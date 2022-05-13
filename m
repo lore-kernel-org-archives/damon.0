@@ -1,20 +1,20 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B85C74C64
-	for <damon@lists.linux.dev>; Fri, 13 May 2022 15:00:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AF7FC34115;
-	Fri, 13 May 2022 15:00:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A6614C64
+	for <damon@lists.linux.dev>; Fri, 13 May 2022 15:00:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85191C34100;
+	Fri, 13 May 2022 15:00:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1652454036;
-	bh=w5mI+m7YFoLXGyrTD97A7aVQJcALsUpoPsjo1Fivhrw=;
+	s=k20201202; t=1652454038;
+	bh=dvkE+Xle/CL236kYATrTSaFb/CzjqEqgY0TtOELuS3s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VZ0VSFfIONCVA1y76eAkXqiBNav2M0U1RT1pz5UliiH0R2Rwhs0OS5Atku3oa5iZe
-	 Kuigcj0Nak335/fGN54i8YYqfrQKetOnbSTLTCm9af0C8AVjaIMYsmGERw64g2mM2A
-	 V3crrrYRG5g3lCSR7csJrZiuYRfegWS0I6n3GAo+k02usfM21Bdj5kGbx96QYlsIlw
-	 LSsvoPfvbdb4TniPKLeZ1ezfqxI/+9F6qdSjCFGTaP8rZ3uI7NUiv05zbnIWTpMT62
-	 luJDOH9SAZQCRzxD5S3DLuhNqnR7ty6E4IfhrWgCvUEcHYaSsDoyTwRL6ayz9Y3Alq
-	 ageyVvA548Zuw==
+	b=G8xkcMwft8MJgi5PphUHDXBPYWeRuVAR9cEtuPyM3CN3b3Stzq8L9ooP1Xmc8xPc6
+	 5PPqqjAnCV1UyX2GcnApgnhwTq94CHyWAsTfFHUSlxGkzjNq8SIehWGhdObmVyCSJI
+	 dg6QFE3X8lSkpdgqFCieCzbpPGH2nJrpP7BhimaJKGUoigLKieCQkTGNCK9L0IuftZ
+	 0jyXQ3FsdasiWkPdTUqNpq4juzPBY7aWZ5jS70hVOn+avgDIPnQcFFedlc6nNpy9DB
+	 EwVsolHZXS/3tLcnqYnIkyh4xwa6N1BtPOLsU1FUi0Y5CCQXGb86NqZ0pNdy4lawcB
+	 Rj5bHogHTx8aQ==
 From: SeongJae Park <sj@kernel.org>
 To: 
 Cc: linux-damon@amazon.com,
@@ -22,9 +22,9 @@ Cc: linux-damon@amazon.com,
 	linux-mm@kvack.org,
 	linux-kernel@vger.kernel.org,
 	SeongJae Park <sj@kernel.org>
-Subject: [RFC PATCH 2/3] mm/damon/schemes: Support 'hot' action
-Date: Fri, 13 May 2022 16:59:59 +0200
-Message-Id: <20220513150000.25797-3-sj@kernel.org>
+Subject: [RFC PATCH 3/3] mm/damon/paddr: Support DAMOS_COLD
+Date: Fri, 13 May 2022 17:00:00 +0200
+Message-Id: <20220513150000.25797-4-sj@kernel.org>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20220513150000.25797-1-sj@kernel.org>
 References: <20220513150000.25797-1-sj@kernel.org>
@@ -34,110 +34,27 @@ List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 
-This commit adds another DAMOS action called 'hot'.  The action marks
-pages in the memory area of the taregt access pattern to be marked as
-accessed.  Specifically, calls 'mark_page_accessed()'.  This is supposed
-to be used for memory regions having frequent access so that hot pages
-could be more protected under memory pressure.
+DAMOS_COLD is currently supported by the virtual address spaces
+monitoring operations set (vaddr).  This commit adds support of the
+action to the physical address space monitoring operations set (paddr).
+Using this together with hot DAMOS action, users can proactively sort
+LRU lists so that performance degradation under memory pressure can be
+reduced.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- include/linux/damon.h |  2 ++
- mm/damon/ops-common.c | 42 ++++++++++++++++++++++++++++++++++++++++++
- mm/damon/ops-common.h |  2 ++
- mm/damon/paddr.c      | 20 ++++++++++++++++++++
- mm/damon/sysfs.c      |  1 +
- 5 files changed, 67 insertions(+)
+ mm/damon/paddr.c | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
-diff --git a/include/linux/damon.h b/include/linux/damon.h
-index 7c62da31ce4b..ed5338c3133d 100644
---- a/include/linux/damon.h
-+++ b/include/linux/damon.h
-@@ -87,6 +87,7 @@ struct damon_target {
-  * @DAMOS_HUGEPAGE:	Call ``madvise()`` for the region with MADV_HUGEPAGE.
-  * @DAMOS_NOHUGEPAGE:	Call ``madvise()`` for the region with MADV_NOHUGEPAGE.
-  * @DAMOS_STAT:		Do nothing but count the stat.
-+ * @DAMOS_HOT:		Mark the region as hot.
-  * @NR_DAMOS_ACTIONS:	Total number of DAMOS actions
-  */
- enum damos_action {
-@@ -96,6 +97,7 @@ enum damos_action {
- 	DAMOS_HUGEPAGE,
- 	DAMOS_NOHUGEPAGE,
- 	DAMOS_STAT,		/* Do nothing but only record the stat */
-+	DAMOS_HOT,
- 	NR_DAMOS_ACTIONS,
- };
- 
-diff --git a/mm/damon/ops-common.c b/mm/damon/ops-common.c
-index e346cc10d143..fe9288025bae 100644
---- a/mm/damon/ops-common.c
-+++ b/mm/damon/ops-common.c
-@@ -131,3 +131,45 @@ int damon_pageout_score(struct damon_ctx *c, struct damon_region *r,
- 	/* Return coldness of the region */
- 	return DAMOS_MAX_SCORE - hotness;
- }
-+
-+int damon_hot_score(struct damon_ctx *c, struct damon_region *r,
-+			struct damos *s)
-+{
-+	unsigned int max_nr_accesses;
-+	int freq_subscore;
-+	unsigned int age_in_sec;
-+	int age_in_log, age_subscore;
-+	unsigned int freq_weight = s->quota.weight_nr_accesses;
-+	unsigned int age_weight = s->quota.weight_age;
-+	int hotness;
-+
-+	max_nr_accesses = c->aggr_interval / c->sample_interval;
-+	freq_subscore = r->nr_accesses * DAMON_MAX_SUBSCORE / max_nr_accesses;
-+
-+	age_in_sec = (unsigned long)r->age * c->aggr_interval / 1000000;
-+	for (age_in_log = 0; age_in_log < DAMON_MAX_AGE_IN_LOG && age_in_sec;
-+			age_in_log++, age_in_sec >>= 1)
-+		;
-+
-+	/* If frequency is 0, higher age means it's colder */
-+	if (freq_subscore == 0)
-+		age_in_log *= -1;
-+
-+	/*
-+	 * Now age_in_log is in [-DAMON_MAX_AGE_IN_LOG, DAMON_MAX_AGE_IN_LOG].
-+	 * Scale it to be in [0, 100] and set it as age subscore.
-+	 */
-+	age_in_log += DAMON_MAX_AGE_IN_LOG;
-+	age_subscore = age_in_log * DAMON_MAX_SUBSCORE /
-+		DAMON_MAX_AGE_IN_LOG / 2;
-+
-+	hotness = (freq_weight * freq_subscore + age_weight * age_subscore);
-+	if (freq_weight + age_weight)
-+		hotness /= freq_weight + age_weight;
-+	/*
-+	 * Transform it to fit in [0, DAMOS_MAX_SCORE]
-+	 */
-+	hotness = hotness * DAMOS_MAX_SCORE / DAMON_MAX_SUBSCORE;
-+
-+	return hotness;
-+}
-diff --git a/mm/damon/ops-common.h b/mm/damon/ops-common.h
-index e790cb5f8fe0..52329ff361cd 100644
---- a/mm/damon/ops-common.h
-+++ b/mm/damon/ops-common.h
-@@ -14,3 +14,5 @@ void damon_pmdp_mkold(pmd_t *pmd, struct mm_struct *mm, unsigned long addr);
- 
- int damon_pageout_score(struct damon_ctx *c, struct damon_region *r,
- 			struct damos *s);
-+int damon_hot_score(struct damon_ctx *c, struct damon_region *r,
-+			struct damos *s);
 diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
-index 08deee12ebfd..69980b922bf4 100644
+index 69980b922bf4..761b1580271c 100644
 --- a/mm/damon/paddr.c
 +++ b/mm/damon/paddr.c
-@@ -233,6 +233,22 @@ static unsigned long damon_pa_pageout(struct damon_region *r)
+@@ -249,6 +249,22 @@ static unsigned long damon_pa_mark_accessed(struct damon_region *r)
  	return applied * PAGE_SIZE;
  }
  
-+static unsigned long damon_pa_mark_accessed(struct damon_region *r)
++static unsigned long damon_pa_cold(struct damon_region *r)
 +{
 +	unsigned long addr, applied = 0;
 +
@@ -146,7 +63,7 @@ index 08deee12ebfd..69980b922bf4 100644
 +
 +		if (!page)
 +			continue;
-+		mark_page_accessed(page);
++		deactivate_page(page);
 +		put_page(page);
 +		applied++;
 +	}
@@ -156,36 +73,24 @@ index 08deee12ebfd..69980b922bf4 100644
  static unsigned long damon_pa_apply_scheme(struct damon_ctx *ctx,
  		struct damon_target *t, struct damon_region *r,
  		struct damos *scheme)
-@@ -240,6 +256,8 @@ static unsigned long damon_pa_apply_scheme(struct damon_ctx *ctx,
- 	switch (scheme->action) {
- 	case DAMOS_PAGEOUT:
+@@ -258,6 +274,8 @@ static unsigned long damon_pa_apply_scheme(struct damon_ctx *ctx,
  		return damon_pa_pageout(r);
-+	case DAMOS_HOT:
-+		return damon_pa_mark_accessed(r);
+ 	case DAMOS_HOT:
+ 		return damon_pa_mark_accessed(r);
++	case DAMOS_COLD:
++		return damon_pa_cold(r);
  	default:
  		break;
  	}
-@@ -253,6 +271,8 @@ static int damon_pa_scheme_score(struct damon_ctx *context,
- 	switch (scheme->action) {
- 	case DAMOS_PAGEOUT:
+@@ -273,6 +291,8 @@ static int damon_pa_scheme_score(struct damon_ctx *context,
  		return damon_pageout_score(context, r, scheme);
-+	case DAMOS_HOT:
-+		return damon_hot_score(context, r, scheme);
+ 	case DAMOS_HOT:
+ 		return damon_hot_score(context, r, scheme);
++	case DAMOS_COLD:
++		return damon_pageout_score(context, r, scheme);
  	default:
  		break;
  	}
-diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
-index 09f9e8ca3d1f..a1de2278f8c2 100644
---- a/mm/damon/sysfs.c
-+++ b/mm/damon/sysfs.c
-@@ -763,6 +763,7 @@ static const char * const damon_sysfs_damos_action_strs[] = {
- 	"hugepage",
- 	"nohugepage",
- 	"stat",
-+	"hot",
- };
- 
- static struct damon_sysfs_scheme *damon_sysfs_scheme_alloc(
 -- 
 2.17.1
 
