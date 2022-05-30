@@ -1,128 +1,102 @@
-Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CA7317D0
-	for <damon@lists.linux.dev>; Mon, 30 May 2022 05:04:23 +0000 (UTC)
-Received: by mail-ej1-f45.google.com with SMTP id f21so18477717ejh.11
-        for <damon@lists.linux.dev>; Sun, 29 May 2022 22:04:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=7XirfjVzzLTx46Nwwu3/b9HkXUr3i8KCBR76hKC0bJ0=;
-        b=DGhV6BHo9SqfMyLJjJ3wu1Uvioz9+CdI8xcclct5k9zkFmC91TC/GcQFrLJtjk+3JK
-         Fxl+U4K7mXsZnykWWVzdXkfszUw0iElQsMpT5qlzr2k73LsOyT04ud0ANyOPX9XWRX2L
-         Z08pqCkTditNbugrDOtozQj72LnxxWQmacSinPdkdZu7eHp94yxT9a8xn3/zCzIwXg6F
-         FHYwXtF5TpiQQ9tGpL9pjo2RYdsQksdw4Co538yxxUfxku3NxhuL3sp5O+RMxoxBzYCR
-         ggMDQNmHPVKvbVt895CzU+hBFdgdCzjL36cZ8gCfSrqCS2Et46lAtoL+Fo1gekZbS/lh
-         r6Iw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=7XirfjVzzLTx46Nwwu3/b9HkXUr3i8KCBR76hKC0bJ0=;
-        b=ACKcl/60NYqHWBOiH7Mrh4FzH81jlNB5cluAXp+7+Eny2QZSdVcHphXrvD0PelbJPy
-         nX1YucQMqKD2HlvUXA0AJxpk9ZqU8nyG+2JEAx6Qi/2QCmAOvcU+aXFHlbkHuIMd+2f/
-         C0G7S2jHKP2WqS9Dmowxu/TcBsH0SibmUbETILW0g0YF9qAuAEDilD4QPpgAKEYL06aM
-         C5FdrjP5lWQLwp/iXMYjNGRIQm7KK5YTLDU3lJm3tn94qwyjal5Wmx9Lt8x/6mknwIV0
-         g8LbFwQMFu85hE1lR2pzhTaf9qzBPNBQ+kGGLG3nOog3pkzyvEjvZ+UPynLHMYMh8pu9
-         Lz2w==
-X-Gm-Message-State: AOAM531KnXLhkynnBPH/7vnxbaquDcXqUn/Or70mTE4YxoGOjUa6LhWA
-	jWO5JmxDQyObGkr/UHKzypDacS1iPNWq09lHmfw=
-X-Google-Smtp-Source: ABdhPJxzcsWyiFUNFhiLW9ZBQqLkxaf3fKI1k4l28bbKdikEdXxdXZVuWKK+6Sq/Nt4qfH6wn4CQzCbctovuEx5Xndo=
-X-Received: by 2002:a17:907:d17:b0:6ff:2f91:5b82 with SMTP id
- gn23-20020a1709070d1700b006ff2f915b82mr14190903ejc.192.1653887061641; Sun, 29
- May 2022 22:04:21 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 128552FAF
+	for <damon@lists.linux.dev>; Mon, 30 May 2022 16:56:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 397C9C385B8;
+	Mon, 30 May 2022 16:56:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1653929810;
+	bh=D0OLsrOL0CSZt0TW+pAzxo6uAd6kEtYLd7cEs1qfllU=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=RD4I0Tq4cVWE338ctzZB15LZHOxGr6Eoc1UIM6WFCB4/4s+yLSoQH2IWN/2XQICf5
+	 2p6kX0/xkzZLIQc6WyVXmTyGypmRltZmBslh3LOWHLfKPieFA8OTLonvOfhSW1qNmk
+	 ndC+WohUtRkBPt2VkyLvD5fH1IjPvJg1+KbWTPeheXTBtQOKt4O9glBI1FJqACtPVl
+	 9zTKJcV9OZgH398Lsm7uaYBJup+LbVifWbaFK3IRKbMuw9eG8FjhR6WwOIZ7cB++8w
+	 q9Z4zoVgsutKdZV90TjmsICUcniwPmoXtCMAxRvITQuvX/BgMD/RaX9XBRMy93ZOHI
+	 oxdsiMSMG8TQg==
+From: SeongJae Park <sj@kernel.org>
+To: Chengming Zhou <zhouchengming@bytedance.com>
+Cc: sj@kernel.org,
+	damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] mm/damon: remove obsolete comments of kdamond_stop
+Date: Mon, 30 May 2022 16:56:48 +0000
+Message-Id: <20220530165648.2921-1-sj@kernel.org>
+X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20220530022016.11771-1-zhouchengming@bytedance.com>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20220427175049.50057-1-sj@kernel.org> <20220529195411.102379-1-sj@kernel.org>
-In-Reply-To: <20220529195411.102379-1-sj@kernel.org>
-From: Barry Song <21cnbao@gmail.com>
-Date: Mon, 30 May 2022 17:04:10 +1200
-Message-ID: <CAGsJ_4y+w-i7OhE9Xk94W8p6srkMsVxTFxwb-+8g_ShGPEj5pw@mail.gmail.com>
-Subject: Re: DAMON VA regions don't split on an large Android APP
-To: SeongJae Park <sj@kernel.org>
-Cc: Rongwei Wang <rongwei.wang@linux.alibaba.com>, 
-	Andrew Morton <akpm@linux-foundation.org>, Linux-MM <linux-mm@kvack.org>, 
-	LKML <linux-kernel@vger.kernel.org>, Matthew Wilcox <willy@infradead.org>, shuah@kernel.org, 
-	Brendan Higgins <brendanhiggins@google.com>, foersleo@amazon.de, sieberf@amazon.com, 
-	Shakeel Butt <shakeelb@google.com>, sjpark@amazon.de, tuhailong@gmail.com, 
-	Song Jiang <sjiang88@gmail.com>, =?UTF-8?B?5byg6K+X5piOKFNpbW9uIFpoYW5nKQ==?= <zhangshiming@oppo.com>, 
-	=?UTF-8?B?5p2O5Z+56ZSLKHdpbmsp?= <lipeifeng@oppo.com>, xhao@linux.alibaba.com, 
-	damon@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 
-On Mon, May 30, 2022 at 7:54 AM SeongJae Park <sj@kernel.org> wrote:
->
-> On Wed, 27 Apr 2022 17:50:49 +0000 sj@kernel.org wrote:
->
-> > Hello Rongwei and Barry,
-> >
-> > On Wed, 27 Apr 2022 19:44:23 +1200 Barry Song <21cnbao@gmail.com> wrote:
-> >
-> > > On Wed, Apr 27, 2022 at 6:56 PM Rongwei Wang
-> > > <rongwei.wang@linux.alibaba.com> wrote:
-> > > >
-> > > >
-> > > >
-> > > > On 4/27/22 7:19 AM, Barry Song wrote:
-> [...]
-> > >
-> > > I guess the cause might be:
-> > > in case a region is very big like 10GiB, we have only 1MiB hot pages
-> > > in this large region.
-> > > damon will randomly pick one page to sample, but the page has only
-> > > 1MiB/10GiB, thus
-> > > less than 1/10000 chance to hit the hot 1MiB. so probably we need
-> > > 10000 sample periods
-> > > to hit the hot 1MiB in order to split this large region?
-> > >
-> > > @SeongJae, please correct me if I am wrong.
-> >
-> > I think your theory makes sense.  There was a similar concern, so we made DAMON
-> > to split regions into 3 sub-regions when we don't see advance[1].  My current
-> > rough idea for improving DAMON accuracy is making it more aggressive while
-> > keeping the monitoring overhead low.
-> >
-> > [1] https://git.kernel.org/pub/scm/linux/kernel/git/sj/linux.git/tree/mm/damon/core.c?h=damon/next-2022-04-21-08-31-on-v5.18-rc3-mmots-2022-04-20-17-37#n1053
-> >
-> > >
-> > > >
-> > > > I'm not sure whether sets init_regions can deal with the above problem,
-> > > > or dynamic choose one or limited number VMA to monitor.
-> > > >
-> > >
-> > > I won't set a limited number of VMA as this will make the damon too hard to use
-> > > as nobody wants to make such complex operations, especially an Android
-> > > app might have more than 8000 VMAs.
-> > >
-> > > I agree init_regions might be the right place to enhance the situation.
-> >
-> > 'init_regions' has developed for the purpose, where user space knows some good
-> > information for starting point of the regions adjustment, and thus want to hint
-> > DAMON.  Nevertheless, it might not work as expected, because DAMON
-> > automatically updates the target regions to cover all VMAs as much as it can.
-> > I have posted a patchset for the use case yesterday[1].
-> >
-> > [1] https://lore.kernel.org/linux-mm/20220426231750.48822-1-sj@kernel.org/
->
-> FWIW, the patchset for the fixed virtual address space ranges monitoring has
-> merged in the mainline[1].
->
-> [1] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=98931dd95fd489fcbfa97da563505a6f071d7c77
->
+Hi Chengming,
 
-nice to know that. Thanks, though it doesn't fix my problem as I am
-looking for a solution to
-collect precise monitoring data  automatically and economically.
+On Mon, 30 May 2022 10:20:16 +0800 Chengming Zhou <zhouchengming@bytedance.com> wrote:
 
->
-> Thanks,
-> SJ
+> Since commit 0f91d13366a4 ("mm/damon: simplify stop mechanism")
+> delete kdamond_stop and change to use kthread stop mechanism,
+> these obsolete comments should be removed accordingly.
 
-Thanks
-Barry
+Good point, thank you!
+
+> 
+> Signed-off-by: Chengming Zhou <zhouchengming@bytedance.com>
+> ---
+>  include/linux/damon.h | 17 ++++++++---------
+>  1 file changed, 8 insertions(+), 9 deletions(-)
+> 
+> diff --git a/include/linux/damon.h b/include/linux/damon.h
+> index 7c62da31ce4b..fa1c2968b1dd 100644
+> --- a/include/linux/damon.h
+> +++ b/include/linux/damon.h
+> @@ -397,7 +397,6 @@ struct damon_callback {
+>   * detail.
+>   *
+>   * @kdamond:		Kernel thread who does the monitoring.
+> - * @kdamond_stop:	Notifies whether kdamond should stop.
+>   * @kdamond_lock:	Mutex for the synchronizations with @kdamond.
+>   *
+>   * For each monitoring context, one kernel thread for the monitoring is
+> @@ -406,14 +405,14 @@ struct damon_callback {
+>   * Once started, the monitoring thread runs until explicitly required to be
+>   * terminated or every monitoring target is invalid.  The validity of the
+>   * targets is checked via the &damon_operations.target_valid of @ops.  The
+> - * termination can also be explicitly requested by writing non-zero to
+> - * @kdamond_stop.  The thread sets @kdamond to NULL when it terminates.
+> - * Therefore, users can know whether the monitoring is ongoing or terminated by
+> - * reading @kdamond.  Reads and writes to @kdamond and @kdamond_stop from
+> - * outside of the monitoring thread must be protected by @kdamond_lock.
+> - *
+> - * Note that the monitoring thread protects only @kdamond and @kdamond_stop via
+> - * @kdamond_lock.  Accesses to other fields must be protected by themselves.
+> + * termination can also be explicitly requested by calling __damon_stop().
+
+'__damon_stop()' is a static function, so mentioning that here makes no sense.
+Let's mention its wrapper, 'damon_stop()' instead.
+
+After the change, you could add
+
+Reviewed-by: SeongJae Park <sj@kernel.org>
+
+
+Thanks,
+SJ
+
+> + * The thread sets @kdamond to NULL when it terminates. Therefore, users can
+> + * know whether the monitoring is ongoing or terminated by reading @kdamond.
+> + * Reads and writes to @kdamond from outside of the monitoring thread must
+> + * be protected by @kdamond_lock.
+> + *
+> + * Note that the monitoring thread protects only @kdamond via @kdamond_lock.
+> + * Accesses to other fields must be protected by themselves.
+>   *
+>   * @ops:	Set of monitoring operations for given use cases.
+>   * @callback:	Set of callbacks for monitoring events notifications.
+> -- 
+> 2.36.1
