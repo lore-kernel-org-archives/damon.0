@@ -1,107 +1,64 @@
-Received: from mail-pj1-f42.google.com (mail-pj1-f42.google.com [209.85.216.42])
+Received: from mail-pg1-f171.google.com (mail-pg1-f171.google.com [209.85.215.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16ECF17C9
-	for <damon@lists.linux.dev>; Tue, 31 May 2022 02:04:32 +0000 (UTC)
-Received: by mail-pj1-f42.google.com with SMTP id hv24-20020a17090ae41800b001e33eebdb5dso115211pjb.0
-        for <damon@lists.linux.dev>; Mon, 30 May 2022 19:04:32 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F52A20E0
+	for <damon@lists.linux.dev>; Tue, 31 May 2022 02:29:47 +0000 (UTC)
+Received: by mail-pg1-f171.google.com with SMTP id s68so11529191pgs.10
+        for <damon@lists.linux.dev>; Mon, 30 May 2022 19:29:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=bytedance-com.20210112.gappssmtp.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=QVmLfgn1Nm0LiEUGoHnz2dUGee44h4bxPJzSoBNxosU=;
-        b=uos1a+yHGla5I6drZ9n+twHQmjFUu6SMLxAAfWu7H8cv8HExB6g2cQTVyGmgnKTCEk
-         pAagV+KHi6edesy4J8md/RWFKce8nc3wPtbxqYYIUbtCbRgoZeaa8MNgCld6R0U6AZlN
-         L9kE5+HYnVFFRTQq5aHOyNhBBoYZSr/vQRqjQtPm8as8FHeUGqIlV/9q8ia9WA0Oq642
-         fcF33pHIdydP4sOxGuZgWseVrT2eChQ3dqWiimur9ncs+ilqT6zIbVitx9Qx0ABtxKgF
-         IXMU9mK/D7n7vN9LhdYfrtm/hgwlxojRfP/6Aln0D+GVLpODRbQH7wNc49Tt0bkiPut8
-         g4Dw==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=yTMqOEWwFqPjCBnVwjlOgGC66EofdLuSUHGdwSY9I+8=;
+        b=ifK6uC52NIu+skSIrfHV4J0Njr/BqESkbdnpQzfXZBHNX484VlgcJ10oKykmGIxafE
+         0EDDPPYN4F8OVULDZIuwqS3yV0AF7gZ7Vpp9BgC/aWqaFBkVC/9BXmLFLceF7f2ufQx6
+         lSRznUnCv6gFoEqk6Dp8bGhBwn1/vD+QxF7bnz9kpitHp5WhwB3EHf7a/y0lrEeST0sZ
+         /zufRzC13BMCmsNSXP5+HnTefpCOWnzEXM/7Y0pyHUrDvUlnTGTIFlb7QPhEf9NBIJEu
+         d27c64bECTIj2R8mvRiNHgZqktfyZkNueqCLPBTnZiei9NBEepPd8Cu1UPLPb/Be11j2
+         LAtg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=QVmLfgn1Nm0LiEUGoHnz2dUGee44h4bxPJzSoBNxosU=;
-        b=M+TFrfI8Li+MZcJdTadTQGodlhKo40j7Ya7GDcDTCstkkxvpXXe7IRAbtqPcyLyHo0
-         wFeJICrvwofBkKthONJAmvda7UzrLvvCsB1pZH1BUQ1f57DwqGrjNN9TtEIORWVfxi+M
-         hTo7Gjskk+XjT6FTj6XT9qVO5w2c0VGQf4/kw9odYGp7TVzXNeompciEu2dtIAuWfJ3L
-         SGlB67RSjvDZiTfvTcTqhftVStIpOZczujniS56V8aT8/TqTEmKfvi9iJIH7l4X986w2
-         cZiZTx8zIcjZ1bjba7FQIas1ggqQ2hGopgrgAraSC2dBfZ+0FwDkTS73WweMZaq6C+3w
-         A6qg==
-X-Gm-Message-State: AOAM533FmVUct1jU0pOaA8dRzVSiaKQxSuTgwO0OObTCaT9RHwxkMRzz
-	8ZDuTvxrshakUlhAJgz30mVETmqwdGnBFA==
-X-Google-Smtp-Source: ABdhPJwqyfqh3TdM8rEWKG+tvJdNyCdIntwg0OJn3Jsu+EfLz1PnNkvtFHLVLTje863Tc3rsUCUElQ==
-X-Received: by 2002:a17:90a:b703:b0:1dd:1e2f:97d7 with SMTP id l3-20020a17090ab70300b001dd1e2f97d7mr26005094pjr.62.1653962672535;
-        Mon, 30 May 2022 19:04:32 -0700 (PDT)
-Received: from C02CV1DAMD6P.bytedance.net ([139.177.225.231])
-        by smtp.gmail.com with ESMTPSA id q60-20020a17090a1b4200b001e2f8163810sm367573pjq.30.2022.05.30.19.04.29
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=yTMqOEWwFqPjCBnVwjlOgGC66EofdLuSUHGdwSY9I+8=;
+        b=z61Nxi6AAgHTISrEg8CQjBt3jnDYFLkjSbVX+6JmV6xQH8iZeRHpZiyTYDm+y3tYIO
+         XYPrAV5YWZJnH17XsfTk1St2S/heYNN71IuPBJb2MTJsUe++KFKkwOc0lijGeYYgTzv7
+         jZHrh5sFff65AGT/Rp4nBD0pkcYALTI8Ugs+JueNP6f2ja4cKxZ2Kbua1gnwQcilsKDd
+         z/G5xwKDAdjLtYCIx4Q8ggWqPzcwrTk9GqJi1KWe+L0xJ39WkSOInYVscJVB8YqWcA4B
+         UZDIHV1eOn9Xc5c1Qt74h1LTJrj8YMaSMbK6b1xsVxb/iYDoGUvhqZhPwGDFQH0UMWXN
+         aYmQ==
+X-Gm-Message-State: AOAM532B+aC5+1RG0F8Dqlazk9VZooc2At9i6+Xok7McGCR7U9/DH1CV
+	BOf7SI2MtA4Y5rePpCwV3RyS+A==
+X-Google-Smtp-Source: ABdhPJzahjwX8i93rNK2hQ9Yjfe9NmcWBos5aMcxAe2dGetSUWu3B4DPJ7deCw59XuI8/a5VaFZnRw==
+X-Received: by 2002:a63:688a:0:b0:3fa:a80c:a228 with SMTP id d132-20020a63688a000000b003faa80ca228mr28184578pgc.182.1653964187033;
+        Mon, 30 May 2022 19:29:47 -0700 (PDT)
+Received: from localhost ([2408:8207:18da:2310:7163:3a36:783f:6d4a])
+        by smtp.gmail.com with ESMTPSA id w3-20020a170902d10300b0016152774878sm3631059plw.176.2022.05.30.19.29.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 30 May 2022 19:04:32 -0700 (PDT)
-From: Chengming Zhou <zhouchengming@bytedance.com>
-To: sj@kernel.org
-Cc: damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org,
-	Chengming Zhou <zhouchengming@bytedance.com>
-Subject: [PATCH v2] mm/damon: remove obsolete comments of kdamond_stop
-Date: Tue, 31 May 2022 10:04:21 +0800
-Message-Id: <20220531020421.46849-1-zhouchengming@bytedance.com>
-X-Mailer: git-send-email 2.35.1
+        Mon, 30 May 2022 19:29:46 -0700 (PDT)
+Date: Tue, 31 May 2022 10:29:41 +0800
+From: Muchun Song <songmuchun@bytedance.com>
+To: Chengming Zhou <zhouchengming@bytedance.com>
+Cc: sj@kernel.org, damon@lists.linux.dev, linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] mm/damon: remove obsolete comments of kdamond_stop
+Message-ID: <YpV9lQ3IAMmIJFCw@FVFYT0MHHV2J.googleapis.com>
+References: <20220530022016.11771-1-zhouchengming@bytedance.com>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220530022016.11771-1-zhouchengming@bytedance.com>
 
-Since commit 0f91d13366a4 ("mm/damon: simplify stop mechanism")
-delete kdamond_stop and change to use kthread stop mechanism,
-these obsolete comments should be removed accordingly.
+On Mon, May 30, 2022 at 10:20:16AM +0800, Chengming Zhou wrote:
+> Since commit 0f91d13366a4 ("mm/damon: simplify stop mechanism")
+> delete kdamond_stop and change to use kthread stop mechanism,
+> these obsolete comments should be removed accordingly.
+> 
+> Signed-off-by: Chengming Zhou <zhouchengming@bytedance.com>
 
-Reviewed-by: SeongJae Park <sj@kernel.org>
-Signed-off-by: Chengming Zhou <zhouchengming@bytedance.com>
----
-v2:
- - explicit termination uses damon_stop() instead of __damon_stop()
----
- include/linux/damon.h | 17 ++++++++---------
- 1 file changed, 8 insertions(+), 9 deletions(-)
-
-diff --git a/include/linux/damon.h b/include/linux/damon.h
-index 7c62da31ce4b..2765c7d99beb 100644
---- a/include/linux/damon.h
-+++ b/include/linux/damon.h
-@@ -397,7 +397,6 @@ struct damon_callback {
-  * detail.
-  *
-  * @kdamond:		Kernel thread who does the monitoring.
-- * @kdamond_stop:	Notifies whether kdamond should stop.
-  * @kdamond_lock:	Mutex for the synchronizations with @kdamond.
-  *
-  * For each monitoring context, one kernel thread for the monitoring is
-@@ -406,14 +405,14 @@ struct damon_callback {
-  * Once started, the monitoring thread runs until explicitly required to be
-  * terminated or every monitoring target is invalid.  The validity of the
-  * targets is checked via the &damon_operations.target_valid of @ops.  The
-- * termination can also be explicitly requested by writing non-zero to
-- * @kdamond_stop.  The thread sets @kdamond to NULL when it terminates.
-- * Therefore, users can know whether the monitoring is ongoing or terminated by
-- * reading @kdamond.  Reads and writes to @kdamond and @kdamond_stop from
-- * outside of the monitoring thread must be protected by @kdamond_lock.
-- *
-- * Note that the monitoring thread protects only @kdamond and @kdamond_stop via
-- * @kdamond_lock.  Accesses to other fields must be protected by themselves.
-+ * termination can also be explicitly requested by calling damon_stop().
-+ * The thread sets @kdamond to NULL when it terminates. Therefore, users can
-+ * know whether the monitoring is ongoing or terminated by reading @kdamond.
-+ * Reads and writes to @kdamond from outside of the monitoring thread must
-+ * be protected by @kdamond_lock.
-+ *
-+ * Note that the monitoring thread protects only @kdamond via @kdamond_lock.
-+ * Accesses to other fields must be protected by themselves.
-  *
-  * @ops:	Set of monitoring operations for given use cases.
-  * @callback:	Set of callbacks for monitoring events notifications.
--- 
-2.36.1
-
+Acked-by: Muchun Song <songmuchun@bytedance.com>
