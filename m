@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07035186D
-	for <damon@lists.linux.dev>; Mon, 13 Jun 2022 19:23:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 454CBC3411F;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4BF4186F
+	for <damon@lists.linux.dev>; Mon, 13 Jun 2022 19:23:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBC34C341C5;
 	Mon, 13 Jun 2022 19:23:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1655148188;
-	bh=XOWacsSFy4qQVUe4yC1Lr3xCRJ6lmmqOdxcVjKLkxx8=;
+	s=k20201202; t=1655148189;
+	bh=kMFgX2OiG0wP+m/airbACgnFus0Mqohfs1JXeb3bcyc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YCizNenf2u5d4ieuePcVEjzZ2J39Sj48RNI7hGwMQwP/Abq9boO2PmAU5PmHVHtos
-	 K5zCk0uhTbHp67T5LrOHdPQirivVTyL+mIvseF7cg/vJOrabOuc9GBmWbd90836pWq
-	 80AdC/J8slOkYQUhjnYmijIIcNH46See1cJo/ApvzWcC+dlTcwICTFJjEgsTLgpumq
-	 zhRoiHq0nEHIAs+a8Tg5cXkc04tSfs/P9Czxgry3qfzQnD0ELzWBhGFQl6u5FvIPxB
-	 /L61PzRRY849tV0+hguoIHWX/5IzklIs3N5PskB/9YNMI13TArwYX9VDHYDvdNiENf
-	 OjDhaCgR8CI+w==
+	b=cEHxWCWcDQnzLU9nrgqKVHPe8OuFolxLzHQbWGm0FDF8s2xyR+UTbdrrPSpXxDWb+
+	 2gja07x61ylmEov3ngjkYe9zoxwsLiRsSLnjjcuXyTF1V+f2m0lVxOgZUrUBy+RKLl
+	 HoyjSta5L7tdYRjPc5ynMnYKljYgVJoGjtPLFVephMY8pxOffmSghJkInlXkTdzq7j
+	 EQ0n+oOBMJcI9B9+LUGI/G25iNl58r5iAnolPTravhz/k2gCL6FnuyQlG3VTunei/h
+	 CU1/VdnwPkiKUvgic43cy3ptsNJfigiY8JonZzcVNLWAvemNXegxPvstsoUcuQP2t0
+	 o3V9PurM1s9Nw==
 From: SeongJae Park <sj@kernel.org>
 To: SeongJae Park <sj@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>
 Cc: damon@lists.linux.dev,
 	linux-mm@kvack.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH 1/8] mm/damon/dbgfs: add and use mappings between 'schemes' action inputs and 'damos_action' values
-Date: Mon, 13 Jun 2022 19:22:53 +0000
-Message-Id: <20220613192301.8817-2-sj@kernel.org>
+Subject: [PATCH 1/8] mm/damon/dbgfs: add mappings between 'schemes' file's action inputs and 'damos_action' values
+Date: Mon, 13 Jun 2022 19:22:54 +0000
+Message-Id: <20220613192301.8817-3-sj@kernel.org>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20220613192301.8817-1-sj@kernel.org>
 References: <20220613192301.8817-1-sj@kernel.org>
@@ -39,8 +39,9 @@ DAMON debugfs interface assumes users will write 'damos_action' value
 directly to the 'schemes' file.  This makes adding new 'damos_action' in
 the middle of its definition breaks the backward compatibility of DAMON
 debugfs interface, as values of some 'damos_action' could be changed.
-To mitigate the situation, this commit adds mappings between the user
-inputs and 'damos_action' value and makes DAMON debugfs code uses those.
+To support backward compatibility in the cases, this commit adds
+mappings between the user inputs and 'damos_action' value and makes
+DAMON debugfs code uses those.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
