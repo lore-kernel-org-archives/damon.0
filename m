@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4BF4186F
-	for <damon@lists.linux.dev>; Mon, 13 Jun 2022 19:23:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBC34C341C5;
-	Mon, 13 Jun 2022 19:23:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7BCA186D
+	for <damon@lists.linux.dev>; Mon, 13 Jun 2022 19:23:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4293BC341C0;
+	Mon, 13 Jun 2022 19:23:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1655148189;
-	bh=kMFgX2OiG0wP+m/airbACgnFus0Mqohfs1JXeb3bcyc=;
+	s=k20201202; t=1655148190;
+	bh=uKUGIZGPQZchKZAH92MEAi0WmMFjIc8qS5qYmL1UAXQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cEHxWCWcDQnzLU9nrgqKVHPe8OuFolxLzHQbWGm0FDF8s2xyR+UTbdrrPSpXxDWb+
-	 2gja07x61ylmEov3ngjkYe9zoxwsLiRsSLnjjcuXyTF1V+f2m0lVxOgZUrUBy+RKLl
-	 HoyjSta5L7tdYRjPc5ynMnYKljYgVJoGjtPLFVephMY8pxOffmSghJkInlXkTdzq7j
-	 EQ0n+oOBMJcI9B9+LUGI/G25iNl58r5iAnolPTravhz/k2gCL6FnuyQlG3VTunei/h
-	 CU1/VdnwPkiKUvgic43cy3ptsNJfigiY8JonZzcVNLWAvemNXegxPvstsoUcuQP2t0
-	 o3V9PurM1s9Nw==
+	b=dK6TFvLEVwmXnr86/42/FgXjvzbKYeaAFVTHq+OA3hBpVVNQDCmG6yj4xyYosJlpO
+	 3HbCMV2snUEAbqP+mr2h7GsZuOMYWVrchP3JJW3gl7ZOR+isfJCza0/wEphct07O36
+	 m+Uz/LwRBP2cPaMZXDSi6CoZZf4BC7IH8kdLulq8mZUJt1/o1nCRBug8S8WRxnKSJ4
+	 shA6ZH2CwhBt13c8rn42G/ppl9ZdMS8ZiXsiew65Y4tagAYXCjOK86SI9DfSHCI0RC
+	 LQQe48kkhO6Nw+higB9rZQCVP9QdVti3gPJaQoK92LKhDSrzcZ+CSDj4ThpN1dWh+w
+	 kW6kPFM+piwBg==
 From: SeongJae Park <sj@kernel.org>
 To: SeongJae Park <sj@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>
 Cc: damon@lists.linux.dev,
 	linux-mm@kvack.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH 1/8] mm/damon/dbgfs: add mappings between 'schemes' file's action inputs and 'damos_action' values
-Date: Mon, 13 Jun 2022 19:22:54 +0000
-Message-Id: <20220613192301.8817-3-sj@kernel.org>
+Subject: [PATCH 3/8] mm/damon/schemes: add 'LRU_PRIO' DAMOS action
+Date: Mon, 13 Jun 2022 19:22:56 +0000
+Message-Id: <20220613192301.8817-5-sj@kernel.org>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20220613192301.8817-1-sj@kernel.org>
 References: <20220613192301.8817-1-sj@kernel.org>
@@ -35,131 +35,159 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-DAMON debugfs interface assumes users will write 'damos_action' value
-directly to the 'schemes' file.  This makes adding new 'damos_action' in
-the middle of its definition breaks the backward compatibility of DAMON
-debugfs interface, as values of some 'damos_action' could be changed.
-To support backward compatibility in the cases, this commit adds
-mappings between the user inputs and 'damos_action' value and makes
-DAMON debugfs code uses those.
+This commit adds a new DAMOS action called 'LRU_PRIO' for the physical
+address space.  The action prioritizes pages in the memory regions of
+the user-specified target access pattern on their LRU lists. This is
+hence supposed to be used for frequently accessed (hot) memory regions
+so that hot pages could be more likely protected under memory pressure.
+Internally, it simply calls 'mark_page_accessed()'.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- mm/damon/dbgfs.c | 64 +++++++++++++++++++++++++++++++++++++-----------
- 1 file changed, 50 insertions(+), 14 deletions(-)
+ include/linux/damon.h |  2 ++
+ mm/damon/ops-common.c | 42 ++++++++++++++++++++++++++++++++++++++++++
+ mm/damon/ops-common.h |  2 ++
+ mm/damon/paddr.c      | 20 ++++++++++++++++++++
+ mm/damon/sysfs.c      |  1 +
+ 5 files changed, 67 insertions(+)
 
-diff --git a/mm/damon/dbgfs.c b/mm/damon/dbgfs.c
-index 5ae810927309..cb8a7e9926a4 100644
---- a/mm/damon/dbgfs.c
-+++ b/mm/damon/dbgfs.c
-@@ -97,6 +97,31 @@ static ssize_t dbgfs_attrs_write(struct file *file,
- 	return ret;
+diff --git a/include/linux/damon.h b/include/linux/damon.h
+index b9aae19fab3e..4c64e03e94d8 100644
+--- a/include/linux/damon.h
++++ b/include/linux/damon.h
+@@ -86,6 +86,7 @@ struct damon_target {
+  * @DAMOS_PAGEOUT:	Call ``madvise()`` for the region with MADV_PAGEOUT.
+  * @DAMOS_HUGEPAGE:	Call ``madvise()`` for the region with MADV_HUGEPAGE.
+  * @DAMOS_NOHUGEPAGE:	Call ``madvise()`` for the region with MADV_NOHUGEPAGE.
++ * @DAMOS_LRU_PRIO:	Prioritize the region on its LRU lists.
+  * @DAMOS_STAT:		Do nothing but count the stat.
+  * @NR_DAMOS_ACTIONS:	Total number of DAMOS actions
+  */
+@@ -95,6 +96,7 @@ enum damos_action {
+ 	DAMOS_PAGEOUT,
+ 	DAMOS_HUGEPAGE,
+ 	DAMOS_NOHUGEPAGE,
++	DAMOS_LRU_PRIO,
+ 	DAMOS_STAT,		/* Do nothing but only record the stat */
+ 	NR_DAMOS_ACTIONS,
+ };
+diff --git a/mm/damon/ops-common.c b/mm/damon/ops-common.c
+index 10ef20b2003f..b1335de200e7 100644
+--- a/mm/damon/ops-common.c
++++ b/mm/damon/ops-common.c
+@@ -130,3 +130,45 @@ int damon_pageout_score(struct damon_ctx *c, struct damon_region *r,
+ 	/* Return coldness of the region */
+ 	return DAMOS_MAX_SCORE - hotness;
+ }
++
++int damon_hot_score(struct damon_ctx *c, struct damon_region *r,
++			struct damos *s)
++{
++	unsigned int max_nr_accesses;
++	int freq_subscore;
++	unsigned int age_in_sec;
++	int age_in_log, age_subscore;
++	unsigned int freq_weight = s->quota.weight_nr_accesses;
++	unsigned int age_weight = s->quota.weight_age;
++	int hotness;
++
++	max_nr_accesses = c->aggr_interval / c->sample_interval;
++	freq_subscore = r->nr_accesses * DAMON_MAX_SUBSCORE / max_nr_accesses;
++
++	age_in_sec = (unsigned long)r->age * c->aggr_interval / 1000000;
++	for (age_in_log = 0; age_in_log < DAMON_MAX_AGE_IN_LOG && age_in_sec;
++			age_in_log++, age_in_sec >>= 1)
++		;
++
++	/* If frequency is 0, higher age means it's colder */
++	if (freq_subscore == 0)
++		age_in_log *= -1;
++
++	/*
++	 * Now age_in_log is in [-DAMON_MAX_AGE_IN_LOG, DAMON_MAX_AGE_IN_LOG].
++	 * Scale it to be in [0, 100] and set it as age subscore.
++	 */
++	age_in_log += DAMON_MAX_AGE_IN_LOG;
++	age_subscore = age_in_log * DAMON_MAX_SUBSCORE /
++		DAMON_MAX_AGE_IN_LOG / 2;
++
++	hotness = (freq_weight * freq_subscore + age_weight * age_subscore);
++	if (freq_weight + age_weight)
++		hotness /= freq_weight + age_weight;
++	/*
++	 * Transform it to fit in [0, DAMOS_MAX_SCORE]
++	 */
++	hotness = hotness * DAMOS_MAX_SCORE / DAMON_MAX_SUBSCORE;
++
++	return hotness;
++}
+diff --git a/mm/damon/ops-common.h b/mm/damon/ops-common.h
+index e790cb5f8fe0..52329ff361cd 100644
+--- a/mm/damon/ops-common.h
++++ b/mm/damon/ops-common.h
+@@ -14,3 +14,5 @@ void damon_pmdp_mkold(pmd_t *pmd, struct mm_struct *mm, unsigned long addr);
+ 
+ int damon_pageout_score(struct damon_ctx *c, struct damon_region *r,
+ 			struct damos *s);
++int damon_hot_score(struct damon_ctx *c, struct damon_region *r,
++			struct damos *s);
+diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
+index 7bcd48066b43..f145b1d51e13 100644
+--- a/mm/damon/paddr.c
++++ b/mm/damon/paddr.c
+@@ -233,6 +233,22 @@ static unsigned long damon_pa_pageout(struct damon_region *r)
+ 	return applied * PAGE_SIZE;
  }
  
-+/*
-+ * Return corresponding dbgfs' scheme action value (int) for the given
-+ * damos_action if the given damos_action value is valid and supported by
-+ * dbgfs, negative error code otherwise.
-+ */
-+static int damos_action_to_dbgfs_scheme_action(enum damos_action action)
++static unsigned long damon_pa_mark_accessed(struct damon_region *r)
 +{
-+	switch (action) {
-+	case DAMOS_WILLNEED:
-+		return 0;
-+	case DAMOS_COLD:
-+		return 1;
-+	case DAMOS_PAGEOUT:
-+		return 2;
-+	case DAMOS_HUGEPAGE:
-+		return 3;
-+	case DAMOS_NOHUGEPAGE:
-+		return 4;
-+	case DAMOS_STAT:
-+		return 5;
-+	default:
-+		return -EINVAL;
++	unsigned long addr, applied = 0;
++
++	for (addr = r->ar.start; addr < r->ar.end; addr += PAGE_SIZE) {
++		struct page *page = damon_get_page(PHYS_PFN(addr));
++
++		if (!page)
++			continue;
++		mark_page_accessed(page);
++		put_page(page);
++		applied++;
 +	}
++	return applied * PAGE_SIZE;
 +}
 +
- static ssize_t sprint_schemes(struct damon_ctx *c, char *buf, ssize_t len)
- {
- 	struct damos *s;
-@@ -109,7 +134,7 @@ static ssize_t sprint_schemes(struct damon_ctx *c, char *buf, ssize_t len)
- 				s->min_sz_region, s->max_sz_region,
- 				s->min_nr_accesses, s->max_nr_accesses,
- 				s->min_age_region, s->max_age_region,
--				s->action,
-+				damos_action_to_dbgfs_scheme_action(s->action),
- 				s->quota.ms, s->quota.sz,
- 				s->quota.reset_interval,
- 				s->quota.weight_sz,
-@@ -160,18 +185,27 @@ static void free_schemes_arr(struct damos **schemes, ssize_t nr_schemes)
- 	kfree(schemes);
- }
- 
--static bool damos_action_valid(int action)
-+/*
-+ * Return corresponding damos_action for the given dbgfs input for a scheme
-+ * action if the input is valid, negative error code otherwise.
-+ */
-+static enum damos_action dbgfs_scheme_action_to_damos_action(int dbgfs_action)
- {
--	switch (action) {
--	case DAMOS_WILLNEED:
--	case DAMOS_COLD:
--	case DAMOS_PAGEOUT:
--	case DAMOS_HUGEPAGE:
--	case DAMOS_NOHUGEPAGE:
--	case DAMOS_STAT:
--		return true;
-+	switch (dbgfs_action) {
-+	case 0:
-+		return DAMOS_WILLNEED;
-+	case 1:
-+		return DAMOS_COLD;
-+	case 2:
-+		return DAMOS_PAGEOUT;
-+	case 3:
-+		return DAMOS_HUGEPAGE;
-+	case 4:
-+		return DAMOS_NOHUGEPAGE;
-+	case 5:
-+		return DAMOS_STAT;
+ static unsigned long damon_pa_apply_scheme(struct damon_ctx *ctx,
+ 		struct damon_target *t, struct damon_region *r,
+ 		struct damos *scheme)
+@@ -240,6 +256,8 @@ static unsigned long damon_pa_apply_scheme(struct damon_ctx *ctx,
+ 	switch (scheme->action) {
+ 	case DAMOS_PAGEOUT:
+ 		return damon_pa_pageout(r);
++	case DAMOS_LRU_PRIO:
++		return damon_pa_mark_accessed(r);
  	default:
--		return false;
-+		return -EINVAL;
+ 		break;
  	}
- }
+@@ -253,6 +271,8 @@ static int damon_pa_scheme_score(struct damon_ctx *context,
+ 	switch (scheme->action) {
+ 	case DAMOS_PAGEOUT:
+ 		return damon_pageout_score(context, r, scheme);
++	case DAMOS_LRU_PRIO:
++		return damon_hot_score(context, r, scheme);
+ 	default:
+ 		break;
+ 	}
+diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
+index c35809c6087c..86c69f980927 100644
+--- a/mm/damon/sysfs.c
++++ b/mm/damon/sysfs.c
+@@ -762,6 +762,7 @@ static const char * const damon_sysfs_damos_action_strs[] = {
+ 	"pageout",
+ 	"hugepage",
+ 	"nohugepage",
++	"lru_prio",
+ 	"stat",
+ };
  
-@@ -189,7 +223,8 @@ static struct damos **str_to_schemes(const char *str, ssize_t len,
- 	int pos = 0, parsed, ret;
- 	unsigned long min_sz, max_sz;
- 	unsigned int min_nr_a, max_nr_a, min_age, max_age;
--	unsigned int action;
-+	unsigned int action_input;
-+	enum damos_action action;
- 
- 	schemes = kmalloc_array(max_nr_schemes, sizeof(scheme),
- 			GFP_KERNEL);
-@@ -204,7 +239,7 @@ static struct damos **str_to_schemes(const char *str, ssize_t len,
- 		ret = sscanf(&str[pos],
- 				"%lu %lu %u %u %u %u %u %lu %lu %lu %u %u %u %u %lu %lu %lu %lu%n",
- 				&min_sz, &max_sz, &min_nr_a, &max_nr_a,
--				&min_age, &max_age, &action, &quota.ms,
-+				&min_age, &max_age, &action_input, &quota.ms,
- 				&quota.sz, &quota.reset_interval,
- 				&quota.weight_sz, &quota.weight_nr_accesses,
- 				&quota.weight_age, &wmarks.metric,
-@@ -212,7 +247,8 @@ static struct damos **str_to_schemes(const char *str, ssize_t len,
- 				&wmarks.low, &parsed);
- 		if (ret != 18)
- 			break;
--		if (!damos_action_valid(action))
-+		action = dbgfs_scheme_action_to_damos_action(action_input);
-+		if ((int)action < 0)
- 			goto fail;
- 
- 		if (min_sz > max_sz || min_nr_a > max_nr_a || min_age > max_age)
 -- 
 2.25.1
 
