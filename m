@@ -1,50 +1,35 @@
-Received: from mail-pg1-f174.google.com (mail-pg1-f174.google.com [209.85.215.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from casper.infradead.org (casper.infradead.org [90.155.50.34])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 518AA10F1
-	for <damon@lists.linux.dev>; Wed, 22 Jun 2022 03:09:22 +0000 (UTC)
-Received: by mail-pg1-f174.google.com with SMTP id l4so14865096pgh.13
-        for <damon@lists.linux.dev>; Tue, 21 Jun 2022 20:09:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bytedance-com.20210112.gappssmtp.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=qeFLGzKyEitMeyLAF5p2SS4hTRAjoU69UDSP6vdWSjY=;
-        b=p2wwgxhu9ut5UKfrtDC0rPYOS8CGYB4DZKXrTV8Z6vFZaGsCErBuey217nlClTv6sL
-         F4xbgHt4MjpUrGsIfxCNeQqcdvLLcCo8zQRCZPoMa/FSPeUWBDmMVga+VitfhQKbIXKs
-         RWirpynPoN/X+YpCHLmDmw67sKTa0bl3A0lzfyzEG2A/lyGOcWItAYsfTznkQRS6SQ/+
-         /8m20H/hLi2E1/xgjLH9iLLvl+XnO3MrlCz8jZtna9qWwcAWVOrl04NY+SUT/ceAJF8j
-         XhTyy6Yr4uf1yihCeZwvc3UQv1ubTwxn9/GHyyMgo+h+0pPS4enGayVOVjCuAKzF8Vkn
-         MNUA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=qeFLGzKyEitMeyLAF5p2SS4hTRAjoU69UDSP6vdWSjY=;
-        b=53ZnKClOYZg/3n4BNQeoZ7vQ9uaiRX4paXeSGk1kCUp1SpuLSyDKY0JMJjrIGzyH+t
-         R1Y8jiP9TNfC/PgL5oIKjvvKCP7jFYsCpfVR9bxJohJ4iohkl0tv5kDjES9QJwTCZD6M
-         CkUgjLKmc9GDmS3WrEK63NBv29QMoxjQAIiP86v5e2DM5e/+j6sJicukWo3lIHaNDzqO
-         C4QzAiblOpfhdFuaXiVSKRxGsmbGIQ6djMau5oENMjysQEMYBSM5Y512BvXZaCKM08nZ
-         4uY6BFFD9JCys5SR6B0fX6ia92o2i+x7UfN3pIomOC6SXdpQOXPUHJ2T+YvG4pRy8qk9
-         +gZw==
-X-Gm-Message-State: AJIora/+0Pnneia9fUAZeBpUmEpufKVOeZsFhXpxrvTaPTwpAx4IUmXj
-	2gW4at/a/M8CZF6QZLrf+sp3Ww==
-X-Google-Smtp-Source: AGRyM1v/MjNT/bnm9g6Ofg4xP2CNsIToPVWuYeLOj+RxjCRuiNQqo1YZVEhQtNsoecrOZLGUHppubw==
-X-Received: by 2002:a63:68c4:0:b0:3fb:984f:6779 with SMTP id d187-20020a6368c4000000b003fb984f6779mr1066855pgc.444.1655867361716;
-        Tue, 21 Jun 2022 20:09:21 -0700 (PDT)
-Received: from localhost ([139.177.225.231])
-        by smtp.gmail.com with ESMTPSA id x16-20020a17090a165000b001e667f932cdsm13118167pje.53.2022.06.21.20.09.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 Jun 2022 20:09:21 -0700 (PDT)
-Date: Wed, 22 Jun 2022 11:09:16 +0800
-From: Muchun Song <songmuchun@bytedance.com>
-To: Baolin Wang <baolin.wang@linux.alibaba.com>
-Cc: sj@kernel.org, akpm@linux-foundation.org, mike.kravetz@oracle.com,
-	damon@lists.linux.dev, linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] mm/damon: Use set_huge_pte_at() to make huge pte old
-Message-ID: <YrKH3BlKA6sKdLbd@FVFYT0MHHV2J.usts.net>
-References: <1655692482-28797-1-git-send-email-baolin.wang@linux.alibaba.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FDFF1FB2
+	for <damon@lists.linux.dev>; Thu, 23 Jun 2022 17:03:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=casper.20170209; h=In-Reply-To:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description;
+	bh=UenEwcIN0CvVMMXweP0TWmC7AzLiwOHffKvm7rzsvxY=; b=F60jZ0DijvM0NLeHfLyAZLtO8B
+	cbCSSryf/ZJyUOWsnEtUCDNiwnf8r9kSJNUJoyCOh8/JSjMgZzxWLo2l8nGB+M4V1I64oCbTL8pnG
+	YD/LZs6YKE1Yq40e61dXoVn75QKBz2bsGHtBJwGqalXEPQiKoj5XIahiSxsGOtj/k+nMhmgwTgWW8
+	7XwYtcrrkIvSvlYu8Los43W1fSgc4MBXDNne0L/6KVVUHONYps1CLTuGkbV4Wx+68AKR3hm6oXagi
+	2hq7ITECWkzRHY60cGknvOTokRIsGqq0J+1DfEUZQyyIppBLROpiJW5iXocE8Cjnn9GKnJfD8B5kj
+	0+LhjxVw==;
+Received: from willy by casper.infradead.org with local (Exim 4.94.2 #2 (Red Hat Linux))
+	id 1o4QER-0081dP-VH; Thu, 23 Jun 2022 17:03:03 +0000
+Date: Thu, 23 Jun 2022 18:03:03 +0100
+From: Matthew Wilcox <willy@infradead.org>
+To: David Hildenbrand <david@redhat.com>
+Cc: Liam Howlett <liam.howlett@oracle.com>,
+	"maple-tree@lists.infradead.org" <maple-tree@lists.infradead.org>,
+	"linux-mm@kvack.org" <linux-mm@kvack.org>,
+	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	"damon @ lists . linux . dev" <damon@lists.linux.dev>,
+	SeongJae Park <sj@kernel.org>
+Subject: Re: [PATCH v10 09/69] mm: add VMA iterator
+Message-ID: <YrScxyQ5RRYYZFrj@casper.infradead.org>
+References: <20220621204632.3370049-1-Liam.Howlett@oracle.com>
+ <20220621204632.3370049-10-Liam.Howlett@oracle.com>
+ <20192b57-30de-1426-6694-238e018104eb@redhat.com>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -53,23 +38,51 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1655692482-28797-1-git-send-email-baolin.wang@linux.alibaba.com>
+In-Reply-To: <20192b57-30de-1426-6694-238e018104eb@redhat.com>
 
-On Mon, Jun 20, 2022 at 10:34:42AM +0800, Baolin Wang wrote:
-> The huge_ptep_set_access_flags() can not make the huge pte old according
-> to the discussion [1], that means we will always mornitor the young state
-> of the hugetlb though we stopped accessing the hugetlb, as a result DAMON
-> will get inaccurate accessing statistics.
+On Tue, Jun 21, 2022 at 11:10:09PM +0200, David Hildenbrand wrote:
+> > +#define VMA_ITERATOR(name, mm, addr) 					\
+> > +	struct vma_iterator name = {					\
+> > +		.mas = {						\
+> > +			.tree = &mm->mm_mt,				\
+> > +			.index = addr,					\
+> > +			.node = MAS_START,				\
+> > +		},							\
+> > +	}
+> > +
 > 
-> So changing to use set_huge_pte_at() to make the huge pte old to fix this
-> issue.
+> No __* and () macro magic?
 > 
-> [1] https://lore.kernel.org/all/Yqy97gXI4Nqb7dYo@arm.com/
+> I'd have expected at least
 > 
-> Fixes: 49f4203aae06 ("mm/damon: add access checking for hugetlb pages")
-> Signed-off-by: Baolin Wang <baolin.wang@linux.alibaba.com>
+> tree = &(__mm)->mm_mt,
+> .index = (__addr),
+> 
+> ;)
 
-The changes make sense to me.
+Fair, fair.  Just testing that change now.  I always forget to do those
+things until they bite me.
 
-Reviewed-by: Muchun Song <songmuchun@bytedance.com>
+> Reviewed-by: David Hildenbrand <david@redhat.com>
 
+Appreciate the review!
+
+diff --git a/include/linux/mm_types.h b/include/linux/mm_types.h
+index acbd8d03e01e..8bcbffefdc02 100644
+--- a/include/linux/mm_types.h
++++ b/include/linux/mm_types.h
+@@ -686,11 +686,11 @@ struct vma_iterator {
+ 	struct ma_state mas;
+ };
+ 
+-#define VMA_ITERATOR(name, mm, addr) 					\
++#define VMA_ITERATOR(name, _mm, _addr)	 				\
+ 	struct vma_iterator name = {					\
+ 		.mas = {						\
+-			.tree = &mm->mm_mt,				\
+-			.index = addr,					\
++			.tree = &(_mm)->mm_mt,				\
++			.index = (_addr),				\
+ 			.node = MAS_START,				\
+ 		},							\
+ 	}
