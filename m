@@ -1,101 +1,96 @@
-Received: from mail-qv1-f51.google.com (mail-qv1-f51.google.com [209.85.219.51])
+Received: from mail-ot1-f44.google.com (mail-ot1-f44.google.com [209.85.210.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78D8C46B7
-	for <damon@lists.linux.dev>; Mon, 27 Jun 2022 18:57:14 +0000 (UTC)
-Received: by mail-qv1-f51.google.com with SMTP id cu16so16156717qvb.7
-        for <damon@lists.linux.dev>; Mon, 27 Jun 2022 11:57:14 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0FE63D68
+	for <damon@lists.linux.dev>; Mon, 27 Jun 2022 19:47:00 +0000 (UTC)
+Received: by mail-ot1-f44.google.com with SMTP id l9-20020a056830268900b006054381dd35so8145573otu.4
+        for <damon@lists.linux.dev>; Mon, 27 Jun 2022 12:47:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=NOsgPwcDx+OihP7CM9EgDPr6TtruXCYq9aRNj46ysBQ=;
-        b=m2eUHMAtpzvN+Y99ePVbPBQhAiBwfdEMa4sYWEHf2vtSBRaVt/SObAY73NbhrfVRfT
-         bIAQti3EBUREmLes+VGyWRM/whbdbjPFFIuDU/j3NkDwPE/jOD3NueZzE82yw60Vs2Yc
-         3a8s7Yt92kyWFupcn49IGDFq2DfzziTMaUL/KsaDcRlQ+mv5JEU1/Z8gxzeJP5Mq7INE
-         mZyZpzrs+NVF5UJ38AiWA7JgBQu6LWX5NqeYEMPyHcLd7m4ZvXM1mtntv9xK71DmrCJV
-         3PLqp6sEguoeleMa70eC8OzsTFBtGVG58Kmve2RhNwey7dXpIv6CFExpLh+oqa94Vqkr
-         UQ4g==
+        d=linuxfoundation.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=sEyIMurSbUDEtnO4sXJJJqiGT9VfNu9mH5Y+RF1zXpM=;
+        b=Q/XU92EvXKhdUFHYTfxhesbhCz0S+IitCXqbWL1lwG8PNxG+l+4SrGA2WOvu8Hdddc
+         hxNASREKZON99TgF7gAIPDYD0ndh2+wavjuNnWpuUEeMootx4hkqjxKrR9TgklvfT9DF
+         NCYJjTEFsfdWM9OZUdQ8BfTDKs6pNJBV7n3tU=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=NOsgPwcDx+OihP7CM9EgDPr6TtruXCYq9aRNj46ysBQ=;
-        b=oTlWOhj0oS6hupgmWwShhJrW+3zP9WQBd1gSWNSRV0G9ZSjTMy967QF7pnf5+7Abkx
-         sVwLtFiXcEC3Z3V8duGhg/enmJlXaS8I8me1AIAjRA69QAjwAl6IL2aNGroX7vTCDuOi
-         leGIkq/z3kmeEJMZ65czFT8ijFf9veiGjf1FZp/T1BEWBrsmgkMr8soX60VzQ8tx82tI
-         1CTfZKaDHFGFhuiML9WRgtFz/B018dzONNPFbd/Gx1tTSmhkjHeyIYmlkUXFKzAiC4Yn
-         ax8NcDRcS8sMhhi/tAf1qS9kvMothTNFAahyn5o4naPgUmBaDYGLCVFO4nSC4oEAQh9Y
-         dEZg==
-X-Gm-Message-State: AJIora/HEUt0cyQecxK0uj76pfSveF+Q8ybTnN0IVZJ7o/6XNK6YrGul
-	AQTk39nWCXdjD4MVeALpkHw=
-X-Google-Smtp-Source: AGRyM1v5DGJwQQuAEAEZGEeHt/yRbP+et2CeJtdJxfhZdyXi1ntL/oaNsKV7SbYf8pRvXiM6V6UuHQ==
-X-Received: by 2002:a0c:9a0e:0:b0:470:5ffa:ff43 with SMTP id p14-20020a0c9a0e000000b004705ffaff43mr745456qvd.6.1656356233274;
-        Mon, 27 Jun 2022 11:57:13 -0700 (PDT)
-Received: from localhost.localdomain (ec2-35-169-212-159.compute-1.amazonaws.com. [35.169.212.159])
-        by smtp.gmail.com with ESMTPSA id g1-20020ac87f41000000b002f93554c009sm7781826qtk.59.2022.06.27.11.57.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Jun 2022 11:57:12 -0700 (PDT)
-From: SeongJae Park <sj38.park@gmail.com>
-To: Shuah Khan <skhan@linuxfoundation.org>
-Cc: SeongJae Park <sj@kernel.org>,
-	Gautam <gautammenghani201@gmail.com>,
-	shuah@kernel.org,
-	damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	linux-kselftest@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v4] kselftests/damon: add support for cases where debugfs cannot be read
-Date: Mon, 27 Jun 2022 18:57:04 +0000
-Message-Id: <20220627185704.58902-1-sj38.park@gmail.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <7d6b7de6-4609-e6ca-0a88-1f9799c70769@linuxfoundation.org>
-References: 
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=sEyIMurSbUDEtnO4sXJJJqiGT9VfNu9mH5Y+RF1zXpM=;
+        b=4vykXD9xwsgV04/vTkUOo8M3127c+iSOYRd229GnP9O1mC2Bw8yMSzVj/a4Q8u2vX4
+         PDokJkCXm28h+ZidMk05n3h/4DUR0DNFYaQKsDMxLJ3emIUx2HEGlAri0nd+qX3WhrsY
+         a+/M8Kfh8f20VKcUYhO7yjZaVT2lxCkIii4yidIWNOG9/aORNRpysax9BUoMk87NgQSR
+         Ofp04r4dENrL0y8b75YEuFP3obC8So2aCH8AsD98nWewM98fCpdWtfUzTE3RHskVoUPm
+         Yt6JlNanY3+FW8OnXye3Ht/5XHtxNuAiPUt09Se0VPZmvxAeXAoPFSNvTSBRGOLvmdkp
+         nEDw==
+X-Gm-Message-State: AJIora9t04daUGjOZ2zQbYwuHmLTYuqiwoG0tHwlBAKYIrlj71yn0QGI
+	kOKcFg/hD+ipB/bKIf7JDVLiUA==
+X-Google-Smtp-Source: AGRyM1te5Bj88UBGJhxBv7OUhUu6rYyaYCShv/RM1GHQuJnIgZVd2AIbqFEHx30R36IqvOP82OnZBg==
+X-Received: by 2002:a9d:76d0:0:b0:60b:53e5:6640 with SMTP id p16-20020a9d76d0000000b0060b53e56640mr6833397otl.241.1656359219758;
+        Mon, 27 Jun 2022 12:46:59 -0700 (PDT)
+Received: from [192.168.1.128] ([38.15.45.1])
+        by smtp.gmail.com with ESMTPSA id h9-20020a056830400900b00616a19aac0bsm6693195ots.51.2022.06.27.12.46.59
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 27 Jun 2022 12:46:59 -0700 (PDT)
+Subject: Re: [PATCH v4] kselftests/damon: add support for cases where debugfs
+ cannot be read
+To: SeongJae Park <sj38.park@gmail.com>
+Cc: SeongJae Park <sj@kernel.org>, Gautam <gautammenghani201@gmail.com>,
+ shuah@kernel.org, damon@lists.linux.dev, linux-mm@kvack.org,
+ linux-kselftest@vger.kernel.org, linux-kernel@vger.kernel.org,
+ Shuah Khan <skhan@linuxfoundation.org>
+References: <20220627185704.58902-1-sj38.park@gmail.com>
+From: Shuah Khan <skhan@linuxfoundation.org>
+Message-ID: <5708a2f6-4555-7bb3-4664-c33fe5b411b1@linuxfoundation.org>
+Date: Mon, 27 Jun 2022 13:46:58 -0600
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.8.1
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20220627185704.58902-1-sj38.park@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 
-From: SeongJae Park <sj@kernel.org>
-
-Hi Shuah,
-
-On Mon, 27 Jun 2022 11:00:18 -0600 Shuah Khan <skhan@linuxfoundation.org> wrote:
-
-[...]
-> >> --- a/tools/testing/selftests/damon/_chk_dependency.sh
-> >> +++ b/tools/testing/selftests/damon/_chk_dependency.sh
-> >> @@ -26,3 +26,13 @@ do
-> >>   		exit 1
-> >>   	fi
-> >>   done
-> >> +
-> >> +permission_error="Operation not permitted"
-> >> +for f in attrs target_ids monitor_on
-> >> +do
-> >> +	status=$( cat "$DBGFS/$f" 2>&1 )
-> >> +	if [ "${status#*$permission_error}" != "$status" ]; then
-> >> +		echo "Permission for reading $DBGFS/$f denied; maybe secureboot enabled?"
+On 6/27/22 12:57 PM, SeongJae Park wrote:
+> From: SeongJae Park <sj@kernel.org>
 > 
-> btw - does this run as a regular user or does it need root privilege?
-> If so add a test for that and skip with a message.
+> Hi Shuah,
+> 
+> On Mon, 27 Jun 2022 11:00:18 -0600 Shuah Khan <skhan@linuxfoundation.org> wrote:
+> 
+> [...]
+>>>> --- a/tools/testing/selftests/damon/_chk_dependency.sh
+>>>> +++ b/tools/testing/selftests/damon/_chk_dependency.sh
+>>>> @@ -26,3 +26,13 @@ do
+>>>>    		exit 1
+>>>>    	fi
+>>>>    done
+>>>> +
+>>>> +permission_error="Operation not permitted"
+>>>> +for f in attrs target_ids monitor_on
+>>>> +do
+>>>> +	status=$( cat "$DBGFS/$f" 2>&1 )
+>>>> +	if [ "${status#*$permission_error}" != "$status" ]; then
+>>>> +		echo "Permission for reading $DBGFS/$f denied; maybe secureboot enabled?"
+>>
+>> btw - does this run as a regular user or does it need root privilege?
+>> If so add a test for that and skip with a message.
+> 
+> It needs the root permission, and does the check at the beginning[1].
+> 
+> [1] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/tools/testing/selftests/damon/_chk_dependency.sh?h=v5.19-rc4#n9
+> 
+> 
 
-It needs the root permission, and does the check at the beginning[1].
+Great. Thank you. I will pull this one in for linux-kselftest next
+for Linux 5.20-rc1
 
-[1] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/tools/testing/selftests/damon/_chk_dependency.sh?h=v5.19-rc4#n9
-
-
-Thanks,
-SJ
-
-> >> +		exit $ksft_skip
-> >> +	fi
-> >> +done
-> >> -- 
-> >> 2.36.1
-> >
-> thanks,
-> -- Shuah
+thanks,
+-- Shuah
