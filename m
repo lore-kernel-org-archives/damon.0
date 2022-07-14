@@ -1,34 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45FA14C64
-	for <damon@lists.linux.dev>; Thu, 14 Jul 2022 16:44:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C01FC34114;
-	Thu, 14 Jul 2022 16:44:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADD624C76
+	for <damon@lists.linux.dev>; Thu, 14 Jul 2022 17:05:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDBF4C34114;
+	Thu, 14 Jul 2022 17:05:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1657817069;
-	bh=iM0sHba9YtLd8lM6n792MFUeeIeWthKKRCzYAJSsaiI=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=USWNvHsK5uZ9X+4GaAJNb0zO9c3mkeZ86qiWdqvOkTD44X3QZKGFcMEUyEIeLfA+v
-	 YJPHd/yQYytXaHZv8jbcb+tVdV1nnLM89TJ2LaFpb2AYkZ0g3e9cF+BXLF8uP2AXz7
-	 7YaV7oPnUHP5yNHgtGSENcQC1QWRAntFMiRRXXXgFV+KU9LzFSczBWiqhomPo+DDzt
-	 GO+JG3l9jawbqON4ewGl8EKpghvT9dwxqJNtIFFPTwt+2hwjgaA/g26HIs96iz74W+
-	 DeZYARD50imniZKQFLyh6j1Bh83dVykm9MgjMiqZgppEGJCeXyu83pS9QKfC7gaMZV
-	 a5C7y/75wGXjw==
+	s=k20201202; t=1657818307;
+	bh=WadMQH2Ma9dG1nxvj1p2IIitBxICYq77zOLfBOTGYgg=;
+	h=From:To:Cc:Subject:Date:From;
+	b=PUls/OjFdJhBE9Z5qItunWM8OW6ncv/3+aGrs4HWLkdPET+VLoDMqrN3Sum6FT/+5
+	 MspF7aN9T1FuLVK6eRspz8G7Bgh8JkXhjKFmWrQK59zNI5eZMfzwcQFKXInGMZ71w8
+	 2W0xlW6yJCK/7yBRVHQ87I+RSJZoq8D1K+7jYP03IpHi5TBz3mTZWzh7b7cHcJxZHi
+	 tkQWPniVzUu0aEkTeeA6hnidQJ+bnBgJost+W+eOJWKPHTXow6bXEQmr+sPas60/YS
+	 oH6tHa32H7doMnvtlZ53DZPjwmLbzY7AlzviaMeWgvMsfIT903nhKesEKZwQeQHBA6
+	 3FCocgCOX3/5A==
 From: SeongJae Park <sj@kernel.org>
-To: Jianglei Nie <niejianglei2021@163.com>
-Cc: sj@kernel.org,
-	akpm@linux-foundation.org,
-	damon@lists.linux.dev,
+To: akpm@linux-foundation.org
+Cc: damon@lists.linux.dev,
 	linux-mm@kvack.org,
 	linux-kernel@vger.kernel.org,
-	stable@vger.kernel.org
-Subject: Re: [PATCH] mm/damon/reclaim: fix potential memory leak in damon_reclaim_init()
-Date: Thu, 14 Jul 2022 16:44:27 +0000
-Message-Id: <20220714164427.157184-1-sj@kernel.org>
+	SeongJae Park <sj@kernel.org>
+Subject: [PATCH for mm-stable] mm/damon/lru_sort: fix potential memory leak in damon_lru_sort_init()
+Date: Thu, 14 Jul 2022 17:04:58 +0000
+Message-Id: <20220714170458.49727-1-sj@kernel.org>
 X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20220714063746.2343549-1-niejianglei2021@163.com>
-References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -37,52 +33,36 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hello Jianglei,
+'damon_lru_sort_init()' returns an error when 'damon_select_ops()' fails
+without freeing 'ctx' which allocated before.  This commit fixes the
+potential memory leak by freeing 'ctx' under the situation.
 
-On Thu, 14 Jul 2022 14:37:46 +0800 Jianglei Nie <niejianglei2021@163.com> wrote:
+Commit 40e983cca927 ("mm/damon: introduce DAMON-based LRU-lists
+Sorting"), which caused the problem is not in the mainline but
+mm-stable.  Please meld this into the commit.
 
-> damon_reclaim_init() allocates a memory chunk for ctx with
-> damon_new_ctx(). When damon_select_ops() fails, ctx is not released, which
-> will lead to a memory leak.
-> 
-> We should release the ctx with damon_destroy_ctx() when damon_select_ops()
-> fails to fix the memory leak.
+Fixes: 40e983cca927 ("mm/damon: introduce DAMON-based LRU-lists Sorting")
+Signed-off-by: SeongJae Park <sj@kernel.org>
+---
+ mm/damon/lru_sort.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-Thank you for this patch!
+diff --git a/mm/damon/lru_sort.c b/mm/damon/lru_sort.c
+index c276736a071c..9de6f00a71c5 100644
+--- a/mm/damon/lru_sort.c
++++ b/mm/damon/lru_sort.c
+@@ -524,8 +524,10 @@ static int __init damon_lru_sort_init(void)
+ 	if (!ctx)
+ 		return -ENOMEM;
+ 
+-	if (damon_select_ops(ctx, DAMON_OPS_PADDR))
++	if (damon_select_ops(ctx, DAMON_OPS_PADDR)) {
++		damon_destroy_ctx(ctx);
+ 		return -EINVAL;
++	}
+ 
+ 	ctx->callback.after_wmarks_check = damon_lru_sort_after_wmarks_check;
+ 	ctx->callback.after_aggregation = damon_lru_sort_after_aggregation;
+-- 
+2.25.1
 
-I think below tags would be better to be added.
-
-Fixes: 4d69c3457821 ("mm/damon/reclaim: use damon_select_ops() instead of damon_{v,p}a_set_operations()")
-Cc: <stable@vger.kernel.org> # 5.18.x
-
-> 
-> Signed-off-by: Jianglei Nie <niejianglei2021@163.com>
-
-Reviewed-by: SeongJae Park <sj@kernel.org>
-
-
-Thanks,
-SJ
-
-> ---
->  mm/damon/reclaim.c | 4 +++-
->  1 file changed, 3 insertions(+), 1 deletion(-)
-> 
-> diff --git a/mm/damon/reclaim.c b/mm/damon/reclaim.c
-> index 4b07c29effe9..0b3c7396cb90 100644
-> --- a/mm/damon/reclaim.c
-> +++ b/mm/damon/reclaim.c
-> @@ -441,8 +441,10 @@ static int __init damon_reclaim_init(void)
->  	if (!ctx)
->  		return -ENOMEM;
->  
-> -	if (damon_select_ops(ctx, DAMON_OPS_PADDR))
-> +	if (damon_select_ops(ctx, DAMON_OPS_PADDR)) {
-> +		damon_destroy_ctx(ctx);
->  		return -EINVAL;
-> +	}
->  
->  	ctx->callback.after_wmarks_check = damon_reclaim_after_wmarks_check;
->  	ctx->callback.after_aggregation = damon_reclaim_after_aggregation;
-> -- 
-> 2.25.1
