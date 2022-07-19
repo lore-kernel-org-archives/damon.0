@@ -1,110 +1,180 @@
-Received: from szxga01-in.huawei.com (szxga01-in.huawei.com [45.249.212.187])
+Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 134347E9
-	for <damon@lists.linux.dev>; Mon, 18 Jul 2022 04:48:40 +0000 (UTC)
-Received: from dggpeml500026.china.huawei.com (unknown [172.30.72.54])
-	by szxga01-in.huawei.com (SkyGuard) with ESMTP id 4LmTtR3xvKzjX0R;
-	Mon, 18 Jul 2022 12:45:51 +0800 (CST)
-Received: from [10.174.179.110] (10.174.179.110) by
- dggpeml500026.china.huawei.com (7.185.36.106) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2375.24; Mon, 18 Jul 2022 12:48:32 +0800
-Message-ID: <250ec3d9-6fec-a051-6d9a-24b265fa0a57@huawei.com>
-Date: Mon, 18 Jul 2022 12:48:12 +0800
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11C9A1FA2
+	for <damon@lists.linux.dev>; Tue, 19 Jul 2022 14:21:09 +0000 (UTC)
+Received: from pps.filterd (m0098420.ppops.net [127.0.0.1])
+	by mx0b-001b2d01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 26JEDnZY017144;
+	Tue, 19 Jul 2022 14:20:49 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=from : to : cc : subject
+ : references : date : in-reply-to : message-id : content-type :
+ mime-version; s=pp1; bh=6BchNWndvq2RoIW6HJPS1KPURa5/erXwK9S4Ym4B7tY=;
+ b=BBFl3JBZ+s/GpejmLT1G3uWyRbccF5/Hcp4o+7Xz4bdbqWBN2+sb899pArm+Vb4/6JGM
+ kba0FhsnvaYukdGF5i6JPbAnNgX9t0+N0nRTycu8B3IBMxMqWo9NCBOfFJxStKJPDCqW
+ XfCX64AO8SojmdVc7oaHD8PzOnEJrUKyqRZ6WvVYcvkRmiffkVy4frWgIVYxlN6xxeIT
+ aPQa3pahpu06JbehZva3WYGNKw23ENO4Fb5MZspqpzCSw8DlMXSbojQx2HbUcvu171jP
+ M1kjvX75El+zM93Rhxagasgt3gdbKCHh6K3TTd4hPGg+V68SejMVV7rONhC6UP9kZiyh vw== 
+Received: from pps.reinject (localhost [127.0.0.1])
+	by mx0b-001b2d01.pphosted.com (PPS) with ESMTPS id 3hdx6k08qg-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 19 Jul 2022 14:20:49 +0000
+Received: from m0098420.ppops.net (m0098420.ppops.net [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 26JEETs5023201;
+	Tue, 19 Jul 2022 14:20:49 GMT
+Received: from ppma05fra.de.ibm.com (6c.4a.5195.ip4.static.sl-reverse.com [149.81.74.108])
+	by mx0b-001b2d01.pphosted.com (PPS) with ESMTPS id 3hdx6k08pe-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 19 Jul 2022 14:20:48 +0000
+Received: from pps.filterd (ppma05fra.de.ibm.com [127.0.0.1])
+	by ppma05fra.de.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 26JE5J5b000772;
+	Tue, 19 Jul 2022 14:20:46 GMT
+Received: from b06cxnps4074.portsmouth.uk.ibm.com (d06relay11.portsmouth.uk.ibm.com [9.149.109.196])
+	by ppma05fra.de.ibm.com with ESMTP id 3hbmy8u7st-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 19 Jul 2022 14:20:46 +0000
+Received: from d06av24.portsmouth.uk.ibm.com (mk.ibm.com [9.149.105.60])
+	by b06cxnps4074.portsmouth.uk.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 26JEKgGQ18088288
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Tue, 19 Jul 2022 14:20:42 GMT
+Received: from d06av24.portsmouth.uk.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 8505E42045;
+	Tue, 19 Jul 2022 14:20:42 +0000 (GMT)
+Received: from d06av24.portsmouth.uk.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 33C1442042;
+	Tue, 19 Jul 2022 14:20:42 +0000 (GMT)
+Received: from tuxmaker.linux.ibm.com (unknown [9.152.85.9])
+	by d06av24.portsmouth.uk.ibm.com (Postfix) with ESMTPS;
+	Tue, 19 Jul 2022 14:20:42 +0000 (GMT)
+From: Sven Schnelle <svens@linux.ibm.com>
+To: Liam Howlett <liam.howlett@oracle.com>
+Cc: "maple-tree@lists.infradead.org" <maple-tree@lists.infradead.org>,
+        "linux-mm@kvack.org" <linux-mm@kvack.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        Andrew
+ Morton <akpm@linux-foundation.org>,
+        "damon @ lists . linux . dev"
+ <damon@lists.linux.dev>,
+        SeongJae Park <sj@kernel.org>, David
+ Hildenbrand <david@redhat.com>,
+        hca@linux.ibm.com, alexander.gordeev@linux.ibm.com,
+        linux-s390@vger.kernel.org
+Subject: Re: [PATCH v10 13/69] mm/mmap: use maple tree for
+ unmapped_area{_topdown}
+References: <20220621204632.3370049-1-Liam.Howlett@oracle.com>
+	<20220621204632.3370049-14-Liam.Howlett@oracle.com>
+Date: Tue, 19 Jul 2022 16:20:41 +0200
+In-Reply-To: <20220621204632.3370049-14-Liam.Howlett@oracle.com> (Liam
+	Howlett's message of "Tue, 21 Jun 2022 20:46:55 +0000")
+Message-ID: <yt9dy1wpi3pi.fsf@linux.ibm.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.0.50 (gnu/linux)
+Content-Type: text/plain
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: VqItlfgRnn3a4zrf6tp2nk8poAUm6Avy
+X-Proofpoint-ORIG-GUID: SfROzVBq_eWye3iOd9tvAHgH0rtEfvDO
+X-Proofpoint-UnRewURL: 0 URL was un-rewritten
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.2.1
-Subject: Re: [PATCH] mm/damon/reclaim: fix 'enabled' is incorrectly set
- because 'system_wq' is not initialized
-Content-Language: en-US
-To: SeongJae Park <sj@kernel.org>
-CC: <akpm@linux-foundation.org>, <damon@lists.linux.dev>,
-	<linux-mm@kvack.org>, <linux-kernel@vger.kernel.org>
-References: <20220715170736.126498-1-sj@kernel.org>
-From: songyuanzheng <songyuanzheng@huawei.com>
-In-Reply-To: <20220715170736.126498-1-sj@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.174.179.110]
-X-ClientProxiedBy: dggems701-chm.china.huawei.com (10.3.19.178) To
- dggpeml500026.china.huawei.com (7.185.36.106)
-X-CFilter-Loop: Reflected
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.883,Hydra:6.0.517,FMLib:17.11.122.1
+ definitions=2022-07-19_02,2022-07-19_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 adultscore=0
+ priorityscore=1501 lowpriorityscore=0 bulkscore=0 spamscore=0
+ suspectscore=0 impostorscore=0 clxscore=1011 mlxscore=0 malwarescore=0
+ mlxlogscore=936 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2206140000 definitions=main-2207190059
 
-Hello SJ,
+Hi Liam,
 
-Thank you very much for your reply, through your reply let me understand 
-this principle, so please ignore this patch.
+Liam Howlett <liam.howlett@oracle.com> writes:
 
-Thanks,
+> From: "Liam R. Howlett" <Liam.Howlett@Oracle.com>
+>
+> The maple tree code was added to find the unmapped area in a previous
+> commit and was checked against what the rbtree returned, but the actual
+> result was never used.  Start using the maple tree implementation and
+> remove the rbtree code.
+>
+> Add kernel documentation comment for these functions.
+>
+> Link: https://lkml.kernel.org/r/20220504010716.661115-15-Liam.Howlett@oracle.com
+> Signed-off-by: Liam R. Howlett <Liam.Howlett@Oracle.com>
+> Cc: Catalin Marinas <catalin.marinas@arm.com>
+> Cc: David Howells <dhowells@redhat.com>
+> Cc: "Matthew Wilcox (Oracle)" <willy@infradead.org>
+> Cc: SeongJae Park <sj@kernel.org>
+> Cc: Vlastimil Babka <vbabka@suse.cz>
+> Cc: Will Deacon <will@kernel.org>
+> Cc: Davidlohr Bueso <dave@stgolabs.net>
+> Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+> ---
+>  mm/mmap.c | 253 +++++++-----------------------------------------------
+>  1 file changed, 32 insertions(+), 221 deletions(-)
 
-Yuanzheng
+With next-20220718 git bisect pointed me to this commit because the
+following code fails in compat mode (31 bit addressing) on s390:
 
-On 2022/7/16 1:07, SeongJae Park wrote:
-> Hello Yuanzheng,
->
->
-> On Fri, 15 Jul 2022 06:16:09 +0000 Yuanzheng Song <songyuanzheng@huawei.com> wrote:
->
->> The 'enabled' will be incorrectly set because the 'system_wq'
->> might not initialized yet. This results in 'enabled=true',
->> but the 'damon_reclaim_timer' is inactive. So fix it by moving
->> the judgment logic of the 'damon_reclaim_initialized' to the
->> start position of the enable_store().
-> Thank you for this patch!
->
-> In the case, however, 'damon_reclaim_init()' will activate
-> 'damon_reclaim_timer', which will check the 'enabled' and start DAMON later.
-> So 'enabled' will inconsistently set while DAMON_RECLAIM is not really enabled
-> for a moment, but those will eventually be consistent.  This patch could reduce
-> the duration of the inconsistent state.
->
-> However, this would break boot-time DAMON_RECLAIM enabling, which adds
-> 'damon_reclaim.enabled=true' to the kernel parameter, as this change will set
-> 'enabled' as 'false' in the early 'damon_reclaim_enabled_store()', so that the
-> later 'damon_reclaim_initialized()' activated 'damon_reclaim_timer' shows
-> 'enabled' as 'false' and therefore doesn't start DAMON.
->
-> If there is anything I'm missing, please let me know.
->
->
-> Thanks,
-> SJ
->
->> Fixes: 294928293813 ("mm/damon/reclaim: schedule 'damon_reclaim_timer' only after 'system_wq' is initialized")
->> Signed-off-by: Yuanzheng Song <songyuanzheng@huawei.com>
->> ---
->>   mm/damon/reclaim.c | 9 +++++----
->>   1 file changed, 5 insertions(+), 4 deletions(-)
->>
->> diff --git a/mm/damon/reclaim.c b/mm/damon/reclaim.c
->> index e69b807fefe4..b13d5a02bf2e 100644
->> --- a/mm/damon/reclaim.c
->> +++ b/mm/damon/reclaim.c
->> @@ -374,13 +374,14 @@ static bool damon_reclaim_initialized;
->>   static int damon_reclaim_enabled_store(const char *val,
->>   		const struct kernel_param *kp)
->>   {
->> -	int rc = param_set_bool(val, kp);
->> -
->> -	if (rc < 0)
->> -		return rc;
->> +	int rc;
->>   
->>   	/* system_wq might not initialized yet */
->>   	if (!damon_reclaim_initialized)
->> +		return -EINVAL;
->> +
->> +	rc = param_set_bool(val, kp);
->> +	if (rc < 0)
->>   		return rc;
->>   
->>   	schedule_delayed_work(&damon_reclaim_timer, 0);
->> -- 
->> 2.25.1
-> .
+#include <unistd.h>
+#include <stdlib.h>
+#include <sys/mman.h>
+#include <stdio.h>
+
+#define __2GB__         0x80000000
+#define VMA_SIZE        0x10000000
+#define VMA_COUNT       (__2GB__ / VMA_SIZE)
+
+/*
+ * Repeated mapping below 2GB until all memory is exhausted
+ */
+int main(void)
+{
+        void *p;
+        unsigned int i;
+
+        for (i = 0; i < VMA_COUNT; i++) {
+            p = mmap(NULL, VMA_SIZE, PROT_READ,MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
+            printf("%d: %08x - %08x\n", i, (int)p, (int)p + VMA_SIZE);
+            if (p == MAP_FAILED)
+                  break;
+            if (p > (void *)__2GB__) {
+                  return 1;
+            }
+        }
+        if ((i == 0) || (i >= VMA_COUNT))
+               return 2;
+        return 0;
+}
+
+With linux/master:
+# ./mmap_compat_anon
+0: 67a00000 - 77a00000
+1: 57a00000 - 67a00000
+2: 47a00000 - 57a00000
+3: 37a00000 - 47a00000
+4: 27a00000 - 37a00000
+5: 17a00000 - 27a00000
+6: 07a00000 - 17a00000
+7: ffffffff - 0fffffff
+
+With next-20220718 (and older, we're seeing this for a while, but i
+didn't notice due to vacation and other priorities):
+
+# ./mmap_compat_anon
+0: 67600000 - 77600000
+1: 57600000 - 67600000
+2: 47600000 - 57600000
+3: 37600000 - 47600000
+4: 27600000 - 37600000
+5: 17600000 - 27600000
+6: 07600000 - 17600000
+7: 40000000 - 50000000
+
+So the first output is correct - mmap succeeds until there's no space
+left, where it returns MAP_FAILED. In the lower (failing) one, mmap
+instead returns an address that is already in use.
+
+Regards
+Sven
