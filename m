@@ -1,208 +1,74 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 956202F3E
-	for <damon@lists.linux.dev>; Wed, 10 Aug 2022 22:51:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBC63C433D6;
-	Wed, 10 Aug 2022 22:51:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25A0C17D2
+	for <damon@lists.linux.dev>; Thu, 11 Aug 2022 00:52:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CD39C433C1;
+	Thu, 11 Aug 2022 00:52:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1660171882;
-	bh=Gxu775Ee6UWgBt0eLWGJTjM2Ta0+Pd54mBJiv6+TmQc=;
-	h=From:To:Cc:Subject:Date:From;
-	b=J7MRHOUIunjG8EX2o6kv7bb2DW16bFVZb0riaVeL+3pdpLTxlK1oGIYHmlzinbrW/
-	 Sj4b+9jhkFgPjAiJtq3c5U1McQtnTwJc+r9npLX/fFJLI5BalLxyRIlFn8qHpJz47F
-	 VylaWUjUcdsIBt8Wg3iuqNaM6pdX70ZdvEtM34Xih1kDYv853fgnRd0tzO2ZHf4k0k
-	 mgs3ZBeBn+t+C4InI1R4V6VaCIvq67WejUgkkLY1BFoMuW9Mc8lePeLt8Q2rVutoPV
-	 /tCOmk54Q7KU7ff5+XinDx8jDg1u5hhDt8Z7oiPN2JkLWRHMHCYw1VSCAGqtPvHPak
-	 XXO3dvuvWdmJw==
+	s=k20201202; t=1660179164;
+	bh=GvjbTsP/kYDC8sXh+otSCioOHXkIHtb+6aCTV1apucE=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=s9WRFOlAlmqYUaaq4KefajE3gP33ZUsEyGw8V824b/wb9DQ5JGEWzHuj4CcZrBoD7
+	 nIchLlLQjZwuD+5Pjxpe+W7tZJc2kkTG/I/RKOqsxgttF6Wr+G5c4wAM2Q5gTgrYzk
+	 PSJWpxJxcqMhDq9QMiIgf/GppC8PVvbJUR3ViJaPLlap4zXs8TDNVTf9TaGvtWHbZR
+	 +PiVpuJ/vTCN9cODMbo/qaN8WcY7feI+sACFhH1lylqdCLpJFVv61mmdjZx+PwhnO0
+	 hRUiU/GiO1OlLPt1YWlA+3B2YtO15KQMiKuXV7niisoSV0UQBTuijqVzvJpSoYrp/I
+	 C4fetMV76UWPg==
 From: SeongJae Park <sj@kernel.org>
-To: damon@lists.linux.dev,
-	linux-damon@amazon.com,
-	linux-damon-trial@amazon.com
-Cc: linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org
-Subject: DAMON Beer/Coffee/Tea chat series
-Date: Wed, 10 Aug 2022 22:51:02 +0000
-Message-Id: <20220810225102.124459-1-sj@kernel.org>
+To: Kenneth Lee <klee33@uw.edu>
+Cc: akpm@linux-foundation.org,
+	damon@lists.linux.dev,
+	SeongJae Park <sj@kernel.org>
+Subject: Re: [PATCH] mm/damon/dbgfs: Use kmalloc for allocating only one element
+Date: Thu, 11 Aug 2022 00:52:41 +0000
+Message-Id: <20220811005241.51597-1-sj@kernel.org>
 X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20220808220019.1680469-1-klee33@uw.edu>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Hello,
+Hi Kenneth,
 
 
-In short, I'd like to start an open, regular, and informal virtual bi-weekly
-meeting series for DAMON community.
+Thanks for this patch, and sorry for this late reply.
 
-Important links and dates
--------------------------
+On Mon, 8 Aug 2022 15:00:19 -0700 Kenneth Lee <klee33@uw.edu> wrote:
 
-Location: https://meet.google.com/ndx-evoc-gbu
-Agenda: https://docs.google.com/document/d/1v43Kcj3ly4CYqmAkMaZzLiM2GEnWfgdGbZAH3mi2vpM/edit?usp=sharing
+> Use kmalloc(...) rather than kmalloc_array(1, ...) because the number of
+> elements we are specifying in this case is 1, kmalloc would accomplish the
+> same thing and we can simplify.
+> 
+> Signed-off-by: Kenneth Lee <klee33@uw.edu>
 
-First instance: 2022-08-15 18:00 PDT
-Second instance: 2022-08-30 09:00 PDT
-
-Why
----
-
-A number of people have shown interest in DAMON, participated in the
-development, and formed a community.  I therefore tried to react to queries,
-comments, and share current works and progresses via mails, conferences, and
-some virtual meetings.  Nevertheless, that was in somewhat reactive and
-occasional manner.  It was sometimes not open to all, and might be too formal.
-
-I hence think we could make it better.  That is, helping each member of the
-community to better understand who have what kind of interest in DAMON and what
-they are doing at the moment, align their goals, and efficiently collaborate.
-
-Who
----
-
-I hope to meet with anyone having interest in DAMON including but not limited
-to kernel developers, user space developers, system administrators,
-researchers, students, and whoever.  Only one requirement is to have any kind
-of interest in the development and/or usages of DAMON.
-
-How
----
-
-I'd prefer the meeting to be informal for easy communictions.  Just grab a
-beer, a coffee, a tea, or whatever you have, join in the meeting, and chat
-anything except confidentials (of course!).  No proof of concept or concrete
-plan will be needed.  Rather than that, dumb questions and crazy ideas are more
-welcome.
-
-For meeting agenda proposal, let's use a public Google doc: 
-https://docs.google.com/document/d/1v43Kcj3ly4CYqmAkMaZzLiM2GEnWfgdGbZAH3mi2vpM/edit?usp=sharing
-The agendas proposed previous to the meeting would have higher priority, but
-proposing any agenda during the meeting is also welcome.
-
-Expected topics of the meetings include:
-
-- Introduction of each other (who they are, what kind of interest/expectation
-  they have for DAMON),
-- Sharing each person or company's current progress and bottlenecks on their
-  DAMON development/application works,
-- Discussions on possible collaborations on DAMON-related works (both on kernel
-  space and user space),
-- Discussions on direction and prioritization of DAMON's future,
-- Just show each other's face and saying hi, and
-- Anything.
-
-So the meetings might cover quite wide ranges of topics.  We could have
-separate communications for more focused topics with people who have interest
-in the specific topic on demand.  At least, I will try to share my progress and
-near future plans in every meeting.
-
-Where
------
-
-Let's use Google Meet: https://meet.google.com/ndx-evoc-gbu.  I'm using Google
-Meet only because I don't have experience in other tools.  If you know better
-tools or have concerns about Google Meet, please feel free to let me know.  If
-there is any change to the platform or the link, I will share the update to
-damon@lists.linux.dev.
-
-When
-----
-
-The meeting will be held every two weeks for 30 minutes.  To cover as many
-timezones as possible, the meeting will be held once at Monday evening (18:00)
-PDT, and then at Tuesday morning (09:00) PDT two weeks after the previous one,
-and repeat.  The two time slots will hopefully convince
-Asia/Pacific/America-near and America/Europe/Africa/-near people, respectively.
-Of course, the meetings could be canceled sometimes.
-
-The first instance will be held at 2022-08-15 (Mon) 18:00 PDT.
-
-               ,_   .  ._. _.  .                                                        ,_
-           , _-\','|~\~      ~/      ;-'_   _-'     ,;_;_,    ~~-                   , _-\',
-  /~~-\_/-'~'--' \~~| ',    ,'      /  / ~|-_\_/~/~      ~~--~~~~'--_      /~~-\_/-'~'--' \
-  /              ,/'-/~ '\ ,' _  , '|,'|~                   ._/-, /~       /              ,
-  ~/-'~\_,       '-,| '|. '   ~  ,\ /'~                /    /_  /~         ~/-'~\_,       '
-.-~      '|        '',\~|\       _\~ EU  ,_  ,               /|          .-~      '|
-          '\  AMER  /'~          |_/~\\,-,~  \ "   ASIA  ,_,/ |                    '\  AMER
-           |       /            ._-~'\_ _~|              \ ) /                      |
-            \   __-\           '/      ~ |\  \_          /  ~                        \   __
-  .,         '\ |,  ~-_      - |          \\_' ~|  /\  \~ ,                .,         '\ |,
-               ~-_'  _;       '\  AFRICA   '-,   \,' /\/  |                             ~-_
-                 '\_,~'\_       \_ _,       /'    '  |, /|'                               '
-                   /     \_       ~ |      /         \  ~'; -,_.
-                   |       ~\        |    |  ,        '-_, ,; ~ ~\
-                    \,      /        \    / /|            ,-, ,   -,
-                     |    ,/          |  |' |/          ,-   ~ \   '.
-                    ,|   ,/           \ ,/              \       |
-                    /    |             ~                 -~~-, /   _
-                    |  ,-'                                    ~    /
-                    / ,'                                      ~
-                    ',|  ~
-          │                                  │ │                                       │
-          └──────────────────────────────────┘ └───────────────────────────────────────┘
-                   Tuesday morning PDT                     Monday evening PDT
-
-FAQs
-----
-
-1. Will this replace the email based communications?
-
-Obviously not.  This is only for complementing the email based communication.
-The email based communication, especially the patches review process, will of
-course continue.  We might provide some comments on each other's patches during
-the meeting, but it should also be sent via email and archived.
-
-2. Can I miss some important information if I don't join the meetings?
-
-Probably no.  I will provide meeting summaries to DAMON mailing list
-(damon@lists.linux.dev) if there were important discussions, so you are not
-required to join in the meeting series always.  Nevertheless, as it could be
-delayed or missed, I'd recommend to join in the meetings if you could.
-
-3. Will the meetings be recorded and shared?
-
-No, unless explicitly required and everyone agreed.
-
-4. Can I discuss about some confidential things?
-
-No.  This meeting series is open for everyone, so please discuss only
-non-confidential things.  If you have to or unsure, please have a separate
-meeting with appropriate people.
-
-5. Who will organize and lead the meeting series?
-
-I would organize and lead it by default at the beginning, but would be also ok
-to be driven by anyone in the community.
-
-6. Should I say something if I join in?
-
-No.  You're welcome to just listen if you don't have anything to say.  I'd
-personally recommend people to provide a brief introduction of themselves, but
-if you feel uncomfortable about it, of course you can skip.  Simply showing up
-your face or name on the screen and saying hi to others would also be great.
-
-7. What's the benefit for me to join in the meeting series?
-
-This would be a good chance to let the people of the community know your
-problems, requirements, ongoing works and get helps or avoid unnecessary
-conflicts.  Maybe you could make a friend.  It will benefit not only you, but
-eventually help the community back.  Making community healthy will again help
-you back.  So I'd recommend you to join the meetings if you could, even if you
-don't have something special to say.
-
----
-
-I hope this to help the community to better understand each other, make
-good/efficient alignments of each goals on DAMON, and ultimately get some fun
-and deliver benefits to the community and the world.
-
-Please leave any comments or questions if you have.
+Reviewed-by: SeongJae Park <sj@kernel.org>
 
 
 Thanks,
 SJ
+
+> ---
+>  mm/damon/dbgfs.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/mm/damon/dbgfs.c b/mm/damon/dbgfs.c
+> index cb8a7e9926a4..51d67c8050dd 100644
+> --- a/mm/damon/dbgfs.c
+> +++ b/mm/damon/dbgfs.c
+> @@ -1041,7 +1041,7 @@ static int __init __damon_dbgfs_init(void)
+>  				fops[i]);
+>  	dbgfs_fill_ctx_dir(dbgfs_root, dbgfs_ctxs[0]);
+>  
+> -	dbgfs_dirs = kmalloc_array(1, sizeof(dbgfs_root), GFP_KERNEL);
+> +	dbgfs_dirs = kmalloc(sizeof(dbgfs_root), GFP_KERNEL);
+>  	if (!dbgfs_dirs) {
+>  		debugfs_remove(dbgfs_root);
+>  		return -ENOMEM;
+> -- 
+> 2.31.1
