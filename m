@@ -1,20 +1,20 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 629564683
-	for <damon@lists.linux.dev>; Thu, 18 Aug 2022 17:11:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2644C433D7;
-	Thu, 18 Aug 2022 17:11:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88DEB4683
+	for <damon@lists.linux.dev>; Thu, 18 Aug 2022 17:23:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDD72C433D6;
+	Thu, 18 Aug 2022 17:23:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1660842708;
-	bh=Mc/teE1LL9vULZCSDU4ycYT9u3eYQsCxpUOtyauN4pA=;
+	s=k20201202; t=1660843405;
+	bh=n+Zh5soEiKsYTavc5xpB5hD5bHQyBWVCiz9gxj6eumY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AWZJlPCUjq7p7vu1Bz1r9kJMchqJkGqlekx/lzPT6Oj4nq7WfVIZWD8OhWHR2XkVX
-	 ZnKbvC1td2JxmqeAdI92wUok2KK0c+EGdwAkUYukMT0fkHzjx++xPTyA00oZfxDQsU
-	 oObrS3/4Qeb8iKzTN3NRGKr2Hqg0xImh2Zp0BOkmRMrE/lzEOtzH2nV3907a3fZRpf
-	 jXcDflt8dDHueJRaAPrBJ+5KerzThkqKlYnEssdtOjzTBPv+jNv7wM7iov/uUCc/Hl
-	 agnxm4gTMg5MrPk4VELdphBGUPn8P0x5dNqePLwdV5MNnFfetscJh8KZYrUCkUs/FV
-	 Cf5Qi8CnwkXOA==
+	b=uzRzyMDttnWkLveGuhV3m6MbEQeEFkChs0X3xIiXlnuxoRvx928i6qTBRVQTOWuUC
+	 3hEcEcVuS/ZO/7HTLRXXZrvg6u46R1FYIahF29qSBcwASDb31qK6k+daIrcxf2OrwR
+	 uZZ2E6zfM4+Lg0qBBpc47yrzhdNaAT4kH12vupPrysE8Feesz8ijiavPFdCuhd4lF8
+	 C/fGYfQwR5sS5zj9U/ruBzwIVbj6Y1t6IdMa+cE/xDdVmMIedkG47b/jOx3rnxHS0I
+	 1lRuRnuMcReC08JKkmZ6tefikIBX3j02YFnbSl4Fh58iL0SPC4uGAp+gazGHqceVi0
+	 owAqaZlZa7Nxw==
 From: SeongJae Park <sj@kernel.org>
 To: Xin Hao <xhao@linux.alibaba.com>
 Cc: sj@kernel.org,
@@ -22,11 +22,11 @@ Cc: sj@kernel.org,
 	damon@lists.linux.dev,
 	linux-mm@kvack.org,
 	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH V2 1/2] mm/damon/lru_sort: Move target memory region check to head of func
-Date: Thu, 18 Aug 2022 17:11:45 +0000
-Message-Id: <20220818171145.51607-1-sj@kernel.org>
+Subject: Re: [PATCH V2 2/2] mm/damon/lru_sort: Remove struct of damon_lru_sort_ram_walk_arg
+Date: Thu, 18 Aug 2022 17:23:22 +0000
+Message-Id: <20220818172322.51705-1-sj@kernel.org>
 X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20220818105732.34492-2-xhao@linux.alibaba.com>
+In-Reply-To: <20220818105732.34492-3-xhao@linux.alibaba.com>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -38,39 +38,18 @@ Content-Transfer-Encoding: 8bit
 
 Hi Xin,
 
+On Thu, 18 Aug 2022 18:57:32 +0800 Xin Hao <xhao@linux.alibaba.com> wrote:
 
-On Thu, 18 Aug 2022 18:57:31 +0800 Xin Hao <xhao@linux.alibaba.com> wrote:
+> The struct of 'damon_lru_sort_ram_walk_arg' is the same with struct of
+> 'damon_addr_range', so, there no need to redefine it, just use struct of
+> 'damon_addr_range' instead.
 
-> In damon_lru_sort_apply_parameters(), if "monitor_region_start"
-> and "monitor_region_end" is not a valid physical address range,
-> There no need to run the remainder codes in it.
-
-The function, 'damon_lru_sort_apply_parameters()', checks validity of
-parameters and construct the DAMON context one by one.  For example,
-'damon_set_attrs()' returns an error if the parameters are invalid.  So the
-intended flow is,
-
-1. check DAMON attributes parameters,
-2. apply DAMON attributes parameters,
-3. check scheme parameters,
-4. apply scheme parameters,
-5. check target region parameters, and
-6. apply target region parameters.
-
-Therefore what this patch does is making the target regions validity check to
-be done earlier than validity checks of other parameters.  There is no special
-reason to check the region earlier than others.  Also, this change makes the
-flow of the function a little bit weird in my humble opinion, as the flow will
-be
-
-1. check target region parameters,
-2. check DAMON attributes parameters,
-3. apply DAMON attributes parameters,
-4. check scheme parameters,
-5. apply scheme parameters, and
-6. apply target region parameters.
-
-So I'd argue this patch seems not really needed, sorry.
+Reducing code is always good, thanks.  However, I think the type of the 'start'
+and 'end' fields of 'struct damon_addr_range' might be changed in a future.
+It's very unlikely, though.  Also, we might add some more fields to the struct
+in a future.  After all, the purpose of 'struct damon_addr_range' is not saving
+the 'start' and 'end' fields of 'struct resource'.  I'd like to avoid making
+any possible dependency here, sorry.
 
 
 Thanks,
