@@ -1,14 +1,14 @@
-Received: from out30-54.freemail.mail.aliyun.com (out30-54.freemail.mail.aliyun.com [115.124.30.54])
+Received: from out30-45.freemail.mail.aliyun.com (out30-45.freemail.mail.aliyun.com [115.124.30.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 802E67B
-	for <damon@lists.linux.dev>; Thu, 18 Aug 2022 02:55:25 +0000 (UTC)
-X-Alimail-AntiSpam:AC=PASS;BC=-1|-1;BR=01201311R171e4;CH=green;DM=||false|;DS=||;FP=0|-1|-1|-1|0|-1|-1|-1;HT=ay29a033018045168;MF=baolin.wang@linux.alibaba.com;NM=1;PH=DS;RN=5;SR=0;TI=SMTPD_---0VMYx6pz_1660790387;
-Received: from 30.97.48.48(mailfrom:baolin.wang@linux.alibaba.com fp:SMTPD_---0VMYx6pz_1660790387)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25EC17B
+	for <damon@lists.linux.dev>; Thu, 18 Aug 2022 03:12:50 +0000 (UTC)
+X-Alimail-AntiSpam:AC=PASS;BC=-1|-1;BR=01201311R131e4;CH=green;DM=||false|;DS=||;FP=0|-1|-1|-1|0|-1|-1|-1;HT=ay29a033018046059;MF=baolin.wang@linux.alibaba.com;NM=1;PH=DS;RN=7;SR=0;TI=SMTPD_---0VMYubQo_1660791429;
+Received: from 30.97.48.48(mailfrom:baolin.wang@linux.alibaba.com fp:SMTPD_---0VMYubQo_1660791429)
           by smtp.aliyun-inc.com;
-          Thu, 18 Aug 2022 10:39:47 +0800
-Message-ID: <c9cde43f-d169-0a65-e69a-7b77c75322fd@linux.alibaba.com>
-Date: Thu, 18 Aug 2022 10:39:54 +0800
+          Thu, 18 Aug 2022 10:57:10 +0800
+Message-ID: <ceaa1e54-e79a-86c7-cf35-d4159088f0f3@linux.alibaba.com>
+Date: Thu, 18 Aug 2022 10:57:21 +0800
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -19,77 +19,80 @@ User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
  Thunderbird/91.12.0
 Subject: Re: [PATCH] mm/damon: Validate if the pmd entry is present before
  accessing
-To: SeongJae Park <sj@kernel.org>
-Cc: akpm@linux-foundation.org, damon@lists.linux.dev, linux-mm@kvack.org,
- linux-kernel@vger.kernel.org
-References: <20220818022947.94345-1-sj@kernel.org>
+To: Muchun Song <muchun.song@linux.dev>
+Cc: sj@kernel.org, Andrew Morton <akpm@linux-foundation.org>,
+ damon@lists.linux.dev, Linux MM <linux-mm@kvack.org>,
+ linux-kernel@vger.kernel.org, Mike Kravetz <mike.kravetz@oracle.com>
+References: <2838b6737bc259cf575ff11fd1c4b7fdb340fa73.1660717122.git.baolin.wang@linux.alibaba.com>
+ <5173E308-2403-4667-9162-865CF7F11838@linux.dev>
 From: Baolin Wang <baolin.wang@linux.alibaba.com>
-In-Reply-To: <20220818022947.94345-1-sj@kernel.org>
+In-Reply-To: <5173E308-2403-4667-9162-865CF7F11838@linux.dev>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
 
 
-On 8/18/2022 10:29 AM, SeongJae Park wrote:
-> Hi Baolin,
+在 8/18/2022 10:41 AM, Muchun Song 写道:
 > 
-> On Thu, 18 Aug 2022 09:05:58 +0800 Baolin Wang <baolin.wang@linux.alibaba.com> wrote:
 > 
+>> On Aug 17, 2022, at 14:21, Baolin Wang <baolin.wang@linux.alibaba.com> wrote:
 >>
+>> The pmd_huge() is used to validate if the pmd entry is mapped by a huge
+>> page, also including the case of non-present (migration or hwpoisoned)
+>> pmd entry on arm64 or x86 architectures. Thus we should validate if it
+>> is present before making the pmd entry old or getting young state,
+>> otherwise we can not get the correct corresponding page.
 >>
->> On 8/18/2022 12:09 AM, SeongJae Park wrote:
->>> Hi Baolin,
->>>
->>>
->>> Thank you always for your great patch!
->>>
->>> On Wed, 17 Aug 2022 14:21:12 +0800 Baolin Wang <baolin.wang@linux.alibaba.com> wrote:
->>>
->>>> The pmd_huge() is used to validate if the pmd entry is mapped by a huge
->>>> page, also including the case of non-present (migration or hwpoisoned)
->>>> pmd entry on arm64 or x86 architectures. Thus we should validate if it
->>>> is present before making the pmd entry old or getting young state,
->>>> otherwise we can not get the correct corresponding page.
->>>
->>> Maybe I'm missing something, but... I'm unsure if the page is present or not
->>> really matters from the perspective of access checking.  In the case, DAMON
->>> could simply report the page has accessed once for the first check after the
->>> page being non-present if it really accessed before, and then report the page
->>> as not accessed, which is true.
+>> Signed-off-by: Baolin Wang <baolin.wang@linux.alibaba.com>
+>> ---
+>> mm/damon/vaddr.c | 10 ++++++++++
+>> 1 file changed, 10 insertions(+)
 >>
->> Yes, that's the patch's goal to make the accesses correct. However if
->> the PMD entry is not present, we can not get the correct page object by
->> pmd_pfn(*pmd), since the non-present pmd entry will contain swap type
->> and swap offset with below format on ARM64, that means the pfn number is
->> saved in bits 8-57 in a migration or poisoned entry, but pmd_pfn() still
->> treat bits 12-47 as the pfn number on ARM64, which may get an incorrect
->> page struct (also maybe is NULL by pfn_to_online_page()) to make the
->> access statistics incorrect.
+>> diff --git a/mm/damon/vaddr.c b/mm/damon/vaddr.c
+>> index 3c7b9d6..1d16c6c 100644
+>> --- a/mm/damon/vaddr.c
+>> +++ b/mm/damon/vaddr.c
+>> @@ -304,6 +304,11 @@ static int damon_mkold_pmd_entry(pmd_t *pmd, unsigned long addr,
 >>
->> /*
->>    * Encode and decode a swap entry:
->>    *	bits 0-1:	present (must be zero)
->>    *	bits 2:		remember PG_anon_exclusive
->>    *	bits 3-7:	swap type
->>    *	bits 8-57:	swap offset
->>    *	bit  58:	PTE_PROT_NONE (must be zero)
->>    */
->>
->>
->> Moreoever I don't think we should still waste time to get the page of
->> the non-present entry, just treat it as not-accessed and skip it, that
->> keeps consistent with non-present pte level entry.
->>
->> Does that make sense for you? Thanks.
+>> 	if (pmd_huge(*pmd)) {
+>> 		ptl = pmd_lock(walk->mm, pmd);
+>> +		if (!pmd_present(*pmd)) {
 > 
-> Yes, that totally makes sense.  Thank you very much for the kind answer.  I
-> think it would be great if we could put the detailed explanation in the commit
-> message.  Could you please update the commit message and post v2 of the patch?
+> Unluckily, we should use pte_present here. See commit c9d398fa23788. We can use
+> huge_ptep_get() to get a hugetlb pte, so it’s better to put the check after
+> pmd_huge.
 
-Sure, will update the commit message to make it more clear and I think 
-that can also answer Andrew's concern.
+IMO this is not the case for hugetlb, and the hugetlb case will be 
+handled by damon_mkold_hugetlb_entry(), which already used pte_present() 
+for hugetlb case.
 
 > 
-> Reviewed-by: SeongJae Park <sj@kernel.org>
-
-Thanks.
+> Cc Mike to make sure I am not missing something.
+> 
+> Muchun,
+> Thanks.
+> 
+>> +			spin_unlock(ptl);
+>> +			return 0;
+>> +		}
+>> +
+>> 		if (pmd_huge(*pmd)) {
+>> 			damon_pmdp_mkold(pmd, walk->mm, addr);
+>> 			spin_unlock(ptl);
+>> @@ -431,6 +436,11 @@ static int damon_young_pmd_entry(pmd_t *pmd, unsigned long addr,
+>> #ifdef CONFIG_TRANSPARENT_HUGEPAGE
+>> 	if (pmd_huge(*pmd)) {
+>> 		ptl = pmd_lock(walk->mm, pmd);
+>> +		if (!pmd_present(*pmd)) {
+>> +			spin_unlock(ptl);
+>> +			return 0;
+>> +		}
+>> +
+>> 		if (!pmd_huge(*pmd)) {
+>> 			spin_unlock(ptl);
+>> 			goto regular_page;
+>> -- 
+>> 1.8.3.1
+>>
+>>
+> 
