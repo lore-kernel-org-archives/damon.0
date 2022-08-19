@@ -1,113 +1,103 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 623CD7B
-	for <damon@lists.linux.dev>; Fri, 19 Aug 2022 04:52:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFE0FC433D6;
-	Fri, 19 Aug 2022 04:52:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EBBE4697
+	for <damon@lists.linux.dev>; Fri, 19 Aug 2022 17:19:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85184C433C1;
+	Fri, 19 Aug 2022 17:19:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1660884741;
-	bh=pJsR9cSORbtbMymP+m9MvHTaCihfu9PX9SIGrheKZmw=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:From;
-	b=o637CJLbB7MYcFkOf3iJtO6JpyRqT6H/5C4jnwxHKJxPdd8ZbddPbFkBo+Owi/yid
-	 XwC+pxHsAnOS7lk8zjN3euHYHC8T1TKW7LPAUZ1VzFVNxyvbUZAJX05KUIX0W0YcTe
-	 zutCqedwg2t+ZGWH9IsEbLWKOLFpN1rToKXWL/HQnGuaYzniR+aYnDlfZmHCLur+18
-	 A9rskX98zkia9sdqJOJtmTL37CwwpUIM+SvRSc2c/jGT2ltJtUDi7TTj/YphImTOX8
-	 jIOurMsYjVJ+aDtwDBX0ZqunReNK3u1gU4A8bAOyztUXzd72GBHUkzvSLwyU8v/DGR
-	 gBxt8Sf1ZFALQ==
+	s=k20201202; t=1660929576;
+	bh=3Sdln9qJKHLzw3ch7twkCCMwF2dg/LGZE0fJeB2Pqds=;
+	h=From:To:Cc:Subject:Date:From;
+	b=WDXGks4O7BdiqUE7X0ObnfF1Zyc1+QRtTDQWZKrcu/dYHW20fJbBaY5zTopwpzRcr
+	 iT1CheRg5d9nG1nbiK+07tKfvbRrMPPAzYs5xdQS9G94QOx6JiQ+CZqnjz5bLfoTQM
+	 8GizFsATxnYxbVf0njAQVdq4u3/+gJxXl8HMgOFRfzNYQuZFqeZm2bQA2iehreJcJr
+	 MsgssHY7b9NDzkvL3zvPSqZdzev4Zl7VTNxdSDSPb4x7IYajtOS5mXMkGX9sEwD/g5
+	 YzO+4CjEDdZnIOJknjJdGpijVe7LNFh8j3wLUZmLKeBi2YCJXcIkfdlNSLufGy6I/p
+	 rjfnuFJRi3Ofg==
 From: SeongJae Park <sj@kernel.org>
-To: haoxin <xhao@linux.alibaba.com>
-Cc: SeongJae Park <sj@kernel.org>,
-	akpm@linux-foundation.org,
+To: akpm@linux-foundation.org
+Cc: sj@kernel.org,
+	badari.pulavarty@intel.com,
 	damon@lists.linux.dev,
 	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH V2 1/2] mm/damon/lru_sort: Move target memory region check to head of func
-Date: Thu, 18 Aug 2022 21:52:04 -0700
-Message-Id: <20220819045204.21834-1-sj@kernel.org>
-X-Mailer: git-send-email 2.17.1
+	linux-kernel@vger.kernel.org,
+	stable@vger.kernel.org
+Subject: [PATCH v2] mm/damon/dbgfs: avoid duplicate context directory creation
+Date: Fri, 19 Aug 2022 17:19:30 +0000
+Message-Id: <20220819171930.16166-1-sj@kernel.org>
+X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-In-Reply-To: <c0c5c013-9355-c394-afff-ed25b0c456b8@linux.alibaba.com>
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On Fri, 19 Aug 2022 10:47:58 +0800 haoxin <xhao@linux.alibaba.com> wrote:
+From: Badari Pulavarty <badari.pulavarty@intel.com>
 
-> 
-> 在 2022/8/19 上午10:28, SeongJae Park 写道:
-> > Hi Xin,
-> >
-> >> 在 2022/8/19 上午1:11, SeongJae Park 写道:
-> >>> Hi Xin,
-> >>>
-> >>>
-> >>> On Thu, 18 Aug 2022 18:57:31 +0800 Xin Hao <xhao@linux.alibaba.com> wrote:
-> >>>
-> >>>> In damon_lru_sort_apply_parameters(), if "monitor_region_start"
-> >>>> and "monitor_region_end" is not a valid physical address range,
-> >>>> There no need to run the remainder codes in it.
-> >>> The function, 'damon_lru_sort_apply_parameters()', checks validity of
-> >>> parameters and construct the DAMON context one by one.  For example,
-> >>> 'damon_set_attrs()' returns an error if the parameters are invalid.  So the
-> >>> intended flow is,
-> >>>
-> >>> 1. check DAMON attributes parameters,
-> >>> 2. apply DAMON attributes parameters,
-> >>> 3. check scheme parameters,
-> >>> 4. apply scheme parameters,
-> >>> 5. check target region parameters, and
-> >>> 6. apply target region parameters.
-> >>>
-> >>> Therefore what this patch does is making the target regions validity check to
-> >>> be done earlier than validity checks of other parameters.  There is no special
-> >>> reason to check the region earlier than others.  Also, this change makes the
-> >>> flow of the function a little bit weird in my humble opinion, as the flow will
-> >>> be
-> >>>
-> >>> 1. check target region parameters,
-> >>> 2. check DAMON attributes parameters,
-> >>> 3. apply DAMON attributes parameters,
-> >>> 4. check scheme parameters,
-> >>> 5. apply scheme parameters, and
-> >>> 6. apply target region parameters.
-> >> Ok, understand what you mean,   my fix looks ugly,  buy any apply above
-> >> are not not necessary if one of them checks failed, why not check all
-> >> fisrt and then apply them, like this:
-> >>
-> >> 1. check target region parameters,
-> >>
-> >> 2. check DAMON attributes parameters,
-> >>
-> >> 3. check scheme parameters,
-> > The parameter values could be changed by users after the check, so we should
-> > cache those somewhere anyway.  In other words, we cache those in the DAMON
-> > context.  Therefore I think the above works were not totally waste of the time.
-> > Also, because the parameters applying functions like 'damon_set_attrs()' does
-> > the check and applying of the parameters together, I feel like current flow is
-> > natural.
-> 
-> Ok,  Thank you for your detailed  explain, just keep it. but there still 
-> a problem in damon_lru_sort_apply_parameters
-> 
-> if (!monitor_region_start && !monitor_region_end &&
-> 		!get_monitoring_region(&monitor_region_start,
-> 			&monitor_region_end))
-> 
-> if (!monitor_region_start || !monitor_region_end ||
-> 		!get_monitoring_region(&monitor_region_start,
-> 			&monitor_region_end))
-> 
-> the '&&' should fix to '||',  anyone checks fail, it should return ?
+When user tries to create a DAMON context via the DAMON debugfs
+interface with a name of an already existing context, the context
+directory creation silently fails but the context is added in the
+internal data structure.  As a result, memory could leak and DAMON
+cannot be turned on.  An example test case is as below:
 
-No.  The code is for setting the monitoring region as the biggest System RAM
-resource only if the user didn't set both 'monitor_region_start' and
-'monitor_region_end'.
+    # cd /sys/kernel/debug/damon/
+    # echo "off" >  monitor_on
+    # echo paddr > target_ids
+    # echo "abc" > mk_context
+    # echo "abc" > mk_context
+    # echo $$ > abc/target_ids
+    # echo "on" > monitor_on  <<< fails
 
+This commit fixes the issue by checking if the name already exist and
+immediately returning '-EEXIST' in the case.
 
-Thanks,
-SJ
+Fixes: 75c1c2b53c78 ("mm/damon/dbgfs: support multiple contexts")
+Cc: <stable@vger.kernel.org> # 5.15.x
+Signed-off-by: Badari Pulavarty <badari.pulavarty@intel.com>
+Signed-off-by: SeongJae Park <sj@kernel.org>
+---
+Changes from v1
+(https://lore.kernel.org/damon/DM6PR11MB3978994F75A4104D714437379C679@DM6PR11MB3978.namprd11.prod.outlook.com/)
+- Manually check duplicate entry instead of checking
+  'debugfs_create_dir()' return value
+- Reword commit message and the test case
+
+Seems Badari have some email client issue, so I (SJ) am making this
+second version of the patch based on Badari's final proposal and repost
+on behalf of Badari.
+
+ mm/damon/dbgfs.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
+
+diff --git a/mm/damon/dbgfs.c b/mm/damon/dbgfs.c
+index 51d67c8050dd..364b44063c2f 100644
+--- a/mm/damon/dbgfs.c
++++ b/mm/damon/dbgfs.c
+@@ -795,7 +795,7 @@ static void dbgfs_destroy_ctx(struct damon_ctx *ctx)
+  */
+ static int dbgfs_mk_context(char *name)
+ {
+-	struct dentry *root, **new_dirs, *new_dir;
++	struct dentry *root, **new_dirs, *new_dir, *dir;
+ 	struct damon_ctx **new_ctxs, *new_ctx;
+ 
+ 	if (damon_nr_running_ctxs())
+@@ -817,6 +817,12 @@ static int dbgfs_mk_context(char *name)
+ 	if (!root)
+ 		return -ENOENT;
+ 
++	dir = debugfs_lookup(name, root);
++	if (dir) {
++		dput(dir);
++		return -EEXIST;
++	}
++
+ 	new_dir = debugfs_create_dir(name, root);
+ 	dbgfs_dirs[dbgfs_nr_ctxs] = new_dir;
+ 
+-- 
+2.25.1
+
