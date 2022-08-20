@@ -1,87 +1,90 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f54.google.com (mail-pj1-f54.google.com [209.85.216.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EBED2C80
-	for <damon@lists.linux.dev>; Fri, 19 Aug 2022 23:05:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A2A3C433B5;
-	Fri, 19 Aug 2022 23:05:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1660950304;
-	bh=AZL0aSK7Iwf8Lk3JbnO6+H4YnWrrROAZWLMPh5Hm/5E=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZEKPV7mXRXYXHkT9CiejWuOCLLKp1h4nrKuXEyG9QfdzXQt68jqr2caGZI6WJkxYe
-	 gweaJaYGJxoiXNQ/zrX2WoI6U/KcRK9bU+n+c+FdQ4N7q8ZT6XDaK3aTCC13thOEMd
-	 qEuLyoVfoMM/6ghLjJlAtzmjZsmiH6Sg8by3zhFwGPnf/q/S50i5qDAHn5RPrYs9rS
-	 uwy8ylu3fm6KGo4LvMOLItxclMgd1WZK5VYUVUoToWPjzRve8+/WhFwaWAfZ2iS6Re
-	 hIgFMFZzjaa01DTi4ploFElFllt+QnNoPtJjTRDMH3nmrZZTYEgwor0R5msDqt+53d
-	 kR10UUa28lbqA==
-From: SeongJae Park <sj@kernel.org>
-To: Andrew Morton <akpm@linux-foundation.org>
-Cc: SeongJae Park <sj@kernel.org>,
-	gregkh@linuxfoundation.org,
-	badari.pulavarty@intel.com,
-	damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org,
-	stable@vger.kernel.org
-Subject: Re: [PATCH v2] mm/damon/dbgfs: avoid duplicate context directory creation
-Date: Fri, 19 Aug 2022 23:05:01 +0000
-Message-Id: <20220819230501.16830-1-sj@kernel.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20220819154451.9f424d9d563969d9cc6437f7@linux-foundation.org>
-References: 
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8CA117EF
+	for <damon@lists.linux.dev>; Sat, 20 Aug 2022 02:29:29 +0000 (UTC)
+Received: by mail-pj1-f54.google.com with SMTP id s4-20020a17090a5d0400b001fabc6bb0baso5675887pji.1
+        for <damon@lists.linux.dev>; Fri, 19 Aug 2022 19:29:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc;
+        bh=h/HJ65cb2+nIGwhv5QH5QTgJ4jWxy0giXVXsSHB7yko=;
+        b=iuCRhwHvRBHWpZ+AfOlPMiIE4kR6hweHfR1SBEN6YW20gjBM2ixZbR8hui4zb1FfIH
+         KONz0WtxxHeYRsbXWN+bjJviEfSFdSqRGJdlYqSqh5cRn/Px1liqn3nUwC/MUpWEDAEN
+         WlbKswo9JvZGBBdDfcbkhIz9dANcSE7v1j1JETjYFPobMcWHjdOPimg+iKnFUaGrIEgX
+         vtxMk8zhKjKbYER1nFnXhJikpbg6sBLINjhe6EkPkFRBJsyYXLaD+70sjpXYUbpihqFO
+         deEFYRZKvN3dcYDAA4FHkW7+m5urs0X7b06MlsxndKKUnI27es9IuyGrEWZ22Fw4uaIR
+         6hEA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc;
+        bh=h/HJ65cb2+nIGwhv5QH5QTgJ4jWxy0giXVXsSHB7yko=;
+        b=m06SuRt5CJv8VvSRmvy6P/ngJRvr0AdJFJehFbh5RDggbA8CZJ/mxH27Vz+KW8AqOy
+         NvFCHV+FvwOE2ZEg4cnft323FFTvQp0XxRl/AQanFHrMy7wD6ODgXvf4/ro91tM3egGg
+         cryV+CaFXJt4B6kRw6MoFHhNJPu5suoCEKUdnsnhv3G0wFi3/WLRcjnbUyx/HymkZaQA
+         8BcahdIeUSie46GPt7bAhLSSwmSva1MqoNxbHhu92bzJW7qHZxf9ZH+WvLAe2D7lfb1+
+         wPZZXM/ooy/4rLyux40sJWijzpLoCykSyG5rTXmzeQO6PpE/DpAno+tPgfQJbw3lEi5r
+         ksMg==
+X-Gm-Message-State: ACgBeo03+Y82fOX5ksSwPsuvyaE6Z+pxE849AOH3XWaQgNisHKblTLhH
+	uyQL2Wl9YJDwNPyf4gMH6vY=
+X-Google-Smtp-Source: AA6agR6Zpo21opq2l8HWg7HLYMOJyGVGl/tr0rum0zXAixFaKrG0xIztTBKPV4VCL7tZ2YidfzXR0w==
+X-Received: by 2002:a17:902:ef96:b0:172:abb9:657e with SMTP id iz22-20020a170902ef9600b00172abb9657emr10056786plb.48.1660962569323;
+        Fri, 19 Aug 2022 19:29:29 -0700 (PDT)
+Received: from [192.168.43.80] (subs02-180-214-232-69.three.co.id. [180.214.232.69])
+        by smtp.gmail.com with ESMTPSA id u6-20020a170902e5c600b0016d88dc7745sm3793478plf.259.2022.08.19.19.29.26
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 19 Aug 2022 19:29:28 -0700 (PDT)
+Message-ID: <69366c8b-9bbb-7d4c-4d0d-4948d04e71bb@gmail.com>
+Date: Sat, 20 Aug 2022 09:29:24 +0700
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.12.0
+Subject: Re: [PATCH v2] mm/damon/dbgfs: avoid duplicate context directory
+ creation
+Content-Language: en-US
+To: SeongJae Park <sj@kernel.org>, akpm@linux-foundation.org
+Cc: badari.pulavarty@intel.com, damon@lists.linux.dev, linux-mm@kvack.org,
+ linux-kernel@vger.kernel.org, stable@vger.kernel.org
+References: <20220819171930.16166-1-sj@kernel.org>
+From: Bagas Sanjaya <bagasdotme@gmail.com>
+In-Reply-To: <20220819171930.16166-1-sj@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Fri, 19 Aug 2022 15:44:51 -0700 Andrew Morton <akpm@linux-foundation.org> wrote:
-
-> On Fri, 19 Aug 2022 21:16:31 +0000 SeongJae Park <sj@kernel.org> wrote:
+On 8/20/22 00:19, SeongJae Park wrote:
+> From: Badari Pulavarty <badari.pulavarty@intel.com>
 > 
-> > > It would be simpler (and less racy) to check the debugfs_create_dir()
-> > > return value for IS_ERR()?
-> > 
-> > I was merely following Greg's previous advice for ignoring the return value[1]
-> > of the function, but I might misunderstanding his intention, so CC-ing Greg.
-> > Greg, may I ask your opinion?
-> > 
-> > [1] https://lore.kernel.org/linux-mm/YB1kZaD%2F7omxXztF@kroah.com/
+> When user tries to create a DAMON context via the DAMON debugfs
+> interface with a name of an already existing context, the context
+> directory creation silently fails but the context is added in the
+> internal data structure.  As a result, memory could leak and DAMON
+> cannot be turned on.  An example test case is as below:
 > 
-> Thing is, the correct functioning of the debugfs interfaces is utterly
-> critical to damon.  And that's apart from these memory leak and
-> oops-we-killed-damon issues.
+>     # cd /sys/kernel/debug/damon/
+>     # echo "off" >  monitor_on
+>     # echo paddr > target_ids
+>     # echo "abc" > mk_context
+>     # echo "abc" > mk_context
+>     # echo $$ > abc/target_ids
+>     # echo "on" > monitor_on  <<< fails
 > 
-> So damon simply cannot ignore the state of its debugfs interfaces and
-> keep going along - because if something goes wrong at the debugfs
-> layer, damon is dead and useless and the machine needs a reboot.
+> This commit fixes the issue by checking if the name already exist and
+> immediately returning '-EEXIST' in the case.
 > 
-> Perhaps this means that damon should not be using debugfs for its
-> interfaces at all.  Or it means that the debugfs interfaces are
-> misdesigned.  I go with the latter, which, alas, also affirms the
-> former.
 
-I'd save my word about the latter, but agreed on the former.  Fortunately we
-already have an alternative (DAMON sysfs interface), and the debugfs interface
-deprecation plan was announced for a while ago.  Not sure if the deprecation
-will be well as hoped, though.
+Meh...
 
-> 
-> From a quick scan it appears that a significant minority (20%?) of
-> drivers are checking the debugfs_create_dir() return value.
+SJ, I have seen most (if not all of) your patches uses descriptive mood
+instead of imperative. Better say "Fix the issue by checking ...".
 
-Maybe partly owing to Greg's previous efforts for removing the checks[1,2]?
-Anyway, based on the previous discussions, I'd expect Greg might prefer not
-checking the return code.
-
-Anyway, waiting for his opinion.
-
-[1] https://lore.kernel.org/all/20190122152151.16139-14-gregkh@linuxfoundation.org/
-[2] https://lore.kernel.org/lkml/20190122152151.16139-7-gregkh@linuxfoundation.org/
-
-
-Thanks,
-SJ
+-- 
+An old man doll... just what I always wanted! - Clara
