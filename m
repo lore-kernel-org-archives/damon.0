@@ -1,54 +1,35 @@
-Received: from mail-pj1-f52.google.com (mail-pj1-f52.google.com [209.85.216.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 807357FA
-	for <damon@lists.linux.dev>; Mon, 22 Aug 2022 10:56:55 +0000 (UTC)
-Received: by mail-pj1-f52.google.com with SMTP id w11-20020a17090a380b00b001f73f75a1feso13548578pjb.2
-        for <damon@lists.linux.dev>; Mon, 22 Aug 2022 03:56:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:reply-to:message-id:date
-         :subject:cc:to:from:from:to:cc;
-        bh=hUQZ/Tp1Sqyiv6w3yUz+ygSiTM9PrSsj+REeubDk2qE=;
-        b=C3HaUGLQY/5xCsQrVkt+OdGw/vWjDEQbsfd0003LDMRZiClk+Q/ID/FH98FpvzpkhW
-         YmozuFBomyLxUP7iEui4cprVH2IL/wR6kybEI06V3D+1rKIOvuB2TD1db8RGJWmOn8BO
-         Ratq2FuXP5lPY+ygKTFYyzIWy0inHKk727PrNQfDFkKvRBTwLEKbXo+/gn+HMMKgYacO
-         rdBCeFi1Bl6PTxOETCCW7oGQBBfh+B+wNCG48TleMWHAtuFuzBf7Vns0E08EYK9wDqPu
-         zpaNILIeB1gIwrhs1EoEHnqsdoj9pdDc0wUs235s2eOFfGUM0Jyhgt9dzstb17bArH26
-         KoAw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:reply-to:message-id:date
-         :subject:cc:to:from:x-gm-message-state:from:to:cc;
-        bh=hUQZ/Tp1Sqyiv6w3yUz+ygSiTM9PrSsj+REeubDk2qE=;
-        b=oiEop6raFfMX9ZO95T6Bf2umHL92lnCwfZ4jB8hmSJB8nzeI3SnpuHfC2LpPGSxbMA
-         rysqvpY86vGTWMmUFyWhrZ5XJewI0evBzzrYCp/y8ppFBPfbRb5I0VFD7DgAYwbRllMi
-         URDMDzftaO6NLQvueQRZV61CAnSmqXy1nQwjDK3jA4ukVMCI/56LeMDw80eg/keHewZf
-         Jin3pPbJW2Ll9ksqbdYhGLyXbWqUj0I0wwT8zrxtSTyrDkiJgfkvUSTMKZiQF+8cqEDQ
-         fbDV4eBwZxoleLoMHQpTtpB9W0ASbBOOEIhPqRI4NdDmXMZwI7gurrV/juV2Y4qUGInD
-         sTbw==
-X-Gm-Message-State: ACgBeo0BDmmF/SfVvVoiV2aV1JUAyqrNGqkMhVMzzdVe0VZAEoJRN61K
-	Yc5v2y/bieMKduFTnwH4Y1Zzyvs3Rd81fupl
-X-Google-Smtp-Source: AA6agR5CXRqUs3HJRCeXUJI+lLofKDx4VbPUBq2jOgPfCZ7L6aGgxEOblRidGxRmwmFYt28M9X+3mQ==
-X-Received: by 2002:a17:902:7005:b0:172:98ef:863c with SMTP id y5-20020a170902700500b0017298ef863cmr19616019plk.131.1661165814407;
-        Mon, 22 Aug 2022 03:56:54 -0700 (PDT)
-Received: from KASONG-MB0.tencent.com ([103.7.29.31])
-        by smtp.gmail.com with ESMTPSA id m7-20020a1709026bc700b00172d9f6e22bsm3727399plt.15.2022.08.22.03.56.52
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Mon, 22 Aug 2022 03:56:53 -0700 (PDT)
-From: Kairui Song <ryncsn@gmail.com>
-To: damon@lists.linux.dev
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FAB62580
+	for <damon@lists.linux.dev>; Mon, 22 Aug 2022 16:52:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 417EEC433C1;
+	Mon, 22 Aug 2022 16:52:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1661187158;
+	bh=ua+EemPhFEiGOECa+PnGXwOWqdK9IkIdgInQOv3c9K0=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=pT3kjSF+QEXT8O0OlO59j9zM4jtb5K+UdzgN4uZwb6n7hQxauBiQTUmCHt2VMwzqr
+	 SusENy0EE1NXLTK6z9oSNdwZtUQf8R/7h5jqy11FkaA1h1sC8QePF6tcB9quDtDW8J
+	 MhqAxXyh3uOO7SxMbBDKlBv1b0CQfSHSti6zsJJi5SuWjtKZ9NXM9S8ijxPGQEI1CX
+	 dzuSFdu7pnqtof3txRVzo1VWUOAtkX/xYfp6ybd99DysZjxdwYbEvP9ZsYgNkY+4NF
+	 ITyrI3vi6t3q9ZOz47VUjgkvNhseZ1nEkBI0wgBcdPjuC5ir7Z8yDQnE81HHAZSIfO
+	 o9qxptSAMLHfQ==
+From: SeongJae Park <sj@kernel.org>
+To: Greg KH <gregkh@linuxfoundation.org>
 Cc: SeongJae Park <sj@kernel.org>,
-	Jonathan Corbet <corbet@lwn.net>,
+	akpm@linux-foundation.org,
+	badari.pulavarty@intel.com,
+	damon@lists.linux.dev,
 	linux-mm@kvack.org,
-	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	Kairui Song <kasong@tencent.com>
-Subject: [PATCH] Docs/admin-guide/mm/damon/usage: fix the example code snip
-Date: Mon, 22 Aug 2022 18:56:17 +0800
-Message-Id: <20220822105617.75524-1-ryncsn@gmail.com>
-X-Mailer: git-send-email 2.35.2
-Reply-To: Kairui Song <kasong@tencent.com>
+	stable@vger.kernel.org
+Subject: Re: [PATCH v3] mm/damon/dbgfs: avoid duplicate context directory creation
+Date: Mon, 22 Aug 2022 16:52:36 +0000
+Message-Id: <20220822165236.87421-1-sj@kernel.org>
+X-Mailer: git-send-email 2.25.1
+In-Reply-To: <YwMhLHNfc7Fcdrd5@kroah.com>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -57,53 +38,106 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-From: Kairui Song <kasong@tencent.com>
+Hi Greg,
 
-The workflow example code is not working since it got the file names
-wrong. So fix this.
 
-Signed-off-by: Kairui Song <kasong@tencent.com>
----
- Documentation/admin-guide/mm/damon/usage.rst | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+On Mon, 22 Aug 2022 08:24:44 +0200 Greg KH <gregkh@linuxfoundation.org> wrote:
 
-diff --git a/Documentation/admin-guide/mm/damon/usage.rst b/Documentation/admin-guide/mm/damon/usage.rst
-index d52f572a90298..ca91ecc290785 100644
---- a/Documentation/admin-guide/mm/damon/usage.rst
-+++ b/Documentation/admin-guide/mm/damon/usage.rst
-@@ -50,10 +50,10 @@ For a short example, users can monitor the virtual address space of a given
- workload as below. ::
- 
-     # cd /sys/kernel/mm/damon/admin/
--    # echo 1 > kdamonds/nr && echo 1 > kdamonds/0/contexts/nr
-+    # echo 1 > kdamonds/nr_kdamonds && echo 1 > kdamonds/0/contexts/nr_contexts
-     # echo vaddr > kdamonds/0/contexts/0/operations
--    # echo 1 > kdamonds/0/contexts/0/targets/nr
--    # echo $(pidof <workload>) > kdamonds/0/contexts/0/targets/0/pid
-+    # echo 1 > kdamonds/0/contexts/0/targets/nr_targets
-+    # echo $(pidof <workload>) > kdamonds/0/contexts/0/targets/0/pid_target
-     # echo on > kdamonds/0/state
- 
- Files Hierarchy
-@@ -366,12 +366,12 @@ memory rate becomes larger than 60%, or lower than 30%". ::
-     # echo 1 > kdamonds/0/contexts/0/schemes/nr_schemes
-     # cd kdamonds/0/contexts/0/schemes/0
-     # # set the basic access pattern and the action
--    # echo 4096 > access_patterns/sz/min
--    # echo 8192 > access_patterns/sz/max
--    # echo 0 > access_patterns/nr_accesses/min
--    # echo 5 > access_patterns/nr_accesses/max
--    # echo 10 > access_patterns/age/min
--    # echo 20 > access_patterns/age/max
-+    # echo 4096 > access_pattern/sz/min
-+    # echo 8192 > access_pattern/sz/max
-+    # echo 0 > access_pattern/nr_accesses/min
-+    # echo 5 > access_pattern/nr_accesses/max
-+    # echo 10 > access_pattern/age/min
-+    # echo 20 > access_pattern/age/max
-     # echo pageout > action
-     # # set quotas
-     # echo 10 > quotas/ms
--- 
-2.35.2
+> On Sun, Aug 21, 2022 at 06:08:53PM +0000, SeongJae Park wrote:
+> > From: Badari Pulavarty <badari.pulavarty@intel.com>
+> > 
+> > From: Badari Pulavarty <badari.pulavarty@intel.com>
+> 
+> Twice?
 
+My dumb mistake, sorry.  Fortunately Andrew fixed the mess on his own before
+adding this to mm[1].  Thanks, Andrew!
+
+[1] https://lore.kernel.org/mm-commits/20220821233916.8FC63C433D6@smtp.kernel.org/
+
+> 
+> > 
+> > When user tries to create a DAMON context via the DAMON debugfs
+> > interface with a name of an already existing context, the context
+> > directory creation fails but a new context is created and added in the
+> > internal data structure, due to absence of the directory creation
+> > success check.  As a result, memory could leak and DAMON cannot be
+> > turned on.  An example test case is as below:
+> > 
+> >     # cd /sys/kernel/debug/damon/
+> >     # echo "off" >  monitor_on
+> >     # echo paddr > target_ids
+> >     # echo "abc" > mk_context
+> >     # echo "abc" > mk_context
+> >     # echo $$ > abc/target_ids
+> >     # echo "on" > monitor_on  <<< fails
+> > 
+> > Return value of 'debugfs_create_dir()' is expected to be ignored in
+> > general, but this is an exceptional case as DAMON feature is depending
+> > on the debugfs functionality and it has the potential duplicate name
+> > issue.  This commit therefore fixes the issue by checking the directory
+> > creation failure and immediately return the error in the case.
+> > 
+> > Fixes: 75c1c2b53c78 ("mm/damon/dbgfs: support multiple contexts")
+> > Cc: <stable@vger.kernel.org> # 5.15.x
+> > Signed-off-by: Badari Pulavarty <badari.pulavarty@intel.com>
+> > Signed-off-by: SeongJae Park <sj@kernel.org>
+> > ---
+> > Changes from v2
+> > (https://lore.kernel.org/damon/20220819171930.16166-1-sj@kernel.org/)
+> > - Simply check the debugfs_create_dir() return value (Andrew Morton)
+> > - Put a comment for justifying check of the return value (Greg KH)
+> > 
+> > Changes from v1
+> > (https://lore.kernel.org/damon/DM6PR11MB3978994F75A4104D714437379C679@DM6PR11MB3978.namprd11.prod.outlook.com/)
+> > - Manually check duplicate entry instead of checking
+> >   'debugfs_create_dir()' return value
+> > - Reword commit message and the test case
+> > 
+> > Seems Badari have some email client issue, so I (SJ) am making this
+> > third version of the patch based on Badari's final proposal and
+> > reposting on behalf of Badari.
+> > 
+> >  mm/damon/dbgfs.c | 3 +++
+> >  1 file changed, 3 insertions(+)
+> > 
+> > diff --git a/mm/damon/dbgfs.c b/mm/damon/dbgfs.c
+> > index 51d67c8050dd..3b55a1b219b5 100644
+> > --- a/mm/damon/dbgfs.c
+> > +++ b/mm/damon/dbgfs.c
+> > @@ -818,6 +818,9 @@ static int dbgfs_mk_context(char *name)
+> >  		return -ENOENT;
+> >  
+> >  	new_dir = debugfs_create_dir(name, root);
+> > +	/* Below check is required for a potential duplicated name case */
+> > +	if (IS_ERR(new_dir))
+> > +		return PTR_ERR(new_dir);
+> 
+> Did you just leak the memory allocated above this check?  It's hard to
+> determine as you are setting global variables.
+
+We re-alloc the metadata arrays for context above for this new context, and we
+do not re-alloc those in this failure case.  So yes, the arrays will have one
+more item that not really needed and also not really will be used.
+
+However, the variable for the array, 'dbgfs_nr_ctxs' is not increased here.
+Therefore, the arrays will be re-allocated to the proper size when this
+function or other function that re-alloc the arrays based on 'dbgfs_nr_ctxs'
+(For example, 'dbgfs_rm_context()') are called.
+
+So, though the arrays could have not-really-needed one entry that is only waste
+of memory, as it's only a small and fixed amount of memory (just one more
+pointer), and as the unneeded memory will eventually be returned (by a next
+'dbgfs_{mk,rm}_context()' call), I think that's no problem.  This is what I
+intended for keeping the logic simple.
+
+If I'm missing something, please let me know, though.
+
+
+Thanks,
+SJ
+
+> 
+> thanks,
+> 
+> greg k-h
