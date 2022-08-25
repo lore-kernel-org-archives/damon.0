@@ -1,56 +1,58 @@
-Received: from ms.lwn.net (ms.lwn.net [45.79.88.28])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 847D31FC5
-	for <damon@lists.linux.dev>; Thu, 25 Aug 2022 18:50:36 +0000 (UTC)
-Received: from localhost (unknown [IPv6:2601:281:8300:73::5f6])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by ms.lwn.net (Postfix) with ESMTPSA id CC6232E2;
-	Thu, 25 Aug 2022 18:50:29 +0000 (UTC)
-DKIM-Filter: OpenDKIM Filter v2.11.0 ms.lwn.net CC6232E2
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=lwn.net; s=20201203;
-	t=1661453430; bh=y42Jf/ag9rU15ToKoopXiKAz4rUlonTv87e8xUVPCd0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
-	b=RVEMFYtlAdcfdp9M02F2cjSEDTIPcvvWhZlWJbRfuME+Dmdal3T5IUCFQapXOB1VB
-	 bWZBFis1jPQqM0li0LPjmGGpfVHpN4rXWMQl7fKBY6JCRz9qTHT+TqwwlDeZJ/N9Qa
-	 J/XMyJz20DRhUzhFYbmC+uBBl/O5jDkW8jOwTGtirHakP5MZroVIAd45KsI+/6I8tk
-	 b/GHl9/XTl7xMTkFnMhGrjbLOPjg9xvuMUFOqCD0rs99y+jR4xQ4AMK9kE2SVJ8j88
-	 vr0qvHZrcosA5i7D/KsvAkeZxvh016DI7/h1qHS87UPxKgHzvPREG9ugDHYFt17u0h
-	 otT7y//sAhkpQ==
-From: Jonathan Corbet <corbet@lwn.net>
-To: Kairui Song <ryncsn@gmail.com>, damon@lists.linux.dev
-Cc: SeongJae Park <sj@kernel.org>, linux-mm@kvack.org,
- linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org, Kairui Song
- <kasong@tencent.com>
-Subject: Re: [PATCH v2] Docs/admin-guide/mm/damon/usage: fix the example
- code snip
-In-Reply-To: <20220823114053.53305-1-ryncsn@gmail.com>
-References: <20220823114053.53305-1-ryncsn@gmail.com>
-Date: Thu, 25 Aug 2022 12:50:29 -0600
-Message-ID: <875yigyx6y.fsf@meer.lwn.net>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18E364C74
+	for <damon@lists.linux.dev>; Thu, 25 Aug 2022 22:03:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 938A6C433C1;
+	Thu, 25 Aug 2022 22:03:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1661465006;
+	bh=qqj1sPuIU2M5if+JbH3KWWswkdV/0dNUDeh0IvSKFtg=;
+	h=From:To:Cc:Subject:Date:From;
+	b=fsl6BuPVos27L0w8g+6EOItCVKILp9mDLjbYEWiXKpjPO+US7EgJrrgvD7M82zf+e
+	 yzgwyTgBaJYJ8VyOu14Fs2/mchkB0bYgblVjP1jpwPd0bA82CWAKYl8okkcyNhv0hs
+	 wdhtzlBMoNbJSTpd34G3zGz+1Oid0KIFlPAUNybcdekzx11Gxa9S4++7P7oUlTIxT5
+	 oM2iio9FnF+NEJwPhANiOzEvNxBK5ZygJkM7Bvyx9rK4HldxCcTVhhHOVI0XXCdfI7
+	 MrG85m38Lp/IfTj2/6/KDAc3lUow6xOcADZRTN/IInjPa3YG7TF84csTeIO1LZuqo7
+	 zmtLmQL8iohzw==
+From: SeongJae Park <sj@kernel.org>
+To: damon@lists.linux.dev
+Cc: linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org
+Subject: [Reminder] DAMON debugfs interface will be removed
+Date: Thu, 25 Aug 2022 22:03:19 +0000
+Message-Id: <20220825220319.95226-1-sj@kernel.org>
+X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 
-Kairui Song <ryncsn@gmail.com> writes:
+Hello,
 
-> From: Kairui Song <kasong@tencent.com>
->
-> The workflow example code is not working since it got the file names
-> wrong. So fix this.
->
-> Fixes: b18402726bd1 ("Docs/admin-guide/mm/damon/usage: document DAMON sysfs interface")
-> Reviewed-by: SeongJae Park <sj@kernel.org>
-> Signed-off-by: Kairui Song <kasong@tencent.com>
-> ---
->  Documentation/admin-guide/mm/damon/usage.rst | 18 +++++++++---------
->  1 file changed, 9 insertions(+), 9 deletions(-)
 
-I've gone ahead and applied this, thanks.
+As announced before via the DAMON sysfs interface patchset[1] and also noted
+in the document[2], DAMON debugfs interface already in new-feature-frozen state
+and will be removed once next LTS kernel is released.  As there could be some
+users who still depends on the debugfs interface and forgot about the
+announcement, I just wanted to remind.
 
-jon
+DAMON user-space tool, damo[3], has supported both interfaces since the
+introduction of the sysfs interface and defaults to sysfs interface now, so the
+users of damo would have no problem.  If you are still using the debugfs
+interface, you could refer to that to know how you could use sysfs instead.
+
+That said, there is no problem at extending the timeline if there is any
+critical user issue, of course.  If you have such a critical issue, please let
+me know.
+
+[1] https://lore.kernel.org/all/20220228081314.5770-1-sj@kernel.org/
+[2] https://docs.kernel.org/admin-guide/mm/damon/usage.html
+[3] https://github.com/awslabs/damo
+
+
+Thanks,
+SJ
