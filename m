@@ -1,20 +1,20 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49AB94401
-	for <damon@lists.linux.dev>; Fri, 26 Aug 2022 17:08:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69C1CC433C1;
-	Fri, 26 Aug 2022 17:08:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAF7A440C
+	for <damon@lists.linux.dev>; Fri, 26 Aug 2022 17:16:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04F61C433D7;
+	Fri, 26 Aug 2022 17:16:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1661533702;
-	bh=JNWgzqw2tKu/IX/8pc1hZ71PjLuc8vnbXaaTYzYOVqo=;
+	s=k20201202; t=1661534191;
+	bh=iDINRuAQ4YmaJq22k2DCZ+hhEQstH3cgG8wNmEwf7RY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rDfBAJ8bVPWABbCjjYIv+k1fEpTx6a0eLEdqz6XZPoY4zq1SYEerpdmETH7OYZt9M
-	 skgKatTSN3AEbor1Jpr5W4kAg2K6F/3J41YYTw6WdXJTffyFhCkAq0pH+Haqp52TCj
-	 cBvv1jI+l6WqHrm7h+021WQI8cG0F9ml5IKlfAKV4oqMzejBdSdbC9naewR1liiSc5
-	 h6m3rHVBLI7u5INQH6nCWf2ol7XuKMpMKQA4SpQBJ48A/ZGBD/x28RAmYIHyfFjwwG
-	 e5j1wkbTWkitMUR/gUjdTHiyQ/41Z1kHRD7psMqHbb9DjwJshs20F/R46RFYK7CJR3
-	 R0zOBzVXNl8kQ==
+	b=daNeke0IhQ/wVEd02y7AL28gqaIRqwNto6VvGKWd5c4ahO5ZFNwOT2REHKTpkC550
+	 KR8okkektQbiFKq7NS/VmDQmDLpEF+Fz9c8vyTrbVppRif+qF0dcSUH4ZyMJJLV5CI
+	 wPmI0gOiQPtiWYeV2TEs0hacs8vNABhzIqOrnuTsgPtvGh2CEb862SW0+wXzG8qFT6
+	 SbeIDmdl6Fr/NRuCHxp1RpXE0DoKHKETm0qj21GEl5IIyX8mo+gIr1JLXdNhwZ0HIF
+	 lNgffucmLb4JL5s08Q93Cn/JoLbXgqJmxr/tYXIGxLRqX101R9Xlblm9H1z9b6bifB
+	 kIGvWEhqEGe8g==
 From: SeongJae Park <sj@kernel.org>
 To: xiakaixu1987@gmail.com
 Cc: sj@kernel.org,
@@ -23,11 +23,11 @@ Cc: sj@kernel.org,
 	linux-mm@kvack.org,
 	linux-kernel@vger.kernel.org,
 	Kaixu Xia <kaixuxia@tencent.com>
-Subject: Re: [PATCH 1/2] mm/damon: simplify the parameter passing for 'check_accesses'
-Date: Fri, 26 Aug 2022 17:08:18 +0000
-Message-Id: <20220826170818.50050-1-sj@kernel.org>
+Subject: Re: [PATCH 2/2] mm/damon/vaddr: remove comparison between mm and last_mm when checking region accesses
+Date: Fri, 26 Aug 2022 17:16:29 +0000
+Message-Id: <20220826171629.50210-1-sj@kernel.org>
 X-Mailer: git-send-email 2.25.1
-In-Reply-To: <1661502678-19336-2-git-send-email-kaixuxia@tencent.com>
+In-Reply-To: <1661502678-19336-3-git-send-email-kaixuxia@tencent.com>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -39,81 +39,24 @@ Content-Transfer-Encoding: 8bit
 
 Hi Kaixu,
 
-On Fri, 26 Aug 2022 16:31:17 +0800 xiakaixu1987@gmail.com wrote:
+On Fri, 26 Aug 2022 16:31:18 +0800 xiakaixu1987@gmail.com wrote:
 
 > From: Kaixu Xia <kaixuxia@tencent.com>
 > 
-> The parameter 'struct damon_ctx *ctx' is unnecessary in damon
-> 'check_accesses' callback operation, so we can remove it.
+> The damon regions that belong to the same damon target have the same
+> 'struct mm_struct *mm', so it's unnecessary to compare the mm and last_mm
+> objects among the damon regions in one damon target when checking accesses.
 
-Thank you for the finding, but this wording is not 100% perfect, strictly
-speaking.  The callback operations indeed use the parameter, but the internal
-functions called by the callbacks (__damon_{p,v}a_check_access()) aren't.
+There could be multiple targets, and 'damon_va_check_accesses()' calls
+'__damon_va_check_accesses()' for all the targets.  However,
+'damon_va_check_accesses()' doesn't note if '__damon_va_check_accesses()' is
+called with a target that same to the target it was called with for the last
+time.  Hence the check is necessary.
 
-Could you please update the message?
-
-> 
-> Signed-off-by: Kaixu Xia <kaixuxia@tencent.com>
-> ---
->  mm/damon/paddr.c | 5 ++---
->  mm/damon/vaddr.c | 5 ++---
->  2 files changed, 4 insertions(+), 6 deletions(-)
-> 
-> diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
-> index dc131c6a5403..6b0d9e6aa677 100644
-> --- a/mm/damon/paddr.c
-> +++ b/mm/damon/paddr.c
-> @@ -166,8 +166,7 @@ static bool damon_pa_young(unsigned long paddr, unsigned long *page_sz)
->  	return result.accessed;
->  }
->  
-> -static void __damon_pa_check_access(struct damon_ctx *ctx,
-> -				    struct damon_region *r)
-> +static void __damon_pa_check_access(struct damon_region *r)
->  {
->  	static unsigned long last_addr;
->  	static unsigned long last_page_sz = PAGE_SIZE;
-> @@ -196,7 +195,7 @@ static unsigned int damon_pa_check_accesses(struct damon_ctx *ctx)
->  
->  	damon_for_each_target(t, ctx) {
->  		damon_for_each_region(r, t) {
-> -			__damon_pa_check_access(ctx, r);
-> +			__damon_pa_check_access(r);
->  			max_nr_accesses = max(r->nr_accesses, max_nr_accesses);
->  		}
->  	}
-> diff --git a/mm/damon/vaddr.c b/mm/damon/vaddr.c
-> index 3c7b9d6dca95..c8c2f306bb6d 100644
-> --- a/mm/damon/vaddr.c
-> +++ b/mm/damon/vaddr.c
-> @@ -532,8 +532,7 @@ static bool damon_va_young(struct mm_struct *mm, unsigned long addr,
->   * mm	'mm_struct' for the given virtual address space
->   * r	the region to be checked
->   */
-> -static void __damon_va_check_access(struct damon_ctx *ctx,
-> -			       struct mm_struct *mm, struct damon_region *r)
-> +static void __damon_va_check_access(struct mm_struct *mm, struct damon_region *r)
-
-I still prefer 80 columns rule[1].  Could you please break this line?
-
-
-[1] https://docs.kernel.org/process/coding-style.html#breaking-long-lines-and-strings
-
->  {
->  	static struct mm_struct *last_mm;
->  	static unsigned long last_addr;
-> @@ -568,7 +567,7 @@ static unsigned int damon_va_check_accesses(struct damon_ctx *ctx)
->  		if (!mm)
->  			continue;
->  		damon_for_each_region(r, t) {
-> -			__damon_va_check_access(ctx, mm, r);
-> +			__damon_va_check_access(mm, r);
->  			max_nr_accesses = max(r->nr_accesses, max_nr_accesses);
->  		}
->  		mmput(mm);
-> -- 
-> 2.27.0
+If I'm missing something, please let me know.
 
 
 Thanks,
 SJ
+
+[...]
