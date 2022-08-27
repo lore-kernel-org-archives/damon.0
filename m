@@ -1,39 +1,41 @@
-Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
+Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7D092567
-	for <damon@lists.linux.dev>; Sat, 27 Aug 2022 09:03:13 +0000 (UTC)
-Received: by mail-pl1-f178.google.com with SMTP id c2so3567847plo.3
-        for <damon@lists.linux.dev>; Sat, 27 Aug 2022 02:03:13 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BADC28F0
+	for <damon@lists.linux.dev>; Sat, 27 Aug 2022 09:03:16 +0000 (UTC)
+Received: by mail-pf1-f180.google.com with SMTP id p185so3692919pfb.13
+        for <damon@lists.linux.dev>; Sat, 27 Aug 2022 02:03:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:date:subject:cc:to:from:from:to:cc;
-        bh=90UlM2PuWOh2i930PTJrjm9Hw09uaXewUF8YqD4wyuk=;
-        b=UZT7avK2u7Igc1jSHNW5W6BqyyviOvdR6mP6igbn1yln+jQ1siSL5Tb+MV+h8L2lQs
-         eeKGY7F8CR4qQ7lLvTIpw1A15s5zRadRVnzrKljONn2veUAseTe/UJqo1edF8dJpWJFY
-         e93wzsKQjCal8eiEpln43OnJVl5qVGocCkgf7b4Cs7mdA9wdXQ5UOCLfSzOzeEEuDZnj
-         yjclsxdbr5xmH/Ruo5ahQ7gp/ThrMpJo19S038MBFPB66JwymOpqdasZwEAw99oe224+
-         +YHkEkPzFKlknen3DPuX5KI/yMTLDDdFn8t6meidzYC3pCkhCQFYLJZ7CKEPsWBR2VSC
-         hZ6A==
+        h=references:in-reply-to:message-id:date:subject:cc:to:from:from:to
+         :cc;
+        bh=d1f8nUkF5t5cqSm1uy6aZjuA2/Q1MZyp0rZYnQGPqp0=;
+        b=ADjlqlLIinapEBKNHJvPolEuOZOLX5jS2yCniDir0S71XSJNsvfMC3q6GUuAFzuJqR
+         8vplwGxKNX2EsG9DemkIS31tmJaa8urq6d9dQPAoSQfovgGR1RKD8BYEryyzG3AJG/dm
+         nG1Hy5RBSbbVJIPOfm9dxB1H/nLD7X0PGfE6nOpZntMCl/OIiy7dvNBflhCnnZlgjQIV
+         nuh2nT0+/QE5gOvY/YEECvTlajluTepx43UDivJKpw+BuV2uonfE7Mlc/mAfNIDC7vo4
+         SIX0MT+I90XyCiC1VW+mvtuFzDkQDeFK68kD3JdlI5G8HPDdUtlklTfqy/k+gVgiUb7A
+         Ut/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc;
-        bh=90UlM2PuWOh2i930PTJrjm9Hw09uaXewUF8YqD4wyuk=;
-        b=fbd5/XtEt3R0jLOe2tJzOv3TZx+goxlPEgvxu02ZsKJQBS+FaHA6yyGrxiiHbrmy07
-         Kyt1AY80xCI2sq43OpBPFOpVd+CnWgTTGSWeD+yijb362Q76jPtPZu8dJnMk9h8IJQmM
-         p1uxntboE4vsM9zTLIiZApSrNWZ8HDfyd6eNOFPzqjC1f3wjtKAHQ/0CKkL/WzoILdSy
-         Sf5wXvSrvM8RH7J0i8KDy1freCG91js7F3dtfNuYtYVKK0b4v+YELMXP0xmCCq6qxD+c
-         gsO+0x+kPC5xXe5tbekEEZ4QGLNXh864jOcp+G6/B/4uVQYZ1r7lxbKfGIYQPt4yc20h
-         +GWA==
-X-Gm-Message-State: ACgBeo0dp5YTXHCDhCg9qziMLB3jQdAeFuhC4Utnd0A0vJSXLJw0oJ0r
-	QJqOVE9wORvxCmHe/NjXSg==
-X-Google-Smtp-Source: AA6agR7jm26RfQlxhDsB8HFVODUjthl94fNCvZuO25VcQRFNig6aVaO0fULlUcZMUh5zB99+JErAJA==
-X-Received: by 2002:a17:90b:3142:b0:1fa:f533:3191 with SMTP id ip2-20020a17090b314200b001faf5333191mr8274424pjb.193.1661590993285;
-        Sat, 27 Aug 2022 02:03:13 -0700 (PDT)
+        h=references:in-reply-to:message-id:date:subject:cc:to:from
+         :x-gm-message-state:from:to:cc;
+        bh=d1f8nUkF5t5cqSm1uy6aZjuA2/Q1MZyp0rZYnQGPqp0=;
+        b=IiTwEt5E9sbZ34RbT4ywY23x1itI0IdLMYK0DOxFoxTUx1vWYeWUj+yzeIldK6Veqq
+         uuwsGbW66eWQfc/2ocVONQKqr5aXhG8CimRZ8nh4Plt+NqC+yEjrWO5afCLhlZr4ITv1
+         MBZAs4S21uhQVQDtifXLMNexw3Bjf1LiGlHjthOABIB20jUyb6fI34026SMYzuK6NRtv
+         7J38KYobg4dfsFSotufg/QIbmtV9kap22VxD5Ax5cWU9kSCa90MkBWy169N2xRvsqraO
+         m23vfVyUm5i2IPNTCwtEyaj9EjU11w/mAB/7ifmo2q9jq6eIynOCJfeP8NwZCppe/rL5
+         QpRA==
+X-Gm-Message-State: ACgBeo1rSFLLzFUccr4oC+VZ0rsQO+OUXGJYrnT8lP3bHfTIaw3jskIX
+	3HL/T6UaVxYOk/rsAJolhQ==
+X-Google-Smtp-Source: AA6agR5q+qB4j7NKYCCupMsiap0S5orWPGACxAjLmCltEPdsahEoARsCXsq2ScHJmpUnXiH+R4HNCg==
+X-Received: by 2002:a63:5d4e:0:b0:41d:dcc3:aa85 with SMTP id o14-20020a635d4e000000b0041ddcc3aa85mr6342951pgm.324.1661590995694;
+        Sat, 27 Aug 2022 02:03:15 -0700 (PDT)
 Received: from localhost.localdomain ([43.132.141.8])
-        by smtp.gmail.com with ESMTPSA id s88-20020a17090a69e100b001fb09316a26sm2943332pjj.43.2022.08.27.02.03.11
+        by smtp.gmail.com with ESMTPSA id s88-20020a17090a69e100b001fb09316a26sm2943332pjj.43.2022.08.27.02.03.13
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 27 Aug 2022 02:03:12 -0700 (PDT)
+        Sat, 27 Aug 2022 02:03:14 -0700 (PDT)
 From: xiakaixu1987@gmail.com
 X-Google-Original-From: kaixuxia@tencent.com
 To: sj@kernel.org,
@@ -42,10 +44,12 @@ Cc: damon@lists.linux.dev,
 	linux-mm@kvack.org,
 	linux-kernel@vger.kernel.org,
 	Kaixu Xia <kaixuxia@tencent.com>
-Subject: [PATCH v2 0/2] mm/damon: Simplify the damon regions access check
-Date: Sat, 27 Aug 2022 17:02:49 +0800
-Message-Id: <1661590971-20893-1-git-send-email-kaixuxia@tencent.com>
+Subject: [PATCH v2 1/2] mm/damon: simplify the parameter passing for 'check_accesses'
+Date: Sat, 27 Aug 2022 17:02:50 +0800
+Message-Id: <1661590971-20893-2-git-send-email-kaixuxia@tencent.com>
 X-Mailer: git-send-email 1.8.3.1
+In-Reply-To: <1661590971-20893-1-git-send-email-kaixuxia@tencent.com>
+References: <1661590971-20893-1-git-send-email-kaixuxia@tencent.com>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -54,22 +58,63 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 
 From: Kaixu Xia <kaixuxia@tencent.com>
 
-This patchset simplify the operations when checking the damon
-regions accesses.
+The parameter 'struct damon_ctx *ctx' isn't used in the functions
+__damon_{p,v}a_check_access(), so we can remove it and simplify the
+parameter passing.
 
-v2:
- -Update commit messages and fix the 80 characters warning.
- -Add the check when damon target changed.
+Signed-off-by: Kaixu Xia <kaixuxia@tencent.com>
+---
+ mm/damon/paddr.c | 5 ++---
+ mm/damon/vaddr.c | 6 +++---
+ 2 files changed, 5 insertions(+), 6 deletions(-)
 
-Kaixu Xia (2):
-  mm/damon: simplify the parameter passing for 'check_accesses'
-  mm/damon/vaddr: remove comparison between mm and last_mm when checking
-    region accesses
-
- mm/damon/paddr.c |  5 ++---
- mm/damon/vaddr.c | 13 +++++++------
- 2 files changed, 9 insertions(+), 9 deletions(-)
-
+diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
+index dc131c6a5403..6b0d9e6aa677 100644
+--- a/mm/damon/paddr.c
++++ b/mm/damon/paddr.c
+@@ -166,8 +166,7 @@ static bool damon_pa_young(unsigned long paddr, unsigned long *page_sz)
+ 	return result.accessed;
+ }
+ 
+-static void __damon_pa_check_access(struct damon_ctx *ctx,
+-				    struct damon_region *r)
++static void __damon_pa_check_access(struct damon_region *r)
+ {
+ 	static unsigned long last_addr;
+ 	static unsigned long last_page_sz = PAGE_SIZE;
+@@ -196,7 +195,7 @@ static unsigned int damon_pa_check_accesses(struct damon_ctx *ctx)
+ 
+ 	damon_for_each_target(t, ctx) {
+ 		damon_for_each_region(r, t) {
+-			__damon_pa_check_access(ctx, r);
++			__damon_pa_check_access(r);
+ 			max_nr_accesses = max(r->nr_accesses, max_nr_accesses);
+ 		}
+ 	}
+diff --git a/mm/damon/vaddr.c b/mm/damon/vaddr.c
+index 3c7b9d6dca95..e481f81c3efb 100644
+--- a/mm/damon/vaddr.c
++++ b/mm/damon/vaddr.c
+@@ -532,8 +532,8 @@ static bool damon_va_young(struct mm_struct *mm, unsigned long addr,
+  * mm	'mm_struct' for the given virtual address space
+  * r	the region to be checked
+  */
+-static void __damon_va_check_access(struct damon_ctx *ctx,
+-			       struct mm_struct *mm, struct damon_region *r)
++static void __damon_va_check_access(struct mm_struct *mm,
++				struct damon_region *r)
+ {
+ 	static struct mm_struct *last_mm;
+ 	static unsigned long last_addr;
+@@ -568,7 +568,7 @@ static unsigned int damon_va_check_accesses(struct damon_ctx *ctx)
+ 		if (!mm)
+ 			continue;
+ 		damon_for_each_region(r, t) {
+-			__damon_va_check_access(ctx, mm, r);
++			__damon_va_check_access(mm, r);
+ 			max_nr_accesses = max(r->nr_accesses, max_nr_accesses);
+ 		}
+ 		mmput(mm);
 -- 
 2.27.0
 
