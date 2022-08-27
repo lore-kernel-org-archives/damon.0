@@ -1,88 +1,75 @@
-Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
+Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3BC44C94
-	for <damon@lists.linux.dev>; Fri, 26 Aug 2022 21:06:25 +0000 (UTC)
-Received: by mail-ej1-f46.google.com with SMTP id cu2so5397810ejb.0
-        for <damon@lists.linux.dev>; Fri, 26 Aug 2022 14:06:25 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7D092567
+	for <damon@lists.linux.dev>; Sat, 27 Aug 2022 09:03:13 +0000 (UTC)
+Received: by mail-pl1-f178.google.com with SMTP id c2so3567847plo.3
+        for <damon@lists.linux.dev>; Sat, 27 Aug 2022 02:03:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc;
-        bh=5PwylQXedxDhkWafpzB4KIy3NiEnlvim/yfJsbpjDbQ=;
-        b=Yf9PjWlfL1r7eT/c/0AIKUjx+BKquW/wJnHvOD5xraOs6Zq6+qgnX0MvaVZZirGA29
-         MiCEjgTCWVH6qERy3ErADS+pQlFu0JZM6MMkgMyDzjmYTl7pzcjuduPfCeYXe62wir+R
-         F/0AJRGshM9LobezTNYiztGwD4ALx554BVYmphaKX7b/HqjkDb7yE0CapdGKprLHC+uD
-         NVhp5BNbj7GtIsj4wHzXNKBXu/nBCo5/+AtMQFMoQTJGxpubM3Nl1C2nlDuiKCFTD0OA
-         rUPDJDe2Jk6Y9NkE7s0OgIZFirU9LpSK8tGo9v+OA4I+pXOc2aqEI54hnwrbByRa3Csa
-         4lMg==
+        h=message-id:date:subject:cc:to:from:from:to:cc;
+        bh=90UlM2PuWOh2i930PTJrjm9Hw09uaXewUF8YqD4wyuk=;
+        b=UZT7avK2u7Igc1jSHNW5W6BqyyviOvdR6mP6igbn1yln+jQ1siSL5Tb+MV+h8L2lQs
+         eeKGY7F8CR4qQ7lLvTIpw1A15s5zRadRVnzrKljONn2veUAseTe/UJqo1edF8dJpWJFY
+         e93wzsKQjCal8eiEpln43OnJVl5qVGocCkgf7b4Cs7mdA9wdXQ5UOCLfSzOzeEEuDZnj
+         yjclsxdbr5xmH/Ruo5ahQ7gp/ThrMpJo19S038MBFPB66JwymOpqdasZwEAw99oe224+
+         +YHkEkPzFKlknen3DPuX5KI/yMTLDDdFn8t6meidzYC3pCkhCQFYLJZ7CKEPsWBR2VSC
+         hZ6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc;
-        bh=5PwylQXedxDhkWafpzB4KIy3NiEnlvim/yfJsbpjDbQ=;
-        b=zG1T2bOJ3K0jaGwnLTYrL35Zlw6YApNH/uHgGDxbuHCpRCDfEOOCxROzqOpPdd+W9r
-         lVRhMmtD7zxBkI3J+WuqEs1e0iWqHRPA554vm2sTIe0tBjKVQWQ8uilmmSMoeJUYiQGd
-         elDFY6NNEGfGTlGn649conD2dIPmP+2blUKBRy2EWXHGC0LPZVjh1pA+3x4bQMFzlBwn
-         /6hyQxADetAm7yAXnjOzl+WAuP6Dvv1c8Akskd1KhP74jxsXSEaFMGUzg4Ol6VZ966DE
-         kgVM9Lj1lcX9yeXEFDJ3Agi3A0Ctj8Ilk9ZqDv7agCy2M3eCAEkVcMnUAB2RWdW+vwzM
-         yz9g==
-X-Gm-Message-State: ACgBeo3WtnZLUJPps+1AgzhbR2mNxt8AKioTdFZkNERxhIdGRGX7p2AS
-	9uI5MzaTkJgXnQxIPsKCyexnV/6IGsxpXcLhtg==
-X-Google-Smtp-Source: AA6agR6Ncxwh8sZisapap17QKB0vCPLvZPFGD64SjhSRwQj5pNJD2743vRLKzk92RbbdMrcFnobg9pLitg0Rbm61fT0=
-X-Received: by 2002:a17:907:6096:b0:73d:9d12:4b04 with SMTP id
- ht22-20020a170907609600b0073d9d124b04mr6717363ejc.745.1661547983987; Fri, 26
- Aug 2022 14:06:23 -0700 (PDT)
+        h=message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc;
+        bh=90UlM2PuWOh2i930PTJrjm9Hw09uaXewUF8YqD4wyuk=;
+        b=fbd5/XtEt3R0jLOe2tJzOv3TZx+goxlPEgvxu02ZsKJQBS+FaHA6yyGrxiiHbrmy07
+         Kyt1AY80xCI2sq43OpBPFOpVd+CnWgTTGSWeD+yijb362Q76jPtPZu8dJnMk9h8IJQmM
+         p1uxntboE4vsM9zTLIiZApSrNWZ8HDfyd6eNOFPzqjC1f3wjtKAHQ/0CKkL/WzoILdSy
+         Sf5wXvSrvM8RH7J0i8KDy1freCG91js7F3dtfNuYtYVKK0b4v+YELMXP0xmCCq6qxD+c
+         gsO+0x+kPC5xXe5tbekEEZ4QGLNXh864jOcp+G6/B/4uVQYZ1r7lxbKfGIYQPt4yc20h
+         +GWA==
+X-Gm-Message-State: ACgBeo0dp5YTXHCDhCg9qziMLB3jQdAeFuhC4Utnd0A0vJSXLJw0oJ0r
+	QJqOVE9wORvxCmHe/NjXSg==
+X-Google-Smtp-Source: AA6agR7jm26RfQlxhDsB8HFVODUjthl94fNCvZuO25VcQRFNig6aVaO0fULlUcZMUh5zB99+JErAJA==
+X-Received: by 2002:a17:90b:3142:b0:1fa:f533:3191 with SMTP id ip2-20020a17090b314200b001faf5333191mr8274424pjb.193.1661590993285;
+        Sat, 27 Aug 2022 02:03:13 -0700 (PDT)
+Received: from localhost.localdomain ([43.132.141.8])
+        by smtp.gmail.com with ESMTPSA id s88-20020a17090a69e100b001fb09316a26sm2943332pjj.43.2022.08.27.02.03.11
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 27 Aug 2022 02:03:12 -0700 (PDT)
+From: xiakaixu1987@gmail.com
+X-Google-Original-From: kaixuxia@tencent.com
+To: sj@kernel.org,
+	akpm@linux-foundation.org
+Cc: damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org,
+	Kaixu Xia <kaixuxia@tencent.com>
+Subject: [PATCH v2 0/2] mm/damon: Simplify the damon regions access check
+Date: Sat, 27 Aug 2022 17:02:49 +0800
+Message-Id: <1661590971-20893-1-git-send-email-kaixuxia@tencent.com>
+X-Mailer: git-send-email 1.8.3.1
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-References: <1661502678-19336-3-git-send-email-kaixuxia@tencent.com> <20220826171629.50210-1-sj@kernel.org>
-In-Reply-To: <20220826171629.50210-1-sj@kernel.org>
-From: Kaixu Xia <xiakaixu1987@gmail.com>
-Date: Sat, 27 Aug 2022 05:06:12 +0800
-Message-ID: <CAGjdHunJ4bRbzm6gGKaZONTa1sY8macitByxattRSbwJZR5J2g@mail.gmail.com>
-Subject: Re: [PATCH 2/2] mm/damon/vaddr: remove comparison between mm and
- last_mm when checking region accesses
-To: SeongJae Park <sj@kernel.org>
-Cc: akpm@linux-foundation.org, damon@lists.linux.dev, linux-mm@kvack.org, 
-	LKML <linux-kernel@vger.kernel.org>, Kaixu Xia <kaixuxia@tencent.com>
-Content-Type: text/plain; charset="UTF-8"
 
-On Sat, Aug 27, 2022 at 1:16 AM SeongJae Park <sj@kernel.org> wrote:
->
-> Hi Kaixu,
->
-> On Fri, 26 Aug 2022 16:31:18 +0800 xiakaixu1987@gmail.com wrote:
->
-> > From: Kaixu Xia <kaixuxia@tencent.com>
-> >
-> > The damon regions that belong to the same damon target have the same
-> > 'struct mm_struct *mm', so it's unnecessary to compare the mm and last_mm
-> > objects among the damon regions in one damon target when checking accesses.
->
-> There could be multiple targets, and 'damon_va_check_accesses()' calls
-> '__damon_va_check_accesses()' for all the targets.  However,
-> 'damon_va_check_accesses()' doesn't note if '__damon_va_check_accesses()' is
-> called with a target that same to the target it was called with for the last
-> time.  Hence the check is necessary.
+From: Kaixu Xia <kaixuxia@tencent.com>
 
-There could be many regions(1000 max limit) in one target and the mm
-is same within
-the target, maybe we don't need to maintain the 'last_mm' and do the
-check every time
-when the target is same.
-But yes, the check is necessary when the target changed in
-'__damon_va_check_accesses()',
-this RFC patch missed this case :)  will fix it.
+This patchset simplify the operations when checking the damon
+regions accesses.
 
->
-> If I'm missing something, please let me know.
->
->
-> Thanks,
-> SJ
->
-> [...]
+v2:
+ -Update commit messages and fix the 80 characters warning.
+ -Add the check when damon target changed.
+
+Kaixu Xia (2):
+  mm/damon: simplify the parameter passing for 'check_accesses'
+  mm/damon/vaddr: remove comparison between mm and last_mm when checking
+    region accesses
+
+ mm/damon/paddr.c |  5 ++---
+ mm/damon/vaddr.c | 13 +++++++------
+ 2 files changed, 9 insertions(+), 9 deletions(-)
+
+-- 
+2.27.0
+
