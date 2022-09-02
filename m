@@ -1,38 +1,38 @@
-Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
+Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2068DEA0
-	for <damon@lists.linux.dev>; Fri,  2 Sep 2022 01:18:28 +0000 (UTC)
-Received: by mail-ed1-f46.google.com with SMTP id u6so793269eda.12
-        for <damon@lists.linux.dev>; Thu, 01 Sep 2022 18:18:27 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80C48EA0
+	for <damon@lists.linux.dev>; Fri,  2 Sep 2022 01:22:12 +0000 (UTC)
+Received: by mail-ej1-f49.google.com with SMTP id qh18so930404ejb.7
+        for <damon@lists.linux.dev>; Thu, 01 Sep 2022 18:22:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date;
-        bh=vubaGOA7KAPskf9TWeTqLDaT3GTBzASXB3ONje3ZhBQ=;
-        b=e0XDxZD4BlDqW2yW2GdtDuadr5wMVeqgtWyK7SjJ89u1AF49qE5j3GpVJns1IOt8QV
-         Cl2N0D2I8pJeMrg67NariRniZVkO6LA2yFzMF1ojRACDYcVZIvYDzMNdO+rPQlb6ggbP
-         s96+VQpkVBkxE/kZo9KUt8lZAT1JKxCG7e9+0e3fz6DFRCps7SFuIkHZlbMzKB+BMSQt
-         zrZZKxE9k4FbnJxTdj4Mf1pH3hAKJAWwQ/kVSYlY0ucHkLXT2J8dqKZh3+SxIzz8omFZ
-         Pg/pqFsj2tF7cqgjrlxW6PEOUbpj/MWGkLKfeeMk0HMlcvQROXwKmZ3q+SY1+VW2wWmQ
-         Bdcw==
+        bh=4ekojsMMqY2Pm05Rphb53MHYNyMEIvQwOJ3eVma3ANU=;
+        b=DpE5ySnBVoMrzA8BE5ubvWKgQjB1eCXTMacZXixvZozSowwvy8FN2PZfmG+otQ9CV+
+         OAf7gWgQnbp0SDJ8le0Tw3/xbHELKX/g6NcRgiey2LlnnGRPV8o72Hletv2uMsURQa3y
+         rYwiT+BKPC/m9v1v6RZ+woAz1ofjW1p559y30t9akOy+/w6kSRD/GjPxNyEJYOavDCXm
+         Ov7Rry9VHU3af8eC6+7+fZ4KGjQKLl2Lfxxs539lVqvhtCJwZ02M3joaNM9ui5UyjxH6
+         VZnGPJ57zgHXiSdTX+2G4gMUAn1J8TCA2aAybDOArbH04LzR44QuRDzQNQY3k4V5rrOO
+         Lcyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date;
-        bh=vubaGOA7KAPskf9TWeTqLDaT3GTBzASXB3ONje3ZhBQ=;
-        b=Kx5Cpimgh1yvK5Hg2avb4/b+IqAU0q6h8sCjmOEHoBRdzN8df5ObypY6PjAK5NiPHT
-         LiWdhFddZ8Y4JGfnGAlexsQXSOMg50gYPsjzM4m9MbG0LruXdKVhM/l1cK4BeSUESB72
-         lvSLdb2qK2WuxVoCdcCUfIMI7VWKoEEmNGDNMDJwjC23qqWa/tVmgCdxvr1YUvJ2HcgE
-         skDbewOQJxy1laTG86Knrh1K/iqTnfhw1mt3VZOgGxFA9e3RivGTrFLdT1rYAYszjXBj
-         6W1DzE1CSkRoQFsgKsVBYyutSgVsj3Kwi/x11mGk1wMP0itjQ4/6RvR6UWxuns6pbo7v
-         kudg==
-X-Gm-Message-State: ACgBeo1/q+u2l6JDG7XY4Bitbgn+Ql/mC/XJZc6ZfqGcsaZ8QiurABA3
-	VQpfr6V53ku0nFPDn6EqFw8BSgi+krsp3+EJxV8=
-X-Google-Smtp-Source: AA6agR645HOEPE/gqaaVEnxnhpjUlnfl7tSda4XCFDPjOInVU7DSeqWhDlV+YM7dCxScZqQhB2VGwElrij+dAGvWvdw=
-X-Received: by 2002:aa7:df8c:0:b0:448:a9a0:5fd8 with SMTP id
- b12-20020aa7df8c000000b00448a9a05fd8mr14996981edy.244.1662081506225; Thu, 01
- Sep 2022 18:18:26 -0700 (PDT)
+        bh=4ekojsMMqY2Pm05Rphb53MHYNyMEIvQwOJ3eVma3ANU=;
+        b=bIdaUs5yOOfTZQPBaDudZFlNMPc7MmoCJtpFK3tWkGlnGVJoYJlQ0ECO8F1i8bgOue
+         RMIWaTR7DeiScMKLxH6DZ8ZeiEr3TdGlI/U14nffpGgtARhv3FfTZseRJGQLpGR4e14e
+         dkNjedSX/iWjRp/7UrPPhAwUtH0SXlt6sD7y4QEYTNyiOMxewp1kMyT8R7kJ2QTnPPs0
+         G9DAzsZ2QGXySpPlag1TXnNEkKw+/SMgxViHAjOu6pQuiRXzHIr/Og5s8rDNWgbo4I+z
+         INgcft096qIyrJu90E7078SnmVhOMjYwsMdawjS2OWlKhJu99YSKThMVXxumk7exvhvj
+         /8Bg==
+X-Gm-Message-State: ACgBeo0mqxRZjh1j8eu4GXxb7YnUDVxTrB10VnTIBhae/rU0ncA+Xw13
+	0ENRFyHhULWMtxd9/DLru8FJGXAzMXY/YJq3K6I=
+X-Google-Smtp-Source: AA6agR7W3a5Sl/Lf3q0qup8swxm27nDGIzxM98seBuNVPpdZiEoOzNDOaGns8RakN4dBbM2m+TBvcVlsmwdczcFz+XY=
+X-Received: by 2002:a17:906:8462:b0:741:6003:71e4 with SMTP id
+ hx2-20020a170906846200b00741600371e4mr17739965ejc.170.1662081730591; Thu, 01
+ Sep 2022 18:22:10 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -43,8 +43,8 @@ References: <CAGsJ_4w=NKr-NOg2TLycx=ka1OpzmzC2dpq0Z1EUXaXDMM8uVQ@mail.gmail.com>
  <20220901221114.81601-1-sj@kernel.org>
 In-Reply-To: <20220901221114.81601-1-sj@kernel.org>
 From: Barry Song <21cnbao@gmail.com>
-Date: Fri, 2 Sep 2022 13:18:15 +1200
-Message-ID: <CAGsJ_4zgQ87vfBN795Yxa4R25kQwHm9H1Kxi3RetpfTu9bzSew@mail.gmail.com>
+Date: Fri, 2 Sep 2022 13:21:59 +1200
+Message-ID: <CAGsJ_4zw7eiDT5WXOhxNSH5154pRYhTx00JZrnNP=cSqNStyjw@mail.gmail.com>
 Subject: Re: [PATCH 7/8] mm/damon: introduce DAMON-based LRU-lists Sorting
 To: SeongJae Park <sj@kernel.org>
 Cc: Yu Zhao <yuzhao@google.com>, Andrew Morton <akpm@linux-foundation.org>, 
@@ -144,13 +144,14 @@ On Fri, Sep 2, 2022 at 10:11 AM SeongJae Park <sj@kernel.org> wrote:
 > Well, what I can tell for now is that it would depend on the specific system
 > and workload, but I found some production systems that have such kind of
 > physical address space locality.
->
 
 yep. I guess for mmu-less systems, spatial locality is more likely to be true.
-for mmu system, workload using 2MB or 1GB THP won't show locality in
+for mmu system, workload using 2MB or 1GB THP will show some locality in
 physical address as well. but THP_SWP will swap them as a whole, so it
-seems locality inside a THP
+seems locality inside a THP doesn't help? as we are not splitting sub pages
+of THP for reclamation?
 
+>
 > >
 > > >
 > > > If your system has too low locality and therefore DAMON doesn't provide good
@@ -192,6 +193,11 @@ seems locality inside a THP
 >
 > I didn't read MGLRU patchset thoroughly, but, maybe?
 >
+
+Yes, please read MGLRU, SeongJae. I find some ideas in MGLRU are
+really good. we might
+leverage those to improve DAMON as well :-)
+
 >
 > Thanks,
 > SJ
@@ -205,5 +211,6 @@ seems locality inside a THP
 > > > Thanks,
 > > > SJ
 > >
-> > Thanks
-> > Barry
+
+Thanks
+Barry
