@@ -1,119 +1,113 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f178.google.com (mail-yb1-f178.google.com [209.85.219.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AE27468E
-	for <damon@lists.linux.dev>; Mon,  5 Sep 2022 18:20:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76A42C433D7;
-	Mon,  5 Sep 2022 18:20:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1662402020;
-	bh=v7P6Uw4HRJRP4lWIfQcjoKQy75gM4zEUpDlPO/DPqz0=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CHC0kzZF/ex5uMQxHHasuue1Hxlvx0zNLHDfvhPxdjZEtkmrsZ9BTrGMP6qC9yK2+
-	 a9r0j8RRkVKNMSTOfc+15y1xhFDC2Y913HuDJhCnihSiLU/Bk/ahw1b0YceOSmTjYX
-	 KmEDIQCPKk9heFzQSjJRG1EcXR+1KPZEuaHfA+HonRemofBwJoVYlhTH9TDYwAC6dk
-	 jZUYY7cI2WRsehHRV45ROVUSjlfV42c+6lTdg3WgwrCQH7aj5LgYxBLnfYAtn5IUCn
-	 tfwaJt8xSTkLiyjCCFjOmffjKxAIgbnBSs9rwhiHcYUvVlAo7L5/eSU6ZIISNPWmNW
-	 yqxvy/mQWEHJg==
-From: SeongJae Park <sj@kernel.org>
-To: xiakaixu1987@gmail.com
-Cc: sj@kernel.org,
-	akpm@linux-foundation.org,
-	damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org,
-	Kaixu Xia <kaixuxia@tencent.com>
-Subject: Re: [PATCH] mm/damon/sysfs: simplify the judgement whether kdamonds are busy
-Date: Mon,  5 Sep 2022 18:20:17 +0000
-Message-Id: <20220905182017.50625-1-sj@kernel.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <1662302166-13216-1-git-send-email-kaixuxia@tencent.com>
-References: 
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D16BB15AA
+	for <damon@lists.linux.dev>; Tue,  6 Sep 2022 03:19:19 +0000 (UTC)
+Received: by mail-yb1-f178.google.com with SMTP id 11so15108967ybu.0
+        for <damon@lists.linux.dev>; Mon, 05 Sep 2022 20:19:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date;
+        bh=eZB+jaMbUWbX1Y2w9I5PneyUYBCuhx3bHJpkIVFw0wo=;
+        b=FGBbdYvESaAONqJdhfJHE/WKEhha4pnihAIu3I5oYEfJYFsj8DnenARr3g5H/iuQvc
+         tLS73HfRv9S7A/gnE3fSNpI1EpC9u5NdLWiJM8+7brQOvH/WwL5Hk4kncd39iPmbLqhj
+         kmfBrMWclkMgFuTfKD/jXQ8OoJPqYt6iusv1gQ6AxN3ORLBKMHm3Vj49nSRXLje5xElH
+         xotQLKpvlZaafy9sZHSNRN6eNY3Yg/4DpLxSSXj3LUvcfeA8c3DSO0FI664BvYXzRJIk
+         MywUYWTeH4VLuAETBWTuqqtYBg91iOWFkJ9pVw06XERB/UcXMac44B1B2hWyUMWZm6ag
+         SB4A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date;
+        bh=eZB+jaMbUWbX1Y2w9I5PneyUYBCuhx3bHJpkIVFw0wo=;
+        b=SBQglA6WTQYFliJ8P/yl+NNHJRm0o4fi9wzkGNKBFDar/PbNPrW7k6DBDjV0hwHHj0
+         +3xX48zyPG3RxI4NLeZeN2HyQvC8vltLllmiPDrd9I+6iOp3+/wETOEKjlKQAsFDaVEo
+         BPHEHOxD+CtkU0js2bkMlNS0vAVdZVuO917v4GFusIVd8pND3K3t+xzuyixXAXUY6Uxe
+         4xT91tHYl5hscoi9wtwr8LAQ/wQltiu0vbU8gBCS8SYLrvqNmKsxaTxAaUToP1Ni+WcD
+         KQHQb6o2N6om7pLFu/i844lOUgOPMa3+1CFq1zIh/qMGUXQUhi0RE7oRkV8t3E/AA9y+
+         u17g==
+X-Gm-Message-State: ACgBeo2HK8M/rGou26BMLsubgSZ2z2jH05xG+qDterJ7II1bULIUTlUP
+	a0dZJbnP6k9ucspVvpM6Ig7njgFnxWQ8mXvB9tRoLE/qAMg=
+X-Google-Smtp-Source: AA6agR63prlepWoFRiH1RmMNKUsZKoz8t4c4k+VzNgK77jNvXHN5dFsL2jnw9tSkqHU4koFIqHILpQeDv2ad9So5pbo=
+X-Received: by 2002:a25:b904:0:b0:6a8:cd89:18b0 with SMTP id
+ x4-20020a25b904000000b006a8cd8918b0mr9613111ybj.234.1662434358574; Mon, 05
+ Sep 2022 20:19:18 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+From: Yun Levi <ppbuk5246@gmail.com>
+Date: Tue, 6 Sep 2022 12:19:07 +0900
+Message-ID: <CAM7-yPTjEa0Av8nrqqQ5vmBTg2fv26mzXReLOBFaRxViGXvF+Q@mail.gmail.com>
+Subject: [Question] About damon_set_regions function.
+To: sj@kernel.org
+Cc: damon@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
 
-Hi Kaixu,
+Hello damon community.
+I'm a beginner of damon who want to use it well :)
 
-On Sun, 4 Sep 2022 22:36:06 +0800 xiakaixu1987@gmail.com wrote:
+While I'm reading the damon core code,
+I have a question about the "damon_set_regions" function's features.
 
-> From: Kaixu Xia <kaixuxia@tencent.com>
-> 
-> It is unnecessary to get the number of the running kdamond to judge
-> whether kdamonds are busy. Here we can use the
-> damon_sysfs_kdamond_running() helper and return -EBUSY directly
-> when finding a running kdamond. Meanwhile, merging with the judgement
-> that a kdamond has current sysfs command callback request to make
-> the code more clear.
-> 
-> Signed-off-by: Kaixu Xia <kaixuxia@tencent.com>
+Comment said that
+"This function adds new regions to, or modify existing regions of a
+monitoring target to fit in specific ranges".
 
-Reviewed-by: SeongJae Park <sj@kernel.org>
+But I don't know if it's correct in the case below:
 
+Suppose, target already has 2 ranges one of them is 4K to 16K and the
+other 24K to 32K
+And someone calls damon_set_regions with a range 8K to 28K.
 
-Thanks,
-SJ
+In that situation, damon_set_regions function will modify existing two
+region like
+    - first as 8K to 16K
+    - last as 24K to 28K
 
-> ---
->  mm/damon/sysfs.c | 25 +++++++------------------
->  1 file changed, 7 insertions(+), 18 deletions(-)
-> 
-> diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
-> index 7488e27c87c3..fe6c6870cf86 100644
-> --- a/mm/damon/sysfs.c
-> +++ b/mm/damon/sysfs.c
-> @@ -2657,23 +2657,18 @@ static void damon_sysfs_kdamonds_rm_dirs(struct damon_sysfs_kdamonds *kdamonds)
->  	kdamonds->kdamonds_arr = NULL;
->  }
->  
-> -static int damon_sysfs_nr_running_ctxs(struct damon_sysfs_kdamond **kdamonds,
-> +static bool damon_sysfs_kdamonds_busy(struct damon_sysfs_kdamond **kdamonds,
->  		int nr_kdamonds)
->  {
-> -	int nr_running_ctxs = 0;
->  	int i;
->  
->  	for (i = 0; i < nr_kdamonds; i++) {
-> -		struct damon_ctx *ctx = kdamonds[i]->damon_ctx;
-> -
-> -		if (!ctx)
-> -			continue;
-> -		mutex_lock(&ctx->kdamond_lock);
-> -		if (ctx->kdamond)
-> -			nr_running_ctxs++;
-> -		mutex_unlock(&ctx->kdamond_lock);
-> +		if (damon_sysfs_kdamond_running(kdamonds[i]) ||
-> +		    damon_sysfs_cmd_request.kdamond == kdamonds[i])
-> +			return true;
->  	}
-> -	return nr_running_ctxs;
-> +
-> +	return false;
->  }
->  
->  static int damon_sysfs_kdamonds_add_dirs(struct damon_sysfs_kdamonds *kdamonds,
-> @@ -2682,15 +2677,9 @@ static int damon_sysfs_kdamonds_add_dirs(struct damon_sysfs_kdamonds *kdamonds,
->  	struct damon_sysfs_kdamond **kdamonds_arr, *kdamond;
->  	int err, i;
->  
-> -	if (damon_sysfs_nr_running_ctxs(kdamonds->kdamonds_arr, kdamonds->nr))
-> +	if (damon_sysfs_kdamonds_busy(kdamonds->kdamonds_arr, kdamonds->nr))
->  		return -EBUSY;
->  
-> -	for (i = 0; i < kdamonds->nr; i++) {
-> -		if (damon_sysfs_cmd_request.kdamond ==
-> -				kdamonds->kdamonds_arr[i])
-> -			return -EBUSY;
-> -	}
-> -
->  	damon_sysfs_kdamonds_rm_dirs(kdamonds);
->  	if (!nr_kdamonds)
->  		return 0;
-> -- 
-> 2.27.0
-> 
-> 
+base on below code snippet:
+         } else {
+              /* resize intersecting regions to fit in this range */
+              first->ar.start = ALIGN_DOWN(range->start,
+                      DAMON_MIN_REGION);
+              last->ar.end = ALIGN(range->end, DAMON_MIN_REGION);
+         }
+
+But, I don't know the reason why the region having 16K to 24K range
+isn't added to the target region list and it's correct or not.
+
+In my thinking,  there should be the code adding the region like:
+
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index 7d25dc582fe3..f755efca71b2 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -225,6 +225,15 @@ int damon_set_regions(struct damon_target *t,
+struct damon_addr_range *ranges,
+                        first->ar.start = ALIGN_DOWN(range->start,
+                                        DAMON_MIN_REGION);
+                        last->ar.end = ALIGN(range->end, DAMON_MIN_REGION);
++
++                       if (first != last) {
++                               newr = damon_new_region(
++                                               first->ar.end,
+last->ar_start); /**< already aligned. */
++                               if (!newr)
++                                       return -ENOMEM;
++
++                               damon_insert_region(newr, first, last, t);
++                       }
+                }
+        }
+        return 0;
+
+Am I wrong?
+
+Thanks.
+
+-- 
+Best regards,
+Levi
