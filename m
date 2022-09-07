@@ -1,89 +1,101 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mga02.intel.com (mga02.intel.com [134.134.136.20])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08E0B2F42
-	for <damon@lists.linux.dev>; Wed,  7 Sep 2022 20:59:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38F69C433C1;
-	Wed,  7 Sep 2022 20:59:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1662584353;
-	bh=FniondtFbpoxyTfBIT/tD9EaOffiZzbj+1i6uXyMxKM=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AMug+Taf20KbZ8zIj/PQfrkYE8FfrIMY8WMjII3yQUm0cPgAuy8hk+xQnzsiM52qV
-	 DXpqiSjYvWK1tzW8Y0q19Tn4gDBPbAodLlmF2dfNmnyXssKSOt5CuzcLe/ZBkqXfyX
-	 gcji/ukWAB/IstDYNQCtfr7j2+fzjdJPGhjJtguAeOYlE4cHfTR8TAP/jv414jx8xG
-	 7zdxa/bSlZrTRuL0rBQJTCS3HrGItneKuIuHKO08hWAclQUacwdBwoldEJOEDnWOUB
-	 JT+5Y/GZfww+TsV3oUD13RME09kRA/jLjR0+YUy1Qn6j3tnGiwZqlpRLomUpZbJ8k+
-	 vEZ7HQjbFXJLA==
-From: SeongJae Park <sj@kernel.org>
-To: SeongJae Park <sj@kernel.org>
-Cc: akpm@linux-foundation.org,
-	damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org,
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95F3F89D4;
+	Wed,  7 Sep 2022 22:07:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1662588455; x=1694124455;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=opm+udo9hcC/Jimt9TvXEIDH8cXQbqxDr/iB2g4r7Hc=;
+  b=geNZ3ofqQXELrtchw9i+fe+6vL1vZO9OBf1QE2Rg8/yoWrfwcUzvPHec
+   4PlxNTfbKeufxaCUQpvTYgmfHpXAhoS3dEIdJdf78TymdHbg7Woabdv/E
+   t+Mv5f+r6F4AZVHzHMG8YLUPkNvRKIkmz5uHgmBDWhc3aWzc9IKfcLe4W
+   c49XL7U3SyrWBPo1PvgeZN0itJTdHJ9MWk8dTjeC1zZe69D1JmvmdyRKb
+   aTk4CVWcPP4F1cpuyPT1cPcucJlHEt3je7pdbBcusfJOwekosCQT/jwYk
+   Ig60qQWI3d8RXvOVFGTn+5kCLcSk2sBm0mtUbwbJw05YxMcXKnG92UzbY
+   w==;
+X-IronPort-AV: E=McAfee;i="6500,9779,10463"; a="284027151"
+X-IronPort-AV: E=Sophos;i="5.93,298,1654585200"; 
+   d="scan'208";a="284027151"
+Received: from orsmga003.jf.intel.com ([10.7.209.27])
+  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Sep 2022 15:07:35 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.93,298,1654585200"; 
+   d="scan'208";a="565695255"
+Received: from lkp-server02.sh.intel.com (HELO 95dfd251caa2) ([10.239.97.151])
+  by orsmga003.jf.intel.com with ESMTP; 07 Sep 2022 15:07:33 -0700
+Received: from kbuild by 95dfd251caa2 with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1oW3Cm-00070J-24;
+	Wed, 07 Sep 2022 22:07:32 +0000
+Date: Thu, 8 Sep 2022 06:07:15 +0800
+From: kernel test robot <lkp@intel.com>
+To: Xin Hao <xhao@linux.alibaba.com>, sj@kernel.org
+Cc: llvm@lists.linux.dev, kbuild-all@lists.01.org,
+	akpm@linux-foundation.org, damon@lists.linux.dev,
+	linux-mm@kvack.org, linux-kernel@vger.kernel.org,
 	xhao@linux.alibaba.com
-Subject: Re: [PATCH] mm/damon: Remove duplicate get_monitoring_region() definitions
-Date: Wed,  7 Sep 2022 20:59:11 +0000
-Message-Id: <20220907205911.62483-1-sj@kernel.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20220907172712.61006-1-sj@kernel.org>
-References: 
+Subject: Re: [PATCH] mm/damon: Remove duplicate get_monitoring_region()
+ definitions
+Message-ID: <202209080600.L5N3msAB-lkp@intel.com>
+References: <20220907112924.65546-1-xhao@linux.alibaba.com>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220907112924.65546-1-xhao@linux.alibaba.com>
 
-On Wed, 7 Sep 2022 17:27:12 +0000 SeongJae Park <sj@kernel.org> wrote:
+Hi Xin,
 
-[...]
-> > diff --git a/mm/damon/ops-common.c b/mm/damon/ops-common.c
-> > index b1335de200e7..01938f33038d 100644
-> > --- a/mm/damon/ops-common.c
-> > +++ b/mm/damon/ops-common.c
-> > @@ -172,3 +172,31 @@ int damon_hot_score(struct damon_ctx *c, struct damon_region *r,
-> > 
-> >  	return hotness;
-> >  }
-> > +
-> > +static inline int walk_system_ram(struct resource *res, void *arg)
-> > +{
-> > +	struct damon_addr_range *a = arg;
-> > +
-> > +	if (a->end - a->start < resource_size(res)) {
-> > +		a->start = res->start;
-> > +		a->end = res->end;
-> > +	}
-> > +	return 0;
-> > +}
-> > +
-> > +/*
-> > + * Find biggest 'System RAM' resource and store its start and end address in
-> > + * @start and @end, respectively.  If no System RAM is found, returns false.
-> > + */
-> > +bool get_monitoring_region(unsigned long *start, unsigned long *end)
-> > +{
-> > +	struct damon_addr_range arg = {};
-> > +
-> > +	walk_system_ram_res(0, ULONG_MAX, &arg, walk_system_ram);
-> > +	if (arg.end <= arg.start)
-> > +		return false;
-> > +
-> > +	*start = arg.start;
-> > +	*end = arg.end;
-> > +	return true;
-> > +}
-> 
-> 'ops-common.c' is for code that common in monitoring operations
-> implementations.  I'd prefer to have yet another source file for the DAMON
-> modules including reclaim and lru_sort, say, 'modules-common.c'.
+Thank you for the patch! Yet something to improve:
 
-Or, putting it in damon/core.c might make more sense.
+[auto build test ERROR on linus/master]
+[also build test ERROR on v6.0-rc4 next-20220907]
+[cannot apply to akpm-mm/mm-everything]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
+
+url:    https://github.com/intel-lab-lkp/linux/commits/Xin-Hao/mm-damon-Remove-duplicate-get_monitoring_region-definitions/20220907-193059
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git 0066f1b0e27556381402db3ff31f85d2a2265858
+config: hexagon-randconfig-r041-20220907 (https://download.01.org/0day-ci/archive/20220908/202209080600.L5N3msAB-lkp@intel.com/config)
+compiler: clang version 16.0.0 (https://github.com/llvm/llvm-project c55b41d5199d2394dd6cdb8f52180d8b81d809d4)
+reproduce (this is a W=1 build):
+        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
+        chmod +x ~/bin/make.cross
+        # https://github.com/intel-lab-lkp/linux/commit/28cd0cc7549075eccc95a2c48fbe3bc58f17caee
+        git remote add linux-review https://github.com/intel-lab-lkp/linux
+        git fetch --no-tags linux-review Xin-Hao/mm-damon-Remove-duplicate-get_monitoring_region-definitions/20220907-193059
+        git checkout 28cd0cc7549075eccc95a2c48fbe3bc58f17caee
+        # save the config file
+        mkdir build_dir && cp config build_dir/.config
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross W=1 O=build_dir ARCH=hexagon SHELL=/bin/bash mm/
+
+If you fix the issue, kindly add following tag where applicable
+Reported-by: kernel test robot <lkp@intel.com>
+
+All errors (new ones prefixed by >>):
+
+   In file included from mm/damon/reclaim.c:16:
+>> mm/damon/ops-common.h:13:23: error: unknown type name 'pmd_t'
+   void damon_pmdp_mkold(pmd_t *pmd, struct mm_struct *mm, unsigned long addr);
+                         ^
+   1 error generated.
 
 
-Thanks,
-SJ
+vim +/pmd_t +13 mm/damon/ops-common.h
 
-[...]
+46c3a0accdc48c mm/damon/prmtv-common.h SeongJae Park 2021-11-05  11  
+46c3a0accdc48c mm/damon/prmtv-common.h SeongJae Park 2021-11-05  12  void damon_ptep_mkold(pte_t *pte, struct mm_struct *mm, unsigned long addr);
+46c3a0accdc48c mm/damon/prmtv-common.h SeongJae Park 2021-11-05 @13  void damon_pmdp_mkold(pmd_t *pmd, struct mm_struct *mm, unsigned long addr);
+198f0f4c58b9f4 mm/damon/prmtv-common.h SeongJae Park 2021-11-05  14  
+
+-- 
+0-DAY CI Kernel Test Service
+https://01.org/lkp
