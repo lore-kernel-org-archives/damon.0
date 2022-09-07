@@ -1,33 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30F9689A7
-	for <damon@lists.linux.dev>; Wed,  7 Sep 2022 17:42:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42131C433C1;
-	Wed,  7 Sep 2022 17:42:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08E0B2F42
+	for <damon@lists.linux.dev>; Wed,  7 Sep 2022 20:59:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38F69C433C1;
+	Wed,  7 Sep 2022 20:59:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1662572529;
-	bh=Fxy9JuorIOPwm9qgEKC5873CJe+ELikzyA/2KWjOoRc=;
+	s=k20201202; t=1662584353;
+	bh=FniondtFbpoxyTfBIT/tD9EaOffiZzbj+1i6uXyMxKM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KLYZmnbw38GsCpgRtC0AUxgr7KRmniYbNUydgRsLcmfNsRiphKFn8hAZ8mT2PbrrA
-	 8VWC1vIRSK6wCCRNWC3HPwHc86aHPdx9DBNO/6timSsWeoSF1yej9TEbfny98qdrfV
-	 S2kzwmzOZs0QEJ3h6O31mjFrcPT6AmYOHcZ2akxHJgh/77u93gqokWwjMCFUY0rSMv
-	 ZYSuei1s/ZyRiS7FlcEY0KsOGfRcKZ09vLaRlwyy7C7HcY4YhsuCs3+BagDD4AeuMY
-	 DlYopfvHqzShTfddz4M7gIjZErHPup3XZfBL7LddKhsswawfA4rQMWfHSFGiLbxuMy
-	 ip2/VFVrdbNmQ==
+	b=AMug+Taf20KbZ8zIj/PQfrkYE8FfrIMY8WMjII3yQUm0cPgAuy8hk+xQnzsiM52qV
+	 DXpqiSjYvWK1tzW8Y0q19Tn4gDBPbAodLlmF2dfNmnyXssKSOt5CuzcLe/ZBkqXfyX
+	 gcji/ukWAB/IstDYNQCtfr7j2+fzjdJPGhjJtguAeOYlE4cHfTR8TAP/jv414jx8xG
+	 7zdxa/bSlZrTRuL0rBQJTCS3HrGItneKuIuHKO08hWAclQUacwdBwoldEJOEDnWOUB
+	 JT+5Y/GZfww+TsV3oUD13RME09kRA/jLjR0+YUy1Qn6j3tnGiwZqlpRLomUpZbJ8k+
+	 vEZ7HQjbFXJLA==
 From: SeongJae Park <sj@kernel.org>
-To: xiakaixu1987@gmail.com
-Cc: sj@kernel.org,
-	akpm@linux-foundation.org,
+To: SeongJae Park <sj@kernel.org>
+Cc: akpm@linux-foundation.org,
 	damon@lists.linux.dev,
 	linux-mm@kvack.org,
 	linux-kernel@vger.kernel.org,
-	Kaixu Xia <kaixuxia@tencent.com>
-Subject: Re: [PATCH] mm/damon/vaddr: remove unnecessary switch case DAMOS_STAT
-Date: Wed,  7 Sep 2022 17:42:07 +0000
-Message-Id: <20220907174207.61191-1-sj@kernel.org>
+	xhao@linux.alibaba.com
+Subject: Re: [PATCH] mm/damon: Remove duplicate get_monitoring_region() definitions
+Date: Wed,  7 Sep 2022 20:59:11 +0000
+Message-Id: <20220907205911.62483-1-sj@kernel.org>
 X-Mailer: git-send-email 2.25.1
-In-Reply-To: <1662568262-20925-1-git-send-email-kaixuxia@tencent.com>
+In-Reply-To: <20220907172712.61006-1-sj@kernel.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -37,53 +36,54 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hi Kaixu,
+On Wed, 7 Sep 2022 17:27:12 +0000 SeongJae Park <sj@kernel.org> wrote:
 
-On Thu, 8 Sep 2022 00:31:02 +0800 xiakaixu1987@gmail.com wrote:
-
-> From: Kaixu Xia <kaixuxia@tencent.com>
+[...]
+> > diff --git a/mm/damon/ops-common.c b/mm/damon/ops-common.c
+> > index b1335de200e7..01938f33038d 100644
+> > --- a/mm/damon/ops-common.c
+> > +++ b/mm/damon/ops-common.c
+> > @@ -172,3 +172,31 @@ int damon_hot_score(struct damon_ctx *c, struct damon_region *r,
+> > 
+> >  	return hotness;
+> >  }
+> > +
+> > +static inline int walk_system_ram(struct resource *res, void *arg)
+> > +{
+> > +	struct damon_addr_range *a = arg;
+> > +
+> > +	if (a->end - a->start < resource_size(res)) {
+> > +		a->start = res->start;
+> > +		a->end = res->end;
+> > +	}
+> > +	return 0;
+> > +}
+> > +
+> > +/*
+> > + * Find biggest 'System RAM' resource and store its start and end address in
+> > + * @start and @end, respectively.  If no System RAM is found, returns false.
+> > + */
+> > +bool get_monitoring_region(unsigned long *start, unsigned long *end)
+> > +{
+> > +	struct damon_addr_range arg = {};
+> > +
+> > +	walk_system_ram_res(0, ULONG_MAX, &arg, walk_system_ram);
+> > +	if (arg.end <= arg.start)
+> > +		return false;
+> > +
+> > +	*start = arg.start;
+> > +	*end = arg.end;
+> > +	return true;
+> > +}
 > 
-> The switch case DAMOS_STAT and switch case default have same
-> return value in damon_va_apply_scheme(), so we can combine them.
+> 'ops-common.c' is for code that common in monitoring operations
+> implementations.  I'd prefer to have yet another source file for the DAMON
+> modules including reclaim and lru_sort, say, 'modules-common.c'.
 
-Good point.  I have a comment below, though.
-
-> 
-> Signed-off-by: Kaixu Xia <kaixuxia@tencent.com>
-> ---
->  mm/damon/vaddr.c | 2 --
->  1 file changed, 2 deletions(-)
-> 
-> diff --git a/mm/damon/vaddr.c b/mm/damon/vaddr.c
-> index 3c7b9d6dca95..94ae8816a912 100644
-> --- a/mm/damon/vaddr.c
-> +++ b/mm/damon/vaddr.c
-> @@ -643,8 +643,6 @@ static unsigned long damon_va_apply_scheme(struct damon_ctx *ctx,
->  	case DAMOS_NOHUGEPAGE:
->  		madv_action = MADV_NOHUGEPAGE;
->  		break;
-> -	case DAMOS_STAT:
-> -		return 0;
-
-IMHO, keeping the 'case' makes the code easier to read, as we can find what is
-the expected flow for DAMOS_STAT here immediately, instead of asking readers to
-find what are the actions that not specified here and therefore fall though to
-'default'.
-
-Also, my another intention here is to mark 'DAMOS_STAT' is supported by
-'vaddr'.
-
->  	default:
->  		return 0;
-
-That is, 'default' case here is for DAMOS actions that not supported by
-'vaddr'.  So, I'd like to keep the code as is.  Maybe we could add a comment
-saying 'default' case is for DAMOS actions that not yet supported by 'vaddr'.
-
->  	}
-> -- 
-> 2.27.0
+Or, putting it in damon/core.c might make more sense.
 
 
 Thanks,
 SJ
+
+[...]
