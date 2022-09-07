@@ -1,208 +1,81 @@
-Received: from out199-18.us.a.mail.aliyun.com (out199-18.us.a.mail.aliyun.com [47.90.199.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f171.google.com (mail-pg1-f171.google.com [209.85.215.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C350C539F
-	for <damon@lists.linux.dev>; Wed,  7 Sep 2022 11:29:41 +0000 (UTC)
-X-Alimail-AntiSpam:AC=PASS;BC=-1|-1;BR=01201311R831e4;CH=green;DM=||false|;DS=||;FP=0|-1|-1|-1|0|-1|-1|-1;HT=ay29a033018045168;MF=xhao@linux.alibaba.com;NM=1;PH=DS;RN=6;SR=0;TI=SMTPD_---0VOy9MDS_1662550166;
-Received: from localhost.localdomain(mailfrom:xhao@linux.alibaba.com fp:SMTPD_---0VOy9MDS_1662550166)
-          by smtp.aliyun-inc.com;
-          Wed, 07 Sep 2022 19:29:28 +0800
-From: Xin Hao <xhao@linux.alibaba.com>
-To: sj@kernel.org
-Cc: akpm@linux-foundation.org,
-	damon@lists.linux.dev,
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFF1A360
+	for <damon@lists.linux.dev>; Wed,  7 Sep 2022 16:32:06 +0000 (UTC)
+Received: by mail-pg1-f171.google.com with SMTP id bh13so14118517pgb.4
+        for <damon@lists.linux.dev>; Wed, 07 Sep 2022 09:32:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:date:subject:cc:to:from:from:to:cc:subject:date;
+        bh=hy0JMuvgsYU9oiVlHedY7uh5S6R+8D09pDCmcrh8eeM=;
+        b=ENnC5GS6K1p3inohTizFFKGqfyjiDX6+L1sT+Vpn+HJFCsouTkxw0zg3Qkl0MaV2Wc
+         WatsHsrw4toDD+8BAnvhKl60P/NjJHeawMbBv9djKlHbpyDmd84MMXtt6RY2m9e7xZRS
+         FMhS12g+/nVaanBMz1HgIg2QbFewJP9eV0L562lQ7vnTbfrvh91lKzeQNAB9LgOTfVXB
+         qA7eYEdwn+lq5KyNJ1ZzEdOia4GBdQpHnVHgOOCzDLrmMWpCmHcVTxERP7K8tmJ9XETC
+         Q63UXxQW7jzX3to8l8ggqTATcQdFplvwjqdO6yrwfXgr07o3y1YAFqwTgFjAQP0qqQj8
+         Vz2A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date;
+        bh=hy0JMuvgsYU9oiVlHedY7uh5S6R+8D09pDCmcrh8eeM=;
+        b=K8/aY2fi9KvsNC8YuAy78912Mz3qfoRVVLZDgib3Ozjs7d6wnOMiKc2hHaj10wu0w2
+         uVxBMbipoxblbBeoqfHjRvtPCwHE8K0i1v67vhAhgLNNY8689ym5TrOi/3FD2AlscwHM
+         /wcDhDPtQazrZ/6+R/PuI5IMwt3vAW3EBuySMElgd+i7hZ8vep7vBN7vP3ghiRRKT20o
+         YQZ8yWbngCWIHKHxWCAXYU4Tnyhb/21JByvC8l1aavGdWY2/nAgxiicjgiffiWuSqPag
+         UvwPyyyzedtx7BwcQm3fvdQ/9xvUqjhG0WQyRMh9tXJ19k1BUm2ayImdrMrBnlrBEPM1
+         UHZw==
+X-Gm-Message-State: ACgBeo1wklU6JPJ/fUKR0VLzye626M9cma5xRh7KYB0PjHQt845HhU/d
+	rK2jp0GoAk6ihU7WBzVO6Q==
+X-Google-Smtp-Source: AA6agR59HjdcsLeUSVZtu7YrVUnrrWCUSdAgco5n0+TJvIADJMhDAjBtFCKtITcU8jtU9+7Ymj/dLQ==
+X-Received: by 2002:a65:604f:0:b0:434:7885:6944 with SMTP id a15-20020a65604f000000b0043478856944mr4073675pgp.562.1662568326202;
+        Wed, 07 Sep 2022 09:32:06 -0700 (PDT)
+Received: from localhost.localdomain ([43.132.141.4])
+        by smtp.gmail.com with ESMTPSA id u23-20020a1709026e1700b00177ee563b6dsm121754plk.33.2022.09.07.09.32.04
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 07 Sep 2022 09:32:05 -0700 (PDT)
+From: xiakaixu1987@gmail.com
+X-Google-Original-From: kaixuxia@tencent.com
+To: sj@kernel.org,
+	akpm@linux-foundation.org
+Cc: damon@lists.linux.dev,
 	linux-mm@kvack.org,
 	linux-kernel@vger.kernel.org,
-	xhao@linux.alibaba.com
-Subject: [PATCH] mm/damon: Remove duplicate get_monitoring_region() definitions
-Date: Wed,  7 Sep 2022 19:29:24 +0800
-Message-Id: <20220907112924.65546-1-xhao@linux.alibaba.com>
-X-Mailer: git-send-email 2.31.0
+	Kaixu Xia <kaixuxia@tencent.com>
+Subject: [PATCH] mm/damon/vaddr: remove unnecessary switch case DAMOS_STAT
+Date: Thu,  8 Sep 2022 00:31:02 +0800
+Message-Id: <1662568262-20925-1-git-send-email-kaixuxia@tencent.com>
+X-Mailer: git-send-email 1.8.3.1
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-In lru_sort.c and reclaim.c, they are all define get_monitoring_region()
-function, there is no need to define it separately.
+From: Kaixu Xia <kaixuxia@tencent.com>
 
-BTW, this patch remove tow struct 'damon_lru_sort_ram_walk_arg' and
-'damon_reclaim_ram_walk_arg', though the two struct are removed, if we
-want to add more fields to these struct for other purposes later, it will
-not too late for us to use them again.
-For example:
-    struct damon_reclaim_ram_walk_arg {
-	struct damon_addr_range raw_walk;
-	xxx  A;
-	xxx  B;
-    }
-    struct damon_lru_sort_ram_walk_arg {
-	struct damon_addr_range raw_walk;
-	xxx  A;
-	xxx  B;
-    }
+The switch case DAMOS_STAT and switch case default have same
+return value in damon_va_apply_scheme(), so we can combine them.
 
-Signed-off-by: Xin Hao <xhao@linux.alibaba.com>
+Signed-off-by: Kaixu Xia <kaixuxia@tencent.com>
 ---
- mm/damon/lru_sort.c   | 35 ++---------------------------------
- mm/damon/ops-common.c | 28 ++++++++++++++++++++++++++++
- mm/damon/ops-common.h |  1 +
- mm/damon/reclaim.c    | 35 ++---------------------------------
- 4 files changed, 33 insertions(+), 66 deletions(-)
+ mm/damon/vaddr.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/mm/damon/lru_sort.c b/mm/damon/lru_sort.c
-index 9de6f00a71c5..5032d59d46e4 100644
---- a/mm/damon/lru_sort.c
-+++ b/mm/damon/lru_sort.c
-@@ -13,6 +13,8 @@
- #include <linux/sched.h>
- #include <linux/workqueue.h>
+diff --git a/mm/damon/vaddr.c b/mm/damon/vaddr.c
+index 3c7b9d6dca95..94ae8816a912 100644
+--- a/mm/damon/vaddr.c
++++ b/mm/damon/vaddr.c
+@@ -643,8 +643,6 @@ static unsigned long damon_va_apply_scheme(struct damon_ctx *ctx,
+ 	case DAMOS_NOHUGEPAGE:
+ 		madv_action = MADV_NOHUGEPAGE;
+ 		break;
+-	case DAMOS_STAT:
+-		return 0;
+ 	default:
+ 		return 0;
+ 	}
+-- 
+2.27.0
 
-+#include "ops-common.h"
-+
- #ifdef MODULE_PARAM_PREFIX
- #undef MODULE_PARAM_PREFIX
- #endif
-@@ -257,39 +259,6 @@ module_param(nr_cold_quota_exceeds, ulong, 0400);
- static struct damon_ctx *ctx;
- static struct damon_target *target;
-
--struct damon_lru_sort_ram_walk_arg {
--	unsigned long start;
--	unsigned long end;
--};
--
--static int walk_system_ram(struct resource *res, void *arg)
--{
--	struct damon_lru_sort_ram_walk_arg *a = arg;
--
--	if (a->end - a->start < resource_size(res)) {
--		a->start = res->start;
--		a->end = res->end;
--	}
--	return 0;
--}
--
--/*
-- * Find biggest 'System RAM' resource and store its start and end address in
-- * @start and @end, respectively.  If no System RAM is found, returns false.
-- */
--static bool get_monitoring_region(unsigned long *start, unsigned long *end)
--{
--	struct damon_lru_sort_ram_walk_arg arg = {};
--
--	walk_system_ram_res(0, ULONG_MAX, &arg, walk_system_ram);
--	if (arg.end <= arg.start)
--		return false;
--
--	*start = arg.start;
--	*end = arg.end;
--	return true;
--}
--
- /* Create a DAMON-based operation scheme for hot memory regions */
- static struct damos *damon_lru_sort_new_hot_scheme(unsigned int hot_thres)
- {
-diff --git a/mm/damon/ops-common.c b/mm/damon/ops-common.c
-index b1335de200e7..01938f33038d 100644
---- a/mm/damon/ops-common.c
-+++ b/mm/damon/ops-common.c
-@@ -172,3 +172,31 @@ int damon_hot_score(struct damon_ctx *c, struct damon_region *r,
-
- 	return hotness;
- }
-+
-+static inline int walk_system_ram(struct resource *res, void *arg)
-+{
-+	struct damon_addr_range *a = arg;
-+
-+	if (a->end - a->start < resource_size(res)) {
-+		a->start = res->start;
-+		a->end = res->end;
-+	}
-+	return 0;
-+}
-+
-+/*
-+ * Find biggest 'System RAM' resource and store its start and end address in
-+ * @start and @end, respectively.  If no System RAM is found, returns false.
-+ */
-+bool get_monitoring_region(unsigned long *start, unsigned long *end)
-+{
-+	struct damon_addr_range arg = {};
-+
-+	walk_system_ram_res(0, ULONG_MAX, &arg, walk_system_ram);
-+	if (arg.end <= arg.start)
-+		return false;
-+
-+	*start = arg.start;
-+	*end = arg.end;
-+	return true;
-+}
-diff --git a/mm/damon/ops-common.h b/mm/damon/ops-common.h
-index 52329ff361cd..e6f1c9b48042 100644
---- a/mm/damon/ops-common.h
-+++ b/mm/damon/ops-common.h
-@@ -16,3 +16,4 @@ int damon_pageout_score(struct damon_ctx *c, struct damon_region *r,
- 			struct damos *s);
- int damon_hot_score(struct damon_ctx *c, struct damon_region *r,
- 			struct damos *s);
-+bool get_monitoring_region(unsigned long *start, unsigned long *end);
-diff --git a/mm/damon/reclaim.c b/mm/damon/reclaim.c
-index a7faf51b4bd4..20e83eee3c7d 100644
---- a/mm/damon/reclaim.c
-+++ b/mm/damon/reclaim.c
-@@ -13,6 +13,8 @@
- #include <linux/sched.h>
- #include <linux/workqueue.h>
-
-+#include "ops-common.h"
-+
- #ifdef MODULE_PARAM_PREFIX
- #undef MODULE_PARAM_PREFIX
- #endif
-@@ -229,39 +231,6 @@ module_param(nr_quota_exceeds, ulong, 0400);
- static struct damon_ctx *ctx;
- static struct damon_target *target;
-
--struct damon_reclaim_ram_walk_arg {
--	unsigned long start;
--	unsigned long end;
--};
--
--static int walk_system_ram(struct resource *res, void *arg)
--{
--	struct damon_reclaim_ram_walk_arg *a = arg;
--
--	if (a->end - a->start < resource_size(res)) {
--		a->start = res->start;
--		a->end = res->end;
--	}
--	return 0;
--}
--
--/*
-- * Find biggest 'System RAM' resource and store its start and end address in
-- * @start and @end, respectively.  If no System RAM is found, returns false.
-- */
--static bool get_monitoring_region(unsigned long *start, unsigned long *end)
--{
--	struct damon_reclaim_ram_walk_arg arg = {};
--
--	walk_system_ram_res(0, ULONG_MAX, &arg, walk_system_ram);
--	if (arg.end <= arg.start)
--		return false;
--
--	*start = arg.start;
--	*end = arg.end;
--	return true;
--}
--
- static struct damos *damon_reclaim_new_scheme(void)
- {
- 	struct damos_watermarks wmarks = {
---
-2.31.0
