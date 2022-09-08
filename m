@@ -1,56 +1,65 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC44F5CA6
-	for <damon@lists.linux.dev>; Thu,  8 Sep 2022 19:17:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC5CCC433D6;
-	Thu,  8 Sep 2022 19:17:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1662664678;
-	bh=4y/gYFIK8fZNCZXf2/aoBtlgEBW3r/vu7ufnJ6SLnj4=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=baZEsFfCF/BU3dYZ6PyVV/s/KTWUWw9Yx1eFiCutXR0stYn8JUfS644nK7an179BM
-	 UVXKuB/sNJyxrT2zgwrClPMQpj9NpT6J/whh/LZ1yQ+0EgGbDSrbAgHj0/1+QlKsmo
-	 LtDhyRFXWgZL/PSsuNNBVdbi+vU3FahBiOV+qeG1OVFIJHMDnA241WWOMNHrZPo8id
-	 o0EqpZoU26bRBKsNxH1WGeEQOn9Jm+mBps80/CL9Ben6hxyHYgAanl9w8s1iLYAEmx
-	 vQyc6YwndIYvXvrcul0RuZqhm3x795oaKEdj02zF5KIjsPsAY7Ww3KHJ+RjMHNRIXc
-	 dF8kQif0Rj3RA==
-From: SeongJae Park <sj@kernel.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2140610E
+	for <damon@lists.linux.dev>; Thu,  8 Sep 2022 22:10:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E72DC433C1;
+	Thu,  8 Sep 2022 22:10:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linux-foundation.org;
+	s=korg; t=1662675043;
+	bh=XCIEEKRk/9WvUsGT3ciNFy1vp9nzMZ5TXc8Ty7hjscY=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=w3vl4Md4FHGe0tnYeeCYkS5h5JMouvTrbMEHCgTuEJxAyd0WvjHEUVdC26QvLciGm
+	 Q5wf0618dav32gRdyqyKw2UQ5JLNldT0FNoNuSqQ4j66Fdxjh6Eiy+6PyzyuCbZhWK
+	 9a/Dju5mptLZw4vwp/HA3Z1+woZeG4meSvOxTEhU=
+Date: Thu, 8 Sep 2022 15:10:42 -0700
+From: Andrew Morton <akpm@linux-foundation.org>
 To: SeongJae Park <sj@kernel.org>
-Cc: Yajun Deng <yajun.deng@linux.dev>,
-	akpm@linux-foundation.org,
-	damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2] mm/damon: introduce struct damos_access_pattern
-Date: Thu,  8 Sep 2022 19:17:56 +0000
-Message-Id: <20220908191756.129602-1-sj@kernel.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20220908184356.103133-1-sj@kernel.org>
-References: 
+Cc: Xin Hao <xhao@linux.alibaba.com>, damon@lists.linux.dev,
+ linux-mm@kvack.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] mm/damon/sysfs: change few functions execute order
+Message-Id: <20220908151042.239189ddb1635c0f598c6fd2@linux-foundation.org>
+In-Reply-To: <20220908184947.103206-1-sj@kernel.org>
+References: <20220908081932.77370-1-xhao@linux.alibaba.com>
+	<20220908184947.103206-1-sj@kernel.org>
+X-Mailer: Sylpheed 3.7.0 (GTK+ 2.24.33; x86_64-redhat-linux-gnu)
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
-On Thu, 8 Sep 2022 18:43:56 +0000 SeongJae Park <sj@kernel.org> wrote:
+On Thu,  8 Sep 2022 18:49:47 +0000 SeongJae Park <sj@kernel.org> wrote:
 
-> Hi Yajun,
+> Hi Xin,
 > 
-> On Thu, 8 Sep 2022 11:26:11 +0800 Yajun Deng <yajun.deng@linux.dev> wrote:
+> On Thu, 8 Sep 2022 16:19:32 +0800 Xin Hao <xhao@linux.alibaba.com> wrote:
 > 
-> > The damon_new_scheme() has too many parameters, we can introduce struct
-> > damos_access_pattern to simplify it.
+> > These nr_{schemes,regions,contexts,kdamonds}_store() functions are both call
+> 
+> checkpatch complains as below:
+> 
+>     WARNING: Possible unwrapped commit description (prefer a maximum 75 chars per line)
+>     #10:
+>     These nr_{schemes,regions,contexts,kdamonds}_store() functions are both call
 
-Because my previous comments are only for trivial cosmetic nits and the size of
-the patch is not tiny, I fixed those on my own and posted it:
-https://lore.kernel.org/damon/20220908191443.129534-1-sj@kernel.org/
+I fix that sort of thing.  A lot ;)
 
+> > kstrtoint() to get relative values from sysfs interface, if it return an
+> > error, there get kobject instance would be meaningless through 'container_of'.
+> 
+> I was thinking the compiler could do that kind of optimization on its own, so I
+> preferred to make the code shorter.
 
-Thanks,
-SJ
+Yes, the compiler will do this.
 
-[...]
+> This change makes the code slightly longer, while the benefit of the change is
+> unclear.  I'd like to keep it as is unless we get some clear benefit of this?
+
+I find it a readability improvement.  Puts the initialization in a more
+appropriate place and avoids those nasty tricks to prevent unreasonable
+line lengths.
+
