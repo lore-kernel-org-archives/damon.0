@@ -1,232 +1,84 @@
-Received: from out30-132.freemail.mail.aliyun.com (out30-132.freemail.mail.aliyun.com [115.124.30.132])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A0C67C
-	for <damon@lists.linux.dev>; Thu,  8 Sep 2022 02:32:41 +0000 (UTC)
-X-Alimail-AntiSpam:AC=PASS;BC=-1|-1;BR=01201311R491e4;CH=green;DM=||false|;DS=||;FP=0|-1|-1|-1|0|-1|-1|-1;HT=ay29a033018046051;MF=xhao@linux.alibaba.com;NM=1;PH=DS;RN=5;SR=0;TI=SMTPD_---0VP05Ymq_1662604042;
-Received: from 30.240.97.117(mailfrom:xhao@linux.alibaba.com fp:SMTPD_---0VP05Ymq_1662604042)
-          by smtp.aliyun-inc.com;
-          Thu, 08 Sep 2022 10:27:23 +0800
-Message-ID: <1beedefc-bbcc-3161-a44b-8056666d5dee@linux.alibaba.com>
-Date: Thu, 8 Sep 2022 10:27:21 +0800
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3F267C
+	for <damon@lists.linux.dev>; Thu,  8 Sep 2022 03:14:31 +0000 (UTC)
+Received: by mail-pl1-f177.google.com with SMTP id s14so6922204plr.4
+        for <damon@lists.linux.dev>; Wed, 07 Sep 2022 20:14:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:date:subject:cc:to:from:from:to:cc:subject:date;
+        bh=Lj2YfwNoO49u1JDvTZXx6+kIlpsbYxEjipNfytO+vCs=;
+        b=nQEK5nC8oAw6xALpVaD7cWoOAlsvszdvZRYNlOlnIP6f8eCsh8ue+N//oqGvqbqHO5
+         JPoGwPd+LVd8tyB6El85eVRif2ySMJwKKMXgjjv6bXH6/tKgZaXPd7e/7upZICjeGhGl
+         uBfXSj5FxyBTqiqllpHZjf4yr0Z+AlhunZ5hE1nG5Yqr/+IJWo2RrjdC8bkf7Rk1wuCn
+         9fRGaZMU0UdkDUe6ZyCRd8dRmZjMrwEH8kMoWOmGbu5fdFDrmWccstZwmtdiX99QbJFR
+         cBpSX7IRtqKjBpGGxsFUzXMlCQbrbyfnmPFkkxucaKggPvRKs894sOxOUs9/AsdS7Wc8
+         qS+w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date;
+        bh=Lj2YfwNoO49u1JDvTZXx6+kIlpsbYxEjipNfytO+vCs=;
+        b=TFpjeWa4X47KzInj3rx6DzVCFU3kWfJyzd0ppm5ZCKMeNJ56xllP+SA7i+KF5MaxMR
+         9TT0ZndtWhNcLEUo1xLW184Y5Ey5RJCzfaFHX6B711qs2183oaB7VWJJuoM3kcrYVUJY
+         rQKjcDl79XjvPihqQsGRAUzVMVan/Z5YGrd27Jh7YHqGHyqmJA4HgL4IHWP7+u4AAxPM
+         /IRtTwFtDED8UXgGUZoVii7wv8Ut8fKjKXXmotvppwwR3VdMmSkWLCNVw8DyJJ5qT0M5
+         klF5wEjj6vVofhSxAFI8TRDM3KH1YIx1ErWSkyE2jrLjToPDl6bt4V0GZ1Cp6pUs+53y
+         TTvg==
+X-Gm-Message-State: ACgBeo0Cd1izgoGKeCgr0PdDfj+Z9II/tc+hhB9Zy1Optovsy6unQaKI
+	XhNMLCq4UcXMDw1Jho8UUA==
+X-Google-Smtp-Source: AA6agR7YKcNoEQt92SgUbr5dFIFg3iQEjYDhmdzCFobfDa2+qKVtlIHdsY8Xn/4H7W0btC7I0h5FfA==
+X-Received: by 2002:a17:90a:b782:b0:1fd:bef9:d49 with SMTP id m2-20020a17090ab78200b001fdbef90d49mr1757702pjr.221.1662606871311;
+        Wed, 07 Sep 2022 20:14:31 -0700 (PDT)
+Received: from localhost.localdomain ([43.132.141.8])
+        by smtp.gmail.com with ESMTPSA id d13-20020a17090ae28d00b002008ba3a74csm457870pjz.52.2022.09.07.20.14.29
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 07 Sep 2022 20:14:30 -0700 (PDT)
+From: xiakaixu1987@gmail.com
+X-Google-Original-From: kaixuxia@tencent.com
+To: sj@kernel.org,
+	akpm@linux-foundation.org
+Cc: damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org,
+	Kaixu Xia <kaixuxia@tencent.com>
+Subject: [PATCH v2] mm/damon/vaddr: add a comment for 'default' case in damon_va_apply_scheme()
+Date: Thu,  8 Sep 2022 11:13:17 +0800
+Message-Id: <1662606797-23534-1-git-send-email-kaixuxia@tencent.com>
+X-Mailer: git-send-email 1.8.3.1
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.1.2
-Subject: Re: [PATCH V2] mm/damon: Remove duplicate get_monitoring_region()
- definitions
-To: sj@kernel.org
-Cc: akpm@linux-foundation.org, damon@lists.linux.dev, linux-mm@kvack.org,
- linux-kernel@vger.kernel.org
-References: <20220908021544.70212-1-xhao@linux.alibaba.com>
-From: haoxin <xhao@linux.alibaba.com>
-In-Reply-To: <20220908021544.70212-1-xhao@linux.alibaba.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
 
+From: Kaixu Xia <kaixuxia@tencent.com>
 
-在 2022/9/8 上午10:15, Xin Hao 写道:
-> In lru_sort.c and reclaim.c, they are all defining get_monitoring_region()
-> function, there is no need to define it separately.
->
-> BTW, this patch removes two struct 'damon_lru_sort_ram_walk_arg' and
-> 'damon_reclaim_ram_walk_arg', though the two structs are removed, if we
-> want to add more fields to these structs for other purposes later, it will
-> not too late for us to use them again.
-> For example:
->      struct damon_reclaim_ram_walk_arg {
-> 	struct damon_addr_range raw_walk;
-> 	xxx  A;
-> 	xxx  B;
->      }
->      struct damon_lru_sort_ram_walk_arg {
-> 	struct damon_addr_range raw_walk;
-> 	xxx  A;
-> 	xxx  B;
->      }
->
-> Signed-off-by: Xin Hao <xhao@linux.alibaba.com>
-> ---
->   include/linux/damon.h |  1 +
->   mm/damon/core.c       | 28 ++++++++++++++++++++++++++++
->   mm/damon/lru_sort.c   | 37 ++-----------------------------------
->   mm/damon/ops-common.h |  1 +
->   mm/damon/reclaim.c    | 37 ++-----------------------------------
->   5 files changed, 34 insertions(+), 70 deletions(-)
->
-> diff --git a/include/linux/damon.h b/include/linux/damon.h
-> index 7b1f4a488230..f27b92e5afc2 100644
-> --- a/include/linux/damon.h
-> +++ b/include/linux/damon.h
-> @@ -500,6 +500,7 @@ void damon_add_region(struct damon_region *r, struct damon_target *t);
->   void damon_destroy_region(struct damon_region *r, struct damon_target *t);
->   int damon_set_regions(struct damon_target *t, struct damon_addr_range *ranges,
->   		unsigned int nr_ranges);
-> +bool damon_get_sram_monitoring_region(unsigned long *start, unsigned long *end);
->   
->   struct damos *damon_new_scheme(
->   		unsigned long min_sz_region, unsigned long max_sz_region,
-> diff --git a/mm/damon/core.c b/mm/damon/core.c
-> index 7d25dc582fe3..05a2d1b9d03d 100644
-> --- a/mm/damon/core.c
-> +++ b/mm/damon/core.c
-> @@ -276,6 +276,34 @@ struct damos *damon_new_scheme(
->   	return scheme;
->   }
->   
-> +static inline int walk_system_ram(struct resource *res, void *arg)
-> +{
-> +	struct damon_addr_range *a = arg;
-> +
-> +	if (a->end - a->start < resource_size(res)) {
-> +		a->start = res->start;
-> +		a->end = res->end;
-> +	}
-> +	return 0;
-> +}
-> +
-> +/*
-> + * Find biggest 'System RAM' resource and store its start and end address in
-> + * @start and @end, respectively.  If no System RAM is found, returns false.
-> + */
-> +bool damon_get_sram_monitoring_region(unsigned long *start, unsigned long *end)
-> +{
-> +	struct damon_addr_range arg = {};
-> +
-> +	walk_system_ram_res(0, ULONG_MAX, &arg, walk_system_ram);
-> +	if (arg.end <= arg.start)
-> +		return false;
-> +
-> +	*start = arg.start;
-> +	*end = arg.end;
-> +	return true;
-> +}
-> +
->   void damon_add_scheme(struct damon_ctx *ctx, struct damos *s)
->   {
->   	list_add_tail(&s->list, &ctx->schemes);
-> diff --git a/mm/damon/lru_sort.c b/mm/damon/lru_sort.c
-> index 9de6f00a71c5..cbe7e865dc74 100644
-> --- a/mm/damon/lru_sort.c
-> +++ b/mm/damon/lru_sort.c
-> @@ -257,39 +257,6 @@ module_param(nr_cold_quota_exceeds, ulong, 0400);
->   static struct damon_ctx *ctx;
->   static struct damon_target *target;
->   
-> -struct damon_lru_sort_ram_walk_arg {
-> -	unsigned long start;
-> -	unsigned long end;
-> -};
-> -
-> -static int walk_system_ram(struct resource *res, void *arg)
-> -{
-> -	struct damon_lru_sort_ram_walk_arg *a = arg;
-> -
-> -	if (a->end - a->start < resource_size(res)) {
-> -		a->start = res->start;
-> -		a->end = res->end;
-> -	}
-> -	return 0;
-> -}
-> -
-> -/*
-> - * Find biggest 'System RAM' resource and store its start and end address in
-> - * @start and @end, respectively.  If no System RAM is found, returns false.
-> - */
-> -static bool get_monitoring_region(unsigned long *start, unsigned long *end)
-> -{
-> -	struct damon_lru_sort_ram_walk_arg arg = {};
-> -
-> -	walk_system_ram_res(0, ULONG_MAX, &arg, walk_system_ram);
-> -	if (arg.end <= arg.start)
-> -		return false;
-> -
-> -	*start = arg.start;
-> -	*end = arg.end;
-> -	return true;
-> -}
-> -
->   /* Create a DAMON-based operation scheme for hot memory regions */
->   static struct damos *damon_lru_sort_new_hot_scheme(unsigned int hot_thres)
->   {
-> @@ -404,8 +371,8 @@ static int damon_lru_sort_apply_parameters(void)
->   	if (monitor_region_start > monitor_region_end)
->   		return -EINVAL;
->   	if (!monitor_region_start && !monitor_region_end &&
-> -			!get_monitoring_region(&monitor_region_start,
-> -				&monitor_region_end))
-> +	    !damon_get_sram_monitoring_region(&monitor_region_start,
-> +					      &monitor_region_end))
->   		return -EINVAL;
->   	addr_range.start = monitor_region_start;
->   	addr_range.end = monitor_region_end;
-> diff --git a/mm/damon/ops-common.h b/mm/damon/ops-common.h
-> index 52329ff361cd..e6f1c9b48042 100644
-> --- a/mm/damon/ops-common.h
-> +++ b/mm/damon/ops-common.h
-> @@ -16,3 +16,4 @@ int damon_pageout_score(struct damon_ctx *c, struct damon_region *r,
->   			struct damos *s);
->   int damon_hot_score(struct damon_ctx *c, struct damon_region *r,
->   			struct damos *s);
-> +bool get_monitoring_region(unsigned long *start, unsigned long *end);
-There should be removed,  please ignore this patch, i will send a V3 
-patch,  thanks.
-> diff --git a/mm/damon/reclaim.c b/mm/damon/reclaim.c
-> index a7faf51b4bd4..484bb802d249 100644
-> --- a/mm/damon/reclaim.c
-> +++ b/mm/damon/reclaim.c
-> @@ -229,39 +229,6 @@ module_param(nr_quota_exceeds, ulong, 0400);
->   static struct damon_ctx *ctx;
->   static struct damon_target *target;
->   
-> -struct damon_reclaim_ram_walk_arg {
-> -	unsigned long start;
-> -	unsigned long end;
-> -};
-> -
-> -static int walk_system_ram(struct resource *res, void *arg)
-> -{
-> -	struct damon_reclaim_ram_walk_arg *a = arg;
-> -
-> -	if (a->end - a->start < resource_size(res)) {
-> -		a->start = res->start;
-> -		a->end = res->end;
-> -	}
-> -	return 0;
-> -}
-> -
-> -/*
-> - * Find biggest 'System RAM' resource and store its start and end address in
-> - * @start and @end, respectively.  If no System RAM is found, returns false.
-> - */
-> -static bool get_monitoring_region(unsigned long *start, unsigned long *end)
-> -{
-> -	struct damon_reclaim_ram_walk_arg arg = {};
-> -
-> -	walk_system_ram_res(0, ULONG_MAX, &arg, walk_system_ram);
-> -	if (arg.end <= arg.start)
-> -		return false;
-> -
-> -	*start = arg.start;
-> -	*end = arg.end;
-> -	return true;
-> -}
-> -
->   static struct damos *damon_reclaim_new_scheme(void)
->   {
->   	struct damos_watermarks wmarks = {
-> @@ -323,8 +290,8 @@ static int damon_reclaim_apply_parameters(void)
->   	if (monitor_region_start > monitor_region_end)
->   		return -EINVAL;
->   	if (!monitor_region_start && !monitor_region_end &&
-> -			!get_monitoring_region(&monitor_region_start,
-> -				&monitor_region_end))
-> +	    !damon_get_sram_monitoring_region(&monitor_region_start,
-> +					      &monitor_region_end))
->   		return -EINVAL;
->   	addr_range.start = monitor_region_start;
->   	addr_range.end = monitor_region_end;
+The switch case 'DAMOS_STAT' and switch case 'default' have same
+return value in damon_va_apply_scheme(), and the 'default' case
+is for DAMOS actions that not supported by 'vaddr'. It might
+make sense to add a comment here.
+
+Signed-off-by: Kaixu Xia <kaixuxia@tencent.com>
+---
+ mm/damon/vaddr.c | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/mm/damon/vaddr.c b/mm/damon/vaddr.c
+index 3c7b9d6dca95..3814200e61e4 100644
+--- a/mm/damon/vaddr.c
++++ b/mm/damon/vaddr.c
+@@ -646,6 +646,9 @@ static unsigned long damon_va_apply_scheme(struct damon_ctx *ctx,
+ 	case DAMOS_STAT:
+ 		return 0;
+ 	default:
++		/*
++		 * DAMOS actions that not yet supported by 'vaddr'.
++		 */
+ 		return 0;
+ 	}
+ 
+-- 
+2.27.0
+
