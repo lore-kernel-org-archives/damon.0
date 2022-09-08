@@ -1,33 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0DC65CA6
-	for <damon@lists.linux.dev>; Thu,  8 Sep 2022 18:49:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12022C433D7;
-	Thu,  8 Sep 2022 18:49:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D007B5CA6
+	for <damon@lists.linux.dev>; Thu,  8 Sep 2022 19:14:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6CC6C433C1;
+	Thu,  8 Sep 2022 19:14:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1662662990;
-	bh=9blEcl+kQyexkHeFxKpL4hVCHMxyX6MRyBgDynt2ggA=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LUYMF6ihxRMbLcvAo6bo2tuSSmkMIp+xGcGekfAMRsJYAgB2hx3pUoob0W9ZShep4
-	 7xx/DZ/EZc5vgUVSoMNN7y1PT7Tri5U9UjSmREmB261CbfPx108eUd4pihulssseze
-	 yFRu7JUKS3AxNeF5JUMc+MSIyphZIyLh/kNTS2pWhCOkR6a8vGNrBfCiKR6OmnX27+
-	 z7UcDie4z0fmoQOy8gw9D8x0XXdgOiCT17IVj3ePqmRnd1VsQ86XVtJFJbsY0nlrk+
-	 f/8qHDKwjwVyfOW9H/YgqUTq1nffhfYpZeyojGYCB/v/DaIQYFELps/7O9uHmitbdD
-	 EdkJ9T5DOMQRA==
+	s=k20201202; t=1662664492;
+	bh=yZK4GKE4bBaOcZKG8OpufGWJ5T4bJN3vGP8XxsKNhoc=;
+	h=From:To:Cc:Subject:Date:From;
+	b=S3Z0hLtOXOal4z6XZKqMmfXH04b4SnBO5ffm5jNG6HrJej+TuA3AelCLMHtrm8qNI
+	 fAueYoaEilTKnD1ucrEK9dKmeXiMx9DIcRoADFix4IM9l+o8s1CXToujYw3WXC3g9i
+	 TRjmkgUl5N5wOjknEym/C41n+ps+iH4pY8SdBLPKyRgh6/V63utpBMCUdOji/fYb7y
+	 H014yO0ZqVJs0/1lFCwmNnhdRUga3JSVaC13qs5GLLoeod5zFEHrlf1OpXz0gOF40m
+	 XgepXYQX3qPycctY7c/2WAeAMPHqo8A0K0xTizQ46onD5bZ43iVDW9NQWV+Y8SEnvi
+	 JtGKzSwbdvc3w==
 From: SeongJae Park <sj@kernel.org>
-To: Xin Hao <xhao@linux.alibaba.com>
-Cc: sj@kernel.org,
-	akpm@linux-foundation.org,
-	damon@lists.linux.dev,
+To: akpm@linux-foundation.org
+Cc: damon@lists.linux.dev,
 	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] mm/damon/sysfs: change few functions execute order
-Date: Thu,  8 Sep 2022 18:49:47 +0000
-Message-Id: <20220908184947.103206-1-sj@kernel.org>
+	linux-kernel@vger.kernel.org,
+	Yajun Deng <yajun.deng@linux.dev>,
+	SeongJae Park <sj@kernel.org>
+Subject: [PATCH v3] mm/damon: introduce struct damos_access_pattern
+Date: Thu,  8 Sep 2022 19:14:43 +0000
+Message-Id: <20220908191443.129534-1-sj@kernel.org>
 X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20220908081932.77370-1-xhao@linux.alibaba.com>
-References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -36,134 +34,410 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hi Xin,
+From: Yajun Deng <yajun.deng@linux.dev>
 
-On Thu, 8 Sep 2022 16:19:32 +0800 Xin Hao <xhao@linux.alibaba.com> wrote:
+The damon_new_scheme() has too many parameters, we can introduce struct
+damos_access_pattern to simplify it.
 
-> These nr_{schemes,regions,contexts,kdamonds}_store() functions are both call
+In additon, we couldn't use bpf trace kprobe that more than 5 parameters.
 
-checkpatch complains as below:
+Signed-off-by: Yajun Deng <yajun.deng@linux.dev>
+Reviewed-by: SeongJae Park <sj@kernel.org>
+Signed-off-by: SeongJae Park <sj@kernel.org>
+---
+Changes from v2
+(https://lore.kernel.org/damon/20220908032611.4072174-1-yajun.deng@linux.dev/):
+ - Fix cosmetic nits in v2 (SeongJae Park)
+ - Wordsmith damos_access_pattern description comment (SeongJae Park)
+ - Adds 'Reviewed-by:' and 'Signed-off-by:' from SeongJae Park
 
-    WARNING: Possible unwrapped commit description (prefer a maximum 75 chars per line)
-    #10:
-    These nr_{schemes,regions,contexts,kdamonds}_store() functions are both call
+Changes from v1
+(https://lore.kernel.org/damon/20220907092626.3013765-1-yajun.deng@linux.dev/):
+ - make the name of structure more sense.
 
-> kstrtoint() to get relative values from sysfs interface, if it return an
-> error, there get kobject instance would be meaningless through 'container_of'.
+ include/linux/damon.h | 37 ++++++++++++++++++----------------
+ mm/damon/core.c       | 31 ++++++++++++++---------------
+ mm/damon/dbgfs.c      | 27 +++++++++++++++----------
+ mm/damon/lru_sort.c   | 46 ++++++++++++++++++++++++++-----------------
+ mm/damon/reclaim.c    | 23 +++++++++++++---------
+ mm/damon/sysfs.c      | 17 +++++++++++-----
+ 6 files changed, 106 insertions(+), 75 deletions(-)
 
-I was thinking the compiler could do that kind of optimization on its own, so I
-preferred to make the code shorter.
+diff --git a/include/linux/damon.h b/include/linux/damon.h
+index d54acec048d6..90f20675da22 100644
+--- a/include/linux/damon.h
++++ b/include/linux/damon.h
+@@ -216,13 +216,26 @@ struct damos_stat {
+ };
+ 
+ /**
+- * struct damos - Represents a Data Access Monitoring-based Operation Scheme.
++ * struct damos_access_pattern - Target access pattern of the given scheme.
+  * @min_sz_region:	Minimum size of target regions.
+  * @max_sz_region:	Maximum size of target regions.
+  * @min_nr_accesses:	Minimum ``->nr_accesses`` of target regions.
+  * @max_nr_accesses:	Maximum ``->nr_accesses`` of target regions.
+  * @min_age_region:	Minimum age of target regions.
+  * @max_age_region:	Maximum age of target regions.
++ */
++struct damos_access_pattern {
++	unsigned long min_sz_region;
++	unsigned long max_sz_region;
++	unsigned int min_nr_accesses;
++	unsigned int max_nr_accesses;
++	unsigned int min_age_region;
++	unsigned int max_age_region;
++};
++
++/**
++ * struct damos - Represents a Data Access Monitoring-based Operation Scheme.
++ * @pattern:		Access pattern of target regions.
+  * @action:		&damo_action to be applied to the target regions.
+  * @quota:		Control the aggressiveness of this scheme.
+  * @wmarks:		Watermarks for automated (in)activation of this scheme.
+@@ -230,10 +243,8 @@ struct damos_stat {
+  * @list:		List head for siblings.
+  *
+  * For each aggregation interval, DAMON finds regions which fit in the
+- * condition (&min_sz_region, &max_sz_region, &min_nr_accesses,
+- * &max_nr_accesses, &min_age_region, &max_age_region) and applies &action to
+- * those.  To avoid consuming too much CPU time or IO resources for the
+- * &action, &quota is used.
++ * &pattern and applies &action to those. To avoid consuming too much
++ * CPU time or IO resources for the &action, &quota is used.
+  *
+  * To do the work only when needed, schemes can be activated for specific
+  * system situations using &wmarks.  If all schemes that registered to the
+@@ -248,12 +259,7 @@ struct damos_stat {
+  * &action is applied.
+  */
+ struct damos {
+-	unsigned long min_sz_region;
+-	unsigned long max_sz_region;
+-	unsigned int min_nr_accesses;
+-	unsigned int max_nr_accesses;
+-	unsigned int min_age_region;
+-	unsigned int max_age_region;
++	struct damos_access_pattern pattern;
+ 	enum damos_action action;
+ 	struct damos_quota quota;
+ 	struct damos_watermarks wmarks;
+@@ -509,12 +515,9 @@ void damon_destroy_region(struct damon_region *r, struct damon_target *t);
+ int damon_set_regions(struct damon_target *t, struct damon_addr_range *ranges,
+ 		unsigned int nr_ranges);
+ 
+-struct damos *damon_new_scheme(
+-		unsigned long min_sz_region, unsigned long max_sz_region,
+-		unsigned int min_nr_accesses, unsigned int max_nr_accesses,
+-		unsigned int min_age_region, unsigned int max_age_region,
+-		enum damos_action action, struct damos_quota *quota,
+-		struct damos_watermarks *wmarks);
++struct damos *damon_new_scheme(struct damos_access_pattern *pattern,
++			enum damos_action action, struct damos_quota *quota,
++			struct damos_watermarks *wmarks);
+ void damon_add_scheme(struct damon_ctx *ctx, struct damos *s);
+ void damon_destroy_scheme(struct damos *s);
+ 
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index 338bc79771b9..c2f9e30f450a 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -265,24 +265,21 @@ int damon_set_regions(struct damon_target *t, struct damon_addr_range *ranges,
+ 	return 0;
+ }
+ 
+-struct damos *damon_new_scheme(
+-		unsigned long min_sz_region, unsigned long max_sz_region,
+-		unsigned int min_nr_accesses, unsigned int max_nr_accesses,
+-		unsigned int min_age_region, unsigned int max_age_region,
+-		enum damos_action action, struct damos_quota *quota,
+-		struct damos_watermarks *wmarks)
++struct damos *damon_new_scheme(struct damos_access_pattern *pattern,
++			enum damos_action action, struct damos_quota *quota,
++			struct damos_watermarks *wmarks)
+ {
+ 	struct damos *scheme;
+ 
+ 	scheme = kmalloc(sizeof(*scheme), GFP_KERNEL);
+ 	if (!scheme)
+ 		return NULL;
+-	scheme->min_sz_region = min_sz_region;
+-	scheme->max_sz_region = max_sz_region;
+-	scheme->min_nr_accesses = min_nr_accesses;
+-	scheme->max_nr_accesses = max_nr_accesses;
+-	scheme->min_age_region = min_age_region;
+-	scheme->max_age_region = max_age_region;
++	scheme->pattern.min_sz_region = pattern->min_sz_region;
++	scheme->pattern.max_sz_region = pattern->max_sz_region;
++	scheme->pattern.min_nr_accesses = pattern->min_nr_accesses;
++	scheme->pattern.max_nr_accesses = pattern->max_nr_accesses;
++	scheme->pattern.min_age_region = pattern->min_age_region;
++	scheme->pattern.max_age_region = pattern->max_age_region;
+ 	scheme->action = action;
+ 	scheme->stat = (struct damos_stat){};
+ 	INIT_LIST_HEAD(&scheme->list);
+@@ -720,10 +717,12 @@ static bool __damos_valid_target(struct damon_region *r, struct damos *s)
+ 	unsigned long sz;
+ 
+ 	sz = r->ar.end - r->ar.start;
+-	return s->min_sz_region <= sz && sz <= s->max_sz_region &&
+-		s->min_nr_accesses <= r->nr_accesses &&
+-		r->nr_accesses <= s->max_nr_accesses &&
+-		s->min_age_region <= r->age && r->age <= s->max_age_region;
++	return s->pattern.min_sz_region <= sz &&
++		sz <= s->pattern.max_sz_region &&
++		s->pattern.min_nr_accesses <= r->nr_accesses &&
++		r->nr_accesses <= s->pattern.max_nr_accesses &&
++		s->pattern.min_age_region <= r->age &&
++		r->age <= s->pattern.max_age_region;
+ }
+ 
+ static bool damos_valid_target(struct damon_ctx *c, struct damon_target *t,
+diff --git a/mm/damon/dbgfs.c b/mm/damon/dbgfs.c
+index 652a94deafe3..1422037cedd2 100644
+--- a/mm/damon/dbgfs.c
++++ b/mm/damon/dbgfs.c
+@@ -131,9 +131,12 @@ static ssize_t sprint_schemes(struct damon_ctx *c, char *buf, ssize_t len)
+ 	damon_for_each_scheme(s, c) {
+ 		rc = scnprintf(&buf[written], len - written,
+ 				"%lu %lu %u %u %u %u %d %lu %lu %lu %u %u %u %d %lu %lu %lu %lu %lu %lu %lu %lu %lu\n",
+-				s->min_sz_region, s->max_sz_region,
+-				s->min_nr_accesses, s->max_nr_accesses,
+-				s->min_age_region, s->max_age_region,
++				s->pattern.min_sz_region,
++				s->pattern.max_sz_region,
++				s->pattern.min_nr_accesses,
++				s->pattern.max_nr_accesses,
++				s->pattern.min_age_region,
++				s->pattern.max_age_region,
+ 				damos_action_to_dbgfs_scheme_action(s->action),
+ 				s->quota.ms, s->quota.sz,
+ 				s->quota.reset_interval,
+@@ -221,8 +224,6 @@ static struct damos **str_to_schemes(const char *str, ssize_t len,
+ 	struct damos *scheme, **schemes;
+ 	const int max_nr_schemes = 256;
+ 	int pos = 0, parsed, ret;
+-	unsigned long min_sz, max_sz;
+-	unsigned int min_nr_a, max_nr_a, min_age, max_age;
+ 	unsigned int action_input;
+ 	enum damos_action action;
+ 
+@@ -233,13 +234,18 @@ static struct damos **str_to_schemes(const char *str, ssize_t len,
+ 
+ 	*nr_schemes = 0;
+ 	while (pos < len && *nr_schemes < max_nr_schemes) {
++		struct damos_access_pattern pattern = {};
+ 		struct damos_quota quota = {};
+ 		struct damos_watermarks wmarks;
+ 
+ 		ret = sscanf(&str[pos],
+ 				"%lu %lu %u %u %u %u %u %lu %lu %lu %u %u %u %u %lu %lu %lu %lu%n",
+-				&min_sz, &max_sz, &min_nr_a, &max_nr_a,
+-				&min_age, &max_age, &action_input, &quota.ms,
++				&pattern.min_sz_region, &pattern.max_sz_region,
++				&pattern.min_nr_accesses,
++				&pattern.max_nr_accesses,
++				&pattern.min_age_region,
++				&pattern.max_age_region,
++				&action_input, &quota.ms,
+ 				&quota.sz, &quota.reset_interval,
+ 				&quota.weight_sz, &quota.weight_nr_accesses,
+ 				&quota.weight_age, &wmarks.metric,
+@@ -251,7 +257,9 @@ static struct damos **str_to_schemes(const char *str, ssize_t len,
+ 		if ((int)action < 0)
+ 			goto fail;
+ 
+-		if (min_sz > max_sz || min_nr_a > max_nr_a || min_age > max_age)
++		if (pattern.min_sz_region > pattern.max_sz_region ||
++		    pattern.min_nr_accesses > pattern.max_nr_accesses ||
++		    pattern.min_age_region > pattern.max_age_region)
+ 			goto fail;
+ 
+ 		if (wmarks.high < wmarks.mid || wmarks.high < wmarks.low ||
+@@ -259,8 +267,7 @@ static struct damos **str_to_schemes(const char *str, ssize_t len,
+ 			goto fail;
+ 
+ 		pos += parsed;
+-		scheme = damon_new_scheme(min_sz, max_sz, min_nr_a, max_nr_a,
+-				min_age, max_age, action, &quota, &wmarks);
++		scheme = damon_new_scheme(&pattern, action, &quota, &wmarks);
+ 		if (!scheme)
+ 			goto fail;
+ 
+diff --git a/mm/damon/lru_sort.c b/mm/damon/lru_sort.c
+index 3a9ea4554289..702c8c3afb49 100644
+--- a/mm/damon/lru_sort.c
++++ b/mm/damon/lru_sort.c
+@@ -234,6 +234,17 @@ static bool get_monitoring_region(unsigned long *start, unsigned long *end)
+ /* Create a DAMON-based operation scheme for hot memory regions */
+ static struct damos *damon_lru_sort_new_hot_scheme(unsigned int hot_thres)
+ {
++	struct damos_access_pattern pattern = {
++		/* Find regions having PAGE_SIZE or larger size */
++		.min_sz_region = PAGE_SIZE,
++		.max_sz_region = ULONG_MAX,
++		/* and accessed for more than the threshold */
++		.min_nr_accesses = hot_thres,
++		.max_nr_accesses = UINT_MAX,
++		/* no matter its age */
++		.min_age_region = 0,
++		.max_age_region = UINT_MAX,
++	};
+ 	struct damos_watermarks wmarks = {
+ 		.metric = DAMOS_WMARK_FREE_MEM_RATE,
+ 		.interval = wmarks_interval,
+@@ -254,26 +265,31 @@ static struct damos *damon_lru_sort_new_hot_scheme(unsigned int hot_thres)
+ 		.weight_nr_accesses = 1,
+ 		.weight_age = 0,
+ 	};
+-	struct damos *scheme = damon_new_scheme(
+-			/* Find regions having PAGE_SIZE or larger size */
+-			PAGE_SIZE, ULONG_MAX,
+-			/* and accessed for more than the threshold */
+-			hot_thres, UINT_MAX,
+-			/* no matter its age */
+-			0, UINT_MAX,
++
++	return damon_new_scheme(
++			&pattern,
+ 			/* prioritize those on LRU lists, as soon as found */
+ 			DAMOS_LRU_PRIO,
+ 			/* under the quota. */
+ 			&quota,
+ 			/* (De)activate this according to the watermarks. */
+ 			&wmarks);
+-
+-	return scheme;
+ }
+ 
+ /* Create a DAMON-based operation scheme for cold memory regions */
+ static struct damos *damon_lru_sort_new_cold_scheme(unsigned int cold_thres)
+ {
++	struct damos_access_pattern pattern = {
++		/* Find regions having PAGE_SIZE or larger size */
++		.min_sz_region = PAGE_SIZE,
++		.max_sz_region = ULONG_MAX,
++		/* and not accessed at all */
++		.min_nr_accesses = 0,
++		.max_nr_accesses = 0,
++		/* for min_age or more micro-seconds */
++		.min_age_region = cold_thres,
++		.max_age_region = UINT_MAX,
++	};
+ 	struct damos_watermarks wmarks = {
+ 		.metric = DAMOS_WMARK_FREE_MEM_RATE,
+ 		.interval = wmarks_interval,
+@@ -295,21 +311,15 @@ static struct damos *damon_lru_sort_new_cold_scheme(unsigned int cold_thres)
+ 		.weight_nr_accesses = 0,
+ 		.weight_age = 1,
+ 	};
+-	struct damos *scheme = damon_new_scheme(
+-			/* Find regions having PAGE_SIZE or larger size */
+-			PAGE_SIZE, ULONG_MAX,
+-			/* and not accessed at all */
+-			0, 0,
+-			/* for cold_thres or more micro-seconds, and */
+-			cold_thres, UINT_MAX,
++
++	return damon_new_scheme(
++			&pattern,
+ 			/* mark those as not accessed, as soon as found */
+ 			DAMOS_LRU_DEPRIO,
+ 			/* under the quota. */
+ 			&quota,
+ 			/* (De)activate this according to the watermarks. */
+ 			&wmarks);
+-
+-	return scheme;
+ }
+ 
+ static int damon_lru_sort_apply_parameters(void)
+diff --git a/mm/damon/reclaim.c b/mm/damon/reclaim.c
+index 2c5960ad9c08..8eb78b6a3296 100644
+--- a/mm/damon/reclaim.c
++++ b/mm/damon/reclaim.c
+@@ -191,6 +191,17 @@ static bool get_monitoring_region(unsigned long *start, unsigned long *end)
+ 
+ static struct damos *damon_reclaim_new_scheme(void)
+ {
++	struct damos_access_pattern pattern = {
++		/* Find regions having PAGE_SIZE or larger size */
++		.min_sz_region = PAGE_SIZE,
++		.max_sz_region = ULONG_MAX,
++		/* and not accessed at all */
++		.min_nr_accesses = 0,
++		.max_nr_accesses = 0,
++		/* for min_age or more micro-seconds */
++		.min_age_region = min_age / aggr_interval,
++		.max_age_region = UINT_MAX,
++	};
+ 	struct damos_watermarks wmarks = {
+ 		.metric = DAMOS_WMARK_FREE_MEM_RATE,
+ 		.interval = wmarks_interval,
+@@ -211,21 +222,15 @@ static struct damos *damon_reclaim_new_scheme(void)
+ 		.weight_nr_accesses = 0,
+ 		.weight_age = 1
+ 	};
+-	struct damos *scheme = damon_new_scheme(
+-			/* Find regions having PAGE_SIZE or larger size */
+-			PAGE_SIZE, ULONG_MAX,
+-			/* and not accessed at all */
+-			0, 0,
+-			/* for min_age or more micro-seconds, and */
+-			min_age / aggr_interval, UINT_MAX,
++
++	return damon_new_scheme(
++			&pattern,
+ 			/* page out those, as soon as found */
+ 			DAMOS_PAGEOUT,
+ 			/* under the quota. */
+ 			&quota,
+ 			/* (De)activate this according to the watermarks. */
+ 			&wmarks);
+-
+-	return scheme;
+ }
+ 
+ static int damon_reclaim_apply_parameters(void)
+diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
+index 1719bb3531e3..9fcf7bae41eb 100644
+--- a/mm/damon/sysfs.c
++++ b/mm/damon/sysfs.c
+@@ -2259,11 +2259,20 @@ static int damon_sysfs_set_targets(struct damon_ctx *ctx,
+ static struct damos *damon_sysfs_mk_scheme(
+ 		struct damon_sysfs_scheme *sysfs_scheme)
+ {
+-	struct damon_sysfs_access_pattern *pattern =
++	struct damon_sysfs_access_pattern *access_pattern =
+ 		sysfs_scheme->access_pattern;
+ 	struct damon_sysfs_quotas *sysfs_quotas = sysfs_scheme->quotas;
+ 	struct damon_sysfs_weights *sysfs_weights = sysfs_quotas->weights;
+ 	struct damon_sysfs_watermarks *sysfs_wmarks = sysfs_scheme->watermarks;
++
++	struct damos_access_pattern pattern = {
++		.min_sz_region = access_pattern->sz->min,
++		.max_sz_region = access_pattern->sz->max,
++		.min_nr_accesses = access_pattern->nr_accesses->min,
++		.max_nr_accesses = access_pattern->nr_accesses->max,
++		.min_age_region = access_pattern->age->min,
++		.max_age_region = access_pattern->age->max,
++	};
+ 	struct damos_quota quota = {
+ 		.ms = sysfs_quotas->ms,
+ 		.sz = sysfs_quotas->sz,
+@@ -2280,10 +2289,8 @@ static struct damos *damon_sysfs_mk_scheme(
+ 		.low = sysfs_wmarks->low,
+ 	};
+ 
+-	return damon_new_scheme(pattern->sz->min, pattern->sz->max,
+-			pattern->nr_accesses->min, pattern->nr_accesses->max,
+-			pattern->age->min, pattern->age->max,
+-			sysfs_scheme->action, &quota, &wmarks);
++	return damon_new_scheme(&pattern, sysfs_scheme->action, &quota,
++			&wmarks);
+ }
+ 
+ static int damon_sysfs_set_schemes(struct damon_ctx *ctx,
+-- 
+2.25.1
 
-This change makes the code slightly longer, while the benefit of the change is
-unclear.  I'd like to keep it as is unless we get some clear benefit of this?
-
-
-Thanks,
-SJ
-
-> 
-> Signed-off-by: Xin Hao <xhao@linux.alibaba.com>
-> ---
->  mm/damon/sysfs.c | 24 ++++++++++++++----------
->  1 file changed, 14 insertions(+), 10 deletions(-)
-> 
-> diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
-> index 88f208ff235d..54fdfcdbb3e4 100644
-> --- a/mm/damon/sysfs.c
-> +++ b/mm/damon/sysfs.c
-> @@ -1031,8 +1031,7 @@ static ssize_t nr_schemes_show(struct kobject *kobj,
->  static ssize_t nr_schemes_store(struct kobject *kobj,
->  		struct kobj_attribute *attr, const char *buf, size_t count)
->  {
-> -	struct damon_sysfs_schemes *schemes = container_of(kobj,
-> -			struct damon_sysfs_schemes, kobj);
-> +	struct damon_sysfs_schemes *schemes;
->  	int nr, err = kstrtoint(buf, 0, &nr);
->  
->  	if (err)
-> @@ -1040,6 +1039,8 @@ static ssize_t nr_schemes_store(struct kobject *kobj,
->  	if (nr < 0)
->  		return -EINVAL;
->  
-> +	schemes = container_of(kobj, struct damon_sysfs_schemes, kobj);
-> +
->  	if (!mutex_trylock(&damon_sysfs_lock))
->  		return -EBUSY;
->  	err = damon_sysfs_schemes_add_dirs(schemes, nr);
-> @@ -1237,8 +1238,7 @@ static ssize_t nr_regions_show(struct kobject *kobj,
->  static ssize_t nr_regions_store(struct kobject *kobj,
->  		struct kobj_attribute *attr, const char *buf, size_t count)
->  {
-> -	struct damon_sysfs_regions *regions = container_of(kobj,
-> -			struct damon_sysfs_regions, kobj);
-> +	struct damon_sysfs_regions *regions;
->  	int nr, err = kstrtoint(buf, 0, &nr);
->  
->  	if (err)
-> @@ -1246,6 +1246,8 @@ static ssize_t nr_regions_store(struct kobject *kobj,
->  	if (nr < 0)
->  		return -EINVAL;
->  
-> +	regions = container_of(kobj, struct damon_sysfs_regions, kobj);
-> +
->  	if (!mutex_trylock(&damon_sysfs_lock))
->  		return -EBUSY;
->  	err = damon_sysfs_regions_add_dirs(regions, nr);
-> @@ -1440,8 +1442,7 @@ static ssize_t nr_targets_show(struct kobject *kobj,
->  static ssize_t nr_targets_store(struct kobject *kobj,
->  		struct kobj_attribute *attr, const char *buf, size_t count)
->  {
-> -	struct damon_sysfs_targets *targets = container_of(kobj,
-> -			struct damon_sysfs_targets, kobj);
-> +	struct damon_sysfs_targets *targets;
->  	int nr, err = kstrtoint(buf, 0, &nr);
->  
->  	if (err)
-> @@ -1449,6 +1450,8 @@ static ssize_t nr_targets_store(struct kobject *kobj,
->  	if (nr < 0)
->  		return -EINVAL;
->  
-> +	targets = container_of(kobj, struct damon_sysfs_targets, kobj);
-> +
->  	if (!mutex_trylock(&damon_sysfs_lock))
->  		return -EBUSY;
->  	err = damon_sysfs_targets_add_dirs(targets, nr);
-> @@ -1962,8 +1965,7 @@ static ssize_t nr_contexts_show(struct kobject *kobj,
->  static ssize_t nr_contexts_store(struct kobject *kobj,
->  		struct kobj_attribute *attr, const char *buf, size_t count)
->  {
-> -	struct damon_sysfs_contexts *contexts = container_of(kobj,
-> -			struct damon_sysfs_contexts, kobj);
-> +	struct damon_sysfs_contexts *contexts;
->  	int nr, err;
->  
->  	err = kstrtoint(buf, 0, &nr);
-> @@ -1973,6 +1975,7 @@ static ssize_t nr_contexts_store(struct kobject *kobj,
->  	if (nr < 0 || 1 < nr)
->  		return -EINVAL;
->  
-> +	contexts = container_of(kobj, struct damon_sysfs_contexts, kobj);
->  	if (!mutex_trylock(&damon_sysfs_lock))
->  		return -EBUSY;
->  	err = damon_sysfs_contexts_add_dirs(contexts, nr);
-> @@ -2741,8 +2744,7 @@ static ssize_t nr_kdamonds_show(struct kobject *kobj,
->  static ssize_t nr_kdamonds_store(struct kobject *kobj,
->  		struct kobj_attribute *attr, const char *buf, size_t count)
->  {
-> -	struct damon_sysfs_kdamonds *kdamonds = container_of(kobj,
-> -			struct damon_sysfs_kdamonds, kobj);
-> +	struct damon_sysfs_kdamonds *kdamonds;
->  	int nr, err;
->  
->  	err = kstrtoint(buf, 0, &nr);
-> @@ -2751,6 +2753,8 @@ static ssize_t nr_kdamonds_store(struct kobject *kobj,
->  	if (nr < 0)
->  		return -EINVAL;
->  
-> +	kdamonds = container_of(kobj, struct damon_sysfs_kdamonds, kobj);
-> +
->  	if (!mutex_trylock(&damon_sysfs_lock))
->  		return -EBUSY;
->  	err = damon_sysfs_kdamonds_add_dirs(kdamonds, nr);
-> -- 
-> 2.31.0
