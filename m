@@ -1,61 +1,82 @@
-Received: from mail-yb1-f174.google.com (mail-yb1-f174.google.com [209.85.219.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out199-18.us.a.mail.aliyun.com (out199-18.us.a.mail.aliyun.com [47.90.199.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1D3A7C
-	for <damon@lists.linux.dev>; Thu,  8 Sep 2022 00:04:50 +0000 (UTC)
-Received: by mail-yb1-f174.google.com with SMTP id y82so15757473yby.6
-        for <damon@lists.linux.dev>; Wed, 07 Sep 2022 17:04:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date;
-        bh=CSfIoIEprQL1Zq/RCJabpgauZviYxw0dabcud5lCVXU=;
-        b=PKwHKJ7dTQ+Ce4MqDAqBwUG9HShjVfeph8EZCcyG/8suM34nxJ5wffutIH1zst93HE
-         IQ6A+vW0zNStaCdrsf7qswV/pKV9wcsZH6LmaW0dmvasKWzbKbpg3MZfTFofSTMFi857
-         /5OLLjfjaDOjsStv8l3klvJCkLf9jpzfTth3tuAxxXqn94Ffdqf7IKiqnSZVLD5qqTzj
-         ZaG97PXga8YP5KdW5MwINtZRpye48FJ0+ymw4qn3XIEqeKXfoKCYrWYqjwBRvAluYPcB
-         MnDN1bCITQC6ecInQhEMgj39QF2ZahGKweg8QsHhYHQglfpwpf2bvpEBfQHNlXZui95j
-         IVwg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date;
-        bh=CSfIoIEprQL1Zq/RCJabpgauZviYxw0dabcud5lCVXU=;
-        b=zAQwGFalq/+vlB+M2sZVBaGxZClvLrRiwlTUjh73+YJfUhcRuqlezSAiir96/cvUwr
-         ouNbKRu2Q4g5Ytj0sbuOo8zy/VcRqZIKEv8vH86UOlmwOwgn6ip+PTYmC9KFk7DB94PO
-         YidE6L67oQFGkvRIUjOYzWfXaJhUs3a9f7C2QuxXyWNWB6o1rXYt5xBqSQ5mW522IuQR
-         F5P3MlTqbSZBdO8VLRgvfoWeIb/BnVzd1bDJDq0Px1kdxzGxsPJmIADtN4bQvR1GfzcV
-         g4OwDr+j9uMilk9Hkl8chNab+50tP4X81zp9Qplp6vsUOxOqa29x5aZADBtUfPN0M58P
-         uRZA==
-X-Gm-Message-State: ACgBeo1FmLc3lV47xEPe6s9vhDLiV7F2hYI2TpT/hTUchwvYwabLBjL0
-	yMFWLu9P562aOLK2lTk/oWhnAPumzQ66v8I0YgLXywha
-X-Google-Smtp-Source: AA6agR5OQMJab5Hu4Ov4v7wHMb1Y1JB/UM8qIplqhL3II3ijM4vkZFmwyS6oDCWDHtPUhAqJWkmUE6RTMJRl/EMz1aU=
-X-Received: by 2002:a25:9948:0:b0:67b:fc24:642d with SMTP id
- n8-20020a259948000000b0067bfc24642dmr4661289ybo.42.1662595489484; Wed, 07 Sep
- 2022 17:04:49 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D21B7C
+	for <damon@lists.linux.dev>; Thu,  8 Sep 2022 01:49:22 +0000 (UTC)
+X-Alimail-AntiSpam:AC=PASS;BC=-1|-1;BR=01201311R221e4;CH=green;DM=||false|;DS=||;FP=0|-1|-1|-1|0|-1|-1|-1;HT=ay29a033018046059;MF=xhao@linux.alibaba.com;NM=1;PH=DS;RN=5;SR=0;TI=SMTPD_---0VP.zpTy_1662601430;
+Received: from 30.240.97.117(mailfrom:xhao@linux.alibaba.com fp:SMTPD_---0VP.zpTy_1662601430)
+          by smtp.aliyun-inc.com;
+          Thu, 08 Sep 2022 09:43:52 +0800
+Message-ID: <c0a1e773-7dcf-0e27-95d8-beda673baac7@linux.alibaba.com>
+Date: Thu, 8 Sep 2022 09:43:50 +0800
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <CAM7-yPSeNe9v4QGRoqXkjcLtio3xiJKha9bRoPiu7v=o3RG2Nw@mail.gmail.com>
- <20220907163525.78126-1-sj@kernel.org>
-In-Reply-To: <20220907163525.78126-1-sj@kernel.org>
-From: Yun Levi <ppbuk5246@gmail.com>
-Date: Thu, 8 Sep 2022 09:04:38 +0900
-Message-ID: <CAM7-yPRgE58_BgAmkYuvWLHmLu2N2Ff_9nxHcpzEggvajkLj0w@mail.gmail.com>
-Subject: Re: [Question] About damon_set_regions function.
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.1.2
+Subject: Re: [PATCH] mm/damon: Remove duplicate get_monitoring_region()
+ definitions
 To: SeongJae Park <sj@kernel.org>
-Cc: damon@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
+Cc: akpm@linux-foundation.org, damon@lists.linux.dev, linux-mm@kvack.org,
+ linux-kernel@vger.kernel.org
+References: <20220907205911.62483-1-sj@kernel.org>
+From: haoxin <xhao@linux.alibaba.com>
+In-Reply-To: <20220907205911.62483-1-sj@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
+
+在 2022/9/8 上午4:59, SeongJae Park 写道:
+> On Wed, 7 Sep 2022 17:27:12 +0000 SeongJae Park <sj@kernel.org> wrote:
 >
-> Thanks.  If you don't mind, I will post a patch for this soon.
-
-Never mind! I'm looking forward to seeing the patch :) Thanks!
-
-
--- 
-Best regards,
-Levi
+> [...]
+>>> diff --git a/mm/damon/ops-common.c b/mm/damon/ops-common.c
+>>> index b1335de200e7..01938f33038d 100644
+>>> --- a/mm/damon/ops-common.c
+>>> +++ b/mm/damon/ops-common.c
+>>> @@ -172,3 +172,31 @@ int damon_hot_score(struct damon_ctx *c, struct damon_region *r,
+>>>
+>>>   	return hotness;
+>>>   }
+>>> +
+>>> +static inline int walk_system_ram(struct resource *res, void *arg)
+>>> +{
+>>> +	struct damon_addr_range *a = arg;
+>>> +
+>>> +	if (a->end - a->start < resource_size(res)) {
+>>> +		a->start = res->start;
+>>> +		a->end = res->end;
+>>> +	}
+>>> +	return 0;
+>>> +}
+>>> +
+>>> +/*
+>>> + * Find biggest 'System RAM' resource and store its start and end address in
+>>> + * @start and @end, respectively.  If no System RAM is found, returns false.
+>>> + */
+>>> +bool get_monitoring_region(unsigned long *start, unsigned long *end)
+>>> +{
+>>> +	struct damon_addr_range arg = {};
+>>> +
+>>> +	walk_system_ram_res(0, ULONG_MAX, &arg, walk_system_ram);
+>>> +	if (arg.end <= arg.start)
+>>> +		return false;
+>>> +
+>>> +	*start = arg.start;
+>>> +	*end = arg.end;
+>>> +	return true;
+>>> +}
+>> 'ops-common.c' is for code that common in monitoring operations
+>> implementations.  I'd prefer to have yet another source file for the DAMON
+>> modules including reclaim and lru_sort, say, 'modules-common.c'.
+> Or, putting it in damon/core.c might make more sense.
+Ok,  i will fix them in my next patch, thanks.
+>
+>
+> Thanks,
+> SJ
+>
+> [...]
