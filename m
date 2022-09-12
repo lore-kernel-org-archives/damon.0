@@ -1,163 +1,82 @@
-Received: from JPN01-OS0-obe.outbound.protection.outlook.com (mail-os0jpn01lp2104.outbound.protection.outlook.com [104.47.23.104])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f179.google.com (mail-pl1-f179.google.com [209.85.214.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 821932913
-	for <damon@lists.linux.dev>; Mon, 12 Sep 2022 14:39:31 +0000 (UTC)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=Z7tA08Mlhx32qtQ7W594grxxiS0pw2Bbao+Hq5uib6hiu7ro4WcogsVnDRtTmygLYzX4TFTcAjKA0PLELNe035sGoEGO80qtg9SeffsU/4Vt526PtMAoeuGn6OyBOMNYxc8Jp1E/DUkFzMX7CNILNY6xMz0nWHwtnvkxrePnEKv4SRDtnF33h3Ht2funhGv2HQgJwtxFU92gNeZ+RVfgEYWcGujwLACqhnmSF1k4L0TXJR7kjTlnLTRe2Mz1SpcT56coO4AIFSLVXPrn5GcTrwt6ateMTXMSXq9e1/b9yF23DCyfCecZ8vD/+4kLA2YRTnUGwJPr4m4TokKxFM+Q5g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=4EAFIRTLI3lMRYU30pzfpjFQEyY1HfZgZk+GB5sDfrQ=;
- b=LPKIinQe5olBFWb4ZL48PGa4YHfnrwGNXqTcceCUibhTlcMpsA/CMOj6MkOUYRf6YM4C2Vuay205Wc/+yIe5XxJA5qFqmIFLkJ5PMWDWArhMfhq4KBWUpTp7btCJsmZdp5s3Pjh0fgkceMc+cEcDyUkuWYi5VfFDlciDQN59BQzdEZVDSdsTHIy5Rf3WAZSHY79ef6MLmmN/3dPOP3mKIJQZZq0GQj9y3lVLupVqW6h/Lke5jv/OscDqYNGOT0GczjPzBQsj9L9ytM3bnhG0+y0nZunCYvPSIXVOBd0MyPHm3NMnmUaIc70izENX3+8HdDTRUbscHsEiKumxuE27tg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=4EAFIRTLI3lMRYU30pzfpjFQEyY1HfZgZk+GB5sDfrQ=;
- b=HKwLz+XZ32juKl6Iwo2Lh0gu81AmAY/kxCQ4l7gX+UxwUml95C64wF1C37UOd9ANvZRzbQqvODkqb1SobYokpImKhn3x4YbIAOqpXSpmHBPZ6LwGXmVy1gw62lwGaLOAc+eaVjMXMp5xjk2vwcSJxM+xbRagbZeyFfJWhHkl86zIu29a2KbBdIXbZCNk4IjzFYR7IdCSHPQ7UuTVw3BdkdnH4iSB9IzylTwlT0sn3JxEWoN/I4aUNd3qW5OCXRH/XpZe3fduQNUwa8IcsMK+8AxPzFsTsgsEla0QNlijBBnD/hzqYdcvYSUdRuS3a7nzkd2d9JuBO/2vMdAYxJAdzA==
-Received: from TYCP286MB2323.JPNP286.PROD.OUTLOOK.COM (2603:1096:400:152::9)
- by TYWP286MB2528.JPNP286.PROD.OUTLOOK.COM (2603:1096:400:225::11) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5612.14; Mon, 12 Sep
- 2022 14:39:28 +0000
-Received: from TYCP286MB2323.JPNP286.PROD.OUTLOOK.COM
- ([fe80::8d69:1a6d:5def:16db]) by TYCP286MB2323.JPNP286.PROD.OUTLOOK.COM
- ([fe80::8d69:1a6d:5def:16db%4]) with mapi id 15.20.5612.022; Mon, 12 Sep 2022
- 14:39:28 +0000
-From: Dawei Li <set_pte_at@outlook.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D36D2F2A
+	for <damon@lists.linux.dev>; Mon, 12 Sep 2022 15:12:45 +0000 (UTC)
+Received: by mail-pl1-f179.google.com with SMTP id u22so8869497plq.12
+        for <damon@lists.linux.dev>; Mon, 12 Sep 2022 08:12:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:date:subject:cc:to:from:from:to:cc:subject:date;
+        bh=J2EfS61ET44TCc+3QSfNlPKs8G07uWPFuZhCKqF9mNg=;
+        b=lvadD5K3rHg41vyguPIZs3SAs0qNEImqL8auN87u0WS8Do2g67gHhkQT80c2u4gJxA
+         RGJOtB8EtMOgz2k4rYvmUvKTGV/3ZnNJse0pcxuUIzu/N0bjKvNPvvyQrk8r6lBIM/Vc
+         /BYK8ItrmRLwSa0fnHA5ys3gKpncm5G+gS1pLgs3lBe6c/qMWSFhc9HHeTqDt5crXB58
+         dMCmFTlzaspQrnhNv34zGiay22wWatvIt5YpeYR7QmL1bM9UD08RGB/0P0ZxQhU0SQB9
+         ht62eIr0wA4e+6jHqXf2Iz80usBeX4hXAurB18Zq4qrO8te4W6M3cFsXgDuoywwHSDvN
+         h2Zg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date;
+        bh=J2EfS61ET44TCc+3QSfNlPKs8G07uWPFuZhCKqF9mNg=;
+        b=tgJ4Xu43WUi8HxJ+9eUYCr2Rg46cQpVOEhthMobo3LK8xh+hWUo6dKhdCMSAjQQkv2
+         DpketrgAs49g6KoDRMbaG1bLiXq05F0hxQg7IoXKVbeAm+/0ij1PAl+0vM6Ml9SyYPWM
+         p+4i08//ZQFt+Wb3F2hYoxoNYAroqO9Cqb5Y7zSdXR33WWwVpHZPzQ3lwUAfjNMFElcs
+         b9DfDqPmd4fNtnCmY7BNAoU9yGoDAo7QHSE51JeoYqBsdqy26hmqmPVwmF5rTDBBfpcV
+         wrAMA4K5l7G2GkitgQdGDnPIWmD+8+jc0YVj8ogWO/ZraUPxiIuR84gRd3JYJDM07c0G
+         QLzQ==
+X-Gm-Message-State: ACgBeo0iUZzrUAzaidX2D173RPy5A/DyUGP2NlwpwfBV1cd8SfVDnCfy
+	rQglEMClCYME5jnQToFHzQ==
+X-Google-Smtp-Source: AA6agR6mScOPPWtchxpH7T2XGJUOb+bGqVrhg7PQocFGMCm7j1FNyLGp4fCFo47zYN9F8iYQZqsj5A==
+X-Received: by 2002:a17:902:e14c:b0:177:e7be:2ab6 with SMTP id d12-20020a170902e14c00b00177e7be2ab6mr23975827pla.25.1662995564687;
+        Mon, 12 Sep 2022 08:12:44 -0700 (PDT)
+Received: from localhost.localdomain ([43.132.141.3])
+        by smtp.gmail.com with ESMTPSA id u16-20020a17090a0c5000b00200b2894648sm5311046pje.52.2022.09.12.08.12.42
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 12 Sep 2022 08:12:43 -0700 (PDT)
+From: xiakaixu1987@gmail.com
+X-Google-Original-From: kaixuxia@tencent.com
 To: sj@kernel.org,
 	akpm@linux-foundation.org
 Cc: damon@lists.linux.dev,
 	linux-mm@kvack.org,
 	linux-kernel@vger.kernel.org,
-	Dawei Li <set_pte_at@outlook.com>
-Subject: [PATCH] mm/damon: improve damon_new_region strategy
-Date: Mon, 12 Sep 2022 22:39:03 +0800
-Message-ID:
- <TYCP286MB2323DA1894FA55BB9CF90978CA449@TYCP286MB2323.JPNP286.PROD.OUTLOOK.COM>
-X-Mailer: git-send-email 2.25.1
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-TMN: [sVWPtShicKCXAwjZlIMlGDB4RwBbz+y2]
-X-ClientProxiedBy: SI1PR02CA0053.apcprd02.prod.outlook.com
- (2603:1096:4:1f5::8) To TYCP286MB2323.JPNP286.PROD.OUTLOOK.COM
- (2603:1096:400:152::9)
-X-Microsoft-Original-Message-ID:
- <20220912143903.33688-1-set_pte_at@outlook.com>
+	Kaixu Xia <kaixuxia@tencent.com>
+Subject: [PATCH] mm/damon/sysfs: use the wrapper directly to check if the kdamond is running
+Date: Mon, 12 Sep 2022 23:11:53 +0800
+Message-Id: <1662995513-24489-1-git-send-email-kaixuxia@tencent.com>
+X-Mailer: git-send-email 1.8.3.1
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: TYCP286MB2323:EE_|TYWP286MB2528:EE_
-X-MS-Office365-Filtering-Correlation-Id: 505165f8-7154-4580-a14f-08da94cc98af
-X-MS-Exchange-SLBlob-MailProps:
-	30ekHghIwFplBPqP8VCCscci5FKlo3HhUHNP4M9WR6JkwAcfNZGUDFSCTc+YA21qVZufwwWDnO5AnbbKslKu2DgnGd5Vp99PtqqwAlWcUC8jTnmVhTK+FfiFv/WpCP+tBYossNzNTAn5OFAD5CS8AdoX4gun1zPxZIbz9lXjKDVIXKOprpR5V8vLxPGWMVRcao/70VGQLMuw7LbPOjk2766L1Uvfp0H0siOq5hWnc8V+zgvXbndJm2L+dqV/DsBtQ6iPxf4LHKSV/eKgIcvsYLUSY9/ZOqyY1HD/9asXjT1dDk8TjtKIFGrCnmKq4zV6zONiBdSav4lpjEuddUvUhY/oXYlWgUb/IAq1AJmVEX+gylNpRBdt3bWXdHseoOPIuRaizesBGqBsijgKPu///WNRiWC7d2hjv+AIQeSW6CZcgP+t3FyeshjyRMVpZEMZ/VxhaWoUnLl2IhEd+FmZ1Cda4mB2jVVr0Zb7J0p2FYhK84hXbj/bIfqGGxcEbYDMRPoQkBNhguEXm3SEIeivdlO/pNHuer8jqUi6lc4a7GAhUXFioTTsHboSzygzkqeKUXMVFZiKbuU6R2eNKo7GDmctZ3EUeTgXPFbTXEoIOAqqVttXWhScUWd8segak2QW50VWjs3Q2FcBuvymtV5FPXrjNA+AG1ffUgFQlZCZJgKooVME23R0a3Z5KHawwh/3JyjNWNtUM09yJfzFWXa/tJxP9zh16ZbAC0MzB8f9C7SNUIz0pokiuiKLygGEF2Ql
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info:
-	4yEHfnOfobpj/9Ca2MYyvu2nfkGIDZ1WDUCXzlmzu5qbXXOzgaHzR3mFilW3f0kR40KBZ43W4gShm2YjCezyZLb112+yWF6JfbM4hiLJX0iaINyYvZTdoEljVw1bOfH0FvWhctsbcGbEbbsaNIq+I7svBIGP8rWSpqqYGTRSf9ytWIc4GBo2B/5OPMofSyjhb9mEcDmCtSTWb8IdobvSE/9YCgam8WMbvK4/Aypy78DyaEYeTPKI2tOtkrpQYrjxpEQmMr8bDCLaAg6MXs0JcPlpxpGZ9M6jYSweVvvrz6d3H/FKm1NpAj+s2KvotI1dOZLyHlRrBjGnFL7kU+kIH6Fu/v0OP85tMZCCTnK4QwOHvoQbeUo/xJcOupu6YicoKWCdLxarOobESj9gsQC6xsEXKDewoXFpP0tVyEZmhpap0Kz6ovxMIBXnptdkwjTrFmIVpiIrD7Kwtvi9eGTfaxRhMGbDj9PBdx8ZDulzwoQB2RfeWMH67HustBhFIfxcAvW1A5EVjnMLrGBLxsPjvKQQuoGIKpo8ZP3Z/dMqyyRMtULWcZD7LHixv5E8VTqR79ft1XBm/ZnIdj4w8MC9w8YZc3ko00gLwTOuYf5U7J02BZ1ZLGwta7j1KbXDWtEguGql7dm/Sc4PZpkBmUl8hA==
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?XDsCPbRgA9LJgRp7v1kd5v1dTkYqCaUQ9dLNuCzsP54rJgr/hY3lBOV4XIVu?=
- =?us-ascii?Q?TgZol5loa+Q3+E4QeCfbcAPmtMWtaiM/rbbQXFaCQc2kwPqMZNdnRb8xYJlR?=
- =?us-ascii?Q?77OhtO+Q4GXGnu9hPLd7PgxS9WOg8bhGw3+6XW0ruY0hd/7/mcDo3bnElQF3?=
- =?us-ascii?Q?f5p6EU8YNoeLeNYST/ofwq1ZaK1PAPgbEBLhclTdQX9Jvi7Mn/AVIYgtFTqw?=
- =?us-ascii?Q?5rA5CNMHA+H7NnaJim+mhbVn3iqC/pti3R07SKLvqaCSncNEn00ntVt4V3Yj?=
- =?us-ascii?Q?k/1hNMuS7P+Zfob0u9QbjTXADivdDgRnCe72PLfR5OLjlh6IWM+wRoKblrLk?=
- =?us-ascii?Q?kB3qXqBGBt7fAzkCqQ6khdU+aCm+pfnh1Gx012hSZaBwBqIIWNV+pXcFMduE?=
- =?us-ascii?Q?fEHigh46FCvstp/f5SrjD5sD9fCepeqVcNP1ZwVNJ0LkI1l1pC0/hEhCPPIU?=
- =?us-ascii?Q?RwyYLhQMqPUhP+sYJ2GXnEljLl6uXW1ldOFdpsYklNYeAJTwmUB0jjcz9EoJ?=
- =?us-ascii?Q?pSPrmwlMGyvKaTdbzdH9f3hlblGb19EKk5C5ye2ayXIKGmghMdNDCgVhWEzW?=
- =?us-ascii?Q?bSG82MpCWDIN9g6fv0iPTUbZMeLADb9yLRbJp0w69yp0UrEu1DjF9GnYBBLP?=
- =?us-ascii?Q?9jFHJkirJyhWycrdaZUuzdf1cGmXhbZyQEQaqmmY6GJbV4UPL2ICy1aijfK/?=
- =?us-ascii?Q?pm7OQ4jnL2Qq8gYjv3fd6WuRZIWup3aEaEIw1SxaL1WU3b3DtJLticraOduW?=
- =?us-ascii?Q?3ug22dmxmdn/6q6/8dIrfnSMM1AJhNtURqEhx/h8rEi6Re445YqO//FbB04N?=
- =?us-ascii?Q?6fWrsjJ4yqATO9bVN3DmlepdRffhKxdCO8oMOylhHWvWrBrURBYQew+YM3hL?=
- =?us-ascii?Q?LtPoa/8pZmyCCl2CJeATErsh6r6aUEBhou/hHNmV8WaEWDgcHCV0+XtMmOnB?=
- =?us-ascii?Q?DhAKLfwkO+X2jZoea6HGdTzBtEu6i59erFW0bHLINla6R7WmBd+8gYZ3YMry?=
- =?us-ascii?Q?017B+MsseRln3vXeYnYUHl5QeYtdDMj0XlJndEjWePc1eR0JltgQU68/WIUI?=
- =?us-ascii?Q?qxN2rUWBsZ1aUFtEFfbNbxmmtdo54+6FlZ9TUO/o1V9atUqDMq8DtleriwUC?=
- =?us-ascii?Q?xIcaceGNdnnUpFaHB9QKLt5nig3crWxCWj61jAXeBcUhY6Qwn4QVFkrnIbY9?=
- =?us-ascii?Q?4LAc5EX9/Ti2l2cC4Lb8FGXZvbKNxI7qEQmhi8RkWxD8elhaQe8R6sYYuauM?=
- =?us-ascii?Q?XEDdpPipbwxd9L0zClC0noBxqXhbE9XIzDzF1+srXQ=3D=3D?=
-X-OriginatorOrg: outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 505165f8-7154-4580-a14f-08da94cc98af
-X-MS-Exchange-CrossTenant-AuthSource: TYCP286MB2323.JPNP286.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Sep 2022 14:39:28.5825
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
-	00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYWP286MB2528
 
-Kdamond is implemented as a periodical split-merge pattern, which will
-create and destroy regions possibly on high frequency(hundreds or even
-thousands of per sec), depending on number of regions and aggregation
-period.  In that case, kmalloc and kfree could bring considerable overhead
-to system, which can be improved by private kmem cache.
+From: Kaixu Xia <kaixuxia@tencent.com>
 
-Signed-off-by: Dawei Li <set_pte_at@outlook.com>
+We can use the 'damon_sysfs_kdamond_running()' wrapper directly to
+check if the kdamond is running in 'damon_sysfs_turn_damon_on()'.
+
+Signed-off-by: Kaixu Xia <kaixuxia@tencent.com>
 ---
- mm/damon/core.c | 20 ++++++++++++++++++--
- 1 file changed, 18 insertions(+), 2 deletions(-)
+ mm/damon/sysfs.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index 029ae384e6ff..0b1eb945c68a 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -29,6 +29,8 @@ static bool running_exclusive_ctxs;
- static DEFINE_MUTEX(damon_ops_lock);
- static struct damon_operations damon_registered_ops[NR_DAMON_OPS];
+diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
+index 7488e27c87c3..84861c4085a5 100644
+--- a/mm/damon/sysfs.c
++++ b/mm/damon/sysfs.c
+@@ -2455,8 +2455,7 @@ static int damon_sysfs_turn_damon_on(struct damon_sysfs_kdamond *kdamond)
+ 	struct damon_ctx *ctx;
+ 	int err;
  
-+static struct kmem_cache *damon_region_cache __ro_after_init;
-+
- /* Should be called under damon_ops_lock with id smaller than NR_DAMON_OPS */
- static bool __damon_is_registered_ops(enum damon_ops_id id)
- {
-@@ -119,7 +121,7 @@ struct damon_region *damon_new_region(unsigned long start, unsigned long end)
- {
- 	struct damon_region *region;
- 
--	region = kmalloc(sizeof(*region), GFP_KERNEL);
-+	region = kmem_cache_alloc(damon_region_cache, GFP_KERNEL);
- 	if (!region)
- 		return NULL;
- 
-@@ -148,7 +150,7 @@ static void damon_del_region(struct damon_region *r, struct damon_target *t)
- 
- static void damon_free_region(struct damon_region *r)
- {
--	kfree(r);
-+	kmem_cache_free(damon_region_cache, r);
- }
- 
- void damon_destroy_region(struct damon_region *r, struct damon_target *t)
-@@ -1279,4 +1281,18 @@ bool damon_find_biggest_system_ram(unsigned long *start, unsigned long *end)
- 	return true;
- }
- 
-+static int __init damon_init(void)
-+{
-+	damon_region_cache = kmem_cache_create("damon_region_cache", sizeof(struct damon_region),
-+		0, 0, NULL);
-+	if (unlikely(!damon_region_cache)) {
-+		pr_err("creating damon_region_cache fails\n");
-+		return -ENOMEM;
-+	}
-+
-+	return 0;
-+}
-+
-+subsys_initcall(damon_init);
-+
- #include "core-test.h"
+-	if (kdamond->damon_ctx &&
+-			damon_sysfs_ctx_running(kdamond->damon_ctx))
++	if (damon_sysfs_kdamond_running(kdamond))
+ 		return -EBUSY;
+ 	if (damon_sysfs_cmd_request.kdamond == kdamond)
+ 		return -EBUSY;
 -- 
-2.25.1
+2.27.0
 
