@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D91B3C39
-	for <damon@lists.linux.dev>; Tue, 13 Sep 2022 17:44:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57CE3C433C1;
-	Tue, 13 Sep 2022 17:44:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E7123C3F
+	for <damon@lists.linux.dev>; Tue, 13 Sep 2022 17:44:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A331C433B5;
+	Tue, 13 Sep 2022 17:44:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1663091096;
-	bh=K7noZZXWc7OYsglqBcB0HhttVkm6j87iOZkQHk+Jwew=;
+	s=k20201202; t=1663091098;
+	bh=vJRpVbuRNEWxiwJhtSxeIniDUyu+JoVCpD8GHbjL3iI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gjqjlZf4JKxlU1qngINKNjIQRI28bhKmxR92VUaRZcndWGVsHxTgjpcRt1D0Zuwi/
-	 ePWweOxeH7mPuBSxxkL4zVMcsH4BEUV1NwoCQfXffHgIhxad80QCQ2qV008KHhn1Vv
-	 hoROFzflbLsBCI3TbtUudMRip+AD3zcKQc/WxZWvjH+kvUUrRZf1kgRbUHtIKUbl93
-	 uDwfi6aqAsyDMGoFYTAiRhyXbFN6YYa4qhwczpJtNWzGb73RaAA7rnjEVaNxUf1bNf
-	 DphOwtdl5EriObrDYPtNfFlpiKLOUudJbjBdUgRbArSbBe91yejtE9j/5NCe9eevAu
-	 ls+6bACVYRRGw==
+	b=Oa67jNZTl390H4yWs/1PtCmIDFSn0aIjc4wOuOXCSz50qUjEsDezOvqO40mBPvRBb
+	 JUqkSUSti/9RzAq9wIXpJ9bVY4V+KGnatsFN9xP62cAbc0b2R0l7y9232rPe/ehdi4
+	 4diPT6xyF1GWkQxGDSKEvTnVsLMkMf4gIvMxMUWWFdAyzm9ad05f7365FDP5wyXYB2
+	 t3XGfWvJlYcP231su+/HpzPF23arUhQ1wjp4YdxXPn6uta8Qb5L7ZheEYatfDBsBQb
+	 eNZJvCqQXW3ZwEqG21pchF6xekZzdau7IIzVqNBiLwPog0t5W/PxfU9QK/tgEdukdN
+	 zpRO4nyJerBOw==
 From: SeongJae Park <sj@kernel.org>
-To: SeongJae Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Cc: damon@lists.linux.dev,
+To: Andrew Morton <akpm@linux-foundation.org>
+Cc: SeongJae Park <sj@kernel.org>,
+	damon@lists.linux.dev,
 	linux-mm@kvack.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH 02/22] mm/damon/paddr: deduplicate damon_pa_{mark_accessed,deactivate_pages}()
-Date: Tue, 13 Sep 2022 17:44:29 +0000
-Message-Id: <20220913174449.50645-3-sj@kernel.org>
+Subject: [PATCH 04/22] mm/damon/core: factor out 'damos_quota' private fileds initialization
+Date: Tue, 13 Sep 2022 17:44:31 +0000
+Message-Id: <20220913174449.50645-5-sj@kernel.org>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20220913174449.50645-1-sj@kernel.org>
 References: <20220913174449.50645-1-sj@kernel.org>
@@ -35,67 +35,57 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The bodies of damon_pa_{mark_accessed,deactivate_pages}() contains
-duplicates.  This commit factors out the common part to a separate
-function and removes the duplicates.
+The 'struct damos' creation function, 'damon_new_scheme()', does
+initialization of private fileds of 'struct damos_quota' in it.  As its
+verbose and makes the function unnecessarily long, this commit factors
+it out to separate function.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- mm/damon/paddr.c | 26 ++++++++++++--------------
- 1 file changed, 12 insertions(+), 14 deletions(-)
+ mm/damon/core.c | 23 ++++++++++++++---------
+ 1 file changed, 14 insertions(+), 9 deletions(-)
 
-diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
-index 5eba09d50855..dfeebffe82f4 100644
---- a/mm/damon/paddr.c
-+++ b/mm/damon/paddr.c
-@@ -231,7 +231,8 @@ static unsigned long damon_pa_pageout(struct damon_region *r)
- 	return applied * PAGE_SIZE;
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index 27e0c312f7a5..6767580c0a27 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -267,6 +267,19 @@ int damon_set_regions(struct damon_target *t, struct damon_addr_range *ranges,
+ 	return 0;
  }
  
--static unsigned long damon_pa_mark_accessed(struct damon_region *r)
-+static inline unsigned long damon_pa_mark_accessed_or_deactivate(
-+		struct damon_region *r, bool mark_accessed)
- {
- 	unsigned long addr, applied = 0;
- 
-@@ -240,27 +241,24 @@ static unsigned long damon_pa_mark_accessed(struct damon_region *r)
- 
- 		if (!page)
- 			continue;
--		mark_page_accessed(page);
-+		if (mark_accessed)
-+			mark_page_accessed(page);
-+		else
-+			deactivate_page(page);
- 		put_page(page);
- 		applied++;
- 	}
- 	return applied * PAGE_SIZE;
- }
- 
--static unsigned long damon_pa_deactivate_pages(struct damon_region *r)
-+static unsigned long damon_pa_mark_accessed(struct damon_region *r)
- {
--	unsigned long addr, applied = 0;
--
--	for (addr = r->ar.start; addr < r->ar.end; addr += PAGE_SIZE) {
--		struct page *page = damon_get_page(PHYS_PFN(addr));
-+	return damon_pa_mark_accessed_or_deactivate(r, true);
-+}
- 
--		if (!page)
--			continue;
--		deactivate_page(page);
--		put_page(page);
--		applied++;
--	}
--	return applied * PAGE_SIZE;
-+static unsigned long damon_pa_deactivate_pages(struct damon_region *r)
++/* initialize private fields of damos_quota and return the pointer */
++static struct damos_quota *damos_quota_init_priv(struct damos_quota *quota)
 +{
-+	return damon_pa_mark_accessed_or_deactivate(r, false);
- }
++	quota->total_charged_sz = 0;
++	quota->total_charged_ns = 0;
++	quota->esz = 0;
++	quota->charged_sz = 0;
++	quota->charged_from = 0;
++	quota->charge_target_from = NULL;
++	quota->charge_addr_from = 0;
++	return quota;
++}
++
+ struct damos *damon_new_scheme(struct damos_access_pattern *pattern,
+ 			enum damos_action action, struct damos_quota *quota,
+ 			struct damos_watermarks *wmarks)
+@@ -281,15 +294,7 @@ struct damos *damon_new_scheme(struct damos_access_pattern *pattern,
+ 	scheme->stat = (struct damos_stat){};
+ 	INIT_LIST_HEAD(&scheme->list);
  
- static unsigned long damon_pa_apply_scheme(struct damon_ctx *ctx,
+-	scheme->quota = *quota;
+-	/* caller might not zero-initialized the private fileds */
+-	scheme->quota.total_charged_sz = 0;
+-	scheme->quota.total_charged_ns = 0;
+-	scheme->quota.esz = 0;
+-	scheme->quota.charged_sz = 0;
+-	scheme->quota.charged_from = 0;
+-	scheme->quota.charge_target_from = NULL;
+-	scheme->quota.charge_addr_from = 0;
++	scheme->quota = *(damos_quota_init_priv(quota));
+ 
+ 	scheme->wmarks = *wmarks;
+ 	scheme->wmarks.activated = true;
 -- 
 2.25.1
 
