@@ -1,33 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79DCE3C26
-	for <damon@lists.linux.dev>; Tue, 13 Sep 2022 17:16:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A57CBC433C1;
-	Tue, 13 Sep 2022 17:16:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8EE83C0C
+	for <damon@lists.linux.dev>; Tue, 13 Sep 2022 17:44:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B4D8C433C1;
+	Tue, 13 Sep 2022 17:44:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1663089408;
-	bh=Uo0FmKOIOqO2xt98KZDO75WMovCewe/BPwr12WzqD+Y=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mAlGN2bbSywVp6ZYPZdCV+CdkaorThXnHVupWVu4TBqYco2iF+6ffjoU204Ci59xD
-	 QYVctAzw25geHyf0q6pAXfz06rbQk2VZUv9nk6rUhCdG72swQ+NTHuQedhHAFwXnqU
-	 IF/lpEivXclmgCb/wuCpAzd6fi4BtKrZsIsQR6wiXTYvkGHlodvO9LRQylSKEgfssc
-	 XUdPM18I8xWqEMkAWVCTaSyxWDYNTcQmonggXcRUrOCZiaqGLdvKkpQeH+LJs0X2vo
-	 CtPlfprzSMSNhql2Z5OvJh2J6PtKhdNHeSFgLRmhoe6K/tL5axr4CwUmdSVVai4dN3
-	 EJ89jtbcc9gJA==
+	s=k20201202; t=1663091091;
+	bh=LTJFQvu3fbUeoBlxoYkTj8tKAF1KlT7wckZz/6RxiTk=;
+	h=From:To:Cc:Subject:Date:From;
+	b=ZH1Dt/WEu+RKqwakhbFJdLk1LRaoAY6d4pBecFD6CWCBB29RD8d9bRfAAAaeBSX6C
+	 J0CX8Ug8EdBVLn/vyrwrvjm02pykj6JLmd5iCoKLbASMe8H/WM5CLDwpSejRPuVtTN
+	 lvcEW6KKG3POEsv3eX4pnhNGTUUf63tgNuj57ns8zhNcA1yk6GUgjyj0AFn/RFU1+z
+	 N67qc4s3i7+lq8pKR5UiAleJFeo8yg6V+JellPHu7HT/z8PGh5kzu6qYyHhGq5LpJr
+	 7qxKE/2WauPs0gTPhIMQgSC70NQ9yAnw/CYd6n8B3QQQemnkB1pSDK2UOZrSRczE20
+	 Fn+UI+hVckl0A==
 From: SeongJae Park <sj@kernel.org>
-To: Dawei Li <set_pte_at@outlook.com>
-Cc: sj@kernel.org,
-	akpm@linux-foundation.org,
+To: Andrew Morton <akpm@linux-foundation.org>
+Cc: SeongJae Park <sj@kernel.org>,
 	damon@lists.linux.dev,
 	linux-mm@kvack.org,
 	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] mm/damon: Creating kmem cache for damon regions by KMEM_CACHE()
-Date: Tue, 13 Sep 2022 17:16:46 +0000
-Message-Id: <20220913171646.47472-1-sj@kernel.org>
+Subject: [PATCH 00/22] mm/damon: cleanup code
+Date: Tue, 13 Sep 2022 17:44:27 +0000
+Message-Id: <20220913174449.50645-1-sj@kernel.org>
 X-Mailer: git-send-email 2.25.1
-In-Reply-To: <TYCP286MB23233778395A18052E578387CA479@TYCP286MB2323.JPNP286.PROD.OUTLOOK.COM>
-References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -36,44 +33,54 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Wed, 14 Sep 2022 00:21:58 +0800 Dawei Li <set_pte_at@outlook.com> wrote:
+DAMON code was not so clean from the beginning, but it has been too much
+nowadays, especially due to the duplicates in DAMON_RECLAIM and
+DAMON_LRU_SORT.  This patchset cleans some of the mess.
 
-> Damon regions are dynamic objects which can be created and destroyed
-> frequently, a dedicated slab cache is created by KMEM_CACHE(), as
-> suggested by akpm.
-> 
-> Signed-off-by: Dawei Li <set_pte_at@outlook.com>
-> ---
->  mm/damon/core.c | 3 +--
->  1 file changed, 1 insertion(+), 2 deletions(-)
-> 
-> diff --git a/mm/damon/core.c b/mm/damon/core.c
-> index 0b1eb945c68a..20163c3c9aa7 100644
-> --- a/mm/damon/core.c
-> +++ b/mm/damon/core.c
-> @@ -1283,8 +1283,7 @@ bool damon_find_biggest_system_ram(unsigned long *start, unsigned long *end)
->  
->  static int __init damon_init(void)
->  {
-> -	damon_region_cache = kmem_cache_create("damon_region_cache", sizeof(struct damon_region),
-> -		0, 0, NULL);
-> +	damon_region_cache = KMEM_CACHE(damon_region, 0);
+SeongJae Park (22):
+  mm/damon/paddr: make supported DAMOS actions of paddr clear
+  mm/damon/paddr: deduplicate
+    damon_pa_{mark_accessed,deactivate_pages}()
+  mm/damon/core: copy struct-to-struct instead of field-to-field in
+    damon_new_scheme()
+  mm/damon/core: factor out 'damos_quota' private fileds initialization
+  mm/damon/core: use a dedicated struct for monitoring attributes
+  mm/damon/core: reduce parameters for damon_set_attrs()
+  mm/damon/reclaim: use 'struct damon_attrs' for storing parameters for
+    it
+  mm/damon/lru_sort: use 'struct damon_attrs' for storing parameters for
+    it
+  mm/damon: implement a monitoring attributes module parameters
+    generator macro
+  mm/damon/lru_sort: use monitoring attributes parameters generaotr
+    macro
+  mm/damon/reclaim: use monitoring attributes parameters generator macro
+  mm/damon/modules-common: implement a watermarks module parameters
+    generator macro
+  mm/damon/lru_sort: use watermarks parameters generator macro
+  mm/damon/reclaim: use watermarks parameters generator macro
+  mm/damon/modules-common: implement a stats parameters generator macro
+  mm/damon/reclaim: use stat parameters generator
+  mm/damon/lru_sort: use stat generator
+  mm/damon/modules-common: implement a damos quota params generator
+  mm/damon/modules-common: implement damos time quota params generator
+  mm/damon/reclaim: use the quota params generator macro
+  mm/damon/lru_sort: use quotas param generator
+  mm/damon/lru_sort: deduplicate hot/cold schemes generators
 
-I was about to say about the 80 columns limit, and this fixes it as well.
-Thank you, Andrew and Dawei!
+ include/linux/damon.h     |  34 +++--
+ mm/damon/core.c           |  87 +++++------
+ mm/damon/dbgfs.c          |  15 +-
+ mm/damon/lru_sort.c       | 303 +++++++++-----------------------------
+ mm/damon/modules-common.h |  46 ++++++
+ mm/damon/ops-common.c     |   4 +-
+ mm/damon/paddr.c          |  29 ++--
+ mm/damon/reclaim.c        | 220 ++++++---------------------
+ mm/damon/sysfs.c          |  12 +-
+ mm/damon/vaddr.c          |   4 +-
+ 10 files changed, 246 insertions(+), 508 deletions(-)
+ create mode 100644 mm/damon/modules-common.h
 
->  	if (unlikely(!damon_region_cache)) {
->  		pr_err("creating damon_region_cache fails\n");
->  		return -ENOMEM;
-> -- 
-> 2.25.1
-> 
+-- 
+2.25.1
 
-For this fixup and the initial patch[1],
-Reviewed-by: SeongJae Park <sj@kernel.org>
-
-[1] https://lore.kernel.org/damon/TYCP286MB2323DA1894FA55BB9CF90978CA449@TYCP286MB2323.JPNP286.PROD.OUTLOOK.COM/
-
-
-Thanks,
-SJ
