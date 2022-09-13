@@ -1,178 +1,125 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from JPN01-OS0-obe.outbound.protection.outlook.com (mail-os0jpn01olkn2048.outbound.protection.outlook.com [40.92.98.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF9E53C10
-	for <damon@lists.linux.dev>; Tue, 13 Sep 2022 15:43:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CC37C433D6;
-	Tue, 13 Sep 2022 15:43:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1663083803;
-	bh=Ir7P+Su2E7kZxVG0lqR6jeQUnTLGLwG/e7Tk9o9uELk=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cx7d1SjGZdCSQymvF7oRaHvg9q2ToarGZkooE3ffzJYQxLRoE4hBHksXnwPWR5RE9
-	 mOCMi18vlwfKuujUtpqR2dGUjN3c51CC++ceijwc+5kzR3/EI8CXV06Hfx7zDYITrL
-	 SVHuH1SQsWHNuNGa2qmrI2cu5QblVyNkwYhZvbrVHVLc08+eJNNw1z8/t57EN3o28j
-	 AHMYMk/XiZ04pzWpIrslD48cBUNw8nzmI/t8MSeXZwwVjHm3J3M7WMPUt5Tm7qV03y
-	 TsVhJ7hNrfBQaNm9NiQUnJgJgdM3sNLgxzrAP4RbGz4pmwRXMSb485OKwVm9VvfAWg
-	 3bZeKYi+E6eGg==
-From: SeongJae Park <sj@kernel.org>
-To: Xin Hao <xhao@linux.alibaba.com>
-Cc: sj@kernel.org,
-	akpm@linux-foundation.org,
-	damon@lists.linux.dev,
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D95493C10
+	for <damon@lists.linux.dev>; Tue, 13 Sep 2022 16:22:14 +0000 (UTC)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=DWoRncdEYvMDzl7UISQRCDYD6I+41bqMxL+n91Nn3uZr7JDMlNKHH7wKQzy9+9pxNJRUBdntkmMRtuhSWT0W+Db4IqluD/3o4KbUMFA5bX89OqK9YnnZ90Ks1ygeOtCZ9sOn5EGM8VAomXTIc5LCOyn1C8kS3BomUeIKQLoTlsb84eVZNVPeOThf2tfoevzQG6Dj/3D5Gnvui3+/IsPFuRA0sHy8m1Tv7wLJR4NsG3IyO5DQSbOFhzwh0IschG4fqo3sbQ2xfD4zbtDh88+HKtaqDfFdZ8Rbynip8V1IrRRE/EyJ0VJ4mjcIMrsqPqpcHSmtmXekZZdrBvl4LeHB5g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=hFFzN6HyxVDp6++o9aXYTIouEDXFRsFE2Wv04kjX07I=;
+ b=kjEjGxbkvFIK4NQKqRbTT+NAKTxcoJ2/QamBg7Lp/7WpIBrpxWfrzDWqdrztank7T5WYPyjzrNPrj/ZD+uC+8WCKB8Uw3sOCqgzP57kEZ4qv1ttbJRBynG2QC7cT98cA9ETqH+kW+ULrdlDCw57vrf0UcLKMBaMPErwdZUA/eMLtticsO0K7E+rCv9AmLG5oeDmy/rUQi/riOZuRNjOYINTQOXHRFTOsplVPgWlopLqPWOwJQW40twYLxqVGOI1EFlNe6P9LmxlKYhueilgC0DTWxR6JiWWWm4J1Lq7uLku63eCeBzLdSga1mJNPrktmraSwZPOUSMqTR+dal4FrTg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=hFFzN6HyxVDp6++o9aXYTIouEDXFRsFE2Wv04kjX07I=;
+ b=rZmOsh1F6+oivLZKWdLzvqSoDsfKlY7dRvCsGFArE4AHgyfsnPesg/Pz6aeaPkBVslzsX6VObbYilKt/py916voIYy7+vpZsMQNSYbUHD61qPmwPjg9ATE4qVtDK+hei8sgIcm6luGyj1/OfMOL/75iwxEB/lHTlfR/AH5Nr6wSehWZbpal9ulqf7GhBUkWSR9Mf6+59KpqVEO2a4vIjppF56Q19BsrJtHS2YZrX7I/m/tUxFnd0nUIDmlOAlQwkeuhfGd7c9MdIIrdPXeD3fRI/fcEM90YtbFK3zjwp79dk2U1u2xWND9nbAlBb4i7z56OmXM5nh5NIoGEjUfHBoQ==
+Received: from TYCP286MB2323.JPNP286.PROD.OUTLOOK.COM (2603:1096:400:152::9)
+ by TYCP286MB2146.JPNP286.PROD.OUTLOOK.COM (2603:1096:400:158::13) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5612.12; Tue, 13 Sep
+ 2022 16:22:11 +0000
+Received: from TYCP286MB2323.JPNP286.PROD.OUTLOOK.COM
+ ([fe80::8d69:1a6d:5def:16db]) by TYCP286MB2323.JPNP286.PROD.OUTLOOK.COM
+ ([fe80::8d69:1a6d:5def:16db%4]) with mapi id 15.20.5612.022; Tue, 13 Sep 2022
+ 16:22:11 +0000
+From: Dawei Li <set_pte_at@outlook.com>
+To: sj@kernel.org,
+	akpm@linux-foundation.org
+Cc: damon@lists.linux.dev,
 	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] mm/damon: simplify scheme create in lru_sort.c
-Date: Tue, 13 Sep 2022 15:43:21 +0000
-Message-Id: <20220913154321.45954-1-sj@kernel.org>
+	linux-kernel@vger.kernel.org,
+	Dawei Li <set_pte_at@outlook.com>
+Subject: [PATCH] mm/damon: Creating kmem cache for damon regions by KMEM_CACHE()
+Date: Wed, 14 Sep 2022 00:21:58 +0800
+Message-ID:
+ <TYCP286MB23233778395A18052E578387CA479@TYCP286MB2323.JPNP286.PROD.OUTLOOK.COM>
 X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20220913152245.25224-1-xhao@linux.alibaba.com>
-References: 
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-TMN: [8alXQgIZM0+q4CsoLmoSY65t7Jir3Cwr]
+X-ClientProxiedBy: SI2PR01CA0044.apcprd01.prod.exchangelabs.com
+ (2603:1096:4:193::8) To TYCP286MB2323.JPNP286.PROD.OUTLOOK.COM
+ (2603:1096:400:152::9)
+X-Microsoft-Original-Message-ID:
+ <20220913162158.157767-1-set_pte_at@outlook.com>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+X-MS-Exchange-MessageSentRepresentingType: 1
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: TYCP286MB2323:EE_|TYCP286MB2146:EE_
+X-MS-Office365-Filtering-Correlation-Id: 26472d5b-8b58-4578-ea90-08da95a41c89
+X-MS-Exchange-SLBlob-MailProps:
+	AZnQBsB9XmpEumVcsW5TnWy4PLAuKi5diZWuL0anliBMc/m3HusdrAa33+zeBwRxYGrjmEZz3PJMC812i/X4KsPkAcJ8ulz5L/4BOD2dVNi52jl3QUel/CfzY4syIQ03/W0XaPevFwQvB8jy0XD7PEa0mxCd8hpKqcRZBBjtFdMqWvGb5DKx6JsARN42xO2kjZ4dyxdw2uto/xvtOUcZCf1fVzzy9nxkaurFaqSKNOAOyrtpPhAiwJ2YG2sUuqlhd/MyLpATl45ip+DFkOqCMmPP2+RRDxFudkDVaeCbGtb9V/aqm3kBatuyJluNVtRNRI92wfSJ2LLvwvfASU1aELP9mRxbspGDhmzA/oJkaKYKAIpgCYcx6LsNGWEQlkKbZUIXvNDcErmlvjT5r/sfLI2bF3HAFhVWbVK3h4+7Mo77KtcGjLsdCEUyt5UcQkpzZXFyMsNbXz/FRg87vvTkrEnrBM+N684gujrl0u2+QGHE0TpTF3IrYBsWYyW0KGMaH0e92o8wFxG0APF9JI65z68/tNQIGvSZsxdCH/0764Nj2UUTQzAm4yRGXv5ue+++FUQDrdLhyFi7qrbeGuAV57LCxu3q0zx/yzyscj1g3yhUL8grs1p21YSYtEYHBSp9McDzlloAz/T5XDqRXzRd5i71CU7KgSF7IyiAfNnZkKAb3FK5aGv59TbsAC7psgCv7BFHzW1MUxmuaPZKcrIYqELCt287Eu/GpA94cr5jERi/w87gHAESFeyBtEUQUV5ow6Go7o88dHY=
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info:
+	4f4KM19CMvtPAoRc9ib4U1qG25Caly1A+sIPbKaKg1ULRGRdhGV2g216VHN0p9ToLxgEUR9NFmHBXJLrg/Y/XFLW7FXQ6xA5I61D/6VP3YEU7m9Kv9+cShFomsdPY6oREot5+7KeSsNZDnY4ditia6PxDUb/ykK1pE5y4qQUMJJk1yZi+B4bMXCsn8aa/SbCI9A8ZL9mb2sfUxNO5gLUPKurN1STkA87pNpaY5KBIFoo8oOASaJSOu/gz/s+mr3ussdoY7FiVm7iVQhbEYu1/97PIkJDvswgjXrqCYjq5MvX4yTP0hffb0gsQw3sg07cYjNyB7cQrcGoOwHLkv0X+Nc26q0lwhL2R9r/mCdLgio4j5y1D9QG/qtCRBW08yG5zjr4c15ZxcBjkvk8TKsJfySUQoJuYGMFf07CwpdvEn/1f71KN0I98NZ58+AQ9gmgNHsE2xCA8VspGRpRWGITz0IICrDNVayY29FJ4/idKVPmjMjVvrh0GlbHhu3D6IQudOe0ozhXILOarMhFO6mw4JUzK+0qPl4nKt91PSUQp7HaK/UkgZwihsQ6Sh29vME7MJ+wvkzwtNJ7wOoY3oBEpC+MZ4qcIVN+7Y2DzbyQz6+5/AqQmFuedJdmv9STmCoPVh0X0ExCTO7UXMu3iChLng==
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?KOIOh+Oe8zO7WEM3gN7azAFYTx42hGIdct88SZcrMPAm/r6FVxoyyUYSVm7E?=
+ =?us-ascii?Q?ipLFpR4FrDyrtjn87N/aHk4WT3zctaSHV4F5on34aqMS+/69SVRq8u8yWk19?=
+ =?us-ascii?Q?Pw4X4VhuT4kTJ5HWi3hnK80f88BBAdNVSdFyK88SBmfM+pWblv20f3lkLiqM?=
+ =?us-ascii?Q?9VthD4hynox1PY5SshHyWU+pIUSlSgWb8e7kbefaxRf46oMo+FzbagAx3GkB?=
+ =?us-ascii?Q?6AyzGBqeN3Lk4U9g1y5Bq8UUVyBqAWcF4Jl3aVj6uQP4KSv8f7YNpFriooAk?=
+ =?us-ascii?Q?eRwEKR9HJCgDO1KmBZxHqx593+WKvXxYZkO9J8I7ATDlGqaDw+NufMIM4Edg?=
+ =?us-ascii?Q?0+IEpDGpAeapHCnOsaXKINXuv2E0L1ne5TvxlHae3qZKMCyi8Glc6WE72zUe?=
+ =?us-ascii?Q?n7Hd+grBanhaCi+ye66LsHuXah+YaejcLVxUFbv5SKiLzACvu3WWvdySRyiO?=
+ =?us-ascii?Q?NYndLNbWNCMq+NMNOZOireHxUyGpkkKSkclUnH87W4+EF+VJHAl2Dx5oIwfe?=
+ =?us-ascii?Q?CfpAjkzwS6WjAN6dlNHkRy6Rd2DnPIa5pEewLA7t/l8EBZ+tliCTNAbwTlLN?=
+ =?us-ascii?Q?XbEJGjBrxaqN4RStq2XT4tyWvfQy9kmVvqmTZ+jlsHJ5UJdvV0nK0dVgcpMX?=
+ =?us-ascii?Q?UEqTjdui5Kw8wvlgkh/fdIT+NFmC+SATZtvwdAYtH/457Uq5MP1nEBNzOh/r?=
+ =?us-ascii?Q?9EKP127H1cjNE6MNt0JZ3wDXY8OODizJiD2t3dtyUz0BUfG5H3r/d4xUuBw6?=
+ =?us-ascii?Q?QQZ0w4EpIXJoVqq91avtm5BicvPaaY+hMriHFrfGGr4wu6o8qF0gWjjphcee?=
+ =?us-ascii?Q?itUjV3Mo3PuFUxeG27X+fdGiVwOejNbxAbbiS8oOPZ/lYnks8uaNt+jFUpUG?=
+ =?us-ascii?Q?IcSUHUfkvt3qNPOx90xTGgqznhv4+mogVCCkN67rM+YuZjehYlgiGKbw1TEQ?=
+ =?us-ascii?Q?uHppF0UV1Q7XZcDNTaSwO7JKzZx95Rho9IWZc6yJW757xMP123dTwpDzSu9F?=
+ =?us-ascii?Q?17HcmkKyTv3xYAgMQ7AhRmoLNXarYlHo91e7yAEIe0+uUGh46o0LdVzIw3U6?=
+ =?us-ascii?Q?xC7F9Tn3JULC2mKpY9R1J85UnvE7zrIVTdc/75SszplCXodMUMO+Cwc9mhLI?=
+ =?us-ascii?Q?XheADkoEQ3fQkooyvadLlzkCmU9Gqxcj3JkQF+Pg/u9A0IofpaUEzAZK8Xzf?=
+ =?us-ascii?Q?3lEp0QLBn73R3AzwIznGM3CDBD0liyz+ncp6fOccGAmUBRlQqUyTSSIy6rlJ?=
+ =?us-ascii?Q?038zZOSfPzwPGyxSoRuXU9AQCRLxOfu/4rQvjXommQ=3D=3D?=
+X-OriginatorOrg: outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 26472d5b-8b58-4578-ea90-08da95a41c89
+X-MS-Exchange-CrossTenant-AuthSource: TYCP286MB2323.JPNP286.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Sep 2022 16:22:11.6240
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
+	00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYCP286MB2146
 
-Hi Xin,
+Damon regions are dynamic objects which can be created and destroyed
+frequently, a dedicated slab cache is created by KMEM_CACHE(), as
+suggested by akpm.
 
-On Tue, 13 Sep 2022 23:22:45 +0800 Xin Hao <xhao@linux.alibaba.com> wrote:
+Signed-off-by: Dawei Li <set_pte_at@outlook.com>
+---
+ mm/damon/core.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-> In damon_lru_sort_new_hot_scheme() and damon_lru_sort_new_cold_scheme(),
-> they have so much in common, so we can combine them into a single
-> function, and we just need to distinguish their differences.
-> 
-> Signed-off-by: Xin Hao <xhao@linux.alibaba.com>
-> ---
->  mm/damon/lru_sort.c | 82 +++++++++++++++++----------------------------
->  1 file changed, 30 insertions(+), 52 deletions(-)
-> 
-> diff --git a/mm/damon/lru_sort.c b/mm/damon/lru_sort.c
-> index 8415e18fcf0e..62063ed43224 100644
-> --- a/mm/damon/lru_sort.c
-> +++ b/mm/damon/lru_sort.c
-> @@ -257,15 +257,15 @@ module_param(nr_cold_quota_exceeds, ulong, 0400);
->  static struct damon_ctx *ctx;
->  static struct damon_target *target;
-> 
-> -/* Create a DAMON-based operation scheme for hot memory regions */
-> -static struct damos *damon_lru_sort_new_hot_scheme(unsigned int hot_thres)
-> +static inline struct damos *damon_lru_sort_new_scheme(unsigned int thres,
-> +						      enum damos_action action)
->  {
->  	struct damos_access_pattern pattern = {
->  		/* Find regions having PAGE_SIZE or larger size */
->  		.min_sz_region = PAGE_SIZE,
->  		.max_sz_region = ULONG_MAX,
->  		/* and accessed for more than the threshold */
-> -		.min_nr_accesses = hot_thres,
-> +		.min_nr_accesses = 0,
->  		.max_nr_accesses = UINT_MAX,
->  		/* no matter its age */
->  		.min_age_region = 0,
-> @@ -292,60 +292,38 @@ static struct damos *damon_lru_sort_new_hot_scheme(unsigned int hot_thres)
->  		.weight_age = 0,
->  	};
-> 
-> -	return damon_new_scheme(
-> -			&pattern,
-> -			/* prioritize those on LRU lists, as soon as found */
-> -			DAMOS_LRU_PRIO,
-> -			/* under the quota. */
-> -			&quota,
-> -			/* (De)activate this according to the watermarks. */
-> -			&wmarks);
-> +	switch (action) {
-> +	case DAMOS_LRU_PRIO:
-> +		pattern.min_nr_accesses = thres;
-> +		break;
-> +	case DAMOS_LRU_DEPRIO:
-> +		pattern.min_age_region = thres;
-> +		quota.weight_nr_accesses = 0;
-> +		quota.weight_age = 1;
-> +		break;
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index 0b1eb945c68a..20163c3c9aa7 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -1283,8 +1283,7 @@ bool damon_find_biggest_system_ram(unsigned long *start, unsigned long *end)
+ 
+ static int __init damon_init(void)
+ {
+-	damon_region_cache = kmem_cache_create("damon_region_cache", sizeof(struct damon_region),
+-		0, 0, NULL);
++	damon_region_cache = KMEM_CACHE(damon_region, 0);
+ 	if (unlikely(!damon_region_cache)) {
+ 		pr_err("creating damon_region_cache fails\n");
+ 		return -ENOMEM;
+-- 
+2.25.1
 
-I would like to do this from damon_lru_sort_new_{hot,cold}_scheme() instead.
-
-> +	default:
-> +		return NULL;
-> +	}
-> +
-> +	return damon_new_scheme(&pattern,
-> +				/* mark those as not accessed, as soon as found */
-> +				action,
-> +				/* under the quota. */
-> +				&quota,
-> +				/* (De)activate this according to the watermarks. */
-> +				&wmarks);
-> +}
-> +
-> +/* Create a DAMON-based operation scheme for hot memory regions */
-> +static struct damos *damon_lru_sort_new_hot_scheme(unsigned int hot_thres)
-> +{
-> +	return damon_lru_sort_new_scheme(hot_thres, DAMOS_LRU_PRIO);
->  }
-> 
->  /* Create a DAMON-based operation scheme for cold memory regions */
->  static struct damos *damon_lru_sort_new_cold_scheme(unsigned int cold_thres)
->  {
-> -	struct damos_access_pattern pattern = {
-> -		/* Find regions having PAGE_SIZE or larger size */
-> -		.min_sz_region = PAGE_SIZE,
-> -		.max_sz_region = ULONG_MAX,
-> -		/* and not accessed at all */
-> -		.min_nr_accesses = 0,
-> -		.max_nr_accesses = 0,
-> -		/* for min_age or more micro-seconds */
-> -		.min_age_region = cold_thres,
-> -		.max_age_region = UINT_MAX,
-> -	};
-> -	struct damos_watermarks wmarks = {
-> -		.metric = DAMOS_WMARK_FREE_MEM_RATE,
-> -		.interval = wmarks_interval,
-> -		.high = wmarks_high,
-> -		.mid = wmarks_mid,
-> -		.low = wmarks_low,
-> -	};
-> -	struct damos_quota quota = {
-> -		/*
-> -		 * Do not try LRU-lists sorting of cold pages for more than
-> -		 * half of quota_ms milliseconds within
-> -		 * quota_reset_interval_ms.
-> -		 */
-> -		.ms = quota_ms / 2,
-> -		.sz = 0,
-> -		.reset_interval = quota_reset_interval_ms,
-> -		/* Within the quota, mark colder regions not accessed first. */
-> -		.weight_sz = 0,
-> -		.weight_nr_accesses = 0,
-> -		.weight_age = 1,
-> -	};
-> -
-> -	return damon_new_scheme(
-> -			&pattern,
-> -			/* mark those as not accessed, as soon as found */
-> -			DAMOS_LRU_DEPRIO,
-> -			/* under the quota. */
-> -			&quota,
-> -			/* (De)activate this according to the watermarks. */
-> -			&wmarks);
-> +	return damon_lru_sort_new_scheme(cold_thres, DAMOS_LRU_DEPRIO);
->  }
-> 
->  static int damon_lru_sort_apply_parameters(void)
-> --
-> 2.31.0
-
-And, yes, LRU_SORT is a mess.  I'm also trying to make some cleanups like this:
-https://git.kernel.org/pub/scm/linux/kernel/git/sj/linux.git/commit/?h=damon/next&id=366451cd82e71ff0227caa0c6b7b6f9ae2659c29
-
-I'd like to apply your patch and then rebase my cleanups on it, but it might be
-not a one second work.  Could I ask you to wait until my cleanups are done?  I
-will post the patches within this week.
-
-
-Thanks,
-SJ
