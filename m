@@ -1,23 +1,34 @@
-Received: from out199-18.us.a.mail.aliyun.com (out199-18.us.a.mail.aliyun.com [47.90.199.18])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3409320D
-	for <damon@lists.linux.dev>; Tue, 13 Sep 2022 11:48:02 +0000 (UTC)
-X-Alimail-AntiSpam:AC=PASS;BC=-1|-1;BR=01201311R201e4;CH=green;DM=||false|;DS=||;FP=0|-1|-1|-1|0|-1|-1|-1;HT=ay29a033018046050;MF=xhao@linux.alibaba.com;NM=1;PH=DS;RN=6;SR=0;TI=SMTPD_---0VPgF9Ig_1663069663;
-Received: from localhost.localdomain(mailfrom:xhao@linux.alibaba.com fp:SMTPD_---0VPgF9Ig_1663069663)
-          by smtp.aliyun-inc.com;
-          Tue, 13 Sep 2022 19:47:45 +0800
-From: Xin Hao <xhao@linux.alibaba.com>
-To: sj@kernel.org
-Cc: akpm@linux-foundation.org,
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 841A233CC
+	for <damon@lists.linux.dev>; Tue, 13 Sep 2022 14:41:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C540AC43150;
+	Tue, 13 Sep 2022 14:41:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1663080074;
+	bh=0Iu5DsvC2OjaeqYGhwmLixwDgdWUl/BFj6dhTq4RAts=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=p9Zm7asacy4VFjm24SgyTL0RRdpJv68cAyH0gdlTLHAHQg+8sQHqWn/+3anIjp6IG
+	 wwLvL+MdXvOS9NT8hhDH6UklUcGMa3rcncpD51I6+EXMec52o59k2Qi0Ey76Wfp1Tf
+	 Yq1CNCaySzlU6sxB8GeIRvWTCf2lF4xvLrRyP7KAIS4uESjxQt5XukzZcPkWNaYi4a
+	 Sdvk2W7L8RRvrlFQt6ljuAqr68jVK+vALzs1DfS+v13/OB5wGsG3T0xVF66TYIKj/H
+	 6PO+4ZjiGM98bH32tLQGDytl4cq83o+5vK/dsctgjUpw82j9zCJVDqcb4S1R7oxALp
+	 lh4CI7QYQY7cQ==
+From: SeongJae Park <sj@kernel.org>
+To: xiakaixu1987@gmail.com
+Cc: sj@kernel.org,
+	akpm@linux-foundation.org,
 	damon@lists.linux.dev,
 	linux-mm@kvack.org,
 	linux-kernel@vger.kernel.org,
-	xhao@linux.alibaba.com
-Subject: [PATCH] mm/damon: add MADV_COLLAPSE support in damos_action
-Date: Tue, 13 Sep 2022 19:47:35 +0800
-Message-Id: <20220913114735.22841-1-xhao@linux.alibaba.com>
-X-Mailer: git-send-email 2.31.0
+	Kaixu Xia <kaixuxia@tencent.com>
+Subject: Re: [PATCH] mm/damon/sysfs: use the wrapper directly to check if the kdamond is running
+Date: Tue, 13 Sep 2022 14:41:12 +0000
+Message-Id: <20220913144112.95690-1-sj@kernel.org>
+X-Mailer: git-send-email 2.25.1
+In-Reply-To: <1662995513-24489-1-git-send-email-kaixuxia@tencent.com>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -26,42 +37,41 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-MADV_COLLAPSE has large different with MDVA_HUGE in dealing with huge
-pages, it doesn't need to rely on 'khugepage' thread to create THP.
-So combining with it will give damon users more options.
+Hi Kaixu,
 
-Signed-off-by: Xin Hao <xhao@linux.alibaba.com>
----
- include/linux/damon.h | 1 +
- mm/damon/vaddr.c      | 3 +++
- 2 files changed, 4 insertions(+)
+On Mon, 12 Sep 2022 23:11:53 +0800 xiakaixu1987@gmail.com wrote:
 
-diff --git a/include/linux/damon.h b/include/linux/damon.h
-index 016b6c9c03d6..c44f9410d997 100644
---- a/include/linux/damon.h
-+++ b/include/linux/damon.h
-@@ -97,6 +97,7 @@ enum damos_action {
- 	DAMOS_PAGEOUT,
- 	DAMOS_HUGEPAGE,
- 	DAMOS_NOHUGEPAGE,
-+	DAMOS_COLLAPSE,
- 	DAMOS_LRU_PRIO,
- 	DAMOS_LRU_DEPRIO,
- 	DAMOS_STAT,		/* Do nothing but only record the stat */
-diff --git a/mm/damon/vaddr.c b/mm/damon/vaddr.c
-index c2c08c1b316b..58c0d068563d 100644
---- a/mm/damon/vaddr.c
-+++ b/mm/damon/vaddr.c
-@@ -655,6 +655,9 @@ static unsigned long damon_va_apply_scheme(struct damon_ctx *ctx,
- 	case DAMOS_NOHUGEPAGE:
- 		madv_action = MADV_NOHUGEPAGE;
- 		break;
-+	case DAMOS_COLLAPSE:
-+		madv_action = MADV_COLLAPSE;
-+		break;
- 	case DAMOS_STAT:
- 		return 0;
- 	default:
--- 
-2.31.0
+> From: Kaixu Xia <kaixuxia@tencent.com>
+> 
+> We can use the 'damon_sysfs_kdamond_running()' wrapper directly to
+> check if the kdamond is running in 'damon_sysfs_turn_damon_on()'.
+> 
+> Signed-off-by: Kaixu Xia <kaixuxia@tencent.com>
 
+Reviewed-by: SeongJae Park <sj@kernel.org>
+
+
+Thanks,
+SJ
+
+> ---
+>  mm/damon/sysfs.c | 3 +--
+>  1 file changed, 1 insertion(+), 2 deletions(-)
+> 
+> diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
+> index 7488e27c87c3..84861c4085a5 100644
+> --- a/mm/damon/sysfs.c
+> +++ b/mm/damon/sysfs.c
+> @@ -2455,8 +2455,7 @@ static int damon_sysfs_turn_damon_on(struct damon_sysfs_kdamond *kdamond)
+>  	struct damon_ctx *ctx;
+>  	int err;
+>  
+> -	if (kdamond->damon_ctx &&
+> -			damon_sysfs_ctx_running(kdamond->damon_ctx))
+> +	if (damon_sysfs_kdamond_running(kdamond))
+>  		return -EBUSY;
+>  	if (damon_sysfs_cmd_request.kdamond == kdamond)
+>  		return -EBUSY;
+> -- 
+> 2.27.0
+> 
