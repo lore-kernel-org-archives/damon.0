@@ -1,82 +1,56 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from out2.migadu.com (out2.migadu.com [188.165.223.204])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE06D7F
-	for <damon@lists.linux.dev>; Wed, 14 Sep 2022 09:52:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5DA3C433D7;
-	Wed, 14 Sep 2022 09:52:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1663149128;
-	bh=ET7xbCmKy/wqjVqLOdaW4rsp6pDFPXzpeLtwj+QaumI=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=esymQ/kJqQsK2cqJ9IZ7oY0Clu6YyLsT78uqOUlEhaCBDCgX6jFu9XKPrNZbryLiu
-	 6gH+q1Ov9/ZtXtPZHp5CXJ8+gqf9OR2vxM2tGKcXBIv5MrUVfvPcPEd7EEeOtAzzhh
-	 VGkQH+tmS7nOCtRVn1ZIva/jZ1xxnVoHpaCsIzjTiTgwO7iMeUzZHFMYYABRplL7kY
-	 ltnM6yGDX236aK+iETeMDt4t6S949SL/zDISOkTUvkR4hUs+v332jQK1b3fGt9mKGr
-	 Tf5l+kJt69JuC/mWYDTZQIdPnopU0XjHgk39Chm+IRi5H1Bev35sWWFW2JRxAplCal
-	 fCBGBjgBXBQnQ==
-From: SeongJae Park <sj@kernel.org>
-To: Yajun Deng <yajun.deng@linux.dev>
-Cc: sj@kernel.org,
-	akpm@linux-foundation.org,
-	sieberf@amazon.com,
-	shakeelb@google.com,
-	foersleo@amazon.de,
-	damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] mm/damon: fix missing damon_del_region()
-Date: Wed, 14 Sep 2022 09:52:06 +0000
-Message-Id: <20220914095206.70459-1-sj@kernel.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20220914093636.1184590-1-yajun.deng@linux.dev>
-References: 
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44AF37F
+	for <damon@lists.linux.dev>; Wed, 14 Sep 2022 10:26:47 +0000 (UTC)
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1663151199;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=lj2gDBWDxhbWfpJ3F2DuTG5OBZRpUdCDuERum2ovK+M=;
+	b=hi3QMYUHfOuFXdjn7Jj90aA+Gc8WFyhf8nuRHV+74HB/tNyT3LV3i6+Gsw71o0FMvw094B
+	T46x39QgtouHs46DDXcMBrAcRHg9wi2LiZQUdlakIHuX64XxSOjOKKY4Xa6GzOcMOD5ovV
+	nK9SK1GTc5h9GFctTL9sFh5S1a3jFDo=
+Date: Wed, 14 Sep 2022 10:26:38 +0000
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: "Yajun Deng" <yajun.deng@linux.dev>
+Message-ID: <78c7cd3900e0a33da514be8799b35f9f@linux.dev>
+Subject: Re: [PATCH] mm/damon: fix missing damon_del_region()
+To: "SeongJae Park" <sj@kernel.org>
+Cc: akpm@linux-foundation.org, sieberf@amazon.com, shakeelb@google.com,
+ foersleo@amazon.de, damon@lists.linux.dev, linux-mm@kvack.org,
+ linux-kernel@vger.kernel.org
+In-Reply-To: <20220914095206.70459-1-sj@kernel.org>
+References: <20220914095206.70459-1-sj@kernel.org>
+X-Migadu-Flow: FLOW_OUT
+X-Migadu-Auth-User: linux.dev
 
-Hi Yajun,
-
-On Wed, 14 Sep 2022 17:36:36 +0800 Yajun Deng <yajun.deng@linux.dev> wrote:
-
-> It should be called damon_del_region() before free each region, so use
-> damon_destroy_region() instead of damon_free_region().
-
-What 'damon_del_region()' does is deleting the region from target's regions
-linked list so that nobody references it later after its freed.  However, as
-each region is linked to one target, and as we will free the target here, the
-list will also be freed.  Therefore, we don't need to worry about future
-references to the region.
-
-Anything I'm missing?
-
-
-Thanks,
-SJ
-
-> 
-> Fixes: f23b8eee1871 (mm/damon/core: implement region-based sampling)
-> Signed-off-by: Yajun Deng <yajun.deng@linux.dev>
-> ---
->  mm/damon/core.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/mm/damon/core.c b/mm/damon/core.c
-> index 0b1eb945c68a..e62e7ebf4b12 100644
-> --- a/mm/damon/core.c
-> +++ b/mm/damon/core.c
-> @@ -361,7 +361,7 @@ void damon_free_target(struct damon_target *t)
->  	struct damon_region *r, *next;
->  
->  	damon_for_each_region_safe(r, next, t)
-> -		damon_free_region(r);
-> +		damon_destroy_region(r, t);
->  	kfree(t);
->  }
->  
-> -- 
-> 2.25.1
+September 14, 2022 5:52 PM, "SeongJae Park" <sj@kernel.org> wrote:=0A=0A>=
+ Hi Yajun,=0A> =0A> On Wed, 14 Sep 2022 17:36:36 +0800 Yajun Deng <yajun.=
+deng@linux.dev> wrote:=0A> =0A>> It should be called damon_del_region() b=
+efore free each region, so use=0A>> damon_destroy_region() instead of dam=
+on_free_region().=0A> =0A> What 'damon_del_region()' does is deleting the=
+ region from target's regions=0A> linked list so that nobody references i=
+t later after its freed. However, as=0A> each region is linked to one tar=
+get, and as we will free the target here, the=0A> list will also be freed=
+. Therefore, we don't need to worry about future=0A> references to the re=
+gion.=0A> =0A> Anything I'm missing?=0A> =0AOK, got it.=0A=0A> Thanks,=0A=
+> SJ=0A> =0A>> Fixes: f23b8eee1871 (mm/damon/core: implement region-based=
+ sampling)=0A>> Signed-off-by: Yajun Deng <yajun.deng@linux.dev>=0A>> ---=
+=0A>> mm/damon/core.c | 2 +-=0A>> 1 file changed, 1 insertion(+), 1 delet=
+ion(-)=0A>> =0A>> diff --git a/mm/damon/core.c b/mm/damon/core.c=0A>> ind=
+ex 0b1eb945c68a..e62e7ebf4b12 100644=0A>> --- a/mm/damon/core.c=0A>> +++ =
+b/mm/damon/core.c=0A>> @@ -361,7 +361,7 @@ void damon_free_target(struct =
+damon_target *t)=0A>> struct damon_region *r, *next;=0A>> =0A>> damon_for=
+_each_region_safe(r, next, t)=0A>> - damon_free_region(r);=0A>> + damon_d=
+estroy_region(r, t);=0A>> kfree(t);=0A>> }=0A>> =0A>> --=0A>> 2.25.1
