@@ -1,56 +1,128 @@
-Received: from out2.migadu.com (out2.migadu.com [188.165.223.204])
+Received: from out30-42.freemail.mail.aliyun.com (out30-42.freemail.mail.aliyun.com [115.124.30.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44AF37F
-	for <damon@lists.linux.dev>; Wed, 14 Sep 2022 10:26:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F41C93D61
+	for <damon@lists.linux.dev>; Wed, 14 Sep 2022 11:44:27 +0000 (UTC)
+X-Alimail-AntiSpam:AC=PASS;BC=-1|-1;BR=01201311R211e4;CH=green;DM=||false|;DS=||;FP=0|-1|-1|-1|0|-1|-1|-1;HT=ay29a033018045192;MF=xhao@linux.alibaba.com;NM=1;PH=DS;RN=6;SR=0;TI=SMTPD_---0VPnAFuw_1663155541;
+Received: from localhost.localdomain(mailfrom:xhao@linux.alibaba.com fp:SMTPD_---0VPnAFuw_1663155541)
+          by smtp.aliyun-inc.com;
+          Wed, 14 Sep 2022 19:39:03 +0800
+From: Xin Hao <xhao@linux.alibaba.com>
+To: sj@kernel.org
+Cc: akpm@linux-foundation.org,
+	damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org,
+	xhao@linux.alibaba.com
+Subject: [PATCH V2] mm/damon: simplify scheme create in lru_sort.c
+Date: Wed, 14 Sep 2022 19:38:59 +0800
+Message-Id: <20220914113859.37637-1-xhao@linux.alibaba.com>
+X-Mailer: git-send-email 2.31.0
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1663151199;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=lj2gDBWDxhbWfpJ3F2DuTG5OBZRpUdCDuERum2ovK+M=;
-	b=hi3QMYUHfOuFXdjn7Jj90aA+Gc8WFyhf8nuRHV+74HB/tNyT3LV3i6+Gsw71o0FMvw094B
-	T46x39QgtouHs46DDXcMBrAcRHg9wi2LiZQUdlakIHuX64XxSOjOKKY4Xa6GzOcMOD5ovV
-	nK9SK1GTc5h9GFctTL9sFh5S1a3jFDo=
-Date: Wed, 14 Sep 2022 10:26:38 +0000
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: "Yajun Deng" <yajun.deng@linux.dev>
-Message-ID: <78c7cd3900e0a33da514be8799b35f9f@linux.dev>
-Subject: Re: [PATCH] mm/damon: fix missing damon_del_region()
-To: "SeongJae Park" <sj@kernel.org>
-Cc: akpm@linux-foundation.org, sieberf@amazon.com, shakeelb@google.com,
- foersleo@amazon.de, damon@lists.linux.dev, linux-mm@kvack.org,
- linux-kernel@vger.kernel.org
-In-Reply-To: <20220914095206.70459-1-sj@kernel.org>
-References: <20220914095206.70459-1-sj@kernel.org>
-X-Migadu-Flow: FLOW_OUT
-X-Migadu-Auth-User: linux.dev
+Content-Transfer-Encoding: 8bit
 
-September 14, 2022 5:52 PM, "SeongJae Park" <sj@kernel.org> wrote:=0A=0A>=
- Hi Yajun,=0A> =0A> On Wed, 14 Sep 2022 17:36:36 +0800 Yajun Deng <yajun.=
-deng@linux.dev> wrote:=0A> =0A>> It should be called damon_del_region() b=
-efore free each region, so use=0A>> damon_destroy_region() instead of dam=
-on_free_region().=0A> =0A> What 'damon_del_region()' does is deleting the=
- region from target's regions=0A> linked list so that nobody references i=
-t later after its freed. However, as=0A> each region is linked to one tar=
-get, and as we will free the target here, the=0A> list will also be freed=
-. Therefore, we don't need to worry about future=0A> references to the re=
-gion.=0A> =0A> Anything I'm missing?=0A> =0AOK, got it.=0A=0A> Thanks,=0A=
-> SJ=0A> =0A>> Fixes: f23b8eee1871 (mm/damon/core: implement region-based=
- sampling)=0A>> Signed-off-by: Yajun Deng <yajun.deng@linux.dev>=0A>> ---=
-=0A>> mm/damon/core.c | 2 +-=0A>> 1 file changed, 1 insertion(+), 1 delet=
-ion(-)=0A>> =0A>> diff --git a/mm/damon/core.c b/mm/damon/core.c=0A>> ind=
-ex 0b1eb945c68a..e62e7ebf4b12 100644=0A>> --- a/mm/damon/core.c=0A>> +++ =
-b/mm/damon/core.c=0A>> @@ -361,7 +361,7 @@ void damon_free_target(struct =
-damon_target *t)=0A>> struct damon_region *r, *next;=0A>> =0A>> damon_for=
-_each_region_safe(r, next, t)=0A>> - damon_free_region(r);=0A>> + damon_d=
-estroy_region(r, t);=0A>> kfree(t);=0A>> }=0A>> =0A>> --=0A>> 2.25.1
+In damon_lru_sort_new_hot_scheme() and damon_lru_sort_new_cold_scheme(),
+they have so much in common, so we can combine them into a single
+function, and we just need to distinguish their differences.
+
+Signed-off-by: Xin Hao <xhao@linux.alibaba.com>
+---
+ mm/damon/lru_sort.c | 57 ++++++++++++++++++++++-----------------------
+ 1 file changed, 28 insertions(+), 29 deletions(-)
+
+diff --git a/mm/damon/lru_sort.c b/mm/damon/lru_sort.c
+index 07a0908963fd..2eac907e866d 100644
+--- a/mm/damon/lru_sort.c
++++ b/mm/damon/lru_sort.c
+@@ -135,17 +135,40 @@ DEFINE_DAMON_MODULES_DAMOS_STATS_PARAMS(damon_lru_sort_cold_stat,
+ static struct damon_ctx *ctx;
+ static struct damon_target *target;
+ 
+-static struct damos *damon_lru_sort_new_scheme(
+-		struct damos_access_pattern *pattern, enum damos_action action)
++static struct damos *damon_lru_sort_new_scheme(unsigned int thres,
++					       enum damos_action action)
+ {
++	struct damos_access_pattern pattern = {
++		/* Find regions having PAGE_SIZE or larger size */
++		.min_sz_region = PAGE_SIZE,
++		.max_sz_region = ULONG_MAX,
++		/* and accessed for more than the threshold */
++		.min_nr_accesses = 0,
++		.max_nr_accesses = 0,
++		/* no matter its age */
++		.min_age_region = 0,
++		.max_age_region = UINT_MAX,
++	};
+ 	struct damos_quota quota = damon_lru_sort_quota;
+ 
+ 	/* Use half of total quota for hot/cold pages sorting */
+ 	quota.ms = quota.ms / 2;
+ 
++	switch (action) {
++	case DAMOS_LRU_PRIO:
++		pattern.min_nr_accesses = thres;
++		pattern.max_nr_accesses = UINT_MAX;
++		break;
++	case DAMOS_LRU_DEPRIO:
++		pattern.min_age_region = thres;
++		break;
++	default:
++		return NULL;
++	}
++
+ 	return damon_new_scheme(
+ 			/* find the pattern, and */
+-			pattern,
++			&pattern,
+ 			/* (de)prioritize on LRU-lists */
+ 			action,
+ 			/* under the quota. */
+@@ -157,37 +180,13 @@ static struct damos *damon_lru_sort_new_scheme(
+ /* Create a DAMON-based operation scheme for hot memory regions */
+ static struct damos *damon_lru_sort_new_hot_scheme(unsigned int hot_thres)
+ {
+-	struct damos_access_pattern pattern = {
+-		/* Find regions having PAGE_SIZE or larger size */
+-		.min_sz_region = PAGE_SIZE,
+-		.max_sz_region = ULONG_MAX,
+-		/* and accessed for more than the threshold */
+-		.min_nr_accesses = hot_thres,
+-		.max_nr_accesses = UINT_MAX,
+-		/* no matter its age */
+-		.min_age_region = 0,
+-		.max_age_region = UINT_MAX,
+-	};
+-
+-	return damon_lru_sort_new_scheme(&pattern, DAMOS_LRU_PRIO);
++	return damon_lru_sort_new_scheme(hot_thres, DAMOS_LRU_PRIO);
+ }
+ 
+ /* Create a DAMON-based operation scheme for cold memory regions */
+ static struct damos *damon_lru_sort_new_cold_scheme(unsigned int cold_thres)
+ {
+-	struct damos_access_pattern pattern = {
+-		/* Find regions having PAGE_SIZE or larger size */
+-		.min_sz_region = PAGE_SIZE,
+-		.max_sz_region = ULONG_MAX,
+-		/* and not accessed at all */
+-		.min_nr_accesses = 0,
+-		.max_nr_accesses = 0,
+-		/* for min_age or more micro-seconds */
+-		.min_age_region = cold_thres,
+-		.max_age_region = UINT_MAX,
+-	};
+-
+-	return damon_lru_sort_new_scheme(&pattern, DAMOS_LRU_DEPRIO);
++	return damon_lru_sort_new_scheme(cold_thres, DAMOS_LRU_DEPRIO);
+ }
+ 
+ static int damon_lru_sort_apply_parameters(void)
+-- 
+2.31.0
+
