@@ -1,12 +1,12 @@
-Received: from out30-44.freemail.mail.aliyun.com (out30-44.freemail.mail.aliyun.com [115.124.30.44])
+Received: from out199-16.us.a.mail.aliyun.com (out199-16.us.a.mail.aliyun.com [47.90.199.16])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E0624683
-	for <damon@lists.linux.dev>; Thu, 15 Sep 2022 14:22:44 +0000 (UTC)
-X-Alimail-AntiSpam:AC=PASS;BC=-1|-1;BR=01201311R441e4;CH=green;DM=||false|;DS=||;FP=0|-1|-1|-1|0|-1|-1|-1;HT=ay29a033018046059;MF=xhao@linux.alibaba.com;NM=1;PH=DS;RN=6;SR=0;TI=SMTPD_---0VPtLfkE_1663251760;
-Received: from localhost.localdomain(mailfrom:xhao@linux.alibaba.com fp:SMTPD_---0VPtLfkE_1663251760)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7C9B4683
+	for <damon@lists.linux.dev>; Thu, 15 Sep 2022 14:23:02 +0000 (UTC)
+X-Alimail-AntiSpam:AC=PASS;BC=-1|-1;BR=01201311R201e4;CH=green;DM=||false|;DS=||;FP=0|-1|-1|-1|0|-1|-1|-1;HT=ay29a033018046060;MF=xhao@linux.alibaba.com;NM=1;PH=DS;RN=6;SR=0;TI=SMTPD_---0VPtLfjQ_1663251759;
+Received: from localhost.localdomain(mailfrom:xhao@linux.alibaba.com fp:SMTPD_---0VPtLfjQ_1663251759)
           by smtp.aliyun-inc.com;
-          Thu, 15 Sep 2022 22:22:41 +0800
+          Thu, 15 Sep 2022 22:22:40 +0800
 From: Xin Hao <xhao@linux.alibaba.com>
 To: sj@kernel.org
 Cc: akpm@linux-foundation.org,
@@ -14,12 +14,10 @@ Cc: akpm@linux-foundation.org,
 	linux-mm@kvack.org,
 	linux-kernel@vger.kernel.org,
 	xhao@linux.alibaba.com
-Subject: [PATCH V1 2/2] mm/damon/core: remove duplicate check about THP
-Date: Thu, 15 Sep 2022 22:22:37 +0800
-Message-Id: <20220915142237.92529-2-xhao@linux.alibaba.com>
+Subject: [PATCH V1 1/2] mm/damon/sysfs: avoid call damon_target_has_pid() repeatedly
+Date: Thu, 15 Sep 2022 22:22:36 +0800
+Message-Id: <20220915142237.92529-1-xhao@linux.alibaba.com>
 X-Mailer: git-send-email 2.31.0
-In-Reply-To: <20220915142237.92529-1-xhao@linux.alibaba.com>
-References: <20220915142237.92529-1-xhao@linux.alibaba.com>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -28,34 +26,33 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-In damon_young_pmd_entry(), it calls pmd_trans_huge() to check whether
-the OS supports THP, if CONFIG_TRANSPARENT_HUGEPAGE is not included,
-the pmd_trans_huge() will return 0.
+In damon_sysfs_destroy_targets(), we call damon_target_has_pid() to
+check whether the 'ctx' include a valid pid, but there no need to call
+damon_target_has_pid() to check repeatedly, just need call it once.
 
 Signed-off-by: Xin Hao <xhao@linux.alibaba.com>
 ---
- mm/damon/vaddr.c | 2 --
- 1 file changed, 2 deletions(-)
+ mm/damon/sysfs.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/mm/damon/vaddr.c b/mm/damon/vaddr.c
-index 58bf1bbad530..21daaa5503fb 100644
---- a/mm/damon/vaddr.c
-+++ b/mm/damon/vaddr.c
-@@ -434,7 +434,6 @@ static int damon_young_pmd_entry(pmd_t *pmd, unsigned long addr,
- 	struct page *page;
- 	struct damon_young_walk_private *priv = walk->private;
+diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
+index 1fa0023f136e..966ea7892ccf 100644
+--- a/mm/damon/sysfs.c
++++ b/mm/damon/sysfs.c
+@@ -2143,9 +2143,13 @@ static int damon_sysfs_set_attrs(struct damon_ctx *ctx,
+ static void damon_sysfs_destroy_targets(struct damon_ctx *ctx)
+ {
+ 	struct damon_target *t, *next;
++	bool has_pid = false;
++
++	if (damon_target_has_pid(ctx))
++		has_pid = true;
 
--#ifdef CONFIG_TRANSPARENT_HUGEPAGE
- 	if (pmd_trans_huge(*pmd)) {
- 		ptl = pmd_lock(walk->mm, pmd);
- 		if (!pmd_present(*pmd)) {
-@@ -462,7 +461,6 @@ static int damon_young_pmd_entry(pmd_t *pmd, unsigned long addr,
+ 	damon_for_each_target_safe(t, next, ctx) {
+-		if (damon_target_has_pid(ctx))
++		if (has_pid)
+ 			put_pid(t->pid);
+ 		damon_destroy_target(t);
  	}
-
- regular_page:
--#endif	/* CONFIG_TRANSPARENT_HUGEPAGE */
-
- 	if (pmd_none(*pmd) || unlikely(pmd_bad(*pmd)))
- 		return -EINVAL;
 --
 2.31.0
