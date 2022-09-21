@@ -1,212 +1,239 @@
-Received: from out30-57.freemail.mail.aliyun.com (out30-57.freemail.mail.aliyun.com [115.124.30.57])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EBFE1365
-	for <damon@lists.linux.dev>; Wed, 21 Sep 2022 01:28:35 +0000 (UTC)
-X-Alimail-AntiSpam:AC=PASS;BC=-1|-1;BR=01201311R191e4;CH=green;DM=||false|;DS=||;FP=0|-1|-1|-1|0|-1|-1|-1;HT=ay29a033018046059;MF=xhao@linux.alibaba.com;NM=1;PH=DS;RN=5;SR=0;TI=SMTPD_---0VQLXQDo_1663723704;
-Received: from 30.240.97.89(mailfrom:xhao@linux.alibaba.com fp:SMTPD_---0VQLXQDo_1663723704)
-          by smtp.aliyun-inc.com;
-          Wed, 21 Sep 2022 09:28:26 +0800
-Message-ID: <74773dd0-583a-afb4-ad73-9b324c715d08@linux.alibaba.com>
-Date: Wed, 21 Sep 2022 09:28:24 +0800
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4790D7C
+	for <damon@lists.linux.dev>; Wed, 21 Sep 2022 03:30:07 +0000 (UTC)
+Received: by mail-wm1-f45.google.com with SMTP id ay36so3556400wmb.0
+        for <damon@lists.linux.dev>; Tue, 20 Sep 2022 20:30:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date;
+        bh=56+9vK6+9Zc0jZec7X5/qk5UPRRtfTDGK1I5XcbnItc=;
+        b=nErNZQUgcNufXSE8BUWNJuAKxo7Q+Zg94NoK1Pf4O6rPrEwzsJu4Z8+JkOIsXjBa/q
+         xEOgvvWvp0TPgfuJ0z8SMHfXsQZo41jsWyM/43rPIPKN2/rXlIF8/3Fjb0L9vVS5EhVp
+         Cuu3JZOKqjVVAwXwlzGCV7BCSZXFn7JnqnICWz7k4n/IgQczIUcqk2zIprenEncSp8K6
+         MhPuh2vcFx3ATfe/Wj1r8GSct90u/7XzIjk6xCVTre6gQzYcdOtwPitpTSv0UInS5y0b
+         Tf+5UH0YbyyIxCejJ/RId6PBAwz5K7j22caIcmKLNpKxDY52Fk2hc2VLCaNdg7Q5W4JK
+         mo6w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date;
+        bh=56+9vK6+9Zc0jZec7X5/qk5UPRRtfTDGK1I5XcbnItc=;
+        b=JBnvtEagCu8QzvenwIiTaYR6AawaLnJFzp2JHK5DdaEKsFn74+LMDzNChRura6Dl0J
+         zAEpD+fbRCjLjfnivXwntsKkQ7YwkLWYBnrGf5SkwBMa7Lj5VQUSFgN8ziDTVIAXAJ1Y
+         LznkWG+CBvV+b2g4e98dB7hBcZNEhJwV/WA16A9TswbG2KZLm5gJfZmOTKWTwFzOnRAF
+         Ec4gVcBCFIvurpkHjQYJ67HE1EJe0iJ9boTY+7m79vmEROfJ7C1Qzq38SXO+JMAJiXs4
+         h7OI/vWAqiISEAu5/iq6GQk1P2RUuWMOpsl0NIwqHbeWSk1Gk0XPsCw2jDPX1EOhxRko
+         BF5Q==
+X-Gm-Message-State: ACrzQf1BQl+1gpNMEMId+fPpY4EtfqP+pBAyc1yj/PcJlmBl7Q0ufvIX
+	MQ00PnN3OOSqldxlyqT0D76LZCyWtW8/qL7YW6yy5eqm3Q==
+X-Google-Smtp-Source: AMsMyM5MkIkfbX8ti06vv/pyhUf8jnriKf/fmUSk41UTtg4/FCjgcpmrDxt3qx8Qd8AIP4YPOMlOynAjNWknNY3FRZg=
+X-Received: by 2002:a05:600c:1909:b0:3b4:aa30:40df with SMTP id
+ j9-20020a05600c190900b003b4aa3040dfmr4362300wmq.205.1663731005317; Tue, 20
+ Sep 2022 20:30:05 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.2.2
-Subject: Re: [PATCH v3] mm/damon/sysfs: return 'err' value when call
- kstrtoul() failed
+References: <1663645461-21084-1-git-send-email-kaixuxia@tencent.com> <20220920164331.59056-1-sj@kernel.org>
+In-Reply-To: <20220920164331.59056-1-sj@kernel.org>
+From: Kaixu Xia <xiakaixu1987@gmail.com>
+Date: Wed, 21 Sep 2022 11:29:53 +0800
+Message-ID: <CAGjdHukGEje3yQqXSsk14SheJKy9S=qFBndWohbyi2C7=9JO-A@mail.gmail.com>
+Subject: Re: [PATCH v2] mm/damon: deduplicate damon_{reclaim,lru_sort}_apply_parameters()
 To: SeongJae Park <sj@kernel.org>
-Cc: akpm@linux-foundation.org, damon@lists.linux.dev, linux-mm@kvack.org,
- linux-kernel@vger.kernel.org
-References: <20220920025158.70293-1-xhao@linux.alibaba.com>
-From: haoxin <xhao@linux.alibaba.com>
-In-Reply-To: <20220920025158.70293-1-xhao@linux.alibaba.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Cc: akpm@linux-foundation.org, damon@lists.linux.dev, linux-mm@kvack.org, 
+	LKML <linux-kernel@vger.kernel.org>, Kaixu Xia <kaixuxia@tencent.com>
+Content-Type: text/plain; charset="UTF-8"
 
-Hi SJ,
-
-
-在 2022/9/21 上午12:35, SeongJae Park 写道:
-> From: Xin Hao <xhao@linux.alibaba.com>
+On Wed, Sep 21, 2022 at 12:43 AM SeongJae Park <sj@kernel.org> wrote:
 >
-> We had better return the 'err' value when calling kstrtoul() failed, so
-> the user will know why it really fails, there do little change, let it
-> return the 'err' value when failed.
+> Hi Kaixu,
 >
-> Suggested-by: SeongJae Park <sj@kernel.org>
-> Signed-off-by: Xin Hao <xhao@linux.alibaba.com>
+> On Tue, 20 Sep 2022 11:44:21 +0800 xiakaixu1987@gmail.com wrote:
+>
+> > From: Kaixu Xia <kaixuxia@tencent.com>
+> >
+> > The bodies of damon_{reclaim,lru_sort}_apply_parameters() contain
+> > duplicates. This commit add a common function
+>
+> s/add/adds/
+>
+> > damon_set_region_biggest_system_ram_default() to removes the
+>
+> s/removes/remove/
+>
+> > duplicates.
+> >
+> > Signed-off-by: Kaixu Xia <kaixuxia@tencent.com>
+> > Suggested-by: SeongJae Park <sj@kernel.org>
+> > ---
+> > v2:
+> >  -change the common function name and add kernel comment.
+>
+> Adding a link to the previous version of the patch here would be very helpful
+> for me.  Could you please do so from next time?
+>
+> >
+> >  include/linux/damon.h |  3 ++-
+> >  mm/damon/core.c       | 35 ++++++++++++++++++++++++++++++++++-
+> >  mm/damon/lru_sort.c   | 13 +++----------
+> >  mm/damon/reclaim.c    | 13 +++----------
+> >  4 files changed, 42 insertions(+), 22 deletions(-)
+> >
+> > diff --git a/include/linux/damon.h b/include/linux/damon.h
+> > index e7808a84675f..ed5470f50bab 100644
+> > --- a/include/linux/damon.h
+> > +++ b/include/linux/damon.h
+> > @@ -557,7 +557,8 @@ static inline bool damon_target_has_pid(const struct damon_ctx *ctx)
+> >  int damon_start(struct damon_ctx **ctxs, int nr_ctxs, bool exclusive);
+> >  int damon_stop(struct damon_ctx **ctxs, int nr_ctxs);
+> >
+> > -bool damon_find_biggest_system_ram(unsigned long *start, unsigned long *end);
+> > +int damon_set_region_biggest_system_ram_default(struct damon_target *t,
+> > +                             unsigned long *start, unsigned long *end);
+> >
+> >  #endif       /* CONFIG_DAMON */
+> >
+> > diff --git a/mm/damon/core.c b/mm/damon/core.c
+> > index 9c80c6eb00c2..9e96cb9fb5db 100644
+> > --- a/mm/damon/core.c
+> > +++ b/mm/damon/core.c
+> > @@ -1245,7 +1245,8 @@ static int walk_system_ram(struct resource *res, void *arg)
+> >   * Find biggest 'System RAM' resource and store its start and end address in
+> >   * @start and @end, respectively.  If no System RAM is found, returns false.
+> >   */
+> > -bool damon_find_biggest_system_ram(unsigned long *start, unsigned long *end)
+> > +static bool damon_find_biggest_system_ram(unsigned long *start,
+> > +                                             unsigned long *end)
+> >
+> >  {
+> >       struct damon_system_ram_region arg = {};
+> > @@ -1259,6 +1260,38 @@ bool damon_find_biggest_system_ram(unsigned long *start, unsigned long *end)
+> >       return true;
+> >  }
+> >
+> > +/*
+> > + * damon_set_region_biggest_system_ram_default() - Set the region of the given
+> > + * monitoring target as requested, or biggest 'System RAM'.
+> > + * @t:               The monitoring target to set the region.
+> > + * @start:   The pointer to the start address of the region.
+> > + * @end:     The pointer to the end address of the region.
+> > + *
+> > + * This function sets the region of @t as requested by @start and @end.  If the
+> > + * values of the two pointers are pointing to are zero, however, this function
+> > + * finds the biggest 'System RAM' resource and set the region to cover the
+>
+> s/set/sets/
+>
+> > + * resource.  In the latter case, this function saves the start and end address
+>
+> s/address/addresses/
+>
+> > + * of the resource in @start and @end, respectively.
+> > + *
+> > + * Return: 0 on success, negative error code otherwise.
+> > + */
+> > +int damon_set_region_biggest_system_ram_default(struct damon_target *t,
+> > +                     unsigned long *start, unsigned long *end)
+> > +{
+> > +     struct damon_addr_range addr_range;
+> > +
+> > +     if (*start > *end)
+> > +             return -EINVAL;
+> > +
+> > +     if (!*start && !*end &&
+> > +             !damon_find_biggest_system_ram(start, end))
+> > +             return -EINVAL;
+> > +
+> > +     addr_range.start = *start;
+> > +     addr_range.end = *end;
+> > +     return damon_set_regions(t, &addr_range, 1);
+> > +}
+> > +
+> >  static int __init damon_init(void)
+> >  {
+> >       damon_region_cache = KMEM_CACHE(damon_region, 0);
+> > diff --git a/mm/damon/lru_sort.c b/mm/damon/lru_sort.c
+> > index d7eb72b41cb6..efbc2bda8b9c 100644
+> > --- a/mm/damon/lru_sort.c
+> > +++ b/mm/damon/lru_sort.c
+> > @@ -188,7 +188,6 @@ static struct damos *damon_lru_sort_new_cold_scheme(unsigned int cold_thres)
+> >  static int damon_lru_sort_apply_parameters(void)
+> >  {
+> >       struct damos *scheme;
+> > -     struct damon_addr_range addr_range;
+> >       unsigned int hot_thres, cold_thres;
+> >       int err = 0;
+> >
+> > @@ -211,15 +210,9 @@ static int damon_lru_sort_apply_parameters(void)
+> >               return -ENOMEM;
+> >       damon_add_scheme(ctx, scheme);
+> >
+> > -     if (monitor_region_start > monitor_region_end)
+> > -             return -EINVAL;
+> > -     if (!monitor_region_start && !monitor_region_end &&
+> > -         !damon_find_biggest_system_ram(&monitor_region_start,
+> > -                                        &monitor_region_end))
+> > -             return -EINVAL;
+> > -     addr_range.start = monitor_region_start;
+> > -     addr_range.end = monitor_region_end;
+> > -     return damon_set_regions(target, &addr_range, 1);
+> > +     return damon_set_region_biggest_system_ram_default(target,
+> > +                                     &monitor_region_start,
+> > +                                     &monitor_region_end);
+> >  }
+> >
+> >  static int damon_lru_sort_turn(bool on)
+> > diff --git a/mm/damon/reclaim.c b/mm/damon/reclaim.c
+> > index 3d59ab11b7b3..162c9b1ca00f 100644
+> > --- a/mm/damon/reclaim.c
+> > +++ b/mm/damon/reclaim.c
+> > @@ -144,7 +144,6 @@ static struct damos *damon_reclaim_new_scheme(void)
+> >  static int damon_reclaim_apply_parameters(void)
+> >  {
+> >       struct damos *scheme;
+> > -     struct damon_addr_range addr_range;
+> >       int err = 0;
+> >
+> >       err = damon_set_attrs(ctx, &damon_reclaim_mon_attrs);
+> > @@ -157,15 +156,9 @@ static int damon_reclaim_apply_parameters(void)
+> >               return -ENOMEM;
+> >       damon_set_schemes(ctx, &scheme, 1);
+> >
+> > -     if (monitor_region_start > monitor_region_end)
+> > -             return -EINVAL;
+> > -     if (!monitor_region_start && !monitor_region_end &&
+> > -         !damon_find_biggest_system_ram(&monitor_region_start,
+> > -                                        &monitor_region_end))
+> > -             return -EINVAL;
+> > -     addr_range.start = monitor_region_start;
+> > -     addr_range.end = monitor_region_end;
+> > -     return damon_set_regions(target, &addr_range, 1);
+> > +     return damon_set_region_biggest_system_ram_default(target,
+> > +                                     &monitor_region_start,
+> > +                                     &monitor_region_end);
+> >  }
+> >
+> >  static int damon_reclaim_turn(bool on)
+> > --
+> > 2.27.0
+>
+> Other than above mean and trivial comments,
+>
 > Reviewed-by: SeongJae Park <sj@kernel.org>
-> Signed-off-by: SeongJae Park <sj@kernel.org>
 >
-> ---
-> Changes from v2
-> (https://lore.kernel.org/damon/20220920025158.70293-1-xhao@linux.alibaba.com/)
-> - Move patch changelog outside of the commit message area
+> As the comments are only for trivial grammar things, I will revise and post one
+> on my own.
+>
+Thanks for your detailed comments!
 
-Thanks for fix this stupid bug，i will nerver make it happen once again.
-
-Reviewed-by: Xin Hao <xhao@linux.alibaba.com>
-
+Thanks,
+Kaixu
 >
-> Changes from v1
-> (https://lore.kernel.org/linux-mm/20220919170305.61335-1-sj@kernel.org/T/)
-> - keep the 'err' variable, and return the 'err' value when failed.
->
->   mm/damon/sysfs.c | 46 ++++++++++++++--------------------------------
->   1 file changed, 14 insertions(+), 32 deletions(-)
->
-> diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
-> index 0cca1909bf67..455215a5c059 100644
-> --- a/mm/damon/sysfs.c
-> +++ b/mm/damon/sysfs.c
-> @@ -58,7 +58,7 @@ static ssize_t min_store(struct kobject *kobj, struct kobj_attribute *attr,
->
->   	err = kstrtoul(buf, 0, &min);
->   	if (err)
-> -		return -EINVAL;
-> +		return err;
->
->   	range->min = min;
->   	return count;
-> @@ -83,7 +83,7 @@ static ssize_t max_store(struct kobject *kobj, struct kobj_attribute *attr,
->
->   	err = kstrtoul(buf, 0, &max);
->   	if (err)
-> -		return -EINVAL;
-> +		return err;
->
->   	range->max = max;
->   	return count;
-> @@ -291,9 +291,7 @@ static ssize_t interval_us_store(struct kobject *kobj,
->   			struct damon_sysfs_watermarks, kobj);
->   	int err = kstrtoul(buf, 0, &watermarks->interval_us);
->
-> -	if (err)
-> -		return -EINVAL;
-> -	return count;
-> +	return err ? err : count;
->   }
->
->   static ssize_t high_show(struct kobject *kobj,
-> @@ -312,9 +310,7 @@ static ssize_t high_store(struct kobject *kobj,
->   			struct damon_sysfs_watermarks, kobj);
->   	int err = kstrtoul(buf, 0, &watermarks->high);
->
-> -	if (err)
-> -		return -EINVAL;
-> -	return count;
-> +	return err ? err : count;
->   }
->
->   static ssize_t mid_show(struct kobject *kobj,
-> @@ -333,9 +329,7 @@ static ssize_t mid_store(struct kobject *kobj,
->   			struct damon_sysfs_watermarks, kobj);
->   	int err = kstrtoul(buf, 0, &watermarks->mid);
->
-> -	if (err)
-> -		return -EINVAL;
-> -	return count;
-> +	return err ? err : count;
->   }
->
->   static ssize_t low_show(struct kobject *kobj,
-> @@ -354,9 +348,7 @@ static ssize_t low_store(struct kobject *kobj,
->   			struct damon_sysfs_watermarks, kobj);
->   	int err = kstrtoul(buf, 0, &watermarks->low);
->
-> -	if (err)
-> -		return -EINVAL;
-> -	return count;
-> +	return err ? err : count;
->   }
->
->   static void damon_sysfs_watermarks_release(struct kobject *kobj)
-> @@ -437,9 +429,7 @@ static ssize_t sz_permil_store(struct kobject *kobj,
->   			struct damon_sysfs_weights, kobj);
->   	int err = kstrtouint(buf, 0, &weights->sz);
->
-> -	if (err)
-> -		return -EINVAL;
-> -	return count;
-> +	return err ? err : count;
->   }
->
->   static ssize_t nr_accesses_permil_show(struct kobject *kobj,
-> @@ -458,9 +448,7 @@ static ssize_t nr_accesses_permil_store(struct kobject *kobj,
->   			struct damon_sysfs_weights, kobj);
->   	int err = kstrtouint(buf, 0, &weights->nr_accesses);
->
-> -	if (err)
-> -		return -EINVAL;
-> -	return count;
-> +	return err ? err : count;
->   }
->
->   static ssize_t age_permil_show(struct kobject *kobj,
-> @@ -479,9 +467,7 @@ static ssize_t age_permil_store(struct kobject *kobj,
->   			struct damon_sysfs_weights, kobj);
->   	int err = kstrtouint(buf, 0, &weights->age);
->
-> -	if (err)
-> -		return -EINVAL;
-> -	return count;
-> +	return err ? err : count;
->   }
->
->   static void damon_sysfs_weights_release(struct kobject *kobj)
-> @@ -1111,9 +1097,7 @@ static ssize_t start_store(struct kobject *kobj, struct kobj_attribute *attr,
->   			struct damon_sysfs_region, kobj);
->   	int err = kstrtoul(buf, 0, &region->start);
->
-> -	if (err)
-> -		return -EINVAL;
-> -	return count;
-> +	return err ? err : count;
->   }
->
->   static ssize_t end_show(struct kobject *kobj, struct kobj_attribute *attr,
-> @@ -1132,9 +1116,7 @@ static ssize_t end_store(struct kobject *kobj, struct kobj_attribute *attr,
->   			struct damon_sysfs_region, kobj);
->   	int err = kstrtoul(buf, 0, &region->end);
->
-> -	if (err)
-> -		return -EINVAL;
-> -	return count;
-> +	return err ? err : count;
->   }
->
->   static void damon_sysfs_region_release(struct kobject *kobj)
-> @@ -1528,7 +1510,7 @@ static ssize_t sample_us_store(struct kobject *kobj,
->   	int err = kstrtoul(buf, 0, &us);
->
->   	if (err)
-> -		return -EINVAL;
-> +		return err;
->
->   	intervals->sample_us = us;
->   	return count;
-> @@ -1552,7 +1534,7 @@ static ssize_t aggr_us_store(struct kobject *kobj, struct kobj_attribute *attr,
->   	int err = kstrtoul(buf, 0, &us);
->
->   	if (err)
-> -		return -EINVAL;
-> +		return err;
->
->   	intervals->aggr_us = us;
->   	return count;
-> @@ -1576,7 +1558,7 @@ static ssize_t update_us_store(struct kobject *kobj,
->   	int err = kstrtoul(buf, 0, &us);
->
->   	if (err)
-> -		return -EINVAL;
-> +		return err;
->
->   	intervals->update_us = us;
->   	return count;
-> --
-> 2.31.0
+> Thanks,
+> SJ
