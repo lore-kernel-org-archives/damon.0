@@ -1,33 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F6483237;
-	Wed, 21 Sep 2022 17:20:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49D68C433D6;
-	Wed, 21 Sep 2022 17:20:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7939866E4
+	for <damon@lists.linux.dev>; Wed, 21 Sep 2022 17:36:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C563BC433D6;
+	Wed, 21 Sep 2022 17:36:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1663780843;
-	bh=hNaN7/kTR6R67WQe1nz7d9zyD1hTIz4x7uOZDBw7WDE=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r8/UQteLaNgQxda1merTV54F8tGAgAly2d6RNb4jO7N4UW0y8l8ipw0RSVhO9HXTX
-	 I8QjdyUV5F7I6yWRPFmBWTahB/XGf897gzrNQ+g3vHH60RnljzFFDDs4LnKoGbmtav
-	 4kilFoOAXg+OlnIz9xP27psVUCWD4ks5XuRJpj7hH0bm4ZvIHmfPYhSmv0p9ZQ0bLH
-	 cK6/J4w8R3Uq+OWyxqvEb3ICiqEdbhQ8cUCDfujiVDlEaP16JrkDT9qn4i1tqdGlIR
-	 9HHn1fJ5Q27orDxbaCBmq8dYICOj2NrsHI5Olj+SToAGMNJdGg0aWt70tqDW4dcS4G
-	 P5yeLFbts2tnA==
+	s=k20201202; t=1663781773;
+	bh=QaPwob4cmJzkIfhU85aufFwc39FZ/FKzJ0qPTKysOI4=;
+	h=From:To:Cc:Subject:Date:From;
+	b=WlQAH2wHBfka+mlfQFZ3NASlgKzLaeIK3pvLZyC3UQ/C+ic0h/GdEK+DpNmhbrrLY
+	 hN10PFEviF/hd/2rrnWv9AZsaROR5E4gqLCwrXet02Ydh+XLQoK/EOEIuS/LLOfY5H
+	 zOvUqYtHyEI4UyzOBZd9cmSv4XlpFOBmcyxL92QIgcAnAtJz9NZdD/5O8zHni0CxPr
+	 TjUI3Sjcb03KYXEmGAwMT3ucAnkqG94yIuTlCrjkVLOvv3j9lQEuACAwpBCJSuOqiR
+	 mOlR1sK+qQHXKgUSqFE/8vNRQkTycnvudrm0uCAG4xqdPR5IoiKri4N9QuWUn9Wuid
+	 0OkBYaN8k3ttA==
 From: SeongJae Park <sj@kernel.org>
-To: kernel test robot <lkp@intel.com>
-Cc: SeongJae Park <sj@kernel.org>,
-	damon@lists.linux.dev,
-	llvm@lists.linux.dev,
-	kbuild-all@lists.01.org,
+To: damon@lists.linux.dev
+Cc: sj@kernel.org,
+	linux-mm@kvack.org,
 	linux-kernel@vger.kernel.org
-Subject: Re: [sj:damon/next 26/29] mm/damon/core.c:807:3: warning: variable 'err' is used uninitialized whenever 'if' condition is false
-Date: Wed, 21 Sep 2022 17:20:41 +0000
-Message-Id: <20220921172041.51621-1-sj@kernel.org>
+Subject: [RFC] Listing all DAMON user-space tools in the Doc
+Date: Wed, 21 Sep 2022 17:36:04 +0000
+Message-Id: <20220921173604.51794-1-sj@kernel.org>
 X-Mailer: git-send-email 2.25.1
-In-Reply-To: <202209220049.dcCdIisb-lkp@intel.com>
-References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -36,132 +32,26 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hi robot,
+Hello,
 
 
-Thank you for the report, just fixed[1] and pushed!
+DAMON admin-guide doc[1] is currently listing only DAMO[2] as its user-space
+tool.  However, I know there are user-space tools internally using DAMON other
+than DAMO.  For example, as I also mentioned in the last week Kernel Summit
+talk[3], I know Alibaba has made their own great DAMON user-sapce tool[4].  I,
+hence, just thought it might make more sense to give users more selection of
+the tools by listing all available DAMON user-space tools on the doc.  Any
+thoughts or concerns?
 
-[1] https://git.kernel.org/sj/c/5c2a0770beeab07243ac6632a2afcf637f343806
+If you don't have a concern but have your own, or know someone's user-space
+tools internally using DAMON, and want to list it up on the doc, please let me
+know.
+
+[1] https://docs.kernel.org/admin-guide/mm/damon/usage.html
+[2] https://github.com/awslabs/damo
+[3] https://lpc.events/event/16/contributions/1224/
+[4] https://github.com/aliyun/data-profile-tools
 
 
 Thanks,
 SJ
-
-On Thu, 22 Sep 2022 00:06:55 +0800 kernel test robot <lkp@intel.com> wrote:
-
-> tree:   https://git.kernel.org/pub/scm/linux/kernel/git/sj/linux.git damon/next
-> head:   a5f85a5de8b74931ccd564bdb63194aedc99f2a9
-> commit: 71af589c839d9564a9daa6bb0af2f7f4931ea19c [26/29] mm/damon/core: separate damos application logic
-> config: hexagon-randconfig-r033-20220921 (https://download.01.org/0day-ci/archive/20220922/202209220049.dcCdIisb-lkp@intel.com/config)
-> compiler: clang version 16.0.0 (https://github.com/llvm/llvm-project 791a7ae1ba3efd6bca96338e10ffde557ba83920)
-> reproduce (this is a W=1 build):
->         wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
->         chmod +x ~/bin/make.cross
->         # https://git.kernel.org/pub/scm/linux/kernel/git/sj/linux.git/commit/?id=71af589c839d9564a9daa6bb0af2f7f4931ea19c
->         git remote add sj https://git.kernel.org/pub/scm/linux/kernel/git/sj/linux.git
->         git fetch --no-tags sj damon/next
->         git checkout 71af589c839d9564a9daa6bb0af2f7f4931ea19c
->         # save the config file
->         mkdir build_dir && cp config build_dir/.config
->         COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross W=1 O=build_dir ARCH=hexagon SHELL=/bin/bash mm/damon/
-> 
-> If you fix the issue, kindly add following tag where applicable
-> | Reported-by: kernel test robot <lkp@intel.com>
-> 
-> All warnings (new ones prefixed by >>):
-> 
-> >> mm/damon/core.c:807:3: warning: variable 'err' is used uninitialized whenever 'if' condition is false [-Wsometimes-uninitialized]
->                    if (c->callback.before_scheme_apply)
->                    ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
->    include/linux/compiler.h:56:28: note: expanded from macro 'if'
->    #define if(cond, ...) if ( __trace_if_var( !!(cond , ## __VA_ARGS__) ) )
->                               ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
->    include/linux/compiler.h:58:30: note: expanded from macro '__trace_if_var'
->    #define __trace_if_var(cond) (__builtin_constant_p(cond) ? (cond) : __trace_if_value(cond))
->                                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
->    mm/damon/core.c:809:8: note: uninitialized use occurs here
->                    if (!err)
->                         ^~~
->    include/linux/compiler.h:56:47: note: expanded from macro 'if'
->    #define if(cond, ...) if ( __trace_if_var( !!(cond , ## __VA_ARGS__) ) )
->                                                  ^~~~
->    include/linux/compiler.h:58:52: note: expanded from macro '__trace_if_var'
->    #define __trace_if_var(cond) (__builtin_constant_p(cond) ? (cond) : __trace_if_value(cond))
->                                                       ^~~~
->    mm/damon/core.c:807:3: note: remove the 'if' if its condition is always true
->                    if (c->callback.before_scheme_apply)
->                    ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
->    include/linux/compiler.h:56:23: note: expanded from macro 'if'
->    #define if(cond, ...) if ( __trace_if_var( !!(cond , ## __VA_ARGS__) ) )
->                          ^
->    mm/damon/core.c:787:9: note: initialize the variable 'err' to silence this warning
->            int err;
->                   ^
->                    = 0
->    1 warning generated.
-> 
-> 
-> vim +807 mm/damon/core.c
-> 
-> b47f2bf827d3e3 SeongJae Park 2022-09-20  779  
-> 71af589c839d95 SeongJae Park 2022-09-20  780  static void damos_apply_scheme(struct damon_ctx *c, struct damon_target *t,
-> 71af589c839d95 SeongJae Park 2022-09-20  781  		struct damon_region *r, struct damos *s)
-> b47f2bf827d3e3 SeongJae Park 2022-09-20  782  {
-> b47f2bf827d3e3 SeongJae Park 2022-09-20  783  	struct damos_quota *quota = &s->quota;
-> 71af589c839d95 SeongJae Park 2022-09-20  784  	unsigned long sz = r->ar.end - r->ar.start;
-> b47f2bf827d3e3 SeongJae Park 2022-09-20  785  	struct timespec64 begin, end;
-> b47f2bf827d3e3 SeongJae Park 2022-09-20  786  	unsigned long sz_applied = 0;
-> 71af589c839d95 SeongJae Park 2022-09-20  787  	int err;
-> b47f2bf827d3e3 SeongJae Park 2022-09-20  788  
-> f7d911c39cbbb8 SeongJae Park 2022-03-22  789  	if (c->ops.apply_scheme) {
-> 71af589c839d95 SeongJae Park 2022-09-20  790  		if (quota->esz && quota->charged_sz + sz > quota->esz) {
-> 1cd2430300594a SeongJae Park 2021-11-05  791  			sz = ALIGN_DOWN(quota->esz - quota->charged_sz,
-> 2b8a248d587334 SeongJae Park 2021-11-05  792  					DAMON_MIN_REGION);
-> 2b8a248d587334 SeongJae Park 2021-11-05  793  			if (!sz)
-> 2b8a248d587334 SeongJae Park 2021-11-05  794  				goto update_stat;
-> 2886230666fa8b SeongJae Park 2022-08-14  795  			if (sz >= r->ar.end - r->ar.start) {
-> 2886230666fa8b SeongJae Park 2022-08-14  796  				pr_err("sz: %lu, region: %lu-%lu (%lu), quota: %lu, charged: %lu\n",
-> 2886230666fa8b SeongJae Park 2022-08-14  797  						sz, r->ar.start,
-> 2886230666fa8b SeongJae Park 2022-08-14  798  						r->ar.end, r->ar.end -
-> 2886230666fa8b SeongJae Park 2022-08-14  799  						r->ar.start,
-> 2886230666fa8b SeongJae Park 2022-08-14  800  						quota->esz,
-> 2886230666fa8b SeongJae Park 2022-08-14  801  						quota->charged_sz);
-> 2886230666fa8b SeongJae Park 2022-08-14  802  				BUG();
-> 2886230666fa8b SeongJae Park 2022-08-14  803  			}
-> 4ed9824346c071 Kaixu Xia     2022-08-13  804  			damon_split_region_at(t, r, sz);
-> 2b8a248d587334 SeongJae Park 2021-11-05  805  		}
-> 1cd2430300594a SeongJae Park 2021-11-05  806  		ktime_get_coarse_ts64(&begin);
-> 5cb21aeba065d6 SeongJae Park 2022-09-20 @807  		if (c->callback.before_scheme_apply)
-> 71af589c839d95 SeongJae Park 2022-09-20  808  			err = c->callback.before_scheme_apply(c, t, r, s);
-> 5cb21aeba065d6 SeongJae Park 2022-09-20  809  		if (!err)
-> f7d911c39cbbb8 SeongJae Park 2022-03-22  810  			sz_applied = c->ops.apply_scheme(c, t, r, s);
-> 1cd2430300594a SeongJae Park 2021-11-05  811  		ktime_get_coarse_ts64(&end);
-> 1cd2430300594a SeongJae Park 2021-11-05  812  		quota->total_charged_ns += timespec64_to_ns(&end) -
-> 1cd2430300594a SeongJae Park 2021-11-05  813  			timespec64_to_ns(&begin);
-> 2b8a248d587334 SeongJae Park 2021-11-05  814  		quota->charged_sz += sz;
-> 1cd2430300594a SeongJae Park 2021-11-05  815  		if (quota->esz && quota->charged_sz >= quota->esz) {
-> 50585192bc2ef9 SeongJae Park 2021-11-05  816  			quota->charge_target_from = t;
-> 50585192bc2ef9 SeongJae Park 2021-11-05  817  			quota->charge_addr_from = r->ar.end + 1;
-> 50585192bc2ef9 SeongJae Park 2021-11-05  818  		}
-> 2b8a248d587334 SeongJae Park 2021-11-05  819  	}
-> 2f0b548c9f03a7 SeongJae Park 2021-11-05  820  	if (s->action != DAMOS_STAT)
-> 1f366e421c8f69 SeongJae Park 2021-11-05  821  		r->age = 0;
-> 2b8a248d587334 SeongJae Park 2021-11-05  822  
-> 2b8a248d587334 SeongJae Park 2021-11-05  823  update_stat:
-> 0e92c2ee9f4595 SeongJae Park 2022-01-14  824  	s->stat.nr_tried++;
-> 0e92c2ee9f4595 SeongJae Park 2022-01-14  825  	s->stat.sz_tried += sz;
-> 0e92c2ee9f4595 SeongJae Park 2022-01-14  826  	if (sz_applied)
-> 0e92c2ee9f4595 SeongJae Park 2022-01-14  827  		s->stat.nr_applied++;
-> 0e92c2ee9f4595 SeongJae Park 2022-01-14  828  	s->stat.sz_applied += sz_applied;
-> 1f366e421c8f69 SeongJae Park 2021-11-05  829  }
-> 71af589c839d95 SeongJae Park 2022-09-20  830  
-> 
-> :::::: The code at line 807 was first introduced by commit
-> :::::: 5cb21aeba065d632fa56295d75151d6b70a2bd1b mm/damon/core: add a DAMON callback for scheme target regions check
-> 
-> :::::: TO: SeongJae Park <sj@kernel.org>
-> :::::: CC: SeongJae Park <sj@kernel.org>
-> 
-> -- 
-> 0-DAY CI Kernel Test Service
-> https://01.org/lkp
