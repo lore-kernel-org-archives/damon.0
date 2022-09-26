@@ -1,32 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84A573FE4
-	for <damon@lists.linux.dev>; Mon, 26 Sep 2022 16:16:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3CE1C433B5;
-	Mon, 26 Sep 2022 16:16:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEB843FFA
+	for <damon@lists.linux.dev>; Mon, 26 Sep 2022 16:23:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12BB4C433D7;
+	Mon, 26 Sep 2022 16:23:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1664209015;
-	bh=8eb5D21gEF66inNnQouUMu41BDd99PJhj1rPt0/irjg=;
+	s=k20201202; t=1664209408;
+	bh=3NryUWgV4wNFcxmk/xIXBo2lc6PqLNsFir7j/J5ql+M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X54TgucB4ynTbW6I5lDo2kqcvFqfnqPGLCg1VJGdA3DWKJBII72OyGbdEWp+8z5BX
-	 2ntH3vaQqraTo1eBhNO159zpBhepDDRdGNu/uLvopzxNb8ve/cu7s9IWptr97Zfczl
-	 uInaFtL/aC61c4vgJ5APIBapiyh0CffSk51pdIrJxNTLlshQHIuaaucmGTHo+Bie3S
-	 Fcd31a4ojAcs3Jrf44+1mSUdyzyIYX3mLkGtObRIfkAVftnwnP9+E5a/ATXJkzezpG
-	 a3EP8IIx7UcomyrFBo866AO6C8cvb6K6kKZarrcv2XvYzHWyOkvyKBa6Sww+x2EKaA
-	 P34taTW/5X6bg==
+	b=B9VxvHOWkGdHyuAUNDqCqlOxg64J4VVjtASjH5BQowJtyDWQK04xux3uC2Lnn5h/b
+	 PrDHkRjm3biuNgaFNpRDLtC0LGOHMXy2LsFtz7uO0XdOqRb+Eh4ivOmptA/35CS9AE
+	 97gPV8P4XpmwkyFJwfaaTnPJGVJAGhX3Jt9lGsGaH0vIyxp426Yp0DFXZ1V6CjQq0T
+	 Th3Il54+19a9FLERiAON15iosTLwqWxoAYdJNf1gGmlbBYPj7NHlZ8EjnvVJX5kywR
+	 +fugilr2jLjXoD9mxnrbzQyvT57xD9145ZkkEUXa1cuHN5TUZy/GvncTnsQsxcuBG7
+	 SC+gT25qjxAFA==
 From: SeongJae Park <sj@kernel.org>
-To: Xin Hao <xhao@linux.alibaba.com>
-Cc: sj@kernel.org,
-	akpm@linux-foundation.org,
+To: SeongJae Park <sj@kernel.org>
+Cc: akpm@linux-foundation.org,
+	ppbuk5246@gmail.com,
 	damon@lists.linux.dev,
 	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v1 1/2] mm/damon: rename sz_damon_region to damon_region_size
-Date: Mon, 26 Sep 2022 16:16:53 +0000
-Message-Id: <20220926161653.48710-1-sj@kernel.org>
+	linux-kernel@vger.kernel.org,
+	stable@vger.kernel.org
+Subject: Re: [PATCH v4] damon/sysfs: Fix possible memleak on damon_sysfs_add_target.
+Date: Mon, 26 Sep 2022 16:23:26 +0000
+Message-Id: <20220926162326.49013-1-sj@kernel.org>
 X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20220926071100.76379-1-xhao@linux.alibaba.com>
+In-Reply-To: <20220926160611.48536-1-sj@kernel.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -36,74 +37,66 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Mon, 26 Sep 2022 15:10:59 +0800 Xin Hao <xhao@linux.alibaba.com> wrote:
+I forgot removing the closing dot of the subject and making the subject
+lower-case.
 
-> Here, i rename sz_damon_region() to damon_region_size(), and move it to
-> "include/linux/damon.h", because in many places, we can to use this func.
+On Mon, 26 Sep 2022 16:06:11 +0000 SeongJae Park <sj@kernel.org> wrote:
 
-Good idea.
-
+> From: Levi Yun <ppbuk5246@gmail.com>
 > 
-> Signed-off-by: Xin Hao <xhao@linux.alibaba.com>
+> When damon_sysfs_add_target couldn't find proper task,
+> New allocated damon_target structure isn't registered yet,
+> So, it's impossible to free new allocated one by
+> damon_sysfs_destroy_targets.
+> 
+> By calling daemon_add_target as soon as allocating new target, Fix this
+
+Also we should s/daemon/damon/
+
+I will revise and send v5.
+
+> possible memory leak.
+> 
+> Fixes: a61ea561c871 ("mm/damon/sysfs: link DAMON for virtual address spaces monitoring")
+> Cc: <stable@vger.kernel.org> # 5.17.x
+> Signed-off-by: Levi Yun <ppbuk5246@gmail.com>
+> Reviewed-by: SeongJae Park <sj@kernel.org>
+> Signed-off-by: SeongJae Park <sj@kernel.org>
 > ---
->  include/linux/damon.h | 1 +
->  mm/damon/core.c       | 6 +++---
->  2 files changed, 4 insertions(+), 3 deletions(-)
 > 
-> diff --git a/include/linux/damon.h b/include/linux/damon.h
-> index ed5470f50bab..21f4bfd0f41f 100644
-> --- a/include/linux/damon.h
-> +++ b/include/linux/damon.h
-> @@ -524,6 +524,7 @@ void damon_add_region(struct damon_region *r, struct damon_target *t);
->  void damon_destroy_region(struct damon_region *r, struct damon_target *t);
->  int damon_set_regions(struct damon_target *t, struct damon_addr_range *ranges,
->  		unsigned int nr_ranges);
-> +unsigned long damon_region_size(struct damon_region *r);
-
-This name looks good enough, but I'd like to suggest damon_sz_region().  What
-do you think?
-
-Also, I'd like to keep this function 'static inline' and put the definition
-just after that of 'damon_first_region()'.
-
-
-Thanks,
-SJ
-
+> Changes from v3
+> (https://lore.kernel.org/damon/20220925234327.26345-1-ppbuk5246@gmail.com/)
+> - Fix Fixes: tag
+> - Add patch changelog
 > 
->  struct damos *damon_new_scheme(struct damos_access_pattern *pattern,
->  			enum damos_action action, struct damos_quota *quota,
-> diff --git a/mm/damon/core.c b/mm/damon/core.c
-> index 4de8c7c52979..74ab45b2c2f1 100644
-> --- a/mm/damon/core.c
-> +++ b/mm/damon/core.c
-> @@ -864,7 +864,7 @@ static void kdamond_apply_schemes(struct damon_ctx *c)
+> Changes from v2
+> (https://lore.kernel.org/damon/20220925234053.26090-1-ppbuk5246@gmail.com/)
+> - Add Fixes: and Cc: stable
+> 
+> Changes from v1
+> (https://lore.kernel.org/damon/20220925140257.23431-1-ppbuk5246@gmail.com/)
+> - Do damon_add_target() earlier instead of explicitly freeing the object
+> 
+>  mm/damon/sysfs.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
+> index 455215a5c059..9f1219a67e3f 100644
+> --- a/mm/damon/sysfs.c
+> +++ b/mm/damon/sysfs.c
+> @@ -2172,12 +2172,12 @@ static int damon_sysfs_add_target(struct damon_sysfs_target *sys_target,
+>  
+>  	if (!t)
+>  		return -ENOMEM;
+> +	damon_add_target(ctx, t);
+>  	if (damon_target_has_pid(ctx)) {
+>  		t->pid = find_get_pid(sys_target->pid);
+>  		if (!t->pid)
+>  			goto destroy_targets_out;
 >  	}
->  }
-> 
-> -static inline unsigned long sz_damon_region(struct damon_region *r)
-> +unsigned long damon_region_size(struct damon_region *r)
->  {
->  	return r->ar.end - r->ar.start;
->  }
-> @@ -875,7 +875,7 @@ static inline unsigned long sz_damon_region(struct damon_region *r)
->  static void damon_merge_two_regions(struct damon_target *t,
->  		struct damon_region *l, struct damon_region *r)
->  {
-> -	unsigned long sz_l = sz_damon_region(l), sz_r = sz_damon_region(r);
-> +	unsigned long sz_l = damon_region_size(l), sz_r = damon_region_size(r);
-> 
->  	l->nr_accesses = (l->nr_accesses * sz_l + r->nr_accesses * sz_r) /
->  			(sz_l + sz_r);
-> @@ -904,7 +904,7 @@ static void damon_merge_regions_of(struct damon_target *t, unsigned int thres,
-> 
->  		if (prev && prev->ar.end == r->ar.start &&
->  		    abs(prev->nr_accesses - r->nr_accesses) <= thres &&
-> -		    sz_damon_region(prev) + sz_damon_region(r) <= sz_limit)
-> +		    damon_region_size(prev) + damon_region_size(r) <= sz_limit)
->  			damon_merge_two_regions(t, prev, r);
->  		else
->  			prev = r;
-> --
-> 2.31.0
-> 
+> -	damon_add_target(ctx, t);
+>  	err = damon_sysfs_set_regions(t, sys_target->regions);
+>  	if (err)
+>  		goto destroy_targets_out;
+> -- 
+> 2.25.1
