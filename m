@@ -1,32 +1,53 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8887C7C
-	for <damon@lists.linux.dev>; Sun,  2 Oct 2022 19:36:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD1F5C433D6;
-	Sun,  2 Oct 2022 19:36:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1664739418;
-	bh=LvdA4nKSrotgHMTvX23UojetKOPJvfcUlZAliPGdX2Y=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PlN7SIDmB0GB/uWlkZAiu9j476c0931Rsv/SuSk7inzEV73Ng9VlOUtpP8qTNpX8P
-	 tDCHVzoK/mO5maTHGT/b2zc92i1M/ZhY44yyppzd8ZFJ30mibuD179M+dcNL4RncU5
-	 1koxUFC1Zje5/2LAKI4OirMSnAn5fl5C9Gex2vVkIgTRDyT5Y/HhY/OfC5PGrEK2Z5
-	 zJf1IyQRAzC+No7Frxq2mvCd/yzuLxybxUu5bZkcK+cXHEsg0cw3omKieUGdzOXUSF
-	 cd+pUtl35DdZW/awvo19spfDJaQf2ScLND+3VrhFAv1f37qOZ+FHAA1gg+zFtd+nBa
-	 D42DhR7ymlqcQ==
-From: SeongJae Park <sj@kernel.org>
-To: Hyeonggon Yoo <42.hyeyoo@gmail.com>
-Cc: sj@kernel.org,
-	linux-mm@kvack.org,
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB3813D8A
+	for <damon@lists.linux.dev>; Sun,  2 Oct 2022 22:55:24 +0000 (UTC)
+Received: by mail-pl1-f172.google.com with SMTP id n7so8267544plp.1
+        for <damon@lists.linux.dev>; Sun, 02 Oct 2022 15:55:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date;
+        bh=b/cqXABwEkVImEJzZr0tX/Uc5PPjefuHaywOkawSlcY=;
+        b=e3IO949lN/8sVUNjQ+f64Hso5GFXmlyB0SjpN3tte03IMJnjrXpYn6C/otRd6N+yoz
+         kLupU+EtDt2MyMhd2hzAWVDyKRF0UfKV0FkvffC7P+c9sfirldy6/TUKJTIKVO1Qm5dP
+         5XivOUXdhYxW1Cd85uhVKCkDnFxNlSIu1kT7qsNdgyAwWtFuExbXtf1kde0pRj5GgEQu
+         REgTVX8nZSKd4FODAwVV99LnmdHD9eUgSf91YkWrih5Nr9qj6ZEDKWEcxXS+rRKRkGYL
+         StSnspO1mf+BZjp5hEpFCYPLfWVSuHk3f+yLbcHc9hJp3yH9lOER6aDp1Y/i5BAQ2CyO
+         1tow==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date;
+        bh=b/cqXABwEkVImEJzZr0tX/Uc5PPjefuHaywOkawSlcY=;
+        b=7ngEeOAxHqi1T38IPkCdzznfBJIIMV8NsAPd4+tXETSYbj+CyOoG85wTEcfryDK4Ed
+         dVYJ4UkWBnGgyQqW45lLysSkcBtM3ljzTkbjhkEwm9KhJpuu0Z6qDpQ17sjrglz8fO6W
+         OTrpWK2iNwIB+trzZqx33nHtONQlfEqGkxWBJX4TFl7WYP0gz7SlILkICvJiLXBnXwDw
+         DiB7TNEwxeIKf7VZ5wiH5o3W6rH2dXZtn8EanWx40m/G2NpONTaXP0rg3p3v+Ucrs6nB
+         E6encmW+GoOMnuV6CU4nmnxHhJYtie1RYx/MrTccxeXw+T1vxvzTlGzxQO7xNfTJwCNb
+         PdAA==
+X-Gm-Message-State: ACrzQf1Nr7W3rY2UrQXd/wYZtxEj/bn0jD86NQ2hO59NLINiQ2zDCXZt
+	RhI5h1YJ8NNxx67QqLzSrNk=
+X-Google-Smtp-Source: AMsMyM4hRvMaReSshv6hmGDBn+Lt+0ll8ylRSELdGJqX1tqjcjkgEoHMUa4emdmB/MBQav7x0XZzpA==
+X-Received: by 2002:a17:90b:4c03:b0:20a:919d:44a3 with SMTP id na3-20020a17090b4c0300b0020a919d44a3mr4070665pjb.146.1664751323871;
+        Sun, 02 Oct 2022 15:55:23 -0700 (PDT)
+Received: from localhost.localdomain ([211.226.85.205])
+        by smtp.gmail.com with ESMTPSA id y2-20020a17090a86c200b001f5513f6fb9sm5297022pjv.14.2022.10.02.15.55.21
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Sun, 02 Oct 2022 15:55:23 -0700 (PDT)
+From: Levi Yun <ppbuk5246@gmail.com>
+To: stable@vger.kernel.org
+Cc: gregkh@linuxfoundation.org,
+	sj@kernel.org,
 	akpm@linux-foundation.org,
-	damon@lists.linux.dev
-Subject: Re: DAMON KUNIT test failure in latest mm-everything
-Date: Sun,  2 Oct 2022 19:36:56 +0000
-Message-Id: <20221002193656.8300-1-sj@kernel.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <Yzk8rfGNTTiU3tH0@hyeyoo>
-References: 
+	damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	Levi Yun <ppbuk5246@gmail.com>
+Subject: [PATCH for-stable-5.19.y] fix possible memleak on damon_sysfs_add_target
+Date: Mon,  3 Oct 2022 07:54:45 +0900
+Message-Id: <20221002225444.70464-1-ppbuk5246@gmail.com>
+X-Mailer: git-send-email 2.35.1
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -35,44 +56,44 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hi Hyeonggon,
+commit 1c8e2349f2d0 ("damon/sysfs: fix possible memleak on damon_sysfs_add_target") upstream.
 
-On Sun, 2 Oct 2022 16:24:29 +0900 Hyeonggon Yoo <42.hyeyoo@gmail.com> wrote:
+When damon_sysfs_add_target couldn't find proper task,
+New allocated damon_target structure isn't registered yet,
+So, it's impossible to free new allocated one by damon_sysfs_destroy_targets.
 
-> On Sun, Oct 02, 2022 at 01:24:23PM +0900, Hyeonggon Yoo wrote:
-> > Hi guys, yesterday I just built and booted latest mm-everything,
-> > and I got following report from KUNIT test.
-> > 
-> > Environment:
-> > - x86_64, gcc 11.2.0
-> > - mm-everything (tag: mm-everything-2022-10-01-01-55)
-> > - config attached
-> > 
-> > Report (stacktrace decoded):
-> 
-> FYI, below is the bad commit from git bisection ;)
-> 
-> Thanks!
-> 
-> 065530b966a42d63f214ba40427dc8d00345f573 is the first bad commit
-> commit 065530b966a42d63f214ba40427dc8d00345f573
-> Author: SeongJae Park <sj@kernel.org>
-> Date:   Fri Sep 9 20:28:57 2022 +0000
-> 
-> mm/damon/core-test: test damon_set_regions
-> 
-> Preceding commit fixes a bug in 'damon_set_regions()', which allows holes
-> in the new monitoring target ranges.  This commit adds a kunit test case
-> for the problem to avoid any regression.
+By calling damon_add_target as soon as allocating new target,
+Fix this possible memory leak.
 
-Thank you so much for this kind report!  I just sent a patch[1] for this.  It
-should fix this issue.  BTW, please note that the real issue was there even
-before the kunit commit, but the kunit commit was the first commit that
-triggers the issue.
+Link: https://lkml.kernel.org/r/20220926160611.48536-1-sj@kernel.org
+Fixes: a61ea561c871 ("mm/damon/sysfs: link DAMON for virtual address spaces monitoring")
+Signed-off-by: Levi Yun <ppbuk5246@gmail.com>
+Signed-off-by: SeongJae Park <sj@kernel.org>
+Reviewed-by: SeongJae Park <sj@kernel.org>
+Cc: <stable@vger.kernel.org> # 5.19.x
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+---
+ mm/damon/sysfs.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-[1] https://lore.kernel.org/damon/20221002193130.8227-1-sj@kernel.org/
+diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
+index 09f9e8ca3d1f..5b5ee3308d71 100644
+--- a/mm/damon/sysfs.c
++++ b/mm/damon/sysfs.c
+@@ -2181,13 +2181,13 @@ static int damon_sysfs_add_target(struct damon_sysfs_target *sys_target,
 
-
-Thanks,
-SJ
-[...]
+ 	if (!t)
+ 		return -ENOMEM;
++	damon_add_target(ctx, t);
+ 	if (ctx->ops.id == DAMON_OPS_VADDR ||
+ 			ctx->ops.id == DAMON_OPS_FVADDR) {
+ 		t->pid = find_get_pid(sys_target->pid);
+ 		if (!t->pid)
+ 			goto destroy_targets_out;
+ 	}
+-	damon_add_target(ctx, t);
+ 	err = damon_sysfs_set_regions(t, sys_target->regions);
+ 	if (err)
+ 		goto destroy_targets_out;
+--
+2.35.1
