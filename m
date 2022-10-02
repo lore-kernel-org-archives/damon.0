@@ -1,31 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EB257C
-	for <damon@lists.linux.dev>; Sun,  2 Oct 2022 19:31:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6ADC4C433D6;
-	Sun,  2 Oct 2022 19:31:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8887C7C
+	for <damon@lists.linux.dev>; Sun,  2 Oct 2022 19:36:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD1F5C433D6;
+	Sun,  2 Oct 2022 19:36:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1664739096;
-	bh=bQS/eXJeMiPmj71PLej7rSCZfOQeTrzaD8xCsX+qwWs=;
-	h=From:To:Cc:Subject:Date:From;
-	b=mqXGGEijWGYOiDoFBLN96KIHMPXk+iRXIEhFZEthkWkhHbII4hJTk8mU7LmVLy5Hb
-	 27BrqgLA7UBZEmpgEnID8xnk6WO0IGDFKavvDraIxLFdEbbt/bmMCDhtEWDyM8u7aQ
-	 yI+/LFUrOlsM1ulAgbtmQxXx5kOqO55fG59CsmEiJ5elUp6M3tiNfsCmq7pqLCMXoZ
-	 PbWKrJE01GK1Gt0BUUXA9wxzzh3sAwSL6vF3F1rgr/zEyXKuyp1CuwunE6vDOqW5Zi
-	 khuo8Dk5lBvSZ6cMAIlkRdtunin+/MAJCHpz6LYqi5cpCkFwVPDTIoFpa8Spw2bFcR
-	 kkDribUKFF/Cg==
+	s=k20201202; t=1664739418;
+	bh=LvdA4nKSrotgHMTvX23UojetKOPJvfcUlZAliPGdX2Y=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=PlN7SIDmB0GB/uWlkZAiu9j476c0931Rsv/SuSk7inzEV73Ng9VlOUtpP8qTNpX8P
+	 tDCHVzoK/mO5maTHGT/b2zc92i1M/ZhY44yyppzd8ZFJ30mibuD179M+dcNL4RncU5
+	 1koxUFC1Zje5/2LAKI4OirMSnAn5fl5C9Gex2vVkIgTRDyT5Y/HhY/OfC5PGrEK2Z5
+	 zJf1IyQRAzC+No7Frxq2mvCd/yzuLxybxUu5bZkcK+cXHEsg0cw3omKieUGdzOXUSF
+	 cd+pUtl35DdZW/awvo19spfDJaQf2ScLND+3VrhFAv1f37qOZ+FHAA1gg+zFtd+nBa
+	 D42DhR7ymlqcQ==
 From: SeongJae Park <sj@kernel.org>
-To: akpm@linux-foundation.org
-Cc: damon@lists.linux.dev,
+To: Hyeonggon Yoo <42.hyeyoo@gmail.com>
+Cc: sj@kernel.org,
 	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org,
-	SeongJae Park <sj@kernel.org>,
-	Hyeonggon Yoo <42.hyeyoo@gmail.com>
-Subject: [PATCH] mm/damon/core: initialize damon_target->list in damon_new_target()
-Date: Sun,  2 Oct 2022 19:31:30 +0000
-Message-Id: <20221002193130.8227-1-sj@kernel.org>
+	akpm@linux-foundation.org,
+	damon@lists.linux.dev
+Subject: Re: DAMON KUNIT test failure in latest mm-everything
+Date: Sun,  2 Oct 2022 19:36:56 +0000
+Message-Id: <20221002193656.8300-1-sj@kernel.org>
 X-Mailer: git-send-email 2.25.1
+In-Reply-To: <Yzk8rfGNTTiU3tH0@hyeyoo>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -34,36 +35,44 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-'struct damon_target' creation function, 'damon_new_target()' is not
-initializing its '->list' field, unlike other DAMON structs creator
-functions such as 'damon_new_region()'.  Normal users of
-'damon_new_target()' initializes the field by adding the target to DAMON
-context's targets list, but some code could access the uninitialized
-field.
+Hi Hyeonggon,
 
-This commit avoids the case by initializing the field in
-'damon_new_target()'.
+On Sun, 2 Oct 2022 16:24:29 +0900 Hyeonggon Yoo <42.hyeyoo@gmail.com> wrote:
 
-Reported-by: Hyeonggon Yoo <42.hyeyoo@gmail.com>
-Fixes: f23b8eee1871 ("mm/damon/core: implement region-based sampling")
-Signed-off-by: SeongJae Park <sj@kernel.org>
----
+> On Sun, Oct 02, 2022 at 01:24:23PM +0900, Hyeonggon Yoo wrote:
+> > Hi guys, yesterday I just built and booted latest mm-everything,
+> > and I got following report from KUNIT test.
+> > 
+> > Environment:
+> > - x86_64, gcc 11.2.0
+> > - mm-everything (tag: mm-everything-2022-10-01-01-55)
+> > - config attached
+> > 
+> > Report (stacktrace decoded):
+> 
+> FYI, below is the bad commit from git bisection ;)
+> 
+> Thanks!
+> 
+> 065530b966a42d63f214ba40427dc8d00345f573 is the first bad commit
+> commit 065530b966a42d63f214ba40427dc8d00345f573
+> Author: SeongJae Park <sj@kernel.org>
+> Date:   Fri Sep 9 20:28:57 2022 +0000
+> 
+> mm/damon/core-test: test damon_set_regions
+> 
+> Preceding commit fixes a bug in 'damon_set_regions()', which allows holes
+> in the new monitoring target ranges.  This commit adds a kunit test case
+> for the problem to avoid any regression.
 
- mm/damon/core.c | 1 +
- 1 file changed, 1 insertion(+)
+Thank you so much for this kind report!  I just sent a patch[1] for this.  It
+should fix this issue.  BTW, please note that the real issue was there even
+before the kunit commit, but the kunit commit was the first commit that
+triggers the issue.
 
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index 1d952fa7ba3e..1e6691771a95 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -345,6 +345,7 @@ struct damon_target *damon_new_target(void)
- 	t->pid = NULL;
- 	t->nr_regions = 0;
- 	INIT_LIST_HEAD(&t->regions_list);
-+	INIT_LIST_HEAD(&t->list);
- 
- 	return t;
- }
--- 
-2.25.1
+[1] https://lore.kernel.org/damon/20221002193130.8227-1-sj@kernel.org/
 
+
+Thanks,
+SJ
+[...]
