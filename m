@@ -1,211 +1,87 @@
-Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBE831FC9
-	for <damon@lists.linux.dev>; Wed, 19 Oct 2022 02:49:59 +0000 (UTC)
-Received: by mail-pl1-f172.google.com with SMTP id k9so15215791pll.11
-        for <damon@lists.linux.dev>; Tue, 18 Oct 2022 19:49:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=wUd/MGTvQfTnwEOK6nXZY2PdLyfAu6WiBr91nkDhpXI=;
-        b=Fb0ThL3P12V9lC3il+a3vsDIjksNEJp26sJGq5lOiYpe16KzVDyjlMJ3ejx2jQevhT
-         bS4nGUO3c3tz7bnOW7YaUyShH77m5MvRz8B0F3aMlEN+7eMGt2hTbF4PJF2kl64bLK8n
-         eFni3jwCIkSXDxTpnG5upVFyI19kdxqso8pK/Og4GcjHA2k6OZrnOK98vLazkGQwqk7J
-         /V0bBQzYDEbrQdK9gkSVSePBL8bMZyF915AG/cYz2rlhBPTP9BRbQTZ4+xVfQTGEwVrS
-         Mj4LabyLKplHPPr49nwVHZEkFpEr2lHvlLfS917zHV9Hlf8TGFzrh21/uJmg0svQyNKX
-         n2qA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=wUd/MGTvQfTnwEOK6nXZY2PdLyfAu6WiBr91nkDhpXI=;
-        b=A1II4n5X/iy2HpHOYXUXE/81wS1LUzXHDiYWtqQnosMv+wwBMqQ//iOljFHbZAQ0aN
-         RBWQR8tfGymF/IJ4HFbKYKuN4vT3wGMdID7UkyHuqYtJJ+PyvJ/NdBHkkNC6pZsfTOtR
-         F1mLl9lbTWRjm/nLLSogL+6+Ovh1dF0VgfhVyGjPAp3yDrs4oYCf0DIFaR/6KfHHakIk
-         5v/zo6HNwAVidYSPYnZEA3lMOhYiVcz3AX4hlt77rrKnGxLD10Kd1UfX6hoikR1X3awO
-         VEDNqGGeZJgp79akZ8IlJG/+9+p2HwprVl0fa1+o4p6fvebdkd/dse3MpYX9WhxKBuD/
-         PdBQ==
-X-Gm-Message-State: ACrzQf2A1xQtHx7UrMKzuog8pSF3kTqD/kAyZCGnHgFi7CIyfoucCSHU
-	xWzpo1edyC6OQLfGLPNpOmm/io7fFE5BlRVyoXdpu4xRGjM=
-X-Google-Smtp-Source: AMsMyM5/A4sTx/j24uk3Tl+Eqllidlnoi1/Hxdt/yH++43fYJhmBCX7Dd2q8MT/JcxouuaBSOULwRszBpCm1gUOJ+84=
-X-Received: by 2002:a17:90b:4a4d:b0:20d:4dc7:fa72 with SMTP id
- lb13-20020a17090b4a4d00b0020d4dc7fa72mr6822698pjb.86.1666147798739; Tue, 18
- Oct 2022 19:49:58 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0726B4C72
+	for <damon@lists.linux.dev>; Wed, 19 Oct 2022 17:32:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34240C433D6;
+	Wed, 19 Oct 2022 17:32:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1666200727;
+	bh=j5op88tCtQJYSZcABrjvuLNqEi5MZTKsnk+JdLArf+s=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=lTrDtmlVNr2LSm472A9vSFy+P198V/su8VSou661enLYiKL6DuiO149uM0dMiVxvF
+	 SKyZGXElT56ETi2brFrQ423OU3OvSt43WSC8uxFVGHb2tsZOgsSckx5DUa4YFQ8Tzg
+	 gAbURZVeiO7egr1c1Q05I2hulDFa9RrZJe05vuKii2/XfXz/g/ofg8w7hS1skw5ul6
+	 1JgClGV12xcOh1l1z1HlGKNphUiYP4MgnFcMR7LmuclRdDrvDbT6D6cCqQSOk6rg+n
+	 83pEhULHUBZNfahhCfqFEJlWSQuQxjC3tVDKoNBlBAXbzVwvzyewkVYBR76/V+26uX
+	 PtGRmNbchL1AQ==
+From: SeongJae Park <sj@kernel.org>
+To: SeongJae Park <sj@kernel.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>,
+	Jonathan Corbet <corbet@lwn.net>,
+	damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	linux-doc@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [RFC PATCH 00/18] efficiently expose damos action tried regions information
+Date: Wed, 19 Oct 2022 17:32:05 +0000
+Message-Id: <20221019173205.85216-1-sj@kernel.org>
+X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20221019001317.104270-1-sj@kernel.org>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-From: Vinicius Petrucci <vpetrucci@gmail.com>
-Date: Tue, 18 Oct 2022 21:49:22 -0500
-Message-ID: <CAEZ6=UNUcH2BvJj++OrT=XQLdkidU79wmCO=tantSOB36pPNTg@mail.gmail.com>
-Subject: Issue while testing new fvaddr feature
-To: damon@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-
-Hello,
-
-I am experimenting with the new fixed address (fvaddr) feature of
-DAMON to monitor memory regions originated from user-level mmap/malloc
-calls.
-I used "strace" to intercept the mmap calls and derive "start" and
-"end" attributes for monitoring using the "masim" program
-(https://github.com/sjp38/masim) as an example that creates two memory
-allocations and keeps accessing them for a long time.
-Then, I used "perf record" to get the data, but perf doesn't seem to
-be recording anything. Nothing is shown after issuing "perf script".
-
-Could you please help me spot any mistakes with my tests (if any)
-using the Bash script below? Could also please let me know whether or
-not that is reproducible in your system?
-
-I am using kernel 6.0.2 and I checked that "fvaddr" is supported via
-"damo features".
-All steps in the script below ("test-fvaddr-damon.sh") runs without
-any errors. It is just that nothing appears in the perf data.
-
--------- test-fvaddr-damon.sh --------------
-
-strace -e mmap ./masim/masim hint_test_inf 2> strace.out &
-
-
-sleep 2
-
-
-echo 1 > /sys/kernel/mm/damon/admin/kdamonds/nr_kdamonds
-echo 1 > /sys/kernel/mm/damon/admin/kdamonds/0/contexts/nr_contexts
-
-echo fvaddr > /sys/kernel/mm/damon/admin/kdamonds/0/contexts/0/operations
-
-echo 1 > /sys/kernel/mm/damon/admin/kdamonds/0/contexts/0/targets/nr_targets
-
-echo $(pidof masim) >
-/sys/kernel/mm/damon/admin/kdamonds/0/contexts/0/targets/0/pid_target
-
-echo on > /sys/kernel/mm/damon/admin/kdamonds/0/state
-
-
-
-start1=`cat strace.out | tail -2 | head -1 | cut -f2 -d=`
-
-start2=`cat strace.out | tail -2 | tail -1 | cut -f2 -d=`
-
-
-
-# convert to decimal
-
-start1=$((${start1}))
-
-start2=$((${start2}))
-
-
-
-size1=`cat strace.out | tail -2 | cut -d, -f2 | head -1`
-
-size2=`cat strace.out | tail -2 | cut -d, -f2 | tail -1`
-
-
-
-end1=$(($start1+$size1-1))
-
-end2=$(($start1+$size1-1))
-
-
-
-echo $start1 $end1
-
-echo $start2 $end2
-
-
-
-echo 2 > /sys/kernel/mm/damon/admin/kdamonds/0/contexts/0/targets/0/regions/nr_regions
-
-
-
-echo $start1 > /sys/kernel/mm/damon/admin/kdamonds/0/contexts/0/targets/0/regions/0/start
-
-echo $end1 > /sys/kernel/mm/damon/admin/kdamonds/0/contexts/0/targets/0/regions/0/end
-
-
-
-echo $start2 > /sys/kernel/mm/damon/admin/kdamonds/0/contexts/0/targets/0/regions/1/start
-
-echo $end2 > /sys/kernel/mm/damon/admin/kdamonds/0/contexts/0/targets/0/regions/1/end
-
-
-
-perf record -e damon:damon_aggregated &
-
-
-
-sleep 15
-
-
-
-kill $(pidof perf)
-
-
-
-echo off > /sys/kernel/mm/damon/admin/kdamonds/0/state
-
-
-
-perf script
-
-
-
-killall strace
-
------------ hint_test_inf -------------
-
-#regions
-
-# name, length
-
-a, 1073741824 # 1 GiB
-
-b, 1073741824 # 1 GiB
-
-
-
-# phase 1
-
-# name of phase
-
-phase 1
-
-# time in ms
-
-9999999999999
-
-# access patterns
-
-# name of region, randomness, stride, probability
-
-a, 0, 64, 99
-
-b, 0, 64, 1
-
-
-
-# phase 2
-
-phase 2
-
-# time in ms
-
-10000
-
-# access patterns
-
-# name of region, randomness, stride, probability
-
-a, 0, 64, 1
-
-b, 0, 64, 99
-
-
-Thank you!
+Content-Transfer-Encoding: 8bit
+
+On Wed, 19 Oct 2022 00:12:59 +0000 SeongJae Park <sj@kernel.org> wrote:
+
+> DAMON users can retrieve the monitoring results via 'after_aggregation'
+> callbacks if the user is using the kernel API, or 'damon_aggregated'
+> tracepoint if the user is in the user space.  Those are useful if full
+> monitoring results are necessary.  However, if the user has interest in
+> only some regions having specific access pattern, the interfaces could
+> be inefficient.  For example, some DAMOS users might want to know
+> exactly what regions were identified as fulfilling the access pattern of
+> the scheme, for a debugging or a tuning.
+> 
+> This patchset implements DAMON kernel API callbacks and sysfs directory
+> for efficient exposure of the information.  The new callback will be
+> called for each region before specific DAMOS action is gonna tried to be
+> applied.  The sysfs directory will be called 'tried_regions' and placed
+> under each scheme sysfs directory.  User can write a special keyworkd,
+> 'update_schemes_regions' to the 'state' file of a kdamond sysfs
+> directory.  Then, DAMON sysfs interface will fill the directory with the
+> information of regions that corresponding scheme action was tried to be
+> applied for one aggregation interval.
+> 
+> Patches Sequence
+> ----------------
+> 
+> First five patches (1-5) clean up and refactor code that following patch
+> will touch, and the following one (patch 6) implements the DAMON
+> callback for DAMON kernel API users.
+> 
+> Following six patches (7-12) clean up and refactor the sysfs interface
+> before the new sysfs directory introduction.  Following two patches (13
+> and 14) implement the sysfs directories, and successing two patches (15
+> and 16) implement the special keyword for 'state' to fill and clean up
+> the directories.
+> 
+> Finally, two more patches (17 and 18) for the documentation of the usage
+> and ABI follow.
+
+I think this patchset is unnecessarily big due to the cleanups and
+refactorings.  I added them in this patchset mainly because I found the messy
+code while working for the feature.  However, now it looks like it would make
+more sense to split them out into separate patchsets.
+
+Just thinking loudly, but any input is welcome.
+
+
+Thanks,
+SJ
+[...]
