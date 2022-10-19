@@ -1,33 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 302DD3200
-	for <damon@lists.linux.dev>; Tue, 18 Oct 2022 17:00:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5926CC433D7;
-	Tue, 18 Oct 2022 17:00:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 043327E
+	for <damon@lists.linux.dev>; Wed, 19 Oct 2022 00:13:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B0B0C433C1;
+	Wed, 19 Oct 2022 00:13:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1666112400;
-	bh=j95Pr+nqCm9HQ0/2Y0CWsEer+z/8+6G8uW/jrB6rHD4=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VnDUTX+2ON+KD9FPoyxYsSYtZt0fFO/i6m06G1aKvu4JKWae9UZR+ArxG3rU/SRc4
-	 BaNpN739QbHT+utQMFzXnDi6guk6Ofylj1XHK6h+swRz1IWopVlhM2cr68udZSLkhb
-	 Q9WrvRmOsi5KQosBf86BKsvJSbtpR3Fqe7gX/3Gs63z3rVue0l772VPq6FT7Qhj3nH
-	 W6g+/LMReottOA8WF9ZJbwuQjEXLQzqLLcVIoZZisOpqSZR1WoL3Xstr7GwlIhK2Zn
-	 mfT4wkJ/4KI5WhCyghv228sDdn4G86Jz4x7HeFwLwZdLi73v+BiMnpTiWc53BZqz6b
-	 kGyYW2Hzpa1qA==
+	s=k20201202; t=1666138402;
+	bh=dpOBk5cVjdXzz1IhM8jwMTCjeK/vMf8lWOrAu4uF1nI=;
+	h=From:To:Cc:Subject:Date:From;
+	b=AMx1r4qTE/UyPgLZgfR5w8EvSMa0cCZcRacr+T37GLPlvpDnrsV5EV9anW1tduwEz
+	 E6qFwNNegxjwQfGq52tzTQEUHmCJmMXqBgslB+xe2jyWfYYx3alV7HZOhemXyeDxxe
+	 mWa9vG4ErR4W5SQunrbc/Dv3iz7DUuoqAbErw+08cKG3Bzmt/Ni3FRsH47s4pNBxnH
+	 pvthyGj5RJV4PpHP3r3fSx/0rOZKHXYNUmdIfGoJRg+haHcBvQNzpLj9Esi4wQXLer
+	 zT1o6Sp/8DsxgnftipgRl55GRnS6LFt2QkVAvSmDPGrszWcGiuz5e9TlxgEExCzrVf
+	 DGpbnHIXrQ4ug==
 From: SeongJae Park <sj@kernel.org>
-To: SeongJae Park <sj@kernel.org>
+To: Andrew Morton <akpm@linux-foundation.org>,
+	Jonathan Corbet <corbet@lwn.net>,
+	SeongJae Park <sj@kernel.org>
 Cc: damon@lists.linux.dev,
-	linux-damon@amazon.com,
-	linux-damon-trial@amazon.com,
 	linux-mm@kvack.org,
+	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: Re: DAMON Beer/Coffee/Tea chat series
-Date: Tue, 18 Oct 2022 16:59:58 +0000
-Message-Id: <20221018165958.82803-1-sj@kernel.org>
+Subject: [RFC PATCH 00/18] efficiently expose damos action tried regions information
+Date: Wed, 19 Oct 2022 00:12:59 +0000
+Message-Id: <20221019001317.104270-1-sj@kernel.org>
 X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20220810225102.124459-1-sj@kernel.org>
-References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -36,31 +35,94 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Wed, 10 Aug 2022 22:51:02 +0000 SeongJae Park <sj@kernel.org> wrote:
+DAMON users can retrieve the monitoring results via 'after_aggregation'
+callbacks if the user is using the kernel API, or 'damon_aggregated'
+tracepoint if the user is in the user space.  Those are useful if full
+monitoring results are necessary.  However, if the user has interest in
+only some regions having specific access pattern, the interfaces could
+be inefficient.  For example, some DAMOS users might want to know
+exactly what regions were identified as fulfilling the access pattern of
+the scheme, for a debugging or a tuning.
 
-> Hello,
-> 
-> 
-> In short, I'd like to start an open, regular, and informal virtual bi-weekly
-> meeting series for DAMON community.
-> 
-> Important links and dates
-> -------------------------
-> 
-> Location: https://meet.google.com/ndx-evoc-gbu
-> Agenda: https://docs.google.com/document/d/1v43Kcj3ly4CYqmAkMaZzLiM2GEnWfgdGbZAH3mi2vpM/edit?usp=sharing
+This patchset implements DAMON kernel API callbacks and sysfs directory
+for efficient exposure of the information.  The new callback will be
+called for each region before specific DAMOS action is gonna tried to be
+applied.  The sysfs directory will be called 'tried_regions' and placed
+under each scheme sysfs directory.  User can write a special keyworkd,
+'update_schemes_regions' to the 'state' file of a kdamond sysfs
+directory.  Then, DAMON sysfs interface will fill the directory with the
+information of regions that corresponding scheme action was tried to be
+applied for one aggregation interval.
 
-The meeting was scheduled for yesterday 18:00 PDT, but I forgot that.  Sorrry
-for my bad memory.  It's very volatile and easily corrupted.  I will try to
-sanitize it next time.
+Patches Sequence
+----------------
 
-For people who prefer the time zone, I will change the time of next meeting
-from Tuesday 09:30 PDT to Monday 18:00 PDT.  So, the next meeting will be at
-2022-10-31 (Mon) 18:00 PDT, Google Meet (https://meet.google.com/ndx-evoc-gbu).
+First five patches (1-5) clean up and refactor code that following patch
+will touch, and the following one (patch 6) implements the DAMON
+callback for DAMON kernel API users.
 
-Sincere apology again.  I may prepare some sweets for you ;)
+Following six patches (7-12) clean up and refactor the sysfs interface
+before the new sysfs directory introduction.  Following two patches (13
+and 14) implement the sysfs directories, and successing two patches (15
+and 16) implement the special keyword for 'state' to fill and clean up
+the directories.
 
+Finally, two more patches (17 and 18) for the documentation of the usage
+and ABI follow.
 
-Thanks,
-SJ
-[...]
+Assembled Tree
+--------------
+
+This patchset is based on the latest mm-unstable tree[1].  Assembled
+tree is also available at the damon/next tree[2].
+
+[1] https://git.kernel.org/akpm/mm/h/mm-unstable
+[2] https://git.kernel.org/sj/h/damon/next
+
+SeongJae Park (18):
+  mm/damon/modules: deduplicate init steps for DAMON context setup
+  mm/damon/core: split out DAMOS-charged region skip logic into a new
+    function
+  mm/damon/core: split damos application logic into a new function
+  mm/damon/core: split out scheme stat update logic into a new function
+  mm/damon/core: split out scheme quota adjustment logic into a new
+    function
+  mm/damon/core: add a DAMON callback for scheme target regions check
+  mm/damon/sysfs: Use damon_addr_range for regions' start and end values
+  mm/damon/sysfs: remove parameters of damon_sysfs_region_alloc()
+  mm/damon/sysfs: move sysfs_lock to common module
+  mm/damon/sysfs: move unsigned long range directory to common module
+  mm/damon/sysfs: split out kdamond-independent schemes stats update
+    logic into a new function
+  mm/damon/sysfs: move schemes directory implementation to separate
+    module
+  mm/damon/sysfs-schemes: implement schemes/tried_regions directory
+  mm/damon/sysfs-schemes: implement scheme region directory
+  mm/damon/sysfs: implement DAMOS-tried regions update command
+  mm/damon/sysfs-schemes: implement DAMOS tried regions clear command
+  Docs/admin-guide/mm/damon/usage: document schemes/<s>/tried_regions
+    directory
+  Docs/ABI/damon: document 'schemes/<s>/tried_regions' directory
+
+ .../ABI/testing/sysfs-kernel-mm-damon         |   32 +
+ Documentation/admin-guide/mm/damon/usage.rst  |   44 +-
+ include/linux/damon.h                         |    5 +
+ mm/damon/Makefile                             |    6 +-
+ mm/damon/core.c                               |  259 ++--
+ mm/damon/lru_sort.c                           |   17 +-
+ mm/damon/modules-common.c                     |   42 +
+ mm/damon/modules-common.h                     |    3 +
+ mm/damon/reclaim.c                            |   17 +-
+ mm/damon/sysfs-common.c                       |  107 ++
+ mm/damon/sysfs-common.h                       |   56 +
+ mm/damon/sysfs-schemes.c                      | 1281 +++++++++++++++++
+ mm/damon/sysfs.c                              | 1224 ++--------------
+ 13 files changed, 1813 insertions(+), 1280 deletions(-)
+ create mode 100644 mm/damon/modules-common.c
+ create mode 100644 mm/damon/sysfs-common.c
+ create mode 100644 mm/damon/sysfs-common.h
+ create mode 100644 mm/damon/sysfs-schemes.c
+
+-- 
+2.25.1
+
