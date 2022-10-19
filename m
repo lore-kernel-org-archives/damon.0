@@ -1,225 +1,93 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f169.google.com (mail-pf1-f169.google.com [209.85.210.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E24F44C72
-	for <damon@lists.linux.dev>; Wed, 19 Oct 2022 17:45:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6659AC433D6;
-	Wed, 19 Oct 2022 17:45:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1666201512;
-	bh=+diI9SCISw3g1Kjy+B4WDOPHkmLS+1oSLSOHmA7sPzc=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nuP6g512y0XJAYk6VJ0JeZH0hb+3pn6WyZ4ymnonK9Nm2GhhaVVQjXena/uZNAdkA
-	 j6VbpdU9uvfhqHZ3NcfmAMZjd0JxAsiAUAyprQoOo3EUWK8akAagSJsviA3EHCdj5M
-	 7u3yPvRxUz/qlK6LgI7uyazs1XkaF0eMSEsW0BxDOHZZhbeDwNBfUxgTyXK4DPLbhJ
-	 nhX3zwZidU9aVZlmo1bSKtzghwE0Df/0BR/GRjGDEIzWpcC2DUtg1utwuz2bHZnIqW
-	 fzDVUnoAyJJPyVRqk+kaubGa2zX7JhaTsTOkwjivGs3Ft2rheh005xISirr8JZhV8L
-	 PQRdCNowkhRVA==
-From: SeongJae Park <sj@kernel.org>
-To: Vinicius Petrucci <vpetrucci@gmail.com>
-Cc: damon@lists.linux.dev
-Subject: Re: Issue while testing new fvaddr feature
-Date: Wed, 19 Oct 2022 17:45:10 +0000
-Message-Id: <20221019174510.85286-1-sj@kernel.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <CAEZ6=UNUcH2BvJj++OrT=XQLdkidU79wmCO=tantSOB36pPNTg@mail.gmail.com>
-References: 
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C93C95C87
+	for <damon@lists.linux.dev>; Wed, 19 Oct 2022 23:58:52 +0000 (UTC)
+Received: by mail-pf1-f169.google.com with SMTP id h13so18718969pfr.7
+        for <damon@lists.linux.dev>; Wed, 19 Oct 2022 16:58:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=y7UEu9uN2ujKdPAho6ZZ2+DbdoeogY1gQhveka0R0iM=;
+        b=hkIEFJl5fqT9LPr7UECybhdEDjAQkqAF3gFJOSS95ayVIr52uSkCWyen48delTpr5D
+         v1scQl/6ezefaE6KzfnhEOJBTShPpWr0GZmww0/OUJEiLsvTKU10OqsZZCytTnYDfplP
+         GAcJxTVNPVJscjYHyv4gOPKeTMVSp/+0RdlkbnxQzJdpD0uYXAw+9lfRYGWYRQMrXBzX
+         MPVN6+rQkbyErqDxpb3h9nUhd6C7rQotipg30vdga5kHAPXPbNq9nJMEDzcI0TH2SVnb
+         P7FPMCIXAd2DtZRj1OYPXVlmLkyXQMW+HB+D1tORcGxCpNZ9tB2g+dMKPUN0XDFDmvUK
+         PXHw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=y7UEu9uN2ujKdPAho6ZZ2+DbdoeogY1gQhveka0R0iM=;
+        b=Tu4zwTsrKggg427GqxD801eQxQqwJfRJivEMWO/c4rvBv9WZXTr6rShf7sld0Mzh2S
+         52fFD4gKIAvLFbs3aZodkaJknqULc3V8aiX9a0mPleULFnOBO9/n9nrDviUSEJOru1ow
+         nhH+sQ3EkHwGV2H9/uzM4DLLEEUuW4KhdQpPRaJfiu18jI+iYpITS1JIxlOnfkjvXYSk
+         UY+LhjZEJS+vxCi4dWdSFKQOJuRCJlrTp+qfvCtxSaA5BRU2qfke9JKUiO9fnftDvnSe
+         /Z1yin/Ghg6rMmgCnnyALGbD2B8R1hyY3MPJsniapEvwaMqeFRCzJMeDu6jhiKhmGi0X
+         xr5Q==
+X-Gm-Message-State: ACrzQf0dmNWb3Sw57wPWm/CCzACiD+JkRjKdqUNjHcaocj4/AVEEEhhO
+	J4l/nBCdBQF0mMzjTm8JpravkBKO/Oz++OKN7hw=
+X-Google-Smtp-Source: AMsMyM6MquWjXJOKmnAYmrM6ObwgzTHvuvEwdhMPDyH6VEPj2zaiupN+l9i5FUXyv5UCCFWawBHXTmbHkkiHVjaVxDw=
+X-Received: by 2002:a05:6a00:b84:b0:565:caea:38bc with SMTP id
+ g4-20020a056a000b8400b00565caea38bcmr11316823pfj.80.1666223932014; Wed, 19
+ Oct 2022 16:58:52 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <CAEZ6=UNUcH2BvJj++OrT=XQLdkidU79wmCO=tantSOB36pPNTg@mail.gmail.com>
+ <20221019174510.85286-1-sj@kernel.org>
+In-Reply-To: <20221019174510.85286-1-sj@kernel.org>
+From: Vinicius Petrucci <vpetrucci@gmail.com>
+Date: Wed, 19 Oct 2022 18:58:15 -0500
+Message-ID: <CAEZ6=UN4jagT49VHPr4oM0BSqUOybFyty85hrWKeKAq0QApSXA@mail.gmail.com>
+Subject: Re: Issue while testing new fvaddr feature
+To: SeongJae Park <sj@kernel.org>
+Cc: damon@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi Vinicius,
+Hi SeongJae!
 
-On Tue, 18 Oct 2022 21:49:22 -0500 Vinicius Petrucci <vpetrucci@gmail.com> wrote:
+I appreciate your feedback on this. Your explanation makes sense and I
+didn't notice the "commit" feature. Sorry!
 
-> Hello,
-> 
-> I am experimenting with the new fixed address (fvaddr) feature of
-> DAMON to monitor memory regions originated from user-level mmap/malloc
-> calls.
-> I used "strace" to intercept the mmap calls and derive "start" and
-> "end" attributes for monitoring using the "masim" program
-> (https://github.com/sjp38/masim) as an example that creates two memory
-> allocations and keeps accessing them for a long time.
-> Then, I used "perf record" to get the data, but perf doesn't seem to
-> be recording anything. Nothing is shown after issuing "perf script".
-> 
-> Could you please help me spot any mistakes with my tests (if any)
-> using the Bash script below? Could also please let me know whether or
-> not that is reproducible in your system?
-> 
-> I am using kernel 6.0.2 and I checked that "fvaddr" is supported via
-> "damo features".
-> All steps in the script below ("test-fvaddr-damon.sh") runs without
-> any errors. It is just that nothing appears in the perf data.
+Nevertheless, I am still not able to get any perf data, and now I am
+getting some errors. Not sure what I am doing wrong now. I tried both
+approaches.
 
-Thank you for reaching out to us with this kind question!
+1) I tried doing =E2=80=9Con=E2=80=9D only after setting the start/end addr=
+ess, and got:
 
-> 
-> -------- test-fvaddr-damon.sh --------------
-> 
-> strace -e mmap ./masim/masim hint_test_inf 2> strace.out &
-> 
-> 
-> sleep 2
-> 
-> 
-> echo 1 > /sys/kernel/mm/damon/admin/kdamonds/nr_kdamonds
-> echo 1 > /sys/kernel/mm/damon/admin/kdamonds/0/contexts/nr_contexts
-> 
-> echo fvaddr > /sys/kernel/mm/damon/admin/kdamonds/0/contexts/0/operations
-> 
-> echo 1 > /sys/kernel/mm/damon/admin/kdamonds/0/contexts/0/targets/nr_targets
-> 
-> echo $(pidof masim) >
-> /sys/kernel/mm/damon/admin/kdamonds/0/contexts/0/targets/0/pid_target
-> 
-> echo on > /sys/kernel/mm/damon/admin/kdamonds/0/state
-> 
-> 
-> 
-> start1=`cat strace.out | tail -2 | head -1 | cut -f2 -d=`
-> 
-> start2=`cat strace.out | tail -2 | tail -1 | cut -f2 -d=`
-> 
-> 
-> 
-> # convert to decimal
-> 
-> start1=$((${start1}))
-> 
-> start2=$((${start2}))
-> 
-> 
-> 
-> size1=`cat strace.out | tail -2 | cut -d, -f2 | head -1`
-> 
-> size2=`cat strace.out | tail -2 | cut -d, -f2 | tail -1`
-> 
-> 
-> 
-> end1=$(($start1+$size1-1))
-> 
-> end2=$(($start1+$size1-1))
-> 
-> 
-> 
-> echo $start1 $end1
-> 
-> echo $start2 $end2
-> 
-> 
-> 
-> echo 2 > /sys/kernel/mm/damon/admin/kdamonds/0/contexts/0/targets/0/regions/nr_regions
-> 
-> 
-> 
-> echo $start1 > /sys/kernel/mm/damon/admin/kdamonds/0/contexts/0/targets/0/regions/0/start
-> 
-> echo $end1 > /sys/kernel/mm/damon/admin/kdamonds/0/contexts/0/targets/0/regions/0/end
-> 
-> 
-> 
-> echo $start2 > /sys/kernel/mm/damon/admin/kdamonds/0/contexts/0/targets/0/regions/1/start
-> 
-> echo $end2 > /sys/kernel/mm/damon/admin/kdamonds/0/contexts/0/targets/0/regions/1/end
-> 
-> 
-> 
-> perf record -e damon:damon_aggregated &
+# echo on > /sys/kernel/mm/damon/admin/kdamonds/0/state
 
-kdamond doesn't read the values of the sysfs files after turned on by default.
-You can force it to read the values again by writing a special keyword,
-`commit`, to the `state` file of the kdamond[1].
+-bash: echo: write error: Invalid argument
 
-Therefore, in this case, DAMON would run with no region, and hence it gets
-nothing to report.  I think that should be why you show nothing from the `perf
-script` command.
+2) When doing =E2=80=9Con=E2=80=9D just after setting pid_target, then sett=
+ing
+start/end addr regions (as originally), then added a new echo =E2=80=9Ccomm=
+it=E2=80=9D
+to the state variable, the kdamond automatically goes to =E2=80=9Coff=E2=80=
+=9D state
+and cannot be set to "on" anymore. As follows:
 
-So, could you please set the start/end values before turning the kdamond on, or
-write 'commit' to the 'state' file here, and check if it works?
+# echo commit > /sys/kernel/mm/damon/admin/kdamonds/0/state
 
-If there is anything I missed or wrong, please let me know.
+# cat /sys/kernel/mm/damon/admin/kdamonds/0/state
 
+off
 
-[1] https://www.kernel.org/doc/html/v6.0/admin-guide/mm/damon/usage.html#kdamonds-n
+# echo on > /sys/kernel/mm/damon/admin/kdamonds/0/state
 
+-bash: echo: write error: Invalid argument
 
-Thanks,
-SJ
+Please let me know if you have any further directions on how to better
+understand/debug this.
 
-> 
-> 
-> 
-> sleep 15
-> 
-> 
-> 
-> kill $(pidof perf)
-> 
-> 
-> 
-> echo off > /sys/kernel/mm/damon/admin/kdamonds/0/state
-> 
-> 
-> 
-> perf script
-> 
-> 
-> 
-> killall strace
-> 
-> ----------- hint_test_inf -------------
-> 
-> #regions
-> 
-> # name, length
-> 
-> a, 1073741824 # 1 GiB
-> 
-> b, 1073741824 # 1 GiB
-> 
-> 
-> 
-> # phase 1
-> 
-> # name of phase
-> 
-> phase 1
-> 
-> # time in ms
-> 
-> 9999999999999
-> 
-> # access patterns
-> 
-> # name of region, randomness, stride, probability
-> 
-> a, 0, 64, 99
-> 
-> b, 0, 64, 1
-> 
-> 
-> 
-> # phase 2
-> 
-> phase 2
-> 
-> # time in ms
-> 
-> 10000
-> 
-> # access patterns
-> 
-> # name of region, randomness, stride, probability
-> 
-> a, 0, 64, 1
-> 
-> b, 0, 64, 99
-> 
-> 
-> Thank you!
+THanks again!
