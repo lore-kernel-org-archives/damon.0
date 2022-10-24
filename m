@@ -1,32 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E79644438
-	for <damon@lists.linux.dev>; Mon, 24 Oct 2022 17:46:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9C63C433B5;
-	Mon, 24 Oct 2022 17:46:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AA72441F
+	for <damon@lists.linux.dev>; Mon, 24 Oct 2022 17:46:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5AD8C43470;
+	Mon, 24 Oct 2022 17:46:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1666633587;
-	bh=lV8oUGKGj7ZDIO/tmDfk1VdZPNBMnBKsnbsjH0pe+m4=;
+	s=k20201202; t=1666633588;
+	bh=S8N3UZ7gBOYKRFRy1cc+++5T5Gtx3WFgOSwLDzkycq0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MLsERA71D+0f1bI2hLFm02yZWXy7V4t4J5aBlCTtR7UBsixm3HQJ04xiUvdl+gWYW
-	 IR6ZBLnPq8d9XPQesG1OmXEH11O7o7Qi8vmRcuBUGVOExTPbnImg8uq0NYjIYW8SVC
-	 W1Lco5wuKDJg37THPKPkpDSBLdmcP+RyQoW0Fs2Q3rdyQwSdkeOhCAC3cN9Q2tT9Ls
-	 p4xuRqwCOdPp0jpN/i+04kihcUNFpWixl+ZB+apzgqC3Smw0s11nL6W4Z9Thki86f6
-	 iFvzyNxQUxUv4vSy3cEK8xlyutYJfHWAN8qRHlzL6MkuXDyMsDrmR8K7kuvui/MBi0
-	 TvZVSo1tvnB9A==
+	b=LiREqdLetOPDFQRyZCCTehNe1MrreQJ2I9j4scg3jL62B3rujAYFOshLm+/VnZTI2
+	 szACUAnHPSYoXH3/EsR7zCdEad7WkKV34SUiUrPsJcrJ5B/u0qSEtP5X/nGEibA96o
+	 AWrAr5QjEpPsX3gTpXliw6hQO7FlOZ3vu9Xu4/JQbHBQG+x9aXY4CmRO+J2bBEcd9P
+	 t+rye+9BUCg4kxUydcOjkmg3itRRcLkDsvwhBEmDox5C3q45BXlsUwpK/IUlol2cju
+	 vCTX3qbwdTwv5KuETRcBbj9PLuugT8DlexauESWlgTbfkQUdg6j9C6AMnP/M21wXOd
+	 ZS04O5Z3tuj2g==
 From: SeongJae Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
-Cc: SeongJae Park <sj@kernel.org>,
-	Jonathan Corbet <corbet@lwn.net>,
+Cc: Jonathan Corbet <corbet@lwn.net>,
 	damon@lists.linux.dev,
 	linux-mm@kvack.org,
 	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	Vinicius Petrucci <vpetrucci@gmail.com>
-Subject: [PATCH 1/2] Docs/admin-guide/mm/damon/usage: describe the rules of sysfs region directories
-Date: Mon, 24 Oct 2022 17:46:18 +0000
-Message-Id: <20221024174619.15600-2-sj@kernel.org>
+	SeongJae Park <sj@kernel.org>
+Subject: [PATCH 2/2] Docs/admin-guide/mm/damon/usage: Fix wrong usage example of init_regions file
+Date: Mon, 24 Oct 2022 17:46:19 +0000
+Message-Id: <20221024174619.15600-3-sj@kernel.org>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20221024174619.15600-1-sj@kernel.org>
 References: <20221024174619.15600-1-sj@kernel.org>
@@ -38,33 +37,47 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Target region directories of DAMON sysfs interface should contain no
-overlap and sorted by the address, but not clearly documented.
-Actually, a user had an issue[1] due to the poor documentation.  Add
-clear description of it on the usage document.
+DAMON debugfs interface assumes the users will write all inputs at once.
+However, redirecting a string of multiple lines sometimes end up writing
+line by line.  Therefore, the example usage of 'init_regions' file,
+which writes input as a string of multiple lines can fail.  Fix it to
+use a single line string instead.  Also update the description of the
+usage to not assume users will write inputs in multiple lines.
 
-[1] https://lore.kernel.org/damon/CAEZ6=UNUcH2BvJj++OrT=XQLdkidU79wmCO=tantSOB36pPNTg@mail.gmail.com/
-
-Reported-by: Vinicius Petrucci <vpetrucci@gmail.com>
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- Documentation/admin-guide/mm/damon/usage.rst | 3 +++
- 1 file changed, 3 insertions(+)
+ Documentation/admin-guide/mm/damon/usage.rst | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
 diff --git a/Documentation/admin-guide/mm/damon/usage.rst b/Documentation/admin-guide/mm/damon/usage.rst
-index b47b0cbbd491..89d9a4f75a29 100644
+index 89d9a4f75a29..c17e02e1e426 100644
 --- a/Documentation/admin-guide/mm/damon/usage.rst
 +++ b/Documentation/admin-guide/mm/damon/usage.rst
-@@ -235,6 +235,9 @@ In each region directory, you will find two files (``start`` and ``end``).  You
- can set and get the start and end addresses of the initial monitoring target
- region by writing to and reading from the files, respectively.
+@@ -468,8 +468,9 @@ regions in case of physical memory monitoring.  Therefore, users should set the
+ monitoring target regions by themselves.
  
-+Each region should not overlap with others.  ``end`` of directory ``N`` should
-+be equal or smaller than ``start`` of directory ``N+1``.
-+
- contexts/<N>/schemes/
- ---------------------
+ In such cases, users can explicitly set the initial monitoring target regions
+-as they want, by writing proper values to the ``init_regions`` file.  Each line
+-of the input should represent one region in below form.::
++as they want, by writing proper values to the ``init_regions`` file.  The input
++should be a sequence of three integers separated by white spaces that represent
++one region in below form.::
  
+     <target idx> <start address> <end address>
+ 
+@@ -484,9 +485,9 @@ ranges, ``20-40`` and ``50-100`` as that of pid 4242, which is the second one
+     # cd <debugfs>/damon
+     # cat target_ids
+     42 4242
+-    # echo "0   1       100
+-            0   100     200
+-            1   20      40
++    # echo "0   1       100 \
++            0   100     200 \
++            1   20      40  \
+             1   50      100" > init_regions
+ 
+ Note that this sets the initial monitoring target regions only.  In case of
 -- 
 2.25.1
 
