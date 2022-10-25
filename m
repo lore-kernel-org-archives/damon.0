@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 640877493
-	for <damon@lists.linux.dev>; Tue, 25 Oct 2022 17:36:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3774C433C1;
-	Tue, 25 Oct 2022 17:36:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43A1E7491
+	for <damon@lists.linux.dev>; Tue, 25 Oct 2022 17:36:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D997C433D6;
+	Tue, 25 Oct 2022 17:36:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1666719417;
-	bh=+caf26+jd72lruUI8kvmUSn/EY6APaB7dnve/Z0xjuA=;
+	s=k20201202; t=1666719418;
+	bh=zeB8cawVzfOV+gbJUOEQJ5p17R71STbXoreipmlZFTk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VrvuZF1rz0yy76gaafEWaleR/CkM5YsNrvrCOFv6/E/w/seFIqYB3UP9+6l4nkUTG
-	 ZvaeD6LBqntTUHJSQYSR8rE458QNlCE4yoc5sowKYsyMG68vZ5Hfx+1Tk5RzBwZDjn
-	 En713epPu9yRhZ/GWV1RvdxH7xh1lnwvRF+yUwj18v7h3FaEoskB39vXx82qym80d0
-	 0FlNhjJ58O79R1P46X9E5ZPNQmfjaMLSyaeVFQogOnq+so/lHveaSACm4ezDf/7u29
-	 hIZBH9Ax7ptOX8LFis2l27TqE0j+wh3OOxDcxTBbVrZGJx14i+gIJ3el2R+euIju8M
-	 seP77KD02p9tQ==
+	b=OkdC3Pae44Lo+tzDZU5ZqUGPIRcR8H7h0UL4JIPf3l/+1SJBAIwYIN5kpodxDhGCb
+	 K4isG0kLPGg82hLpEYWbjZTmiYeMI0X7N9G1AEs8ADtPwpvnYhxUW2YJaPP/R1w7fK
+	 wWaYIjpO1rxbPbYrSjPMKYsE3RdYeQCvRai7TzKwAQyHzn99okFHcdGOHs2eDE1ubT
+	 lFpWPXQsz+UUPb8FGDteoPbcjbnidXr8B+aDAgoL9NnPJAWHzJiqNl96M2WWDxQNyi
+	 /3K09Ik3vPGIfj+mqhw3T5J5bm0PU5jzMpx7Juh+ygmAJTK+xAHl0/a5NR3Ums0Ag6
+	 6tsQRbsBPUA4Q==
 From: SeongJae Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
-Cc: damon@lists.linux.dev,
-	linux-mm@kvack.org,
+Cc: Shuah Khan <shuah@kernel.org>,
 	linux-kernel@vger.kernel.org,
+	damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	linux-kselftest@vger.kernel.org,
 	SeongJae Park <sj@kernel.org>
-Subject: [PATCH 3/4] mm/damon/lru_sort: enable and disable synchronously
-Date: Tue, 25 Oct 2022 17:36:49 +0000
-Message-Id: <20221025173650.90624-4-sj@kernel.org>
+Subject: [PATCH 4/4] selftests/damon: add tests for DAMON_LRU_SORT's enabled parameter
+Date: Tue, 25 Oct 2022 17:36:50 +0000
+Message-Id: <20221025173650.90624-5-sj@kernel.org>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20221025173650.90624-1-sj@kernel.org>
 References: <20221025173650.90624-1-sj@kernel.org>
@@ -35,106 +37,76 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Writing a value to DAMON_RECLAIM's 'enabled' parameter turns on or off
-DAMON in an ansychronous way.  This means the parameter cannot be used
-to read the current status of DAMON_RECLAIM.  'kdamond_pid' parameter
-should be used instead for the purpose.  The documentation is easy to be
-read as it works in a synchronous way, so it is a little bit confusing.
-It also makes the user space tooling dirty.
-
-There's no real reason to have the asynchronous behavior, though.
-Simply make the parameter works synchronously, rather than updating the
-document.
+Adds simple test cases for DAMON_LRU_SORT's 'enabled' parameter.  Those
+tests are focusing on the synchronous behavior of DAMON_RECLAIM enabling
+and disabling.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- mm/damon/lru_sort.c | 51 +++++++++++++++++++--------------------------
- 1 file changed, 22 insertions(+), 29 deletions(-)
+ tools/testing/selftests/damon/Makefile    |  2 +-
+ tools/testing/selftests/damon/lru_sort.sh | 41 +++++++++++++++++++++++
+ 2 files changed, 42 insertions(+), 1 deletion(-)
+ create mode 100755 tools/testing/selftests/damon/lru_sort.sh
 
-diff --git a/mm/damon/lru_sort.c b/mm/damon/lru_sort.c
-index 5c60163e556c..2a532e3983df 100644
---- a/mm/damon/lru_sort.c
-+++ b/mm/damon/lru_sort.c
-@@ -9,7 +9,6 @@
+diff --git a/tools/testing/selftests/damon/Makefile b/tools/testing/selftests/damon/Makefile
+index dbbf18cb3e6b..af490acc5348 100644
+--- a/tools/testing/selftests/damon/Makefile
++++ b/tools/testing/selftests/damon/Makefile
+@@ -8,6 +8,6 @@ TEST_PROGS = debugfs_attrs.sh debugfs_schemes.sh debugfs_target_ids.sh
+ TEST_PROGS += debugfs_empty_targets.sh debugfs_huge_count_read_write.sh
+ TEST_PROGS += debugfs_duplicate_context_creation.sh
+ TEST_PROGS += sysfs.sh
+-TEST_PROGS += reclaim.sh
++TEST_PROGS += reclaim.sh lru_sort.sh
  
- #include <linux/damon.h>
- #include <linux/module.h>
--#include <linux/workqueue.h>
- 
- #include "modules-common.h"
- 
-@@ -235,38 +234,31 @@ static int damon_lru_sort_turn(bool on)
- 	return 0;
- }
- 
--static struct delayed_work damon_lru_sort_timer;
--static void damon_lru_sort_timer_fn(struct work_struct *work)
--{
--	static bool last_enabled;
--	bool now_enabled;
--
--	now_enabled = enabled;
--	if (last_enabled != now_enabled) {
--		if (!damon_lru_sort_turn(now_enabled))
--			last_enabled = now_enabled;
--		else
--			enabled = last_enabled;
--	}
--}
--static DECLARE_DELAYED_WORK(damon_lru_sort_timer, damon_lru_sort_timer_fn);
--
--static bool damon_lru_sort_initialized;
--
- static int damon_lru_sort_enabled_store(const char *val,
- 		const struct kernel_param *kp)
- {
--	int rc = param_set_bool(val, kp);
-+	bool is_enabled = enabled;
-+	bool enable;
-+	int err;
+ include ../lib.mk
+diff --git a/tools/testing/selftests/damon/lru_sort.sh b/tools/testing/selftests/damon/lru_sort.sh
+new file mode 100755
+index 000000000000..61b80197c896
+--- /dev/null
++++ b/tools/testing/selftests/damon/lru_sort.sh
+@@ -0,0 +1,41 @@
++#!/bin/bash
++# SPDX-License-Identifier: GPL-2.0
 +
-+	err = strtobool(val, &enable);
-+	if (err)
-+		return err;
- 
--	if (rc < 0)
--		return rc;
-+	if (is_enabled == enable)
-+		return 0;
- 
--	if (!damon_lru_sort_initialized)
--		return rc;
-+	/* Called before init function.  The function will handle this. */
-+	if (!ctx)
-+		goto set_param_out;
- 
--	schedule_delayed_work(&damon_lru_sort_timer, 0);
-+	err = damon_lru_sort_turn(enable);
-+	if (err)
-+		return err;
- 
--	return 0;
-+set_param_out:
-+	enabled = enable;
-+	return err;
- }
- 
- static const struct kernel_param_ops enabled_param_ops = {
-@@ -320,10 +312,11 @@ static int __init damon_lru_sort_init(void)
- 	ctx->callback.after_wmarks_check = damon_lru_sort_after_wmarks_check;
- 	ctx->callback.after_aggregation = damon_lru_sort_after_aggregation;
- 
--	schedule_delayed_work(&damon_lru_sort_timer, 0);
-+	/* 'enabled' has set before this function, probably via command line */
-+	if (enabled)
-+		err = damon_lru_sort_turn(true);
- 
--	damon_lru_sort_initialized = true;
--	return 0;
-+	return err;
- }
- 
- module_init(damon_lru_sort_init);
++# Kselftest framework requirement - SKIP code is 4.
++ksft_skip=4
++
++if [ $EUID -ne 0 ]
++then
++	echo "Run as root"
++	exit $ksft_skip
++fi
++
++damon_lru_sort_enabled="/sys/module/damon_lru_sort/parameters/enabled"
++if [ ! -f "$damon_lru_sort_enabled" ]
++then
++	echo "No 'enabled' file.  Maybe DAMON_LRU_SORT not built"
++	exit $ksft_skip
++fi
++
++nr_kdamonds=$(pgrep kdamond | wc -l)
++if [ "$nr_kdamonds" -ne 0 ]
++then
++	echo "Another kdamond is running"
++	exit $ksft_skip
++fi
++
++echo Y > "$damon_lru_sort_enabled"
++nr_kdamonds=$(pgrep kdamond | wc -l)
++if [ "$nr_kdamonds" -ne 1 ]
++then
++	echo "kdamond is not turned on"
++	exit 1
++fi
++
++echo N > "$damon_lru_sort_enabled"
++nr_kdamonds=$(pgrep kdamond | wc -l)
++if [ "$nr_kdamonds" -ne 0 ]
++then
++	echo "kdamond is not turned off"
++	exit 1
++fi
 -- 
 2.25.1
 
