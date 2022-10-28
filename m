@@ -1,32 +1,23 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from szxga02-in.huawei.com (szxga02-in.huawei.com [45.249.212.188])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E1FB7B
-	for <damon@lists.linux.dev>; Wed, 26 Oct 2022 23:08:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FE3DC433D6;
-	Wed, 26 Oct 2022 23:08:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1666825686;
-	bh=H8xP8TrdD17wMSkTUDDHrIYwVh+7IjJyewOgaLdaUAY=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gCEtxMWdBOZqbJlwTDSgk8aKBaoXJpSdiUZqOV0w10b3UldrQekZXZH5mi6jC4JcU
-	 4d8TRGuHbcbEZBojBoioyUZYtqWs5I4h9DexIGUOVeFbn3AvXXMe84CELdYth4oAO6
-	 CgGoQwq/nFsGK0sFT8KGUSEFdGrN4EWOBinPfPnfooM30LK+HWtCttZSU+iaHOGcux
-	 f+eH8HGAOzSD3OocjZ02hOUFH4CghbLgHndg+d1/nDG5gqbZDBrhmnORT6Z/8BcxBq
-	 NzcCY33BcucgXGm3gb5Ior13hc1Bd1PrlrHhz0mCLE6yi2toIfoIvcYmn1YGTwpvf+
-	 TRZkookGfRX5Q==
-From: SeongJae Park <sj@kernel.org>
-To: Andrew Morton <akpm@linux-foundation.org>
-Cc: SeongJae Park <sj@kernel.org>,
-	damon@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org
-Subject: Re: [PATCH v2 00/12] mm/damon: cleanup and refactoring code
-Date: Wed, 26 Oct 2022 23:08:03 +0000
-Message-Id: <20221026230803.100491-1-sj@kernel.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01E9B1C37
+	for <damon@lists.linux.dev>; Fri, 28 Oct 2022 07:27:18 +0000 (UTC)
+Received: from dggpeml500026.china.huawei.com (unknown [172.30.72.55])
+	by szxga02-in.huawei.com (SkyGuard) with ESMTP id 4MzDdK1CM2zHvRC;
+	Fri, 28 Oct 2022 15:27:01 +0800 (CST)
+Received: from localhost.localdomain (10.175.112.125) by
+ dggpeml500026.china.huawei.com (7.185.36.106) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2375.31; Fri, 28 Oct 2022 15:27:15 +0800
+From: Yuanzheng Song <songyuanzheng@huawei.com>
+To: <sj@kernel.org>, <akpm@linux-foundation.org>
+CC: <damon@lists.linux.dev>, <linux-mm@kvack.org>,
+	<linux-kernel@vger.kernel.org>
+Subject: [PATCH STABLE 5.15] mm/memory: add non-anonymous page check in the copy_present_page()
+Date: Fri, 28 Oct 2022 07:52:44 +0000
+Message-ID: <20221028075244.3112566-1-songyuanzheng@huawei.com>
 X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20221026225943.100429-1-sj@kernel.org>
-References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -34,33 +25,103 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.175.112.125]
+X-ClientProxiedBy: dggems703-chm.china.huawei.com (10.3.19.180) To
+ dggpeml500026.china.huawei.com (7.185.36.106)
+X-CFilter-Loop: Reflected
 
-Hi Andrew,
+The vma->anon_vma of the child process may be NULL because
+the entire vma does not contain anonymous pages. In this
+case, a BUG will occur when the copy_present_page() passes
+a copy of a non-anonymous page of that vma to the
+page_add_new_anon_rmap() to set up new anonymous rmap.
 
-On Wed, 26 Oct 2022 22:59:31 +0000 SeongJae Park <sj@kernel.org> wrote:
+------------[ cut here ]------------
+kernel BUG at mm/rmap.c:1052!
+Internal error: Oops - BUG: 0 [#1] SMP
+Modules linked in:
+CPU: 4 PID: 4652 Comm: test Not tainted 5.15.75 #1
+Hardware name: linux,dummy-virt (DT)
+pstate: 80000005 (Nzcv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+pc : __page_set_anon_rmap+0xc0/0xe8
+lr : __page_set_anon_rmap+0xc0/0xe8
+sp : ffff80000e773860
+x29: ffff80000e773860 x28: fffffc13cf006ec0 x27: ffff04f3ccd68000
+x26: ffff04f3c5c33248 x25: 0000000010100073 x24: ffff04f3c53c0a80
+x23: 0000000020000000 x22: 0000000000000001 x21: 0000000020000000
+x20: fffffc13cf006ec0 x19: 0000000000000000 x18: 0000000000000000
+x17: 0000000000000000 x16: 0000000000000000 x15: 0000000000000000
+x14: 0000000000000000 x13: 0000000000000000 x12: 0000000000000000
+x11: 0000000000000000 x10: 0000000000000000 x9 : ffffdddc5581377c
+x8 : 0000000000000000 x7 : 0000000000000011 x6 : ffff2717a8433000
+x5 : ffff80000e773810 x4 : ffffdddc55400000 x3 : 0000000000000000
+x2 : ffffdddc56b20000 x1 : ffff04f3c9a48040 x0 : 0000000000000000
+Call trace:
+ __page_set_anon_rmap+0xc0/0xe8
+ page_add_new_anon_rmap+0x13c/0x200
+ copy_pte_range+0x6b8/0x1018
+ copy_page_range+0x3a8/0x5e0
+ dup_mmap+0x3a0/0x6e8
+ dup_mm+0x78/0x140
+ copy_process+0x1528/0x1b08
+ kernel_clone+0xac/0x610
+ __do_sys_clone+0x78/0xb0
+ __arm64_sys_clone+0x30/0x40
+ invoke_syscall+0x68/0x170
+ el0_svc_common.constprop.0+0x80/0x250
+ do_el0_svc+0x48/0xb8
+ el0_svc+0x48/0x1a8
+ el0t_64_sync_handler+0xb0/0xb8
+ el0t_64_sync+0x1a0/0x1a4
+Code: 97f899f4 f9400273 17ffffeb 97f899f1 (d4210000)
+---[ end trace dc65e5edd0f362fa ]---
+Kernel panic - not syncing: Oops - BUG: Fatal exception
+SMP: stopping secondary CPUs
+Kernel Offset: 0x5ddc4d400000 from 0xffff800008000000
+PHYS_OFFSET: 0xfffffb0c80000000
+CPU features: 0x44000cf1,00000806
+Memory Limit: none
+---[ end Kernel panic - not syncing: Oops - BUG: Fatal exception ]---
 
-> Changes from v1
-> (https://lore.kernel.org/damon/20221024204919.18524-1-sj@kernel.org/):
-> - Add 10th patch, which splits schemes sysfs directory implementation
+This problem has been fixed by the commit <fb3d824d1a46>
+("mm/rmap: split page_dup_rmap() into page_dup_file_rmap()
+and page_try_dup_anon_rmap()"), but still exists in the
+linux-5.15.y branch.
 
-As mentioned above, I mistakenly forgot adding the tenth patch of this series
-in the previous version.  Could you please replace the series with this
-version?
+This patch is not applicable to this version because
+of the large version differences. Therefore, fix it by
+adding non-anonymous page check in the copy_present_page().
 
-Please note that the 'synchronous damon_{reclaim,lru_sort} enable/disable'
-patchset[1] relies on this patchset, so this patchset should be applied before
-that.
+Cc: stable@vger.kernel.org
+Fixes: 70e806e4e645 ("mm: Do early cow for pinned pages during fork() for ptes")
+Signed-off-by: Yuanzheng Song <songyuanzheng@huawei.com>
+---
+ mm/memory.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-Sorry for your inconvenience.
+diff --git a/mm/memory.c b/mm/memory.c
+index a4d0f744a458..5f98778cfff2 100644
+--- a/mm/memory.c
++++ b/mm/memory.c
+@@ -903,6 +903,17 @@ copy_present_page(struct vm_area_struct *dst_vma, struct vm_area_struct *src_vma
+ 	if (likely(!page_needs_cow_for_dma(src_vma, page)))
+ 		return 1;
+ 
++	/*
++	 * The vma->anon_vma of the child process may be NULL
++	 * because the entire vma does not contain anonymous pages.
++	 * A BUG will occur when the copy_present_page() passes
++	 * a copy of a non-anonymous page of that vma to the
++	 * page_add_new_anon_rmap() to set up new anonymous rmap.
++	 * Return 1 if the page is not an anonymous page.
++	 */
++	if (!PageAnon(page))
++		return 1;
++
+ 	new_page = *prealloc;
+ 	if (!new_page)
+ 		return -EAGAIN;
+-- 
+2.25.1
 
-Also, please note that there are two minor DAMON documentation fixes[2] that
-not yet picked in mm-unstable.
-
-[1] https://lore.kernel.org/damon/20221025173650.90624-1-sj@kernel.org/
-[2] https://lore.kernel.org/damon/20221024174619.15600-1-sj@kernel.org/
-
-
-Thanks,
-SJ
-
-[...]
