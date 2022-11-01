@@ -1,34 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3731F21D6C
-	for <damon@lists.linux.dev>; Tue,  1 Nov 2022 22:00:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62C7CC433D6;
-	Tue,  1 Nov 2022 22:00:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 678CA7B
+	for <damon@lists.linux.dev>; Tue,  1 Nov 2022 22:03:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6358BC433D6;
+	Tue,  1 Nov 2022 22:03:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1667340054;
-	bh=gP4LqJrYpXjsL/T9scrG8Q+DRiTrpGTd3NYLkmhHrI4=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fRYKIiCTh+nt+jwvEtoepcLF1JLG+o+9vufajBuCbph+kwKeCCVkSG9Kn2bwhMYrE
-	 rhAw4A9JPtAn51/Uy1icFcHgU+8iB1m4GP4U6DpTdESd1Vsemld9fbxWFqryzXFjev
-	 W1eA34cPWjp1NpNqm649U0yCJmAum92gHpOjbkLZNtDKEFFjiDe4rFPQ+CDiT/LFQb
-	 GRWplJx71OhFSuJystQEv++gDi9UfSpL/JN+IOn2ezfkwSdDJ4ZtnflP0FQA4DoCLW
-	 7s4nuhJqkb+orDR85juqFSf2TuqH/M9Y+lB2UDiNgCo4ecdyezNj78XrwxvuyH9t4V
-	 74TVYCik84+tA==
+	s=k20201202; t=1667340213;
+	bh=fXmQiQlwfo1wAtVQvQojVvgAeobZBuMjJxM4aD7I54Y=;
+	h=From:To:Cc:Subject:Date:From;
+	b=Q9lbX6QjRZr48IH1loFyw7ZQIC/F6A4uWEKV18+WWDbfBbnX5P9vOFduF+agJj7t5
+	 qFqKcTZ6V8e2nu/UvyZuv2d1WYLU1Abk3z+BXEWvtNTUV3gbzNpCiDBgSIttEn2VyI
+	 uy5cwQyet4IQdKycQxA0R2hREj3rFeEXJrVMfm7YyAGMPDFyBqH842rADPmTqlmKuU
+	 2K46rFMIcVYPe5PKwZ3bZx5czIn96wZAhVR0Kpt6aCdmO0S0Ze5jOBKBuLT8DSnDSJ
+	 fbj2C5u1Y1LFYCk23WV5q7iKbukPOef/JQWFbWmcZ3/hJtYiidh7y1UkN2WM7BGozy
+	 X6GOYOF4RCLrg==
 From: SeongJae Park <sj@kernel.org>
-To: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SeongJae Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	linux-kernel@vger.kernel.org,
-	kernel-janitors@vger.kernel.org,
+	Jonathan Corbet <corbet@lwn.net>,
+	Shuah Khan <shuah@kernel.org>,
 	damon@lists.linux.dev,
-	linux-mm@kvack.org
-Subject: Re: [PATCH 20/30] mm/damon: Use kstrtobool() instead of strtobool()
-Date: Tue,  1 Nov 2022 22:00:53 +0000
-Message-Id: <20221101220053.95605-1-sj@kernel.org>
+	linux-mm@kvack.org,
+	linux-doc@vger.kernel.org,
+	linux-kselftest@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH 0/8] efficiently expose damos action tried regions information
+Date: Tue,  1 Nov 2022 22:03:20 +0000
+Message-Id: <20221101220328.95765-1-sj@kernel.org>
 X-Mailer: git-send-email 2.25.1
-In-Reply-To: <ed2b46489a513988688decb53850339cc228940c.1667336095.git.christophe.jaillet@wanadoo.fr>
-References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -37,22 +37,81 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Tue, 1 Nov 2022 22:14:08 +0100 Christophe JAILLET <christophe.jaillet@wanadoo.fr> wrote:
+Changes from RFC
+(https://lore.kernel.org/damon/20221019001317.104270-1-sj@kernel.org/):
+- Split out cleanup/refactoring parts[1]
 
-> strtobool() is the same as kstrtobool().
-> However, the latter is more used within the kernel.
-> 
-> In order to remove strtobool() and slightly simplify kstrtox.h, switch to
-> the other function name.
-> 
-> While at it, include the corresponding header file (<linux/kstrtox.h>)
-> 
-> Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+[1] https://lore.kernel.org/damon/20221026225943.100429-1-sj@kernel.org/
 
-Reviewed-by: SeongJae Park <sj@kernel.org>
+-----------------------------------------------------------------------
 
+DAMON users can retrieve the monitoring results via 'after_aggregation'
+callbacks if the user is using the kernel API, or 'damon_aggregated'
+tracepoint if the user is in the user space.  Those are useful if full
+monitoring results are necessary.  However, if the user has interest in
+only a snapshot of the results for some regions having specific access
+pattern, the interfaces could be inefficient.  For example, some users
+only want to know which memory regions are not accessed for more than a
+specific time at the moment.
 
-Thanks,
-SJ
+Also, some DAMOS users would want to know exactly to what memory regions
+the schemes' actions tried to be applied, for a debugging or a tuning.
+As DAMOS has its internal mechanism for quota and regions
+prioritization, the users would need to simulate DAMOS' mechanism
+against the monitoring results.  That's unnecessarily complex.
 
-[...]
+This patchset implements DAMON kernel API callbacks and sysfs directory
+for efficient exposure of the information for the use cases.  The new
+callback will be called for each region when a DAMOS action is gonna
+tried to be applied to it.  The sysfs directory will be called
+'tried_regions' and placed under each scheme sysfs directory.  Users can
+write a special keyworkd, 'update_schemes_regions', to the 'state' file
+of a kdamond sysfs directory.  Then, DAMON sysfs interface will fill the
+directory with the information of regions that corresponding scheme
+action was tried to be applied for next one aggregation interval.
+
+Patches Sequence
+----------------
+
+The first one (patch 1) implements the callback for the kernel space
+users.  Following two patches (patches 2 and 3) implements sysfs
+directories for the information and its sub directories.  Two patches
+(patches 4 and 5) for implementing the special keywords for filling the
+data to and cleaning up the directories follow.  Patch 6 adds a selftest
+for the new sysfs directory.  Finally, two patches (patches 7 and 8)
+document the new feature in the administrator guide and the ABI
+document.
+
+Assembled Tree
+--------------
+
+This patchset is based on the latest mm-unstable tree[1].  Assembled
+tree is also available at the damon/next tree[2].
+
+[1] https://git.kernel.org/akpm/mm/h/mm-unstable
+[2] https://git.kernel.org/sj/h/damon/next
+
+SeongJae Park (8):
+  mm/damon/core: add a callback for scheme target regions check
+  mm/damon/sysfs-schemes: implement schemes/tried_regions directory
+  mm/damon/sysfs-schemes: implement scheme region directory
+  mm/damon/sysfs: implement DAMOS tried regions update command
+  mm/damon/sysfs-schemes: implement DAMOS-tried regions clear command
+  tools/selftets/damon/sysfs: test tried_regions directory existence
+  Docs/admin-guide/mm/damon/usage: document schemes/<s>/tried_regions
+    sysfs directory
+  Docs/ABI/damon: document 'schemes/<s>/tried_regions' sysfs directory
+
+ .../ABI/testing/sysfs-kernel-mm-damon         |  32 +++
+ Documentation/admin-guide/mm/damon/usage.rst  |  45 ++-
+ include/linux/damon.h                         |   5 +
+ mm/damon/core.c                               |   6 +-
+ mm/damon/sysfs-common.h                       |  10 +
+ mm/damon/sysfs-schemes.c                      | 261 ++++++++++++++++++
+ mm/damon/sysfs.c                              |  77 +++++-
+ tools/testing/selftests/damon/sysfs.sh        |   7 +
+ 8 files changed, 437 insertions(+), 6 deletions(-)
+
+-- 
+2.25.1
+
