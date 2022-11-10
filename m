@@ -1,92 +1,144 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47E3E7F
-	for <damon@lists.linux.dev>; Mon,  7 Nov 2022 16:50:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D3E2C4347C;
-	Mon,  7 Nov 2022 16:50:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0CFC1A629
+	for <damon@lists.linux.dev>; Thu, 10 Nov 2022 20:09:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F2D0C433C1;
+	Thu, 10 Nov 2022 20:09:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1667839806;
-	bh=9HGMZvb82sypIRoPvUis/kF/0CFkMhQKBGHkFijQToc=;
+	s=k20201202; t=1668110982;
+	bh=pSFInq4N4Bpw1KNnil1myJW1oupVm04I6GvyJ1r4M90=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nPectMM1/5QJ1zmK7cZ7bFJgbJp7443q6YznAqCicO+0SL7aIL9Ou2v5xPpXfmSAr
-	 0t3jEcSv68Hquf8wJKa8BFtg1tdZKx+GZV+3JQksHxTobX2UIy36CKcbe8WB6mSjHX
-	 LVA0JKqVZ7dGy7I5p6DnZ+XgB1Y9bUONIy2kwYw0Z5WNEng7FgZzKdSsSjdNP7AeyE
-	 HAwkI+upl+9Z3udy7DsKPi72rtgbiRJ4XxS1eDPBrlIch1b3WYrELHSZ/i7k5X3yLV
-	 vvV0sSmOfuqImb6yC++5lvOQ338tCW1j8ooYAfkAQRvzrhqoxYrCDMdoXC1XvfP21k
-	 QbWp0n7zkh3Kg==
+	b=ZcRPHU5APr+eHfnFXysOgIHlqisvwx7xeSA+5tA0lqSek+E48B4aV6SQAlcs0pCJA
+	 NnU/H79xbc/Gy1kZYW7sdTDbh90GhkkpROQBxNf0sk3MxSLrmqRmCoYEFEDbLaQNOd
+	 x9qfjievWDnXssIKGrd6SFbBhsvsL6po7k9DuNmOR5yi7UfRMbawI9lpLkFA49RcXg
+	 mvSwCqPn+ahcGthFzjbeA+Ax7Ag/8d63rulA8xBN2hgCdw9Ex7gYX9nLZVzX3/YziR
+	 c0NgmJW2jnOpPzXjaGSBQleiT6VqNJvBtfkaVRJCWlqkhCLw1BZRtgvjYGRjXxdHAT
+	 Wa/QORdRpcl6g==
 From: SeongJae Park <sj@kernel.org>
-To: Andrew Morton <akpm@linux-foundation.org>
-Cc: Shuah Khan <shuah@kernel.org>,
+To: Rong Tao <rtoax@foxmail.com>
+Cc: sj@kernel.org,
+	Rong Tao <rongtao@cestc.cn>,
+	Shuah Khan <shuah@kernel.org>,
 	damon@lists.linux.dev,
 	linux-mm@kvack.org,
 	linux-kselftest@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	SeongJae Park <sj@kernel.org>
-Subject: [PATCH v2 2/2] selftests/damon: test non-context inputs to rm_contexts file
-Date: Mon,  7 Nov 2022 16:50:01 +0000
-Message-Id: <20221107165001.5717-3-sj@kernel.org>
+	Yuanchu Xie <yuanchu@google.com>
+Subject: Re: [PATCH] selftests/damon: Fix unnecessary compilation warnings
+Date: Thu, 10 Nov 2022 20:09:39 +0000
+Message-Id: <20221110200939.101886-1-sj@kernel.org>
 X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20221107165001.5717-1-sj@kernel.org>
-References: <20221107165001.5717-1-sj@kernel.org>
+In-Reply-To: <tencent_CF837EA1B8AC81CB7715E85797510D441E07@qq.com>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-There was a bug[1] that triggered by writing non-context DAMON debugfs
-file names to the 'rm_contexts' DAMON debugfs file.  Add a selftest for
-the bug to avoid it happen again.
+Cc-ing Yuanchu Xie.
 
-[1] https://lore.kernel.org/damon/000000000000ede3ac05ec4abf8e@google.com/
+Hi Rong,
 
-Signed-off-by: SeongJae Park <sj@kernel.org>
----
- tools/testing/selftests/damon/Makefile        |  1 +
- .../damon/debugfs_rm_non_contexts.sh          | 19 +++++++++++++++++++
- 2 files changed, 20 insertions(+)
- create mode 100755 tools/testing/selftests/damon/debugfs_rm_non_contexts.sh
+On Thu, 10 Nov 2022 21:34:18 +0800 Rong Tao <rtoax@foxmail.com> wrote:
 
-diff --git a/tools/testing/selftests/damon/Makefile b/tools/testing/selftests/damon/Makefile
-index af490acc5348..838a8e49f77b 100644
---- a/tools/testing/selftests/damon/Makefile
-+++ b/tools/testing/selftests/damon/Makefile
-@@ -7,6 +7,7 @@ TEST_FILES = _chk_dependency.sh _debugfs_common.sh
- TEST_PROGS = debugfs_attrs.sh debugfs_schemes.sh debugfs_target_ids.sh
- TEST_PROGS += debugfs_empty_targets.sh debugfs_huge_count_read_write.sh
- TEST_PROGS += debugfs_duplicate_context_creation.sh
-+TEST_PROGS += debugfs_rm_non_contexts.sh
- TEST_PROGS += sysfs.sh
- TEST_PROGS += reclaim.sh lru_sort.sh
- 
-diff --git a/tools/testing/selftests/damon/debugfs_rm_non_contexts.sh b/tools/testing/selftests/damon/debugfs_rm_non_contexts.sh
-new file mode 100755
-index 000000000000..48b7af6b022c
---- /dev/null
-+++ b/tools/testing/selftests/damon/debugfs_rm_non_contexts.sh
-@@ -0,0 +1,19 @@
-+#!/bin/bash
-+# SPDX-License-Identifier: GPL-2.0
-+
-+source _debugfs_common.sh
-+
-+# Test putting non-ctx files/dirs to rm_contexts file
-+# ===================================================
-+
-+dmesg -C
-+
-+for file in "$DBGFS/"*
-+do
-+	echo "$(basename "$f")" > "$DBGFS/rm_contexts"
-+	if dmesg | grep -q BUG
-+	then
-+		dmesg
-+		exit 1
-+	fi
-+done
--- 
-2.25.1
+> From: Rong Tao <rongtao@cestc.cn>
+> 
+> When testing overflow and overread, there is no need to keep unnecessary
+> compilation warnings, we should simply ignore them.
+> 
+> How to reproduce the problem:
+> 
+> $ make -C tools/testing/selftests/
+> gcc     huge_count_read_write.c  -o /home/sd/Git/linux/tools/testing/selftests/damon/huge_count_read_write
 
+'checkpatch.pl' complains:
+
+    WARNING: use relative pathname instead of absolute in changelog text
+    #20:
+    gcc     huge_count_read_write.c  -o /home/sd/Git/linux/tools/testing/selftests/damon/huge_count_read_write
+
+Also, could we add four spaces indent for code snippet/command outputs like
+above?
+
+> huge_count_read_write.c: In function ‘write_read_with_huge_count’:
+> huge_count_read_write.c:23:9: warning: ‘write’ reading 4294967295 bytes from a region of size 1 [-Wstringop-overread]
+>    23 |         write(filedesc, "", 0xfffffffful);
+>       |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> In file included from huge_count_read_write.c:8:
+> /usr/include/unistd.h:378:16: note: in a call to function ‘write’ declared with attribute ‘access (read_only, 2, 3)’
+>   378 | extern ssize_t write (int __fd, const void *__buf, size_t __n) __wur
+>       |                ^~~~~
+> huge_count_read_write.c:25:15: warning: ‘read’ writing 4294967295 bytes into a region of size 25 overflows the destination [-Wstringop-overflow=]
+>    25 |         ret = read(filedesc, buf, 0xfffffffful);
+>       |               ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> huge_count_read_write.c:14:14: note: destination object ‘buf’ of size 25
+>    14 |         char buf[25];
+>       |              ^~~
+> In file included from huge_count_read_write.c:8:
+> /usr/include/unistd.h:371:16: note: in a call to function ‘read’ declared with attribute ‘access (write_only, 2, 3)’
+>   371 | extern ssize_t read (int __fd, void *__buf, size_t __nbytes) __wur
+>       |                ^~~~
+> 
+> Signed-off-by: Rong Tao <rongtao@cestc.cn>
+> ---
+>  tools/testing/selftests/damon/huge_count_read_write.c | 7 +++++++
+>  1 file changed, 7 insertions(+)
+> 
+> diff --git a/tools/testing/selftests/damon/huge_count_read_write.c b/tools/testing/selftests/damon/huge_count_read_write.c
+> index ad7a6b4cf338..8fbe276870e7 100644
+> --- a/tools/testing/selftests/damon/huge_count_read_write.c
+> +++ b/tools/testing/selftests/damon/huge_count_read_write.c
+> @@ -8,6 +8,11 @@
+>  #include <unistd.h>
+>  #include <stdio.h>
+>  
+> +#pragma GCC diagnostic push
+> +/* Ignore read(2) overflow and write(2) overread compile warnings */
+> +#pragma GCC diagnostic ignored "-Wstringop-overread"
+> +#pragma GCC diagnostic ignored "-Wstringop-overflow"
+> +
+
+Thank you for sending this patch!
+
+However, there was a similar patch from Yuanchu[1], and this causes another
+warning for old gcc[2] that I use (9.4.0), like below.
+
+    gcc -Wno-stringop-overread -Wno-stringop-overflow    huge_count_read_write.c  -o /home/sjpark/linux/tools/testing/selftests/damon/huge_count_read_write
+    huge_count_read_write.c:13:32: warning: unknown option after ‘#pragma GCC diagnostic’ kind [-Wpragmas]
+       13 | #pragma GCC diagnostic ignored "-Wstringop-overread"
+          |                                ^~~~~~~~~~~~~~~~~~~~~
+    cc1: warning: unrecognized command line option ‘-Wno-stringop-overread’
+
+As mentioned as a reply to Yuanchu's patch, I'd slightly prefer making it
+silent for both new and old compilers than this approach, but no strong opinion
+from my side.  Yuanchu and Shuah, do you have some opinion?
+
+[1] https://lore.kernel.org/lkml/CAJj2-QE4ee=N9wYXVQc6gyZYC3zgAsWVwWJ7DMaS2B9q2WqBHw@mail.gmail.com/
+[2] https://lore.kernel.org/lkml/20220504184537.130085-1-sj@kernel.org/
+[3] https://lore.kernel.org/lkml/20220517160417.1096-1-sj@kernel.org/
+
+
+Thanks,
+SJ
+
+>  void write_read_with_huge_count(char *file)
+>  {
+>  	int filedesc = open(file, O_RDWR);
+> @@ -27,6 +32,8 @@ void write_read_with_huge_count(char *file)
+>  	close(filedesc);
+>  }
+>  
+> +#pragma GCC diagnostic pop
+> +
+>  int main(int argc, char *argv[])
+>  {
+>  	if (argc != 2) {
+> -- 
+> 2.31.1
+> 
+> 
