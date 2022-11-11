@@ -1,36 +1,51 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from out162-62-57-64.mail.qq.com (out162-62-57-64.mail.qq.com [162.62.57.64])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0CFC1A629
-	for <damon@lists.linux.dev>; Thu, 10 Nov 2022 20:09:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F2D0C433C1;
-	Thu, 10 Nov 2022 20:09:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1668110982;
-	bh=pSFInq4N4Bpw1KNnil1myJW1oupVm04I6GvyJ1r4M90=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZcRPHU5APr+eHfnFXysOgIHlqisvwx7xeSA+5tA0lqSek+E48B4aV6SQAlcs0pCJA
-	 NnU/H79xbc/Gy1kZYW7sdTDbh90GhkkpROQBxNf0sk3MxSLrmqRmCoYEFEDbLaQNOd
-	 x9qfjievWDnXssIKGrd6SFbBhsvsL6po7k9DuNmOR5yi7UfRMbawI9lpLkFA49RcXg
-	 mvSwCqPn+ahcGthFzjbeA+Ax7Ag/8d63rulA8xBN2hgCdw9Ex7gYX9nLZVzX3/YziR
-	 c0NgmJW2jnOpPzXjaGSBQleiT6VqNJvBtfkaVRJCWlqkhCLw1BZRtgvjYGRjXxdHAT
-	 Wa/QORdRpcl6g==
-From: SeongJae Park <sj@kernel.org>
-To: Rong Tao <rtoax@foxmail.com>
-Cc: sj@kernel.org,
-	Rong Tao <rongtao@cestc.cn>,
-	Shuah Khan <shuah@kernel.org>,
-	damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	linux-kselftest@vger.kernel.org,
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37DFA62A
+	for <damon@lists.linux.dev>; Fri, 11 Nov 2022 02:55:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foxmail.com;
+	s=s201512; t=1668135327;
+	bh=BL3Df7T2fda2YYRMS2L+HCFmYgkJzAzwFsLU2JM9Hkw=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=BTPFd3z+Qcu9kJljUBOehk7+i91YGIC9L/yQC4fmAbyc99tYFTyuTnB0vYnTLFUsn
+	 cgFCqQemEuFYLr0ygT6AHX8IFWovz8ZsJofMoV89v2op1YujbXnfAG5LwkTvWywf0f
+	 lp0INhGv9YdL8SIpwL/7nPUQLSVc0hOMxVpHk9O0=
+Received: from localhost.localdomain ([111.199.191.46])
+	by newxmesmtplogicsvrsza2-0.qq.com (NewEsmtp) with SMTP
+	id 95619E78; Fri, 11 Nov 2022 10:37:22 +0800
+X-QQ-mid: xmsmtpt1668134242to097gvqf
+Message-ID: <tencent_32CBE47252C5F69571B40751DE6054082D05@qq.com>
+X-QQ-XMAILINFO: NQR8mRxMnur9pmo2KIyz9dprN6UpTtnMoo5DdTsNsP5dbyXhL/Dto/WxKS/eji
+	 yPnSz9aKaiLE8FYJd/UyyLYRg8KD7lbY5XwlDrzbMiMCFnXnziV/ouqi56ahVuJPpKDMYivtPHj7
+	 hEdOKJu8hyeuPO0TJH1Am3Fyzi5WdqU+vL51uVMogq/cnZwMyqhoH5xeTR5a9Y1wwrCMjeyjYnAO
+	 Kn3426Ha/lty+eUNfldE4meYk8g7blNbaGMvkA3SMPfUhayvMa0meed1BZUynFsz3g0Q8S0qaKts
+	 mG3g3PZcvTbibyrAwYkUq1gwStRxoygKDFn6buaOLXjKHS0Tgp98MEHrUopCY/XDyxhrbHghf/If
+	 E0NGyuFmAVJk89c6sJUEofJ6ffZXzjXXmQ0Wp5No8CxPFpwdmDHzOchxPS0Tf1LW4JkyqjwneM23
+	 prUgJTFe5IFekbfM61Mkez1L+e9is4orQr0EDJWQLs1FETG0T7kVCgbIAkRRpKQeEwbZGRAMICd6
+	 cO2PfCcGo+g90Sx+bQyGvLmyRHFN4Trt65w7tC87SBtrogIaPZew20LJXFFaRpk0Laf1sG44Ycw/
+	 xoQ3Qp/dnjOeOakhdrEOUeCtjBOvLdixMSyB02RD4naS8WW/q9mw35sY9oKeU004o4vGfGG7xfDF
+	 //txyYHrQalcHVOQF7G60c76Qou3cw6ulBmX6y3Z/ReGmJx97+ILWOzsP4oybqtA6UiNjm9bIIBk
+	 fIZsuCq7SU+2a4WMXx6LuO24Zyl17TrAQnvIabW4zGOxjYpdEbT8VrsNVCbmRkncq8wQ0W7eeIET
+	 vHUHsOl3YMe5lAiGdM4TbHRL7VG/xUwYD9NcvgLeSd2UlYB6mD/yFI66ZcMskfsDaEevjZnJBv3E
+	 W7bcBMkjoCsNezWV17gi7vqMzqoqfK5IzMGePHJdyl4994IMru+xwppnN7Y0awKFbgPUyn2o1tYf
+	 N8xrVY5VUhMHNpyNlQgrKiy7KzEkRIXrkckUDftwNGsJ3ZEkXBqLzOpIuE0CQbM+A4mAmBqHJjIM
+	 CMBHVEQw==
+From: Rong Tao <rtoax@foxmail.com>
+To: sj@kernel.org
+Cc: damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
-	Yuanchu Xie <yuanchu@google.com>
-Subject: Re: [PATCH] selftests/damon: Fix unnecessary compilation warnings
-Date: Thu, 10 Nov 2022 20:09:39 +0000
-Message-Id: <20221110200939.101886-1-sj@kernel.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <tencent_CF837EA1B8AC81CB7715E85797510D441E07@qq.com>
-References: 
+	linux-kselftest@vger.kernel.org,
+	linux-mm@kvack.org,
+	rongtao@cestc.cn,
+	rtoax@foxmail.com,
+	shuah@kernel.org,
+	yuanchu@google.com
+Subject: [PATCH] selftests/damon: Fix unnecessary compilation warnings
+Date: Fri, 11 Nov 2022 10:37:20 +0800
+X-OQ-MSGID: <20221111023720.15408-1-rtoax@foxmail.com>
+X-Mailer: git-send-email 2.31.1
+In-Reply-To: <20221110200939.101886-1-sj@kernel.org>
+References: <20221110200939.101886-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -40,105 +55,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Cc-ing Yuanchu Xie.
+From: Rong Tao <rongtao@cestc.cn>
 
-Hi Rong,
+When testing overflow and overread, there is no need to keep unnecessary
+compilation warnings, we should simply ignore them.
 
-On Thu, 10 Nov 2022 21:34:18 +0800 Rong Tao <rtoax@foxmail.com> wrote:
+How to reproduce the problem:
 
-> From: Rong Tao <rongtao@cestc.cn>
-> 
-> When testing overflow and overread, there is no need to keep unnecessary
-> compilation warnings, we should simply ignore them.
-> 
-> How to reproduce the problem:
-> 
-> $ make -C tools/testing/selftests/
-> gcc     huge_count_read_write.c  -o /home/sd/Git/linux/tools/testing/selftests/damon/huge_count_read_write
+    $ make -C tools/testing/selftests/
+    ...
+    warning: ‘write’ reading 4294967295 bytes from a region of size 1
+    [-Wstringop-overread]
+    warning: ‘read’ writing 4294967295 bytes into a region of size 25
+    overflows the destination [-Wstringop-overflow=]
 
-'checkpatch.pl' complains:
+Signed-off-by: Rong Tao <rongtao@cestc.cn>
+---
+ tools/testing/selftests/damon/huge_count_read_write.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-    WARNING: use relative pathname instead of absolute in changelog text
-    #20:
-    gcc     huge_count_read_write.c  -o /home/sd/Git/linux/tools/testing/selftests/damon/huge_count_read_write
+diff --git a/tools/testing/selftests/damon/huge_count_read_write.c b/tools/testing/selftests/damon/huge_count_read_write.c
+index ad7a6b4cf338..8fbe276870e7 100644
+--- a/tools/testing/selftests/damon/huge_count_read_write.c
++++ b/tools/testing/selftests/damon/huge_count_read_write.c
+@@ -8,6 +8,11 @@
+ #include <unistd.h>
+ #include <stdio.h>
+ 
++#pragma GCC diagnostic push
++/* Ignore read(2) overflow and write(2) overread compile warnings */
++#pragma GCC diagnostic ignored "-Wstringop-overread"
++#pragma GCC diagnostic ignored "-Wstringop-overflow"
++
+ void write_read_with_huge_count(char *file)
+ {
+ 	int filedesc = open(file, O_RDWR);
+@@ -27,6 +32,8 @@ void write_read_with_huge_count(char *file)
+ 	close(filedesc);
+ }
+ 
++#pragma GCC diagnostic pop
++
+ int main(int argc, char *argv[])
+ {
+ 	if (argc != 2) {
+-- 
+2.31.1
 
-Also, could we add four spaces indent for code snippet/command outputs like
-above?
-
-> huge_count_read_write.c: In function ‘write_read_with_huge_count’:
-> huge_count_read_write.c:23:9: warning: ‘write’ reading 4294967295 bytes from a region of size 1 [-Wstringop-overread]
->    23 |         write(filedesc, "", 0xfffffffful);
->       |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-> In file included from huge_count_read_write.c:8:
-> /usr/include/unistd.h:378:16: note: in a call to function ‘write’ declared with attribute ‘access (read_only, 2, 3)’
->   378 | extern ssize_t write (int __fd, const void *__buf, size_t __n) __wur
->       |                ^~~~~
-> huge_count_read_write.c:25:15: warning: ‘read’ writing 4294967295 bytes into a region of size 25 overflows the destination [-Wstringop-overflow=]
->    25 |         ret = read(filedesc, buf, 0xfffffffful);
->       |               ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-> huge_count_read_write.c:14:14: note: destination object ‘buf’ of size 25
->    14 |         char buf[25];
->       |              ^~~
-> In file included from huge_count_read_write.c:8:
-> /usr/include/unistd.h:371:16: note: in a call to function ‘read’ declared with attribute ‘access (write_only, 2, 3)’
->   371 | extern ssize_t read (int __fd, void *__buf, size_t __nbytes) __wur
->       |                ^~~~
-> 
-> Signed-off-by: Rong Tao <rongtao@cestc.cn>
-> ---
->  tools/testing/selftests/damon/huge_count_read_write.c | 7 +++++++
->  1 file changed, 7 insertions(+)
-> 
-> diff --git a/tools/testing/selftests/damon/huge_count_read_write.c b/tools/testing/selftests/damon/huge_count_read_write.c
-> index ad7a6b4cf338..8fbe276870e7 100644
-> --- a/tools/testing/selftests/damon/huge_count_read_write.c
-> +++ b/tools/testing/selftests/damon/huge_count_read_write.c
-> @@ -8,6 +8,11 @@
->  #include <unistd.h>
->  #include <stdio.h>
->  
-> +#pragma GCC diagnostic push
-> +/* Ignore read(2) overflow and write(2) overread compile warnings */
-> +#pragma GCC diagnostic ignored "-Wstringop-overread"
-> +#pragma GCC diagnostic ignored "-Wstringop-overflow"
-> +
-
-Thank you for sending this patch!
-
-However, there was a similar patch from Yuanchu[1], and this causes another
-warning for old gcc[2] that I use (9.4.0), like below.
-
-    gcc -Wno-stringop-overread -Wno-stringop-overflow    huge_count_read_write.c  -o /home/sjpark/linux/tools/testing/selftests/damon/huge_count_read_write
-    huge_count_read_write.c:13:32: warning: unknown option after ‘#pragma GCC diagnostic’ kind [-Wpragmas]
-       13 | #pragma GCC diagnostic ignored "-Wstringop-overread"
-          |                                ^~~~~~~~~~~~~~~~~~~~~
-    cc1: warning: unrecognized command line option ‘-Wno-stringop-overread’
-
-As mentioned as a reply to Yuanchu's patch, I'd slightly prefer making it
-silent for both new and old compilers than this approach, but no strong opinion
-from my side.  Yuanchu and Shuah, do you have some opinion?
-
-[1] https://lore.kernel.org/lkml/CAJj2-QE4ee=N9wYXVQc6gyZYC3zgAsWVwWJ7DMaS2B9q2WqBHw@mail.gmail.com/
-[2] https://lore.kernel.org/lkml/20220504184537.130085-1-sj@kernel.org/
-[3] https://lore.kernel.org/lkml/20220517160417.1096-1-sj@kernel.org/
-
-
-Thanks,
-SJ
-
->  void write_read_with_huge_count(char *file)
->  {
->  	int filedesc = open(file, O_RDWR);
-> @@ -27,6 +32,8 @@ void write_read_with_huge_count(char *file)
->  	close(filedesc);
->  }
->  
-> +#pragma GCC diagnostic pop
-> +
->  int main(int argc, char *argv[])
->  {
->  	if (argc != 2) {
-> -- 
-> 2.31.1
-> 
-> 
