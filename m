@@ -1,35 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF9B16FC5
-	for <damon@lists.linux.dev>; Sun, 13 Nov 2022 19:49:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1EB9C433D6;
-	Sun, 13 Nov 2022 19:49:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4186E748D
+	for <damon@lists.linux.dev>; Mon, 14 Nov 2022 16:51:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86792C433C1;
+	Mon, 14 Nov 2022 16:51:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1668368950;
-	bh=yrDG2V+vcg1HVPtwi+FlRMwsR7nnH8N/b1BGzR2HGdA=;
+	s=k20201202; t=1668444674;
+	bh=9IOTMhVM4RJc931VeRVmeYbkyluCbLbtzk4jJQ7uS5g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bD3ZVJ9Sj+CuNd4SnlcFNNuixJYu6WW+7JkqTQFPrUFKEpqxUYVmJvr7ec9zEVuZn
-	 QwTz/5HPpVvh79OKiBBxouHYwGI5wp1UPi0RpBCDtArino48OnjQgqutLOEJymzIKQ
-	 XV17gaAddwx6fhFlXKnMuLk1UfRJLLSZ60Qk4Iz7sU1ey9DeD7TPRPKc/ZEsYhcv43
-	 gpKCz/Sx6yIgh1nfMFfwLr0Z4SwEtJlw2NC2klgYhsDlK77ILRKQWQ7V7fOyizf7oX
-	 5PTq+vWll8oU1s4dC4iDbwtS6DGxDfG2Ef2mUaskL68eI7NTX7pcoGNSOKPA85tkzR
-	 sYeVSKszBlDlQ==
+	b=GgFZeDFwlznEdaAsXMtQTK3WK4q0RCAVDyjit6rb4A1lKGA6za5RtsvGFGBk73YTn
+	 iGvBn73Pe6ceKywbyPBQ9Y5q2dQ1tw1YmZggQ4F9lb8et5PQ3XCP+4fXj81bJ/TjhX
+	 nxuUxPt2JY+Sh49/7iMDPEyfpn8z2SNFlbx4aRegNT224+IhOdFc+GltL7rhprJeIB
+	 dTWfMfm8t2kR36C4ejS19tSePjpATCb17hYk9g6jMNi1KQ6ATxY4aq6OG+7AIlpi8W
+	 ZwFFgx5sy2Tza5T0hqovOOGyBIhej5M/cj6ABqhBbQx+/tg5FKowkMzcyGRe0edlA5
+	 8YgdFv4JXvxag==
 From: SeongJae Park <sj@kernel.org>
-To: Rong Tao <rtoax@foxmail.com>
-Cc: sj@kernel.org,
-	damon@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	linux-kselftest@vger.kernel.org,
+To: SeongJae Park <sj@kernel.org>
+Cc: damon@lists.linux.dev,
+	linux-damon@amazon.com,
+	linux-damon-trial@amazon.com,
 	linux-mm@kvack.org,
-	rongtao@cestc.cn,
-	shuah@kernel.org,
-	yuanchu@google.com
-Subject: Re: [PATCH v3] selftests/damon: Fix unnecessary compilation warnings
-Date: Sun, 13 Nov 2022 19:49:07 +0000
-Message-Id: <20221113194908.18554-1-sj@kernel.org>
+	linux-kernel@vger.kernel.org
+Subject: Re: DAMON Beer/Coffee/Tea chat series
+Date: Mon, 14 Nov 2022 16:51:12 +0000
+Message-Id: <20221114165112.21454-1-sj@kernel.org>
 X-Mailer: git-send-email 2.25.1
-In-Reply-To: <tencent_51C4ACA8CB3895C2D7F35178440283602107@qq.com>
+In-Reply-To: <20220810225102.124459-1-sj@kernel.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -37,75 +34,29 @@ List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On Sun, 13 Nov 2022 08:38:45 +0800 Rong Tao <rtoax@foxmail.com> wrote:
+Hello,
 
-> From: Rong Tao <rongtao@cestc.cn>
-> 
-> When testing overflow and overread, there is no need to keep unnecessary
-> compilation warnings, we should simply ignore them.
-> 
-> The motivation for this patch is to eliminate the compilation warning,
-> maybe one day we will compile the kernel with "-Werror -Wall", at which
-> point this compilation warning will turn into a compilation error, we
-> should fix this error in advance.
-> 
-> How to reproduce the problem (with gcc-11.3.1):
-> 
->     $ make -C tools/testing/selftests/
->     ...
->     warning: ‘write’ reading 4294967295 bytes from a region of size 1
->     [-Wstringop-overread]
->     warning: ‘read’ writing 4294967295 bytes into a region of size 25
->     overflows the destination [-Wstringop-overflow=]
-> 
-> "-Wno-stringop-overread" is supported at least in gcc-11.1.0.
-> 
-> Link: https://gcc.gnu.org/git/?p=gcc.git;a=commit;h=d14c547abd484d3540b692bb8048c4a6efe92c8b
-> Signed-off-by: Rong Tao <rongtao@cestc.cn>
+On Wed, 10 Aug 2022 22:51:02 +0000 SeongJae Park <sj@kernel.org> wrote:
 
-Reviewed-by: SeongJae Park <sj@kernel.org>
+> Hello,
+> 
+> 
+> In short, I'd like to start an open, regular, and informal virtual bi-weekly
+> meeting series for DAMON community.
+> 
+> Important links and dates
+> -------------------------
+> 
+> Location: https://meet.google.com/ndx-evoc-gbu
+> Agenda: https://docs.google.com/document/d/1v43Kcj3ly4CYqmAkMaZzLiM2GEnWfgdGbZAH3mi2vpM/edit?usp=sharing
 
-Thank you for fixing this old problem!
+This is a reminder for the next instance of the chat series.  Next instance
+will be 2022-11-15 (Tue) 09:30 PST.  You can show proposed agendas for the
+chat, or propose your own using the above Google doc.  Hope to meet some of you
+:)
 
 
 Thanks,
 SJ
-
-> ---
->  tools/testing/selftests/damon/huge_count_read_write.c | 9 +++++++++
->  1 file changed, 9 insertions(+)
-> 
-> diff --git a/tools/testing/selftests/damon/huge_count_read_write.c b/tools/testing/selftests/damon/huge_count_read_write.c
-> index ad7a6b4cf338..a6fe0689f88d 100644
-> --- a/tools/testing/selftests/damon/huge_count_read_write.c
-> +++ b/tools/testing/selftests/damon/huge_count_read_write.c
-> @@ -8,6 +8,13 @@
->  #include <unistd.h>
->  #include <stdio.h>
->  
-> +#pragma GCC diagnostic push
-> +#if __GNUC__ >= 11 && __GNUC_MINOR__ >= 1
-> +/* Ignore read(2) overflow and write(2) overread compile warnings */
-> +#pragma GCC diagnostic ignored "-Wstringop-overread"
-> +#pragma GCC diagnostic ignored "-Wstringop-overflow"
-> +#endif
-> +
->  void write_read_with_huge_count(char *file)
->  {
->  	int filedesc = open(file, O_RDWR);
-> @@ -27,6 +34,8 @@ void write_read_with_huge_count(char *file)
->  	close(filedesc);
->  }
->  
-> +#pragma GCC diagnostic pop
-> +
->  int main(int argc, char *argv[])
->  {
->  	if (argc != 2) {
-> -- 
-> 2.31.1
-> 
-> 
