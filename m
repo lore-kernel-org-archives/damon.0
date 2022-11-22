@@ -1,32 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 096541229D
-	for <damon@lists.linux.dev>; Tue, 22 Nov 2022 19:53:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9F33C4347C;
-	Tue, 22 Nov 2022 19:53:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 048ED2F3F
+	for <damon@lists.linux.dev>; Tue, 22 Nov 2022 22:32:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5C03C433D7;
+	Tue, 22 Nov 2022 22:32:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1669146816;
-	bh=KObWI8zg9a9ntJtaNU7/rxkOQqIMpYRdtTR+EDzaC2c=;
+	s=k20201202; t=1669156360;
+	bh=htRy+WB1STZAw+OjbG0CAxCOplnssTdlDMbDJ8TlNcg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fyju9Ux2E6zjC/QzkCaP0Bcv5aCKhWYvgGOMZCMSPJT9Q3Nmv1xLDQ2o67/FqX1Mu
-	 JKGn+a+igomR410FDY4dvU+SS46l2Ry9+VyVSrMB8ngWrihcdI+1IuKt1nllzhgPZe
-	 jZZ25CaftFyFo22Av6K5Z3yoC+eXS3iN3pJY7kdYA6dZGwJwdaAklXp+ezmWq4xP//
-	 56X1y6/4A9YxowB5S6P2/jrMoCuZ0bGerL0xgg6ik4SMC0ykg3wllXYagU/ujDfva1
-	 tCGb4mmlgS/WH9lBrvG2NNQHZOWDxnPh5WM/8d+K7Y1+7XDLtX0Yjd0hf3dSTFXf07
-	 LtypSFJZDcFvQ==
+	b=EDCOA6R2WQyG1VWDy6+XE2h22K0kpgJh3JyggppdxWLGxsrFVtyTzNXZi9PSBncdV
+	 6hFuepQedUINez9VXcLdR/srvIpwq2BL2oWfM9OHSBKkD2uDWF+QUt3RJ3F/Q6a7BD
+	 eMqQL4luDa+2SPR3s/k2AH6dk4oLuJg2GLRYXi6pQXVR+jyRGgoI5MHDXBsaN18I7L
+	 XJEM3Rj6+rwLjY3AFGnuxHET90HrJkcjFQL7B7aIJUkUdR2FrHkKgDiCZLil5vvzyO
+	 9trZLnl9fc7P9NP0neGg8IFF+tdxLGmVe5wCTUoMKdoYxRxGOyi/EAI2ASTsXF7lVa
+	 s+uJ0wFclKLHA==
 From: SeongJae Park <sj@kernel.org>
-To: akpm@linux-foundation.org
-Cc: SeongJae Park <sj@kernel.org>,
+To: SeongJae Park <sj@kernel.org>
+Cc: akpm@linux-foundation.org,
 	damon@lists.linux.dev,
 	linux-mm@kvack.org,
 	linux-kernel@vger.kernel.org,
 	stable@vger.kernel.org
 Subject: Re: [PATCH mm-hotfixes-unstable] mm/damon/sysfs: fix wrong empty schemes assumption under online tuning in damon_sysfs_set_schemes()
-Date: Tue, 22 Nov 2022 19:53:33 +0000
-Message-Id: <20221122195333.3552-1-sj@kernel.org>
+Date: Tue, 22 Nov 2022 22:32:38 +0000
+Message-Id: <20221122223238.65691-1-sj@kernel.org>
 X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20221122194831.3472-1-sj@kernel.org>
+In-Reply-To: <20221122195333.3552-1-sj@kernel.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -36,39 +36,78 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hi Andrew,
+On Tue, 22 Nov 2022 19:53:33 +0000 SeongJae Park <sj@kernel.org> wrote:
 
-On Tue, 22 Nov 2022 19:48:31 +0000 SeongJae Park <sj@kernel.org> wrote:
-
-> Commit da87878010e5 ("mm/damon/sysfs: support online inputs update")
-> made 'damon_sysfs_set_schemes()' to be called for running DAMON context,
-> which could have schemes.  In the case, DAMON sysfs interface is
-> supposed to update, remove, or add schemes to reflect the sysfs files.
-> However, the code is assuming the DAMON context wouldn't have schemes at
-> all, and therefore creates and adds new schemes.  As a result, the code
-> doesn't work as intended for online schemes tuning and could have more
-> than expected memory footprint.   The schemes are all in the DAMON
-> context, so it doesn't leak the memory, though.
+> Hi Andrew,
 > 
-> Remove the wrong asssumption (the DAMON context wouldn't have schemes)
-> in 'damon_sysfs_set_schemes()' to fix the bug.
+> On Tue, 22 Nov 2022 19:48:31 +0000 SeongJae Park <sj@kernel.org> wrote:
 > 
-> Fixes: da87878010e5 ("mm/damon/sysfs: support online inputs update")
-> Cc: <stable@vger.kernel.org> # 5.19.y
+> > Commit da87878010e5 ("mm/damon/sysfs: support online inputs update")
+> > made 'damon_sysfs_set_schemes()' to be called for running DAMON context,
+> > which could have schemes.  In the case, DAMON sysfs interface is
+> > supposed to update, remove, or add schemes to reflect the sysfs files.
+> > However, the code is assuming the DAMON context wouldn't have schemes at
+> > all, and therefore creates and adds new schemes.  As a result, the code
+> > doesn't work as intended for online schemes tuning and could have more
+> > than expected memory footprint.   The schemes are all in the DAMON
+> > context, so it doesn't leak the memory, though.
+> > 
+> > Remove the wrong asssumption (the DAMON context wouldn't have schemes)
+> > in 'damon_sysfs_set_schemes()' to fix the bug.
+> > 
+> > Fixes: da87878010e5 ("mm/damon/sysfs: support online inputs update")
+> > Cc: <stable@vger.kernel.org> # 5.19.y
+> > Signed-off-by: SeongJae Park <sj@kernel.org>
+> 
+> This patch is for a hotfix, so based on mm-hotfixes-unstable.  And this makes a
+> following sysfs refactoring patch, "mm/damon/sysfs: split out schemes directory
+> implementation to separate file" conflicts.  Below is the conflict resolved
+> version of the patch.  Please replace it with below one.  Sorry for the
+> inconvenience and thank you for your help in advance!
+> 
+> ================================ 8< ===========================================
+> 
+> From bfb5e978a34626f5b19ee777eeb3187323e6a546 Mon Sep 17 00:00:00 2001
+> From: SeongJae Park <sj@kernel.org>
+> Date: Wed, 26 Oct 2022 22:59:41 +0000
+> Subject: [PATCH mm-unstable] mm/damon/sysfs: split out schemes directory implementation to
+>  separate file
+> 
+> DAMON sysfs interface for 'schemes' directory is implemented using about
+> one thousand lines of code.  It has no strong dependency with other
+> parts of its file, so split it out to another file for better code
+> management.
+> 
+> Link: https://lkml.kernel.org/r/20221026225943.100429-11-sj@kernel.org
 > Signed-off-by: SeongJae Park <sj@kernel.org>
+> Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+> ---
+>  mm/damon/Makefile        |    2 +-
+>  mm/damon/sysfs-common.h  |   22 +
+>  mm/damon/sysfs-schemes.c | 1068 ++++++++++++++++++++++++++++++++++++++
+>  mm/damon/sysfs.c         | 1064 -------------------------------------
+>  4 files changed, 1091 insertions(+), 1065 deletions(-)
+>  create mode 100644 mm/damon/sysfs-schemes.c
+> 
+[...]
+> diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
+> new file mode 100644
+> index 000000000000..731a2314623c
+> --- /dev/null
+> +++ b/mm/damon/sysfs-schemes.c
+[...]
+> +static int damon_sysfs_set_schemes(struct damon_ctx *ctx,
+> +		struct damon_sysfs_schemes *sysfs_schemes)
 
-This patch is for a hotfix, so based on mm-hotfixes-unstable.  And this makes a
-following sysfs refactoring patch, "mm/damon/sysfs: split out schemes directory
-implementation to separate file" conflicts.  Below is the conflict resolved
-version of the patch.  Please replace it with below one.  Sorry for the
-inconvenience and thank you for your help in advance!
+Sorry, I made a mistake.  This should be not static.  Below is the fixed
+version of the patch.
 
-================================ 8< ===========================================
+================================= 8< ==========================================
 
-From bfb5e978a34626f5b19ee777eeb3187323e6a546 Mon Sep 17 00:00:00 2001
+From b1e13a4ebe12485d8c54c36e9ddaec32c34e31ea Mon Sep 17 00:00:00 2001
 From: SeongJae Park <sj@kernel.org>
 Date: Wed, 26 Oct 2022 22:59:41 +0000
-Subject: [PATCH mm-unstable] mm/damon/sysfs: split out schemes directory implementation to
+Subject: [PATCH] mm/damon/sysfs: split out schemes directory implementation to
  separate file
 
 DAMON sysfs interface for 'schemes' directory is implemented using about
@@ -132,7 +171,7 @@ index 56e6a99e353b..4626b2784404 100644
 +		struct damon_ctx *ctx);
 diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
 new file mode 100644
-index 000000000000..731a2314623c
+index 000000000000..9509d5c1e7fc
 --- /dev/null
 +++ b/mm/damon/sysfs-schemes.c
 @@ -0,0 +1,1068 @@
@@ -1153,7 +1192,7 @@ index 000000000000..731a2314623c
 +	scheme->wmarks.low = sysfs_wmarks->low;
 +}
 +
-+static int damon_sysfs_set_schemes(struct damon_ctx *ctx,
++int damon_sysfs_set_schemes(struct damon_ctx *ctx,
 +		struct damon_sysfs_schemes *sysfs_schemes)
 +{
 +	struct damos *scheme, *next;
