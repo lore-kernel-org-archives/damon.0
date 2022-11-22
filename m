@@ -1,32 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B9BE2FAE
-	for <damon@lists.linux.dev>; Mon, 14 Nov 2022 18:30:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FF7DC433D6;
-	Mon, 14 Nov 2022 18:30:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A790F15C9D
+	for <damon@lists.linux.dev>; Tue, 22 Nov 2022 19:48:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8418C433D6;
+	Tue, 22 Nov 2022 19:48:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1668450606;
-	bh=KjLeGyUJTbZpSiKhaAFgRkOpgkH4ndx+JjCuYdxHGcY=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bY29PN+CyQgg6/VdgLjSq/jugOiRFtHQw+Xxc1h2PxY+BLAsSfEJ7e2CBv4KzGmfy
-	 9/aoiEiu5ZSpriSJuR0gSVUmS+zYRvGafuYYtqMPEQDS2NhqQ1kwYdncApO+p92FTX
-	 stqy0WYhQYHGIR+bGkXrE3FUPMGugEp+sWfx013Sj93aJjNN7z2YCazcoSLdPWMwYs
-	 QdyULgUxl+x46SDTihwnGa4I8eGqJGE7esekjFcM5kv73P444WCvBH9nP8vA/qDCO7
-	 rNn+jHctDyZHC5FSnsfooLElEb7u553FDcpbSBpBYlKV87QumPpjh6nmUZjpp5/d6T
-	 jXDfBuLGLo+CQ==
+	s=k20201202; t=1669146518;
+	bh=fELDYP7X7g2hQl01HL1seDQ0enwlGxaSh2Vjv+ZYToU=;
+	h=From:To:Cc:Subject:Date:From;
+	b=d9awUBACiXT6NtF2V4ad/eJjEaQCigkXO/j1aQoYsuFW6RdPlhNvCz352QKphf6uv
+	 YeHKeIHQLBktbxEvc0HOp+LzekGhy5IIrfe6vuqQZ0djQb/haE5Rq+vjd2jxYOP3AB
+	 bzUfe4vQLX7dcyuwlXhqofokrNoUPDH4XD832fhZ31mJAv3yjMpbSoctQF0+vJNA5a
+	 pJLEyOhcaZTvflI94IT8T66up2b/V6KJpR60+xl9uz4atP+qUNuq9fJzOYRWnXvWX5
+	 yXFFaeNg50ZldZGB7nOgFqPk1bBpqglkmqfDflyfWghPpY5OZ37nRSKAcdsfSWB67p
+	 TOTO1D6eWMa7Q==
 From: SeongJae Park <sj@kernel.org>
-To: SeongJae Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
+To: akpm@linux-foundation.org
 Cc: damon@lists.linux.dev,
 	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH mm-unstable 2/2] mm/damon/sysfs-schemes: skip schemes regions clearing if the scheme directory has removed
-Date: Mon, 14 Nov 2022 18:29:54 +0000
-Message-Id: <20221114182954.4745-3-sj@kernel.org>
+	linux-kernel@vger.kernel.org,
+	SeongJae Park <sj@kernel.org>,
+	stable@vger.kernel.org
+Subject: [PATCH mm-hotfixes-unstable] mm/damon/sysfs: fix wrong empty schemes assumption under online tuning in damon_sysfs_set_schemes()
+Date: Tue, 22 Nov 2022 19:48:31 +0000
+Message-Id: <20221122194831.3472-1-sj@kernel.org>
 X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20221114182954.4745-1-sj@kernel.org>
-References: <20221114182954.4745-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -35,33 +34,87 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-A DAMON sysfs interface user can start DAMON with a scheme, remove the
-sysfs directory for the scheme, and then ask clearing of the scheme's
-tried regions.  Because the schemes tried regions clearing logic doesn't
-aware of the situation, it results in an invalid memory access.  Fix the
-bug by checking if the scheme sysfs directory exists.
+Commit da87878010e5 ("mm/damon/sysfs: support online inputs update")
+made 'damon_sysfs_set_schemes()' to be called for running DAMON context,
+which could have schemes.  In the case, DAMON sysfs interface is
+supposed to update, remove, or add schemes to reflect the sysfs files.
+However, the code is assuming the DAMON context wouldn't have schemes at
+all, and therefore creates and adds new schemes.  As a result, the code
+doesn't work as intended for online schemes tuning and could have more
+than expected memory footprint.   The schemes are all in the DAMON
+context, so it doesn't leak the memory, though.
 
-Fixes: bb9641eb3a3e ("mm/damon/sysfs-schemes: implement DAMOS-tried regions clear command") # mm-unstable
+Remove the wrong asssumption (the DAMON context wouldn't have schemes)
+in 'damon_sysfs_set_schemes()' to fix the bug.
+
+Fixes: da87878010e5 ("mm/damon/sysfs: support online inputs update")
+Cc: <stable@vger.kernel.org> # 5.19.y
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- mm/damon/sysfs-schemes.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ mm/damon/sysfs.c | 46 ++++++++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 44 insertions(+), 2 deletions(-)
 
-diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
-index 4df3c99983e8..e6baf55d617d 100644
---- a/mm/damon/sysfs-schemes.c
-+++ b/mm/damon/sysfs-schemes.c
-@@ -1260,6 +1260,10 @@ int damon_sysfs_schemes_clear_regions(
- 	damon_for_each_scheme(scheme, ctx) {
- 		struct damon_sysfs_scheme *sysfs_scheme;
+diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
+index 5ce403378c20..07e5f1bdf025 100644
+--- a/mm/damon/sysfs.c
++++ b/mm/damon/sysfs.c
+@@ -2283,12 +2283,54 @@ static struct damos *damon_sysfs_mk_scheme(
+ 			&wmarks);
+ }
  
-+		/* user could removed the scheme sysfs dir */
-+		if (schemes_idx >= sysfs_schemes->nr)
-+			break;
++static void damon_sysfs_update_scheme(struct damos *scheme,
++		struct damon_sysfs_scheme *sysfs_scheme)
++{
++	struct damon_sysfs_access_pattern *access_pattern =
++		sysfs_scheme->access_pattern;
++	struct damon_sysfs_quotas *sysfs_quotas = sysfs_scheme->quotas;
++	struct damon_sysfs_weights *sysfs_weights = sysfs_quotas->weights;
++	struct damon_sysfs_watermarks *sysfs_wmarks = sysfs_scheme->watermarks;
 +
- 		sysfs_scheme = sysfs_schemes->schemes_arr[schemes_idx++];
- 		damon_sysfs_scheme_regions_rm_dirs(
- 				sysfs_scheme->tried_regions);
++	scheme->pattern.min_sz_region = access_pattern->sz->min;
++	scheme->pattern.max_sz_region = access_pattern->sz->max;
++	scheme->pattern.min_nr_accesses = access_pattern->nr_accesses->min;
++	scheme->pattern.max_nr_accesses = access_pattern->nr_accesses->max;
++	scheme->pattern.min_age_region = access_pattern->age->min;
++	scheme->pattern.max_age_region = access_pattern->age->max;
++
++	scheme->action = sysfs_scheme->action;
++
++	scheme->quota.ms = sysfs_quotas->ms;
++	scheme->quota.sz = sysfs_quotas->sz;
++	scheme->quota.reset_interval = sysfs_quotas->reset_interval_ms;
++	scheme->quota.weight_sz = sysfs_weights->sz;
++	scheme->quota.weight_nr_accesses = sysfs_weights->nr_accesses;
++	scheme->quota.weight_age = sysfs_weights->age;
++
++	scheme->wmarks.metric = sysfs_wmarks->metric;
++	scheme->wmarks.interval = sysfs_wmarks->interval_us;
++	scheme->wmarks.high = sysfs_wmarks->high;
++	scheme->wmarks.mid = sysfs_wmarks->mid;
++	scheme->wmarks.low = sysfs_wmarks->low;
++}
++
+ static int damon_sysfs_set_schemes(struct damon_ctx *ctx,
+ 		struct damon_sysfs_schemes *sysfs_schemes)
+ {
+-	int i;
++	struct damos *scheme, *next;
++	int i = 0;
++
++	damon_for_each_scheme_safe(scheme, next, ctx) {
++		if (i < sysfs_schemes->nr)
++			damon_sysfs_update_scheme(scheme,
++					sysfs_schemes->schemes_arr[i]);
++		else
++			damon_destroy_scheme(scheme);
++		i++;
++	}
+ 
+-	for (i = 0; i < sysfs_schemes->nr; i++) {
++	for (; i < sysfs_schemes->nr; i++) {
+ 		struct damos *scheme, *next;
+ 
+ 		scheme = damon_sysfs_mk_scheme(sysfs_schemes->schemes_arr[i]);
 -- 
 2.25.1
 
