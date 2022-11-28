@@ -1,32 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C0638F6C
-	for <damon@lists.linux.dev>; Mon, 28 Nov 2022 17:21:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AFA3C433D6;
-	Mon, 28 Nov 2022 17:21:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00306A461;
+	Mon, 28 Nov 2022 17:54:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E810C433C1;
+	Mon, 28 Nov 2022 17:54:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1669656104;
-	bh=TyPpfAWkaDgtWxdnYimbzfMlZJGlJ+ZXmhBXeP2ilQ4=;
+	s=k20201202; t=1669658043;
+	bh=PNyyGskXEL6J2fr0axt60kXMvnypsmn7KyeoTEQji0M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dHaQJaP9VBsqcBayryYF/HinrdXV7jkLshA+U/eReLNdXc0YWDI4cKSvF6M8mbmDZ
-	 vc0PXMnO63Tfdjgs3oQFY2CPoADgOeYEv4iYz1h8mq34u4kM6S8m4g0MkwwM9VPOpX
-	 liEbT0Bg48TfXgCON64oDj88HTbf727TbyIbp+kKszE0fTdz8gTDqddNQTXzKWHyaK
-	 faJcE0qcTSOGlveMjh1Kqz4Md8X25/xpZR5xIu9cLQF8Xue0TQSg4fnfm25f3HvbzP
-	 Xt5EChCKhKPVN6uZ4qjVmwH5qm7q6StUILcSNENQlx2qYjh7NOu/hqS53As6p1KUzd
-	 of+RZNRBaVVTw==
+	b=A8Se4BYjG+/aU9nCM1LkdL9QcghZZiVXfO0laO+j5HnxZx3D+I7Kfc/knAfzsuL5b
+	 F5LRk5RgnItSJscgHgo8jlK6eJxql0guKE0kazvVcOuktAP5AjbwkbM8BNl5z/Jm7E
+	 Qel8OnxNx7ry8DjUhuHrmBK60exrHDYfvTatRZPa3iE7LirnsF07Svu4YFqZh2Nr1D
+	 wylafqKmOIQBUzoIwzRrWjEJBA16baopqnE4+dbyvPndRG5Wh3yDGnRmZEVUiZ/vlb
+	 kxjU4I/XnNwjvhR2IfFemKqAAi5maQcHIHcsjSTfr5a6QwseYlJbtxdoewxg6Z1Tnz
+	 ZnKeVXN9OF3nQ==
 From: SeongJae Park <sj@kernel.org>
-To: SeongJae Park <sj@kernel.org>
-Cc: damon@lists.linux.dev,
-	linux-damon@amazon.com,
-	linux-damon-trial@amazon.com,
+To: kernel test robot <lkp@intel.com>
+Cc: SeongJae Park <sj@kernel.org>,
+	damon@lists.linux.dev,
 	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: DAMON Beer/Coffee/Tea chat series
-Date: Mon, 28 Nov 2022 17:21:42 +0000
-Message-Id: <20221128172142.5402-1-sj@kernel.org>
+	linux-kernel@vger.kernel.org,
+	llvm@lists.linux.dev,
+	oe-kbuild-all@lists.linux.dev
+Subject: Re: [sj:damon/next 27/34] mm/damon/sysfs-schemes.c:1409:19: error: incomplete definition of type 'struct mem_cgroup'
+Date: Mon, 28 Nov 2022 17:54:01 +0000
+Message-Id: <20221128175401.17332-1-sj@kernel.org>
 X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20220810225102.124459-1-sj@kernel.org>
+In-Reply-To: <202211281158.AsAWEmu1-lkp@intel.com>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -36,30 +37,63 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hello,
+Hello Robot,
 
-On Wed, 10 Aug 2022 22:51:02 +0000 SeongJae Park <sj@kernel.org> wrote:
+On Mon, 28 Nov 2022 12:00:58 +0800 kernel test robot <lkp@intel.com> wrote:
 
-> Hello,
+> [-- Attachment #1: Type: text/plain, Size: 1995 bytes --]
+> 
+> tree:   https://git.kernel.org/pub/scm/linux/kernel/git/sj/linux.git damon/next
+> head:   c68bc40dc2022ce015ee828d0fccb34f864934f8
+> commit: 80bd927ee54ff864d9a6ceb1c6ce4803b22e7220 [27/34] mm/damon/sysfs-schemes: implement scheme filters
+> config: x86_64-randconfig-r015-20221128
+> compiler: clang version 14.0.6 (https://github.com/llvm/llvm-project f28c006a5895fc0e329fe15fead81e37457cb1d1)
+> reproduce (this is a W=1 build):
+>         wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
+>         chmod +x ~/bin/make.cross
+>         # https://git.kernel.org/pub/scm/linux/kernel/git/sj/linux.git/commit/?id=80bd927ee54ff864d9a6ceb1c6ce4803b22e7220
+>         git remote add sj https://git.kernel.org/pub/scm/linux/kernel/git/sj/linux.git
+>         git fetch --no-tags sj damon/next
+>         git checkout 80bd927ee54ff864d9a6ceb1c6ce4803b22e7220
+>         # save the config file
+>         mkdir build_dir && cp config build_dir/.config
+>         COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross W=1 O=build_dir ARCH=x86_64 SHELL=/bin/bash
+> 
+> If you fix the issue, kindly add following tag where applicable
+> | Reported-by: kernel test robot <lkp@intel.com>
+> 
+> All errors (new ones prefixed by >>):
+> 
+> >> mm/damon/sysfs-schemes.c:1409:19: error: incomplete definition of type 'struct mem_cgroup'
+>            cgroup_path(memcg->css.cgroup, memcg_path_buf, PATH_MAX);
+>                        ~~~~~^
+>    include/linux/mm_types.h:33:8: note: forward declaration of 'struct mem_cgroup'
+>    struct mem_cgroup;
+>           ^
+>    1 error generated.
 > 
 > 
-> In short, I'd like to start an open, regular, and informal virtual bi-weekly
-> meeting series for DAMON community.
+> vim +1409 mm/damon/sysfs-schemes.c
 > 
-> Important links and dates
-> -------------------------
-> 
-> Location: https://meet.google.com/ndx-evoc-gbu
-> Agenda: https://docs.google.com/document/d/1v43Kcj3ly4CYqmAkMaZzLiM2GEnWfgdGbZAH3mi2vpM/edit?usp=sharing
-> 
-> First instance: 2022-08-15 18:00 PDT
-> Second instance: 2022-08-30 09:00 PDT
+>   1404	
+>   1405	static bool damon_sysfs_memcg_path_eq(struct mem_cgroup *memcg,
+>   1406			char *memcg_path_buf, char *path)
+>   1407	{
+>   1408	#ifdef CONFIG_CGROUPS
+> > 1409		cgroup_path(memcg->css.cgroup, memcg_path_buf, PATH_MAX);
+>   1410		if (sysfs_streq(memcg_path_buf, path))
+>   1411			return true;
+>   1412	#endif
 
-This is a reminder for the next instance of the chat series.  Next instance
-will be 2022-11-28 (Mon) 18:00 PST, so about nine hours after now.  You can
-show proposed agendas for the chat, or propose your own using the above Google
-doc.  Hope to meet some of you :)
+'struct mem_cgroup' is defined under '#ifdef CONFIG_MEMCG', so this should be
+guarded with it.  Fixed it[1].  Thank you again!
+
+[1] https://git.kernel.org/pub/scm/linux/kernel/git/sj/linux.git/commit/?h=damon/next&id=dc31f4ababd073e1686de0e51f45c5bbd42e66ac
 
 
 Thanks,
 SJ
+
+>   1413		return false;
+>   1414	}
+>   1415	
