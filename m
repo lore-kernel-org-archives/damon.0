@@ -1,92 +1,87 @@
-Received: from mail-lf1-f42.google.com (mail-lf1-f42.google.com [209.85.167.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64F307E9
-	for <damon@lists.linux.dev>; Wed, 30 Nov 2022 06:01:43 +0000 (UTC)
-Received: by mail-lf1-f42.google.com with SMTP id u27so14349046lfc.9
-        for <damon@lists.linux.dev>; Tue, 29 Nov 2022 22:01:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=Dd2bPOSx73YkfI4ietT0CtlJFPAPYcl5w03w++siR3I=;
-        b=VueP3BV9DWQDNRdZ4CP4P+VNS3R/j4lV1uV1cXsTBW0u75pHBOhRYGDAUdYvUErmti
-         624irIm4wqDMaReKRB30EvyBJ7amP4v+zfVwv2hJUhQyNoe0UAZcezmo2pnlQF6Xrpjh
-         yHfvEx6D1DhBe6VCGE43YjmmeA3fyhA58EgzHePnSXxtFGhySFuXaheY0gqwf1leNssp
-         YKzzaiR/iVoDS8dyWYp/GGWo6hPAsEsTL9CEXKpkfyfwWcFyvSWVxbos+mMe0ELBlrtr
-         BCSxVxIiVT2+ZnQZ3g6aeNXUnk52IIb+bqRn9MbaK0C5Ol58dW3S5HKSmQdCRNC4NppZ
-         OF3A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Dd2bPOSx73YkfI4ietT0CtlJFPAPYcl5w03w++siR3I=;
-        b=hV+RETTrmZT9ttfBDi2/rq7Z1ihrNGw5g5GBn3ZTZhoUfiwnIHKWP5SBGai2NrwuN7
-         g3dT6Spp5MY0gCGTVsdU9hHFnttvySn3LeC0WqOEvXJ4SvzI0F9q0/yZxZ1yejs8i/Gi
-         OG/GzAt1mnmhBpL+vJklVLjm6pRE0K9BVKA7KxS8qa+yAB9mXHtZon7GEvWtbiygsHx0
-         cGT2ZAX0/AbEweVTDB9NesN5EbXqzkzh+ifk8pd1uqm/RaHI0Kf6KfYHNRwDbeGCLSVn
-         6opn7Kzw2XdcIREnGO+UeFGl3gE9q0MDcMe1IYM5ve7yWuII1dRXyVzXmSmulsiAW4mW
-         J0+w==
-X-Gm-Message-State: ANoB5plqmPyuVutrPZz3kiiXBsCTOd9edYbT9kChKvtYG8p3eRa3awWd
-	ktQPB5KjihsfAcwT827SCw3EaSoOJULcVW6fe7I=
-X-Google-Smtp-Source: AA0mqf7q7VYdGDYdxOCSlaJ6L0t8HZDI4fhO1M/d/muCK7Hva5Fqezbch6yxwkGj/aDj8LfChdO+7NneUt+SPFcXc28=
-X-Received: by 2002:a05:6512:22cf:b0:499:fa38:3da4 with SMTP id
- g15-20020a05651222cf00b00499fa383da4mr19306949lfu.12.1669788101168; Tue, 29
- Nov 2022 22:01:41 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6961D79C0
+	for <damon@lists.linux.dev>; Wed, 30 Nov 2022 19:26:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3069C433C1;
+	Wed, 30 Nov 2022 19:26:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1669836398;
+	bh=5LR5nZNtSi/Kxu1y5TcusuYTtmflF/F58GD4wz8A6tU=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=SREZe5jdo0z5QVLSdrd5b0OVFXg61U4/Toe+uHLqAu5+dhjXGqEcvPpu5Bf5uzF2f
+	 ejG8HkfnDf60Z5/pj8/h6WGr1ajfx6psmvzyv9J7XaH53zaa+ZDnVh8morJRd8r6Gj
+	 qT9OPkWumBDYRPx1esRxs+bpOlnEsUGnsWTfzbRpeY3IinzZTKE1d09QKFdKWCAPNt
+	 6ao2pdaLZSgdULhCDyCZWVKdw2nL2I7XPvHOT6MfwiG2fZjncbIadndltZhYrgOv1G
+	 NsokxYq/ch394MEBS93KP2g/mpcWauv3KfJ7PTrWmLg6IKeUYOuR8rbHM0iDv57eFw
+	 daF7L8MIHjN/A==
+From: SeongJae Park <sj@kernel.org>
+To: SeongJae Park <sj@kernel.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>,
+	damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [RFC PATCH 08/11] mm/damon/sysfs-schemes: implement scheme filters
+Date: Wed, 30 Nov 2022 19:26:36 +0000
+Message-Id: <20221130192636.116555-1-sj@kernel.org>
+X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20221124212114.136863-9-sj@kernel.org>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-From: Yun Levi <ppbuk5246@gmail.com>
-Date: Wed, 30 Nov 2022 15:01:29 +0900
-Message-ID: <CAM7-yPSL2ewn9kjaR01vq8V410G+F1taJzAqVuvNOJOkbX7URw@mail.gmail.com>
-Subject: [Question] Should we reuse target when damon's operation changed?
-To: SeongJae Park <sj@kernel.org>
-Cc: damon@lists.linux.dev, linux-mm@kvack.org, 
-	Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 
-Hello SJ.
+On Thu, 24 Nov 2022 21:21:11 +0000 SeongJae Park <sj@kernel.org> wrote:
 
-While I try to use damon, I have some questions whether it is correct
-to reuse damon_target structure when damon's operation is changed.
+> Implement scheme filters functionality of DAMON sysfs interface by
+> making the code reads the values of files under the filter directories
+> and pass that to DAMON using DAMON kernel API.
+> 
+> Signed-off-by: SeongJae Park <sj@kernel.org>
+> ---
+>  mm/damon/sysfs-schemes.c | 85 +++++++++++++++++++++++++++++++++++++++-
+>  1 file changed, 84 insertions(+), 1 deletion(-)
+> 
+> diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
+> index 7f2bab617156..6f014b328e6f 100644
+> --- a/mm/damon/sysfs-schemes.c
+> +++ b/mm/damon/sysfs-schemes.c
+[...]
+> +static int damon_sysfs_memcg_path_to_id(char *memcg_path, unsigned short *id)
+> +{
+> +	struct mem_cgroup *memcg;
+> +	char *path;
+> +
+> +	if (!memcg_path)
+> +		return -EINVAL;
+> +
+> +	path = kmalloc(sizeof(*path) * PATH_MAX, GFP_KERNEL);
+> +	if (!path)
+> +		return -ENOMEM;
+> +
+> +	for (memcg = mem_cgroup_iter(NULL, NULL, NULL); memcg;
+> +			memcg = mem_cgroup_iter(NULL, memcg, NULL)) {
+> +		if (damon_sysfs_memcg_path_eq(memcg, path, memcg_path)) {
+> +			*id = mem_cgroup_id(memcg);
 
-At first, one user set up damon like below.
-    echo 1 > /sys/kernel/mm/damon/admin/kdamonds/nr_kdamonds
-    echo 1 > /sys/kernel/mm/damon/admin/kdamonds/0/contexts/nr_contexts
-    echo 1 > /sys/kernel/mm/damon/admin/kdamonds/0/contexts/0/targets/nr_targets
-    echo 1 > /sys/kernel/mm/damon/admin/kdamonds/0/contexts/0/targets/pid_target
-    echo 1 > /sys/kernel/mm/damon/admin/kdamonds/0/contexts/0/targets/regions/nr_regions
-    echo 0 > /sys/kernel/mm/damon/admin/kdamonds/0/contexts/0/targets/regions/nr_regions/0/start
-    echo 16384 >
-/sys/kernel/mm/damon/admin/kdamonds/0/contexts/0/targets/regions/nr_regions/0/end
+Forgot mentioning this.  Removed memcgs can still be iterated, so this can
+result in getting id of already removed cgroup.  If the user input is valid but
+there is a removed memcg that has same path, this could be confused.
 
-    echo vaddr >  /sys/kernel/mm/damon/admin/kdamonds/0/contexts/0/operation
-    echo on >  /sys/kernel/mm/damon/admin/kdamonds/0/contexts/0/state
+Removed memcg would have id 0.  The next version of this will handle the case.
 
-And some time pass, user change the operation as "paddr" like below:
-    echo paddr >  /sys/kernel/mm/damon/admin/kdamonds/0/contexts/0/operation
-    echo commit >  /sys/kernel/mm/damon/admin/kdamonds/0/contexts/0/state
 
-In that situation, the damon_target is reused and the region isn't changed,
-former region information which damon_region has -- nr_accesse,
-last_nr_accesss, last_sample addr is kept.
+Thanks,
+SJ
 
-But, former accessed information is based on vaddr and changed
-accessed information should be based on paddr and it seems the wrong
-information to new applied operation.
-
-IIUC, it makes some confusion to kdamond when it merges or splits
-regions based on above information.
-
-So, Is it much better to remove the target and region information when
-the operation is changed? or should we check whether it's possible to
-reuse former access information between former and new operation?
-
-Thanks.
-
--- 
-Best regards,
-Levi
+> +			break;
+> +		}
+> +	}
+> +
+> +	kfree(path);
+> +	return 0;
+> +}
