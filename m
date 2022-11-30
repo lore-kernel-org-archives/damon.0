@@ -1,99 +1,92 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f42.google.com (mail-lf1-f42.google.com [209.85.167.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00306A461;
-	Mon, 28 Nov 2022 17:54:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E810C433C1;
-	Mon, 28 Nov 2022 17:54:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1669658043;
-	bh=PNyyGskXEL6J2fr0axt60kXMvnypsmn7KyeoTEQji0M=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A8Se4BYjG+/aU9nCM1LkdL9QcghZZiVXfO0laO+j5HnxZx3D+I7Kfc/knAfzsuL5b
-	 F5LRk5RgnItSJscgHgo8jlK6eJxql0guKE0kazvVcOuktAP5AjbwkbM8BNl5z/Jm7E
-	 Qel8OnxNx7ry8DjUhuHrmBK60exrHDYfvTatRZPa3iE7LirnsF07Svu4YFqZh2Nr1D
-	 wylafqKmOIQBUzoIwzRrWjEJBA16baopqnE4+dbyvPndRG5Wh3yDGnRmZEVUiZ/vlb
-	 kxjU4I/XnNwjvhR2IfFemKqAAi5maQcHIHcsjSTfr5a6QwseYlJbtxdoewxg6Z1Tnz
-	 ZnKeVXN9OF3nQ==
-From: SeongJae Park <sj@kernel.org>
-To: kernel test robot <lkp@intel.com>
-Cc: SeongJae Park <sj@kernel.org>,
-	damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org,
-	llvm@lists.linux.dev,
-	oe-kbuild-all@lists.linux.dev
-Subject: Re: [sj:damon/next 27/34] mm/damon/sysfs-schemes.c:1409:19: error: incomplete definition of type 'struct mem_cgroup'
-Date: Mon, 28 Nov 2022 17:54:01 +0000
-Message-Id: <20221128175401.17332-1-sj@kernel.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <202211281158.AsAWEmu1-lkp@intel.com>
-References: 
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64F307E9
+	for <damon@lists.linux.dev>; Wed, 30 Nov 2022 06:01:43 +0000 (UTC)
+Received: by mail-lf1-f42.google.com with SMTP id u27so14349046lfc.9
+        for <damon@lists.linux.dev>; Tue, 29 Nov 2022 22:01:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=Dd2bPOSx73YkfI4ietT0CtlJFPAPYcl5w03w++siR3I=;
+        b=VueP3BV9DWQDNRdZ4CP4P+VNS3R/j4lV1uV1cXsTBW0u75pHBOhRYGDAUdYvUErmti
+         624irIm4wqDMaReKRB30EvyBJ7amP4v+zfVwv2hJUhQyNoe0UAZcezmo2pnlQF6Xrpjh
+         yHfvEx6D1DhBe6VCGE43YjmmeA3fyhA58EgzHePnSXxtFGhySFuXaheY0gqwf1leNssp
+         YKzzaiR/iVoDS8dyWYp/GGWo6hPAsEsTL9CEXKpkfyfwWcFyvSWVxbos+mMe0ELBlrtr
+         BCSxVxIiVT2+ZnQZ3g6aeNXUnk52IIb+bqRn9MbaK0C5Ol58dW3S5HKSmQdCRNC4NppZ
+         OF3A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Dd2bPOSx73YkfI4ietT0CtlJFPAPYcl5w03w++siR3I=;
+        b=hV+RETTrmZT9ttfBDi2/rq7Z1ihrNGw5g5GBn3ZTZhoUfiwnIHKWP5SBGai2NrwuN7
+         g3dT6Spp5MY0gCGTVsdU9hHFnttvySn3LeC0WqOEvXJ4SvzI0F9q0/yZxZ1yejs8i/Gi
+         OG/GzAt1mnmhBpL+vJklVLjm6pRE0K9BVKA7KxS8qa+yAB9mXHtZon7GEvWtbiygsHx0
+         cGT2ZAX0/AbEweVTDB9NesN5EbXqzkzh+ifk8pd1uqm/RaHI0Kf6KfYHNRwDbeGCLSVn
+         6opn7Kzw2XdcIREnGO+UeFGl3gE9q0MDcMe1IYM5ve7yWuII1dRXyVzXmSmulsiAW4mW
+         J0+w==
+X-Gm-Message-State: ANoB5plqmPyuVutrPZz3kiiXBsCTOd9edYbT9kChKvtYG8p3eRa3awWd
+	ktQPB5KjihsfAcwT827SCw3EaSoOJULcVW6fe7I=
+X-Google-Smtp-Source: AA0mqf7q7VYdGDYdxOCSlaJ6L0t8HZDI4fhO1M/d/muCK7Hva5Fqezbch6yxwkGj/aDj8LfChdO+7NneUt+SPFcXc28=
+X-Received: by 2002:a05:6512:22cf:b0:499:fa38:3da4 with SMTP id
+ g15-20020a05651222cf00b00499fa383da4mr19306949lfu.12.1669788101168; Tue, 29
+ Nov 2022 22:01:41 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+From: Yun Levi <ppbuk5246@gmail.com>
+Date: Wed, 30 Nov 2022 15:01:29 +0900
+Message-ID: <CAM7-yPSL2ewn9kjaR01vq8V410G+F1taJzAqVuvNOJOkbX7URw@mail.gmail.com>
+Subject: [Question] Should we reuse target when damon's operation changed?
+To: SeongJae Park <sj@kernel.org>
+Cc: damon@lists.linux.dev, linux-mm@kvack.org, 
+	Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 
-Hello Robot,
+Hello SJ.
 
-On Mon, 28 Nov 2022 12:00:58 +0800 kernel test robot <lkp@intel.com> wrote:
+While I try to use damon, I have some questions whether it is correct
+to reuse damon_target structure when damon's operation is changed.
 
-> [-- Attachment #1: Type: text/plain, Size: 1995 bytes --]
-> 
-> tree:   https://git.kernel.org/pub/scm/linux/kernel/git/sj/linux.git damon/next
-> head:   c68bc40dc2022ce015ee828d0fccb34f864934f8
-> commit: 80bd927ee54ff864d9a6ceb1c6ce4803b22e7220 [27/34] mm/damon/sysfs-schemes: implement scheme filters
-> config: x86_64-randconfig-r015-20221128
-> compiler: clang version 14.0.6 (https://github.com/llvm/llvm-project f28c006a5895fc0e329fe15fead81e37457cb1d1)
-> reproduce (this is a W=1 build):
->         wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
->         chmod +x ~/bin/make.cross
->         # https://git.kernel.org/pub/scm/linux/kernel/git/sj/linux.git/commit/?id=80bd927ee54ff864d9a6ceb1c6ce4803b22e7220
->         git remote add sj https://git.kernel.org/pub/scm/linux/kernel/git/sj/linux.git
->         git fetch --no-tags sj damon/next
->         git checkout 80bd927ee54ff864d9a6ceb1c6ce4803b22e7220
->         # save the config file
->         mkdir build_dir && cp config build_dir/.config
->         COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross W=1 O=build_dir ARCH=x86_64 SHELL=/bin/bash
-> 
-> If you fix the issue, kindly add following tag where applicable
-> | Reported-by: kernel test robot <lkp@intel.com>
-> 
-> All errors (new ones prefixed by >>):
-> 
-> >> mm/damon/sysfs-schemes.c:1409:19: error: incomplete definition of type 'struct mem_cgroup'
->            cgroup_path(memcg->css.cgroup, memcg_path_buf, PATH_MAX);
->                        ~~~~~^
->    include/linux/mm_types.h:33:8: note: forward declaration of 'struct mem_cgroup'
->    struct mem_cgroup;
->           ^
->    1 error generated.
-> 
-> 
-> vim +1409 mm/damon/sysfs-schemes.c
-> 
->   1404	
->   1405	static bool damon_sysfs_memcg_path_eq(struct mem_cgroup *memcg,
->   1406			char *memcg_path_buf, char *path)
->   1407	{
->   1408	#ifdef CONFIG_CGROUPS
-> > 1409		cgroup_path(memcg->css.cgroup, memcg_path_buf, PATH_MAX);
->   1410		if (sysfs_streq(memcg_path_buf, path))
->   1411			return true;
->   1412	#endif
+At first, one user set up damon like below.
+    echo 1 > /sys/kernel/mm/damon/admin/kdamonds/nr_kdamonds
+    echo 1 > /sys/kernel/mm/damon/admin/kdamonds/0/contexts/nr_contexts
+    echo 1 > /sys/kernel/mm/damon/admin/kdamonds/0/contexts/0/targets/nr_targets
+    echo 1 > /sys/kernel/mm/damon/admin/kdamonds/0/contexts/0/targets/pid_target
+    echo 1 > /sys/kernel/mm/damon/admin/kdamonds/0/contexts/0/targets/regions/nr_regions
+    echo 0 > /sys/kernel/mm/damon/admin/kdamonds/0/contexts/0/targets/regions/nr_regions/0/start
+    echo 16384 >
+/sys/kernel/mm/damon/admin/kdamonds/0/contexts/0/targets/regions/nr_regions/0/end
 
-'struct mem_cgroup' is defined under '#ifdef CONFIG_MEMCG', so this should be
-guarded with it.  Fixed it[1].  Thank you again!
+    echo vaddr >  /sys/kernel/mm/damon/admin/kdamonds/0/contexts/0/operation
+    echo on >  /sys/kernel/mm/damon/admin/kdamonds/0/contexts/0/state
 
-[1] https://git.kernel.org/pub/scm/linux/kernel/git/sj/linux.git/commit/?h=damon/next&id=dc31f4ababd073e1686de0e51f45c5bbd42e66ac
+And some time pass, user change the operation as "paddr" like below:
+    echo paddr >  /sys/kernel/mm/damon/admin/kdamonds/0/contexts/0/operation
+    echo commit >  /sys/kernel/mm/damon/admin/kdamonds/0/contexts/0/state
 
+In that situation, the damon_target is reused and the region isn't changed,
+former region information which damon_region has -- nr_accesse,
+last_nr_accesss, last_sample addr is kept.
 
-Thanks,
-SJ
+But, former accessed information is based on vaddr and changed
+accessed information should be based on paddr and it seems the wrong
+information to new applied operation.
 
->   1413		return false;
->   1414	}
->   1415	
+IIUC, it makes some confusion to kdamond when it merges or splits
+regions based on above information.
+
+So, Is it much better to remove the target and region information when
+the operation is changed? or should we check whether it's possible to
+reuse former access information between former and new operation?
+
+Thanks.
+
+-- 
+Best regards,
+Levi
