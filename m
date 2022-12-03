@@ -1,32 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B09867473
-	for <damon@lists.linux.dev>; Thu,  1 Dec 2022 17:08:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7FF8C433D6;
-	Thu,  1 Dec 2022 17:08:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E76C2568
+	for <damon@lists.linux.dev>; Sat,  3 Dec 2022 19:01:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90D0DC433D6;
+	Sat,  3 Dec 2022 19:01:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1669914516;
-	bh=bb/+qN0VW/7RqIAk2UofMX4wZlBJKhvkATUkAKF4jKA=;
-	h=From:To:Cc:Subject:Date:From;
-	b=JEPpDNsnVhCGYyiDJ5cDyhqXikEiT0RcB4yxn/jMZ7fv7AVfeTgAjru54z8nLIWlj
-	 lAIyUaV6PZMy+5Fv1lWEovXj6GTs93W4HzojUbUR0BYPYIXKR/vOReNYf1/0CZPmIQ
-	 wuew5xRVU2m+sUCpgV5WNv6G6Z2J3jlGc7qcmprjxBuInSBhHRGP32eJYY7aF4Za2G
-	 56suK4RbGZLd6mmSwWIYwg9qyB8O9M7lyENITC6vpJF6FRwJjPg8sma5TjMtdt7aKZ
-	 7yqSitWsMo3wz5nKU6bvay1ypJPdwz4tqPzRDey44MYfHRMkmEwm5QPg6FyAu80ysJ
-	 jxkhtpTDpBUSw==
+	s=k20201202; t=1670094106;
+	bh=ItYMQ/1jSvCAEDxE87LOVRpnEAcK3AZkSpUtEh5qRoc=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=jEE01nnhtu6kR/Nr3LSa4BKfGyv5jIMq/qcPpZbDBBgKAmuZKCB/mZX4hOowV9M6Z
+	 WiNbnzbEnfgHFMwSfX5SCaAQpEsvKz/Kf/4EM8XhswW199RYPxnaXByca6vn63VLFW
+	 ioIR7zMXETIeUafObrY2UhBqlrXuDdjZYhXlxKG68K7+NFAgIkuwO3ak/o2PalHsu8
+	 7hG5pvPfwM/V7ed/ZEjDlCFfv+uhkAzygXl8AYhbcLqYcXQm+wS+eqaUTRhbE7xv4N
+	 Y2D0UBPOK8ws+aFR4mC4freAzqxRQoPEGj6bRDPtu3HF4BqJ2/baRJQ8/slr77rNFM
+	 Hq5Rfxghz1NBw==
 From: SeongJae Park <sj@kernel.org>
-To: Andrew Morton <akpm@linux-foundation.org>
-Cc: SeongJae Park <sj@kernel.org>,
-	Shuah Khan <shuah@kernel.org>,
-	damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	linux-kselftest@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH] selftests/damon: test removed scheme sysfs dir access bug
-Date: Thu,  1 Dec 2022 17:08:34 +0000
-Message-Id: <20221201170834.62823-1-sj@kernel.org>
+To: SeongJae Park <sj@kernel.org>
+Cc: Greg KH <gregkh@linuxfoundation.org>,
+	linux-kernel@vger.kernel.org,
+	akpm@linux-foundation.org,
+	stable-commits@vger.kernel.org,
+	yajun.deng@linux.dev,
+	damon@lists.linux.dev
+Subject: Re: Patch "mm/damon/sysfs: fix wrong empty schemes assumption under online tuning in damon_sysfs_set_schemes()" has been added to the 6.0-stable tree
+Date: Sat,  3 Dec 2022 19:01:43 +0000
+Message-Id: <20221203190143.159947-1-sj@kernel.org>
 X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20221203185854.159885-1-sj@kernel.org>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -35,99 +37,40 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-A DAMON sysfs user could start DAMON with a scheme, remove the sysfs
-directory for the scheme, and then ask stats or schemes tried regions
-update.  The related logic were not aware of the already removed
-directory situation, so it was able to results in invalid memory
-accesses.  The fix has made with commit 8468b486612c
-("mm/damon/sysfs-schemes: skip stats update if the scheme directory is
-removed"), though.  Add a selftest to avoid such kind of bugs be
-introduced again.
+Cc-ing Yajun Deng (author of the commit that this patch depends on for build)
+and damon@lists.linux.dev.
 
-Signed-off-by: SeongJae Park <sj@kernel.org>
----
- tools/testing/selftests/damon/Makefile        |  2 +-
- .../damon/sysfs_update_removed_scheme_dir.sh  | 58 +++++++++++++++++++
- 2 files changed, 59 insertions(+), 1 deletion(-)
- create mode 100644 tools/testing/selftests/damon/sysfs_update_removed_scheme_dir.sh
+On Sat, 3 Dec 2022 18:58:54 +0000 SeongJae Park <sj@kernel.org> wrote:
 
-diff --git a/tools/testing/selftests/damon/Makefile b/tools/testing/selftests/damon/Makefile
-index 838a8e49f77b..b71247ba7196 100644
---- a/tools/testing/selftests/damon/Makefile
-+++ b/tools/testing/selftests/damon/Makefile
-@@ -8,7 +8,7 @@ TEST_PROGS = debugfs_attrs.sh debugfs_schemes.sh debugfs_target_ids.sh
- TEST_PROGS += debugfs_empty_targets.sh debugfs_huge_count_read_write.sh
- TEST_PROGS += debugfs_duplicate_context_creation.sh
- TEST_PROGS += debugfs_rm_non_contexts.sh
--TEST_PROGS += sysfs.sh
-+TEST_PROGS += sysfs.sh sysfs_update_removed_scheme_dir.sh
- TEST_PROGS += reclaim.sh lru_sort.sh
- 
- include ../lib.mk
-diff --git a/tools/testing/selftests/damon/sysfs_update_removed_scheme_dir.sh b/tools/testing/selftests/damon/sysfs_update_removed_scheme_dir.sh
-new file mode 100644
-index 000000000000..ade35576e748
---- /dev/null
-+++ b/tools/testing/selftests/damon/sysfs_update_removed_scheme_dir.sh
-@@ -0,0 +1,58 @@
-+#!/bin/bash
-+# SPDX-License-Identifier: GPL-2.0
-+
-+# Kselftest framework requirement - SKIP code is 4.
-+ksft_skip=4
-+
-+if [ $EUID -ne 0 ]
-+then
-+	echo "Run as root"
-+	exit $ksft_skip
-+fi
-+
-+damon_sysfs="/sys/kernel/mm/damon/admin"
-+if [ ! -d "$damon_sysfs" ]
-+then
-+	echo "damon sysfs not found"
-+	exit $ksft_skip
-+fi
-+
-+# clear log
-+dmesg -C
-+
-+# start DAMON with a scheme
-+echo 1 > "$damon_sysfs/kdamonds/nr_kdamonds"
-+echo 1 > "$damon_sysfs/kdamonds/0/contexts/nr_contexts"
-+echo "vaddr" > "$damon_sysfs/kdamonds/0/contexts/0/operations"
-+echo 1 > "$damon_sysfs/kdamonds/0/contexts/0/targets/nr_targets"
-+echo $$ > "$damon_sysfs/kdamonds/0/contexts/0/targets/0/pid_target"
-+echo 1 > "$damon_sysfs/kdamonds/0/contexts/0/schemes/nr_schemes"
-+scheme_dir="$damon_sysfs/kdamonds/0/contexts/0/schemes/0"
-+echo 4096000 > "$scheme_dir/access_pattern/sz/max"
-+echo 20 > "$scheme_dir/access_pattern/nr_accesses/max"
-+echo 1024 > "$scheme_dir/access_pattern/age/max"
-+echo "on" > "$damon_sysfs/kdamonds/0/state"
-+sleep 0.3
-+
-+# remove scheme sysfs dir
-+echo 0 > "$damon_sysfs/kdamonds/0/contexts/0/schemes/nr_schemes"
-+
-+# try to update stat of already removed scheme sysfs dir
-+echo "update_schemes_stats" > "$damon_sysfs/kdamonds/0/state"
-+if dmesg | grep -q BUG
-+then
-+	echo "update_schemes_stats triggers a kernel bug"
-+	dmesg
-+	exit 1
-+fi
-+
-+# try to update tried regions of already removed scheme sysfs dir
-+echo "update_schemes_tried_regions" > "$damon_sysfs/kdamonds/0/state"
-+if dmesg | grep -q BUG
-+then
-+	echo "update_schemes_tried_regions triggers a kernel bug"
-+	dmesg
-+	exit 1
-+fi
-+
-+echo "off" > "$damon_sysfs/kdamonds/0/state"
--- 
-2.25.1
-
+> Hi Greg,
+> 
+> On Sat, 3 Dec 2022 12:36:39 +0100 Greg KH <gregkh@linuxfoundation.org> wrote:
+> 
+> > On Sat, Dec 03, 2022 at 12:23:48PM +0100, gregkh@linuxfoundation.org wrote:
+> > > 
+> > > This is a note to let you know that I've just added the patch titled
+> > > 
+> > >     mm/damon/sysfs: fix wrong empty schemes assumption under online tuning in damon_sysfs_set_schemes()
+> > > 
+> > > to the 6.0-stable tree which can be found at:
+> > >     http://www.kernel.org/git/?p=linux/kernel/git/stable/stable-queue.git;a=summary
+> > > 
+> > > The filename of the patch is:
+> > >      mm-damon-sysfs-fix-wrong-empty-schemes-assumption-under-online-tuning-in-damon_sysfs_set_schemes.patch
+> > > and it can be found in the queue-6.0 subdirectory.
+> > > 
+> > > If you, or anyone else, feels it should not be added to the stable tree,
+> > > please let <stable@vger.kernel.org> know about it.
+> > > 
+> > 
+> > Nope, breaks the build, now dropped.
+> 
+> Thank you for letting me know this.
+> 
+> It needs commit f5a79d7c0c87 ("mm/damon: introduce struct
+> damos_access_pattern") to build.  Sorry for not noticing this before.  Could
+> you please add the commits together?
+> 
+> 
+> Thanks,
+> SJ
