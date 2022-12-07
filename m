@@ -1,32 +1,53 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f49.google.com (mail-pj1-f49.google.com [209.85.216.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D4F615CAF
-	for <damon@lists.linux.dev>; Mon,  5 Dec 2022 23:08:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DF90C4347C;
-	Mon,  5 Dec 2022 23:08:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1670281722;
-	bh=wsgdvbT/35uxHZu2m3onVtLPaAGvmOTx9y/8CzTLOOI=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YxuueYy6qYjuBFiqjlcV+iqd+nixVioCIjejoFvrmzrck0sfJmflNmEaibMAmS2cK
-	 saItIFUp+3KFIBvFbvXO4X8DAPx0A0haX9DFhplRRGpPVLocjF4JtbjhTiJfSzc5n4
-	 KC1AWOFwDyT8pNFPPVXWgdQltdhDCdQDIMAQ0ItUrQJ3WeN97A/G/7xjUJBYC0ICV8
-	 C/RsAqjJmmbNvecUyMc3T5YA6zt4xMvYGDdAhb8g/FhdBcgTB26jeXdXCSFNBao4++
-	 CMNsro6B6M1cmI2DeQVZyu4oEdlepLiwuFz1f/NVBj5ideR96UWuwDJTUQPaD/+9y8
-	 H+hLjnRCAI1Kw==
-From: SeongJae Park <sj@kernel.org>
-To: Andrew Morton <akpm@linux-foundation.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 586DB17E
+	for <damon@lists.linux.dev>; Wed,  7 Dec 2022 00:22:10 +0000 (UTC)
+Received: by mail-pj1-f49.google.com with SMTP id z8-20020a17090abd8800b00219ed30ce47so5356859pjr.3
+        for <damon@lists.linux.dev>; Tue, 06 Dec 2022 16:22:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=z7lC7jlSvTqXo19/2/T5KkOA5f3nGD9WS088sLB+XjE=;
+        b=UXS4sbGRHT2e9Ver1b4tiyqfrLxdn6Ag3POCRrJqT382zI7se7rl4hJrM2DsFIkoXV
+         yxD0v+yf6FMQ2H/3YaDW1xsoNQ7hnsIBvLVMBX5If6Lrsk4OXCIqFHO7ZrmbXcd005Ip
+         jhfM/qhJ+Tlx44J7oBWSmkXyPFf5FpmnYnMgyB+0AAN4F7z8LSGLhAIc2akKouqF2927
+         IFP9v43gNWgaKgQgx+NcpaU4xpVzx3G/FuO9ZHyddwtnjBRI438gilUsgvzPX2NeZnm/
+         A/NdJNSt4qBU3x32XILuU5yDrA9j6ksOTf1bFDxZaYcHYQ5S76Bvx0zWkYrfnmwrOqH8
+         sIUA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=z7lC7jlSvTqXo19/2/T5KkOA5f3nGD9WS088sLB+XjE=;
+        b=5mx457s+PsUy3SoULZvIck2hHH5RthwnVbfOuKqTmbTHeZDlEI/xGqt8+U6nDNcHnQ
+         TgW6rDlOVae/vFiqYvcyZ2do0R/K/9r0vvibHlwIzD4nEIhOA7yWxIke2ejS27oIg56c
+         pZEZErqhjuwP4yqpGk8MbN2YsBNebYqIRwveowLFZmRs8v07dp1uIQi01rr7UpughuW9
+         xvZtdqWqhUCi1K8Js8KWL6tHCz8Wh4DHQ9RNIudLe1tuihPCdz5LEhhDp8qqEnAgPm8y
+         OFJ/PVSqLijldwDz6AXg/Z5p9cPaW8xMAunF0jaCllRky7lySoNDqYMN+WZ1SZWJ+pUg
+         0bng==
+X-Gm-Message-State: ANoB5pnFUl7nEYDCMW+hN0c4JmLIIDilCfx4XV+oHq7EiwDGB3TFmt65
+	SVz0ojKYDrLk8CSZXgYCdEs=
+X-Google-Smtp-Source: AA0mqf6z2NFqTV4MCD+CBVSzYVkEfy1O6XiPtDBoUQ0qnPog5yxgEMm9VDGL/OH52IwW/TwcKJ0ygA==
+X-Received: by 2002:a17:90a:5d08:b0:218:770c:9a40 with SMTP id s8-20020a17090a5d0800b00218770c9a40mr80245124pji.158.1670372529672;
+        Tue, 06 Dec 2022 16:22:09 -0800 (PST)
+Received: from fedora.hsd1.ca.comcast.net ([2601:644:8002:1c20::2c6b])
+        by smtp.googlemail.com with ESMTPSA id i92-20020a17090a3de500b00218ec4ff0d4sm13369459pjc.6.2022.12.06.16.22.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 06 Dec 2022 16:22:09 -0800 (PST)
+From: "Vishal Moola (Oracle)" <vishal.moola@gmail.com>
+To: linux-mm@kvack.org
 Cc: damon@lists.linux.dev,
-	linux-mm@kvack.org,
 	linux-kernel@vger.kernel.org,
-	SeongJae Park <sj@kernel.org>
-Subject: [PATCH 11/11] Docs/ABI/damon: document scheme filters files
-Date: Mon,  5 Dec 2022 23:08:30 +0000
-Message-Id: <20221205230830.144349-12-sj@kernel.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20221205230830.144349-1-sj@kernel.org>
-References: <20221205230830.144349-1-sj@kernel.org>
+	akpm@linux-foundation.org,
+	sj@kernel.org,
+	"Vishal Moola (Oracle)" <vishal.moola@gmail.com>
+Subject: [PATCH 0/3] Convert deactivate_page() to deactivate_folio()
+Date: Tue,  6 Dec 2022 16:21:55 -0800
+Message-Id: <20221207002158.418789-1-vishal.moola@gmail.com>
+X-Mailer: git-send-email 2.38.1
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -35,54 +56,21 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Document newly added DAMON sysfs interface files for DAMOS filtering on
-the DAMON ABI document.
+Deactivate_page() has already been converted to use folios. This patch
+series modifies the callers of deactivate_page() to use folios as well
+so that deactivate_page() can take in a folio instead.
 
-Signed-off-by: SeongJae Park <sj@kernel.org>
----
- .../ABI/testing/sysfs-kernel-mm-damon         | 29 +++++++++++++++++++
- 1 file changed, 29 insertions(+)
+Vishal Moola (Oracle) (3):
+  madvise: Convert madvise_cold_or_pageout_pte_range() to use folios
+  damon: Convert damon_pa_mark_accessed_or_deactivate() to use folios
+  swap: Convert deactivate_page() to deactivate_folio()
 
-diff --git a/Documentation/ABI/testing/sysfs-kernel-mm-damon b/Documentation/ABI/testing/sysfs-kernel-mm-damon
-index 13397b853692..2744f21b5a6b 100644
---- a/Documentation/ABI/testing/sysfs-kernel-mm-damon
-+++ b/Documentation/ABI/testing/sysfs-kernel-mm-damon
-@@ -258,6 +258,35 @@ Contact:	SeongJae Park <sj@kernel.org>
- Description:	Writing to and reading from this file sets and gets the low
- 		watermark of the scheme in permil.
- 
-+What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/schemes/<S>/filters/nr_filters
-+Date:		Dec 2022
-+Contact:	SeongJae Park <sj@kernel.org>
-+Description:	Writing a number 'N' to this file creates the number of
-+		directories for setting filters of the scheme named '0' to
-+		'N-1' under the filters/ directory.
-+
-+What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/schemes/<S>/filters/<F>/type
-+Date:		Dec 2022
-+Contact:	SeongJae Park <sj@kernel.org>
-+Description:	Writing to and reading from this file sets and gets the type of
-+		the memory of the interest.  'anon' for anonymous pages, or
-+		'memcg' for specific memory cgroup can be written and read.
-+
-+What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/schemes/<S>/filters/<F>/memcg_path
-+Date:		Dec 2022
-+Contact:	SeongJae Park <sj@kernel.org>
-+Description:	If 'memcg' is written to the 'type' file, writing to and
-+		reading from this file sets and gets the path to the memory
-+		cgroup of the interest.
-+
-+What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/schemes/<S>/filters/<F>/matching
-+Date:		Dec 2022
-+Contact:	SeongJae Park <sj@kernel.org>
-+Description:	Writing 'Y' or 'N' to this file sets whether to filter out
-+		pages that do or do not match to the 'type' and 'memcg_path',
-+		respectively.  Filter out means the action of the scheme will
-+		not be applied to.
-+
- What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/schemes/<S>/stats/nr_tried
- Date:		Mar 2022
- Contact:	SeongJae Park <sj@kernel.org>
+ include/linux/swap.h |  2 +-
+ mm/damon/paddr.c     | 11 ++++--
+ mm/madvise.c         | 88 ++++++++++++++++++++++----------------------
+ mm/swap.c            | 14 +++----
+ 4 files changed, 59 insertions(+), 56 deletions(-)
+
 -- 
-2.25.1
+2.38.1
 
