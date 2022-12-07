@@ -1,153 +1,61 @@
-Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from casper.infradead.org (casper.infradead.org [90.155.50.34])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68E688F51
-	for <damon@lists.linux.dev>; Wed,  7 Dec 2022 23:02:01 +0000 (UTC)
-Received: by mail-pl1-f180.google.com with SMTP id y17so18477548plp.3
-        for <damon@lists.linux.dev>; Wed, 07 Dec 2022 15:02:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=nurryG7gVBJWg4R3e/q3KZp9RxkJsYW9MoP7t/y1faI=;
-        b=QWjuDvsx7JlXe9jXENwXVfaXVWdDN8pp2PRVifSfiC5uewfqCcXo7a7QY5NClKN4jo
-         XIYubaBMmt41X0S6tkEosOyXPlmKpSnefXHj4lrdnAshM3ZqoRsqR/RWso9mHzpVH2EP
-         iyucwJCvCzBxNiS0DZOrs2OZQscCfv+Vqs9jHd/QNNIevSm+PEY54R+KQI0Exh/tMikx
-         qtdFlLWc4RdRRyygzeNnWWu9/2rHRjBFNCd+iV5E2Thc6eAcGtYHsG3IJk4RraRP8FB6
-         kttIG2u/RDgKJ/UB3+uT0UUAbXapXVCFd+u44YZpTHrUfNzXtdq4Pif7xxDj1ewuJ6pR
-         jg4A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=nurryG7gVBJWg4R3e/q3KZp9RxkJsYW9MoP7t/y1faI=;
-        b=h+LRz0Npmo4ABzbka1op+07iwY7PZktgYBcCFAB8KvfYIMWXJ75j9/Js9nNjKcYYMO
-         K9UiSLf/SclL85trkic0bGonpVbB4Z4K42EA6k3/NrKulUMHlOBGf1eeWiIf99aOcG4a
-         kc1prCsOwrPPzq0/OZa6CAJOXu2663mT2J/cY/R9m5SKULPbkTAdzTXo0TuTvRw2tN24
-         PjpbBGHcq5cS5XnRaa3LfTj1zyJxlrYGCSAdaoKxL4KqXWvs0DckPCB1KuHKxcRTjLBv
-         FxuiJlqqoKTYlMrxZ8NmqJ2dAa2oWt7o+7e3v+e8mtcLtxK+pnTTLU0WtHKb2KBV/sb1
-         /aiQ==
-X-Gm-Message-State: ANoB5pkGqFTYUCwRBp8jlkwLNu6mpW1PyDoTkeV3cqx6Y9GIeZ3YUuUF
-	5KCM2ngHEDtdHue/Xp7DXys=
-X-Google-Smtp-Source: AA0mqf4LqJeISyz/cbhdlvWeu+sYEbZmsVtecPsU/yjTK5+i5Cv6K7CeBXEmtSozwv/WhsZmrZ747A==
-X-Received: by 2002:a17:90b:1913:b0:219:396c:9e30 with SMTP id mp19-20020a17090b191300b00219396c9e30mr1056306pjb.20.1670454120814;
-        Wed, 07 Dec 2022 15:02:00 -0800 (PST)
-Received: from fedora.hsd1.ca.comcast.net ([2601:644:8002:1c20::2c6b])
-        by smtp.googlemail.com with ESMTPSA id pc16-20020a17090b3b9000b00212cf2fe8c3sm5411033pjb.1.2022.12.07.15.01.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 07 Dec 2022 15:02:00 -0800 (PST)
-From: "Vishal Moola (Oracle)" <vishal.moola@gmail.com>
-To: linux-mm@kvack.org
-Cc: damon@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	akpm@linux-foundation.org,
-	sj@kernel.org,
-	"Vishal Moola (Oracle)" <vishal.moola@gmail.com>
-Subject: [PATCH v2 3/3] mm/swap: Convert deactivate_page() to folio_deactivate()
-Date: Wed,  7 Dec 2022 15:01:52 -0800
-Message-Id: <20221207230152.22938-4-vishal.moola@gmail.com>
-X-Mailer: git-send-email 2.38.1
-In-Reply-To: <20221207230152.22938-1-vishal.moola@gmail.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFFB58F51
+	for <damon@lists.linux.dev>; Wed,  7 Dec 2022 23:09:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=casper.20170209; h=In-Reply-To:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description;
+	bh=xqHiRihBJ8iX0F/IkBiJScs1HhKDLwhRskwhnIf3MT8=; b=Z2+ynanTTY8D9mWJ9eqW9lYfd5
+	Xwe0VmlCYl+gVh/rHRHIuDPnWB2VRRrvl9FJ05OxNsb2YI1exSW+EYKuNiji4yv1pr7+xiJeQ/XzK
+	N79p6UQhttIVKpVjUJjuC2HCHkFpcwHzx7ky9ym0f8+cONc512UwqHcHtMkuFzgMJpfpoaW4lqYwF
+	+6wr3GhOMPcFQRg4QMhzpXbWCiAj/LmzOC/Gh2l3i9eTVHDF2OLB8UbHvY7BuBVYDgUEMIJiCAXnr
+	OzS4OTYhnzcVKOBDp/YE0jTGezZFOZ8GWUcdwvY9ovgQob+KHkwDkqpsUiXApDOPq4WEBQShgAwle
+	1Aa32cVQ==;
+Received: from willy by casper.infradead.org with local (Exim 4.94.2 #2 (Red Hat Linux))
+	id 1p33Y7-006IRG-Nb; Wed, 07 Dec 2022 23:09:59 +0000
+Date: Wed, 7 Dec 2022 23:09:59 +0000
+From: Matthew Wilcox <willy@infradead.org>
+To: "Vishal Moola (Oracle)" <vishal.moola@gmail.com>
+Cc: linux-mm@kvack.org, damon@lists.linux.dev, linux-kernel@vger.kernel.org,
+	akpm@linux-foundation.org, sj@kernel.org
+Subject: Re: [PATCH v2 1/3] madvise: Convert
+ madvise_cold_or_pageout_pte_range() to use folios
+Message-ID: <Y5EdR1l1Ho3FyrY3@casper.infradead.org>
 References: <20221207230152.22938-1-vishal.moola@gmail.com>
+ <20221207230152.22938-2-vishal.moola@gmail.com>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20221207230152.22938-2-vishal.moola@gmail.com>
 
-Deactivate_page() has already been converted to use folios, this change
-converts it to take in a folio argument instead of calling page_folio().
-It also renames the function folio_deactivate() to be more consistent
-with other folio functions.
+On Wed, Dec 07, 2022 at 03:01:50PM -0800, Vishal Moola (Oracle) wrote:
+> @@ -424,28 +425,29 @@ static int madvise_cold_or_pageout_pte_range(pmd_t *pmd,
+>  		page = vm_normal_page(vma, addr, ptent);
+>  		if (!page || is_zone_device_page(page))
+>  			continue;
+> +		folio = page_folio(page);
 
-Signed-off-by: Vishal Moola (Oracle) <vishal.moola@gmail.com>
----
- include/linux/swap.h |  2 +-
- mm/damon/paddr.c     |  2 +-
- mm/madvise.c         |  4 ++--
- mm/swap.c            | 14 ++++++--------
- 4 files changed, 10 insertions(+), 12 deletions(-)
+Maybe we should add a vm_normal_folio() first?  That way we could get
+rid of the 'struct page' in this function entirely.
 
-diff --git a/include/linux/swap.h b/include/linux/swap.h
-index a18cf4b7c724..94aa709ed933 100644
---- a/include/linux/swap.h
-+++ b/include/linux/swap.h
-@@ -409,7 +409,7 @@ extern void lru_add_drain(void);
- extern void lru_add_drain_cpu(int cpu);
- extern void lru_add_drain_cpu_zone(struct zone *zone);
- extern void lru_add_drain_all(void);
--extern void deactivate_page(struct page *page);
-+extern void folio_deactivate(struct folio *folio);
- extern void mark_page_lazyfree(struct page *page);
- extern void swap_setup(void);
- 
-diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
-index 73548bc82297..6b36de1396a4 100644
---- a/mm/damon/paddr.c
-+++ b/mm/damon/paddr.c
-@@ -247,7 +247,7 @@ static inline unsigned long damon_pa_mark_accessed_or_deactivate(
- 		if (mark_accessed)
- 			folio_mark_accessed(folio);
- 		else
--			deactivate_page(&folio->page);
-+			folio_deactivate(folio);
- 		folio_put(folio);
- 		applied += folio_nr_pages(folio);
- 	}
-diff --git a/mm/madvise.c b/mm/madvise.c
-index b323672c969d..9667d052b52f 100644
---- a/mm/madvise.c
-+++ b/mm/madvise.c
-@@ -397,7 +397,7 @@ static int madvise_cold_or_pageout_pte_range(pmd_t *pmd,
- 					list_add(&folio->lru, &folio_list);
- 			}
- 		} else
--			deactivate_page(&folio->page);
-+			folio_deactivate(folio);
- huge_unlock:
- 		spin_unlock(ptl);
- 		if (pageout)
-@@ -487,7 +487,7 @@ static int madvise_cold_or_pageout_pte_range(pmd_t *pmd,
- 					list_add(&folio->lru, &folio_list);
- 			}
- 		} else
--			deactivate_page(&folio->page);
-+			folio_deactivate(folio);
- 	}
- 
- 	arch_leave_lazy_mmu_mode();
-diff --git a/mm/swap.c b/mm/swap.c
-index 955930f41d20..9cc8215acdbb 100644
---- a/mm/swap.c
-+++ b/mm/swap.c
-@@ -720,17 +720,15 @@ void deactivate_file_folio(struct folio *folio)
- }
- 
- /*
-- * deactivate_page - deactivate a page
-- * @page: page to deactivate
-+ * folio_deactivate - deactivate a folio
-+ * @folio: folio to deactivate
-  *
-- * deactivate_page() moves @page to the inactive list if @page was on the active
-- * list and was not an unevictable page.  This is done to accelerate the reclaim
-- * of @page.
-+ * folio_deactivate() moves @folio to the inactive list if @folio was on the
-+ * active list and was not unevictable. This is done to accelerate the
-+ * reclaim of @folio.
-  */
--void deactivate_page(struct page *page)
-+void folio_deactivate(struct folio *folio)
- {
--	struct folio *folio = page_folio(page);
--
- 	if (folio_test_lru(folio) && !folio_test_unevictable(folio) &&
- 	    (folio_test_active(folio) || lru_gen_enabled())) {
- 		struct folio_batch *fbatch;
--- 
-2.38.1
+> @@ -453,13 +455,13 @@ static int madvise_cold_or_pageout_pte_range(pmd_t *pmd,
+>  		}
+>  
+>  		/*
+> -		 * Do not interfere with other mappings of this page and
+> -		 * non-LRU page.
+> +		 * Do not interfere with other mappings of this folio and
+> +		 * non-LRU folio.
+>  		 */
+> -		if (!PageLRU(page) || page_mapcount(page) != 1)
+> +		if (!folio_test_lru(folio))
+
+Why has the test for folio_mapcount() disappeared?
 
