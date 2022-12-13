@@ -1,33 +1,26 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from szxga02-in.huawei.com (szxga02-in.huawei.com [45.249.212.188])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2711915B0
-	for <damon@lists.linux.dev>; Tue, 13 Dec 2022 01:52:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54BCAC433EF;
-	Tue, 13 Dec 2022 01:52:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1670896352;
-	bh=JUFHz4G5BIAlnJM6ImqLTsfHZswsJfOF1/964nJvH/8=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XjXHx894XlOK6zJbIPyoIeyLCh6k1UpwDBgP+ZsPaQLlqSy/kK003WUEVvl6QaqY6
-	 4x02NlRCc/MmEuYj3+No43znqYGu7hVIrwW5xP7a/KuPf76OmsmSddDMlAdq6GAetw
-	 H6DA/hhyXWaHDCNvt3jAD1DiqvrbaKtHen2azV+WOAc65QQPPH7JPdNYSwdQNBMAAa
-	 OmscaRevzmmhh9XFtVXOuJ6rO90bewwNKUnsX5HuZBaBQ/d+3d3HayLqCTF4cR318/
-	 H7vOyVVaZF1m7jJEPpnjdgbaEdIEDSeG1saWvkDMizTElU61jPkC5xYLCneQ4/cpS1
-	 DzgarKsSQU/Hw==
-From: SeongJae Park <sj@kernel.org>
-To: SeongJae Park <sj@kernel.org>
-Cc: damon@lists.linux.dev,
-	linux-damon@amazon.com,
-	linux-damon-trial@amazon.com,
-	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: DAMON Beer/Coffee/Tea chat series
-Date: Tue, 13 Dec 2022 01:52:30 +0000
-Message-Id: <20221213015230.3010-1-sj@kernel.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20220810225102.124459-1-sj@kernel.org>
-References: 
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CED4E2567
+	for <damon@lists.linux.dev>; Tue, 13 Dec 2022 09:11:21 +0000 (UTC)
+Received: from dggpemm500001.china.huawei.com (unknown [172.30.72.54])
+	by szxga02-in.huawei.com (SkyGuard) with ESMTP id 4NWXlH1vCJzRph1;
+	Tue, 13 Dec 2022 17:10:19 +0800 (CST)
+Received: from localhost.localdomain.localdomain (10.175.113.25) by
+ dggpemm500001.china.huawei.com (7.185.36.107) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2375.34; Tue, 13 Dec 2022 17:11:18 +0800
+From: Kefeng Wang <wangkefeng.wang@huawei.com>
+To: Andrew Morton <akpm@linux-foundation.org>, David Hildenbrand
+	<david@redhat.com>, Oscar Salvador <osalvador@suse.de>, SeongJae Park
+	<sj@kernel.org>
+CC: <linux-mm@kvack.org>, <linux-kernel@vger.kernel.org>,
+	<damon@lists.linux.dev>, <vishal.moola@gmail.com>, <willy@infradead.org>,
+	Kefeng Wang <wangkefeng.wang@huawei.com>
+Subject: [PATCH -next 0/8] mm: converted page idle and damon to use folios
+Date: Tue, 13 Dec 2022 17:27:27 +0800
+Message-ID: <20221213092735.187924-1-wangkefeng.wang@huawei.com>
+X-Mailer: git-send-email 2.35.3
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -35,32 +28,42 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.175.113.25]
+X-ClientProxiedBy: dggems703-chm.china.huawei.com (10.3.19.180) To
+ dggpemm500001.china.huawei.com (7.185.36.107)
+X-CFilter-Loop: Reflected
 
-Hello,
+Introduce pfn_to_online_folio() to convert page idle and damon feature
+to use folios.
 
-On Wed, 10 Aug 2022 22:51:02 +0000 SeongJae Park <sj@kernel.org> wrote:
+For page idle feature, should we rename file name and Kconfig to folio
+too, options?
 
-> Hello,
-> 
-> 
-> In short, I'd like to start an open, regular, and informal virtual bi-weekly
-> meeting series for DAMON community.
-> 
-> Important links and dates
-> -------------------------
-> 
-> Location: https://meet.google.com/ndx-evoc-gbu
-> Agenda: https://docs.google.com/document/d/1v43Kcj3ly4CYqmAkMaZzLiM2GEnWfgdGbZAH3mi2vpM/edit?usp=sharing
+Note: this is based on next-2022113, and some context depends on
+patchset[1], please help us to review, thanks.
 
-This is a reminder for the next instance of the chat series.  Next instance
-will be 2022-12-13 (Tue) 09:30 PST.  You can show proposed agendas for the
-chat, or propose your own using the above Google doc.
+[1] https://lore.kernel.org/linux-mm/20221207230152.22938-1-vishal.moola@gmail.com/
 
-According to the original scheduling, the one after next instance would be
-2022-12-26.  Because the day is during the holiday season, I've canceled it.
-So, the tomorrow one will be the last instance of this chat series for 2022.
-Hope to meet some of you :)
+Kefeng Wang (8):
+  mm: memory_hotplug: add pfn_to_online_folio()
+  mm: page_idle: Convert page idle to use folios
+  mm: huge_memory: convert split_huge_pages_all() to use folios
+  mm: damon: add temporary damon_get_folio()
+  mm: damon: convert damon_ptep/pmdp_mkold() to use folios
+  mm: damon: paddr: convert damon_pa_*() to use folios
+  mm: damon: vaddr: convert damon_young_pmd_entry() to use folio
+  mm: damon: remove unneed damon_get_page()
 
+ include/linux/memory_hotplug.h |  7 +++
+ mm/damon/ops-common.c          | 38 +++++++-------
+ mm/damon/ops-common.h          |  3 +-
+ mm/damon/paddr.c               | 44 +++++++---------
+ mm/damon/vaddr.c               | 20 ++++----
+ mm/huge_memory.c               | 22 ++++----
+ mm/page_idle.c                 | 91 ++++++++++++++++------------------
+ 7 files changed, 112 insertions(+), 113 deletions(-)
 
-Thanks,
-SJ
+-- 
+2.35.3
+
