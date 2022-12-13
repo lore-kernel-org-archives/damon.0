@@ -1,215 +1,109 @@
-Received: from szxga02-in.huawei.com (szxga02-in.huawei.com [45.249.212.188])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1F982C9D;
-	Tue, 13 Dec 2022 11:36:08 +0000 (UTC)
-Received: from dggpemm500001.china.huawei.com (unknown [172.30.72.53])
-	by szxga02-in.huawei.com (SkyGuard) with ESMTP id 4NWbyK4zW9zRpqd;
-	Tue, 13 Dec 2022 19:35:05 +0800 (CST)
-Received: from [10.174.177.243] (10.174.177.243) by
- dggpemm500001.china.huawei.com (7.185.36.107) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2375.34; Tue, 13 Dec 2022 19:36:04 +0800
-Message-ID: <3312eb55-6ce5-67e3-389f-4937002423cd@huawei.com>
-Date: Tue, 13 Dec 2022 19:36:04 +0800
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EAC02C9D
+	for <damon@lists.linux.dev>; Tue, 13 Dec 2022 11:40:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1670931633;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=c/wKFqPacuSwbRiY6CcY0zi15fYAnhBFmQsx8ZQhcxk=;
+	b=RyUmFOFpPPXOL3AnffGi/AKV5Oh84rQpHhNwAEs0Q+aettOg8+ExLEIG6QzAxBqyWMzTp/
+	xKXB1SDv9B/91juUXp0K/YTF+286n3EDiHZ4nPwOVA2tyqCRNvKZg8516tGgGOLI0LLotM
+	GUa3xYvFYpHPMlcG1oSMlFsp+5C4oDY=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_128_GCM_SHA256) id
+ us-mta-442-RaAUar2iPhST3fEp1x3VYg-1; Tue, 13 Dec 2022 06:40:30 -0500
+X-MC-Unique: RaAUar2iPhST3fEp1x3VYg-1
+Received: by mail-wm1-f72.google.com with SMTP id n8-20020a05600c294800b003d1cc68889dso2905120wmd.7
+        for <damon@lists.linux.dev>; Tue, 13 Dec 2022 03:40:29 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:organization:from:references
+         :cc:to:content-language:subject:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=c/wKFqPacuSwbRiY6CcY0zi15fYAnhBFmQsx8ZQhcxk=;
+        b=JVA/8rwHWKFfXVO2cSv2n+ULwpWzJAZ5I73YQvJnbbFXyGD5btzwWcCtvCSJFNgR92
+         mFtchXDQPXw6+k6f2aZpA0Os79cb2TuhKz973NIaRTgqJXPjIxtyffdk39pL8qAeaCTu
+         0yPjjqj0L6Za6ZWjWpJ6/Sk6QIxYPsUl7IU8w/pcRa48TwSWek60g/ZvtvR2I4jpDs5P
+         SU+svPZOsAloHWNxVl+jkbjKbb/sjUPjzWTn+381kbit+QnXlQSD5kkVVcn7whFR9SFt
+         aI8CHdeIPYaIRY201f/0ip0RCE1Cq+ViFrkghLGeYUxDgir4IP1o+fbr0mFX0kJBy3Ec
+         lKpQ==
+X-Gm-Message-State: ANoB5pkJSg7otxasth76y6jmXdhJ/r1oXQj0v2NT1NTQxNba8o9G2zAI
+	eXnWYQfvjqthufs+6hcC7witVdf/9vmdf0KZKksJxkhqH5aUG/XYQoNW4NwvmUav/wc0GPoLW3m
+	s28MjaDJxcYnv8mQ=
+X-Received: by 2002:a05:600c:5109:b0:3cf:70e3:a6ad with SMTP id o9-20020a05600c510900b003cf70e3a6admr15630453wms.31.1670931628940;
+        Tue, 13 Dec 2022 03:40:28 -0800 (PST)
+X-Google-Smtp-Source: AA0mqf6lKK8gIol22aYC/DrLGmzGYqhbxO4A+uFiCJajED3EbHfMJpJ8g1TU4b4n6DqANU2jz03mnQ==
+X-Received: by 2002:a05:600c:5109:b0:3cf:70e3:a6ad with SMTP id o9-20020a05600c510900b003cf70e3a6admr15630427wms.31.1670931628479;
+        Tue, 13 Dec 2022 03:40:28 -0800 (PST)
+Received: from ?IPV6:2003:cb:c702:6e00:8b72:420e:df27:90c2? (p200300cbc7026e008b72420edf2790c2.dip0.t-ipconnect.de. [2003:cb:c702:6e00:8b72:420e:df27:90c2])
+        by smtp.gmail.com with ESMTPSA id k18-20020a05600c1c9200b003d22528decesm8899801wms.43.2022.12.13.03.40.27
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 13 Dec 2022 03:40:27 -0800 (PST)
+Message-ID: <f07d1c95-f13c-682b-0519-0b137ccdc631@redhat.com>
+Date: Tue, 13 Dec 2022 12:40:26 +0100
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.5.1
 Subject: Re: [PATCH -next 1/8] mm: memory_hotplug: add pfn_to_online_folio()
+To: Kefeng Wang <wangkefeng.wang@huawei.com>,
+ Andrew Morton <akpm@linux-foundation.org>, Oscar Salvador
+ <osalvador@suse.de>, SeongJae Park <sj@kernel.org>
+Cc: linux-mm@kvack.org, linux-kernel@vger.kernel.org, damon@lists.linux.dev,
+ vishal.moola@gmail.com, willy@infradead.org
+References: <20221213092735.187924-1-wangkefeng.wang@huawei.com>
+ <20221213092735.187924-2-wangkefeng.wang@huawei.com>
+From: David Hildenbrand <david@redhat.com>
+Organization: Red Hat
+In-Reply-To: <20221213092735.187924-2-wangkefeng.wang@huawei.com>
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: redhat.com
 Content-Language: en-US
-To: kernel test robot <lkp@intel.com>, Andrew Morton
-	<akpm@linux-foundation.org>, David Hildenbrand <david@redhat.com>, Oscar
- Salvador <osalvador@suse.de>, SeongJae Park <sj@kernel.org>
-CC: <oe-kbuild-all@lists.linux.dev>, Linux Memory Management List
-	<linux-mm@kvack.org>, <linux-kernel@vger.kernel.org>,
-	<damon@lists.linux.dev>, <vishal.moola@gmail.com>, <willy@infradead.org>
-References: <20221213092735.187924-2-wangkefeng.wang@huawei.com>
- <202212131842.5xNHRahj-lkp@intel.com>
-From: Kefeng Wang <wangkefeng.wang@huawei.com>
-In-Reply-To: <202212131842.5xNHRahj-lkp@intel.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.174.177.243]
-X-ClientProxiedBy: dggems703-chm.china.huawei.com (10.3.19.180) To
- dggpemm500001.china.huawei.com (7.185.36.107)
-X-CFilter-Loop: Reflected
 
+On 13.12.22 10:27, Kefeng Wang wrote:
+> Introduce a wrapper function pfn_to_online_folio(), which calls
+> pfn_to_online_page() and returns the folio of the page found,
+> or null if no page.
+> 
+> Signed-off-by: Kefeng Wang <wangkefeng.wang@huawei.com>
+> ---
+>   include/linux/memory_hotplug.h | 7 +++++++
+>   1 file changed, 7 insertions(+)
+> 
+> diff --git a/include/linux/memory_hotplug.h b/include/linux/memory_hotplug.h
+> index 9fcbf5706595..e841e4fb52a7 100644
+> --- a/include/linux/memory_hotplug.h
+> +++ b/include/linux/memory_hotplug.h
+> @@ -265,6 +265,13 @@ static inline void pgdat_kswapd_unlock(pg_data_t *pgdat) {}
+>   static inline void pgdat_kswapd_lock_init(pg_data_t *pgdat) {}
+>   #endif /* ! CONFIG_MEMORY_HOTPLUG */
+>   
+> +static inline struct folio *pfn_to_online_folio(unsigned long pfn)
+> +{
+> +	struct page *page = pfn_to_online_page(pfn);
+> +
+> +	return page ? page_folio(page) : NULL;
+> +}
 
-On 2022/12/13 19:13, kernel test robot wrote:
-> Hi Kefeng,
->
-> Thank you for the patch! Yet something to improve:
->
-> [auto build test ERROR on linus/master]
-> [also build test ERROR on v6.1]
-> [cannot apply to akpm-mm/mm-everything next-20221213]
-> [If your patch is applied to the wrong git tree, kindly drop us a note.
-> And when submitting patch, we suggest to use '--base' as documented in
-> https://git-scm.com/docs/git-format-patch#_base_tree_information]
->
-> url:    https://github.com/intel-lab-lkp/linux/commits/Kefeng-Wang/mm-converted-page-idle-and-damon-to-use-folios/20221213-171230
-> patch link:    https://lore.kernel.org/r/20221213092735.187924-2-wangkefeng.wang%40huawei.com
-> patch subject: [PATCH -next 1/8] mm: memory_hotplug: add pfn_to_online_folio()
-> config: alpha-allyesconfig
-> compiler: alpha-linux-gcc (GCC) 12.1.0
-> reproduce (this is a W=1 build):
->          wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
->          chmod +x ~/bin/make.cross
->          # https://github.com/intel-lab-lkp/linux/commit/6549c7ce5345695320d1dadef2aceff6e76d34f4
->          git remote add linux-review https://github.com/intel-lab-lkp/linux
->          git fetch --no-tags linux-review Kefeng-Wang/mm-converted-page-idle-and-damon-to-use-folios/20221213-171230
->          git checkout 6549c7ce5345695320d1dadef2aceff6e76d34f4
->          # save the config file
->          mkdir build_dir && cp config build_dir/.config
->          COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-12.1.0 make.cross W=1 O=build_dir ARCH=alpha prepare
->
-> If you fix the issue, kindly add following tag where applicable
-> | Reported-by: kernel test robot <lkp@intel.com>
->
-> All error/warnings (new ones prefixed by >>):
->
->     In file included from include/linux/mmzone.h:1245,
->                      from include/linux/gfp.h:7,
->                      from include/linux/percpu_counter.h:16,
->                      from include/linux/sched/user.h:7,
->                      from include/linux/cred.h:17,
->                      from include/linux/sched/signal.h:10,
->                      from include/linux/ptrace.h:7,
->                      from arch/alpha/kernel/asm-offsets.c:11:
->     include/linux/memory_hotplug.h: In function 'pfn_to_online_folio':
->>> include/linux/memory_hotplug.h:230:13: error: implicit declaration of function 'pfn_valid'; did you mean 'gid_valid'? [-Werror=implicit-function-declaration]
->       230 |         if (pfn_valid(pfn))                     \
->           |             ^~~~~~~~~
->     include/linux/memory_hotplug.h:270:29: note: in expansion of macro 'pfn_to_online_page'
->       270 |         struct page *page = pfn_to_online_page(pfn);
->           |                             ^~~~~~~~~~~~~~~~~~
->     In file included from arch/alpha/include/asm/page.h:94,
->                      from include/linux/shm.h:6,
->                      from include/linux/sched.h:16,
->                      from arch/alpha/kernel/asm-offsets.c:10:
->>> include/asm-generic/memory_model.h:41:37: error: implicit declaration of function '__pfn_to_section' [-Werror=implicit-function-declaration]
->        41 |         struct mem_section *__sec = __pfn_to_section(__pfn);    \
->           |                                     ^~~~~~~~~~~~~~~~
->     include/asm-generic/memory_model.h:53:21: note: in expansion of macro '__pfn_to_page'
->        53 | #define pfn_to_page __pfn_to_page
->           |                     ^~~~~~~~~~~~~
->     include/linux/memory_hotplug.h:231:27: note: in expansion of macro 'pfn_to_page'
->       231 |                 ___page = pfn_to_page(pfn);     \
->           |                           ^~~~~~~~~~~
->     include/linux/memory_hotplug.h:270:29: note: in expansion of macro 'pfn_to_online_page'
->       270 |         struct page *page = pfn_to_online_page(pfn);
->           |                             ^~~~~~~~~~~~~~~~~~
->>> include/asm-generic/memory_model.h:41:37: warning: initialization of 'struct mem_section *' from 'int' makes pointer from integer without a cast [-Wint-conversion]
->        41 |         struct mem_section *__sec = __pfn_to_section(__pfn);    \
->           |                                     ^~~~~~~~~~~~~~~~
->     include/asm-generic/memory_model.h:53:21: note: in expansion of macro '__pfn_to_page'
->        53 | #define pfn_to_page __pfn_to_page
->           |                     ^~~~~~~~~~~~~
->     include/linux/memory_hotplug.h:231:27: note: in expansion of macro 'pfn_to_page'
->       231 |                 ___page = pfn_to_page(pfn);     \
->           |                           ^~~~~~~~~~~
->     include/linux/memory_hotplug.h:270:29: note: in expansion of macro 'pfn_to_online_page'
->       270 |         struct page *page = pfn_to_online_page(pfn);
->           |                             ^~~~~~~~~~~~~~~~~~
->     include/asm-generic/memory_model.h:41:37: note: (near initialization for 'page')
->        41 |         struct mem_section *__sec = __pfn_to_section(__pfn);    \
->           |                                     ^~~~~~~~~~~~~~~~
->     include/asm-generic/memory_model.h:53:21: note: in expansion of macro '__pfn_to_page'
->        53 | #define pfn_to_page __pfn_to_page
->           |                     ^~~~~~~~~~~~~
->     include/linux/memory_hotplug.h:231:27: note: in expansion of macro 'pfn_to_page'
->       231 |                 ___page = pfn_to_page(pfn);     \
->           |                           ^~~~~~~~~~~
->     include/linux/memory_hotplug.h:270:29: note: in expansion of macro 'pfn_to_online_page'
->       270 |         struct page *page = pfn_to_online_page(pfn);
->           |                             ^~~~~~~~~~~~~~~~~~
->>> include/asm-generic/memory_model.h:42:9: error: implicit declaration of function '__section_mem_map_addr' [-Werror=implicit-function-declaration]
->        42 |         __section_mem_map_addr(__sec) + __pfn;          \
->           |         ^~~~~~~~~~~~~~~~~~~~~~
->     include/asm-generic/memory_model.h:53:21: note: in expansion of macro '__pfn_to_page'
->        53 | #define pfn_to_page __pfn_to_page
->           |                     ^~~~~~~~~~~~~
->     include/linux/memory_hotplug.h:231:27: note: in expansion of macro 'pfn_to_page'
->       231 |                 ___page = pfn_to_page(pfn);     \
->           |                           ^~~~~~~~~~~
->     include/linux/memory_hotplug.h:270:29: note: in expansion of macro 'pfn_to_online_page'
->       270 |         struct page *page = pfn_to_online_page(pfn);
->           |                             ^~~~~~~~~~~~~~~~~~
->>> include/linux/memory_hotplug.h:231:25: warning: assignment to 'struct page *' from 'long unsigned int' makes pointer from integer without a cast [-Wint-conversion]
->       231 |                 ___page = pfn_to_page(pfn);     \
->           |                         ^
->     include/linux/memory_hotplug.h:270:29: note: in expansion of macro 'pfn_to_online_page'
->       270 |         struct page *page = pfn_to_online_page(pfn);
->           |                             ^~~~~~~~~~~~~~~~~~
->     include/linux/mmzone.h: At top level:
->>> include/linux/mmzone.h:1740:28: error: conflicting types for '__section_mem_map_addr'; have 'struct page *(struct mem_section *)'
->      1740 | static inline struct page *__section_mem_map_addr(struct mem_section *section)
->           |                            ^~~~~~~~~~~~~~~~~~~~~~
->     include/asm-generic/memory_model.h:42:9: note: previous implicit declaration of '__section_mem_map_addr' with type 'int()'
->        42 |         __section_mem_map_addr(__sec) + __pfn;          \
->           |         ^~~~~~~~~~~~~~~~~~~~~~
->     include/asm-generic/memory_model.h:53:21: note: in expansion of macro '__pfn_to_page'
->        53 | #define pfn_to_page __pfn_to_page
->           |                     ^~~~~~~~~~~~~
->     include/linux/memory_hotplug.h:231:27: note: in expansion of macro 'pfn_to_page'
->       231 |                 ___page = pfn_to_page(pfn);     \
->           |                           ^~~~~~~~~~~
->     include/linux/memory_hotplug.h:270:29: note: in expansion of macro 'pfn_to_online_page'
->       270 |         struct page *page = pfn_to_online_page(pfn);
->           |                             ^~~~~~~~~~~~~~~~~~
->>> include/linux/mmzone.h:1801:35: error: conflicting types for '__pfn_to_section'; have 'struct mem_section *(long unsigned int)'
->      1801 | static inline struct mem_section *__pfn_to_section(unsigned long pfn)
->           |                                   ^~~~~~~~~~~~~~~~
->     include/asm-generic/memory_model.h:41:37: note: previous implicit declaration of '__pfn_to_section' with type 'int()'
->        41 |         struct mem_section *__sec = __pfn_to_section(__pfn);    \
->           |                                     ^~~~~~~~~~~~~~~~
->     include/asm-generic/memory_model.h:53:21: note: in expansion of macro '__pfn_to_page'
->        53 | #define pfn_to_page __pfn_to_page
->           |                     ^~~~~~~~~~~~~
->     include/linux/memory_hotplug.h:231:27: note: in expansion of macro 'pfn_to_page'
->       231 |                 ___page = pfn_to_page(pfn);     \
->           |                           ^~~~~~~~~~~
->     include/linux/memory_hotplug.h:270:29: note: in expansion of macro 'pfn_to_online_page'
->       270 |         struct page *page = pfn_to_online_page(pfn);
->           |                             ^~~~~~~~~~~~~~~~~~
->>> include/linux/mmzone.h:1839:19: error: static declaration of 'pfn_valid' follows non-static declaration
->      1839 | static inline int pfn_valid(unsigned long pfn)
->           |                   ^~~~~~~~~
->     include/linux/memory_hotplug.h:230:13: note: previous implicit declaration of 'pfn_valid' with type 'int()'
->       230 |         if (pfn_valid(pfn))                     \
->           |             ^~~~~~~~~
->     include/linux/memory_hotplug.h:270:29: note: in expansion of macro 'pfn_to_online_page'
->       270 |         struct page *page = pfn_to_online_page(pfn);
->           |                             ^~~~~~~~~~~~~~~~~~
->     arch/alpha/kernel/asm-offsets.c:15:6: warning: no previous prototype for 'foo' [-Wmissing-prototypes]
->        15 | void foo(void)
->           |      ^~~
->     cc1: some warnings being treated as errors
->     make[2]: *** [scripts/Makefile.build:118: arch/alpha/kernel/asm-offsets.s] Error 1
->     make[2]: Target 'prepare' not remade because of errors.
->     make[1]: *** [Makefile:1272: prepare0] Error 2
->     make[1]: Target 'prepare' not remade because of errors.
->     make: *** [Makefile:231: __sub-make] Error 2
->     make: Target 'prepare' not remade because of errors.
->
->
-> vim +230 include/linux/memory_hotplug.h
-Thanks, it seems that we need use macro definition instead of inline 
-function, will update in the next version.
->
-> b4a0215e11dcfe Kefeng Wang  2022-08-27  225
-> 208d54e5513c0c Dave Hansen  2005-10-29  226  #else /* ! CONFIG_MEMORY_HOTPLUG */
-> 2d070eab2e8270 Michal Hocko 2017-07-06  227  #define pfn_to_online_page(pfn)			\
-> 2d070eab2e8270 Michal Hocko 2017-07-06  228  ({						\
-> 2d070eab2e8270 Michal Hocko 2017-07-06  229  	struct page *___page = NULL;		\
-> 2d070eab2e8270 Michal Hocko 2017-07-06 @230  	if (pfn_valid(pfn))			\
-> 2d070eab2e8270 Michal Hocko 2017-07-06 @231  		___page = pfn_to_page(pfn);	\
-> 2d070eab2e8270 Michal Hocko 2017-07-06  232  	___page;				\
-> 2d070eab2e8270 Michal Hocko 2017-07-06  233   })
-> 2d070eab2e8270 Michal Hocko 2017-07-06  234
->
+Who guarantees that page_folio() is safe and stable at that point?
+
+IIRC, that's very tricky. We could have the page concurrently getting 
+freed and the folio dissolved.
+
+-- 
+Thanks,
+
+David / dhildenb
+
