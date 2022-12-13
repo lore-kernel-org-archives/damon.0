@@ -1,74 +1,61 @@
-Received: from szxga08-in.huawei.com (szxga08-in.huawei.com [45.249.212.255])
+Received: from casper.infradead.org (casper.infradead.org [90.155.50.34])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E2C72F2F
-	for <damon@lists.linux.dev>; Tue, 13 Dec 2022 12:13:35 +0000 (UTC)
-Received: from dggpemm500001.china.huawei.com (unknown [172.30.72.53])
-	by szxga08-in.huawei.com (SkyGuard) with ESMTP id 4NWcnb0yDsz15NHW;
-	Tue, 13 Dec 2022 20:12:35 +0800 (CST)
-Received: from [10.174.177.243] (10.174.177.243) by
- dggpemm500001.china.huawei.com (7.185.36.107) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2375.34; Tue, 13 Dec 2022 20:13:31 +0800
-Message-ID: <801ccbe2-08b8-e1cb-9aee-614d59a807d2@huawei.com>
-Date: Tue, 13 Dec 2022 20:13:31 +0800
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF94E33D2
+	for <damon@lists.linux.dev>; Tue, 13 Dec 2022 14:35:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=casper.20170209; h=In-Reply-To:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description;
+	bh=Bp1NI5NxRf5KPduMUan4tguo3EwGdbgGIpn9oy21c2M=; b=Z9y1G33QX5Kj1ZxByLC52j2sGN
+	t/6SEShZ/322yWKWHyaUh1MxwCUY7jL8NnetYR/Xs30mEgxSsMIfdbnc/kIx6/4sN4LFygtPjW4AG
+	hvedfDFbtVQGaeH7S1fkBKv4y1c3c0aqesi5yxUK9HTKPvKGHYO/24pRLfLcEySQJcREDVC6FYN1q
+	3HJlIUofmcFw/kJojLFvMuhhWR/IKO1Bz6pofhWoyYQAZPU6PH6Fp0MTDmfUN8njxQfYEfsxhs/9/
+	N5ONc6nOw92WqGncQ8iciGN1uUMMJuKFx6+zVuvSRjXJOjtOLkqiSrDvpXzgQO5WeoEgAe1EpBAgS
+	OQZdpXbQ==;
+Received: from willy by casper.infradead.org with local (Exim 4.94.2 #2 (Red Hat Linux))
+	id 1p56Mq-00CIsd-V2; Tue, 13 Dec 2022 14:34:49 +0000
+Date: Tue, 13 Dec 2022 14:34:48 +0000
+From: Matthew Wilcox <willy@infradead.org>
+To: Kefeng Wang <wangkefeng.wang@huawei.com>
+Cc: Andrew Morton <akpm@linux-foundation.org>,
+	David Hildenbrand <david@redhat.com>,
+	Oscar Salvador <osalvador@suse.de>, SeongJae Park <sj@kernel.org>,
+	linux-mm@kvack.org, linux-kernel@vger.kernel.org,
+	damon@lists.linux.dev, vishal.moola@gmail.com
+Subject: Re: [PATCH -next 2/8] mm: page_idle: Convert page idle to use folios
+Message-ID: <Y5iNiNUoNlupyhow@casper.infradead.org>
+References: <20221213092735.187924-1-wangkefeng.wang@huawei.com>
+ <20221213092735.187924-3-wangkefeng.wang@huawei.com>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.5.1
-Subject: Re: [PATCH -next 1/8] mm: memory_hotplug: add pfn_to_online_folio()
-Content-Language: en-US
-To: David Hildenbrand <david@redhat.com>, Andrew Morton
-	<akpm@linux-foundation.org>, Oscar Salvador <osalvador@suse.de>, SeongJae
- Park <sj@kernel.org>
-CC: <linux-mm@kvack.org>, <linux-kernel@vger.kernel.org>,
-	<damon@lists.linux.dev>, <vishal.moola@gmail.com>, <willy@infradead.org>
-References: <20221213092735.187924-1-wangkefeng.wang@huawei.com>
- <20221213092735.187924-2-wangkefeng.wang@huawei.com>
- <f07d1c95-f13c-682b-0519-0b137ccdc631@redhat.com>
-From: Kefeng Wang <wangkefeng.wang@huawei.com>
-In-Reply-To: <f07d1c95-f13c-682b-0519-0b137ccdc631@redhat.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.174.177.243]
-X-ClientProxiedBy: dggems701-chm.china.huawei.com (10.3.19.178) To
- dggpemm500001.china.huawei.com (7.185.36.107)
-X-CFilter-Loop: Reflected
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20221213092735.187924-3-wangkefeng.wang@huawei.com>
 
+On Tue, Dec 13, 2022 at 05:27:29PM +0800, Kefeng Wang wrote:
+> -static struct page *page_idle_get_page(unsigned long pfn)
+> +static struct folio *folio_idle_get_folio(unsigned long pfn)
+>  {
+> -	struct page *page = pfn_to_online_page(pfn);
+> +	struct folio *folio = pfn_to_online_folio(pfn);
+>  
+> -	if (!page || !PageLRU(page) ||
+> -	    !get_page_unless_zero(page))
+> +	if (!folio || !folio_test_lru(folio) || !folio_try_get(folio))
+>  		return NULL;
 
-On 2022/12/13 19:40, David Hildenbrand wrote:
-> On 13.12.22 10:27, Kefeng Wang wrote:
->> Introduce a wrapper function pfn_to_online_folio(), which calls
->> pfn_to_online_page() and returns the folio of the page found,
->> or null if no page.
->>
->> Signed-off-by: Kefeng Wang <wangkefeng.wang@huawei.com>
->> ---
->>   include/linux/memory_hotplug.h | 7 +++++++
->>   1 file changed, 7 insertions(+)
->>
->> diff --git a/include/linux/memory_hotplug.h 
->> b/include/linux/memory_hotplug.h
->> index 9fcbf5706595..e841e4fb52a7 100644
->> --- a/include/linux/memory_hotplug.h
->> +++ b/include/linux/memory_hotplug.h
->> @@ -265,6 +265,13 @@ static inline void pgdat_kswapd_unlock(pg_data_t 
->> *pgdat) {}
->>   static inline void pgdat_kswapd_lock_init(pg_data_t *pgdat) {}
->>   #endif /* ! CONFIG_MEMORY_HOTPLUG */
->>   +static inline struct folio *pfn_to_online_folio(unsigned long pfn)
->> +{
->> +    struct page *page = pfn_to_online_page(pfn);
->> +
->> +    return page ? page_folio(page) : NULL;
->> +}
->
-> Who guarantees that page_folio() is safe and stable at that point?
->
-> IIRC, that's very tricky. We could have the page concurrently getting 
-> freed and the folio dissolved.
-So the caller should consider this,  lock or get the folio in the caller?
+You've changed the semantics here, and I suspect will cause breakage
+as a result.  Before if you called page_idle_get_page() on a tail page,
+you got a NULL pointer returned.  Now you get the folio that contains
+that tail page.
+
+I think you have to continue to call pfn_to_online_page() and do
+the conversion to folio manually in this function.  By all means
+convert this function to return the folio, but you need to take a
+little more care.
+
