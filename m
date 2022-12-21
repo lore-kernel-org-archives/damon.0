@@ -1,43 +1,43 @@
-Received: from mail-pj1-f44.google.com (mail-pj1-f44.google.com [209.85.216.44])
+Received: from mail-pj1-f53.google.com (mail-pj1-f53.google.com [209.85.216.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83BE028FC
-	for <damon@lists.linux.dev>; Wed, 21 Dec 2022 18:10:00 +0000 (UTC)
-Received: by mail-pj1-f44.google.com with SMTP id n65-20020a17090a2cc700b0021bc5ef7a14so2885564pjd.0
-        for <damon@lists.linux.dev>; Wed, 21 Dec 2022 10:10:00 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 928EE2C80
+	for <damon@lists.linux.dev>; Wed, 21 Dec 2022 18:10:01 +0000 (UTC)
+Received: by mail-pj1-f53.google.com with SMTP id p4so1632672pjk.2
+        for <damon@lists.linux.dev>; Wed, 21 Dec 2022 10:10:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=V90+BfZtK1slvLn1n1Jx1RIzI90mSXqsrWzPZLU3PF8=;
-        b=idgtJWZU6cXL8auQ5suH1EAlK2iOZX3Y/jKu/mNOZua5+aWbsw51hqTcyRM4Nh2OOB
-         lIKT1uam8nzXBWXebN9JokPLVjBrVByu9Zw/5eU+Wi3xiXKqxd07Q3LuIYo45eVOKasK
-         mGNbB9QfNxPeTkWrUnEQBMDIarluZ7WItM3qk6RsVRp2ivxASFV4CgCjERRAFEW0++rt
-         KRFaw31a5udcVll9o4BxJ1YkyovfEAOfGF3WzX3q/fZTyZDsiFwEocQbbwahXxpNA6Wz
-         xFl1ImHFXxYf7psocCMqL7In5Jh/aghKIznStF2vEp7T0TREjVepbMTM0KjSrnzORygY
-         +ZBQ==
+        bh=FV2WgQnkGF47aHXwNmitYREK9VpntY4pGASooxA0vsY=;
+        b=Kg1XMQEXGj1P5eOMqXh9QBRNWX72E0HNrH5TCgKFnOpXQ2PKPJ/sz6VxqwbRyP/31V
+         MEmCQ6M7lOfXMYadzVs6SjgDmAss0zjsmJK+uqicKnmQ9sdkMbv2Ozm+wTTKQB8ApVST
+         qq80B8WfhDV5+VU0L4rDCOu8K1aHQgwVp4S65V4p5WDwKqRzhkAxDvZFe797MPsGnHxP
+         Ju6eeykfM32/T1VluTLvZsUJWDesdEtZMnarwoMvG+YbjVXTJM3LBa7W/XXgkEshQssx
+         +VSCbILH93R98OybhCiHIVOpLPyUmZHjaoADCn3LxYw9gPFLuWf1FUY6p2QDR1t71LWv
+         W+Tg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=V90+BfZtK1slvLn1n1Jx1RIzI90mSXqsrWzPZLU3PF8=;
-        b=Cs29oZh6cxzPv8T3GzwWFbFDlWHanw2mLmph/Qns03huIYaM5Jeqn+Nb7Wp/3ZYrO9
-         BMeftfbrbFyHNZj1Z4cJtvn9kV5ZaY8KLyReyhs9+pODeO0XCcNHWo9XpE81k9hvw7y5
-         IFJqPuQBh1hvF5wKkPM4HlF482s4ywGqAjW8zmhnhtiaW8dYqeP+KY9Is6lAkLXNSwe4
-         8r62jHongMhYDuPclyBbSje6g1YsNX35GO5vEQdKanw2tPnOMw9yiERjGgf194EG2MNK
-         JQZ+MUwRKq0P1h06DpZtm7Fm2zbIbMRbaQq4pIJAbDeFBSMK1vLfmonHUlQN5xueGm54
-         EWfg==
-X-Gm-Message-State: AFqh2kqVIfd1l4d/BYWr3YQgpK2P6VPj3gXWdHKH4y2u0mfE/Z4gzge7
-	BeSSRdaO+mKHcJ05DV5zo9I=
-X-Google-Smtp-Source: AMrXdXubRnPot5zpMhDyHPp0OTNzVi5od2gLZPVrt/vb+U6VUKCE5XuBc6Z5YFmHx3I3sJn0Vkn8+Q==
-X-Received: by 2002:a05:6a20:1a84:b0:a7:89fd:884c with SMTP id ci4-20020a056a201a8400b000a789fd884cmr3628709pzb.11.1671646199957;
-        Wed, 21 Dec 2022 10:09:59 -0800 (PST)
+        bh=FV2WgQnkGF47aHXwNmitYREK9VpntY4pGASooxA0vsY=;
+        b=BQI5yNPOktVElAbNtkl5aRmtuUpcMYfhgbT+9Hx/gP7fHBSSL+WQQJI/yaYoL+iH6l
+         q0DRvSR9Faa+k4ILqzneDO51CVrs9APm1IKMeQCaP83viPvEuQRGJaYN1SquUdicvpWV
+         7M2P9110bEFOuDe3tOu4dbRGJG/DLsLrY1FodSj7yJht3BAi0BS/OpEbI2VFPVD1a3J1
+         hibYBJ+QJkmnyeOZvzVfHu8Pm9009iDrUPh96GybAocHXaqOjKMWhVEEiRM720jbUexi
+         sdrd5n45CZR58l8mN7u7b9c8iTwgNADYNbCVkGF8i0ffrbPvHveMQOy8SdPEKOcuFN1y
+         4P2g==
+X-Gm-Message-State: AFqh2krif4P1+d0fzhy2Firz44AIvkygkrdQuzYSGduI7dm8aeym21yq
+	DCUk/vdBxlbBcLQHLflJo+4=
+X-Google-Smtp-Source: AMrXdXu5VDOIqKGM3A+JT0KCVz3Bkip3v+cF2w+L6Cyr9LUNlLEY5S39vnlLyv1Nvgic1ZQTYgvR9Q==
+X-Received: by 2002:a05:6a20:d38c:b0:af:a276:2f94 with SMTP id iq12-20020a056a20d38c00b000afa2762f94mr3868375pzb.35.1671646201070;
+        Wed, 21 Dec 2022 10:10:01 -0800 (PST)
 Received: from fedora.hsd1.ca.comcast.net ([2601:644:8002:1c20::a55d])
-        by smtp.googlemail.com with ESMTPSA id e26-20020a63745a000000b00477bfac06b7sm10110732pgn.34.2022.12.21.10.09.59
+        by smtp.googlemail.com with ESMTPSA id e26-20020a63745a000000b00477bfac06b7sm10110732pgn.34.2022.12.21.10.10.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 21 Dec 2022 10:09:59 -0800 (PST)
+        Wed, 21 Dec 2022 10:10:00 -0800 (PST)
 From: "Vishal Moola (Oracle)" <vishal.moola@gmail.com>
 To: linux-mm@kvack.org
 Cc: damon@lists.linux.dev,
@@ -46,9 +46,9 @@ Cc: damon@lists.linux.dev,
 	sj@kernel.org,
 	willy@infradead.org,
 	"Vishal Moola (Oracle)" <vishal.moola@gmail.com>
-Subject: [PATCH v4 2/4] madvise: Convert madvise_cold_or_pageout_pte_range() to use folios
-Date: Wed, 21 Dec 2022 10:08:46 -0800
-Message-Id: <20221221180848.20774-3-vishal.moola@gmail.com>
+Subject: [PATCH v4 3/4] mm/damon: Convert damon_pa_mark_accessed_or_deactivate() to use folios
+Date: Wed, 21 Dec 2022 10:08:47 -0800
+Message-Id: <20221221180848.20774-4-vishal.moola@gmail.com>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221221180848.20774-1-vishal.moola@gmail.com>
 References: <20221221180848.20774-1-vishal.moola@gmail.com>
@@ -60,210 +60,52 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-This change removes a number of calls to compound_head(), and saves
-1729 bytes of kernel text.
+This change replaces 2 calls to compound_head() from put_page() and 1 call
+from mark_page_accessed() with one from page_folio(). This is in
+preparation for the conversion of deactivate_page() to
+folio_deactivate().
 
 Signed-off-by: Vishal Moola (Oracle) <vishal.moola@gmail.com>
+Reviewed-by: SeongJae Park <sj@kernel.org>
 Reviewed-by: Matthew Wilcox (Oracle) <willy@infradead.org>
 ---
- mm/madvise.c | 98 ++++++++++++++++++++++++++--------------------------
- 1 file changed, 49 insertions(+), 49 deletions(-)
+ mm/damon/paddr.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/mm/madvise.c b/mm/madvise.c
-index 7b7549a54a6d..851d977b9b03 100644
---- a/mm/madvise.c
-+++ b/mm/madvise.c
-@@ -345,8 +345,8 @@ static int madvise_cold_or_pageout_pte_range(pmd_t *pmd,
- 	struct vm_area_struct *vma = walk->vma;
- 	pte_t *orig_pte, *pte, ptent;
- 	spinlock_t *ptl;
--	struct page *page = NULL;
--	LIST_HEAD(page_list);
-+	struct folio *folio = NULL;
-+	LIST_HEAD(folio_list);
- 	bool pageout_anon_only_filter;
+diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
+index ebd1905eed6f..884c8bf18b12 100644
+--- a/mm/damon/paddr.c
++++ b/mm/damon/paddr.c
+@@ -283,21 +283,23 @@ static inline unsigned long damon_pa_mark_accessed_or_deactivate(
  
- 	if (fatal_signal_pending(current))
-@@ -375,26 +375,26 @@ static int madvise_cold_or_pageout_pte_range(pmd_t *pmd,
- 			goto huge_unlock;
- 		}
+ 	for (addr = r->ar.start; addr < r->ar.end; addr += PAGE_SIZE) {
+ 		struct page *page = damon_get_page(PHYS_PFN(addr));
++		struct folio *folio;
  
--		page = pmd_page(orig_pmd);
-+		folio = pfn_folio(pmd_pfn(orig_pmd));
+ 		if (!page)
+ 			continue;
++		folio = page_folio(page);
  
--		/* Do not interfere with other mappings of this page */
--		if (page_mapcount(page) != 1)
-+		/* Do not interfere with other mappings of this folio */
-+		if (folio_mapcount(folio) != 1)
- 			goto huge_unlock;
- 
--		if (pageout_anon_only_filter && !PageAnon(page))
-+		if (pageout_anon_only_filter && !folio_test_anon(folio))
- 			goto huge_unlock;
- 
- 		if (next - addr != HPAGE_PMD_SIZE) {
- 			int err;
- 
--			get_page(page);
-+			folio_get(folio);
- 			spin_unlock(ptl);
--			lock_page(page);
--			err = split_huge_page(page);
--			unlock_page(page);
+-		if (damos_pa_filter_out(s, page)) {
 -			put_page(page);
-+			folio_lock(folio);
-+			err = split_folio(folio);
-+			folio_unlock(folio);
++		if (damos_pa_filter_out(s, &folio->page)) {
 +			folio_put(folio);
- 			if (!err)
--				goto regular_page;
-+				goto regular_folio;
- 			return 0;
+ 			continue;
  		}
  
-@@ -406,25 +406,25 @@ static int madvise_cold_or_pageout_pte_range(pmd_t *pmd,
- 			tlb_remove_pmd_tlb_entry(tlb, pmd, addr);
- 		}
- 
--		ClearPageReferenced(page);
--		test_and_clear_page_young(page);
-+		folio_clear_referenced(folio);
-+		folio_test_clear_young(folio);
- 		if (pageout) {
--			if (!isolate_lru_page(page)) {
--				if (PageUnevictable(page))
--					putback_lru_page(page);
-+			if (!folio_isolate_lru(folio)) {
-+				if (folio_test_unevictable(folio))
-+					folio_putback_lru(folio);
- 				else
--					list_add(&page->lru, &page_list);
-+					list_add(&folio->lru, &folio_list);
- 			}
- 		} else
+ 		if (mark_accessed)
+-			mark_page_accessed(page);
++			folio_mark_accessed(folio);
+ 		else
 -			deactivate_page(page);
+-		put_page(page);
+-		applied++;
 +			deactivate_page(&folio->page);
- huge_unlock:
- 		spin_unlock(ptl);
- 		if (pageout)
--			reclaim_pages(&page_list);
-+			reclaim_pages(&folio_list);
- 		return 0;
++		folio_put(folio);
++		applied += folio_nr_pages(folio);
  	}
- 
--regular_page:
-+regular_folio:
- 	if (pmd_trans_unstable(pmd))
- 		return 0;
- #endif
-@@ -441,33 +441,33 @@ static int madvise_cold_or_pageout_pte_range(pmd_t *pmd,
- 		if (!pte_present(ptent))
- 			continue;
- 
--		page = vm_normal_page(vma, addr, ptent);
--		if (!page || is_zone_device_page(page))
-+		folio = vm_normal_folio(vma, addr, ptent);
-+		if (!folio || folio_is_zone_device(folio))
- 			continue;
- 
- 		/*
- 		 * Creating a THP page is expensive so split it only if we
- 		 * are sure it's worth. Split it if we are only owner.
- 		 */
--		if (PageTransCompound(page)) {
--			if (page_mapcount(page) != 1)
-+		if (folio_test_large(folio)) {
-+			if (folio_mapcount(folio) != 1)
- 				break;
--			if (pageout_anon_only_filter && !PageAnon(page))
-+			if (pageout_anon_only_filter && !folio_test_anon(folio))
- 				break;
--			get_page(page);
--			if (!trylock_page(page)) {
--				put_page(page);
-+			folio_get(folio);
-+			if (!folio_trylock(folio)) {
-+				folio_put(folio);
- 				break;
- 			}
- 			pte_unmap_unlock(orig_pte, ptl);
--			if (split_huge_page(page)) {
--				unlock_page(page);
--				put_page(page);
-+			if (split_folio(folio)) {
-+				folio_unlock(folio);
-+				folio_put(folio);
- 				orig_pte = pte_offset_map_lock(mm, pmd, addr, &ptl);
- 				break;
- 			}
--			unlock_page(page);
--			put_page(page);
-+			folio_unlock(folio);
-+			folio_put(folio);
- 			orig_pte = pte = pte_offset_map_lock(mm, pmd, addr, &ptl);
- 			pte--;
- 			addr -= PAGE_SIZE;
-@@ -475,16 +475,16 @@ static int madvise_cold_or_pageout_pte_range(pmd_t *pmd,
- 		}
- 
- 		/*
--		 * Do not interfere with other mappings of this page and
--		 * non-LRU page.
-+		 * Do not interfere with other mappings of this folio and
-+		 * non-LRU folio.
- 		 */
--		if (!PageLRU(page) || page_mapcount(page) != 1)
-+		if (!folio_test_lru(folio) || folio_mapcount(folio) != 1)
- 			continue;
- 
--		if (pageout_anon_only_filter && !PageAnon(page))
-+		if (pageout_anon_only_filter && !folio_test_anon(folio))
- 			continue;
- 
--		VM_BUG_ON_PAGE(PageTransCompound(page), page);
-+		VM_BUG_ON_FOLIO(folio_test_large(folio), folio);
- 
- 		if (pte_young(ptent)) {
- 			ptent = ptep_get_and_clear_full(mm, addr, pte,
-@@ -495,28 +495,28 @@ static int madvise_cold_or_pageout_pte_range(pmd_t *pmd,
- 		}
- 
- 		/*
--		 * We are deactivating a page for accelerating reclaiming.
--		 * VM couldn't reclaim the page unless we clear PG_young.
-+		 * We are deactivating a folio for accelerating reclaiming.
-+		 * VM couldn't reclaim the folio unless we clear PG_young.
- 		 * As a side effect, it makes confuse idle-page tracking
- 		 * because they will miss recent referenced history.
- 		 */
--		ClearPageReferenced(page);
--		test_and_clear_page_young(page);
-+		folio_clear_referenced(folio);
-+		folio_test_clear_young(folio);
- 		if (pageout) {
--			if (!isolate_lru_page(page)) {
--				if (PageUnevictable(page))
--					putback_lru_page(page);
-+			if (!folio_isolate_lru(folio)) {
-+				if (folio_test_unevictable(folio))
-+					folio_putback_lru(folio);
- 				else
--					list_add(&page->lru, &page_list);
-+					list_add(&folio->lru, &folio_list);
- 			}
- 		} else
--			deactivate_page(page);
-+			deactivate_page(&folio->page);
- 	}
- 
- 	arch_leave_lazy_mmu_mode();
- 	pte_unmap_unlock(orig_pte, ptl);
- 	if (pageout)
--		reclaim_pages(&page_list);
-+		reclaim_pages(&folio_list);
- 	cond_resched();
- 
- 	return 0;
+ 	return applied * PAGE_SIZE;
+ }
 -- 
 2.38.1
 
