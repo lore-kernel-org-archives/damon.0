@@ -1,42 +1,43 @@
-Received: from mail-pj1-f51.google.com (mail-pj1-f51.google.com [209.85.216.51])
+Received: from mail-pj1-f42.google.com (mail-pj1-f42.google.com [209.85.216.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E5A528FC
-	for <damon@lists.linux.dev>; Wed, 21 Dec 2022 18:09:58 +0000 (UTC)
-Received: by mail-pj1-f51.google.com with SMTP id v23so11292821pju.3
-        for <damon@lists.linux.dev>; Wed, 21 Dec 2022 10:09:58 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 815AA291C
+	for <damon@lists.linux.dev>; Wed, 21 Dec 2022 18:09:59 +0000 (UTC)
+Received: by mail-pj1-f42.google.com with SMTP id gt4so16547767pjb.1
+        for <damon@lists.linux.dev>; Wed, 21 Dec 2022 10:09:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=yca21srt3jfSdwv9cmVTSEKRbmKmeVKwhiy24VVJrgk=;
-        b=DSJOlh0H6jO1fPraClFL4H/mt/WnSL5eSOkqRML/zohANW9YASclvvRuLArC7LygE3
-         69S5K4eBQ++zsHnSyQ2gSimwzS8WGl+A2n4pxh15QxZkW7QoqX1n7ZPNCn73roGCVPLY
-         CQHjdyeuniToYJ8i0ndIZVvqJ8GQo8YNHba6+zrTEQTmv1n0sSdekDXmzlYzAFZFqhZ0
-         SaZxNuSh3D7Ez4dVAorCB3m4HmUxUJKkB9U9AZ/n9a3GIktg1oHRi2rsKDRyyp+US4Kp
-         oZWAgjNMowWJn4ge84VDkrM0ANapRf08CxpHxldzmZQz0b5OGD7KSc70oXXX688ZWPRt
-         4uPg==
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=3PmJb6CIEqNY6rS2poozpptUa/GTiPJRR/qxOS9Vnc0=;
+        b=nkDePdtCIPB0JT+k15LKJQpvT/NCX++WS8dNEXwSceLOrvzJbV5KnFSi/Q69IbR9m3
+         pz0bbEASdkL5ZdY4gNIep4yTOxDqQn+6P2mNirIanQro8qY4+EtQs7/dTqDX5lFIhZ/n
+         TAj3GOz59idRv9VjUz6+R5EikvGTM60+tFyZa7Efn6m94pwClx9r/IkHOqsvbxOBTehN
+         2j8mpE/fJEO71UEk6LCm68MCU5C3Szk13jN/lj+xzg73aRLX4FQNK8M1K67QCFEsH8Ww
+         rfmAhg4rTRNPdQSkZ0GXgSLs9nXLKoZKuvw6ULiCzpmc618r3bMtR9tPRASbUks1tuQx
+         uUKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=yca21srt3jfSdwv9cmVTSEKRbmKmeVKwhiy24VVJrgk=;
-        b=uFBzeFiCJ97VKrvoptUfQJJ6GE9UXTJy6dgSREaym2ELkEu3jl/9A5YUQqpbaBDJDt
-         /t8W9KZEhYcxwZ85SP8buE+hBIBr03vnacFc7hX9kT0vWdENJnlM7L2ca0ESGLo7JyZK
-         A2PxYUU7E4Y18tq/CMdYhDSMmSgJWch8zAbxjb+Mct1e8RneLMjBcgtVdo0pOHzrWWII
-         VkxPfkVU5xCaD3FDNcpzkS528zEz2MIUznGrBHluun9xVU6LcywZo/cEN9TYQg1sbBI9
-         36AsEpeBfbKOtkko2huPS/7ehI9QSZyUrHnsvfZnqKW4mxYaJcgTYSlIPcu2wawTX/FB
-         LCrg==
-X-Gm-Message-State: AFqh2kr4x6h5ANZz1loKJtgOjIOLDp9yc+g5NtMw22b6uIhoi6ZfPY4S
-	ghwaW3UoeCGn30x1TCWbSwg=
-X-Google-Smtp-Source: AMrXdXt+oepsNuWyWeOO7XR/0jnSM5UBICF9yESwu6cJLSH7Rdfzc7qbutGMcctI/PrXlnxwykdglg==
-X-Received: by 2002:a05:6a21:1709:b0:ac:5671:adfa with SMTP id nv9-20020a056a21170900b000ac5671adfamr20123978pzb.18.1671646197796;
-        Wed, 21 Dec 2022 10:09:57 -0800 (PST)
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=3PmJb6CIEqNY6rS2poozpptUa/GTiPJRR/qxOS9Vnc0=;
+        b=0hJcuGPrombJXXD0RBQfmoRQ2aqlstrPQB2rdGNvAiAY8QSthnXlrzop8H4uUG89Rg
+         TVmkkqfHTKJXqpYkBKRrrTDfJ6kfXMM0iToOdv48kP9+yexf/wTwiRFpAFGTOVprP4EF
+         2qp5DmltJmDAQ5hO13QRjxj56A+lxaTwK8JZuLXajGcOxUwPvyZeMNZO3srM9LlIRwWa
+         wF0gHS/7O9qZhsOHzBTd5MU+hXuzWqfllcCHezqlnc4JnzBskwgWAaOfRmpLuC9gRgUi
+         a0w050NsZG4b9r9PaNnfHPk15Ky83gdJ6F2Z5rnRoKQchPnWIRpXdrX0CWkJW839HDNW
+         /98Q==
+X-Gm-Message-State: AFqh2kp5/LaLs6/KP5eXjZ3/J+R1+O6L4HW4fGpSpsonLYOFEPsmkpGc
+	dcLfablIbAfCQFYzhigXClfRKmOpGDytJg==
+X-Google-Smtp-Source: AMrXdXtca0fMprEg2pyoicfMqzT5In5Towl3radcXSD/IZnbSgXS2K9Z4XEmJtw7RR7DJxDDggCraQ==
+X-Received: by 2002:a17:90a:fd09:b0:219:c40:e3c with SMTP id cv9-20020a17090afd0900b002190c400e3cmr2632387pjb.33.1671646198887;
+        Wed, 21 Dec 2022 10:09:58 -0800 (PST)
 Received: from fedora.hsd1.ca.comcast.net ([2601:644:8002:1c20::a55d])
-        by smtp.googlemail.com with ESMTPSA id e26-20020a63745a000000b00477bfac06b7sm10110732pgn.34.2022.12.21.10.09.56
+        by smtp.googlemail.com with ESMTPSA id e26-20020a63745a000000b00477bfac06b7sm10110732pgn.34.2022.12.21.10.09.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 21 Dec 2022 10:09:57 -0800 (PST)
+        Wed, 21 Dec 2022 10:09:58 -0800 (PST)
 From: "Vishal Moola (Oracle)" <vishal.moola@gmail.com>
 To: linux-mm@kvack.org
 Cc: damon@lists.linux.dev,
@@ -45,10 +46,12 @@ Cc: damon@lists.linux.dev,
 	sj@kernel.org,
 	willy@infradead.org,
 	"Vishal Moola (Oracle)" <vishal.moola@gmail.com>
-Subject: [PATCH v4 0/4] Convert deactivate_page() to folio_deactivate()
-Date: Wed, 21 Dec 2022 10:08:44 -0800
-Message-Id: <20221221180848.20774-1-vishal.moola@gmail.com>
+Subject: [PATCH v4 1/4] mm/memory: Add vm_normal_folio()
+Date: Wed, 21 Dec 2022 10:08:45 -0800
+Message-Id: <20221221180848.20774-2-vishal.moola@gmail.com>
 X-Mailer: git-send-email 2.38.1
+In-Reply-To: <20221221180848.20774-1-vishal.moola@gmail.com>
+References: <20221221180848.20774-1-vishal.moola@gmail.com>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -57,37 +60,55 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Deactivate_page() has already been converted to use folios. This patch
-series modifies the callers of deactivate_page() to use folios. It also
-introduces vm_normal_folio() to assist with folio conversions, and
-converts deactivate_page() to folio_deactivate() which takes in a folio.
+Introduce a wrapper function called vm_normal_folio(). This function
+calls vm_normal_page() and returns the folio of the page found, or null
+if no page is found.
 
+This function allows callers to get a folio from a pte, which will
+eventually allow them to completely replace their struct page variables
+with struct folio instead.
+
+Signed-off-by: Vishal Moola (Oracle) <vishal.moola@gmail.com>
+Reviewed-by: Matthew Wilcox (Oracle) <willy@infradead.org>
 ---
-v4:
-  Rebased onto latest mm-unstable - fixes madvise and damon conflicts
+ include/linux/mm.h |  2 ++
+ mm/memory.c        | 10 ++++++++++
+ 2 files changed, 12 insertions(+)
 
-v3:
-  Introduce vm_normal_folio() wrapper function to return a folio
-  Fix madvise missing folio_mapcount()
-
-v2:
-  Fix a compilation issue
-  Some minor rewording of comments/descriptions
-
-Vishal Moola (Oracle) (4):
-  mm/memory: Add vm_normal_folio()
-  madvise: Convert madvise_cold_or_pageout_pte_range() to use folios
-  mm/damon: Convert damon_pa_mark_accessed_or_deactivate() to use folios
-  mm/swap: Convert deactivate_page() to folio_deactivate()
-
- include/linux/mm.h   |  2 +
- include/linux/swap.h |  2 +-
- mm/damon/paddr.c     | 14 ++++---
- mm/madvise.c         | 98 ++++++++++++++++++++++----------------------
- mm/memory.c          | 10 +++++
- mm/swap.c            | 14 +++----
- 6 files changed, 76 insertions(+), 64 deletions(-)
-
+diff --git a/include/linux/mm.h b/include/linux/mm.h
+index ff46dcab2004..d29bfae4b71f 100644
+--- a/include/linux/mm.h
++++ b/include/linux/mm.h
+@@ -1968,6 +1968,8 @@ static inline bool can_do_mlock(void) { return false; }
+ extern int user_shm_lock(size_t, struct ucounts *);
+ extern void user_shm_unlock(size_t, struct ucounts *);
+ 
++struct folio *vm_normal_folio(struct vm_area_struct *vma, unsigned long addr,
++			     pte_t pte);
+ struct page *vm_normal_page(struct vm_area_struct *vma, unsigned long addr,
+ 			     pte_t pte);
+ struct page *vm_normal_page_pmd(struct vm_area_struct *vma, unsigned long addr,
+diff --git a/mm/memory.c b/mm/memory.c
+index 37d1763c4d47..4000e9f017e0 100644
+--- a/mm/memory.c
++++ b/mm/memory.c
+@@ -625,6 +625,16 @@ struct page *vm_normal_page(struct vm_area_struct *vma, unsigned long addr,
+ 	return pfn_to_page(pfn);
+ }
+ 
++struct folio *vm_normal_folio(struct vm_area_struct *vma, unsigned long addr,
++			    pte_t pte)
++{
++	struct page *page = vm_normal_page(vma, addr, pte);
++
++	if (page)
++		return page_folio(page);
++	return NULL;
++}
++
+ #ifdef CONFIG_TRANSPARENT_HUGEPAGE
+ struct page *vm_normal_page_pmd(struct vm_area_struct *vma, unsigned long addr,
+ 				pmd_t pmd)
 -- 
 2.38.1
 
