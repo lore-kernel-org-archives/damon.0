@@ -1,156 +1,64 @@
-Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
+Received: from mail-vs1-f52.google.com (mail-vs1-f52.google.com [209.85.217.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF5942F30
-	for <damon@lists.linux.dev>; Wed, 21 Dec 2022 18:10:02 +0000 (UTC)
-Received: by mail-pl1-f170.google.com with SMTP id n4so16326869plp.1
-        for <damon@lists.linux.dev>; Wed, 21 Dec 2022 10:10:02 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4395B15A3
+	for <damon@lists.linux.dev>; Fri, 23 Dec 2022 01:04:44 +0000 (UTC)
+Received: by mail-vs1-f52.google.com with SMTP id m2so3279628vsv.9
+        for <damon@lists.linux.dev>; Thu, 22 Dec 2022 17:04:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=IxCbMv7vN+MZYskgQiQXZaUsiwZjC8DQb1oWsEzg+wg=;
-        b=SVH+DMt9Og+wCpl3/C5BsDiXi0R8onKGMrhpkd4hAlX8bvnTiVKmDxskppX9IQkPrD
-         8Sd4evv36aHQ13uRz8HuvrhsBcWuFhUALcpXcURwBX6tiFSJpCU0wdSdBmhHkx7XIrr/
-         JyVRdZoqnokcrqk6Trie7l/7hWBpcvarMU2OLhZ6kJiKEYRNdIksrOfLjFawMwNn6O2p
-         jCmneIA6JP/TtPv5fncfMTNDHOeJ+bi0Qpz3foORBcwYPuBPLReKoQaHUJw3l+w3OALk
-         SUx0tixRN0rcqO5jTqxXfiyWmYW2jH8GSWHBLkGTNVr9roslowxH0YAB3zgJLd+OW8R5
-         o8Ig==
+        d=google.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=X/gOWZAaD8SBIOiOmfYa59YShOa8ycZ4ayxBa1jRd7E=;
+        b=tmaHZMPcPeETZRodOkbShU4wP1wCu3ctqiGNC19OZf6gr4rulXNp5EZfuq4CH5y8N/
+         SVjpjpbPPAoe8VlZ3gMgUYszT5U8lshoTljFb0MQZurhw2j2r5wnY10LW6cdWwlX36hR
+         YTOaluFUI/V4/SVekarIA9spgFf4y2lXk/q1+Y0Gqn6rywM979v4uR0kB47S+NIuMsXh
+         2R7jCVy0/sMWNjjqT8SQjPMyy79DXKkv+t0nw31l8oNTDGGeVYFpeAanUoqSKZOi1lKH
+         C134VdbgAdl/NzxqVQQeNNpmdHAp/H6yhJv05N+nJNZYBVQGxQtoLjkQfbpMDug7svf7
+         4z2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=IxCbMv7vN+MZYskgQiQXZaUsiwZjC8DQb1oWsEzg+wg=;
-        b=7Vk6ddBJvqLFCqxFT2fHS4/5uBcR7dhSMDXSkCOWPwtaPqnk/HrzRrvReJ2P8fRehB
-         t4qSlYuZ4yN2yr9c5nk51d65cnju4T1GHcNZAuFMTz/winYbgThBNRwfN57UtLDbp+Ny
-         gk3zotFohzBnql+9SxeVIgh+NNOG1Hk/cV88ztqBYCwbfN2jj0B6ptkn+/sZUpf952NR
-         efwAfRFzE3RU/PVNFLtPnOq5HI3Y3Qs1m5SLPiHhhx+H/eECgS8gkf7FGUhuEHFNdfMX
-         1laqtc1Om0OO+klv1la3SzP65ZId+Oc6OYK1w0suya9zV7R+Es0giWxXE56kMOAL9Q+h
-         ciKg==
-X-Gm-Message-State: AFqh2kovgI9+eJ1gkeYlPud6Qv1sj/xRnwPzhLQawIt+jix51eME4G17
-	bLACKUyVBefwMPYjcaxXQONTKAgY3D+iSA==
-X-Google-Smtp-Source: AMrXdXu7sLHZOSQkUqGfVCYqV1RGYszssajWNznlILD5f7tvBuIfHAUntNoH41lSWlaha/5S+8g8uQ==
-X-Received: by 2002:a05:6a20:2a09:b0:ac:44ab:33fa with SMTP id e9-20020a056a202a0900b000ac44ab33famr3315612pzh.37.1671646202232;
-        Wed, 21 Dec 2022 10:10:02 -0800 (PST)
-Received: from fedora.hsd1.ca.comcast.net ([2601:644:8002:1c20::a55d])
-        by smtp.googlemail.com with ESMTPSA id e26-20020a63745a000000b00477bfac06b7sm10110732pgn.34.2022.12.21.10.10.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 21 Dec 2022 10:10:01 -0800 (PST)
-From: "Vishal Moola (Oracle)" <vishal.moola@gmail.com>
-To: linux-mm@kvack.org
-Cc: damon@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	akpm@linux-foundation.org,
-	sj@kernel.org,
-	willy@infradead.org,
-	"Vishal Moola (Oracle)" <vishal.moola@gmail.com>
-Subject: [PATCH v4 4/4] mm/swap: Convert deactivate_page() to folio_deactivate()
-Date: Wed, 21 Dec 2022 10:08:48 -0800
-Message-Id: <20221221180848.20774-5-vishal.moola@gmail.com>
-X-Mailer: git-send-email 2.38.1
-In-Reply-To: <20221221180848.20774-1-vishal.moola@gmail.com>
-References: <20221221180848.20774-1-vishal.moola@gmail.com>
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=X/gOWZAaD8SBIOiOmfYa59YShOa8ycZ4ayxBa1jRd7E=;
+        b=DKqIQnTLdB09gOJcFgbZAtpwuIVUhOQ4MXgbt1+JvDg3es0QC1qP1dROUfE+FiyZPK
+         qjie8T2Q1BLCh+QiKkNEhiMrdhF4EpviFrETZkcQ5ggk0luOjGm4YuluVl2mXw3vO8EC
+         ZB8ayI8l+9rRv5Jg5Gw76WBREPrGJhengo95CObOyU7sRDPphNiVD6AzW4UFC6tJiiub
+         8z4zxE1Xt2axv6gifrgOK6NHjJXXcrXaEbXj3wjnaLJeUB1/txeAaTVoG4UpDtLTtOZK
+         sQFmLNDz8srNT0/XHcy5HlUpHwK+CWQesQrahrVc9bCbUEp0xDMsOOBbfXz9ZEPSFe2a
+         5PQQ==
+X-Gm-Message-State: AFqh2krk6RTwS2jRaIOfCgvDd9+o80NL26rv4e6zOfHHZQ7teJCtpBIj
+	NoZIAJ3EVRwtsnuPfn3Dcj6cAmPwkXqzruh2h9mD+Q==
+X-Google-Smtp-Source: AMrXdXv7OoxaKXo2t6mAbAu8R8miK2JpT2IH8nH1wkesWFiDSJdnax1yDykm+3t9ZSiXE5Sin8BXXdg5tAj231ABRwI=
+X-Received: by 2002:a67:c486:0:b0:3aa:f64:fbfd with SMTP id
+ d6-20020a67c486000000b003aa0f64fbfdmr975101vsk.15.1671757483050; Thu, 22 Dec
+ 2022 17:04:43 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20221221180848.20774-1-vishal.moola@gmail.com> <20221221180848.20774-5-vishal.moola@gmail.com>
+In-Reply-To: <20221221180848.20774-5-vishal.moola@gmail.com>
+From: Yu Zhao <yuzhao@google.com>
+Date: Thu, 22 Dec 2022 18:04:07 -0700
+Message-ID: <CAOUHufbcp+VoNR1uonBYi6eEeoG_Td5N_E1hkyaj_gRmRc4vwg@mail.gmail.com>
+Subject: Re: [PATCH v4 4/4] mm/swap: Convert deactivate_page() to folio_deactivate()
+To: "Vishal Moola (Oracle)" <vishal.moola@gmail.com>
+Cc: linux-mm@kvack.org, damon@lists.linux.dev, linux-kernel@vger.kernel.org, 
+	akpm@linux-foundation.org, sj@kernel.org, willy@infradead.org
+Content-Type: text/plain; charset="UTF-8"
 
-Deactivate_page() has already been converted to use folios, this change
-converts it to take in a folio argument instead of calling page_folio().
-It also renames the function folio_deactivate() to be more consistent
-with other folio functions.
+On Wed, Dec 21, 2022 at 11:10 AM Vishal Moola (Oracle)
+<vishal.moola@gmail.com> wrote:
+>
+> Deactivate_page() has already been converted to use folios, this change
+> converts it to take in a folio argument instead of calling page_folio().
+> It also renames the function folio_deactivate() to be more consistent
+> with other folio functions.
 
-Signed-off-by: Vishal Moola (Oracle) <vishal.moola@gmail.com>
-Reviewed-by: Matthew Wilcox (Oracle) <willy@infradead.org>
-Reviewed-by: SeongJae Park <sj@kernel.org>
----
- include/linux/swap.h |  2 +-
- mm/damon/paddr.c     |  2 +-
- mm/madvise.c         |  4 ++--
- mm/swap.c            | 14 ++++++--------
- 4 files changed, 10 insertions(+), 12 deletions(-)
+There is one more in mm/vmscan.c.
 
-diff --git a/include/linux/swap.h b/include/linux/swap.h
-index f965786710b0..209a425739a9 100644
---- a/include/linux/swap.h
-+++ b/include/linux/swap.h
-@@ -401,7 +401,7 @@ extern void lru_add_drain(void);
- extern void lru_add_drain_cpu(int cpu);
- extern void lru_add_drain_cpu_zone(struct zone *zone);
- extern void lru_add_drain_all(void);
--extern void deactivate_page(struct page *page);
-+void folio_deactivate(struct folio *folio);
- void folio_mark_lazyfree(struct folio *folio);
- extern void swap_setup(void);
- 
-diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
-index 884c8bf18b12..6334c99e5152 100644
---- a/mm/damon/paddr.c
-+++ b/mm/damon/paddr.c
-@@ -297,7 +297,7 @@ static inline unsigned long damon_pa_mark_accessed_or_deactivate(
- 		if (mark_accessed)
- 			folio_mark_accessed(folio);
- 		else
--			deactivate_page(&folio->page);
-+			folio_deactivate(folio);
- 		folio_put(folio);
- 		applied += folio_nr_pages(folio);
- 	}
-diff --git a/mm/madvise.c b/mm/madvise.c
-index 851d977b9b03..025be3517af1 100644
---- a/mm/madvise.c
-+++ b/mm/madvise.c
-@@ -416,7 +416,7 @@ static int madvise_cold_or_pageout_pte_range(pmd_t *pmd,
- 					list_add(&folio->lru, &folio_list);
- 			}
- 		} else
--			deactivate_page(&folio->page);
-+			folio_deactivate(folio);
- huge_unlock:
- 		spin_unlock(ptl);
- 		if (pageout)
-@@ -510,7 +510,7 @@ static int madvise_cold_or_pageout_pte_range(pmd_t *pmd,
- 					list_add(&folio->lru, &folio_list);
- 			}
- 		} else
--			deactivate_page(&folio->page);
-+			folio_deactivate(folio);
- 	}
- 
- 	arch_leave_lazy_mmu_mode();
-diff --git a/mm/swap.c b/mm/swap.c
-index 5e5eba186930..e54e2a252e27 100644
---- a/mm/swap.c
-+++ b/mm/swap.c
-@@ -733,17 +733,15 @@ void deactivate_file_folio(struct folio *folio)
- }
- 
- /*
-- * deactivate_page - deactivate a page
-- * @page: page to deactivate
-+ * folio_deactivate - deactivate a folio
-+ * @folio: folio to deactivate
-  *
-- * deactivate_page() moves @page to the inactive list if @page was on the active
-- * list and was not an unevictable page.  This is done to accelerate the reclaim
-- * of @page.
-+ * folio_deactivate() moves @folio to the inactive list if @folio was on the
-+ * active list and was not unevictable. This is done to accelerate the
-+ * reclaim of @folio.
-  */
--void deactivate_page(struct page *page)
-+void folio_deactivate(struct folio *folio)
- {
--	struct folio *folio = page_folio(page);
--
- 	if (folio_test_lru(folio) && !folio_test_unevictable(folio) &&
- 	    (folio_test_active(folio) || lru_gen_enabled())) {
- 		struct folio_batch *fbatch;
--- 
-2.38.1
-
+Please git grep.
