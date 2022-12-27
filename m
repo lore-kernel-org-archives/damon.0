@@ -1,64 +1,102 @@
-Received: from mail-vs1-f52.google.com (mail-vs1-f52.google.com [209.85.217.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from szxga03-in.huawei.com (szxga03-in.huawei.com [45.249.212.189])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4395B15A3
-	for <damon@lists.linux.dev>; Fri, 23 Dec 2022 01:04:44 +0000 (UTC)
-Received: by mail-vs1-f52.google.com with SMTP id m2so3279628vsv.9
-        for <damon@lists.linux.dev>; Thu, 22 Dec 2022 17:04:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=X/gOWZAaD8SBIOiOmfYa59YShOa8ycZ4ayxBa1jRd7E=;
-        b=tmaHZMPcPeETZRodOkbShU4wP1wCu3ctqiGNC19OZf6gr4rulXNp5EZfuq4CH5y8N/
-         SVjpjpbPPAoe8VlZ3gMgUYszT5U8lshoTljFb0MQZurhw2j2r5wnY10LW6cdWwlX36hR
-         YTOaluFUI/V4/SVekarIA9spgFf4y2lXk/q1+Y0Gqn6rywM979v4uR0kB47S+NIuMsXh
-         2R7jCVy0/sMWNjjqT8SQjPMyy79DXKkv+t0nw31l8oNTDGGeVYFpeAanUoqSKZOi1lKH
-         C134VdbgAdl/NzxqVQQeNNpmdHAp/H6yhJv05N+nJNZYBVQGxQtoLjkQfbpMDug7svf7
-         4z2A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=X/gOWZAaD8SBIOiOmfYa59YShOa8ycZ4ayxBa1jRd7E=;
-        b=DKqIQnTLdB09gOJcFgbZAtpwuIVUhOQ4MXgbt1+JvDg3es0QC1qP1dROUfE+FiyZPK
-         qjie8T2Q1BLCh+QiKkNEhiMrdhF4EpviFrETZkcQ5ggk0luOjGm4YuluVl2mXw3vO8EC
-         ZB8ayI8l+9rRv5Jg5Gw76WBREPrGJhengo95CObOyU7sRDPphNiVD6AzW4UFC6tJiiub
-         8z4zxE1Xt2axv6gifrgOK6NHjJXXcrXaEbXj3wjnaLJeUB1/txeAaTVoG4UpDtLTtOZK
-         sQFmLNDz8srNT0/XHcy5HlUpHwK+CWQesQrahrVc9bCbUEp0xDMsOOBbfXz9ZEPSFe2a
-         5PQQ==
-X-Gm-Message-State: AFqh2krk6RTwS2jRaIOfCgvDd9+o80NL26rv4e6zOfHHZQ7teJCtpBIj
-	NoZIAJ3EVRwtsnuPfn3Dcj6cAmPwkXqzruh2h9mD+Q==
-X-Google-Smtp-Source: AMrXdXv7OoxaKXo2t6mAbAu8R8miK2JpT2IH8nH1wkesWFiDSJdnax1yDykm+3t9ZSiXE5Sin8BXXdg5tAj231ABRwI=
-X-Received: by 2002:a67:c486:0:b0:3aa:f64:fbfd with SMTP id
- d6-20020a67c486000000b003aa0f64fbfdmr975101vsk.15.1671757483050; Thu, 22 Dec
- 2022 17:04:43 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AFF7EC0
+	for <damon@lists.linux.dev>; Tue, 27 Dec 2022 12:11:43 +0000 (UTC)
+Received: from dggpemm500001.china.huawei.com (unknown [172.30.72.53])
+	by szxga03-in.huawei.com (SkyGuard) with ESMTP id 4NhD1V2WZzzJpWM;
+	Tue, 27 Dec 2022 20:07:42 +0800 (CST)
+Received: from localhost.localdomain.localdomain (10.175.113.25) by
+ dggpemm500001.china.huawei.com (7.185.36.107) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2375.34; Tue, 27 Dec 2022 20:11:33 +0800
+From: Kefeng Wang <wangkefeng.wang@huawei.com>
+To: Andrew Morton <akpm@linux-foundation.org>, SeongJae Park <sj@kernel.org>
+CC: <damon@lists.linux.dev>, <linux-mm@kvack.org>, <vishal.moola@gmail.com>,
+	<willy@infradead.org>, <david@redhat.com>, Kefeng Wang
+	<wangkefeng.wang@huawei.com>
+Subject: [PATCH -next v2 3/7] mm: damon: convert damon_ptep/pmdp_mkold() to use folios
+Date: Tue, 27 Dec 2022 20:27:10 +0800
+Message-ID: <20221227122714.161224-4-wangkefeng.wang@huawei.com>
+X-Mailer: git-send-email 2.35.3
+In-Reply-To: <20221227122714.161224-1-wangkefeng.wang@huawei.com>
+References: <20221227122714.161224-1-wangkefeng.wang@huawei.com>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20221221180848.20774-1-vishal.moola@gmail.com> <20221221180848.20774-5-vishal.moola@gmail.com>
-In-Reply-To: <20221221180848.20774-5-vishal.moola@gmail.com>
-From: Yu Zhao <yuzhao@google.com>
-Date: Thu, 22 Dec 2022 18:04:07 -0700
-Message-ID: <CAOUHufbcp+VoNR1uonBYi6eEeoG_Td5N_E1hkyaj_gRmRc4vwg@mail.gmail.com>
-Subject: Re: [PATCH v4 4/4] mm/swap: Convert deactivate_page() to folio_deactivate()
-To: "Vishal Moola (Oracle)" <vishal.moola@gmail.com>
-Cc: linux-mm@kvack.org, damon@lists.linux.dev, linux-kernel@vger.kernel.org, 
-	akpm@linux-foundation.org, sj@kernel.org, willy@infradead.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.175.113.25]
+X-ClientProxiedBy: dggems702-chm.china.huawei.com (10.3.19.179) To
+ dggpemm500001.china.huawei.com (7.185.36.107)
+X-CFilter-Loop: Reflected
 
-On Wed, Dec 21, 2022 at 11:10 AM Vishal Moola (Oracle)
-<vishal.moola@gmail.com> wrote:
->
-> Deactivate_page() has already been converted to use folios, this change
-> converts it to take in a folio argument instead of calling page_folio().
-> It also renames the function folio_deactivate() to be more consistent
-> with other folio functions.
+With damon_get_folio(), let's convert damon_ptep_mkold() and
+damon_pmdp_mkold() to use folios.
 
-There is one more in mm/vmscan.c.
+Signed-off-by: Kefeng Wang <wangkefeng.wang@huawei.com>
+---
+ mm/damon/ops-common.c | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
-Please git grep.
+diff --git a/mm/damon/ops-common.c b/mm/damon/ops-common.c
+index ff38a19aa92e..6f9ac8750ca6 100644
+--- a/mm/damon/ops-common.c
++++ b/mm/damon/ops-common.c
+@@ -38,9 +38,9 @@ struct folio *damon_get_folio(unsigned long pfn)
+ void damon_ptep_mkold(pte_t *pte, struct mm_struct *mm, unsigned long addr)
+ {
+ 	bool referenced = false;
+-	struct page *page = damon_get_page(pte_pfn(*pte));
++	struct folio *folio = damon_get_folio(pte_pfn(*pte));
+ 
+-	if (!page)
++	if (!folio)
+ 		return;
+ 
+ 	if (pte_young(*pte)) {
+@@ -54,19 +54,19 @@ void damon_ptep_mkold(pte_t *pte, struct mm_struct *mm, unsigned long addr)
+ #endif /* CONFIG_MMU_NOTIFIER */
+ 
+ 	if (referenced)
+-		set_page_young(page);
++		folio_set_young(folio);
+ 
+-	set_page_idle(page);
+-	put_page(page);
++	folio_set_idle(folio);
++	folio_put(folio);
+ }
+ 
+ void damon_pmdp_mkold(pmd_t *pmd, struct mm_struct *mm, unsigned long addr)
+ {
+ #ifdef CONFIG_TRANSPARENT_HUGEPAGE
+ 	bool referenced = false;
+-	struct page *page = damon_get_page(pmd_pfn(*pmd));
++	struct folio *folio = damon_get_folio(pmd_pfn(*pmd));
+ 
+-	if (!page)
++	if (!folio)
+ 		return;
+ 
+ 	if (pmd_young(*pmd)) {
+@@ -80,10 +80,10 @@ void damon_pmdp_mkold(pmd_t *pmd, struct mm_struct *mm, unsigned long addr)
+ #endif /* CONFIG_MMU_NOTIFIER */
+ 
+ 	if (referenced)
+-		set_page_young(page);
++		folio_set_young(folio);
+ 
+-	set_page_idle(page);
+-	put_page(page);
++	folio_set_idle(folio);
++	folio_put(folio);
+ #endif /* CONFIG_TRANSPARENT_HUGEPAGE */
+ }
+ 
+-- 
+2.35.3
+
