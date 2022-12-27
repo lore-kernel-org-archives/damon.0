@@ -1,23 +1,23 @@
-Received: from szxga03-in.huawei.com (szxga03-in.huawei.com [45.249.212.189])
+Received: from szxga01-in.huawei.com (szxga01-in.huawei.com [45.249.212.187])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AFF7EC0
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86CC710E1
 	for <damon@lists.linux.dev>; Tue, 27 Dec 2022 12:11:43 +0000 (UTC)
-Received: from dggpemm500001.china.huawei.com (unknown [172.30.72.53])
-	by szxga03-in.huawei.com (SkyGuard) with ESMTP id 4NhD1V2WZzzJpWM;
-	Tue, 27 Dec 2022 20:07:42 +0800 (CST)
+Received: from dggpemm500001.china.huawei.com (unknown [172.30.72.54])
+	by szxga01-in.huawei.com (SkyGuard) with ESMTP id 4NhD0m0Xr6zkWty;
+	Tue, 27 Dec 2022 20:07:04 +0800 (CST)
 Received: from localhost.localdomain.localdomain (10.175.113.25) by
  dggpemm500001.china.huawei.com (7.185.36.107) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2375.34; Tue, 27 Dec 2022 20:11:33 +0800
+ 15.1.2375.34; Tue, 27 Dec 2022 20:11:34 +0800
 From: Kefeng Wang <wangkefeng.wang@huawei.com>
 To: Andrew Morton <akpm@linux-foundation.org>, SeongJae Park <sj@kernel.org>
 CC: <damon@lists.linux.dev>, <linux-mm@kvack.org>, <vishal.moola@gmail.com>,
 	<willy@infradead.org>, <david@redhat.com>, Kefeng Wang
 	<wangkefeng.wang@huawei.com>
-Subject: [PATCH -next v2 3/7] mm: damon: convert damon_ptep/pmdp_mkold() to use folios
-Date: Tue, 27 Dec 2022 20:27:10 +0800
-Message-ID: <20221227122714.161224-4-wangkefeng.wang@huawei.com>
+Subject: [PATCH -next v2 5/7] mm: damon: vaddr: convert damon_young_pmd_entry() to use folio
+Date: Tue, 27 Dec 2022 20:27:12 +0800
+Message-ID: <20221227122714.161224-6-wangkefeng.wang@huawei.com>
 X-Mailer: git-send-email 2.35.3
 In-Reply-To: <20221227122714.161224-1-wangkefeng.wang@huawei.com>
 References: <20221227122714.161224-1-wangkefeng.wang@huawei.com>
@@ -34,69 +34,68 @@ X-ClientProxiedBy: dggems702-chm.china.huawei.com (10.3.19.179) To
  dggpemm500001.china.huawei.com (7.185.36.107)
 X-CFilter-Loop: Reflected
 
-With damon_get_folio(), let's convert damon_ptep_mkold() and
-damon_pmdp_mkold() to use folios.
+With damon_get_folio(), let's convert damon_young_pmd_entry()
+to use folios.
 
 Signed-off-by: Kefeng Wang <wangkefeng.wang@huawei.com>
 ---
- mm/damon/ops-common.c | 20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+ mm/damon/vaddr.c | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/mm/damon/ops-common.c b/mm/damon/ops-common.c
-index ff38a19aa92e..6f9ac8750ca6 100644
---- a/mm/damon/ops-common.c
-+++ b/mm/damon/ops-common.c
-@@ -38,9 +38,9 @@ struct folio *damon_get_folio(unsigned long pfn)
- void damon_ptep_mkold(pte_t *pte, struct mm_struct *mm, unsigned long addr)
+diff --git a/mm/damon/vaddr.c b/mm/damon/vaddr.c
+index 15f03df66db6..29227b7a6032 100644
+--- a/mm/damon/vaddr.c
++++ b/mm/damon/vaddr.c
+@@ -431,7 +431,7 @@ static int damon_young_pmd_entry(pmd_t *pmd, unsigned long addr,
  {
- 	bool referenced = false;
--	struct page *page = damon_get_page(pte_pfn(*pte));
-+	struct folio *folio = damon_get_folio(pte_pfn(*pte));
+ 	pte_t *pte;
+ 	spinlock_t *ptl;
+-	struct page *page;
++	struct folio *folio;
+ 	struct damon_young_walk_private *priv = walk->private;
  
--	if (!page)
-+	if (!folio)
- 		return;
- 
- 	if (pte_young(*pte)) {
-@@ -54,19 +54,19 @@ void damon_ptep_mkold(pte_t *pte, struct mm_struct *mm, unsigned long addr)
- #endif /* CONFIG_MMU_NOTIFIER */
- 
- 	if (referenced)
--		set_page_young(page);
-+		folio_set_young(folio);
- 
--	set_page_idle(page);
--	put_page(page);
-+	folio_set_idle(folio);
-+	folio_put(folio);
- }
- 
- void damon_pmdp_mkold(pmd_t *pmd, struct mm_struct *mm, unsigned long addr)
- {
  #ifdef CONFIG_TRANSPARENT_HUGEPAGE
- 	bool referenced = false;
--	struct page *page = damon_get_page(pmd_pfn(*pmd));
-+	struct folio *folio = damon_get_folio(pmd_pfn(*pmd));
- 
+@@ -446,16 +446,16 @@ static int damon_young_pmd_entry(pmd_t *pmd, unsigned long addr,
+ 			spin_unlock(ptl);
+ 			goto regular_page;
+ 		}
+-		page = damon_get_page(pmd_pfn(*pmd));
+-		if (!page)
++		folio = damon_get_folio(pmd_pfn(*pmd));
++		if (!folio)
+ 			goto huge_out;
+-		if (pmd_young(*pmd) || !page_is_idle(page) ||
++		if (pmd_young(*pmd) || !folio_test_idle(folio) ||
+ 					mmu_notifier_test_young(walk->mm,
+ 						addr)) {
+ 			*priv->page_sz = HPAGE_PMD_SIZE;
+ 			priv->young = true;
+ 		}
+-		put_page(page);
++		folio_put(folio);
+ huge_out:
+ 		spin_unlock(ptl);
+ 		return 0;
+@@ -469,15 +469,15 @@ static int damon_young_pmd_entry(pmd_t *pmd, unsigned long addr,
+ 	pte = pte_offset_map_lock(walk->mm, pmd, addr, &ptl);
+ 	if (!pte_present(*pte))
+ 		goto out;
+-	page = damon_get_page(pte_pfn(*pte));
 -	if (!page)
++	folio = damon_get_folio(pte_pfn(*pte));
 +	if (!folio)
- 		return;
- 
- 	if (pmd_young(*pmd)) {
-@@ -80,10 +80,10 @@ void damon_pmdp_mkold(pmd_t *pmd, struct mm_struct *mm, unsigned long addr)
- #endif /* CONFIG_MMU_NOTIFIER */
- 
- 	if (referenced)
--		set_page_young(page);
-+		folio_set_young(folio);
- 
--	set_page_idle(page);
+ 		goto out;
+-	if (pte_young(*pte) || !page_is_idle(page) ||
++	if (pte_young(*pte) || !folio_test_idle(folio) ||
+ 			mmu_notifier_test_young(walk->mm, addr)) {
+ 		*priv->page_sz = PAGE_SIZE;
+ 		priv->young = true;
+ 	}
 -	put_page(page);
-+	folio_set_idle(folio);
 +	folio_put(folio);
- #endif /* CONFIG_TRANSPARENT_HUGEPAGE */
- }
- 
+ out:
+ 	pte_unmap_unlock(pte, ptl);
+ 	return 0;
 -- 
 2.35.3
 
