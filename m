@@ -1,23 +1,23 @@
-Received: from szxga08-in.huawei.com (szxga08-in.huawei.com [45.249.212.255])
+Received: from szxga03-in.huawei.com (szxga03-in.huawei.com [45.249.212.189])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29A2C1FAB
-	for <damon@lists.linux.dev>; Fri, 30 Dec 2022 06:53:11 +0000 (UTC)
-Received: from dggpemm500001.china.huawei.com (unknown [172.30.72.55])
-	by szxga08-in.huawei.com (SkyGuard) with ESMTP id 4NjwsX1WvMz16Lxn;
-	Fri, 30 Dec 2022 14:51:44 +0800 (CST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D37351FAB
+	for <damon@lists.linux.dev>; Fri, 30 Dec 2022 06:53:12 +0000 (UTC)
+Received: from dggpemm500001.china.huawei.com (unknown [172.30.72.54])
+	by szxga03-in.huawei.com (SkyGuard) with ESMTP id 4NjwpZ1h2SzJpV1;
+	Fri, 30 Dec 2022 14:49:10 +0800 (CST)
 Received: from localhost.localdomain.localdomain (10.175.113.25) by
  dggpemm500001.china.huawei.com (7.185.36.107) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2375.34; Fri, 30 Dec 2022 14:53:02 +0800
+ 15.1.2375.34; Fri, 30 Dec 2022 14:53:04 +0800
 From: Kefeng Wang <wangkefeng.wang@huawei.com>
 To: Andrew Morton <akpm@linux-foundation.org>, SeongJae Park <sj@kernel.org>
 CC: <damon@lists.linux.dev>, <linux-mm@kvack.org>, <vishal.moola@gmail.com>,
 	<willy@infradead.org>, <david@redhat.com>, Kefeng Wang
 	<wangkefeng.wang@huawei.com>
-Subject: [PATCH -next v4 1/8] mm: memcg: Add folio_memcg_check()
-Date: Fri, 30 Dec 2022 15:08:42 +0800
-Message-ID: <20221230070849.63358-2-wangkefeng.wang@huawei.com>
+Subject: [PATCH -next v4 5/8] mm/damon/paddr: convert damon_pa_*() to use a folio
+Date: Fri, 30 Dec 2022 15:08:46 +0800
+Message-ID: <20221230070849.63358-6-wangkefeng.wang@huawei.com>
 X-Mailer: git-send-email 2.35.3
 In-Reply-To: <20221230070849.63358-1-wangkefeng.wang@huawei.com>
 References: <20221230070849.63358-1-wangkefeng.wang@huawei.com>
@@ -34,119 +34,162 @@ X-ClientProxiedBy: dggems701-chm.china.huawei.com (10.3.19.178) To
  dggpemm500001.china.huawei.com (7.185.36.107)
 X-CFilter-Loop: Reflected
 
-From: Matthew Wilcox <willy@infradead.org>
+With damon_get_folio(), let's convert all the damon_pa_*() to use a folio.
 
-Convert page_memcg_check() into folio_memcg_check() and add a
-page_memcg_check() wrapper.  The behaviour of page_memcg_check() is
-unchanged; tail pages always had a NULL ->memcg_data.
-
-Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
+Reviewed-by: SeongJae Park <sj@kernel.org>
 Signed-off-by: Kefeng Wang <wangkefeng.wang@huawei.com>
 ---
- include/linux/memcontrol.h | 40 +++++++++++++++++++++++++-------------
- mm/memcontrol.c            |  6 +++---
- 2 files changed, 29 insertions(+), 17 deletions(-)
+ mm/damon/paddr.c | 58 ++++++++++++++++++++++--------------------------
+ 1 file changed, 26 insertions(+), 32 deletions(-)
 
-diff --git a/include/linux/memcontrol.h b/include/linux/memcontrol.h
-index d3c8203cab6c..a2ebb4e2da63 100644
---- a/include/linux/memcontrol.h
-+++ b/include/linux/memcontrol.h
-@@ -466,34 +466,34 @@ static inline struct mem_cgroup *folio_memcg_rcu(struct folio *folio)
+diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
+index 6334c99e5152..99d4c357ef2b 100644
+--- a/mm/damon/paddr.c
++++ b/mm/damon/paddr.c
+@@ -33,17 +33,15 @@ static bool __damon_pa_mkold(struct folio *folio, struct vm_area_struct *vma,
+ 
+ static void damon_pa_mkold(unsigned long paddr)
+ {
+-	struct folio *folio;
+-	struct page *page = damon_get_page(PHYS_PFN(paddr));
++	struct folio *folio = damon_get_folio(PHYS_PFN(paddr));
+ 	struct rmap_walk_control rwc = {
+ 		.rmap_one = __damon_pa_mkold,
+ 		.anon_lock = folio_lock_anon_vma_read,
+ 	};
+ 	bool need_lock;
+ 
+-	if (!page)
++	if (!folio)
+ 		return;
+-	folio = page_folio(page);
+ 
+ 	if (!folio_mapped(folio) || !folio_raw_mapping(folio)) {
+ 		folio_set_idle(folio);
+@@ -122,8 +120,7 @@ static bool __damon_pa_young(struct folio *folio, struct vm_area_struct *vma,
+ 
+ static bool damon_pa_young(unsigned long paddr, unsigned long *page_sz)
+ {
+-	struct folio *folio;
+-	struct page *page = damon_get_page(PHYS_PFN(paddr));
++	struct folio *folio = damon_get_folio(PHYS_PFN(paddr));
+ 	struct damon_pa_access_chk_result result = {
+ 		.page_sz = PAGE_SIZE,
+ 		.accessed = false,
+@@ -135,9 +132,8 @@ static bool damon_pa_young(unsigned long paddr, unsigned long *page_sz)
+ 	};
+ 	bool need_lock;
+ 
+-	if (!page)
++	if (!folio)
+ 		return false;
+-	folio = page_folio(page);
+ 
+ 	if (!folio_mapped(folio) || !folio_raw_mapping(folio)) {
+ 		if (folio_test_idle(folio))
+@@ -203,18 +199,18 @@ static unsigned int damon_pa_check_accesses(struct damon_ctx *ctx)
  }
  
- /*
-- * page_memcg_check - get the memory cgroup associated with a page
-- * @page: a pointer to the page struct
-+ * folio_memcg_check - Get the memory cgroup associated with a folio.
-+ * @folio: Pointer to the folio.
-  *
-- * Returns a pointer to the memory cgroup associated with the page,
-- * or NULL. This function unlike page_memcg() can take any page
-- * as an argument. It has to be used in cases when it's not known if a page
-+ * Returns a pointer to the memory cgroup associated with the folio,
-+ * or NULL. This function unlike folio_memcg() can take any folio
-+ * as an argument. It has to be used in cases when it's not known if a folio
-  * has an associated memory cgroup pointer or an object cgroups vector or
-  * an object cgroup.
-  *
-- * For a non-kmem page any of the following ensures page and memcg binding
-+ * For a non-kmem folio any of the following ensures folio and memcg binding
-  * stability:
-  *
-- * - the page lock
-+ * - the folio lock
-  * - LRU isolation
-- * - lock_page_memcg()
-+ * - lock_folio_memcg()
-  * - exclusive reference
-  * - mem_cgroup_trylock_pages()
-  *
-- * For a kmem page a caller should hold an rcu read lock to protect memcg
-- * associated with a kmem page from being released.
-+ * For a kmem folio a caller should hold an rcu read lock to protect memcg
-+ * associated with a kmem folio from being released.
-  */
--static inline struct mem_cgroup *page_memcg_check(struct page *page)
-+static inline struct mem_cgroup *folio_memcg_check(struct folio *folio)
+ static bool __damos_pa_filter_out(struct damos_filter *filter,
+-		struct page *page)
++		struct folio *folio)
  {
- 	/*
--	 * Because page->memcg_data might be changed asynchronously
--	 * for slab pages, READ_ONCE() should be used here.
-+	 * Because folio->memcg_data might be changed asynchronously
-+	 * for slabs, READ_ONCE() should be used here.
- 	 */
--	unsigned long memcg_data = READ_ONCE(page->memcg_data);
-+	unsigned long memcg_data = READ_ONCE(folio->memcg_data);
- 
- 	if (memcg_data & MEMCG_DATA_OBJCGS)
- 		return NULL;
-@@ -508,6 +508,13 @@ static inline struct mem_cgroup *page_memcg_check(struct page *page)
- 	return (struct mem_cgroup *)(memcg_data & ~MEMCG_DATA_FLAGS_MASK);
- }
- 
-+static inline struct mem_cgroup *page_memcg_check(struct page *page)
-+{
-+	if (PageTail(page))
-+		return NULL;
-+	return folio_memcg_check((struct folio *)page);
-+}
-+
- static inline struct mem_cgroup *get_mem_cgroup_from_objcg(struct obj_cgroup *objcg)
- {
+ 	bool matched = false;
  	struct mem_cgroup *memcg;
-@@ -1165,6 +1172,11 @@ static inline struct mem_cgroup *folio_memcg_rcu(struct folio *folio)
- 	return NULL;
- }
  
-+static inline struct mem_cgroup *folio_memcg_check(struct folio *folio)
-+{
-+	return NULL;
-+}
-+
- static inline struct mem_cgroup *page_memcg_check(struct page *page)
- {
- 	return NULL;
-diff --git a/mm/memcontrol.c b/mm/memcontrol.c
-index 92f319ef6c99..259bc0a48d16 100644
---- a/mm/memcontrol.c
-+++ b/mm/memcontrol.c
-@@ -2939,13 +2939,13 @@ struct mem_cgroup *mem_cgroup_from_obj_folio(struct folio *folio, void *p)
- 	}
- 
- 	/*
--	 * page_memcg_check() is used here, because in theory we can encounter
-+	 * folio_memcg_check() is used here, because in theory we can encounter
- 	 * a folio where the slab flag has been cleared already, but
- 	 * slab->memcg_data has not been freed yet
--	 * page_memcg_check(page) will guarantee that a proper memory
-+	 * folio_memcg_check() will guarantee that a proper memory
- 	 * cgroup pointer or NULL will be returned.
- 	 */
--	return page_memcg_check(folio_page(folio, 0));
-+	return folio_memcg_check(folio);
- }
- 
+ 	switch (filter->type) {
+ 	case DAMOS_FILTER_TYPE_ANON:
+-		matched = PageAnon(page);
++		matched = folio_test_anon(folio);
+ 		break;
+ 	case DAMOS_FILTER_TYPE_MEMCG:
+ 		rcu_read_lock();
+-		memcg = page_memcg_check(page);
++		memcg = folio_memcg_check(folio);
+ 		if (!memcg)
+ 			matched = false;
+ 		else
+@@ -231,12 +227,12 @@ static bool __damos_pa_filter_out(struct damos_filter *filter,
  /*
+  * damos_pa_filter_out - Return true if the page should be filtered out.
+  */
+-static bool damos_pa_filter_out(struct damos *scheme, struct page *page)
++static bool damos_pa_filter_out(struct damos *scheme, struct folio *folio)
+ {
+ 	struct damos_filter *filter;
+ 
+ 	damos_for_each_filter(filter, scheme) {
+-		if (__damos_pa_filter_out(filter, page))
++		if (__damos_pa_filter_out(filter, folio))
+ 			return true;
+ 	}
+ 	return false;
+@@ -245,33 +241,33 @@ static bool damos_pa_filter_out(struct damos *scheme, struct page *page)
+ static unsigned long damon_pa_pageout(struct damon_region *r, struct damos *s)
+ {
+ 	unsigned long addr, applied;
+-	LIST_HEAD(page_list);
++	LIST_HEAD(folio_list);
+ 
+ 	for (addr = r->ar.start; addr < r->ar.end; addr += PAGE_SIZE) {
+-		struct page *page = damon_get_page(PHYS_PFN(addr));
++		struct folio *folio = damon_get_folio(PHYS_PFN(addr));
+ 
+-		if (!page)
++		if (!folio)
+ 			continue;
+ 
+-		if (damos_pa_filter_out(s, page)) {
+-			put_page(page);
++		if (damos_pa_filter_out(s, folio)) {
++			folio_put(folio);
+ 			continue;
+ 		}
+ 
+-		ClearPageReferenced(page);
+-		test_and_clear_page_young(page);
+-		if (isolate_lru_page(page)) {
+-			put_page(page);
++		folio_clear_referenced(folio);
++		folio_test_clear_young(folio);
++		if (folio_isolate_lru(folio)) {
++			folio_put(folio);
+ 			continue;
+ 		}
+-		if (PageUnevictable(page)) {
+-			putback_lru_page(page);
++		if (folio_test_unevictable(folio)) {
++			folio_putback_lru(folio);
+ 		} else {
+-			list_add(&page->lru, &page_list);
+-			put_page(page);
++			list_add(&folio->lru, &folio_list);
++			folio_put(folio);
+ 		}
+ 	}
+-	applied = reclaim_pages(&page_list);
++	applied = reclaim_pages(&folio_list);
+ 	cond_resched();
+ 	return applied * PAGE_SIZE;
+ }
+@@ -282,14 +278,12 @@ static inline unsigned long damon_pa_mark_accessed_or_deactivate(
+ 	unsigned long addr, applied = 0;
+ 
+ 	for (addr = r->ar.start; addr < r->ar.end; addr += PAGE_SIZE) {
+-		struct page *page = damon_get_page(PHYS_PFN(addr));
+-		struct folio *folio;
++		struct folio *folio = damon_get_folio(PHYS_PFN(addr));
+ 
+-		if (!page)
++		if (!folio)
+ 			continue;
+-		folio = page_folio(page);
+ 
+-		if (damos_pa_filter_out(s, &folio->page)) {
++		if (damos_pa_filter_out(s, folio)) {
+ 			folio_put(folio);
+ 			continue;
+ 		}
 -- 
 2.35.3
 
