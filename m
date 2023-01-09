@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA7795231
-	for <damon@lists.linux.dev>; Mon,  9 Jan 2023 21:33:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F18BDC433F1;
-	Mon,  9 Jan 2023 21:33:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3910F5232
+	for <damon@lists.linux.dev>; Mon,  9 Jan 2023 21:33:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95EB2C43392;
+	Mon,  9 Jan 2023 21:33:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1673300026;
-	bh=8zePhCnELAS1QJzxrjEP75j3wPseZorjwjhVisLqJLk=;
+	bh=S9qpLQ77vZLkX0Fi/FnXthnFg4be2LJbk3/kO/j1qTI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iI0kvQY14VYnZdX+nOXPYkE3NYQ684HNWh99BZ3HGSB44hAC1XoKXeyhI00O79K6w
-	 baT02EhqlaaajEh5EOvLemJQ/HQvCXaL6sXFaCAqhiR5TnV4vHFxqkYJsxwHwsiUbL
-	 RRxzElNee++MXz9VfFsYQ8CR47R+UgOqES3k8M4JMiDSkcE+7rSG6/r4dpWWLTprUL
-	 DXXWH5WGqOtB3POAMRJ/7HmiW0iPUezsF6QKlwQVYwZcYHaD93ZvADEpOP5D6eBoO1
-	 rDzq6VTp6zIC3RvJ28SRNRMF5F3miHkJE18KNJl7SuBX8OaT9jC4tF4OzqsUfIcI9O
-	 vCW3K43C/4img==
+	b=jRDHdTCz4fpg4pSg+atnuiWHPSzA34OuiyN0y4hpkdydvPbEXc5zQNd2rmXYtLG3R
+	 3qnhCqhu0s5e6yY71KGAHWgxIuU/eKP9xpeghcLzTaHoAiaNpS1AV6Ixh21DKD0orM
+	 uSzwGl7Itp0qOi0SAjUWVJgo6gllE3SdJ2Tfo53cV7OsSDL+n310BVjzmPDIcm0XMO
+	 p8wPGPwVOXBEM6ivtFSJskAo1VQNvggSIM9GNleCP4uRobOuMxdi9GBMueeRyyR1Rr
+	 BEaar4UIe6j/wPq/l0eaX6+bLZBckUQuURSfg9NUCEN8MXUiJ4raIz5tcuKTpBcfsR
+	 BUGNJ394IFnhg==
 From: SeongJae Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SeongJae Park <sj@kernel.org>,
 	damon@lists.linux.dev,
 	linux-mm@kvack.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH 1/6] mm/damon/vaddr: rename 'damon_young_walk_private->page_sz' to 'folio_sz'
-Date: Mon,  9 Jan 2023 21:33:30 +0000
-Message-Id: <20230109213335.62525-2-sj@kernel.org>
+Subject: [PATCH 2/6] mm/damon/vaddr: support folio of neither HPAGE_PMD_SIZE nor PAGE_SIZE
+Date: Mon,  9 Jan 2023 21:33:31 +0000
+Message-Id: <20230109213335.62525-3-sj@kernel.org>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20230109213335.62525-1-sj@kernel.org>
 References: <20230109213335.62525-1-sj@kernel.org>
@@ -35,91 +35,28 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-DAMON's virtual address space monitoring operations set is using folio
-now.  Rename 'damon_pa_access_chk_result->page_sz' to reflect the fact.
+DAMON virtual address space monitoring operations set treats folios
+having non-HPAGE_PMD_SIZE size as having PAGE_SIZE size.  Use the exact
+size of the folio.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- mm/damon/vaddr.c | 21 +++++++++++----------
- 1 file changed, 11 insertions(+), 10 deletions(-)
+ mm/damon/vaddr.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/mm/damon/vaddr.c b/mm/damon/vaddr.c
-index 9d92c5eb3a1f..d6cb1fca1769 100644
+index d6cb1fca1769..c7b192006fe6 100644
 --- a/mm/damon/vaddr.c
 +++ b/mm/damon/vaddr.c
-@@ -422,7 +422,8 @@ static void damon_va_prepare_access_checks(struct damon_ctx *ctx)
- }
- 
- struct damon_young_walk_private {
--	unsigned long *page_sz;
-+	/* size of the folio for the access checked virtual memory address */
-+	unsigned long *folio_sz;
- 	bool young;
- };
- 
-@@ -452,7 +453,7 @@ static int damon_young_pmd_entry(pmd_t *pmd, unsigned long addr,
- 		if (pmd_young(*pmd) || !folio_test_idle(folio) ||
- 					mmu_notifier_test_young(walk->mm,
- 						addr)) {
--			*priv->page_sz = HPAGE_PMD_SIZE;
-+			*priv->folio_sz = HPAGE_PMD_SIZE;
- 			priv->young = true;
- 		}
- 		folio_put(folio);
-@@ -474,7 +475,7 @@ static int damon_young_pmd_entry(pmd_t *pmd, unsigned long addr,
+@@ -475,7 +475,7 @@ static int damon_young_pmd_entry(pmd_t *pmd, unsigned long addr,
  		goto out;
  	if (pte_young(*pte) || !folio_test_idle(folio) ||
  			mmu_notifier_test_young(walk->mm, addr)) {
--		*priv->page_sz = PAGE_SIZE;
-+		*priv->folio_sz = PAGE_SIZE;
+-		*priv->folio_sz = PAGE_SIZE;
++		*priv->folio_sz = folio_size(folio);
  		priv->young = true;
  	}
  	folio_put(folio);
-@@ -504,7 +505,7 @@ static int damon_young_hugetlb_entry(pte_t *pte, unsigned long hmask,
- 
- 	if (pte_young(entry) || !folio_test_idle(folio) ||
- 	    mmu_notifier_test_young(walk->mm, addr)) {
--		*priv->page_sz = huge_page_size(h);
-+		*priv->folio_sz = huge_page_size(h);
- 		priv->young = true;
- 	}
- 
-@@ -524,10 +525,10 @@ static const struct mm_walk_ops damon_young_ops = {
- };
- 
- static bool damon_va_young(struct mm_struct *mm, unsigned long addr,
--		unsigned long *page_sz)
-+		unsigned long *folio_sz)
- {
- 	struct damon_young_walk_private arg = {
--		.page_sz = page_sz,
-+		.folio_sz = folio_sz,
- 		.young = false,
- 	};
- 
-@@ -547,18 +548,18 @@ static void __damon_va_check_access(struct mm_struct *mm,
- 				struct damon_region *r, bool same_target)
- {
- 	static unsigned long last_addr;
--	static unsigned long last_page_sz = PAGE_SIZE;
-+	static unsigned long last_folio_sz = PAGE_SIZE;
- 	static bool last_accessed;
- 
- 	/* If the region is in the last checked page, reuse the result */
--	if (same_target && (ALIGN_DOWN(last_addr, last_page_sz) ==
--				ALIGN_DOWN(r->sampling_addr, last_page_sz))) {
-+	if (same_target && (ALIGN_DOWN(last_addr, last_folio_sz) ==
-+				ALIGN_DOWN(r->sampling_addr, last_folio_sz))) {
- 		if (last_accessed)
- 			r->nr_accesses++;
- 		return;
- 	}
- 
--	last_accessed = damon_va_young(mm, r->sampling_addr, &last_page_sz);
-+	last_accessed = damon_va_young(mm, r->sampling_addr, &last_folio_sz);
- 	if (last_accessed)
- 		r->nr_accesses++;
- 
 -- 
 2.25.1
 
