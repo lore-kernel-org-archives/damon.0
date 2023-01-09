@@ -1,86 +1,79 @@
-Received: from mxct.zte.com.cn (mxct.zte.com.cn [58.251.27.85])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98FD02C9D
-	for <damon@lists.linux.dev>; Mon,  9 Jan 2023 11:57:34 +0000 (UTC)
-Received: from mxde.zte.com.cn (unknown [10.35.20.165])
-	(using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mxct.zte.com.cn (FangMail) with ESMTPS id 4NrByS0d9gzW26
-	for <damon@lists.linux.dev>; Mon,  9 Jan 2023 19:47:44 +0800 (CST)
-Received: from mxus.zte.com.cn (unknown [10.207.168.7])
-	(using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mxde.zte.com.cn (FangMail) with ESMTPS id 4NrBxz1rNrz4xBTj
-	for <damon@lists.linux.dev>; Mon,  9 Jan 2023 19:47:19 +0800 (CST)
-Received: from mxhk.zte.com.cn (unknown [192.168.250.137])
-	(using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mxus.zte.com.cn (FangMail) with ESMTPS id 4NrBxp1SXdz9tyDF
-	for <damon@lists.linux.dev>; Mon,  9 Jan 2023 19:47:10 +0800 (CST)
-Received: from mse-fl1.zte.com.cn (unknown [10.5.228.132])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by mxhk.zte.com.cn (FangMail) with ESMTPS id 4NrBxc0fcLz8QrkZ;
-	Mon,  9 Jan 2023 19:47:00 +0800 (CST)
-Received: from szxlzmapp04.zte.com.cn ([10.5.231.166])
-	by mse-fl1.zte.com.cn with SMTP id 309BkqU1093359;
-	Mon, 9 Jan 2023 19:46:52 +0800 (+08)
-	(envelope-from yang.yang29@zte.com.cn)
-Received: from mapi (szxlzmapp01[null])
-	by mapi (Zmail) with MAPI id mid14;
-	Mon, 9 Jan 2023 19:46:55 +0800 (CST)
-Date: Mon, 9 Jan 2023 19:46:55 +0800 (CST)
-X-Zmail-TransId: 2b0363bbfeafffffffffb62deb1a
-X-Mailer: Zmail v1.0
-Message-ID: <202301091946553770006@zte.com.cn>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6569B163
+	for <damon@lists.linux.dev>; Mon,  9 Jan 2023 18:30:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8720BC433EF;
+	Mon,  9 Jan 2023 18:30:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1673289029;
+	bh=HQCfjExHsVNbVU5V07LRXzsNiZRcHQX4rgcNmgWNn+I=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=Ekvh4iIsqIQ6GVoHVm4thN3+73pRDwghhkwnJMdooRgauK2v8ypGCA8euo1Hdwuy+
+	 odwUC+onI9Vz3U5pqKaxD7TfvgPVoStViH1Aj8MXlJAjPvHyAaMbCegJ/neqtzAkQX
+	 DC2nPYGcYA4MZG6QNROSn+xKL+5wn3d12jFlsNOZM9TKviXEiyDt9qj3/jAVYciPH9
+	 rFu+UUDJMewoERsuNkRS9z7TcDyHXfCBrwI4XLHtz/8SnZk9u+JkSaEXUJWJqcRCtU
+	 tE/zEAmdovsr4vYJLvseGqVf1JKFK92T6sHu79sj3d9nIeSV2UZVKG2KkDFVfC5P1F
+	 Ft9kUMud2Qvdg==
+From: SeongJae Park <sj@kernel.org>
+To: yang.yang29@zte.com.cn
+Cc: sj@kernel.org,
+	akpm@linux-foundation.org,
+	damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org,
+	xu.panda@zte.com.cn
+Subject: Re: [PATCH linux-next] mm/damon/sysfs-schemes: use strscpy() to instead of strncpy()
+Date: Mon,  9 Jan 2023 18:30:26 +0000
+Message-Id: <20230109183026.157393-1-sj@kernel.org>
+X-Mailer: git-send-email 2.25.1
+In-Reply-To: <202301091946553770006@zte.com.cn>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-From: <yang.yang29@zte.com.cn>
-To: <sj@kernel.org>
-Cc: <akpm@linux-foundation.org>, <damon@lists.linux.dev>, <linux-mm@kvack.org>,
-        <linux-kernel@vger.kernel.org>, <xu.panda@zte.com.cn>,
-        <yang.yang29@zte.com.cn>
-Subject: =?UTF-8?B?W1BBVENIIGxpbnV4LW5leHRdIG1tL2RhbW9uL3N5c2ZzLXNjaGVtZXM6IHVzZSBzdHJzY3B5KCkgdG8gaW5zdGVhZCBvZiBzdHJuY3B5KCk=?=
-Content-Type: text/plain;
-	charset="UTF-8"
-X-MAIL:mse-fl1.zte.com.cn 309BkqU1093359
-X-FangMail-Bounce-Flag: 1673264830.63BBFEBC.000
-X-FangMail-Outinfo: 1673264830/63BBFEBC.000/4NrBxp1SXdz9tyDF/yang.yang29@zte.com.cn/1
-X-Fangmail-Gw-Spam-Type: 0
-X-FangMail-Miltered: at cgslv5.04-192.168.251.14.novalocal with ID 63BBFEDF.000 by FangMail milter!
-X-FangMail-Envelope: 1673264864/4NrByS0d9gzW26/63BBFEDF.000/10.35.20.165/[10.35.20.165]/mxde.zte.com.cn/<yang.yang29@zte.com.cn>
-X-Fangmail-Anti-Spam-Filtered: true
-X-Fangmail-MID-QID: 63BBFEDF.000/4NrByS0d9gzW26
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-From: Xu Panda <xu.panda@zte.com.cn>
+Hello Xu,
 
-The implementation of strscpy() is more robust and safer.
-That's now the recommended way to copy NUL-terminated strings.
 
-Signed-off-by: Xu Panda <xu.panda@zte.com.cn>
-Signed-off-by: Yang Yang <yang.yang29@zte.com.cn>
----
- mm/damon/sysfs-schemes.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+Thank you for this patch.
 
-diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
-index f0dabe3e2dc0..86edca66aab1 100644
---- a/mm/damon/sysfs-schemes.c
-+++ b/mm/damon/sysfs-schemes.c
-@@ -353,8 +353,7 @@ static ssize_t memcg_path_store(struct kobject *kobj,
- 	if (!path)
- 		return -ENOMEM;
+On Mon, 9 Jan 2023 19:46:55 +0800 (CST) <yang.yang29@zte.com.cn> wrote:
 
--	strncpy(path, buf, count);
--	path[count] = '\0';
-+	strscpy(path, buf, count + 1);
- 	filter->memcg_path = path;
- 	return count;
- }
--- 
-2.15.2
+> From: Xu Panda <xu.panda@zte.com.cn>
+> 
+> The implementation of strscpy() is more robust and safer.
+> That's now the recommended way to copy NUL-terminated strings.
+> 
+> Signed-off-by: Xu Panda <xu.panda@zte.com.cn>
+> Signed-off-by: Yang Yang <yang.yang29@zte.com.cn>
+
+Reviewed-by: SeongJae Park <sj@kernel.org>
+
+Thanks,
+SJ
+
+> ---
+>  mm/damon/sysfs-schemes.c | 3 +--
+>  1 file changed, 1 insertion(+), 2 deletions(-)
+> 
+> diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
+> index f0dabe3e2dc0..86edca66aab1 100644
+> --- a/mm/damon/sysfs-schemes.c
+> +++ b/mm/damon/sysfs-schemes.c
+> @@ -353,8 +353,7 @@ static ssize_t memcg_path_store(struct kobject *kobj,
+>  	if (!path)
+>  		return -ENOMEM;
+> 
+> -	strncpy(path, buf, count);
+> -	path[count] = '\0';
+> +	strscpy(path, buf, count + 1);
+>  	filter->memcg_path = path;
+>  	return count;
+>  }
+> -- 
+> 2.15.2
