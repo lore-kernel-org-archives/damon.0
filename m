@@ -1,115 +1,136 @@
-Received: from m12.mail.163.com (m12.mail.163.com [220.181.12.216])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8F4723C0B
-	for <damon@lists.linux.dev>; Sat, 28 Jan 2023 09:57:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-	s=s110527; h=Date:From:Subject:Message-ID:MIME-Version:
-	Content-Type; bh=+vDrkP2F8VPkWsCf/ZbZMm5gtlkYDS7DkNhsTVZw5f0=;
-	b=OgPWOZLE249HCw312oGXeYyjXFbXtal64QKrQrJL/odJtT0genuQaYD1AaZG/4
-	pxf10s77OzZHpyBTXSGNnCjvEAKj1TFnaD6eYcD+DDK/XJUwBKelBK0eXBUgxuTc
-	tN1Od3Iba6VES1iJc7fyAgqrYZo00fqqZ1lmvDwfFLb5c=
-Received: from localhost (unknown [49.235.41.28])
-	by zwqz-smtp-mta-g0-0 (Coremail) with SMTP id _____wCXxR7U5tRj9TjLBw--.29123S2;
-	Sat, 28 Jan 2023 17:11:48 +0800 (CST)
-Date: Sat, 28 Jan 2023 17:11:48 +0800
-From: Hui Su <suhui_kernel@163.com>
-To: sj@kernel.org, corbet@lwn.net, alexs@kernel.org, siyanteng@loongson.cn,
-	rppt@kernel.org, bobwxc@email.cn, damon@lists.linux.dev,
-	linux-mm@kvack.org, linux-doc@vger.kernel.org,
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 962CC33F7
+	for <damon@lists.linux.dev>; Sat, 28 Jan 2023 18:54:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5355AC433EF;
+	Sat, 28 Jan 2023 18:54:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1674932096;
+	bh=b3LC7GzJbKCQgoSIJh2AUXE2SY/l0rvrW75DR/3uPMQ=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=C5Se+sjU2iJ1IBGxkJQSZfWkUmGEQHJJciDry/WOxVI2jP+O9XwMTS2mYVpstaXFt
+	 uTPduMZ46mj9Fonxm3rwvjctPwaGxWGGKIMGM1YkwLcqRVQa/C1/rFgB8I4FTmQM+s
+	 963+jkwhe77UKjqPOMU/JiriyNe4tDkMxp9fCtmfovMgwgId79LSkcbvPdUxzOpgO7
+	 YGPHEleqhN4eIaE9WFuvlgZ9hStjGREK3jjiuNm1NEh3kX8UqtrAbxmxj2BzNqt3nU
+	 fHjMOYIpjyENkhMN3mfi5RXwwLCVpfcX9laWQ/68zjHqS81+my3XIjKSIJn2Qh7zps
+	 ZQfiYYurRE+4A==
+From: SeongJae Park <sj@kernel.org>
+To: Hui Su <suhui_kernel@163.com>
+Cc: sj@kernel.org,
+	corbet@lwn.net,
+	alexs@kernel.org,
+	siyanteng@loongson.cn,
+	rppt@kernel.org,
+	bobwxc@email.cn,
+	damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH] Doc/damon: fix the data path error
-Message-ID: <Y9Tm1FiKBPKA2Tcx@localhost.localdomain>
+Subject: Re: [PATCH] Doc/damon: fix the data path error
+Date: Sat, 28 Jan 2023 18:54:53 +0000
+Message-Id: <20230128185453.131270-1-sj@kernel.org>
+X-Mailer: git-send-email 2.25.1
+In-Reply-To: <Y9Tm1FiKBPKA2Tcx@localhost.localdomain>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:_____wCXxR7U5tRj9TjLBw--.29123S2
-X-Coremail-Antispam: 1Uf129KBjvJXoWxCFW3CF17ZrWrAF13Xr4DXFb_yoWrCryUpF
-	93tryIq3yxJF9Igws7AanrWF15AayIkFWYqFWfW3Z7ZFs0qa4vyF13Kr1Yk3WkZryrGa15
-	Zan3GryUuFy7A3DanT9S1TB71UUUUUDqnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x07UEZXrUUUUU=
-X-Originating-IP: [49.235.41.28]
-X-CM-SenderInfo: 5vxk3xhbnh20lho6il2tof0z/xtbCfhAFbWDcMzXLngAAsp
 
-%s/modules/module/
+Hi Hui,
 
-Signed-off-by: Hui Su <suhui_kernel@163.com>
----
- Documentation/admin-guide/mm/damon/lru_sort.rst               | 4 ++--
- Documentation/admin-guide/mm/damon/reclaim.rst                | 4 ++--
- .../translations/zh_CN/admin-guide/mm/damon/reclaim.rst       | 4 ++--
- 3 files changed, 6 insertions(+), 6 deletions(-)
+On Sat, 28 Jan 2023 17:11:48 +0800 Hui Su <suhui_kernel@163.com> wrote:
 
-diff --git a/Documentation/admin-guide/mm/damon/lru_sort.rst b/Documentation/admin-guide/mm/damon/lru_sort.rst
-index c09cace80651..7b0775d281b4 100644
---- a/Documentation/admin-guide/mm/damon/lru_sort.rst
-+++ b/Documentation/admin-guide/mm/damon/lru_sort.rst
-@@ -54,7 +54,7 @@ that is built with ``CONFIG_DAMON_LRU_SORT=y``.
- To let sysadmins enable or disable it and tune for the given system,
- DAMON_LRU_SORT utilizes module parameters.  That is, you can put
- ``damon_lru_sort.<parameter>=<value>`` on the kernel boot command line or write
--proper values to ``/sys/modules/damon_lru_sort/parameters/<parameter>`` files.
-+proper values to ``/sys/module/damon_lru_sort/parameters/<parameter>`` files.
- 
- Below are the description of each parameter.
- 
-@@ -283,7 +283,7 @@ doesn't make progress and therefore the free memory rate becomes lower than
- 20%, it asks DAMON_LRU_SORT to do nothing again, so that we can fall back to
- the LRU-list based page granularity reclamation. ::
- 
--    # cd /sys/modules/damon_lru_sort/parameters
-+    # cd /sys/module/damon_lru_sort/parameters
-     # echo 500 > hot_thres_access_freq
-     # echo 120000000 > cold_min_age
-     # echo 10 > quota_ms
-diff --git a/Documentation/admin-guide/mm/damon/reclaim.rst b/Documentation/admin-guide/mm/damon/reclaim.rst
-index 4f1479a11e63..d2ccd9c21b9a 100644
---- a/Documentation/admin-guide/mm/damon/reclaim.rst
-+++ b/Documentation/admin-guide/mm/damon/reclaim.rst
-@@ -46,7 +46,7 @@ that is built with ``CONFIG_DAMON_RECLAIM=y``.
- To let sysadmins enable or disable it and tune for the given system,
- DAMON_RECLAIM utilizes module parameters.  That is, you can put
- ``damon_reclaim.<parameter>=<value>`` on the kernel boot command line or write
--proper values to ``/sys/modules/damon_reclaim/parameters/<parameter>`` files.
-+proper values to ``/sys/module/damon_reclaim/parameters/<parameter>`` files.
- 
- Below are the description of each parameter.
- 
-@@ -251,7 +251,7 @@ therefore the free memory rate becomes lower than 20%, it asks DAMON_RECLAIM to
- do nothing again, so that we can fall back to the LRU-list based page
- granularity reclamation. ::
- 
--    # cd /sys/modules/damon_reclaim/parameters
-+    # cd /sys/module/damon_reclaim/parameters
-     # echo 30000000 > min_age
-     # echo $((1 * 1024 * 1024 * 1024)) > quota_sz
-     # echo 1000 > quota_reset_interval_ms
-diff --git a/Documentation/translations/zh_CN/admin-guide/mm/damon/reclaim.rst b/Documentation/translations/zh_CN/admin-guide/mm/damon/reclaim.rst
-index c976f3e33ffd..d15a2f20bb11 100644
---- a/Documentation/translations/zh_CN/admin-guide/mm/damon/reclaim.rst
-+++ b/Documentation/translations/zh_CN/admin-guide/mm/damon/reclaim.rst
-@@ -45,7 +45,7 @@ DAMON_RECLAIM找到在特定时间内没有被访问的内存区域并分页。
- 
- 为了让系统管理员启用或禁用它，并为给定的系统进行调整，DAMON_RECLAIM利用了模块参数。也就
- 是说，你可以把 ``damon_reclaim.<parameter>=<value>`` 放在内核启动命令行上，或者把
--适当的值写入 ``/sys/modules/damon_reclaim/parameters/<parameter>`` 文件。
-+适当的值写入 ``/sys/module/damon_reclaim/parameters/<parameter>`` 文件。
- 
- 注意，除 ``启用`` 外的参数值只在DAMON_RECLAIM启动时应用。因此，如果你想在运行时应用新
- 的参数值，而DAMON_RECLAIM已经被启用，你应该通过 ``启用`` 的参数文件禁用和重新启用它。
-@@ -218,7 +218,7 @@ nr_quota_exceeds
- 就开始真正的工作。如果DAMON_RECLAIM没有取得进展，因此空闲内存率低于20%，它会要求
- DAMON_RECLAIM再次什么都不做，这样我们就可以退回到基于LRU列表的页面粒度回收了::
- 
--    # cd /sys/modules/damon_reclaim/parameters
-+    # cd /sys/module/damon_reclaim/parameters
-     # echo 30000000 > min_age
-     # echo $((1 * 1024 * 1024 * 1024)) > quota_sz
-     # echo 1000 > quota_reset_interval_ms
--- 
-2.34.1
+> %s/modules/module/
+> 
+> Signed-off-by: Hui Su <suhui_kernel@163.com>
 
+Reviewed-by: SeongJae Park <sj@kernel.org>
+
+> ---
+>  Documentation/admin-guide/mm/damon/lru_sort.rst               | 4 ++--
+>  Documentation/admin-guide/mm/damon/reclaim.rst                | 4 ++--
+>  .../translations/zh_CN/admin-guide/mm/damon/reclaim.rst       | 4 ++--
+
+I realized DAMON documentation is also translated for Chinese today!  Thank you
+for letting me know this, and also thanks to the translators!
+
+
+Thanks,
+SJ
+
+>  3 files changed, 6 insertions(+), 6 deletions(-)
+> 
+> diff --git a/Documentation/admin-guide/mm/damon/lru_sort.rst b/Documentation/admin-guide/mm/damon/lru_sort.rst
+> index c09cace80651..7b0775d281b4 100644
+> --- a/Documentation/admin-guide/mm/damon/lru_sort.rst
+> +++ b/Documentation/admin-guide/mm/damon/lru_sort.rst
+> @@ -54,7 +54,7 @@ that is built with ``CONFIG_DAMON_LRU_SORT=y``.
+>  To let sysadmins enable or disable it and tune for the given system,
+>  DAMON_LRU_SORT utilizes module parameters.  That is, you can put
+>  ``damon_lru_sort.<parameter>=<value>`` on the kernel boot command line or write
+> -proper values to ``/sys/modules/damon_lru_sort/parameters/<parameter>`` files.
+> +proper values to ``/sys/module/damon_lru_sort/parameters/<parameter>`` files.
+>  
+>  Below are the description of each parameter.
+>  
+> @@ -283,7 +283,7 @@ doesn't make progress and therefore the free memory rate becomes lower than
+>  20%, it asks DAMON_LRU_SORT to do nothing again, so that we can fall back to
+>  the LRU-list based page granularity reclamation. ::
+>  
+> -    # cd /sys/modules/damon_lru_sort/parameters
+> +    # cd /sys/module/damon_lru_sort/parameters
+>      # echo 500 > hot_thres_access_freq
+>      # echo 120000000 > cold_min_age
+>      # echo 10 > quota_ms
+> diff --git a/Documentation/admin-guide/mm/damon/reclaim.rst b/Documentation/admin-guide/mm/damon/reclaim.rst
+> index 4f1479a11e63..d2ccd9c21b9a 100644
+> --- a/Documentation/admin-guide/mm/damon/reclaim.rst
+> +++ b/Documentation/admin-guide/mm/damon/reclaim.rst
+> @@ -46,7 +46,7 @@ that is built with ``CONFIG_DAMON_RECLAIM=y``.
+>  To let sysadmins enable or disable it and tune for the given system,
+>  DAMON_RECLAIM utilizes module parameters.  That is, you can put
+>  ``damon_reclaim.<parameter>=<value>`` on the kernel boot command line or write
+> -proper values to ``/sys/modules/damon_reclaim/parameters/<parameter>`` files.
+> +proper values to ``/sys/module/damon_reclaim/parameters/<parameter>`` files.
+>  
+>  Below are the description of each parameter.
+>  
+> @@ -251,7 +251,7 @@ therefore the free memory rate becomes lower than 20%, it asks DAMON_RECLAIM to
+>  do nothing again, so that we can fall back to the LRU-list based page
+>  granularity reclamation. ::
+>  
+> -    # cd /sys/modules/damon_reclaim/parameters
+> +    # cd /sys/module/damon_reclaim/parameters
+>      # echo 30000000 > min_age
+>      # echo $((1 * 1024 * 1024 * 1024)) > quota_sz
+>      # echo 1000 > quota_reset_interval_ms
+> diff --git a/Documentation/translations/zh_CN/admin-guide/mm/damon/reclaim.rst b/Documentation/translations/zh_CN/admin-guide/mm/damon/reclaim.rst
+> index c976f3e33ffd..d15a2f20bb11 100644
+> --- a/Documentation/translations/zh_CN/admin-guide/mm/damon/reclaim.rst
+> +++ b/Documentation/translations/zh_CN/admin-guide/mm/damon/reclaim.rst
+> @@ -45,7 +45,7 @@ DAMON_RECLAIM找到在特定时间内没有被访问的内存区域并分页。
+>  
+>  为了让系统管理员启用或禁用它，并为给定的系统进行调整，DAMON_RECLAIM利用了模块参数。也就
+>  是说，你可以把 ``damon_reclaim.<parameter>=<value>`` 放在内核启动命令行上，或者把
+> -适当的值写入 ``/sys/modules/damon_reclaim/parameters/<parameter>`` 文件。
+> +适当的值写入 ``/sys/module/damon_reclaim/parameters/<parameter>`` 文件。
+>  
+>  注意，除 ``启用`` 外的参数值只在DAMON_RECLAIM启动时应用。因此，如果你想在运行时应用新
+>  的参数值，而DAMON_RECLAIM已经被启用，你应该通过 ``启用`` 的参数文件禁用和重新启用它。
+> @@ -218,7 +218,7 @@ nr_quota_exceeds
+>  就开始真正的工作。如果DAMON_RECLAIM没有取得进展，因此空闲内存率低于20%，它会要求
+>  DAMON_RECLAIM再次什么都不做，这样我们就可以退回到基于LRU列表的页面粒度回收了::
+>  
+> -    # cd /sys/modules/damon_reclaim/parameters
+> +    # cd /sys/module/damon_reclaim/parameters
+>      # echo 30000000 > min_age
+>      # echo $((1 * 1024 * 1024 * 1024)) > quota_sz
+>      # echo 1000 > quota_reset_interval_ms
+> -- 
+> 2.34.1
