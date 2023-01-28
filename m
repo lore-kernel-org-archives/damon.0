@@ -1,77 +1,115 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFC84322A
-	for <damon@lists.linux.dev>; Tue, 24 Jan 2023 23:06:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED762C433EF;
-	Tue, 24 Jan 2023 23:06:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1674601610;
-	bh=s7pIW0jia0g5VIFzcKgT/jLZ3jSOURjQa383hJ8aYqI=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Fg1YSiGUjN1zndovtoikiu0vqfEKGhRoqrNvGkbdoMwNlVXslB0X9fhYdmjB060pP
-	 ucdwamaTozqkicBefjY1B865QF7EJ3BE+wIe0dao1RUWbnAb7UxO8mldV739t5HlwX
-	 SyHqp1ltDgVhntqGkVlqwkURt4ywFhFKyvDu6lOwFtwREiXGa4wgYABxmU6gX59cID
-	 VI/7V2kZxb6cDAVb+Fzh90sucX8kqvMFZGUhoX6HBiKhwouYhaGg1R9vIf1BHdYBzN
-	 Hd/1YX1zGc/ua5r3MbE8sNG5bsR4Zt5TtVriUELvhyd/jMSfL6YIZi1WPphLSiMEPk
-	 ZeBLuMbs+EWug==
-From: SeongJae Park <sj@kernel.org>
-To: SeongJae Park <sj@kernel.org>
-Cc: damon@lists.linux.dev,
-	linux-damon@amazon.com,
-	linux-damon-trial@amazon.com,
-	linux-mm@kvack.org,
+Received: from m12.mail.163.com (m12.mail.163.com [220.181.12.216])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8F4723C0B
+	for <damon@lists.linux.dev>; Sat, 28 Jan 2023 09:57:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+	s=s110527; h=Date:From:Subject:Message-ID:MIME-Version:
+	Content-Type; bh=+vDrkP2F8VPkWsCf/ZbZMm5gtlkYDS7DkNhsTVZw5f0=;
+	b=OgPWOZLE249HCw312oGXeYyjXFbXtal64QKrQrJL/odJtT0genuQaYD1AaZG/4
+	pxf10s77OzZHpyBTXSGNnCjvEAKj1TFnaD6eYcD+DDK/XJUwBKelBK0eXBUgxuTc
+	tN1Od3Iba6VES1iJc7fyAgqrYZo00fqqZ1lmvDwfFLb5c=
+Received: from localhost (unknown [49.235.41.28])
+	by zwqz-smtp-mta-g0-0 (Coremail) with SMTP id _____wCXxR7U5tRj9TjLBw--.29123S2;
+	Sat, 28 Jan 2023 17:11:48 +0800 (CST)
+Date: Sat, 28 Jan 2023 17:11:48 +0800
+From: Hui Su <suhui_kernel@163.com>
+To: sj@kernel.org, corbet@lwn.net, alexs@kernel.org, siyanteng@loongson.cn,
+	rppt@kernel.org, bobwxc@email.cn, damon@lists.linux.dev,
+	linux-mm@kvack.org, linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: Re: DAMON Beer/Coffee/Tea chat series
-Date: Tue, 24 Jan 2023 23:06:48 +0000
-Message-Id: <20230124230648.113669-1-sj@kernel.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20230124014421.112436-1-sj@kernel.org>
-References: 
+Subject: [PATCH] Doc/damon: fix the data path error
+Message-ID: <Y9Tm1FiKBPKA2Tcx@localhost.localdomain>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+X-CM-TRANSID:_____wCXxR7U5tRj9TjLBw--.29123S2
+X-Coremail-Antispam: 1Uf129KBjvJXoWxCFW3CF17ZrWrAF13Xr4DXFb_yoWrCryUpF
+	93tryIq3yxJF9Igws7AanrWF15AayIkFWYqFWfW3Z7ZFs0qa4vyF13Kr1Yk3WkZryrGa15
+	Zan3GryUuFy7A3DanT9S1TB71UUUUUDqnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x07UEZXrUUUUU=
+X-Originating-IP: [49.235.41.28]
+X-CM-SenderInfo: 5vxk3xhbnh20lho6il2tof0z/xtbCfhAFbWDcMzXLngAAsp
 
-On Tue, 24 Jan 2023 01:44:21 +0000 SeongJae Park <sj@kernel.org> wrote:
+%s/modules/module/
 
-> Hello,
-> 
-> On Wed, 10 Aug 2022 22:51:02 +0000 SeongJae Park <sj@kernel.org> wrote:
-> 
-> > Hello,
-> > 
-> > 
-> > In short, I'd like to start an open, regular, and informal virtual bi-weekly
-> > meeting series for DAMON community.
-> > 
-> > Important links and dates
-> > -------------------------
-> > 
-> > Location: https://meet.google.com/ndx-evoc-gbu
-> > Agenda: https://docs.google.com/document/d/1v43Kcj3ly4CYqmAkMaZzLiM2GEnWfgdGbZAH3mi2vpM/edit?usp=sharing
-> 
-> This is a reminder for the next instance of the chat series.  Next instance
-> will be 2023-01-23 (Tue) 09:30 PST.  You can show proposed agendas for the
-> chat, or propose your own using the above Google doc.  Looking forward to see
-> you after about 15 hours for the first time in the new lunar year :)
+Signed-off-by: Hui Su <suhui_kernel@163.com>
+---
+ Documentation/admin-guide/mm/damon/lru_sort.rst               | 4 ++--
+ Documentation/admin-guide/mm/damon/reclaim.rst                | 4 ++--
+ .../translations/zh_CN/admin-guide/mm/damon/reclaim.rst       | 4 ++--
+ 3 files changed, 6 insertions(+), 6 deletions(-)
 
-If you tried to but couldn't join today meeting, that's not you or system's
-fault but mine.  I was out of mind this morning due to some other urgent things
-and therefore couldn't attend, sorry.
+diff --git a/Documentation/admin-guide/mm/damon/lru_sort.rst b/Documentation/admin-guide/mm/damon/lru_sort.rst
+index c09cace80651..7b0775d281b4 100644
+--- a/Documentation/admin-guide/mm/damon/lru_sort.rst
++++ b/Documentation/admin-guide/mm/damon/lru_sort.rst
+@@ -54,7 +54,7 @@ that is built with ``CONFIG_DAMON_LRU_SORT=y``.
+ To let sysadmins enable or disable it and tune for the given system,
+ DAMON_LRU_SORT utilizes module parameters.  That is, you can put
+ ``damon_lru_sort.<parameter>=<value>`` on the kernel boot command line or write
+-proper values to ``/sys/modules/damon_lru_sort/parameters/<parameter>`` files.
++proper values to ``/sys/module/damon_lru_sort/parameters/<parameter>`` files.
+ 
+ Below are the description of each parameter.
+ 
+@@ -283,7 +283,7 @@ doesn't make progress and therefore the free memory rate becomes lower than
+ 20%, it asks DAMON_LRU_SORT to do nothing again, so that we can fall back to
+ the LRU-list based page granularity reclamation. ::
+ 
+-    # cd /sys/modules/damon_lru_sort/parameters
++    # cd /sys/module/damon_lru_sort/parameters
+     # echo 500 > hot_thres_access_freq
+     # echo 120000000 > cold_min_age
+     # echo 10 > quota_ms
+diff --git a/Documentation/admin-guide/mm/damon/reclaim.rst b/Documentation/admin-guide/mm/damon/reclaim.rst
+index 4f1479a11e63..d2ccd9c21b9a 100644
+--- a/Documentation/admin-guide/mm/damon/reclaim.rst
++++ b/Documentation/admin-guide/mm/damon/reclaim.rst
+@@ -46,7 +46,7 @@ that is built with ``CONFIG_DAMON_RECLAIM=y``.
+ To let sysadmins enable or disable it and tune for the given system,
+ DAMON_RECLAIM utilizes module parameters.  That is, you can put
+ ``damon_reclaim.<parameter>=<value>`` on the kernel boot command line or write
+-proper values to ``/sys/modules/damon_reclaim/parameters/<parameter>`` files.
++proper values to ``/sys/module/damon_reclaim/parameters/<parameter>`` files.
+ 
+ Below are the description of each parameter.
+ 
+@@ -251,7 +251,7 @@ therefore the free memory rate becomes lower than 20%, it asks DAMON_RECLAIM to
+ do nothing again, so that we can fall back to the LRU-list based page
+ granularity reclamation. ::
+ 
+-    # cd /sys/modules/damon_reclaim/parameters
++    # cd /sys/module/damon_reclaim/parameters
+     # echo 30000000 > min_age
+     # echo $((1 * 1024 * 1024 * 1024)) > quota_sz
+     # echo 1000 > quota_reset_interval_ms
+diff --git a/Documentation/translations/zh_CN/admin-guide/mm/damon/reclaim.rst b/Documentation/translations/zh_CN/admin-guide/mm/damon/reclaim.rst
+index c976f3e33ffd..d15a2f20bb11 100644
+--- a/Documentation/translations/zh_CN/admin-guide/mm/damon/reclaim.rst
++++ b/Documentation/translations/zh_CN/admin-guide/mm/damon/reclaim.rst
+@@ -45,7 +45,7 @@ DAMON_RECLAIM找到在特定时间内没有被访问的内存区域并分页。
+ 
+ 为了让系统管理员启用或禁用它，并为给定的系统进行调整，DAMON_RECLAIM利用了模块参数。也就
+ 是说，你可以把 ``damon_reclaim.<parameter>=<value>`` 放在内核启动命令行上，或者把
+-适当的值写入 ``/sys/modules/damon_reclaim/parameters/<parameter>`` 文件。
++适当的值写入 ``/sys/module/damon_reclaim/parameters/<parameter>`` 文件。
+ 
+ 注意，除 ``启用`` 外的参数值只在DAMON_RECLAIM启动时应用。因此，如果你想在运行时应用新
+ 的参数值，而DAMON_RECLAIM已经被启用，你应该通过 ``启用`` 的参数文件禁用和重新启用它。
+@@ -218,7 +218,7 @@ nr_quota_exceeds
+ 就开始真正的工作。如果DAMON_RECLAIM没有取得进展，因此空闲内存率低于20%，它会要求
+ DAMON_RECLAIM再次什么都不做，这样我们就可以退回到基于LRU列表的页面粒度回收了::
+ 
+-    # cd /sys/modules/damon_reclaim/parameters
++    # cd /sys/module/damon_reclaim/parameters
+     # echo 30000000 > min_age
+     # echo $((1 * 1024 * 1024 * 1024)) > quota_sz
+     # echo 1000 > quota_reset_interval_ms
+-- 
+2.34.1
 
-Let's have yet another one instance for next Tuesday morning (PST), so
-2023-01-31 (Tue) 09:30 PST.
-
-
-Thanks,
-SJ
-
-> 
-> 
-> Thanks,
-> SJ
-> 
