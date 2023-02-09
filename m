@@ -1,58 +1,66 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B78927733
-	for <damon@lists.linux.dev>; Tue,  7 Feb 2023 22:28:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C76DDC433EF;
-	Tue,  7 Feb 2023 22:28:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E357A931
+	for <damon@lists.linux.dev>; Thu,  9 Feb 2023 19:20:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 557C8C433D2;
+	Thu,  9 Feb 2023 19:20:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1675808910;
-	bh=0pnhlHgUFS+duPYaJ+ghB1NoXh/J7+EhVyjb0D0gxOA=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VfWZG7Sg7ohHXC9+JTd8YMCwha+ceyYX0R3lnjfSkDm+AWuWFwtjIdpWfmkSPqw8j
-	 rEp4NLFkG6d3mYNZTcTzFg8fi7HoG6SkqRA1SqTkQ9qpgrRs5bED49eSUfUooBlvfC
-	 3J91PJWN/wkErtr2q5c4UuDfcvOw5Jkhc1abvvVPyZU+3yG+8zFqNCCpTQVBjbdHc2
-	 E7knlD0d23EKuZVL5PvcvjRZOavr+e5tpZixVQQPttL9GqhWNAxYSEFBRfgjiJwjPC
-	 YojAlxMEpPQI7ABAvgTy26rX+heSJgmF2BI8kMKMzZoWxZ0YDzWTi27zVPVx0eVLAZ
-	 2Q5Da4uQscl+w==
+	s=k20201202; t=1675970414;
+	bh=swRBBVE/viI6KG+9S+fnzgo4Go35k+GOMOw/h5ENBfk=;
+	h=From:To:Cc:Subject:Date:From;
+	b=n98LMgfRjhS+NQiBVMD7yJTQxUiNwDOHp2zsiupAX66a4s99YZJ/ZjJI8UL/11rhY
+	 n7xJ9PJgVIacDV1DI2adJtyPmK8TDZTu5DSbeeYYrc77U7bs02uZo7xi94plOychbu
+	 btI0RKSBjoXXVUZCJ9GiAhhhVkewgja1zOyu0+5X5sNxnAfK+YEAKUEolr9pG47VOu
+	 24jWZYkoRHC+NKEhGf46GGCisAfytAk3tvtLPaPaNxkA+zmWCMbs0ui3vxhyemuesN
+	 2jwjcZu+ibGnLPQQZjBNkQTmCk2UL4k9r+QnIiNJH7yqTaOFzJqqfR3/7MU49Vg5+a
+	 ExV/fjc6WqjJg==
 From: SeongJae Park <sj@kernel.org>
-To: =?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>
+To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SeongJae Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Jonathan Corbet <corbet@lwn.net>,
 	damon@lists.linux.dev,
 	linux-mm@kvack.org,
+	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] mm/damon/sysfs: make kobj_type structures constant
-Date: Tue,  7 Feb 2023 22:28:27 +0000
-Message-Id: <20230207222827.55192-1-sj@kernel.org>
+Subject: 
+Date: Thu,  9 Feb 2023 19:20:06 +0000
+Message-Id: <20230209192009.7885-1-sj@kernel.org>
 X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20230207-kobj_type-damon-v1-1-9d4fea6a465b@weissschuh.net>
-References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Hi Thomas,
+Date: Thu, 9 Feb 2023 19:16:23 +0000
+Subject: [PATCH 0/3] mm/damon: deprecate DAMON debugfs interface
 
-On Tue, 07 Feb 2023 19:21:15 +0000 "Thomas Weißschuh" <linux@weissschuh.net> wrote:
+DAMON debugfs interface has announced to be deprecated after >v5.15 LTS
+kernel is released.  And, v6.1.y has announced to be an LTS[1].
 
-> Since commit ee6d3dd4ed48 ("driver core: make kobj_type constant.")
-> the driver core allows the usage of const struct kobj_type.
-> 
-> Take advantage of this to constify the structure definitions to prevent
-> modification at runtime.
-> 
-> Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
+Though the announcement was there for a while, some people might not
+noticed that so far.  Also, some users could depend on it and have
+problems at  movng to the alternative (DAMON sysfs interface).
 
-Reviewed-by: SeongJae Park <sj@kernel.org>
+For such cases, keep the code and documents with warning messages and
+contacts to ask helps for the deprecation.
 
+[1] https://git.kernel.org/pub/scm/docs/kernel/website.git/commit/?id=332e9121320bc7461b2d3a79665caf153e51732c
 
-Thanks,
-SJ
+SeongJae Park (3):
+  Docs/admin-guide/mm/damon/usage: add DAMON debugfs interface
+    deprecation notice
+  mm/damon/Kconfig: add DAMON debugfs interface deprecation notice
+  mm/damon/dbgfs: print DAMON debugfs interface deprecation message
 
-[...]
+ Documentation/admin-guide/mm/damon/usage.rst | 20 +++++++++++++-------
+ mm/damon/Kconfig                             |  7 ++++---
+ mm/damon/dbgfs.c                             | 16 ++++++++++++++++
+ 3 files changed, 33 insertions(+), 10 deletions(-)
+
+-- 
+2.25.1
+
