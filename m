@@ -1,12 +1,12 @@
-Received: from out199-14.us.a.mail.aliyun.com (out199-14.us.a.mail.aliyun.com [47.90.199.14])
+Received: from out199-5.us.a.mail.aliyun.com (out199-5.us.a.mail.aliyun.com [47.90.199.5])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A38BC081
-	for <damon@lists.linux.dev>; Tue, 14 Feb 2023 13:59:59 +0000 (UTC)
-X-Alimail-AntiSpam:AC=PASS;BC=-1|-1;BR=01201311R111e4;CH=green;DM=||false|;DS=||;FP=0|-1|-1|-1|0|-1|-1|-1;HT=ay29a033018046059;MF=baolin.wang@linux.alibaba.com;NM=1;PH=DS;RN=19;SR=0;TI=SMTPD_---0VbgTJ0s_1676383180;
-Received: from localhost(mailfrom:baolin.wang@linux.alibaba.com fp:SMTPD_---0VbgTJ0s_1676383180)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACD4DC081
+	for <damon@lists.linux.dev>; Tue, 14 Feb 2023 14:00:05 +0000 (UTC)
+X-Alimail-AntiSpam:AC=PASS;BC=-1|-1;BR=01201311R691e4;CH=green;DM=||false|;DS=||;FP=0|-1|-1|-1|0|-1|-1|-1;HT=ay29a033018046056;MF=baolin.wang@linux.alibaba.com;NM=1;PH=DS;RN=19;SR=0;TI=SMTPD_---0VbgTJ1R_1676383183;
+Received: from localhost(mailfrom:baolin.wang@linux.alibaba.com fp:SMTPD_---0VbgTJ1R_1676383183)
           by smtp.aliyun-inc.com;
-          Tue, 14 Feb 2023 21:59:40 +0800
+          Tue, 14 Feb 2023 21:59:44 +0800
 From: Baolin Wang <baolin.wang@linux.alibaba.com>
 To: akpm@linux-foundation.org
 Cc: torvalds@linux-foundation.org,
@@ -27,9 +27,9 @@ Cc: torvalds@linux-foundation.org,
 	cgroups@vger.kernel.org,
 	linux-mm@kvack.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH v2 1/4] mm: change to return bool for folio_isolate_lru()
-Date: Tue, 14 Feb 2023 21:59:29 +0800
-Message-Id: <7abe2897803410fdc8f167b46bb5b0467de0e3c9.1676382188.git.baolin.wang@linux.alibaba.com>
+Subject: [PATCH v2 4/4] mm: change to return bool for isolate_movable_page()
+Date: Tue, 14 Feb 2023 21:59:32 +0800
+Message-Id: <57406039579e764fb6002648699d4896da56ba4a.1676382188.git.baolin.wang@linux.alibaba.com>
 X-Mailer: git-send-email 2.27.0
 In-Reply-To: <cover.1676382188.git.baolin.wang@linux.alibaba.com>
 References: <cover.1676382188.git.baolin.wang@linux.alibaba.com>
@@ -41,181 +41,121 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Now the folio_isolate_lru() did not return a boolean value to indicate
-isolation success or not, however below code checking the return value
-can make people think that it was a boolean success/failure thing, which
-makes people easy to make mistakes (see the fix patch[1]).
-
-if (folio_isolate_lru(folio))
-	continue;
-
-Thus it's better to check the negative error value expilictly returned by
-folio_isolate_lru(), which makes code more clear per Linus's suggestion[2].
-Moreover Matthew suggested we can convert the isolation functions to return
-a boolean[3], since most users did not care about the negative error value,
-and can also remove the confusing of checking return value.
-
-So this patch converts the folio_isolate_lru() to return a boolean value,
-which means return 'true' to indicate the folio isolation is successful, and
-'false' means a failure to isolation. Meanwhile changing all users' logic of
-checking the isolation state.
+Now the isolate_movable_page() can only return 0 or -EBUSY, and no users
+will care about the negative return value, thus we can convert the
+isolate_movable_page() to return a boolean value to make the code more
+clear when checking the movable page isolation state.
 
 No functional changes intended.
 
-[1] https://lore.kernel.org/all/20230131063206.28820-1-Kuan-Ying.Lee@mediatek.com/T/#u
-[2] https://lore.kernel.org/all/CAHk-=wiBrY+O-4=2mrbVyxR+hOqfdJ=Do6xoucfJ9_5az01L4Q@mail.gmail.com/
-[3] https://lore.kernel.org/all/Y+sTFqwMNAjDvxw3@casper.infradead.org/
-
 Signed-off-by: Baolin Wang <baolin.wang@linux.alibaba.com>
 ---
- mm/damon/paddr.c  |  2 +-
- mm/folio-compat.c |  8 +++++++-
- mm/gup.c          |  2 +-
- mm/internal.h     |  2 +-
- mm/khugepaged.c   |  2 +-
- mm/madvise.c      |  4 ++--
- mm/mempolicy.c    |  2 +-
- mm/vmscan.c       | 10 +++++-----
- 8 files changed, 19 insertions(+), 13 deletions(-)
+ include/linux/migrate.h | 6 +++---
+ mm/compaction.c         | 2 +-
+ mm/memory-failure.c     | 4 ++--
+ mm/memory_hotplug.c     | 4 ++--
+ mm/migrate.c            | 6 +++---
+ 5 files changed, 11 insertions(+), 11 deletions(-)
 
-diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
-index b4df9b9bcc0a..607bb69e526c 100644
---- a/mm/damon/paddr.c
-+++ b/mm/damon/paddr.c
-@@ -246,7 +246,7 @@ static unsigned long damon_pa_pageout(struct damon_region *r, struct damos *s)
+diff --git a/include/linux/migrate.h b/include/linux/migrate.h
+index c88b96b48be7..6b252f519c86 100644
+--- a/include/linux/migrate.h
++++ b/include/linux/migrate.h
+@@ -71,7 +71,7 @@ extern int migrate_pages(struct list_head *l, new_page_t new, free_page_t free,
+ 		unsigned long private, enum migrate_mode mode, int reason,
+ 		unsigned int *ret_succeeded);
+ extern struct page *alloc_migration_target(struct page *page, unsigned long private);
+-extern int isolate_movable_page(struct page *page, isolate_mode_t mode);
++extern bool isolate_movable_page(struct page *page, isolate_mode_t mode);
  
- 		folio_clear_referenced(folio);
- 		folio_test_clear_young(folio);
--		if (folio_isolate_lru(folio)) {
-+		if (!folio_isolate_lru(folio)) {
- 			folio_put(folio);
- 			continue;
- 		}
-diff --git a/mm/folio-compat.c b/mm/folio-compat.c
-index 18c48b557926..540373cf904e 100644
---- a/mm/folio-compat.c
-+++ b/mm/folio-compat.c
-@@ -115,9 +115,15 @@ EXPORT_SYMBOL(grab_cache_page_write_begin);
+ int migrate_huge_page_move_mapping(struct address_space *mapping,
+ 		struct folio *dst, struct folio *src);
+@@ -92,8 +92,8 @@ static inline int migrate_pages(struct list_head *l, new_page_t new,
+ static inline struct page *alloc_migration_target(struct page *page,
+ 		unsigned long private)
+ 	{ return NULL; }
+-static inline int isolate_movable_page(struct page *page, isolate_mode_t mode)
+-	{ return -EBUSY; }
++static inline bool isolate_movable_page(struct page *page, isolate_mode_t mode)
++	{ return false; }
  
- int isolate_lru_page(struct page *page)
+ static inline int migrate_huge_page_move_mapping(struct address_space *mapping,
+ 				  struct folio *dst, struct folio *src)
+diff --git a/mm/compaction.c b/mm/compaction.c
+index d73578af44cc..ad7409f70519 100644
+--- a/mm/compaction.c
++++ b/mm/compaction.c
+@@ -976,7 +976,7 @@ isolate_migratepages_block(struct compact_control *cc, unsigned long low_pfn,
+ 					locked = NULL;
+ 				}
+ 
+-				if (!isolate_movable_page(page, mode))
++				if (isolate_movable_page(page, mode))
+ 					goto isolate_success;
+ 			}
+ 
+diff --git a/mm/memory-failure.c b/mm/memory-failure.c
+index 8604753bc644..a1ede7bdce95 100644
+--- a/mm/memory-failure.c
++++ b/mm/memory-failure.c
+@@ -2515,8 +2515,8 @@ static bool isolate_page(struct page *page, struct list_head *pagelist)
+ 		if (lru)
+ 			isolated = isolate_lru_page(page);
+ 		else
+-			isolated = !isolate_movable_page(page,
+-							 ISOLATE_UNEVICTABLE);
++			isolated = isolate_movable_page(page,
++							ISOLATE_UNEVICTABLE);
+ 
+ 		if (isolated) {
+ 			list_add(&page->lru, pagelist);
+diff --git a/mm/memory_hotplug.c b/mm/memory_hotplug.c
+index 17ed80707518..e54c4aa69636 100644
+--- a/mm/memory_hotplug.c
++++ b/mm/memory_hotplug.c
+@@ -1668,10 +1668,10 @@ do_migrate_range(unsigned long start_pfn, unsigned long end_pfn)
+ 		 * LRU and non-lru movable pages.
+ 		 */
+ 		if (PageLRU(page))
+-			ret = !isolate_lru_page(page);
++			ret = isolate_lru_page(page);
+ 		else
+ 			ret = isolate_movable_page(page, ISOLATE_UNEVICTABLE);
+-		if (!ret) { /* Success */
++		if (ret) { /* Success */
+ 			list_add_tail(&page->lru, &source);
+ 			if (!__PageMovable(page))
+ 				inc_node_page_state(page, NR_ISOLATED_ANON +
+diff --git a/mm/migrate.c b/mm/migrate.c
+index c5136fa48638..b7982aa745b0 100644
+--- a/mm/migrate.c
++++ b/mm/migrate.c
+@@ -58,7 +58,7 @@
+ 
+ #include "internal.h"
+ 
+-int isolate_movable_page(struct page *page, isolate_mode_t mode)
++bool isolate_movable_page(struct page *page, isolate_mode_t mode)
  {
-+	bool ret;
-+
- 	if (WARN_RATELIMIT(PageTail(page), "trying to isolate tail page"))
- 		return -EBUSY;
--	return folio_isolate_lru((struct folio *)page);
-+	ret = folio_isolate_lru((struct folio *)page);
-+	if (ret)
-+		return 0;
-+
-+	return -EBUSY;
+ 	struct folio *folio = folio_get_nontail_page(page);
+ 	const struct movable_operations *mops;
+@@ -119,14 +119,14 @@ int isolate_movable_page(struct page *page, isolate_mode_t mode)
+ 	folio_set_isolated(folio);
+ 	folio_unlock(folio);
+ 
+-	return 0;
++	return true;
+ 
+ out_no_isolated:
+ 	folio_unlock(folio);
+ out_putfolio:
+ 	folio_put(folio);
+ out:
+-	return -EBUSY;
++	return false;
  }
  
- void putback_lru_page(struct page *page)
-diff --git a/mm/gup.c b/mm/gup.c
-index b0885f70579c..eab18ba045db 100644
---- a/mm/gup.c
-+++ b/mm/gup.c
-@@ -1939,7 +1939,7 @@ static unsigned long collect_longterm_unpinnable_pages(
- 			drain_allow = false;
- 		}
- 
--		if (folio_isolate_lru(folio))
-+		if (!folio_isolate_lru(folio))
- 			continue;
- 
- 		list_add_tail(&folio->lru, movable_page_list);
-diff --git a/mm/internal.h b/mm/internal.h
-index dfb37e94e140..8645e8496537 100644
---- a/mm/internal.h
-+++ b/mm/internal.h
-@@ -188,7 +188,7 @@ pgprot_t __init early_memremap_pgprot_adjust(resource_size_t phys_addr,
-  * in mm/vmscan.c:
-  */
- int isolate_lru_page(struct page *page);
--int folio_isolate_lru(struct folio *folio);
-+bool folio_isolate_lru(struct folio *folio);
- void putback_lru_page(struct page *page);
- void folio_putback_lru(struct folio *folio);
- extern void reclaim_throttle(pg_data_t *pgdat, enum vmscan_throttle_state reason);
-diff --git a/mm/khugepaged.c b/mm/khugepaged.c
-index a5d32231bfad..cee659cfa3c1 100644
---- a/mm/khugepaged.c
-+++ b/mm/khugepaged.c
-@@ -2047,7 +2047,7 @@ static int collapse_file(struct mm_struct *mm, unsigned long addr,
- 			goto out_unlock;
- 		}
- 
--		if (folio_isolate_lru(folio)) {
-+		if (!folio_isolate_lru(folio)) {
- 			result = SCAN_DEL_PAGE_LRU;
- 			goto out_unlock;
- 		}
-diff --git a/mm/madvise.c b/mm/madvise.c
-index 5a5a687d03c2..c2202f51e9dd 100644
---- a/mm/madvise.c
-+++ b/mm/madvise.c
-@@ -406,7 +406,7 @@ static int madvise_cold_or_pageout_pte_range(pmd_t *pmd,
- 		folio_clear_referenced(folio);
- 		folio_test_clear_young(folio);
- 		if (pageout) {
--			if (!folio_isolate_lru(folio)) {
-+			if (folio_isolate_lru(folio)) {
- 				if (folio_test_unevictable(folio))
- 					folio_putback_lru(folio);
- 				else
-@@ -500,7 +500,7 @@ static int madvise_cold_or_pageout_pte_range(pmd_t *pmd,
- 		folio_clear_referenced(folio);
- 		folio_test_clear_young(folio);
- 		if (pageout) {
--			if (!folio_isolate_lru(folio)) {
-+			if (folio_isolate_lru(folio)) {
- 				if (folio_test_unevictable(folio))
- 					folio_putback_lru(folio);
- 				else
-diff --git a/mm/mempolicy.c b/mm/mempolicy.c
-index 0919c7a719d4..2751bc3310fd 100644
---- a/mm/mempolicy.c
-+++ b/mm/mempolicy.c
-@@ -1033,7 +1033,7 @@ static int migrate_folio_add(struct folio *folio, struct list_head *foliolist,
- 	 * expensive, so check the estimated mapcount of the folio instead.
- 	 */
- 	if ((flags & MPOL_MF_MOVE_ALL) || folio_estimated_sharers(folio) == 1) {
--		if (!folio_isolate_lru(folio)) {
-+		if (folio_isolate_lru(folio)) {
- 			list_add_tail(&folio->lru, foliolist);
- 			node_stat_mod_folio(folio,
- 				NR_ISOLATED_ANON + folio_is_file_lru(folio),
-diff --git a/mm/vmscan.c b/mm/vmscan.c
-index 34535bbd4fe9..7658b40df947 100644
---- a/mm/vmscan.c
-+++ b/mm/vmscan.c
-@@ -2337,12 +2337,12 @@ static unsigned long isolate_lru_folios(unsigned long nr_to_scan,
-  * (2) The lru_lock must not be held.
-  * (3) Interrupts must be enabled.
-  *
-- * Return: 0 if the folio was removed from an LRU list.
-- * -EBUSY if the folio was not on an LRU list.
-+ * Return: true if the folio was removed from an LRU list.
-+ * false if the folio was not on an LRU list.
-  */
--int folio_isolate_lru(struct folio *folio)
-+bool folio_isolate_lru(struct folio *folio)
- {
--	int ret = -EBUSY;
-+	bool ret = false;
- 
- 	VM_BUG_ON_FOLIO(!folio_ref_count(folio), folio);
- 
-@@ -2353,7 +2353,7 @@ int folio_isolate_lru(struct folio *folio)
- 		lruvec = folio_lruvec_lock_irq(folio);
- 		lruvec_del_folio(lruvec, folio);
- 		unlock_page_lruvec_irq(lruvec);
--		ret = 0;
-+		ret = true;
- 	}
- 
- 	return ret;
+ static void putback_movable_folio(struct folio *folio)
 -- 
 2.27.0
 
