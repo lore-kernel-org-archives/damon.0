@@ -1,12 +1,12 @@
-Received: from out30-124.freemail.mail.aliyun.com (out30-124.freemail.mail.aliyun.com [115.124.30.124])
+Received: from out30-99.freemail.mail.aliyun.com (out30-99.freemail.mail.aliyun.com [115.124.30.99])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4A45C086
-	for <damon@lists.linux.dev>; Tue, 14 Feb 2023 14:05:01 +0000 (UTC)
-X-Alimail-AntiSpam:AC=PASS;BC=-1|-1;BR=01201311R191e4;CH=green;DM=||false|;DS=||;FP=0|-1|-1|-1|0|-1|-1|-1;HT=ay29a033018045168;MF=baolin.wang@linux.alibaba.com;NM=1;PH=DS;RN=19;SR=0;TI=SMTPD_---0VbgTJ0R_1676383178;
-Received: from localhost(mailfrom:baolin.wang@linux.alibaba.com fp:SMTPD_---0VbgTJ0R_1676383178)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52A18C081
+	for <damon@lists.linux.dev>; Tue, 14 Feb 2023 14:05:00 +0000 (UTC)
+X-Alimail-AntiSpam:AC=PASS;BC=-1|-1;BR=01201311R191e4;CH=green;DM=||false|;DS=||;FP=0|-1|-1|-1|0|-1|-1|-1;HT=ay29a033018046056;MF=baolin.wang@linux.alibaba.com;NM=1;PH=DS;RN=19;SR=0;TI=SMTPD_---0VbgLy-t_1676383181;
+Received: from localhost(mailfrom:baolin.wang@linux.alibaba.com fp:SMTPD_---0VbgLy-t_1676383181)
           by smtp.aliyun-inc.com;
-          Tue, 14 Feb 2023 21:59:39 +0800
+          Tue, 14 Feb 2023 21:59:41 +0800
 From: Baolin Wang <baolin.wang@linux.alibaba.com>
 To: akpm@linux-foundation.org
 Cc: torvalds@linux-foundation.org,
@@ -27,10 +27,12 @@ Cc: torvalds@linux-foundation.org,
 	cgroups@vger.kernel.org,
 	linux-mm@kvack.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH v2 0/4] Change the return value for page isolation functions
-Date: Tue, 14 Feb 2023 21:59:28 +0800
-Message-Id: <cover.1676382188.git.baolin.wang@linux.alibaba.com>
+Subject: [PATCH v2 2/4] mm: change to return bool for isolate_lru_page()
+Date: Tue, 14 Feb 2023 21:59:30 +0800
+Message-Id: <3635a17b9a0cf4be011a886415bf620b1c682ff6.1676382188.git.baolin.wang@linux.alibaba.com>
 X-Mailer: git-send-email 2.27.0
+In-Reply-To: <cover.1676382188.git.baolin.wang@linux.alibaba.com>
+References: <cover.1676382188.git.baolin.wang@linux.alibaba.com>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -39,50 +41,179 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Now the page isolation functions did not return a boolean to indicate
-success or not, instead it will return a negative error when failed
-to isolate a page. So below code used in most places seem a boolean
-success/failure thing, which can confuse people whether the isolation
-is successful.
+The isolate_lru_page() can only return 0 or -EBUSY, and most users did
+not care about the negative error of isolate_lru_page(), except one user
+in add_page_for_migration(). So we can convert the isolate_lru_page() to
+return a boolean value, which can help to make the code more clear when
+checking the return value of isolate_lru_page().
 
-if (folio_isolate_lru(folio))
-        continue;
+Also convert all users' logic of checking the isolation state.
 
-Moreover the page isolation functions only return 0 or -EBUSY, and
-most users did not care about the negative error except for few users,
-thus we can convert all page isolation functions to return a boolean
-value, which can remove the confusion to make code more clear.
+No functional changes intended.
 
-No functional changes intended in this patch series.
+Signed-off-by: Baolin Wang <baolin.wang@linux.alibaba.com>
+---
+ mm/folio-compat.c   | 12 +++---------
+ mm/internal.h       |  2 +-
+ mm/khugepaged.c     |  2 +-
+ mm/memcontrol.c     |  4 ++--
+ mm/memory-failure.c |  4 ++--
+ mm/memory_hotplug.c |  2 +-
+ mm/migrate.c        |  9 ++++++---
+ mm/migrate_device.c |  2 +-
+ 8 files changed, 17 insertions(+), 20 deletions(-)
 
-Changes from v1:
- - Convert all isolation functions to return bool.
-
-Baolin Wang (4):
-  mm: change to return bool for folio_isolate_lru()
-  mm: change to return bool for isolate_lru_page()
-  mm: hugetlb: change to return bool for isolate_hugetlb()
-  mm: change to return bool for isolate_movable_page()
-
- include/linux/hugetlb.h |  6 +++---
- include/linux/migrate.h |  6 +++---
- mm/compaction.c         |  2 +-
- mm/damon/paddr.c        |  2 +-
- mm/folio-compat.c       |  4 ++--
- mm/gup.c                |  2 +-
- mm/hugetlb.c            | 12 ++++++++----
- mm/internal.h           |  4 ++--
- mm/khugepaged.c         |  4 ++--
- mm/madvise.c            |  4 ++--
- mm/memcontrol.c         |  4 ++--
- mm/memory-failure.c     | 10 +++++-----
- mm/memory_hotplug.c     |  2 +-
- mm/mempolicy.c          |  4 ++--
- mm/migrate.c            | 17 ++++++++++-------
- mm/migrate_device.c     |  2 +-
- mm/vmscan.c             | 10 +++++-----
- 17 files changed, 51 insertions(+), 44 deletions(-)
-
+diff --git a/mm/folio-compat.c b/mm/folio-compat.c
+index 540373cf904e..cabcd1de9ecb 100644
+--- a/mm/folio-compat.c
++++ b/mm/folio-compat.c
+@@ -113,17 +113,11 @@ struct page *grab_cache_page_write_begin(struct address_space *mapping,
+ }
+ EXPORT_SYMBOL(grab_cache_page_write_begin);
+ 
+-int isolate_lru_page(struct page *page)
++bool isolate_lru_page(struct page *page)
+ {
+-	bool ret;
+-
+ 	if (WARN_RATELIMIT(PageTail(page), "trying to isolate tail page"))
+-		return -EBUSY;
+-	ret = folio_isolate_lru((struct folio *)page);
+-	if (ret)
+-		return 0;
+-
+-	return -EBUSY;
++		return false;
++	return folio_isolate_lru((struct folio *)page);
+ }
+ 
+ void putback_lru_page(struct page *page)
+diff --git a/mm/internal.h b/mm/internal.h
+index 8645e8496537..fc01fd092ea5 100644
+--- a/mm/internal.h
++++ b/mm/internal.h
+@@ -187,7 +187,7 @@ pgprot_t __init early_memremap_pgprot_adjust(resource_size_t phys_addr,
+ /*
+  * in mm/vmscan.c:
+  */
+-int isolate_lru_page(struct page *page);
++bool isolate_lru_page(struct page *page);
+ bool folio_isolate_lru(struct folio *folio);
+ void putback_lru_page(struct page *page);
+ void folio_putback_lru(struct folio *folio);
+diff --git a/mm/khugepaged.c b/mm/khugepaged.c
+index cee659cfa3c1..8dbc39896811 100644
+--- a/mm/khugepaged.c
++++ b/mm/khugepaged.c
+@@ -659,7 +659,7 @@ static int __collapse_huge_page_isolate(struct vm_area_struct *vma,
+ 		 * Isolate the page to avoid collapsing an hugepage
+ 		 * currently in use by the VM.
+ 		 */
+-		if (isolate_lru_page(page)) {
++		if (!isolate_lru_page(page)) {
+ 			unlock_page(page);
+ 			result = SCAN_DEL_PAGE_LRU;
+ 			goto out;
+diff --git a/mm/memcontrol.c b/mm/memcontrol.c
+index 17335459d8dc..e8fd42be5fab 100644
+--- a/mm/memcontrol.c
++++ b/mm/memcontrol.c
+@@ -6176,7 +6176,7 @@ static int mem_cgroup_move_charge_pte_range(pmd_t *pmd,
+ 		target_type = get_mctgt_type_thp(vma, addr, *pmd, &target);
+ 		if (target_type == MC_TARGET_PAGE) {
+ 			page = target.page;
+-			if (!isolate_lru_page(page)) {
++			if (isolate_lru_page(page)) {
+ 				if (!mem_cgroup_move_account(page, true,
+ 							     mc.from, mc.to)) {
+ 					mc.precharge -= HPAGE_PMD_NR;
+@@ -6226,7 +6226,7 @@ static int mem_cgroup_move_charge_pte_range(pmd_t *pmd,
+ 			 */
+ 			if (PageTransCompound(page))
+ 				goto put;
+-			if (!device && isolate_lru_page(page))
++			if (!device && !isolate_lru_page(page))
+ 				goto put;
+ 			if (!mem_cgroup_move_account(page, false,
+ 						mc.from, mc.to)) {
+diff --git a/mm/memory-failure.c b/mm/memory-failure.c
+index db85c2d37f70..e504362fdb23 100644
+--- a/mm/memory-failure.c
++++ b/mm/memory-failure.c
+@@ -846,7 +846,7 @@ static const char * const action_page_types[] = {
+  */
+ static int delete_from_lru_cache(struct page *p)
+ {
+-	if (!isolate_lru_page(p)) {
++	if (isolate_lru_page(p)) {
+ 		/*
+ 		 * Clear sensible page flags, so that the buddy system won't
+ 		 * complain when the page is unpoison-and-freed.
+@@ -2513,7 +2513,7 @@ static bool isolate_page(struct page *page, struct list_head *pagelist)
+ 		bool lru = !__PageMovable(page);
+ 
+ 		if (lru)
+-			isolated = !isolate_lru_page(page);
++			isolated = isolate_lru_page(page);
+ 		else
+ 			isolated = !isolate_movable_page(page,
+ 							 ISOLATE_UNEVICTABLE);
+diff --git a/mm/memory_hotplug.c b/mm/memory_hotplug.c
+index a1e8c3e9ab08..17ed80707518 100644
+--- a/mm/memory_hotplug.c
++++ b/mm/memory_hotplug.c
+@@ -1668,7 +1668,7 @@ do_migrate_range(unsigned long start_pfn, unsigned long end_pfn)
+ 		 * LRU and non-lru movable pages.
+ 		 */
+ 		if (PageLRU(page))
+-			ret = isolate_lru_page(page);
++			ret = !isolate_lru_page(page);
+ 		else
+ 			ret = isolate_movable_page(page, ISOLATE_UNEVICTABLE);
+ 		if (!ret) { /* Success */
+diff --git a/mm/migrate.c b/mm/migrate.c
+index ef68a1aff35c..53010a142e7f 100644
+--- a/mm/migrate.c
++++ b/mm/migrate.c
+@@ -2132,11 +2132,14 @@ static int add_page_for_migration(struct mm_struct *mm, unsigned long addr,
+ 		}
+ 	} else {
+ 		struct page *head;
++		bool isolated;
+ 
+ 		head = compound_head(page);
+-		err = isolate_lru_page(head);
+-		if (err)
++		isolated = isolate_lru_page(head);
++		if (!isolated) {
++			err = -EBUSY;
+ 			goto out_putpage;
++		}
+ 
+ 		err = 1;
+ 		list_add_tail(&head->lru, pagelist);
+@@ -2541,7 +2544,7 @@ static int numamigrate_isolate_page(pg_data_t *pgdat, struct page *page)
+ 		return 0;
+ 	}
+ 
+-	if (isolate_lru_page(page))
++	if (!isolate_lru_page(page))
+ 		return 0;
+ 
+ 	mod_node_page_state(page_pgdat(page), NR_ISOLATED_ANON + page_is_file_lru(page),
+diff --git a/mm/migrate_device.c b/mm/migrate_device.c
+index 6c3740318a98..d30c9de60b0d 100644
+--- a/mm/migrate_device.c
++++ b/mm/migrate_device.c
+@@ -388,7 +388,7 @@ static unsigned long migrate_device_unmap(unsigned long *src_pfns,
+ 				allow_drain = false;
+ 			}
+ 
+-			if (isolate_lru_page(page)) {
++			if (!isolate_lru_page(page)) {
+ 				src_pfns[i] &= ~MIGRATE_PFN_MIGRATE;
+ 				restore++;
+ 				continue;
 -- 
 2.27.0
 
