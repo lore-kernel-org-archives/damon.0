@@ -1,15 +1,24 @@
-Received: from out30-99.freemail.mail.aliyun.com (out30-99.freemail.mail.aliyun.com [115.124.30.99])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52A18C081
-	for <damon@lists.linux.dev>; Tue, 14 Feb 2023 14:05:00 +0000 (UTC)
-X-Alimail-AntiSpam:AC=PASS;BC=-1|-1;BR=01201311R191e4;CH=green;DM=||false|;DS=||;FP=0|-1|-1|-1|0|-1|-1|-1;HT=ay29a033018046056;MF=baolin.wang@linux.alibaba.com;NM=1;PH=DS;RN=19;SR=0;TI=SMTPD_---0VbgLy-t_1676383181;
-Received: from localhost(mailfrom:baolin.wang@linux.alibaba.com fp:SMTPD_---0VbgLy-t_1676383181)
-          by smtp.aliyun-inc.com;
-          Tue, 14 Feb 2023 21:59:41 +0800
-From: Baolin Wang <baolin.wang@linux.alibaba.com>
-To: akpm@linux-foundation.org
-Cc: torvalds@linux-foundation.org,
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A106CC5C2
+	for <damon@lists.linux.dev>; Tue, 14 Feb 2023 17:46:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8A40C433D2;
+	Tue, 14 Feb 2023 17:46:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1676396789;
+	bh=MEG6NlLEiDkZKTJsLOd2zm/nDm26I6+i8VdF4xtbs18=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=bi78MPmBkukT5Jrfo8mnvXqS2i2OFtZRbpqm7+zOZPMNAjBb/E3vsgivICgeyqC4b
+	 PoEJ1ryoP+jn/irksPJBXMwnY1iEU7BNS52x59OejNuV12o2w4udhcum2TRMJlWbbB
+	 Al1YeJ5X5BI+P19U8qtDmhjfj6yg6qr2BiaaoOIQjMpwJoyY6VPz3u9azgy6kMKxp9
+	 qMAM7+cyRUg8RRkxBOH9gULqR5KRnO0NdjswwDvJiTITk0jHDkTM82ImdW2bggg52S
+	 Rrq4i3YcXL84BO3tHhlhH8OnmMV5e7vy8c1gxln1DqnrdwbtIDmfDvkKo8hnX+XLnV
+	 5IG0OglfDXBZg==
+From: SeongJae Park <sj@kernel.org>
+To: Baolin Wang <baolin.wang@linux.alibaba.com>
+Cc: akpm@linux-foundation.org,
+	torvalds@linux-foundation.org,
 	sj@kernel.org,
 	hannes@cmpxchg.org,
 	mhocko@kernel.org,
@@ -22,17 +31,16 @@ Cc: torvalds@linux-foundation.org,
 	osalvador@suse.de,
 	mike.kravetz@oracle.com,
 	willy@infradead.org,
-	baolin.wang@linux.alibaba.com,
 	damon@lists.linux.dev,
 	cgroups@vger.kernel.org,
 	linux-mm@kvack.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH v2 2/4] mm: change to return bool for isolate_lru_page()
-Date: Tue, 14 Feb 2023 21:59:30 +0800
-Message-Id: <3635a17b9a0cf4be011a886415bf620b1c682ff6.1676382188.git.baolin.wang@linux.alibaba.com>
-X-Mailer: git-send-email 2.27.0
-In-Reply-To: <cover.1676382188.git.baolin.wang@linux.alibaba.com>
-References: <cover.1676382188.git.baolin.wang@linux.alibaba.com>
+Subject: Re: [PATCH v2 1/4] mm: change to return bool for folio_isolate_lru()
+Date: Tue, 14 Feb 2023 17:46:26 +0000
+Message-Id: <20230214174626.71336-1-sj@kernel.org>
+X-Mailer: git-send-email 2.25.1
+In-Reply-To: <7abe2897803410fdc8f167b46bb5b0467de0e3c9.1676382188.git.baolin.wang@linux.alibaba.com>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -41,179 +49,188 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The isolate_lru_page() can only return 0 or -EBUSY, and most users did
-not care about the negative error of isolate_lru_page(), except one user
-in add_page_for_migration(). So we can convert the isolate_lru_page() to
-return a boolean value, which can help to make the code more clear when
-checking the return value of isolate_lru_page().
+On Tue, 14 Feb 2023 21:59:29 +0800 Baolin Wang <baolin.wang@linux.alibaba.com> wrote:
 
-Also convert all users' logic of checking the isolation state.
+> Now the folio_isolate_lru() did not return a boolean value to indicate
+> isolation success or not, however below code checking the return value
+> can make people think that it was a boolean success/failure thing, which
+> makes people easy to make mistakes (see the fix patch[1]).
+> 
+> if (folio_isolate_lru(folio))
+> 	continue;
+> 
+> Thus it's better to check the negative error value expilictly returned by
+> folio_isolate_lru(), which makes code more clear per Linus's suggestion[2].
+> Moreover Matthew suggested we can convert the isolation functions to return
+> a boolean[3], since most users did not care about the negative error value,
+> and can also remove the confusing of checking return value.
+> 
+> So this patch converts the folio_isolate_lru() to return a boolean value,
+> which means return 'true' to indicate the folio isolation is successful, and
+> 'false' means a failure to isolation. Meanwhile changing all users' logic of
+> checking the isolation state.
+> 
+> No functional changes intended.
+> 
+> [1] https://lore.kernel.org/all/20230131063206.28820-1-Kuan-Ying.Lee@mediatek.com/T/#u
+> [2] https://lore.kernel.org/all/CAHk-=wiBrY+O-4=2mrbVyxR+hOqfdJ=Do6xoucfJ9_5az01L4Q@mail.gmail.com/
+> [3] https://lore.kernel.org/all/Y+sTFqwMNAjDvxw3@casper.infradead.org/
+> 
+> Signed-off-by: Baolin Wang <baolin.wang@linux.alibaba.com>
+> ---
+>  mm/damon/paddr.c  |  2 +-
+>  mm/folio-compat.c |  8 +++++++-
+>  mm/gup.c          |  2 +-
+>  mm/internal.h     |  2 +-
+>  mm/khugepaged.c   |  2 +-
+>  mm/madvise.c      |  4 ++--
+>  mm/mempolicy.c    |  2 +-
+>  mm/vmscan.c       | 10 +++++-----
+>  8 files changed, 19 insertions(+), 13 deletions(-)
+> 
+> diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
+> index b4df9b9bcc0a..607bb69e526c 100644
+> --- a/mm/damon/paddr.c
+> +++ b/mm/damon/paddr.c
+> @@ -246,7 +246,7 @@ static unsigned long damon_pa_pageout(struct damon_region *r, struct damos *s)
+>  
+>  		folio_clear_referenced(folio);
+>  		folio_test_clear_young(folio);
+> -		if (folio_isolate_lru(folio)) {
+> +		if (!folio_isolate_lru(folio)) {
+>  			folio_put(folio);
+>  			continue;
+>  		}
+> diff --git a/mm/folio-compat.c b/mm/folio-compat.c
+> index 18c48b557926..540373cf904e 100644
+> --- a/mm/folio-compat.c
+> +++ b/mm/folio-compat.c
+> @@ -115,9 +115,15 @@ EXPORT_SYMBOL(grab_cache_page_write_begin);
+>  
+>  int isolate_lru_page(struct page *page)
+>  {
+> +	bool ret;
+> +
+>  	if (WARN_RATELIMIT(PageTail(page), "trying to isolate tail page"))
+>  		return -EBUSY;
+> -	return folio_isolate_lru((struct folio *)page);
+> +	ret = folio_isolate_lru((struct folio *)page);
+> +	if (ret)
+> +		return 0;
+> +
+> +	return -EBUSY;
+>  }
+>  
+>  void putback_lru_page(struct page *page)
+> diff --git a/mm/gup.c b/mm/gup.c
+> index b0885f70579c..eab18ba045db 100644
+> --- a/mm/gup.c
+> +++ b/mm/gup.c
+> @@ -1939,7 +1939,7 @@ static unsigned long collect_longterm_unpinnable_pages(
+>  			drain_allow = false;
+>  		}
+>  
+> -		if (folio_isolate_lru(folio))
+> +		if (!folio_isolate_lru(folio))
+>  			continue;
+>  
+>  		list_add_tail(&folio->lru, movable_page_list);
+> diff --git a/mm/internal.h b/mm/internal.h
+> index dfb37e94e140..8645e8496537 100644
+> --- a/mm/internal.h
+> +++ b/mm/internal.h
+> @@ -188,7 +188,7 @@ pgprot_t __init early_memremap_pgprot_adjust(resource_size_t phys_addr,
+>   * in mm/vmscan.c:
+>   */
+>  int isolate_lru_page(struct page *page);
+> -int folio_isolate_lru(struct folio *folio);
+> +bool folio_isolate_lru(struct folio *folio);
+>  void putback_lru_page(struct page *page);
+>  void folio_putback_lru(struct folio *folio);
+>  extern void reclaim_throttle(pg_data_t *pgdat, enum vmscan_throttle_state reason);
+> diff --git a/mm/khugepaged.c b/mm/khugepaged.c
+> index a5d32231bfad..cee659cfa3c1 100644
+> --- a/mm/khugepaged.c
+> +++ b/mm/khugepaged.c
+> @@ -2047,7 +2047,7 @@ static int collapse_file(struct mm_struct *mm, unsigned long addr,
+>  			goto out_unlock;
+>  		}
+>  
+> -		if (folio_isolate_lru(folio)) {
+> +		if (!folio_isolate_lru(folio)) {
+>  			result = SCAN_DEL_PAGE_LRU;
+>  			goto out_unlock;
+>  		}
+> diff --git a/mm/madvise.c b/mm/madvise.c
+> index 5a5a687d03c2..c2202f51e9dd 100644
+> --- a/mm/madvise.c
+> +++ b/mm/madvise.c
+> @@ -406,7 +406,7 @@ static int madvise_cold_or_pageout_pte_range(pmd_t *pmd,
+>  		folio_clear_referenced(folio);
+>  		folio_test_clear_young(folio);
+>  		if (pageout) {
+> -			if (!folio_isolate_lru(folio)) {
+> +			if (folio_isolate_lru(folio)) {
+>  				if (folio_test_unevictable(folio))
+>  					folio_putback_lru(folio);
+>  				else
+> @@ -500,7 +500,7 @@ static int madvise_cold_or_pageout_pte_range(pmd_t *pmd,
+>  		folio_clear_referenced(folio);
+>  		folio_test_clear_young(folio);
+>  		if (pageout) {
+> -			if (!folio_isolate_lru(folio)) {
+> +			if (folio_isolate_lru(folio)) {
+>  				if (folio_test_unevictable(folio))
+>  					folio_putback_lru(folio);
+>  				else
+> diff --git a/mm/mempolicy.c b/mm/mempolicy.c
+> index 0919c7a719d4..2751bc3310fd 100644
+> --- a/mm/mempolicy.c
+> +++ b/mm/mempolicy.c
+> @@ -1033,7 +1033,7 @@ static int migrate_folio_add(struct folio *folio, struct list_head *foliolist,
+>  	 * expensive, so check the estimated mapcount of the folio instead.
+>  	 */
+>  	if ((flags & MPOL_MF_MOVE_ALL) || folio_estimated_sharers(folio) == 1) {
+> -		if (!folio_isolate_lru(folio)) {
+> +		if (folio_isolate_lru(folio)) {
+>  			list_add_tail(&folio->lru, foliolist);
+>  			node_stat_mod_folio(folio,
+>  				NR_ISOLATED_ANON + folio_is_file_lru(folio),
+> diff --git a/mm/vmscan.c b/mm/vmscan.c
+> index 34535bbd4fe9..7658b40df947 100644
+> --- a/mm/vmscan.c
+> +++ b/mm/vmscan.c
+> @@ -2337,12 +2337,12 @@ static unsigned long isolate_lru_folios(unsigned long nr_to_scan,
+>   * (2) The lru_lock must not be held.
+>   * (3) Interrupts must be enabled.
+>   *
+> - * Return: 0 if the folio was removed from an LRU list.
+> - * -EBUSY if the folio was not on an LRU list.
+> + * Return: true if the folio was removed from an LRU list.
+> + * false if the folio was not on an LRU list.
+>   */
+> -int folio_isolate_lru(struct folio *folio)
+> +bool folio_isolate_lru(struct folio *folio)
+>  {
+> -	int ret = -EBUSY;
+> +	bool ret = false;
+>  
+>  	VM_BUG_ON_FOLIO(!folio_ref_count(folio), folio);
+>  
+> @@ -2353,7 +2353,7 @@ int folio_isolate_lru(struct folio *folio)
+>  		lruvec = folio_lruvec_lock_irq(folio);
+>  		lruvec_del_folio(lruvec, folio);
+>  		unlock_page_lruvec_irq(lruvec);
+> -		ret = 0;
+> +		ret = true;
+>  	}
+>  
+>  	return ret;
+> -- 
+> 2.27.0
 
-No functional changes intended.
+Reviewed-by: SeongJae Park <sj@kernel.org>
 
-Signed-off-by: Baolin Wang <baolin.wang@linux.alibaba.com>
----
- mm/folio-compat.c   | 12 +++---------
- mm/internal.h       |  2 +-
- mm/khugepaged.c     |  2 +-
- mm/memcontrol.c     |  4 ++--
- mm/memory-failure.c |  4 ++--
- mm/memory_hotplug.c |  2 +-
- mm/migrate.c        |  9 ++++++---
- mm/migrate_device.c |  2 +-
- 8 files changed, 17 insertions(+), 20 deletions(-)
 
-diff --git a/mm/folio-compat.c b/mm/folio-compat.c
-index 540373cf904e..cabcd1de9ecb 100644
---- a/mm/folio-compat.c
-+++ b/mm/folio-compat.c
-@@ -113,17 +113,11 @@ struct page *grab_cache_page_write_begin(struct address_space *mapping,
- }
- EXPORT_SYMBOL(grab_cache_page_write_begin);
- 
--int isolate_lru_page(struct page *page)
-+bool isolate_lru_page(struct page *page)
- {
--	bool ret;
--
- 	if (WARN_RATELIMIT(PageTail(page), "trying to isolate tail page"))
--		return -EBUSY;
--	ret = folio_isolate_lru((struct folio *)page);
--	if (ret)
--		return 0;
--
--	return -EBUSY;
-+		return false;
-+	return folio_isolate_lru((struct folio *)page);
- }
- 
- void putback_lru_page(struct page *page)
-diff --git a/mm/internal.h b/mm/internal.h
-index 8645e8496537..fc01fd092ea5 100644
---- a/mm/internal.h
-+++ b/mm/internal.h
-@@ -187,7 +187,7 @@ pgprot_t __init early_memremap_pgprot_adjust(resource_size_t phys_addr,
- /*
-  * in mm/vmscan.c:
-  */
--int isolate_lru_page(struct page *page);
-+bool isolate_lru_page(struct page *page);
- bool folio_isolate_lru(struct folio *folio);
- void putback_lru_page(struct page *page);
- void folio_putback_lru(struct folio *folio);
-diff --git a/mm/khugepaged.c b/mm/khugepaged.c
-index cee659cfa3c1..8dbc39896811 100644
---- a/mm/khugepaged.c
-+++ b/mm/khugepaged.c
-@@ -659,7 +659,7 @@ static int __collapse_huge_page_isolate(struct vm_area_struct *vma,
- 		 * Isolate the page to avoid collapsing an hugepage
- 		 * currently in use by the VM.
- 		 */
--		if (isolate_lru_page(page)) {
-+		if (!isolate_lru_page(page)) {
- 			unlock_page(page);
- 			result = SCAN_DEL_PAGE_LRU;
- 			goto out;
-diff --git a/mm/memcontrol.c b/mm/memcontrol.c
-index 17335459d8dc..e8fd42be5fab 100644
---- a/mm/memcontrol.c
-+++ b/mm/memcontrol.c
-@@ -6176,7 +6176,7 @@ static int mem_cgroup_move_charge_pte_range(pmd_t *pmd,
- 		target_type = get_mctgt_type_thp(vma, addr, *pmd, &target);
- 		if (target_type == MC_TARGET_PAGE) {
- 			page = target.page;
--			if (!isolate_lru_page(page)) {
-+			if (isolate_lru_page(page)) {
- 				if (!mem_cgroup_move_account(page, true,
- 							     mc.from, mc.to)) {
- 					mc.precharge -= HPAGE_PMD_NR;
-@@ -6226,7 +6226,7 @@ static int mem_cgroup_move_charge_pte_range(pmd_t *pmd,
- 			 */
- 			if (PageTransCompound(page))
- 				goto put;
--			if (!device && isolate_lru_page(page))
-+			if (!device && !isolate_lru_page(page))
- 				goto put;
- 			if (!mem_cgroup_move_account(page, false,
- 						mc.from, mc.to)) {
-diff --git a/mm/memory-failure.c b/mm/memory-failure.c
-index db85c2d37f70..e504362fdb23 100644
---- a/mm/memory-failure.c
-+++ b/mm/memory-failure.c
-@@ -846,7 +846,7 @@ static const char * const action_page_types[] = {
-  */
- static int delete_from_lru_cache(struct page *p)
- {
--	if (!isolate_lru_page(p)) {
-+	if (isolate_lru_page(p)) {
- 		/*
- 		 * Clear sensible page flags, so that the buddy system won't
- 		 * complain when the page is unpoison-and-freed.
-@@ -2513,7 +2513,7 @@ static bool isolate_page(struct page *page, struct list_head *pagelist)
- 		bool lru = !__PageMovable(page);
- 
- 		if (lru)
--			isolated = !isolate_lru_page(page);
-+			isolated = isolate_lru_page(page);
- 		else
- 			isolated = !isolate_movable_page(page,
- 							 ISOLATE_UNEVICTABLE);
-diff --git a/mm/memory_hotplug.c b/mm/memory_hotplug.c
-index a1e8c3e9ab08..17ed80707518 100644
---- a/mm/memory_hotplug.c
-+++ b/mm/memory_hotplug.c
-@@ -1668,7 +1668,7 @@ do_migrate_range(unsigned long start_pfn, unsigned long end_pfn)
- 		 * LRU and non-lru movable pages.
- 		 */
- 		if (PageLRU(page))
--			ret = isolate_lru_page(page);
-+			ret = !isolate_lru_page(page);
- 		else
- 			ret = isolate_movable_page(page, ISOLATE_UNEVICTABLE);
- 		if (!ret) { /* Success */
-diff --git a/mm/migrate.c b/mm/migrate.c
-index ef68a1aff35c..53010a142e7f 100644
---- a/mm/migrate.c
-+++ b/mm/migrate.c
-@@ -2132,11 +2132,14 @@ static int add_page_for_migration(struct mm_struct *mm, unsigned long addr,
- 		}
- 	} else {
- 		struct page *head;
-+		bool isolated;
- 
- 		head = compound_head(page);
--		err = isolate_lru_page(head);
--		if (err)
-+		isolated = isolate_lru_page(head);
-+		if (!isolated) {
-+			err = -EBUSY;
- 			goto out_putpage;
-+		}
- 
- 		err = 1;
- 		list_add_tail(&head->lru, pagelist);
-@@ -2541,7 +2544,7 @@ static int numamigrate_isolate_page(pg_data_t *pgdat, struct page *page)
- 		return 0;
- 	}
- 
--	if (isolate_lru_page(page))
-+	if (!isolate_lru_page(page))
- 		return 0;
- 
- 	mod_node_page_state(page_pgdat(page), NR_ISOLATED_ANON + page_is_file_lru(page),
-diff --git a/mm/migrate_device.c b/mm/migrate_device.c
-index 6c3740318a98..d30c9de60b0d 100644
---- a/mm/migrate_device.c
-+++ b/mm/migrate_device.c
-@@ -388,7 +388,7 @@ static unsigned long migrate_device_unmap(unsigned long *src_pfns,
- 				allow_drain = false;
- 			}
- 
--			if (isolate_lru_page(page)) {
-+			if (!isolate_lru_page(page)) {
- 				src_pfns[i] &= ~MIGRATE_PFN_MIGRATE;
- 				restore++;
- 				continue;
--- 
-2.27.0
-
+Thanks,
+SJ
