@@ -1,12 +1,12 @@
-Received: from out30-101.freemail.mail.aliyun.com (out30-101.freemail.mail.aliyun.com [115.124.30.101])
+Received: from out30-118.freemail.mail.aliyun.com (out30-118.freemail.mail.aliyun.com [115.124.30.118])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03DFC7E
-	for <damon@lists.linux.dev>; Tue, 14 Feb 2023 03:23:52 +0000 (UTC)
-X-Alimail-AntiSpam:AC=PASS;BC=-1|-1;BR=01201311R331e4;CH=green;DM=||false|;DS=||;FP=0|-1|-1|-1|0|-1|-1|-1;HT=ay29a033018046049;MF=baolin.wang@linux.alibaba.com;NM=1;PH=DS;RN=13;SR=0;TI=SMTPD_---0Vbe-fy8_1676344706;
-Received: from localhost(mailfrom:baolin.wang@linux.alibaba.com fp:SMTPD_---0Vbe-fy8_1676344706)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 393757E
+	for <damon@lists.linux.dev>; Tue, 14 Feb 2023 03:34:04 +0000 (UTC)
+X-Alimail-AntiSpam:AC=PASS;BC=-1|-1;BR=01201311R201e4;CH=green;DM=||false|;DS=||;FP=0|-1|-1|-1|0|-1|-1|-1;HT=ay29a033018046059;MF=baolin.wang@linux.alibaba.com;NM=1;PH=DS;RN=13;SR=0;TI=SMTPD_---0Vbe-fxI_1676344705;
+Received: from localhost(mailfrom:baolin.wang@linux.alibaba.com fp:SMTPD_---0Vbe-fxI_1676344705)
           by smtp.aliyun-inc.com;
-          Tue, 14 Feb 2023 11:18:27 +0800
+          Tue, 14 Feb 2023 11:18:26 +0800
 From: Baolin Wang <baolin.wang@linux.alibaba.com>
 To: akpm@linux-foundation.org
 Cc: torvalds@linux-foundation.org,
@@ -21,12 +21,10 @@ Cc: torvalds@linux-foundation.org,
 	cgroups@vger.kernel.org,
 	linux-mm@kvack.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH 1/3] mm: check negative error of folio_isolate_lru() when failed to isolate a folio
-Date: Tue, 14 Feb 2023 11:18:06 +0800
-Message-Id: <ef7059c8442b7e1ee5f406523b79d24d19b050b6.1676342827.git.baolin.wang@linux.alibaba.com>
+Subject: [PATCH 0/3] Some cleanups for page isolation
+Date: Tue, 14 Feb 2023 11:18:05 +0800
+Message-Id: <cover.1676342827.git.baolin.wang@linux.alibaba.com>
 X-Mailer: git-send-email 2.27.0
-In-Reply-To: <cover.1676342827.git.baolin.wang@linux.alibaba.com>
-References: <cover.1676342827.git.baolin.wang@linux.alibaba.com>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -35,60 +33,34 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The folio_isolate_lru() will return a negative error if failed to isolate
-a folio from its LRU list, thus better to check the negative error to
-make the code more clear per Linus's suggestion[1].
+Hi,
 
-No functional changes.
+The page isolation functions did not return a boolean to indicate
+success or not, instead it will return a negative error when failed
+to isolate a page. So it's better to check the negative error explicitly
+for isolation to make the code more clear per Linus's suggestion in [1].
+
+No functional changes intended in this patch series.
 
 [1] https://lore.kernel.org/all/CAHk-=wiBrY+O-4=2mrbVyxR+hOqfdJ=Do6xoucfJ9_5az01L4Q@mail.gmail.com/
 
-Signed-off-by: Baolin Wang <baolin.wang@linux.alibaba.com>
----
- mm/damon/paddr.c | 2 +-
- mm/gup.c         | 2 +-
- mm/khugepaged.c  | 2 +-
- 3 files changed, 3 insertions(+), 3 deletions(-)
+Baolin Wang (3):
+  mm: check negative error of folio_isolate_lru() when failed to isolate
+    a folio
+  mm: check negative error of isolate_lru_page() when failed to isolate
+    a page
+  mm: mempolicy: check negative error of isolate_hugetlb() when failed
+    to isolate a hugetlb
 
-diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
-index b4df9b9bcc0a..ebf3dd084af2 100644
---- a/mm/damon/paddr.c
-+++ b/mm/damon/paddr.c
-@@ -246,7 +246,7 @@ static unsigned long damon_pa_pageout(struct damon_region *r, struct damos *s)
- 
- 		folio_clear_referenced(folio);
- 		folio_test_clear_young(folio);
--		if (folio_isolate_lru(folio)) {
-+		if (folio_isolate_lru(folio) < 0) {
- 			folio_put(folio);
- 			continue;
- 		}
-diff --git a/mm/gup.c b/mm/gup.c
-index b0885f70579c..7fdddd43663c 100644
---- a/mm/gup.c
-+++ b/mm/gup.c
-@@ -1939,7 +1939,7 @@ static unsigned long collect_longterm_unpinnable_pages(
- 			drain_allow = false;
- 		}
- 
--		if (folio_isolate_lru(folio))
-+		if (folio_isolate_lru(folio) < 0)
- 			continue;
- 
- 		list_add_tail(&folio->lru, movable_page_list);
-diff --git a/mm/khugepaged.c b/mm/khugepaged.c
-index a5d32231bfad..463dfca4b841 100644
---- a/mm/khugepaged.c
-+++ b/mm/khugepaged.c
-@@ -2047,7 +2047,7 @@ static int collapse_file(struct mm_struct *mm, unsigned long addr,
- 			goto out_unlock;
- 		}
- 
--		if (folio_isolate_lru(folio)) {
-+		if (folio_isolate_lru(folio) < 0) {
- 			result = SCAN_DEL_PAGE_LRU;
- 			goto out_unlock;
- 		}
+ mm/damon/paddr.c    | 2 +-
+ mm/gup.c            | 2 +-
+ mm/khugepaged.c     | 4 ++--
+ mm/memcontrol.c     | 2 +-
+ mm/mempolicy.c      | 2 +-
+ mm/migrate.c        | 4 ++--
+ mm/migrate_device.c | 2 +-
+ 7 files changed, 9 insertions(+), 9 deletions(-)
+
 -- 
 2.27.0
 
