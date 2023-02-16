@@ -1,89 +1,90 @@
-Received: from out30-112.freemail.mail.aliyun.com (out30-112.freemail.mail.aliyun.com [115.124.30.112])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32E087B
-	for <damon@lists.linux.dev>; Thu, 16 Feb 2023 02:07:14 +0000 (UTC)
-X-Alimail-AntiSpam:AC=PASS;BC=-1|-1;BR=01201311R141e4;CH=green;DM=||false|;DS=||;FP=0|-1|-1|-1|0|-1|-1|-1;HT=ay29a033018046056;MF=baolin.wang@linux.alibaba.com;NM=1;PH=DS;RN=18;SR=0;TI=SMTPD_---0VbmFOuB_1676513225;
-Received: from 30.97.48.85(mailfrom:baolin.wang@linux.alibaba.com fp:SMTPD_---0VbmFOuB_1676513225)
-          by smtp.aliyun-inc.com;
-          Thu, 16 Feb 2023 10:07:06 +0800
-Message-ID: <baf51a97-0d28-119a-691a-e3ecb799d806@linux.alibaba.com>
-Date: Thu, 16 Feb 2023 10:07:05 +0800
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB9D3D308
+	for <damon@lists.linux.dev>; Thu, 16 Feb 2023 22:46:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC6ACC433EF;
+	Thu, 16 Feb 2023 22:46:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linux-foundation.org;
+	s=korg; t=1676587619;
+	bh=9oeCHSLszN1ZlteZIP+mKzpT4ngVcpBp4cDal0zXZL0=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=XklABHGuz67Jr6L6q/GiqwCZqRGFa+meW1H0YZ/7JApSIsmEX8CEMBZVPkJ8B+60O
+	 FlR0T0McnQ+zkZBfm7a39gFwYc8vtAuogsrnhflLLTuwcTv+vtD/qfquyn7FMcATsT
+	 3jqW32IAcaubqFDEOIYbQmm1CSWaRBHcflvOu1P0=
+Date: Thu, 16 Feb 2023 14:46:58 -0800
+From: Andrew Morton <akpm@linux-foundation.org>
+To: Matthew Wilcox <willy@infradead.org>
+Cc: Baolin Wang <baolin.wang@linux.alibaba.com>,
+ torvalds@linux-foundation.org, sj@kernel.org, hannes@cmpxchg.org,
+ mhocko@kernel.org, roman.gushchin@linux.dev, shakeelb@google.com,
+ muchun.song@linux.dev, naoya.horiguchi@nec.com, linmiaohe@huawei.com,
+ david@redhat.com, osalvador@suse.de, mike.kravetz@oracle.com,
+ damon@lists.linux.dev, cgroups@vger.kernel.org, linux-mm@kvack.org,
+ linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 4/4] mm: change to return bool for
+ isolate_movable_page()
+Message-Id: <20230216144658.18add74d133be070f07cf1f5@linux-foundation.org>
+In-Reply-To: <Y+z91pcxAuygc92J@casper.infradead.org>
+References: <cover.1676424378.git.baolin.wang@linux.alibaba.com>
+	<cb877f73f4fff8d309611082ec740a7065b1ade0.1676424378.git.baolin.wang@linux.alibaba.com>
+	<Y+z91pcxAuygc92J@casper.infradead.org>
+X-Mailer: Sylpheed 3.7.0 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.2
-Subject: Re: [PATCH v3 4/4] mm: change to return bool for
- isolate_movable_page()
-To: Matthew Wilcox <willy@infradead.org>
-Cc: akpm@linux-foundation.org, torvalds@linux-foundation.org, sj@kernel.org,
- hannes@cmpxchg.org, mhocko@kernel.org, roman.gushchin@linux.dev,
- shakeelb@google.com, muchun.song@linux.dev, naoya.horiguchi@nec.com,
- linmiaohe@huawei.com, david@redhat.com, osalvador@suse.de,
- mike.kravetz@oracle.com, damon@lists.linux.dev, cgroups@vger.kernel.org,
- linux-mm@kvack.org, linux-kernel@vger.kernel.org
-References: <cover.1676424378.git.baolin.wang@linux.alibaba.com>
- <cb877f73f4fff8d309611082ec740a7065b1ade0.1676424378.git.baolin.wang@linux.alibaba.com>
- <Y+z91pcxAuygc92J@casper.infradead.org>
-From: Baolin Wang <baolin.wang@linux.alibaba.com>
-In-Reply-To: <Y+z91pcxAuygc92J@casper.infradead.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
 
+On Wed, 15 Feb 2023 15:44:22 +0000 Matthew Wilcox <willy@infradead.org> wrote:
 
-
-On 2/15/2023 11:44 PM, Matthew Wilcox wrote:
-> On Wed, Feb 15, 2023 at 06:39:37PM +0800, Baolin Wang wrote:
->> Now the isolate_movable_page() can only return 0 or -EBUSY, and no users
->> will care about the negative return value, thus we can convert the
->> isolate_movable_page() to return a boolean value to make the code more
->> clear when checking the movable page isolation state.
->>
->> No functional changes intended.
->>
->> Signed-off-by: Baolin Wang <baolin.wang@linux.alibaba.com>
->> Acked-by: David Hildenbrand <david@redhat.com>
-> 
-> Reviewed-by: Matthew Wilcox (Oracle) <willy@infradead.org>
-> 
-> A couple of nits below, not worth respinning the patch series for:
-> 
->> diff --git a/include/linux/migrate.h b/include/linux/migrate.h
->> index c88b96b48be7..6b252f519c86 100644
->> --- a/include/linux/migrate.h
->> +++ b/include/linux/migrate.h
->> @@ -71,7 +71,7 @@ extern int migrate_pages(struct list_head *l, new_page_t new, free_page_t free,
->>   		unsigned long private, enum migrate_mode mode, int reason,
->>   		unsigned int *ret_succeeded);
->>   extern struct page *alloc_migration_target(struct page *page, unsigned long private);
->> -extern int isolate_movable_page(struct page *page, isolate_mode_t mode);
->> +extern bool isolate_movable_page(struct page *page, isolate_mode_t mode);
+> >  extern struct page *alloc_migration_target(struct page *page, unsigned long private);
+> > -extern int isolate_movable_page(struct page *page, isolate_mode_t mode);
+> > +extern bool isolate_movable_page(struct page *page, isolate_mode_t mode);
 > 
 > You can drop the 'extern' here.
-> 
->> +++ b/mm/memory_hotplug.c
->> @@ -1668,18 +1668,18 @@ do_migrate_range(unsigned long start_pfn, unsigned long end_pfn)
->>   		 * We can skip free pages. And we can deal with pages on
->>   		 * LRU and non-lru movable pages.
->>   		 */
->> -		if (PageLRU(page)) {
->> +		if (PageLRU(page))
->>   			isolated = isolate_lru_page(page);
->> -			ret = isolated ? 0 : -EBUSY;
->> -		} else
->> -			ret = isolate_movable_page(page, ISOLATE_UNEVICTABLE);
->> -		if (!ret) { /* Success */
->> +		else
->> +			isolated = isolate_movable_page(page, ISOLATE_UNEVICTABLE);
->> +		if (isolated) { /* Success */
-> 
-> I would have dropped the "/* Success */" here.  Before, commenting
-> "!ret" is quite sensible, but "isolated" seems obviously success to me.
 
-Right. Hope Andrew can help to drop this unnecessary comment:)
+There are a bunch of them, so a separate patch would be better.
 
-Thanks for reviewing.
+
+--- a/include/linux/migrate.h~a
++++ a/include/linux/migrate.h
+@@ -62,16 +62,16 @@ extern const char *migrate_reason_names[
+ 
+ #ifdef CONFIG_MIGRATION
+ 
+-extern void putback_movable_pages(struct list_head *l);
++void putback_movable_pages(struct list_head *l);
+ int migrate_folio_extra(struct address_space *mapping, struct folio *dst,
+ 		struct folio *src, enum migrate_mode mode, int extra_count);
+ int migrate_folio(struct address_space *mapping, struct folio *dst,
+ 		struct folio *src, enum migrate_mode mode);
+-extern int migrate_pages(struct list_head *l, new_page_t new, free_page_t free,
+-		unsigned long private, enum migrate_mode mode, int reason,
+-		unsigned int *ret_succeeded);
+-extern struct page *alloc_migration_target(struct page *page, unsigned long private);
+-extern bool isolate_movable_page(struct page *page, isolate_mode_t mode);
++int migrate_pages(struct list_head *l, new_page_t new, free_page_t free,
++		  unsigned long private, enum migrate_mode mode, int reason,
++		  unsigned int *ret_succeeded);
++struct page *alloc_migration_target(struct page *page, unsigned long private);
++bool isolate_movable_page(struct page *page, isolate_mode_t mode);
+ 
+ int migrate_huge_page_move_mapping(struct address_space *mapping,
+ 		struct folio *dst, struct folio *src);
+@@ -142,8 +142,8 @@ const struct movable_operations *page_mo
+ }
+ 
+ #ifdef CONFIG_NUMA_BALANCING
+-extern int migrate_misplaced_page(struct page *page,
+-				  struct vm_area_struct *vma, int node);
++int migrate_misplaced_page(struct page *page, struct vm_area_struct *vma,
++			   int node);
+ #else
+ static inline int migrate_misplaced_page(struct page *page,
+ 					 struct vm_area_struct *vma, int node)
+_
+
