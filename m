@@ -1,34 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CE3279C1
-	for <damon@lists.linux.dev>; Tue, 21 Feb 2023 17:56:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD87DC433D2;
-	Tue, 21 Feb 2023 17:56:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AB5E8C0B
+	for <damon@lists.linux.dev>; Tue, 21 Feb 2023 18:35:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44575C433D2;
+	Tue, 21 Feb 2023 18:35:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1677002174;
-	bh=i1G9p2HFfEsGEPBCun+w0p9u3T0NIUNu09S0UeZIsbg=;
+	s=k20201202; t=1677004504;
+	bh=dgnjcSUG5w1/UXY20oy7pA67rk5DpCFG+LKqSztlm2U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ph/VR6MhjStUE0IqlCrdfg+ZiHOln3ZJN4CZxDKzhmqEkqVLEvcWOilw+RDHXXPRF
-	 K+BfYQ1mbAWBgbv+pMwSDAMJcT91d1yIKpVfkswkoOce16ITtuRye0rBO8thbhxr9z
-	 1Jhg67DXRU3QC2Pntya3vep1MdKb2mgDuaNJwD1VvWl4crC+rIr+16imofuJQBoVKv
-	 8N1M60Cn4ax0PljzN4maQtBqblStXdhuQ2EY9GbzmDPobiTRuvsduWe2HV0j2nCPsl
-	 4aEqnJLjKufeFE0rnMubSnkWGG97hJrXxI8iUumSki/6oqGTa9Mx6FIiDDcLqKKCeO
-	 Urp3dLtJJmulg==
+	b=JaHaknMQH94f0Ouz7x7+bJIIjbqP/1A+lf0z1r07/7u31jA6NOMhkjW7+NQyvj35e
+	 r/jQRM84dkmgFx+I10T1+lXThjNBjateNxycYIcs8ndkx+83AY7RtGGDH1RDlxKsfx
+	 F0ElKYH0Wx72EtvnPAl2tSazAPHRHXzUqgYigzELtugc3AHpiPANpZvByCujdPkOTF
+	 w0dPFwyDldQNFWCLQNnI2VnKaMG/a15VZoIU6XlPnNlL9JqQDQxANx9QltdGXZU71M
+	 Dl2ye6B6QBHGkFlvvHhMbYXijeMmxJYK1eg3IOhRUo8lxsPqfw5aljOdgLV50q/zFN
+	 Y/WQZlhgK3iOA==
 From: SeongJae Park <sj@kernel.org>
-To: Anders Roxell <anders.roxell@linaro.org>
-Cc: sj@kernel.org,
-	shuah@kernel.org,
-	gregkh@linuxfoundation.org,
-	linux-kernel@vger.kernel.org,
+To: Andrew Yang <andrew.yang@mediatek.com>
+Cc: SeongJae Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	wsd_upstream@mediatek.com,
+	casper.lin@mediatek.com,
 	damon@lists.linux.dev,
 	linux-mm@kvack.org,
-	linux-kselftest@vger.kernel.org
-Subject: Re: [PATCH 2/2] selftests: damon: change scripts to be executable
-Date: Tue, 21 Feb 2023 17:56:12 +0000
-Message-Id: <20230221175612.131555-1-sj@kernel.org>
+	linux-kernel@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-mediatek@lists.infradead.org,
+	stable@vger.kernel.org
+Subject: Re: [PATCH] mm/damon/paddr: fix pin page problem
+Date: Tue, 21 Feb 2023 18:35:01 +0000
+Message-Id: <20230221183501.132024-1-sj@kernel.org>
 X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20230221070837.1502935-2-anders.roxell@linaro.org>
+In-Reply-To: <20230221090313.15396-1-andrew.yang@mediatek.com>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -38,26 +43,66 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Tue, 21 Feb 2023 08:08:37 +0100 Anders Roxell <anders.roxell@linaro.org> wrote:
+Hi Andrew,
 
-> When running kselftest-damon The following issues shows up:
+
+On Tue, 21 Feb 2023 17:03:13 +0800 Andrew Yang <andrew.yang@mediatek.com> wrote:
+
+> From: "andrew.yang" <andrew.yang@mediatek.com>
 > 
-> '# Warning: file debugfs_attrs.sh is not executable'
+> damon_get_page() would always increase page _refcount and
+> isolate_lru_page() would increase page _refcount if the page's lru
+> flag is set.
 > 
-> Changing the scripts so they are executable.
+> If a unevictable page isolated successfully, there will be two more
+> _refcount. The one from isolate_lru_page() will be decreased in
+> putback_lru_page(), but the other one from damon_get_page() will be
+> left behind. This causes a pin page.
+> 
+> Whatever the case, the _refcount from damon_get_page() should be
+> decreased.
 
-I tried to make similar changes before[1], but resulted in making a change in
-kselftest following Greg's comment[2].  So it might make sense to remove the
-warning message from kselftest instead of this change, though I think this
-change also looks good.  Could I ask others' opinions?
+Thank you for finding this issue!  I think the David suggested subject[1] is
+better, though.
 
-[1] https://lore.kernel.org/mm-commits/20210810112050.22225-1-sj38.park@gmail.com/
-[2] https://lore.kernel.org/mm-commits/YRJisBs9AunccCD4@kroah.com/
+I think we could add below Fixes: and Cc: tags?
+
+Fixes: 57223ac29584 ("mm/damon/paddr: support the pageout scheme")
+Cc: <stable@vger.kernel.org> # 5.16.x
+
+> 
+> Signed-off-by: andrew.yang <andrew.yang@mediatek.com>
+> ---
+>  mm/damon/paddr.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
+> index e1a4315c4be6..56d8abd08fb1 100644
+> --- a/mm/damon/paddr.c
+> +++ b/mm/damon/paddr.c
+> @@ -223,8 +223,8 @@ static unsigned long damon_pa_pageout(struct damon_region *r)
+>  			putback_lru_page(page);
+>  		} else {
+>  			list_add(&page->lru, &page_list);
+> -			put_page(page);
+>  		}
+> +		put_page(page);
+
+Seems your patch is not based on mm-unstable tree[2].  Could you please rebase
+on it?
+
+Also, let's remove the braces for the single statements[3].
+
+[1] https://lore.kernel.org/damon/1b3e8e88-ed5c-7302-553f-4ddb3400d466@redhat.com/
+[2] https://docs.kernel.org/next/mm/damon/maintainer-profile.html#scm-trees
+[3] https://docs.kernel.org/process/coding-style.html?highlight=coding+style#placing-braces-and-spaces
 
 
 Thanks,
 SJ
 
-> 
-> Signed-off-by: Anders Roxell <anders.roxell@linaro.org>
-> ---
+>  	}
+>  	applied = reclaim_pages(&page_list);
+>  	cond_resched();
+> -- 
+> 2.18.0
