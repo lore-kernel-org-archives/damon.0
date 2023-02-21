@@ -1,108 +1,122 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f49.google.com (mail-pj1-f49.google.com [209.85.216.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AB5E8C0B
-	for <damon@lists.linux.dev>; Tue, 21 Feb 2023 18:35:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44575C433D2;
-	Tue, 21 Feb 2023 18:35:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1677004504;
-	bh=dgnjcSUG5w1/UXY20oy7pA67rk5DpCFG+LKqSztlm2U=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JaHaknMQH94f0Ouz7x7+bJIIjbqP/1A+lf0z1r07/7u31jA6NOMhkjW7+NQyvj35e
-	 r/jQRM84dkmgFx+I10T1+lXThjNBjateNxycYIcs8ndkx+83AY7RtGGDH1RDlxKsfx
-	 F0ElKYH0Wx72EtvnPAl2tSazAPHRHXzUqgYigzELtugc3AHpiPANpZvByCujdPkOTF
-	 w0dPFwyDldQNFWCLQNnI2VnKaMG/a15VZoIU6XlPnNlL9JqQDQxANx9QltdGXZU71M
-	 Dl2ye6B6QBHGkFlvvHhMbYXijeMmxJYK1eg3IOhRUo8lxsPqfw5aljOdgLV50q/zFN
-	 Y/WQZlhgK3iOA==
-From: SeongJae Park <sj@kernel.org>
-To: Andrew Yang <andrew.yang@mediatek.com>
-Cc: SeongJae Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	wsd_upstream@mediatek.com,
-	casper.lin@mediatek.com,
-	damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-mediatek@lists.infradead.org,
-	stable@vger.kernel.org
-Subject: Re: [PATCH] mm/damon/paddr: fix pin page problem
-Date: Tue, 21 Feb 2023 18:35:01 +0000
-Message-Id: <20230221183501.132024-1-sj@kernel.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20230221090313.15396-1-andrew.yang@mediatek.com>
-References: 
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7066F8C0B
+	for <damon@lists.linux.dev>; Tue, 21 Feb 2023 20:10:27 +0000 (UTC)
+Received: by mail-pj1-f49.google.com with SMTP id d1-20020a17090a3b0100b00229ca6a4636so6439217pjc.0
+        for <damon@lists.linux.dev>; Tue, 21 Feb 2023 12:10:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1677010227;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=LRlUY6P+Ws5JPolkKmM4if+5xV6FQbDYkfpB+lRI9nA=;
+        b=p7bEe3YtIo4ajQL8acKLCVuOyUPkB9m1s1o0xoenMbSiaB337hC/CdK/jbzvDugc0f
+         Hf4fM4xnGQAICvqcdnsCmWG1jh1fCnAzvC+G7PNSr9l4eEyhUf6HRrEVj0qye4Z9xojM
+         3HByT4JE1omYdOn463zyimPZ7tXfslxrCjpy4aS4iO1exB1AF66AgiwSzKq/yd1BQ7jz
+         cgyX1mzTZe65lBFWhIkW5bB0yaZ01Wz7NEC10t3zZyXHX0uRN7BeC/LOcD2C9HgNWyc7
+         rreJcF/ZpBmEDH/OC8J0GurpsNB6TBWV69eZWIhvxd8szuQUilaJvRL9jPxKLNWOipXz
+         1wiw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1677010227;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=LRlUY6P+Ws5JPolkKmM4if+5xV6FQbDYkfpB+lRI9nA=;
+        b=Um7hcamJpiNKFmXxiiJ2IYlubWm1XnTON56XBU/bQRmKjl8th7P2WhiPpTkXt5MzAr
+         HgYoI8c8vSfRGEkC7Y6zy2Sr0OY+2Sz7lNlEuTFM6ZmVSRwu0q8oZp/GbbYGCbxF8OvX
+         QFa4P42JWnmDV+N1xCcaj43SwApYkdNdIBETAdT63GCdk972UgNZOpsLqBTs6YMf72V6
+         XbtlE3klVikZgzlebvOGRsGFJ5q//Lt2br+wYkKS5Nfs0m6N0lZZvFvu3GRlYewjcWNT
+         iwlUJzsV9l4OrEbYqgUzo9I+PyygEFaPU7FipmLwu/DVUdgxAiGAdQzzFTI1OhEL5v0e
+         6FyA==
+X-Gm-Message-State: AO0yUKVhEkxOMzJ6WJ9Nq05fjEWHKBbarse2ul148p45gLg4frwGClj2
+	29Us1BEvVQAcdkwUu/dxJue9igJSlOFhNysYan/qRcZrgl9tz8Db
+X-Google-Smtp-Source: AK7set/bvzuBBHiSVRwjdCBYFgmcLi2VbO8gyb1hmLmDfOqhiJPx1AXSbHElEgZn5ThzkdRg0ezGAHgn6PJB0Lpc+wQ=
+X-Received: by 2002:a17:90b:48c3:b0:234:bd18:61e4 with SMTP id
+ li3-20020a17090b48c300b00234bd1861e4mr2124639pjb.83.1677010226892; Tue, 21
+ Feb 2023 12:10:26 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20230221070837.1502935-1-anders.roxell@linaro.org> <20230221171951.131472-1-sj@kernel.org>
+In-Reply-To: <20230221171951.131472-1-sj@kernel.org>
+From: Anders Roxell <anders.roxell@linaro.org>
+Date: Tue, 21 Feb 2023 21:10:15 +0100
+Message-ID: <CADYN=9KdXbCbVCs1C5n54g_EtmTn5iuHwh3BC4drHtAvcOQ0XQ@mail.gmail.com>
+Subject: Re: [PATCH 1/2] selftests: damon: add config file
+To: SeongJae Park <sj@kernel.org>
+Cc: shuah@kernel.org, linux-kernel@vger.kernel.org, damon@lists.linux.dev, 
+	linux-mm@kvack.org, linux-kselftest@vger.kernel.org, 
+	Naresh Kamboju <naresh.kamboju@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 
-Hi Andrew,
+On Tue, 21 Feb 2023 at 18:19, SeongJae Park <sj@kernel.org> wrote:
+>
+> Hi Anders,
+>
+>
+> Thank you for this patch!
+>
+> On Tue, 21 Feb 2023 08:08:36 +0100 Anders Roxell <anders.roxell@linaro.org> wrote:
+>
+> > Building and running the subsuite 'damon' of kselftest, shows the
+> > following issues:
+> >  selftests: damon: debugfs_attrs.sh
+> >   /sys/kernel/debug/damon not found
+> >
+> > By creating a config file enabling DAMON fragments in the
+> > selftests/damon/ directory the tests pass.
+> >
+>
+> I think we could put Fixes tag as below?
+>
+> Fixes: b348eb7abd09 ("mm/damon: add user space selftests")
 
+Make sense, I'll add it.
 
-On Tue, 21 Feb 2023 17:03:13 +0800 Andrew Yang <andrew.yang@mediatek.com> wrote:
+>
+> Though this may not need to be merged in stable.
+>
+> > Reported-by: Naresh Kamboju <naresh.kamboju@linaro.org>
+> > Signed-off-by: Anders Roxell <anders.roxell@linaro.org>
+> > ---
+> >  tools/testing/selftests/damon/config | 8 ++++++++
+> >  1 file changed, 8 insertions(+)
+> >  create mode 100644 tools/testing/selftests/damon/config
+> >
+> > diff --git a/tools/testing/selftests/damon/config b/tools/testing/selftests/damon/config
+> > new file mode 100644
+> > index 000000000000..a6b636e438b9
+> > --- /dev/null
+> > +++ b/tools/testing/selftests/damon/config
+> > @@ -0,0 +1,8 @@
+> > +CONFIG_DEBUG_SYSFS=y
+>
+> 's/SYS//'?  Or, I guess this is not needed at all?
 
-> From: "andrew.yang" <andrew.yang@mediatek.com>
-> 
-> damon_get_page() would always increase page _refcount and
-> isolate_lru_page() would increase page _refcount if the page's lru
-> flag is set.
-> 
-> If a unevictable page isolated successfully, there will be two more
-> _refcount. The one from isolate_lru_page() will be decreased in
-> putback_lru_page(), but the other one from damon_get_page() will be
-> left behind. This causes a pin page.
-> 
-> Whatever the case, the _refcount from damon_get_page() should be
-> decreased.
+This can be dropped.
 
-Thank you for finding this issue!  I think the David suggested subject[1] is
-better, though.
+Thank you.
 
-I think we could add below Fixes: and Cc: tags?
+I'll respin the patch shortly.
 
-Fixes: 57223ac29584 ("mm/damon/paddr: support the pageout scheme")
-Cc: <stable@vger.kernel.org> # 5.16.x
+Cheers,
+Anders
 
-> 
-> Signed-off-by: andrew.yang <andrew.yang@mediatek.com>
-> ---
->  mm/damon/paddr.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
-> index e1a4315c4be6..56d8abd08fb1 100644
-> --- a/mm/damon/paddr.c
-> +++ b/mm/damon/paddr.c
-> @@ -223,8 +223,8 @@ static unsigned long damon_pa_pageout(struct damon_region *r)
->  			putback_lru_page(page);
->  		} else {
->  			list_add(&page->lru, &page_list);
-> -			put_page(page);
->  		}
-> +		put_page(page);
-
-Seems your patch is not based on mm-unstable tree[2].  Could you please rebase
-on it?
-
-Also, let's remove the braces for the single statements[3].
-
-[1] https://lore.kernel.org/damon/1b3e8e88-ed5c-7302-553f-4ddb3400d466@redhat.com/
-[2] https://docs.kernel.org/next/mm/damon/maintainer-profile.html#scm-trees
-[3] https://docs.kernel.org/process/coding-style.html?highlight=coding+style#placing-braces-and-spaces
-
-
-Thanks,
-SJ
-
->  	}
->  	applied = reclaim_pages(&page_list);
->  	cond_resched();
-> -- 
-> 2.18.0
+>
+> > +CONFIG_DAMON=y
+> > +CONFIG_DAMON_SYSFS=y
+> > +CONFIG_DAMON_DBGFS=y
+> > +CONFIG_DAMON_PADDR=y
+> > +CONFIG_DAMON_VADDR=y
+> > +CONFIG_DAMON_RECLAIM=y
+> > +CONFIG_DAMON_LRU_SORT=y
+>
+>
+> Thanks,
+> SJ
+>
+> > --
+> > 2.39.1
