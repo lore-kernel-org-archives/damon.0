@@ -1,122 +1,103 @@
-Received: from mail-pj1-f49.google.com (mail-pj1-f49.google.com [209.85.216.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mailgw02.mediatek.com (unknown [210.61.82.184])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7066F8C0B
-	for <damon@lists.linux.dev>; Tue, 21 Feb 2023 20:10:27 +0000 (UTC)
-Received: by mail-pj1-f49.google.com with SMTP id d1-20020a17090a3b0100b00229ca6a4636so6439217pjc.0
-        for <damon@lists.linux.dev>; Tue, 21 Feb 2023 12:10:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1677010227;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=LRlUY6P+Ws5JPolkKmM4if+5xV6FQbDYkfpB+lRI9nA=;
-        b=p7bEe3YtIo4ajQL8acKLCVuOyUPkB9m1s1o0xoenMbSiaB337hC/CdK/jbzvDugc0f
-         Hf4fM4xnGQAICvqcdnsCmWG1jh1fCnAzvC+G7PNSr9l4eEyhUf6HRrEVj0qye4Z9xojM
-         3HByT4JE1omYdOn463zyimPZ7tXfslxrCjpy4aS4iO1exB1AF66AgiwSzKq/yd1BQ7jz
-         cgyX1mzTZe65lBFWhIkW5bB0yaZ01Wz7NEC10t3zZyXHX0uRN7BeC/LOcD2C9HgNWyc7
-         rreJcF/ZpBmEDH/OC8J0GurpsNB6TBWV69eZWIhvxd8szuQUilaJvRL9jPxKLNWOipXz
-         1wiw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1677010227;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=LRlUY6P+Ws5JPolkKmM4if+5xV6FQbDYkfpB+lRI9nA=;
-        b=Um7hcamJpiNKFmXxiiJ2IYlubWm1XnTON56XBU/bQRmKjl8th7P2WhiPpTkXt5MzAr
-         HgYoI8c8vSfRGEkC7Y6zy2Sr0OY+2Sz7lNlEuTFM6ZmVSRwu0q8oZp/GbbYGCbxF8OvX
-         QFa4P42JWnmDV+N1xCcaj43SwApYkdNdIBETAdT63GCdk972UgNZOpsLqBTs6YMf72V6
-         XbtlE3klVikZgzlebvOGRsGFJ5q//Lt2br+wYkKS5Nfs0m6N0lZZvFvu3GRlYewjcWNT
-         iwlUJzsV9l4OrEbYqgUzo9I+PyygEFaPU7FipmLwu/DVUdgxAiGAdQzzFTI1OhEL5v0e
-         6FyA==
-X-Gm-Message-State: AO0yUKVhEkxOMzJ6WJ9Nq05fjEWHKBbarse2ul148p45gLg4frwGClj2
-	29Us1BEvVQAcdkwUu/dxJue9igJSlOFhNysYan/qRcZrgl9tz8Db
-X-Google-Smtp-Source: AK7set/bvzuBBHiSVRwjdCBYFgmcLi2VbO8gyb1hmLmDfOqhiJPx1AXSbHElEgZn5ThzkdRg0ezGAHgn6PJB0Lpc+wQ=
-X-Received: by 2002:a17:90b:48c3:b0:234:bd18:61e4 with SMTP id
- li3-20020a17090b48c300b00234bd1861e4mr2124639pjb.83.1677010226892; Tue, 21
- Feb 2023 12:10:26 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52DF71FAE
+	for <damon@lists.linux.dev>; Wed, 22 Feb 2023 06:28:12 +0000 (UTC)
+X-UUID: 0fb0b1f4b27a11ed945fc101203acc17-20230222
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mediatek.com; s=dk;
+	h=Content-Type:MIME-Version:Message-ID:Date:Subject:CC:To:From; bh=GlIiKdz81RC+WT6ye6XFZWOPht8IFh4/MI/IcySt7tk=;
+	b=Wy5W7Pma7ksrsOWmCqdALFtvC2TG9DiuPqdcpe8rFJx0sULsSyYjxbelVrC4lrS6IIT2ULuqVVe4sGqu9mVaiwzzA5TRngbFm1pXJlCQiBb06vvrXF3mWpCIJB0h+Ok/R4J1DebHGio5Qu8e7tjuESz5sBHH5A0aVycuCA2euOk=;
+X-CID-P-RULE: Release_Ham
+X-CID-O-INFO: VERSION:1.1.20,REQID:5b8d3c7f-90d5-4979-88ad-ea03f3ead3ad,IP:0,U
+	RL:0,TC:0,Content:0,EDM:0,RT:0,SF:95,FILE:0,BULK:0,RULE:Release_Ham,ACTION
+	:release,TS:95
+X-CID-INFO: VERSION:1.1.20,REQID:5b8d3c7f-90d5-4979-88ad-ea03f3ead3ad,IP:0,URL
+	:0,TC:0,Content:0,EDM:0,RT:0,SF:95,FILE:0,BULK:0,RULE:Spam_GS981B3D,ACTION
+	:quarantine,TS:95
+X-CID-META: VersionHash:25b5999,CLOUDID:e1dc5426-564d-42d9-9875-7c868ee415ec,B
+	ulkID:230222142806P43O9XSH,BulkQuantity:0,Recheck:0,SF:38|29|28|17|19|48,T
+	C:nil,Content:0,EDM:-3,IP:nil,URL:0,File:nil,Bulk:nil,QS:nil,BEC:nil,COL:0
+	,OSI:0,OSA:0,AV:0
+X-CID-BVR: 0
+X-UUID: 0fb0b1f4b27a11ed945fc101203acc17-20230222
+Received: from mtkmbs10n1.mediatek.inc [(172.21.101.34)] by mailgw02.mediatek.com
+	(envelope-from <andrew.yang@mediatek.com>)
+	(Generic MTA with TLSv1.2 ECDHE-RSA-AES256-GCM-SHA384 256/256)
+	with ESMTP id 1151569263; Wed, 22 Feb 2023 14:28:03 +0800
+Received: from mtkmbs13n1.mediatek.inc (172.21.101.193) by
+ mtkmbs10n2.mediatek.inc (172.21.101.183) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.792.3;
+ Wed, 22 Feb 2023 14:28:02 +0800
+Received: from mtksdccf07.mediatek.inc (172.21.84.99) by
+ mtkmbs13n1.mediatek.inc (172.21.101.73) with Microsoft SMTP Server id
+ 15.2.792.15 via Frontend Transport; Wed, 22 Feb 2023 14:28:02 +0800
+From: Andrew Yang <andrew.yang@mediatek.com>
+To: SeongJae Park <sj@kernel.org>, Andrew Morton <akpm@linux-foundation.org>,
+	Matthias Brugger <matthias.bgg@gmail.com>, AngeloGioacchino Del Regno
+	<angelogioacchino.delregno@collabora.com>
+CC: <wsd_upstream@mediatek.com>, <casper.li@mediatek.com>, andrew.yang
+	<andrew.yang@mediatek.com>, <damon@lists.linux.dev>, <linux-mm@kvack.org>,
+	<linux-kernel@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
+	<linux-mediatek@lists.infradead.org>
+Subject: [PATCH v2] mm/damon/paddr: fix missing folio_put()
+Date: Wed, 22 Feb 2023 14:27:54 +0800
+Message-ID: <20230222062758.6183-1-andrew.yang@mediatek.com>
+X-Mailer: git-send-email 2.18.0
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230221070837.1502935-1-anders.roxell@linaro.org> <20230221171951.131472-1-sj@kernel.org>
-In-Reply-To: <20230221171951.131472-1-sj@kernel.org>
-From: Anders Roxell <anders.roxell@linaro.org>
-Date: Tue, 21 Feb 2023 21:10:15 +0100
-Message-ID: <CADYN=9KdXbCbVCs1C5n54g_EtmTn5iuHwh3BC4drHtAvcOQ0XQ@mail.gmail.com>
-Subject: Re: [PATCH 1/2] selftests: damon: add config file
-To: SeongJae Park <sj@kernel.org>
-Cc: shuah@kernel.org, linux-kernel@vger.kernel.org, damon@lists.linux.dev, 
-	linux-mm@kvack.org, linux-kselftest@vger.kernel.org, 
-	Naresh Kamboju <naresh.kamboju@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-MTK: N
 
-On Tue, 21 Feb 2023 at 18:19, SeongJae Park <sj@kernel.org> wrote:
->
-> Hi Anders,
->
->
-> Thank you for this patch!
->
-> On Tue, 21 Feb 2023 08:08:36 +0100 Anders Roxell <anders.roxell@linaro.org> wrote:
->
-> > Building and running the subsuite 'damon' of kselftest, shows the
-> > following issues:
-> >  selftests: damon: debugfs_attrs.sh
-> >   /sys/kernel/debug/damon not found
-> >
-> > By creating a config file enabling DAMON fragments in the
-> > selftests/damon/ directory the tests pass.
-> >
->
-> I think we could put Fixes tag as below?
->
-> Fixes: b348eb7abd09 ("mm/damon: add user space selftests")
+From: "andrew.yang" <andrew.yang@mediatek.com>
 
-Make sense, I'll add it.
+damon_get_folio() would always increase folio _refcount and
+folio_isolate_lru() would increase folio _refcount if the folio's lru
+flag is set.
 
->
-> Though this may not need to be merged in stable.
->
-> > Reported-by: Naresh Kamboju <naresh.kamboju@linaro.org>
-> > Signed-off-by: Anders Roxell <anders.roxell@linaro.org>
-> > ---
-> >  tools/testing/selftests/damon/config | 8 ++++++++
-> >  1 file changed, 8 insertions(+)
-> >  create mode 100644 tools/testing/selftests/damon/config
-> >
-> > diff --git a/tools/testing/selftests/damon/config b/tools/testing/selftests/damon/config
-> > new file mode 100644
-> > index 000000000000..a6b636e438b9
-> > --- /dev/null
-> > +++ b/tools/testing/selftests/damon/config
-> > @@ -0,0 +1,8 @@
-> > +CONFIG_DEBUG_SYSFS=y
->
-> 's/SYS//'?  Or, I guess this is not needed at all?
+If an unevictable folio isolated successfully, there will be two more
+_refcount. The one from folio_isolate_lru() will be decreased in
+folio_puback_lru(), but the other one from damon_get_folio() will be
+left behind. This causes a pin page.
 
-This can be dropped.
+Whatever the case, the _refcount from damon_get_folio() should be
+decreased.
 
-Thank you.
+Signed-off-by: andrew.yang <andrew.yang@mediatek.com>
+---
+v2:
+  according to David's suggestion
+    1. revise subject
+  according to SeongJae's suggestions
+    1. rebase to mm-unstable tree 
+    2. remove braces for th single statements
+---
+ mm/damon/paddr.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-I'll respin the patch shortly.
+diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
+index 607bb69e526c..6c655d9b5639 100644
+--- a/mm/damon/paddr.c
++++ b/mm/damon/paddr.c
+@@ -250,12 +250,11 @@ static unsigned long damon_pa_pageout(struct damon_region *r, struct damos *s)
+ 			folio_put(folio);
+ 			continue;
+ 		}
+-		if (folio_test_unevictable(folio)) {
++		if (folio_test_unevictable(folio))
+ 			folio_putback_lru(folio);
+-		} else {
++		else
+ 			list_add(&folio->lru, &folio_list);
+-			folio_put(folio);
+-		}
++		folio_put(folio);
+ 	}
+ 	applied = reclaim_pages(&folio_list);
+ 	cond_resched();
+-- 
+2.18.0
 
-Cheers,
-Anders
-
->
-> > +CONFIG_DAMON=y
-> > +CONFIG_DAMON_SYSFS=y
-> > +CONFIG_DAMON_DBGFS=y
-> > +CONFIG_DAMON_PADDR=y
-> > +CONFIG_DAMON_VADDR=y
-> > +CONFIG_DAMON_RECLAIM=y
-> > +CONFIG_DAMON_LRU_SORT=y
->
->
-> Thanks,
-> SJ
->
-> > --
-> > 2.39.1
