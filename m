@@ -1,40 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D3EE8F59
-	for <damon@lists.linux.dev>; Wed, 22 Feb 2023 18:26:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 424DBC433EF;
-	Wed, 22 Feb 2023 18:26:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 515DD3D79
+	for <damon@lists.linux.dev>; Tue, 28 Feb 2023 22:39:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FBA8C4339B;
+	Tue, 28 Feb 2023 22:39:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1677090416;
-	bh=xBFAtQy7H9IEzhN6tiCIgW4YKmQxOgfi228DV4+IAOU=;
+	s=k20201202; t=1677623942;
+	bh=d4lBrhKPB0jOyh0au68MrD6u+KOd9aGeSx3XzB0078I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gyy8EWcwUoDh5Qjanib5yUoXbwdJ3E933glFTOrgDTICp8tQxuZZkdBWdCGE3GP5L
-	 IxTfwN+Fh1JdZsKTXuH3jKRJEB9zy2LO/NH1jbTZ7E/EOY4q1FNVRzyJjAoBxvmdDu
-	 MVV+eDn0AMPxdnL8Q0FRbrW2+coXXNG5QDtWh3vppgE5oVBaBvMuflomt+yJYgElsD
-	 MlPWYQGEs//RgjLSUiJywp5dwIEHNFErsiKFuvoqUa/G+n4gVnIs1G6MkBP917I6I1
-	 Ekzw/9EtI+E+SdRK5UvkWyfFnnXBWppvc+L5Lm48S6NxOuPYko2N/twjqZwm5QpX26
-	 VmfP0U9PyOClQ==
+	b=SbHQ3IYfgGH2M4K+4QG0XJHcQXbrNWbSLhU3DR3E7/36PUh/kVUjiPvVljfy9FSwA
+	 PUzHJ/S5K06AfV9buE6DKOmz9fr552kLm2Mg/aAq+fktL17F5zg0OUNp6pXk4X3k+v
+	 SxDH5Q4jTMCIZ+Ug9U+1BLJiBEobpSUsPoaIqx2sJHcmro6cDDUJPXeV/tuLRJ/Ulj
+	 3Ph0/+D14/qrnw/tPGM0HKnzjHMIRN7w0t/cjxowauVZFs71V9erKshha4b05zQwuJ
+	 Xbv3zpPSZTxiT/KKB6p10+NaL+N59T4HdBfqp7sQdjPOCxLbSMUHp03hYf6hMn0UGY
+	 EkGgIdQbAXG0w==
 From: SeongJae Park <sj@kernel.org>
-To: 
-Cc: SeongJae Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	wsd_upstream@mediatek.com,
-	casper.li@mediatek.com,
-	"andrew . yang" <andrew.yang@mediatek.com>,
-	stable@vger.kernel.org,
-	damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-mediatek@lists.infradead.org
-Subject: Re: [PATCH v3] mm/damon/paddr: fix missing folio_put()
-Date: Wed, 22 Feb 2023 18:26:53 +0000
-Message-Id: <20230222182653.156921-1-sj@kernel.org>
+To: David Hildenbrand <david@redhat.com>
+Cc: "T.J. Alumbaugh" <talumbau@google.com>,
+	lsf-pc@lists.linux-foundation.org,
+	"Sudarshan Rajagopalan (QUIC)" <quic_sudaraja@quicinc.com>,
+	hch@lst.de,
+	kai.huang@intel.com,
+	jon@nutanix.com,
+	Yuanchu Xie <yuanchu@google.com>,
+	linux-mm <linux-mm@kvack.org>,
+	damon@lists.linux.dev
+Subject: Re: [LSF/MM/BPF TOPIC] VM Memory Overcommit
+Date: Tue, 28 Feb 2023 22:38:59 +0000
+Message-Id: <20230228223859.114846-1-sj@kernel.org>
 X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20230222064223.6735-1-andrew.yang@mediatek.com>
+In-Reply-To: <d1c562e2-58a5-14b0-9db9-de1c492fe921@redhat.com>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -44,72 +40,75 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hi Andrew,
+On Tue, 28 Feb 2023 10:20:57 +0100 David Hildenbrand <david@redhat.com> wrote:
 
-
-Thank you for revising this patch!
-
-> From: "andrew.yang" <andrew.yang@mediatek.com>
+> On 23.02.23 00:59, T.J. Alumbaugh wrote:
+> > Hi,
+> > 
+> > This topic proposal would be to present and discuss multiple MM
+> > features to improve host memory overcommit while running VMs. There
+> > are two general cases:
+> > 
+> > 1. The host and its guests operate independently,
+> > 
+> > 2. The host and its guests cooperate by techniques like ballooning.
+> > 
+> > In the first case, we would discuss some new techniques, e.g., fast
+> > access bit harvesting in the KVM MMU, and some difficulties, e.g.,
+> > double zswapping.
+> > 
+> > In the second case, we would like to discuss a novel working set size
+> > (WSS) notifier framework and some improvements to the ballooning
+> > policy. The WSS notifier, when available, can report WSS to its
+> > listeners. VM Memory Overcommit is one of its use cases: the
+> > virtio-balloon driver can register for WSS notifications and relay WSS
+> > to the host. The host can leverage the WSS notifications and improve
+> > the ballooning policy.
+> > 
+> > This topic would be of interest to a wide range of audience, e.g.,
+> > phones, laptops and servers.
+> > Co-presented with Yuanchu Xie.
 > 
-> damon_get_folio() would always increase folio _refcount and
-> folio_isolate_lru() would increase folio _refcount if the folio's lru
-> flag is set.
+> In general, having the WSS available to the hypervisor might be 
+> beneficial. I recall, that there was an idea to leverage MGLRU and to 
+> communicate MGLRU statistics to the hypervisor, such that the hypervisor 
+> can make decisions using these statistics.
 > 
-> If an unevictable folio isolated successfully, there will be two more
-> _refcount. The one from folio_isolate_lru() will be decreased in
-> folio_puback_lru(), but the other one from damon_get_folio() will be
-> left behind. This causes a pin page.
+> But note that I don't think that the future will be traditional memory 
+> balloon inflation/deflation. I think it might be useful in related 
+> context, though.
 > 
-> Whatever the case, the _refcount from damon_get_folio() should be
-> decreased.
+> What we actually might want is a way to tell the OS ruining inside the 
+> VM to "please try not using more than XXX MiB of physical memory" but 
+> treat it as a soft limit. So in case we mess up, or there is a sudden 
+> peak in memory consumption due to a workload, we won't harm the guest 
+> OS/workload, and don't have to act immediately to avoid trouble. One can 
+> think of it like an evolution of memory ballooning: instead of creating 
+> artificial memory pressure by inflating the balloon that is fairly event 
+> driven and requires explicit memory deflation, we teach the OS to do it 
+> natively and pair it with free page reporting.
 > 
-> Signed-off-by: andrew.yang <andrew.yang@mediatek.com>
-> Fixes: 57223ac29584 ("mm/damon/paddr: support the pageout scheme")
-> Cc: <stable@vger.kernel.org> # 5.16.x
+> All free physical memory inside the VM can be reported using free page 
+> reporting to the hypervisor, and the OS will try sticking to the 
+> requested "logical" VM size, unless there is real demand for more memory.
 
-Reviewed-by: SeongJae Park <sj@kernel.org>
+I think use of DAMON_RECLAIM[1] inside VM together with free pages reporting
+could be an option.  Some users tried that in a manual way and reported some
+positive results.  I'm trying to find a good way to provide some control of the
+in-VM DAMON_RECLAIM utilization to hypervisor.
 
-This may not cleanly applicable on 6.1.y and 6.2.y.  I would post backports
-once this is merged in the mainline, unless others do earlier than me.
+Hope to attend this session and discuss about that together.
+
+[1] https://docs.kernel.org/admin-guide/mm/damon/reclaim.html
 
 
 Thanks,
 SJ
 
-> ---
-> v3:
->   add fixes tag and cc stable
-> v2:
->   according to David's suggestion
->     1. revise subject
->   according to SeongJae's suggestions
->     1. rebase to mm-unstable tree 
->     2. remove braces for th single statements
-> ---
->  mm/damon/paddr.c | 7 +++----
->  1 file changed, 3 insertions(+), 4 deletions(-)
 > 
-> diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
-> index 607bb69e526c..6c655d9b5639 100644
-> --- a/mm/damon/paddr.c
-> +++ b/mm/damon/paddr.c
-> @@ -250,12 +250,11 @@ static unsigned long damon_pa_pageout(struct damon_region *r, struct damos *s)
->  			folio_put(folio);
->  			continue;
->  		}
-> -		if (folio_test_unevictable(folio)) {
-> +		if (folio_test_unevictable(folio))
->  			folio_putback_lru(folio);
-> -		} else {
-> +		else
->  			list_add(&folio->lru, &folio_list);
-> -			folio_put(folio);
-> -		}
-> +		folio_put(folio);
->  	}
->  	applied = reclaim_pages(&folio_list);
->  	cond_resched();
 > -- 
-> 2.18.0
+> Thanks,
+> 
+> David / dhildenb
 > 
 > 
