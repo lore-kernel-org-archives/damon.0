@@ -1,129 +1,135 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from szxga01-in.huawei.com (szxga01-in.huawei.com [45.249.212.187])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB0A229A0
-	for <damon@lists.linux.dev>; Thu,  2 Mar 2023 16:47:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32C19C433EF;
-	Thu,  2 Mar 2023 16:47:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1677775628;
-	bh=Bfaxg0viKwM69JDI9XacTFnWsfSPRHkmBeTe0jCJjhU=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uGmuCBI35YMYdj1qVKjiffrckevG0q4jBIGfhm3EB5st05tld1r7r/+8Ufq0To4Vb
-	 HnvW2i0wvozPC7dbaBrgO+RLpdgSIaVGLOcrXnrY/sB5ONOar5qnpu3XNZHGz4SugF
-	 kxxzQJEePbcEFKG53xu2/J03kt8cXBkzT/RJRSxsgT7eW3dPipwKFHNoMwWvEcHlt/
-	 qmugQgBHieDf/EBVSfDaFKK+GU/QlD1u/QPxlf1drG5mu9noMM5aatTh1cbx0xvpHJ
-	 wyKCidm72tG42CB+y/k/m04q9B6PyE7XeLdj3dD4SuXl3uLZfBF9r1tZwPGluZ+n1y
-	 j7fDEjh+dmxCg==
-From: SeongJae Park <sj@kernel.org>
-To: Kefeng Wang <wangkefeng.wang@huawei.com>
-Cc: SeongJae Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org,
-	damon@lists.linux.dev
-Subject: Re: [PATCH -next] mm/damon/paddr: minor refactor of damon_pa_pageout()
-Date: Thu,  2 Mar 2023 16:47:06 +0000
-Message-Id: <20230302164706.85999-1-sj@kernel.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20230302144926.40012-1-wangkefeng.wang@huawei.com>
-References: 
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAC501107
+	for <damon@lists.linux.dev>; Fri,  3 Mar 2023 02:00:47 +0000 (UTC)
+Received: from dggpemm500001.china.huawei.com (unknown [172.30.72.57])
+	by szxga01-in.huawei.com (SkyGuard) with ESMTP id 4PSW10095hzrS80;
+	Fri,  3 Mar 2023 09:41:56 +0800 (CST)
+Received: from [10.174.177.243] (10.174.177.243) by
+ dggpemm500001.china.huawei.com (7.185.36.107) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.21; Fri, 3 Mar 2023 09:42:04 +0800
+Message-ID: <927fbb66-ee80-2ec4-60d1-1cda23b3cb19@huawei.com>
+Date: Fri, 3 Mar 2023 09:42:04 +0800
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.5.1
+Subject: Re: [PATCH -next] mm/damon/paddr: minor refactor of
+ damon_pa_pageout()
+Content-Language: en-US
+To: SeongJae Park <sj@kernel.org>
+CC: Andrew Morton <akpm@linux-foundation.org>, <linux-mm@kvack.org>,
+	<linux-kernel@vger.kernel.org>, <damon@lists.linux.dev>
+References: <20230302164706.85999-1-sj@kernel.org>
+From: Kefeng Wang <wangkefeng.wang@huawei.com>
+In-Reply-To: <20230302164706.85999-1-sj@kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.174.177.243]
+X-ClientProxiedBy: dggems702-chm.china.huawei.com (10.3.19.179) To
+ dggpemm500001.china.huawei.com (7.185.36.107)
+X-CFilter-Loop: Reflected
 
-Hi Kefeng,
 
-On Thu, 2 Mar 2023 22:49:26 +0800 Kefeng Wang <wangkefeng.wang@huawei.com> wrote:
 
-> Omit two lines by converting if(!folio_isolate_lru()) to
-> if(folio_isolate_lru()).
+On 2023/3/3 0:47, SeongJae Park wrote:
+> Hi Kefeng,
 > 
-> Signed-off-by: Kefeng Wang <wangkefeng.wang@huawei.com>
-> ---
->  mm/damon/paddr.c | 12 +++++-------
->  1 file changed, 5 insertions(+), 7 deletions(-)
+> On Thu, 2 Mar 2023 22:49:26 +0800 Kefeng Wang <wangkefeng.wang@huawei.com> wrote:
 > 
-> diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
-> index 6c655d9b5639..a557f3c9300f 100644
-> --- a/mm/damon/paddr.c
-> +++ b/mm/damon/paddr.c
-> @@ -246,14 +246,12 @@ static unsigned long damon_pa_pageout(struct damon_region *r, struct damos *s)
->  
->  		folio_clear_referenced(folio);
->  		folio_test_clear_young(folio);
-> -		if (!folio_isolate_lru(folio)) {
-> -			folio_put(folio);
-> -			continue;
-> +		if (folio_isolate_lru(folio)) {
-> +			if (folio_test_unevictable(folio))
-> +				folio_putback_lru(folio);
-> +			else
-> +				list_add(&folio->lru, &folio_list);
->  		}
-> -		if (folio_test_unevictable(folio))
-> -			folio_putback_lru(folio);
-> -		else
-> -			list_add(&folio->lru, &folio_list);
->  		folio_put(folio);
->  	}
+>> Omit two lines by converting if(!folio_isolate_lru()) to
+>> if(folio_isolate_lru()).
+>>
+>> Signed-off-by: Kefeng Wang <wangkefeng.wang@huawei.com>
+>> ---
+>>   mm/damon/paddr.c | 12 +++++-------
+>>   1 file changed, 5 insertions(+), 7 deletions(-)
+>>
+>> diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
+>> index 6c655d9b5639..a557f3c9300f 100644
+>> --- a/mm/damon/paddr.c
+>> +++ b/mm/damon/paddr.c
+>> @@ -246,14 +246,12 @@ static unsigned long damon_pa_pageout(struct damon_region *r, struct damos *s)
+>>   
+>>   		folio_clear_referenced(folio);
+>>   		folio_test_clear_young(folio);
+>> -		if (!folio_isolate_lru(folio)) {
+>> -			folio_put(folio);
+>> -			continue;
+>> +		if (folio_isolate_lru(folio)) {
+>> +			if (folio_test_unevictable(folio))
+>> +				folio_putback_lru(folio);
+>> +			else
+>> +				list_add(&folio->lru, &folio_list);
+>>   		}
+>> -		if (folio_test_unevictable(folio))
+>> -			folio_putback_lru(folio);
+>> -		else
+>> -			list_add(&folio->lru, &folio_list);
+>>   		folio_put(folio);
+>>   	}
+> 
+> This looks ok to me, thank you for your effort!  Nevertheless, I don't like
+> increasing depth as much as number of lines.  The
+> more-than-3-levels-of-indentation[1] warning is not always right, but this 4
+> levels of indentation is not making me so exciting.
+> 
+> What do you think about adding put_continue label and using it, not only here,
+> but also above part?  For example:
+> 
+>      --- a/mm/damon/paddr.c
+>      +++ b/mm/damon/paddr.c
+>      @@ -239,21 +239,18 @@ static unsigned long damon_pa_pageout(struct damon_region *r, struct damos *s)
+>                      if (!folio)
+>                              continue;
+>      
+>      -               if (damos_pa_filter_out(s, folio)) {
+>      -                       folio_put(folio);
+>      -                       continue;
+>      -               }
+>      +               if (damos_pa_filter_out(s, folio))
+>      +                       goto put_continue;
+>      
+>                      folio_clear_referenced(folio);
+>                      folio_test_clear_young(folio);
+>      -               if (!folio_isolate_lru(folio)) {
+>      -                       folio_put(folio);
+>      -                       continue;
+>      -               }
+>      +               if (!folio_isolate_lru(folio))
+>      +                       goto put_continue;
+>                      if (folio_test_unevictable(folio))
+>                              folio_putback_lru(folio);
+>                      else
+>                              list_add(&folio->lru, &folio_list);
+>      +put_continue:
+>                      folio_put(folio);
+>              }
+>              applied = reclaim_pages(&folio_list);
+> 
+> It omits three lines.
 
-This looks ok to me, thank you for your effort!  Nevertheless, I don't like
-increasing depth as much as number of lines.  The
-more-than-3-levels-of-indentation[1] warning is not always right, but this 4
-levels of indentation is not making me so exciting.
+It looks good, will update, thanks
 
-What do you think about adding put_continue label and using it, not only here,
-but also above part?  For example:
-
-    --- a/mm/damon/paddr.c
-    +++ b/mm/damon/paddr.c
-    @@ -239,21 +239,18 @@ static unsigned long damon_pa_pageout(struct damon_region *r, struct damos *s)
-                    if (!folio)
-                            continue;
-    
-    -               if (damos_pa_filter_out(s, folio)) {
-    -                       folio_put(folio);
-    -                       continue;
-    -               }
-    +               if (damos_pa_filter_out(s, folio))
-    +                       goto put_continue;
-    
-                    folio_clear_referenced(folio);
-                    folio_test_clear_young(folio);
-    -               if (!folio_isolate_lru(folio)) {
-    -                       folio_put(folio);
-    -                       continue;
-    -               }
-    +               if (!folio_isolate_lru(folio))
-    +                       goto put_continue;
-                    if (folio_test_unevictable(folio))
-                            folio_putback_lru(folio);
-                    else
-                            list_add(&folio->lru, &folio_list);
-    +put_continue:
-                    folio_put(folio);
-            }
-            applied = reclaim_pages(&folio_list);
-
-It omits three lines.
-
-    $ git diff --stat
-     mm/damon/paddr.c | 13 +++++--------
-     1 file changed, 5 insertions(+), 8 deletions(-)
-
-[1] https://docs.kernel.org/process/coding-style.html#indentation
-
-
-Thanks,
-SJ
-
->  	applied = reclaim_pages(&folio_list);
-> -- 
-> 2.35.3
+> 
+>      $ git diff --stat
+>       mm/damon/paddr.c | 13 +++++--------
+>       1 file changed, 5 insertions(+), 8 deletions(-)
+> 
+> [1] https://docs.kernel.org/process/coding-style.html#indentation
 > 
 > 
+> Thanks,
+> SJ
+> 
+>>   	applied = reclaim_pages(&folio_list);
+>> -- 
+>> 2.35.3
+>>
+>>
