@@ -1,50 +1,105 @@
-Received: from casper.infradead.org (casper.infradead.org [90.155.50.34])
+Received: from szxga01-in.huawei.com (szxga01-in.huawei.com [45.249.212.187])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56C207E
-	for <damon@lists.linux.dev>; Sun,  5 Mar 2023 00:00:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=casper.20170209; h=In-Reply-To:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=TkIQu3TPsM6ji5C2QtwbOmWwtOZkLwyJUtqHPGL53xE=; b=eTiY+jAgsZl8q470a4XOe8TBmP
-	ujKjrZTDRfH0d5knsDYYetvbHuxg0LRvMhM2MV9tZXJe4d60f3I3dckhIw/GNjgnl0FrFMx+rUZl1
-	13D35Qdb61mtDiFWfSfmWDgCC4Vh8dpxbH5yeic7K/oGRK3EmB5niWRzJqPLzQwGTIJFvzyZtM07U
-	p+u5APYXYCSxsiWB4SmHb8XF8kDgWN7VHZ8FTsWLJRI0Pfor4JbmN6ATpgU3MiwZsCH9Us5W2M3IW
-	ckHwBS8L+46xSVAcP8XJ5KKOgn9RI2vvr/HL1iJquGsRjZpJUznt7xFsYfHvY21gFVXvUxd/8XE36
-	19+xbmdA==;
-Received: from willy by casper.infradead.org with local (Exim 4.94.2 #2 (Red Hat Linux))
-	id 1pYbnp-0047Nz-7v; Sun, 05 Mar 2023 00:00:37 +0000
-Date: Sun, 5 Mar 2023 00:00:37 +0000
-From: Matthew Wilcox <willy@infradead.org>
-To: SeongJae Park <sj@kernel.org>
-Cc: Andrew Morton <akpm@linux-foundation.org>,
-	Kefeng Wang <wangkefeng.wang@huawei.com>,
-	"Vishal Moola (Oracle)" <vishal.moola@gmail.com>,
-	damon@lists.linux.dev, linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Subject: Re: [PATCH 2/2] mm/damon/paddr: fix folio_nr_pages() after
- folio_put() in damon_pa_mark_accessed_or_deactivate()
-Message-ID: <ZAPbpUkiw3T2blE5@casper.infradead.org>
-References: <20230304193949.296391-1-sj@kernel.org>
- <20230304193949.296391-3-sj@kernel.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 326167E
+	for <damon@lists.linux.dev>; Mon,  6 Mar 2023 01:10:44 +0000 (UTC)
+Received: from dggpemm500001.china.huawei.com (unknown [172.30.72.54])
+	by szxga01-in.huawei.com (SkyGuard) with ESMTP id 4PVL6G5K44znWg5;
+	Mon,  6 Mar 2023 09:07:50 +0800 (CST)
+Received: from [10.174.177.243] (10.174.177.243) by
+ dggpemm500001.china.huawei.com (7.185.36.107) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.21; Mon, 6 Mar 2023 09:10:36 +0800
+Message-ID: <04645c9e-2188-da5c-30da-4c4694c7283c@huawei.com>
+Date: Mon, 6 Mar 2023 09:10:35 +0800
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230304193949.296391-3-sj@kernel.org>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.5.1
+Subject: Re: [PATCH v2 2/3] mm/damon/paddr: minor refactor of damon_pa_young()
+Content-Language: en-US
+To: SeongJae Park <sj@kernel.org>
+CC: Andrew Morton <akpm@linux-foundation.org>, <linux-mm@kvack.org>,
+	<linux-kernel@vger.kernel.org>, <damon@lists.linux.dev>
+References: <20230303183925.113520-1-sj@kernel.org>
+From: Kefeng Wang <wangkefeng.wang@huawei.com>
+In-Reply-To: <20230303183925.113520-1-sj@kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.174.177.243]
+X-ClientProxiedBy: dggems701-chm.china.huawei.com (10.3.19.178) To
+ dggpemm500001.china.huawei.com (7.185.36.107)
+X-CFilter-Loop: Reflected
 
-On Sat, Mar 04, 2023 at 07:39:49PM +0000, SeongJae Park wrote:
-> damon_pa_mark_accessed_or_deactivate() is accessing a folio via
-> folio_nr_pages() after folio_put() for the folio has invoked.  Fix it.
+
+
+On 2023/3/4 2:39, SeongJae Park wrote:
+> Hi Kefeng,
 > 
-> Fixes: f70da5ee8fe1 ("mm/damon: convert damon_pa_mark_accessed_or_deactivate() to use folios")
-> Cc: <stable@vger.kernel.org> # 6.3.x
-> Signed-off-by: SeongJae Park <sj@kernel.org>
-
-Reviewed-by: Matthew Wilcox (Oracle) <willy@infradead.org>
-
+> On Fri, 3 Mar 2023 16:43:42 +0800 Kefeng Wang <wangkefeng.wang@huawei.com> wrote:
+> 
+>> Omit three lines by unified folio_put(), and make code more clear.
+>>
+>> Signed-off-by: Kefeng Wang <wangkefeng.wang@huawei.com>
+>> ---
+>>   mm/damon/paddr.c | 11 ++++-------
+>>   1 file changed, 4 insertions(+), 7 deletions(-)
+>>
+>> diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
+>> index 3fda00a0f786..2ef9db0189ca 100644
+>> --- a/mm/damon/paddr.c
+>> +++ b/mm/damon/paddr.c
+>> @@ -130,24 +130,21 @@ static bool damon_pa_young(unsigned long paddr, unsigned long *folio_sz)
+>>   			accessed = false;
+>>   		else
+>>   			accessed = true;
+>> -		folio_put(folio);
+>>   		goto out;
+> 
+> Because you moved 'out' label to not include *folio_sz setting, folio_sz will
+> not set in this case.  It should be set.
+oh, it should be fixed.
+> 
+>>   	}
+>>   
+>>   	need_lock = !folio_test_anon(folio) || folio_test_ksm(folio);
+>> -	if (need_lock && !folio_trylock(folio)) {
+>> -		folio_put(folio);
+>> -		return false;
+>> -	}
+>> +	if (need_lock && !folio_trylock(folio))
+>> +		goto out;
+>>   
+>>   	rmap_walk(folio, &rwc);
+>>   
+>>   	if (need_lock)
+>>   		folio_unlock(folio);
+>> -	folio_put(folio);
+>>   
+>> -out:
+>>   	*folio_sz = folio_size(folio);
+>> +out:
+>> +	folio_put(folio);
+> 
+> Before this change, folio_size() is called after folio_put().  Shouldn't it be
+> called before folio_put()?  If so, could we make a separate fix for that first,
+> and then make this change on top of it, so that it can be easily applied to
+> relevant stable kernels?
+> 
+Yes， I could separate it, after folio_put(), the folio could be 
+re-allocated and the folio_size calculation is not right.
+> 
+> Thanks,
+> SJ
+> 
+>>   	return accessed;
+>>   }
+>>   
+>> -- 
+>> 2.35.3
+>>
+>>
