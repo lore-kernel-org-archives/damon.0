@@ -1,80 +1,86 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from todd.t-8ch.de (todd.t-8ch.de [159.69.126.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F7A78462
-	for <damon@lists.linux.dev>; Wed,  8 Mar 2023 18:17:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9319BC433EF;
-	Wed,  8 Mar 2023 18:17:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1678299439;
-	bh=WSCK4EjboqTykWYFTwfbIgSgksqAobdYHV2zBrtxayQ=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fm9Tp+jDqiNJLqPdubQL+sEqoF7WZwjzbyVuKq+9MWn9ysbdCt5ZNPU6JbsKRN9Zg
-	 JkNLuMwYtPX2w/9tvhKaBqMIj07vlY3iYlZlBEYZJPY9ZMIejpGFpG1QswMMXHZAP5
-	 YNk/VSlUjOYLNxMQknxZksyrIkd43L/P54M3dWwVGmuGZuqoyVE94rUkuy0/CjfH7C
-	 9xk+6GsVbcc/U3HEIPRscOwUkG2+2HIyUaaP8ISTMxMUgD+3f/BkZjqMgaeq03nomF
-	 Sm74VuBfnURUVXRNZbd1apZCYyTbaV/1QwjQfG33+M+J5fNwGfJNRZ0xXRDIhX6jBF
-	 /ibogoPIXwq4A==
-From: SeongJae Park <sj@kernel.org>
-To: Kefeng Wang <wangkefeng.wang@huawei.com>
-Cc: SeongJae Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org,
-	damon@lists.linux.dev
-Subject: Re: [PATCH v3 0/3] mm/damon/paddr: minor code improvement
-Date: Wed,  8 Mar 2023 18:17:17 +0000
-Message-Id: <20230308181717.46186-1-sj@kernel.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20230308083311.120951-1-wangkefeng.wang@huawei.com>
-References: 
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE5BC7471
+	for <damon@lists.linux.dev>; Fri, 24 Mar 2023 15:35:38 +0000 (UTC)
+From: =?utf-8?q?Thomas_Wei=C3=9Fschuh?= <linux@weissschuh.net>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=weissschuh.net;
+	s=mail; t=1679672130;
+	bh=ckFawQ1qLSFHu7FH9gpxiQREhNiKA5dRZcnPaoegb24=;
+	h=From:Date:Subject:To:Cc:From;
+	b=bxV7MelJxdH1rg39V3lDEb+JLrqLBP2PKdDLXWxmrJ9dNGp41MhC8Sdqe1y/0PtsI
+	 2zkxqzDj/DYAIXDsODYALwK3Ju6mspcHe2xIW4AAs7pIagNfGGmYJUnuMMD3fJRjqh
+	 QkOMKShGzw9eP7rD41CXhNfeB9umzb1+rlkwvkds=
+Date: Fri, 24 Mar 2023 15:35:27 +0000
+Subject: [PATCH] mm/damon/sysfs: make more kobj_type structures constant
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
+Message-Id: <20230324-b4-kobj_type-damon2-v1-1-48ddbf1c8fcf@weissschuh.net>
+X-B4-Tracking: v=1; b=H4sIAD7DHWQC/x2NywrCMBBFf6XM2oGadhH9FRHJ42pHa1KSKi2l/
+ +7g8pzL4W5UUQSVzs1GBV+pkpPC8dBQGFx6gCUqk2lN13amZ9/zK/vnbV4ncHTvnAzrZoETbLS
+ BtPSugn1xKQzaps84qpwK7rL8ry7Xff8Ba5swy3oAAAA=
+To: SeongJae Park <sj@kernel.org>, 
+ Andrew Morton <akpm@linux-foundation.org>
+Cc: damon@lists.linux.dev, linux-mm@kvack.org, linux-kernel@vger.kernel.org, 
+ =?utf-8?q?Thomas_Wei=C3=9Fschuh?= <linux@weissschuh.net>
+X-Mailer: b4 0.12.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1679672127; l=1721;
+ i=linux@weissschuh.net; s=20221212; h=from:subject:message-id;
+ bh=ckFawQ1qLSFHu7FH9gpxiQREhNiKA5dRZcnPaoegb24=;
+ b=Z/mj9pBksJMTxSODV3RjMllkofs/ct51LPHtbxiK/dC93KL/ZL7YClId558U6SprhHAMWSUIs
+ xK0D2hUYCFJBAeidOJF/7lUDrF8OYSpPKrQ9XMWC9+EfDqcPIO4oat1
+X-Developer-Key: i=linux@weissschuh.net; a=ed25519;
+ pk=KcycQgFPX2wGR5azS7RhpBqedglOZVgRPfdFSPB1LNw=
 
-Hi Kefeng,
+Since commit ee6d3dd4ed48 ("driver core: make kobj_type constant.")
+the driver core allows the usage of const struct kobj_type.
 
-On Wed, 8 Mar 2023 16:33:08 +0800 Kefeng Wang <wangkefeng.wang@huawei.com> wrote:
+Take advantage of this to constify the structure definition to prevent
+modification at runtime.
 
-> Unify folio_put() to make code more clear, and also fix minor issue in
-> damon_pa_young().
-> 
-> v3: 
-> - as SJ split the bugfix from v2, and it has merged[1], only do code
->   improvement
-> - fix a missing folio_sz update in damon_pa_young()
-> - add RB from SJ
-> - rebase on next-20230308
-> 
-> [1] https://lkml.kernel.org/r/20230304193949.296391-1-sj@kernel.org
-> 
-> v2: 
-> - use goto lable in damon_pa_pageout() and refact too more functions
-> 
-> Kefeng Wang (3):
->   mm/damon/paddr: minor refactor of damon_pa_pageout()
->   mm/damon/paddr: minor refactor of
->     damon_pa_mark_accessed_or_deactivate()
->   mm/damon/paddr: fix missing folio_sz update in damon_pa_young()
-> 
->  mm/damon/paddr.c | 26 ++++++++++----------------
->  1 file changed, 10 insertions(+), 16 deletions(-)
+These structures were not constified in
+commit e56397e8c40d ("mm/damon/sysfs: make kobj_type structures constant")
+as they didn't exist when that patch was written.
 
-For the series,
+Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
+---
+ mm/damon/sysfs-schemes.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-Reviewed-by: SeongJae Park <sj@kernel.org>
+diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
+index 3cdad5a7f936..50cf89dcd898 100644
+--- a/mm/damon/sysfs-schemes.c
++++ b/mm/damon/sysfs-schemes.c
+@@ -384,7 +384,7 @@ static struct attribute *damon_sysfs_scheme_filter_attrs[] = {
+ };
+ ATTRIBUTE_GROUPS(damon_sysfs_scheme_filter);
+ 
+-static struct kobj_type damon_sysfs_scheme_filter_ktype = {
++static const struct kobj_type damon_sysfs_scheme_filter_ktype = {
+ 	.release = damon_sysfs_scheme_filter_release,
+ 	.sysfs_ops = &kobj_sysfs_ops,
+ 	.default_groups = damon_sysfs_scheme_filter_groups,
+@@ -503,7 +503,7 @@ static struct attribute *damon_sysfs_scheme_filters_attrs[] = {
+ };
+ ATTRIBUTE_GROUPS(damon_sysfs_scheme_filters);
+ 
+-static struct kobj_type damon_sysfs_scheme_filters_ktype = {
++static const struct kobj_type damon_sysfs_scheme_filters_ktype = {
+ 	.release = damon_sysfs_scheme_filters_release,
+ 	.sysfs_ops = &kobj_sysfs_ops,
+ 	.default_groups = damon_sysfs_scheme_filters_groups,
 
-Thank you for your efforts on this, Kefeng!
+---
+base-commit: 1e760fa3596e8c7f08412712c168288b79670d78
+change-id: 20230324-b4-kobj_type-damon2-0238ee9e8d8c
 
+Best regards,
+-- 
+Thomas Weißschuh <linux@weissschuh.net>
 
-Thanks,
-SJ
-
-> 
-> -- 
-> 2.35.3
-> 
