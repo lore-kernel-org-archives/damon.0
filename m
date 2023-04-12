@@ -1,94 +1,92 @@
-Received: from madras.collabora.co.uk (madras.collabora.co.uk [46.235.227.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27BEF27706
-	for <damon@lists.linux.dev>; Fri, 24 Mar 2023 21:13:11 +0000 (UTC)
-Received: from [192.168.10.39] (unknown [119.155.2.20])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: usama.anjum)
-	by madras.collabora.co.uk (Postfix) with ESMTPSA id E6490660206A;
-	Fri, 24 Mar 2023 21:13:06 +0000 (GMT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-	s=mail; t=1679692389;
-	bh=txaOnhLH2D4ccynBeXElhufAFanFILa3bH1kjnNZJZs=;
-	h=Date:Cc:Subject:To:References:From:In-Reply-To:From;
-	b=JDEQbwquT419PgvuTeM/GUJzyJ9wfI32yh38MsDe1BWnDpI9euwMvGNmXd32pk10x
-	 0qbJ4CDBKFSpSX62yN8dlQOD1FyHPjE9+y86tUm9+F2FrFwpXOPqmtjO/Yn9WzUM7k
-	 6BUhprovL1Av+YDtR/cAWzclrH+XmFQLn9Mbs4cXhf7b0qUgMV4r437skabiA5KL0o
-	 myjBLJZjo/02bkjRDweJ8d48cyMb0eenTr7OfJviYfXlRWxKJIp+Tw4icvdbG+jbt+
-	 Lmi4W47lDX8Z6vDxjW0/cQ7elNSDGgckYQZCKT8gL/YPS8V0juzb70A/N6ExKTpptW
-	 pPKkAANs5xPqQ==
-Message-ID: <eab20109-ffa2-461c-92ff-3eec4fa5c8a8@collabora.com>
-Date: Sat, 25 Mar 2023 02:12:55 +0500
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 333E32F24
+	for <damon@lists.linux.dev>; Wed, 12 Apr 2023 09:29:11 +0000 (UTC)
+Received: by mail-lf1-f45.google.com with SMTP id r27so13904980lfe.0
+        for <damon@lists.linux.dev>; Wed, 12 Apr 2023 02:29:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1681291749; x=1683883749;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=rcb/qkDEsQAl3olw9yoUk92A6JDi4rIg7+uNlXHrrCs=;
+        b=Alwr349E2yAIHR5wfg8SEgSZr/CCUPuG2GWmqALnr6hK6vdoizML4AWTfimx5up2SW
+         cE8J8yP2FMiI6DphLH5GAuGP9jFQhyHr9B9gpzG3o/XOmdzNTJsNKzZ5rhtiPrnMoNN6
+         tUkso/4ZDUl4jc01UGsKK7npR707zP10BciQhEVCmXgwtI00WG/ModH5mWWI2Qd3ge23
+         eZl6c9m0Ll4esPo6mtIne1N0Vq8tCTxps5632eE7aeNA4kvMdRQaqD56z2m+mnJ5V+Se
+         BkbwY8oyLEn7hwSO6+DUHUqZYLNHPwaXJBiwSQp7AkruLSQZxZi+nSJh82LvrlrrozpN
+         kReg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1681291749; x=1683883749;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=rcb/qkDEsQAl3olw9yoUk92A6JDi4rIg7+uNlXHrrCs=;
+        b=A/y01SmsByfmI2Z3BYdEsoYDK3BBucNumw1enSpmn2SgtthXm8w1DdLB5SMT+q/gi2
+         F+xi0BUqeSUgmLr9gXmSXKv+fHQ9SPVFDCS5I41dwqv1C4YHib/X94JvGUNNJKjybV0s
+         5SmJ4qxZO7tcIkGX09QZqjlX3F0KsqJs+gmlryhhYQ+0b59Ce+zaUF2pfGhFdUM1a+fd
+         qg8v1/kzb4/EA3sWqt+x7BAlPd0SZOd8I8jyWobSWwNOLTY5p6xvVbK82BXqJ6YAsnY0
+         ZM2pjVesrd6ar41fAVxF6jX1pB7UYwyhidkrK1iCKWY1Id4CBO6o+Wsv/cVGzipoULB3
+         QG/g==
+X-Gm-Message-State: AAQBX9cKGsMo1fYRuSbI510QvrpJvgbOZu8Sq8Z+ebefaDQcxq4KNSC0
+	d45xCN/ZOYxh39iiXazBGyD36w==
+X-Google-Smtp-Source: AKy350ZowSyMYKkqTf7keNy16KvCpT3A3P84fOVnNItqH3nenGNIhyEzgSn0fOn/v5tDeetQ9TjNjA==
+X-Received: by 2002:a19:ad0c:0:b0:4e8:4489:6f06 with SMTP id t12-20020a19ad0c000000b004e844896f06mr3826521lfc.58.1681291749100;
+        Wed, 12 Apr 2023 02:29:09 -0700 (PDT)
+Received: from localhost (c-9b0ee555.07-21-73746f28.bbcust.telenor.se. [85.229.14.155])
+        by smtp.gmail.com with ESMTPSA id i12-20020ac2522c000000b004db3e330dcesm2959121lfl.178.2023.04.12.02.29.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 12 Apr 2023 02:29:08 -0700 (PDT)
+From: Anders Roxell <anders.roxell@linaro.org>
+To: sj@kernel.org,
+	shuah@kernel.org
+Cc: linux-kernel@vger.kernel.org,
+	damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	linux-kselftest@vger.kernel.org,
+	Anders Roxell <anders.roxell@linaro.org>,
+	Naresh Kamboju <naresh.kamboju@linaro.org>
+Subject: [PATCHv2] selftests: damon: add config file
+Date: Wed, 12 Apr 2023 11:28:54 +0200
+Message-Id: <20230412092854.3306197-1-anders.roxell@linaro.org>
+X-Mailer: git-send-email 2.39.2
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Cc: Muhammad Usama Anjum <usama.anjum@collabora.com>, damon@lists.linux.dev,
- linux-mm@kvack.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] mm/damon/sysfs: make more kobj_type structures constant
-Content-Language: en-US
-To: =?UTF-8?Q?Thomas_Wei=c3=9fschuh?= <linux@weissschuh.net>,
- SeongJae Park <sj@kernel.org>, Andrew Morton <akpm@linux-foundation.org>
-References: <20230324-b4-kobj_type-damon2-v1-1-48ddbf1c8fcf@weissschuh.net>
-From: Muhammad Usama Anjum <usama.anjum@collabora.com>
-In-Reply-To: <20230324-b4-kobj_type-damon2-v1-1-48ddbf1c8fcf@weissschuh.net>
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On 3/24/23 8:35 PM, Thomas Weißschuh wrote:
-> Since commit ee6d3dd4ed48 ("driver core: make kobj_type constant.")
-> the driver core allows the usage of const struct kobj_type.
-> 
-> Take advantage of this to constify the structure definition to prevent
-> modification at runtime.
-> 
-> These structures were not constified in
-> commit e56397e8c40d ("mm/damon/sysfs: make kobj_type structures constant")
-> as they didn't exist when that patch was written.
-> 
-> Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
-Reviewed-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
+Building and running the subsuite 'damon' of kselftest, shows the
+following issues:
+ selftests: damon: debugfs_attrs.sh
+  /sys/kernel/debug/damon not found
 
-> ---
->  mm/damon/sysfs-schemes.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
-> index 3cdad5a7f936..50cf89dcd898 100644
-> --- a/mm/damon/sysfs-schemes.c
-> +++ b/mm/damon/sysfs-schemes.c
-> @@ -384,7 +384,7 @@ static struct attribute *damon_sysfs_scheme_filter_attrs[] = {
->  };
->  ATTRIBUTE_GROUPS(damon_sysfs_scheme_filter);
->  
-> -static struct kobj_type damon_sysfs_scheme_filter_ktype = {
-> +static const struct kobj_type damon_sysfs_scheme_filter_ktype = {
->  	.release = damon_sysfs_scheme_filter_release,
->  	.sysfs_ops = &kobj_sysfs_ops,
->  	.default_groups = damon_sysfs_scheme_filter_groups,
-> @@ -503,7 +503,7 @@ static struct attribute *damon_sysfs_scheme_filters_attrs[] = {
->  };
->  ATTRIBUTE_GROUPS(damon_sysfs_scheme_filters);
->  
-> -static struct kobj_type damon_sysfs_scheme_filters_ktype = {
-> +static const struct kobj_type damon_sysfs_scheme_filters_ktype = {
->  	.release = damon_sysfs_scheme_filters_release,
->  	.sysfs_ops = &kobj_sysfs_ops,
->  	.default_groups = damon_sysfs_scheme_filters_groups,
-> 
-> ---
-> base-commit: 1e760fa3596e8c7f08412712c168288b79670d78
-> change-id: 20230324-b4-kobj_type-damon2-0238ee9e8d8c
-> 
-> Best regards,
+By creating a config file enabling DAMON fragments in the
+selftests/damon/ directory the tests pass.
 
+Fixes: b348eb7abd09 ("mm/damon: add user space selftests")
+Reported-by: Naresh Kamboju <naresh.kamboju@linaro.org>
+Signed-off-by: Anders Roxell <anders.roxell@linaro.org>
+---
+ tools/testing/selftests/damon/config | 7 +++++++
+ 1 file changed, 7 insertions(+)
+ create mode 100644 tools/testing/selftests/damon/config
+
+diff --git a/tools/testing/selftests/damon/config b/tools/testing/selftests/damon/config
+new file mode 100644
+index 000000000000..0daf38974eb0
+--- /dev/null
++++ b/tools/testing/selftests/damon/config
+@@ -0,0 +1,7 @@
++CONFIG_DAMON=y
++CONFIG_DAMON_SYSFS=y
++CONFIG_DAMON_DBGFS=y
++CONFIG_DAMON_PADDR=y
++CONFIG_DAMON_VADDR=y
++CONFIG_DAMON_RECLAIM=y
++CONFIG_DAMON_LRU_SORT=y
 -- 
-BR,
-Muhammad Usama Anjum
+2.39.2
+
