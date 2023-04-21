@@ -1,34 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A2E16FD2
-	for <damon@lists.linux.dev>; Wed, 12 Apr 2023 16:58:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6775CC433EF;
-	Wed, 12 Apr 2023 16:58:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F203C612D
+	for <damon@lists.linux.dev>; Fri, 21 Apr 2023 19:45:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 321FCC433D2;
+	Fri, 21 Apr 2023 19:45:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1681318688;
-	bh=qEym68sXMMO79/ef6jwH0/WMRK6ifej8V9kh6pO6Nks=;
+	s=k20201202; t=1682106328;
+	bh=LVD0h2MtRQCLv9fYsPYzBh7vUpnhSB9kiT4aJ/lcBb4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kdM4KzxIZkv1ULAS4OtVgKDbS37cSTSOjXacui2q0LZoYz8GktC3FJqekjCS2V5nl
-	 QYdkMKav/YAvgww2sj5HqyV3XZXd1NJ7JhMZyTX2m88azi37Ki/QxQBU3mBS+8V4v8
-	 oaa45whwzZtUoj+N0RgTvdGlMBqEtT7c7beP/1K1qZPif8PPDXfb1EbDx1xlEjSEnt
-	 5hEqr2pMWId3pE3bZs3YVpPeYQ7vyO7V4ihViEGvEzcxBdEHJAa1v6VoRwY11OrT5O
-	 xoZwIFVbm/FXFGHQ9/HliNnPl/kqsDrZ9ji9FSvA1kBKxYL0lM+Mitz70Abyy5sFbj
-	 m7g8t5e30YEmQ==
+	b=bVmb4l0Cx3p3Qxeaw2ncyf3e8Kq1WYdBBcgoCJFvQXRLas9GNORBD0ly8URnWiULT
+	 nSntdG0AnVlkUaZrsqQC2BgW2vAv75KaaRkh2Ll/+soE6XU1rrp7+Pj4Fv3MZ0RDg+
+	 StOGYeyV5kxFTJjQ7DrWuGjE4z8hJNcTAKJ1AuwooLJdHQs9P6lbOrtrfGJVI+w78D
+	 RDxywFgLb+qhbfBzHd/6E5964j7AIEo/8j6JDr2VqvX/z/3qmYkYxbSThgfXbMrHY+
+	 J0q3V0on9kslCS4GaUdQD0RUVYvVRPOojH6AisJVOTE1nN5SQGFIhcFwmsRcHMpjUZ
+	 kdxNdWAIeBfVA==
 From: SeongJae Park <sj@kernel.org>
-To: Anders Roxell <anders.roxell@linaro.org>
-Cc: sj@kernel.org,
-	shuah@kernel.org,
-	linux-kernel@vger.kernel.org,
-	damon@lists.linux.dev,
+To: SeongJae Park <sj@kernel.org>
+Cc: damon@lists.linux.dev,
+	linux-damon@amazon.com,
+	linux-damon-trial@amazon.com,
 	linux-mm@kvack.org,
-	linux-kselftest@vger.kernel.org,
-	Naresh Kamboju <naresh.kamboju@linaro.org>
-Subject: Re: [PATCHv2] selftests: damon: add config file
-Date: Wed, 12 Apr 2023 16:58:06 +0000
-Message-Id: <20230412165806.80672-1-sj@kernel.org>
+	linux-kernel@vger.kernel.org
+Subject: Re: DAMON Beer/Coffee/Tea chat series
+Date: Fri, 21 Apr 2023 19:45:26 +0000
+Message-Id: <20230421194526.81736-1-sj@kernel.org>
 X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20230412092854.3306197-1-anders.roxell@linaro.org>
+In-Reply-To: <20220810225102.124459-1-sj@kernel.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -38,60 +36,29 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hi Anders,
+Hello,
 
-On Wed, 12 Apr 2023 11:28:54 +0200 Anders Roxell <anders.roxell@linaro.org> wrote:
+On Wed, 10 Aug 2022 22:51:02 +0000 SeongJae Park <sj@kernel.org> wrote:
 
-> Building and running the subsuite 'damon' of kselftest, shows the
-> following issues:
->  selftests: damon: debugfs_attrs.sh
->   /sys/kernel/debug/damon not found
+> Hello,
 > 
-> By creating a config file enabling DAMON fragments in the
-> selftests/damon/ directory the tests pass.
 > 
-> Fixes: b348eb7abd09 ("mm/damon: add user space selftests")
-> Reported-by: Naresh Kamboju <naresh.kamboju@linaro.org>
+> In short, I'd like to start an open, regular, and informal virtual bi-weekly
+> meeting series for DAMON community.
+> 
+> Important links and dates
+> -------------------------
+> 
+> Location: https://meet.google.com/ndx-evoc-gbu
+> Agenda: https://docs.google.com/document/d/1v43Kcj3ly4CYqmAkMaZzLiM2GEnWfgdGbZAH3mi2vpM/edit?usp=sharing
 
-checkpatch.pl is warning as below:
+The last instance was scheduled for Tuesday of this week, but I forgot the
+schedule by my mistake.  Sorry if you wanted to join.  I therefore schedule
+another instance for next Tuesday.  Please check the agenda doc for the updated
+schedule.
 
-    WARNING: Reported-by: should be immediately followed by Link: with a URL to the report
-    #20:
-    Reported-by: Naresh Kamboju <naresh.kamboju@linaro.org>
-    Signed-off-by: Anders Roxell <anders.roxell@linaro.org>
-
-The reason for the warning can be found from commit d7f1d71e5ef6 ("checkpatch:
-warn when Reported-by: is not followed by Link:")'s commit message.  Do you
-have a link to put here?  I guess the report was made inside Linaro, so might
-have no publicly available link.  Maybe better to add some notes or some funny
-tag like "Link: N/A # no publicly-available link of the report" for convincing
-the tool, but I don't think this should be a blocker for this patch.
-
-> Signed-off-by: Anders Roxell <anders.roxell@linaro.org>
-
-Reviewed-by: SeongJae Park <sj@kernel.org>
+Sorry again.
 
 
 Thanks,
 SJ
-
-> ---
->  tools/testing/selftests/damon/config | 7 +++++++
->  1 file changed, 7 insertions(+)
->  create mode 100644 tools/testing/selftests/damon/config
-> 
-> diff --git a/tools/testing/selftests/damon/config b/tools/testing/selftests/damon/config
-> new file mode 100644
-> index 000000000000..0daf38974eb0
-> --- /dev/null
-> +++ b/tools/testing/selftests/damon/config
-> @@ -0,0 +1,7 @@
-> +CONFIG_DAMON=y
-> +CONFIG_DAMON_SYSFS=y
-> +CONFIG_DAMON_DBGFS=y
-> +CONFIG_DAMON_PADDR=y
-> +CONFIG_DAMON_VADDR=y
-> +CONFIG_DAMON_RECLAIM=y
-> +CONFIG_DAMON_LRU_SORT=y
-> -- 
-> 2.39.2
