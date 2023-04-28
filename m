@@ -1,64 +1,98 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f169.google.com (mail-lj1-f169.google.com [209.85.208.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F203C612D
-	for <damon@lists.linux.dev>; Fri, 21 Apr 2023 19:45:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 321FCC433D2;
-	Fri, 21 Apr 2023 19:45:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1682106328;
-	bh=LVD0h2MtRQCLv9fYsPYzBh7vUpnhSB9kiT4aJ/lcBb4=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bVmb4l0Cx3p3Qxeaw2ncyf3e8Kq1WYdBBcgoCJFvQXRLas9GNORBD0ly8URnWiULT
-	 nSntdG0AnVlkUaZrsqQC2BgW2vAv75KaaRkh2Ll/+soE6XU1rrp7+Pj4Fv3MZ0RDg+
-	 StOGYeyV5kxFTJjQ7DrWuGjE4z8hJNcTAKJ1AuwooLJdHQs9P6lbOrtrfGJVI+w78D
-	 RDxywFgLb+qhbfBzHd/6E5964j7AIEo/8j6JDr2VqvX/z/3qmYkYxbSThgfXbMrHY+
-	 J0q3V0on9kslCS4GaUdQD0RUVYvVRPOojH6AisJVOTE1nN5SQGFIhcFwmsRcHMpjUZ
-	 kdxNdWAIeBfVA==
-From: SeongJae Park <sj@kernel.org>
-To: SeongJae Park <sj@kernel.org>
-Cc: damon@lists.linux.dev,
-	linux-damon@amazon.com,
-	linux-damon-trial@amazon.com,
-	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: DAMON Beer/Coffee/Tea chat series
-Date: Fri, 21 Apr 2023 19:45:26 +0000
-Message-Id: <20230421194526.81736-1-sj@kernel.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20220810225102.124459-1-sj@kernel.org>
-References: 
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 767AE3C1D
+	for <damon@lists.linux.dev>; Fri, 28 Apr 2023 14:17:06 +0000 (UTC)
+Received: by mail-lj1-f169.google.com with SMTP id 38308e7fff4ca-2a7af0cb2e6so97778311fa.0
+        for <damon@lists.linux.dev>; Fri, 28 Apr 2023 07:17:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1682691424; x=1685283424;
+        h=content-transfer-encoding:subject:from:cc:to:content-language
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=pX9WjjkTv92gewoGzLGlJ8qlhFBP8gtOO2O4fVnFTWY=;
+        b=mXbK5ex0BXyMpLjDWNU7TKeDfTqZAPDifoOqG+/QTXcKYcQQ6AsMPVxDbED6qa9Ljh
+         F6L0+UWSIa5oRlX8fdarniu5z+ghx7gmeYSlG+CwwkGQsrz5y4pZnVkNBbyr2byI4WeR
+         vURocvp/agpqkZQdjcD8yYZlPmUcG/DI5jKWTFKEzXhEvCFspSFWdj/ov+IYqxFVHl5/
+         TxIswOh5RPmfp3Cjz3SYOvmQshcssdE4gQAfxdvkitCiofIUzOSLPuHvAZiFD5/UCZSA
+         VvAgc3u3Gqxxh3fcxnlpOGwZe20Gis1p+xMlrBbtRsTE9q7XhpWa5i6HERR+AqFo57QX
+         E/Pg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1682691424; x=1685283424;
+        h=content-transfer-encoding:subject:from:cc:to:content-language
+         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=pX9WjjkTv92gewoGzLGlJ8qlhFBP8gtOO2O4fVnFTWY=;
+        b=U9tafsV8sdV6ZwQdPGZ0y9XuOzBydp7dN2ZrGXP7H/SJmAb8CIxnbiw3buBzzZb03L
+         CwCD2B+JLo9zHR+4u06HQEupCWUkuj19m1b8NdvZUTDAf4vvdzBuPcwdwbmFGw/P4Zx9
+         3OfZiM0f92/xRCr+t87T3XheuzHnvAkxczybYxy9BdvNIdP6S94M9Wlzfn/eYwCDrfXv
+         bzCKHz1TCWfizDUSBlvvEKatrULXw5LA7Rt+uEvMIqtqJjgoK8MyWnSSsfUMQln63hR2
+         jAjJLZpemiz/9ytoCvo/AOiw/D2Ku5ydbAYqnuCUkVddpzzyFJa7LIpfZez6Uk/DCRbL
+         ydfQ==
+X-Gm-Message-State: AC+VfDxKR6cUt55OQ1WJrkKC3OGXPmQNh5gVojouWm3poBNjxtDmblzc
+	YPN1jen2bd7WAm2X8eRcSpTN0/L/mBI=
+X-Google-Smtp-Source: ACHHUZ6USqaqZyrOcbbOcvRmFXxvcpU7l06vpYuEcE7e8EVpOTP978+Y0yFcw+ymcB1ZRH//sY0lhg==
+X-Received: by 2002:a2e:8895:0:b0:2a7:78c3:a3ee with SMTP id k21-20020a2e8895000000b002a778c3a3eemr1506548lji.45.1682691423853;
+        Fri, 28 Apr 2023 07:17:03 -0700 (PDT)
+Received: from [192.168.88.92] (95-158-68-28.static.chello.pl. [95.158.68.28])
+        by smtp.gmail.com with ESMTPSA id o8-20020a2e9b48000000b002a9b01bb0a3sm3379799ljj.57.2023.04.28.07.17.02
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 28 Apr 2023 07:17:03 -0700 (PDT)
+Message-ID: <c3086fc3-f33c-4eb5-db1e-9dec731aeede@gmail.com>
+Date: Fri, 28 Apr 2023 16:15:12 +0200
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.0
+Content-Language: en-US
+To: damon@lists.linux.dev
+Cc: dutkahugo@gmail.com
+From: Grzegorz Uriasz <gorbak25@gmail.com>
+Subject: What kind of memory is DAMON RECLAIM able to free?
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Hello,
+Hi!
 
-On Wed, 10 Aug 2022 22:51:02 +0000 SeongJae Park <sj@kernel.org> wrote:
+I'm running some experiments using DAMON RECLAIM on the 6.2 kernel. I've 
+set up an VM with free page reporting enabled with 16 vcores and 16GB of 
+ram with very aggressive memory reclamation settings, my kernel boot 
+line includes:
+- transparent_hugepage=never
+- page_reporting.page_reporting_order=0
+- damon_reclaim.enabled=Y
+- damon_reclaim.min_age=10000000
+- damon_reclaim.wmarks_low=0
+- damon_reclaim.wmarks_mid=999
+- damon_reclaim.wmarks_high=1000
+- damon_reclaim.quota_sz=1073741824
+- damon_reclaim.quota_reset_interval_ms=1000
 
-> Hello,
-> 
-> 
-> In short, I'd like to start an open, regular, and informal virtual bi-weekly
-> meeting series for DAMON community.
-> 
-> Important links and dates
-> -------------------------
-> 
-> Location: https://meet.google.com/ndx-evoc-gbu
-> Agenda: https://docs.google.com/document/d/1v43Kcj3ly4CYqmAkMaZzLiM2GEnWfgdGbZAH3mi2vpM/edit?usp=sharing
+The memory usage of the VM starts at 800 MB, after running some 
+workloads and ballooning the VM to 16 GB DAMON RECLAIM was able to 
+quickly bring the memory usage back down to 3GB, after which it just 
+stopped doing anything. What concerns me is that 20%(3.2GB for that VM) 
+is the default low watermark in the DAMON RECLAIM module. I've verified 
+that the watermarks were properly set in sysfs to my custom values, but 
+it doesn't seem to affect anything as free -mh shows 400Mb for apps but 
+2.6GB for caches/buffers. The VM besides idling for a very long time 
+isn't able to free the buffers. When dropping the caches manually using 
+/proc/sys/vm/drop_caches the memory usage returns back to the starting 
+one. The cache/buffers don't increase at all after dropping them 
+indicating that this memory was indeed idling.
 
-The last instance was scheduled for Tuesday of this week, but I forgot the
-schedule by my mistake.  Sorry if you wanted to join.  I therefore schedule
-another instance for next Tuesday.  Please check the agenda doc for the updated
-schedule.
+My questions:
+1. Are there types of freeable memory which DAMON is not allowed to touch?
+2. What prevents DAMON from getting back the memory?
+2. /sys/kernel/debug/damon/* seems separate from DAMON RECLAIM, 
+/sys/module/damon_reclaim/parameters/kdamond_pid shows DAMON RECLAIM is 
+running but the DAMON debugfs doesn't show it nor exposes any registered 
+reclamation schemes.
 
-Sorry again.
+Best Regards,
+Grzegorz Uriasz
 
-
-Thanks,
-SJ
