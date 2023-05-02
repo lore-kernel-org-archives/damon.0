@@ -1,98 +1,123 @@
-Received: from mail-lj1-f169.google.com (mail-lj1-f169.google.com [209.85.208.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 767AE3C1D
-	for <damon@lists.linux.dev>; Fri, 28 Apr 2023 14:17:06 +0000 (UTC)
-Received: by mail-lj1-f169.google.com with SMTP id 38308e7fff4ca-2a7af0cb2e6so97778311fa.0
-        for <damon@lists.linux.dev>; Fri, 28 Apr 2023 07:17:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1682691424; x=1685283424;
-        h=content-transfer-encoding:subject:from:cc:to:content-language
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=pX9WjjkTv92gewoGzLGlJ8qlhFBP8gtOO2O4fVnFTWY=;
-        b=mXbK5ex0BXyMpLjDWNU7TKeDfTqZAPDifoOqG+/QTXcKYcQQ6AsMPVxDbED6qa9Ljh
-         F6L0+UWSIa5oRlX8fdarniu5z+ghx7gmeYSlG+CwwkGQsrz5y4pZnVkNBbyr2byI4WeR
-         vURocvp/agpqkZQdjcD8yYZlPmUcG/DI5jKWTFKEzXhEvCFspSFWdj/ov+IYqxFVHl5/
-         TxIswOh5RPmfp3Cjz3SYOvmQshcssdE4gQAfxdvkitCiofIUzOSLPuHvAZiFD5/UCZSA
-         VvAgc3u3Gqxxh3fcxnlpOGwZe20Gis1p+xMlrBbtRsTE9q7XhpWa5i6HERR+AqFo57QX
-         E/Pg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682691424; x=1685283424;
-        h=content-transfer-encoding:subject:from:cc:to:content-language
-         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=pX9WjjkTv92gewoGzLGlJ8qlhFBP8gtOO2O4fVnFTWY=;
-        b=U9tafsV8sdV6ZwQdPGZ0y9XuOzBydp7dN2ZrGXP7H/SJmAb8CIxnbiw3buBzzZb03L
-         CwCD2B+JLo9zHR+4u06HQEupCWUkuj19m1b8NdvZUTDAf4vvdzBuPcwdwbmFGw/P4Zx9
-         3OfZiM0f92/xRCr+t87T3XheuzHnvAkxczybYxy9BdvNIdP6S94M9Wlzfn/eYwCDrfXv
-         bzCKHz1TCWfizDUSBlvvEKatrULXw5LA7Rt+uEvMIqtqJjgoK8MyWnSSsfUMQln63hR2
-         jAjJLZpemiz/9ytoCvo/AOiw/D2Ku5ydbAYqnuCUkVddpzzyFJa7LIpfZez6Uk/DCRbL
-         ydfQ==
-X-Gm-Message-State: AC+VfDxKR6cUt55OQ1WJrkKC3OGXPmQNh5gVojouWm3poBNjxtDmblzc
-	YPN1jen2bd7WAm2X8eRcSpTN0/L/mBI=
-X-Google-Smtp-Source: ACHHUZ6USqaqZyrOcbbOcvRmFXxvcpU7l06vpYuEcE7e8EVpOTP978+Y0yFcw+ymcB1ZRH//sY0lhg==
-X-Received: by 2002:a2e:8895:0:b0:2a7:78c3:a3ee with SMTP id k21-20020a2e8895000000b002a778c3a3eemr1506548lji.45.1682691423853;
-        Fri, 28 Apr 2023 07:17:03 -0700 (PDT)
-Received: from [192.168.88.92] (95-158-68-28.static.chello.pl. [95.158.68.28])
-        by smtp.gmail.com with ESMTPSA id o8-20020a2e9b48000000b002a9b01bb0a3sm3379799ljj.57.2023.04.28.07.17.02
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 28 Apr 2023 07:17:03 -0700 (PDT)
-Message-ID: <c3086fc3-f33c-4eb5-db1e-9dec731aeede@gmail.com>
-Date: Fri, 28 Apr 2023 16:15:12 +0200
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B770C622
+	for <damon@lists.linux.dev>; Tue,  2 May 2023 01:27:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E46CC433EF;
+	Tue,  2 May 2023 01:27:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1682990862;
+	bh=1lfG7N0xynxHpyMOtx9RCUa6Rg91lUAThOYSp1xJdn4=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=PLwYUw0f8f1zyNqSL5lulev64XYpTHOR9/JQI+siM/T6nUYe6MOfRNSTWBqGpOlDI
+	 rOT2BHzlBsCROFgxx+egKjosrx3pSmxqLtChLwj4t6+REVPcUsAAG3wbq4IbDRMw8L
+	 EgU7AUG9OXp/Sw7rEAmywqtI0adLCyvWu93o+RnU6w4Iea9iV1XOi2FYfSXLboTUbG
+	 ByPoMg719ORIR79PtK2TQUL9v+mfjPcfbswJbN4r5hsBT8g3tBCyS0d8i4KpYJqsYB
+	 vMsZ5fx4kXN7GKgNtw1SylFLlKyPThjuf9lvnBMqImhEgviZwesNnMQGcVRT0REp+8
+	 7FnvkEvhj5bcA==
+From: SeongJae Park <sj@kernel.org>
+To: Grzegorz Uriasz <gorbak25@gmail.com>
+Cc: damon@lists.linux.dev,
+	dutkahugo@gmail.com
+Subject: Re: What kind of memory is DAMON RECLAIM able to free?
+Date: Tue,  2 May 2023 01:27:40 +0000
+Message-Id: <20230502012740.150413-1-sj@kernel.org>
+X-Mailer: git-send-email 2.25.1
+In-Reply-To: <c3086fc3-f33c-4eb5-db1e-9dec731aeede@gmail.com>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Content-Language: en-US
-To: damon@lists.linux.dev
-Cc: dutkahugo@gmail.com
-From: Grzegorz Uriasz <gorbak25@gmail.com>
-Subject: What kind of memory is DAMON RECLAIM able to free?
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-Hi!
+Hi Grzegorz,
 
-I'm running some experiments using DAMON RECLAIM on the 6.2 kernel. I've 
-set up an VM with free page reporting enabled with 16 vcores and 16GB of 
-ram with very aggressive memory reclamation settings, my kernel boot 
-line includes:
-- transparent_hugepage=never
-- page_reporting.page_reporting_order=0
-- damon_reclaim.enabled=Y
-- damon_reclaim.min_age=10000000
-- damon_reclaim.wmarks_low=0
-- damon_reclaim.wmarks_mid=999
-- damon_reclaim.wmarks_high=1000
-- damon_reclaim.quota_sz=1073741824
-- damon_reclaim.quota_reset_interval_ms=1000
+On Fri, 28 Apr 2023 16:15:12 +0200 Grzegorz Uriasz <gorbak25@gmail.com> wrote:
 
-The memory usage of the VM starts at 800 MB, after running some 
-workloads and ballooning the VM to 16 GB DAMON RECLAIM was able to 
-quickly bring the memory usage back down to 3GB, after which it just 
-stopped doing anything. What concerns me is that 20%(3.2GB for that VM) 
-is the default low watermark in the DAMON RECLAIM module. I've verified 
-that the watermarks were properly set in sysfs to my custom values, but 
-it doesn't seem to affect anything as free -mh shows 400Mb for apps but 
-2.6GB for caches/buffers. The VM besides idling for a very long time 
-isn't able to free the buffers. When dropping the caches manually using 
-/proc/sys/vm/drop_caches the memory usage returns back to the starting 
-one. The cache/buffers don't increase at all after dropping them 
-indicating that this memory was indeed idling.
+> Hi!
+> 
+> I'm running some experiments using DAMON RECLAIM on the 6.2 kernel. I've 
+> set up an VM with free page reporting enabled with 16 vcores and 16GB of 
+> ram with very aggressive memory reclamation settings, my kernel boot 
+> line includes:
+> - transparent_hugepage=never
+> - page_reporting.page_reporting_order=0
+> - damon_reclaim.enabled=Y
+> - damon_reclaim.min_age=10000000
+> - damon_reclaim.wmarks_low=0
+> - damon_reclaim.wmarks_mid=999
+> - damon_reclaim.wmarks_high=1000
+> - damon_reclaim.quota_sz=1073741824
+> - damon_reclaim.quota_reset_interval_ms=1000
+> 
+> The memory usage of the VM starts at 800 MB, after running some 
+> workloads and ballooning the VM to 16 GB DAMON RECLAIM was able to 
+> quickly bring the memory usage back down to 3GB, after which it just 
+> stopped doing anything. What concerns me is that 20%(3.2GB for that VM) 
+> is the default low watermark in the DAMON RECLAIM module. I've verified 
+> that the watermarks were properly set in sysfs to my custom values, but 
+> it doesn't seem to affect anything as free -mh shows 400Mb for apps but 
+> 2.6GB for caches/buffers. The VM besides idling for a very long time 
+> isn't able to free the buffers. When dropping the caches manually using 
+> /proc/sys/vm/drop_caches the memory usage returns back to the starting 
+> one. The cache/buffers don't increase at all after dropping them 
+> indicating that this memory was indeed idling.
 
-My questions:
-1. Are there types of freeable memory which DAMON is not allowed to touch?
-2. What prevents DAMON from getting back the memory?
-2. /sys/kernel/debug/damon/* seems separate from DAMON RECLAIM, 
-/sys/module/damon_reclaim/parameters/kdamond_pid shows DAMON RECLAIM is 
-running but the DAMON debugfs doesn't show it nor exposes any registered 
-reclamation schemes.
+Thank you for sharing your great experience and questions!
 
-Best Regards,
-Grzegorz Uriasz
+> 
+> My questions:
+> 1. Are there types of freeable memory which DAMON is not allowed to touch?
 
+Basically there is no such limitation.  We implemented page type of cgroups
+based DAMOS filtering feature in v6.3, but as you're using v6.2, it shouldn't
+be related with your use case.
+
+One possible limitation for this case might be the monitoring region.  You can
+specify the region to monitor and reclaim using `monitor_region_{start,end}`
+parameters.  By default, it's set to biggest System RAM.  If your system is
+having non-countinuous System RAMs and the biggest one is not covering the 3GiB
+region, the 3GiB regions will not be moitored and therefore not reclaimed.
+
+Can you check if it is excluding the 3GiB region?  You may be able to get it
+using `proc/iomem` like files.  You could also refer to DAMON user-space tool
+to show its usage of the file[1].
+
+Also, you could get DAMON_RECLAIM internal statistics[2].  Checking those could
+also provide some hints, or help excluding unnecessary suspects.
+
+> 2. What prevents DAMON from getting back the memory?
+
+Other than quotas, watermarks and access pattern, there should be nothing
+preventing DAMON_RECLAIM reclaiming memory on v6.2 kernel.  DAMOS filters could
+also make some effect, but as mentioned-above, it's available from v6.3.
+
+> 2. /sys/kernel/debug/damon/* seems separate from DAMON RECLAIM, 
+> /sys/module/damon_reclaim/parameters/kdamond_pid shows DAMON RECLAIM is 
+> running but the DAMON debugfs doesn't show it nor exposes any registered 
+> reclamation schemes.
+
+You're correct.  DAMON provides two main user interfaces, via debugfs
+(/sys/kernel/debug/damon/) and sysfs (/sys/kernel/mm/damon/).  Those are for
+fine-controlled use of all DAMON capabilities.  Btw, the debugfs interface is
+deprecated now, so please use the sysfs interface.
+
+DAMON modules like DAMON_RECLAIM and DAMON_LRU_SORT are for simpler control of
+DAMON for only special purpose system-wide utilization, like proactive reclaim
+and LRU lists manipulation.  Those hence provide simpler module parameters
+interface.
+
+
+[1] https://github.com/awslabs/damo/blob/next/_damo_paddr_layout.py
+[2] https://docs.kernel.org/admin-guide/mm/damon/reclaim.html#nr-reclaim-tried-regions
+
+
+Thanks,
+SJ
+
+> 
+> Best Regards,
+> Grzegorz Uriasz
