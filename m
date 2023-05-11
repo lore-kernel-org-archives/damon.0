@@ -1,32 +1,25 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E35E111CBD
-	for <damon@lists.linux.dev>; Mon,  8 May 2023 21:40:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36AC8C433D2;
-	Mon,  8 May 2023 21:40:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1683582021;
-	bh=oANPd3DOs4qD/lyqQBdBplr1++MgwupwWRZ+vdH1m90=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L7crJzFpVf5vcR2RJIAYclhXhh60hTtGH+ZKWXR2a5WCq2JnAdlu65p7hDRzEgmGp
-	 kMiXy1eEv1hBPiKKY4DkP6EIsF25tTVPnHsXv4kwzsjJ3UT/4Dkzf9IRtkSlAuC87A
-	 sKnvLMiILOCWFgCNwWE6zUoOjeh0GHjr4NAQypq2jwx8zcF0w2wLjHl3fA2B1vMbz0
-	 NLJHk6+chVm3cFXnvPGdEL/IxAUIAhZ54PEYScT1ZURARfI0rNzMAhaTYCeSdF96Q2
-	 LJRFo22DPHGDX3WCp2osv/Go8zXUUHSZNFSXFadOzAHQoa7MD2tcad/MOsu74WPfbi
-	 MYnVEn+wSrlUA==
-From: SeongJae Park <sj@kernel.org>
-To: SeongJae Park <sj@kernel.org>
-Cc: lsf-pc@lists.linux-foundation.org,
-	damon@lists.linux.dev,
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2D2461F921
+	for <damon@lists.linux.dev>; Thu, 11 May 2023 12:59:08 +0000 (UTC)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 1CFA4113E;
+	Thu, 11 May 2023 05:59:52 -0700 (PDT)
+Received: from e125769.cambridge.arm.com (e125769.cambridge.arm.com [10.1.196.26])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 74F303F5A1;
+	Thu, 11 May 2023 05:59:06 -0700 (PDT)
+From: Ryan Roberts <ryan.roberts@arm.com>
+To: Andrew Morton <akpm@linux-foundation.org>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
+	SeongJae Park <sj@kernel.org>
+Cc: Ryan Roberts <ryan.roberts@arm.com>,
+	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [LSF/MM/BPF TOPIC] DAMON Updates and Future Plans
-Date: Mon,  8 May 2023 21:40:19 +0000
-Message-Id: <20230508214019.80558-1-sj@kernel.org>
+	damon@lists.linux.dev
+Subject: 
+Date: Thu, 11 May 2023 13:58:43 +0100
+Message-Id: <20230511125848.78621-1-ryan.roberts@arm.com>
 X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20230214003328.55285-1-sj@kernel.org>
-References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -35,47 +28,118 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hello,
+Date: Thu, 11 May 2023 11:38:28 +0100
+Subject: [PATCH v1 0/5] Encapsulate PTE contents from non-arch code
 
-On Tue, 14 Feb 2023 00:33:28 +0000 SeongJae Park <sj@kernel.org> wrote:
+Hi All,
 
-> Hi all,
-> 
-> 
-> DAMON has merged into mainline as a data access monitoring tool that equips a
-> best-effort overhead-accuracy tradeoff mechanism, and then extended for data
-> access-aware system operations.  I'd like to briefly introduce current state of
-> DAMON and share/discuss about 2023 plans including below.
-> 
-> - Finer and easier-to-use DAMOS tuning
->   - tuning aggressiveness based on user or kernel feed (e.g., QPS or PSI)
-> - Merging DAMON user space tool into the mainline
-> - Extending DAMON
->   - Page-granularity monitoring
->     - LRU-lists based page-granulariy monitoring
->   - CPU-specific access monitoring
->   - Read/Write-only access monitoring
-> - More DAMON-based Operation Schemes
->   - Tiered memory management
->   - THP memory footprint reduction
->   - NUMA balancing
-> 
-> I hope to hear concerns/interests about the plans for prioritizing each work
-> items and get some suggestions of future works and collaboration with other
-> kernel subsystems/hackers.
+This series improves the encapsulation of pte entries by disallowing non-arch
+code from directly dereferencing pte_t pointers. Instead code must use a new
+helper, `pte_t ptep_deref(pte_t *ptep)`. By default, this helper does a direct
+dereference of the pointer, so generated code should be exactly the same. But
+it's presence sets us up for arch code being able to override the default to
+"virtualize" the ptes without needing to maintain a shadow table.
 
-We will start the discussion after about 1 hour and 20 minutes, so sharing the
-slides here:
-https://drive.google.com/file/d/10nsd4fq01On9p-oTmCS5KSW6qESmB6ER/view?usp=sharing
+I intend to take advantage of this for arm64 to enable use of its "contiguous
+bit" to coalesce multiple ptes into a single tlb entry, reducing pressure and
+improving performance. I have an RFC for the first part of this work at [1]. The
+cover letter there also explains the second part, which this series is enabling.
 
-The link might be changed later.  I will update on this thread in the case.
+I intend to post an RFC for the contpte changes in due course, but it would be
+good to get the ball rolling on this enabler.
 
+There are 2 reasons that I need the encapsulation:
+
+  - Prevent leaking the arch-private PTE_CONT bit to the core code. If the core
+    code reads a pte that contains this bit, it could end up calling
+    set_pte_at() with the bit set which would confuse the implementation. So we
+    can always clear PTE_CONT in ptep_deref() (and ptep_get()) to avoid a leaky
+    abstraction.
+  - Contiguous ptes have a single access and dirty bit for the contiguous range.
+    So we need to "mix-in" those bits when the core is dereferencing a pte that
+    lies in the contig range. There is code that dereferences the pte then takes
+    different actions based on access/dirty (see e.g. write_protect_page()).
+
+While ptep_get() and ptep_get_lockless() already exist, both of them are
+implemented using READ_ONCE() by default. While we could use ptep_get() instead
+of the new ptep_deref(), I didn't want to risk performance regression.
+Alternatively, all call sites that currently use ptep_get() that need the
+lockless behaviour could be upgraded to ptep_get_lockless() and ptep_get() could
+be downgraded to a simple dereference. That would be cleanest, but is a much
+bigger (and likely error prone) change because all the arch code would need to
+be updated for the new definitions of ptep_get().
+
+The series is split up as follows:
+
+patchs 1-2: Fix bugs where code was _setting_ ptes directly, rather than using
+            set_pte_at() and friends.
+patch 3:    Fix highmem unmapping issue I spotted while doing the work.
+patch 4:    Introduce the new ptep_deref() helper with default implementation.
+patch 5:    Convert all direct dereferences to use ptep_deref().
+
+[1] https://lore.kernel.org/linux-mm/20230414130303.2345383-1-ryan.roberts@arm.com/
 
 Thanks,
-SJ
+Ryan
 
-> 
-> 
-> Thanks,
-> SJ
-> 
+
+Ryan Roberts (5):
+  mm: vmalloc must set pte via arch code
+  mm: damon must atomically clear young on ptes and pmds
+  mm: Fix failure to unmap pte on highmem systems
+  mm: Add new ptep_deref() helper to fully encapsulate pte_t
+  mm: ptep_deref() conversion
+
+ .../drm/i915/gem/selftests/i915_gem_mman.c    |   8 +-
+ drivers/misc/sgi-gru/grufault.c               |   2 +-
+ drivers/vfio/vfio_iommu_type1.c               |   7 +-
+ drivers/xen/privcmd.c                         |   2 +-
+ fs/proc/task_mmu.c                            |  33 +++---
+ fs/userfaultfd.c                              |   6 +-
+ include/linux/hugetlb.h                       |   2 +-
+ include/linux/mm_inline.h                     |   2 +-
+ include/linux/pgtable.h                       |  13 ++-
+ kernel/events/uprobes.c                       |   2 +-
+ mm/damon/ops-common.c                         |  18 ++-
+ mm/damon/ops-common.h                         |   4 +-
+ mm/damon/paddr.c                              |   6 +-
+ mm/damon/vaddr.c                              |  14 ++-
+ mm/filemap.c                                  |   2 +-
+ mm/gup.c                                      |  21 ++--
+ mm/highmem.c                                  |  12 +-
+ mm/hmm.c                                      |   2 +-
+ mm/huge_memory.c                              |   4 +-
+ mm/hugetlb.c                                  |   2 +-
+ mm/hugetlb_vmemmap.c                          |   6 +-
+ mm/kasan/init.c                               |   9 +-
+ mm/kasan/shadow.c                             |  10 +-
+ mm/khugepaged.c                               |  24 ++--
+ mm/ksm.c                                      |  22 ++--
+ mm/madvise.c                                  |   6 +-
+ mm/mapping_dirty_helpers.c                    |   4 +-
+ mm/memcontrol.c                               |   4 +-
+ mm/memory-failure.c                           |   6 +-
+ mm/memory.c                                   | 103 +++++++++---------
+ mm/mempolicy.c                                |   6 +-
+ mm/migrate.c                                  |  14 ++-
+ mm/migrate_device.c                           |  14 ++-
+ mm/mincore.c                                  |   2 +-
+ mm/mlock.c                                    |   6 +-
+ mm/mprotect.c                                 |   8 +-
+ mm/mremap.c                                   |   2 +-
+ mm/page_table_check.c                         |   4 +-
+ mm/page_vma_mapped.c                          |  26 +++--
+ mm/pgtable-generic.c                          |   2 +-
+ mm/rmap.c                                     |  32 +++---
+ mm/sparse-vmemmap.c                           |   8 +-
+ mm/swap_state.c                               |   4 +-
+ mm/swapfile.c                                 |  16 +--
+ mm/userfaultfd.c                              |   4 +-
+ mm/vmalloc.c                                  |  11 +-
+ mm/vmscan.c                                   |  14 ++-
+ virt/kvm/kvm_main.c                           |   9 +-
+ 48 files changed, 302 insertions(+), 236 deletions(-)
+
+--
+2.25.1
+
