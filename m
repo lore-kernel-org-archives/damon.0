@@ -1,93 +1,138 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E6BD2260E
-	for <damon@lists.linux.dev>; Sat, 13 May 2023 14:53:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACAC3C433EF;
-	Sat, 13 May 2023 14:53:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1683989596;
-	bh=rJhUp++XoeDNmVFtwTL9mS0YbDDSj5FAqHg8ylJIe/I=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MX6R7UdOZ+yTa1zeqsH7oEBWueCzE23hXNcrgWC1JFgOjv8snyWtNC7QPmsCwxq7D
-	 4UjsTnv4B9OtVQAkiiRBRwm4YrszZH0jjFPZaJMID1MVxgDMxUUdy3tsgMj1svmOaG
-	 js2gptSLxCIOjH/R84+hODiBHhezJpXqSxqXmMsKDaB7vhdhSlKNKlJCz0E+HjwG7E
-	 nSjlIB5odhMn/yeFUM8Rmft3xU/XFqjWThWKTdK11+QPiTZn9SBUbIDmMgbeu58zcI
-	 HJ0bQfl/dZpxRgz8uBw+gX/7NOJpfEfdETz7hiUJ1+cwhgrIGH1eh97pBDrfCQLIgB
-	 DrIDYGs+Mowpw==
-From: SeongJae Park <sj@kernel.org>
-To: SeongJae Park <sj@kernel.org>
-Cc: lsf-pc@lists.linux-foundation.org,
-	damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [LSF/MM/BPF TOPIC] DAMON Updates and Future Plans
-Date: Sat, 13 May 2023 14:53:14 +0000
-Message-Id: <20230513145314.84505-1-sj@kernel.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20230508214019.80558-1-sj@kernel.org>
-References: 
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9792B1C26
+	for <damon@lists.linux.dev>; Mon, 15 May 2023 08:29:25 +0000 (UTC)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id B401A2F4;
+	Mon, 15 May 2023 01:30:03 -0700 (PDT)
+Received: from [10.57.73.22] (unknown [10.57.73.22])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id A16163F67D;
+	Mon, 15 May 2023 01:29:17 -0700 (PDT)
+Message-ID: <2d43731e-3a38-c96e-320e-6a0dc16f10e4@arm.com>
+Date: Mon, 15 May 2023 09:29:16 +0100
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.11.0
+Subject: Re: [RESEND PATCH v1 1/5] mm: vmalloc must set pte via arch code
+To: Lorenzo Stoakes <lstoakes@gmail.com>
+Cc: Andrew Morton <akpm@linux-foundation.org>,
+ "Matthew Wilcox (Oracle)" <willy@infradead.org>,
+ "Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
+ SeongJae Park <sj@kernel.org>,
+ "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+ "linux-mm@kvack.org" <linux-mm@kvack.org>,
+ "damon@lists.linux.dev" <damon@lists.linux.dev>,
+ Christoph Hellwig <hch@infradead.org>, Uladzislau Rezki <urezki@gmail.com>
+References: <20230511132113.80196-1-ryan.roberts@arm.com>
+ <20230511132113.80196-2-ryan.roberts@arm.com>
+ <db1b8b8f-c3ac-4dbb-8b15-125c0929856a@lucifer.local>
+From: Ryan Roberts <ryan.roberts@arm.com>
+In-Reply-To: <db1b8b8f-c3ac-4dbb-8b15-125c0929856a@lucifer.local>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Mon, 8 May 2023 21:40:19 +0000 SeongJae Park <sj@kernel.org> wrote:
+Hi Lorenzo,
 
-> Hello,
+Thanks for the review - I appreciate it!
+
+
+On 13/05/2023 14:14, Lorenzo Stoakes wrote:
+> You've not cc'd the vmalloc reviewers, including the author of 3e9a9e256b1e
+> whose patch you purport to fix. Please remember to run get_maintainers.pl
+> on all files you patch and cc them at least on relevant patches.
 > 
-> On Tue, 14 Feb 2023 00:33:28 +0000 SeongJae Park <sj@kernel.org> wrote:
-> 
-> > Hi all,
-> > 
-> > 
-> > DAMON has merged into mainline as a data access monitoring tool that equips a
-> > best-effort overhead-accuracy tradeoff mechanism, and then extended for data
-> > access-aware system operations.  I'd like to briefly introduce current state of
-> > DAMON and share/discuss about 2023 plans including below.
-> > 
-> > - Finer and easier-to-use DAMOS tuning
-> >   - tuning aggressiveness based on user or kernel feed (e.g., QPS or PSI)
-> > - Merging DAMON user space tool into the mainline
-> > - Extending DAMON
-> >   - Page-granularity monitoring
-> >     - LRU-lists based page-granulariy monitoring
-> >   - CPU-specific access monitoring
-> >   - Read/Write-only access monitoring
-> > - More DAMON-based Operation Schemes
-> >   - Tiered memory management
-> >   - THP memory footprint reduction
-> >   - NUMA balancing
-> > 
-> > I hope to hear concerns/interests about the plans for prioritizing each work
-> > items and get some suggestions of future works and collaboration with other
-> > kernel subsystems/hackers.
-> 
-> We will start the discussion after about 1 hour and 20 minutes, so sharing the
-> slides here:
-> https://drive.google.com/file/d/10nsd4fq01On9p-oTmCS5KSW6qESmB6ER/view?usp=sharing
-> 
-> The link might be changed later.  I will update on this thread in the case.
+> Have added Christoph + Uladzislau as cc.
 
-As mentioned above, I indeed moved it to Github[1].  Above Google Drive link
-may be expired soon.
+I did run get_maintainers.pl, but it gave me 82 names. I assumed I wouldn't be
+making any friends by CCing everyone, so tried to choose what I thought was a
+sensible base. I guess I didn't quite get it right. Sorry about that. Thanks for
+noticing and adding the right people.
 
-[1] https://github.com/damonitor/talks/blob/master/2023/lsfmmbpf/damon_lsfmmbpf_2023.pdf
+> 
+> You'll definitely want an ack from Christoph on this!
+> 
+> On Thu, May 11, 2023 at 02:21:09PM +0100, Ryan Roberts wrote:
+>> It is bad practice to directly set pte entries within a pte table.
+>> Instead all modifications must go through arch-provided helpers such as
+>> set_pte_at() to give the arch code visibility and allow it to validate
+>> (and potentially modify) the operation.
+> 
+> This does make sense, and I see for example in xtensa that an arch-specific
+> instruction is issued under certain circumstances so I do suspect we should
+> do this.
 
+arm64 provides another example, where barriers are required to ensure the page
+table walker sees the new pte and no fault is raised. See
+arch/arm64/include/asm/pgtable.h:set_pte() (which is called by its
+implementation of set_pte_at()).
+
+> 
+> As for validation, the function never indicates an error, so only in the
+> sense that a WARN_ON() could _in theory_ trigger is it being
+> validated. This might be quite a nitty point :) as set_pte_at() has no
+> means of indicating an error. But maybe to be pedantic 'check' rather than
+> 'validate'?
+
+I'm sorry, I'm not sure what you are asking here? set_pte_at() forms part of the
+contract with he arch code and is defined never to return an error. Some
+implementations might have code enabled in debug configs to detect incorrect
+usage and emit warnings (see arm64's implementation).
+
+> 
+>>
+>> Fixes: 3e9a9e256b1e ("mm: add a vmap_pfn function")
+> 
+> Not sure if this is really 'fixing' anything, I mean ostensibly, but not
+> sure if the tag is relevant here, that is more so for a bug being
+> introduced, and unless an issue has arisen not sure if it's
+> appropriate. But this might be a nit, again!
+
+Well I'm happy to remove it if that's the concensus. But I do believe there is a
+real bug here. At least on arm64, the barriers are needed to prevent a race with
+the page table walker. That said, the only place in the tree I can see
+vmap_pfn() used, is in the i915 driver, which I guess has never been used on an
+arm64 platform.
+
+> 
+>> Signed-off-by: Ryan Roberts <ryan.roberts@arm.com>
+>> ---
+>>  mm/vmalloc.c | 5 ++++-
+>>  1 file changed, 4 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/mm/vmalloc.c b/mm/vmalloc.c
+>> index 9683573f1225..d8d2fe797c55 100644
+>> --- a/mm/vmalloc.c
+>> +++ b/mm/vmalloc.c
+>> @@ -2899,10 +2899,13 @@ struct vmap_pfn_data {
+>>  static int vmap_pfn_apply(pte_t *pte, unsigned long addr, void *private)
+>>  {
+>>  	struct vmap_pfn_data *data = private;
+>> +	pte_t ptent;
+>>
+>>  	if (WARN_ON_ONCE(pfn_valid(data->pfns[data->idx])))
+>>  		return -EINVAL;
+>> -	*pte = pte_mkspecial(pfn_pte(data->pfns[data->idx++], data->prot));
+>> +
+>> +	ptent = pte_mkspecial(pfn_pte(data->pfns[data->idx++], data->prot));
+>> +	set_pte_at(&init_mm, addr, pte, ptent);>
+> While we're refactoring, it'd be nice to stash data->pfns[data->idx] into a
+> local pfn variable.
+
+OK, I'll do this for v2.
 
 Thanks,
-SJ
+Ryan
+
 
 > 
-> 
-> Thanks,
-> SJ
-> 
-> > 
-> > 
-> > Thanks,
-> > SJ
-> > 
+>>  	return 0;
+>>  }
+>>
+>> --
+>> 2.25.1
+>>
+
