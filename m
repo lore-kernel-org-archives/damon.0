@@ -1,39 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D24D418C15
-	for <damon@lists.linux.dev>; Thu, 18 May 2023 17:22:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95EF7C433EF;
-	Thu, 18 May 2023 17:22:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0366F6FB8
+	for <damon@lists.linux.dev>; Thu, 18 May 2023 18:53:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63CEDC433EF;
+	Thu, 18 May 2023 18:53:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1684430533;
-	bh=OZgSrTfO4ThuInBExHzNs7TMmFHDdgXi7iQ9bpEIZA4=;
+	s=k20201202; t=1684436014;
+	bh=thqrSXP2BC4DJH528QS5GyiNrs8cMPzkwGyIFD1nCJY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Cu3GH6B/ShuAcPKltcQ4hxgZZVxbP8UZl0y4WcWeK3QhLDBZdN214TOVxev71vZXh
-	 syOW2/1dCV1I17xeAO0gV3hQPb96EBSv5e+hpv3qDJrhW+mbidSxkWbQN+mIBMqx8N
-	 Zkt/Md3dzX/R9AS2d84ruUZEuGhQ8UAbbfoeI1jfpbsSYbLsikeTr9oURt9a36ivMh
-	 gVjCuNfypMRZ2xcVNnxJcRYBV1GVmv6AEeKREAuE159PbAzmhVNNPYlrgdlTmLv4oF
-	 bHLVCqz/JTUBinIaYL0DJk2gya2wmJYMzG6O2h74U0rzHRO8lWENqTRSFW3eD2Isxd
-	 mFhryDZ+wvqEQ==
+	b=J5diEBTFWPRmnysYUv7xoYJby573VfnCZMCzKJqPQjQvhPcDvP/omE39ca3hW/UWR
+	 qELgAtdtA/F95wW/eszgom61yzzy1jE0kU1PNHbd+tYS+5sk+MSP7HvaT3KVCbxopa
+	 UGU0nErFkIlBLPTsWvrp2G97V2kQnNnwaL8T3b+7NaPCtTRJimeuJzFufVAaFAmOSV
+	 tjvTZczt5ek+xcz4tRYEbq+Erhtkqsihmgd+5vVKRERtwYrBmDeuUyQsHFt6GplBKc
+	 pbgjFquYxtd4Zg423XCF2SESfsrpCFmumjjAqBJ6Z+OOxgcleo8rcoumwM9NbVzRjs
+	 Q9e40buk8enLA==
 From: SeongJae Park <sj@kernel.org>
-To: Ryan Roberts <ryan.roberts@arm.com>
-Cc: Andrew Morton <akpm@linux-foundation.org>,
-	SeongJae Park <sj@kernel.org>,
-	Christoph Hellwig <hch@infradead.org>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
-	Lorenzo Stoakes <lstoakes@gmail.com>,
-	Uladzislau Rezki <urezki@gmail.com>,
-	Zi Yan <ziy@nvidia.com>,
-	linux-kernel@vger.kernel.org,
+To: SeongJae Park <sj@kernel.org>
+Cc: damon@lists.linux.dev,
+	linux-damon@amazon.com,
+	linux-damon-trial@amazon.com,
 	linux-mm@kvack.org,
-	damon@lists.linux.dev,
-	kernel test robot <lkp@intel.com>
-Subject: Re: [PATCH v2 5/5] mm: ptep_deref() conversion
-Date: Thu, 18 May 2023 17:22:11 +0000
-Message-Id: <20230518172211.84101-1-sj@kernel.org>
+	linux-kernel@vger.kernel.org
+Subject: Re: DAMON Beer/Coffee/Tea chat series
+Date: Thu, 18 May 2023 18:53:32 +0000
+Message-Id: <20230518185332.84180-1-sj@kernel.org>
 X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20230518110727.2106156-6-ryan.roberts@arm.com>
+In-Reply-To: <20220810225102.124459-1-sj@kernel.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -43,64 +36,26 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Thu, 18 May 2023 12:07:27 +0100 Ryan Roberts <ryan.roberts@arm.com> wrote:
+Hello,
 
-> Convert all instances of direct pte_t* dereferencing to instead use
-> ptep_deref() helper. By default, the helper does a direct dereference as
-> before, but it can (and will) be overridden by the architecture to fully
-> encapsulate the contents of the pte. Arch code is deliberately not
-> converted, as the arch code knows best.
-> 
-> Conversion was done using Coccinelle:
-> 
-> ----
-> 
-> // $ make coccicheck \
-> //          COCCI=ptepderef.cocci \
-> //          SPFLAGS="--include-headers" \
-> //          MODE=patch
-> 
-> virtual patch
-> 
-> @ depends on patch @
-> pte_t *v;
-> @@
-> 
-> - *v
-> + ptep_deref(v)
-> 
-> ----
-> 
-> Then reviewed and hand-edited to avoid multiple unnecessary calls to
-> ptep_deref(), instead opting to store the result of a single in a
-> variable, where it is correct to do so. This will benefit arch-overrides
-> that may be more complex than a simple (optimizable) pointer
-> dereference.
-> 
-> Included is a fix for an issue in an earlier version of this patch that
-> was pointed out by kernel test robot. The issue arose because config
-> MMU=n elides definition of the ptep helper functions, including
-> ptep_deref(). HUGETLB_PAGE=n configs still define a simple
-> huge_ptep_clear_flush() for linking purposes, which dereferences the
-> ptep. So when both configs are disabled, this caused a build error
-> because ptep_deref() is not defined. Fix by continuing to do a direct
-> dereference when MMU=n. This is safe because for this config the arch
-> code cannot be trying to virtualize the ptes because none of the ptep
-> helpers are defined.
-> 
-> Reported-by: kernel test robot <lkp@intel.com>
-> Link: https://lore.kernel.org/oe-kbuild-all/202305120142.yXsNEo6H-lkp@intel.com/
-> Signed-off-by: Ryan Roberts <ryan.roberts@arm.com>
-[...]
->  mm/damon/ops-common.c                         |   2 +-
->  mm/damon/paddr.c                              |   2 +-
->  mm/damon/vaddr.c                              |  10 +-
+On Wed, 10 Aug 2022 22:51:02 +0000 SeongJae Park <sj@kernel.org> wrote:
 
-For above mm/damon/ part,
+> Hello,
+> 
+> 
+> In short, I'd like to start an open, regular, and informal virtual bi-weekly
+> meeting series for DAMON community.
+> 
+> Important links and dates
+> -------------------------
+> 
+> Location: https://meet.google.com/ndx-evoc-gbu
+> Agenda: https://docs.google.com/document/d/1v43Kcj3ly4CYqmAkMaZzLiM2GEnWfgdGbZAH3mi2vpM/edit?usp=sharing
 
-Reviewed-by: SeongJae Park <sj@kernel.org>
+The next instance was originally scheduled ror 2023-05-29.  But I realized it's
+a holiday in USA.  So I rescheduled it to 2023-05-30.  Please refer to the
+Agenda doc whenever you unsure the schedules.
 
 
 Thanks,
 SJ
-
