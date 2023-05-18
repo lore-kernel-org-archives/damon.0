@@ -1,53 +1,52 @@
-Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAF553D389
-	for <damon@lists.linux.dev>; Thu, 18 May 2023 19:29:19 +0000 (UTC)
-Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-3f42397f41fso355e9.1
-        for <damon@lists.linux.dev>; Thu, 18 May 2023 12:29:19 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 381D520EE
+	for <damon@lists.linux.dev>; Thu, 18 May 2023 23:20:27 +0000 (UTC)
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-3f42397f41fso13125e9.1
+        for <damon@lists.linux.dev>; Thu, 18 May 2023 16:20:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1684438158; x=1687030158;
+        d=google.com; s=20221208; t=1684452025; x=1687044025;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=AIFdF8GT7zUenP4B/UoN0byarsJ8CzDEiV0NqRPRUiQ=;
-        b=Uxo5R0yZohoUeJJFTQrwM/0iDUM8s/ZhBeLXvqBwIGBhosJvSUZY/pVw5D/kK5YqBX
-         t0YUZ9PJRPbSBA1cAXgrFlmyRu22QDs2vk9LwoS1Vc/BLgT33eNrFh2gR7RMixMdU9pF
-         8P01mTJth058rQOO5TmeFThj0TmYFHxendJ35CKKe0wpv+KSFOx9FbGk+vSsbmtjdJmF
-         MoKqNialoSnEDU27YOgQHSeSfgbH3RwmpqCCAHYQW9TQlFT8KOxl4iLKhN8Q4nRG0k3C
-         vTIffa26u7CrKoYTKHxbPYN7OQkEBh7C7utYywfWTfxfYempEHiTHfbsjZAafRzuys/3
-         coEw==
+        bh=hJYCzmsxGe3XadmHdoY3BjZEttTV9cjxHheRcEXc8pI=;
+        b=Qo8Fd9UVjLA5wDOWZyMhv7XSWo/l9odl2UB/pRyuLKCGJ9QaQm8mrzXc92qF1Tj/vi
+         lhU3yjKbyG9kdDg4amhJdGPsTRzBgIIUywxFqaDU6TpJq4mNJNh3b5rqgfYS+1Ic+KWR
+         m6cUcThAN4sf3TkjRa6x33ba0j2k/yZC7BtQb4yTFRXVEKT1vejd8ONjeONZiT1/cQan
+         DxnM1buLmZ/uez72mjo1RmUwv7BXwJIj7L1oPTLDISXobLn9KdE8m0KG8KW2r8Yalx86
+         gip9/aMpN1eYBAMHDbTOgFnaJRAGKI9dS4/t7vmEPDdgSp6Sd7T51AWYcE1Yc6qjA5Lx
+         QWvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684438158; x=1687030158;
+        d=1e100.net; s=20221208; t=1684452025; x=1687044025;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=AIFdF8GT7zUenP4B/UoN0byarsJ8CzDEiV0NqRPRUiQ=;
-        b=Q3lmjlW0LUIV7J6lV3S/xHJ6I9cKzdCogRf5scs8TCY2dfseR85A7QIhoO3TqgvzzV
-         Pft51sg9heq9p0wdlTSpqbsWc8kK7kF1mAGtEeAyx9wDZEtu10fSup/UIb8/d1TpYyew
-         C5QvttbXS7UvE/QCtFmwc2O5lHQJ0B8ERXSo0dlGS9sU78dIZWfoDdSf+I9caigGWvHz
-         MtojGSAh3bbjyBs13oqa7TuER2wRUp+Mk1TsYNKpaRiF3e1tdgPUOHWdOBlKwCyI7don
-         tGc7eqROyeoHb9CqDP2w5G2crSo9Z+qYydxQSOSrkKjCT0OwiBZe1IpZnEen2gjCwJxI
-         OhCA==
-X-Gm-Message-State: AC+VfDws2rPbyQE6KmDkJrJNsTqQpKPO9va5ig4AU8uVunm4PScxa1/u
-	4vno8ITl91J1gr0Gz/LglPZX8K9dnBQfMlX+PZnzHw==
-X-Google-Smtp-Source: ACHHUZ5CjeOl+/lEZTX8Uee0Ftthe9E4dunYZK5dMRfMgke26RmSp2LBtvDHRXHjW5Kbw5GABsfsakJxT5P3YD+q7Z4=
-X-Received: by 2002:a05:600c:46d0:b0:3f2:4fd2:e961 with SMTP id
- q16-20020a05600c46d000b003f24fd2e961mr3080wmo.0.1684438157716; Thu, 18 May
- 2023 12:29:17 -0700 (PDT)
+        bh=hJYCzmsxGe3XadmHdoY3BjZEttTV9cjxHheRcEXc8pI=;
+        b=Fk7S6/d3KV5t6LYqNj04Q40d5UtjNNTgpWgyrNSRorQrINVHbX4FSYD8NNo7ERkf+d
+         IabJzeR3xSjxQLipjRwTYSnd3PUw7Miv/UuqNeDKYOYRONS9yh3232rVNPF6RMcMIFuT
+         p0ynCYyIFBFypbLd7qWlsehyROmsbmPdXdyqv/o4dpKV5ArpZzoG6CRDCosGMlrsjKPq
+         +97P55wVgqL6l0g4r2KF6P8B9DuzAr06Stftm8wbAVfzHwUE1rB8B9fX3JJ3OI6AwoRS
+         fbWgSvjeJ6k3HyzOdFvwZVqHW/WcHhnO44NMxtFBYTOBqFG6oNg69gzurLwmlTBdWbSa
+         Qdow==
+X-Gm-Message-State: AC+VfDw5TfPGedotH5WidQhg0tD7YdljNOPGGbHEVAhysHKnzDUGCWsz
+	DHr+HeQKgLw0tuc3nP7qfpVi3G3ItkSXMWTj4M6bZw==
+X-Google-Smtp-Source: ACHHUZ7M54BsEHMo9QjezJJD7FpRp2hq0zHfe/ZaWXANjZPO4pzpy4ews+hVsaI9pbSnPGvmL6U5TqRjLytqp01+g/Q=
+X-Received: by 2002:a05:600c:3ba3:b0:3f1:73b8:b5fe with SMTP id
+ n35-20020a05600c3ba300b003f173b8b5femr31383wms.3.1684452025268; Thu, 18 May
+ 2023 16:20:25 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230518110727.2106156-1-ryan.roberts@arm.com> <20230518110727.2106156-5-ryan.roberts@arm.com>
-In-Reply-To: <20230518110727.2106156-5-ryan.roberts@arm.com>
+References: <20230518110727.2106156-1-ryan.roberts@arm.com> <20230518110727.2106156-3-ryan.roberts@arm.com>
+In-Reply-To: <20230518110727.2106156-3-ryan.roberts@arm.com>
 From: Yu Zhao <yuzhao@google.com>
-Date: Thu, 18 May 2023 13:28:35 -0600
-Message-ID: <CAOUHufZaiTCxk4M4w5GaA-+5FoMnHZt+fzoU=cYCA1Ldk7CVEQ@mail.gmail.com>
-Subject: Re: [PATCH v2 4/5] mm: Add new ptep_deref() helper to fully
- encapsulate pte_t
+Date: Thu, 18 May 2023 17:19:48 -0600
+Message-ID: <CAOUHufYXuH+mUNAtiRbAqqKTKO-nGR248Z2MVgGzMJqYu8yawQ@mail.gmail.com>
+Subject: Re: [PATCH v2 2/5] mm: damon must atomically clear young on ptes and pmds
 To: Ryan Roberts <ryan.roberts@arm.com>
 Cc: Andrew Morton <akpm@linux-foundation.org>, SeongJae Park <sj@kernel.org>, 
 	Christoph Hellwig <hch@infradead.org>, "Matthew Wilcox (Oracle)" <willy@infradead.org>, 
@@ -60,23 +59,61 @@ Content-Transfer-Encoding: quoted-printable
 On Thu, May 18, 2023 at 5:07=E2=80=AFAM Ryan Roberts <ryan.roberts@arm.com>=
  wrote:
 >
-> There are many call sites that directly dereference a pte_t pointer.
-> This makes it very difficult to properly encapsulate a page table in the
-> arch code without having to allocate shadow page tables. ptep_deref()
-> aims to solve this by replacing all direct dereferences with a call to
-> this function.
+> It is racy to non-atomically read a pte, then clear the young bit, then
+> write it back as this could discard dirty information. Further, it is
+> bad practice to directly set a pte entry within a table. Instead
+> clearing young must go through the arch-provided helper,
+> ptep_test_and_clear_young() to ensure it is modified atomically and to
+> give the arch code visibility and allow it to check (and potentially
+> modify) the operation.
 >
-> The default implementation continues to just dereference the pointer
-> (*ptep), so generated code should be exactly the same. However, it is
-> possible for the architecture to override the default with their own
-> implementation, that can (e.g.) hide certain bits from the core code, or
-> determine young/dirty status by mixing in state from another source.
->
-> While ptep_get() and ptep_get_lockless() already exist, these are
-> implemented as atomic accesses (e.g. READ_ONCE() in the default case).
-> So rather than using ptep_get() and risking performance regressions,
-> introduce an new variant.
+> Fixes: 46c3a0accdc4 ("mm/damon/vaddr: separate commonly usable functions"=
+)
 
-We should reuse ptep_get():
-1. I don't think READ_ONCE() can cause measurable regressions in this case.
-2. It's technically wrong without it.
+This should be a separate patch, since it's independent from what the
+series tries to do.
+
+And that patch should cc stable, since it fixes user data corruption.
+
+> Signed-off-by: Ryan Roberts <ryan.roberts@arm.com>
+> Reviewed-by: Zi Yan <ziy@nvidia.com>
+> ---
+>  mm/damon/ops-common.c | 16 ++++++----------
+>  mm/damon/ops-common.h |  4 ++--
+>  mm/damon/paddr.c      |  4 ++--
+>  mm/damon/vaddr.c      |  4 ++--
+>  4 files changed, 12 insertions(+), 16 deletions(-)
+>
+> diff --git a/mm/damon/ops-common.c b/mm/damon/ops-common.c
+> index cc63cf953636..acc264b97903 100644
+> --- a/mm/damon/ops-common.c
+> +++ b/mm/damon/ops-common.c
+> @@ -37,7 +37,7 @@ struct folio *damon_get_folio(unsigned long pfn)
+>         return folio;
+>  }
+>
+> -void damon_ptep_mkold(pte_t *pte, struct mm_struct *mm, unsigned long ad=
+dr)
+> +void damon_ptep_mkold(pte_t *pte, struct vm_area_struct *vma, unsigned l=
+ong addr)
+>  {
+>         bool referenced =3D false;
+>         struct folio *folio =3D damon_get_folio(pte_pfn(*pte));
+> @@ -45,13 +45,11 @@ void damon_ptep_mkold(pte_t *pte, struct mm_struct *m=
+m, unsigned long addr)
+>         if (!folio)
+>                 return;
+>
+> -       if (pte_young(*pte)) {
+> +       if (ptep_test_and_clear_young(vma, addr, pte))
+>                 referenced =3D true;
+> -               *pte =3D pte_mkold(*pte);
+> -       }
+>
+>  #ifdef CONFIG_MMU_NOTIFIER
+> -       if (mmu_notifier_clear_young(mm, addr, addr + PAGE_SIZE))
+> +       if (mmu_notifier_clear_young(vma->vm_mm, addr, addr + PAGE_SIZE))
+>                 referenced =3D true;
+>  #endif /* CONFIG_MMU_NOTIFIER */
+
+Use ptep_clear_young_notify(). Similar below.
