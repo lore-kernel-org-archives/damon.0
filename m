@@ -1,14 +1,14 @@
 Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 49EF33D3A4
-	for <damon@lists.linux.dev>; Fri, 19 May 2023 09:02:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4486D611C
+	for <damon@lists.linux.dev>; Fri, 19 May 2023 09:12:24 +0000 (UTC)
 Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 552991FB;
-	Fri, 19 May 2023 02:03:36 -0700 (PDT)
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 3935E1FB;
+	Fri, 19 May 2023 02:13:08 -0700 (PDT)
 Received: from [10.57.73.191] (unknown [10.57.73.191])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id D578A3F73F;
-	Fri, 19 May 2023 02:02:49 -0700 (PDT)
-Message-ID: <88c125fd-2294-4650-65b1-6be56589120e@arm.com>
-Date: Fri, 19 May 2023 10:02:48 +0100
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id B9EC43F73F;
+	Fri, 19 May 2023 02:12:21 -0700 (PDT)
+Message-ID: <692e9e7e-ee00-368b-6a31-60a895f7011c@arm.com>
+Date: Fri, 19 May 2023 10:12:20 +0100
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -17,8 +17,8 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
  Gecko/20100101 Thunderbird/102.11.0
-Subject: Re: [PATCH v2 2/5] mm: damon must atomically clear young on ptes and
- pmds
+Subject: Re: [PATCH v2 4/5] mm: Add new ptep_deref() helper to fully
+ encapsulate pte_t
 To: Yu Zhao <yuzhao@google.com>
 Cc: Andrew Morton <akpm@linux-foundation.org>, SeongJae Park <sj@kernel.org>,
  Christoph Hellwig <hch@infradead.org>,
@@ -28,83 +28,44 @@ Cc: Andrew Morton <akpm@linux-foundation.org>, SeongJae Park <sj@kernel.org>,
  Zi Yan <ziy@nvidia.com>, linux-kernel@vger.kernel.org, linux-mm@kvack.org,
  damon@lists.linux.dev
 References: <20230518110727.2106156-1-ryan.roberts@arm.com>
- <20230518110727.2106156-3-ryan.roberts@arm.com>
- <CAOUHufYXuH+mUNAtiRbAqqKTKO-nGR248Z2MVgGzMJqYu8yawQ@mail.gmail.com>
+ <20230518110727.2106156-5-ryan.roberts@arm.com>
+ <CAOUHufZaiTCxk4M4w5GaA-+5FoMnHZt+fzoU=cYCA1Ldk7CVEQ@mail.gmail.com>
 From: Ryan Roberts <ryan.roberts@arm.com>
-In-Reply-To: <CAOUHufYXuH+mUNAtiRbAqqKTKO-nGR248Z2MVgGzMJqYu8yawQ@mail.gmail.com>
+In-Reply-To: <CAOUHufZaiTCxk4M4w5GaA-+5FoMnHZt+fzoU=cYCA1Ldk7CVEQ@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On 19/05/2023 00:19, Yu Zhao wrote:
+On 18/05/2023 20:28, Yu Zhao wrote:
 > On Thu, May 18, 2023 at 5:07 AM Ryan Roberts <ryan.roberts@arm.com> wrote:
 >>
->> It is racy to non-atomically read a pte, then clear the young bit, then
->> write it back as this could discard dirty information. Further, it is
->> bad practice to directly set a pte entry within a table. Instead
->> clearing young must go through the arch-provided helper,
->> ptep_test_and_clear_young() to ensure it is modified atomically and to
->> give the arch code visibility and allow it to check (and potentially
->> modify) the operation.
+>> There are many call sites that directly dereference a pte_t pointer.
+>> This makes it very difficult to properly encapsulate a page table in the
+>> arch code without having to allocate shadow page tables. ptep_deref()
+>> aims to solve this by replacing all direct dereferences with a call to
+>> this function.
 >>
->> Fixes: 46c3a0accdc4 ("mm/damon/vaddr: separate commonly usable functions")
+>> The default implementation continues to just dereference the pointer
+>> (*ptep), so generated code should be exactly the same. However, it is
+>> possible for the architecture to override the default with their own
+>> implementation, that can (e.g.) hide certain bits from the core code, or
+>> determine young/dirty status by mixing in state from another source.
+>>
+>> While ptep_get() and ptep_get_lockless() already exist, these are
+>> implemented as atomic accesses (e.g. READ_ONCE() in the default case).
+>> So rather than using ptep_get() and risking performance regressions,
+>> introduce an new variant.
 > 
-> This should be a separate patch, since it's independent from what the
-> series tries to do.
-> 
-> And that patch should cc stable, since it fixes user data corruption.
+> We should reuse ptep_get():
+> 1. I don't think READ_ONCE() can cause measurable regressions in this case.
+> 2. It's technically wrong without it.
 
-Fair point. The first 3 patches are fixes for issues I found during the
-conversion. So if you're ok with it, I'll split into 2 series; the first 3
-patches in the first, and the conversion to ptep_deref() (or ptep_get(), as per
-your comments in the other thread) in the second. I guess the whole first series
-should go to stable.
+Can you clarify what you mean by technically wrong? Are you saying that the
+current code that does direct dereferencing is buggy?
 
-Let me know if you disagree.
+I previously convinced myself that the potential for the compiler generating
+multiple loads was safe because the code in question is under the PTL so there
+are no concurrent stores. And we shouldn't see any tearing for the same reason.
 
-> 
->> Signed-off-by: Ryan Roberts <ryan.roberts@arm.com>
->> Reviewed-by: Zi Yan <ziy@nvidia.com>
->> ---
->>  mm/damon/ops-common.c | 16 ++++++----------
->>  mm/damon/ops-common.h |  4 ++--
->>  mm/damon/paddr.c      |  4 ++--
->>  mm/damon/vaddr.c      |  4 ++--
->>  4 files changed, 12 insertions(+), 16 deletions(-)
->>
->> diff --git a/mm/damon/ops-common.c b/mm/damon/ops-common.c
->> index cc63cf953636..acc264b97903 100644
->> --- a/mm/damon/ops-common.c
->> +++ b/mm/damon/ops-common.c
->> @@ -37,7 +37,7 @@ struct folio *damon_get_folio(unsigned long pfn)
->>         return folio;
->>  }
->>
->> -void damon_ptep_mkold(pte_t *pte, struct mm_struct *mm, unsigned long addr)
->> +void damon_ptep_mkold(pte_t *pte, struct vm_area_struct *vma, unsigned long addr)
->>  {
->>         bool referenced = false;
->>         struct folio *folio = damon_get_folio(pte_pfn(*pte));
->> @@ -45,13 +45,11 @@ void damon_ptep_mkold(pte_t *pte, struct mm_struct *mm, unsigned long addr)
->>         if (!folio)
->>                 return;
->>
->> -       if (pte_young(*pte)) {
->> +       if (ptep_test_and_clear_young(vma, addr, pte))
->>                 referenced = true;
->> -               *pte = pte_mkold(*pte);
->> -       }
->>
->>  #ifdef CONFIG_MMU_NOTIFIER
->> -       if (mmu_notifier_clear_young(mm, addr, addr + PAGE_SIZE))
->> +       if (mmu_notifier_clear_young(vma->vm_mm, addr, addr + PAGE_SIZE))
->>                 referenced = true;
->>  #endif /* CONFIG_MMU_NOTIFIER */
-> 
-> Use ptep_clear_young_notify(). Similar below.
-
-This looks sensible but I'd like clarification from SeongJae: Are you happy for
-me to do this refactoring as part of the patch?
-
-Thanks,
-Ryan
+That said, if there is concensus that we can just use ptep_get() (==
+READ_ONCE()) everywhere, then I agree that would be cleaner. Does anyone object?
 
