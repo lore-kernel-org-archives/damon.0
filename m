@@ -1,111 +1,129 @@
-Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E2F78C16
-	for <damon@lists.linux.dev>; Fri, 19 May 2023 12:09:40 +0000 (UTC)
-Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-4f3af4295ddso607934e87.2
-        for <damon@lists.linux.dev>; Fri, 19 May 2023 05:09:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1684498178; x=1687090178;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=b7UdFp5GhAiSV0XORaYQNKiXNz/+Czt3HESIc1RiAg8=;
-        b=SsTsyfOr21l+ewnUtIgEk7T27S/itlGotkVd0LvcJPueUZVCtnepavisOdEOzdjeXz
-         hAg9fj7Vh0xUzAHeuuCRN8Lx1r0Fx6o1RbCZx5xblVRJTRMx4/zR2EJjUbOB+PRSXnXt
-         uJLJssYxU3MxSSj+NjzRyk9tK3qomv+1GH45+LpYOImEIlmMcvL/RT0PJSzK3LQCvsY9
-         iS3oXXMFXZCpVEZjpWnqy4zoJZzx1DR2qK3cr0gNTjN/qfD1XF2NpZ3OHiK0EWfarwcu
-         wZNS0OXn0qAW8bafFMKhre7LZQxW92UIBUubNy7MRrDHP7CDhS+pgLthZ2w6ZCKVwmh5
-         LCjg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684498178; x=1687090178;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:date:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=b7UdFp5GhAiSV0XORaYQNKiXNz/+Czt3HESIc1RiAg8=;
-        b=dIDURb9trrI6cG56uJ69+CxEWxcY1xB5GvkTp/pKQckF0CIfpugXQeYAIP9SKUz6Df
-         N6X+vve0idkFNe+QVAD/558muAJeIexb6cWj45wIuQK/dd5I7onxThmL3XNQp94OzemC
-         nnd6rfqCSH1oNXST+vllfj35du6kjzeSjNipi3qkO6YFoL7HypneOGjXQK+3jgboLVo8
-         2qRdcO4KzLrBTxtYARtbO0hATkH8KF/C9wyix+VxZx8qwSU++HsXDxoJdSQuMZFo7dnm
-         oC3X4bu92zulS6cAcwu1iIMsEQYpCZLj/38sax5gysGBG0LSs1AYedH8lZpmnlWI5nlP
-         83bA==
-X-Gm-Message-State: AC+VfDwQVB5lKIfRtY1xeh3/PP1AT8lTGjYiC5LbS1HYa5FvyPUw+1V7
-	R9MtFC0IhRVjMSyY9cPfohs=
-X-Google-Smtp-Source: ACHHUZ6chS+j6ik3EDwUZbqAeKYmkhlSk/4VlNyw4JPRLbolGOF1i2zWinXwEYOmyW0qHqk9zFDXSA==
-X-Received: by 2002:ac2:5fe6:0:b0:4ed:c639:54cd with SMTP id s6-20020ac25fe6000000b004edc63954cdmr633908lfg.35.1684498177856;
-        Fri, 19 May 2023 05:09:37 -0700 (PDT)
-Received: from pc636 (host-90-235-19-70.mobileonline.telia.com. [90.235.19.70])
-        by smtp.gmail.com with ESMTPSA id n7-20020ac242c7000000b004f24cb9ef14sm582963lfl.47.2023.05.19.05.09.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 19 May 2023 05:09:37 -0700 (PDT)
-From: Uladzislau Rezki <urezki@gmail.com>
-X-Google-Original-From: Uladzislau Rezki <urezki@pc636>
-Date: Fri, 19 May 2023 14:09:34 +0200
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6835DDD0
+	for <damon@lists.linux.dev>; Fri, 19 May 2023 19:54:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 689D2C433D2;
+	Fri, 19 May 2023 19:54:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1684526078;
+	bh=Ns58burMT4c0EWSkncF1uaZbw4bRG/N+tROJuYPPCN0=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=P8KMX/ai33gl6aKSfnz60iRj7pvKbWY8KlEhg+AuilM3+bx0LTdJM8E8IDhtFAgYB
+	 xp4kwuVLeseRxiseh4Z+d09U4VU9Xbx3ikgnmARoV3hM+ZTjjyiW5Hie+hZWsoA/ZC
+	 hFoGkh+eH8c1Vy/MDAtB2AWJrXrzojr0dZJJKvfhltDuImPO57LK57qqQgQ3lALLT8
+	 dp6+Ea7/5Y7CNVHnZ6Tx4wmVQMPIHOCZiCMfXAPwuoCVxAeGclnGM8UDaqMy3Aur+s
+	 QPMGAdzWtofTat96uz60Q7fRCiqhl6wSSkgtYKNXdCeJafzPWxTJPnkHXnBq6T1PY4
+	 WYiDOwjNPmAuQ==
+From: SeongJae Park <sj@kernel.org>
 To: Ryan Roberts <ryan.roberts@arm.com>
-Cc: Andrew Morton <akpm@linux-foundation.org>,
+Cc: Yu Zhao <yuzhao@google.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	SeongJae Park <sj@kernel.org>,
 	Christoph Hellwig <hch@infradead.org>,
 	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
 	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
 	Lorenzo Stoakes <lstoakes@gmail.com>,
-	Uladzislau Rezki <urezki@gmail.com>, Zi Yan <ziy@nvidia.com>,
-	linux-kernel@vger.kernel.org, linux-mm@kvack.org,
-	damon@lists.linux.dev, Christoph Hellwig <hch@lst.de>
-Subject: Re: [PATCH v2 1/5] mm: vmalloc must set pte via arch code
-Message-ID: <ZGdm/hz7HP5iJWny@pc636>
-References: <20230518110727.2106156-1-ryan.roberts@arm.com>
- <20230518110727.2106156-2-ryan.roberts@arm.com>
+	Uladzislau Rezki <urezki@gmail.com>,
+	Zi Yan <ziy@nvidia.com>,
+	linux-kernel@vger.kernel.org,
+	linux-mm@kvack.org,
+	damon@lists.linux.dev
+Subject: Re: [PATCH v2 2/5] mm: damon must atomically clear young on ptes and pmds
+Date: Fri, 19 May 2023 19:54:35 +0000
+Message-Id: <20230519195435.90394-1-sj@kernel.org>
+X-Mailer: git-send-email 2.25.1
+In-Reply-To: <88c125fd-2294-4650-65b1-6be56589120e@arm.com>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230518110727.2106156-2-ryan.roberts@arm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Thu, May 18, 2023 at 12:07:23PM +0100, Ryan Roberts wrote:
-> It is bad practice to directly set pte entries within a pte table.
-> Instead all modifications must go through arch-provided helpers such as
-> set_pte_at() to give the arch code visibility and allow it to check
-> (and potentially modify) the operation.
-> 
-> Fixes: 3e9a9e256b1e ("mm: add a vmap_pfn function")
-> Signed-off-by: Ryan Roberts <ryan.roberts@arm.com>
-> Reviewed-by: Zi Yan <ziy@nvidia.com>
-> Acked-by: Lorenzo Stoakes <lstoakes@gmail.com>
-> Reviewed-by: Christoph Hellwig <hch@lst.de>
-> ---
->  mm/vmalloc.c | 10 ++++++++--
->  1 file changed, 8 insertions(+), 2 deletions(-)
-> 
-> diff --git a/mm/vmalloc.c b/mm/vmalloc.c
-> index 9683573f1225..48202ec5f79a 100644
-> --- a/mm/vmalloc.c
-> +++ b/mm/vmalloc.c
-> @@ -2899,10 +2899,16 @@ struct vmap_pfn_data {
->  static int vmap_pfn_apply(pte_t *pte, unsigned long addr, void *private)
->  {
->  	struct vmap_pfn_data *data = private;
-> +	unsigned long pfn = data->pfns[data->idx];
-> +	pte_t ptent;
->  
-> -	if (WARN_ON_ONCE(pfn_valid(data->pfns[data->idx])))
-> +	if (WARN_ON_ONCE(pfn_valid(pfn)))
->  		return -EINVAL;
-> -	*pte = pte_mkspecial(pfn_pte(data->pfns[data->idx++], data->prot));
-> +
-> +	ptent = pte_mkspecial(pfn_pte(pfn, data->prot));
-> +	set_pte_at(&init_mm, addr, pte, ptent);
-> +
-> +	data->idx++;
->  	return 0;
->  }
->  
-> -- 
-> 2.25.1
-> 
-Reviewed-by: Uladzislau Rezki (Sony) <urezki@gmail.com>
+On Fri, 19 May 2023 10:02:48 +0100 Ryan Roberts <ryan.roberts@arm.com> wrote:
 
---
-Uladzislau Rezki
+> On 19/05/2023 00:19, Yu Zhao wrote:
+> > On Thu, May 18, 2023 at 5:07 AM Ryan Roberts <ryan.roberts@arm.com> wrote:
+> >>
+> >> It is racy to non-atomically read a pte, then clear the young bit, then
+> >> write it back as this could discard dirty information. Further, it is
+> >> bad practice to directly set a pte entry within a table. Instead
+> >> clearing young must go through the arch-provided helper,
+> >> ptep_test_and_clear_young() to ensure it is modified atomically and to
+> >> give the arch code visibility and allow it to check (and potentially
+> >> modify) the operation.
+> >>
+> >> Fixes: 46c3a0accdc4 ("mm/damon/vaddr: separate commonly usable functions")
+> > 
+> > This should be a separate patch, since it's independent from what the
+> > series tries to do.
+> > 
+> > And that patch should cc stable, since it fixes user data corruption.
+> 
+> Fair point. The first 3 patches are fixes for issues I found during the
+> conversion. So if you're ok with it, I'll split into 2 series; the first 3
+> patches in the first, and the conversion to ptep_deref() (or ptep_get(), as per
+> your comments in the other thread) in the second. I guess the whole first series
+> should go to stable.
+> 
+> Let me know if you disagree.
+> 
+> > 
+> >> Signed-off-by: Ryan Roberts <ryan.roberts@arm.com>
+> >> Reviewed-by: Zi Yan <ziy@nvidia.com>
+> >> ---
+> >>  mm/damon/ops-common.c | 16 ++++++----------
+> >>  mm/damon/ops-common.h |  4 ++--
+> >>  mm/damon/paddr.c      |  4 ++--
+> >>  mm/damon/vaddr.c      |  4 ++--
+> >>  4 files changed, 12 insertions(+), 16 deletions(-)
+> >>
+> >> diff --git a/mm/damon/ops-common.c b/mm/damon/ops-common.c
+> >> index cc63cf953636..acc264b97903 100644
+> >> --- a/mm/damon/ops-common.c
+> >> +++ b/mm/damon/ops-common.c
+> >> @@ -37,7 +37,7 @@ struct folio *damon_get_folio(unsigned long pfn)
+> >>         return folio;
+> >>  }
+> >>
+> >> -void damon_ptep_mkold(pte_t *pte, struct mm_struct *mm, unsigned long addr)
+> >> +void damon_ptep_mkold(pte_t *pte, struct vm_area_struct *vma, unsigned long addr)
+> >>  {
+> >>         bool referenced = false;
+> >>         struct folio *folio = damon_get_folio(pte_pfn(*pte));
+> >> @@ -45,13 +45,11 @@ void damon_ptep_mkold(pte_t *pte, struct mm_struct *mm, unsigned long addr)
+> >>         if (!folio)
+> >>                 return;
+> >>
+> >> -       if (pte_young(*pte)) {
+> >> +       if (ptep_test_and_clear_young(vma, addr, pte))
+> >>                 referenced = true;
+> >> -               *pte = pte_mkold(*pte);
+> >> -       }
+> >>
+> >>  #ifdef CONFIG_MMU_NOTIFIER
+> >> -       if (mmu_notifier_clear_young(mm, addr, addr + PAGE_SIZE))
+> >> +       if (mmu_notifier_clear_young(vma->vm_mm, addr, addr + PAGE_SIZE))
+> >>                 referenced = true;
+> >>  #endif /* CONFIG_MMU_NOTIFIER */
+> > 
+> > Use ptep_clear_young_notify(). Similar below.
+> 
+> This looks sensible but I'd like clarification from SeongJae: Are you happy for
+> me to do this refactoring as part of the patch?
+
+Yes, I would be happy for that :)  Nevertheless, because that's a refactoring
+rather than a fix, I'd be happier if you could do that with a separate patch.
+
+
+Thanks,
+SJ
+
+> 
+> Thanks,
+> Ryan
+> 
