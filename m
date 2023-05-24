@@ -1,123 +1,92 @@
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 36ED246BA
-	for <damon@lists.linux.dev>; Mon, 22 May 2023 08:54:07 +0000 (UTC)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 6FDDC11FB;
-	Mon, 22 May 2023 01:54:45 -0700 (PDT)
-Received: from [10.57.73.5] (unknown [10.57.73.5])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 62E3C3F6C4;
-	Mon, 22 May 2023 01:53:58 -0700 (PDT)
-Message-ID: <1a6468c3-0395-173d-7a0a-96dcd4f7616c@arm.com>
-Date: Mon, 22 May 2023 09:53:56 +0100
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DC11C13A
+	for <damon@lists.linux.dev>; Wed, 24 May 2023 18:47:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DA8DC433D2;
+	Wed, 24 May 2023 18:47:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1684954064;
+	bh=ktiLabnYKAG3KyFEF2Q6zpiOpHDgr/G8xrLKc5nzBjw=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=eDhgWVlhdFx2XOrl59CnlL8BCPXIMfC+H/ZrYgxlSTU/cxDxdzw6f8fj2mG+bCQi5
+	 ud56NFMt0XN6a6loUJdqBOFEB+YJH7VJ40kjA+diqLGn7k5idmQDjfU+3Esf2Ul7RK
+	 8nfAe0OIOMTzwV6i7qWZhzy25VOY7PAf8JT/yT2ClShfOX1lP9rc0jsbbAml6Ubvr1
+	 th8Ke5DyOsxggNYqIOKSJdso9ZfdAvIYFa5tk8miCeEEq/iTRcBmTdz3LD3tFNIT7n
+	 +o+82EPvJLH+Tn+8B0SJxMuCAlGGSFR0m8ie22YsLO0HSHvucH5AGvLqbsdSM+WMir
+	 9SzqIKKbARrHQ==
+Date: Wed, 24 May 2023 21:47:21 +0300
+From: Mike Rapoport <rppt@kernel.org>
+To: Ryan Roberts <ryan.roberts@arm.com>
+Cc: Andrew Morton <akpm@linux-foundation.org>,
+	SeongJae Park <sj@kernel.org>,
+	Christoph Hellwig <hch@infradead.org>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
+	Lorenzo Stoakes <lstoakes@gmail.com>,
+	Uladzislau Rezki <urezki@gmail.com>, Zi Yan <ziy@nvidia.com>,
+	linux-kernel@vger.kernel.org, linux-mm@kvack.org,
+	damon@lists.linux.dev, Christoph Hellwig <hch@lst.de>
+Subject: Re: [PATCH v2 1/5] mm: vmalloc must set pte via arch code
+Message-ID: <20230524184721.GO4967@kernel.org>
+References: <20230518110727.2106156-1-ryan.roberts@arm.com>
+ <20230518110727.2106156-2-ryan.roberts@arm.com>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.11.0
-Subject: Re: [PATCH v2 2/5] mm: damon must atomically clear young on ptes and
- pmds
-To: SeongJae Park <sj@kernel.org>
-Cc: Yu Zhao <yuzhao@google.com>, Andrew Morton <akpm@linux-foundation.org>,
- Christoph Hellwig <hch@infradead.org>,
- "Matthew Wilcox (Oracle)" <willy@infradead.org>,
- "Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
- Lorenzo Stoakes <lstoakes@gmail.com>, Uladzislau Rezki <urezki@gmail.com>,
- Zi Yan <ziy@nvidia.com>, linux-kernel@vger.kernel.org, linux-mm@kvack.org,
- damon@lists.linux.dev
-References: <20230519195435.90394-1-sj@kernel.org>
-From: Ryan Roberts <ryan.roberts@arm.com>
-In-Reply-To: <20230519195435.90394-1-sj@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230518110727.2106156-2-ryan.roberts@arm.com>
 
-On 19/05/2023 20:54, SeongJae Park wrote:
-> On Fri, 19 May 2023 10:02:48 +0100 Ryan Roberts <ryan.roberts@arm.com> wrote:
+On Thu, May 18, 2023 at 12:07:23PM +0100, Ryan Roberts wrote:
+> It is bad practice to directly set pte entries within a pte table.
+> Instead all modifications must go through arch-provided helpers such as
+> set_pte_at() to give the arch code visibility and allow it to check
+> (and potentially modify) the operation.
 > 
->> On 19/05/2023 00:19, Yu Zhao wrote:
->>> On Thu, May 18, 2023 at 5:07 AM Ryan Roberts <ryan.roberts@arm.com> wrote:
->>>>
->>>> It is racy to non-atomically read a pte, then clear the young bit, then
->>>> write it back as this could discard dirty information. Further, it is
->>>> bad practice to directly set a pte entry within a table. Instead
->>>> clearing young must go through the arch-provided helper,
->>>> ptep_test_and_clear_young() to ensure it is modified atomically and to
->>>> give the arch code visibility and allow it to check (and potentially
->>>> modify) the operation.
->>>>
->>>> Fixes: 46c3a0accdc4 ("mm/damon/vaddr: separate commonly usable functions")
->>>
->>> This should be a separate patch, since it's independent from what the
->>> series tries to do.
->>>
->>> And that patch should cc stable, since it fixes user data corruption.
->>
->> Fair point. The first 3 patches are fixes for issues I found during the
->> conversion. So if you're ok with it, I'll split into 2 series; the first 3
->> patches in the first, and the conversion to ptep_deref() (or ptep_get(), as per
->> your comments in the other thread) in the second. I guess the whole first series
->> should go to stable.
->>
->> Let me know if you disagree.
->>
->>>
->>>> Signed-off-by: Ryan Roberts <ryan.roberts@arm.com>
->>>> Reviewed-by: Zi Yan <ziy@nvidia.com>
->>>> ---
->>>>  mm/damon/ops-common.c | 16 ++++++----------
->>>>  mm/damon/ops-common.h |  4 ++--
->>>>  mm/damon/paddr.c      |  4 ++--
->>>>  mm/damon/vaddr.c      |  4 ++--
->>>>  4 files changed, 12 insertions(+), 16 deletions(-)
->>>>
->>>> diff --git a/mm/damon/ops-common.c b/mm/damon/ops-common.c
->>>> index cc63cf953636..acc264b97903 100644
->>>> --- a/mm/damon/ops-common.c
->>>> +++ b/mm/damon/ops-common.c
->>>> @@ -37,7 +37,7 @@ struct folio *damon_get_folio(unsigned long pfn)
->>>>         return folio;
->>>>  }
->>>>
->>>> -void damon_ptep_mkold(pte_t *pte, struct mm_struct *mm, unsigned long addr)
->>>> +void damon_ptep_mkold(pte_t *pte, struct vm_area_struct *vma, unsigned long addr)
->>>>  {
->>>>         bool referenced = false;
->>>>         struct folio *folio = damon_get_folio(pte_pfn(*pte));
->>>> @@ -45,13 +45,11 @@ void damon_ptep_mkold(pte_t *pte, struct mm_struct *mm, unsigned long addr)
->>>>         if (!folio)
->>>>                 return;
->>>>
->>>> -       if (pte_young(*pte)) {
->>>> +       if (ptep_test_and_clear_young(vma, addr, pte))
->>>>                 referenced = true;
->>>> -               *pte = pte_mkold(*pte);
->>>> -       }
->>>>
->>>>  #ifdef CONFIG_MMU_NOTIFIER
->>>> -       if (mmu_notifier_clear_young(mm, addr, addr + PAGE_SIZE))
->>>> +       if (mmu_notifier_clear_young(vma->vm_mm, addr, addr + PAGE_SIZE))
->>>>                 referenced = true;
->>>>  #endif /* CONFIG_MMU_NOTIFIER */
->>>
->>> Use ptep_clear_young_notify(). Similar below.
->>
->> This looks sensible but I'd like clarification from SeongJae: Are you happy for
->> me to do this refactoring as part of the patch?
-> 
-> Yes, I would be happy for that :)  Nevertheless, because that's a refactoring
-> rather than a fix, I'd be happier if you could do that with a separate patch.
+> Fixes: 3e9a9e256b1e ("mm: add a vmap_pfn function")
+> Signed-off-by: Ryan Roberts <ryan.roberts@arm.com>
+> Reviewed-by: Zi Yan <ziy@nvidia.com>
+> Acked-by: Lorenzo Stoakes <lstoakes@gmail.com>
+> Reviewed-by: Christoph Hellwig <hch@lst.de>
 
-Great - I'll do it like this for v3.
+Reviewed-by: Mike Rapoport (IBM) <rppt@kernel.org>
 
+> ---
+>  mm/vmalloc.c | 10 ++++++++--
+>  1 file changed, 8 insertions(+), 2 deletions(-)
+> 
+> diff --git a/mm/vmalloc.c b/mm/vmalloc.c
+> index 9683573f1225..48202ec5f79a 100644
+> --- a/mm/vmalloc.c
+> +++ b/mm/vmalloc.c
+> @@ -2899,10 +2899,16 @@ struct vmap_pfn_data {
+>  static int vmap_pfn_apply(pte_t *pte, unsigned long addr, void *private)
+>  {
+>  	struct vmap_pfn_data *data = private;
+> +	unsigned long pfn = data->pfns[data->idx];
+> +	pte_t ptent;
+>  
+> -	if (WARN_ON_ONCE(pfn_valid(data->pfns[data->idx])))
+> +	if (WARN_ON_ONCE(pfn_valid(pfn)))
+>  		return -EINVAL;
+> -	*pte = pte_mkspecial(pfn_pte(data->pfns[data->idx++], data->prot));
+> +
+> +	ptent = pte_mkspecial(pfn_pte(pfn, data->prot));
+> +	set_pte_at(&init_mm, addr, pte, ptent);
+> +
+> +	data->idx++;
+>  	return 0;
+>  }
+>  
+> -- 
+> 2.25.1
 > 
 > 
-> Thanks,
-> SJ
-> 
->>
->> Thanks,
->> Ryan
->>
 
+-- 
+Sincerely yours,
+Mike.
