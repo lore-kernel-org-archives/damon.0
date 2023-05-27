@@ -1,50 +1,69 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from szxga02-in.huawei.com (szxga02-in.huawei.com [45.249.212.188])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBC2A194
-	for <damon@lists.linux.dev>; Sat, 27 May 2023 02:35:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EEACC433D2;
-	Sat, 27 May 2023 02:35:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1685154915;
-	bh=OARHjl7VtSdPoG7u5ehRQS9jDdQ7zVa4zuVU0zJzJLA=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:From;
-	b=vOJFzCGpW1ATUZ2z1oyj//r7R4XFpU8o1SPSilDqjJ7VozGVRyp4R3WcFd6SsTbkB
-	 xBpXx4R39XzOQb+k4e6Jl+2Uz3RlG7k3h/+Ia6A5x8RNO08cHQJYnTglse+KnFLQK+
-	 QFQ04FZueDQG1csGHgzR3YgzUZe1QGLLSRdNsMXwcbcvPkgLxCBjFCsP/gCWzcqVrL
-	 +XHEQSmxSY4HVr6SlEZ/sZGqRkTA5IB+J6nIpm5pimHl+UWGJL+ifkiRloYXw/S1NC
-	 mD/m8jLetJO5gTcbNfA/j4K5iTlpho7c6rofQlMOWEgW4jRcanWYWoo8QX3N3ab7F2
-	 SuQjymaWreArg==
-From: SeongJae Park <sj@kernel.org>
-To: SeongJae Park <sj@kernel.org>
-Cc: Kefeng Wang <wangkefeng.wang@huawei.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org,
-	syzbot+841a46899768ec7bec67@syzkaller.appspotmail.com
-Subject: Re: [PATCH] mm/damon/core: fix divide error in damon_nr_accesses_to_accesses_bp()
-Date: Fri, 26 May 2023 19:34:59 -0700
-Message-Id: <20230527023459.8567-1-sj@kernel.org>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20230527023149.8441-1-sj@kernel.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 861B2389
+	for <damon@lists.linux.dev>; Sat, 27 May 2023 03:04:48 +0000 (UTC)
+Received: from dggpemm500001.china.huawei.com (unknown [172.30.72.57])
+	by szxga02-in.huawei.com (SkyGuard) with ESMTP id 4QSmlw1WkrzLnb3;
+	Sat, 27 May 2023 11:01:48 +0800 (CST)
+Received: from localhost.localdomain.localdomain (10.175.113.25) by
+ dggpemm500001.china.huawei.com (7.185.36.107) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.23; Sat, 27 May 2023 11:04:45 +0800
+From: Kefeng Wang <wangkefeng.wang@huawei.com>
+To: SeongJae Park <sj@kernel.org>, Andrew Morton <akpm@linux-foundation.org>,
+	<damon@lists.linux.dev>, <linux-mm@kvack.org>
+CC: <linux-kernel@vger.kernel.org>, Kefeng Wang <wangkefeng.wang@huawei.com>,
+	<syzbot+841a46899768ec7bec67@syzkaller.appspotmail.com>,
+	<stable@vger.kernel.org>
+Subject: [PATCH v2] mm/damon/core: fix divide error in damon_nr_accesses_to_accesses_bp()
+Date: Sat, 27 May 2023 11:21:01 +0800
+Message-ID: <20230527032101.167788-1-wangkefeng.wang@huawei.com>
+X-Mailer: git-send-email 2.35.3
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.175.113.25]
+X-ClientProxiedBy: dggems702-chm.china.huawei.com (10.3.19.179) To
+ dggpemm500001.china.huawei.com (7.185.36.107)
+X-CFilter-Loop: Reflected
 
-On Fri, 26 May 2023 19:31:49 -0700 SeongJae Park <sj@kernel.org> wrote:
+If 'aggr_interval' is smaller than 'sample_interval', max_nr_accesses
+in damon_nr_accesses_to_accesses_bp() becomes zero which leads to divide
+error, let's validate the values of them in damon_set_attrs() to fix it,
+which similar to others attrs check.
 
-[...]
-> Could you please resolve those by wrapping the commit messages and adding
-> 'Closes:' tag?  'Closes:' tag might be able to replace the 'Link:' tag I
-> supposed above.  I have no strong opinions there but having both may harm
+Reported-by: syzbot+841a46899768ec7bec67@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=841a46899768ec7bec67
+Link: https://lore.kernel.org/damon/00000000000055fc4e05fc975bc2@google.com/
+Fixes: 2f5bef5a590b ("mm/damon/core: update monitoring results for new monitoring attributes")
+Cc: <stable@vger.kernel.org> # 6.3.x-
+Reviewed-by: SeongJae Park <sj@kernel.org>
+Signed-off-by: Kefeng Wang <wangkefeng.wang@huawei.com>
+---
+v2: close checkpatch warning, add RB/cc stable, per SJ
 
-s/supposed/suggested/
+ mm/damon/core.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index d9ef62047bf5..91cff7f2997e 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -551,6 +551,8 @@ int damon_set_attrs(struct damon_ctx *ctx, struct damon_attrs *attrs)
+ 		return -EINVAL;
+ 	if (attrs->min_nr_regions > attrs->max_nr_regions)
+ 		return -EINVAL;
++	if (attrs->sample_interval > attrs->aggr_interval)
++		return -EINVAL;
+ 
+ 	damon_update_monitoring_results(ctx, attrs);
+ 	ctx->attrs = *attrs;
+-- 
+2.35.3
 
-Thanks,
-SJ
-
-[...]
