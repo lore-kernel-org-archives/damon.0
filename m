@@ -1,25 +1,31 @@
-Received: from szxga02-in.huawei.com (szxga02-in.huawei.com [45.249.212.188])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 861B2389
-	for <damon@lists.linux.dev>; Sat, 27 May 2023 03:04:48 +0000 (UTC)
-Received: from dggpemm500001.china.huawei.com (unknown [172.30.72.57])
-	by szxga02-in.huawei.com (SkyGuard) with ESMTP id 4QSmlw1WkrzLnb3;
-	Sat, 27 May 2023 11:01:48 +0800 (CST)
-Received: from localhost.localdomain.localdomain (10.175.113.25) by
- dggpemm500001.china.huawei.com (7.185.36.107) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.23; Sat, 27 May 2023 11:04:45 +0800
-From: Kefeng Wang <wangkefeng.wang@huawei.com>
-To: SeongJae Park <sj@kernel.org>, Andrew Morton <akpm@linux-foundation.org>,
-	<damon@lists.linux.dev>, <linux-mm@kvack.org>
-CC: <linux-kernel@vger.kernel.org>, Kefeng Wang <wangkefeng.wang@huawei.com>,
-	<syzbot+841a46899768ec7bec67@syzkaller.appspotmail.com>,
-	<stable@vger.kernel.org>
-Subject: [PATCH v2] mm/damon/core: fix divide error in damon_nr_accesses_to_accesses_bp()
-Date: Sat, 27 May 2023 11:21:01 +0800
-Message-ID: <20230527032101.167788-1-wangkefeng.wang@huawei.com>
-X-Mailer: git-send-email 2.35.3
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 62B0E17756
+	for <damon@lists.linux.dev>; Fri,  2 Jun 2023 09:30:04 +0000 (UTC)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 053C21063;
+	Fri,  2 Jun 2023 02:30:49 -0700 (PDT)
+Received: from e125769.cambridge.arm.com (e125769.cambridge.arm.com [10.1.196.26])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id CCD1E3F7BD;
+	Fri,  2 Jun 2023 02:30:01 -0700 (PDT)
+From: Ryan Roberts <ryan.roberts@arm.com>
+To: Andrew Morton <akpm@linux-foundation.org>,
+	SeongJae Park <sj@kernel.org>,
+	Christoph Hellwig <hch@infradead.org>
+Cc: Ryan Roberts <ryan.roberts@arm.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
+	Lorenzo Stoakes <lstoakes@gmail.com>,
+	Uladzislau Rezki <urezki@gmail.com>,
+	Zi Yan <ziy@nvidia.com>,
+	Yu Zhao <yuzhao@google.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	linux-kernel@vger.kernel.org,
+	linux-mm@kvack.org,
+	damon@lists.linux.dev
+Subject: [PATCH v3 0/4] Fixes for pte encapsulation bypasses
+Date: Fri,  2 Jun 2023 10:29:45 +0100
+Message-Id: <20230602092949.545577-1-ryan.roberts@arm.com>
+X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -27,43 +33,61 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.175.113.25]
-X-ClientProxiedBy: dggems702-chm.china.huawei.com (10.3.19.179) To
- dggpemm500001.china.huawei.com (7.185.36.107)
-X-CFilter-Loop: Reflected
 
-If 'aggr_interval' is smaller than 'sample_interval', max_nr_accesses
-in damon_nr_accesses_to_accesses_bp() becomes zero which leads to divide
-error, let's validate the values of them in damon_set_attrs() to fix it,
-which similar to others attrs check.
+This is the first half of v3 of a series to improve the encapsulation of pte
+entries by disallowing non-arch code from directly dereferencing pte_t pointers.
+Based on earlier feedback, I've split the series in 2; this first part contains
+fixes for existing bugs that were discovered during the work. The second part,
+which contains the new changes I'm adding, will be posted separately.
 
-Reported-by: syzbot+841a46899768ec7bec67@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=841a46899768ec7bec67
-Link: https://lore.kernel.org/damon/00000000000055fc4e05fc975bc2@google.com/
-Fixes: 2f5bef5a590b ("mm/damon/core: update monitoring results for new monitoring attributes")
-Cc: <stable@vger.kernel.org> # 6.3.x-
-Reviewed-by: SeongJae Park <sj@kernel.org>
-Signed-off-by: Kefeng Wang <wangkefeng.wang@huawei.com>
----
-v2: close checkpatch warning, add RB/cc stable, per SJ
+These fixes have had a fair amount of review now so I hope they can be
+considered for addition to the appropriate mm- branch as is. And I've cc'ed
+stable since I believe they should be candidates for backport.
 
- mm/damon/core.c | 2 ++
- 1 file changed, 2 insertions(+)
+See the v1 cover letter at [1] for rationale and explanation of overall
+objective (requires both parts of the split series to achieve).
 
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index d9ef62047bf5..91cff7f2997e 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -551,6 +551,8 @@ int damon_set_attrs(struct damon_ctx *ctx, struct damon_attrs *attrs)
- 		return -EINVAL;
- 	if (attrs->min_nr_regions > attrs->max_nr_regions)
- 		return -EINVAL;
-+	if (attrs->sample_interval > attrs->aggr_interval)
-+		return -EINVAL;
- 
- 	damon_update_monitoring_results(ctx, attrs);
- 	ctx->attrs = *attrs;
--- 
-2.35.3
+The series is split up as follows:
+
+patch 1-2:  Fix bugs where code was _setting_ ptes directly, rather than using
+            set_pte_at() and friends. Data corruption was theoretically
+	    possible.
+patch 3:    Minor refactoring requested in v2 review.
+patch 4:    Fix highmem unmapping issue I spotted while doing the work.
+
+Patches are based on v6.4-rc4 and a branch is available at [3].
+
+Changes since v2 [2]:
+   - patch 2: minor commit message rewording to fix review nits
+   - patch 3: Refactored damon code to use {pte|pmd}p_clear_young_notify()
+   - patch 1-4: applied Ack/Reviewed-by tags; thanks for those!
+
+Changes since v1 [1]:
+   - patch 1: Refactored pfn to use local variable
+   - patch 1-2: Minor rewording of commit message: 'verify' -> 'check'
+   - patch 1-3: applied Ack/Reviewed-by tags; thanks for those!
+
+[1] https://lore.kernel.org/linux-mm/20230511132113.80196-1-ryan.roberts@arm.com/
+[2] https://lore.kernel.org/linux-mm/20230518110727.2106156-1-ryan.roberts@arm.com/
+[3] https://gitlab.arm.com/linux-arm/linux-rr/-/tree/bugs/pte_encapsulation_bypasses-lkml_v3
+
+Thanks,
+Ryan
+
+Ryan Roberts (4):
+  mm: vmalloc must set pte via arch code
+  mm/damon/ops-common: atomically test and clear young on ptes and pmds
+  mm/damon/ops-common: Refactor to use {pte|pmd}p_clear_young_notify()
+  mm: Fix failure to unmap pte on highmem systems
+
+ mm/damon/ops-common.c | 30 ++++--------------------------
+ mm/damon/ops-common.h |  4 ++--
+ mm/damon/paddr.c      |  4 ++--
+ mm/damon/vaddr.c      |  4 ++--
+ mm/memory.c           |  6 ++----
+ mm/vmalloc.c          | 10 ++++++++--
+ 6 files changed, 20 insertions(+), 38 deletions(-)
+
+--
+2.25.1
 
