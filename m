@@ -1,120 +1,88 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33DCEC121
-	for <damon@lists.linux.dev>; Fri,  2 Jun 2023 21:54:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A68E5C4339B;
-	Fri,  2 Jun 2023 21:54:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1685742891;
-	bh=gCs8lv7QzbHnoWxQdwszcYV+QYvUCCO1/czQtJohcFU=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ts7sAD57zMu7vNGEpDIixZvsiCJOZ80qVMELZ4CaImTurenx2HP26g13kCMI3Bffm
-	 3UiQfr0XQOhK3uV65sXsNKniBv0Vq7wHx/6q3alx5oUnt97bTptVmunhDmaIp5AT10
-	 JayT2NdmOxOq2na3VbRxvvCYCAsW+cPy+p+Ks1iIFHud46AI2g5vvwwcwrvAlj0CNi
-	 YYkAzjXX67DfIU7VbUAP7EXfYc4vKM7qx6EzIsqM5uMM33aytyfGTP5WsK1/xlOX/d
-	 P/oaziCvx8iFLG+gxDhd2tm4HrV/dbkLrcGUhoYm4IVNrvgLB288ByElyoY/Ch9SJT
-	 hyCq98DJScunQ==
-From: SeongJae Park <sj@kernel.org>
-To: Ryan Roberts <ryan.roberts@arm.com>
-Cc: Andrew Morton <akpm@linux-foundation.org>,
-	SeongJae Park <sj@kernel.org>,
-	Christoph Hellwig <hch@infradead.org>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
-	Lorenzo Stoakes <lstoakes@gmail.com>,
-	Uladzislau Rezki <urezki@gmail.com>,
-	Zi Yan <ziy@nvidia.com>,
-	Yu Zhao <yuzhao@google.com>,
-	Mike Rapoport <rppt@kernel.org>,
-	linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org,
-	damon@lists.linux.dev
-Subject: Re: [PATCH v3 3/4] mm/damon/ops-common: Refactor to use {pte|pmd}p_clear_young_notify()
-Date: Fri,  2 Jun 2023 21:54:49 +0000
-Message-Id: <20230602215449.107659-1-sj@kernel.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20230602092949.545577-4-ryan.roberts@arm.com>
-References: 
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4B938290B
+	for <damon@lists.linux.dev>; Sat,  3 Jun 2023 18:20:45 +0000 (UTC)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 4633EFEC;
+	Sat,  3 Jun 2023 11:21:23 -0700 (PDT)
+Received: from [10.57.72.226] (unknown [10.57.72.226])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 1260F3F793;
+	Sat,  3 Jun 2023 11:20:35 -0700 (PDT)
+Message-ID: <c87d4b69-0971-2faf-9d10-615e3264b131@arm.com>
+Date: Sat, 3 Jun 2023 19:20:34 +0100
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.11.2
+Subject: Re: [PATCH v3 2/4] mm/damon/ops-common: atomically test and clear
+ young on ptes and pmds
+To: SeongJae Park <sj@kernel.org>
+Cc: Yu Zhao <yuzhao@google.com>, Andrew Morton <akpm@linux-foundation.org>,
+ Christoph Hellwig <hch@infradead.org>,
+ "Matthew Wilcox (Oracle)" <willy@infradead.org>,
+ "Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
+ Lorenzo Stoakes <lstoakes@gmail.com>, Uladzislau Rezki <urezki@gmail.com>,
+ Zi Yan <ziy@nvidia.com>, Mike Rapoport <rppt@kernel.org>,
+ linux-kernel@vger.kernel.org, linux-mm@kvack.org, damon@lists.linux.dev
+References: <20230602214347.85694-1-sj@kernel.org>
+From: Ryan Roberts <ryan.roberts@arm.com>
+In-Reply-To: <20230602214347.85694-1-sj@kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Hi Ryan,
-
-On Fri, 2 Jun 2023 10:29:48 +0100 Ryan Roberts <ryan.roberts@arm.com> wrote:
-
-> With the fix in place to atomically test and clear young on ptes and
-> pmds, simplify the code to handle the clearing for both the primary mmu
-> and the mmu notifier with a single API call.
+On 02/06/2023 22:43, SeongJae Park wrote:
+> On Fri, 2 Jun 2023 19:15:01 +0000 SeongJae Park <sj@kernel.org> wrote:
 > 
-> Signed-off-by: Ryan Roberts <ryan.roberts@arm.com>
-
-Reviewed-by: SeongJae Park <sj@kernel.org>
-
-
-Thanks,
-SJ
-
-> ---
->  mm/damon/ops-common.c | 22 ++--------------------
->  1 file changed, 2 insertions(+), 20 deletions(-)
+>> Hi Ryan,
+>>
+>> On Fri, 2 Jun 2023 18:14:25 +0100 Ryan Roberts <ryan.roberts@arm.com> wrote:
+>>
+>>> On 02/06/2023 17:35, Yu Zhao wrote:
+>>>> On Fri, Jun 2, 2023 at 3:30 AM Ryan Roberts <ryan.roberts@arm.com> wrote:
+>>>>>
+>>>>> It is racy to non-atomically read a pte, then clear the young bit, then
+>>>>> write it back as this could discard dirty information. Further, it is
+>>>>> bad practice to directly set a pte entry within a table. Instead
+>>>>> clearing young must go through the arch-provided helper,
+>>>>> ptep_test_and_clear_young() to ensure it is modified atomically and to
+>>>>> give the arch code visibility and allow it to check (and potentially
+>>>>> modify) the operation.
+>>>>>
+>>>>> Fixes: 3f49584b262c ("mm/damon: implement primitives for the virtual memory address spaces").
+>>>>
+>>>> Just to double check: was "Cc: stable@vger.kernel.org" overlooked or
+>>>> deemed unnecessary?
+>>>
+>>> It was overlooked - incompetance strikes again! I was intending to cc the
+>>> whole series.
+>>
+>> Not the whole patches in this series but only this patch is intended to be
+>> merged in stable series, right?  If I'm not wrong, you could add
+>> 'Cc: <stable@vger.kernel.org>' tag here[1] when resending, to let stable kernel
+>> maintainers easily understand exactly what patches should be merged in the
+>> stable kernels.  So, you wouldn't need to touch coverletter or cc whole series
+>> but only this one.
+>>
+>> [1] https://www.kernel.org/doc/html/v4.10/process/stable-kernel-rules.html
 > 
-> diff --git a/mm/damon/ops-common.c b/mm/damon/ops-common.c
-> index acc264b97903..d4ab81229136 100644
-> --- a/mm/damon/ops-common.c
-> +++ b/mm/damon/ops-common.c
-> @@ -39,21 +39,12 @@ struct folio *damon_get_folio(unsigned long pfn)
->  
->  void damon_ptep_mkold(pte_t *pte, struct vm_area_struct *vma, unsigned long addr)
->  {
-> -	bool referenced = false;
->  	struct folio *folio = damon_get_folio(pte_pfn(*pte));
->  
->  	if (!folio)
->  		return;
->  
-> -	if (ptep_test_and_clear_young(vma, addr, pte))
-> -		referenced = true;
-> -
-> -#ifdef CONFIG_MMU_NOTIFIER
-> -	if (mmu_notifier_clear_young(vma->vm_mm, addr, addr + PAGE_SIZE))
-> -		referenced = true;
-> -#endif /* CONFIG_MMU_NOTIFIER */
-> -
-> -	if (referenced)
-> +	if (ptep_clear_young_notify(vma, addr, pte))
->  		folio_set_young(folio);
->  
->  	folio_set_idle(folio);
-> @@ -63,21 +54,12 @@ void damon_ptep_mkold(pte_t *pte, struct vm_area_struct *vma, unsigned long addr
->  void damon_pmdp_mkold(pmd_t *pmd, struct vm_area_struct *vma, unsigned long addr)
->  {
->  #ifdef CONFIG_TRANSPARENT_HUGEPAGE
-> -	bool referenced = false;
->  	struct folio *folio = damon_get_folio(pmd_pfn(*pmd));
->  
->  	if (!folio)
->  		return;
->  
-> -	if (pmdp_test_and_clear_young(vma, addr, pmd))
-> -		referenced = true;
-> -
-> -#ifdef CONFIG_MMU_NOTIFIER
-> -	if (mmu_notifier_clear_young(vma->vm_mm, addr, addr + HPAGE_PMD_SIZE))
-> -		referenced = true;
-> -#endif /* CONFIG_MMU_NOTIFIER */
-> -
-> -	if (referenced)
-> +	if (pmdp_clear_young_notify(vma, addr, pmd))
->  		folio_set_young(folio);
->  
->  	folio_set_idle(folio);
-> -- 
-> 2.25.1
+> And I just found Andrew added the tag while adding this to the -mm queue.
+> Thank you, Andrew!
+
+Yes indeed - thanks for fixing that up for me, Andrew!
+
+> 
+> [1] https://lore.kernel.org/mm-commits/20230602205509.9DFBDC433D2@smtp.kernel.org/
 > 
 > 
+> Thanks,
+> SJ
+> 
+>>
+>>
+>> Thanks,
+>> SJ
+>>
+
