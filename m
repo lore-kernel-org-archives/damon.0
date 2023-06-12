@@ -1,36 +1,59 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ACF01C766
-	for <damon@lists.linux.dev>; Fri,  9 Jun 2023 19:16:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60A48C4339C;
-	Fri,  9 Jun 2023 19:16:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1686338185;
-	bh=tJjWk6hGIUwDfmPq3y89WUdeFFNwy2a0cWqN5OR7kJ0=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KF5au+WfV0NuB0ror1osdkBAbZLKNTlIzfO7xdF9/kwLYpsNE6bOUjL7l4mW218XN
-	 Zswfyuk+qs/TjZiP60VijNjhYEQb3fvxWDeXRcmfeTizhr1nMK7uc4kGXMeveApGzU
-	 DaTl9qgAo/giDkLqZFy3Kwoh0oLKcXvsOGe9H6wBVmdyAvgdDeHEqTwJ1DoKUB3omv
-	 EfD04rIlueqhUKXR5cJFhOxX3v44n2ltyE02VWNXRKLAbQryQA5ntHT5YM1gN6JypB
-	 bVNXhWX34B7ujj5CH/cxteXyMcsiZ18cGgH8ZBt46a3Sw1/kY/GgPhkn5fv+mZ3Lxp
-	 fhCegvfX8DQJQ==
-From: SeongJae Park <sj@kernel.org>
-To: SeongJae Park <sj@kernel.org>
-Cc: akpm@linux-foundation.org,
-	Anders Roxell <anders.roxell@linaro.org>,
-	shuah@kernel.org,
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 272F019511
+	for <damon@lists.linux.dev>; Mon, 12 Jun 2023 15:16:01 +0000 (UTC)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 4E5FE1FB;
+	Mon, 12 Jun 2023 08:16:46 -0700 (PDT)
+Received: from e125769.cambridge.arm.com (e125769.cambridge.arm.com [10.1.196.26])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 628073F5A1;
+	Mon, 12 Jun 2023 08:15:56 -0700 (PDT)
+From: Ryan Roberts <ryan.roberts@arm.com>
+To: Andrew Morton <akpm@linux-foundation.org>,
+	SeongJae Park <sj@kernel.org>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Yu Zhao <yuzhao@google.com>,
+	Jason Gunthorpe <jgg@ziepe.ca>,
+	David Airlie <airlied@gmail.com>,
+	Daniel Vetter <daniel@ffwll.ch>,
+	Dimitri Sivanich <dimitri.sivanich@hpe.com>,
+	Alex Williamson <alex.williamson@redhat.com>,
+	Oleksandr Tyshchenko <oleksandr_tyshchenko@epam.com>,
+	Alexander Viro <viro@zeniv.linux.org.uk>,
+	Christian Brauner <brauner@kernel.org>,
+	Mike Kravetz <mike.kravetz@oracle.com>,
+	Muchun Song <muchun.song@linux.dev>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Ian Rogers <irogers@google.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	=?UTF-8?q?J=C3=A9r=C3=B4me=20Glisse?= <jglisse@redhat.com>,
+	Andrey Ryabinin <ryabinin.a.a@gmail.com>,
+	Alexander Potapenko <glider@google.com>,
+	Andrey Konovalov <andreyknvl@gmail.com>,
+	Dmitry Vyukov <dvyukov@google.com>,
+	Vincenzo Frascino <vincenzo.frascino@arm.com>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Michal Hocko <mhocko@kernel.org>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Shakeel Butt <shakeelb@google.com>,
+	Naoya Horiguchi <naoya.horiguchi@nec.com>,
+	Miaohe Lin <linmiaohe@huawei.com>,
+	Pasha Tatashin <pasha.tatashin@soleen.com>,
+	Uladzislau Rezki <urezki@gmail.com>,
+	Christoph Hellwig <hch@infradead.org>,
+	Lorenzo Stoakes <lstoakes@gmail.com>
+Cc: Ryan Roberts <ryan.roberts@arm.com>,
 	linux-kernel@vger.kernel.org,
-	damon@lists.linux.dev,
 	linux-mm@kvack.org,
-	linux-kselftest@vger.kernel.org,
-	Naresh Kamboju <naresh.kamboju@linaro.org>
-Subject: Re: [PATCHv2] selftests: damon: add config file
-Date: Fri,  9 Jun 2023 19:16:22 +0000
-Message-Id: <20230609191622.80289-1-sj@kernel.org>
+	damon@lists.linux.dev
+Subject: [PATCH v3 0/3] Encapsulate PTE contents from non-arch code
+Date: Mon, 12 Jun 2023 16:15:42 +0100
+Message-Id: <20230612151545.3317766-1-ryan.roberts@arm.com>
 X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20230412165806.80672-1-sj@kernel.org>
-References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -39,72 +62,103 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Wed, 12 Apr 2023 16:58:06 +0000 SeongJae Park <sj@kernel.org> wrote:
+Hi All,
 
-> Hi Anders,
-> 
-> On Wed, 12 Apr 2023 11:28:54 +0200 Anders Roxell <anders.roxell@linaro.org> wrote:
-> 
-> > Building and running the subsuite 'damon' of kselftest, shows the
-> > following issues:
-> >  selftests: damon: debugfs_attrs.sh
-> >   /sys/kernel/debug/damon not found
-> > 
-> > By creating a config file enabling DAMON fragments in the
-> > selftests/damon/ directory the tests pass.
-> > 
-> > Fixes: b348eb7abd09 ("mm/damon: add user space selftests")
-> > Reported-by: Naresh Kamboju <naresh.kamboju@linaro.org>
-> 
-> checkpatch.pl is warning as below:
-> 
->     WARNING: Reported-by: should be immediately followed by Link: with a URL to the report
->     #20:
->     Reported-by: Naresh Kamboju <naresh.kamboju@linaro.org>
->     Signed-off-by: Anders Roxell <anders.roxell@linaro.org>
-> 
-> The reason for the warning can be found from commit d7f1d71e5ef6 ("checkpatch:
-> warn when Reported-by: is not followed by Link:")'s commit message.  Do you
-> have a link to put here?  I guess the report was made inside Linaro, so might
-> have no publicly available link.  Maybe better to add some notes or some funny
-> tag like "Link: N/A # no publicly-available link of the report" for convincing
-> the tool, but I don't think this should be a blocker for this patch.
-> 
-> > Signed-off-by: Anders Roxell <anders.roxell@linaro.org>
-> 
-> Reviewed-by: SeongJae Park <sj@kernel.org>
+(Including wider audience this time since changes touch a fair few subsystems)
 
-Shuah, may I ask your opinion on this patch?
+This is the second half of v3 of a series to improve the encapsulation of pte
+entries by disallowing non-arch code from directly dereferencing pte_t pointers.
+Based on earlier feedback, I split the series in 2; the first part, fixes for
+existing bugs, was already posted at [3] and merged into mm-stable. This second
+part contains the conversion from direct dereferences to instead use
+ptep_get()/ptep_get_lockless().
 
-I'm also cc-ing Andrew, as he may also interested in picking this patch.
+See the v1 cover letter at [1] for rationale for this work.
 
+Based on feedback at v2, I've removed the new ptep_deref() helper I originally
+added, and am now using the existing ptep_get() and ptep_get_lockless() helpers.
+Testing on Ampere Altra (arm64) showed no difference in performance when using
+ptep_deref() (*pte) vs ptep_get() (READ_ONCE(*pte)).
+
+Patches are based on mm-unstable (49e038b1919e) and a branch is available at [4]
+(Let me know if this is the wrong branch to target - I'm still not familiar with
+the details of the mm- dev process!). Note that Hugh Dickins's "mm: allow
+pte_offset_map[_lock]() to fail" (now in mm-unstable) patch set caused a number
+of conflicts which I've resolved. But due to that, you won't be able to apply
+these patches on top of Linus's tree. I have an alternate branch on top of
+v6.4-rc6 at [5].
+
+Changes since v2 [2]:
+   - Removed ptep_deref() helper
+   - Converted ptep_deref() callsites to use ptep_get[_lockless]()
+
+Changes since v1 [1]:
+   - Fixed sh build bug reported by 0-day CI
+
+[1] https://lore.kernel.org/linux-mm/20230511132113.80196-1-ryan.roberts@arm.com/
+[2] https://lore.kernel.org/linux-mm/20230518110727.2106156-1-ryan.roberts@arm.com/
+[3] https://lore.kernel.org/all/20230602092949.545577-1-ryan.roberts@arm.com/
+[4] https://gitlab.arm.com/linux-arm/linux-rr/-/tree/features/granule_perf/ptep_get-mm-unstable-lkml_v3
+[5] https://gitlab.arm.com/linux-arm/linux-rr/-/tree/features/granule_perf/ptep_get-v6.4-rc6-lkml_v3
 
 Thanks,
-SJ
+Ryan
 
-> 
-> 
-> Thanks,
-> SJ
-> 
-> > ---
-> >  tools/testing/selftests/damon/config | 7 +++++++
-> >  1 file changed, 7 insertions(+)
-> >  create mode 100644 tools/testing/selftests/damon/config
-> > 
-> > diff --git a/tools/testing/selftests/damon/config b/tools/testing/selftests/damon/config
-> > new file mode 100644
-> > index 000000000000..0daf38974eb0
-> > --- /dev/null
-> > +++ b/tools/testing/selftests/damon/config
-> > @@ -0,0 +1,7 @@
-> > +CONFIG_DAMON=y
-> > +CONFIG_DAMON_SYSFS=y
-> > +CONFIG_DAMON_DBGFS=y
-> > +CONFIG_DAMON_PADDR=y
-> > +CONFIG_DAMON_VADDR=y
-> > +CONFIG_DAMON_RECLAIM=y
-> > +CONFIG_DAMON_LRU_SORT=y
-> > -- 
-> > 2.39.2
-> 
+Ryan Roberts (3):
+  mm: ptdump should use ptep_get_lockless()
+  mm: Move ptep_get() and pmdp_get() helpers
+  mm: ptep_get() conversion
+
+ .../drm/i915/gem/selftests/i915_gem_mman.c    |   8 +-
+ drivers/misc/sgi-gru/grufault.c               |   2 +-
+ drivers/vfio/vfio_iommu_type1.c               |   7 +-
+ drivers/xen/privcmd.c                         |   2 +-
+ fs/proc/task_mmu.c                            |  33 +++---
+ fs/userfaultfd.c                              |   6 +-
+ include/linux/hugetlb.h                       |   4 +
+ include/linux/mm_inline.h                     |   2 +-
+ include/linux/pgtable.h                       |  34 +++---
+ kernel/events/uprobes.c                       |   2 +-
+ mm/damon/ops-common.c                         |   2 +-
+ mm/damon/paddr.c                              |   2 +-
+ mm/damon/vaddr.c                              |  10 +-
+ mm/filemap.c                                  |   2 +-
+ mm/gup.c                                      |  21 ++--
+ mm/highmem.c                                  |  12 ++-
+ mm/hmm.c                                      |   2 +-
+ mm/huge_memory.c                              |   4 +-
+ mm/hugetlb.c                                  |   2 +-
+ mm/hugetlb_vmemmap.c                          |   6 +-
+ mm/kasan/init.c                               |   9 +-
+ mm/kasan/shadow.c                             |  10 +-
+ mm/khugepaged.c                               |  22 ++--
+ mm/ksm.c                                      |  22 ++--
+ mm/madvise.c                                  |   6 +-
+ mm/mapping_dirty_helpers.c                    |   4 +-
+ mm/memcontrol.c                               |   4 +-
+ mm/memory-failure.c                           |  26 ++---
+ mm/memory.c                                   | 100 ++++++++++--------
+ mm/mempolicy.c                                |   6 +-
+ mm/migrate.c                                  |  14 +--
+ mm/migrate_device.c                           |  15 +--
+ mm/mincore.c                                  |   2 +-
+ mm/mlock.c                                    |   6 +-
+ mm/mprotect.c                                 |   8 +-
+ mm/mremap.c                                   |   2 +-
+ mm/page_table_check.c                         |   4 +-
+ mm/page_vma_mapped.c                          |  27 +++--
+ mm/pgtable-generic.c                          |   2 +-
+ mm/ptdump.c                                   |   2 +-
+ mm/rmap.c                                     |  34 +++---
+ mm/sparse-vmemmap.c                           |   8 +-
+ mm/swap_state.c                               |   8 +-
+ mm/swapfile.c                                 |  20 ++--
+ mm/userfaultfd.c                              |   4 +-
+ mm/vmalloc.c                                  |   6 +-
+ mm/vmscan.c                                   |  14 +--
+ virt/kvm/kvm_main.c                           |  11 +-
+ 48 files changed, 316 insertions(+), 243 deletions(-)
+
+--
+2.25.1
+
