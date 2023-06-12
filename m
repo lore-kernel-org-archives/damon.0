@@ -1,218 +1,109 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-io1-f44.google.com (mail-io1-f44.google.com [209.85.166.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BB11C8C1
-	for <damon@lists.linux.dev>; Mon, 12 Jun 2023 21:27:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BE59C433D2;
-	Mon, 12 Jun 2023 21:27:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1686605247;
-	bh=7LfNjfS4Zf4U5lMlQ2I09BVw2IXRjySt/jv0/P+rlX4=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dacuBPoSFVDZwmysWY0+sJX2kCpLfzlOADMPWlPI1SXhY5oymB/CjE1k3GxRDWEvy
-	 +K68RJCTIWgm2AXWaHWcUrZeQzQSnCsu+OTNcTTgAHVbgq63G39+XV47Am+tCO4Y0Y
-	 xc9hxFjwncmMg/Twg/IsjTGVO87I/4PrZUqrl48TttOWMtN2d6vRlZoskBNffkVCJZ
-	 Z1GZRN5dZffADCi0q8aVKxHHhkX5HLiwjCbIGku1nIoQLs2+lxofK9jefoj0jetdPt
-	 twTY2rj6QVhglYyTNio8xUlTVQDpyJHbHRIi5Jb7iiTi/LUeoY3c/7Mk+b5X/cfkQS
-	 IAWgPT5j0O17Q==
-From: SeongJae Park <sj@kernel.org>
-To: Ryan Roberts <ryan.roberts@arm.com>
-Cc: "SeongJae Park" <sj@kernel.org>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
-	"Mike Rapoport" <rppt@kernel.org>,
-	"Yu Zhao" <yuzhao@google.com>,
-	"Jason Gunthorpe" <jgg@ziepe.ca>,
-	"David Airlie" <airlied@gmail.com>,
-	"Daniel Vetter" <daniel@ffwll.ch>,
-	"Dimitri Sivanich" <dimitri.sivanich@hpe.com>,
-	"Alex Williamson" <alex.williamson@redhat.com>,
-	"Oleksandr Tyshchenko" <oleksandr_tyshchenko@epam.com>,
-	"Alexander Viro" <viro@zeniv.linux.org.uk>,
-	"Christian Brauner" <brauner@kernel.org>,
-	"Mike Kravetz" <mike.kravetz@oracle.com>,
-	"Muchun Song" <muchun.song@linux.dev>,
-	"Mark Rutland" <mark.rutland@arm.com>,
-	"Alexander Shishkin" <alexander.shishkin@linux.intel.com>,
-	"Jiri Olsa" <jolsa@kernel.org>,
-	"Namhyung Kim" <namhyung@kernel.org>,
-	"Ian Rogers" <irogers@google.com>,
-	"Adrian Hunter" <adrian.hunter@intel.com>,
-	=?UTF-8?q?J=C3=A9r=C3=B4me=20Glisse?= <jglisse@redhat.com>,
-	"Andrey Ryabinin" <ryabinin.a.a@gmail.com>,
-	"Alexander Potapenko" <glider@google.com>,
-	"Andrey Konovalov" <andreyknvl@gmail.com>,
-	"Dmitry Vyukov" <dvyukov@google.com>,
-	"Vincenzo Frascino" <vincenzo.frascino@arm.com>,
-	"Johannes Weiner" <hannes@cmpxchg.org>,
-	"Michal Hocko" <mhocko@kernel.org>,
-	"Roman Gushchin" <roman.gushchin@linux.dev>,
-	"Shakeel Butt" <shakeelb@google.com>,
-	"Naoya Horiguchi" <naoya.horiguchi@nec.com>,
-	"Miaohe Lin" <linmiaohe@huawei.com>,
-	"Pasha Tatashin" <pasha.tatashin@soleen.com>,
-	"Uladzislau Rezki" <urezki@gmail.com>,
-	"Christoph Hellwig" <hch@infradead.org>,
-	"Lorenzo Stoakes" <lstoakes@gmail.com>,
-	linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org,
-	damon@lists.linux.dev,
-	kernel test robot <lkp@intel.com>
-Subject: Re: [PATCH v3 3/3] mm: ptep_get() conversion
-Date: Mon, 12 Jun 2023 21:27:23 +0000
-Message-Id: <20230612212723.196693-1-sj@kernel.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20230612151545.3317766-4-ryan.roberts@arm.com>
-References: 
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4154E23C9B
+	for <damon@lists.linux.dev>; Mon, 12 Jun 2023 22:32:12 +0000 (UTC)
+Received: by mail-io1-f44.google.com with SMTP id ca18e2360f4ac-777abee746cso44255239f.0
+        for <damon@lists.linux.dev>; Mon, 12 Jun 2023 15:32:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxfoundation.org; s=google; t=1686609131; x=1689201131;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=zO8aM9RsIffIjx4jAwj5YcVlYgxgznlqdMEphKaCDWk=;
+        b=eGRWpJQyLSZ6IJ+0Ht1B84epSUoTv4pGbA2zVUUlO+1PNHFgxxNITeeSnByn3mXOTx
+         Qi4G578qXQJw2cI1mU5N4iGZkTcyjm5XG1NKGzusRMBQWN3pJvILgFsUxYr+9e1OykwC
+         RVIzfpZWwskQp9n7U40PWoJmEH7D5W+BV8qKo=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1686609131; x=1689201131;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=zO8aM9RsIffIjx4jAwj5YcVlYgxgznlqdMEphKaCDWk=;
+        b=EGZMfJV14YWDPt+DMBxRsoDgICsCYPOVQ6a9FywXhW0f33tUqtS1CTp9IyBzSaLe9Z
+         +9WZ1eKzZC+qfYNFwNgtuPuO/yq21/fktKy76OqTdUKhfgaSAUgJSvb/xcN4xGjsj+rm
+         FVMWRSrQcFNpNDBPoLHILnA9aP0vsBtnotwQv2MabfVPrzdIQeXHEkyUk1VK/AEH2Fah
+         hg48/5acA5tCb4oJp1XEPYssivTkiD+M94Kb9KvT1dD/GnoNbDy1HvDnvY2S+KPdkmCj
+         affQaEl6DHSuzA8X3RxaFSrafKjE7xAPdgFk/S1SMZDk1ae3MvgAikzKh8h1VE7KL0Lh
+         Kc8g==
+X-Gm-Message-State: AC+VfDxxynUD3IkmaTKkYJY/0Zlx2q1AIzylX9FijmJVarouLMTNfLoR
+	PI9SeWJbbnuaBIJ8TGRkugb/2D4o9pZbPMNNGSE=
+X-Google-Smtp-Source: ACHHUZ4faLgbaPTuPJztAFxODz/u7zHgz+n9zvWgBtWNe3m/0cIMYBx82V/NN7XO82lNQl6eKLSOag==
+X-Received: by 2002:a05:6e02:585:b0:33b:3a14:c14c with SMTP id c5-20020a056e02058500b0033b3a14c14cmr5983221ils.3.1686609131185;
+        Mon, 12 Jun 2023 15:32:11 -0700 (PDT)
+Received: from [192.168.1.128] ([38.15.45.1])
+        by smtp.gmail.com with ESMTPSA id 6-20020a920d06000000b0033d136f248esm3474021iln.5.2023.06.12.15.32.10
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 12 Jun 2023 15:32:10 -0700 (PDT)
+Message-ID: <b9dd402c-d8d6-e6e9-f17b-304a1dc8a578@linuxfoundation.org>
+Date: Mon, 12 Jun 2023 16:32:10 -0600
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCHv2] selftests: damon: add config file
+Content-Language: en-US
+To: SeongJae Park <sj@kernel.org>
+Cc: akpm@linux-foundation.org, Anders Roxell <anders.roxell@linaro.org>,
+ shuah@kernel.org, linux-kernel@vger.kernel.org, damon@lists.linux.dev,
+ linux-mm@kvack.org, linux-kselftest@vger.kernel.org,
+ Naresh Kamboju <naresh.kamboju@linaro.org>,
+ Shuah Khan <skhan@linuxfoundation.org>
+References: <20230609191622.80289-1-sj@kernel.org>
+From: Shuah Khan <skhan@linuxfoundation.org>
+In-Reply-To: <20230609191622.80289-1-sj@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Mon, 12 Jun 2023 16:15:45 +0100 Ryan Roberts <ryan.roberts@arm.com> wrote:
+On 6/9/23 13:16, SeongJae Park wrote:
+> On Wed, 12 Apr 2023 16:58:06 +0000 SeongJae Park <sj@kernel.org> wrote:
+> 
+>> Hi Anders,
+>>
+>> On Wed, 12 Apr 2023 11:28:54 +0200 Anders Roxell <anders.roxell@linaro.org> wrote:
+>>
+>>> Building and running the subsuite 'damon' of kselftest, shows the
+>>> following issues:
+>>>   selftests: damon: debugfs_attrs.sh
+>>>    /sys/kernel/debug/damon not found
+>>>
+>>> By creating a config file enabling DAMON fragments in the
+>>> selftests/damon/ directory the tests pass.
+>>>
+>>> Fixes: b348eb7abd09 ("mm/damon: add user space selftests")
+>>> Reported-by: Naresh Kamboju <naresh.kamboju@linaro.org>
+>>
+>> checkpatch.pl is warning as below:
+>>
+>>      WARNING: Reported-by: should be immediately followed by Link: with a URL to the report
+>>      #20:
+>>      Reported-by: Naresh Kamboju <naresh.kamboju@linaro.org>
+>>      Signed-off-by: Anders Roxell <anders.roxell@linaro.org>
+>>
+>> The reason for the warning can be found from commit d7f1d71e5ef6 ("checkpatch:
+>> warn when Reported-by: is not followed by Link:")'s commit message.  Do you
+>> have a link to put here?  I guess the report was made inside Linaro, so might
+>> have no publicly available link.  Maybe better to add some notes or some funny
+>> tag like "Link: N/A # no publicly-available link of the report" for convincing
+>> the tool, but I don't think this should be a blocker for this patch.
+>>
+>>> Signed-off-by: Anders Roxell <anders.roxell@linaro.org>
+>>
+>> Reviewed-by: SeongJae Park <sj@kernel.org>
+> 
+> Shuah, may I ask your opinion on this patch?
+> 
+> I'm also cc-ing Andrew, as he may also interested in picking this patch.
+> 
 
-> Convert all instances of direct pte_t* dereferencing to instead use
-> ptep_get() helper. This means that by default, the accesses change from
-> a C dereference to a READ_ONCE(). This is technically the correct thing
-> to do since where pgtables are modified by HW (for access/dirty) they
-> are volatile and therefore we should always ensure READ_ONCE()
-> semantics.
-> 
-> But more importantly, by always using the helper, it can be overridden
-> by the architecture to fully encapsulate the contents of the pte. Arch
-> code is deliberately not converted, as the arch code knows best. It is
-> intended that arch code (arm64) will override the default with its own
-> implementation that can (e.g.) hide certain bits from the core code, or
-> determine young/dirty status by mixing in state from another source.
-> 
-> Conversion was done using Coccinelle:
-> 
-> ----
-> 
-> // $ make coccicheck \
-> //          COCCI=ptepget.cocci \
-> //          SPFLAGS="--include-headers" \
-> //          MODE=patch
-> 
-> virtual patch
-> 
-> @ depends on patch @
-> pte_t *v;
-> @@
-> 
-> - *v
-> + ptep_get(v)
-> 
-> ----
-> 
-> Then reviewed and hand-edited to avoid multiple unnecessary calls to
-> ptep_get(), instead opting to store the result of a single call in a
-> variable, where it is correct to do so. This aims to negate any cost of
-> READ_ONCE() and will benefit arch-overrides that may be more complex.
-> 
-> Included is a fix for an issue in an earlier version of this patch that
-> was pointed out by kernel test robot. The issue arose because config
-> MMU=n elides definition of the ptep helper functions, including
-> ptep_get(). HUGETLB_PAGE=n configs still define a simple
-> huge_ptep_clear_flush() for linking purposes, which dereferences the
-> ptep. So when both configs are disabled, this caused a build error
-> because ptep_get() is not defined. Fix by continuing to do a direct
-> dereference when MMU=n. This is safe because for this config the arch
-> code cannot be trying to virtualize the ptes because none of the ptep
-> helpers are defined.
-> 
-> Reported-by: kernel test robot <lkp@intel.com>
-> Link: https://lore.kernel.org/oe-kbuild-all/202305120142.yXsNEo6H-lkp@intel.com/
-> Signed-off-by: Ryan Roberts <ryan.roberts@arm.com>
-> ---
->  .../drm/i915/gem/selftests/i915_gem_mman.c    |   8 +-
->  drivers/misc/sgi-gru/grufault.c               |   2 +-
->  drivers/vfio/vfio_iommu_type1.c               |   7 +-
->  drivers/xen/privcmd.c                         |   2 +-
->  fs/proc/task_mmu.c                            |  33 +++---
->  fs/userfaultfd.c                              |   6 +-
->  include/linux/hugetlb.h                       |   4 +
->  include/linux/mm_inline.h                     |   2 +-
->  include/linux/pgtable.h                       |   6 +-
->  kernel/events/uprobes.c                       |   2 +-
->  mm/damon/ops-common.c                         |   2 +-
->  mm/damon/paddr.c                              |   2 +-
->  mm/damon/vaddr.c                              |  10 +-
-[...]
-> diff --git a/mm/damon/ops-common.c b/mm/damon/ops-common.c
-> index d4ab81229136..e940802a15a4 100644
-> --- a/mm/damon/ops-common.c
-> +++ b/mm/damon/ops-common.c
-> @@ -39,7 +39,7 @@ struct folio *damon_get_folio(unsigned long pfn)
->  
->  void damon_ptep_mkold(pte_t *pte, struct vm_area_struct *vma, unsigned long addr)
->  {
-> -	struct folio *folio = damon_get_folio(pte_pfn(*pte));
-> +	struct folio *folio = damon_get_folio(pte_pfn(ptep_get(pte)));
->  
->  	if (!folio)
->  		return;
-> diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
-> index 5b3a3463d078..40801e38fcf0 100644
-> --- a/mm/damon/paddr.c
-> +++ b/mm/damon/paddr.c
-> @@ -89,7 +89,7 @@ static bool __damon_pa_young(struct folio *folio, struct vm_area_struct *vma,
->  	while (page_vma_mapped_walk(&pvmw)) {
->  		addr = pvmw.address;
->  		if (pvmw.pte) {
-> -			*accessed = pte_young(*pvmw.pte) ||
-> +			*accessed = pte_young(ptep_get(pvmw.pte)) ||
->  				!folio_test_idle(folio) ||
->  				mmu_notifier_test_young(vma->vm_mm, addr);
->  		} else {
-> diff --git a/mm/damon/vaddr.c b/mm/damon/vaddr.c
-> index e814f66dfc2e..2fcc9731528a 100644
-> --- a/mm/damon/vaddr.c
-> +++ b/mm/damon/vaddr.c
-> @@ -323,7 +323,7 @@ static int damon_mkold_pmd_entry(pmd_t *pmd, unsigned long addr,
->  		walk->action = ACTION_AGAIN;
->  		return 0;
->  	}
-> -	if (!pte_present(*pte))
-> +	if (!pte_present(ptep_get(pte)))
->  		goto out;
->  	damon_ptep_mkold(pte, walk->vma, addr);
->  out:
-> @@ -433,6 +433,7 @@ static int damon_young_pmd_entry(pmd_t *pmd, unsigned long addr,
->  		unsigned long next, struct mm_walk *walk)
->  {
->  	pte_t *pte;
-> +	pte_t ptent;
->  	spinlock_t *ptl;
->  	struct folio *folio;
->  	struct damon_young_walk_private *priv = walk->private;
-> @@ -471,12 +472,13 @@ static int damon_young_pmd_entry(pmd_t *pmd, unsigned long addr,
->  		walk->action = ACTION_AGAIN;
->  		return 0;
->  	}
-> -	if (!pte_present(*pte))
-> +	ptent = ptep_get(pte);
-> +	if (!pte_present(ptent))
->  		goto out;
-> -	folio = damon_get_folio(pte_pfn(*pte));
-> +	folio = damon_get_folio(pte_pfn(ptent));
->  	if (!folio)
->  		goto out;
-> -	if (pte_young(*pte) || !folio_test_idle(folio) ||
-> +	if (pte_young(ptent) || !folio_test_idle(folio) ||
->  			mmu_notifier_test_young(walk->mm, addr))
->  		priv->young = true;
->  	*priv->folio_sz = folio_size(folio);
+If Andrew wants to pick this up:
 
-For above DAMON part,
+Acked-by: Shuah Khan <skhan@linuxfoundation.org>
 
-Reviewed-by: SeongJae Park <sj@kernel.org>
+thanks,
+-- Shuah
 
-
-Thanks,
-SJ
-
-[...]
