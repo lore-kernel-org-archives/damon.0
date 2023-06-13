@@ -1,109 +1,117 @@
-Received: from mail-io1-f44.google.com (mail-io1-f44.google.com [209.85.166.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out-18.mta0.migadu.com (out-18.mta0.migadu.com [91.218.175.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4154E23C9B
-	for <damon@lists.linux.dev>; Mon, 12 Jun 2023 22:32:12 +0000 (UTC)
-Received: by mail-io1-f44.google.com with SMTP id ca18e2360f4ac-777abee746cso44255239f.0
-        for <damon@lists.linux.dev>; Mon, 12 Jun 2023 15:32:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google; t=1686609131; x=1689201131;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=zO8aM9RsIffIjx4jAwj5YcVlYgxgznlqdMEphKaCDWk=;
-        b=eGRWpJQyLSZ6IJ+0Ht1B84epSUoTv4pGbA2zVUUlO+1PNHFgxxNITeeSnByn3mXOTx
-         Qi4G578qXQJw2cI1mU5N4iGZkTcyjm5XG1NKGzusRMBQWN3pJvILgFsUxYr+9e1OykwC
-         RVIzfpZWwskQp9n7U40PWoJmEH7D5W+BV8qKo=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686609131; x=1689201131;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=zO8aM9RsIffIjx4jAwj5YcVlYgxgznlqdMEphKaCDWk=;
-        b=EGZMfJV14YWDPt+DMBxRsoDgICsCYPOVQ6a9FywXhW0f33tUqtS1CTp9IyBzSaLe9Z
-         +9WZ1eKzZC+qfYNFwNgtuPuO/yq21/fktKy76OqTdUKhfgaSAUgJSvb/xcN4xGjsj+rm
-         FVMWRSrQcFNpNDBPoLHILnA9aP0vsBtnotwQv2MabfVPrzdIQeXHEkyUk1VK/AEH2Fah
-         hg48/5acA5tCb4oJp1XEPYssivTkiD+M94Kb9KvT1dD/GnoNbDy1HvDnvY2S+KPdkmCj
-         affQaEl6DHSuzA8X3RxaFSrafKjE7xAPdgFk/S1SMZDk1ae3MvgAikzKh8h1VE7KL0Lh
-         Kc8g==
-X-Gm-Message-State: AC+VfDxxynUD3IkmaTKkYJY/0Zlx2q1AIzylX9FijmJVarouLMTNfLoR
-	PI9SeWJbbnuaBIJ8TGRkugb/2D4o9pZbPMNNGSE=
-X-Google-Smtp-Source: ACHHUZ4faLgbaPTuPJztAFxODz/u7zHgz+n9zvWgBtWNe3m/0cIMYBx82V/NN7XO82lNQl6eKLSOag==
-X-Received: by 2002:a05:6e02:585:b0:33b:3a14:c14c with SMTP id c5-20020a056e02058500b0033b3a14c14cmr5983221ils.3.1686609131185;
-        Mon, 12 Jun 2023 15:32:11 -0700 (PDT)
-Received: from [192.168.1.128] ([38.15.45.1])
-        by smtp.gmail.com with ESMTPSA id 6-20020a920d06000000b0033d136f248esm3474021iln.5.2023.06.12.15.32.10
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 12 Jun 2023 15:32:10 -0700 (PDT)
-Message-ID: <b9dd402c-d8d6-e6e9-f17b-304a1dc8a578@linuxfoundation.org>
-Date: Mon, 12 Jun 2023 16:32:10 -0600
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D99217C7
+	for <damon@lists.linux.dev>; Tue, 13 Jun 2023 02:17:15 +0000 (UTC)
+Content-Type: text/plain;
+	charset=us-ascii
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1686622633;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=17ugyNFhbrwEanCoHF7v9qrJ1jJmHx/jdN9D7BRY9oE=;
+	b=m7DmPVEXGMkpf0bo+q5pbu5oDDKH189Z/XzRq7Dih/3Dx0SQfpjZXQWTSJWS3TkVoCDoXU
+	+v02nL8NwADRue1ybe3/uGEqr48aSC+9ZD5XlLUCSo4eNSNQeoeI8A91KFFzRGT1sCbUPr
+	MXmvlJA1v+AC/K7Zq4kbQC18O8E8+QA=
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCHv2] selftests: damon: add config file
-Content-Language: en-US
-To: SeongJae Park <sj@kernel.org>
-Cc: akpm@linux-foundation.org, Anders Roxell <anders.roxell@linaro.org>,
- shuah@kernel.org, linux-kernel@vger.kernel.org, damon@lists.linux.dev,
- linux-mm@kvack.org, linux-kselftest@vger.kernel.org,
- Naresh Kamboju <naresh.kamboju@linaro.org>,
- Shuah Khan <skhan@linuxfoundation.org>
-References: <20230609191622.80289-1-sj@kernel.org>
-From: Shuah Khan <skhan@linuxfoundation.org>
-In-Reply-To: <20230609191622.80289-1-sj@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Subject: Re: [PATCH v3 0/3] Encapsulate PTE contents from non-arch code
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Muchun Song <muchun.song@linux.dev>
+In-Reply-To: <20230612151545.3317766-1-ryan.roberts@arm.com>
+Date: Tue, 13 Jun 2023 10:16:26 +0800
+Cc: Andrew Morton <akpm@linux-foundation.org>,
+ SeongJae Park <sj@kernel.org>,
+ "Matthew Wilcox (Oracle)" <willy@infradead.org>,
+ "Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
+ Mike Rapoport <rppt@kernel.org>,
+ Yu Zhao <yuzhao@google.com>,
+ Jason Gunthorpe <jgg@ziepe.ca>,
+ David Airlie <airlied@gmail.com>,
+ Daniel Vetter <daniel@ffwll.ch>,
+ Dimitri Sivanich <dimitri.sivanich@hpe.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ Oleksandr Tyshchenko <oleksandr_tyshchenko@epam.com>,
+ Alexander Viro <viro@zeniv.linux.org.uk>,
+ Christian Brauner <brauner@kernel.org>,
+ Mike Kravetz <mike.kravetz@oracle.com>,
+ Mark Rutland <mark.rutland@arm.com>,
+ Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+ Jiri Olsa <jolsa@kernel.org>,
+ Namhyung Kim <namhyung@kernel.org>,
+ Ian Rogers <irogers@google.com>,
+ Adrian Hunter <adrian.hunter@intel.com>,
+ =?utf-8?B?SsOpcsO0bWUgR2xpc3Nl?= <jglisse@redhat.com>,
+ Andrey Ryabinin <ryabinin.a.a@gmail.com>,
+ Alexander Potapenko <glider@google.com>,
+ Andrey Konovalov <andreyknvl@gmail.com>,
+ Dmitry Vyukov <dvyukov@google.com>,
+ Vincenzo Frascino <vincenzo.frascino@arm.com>,
+ Johannes Weiner <hannes@cmpxchg.org>,
+ Michal Hocko <mhocko@kernel.org>,
+ Roman Gushchin <roman.gushchin@linux.dev>,
+ Shakeel Butt <shakeelb@google.com>,
+ Naoya Horiguchi <naoya.horiguchi@nec.com>,
+ Miaohe Lin <linmiaohe@huawei.com>,
+ Pasha Tatashin <pasha.tatashin@soleen.com>,
+ Uladzislau Rezki <urezki@gmail.com>,
+ Christoph Hellwig <hch@infradead.org>,
+ Lorenzo Stoakes <lstoakes@gmail.com>,
+ linux-kernel@vger.kernel.org,
+ Linux Memory Management List <linux-mm@kvack.org>,
+ damon@lists.linux.dev
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <3ECE40AA-536E-4A2C-82BA-FE74AA6FB689@linux.dev>
+References: <20230612151545.3317766-1-ryan.roberts@arm.com>
+To: Ryan Roberts <ryan.roberts@arm.com>
+X-Migadu-Flow: FLOW_OUT
 
-On 6/9/23 13:16, SeongJae Park wrote:
-> On Wed, 12 Apr 2023 16:58:06 +0000 SeongJae Park <sj@kernel.org> wrote:
-> 
->> Hi Anders,
->>
->> On Wed, 12 Apr 2023 11:28:54 +0200 Anders Roxell <anders.roxell@linaro.org> wrote:
->>
->>> Building and running the subsuite 'damon' of kselftest, shows the
->>> following issues:
->>>   selftests: damon: debugfs_attrs.sh
->>>    /sys/kernel/debug/damon not found
->>>
->>> By creating a config file enabling DAMON fragments in the
->>> selftests/damon/ directory the tests pass.
->>>
->>> Fixes: b348eb7abd09 ("mm/damon: add user space selftests")
->>> Reported-by: Naresh Kamboju <naresh.kamboju@linaro.org>
->>
->> checkpatch.pl is warning as below:
->>
->>      WARNING: Reported-by: should be immediately followed by Link: with a URL to the report
->>      #20:
->>      Reported-by: Naresh Kamboju <naresh.kamboju@linaro.org>
->>      Signed-off-by: Anders Roxell <anders.roxell@linaro.org>
->>
->> The reason for the warning can be found from commit d7f1d71e5ef6 ("checkpatch:
->> warn when Reported-by: is not followed by Link:")'s commit message.  Do you
->> have a link to put here?  I guess the report was made inside Linaro, so might
->> have no publicly available link.  Maybe better to add some notes or some funny
->> tag like "Link: N/A # no publicly-available link of the report" for convincing
->> the tool, but I don't think this should be a blocker for this patch.
->>
->>> Signed-off-by: Anders Roxell <anders.roxell@linaro.org>
->>
->> Reviewed-by: SeongJae Park <sj@kernel.org>
-> 
-> Shuah, may I ask your opinion on this patch?
-> 
-> I'm also cc-ing Andrew, as he may also interested in picking this patch.
-> 
 
-If Andrew wants to pick this up:
 
-Acked-by: Shuah Khan <skhan@linuxfoundation.org>
+> On Jun 12, 2023, at 23:15, Ryan Roberts <ryan.roberts@arm.com> wrote:
+>=20
+> Hi All,
+>=20
+> (Including wider audience this time since changes touch a fair few =
+subsystems)
+>=20
+> This is the second half of v3 of a series to improve the encapsulation =
+of pte
+> entries by disallowing non-arch code from directly dereferencing pte_t =
+pointers.
+> Based on earlier feedback, I split the series in 2; the first part, =
+fixes for
+> existing bugs, was already posted at [3] and merged into mm-stable. =
+This second
+> part contains the conversion from direct dereferences to instead use
+> ptep_get()/ptep_get_lockless().
+>=20
+> See the v1 cover letter at [1] for rationale for this work.
+>=20
+> Based on feedback at v2, I've removed the new ptep_deref() helper I =
+originally
+> added, and am now using the existing ptep_get() and =
+ptep_get_lockless() helpers.
 
-thanks,
--- Shuah
+When I first saw the name of ptep_get()/ptep_get_lockless(), I thought
+the pte seems like to be protected by the refcount mechanism (Why I have
+this though? Because Qi Zheng has proposed a approach to free pte page =
+tables
+by using the refcount mechanism [1]). And your proposed name of =
+ptep_deref()
+is intuitive for me, so I have another thought, should we rename =
+ptep_get()
+to ptep_deref()? Just a thought from me, I'd like to hear if others =
+object.
 
+Thanks.
+
+[1] =
+https://lore.kernel.org/lkml/20211110105428.32458-7-zhengqi.arch@bytedance=
+.com/=
