@@ -1,106 +1,163 @@
-Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAE591844
-	for <damon@lists.linux.dev>; Tue, 13 Jun 2023 06:49:07 +0000 (UTC)
-Received: from pps.filterd (m0353722.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35D6kFRI027368;
-	Tue, 13 Jun 2023 06:48:55 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=message-id : date : to :
- cc : from : subject : content-type : content-transfer-encoding :
- mime-version; s=pp1; bh=gmG6z0AdC2J3asvww+4weYo/FbTqpbQY75lclW4dW5U=;
- b=nto1vGxCV/1509gKv0IuwXiaH9KoEIn/AuC1/ucd2yi/t493U6dMjPQ9FD94jO9NcXFy
- AMFdKrDCCunnwaE6Y45TqOj+/fvNOA50YXOwDmZ1ko3xKVzxDA9RPWC73OfGS2W7l8R1
- 4vlpaP2UhMr/9jXO+1rwSxMWRNVq47i6tQD9f8Ad012w/cgA0qQfkUWD4ky0lDxxarjA
- JkrwvS/nvWqFgGfydXPfqboDrJx73lUrrtvydLsJjQL0qkzy6pA0svy78ueOcLmWny7R
- DSXSK99XFbgNAPrvYgXUohWdWsM8KBpOQbe2Djd9b5K69pNC2cFBCDfYEuOpQt3ibRQw 6Q== 
-Received: from ppma04ams.nl.ibm.com (63.31.33a9.ip4.static.sl-reverse.com [169.51.49.99])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3r6k0rgk9e-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 13 Jun 2023 06:48:54 +0000
-Received: from pps.filterd (ppma04ams.nl.ibm.com [127.0.0.1])
-	by ppma04ams.nl.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id 35D4rEvu017859;
-	Tue, 13 Jun 2023 06:48:52 GMT
-Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
-	by ppma04ams.nl.ibm.com (PPS) with ESMTPS id 3r4gt51y2t-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 13 Jun 2023 06:48:52 +0000
-Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com [10.20.54.105])
-	by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 35D6mocb18285256
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Tue, 13 Jun 2023 06:48:50 GMT
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 6BB5620049;
-	Tue, 13 Jun 2023 06:48:50 +0000 (GMT)
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 643B920040;
-	Tue, 13 Jun 2023 06:48:49 +0000 (GMT)
-Received: from [9.109.218.210] (unknown [9.109.218.210])
-	by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
-	Tue, 13 Jun 2023 06:48:49 +0000 (GMT)
-Message-ID: <e6e8c252-f7b4-e71f-0315-f6cc774354d2@linux.ibm.com>
-Date: Tue, 13 Jun 2023 12:18:48 +0530
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Content-Language: en-US
-To: sjpark@amazon.de, damon@lists.linux.dev
-Cc: linux-mm@kvack.org, aneesh.kumar@linux.ibm.com
-From: Piyush Sachdeva <piyushs@linux.ibm.com>
-Subject: DAMON testing and benchmarking
-Content-Type: text/plain; charset=UTF-8; format=flowed
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: PhxerfucwcE4aUzYIjSfEZV4N9KaVk59
-X-Proofpoint-ORIG-GUID: PhxerfucwcE4aUzYIjSfEZV4N9KaVk59
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B57A33C22
+	for <damon@lists.linux.dev>; Tue, 13 Jun 2023 08:43:26 +0000 (UTC)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 8C8C41FB;
+	Tue, 13 Jun 2023 01:44:10 -0700 (PDT)
+Received: from [10.57.74.148] (unknown [10.57.74.148])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 5F5C33F71E;
+	Tue, 13 Jun 2023 01:43:20 -0700 (PDT)
+Message-ID: <6b328080-ca6e-a2b1-4644-a29b62d6ac6e@arm.com>
+Date: Tue, 13 Jun 2023 09:43:18 +0100
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
- definitions=2023-06-13_04,2023-06-12_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- suspectscore=0 phishscore=0 bulkscore=0 clxscore=1011 adultscore=0
- malwarescore=0 mlxscore=0 spamscore=0 mlxlogscore=773 impostorscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2305260000 definitions=main-2306130058
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.11.2
+Subject: Re: [PATCH v3 0/3] Encapsulate PTE contents from non-arch code
+To: Andrew Morton <akpm@linux-foundation.org>
+Cc: SeongJae Park <sj@kernel.org>,
+ "Matthew Wilcox (Oracle)" <willy@infradead.org>,
+ "Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
+ Mike Rapoport <rppt@kernel.org>, Yu Zhao <yuzhao@google.com>,
+ Jason Gunthorpe <jgg@ziepe.ca>, David Airlie <airlied@gmail.com>,
+ Daniel Vetter <daniel@ffwll.ch>, Dimitri Sivanich
+ <dimitri.sivanich@hpe.com>, Alex Williamson <alex.williamson@redhat.com>,
+ Oleksandr Tyshchenko <oleksandr_tyshchenko@epam.com>,
+ Alexander Viro <viro@zeniv.linux.org.uk>,
+ Christian Brauner <brauner@kernel.org>,
+ Mike Kravetz <mike.kravetz@oracle.com>, Muchun Song <muchun.song@linux.dev>,
+ Mark Rutland <mark.rutland@arm.com>,
+ Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+ Jiri Olsa <jolsa@kernel.org>, Namhyung Kim <namhyung@kernel.org>,
+ Ian Rogers <irogers@google.com>, Adrian Hunter <adrian.hunter@intel.com>,
+ =?UTF-8?B?SsOpcsO0bWUgR2xpc3Nl?= <jglisse@redhat.com>,
+ Andrey Ryabinin <ryabinin.a.a@gmail.com>,
+ Alexander Potapenko <glider@google.com>,
+ Andrey Konovalov <andreyknvl@gmail.com>, Dmitry Vyukov <dvyukov@google.com>,
+ Vincenzo Frascino <vincenzo.frascino@arm.com>,
+ Johannes Weiner <hannes@cmpxchg.org>, Michal Hocko <mhocko@kernel.org>,
+ Roman Gushchin <roman.gushchin@linux.dev>, Shakeel Butt
+ <shakeelb@google.com>, Naoya Horiguchi <naoya.horiguchi@nec.com>,
+ Miaohe Lin <linmiaohe@huawei.com>, Pasha Tatashin
+ <pasha.tatashin@soleen.com>, Uladzislau Rezki <urezki@gmail.com>,
+ Christoph Hellwig <hch@infradead.org>, Lorenzo Stoakes <lstoakes@gmail.com>,
+ linux-kernel@vger.kernel.org, linux-mm@kvack.org, damon@lists.linux.dev
+References: <20230612151545.3317766-1-ryan.roberts@arm.com>
+ <20230612131656.2ba4f95865f27e6b3b984936@linux-foundation.org>
+From: Ryan Roberts <ryan.roberts@arm.com>
+In-Reply-To: <20230612131656.2ba4f95865f27e6b3b984936@linux-foundation.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Dear Mr. SeongJae Park,
-I hope this email finds you well.
+Hi Andrew,
 
-For the last few months, I have been looking at DAMON from an end-users
-perspective and a developer's PoV. Most recently, I was focusing on
-`lru_sort.c` module that uses the `lru_prio` and `lru_deprio` operations
-which result in a more precise reclaim. In my understanding, enabling
-the "lru_sort.c" module would make intelligent decisions based on the
-access frequency of the pages and end up preventing hot page
-swaps. Hence, when integrated with an LRU algorithm, it should improve
-it.
+Thanks for taking the patches!
 
-If you could share any test/benchmark that you might have run to verify
-the above assumption? I did find the result numbers you posted (link
-below), but that doesn't mention the "plrus-*" scheme numbers. It also
-doesn't have numbers for running the `pageout` operation on the entire
-physical address space (paddr) i.e. the `pprcl` scheme. So, if you can
-link those too, it would be amazing.
+On 12/06/2023 21:16, Andrew Morton wrote:
+> On Mon, 12 Jun 2023 16:15:42 +0100 Ryan Roberts <ryan.roberts@arm.com> wrote:
+> 
+>> Hi All,
+>>
+>> (Including wider audience this time since changes touch a fair few subsystems)
+>>
+>> This is the second half of v3 of a series to improve the encapsulation of pte
+>> entries by disallowing non-arch code from directly dereferencing pte_t pointers.
+> 
+> That's basically all we have here for [0/N] cover letter content.  I
+> stole some words from the [3/3] changelog, so we now have:
+> 
+> : A series to improve the encapsulation of pte entries by disallowing
+> : non-arch code from directly dereferencing pte_t pointers.
+> : 
+> : This means that by default, the accesses change from a C dereference to a
+> : READ_ONCE().  This is technically the correct thing to do since where
+> : pgtables are modified by HW (for access/dirty) they are volatile and
+> : therefore we should always ensure READ_ONCE() semantics.
+> : 
+> : But more importantly, by always using the helper, it can be overridden by
+> : the architecture to fully encapsulate the contents of the pte.  Arch code
+> : is deliberately not converted, as the arch code knows best.  It is
+> : intended that arch code (arm64) will override the default with its own
+> : implementation that can (e.g.) hide certain bits from the core code, or
+> : determine young/dirty status by mixing in state from another source.
 
-Can you also share any real-world (memory-management specific) workload
-results that you would have used with DAMON in your experiments? Like
-either MongoDB or memcached over Parsec3.0 (including splash2x) - which,
-in my understanding, is less memory intensive and more architecture
-inclined.
+I'm not sure I've understood what you are saying here? Is there some expectation
+for the content of the cover letter for mm patches, which I'm not aware of? If
+you can point me to some docs I'll make sure I'm conformant in future.
 
-I also had a question regarding schemes - A scheme is highly tweakable,
-and it's what the efficiency of DAMON rests upon. The more precise the
-scheme, the more efficient DAMON will be. Hence, I'd be thankful if you
-can help me derive a config that would provide the best results.
-Hope to hear from you soon.
+> 
+> 
+>> Based on earlier feedback, I split the series in 2; the first part, fixes for
+>> existing bugs, was already posted at [3] and merged into mm-stable. This second
+>> part contains the conversion from direct dereferences to instead use
+>> ptep_get()/ptep_get_lockless().
+>>
+>> See the v1 cover letter at [1] for rationale for this work.
+>>
+>> Based on feedback at v2, I've removed the new ptep_deref() helper I originally
+>> added, and am now using the existing ptep_get() and ptep_get_lockless() helpers.
+>> Testing on Ampere Altra (arm64) showed no difference in performance when using
+>> ptep_deref() (*pte) vs ptep_get() (READ_ONCE(*pte)).
+>>
+>> Patches are based on mm-unstable (49e038b1919e) and a branch is available at [4]
+>> (Let me know if this is the wrong branch to target - I'm still not familiar with
+>> the details of the mm- dev process!). Note that Hugh Dickins's "mm: allow
+>> pte_offset_map[_lock]() to fail" (now in mm-unstable) patch set caused a number
+>> of conflicts which I've resolved. But due to that, you won't be able to apply
+>> these patches on top of Linus's tree. I have an alternate branch on top of
+>> v6.4-rc6 at [5].
+> 
+> Yep, that's all great, thanks.
+> 
+> 
+> Is there some clever trick we can do to prevent new open-coded derefs
+> of pte_t* from being introduced?
 
-Test results: https://damonitor.github.io/test/result/perf/latest/html/
+I've been thinking about this myself but don't have a good answer at the moment.
+I used 2 techniques to find them all, but neither are fullproof so required hand
+editing:
 
---
-Regards,
-Piyush Sachdeva
+1) global find/replace of "pte_t *" to "pte_handle_t ", and define pte_handle_t
+as void *. Then the compiler will throw an error for an attempted dereference.
+This obbiously only checks code that is actually being compiled, and it doesn't
+prevent anyone from declaring a pte_t* and directly dereferencing in future.
+
+2) Using the coccinelle script. This worked pretty well, but finds a few places
+where the pte_t pointer is not pointing to a page table, but a variable on the
+stack, and there it is legitimate to dereference (we don't want to use
+ptep_get()/ptep_set_at() there). And also flags up lots of arch code that needs
+to be ignored.
+
+There are coccinelle scripts kept in scripts/coccinelle that apprarently get run
+semi-regularly [1]. So could submit something there, but would need to add
+support for excluding the arch directory and for marking known false-positives,
+neither of which I think are currently available. Does anyone know better?
+
+> 
+> I suppose we could convert pte_t to a single-member struct to force a
+> compile error.  That struct will get passed by value to ptep_get() so
+> that's OK.  But this isn't viable unless/until all architectures are
+> converted :(
+
+It already is defined that way for arm64 at least:
+
+  typedef struct { pteval_t pte; } pte_t;
+
+But I'm not sure how that helps? You can still legally deref it in C.
+
+> 
+> Or we rely upon Ryan to grep the tree occasionally ;)
+
+This is my least favourite option ;-) But it wouldn't be the end of the world in
+the short term. Once I achieve the full objective of using arm64's contpte
+capability, open coded derefs will manifest as bugs (at least for cases where
+the accuracy of the access/dirty bits matter), which will certainly make sure
+they get fixed.
+
+Thanks,
+Ryan
+
