@@ -1,43 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF59A253B8
-	for <damon@lists.linux.dev>; Mon, 17 Jul 2023 19:30:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 282DCC433C8;
-	Mon, 17 Jul 2023 19:30:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDBE811185
+	for <damon@lists.linux.dev>; Tue, 18 Jul 2023 16:19:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0562C433C8;
+	Tue, 18 Jul 2023 16:19:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1689622219;
-	bh=B3lKcl6AG4VzLC8vKc3oOwsXsHm9qE0hLnyJCufjkwQ=;
+	s=k20201202; t=1689697175;
+	bh=o6/z++iAsfxtC4ue21DXnPDGcjMDSp5m+OtMQDwMI+Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tZBQ0hW12YiHopMYlgU/iscjagmj++kFnsMTRjCXXss4RiQSZmC+t1AoqGLtwSH/Q
-	 ApRemcZP1v8V0m6UAxS1FT0C/s3o6IyBBx980E6uz1JTeeg30qeLdFNpeh9eiAS9UO
-	 ypGzf+fanyWIUa5996eXCNxKos8nrQJD3hXn+b51BlcSEZIg2QtnqOntZITca/GM3F
-	 rWSt60S2igAtbmHSzNBLFkG3/oW96LvlEHPby+FkCu4ayFcG44Y4eOBUCl49O4AGum
-	 zt7XLhr0V/n4IPtlkN1uJL/Pb9V6soEQ9Rdl6aqDNqN/1So3uIzt8vuoZTSC0w4ClN
-	 Q5VPS8kggiT0Q==
+	b=GMAFV3ptIcg8KmlYOr5yFD5yYC0pYLFymRyLCv81KtSWLVQ5kqJLQH9IRQ0DJ41Fl
+	 9z2pxXwKnxXwaKcR4xYaxowByK6fkzYTAJyXavdvJEXRyQ0/mB/RG/yPMtw5GSToyQ
+	 fDd+3eKOmJHLkL/YqTFRSsf1/FGf5OxMspPNw4nTJYILEDqKLWOf7SR4oKSBHC3YzI
+	 f309AscsqKYbSBp5H8sXwEhKE2Or8RvZ14jGGMC3euDZZyXTx9fY2s6HYby6Dn6T6n
+	 aMhTGCP25yFGuIqKkUlEu9Cb0nFzgV4OvvM9S+9XCz44yiHq8x1Z/XueyBQfSKQnrS
+	 KpNg0fVUSwWYw==
 From: SeongJae Park <sj@kernel.org>
-To: gregkh@linuxfoundation.org
-Cc: ryan.roberts@arm.com,
-	akpm@linux-foundation.org,
-	hch@lst.de,
-	kirill.shutemov@linux.intel.com,
-	lstoakes@gmail.com,
-	rppt@kernel.org,
-	sj@kernel.org,
-	stable@vger.kernel.org,
-	urezki@gmail.com,
-	willy@infradead.org,
-	yuzhao@google.com,
-	ziy@nvidia.com,
-	damon@lists.linux.dev,
+To: SeongJae Park <sj@kernel.org>
+Cc: Feng Tang <feng.tang@intel.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH 5.15.y] mm/damon/ops-common: atomically test and clear young on ptes and pmds
-Date: Mon, 17 Jul 2023 19:30:08 +0000
-Message-Id: <20230717193008.122040-1-sj@kernel.org>
+	linux-kernel@vger.kernel.org,
+	damon@lists.linux.dev
+Subject: Re: [PATCH] mm/damon/core-test: Initialise context before test in damon_test_set_attrs()
+Date: Tue, 18 Jul 2023 16:19:33 +0000
+Message-Id: <20230718161933.78949-1-sj@kernel.org>
 X-Mailer: git-send-email 2.25.1
-In-Reply-To: <2023071613-reminder-relapse-b922@gregkh>
-References: <2023071613-reminder-relapse-b922@gregkh>
+In-Reply-To: <20230718161656.78877-1-sj@kernel.org>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -46,114 +36,68 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-From: Ryan Roberts <ryan.roberts@arm.com>
+Also, please note that it would be very helpful if you could Cc
+damon@lists.linux.dev for all DAMON-related patches from the next time.  I'm
+cc-ing the list.
 
-commit c11d34fa139e4b0fb4249a30f37b178353533fa1 upstream.
 
-It is racy to non-atomically read a pte, then clear the young bit, then
-write it back as this could discard dirty information.  Further, it is bad
-practice to directly set a pte entry within a table.  Instead clearing
-young must go through the arch-provided helper,
-ptep_test_and_clear_young() to ensure it is modified atomically and to
-give the arch code visibility and allow it to check (and potentially
-modify) the operation.
+Thanks,
+SJ
 
-Link: https://lkml.kernel.org/r/20230602092949.545577-3-ryan.roberts@arm.com
-Fixes: 3f49584b262c ("mm/damon: implement primitives for the virtual memory address spaces").
-Signed-off-by: Ryan Roberts <ryan.roberts@arm.com>
-Reviewed-by: Zi Yan <ziy@nvidia.com>
-Reviewed-by: SeongJae Park <sj@kernel.org>
-Reviewed-by: Mike Rapoport (IBM) <rppt@kernel.org>
-Cc: Christoph Hellwig <hch@lst.de>
-Cc: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
-Cc: Lorenzo Stoakes <lstoakes@gmail.com>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: Uladzislau Rezki (Sony) <urezki@gmail.com>
-Cc: Yu Zhao <yuzhao@google.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: SeongJae Park <sj@kernel.org>
----
-This is a manual backport of the commit, which cannot cleanly
-cherry-picked on 5.15.y[1], on 5.15.y, specifically 5.15.120.
+On Tue, 18 Jul 2023 16:16:56 +0000 SeongJae Park <sj@kernel.org> wrote:
 
-[1] https://lore.kernel.org/stable/2023071613-reminder-relapse-b922@gregkh/
-
- mm/damon/vaddr.c | 20 ++++++++------------
- 1 file changed, 8 insertions(+), 12 deletions(-)
-
-diff --git a/mm/damon/vaddr.c b/mm/damon/vaddr.c
-index 1945196fd743..6ad96da15081 100644
---- a/mm/damon/vaddr.c
-+++ b/mm/damon/vaddr.c
-@@ -393,7 +393,7 @@ static struct page *damon_get_page(unsigned long pfn)
- 	return page;
- }
- 
--static void damon_ptep_mkold(pte_t *pte, struct mm_struct *mm,
-+static void damon_ptep_mkold(pte_t *pte, struct vm_area_struct *vma,
- 			     unsigned long addr)
- {
- 	bool referenced = false;
-@@ -402,13 +402,11 @@ static void damon_ptep_mkold(pte_t *pte, struct mm_struct *mm,
- 	if (!page)
- 		return;
- 
--	if (pte_young(*pte)) {
-+	if (ptep_test_and_clear_young(vma, addr, pte))
- 		referenced = true;
--		*pte = pte_mkold(*pte);
--	}
- 
- #ifdef CONFIG_MMU_NOTIFIER
--	if (mmu_notifier_clear_young(mm, addr, addr + PAGE_SIZE))
-+	if (mmu_notifier_clear_young(vma->vm_mm, addr, addr + PAGE_SIZE))
- 		referenced = true;
- #endif /* CONFIG_MMU_NOTIFIER */
- 
-@@ -419,7 +417,7 @@ static void damon_ptep_mkold(pte_t *pte, struct mm_struct *mm,
- 	put_page(page);
- }
- 
--static void damon_pmdp_mkold(pmd_t *pmd, struct mm_struct *mm,
-+static void damon_pmdp_mkold(pmd_t *pmd, struct vm_area_struct *vma,
- 			     unsigned long addr)
- {
- #ifdef CONFIG_TRANSPARENT_HUGEPAGE
-@@ -429,13 +427,11 @@ static void damon_pmdp_mkold(pmd_t *pmd, struct mm_struct *mm,
- 	if (!page)
- 		return;
- 
--	if (pmd_young(*pmd)) {
-+	if (pmdp_test_and_clear_young(vma, addr, pmd))
- 		referenced = true;
--		*pmd = pmd_mkold(*pmd);
--	}
- 
- #ifdef CONFIG_MMU_NOTIFIER
--	if (mmu_notifier_clear_young(mm, addr,
-+	if (mmu_notifier_clear_young(vma->vm_mm, addr,
- 				addr + ((1UL) << HPAGE_PMD_SHIFT)))
- 		referenced = true;
- #endif /* CONFIG_MMU_NOTIFIER */
-@@ -462,7 +458,7 @@ static int damon_mkold_pmd_entry(pmd_t *pmd, unsigned long addr,
- 		}
- 
- 		if (pmd_huge(*pmd)) {
--			damon_pmdp_mkold(pmd, walk->mm, addr);
-+			damon_pmdp_mkold(pmd, walk->vma, addr);
- 			spin_unlock(ptl);
- 			return 0;
- 		}
-@@ -474,7 +470,7 @@ static int damon_mkold_pmd_entry(pmd_t *pmd, unsigned long addr,
- 	pte = pte_offset_map_lock(walk->mm, pmd, addr, &ptl);
- 	if (!pte_present(*pte))
- 		goto out;
--	damon_ptep_mkold(pte, walk->mm, addr);
-+	damon_ptep_mkold(pte, walk->vma, addr);
- out:
- 	pte_unmap_unlock(pte, ptl);
- 	return 0;
--- 
-2.25.1
-
+> Hi Feng Tang,
+> 
+> On Tue, 18 Jul 2023 13:28:11 +0800 Feng Tang <feng.tang@intel.com> wrote:
+> 
+> > Running kunit test for 6.5-rc1 hits one bug:
+> > 
+> >         ok 10 damon_test_update_monitoring_result
+> >     general protection fault, probably for non-canonical address 0x1bffa5c419cfb81: 0000 [#1] PREEMPT SMP NOPTI
+> >     CPU: 1 PID: 110 Comm: kunit_try_catch Tainted: G                 N 6.5.0-rc2 #15
+> >     Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
+> >     RIP: 0010:damon_set_attrs+0xb9/0x120
+> >     Code: f8 00 00 00 4c 8d 58 e0 48 39 c3 74 ba 41 ba 59 17 b7 d1 49 8b 43 10 4d
+> >     8d 4b 10 48 8d 70 e0 49 39 c1 74 50 49 8b 40 08 31 d2 <69> 4e 18 10 27 00 00
+> >     49 f7 30 31 d2 48 89 c5 89 c8 f7 f5 31 d2 89
+> >     RSP: 0000:ffffc900005bfd40 EFLAGS: 00010246
+> >     RAX: ffffffff81159fc0 RBX: ffffc900005bfeb8 RCX: 0000000000000000
+> >     RDX: 0000000000000000 RSI: 01bffa5c419cfb69 RDI: ffffc900005bfd70
+> >     RBP: ffffc90000013c10 R08: ffffc900005bfdc0 R09: ffffffff81ff10ed
+> >     R10: 00000000d1b71759 R11: ffffffff81ff10dd R12: ffffc90000013a78
+> >     R13: ffff88810eb78180 R14: ffffffff818297c0 R15: ffffc90000013c28
+> >     FS:  0000000000000000(0000) GS:ffff88813bd00000(0000) knlGS:0000000000000000
+> >     CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+> >     CR2: 0000000000000000 CR3: 0000000002a1c001 CR4: 0000000000370ee0
+> >     DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+> >     DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+> >     Call Trace:
+> >      <TASK>
+> >      damon_test_set_attrs+0x63/0x1f0
+> >      kunit_generic_run_threadfn_adapter+0x17/0x30
+> >      kthread+0xfd/0x130
+> 
+> Great.  But it would be even greater if you could this kind of output after
+> decoding the addreses using 'scripts/decode_stacktrace.sh` or
+> 'scripts/faddr2line' from next time if possible.
+> 
+> > 
+> > The problem seems to be related with the damon_ctx was used without
+> > being initialized. Fix it by adding the initialization.
+> 
+> Somehow the test always passed on my test machine, but maybe that's due to some
+> different behavior of my compiler.  I agree that could be the root cause
+> because 'damon_set_attrs()' calls 'damon_update_monitoring_results()', which
+> accesses the context's fields including the targets list.  Since the list is
+> not initialized in this test code, it would cause such error.
+> 
+> > 
+> > Fixes: aa13779be6b7 ("mm/damon/core-test: add a test for damon_set_attrs()")
+> > Signed-off-by: Feng Tang <feng.tang@intel.com>
+> 
+> Reviewed-by: SeongJae Park <sj@kernel.org>
+> 
+> 
+> Thanks,
+> SJ
+> 
