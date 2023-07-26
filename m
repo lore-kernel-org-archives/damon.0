@@ -1,75 +1,86 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D72DDA38
-	for <damon@lists.linux.dev>; Fri, 21 Jul 2023 05:18:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B047DC433C7;
-	Fri, 21 Jul 2023 05:18:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689916735;
-	bh=TTI/GlElwDYyih0KOVoE5zW1kAkMrgogNBmCmy5UeQk=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=eB4YsL4nxl0qIm/TpuKDY5S2GXuAh7qGicWKVqPsmqj1DSokXbdb4/nHPW8ZQI4Ug
-	 vP1f7ciEphR0wgaHQ+b7zviAYPPivdW7iK2rb12SZWX0YiDJFaZwygnyLFw4aZgtUH
-	 0GCssRGE0VB8x3pHjshGBuCRKO+snluglPtNdOYo=
-Date: Fri, 21 Jul 2023 07:18:52 +0200
-From: Greg KH <gregkh@linuxfoundation.org>
-To: SeongJae Park <sj@kernel.org>
-Cc: ryan.roberts@arm.com, akpm@linux-foundation.org, hch@lst.de,
-	kirill.shutemov@linux.intel.com, lstoakes@gmail.com,
-	rppt@kernel.org, stable@vger.kernel.org, urezki@gmail.com,
-	willy@infradead.org, yuzhao@google.com, ziy@nvidia.com,
-	damon@lists.linux.dev, linux-mm@kvack.org,
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 553227E1;
+	Wed, 26 Jul 2023 19:09:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 634E6C433C7;
+	Wed, 26 Jul 2023 19:09:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1690398580;
+	bh=wpXDQkyhqevpCIjGRP6IrCzl4cjAiAQRIDWv3E1gcPQ=;
+	h=From:To:Cc:Subject:Date:From;
+	b=ASN2DIA0e/2uiBlXaXTYYywEIEdTTahPMEZcPJKy+c6Y6k3ypi/oH34eI0a4uuRbP
+	 xqkiRmZXVhMWozBRLAWQTQ1cVxyRj0I44uHdwgMd6tRQnOTm10wPnddAF8kvrNHEBb
+	 1/WgA65rVsjWSpPyZJtatJwkzNognv/5Jzq/Ha7DvDjp8Yw+glIAFUBaqMWY5CwHC8
+	 9dswwPCe4M+e2HWlU4A3ip0c/bFjmFeajUWye3TruhCKHZNoxDkIREnfTg8vjxOjo1
+	 mzuDJaaiyfRdUHSAvG4Ig5Xv8tbBJWq0MdaEUEGzB/D0k07xfs8ObLRcTbFT25/Zak
+	 LKCKszOSaSiZw==
+From: SeongJae Park <sj@kernel.org>
+To: ksummit@lists.linux.dev
+Cc: sj@kernel.org,
+	inux-mm@kvack.org,
+	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 5.15.y] mm/damon/ops-common: atomically test and clear
- young on ptes and pmds
-Message-ID: <2023072144-item-cosmic-5c73@gregkh>
-References: <2023071613-reminder-relapse-b922@gregkh>
- <20230717193008.122040-1-sj@kernel.org>
+Subject: [TECH TOPIC] DAMON: Current Status and Future Plans
+Date: Wed, 26 Jul 2023 19:09:26 +0000
+Message-Id: <20230726190926.85121-1-sj@kernel.org>
+X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230717193008.122040-1-sj@kernel.org>
+Content-Transfer-Encoding: 8bit
 
-On Mon, Jul 17, 2023 at 07:30:08PM +0000, SeongJae Park wrote:
-> From: Ryan Roberts <ryan.roberts@arm.com>
-> 
-> commit c11d34fa139e4b0fb4249a30f37b178353533fa1 upstream.
-> 
-> It is racy to non-atomically read a pte, then clear the young bit, then
-> write it back as this could discard dirty information.  Further, it is bad
-> practice to directly set a pte entry within a table.  Instead clearing
-> young must go through the arch-provided helper,
-> ptep_test_and_clear_young() to ensure it is modified atomically and to
-> give the arch code visibility and allow it to check (and potentially
-> modify) the operation.
-> 
-> Link: https://lkml.kernel.org/r/20230602092949.545577-3-ryan.roberts@arm.com
-> Fixes: 3f49584b262c ("mm/damon: implement primitives for the virtual memory address spaces").
-> Signed-off-by: Ryan Roberts <ryan.roberts@arm.com>
-> Reviewed-by: Zi Yan <ziy@nvidia.com>
-> Reviewed-by: SeongJae Park <sj@kernel.org>
-> Reviewed-by: Mike Rapoport (IBM) <rppt@kernel.org>
-> Cc: Christoph Hellwig <hch@lst.de>
-> Cc: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
-> Cc: Lorenzo Stoakes <lstoakes@gmail.com>
-> Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-> Cc: Uladzislau Rezki (Sony) <urezki@gmail.com>
-> Cc: Yu Zhao <yuzhao@google.com>
-> Cc: <stable@vger.kernel.org>
-> Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-> Signed-off-by: SeongJae Park <sj@kernel.org>
-> ---
-> This is a manual backport of the commit, which cannot cleanly
-> cherry-picked on 5.15.y[1], on 5.15.y, specifically 5.15.120.
-> 
-> [1] https://lore.kernel.org/stable/2023071613-reminder-relapse-b922@gregkh/
+Hello all,
 
-Now queued up, thanks.
 
-greg k-h
+I'm posting my Kernel Summit topic suggestion below.  I will also submit it to
+the LPC site.
+
+
+DAMON[1,2] is a Linux kernel subsystem that provides efficient data access
+monitoring and access-aware system operations (DAMON-based Operation Schemes,
+a.k.a DAMOS).  A service provider reported that they are showing about a 16%
+reduction in memory usages with modest overhead on their products by utilizing
+a DAMON-based system operation scheme.
+
+After its initial introduction[3], it has continued to develop in response to
+the voices from the users and kernel hackers.  We also proactively tried to get
+more feedback by sharing the status and discussing future works in multiple
+venues including every kernel summits since 2019[3,4,5,6] and DAMON
+community[7,8].  As a result, DAMON made substantial improvements while the
+list for future works never emptied.
+
+This talk will aim to continue the sharing and discussion at the kernel summit
+of 2023.  We will share what feedback we received, what patches have been
+developed or are under development, what requests are still in the planning
+stage, and what the plans are.  With that, hopefully we will have discussions
+that will be helpful for improving and prioritizing the plans and specific
+tasks, and finding new requirements.
+
+Specific sub-topics would include, but are not limited to:
+
+- Efficient ABI and a convenient user-space tool
+- Fine-grained DAMOS control
+- Partial self-tuning of DAMOS
+- Extension of DAMON monitoring targets
+- Plan for collaborative memory-overcommit VM system management
+- Plan for tiered-memory management
+- Plan for DAMON accuracy improvement
+
+Based on the progress until the summit, some items can be added or dropped.
+
+[1] project homepage, https://damonitor.github.io
+[2] official doc, https://docs.kernel.org/mm/damon/index.html
+[3] ksummit 2019, https://linuxplumbersconf.org/event/4/contributions/548/
+[4] ksummit 2020, https://www.linuxplumbersconf.org/event/7/contributions/659/
+[5] ksummit 2021, https://linuxplumbersconf.org/event/11/contributions/984/
+[6] ksummit 2022, https://lpc.events/event/16/contributions/1224/
+[7] DAMON mailing list, https://lore.kernel.org/damon
+[8] DAMON meetup, https://lore.kernel.org/damon/20220810225102.124459-1-sj@kernel.org/
+
+
+Thanks,
+SJ
