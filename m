@@ -1,30 +1,53 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 553227E1;
-	Wed, 26 Jul 2023 19:09:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 634E6C433C7;
-	Wed, 26 Jul 2023 19:09:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1690398580;
-	bh=wpXDQkyhqevpCIjGRP6IrCzl4cjAiAQRIDWv3E1gcPQ=;
-	h=From:To:Cc:Subject:Date:From;
-	b=ASN2DIA0e/2uiBlXaXTYYywEIEdTTahPMEZcPJKy+c6Y6k3ypi/oH34eI0a4uuRbP
-	 xqkiRmZXVhMWozBRLAWQTQ1cVxyRj0I44uHdwgMd6tRQnOTm10wPnddAF8kvrNHEBb
-	 1/WgA65rVsjWSpPyZJtatJwkzNognv/5Jzq/Ha7DvDjp8Yw+glIAFUBaqMWY5CwHC8
-	 9dswwPCe4M+e2HWlU4A3ip0c/bFjmFeajUWye3TruhCKHZNoxDkIREnfTg8vjxOjo1
-	 mzuDJaaiyfRdUHSAvG4Ig5Xv8tbBJWq0MdaEUEGzB/D0k07xfs8ObLRcTbFT25/Zak
-	 LKCKszOSaSiZw==
-From: SeongJae Park <sj@kernel.org>
-To: ksummit@lists.linux.dev
-Cc: sj@kernel.org,
-	inux-mm@kvack.org,
-	damon@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-Subject: [TECH TOPIC] DAMON: Current Status and Future Plans
-Date: Wed, 26 Jul 2023 19:09:26 +0000
-Message-Id: <20230726190926.85121-1-sj@kernel.org>
-X-Mailer: git-send-email 2.25.1
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 436DB27159
+	for <damon@lists.linux.dev>; Thu, 27 Jul 2023 18:39:10 +0000 (UTC)
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-3fd0f000f1cso8806825e9.1
+        for <damon@lists.linux.dev>; Thu, 27 Jul 2023 11:39:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1690483148; x=1691087948;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=NF0AAzp00VPKSBWIz1veCNt0J3woGem5lOOY6FNXLkY=;
+        b=aqF4+TegclUGZOLtF/MB6RYFv+Nx2SbGXYzuENSiYPwAbk6epOs9CvWFIc+u8lPNRJ
+         Xy/WBXKMScoZxNo4XP2hNshAfYRhTNd4OkWGBtLpRwceSafX0NFB1gqZ6ssUcXsc+n7n
+         q35C+VpD3mLJblOjzy8FW+CdBvBnqSxIc9HKk05RsqE3TCrGjeudcYRwq6HtqIVCQO8R
+         ENblDi74Ul7a51M3D+4drzSY6jnQRxs3wRV11YgyLwHG7RVw8j/OzlGqHiAhp/x1VhVN
+         69K11ePcdX4SxLa0EuCenwA42T23J2917FeEwyqwJg1kq2JJ1gtl4xid/IOKfsBRdfFq
+         uVUw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1690483148; x=1691087948;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=NF0AAzp00VPKSBWIz1veCNt0J3woGem5lOOY6FNXLkY=;
+        b=FFsHDrTBPvj8BvJXuxKdovk4QvFXtEATtSf1DSGB8TCmdCDZ/WQnWgQsFS/v9+INkj
+         v+NESVp3IVV1iMwA/VQ7Ynuh2UqWiJWu9cmwfzojppIHHHHVWtcl+qsTwdqa3OHhK9qj
+         X/G+093xfzoHnlYN1ITOutOQ/2q8a2XuvdAK3qiUjffzBj723kdlsVbiJPr+8lN8wmcB
+         hTGmh/pOQP+pslxqCwNlFJbRygk6Tpv8yHDfAF92I2RigOxv7lFniPHE3QIDVSNzxOO1
+         yxV2wyL9vnccy1uhQDdHfydfMCPileoCW++zYUQaQwHa2pRjxx4anSQ2oq+htGuhSG+0
+         QXMw==
+X-Gm-Message-State: ABy/qLZmhQSBGJscx7y4Ju+SFNHgyVTzSSrkOT2VCjsYPjgKSo3Mi6pb
+	ATpivLAOpV6A2t1te27KEfk=
+X-Google-Smtp-Source: APBJJlEWoFbRwReSvEmnOzCNHN4d6L+Ko4ImG7PEidfC7KxqZCNGdz9ooufvrkKp/Ql+K2+xOrLpkA==
+X-Received: by 2002:a05:600c:82c7:b0:3fa:821e:1fb5 with SMTP id eo7-20020a05600c82c700b003fa821e1fb5mr2837725wmb.5.1690483147803;
+        Thu, 27 Jul 2023 11:39:07 -0700 (PDT)
+Received: from localhost.localdomain (host31-52-141-59.range31-52.btcentralplus.com. [31.52.141.59])
+        by smtp.gmail.com with ESMTPSA id c8-20020a7bc848000000b003fb40ec9475sm2473228wml.11.2023.07.27.11.39.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 27 Jul 2023 11:39:07 -0700 (PDT)
+From: Levi Yun <ppbuk5246@gmail.com>
+To: sj@kernel.org,
+	akpm@linux-foundation.org
+Cc: damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org,
+	Levi Yun <ppbuk5246@gmail.com>
+Subject: [PATCH] damon: Use pmdp_get instead of drect dereferencing pmd.
+Date: Fri, 28 Jul 2023 03:37:45 +0900
+Message-Id: <20230727183745.682880-1-ppbuk5246@gmail.com>
+X-Mailer: git-send-email 2.37.2
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -33,54 +56,104 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hello all,
+As ptep_get, Use the pmdp_get wrapper when we accessing pmdval
+instead of direct dereferencing pmd.
 
+Signed-off-by: Levi Yun <ppbuk5246@gmail.com>
+---
+ mm/damon/ops-common.c |  2 +-
+ mm/damon/paddr.c      |  2 +-
+ mm/damon/vaddr.c      | 22 ++++++++++++++--------
+ 3 files changed, 16 insertions(+), 10 deletions(-)
 
-I'm posting my Kernel Summit topic suggestion below.  I will also submit it to
-the LPC site.
+diff --git a/mm/damon/ops-common.c b/mm/damon/ops-common.c
+index e940802a15a4..ac1c3fa80f98 100644
+--- a/mm/damon/ops-common.c
++++ b/mm/damon/ops-common.c
+@@ -54,7 +54,7 @@ void damon_ptep_mkold(pte_t *pte, struct vm_area_struct *vma, unsigned long addr
+ void damon_pmdp_mkold(pmd_t *pmd, struct vm_area_struct *vma, unsigned long addr)
+ {
+ #ifdef CONFIG_TRANSPARENT_HUGEPAGE
+-	struct folio *folio = damon_get_folio(pmd_pfn(*pmd));
++	struct folio *folio = damon_get_folio(pmd_pfn(pmdp_get(pmd)));
+ 
+ 	if (!folio)
+ 		return;
+diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
+index 40801e38fcf0..909db25efb35 100644
+--- a/mm/damon/paddr.c
++++ b/mm/damon/paddr.c
+@@ -94,7 +94,7 @@ static bool __damon_pa_young(struct folio *folio, struct vm_area_struct *vma,
+ 				mmu_notifier_test_young(vma->vm_mm, addr);
+ 		} else {
+ #ifdef CONFIG_TRANSPARENT_HUGEPAGE
+-			*accessed = pmd_young(*pvmw.pmd) ||
++			*accessed = pmd_young(pmdp_get(pvmw.pmd)) ||
+ 				!folio_test_idle(folio) ||
+ 				mmu_notifier_test_young(vma->vm_mm, addr);
+ #else
+diff --git a/mm/damon/vaddr.c b/mm/damon/vaddr.c
+index 2fcc9731528a..82f7865719fe 100644
+--- a/mm/damon/vaddr.c
++++ b/mm/damon/vaddr.c
+@@ -301,16 +301,19 @@ static int damon_mkold_pmd_entry(pmd_t *pmd, unsigned long addr,
+ 		unsigned long next, struct mm_walk *walk)
+ {
+ 	pte_t *pte;
++	pmd_t pmde;
+ 	spinlock_t *ptl;
+ 
+-	if (pmd_trans_huge(*pmd)) {
++	if (pmd_trans_huge(pmdp_get_lockless(pmd))) {
+ 		ptl = pmd_lock(walk->mm, pmd);
+-		if (!pmd_present(*pmd)) {
++		pmde = pmdp_get(pmd);
++
++		if (!pmd_present(pmde)) {
+ 			spin_unlock(ptl);
+ 			return 0;
+ 		}
+ 
+-		if (pmd_trans_huge(*pmd)) {
++		if (pmd_trans_huge(pmde)) {
+ 			damon_pmdp_mkold(pmd, walk->vma, addr);
+ 			spin_unlock(ptl);
+ 			return 0;
+@@ -434,26 +437,29 @@ static int damon_young_pmd_entry(pmd_t *pmd, unsigned long addr,
+ {
+ 	pte_t *pte;
+ 	pte_t ptent;
++	pmd_t pmde;
+ 	spinlock_t *ptl;
+ 	struct folio *folio;
+ 	struct damon_young_walk_private *priv = walk->private;
+ 
+ #ifdef CONFIG_TRANSPARENT_HUGEPAGE
+-	if (pmd_trans_huge(*pmd)) {
++	if (pmd_trans_huge(pmdp_get_lockless(pmd))) {
+ 		ptl = pmd_lock(walk->mm, pmd);
+-		if (!pmd_present(*pmd)) {
++		pmde = pmdp_get(pmd);
++
++		if (!pmd_present(pmde)) {
+ 			spin_unlock(ptl);
+ 			return 0;
+ 		}
+ 
+-		if (!pmd_trans_huge(*pmd)) {
++		if (!pmd_trans_huge(pmde)) {
+ 			spin_unlock(ptl);
+ 			goto regular_page;
+ 		}
+-		folio = damon_get_folio(pmd_pfn(*pmd));
++		folio = damon_get_folio(pmd_pfn(pmde));
+ 		if (!folio)
+ 			goto huge_out;
+-		if (pmd_young(*pmd) || !folio_test_idle(folio) ||
++		if (pmd_young(pmde) || !folio_test_idle(folio) ||
+ 					mmu_notifier_test_young(walk->mm,
+ 						addr))
+ 			priv->young = true;
+-- 
+2.37.2
 
-
-DAMON[1,2] is a Linux kernel subsystem that provides efficient data access
-monitoring and access-aware system operations (DAMON-based Operation Schemes,
-a.k.a DAMOS).  A service provider reported that they are showing about a 16%
-reduction in memory usages with modest overhead on their products by utilizing
-a DAMON-based system operation scheme.
-
-After its initial introduction[3], it has continued to develop in response to
-the voices from the users and kernel hackers.  We also proactively tried to get
-more feedback by sharing the status and discussing future works in multiple
-venues including every kernel summits since 2019[3,4,5,6] and DAMON
-community[7,8].  As a result, DAMON made substantial improvements while the
-list for future works never emptied.
-
-This talk will aim to continue the sharing and discussion at the kernel summit
-of 2023.  We will share what feedback we received, what patches have been
-developed or are under development, what requests are still in the planning
-stage, and what the plans are.  With that, hopefully we will have discussions
-that will be helpful for improving and prioritizing the plans and specific
-tasks, and finding new requirements.
-
-Specific sub-topics would include, but are not limited to:
-
-- Efficient ABI and a convenient user-space tool
-- Fine-grained DAMOS control
-- Partial self-tuning of DAMOS
-- Extension of DAMON monitoring targets
-- Plan for collaborative memory-overcommit VM system management
-- Plan for tiered-memory management
-- Plan for DAMON accuracy improvement
-
-Based on the progress until the summit, some items can be added or dropped.
-
-[1] project homepage, https://damonitor.github.io
-[2] official doc, https://docs.kernel.org/mm/damon/index.html
-[3] ksummit 2019, https://linuxplumbersconf.org/event/4/contributions/548/
-[4] ksummit 2020, https://www.linuxplumbersconf.org/event/7/contributions/659/
-[5] ksummit 2021, https://linuxplumbersconf.org/event/11/contributions/984/
-[6] ksummit 2022, https://lpc.events/event/16/contributions/1224/
-[7] DAMON mailing list, https://lore.kernel.org/damon
-[8] DAMON meetup, https://lore.kernel.org/damon/20220810225102.124459-1-sj@kernel.org/
-
-
-Thanks,
-SJ
