@@ -1,172 +1,105 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi1-f171.google.com (mail-oi1-f171.google.com [209.85.167.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90D5B1C9E0
-	for <damon@lists.linux.dev>; Thu, 27 Jul 2023 19:54:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DD92C433C8;
-	Thu, 27 Jul 2023 19:54:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1690487695;
-	bh=/jP1tCMthxFNPSaqOUszBlNwQ94CB6jBYZ00mppC3O0=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qfyH29vTZiN6nYEmK0Ow4XeWsSUlDWlyD0eAMjr1NYeIMgM6CuIBywSrfyCeFUdPw
-	 kG1lwWJPAVfSf0Kbq4YNX4Ogu544UZ9RagOE3raqEZsra27siYVtDkClAc5ggUK0yk
-	 i7o0MObK2/D0G7/sgcPOHohO0dYgcHc2Lz6e0L8AAoekqKp8cMNtYZtmM9aL6L9shD
-	 TbEsS9wgDCtNXk3WNhoPrVLqDQrKn802+VcYowGlZfxbSpGF0Yly/5Ta+ItjPXs1lC
-	 kkFmtwzPRzFeOaOUGrE8IJGyRIEGOQtrjIehusVrE3x7TRrngiZg6Lm8utpg47i2gM
-	 GsCGk8gsV2rJQ==
-From: SeongJae Park <sj@kernel.org>
-To: Levi Yun <ppbuk5246@gmail.com>
-Cc: sj@kernel.org,
-	akpm@linux-foundation.org,
-	damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] damon: Use pmdp_get instead of drect dereferencing pmd.
-Date: Thu, 27 Jul 2023 19:54:53 +0000
-Message-Id: <20230727195453.67611-1-sj@kernel.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20230727183745.682880-1-ppbuk5246@gmail.com>
-References: 
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D03C52714B
+	for <damon@lists.linux.dev>; Thu, 27 Jul 2023 21:16:01 +0000 (UTC)
+Received: by mail-oi1-f171.google.com with SMTP id 5614622812f47-3a43cbb4343so996123b6e.1
+        for <damon@lists.linux.dev>; Thu, 27 Jul 2023 14:16:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1690492560; x=1691097360;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=6D1dKbMUyuMxqTeEeSi4spRio8knbrwzUbIZXRfX+hw=;
+        b=IOAM7fcKQP3AJZ1G53VvO+FMwupcfbqVzToDOoQiJYud3dWdDmJb6Jtd760kWvOUgI
+         rl+NquP649J9eHU2kyBq4oFVRVj0tR8rPhz7Ji7xDfcWHJ1ifnhjAhjxOV2uG+bw/7Y2
+         dhwWvtJk+kyNFnZzLO8zhXzuFxNS2EeGA+AGfxAVI6WEUk/WYGvd5wsxpCZjV7O4d6Uf
+         VL7boBq6vz3GeQ1VQXFX917WhcDwNXpDH0FGGDw6OKSSdcizMPmxExSB+58GXYbTCyFP
+         qXqtahtcdKYTb8JUnOHa3XGxA5clJ6igdYnXEvscYlpAvzLLdDk7vHbm1dF/wJiivo1Y
+         aLNQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1690492560; x=1691097360;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=6D1dKbMUyuMxqTeEeSi4spRio8knbrwzUbIZXRfX+hw=;
+        b=eZe3zsCiirtbOCxscc0hVXd7Rhhx/H57JL6MevfQECo4SAlxV9VZDTdwLmghwvlRA7
+         79YjPuY3Qbz9Jb0ntdj5dxKjVRXjiPZAk7omvNXJvKPiUyFLyVEuYhBbeBhqlw2RQlLT
+         5TLqBubjCp4dcs2wQDqv/7gakLUyAAHSNx/2O0Zipoz4ipHVHkG8L4lgdj0/AKgY1bsA
+         pItn9/mYLNNNODu+PeXN06V5W1KwneGMV76VM2kBG82HaX6rciVtCu+Jwr3mgDQ8LDej
+         W5JN/uyhUR+bi3C8wxo7xJa2XRfjKFFnEMzFx3iJxRr8epcqk+DQQMPj2mGJL9p/hfGp
+         otRg==
+X-Gm-Message-State: ABy/qLaB4pAiebYxHqJPou2ZVDk39djyIUguONjcvRbRsAasgfOb52Dk
+	rpChmOdoD2RMpolRjXUkFXLMEUD2BPgALcU3FoY=
+X-Google-Smtp-Source: APBJJlEDDP8mK0hZ5SSzXDsSCp3U0EVYi57aUTLxXKqR+DlsxeNchSLZb4HqSXKBKuyr3p3G0Qt+ujscvg7RD1LQiwY=
+X-Received: by 2002:a05:6808:140b:b0:3a4:3f74:3bd6 with SMTP id
+ w11-20020a056808140b00b003a43f743bd6mr500196oiv.47.1690492560354; Thu, 27 Jul
+ 2023 14:16:00 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20230727183745.682880-1-ppbuk5246@gmail.com> <20230727195453.67611-1-sj@kernel.org>
+In-Reply-To: <20230727195453.67611-1-sj@kernel.org>
+From: Yun Levi <ppbuk5246@gmail.com>
+Date: Thu, 27 Jul 2023 22:15:49 +0100
+Message-ID: <CAM7-yPQp-3BRcuFjOfEfdsMzUNU2bswKWAdQpOe_3gV1TyH5AQ@mail.gmail.com>
+Subject: Re: [PATCH] damon: Use pmdp_get instead of drect dereferencing pmd.
+To: SeongJae Park <sj@kernel.org>
+Cc: akpm@linux-foundation.org, damon@lists.linux.dev, linux-mm@kvack.org, 
+	linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-Hi Levi,
+Hi SJ.
 
+Thanks for looking into this.
 
-Thank you for this patch.
+> Nit for the subject, what about s/drect/directly/?  Also, let's remove the
+> period at the end.
+>
+> On Fri, 28 Jul 2023 03:37:45 +0900 Levi Yun <ppbuk5246@gmail.com> wrote:
 
-Nit for the subject, what about s/drect/directly/?  Also, let's remove the
-period at the end.
+Thanks. But I don't know why period is added thou I sent via git send-email ..
 
-On Fri, 28 Jul 2023 03:37:45 +0900 Levi Yun <ppbuk5246@gmail.com> wrote:
+> > -     if (pmd_trans_huge(*pmd)) {
+> > +     if (pmd_trans_huge(pmdp_get_lockless(pmd))) {
+>
+> I don't think we really need to use pmdp_get_lockless() here, since we will do
+> this check again with the lock, and we have the fallback for the intermediate
+> changes.
 
-> As ptep_get, Use the pmdp_get wrapper when we accessing pmdval
-> instead of direct dereferencing pmd.
+Agree. I'll change. Thanks :)
 
-Nit: s/Use/use/ and s/direct/directly
+> > @@ -434,26 +437,29 @@ static int damon_young_pmd_entry(pmd_t *pmd, unsigned long addr,
+> >  {
+> >       pte_t *pte;
+> >       pte_t ptent;
+> > +     pmd_t pmde;
+>
+> This would cause below build warning if CONFIG_TRANSPARENT_HUGEPAGE is not
+> defined.
+>
+> .../mm/damon/vaddr.c:440:8: warning: unused variable 'pmde' [-Wunused-variable]
+>   440 |  pmd_t pmde;
+>       |        ^~~~
+>
+>
+> >       spinlock_t *ptl;
+> >       struct folio *folio;
+> >       struct damon_young_walk_private *priv = walk->private;
+> >
+> >  #ifdef CONFIG_TRANSPARENT_HUGEPAGE
+> > -     if (pmd_trans_huge(*pmd)) {
+> > +     if (pmd_trans_huge(pmdp_get_lockless(pmd))) {
 
-> 
-> Signed-off-by: Levi Yun <ppbuk5246@gmail.com>
-> ---
->  mm/damon/ops-common.c |  2 +-
->  mm/damon/paddr.c      |  2 +-
->  mm/damon/vaddr.c      | 22 ++++++++++++++--------
->  3 files changed, 16 insertions(+), 10 deletions(-)
-> 
-> diff --git a/mm/damon/ops-common.c b/mm/damon/ops-common.c
-> index e940802a15a4..ac1c3fa80f98 100644
-> --- a/mm/damon/ops-common.c
-> +++ b/mm/damon/ops-common.c
-> @@ -54,7 +54,7 @@ void damon_ptep_mkold(pte_t *pte, struct vm_area_struct *vma, unsigned long addr
->  void damon_pmdp_mkold(pmd_t *pmd, struct vm_area_struct *vma, unsigned long addr)
->  {
->  #ifdef CONFIG_TRANSPARENT_HUGEPAGE
-> -	struct folio *folio = damon_get_folio(pmd_pfn(*pmd));
-> +	struct folio *folio = damon_get_folio(pmd_pfn(pmdp_get(pmd)));
->  
->  	if (!folio)
->  		return;
-> diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
-> index 40801e38fcf0..909db25efb35 100644
-> --- a/mm/damon/paddr.c
-> +++ b/mm/damon/paddr.c
-> @@ -94,7 +94,7 @@ static bool __damon_pa_young(struct folio *folio, struct vm_area_struct *vma,
->  				mmu_notifier_test_young(vma->vm_mm, addr);
->  		} else {
->  #ifdef CONFIG_TRANSPARENT_HUGEPAGE
-> -			*accessed = pmd_young(*pvmw.pmd) ||
-> +			*accessed = pmd_young(pmdp_get(pvmw.pmd)) ||
->  				!folio_test_idle(folio) ||
->  				mmu_notifier_test_young(vma->vm_mm, addr);
->  #else
-> diff --git a/mm/damon/vaddr.c b/mm/damon/vaddr.c
-> index 2fcc9731528a..82f7865719fe 100644
-> --- a/mm/damon/vaddr.c
-> +++ b/mm/damon/vaddr.c
-> @@ -301,16 +301,19 @@ static int damon_mkold_pmd_entry(pmd_t *pmd, unsigned long addr,
->  		unsigned long next, struct mm_walk *walk)
->  {
->  	pte_t *pte;
-> +	pmd_t pmde;
->  	spinlock_t *ptl;
->  
-> -	if (pmd_trans_huge(*pmd)) {
-> +	if (pmd_trans_huge(pmdp_get_lockless(pmd))) {
+Oh.. I miss this. Many thanks..!
 
-I don't think we really need to use pmdp_get_lockless() here, since we will do
-this check again with the lock, and we have the fallback for the intermediate
-changes.
+> Thanks,
+> SJ
 
->  		ptl = pmd_lock(walk->mm, pmd);
-> -		if (!pmd_present(*pmd)) {
-> +		pmde = pmdp_get(pmd);
-> +
-> +		if (!pmd_present(pmde)) {
->  			spin_unlock(ptl);
->  			return 0;
->  		}
->  
-> -		if (pmd_trans_huge(*pmd)) {
-> +		if (pmd_trans_huge(pmde)) {
->  			damon_pmdp_mkold(pmd, walk->vma, addr);
->  			spin_unlock(ptl);
->  			return 0;
-> @@ -434,26 +437,29 @@ static int damon_young_pmd_entry(pmd_t *pmd, unsigned long addr,
->  {
->  	pte_t *pte;
->  	pte_t ptent;
-> +	pmd_t pmde;
+Many Thanks..!
 
-This would cause below build warning if CONFIG_TRANSPARENT_HUGEPAGE is not
-defined.
-
-.../mm/damon/vaddr.c:440:8: warning: unused variable 'pmde' [-Wunused-variable]
-  440 |  pmd_t pmde;
-      |        ^~~~
-
-
->  	spinlock_t *ptl;
->  	struct folio *folio;
->  	struct damon_young_walk_private *priv = walk->private;
->  
->  #ifdef CONFIG_TRANSPARENT_HUGEPAGE
-> -	if (pmd_trans_huge(*pmd)) {
-> +	if (pmd_trans_huge(pmdp_get_lockless(pmd))) {
-
-Again, pmdp_get() might be enough?
-
->  		ptl = pmd_lock(walk->mm, pmd);
-> -		if (!pmd_present(*pmd)) {
-> +		pmde = pmdp_get(pmd);
-> +
-> +		if (!pmd_present(pmde)) {
->  			spin_unlock(ptl);
->  			return 0;
->  		}
->  
-> -		if (!pmd_trans_huge(*pmd)) {
-> +		if (!pmd_trans_huge(pmde)) {
->  			spin_unlock(ptl);
->  			goto regular_page;
->  		}
-> -		folio = damon_get_folio(pmd_pfn(*pmd));
-> +		folio = damon_get_folio(pmd_pfn(pmde));
->  		if (!folio)
->  			goto huge_out;
-> -		if (pmd_young(*pmd) || !folio_test_idle(folio) ||
-> +		if (pmd_young(pmde) || !folio_test_idle(folio) ||
->  					mmu_notifier_test_young(walk->mm,
->  						addr))
->  			priv->young = true;
-> -- 
-> 2.37.2
-> 
-
-Thanks,
-SJ
+---------
+Sincerely,
+Levi.
