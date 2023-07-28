@@ -1,99 +1,102 @@
-Received: from mail-qt1-f175.google.com (mail-qt1-f175.google.com [209.85.160.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (unknown [134.134.136.65])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A901DAD5C
-	for <damon@lists.linux.dev>; Fri, 28 Jul 2023 06:59:08 +0000 (UTC)
-Received: by mail-qt1-f175.google.com with SMTP id d75a77b69052e-40694b191cfso11432031cf.3
-        for <damon@lists.linux.dev>; Thu, 27 Jul 2023 23:59:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1690527547; x=1691132347;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=uBrLltNK/fDQgPKGFScyH1SDUmmIH86PwWRaDh569qE=;
-        b=SnpBnY2otihuHHHYSDjHJOPZT9jkR75uqSrm0wLVx0ID2esJ6KaK3gH47A6BardiPh
-         y29FLCa+aFMSDSoaUNavqOQDEQ4F8MecDEJmBQCil06OOb+UF1EfrFvv8x0Jlr/USQLC
-         R+iWvdAiHDPucg1tPytbsDytFtFnF9wHhFY+c9WqR0gMU+obe4ooJR6RCw+Q3uD5LX1y
-         TOYz/rt4XK591cUqd3r+4mx/18Hksnq5G2uErJNFszqIavTiCv7lVdUunVVZhB2NMeju
-         ZYyYMb9MVt8KJWYlpmETvumOoKKK7+YPGkJ6Xtv3Fm+xFgJJQz7Av3qBzrLo0lE0JCLP
-         RuyQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690527547; x=1691132347;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=uBrLltNK/fDQgPKGFScyH1SDUmmIH86PwWRaDh569qE=;
-        b=RzrJ8tnmNrIKpZMxk46eygUo9a9UnZauBHf+jklVLhQbKjfpwa9WIfK+xAMOzxZ7r7
-         dGPabyAs8vk/uoxs8ocMvPBnQ7w8FAazdhlslT+mHkZwKqGtbM9b2f+pZSML8iZsOGVr
-         SdwMf2kHQW/htasTgiieUDIOzy9Z7tE9oenhY1psf/HW1v9FLnxKPTVRCvDxYZtaLhEb
-         +/S5FWoS3ebR0v6gcNei/bKsoa4gRqHKARshXIaXmSWuKSUThpuvN3YHn2MEI/qdNNRm
-         Q41bTfdUDKyACVtT0k+qdMJlgT4dN9leWYyt4XarKdVOqCNc1uQ/jIA600/UuFxcgdLU
-         jKyA==
-X-Gm-Message-State: ABy/qLZ+xsu/quWJFmvRFVpcb7YFZ3tR1aQwCkJZE/4e3lJe86asdEYU
-	NAMBwvzTuJ/aMEiYN7DbXiuKqk7OLKxH3d+ZFxw=
-X-Google-Smtp-Source: APBJJlHg75yjSFYybiZyNX0p1R660gZtMx4uxNZHQamf2phdSTVEpDTI3nzSY6Fpzgt1B0Epe+/OspI3XwT96qzAg0s=
-X-Received: by 2002:a05:622a:11cc:b0:403:9be1:c969 with SMTP id
- n12-20020a05622a11cc00b004039be1c969mr2270692qtk.62.1690527547226; Thu, 27
- Jul 2023 23:59:07 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76F31C8DA;
+	Fri, 28 Jul 2023 08:09:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1690531740; x=1722067740;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=7H1DGTtPz3o+QAj240HysVc/w83lxlzbiBKVni7/XEY=;
+  b=DAgkVRyI5KD5rebYeeKKLGO5DOQuJJBQtRwJ2xK2Zh4KxM8C3dhgTtsZ
+   KeNAPUxL8uNlW6CIW/4dk2vtur+LPppwJK8RB1zQKTzQDVEUqaAmnnrdk
+   CEeYIQbBvxpsEUWHXbDSeEvFZqROD1+O/Jh3B2jfSnCtAj6nDvn99+4hp
+   /uMkqpmSGmhodItUFb3phxx4JhbVO1fiujwQX5Cebit9OXIXlRZ/0VMxZ
+   yAcTcaaEI6Z+ohKQKxOwRBsLXClZNJJju2DONbqRYDbnEeJL+HlY8DzO/
+   7Vu+MNcnmbJGftmqzDXt5kkAwC+Zzau3QCe4XTlJhvx0Jr718JqeauNPa
+   Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10784"; a="372156417"
+X-IronPort-AV: E=Sophos;i="6.01,236,1684825200"; 
+   d="scan'208";a="372156417"
+Received: from fmsmga004.fm.intel.com ([10.253.24.48])
+  by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Jul 2023 01:08:59 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10784"; a="797357757"
+X-IronPort-AV: E=Sophos;i="6.01,236,1684825200"; 
+   d="scan'208";a="797357757"
+Received: from lkp-server02.sh.intel.com (HELO 953e8cd98f7d) ([10.239.97.151])
+  by fmsmga004.fm.intel.com with ESMTP; 28 Jul 2023 01:08:57 -0700
+Received: from kbuild by 953e8cd98f7d with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1qPIWu-000313-2R;
+	Fri, 28 Jul 2023 08:08:56 +0000
+Date: Fri, 28 Jul 2023 16:08:11 +0800
+From: kernel test robot <lkp@intel.com>
+To: Levi Yun <ppbuk5246@gmail.com>, sj@kernel.org,
+	akpm@linux-foundation.org
+Cc: oe-kbuild-all@lists.linux.dev, damon@lists.linux.dev,
+	linux-mm@kvack.org, linux-kernel@vger.kernel.org,
+	Levi Yun <ppbuk5246@gmail.com>
+Subject: Re: [PATCH] damon: Use pmdp_get instead of drect dereferencing pmd.
+Message-ID: <202307281532.pVsrTsL2-lkp@intel.com>
+References: <20230727183745.682880-1-ppbuk5246@gmail.com>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230727212157.2985025-1-ppbuk5246@gmail.com> <20230727215318.43455-1-sj@kernel.org>
-In-Reply-To: <20230727215318.43455-1-sj@kernel.org>
-From: Yun Levi <ppbuk5246@gmail.com>
-Date: Fri, 28 Jul 2023 07:58:56 +0100
-Message-ID: <CAM7-yPQEnppWQ4j7mc4WG3POKbjzOLynkFXsSw47GRhSUaTawg@mail.gmail.com>
-Subject: Re: [PATCH v2] damon: Use pmdp_get instead of drectly dereferencing pmd.
-To: SeongJae Park <sj@kernel.org>
-Cc: akpm@linux-foundation.org, damon@lists.linux.dev, linux-mm@kvack.org, 
-	linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230727183745.682880-1-ppbuk5246@gmail.com>
 
-On Thu, Jul 27, 2023 at 10:53=E2=80=AFPM SeongJae Park <sj@kernel.org> wrot=
-e:
->
-> Hi Levi,
->
->
-> Thank you for quick respin.
->
-> I still hope the subject to drop the ending period, and start the subject=
- with
-> lowercase, like other mm/damon/ commits.
->
+Hi Levi,
 
-Sorry to bother you, I should find why the ending period inserted..
+kernel test robot noticed the following build warnings:
 
-> > As ptep_get, Use the pmdp_get wrapper when we accessing pmdval
-> > instead of directly dereferencing pmd.
->
-> Based on the usual git commit message line length recommendation (72
-> characters), there is nothing really wrong, but putting 'instead' at the =
-first
-> line may look more consistent with other messages.
+[auto build test WARNING on akpm-mm/mm-everything]
+[also build test WARNING on linus/master v6.5-rc3 next-20230728]
+[cannot apply to sj/damon/next]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
 
-> Since this is the good place to put additional comments not suitable for =
-the
-> changelog[2], it would be helpful if you could put changes of this patch =
-that
-> made after the v1 here, from next time.
->
-> Above comments are only my trivial and personal preferences, so I wouldn'=
-t ask
-> you to respin, unless you really want to.
->
-> [1] https://github.com/torvalds/linux/pull/17
-> [2] https://docs.kernel.org/process/submitting-patches.html#the-canonical=
--patch-format
+url:    https://github.com/intel-lab-lkp/linux/commits/Levi-Yun/damon-Use-pmdp_get-instead-of-drect-dereferencing-pmd/20230728-024044
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/akpm/mm.git mm-everything
+patch link:    https://lore.kernel.org/r/20230727183745.682880-1-ppbuk5246%40gmail.com
+patch subject: [PATCH] damon: Use pmdp_get instead of drect dereferencing pmd.
+config: i386-randconfig-i016-20230727 (https://download.01.org/0day-ci/archive/20230728/202307281532.pVsrTsL2-lkp@intel.com/config)
+compiler: gcc-12 (Debian 12.2.0-14) 12.2.0
+reproduce: (https://download.01.org/0day-ci/archive/20230728/202307281532.pVsrTsL2-lkp@intel.com/reproduce)
 
-Thanks for letting me know some details why I missed :)
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202307281532.pVsrTsL2-lkp@intel.com/
 
-Many thanks.
+All warnings (new ones prefixed by >>):
 
---------
-Sincerely,
-Levi.
+   mm/damon/vaddr.c: In function 'damon_young_pmd_entry':
+>> mm/damon/vaddr.c:440:15: warning: unused variable 'pmde' [-Wunused-variable]
+     440 |         pmd_t pmde;
+         |               ^~~~
+
+
+vim +/pmde +440 mm/damon/vaddr.c
+
+   434	
+   435	static int damon_young_pmd_entry(pmd_t *pmd, unsigned long addr,
+   436			unsigned long next, struct mm_walk *walk)
+   437	{
+   438		pte_t *pte;
+   439		pte_t ptent;
+ > 440		pmd_t pmde;
+   441		spinlock_t *ptl;
+   442		struct folio *folio;
+   443		struct damon_young_walk_private *priv = walk->private;
+   444	
+
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
