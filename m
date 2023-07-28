@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBFD1154BA
-	for <damon@lists.linux.dev>; Fri, 28 Jul 2023 20:34:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C68D0C433C8;
-	Fri, 28 Jul 2023 20:34:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20321156F3
+	for <damon@lists.linux.dev>; Fri, 28 Jul 2023 20:34:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81061C433C9;
+	Fri, 28 Jul 2023 20:34:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1690576491;
-	bh=cjc8ooSUQ83tCK1u+lTmvslo5pngriB995qOBl2lfEU=;
+	s=k20201202; t=1690576492;
+	bh=OCzjAXySbo2P2W2ofPo/GLfYFykKqV/gINis3/IWY+s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kZVzJF7D3covRVxGV8qlNVSYryTJADsCE2nkG3JlMM6KW9d11TNHzemNIWTQimTJK
-	 ffO0M4jAfUNnDSYV4c9DRRIB0VliGAVfq2/WXiijhELaaucip42BKwqrIHBcjqIaJD
-	 bVnh67z2b8iM5uSNPfJCZ1KxJ5yeEkYjeM8YTtQ4idTBJQzHSnwyViTad4T/Ago0h4
-	 h1HmW4PEjGdHDzBE+c0WSscxqojOd5yWq1PEFp9djhuFqImKaV0iUCkHaYqWM+1D5U
-	 LEC5LNT0heATO0ErxPQA1r1Qhcp8va2vn+6A5rWmwm3Muli5fwkwIJopgiP201Ruvx
-	 5GI/wU1T9CLGg==
+	b=heq5ttnp+0povkEP2NQq2cKCGH6lIIYkoMJQgmhO9vQAax7BDzcr7DdU1Q787/Wq6
+	 Q9YeJVWmEHUFLd5qRENHxmVH7CqsLYHLU+C9jYL0lY2f9fTzGd89JOSSEKcugjH5qV
+	 +4OBdFvsT2CsHNrjMfFwwft/J4k+Sn3di3qmQeI8yWpwnFfHQadtT9Nhb/Sh+YCC+o
+	 13cM5XYudDgbte9YduCx4h3FLlpSG0BPdG2nb3Nhzv20aF3IqPZIVxzyK5nrHmLY1z
+	 cePPG89HaxuFAEeiheYUlMAMH8JDYucg43I689mqC6DQhyBbg3QctN4ksFohaXYEeh
+	 kBPKIAB9Al3EA==
 From: SeongJae Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SeongJae Park <sj@kernel.org>,
-	Shuah Khan <shuah@kernel.org>,
+	Jonathan Corbet <corbet@lwn.net>,
 	damon@lists.linux.dev,
 	linux-mm@kvack.org,
-	linux-kselftest@vger.kernel.org,
+	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [RFC PATCH 04/13] selftests/damon/sysfs: test address range damos filter
-Date: Fri, 28 Jul 2023 20:34:35 +0000
-Message-Id: <20230728203444.70703-5-sj@kernel.org>
+Subject: [RFC PATCH 05/13] Docs/mm/damon/design: update for address range filters
+Date: Fri, 28 Jul 2023 20:34:36 +0000
+Message-Id: <20230728203444.70703-6-sj@kernel.org>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20230728203444.70703-1-sj@kernel.org>
 References: <20230728203444.70703-1-sj@kernel.org>
@@ -37,32 +37,48 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Add a selftest for checking existence of addr_{start,end} files under
-DAMOS filter directory, and 'addr' damos filter type input of DAMON
-sysfs interface.
+Update DAMON design document's DAMOS filters section for address range
+DAMOS filters.  Because address range filters are handled by the core
+layer and it makes difference in schemes tried regions and schemes
+statistics, clearly describe it.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- tools/testing/selftests/damon/sysfs.sh | 3 +++
- 1 file changed, 3 insertions(+)
+ Documentation/mm/damon/design.rst | 21 +++++++++++++++------
+ 1 file changed, 15 insertions(+), 6 deletions(-)
 
-diff --git a/tools/testing/selftests/damon/sysfs.sh b/tools/testing/selftests/damon/sysfs.sh
-index 967e27267549..5677cfd342fc 100644
---- a/tools/testing/selftests/damon/sysfs.sh
-+++ b/tools/testing/selftests/damon/sysfs.sh
-@@ -103,9 +103,12 @@ test_filter()
- 	ensure_file "$filter_dir/type" "exist" "600"
- 	ensure_write_succ "$filter_dir/type" "anon" "valid input"
- 	ensure_write_succ "$filter_dir/type" "memcg" "valid input"
-+	ensure_write_succ "$filter_dir/type" "addr" "valid input"
- 	ensure_write_fail "$filter_dir/type" "foo" "invalid input"
- 	ensure_file "$filter_dir/matching" "exist" "600"
- 	ensure_file "$filter_dir/memcg_path" "exist" "600"
-+	ensure_file "$filter_dir/addr_start" "exist" "600"
-+	ensure_file "$filter_dir/addr_end" "exist" "600"
- }
+diff --git a/Documentation/mm/damon/design.rst b/Documentation/mm/damon/design.rst
+index 4bfdf1d30c4a..134912166f5a 100644
+--- a/Documentation/mm/damon/design.rst
++++ b/Documentation/mm/damon/design.rst
+@@ -380,12 +380,21 @@ number of filters for each scheme.  Each filter specifies the type of target
+ memory, and whether it should exclude the memory of the type (filter-out), or
+ all except the memory of the type (filter-in).
  
- test_filters()
+-As of this writing, anonymous page type and memory cgroup type are supported by
+-the feature.  Some filter target types can require additional arguments.  For
+-example, the memory cgroup filter type asks users to specify the file path of
+-the memory cgroup for the filter.  Hence, users can apply specific schemes to
+-only anonymous pages, non-anonymous pages, pages of specific cgroups, all pages
+-excluding those of specific cgroups, and any combination of those.
++Currently, anonymous page, memory cgroup, and address range type filters are
++supported by the feature.  Some filter target types can require additional
++arguments.  For example, the memory cgroup filter type asks users to specify
++the file path of the memory cgroup for the filter, while the address range type
++asks the start and end addresses of the range.  Hence, users can apply specific
++schemes to only anonymous pages, non-anonymous pages, pages of specific
++cgroups, all pages excluding those of specific cgroups, pages in specific
++address range, and any combination of those.
++
++To handle filters efficiently, the address range type filter is handled by the
++core layer, while others are handled by operations set.  If a memory region is
++filtered by the core layer-handled filter, it is not counted as the scheme has
++tried to the region.  In contrast, if a memory regions is filtered by an
++operations set layer-handled filter, it is counted as the scheme has tried.
++The difference in accounting leads to changes in the statistics.
+ 
+ 
+ Application Programming Interface
 -- 
 2.25.1
 
