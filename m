@@ -1,34 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A27191BB3E
-	for <damon@lists.linux.dev>; Fri, 28 Jul 2023 20:34:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B4C7C433CA;
-	Fri, 28 Jul 2023 20:34:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3865C7C
+	for <damon@lists.linux.dev>; Sat, 29 Jul 2023 20:37:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8B73C433C7;
+	Sat, 29 Jul 2023 20:37:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1690576497;
-	bh=jeC4GAEfQQwmVnTIZskvg6L9vM/nrayE2m9ijer6n98=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kCfYKwe4QL89JDRqiWJGihImM+qcoMbDWecJ7hn5Iu+Tfw0wwq6G5Soa4tXigbIs+
-	 cKRMiMjzFiwRgTa6FFAOyZ/Cj4fLXYlE0wrBytmbm3mQbInHJDivY+r/aUeIdGg3oE
-	 Mttwki34KUH6dQ4afT+n7RpDZEfriIuE5WtcfXH3hSOT9fbYJoS/uhCmYL6v6zaHlF
-	 8kHxycb0NP0w8mRdV0JOMb4kDQW6JCY/h32sSZ8ZyZ3iqHTsijHYjs8Co5cqxVWS7F
-	 bRGrb21xaEpee+/SLZW1SB2C5OnDQu3NvdTvQg0bZ/zZxF8gJPpGUrIvZB02FSjVjY
-	 AEaMp+FQ3zbXQ==
+	s=k20201202; t=1690663057;
+	bh=iMknI2mssvMpvNEEtPFsjpKnh0+OEHxOEdyJZpeCgHY=;
+	h=From:To:Cc:Subject:Date:From;
+	b=vFJySY2rk1//Bkt9H41fBKeJvOhjKt9m7pNLfcYd/YbXNoDwBUj2HavpAFun6VP8b
+	 fpqIbkQKa9JyY+9FArMVz3l5JUe+ji6L2OwZA4tOjXV8DBcT53kkP+kdJN+7rnGOgJ
+	 OHMq25YIkjtAIVhX71U9KccUySxnQwKh+gOANdDqlB+MqQ2dzQ9CwGpfpDGTdumfsq
+	 yVynLsLCQiJ3nHfOvA3dswClNDRjCrA4gGnrJ1mf5h5HnSXLHqmKThXGFP4U9BVWgG
+	 XP18+zQi8wTYIR2MG3bVK9SM43+WIrj2jk9NogyN69sz8qGzCSgQOHGmuOiqiWslzu
+	 Nq/Xps6fD3aVQ==
 From: SeongJae Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SeongJae Park <sj@kernel.org>,
-	Jonathan Corbet <corbet@lwn.net>,
+	Brendan Higgins <brendanhiggins@google.com>,
 	damon@lists.linux.dev,
 	linux-mm@kvack.org,
-	linux-doc@vger.kernel.org,
+	linux-kselftest@vger.kernel.org,
+	kunit-dev@googlegroups.com,
+	stable@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [RFC PATCH 13/13] Docs/admin-guide/mm/damon/usage: update for DAMON monitoring target type DAMOS filter
-Date: Fri, 28 Jul 2023 20:34:44 +0000
-Message-Id: <20230728203444.70703-14-sj@kernel.org>
+Subject: [PATCH 0/2] mm/damon/core: fix unitialized memory error from
+Date: Sat, 29 Jul 2023 20:37:31 +0000
+Message-Id: <20230729203733.38949-1-sj@kernel.org>
 X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20230728203444.70703-1-sj@kernel.org>
-References: <20230728203444.70703-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -37,69 +37,50 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Update DAMON usage document for newly added DAMON monitoring target type
-DAMOS filter.
+damos_new_filter() is returning a damos_filter struct without
+initializing its ->list field.  And the users of the function uses the
+struct without initializing the field.  As a result, uninitialized
+memory access error is possible.  Actually, a kernel NULL pointer
+dereference BUG can be triggered using DAMON user-space tool, like
+below.
 
-Signed-off-by: SeongJae Park <sj@kernel.org>
----
- Documentation/admin-guide/mm/damon/usage.rst | 37 +++++++++++---------
- 1 file changed, 20 insertions(+), 17 deletions(-)
+    # damo start --damos_action stat --damos_filter anon matching
+    # damo tune --damos_action stat --damos_filter anon matching --damos_filter anon nomatching
+    # dmesg
+    [...]
+    [   36.908136] BUG: kernel NULL pointer dereference, address: 0000000000000008
+    [   36.910483] #PF: supervisor write access in kernel mode
+    [   36.912238] #PF: error_code(0x0002) - not-present page
+    [   36.913415] PGD 0 P4D 0
+    [   36.913978] Oops: 0002 [#1] PREEMPT SMP PTI
+    [   36.914878] CPU: 32 PID: 1335 Comm: kdamond.0 Not tainted 6.5.0-rc3-mm-unstable-damon+ #1
+    [   36.916621] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org 04/01/2014
+    [   36.919051] RIP: 0010:damos_destroy_filter (include/linux/list.h:114 include/linux/list.h:137 include/linux/list.h:148 mm/damon/core.c:345 mm/damon/core.c:355)
+    [...]
+    [   36.938247] Call Trace:
+    [   36.938721]  <TASK>
+    [...]
+    [   36.950064] ? damos_destroy_filter (include/linux/list.h:114 include/linux/list.h:137 include/linux/list.h:148 mm/damon/core.c:345 mm/damon/core.c:355)
+    [   36.950883] ? damon_sysfs_set_scheme_filters.isra.0 (mm/damon/sysfs-schemes.c:1573)
+    [   36.952019] damon_sysfs_set_schemes (mm/damon/sysfs-schemes.c:1674 mm/damon/sysfs-schemes.c:1686)
+    [   36.952875] damon_sysfs_apply_inputs (mm/damon/sysfs.c:1312 mm/damon/sysfs.c:1298)
+    [   36.953757] ? damon_pa_check_accesses (mm/damon/paddr.c:168 mm/damon/paddr.c:179)
+    [   36.954648] damon_sysfs_cmd_request_callback (mm/damon/sysfs.c:1329 mm/damon/sysfs.c:1359)
+    [...]
 
-diff --git a/Documentation/admin-guide/mm/damon/usage.rst b/Documentation/admin-guide/mm/damon/usage.rst
-index a9cb9949b796..084f0a32b421 100644
---- a/Documentation/admin-guide/mm/damon/usage.rst
-+++ b/Documentation/admin-guide/mm/damon/usage.rst
-@@ -363,18 +363,21 @@ number (``N``) to the file creates the number of child directories named ``0``
- to ``N-1``.  Each directory represents each filter.  The filters are evaluated
- in the numeric order.
- 
--Each filter directory contains five files, namely ``type``, ``matcing``,
--``memcg_path``, ``addr_start``, and ``addr_end``.  To ``type`` file, you can
--write one of three special keywords: ``anon`` for anonymous pages, ``memcg``
--for specific memory cgroup, or ``addr`` for specific address range (an
--open-ended interval) filtering.  In case of the memory cgroup filtering, you
--can specify the memory cgroup of the interest by writing the path of the memory
--cgroup from the cgroups mount point to ``memcg_path`` file.  In case of the
--address range filtering, you can specify the start and end address of the range
--to ``addr_start`` and ``addr_end`` files, respectively.  You can write ``Y`` or
--``N`` to ``matching`` file to filter out pages that does or does not match to
--the type, respectively.  Then, the scheme's action will not be applied to the
--pages that specified to be filtered out.
-+Each filter directory contains six files, namely ``type``, ``matcing``,
-+``memcg_path``, ``addr_start``, ``addr_end``, and ``target_idx``.  To ``type``
-+file, you can write one of four special keywords: ``anon`` for anonymous pages,
-+``memcg`` for specific memory cgroup, ``addr`` for specific address range (an
-+open-ended interval), or ``target`` for specific DAMON monitoring target
-+filtering.  In case of the memory cgroup filtering, you can specify the memory
-+cgroup of the interest by writing the path of the memory cgroup from the
-+cgroups mount point to ``memcg_path`` file.  In case of the address range
-+filtering, you can specify the start and end address of the range to
-+``addr_start`` and ``addr_end`` files, respectively.  For the DAMON monitoring
-+target filtering, you can specify the index of the target between the list of
-+the DAMON context's monitoring targets list to ``target_idx`` file.  You can
-+write ``Y`` or ``N`` to ``matching`` file to filter out pages that does or does
-+not match to the type, respectively.  Then, the scheme's action will not be
-+applied to the pages that specified to be filtered out.
- 
- For example, below restricts a DAMOS action to be applied to only non-anonymous
- pages of all memory cgroups except ``/having_care_already``.::
-@@ -391,11 +394,11 @@ pages of all memory cgroups except ``/having_care_already``.::
- Note that ``anon`` and ``memcg`` filters are currently supported only when
- ``paddr`` `implementation <sysfs_contexts>` is being used.
- 
--Also, memory regions that are filtered out by ``addr`` filters are not counted
--as the scheme has tried to those, while regions that filtered out by other type
--filters are counted as the scheme has tried to.  The difference is applied to
--:ref:`stats <damos_stats>` and :ref:`tried regions
--<sysfs_schemes_tried_regions>`.
-+Also, memory regions that are filtered out by ``addr`` or ``target`` filters
-+are not counted as the scheme has tried to those, while regions that filtered
-+out by other type filters are counted as the scheme has tried to.  The
-+difference is applied to :ref:`stats <damos_stats>` and
-+:ref:`tried regions <sysfs_schemes_tried_regions>`.
- 
- .. _sysfs_schemes_stats:
- 
+The first patch of this patchset fixes the bug by initializing the field in
+damos_new_filter().  The second patch adds a unit test for the problem.
+Note that the second patch Cc stable@ without Fixes: tag, since it would
+be better to be ingested together for avoiding any future regression.
+
+SeongJae Park (2):
+  mm/damon/core: initialize damo_filter->list from damos_new_filter()
+  mm/damon/core-test: add a test for damos_new_filter()
+
+ mm/damon/core-test.h | 13 +++++++++++++
+ mm/damon/core.c      |  1 +
+ 2 files changed, 14 insertions(+)
+
 -- 
 2.25.1
 
