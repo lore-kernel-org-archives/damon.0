@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BEEF12B9F
-	for <damon@lists.linux.dev>; Wed,  2 Aug 2023 21:43:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 411BEC433C7;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A72B9134A8
+	for <damon@lists.linux.dev>; Wed,  2 Aug 2023 21:43:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5911C433C9;
 	Wed,  2 Aug 2023 21:43:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1691012596;
-	bh=kMVc66oZXCOktM4R7/awXD6J4keYYzNjFUaNutsI2bU=;
+	s=k20201202; t=1691012597;
+	bh=JP7uB7/G+cUBWmCMFTcCRqLSa2LcbVSrJBh+8gJznBY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XTxyZN9wgm81uYCBD8tsYa8GiyQrknkGGCqGP+Zp6Wc+lvHBHfpOQUmIBlKSTGYmh
-	 1UKD17lJBeOavBqNqJh3fOpnflBOMfvY+Bx0jYBVEh9fZDHTjC1jP/dOaSqYFRl+jQ
-	 veY9IxAu4ARncosqjFWMds8VXLP9r2WxtyD1BaEJhw27OGS7l0Q+iUKN5psDk0se7K
-	 fo0JmD6X43tdBI8eG86p92nY0vo9ypmrouOlHNvXMWIrOP1qktU2tIGPQ6yqqpzsfG
-	 st/A6Dt42kSWmistvHhdf0bjHrvd2e8qx+VIySEG2VKdtpNHM1uHAeQMlcVifJDMHs
-	 fhvvpLexHQ2Hw==
+	b=d7xhpD4E6+xzHmLfpPR8xGJeolAoLBdQ9cU9bmsPDrhUUzqAQB3BxkMswSpzjfR7F
+	 bZc3Fqr8n6GnLlqOfjjloocRUENNRBb6HKHdzqmAYeY82HvBo/5IlyyO6BqiyHQnij
+	 dUzqJPM7nGRPpbnBigsMKPqICuvROkUfZbHmLB9QiP7TRI7y7YStlKiqvORxaaIrYO
+	 56CifiuxP5cepT2YUYx7ld/O9AQQw5Kf1eRKYDuxPmxQSJZeaYsRmtMiZlcXClpoPh
+	 emu8Mso4037QQC16Eiv96YfdCCV3p08+4tqrovf0W5WO8TOlmLqyn9Ra5cl2E9Xze4
+	 IAfLeY30ehFPQ==
 From: SeongJae Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SeongJae Park <sj@kernel.org>,
 	damon@lists.linux.dev,
 	linux-mm@kvack.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH 01/13] mm/damon/core: introduce address range type damos filter
-Date: Wed,  2 Aug 2023 21:43:00 +0000
-Message-Id: <20230802214312.110532-2-sj@kernel.org>
+Subject: [PATCH 02/13] mm/damon/sysfs-schemes: support address range type DAMOS filter
+Date: Wed,  2 Aug 2023 21:43:01 +0000
+Message-Id: <20230802214312.110532-3-sj@kernel.org>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20230802214312.110532-1-sj@kernel.org>
 References: <20230802214312.110532-1-sj@kernel.org>
@@ -35,157 +35,116 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Users can know special characteristic of specific address ranges.  NUMA
-nodes or special objects or buffers in virtual address space could be
-such examples.  For such cases, DAMOS schemes could required to be
-applied to only specific address ranges.  Implement yet another type of
-DAMOS filter for the purpose.
-
-Note that the existing filter types, namely anon pages and memcg DAMOS
-filters needed page level type check.  Because such check can be done
-efficiently in the opertions set layer, those filters are handled in
-operations set layer.  Specifically, only paddr operations set
-implementation supports these filters.  Also, because statistics
-counting is done in the DAMON core layer, the regions that filtered out
-by these filters are counted as tried but failed to the statistics.
-
-Unlike those, address range based filters can efficiently handled in the
-core layer.  Hence, do the handling in the layer, and count the regions
-that filtered out by those as the scheme has not tried for the region.
-This difference should clearly documented.
+Extend DAMON sysfs interface to support address range based DAMOS
+filters, by adding a special keyword for the filter/<N>/type file,
+namely 'addr', and two files under filter/<N>/ for specifying the start
+and the end addresses of the range, namely 'addr_start' and 'addr_end'.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- include/linux/damon.h | 22 +++++++++++++-----
- mm/damon/core.c       | 52 +++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 68 insertions(+), 6 deletions(-)
+ mm/damon/sysfs-schemes.c | 56 ++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 56 insertions(+)
 
-diff --git a/include/linux/damon.h b/include/linux/damon.h
-index d5d4d19928e0..476f37a883a4 100644
---- a/include/linux/damon.h
-+++ b/include/linux/damon.h
-@@ -226,16 +226,24 @@ struct damos_stat {
-  * enum damos_filter_type - Type of memory for &struct damos_filter
-  * @DAMOS_FILTER_TYPE_ANON:	Anonymous pages.
-  * @DAMOS_FILTER_TYPE_MEMCG:	Specific memcg's pages.
-+ * @DAMOS_FILTER_TYPE_ADDR:	Address range.
-  * @NR_DAMOS_FILTER_TYPES:	Number of filter types.
-  *
-- * The support of each filter type is up to running &struct damon_operations.
-- * &enum DAMON_OPS_PADDR is supporting all filter types, while
-- * &enum DAMON_OPS_VADDR and &enum DAMON_OPS_FVADDR are not supporting any
-- * filter types.
-+ * The anon pages type and memcg type filters are handled by underlying
-+ * &struct damon_operations as a part of scheme action trying, and therefore
-+ * accounted as 'tried'.  In contrast, other types are handled by core layer
-+ * before trying of the action and therefore not accounted as 'tried'.
-+ *
-+ * The support of the filters that handled by &struct damon_operations depend
-+ * on the running &struct damon_operations.
-+ * &enum DAMON_OPS_PADDR supports both anon pages type and memcg type filters,
-+ * while &enum DAMON_OPS_VADDR and &enum DAMON_OPS_FVADDR don't support any of
-+ * the two types.
-  */
- enum damos_filter_type {
- 	DAMOS_FILTER_TYPE_ANON,
- 	DAMOS_FILTER_TYPE_MEMCG,
-+	DAMOS_FILTER_TYPE_ADDR,
- 	NR_DAMOS_FILTER_TYPES,
- };
- 
-@@ -244,18 +252,20 @@ enum damos_filter_type {
-  * @type:	Type of the page.
-  * @matching:	If the matching page should filtered out or in.
-  * @memcg_id:	Memcg id of the question if @type is DAMOS_FILTER_MEMCG.
-+ * @addr_range:	Address range if @type is DAMOS_FILTER_TYPE_ADDR.
-  * @list:	List head for siblings.
-  *
-  * Before applying the &damos->action to a memory region, DAMOS checks if each
-  * page of the region matches to this and avoid applying the action if so.
-- * Note that the check support is up to &struct damon_operations
-- * implementation.
-+ * Support of each filter type depends on the running &struct damon_operations
-+ * and the type.  Refer to &enum damos_filter_type for more detai.
-  */
- struct damos_filter {
+diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
+index 9a015079f3a4..03ddba3e216d 100644
+--- a/mm/damon/sysfs-schemes.c
++++ b/mm/damon/sysfs-schemes.c
+@@ -282,6 +282,7 @@ struct damon_sysfs_scheme_filter {
  	enum damos_filter_type type;
  	bool matching;
- 	union {
- 		unsigned short memcg_id;
-+		struct damon_addr_range addr_range;
- 	};
- 	struct list_head list;
+ 	char *memcg_path;
++	struct damon_addr_range addr_range;
  };
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index eb9580942a5c..f3a821215230 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -878,6 +878,56 @@ static void damos_update_stat(struct damos *s,
- 	s->stat.sz_applied += sz_applied;
+ 
+ static struct damon_sysfs_scheme_filter *damon_sysfs_scheme_filter_alloc(void)
+@@ -293,6 +294,7 @@ static struct damon_sysfs_scheme_filter *damon_sysfs_scheme_filter_alloc(void)
+ static const char * const damon_sysfs_scheme_filter_type_strs[] = {
+ 	"anon",
+ 	"memcg",
++	"addr",
+ };
+ 
+ static ssize_t type_show(struct kobject *kobj,
+@@ -373,6 +375,44 @@ static ssize_t memcg_path_store(struct kobject *kobj,
+ 	return count;
  }
  
-+static bool __damos_filter_out(struct damon_target *t, struct damon_region *r,
-+		struct damos_filter *filter)
++static ssize_t addr_start_show(struct kobject *kobj,
++		struct kobj_attribute *attr, char *buf)
 +{
-+	bool matched = false;
-+	unsigned long start, end;
++	struct damon_sysfs_scheme_filter *filter = container_of(kobj,
++			struct damon_sysfs_scheme_filter, kobj);
 +
-+	switch (filter->type) {
-+	case DAMOS_FILTER_TYPE_ADDR:
-+		start = ALIGN_DOWN(filter->addr_range.start, DAMON_MIN_REGION);
-+		end = ALIGN_DOWN(filter->addr_range.end, DAMON_MIN_REGION);
-+
-+		/* inside the range */
-+		if (start <= r->ar.start && r->ar.end <= end) {
-+			matched = true;
-+			break;
-+		}
-+		/* outside of the range */
-+		if (r->ar.end <= start || end <= r->ar.start) {
-+			matched = false;
-+			break;
-+		}
-+		/* start before the range and overlap */
-+		if (r->ar.start < start) {
-+			damon_split_region_at(t, r, start - r->ar.start);
-+			matched = false;
-+			break;
-+		}
-+		/* start inside the range */
-+		damon_split_region_at(t, r, end - r->ar.start);
-+		matched = true;
-+		break;
-+	default:
-+		break;
-+	}
-+
-+	return matched == filter->matching;
++	return sysfs_emit(buf, "%lu\n", filter->addr_range.start);
 +}
 +
-+static bool damos_filter_out(struct damon_target *t, struct damon_region *r,
-+		struct damos *s)
++static ssize_t addr_start_store(struct kobject *kobj,
++		struct kobj_attribute *attr, const char *buf, size_t count)
 +{
-+	struct damos_filter *filter;
++	struct damon_sysfs_scheme_filter *filter = container_of(kobj,
++			struct damon_sysfs_scheme_filter, kobj);
++	int err = kstrtoul(buf, 0, &filter->addr_range.start);
 +
-+	damos_for_each_filter(filter, s) {
-+		if (__damos_filter_out(t, r, filter))
-+			return true;
-+	}
-+	return false;
++	return err ? err : count;
 +}
 +
- static void damos_apply_scheme(struct damon_ctx *c, struct damon_target *t,
- 		struct damon_region *r, struct damos *s)
++static ssize_t addr_end_show(struct kobject *kobj,
++		struct kobj_attribute *attr, char *buf)
++{
++	struct damon_sysfs_scheme_filter *filter = container_of(kobj,
++			struct damon_sysfs_scheme_filter, kobj);
++
++	return sysfs_emit(buf, "%lu\n", filter->addr_range.end);
++}
++
++static ssize_t addr_end_store(struct kobject *kobj,
++		struct kobj_attribute *attr, const char *buf, size_t count)
++{
++	struct damon_sysfs_scheme_filter *filter = container_of(kobj,
++			struct damon_sysfs_scheme_filter, kobj);
++	int err = kstrtoul(buf, 0, &filter->addr_range.end);
++
++	return err ? err : count;
++}
++
+ static void damon_sysfs_scheme_filter_release(struct kobject *kobj)
  {
-@@ -895,6 +945,8 @@ static void damos_apply_scheme(struct damon_ctx *c, struct damon_target *t,
- 				goto update_stat;
- 			damon_split_region_at(t, r, sz);
+ 	struct damon_sysfs_scheme_filter *filter = container_of(kobj,
+@@ -391,10 +431,18 @@ static struct kobj_attribute damon_sysfs_scheme_filter_matching_attr =
+ static struct kobj_attribute damon_sysfs_scheme_filter_memcg_path_attr =
+ 		__ATTR_RW_MODE(memcg_path, 0600);
+ 
++static struct kobj_attribute damon_sysfs_scheme_filter_addr_start_attr =
++		__ATTR_RW_MODE(addr_start, 0600);
++
++static struct kobj_attribute damon_sysfs_scheme_filter_addr_end_attr =
++		__ATTR_RW_MODE(addr_end, 0600);
++
+ static struct attribute *damon_sysfs_scheme_filter_attrs[] = {
+ 	&damon_sysfs_scheme_filter_type_attr.attr,
+ 	&damon_sysfs_scheme_filter_matching_attr.attr,
+ 	&damon_sysfs_scheme_filter_memcg_path_attr.attr,
++	&damon_sysfs_scheme_filter_addr_start_attr.attr,
++	&damon_sysfs_scheme_filter_addr_end_attr.attr,
+ 	NULL,
+ };
+ ATTRIBUTE_GROUPS(damon_sysfs_scheme_filter);
+@@ -1484,7 +1532,15 @@ static int damon_sysfs_set_scheme_filters(struct damos *scheme,
+ 				damos_destroy_filter(filter);
+ 				return err;
+ 			}
++		} else if (filter->type == DAMOS_FILTER_TYPE_ADDR) {
++			if (sysfs_filter->addr_range.end <
++					sysfs_filter->addr_range.start) {
++				damos_destroy_filter(filter);
++				return -EINVAL;
++			}
++			filter->addr_range = sysfs_filter->addr_range;
  		}
-+		if (damos_filter_out(t, r, s))
-+			return;
- 		ktime_get_coarse_ts64(&begin);
- 		if (c->callback.before_damos_apply)
- 			err = c->callback.before_damos_apply(c, t, r, s);
++
+ 		damos_add_filter(scheme, filter);
+ 	}
+ 	return 0;
 -- 
 2.25.1
 
