@@ -1,120 +1,106 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4653C12B84
-	for <damon@lists.linux.dev>; Wed,  2 Aug 2023 21:32:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9802AC433C9;
-	Wed,  2 Aug 2023 21:32:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92276D51F
+	for <damon@lists.linux.dev>; Wed,  2 Aug 2023 21:43:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 400B5C433C8;
+	Wed,  2 Aug 2023 21:43:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1691011951;
-	bh=yEbF4+MD2fwxwTT+Hga32t2Dr/eR/mptRKFvKfgNyUo=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZqyP22dRe9txftfj0mTUSKJdBVIfJS1fQ0q1DN993ssD71Y/JqUWnM0H60utm4t2J
-	 uMCZdbNjNYBEz2HiAbC4KO9ZTcRMCAlxOo93soa5DH1MH2yNhVq6MNYcRbGNhY0ZOB
-	 oHCr8oMfDxScd3CpAtFHklMIqLUyywRvNsuJmsL1Z3afAKXlBqtzQuw9liSjCXiwsG
-	 ZnWPOJPpSLsqkpRJCTHsn7DIS0hIFSOz0BR+yYwpUTZ8B//Vm6Re/QFwCS9iW9aQKO
-	 rVZEF0cDLe1gJGf6HsNUEyr/1p45zPFuEOX8VrD/DD6sBCE7YZRLXHgcaXt/NP7SrL
-	 sQHPQ24C4gGgg==
+	s=k20201202; t=1691012596;
+	bh=QBEuiRTbe28FwTJFyn0gDDELntZEEA9zFJZItYOJvcw=;
+	h=From:To:Cc:Subject:Date:From;
+	b=FKYuhgFDuS/e5nbYCnIMw34QvAdrdGGRcfjrAK/XBtebMhBW+RzUXodidWe9sRR4h
+	 zEGiRMPUAvCDINdU91+Xh5lbQ5JV5Nn4L6dFQc460WmEuf5yJjTKvoJz4lXNWVj1Vq
+	 Fr6XytvI/Yjrtp11SCUK7KLB89U8l0Vo2ZTbGjKokFLlS/5HQVVc1v7EkROSLjD0kv
+	 RNlcZEJRPbHAR6qOe08UpWBBEex44zs8y/tx4yxtuSTHHZGIFoKVDHy+cIiJA6wNv3
+	 B0QbSi4mbg9jgbX0nV0v4WW2BCA6aHWBiZiEEnlLzkdLZ82+RAG9SQrb7l42AsU71c
+	 fyWpzYI7uwBnA==
 From: SeongJae Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SeongJae Park <sj@kernel.org>,
 	Jonathan Corbet <corbet@lwn.net>,
+	Shuah Khan <shuah@kernel.org>,
+	Brendan Higgins <brendanhiggins@google.com>,
 	damon@lists.linux.dev,
-	linux-mm@kvack.org,
 	linux-doc@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH 5/5] Docs/admin-guide/mm/damon/usage: update for tried_regions/total_bytes
-Date: Wed,  2 Aug 2023 21:32:21 +0000
-Message-Id: <20230802213222.109841-6-sj@kernel.org>
+	linux-kernel@vger.kernel.org,
+	linux-kselftest@vger.kernel.org,
+	kunit-dev@googlegroups.com,
+	linux-mm@kvack.org
+Subject: [PATCH 00/13] Extedn DAMOS filters for address ranges and DAMON monitoring targets
+Date: Wed,  2 Aug 2023 21:42:59 +0000
+Message-Id: <20230802214312.110532-1-sj@kernel.org>
 X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20230802213222.109841-1-sj@kernel.org>
-References: <20230802213222.109841-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Update the DAMON usage document for newly added
-schemes/.../tried_regions/total_bytes file and the
-update_schemes_tried_bytes command.
+Changes from RFC[1]
+- Rebase on latest mm-unstable
+- Add base-commit
 
-Signed-off-by: SeongJae Park <sj@kernel.org>
----
- Documentation/admin-guide/mm/damon/usage.rst | 42 +++++++++++++-------
- 1 file changed, 27 insertions(+), 15 deletions(-)
+----
 
-diff --git a/Documentation/admin-guide/mm/damon/usage.rst b/Documentation/admin-guide/mm/damon/usage.rst
-index 2d495fa85a0e..1859dd6c3834 100644
---- a/Documentation/admin-guide/mm/damon/usage.rst
-+++ b/Documentation/admin-guide/mm/damon/usage.rst
-@@ -87,7 +87,7 @@ comma (","). ::
-     │ │ │ │ │ │ │ filters/nr_filters
-     │ │ │ │ │ │ │ │ 0/type,matching,memcg_id
-     │ │ │ │ │ │ │ stats/nr_tried,sz_tried,nr_applied,sz_applied,qt_exceeds
--    │ │ │ │ │ │ │ tried_regions/
-+    │ │ │ │ │ │ │ tried_regions/total_bytes
-     │ │ │ │ │ │ │ │ 0/start,end,nr_accesses,age
-     │ │ │ │ │ │ │ │ ...
-     │ │ │ │ │ │ ...
-@@ -127,14 +127,18 @@ in the state.  Writing ``commit`` to the ``state`` file makes kdamond reads the
- user inputs in the sysfs files except ``state`` file again.  Writing
- ``update_schemes_stats`` to ``state`` file updates the contents of stats files
- for each DAMON-based operation scheme of the kdamond.  For details of the
--stats, please refer to :ref:`stats section <sysfs_schemes_stats>`.  Writing
--``update_schemes_tried_regions`` to ``state`` file updates the DAMON-based
--operation scheme action tried regions directory for each DAMON-based operation
--scheme of the kdamond.  Writing ``clear_schemes_tried_regions`` to ``state``
--file clears the DAMON-based operating scheme action tried regions directory for
--each DAMON-based operation scheme of the kdamond.  For details of the
--DAMON-based operation scheme action tried regions directory, please refer to
--:ref:`tried_regions section <sysfs_schemes_tried_regions>`.
-+stats, please refer to :ref:`stats section <sysfs_schemes_stats>`.
-+
-+Writing ``update_schemes_tried_regions`` to ``state`` file updates the
-+DAMON-based operation scheme action tried regions directory for each
-+DAMON-based operation scheme of the kdamond.  Writing
-+``update_schemes_tried_bytes`` to ``state`` file updates only
-+``.../tried_regions/total_bytes`` files.  Writing
-+``clear_schemes_tried_regions`` to ``state`` file clears the DAMON-based
-+operating scheme action tried regions directory for each DAMON-based operation
-+scheme of the kdamond.  For details of the DAMON-based operation scheme action
-+tried regions directory, please refer to :ref:`tried_regions section
-+<sysfs_schemes_tried_regions>`.
- 
- If the state is ``on``, reading ``pid`` shows the pid of the kdamond thread.
- 
-@@ -406,13 +410,21 @@ stats by writing a special keyword, ``update_schemes_stats`` to the relevant
- schemes/<N>/tried_regions/
- --------------------------
- 
-+This directory initially has one file, ``total_bytes``.
-+
- When a special keyword, ``update_schemes_tried_regions``, is written to the
--relevant ``kdamonds/<N>/state`` file, DAMON creates directories named integer
--starting from ``0`` under this directory.  Each directory contains files
--exposing detailed information about each of the memory region that the
--corresponding scheme's ``action`` has tried to be applied under this directory,
--during next :ref:`aggregation interval <sysfs_monitoring_attrs>`.  The
--information includes address range, ``nr_accesses``, and ``age`` of the region.
-+relevant ``kdamonds/<N>/state`` file, DAMON updates the ``total_bytes`` file so
-+that reading it returns the total size of the scheme tried regions, and creates
-+directories named integer starting from ``0`` under this directory.  Each
-+directory contains files exposing detailed information about each of the memory
-+region that the corresponding scheme's ``action`` has tried to be applied under
-+this directory, during next :ref:`aggregation interval
-+<sysfs_monitoring_attrs>`.  The information includes address range,
-+``nr_accesses``, and ``age`` of the region.
-+
-+Writing ``update_schemes_tried_bytes`` to the relevant ``kdamonds/<N>/state``
-+file will only update the ``total_bytes`` file, and will not create the
-+subdirectories.
- 
- The directories will be removed when another special keyword,
- ``clear_schemes_tried_regions``, is written to the relevant
+There are use cases that need to apply DAMOS schemes to specific address
+ranges or DAMON monitoring targets.  NUMA nodes in the physical address
+space, special memory objects in the virtual address space, and
+monitoring target specific efficient monitoring results snapshot
+retrieval could be examples of such use cases.  This patchset extends
+DAMOS filters feature for such cases, by implementing two more filter
+types, namely address ranges and DAMON monitoring types.
+
+Patches sequence
+----------------
+
+The first seven patches are for the address ranges based DAMOS filter.
+The first patch implements the filter feature and expose it via DAMON
+kernel API.  The second patch further expose the feature to users via
+DAMON sysfs interface.  The third and fourth patches implement unit
+tests and selftests for the feature.  Three patches (fifth to seventh)
+updating the documents follow.
+
+The following six patches are for the DAMON monitoring target based
+DAMOS filter.  The eighth patch implements the feature in the core layer
+and expose it via DAMON's kernel API.  The ninth patch further expose it
+to users via DAMON sysfs interface.  Tenth patch add a selftest, and two
+patches (eleventh and twelfth) update documents.
+
+[1] https://lore.kernel.org/damon/20230728203444.70703-1-sj@kernel.org/
+
+SeongJae Park (13):
+  mm/damon/core: introduce address range type damos filter
+  mm/damon/sysfs-schemes: support address range type DAMOS filter
+  mm/damon/core-test: add a unit test for __damos_filter_out()
+  selftests/damon/sysfs: test address range damos filter
+  Docs/mm/damon/design: update for address range filters
+  Docs/ABI/damon: update for address range DAMOS filter
+  Docs/admin-guide/mm/damon/usage: update for address range type DAMOS
+    filter
+  mm/damon/core: implement target type damos filter
+  mm/damon/sysfs-schemes: support target damos filter
+  selftests/damon/sysfs: test damon_target filter
+  Docs/mm/damon/design: update for DAMON monitoring target type DAMOS
+    filter
+  Docs/ABI/damon: update for DAMON monitoring target type DAMOS filter
+  Docs/admin-guide/mm/damon/usage: update for DAMON monitoring target
+    type DAMOS filter
+
+ .../ABI/testing/sysfs-kernel-mm-damon         | 27 +++++-
+ Documentation/admin-guide/mm/damon/usage.rst  | 34 +++++---
+ Documentation/mm/damon/design.rst             | 24 ++++--
+ include/linux/damon.h                         | 28 +++++--
+ mm/damon/core-test.h                          | 61 ++++++++++++++
+ mm/damon/core.c                               | 62 ++++++++++++++
+ mm/damon/sysfs-schemes.c                      | 83 +++++++++++++++++++
+ tools/testing/selftests/damon/sysfs.sh        |  5 ++
+ 8 files changed, 299 insertions(+), 25 deletions(-)
+
+
+base-commit: 32f9db36a0031f99629b5910d795b3f13f284472
 -- 
 2.25.1
 
