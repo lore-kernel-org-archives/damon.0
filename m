@@ -1,104 +1,104 @@
-Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D72F7DDBF
-	for <damon@lists.linux.dev>; Tue,  8 Aug 2023 09:59:25 +0000 (UTC)
-Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-99bcf2de59cso799814166b.0
-        for <damon@lists.linux.dev>; Tue, 08 Aug 2023 02:59:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1691488764; x=1692093564;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=oj2ai9zvS+9QZOskCM8RXfhgWWD2kjSbmwS4f6JevAw=;
-        b=REfFB6xxXyunKIxjea/FR6SFY2a1L7wAPVaHVDbWmFulGyGx+Ri7avf/nbzBosqq7q
-         FUmH05AE6N6ARunU/HUohq1g1KLoCqT13s8MvQ8NlbRSfEG8nZzHMHsMiW3tzQ9GG3d3
-         LNbp0tZ9h9HF7pzYfUGd0JnFDdFTidwI9FlVFbNPQmmZ5g6/WFN9zXZKf8ApoCA9rEqj
-         2Fmv4Ugj8+OPy/LrkVFSFS0v31r7l8ujkK2rmwAqWjdP07XMD8ZI+KHXlgm9yDmIO6PZ
-         wJEt+jx/X762tXjSeCzOFN76OZeJqCuRsFUXZdKzBmLQ7AshXmjUO+/jDc5xAytH198K
-         aMIw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691488764; x=1692093564;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=oj2ai9zvS+9QZOskCM8RXfhgWWD2kjSbmwS4f6JevAw=;
-        b=XPnEYBkYsYxdzKibI3L+f5STsroNLgcFJVCzGYKNHFFmWykcog4ME7IaLJJ16hanO/
-         tNFk3i7dSMFsD+HmDJrpY23CI9fziukaiFwRGf5kfl64MjqHwauy0/gfPDPbhv0AIZLv
-         TYLoAfN4bY+05YYFwE5QW2vON4NNTpauaEwmpXQ+PieU2uP8SGPubWjJSkPSEBMcbdb5
-         d5GUfd8M74emzY9h28PgAzorlc4YuQUe1I/joX/ZQHL4dmsg4DocbXX7pBDShaez4ChQ
-         plIdO6ZT8rf+zxTokkMRbw/rLzKy0/yowqgFR+6Hoepn4sBmhxMHfOUNMJxavDwgk4ZX
-         mHvQ==
-X-Gm-Message-State: AOJu0Yy0kkf1eQDLARCgYnpbJhatzdIzB2nskAKHTZ9uhcTevzgGT87p
-	H1TRyVBdojhl3lUp7i52hu/bd0Tc2mBxPlsAIu8=
-X-Google-Smtp-Source: AGHT+IFfju5o1lWIv3wyfHE+qyETz1vJSnBk2q+GZQ6BY2VK2b4Baqqt+9vLWQ3xkBaRGglOIQJ0QqulvLM+5Af0FWA=
-X-Received: by 2002:a17:906:109b:b0:99b:d977:c00c with SMTP id
- u27-20020a170906109b00b0099bd977c00cmr10395304eju.45.1691488763617; Tue, 08
- Aug 2023 02:59:23 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB2B61BB3D;
+	Wed,  9 Aug 2023 17:05:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA116C433C8;
+	Wed,  9 Aug 2023 17:05:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1691600714;
+	bh=2f0W3NcNjV1j4avoEGTZkd6zteRKgy72/PqLXiSMKCg=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=R8NepVIc5ytHOhMwB4WlHRTOUe3NUTfa4mNiJvrm3DteUZ00K8kMEXkYw8UdwjCrs
+	 /ipXEM2LK2TorG6suKTOFqn9Ew2MLBgfdLIG2yiNovnQ2sqSvIifXHVwMohg+RSHY5
+	 +rQUKYFktjprYzVk2ULTRGgiVjMkIJT5eukxS7fULWhQL5PnRrMEtSk0OOpBfjtpIo
+	 H7OhdAhsC5XQgy84U1x+/J0Y+q0baTHUIemHbzhrk8iuLzrkJilDzJ+Qn8ZIDEm7Gl
+	 JD40ZINcYZlQBxvH+yhqVfnMLGpjpf/9pSNeFBO1sx+y213ag4MnrN3sP5PdyibGiK
+	 1nbz26n8BWjqA==
+From: SeongJae Park <sj@kernel.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org,
+	patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net,
+	rwarsow@gmx.de,
+	conor@kernel.org,
+	damon@lists.linux.dev,
+	SeongJae Park <sj@kernel.org>
+Subject: Re: [PATCH 5.15 00/92] 5.15.126-rc1 review
+Date: Wed,  9 Aug 2023 17:05:11 +0000
+Message-Id: <20230809170511.90647-1-sj@kernel.org>
+X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20230809103633.485906560@linuxfoundation.org>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <1691401475-3796-1-git-send-email-hyeongtak.ji@gmail.com> <20230807181409.97310-1-sj@kernel.org>
-In-Reply-To: <20230807181409.97310-1-sj@kernel.org>
-From: =?UTF-8?B?7KeA7ZiV7YOB?= <hyeongtak.ji@gmail.com>
-Date: Tue, 8 Aug 2023 18:59:13 +0900
-Message-ID: <CAFY0u4Q32yX+O57D+Eh_x6yVwQv2EcqvuxtQxG1msd8RqQy0zQ@mail.gmail.com>
-Subject: Re: [PATCH] mm/damon: Prevent unnecessary age reset for regions
-To: SeongJae Park <sj@kernel.org>
-Cc: akpm@linux-foundation.org, damon@lists.linux.dev, linux-mm@kvack.org, 
-	linux-kernel@vger.kernel.org, Hyeongtak Ji <hyeongtak.ji@sk.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
 Hello,
 
-Thank you for your review. I really appreciate it.
+On 2023-08-09T12:40:36+02:00   Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
 
-On Tue, Aug 8, 2023 at 3:14=E2=80=AFAM SeongJae Park <sj@kernel.org> wrote:
->
-> Hi Hyeongtak,
->
->
-> Thank you for this patch!
->
-> On Mon, 7 Aug 2023 18:44:35 +0900 Hyeongtak Ji <hyeongtak.ji@gmail.com> w=
-rote:
->
-> > DAMON resets the age of each region after applying each scheme,
-> > regardless of whether the scheme has been successfully applied.
-> >
-> > This patch adds a simple condition to prevent the age of regions from
-> > being reset when schemes have not been actually applied.
->
-> We consider applying the action as making a change to the region, and hen=
-ce
-> reset the age to zero.  Even if the action was not completely applied,
-> that might be enough to make some change to the region.  The behavior is =
-also
-> to limit a scheme too repeatedly and frequently applied to a region.
+> This is the start of the stable review cycle for the 5.15.126 release.
+> There are 92 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Fri, 11 Aug 2023 10:36:10 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.126-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
+> and the diffstat can be found below.
 
-This is what I have totally overlooked.
+This rc kernel passes DAMON functionality test[1] on my test machine.
+Attaching the test results summary below.  Please note that I retrieved the
+kernel from linux-stable-rc tree[2].
 
->
-> So, this is not a bug but an intended behavior, and I think this change m=
-ight
-> not what really necessary.
+Tested-by: SeongJae Park <sj@kernel.org>
 
-Now I understand that this patch is not necessary.
+[1] https://github.com/awslabs/damon-tests/tree/next/corr
+[2] ae7f23cbf199 ("Linux 5.15.126-rc1")
 
->
-> Is there a specific use case that this change is needed?  If so, I think =
-we can
-> think about extending the interface to support the case.
 
-Not for now, but if I find any use cases for this situation, I will
-let you know.
+Thanks,
+SJ
 
->
->
-> Thanks,
-> SJ
->
+[...]
+
+---
+
+ok 1 selftests: damon: debugfs_attrs.sh
+ok 1 selftests: damon-tests: kunit.sh
+ok 2 selftests: damon-tests: huge_count_read_write.sh
+ok 3 selftests: damon-tests: buffer_overflow.sh
+ok 4 selftests: damon-tests: rm_contexts.sh
+ok 5 selftests: damon-tests: record_null_deref.sh
+ok 6 selftests: damon-tests: dbgfs_target_ids_read_before_terminate_race.sh
+ok 7 selftests: damon-tests: dbgfs_target_ids_pid_leak.sh
+ok 8 selftests: damon-tests: damo_tests.sh
+ok 9 selftests: damon-tests: masim-record.sh
+ok 10 selftests: damon-tests: build_i386.sh
+ok 11 selftests: damon-tests: build_m68k.sh
+ok 12 selftests: damon-tests: build_arm64.sh
+ok 13 selftests: damon-tests: build_i386_idle_flag.sh
+ok 14 selftests: damon-tests: build_i386_highpte.sh
+ok 15 selftests: damon-tests: build_nomemcg.sh
+
+PASS
