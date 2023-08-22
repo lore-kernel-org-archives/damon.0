@@ -1,20 +1,20 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B55DAC2FF;
-	Mon, 14 Aug 2023 17:36:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCC33C433C7;
-	Mon, 14 Aug 2023 17:36:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19D0D9447;
+	Tue, 22 Aug 2023 11:00:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3243AC433C8;
+	Tue, 22 Aug 2023 11:00:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1692034582;
-	bh=1tNcPHsbHs3no/235NAi3iB8oG/DKPFv0QuXfBPog+c=;
+	s=k20201202; t=1692702020;
+	bh=deQQMGTa5DqJgxvuclOljoYtiCOmhjCpDiH4LVTbozk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NvRQYIChsdoa+JYbLQvdtVQXVqmZzgzFait+AmTTmIm7R30VWkgzENev0hv8ZW19Y
-	 1+btnuMK85SuAqIV/GjHx+Xs+HVGddWMfACa+4a6RWhl37CWs2qlf1fujC13atR0vM
-	 cNPCWQnfIWI3sR2shGgXZQe03rcU6O289bFA4poUX8B5n4WNRAIcoD1srbugVmremy
-	 l3yrFdJU5UTAycBXc/GFJacQm/TVDREDkjosAJSWjhJPi0bC/nsZe1C2jdFyU0ckr5
-	 HKkTxRygJNaFX8uXhB1pofbHoEfzaD6mpQsrxmub5+InAE32xhlYZTVdu/RmZBwPSU
-	 g12muAdfRKdHQ==
+	b=tccfDqjJDQplfAq0AkrK8go9+E+ZD6Z985cZfbnjOtg3EpTtZ/fp2Ab0ra0e7bBna
+	 FzcpWHZ2xMnlnvSfwa7XGV7wE00C8fg4snK7Jq0u8P39nCUytnBAZSVNX/lHwh7VoT
+	 1VgNSwEe9BCLbciSnYj9XRFwUIKyOG0wkKdtOSnGv3bKkHvgedT/EqADlQz0scqoZG
+	 TuE/f1Ap+nailCPUBUXwZijMNqVn9Gf1ZZw78NfNCiJhDCILAy48CB+1ivKJ+F1Imw
+	 tfPBb7WMWTl86rBx+MvhMSoF60fPrH52j3gyuBtJdZVGC+J3zfDW90sLxnanI6cexp
+	 upr4liWPjeckg==
 From: SeongJae Park <sj@kernel.org>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: stable@vger.kernel.org,
@@ -35,11 +35,11 @@ Cc: stable@vger.kernel.org,
 	conor@kernel.org,
 	damon@lists.linux.dev,
 	SeongJae Park <sj@kernel.org>
-Subject: Re: [PATCH 6.4 000/206] 6.4.11-rc1 review
-Date: Mon, 14 Aug 2023 17:36:19 +0000
-Message-Id: <20230814173619.9923-1-sj@kernel.org>
+Subject: Re: [PATCH 6.4 000/234] 6.4.12-rc1 review
+Date: Tue, 22 Aug 2023 11:00:17 +0000
+Message-Id: <20230822110017.64926-1-sj@kernel.org>
 X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20230813211724.969019629@linuxfoundation.org>
+In-Reply-To: <20230821194128.754601642@linuxfoundation.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -49,20 +49,18 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hello,
+On Mon, 21 Aug 2023 21:39:23 +0200 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
 
-On Sun, 13 Aug 2023 23:16:10 +0200 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
-
-> This is the start of the stable review cycle for the 6.4.11 release.
-> There are 206 patches in this series, all will be posted as a response
+> This is the start of the stable review cycle for the 6.4.12 release.
+> There are 234 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 > 
-> Responses should be made by Tue, 15 Aug 2023 21:16:53 +0000.
+> Responses should be made by Wed, 23 Aug 2023 19:40:45 +0000.
 > Anything received after that time might be too late.
 > 
 > The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.4.11-rc1.gz
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.4.12-rc1.gz
 > or in the git tree and branch at:
 > 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.4.y
 > and the diffstat can be found below.
@@ -74,7 +72,7 @@ kernel from linux-stable-rc tree[2].
 Tested-by: SeongJae Park <sj@kernel.org>
 
 [1] https://github.com/awslabs/damon-tests/tree/next/corr
-[2] 427a3a47257b ("Linux 6.4.11-rc1")
+[2] 2a85de3fab43 ("Linux 6.4.12-rc1")
 
 Thanks,
 SJ
