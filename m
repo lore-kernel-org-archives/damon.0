@@ -1,46 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A65EB621;
-	Fri, 25 Aug 2023 01:31:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB978C433C9;
-	Fri, 25 Aug 2023 01:31:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46839649
+	for <damon@lists.linux.dev>; Fri, 25 Aug 2023 02:04:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B0C3C433C8;
+	Fri, 25 Aug 2023 02:04:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1692927099;
-	bh=lhrAqAxMEr40IS0xmnCfLWy8ejhy3ZAXRBr9oZpBrPc=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SUVywRZKobOQhT98vwJuJMIoTrhrmyoxh+4+yYubfBpjyDH5qHuj5CCxzE3QueOJz
-	 XChGafqDn9ZHsXw88lPPbxXuCgTUs1t/quLImQ2WnKbq8Uyjp3EGfZdcBUyjAP+nER
-	 wAhLLnEB79SPpAsoi+aBcYas+q2SbhSX0svFoB046U6M+v8s97ZSmF4K8NoiEXnn2P
-	 qyKxcQuOd+lzXuLP2VUnMk0ARnSeammu4Uhtpg4bMjseT+bCZQVJky6XT7lVJR+o46
-	 ZxdrtysAvxW7cXj9Ez96hpw4OjJC+lwicL35Ft8sUMF5PUzJgkp9kqpTAMuvUVveMv
-	 5/8dsf5JMcCdw==
+	s=k20201202; t=1692929083;
+	bh=DGy3J8tYd2fNRF/XMycogFjHA/nAjC6h5pCTBYpzOiI=;
+	h=From:To:Cc:Subject:Date:From;
+	b=Hq8Ec9ZVIKKgzSO5bo2qz85hrjMHvmYvKbaBnGJgQNBALU2Yene9Vt3mQ8oOLA+VJ
+	 gKBtDB2OsWoa8XQHpEbsvLT3HygLVL5ISqhfF3frSEv8HPDJaf7Ik7FX/uEedk7OV+
+	 wL8Ghc8bSX0WAGnY3ZnCC8EDtjSUTmL2qyeFa2/+hB9TyUah51BY9vgnQXmsO5sdij
+	 i4We3Y6q14CyEcfuTHdOz3XOPyNNtZJUpGYEH3dsQ1PXQMAqDX0wpIc0/riu6mWxIB
+	 kR/jf332aRiKl3WtuGTNNA/Hlzq8oRahAR6LTsoqCq4vfdIW/I+CAuEdD7858V3TLm
+	 XSfFlwbbGiHkA==
 From: SeongJae Park <sj@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org,
-	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net,
-	rwarsow@gmx.de,
-	conor@kernel.org,
+To: Kees Cook <keescook@chromium.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Cc: SeongJae Park <sj@kernel.org>,
 	damon@lists.linux.dev,
-	SeongJae Park <sj@kernel.org>
-Subject: Re: [PATCH 5.15 000/139] 5.15.128-rc1 review
-Date: Fri, 25 Aug 2023 01:31:36 +0000
-Message-Id: <20230825013136.50239-1-sj@kernel.org>
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org
+Subject: [RFC PATCH] mm/damon/sysfs: add __counted_by() annotation
+Date: Fri, 25 Aug 2023 02:04:41 +0000
+Message-Id: <20230825020441.65431-1-sj@kernel.org>
 X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20230824145023.559380953@linuxfoundation.org>
-References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -49,67 +34,57 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hello,
+Commit dd06e72e68bc ("Compiler Attributes: Add __counted_by macro")
+added __counted_by() annotation.  The underlying attribute for the
+feature is still under development, but adopting it can improve the
+readability of the code.  Apply it to four dynamic arrays in DAMON sysfs
+code.
 
-On Thu, 24 Aug 2023 16:48:43 +0200 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
-
-> This is the start of the stable review cycle for the 5.15.128 release.
-> There are 139 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Sat, 26 Aug 2023 14:49:55 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.128-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
-> and the diffstat can be found below.
-
-This rc kernel passes DAMON functionality test[1] on my test machine.
-Attaching the test results summary below.  Please note that I retrieved the
-kernel from linux-stable-rc tree[2].
-
-Tested-by: SeongJae Park <sj@kernel.org>
-
-[1] https://github.com/awslabs/damon-tests/tree/next/corr
-[2] 00e5f0b76767 ("Linux 5.15.128-rc1")
-
-Thanks,
-SJ
-
-[...]
-
+Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
+ mm/damon/sysfs.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-ok 13 selftests: damon-tests: build_i386_idle_flag.sh
-# selftests: damon-tests: build_i386_highpte.sh
-# .config:1341:warning: override: reassigning to symbol DAMON
-ok 14 selftests: damon-tests: build_i386_highpte.sh
-# selftests: damon-tests: build_nomemcg.sh
-# .config:1342:warning: override: reassigning to symbol DAMON
-# .config:1352:warning: override: reassigning to symbol CGROUPS
-ok 15 selftests: damon-tests: build_nomemcg.sh
-# kselftest dir '/home/sjpark/damon-tests-cont/linux/tools/testing/selftests/damon-tests' is in dirty state.
-# the log is at '/home/sjpark/log'.
- [32m
-ok 1 selftests: damon: debugfs_attrs.sh
-ok 1 selftests: damon-tests: kunit.sh
-ok 2 selftests: damon-tests: huge_count_read_write.sh
-ok 3 selftests: damon-tests: buffer_overflow.sh
-ok 4 selftests: damon-tests: rm_contexts.sh
-ok 5 selftests: damon-tests: record_null_deref.sh
-ok 6 selftests: damon-tests: dbgfs_target_ids_read_before_terminate_race.sh
-ok 7 selftests: damon-tests: dbgfs_target_ids_pid_leak.sh
-ok 8 selftests: damon-tests: damo_tests.sh
-ok 9 selftests: damon-tests: masim-record.sh
-ok 10 selftests: damon-tests: build_i386.sh
-ok 11 selftests: damon-tests: build_m68k.sh
-ok 12 selftests: damon-tests: build_arm64.sh
-ok 13 selftests: damon-tests: build_i386_idle_flag.sh
-ok 14 selftests: damon-tests: build_i386_highpte.sh
-ok 15 selftests: damon-tests: build_nomemcg.sh
- [33m
- [92mPASS [39m
-_remote_run_corr.sh SUCCESS
+diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
+index 808a8efe0523..36a176f38726 100644
+--- a/mm/damon/sysfs.c
++++ b/mm/damon/sysfs.c
+@@ -93,7 +93,7 @@ static const struct kobj_type damon_sysfs_region_ktype = {
+ 
+ struct damon_sysfs_regions {
+ 	struct kobject kobj;
+-	struct damon_sysfs_region **regions_arr;
++	struct damon_sysfs_region **regions_arr __counted_by(nr);
+ 	int nr;
+ };
+ 
+@@ -289,7 +289,7 @@ static const struct kobj_type damon_sysfs_target_ktype = {
+ 
+ struct damon_sysfs_targets {
+ 	struct kobject kobj;
+-	struct damon_sysfs_target **targets_arr;
++	struct damon_sysfs_target **targets_arr __counted_by(nr);
+ 	int nr;
+ };
+ 
+@@ -812,7 +812,7 @@ static const struct kobj_type damon_sysfs_context_ktype = {
+ 
+ struct damon_sysfs_contexts {
+ 	struct kobject kobj;
+-	struct damon_sysfs_context **contexts_arr;
++	struct damon_sysfs_context **contexts_arr __counted_by(nr);
+ 	int nr;
+ };
+ 
+@@ -1590,7 +1590,7 @@ static const struct kobj_type damon_sysfs_kdamond_ktype = {
+ 
+ struct damon_sysfs_kdamonds {
+ 	struct kobject kobj;
+-	struct damon_sysfs_kdamond **kdamonds_arr;
++	struct damon_sysfs_kdamond **kdamonds_arr __counted_by(nr);
+ 	int nr;
+ };
+ 
+-- 
+2.25.1
+
