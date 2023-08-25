@@ -1,20 +1,20 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6DF69447;
-	Tue, 22 Aug 2023 11:01:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD992C433C8;
-	Tue, 22 Aug 2023 11:01:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C8C2621;
+	Fri, 25 Aug 2023 01:30:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E350C433C7;
+	Fri, 25 Aug 2023 01:30:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1692702101;
-	bh=+2UQHLLmsfpTP1PfTn6zOedxzoF2MldQaNFeDy6Drw8=;
+	s=k20201202; t=1692927022;
+	bh=7XObBKsY+H6XyS6THaA4MDQv9qgGrQumGJeBl/f7+hM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YOUPxUQ8Ma19nfHTGzaCyzMoKm45FOks1ykq0KPOmNi/SGAZEQOHT7SHblKN7TBSU
-	 RxobmL8TUlmhwY1Pe/UuOzR/qySJouWui3utXpCoyp7QRjsGVW9me//OR0u/FxYkRo
-	 C+coS3hooV9bzx+Ytqj6GltpcMDT8nNLeLgOVqKItCDUiGK68qtsEQ3Za1EtyrE8M8
-	 vGfK2+0a2oJDtmxOrysWtafVWFm5lyvMi2kG8vVSxrTBmmNeMIefRWsHzwDcBmsWOo
-	 2HiPxkVdmDP8GPJLanoQdnq6qTZAvudwP8ohGh2gn5kCGbltMs/QQul9safgjY1l5E
-	 G1qIGeA81vyew==
+	b=gQ61VxneSHTO1hOAdvbOJkzwlkHqfM9gXYDVpOBsE1uooHWlHY3T+FtAguZ7fXHEL
+	 bxKVJtgkTRXAig4GuWTeEY/8Xd15efY8aBpAdYnNf+KYGfy11fIUpscUmOqCI2/7Zw
+	 OtuBZYe6/4oedAfjaZZz5DesKoEzlj/z2EdqOuQDaH0wJGRlrKqV22AMxytNLwUuMR
+	 cD1njVXFjIwkhIROK1VluqKagvxW+J6Kb66Ov4ImGNA5La2PfLAMVtbG+7ruU2nojf
+	 yycR0YzXB87Xp7dfgdZG0C10JRrSKCjhgQ0rN6I9+QuLjALq6Gvr/Je5/saaGbRlMN
+	 BV32e+oLCtbAw==
 From: SeongJae Park <sj@kernel.org>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: stable@vger.kernel.org,
@@ -35,11 +35,11 @@ Cc: stable@vger.kernel.org,
 	conor@kernel.org,
 	damon@lists.linux.dev,
 	SeongJae Park <sj@kernel.org>
-Subject: Re: [PATCH 6.1 000/194] 6.1.47-rc1 review
-Date: Tue, 22 Aug 2023 11:01:38 +0000
-Message-Id: <20230822110138.64987-1-sj@kernel.org>
+Subject: Re: [PATCH 6.1 00/15] 6.1.48-rc1 review
+Date: Fri, 25 Aug 2023 01:30:19 +0000
+Message-Id: <20230825013019.50178-1-sj@kernel.org>
 X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20230821194122.695845670@linuxfoundation.org>
+In-Reply-To: <20230824141447.155846739@linuxfoundation.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -51,23 +51,21 @@ Content-Transfer-Encoding: 8bit
 
 Hello,
 
-On Mon, 21 Aug 2023 21:39:39 +0200 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+On Thu, 24 Aug 2023 16:14:56 +0200 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
 
-> This is the start of the stable review cycle for the 6.1.47 release.
-> There are 194 patches in this series, all will be posted as a response
+> This is the start of the stable review cycle for the 6.1.48 release.
+> There are 15 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 > 
-> Responses should be made by Wed, 23 Aug 2023 19:40:45 +0000.
+> Responses should be made by Sat, 26 Aug 2023 14:14:28 +0000.
 > Anything received after that time might be too late.
 > 
 > The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.47-rc1.gz
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.48-rc1.gz
 > or in the git tree and branch at:
 > 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
 > and the diffstat can be found below.
-
-# TODO: Cc damon@lists.linux.dev
 
 This rc kernel passes DAMON functionality test[1] on my test machine.
 Attaching the test results summary below.  Please note that I retrieved the
@@ -76,7 +74,7 @@ kernel from linux-stable-rc tree[2].
 Tested-by: SeongJae Park <sj@kernel.org>
 
 [1] https://github.com/awslabs/damon-tests/tree/next/corr
-[2] 5165f4e9738c ("Linux 6.1.47-rc1")
+[2] c079d0dd788a ("Linux 6.1.48-rc1")
 
 Thanks,
 SJ
