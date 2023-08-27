@@ -1,35 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B13A137F
-	for <damon@lists.linux.dev>; Sat, 26 Aug 2023 00:54:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 761E1C433C8;
-	Sat, 26 Aug 2023 00:54:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A26E19B
+	for <damon@lists.linux.dev>; Sun, 27 Aug 2023 00:37:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67961C433C8;
+	Sun, 27 Aug 2023 00:37:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1693011289;
-	bh=KunlMoFaeB09wWpK/chJYbgKS5tfp+/UPw8r6E8VtDQ=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FSgNX7cYWf2qXdMFCXD0W7Ors9olo5dw9e/ubec5mBKB8+DJR3PCWeflqAWBrUYb0
-	 X2o1UjfBWV5qTqbf0R8Lyfjk7WbHr6/e9tZbXrkfFpeHMJIEbFRzSPg/1k6AtNDdPQ
-	 sZjVeIQtT4GkUioINsligfhNom5WIP9u9+YfPIfsmYXUjEyvo2EUYYVv3xuLnNyk21
-	 hgqTssuXFfgYZNLh61C4bGjExZxsLv6euZ2K/V3DTMdq5nJlvnxrW1MfQtt3V59Tf6
-	 k+j1ErQANSDNyg6LyJNEEX4Nd5fsU4uYXW/KhjIVrr6PExmaSUoyfC1xPXi15w2pPR
-	 P/ZFZ5u2L4xiQ==
+	s=k20201202; t=1693096653;
+	bh=I6+EjuMhnMqA0A4SsaSLYkN9eETY2McANvNftJkI0dM=;
+	h=From:To:Cc:Subject:Date:From;
+	b=Lo1DIY8gtf7Th1wUHVHnXZJ3Je8HOVS7taKpYUE+ksqp1o3qqQAi8al7eP48M5cN+
+	 GmG3Vqx/Bw8Cdmp8aIippxj1Or6nMYiNT/Eb2pC5XUgj011KZd4sLeKySRbWdSGTxG
+	 CA50E5u+hRNcxigWAd2byVptPZbNQElXZ9f7fNIJzGjx7qq0FjqfSA2ahVPDnkysmH
+	 gTrM485E4xuUdgtBCU8us98C6IYD424xWrIMR17/kc2ZQFETWgJ+IuQc67NHRGH7Zt
+	 WG8jgH85rjBPuhISdj4mqrlUtJ7aCQa++ElPL23Q0QJ63OGyc4tKTX5ZTNq/OPHaic
+	 ureLkSb8a+7LQ==
 From: SeongJae Park <sj@kernel.org>
-To: Kees Cook <keescook@chromium.org>
+To: damon@lists.linux.dev
 Cc: SeongJae Park <sj@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	damon@lists.linux.dev,
 	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org,
-	Qing Zhao <qing.zhao@oracle.com>,
-	linux-hardening@vger.kernel.org
-Subject: Re: [RFC PATCH] mm/damon/sysfs: add __counted_by() annotation
-Date: Sat, 26 Aug 2023 00:54:47 +0000
-Message-Id: <20230826005447.109776-1-sj@kernel.org>
+	linux-kernel@vger.kernel.org
+Subject: [RFC PATCH] mm/damon/core: use number of passed access sampling as a timer
+Date: Sun, 27 Aug 2023 00:37:27 +0000
+Message-Id: <20230827003727.49369-1-sj@kernel.org>
 X-Mailer: git-send-email 2.25.1
-In-Reply-To: <202308251426.94092475C3@keescook>
-References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -38,64 +33,210 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hi Kees,
+DAMON sleeps for sampling interval after each sampling, and check if
+it's time for further doing aggregation and ops updating using
+ktime_get_coarse_ts64() and baseline timestamps for the two periodic
+operations.  That's for making the operations occur at deterministic
+timing.  However, it turned out it could still result in indeterministic
+and even not-that-intuitive results.
 
-On Fri, 25 Aug 2023 14:32:34 -0700 Kees Cook <keescook@chromium.org> wrote:
+After all, timer functions, and especially sleep functions that DAMON
+uses to wait for specific timing, could contain some errors.  Those
+errors are legal, so no problem.  However, depending on such legal
+timing errors, the nr_accesses can be larger than aggregation interval
+divided by sampling interval.  For example, with the default setting (5
+ms sampling interval and 100 ms aggregation interval) we frequently show
+regions having nr_accesses larger than 20.  Also, if the execution of a
+DAMOS scheme takes a long time, next aggregation could happen before
+enough number of samples are collected.
 
-> On Fri, Aug 25, 2023 at 02:04:41AM +0000, SeongJae Park wrote:
-> > Commit dd06e72e68bc ("Compiler Attributes: Add __counted_by macro")
-> > added __counted_by() annotation.  The underlying attribute for the
-> > feature is still under development, but adopting it can improve the
-> > readability of the code.  Apply it to four dynamic arrays in DAMON sysfs
-> > code.
-> > 
-> > Signed-off-by: SeongJae Park <sj@kernel.org>
-> > ---
-> >  mm/damon/sysfs.c | 8 ++++----
-> >  1 file changed, 4 insertions(+), 4 deletions(-)
-> > 
-> > diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
-> > index 808a8efe0523..36a176f38726 100644
-> > --- a/mm/damon/sysfs.c
-> > +++ b/mm/damon/sysfs.c
-> > @@ -93,7 +93,7 @@ static const struct kobj_type damon_sysfs_region_ktype = {
-> > 
-> >  struct damon_sysfs_regions {
-> >  	struct kobject kobj;
-> > -	struct damon_sysfs_region **regions_arr;
-> > +	struct damon_sysfs_region **regions_arr __counted_by(nr);
-> >  	int nr;
-> >  };
-> 
-> Unfortunately this isn't supported yet for non-flexible-array-members:
-> 
-> mm/damon/sysfs.c:96:14: error: 'counted_by' attribute may not be specified for a non-array field
->    96 |         struct damon_sysfs_region **regions_arr __counted_by(nr);
->       |                                     ^~~~~
-> 
-> We'll have to wait a bit before we can add this patch.
+Since access check sampling is the smallest unit work of DAMON, using
+the number of passed sampling intervals as the DAMON-internal timer can
+easily avoid these problems.  That is, convert aggregation and ops
+update intervals to numbers of sampling intervals that need to be passed
+before those operations be executed, count the number of passed sampling
+intervals, and invoke the operations as soon as the specific amount of
+sampling intervals passed.  Make the change.
 
-Thank you for checking this and let me know.  Ok, I will wait.
+Signed-off-by: SeongJae Park <sj@kernel.org>
+---
+ include/linux/damon.h | 14 ++++++--
+ mm/damon/core.c       | 84 +++++++++++++++++++------------------------
+ 2 files changed, 48 insertions(+), 50 deletions(-)
 
-> Thank you for
-> getting it ready, though!
+diff --git a/include/linux/damon.h b/include/linux/damon.h
+index ab3089de1478..9a32b8fd0bd3 100644
+--- a/include/linux/damon.h
++++ b/include/linux/damon.h
+@@ -524,8 +524,18 @@ struct damon_ctx {
+ 	struct damon_attrs attrs;
+ 
+ /* private: internal use only */
+-	struct timespec64 last_aggregation;
+-	struct timespec64 last_ops_update;
++	/* number of sample intervals that passed since this context started */
++	unsigned long passed_sample_intervals;
++	/*
++	 * number of sample intervals that should be passed before next
++	 * aggregation
++	 */
++	unsigned long next_aggregation_sis;
++	/*
++	 * number of sample intervals that should be passed before next ops
++	 * update
++	 */
++	unsigned long next_ops_update_sis;
+ 
+ /* public: */
+ 	struct task_struct *kdamond;
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index 988dc39e44b1..83af336bb0e6 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -456,8 +456,11 @@ struct damon_ctx *damon_new_ctx(void)
+ 	ctx->attrs.aggr_interval = 100 * 1000;
+ 	ctx->attrs.ops_update_interval = 60 * 1000 * 1000;
+ 
+-	ktime_get_coarse_ts64(&ctx->last_aggregation);
+-	ctx->last_ops_update = ctx->last_aggregation;
++	ctx->passed_sample_intervals = 0;
++	ctx->next_aggregation_sis = ctx->attrs.aggr_interval /
++		ctx->attrs.sample_interval;
++	ctx->next_ops_update_sis = ctx->attrs.ops_update_interval /
++		ctx->attrs.sample_interval;
+ 
+ 	mutex_init(&ctx->kdamond_lock);
+ 
+@@ -577,6 +580,9 @@ static void damon_update_monitoring_results(struct damon_ctx *ctx,
+  */
+ int damon_set_attrs(struct damon_ctx *ctx, struct damon_attrs *attrs)
+ {
++	unsigned long sample_interval;
++	unsigned long remaining_interval_us;
++
+ 	if (attrs->min_nr_regions < 3)
+ 		return -EINVAL;
+ 	if (attrs->min_nr_regions > attrs->max_nr_regions)
+@@ -584,6 +590,20 @@ int damon_set_attrs(struct damon_ctx *ctx, struct damon_attrs *attrs)
+ 	if (attrs->sample_interval > attrs->aggr_interval)
+ 		return -EINVAL;
+ 
++	sample_interval = attrs->sample_interval ? attrs->sample_interval : 1;
++
++	/* adjust next_aggregation_sis */
++	remaining_interval_us = ctx->attrs.sample_interval *
++		(ctx->next_aggregation_sis - ctx->passed_sample_intervals);
++	ctx->next_aggregation_sis = ctx->passed_sample_intervals +
++		remaining_interval_us / sample_interval;
++
++	/* adjust next_ops_update_sis */
++	remaining_interval_us = ctx->attrs.sample_interval *
++		(ctx->next_ops_update_sis - ctx->passed_sample_intervals);
++	ctx->next_ops_update_sis = ctx->passed_sample_intervals +
++		remaining_interval_us / sample_interval;
++
+ 	damon_update_monitoring_results(ctx, attrs);
+ 	ctx->attrs = *attrs;
+ 	return 0;
+@@ -757,38 +777,6 @@ int damon_stop(struct damon_ctx **ctxs, int nr_ctxs)
+ 	return err;
+ }
+ 
+-/*
+- * damon_check_reset_time_interval() - Check if a time interval is elapsed.
+- * @baseline:	the time to check whether the interval has elapsed since
+- * @interval:	the time interval (microseconds)
+- *
+- * See whether the given time interval has passed since the given baseline
+- * time.  If so, it also updates the baseline to current time for next check.
+- *
+- * Return:	true if the time interval has passed, or false otherwise.
+- */
+-static bool damon_check_reset_time_interval(struct timespec64 *baseline,
+-		unsigned long interval)
+-{
+-	struct timespec64 now;
+-
+-	ktime_get_coarse_ts64(&now);
+-	if ((timespec64_to_ns(&now) - timespec64_to_ns(baseline)) <
+-			interval * 1000)
+-		return false;
+-	*baseline = now;
+-	return true;
+-}
+-
+-/*
+- * Check whether it is time to flush the aggregated information
+- */
+-static bool kdamond_aggregate_interval_passed(struct damon_ctx *ctx)
+-{
+-	return damon_check_reset_time_interval(&ctx->last_aggregation,
+-			ctx->attrs.aggr_interval);
+-}
+-
+ /*
+  * Reset the aggregated monitoring results ('nr_accesses' of each region).
+  */
+@@ -1292,18 +1280,6 @@ static void kdamond_split_regions(struct damon_ctx *ctx)
+ 	last_nr_regions = nr_regions;
+ }
+ 
+-/*
+- * Check whether it is time to check and apply the operations-related data
+- * structures.
+- *
+- * Returns true if it is.
+- */
+-static bool kdamond_need_update_operations(struct damon_ctx *ctx)
+-{
+-	return damon_check_reset_time_interval(&ctx->last_ops_update,
+-			ctx->attrs.ops_update_interval);
+-}
+-
+ /*
+  * Check whether current monitoring should be stopped
+  *
+@@ -1436,6 +1412,8 @@ static int kdamond_fn(void *data)
+ 	sz_limit = damon_region_sz_limit(ctx);
+ 
+ 	while (!kdamond_need_stop(ctx)) {
++		unsigned long sample_interval;
++
+ 		if (kdamond_wait_activation(ctx))
+ 			break;
+ 
+@@ -1446,11 +1424,17 @@ static int kdamond_fn(void *data)
+ 			break;
+ 
+ 		kdamond_usleep(ctx->attrs.sample_interval);
++		ctx->passed_sample_intervals++;
+ 
+ 		if (ctx->ops.check_accesses)
+ 			max_nr_accesses = ctx->ops.check_accesses(ctx);
+ 
+-		if (kdamond_aggregate_interval_passed(ctx)) {
++		sample_interval = ctx->attrs.sample_interval ?
++			ctx->attrs.sample_interval : 1;
++		if (ctx->passed_sample_intervals ==
++				ctx->next_aggregation_sis) {
++			ctx->next_aggregation_sis +=
++				ctx->attrs.aggr_interval / sample_interval;
+ 			kdamond_merge_regions(ctx,
+ 					max_nr_accesses / 10,
+ 					sz_limit);
+@@ -1465,7 +1449,11 @@ static int kdamond_fn(void *data)
+ 				ctx->ops.reset_aggregated(ctx);
+ 		}
+ 
+-		if (kdamond_need_update_operations(ctx)) {
++		if (ctx->passed_sample_intervals ==
++				ctx->next_ops_update_sis) {
++			ctx->next_ops_update_sis +=
++				ctx->attrs.ops_update_interval /
++				sample_interval;
+ 			if (ctx->ops.update)
+ 				ctx->ops.update(ctx);
+ 			sz_limit = damon_region_sz_limit(ctx);
+-- 
+2.25.1
 
-Owing to your previous contributions.  Thank you for helping me make DAMON code
-better to read :)
-
-> This support is next in line. :)
-> 
-> The FAM support is likely ready to land, though[1]. I just tested it
-> today.
-> 
-> -Kees
-> 
-> [1] https://gcc.gnu.org/pipermail/gcc-patches/2023-August/628459.html
-> 
-> -- 
-> Kees Cook
-> 
-
-
-Thanks,
-SJ
