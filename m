@@ -1,116 +1,62 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 639A4A2A;
-	Tue, 29 Aug 2023 01:57:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83263C433C8;
-	Tue, 29 Aug 2023 01:57:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1693274226;
-	bh=E669YVGPm0vgklLyyks/lIuzvxJ4HuktAdSZEfm/plU=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y7PP7fcSsRnFimMBE8CHK7UjUPbjthNGI1Xu8Bu6B59q70IM5irnVIQ+UegYswTAM
-	 LgHmCFp2NfXtc/mEhnJTc/6P2ybNjPLxIDoQlKrtDGDu7XBRZIV1bkWemgQvmn0nAX
-	 ljuSCHTKzGaG/yqDaK9t6FwD2XBeriQllV1onBP6kJV4dQBH/dOAHbtuyAEAG9eFuZ
-	 p3UpNm6DZiNUwi5ywNLtqvmr+MBoadUMqubzkrpLZ5raAkkPAiDifp+kzgy76F8OzG
-	 cx0d/JNXI/p+keOuQa6LquwXv6iQ51BvNIG3tpWpUyOGTvgrDVApWGhsMBNKIF4jTr
-	 GYOj5N03d6sxg==
-From: SeongJae Park <sj@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org,
-	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net,
-	rwarsow@gmx.de,
-	conor@kernel.org,
-	damon@lists.linux.dev,
-	SeongJae Park <sj@kernel.org>
-Subject: Re: [PATCH 5.15 00/89] 5.15.129-rc1 review
-Date: Tue, 29 Aug 2023 01:57:04 +0000
-Message-Id: <20230829015704.50328-1-sj@kernel.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20230828101150.163430842@linuxfoundation.org>
-References: 
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D4BF6AAC
+	for <damon@lists.linux.dev>; Tue, 29 Aug 2023 23:16:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB135C433C8;
+	Tue, 29 Aug 2023 23:16:31 +0000 (UTC)
+Date: Tue, 29 Aug 2023 19:16:29 -0400
+From: Steven Rostedt <rostedt@goodmis.org>
+To: SeongJae Park <sj@kernel.org>
+Cc: damon@lists.linux.dev, Andrew Morton <akpm@linux-foundation.org>,
+ linux-mm@kvack.org, linux-trace-kernel@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+Subject: Re: [RFC PATCH] mm/damon/core: add a tracepoint for damos apply
+ target regions
+Message-ID: <20230829191629.25c5f0e2@rorschach.local.home>
+In-Reply-To: <20230827004045.49516-1-sj@kernel.org>
+References: <20230827004045.49516-1-sj@kernel.org>
+X-Mailer: Claws Mail 3.17.8 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
-Hello,
+On Sun, 27 Aug 2023 00:40:45 +0000
+SeongJae Park <sj@kernel.org> wrote:
 
-On Mon, 28 Aug 2023 12:13:01 +0200 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+> +	TP_STRUCT__entry(
+> +		__field(unsigned int, context_idx)
 
-> This is the start of the stable review cycle for the 5.15.129 release.
-> There are 89 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Wed, 30 Aug 2023 10:11:30 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.129-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
-> and the diffstat can be found below.
+4 bytes
 
-This rc kernel passes DAMON functionality test[1] on my test machine.
-Attaching the test results summary below.  Please note that I retrieved the
-kernel from linux-stable-rc tree[2].
+> +		__field(unsigned int, scheme_idx)
 
-Tested-by: SeongJae Park <sj@kernel.org>
+4 bytes
 
-[1] https://github.com/awslabs/damon-tests/tree/next/corr
-[2] 9e5846c251f4 ("Linux 5.15.129-rc1")
+> +		__field(unsigned long, target_idx)
 
-Thanks,
-SJ
+8 bytes
 
-[...]
+> +		__field(unsigned int, nr_regions)
 
----
+4 bytes
 
-ok 13 selftests: damon-tests: build_i386_idle_flag.sh
-# selftests: damon-tests: build_i386_highpte.sh
-# .config:1341:warning: override: reassigning to symbol DAMON
-ok 14 selftests: damon-tests: build_i386_highpte.sh
-# selftests: damon-tests: build_nomemcg.sh
-# .config:1342:warning: override: reassigning to symbol DAMON
-# .config:1352:warning: override: reassigning to symbol CGROUPS
-ok 15 selftests: damon-tests: build_nomemcg.sh
-# kselftest dir '/home/sjpark/damon-tests-cont/linux/tools/testing/selftests/damon-tests' is in dirty state.
-# the log is at '/home/sjpark/log'.
- [32m
-ok 1 selftests: damon: debugfs_attrs.sh
-ok 1 selftests: damon-tests: kunit.sh
-ok 2 selftests: damon-tests: huge_count_read_write.sh
-ok 3 selftests: damon-tests: buffer_overflow.sh
-ok 4 selftests: damon-tests: rm_contexts.sh
-ok 5 selftests: damon-tests: record_null_deref.sh
-ok 6 selftests: damon-tests: dbgfs_target_ids_read_before_terminate_race.sh
-ok 7 selftests: damon-tests: dbgfs_target_ids_pid_leak.sh
-ok 8 selftests: damon-tests: damo_tests.sh
-ok 9 selftests: damon-tests: masim-record.sh
-ok 10 selftests: damon-tests: build_i386.sh
-ok 11 selftests: damon-tests: build_m68k.sh
-ok 12 selftests: damon-tests: build_arm64.sh
-ok 13 selftests: damon-tests: build_i386_idle_flag.sh
-ok 14 selftests: damon-tests: build_i386_highpte.sh
-ok 15 selftests: damon-tests: build_nomemcg.sh
- [33m
- [92mPASS [39m
-_remote_run_corr.sh SUCCESS
+> +		__field(unsigned long, start)
 
+This is going to cause a 4 byte hole. I would move nr_regions after end
+so that it stays properly aligned.
+
+-- Steve
+
+
+
+> +		__field(unsigned long, end)
+> +		__field(unsigned int, nr_accesses)
+> +		__field(unsigned int, age)
+> +	),
+> +
