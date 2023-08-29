@@ -1,32 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12F6B36A
-	for <damon@lists.linux.dev>; Sun, 27 Aug 2023 00:40:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0F7EC433C7;
-	Sun, 27 Aug 2023 00:40:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DC647FF;
+	Tue, 29 Aug 2023 01:54:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4469FC433C8;
+	Tue, 29 Aug 2023 01:54:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1693096847;
-	bh=OVEU+9mCgeRFNww8ePJ6l3hvkB0OBAcU0yHXtNzZZ3w=;
-	h=From:To:Cc:Subject:Date:From;
-	b=PA3hihX4jrkqeaCm7VD5UQqCiLGakqPf3cZXPo7690IMZ20lmf/pGoRNV1/ugXUQ7
-	 CWmTIOz0ozXtmC1oE5t09kvxRr0mQ+PIAcMhC7AKbBRvU4qhDAOEQcpKXdEHkFtQJx
-	 Opyg792baEpl5hq3O++Mqtb2RL7qh8RK+VZPRt++iJ+CrpN+qu07xPs6tD/snL3SbF
-	 5uBNFRvplrqs3bfN/Qa/21P9Z5Hj7QKP+DE2sLiMGEz6KOzYPXcyM/OHeWZJPKcZwE
-	 /9afwHZpMn1gCEkmLzqJ57Scn4XeyxXGFAoJ3OB0sPrJz3HYlV/LcJXVhobBekaona
-	 EQIpIF4jKtIew==
+	s=k20201202; t=1693274067;
+	bh=pPmTDiK4MLHcRRW0Gn3reBk9e6g2ANdvYrkajhi3BUM=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=DvH1RRnIEYEoWOgAgYnjxk42+4AeHPBoIszQqlDaiyyQ9Z9nUIjFqURvwHveQ0GQF
+	 Vjs8iM4Z2Ou/GlGB1a+ynXQyqqQ4oN3CXpwu37TloaLiRp4o+GQ9LWaCzXLjCgeyce
+	 DZ8TdXJJgpk02WKltUJpOtPF/vxE9e2kJwpK0tiGA4P/8SjeBKVz3eFnOa9o1OwheG
+	 yqCZLDWFa56fD1yBDxgbKtyTmCpfHQkgb0uARQM3mNG5AVJETRdVCUVRsOLoJ+uVGE
+	 si0m9Gk/PdMhxhJvNWxBtiilvxS4uo/SwPBPnlB/vDCCa1xTUJGtlWnAIqjBgflPDC
+	 E+yL9B8KPs62Q==
 From: SeongJae Park <sj@kernel.org>
-To: damon@lists.linux.dev
-Cc: SeongJae Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	linux-mm@kvack.org,
-	linux-trace-kernel@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [RFC PATCH] mm/damon/core: add a tracepoint for damos apply target regions
-Date: Sun, 27 Aug 2023 00:40:45 +0000
-Message-Id: <20230827004045.49516-1-sj@kernel.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org,
+	patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net,
+	rwarsow@gmx.de,
+	conor@kernel.org,
+	damon@lists.linux.dev,
+	SeongJae Park <sj@kernel.org>
+Subject: Re: [PATCH 6.4 000/129] 6.4.13-rc1 review
+Date: Tue, 29 Aug 2023 01:54:24 +0000
+Message-Id: <20230829015424.50202-1-sj@kernel.org>
 X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20230828101157.383363777@linuxfoundation.org>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -35,133 +49,68 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-DAMON provides damon_aggregated tracepoint, which exposes details of
-each region and its access monitoring results.  It is useful for
-getting whole monitoring results, e.g., for recording purposes.
 
-For investigations of DAMOS, DAMON Sysfs interface provides DAMOS
-statistics and tried_regions directory.  But, those provides only
-statistics and snapshots.  If the scheme is frequently applied and if
-the user needs to know every detail of DAMOS behavior, the
-snapshot-based interface could be insufficient and expensive.
+Hello Greg,
 
-As a last resort, userspace users need to record the all monitoring
-results via damon_aggregated tracepoint and simulate how DAMOS would
-worked.  It is unnecessarily complicated.  DAMON kernel API users,
-meanwhile, can do that easily via before_damos_apply() callback field of
-'struct damon_callback', though.
+On Mon, 28 Aug 2023 12:11:19 +0200 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
 
-Add a tracepoint that will be called just after before_damos_apply()
-callback for more convenient investigations of DAMOS.  The tracepoint
-exposes all details about each regions, similar to damon_aggregated
-tracepoint.
+> This is the start of the stable review cycle for the 6.4.13 release.
+> There are 129 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Wed, 30 Aug 2023 10:11:30 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.4.13-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.4.y
+> and the diffstat can be found below.
 
-Please note that DAMOS is currently not only for memory management but
-also for query-like efficient monitoring results retrievals (when 'stat'
-action is used).  Until now, only statistics or snapshots were
-supported.  Addition of this tracepoint allows efficient full recording
-of DAMOS-based filtered monitoring results.
+This rc kernel passes DAMON functionality test[1] on my test machine.
+Attaching the test results summary below.  Please note that I retrieved the
+kernel from linux-stable-rc tree[2].
 
-Signed-off-by: SeongJae Park <sj@kernel.org>
+Tested-by: SeongJae Park <sj@kernel.org>
+
+[1] https://github.com/awslabs/damon-tests/tree/next/corr
+[2] 8c2717f278c5 ("Linux 6.4.13-rc1")
+
+Thanks,
+SJ
+
+[...]
+
 ---
- include/trace/events/damon.h | 37 ++++++++++++++++++++++++++++++++++++
- mm/damon/core.c              | 27 +++++++++++++++++++++++++-
- 2 files changed, 63 insertions(+), 1 deletion(-)
 
-diff --git a/include/trace/events/damon.h b/include/trace/events/damon.h
-index 0b8d13bde17a..c942c5033b5f 100644
---- a/include/trace/events/damon.h
-+++ b/include/trace/events/damon.h
-@@ -9,6 +9,43 @@
- #include <linux/types.h>
- #include <linux/tracepoint.h>
- 
-+TRACE_EVENT(damos_before_apply,
-+
-+	TP_PROTO(unsigned int context_idx, unsigned int scheme_idx,
-+		unsigned int target_idx, struct damon_region *r,
-+		unsigned int nr_regions),
-+
-+	TP_ARGS(context_idx, target_idx, scheme_idx, r, nr_regions),
-+
-+	TP_STRUCT__entry(
-+		__field(unsigned int, context_idx)
-+		__field(unsigned int, scheme_idx)
-+		__field(unsigned long, target_idx)
-+		__field(unsigned int, nr_regions)
-+		__field(unsigned long, start)
-+		__field(unsigned long, end)
-+		__field(unsigned int, nr_accesses)
-+		__field(unsigned int, age)
-+	),
-+
-+	TP_fast_assign(
-+		__entry->context_idx = context_idx;
-+		__entry->scheme_idx = scheme_idx;
-+		__entry->target_idx = target_idx;
-+		__entry->nr_regions = nr_regions;
-+		__entry->start = r->ar.start;
-+		__entry->end = r->ar.end;
-+		__entry->nr_accesses = r->nr_accesses;
-+		__entry->age = r->age;
-+	),
-+
-+	TP_printk("ctx_idx=%u scheme_idx=%u target_idx=%lu nr_regions=%u %lu-%lu: %u %u",
-+			__entry->context_idx, __entry->scheme_idx,
-+			__entry->target_idx, __entry->nr_regions,
-+			__entry->start, __entry->end,
-+			__entry->nr_accesses, __entry->age)
-+);
-+
- TRACE_EVENT(damon_aggregated,
- 
- 	TP_PROTO(unsigned int target_id, struct damon_region *r,
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index 83af336bb0e6..22fe81abd35d 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -963,6 +963,28 @@ static void damos_apply_scheme(struct damon_ctx *c, struct damon_target *t,
- 	struct timespec64 begin, end;
- 	unsigned long sz_applied = 0;
- 	int err = 0;
-+	/*
-+	 * We plan to support multiple context per kdamond, as DAMON sysfs
-+	 * implies with 'nr_contexts' file.  Nevertheless, only single context
-+	 * per kdamond is supported for now.  So, we can simply use '0' context
-+	 * index here.
-+	 */
-+	unsigned int cidx = 0;
-+	struct damos *siter;		/* schemes iterator */
-+	unsigned int sidx = 0;
-+	struct damon_target *titer;	/* targets iterator */
-+	unsigned int tidx = 0;
-+
-+	damon_for_each_scheme(siter, c) {
-+		if (siter == s)
-+			break;
-+		sidx++;
-+	}
-+	damon_for_each_target(titer, c) {
-+		if (titer == t)
-+			break;
-+		tidx++;
-+	}
- 
- 	if (c->ops.apply_scheme) {
- 		if (quota->esz && quota->charged_sz + sz > quota->esz) {
-@@ -986,8 +1008,11 @@ static void damos_apply_scheme(struct damon_ctx *c, struct damon_target *t,
- 		ktime_get_coarse_ts64(&begin);
- 		if (c->callback.before_damos_apply)
- 			err = c->callback.before_damos_apply(c, t, r, s);
--		if (!err)
-+		if (!err) {
-+			trace_damos_before_apply(cidx, sidx, tidx, r,
-+					damon_nr_regions(t));
- 			sz_applied = c->ops.apply_scheme(c, t, r, s);
-+		}
- 		ktime_get_coarse_ts64(&end);
- 		quota->total_charged_ns += timespec64_to_ns(&end) -
- 			timespec64_to_ns(&begin);
--- 
-2.25.1
-
+ [32m
+ok 1 selftests: damon: debugfs_attrs.sh
+ok 2 selftests: damon: debugfs_schemes.sh
+ok 3 selftests: damon: debugfs_target_ids.sh
+ok 4 selftests: damon: debugfs_empty_targets.sh
+ok 5 selftests: damon: debugfs_huge_count_read_write.sh
+ok 6 selftests: damon: debugfs_duplicate_context_creation.sh
+ok 7 selftests: damon: debugfs_rm_non_contexts.sh
+ok 8 selftests: damon: sysfs.sh
+ok 9 selftests: damon: sysfs_update_removed_scheme_dir.sh
+ok 10 selftests: damon: reclaim.sh
+ok 11 selftests: damon: lru_sort.sh
+ok 1 selftests: damon-tests: kunit.sh
+ok 2 selftests: damon-tests: huge_count_read_write.sh
+ok 3 selftests: damon-tests: buffer_overflow.sh
+ok 4 selftests: damon-tests: rm_contexts.sh
+ok 5 selftests: damon-tests: record_null_deref.sh
+ok 6 selftests: damon-tests: dbgfs_target_ids_read_before_terminate_race.sh
+ok 7 selftests: damon-tests: dbgfs_target_ids_pid_leak.sh
+ok 8 selftests: damon-tests: damo_tests.sh
+ok 9 selftests: damon-tests: masim-record.sh
+ok 10 selftests: damon-tests: build_i386.sh
+ok 11 selftests: damon-tests: build_m68k.sh
+ok 12 selftests: damon-tests: build_arm64.sh
+ok 13 selftests: damon-tests: build_i386_idle_flag.sh
+ok 14 selftests: damon-tests: build_i386_highpte.sh
+ok 15 selftests: damon-tests: build_nomemcg.sh
+ [33m
+ [92mPASS [39m
+_remote_run_corr.sh SUCCESS
