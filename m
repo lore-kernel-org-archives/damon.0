@@ -1,45 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4BE9375;
-	Tue,  5 Sep 2023 01:25:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6747C433C8;
-	Tue,  5 Sep 2023 01:25:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89F717E
+	for <damon@lists.linux.dev>; Tue,  5 Sep 2023 03:49:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AD83C433C7;
+	Tue,  5 Sep 2023 03:49:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1693877120;
-	bh=/kAVKHby3UySmdooOLFUjxar49WSsPFz7ejDDq/21sY=;
+	s=k20201202; t=1693885741;
+	bh=lr8JZFOrIMmBf3b1VvvA03Ns1Iavbh5ZrCVGwpM6Nik=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aMV6yrM070ihesIskg5zITTm9XI+uXYWOcH5et9bskFnZz/xFo/4zUGnzrc0oXSi8
-	 bT/tJsnftphlgA4ZDYQdrgLB1mMmLA45xomJ2N4iGWfG2KF/wf04XvxtBV665AK3QI
-	 tTXI50CvW/jm+c5Xxi83Uo93V0d1cqKi9uWWORRSjtojZwqEe1+Id84zluYbbzt/UF
-	 x0iO1NyJ/8s8fXlAXydKW6mqDu7Z01Sk2YQGNuiWhYrWQ35n4JRL0XEWWT4Mlj94v+
-	 65WJN6drkAIVWdBvbnOXubh5+B4suc2dqTuc8ZwmEaaqWvPTbsQs1a4gBMCYOQMotJ
-	 Fx03xSWj1/bLA==
+	b=lr3y/LfQjAjdQkg0Cyq3KvExgeue5Yw7O9pcscK462LKG4pds0vVH3HK5jEzulHxk
+	 V8tZPPHjhjDQtaEe9wdO/DkaoSy2zYyCUp+2husOnGCtg3q+7xbxW3ZICoXOw2BlEz
+	 c667MQA2GVGMubLjQcFDpOrCRA2bl0NQPd88lbfCImp2EuTELjar1Of7YHtgI7hcUI
+	 Yv0ERYj9STG6pMjYf1qiNvlbTV7aFVHf9CmkLypJIR+R385mEUKcKllLnFSPXnIS2b
+	 2s3QCEnwFJEIbSMEXnE904NOhypIm+1blPhgo5stDL1HG4QOD+AxM3kj0/BWk6iWKq
+	 Xh8gntPwmoIGA==
 From: SeongJae Park <sj@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org,
-	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net,
-	rwarsow@gmx.de,
-	conor@kernel.org,
-	damon@lists.linux.dev,
-	SeongJae Park <sj@kernel.org>
-Subject: Re: [PATCH 5.15 00/28] 5.15.131-rc1 review
-Date: Tue,  5 Sep 2023 01:25:17 +0000
-Message-Id: <20230905012517.2943-1-sj@kernel.org>
+To: SeongJae Park <sj@kernel.org>
+Cc: damon@lists.linux.dev,
+	Andrew Morton <akpm@linux-foundation.org>,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [RFC PATCH] mm/damon/core: use number of passed access sampling as a timer
+Date: Tue,  5 Sep 2023 03:48:58 +0000
+Message-Id: <20230905034858.127810-1-sj@kernel.org>
 X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20230904182945.178705038@linuxfoundation.org>
+In-Reply-To: <20230827003727.49369-1-sj@kernel.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -49,67 +35,90 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hello,
+On Sun, 27 Aug 2023 00:37:27 +0000 SeongJae Park <sj@kernel.org> wrote:
 
-On Mon, 4 Sep 2023 19:30:31 +0100 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
-
-> This is the start of the stable review cycle for the 5.15.131 release.
-> There are 28 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+> DAMON sleeps for sampling interval after each sampling, and check if
+> it's time for further doing aggregation and ops updating using
+> ktime_get_coarse_ts64() and baseline timestamps for the two periodic
+> operations.  That's for making the operations occur at deterministic
+> timing.  However, it turned out it could still result in indeterministic
+> and even not-that-intuitive results.
 > 
-> Responses should be made by Wed, 06 Sep 2023 18:29:29 +0000.
-> Anything received after that time might be too late.
+> After all, timer functions, and especially sleep functions that DAMON
+> uses to wait for specific timing, could contain some errors.  Those
+> errors are legal, so no problem.  However, depending on such legal
+> timing errors, the nr_accesses can be larger than aggregation interval
+> divided by sampling interval.  For example, with the default setting (5
+> ms sampling interval and 100 ms aggregation interval) we frequently show
+> regions having nr_accesses larger than 20.  Also, if the execution of a
+> DAMOS scheme takes a long time, next aggregation could happen before
+> enough number of samples are collected.
 > 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.131-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
-> and the diffstat can be found below.
+> Since access check sampling is the smallest unit work of DAMON, using
+> the number of passed sampling intervals as the DAMON-internal timer can
+> easily avoid these problems.  That is, convert aggregation and ops
+> update intervals to numbers of sampling intervals that need to be passed
+> before those operations be executed, count the number of passed sampling
+> intervals, and invoke the operations as soon as the specific amount of
+> sampling intervals passed.  Make the change.
+> 
+> Signed-off-by: SeongJae Park <sj@kernel.org>
+> ---
+>  include/linux/damon.h | 14 ++++++--
+>  mm/damon/core.c       | 84 +++++++++++++++++++------------------------
+>  2 files changed, 48 insertions(+), 50 deletions(-)
+> 
+[...]
+> diff --git a/mm/damon/core.c b/mm/damon/core.c
+> index 988dc39e44b1..83af336bb0e6 100644
+> --- a/mm/damon/core.c
+> +++ b/mm/damon/core.c
+[...]
+> @@ -577,6 +580,9 @@ static void damon_update_monitoring_results(struct damon_ctx *ctx,
+>   */
+>  int damon_set_attrs(struct damon_ctx *ctx, struct damon_attrs *attrs)
+>  {
+> +	unsigned long sample_interval;
+> +	unsigned long remaining_interval_us;
+> +
+>  	if (attrs->min_nr_regions < 3)
+>  		return -EINVAL;
+>  	if (attrs->min_nr_regions > attrs->max_nr_regions)
+> @@ -584,6 +590,20 @@ int damon_set_attrs(struct damon_ctx *ctx, struct damon_attrs *attrs)
+>  	if (attrs->sample_interval > attrs->aggr_interval)
+>  		return -EINVAL;
+>  
+> +	sample_interval = attrs->sample_interval ? attrs->sample_interval : 1;
+> +
+> +	/* adjust next_aggregation_sis */
+> +	remaining_interval_us = ctx->attrs.sample_interval *
+> +		(ctx->next_aggregation_sis - ctx->passed_sample_intervals);
+> +	ctx->next_aggregation_sis = ctx->passed_sample_intervals +
+> +		remaining_interval_us / sample_interval;
+> +
+> +	/* adjust next_ops_update_sis */
+> +	remaining_interval_us = ctx->attrs.sample_interval *
+> +		(ctx->next_ops_update_sis - ctx->passed_sample_intervals);
+> +	ctx->next_ops_update_sis = ctx->passed_sample_intervals +
+> +		remaining_interval_us / sample_interval;
 
-This rc kernel passes DAMON functionality test[1] on my test machine.
-Attaching the test results summary below.  Please note that I retrieved the
-kernel from linux-stable-rc tree[2].
+The above remaining interval based adjustments mean we will respect the old
+intervals for one more time.  However, user wants to change it right now, so
+respecting it yet makes no sense.  Also, since this function is to be called
+while no aggregation is ongoing, the remaining_interval_us for
+next_aggregation_sis will be always zero.  So, simply ignoring past and
+resetting the timings as below may make better sense.
 
-Tested-by: SeongJae Park <sj@kernel.org>
+    ctx->next_aggregation_sis = ctx->passed_sample_intervals +
+    		attrs->aggr_interval / sample_interval;
 
-[1] https://github.com/awslabs/damon-tests/tree/next/corr
-[2] bec292fb85c5 ("Linux 5.15.131-rc1")
+    ctx->next_ops_update_sis = ctx->passed_sample_intervals +
+    		attrs->ops_update_interval / sample_interval;
+
+I will replace the adjustments as above.
+
 
 Thanks,
 SJ
 
 [...]
-
----
-
-ok 13 selftests: damon-tests: build_i386_idle_flag.sh
-# selftests: damon-tests: build_i386_highpte.sh
-# .config:1341:warning: override: reassigning to symbol DAMON
-ok 14 selftests: damon-tests: build_i386_highpte.sh
-# selftests: damon-tests: build_nomemcg.sh
-# .config:1342:warning: override: reassigning to symbol DAMON
-# .config:1352:warning: override: reassigning to symbol CGROUPS
-ok 15 selftests: damon-tests: build_nomemcg.sh
-# kselftest dir '/home/sjpark/damon-tests-cont/linux/tools/testing/selftests/damon-tests' is in dirty state.
-# the log is at '/home/sjpark/log'.
- [32m
-ok 1 selftests: damon: debugfs_attrs.sh
-ok 1 selftests: damon-tests: kunit.sh
-ok 2 selftests: damon-tests: huge_count_read_write.sh
-ok 3 selftests: damon-tests: buffer_overflow.sh
-ok 4 selftests: damon-tests: rm_contexts.sh
-ok 5 selftests: damon-tests: record_null_deref.sh
-ok 6 selftests: damon-tests: dbgfs_target_ids_read_before_terminate_race.sh
-ok 7 selftests: damon-tests: dbgfs_target_ids_pid_leak.sh
-ok 8 selftests: damon-tests: damo_tests.sh
-ok 9 selftests: damon-tests: masim-record.sh
-ok 10 selftests: damon-tests: build_i386.sh
-ok 11 selftests: damon-tests: build_m68k.sh
-ok 12 selftests: damon-tests: build_arm64.sh
-ok 13 selftests: damon-tests: build_i386_idle_flag.sh
-ok 14 selftests: damon-tests: build_i386_highpte.sh
-ok 15 selftests: damon-tests: build_nomemcg.sh
- [33m
- [92mPASS [39m
-_remote_run_corr.sh SUCCESS
