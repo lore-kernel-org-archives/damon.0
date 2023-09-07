@@ -1,20 +1,20 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A8F9A29
-	for <damon@lists.linux.dev>; Thu,  7 Sep 2023 02:29:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4271BC43391;
-	Thu,  7 Sep 2023 02:29:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEF89A4D
+	for <damon@lists.linux.dev>; Thu,  7 Sep 2023 02:29:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3E37C433C9;
+	Thu,  7 Sep 2023 02:29:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1694053779;
-	bh=DPwXZPd8fZ7k76FJchCmgeNiFjKUbh+BZTC85e+typU=;
+	s=k20201202; t=1694053781;
+	bh=/4c0bNqammeumkz0XhdEYekAGWITk+eiJUgJ8I1y+iI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VfeGOqRlnm1Nvu7Y2kpqlsGEtfB0Kla59hAm6h5Y/p0nAKX8Y+yr52/mK2U5nrH+2
-	 hfS//w3W7c4ET/DXTDnly0qtrnvotoU8irI8jZt6PdrASx/nf/QCHupesbiS82wbFj
-	 KiEcIUhAXFG2uDrfO7LiMuLy2Rl8udgQmP0xafcIhBpkH7aY7lDryUSN0oIFlsieQ6
-	 w46kYv6osQmpIdkqCMMZ7FT6hb0JL4NY4ZUNEszYWhQrH29kzmKstStqhSqFr9tdTC
-	 teVpDaZxwOf9lyI69y4dN4BLbnN/YZPQNcQueIoGSoDt4n070hfVug2XT9bl33UsZ8
-	 IXUNAIM0JHyvA==
+	b=e1aBIvrVp1OYAQpfz00zRovXOneOesmUDSZyTevcK820XKsGAeBqVz+uKLkcn19ia
+	 t6iRL/0aRlSuwJh0x/3UVFXNGwBKDRIioHx4gYhpYlanDqU5oNeS/uQo/0Kf0FYlTn
+	 yHWjH8sqOnKWJtQ8ZXjS0fEpJY2oDw3OKXbcwx4Q8uXajUh3jhQ00R6lMX83jpsFLU
+	 7qB3XGpSq8hnVEiIUFzsOtdQuhLHqy8onWed+iUqj13gYcdnfp+m/ndsdEmepn6P66
+	 SD0M9Ouci60A3Zf8RhsozItBrOl647bJks1M3TsZTbi3TpBkLEJgMaWCHyNU2RtBuS
+	 owRht7VtaeJcQ==
 From: SeongJae Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SeongJae Park <sj@kernel.org>,
@@ -23,9 +23,9 @@ Cc: SeongJae Park <sj@kernel.org>,
 	linux-mm@kvack.org,
 	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH 03/11] Docs/admin-guide/mm/damon/usage: move debugfs intro to the bottom of the section
-Date: Thu,  7 Sep 2023 02:29:21 +0000
-Message-Id: <20230907022929.91361-4-sj@kernel.org>
+Subject: [PATCH 05/11] Docs/admin-guide/mm/damon/usage: explain the format of damon_aggregate tracepoint
+Date: Thu,  7 Sep 2023 02:29:23 +0000
+Message-Id: <20230907022929.91361-6-sj@kernel.org>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20230907022929.91361-1-sj@kernel.org>
 References: <20230907022929.91361-1-sj@kernel.org>
@@ -37,44 +37,62 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On the DAMON usage introduction section, the introduction of DAMON
-debugfs interface, which is deprecated, is above kernel API, which is
-actively supported.  Move the DAMON debugfs intro to bottom, so that
-readers have less chances to read it.
+The example of the section for damon_aggregated tracepoint is not
+explaining how the output looks like, and how it can be interpreted.
+Add it.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- Documentation/admin-guide/mm/damon/usage.rst | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ Documentation/admin-guide/mm/damon/usage.rst | 14 ++++++++++++++
+ Documentation/mm/damon/design.rst            |  4 ++++
+ 2 files changed, 18 insertions(+)
 
 diff --git a/Documentation/admin-guide/mm/damon/usage.rst b/Documentation/admin-guide/mm/damon/usage.rst
-index bffe9dd9b0d6..e48101c777e1 100644
+index e48101c777e1..758575d33ab6 100644
 --- a/Documentation/admin-guide/mm/damon/usage.rst
 +++ b/Documentation/admin-guide/mm/damon/usage.rst
-@@ -20,18 +20,18 @@ DAMON provides below interfaces for different users.
-   you can write and use your personalized DAMON sysfs wrapper programs that
-   reads/writes the sysfs files instead of you.  The `DAMON user space tool
-   <https://github.com/awslabs/damo>`_ is one example of such programs.
--- *debugfs interface. (DEPRECATED!)*
--  :ref:`This <debugfs_interface>` is almost identical to :ref:`sysfs interface
--  <sysfs_interface>`.  This is deprecated, so users should move to the
--  :ref:`sysfs interface <sysfs_interface>`.  If you depend on this and cannot
--  move, please report your usecase to damon@lists.linux.dev and
--  linux-mm@kvack.org.
- - *Kernel Space Programming Interface.*
-   :doc:`This </mm/damon/api>` is for kernel space programmers.  Using this,
-   users can utilize every feature of DAMON most flexibly and efficiently by
-   writing kernel space DAMON application programs for you.  You can even extend
-   DAMON for various address spaces.  For detail, please refer to the interface
-   :doc:`document </mm/damon/api>`.
-+- *debugfs interface. (DEPRECATED!)*
-+  :ref:`This <debugfs_interface>` is almost identical to :ref:`sysfs interface
-+  <sysfs_interface>`.  This is deprecated, so users should move to the
-+  :ref:`sysfs interface <sysfs_interface>`.  If you depend on this and cannot
-+  move, please report your usecase to damon@lists.linux.dev and
-+  linux-mm@kvack.org.
+@@ -513,6 +513,20 @@ results using tracepoint supporting tools like ``perf``.  For example::
+     # kill 9 $(pidof perf)
+     # echo off > monitor_on
+     # perf script
++    kdamond.0 46568 [027] 79357.842179: damon:damon_aggregated: target_id=0 nr_regions=11 122509119488-135708762112: 0 864
++    [...]
++
++Each line of the perf script output represents each monitoring region.  The
++first five fields are as usual other tracepoint outputs.  The sixth field
++(``target_id=X``) shows the ide of the monitoring target of the region.  The
++seventh field (``nr_regions=X``) shows the total number of monitoring regions
++for the target.  The eighth field (``X-Y:``) shows the start (``X``) and end
++(``Y``) addresses of the region in bytes.  The ninth field (``X``) shows the
++``nr_accesses`` of the region (refer to
++:ref:`design <damon_design_region_based_sampling>` for more details of the
++counter).  Finally the tenth field (``X``) shows the ``age`` of the region
++(refer to :ref:`design <damon_design_age_tracking>` for more details of the
++counter).
  
- .. _sysfs_interface:
+ .. _debugfs_interface:
+ 
+diff --git a/Documentation/mm/damon/design.rst b/Documentation/mm/damon/design.rst
+index 5c465835a44f..51aab9b0621a 100644
+--- a/Documentation/mm/damon/design.rst
++++ b/Documentation/mm/damon/design.rst
+@@ -154,6 +154,8 @@ The monitoring overhead of this mechanism will arbitrarily increase as the
+ size of the target workload grows.
+ 
+ 
++.. _damon_design_region_based_sampling:
++
+ Region Based Sampling
+ ~~~~~~~~~~~~~~~~~~~~~
+ 
+@@ -191,6 +193,8 @@ In this way, DAMON provides its best-effort quality and minimal overhead while
+ keeping the bounds users set for their trade-off.
+ 
+ 
++.. _damon_design_age_tracking:
++
+ Age Tracking
+ ~~~~~~~~~~~~
  
 -- 
 2.25.1
