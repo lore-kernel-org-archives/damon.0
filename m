@@ -1,20 +1,20 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBF53A29
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E274A51
 	for <damon@lists.linux.dev>; Thu,  7 Sep 2023 02:29:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34969C433CA;
-	Thu,  7 Sep 2023 02:29:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73D10C433CC;
+	Thu,  7 Sep 2023 02:29:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1694053782;
-	bh=M64Pfxcjf04QA6IY4mZMjdI8QQdmOQDItlzxRcwz4LQ=;
+	bh=nX+lBCNxvHlh2Hd6gi4Ol2YBYOd7nIVtVx3JTRH4uq0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MVm2PfWXGzcgo0kBxY/8/P25MQuwXf2YFzHZmudczea0VOOSzggdox8oqOLX3u4Nr
-	 ZlZHTblD7l+UcOvhoYenzWvOLWWxJslj5dYbFGfNz0oN3B81Pcxt+aPPDKmI6jrtMo
-	 YllggfJnHAK1A1kkPPl/wWO7P2zWYpBc1Pe//JP9NYo6K6Q70bKcUnlzBrImIpv2NS
-	 izprI02tEPyUMz1Hfpctj6gMDM09k49HVu5q+X2frB82M8+ahs+8gOQpnkbrxSw5zm
-	 Qkvh9AomlCBXMtNeaCR/vzEj0YIX85F7RxK58U3UuYr+LD8Mxn/OkeIaAZNfHgvaPS
-	 MjJ6rWY4ilFKQ==
+	b=I9w1kxv9RA186Id0zHiS1zj+BAWURWAM5lFzFwxGnAFkbOzT+alc0bJOmHHWt8jct
+	 Q4jtNAkHhp+5IA6yHicRT3lr/mvEFKowHjn869YNnj4WhXTR6m9pryGxMT2+ME1DTC
+	 DMptSU91rd7c6N4zVxIIoXhw+QDzsyi0AO1xQdEgloEG1ovEnYjbJyUsoo6s74QWSp
+	 beuyoPPwVNVq+pc8howL9hkKWIUO3KAdpEzIpzs3Hhu0WBQMaGsAOnUtSDLvDS21uK
+	 qwRvMdnKNG7PeimG83FzH02OCX+LD3nmd+vZ0CUO8eRiFMPYGbJ+Ekra1waYsgazYV
+	 Kr6xv4L++j1iw==
 From: SeongJae Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SeongJae Park <sj@kernel.org>,
@@ -23,9 +23,9 @@ Cc: SeongJae Park <sj@kernel.org>,
 	linux-mm@kvack.org,
 	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH 07/11] Docs/admin-guide/mm/damon/usage: link design doc for details of kdamond and context
-Date: Thu,  7 Sep 2023 02:29:25 +0000
-Message-Id: <20230907022929.91361-8-sj@kernel.org>
+Subject: [PATCH 06/11] Docs/mm/damon/design: add a section for kdamond and DAMON context
+Date: Thu,  7 Sep 2023 02:29:24 +0000
+Message-Id: <20230907022929.91361-7-sj@kernel.org>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20230907022929.91361-1-sj@kernel.org>
 References: <20230907022929.91361-1-sj@kernel.org>
@@ -37,67 +37,34 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The explanation of kdamond and context is duplicated in the design and
-the usage documents.  Replace that in the usage with links to those in
-the design document.
+The design document is not explaining about the concept of kdamond and
+the DAMON context, while usage document does.  Those concept explanation
+should be in the design document, and usage document should link those.
+Add a section for those.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- Documentation/admin-guide/mm/damon/usage.rst | 19 +++++++++----------
- Documentation/mm/damon/design.rst            |  2 ++
- 2 files changed, 11 insertions(+), 10 deletions(-)
+ Documentation/mm/damon/design.rst | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/Documentation/admin-guide/mm/damon/usage.rst b/Documentation/admin-guide/mm/damon/usage.rst
-index 758575d33ab6..282062b6f134 100644
---- a/Documentation/admin-guide/mm/damon/usage.rst
-+++ b/Documentation/admin-guide/mm/damon/usage.rst
-@@ -105,14 +105,12 @@ having the root permission could use this directory.
- kdamonds/
- ---------
- 
--The monitoring-related information including request specifications and results
--are called DAMON context.  DAMON executes each context with a kernel thread
--called kdamond, and multiple kdamonds could run in parallel.
--
- Under the ``admin`` directory, one directory, ``kdamonds``, which has files for
--controlling the kdamonds exist.  In the beginning, this directory has only one
--file, ``nr_kdamonds``.  Writing a number (``N``) to the file creates the number
--of child directories named ``0`` to ``N-1``.  Each directory represents each
-+controlling the kdamonds (refer to
-+:ref:`design <damon_design_execution_model_and_data_structures>` for more
-+details) exists.  In the beginning, this directory has only one file,
-+``nr_kdamonds``.  Writing a number (``N``) to the file creates the number of
-+child directories named ``0`` to ``N-1``.  Each directory represents each
- kdamond.
- 
- kdamonds/<N>/
-@@ -150,9 +148,10 @@ kdamonds/<N>/contexts/
- 
- In the beginning, this directory has only one file, ``nr_contexts``.  Writing a
- number (``N``) to the file creates the number of child directories named as
--``0`` to ``N-1``.  Each directory represents each monitoring context.  At the
--moment, only one context per kdamond is supported, so only ``0`` or ``1`` can
--be written to the file.
-+``0`` to ``N-1``.  Each directory represents each monitoring context (refer to
-+:ref:`design <damon_design_execution_model_and_data_structures>` for more
-+details).  At the moment, only one context per kdamond is supported, so only
-+``0`` or ``1`` can be written to the file.
- 
- .. _sysfs_contexts:
- 
 diff --git a/Documentation/mm/damon/design.rst b/Documentation/mm/damon/design.rst
-index ee099d45fea8..18e9b42673f8 100644
+index 51aab9b0621a..ee099d45fea8 100644
 --- a/Documentation/mm/damon/design.rst
 +++ b/Documentation/mm/damon/design.rst
-@@ -478,6 +478,8 @@ more detail, please read the usage documents for those
+@@ -476,3 +476,13 @@ modules for proactive reclamation and LRU lists manipulation are provided.  For
+ more detail, please read the usage documents for those
+ (:doc:`/admin-guide/mm/damon/reclaim` and
  :doc:`/admin-guide/mm/damon/lru_sort`).
- 
- 
-+.. _damon_design_execution_model_and_data_structures:
 +
- Execution Model and Data Structures
- ===================================
- 
++
++Execution Model and Data Structures
++===================================
++
++The monitoring-related information including the monitoring request
++specification and DAMON-based operation schemes are stored in a data structure
++called DAMON ``context``.  DAMON executes each context with a kernel thread
++called ``kdamond``.  Multiple kdamonds could run in parallel, for different
++types of monitoring.
 -- 
 2.25.1
 
