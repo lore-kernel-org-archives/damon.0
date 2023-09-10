@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEA8A17C6
-	for <damon@lists.linux.dev>; Sun, 10 Sep 2023 03:40:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E782EC433CD;
-	Sun, 10 Sep 2023 03:40:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C932C1842
+	for <damon@lists.linux.dev>; Sun, 10 Sep 2023 03:40:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2A62C43391;
+	Sun, 10 Sep 2023 03:40:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1694317253;
-	bh=MX3U5PAIeegCJCB7eLilaWjnagt4bwpadGy8uCoTAPk=;
+	s=k20201202; t=1694317255;
+	bh=rUjHOoTpqiE+vomfhnfVsNQY6HBVoYZiR13zlPEqKrs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ukwU7ClsMJzswDPgiPqi34noD/YWgkgpYy9DTKZv6j27OpTnHzCYojjnIIeATvJYN
-	 ahttWt3gMemTLniiTvBNfWs/xtDY8/cnBxOVexAWmn/45Om5A9B80Fyd8Lh4ayso3S
-	 h2IOtpquQVNeVk/ljEco9I+zHWzG9plGhihdWjIUaDeakrlOgGuNxa+XnnDi/A8gfO
-	 N70z6/+H4ITZFIZp3II+NPOj7wCMGK/ofQn13w16+xfVvSR5dGtKacsaVZgLXNbC3d
-	 I4z7iTc426dEh1+QdaG28ZXBNBtTVotkJ75bMNBlcObJljwa3L3QDiAfMbfxEPN47s
-	 bXb9XM7/1Dh8w==
+	b=HksUUdUWanh2pIH/SIVi+KtR2Gpkua5pt58Q7EXmTfMRYCH7jaiFAOMfZNHBo42HY
+	 z39BHHSJOmBs/f8JKvNW0aPkpOiiMzWKRTfmOTIOLjJb8waymf//tQg5CphaSotpMd
+	 /Xz+oETjlqnLKNewbNPDT051K1hoSuHpjd7nOuFQamxyK84TH74GVw/5DSGP9iY+m0
+	 oOf6ozysUwk04FHCgSAISPQ9GSarjemZhdkoPEv+0HpJ/OaGytO4+d/QwY/uTPG4Sy
+	 9upFfCh6680+hjMyr10vq8w2P/tDJE1hwRqJrup3A7YoMVWoKHyfwmafq06KaUvh41
+	 Qb9r1Q6zeXE2g==
 From: SeongJae Park <sj@kernel.org>
 To: 
 Cc: SeongJae Park <sj@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Steven Rostedt <rostedt@goodmis.org>,
 	damon@lists.linux.dev,
 	linux-mm@kvack.org,
-	linux-trace-kernel@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [RFC 3/8] mm/damon/core: expose nr_accesses_bp from damos_before_apply tracepoint
-Date: Sun, 10 Sep 2023 03:40:43 +0000
-Message-Id: <20230910034048.59191-4-sj@kernel.org>
+Subject: [RFC 6/8] mm/damon/sysfs-schemes: support DAMOS apply interval
+Date: Sun, 10 Sep 2023 03:40:46 +0000
+Message-Id: <20230910034048.59191-7-sj@kernel.org>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20230910034048.59191-1-sj@kernel.org>
 References: <20230910034048.59191-1-sj@kernel.org>
@@ -38,32 +36,116 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-damos_before_apply tracepoint is exposing access rate of DAMON regions
-using nr_accesses, which was actually used by DAMOS in the past.
-However, it has changed to use nr_accesses_bp instead.  Update the
-tracepoint to expose the value that DAMOS is really using.  Note that it
-doesn't expose the value as is in the basis point, but after converting
-it to the natural number by dividing it by 10,000.  That's for avoiding
-confuses for old users.
+Update DAMON sysfs interval to support DAMOS apply intervals.  Users
+can set and get the interval for each scheme in microseconds by writing
+to and reading from the new sysfs file, 'apply_interval_us', in each
+scheme sysfs directory.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- include/trace/events/damon.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ mm/damon/sysfs-schemes.c | 38 ++++++++++++++++++++++++++++++++++----
+ 1 file changed, 34 insertions(+), 4 deletions(-)
 
-diff --git a/include/trace/events/damon.h b/include/trace/events/damon.h
-index 9e7b39495b05..6f98198c0104 100644
---- a/include/trace/events/damon.h
-+++ b/include/trace/events/damon.h
-@@ -34,7 +34,7 @@ TRACE_EVENT(damos_before_apply,
- 		__entry->target_idx = target_idx;
- 		__entry->start = r->ar.start;
- 		__entry->end = r->ar.end;
--		__entry->nr_accesses = r->nr_accesses;
-+		__entry->nr_accesses = r->nr_accesses_bp / 10000;
- 		__entry->age = r->age;
- 		__entry->nr_regions = nr_regions;
- 	),
+diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
+index 3d30e85596b0..a7d70b95c4dd 100644
+--- a/mm/damon/sysfs-schemes.c
++++ b/mm/damon/sysfs-schemes.c
+@@ -1121,6 +1121,7 @@ struct damon_sysfs_scheme {
+ 	struct kobject kobj;
+ 	enum damos_action action;
+ 	struct damon_sysfs_access_pattern *access_pattern;
++	unsigned long apply_interval_us;
+ 	struct damon_sysfs_quotas *quotas;
+ 	struct damon_sysfs_watermarks *watermarks;
+ 	struct damon_sysfs_scheme_filters *filters;
+@@ -1141,7 +1142,7 @@ static const char * const damon_sysfs_damos_action_strs[] = {
+ };
+ 
+ static struct damon_sysfs_scheme *damon_sysfs_scheme_alloc(
+-		enum damos_action action)
++		enum damos_action action, unsigned long apply_interval_us)
+ {
+ 	struct damon_sysfs_scheme *scheme = kmalloc(sizeof(*scheme),
+ 				GFP_KERNEL);
+@@ -1150,6 +1151,7 @@ static struct damon_sysfs_scheme *damon_sysfs_scheme_alloc(
+ 		return NULL;
+ 	scheme->kobj = (struct kobject){};
+ 	scheme->action = action;
++	scheme->apply_interval_us = apply_interval_us;
+ 	return scheme;
+ }
+ 
+@@ -1353,6 +1355,25 @@ static ssize_t action_store(struct kobject *kobj, struct kobj_attribute *attr,
+ 	return -EINVAL;
+ }
+ 
++static ssize_t apply_interval_us_show(struct kobject *kobj,
++		struct kobj_attribute *attr, char *buf)
++{
++	struct damon_sysfs_scheme *scheme = container_of(kobj,
++			struct damon_sysfs_scheme, kobj);
++
++	return sysfs_emit(buf, "%lu\n", scheme->apply_interval_us);
++}
++
++static ssize_t apply_interval_us_store(struct kobject *kobj,
++		struct kobj_attribute *attr, const char *buf, size_t count)
++{
++	struct damon_sysfs_scheme *scheme = container_of(kobj,
++			struct damon_sysfs_scheme, kobj);
++	int err = kstrtoul(buf, 0, &scheme->apply_interval_us);
++
++	return err ? err : count;
++}
++
+ static void damon_sysfs_scheme_release(struct kobject *kobj)
+ {
+ 	kfree(container_of(kobj, struct damon_sysfs_scheme, kobj));
+@@ -1361,8 +1382,12 @@ static void damon_sysfs_scheme_release(struct kobject *kobj)
+ static struct kobj_attribute damon_sysfs_scheme_action_attr =
+ 		__ATTR_RW_MODE(action, 0600);
+ 
++static struct kobj_attribute damon_sysfs_scheme_apply_interval_us_attr =
++		__ATTR_RW_MODE(apply_interval_us, 0600);
++
+ static struct attribute *damon_sysfs_scheme_attrs[] = {
+ 	&damon_sysfs_scheme_action_attr.attr,
++	&damon_sysfs_scheme_apply_interval_us_attr.attr,
+ 	NULL,
+ };
+ ATTRIBUTE_GROUPS(damon_sysfs_scheme);
+@@ -1413,7 +1438,11 @@ static int damon_sysfs_schemes_add_dirs(struct damon_sysfs_schemes *schemes,
+ 	schemes->schemes_arr = schemes_arr;
+ 
+ 	for (i = 0; i < nr_schemes; i++) {
+-		scheme = damon_sysfs_scheme_alloc(DAMOS_STAT);
++		/*
++		 * apply_interval_us as 0 means same to aggregation interval
++		 * (same to before-apply_interval behavior)
++		 */
++		scheme = damon_sysfs_scheme_alloc(DAMOS_STAT, 0);
+ 		if (!scheme) {
+ 			damon_sysfs_schemes_rm_dirs(schemes);
+ 			return -ENOMEM;
+@@ -1610,8 +1639,8 @@ static struct damos *damon_sysfs_mk_scheme(
+ 		.low = sysfs_wmarks->low,
+ 	};
+ 
+-	scheme = damon_new_scheme(&pattern, sysfs_scheme->action, 0, &quota,
+-			&wmarks);
++	scheme = damon_new_scheme(&pattern, sysfs_scheme->action,
++			sysfs_scheme->apply_interval_us, &quota, &wmarks);
+ 	if (!scheme)
+ 		return NULL;
+ 
+@@ -1641,6 +1670,7 @@ static void damon_sysfs_update_scheme(struct damos *scheme,
+ 	scheme->pattern.max_age_region = access_pattern->age->max;
+ 
+ 	scheme->action = sysfs_scheme->action;
++	scheme->apply_interval_us = sysfs_scheme->apply_interval_us;
+ 
+ 	scheme->quota.ms = sysfs_quotas->ms;
+ 	scheme->quota.sz = sysfs_quotas->sz;
 -- 
 2.25.1
 
