@@ -1,64 +1,48 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from ms.laurazamberk.cz (ms.laurazamberk.cz [46.229.120.210])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 025825393
-	for <damon@lists.linux.dev>; Mon, 11 Sep 2023 20:51:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D463EC433C9;
-	Mon, 11 Sep 2023 20:51:28 +0000 (UTC)
-Date: Mon, 11 Sep 2023 16:51:44 -0400
-From: Steven Rostedt <rostedt@goodmis.org>
-To: SeongJae Park <sj@kernel.org>
-Cc: Andrew Morton <akpm@linux-foundation.org>, damon@lists.linux.dev,
- linux-mm@kvack.org, linux-trace-kernel@vger.kernel.org,
- linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/2] mm/damon/core: add a tracepoint for damos apply
- target regions
-Message-ID: <20230911165144.5002a0ac@gandalf.local.home>
-In-Reply-To: <20230911203642.1788-1-sj@kernel.org>
-References: <20230911163127.167dccc2@gandalf.local.home>
-	<20230911203642.1788-1-sj@kernel.org>
-X-Mailer: Claws Mail 3.19.1 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48C488838
+	for <damon@lists.linux.dev>; Mon, 11 Sep 2023 21:51:49 +0000 (UTC)
+Received: from [37.221.115.6] ([192.168.5.1])
+        by ms.laurazamberk.cz (13.0.3 build 7 x64) with SMTP id 202309112349118938
+        for <damon@lists.linux.dev>; Mon, 11 Sep 2023 23:49:11 +0200
+From: "Mr.Faiez"<mrfaiez@zohomail.com>
+To: damon@lists.linux.dev
+Subject: Reply!!
+Date: 11 Sep 2023 14:49:36 -0700
+Message-ID: <20230911144935.9D2EAE02732F9A0D@zohomail.com>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain;
+	charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+X-CTCH: RefID="str=0001.0A702F25.64FF8B71.0050,ss=1,re=0.000,recu=0.000,reip=0.000,cl=1,cld=1,fgs=0,sb=1,sb=1"; Spam="Suspect"; VOD="Unknown"
 
-On Mon, 11 Sep 2023 20:36:42 +0000
-SeongJae Park <sj@kernel.org> wrote:
+Hello
 
-> > Then tracing is fully enabled here, and now we enter:
-> > 
-> >  	if (trace_damos_before_apply_enabled()) {
-> > 		trace_damos_before_apply(cidx, sidx, tidx, r,
-> >  				damon_nr_regions(t));
-> >  	}
-> > 
-> > Now the trace event is hit with sidx and tidx zero when they should not be.
-> > This could confuse you when looking at the report.  
-> 
-> Thank you so much for enlightening me with this kind explanation, Steve!  And
-> this all make sense.  I will follow your suggestion in the next spin.
-> 
-> > 
-> > What I suggested was to initialize sidx to zero,  
-> 
-> Nit.  Initialize to not zero but -1, right?
+Please did you receive my previous email?
 
-Yeah, but I was also thinking of the reset of it too :-p
+Kind regards
 
-	sidx = -1;
+Mr. Faiez Ashi Farah
+Director Syrian Petroleum Company
 
-	if (trace_damos_before_apply_enabled()) {
-		sidx = 0;
-
--- Steve
-
-
-> 
-> > set it in the first trace_*_enabled() check, and ignore calling the
-> > tracepoint if it's not >= 0.
-> > 
+DISCLAIMER
+***********************************
+This message and any files transmitted with it are intended only
+for the addressee. This message may contain confidential or
+privileged information. If you are not the addressee of this
+message you must not read, copy, distribute this information or
+take an action in reliance on it. If you have received this
+message in error you are requested to immediately contact the
+sender and delete the original and any copies of this message and
+any files transmitted with it. The views expressed in this
+message are those of the individual sender, except where the
+sender has the authority and specifically states them to be their
+views.Sender accepts no liability for any damage caused in the
+transmission, receipt or opening of this message and any files
+transmitted with it.
