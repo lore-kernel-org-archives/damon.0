@@ -1,106 +1,124 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BB4223A8
-	for <damon@lists.linux.dev>; Mon, 11 Sep 2023 04:59:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29486C433CB;
-	Mon, 11 Sep 2023 04:59:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1694408353;
-	bh=yCdyENSSr2jBoqcU5uuhQp9Eg5ZiZzpyIfgAEWQFG08=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IqHzNhQypANFa8iW43c8T+CdTyJNbZILeHGR5vSckO9OyBoFNScts3NkhNUB0hUdK
-	 Rx5bC7TPP6c1kPbTEQm4UdifFD22iGQnZOYHwLiu6/w9NW3rAlGLD3u3xc2w32aOoi
-	 Nwc02GNkWg4NlNb9IM0GaoGG0vBlM1yRLDmB0t9ggDMobW8Qees4i9hw4wfPsBX+rL
-	 9ReNouLD2afycjPERmYjFbmeVk/RljkfbhU+Oj9GNhovKG9UKWU0/PnHfb8K6FMVBK
-	 gyc0JMX3jmy2dgaPh5Fktf3uJRTXqchjoXp1EoKv+dZhBQwxh5fiW9XEZVHusV6w5j
-	 ZNfpLBdyi3K5g==
-From: SeongJae Park <sj@kernel.org>
-To: Andrew Morton <akpm@linux-foundation.org>
-Cc: SeongJae Park <sj@kernel.org>,
-	Jonathan Corbet <corbet@lwn.net>,
-	damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	linux-doc@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH 2/2] Docs/admin-guide/mm/damon/usage: document damos_before_apply tracepoint
-Date: Mon, 11 Sep 2023 04:59:08 +0000
-Message-Id: <20230911045908.97649-3-sj@kernel.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20230911045908.97649-1-sj@kernel.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2454AAD2E
+	for <damon@lists.linux.dev>; Mon, 11 Sep 2023 18:19:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F40BAC433C8;
+	Mon, 11 Sep 2023 18:19:39 +0000 (UTC)
+Date: Mon, 11 Sep 2023 14:19:55 -0400
+From: Steven Rostedt <rostedt@goodmis.org>
+To: SeongJae Park <sj@kernel.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>, damon@lists.linux.dev,
+ linux-mm@kvack.org, linux-trace-kernel@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/2] mm/damon/core: add a tracepoint for damos apply
+ target regions
+Message-ID: <20230911141955.245d1397@gandalf.local.home>
+In-Reply-To: <20230911045908.97649-2-sj@kernel.org>
 References: <20230911045908.97649-1-sj@kernel.org>
+	<20230911045908.97649-2-sj@kernel.org>
+X-Mailer: Claws Mail 3.19.1 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
-Document damos_before_apply tracepoint on the usage document.
+On Mon, 11 Sep 2023 04:59:07 +0000
+SeongJae Park <sj@kernel.org> wrote:
 
-Signed-off-by: SeongJae Park <sj@kernel.org>
----
- Documentation/admin-guide/mm/damon/usage.rst | 37 ++++++++++++++++----
- 1 file changed, 30 insertions(+), 7 deletions(-)
+> --- a/mm/damon/core.c
+> +++ b/mm/damon/core.c
+> @@ -950,6 +950,28 @@ static void damos_apply_scheme(struct damon_ctx *c, struct damon_target *t,
+>  	struct timespec64 begin, end;
+>  	unsigned long sz_applied = 0;
+>  	int err = 0;
+> +	/*
+> +	 * We plan to support multiple context per kdamond, as DAMON sysfs
+> +	 * implies with 'nr_contexts' file.  Nevertheless, only single context
+> +	 * per kdamond is supported for now.  So, we can simply use '0' context
+> +	 * index here.
+> +	 */
+> +	unsigned int cidx = 0;
+> +	struct damos *siter;		/* schemes iterator */
+> +	unsigned int sidx = 0;
+> +	struct damon_target *titer;	/* targets iterator */
+> +	unsigned int tidx = 0;
+> +
 
-diff --git a/Documentation/admin-guide/mm/damon/usage.rst b/Documentation/admin-guide/mm/damon/usage.rst
-index 282062b6f134..6272cd36590a 100644
---- a/Documentation/admin-guide/mm/damon/usage.rst
-+++ b/Documentation/admin-guide/mm/damon/usage.rst
-@@ -496,15 +496,24 @@ the files as above.  Above is only for an example.
- 
- .. _tracepoint:
- 
--Tracepoint for Monitoring Results
--=================================
-+Tracepoints for Monitoring Results
-+==================================
- 
- Users can get the monitoring results via the :ref:`tried_regions
--<sysfs_schemes_tried_regions>` or a tracepoint, ``damon:damon_aggregated``.
--While the tried regions directory is useful for getting a snapshot, the
--tracepoint is useful for getting a full record of the results.  While the
--monitoring is turned on, you could record the tracepoint events and show
--results using tracepoint supporting tools like ``perf``.  For example::
-+<sysfs_schemes_tried_regions>`.  The interface is useful for getting a
-+snapshot, but it could be inefficient for fully recording all the monitoring
-+results.  For the purpose, two trace points, namely ``damon:damon_aggregated``
-+and ``damon:damos_before_apply``, are provided.  ``damon:damon_aggregated``
-+provides the whole monitoring results, while ``damon:damos_before_apply``
-+provides the monitoring results for regions that each DAMON-based Operation
-+Scheme (:ref:`DAMOS <damon_design_damos>`) is gonna be applied.  Hence,
-+``damon:damos_before_apply`` is more useful for recording internal behavior of
-+DAMOS, or DAMOS target access
-+:ref:`pattern <damon_design_damos_access_pattern>` based query-like efficient
-+monitoring results recording.
-+
-+While the monitoring is turned on, you could record the tracepoint events and
-+show results using tracepoint supporting tools like ``perf``.  For example::
- 
-     # echo on > monitor_on
-     # perf record -e damon:damon_aggregated &
-@@ -527,6 +536,20 @@ counter).  Finally the tenth field (``X``) shows the ``age`` of the region
- (refer to :ref:`design <damon_design_age_tracking>` for more details of the
- counter).
- 
-+If the event was ``damon:damos_beofre_apply``, the ``perf script`` output would
-+be somewhat like below::
-+
-+    kdamond.0 47293 [000] 80801.060214: damon:damos_before_apply: ctx_idx=0 scheme_idx=0 target_idx=0 nr_regions=11 121932607488-135128711168: 0 136
-+    [...]
-+
-+Each line of the output represents each monitoring region that each DAMON-based
-+Operation Scheme was about to be applied at the traced time.  The first five
-+fields are as usual.  It shows the index of the DAMON context (``ctx_idx=X``)
-+of the scheme in the list of the contexts of the context's kdamond, the index
-+of the scheme (``scheme_idx=X``) in the list of the schemes of the context, in
-+addition to the output of ``damon_aggregated`` tracepoint.
-+
-+
- .. _debugfs_interface:
- 
- debugfs Interface (DEPRECATED!)
--- 
-2.25.1
+If this loop is only for passing sidx and tidx to the trace point, you can
+add around it:
 
+	if (trace_damos_before_apply_enabled()) {
+
+> +	damon_for_each_scheme(siter, c) {
+> +		if (siter == s)
+> +			break;
+> +		sidx++;
+> +	}
+> +	damon_for_each_target(titer, c) {
+> +		if (titer == t)
+> +			break;
+> +		tidx++;
+> +	}
+
+	}
+
+
+And then this loop will only be done if that trace event is enabled.
+
+To prevent races, you may also want to add a third parameter, or initialize
+them to -1:
+
+	sidx = -1;
+
+	if (trace_damo_before_apply_enabled()) {
+		sidx = 0;
+		[..]
+	}
+
+And you can change the TRACE_EVENT() TO TRACE_EVENT_CONDITION():
+
+TRACE_EVENT_CONDITION(damos_before_apply,
+
+	TP_PROTO(...),
+
+	TP_ARGS(...),
+
+	TP_CONDITION(sidx >= 0),
+
+and the trace event will not be called if sidx is less than zero.
+
+Also, this if statement is only done when the trace event is enabled, so
+it's equivalent to:
+
+	if (trace_damos_before_apply_enabled()) {
+		if (sdx >= 0)
+			trace_damos_before_apply(cidx, sidx, tidx, r,
+					damon_nr_regions(t));
+	}
+
+-- Steve
+
+
+
+>  
+>  	if (c->ops.apply_scheme) {
+>  		if (quota->esz && quota->charged_sz + sz > quota->esz) {
+> @@ -964,8 +986,11 @@ static void damos_apply_scheme(struct damon_ctx *c, struct damon_target *t,
+>  		ktime_get_coarse_ts64(&begin);
+>  		if (c->callback.before_damos_apply)
+>  			err = c->callback.before_damos_apply(c, t, r, s);
+> -		if (!err)
+> +		if (!err) {
+> +			trace_damos_before_apply(cidx, sidx, tidx, r,
+> +					damon_nr_regions(t));
+>  			sz_applied = c->ops.apply_scheme(c, t, r, s);
+> +		}
+>  		ktime_get_coarse_ts64(&end);
+>  		quota->total_charged_ns += timespec64_to_ns(&end) -
+>  			timespec64_to_ns(&begin);
+> -- 
