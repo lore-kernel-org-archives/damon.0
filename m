@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3E78539D
-	for <damon@lists.linux.dev>; Sat, 16 Sep 2023 02:10:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D3E2C433C9;
-	Sat, 16 Sep 2023 02:10:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B259539D
+	for <damon@lists.linux.dev>; Sat, 16 Sep 2023 02:10:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E569C433C7;
+	Sat, 16 Sep 2023 02:10:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1694830207;
-	bh=I2fvF7L5MWw0Xd6X92VF2iHBCnxT4grJu/1S+mVZwhQ=;
+	s=k20201202; t=1694830209;
+	bh=mFM51HzoacyqEH6SUQlgy6Seux4I2scRhn39ZTi26N8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SKhM4RCiPW/WTsWk5JRgIEMREqf3W6POSXpmuWjX+pNtpbUKhf9uSSUSCfWwTyVmt
-	 O0IjP4qBbo7CWUTv7afVCGvVFZEuytTab+a9LlQKW78/utBW81O3uDztR6cOx5ev64
-	 pIX82Gd/olQdHoBt8QLIc80rPpTTZd16EGrkeI9BkD0T3iFbc0tiYmCH/AFuqA2fFY
-	 j4s2acBog/OIGBGeyBvNG+xzEImkvBvcF83HnXH9ajYft0z5YG6VdlyQ3G190oTika
-	 y4PWdtiibt/78XrDsqhUy3bsC2YFWGbyhY1zo9tv79mChFaA9yJPIfOFqFoQTp8xQD
-	 H4lwh2LfGuiTQ==
+	b=RR9FrdagkAthQDZzU/MqLOXvaeDFzI76AyKnmNaANhjKl5qK562b8z09HGpclirta
+	 jYc6LhrAJdUrtF6/8jEUYFxkzhz4DQs0wM8OIqyrP6MuYh5q8fsrOCkAhZ8cDkRDL+
+	 m68G1t0/aauOfr5qF8XtuEjYHQmFewU+Siz5iH7DwXksWnvKxs++VqIl9SDSLjoUoY
+	 0QdXTO1VgnyGAGXCuhbJxMUqcWGdICS6t8Md21tTKIOimgBmf0pSxHXMHOvbu2Sjsc
+	 As4vL2HJ+p/l6ENXnlhs5iHasOdBcHl2cwXlMbhtQReq+p8GnBNOXcxmZ4rOV/Zo9t
+	 87jyj74Sod1Gg==
 From: SeongJae Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SeongJae Park <sj@kernel.org>,
-	Shuah Khan <shuah@kernel.org>,
+	Jonathan Corbet <corbet@lwn.net>,
 	damon@lists.linux.dev,
 	linux-mm@kvack.org,
-	linux-kselftest@vger.kernel.org,
+	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH 7/9] selftests/damon/sysfs: test DAMOS apply intervals
-Date: Sat, 16 Sep 2023 02:09:43 +0000
-Message-Id: <20230916020945.47296-8-sj@kernel.org>
+Subject: [PATCH 8/9] Docs/admin-guide/mm/damon/usage: update for DAMOS apply intervals
+Date: Sat, 16 Sep 2023 02:09:44 +0000
+Message-Id: <20230916020945.47296-9-sj@kernel.org>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20230916020945.47296-1-sj@kernel.org>
 References: <20230916020945.47296-1-sj@kernel.org>
@@ -35,28 +35,51 @@ List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Update DAMON selftests to test existence of the file for reading/writing
-DAMOS apply interval under each scheme directory.
+Update DAMON usage document's DAMON sysfs interface section for the
+newly added DAMOS apply intervals support (apply_interval_us file).
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- tools/testing/selftests/damon/sysfs.sh | 1 +
- 1 file changed, 1 insertion(+)
+ Documentation/admin-guide/mm/damon/usage.rst | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/tools/testing/selftests/damon/sysfs.sh b/tools/testing/selftests/damon/sysfs.sh
-index 60a9a305aef0..56f0230a8b92 100644
---- a/tools/testing/selftests/damon/sysfs.sh
-+++ b/tools/testing/selftests/damon/sysfs.sh
-@@ -175,6 +175,7 @@ test_scheme()
- 	ensure_dir "$scheme_dir" "exist"
- 	ensure_file "$scheme_dir/action" "exist" "600"
- 	test_access_pattern "$scheme_dir/access_pattern"
-+	ensure_file "$scheme_dir/apply_interval_us" "exist" "600"
- 	test_quotas "$scheme_dir/quotas"
- 	test_watermarks "$scheme_dir/watermarks"
- 	test_filters "$scheme_dir/filters"
+diff --git a/Documentation/admin-guide/mm/damon/usage.rst b/Documentation/admin-guide/mm/damon/usage.rst
+index 6272cd36590a..8507a6e45d86 100644
+--- a/Documentation/admin-guide/mm/damon/usage.rst
++++ b/Documentation/admin-guide/mm/damon/usage.rst
+@@ -76,7 +76,7 @@ comma (","). ::
+     │ │ │ │ │ │ │ │ ...
+     │ │ │ │ │ │ ...
+     │ │ │ │ │ schemes/nr_schemes
+-    │ │ │ │ │ │ 0/action
++    │ │ │ │ │ │ 0/action,apply_interval_us
+     │ │ │ │ │ │ │ access_pattern/
+     │ │ │ │ │ │ │ │ sz/min,max
+     │ │ │ │ │ │ │ │ nr_accesses/min,max
+@@ -269,8 +269,8 @@ schemes/<N>/
+ ------------
+ 
+ In each scheme directory, five directories (``access_pattern``, ``quotas``,
+-``watermarks``, ``filters``, ``stats``, and ``tried_regions``) and one file
+-(``action``) exist.
++``watermarks``, ``filters``, ``stats``, and ``tried_regions``) and two files
++(``action`` and ``apply_interval``) exist.
+ 
+ The ``action`` file is for setting and getting the scheme's :ref:`action
+ <damon_design_damos_action>`.  The keywords that can be written to and read
+@@ -296,6 +296,9 @@ Note that support of each action depends on the running DAMON operations set
+  - ``stat``: Do nothing but count the statistics.
+    Supported by all operations sets.
+ 
++The ``apply_interval_us`` file is for setting and getting the scheme's
++:ref:`apply_interval <damon_design_damos>` in microseconds.
++
+ schemes/<N>/access_pattern/
+ ---------------------------
+ 
 -- 
 2.25.1
 
