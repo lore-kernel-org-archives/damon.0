@@ -1,46 +1,27 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from szxga01-in.huawei.com (szxga01-in.huawei.com [45.249.212.187])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C07A63B8;
-	Sun, 17 Sep 2023 20:48:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D245BC433C7;
-	Sun, 17 Sep 2023 20:48:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1694983725;
-	bh=I8aQ44ZQ4i+K3hpbPAyOZKD9gkS29MWEjszUUgf/Kt4=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=am4rIWATfHb7net4lH3vkzoLOp6TAVy5kTBRvqpfeqO6ui3+WKFCnsKPR6GMQpMsZ
-	 h3X+nUDP16HzVFLLBjELwV98LhARPwR6c3AmElwO3i+iEo76J52phGrBAAWTZIoSCI
-	 2fZ1OG2l/irR8MkHgZs0n7yzwm5EO2IYCvvt1Z7OJE2gSjP3FMKpLAgIspKpMIfMN5
-	 2pVGgtiswOYvaCrum4Rib2mifV49JVAx1e62RhjWgWKSMpmc9pt+zU116p6EKEP8zi
-	 bavcg7J/jy2k1S9ox6PUWDL58EdgOZ2MLmaor7kLu/LyXJJ2TrY+fm66/qZQqLHEkV
-	 dToe5MzyUXyKw==
-From: SeongJae Park <sj@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org,
-	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net,
-	rwarsow@gmx.de,
-	conor@kernel.org,
-	damon@lists.linux.dev,
-	SeongJae Park <sj@kernel.org>
-Subject: Re: [PATCH 6.5 000/285] 6.5.4-rc1 review
-Date: Sun, 17 Sep 2023 20:48:42 +0000
-Message-Id: <20230917204842.104983-1-sj@kernel.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20230917191051.639202302@linuxfoundation.org>
-References: 
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD08A290C
+	for <damon@lists.linux.dev>; Mon, 18 Sep 2023 05:11:59 +0000 (UTC)
+Received: from kwepemi500008.china.huawei.com (unknown [172.30.72.54])
+	by szxga01-in.huawei.com (SkyGuard) with ESMTP id 4Rpt8V55WCztRn7;
+	Mon, 18 Sep 2023 13:07:38 +0800 (CST)
+Received: from huawei.com (10.90.53.73) by kwepemi500008.china.huawei.com
+ (7.221.188.139) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.31; Mon, 18 Sep
+ 2023 13:11:50 +0800
+From: Jinjie Ruan <ruanjinjie@huawei.com>
+To: <sj@kernel.org>, <akpm@linux-foundation.org>, <brendan.higgins@linux.dev>,
+	<feng.tang@intel.com>, <damon@lists.linux.dev>, <linux-mm@kvack.org>,
+	<kunit-dev@googlegroups.com>, <linux-kselftest@vger.kernel.org>,
+	<linux-kernel@vger.kernel.org>
+CC: <ruanjinjie@huawei.com>
+Subject: [PATCH RESEND 1/2] mm/damon/core-test: Fix memory leak in damon_new_region()
+Date: Mon, 18 Sep 2023 13:10:43 +0800
+Message-ID: <20230918051044.3814018-2-ruanjinjie@huawei.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20230918051044.3814018-1-ruanjinjie@huawei.com>
+References: <20230918051044.3814018-1-ruanjinjie@huawei.com>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -48,69 +29,74 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.90.53.73]
+X-ClientProxiedBy: dggems701-chm.china.huawei.com (10.3.19.178) To
+ kwepemi500008.china.huawei.com (7.221.188.139)
+X-CFilter-Loop: Reflected
 
-Hello,
+The damon_region which is allocated by kmem_cache_alloc() in
+damon_new_region() in damon_test_regions() and
+damon_test_update_monitoring_result() are not freed and it causes below
+memory leak. So use damon_free_region() to free it.
 
-On Sun, 17 Sep 2023 21:10:00 +0200 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+unreferenced object 0xffff2b49c3edc000 (size 56):
+  comm "kunit_try_catch", pid 338, jiffies 4294895280 (age 557.084s)
+  hex dump (first 32 bytes):
+    01 00 00 00 00 00 00 00 02 00 00 00 00 00 00 00  ................
+    00 00 00 00 00 00 00 00 00 00 00 00 49 2b ff ff  ............I+..
+  backtrace:
+    [<0000000088e71769>] slab_post_alloc_hook+0xb8/0x368
+    [<00000000b528f67c>] kmem_cache_alloc+0x168/0x284
+    [<000000008603f022>] damon_new_region+0x28/0x54
+    [<00000000a3b8c64e>] damon_test_regions+0x38/0x270
+    [<00000000559c4801>] kunit_try_run_case+0x50/0xac
+    [<000000003932ed49>] kunit_generic_run_threadfn_adapter+0x20/0x2c
+    [<000000003c3e9211>] kthread+0x124/0x130
+    [<0000000028f85bdd>] ret_from_fork+0x10/0x20
+unreferenced object 0xffff2b49c5b20000 (size 56):
+  comm "kunit_try_catch", pid 354, jiffies 4294895304 (age 556.988s)
+  hex dump (first 32 bytes):
+    03 00 00 00 00 00 00 00 07 00 00 00 00 00 00 00  ................
+    00 00 00 00 00 00 00 00 96 00 00 00 49 2b ff ff  ............I+..
+  backtrace:
+    [<0000000088e71769>] slab_post_alloc_hook+0xb8/0x368
+    [<00000000b528f67c>] kmem_cache_alloc+0x168/0x284
+    [<000000008603f022>] damon_new_region+0x28/0x54
+    [<00000000ca019f80>] damon_test_update_monitoring_result+0x18/0x34
+    [<00000000559c4801>] kunit_try_run_case+0x50/0xac
+    [<000000003932ed49>] kunit_generic_run_threadfn_adapter+0x20/0x2c
+    [<000000003c3e9211>] kthread+0x124/0x130
+    [<0000000028f85bdd>] ret_from_fork+0x10/0x20
 
-> This is the start of the stable review cycle for the 6.5.4 release.
-> There are 285 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Tue, 19 Sep 2023 19:10:04 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.5.4-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.5.y
-> and the diffstat can be found below.
-> 
-
-This rc kernel passes DAMON functionality test[1] on my test machine.
-Attaching the test results summary below.  Please note that I retrieved the
-kernel from linux-stable-rc tree[2].
-
-Tested-by: SeongJae Park <sj@kernel.org>
-
-[1] https://github.com/awslabs/damon-tests/tree/next/corr
-[2] e5d077fb1eae ("Linux 6.5.4-rc1")
-
-Thanks,
-SJ
-
-[...]
-
+Fixes: 17ccae8bb5c9 ("mm/damon: add kunit tests")
+Fixes: f4c978b6594b ("mm/damon/core-test: add a test for damon_update_monitoring_results()")
+Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
 ---
+ mm/damon/core-test.h | 3 +++
+ 1 file changed, 3 insertions(+)
 
- [32m
-ok 1 selftests: damon: debugfs_attrs.sh
-ok 2 selftests: damon: debugfs_schemes.sh
-ok 3 selftests: damon: debugfs_target_ids.sh
-ok 4 selftests: damon: debugfs_empty_targets.sh
-ok 5 selftests: damon: debugfs_huge_count_read_write.sh
-ok 6 selftests: damon: debugfs_duplicate_context_creation.sh
-ok 7 selftests: damon: debugfs_rm_non_contexts.sh
-ok 8 selftests: damon: sysfs.sh
-ok 9 selftests: damon: sysfs_update_removed_scheme_dir.sh
-ok 10 selftests: damon: reclaim.sh
-ok 11 selftests: damon: lru_sort.sh
-ok 1 selftests: damon-tests: kunit.sh
-ok 2 selftests: damon-tests: huge_count_read_write.sh
-ok 3 selftests: damon-tests: buffer_overflow.sh
-ok 4 selftests: damon-tests: rm_contexts.sh
-ok 5 selftests: damon-tests: record_null_deref.sh
-ok 6 selftests: damon-tests: dbgfs_target_ids_read_before_terminate_race.sh
-ok 7 selftests: damon-tests: dbgfs_target_ids_pid_leak.sh
-ok 8 selftests: damon-tests: damo_tests.sh
-ok 9 selftests: damon-tests: masim-record.sh
-ok 10 selftests: damon-tests: build_i386.sh
-ok 11 selftests: damon-tests: build_m68k.sh
-ok 12 selftests: damon-tests: build_arm64.sh
-ok 13 selftests: damon-tests: build_i386_idle_flag.sh
-ok 14 selftests: damon-tests: build_i386_highpte.sh
-ok 15 selftests: damon-tests: build_nomemcg.sh
- [33m
- [92mPASS [39m
-_remote_run_corr.sh SUCCESS
+diff --git a/mm/damon/core-test.h b/mm/damon/core-test.h
+index 6cc8b245586d..255f8c925c00 100644
+--- a/mm/damon/core-test.h
++++ b/mm/damon/core-test.h
+@@ -34,6 +34,7 @@ static void damon_test_regions(struct kunit *test)
+ 	KUNIT_EXPECT_EQ(test, 0u, damon_nr_regions(t));
+ 
+ 	damon_free_target(t);
++	damon_free_region(r);
+ }
+ 
+ static unsigned int nr_damon_targets(struct damon_ctx *ctx)
+@@ -316,6 +317,8 @@ static void damon_test_update_monitoring_result(struct kunit *test)
+ 	damon_update_monitoring_result(r, &old_attrs, &new_attrs);
+ 	KUNIT_EXPECT_EQ(test, r->nr_accesses, 150);
+ 	KUNIT_EXPECT_EQ(test, r->age, 20);
++
++	damon_free_region(r);
+ }
+ 
+ static void damon_test_set_attrs(struct kunit *test)
+-- 
+2.34.1
+
