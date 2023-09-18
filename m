@@ -1,36 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EA8D38FB1
-	for <damon@lists.linux.dev>; Mon, 18 Sep 2023 11:03:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF0D7C433C7;
-	Mon, 18 Sep 2023 11:03:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBB3038F8C
+	for <damon@lists.linux.dev>; Mon, 18 Sep 2023 11:11:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8813C433C7;
+	Mon, 18 Sep 2023 11:11:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1695034986;
-	bh=xheY1ymXh/wvdjFd8+v/+GHt+em90YiVp8HQxiG3Nd4=;
+	s=k20201202; t=1695035469;
+	bh=ex+golzLi755Q7c5GOzK8ML6NZjydWxv20lWvmv3MMU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Zi8DFmZm1oR8NWs7ka2iDKaLGQgBPU04YKEruMLQeiJ774r2K4wMKMxgQlFbp0FXY
-	 DVGTGCkK3T7WQjdQpTp3+N2ZL5QC5N9Gy8vU+peGy6qMXRCMihR+yHriLYH8u8USqs
-	 oH77NXEo9PjHiLOFfKckdkLwWnoU6NUZtvBWOp6isqjzwTFuUr0BLR8By8DyzBG09o
-	 wx1RIIFk9yHkzPt3uwX6qM3TdpaT/IaK7OToIC1uWLx/WJyBd5mkIx7ThNpYeCgc/C
-	 7MY5w7xw2c9gadANljIDPj9Ko/P54/tQ02XB23waPsc+5OO0aiTxgrN79iAEf4Sr0R
-	 5aVR5b1Ik8Hjg==
+	b=gvNvbnWdRbTuraWZa+yNPIF7xHuuFPk5aPVI1hEQBDTXoB3FPJgE5jOHvHtp+b4Im
+	 fRwZTZittY0g8uEXwUV6SovcdsD7alarLUAgyDqGasuPBPlf8oRruwcvscwwcInDbx
+	 c64577bBuOABQ4A/s+2HamKLkPaMaBHn+zWWi7CTLtYDlcmefEv0lrfae/ZmdRRYV8
+	 k5uIB2umdbYEWdT2YNQUeJhLprEsZAKqR4CHYNDPUaNOGtXrl1OqZXdUgFyV/0lYY8
+	 TloiNrZAudiKwcEK5RrMfXHCIgMPur5EWHwWFkiHFyLTJ/4YOLhmIDa46PuEwIazOt
+	 o8U72h6ghLjqA==
 From: SeongJae Park <sj@kernel.org>
-To: Jinjie Ruan <ruanjinjie@huawei.com>
-Cc: sj@kernel.org,
-	akpm@linux-foundation.org,
-	brendan.higgins@linux.dev,
-	feng.tang@intel.com,
-	damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	kunit-dev@googlegroups.com,
-	linux-kselftest@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 2/2] mm/damon/core-test: Fix memory leak in damon_new_ctx()
-Date: Mon, 18 Sep 2023 11:03:04 +0000
-Message-Id: <20230918110304.81807-1-sj@kernel.org>
+To: Huan Yang <link@vivo.com>
+Cc: SeongJae Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	damon@lists.linux.dev (open list:DATA ACCESS MONITOR),
+	linux-mm@kvack.org (open list:DATA ACCESS MONITOR),
+	linux-kernel@vger.kernel.org (open list),
+	opensource.kernel@vivo.com
+Subject: Re: [PATCH] mm/damon/core: remove unnecessary si_meminfo invoke.
+Date: Mon, 18 Sep 2023 11:11:07 +0000
+Message-Id: <20230918111107.85008-1-sj@kernel.org>
 X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20230918074759.3895339-3-ruanjinjie@huawei.com>
+In-Reply-To: <20230918094934.18123-1-link@vivo.com>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -40,92 +37,58 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hi Jinjie,
+Hi Huan,
 
-On Mon, 18 Sep 2023 15:47:59 +0800 Jinjie Ruan <ruanjinjie@huawei.com> wrote:
+On Mon, 18 Sep 2023 17:49:34 +0800 Huan Yang <link@vivo.com> wrote:
 
-> When CONFIG_DAMON_KUNIT_TEST=y and making CONFIG_DEBUG_KMEMLEAK=y
-> and CONFIG_DEBUG_KMEMLEAK_AUTO_SCAN=y, the below memory leak is detected.
-> 
-> The damon_ctx which is allocated by kzalloc() in damon_new_ctx() in
-> damon_test_ops_registration() and damon_test_set_attrs() are not freed.
-> So use damon_destroy_ctx() to free it. After applying this patch, the
-> following memory leak is never detected
-> 
->     unreferenced object 0xffff2b49c6968800 (size 512):
->       comm "kunit_try_catch", pid 350, jiffies 4294895294 (age 557.028s)
->       hex dump (first 32 bytes):
->         88 13 00 00 00 00 00 00 a0 86 01 00 00 00 00 00  ................
->         00 87 93 03 00 00 00 00 0a 00 00 00 00 00 00 00  ................
->       backtrace:
->         [<0000000088e71769>] slab_post_alloc_hook+0xb8/0x368
->         [<0000000073acab3b>] __kmem_cache_alloc_node+0x174/0x290
->         [<00000000b5f89cef>] kmalloc_trace+0x40/0x164
->         [<00000000eb19e83f>] damon_new_ctx+0x28/0xb4
->         [<00000000daf6227b>] damon_test_ops_registration+0x34/0x328
->         [<00000000559c4801>] kunit_try_run_case+0x50/0xac
->         [<000000003932ed49>] kunit_generic_run_threadfn_adapter+0x20/0x2c
->         [<000000003c3e9211>] kthread+0x124/0x130
->         [<0000000028f85bdd>] ret_from_fork+0x10/0x20
->     unreferenced object 0xffff2b49c1a9cc00 (size 512):
->       comm "kunit_try_catch", pid 356, jiffies 4294895306 (age 557.000s)
->       hex dump (first 32 bytes):
->         88 13 00 00 00 00 00 00 a0 86 01 00 00 00 00 00  ................
->         00 00 00 00 00 00 00 00 0a 00 00 00 00 00 00 00  ................
->       backtrace:
->         [<0000000088e71769>] slab_post_alloc_hook+0xb8/0x368
->         [<0000000073acab3b>] __kmem_cache_alloc_node+0x174/0x290
->         [<00000000b5f89cef>] kmalloc_trace+0x40/0x164
->         [<00000000eb19e83f>] damon_new_ctx+0x28/0xb4
->         [<00000000058495c4>] damon_test_set_attrs+0x30/0x1a8
->         [<00000000559c4801>] kunit_try_run_case+0x50/0xac
->         [<000000003932ed49>] kunit_generic_run_threadfn_adapter+0x20/0x2c
->         [<000000003c3e9211>] kthread+0x124/0x130
->         [<0000000028f85bdd>] ret_from_fork+0x10/0x20
-> 
-> Fixes: d1836a3b2a9a ("mm/damon/core-test: initialise context before test in damon_test_set_attrs()")
-> Fixes: 4f540f5ab4f2 ("mm/damon/core-test: add a kunit test case for ops registration")
-> Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-> Reviewed-by: Feng Tang <feng.tang@intel.com>
+> si_meminfo() will read and assign more info not just free/ram pages.
 
-Reviewed-by: SeongJae Park <sj@kernel.org>
+Nice catch :)
+
+> For just DAMOS_WMARK_FREE_MEM_RATE use, only get free and ram pages
+> is ok to save cpu.
+> 
+> Signed-off-by: Huan Yang <link@vivo.com>
+> ---
+>  mm/damon/core.c | 10 ++++++----
+>  1 file changed, 6 insertions(+), 4 deletions(-)
+> 
+> diff --git a/mm/damon/core.c b/mm/damon/core.c
+> index bcd2bd9d6c10..1cddee9ae73b 100644
+> --- a/mm/damon/core.c
+> +++ b/mm/damon/core.c
+> @@ -1278,14 +1278,16 @@ static bool kdamond_need_stop(struct damon_ctx *ctx)
+>  	return true;
+>  }
+>  
+> -static unsigned long damos_wmark_metric_value(enum damos_wmark_metric metric)
+> +static unsigned long __damons_get_wmark_free_mem_rate(void)
+
+Nit.  s/damons/damos/ would look more consistently, in my opinion?
+
+>  {
+> -	struct sysinfo i;
+> +	return global_zone_page_state(NR_FREE_PAGES) * 1000 / totalram_pages();
+> +}
+>  
+> +static unsigned long damos_wmark_metric_value(enum damos_wmark_metric metric)
+> +{
+>  	switch (metric) {
+>  	case DAMOS_WMARK_FREE_MEM_RATE:
+> -		si_meminfo(&i);
+> -		return i.freeram * 1000 / i.totalram;
+> +		return __damons_get_wmark_free_mem_rate();
+
+Since __damons_get_wmark_free_mem_rate() is just one line function and
+damos_wmark_metric_value() is the only user of the code, I think we could just
+writ the code here?
+
+>  	default:
+>  		break;
+>  	}
+> -- 
+> 2.34.1
 
 
 Thanks,
 SJ
-
-> ---
-> v2:
-> - Add Reviewed-by.
-> - Rebased on mm-unstable.
-> - Update the commit message.
-> ---
->  mm/damon/core-test.h | 4 ++++
->  1 file changed, 4 insertions(+)
-> 
-> diff --git a/mm/damon/core-test.h b/mm/damon/core-test.h
-> index 3959be35b901..649adf91ebc5 100644
-> --- a/mm/damon/core-test.h
-> +++ b/mm/damon/core-test.h
-> @@ -269,6 +269,8 @@ static void damon_test_ops_registration(struct kunit *test)
->  
->  	/* Check double-registration failure again */
->  	KUNIT_EXPECT_EQ(test, damon_register_ops(&ops), -EINVAL);
-> +
-> +	damon_destroy_ctx(c);
->  }
->  
->  static void damon_test_set_regions(struct kunit *test)
-> @@ -346,6 +348,8 @@ static void damon_test_set_attrs(struct kunit *test)
->  	invalid_attrs = valid_attrs;
->  	invalid_attrs.aggr_interval = 4999;
->  	KUNIT_EXPECT_EQ(test, damon_set_attrs(c, &invalid_attrs), -EINVAL);
-> +
-> +	damon_destroy_ctx(c);
->  }
->  
->  static void damon_test_moving_sum(struct kunit *test)
-> -- 
-> 2.34.1
-> 
-> 
