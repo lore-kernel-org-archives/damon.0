@@ -1,33 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 772FD79E0
-	for <damon@lists.linux.dev>; Wed, 20 Sep 2023 07:19:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4550FC433C8;
-	Wed, 20 Sep 2023 07:19:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 966FC36B04;
+	Wed, 20 Sep 2023 14:21:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B31CCC433C7;
+	Wed, 20 Sep 2023 14:21:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1695194391;
-	bh=qFdKBzqTmmQ2nUPNK5GbW1ZYNZ25HnBX2G2O6O2qgtw=;
+	s=k20201202; t=1695219668;
+	bh=NvDTE4coXFzcg9T9zLlpbjt4Q2P5H6tVQUNN1gsYROc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JwJfNw/lMLXQffIjVCXrlngljneOT1KsD/CT/8dx3/6vAVvsTcZnnJ1wTHnCl3Dxw
-	 XVGw5FQj7scOr7UQIxB8HR9uSOUorhtAo4kd+tgEtBXjsjQwzhQZTeXgnGNdUACt4D
-	 9beTUeZFLL7xehCRZzEPLn3AjkYwxquqQBZrAlX/KlOr6EJk2yTeZxJou3Ako5IG/F
-	 1OHIY7IxbA0ypJHv2yVoW99OewAZqs9frGUN7abb0dOwEiF7uLiMtu6fUpyGDmikuf
-	 9dZalQI5eoc2NMridpMayTavc4YYmAiZhddH1DD9OfrB9wxzfL7NgtspXoHi358r6C
-	 ps4EoiYlOWEkw==
+	b=pdrwUhCh1BGUk0VwviTh4v3rcldyKdMGJy9k6friNPKgLScI0zBSPZ0SIiL1s1szg
+	 OHk0aMuqTOvFZ797w3TmbpRu3qQep0oq5x2fdylhtVcs4MmP2N9RmtTN8eck19ymA5
+	 eYq5iv7n3MNJOx5YQvTElVwa9O0V9ywsOp3Kr9BxCqKXOT7u8mJBFHIEJLVfbJgPz5
+	 SC7/G3Pwe6a5LHomKvRf/717FBnPu91RICgKbDBrzsSaHqIyJlk6XXAc+vtlyw6sHo
+	 2omH7rTUeIOM8oqeUdPqE/MfkCB4Nf4J0H2B2mjfdWJ+vsUpj9Cr8M1Ka4KW2XdiT1
+	 BjhxJUIZgnCvg==
 From: SeongJae Park <sj@kernel.org>
-To: Huan Yang <link@vivo.com>
-Cc: SeongJae Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	damon@lists.linux.dev,
-	linux-mm@kvack.org,
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org,
+	patches@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
-	opensource.kernel@vivo.com
-Subject: Re: [PATCH v3] mm/damon/core: remove unnecessary si_meminfo invoke.
-Date: Wed, 20 Sep 2023 07:19:49 +0000
-Message-Id: <20230920071949.26063-1-sj@kernel.org>
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net,
+	rwarsow@gmx.de,
+	conor@kernel.org,
+	damon@lists.linux.dev,
+	SeongJae Park <sj@kernel.org>
+Subject: Re: [PATCH 5.15 000/110] 5.15.133-rc1 review
+Date: Wed, 20 Sep 2023 14:21:05 +0000
+Message-Id: <20230920142105.1709-1-sj@kernel.org>
 X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20230920015727.4482-1-link@vivo.com>
+In-Reply-To: <20230920112830.377666128@linuxfoundation.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -37,52 +49,55 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hi Huan,
+Hello,
 
-On Wed, 20 Sep 2023 09:57:27 +0800 Huan Yang <link@vivo.com> wrote:
+On Wed, 20 Sep 2023 13:30:58 +0200 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
 
-> si_meminfo() will read and assign more info not just free/ram pages.
-> For just DAMOS_WMARK_FREE_MEM_RATE use, only get free and ram pages
-> is ok to save cpu.
+> This is the start of the stable review cycle for the 5.15.133 release.
+> There are 110 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 > 
-> Signed-off-by: Huan Yang <link@vivo.com>
+> Responses should be made by Fri, 22 Sep 2023 11:28:09 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.133-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
+> and the diffstat can be found below.
 
-Reviewed-by: SeongJae Park <sj@kernel.org>
+This rc kernel passes DAMON functionality test[1] on my test machine.
+Attaching the test results summary below.  Please note that I retrieved the
+kernel from linux-stable-rc tree[2].
 
+Tested-by: SeongJae Park <sj@kernel.org>
+
+[1] https://github.com/awslabs/damon-tests/tree/next/corr
+[2] 634d2466eedd ("Linux 5.15.133-rc1")
 
 Thanks,
 SJ
 
-> ---
-> Change from v1:
-> v1 fold free mem rate logic into __damos_get_wmark_free_mem_rate and not
-> invoke si_meminfo, just get free/ram_pages in global.
-> v2 cancel this __damos_get_wmark_free_mem_rate and just calculate rate
-> in damos_wmark_metric_value to keep it simple.
-> v3 fix changelog format, fix code style.
-> 
-> 
->  mm/damon/core.c | 6 ++----
->  1 file changed, 2 insertions(+), 4 deletions(-)
-> 
-> diff --git a/mm/damon/core.c b/mm/damon/core.c
-> index bcd2bd9d6c10..6ceb52298904 100644
-> --- a/mm/damon/core.c
-> +++ b/mm/damon/core.c
-> @@ -1280,12 +1280,10 @@ static bool kdamond_need_stop(struct damon_ctx *ctx)
->  
->  static unsigned long damos_wmark_metric_value(enum damos_wmark_metric metric)
->  {
-> -	struct sysinfo i;
-> -
->  	switch (metric) {
->  	case DAMOS_WMARK_FREE_MEM_RATE:
-> -		si_meminfo(&i);
-> -		return i.freeram * 1000 / i.totalram;
-> +		return global_zone_page_state(NR_FREE_PAGES) * 1000 /
-> +		       totalram_pages();
->  	default:
->  		break;
->  	}
-> -- 
-> 2.34.1
+[...]
+
+---
+
+ok 1 selftests: damon: debugfs_attrs.sh
+ok 1 selftests: damon-tests: kunit.sh
+ok 2 selftests: damon-tests: huge_count_read_write.sh
+ok 3 selftests: damon-tests: buffer_overflow.sh
+ok 4 selftests: damon-tests: rm_contexts.sh
+ok 5 selftests: damon-tests: record_null_deref.sh
+ok 6 selftests: damon-tests: dbgfs_target_ids_read_before_terminate_race.sh
+ok 7 selftests: damon-tests: dbgfs_target_ids_pid_leak.sh
+ok 8 selftests: damon-tests: damo_tests.sh
+ok 9 selftests: damon-tests: masim-record.sh
+ok 10 selftests: damon-tests: build_i386.sh
+ok 11 selftests: damon-tests: build_m68k.sh
+ok 12 selftests: damon-tests: build_arm64.sh
+ok 13 selftests: damon-tests: build_i386_idle_flag.sh
+ok 14 selftests: damon-tests: build_i386_highpte.sh
+ok 15 selftests: damon-tests: build_nomemcg.sh
+ [33m
+ [92mPASS [39m
