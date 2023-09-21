@@ -1,45 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCBC736B04;
-	Wed, 20 Sep 2023 14:24:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3178C433C8;
-	Wed, 20 Sep 2023 14:24:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A0B817991
+	for <damon@lists.linux.dev>; Thu, 21 Sep 2023 19:36:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0242C433C8;
+	Thu, 21 Sep 2023 19:36:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1695219890;
-	bh=RViBJ1ipCpvcOamR36FBZv/+zuY68gbePAurU1aB8A0=;
+	s=k20201202; t=1695324987;
+	bh=yWgtFNgkqgWjEXgwCB6SqgQ53emC6ZvfBAx69yUw5yQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o0zxW3WhPXPdjGkBVHgfiGfkhrq0T1IM6K/OdjXSOqWF92J9cPrB8iClVSWHJcPew
-	 GNPMu0KprRsTgynMWZPIerPkcDms+5vJOmMVdF+2VC7VjtyiwT+kj+tdNhzSdmAUD2
-	 hU0aoNYyyN0/G0DSUnqjmHasvpMXC1qNNoLU1oEpBt32jOQcon/zNg6Fi48+KM14fp
-	 Ky64mdl2BLSLaznU8c38BAivfhtoL4ccYXOXNCstrduAoxSN+PeZMMku0vzeP35AKU
-	 LEIXCQP+TGB3kxH/fZrD0osEnxPj5WRR8aTdMzPbcYr0eKqCp5pwHoyHZbban9CILe
-	 8KgB/v+77jI6A==
+	b=Dmdu9ccaG6RwZLCVtqnwk4lho3W9T0um4xSuX6SBZFvkcezG0GoeVUuDvwdVYyX1L
+	 jpPrS/Ng5UuimZZ4Q8Fjrl91XBGaUaJJSTES1g6xikPjOEmKa7VALkPLGOtMj156Nh
+	 LJunk2N4sHsrbeUQADAKcpe2iL1QypPJ39BTJCHTAnCp5wbJpuVCf8tivsEiNK5Ysv
+	 A3edupwAMRy33tMf0/y7DE74FIFZCLg2QX3qkO02/R/URkT57uLE4wd1S3G7macte3
+	 rwtDRwTYyqk12u3zUrXSmd/fcdFcOjWm3x8gFufQxlhUIheFMzUzFidLx+zHJ7Gj6I
+	 0q2BFIEB+PTFg==
 From: SeongJae Park <sj@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org,
-	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net,
-	rwarsow@gmx.de,
-	conor@kernel.org,
-	damon@lists.linux.dev,
-	SeongJae Park <sj@kernel.org>
-Subject: Re: [PATCH 6.5 000/211] 6.5.5-rc1 review
-Date: Wed, 20 Sep 2023 14:24:47 +0000
-Message-Id: <20230920142447.1843-1-sj@kernel.org>
+To: Huan Yang <link@vivo.com>
+Cc: SeongJae Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	linux-kernel@vger.kernel.org (open list),
+	damon@lists.linux.dev (open list:DATA ACCESS MONITOR),
+	linux-mm@kvack.org (open list:DATA ACCESS MONITOR),
+	opensource.kernel@vivo.com
+Subject: Re: [RFC 0/2] Damos filter cleanup code and implement workingset
+Date: Thu, 21 Sep 2023 19:36:25 +0000
+Message-Id: <20230921193625.99617-1-sj@kernel.org>
 X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20230920112845.859868994@linuxfoundation.org>
+In-Reply-To: <20230919095237.26613-1-link@vivo.com>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -49,65 +37,94 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hello,
+Hi Huan,
 
-On Wed, 20 Sep 2023 13:27:24 +0200 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
 
-> This is the start of the stable review cycle for the 6.5.5 release.
-> There are 211 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+First of all, thank you for this patch.  I have some high level comments and
+questions as below.
+
+On Tue, 19 Sep 2023 17:52:33 +0800 Huan Yang <link@vivo.com> wrote:
+
+> Now damos support filter contains two type.
+> The first is scheme filter which will invoke each scheme apply,
+> second is scheme action filter, which will filter out unwanted action.
+
+IMHO, that's not clear definition of the types.  Conceptually, all the filters
+are same.  Nonetheless, they are having different behaviors because they are
+handled in different layer depending on which layer is more efficient to handle
+those[1].
+
+I agree this is complicated and a bit verbose explanation, but I don't feel
+your scheme vs action definition is making it easier to understand.
+
 > 
-> Responses should be made by Fri, 22 Sep 2023 11:28:09 +0000.
-> Anything received after that time might be too late.
+> But this implement is scattered in different implementations
+
+Indeed the implementation is scattered in core layer and the ops layer
+depending on the filter types.  But I think this is needed for efficient
+handling of those.
+
+> and hard to reuse or extend.
+
+From your first patch, which extending the filter, the essential change for the
+extension is adding another enum to 'enum damos_filter_type' (1 line) and
+addition of switch case in '__damos_pa_filter_out()' (3 lines).  I don't think
+it looks too complicated.  If you're saying it was hard to understand which
+part really need to be modifed, I think that makes sense.  But in the case,
+we might need more comments rather than structural change.
+
 > 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.5.5-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.5.y
-> and the diffstat can be found below.
+> This patchset clean up those filter code, move into filter.c and add header
+> to expose filter func.(patch 2)
 
-This rc kernel passes DAMON functionality test[1] on my test machine.
-Attaching the test results summary below.  Please note that I retrieved the
-kernel from linux-stable-rc tree[2].
+Again, I agree more code cleanup is needed.  But I'm not sure if this is the
+right way.  Especially, I'm unsure if it really need to have a dedicated file.
+To my humble eyes, it doesn't look like making code clearly easier to read
+compared to the current version.  This is probably because I don't feel your
+scheme vs action definition is clear to understand.  Neither it is
+deduplicating code.  The patch adds lines more that deleted ones, according to
+its diffstat.  For the reason, I don't see clear benefit of this change.  I
+might be biased, having NIH (Not Invented Here) sindrome, or missing something.
+Please let me know if so.
 
-Tested-by: SeongJae Park <sj@kernel.org>
+> And add a new filter "workingset" to protect workingset page.
 
-[1] https://github.com/awslabs/damon-tests/tree/next/corr
-[2] 9e47a110b1b5 ("Linux 6.5.5-rc1")
+Can you explain expected use cases of this new filter type in more detail?
+Specifically, for what scheme action and under what situation this new filter
+type will be needed?  If you have some test data for the use case and could
+share it, it would be very helpful for me to understand why it is needed.
+
+> 
+> Do we need this and cleanup it?
+
+I think I cannot answer for now, and your further clarification and patient
+explanation could be helpful.
+
+[1] https://git.kernel.org/pub/scm/linux/kernel/git/akpm/mm.git/tree/Documentation/mm/damon/design.rst?h=mm-everything-2023-09-20-19-38#n400
+
 
 Thanks,
 SJ
 
-[...]
-
----
-
-ok 1 selftests: damon: debugfs_attrs.sh
-ok 2 selftests: damon: debugfs_schemes.sh
-ok 3 selftests: damon: debugfs_target_ids.sh
-ok 4 selftests: damon: debugfs_empty_targets.sh
-ok 5 selftests: damon: debugfs_huge_count_read_write.sh
-ok 6 selftests: damon: debugfs_duplicate_context_creation.sh
-ok 7 selftests: damon: debugfs_rm_non_contexts.sh
-ok 8 selftests: damon: sysfs.sh
-ok 9 selftests: damon: sysfs_update_removed_scheme_dir.sh
-ok 10 selftests: damon: reclaim.sh
-ok 11 selftests: damon: lru_sort.sh
-ok 1 selftests: damon-tests: kunit.sh
-ok 2 selftests: damon-tests: huge_count_read_write.sh
-ok 3 selftests: damon-tests: buffer_overflow.sh
-ok 4 selftests: damon-tests: rm_contexts.sh
-ok 5 selftests: damon-tests: record_null_deref.sh
-ok 6 selftests: damon-tests: dbgfs_target_ids_read_before_terminate_race.sh
-ok 7 selftests: damon-tests: dbgfs_target_ids_pid_leak.sh
-ok 8 selftests: damon-tests: damo_tests.sh
-ok 9 selftests: damon-tests: masim-record.sh
-ok 10 selftests: damon-tests: build_i386.sh
-ok 11 selftests: damon-tests: build_m68k.sh
-ok 12 selftests: damon-tests: build_arm64.sh
-ok 13 selftests: damon-tests: build_i386_idle_flag.sh
-ok 14 selftests: damon-tests: build_i386_highpte.sh
-ok 15 selftests: damon-tests: build_nomemcg.sh
- [33m
- [92mPASS [39m
+> 
+> Huan Yang (2):
+>   mm/damos/filter: Add workingset page filter
+>   mm/damos/filter: Damos filter cleanup
+> 
+>  include/linux/damon.h    |  62 +-----------------
+>  mm/damon/Makefile        |   2 +-
+>  mm/damon/core-test.h     |   7 ++
+>  mm/damon/core.c          |  93 ++++-----------------------
+>  mm/damon/filter.c        | 135 +++++++++++++++++++++++++++++++++++++++
+>  mm/damon/filter.h        | 119 ++++++++++++++++++++++++++++++++++
+>  mm/damon/paddr.c         |  29 +++------
+>  mm/damon/reclaim.c       |  48 +++++++++++---
+>  mm/damon/sysfs-schemes.c |   1 +
+>  9 files changed, 325 insertions(+), 171 deletions(-)
+>  create mode 100644 mm/damon/filter.c
+>  create mode 100644 mm/damon/filter.h
+> 
+> -- 
+> 2.34.1
+> 
+> 
