@@ -1,204 +1,218 @@
-Received: from APC01-PSA-obe.outbound.protection.outlook.com (mail-psaapc01on2118.outbound.protection.outlook.com [40.107.255.118])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E685A385
-	for <damon@lists.linux.dev>; Fri, 22 Sep 2023 02:55:03 +0000 (UTC)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=exLmEdjnzi+rfQBBWQt++WEIwNI40Rxno/LjVZz4ua1Vdg3Q/hioNpaTb9pUGzHM72sqdTe1vzopoakBshZkYvOQ72lipwJzBTiDE4tRfNrOm8kPkxmNw+ua3qgBZCLPqBT0hjlST5mJRpjqO3SlAdmxex8pZ95WNY5gso4wh0oCsRXVpD6XsALqvgm1zwZul/hozbHeDBvdMSPQEo2mRBvx+892+Q9DpyCBgSE9W7nyKCj15F9Gph6XYv/9rL1muMTNlO/0ZBuD8ugClzMilzNjv19kLjr2ZUx0VfcgHeVVHyUtbHIXpF6L2xOwhvOuPs4CP71TJQ7ioVFwz6dSWQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=eXk2A/CcRyHDvan2adGtPTIPy7jszVGjzy8kia0qj/A=;
- b=c8/gRpyDUKVslv6EOgBw6BRaIXKUplXU4FTLOnuhpfn1/wNPC5LVlsGhMVrTootYTuxnYYaxan1y+iBiV4iFPjTj3lQ79XPm+gYxAyaBNxmxjA9Y972yfYOBKBgmajgYN8ABNzuqcwVOpkG/1O5RlHeWPU6xCqyAQPdXLvVPWYmPlwhXhyWEMv/2IQKm6A8zGMUcYZ0ZT4HAb49HUe2BmK6pKIEitg8pP+QONJrMREBm3GmaFIjH+6hRoL+pfhXm8dMnni0m7MTIPK3BYzr9ZvP25YgfzZ9v1a1FL8lbALPqbhvkiUTj0UThgMRUUnBoIFAdBEijsglmI/b3S9oBzw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=vivo.com; dmarc=pass action=none header.from=vivo.com;
- dkim=pass header.d=vivo.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vivo.com; s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=eXk2A/CcRyHDvan2adGtPTIPy7jszVGjzy8kia0qj/A=;
- b=cga6uLIyVOmfGHttd+R+6dtV+D7wGSG6w0kv3NqEG+SEBCZ1uQN2JzZjUeL7rDtod2G2hrX5NK4AbsN3u/TgORAPf7shnLyY54ji+3tDgYnhfuCdT5xdCM53bKjTfalXVbWJmr09kAwxdtT05a2hpzIkd+01xzEZSg/GoZrmaShRnLJnlYE9XcfdL6GQkbR8V4uph28DJpdxVf94nIk+4YGrXOCQu+LNXiILgI9G6NdcxojGpfokON4KGCgiKAv83f2rBMb98oiIWo9jBGkxk+/VNTV/pN5yjKuNKRF1yYSeIyelPX+4RSl31006rnW7ktpc6+2+e5vbr+z9vMHUzw==
-Received: from PUZPR06MB5676.apcprd06.prod.outlook.com (2603:1096:301:f8::10)
- by PUZPR06MB6185.apcprd06.prod.outlook.com (2603:1096:301:11b::15) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6813.20; Fri, 22 Sep
- 2023 02:54:58 +0000
-Received: from PUZPR06MB5676.apcprd06.prod.outlook.com
- ([fe80::64c1:bd7f:ced7:7d02]) by PUZPR06MB5676.apcprd06.prod.outlook.com
- ([fe80::64c1:bd7f:ced7:7d02%4]) with mapi id 15.20.6792.026; Fri, 22 Sep 2023
- 02:54:58 +0000
-From: =?utf-8?B?5p2o5qyi?= <link@vivo.com>
-To: SeongJae Park <sj@kernel.org>, =?utf-8?B?5p2o5qyi?= <link@vivo.com>
-CC: Andrew Morton <akpm@linux-foundation.org>, open list
-	<linux-kernel@vger.kernel.org>, "open list:DATA ACCESS MONITOR"
-	<damon@lists.linux.dev>, "open list:DATA ACCESS MONITOR"
-	<linux-mm@kvack.org>, opensource.kernel <opensource.kernel@vivo.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBF694736E
+	for <damon@lists.linux.dev>; Fri, 22 Sep 2023 22:15:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21F90C433C9;
+	Fri, 22 Sep 2023 22:15:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1695420918;
+	bh=KZAzIlymensHpeS8g6K9kxZZ7WQMm3JO+eEk1l2wXKc=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=ecQq/UdFUb3wBQ21d31FdbMsyf+eCk9oROSI2WjBVij9BgmBE+wgzcUmrdM71MMLs
+	 cajp8iz2/iaXkQ8RS0B9tz3ddv4LV6/rrcbVwqEhQ0cR02NIJgRFqs1CAtbyik97gV
+	 w89wASj8VnAm72hC4KZwttoACefzfh9AnJeSTgT7zhJc1eRIzEesiwZkQ/L7mu1pPl
+	 r+PCcle9EkqzU/dKV+l2/jN1vG+snxXJr3VTBf0XpHKFWUTIPthR1QdECtsHJqHUN7
+	 G1uum3AhRB9OnLDoPOfWV1rexKoZNQBqSDBWNYqIfWsxHQ7tCnH5+rN0IGwe0Mkjsu
+	 IVxc3nXI+COBA==
+From: SeongJae Park <sj@kernel.org>
+To: =?UTF-8?q?=E6=9D=A8=E6=AC=A2?= <link@vivo.com>
+Cc: "SeongJae Park" <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	open list <linux-kernel@vger.kernel.org>,
+	"open list:DATA ACCESS MONITOR" <damon@lists.linux.dev>,
+	"open list:DATA ACCESS MONITOR" <linux-mm@kvack.org>,
+	"opensource . kernel" <opensource.kernel@vivo.com>
 Subject: Re: [RFC 0/2] Damos filter cleanup code and implement workingset
-Thread-Topic: [RFC 0/2] Damos filter cleanup code and implement workingset
-Thread-Index: AQHZ6t8VUkQ1WlLf10K+q+97AmDI/bAlsBKAgAB6hoA=
-Date: Fri, 22 Sep 2023 02:54:58 +0000
-Message-ID: <d060083d-ebdd-4966-9f41-87cef0d2c106@vivo.com>
-References: <20230921193625.99617-1-sj@kernel.org>
-In-Reply-To: <20230921193625.99617-1-sj@kernel.org>
-Accept-Language: zh-CN, en-US
-Content-Language: zh-CN
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=vivo.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: PUZPR06MB5676:EE_|PUZPR06MB6185:EE_
-x-ms-office365-filtering-correlation-id: f141c194-cf6c-4a28-5a20-08dbbb174e9d
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info:
- 0ThW+UFYNXEvFmFdeptlM4IuCThCk09/48Upt9kkR3y3YpcY/C6/mjTRJfh5/WSSicOA7n744JKLx9N/eP84Pc4MjCOQum6RIM72Mj1r07muMQEBY5RqC9rR0Ku2/mxIDCk3M+K1szmeHUHhTm+evu1oLhoJx38ICAVC8MFECjXGgdoyJz80VLcCt8QjnI49nCVt+JmXqwgIf1m8qRpDd7ANFbDpaxIDCsyoafF2zROMEJD66cpLRnMaW0GmVc6GkrnmgoDxuxLzybE0VxTw3lrO6uXE6u70EPnnThCeC7A6+RmFnmXhNP+9AaVBZNBOhQQRnu7UEhY2TmdWcw8tzdfuRmKprIurQ/zFHV0YG+PWgdMDha+dfZxTta7wrs7orFYo42TEiBMO/XUWrNCXPM40+d40dgMeke0zCUtCrB22T7YA1LzcQ61cmC1sh+HI25px/sVOETLRmH6NQn2rg119y7k/8pZva0OC87e49PZ+9+wrqvc3GPc+gMojl4k3G8V3JdbxHCjyb15pQwtfLa0SArzPlVbe4bzicRgJomi4JXF01hNy29YFjka8qaqNdqhe93oDQWeZBfdO0WMdJs7YusxqMMIDyNS18uwA6h/Bl+TQj+jtpx3krkhuc1tu/jLjjUcJ9ly8nu970oof9A==
-x-forefront-antispam-report:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PUZPR06MB5676.apcprd06.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(39860400002)(346002)(366004)(396003)(136003)(376002)(451199024)(1800799009)(186009)(71200400001)(26005)(83380400001)(6486002)(4326008)(107886003)(2906002)(6512007)(2616005)(76116006)(54906003)(66946007)(8676002)(110136005)(66476007)(66446008)(966005)(66556008)(64756008)(5660300002)(91956017)(316002)(8936002)(41300700001)(478600001)(6506007)(86362001)(122000001)(31696002)(36756003)(85182001)(38070700005)(38100700002)(31686004)(66899024)(45980500001);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?utf-8?B?Ylo2cUo1bGlZdG1ycWZ3SkVUL2lvY2l2Q051NlhyYnNtd2l0SHkyeEI3Y25K?=
- =?utf-8?B?aWJnL25VL1ZHelFvYnJsOFM4akFHZlFodkh1dGc5OVpZUU9uS3RZa3NuSnZt?=
- =?utf-8?B?a2xWcGR3MS9IT0FkSE1nWjBpbnh1WFU3TWx2R0cxRExiSkhFVjBaUklDSmxi?=
- =?utf-8?B?U1IxTTkyL1dXMUIrU25RQ0d6R3NkOGZCamxyeXU2Qk9XMWJhRThLSVlVSE1Y?=
- =?utf-8?B?cm9kcWJwdjlRZG85QXIwNWxhbTlUdjVLNlozTUl6K0NYOHBpRjJVUDZuUkg3?=
- =?utf-8?B?Sk5zZjcrOHpoVUFzSCtSUVE4VlNKK0tMOHhPL2JvMkVYdnN0NXZYL2xKeEVQ?=
- =?utf-8?B?N0hxcDh5aXZ1QnhoZVJOUTRkVDkrWGJmZmljMTNnT0k1elhicFdnaUhTM0Nr?=
- =?utf-8?B?Tzk1NDdBOEpaalRRWFhITmdKMWtFZmxmOGVuc2M4bzlLSmNOWmhXQmp0c3No?=
- =?utf-8?B?TWdQSkQ0STNvaEVuUUliVEl4RE0zZ3hVeEFDTVBjYVR0ZHVPVTN4R0REVHhY?=
- =?utf-8?B?cG9YS0hPbEc5TXQ3RHk1TUpqd2F2ajVDRFMzOW1xU2x6RWo1REJ5OGN6Vjk3?=
- =?utf-8?B?NU1KbmkydnJldnlyNElNTXF4Y1h2UGNTMHJqQTkySndQa21FaVdSNG42M1BC?=
- =?utf-8?B?TUxPZmp1YS9mMzY0cGx0MTBLUktFQThQU0RiRC81WitEL1c0NzlJVnpqYmcy?=
- =?utf-8?B?QXRQb2E2OGpRYTZrdTM1ZkZBeC9tdHFMTzdWSDNOYWpVYVZpbFlxTEdxVmtB?=
- =?utf-8?B?TG10RzdSeDEyN2ExQktaY3VCOEphSGRMRHhZUFNJRVl0RTVCMGZIcHo3VlRn?=
- =?utf-8?B?azRwZ2duMWFrWDFDRmplR3JLUVhsaEhwRUYzT2JkWTU0ZTVmcXUvSUpYNjBV?=
- =?utf-8?B?WTExZTl3bDhTNVR5eE1BSDg4UnV0dENGcUZ5ZmprblZFNFhUdWZFVGhhUzlM?=
- =?utf-8?B?akEzRVFHL2Q4YWFLRksxeHEvU0dKem5UUDNoSDgyUzBkMmJzaXZySGJ1NWw0?=
- =?utf-8?B?bFB4U01UcW5CUkgxdkJ3ZVI3b1ZMQTk0UktuQVVFUkFXTS9uRG8yaWE1c2FE?=
- =?utf-8?B?QVhPYXNKWDZ2YWtBa3R3cjl4czMyOEJmRElGa2l4U2QvL05sYXJUcnkvcUZL?=
- =?utf-8?B?cXJ6cThGUSs4V0lES3licitPaTNFb0w3YTAyQ3pxaS9SdExGVzdPbUtFKysy?=
- =?utf-8?B?OTlidzdvelZ2RTdFaXdWKzVoRzJRdmE0Y0JtbTFpQ3FHeWF3dU55SzdxQmlQ?=
- =?utf-8?B?TlZCb1l5YTFhSmNvZUpxTDZPM1RkMURrYkxwTVpweVk5VFhaQnVTWWdSdnpL?=
- =?utf-8?B?enlNSWZldTkzRFUrT0ZyRVNNK2U1MnVyaXBsWjhRWWhTYnRTcy9CTGhUNUR1?=
- =?utf-8?B?VG9kSFFUc3pGbUxRQi9RZHlDZTVRZ1dDVWRVL2NxUmpDNy9wWWZTazdjQy9T?=
- =?utf-8?B?c0ZmM04rdmE5Z2N5Zmk4UzNldFluS3RsMmhZRWYrRDZSOEhFSlVhcXNtQ2lI?=
- =?utf-8?B?NzFkZDJmTWZEeXc4R3g2SnZCUkF1cXBiNmpyajM5NVRqV2FWRjlUTGxLZWly?=
- =?utf-8?B?b0V0SkNiTjF4ZWhpTEFJaFUwUUQ4Q2lsSjhneC9kUlpDRXZKRWNoaEdNV1JO?=
- =?utf-8?B?NVVkTkZCcnNJTnhORnlsZkRxYTc5OTUxY1h4TGJLT1FnZzhHbmk5Q1JPK2tP?=
- =?utf-8?B?UmN1eFd3RGxnSkVFa0xwUTJSTkZkc0MzS2kwSWhxZFA3RkNJc0ZWZ2hCVkVa?=
- =?utf-8?B?Q3FmcGdVQzZScmZWeVpBUzdKc1FaZ056TXgwQk5zZGh6SEtTcjFZc2NUd09a?=
- =?utf-8?B?bis3ME1NSjE4YkdsbHZVVnY4MDhFYWRzeGRocDZkKzUrakVleWdsSWowNUx0?=
- =?utf-8?B?T2NIemVUT0JFYTRrTGhtV2JJV3ZKRytTTWdaZzgvRDdZcnUwVi9aQjNHRllN?=
- =?utf-8?B?enFmZ0xEVitaQWlHUTlwUy9YRU5lK0MrMTBMUVJUaUFCRnk1c0ZEQUZpUlN5?=
- =?utf-8?B?dDJud0xvQ2hJSlBXUkticERVWU9qWGthMzlSVXlCZ0MxNGJ2b1E5Z0RFSkRR?=
- =?utf-8?B?WHBZVjE3RVFiVUxBc2tKTyt0M3FUV0pMTEdlS2tDQkNKTHZhYXlQQ0pGTU1N?=
- =?utf-8?Q?8BCE=3D?=
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <6AC15D8703C4D246A3A327DB4E824E2C@apcprd06.prod.outlook.com>
-Content-Transfer-Encoding: base64
+Date: Fri, 22 Sep 2023 22:15:15 +0000
+Message-Id: <20230922221515.66785-1-sj@kernel.org>
+X-Mailer: git-send-email 2.25.1
+In-Reply-To: <d060083d-ebdd-4966-9f41-87cef0d2c106@vivo.com>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-OriginatorOrg: vivo.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: PUZPR06MB5676.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: f141c194-cf6c-4a28-5a20-08dbbb174e9d
-X-MS-Exchange-CrossTenant-originalarrivaltime: 22 Sep 2023 02:54:58.0277
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 923e42dc-48d5-4cbe-b582-1a797a6412ed
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: Gpx5B+1MiljLXcG5WkgzP5rAFiFEtlUacv1+LdZ5ZNHNN0HV18AWWuOJfYrffF5aS4GKx7jPRWQN/TURg26ocw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PUZPR06MB6185
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-SEkgU0osDQoNClRoYW5rcyBmb3IgeW91ciBwYXRpZW50IHJlc3BvbnNlLg0KPiBbU29tZSBwZW9w
-bGUgd2hvIHJlY2VpdmVkIHRoaXMgbWVzc2FnZSBkb24ndCBvZnRlbiBnZXQgZW1haWwgZnJvbSBz
-akBrZXJuZWwub3JnLiBMZWFybiB3aHkgdGhpcyBpcyBpbXBvcnRhbnQgYXQgaHR0cHM6Ly9ha2Eu
-bXMvTGVhcm5BYm91dFNlbmRlcklkZW50aWZpY2F0aW9uIF0NCj4NCj4gSGkgSHVhbiwNCj4NCj4N
-Cj4gRmlyc3Qgb2YgYWxsLCB0aGFuayB5b3UgZm9yIHRoaXMgcGF0Y2guICBJIGhhdmUgc29tZSBo
-aWdoIGxldmVsIGNvbW1lbnRzIGFuZA0KPiBxdWVzdGlvbnMgYXMgYmVsb3cuDQo+DQo+IE9uIFR1
-ZSwgMTkgU2VwIDIwMjMgMTc6NTI6MzMgKzA4MDAgSHVhbiBZYW5nIDxsaW5rQHZpdm8uY29tPiB3
-cm90ZToNCj4NCj4+IE5vdyBkYW1vcyBzdXBwb3J0IGZpbHRlciBjb250YWlucyB0d28gdHlwZS4N
-Cj4+IFRoZSBmaXJzdCBpcyBzY2hlbWUgZmlsdGVyIHdoaWNoIHdpbGwgaW52b2tlIGVhY2ggc2No
-ZW1lIGFwcGx5LA0KPj4gc2Vjb25kIGlzIHNjaGVtZSBhY3Rpb24gZmlsdGVyLCB3aGljaCB3aWxs
-IGZpbHRlciBvdXQgdW53YW50ZWQgYWN0aW9uLg0KPiBJTUhPLCB0aGF0J3Mgbm90IGNsZWFyIGRl
-ZmluaXRpb24gb2YgdGhlIHR5cGVzLiAgQ29uY2VwdHVhbGx5LCBhbGwgdGhlIGZpbHRlcnMNCj4g
-YXJlIHNhbWUuICBOb25ldGhlbGVzcywgdGhleSBhcmUgaGF2aW5nIGRpZmZlcmVudCBiZWhhdmlv
-cnMgYmVjYXVzZSB0aGV5IGFyZQ0KPiBoYW5kbGVkIGluIGRpZmZlcmVudCBsYXllciBkZXBlbmRp
-bmcgb24gd2hpY2ggbGF5ZXIgaXMgbW9yZSBlZmZpY2llbnQgdG8gaGFuZGxlDQpUaGFua3MgZm9y
-IHRoZXNlIGluc3RydWN0aW9ucyB0byBoZWxwIG1lIHVuZGVyc3RhbmQgdGhlIGRlc2lnbiBpZGVh
-IG9mIA0KZGFtb3MgZmlsdGVyLg0KPiB0aG9zZVsxXS4NCj4NCj4gSSBhZ3JlZSB0aGlzIGlzIGNv
-bXBsaWNhdGVkIGFuZCBhIGJpdCB2ZXJib3NlIGV4cGxhbmF0aW9uLCBidXQgSSBkb24ndCBmZWVs
-DQo+IHlvdXIgc2NoZW1lIHZzIGFjdGlvbiBkZWZpbml0aW9uIGlzIG1ha2luZyBpdCBlYXNpZXIg
-dG8gdW5kZXJzdGFuZC4NCj4NCj4+IEJ1dCB0aGlzIGltcGxlbWVudCBpcyBzY2F0dGVyZWQgaW4g
-ZGlmZmVyZW50IGltcGxlbWVudGF0aW9ucw0KPiBJbmRlZWQgdGhlIGltcGxlbWVudGF0aW9uIGlz
-IHNjYXR0ZXJlZCBpbiBjb3JlIGxheWVyIGFuZCB0aGUgb3BzIGxheWVyDQo+IGRlcGVuZGluZyBv
-biB0aGUgZmlsdGVyIHR5cGVzLiAgQnV0IEkgdGhpbmsgdGhpcyBpcyBuZWVkZWQgZm9yIGVmZmlj
-aWVudA0KPiBoYW5kbGluZyBvZiB0aG9zZS4NCg0KSU1PLCBzb21lIHNpbXBsZSBmaWx0ZXIgY2Fu
-IGhhdmUgYSBjb21tb24gaW1wbGVtZW50LCBsaWtlIGFub24gZmlsdGVyPyBBbmQsDQoNCmZvciBz
-b21lIHNwZWNpYWwgdHlwZSwgZWFjaCBsYXllciBvZmZlciB0aGVpciBvd24/DQoNCj4NCj4+IGFu
-ZCBoYXJkIHRvIHJldXNlIG9yIGV4dGVuZC4NCj4gIEZyb20geW91ciBmaXJzdCBwYXRjaCwgd2hp
-Y2ggZXh0ZW5kaW5nIHRoZSBmaWx0ZXIsIHRoZSBlc3NlbnRpYWwgY2hhbmdlIGZvciB0aGUNCj4g
-ZXh0ZW5zaW9uIGlzIGFkZGluZyBhbm90aGVyIGVudW0gdG8gJ2VudW0gZGFtb3NfZmlsdGVyX3R5
-cGUnICgxIGxpbmUpIGFuZA0KPiBhZGRpdGlvbiBvZiBzd2l0Y2ggY2FzZSBpbiAnX19kYW1vc19w
-YV9maWx0ZXJfb3V0KCknICgzIGxpbmVzKS4gIEkgZG9uJ3QgdGhpbmsNCj4gaXQgbG9va3MgdG9v
-IGNvbXBsaWNhdGVkLiAgSWYgeW91J3JlIHNheWluZyBpdCB3YXMgaGFyZCB0byB1bmRlcnN0YW5k
-IHdoaWNoDQpZZXMsIGluZGVlZC4NCj4gcGFydCByZWFsbHkgbmVlZCB0byBiZSBtb2RpZmVkLCBJ
-IHRoaW5rIHRoYXQgbWFrZXMgc2Vuc2UuICBCdXQgaW4gdGhlIGNhc2UsDQo+IHdlIG1pZ2h0IG5l
-ZWQgbW9yZSBjb21tZW50cyByYXRoZXIgdGhhbiBzdHJ1Y3R1cmFsIGNoYW5nZS4NCj4NCj4+IFRo
-aXMgcGF0Y2hzZXQgY2xlYW4gdXAgdGhvc2UgZmlsdGVyIGNvZGUsIG1vdmUgaW50byBmaWx0ZXIu
-YyBhbmQgYWRkIGhlYWRlcg0KPj4gdG8gZXhwb3NlIGZpbHRlciBmdW5jLihwYXRjaCAyKQ0KPiBB
-Z2FpbiwgSSBhZ3JlZSBtb3JlIGNvZGUgY2xlYW51cCBpcyBuZWVkZWQuICBCdXQgSSdtIG5vdCBz
-dXJlIGlmIHRoaXMgaXMgdGhlDQo+IHJpZ2h0IHdheS4gIEVzcGVjaWFsbHksIEknbSB1bnN1cmUg
-aWYgaXQgcmVhbGx5IG5lZWQgdG8gaGF2ZSBhIGRlZGljYXRlZCBmaWxlLg0KDQpJIHRoaW5rIHRo
-ZSBmaWx0ZXIgY29kZSBzY2F0dGVyIGludG8gZWFjaCBsYXllciBtYXkgbWFrZSBjb2RlIGhhcmQg
-dG8gDQpyZXVzZSwgb3RoZXIgb3BzDQoNCm1heSBuZWVkIGFub24gZmlsdGVyIG9yIHNvbWV0aGlu
-Zy4gU28sIG1ha2UgY29kZSBpbnRvIGEgZGVkaWNhdGVkIGZpbGUgDQptYXkgZ29vZD8NCg0KKGp1
-c3QgbXkgb3Bpbmlvbi4pDQoNCj4gVG8gbXkgaHVtYmxlIGV5ZXMsIGl0IGRvZXNuJ3QgbG9vayBs
-aWtlIG1ha2luZyBjb2RlIGNsZWFybHkgZWFzaWVyIHRvIHJlYWQNCj4gY29tcGFyZWQgdG8gdGhl
-IGN1cnJlbnQgdmVyc2lvbi4gIFRoaXMgaXMgcHJvYmFibHkgYmVjYXVzZSBJIGRvbid0IGZlZWwg
-eW91cg0KPiBzY2hlbWUgdnMgYWN0aW9uIGRlZmluaXRpb24gaXMgY2xlYXIgdG8gdW5kZXJzdGFu
-ZC4gIE5laXRoZXIgaXQgaXMNClllcywgaW5kZWVkLCBjdXJyZW50IGNvZGUgbm90IGNsZWFuLCB0
-aGUgaWRlYSBkaWRuJ3QgdGFrZSBzaGFwZS4NCj4gZGVkdXBsaWNhdGluZyBjb2RlLiAgVGhlIHBh
-dGNoIGFkZHMgbGluZXMgbW9yZSB0aGF0IGRlbGV0ZWQgb25lcywgYWNjb3JkaW5nIHRvDQo+IGl0
-cyBkaWZmc3RhdC4gIEZvciB0aGUgcmVhc29uLCBJIGRvbid0IHNlZSBjbGVhciBiZW5lZml0IG9m
-IHRoaXMgY2hhbmdlLg0KSW4gdGhpcyBjb2RlLCBtYXliZSBqdXN0IGEgbGl0dGxlIGJlbmVmaXQg
-d2hlbiBvdGhlciBvcHMgbmVlZCB0byBmaWx0ZXIgDQphbm9uIHBhZ2U/IDopDQo+ICAgIEkNCj4g
-bWlnaHQgYmUgYmlhc2VkLCBoYXZpbmcgTklIIChOb3QgSW52ZW50ZWQgSGVyZSkgc2luZHJvbWUs
-IG9yIG1pc3Npbmcgc29tZXRoaW5nLg0KPiBQbGVhc2UgbGV0IG1lIGtub3cgaWYgc28uDQo+DQo+
-PiBBbmQgYWRkIGEgbmV3IGZpbHRlciAid29ya2luZ3NldCIgdG8gcHJvdGVjdCB3b3JraW5nc2V0
-IHBhZ2UuDQo+IENhbiB5b3UgZXhwbGFpbiBleHBlY3RlZCB1c2UgY2FzZXMgb2YgdGhpcyBuZXcg
-ZmlsdGVyIHR5cGUgaW4gbW9yZSBkZXRhaWw/DQo+IFNwZWNpZmljYWxseSwgZm9yIHdoYXQgc2No
-ZW1lIGFjdGlvbiBhbmQgdW5kZXIgd2hhdCBzaXR1YXRpb24gdGhpcyBuZXcgZmlsdGVyDQoNCklN
-TywgcGFnZSBpZiBtYXJrZWQgYXMgd29ya2luZ3NldCwgbWVhbiBwYWdlIGluIHRhc2sncyBjb3Jl
-IA0Kd29ya2xvYWQobWF5YmUgaGF2ZQ0KDQpzZWVuIHRoZSByZWZhdWx0LCBhbmQgdHJpZ2dlciBy
-ZWZhdWx0IHByb3RlY3QpLiBTbywgZm9yIGxydSBzb3J0IG9yIHJlY2xhaW0sDQoNCndlJ2QgYmV0
-dGVyIG5vdCB0b3VjaCBpdD8oSWYgYW55IHdyb25nLCBwbGVhc2UgbGV0IG1lIGtub3cuKQ0KDQo+
-IHR5cGUgd2lsbCBiZSBuZWVkZWQ/ICBJZiB5b3UgaGF2ZSBzb21lIHRlc3QgZGF0YSBmb3IgdGhl
-IHVzZSBjYXNlIGFuZCBjb3VsZA0KPiBzaGFyZSBpdCwgaXQgd291bGQgYmUgdmVyeSBoZWxwZnVs
-IGZvciBtZSB0byB1bmRlcnN0YW5kIHdoeSBpdCBpcyBuZWVkZWQuDQoNClNvcnJ5LCB0aGlzIHR5
-cGUganVzdCBmcm9tIG15IGtub3dsZWRnZSBvZiBNTSwgaGF2ZSBubyB0ZXN0IGRhdGEuDQoNCkZv
-ciBmdXRoZXIgbGVhcm4gb2YgREFNT04sIEknbGwgdHJ5IGl0Lg0KDQo+DQo+PiBEbyB3ZSBuZWVk
-IHRoaXMgYW5kIGNsZWFudXAgaXQ/DQo+IEkgdGhpbmsgSSBjYW5ub3QgYW5zd2VyIGZvciBub3cs
-IGFuZCB5b3VyIGZ1cnRoZXIgY2xhcmlmaWNhdGlvbiBhbmQgcGF0aWVudA0KPiBleHBsYW5hdGlv
-biBjb3VsZCBiZSBoZWxwZnVsLg0KPg0KPiBbMV0gaHR0cHM6Ly9naXQua2VybmVsLm9yZy9wdWIv
-c2NtL2xpbnV4L2tlcm5lbC9naXQvYWtwbS9tbS5naXQvdHJlZS9Eb2N1bWVudGF0aW9uL21tL2Rh
-bW9uL2Rlc2lnbi5yc3Q/aD1tbS1ldmVyeXRoaW5nLTIwMjMtMDktMjAtMTktMzgjbjQwMA0KPg0K
-Pg0KPiBUaGFua3MsDQo+IFNKDQoNClRoYW5rcywNCg0KSHVhbg0KDQo+DQo+PiBIdWFuIFlhbmcg
-KDIpOg0KPj4gICAgbW0vZGFtb3MvZmlsdGVyOiBBZGQgd29ya2luZ3NldCBwYWdlIGZpbHRlcg0K
-Pj4gICAgbW0vZGFtb3MvZmlsdGVyOiBEYW1vcyBmaWx0ZXIgY2xlYW51cA0KPj4NCj4+ICAgaW5j
-bHVkZS9saW51eC9kYW1vbi5oICAgIHwgIDYyICstLS0tLS0tLS0tLS0tLS0tLQ0KPj4gICBtbS9k
-YW1vbi9NYWtlZmlsZSAgICAgICAgfCAgIDIgKy0NCj4+ICAgbW0vZGFtb24vY29yZS10ZXN0Lmgg
-ICAgIHwgICA3ICsrDQo+PiAgIG1tL2RhbW9uL2NvcmUuYyAgICAgICAgICB8ICA5MyArKysrLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0NCj4+ICAgbW0vZGFtb24vZmlsdGVyLmMgICAgICAgIHwgMTM1
-ICsrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKw0KPj4gICBtbS9kYW1vbi9m
-aWx0ZXIuaCAgICAgICAgfCAxMTkgKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKw0K
-Pj4gICBtbS9kYW1vbi9wYWRkci5jICAgICAgICAgfCAgMjkgKysrLS0tLS0tDQo+PiAgIG1tL2Rh
-bW9uL3JlY2xhaW0uYyAgICAgICB8ICA0OCArKysrKysrKysrKy0tLQ0KPj4gICBtbS9kYW1vbi9z
-eXNmcy1zY2hlbWVzLmMgfCAgIDEgKw0KPj4gICA5IGZpbGVzIGNoYW5nZWQsIDMyNSBpbnNlcnRp
-b25zKCspLCAxNzEgZGVsZXRpb25zKC0pDQo+PiAgIGNyZWF0ZSBtb2RlIDEwMDY0NCBtbS9kYW1v
-bi9maWx0ZXIuYw0KPj4gICBjcmVhdGUgbW9kZSAxMDA2NDQgbW0vZGFtb24vZmlsdGVyLmgNCj4+
-DQo+PiAtLQ0KPj4gMi4zNC4xDQo+Pg0KPj4NCg0K
+Hi Huan,
+
+On Fri, 22 Sep 2023 02:54:58 +0000 杨欢 <link@vivo.com> wrote:
+
+> HI SJ,
+> 
+> Thanks for your patient response.
+
+Happy to hear this kind acknowledgement :)
+
+> > [Some people who received this message don't often get email from sj@kernel.org. Learn why this is important at https://aka.ms/LearnAboutSenderIdentification ]
+> >
+> > Hi Huan,
+> >
+> >
+> > First of all, thank you for this patch.  I have some high level comments and
+> > questions as below.
+> >
+> > On Tue, 19 Sep 2023 17:52:33 +0800 Huan Yang <link@vivo.com> wrote:
+> >
+> >> Now damos support filter contains two type.
+> >> The first is scheme filter which will invoke each scheme apply,
+> >> second is scheme action filter, which will filter out unwanted action.
+> > IMHO, that's not clear definition of the types.  Conceptually, all the filters
+> > are same.  Nonetheless, they are having different behaviors because they are
+> > handled in different layer depending on which layer is more efficient to handle
+> Thanks for these instructions to help me understand the design idea of 
+> damos filter.
+> > those[1].
+> >
+> > I agree this is complicated and a bit verbose explanation, but I don't feel
+> > your scheme vs action definition is making it easier to understand.
+> >
+> >> But this implement is scattered in different implementations
+> > Indeed the implementation is scattered in core layer and the ops layer
+> > depending on the filter types.  But I think this is needed for efficient
+> > handling of those.
+> 
+> IMO, some simple filter can have a common implement, like anon filter? And,
+> for some special type, each layer offer their own?
+
+Do you mean there could be two filter types that better to be handled in
+different layer for efficiency, but share common implementation?  Could you
+please give me a more specific example?
+
+> 
+> >
+> >> and hard to reuse or extend.
+> >  From your first patch, which extending the filter, the essential change for the
+> > extension is adding another enum to 'enum damos_filter_type' (1 line) and
+> > addition of switch case in '__damos_pa_filter_out()' (3 lines).  I don't think
+> > it looks too complicated.  If you're saying it was hard to understand which
+> Yes, indeed.
+> > part really need to be modifed, I think that makes sense.  But in the case,
+> > we might need more comments rather than structural change.
+> >
+> >> This patchset clean up those filter code, move into filter.c and add header
+> >> to expose filter func.(patch 2)
+> > Again, I agree more code cleanup is needed.  But I'm not sure if this is the
+> > right way.  Especially, I'm unsure if it really need to have a dedicated file.
+> 
+> I think the filter code scatter into each layer may make code hard to 
+> reuse, other ops
+> 
+> may need anon filter or something. So, make code into a dedicated file 
+> may good?
+> 
+> (just my opinion.)
+
+Again, I'm not super confident about my understanding.  But sounds like you're
+partly worrying about duplication of some code in each ops implementation
+(modules in same layer).  Please correct me if I'm wrong, with specific,
+detailed and realistic examples.
+
+If my guess is not that wrong, I can agree to the concern.  Nevertheless, we
+already have a dedicated source file for such common code between ops
+implementaions, namely ops-common.c.
+
+That said, we don't have duplicated DAMOS filters implementation code in
+multipe ops implementation at the moment.  It could have such duplication in
+the future, but I think it's not too late to make such cleanup after or just
+before such duplication heppen.  IOW, I'd suggest to not make changes for
+something that _might_ happen in future.
+
+> 
+> > To my humble eyes, it doesn't look like making code clearly easier to read
+> > compared to the current version.  This is probably because I don't feel your
+> > scheme vs action definition is clear to understand.  Neither it is
+> Yes, indeed, current code not clean, the idea didn't take shape.
+> > deduplicating code.  The patch adds lines more that deleted ones, according to
+> > its diffstat.  For the reason, I don't see clear benefit of this change.
+> In this code, maybe just a little benefit when other ops need to filter 
+> anon page? :)
+
+As mentioned above, it's unclear when, how, and for what benefit we will
+support anon pages filter from vaddr.  I'd again suggest to not make change
+only for future change that not clear if we really want to make for now.
+
+> >    I
+> > might be biased, having NIH (Not Invented Here) sindrome, or missing something.
+> > Please let me know if so.
+> >
+> >> And add a new filter "workingset" to protect workingset page.
+> > Can you explain expected use cases of this new filter type in more detail?
+> > Specifically, for what scheme action and under what situation this new filter
+> 
+> IMO, page if marked as workingset, mean page in task's core 
+> workload(maybe have
+> 
+> seen the refault, and trigger refault protect). So, for lru sort or reclaim,
+> 
+> we'd better not touch it?(If any wrong, please let me know.)
+
+Still unclear to me.  Could I ask you more specific and detailed case?
+
+> 
+> > type will be needed?  If you have some test data for the use case and could
+> > share it, it would be very helpful for me to understand why it is needed.
+> 
+> Sorry, this type just from my knowledge of MM, have no test data.
+> 
+> For futher learn of DAMON, I'll try it.
+
+Yes, that will be very helpful.
+
+And from this point, I'm getting an impression that the purpose of this RFC is
+not for making a real change for specific use case that assumed to make real
+benefits, but just for getting opinions about some imaginable changes that
+_might_ be helpful, and _might_ be made in future.  If so, making the point
+more clear would be helpful for me to give you opinion earlier.  If that's the
+case, my opinion is this.  I agree DAMON code has many rooms of improvement in
+terms of readability, so cleanup patches are welcome.  Nevertheless, I'd prefer
+to make changes only when it is reasonable to expect it's providing _real_
+improvement just after be applied, or at least very near and specific future.
+
+
+Thanks,
+SJ
+
+> 
+> >
+> >> Do we need this and cleanup it?
+> > I think I cannot answer for now, and your further clarification and patient
+> > explanation could be helpful.
+> >
+> > [1] https://git.kernel.org/pub/scm/linux/kernel/git/akpm/mm.git/tree/Documentation/mm/damon/design.rst?h=mm-everything-2023-09-20-19-38#n400
+> >
+> >
+> > Thanks,
+> > SJ
+> 
+> Thanks,
+> 
+> Huan
+> 
+> >
+> >> Huan Yang (2):
+> >>    mm/damos/filter: Add workingset page filter
+> >>    mm/damos/filter: Damos filter cleanup
+> >>
+> >>   include/linux/damon.h    |  62 +-----------------
+> >>   mm/damon/Makefile        |   2 +-
+> >>   mm/damon/core-test.h     |   7 ++
+> >>   mm/damon/core.c          |  93 ++++-----------------------
+> >>   mm/damon/filter.c        | 135 +++++++++++++++++++++++++++++++++++++++
+> >>   mm/damon/filter.h        | 119 ++++++++++++++++++++++++++++++++++
+> >>   mm/damon/paddr.c         |  29 +++------
+> >>   mm/damon/reclaim.c       |  48 +++++++++++---
+> >>   mm/damon/sysfs-schemes.c |   1 +
+> >>   9 files changed, 325 insertions(+), 171 deletions(-)
+> >>   create mode 100644 mm/damon/filter.c
+> >>   create mode 100644 mm/damon/filter.h
+> >>
+> >> --
+> >> 2.34.1
+> >>
+> >>
+> 
