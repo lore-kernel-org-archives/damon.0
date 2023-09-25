@@ -1,193 +1,58 @@
-Received: from szxga03-in.huawei.com (szxga03-in.huawei.com [45.249.212.189])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C5B610950
-	for <damon@lists.linux.dev>; Mon, 25 Sep 2023 07:21:37 +0000 (UTC)
-Received: from kwepemi500008.china.huawei.com (unknown [172.30.72.56])
-	by szxga03-in.huawei.com (SkyGuard) with ESMTP id 4RvDjS72lgzMlsj;
-	Mon, 25 Sep 2023 15:17:48 +0800 (CST)
-Received: from huawei.com (10.90.53.73) by kwepemi500008.china.huawei.com
- (7.221.188.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.31; Mon, 25 Sep
- 2023 15:21:28 +0800
-From: Jinjie Ruan <ruanjinjie@huawei.com>
-To: <linux-mm@kvack.org>, <damon@lists.linux.dev>, SeongJae Park
-	<sj@kernel.org>, Andrew Morton <akpm@linux-foundation.org>
-CC: <ruanjinjie@huawei.com>
-Subject: [PATCH] mm/damon/vaddr-test: Fix memory leak in damon_do_test_apply_three_regions()
-Date: Mon, 25 Sep 2023 15:20:59 +0800
-Message-ID: <20230925072100.3725620-1-ruanjinjie@huawei.com>
-X-Mailer: git-send-email 2.34.1
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AB381EA8A
+	for <damon@lists.linux.dev>; Mon, 25 Sep 2023 15:14:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7B44C433C8;
+	Mon, 25 Sep 2023 15:14:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linux-foundation.org;
+	s=korg; t=1695654841;
+	bh=YKKQIK4vMhPCWEyAM4Ug/QZsOia0En0oCqy3GEJLLZU=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=HPJ6GoiCBgUc6GJOH4BH1j9TEjGzGUCAVaAspSKOWUz55wuTZBpAiCYKWOoNohoaN
+	 QbTFPGMClExIvBPS1bAyPei7wKiNDh9TV/W2Y8KCirkV6Fj/2NPIERSrPLDhR0QQ+u
+	 EKW8V+IgWABOfMqlqKZzTWyVhQzFnNi1gRssPp+c=
+Date: Mon, 25 Sep 2023 08:14:00 -0700
+From: Andrew Morton <akpm@linux-foundation.org>
+To: Jinjie Ruan <ruanjinjie@huawei.com>
+Cc: <linux-mm@kvack.org>, <damon@lists.linux.dev>, SeongJae Park
+ <sj@kernel.org>
+Subject: Re: [PATCH] mm/damon/vaddr-test: Fix memory leak in
+ damon_do_test_apply_three_regions()
+Message-Id: <20230925081400.9593189a7665c6ff1f812855@linux-foundation.org>
+In-Reply-To: <20230925072100.3725620-1-ruanjinjie@huawei.com>
+References: <20230925072100.3725620-1-ruanjinjie@huawei.com>
+X-Mailer: Sylpheed 3.8.0beta1 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.90.53.73]
-X-ClientProxiedBy: dggems702-chm.china.huawei.com (10.3.19.179) To
- kwepemi500008.china.huawei.com (7.221.188.139)
-X-CFilter-Loop: Reflected
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
-When CONFIG_DAMON_VADDR_KUNIT_TEST=y and making CONFIG_DEBUG_KMEMLEAK=y
-and CONFIG_DEBUG_KMEMLEAK_AUTO_SCAN=y, the below memory leak is detected.
+On Mon, 25 Sep 2023 15:20:59 +0800 Jinjie Ruan <ruanjinjie@huawei.com> wrote:
 
-Since commit 9f86d624292c ("mm/damon/vaddr-test: remove unnecessary
-variables"), the damon_destroy_ctx() is removed, but still call
-damon_new_target() and damon_new_region(), the damon_region which is
-allocated by kmem_cache_alloc() in damon_new_region() and the damon_target
-which is allocated by kmalloc in damon_new_target() are not freed. And the
-damon_region which is allocated in damon_new_region() in
-damon_set_regions() is also not freed.
+> When CONFIG_DAMON_VADDR_KUNIT_TEST=y and making CONFIG_DEBUG_KMEMLEAK=y
+> and CONFIG_DEBUG_KMEMLEAK_AUTO_SCAN=y, the below memory leak is detected.
+> 
+> Since commit 9f86d624292c ("mm/damon/vaddr-test: remove unnecessary
+> variables"), the damon_destroy_ctx() is removed, but still call
+> damon_new_target() and damon_new_region(), the damon_region which is
+> allocated by kmem_cache_alloc() in damon_new_region() and the damon_target
+> which is allocated by kmalloc in damon_new_target() are not freed. And the
+> damon_region which is allocated in damon_new_region() in
+> damon_set_regions() is also not freed.
+> 
+> So use damon_destroy_target to free all the damon_regions and damon_target.
+> 
+> ...
+> 
+> Fixes:  9f86d624292c ("mm/damon/vaddr-test: remove unnecessary variables")
+> Fixes: dae0087aeff4 ("mm/damon/vaddr: remove damon_va_apply_three_regions()")
 
-So use damon_destroy_target to free all the damon_regions and damon_target.
+Can we please identify a single Fixes: target?  Otherwise, how are
+-stable tree maintainers to determine which kernels need the fix?  
 
-    unreferenced object 0xffff888107c9a940 (size 64):
-      comm "kunit_try_catch", pid 1069, jiffies 4294670592 (age 732.761s)
-      hex dump (first 32 bytes):
-        00 00 00 00 00 00 00 00 06 00 00 00 6b 6b 6b 6b  ............kkkk
-        60 c7 9c 07 81 88 ff ff f8 cb 9c 07 81 88 ff ff  `...............
-      backtrace:
-        [<ffffffff817e0167>] kmalloc_trace+0x27/0xa0
-        [<ffffffff819c11cf>] damon_new_target+0x3f/0x1b0
-        [<ffffffff819c7d55>] damon_do_test_apply_three_regions.constprop.0+0x95/0x3e0
-        [<ffffffff819c82be>] damon_test_apply_three_regions1+0x21e/0x260
-        [<ffffffff829fce6a>] kunit_generic_run_threadfn_adapter+0x4a/0x90
-        [<ffffffff81237cf6>] kthread+0x2b6/0x380
-        [<ffffffff81097add>] ret_from_fork+0x2d/0x70
-        [<ffffffff81003791>] ret_from_fork_asm+0x11/0x20
-    unreferenced object 0xffff8881079cc740 (size 56):
-      comm "kunit_try_catch", pid 1069, jiffies 4294670592 (age 732.761s)
-      hex dump (first 32 bytes):
-        05 00 00 00 00 00 00 00 14 00 00 00 00 00 00 00  ................
-        6b 6b 6b 6b 6b 6b 6b 6b 00 00 00 00 6b 6b 6b 6b  kkkkkkkk....kkkk
-      backtrace:
-        [<ffffffff819bc492>] damon_new_region+0x22/0x1c0
-        [<ffffffff819c7d91>] damon_do_test_apply_three_regions.constprop.0+0xd1/0x3e0
-        [<ffffffff819c82be>] damon_test_apply_three_regions1+0x21e/0x260
-        [<ffffffff829fce6a>] kunit_generic_run_threadfn_adapter+0x4a/0x90
-        [<ffffffff81237cf6>] kthread+0x2b6/0x380
-        [<ffffffff81097add>] ret_from_fork+0x2d/0x70
-        [<ffffffff81003791>] ret_from_fork_asm+0x11/0x20
-    unreferenced object 0xffff888107c9ac40 (size 64):
-      comm "kunit_try_catch", pid 1071, jiffies 4294670595 (age 732.843s)
-      hex dump (first 32 bytes):
-        00 00 00 00 00 00 00 00 06 00 00 00 6b 6b 6b 6b  ............kkkk
-        a0 cc 9c 07 81 88 ff ff 78 a1 76 07 81 88 ff ff  ........x.v.....
-      backtrace:
-        [<ffffffff817e0167>] kmalloc_trace+0x27/0xa0
-        [<ffffffff819c11cf>] damon_new_target+0x3f/0x1b0
-        [<ffffffff819c7d55>] damon_do_test_apply_three_regions.constprop.0+0x95/0x3e0
-        [<ffffffff819c851e>] damon_test_apply_three_regions2+0x21e/0x260
-        [<ffffffff829fce6a>] kunit_generic_run_threadfn_adapter+0x4a/0x90
-        [<ffffffff81237cf6>] kthread+0x2b6/0x380
-        [<ffffffff81097add>] ret_from_fork+0x2d/0x70
-        [<ffffffff81003791>] ret_from_fork_asm+0x11/0x20
-    unreferenced object 0xffff8881079ccc80 (size 56):
-      comm "kunit_try_catch", pid 1071, jiffies 4294670595 (age 732.843s)
-      hex dump (first 32 bytes):
-        05 00 00 00 00 00 00 00 14 00 00 00 00 00 00 00  ................
-        6b 6b 6b 6b 6b 6b 6b 6b 00 00 00 00 6b 6b 6b 6b  kkkkkkkk....kkkk
-      backtrace:
-        [<ffffffff819bc492>] damon_new_region+0x22/0x1c0
-        [<ffffffff819c7d91>] damon_do_test_apply_three_regions.constprop.0+0xd1/0x3e0
-        [<ffffffff819c851e>] damon_test_apply_three_regions2+0x21e/0x260
-        [<ffffffff829fce6a>] kunit_generic_run_threadfn_adapter+0x4a/0x90
-        [<ffffffff81237cf6>] kthread+0x2b6/0x380
-        [<ffffffff81097add>] ret_from_fork+0x2d/0x70
-        [<ffffffff81003791>] ret_from_fork_asm+0x11/0x20
-    unreferenced object 0xffff888107c9af40 (size 64):
-      comm "kunit_try_catch", pid 1073, jiffies 4294670597 (age 733.011s)
-      hex dump (first 32 bytes):
-        00 00 00 00 00 00 00 00 06 00 00 00 6b 6b 6b 6b  ............kkkk
-        20 a2 76 07 81 88 ff ff b8 a6 76 07 81 88 ff ff   .v.......v.....
-      backtrace:
-        [<ffffffff817e0167>] kmalloc_trace+0x27/0xa0
-        [<ffffffff819c11cf>] damon_new_target+0x3f/0x1b0
-        [<ffffffff819c7d55>] damon_do_test_apply_three_regions.constprop.0+0x95/0x3e0
-        [<ffffffff819c877e>] damon_test_apply_three_regions3+0x21e/0x260
-        [<ffffffff829fce6a>] kunit_generic_run_threadfn_adapter+0x4a/0x90
-        [<ffffffff81237cf6>] kthread+0x2b6/0x380
-        [<ffffffff81097add>] ret_from_fork+0x2d/0x70
-        [<ffffffff81003791>] ret_from_fork_asm+0x11/0x20
-    unreferenced object 0xffff88810776a200 (size 56):
-      comm "kunit_try_catch", pid 1073, jiffies 4294670597 (age 733.011s)
-      hex dump (first 32 bytes):
-        05 00 00 00 00 00 00 00 14 00 00 00 00 00 00 00  ................
-        6b 6b 6b 6b 6b 6b 6b 6b 00 00 00 00 6b 6b 6b 6b  kkkkkkkk....kkkk
-      backtrace:
-        [<ffffffff819bc492>] damon_new_region+0x22/0x1c0
-        [<ffffffff819c7d91>] damon_do_test_apply_three_regions.constprop.0+0xd1/0x3e0
-        [<ffffffff819c877e>] damon_test_apply_three_regions3+0x21e/0x260
-        [<ffffffff829fce6a>] kunit_generic_run_threadfn_adapter+0x4a/0x90
-        [<ffffffff81237cf6>] kthread+0x2b6/0x380
-        [<ffffffff81097add>] ret_from_fork+0x2d/0x70
-        [<ffffffff81003791>] ret_from_fork_asm+0x11/0x20
-    unreferenced object 0xffff88810776a740 (size 56):
-      comm "kunit_try_catch", pid 1073, jiffies 4294670597 (age 733.025s)
-      hex dump (first 32 bytes):
-        3d 00 00 00 00 00 00 00 3f 00 00 00 00 00 00 00  =.......?.......
-        6b 6b 6b 6b 6b 6b 6b 6b 00 00 00 00 6b 6b 6b 6b  kkkkkkkk....kkkk
-      backtrace:
-        [<ffffffff819bc492>] damon_new_region+0x22/0x1c0
-        [<ffffffff819bfcc2>] damon_set_regions+0x4c2/0x8e0
-        [<ffffffff819c7dbb>] damon_do_test_apply_three_regions.constprop.0+0xfb/0x3e0
-        [<ffffffff819c877e>] damon_test_apply_three_regions3+0x21e/0x260
-        [<ffffffff829fce6a>] kunit_generic_run_threadfn_adapter+0x4a/0x90
-        [<ffffffff81237cf6>] kthread+0x2b6/0x380
-        [<ffffffff81097add>] ret_from_fork+0x2d/0x70
-        [<ffffffff81003791>] ret_from_fork_asm+0x11/0x20
-    unreferenced object 0xffff888108038240 (size 64):
-      comm "kunit_try_catch", pid 1075, jiffies 4294670600 (age 733.022s)
-      hex dump (first 32 bytes):
-        00 00 00 00 00 00 00 00 03 00 00 00 6b 6b 6b 6b  ............kkkk
-        48 ad 76 07 81 88 ff ff 98 ae 76 07 81 88 ff ff  H.v.......v.....
-      backtrace:
-        [<ffffffff817e0167>] kmalloc_trace+0x27/0xa0
-        [<ffffffff819c11cf>] damon_new_target+0x3f/0x1b0
-        [<ffffffff819c7d55>] damon_do_test_apply_three_regions.constprop.0+0x95/0x3e0
-        [<ffffffff819c898d>] damon_test_apply_three_regions4+0x1cd/0x210
-        [<ffffffff829fce6a>] kunit_generic_run_threadfn_adapter+0x4a/0x90
-        [<ffffffff81237cf6>] kthread+0x2b6/0x380
-        [<ffffffff81097add>] ret_from_fork+0x2d/0x70
-        [<ffffffff81003791>] ret_from_fork_asm+0x11/0x20
-    unreferenced object 0xffff88810776ad28 (size 56):
-      comm "kunit_try_catch", pid 1075, jiffies 4294670600 (age 733.022s)
-      hex dump (first 32 bytes):
-        05 00 00 00 00 00 00 00 07 00 00 00 00 00 00 00  ................
-        6b 6b 6b 6b 6b 6b 6b 6b 00 00 00 00 6b 6b 6b 6b  kkkkkkkk....kkkk
-      backtrace:
-        [<ffffffff819bc492>] damon_new_region+0x22/0x1c0
-        [<ffffffff819bfcc2>] damon_set_regions+0x4c2/0x8e0
-        [<ffffffff819c7dbb>] damon_do_test_apply_three_regions.constprop.0+0xfb/0x3e0
-        [<ffffffff819c898d>] damon_test_apply_three_regions4+0x1cd/0x210
-        [<ffffffff829fce6a>] kunit_generic_run_threadfn_adapter+0x4a/0x90
-        [<ffffffff81237cf6>] kthread+0x2b6/0x380
-        [<ffffffff81097add>] ret_from_fork+0x2d/0x70
-        [<ffffffff81003791>] ret_from_fork_asm+0x11/0x20
-
-Fixes: 9f86d624292c ("mm/damon/vaddr-test: remove unnecessary variables")
-Fixes: dae0087aeff4 ("mm/damon/vaddr: remove damon_va_apply_three_regions()")
-Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
----
- mm/damon/vaddr-test.h | 2 ++
- 1 file changed, 2 insertions(+)
-
-diff --git a/mm/damon/vaddr-test.h b/mm/damon/vaddr-test.h
-index c4b455b5ee30..dcf1ca6b31cc 100644
---- a/mm/damon/vaddr-test.h
-+++ b/mm/damon/vaddr-test.h
-@@ -148,6 +148,8 @@ static void damon_do_test_apply_three_regions(struct kunit *test,
- 		KUNIT_EXPECT_EQ(test, r->ar.start, expected[i * 2]);
- 		KUNIT_EXPECT_EQ(test, r->ar.end, expected[i * 2 + 1]);
- 	}
-+
-+	damon_destroy_target(t);
- }
- 
- /*
--- 
-2.34.1
-
+I'll go with 9f86d624292c for now.
