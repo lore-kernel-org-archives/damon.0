@@ -1,267 +1,193 @@
-Received: from APC01-SG2-obe.outbound.protection.outlook.com (mail-sgaapc01on2090.outbound.protection.outlook.com [40.107.215.90])
+Received: from szxga03-in.huawei.com (szxga03-in.huawei.com [45.249.212.189])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7B1FED7
-	for <damon@lists.linux.dev>; Mon, 25 Sep 2023 02:11:06 +0000 (UTC)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=c4E3r7Vbna/tihSFRkfCThD/I09ZJUfMB2ufQHkCsusEh2YkvdV9DVQ6ZB5wH9UKgw2pJhA63hKiOc6XkkVY85YaHLRNacFMHJb0ji3orY5MQ1dPXbHhCjOaq1n74WFD4LGYR98X/rJikEPQGJgojhAmaGkYdvYvehC918ytGMYxjBWfmaLlr4x5kKHbj/4E47mWDTdsnztE3YUYIHaJckoLmebSVb/EYb26m7qQQesOi4l5tlAOChw0k6aLHIi6sux5naBz5tXHthJNN4eF50uKcqVTNU2I8L2xYeQAd6YLhFfHMWHYvi+rQ79t8ss9aUJfzNIFGfkoU0mqs1jo8A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=c9QVmzuYgyi/C67/SffwsTqz0IfAfgpMiWMr1jmTi68=;
- b=haECTyUKRdgyK4BYtEuH904hkytkWsKqWt5sgudh6HeNezcxdcrgj556gPE3T4mn2lc8OD9J4jmCoXiwTCVPNYQU3GQYTq3C5uBU8W4emqH1GffRUWWg5kkyt3yUzC15fe76B12dAHY6IycSAoS8TuhY2tULE7osgJHBAQa+eSwKN3Xt/Ldrm6Fpb+bfZtpe0Sit/bbov8Ui1A2XyCiM8IZ+6r3feGoV2NTP1Taf4vy+qIpZ7FvrZ3QY1pqleF8fTQ1xeYno68viXCa9x0P+wt3CDAy+3MWGro+WOOe2JjRuaZWQHddTclogQN1Z4Ntqml+GEpb9r2/6ke7Cmhwmlw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=vivo.com; dmarc=pass action=none header.from=vivo.com;
- dkim=pass header.d=vivo.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vivo.com; s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=c9QVmzuYgyi/C67/SffwsTqz0IfAfgpMiWMr1jmTi68=;
- b=oqlheRb3IvCTzwygKjr9KgjWKg8STxDcmshY81BecA2McpatGnEVFfFm21D9X3FOgQkTj3JyI4dGCbgMgIzRY1Tillp59DYQe9l0n9BFlIH4t1ZmnrywlnC4Dz/RXe6R7ncTkX7wdMbVPUHU7GQaQ1SjAVpUoASqHofw7eWEYHynFUyNtpvyVI/JgeH1iiuZCK1Mh+ejYX4lywtqs7ouTCDaheVQk/cr7PEO8UVTMmIc+mvpyFwn0jyF9asuPCILPS2aXrQSu/lvgyQolBoLq4JJXX8KyE4gj4Vw027T3l0Gc1OMyvMUSg8CEVQ7uL9qM34UZ6m3Nb3WWuWWF6aCIQ==
-Received: from PUZPR06MB5676.apcprd06.prod.outlook.com (2603:1096:301:f8::10)
- by SEYPR06MB6012.apcprd06.prod.outlook.com (2603:1096:101:de::6) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6792.26; Mon, 25 Sep
- 2023 02:10:59 +0000
-Received: from PUZPR06MB5676.apcprd06.prod.outlook.com
- ([fe80::64c1:bd7f:ced7:7d02]) by PUZPR06MB5676.apcprd06.prod.outlook.com
- ([fe80::64c1:bd7f:ced7:7d02%4]) with mapi id 15.20.6792.026; Mon, 25 Sep 2023
- 02:10:59 +0000
-From: =?utf-8?B?5p2o5qyi?= <link@vivo.com>
-To: SeongJae Park <sj@kernel.org>, =?utf-8?B?5p2o5qyi?= <link@vivo.com>
-CC: Andrew Morton <akpm@linux-foundation.org>, open list
-	<linux-kernel@vger.kernel.org>, "open list:DATA ACCESS MONITOR"
-	<damon@lists.linux.dev>, "open list:DATA ACCESS MONITOR"
-	<linux-mm@kvack.org>, opensource.kernel <opensource.kernel@vivo.com>
-Subject: Re: [RFC 0/2] Damos filter cleanup code and implement workingset
-Thread-Topic: [RFC 0/2] Damos filter cleanup code and implement workingset
-Thread-Index: AQHZ6t8VUkQ1WlLf10K+q+97AmDI/bAlsBKAgAB6hoCAAUQvgIADZoYA
-Date: Mon, 25 Sep 2023 02:10:58 +0000
-Message-ID: <73e82ae6-8dc4-4816-98be-1230a47ade42@vivo.com>
-References: <20230922221515.66785-1-sj@kernel.org>
-In-Reply-To: <20230922221515.66785-1-sj@kernel.org>
-Accept-Language: zh-CN, en-US
-Content-Language: zh-CN
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=vivo.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: PUZPR06MB5676:EE_|SEYPR06MB6012:EE_
-x-ms-office365-filtering-correlation-id: bf356d94-d72a-4f85-c456-08dbbd6ca89c
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info:
- AtWmwsPdVUPCfw40nQjv2NQ59ys6Ooq42YT98bv/VbgrVDGQ3GQbHBdXwNXavllD+YjA+gFiORKCIpQ+rqvzSDLg1R/SG/kHjh0vRT4saGwh3+slBk+xrGN0fDGNE/A+F1M2C7QYCFm1fwi/WlLWfd7UT+Ds6zEIvVWiNddxHfCTPQIr+TMPhhxrT7GuoSyCFipo690wa8ZRLeOe31/U07gqxi2A6xCjTkssNaPVFCVNkl1J5myDbVXH/XQpUFi2etQRoSv9mJKtn/v1HKTdJv6CQ5PRfai4jLWx+ksebI9AwZ60TXAOZSSIX+jPQ9sPSTo1/E/R1bKYVT0by8Uaq0+lH6frcR1u5epZXcWLIzcrmgBjGZ8ZiShn/K1yomfT+XY20Q0PAUooeZq+V3zHKUPIoc5ZI1Lm6DqHyMpKTlvm4bmZ2BmwOg1MKtvWcI+iVriwlMDjqi3og4fRh4r/XBz7ktLkBWbxjDyIwMmMCCi6boP+3pWZ/Xg++CrZhTsUTmwUuqejSaj+lQCrjVzGjSwpvzyCf5OuMp5xqrBD6GJ5R8DXQ1mIwmUf9DGTCZM+E/E0u3XtspydM4sD3wtroxq7S2mmfcDc2PeBMR5MnSkyD742NI5jAYrv8/XGN783o1xfqVZoy6dxuwXCijkuEQ==
-x-forefront-antispam-report:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PUZPR06MB5676.apcprd06.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(346002)(39850400004)(376002)(396003)(136003)(366004)(230922051799003)(451199024)(1800799009)(186009)(478600001)(85182001)(38100700002)(6486002)(45080400002)(6506007)(83380400001)(41300700001)(6512007)(8936002)(26005)(110136005)(54906003)(4326008)(5660300002)(66446008)(71200400001)(8676002)(2616005)(91956017)(76116006)(966005)(66476007)(66556008)(64756008)(107886003)(86362001)(31696002)(38070700005)(2906002)(316002)(36756003)(122000001)(31686004)(66946007)(66899024)(45980500001);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?utf-8?B?V3ZWWXF2dHdJUkpvSnkvUnFQUUtmS3RSWEpUS3pYa1pWTXRRaldSNlVhQy9n?=
- =?utf-8?B?OWtFYzN5MUxyekZBTnYxazVrNFdqM3FvWG9zN0l6Ni9RbUtvaFA5V2ZMc3Mx?=
- =?utf-8?B?ckN0NmNUWDc3TUlyWEJDWnYzaFBMc2pwL1JHeXRUS0N5a3haWXh0aE50UEFR?=
- =?utf-8?B?REZqbU9ZayszZVdOQlFTaTN6NUhlSHcycnVmU3duU0dyWUw0Q3VReWR4MnZn?=
- =?utf-8?B?cUw3OUMwNFNjMEsveFdKNUxqWFZHdyt2K1I3Y2NUWGlYVkpUN2Z6QXhmUmxV?=
- =?utf-8?B?bC9KL1BaSkd6Z3Z1MGlSSHRuWXBNVDhvdkxQSnR5NE5RdnFKOTZPTnJwa2t2?=
- =?utf-8?B?Ky9Gd2JCY0ZBZHBhRVpSM1lvN1haTU5seU4zQVVCTlE5UE9xRkczTFJFTUhq?=
- =?utf-8?B?OTFJMHFPZzNEa1pOQkNLT2cxR3pGc1JQc0NmSW44NEV6MTgxMWh5RklMMWVH?=
- =?utf-8?B?VGdObmpBekp4Y0p0c1RTanVUWnpRaHFtQ2RGbXpkU2taczQ4UW0zSStpZFRI?=
- =?utf-8?B?UUpjUHRkbEcvaTh3NEY5dUlRVTZoWkNaZlJpelloemFQajRNYkZjblBodmha?=
- =?utf-8?B?Z0NOMldHYnExNG9QcENjaUwyYmg3NDdvTHlQOHR0RzQzQ0VmbVRNN0xmK09O?=
- =?utf-8?B?cnBReFRFejRTdVEvL1hGemtaTCtGU3RWMnZiMGNITkZ0MHpaaFJUL1pmMWlo?=
- =?utf-8?B?TnV4N3ZuZ1Y2UmJmdHA0YTlLNWFwakEyVjZ3ZzUvUmFFWGZWTTVuaHhIREd6?=
- =?utf-8?B?a2xXTmNYTWNDOGZxbDZuUG1tVU16UnJUZ2puVXhLdWdnWG43VVNXMnFBdm1s?=
- =?utf-8?B?eTFoRlVRQ2NkbnNmKzlOeEdZRytDaDVzSEJOa0dkNk41MmxjRi9uU2FFTGZG?=
- =?utf-8?B?b1MvckxBRVIxRVZWdTBpWUkwMm1IaWlLV295d2lKdHdaUXJkODkzTXR6UUJV?=
- =?utf-8?B?UHJ4Y3o4L3NmUEpsQWlHY2Y3OFJsellEQXk3ZHVLMUR3WkwxRGlpYUJ1RDF4?=
- =?utf-8?B?R3YzNEllTWo3YklFV2JaUS9EMXpVcVZWSWhSSWoyMU1oWlVFMG9jVnFoN2lh?=
- =?utf-8?B?eXR5WmJ5SDUvdUF0ZUJNZndkVGJjalhkMlpTZU8xNkg3L2IyV3pHUkhyY3dI?=
- =?utf-8?B?NllwVzllN1V1cDh2UTNnSE1YYW1yNENvdUhyWUVsT08rRDJabGtsZUxhY1gr?=
- =?utf-8?B?ajZIT08wV1ZXeUdhNHhGU2taTTBDY2ZnWEloMnhTUEdQcUhvRGhVbERXdWxI?=
- =?utf-8?B?alh1aVlyamRrNWh1QW05a3IyRjNOamxDazlVNmhWYWxPaldyL2NRZGR2eVUz?=
- =?utf-8?B?c0h5cnBwbVNrN3ZLRFMxVlFXblI0eVprUWdtVjFPYzdrKzh4dUZueVk3azYz?=
- =?utf-8?B?S2xFWGUxamJDVnR5MUhTUTcrdzZ0a2pReCtOa08zN0FrN2h6eDQ1N0tRMHBx?=
- =?utf-8?B?K2wxV291WW9PZ0dSNW05SHNhK2tIM2wxMHphQXdqbCtFRE5iMkxsTUsxL2Fi?=
- =?utf-8?B?N0EvN2lnT3lBMGdINGNDY0JrSGxyeUttbDNaNGNFTHgxZFZQV0xIeTEvMCtK?=
- =?utf-8?B?MlZ0QXFzTjBCRVlSd2xTeDJsODZxZWZCTzI2aDQ4S1lnOXVpbTZBQ2h5YVlt?=
- =?utf-8?B?OHQrTXJxM0NWMHFtQ3FLRmdCVzN2SjBxNkxyOUV5amNLYkc3WTJteFlQQTdJ?=
- =?utf-8?B?dGkzVG5qVFVwdTNkSmxobTYvbUVvdzlFRk81OXZHNmZUSW55NXh5Rk5kZjNr?=
- =?utf-8?B?MEZzeHJGZ1Vrb3lRZnQ0eDdYRVZFQlpIT1hwWW1zMmhvVmZldDh5cjZ5OUFD?=
- =?utf-8?B?RE1GU1FqcWZBdElNNUJRTHZaTlE1blBtUUdYR3kvUitmRmQraWNMZU93b0ZO?=
- =?utf-8?B?T2NiTzZOVnF2ZDFqbTdDa3pVMlNkbTdqWkY3Rk9tTk5kdXdPdFFlU3hINGp2?=
- =?utf-8?B?a1A3bzJrcWNKUk9WNGI5K2RSOXNIQi9uWDVYMU44ZS8raHdUSDBTRytuU2h2?=
- =?utf-8?B?QUxWekRsSHh3SGQwVE9OZHJDOUZPOHVuRzl6dGozYytNaGNOK041Q0RmdFlk?=
- =?utf-8?B?UzJWOE15aXhqbm9oUkgzSXRoNXhnMFM5eEJEbkNvbFF2VFdjK2xINW5DODlM?=
- =?utf-8?Q?L8Pg=3D?=
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <D097D1F2272C674C890DE54CF2A58294@apcprd06.prod.outlook.com>
-Content-Transfer-Encoding: base64
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C5B610950
+	for <damon@lists.linux.dev>; Mon, 25 Sep 2023 07:21:37 +0000 (UTC)
+Received: from kwepemi500008.china.huawei.com (unknown [172.30.72.56])
+	by szxga03-in.huawei.com (SkyGuard) with ESMTP id 4RvDjS72lgzMlsj;
+	Mon, 25 Sep 2023 15:17:48 +0800 (CST)
+Received: from huawei.com (10.90.53.73) by kwepemi500008.china.huawei.com
+ (7.221.188.139) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.31; Mon, 25 Sep
+ 2023 15:21:28 +0800
+From: Jinjie Ruan <ruanjinjie@huawei.com>
+To: <linux-mm@kvack.org>, <damon@lists.linux.dev>, SeongJae Park
+	<sj@kernel.org>, Andrew Morton <akpm@linux-foundation.org>
+CC: <ruanjinjie@huawei.com>
+Subject: [PATCH] mm/damon/vaddr-test: Fix memory leak in damon_do_test_apply_three_regions()
+Date: Mon, 25 Sep 2023 15:20:59 +0800
+Message-ID: <20230925072100.3725620-1-ruanjinjie@huawei.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-OriginatorOrg: vivo.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: PUZPR06MB5676.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: bf356d94-d72a-4f85-c456-08dbbd6ca89c
-X-MS-Exchange-CrossTenant-originalarrivaltime: 25 Sep 2023 02:10:58.5601
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 923e42dc-48d5-4cbe-b582-1a797a6412ed
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: vFbfxGaHE71AyU9TyBbcaL5mlWrpuaE2yi9u95Qt+4BJ5v0N5J0t5Pb0boczBzXK9n0eCpZImeQ7lx8LRF38rA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SEYPR06MB6012
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.90.53.73]
+X-ClientProxiedBy: dggems702-chm.china.huawei.com (10.3.19.179) To
+ kwepemi500008.china.huawei.com (7.221.188.139)
+X-CFilter-Loop: Reflected
 
-SEkgU0osDQo+IEhpIEh1YW4sDQo+DQo+IE9uIEZyaSwgMjIgU2VwIDIwMjMgMDI6NTQ6NTggKzAw
-MDAg5p2o5qyiIDxsaW5rQHZpdm8uY29tPiB3cm90ZToNCj4NCj4+IEhJIFNKLA0KPj4NCj4+IFRo
-YW5rcyBmb3IgeW91ciBwYXRpZW50IHJlc3BvbnNlLg0KPiBIYXBweSB0byBoZWFyIHRoaXMga2lu
-ZCBhY2tub3dsZWRnZW1lbnQgOikNCj4NCj4+PiBbU29tZSBwZW9wbGUgd2hvIHJlY2VpdmVkIHRo
-aXMgbWVzc2FnZSBkb24ndCBvZnRlbiBnZXQgZW1haWwgZnJvbSBzakBrZXJuZWwub3JnLiBMZWFy
-biB3aHkgdGhpcyBpcyBpbXBvcnRhbnQgYXQgaHR0cHM6Ly9ha2EubXMvTGVhcm5BYm91dFNlbmRl
-cklkZW50aWZpY2F0aW9uIF0NCj4+Pg0KPj4+IEhpIEh1YW4sDQo+Pj4NCj4+Pg0KPj4+IEZpcnN0
-IG9mIGFsbCwgdGhhbmsgeW91IGZvciB0aGlzIHBhdGNoLiAgSSBoYXZlIHNvbWUgaGlnaCBsZXZl
-bCBjb21tZW50cyBhbmQNCj4+PiBxdWVzdGlvbnMgYXMgYmVsb3cuDQo+Pj4NCj4+PiBPbiBUdWUs
-IDE5IFNlcCAyMDIzIDE3OjUyOjMzICswODAwIEh1YW4gWWFuZyA8bGlua0B2aXZvLmNvbT4gd3Jv
-dGU6DQo+Pj4NCj4+Pj4gTm93IGRhbW9zIHN1cHBvcnQgZmlsdGVyIGNvbnRhaW5zIHR3byB0eXBl
-Lg0KPj4+PiBUaGUgZmlyc3QgaXMgc2NoZW1lIGZpbHRlciB3aGljaCB3aWxsIGludm9rZSBlYWNo
-IHNjaGVtZSBhcHBseSwNCj4+Pj4gc2Vjb25kIGlzIHNjaGVtZSBhY3Rpb24gZmlsdGVyLCB3aGlj
-aCB3aWxsIGZpbHRlciBvdXQgdW53YW50ZWQgYWN0aW9uLg0KPj4+IElNSE8sIHRoYXQncyBub3Qg
-Y2xlYXIgZGVmaW5pdGlvbiBvZiB0aGUgdHlwZXMuICBDb25jZXB0dWFsbHksIGFsbCB0aGUgZmls
-dGVycw0KPj4+IGFyZSBzYW1lLiAgTm9uZXRoZWxlc3MsIHRoZXkgYXJlIGhhdmluZyBkaWZmZXJl
-bnQgYmVoYXZpb3JzIGJlY2F1c2UgdGhleSBhcmUNCj4+PiBoYW5kbGVkIGluIGRpZmZlcmVudCBs
-YXllciBkZXBlbmRpbmcgb24gd2hpY2ggbGF5ZXIgaXMgbW9yZSBlZmZpY2llbnQgdG8gaGFuZGxl
-DQo+PiBUaGFua3MgZm9yIHRoZXNlIGluc3RydWN0aW9ucyB0byBoZWxwIG1lIHVuZGVyc3RhbmQg
-dGhlIGRlc2lnbiBpZGVhIG9mDQo+PiBkYW1vcyBmaWx0ZXIuDQo+Pj4gdGhvc2VbMV0uDQo+Pj4N
-Cj4+PiBJIGFncmVlIHRoaXMgaXMgY29tcGxpY2F0ZWQgYW5kIGEgYml0IHZlcmJvc2UgZXhwbGFu
-YXRpb24sIGJ1dCBJIGRvbid0IGZlZWwNCj4+PiB5b3VyIHNjaGVtZSB2cyBhY3Rpb24gZGVmaW5p
-dGlvbiBpcyBtYWtpbmcgaXQgZWFzaWVyIHRvIHVuZGVyc3RhbmQuDQo+Pj4NCj4+Pj4gQnV0IHRo
-aXMgaW1wbGVtZW50IGlzIHNjYXR0ZXJlZCBpbiBkaWZmZXJlbnQgaW1wbGVtZW50YXRpb25zDQo+
-Pj4gSW5kZWVkIHRoZSBpbXBsZW1lbnRhdGlvbiBpcyBzY2F0dGVyZWQgaW4gY29yZSBsYXllciBh
-bmQgdGhlIG9wcyBsYXllcg0KPj4+IGRlcGVuZGluZyBvbiB0aGUgZmlsdGVyIHR5cGVzLiAgQnV0
-IEkgdGhpbmsgdGhpcyBpcyBuZWVkZWQgZm9yIGVmZmljaWVudA0KPj4+IGhhbmRsaW5nIG9mIHRo
-b3NlLg0KPj4gSU1PLCBzb21lIHNpbXBsZSBmaWx0ZXIgY2FuIGhhdmUgYSBjb21tb24gaW1wbGVt
-ZW50LCBsaWtlIGFub24gZmlsdGVyPyBBbmQsDQo+PiBmb3Igc29tZSBzcGVjaWFsIHR5cGUsIGVh
-Y2ggbGF5ZXIgb2ZmZXIgdGhlaXIgb3duPw0KPiBEbyB5b3UgbWVhbiB0aGVyZSBjb3VsZCBiZSB0
-d28gZmlsdGVyIHR5cGVzIHRoYXQgYmV0dGVyIHRvIGJlIGhhbmRsZWQgaW4NCj4gZGlmZmVyZW50
-IGxheWVyIGZvciBlZmZpY2llbmN5LCBidXQgc2hhcmUgY29tbW9uIGltcGxlbWVudGF0aW9uPyAg
-Q291bGQgeW91DQo+IHBsZWFzZSBnaXZlIG1lIGEgbW9yZSBzcGVjaWZpYyBleGFtcGxlPw0KDQpJ
-dCdzIGhhcmQgdG8gb2ZmZXIgYSBzcGVjaWZpYyBleGFtcGxlIGR1ZSB0byBjdXJyZW50IG9wcyBp
-bXBsZW1lbnQgaXMgc28NCmdyZWF0IHRvIGNvdmVyDQoNCm11Y2ggc2l0dWF0aW9uLiBNYXliZSBI
-ZXRlcm9nZW5lb3VzIG1lbW9yeSBtYXkgYWRkIGEgbmV3IG9wcyhqdXN0DQpleGFtcGxlcyBvZg0K
-DQppbXBydWRlbmNlLCBsaWtlIGludGVsJ3Mgb3Igb3RoZXIgbmV0d29yayBtZW1vcnk/KSAuIEFu
-ZCBvZmZlciBhIGNvbW1vbg0Kb3BzIGZpbHRlciBjb2RlDQoNCmNhbiBtYXkgc29tZSBzaW1wbGUg
-dHlwZSBiZSByZXVzZWQuDQoNCj4NCj4+Pj4gYW5kIGhhcmQgdG8gcmV1c2Ugb3IgZXh0ZW5kLg0K
-Pj4+ICAgRnJvbSB5b3VyIGZpcnN0IHBhdGNoLCB3aGljaCBleHRlbmRpbmcgdGhlIGZpbHRlciwg
-dGhlIGVzc2VudGlhbCBjaGFuZ2UgZm9yIHRoZQ0KPj4+IGV4dGVuc2lvbiBpcyBhZGRpbmcgYW5v
-dGhlciBlbnVtIHRvICdlbnVtIGRhbW9zX2ZpbHRlcl90eXBlJyAoMSBsaW5lKSBhbmQNCj4+PiBh
-ZGRpdGlvbiBvZiBzd2l0Y2ggY2FzZSBpbiAnX19kYW1vc19wYV9maWx0ZXJfb3V0KCknICgzIGxp
-bmVzKS4gIEkgZG9uJ3QgdGhpbmsNCj4+PiBpdCBsb29rcyB0b28gY29tcGxpY2F0ZWQuICBJZiB5
-b3UncmUgc2F5aW5nIGl0IHdhcyBoYXJkIHRvIHVuZGVyc3RhbmQgd2hpY2gNCj4+IFllcywgaW5k
-ZWVkLg0KPj4+IHBhcnQgcmVhbGx5IG5lZWQgdG8gYmUgbW9kaWZlZCwgSSB0aGluayB0aGF0IG1h
-a2VzIHNlbnNlLiAgQnV0IGluIHRoZSBjYXNlLA0KPj4+IHdlIG1pZ2h0IG5lZWQgbW9yZSBjb21t
-ZW50cyByYXRoZXIgdGhhbiBzdHJ1Y3R1cmFsIGNoYW5nZS4NCj4+Pg0KPj4+PiBUaGlzIHBhdGNo
-c2V0IGNsZWFuIHVwIHRob3NlIGZpbHRlciBjb2RlLCBtb3ZlIGludG8gZmlsdGVyLmMgYW5kIGFk
-ZCBoZWFkZXINCj4+Pj4gdG8gZXhwb3NlIGZpbHRlciBmdW5jLihwYXRjaCAyKQ0KPj4+IEFnYWlu
-LCBJIGFncmVlIG1vcmUgY29kZSBjbGVhbnVwIGlzIG5lZWRlZC4gIEJ1dCBJJ20gbm90IHN1cmUg
-aWYgdGhpcyBpcyB0aGUNCj4+PiByaWdodCB3YXkuICBFc3BlY2lhbGx5LCBJJ20gdW5zdXJlIGlm
-IGl0IHJlYWxseSBuZWVkIHRvIGhhdmUgYSBkZWRpY2F0ZWQgZmlsZS4NCj4+IEkgdGhpbmsgdGhl
-IGZpbHRlciBjb2RlIHNjYXR0ZXIgaW50byBlYWNoIGxheWVyIG1heSBtYWtlIGNvZGUgaGFyZCB0
-bw0KPj4gcmV1c2UsIG90aGVyIG9wcw0KPj4NCj4+IG1heSBuZWVkIGFub24gZmlsdGVyIG9yIHNv
-bWV0aGluZy4gU28sIG1ha2UgY29kZSBpbnRvIGEgZGVkaWNhdGVkIGZpbGUNCj4+IG1heSBnb29k
-Pw0KPj4NCj4+IChqdXN0IG15IG9waW5pb24uKQ0KPiBBZ2FpbiwgSSdtIG5vdCBzdXBlciBjb25m
-aWRlbnQgYWJvdXQgbXkgdW5kZXJzdGFuZGluZy4gIEJ1dCBzb3VuZHMgbGlrZSB5b3UncmUNCj4g
-cGFydGx5IHdvcnJ5aW5nIGFib3V0IGR1cGxpY2F0aW9uIG9mIHNvbWUgY29kZSBpbiBlYWNoIG9w
-cyBpbXBsZW1lbnRhdGlvbg0KPiAobW9kdWxlcyBpbiBzYW1lIGxheWVyKS4gIFBsZWFzZSBjb3Jy
-ZWN0IG1lIGlmIEknbSB3cm9uZywgd2l0aCBzcGVjaWZpYywNCj4gZGV0YWlsZWQgYW5kIHJlYWxp
-c3RpYyBleGFtcGxlcy4NCj4NCj4gSWYgbXkgZ3Vlc3MgaXMgbm90IHRoYXQgd3JvbmcsIEkgY2Fu
-IGFncmVlIHRvIHRoZSBjb25jZXJuLiAgTmV2ZXJ0aGVsZXNzLCB3ZQ0KPiBhbHJlYWR5IGhhdmUg
-YSBkZWRpY2F0ZWQgc291cmNlIGZpbGUgZm9yIHN1Y2ggY29tbW9uIGNvZGUgYmV0d2VlbiBvcHMN
-Cj4gaW1wbGVtZW50YWlvbnMsIG5hbWVseSBvcHMtY29tbW9uLmMuDQpZZXMsIG5vIG5lZWQgdG8g
-c3BsaXQgYSBzaW5nbGUgZmlsZSB0byBkcml2ZSBmaWx0ZXIuDQo+DQo+IFRoYXQgc2FpZCwgd2Ug
-ZG9uJ3QgaGF2ZSBkdXBsaWNhdGVkIERBTU9TIGZpbHRlcnMgaW1wbGVtZW50YXRpb24gY29kZSBp
-bg0KPiBtdWx0aXBlIG9wcyBpbXBsZW1lbnRhdGlvbiBhdCB0aGUgbW9tZW50LiAgSXQgY291bGQg
-aGF2ZSBzdWNoIGR1cGxpY2F0aW9uIGluDQo+IHRoZSBmdXR1cmUsIGJ1dCBJIHRoaW5rIGl0J3Mg
-bm90IHRvbyBsYXRlIHRvIG1ha2Ugc3VjaCBjbGVhbnVwIGFmdGVyIG9yIGp1c3QNCj4gYmVmb3Jl
-IHN1Y2ggZHVwbGljYXRpb24gaGVwcGVuLiAgSU9XLCBJJ2Qgc3VnZ2VzdCB0byBub3QgbWFrZSBj
-aGFuZ2VzIGZvcg0KPiBzb21ldGhpbmcgdGhhdCBfbWlnaHRfIGhhcHBlbiBpbiBmdXR1cmUuDQoN
-ClllcywgaW5kZWVkLiBXZSBuZWVkbid0IHRvIG1ha2UgdGhpcyByaWdodCBub3cuKFRoYXQncyB0
-aGUgd2h5IFJGQywNCm1lYW53aGlsZSwgbXkgY29kZSBpcw0KDQpub3QgZ29vZC4pDQoNCj4NCj4+
-PiBUbyBteSBodW1ibGUgZXllcywgaXQgZG9lc24ndCBsb29rIGxpa2UgbWFraW5nIGNvZGUgY2xl
-YXJseSBlYXNpZXIgdG8gcmVhZA0KPj4+IGNvbXBhcmVkIHRvIHRoZSBjdXJyZW50IHZlcnNpb24u
-ICBUaGlzIGlzIHByb2JhYmx5IGJlY2F1c2UgSSBkb24ndCBmZWVsIHlvdXINCj4+PiBzY2hlbWUg
-dnMgYWN0aW9uIGRlZmluaXRpb24gaXMgY2xlYXIgdG8gdW5kZXJzdGFuZC4gIE5laXRoZXIgaXQg
-aXMNCj4+IFllcywgaW5kZWVkLCBjdXJyZW50IGNvZGUgbm90IGNsZWFuLCB0aGUgaWRlYSBkaWRu
-J3QgdGFrZSBzaGFwZS4NCj4+PiBkZWR1cGxpY2F0aW5nIGNvZGUuICBUaGUgcGF0Y2ggYWRkcyBs
-aW5lcyBtb3JlIHRoYXQgZGVsZXRlZCBvbmVzLCBhY2NvcmRpbmcgdG8NCj4+PiBpdHMgZGlmZnN0
-YXQuICBGb3IgdGhlIHJlYXNvbiwgSSBkb24ndCBzZWUgY2xlYXIgYmVuZWZpdCBvZiB0aGlzIGNo
-YW5nZS4NCj4+IEluIHRoaXMgY29kZSwgbWF5YmUganVzdCBhIGxpdHRsZSBiZW5lZml0IHdoZW4g
-b3RoZXIgb3BzIG5lZWQgdG8gZmlsdGVyDQo+PiBhbm9uIHBhZ2U/IDopDQo+IEFzIG1lbnRpb25l
-ZCBhYm92ZSwgaXQncyB1bmNsZWFyIHdoZW4sIGhvdywgYW5kIGZvciB3aGF0IGJlbmVmaXQgd2Ug
-d2lsbA0KPiBzdXBwb3J0IGFub24gcGFnZXMgZmlsdGVyIGZyb20gdmFkZHIuICBJJ2QgYWdhaW4g
-c3VnZ2VzdCB0byBub3QgbWFrZSBjaGFuZ2UNCj4gb25seSBmb3IgZnV0dXJlIGNoYW5nZSB0aGF0
-IG5vdCBjbGVhciBpZiB3ZSByZWFsbHkgd2FudCB0byBtYWtlIGZvciBub3cuDQo+DQo+Pj4gICAg
-IEkNCj4+PiBtaWdodCBiZSBiaWFzZWQsIGhhdmluZyBOSUggKE5vdCBJbnZlbnRlZCBIZXJlKSBz
-aW5kcm9tZSwgb3IgbWlzc2luZyBzb21ldGhpbmcuDQo+Pj4gUGxlYXNlIGxldCBtZSBrbm93IGlm
-IHNvLg0KPj4+DQo+Pj4+IEFuZCBhZGQgYSBuZXcgZmlsdGVyICJ3b3JraW5nc2V0IiB0byBwcm90
-ZWN0IHdvcmtpbmdzZXQgcGFnZS4NCj4+PiBDYW4geW91IGV4cGxhaW4gZXhwZWN0ZWQgdXNlIGNh
-c2VzIG9mIHRoaXMgbmV3IGZpbHRlciB0eXBlIGluIG1vcmUgZGV0YWlsPw0KPj4+IFNwZWNpZmlj
-YWxseSwgZm9yIHdoYXQgc2NoZW1lIGFjdGlvbiBhbmQgdW5kZXIgd2hhdCBzaXR1YXRpb24gdGhp
-cyBuZXcgZmlsdGVyDQo+PiBJTU8sIHBhZ2UgaWYgbWFya2VkIGFzIHdvcmtpbmdzZXQsIG1lYW4g
-cGFnZSBpbiB0YXNrJ3MgY29yZQ0KPj4gd29ya2xvYWQobWF5YmUgaGF2ZQ0KPj4NCj4+IHNlZW4g
-dGhlIHJlZmF1bHQsIGFuZCB0cmlnZ2VyIHJlZmF1bHQgcHJvdGVjdCkuIFNvLCBmb3IgbHJ1IHNv
-cnQgb3IgcmVjbGFpbSwNCj4+DQo+PiB3ZSdkIGJldHRlciBub3QgdG91Y2ggaXQ/KElmIGFueSB3
-cm9uZywgcGxlYXNlIGxldCBtZSBrbm93LikNCj4gU3RpbGwgdW5jbGVhciB0byBtZS4gIENvdWxk
-IEkgYXNrIHlvdSBtb3JlIHNwZWNpZmljIGFuZCBkZXRhaWxlZCBjYXNlPw0KDQpJIG1heSBoYXZl
-IG1pc3VuZGVyc3Rvb2QsIEkgc3VnZ2VzdCB5b3UganVzdCBsb29rOg0KDQpQYWdlIHdvcmtpbmdz
-ZXQgZmxhZyB3aWxsIG1hcmsgdG8gcGFnZSB3aGVuIHBhZ2UgbmVlZCB0byBkZWFjdGl2ZSBvcg0K
-cmVmYXVsdCBhbmQNCg0KZmluZCBpdCBhbHJlYWR5IG1hcmtlZC4gSW4gc29tZSBtZW1vcnkgcGF0
-aChtaWdyYXRlLCByZWNsYWltIG9yIGVsc2UuKSwNCnRvdWNoDQoNCndvcmtpbmdzZXQgcGFnZSBy
-ZXF1aXJlIHNwZWNpYWwgYXR0ZW50aW9uLihFbnRlciBwc2kgbW0gc3RhbGwgb3IgZWxzZSkNCg0K
-U28sIEkgdGhpbmsgaGVscCBmaWx0ZXIgb3V0IHRoaXMgaXMgaGVscGZ1bC4oT2YgY291cnNlLCBq
-dXN0IHRob3VnaHQNCmV4cGVyaW1lbnQsIG5vIGhlbHBmdWwgZGF0YSkuDQoNCkFzLCBhYm92ZSBh
-bmQgYmVsb3cuIFRoaXMgUkZDIHBhdGNoLiA6KS4gSSB3aWxsIHNoYXJlIHdoZW4gZ2V0IHZhbHVh
-YmxlDQpkYXRhLg0KDQo+DQo+Pj4gdHlwZSB3aWxsIGJlIG5lZWRlZD8gIElmIHlvdSBoYXZlIHNv
-bWUgdGVzdCBkYXRhIGZvciB0aGUgdXNlIGNhc2UgYW5kIGNvdWxkDQo+Pj4gc2hhcmUgaXQsIGl0
-IHdvdWxkIGJlIHZlcnkgaGVscGZ1bCBmb3IgbWUgdG8gdW5kZXJzdGFuZCB3aHkgaXQgaXMgbmVl
-ZGVkLg0KPj4gU29ycnksIHRoaXMgdHlwZSBqdXN0IGZyb20gbXkga25vd2xlZGdlIG9mIE1NLCBo
-YXZlIG5vIHRlc3QgZGF0YS4NCj4+DQo+PiBGb3IgZnV0aGVyIGxlYXJuIG9mIERBTU9OLCBJJ2xs
-IHRyeSBpdC4NCj4gWWVzLCB0aGF0IHdpbGwgYmUgdmVyeSBoZWxwZnVsLg0KPg0KPiBBbmQgZnJv
-bSB0aGlzIHBvaW50LCBJJ20gZ2V0dGluZyBhbiBpbXByZXNzaW9uIHRoYXQgdGhlIHB1cnBvc2Ug
-b2YgdGhpcyBSRkMgaXMNCj4gbm90IGZvciBtYWtpbmcgYSByZWFsIGNoYW5nZSBmb3Igc3BlY2lm
-aWMgdXNlIGNhc2UgdGhhdCBhc3N1bWVkIHRvIG1ha2UgcmVhbA0KPiBiZW5lZml0cywgYnV0IGp1
-c3QgZm9yIGdldHRpbmcgb3BpbmlvbnMgYWJvdXQgc29tZSBpbWFnaW5hYmxlIGNoYW5nZXMgdGhh
-dA0KPiBfbWlnaHRfIGJlIGhlbHBmdWwsIGFuZCBfbWlnaHRfIGJlIG1hZGUgaW4gZnV0dXJlLiAg
-SWYgc28sIG1ha2luZyB0aGUgcG9pbnQNClllcywgSSBqdXN0IGxlYXJuIERBTU9OIGEgbGl0dGxl
-IHRpbWUsIGFuZCBvZmZlciBzb21lIHRoaW5raW5nIGZvciB0aGlzLg0KPiBtb3JlIGNsZWFyIHdv
-dWxkIGJlIGhlbHBmdWwgZm9yIG1lIHRvIGdpdmUgeW91IG9waW5pb24gZWFybGllci4gIElmIHRo
-YXQncyB0aGUNCj4gY2FzZSwgbXkgb3BpbmlvbiBpcyB0aGlzLiAgSSBhZ3JlZSBEQU1PTiBjb2Rl
-IGhhcyBtYW55IHJvb21zIG9mIGltcHJvdmVtZW50IGluDQo+IHRlcm1zIG9mIHJlYWRhYmlsaXR5
-LCBzbyBjbGVhbnVwIHBhdGNoZXMgYXJlIHdlbGNvbWUuICBOZXZlcnRoZWxlc3MsIEknZCBwcmVm
-ZXINCj4gdG8gbWFrZSBjaGFuZ2VzIG9ubHkgd2hlbiBpdCBpcyByZWFzb25hYmxlIHRvIGV4cGVj
-dCBpdCdzIHByb3ZpZGluZyBfcmVhbF8NCj4gaW1wcm92ZW1lbnQganVzdCBhZnRlciBiZSBhcHBs
-aWVkLCBvciBhdCBsZWFzdCB2ZXJ5IG5lYXIgYW5kIHNwZWNpZmljIGZ1dHVyZS4NClllcywga2Vl
-cCB0aGlzIGFuZCBjaGFuZ2Ugd2hlbiB3ZSBuZWVkIGluZGVlZC4gOikNCj4NCj4NCj4gVGhhbmtz
-LA0KPiBTSg0KDQpUaGFucywNCg0KSHVhbg0KDQo+Pj4+IERvIHdlIG5lZWQgdGhpcyBhbmQgY2xl
-YW51cCBpdD8NCj4+PiBJIHRoaW5rIEkgY2Fubm90IGFuc3dlciBmb3Igbm93LCBhbmQgeW91ciBm
-dXJ0aGVyIGNsYXJpZmljYXRpb24gYW5kIHBhdGllbnQNCj4+PiBleHBsYW5hdGlvbiBjb3VsZCBi
-ZSBoZWxwZnVsLg0KPj4+DQo+Pj4gWzFdIGh0dHBzOi8vZ2l0Lmtlcm5lbC5vcmcvcHViL3NjbS9s
-aW51eC9rZXJuZWwvZ2l0L2FrcG0vbW0uZ2l0L3RyZWUvRG9jdW1lbnRhdGlvbi9tbS9kYW1vbi9k
-ZXNpZ24ucnN0P2g9bW0tZXZlcnl0aGluZy0yMDIzLTA5LTIwLTE5LTM4I240MDANCj4+Pg0KPj4+
-DQo+Pj4gVGhhbmtzLA0KPj4+IFNKDQo+PiBUaGFua3MsDQo+Pg0KPj4gSHVhbg0KPj4NCj4+Pj4g
-SHVhbiBZYW5nICgyKToNCj4+Pj4gICAgIG1tL2RhbW9zL2ZpbHRlcjogQWRkIHdvcmtpbmdzZXQg
-cGFnZSBmaWx0ZXINCj4+Pj4gICAgIG1tL2RhbW9zL2ZpbHRlcjogRGFtb3MgZmlsdGVyIGNsZWFu
-dXANCj4+Pj4NCj4+Pj4gICAgaW5jbHVkZS9saW51eC9kYW1vbi5oICAgIHwgIDYyICstLS0tLS0t
-LS0tLS0tLS0tLQ0KPj4+PiAgICBtbS9kYW1vbi9NYWtlZmlsZSAgICAgICAgfCAgIDIgKy0NCj4+
-Pj4gICAgbW0vZGFtb24vY29yZS10ZXN0LmggICAgIHwgICA3ICsrDQo+Pj4+ICAgIG1tL2RhbW9u
-L2NvcmUuYyAgICAgICAgICB8ICA5MyArKysrLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0NCj4+Pj4g
-ICAgbW0vZGFtb24vZmlsdGVyLmMgICAgICAgIHwgMTM1ICsrKysrKysrKysrKysrKysrKysrKysr
-KysrKysrKysrKysrKysrKw0KPj4+PiAgICBtbS9kYW1vbi9maWx0ZXIuaCAgICAgICAgfCAxMTkg
-KysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKw0KPj4+PiAgICBtbS9kYW1vbi9wYWRk
-ci5jICAgICAgICAgfCAgMjkgKysrLS0tLS0tDQo+Pj4+ICAgIG1tL2RhbW9uL3JlY2xhaW0uYyAg
-ICAgICB8ICA0OCArKysrKysrKysrKy0tLQ0KPj4+PiAgICBtbS9kYW1vbi9zeXNmcy1zY2hlbWVz
-LmMgfCAgIDEgKw0KPj4+PiAgICA5IGZpbGVzIGNoYW5nZWQsIDMyNSBpbnNlcnRpb25zKCspLCAx
-NzEgZGVsZXRpb25zKC0pDQo+Pj4+ICAgIGNyZWF0ZSBtb2RlIDEwMDY0NCBtbS9kYW1vbi9maWx0
-ZXIuYw0KPj4+PiAgICBjcmVhdGUgbW9kZSAxMDA2NDQgbW0vZGFtb24vZmlsdGVyLmgNCj4+Pj4N
-Cj4+Pj4gLS0NCj4+Pj4gMi4zNC4xDQo+Pj4+DQo+Pj4+DQoNCg==
+When CONFIG_DAMON_VADDR_KUNIT_TEST=y and making CONFIG_DEBUG_KMEMLEAK=y
+and CONFIG_DEBUG_KMEMLEAK_AUTO_SCAN=y, the below memory leak is detected.
+
+Since commit 9f86d624292c ("mm/damon/vaddr-test: remove unnecessary
+variables"), the damon_destroy_ctx() is removed, but still call
+damon_new_target() and damon_new_region(), the damon_region which is
+allocated by kmem_cache_alloc() in damon_new_region() and the damon_target
+which is allocated by kmalloc in damon_new_target() are not freed. And the
+damon_region which is allocated in damon_new_region() in
+damon_set_regions() is also not freed.
+
+So use damon_destroy_target to free all the damon_regions and damon_target.
+
+    unreferenced object 0xffff888107c9a940 (size 64):
+      comm "kunit_try_catch", pid 1069, jiffies 4294670592 (age 732.761s)
+      hex dump (first 32 bytes):
+        00 00 00 00 00 00 00 00 06 00 00 00 6b 6b 6b 6b  ............kkkk
+        60 c7 9c 07 81 88 ff ff f8 cb 9c 07 81 88 ff ff  `...............
+      backtrace:
+        [<ffffffff817e0167>] kmalloc_trace+0x27/0xa0
+        [<ffffffff819c11cf>] damon_new_target+0x3f/0x1b0
+        [<ffffffff819c7d55>] damon_do_test_apply_three_regions.constprop.0+0x95/0x3e0
+        [<ffffffff819c82be>] damon_test_apply_three_regions1+0x21e/0x260
+        [<ffffffff829fce6a>] kunit_generic_run_threadfn_adapter+0x4a/0x90
+        [<ffffffff81237cf6>] kthread+0x2b6/0x380
+        [<ffffffff81097add>] ret_from_fork+0x2d/0x70
+        [<ffffffff81003791>] ret_from_fork_asm+0x11/0x20
+    unreferenced object 0xffff8881079cc740 (size 56):
+      comm "kunit_try_catch", pid 1069, jiffies 4294670592 (age 732.761s)
+      hex dump (first 32 bytes):
+        05 00 00 00 00 00 00 00 14 00 00 00 00 00 00 00  ................
+        6b 6b 6b 6b 6b 6b 6b 6b 00 00 00 00 6b 6b 6b 6b  kkkkkkkk....kkkk
+      backtrace:
+        [<ffffffff819bc492>] damon_new_region+0x22/0x1c0
+        [<ffffffff819c7d91>] damon_do_test_apply_three_regions.constprop.0+0xd1/0x3e0
+        [<ffffffff819c82be>] damon_test_apply_three_regions1+0x21e/0x260
+        [<ffffffff829fce6a>] kunit_generic_run_threadfn_adapter+0x4a/0x90
+        [<ffffffff81237cf6>] kthread+0x2b6/0x380
+        [<ffffffff81097add>] ret_from_fork+0x2d/0x70
+        [<ffffffff81003791>] ret_from_fork_asm+0x11/0x20
+    unreferenced object 0xffff888107c9ac40 (size 64):
+      comm "kunit_try_catch", pid 1071, jiffies 4294670595 (age 732.843s)
+      hex dump (first 32 bytes):
+        00 00 00 00 00 00 00 00 06 00 00 00 6b 6b 6b 6b  ............kkkk
+        a0 cc 9c 07 81 88 ff ff 78 a1 76 07 81 88 ff ff  ........x.v.....
+      backtrace:
+        [<ffffffff817e0167>] kmalloc_trace+0x27/0xa0
+        [<ffffffff819c11cf>] damon_new_target+0x3f/0x1b0
+        [<ffffffff819c7d55>] damon_do_test_apply_three_regions.constprop.0+0x95/0x3e0
+        [<ffffffff819c851e>] damon_test_apply_three_regions2+0x21e/0x260
+        [<ffffffff829fce6a>] kunit_generic_run_threadfn_adapter+0x4a/0x90
+        [<ffffffff81237cf6>] kthread+0x2b6/0x380
+        [<ffffffff81097add>] ret_from_fork+0x2d/0x70
+        [<ffffffff81003791>] ret_from_fork_asm+0x11/0x20
+    unreferenced object 0xffff8881079ccc80 (size 56):
+      comm "kunit_try_catch", pid 1071, jiffies 4294670595 (age 732.843s)
+      hex dump (first 32 bytes):
+        05 00 00 00 00 00 00 00 14 00 00 00 00 00 00 00  ................
+        6b 6b 6b 6b 6b 6b 6b 6b 00 00 00 00 6b 6b 6b 6b  kkkkkkkk....kkkk
+      backtrace:
+        [<ffffffff819bc492>] damon_new_region+0x22/0x1c0
+        [<ffffffff819c7d91>] damon_do_test_apply_three_regions.constprop.0+0xd1/0x3e0
+        [<ffffffff819c851e>] damon_test_apply_three_regions2+0x21e/0x260
+        [<ffffffff829fce6a>] kunit_generic_run_threadfn_adapter+0x4a/0x90
+        [<ffffffff81237cf6>] kthread+0x2b6/0x380
+        [<ffffffff81097add>] ret_from_fork+0x2d/0x70
+        [<ffffffff81003791>] ret_from_fork_asm+0x11/0x20
+    unreferenced object 0xffff888107c9af40 (size 64):
+      comm "kunit_try_catch", pid 1073, jiffies 4294670597 (age 733.011s)
+      hex dump (first 32 bytes):
+        00 00 00 00 00 00 00 00 06 00 00 00 6b 6b 6b 6b  ............kkkk
+        20 a2 76 07 81 88 ff ff b8 a6 76 07 81 88 ff ff   .v.......v.....
+      backtrace:
+        [<ffffffff817e0167>] kmalloc_trace+0x27/0xa0
+        [<ffffffff819c11cf>] damon_new_target+0x3f/0x1b0
+        [<ffffffff819c7d55>] damon_do_test_apply_three_regions.constprop.0+0x95/0x3e0
+        [<ffffffff819c877e>] damon_test_apply_three_regions3+0x21e/0x260
+        [<ffffffff829fce6a>] kunit_generic_run_threadfn_adapter+0x4a/0x90
+        [<ffffffff81237cf6>] kthread+0x2b6/0x380
+        [<ffffffff81097add>] ret_from_fork+0x2d/0x70
+        [<ffffffff81003791>] ret_from_fork_asm+0x11/0x20
+    unreferenced object 0xffff88810776a200 (size 56):
+      comm "kunit_try_catch", pid 1073, jiffies 4294670597 (age 733.011s)
+      hex dump (first 32 bytes):
+        05 00 00 00 00 00 00 00 14 00 00 00 00 00 00 00  ................
+        6b 6b 6b 6b 6b 6b 6b 6b 00 00 00 00 6b 6b 6b 6b  kkkkkkkk....kkkk
+      backtrace:
+        [<ffffffff819bc492>] damon_new_region+0x22/0x1c0
+        [<ffffffff819c7d91>] damon_do_test_apply_three_regions.constprop.0+0xd1/0x3e0
+        [<ffffffff819c877e>] damon_test_apply_three_regions3+0x21e/0x260
+        [<ffffffff829fce6a>] kunit_generic_run_threadfn_adapter+0x4a/0x90
+        [<ffffffff81237cf6>] kthread+0x2b6/0x380
+        [<ffffffff81097add>] ret_from_fork+0x2d/0x70
+        [<ffffffff81003791>] ret_from_fork_asm+0x11/0x20
+    unreferenced object 0xffff88810776a740 (size 56):
+      comm "kunit_try_catch", pid 1073, jiffies 4294670597 (age 733.025s)
+      hex dump (first 32 bytes):
+        3d 00 00 00 00 00 00 00 3f 00 00 00 00 00 00 00  =.......?.......
+        6b 6b 6b 6b 6b 6b 6b 6b 00 00 00 00 6b 6b 6b 6b  kkkkkkkk....kkkk
+      backtrace:
+        [<ffffffff819bc492>] damon_new_region+0x22/0x1c0
+        [<ffffffff819bfcc2>] damon_set_regions+0x4c2/0x8e0
+        [<ffffffff819c7dbb>] damon_do_test_apply_three_regions.constprop.0+0xfb/0x3e0
+        [<ffffffff819c877e>] damon_test_apply_three_regions3+0x21e/0x260
+        [<ffffffff829fce6a>] kunit_generic_run_threadfn_adapter+0x4a/0x90
+        [<ffffffff81237cf6>] kthread+0x2b6/0x380
+        [<ffffffff81097add>] ret_from_fork+0x2d/0x70
+        [<ffffffff81003791>] ret_from_fork_asm+0x11/0x20
+    unreferenced object 0xffff888108038240 (size 64):
+      comm "kunit_try_catch", pid 1075, jiffies 4294670600 (age 733.022s)
+      hex dump (first 32 bytes):
+        00 00 00 00 00 00 00 00 03 00 00 00 6b 6b 6b 6b  ............kkkk
+        48 ad 76 07 81 88 ff ff 98 ae 76 07 81 88 ff ff  H.v.......v.....
+      backtrace:
+        [<ffffffff817e0167>] kmalloc_trace+0x27/0xa0
+        [<ffffffff819c11cf>] damon_new_target+0x3f/0x1b0
+        [<ffffffff819c7d55>] damon_do_test_apply_three_regions.constprop.0+0x95/0x3e0
+        [<ffffffff819c898d>] damon_test_apply_three_regions4+0x1cd/0x210
+        [<ffffffff829fce6a>] kunit_generic_run_threadfn_adapter+0x4a/0x90
+        [<ffffffff81237cf6>] kthread+0x2b6/0x380
+        [<ffffffff81097add>] ret_from_fork+0x2d/0x70
+        [<ffffffff81003791>] ret_from_fork_asm+0x11/0x20
+    unreferenced object 0xffff88810776ad28 (size 56):
+      comm "kunit_try_catch", pid 1075, jiffies 4294670600 (age 733.022s)
+      hex dump (first 32 bytes):
+        05 00 00 00 00 00 00 00 07 00 00 00 00 00 00 00  ................
+        6b 6b 6b 6b 6b 6b 6b 6b 00 00 00 00 6b 6b 6b 6b  kkkkkkkk....kkkk
+      backtrace:
+        [<ffffffff819bc492>] damon_new_region+0x22/0x1c0
+        [<ffffffff819bfcc2>] damon_set_regions+0x4c2/0x8e0
+        [<ffffffff819c7dbb>] damon_do_test_apply_three_regions.constprop.0+0xfb/0x3e0
+        [<ffffffff819c898d>] damon_test_apply_three_regions4+0x1cd/0x210
+        [<ffffffff829fce6a>] kunit_generic_run_threadfn_adapter+0x4a/0x90
+        [<ffffffff81237cf6>] kthread+0x2b6/0x380
+        [<ffffffff81097add>] ret_from_fork+0x2d/0x70
+        [<ffffffff81003791>] ret_from_fork_asm+0x11/0x20
+
+Fixes: 9f86d624292c ("mm/damon/vaddr-test: remove unnecessary variables")
+Fixes: dae0087aeff4 ("mm/damon/vaddr: remove damon_va_apply_three_regions()")
+Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+---
+ mm/damon/vaddr-test.h | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/mm/damon/vaddr-test.h b/mm/damon/vaddr-test.h
+index c4b455b5ee30..dcf1ca6b31cc 100644
+--- a/mm/damon/vaddr-test.h
++++ b/mm/damon/vaddr-test.h
+@@ -148,6 +148,8 @@ static void damon_do_test_apply_three_regions(struct kunit *test,
+ 		KUNIT_EXPECT_EQ(test, r->ar.start, expected[i * 2]);
+ 		KUNIT_EXPECT_EQ(test, r->ar.end, expected[i * 2 + 1]);
+ 	}
++
++	damon_destroy_target(t);
+ }
+ 
+ /*
+-- 
+2.34.1
+
