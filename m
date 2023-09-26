@@ -1,126 +1,231 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from szxga01-in.huawei.com (szxga01-in.huawei.com [45.249.212.187])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34C0D1DA33
-	for <damon@lists.linux.dev>; Mon, 25 Sep 2023 20:53:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14040C433C8;
-	Mon, 25 Sep 2023 20:53:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1695675212;
-	bh=7hXvLQbvJIz227Ub7eXBQQ+8+Mqa/7Yw7vX+OS9wJUM=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b7KIR50pB1YTnipIRcBQKkp4IAvLhUqlQofH+lGegv4snvLGNcCkP5z+R48wy8xne
-	 rOL1rsTs9N174A/GSq7ZGz2RLvFrSsfLcCfRATKVj1Wtnn1NtZYXFCjP55SnkfSi5H
-	 BNiM7+4SQCYBs+FhcXL6gmm9jWbf6/AUZSEpmeYqFAa4/rzULQxqcEpLSQWFEmpqmf
-	 f9SX4hqdI0bwfnW1lAY6H3zP/YW+tMVm6djtqKcv4u8htepEAHX60jz+j6xYYiSg9U
-	 K/n6ljgBS2DlhxNfAJtWPnLV+oGdE3fw5w4FPEirIDIHTHVbzU/5G1UFy+5wwVCgrD
-	 8/Zb6sMemRZcQ==
-From: SeongJae Park <sj@kernel.org>
-To: Juntong Deng <juntong.deng@outlook.com>
-Cc: sj@kernel.org,
-	shuah@kernel.org,
-	damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	linux-kselftest@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-kernel-mentees@lists.linuxfoundation.org
-Subject: Re: [PATCH] selftests/damon: Add executable permission to test scripts
-Date: Mon, 25 Sep 2023 20:53:30 +0000
-Message-Id: <20230925205330.83701-1-sj@kernel.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <VI1P193MB07529234393616AE94D58C7B99FCA@VI1P193MB0752.EURP193.PROD.OUTLOOK.COM>
-References: 
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89A85637
+	for <damon@lists.linux.dev>; Tue, 26 Sep 2023 01:38:01 +0000 (UTC)
+Received: from kwepemi500008.china.huawei.com (unknown [172.30.72.57])
+	by szxga01-in.huawei.com (SkyGuard) with ESMTP id 4Rvj1n1DKlztT64;
+	Tue, 26 Sep 2023 09:33:33 +0800 (CST)
+Received: from [10.67.109.254] (10.67.109.254) by
+ kwepemi500008.china.huawei.com (7.221.188.139) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.31; Tue, 26 Sep 2023 09:37:53 +0800
+Message-ID: <222df606-6847-d1e6-c25e-aae2527a0da2@huawei.com>
+Date: Tue, 26 Sep 2023 09:37:52 +0800
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.2.0
+Subject: Re: [PATCH] mm/damon/vaddr-test: Fix memory leak in
+ damon_do_test_apply_three_regions()
+Content-Language: en-US
+To: SeongJae Park <sj@kernel.org>
+CC: <linux-mm@kvack.org>, <damon@lists.linux.dev>, Andrew Morton
+	<akpm@linux-foundation.org>
+References: <20230925160329.83109-1-sj@kernel.org>
+From: Ruan Jinjie <ruanjinjie@huawei.com>
+In-Reply-To: <20230925160329.83109-1-sj@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.67.109.254]
+X-ClientProxiedBy: dggems701-chm.china.huawei.com (10.3.19.178) To
+ kwepemi500008.china.huawei.com (7.221.188.139)
+X-CFilter-Loop: Reflected
 
-Hi Juntong,
 
-On Tue, 26 Sep 2023 04:35:52 +0800 Juntong Deng <juntong.deng@outlook.com> wrote:
 
-> When running the test for the damon subsystem, there are a lot of
-> warnings because test scripts do not have executable permission,
-> for example:
+On 2023/9/26 0:03, SeongJae Park wrote:
+> Hi Jinjie,
 > 
-> Warning: file debugfs_attrs.sh is not executable
-> Warning: file debugfs_schemes.sh is not executable
-> Warning: file debugfs_target_ids.sh is not executable
-> ...
+> On Mon, 25 Sep 2023 15:20:59 +0800 Jinjie Ruan <ruanjinjie@huawei.com> wrote:
 > 
-> This patch adds executable permission to test scripts to eliminate
-> these warnings.
+>> When CONFIG_DAMON_VADDR_KUNIT_TEST=y and making CONFIG_DEBUG_KMEMLEAK=y
+>> and CONFIG_DEBUG_KMEMLEAK_AUTO_SCAN=y, the below memory leak is detected.
+>>
+>> Since commit 9f86d624292c ("mm/damon/vaddr-test: remove unnecessary
+>> variables"), the damon_destroy_ctx() is removed, but still call
+>> damon_new_target() and damon_new_region(), the damon_region which is
+>> allocated by kmem_cache_alloc() in damon_new_region() and the damon_target
+>> which is allocated by kmalloc in damon_new_target() are not freed. And the
+>> damon_region which is allocated in damon_new_region() in
+>> damon_set_regions() is also not freed.
+>>
+>> So use damon_destroy_target to free all the damon_regions and damon_target.
 > 
-> Signed-off-by: Juntong Deng <juntong.deng@outlook.com>
+> Thank you for finding this bug and sending this patch!
+> 
+>>
+>>     unreferenced object 0xffff888107c9a940 (size 64):
+>>       comm "kunit_try_catch", pid 1069, jiffies 4294670592 (age 732.761s)
+>>       hex dump (first 32 bytes):
+>>         00 00 00 00 00 00 00 00 06 00 00 00 6b 6b 6b 6b  ............kkkk
+>>         60 c7 9c 07 81 88 ff ff f8 cb 9c 07 81 88 ff ff  `...............
+>>       backtrace:
+>>         [<ffffffff817e0167>] kmalloc_trace+0x27/0xa0
+>>         [<ffffffff819c11cf>] damon_new_target+0x3f/0x1b0
+>>         [<ffffffff819c7d55>] damon_do_test_apply_three_regions.constprop.0+0x95/0x3e0
+>>         [<ffffffff819c82be>] damon_test_apply_three_regions1+0x21e/0x260
+>>         [<ffffffff829fce6a>] kunit_generic_run_threadfn_adapter+0x4a/0x90
+>>         [<ffffffff81237cf6>] kthread+0x2b6/0x380
+>>         [<ffffffff81097add>] ret_from_fork+0x2d/0x70
+>>         [<ffffffff81003791>] ret_from_fork_asm+0x11/0x20
+>>     unreferenced object 0xffff8881079cc740 (size 56):
+>>       comm "kunit_try_catch", pid 1069, jiffies 4294670592 (age 732.761s)
+>>       hex dump (first 32 bytes):
+>>         05 00 00 00 00 00 00 00 14 00 00 00 00 00 00 00  ................
+>>         6b 6b 6b 6b 6b 6b 6b 6b 00 00 00 00 6b 6b 6b 6b  kkkkkkkk....kkkk
+>>       backtrace:
+>>         [<ffffffff819bc492>] damon_new_region+0x22/0x1c0
+>>         [<ffffffff819c7d91>] damon_do_test_apply_three_regions.constprop.0+0xd1/0x3e0
+>>         [<ffffffff819c82be>] damon_test_apply_three_regions1+0x21e/0x260
+>>         [<ffffffff829fce6a>] kunit_generic_run_threadfn_adapter+0x4a/0x90
+>>         [<ffffffff81237cf6>] kthread+0x2b6/0x380
+>>         [<ffffffff81097add>] ret_from_fork+0x2d/0x70
+>>         [<ffffffff81003791>] ret_from_fork_asm+0x11/0x20
+>>     unreferenced object 0xffff888107c9ac40 (size 64):
+>>       comm "kunit_try_catch", pid 1071, jiffies 4294670595 (age 732.843s)
+>>       hex dump (first 32 bytes):
+>>         00 00 00 00 00 00 00 00 06 00 00 00 6b 6b 6b 6b  ............kkkk
+>>         a0 cc 9c 07 81 88 ff ff 78 a1 76 07 81 88 ff ff  ........x.v.....
+>>       backtrace:
+>>         [<ffffffff817e0167>] kmalloc_trace+0x27/0xa0
+>>         [<ffffffff819c11cf>] damon_new_target+0x3f/0x1b0
+>>         [<ffffffff819c7d55>] damon_do_test_apply_three_regions.constprop.0+0x95/0x3e0
+>>         [<ffffffff819c851e>] damon_test_apply_three_regions2+0x21e/0x260
+>>         [<ffffffff829fce6a>] kunit_generic_run_threadfn_adapter+0x4a/0x90
+>>         [<ffffffff81237cf6>] kthread+0x2b6/0x380
+>>         [<ffffffff81097add>] ret_from_fork+0x2d/0x70
+>>         [<ffffffff81003791>] ret_from_fork_asm+0x11/0x20
+>>     unreferenced object 0xffff8881079ccc80 (size 56):
+>>       comm "kunit_try_catch", pid 1071, jiffies 4294670595 (age 732.843s)
+>>       hex dump (first 32 bytes):
+>>         05 00 00 00 00 00 00 00 14 00 00 00 00 00 00 00  ................
+>>         6b 6b 6b 6b 6b 6b 6b 6b 00 00 00 00 6b 6b 6b 6b  kkkkkkkk....kkkk
+>>       backtrace:
+>>         [<ffffffff819bc492>] damon_new_region+0x22/0x1c0
+>>         [<ffffffff819c7d91>] damon_do_test_apply_three_regions.constprop.0+0xd1/0x3e0
+>>         [<ffffffff819c851e>] damon_test_apply_three_regions2+0x21e/0x260
+>>         [<ffffffff829fce6a>] kunit_generic_run_threadfn_adapter+0x4a/0x90
+>>         [<ffffffff81237cf6>] kthread+0x2b6/0x380
+>>         [<ffffffff81097add>] ret_from_fork+0x2d/0x70
+>>         [<ffffffff81003791>] ret_from_fork_asm+0x11/0x20
+>>     unreferenced object 0xffff888107c9af40 (size 64):
+>>       comm "kunit_try_catch", pid 1073, jiffies 4294670597 (age 733.011s)
+>>       hex dump (first 32 bytes):
+>>         00 00 00 00 00 00 00 00 06 00 00 00 6b 6b 6b 6b  ............kkkk
+>>         20 a2 76 07 81 88 ff ff b8 a6 76 07 81 88 ff ff   .v.......v.....
+>>       backtrace:
+>>         [<ffffffff817e0167>] kmalloc_trace+0x27/0xa0
+>>         [<ffffffff819c11cf>] damon_new_target+0x3f/0x1b0
+>>         [<ffffffff819c7d55>] damon_do_test_apply_three_regions.constprop.0+0x95/0x3e0
+>>         [<ffffffff819c877e>] damon_test_apply_three_regions3+0x21e/0x260
+>>         [<ffffffff829fce6a>] kunit_generic_run_threadfn_adapter+0x4a/0x90
+>>         [<ffffffff81237cf6>] kthread+0x2b6/0x380
+>>         [<ffffffff81097add>] ret_from_fork+0x2d/0x70
+>>         [<ffffffff81003791>] ret_from_fork_asm+0x11/0x20
+>>     unreferenced object 0xffff88810776a200 (size 56):
+>>       comm "kunit_try_catch", pid 1073, jiffies 4294670597 (age 733.011s)
+>>       hex dump (first 32 bytes):
+>>         05 00 00 00 00 00 00 00 14 00 00 00 00 00 00 00  ................
+>>         6b 6b 6b 6b 6b 6b 6b 6b 00 00 00 00 6b 6b 6b 6b  kkkkkkkk....kkkk
+>>       backtrace:
+>>         [<ffffffff819bc492>] damon_new_region+0x22/0x1c0
+>>         [<ffffffff819c7d91>] damon_do_test_apply_three_regions.constprop.0+0xd1/0x3e0
+>>         [<ffffffff819c877e>] damon_test_apply_three_regions3+0x21e/0x260
+>>         [<ffffffff829fce6a>] kunit_generic_run_threadfn_adapter+0x4a/0x90
+>>         [<ffffffff81237cf6>] kthread+0x2b6/0x380
+>>         [<ffffffff81097add>] ret_from_fork+0x2d/0x70
+>>         [<ffffffff81003791>] ret_from_fork_asm+0x11/0x20
+>>     unreferenced object 0xffff88810776a740 (size 56):
+>>       comm "kunit_try_catch", pid 1073, jiffies 4294670597 (age 733.025s)
+>>       hex dump (first 32 bytes):
+>>         3d 00 00 00 00 00 00 00 3f 00 00 00 00 00 00 00  =.......?.......
+>>         6b 6b 6b 6b 6b 6b 6b 6b 00 00 00 00 6b 6b 6b 6b  kkkkkkkk....kkkk
+>>       backtrace:
+>>         [<ffffffff819bc492>] damon_new_region+0x22/0x1c0
+>>         [<ffffffff819bfcc2>] damon_set_regions+0x4c2/0x8e0
+>>         [<ffffffff819c7dbb>] damon_do_test_apply_three_regions.constprop.0+0xfb/0x3e0
+>>         [<ffffffff819c877e>] damon_test_apply_three_regions3+0x21e/0x260
+>>         [<ffffffff829fce6a>] kunit_generic_run_threadfn_adapter+0x4a/0x90
+>>         [<ffffffff81237cf6>] kthread+0x2b6/0x380
+>>         [<ffffffff81097add>] ret_from_fork+0x2d/0x70
+>>         [<ffffffff81003791>] ret_from_fork_asm+0x11/0x20
+>>     unreferenced object 0xffff888108038240 (size 64):
+>>       comm "kunit_try_catch", pid 1075, jiffies 4294670600 (age 733.022s)
+>>       hex dump (first 32 bytes):
+>>         00 00 00 00 00 00 00 00 03 00 00 00 6b 6b 6b 6b  ............kkkk
+>>         48 ad 76 07 81 88 ff ff 98 ae 76 07 81 88 ff ff  H.v.......v.....
+>>       backtrace:
+>>         [<ffffffff817e0167>] kmalloc_trace+0x27/0xa0
+>>         [<ffffffff819c11cf>] damon_new_target+0x3f/0x1b0
+>>         [<ffffffff819c7d55>] damon_do_test_apply_three_regions.constprop.0+0x95/0x3e0
+>>         [<ffffffff819c898d>] damon_test_apply_three_regions4+0x1cd/0x210
+>>         [<ffffffff829fce6a>] kunit_generic_run_threadfn_adapter+0x4a/0x90
+>>         [<ffffffff81237cf6>] kthread+0x2b6/0x380
+>>         [<ffffffff81097add>] ret_from_fork+0x2d/0x70
+>>         [<ffffffff81003791>] ret_from_fork_asm+0x11/0x20
+>>     unreferenced object 0xffff88810776ad28 (size 56):
+>>       comm "kunit_try_catch", pid 1075, jiffies 4294670600 (age 733.022s)
+>>       hex dump (first 32 bytes):
+>>         05 00 00 00 00 00 00 00 07 00 00 00 00 00 00 00  ................
+>>         6b 6b 6b 6b 6b 6b 6b 6b 00 00 00 00 6b 6b 6b 6b  kkkkkkkk....kkkk
+>>       backtrace:
+>>         [<ffffffff819bc492>] damon_new_region+0x22/0x1c0
+>>         [<ffffffff819bfcc2>] damon_set_regions+0x4c2/0x8e0
+>>         [<ffffffff819c7dbb>] damon_do_test_apply_three_regions.constprop.0+0xfb/0x3e0
+>>         [<ffffffff819c898d>] damon_test_apply_three_regions4+0x1cd/0x210
+>>         [<ffffffff829fce6a>] kunit_generic_run_threadfn_adapter+0x4a/0x90
+>>         [<ffffffff81237cf6>] kthread+0x2b6/0x380
+>>         [<ffffffff81097add>] ret_from_fork+0x2d/0x70
+>>         [<ffffffff81003791>] ret_from_fork_asm+0x11/0x20
+>>
+>> Fixes: 9f86d624292c ("mm/damon/vaddr-test: remove unnecessary variables")
+>> Fixes: dae0087aeff4 ("mm/damon/vaddr: remove damon_va_apply_three_regions()")
+> 
+> Seems this patch fixes only 9f86d624292c if I'm not missing something?  So,
+> could we simply remove above 'Fixes: dae0087aeff4' line?
 
-Reviewed-by: SeongJae Park <sj@kernel.org>
+Right！Thank you. Commit dae0087aeff4 just replaces
+damon_va_apply_three_regions() with damon_set_regions()，not first
+introduce damon_set_regions().
 
-
-Thanks,
-SJ
-
-> ---
->  tools/testing/selftests/damon/debugfs_attrs.sh                    | 0
->  .../testing/selftests/damon/debugfs_duplicate_context_creation.sh | 0
->  tools/testing/selftests/damon/debugfs_empty_targets.sh            | 0
->  tools/testing/selftests/damon/debugfs_huge_count_read_write.sh    | 0
->  tools/testing/selftests/damon/debugfs_rm_non_contexts.sh          | 0
->  tools/testing/selftests/damon/debugfs_schemes.sh                  | 0
->  tools/testing/selftests/damon/debugfs_target_ids.sh               | 0
->  tools/testing/selftests/damon/lru_sort.sh                         | 0
->  tools/testing/selftests/damon/reclaim.sh                          | 0
->  tools/testing/selftests/damon/sysfs.sh                            | 0
->  tools/testing/selftests/damon/sysfs_update_removed_scheme_dir.sh  | 0
->  11 files changed, 0 insertions(+), 0 deletions(-)
->  mode change 100644 => 100755 tools/testing/selftests/damon/debugfs_attrs.sh
->  mode change 100644 => 100755 tools/testing/selftests/damon/debugfs_duplicate_context_creation.sh
->  mode change 100644 => 100755 tools/testing/selftests/damon/debugfs_empty_targets.sh
->  mode change 100644 => 100755 tools/testing/selftests/damon/debugfs_huge_count_read_write.sh
->  mode change 100644 => 100755 tools/testing/selftests/damon/debugfs_rm_non_contexts.sh
->  mode change 100644 => 100755 tools/testing/selftests/damon/debugfs_schemes.sh
->  mode change 100644 => 100755 tools/testing/selftests/damon/debugfs_target_ids.sh
->  mode change 100644 => 100755 tools/testing/selftests/damon/lru_sort.sh
->  mode change 100644 => 100755 tools/testing/selftests/damon/reclaim.sh
->  mode change 100644 => 100755 tools/testing/selftests/damon/sysfs.sh
->  mode change 100644 => 100755 tools/testing/selftests/damon/sysfs_update_removed_scheme_dir.sh
 > 
-> diff --git a/tools/testing/selftests/damon/debugfs_attrs.sh b/tools/testing/selftests/damon/debugfs_attrs.sh
-> old mode 100644
-> new mode 100755
-> diff --git a/tools/testing/selftests/damon/debugfs_duplicate_context_creation.sh b/tools/testing/selftests/damon/debugfs_duplicate_context_creation.sh
-> old mode 100644
-> new mode 100755
-> diff --git a/tools/testing/selftests/damon/debugfs_empty_targets.sh b/tools/testing/selftests/damon/debugfs_empty_targets.sh
-> old mode 100644
-> new mode 100755
-> diff --git a/tools/testing/selftests/damon/debugfs_huge_count_read_write.sh b/tools/testing/selftests/damon/debugfs_huge_count_read_write.sh
-> old mode 100644
-> new mode 100755
-> diff --git a/tools/testing/selftests/damon/debugfs_rm_non_contexts.sh b/tools/testing/selftests/damon/debugfs_rm_non_contexts.sh
-> old mode 100644
-> new mode 100755
-> diff --git a/tools/testing/selftests/damon/debugfs_schemes.sh b/tools/testing/selftests/damon/debugfs_schemes.sh
-> old mode 100644
-> new mode 100755
-> diff --git a/tools/testing/selftests/damon/debugfs_target_ids.sh b/tools/testing/selftests/damon/debugfs_target_ids.sh
-> old mode 100644
-> new mode 100755
-> diff --git a/tools/testing/selftests/damon/lru_sort.sh b/tools/testing/selftests/damon/lru_sort.sh
-> old mode 100644
-> new mode 100755
-> diff --git a/tools/testing/selftests/damon/reclaim.sh b/tools/testing/selftests/damon/reclaim.sh
-> old mode 100644
-> new mode 100755
-> diff --git a/tools/testing/selftests/damon/sysfs.sh b/tools/testing/selftests/damon/sysfs.sh
-> old mode 100644
-> new mode 100755
-> diff --git a/tools/testing/selftests/damon/sysfs_update_removed_scheme_dir.sh b/tools/testing/selftests/damon/sysfs_update_removed_scheme_dir.sh
-> old mode 100644
-> new mode 100755
-> -- 
-> 2.39.2
+> Seems Andrew also found[1] this and made the change[2] when adding this into
+> the queue.  Thank you, Andrew!  If something wrong, please let us know, Jinjie.
+> 
+>> Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+> 
+> Other than above trivial nit,
+> 
+> Reviewed-by: SeongJae Park <sj@kernel.org>
+> 
+> [1] https://lore.kernel.org/damon/20230925081400.9593189a7665c6ff1f812855@linux-foundation.org/
+> [2] https://lore.kernel.org/mm-commits/20230925151450.EC64BC433C9@smtp.kernel.org/
 > 
 > 
+> Thanks,
+> SJ
+> 
+>> ---
+>>  mm/damon/vaddr-test.h | 2 ++
+>>  1 file changed, 2 insertions(+)
+>>
+>> diff --git a/mm/damon/vaddr-test.h b/mm/damon/vaddr-test.h
+>> index c4b455b5ee30..dcf1ca6b31cc 100644
+>> --- a/mm/damon/vaddr-test.h
+>> +++ b/mm/damon/vaddr-test.h
+>> @@ -148,6 +148,8 @@ static void damon_do_test_apply_three_regions(struct kunit *test,
+>>  		KUNIT_EXPECT_EQ(test, r->ar.start, expected[i * 2]);
+>>  		KUNIT_EXPECT_EQ(test, r->ar.end, expected[i * 2 + 1]);
+>>  	}
+>> +
+>> +	damon_destroy_target(t);
+>>  }
+>>  
+>>  /*
+>> -- 
+>> 2.34.1
