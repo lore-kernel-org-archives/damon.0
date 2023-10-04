@@ -1,71 +1,65 @@
-Received: from szxga01-in.huawei.com (szxga01-in.huawei.com [45.249.212.187])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C84BD637
-	for <damon@lists.linux.dev>; Tue, 26 Sep 2023 01:39:07 +0000 (UTC)
-Received: from kwepemi500008.china.huawei.com (unknown [172.30.72.56])
-	by szxga01-in.huawei.com (SkyGuard) with ESMTP id 4Rvj5b0Mg1zrSdV;
-	Tue, 26 Sep 2023 09:36:51 +0800 (CST)
-Received: from [10.67.109.254] (10.67.109.254) by
- kwepemi500008.china.huawei.com (7.221.188.139) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.31; Tue, 26 Sep 2023 09:39:04 +0800
-Message-ID: <39e981f0-3b73-d48b-1f58-cfedab6139fe@huawei.com>
-Date: Tue, 26 Sep 2023 09:39:04 +0800
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72AD4182;
+	Wed,  4 Oct 2023 00:49:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2980AC433C8;
+	Wed,  4 Oct 2023 00:49:17 +0000 (UTC)
+Date: Tue, 3 Oct 2023 20:50:22 -0400
+From: Steven Rostedt <rostedt@goodmis.org>
+To: SeongJae Park <sj@kernel.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>, damon@lists.linux.dev,
+ linux-mm@kvack.org, linux-trace-kernel@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+Subject: Re: [PATCH RESEND v2 1/2] mm/damon/core: add a tracepoint for damos
+ apply target regions
+Message-ID: <20231003205022.58ffcb2a@gandalf.local.home>
+In-Reply-To: <20230913022050.2109-2-sj@kernel.org>
+References: <20230913022050.2109-1-sj@kernel.org>
+	<20230913022050.2109-2-sj@kernel.org>
+X-Mailer: Claws Mail 3.19.1 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.2.0
-Subject: Re: [PATCH] mm/damon/vaddr-test: Fix memory leak in
- damon_do_test_apply_three_regions()
-Content-Language: en-US
-To: Andrew Morton <akpm@linux-foundation.org>
-CC: <linux-mm@kvack.org>, <damon@lists.linux.dev>, SeongJae Park
-	<sj@kernel.org>
-References: <20230925072100.3725620-1-ruanjinjie@huawei.com>
- <20230925081400.9593189a7665c6ff1f812855@linux-foundation.org>
-From: Ruan Jinjie <ruanjinjie@huawei.com>
-In-Reply-To: <20230925081400.9593189a7665c6ff1f812855@linux-foundation.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.67.109.254]
-X-ClientProxiedBy: dggems703-chm.china.huawei.com (10.3.19.180) To
- kwepemi500008.china.huawei.com (7.221.188.139)
-X-CFilter-Loop: Reflected
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: quoted-printable
 
+On Wed, 13 Sep 2023 02:20:49 +0000
+SeongJae Park <sj@kernel.org> wrote:
 
+> DAMON provides damon_aggregated tracepoint, which exposes details of
+> each region and its access monitoring results.  It is useful for
+> getting whole monitoring results, e.g., for recording purposes.
+>=20
+> For investigations of DAMOS, DAMON Sysfs interface provides DAMOS
+> statistics and tried_regions directory.  But, those provides only
+> statistics and snapshots.  If the scheme is frequently applied and if
+> the user needs to know every detail of DAMOS behavior, the
+> snapshot-based interface could be insufficient and expensive.
+>=20
+> As a last resort, userspace users need to record the all monitoring
+> results via damon_aggregated tracepoint and simulate how DAMOS would
+> worked.  It is unnecessarily complicated.  DAMON kernel API users,
+> meanwhile, can do that easily via before_damos_apply() callback field of
+> 'struct damon_callback', though.
+>=20
+> Add a tracepoint that will be called just after before_damos_apply()
+> callback for more convenient investigations of DAMOS.  The tracepoint
+> exposes all details about each regions, similar to damon_aggregated
+> tracepoint.
+>=20
+> Please note that DAMOS is currently not only for memory management but
+> also for query-like efficient monitoring results retrievals (when 'stat'
+> action is used).  Until now, only statistics or snapshots were
+> supported.  Addition of this tracepoint allows efficient full recording
+> of DAMOS-based filtered monitoring results.
+>=20
 
-On 2023/9/25 23:14, Andrew Morton wrote:
-> On Mon, 25 Sep 2023 15:20:59 +0800 Jinjie Ruan <ruanjinjie@huawei.com> wrote:
-> 
->> When CONFIG_DAMON_VADDR_KUNIT_TEST=y and making CONFIG_DEBUG_KMEMLEAK=y
->> and CONFIG_DEBUG_KMEMLEAK_AUTO_SCAN=y, the below memory leak is detected.
->>
->> Since commit 9f86d624292c ("mm/damon/vaddr-test: remove unnecessary
->> variables"), the damon_destroy_ctx() is removed, but still call
->> damon_new_target() and damon_new_region(), the damon_region which is
->> allocated by kmem_cache_alloc() in damon_new_region() and the damon_target
->> which is allocated by kmalloc in damon_new_target() are not freed. And the
->> damon_region which is allocated in damon_new_region() in
->> damon_set_regions() is also not freed.
->>
->> So use damon_destroy_target to free all the damon_regions and damon_target.
->>
->> ...
->>
->> Fixes:  9f86d624292c ("mm/damon/vaddr-test: remove unnecessary variables")
->> Fixes: dae0087aeff4 ("mm/damon/vaddr: remove damon_va_apply_three_regions()")
-> 
-> Can we please identify a single Fixes: target?  Otherwise, how are
-> -stable tree maintainers to determine which kernels need the fix?  
+=46rom a tracing point of view.
 
-Right！Thank you. Commit dae0087aeff4 just replaces
-damon_va_apply_three_regions() with damon_set_regions()，not first
-introduce damon_set_regions(). Sorry, there is a mistake.
+Reviewed-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 
-> 
-> I'll go with 9f86d624292c for now.
+-- Steve
