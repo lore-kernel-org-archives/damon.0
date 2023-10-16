@@ -1,36 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0D4C34CF2;
-	Thu, 12 Oct 2023 19:23:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DDF4328A2;
+	Mon, 16 Oct 2023 18:35:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bJGzlPrj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D2EBC433CB;
-	Thu, 12 Oct 2023 19:23:04 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Jt0TIgG7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABF54C433C9;
+	Mon, 16 Oct 2023 18:35:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1697138584;
-	bh=PRMNaWi4eLwEr1ddca0C6ItteLnRKdFxcFRimSLMbuo=;
+	s=k20201202; t=1697481337;
+	bh=0sZNyYJufZfEnzv5I8B+QAwaoh5lUuIQWXv/vgtfVqc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bJGzlPrjaiUIBuFyajQ5Ml/qrVcEGh+SjVnuKYWNiD50UIeYWhykkEIUdu7FThB0U
-	 c4m724zZPNDNhN7SMT5Er7OqE7Q+KiPopSS/RZYPf+PaAwiBl0DzTq/JoY932IHK46
-	 HFSs2q3SdwTv8OupysoFHIsHs/Cp2/SqkQielW+BX05cFNdUVj3+s9E2Bn+181AY31
-	 MSV5J0+jmQ5LMDdc850GF9fkma0pIr9lJ9CMwmXWO7XXQguzHCfFcQRleQZNc5kCLR
-	 Ibf04a1T8riDcyY6xMyNg87yq2iYqDql/b2zCzblzfyN50l8gc1fetjrFtVwpzMkZH
-	 9LUJGAQEyISjQ==
+	b=Jt0TIgG7sFtxR8y20e/lHFFOYUCy5BC1u7iodPkgoarrO5mX/b9r9clGMqx7Q+M57
+	 CZB8r77MMhdWTxvCL7FgvX2Vq27T5ufruy63fiTyrYt3Q+Wgw+/rbGUVIdQPjeJCyj
+	 dT3yppsjxWgOhJ8E7W8dEDqrOy9wzdpuAVCXPYxnMLg5iAfZIxKrE37fHiQEmCHbS6
+	 dBkcluZPTt6xmDzm4aLQJ7TFlmJSnnhY2US8EZXE6Rdp9e/6MSQ9RV8n7VvJG+6jP3
+	 R163ctoPTUC0MDkJT4mxPZZZbw2U6V62j8yVRpTXobdq2d458BhyIAYvqPT7rFLT6Y
+	 zzJUU/UL4WAvg==
 From: SeongJae Park <sj@kernel.org>
-To: Andrew Morton <akpm@linux-foundation.org>
-Cc: SeongJae Park <sj@kernel.org>,
-	Jonathan Corbet <corbet@lwn.net>,
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org,
+	patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net,
+	rwarsow@gmx.de,
+	conor@kernel.org,
 	damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	linux-doc@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH 3/3] Docs/admin-guide/mm/damon/usage: update for tried regions update time interval
-Date: Thu, 12 Oct 2023 19:22:55 +0000
-Message-Id: <20231012192256.33556-4-sj@kernel.org>
+	SeongJae Park <sj@kernel.org>
+Subject: Re: [PATCH 5.15 000/102] 5.15.136-rc1 review
+Date: Mon, 16 Oct 2023 18:35:33 +0000
+Message-Id: <20231016183534.98630-1-sj@kernel.org>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20231012192256.33556-1-sj@kernel.org>
-References: <20231012192256.33556-1-sj@kernel.org>
+In-Reply-To: <20231016083953.689300946@linuxfoundation.org>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -39,35 +51,53 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The documentation says DAMOS tried regions update feature of DAMON sysfs
-interface is doing the update for one aggregation interval after the
-request is made.  Since the introduction of the per-scheme apply
-interval, that behavior makes no much sense.  Hence the implementation
-has changed to update the regions for each scheme for only its apply
-interval.  Further update the document to reflect the real behavior.
+Hello,
 
-Signed-off-by: SeongJae Park <sj@kernel.org>
+On Mon, 16 Oct 2023 10:39:59 +0200 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+
+> This is the start of the stable review cycle for the 5.15.136 release.
+> There are 102 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Wed, 18 Oct 2023 08:39:38 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.136-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
+> and the diffstat can be found below.
+
+This rc kernel passes DAMON functionality test[1] on my test machine.
+Attaching the test results summary below.  Please note that I retrieved the
+kernel from linux-stable-rc tree[2].
+
+Tested-by: SeongJae Park <sj@kernel.org>
+
+[1] https://github.com/awslabs/damon-tests/tree/next/corr
+[2] f11fc66f963f ("Linux 5.15.136-rc1")
+
+Thanks,
+SJ
+
+[...]
+
 ---
- Documentation/admin-guide/mm/damon/usage.rst | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/Documentation/admin-guide/mm/damon/usage.rst b/Documentation/admin-guide/mm/damon/usage.rst
-index 8507a6e45d86..da94feb97ed1 100644
---- a/Documentation/admin-guide/mm/damon/usage.rst
-+++ b/Documentation/admin-guide/mm/damon/usage.rst
-@@ -432,9 +432,9 @@ that reading it returns the total size of the scheme tried regions, and creates
- directories named integer starting from ``0`` under this directory.  Each
- directory contains files exposing detailed information about each of the memory
- region that the corresponding scheme's ``action`` has tried to be applied under
--this directory, during next :ref:`aggregation interval
--<sysfs_monitoring_attrs>`.  The information includes address range,
--``nr_accesses``, and ``age`` of the region.
-+this directory, during next :ref:`apply interval <damon_design_damos>` of the
-+corresponding scheme.  The information includes address range, ``nr_accesses``,
-+and ``age`` of the region.
- 
- Writing ``update_schemes_tried_bytes`` to the relevant ``kdamonds/<N>/state``
- file will only update the ``total_bytes`` file, and will not create the
--- 
-2.34.1
+ok 1 selftests: damon: debugfs_attrs.sh
+ok 1 selftests: damon-tests: huge_count_read_write.sh
+ok 2 selftests: damon-tests: buffer_overflow.sh
+ok 3 selftests: damon-tests: rm_contexts.sh
+ok 4 selftests: damon-tests: record_null_deref.sh
+ok 5 selftests: damon-tests: dbgfs_target_ids_read_before_terminate_race.sh
+ok 6 selftests: damon-tests: dbgfs_target_ids_pid_leak.sh
+ok 7 selftests: damon-tests: damo_tests.sh
+ok 8 selftests: damon-tests: masim-record.sh
+ok 9 selftests: damon-tests: build_i386.sh
+ok 10 selftests: damon-tests: build_arm64.sh
+ok 11 selftests: damon-tests: build_i386_idle_flag.sh
+ok 12 selftests: damon-tests: build_i386_highpte.sh
+ok 13 selftests: damon-tests: build_nomemcg.sh
 
+PASS
