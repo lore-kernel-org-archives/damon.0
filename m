@@ -1,48 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 515C0368;
-	Tue, 17 Oct 2023 00:14:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A900539866
+	for <damon@lists.linux.dev>; Thu, 19 Oct 2023 19:49:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fd2R/T/j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EBEAC433C7;
-	Tue, 17 Oct 2023 00:14:36 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CuUPzS+N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A79ACC433C7;
+	Thu, 19 Oct 2023 19:49:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1697501677;
-	bh=FPyG5zRKci3ZPy3S8nE3sp47hjbmHMxIrWz6E1pi2GU=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fd2R/T/jhc1i9uHIG2PP5UqLAJUgudAYz1zKih++90a9Q781TpxHGfLS/1tvcQrw2
-	 AVdL8QR44Os7fK9mUYc9cG4f+E6Mr8amPCEkdaVYTI4mqdfefEnjpBfrDIypK0o+KR
-	 lSzYgKCCi855F5l893pe8dxwKzu6XpK03bfFLXgXqQRjgr/xBwKPLb2zW3UJwtEu57
-	 cK1ZxshSOpN123wcW5VhY1K8IU9JR5GcwtGdyk3PxWaYRFVokKrJqQXuNJiXboAEbY
-	 KHJI7voHnKsTmG5fpp76nWNIFLVvU86LWyAhLq9O6w999cjAT2/rbcIEpyHMcW9m8c
-	 Oi0jn0QLTDshA==
+	s=k20201202; t=1697744970;
+	bh=hrrza+crBd0RjMFZAgh+3yDyKNEWLMDaW4dbIT2n9jQ=;
+	h=From:To:Cc:Subject:Date:From;
+	b=CuUPzS+NiENfFW4IGkmjF1bIWMGzjCQS3iWVUOePE5rhfXDWxQte786cYVifxeVzx
+	 GrusnsW84WOyMJCPzhi3dOzPjSZbDevDjkyXI7MCiqo08/rKT0phGUitlODzcDpPvA
+	 DvtSZBqIgt3a6OilHFjCisaHGwHT4q7him0DbNN7eSOLHYaW+xrQcm5RQ/gr255Wr4
+	 +idbbXK+i9HClhI5L3MD8qLFUwodlAdLn3hQC7Xp6A4mslYvrIeQv7J/RAgd1cYbh/
+	 +KhbQCiGeuMhqyTDT0vc5ilNhJwDrMG5lYAE3kylIerEvyFdvggU2shT/VU/IZ5SKA
+	 a7DlWTT1r0r6Q==
 From: SeongJae Park <sj@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org,
-	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net,
-	rwarsow@gmx.de,
-	conor@kernel.org,
+To: Andrew Morton <akpm@linux-foundation.org>
+Cc: SeongJae Park <sj@kernel.org>,
 	damon@lists.linux.dev,
-	SeongJae Park <sj@kernel.org>
-Subject: Re: [PATCH 6.5 000/190] 6.5.8-rc2 review
-Date: Tue, 17 Oct 2023 00:14:34 +0000
-Message-Id: <20231017001434.1524-1-sj@kernel.org>
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH 0/5] avoid divide-by-zero due to max_nr_accesses overflow
+Date: Thu, 19 Oct 2023 19:49:19 +0000
+Message-Id: <20231019194924.100347-1-sj@kernel.org>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20231016185002.371937173@linuxfoundation.org>
-References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -51,64 +35,40 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hello,
+The maximum nr_accesses of given DAMON context can be calculated by
+dividing the aggregation interval by the sampling interval.  Some logics
+in DAMON uses the maximum nr_accesses as a divisor.  Hence, the value
+shouldn't be zero.  Such case is avoided since DAMON avoids setting the
+agregation interval as samller than the sampling interval.  However,
+since nr_accesses is unsigned int while the intervals are unsigned long,
+the maximum nr_accesses could be zero while casting.
 
-On Mon, 16 Oct 2023 21:48:57 +0200 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+Avoid the divide-by-zero by implementing a function that handles the
+corner case (first patch), and replaces the vulnerable direct max
+nr_accesses calculations (remaining patches).
 
-> This is the start of the stable review cycle for the 6.5.8 release.
-> There are 190 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Wed, 18 Oct 2023 18:48:18 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.5.8-rc2.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.5.y
-> and the diffstat can be found below.
+Note that the patches for the replacements are divided for broken
+commits, to make backporting on required tres easier.  Especially, the
+last patch is for a patch that not yet merged into the mainline but in
+mm tree.
 
-This rc kernel passes DAMON functionality test[1] on my test machine.
-Attaching the test results summary below.  Please note that I retrieved the
-kernel from linux-stable-rc tree[2].
+SeongJae Park (5):
+  mm/damon: implement a function for max nr_accesses safe calculation
+  mm/damon/core: avoid divide-by-zero during monitoring results update
+  mm/damon/ops-common: avoid divide-by-zero during region hotness
+    calculation
+  mm/damon/lru_sort: avoid divide-by-zero in hot threshold calculation
+  mm/damon/core: avoid divide-by-zero from pseudo-moving window length
+    calculation
 
-Tested-by: SeongJae Park <sj@kernel.org>
+ include/linux/damon.h |  7 +++++++
+ mm/damon/core.c       | 12 +++---------
+ mm/damon/lru_sort.c   |  4 +---
+ mm/damon/ops-common.c |  5 ++---
+ 4 files changed, 13 insertions(+), 15 deletions(-)
 
-[1] https://github.com/awslabs/damon-tests/tree/next/corr
-[2] be4ec7370801 ("Linux 6.5.8-rc2")
 
-Thanks,
-SJ
+base-commit: e845524c56a529768a8793e96304db09134eafdf
+-- 
+2.34.1
 
-[...]
-
----
-
-ok 1 selftests: damon: debugfs_attrs.sh
-ok 2 selftests: damon: debugfs_schemes.sh
-ok 3 selftests: damon: debugfs_target_ids.sh
-ok 4 selftests: damon: debugfs_empty_targets.sh
-ok 5 selftests: damon: debugfs_huge_count_read_write.sh
-ok 6 selftests: damon: debugfs_duplicate_context_creation.sh
-ok 7 selftests: damon: debugfs_rm_non_contexts.sh
-ok 8 selftests: damon: sysfs.sh
-ok 9 selftests: damon: sysfs_update_removed_scheme_dir.sh
-ok 10 selftests: damon: reclaim.sh
-ok 11 selftests: damon: lru_sort.sh
-ok 1 selftests: damon-tests: kunit.sh
-ok 2 selftests: damon-tests: huge_count_read_write.sh
-ok 3 selftests: damon-tests: buffer_overflow.sh
-ok 4 selftests: damon-tests: rm_contexts.sh
-ok 5 selftests: damon-tests: record_null_deref.sh
-ok 6 selftests: damon-tests: dbgfs_target_ids_read_before_terminate_race.sh
-ok 7 selftests: damon-tests: dbgfs_target_ids_pid_leak.sh
-ok 8 selftests: damon-tests: damo_tests.sh
-ok 9 selftests: damon-tests: masim-record.sh
-ok 10 selftests: damon-tests: build_i386.sh
-ok 11 selftests: damon-tests: build_arm64.sh
-ok 12 selftests: damon-tests: build_i386_idle_flag.sh
-ok 13 selftests: damon-tests: build_i386_highpte.sh
-ok 14 selftests: damon-tests: build_nomemcg.sh
- [33m
- [92mPASS [39m
