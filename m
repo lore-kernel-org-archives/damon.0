@@ -1,22 +1,22 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60D41200B8
-	for <damon@lists.linux.dev>; Fri, 20 Oct 2023 17:23:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B97BD200B8
+	for <damon@lists.linux.dev>; Fri, 20 Oct 2023 17:23:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lk1FqpYB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5437EC433C8;
-	Fri, 20 Oct 2023 17:23:22 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tibiLrMD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1487BC433C7;
+	Fri, 20 Oct 2023 17:23:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1697822602;
-	bh=Rn9BHGv/kMTRWnOOhqqlR6v0d9H0u3tnTjx9VDJfJCU=;
+	s=k20201202; t=1697822604;
+	bh=OyGTPA4KF2+eYVdgVawdmd836X4nvWEWuxM0J39C7SY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lk1FqpYByQMbf59yh0U8YLgrRJ43zTSnfY5ztYkNwJxmOlrcYYzGMmulb64GWPd27
-	 WDnr/ul64sOEPEBEX/FpDD7+OZxQ8uoE0Z3aJRmivH6ITsRSScdktkyKelkVw9EWzz
-	 /YvbiC+RTKd5QA6LA86beLXArsehV6tLDXXWVWr1ZBYHK8TVlWJvgdQu8eDE1kLNFp
-	 Y09FFWInvtPhlAqZAV2wcN8olPgLL4o0Xj8ujhKXQCa21H/maEShe4WpqSSEIrcXg/
-	 zChMs5xWAxN9PsyWly2J4u8y1YAbo07mJij27Eu/Tj0CAYBsIe7S6DVGlYjXB2W8SE
-	 DJbKUg/VjiXzA==
+	b=tibiLrMDEW1tJPRD83m27OwLCd/3DldWtN6HSY+GRNl2CN2/lGFqdA8TQQ727MbK1
+	 RXghEBiUVpRYW2wWEiF2yiDTw4Mz9aUN/5jKYr74Dv/eki3xYKDE93RdSo9tqctrMh
+	 CQYh7C/JT6Pd/m/Lx4jnpiYh3AL+5ZGjJ0Dgwm8qeCTjxEkZ//jSvkKcBywnn8qJsk
+	 xIov6mao/lOfYVmBmQThgDh3lKi7Zq5LeWX+G0A45G30D5VHCYpRwm1A1Anhin9GeL
+	 YqhXZxPUTshcAwA2xiNxXzGXvG7BgM88reL/1z9rKcS6B3dNgRns0LUK1vsgdWaqlG
+	 PvGSzwlgnkpAg==
 From: SeongJae Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SeongJae Park <sj@kernel.org>,
@@ -25,9 +25,9 @@ Cc: SeongJae Park <sj@kernel.org>,
 	linux-mm@kvack.org,
 	linux-kernel@vger.kernel.org,
 	stable@vger.kernel.org
-Subject: [PATCH v2 1/5] mm/damon: implement a function for max nr_accesses safe calculation
-Date: Fri, 20 Oct 2023 17:23:13 +0000
-Message-Id: <20231020172317.64192-2-sj@kernel.org>
+Subject: [PATCH v2 2/5] mm/damon/core: avoid divide-by-zero during monitoring results update
+Date: Fri, 20 Oct 2023 17:23:14 +0000
+Message-Id: <20231020172317.64192-3-sj@kernel.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20231020172317.64192-1-sj@kernel.org>
 References: <20231020172317.64192-1-sj@kernel.org>
@@ -39,46 +39,48 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The maximum nr_accesses of given DAMON context can be calculated by
-dividing the aggregation interval by the sampling interval.  Some logics
-in DAMON uses the maximum nr_accesses as a divisor.  Hence, the value
-shouldn't be zero.  Such case is avoided since DAMON avoids setting the
-agregation interval as samller than the sampling interval.  However,
-since nr_accesses is unsigned int while the intervals are unsigned long,
-the maximum nr_accesses could be zero while casting.  Implement a
-function that handles the corner case.
-
-Note that this commit is not fixing the real issue since this is only
-introducing the safe function that will replaces the problematic
-divisions.  The replacements will be made by followup commits, to make
-backporting on stable series easier.
+When monitoring attributes are changed, DAMON updates access rate of the
+monitoring results accordingly.  For that, it divides some values by the
+maximum nr_accesses.  However, due to the type of the related variables,
+simple division-based calculation of the divisor can return zero.  As a
+result, divide-by-zero is possible.  Fix it by using
+damon_max_nr_accesses(), which handles the case.
 
 Reported-by: Jakub Acs <acsjakub@amazon.de>
-Fixes: 198f0f4c58b9 ("mm/damon/vaddr,paddr: support pageout prioritization")
-Cc: <stable@vger.kernel.org> # 5.16.x
+Fixes: 2f5bef5a590b ("mm/damon/core: update monitoring results for new monitoring attributes")
+Cc: <stable@vger.kernel.org> # 6.3.x
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- include/linux/damon.h | 7 +++++++
- 1 file changed, 7 insertions(+)
+ mm/damon/core.c | 10 ++--------
+ 1 file changed, 2 insertions(+), 8 deletions(-)
 
-diff --git a/include/linux/damon.h b/include/linux/damon.h
-index 27b995c22497..ab2f17d9926b 100644
---- a/include/linux/damon.h
-+++ b/include/linux/damon.h
-@@ -681,6 +681,13 @@ static inline bool damon_target_has_pid(const struct damon_ctx *ctx)
- 	return ctx->ops.id == DAMON_OPS_VADDR || ctx->ops.id == DAMON_OPS_FVADDR;
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index 9f4f7c378cf3..e194c8075235 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -500,20 +500,14 @@ static unsigned int damon_age_for_new_attrs(unsigned int age,
+ static unsigned int damon_accesses_bp_to_nr_accesses(
+ 		unsigned int accesses_bp, struct damon_attrs *attrs)
+ {
+-	unsigned int max_nr_accesses =
+-		attrs->aggr_interval / attrs->sample_interval;
+-
+-	return accesses_bp * max_nr_accesses / 10000;
++	return accesses_bp * damon_max_nr_accesses(attrs) / 10000;
  }
  
-+static inline unsigned int damon_max_nr_accesses(const struct damon_attrs *attrs)
-+{
-+	/* {aggr,sample}_interval are unsigned long, hence could overflow */
-+	return min(attrs->aggr_interval / attrs->sample_interval,
-+			(unsigned long)UINT_MAX);
-+}
-+
+ /* convert nr_accesses to access ratio in bp (per 10,000) */
+ static unsigned int damon_nr_accesses_to_accesses_bp(
+ 		unsigned int nr_accesses, struct damon_attrs *attrs)
+ {
+-	unsigned int max_nr_accesses =
+-		attrs->aggr_interval / attrs->sample_interval;
+-
+-	return nr_accesses * 10000 / max_nr_accesses;
++	return nr_accesses * 10000 / damon_max_nr_accesses(attrs);
+ }
  
- int damon_start(struct damon_ctx **ctxs, int nr_ctxs, bool exclusive);
- int damon_stop(struct damon_ctx **ctxs, int nr_ctxs);
+ static unsigned int damon_nr_accesses_for_new_attrs(unsigned int nr_accesses,
 -- 
 2.34.1
 
