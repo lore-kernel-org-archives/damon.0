@@ -1,74 +1,59 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE282200B8
-	for <damon@lists.linux.dev>; Fri, 20 Oct 2023 17:23:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4845920318
+	for <damon@lists.linux.dev>; Fri, 20 Oct 2023 17:30:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="R2Uo8d1d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 744D4C433C9;
-	Fri, 20 Oct 2023 17:23:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1697822608;
-	bh=A7qQGX2x61HuX9WngSjrxy/tMdxThwG7cO+vlCnt/oI=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R2Uo8d1dOObRxHmQhvT+GaBkbeipS3EDjJHzlrqnXCOqDtzreW0cAfNfLBKnVc8lc
-	 lCprkGxeggXj98oVNf/z2gNIDicTFnmBoUSvD8XtZKmqF8BGuA1vA5ufLZh4OjhNfY
-	 xc9+xQc4jg/efEPeUXH3jErpnXwLGo738cZmOScqm/dYnZfejUTXwGj+LjFdURrRTu
-	 pAbE3gO8gyfQ/zOq8DRIK0aUFpnm+GIxyJPhGLoPRDPqkfz3HJWzOyFpKlnff7OBsQ
-	 1he8H2Uc1OZyM9peBjSqaiWiqy51/HuuUooffHS1eN5ncUvPAJQtvNwZEIHW/YnzZt
-	 O2zyOi3nvaUSA==
-From: SeongJae Park <sj@kernel.org>
-To: Andrew Morton <akpm@linux-foundation.org>
-Cc: SeongJae Park <sj@kernel.org>,
-	damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH 5/5] mm/damon/core: avoid divide-by-zero from pseudo-moving window length calculation
-Date: Fri, 20 Oct 2023 17:23:17 +0000
-Message-Id: <20231020172317.64192-6-sj@kernel.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20231020172317.64192-1-sj@kernel.org>
-References: <20231020172317.64192-1-sj@kernel.org>
+	dkim=pass (1024-bit key) header.d=linux-foundation.org header.i=@linux-foundation.org header.b="XIbOXKyk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83D8BC433C7;
+	Fri, 20 Oct 2023 17:30:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linux-foundation.org;
+	s=korg; t=1697823037;
+	bh=cJeCmKC38qm90zyfdcG4SUKfILLYa+5rU2Q+LCqJ8lM=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=XIbOXKykVs348OUb2DLZnFwaZAO6yQOODMlyMioGr7OgM6CvBy+LNZcvXM0I9N1U1
+	 9N94CneC/tHv2yls/XwFziprrJXA1NQGwu7D3VG75vhzQMvmrGovs7eabtAjPKjT/x
+	 ncOf/qPcc1NjxqBFZynMjaCLtE3pn3839yr3DUfw=
+Date: Fri, 20 Oct 2023 10:30:36 -0700
+From: Andrew Morton <akpm@linux-foundation.org>
+To: SeongJae Park <sj@kernel.org>
+Cc: damon@lists.linux.dev, linux-mm@kvack.org, linux-kernel@vger.kernel.org,
+ acsjakub@amazon.de
+Subject: Re: [PATCH 0/5] avoid divide-by-zero due to max_nr_accesses
+ overflow
+Message-Id: <20231020103036.027282d16aaf56498230cc12@linux-foundation.org>
+In-Reply-To: <20231020171901.63994-1-sj@kernel.org>
+References: <20231019194924.100347-1-sj@kernel.org>
+	<20231020171901.63994-1-sj@kernel.org>
+X-Mailer: Sylpheed 3.8.0beta1 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
-When calculating the pseudo-moving access rate, DAMON divides some
-values by the maximum nr_accesses.  However, due to the type of the
-related variables, simple division-based calculation of the divisor can
-return zero.  As a result, divide-by-zero is possible.  Fix it by using
-damon_max_nr_accesses(), which handles the case.
+On Fri, 20 Oct 2023 17:19:01 +0000 SeongJae Park <sj@kernel.org> wrote:
 
-Note that this is a fix for a commit that not in the mainline but mm
-tree.
+> On Thu, 19 Oct 2023 19:49:19 +0000 SeongJae Park <sj@kernel.org> wrote:
+> 
+> > The maximum nr_accesses of given DAMON context can be calculated by
+> > dividing the aggregation interval by the sampling interval.  Some logics
+> > in DAMON uses the maximum nr_accesses as a divisor.  Hence, the value
+> > shouldn't be zero.  Such case is avoided since DAMON avoids setting the
+> > agregation interval as samller than the sampling interval.  However,
+> > since nr_accesses is unsigned int while the intervals are unsigned long,
+> > the maximum nr_accesses could be zero while casting.
+> 
+> Actually, the issue was reported by Jakub, and I didn't add 'Reported-by:' tags
+> for him.  I sure Andrew could add that on his own, but I want to minimize
+> Andrew's load, so will send v2 of this patchset.  Andrew, please let me know if
+> that doesn't help but only increasing your load.
 
-Fixes: ace30fb21af5 ("mm/damon/core: use pseudo-moving sum for nr_accesses_bp")
-Signed-off-by: SeongJae Park <sj@kernel.org>
----
+Editing the changelogs is far quicker than updating a patch series ;)
 
-Note that this is for a patch in mm-stable that not yet merged into the
-mainline.
-
- mm/damon/core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index e194c8075235..aa2dc7087cd9 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -1665,7 +1665,7 @@ void damon_update_region_access_rate(struct damon_region *r, bool accessed,
- 	 * aggr_interval, owing to validation of damon_set_attrs().
- 	 */
- 	if (attrs->sample_interval)
--		len_window = attrs->aggr_interval / attrs->sample_interval;
-+		len_window = damon_max_nr_accesses(attrs);
- 	r->nr_accesses_bp = damon_moving_sum(r->nr_accesses_bp,
- 			r->last_nr_accesses * 10000, len_window,
- 			accessed ? 10000 : 0);
--- 
-2.34.1
-
+btw, it's now conventional to add a link to the reporter's report.  The
+new "Closes:" tag, immediately after the Reported-by:.  But it's not a
+big deal.
