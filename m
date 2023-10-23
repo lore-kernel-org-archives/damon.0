@@ -1,37 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11D8A13AC6
-	for <damon@lists.linux.dev>; Sun, 22 Oct 2023 21:07:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68F521CA96;
+	Mon, 23 Oct 2023 16:23:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VPtzbp9D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAD8AC433CC;
-	Sun, 22 Oct 2023 21:07:40 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="i9wc8Y4R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73A59C433C8;
+	Mon, 23 Oct 2023 16:23:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1698008861;
-	bh=pX1A2S2gjU4x1dZfHy4yT2f4Z5R5IGs3hrXsH8uj4kQ=;
+	s=k20201202; t=1698078183;
+	bh=hw1RXDOvJQbEcCc6aiMGkaMdzvxKkAGo1xlXgtElMxw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VPtzbp9DR4GYqSWrxjplHnqJMaf8/XbHf1DVh34biZk0X9atCutXLtohCsYEpmIgb
-	 oSE/M3l9smu1CM0WYj9uYDQeSuEjy7QE4+XhQhpqfKg7yZS7/Yc37r9tj6ofHumFQ8
-	 y9e3/u3flDUEJ0m+lxithcFLhD+TPhUMXZ7PUNzF85LMMhoVMKvHzc+Eh+SZ+fjlzO
-	 wB9gdtBvAmnLkNztpD5YMAhv2kEjvzx9Cw3IwwoPvFwuvVT1TnioVRFrlZvkq9Uh/+
-	 OuVGuIPTla6+EdOxYKPFZvpwWyqfL31jkE55HGMylFl0h2wZexvWGsrvRnNdvMhDUU
-	 9LNIgOocj9Ayg==
+	b=i9wc8Y4R1kVemCS/QZfjYyTWUDmRl7qcQCpvf1SbcSBE5hudWJaTMM2gO69nAAo+9
+	 WWhDq1VsbpTwTQBwIGWMwva4KN70cCasRr3++3M1SFmu5jp4LptXVofrdS0tDID851
+	 zqSOfePJQwv5cw4/ZogStkc85gRJeugmXW/dLsu/fLcNLOLZAfTpWBOt3oqHKWKeuo
+	 LaUAo+mAf7/fxwOvLoH8EWaJCxMpjLw+EEeDmc2nqijSJ8ALrVXHccKPPQXSZ56VYz
+	 0HlzYiG5ax7GZ8VT427PLaoRXrK5UEgM10veBu9oxzpqHbweTINDWBEf1FsFVky6NW
+	 jAQzlgU96YVvA==
 From: SeongJae Park <sj@kernel.org>
-To: Andrew Morton <akpm@linux-foundation.org>
-Cc: SeongJae Park <sj@kernel.org>,
-	Brendan Higgins <brendanhiggins@google.com>,
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org,
+	patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net,
+	rwarsow@gmx.de,
+	conor@kernel.org,
 	damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	kunit-dev@googlegroups.com,
-	linux-kselftest@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH 2/2] mm/damon/sysfs-test: add a unit test for damon_sysfs_set_targets()
-Date: Sun, 22 Oct 2023 21:07:34 +0000
-Message-Id: <20231022210735.46409-3-sj@kernel.org>
+	SeongJae Park <sj@kernel.org>
+Subject: Re: [PATCH 5.15 000/137] 5.15.137-rc1 review
+Date: Mon, 23 Oct 2023 16:23:00 +0000
+Message-Id: <20231023162300.188047-1-sj@kernel.org>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20231022210735.46409-1-sj@kernel.org>
-References: <20231022210735.46409-1-sj@kernel.org>
+In-Reply-To: <20231023104820.849461819@linuxfoundation.org>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -40,143 +51,67 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-damon_sysfs_set_targets() had a bug that can result in unexpected memory
-usage and monitoring overhead increase.  The bug has fixed by a previous
-commit.  Add a unit test for avoiding a similar bug of future.
+Hello,
 
-Signed-off-by: SeongJae Park <sj@kernel.org>
+On Mon, 23 Oct 2023 12:55:57 +0200 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+
+> This is the start of the stable review cycle for the 5.15.137 release.
+> There are 137 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Wed, 25 Oct 2023 10:47:57 +0000.
+> Anything received after that time might be too late.
+
+This rc kernel passes DAMON functionality test[1] on my test machine.
+Attaching the test results summary below.  Please note that I retrieved the
+kernel from linux-stable-rc tree[2].
+
+Also, please note that the automated run of the test was failed kunit test due
+to a buggy commit.  Attaching test results summary is that of the failed one.
+I made a fix and pushed[3].  With the fix, I manually confirmed this rc kernel
+passes the kunit test with the fix.
+
+Tested-by: SeongJae Park <sj@kernel.org>
+
+[1] https://github.com/awslabs/damon-tests/tree/next/corr
+[2] c7721f02ed5c ("Linux 5.15.137-rc1")
+[3] https://github.com/awslabs/damon-tests/commit/6182d52940e83623376ceceb6c0b90e661abba3b
+
+Thanks,
+SJ
+
+[...]
+
 ---
- mm/damon/Kconfig      | 12 ++++++
- mm/damon/sysfs-test.h | 86 +++++++++++++++++++++++++++++++++++++++++++
- mm/damon/sysfs.c      |  2 +
- 3 files changed, 100 insertions(+)
- create mode 100644 mm/damon/sysfs-test.h
 
-diff --git a/mm/damon/Kconfig b/mm/damon/Kconfig
-index 436c6b4cb5ec..29f43fbc2eff 100644
---- a/mm/damon/Kconfig
-+++ b/mm/damon/Kconfig
-@@ -59,6 +59,18 @@ config DAMON_SYSFS
- 	  This builds the sysfs interface for DAMON.  The user space can use
- 	  the interface for arbitrary data access monitoring.
- 
-+config DAMON_SYSFS_KUNIT_TEST
-+	bool "Test for damon debugfs interface" if !KUNIT_ALL_TESTS
-+	depends on DAMON_SYSFS && KUNIT=y
-+	default KUNIT_ALL_TESTS
-+	help
-+	  This builds the DAMON sysfs interface Kunit test suite.
-+
-+	  For more information on KUnit and unit tests in general, please refer
-+	  to the KUnit documentation.
-+
-+	  If unsure, say N.
-+
- config DAMON_DBGFS
- 	bool "DAMON debugfs interface (DEPRECATED!)"
- 	depends on DAMON_VADDR && DAMON_PADDR && DEBUG_FS
-diff --git a/mm/damon/sysfs-test.h b/mm/damon/sysfs-test.h
-new file mode 100644
-index 000000000000..73bdce2452c1
---- /dev/null
-+++ b/mm/damon/sysfs-test.h
-@@ -0,0 +1,86 @@
-+/* SPDX-License-Identifier: GPL-2.0 */
-+/*
-+ * Data Access Monitor Unit Tests
-+ *
-+ * Author: SeongJae Park <sj@kernel.org>
-+ */
-+
-+#ifdef CONFIG_DAMON_SYSFS_KUNIT_TEST
-+
-+#ifndef _DAMON_SYSFS_TEST_H
-+#define _DAMON_SYSFS_TEST_H
-+
-+#include <kunit/test.h>
-+
-+static unsigned int nr_damon_targets(struct damon_ctx *ctx)
-+{
-+	struct damon_target *t;
-+	unsigned int nr_targets = 0;
-+
-+	damon_for_each_target(t, ctx)
-+		nr_targets++;
-+
-+	return nr_targets;
-+}
-+
-+static int __damon_sysfs_test_get_any_pid(int min, int max)
-+{
-+	struct pid *pid;
-+	int i;
-+
-+	for (i = min; i <= max; i++) {
-+		pid = find_get_pid(i);
-+		if (pid) {
-+			put_pid(pid);
-+			return i;
-+		}
-+	}
-+	return -1;
-+}
-+
-+static void damon_sysfs_test_set_targets(struct kunit *test)
-+{
-+	struct damon_sysfs_targets *sysfs_targets;
-+	struct damon_sysfs_target *sysfs_target;
-+	struct damon_ctx *ctx;
-+
-+	sysfs_targets = damon_sysfs_targets_alloc();
-+	sysfs_targets->nr = 1;
-+	sysfs_targets->targets_arr = kmalloc_array(1,
-+			sizeof(*sysfs_targets->targets_arr), GFP_KERNEL);
-+
-+	sysfs_target = damon_sysfs_target_alloc();
-+	sysfs_target->pid = __damon_sysfs_test_get_any_pid(12, 100);
-+	sysfs_target->regions = damon_sysfs_regions_alloc();
-+	sysfs_targets->targets_arr[0] = sysfs_target;
-+
-+	ctx = damon_new_ctx();
-+
-+	damon_sysfs_set_targets(ctx, sysfs_targets);
-+	KUNIT_EXPECT_EQ(test, 1u, nr_damon_targets(ctx));
-+
-+	sysfs_target->pid = __damon_sysfs_test_get_any_pid(
-+			sysfs_target->pid + 1, 200);
-+	damon_sysfs_set_targets(ctx, sysfs_targets);
-+	KUNIT_EXPECT_EQ(test, 1u, nr_damon_targets(ctx));
-+
-+	damon_destroy_ctx(ctx);
-+	kfree(sysfs_targets->targets_arr);
-+	kfree(sysfs_targets);
-+	kfree(sysfs_target);
-+}
-+
-+static struct kunit_case damon_sysfs_test_cases[] = {
-+	KUNIT_CASE(damon_sysfs_test_set_targets),
-+	{},
-+};
-+
-+static struct kunit_suite damon_sysfs_test_suite = {
-+	.name = "damon-sysfs",
-+	.test_cases = damon_sysfs_test_cases,
-+};
-+kunit_test_suite(damon_sysfs_test_suite);
-+
-+#endif /* _DAMON_SYSFS_TEST_H */
-+
-+#endif /* CONFIG_DAMON_SYSFS_KUNIT_TEST */
-diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
-index 5268e8503722..d13e353bee52 100644
---- a/mm/damon/sysfs.c
-+++ b/mm/damon/sysfs.c
-@@ -1804,3 +1804,5 @@ static int __init damon_sysfs_init(void)
- 	return err;
- }
- subsys_initcall(damon_sysfs_init);
-+
-+#include "sysfs-test.h"
--- 
-2.34.1
+# selftests: damon-tests: build_i386_highpte.sh
+# .config:1347:warning: override: reassigning to symbol DAMON
+ok 13 selftests: damon-tests: build_i386_highpte.sh
+# selftests: damon-tests: build_nomemcg.sh
+# .config:1348:warning: override: reassigning to symbol DAMON
+# .config:1358:warning: override: reassigning to symbol CGROUPS
+ok 14 selftests: damon-tests: build_nomemcg.sh
+# kselftest dir '/home/sjpark/damon-tests-cont/linux/tools/testing/selftests/damon-tests' is in dirty state.
+# the log is at '/home/sjpark/log'.
+ [32m
+ok 1 selftests: damon: debugfs_attrs.sh
+ok 2 selftests: damon-tests: huge_count_read_write.sh
+ok 3 selftests: damon-tests: buffer_overflow.sh
+ok 4 selftests: damon-tests: rm_contexts.sh
+ok 5 selftests: damon-tests: record_null_deref.sh
+ok 6 selftests: damon-tests: dbgfs_target_ids_read_before_terminate_race.sh
+ok 7 selftests: damon-tests: dbgfs_target_ids_pid_leak.sh
+ok 8 selftests: damon-tests: damo_tests.sh
+ok 9 selftests: damon-tests: masim-record.sh
+ok 10 selftests: damon-tests: build_i386.sh
+ok 11 selftests: damon-tests: build_arm64.sh
+ok 12 selftests: damon-tests: build_i386_idle_flag.sh
+ok 13 selftests: damon-tests: build_i386_highpte.sh
+ok 14 selftests: damon-tests: build_nomemcg.sh
+ [33m
+not ok 1 selftests: damon-tests: kunit.sh # exit=1
 
+ [91mFAIL [39m
+_remote_run_corr.sh failed (5 times)
+Connection to localhost closed by remote host.
