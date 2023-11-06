@@ -1,34 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E8241D69B;
-	Mon,  6 Nov 2023 16:52:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7987929CF2;
+	Mon,  6 Nov 2023 17:23:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="U7I1gDjK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25238C433C8;
-	Mon,  6 Nov 2023 16:52:07 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TYd67ldJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4419C433C8;
+	Mon,  6 Nov 2023 17:23:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1699289527;
-	bh=GH4rizvfiL8Skfe2XSF+3TdIIrRGXQVKbVpTQfYNGF4=;
+	s=k20201202; t=1699291392;
+	bh=ijIIl76mfSyZJEaXX4AApfOx/nna6VpZIW5RcMMk+U0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U7I1gDjKT1fOKFyyxbggkwZSIm/KlVmyfYlhNV5MzLzR7TZd00U4Ex+OduMTGLFfm
-	 blvUK+tjCzaGVoQsJnsMmUGM6WzNFIkD6BEnHlweFjMAu2cki1m16cvp+t6iioHOVY
-	 KzSrZDADnV+wrI3H1+KK5G591fEH8Iy4gYrJ/KpHCtATkaJ9U01HxjVD6h1z0EfArX
-	 JaTeT9Sl2jYYFOgMdGl+umJfSWbiI/OnAjYVOWus8WSa+dqMNUhw+o5FM+VFC6CXEf
-	 SO885Y0XkOGB42S2RX97IGwqiVZC9fepj4f+DbHGlM0mWKWk9wdlcbq3XZfQnUgsHX
-	 hyXhXLjYKp2bw==
+	b=TYd67ldJQeDK9HAoYfRvW0DFIzUne2FHB0hO5kCS/gcjMe93dVKGJtzpU0t2+0CKD
+	 2XZu/7MHYaMRvbOfTFo+0WrkGdc75iN0o1cpYmx5X+a6Qtov5hwStmvs9s68OL2+jV
+	 1sAqycp1rHVEIlOo0Wkld14VR0pjzPDbM5OfjcK8U0DCS81uRvYsQ+DrsetQRwUOU+
+	 ETv0AYl3RWBClck2kB0WutwCidMzH6Z3lmAFqIcDZhbZ8UBDFF7C/NK3hhpUY6tzqW
+	 BbU7sQPh97aGCAC0IU/9c7aT38hGnziwiTEFvu5PumRpzXhb2WYxIXawKWOs3JMhUo
+	 UAwZ0H+apfPCQ==
 From: SeongJae Park <sj@kernel.org>
-To: Dan Carpenter <dan.carpenter@linaro.org>
-Cc: SeongJae Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org,
+	patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net,
+	rwarsow@gmx.de,
+	conor@kernel.org,
 	damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	kernel-janitors@vger.kernel.org
-Subject: Re: [PATCH] mm/damon/sysfs: eliminate potential uninitialized variable warning
-Date: Mon,  6 Nov 2023 16:52:05 +0000
-Message-Id: <20231106165205.48264-1-sj@kernel.org>
+	SeongJae Park <sj@kernel.org>
+Subject: Re: [PATCH 5.15 000/128] 5.15.138-rc1 review
+Date: Mon,  6 Nov 2023 17:23:08 +0000
+Message-Id: <20231106172309.48303-1-sj@kernel.org>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <18d2f41d-e442-4f73-89f1-50bf20cd85f2@kadam.mountain>
+In-Reply-To: <20231106130309.112650042@linuxfoundation.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -38,52 +51,54 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Mon, 6 Nov 2023 19:23:47 +0300 Dan Carpenter <dan.carpenter@linaro.org> wrote:
+Hello,
 
-> On Mon, Nov 06, 2023 at 06:41:37AM -0800, SeongJae Park wrote:
-> > Hi Dan,
-> > 
-> > On Mon, 6 Nov 2023 17:07:40 +0300 Dan Carpenter <dan.carpenter@linaro.org> wrote:
-> > 
-> > > The "err" variable is not initialized if damon_target_has_pid(ctx) is
-> > > false and sys_target->regions->nr is zero.
-> > 
-> > Thank you for fixing this.  I actually noticed this issue from Coverity Weekly
-> > Scan of -next tree (CID 1570878), and was about to send very same fix, but you
-> > were faster :)
-> > 
-> > > 
-> > > Fixes: 0bcd216c4741 ("mm/damon/sysfs: update monitoring target regions for online input commit")
-> > 
-> > Cc stable?
-> > 
+On Mon, 6 Nov 2023 14:02:40 +0100 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+
+> This is the start of the stable review cycle for the 5.15.138 release.
+> There are 128 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 > 
-> The fixes tag is from last week so I assumed it wasn't in stable yet.
-
-You're right.  But the broken commit is a fix for stable trees, so I was
-thinking this fix should also be merged into the stable kernel together.  I
-think stable maintainers would do that on their own, but I wanted to make sure
-by explicitly Cc-ing them.
-
+> Responses should be made by Wed, 08 Nov 2023 13:02:46 +0000.
+> Anything received after that time might be too late.
 > 
-> Also to be honest, I wasn't totally positive this bug could occur in
-> real life.
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.138-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
+> and the diffstat can be found below.
 
-Again, you're right.  The uninitialized value can be returned to the caller,
-but the caller of the function is not checking the returned value, so no real
-problem can occur here.
+This rc kernel passes DAMON functionality test[1] on my test machine.
+Attaching the test results summary below.  Please note that I retrieved the
+kernel from linux-stable-rc tree[2].
 
-But I think the unhandling of the return value is a bug itself, that not making
-system crash like things but might make user confused, so I was preparing a
-followup fix for that, too.  So, though the problem the fixes will fix are not
-significant, I'd prefer merging this and the followup fix to stable trees if
-ok, since those are anyway bug fix, and should be simple to apply.  If
-something conflicts, I will provide backports.
+Tested-by: SeongJae Park <sj@kernel.org>
 
+[1] https://github.com/awslabs/damon-tests/tree/next/corr
+[2] ec134bfabca0 ("Linux 5.15.138-rc1")
 
 Thanks,
 SJ
 
-> 
-> regards,
-> dan carpenter
+[...]
+
+---
+
+ok 1 selftests: damon: debugfs_attrs.sh
+ok 1 selftests: damon-tests: kunit.sh
+ok 2 selftests: damon-tests: huge_count_read_write.sh
+ok 3 selftests: damon-tests: buffer_overflow.sh
+ok 4 selftests: damon-tests: rm_contexts.sh
+ok 5 selftests: damon-tests: record_null_deref.sh
+ok 6 selftests: damon-tests: dbgfs_target_ids_read_before_terminate_race.sh
+ok 7 selftests: damon-tests: dbgfs_target_ids_pid_leak.sh
+ok 8 selftests: damon-tests: damo_tests.sh
+ok 9 selftests: damon-tests: masim-record.sh
+ok 10 selftests: damon-tests: build_i386.sh
+ok 11 selftests: damon-tests: build_arm64.sh
+ok 12 selftests: damon-tests: build_i386_idle_flag.sh
+ok 13 selftests: damon-tests: build_i386_highpte.sh
+ok 14 selftests: damon-tests: build_nomemcg.sh
+ [33m
+ [92mPASS [39m
