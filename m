@@ -1,35 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEA1A29D07
-	for <damon@lists.linux.dev>; Mon,  6 Nov 2023 23:34:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C53F4DF6B
+	for <damon@lists.linux.dev>; Mon,  6 Nov 2023 23:51:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="D1wTspPU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55F12C433CA;
-	Mon,  6 Nov 2023 23:34:13 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="g/J1Ta1D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4237C433C7;
+	Mon,  6 Nov 2023 23:51:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1699313653;
-	bh=19smz8vjkknnlftKxQDFJP/XhxeknF20W/DyGkIS8Os=;
+	s=k20201202; t=1699314678;
+	bh=ug7V1tbLRIildaS+c6ipgNYbpP3MEP1leM3HDA/pNkE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D1wTspPUeGLo6x8Q/O1NGf9r8R7Y77Rea13Em+t/uPG+M8MB1RkYbqzvbkzEFu/2o
-	 +EbJZr5EpmuJNr37DT7pK4w7FQz0S3gGCgTdLEjwu0j0llYH7NAk8oU5KIZyMrGTDa
-	 xU8ou+PE7Hw8IjLv9dyB+hxXwQngY+1i+Ioz1CMmAr4QR9KqCjMOtErZW426EoDG0n
-	 ZWwH3Jx6nAAnd11/pOFJY9vSHUNoDTRFu1AngsTYsvE2korQlJDZmaQT6CsbPoIwr5
-	 yzi1Mp+MivvdfbKoUGQsKHXEJT583q7JL2Znk9lwUlXiHrruB3lltIK3NLWFk4pDhE
-	 SzPy2Mk286CAw==
+	b=g/J1Ta1DDq5rM2T0i0r2i8ySnmYDnynAyI8MgLPEtC83Sc1yqctCBvAM7mV58yjpV
+	 XAlZcJOR/lZ0+6KLOLaVgfnoH849vWznNg2tLTK8OpJJ8c4fSpX6dSNyVIH4BoFJ56
+	 Z8dZb0HzliYqJH3ScFvBR7mCPYAbw9GldSFgHbJ46E1jCkLxw77XQXpkP6XUDA7d5a
+	 c1MjSrTqnkRAr9syYUW3CtFskcFDtKzAGC49s39p1nhOFbTQqNK6zQorbxSPAgj9Tp
+	 CFxYonO+6HMVOF0L1d0a3xpRF7g0uhces3+/XJugNe71DetWe/QMl9ViY4Mmmutupj
+	 oJfmMudJysf1w==
 From: SeongJae Park <sj@kernel.org>
-To: Andrew Morton <akpm@linux-foundation.org>
-Cc: SeongJae Park <sj@kernel.org>,
+To: SeongJae Park <sj@kernel.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>,
 	damon@lists.linux.dev,
 	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org,
-	stable@vger.kernel.org
-Subject: [PATCH 3/3] mm/damon/sysfs-schemes: handle tried region directory allocation failure
-Date: Mon,  6 Nov 2023 23:34:08 +0000
-Message-Id: <20231106233408.51159-4-sj@kernel.org>
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 0/3] mm/damon/sysfs: fix unhandled return values
+Date: Mon,  6 Nov 2023 23:51:16 +0000
+Message-Id: <20231106235116.95842-1-sj@kernel.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20231106233408.51159-1-sj@kernel.org>
-References: <20231106233408.51159-1-sj@kernel.org>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -38,32 +37,23 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-DAMON sysfs interface's before_damos_apply callback
-(damon_sysfs_before_damos_apply()), which creates the DAMOS tried
-regions for each DAMOS action applied region, is not handling the
-allocation failure for the sysfs directory data.  As a result, NULL
-pointer derefeence is possible.  Fix it by handling the case.
+On Mon, 6 Nov 2023 23:34:05 +0000 SeongJae Park <sj@kernel.org> wrote:
 
-Fixes: f1d13cacabe1 ("mm/damon/sysfs: implement DAMOS tried regions update command")
-Cc: <stable@vger.kernel.org> # 6.2.x
-Signed-off-by: SeongJae Park <sj@kernel.org>
----
- mm/damon/sysfs-schemes.c | 2 ++
- 1 file changed, 2 insertions(+)
+> Some of DAMON sysfs interface code is not handling return values from
+> some functions.  As a result, confusing user input handling or
+> NULL-dereference is possible.  Check those properly.
+> 
+> Please note that these patches are not cleanly applicable on mm-unstable
+> since mm-unstable has dropped the mainline-merged patches and rebased on
+> v6.6, while some DAMON patches that these patches are depend on are
+> merged in the mainline after v6.6.  I confirmed these patches can
+> cleanly applied on latest mainline, or mm-stable-2023-11-01-14-33.
 
-diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
-index 7413cb35c5a9..be667236b8e6 100644
---- a/mm/damon/sysfs-schemes.c
-+++ b/mm/damon/sysfs-schemes.c
-@@ -1826,6 +1826,8 @@ static int damon_sysfs_before_damos_apply(struct damon_ctx *ctx,
- 		return 0;
- 
- 	region = damon_sysfs_scheme_region_alloc(r);
-+	if (!region)
-+		return 0;
- 	list_add_tail(&region->list, &sysfs_regions->regions_list);
- 	sysfs_regions->nr_regions++;
- 	if (kobject_init_and_add(&region->kobj,
--- 
-2.34.1
+I just checked mm-unstable has just updated, and confirmed these patches can
+cleanly applied.
 
+
+Thanks,
+SJ
+
+[...]
