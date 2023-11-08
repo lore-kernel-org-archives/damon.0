@@ -1,76 +1,96 @@
-Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D0A463A0
-	for <damon@lists.linux.dev>; Tue,  7 Nov 2023 03:54:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B95A2FE2E
+	for <damon@lists.linux.dev>; Wed,  8 Nov 2023 14:55:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="TyUISCVy"
-Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-991c786369cso770553266b.1
-        for <damon@lists.linux.dev>; Mon, 06 Nov 2023 19:54:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1699329246; x=1699934046; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=5ohRlubhGgc/ByJJVo91v+dC9pOe3E7CBQIDJq7OEEU=;
-        b=TyUISCVyG8NBFK27WmB2IS8t3WlVk1H4kWUwqO0LLNy8nr0KvnIrUWlasS1eyiM4wz
-         hL8IqFdrxY3lmPUK9XBAxACkYD8kRM8YPnzSI7RbkjPSN8JFrv5f+vGVfMaScMVptGMY
-         MeBW5tI9QOJR5GK0cfA9e+N3OiQFOjnm4C/5LYILPuXEYe01SPfzbVSBWIuuZgI9sJ4S
-         kK+2kwOmJiO2AiL8Y+N5RVTnxp8z7QU1HOJ5J48TMsw31nr7z1M3C0XUpm6vjEKgvAQH
-         QEtCFYwemQVRdssGysjEpKQ9IdzHujhZGp/AcJgIhSdTcUqJMl5sU+2jgg7sqYswjxQA
-         8rKg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1699329246; x=1699934046;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=5ohRlubhGgc/ByJJVo91v+dC9pOe3E7CBQIDJq7OEEU=;
-        b=fjazoXciMAxzbJaBrenfvVV/IPjOIpZTK2ws36Y1h347VxSMp6XstRH2veiOk8fYKf
-         fQWzf2pPbxnpXZO9535PFd/rRZlJsbqN1OsQB3t9NWeNaVY4FzfoISAv4LFCKcKhnbr5
-         Ev+9FR3Qbyu9nk9ovGtPMpdJeg+AHRgFPzypg+x5y3LSFvC99LyTQXqXocekAZY7Tf4d
-         Zr6uMF1iP6/+SO/dnz25tyTISgqltdz397pC8DGuuisEuysnalAnR5vYiNdX49KVBhNK
-         lmW07Pxfg/3qiT8mQRNl6TLTDzC0r3cfJXV35Y90JZ6QjpH6dMmUMcwxGi51ai9s0sau
-         Eg8w==
-X-Gm-Message-State: AOJu0YzI8tfMud7l4w/dfMvMlNRHDF4U6ACCICUjwfMa1DfM+PD/R6Tg
-	k3xtZDOWOhET9pbZRUUkZwQLuA==
-X-Google-Smtp-Source: AGHT+IHRcH59lDrKp36GaSoTXGdBrj80c45Dg5D5kg/o2f2kX1Ge2cCV5nB0wgAbn+E0i3WM9zCrQw==
-X-Received: by 2002:a17:906:7305:b0:9bd:931e:30d8 with SMTP id di5-20020a170906730500b009bd931e30d8mr14069528ejc.14.1699329246453;
-        Mon, 06 Nov 2023 19:54:06 -0800 (PST)
-Received: from localhost ([102.36.222.112])
-        by smtp.gmail.com with ESMTPSA id bi19-20020a170906a25300b009adcb6c0f0esm535379ejb.193.2023.11.06.19.54.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Nov 2023 19:54:06 -0800 (PST)
-Date: Tue, 7 Nov 2023 06:54:03 +0300
-From: Dan Carpenter <dan.carpenter@linaro.org>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lHZKEOBF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77EEEC433C7;
+	Wed,  8 Nov 2023 14:55:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1699455341;
+	bh=SyHUGqhq5GhN6Gpzy5MDudMqRL6roYzi8hTlHcwugmM=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:From;
+	b=lHZKEOBFK/+KyUgKy1aQ3b8vedxJ775eRg4e5saOWvKQdUvFxW3rfhZ+IBVMKffmB
+	 dBqbkhk8TaX+o8WjpFezjXkjKRQJxztFflyveEgVoqt4zX5gmWaHXi2z04/ZxTYNIc
+	 2woteo23i+eMysuMeAQR68NJygYbLyJypqb2C4gKtgwPzu/90zC+t/nwL3YSs8KSsJ
+	 lJfvKNuJocQ17kqPT9YZzFYQNhRoy6H8OJwAAmwgVEy0B4bc9QXvXzSgQnIKWACSWn
+	 ZrZ2/zvGoHc/i08rfwnpH7NGbQaoZRkX8wul3UeQ+mV5qSGKNVQxWiOiPOmUV/8FHf
+	 m6VUqowYy6P5g==
+From: SeongJae Park <sj@kernel.org>
 To: SeongJae Park <sj@kernel.org>
-Cc: Andrew Morton <akpm@linux-foundation.org>, damon@lists.linux.dev,
-	linux-mm@kvack.org, kernel-janitors@vger.kernel.org
-Subject: Re: [PATCH] mm/damon/sysfs: eliminate potential uninitialized
- variable warning
-Message-ID: <0df4612e-6035-496b-96c4-d790b098aadb@kadam.mountain>
-References: <18d2f41d-e442-4f73-89f1-50bf20cd85f2@kadam.mountain>
- <20231106165205.48264-1-sj@kernel.org>
+Cc: damon@lists.linux.dev,
+	linux-damon@amazon.com,
+	linux-damon-trial@amazon.com,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: DAMON Beer/Coffee/Tea chat series
+Date: Wed,  8 Nov 2023 06:55:25 -0800
+Message-Id: <20231108145525.12650-1-sj@kernel.org>
+X-Mailer: git-send-email 2.17.1
+In-Reply-To: <20220909173856.55818-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20231106165205.48264-1-sj@kernel.org>
 
-On Mon, Nov 06, 2023 at 04:52:05PM +0000, SeongJae Park wrote:
-> But I think the unhandling of the return value is a bug itself, that not making
-> system crash like things but might make user confused, so I was preparing a
-> followup fix for that, too.  So, though the problem the fixes will fix are not
-> significant, I'd prefer merging this and the followup fix to stable trees if
-> ok, since those are anyway bug fix, and should be simple to apply.  If
-> something conflicts, I will provide backports.
+Hello Community,
 
-Sounds like a plan.  Thank you for doing this.  :)
+On Fri, 9 Sep 2022 17:38:56 +0000 SeongJae Park <sj@kernel.org> wrote:
 
-regards,
-dan carpenter
+> Hello,
+> 
+> On Tue, 30 Aug 2022 21:54:28 +0000 SeongJae Park <sj@kernel.org> wrote:
+> 
+> > Hello,
+> > 
+> > On Wed, 10 Aug 2022 22:51:02 +0000 SeongJae Park <sj@kernel.org> wrote:
+> > 
+> > > Hello,
+> > > 
+> > > 
+> > > In short, I'd like to start an open, regular, and informal virtual bi-weekly
+> > > meeting series for DAMON community.
+> > > 
+> > > Important links and dates
+> > > -------------------------
+> > > 
+> > > Location: https://meet.google.com/ndx-evoc-gbu
+> > > Agenda: https://docs.google.com/document/d/1v43Kcj3ly4CYqmAkMaZzLiM2GEnWfgdGbZAH3mi2vpM/edit?usp=sharing
+> > > 
+> > > First instance: 2022-08-15 18:00 PDT
+> > > Second instance: 2022-08-30 09:00 PDT
+[...]
+> 
+> And I just received the acceptance notification of my BoF proposal.  The
+> schedule is not updated yet, but I guess it should be 2022-09-14 (Wednesday)
+> 17:00-18:30 in Irish Standard Time (IST, UTC+01:00, Europe/Dublin timezone).
+> So, our next DAMON Beer/Coffee/Tea Chat series will be held in LPC2022, in
+> person.  I will update the final time and location as soon as possible.
 
+Like the last year, DAMON BoF at LPC has accepted and scheduled[1].  So we will
+have the second in-person DAMON community meetup (a.k.a Beer/Coffee/Tea Chat)!
+The schedule is Wednesday 4:30 PM, EST.  I hope it to be the place to meet with
+community members, say hi to each other, and discuss any interesting things.
+Since that's the close to the end of the conference, it could also be a good
+place to say good bye to each other :)
+
+Of course, please don't wait until the time slot if you have anything want to
+ask to, or discuss with me.  If you find me on the hall, I'm yours :)
+
+Please also note that I'll have a talk about DAMON status and plans[2] at
+kernel summit.  The talk will start 2:30 PM, EST, of the same day (Wednesday).
+So if I fail at time managing again and therefore if your question is not
+answered, the BoF will be a nice place for that.
+
+Looking forward to meet you all!
+
+[1] https://lpc.events/event/17/contributions/1652/
+[2] https://lpc.events/event/17/contributions/1624/
+
+
+Thanks,
+SJ
+
+[...]
