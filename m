@@ -1,47 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBBAC43AB8;
-	Wed, 15 Nov 2023 22:33:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0BEC28E02
+	for <damon@lists.linux.dev>; Thu, 16 Nov 2023 10:58:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ExO911IR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07F09C433C8;
-	Wed, 15 Nov 2023 22:33:53 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mB07d3Q7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF16AC433C7;
+	Thu, 16 Nov 2023 10:58:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1700087635;
-	bh=RTr4fWU6Tt3Im0fO1nO9h6Mw8Oa66xoA0Jf/b37HYR8=;
+	s=k20201202; t=1700132299;
+	bh=M+8iKSmznVXEZTfGoN0FrGmEHGx1v9DKi1Ga7R7HHOg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ExO911IR4Z5lD9yd3ebsGMecX8zutOq/Mwr3DrGoPFnzDBaUbbEg2KBq0K/dM6VFc
-	 TLmt4fYkfJrZCFbsOnAbWaJfqXqmHa8P3t+q5hlfSNIxe3ZIHI9m3oKPAh0QLYaA4m
-	 SL8FICW9IXNan/07i9daSsZEqeddgQpBJpee11Doisdf+TKGfJ2jPRVjk1p4m1VQKh
-	 abxDkZFemfyLCOpQ2pJeXx5/yCjc3QAzpgsa+Kc671jWC/+R3MjmvfYmgNDlVP5Mgd
-	 RXA3V2f2xsov3bkgvb8/gcttWejNHLUqby46aflNfqvQwx9yUKzAXlzwaBiX1cpFGX
-	 egszGAV1Y7pyw==
+	b=mB07d3Q7ViI4kjC0hpgE+fXB4OTqUzVdXsyIGTCCGOegiB21GcqULmwnQJ1EeDIBC
+	 Mws+buiwIwtecIwYobCeUxKnssn6vQ5jJFacZIp1SVpRNfjzqGSu56oolFFAymOxd7
+	 6k968IkW5nsJSH6lOdfjDPxhRJWlz3P4MipPYJcE0iZF8Gsc20G6DVyEi5VqvyjBT9
+	 n2YHEvJrEgTG1+SBeoKqlZzOp5tA6hca84d8wpMUjP+a2jAXZdtpXeALDYH+rPKhtf
+	 QLbNWffvtXyAaQNjl2UeRg9pBIFsPHhoOtKRDMiobAYX2it/qfuly2r8IQe9v+s6Eb
+	 oAMaUKeWCv70w==
 From: SeongJae Park <sj@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org,
-	patches@lists.linux.dev,
+To: FANG2508 <1031576200@qq.com>
+Cc: linux-mm@kvack.org,
+	sj@kernel.org,
 	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net,
-	rwarsow@gmx.de,
-	conor@kernel.org,
-	damon@lists.linux.dev,
-	SeongJae Park <sj@kernel.org>
-Subject: Re: [PATCH 6.6 000/603] 6.6.2-rc1 review
-Date: Wed, 15 Nov 2023 22:33:52 +0000
-Message-Id: <20231115223352.46459-1-sj@kernel.org>
+	damon@lists.linux.dev
+Subject: Re: [PATCH] mm/damon/ops-common.c: Fixup missing parentheses
+Date: Thu, 16 Nov 2023 10:58:17 +0000
+Message-Id: <20231116105817.51824-1-sj@kernel.org>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
+In-Reply-To: <tencent_3EF8231A65618FEEC716F90828433D6E9C09@qq.com>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -51,66 +37,49 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hello,
+Hello FANG2508,
 
-On Wed, 15 Nov 2023 14:09:05 -0500 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+On Thu, 16 Nov 2023 18:21:47 +0800 FANG2508 <1031576200@qq.com> wrote:
 
-> This is the start of the stable review cycle for the 6.6.2 release.
-> There are 603 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+> In function 'damon_hot_score', the variable 'hotness' should be divided by the sum of 'freq_weight' and 'age_weight' instead of /'freq_weight'+'age_weight'.
 > 
-> Responses should be made by Fri, 17 Nov 2023 19:14:03 +0000.
-> Anything received after that time might be too late.
+> Signed-off-by: FANG2508 <1031576200@qq.com>
+> ---
+>  mm/damon/ops-common.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.2-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
-> and the diffstat can be found below.
+> diff --git a/mm/damon/ops-common.c b/mm/damon/ops-common.c
+> index d25d99cb5f2b..fc7886c63bf1 100644
+> --- a/mm/damon/ops-common.c
+> +++ b/mm/damon/ops-common.c
+> @@ -102,7 +102,7 @@ int damon_hot_score(struct damon_ctx *c, struct damon_region *r,
+>  
+>  	hotness = (freq_weight * freq_subscore + age_weight * age_subscore);
+>  	if (freq_weight + age_weight)
+> -		hotness /= freq_weight + age_weight;
+> +		hotness /= (freq_weight + age_weight);
 
-This rc kernel passes DAMON functionality test[1] on my test machine.
-Attaching the test results summary below.  Please note that I retrieved the
-kernel from linux-stable-rc tree[2].
+Thank you for this patch.  However, I think the old code is ok, since the
+precedence of the /= operation is right to left[1]?  I also checked that's true
+by confirming below simple kunit passes.
 
-Tested-by: SeongJae Park <sj@kernel.org>
+    int abc = 3;
 
-[1] https://github.com/awslabs/damon-tests/tree/next/corr
-[2] df34d612fd4e ("Linux 6.6.2-rc1")
+    abc /= 1 + 2;
+    KUNIT_EXPECT_EQ(test, abc, 1);
+
+Please let me know if I'm
+missing something.
+
+
+[1] https://en.cppreference.com/w/c/language/operator_precedence
+
 
 Thanks,
 SJ
 
-[...]
-
----
-
-ok 1 selftests: damon: debugfs_attrs.sh
-ok 2 selftests: damon: debugfs_schemes.sh
-ok 3 selftests: damon: debugfs_target_ids.sh
-ok 4 selftests: damon: debugfs_empty_targets.sh
-ok 5 selftests: damon: debugfs_huge_count_read_write.sh
-ok 6 selftests: damon: debugfs_duplicate_context_creation.sh
-ok 7 selftests: damon: debugfs_rm_non_contexts.sh
-ok 8 selftests: damon: sysfs.sh
-ok 9 selftests: damon: sysfs_update_removed_scheme_dir.sh
-ok 10 selftests: damon: reclaim.sh
-ok 11 selftests: damon: lru_sort.sh
-ok 1 selftests: damon-tests: kunit.sh
-ok 2 selftests: damon-tests: huge_count_read_write.sh
-ok 3 selftests: damon-tests: buffer_overflow.sh
-ok 4 selftests: damon-tests: rm_contexts.sh
-ok 5 selftests: damon-tests: record_null_deref.sh
-ok 6 selftests: damon-tests: dbgfs_target_ids_read_before_terminate_race.sh
-ok 7 selftests: damon-tests: dbgfs_target_ids_pid_leak.sh
-ok 8 selftests: damon-tests: damo_tests.sh
-ok 9 selftests: damon-tests: masim-record.sh
-ok 10 selftests: damon-tests: build_i386.sh
-ok 11 selftests: damon-tests: build_arm64.sh
-ok 12 selftests: damon-tests: build_i386_idle_flag.sh
-ok 13 selftests: damon-tests: build_i386_highpte.sh
-ok 14 selftests: damon-tests: build_nomemcg.sh
- [33m
- [92mPASS [39m
-_remote_run_corr.sh SUCCESS
-
+>  	/*
+>  	 * Transform it to fit in [0, DAMOS_MAX_SCORE]
+>  	 */
+> -- 
+> 2.39.2
