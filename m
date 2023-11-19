@@ -1,34 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0BEC28E02
-	for <damon@lists.linux.dev>; Thu, 16 Nov 2023 10:58:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43A2B10786
+	for <damon@lists.linux.dev>; Sun, 19 Nov 2023 17:15:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mB07d3Q7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF16AC433C7;
-	Thu, 16 Nov 2023 10:58:18 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XkfEizFw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06C42C433C8;
+	Sun, 19 Nov 2023 17:15:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1700132299;
-	bh=M+8iKSmznVXEZTfGoN0FrGmEHGx1v9DKi1Ga7R7HHOg=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mB07d3Q7ViI4kjC0hpgE+fXB4OTqUzVdXsyIGTCCGOegiB21GcqULmwnQJ1EeDIBC
-	 Mws+buiwIwtecIwYobCeUxKnssn6vQ5jJFacZIp1SVpRNfjzqGSu56oolFFAymOxd7
-	 6k968IkW5nsJSH6lOdfjDPxhRJWlz3P4MipPYJcE0iZF8Gsc20G6DVyEi5VqvyjBT9
-	 n2YHEvJrEgTG1+SBeoKqlZzOp5tA6hca84d8wpMUjP+a2jAXZdtpXeALDYH+rPKhtf
-	 QLbNWffvtXyAaQNjl2UeRg9pBIFsPHhoOtKRDMiobAYX2it/qfuly2r8IQe9v+s6Eb
-	 oAMaUKeWCv70w==
+	s=k20201202; t=1700414131;
+	bh=wGhN7a1c1/p9kfRbyE8itY6KQu9wn5cOAaIJeGVmnnc=;
+	h=From:To:Cc:Subject:Date:From;
+	b=XkfEizFwjv4s2yyAh/IAdR4Ce6ANjOrHPS6OuUGobhk63MS2x68e7h7vDvp478EgL
+	 raG02fy8zS6Zg8iVPZ2/GmQeoINkjLj9ER0t634jT0bMnPTVJlIGwZEuAhRG9bRdGp
+	 LGqm7giPcvncWcu7qPOQbfn4BAZzlqiiIw4JVn4sJh9HLYuVRRcvUKgpXRLATg3bE3
+	 Z3/oPm1KhExae4SvDwzPARf/8tZLK4fi6QW6K38QS/kF5fUs0mYxWbzOVIuNMUGEM3
+	 Jk6MSHWzyA/E66pjT5jbU5I17CbKbEz4aou4ik1VANNJ4G2tAZhC+9o2fL+3tA+Dlu
+	 j0XgF6IfYEe/w==
 From: SeongJae Park <sj@kernel.org>
-To: FANG2508 <1031576200@qq.com>
-Cc: linux-mm@kvack.org,
-	sj@kernel.org,
-	linux-kernel@vger.kernel.org,
-	damon@lists.linux.dev
-Subject: Re: [PATCH] mm/damon/ops-common.c: Fixup missing parentheses
-Date: Thu, 16 Nov 2023 10:58:17 +0000
-Message-Id: <20231116105817.51824-1-sj@kernel.org>
+To: Andrew Morton <akpm@linux-foundation.org>
+Cc: SeongJae Park <sj@kernel.org>,
+	damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH 1/2] mm/damon/core: copy nr_accesses when splitting region
+Date: Sun, 19 Nov 2023 17:15:28 +0000
+Message-Id: <20231119171529.66863-1-sj@kernel.org>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <tencent_3EF8231A65618FEEC716F90828433D6E9C09@qq.com>
-References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -37,49 +35,39 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hello FANG2508,
+Regions split function ('damon_split_region_at()') is called at the
+beginning of an aggregation interval, and when DAMOS applying the
+actions and charging quota.  Because 'nr_accesses' fields of all regions
+are reset at the beginning of each aggregation interval, and DAMOS was
+applying the action at the end of each aggregation interval, there was
+no need to copy the 'nr_accesses' field to the split-out region.
 
-On Thu, 16 Nov 2023 18:21:47 +0800 FANG2508 <1031576200@qq.com> wrote:
+However, commit 42f994b71404 ("mm/damon/core: implement scheme-specific
+apply interval") made DAMOS applies action on its own timing interval.
+Hence, 'nr_accesses' should also copied to split-out regions, but the
+commit didn't.  Fix it by copying it.
 
-> In function 'damon_hot_score', the variable 'hotness' should be divided by the sum of 'freq_weight' and 'age_weight' instead of /'freq_weight'+'age_weight'.
-> 
-> Signed-off-by: FANG2508 <1031576200@qq.com>
-> ---
->  mm/damon/ops-common.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/mm/damon/ops-common.c b/mm/damon/ops-common.c
-> index d25d99cb5f2b..fc7886c63bf1 100644
-> --- a/mm/damon/ops-common.c
-> +++ b/mm/damon/ops-common.c
-> @@ -102,7 +102,7 @@ int damon_hot_score(struct damon_ctx *c, struct damon_region *r,
->  
->  	hotness = (freq_weight * freq_subscore + age_weight * age_subscore);
->  	if (freq_weight + age_weight)
-> -		hotness /= freq_weight + age_weight;
-> +		hotness /= (freq_weight + age_weight);
+Fixes: 42f994b71404 ("mm/damon/core: implement scheme-specific apply interval")
+Signed-off-by: SeongJae Park <sj@kernel.org>
+---
+Cc-ing stable@ is not needed, since the commit that introduced the issue has
+merged in v6.7 merge window.
 
-Thank you for this patch.  However, I think the old code is ok, since the
-precedence of the /= operation is right to left[1]?  I also checked that's true
-by confirming below simple kunit passes.
+ mm/damon/core.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-    int abc = 3;
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index 6262d55904e7..ce1562783e7e 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -1225,6 +1225,7 @@ static void damon_split_region_at(struct damon_target *t,
+ 	new->age = r->age;
+ 	new->last_nr_accesses = r->last_nr_accesses;
+ 	new->nr_accesses_bp = r->nr_accesses_bp;
++	new->nr_accesses = r->nr_accesses;
+ 
+ 	damon_insert_region(new, r, damon_next_region(r), t);
+ }
+-- 
+2.34.1
 
-    abc /= 1 + 2;
-    KUNIT_EXPECT_EQ(test, abc, 1);
-
-Please let me know if I'm
-missing something.
-
-
-[1] https://en.cppreference.com/w/c/language/operator_precedence
-
-
-Thanks,
-SJ
-
->  	/*
->  	 * Transform it to fit in [0, DAMOS_MAX_SCORE]
->  	 */
-> -- 
-> 2.39.2
