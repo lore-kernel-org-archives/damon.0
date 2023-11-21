@@ -1,33 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 705D65694;
-	Sun, 19 Nov 2023 17:55:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2A1418651
+	for <damon@lists.linux.dev>; Tue, 21 Nov 2023 05:36:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bb9Prg7b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D42EC433C7;
-	Sun, 19 Nov 2023 17:55:38 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="D6nVWtz7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0C87C433C7;
+	Tue, 21 Nov 2023 05:36:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1700416539;
-	bh=LZcAEnEUaEeGngJ4ih0zr/Qjr0gCgV6ZBikCHx99Gx4=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bb9Prg7bb+qwBJHboYckEb0NyeBzAM5Ds011TjUFzpPptiK4ziim1c11f1YpkHoZ+
-	 fZdu+f9XQPIx0D5SoxJndKbrjo4u2+X97XNsUGdiUaSoHjoZV/NBy8IJMUH0j1gDDM
-	 rkOObZJTF655SPivFG4Z+qIpotmLyQUu1A1/wDSH4P2qRWH0eibdy7Q0O684J08rqB
-	 Ggw4vyu6QXBsiqupphdfR5/tnKXx9JjRek3IzZi9xCz/UmYbyGmfGx7pP7sitg1G+m
-	 5InnKaNDRkbh1IC/eQNsEC4WwRHyygbORLOiw4qmotoR6HmeJMgU0D4TZMrX4qTa/Y
-	 /T1PJcW7fVMGw==
+	s=k20201202; t=1700544975;
+	bh=2hTiZxsT86X0oN/PSearw+dfIAhh29V867VL4eOG5r8=;
+	h=From:To:Cc:Subject:Date:From;
+	b=D6nVWtz74Snj6LQsOZed22kJrcYfOOgYEzM/3i+YkHfCZmhauAJx7p3sCWPmkqUZT
+	 +S9RB1X3HAlZGSQDqQkt+IoQZRP42JQxD+10JjolCfxKyMMlLFN+ki6Bu9mHIQpXWi
+	 McBkhAlEdsTrUaRbTH1lyXmWGsnIz55tK7TJV/xaTgoWXb4+SgZG8vweCqDFIu+Nvz
+	 tZ5dfUYZB+t+Nz/tP+1c5ttoqjr3pS0g16ro3IabH7HAEcVvhddyzfiuAuNYakoWcB
+	 5CTdxJsyMsfdPoT/fbyZ+zd76mKOiq9+q76NjH/GbN+xZKAJswD5ufN9CVkvsPks8B
+	 OokXxU/mf8+WQ==
 From: SeongJae Park <sj@kernel.org>
-To: kernel test robot <lkp@intel.com>
+To: 
 Cc: SeongJae Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	damon@lists.linux.dev,
-	oe-kbuild-all@lists.linux.dev
-Subject: Re: [sj:damon/next 7/40] mm/damon/core-test.h:301:43: warning: large integer implicitly truncated to unsigned type
-Date: Sun, 19 Nov 2023 17:55:36 +0000
-Message-Id: <20231119175536.81465-1-sj@kernel.org>
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org
+Subject: [RFC PATCH 0/2] mm/damon: export DAMON symbols and add sample loadable modules
+Date: Tue, 21 Nov 2023 05:36:01 +0000
+Message-Id: <20231121053604.60798-1-sj@kernel.org>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <202311190815.NSeoMUOt-lkp@intel.com>
-References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -36,50 +36,52 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hello robot,
+DAMON cannot be used from loadable modules since it is not exporting its
+symbols.  This makes use of DAMON unnecessarily tedious.  For example,
+we presented basic usge of DAMON at kernel summit 2021[1] by writing
+simple loadable DAMON application modules in live.  Because the time was
+limited (10 minutes) and the coding was to be done step by step, we had
+to make a downstream commit that exports DAMON symbols.  There were
+users asking why the source code is now not working.  It was mainly due
+to the absence of the symbols export patch on their tree, but also due
+to the changed DAMON interfaces.  There were also multiple users
+requesting support of loadable modules for easier deployment.
 
-On Sun, 19 Nov 2023 08:59:05 +0800 kernel test robot <lkp@intel.com> wrote:
+There's no reason to avoid exporting DAMON symbols.  However, it would
+be better to have concrete use cases of the symbols in the tree
+together, for better maintenance of the interface and the use cases.
+The kernels summit 2021's live-coded modules could be used for the
+purpose.
 
-> tree:   https://git.kernel.org/pub/scm/linux/kernel/git/sj/linux.git damon/next
-> head:   8dbdd274afed68979a606009d184cc9fd9dcc48c
-> commit: c5b4cd2968f94e487351a07c141023e44a2e9d3d [7/40] mm/damon/core-test: test overflow-causing divide-by-zero
-> config: i386-buildonly-randconfig-001-20231119 (https://download.01.org/0day-ci/archive/20231119/202311190815.NSeoMUOt-lkp@intel.com/config)
-> compiler: gcc-7 (Ubuntu 7.5.0-6ubuntu2) 7.5.0
-> reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20231119/202311190815.NSeoMUOt-lkp@intel.com/reproduce)
-> 
-> If you fix the issue in a separate patch/commit (i.e. not just a new version of
-> the same patch/commit), kindly add following tags
-> | Reported-by: kernel test robot <lkp@intel.com>
-> | Closes: https://lore.kernel.org/oe-kbuild-all/202311190815.NSeoMUOt-lkp@intel.com/
-> 
-> All warnings (new ones prefixed by >>):
-> 
->    In file included from mm/damon/core.c:1689:0:
->    mm/damon/core-test.h: In function 'damon_test_nr_accesses_to_accesses_bp':
-> >> mm/damon/core-test.h:301:43: warning: large integer implicitly truncated to unsigned type [-Woverflow]
->       .sample_interval = 10, .aggr_interval = 42949672960,};
->                                               ^~~~~~~~~~~
+Expose DAMON API modules for supporting the minimum modules and and add
+the kernel summit 2021's modules that updated for latest DAMON API under
+the samples directory.  We will keep update of the sample modules.  For
+exporting more symbols, requesters would be required to merge their
+modules using it in the tree together, or updsate the sample modules to
+use the newly-exporting symbols in reasonable and still simple ways.
 
-Thank you for this report!  I will make below fix and squash that into the
-fixee commit.
+[1] https://linuxplumbersconf.org/event/11/contributions/984/
 
+SeongJae Park (2):
+  mm/damon/core: export symbols for supporting loadable modules
+  samples: add DAMON sample kernel modules
 
-    --- a/mm/damon/core-test.h
-    +++ b/mm/damon/core-test.h
-    @@ -305,7 +305,9 @@ static void damon_test_set_regions(struct kunit *test)
-     static void damon_test_nr_accesses_to_accesses_bp(struct kunit *test)
-     {
-            struct damon_attrs attrs = {
-    -               .sample_interval = 10, .aggr_interval = 42949672960,};
-    +               .sample_interval = 10,
-    +               .aggr_interval = ((unsigned long)UINT_MAX + 1) * 10
-    +       };
-    
-            KUNIT_EXPECT_EQ(test, damon_nr_accesses_to_accesses_bp(123, &attrs), 0);
-     }
+ MAINTAINERS                       |  1 +
+ mm/damon/core.c                   | 10 ++++
+ samples/Kconfig                   |  2 +
+ samples/Makefile                  |  2 +
+ samples/damon/Kconfig             | 30 ++++++++++
+ samples/damon/Makefile            |  3 +
+ samples/damon/damon_sample_prcl.c | 98 +++++++++++++++++++++++++++++++
+ samples/damon/damon_sample_wsse.c | 80 +++++++++++++++++++++++++
+ 8 files changed, 226 insertions(+)
+ create mode 100644 samples/damon/Kconfig
+ create mode 100644 samples/damon/Makefile
+ create mode 100644 samples/damon/damon_sample_prcl.c
+ create mode 100644 samples/damon/damon_sample_wsse.c
 
 
-Thanks,
-SJ
+base-commit: 79cc930e5e3dc73c972d9e422b5e2ab3fe56dce5
+-- 
+2.34.1
 
-[...]
