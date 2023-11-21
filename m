@@ -1,35 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6DA418651
-	for <damon@lists.linux.dev>; Tue, 21 Nov 2023 05:36:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 236F743153;
+	Tue, 21 Nov 2023 17:36:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XRqUqenp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35AFDC433CC;
-	Tue, 21 Nov 2023 05:36:16 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QACmDvwD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24474C433C7;
+	Tue, 21 Nov 2023 17:36:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1700544976;
-	bh=xeB5Q/0nCB1T8mGIogEvXwiHT5yYGJPGjYRZafQD3vs=;
+	s=k20201202; t=1700588164;
+	bh=aXXUsAbBtqc2m+2Cgi/uIS1tHSwLTPzPAbJEVpba3cA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XRqUqenpLitbMJv0BlMtg1ANbPQdVT7r8XE2BBmQvFEbs0CRkYq0X8FWuePv05Ssh
-	 zZMUKayZf5fuJpRq0xuuw+UDavlWbGYYMIlttP9kxAKic+0yazEGZwtIQC4U+gcS0T
-	 l8oA8ZFf+XFQGdlpPlkzZqZNJIT5+9eTLr9C1tKglZZTvjAgKWvxZX+8ntE2TjPc/b
-	 bUb3wn7Hp4IsOKdHMZ+Vd3LjLC8DARb0mZj3k0ZRWcSKzukE+8NWFlsuF8ohrLovPc
-	 OpMI+7hDqmDnMN9hAznF+p2jw/uQ+VdkUt4CCfUkcSlTQvS7xblyFDBVM9WX6OEQwK
-	 jkVNLt1do6gUA==
+	b=QACmDvwDrSw9cGTMZwyyWquW+zerMzqCFdyc7ofmlMX/k7dJnPrDOh5InvxMg/8MP
+	 6K1gbNiVrSRyhlKoa3voQJm9eoTvRdpeP70lJFaJeKIT8WAiw6x9FdpbWN4JtsVXeu
+	 46JFs0r9H670wxLUoveti7z5zdt3MDmT0W3HCg/9Li2j/HurLz3CVpydZCKpU6corQ
+	 FzSYrJEM8sjQtlQB2MqK2hCwzemn8ecFxe+PIBICrhWu85z3FC4WZM8OsknAuDAmOh
+	 tKVwG+s2fm8urKY5n4RH5k56wyIK6+O6ulWDPkEXwQZVZg1PlLfiZIXuFGfMRSI7HB
+	 rMPuzTMDrK2Hw==
 From: SeongJae Park <sj@kernel.org>
-To: 
-Cc: SeongJae Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org
-Subject: [RFC PATCH 2/2] samples: add DAMON sample kernel modules
-Date: Tue, 21 Nov 2023 05:36:03 +0000
-Message-Id: <20231121053604.60798-3-sj@kernel.org>
+To: Dan Carpenter <dan.carpenter@linaro.org>
+Cc: oe-kbuild@lists.linux.dev,
+	SeongJae Park <sj@kernel.org>,
+	lkp@intel.com,
+	oe-kbuild-all@lists.linux.dev,
+	damon@lists.linux.dev
+Subject: Re: [sj:damon/next 32/42] mm/damon/core.c:1150 damos_set_effective_quota() error: uninitialized symbol 'esz'.
+Date: Tue, 21 Nov 2023 17:36:02 +0000
+Message-Id: <20231121173602.62313-1-sj@kernel.org>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20231121053604.60798-1-sj@kernel.org>
-References: <20231121053604.60798-1-sj@kernel.org>
+In-Reply-To: <473b4c2e-863d-42ec-860a-bf8ec4385240@suswa.mountain>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -38,305 +38,36 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Add sample DAMON application kernel modules that same to the example
-kernel modules that presented at kernel summit 2021 with 10 minutes live
-coding[1] but updated for the latest DAMON interface.
+Hi Dan,
 
-Specifically, add two sample modules, namely damon_sample_wsse and
-damon_sample_prcl.  'damon_sample_wsse' receives a pid of a process to
-monitor the access, monitors the access to the virtual address space of
-the process, calculate estimated working set size, and repeatedly print
-it on the kernel log.  'damon_sample_prcl' is similar to
-'damon_sample_wsse', but find regions that not accessed and proactively
-reclaim those using DAMOS.
+On Tue, 21 Nov 2023 02:37:12 -0500 Dan Carpenter <dan.carpenter@linaro.org> wrote:
 
-[1] https://linuxplumbersconf.org/event/11/contributions/984/
+> tree:   https://git.kernel.org/pub/scm/linux/kernel/git/sj/linux.git damon/next
+> head:   54ffd8ae08121d8cbce1874fe46970cce643a2c7
+> commit: 28cef0e565adbb4175f12ffffce9d0680979de60 [32/42] mm/damon/core: implement goal-oriented feedback-driven quota auto-tuning
+> config: x86_64-randconfig-161-20231121 (https://download.01.org/0day-ci/archive/20231121/202311210420.URG3QSAS-lkp@intel.com/config)
+> compiler: gcc-11 (Debian 11.3.0-12) 11.3.0
+> reproduce: (https://download.01.org/0day-ci/archive/20231121/202311210420.URG3QSAS-lkp@intel.com/reproduce)
+> 
+> If you fix the issue in a separate patch/commit (i.e. not just a new version of
+> the same patch/commit), kindly add following tags
+> | Reported-by: kernel test robot <lkp@intel.com>
+> | Reported-by: Dan Carpenter <error27@gmail.com>
+> | Closes: https://lore.kernel.org/r/202311210420.URG3QSAS-lkp@intel.com/
+> 
+> smatch warnings:
+> mm/damon/core.c:1150 damos_set_effective_quota() error: uninitialized symbol 'esz'.
 
-Signed-off-by: SeongJae Park <sj@kernel.org>
----
- MAINTAINERS                       |  1 +
- samples/Kconfig                   |  2 +
- samples/Makefile                  |  2 +
- samples/damon/Kconfig             | 30 ++++++++++
- samples/damon/Makefile            |  3 +
- samples/damon/damon_sample_prcl.c | 98 +++++++++++++++++++++++++++++++
- samples/damon/damon_sample_wsse.c | 80 +++++++++++++++++++++++++
- 7 files changed, 216 insertions(+)
- create mode 100644 samples/damon/Kconfig
- create mode 100644 samples/damon/Makefile
- create mode 100644 samples/damon/damon_sample_prcl.c
- create mode 100644 samples/damon/damon_sample_wsse.c
+Thank you for this nice report!
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 6eedc85a013b..3ee99307229a 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -5781,6 +5781,7 @@ F:	Documentation/mm/damon/
- F:	include/linux/damon.h
- F:	include/trace/events/damon.h
- F:	mm/damon/
-+F:	samples/damon/
- F:	tools/testing/selftests/damon/
- 
- DAVICOM FAST ETHERNET (DMFE) NETWORK DRIVER
-diff --git a/samples/Kconfig b/samples/Kconfig
-index b0ddf5f36738..1e3f1b33b3d8 100644
---- a/samples/Kconfig
-+++ b/samples/Kconfig
-@@ -287,6 +287,8 @@ config SAMPLE_KMEMLEAK
- 
- source "samples/rust/Kconfig"
- 
-+source "samples/damon/Kconfig"
-+
- endif # SAMPLES
- 
- config HAVE_SAMPLE_FTRACE_DIRECT
-diff --git a/samples/Makefile b/samples/Makefile
-index 0a551c2b33f4..ae863e7c5250 100644
---- a/samples/Makefile
-+++ b/samples/Makefile
-@@ -38,3 +38,5 @@ obj-$(CONFIG_SAMPLE_KMEMLEAK)		+= kmemleak/
- obj-$(CONFIG_SAMPLE_CORESIGHT_SYSCFG)	+= coresight/
- obj-$(CONFIG_SAMPLE_FPROBE)		+= fprobe/
- obj-$(CONFIG_SAMPLES_RUST)		+= rust/
-+obj-$(CONFIG_SAMPLE_DAMON_WSSE)		+= damon/
-+obj-$(CONFIG_SAMPLE_DAMON_PRCL)		+= damon/
-diff --git a/samples/damon/Kconfig b/samples/damon/Kconfig
-new file mode 100644
-index 000000000000..459042ce5958
---- /dev/null
-+++ b/samples/damon/Kconfig
-@@ -0,0 +1,30 @@
-+# SPDX-License-Identifier: GPL-2.0
-+
-+menu "DAMON Samples"
-+
-+config SAMPLE_DAMON_WSSE
-+	tristate "DAMON sameple module for working set size estimation"
-+	depends on DAMON && DAMON_VADDR
-+	help
-+	  This builds DAMON sample module for working set size estimation.
-+
-+	  The module receives pid of a process, monitor access to the virtual
-+	  address space of the process, calculate the estimated working set
-+	  size of the process, and repeatedly print the size on the kernel log.
-+
-+	  If unsure, say N.
-+
-+config SAMPLE_DAMON_PRCL
-+	tristate "DAMON sameple module for access-aware proactive reclamation"
-+	depends on DAMON && DAMON_VADDR
-+	help
-+	  This builds DAMON sample module for access-aware proactive
-+	  reclamation.
-+
-+	  The module receives pid of a process, monitor access to the virtual
-+	  address space of the process, find memory regions that not accessed,
-+	  and proactively reclaim the regions.
-+
-+	  If unsure, say N.
-+
-+endmenu
-diff --git a/samples/damon/Makefile b/samples/damon/Makefile
-new file mode 100644
-index 000000000000..df102e8c2b7b
---- /dev/null
-+++ b/samples/damon/Makefile
-@@ -0,0 +1,3 @@
-+# SPDX-License-Identifier: GPL-2.0-only
-+obj-$(CONFIG_SAMPLE_DAMON_WSSE) += damon_sample_wsse.o
-+obj-$(CONFIG_SAMPLE_DAMON_PRCL) += damon_sample_prcl.o
-diff --git a/samples/damon/damon_sample_prcl.c b/samples/damon/damon_sample_prcl.c
-new file mode 100644
-index 000000000000..962b3309e490
---- /dev/null
-+++ b/samples/damon/damon_sample_prcl.c
-@@ -0,0 +1,98 @@
-+// SPDX-License-Identifier: GPL-2.0
-+
-+#define pr_fmt(fmt) "damon_sample_prcl: " fmt
-+
-+#include <linux/damon.h>
-+#include <linux/init.h>
-+#include <linux/kernel.h>
-+#include <linux/module.h>
-+
-+static int target_pid __read_mostly;
-+module_param(target_pid, int, 0600);
-+
-+static struct damon_ctx *ctx;
-+static struct pid *target_pidp;
-+
-+static int damon_sample_prcl_after_aggregate(struct damon_ctx *c)
-+{
-+	struct damon_target *t;
-+
-+	damon_for_each_target(t, c) {
-+		struct damon_region *r;
-+		unsigned long wss = 0;
-+
-+		damon_for_each_region(r, t) {
-+			if (r->nr_accesses > 0)
-+				wss += r->ar.end - r->ar.start;
-+		}
-+		pr_info("wss: %lu\n", wss);
-+	}
-+	return 0;
-+}
-+
-+static int __init damon_sample_prcl_init(void)
-+{
-+	struct damon_target *target;
-+	struct damos *scheme;
-+
-+	pr_info("Hello\n");
-+
-+	ctx = damon_new_ctx();
-+	if (!ctx)
-+		return -ENOMEM;
-+	if (damon_select_ops(ctx, DAMON_OPS_VADDR)) {
-+		damon_destroy_ctx(ctx);
-+		return -EINVAL;
-+	}
-+
-+	target = damon_new_target();
-+	if (!target) {
-+		damon_destroy_ctx(ctx);
-+		return -ENOMEM;
-+	}
-+	damon_add_target(ctx, target);
-+	target_pidp = find_get_pid(target_pid);
-+	if (!target_pidp) {
-+		damon_destroy_ctx(ctx);
-+		return -EINVAL;
-+	}
-+	target->pid = target_pidp;
-+
-+	ctx->callback.after_aggregation = damon_sample_prcl_after_aggregate;
-+
-+	scheme = damon_new_scheme(
-+			&(struct damos_access_pattern) {
-+			.min_sz_region = PAGE_SIZE,
-+			.max_sz_region = ULONG_MAX,
-+			.min_nr_accesses = 0,
-+			.max_nr_accesses = 0},
-+			DAMOS_PAGEOUT,
-+			0,
-+			&(struct damos_quota){},
-+			&(struct damos_watermarks){});
-+	if (!scheme) {
-+		damon_destroy_ctx(ctx);
-+		return -ENOMEM;
-+	}
-+	damon_set_schemes(ctx, &scheme, 1);
-+
-+	return damon_start(&ctx, 1, true);
-+}
-+
-+static void __exit damon_sample_prcl_exit(void)
-+{
-+	pr_info("Goodbye\n");
-+	if (ctx) {
-+		damon_stop(&ctx, 1);
-+		damon_destroy_ctx(ctx);
-+	}
-+	if (target_pidp)
-+		put_pid(target_pidp);
-+}
-+
-+module_init(damon_sample_prcl_init);
-+module_exit(damon_sample_prcl_exit);
-+
-+MODULE_LICENSE("GPL");
-+MODULE_AUTHOR("SeongJae Park");
-+MODULE_DESCRIPTION("DAMON sample module for proactive reclamation");
-diff --git a/samples/damon/damon_sample_wsse.c b/samples/damon/damon_sample_wsse.c
-new file mode 100644
-index 000000000000..7bfbd2bf56aa
---- /dev/null
-+++ b/samples/damon/damon_sample_wsse.c
-@@ -0,0 +1,80 @@
-+// SPDX-License-Identifier: GPL-2.0
-+
-+#define pr_fmt(fmt) "damon_sample_wsse: " fmt
-+
-+#include <linux/damon.h>
-+#include <linux/init.h>
-+#include <linux/kernel.h>
-+#include <linux/module.h>
-+
-+static int target_pid __read_mostly;
-+module_param(target_pid, int, 0600);
-+
-+static struct damon_ctx *ctx;
-+static struct pid *target_pidp;
-+
-+static int damon_sample_wsse_after_aggregate(struct damon_ctx *c)
-+{
-+	struct damon_target *t;
-+
-+	damon_for_each_target(t, c) {
-+		struct damon_region *r;
-+		unsigned long wss = 0;
-+
-+		damon_for_each_region(r, t) {
-+			if (r->nr_accesses > 0)
-+				wss += r->ar.end - r->ar.start;
-+		}
-+		pr_info("wss: %lu\n", wss);
-+	}
-+	return 0;
-+}
-+
-+static int __init damon_sample_wsse_init(void)
-+{
-+	struct damon_target *target;
-+
-+	pr_info("Hello\n");
-+
-+	ctx = damon_new_ctx();
-+	if (!ctx)
-+		return -ENOMEM;
-+	if (damon_select_ops(ctx, DAMON_OPS_VADDR)) {
-+		damon_destroy_ctx(ctx);
-+		return -EINVAL;
-+	}
-+
-+	target = damon_new_target();
-+	if (!target) {
-+		damon_destroy_ctx(ctx);
-+		return -ENOMEM;
-+	}
-+	damon_add_target(ctx, target);
-+	target_pidp = find_get_pid(target_pid);
-+	if (!target_pidp) {
-+		damon_destroy_ctx(ctx);
-+		return -EINVAL;
-+	}
-+	target->pid = target_pidp;
-+
-+	ctx->callback.after_aggregation = damon_sample_wsse_after_aggregate;
-+	return damon_start(&ctx, 1, true);
-+}
-+
-+static void __exit damon_sample_wsse_exit(void)
-+{
-+	pr_info("Goodbye\n");
-+	if (ctx) {
-+		damon_stop(&ctx, 1);
-+		damon_destroy_ctx(ctx);
-+	}
-+	if (target_pidp)
-+		put_pid(target_pidp);
-+}
-+
-+module_init(damon_sample_wsse_init);
-+module_exit(damon_sample_wsse_exit);
-+
-+MODULE_LICENSE("GPL");
-+MODULE_AUTHOR("SeongJae Park");
-+MODULE_DESCRIPTION("DAMON sample module for working set size estimation");
--- 
-2.34.1
+However, damos_set_effective_quota() is called from damos_adjust_quota(), which
+ensures at least one among quota->{ms,sz,get_score} is nonzero.  And
+damos_set_effective_quota() ensures quota->{ms,get_score} is non-zero at the
+beginning of the function.  Then the function sets esz anyway, for non-zero
+quota->ms and quota->get_score.  Hence the uninitialized variable usage cannot
+happen, if I understand correctly.  Please let me know if I'm missing
+something.
 
+
+Thanks,
+SJ
