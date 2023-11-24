@@ -1,35 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 790D14E61C;
-	Wed, 22 Nov 2023 18:50:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6C182E84B
+	for <damon@lists.linux.dev>; Fri, 24 Nov 2023 21:38:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BCrX36+o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BCB0C433C8;
-	Wed, 22 Nov 2023 18:50:51 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WAWCwNsY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD367C433C8;
+	Fri, 24 Nov 2023 21:38:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1700679052;
-	bh=Aef3Nc8tBndl7jMTaRxytqDcQd1lyM7XV+tBkvsy5Gs=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BCrX36+o2bNWDKv/uOYN/dOlFDd3Ps7g0faIiNY2BAtI/6gOBULDCZb7tswMpjG5X
-	 xVsr/2dTgj1TSZwhBth6IePCvSJRk7RwMYdPz/NK6wn+zgfbxCM/VS7H30d1rryrp/
-	 JVARuJWkh8c4In+mqqFpXl017T97qgtuS+UlqP2ZfR0WLmOPKh2QAOXJwoEy/upGka
-	 DggcuD5X7tUk2l9zhbo7h+ehk91ArBDtRSk+81RjRgkVNIl7cEo/jv4s1TiWuolW6C
-	 3b7upywJe8UmyVxdbmUELgPEdwWNMaGFeseEKJSGiqbqg08c5iYw7K0iye0oSKNi/1
-	 oh40DOwammhmA==
+	s=k20201202; t=1700861923;
+	bh=ptjkAte1QXNuW1BDKm99u+0k/U6sLZF2tFKHqkC6btM=;
+	h=From:To:Cc:Subject:Date:From;
+	b=WAWCwNsY1fMaMcr302PWbuf4doJ/cZNDDR46mMRellmvcqfw+AE1fBzUM+XKP6w/W
+	 ZTEckTXLa3jzw433vrk0ZUlXvUeOkH/CPYzyh5vb8chikffbn3v6+6Nx5SVVol9/AP
+	 ag9lC0u5aCFRoq8B8xkjd6BEaU6udnSrYJEZw+szeuWXzkcmf4AOwVbF87rODMKuXh
+	 H2HOlG2sZxp6+hgg8qkunGc7zQUlq+R5KeYEWWRyVITNe8SNeXMPpYGDAuy2BYaggl
+	 0d0aeVp2TRE2toLmluzDNm+GUz05Ymczjp4ozq/TWMpMD1U0aRX15nA7ZG3UDc94j2
+	 +FLkltKFRLS0w==
 From: SeongJae Park <sj@kernel.org>
-To: Dan Carpenter <dan.carpenter@linaro.org>
+To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SeongJae Park <sj@kernel.org>,
-	oe-kbuild@lists.linux.dev,
-	lkp@intel.com,
-	oe-kbuild-all@lists.linux.dev,
-	damon@lists.linux.dev
-Subject: Re: [sj:damon/next 32/42] mm/damon/core.c:1150 damos_set_effective_quota() error: uninitialized symbol 'esz'.
-Date: Wed, 22 Nov 2023 18:50:49 +0000
-Message-Id: <20231122185049.102436-1-sj@kernel.org>
+	damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH] mm/damon/sysfs-schemes: add timeout for update_schemes_tried_regions
+Date: Fri, 24 Nov 2023 21:38:40 +0000
+Message-Id: <20231124213840.39157-1-sj@kernel.org>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <aa9343f1-b0f9-4452-82e9-d63192ecbcd7@suswa.mountain>
-References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -38,67 +35,115 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Wed, 22 Nov 2023 04:13:36 -0500 Dan Carpenter <dan.carpenter@linaro.org> wrote:
+If a scheme is set to not applied to any monitoring target region for
+any reasons including the target access pattern, quota, filters, or
+watermarks, writing 'update_schemes_tried_regions' to 'state' DAMON
+sysfs file can indefinitely hang.  Fix the case by implementing a
+timeout for the operation.  The time limit is two apply intervals of
+each scheme.
 
-> On Tue, Nov 21, 2023 at 05:36:02PM +0000, SeongJae Park wrote:
-> > Hi Dan,
-> > 
-> > On Tue, 21 Nov 2023 02:37:12 -0500 Dan Carpenter <dan.carpenter@linaro.org> wrote:
-> > 
-> > > tree:   https://git.kernel.org/pub/scm/linux/kernel/git/sj/linux.git damon/next
-> > > head:   54ffd8ae08121d8cbce1874fe46970cce643a2c7
-> > > commit: 28cef0e565adbb4175f12ffffce9d0680979de60 [32/42] mm/damon/core: implement goal-oriented feedback-driven quota auto-tuning
-> > > config: x86_64-randconfig-161-20231121 (https://download.01.org/0day-ci/archive/20231121/202311210420.URG3QSAS-lkp@intel.com/config)
-> > > compiler: gcc-11 (Debian 11.3.0-12) 11.3.0
-> > > reproduce: (https://download.01.org/0day-ci/archive/20231121/202311210420.URG3QSAS-lkp@intel.com/reproduce)
-> > > 
-> > > If you fix the issue in a separate patch/commit (i.e. not just a new version of
-> > > the same patch/commit), kindly add following tags
-> > > | Reported-by: kernel test robot <lkp@intel.com>
-> > > | Reported-by: Dan Carpenter <error27@gmail.com>
-> > > | Closes: https://lore.kernel.org/r/202311210420.URG3QSAS-lkp@intel.com/
-> > > 
-> > > smatch warnings:
-> > > mm/damon/core.c:1150 damos_set_effective_quota() error: uninitialized symbol 'esz'.
-> > 
-> > Thank you for this nice report!
-> > 
-> > However, damos_set_effective_quota() is called from damos_adjust_quota(), which
-> > ensures at least one among quota->{ms,sz,get_score} is nonzero.  And
-> > damos_set_effective_quota() ensures quota->{ms,get_score} is non-zero at the
-> > beginning of the function.  Then the function sets esz anyway, for non-zero
-> > quota->ms and quota->get_score.
-> 
-> The problem is in the "non-zero quota->ms" situation.  It uses an
-> uninitialized value of esz to initialize esz.
-> 
-> 28cef0e565adbb SeongJae Park 2023-10-27 @1150           esz = min(throughput * quota->ms, esz);
->                                                         ^^^                               ^^^
-> This is the uninitialized variable.
+Fixes: 4d4e41b68299 ("mm/damon/sysfs-schemes: do not update tried regions more than one DAMON snapshot")
+Signed-off-by: SeongJae Park <sj@kernel.org>
+---
+The commit that fixed by this patch is merged in v6.7-rc1.  Hence not Cc-ing
+stable@, but this patch would better to be treated as a hotfix that will be
+merged in the mainline before the v6.7 release.
 
-Ah, you're correct.  I was out of mind.  Thank you for this kind explanation.
-I will squash below fix to the broken commit.
+ mm/damon/sysfs-schemes.c | 49 +++++++++++++++++++++++++++++++++++-----
+ 1 file changed, 43 insertions(+), 6 deletions(-)
 
-    --- a/mm/damon/core.c
-    +++ b/mm/damon/core.c
-    @@ -1147,7 +1147,10 @@ static void damos_set_effective_quota(struct damos_quota *quota)
-                                    quota->total_charged_ns;
-                    else
-                            throughput = PAGE_SIZE * 1024;
-    -               esz = min(throughput * quota->ms, esz);
-    +               if (quota->get_score)
-    +                       esz = min(throughput * quota->ms, esz);
-    +               else
-    +                       esz = throughput * quota->ms;
-            }
-    
-            if (quota->sz && quota->sz < esz)
+diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
+index be667236b8e6..fe0fe2562000 100644
+--- a/mm/damon/sysfs-schemes.c
++++ b/mm/damon/sysfs-schemes.c
+@@ -139,6 +139,13 @@ static const struct kobj_type damon_sysfs_scheme_region_ktype = {
+  * damon_sysfs_before_damos_apply() understands the situation by showing the
+  * 'finished' status and do nothing.
+  *
++ * If DAMOS is not applied to any region due to any reasons including the
++ * access pattern, the watermarks, the quotas, and the filters,
++ * ->before_damos_apply() will not be called back.  Until the situation is
++ * changed, the update will not be finished.  To avoid this,
++ * damon_sysfs_after_sampling() set the status as 'finished' if more than two
++ * apply intervals of the scheme is passed while the state is 'idle'.
++ *
+  *  Finally, the tried regions request handling finisher function
+  *  (damon_sysfs_schemes_update_regions_stop()) unregisters the callbacks.
+  */
+@@ -154,6 +161,7 @@ struct damon_sysfs_scheme_regions {
+ 	int nr_regions;
+ 	unsigned long total_bytes;
+ 	enum damos_sysfs_regions_upd_status upd_status;
++	unsigned long upd_timeout_jiffies;
+ };
+ 
+ static struct damon_sysfs_scheme_regions *
+@@ -1854,7 +1862,9 @@ static int damon_sysfs_after_sampling(struct damon_ctx *ctx)
+ 	for (i = 0; i < sysfs_schemes->nr; i++) {
+ 		sysfs_regions = sysfs_schemes->schemes_arr[i]->tried_regions;
+ 		if (sysfs_regions->upd_status ==
+-				DAMOS_TRIED_REGIONS_UPD_STARTED)
++				DAMOS_TRIED_REGIONS_UPD_STARTED ||
++				time_after(jiffies,
++					sysfs_regions->upd_timeout_jiffies))
+ 			sysfs_regions->upd_status =
+ 				DAMOS_TRIED_REGIONS_UPD_FINISHED;
+ 	}
+@@ -1885,14 +1895,41 @@ int damon_sysfs_schemes_clear_regions(
+ 	return 0;
+ }
+ 
++static struct damos *damos_sysfs_nth_scheme(int n, struct damon_ctx *ctx)
++{
++	struct damos *scheme;
++	int i = 0;
++
++	damon_for_each_scheme(scheme, ctx) {
++		if (i == n)
++			return scheme;
++		i++;
++	}
++	return NULL;
++}
++
+ static void damos_tried_regions_init_upd_status(
+-		struct damon_sysfs_schemes *sysfs_schemes)
++		struct damon_sysfs_schemes *sysfs_schemes,
++		struct damon_ctx *ctx)
+ {
+ 	int i;
++	struct damos *scheme;
++	struct damon_sysfs_scheme_regions *sysfs_regions;
+ 
+-	for (i = 0; i < sysfs_schemes->nr; i++)
+-		sysfs_schemes->schemes_arr[i]->tried_regions->upd_status =
+-			DAMOS_TRIED_REGIONS_UPD_IDLE;
++	for (i = 0; i < sysfs_schemes->nr; i++) {
++		sysfs_regions = sysfs_schemes->schemes_arr[i]->tried_regions;
++		scheme = damos_sysfs_nth_scheme(i, ctx);
++		if (!scheme) {
++			sysfs_regions->upd_status =
++				DAMOS_TRIED_REGIONS_UPD_FINISHED;
++			continue;
++		}
++		sysfs_regions->upd_status = DAMOS_TRIED_REGIONS_UPD_IDLE;
++		sysfs_regions->upd_timeout_jiffies = jiffies +
++			2 * usecs_to_jiffies(scheme->apply_interval_us ?
++					scheme->apply_interval_us :
++					ctx->attrs.sample_interval);
++	}
+ }
+ 
+ /* Called from damon_sysfs_cmd_request_callback under damon_sysfs_lock */
+@@ -1902,7 +1939,7 @@ int damon_sysfs_schemes_update_regions_start(
+ {
+ 	damon_sysfs_schemes_clear_regions(sysfs_schemes, ctx);
+ 	damon_sysfs_schemes_for_damos_callback = sysfs_schemes;
+-	damos_tried_regions_init_upd_status(sysfs_schemes);
++	damos_tried_regions_init_upd_status(sysfs_schemes, ctx);
+ 	damos_regions_upd_total_bytes_only = total_bytes_only;
+ 	ctx->callback.before_damos_apply = damon_sysfs_before_damos_apply;
+ 	ctx->callback.after_sampling = damon_sysfs_after_sampling;
+-- 
+2.34.1
 
-
-Thanks,
-SJ
-
-> 
-> regards,
-> dan carpenter
-> 
