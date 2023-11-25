@@ -1,32 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6C182E84B
-	for <damon@lists.linux.dev>; Fri, 24 Nov 2023 21:38:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 768A62D04C;
+	Sat, 25 Nov 2023 18:54:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WAWCwNsY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD367C433C8;
-	Fri, 24 Nov 2023 21:38:42 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rs+XikDQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E529C433C8;
+	Sat, 25 Nov 2023 18:54:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1700861923;
-	bh=ptjkAte1QXNuW1BDKm99u+0k/U6sLZF2tFKHqkC6btM=;
-	h=From:To:Cc:Subject:Date:From;
-	b=WAWCwNsY1fMaMcr302PWbuf4doJ/cZNDDR46mMRellmvcqfw+AE1fBzUM+XKP6w/W
-	 ZTEckTXLa3jzw433vrk0ZUlXvUeOkH/CPYzyh5vb8chikffbn3v6+6Nx5SVVol9/AP
-	 ag9lC0u5aCFRoq8B8xkjd6BEaU6udnSrYJEZw+szeuWXzkcmf4AOwVbF87rODMKuXh
-	 H2HOlG2sZxp6+hgg8qkunGc7zQUlq+R5KeYEWWRyVITNe8SNeXMPpYGDAuy2BYaggl
-	 0d0aeVp2TRE2toLmluzDNm+GUz05Ymczjp4ozq/TWMpMD1U0aRX15nA7ZG3UDc94j2
-	 +FLkltKFRLS0w==
+	s=k20201202; t=1700938483;
+	bh=Tozwi06LvoRADBPDH1PIrglazhaZ6UE7gGXb0fDZALY=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=rs+XikDQShRcMzqHK66+5N0DR4QhdKLG4X0FKBj/dgbSs2FAAT1Iy0aid1xMc2SBQ
+	 BozXguD6e3TEyCD87apDfRwYDRek7h2Gnclh0+UyhNLH7dYkUH5Gtyz5x2ECVSzlJ5
+	 SgyPyjHJ7rXwzF9vZfQQY68A1NJ48fHSO5JWdkZl1tCUYYEdM5kaZjGyJC54GWNJ1D
+	 tgy5RTgUlyqQBudABmh0A1vwMPloYIQ+o9lU0Lh8LnEZa5gzDmMzhxEro7mwdYGSw2
+	 NDrrweDZmZRdXFlGLcoA4BjBS1CSJBPJMaVyT1+a7ChwRIsd3GGK1WhDBevhz33YqW
+	 67zmkx9uYCCIA==
 From: SeongJae Park <sj@kernel.org>
-To: Andrew Morton <akpm@linux-foundation.org>
-Cc: SeongJae Park <sj@kernel.org>,
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org,
+	patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net,
+	rwarsow@gmx.de,
+	conor@kernel.org,
+	allen.lkml@gmail.com,
 	damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH] mm/damon/sysfs-schemes: add timeout for update_schemes_tried_regions
-Date: Fri, 24 Nov 2023 21:38:40 +0000
-Message-Id: <20231124213840.39157-1-sj@kernel.org>
+	SeongJae Park <sj@kernel.org>
+Subject: Re: [PATCH 6.1 000/369] 6.1.64-rc2 review
+Date: Sat, 25 Nov 2023 18:54:40 +0000
+Message-Id: <20231125185440.101709-1-sj@kernel.org>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20231125163140.940904812@linuxfoundation.org>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -35,115 +52,60 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-If a scheme is set to not applied to any monitoring target region for
-any reasons including the target access pattern, quota, filters, or
-watermarks, writing 'update_schemes_tried_regions' to 'state' DAMON
-sysfs file can indefinitely hang.  Fix the case by implementing a
-timeout for the operation.  The time limit is two apply intervals of
-each scheme.
+Hello,
 
-Fixes: 4d4e41b68299 ("mm/damon/sysfs-schemes: do not update tried regions more than one DAMON snapshot")
-Signed-off-by: SeongJae Park <sj@kernel.org>
+On 2023-11-25T16:33:37+00:00 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+
+> This is the start of the stable review cycle for the 6.1.64 release.
+> There are 369 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Mon, 27 Nov 2023 16:30:48 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.64-rc2.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+> and the diffstat can be found below.
+
+This rc kernel passes DAMON functionality test[1] on my test machine.
+Attaching the test results summary below.  Please note that I retrieved the
+kernel from linux-stable-rc tree[2].
+
+Tested-by: SeongJae Park <sj@kernel.org>
+
+[1] https://github.com/awslabs/damon-tests/tree/next/corr
+[2] 8e081ffe77d6 ("Linux 6.1.64-rc2")
+
+Thanks,
+SJ
+
+[...]
+
 ---
-The commit that fixed by this patch is merged in v6.7-rc1.  Hence not Cc-ing
-stable@, but this patch would better to be treated as a hotfix that will be
-merged in the mainline before the v6.7 release.
 
- mm/damon/sysfs-schemes.c | 49 +++++++++++++++++++++++++++++++++++-----
- 1 file changed, 43 insertions(+), 6 deletions(-)
-
-diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
-index be667236b8e6..fe0fe2562000 100644
---- a/mm/damon/sysfs-schemes.c
-+++ b/mm/damon/sysfs-schemes.c
-@@ -139,6 +139,13 @@ static const struct kobj_type damon_sysfs_scheme_region_ktype = {
-  * damon_sysfs_before_damos_apply() understands the situation by showing the
-  * 'finished' status and do nothing.
-  *
-+ * If DAMOS is not applied to any region due to any reasons including the
-+ * access pattern, the watermarks, the quotas, and the filters,
-+ * ->before_damos_apply() will not be called back.  Until the situation is
-+ * changed, the update will not be finished.  To avoid this,
-+ * damon_sysfs_after_sampling() set the status as 'finished' if more than two
-+ * apply intervals of the scheme is passed while the state is 'idle'.
-+ *
-  *  Finally, the tried regions request handling finisher function
-  *  (damon_sysfs_schemes_update_regions_stop()) unregisters the callbacks.
-  */
-@@ -154,6 +161,7 @@ struct damon_sysfs_scheme_regions {
- 	int nr_regions;
- 	unsigned long total_bytes;
- 	enum damos_sysfs_regions_upd_status upd_status;
-+	unsigned long upd_timeout_jiffies;
- };
- 
- static struct damon_sysfs_scheme_regions *
-@@ -1854,7 +1862,9 @@ static int damon_sysfs_after_sampling(struct damon_ctx *ctx)
- 	for (i = 0; i < sysfs_schemes->nr; i++) {
- 		sysfs_regions = sysfs_schemes->schemes_arr[i]->tried_regions;
- 		if (sysfs_regions->upd_status ==
--				DAMOS_TRIED_REGIONS_UPD_STARTED)
-+				DAMOS_TRIED_REGIONS_UPD_STARTED ||
-+				time_after(jiffies,
-+					sysfs_regions->upd_timeout_jiffies))
- 			sysfs_regions->upd_status =
- 				DAMOS_TRIED_REGIONS_UPD_FINISHED;
- 	}
-@@ -1885,14 +1895,41 @@ int damon_sysfs_schemes_clear_regions(
- 	return 0;
- }
- 
-+static struct damos *damos_sysfs_nth_scheme(int n, struct damon_ctx *ctx)
-+{
-+	struct damos *scheme;
-+	int i = 0;
-+
-+	damon_for_each_scheme(scheme, ctx) {
-+		if (i == n)
-+			return scheme;
-+		i++;
-+	}
-+	return NULL;
-+}
-+
- static void damos_tried_regions_init_upd_status(
--		struct damon_sysfs_schemes *sysfs_schemes)
-+		struct damon_sysfs_schemes *sysfs_schemes,
-+		struct damon_ctx *ctx)
- {
- 	int i;
-+	struct damos *scheme;
-+	struct damon_sysfs_scheme_regions *sysfs_regions;
- 
--	for (i = 0; i < sysfs_schemes->nr; i++)
--		sysfs_schemes->schemes_arr[i]->tried_regions->upd_status =
--			DAMOS_TRIED_REGIONS_UPD_IDLE;
-+	for (i = 0; i < sysfs_schemes->nr; i++) {
-+		sysfs_regions = sysfs_schemes->schemes_arr[i]->tried_regions;
-+		scheme = damos_sysfs_nth_scheme(i, ctx);
-+		if (!scheme) {
-+			sysfs_regions->upd_status =
-+				DAMOS_TRIED_REGIONS_UPD_FINISHED;
-+			continue;
-+		}
-+		sysfs_regions->upd_status = DAMOS_TRIED_REGIONS_UPD_IDLE;
-+		sysfs_regions->upd_timeout_jiffies = jiffies +
-+			2 * usecs_to_jiffies(scheme->apply_interval_us ?
-+					scheme->apply_interval_us :
-+					ctx->attrs.sample_interval);
-+	}
- }
- 
- /* Called from damon_sysfs_cmd_request_callback under damon_sysfs_lock */
-@@ -1902,7 +1939,7 @@ int damon_sysfs_schemes_update_regions_start(
- {
- 	damon_sysfs_schemes_clear_regions(sysfs_schemes, ctx);
- 	damon_sysfs_schemes_for_damos_callback = sysfs_schemes;
--	damos_tried_regions_init_upd_status(sysfs_schemes);
-+	damos_tried_regions_init_upd_status(sysfs_schemes, ctx);
- 	damos_regions_upd_total_bytes_only = total_bytes_only;
- 	ctx->callback.before_damos_apply = damon_sysfs_before_damos_apply;
- 	ctx->callback.after_sampling = damon_sysfs_after_sampling;
--- 
-2.34.1
-
+ok 1 selftests: damon: debugfs_attrs.sh
+ok 2 selftests: damon: debugfs_schemes.sh
+ok 3 selftests: damon: debugfs_target_ids.sh
+ok 4 selftests: damon: debugfs_empty_targets.sh
+ok 5 selftests: damon: debugfs_huge_count_read_write.sh
+ok 6 selftests: damon: debugfs_duplicate_context_creation.sh
+ok 7 selftests: damon: sysfs.sh
+ok 1 selftests: damon-tests: kunit.sh
+ok 2 selftests: damon-tests: huge_count_read_write.sh
+ok 3 selftests: damon-tests: buffer_overflow.sh
+ok 4 selftests: damon-tests: rm_contexts.sh
+ok 5 selftests: damon-tests: record_null_deref.sh
+ok 6 selftests: damon-tests: dbgfs_target_ids_read_before_terminate_race.sh
+ok 7 selftests: damon-tests: dbgfs_target_ids_pid_leak.sh
+ok 8 selftests: damon-tests: damo_tests.sh
+ok 9 selftests: damon-tests: masim-record.sh
+ok 10 selftests: damon-tests: build_i386.sh
+ok 11 selftests: damon-tests: build_arm64.sh
+ok 12 selftests: damon-tests: build_i386_idle_flag.sh
+ok 13 selftests: damon-tests: build_i386_highpte.sh
+ok 14 selftests: damon-tests: build_nomemcg.sh
+ [33m
+ [92mPASS [39m
