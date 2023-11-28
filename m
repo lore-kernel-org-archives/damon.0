@@ -1,109 +1,96 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.7])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BE3A37D1A;
-	Tue, 28 Nov 2023 16:22:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99CBC41C6A
+	for <damon@lists.linux.dev>; Tue, 28 Nov 2023 18:57:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="AuDHvXap"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1701188528; x=1732724528;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=Kkj3XaIBhumPeERmIo13qRy1gqgQbcz4xJqxHlZYauY=;
-  b=AuDHvXapwty8oilZpLxTDSMxo6OcVjNSsF8aiHGyL1kgH6hg1ETu8ncU
-   lCbQ+gNEx+IATiqxz20v99UVpi4+fisGfMRaqeH42zYz7I4POobv8jopW
-   gBcNHUGylCJwWxDDnINXBx8UKnrdhLHbwkYoIQjWBUFc0fGcFi+OGySHw
-   jDY22sVSsekmbLI636R+ceKDOZcWeFRUpSWHhow7MUyWOv/bBttWvjxhJ
-   u4J7lzfmUbupzHISfg0W1rcv5OlOChZ4hGk8NYZAirFfTedYHFnC4Y2sc
-   /B8IkZ7jYgv4EwliwKPPsLdJPeOeFYyfhs/q1IkZLlbqeg0Z03qMIb71R
-   g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10908"; a="14519043"
-X-IronPort-AV: E=Sophos;i="6.04,234,1695711600"; 
-   d="scan'208";a="14519043"
-Received: from orsmga003.jf.intel.com ([10.7.209.27])
-  by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Nov 2023 08:22:07 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10908"; a="718433083"
-X-IronPort-AV: E=Sophos;i="6.04,234,1695711600"; 
-   d="scan'208";a="718433083"
-Received: from lkp-server01.sh.intel.com (HELO d584ee6ebdcc) ([10.239.97.150])
-  by orsmga003.jf.intel.com with ESMTP; 28 Nov 2023 08:22:04 -0800
-Received: from kbuild by d584ee6ebdcc with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1r80qY-0007jD-0a;
-	Tue, 28 Nov 2023 16:22:02 +0000
-Date: Wed, 29 Nov 2023 00:21:33 +0800
-From: kernel test robot <lkp@intel.com>
-To: cuiyangpei <cuiyangpei@gmail.com>, sj@kernel.org,
-	akpm@linux-foundation.org, damon@lists.linux.dev,
-	linux-mm@kvack.org, linux-kernel@vger.kernel.org
-Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="j8HREUCG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 821E4C433C7;
+	Tue, 28 Nov 2023 18:57:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1701197862;
+	bh=KIRVGvgTEo6MU+1ULyVc42k3ON+LvmquMKcr6ZnGB3k=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=j8HREUCGIlGLBK181OWcIiiwNM7az5F2/keOGgEmCp1N5CBiZzZbIyXGkTl6cDRpZ
+	 h8Mi1fpXus+5yAlhYTVVXAYfH7HJLlst3bzpeA3U7tcnwQIWVrBMSr/Usib3aA94xe
+	 43YUMNYUrAwk4y4uxr79scpnrC7f104NNqHAMUDt/XVR2L/xJtvhva7P0D98UW/nDH
+	 XT4K889yFY1VzQ73VM0o4ScUzCecJhELMaZk/1t/YMFcn+jE+hNAbqtpGWR00D9pxS
+	 iRXFetT1MZuufpT4Lb20BBecXM40n0krFVJFr/EoSATB0SBnyhdV7Qg8SY/BcvhZIn
+	 D93uAYnLbXatQ==
+From: SeongJae Park <sj@kernel.org>
+To: cuiyangpei <cuiyangpei@gmail.com>
+Cc: sj@kernel.org,
+	akpm@linux-foundation.org,
+	damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org,
 	cuiyangpei <cuiyangpei@xiaomi.com>
 Subject: Re: [PATCH 1/2] mm/damon/sysfs: Implement recording feature
-Message-ID: <202311290021.Jo3VlA8D-lkp@intel.com>
-References: <20231128073440.11894-1-cuiyangpei@xiaomi.com>
+Date: Tue, 28 Nov 2023 18:57:39 +0000
+Message-Id: <20231128185739.47916-1-sj@kernel.org>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20231128073440.11894-1-cuiyangpei@xiaomi.com>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20231128073440.11894-1-cuiyangpei@xiaomi.com>
+Content-Transfer-Encoding: 8bit
 
-Hi cuiyangpei,
-
-kernel test robot noticed the following build errors:
-
-[auto build test ERROR on akpm-mm/mm-everything]
-
-url:    https://github.com/intel-lab-lkp/linux/commits/cuiyangpei/mm-damon-core-add-sysfs-nodes-to-set-last_nr_accesses-weight/20231128-194153
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/akpm/mm.git mm-everything
-patch link:    https://lore.kernel.org/r/20231128073440.11894-1-cuiyangpei%40xiaomi.com
-patch subject: [PATCH 1/2] mm/damon/sysfs: Implement recording feature
-config: i386-buildonly-randconfig-001-20231128 (https://download.01.org/0day-ci/archive/20231129/202311290021.Jo3VlA8D-lkp@intel.com/config)
-compiler: clang version 16.0.4 (https://github.com/llvm/llvm-project.git ae42196bc493ffe877a7e3dff8be32035dea4d07)
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20231129/202311290021.Jo3VlA8D-lkp@intel.com/reproduce)
-
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202311290021.Jo3VlA8D-lkp@intel.com/
-
-All errors (new ones prefixed by >>):
-
-   mm/damon/sysfs.c:1415:6: warning: variable 'count' set but not used [-Wunused-but-set-variable]
-           int count = 0;
-               ^
-   In file included from mm/damon/sysfs.c:2139:
->> mm/damon/sysfs-test.h:15:21: error: redefinition of 'nr_damon_targets'
-   static unsigned int nr_damon_targets(struct damon_ctx *ctx)
-                       ^
-   mm/damon/sysfs.c:1411:21: note: previous definition is here
-   static unsigned int nr_damon_targets(struct damon_ctx *ctx)
-                       ^
-   1 warning and 1 error generated.
+Hi Cuiyanpei,
 
 
-vim +/nr_damon_targets +15 mm/damon/sysfs-test.h
+Thank you for this nice patchset.
 
-b8ee5575f763c2 SeongJae Park 2023-10-22  14  
-b8ee5575f763c2 SeongJae Park 2023-10-22 @15  static unsigned int nr_damon_targets(struct damon_ctx *ctx)
-b8ee5575f763c2 SeongJae Park 2023-10-22  16  {
-b8ee5575f763c2 SeongJae Park 2023-10-22  17  	struct damon_target *t;
-b8ee5575f763c2 SeongJae Park 2023-10-22  18  	unsigned int nr_targets = 0;
-b8ee5575f763c2 SeongJae Park 2023-10-22  19  
-b8ee5575f763c2 SeongJae Park 2023-10-22  20  	damon_for_each_target(t, ctx)
-b8ee5575f763c2 SeongJae Park 2023-10-22  21  		nr_targets++;
-b8ee5575f763c2 SeongJae Park 2023-10-22  22  
-b8ee5575f763c2 SeongJae Park 2023-10-22  23  	return nr_targets;
-b8ee5575f763c2 SeongJae Park 2023-10-22  24  }
-b8ee5575f763c2 SeongJae Park 2023-10-22  25  
+On Tue, 28 Nov 2023 15:34:39 +0800 cuiyangpei <cuiyangpei@gmail.com> wrote:
 
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+> The user space users can control DAMON and get the monitoring results
+> via implements 'recording' feature in 'damon-sysfs'.  The feature
+> can be used via 'record' and 'state' file in the '<sysfs>/kernel/mm/
+> damon/admin/kdamonds/N/' directory.
+> 
+> The file allows users to record monitored access patterns in a text
+> file. Firstly, users set the size of the buffer and the path of the
+> result file by writing to the ``record`` file. Then the recorded
+> results are first written in an in-memory buffer and flushed the
+> recorded results to a file in batch by writing 'record' to the
+> ``state`` file.
+> 
+> For example, below commands set the buffer to be 4 KiB and the result
+> to be saved in ``/damon.txt``. ::
+> 
+>     # cd <sysfs>/kernel/mm/damon/admin/kdamonds/N
+>     # echo "4096 /damon.txt" > record
+>     # echo "record" > state
+
+This reminds me the record feature of DAMON debugfs interface[1], which still
+not merged in the mainline.  I deprioritized the patchset to have a better
+answer to Andrew's questions on the discussion (nice definition of the binary
+format and quatization of the benefit), and later I realized I don't have real
+use case that this makes real benefit, so I'm no more aiming to make this
+merged into the mainline.
+
+More specifically, I'm now thinking the feature is not really needed since
+trace event based recording works, and we found no problem so far.  The DAMON
+user-space tool (damo)[2] also dropped support of the in-kernel record feature,
+but we received no problem report.
+
+Also, I believe DAMOS tried regions like feature could provide some level of
+information, since it provides snapshot of the monitoring result, which
+contains a time data, namely 'age'.
+
+Could you please further elaborate your aimed use case of this feature and the
+advantage compared to other alternatives (tracepoint-based recording or DAMOS
+tried regions based snapshot collecting) I mentioned above?
+
+[1] https://lore.kernel.org/linux-mm/20211011093057.30790-1-sj@kernel.org/
+[2] https://github.com/awslabs/damo
+
+
+Thanks,
+SJ
+
+> 
+> Signed-off-by: cuiyangpei <cuiyangpei@xiaomi.com>
