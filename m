@@ -1,36 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9A434A9B2
-	for <damon@lists.linux.dev>; Fri,  1 Dec 2023 17:31:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 108ADEA8;
+	Sat,  2 Dec 2023 00:08:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FaBiOJUw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A662BC433C8;
-	Fri,  1 Dec 2023 17:31:13 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="r8GrkEMH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CF17C433C7;
+	Sat,  2 Dec 2023 00:08:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1701451874;
-	bh=wA+Ueq448VkzLDqFZSym3+gEJt7y1F440M6KTvullms=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FaBiOJUwzapgllxu6aBcQv9MtKgB3w5QJQp3VFfeXWbuu7MxKNe7y713pMHoSGe/3
-	 3u94ST2R/3bQjGwrRzl/NY659HngxTVBfOKQhuhkW+bzHIYayQtbnd7xmqlPCSGhpv
-	 xSLkpe2yNqvSBoTd1hXtMClbyDKV6jy7hYxIhhe3HIQyqpogDPfbCEjVfnFazgnsV7
-	 9LqsJU24u9FimiiUjMLeCyQlb/6dmMIfcdPoNK1rlfU5+6RSjSn8qqRjvdfutLvaVt
-	 47+qclvmKRrfMS8gLsY5h4ro3KE5tFk0Bv/bVj32hfhfgzApyxbqtYQkV37Yyfw4Fc
-	 gu/Uxz5UifSNA==
+	s=k20201202; t=1701475689;
+	bh=A1C2zs2bNcPgxvWmPkcCx7AYSR8F7j9qABqqkUnLgSo=;
+	h=From:To:Cc:Subject:Date:From;
+	b=r8GrkEMHKqnkzCBxXV6dk0fxj2hTrFflggLRLPq6CrikzGUQ5hYicqP17L4pqk5NL
+	 Kvqe9zz5t9W1mV8znjB0kuJ4IkkBiUTPOonMYIk3B+hPQqFdmt9wEd6qBojTO6X6y3
+	 VaF7fIoMCcnsZ6IuXrbJQ6Q22BzyAY+dfkcgJBrg76baKN3JK/XJx8b+rQimNIWkr2
+	 FI0XLIJZ9d9eDnKddcwIzMG+PHxfpY8uOfAZBS92pH3kTqaovu87UFYYgPaoOV+2iX
+	 mUSzyhjCX3Be3paIV1thkachdpMZGQgEWmMK9DDpQFtn8QRq2Oz5CEE4I/GNzG/gyn
+	 Xg6V2D4b6/Rrw==
 From: SeongJae Park <sj@kernel.org>
-To: cuiyangpei <cuiyangpei@gmail.com>
+To: 
 Cc: SeongJae Park <sj@kernel.org>,
-	akpm@linux-foundation.org,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Shuah Khan <shuah@kernel.org>,
 	damon@lists.linux.dev,
 	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org,
-	xiongping1@xiaomi.com
-Subject: Re: [PATCH 1/2] mm/damon/sysfs: Implement recording feature
-Date: Fri,  1 Dec 2023 17:31:12 +0000
-Message-Id: <20231201173112.64300-1-sj@kernel.org>
+	linux-kselftest@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [RFC PATCH 0/5] selftests/damon: add Python modules for DAMON control and functionality tests
+Date: Sat,  2 Dec 2023 00:08:01 +0000
+Message-Id: <20231202000806.46210-1-sj@kernel.org>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20231201122507.GA15806@cuiyangpei>
-References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -39,118 +38,69 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hi Cuiyangpei,
+DAMON provides almost all control to the user via its sysfs interface.
+For that, the interface provides plenty of files and hierarchies.  The
+interface is simple enough to be controlled by shell commands including
+'cat', 'echo', and redirection.  However, due to the number of files and
+the hierarchies, doing that repeatedly is quite tedious.  As a result,
+DAMON selftests are containing only simple test cases rather than real
+functionality tests.  Having a wrapper script that can be reused to
+implement more functionality tests could be helpful.  Writing such
+wrapper with shell script might be challenging and not easy to further
+maintain and extend for future DAMON interface extensions, though.
 
-On Fri, 1 Dec 2023 20:25:07 +0800 cuiyangpei <cuiyangpei@gmail.com> wrote:
+To this end, implement a Python-written DAMON sysfs interface wrapper
+that could be easily managed and extended for future DAMON interface
+extensions.  Further implement one simple functionality test and a
+corner case regression test for a previously found bug, using the
+wrapper module.  In fact, the bug was found by the test this patchset is
+introducing.
 
-> On Thu, Nov 30, 2023 at 07:44:20PM +0000, SeongJae Park wrote:
-> > Hi Cuiyangpei,
-> > 
-> > On Thu, 30 Nov 2023 17:14:26 +0800 cuiyangpei <cuiyangpei@gmail.com> wrote:
-> > 
-> > > Hi SeongJae,
-> > > 
-> > > We also investigated the operation schemes you mentioned, but we don't
-> > > think it can fit our needs.
-> > > 
-> > > On android, user will open many apps and switch between these apps as
-> > > needs. We hope to monitor apps' memory access only when they are on
-> > > foreground and record the memory access pattern when they are switched
-> > > to the background. 
-> > > 
-> > > When avaliable memory reaches a threshold, we will use these access
-> > > patterns with some strategies to recognize those memory that will have
-> > > little impact on user experience and to reclaim them proactively.  
-> > > 
-> > > I'm not sure I have clarified it clearly, if you still have questions
-> > > on this, please let us know.
-> > 
-> > So, to my understanding, you expect applications may keep similar access
-> > pattern when they are in foreground, but have a different, less aggressive
-> > access pattern in background, and therefore reclaim memory based on the
-> > foreground-access pattern, right?
-> >
-> 
-> Different apps may have different access pattern. On android, the apps will
-> join in freeze cgroup and be frozen after switch to the background. So we 
-> monitor apps' memory access only when they are in foreground.
+Note that the Python wrapper is not supporting full features of DAMON
+interface, but only some of those that essential for the tests that this
+patchset is introducing.  The wrapper would extended to support more
+features, but only with essential ones for such future tests.  The
+wrapper will hence keep being simple, small, and constrained.  For
+convenient and general use cases of DAMON, users should use DAMON
+user-space tools for such purpose, like damo[1].
 
-Thank you for this enlightening me :)
+[1] https://github.com/damonitor/damo
 
-> > Very interesting idea, thank you for sharing!
-> > 
-> > Then, yes, I agree current DAMOS might not that helpful for the situation, and
-> > this record feature could be useful for your case.
-> > 
-> > That said, do you really need full recording of the monitoring results?  If
-> > not, DAMOS provides DAMOS tried regions feature[1], which allows users get the
-> > monitoring results snapshot that include both frequency and recency of all
-> > regions in an efficient way.  If single snapshot is not having enough
-> > information for you, you could collect multiple snapshots.
-> > 
-> > You mentioned absence of Python on Android as a blocker of DAMOS use on the
-> > previous reply[2], but DAMOS tried regions feature is not depend on tracepoints
-> > or Python.
-> > 
-> > Of course, I think you might already surveyed it but found some problems.
-> > Could you please share that in detail if so?
-> > 
-> DAMOS tried regions feature you mentioned is not fully applicable. It needs to
-> apply schemes on regions. There is no available scheme we can use for our use
-> case. What we need is to return regions with access frequency and recency to
-> userspace for later use.
+Patches Sequence
+----------------
 
+This patchset is constructed with five patches.  The first three patches
+implement the Python-written DAMON sysfs interface wrapper in small
+steps.  The basic data structure (first patch), kdamond startup command
+(second patch), and finally DAMOS tried bytes command (third patch).
 
-Thank you for the answer, I understand your concern.  One of the available
-DAMOS action is 'stat'[1], which does nothing but just count the statistic.
-Using DAMOS scheme for any access pattern with 'stat' action, you can extract
-the access pattern via DAMOS tried regions feature of DAMON sysfs interface,
-without making any unnecessary impact to the workload.
+Then two patches for adding selftests using the wrapper follows.  The
+fourth patch implements a basic functionality test of DAMON for working
+set estimation accuracy.  Finally, the fifth patch implements a corner
+case test for a previously found bug.
 
-Quote from [2]:
+SeongJae Park (5):
+  selftests/damon: add a DAMON interface wrapper python module
+  selftests/damon/_damon: implement sysfs-based kdamonds start function
+  selftests/damon/_damon: implement sysfs updat_schemes_tried_bytes
+    command
+  selftests/damon: add a test for update_schemes_tried_regions sysfs
+    command
+  selftests/damon: add a test for update_schemes_tried_regions hang bug
 
-    The expected usage of this directory is investigations of schemes' behaviors,
-    and query-like efficient data access monitoring results retrievals. For the
-    latter use case, in particular, users can set the action as stat and set the
-    access pattern as their interested pattern that they want to query.
-
-For example, you could
-
-# cd /sys/kernel/mm/damon/admin
-#
-# # populate directories
-# echo 1 > kdamonds/nr_kdamonds; echo 1 > kdamonds/0/contexts/nr_contexts;
-# echo 1 > kdamonds/0/contexts/0/schemes/nr_schemes
-# cd kdamonds/0/contexts/0/schemes/0
-#
-# # set the access pattern for any case (max as 2**64 - 1), and action as stat
-# echo 0 > access_pattern/sz/min
-# echo 18446744073709551615 > access_pattern/sz/max
-# echo 0 > access_pattern/nr_accesses/min
-# echo 18446744073709551615 > access_pattern/nr_accesses/max
-# echo 0 > access_pattern/age/min
-# echo 18446744073709551615 > access_pattern/age/max
-# echo stat > action
-
-And this is how DAMON user-space tool is getting the snapshot with 'damo show'
-command[3].
-
-Could this be used for your case?  Please ask any question if you have :)
-
-[1] https://docs.kernel.org/admin-guide/mm/damon/usage.html#schemes-n
-[2] https://docs.kernel.org/admin-guide/mm/damon/usage.html#schemes-n-tried-regions,
-[3] https://github.com/awslabs/damo/blob/next/USAGE.md#damo-show
+ tools/testing/selftests/damon/Makefile        |   3 +
+ tools/testing/selftests/damon/_damon.py       | 322 ++++++++++++++++++
+ tools/testing/selftests/damon/access_memory.c |  41 +++
+ ...sysfs_update_schemes_tried_regions_hang.py |  33 ++
+ ...te_schemes_tried_regions_wss_estimation.py |  48 +++
+ 5 files changed, 447 insertions(+)
+ create mode 100644 tools/testing/selftests/damon/_damon.py
+ create mode 100644 tools/testing/selftests/damon/access_memory.c
+ create mode 100755 tools/testing/selftests/damon/sysfs_update_schemes_tried_regions_hang.py
+ create mode 100755 tools/testing/selftests/damon/sysfs_update_schemes_tried_regions_wss_estimation.py
 
 
-Thanks,
-SJ
+base-commit: 1be383c41197b82cfd51b2edc7ee515c0b786496
+-- 
+2.34.1
 
-> > [1] https://docs.kernel.org/admin-guide/mm/damon/usage.html#schemes-n-tried-regions 
-> > [2] https://lore.kernel.org/damon/20231129131315.GB12957@cuiyangpei/
-> > 
-> > 
-> > Thanks,
-> > SJ
-> > 
-> > > 
-> > > Thanks.
