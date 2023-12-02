@@ -1,37 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4ECCEBE;
-	Sat,  2 Dec 2023 00:08:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E78651FA2;
+	Sat,  2 Dec 2023 00:39:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lgHf7Eo3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA99CC433CD;
-	Sat,  2 Dec 2023 00:08:12 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FnQQrULV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CA1FC433C9;
+	Sat,  2 Dec 2023 00:39:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1701475693;
-	bh=0o1OidTQa+jBmmayVqOJ5Gh8ghc1rg4/WI7HWKTJJqA=;
+	s=k20201202; t=1701477548;
+	bh=iPaECh64/Sa4iA/As7XpVk06Txhu7bfpO1bKNa8FbFs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lgHf7Eo3aY6hqilQ6vhoUxZZ0Dc2Zeu3gG4+W5pxm7RRYGGlX6sRPfdd19Ii+dGRU
-	 3b9OCW1b8U6a+3cQY+1RZWwDJqfWWXvPCDWx/MFMLLBT0neQjeR8jtY/JV+Z7x03qx
-	 dYbsUMgMGYcmq39jD6IJoUmkxwT4DwdLsNjOBAXOkWcfOuei2nWCGBKrbOs8JoIrY4
-	 OieJhlPmDjSE47hOJ9n1ygykcGnoQsGp/C/DuZ20al10JgSmXbU7X+xkKJOxRh51Ie
-	 kBxeDsvx0mPcaXCorB5l6mp4p/vYCUQ0vBhkwzggPNMJ8/arJWGiklqERGlbq77zk6
-	 3PXJSOLrvCU5A==
+	b=FnQQrULVgMY1RxhFuRIDxSmyYneycJC43FqKx15L/oivnLcvU7d3JI3Lzcz91Ndzq
+	 UPnCaOjwzEdCWwD5xSKVSoSiq19eG9nzqqQIqtRLA+ZnXsa477IzYsMnawSs6OZu41
+	 /ZkuOKXrPYhj8poTSzbc3XQcS8e9yEtJ+VwGkO7welcGw+VIfwLP7usHPmZROmAfle
+	 tD0taEM8GqlJ48/bvinlTM2x5aM/0x9chparkf/dmN9f7IANk+ePo1kmxJas6ZSgDn
+	 7DLZUqNs5RDTyzzNUfl3CxQyZifKP3lfUsbQND6nr9IIBpXIxIfD6ffkPt+sWR/9OD
+	 S8Y0KFrEWP3bA==
 From: SeongJae Park <sj@kernel.org>
-To: 
-Cc: SeongJae Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Shuah Khan <shuah@kernel.org>,
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org,
+	patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net,
+	rwarsow@gmx.de,
+	conor@kernel.org,
+	allen.lkml@gmail.com,
 	damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	linux-kselftest@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [RFC PATCH 5/5] selftests/damon: add a test for update_schemes_tried_regions hang bug
-Date: Sat,  2 Dec 2023 00:08:06 +0000
-Message-Id: <20231202000806.46210-6-sj@kernel.org>
+	SeongJae Park <sj@kernel.org>
+Subject: Re: [PATCH 6.6 000/112] 6.6.4-rc1 review
+Date: Sat,  2 Dec 2023 00:39:05 +0000
+Message-Id: <20231202003905.46296-1-sj@kernel.org>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20231202000806.46210-1-sj@kernel.org>
-References: <20231202000806.46210-1-sj@kernel.org>
+In-Reply-To: <20231130162140.298098091@linuxfoundation.org>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -40,71 +52,64 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The update_schemees_tried_{regions,bytes} command was able to be
-indefinitely hang in some corner cases.  It has fixed by introducing a
-timeout for the command[1].  Add a test for the corner case to not
-introduce the problem again.
+Hello,
 
-[1] https://lore.kernel.org/damon/20231124213840.39157-1-sj@kernel.org/
+On 2023-11-30T16:20:47+00:00 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
 
-Signed-off-by: SeongJae Park <sj@kernel.org>
+> This is the start of the stable review cycle for the 6.6.4 release.
+> There are 112 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Sat, 02 Dec 2023 16:21:18 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.4-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
+> and the diffstat can be found below.
+
+This rc kernel passes DAMON functionality test[1] on my test machine.
+Attaching the test results summary below.  Please note that I retrieved the
+kernel from linux-stable-rc tree[2].
+
+Tested-by: SeongJae Park <sj@kernel.org>
+
+[1] https://github.com/awslabs/damon-tests/tree/next/corr
+[2] 6ed60a9257c1 ("Linux 6.6.4-rc1")
+
+Thanks,
+SJ
+
+[...]
+
 ---
- tools/testing/selftests/damon/Makefile        |  1 +
- ...sysfs_update_schemes_tried_regions_hang.py | 33 +++++++++++++++++++
- 2 files changed, 34 insertions(+)
- create mode 100755 tools/testing/selftests/damon/sysfs_update_schemes_tried_regions_hang.py
 
-diff --git a/tools/testing/selftests/damon/Makefile b/tools/testing/selftests/damon/Makefile
-index 1363987709c6..d90bdba28ff4 100644
---- a/tools/testing/selftests/damon/Makefile
-+++ b/tools/testing/selftests/damon/Makefile
-@@ -12,6 +12,7 @@ TEST_PROGS += debugfs_empty_targets.sh debugfs_huge_count_read_write.sh
- TEST_PROGS += debugfs_duplicate_context_creation.sh
- TEST_PROGS += debugfs_rm_non_contexts.sh
- TEST_PROGS += sysfs.sh sysfs_update_removed_scheme_dir.sh
-+TEST_PROGS += sysfs_update_schemes_tried_regions_hang.py
- TEST_PROGS += sysfs_update_schemes_tried_regions_wss_estimation.py
- TEST_PROGS += reclaim.sh lru_sort.sh
- TEST_PROGS += dbgfs_target_ids_read_before_terminate_race.sh
-diff --git a/tools/testing/selftests/damon/sysfs_update_schemes_tried_regions_hang.py b/tools/testing/selftests/damon/sysfs_update_schemes_tried_regions_hang.py
-new file mode 100755
-index 000000000000..14187be3b004
---- /dev/null
-+++ b/tools/testing/selftests/damon/sysfs_update_schemes_tried_regions_hang.py
-@@ -0,0 +1,33 @@
-+#!/usr/bin/env python3
-+# SPDX-License-Identifier: GPL-2.0
-+
-+import subprocess
-+import time
-+
-+import _damon
-+
-+def main():
-+    proc = subprocess.Popen(['sleep', '2'])
-+    kdamonds = _damon.Kdamonds([_damon.Kdamond(
-+            contexts=[_damon.DamonCtx(
-+                ops='vaddr',
-+                targets=[_damon.DamonTarget(pid=proc.pid)],
-+                schemes=[_damon.Damos(
-+                    access_pattern=_damon.DamosAccessPattern(
-+                        nr_accesses=[200, 200]))] # schemes
-+                )] # contexts
-+            )]) # kdamonds
-+
-+    err = kdamonds.start()
-+    if err != None:
-+        print('kdmaond start failed: %s' % err)
-+        exit(1)
-+
-+    while proc.poll() == None:
-+        err = kdamonds.kdamonds[0].update_schemes_tried_bytes()
-+        if err != None:
-+            print('tried bytes update failed: %s' % err)
-+            exit(1)
-+
-+if __name__ == '__main__':
-+    main()
--- 
-2.34.1
-
+ok 1 selftests: damon: debugfs_attrs.sh
+ok 2 selftests: damon: debugfs_schemes.sh
+ok 3 selftests: damon: debugfs_target_ids.sh
+ok 4 selftests: damon: debugfs_empty_targets.sh
+ok 5 selftests: damon: debugfs_huge_count_read_write.sh
+ok 6 selftests: damon: debugfs_duplicate_context_creation.sh
+ok 7 selftests: damon: debugfs_rm_non_contexts.sh
+ok 8 selftests: damon: sysfs.sh
+ok 9 selftests: damon: sysfs_update_removed_scheme_dir.sh
+ok 10 selftests: damon: reclaim.sh
+ok 11 selftests: damon: lru_sort.sh
+ok 1 selftests: damon-tests: kunit.sh
+ok 2 selftests: damon-tests: huge_count_read_write.sh
+ok 3 selftests: damon-tests: buffer_overflow.sh
+ok 4 selftests: damon-tests: rm_contexts.sh
+ok 5 selftests: damon-tests: record_null_deref.sh
+ok 6 selftests: damon-tests: dbgfs_target_ids_read_before_terminate_race.sh
+ok 7 selftests: damon-tests: dbgfs_target_ids_pid_leak.sh
+ok 8 selftests: damon-tests: damo_tests.sh
+ok 9 selftests: damon-tests: masim-record.sh
+ok 10 selftests: damon-tests: build_i386.sh
+ok 11 selftests: damon-tests: build_arm64.sh
+ok 12 selftests: damon-tests: build_i386_idle_flag.sh
+ok 13 selftests: damon-tests: build_i386_highpte.sh
+ok 14 selftests: damon-tests: build_nomemcg.sh
+ [33m
+ [92mPASS [39m
