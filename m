@@ -1,36 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD31C1803A
-	for <damon@lists.linux.dev>; Sun,  3 Dec 2023 19:37:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25781171D9;
+	Mon,  4 Dec 2023 17:01:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="R5KWV1kB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E697C433C8;
-	Sun,  3 Dec 2023 19:37:47 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iGvBZLtY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F5F8C433C7;
+	Mon,  4 Dec 2023 17:01:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1701632268;
-	bh=zpmUNVwx3eN/sMGL2XuHjExRiDp+GF7SBd2lpzktD3w=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R5KWV1kB8aQPhXpkQtSa2PKnVrkqiemTIiCSUaLmtURKjxX2D8lOeaa55ItuqOmHw
-	 khmxJIWzIw8Z6tewelPOqzOzL2NxBBjXSmVg3+eC7Q+eKJXijxq1xxP4AVNenxm0aM
-	 yZjF1BgbM6qoMKYhEv0xEk5wD7chUM1PQPqZiwUslc/PTxieAOKyd/AcdnDluGFuZL
-	 2opSKM6pkP4MrClouQD2AoFgsmkCn5kP91slgWr1S0qE5HtESM7rWR5TF9ztU/47fy
-	 zH/h1upJeGpZOxPyaNm0cECPBknF62noMnsYIBD+uBEATPQWD+UdrM/cySgP5NHMRT
-	 FtShUmuCqvVbg==
+	s=k20201202; t=1701709269;
+	bh=PrQN3LxsLo0hnYtX+mHxOw3BE7UQ018hcELFYEAwoxQ=;
+	h=From:To:Cc:Subject:Date:From;
+	b=iGvBZLtYs7yHtlLTahRlEyaMg77PkPNKCUnY79j+4a+CQ0rzo/s8oWQILhuPdvPah
+	 DXg32bDyS/S+oRwZ/rTx+ePKScRNqgIcPlsFAlXdMrwxfzGqc/48qdxze/hx9zZHv4
+	 FfghEKC/+5gGgaUZUYSWaVNMcBHvC9WDKTVAyXUxCVQle9dgrLwZnKVMwRjumzvyKy
+	 HbwQ/G80otDrUBS13rwTJK+5hCsXWO8VYjkXJ2AmSvqeNrKo26vG+Mbn2ej+ak+6lJ
+	 PbYedmzbC9cXA0f/a4J9cx2Kos0QLDzgLekg7WZItSI4QvlSTYhLxm1CwwCc8yiVcC
+	 BIrLl4SrYaj5Q==
 From: SeongJae Park <sj@kernel.org>
-To: cuiyangpei <cuiyangpei@gmail.com>
+To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SeongJae Park <sj@kernel.org>,
-	akpm@linux-foundation.org,
+	Stephen Rothwell <sfr@canb.auug.org.au>,
 	damon@lists.linux.dev,
 	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org,
-	xiongping1@xiaomi.com
-Subject: Re: [PATCH 1/2] mm/damon/sysfs: Implement recording feature
-Date: Sun,  3 Dec 2023 19:37:45 +0000
-Message-Id: <20231203193745.57035-1-sj@kernel.org>
+	linux-next@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH mm-unstable] mm/damon: document get_score_arg field of struct damos_quota
+Date: Mon,  4 Dec 2023 17:01:06 +0000
+Message-Id: <20231204170106.60992-1-sj@kernel.org>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20231203054313.GA14316@cuiyangpei>
-References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -39,133 +37,44 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On 2023-12-03T13:43:13+08:00 cuiyangpei <cuiyangpei@gmail.com> wrote:
+Commit 99b36eab9c05 ("mm/damon/core: implement goal-oriented
+feedback-driven quota auto-tuning") on mm-unstable missed documenting
+'get_score_arg' field of 'struct damos_quota' on the kernel-doc comment.
+Fix it.
 
-> On Fri, Dec 01, 2023 at 05:31:12PM +0000, SeongJae Park wrote:
-> > Hi Cuiyangpei,
-> > 
-> > On Fri, 1 Dec 2023 20:25:07 +0800 cuiyangpei <cuiyangpei@gmail.com> wrote:
-> > 
-> > > On Thu, Nov 30, 2023 at 07:44:20PM +0000, SeongJae Park wrote:
-> > > > Hi Cuiyangpei,
-> > > > 
-> > > > On Thu, 30 Nov 2023 17:14:26 +0800 cuiyangpei <cuiyangpei@gmail.com> wrote:
-> > > > 
-> > > > > Hi SeongJae,
-> > > > > 
-> > > > > We also investigated the operation schemes you mentioned, but we don't
-> > > > > think it can fit our needs.
-> > > > > 
-> > > > > On android, user will open many apps and switch between these apps as
-> > > > > needs. We hope to monitor apps' memory access only when they are on
-> > > > > foreground and record the memory access pattern when they are switched
-> > > > > to the background. 
-> > > > > 
-> > > > > When avaliable memory reaches a threshold, we will use these access
-> > > > > patterns with some strategies to recognize those memory that will have
-> > > > > little impact on user experience and to reclaim them proactively.  
-> > > > > 
-> > > > > I'm not sure I have clarified it clearly, if you still have questions
-> > > > > on this, please let us know.
-> > > > 
-> > > > So, to my understanding, you expect applications may keep similar access
-> > > > pattern when they are in foreground, but have a different, less aggressive
-> > > > access pattern in background, and therefore reclaim memory based on the
-> > > > foreground-access pattern, right?
-> > > >
-> > > 
-> > > Different apps may have different access pattern. On android, the apps will
-> > > join in freeze cgroup and be frozen after switch to the background. So we 
-> > > monitor apps' memory access only when they are in foreground.
-> > 
-> > Thank you for this enlightening me :)
-> > 
-> > > > Very interesting idea, thank you for sharing!
-> > > > 
-> > > > Then, yes, I agree current DAMOS might not that helpful for the situation, and
-> > > > this record feature could be useful for your case.
-> > > > 
-> > > > That said, do you really need full recording of the monitoring results?  If
-> > > > not, DAMOS provides DAMOS tried regions feature[1], which allows users get the
-> > > > monitoring results snapshot that include both frequency and recency of all
-> > > > regions in an efficient way.  If single snapshot is not having enough
-> > > > information for you, you could collect multiple snapshots.
-> > > > 
-> > > > You mentioned absence of Python on Android as a blocker of DAMOS use on the
-> > > > previous reply[2], but DAMOS tried regions feature is not depend on tracepoints
-> > > > or Python.
-> > > > 
-> > > > Of course, I think you might already surveyed it but found some problems.
-> > > > Could you please share that in detail if so?
-> > > > 
-> > > DAMOS tried regions feature you mentioned is not fully applicable. It needs to
-> > > apply schemes on regions. There is no available scheme we can use for our use
-> > > case. What we need is to return regions with access frequency and recency to
-> > > userspace for later use.
-> > 
-> > 
-> > Thank you for the answer, I understand your concern.  One of the available
-> > DAMOS action is 'stat'[1], which does nothing but just count the statistic.
-> > Using DAMOS scheme for any access pattern with 'stat' action, you can extract
-> > the access pattern via DAMOS tried regions feature of DAMON sysfs interface,
-> > without making any unnecessary impact to the workload.
-> > 
-> > Quote from [2]:
-> > 
-> >     The expected usage of this directory is investigations of schemes' behaviors,
-> >     and query-like efficient data access monitoring results retrievals. For the
-> >     latter use case, in particular, users can set the action as stat and set the
-> >     access pattern as their interested pattern that they want to query.
-> > 
-> > For example, you could
-> > 
-> > # cd /sys/kernel/mm/damon/admin
-> > #
-> > # # populate directories
-> > # echo 1 > kdamonds/nr_kdamonds; echo 1 > kdamonds/0/contexts/nr_contexts;
-> > # echo 1 > kdamonds/0/contexts/0/schemes/nr_schemes
-> > # cd kdamonds/0/contexts/0/schemes/0
-> > #
-> > # # set the access pattern for any case (max as 2**64 - 1), and action as stat
-> > # echo 0 > access_pattern/sz/min
-> > # echo 18446744073709551615 > access_pattern/sz/max
-> > # echo 0 > access_pattern/nr_accesses/min
-> > # echo 18446744073709551615 > access_pattern/nr_accesses/max
-> > # echo 0 > access_pattern/age/min
-> > # echo 18446744073709551615 > access_pattern/age/max
-> > # echo stat > action
-> > 
-> > And this is how DAMON user-space tool is getting the snapshot with 'damo show'
-> > command[3].
-> > 
-> > Could this be used for your case?  Please ask any question if you have :)
-> > 
-> > [1] https://docs.kernel.org/admin-guide/mm/damon/usage.html#schemes-n
-> > [2] https://docs.kernel.org/admin-guide/mm/damon/usage.html#schemes-n-tried-regions,
-> > [3] https://github.com/awslabs/damo/blob/next/USAGE.md#damo-show
-> 
-> Thank you for your detailed response, it is very helpful to us. We will look into it
-> and contact you if we have any questions.
+Fixes: 99b36eab9c05 ("mm/damon/core: implement goal-oriented feedback-driven quota auto-tuning") on mm-unstable
+Signed-off-by: SeongJae Park <sj@kernel.org>
+---
+ include/linux/damon.h | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-So glad to hear this.  Please let me know if you have any questions or need any
-help :)
+diff --git a/include/linux/damon.h b/include/linux/damon.h
+index 508a262418a2..aa34ab433bc5 100644
+--- a/include/linux/damon.h
++++ b/include/linux/damon.h
+@@ -137,6 +137,7 @@ enum damos_action {
+  * @weight_age:		Weight of the region's age for prioritization.
+  *
+  * @get_score:		Feedback function for self-tuning quota.
++ * @get_score_arg:	Parameter for @get_score
+  *
+  * To avoid consuming too much CPU time or IO resources for applying the
+  * &struct damos->action to large memory, DAMON allows users to set time and/or
+@@ -156,10 +157,10 @@ enum damos_action {
+  * &weight_nr_accesses, and &weight_age, because monitoring operations are
+  * encouraged to respect those.
+  *
+- * If @get_score function pointer is set, DAMON calls it back and get the
+- * return value of it for every @reset_interval.  Then, DAMON adjusts the
+- * effective quota using the return value as a feedback score to the current
+- * quota, using its internal feedback loop algorithm.
++ * If @get_score function pointer is set, DAMON calls it back with
++ * @get_score_arg and get the return value of it for every @reset_interval.
++ * Then, DAMON adjusts the effective quota using the return value as a feedback
++ * score to the current quota, using its internal feedback loop algorithm.
+  *
+  * The feedback loop algorithem assumes the quota input and the feedback score
+  * output are in a positive proportional relationship, and the goal of the
+-- 
+2.34.1
 
-
-Thanks,
-SJ
-
-> 
-> > 
-> > 
-> > Thanks,
-> > SJ
-> > 
-> > > > [1] https://docs.kernel.org/admin-guide/mm/damon/usage.html#schemes-n-tried-regions 
-> > > > [2] https://lore.kernel.org/damon/20231129131315.GB12957@cuiyangpei/
-> > > > 
-> > > > 
-> > > > Thanks,
-> > > > SJ
-> > > > 
-> > > > > 
-> > > > > Thanks.
