@@ -1,50 +1,105 @@
-Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9C46D264
-	for <damon@lists.linux.dev>; Tue,  5 Dec 2023 05:12:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bombadil.srs.infradead.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 571A86928C;
+	Tue,  5 Dec 2023 17:09:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="QM3JaUd6"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=bombadil.20210309; h=In-Reply-To:Content-Type:MIME-Version
-	:References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=ncz6t9/1ak5tQzeNdq4sicxqCjunw4/Fask4L2znKlk=; b=QM3JaUd6O6kjwVIotWLkMsWcxw
-	FFEFIyTuo20WeeS3rQnMzCF5h5fdXw9F8hUIsor4c9xc0N3vv6XuUql4TGd5zAU7DeNSunKZTUTU1
-	Fj79EOc9Kbkma5HiXEq/Gq99kU0kl5OUzVHOcJ+JETE8Az/fbNGD3MdK9b+P7GMFQDfMISGDcbdw5
-	75pQZ50ioG1Xcx228O5yXnqapN4gUJhQtz6LEPQmk0UR1PYqG3CIsox+F2Ra3seecq3Gml6BZbSQa
-	YZqTv9VZrMp/f4mPzxJf5+4i2o6K0HuMH1xDxdDNkxEvipwM5Qq263/xrEmUNXKh8kRNfPOeVbE2o
-	0iODzysw==;
-Received: from hch by bombadil.infradead.org with local (Exim 4.96 #2 (Red Hat Linux))
-	id 1rANjj-006Hnu-0y;
-	Tue, 05 Dec 2023 05:12:47 +0000
-Date: Mon, 4 Dec 2023 21:12:47 -0800
-From: Christoph Hellwig <hch@infradead.org>
-To: SeongJae Park <sj@kernel.org>
-Cc: Andrew Morton <akpm@linux-foundation.org>, damon@lists.linux.dev,
-	linux-mm@kvack.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 0/3] mm/damon: export DAMON symbols and add sample
- loadable modules
-Message-ID: <ZW6xTyyl0qvcqi3O@infradead.org>
-References: <20231205022858.1540-1-sj@kernel.org>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KS2ogpMR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D457C433C7;
+	Tue,  5 Dec 2023 17:09:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1701796149;
+	bh=mfCTwBrNlsw0BmDAWHPnDlrs+5S5RWznuV7vJPLzxgY=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=KS2ogpMRXC3TwEhvv2sOp44ckuGKoJNmyx0vWTA79M/mc2e5zN6UYdaRcIkFjid0v
+	 pijsvfVgpB1AFy5wPUFepFY5Mu3deGInx9Eusq9+fgAfqwDfxzpKy9cScACbqXs4ub
+	 sA2Sinn3za3pqoi7SHJ45CahiHGJqs5vVNMd6DkAQ4tigGv/yj+Bdrxla71nK/SVEn
+	 mIhlVwa0v+bu3n/2UK/BRG2uQIIwHpz9/zi6si0a+dLY+N2uTXNyL8x2m0i7a14C77
+	 Qv+GQ7LlfJKNrwX2Oxkpzi9k7abELYoKnbIXfEJeHPkjxPdVlHAq8x1htiYHDDT2ne
+	 o4min16tsyhaQ==
+From: SeongJae Park <sj@kernel.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org,
+	patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net,
+	rwarsow@gmx.de,
+	conor@kernel.org,
+	allen.lkml@gmail.com,
+	damon@lists.linux.dev,
+	SeongJae Park <sj@kernel.org>
+Subject: Re: [PATCH 5.15 00/67] 5.15.142-rc1 review
+Date: Tue,  5 Dec 2023 17:09:06 +0000
+Message-Id: <20231205170907.2126-1-sj@kernel.org>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20231205031519.853779502@linuxfoundation.org>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20231205022858.1540-1-sj@kernel.org>
-X-SRS-Rewrite: SMTP reverse-path rewritten from <hch@infradead.org> by bombadil.infradead.org. See http://www.infradead.org/rpr.html
+Content-Transfer-Encoding: 8bit
 
-On Tue, Dec 05, 2023 at 02:28:55AM +0000, SeongJae Park wrote:
-> DAMON cannot be used from loadable modules since it is not exporting its
-> symbols.
+Hello,
 
-And that is a good thing.  We should absolutely not allow random modules
-probing MM internals.   What you posted here is basically just adding
-hooks without even real in-kernel users.
+On 2023-12-05T12:16:45+09:00 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
 
+> This is the start of the stable review cycle for the 5.15.142 release.
+> There are 67 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Thu, 07 Dec 2023 03:14:57 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.142-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
+> and the diffstat can be found below.
+
+This rc kernel passes DAMON functionality test[1] on my test machine.
+Attaching the test results summary below.  Please note that I retrieved the
+kernel from linux-stable-rc tree[2].
+
+Tested-by: SeongJae Park <sj@kernel.org>
+
+[1] https://github.com/awslabs/damon-tests/tree/next/corr
+[2] bff845be423f ("Linux 5.15.142-rc1")
+
+Thanks,
+SJ
+
+[...]
+
+---
+
+ok 1 selftests: damon: debugfs_attrs.sh
+ok 1 selftests: damon-tests: kunit.sh
+ok 2 selftests: damon-tests: huge_count_read_write.sh
+ok 3 selftests: damon-tests: buffer_overflow.sh
+ok 4 selftests: damon-tests: rm_contexts.sh
+ok 5 selftests: damon-tests: record_null_deref.sh
+ok 6 selftests: damon-tests: dbgfs_target_ids_read_before_terminate_race.sh
+ok 7 selftests: damon-tests: dbgfs_target_ids_pid_leak.sh
+ok 8 selftests: damon-tests: damo_tests.sh
+ok 9 selftests: damon-tests: masim-record.sh
+ok 10 selftests: damon-tests: build_i386.sh
+ok 11 selftests: damon-tests: build_arm64.sh
+ok 12 selftests: damon-tests: build_i386_idle_flag.sh
+ok 13 selftests: damon-tests: build_i386_highpte.sh
+ok 14 selftests: damon-tests: build_nomemcg.sh
+ [33m
+ [92mPASS [39m
