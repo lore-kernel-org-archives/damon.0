@@ -1,48 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ED376928A;
-	Tue,  5 Dec 2023 17:10:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DA8D692BF
+	for <damon@lists.linux.dev>; Tue,  5 Dec 2023 17:23:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jc6Whyum"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93551C433C8;
-	Tue,  5 Dec 2023 17:10:42 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EpMPJv4X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEEB9C433C7;
+	Tue,  5 Dec 2023 17:23:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1701796244;
-	bh=GgzzhyH290H2q+P52NcGVfWo7s+qOx2fxx/N5ZUov8s=;
+	s=k20201202; t=1701796989;
+	bh=pU9M00dkHKU1TS7CBL1inocdlITXmGP7gY/XTaLHoyc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jc6WhyumGJ8yUjAgnrzz+u3QHRHqAHpcnP1+DFQObBSD7wMWaRh8zB05uxHvTM985
-	 xRaBhBr2Le95eY16lcUIf5WDg99rmEgKDpwRSLmCrzGrNvRwQX44bj2MnuFqRrmomH
-	 8mcp8FxPvB6Qce2mNLTkmg0aAGbyxpe49/LFd3uO3fkjEAg9Tja3nbO66/wbaCfUmX
-	 cAZ2E2UDOyBi7sqwb56vcmVDfKy6pjaGemMcO+npp93z7Xa7ciGPjlUPYIt/qloIDi
-	 GQ69VA0UrsE2cqKx0Svc9iMBpxSODcjC1mE4EdgbKdzpCWwKgNN8T2PyXIQPZaGo7Z
-	 fuJo6EhAdJATw==
+	b=EpMPJv4XEKXQyQYQR6FkqXiXv1mDf/eSYeILTXcboW3xOS8bPLZL+N2huZtkLCQEL
+	 0OtFsxwzAd6kdDSsD7WpB6tttxUtHcP0gxlldD7BJAy6XYXjMH4NSuRVOLFiD8ViIy
+	 rWHgLBD2A0HITc0L8KBBIrpwPPqNjiN6VBG8xMYo0PWwMyIboOHek+V2R7b3GUSmdV
+	 autTFncMlnDQxky1Dx0r5f3dzmt4BusJ8adkxkZBjU60FQGxSve3/r7MfAq/fQFb18
+	 eYlvLHBXmriqKTncHF0mpyF1m4N3EZQG6v7p8F46z0Eip5rHX+UGN6gOo/6LwvQAcW
+	 Zv1JAF3oYGeZw==
 From: SeongJae Park <sj@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org,
-	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net,
-	rwarsow@gmx.de,
-	conor@kernel.org,
-	allen.lkml@gmail.com,
+To: Christoph Hellwig <hch@infradead.org>
+Cc: SeongJae Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	damon@lists.linux.dev,
-	SeongJae Park <sj@kernel.org>
-Subject: Re: [PATCH 6.6 000/134] 6.6.5-rc1 review
-Date: Tue,  5 Dec 2023 17:10:41 +0000
-Message-Id: <20231205171041.2242-1-sj@kernel.org>
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 0/3] mm/damon: export DAMON symbols and add sample loadable modules
+Date: Tue,  5 Dec 2023 17:23:07 +0000
+Message-Id: <20231205172307.2310-1-sj@kernel.org>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20231205031535.163661217@linuxfoundation.org>
+In-Reply-To: <ZW6xTyyl0qvcqi3O@infradead.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -52,64 +38,40 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hello,
+Hi Christoph,
 
-On 2023-12-05T12:14:32+09:00 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+On 2023-12-04T21:12:47-08:00 Christoph Hellwig <hch@infradead.org> wrote:
 
-> This is the start of the stable review cycle for the 6.6.5 release.
-> There are 134 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+> On Tue, Dec 05, 2023 at 02:28:55AM +0000, SeongJae Park wrote:
+> > DAMON cannot be used from loadable modules since it is not exporting its
+> > symbols.
 > 
-> Responses should be made by Thu, 07 Dec 2023 03:14:57 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.5-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
-> and the diffstat can be found below.
+> And that is a good thing.  We should absolutely not allow random modules
+> probing MM internals.
 
-This rc kernel passes DAMON functionality test[1] on my test machine.
-Attaching the test results summary below.  Please note that I retrieved the
-kernel from linux-stable-rc tree[2].
+I agree.
 
-Tested-by: SeongJae Park <sj@kernel.org>
+> What you posted here is basically just adding hooks without even real
+> in-kernel users.
 
-[1] https://github.com/awslabs/damon-tests/tree/next/corr
-[2] b0b05ccdd77d ("Linux 6.6.5-rc1")
+I was thinking someone might be able to think even the sample module as real
+usage since there was actually some questions about it from real users.  That
+said, those were more like questions than strong requests, so I still think
+this change is somewhat better to be made for at least some folks, but I also
+agree that this wouldn't be not really essential for everyone, and could be
+only long term maintenance threat.
+
+I personally don't have strong opinion, and thank you for raising your concern.
+I will hold this patchset unless someone request this change again with good
+rationale.
+
+Btw, I know there were many concerns about unnecessarily exporting symbols, but
+do we have a formal guideline or documentation about the requirements for
+exporting symbols in sepcific subsystem?  I was hoping to have such one so that
+I could provide better answer to DAMON's loadable module support questions, but
+I was unable to find such one with my poor searching skill.  This reply could
+be used for the purpose meanwhile, though, so appreciate again. :)
+
 
 Thanks,
 SJ
-
-[...]
-
----
-
-ok 1 selftests: damon: debugfs_attrs.sh
-ok 2 selftests: damon: debugfs_schemes.sh
-ok 3 selftests: damon: debugfs_target_ids.sh
-ok 4 selftests: damon: debugfs_empty_targets.sh
-ok 5 selftests: damon: debugfs_huge_count_read_write.sh
-ok 6 selftests: damon: debugfs_duplicate_context_creation.sh
-ok 7 selftests: damon: debugfs_rm_non_contexts.sh
-ok 8 selftests: damon: sysfs.sh
-ok 9 selftests: damon: sysfs_update_removed_scheme_dir.sh
-ok 10 selftests: damon: reclaim.sh
-ok 11 selftests: damon: lru_sort.sh
-ok 1 selftests: damon-tests: kunit.sh
-ok 2 selftests: damon-tests: huge_count_read_write.sh
-ok 3 selftests: damon-tests: buffer_overflow.sh
-ok 4 selftests: damon-tests: rm_contexts.sh
-ok 5 selftests: damon-tests: record_null_deref.sh
-ok 6 selftests: damon-tests: dbgfs_target_ids_read_before_terminate_race.sh
-ok 7 selftests: damon-tests: dbgfs_target_ids_pid_leak.sh
-ok 8 selftests: damon-tests: damo_tests.sh
-ok 9 selftests: damon-tests: masim-record.sh
-ok 10 selftests: damon-tests: build_i386.sh
-ok 11 selftests: damon-tests: build_arm64.sh
-ok 12 selftests: damon-tests: build_i386_idle_flag.sh
-ok 13 selftests: damon-tests: build_i386_highpte.sh
-ok 14 selftests: damon-tests: build_nomemcg.sh
- [33m
- [92mPASS [39m
