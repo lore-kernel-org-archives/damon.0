@@ -1,33 +1,33 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30E8463C1
-	for <damon@lists.linux.dev>; Tue,  5 Dec 2023 02:29:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9C46D264
+	for <damon@lists.linux.dev>; Tue,  5 Dec 2023 05:12:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bombadil.srs.infradead.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jngeDOXK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EF36C433C7;
-	Tue,  5 Dec 2023 02:29:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1701743348;
-	bh=E477KEEpVfXYBLYCDBbDHRJITkivLWed5UVr6LwW/WM=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jngeDOXKER4A8iR1WtRk2Q+VSSXWfsEjUkLKHDo5gl9pr5B546BF+p4Ih9ogHv/gd
-	 3j69ZEx7YNQra9zB8utvELkTvedAI3ffNHroQG1gcpuQah3zv+sddfG/nNHJn9ou6S
-	 V0w2KF3S6nz+YbsqEFzG+OzOZhS4KVVv6Kn1osxhYFIOLBAbQcEh2xNbZeBSZMHLjN
-	 rmFPkmKu5dKkqh+PyAVPcNDF0TKhEyCuWIYnRSxwIjfg2tI9e/JnNNypV5nyWeHzks
-	 t4LyV4p1qOS8rNrGRHVZ64HFNT8LC3wuXLEBuNYV8ZZfKVtkbe2iA31eO8zza3RRqJ
-	 mwHIOcSmOtT0Q==
-From: SeongJae Park <sj@kernel.org>
-To: Andrew Morton <akpm@linux-foundation.org>
-Cc: SeongJae Park <sj@kernel.org>,
-	damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH 3/3] samples: add proactive reclamation DAMON sample module
-Date: Tue,  5 Dec 2023 02:28:58 +0000
-Message-Id: <20231205022858.1540-4-sj@kernel.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20231205022858.1540-1-sj@kernel.org>
+	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="QM3JaUd6"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=bombadil.20210309; h=In-Reply-To:Content-Type:MIME-Version
+	:References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description;
+	bh=ncz6t9/1ak5tQzeNdq4sicxqCjunw4/Fask4L2znKlk=; b=QM3JaUd6O6kjwVIotWLkMsWcxw
+	FFEFIyTuo20WeeS3rQnMzCF5h5fdXw9F8hUIsor4c9xc0N3vv6XuUql4TGd5zAU7DeNSunKZTUTU1
+	Fj79EOc9Kbkma5HiXEq/Gq99kU0kl5OUzVHOcJ+JETE8Az/fbNGD3MdK9b+P7GMFQDfMISGDcbdw5
+	75pQZ50ioG1Xcx228O5yXnqapN4gUJhQtz6LEPQmk0UR1PYqG3CIsox+F2Ra3seecq3Gml6BZbSQa
+	YZqTv9VZrMp/f4mPzxJf5+4i2o6K0HuMH1xDxdDNkxEvipwM5Qq263/xrEmUNXKh8kRNfPOeVbE2o
+	0iODzysw==;
+Received: from hch by bombadil.infradead.org with local (Exim 4.96 #2 (Red Hat Linux))
+	id 1rANjj-006Hnu-0y;
+	Tue, 05 Dec 2023 05:12:47 +0000
+Date: Mon, 4 Dec 2023 21:12:47 -0800
+From: Christoph Hellwig <hch@infradead.org>
+To: SeongJae Park <sj@kernel.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>, damon@lists.linux.dev,
+	linux-mm@kvack.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 0/3] mm/damon: export DAMON symbols and add sample
+ loadable modules
+Message-ID: <ZW6xTyyl0qvcqi3O@infradead.org>
 References: <20231205022858.1540-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -35,165 +35,16 @@ List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20231205022858.1540-1-sj@kernel.org>
+X-SRS-Rewrite: SMTP reverse-path rewritten from <hch@infradead.org> by bombadil.infradead.org. See http://www.infradead.org/rpr.html
 
-Add a sample DAMON application kernel module, namely damon_sample_prcl.
-It is same to the one of the example kernel modules that presented at
-kernel summit 2021 with 10 minutes live coding[1] but updated for the
-latest DAMON interface.
+On Tue, Dec 05, 2023 at 02:28:55AM +0000, SeongJae Park wrote:
+> DAMON cannot be used from loadable modules since it is not exporting its
+> symbols.
 
-The sample module receives a pid of a process to monitor the access,
-monitors the access to the virtual address space of the process, find
-regions that not accessed and proactively reclaim those using DAMOS.
-
-[1] https://linuxplumbersconf.org/event/11/contributions/984/
-
-Signed-off-by: SeongJae Park <sj@kernel.org>
----
- samples/damon/Kconfig             |  13 ++++
- samples/damon/Makefile            |   1 +
- samples/damon/damon_sample_prcl.c | 102 ++++++++++++++++++++++++++++++
- 3 files changed, 116 insertions(+)
- create mode 100644 samples/damon/damon_sample_prcl.c
-
-diff --git a/samples/damon/Kconfig b/samples/damon/Kconfig
-index f8b9a73717f9..459042ce5958 100644
---- a/samples/damon/Kconfig
-+++ b/samples/damon/Kconfig
-@@ -14,4 +14,17 @@ config SAMPLE_DAMON_WSSE
- 
- 	  If unsure, say N.
- 
-+config SAMPLE_DAMON_PRCL
-+	tristate "DAMON sameple module for access-aware proactive reclamation"
-+	depends on DAMON && DAMON_VADDR
-+	help
-+	  This builds DAMON sample module for access-aware proactive
-+	  reclamation.
-+
-+	  The module receives pid of a process, monitor access to the virtual
-+	  address space of the process, find memory regions that not accessed,
-+	  and proactively reclaim the regions.
-+
-+	  If unsure, say N.
-+
- endmenu
-diff --git a/samples/damon/Makefile b/samples/damon/Makefile
-index 1ace3ad4aff0..509f6a619dc4 100644
---- a/samples/damon/Makefile
-+++ b/samples/damon/Makefile
-@@ -1,2 +1,3 @@
- # SPDX-License-Identifier: GPL-2.0
- obj-$(CONFIG_SAMPLE_DAMON_WSSE) += damon_sample_wsse.o
-+obj-$(CONFIG_SAMPLE_DAMON_PRCL) += damon_sample_prcl.o
-diff --git a/samples/damon/damon_sample_prcl.c b/samples/damon/damon_sample_prcl.c
-new file mode 100644
-index 000000000000..487196f18864
---- /dev/null
-+++ b/samples/damon/damon_sample_prcl.c
-@@ -0,0 +1,102 @@
-+// SPDX-License-Identifier: GPL-2.0
-+/*
-+ * proactive reclamation: monitor access pattern of a given process, find
-+ * regiosn that seems not accessed, and proactively page out the regions.
-+ */
-+
-+#define pr_fmt(fmt) "damon_sample_prcl: " fmt
-+
-+#include <linux/damon.h>
-+#include <linux/init.h>
-+#include <linux/kernel.h>
-+#include <linux/module.h>
-+
-+static int target_pid __read_mostly;
-+module_param(target_pid, int, 0600);
-+
-+static struct damon_ctx *ctx;
-+static struct pid *target_pidp;
-+
-+static int damon_sample_prcl_after_aggregate(struct damon_ctx *c)
-+{
-+	struct damon_target *t;
-+
-+	damon_for_each_target(t, c) {
-+		struct damon_region *r;
-+		unsigned long wss = 0;
-+
-+		damon_for_each_region(r, t) {
-+			if (r->nr_accesses > 0)
-+				wss += r->ar.end - r->ar.start;
-+		}
-+		pr_info("wss: %lu\n", wss);
-+	}
-+	return 0;
-+}
-+
-+static int __init damon_sample_prcl_init(void)
-+{
-+	struct damon_target *target;
-+	struct damos *scheme;
-+
-+	pr_info("Hello\n");
-+
-+	ctx = damon_new_ctx();
-+	if (!ctx)
-+		return -ENOMEM;
-+	if (damon_select_ops(ctx, DAMON_OPS_VADDR)) {
-+		damon_destroy_ctx(ctx);
-+		return -EINVAL;
-+	}
-+
-+	target = damon_new_target();
-+	if (!target) {
-+		damon_destroy_ctx(ctx);
-+		return -ENOMEM;
-+	}
-+	damon_add_target(ctx, target);
-+	target_pidp = find_get_pid(target_pid);
-+	if (!target_pidp) {
-+		damon_destroy_ctx(ctx);
-+		return -EINVAL;
-+	}
-+	target->pid = target_pidp;
-+
-+	ctx->callback.after_aggregation = damon_sample_prcl_after_aggregate;
-+
-+	scheme = damon_new_scheme(
-+			&(struct damos_access_pattern) {
-+			.min_sz_region = PAGE_SIZE,
-+			.max_sz_region = ULONG_MAX,
-+			.min_nr_accesses = 0,
-+			.max_nr_accesses = 0},
-+			DAMOS_PAGEOUT,
-+			0,
-+			&(struct damos_quota){},
-+			&(struct damos_watermarks){});
-+	if (!scheme) {
-+		damon_destroy_ctx(ctx);
-+		return -ENOMEM;
-+	}
-+	damon_set_schemes(ctx, &scheme, 1);
-+
-+	return damon_start(&ctx, 1, true);
-+}
-+
-+static void __exit damon_sample_prcl_exit(void)
-+{
-+	pr_info("Goodbye\n");
-+	if (ctx) {
-+		damon_stop(&ctx, 1);
-+		damon_destroy_ctx(ctx);
-+	}
-+	if (target_pidp)
-+		put_pid(target_pidp);
-+}
-+
-+module_init(damon_sample_prcl_init);
-+module_exit(damon_sample_prcl_exit);
-+
-+MODULE_LICENSE("GPL");
-+MODULE_AUTHOR("SeongJae Park");
-+MODULE_DESCRIPTION("DAMON sample module for proactive reclamation");
--- 
-2.34.1
+And that is a good thing.  We should absolutely not allow random modules
+probing MM internals.   What you posted here is basically just adding
+hooks without even real in-kernel users.
 
