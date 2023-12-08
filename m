@@ -1,34 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E81AA39ADA;
-	Fri,  8 Dec 2023 17:50:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 233F750252;
+	Fri,  8 Dec 2023 20:09:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UlSeOLw2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DAA8C433C7;
-	Fri,  8 Dec 2023 17:50:24 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BSwo5iz3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DB23C433C8;
+	Fri,  8 Dec 2023 20:09:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1702057824;
-	bh=cE24g6fBBFjzqibu8azeRT7zJ49z9KZ0TlE0lX4ftds=;
+	s=k20201202; t=1702066186;
+	bh=I466eE+xnip8ZqtgQ6/GRHSwKNzyZEsjGJvnLC6k9wQ=;
 	h=From:To:Cc:Subject:Date:From;
-	b=UlSeOLw24RssSEoLnv7u5w3h+UtuX6mWYBL9Sh+sfakwDsCwpeUev4OhHzla9QVIF
-	 bmw0uUM0zMIhikMsVXI4flrGhT7nrWczvLfnLb1tmAkKqRyW14rS7PD6Z5Ry7jdCsq
-	 T31MPJj9y5Fb8f1Mr6tYtVu+EIl+OHlkmWh8HltLCarJhdvkHS0bABlmDzQUyLNme5
-	 doKc+VWZ76L7RKDPwaz0dnscdzGMwkMtCW0hA9iauFmt54bTg+k2cPE6iXNd0Kdj7X
-	 PPJOahPakyNBrLKKgly1pY+FieuiY/zJxO5qc0fKD5sIqAG7IlfdYpioRXermCrnOS
-	 0tBPI3pUhujig==
+	b=BSwo5iz33TxP2TqUkqKmQ9lcSO1HjQ+d3tw8YtSKcJ1TaPvyQZlsNyObY+ecPIcKN
+	 E7KnoUXS9Pv6xHy96/kFaAgyJDg4v1Q0EHY8hf2b+xwILzeLr6C19UharPJRycQmBU
+	 sQoxdMaiAHTZFtMQORsO3/nFG2iMArTfANWP4DAnxoZ64eQFlAJOKkUBhIwp2aIn0W
+	 BX4IH6O1q+i4Wdg6o084hniXT9ydu5JDDPFC4e5TnjVH5tqHhmNhjq2cn/HLX4WBrL
+	 UGIxNqh2W19eL5xYFZ0sEmOyTE3582aaNJTgfPntbq++axNZQjtu01wX9O/0hhF7kj
+	 LV7aQNCxFK/Aw==
 From: SeongJae Park <sj@kernel.org>
-To: Andrew Morton <akpm@linux-foundation.org>
-Cc: SeongJae Park <sj@kernel.org>,
-	Changbin Du <changbin.du@intel.com>,
-	Jakub Acs <acsjakub@amazon.de>,
-	damon@lists.linux.dev,
+To: stable@vger.kernel.org
+Cc: damon@lists.linux.dev,
 	linux-mm@kvack.org,
 	linux-kernel@vger.kernel.org,
-	stable@vger.kernel.org
-Subject: [PATCH] mm/damon/core: make damon_start() waits until kdamond_fn() starts
-Date: Fri,  8 Dec 2023 17:50:18 +0000
-Message-Id: <20231208175018.63880-1-sj@kernel.org>
+	SeongJae Park <sj@kernel.org>
+Subject: Please merge commit 85c2ceaafbd3 ("mm/damon/sysfs: eliminate potential uninitialized variable warning") into >=5.19 stable trees
+Date: Fri,  8 Dec 2023 20:09:43 +0000
+Message-Id: <20231208200943.64138-1-sj@kernel.org>
 X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -38,81 +35,29 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The cleanup tasks of kdamond threads including reset of corresponding
-DAMON context's ->kdamond field and decrease of global nr_running_ctxs
-counter is supposed to be executed by kdamond_fn().  However, commit
-0f91d13366a4 ("mm/damon: simplify stop mechanism") made neither
-damon_start() nor damon_stop() ensure the corresponding kdamond has
-started the execution of kdamond_fn().
+Please merge commit 85c2ceaafbd3 ("mm/damon/sysfs: eliminate potential
+uninitialized variable warning") to >=5.19 stable kernels.
 
-As a result, the cleanup can be skipped if damon_stop() is called fast
-enough after the previous damon_start().  Especially the skipped reset
-of ->kdamond could cause a use-after-free.
+In 2023-10-31, I sent[1] a fix for v5.19.  After a week, Dan found an issue in
+the fix and sent a fix.  At that time, the commit that Dan was fixing was
+merged in the mm tree but not in the mainline.  Hence, Dan didn't Cc stable@.
 
-Fix it by waiting for start of kdamond_fn() execution from
-damon_start().
+However, now the broken fix[1] is merged in the mainline as commit 973233600676
+("mm/damon/sysfs: update monitoring target regions for online input commit"),
+and all >=5.19 stable trees.  Hence Dan's fix should also applied to those
+trees.  Please apply those.
 
-Fixes: 0f91d13366a4 ("mm/damon: simplify stop mechanism")
-Reported-by: Jakub Acs <acsjakub@amazon.de>
-Cc: <stable@vger.kernel.org> # 5.15.x
-Signed-off-by: SeongJae Park <sj@kernel.org>
----
-Note that the report has not publicly made, so this patch doesn't have a
-Closes: tag.
+Note that the bug was only potential[3] due to unchecked return value.
+However, the unchecked return value was not an intentional behavior but a bug.
+Hence we further made the return value to be checked[4].  The return value
+check fix is also merged in the relevant stable trees, so the fix is now needed
+for a real bug.
 
- include/linux/damon.h | 2 ++
- mm/damon/core.c       | 6 ++++++
- 2 files changed, 8 insertions(+)
+[1] https://lore.kernel.org/all/20231031170131.46972-1-sj@kernel.org/
+[2] https://lore.kernel.org/all/739e6aaf-a634-4e33-98a8-16546379ec9f@moroto.mountain/
+[3] https://lore.kernel.org/all/20231106165205.48264-1-sj@kernel.org/
+[4] https://lore.kernel.org/all/20231106233408.51159-1-sj@kernel.org/
 
-diff --git a/include/linux/damon.h b/include/linux/damon.h
-index aa34ab433bc5..12510d8c51c6 100644
---- a/include/linux/damon.h
-+++ b/include/linux/damon.h
-@@ -579,6 +579,8 @@ struct damon_ctx {
- 	 * update
- 	 */
- 	unsigned long next_ops_update_sis;
-+	/* for waiting until the execution of the kdamond_fn is started */
-+	struct completion kdamond_started;
- 
- /* public: */
- 	struct task_struct *kdamond;
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index f91715a58dc7..2c0cc65d041e 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -445,6 +445,8 @@ struct damon_ctx *damon_new_ctx(void)
- 	if (!ctx)
- 		return NULL;
- 
-+	init_completion(&ctx->kdamond_started);
-+
- 	ctx->attrs.sample_interval = 5 * 1000;
- 	ctx->attrs.aggr_interval = 100 * 1000;
- 	ctx->attrs.ops_update_interval = 60 * 1000 * 1000;
-@@ -668,11 +670,14 @@ static int __damon_start(struct damon_ctx *ctx)
- 	mutex_lock(&ctx->kdamond_lock);
- 	if (!ctx->kdamond) {
- 		err = 0;
-+		reinit_completion(&ctx->kdamond_started);
- 		ctx->kdamond = kthread_run(kdamond_fn, ctx, "kdamond.%d",
- 				nr_running_ctxs);
- 		if (IS_ERR(ctx->kdamond)) {
- 			err = PTR_ERR(ctx->kdamond);
- 			ctx->kdamond = NULL;
-+		} else {
-+			wait_for_completion(&ctx->kdamond_started);
- 		}
- 	}
- 	mutex_unlock(&ctx->kdamond_lock);
-@@ -1483,6 +1488,7 @@ static int kdamond_fn(void *data)
- 
- 	pr_debug("kdamond (%d) starts\n", current->pid);
- 
-+	complete(&ctx->kdamond_started);
- 	kdamond_init_intervals_sis(ctx);
- 
- 	if (ctx->ops.init)
--- 
-2.34.1
 
+Thanks,
+SJ
