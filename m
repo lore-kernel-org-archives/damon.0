@@ -1,31 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 233F750252;
-	Fri,  8 Dec 2023 20:09:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9475380053;
+	Tue, 12 Dec 2023 19:12:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BSwo5iz3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DB23C433C8;
-	Fri,  8 Dec 2023 20:09:46 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nJ/ZB6cd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67E6EC433C8;
+	Tue, 12 Dec 2023 19:12:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1702066186;
-	bh=I466eE+xnip8ZqtgQ6/GRHSwKNzyZEsjGJvnLC6k9wQ=;
+	s=k20201202; t=1702408331;
+	bh=6tke9Mw73/PmV6sucCIPXGu5OGZe4EV0PkE+FQKIYKI=;
 	h=From:To:Cc:Subject:Date:From;
-	b=BSwo5iz33TxP2TqUkqKmQ9lcSO1HjQ+d3tw8YtSKcJ1TaPvyQZlsNyObY+ecPIcKN
-	 E7KnoUXS9Pv6xHy96/kFaAgyJDg4v1Q0EHY8hf2b+xwILzeLr6C19UharPJRycQmBU
-	 sQoxdMaiAHTZFtMQORsO3/nFG2iMArTfANWP4DAnxoZ64eQFlAJOKkUBhIwp2aIn0W
-	 BX4IH6O1q+i4Wdg6o084hniXT9ydu5JDDPFC4e5TnjVH5tqHhmNhjq2cn/HLX4WBrL
-	 UGIxNqh2W19eL5xYFZ0sEmOyTE3582aaNJTgfPntbq++axNZQjtu01wX9O/0hhF7kj
-	 LV7aQNCxFK/Aw==
+	b=nJ/ZB6cdaAzYm2iVfPA9pB4Kwf3IsNZ2cd5012uIiLCKnE8RjQKaTJKbdn/8HggFL
+	 JvHxekh3fKJhlTDeQ/zSEfKQ1OWLhCItYUItlw4h952ge07YwQt/pxbaaLZkUKcSO1
+	 y2M6qwdV5GYGwNYGUk0g7gmKprHI11sKdJcJnpMJPY8ObZmVgS9EQW5V3IByuGOUMA
+	 srxSoN8X7xIHv06AGfa73Sp/Fjt1qzTEbq10E/vnpXFmnnPTRvSE4JQxCHPOzfM5nX
+	 0NAg5wdjmhAJ3TTdZGF0MpX27kxvyl+Ra8R4VU2barlWQvfHh73WyMAWzgahAqKX/C
+	 f2pV37Ciqcc1Q==
 From: SeongJae Park <sj@kernel.org>
-To: stable@vger.kernel.org
-Cc: damon@lists.linux.dev,
+To: Andrew Morton <akpm@linux-foundation.org>
+Cc: SeongJae Park <sj@kernel.org>,
+	Shuah Khan <shuah@kernel.org>,
+	damon@lists.linux.dev,
 	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org,
-	SeongJae Park <sj@kernel.org>
-Subject: Please merge commit 85c2ceaafbd3 ("mm/damon/sysfs: eliminate potential uninitialized variable warning") into >=5.19 stable trees
-Date: Fri,  8 Dec 2023 20:09:43 +0000
-Message-Id: <20231208200943.64138-1-sj@kernel.org>
+	linux-kselftest@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH 0/5] selftests/damon: add Python-written DAMON functionality tests
+Date: Tue, 12 Dec 2023 19:12:01 +0000
+Message-Id: <20231212191206.52917-1-sj@kernel.org>
 X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -35,29 +37,68 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Please merge commit 85c2ceaafbd3 ("mm/damon/sysfs: eliminate potential
-uninitialized variable warning") to >=5.19 stable kernels.
+Changes from RFC
+(https://lore.kernel.org/damon/20231202000806.46210-1-sj@kernel.org/)
+- Make the working set size estimation test more reliable
+- Wordsmith coverletter and commit messages
+- Rename _damon.py to _damon_sysfs.py
 
-In 2023-10-31, I sent[1] a fix for v5.19.  After a week, Dan found an issue in
-the fix and sent a fix.  At that time, the commit that Dan was fixing was
-merged in the mm tree but not in the mainline.  Hence, Dan didn't Cc stable@.
+DAMON exports most of its functionality via its sysfs interface.  Hence
+most DAMON functionality tests could be implemented using the interface.
+However, because the interfaces require simple but multiple operations
+for many controls, writing all such tests from the scratch could be
+repetitive and time consuming.
 
-However, now the broken fix[1] is merged in the mainline as commit 973233600676
-("mm/damon/sysfs: update monitoring target regions for online input commit"),
-and all >=5.19 stable trees.  Hence Dan's fix should also applied to those
-trees.  Please apply those.
+Implement a minimum DAMON sysfs control module, and a couple of DAMON
+functionality tests using the control module.  The first test is for
+ensuring minimum accuracy of data access monitoring, and the second test
+is for finding if a previously found and fixed bug is introduced again.
 
-Note that the bug was only potential[3] due to unchecked return value.
-However, the unchecked return value was not an intentional behavior but a bug.
-Hence we further made the return value to be checked[4].  The return value
-check fix is also merged in the relevant stable trees, so the fix is now needed
-for a real bug.
+Note that the DAMON sysfs control module is only for avoiding
+duplicating code in tests.  For convenient and general control of DAMON,
+users should use DAMON user-space tools that developed for the purpose,
+such as damo[1].
 
-[1] https://lore.kernel.org/all/20231031170131.46972-1-sj@kernel.org/
-[2] https://lore.kernel.org/all/739e6aaf-a634-4e33-98a8-16546379ec9f@moroto.mountain/
-[3] https://lore.kernel.org/all/20231106165205.48264-1-sj@kernel.org/
-[4] https://lore.kernel.org/all/20231106233408.51159-1-sj@kernel.org/
+[1] https://github.com/damonitor/damo
+
+Patches Sequence
+----------------
+
+This patchset is constructed with five patches.  The first three patches
+implement a Python-written test implementation-purpose DAMON sysfs
+control module.  The implementation is incrementally done in the
+sequence of the basic data structure (first patch) first, kdamonds start
+command (second patch) next, and finally DAMOS tried bytes update
+command (third patch).
+
+Then two patches for implementing selftests using the module follows.
+The fourth patch implements a basic functionality test of DAMON for
+working set estimation accuracy.  Finally, the fifth patch implements a
+corner case test for a previously found bug.
+
+SeongJae Park (5):
+  selftests/damon: implement a python module for test-purpose DAMON
+    sysfs controls
+  selftests/damon/_damon_sysfs: implement kdamonds start function
+  selftests/damon/_damon_sysfs: implement updat_schemes_tried_bytes
+    command
+  selftests/damon: add a test for update_schemes_tried_regions sysfs
+    command
+  selftests/damon: add a test for update_schemes_tried_regions hang bug
+
+ tools/testing/selftests/damon/Makefile        |   3 +
+ tools/testing/selftests/damon/_damon_sysfs.py | 322 ++++++++++++++++++
+ tools/testing/selftests/damon/access_memory.c |  41 +++
+ ...sysfs_update_schemes_tried_regions_hang.py |  33 ++
+ ...te_schemes_tried_regions_wss_estimation.py |  55 +++
+ 5 files changed, 454 insertions(+)
+ create mode 100644 tools/testing/selftests/damon/_damon_sysfs.py
+ create mode 100644 tools/testing/selftests/damon/access_memory.c
+ create mode 100755 tools/testing/selftests/damon/sysfs_update_schemes_tried_regions_hang.py
+ create mode 100755 tools/testing/selftests/damon/sysfs_update_schemes_tried_regions_wss_estimation.py
 
 
-Thanks,
-SJ
+base-commit: 5794dfaf6d1be564b0912d51d8a714baff329495
+-- 
+2.34.1
+
