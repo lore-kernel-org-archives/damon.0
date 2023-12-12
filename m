@@ -1,36 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF2C281E42;
-	Tue, 12 Dec 2023 19:22:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9583563564;
+	Tue, 12 Dec 2023 19:48:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lSUwxVgD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDE4CC433C8;
-	Tue, 12 Dec 2023 19:22:20 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="X95NT4af"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCFA9C433C8;
+	Tue, 12 Dec 2023 19:48:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1702408941;
-	bh=i5eA2fXhaq3Do9ywFpJzwHOFQOS7qYLx5BFeshX3BZI=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lSUwxVgDk2j4cnZPH/Zy7xE7vjsRTnpogG2abp5kyPRCtT/TZgdYhJerl+EIt8XO+
-	 AZCxf+fPMQpNamCpOTnjqC4DOxO2jnXg7wVICwPQJUTf6RfCL14WhPZuHupkqX7l0O
-	 Hq+nJ2IAFAZtDifyGfoR91Vlrlzdh0w8cg/NWZlNbz/mzlhu3X4Kwv8yuSz6GB6uHz
-	 PVUgx+D3XmLxKMS4vyobPs59mP5iwt/lGzRutQe8tew0eS6GZcND9rnTgF9gVWr8sg
-	 0Nerc0Xi7synedvS/VCWgFV37xO/7MVPkRGY//8a+vJkxCv/bYg7Qcn9afsFwQw62R
-	 IjULLbahcHfEg==
+	s=k20201202; t=1702410499;
+	bh=igd2RnhMFXzUjNiscTu9eDHYyW+3+ewG3ZKhV0p4XGo=;
+	h=From:To:Cc:Subject:Date:From;
+	b=X95NT4afRyAWsTbccHx94B2W6zzknjz9JqcA0ko1z5FUEoNTBl7Ci88oljGXp5l9U
+	 +MDcVdzohghe0yxN+qav+YX16YRFRiO+7n0a8yfPKE5Uv67CS+rgZwxKw5LG992pcM
+	 lbTYfra/SJ7b4EozxyjCKF1bAGwmlHxKPhxXy1v2Nvs2LbNJMePXF0xOTsZQYoCqfe
+	 42knU6Y/QcMzxziq4TBYGFQRm/HBIjSLfGUfqDg779PmkHUf0g4D2seuunMQv8Iko6
+	 TbOwyb4nfQfs8hqd+lo5mt5Lt7Zr899nMncYM4jKYErwoVCVsm49Znn3CKIpO7n9k1
+	 FjYLmCmvp/u8w==
 From: SeongJae Park <sj@kernel.org>
-To: SeongJae Park <sj@kernel.org>
-Cc: Andrew Morton <akpm@linux-foundation.org>,
+To: Andrew Morton <akpm@linux-foundation.org>
+Cc: SeongJae Park <sj@kernel.org>,
 	Shuah Khan <shuah@kernel.org>,
 	damon@lists.linux.dev,
 	linux-mm@kvack.org,
 	linux-kselftest@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 4/5] selftests/damon: add a test for update_schemes_tried_regions sysfs command
-Date: Tue, 12 Dec 2023 19:22:18 +0000
-Message-Id: <20231212192218.54095-1-sj@kernel.org>
+Subject: [PATCH v2 0/5] selftests/damon: add Python-written DAMON functionality tests
+Date: Tue, 12 Dec 2023 19:48:05 +0000
+Message-Id: <20231212194810.54457-1-sj@kernel.org>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20231212191206.52917-5-sj@kernel.org>
-References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -39,165 +37,72 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-This and fifth patch of this patchset may not cleanly applicable, since those
-are made on top of my out-of-tree experimental changes.  I will rebase these
-and send v2.  Sorry for the noise.
+Changes from v1
+(https://lore.kernel.org/damon/20231212191206.52917-1-sj@kernel.org/)
+- Fix conflicts on latest mm-unstable tree
+
+Changes from RFC
+(https://lore.kernel.org/damon/20231202000806.46210-1-sj@kernel.org/)
+- Make the working set size estimation test more reliable
+- Wordsmith coverletter and commit messages
+- Rename _damon.py to _damon_sysfs.py
+
+DAMON exports most of its functionality via its sysfs interface.  Hence
+most DAMON functionality tests could be implemented using the interface.
+However, because the interfaces require simple but multiple operations
+for many controls, writing all such tests from the scratch could be
+repetitive and time consuming.
+
+Implement a minimum DAMON sysfs control module, and a couple of DAMON
+functionality tests using the control module.  The first test is for
+ensuring minimum accuracy of data access monitoring, and the second test
+is for finding if a previously found and fixed bug is introduced again.
+
+Note that the DAMON sysfs control module is only for avoiding
+duplicating code in tests.  For convenient and general control of DAMON,
+users should use DAMON user-space tools that developed for the purpose,
+such as damo[1].
+
+[1] https://github.com/damonitor/damo
+
+Patches Sequence
+----------------
+
+This patchset is constructed with five patches.  The first three patches
+implement a Python-written test implementation-purpose DAMON sysfs
+control module.  The implementation is incrementally done in the
+sequence of the basic data structure (first patch) first, kdamonds start
+command (second patch) next, and finally DAMOS tried bytes update
+command (third patch).
+
+Then two patches for implementing selftests using the module follows.
+The fourth patch implements a basic functionality test of DAMON for
+working set estimation accuracy.  Finally, the fifth patch implements a
+corner case test for a previously found bug.
+
+SeongJae Park (5):
+  selftests/damon: implement a python module for test-purpose DAMON
+    sysfs controls
+  selftests/damon/_damon_sysfs: implement kdamonds start function
+  selftests/damon/_damon_sysfs: implement updat_schemes_tried_bytes
+    command
+  selftests/damon: add a test for update_schemes_tried_regions sysfs
+    command
+  selftests/damon: add a test for update_schemes_tried_regions hang bug
+
+ tools/testing/selftests/damon/Makefile        |   3 +
+ tools/testing/selftests/damon/_damon_sysfs.py | 322 ++++++++++++++++++
+ tools/testing/selftests/damon/access_memory.c |  41 +++
+ ...sysfs_update_schemes_tried_regions_hang.py |  33 ++
+ ...te_schemes_tried_regions_wss_estimation.py |  55 +++
+ 5 files changed, 454 insertions(+)
+ create mode 100644 tools/testing/selftests/damon/_damon_sysfs.py
+ create mode 100644 tools/testing/selftests/damon/access_memory.c
+ create mode 100755 tools/testing/selftests/damon/sysfs_update_schemes_tried_regions_hang.py
+ create mode 100755 tools/testing/selftests/damon/sysfs_update_schemes_tried_regions_wss_estimation.py
 
 
-Thanks,
-SJ
+base-commit: 091b8c820de390a6235595bdb281edab63b9befe
+-- 
+2.34.1
 
-On 2023-12-12T19:12:05+00:00 SeongJae Park <sj@kernel.org> wrote:
-
-> Add a selftest for verifying the accuracy of DAMON's access monitoring
-> functionality.  The test starts a program of artificial access pattern,
-> monitor the access pattern using DAMON, and check if DAMON finds
-> expected amount of hot data region (working set size) with only
-> acceptable error rate.
-> 
-> Note that the acceptable error rate is set with only naive assumptions
-> and small number of tests.  Hence failures of the test may not always
-> mean DAMON is broken.  Rather than that, those could be a signal to
-> better understand the real accuracy level of DAMON in wider
-> environments.  Based on further finding, we could optimize DAMON or
-> adjust the expectation of the test.
-> 
-> Signed-off-by: SeongJae Park <sj@kernel.org>
-> ---
->  tools/testing/selftests/damon/Makefile        |  2 +
->  tools/testing/selftests/damon/access_memory.c | 41 ++++++++++++++
->  ...te_schemes_tried_regions_wss_estimation.py | 55 +++++++++++++++++++
->  3 files changed, 98 insertions(+)
->  create mode 100644 tools/testing/selftests/damon/access_memory.c
->  create mode 100755 tools/testing/selftests/damon/sysfs_update_schemes_tried_regions_wss_estimation.py
-> 
-> diff --git a/tools/testing/selftests/damon/Makefile b/tools/testing/selftests/damon/Makefile
-> index d2105d41ea25..1363987709c6 100644
-> --- a/tools/testing/selftests/damon/Makefile
-> +++ b/tools/testing/selftests/damon/Makefile
-> @@ -4,6 +4,7 @@
->  TEST_GEN_FILES += huge_count_read_write
->  TEST_GEN_FILES += dbgfs_target_ids_read_before_terminate_race
->  TEST_GEN_FILES += dbgfs_target_ids_pid_leak
-> +TEST_GEN_FILES += access_memory
->  
->  TEST_FILES = _chk_dependency.sh _debugfs_common.sh
->  TEST_PROGS = debugfs_attrs.sh debugfs_schemes.sh debugfs_target_ids.sh
-> @@ -11,6 +12,7 @@ TEST_PROGS += debugfs_empty_targets.sh debugfs_huge_count_read_write.sh
->  TEST_PROGS += debugfs_duplicate_context_creation.sh
->  TEST_PROGS += debugfs_rm_non_contexts.sh
->  TEST_PROGS += sysfs.sh sysfs_update_removed_scheme_dir.sh
-> +TEST_PROGS += sysfs_update_schemes_tried_regions_wss_estimation.py
->  TEST_PROGS += reclaim.sh lru_sort.sh
->  TEST_PROGS += dbgfs_target_ids_read_before_terminate_race.sh
->  TEST_PROGS += dbgfs_target_ids_pid_leak.sh
-> diff --git a/tools/testing/selftests/damon/access_memory.c b/tools/testing/selftests/damon/access_memory.c
-> new file mode 100644
-> index 000000000000..585a2fa54329
-> --- /dev/null
-> +++ b/tools/testing/selftests/damon/access_memory.c
-> @@ -0,0 +1,41 @@
-> +// SPDX-License-Identifier: GPL-2.0
-> +/*
-> + * Artificial memory access program for testing DAMON.
-> + */
-> +
-> +#include <stdio.h>
-> +#include <stdlib.h>
-> +#include <string.h>
-> +#include <time.h>
-> +
-> +int main(int argc, char *argv[])
-> +{
-> +	char **regions;
-> +	clock_t start_clock;
-> +	int nr_regions;
-> +	int sz_region;
-> +	int access_time_ms;
-> +	int i;
-> +
-> +	if (argc != 4) {
-> +		printf("Usage: %s <number> <size (bytes)> <time (ms)>\n",
-> +				argv[0]);
-> +		return -1;
-> +	}
-> +
-> +	nr_regions = atoi(argv[1]);
-> +	sz_region = atoi(argv[2]);
-> +	access_time_ms = atoi(argv[3]);
-> +
-> +	regions = malloc(sizeof(*regions) * nr_regions);
-> +	for (i = 0; i < nr_regions; i++)
-> +		regions[i] = malloc(sz_region);
-> +
-> +	for (i = 0; i < nr_regions; i++) {
-> +		start_clock = clock();
-> +		while ((clock() - start_clock) * 1000 / CLOCKS_PER_SEC <
-> +				access_time_ms)
-> +			memset(regions[i], i, 1024 * 1024 * 10);
-> +	}
-> +	return 0;
-> +}
-> diff --git a/tools/testing/selftests/damon/sysfs_update_schemes_tried_regions_wss_estimation.py b/tools/testing/selftests/damon/sysfs_update_schemes_tried_regions_wss_estimation.py
-> new file mode 100755
-> index 000000000000..cdbf19b442c9
-> --- /dev/null
-> +++ b/tools/testing/selftests/damon/sysfs_update_schemes_tried_regions_wss_estimation.py
-> @@ -0,0 +1,55 @@
-> +#!/usr/bin/env python3
-> +# SPDX-License-Identifier: GPL-2.0
-> +
-> +import subprocess
-> +import time
-> +
-> +import _damon_sysfs
-> +
-> +def main():
-> +    # access two 10 MiB memory regions, 2 second per each
-> +    sz_region = 10 * 1024 * 1024
-> +    proc = subprocess.Popen(['./access_memory', '2', '%d' % sz_region, '2000'])
-> +    kdamonds = _damon_sysfs.Kdamonds([_damon_sysfs.Kdamond(
-> +            contexts=[_damon_sysfs.DamonCtx(
-> +                ops='vaddr',
-> +                targets=[_damon_sysfs.DamonTarget(pid=proc.pid)],
-> +                schemes=[_damon_sysfs.Damos(
-> +                    access_pattern=_damon_sysfs.DamosAccessPattern(
-> +                        # >= 25% access rate, >= 200ms age
-> +                        nr_accesses=[5, 20], age=[2, 2**64 - 1]))] # schemes
-> +                )] # contexts
-> +            )]) # kdamonds
-> +
-> +    err = kdamonds.start()
-> +    if err != None:
-> +        print('kdmaond start failed: %s' % err)
-> +        exit(1)
-> +
-> +    wss_collected = []
-> +    while proc.poll() == None:
-> +        time.sleep(0.1)
-> +        err = kdamonds.kdamonds[0].update_schemes_tried_bytes()
-> +        if err != None:
-> +            print('tried bytes update failed: %s' % err)
-> +            exit(1)
-> +
-> +        wss_collected.append(
-> +                kdamonds.kdamonds[0].contexts[0].schemes[0].tried_bytes)
-> +
-> +    wss_collected.sort()
-> +    acceptable_error_rate = 0.2
-> +    for percentile in [50, 75]:
-> +        sample = wss_collected[int(len(wss_collected) * percentile / 100)]
-> +        error_rate = abs(sample - sz_region) / sz_region
-> +        print('%d-th percentile (%d) error %f' %
-> +                (percentile, sample, error_rate))
-> +        if error_rate > acceptable_error_rate:
-> +            print('the error rate is not acceptable (> %f)' %
-> +                    acceptable_error_rate)
-> +            print('samples are as below')
-> +            print('\n'.join(['%d' % wss for wss in wss_collected]))
-> +            exit(1)
-> +
-> +if __name__ == '__main__':
-> +    main()
-> -- 
-> 2.34.1
