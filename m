@@ -1,49 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5367660EC;
-	Tue, 12 Dec 2023 22:25:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2147A818;
+	Wed, 13 Dec 2023 19:03:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Y3Bo7BpD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4C67C433C7;
-	Tue, 12 Dec 2023 22:25:13 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="A2fmWay4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F30CC433CA;
+	Wed, 13 Dec 2023 19:03:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1702419915;
-	bh=e4YIRdc1EAGkUpW4eDXOa/5/67iwkj5vK8/Qq4wTRfU=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y3Bo7BpDHsDZgyeeJJnZsasYPdnK8hFkQha7cHEXy3Q2M48P/IZCuJGg9pHKyiWjd
-	 JZUx1xUEF1fD7aoyjEnB1/HedF0+3ETbr2gQXb8N29kq0pHNDHRrOqR/arxONJ25wE
-	 tmrgpBkX0dCGmZY+GXDE5S9M/Q4U4m9scKP8O+adRJWTXDWrDvUyCc8vlj6LM1DhkO
-	 yJJ8+aQTNo6LNJC0nqf1LmvhC++qKI1yq7D+stxbeNRE2nowCAhLdf2XM7eVshtiHc
-	 Oe8WZhdjpxZKtTtUfEpG8fMD/cXREYKOebPlnZbq0VgWOw+crLIFF/tyCqq6sJBb7a
-	 IhDtRetZiDSgg==
+	s=k20201202; t=1702494224;
+	bh=J/iaoXT0rpbsPwoHcTcG3htMVyXBLicckUfUlL8eBn4=;
+	h=From:To:Cc:Subject:Date:From;
+	b=A2fmWay4DvFOhNXj+ErJHs9KGh6CL0CiA9Rrig1Af/yTt6bVBxPQRh3WrazeExAdt
+	 BwpZLqi4FvCUXp0UtWXdHGJQHwjisx9TLgsGXO3lmE3tVnO9XyJb6PNLXhkWjlcntK
+	 bTFDo6HmybRrFTlD+9FPg12pm5Eit9PYTF8sTDMC05N2Ax+Vf4WhFZ2L8srfD6970U
+	 pqKRiTHVjV2R41pjqYebWf3KTZ2vJTG4MJJ7+81YhRPoiaF6FfYzLDgUS1sUujPjnY
+	 iCXltYXanMEKj86HlbuGUvlL4WEIMKIvbFgXeZlOM/VXOlxv2dUm4aZIYzjfUGFQzo
+	 YqCgRsTuuTqrw==
 From: SeongJae Park <sj@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org,
-	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net,
-	rwarsow@gmx.de,
-	conor@kernel.org,
-	allen.lkml@gmail.com,
+To: Andrew Morton <akpm@linux-foundation.org>
+Cc: SeongJae Park <sj@kernel.org>,
+	Jonathan Corbet <corbet@lwn.net>,
 	damon@lists.linux.dev,
-	SeongJae Park <sj@kernel.org>
-Subject: Re: [PATCH 6.6 000/244] 6.6.7-rc1 review
-Date: Tue, 12 Dec 2023 22:25:12 +0000
-Message-Id: <20231212222512.55250-1-sj@kernel.org>
+	linux-mm@kvack.org,
+	linux-doc@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH 0/6] mm/damon: misc updates for 6.8
+Date: Wed, 13 Dec 2023 19:03:32 +0000
+Message-Id: <20231213190338.54146-1-sj@kernel.org>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20231211182045.784881756@linuxfoundation.org>
-References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -52,64 +37,35 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hello,
+Update comments, tests, and documents for DAMON aiming to be merged in
+the next merge window for Linux v6.8.
 
-On 2023-12-11T19:18:13+01:00 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+SeongJae Park (6):
+  mm/damon: update email of SeongJae
+  mm/damon/core-test: test max_nr_accesses overflow caused
+    divide-by-zero
+  Docs/mm/damon/design: place execution model and data structures at the
+    beginning
+  Docs/admin-guide/mm/damon/usage: update context directory section
+    label
+  Docs/admin-guide/mm/damon/usage: add links to sysfs files hierarchy
+  Docs/admin-guide/mm/damon/usage: use a list for 'state' sysfs file
+    input commands
 
-> This is the start of the stable review cycle for the 6.6.7 release.
-> There are 244 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Wed, 13 Dec 2023 18:19:59 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.7-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
-> and the diffstat can be found below.
+ Documentation/admin-guide/mm/damon/usage.rst | 123 +++++++++++--------
+ Documentation/mm/damon/design.rst            |  24 ++--
+ include/linux/damon.h                        |   2 +-
+ mm/damon/core-test.h                         |  13 +-
+ mm/damon/core.c                              |   2 +-
+ mm/damon/dbgfs-test.h                        |   2 +-
+ mm/damon/dbgfs.c                             |   2 +-
+ mm/damon/modules-common.c                    |   2 +-
+ mm/damon/vaddr-test.h                        |   2 +-
+ mm/damon/vaddr.c                             |   2 +-
+ 10 files changed, 106 insertions(+), 68 deletions(-)
 
-This rc kernel passes DAMON functionality test[1] on my test machine.
-Attaching the test results summary below.  Please note that I retrieved the
-kernel from linux-stable-rc tree[2].
 
-Tested-by: SeongJae Park <sj@kernel.org>
+base-commit: def619f2545d0286e6f4ed6c09fac8f863a70da1
+-- 
+2.34.1
 
-[1] https://github.com/awslabs/damon-tests/tree/next/corr
-[2] 4970875239e5 ("Linux 6.6.7-rc1")
-
-Thanks,
-SJ
-
-[...]
-
----
-
-ok 1 selftests: damon: debugfs_attrs.sh
-ok 2 selftests: damon: debugfs_schemes.sh
-ok 3 selftests: damon: debugfs_target_ids.sh
-ok 4 selftests: damon: debugfs_empty_targets.sh
-ok 5 selftests: damon: debugfs_huge_count_read_write.sh
-ok 6 selftests: damon: debugfs_duplicate_context_creation.sh
-ok 7 selftests: damon: debugfs_rm_non_contexts.sh
-ok 8 selftests: damon: sysfs.sh
-ok 9 selftests: damon: sysfs_update_removed_scheme_dir.sh
-ok 10 selftests: damon: reclaim.sh
-ok 11 selftests: damon: lru_sort.sh
-ok 1 selftests: damon-tests: kunit.sh
-ok 2 selftests: damon-tests: huge_count_read_write.sh
-ok 3 selftests: damon-tests: buffer_overflow.sh
-ok 4 selftests: damon-tests: rm_contexts.sh
-ok 5 selftests: damon-tests: record_null_deref.sh
-ok 6 selftests: damon-tests: dbgfs_target_ids_read_before_terminate_race.sh
-ok 7 selftests: damon-tests: dbgfs_target_ids_pid_leak.sh
-ok 8 selftests: damon-tests: damo_tests.sh
-ok 9 selftests: damon-tests: masim-record.sh
-ok 10 selftests: damon-tests: build_i386.sh
-ok 11 selftests: damon-tests: build_arm64.sh
-ok 12 selftests: damon-tests: build_i386_idle_flag.sh
-ok 13 selftests: damon-tests: build_i386_highpte.sh
-ok 14 selftests: damon-tests: build_nomemcg.sh
- [33m
- [92mPASS [39m
