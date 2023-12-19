@@ -1,48 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 140431D12F;
-	Mon, 18 Dec 2023 18:50:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 628AF63AC;
+	Tue, 19 Dec 2023 02:19:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="riIBUN3U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71B6FC433C8;
-	Mon, 18 Dec 2023 18:50:42 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oKxIo+tt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68741C433C7;
+	Tue, 19 Dec 2023 02:19:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1702925443;
-	bh=mAyzULUQ/2cIyFdm96bPlxnFOJOxBk1kSyPiwW8z2kw=;
+	s=k20201202; t=1702952396;
+	bh=bMdUl2uM1U9HzkZZycGPzYls2j01kCAcRdaJWF7S5hk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=riIBUN3UXO4MtI4onPLdmXLWlRLMFLJu6TEA/D7TTt9WOwRzQLObhB4f8tWsAG8D0
-	 AqXslIaj1ET98YTmkyH3u6R9fldkP1vbyTPdwQwtIZdbowf8jDdF3/Dz8KZF5aCcUg
-	 8lWsiGG8KU4Gl5Z5Vaz/n8EqOLNaIRQPBkh37vjQQzKMpDErZ3sEGbYnGY3hUCq9x4
-	 ZFiN0dKAy1Wbb9jp0VFG9c0eHVWPn6mvCMwDAX4WR2vn8ua2sULUuhOxLlvZCHRO0D
-	 /5+zFpIrn5KdCYz1dwOdP3A3RVSHfGkj5fUPq+L8h7MGJ3wimtKIC5ntDVf3SqO30X
-	 6OCtR+TUDapxQ==
+	b=oKxIo+ttsXwYuS2A/o13gROjgVIStuzRJmAk1ZJ/x5kKOENmzst+VCC2/QR0c9KFP
+	 C1S53I64cpV/2Acld30kcDlyuyNo2sUBk6Nq2tjC2WWTBMXsDjUFRxQ5ZSnvubxzjp
+	 NaxIh0OKLvsdqVlYRtBHmqAMIuzgoRpthZ4F2nkqWWXUtcDeZprJYRwTnJ4m5OkCV8
+	 VuMMYHpe4Al0eIWoYDfKrrsMcTAALcRCAUj2v0jVzRiUYf6pLiGaDimL9OXB38/tNW
+	 JbCl2EgkNMjaXKNxu35/9iHjwz43JZ3pxBrSALuGwrCeuiS1Yv5+xb33XUB2atIkhO
+	 HgOYxyAX08F3g==
 From: SeongJae Park <sj@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org,
-	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net,
-	rwarsow@gmx.de,
-	conor@kernel.org,
-	allen.lkml@gmail.com,
-	damon@lists.linux.dev,
-	SeongJae Park <sj@kernel.org>
-Subject: Re: [PATCH 6.6 000/166] 6.6.8-rc1 review
-Date: Mon, 18 Dec 2023 18:50:41 +0000
-Message-Id: <20231218185041.100034-1-sj@kernel.org>
+To: kernel test robot <lkp@intel.com>
+Cc: SeongJae Park <sj@kernel.org>,
+	llvm@lists.linux.dev,
+	oe-kbuild-all@lists.linux.dev,
+	damon@lists.linux.dev
+Subject: Re: [sj:damon/next 18/24] mm/damon/sysfs.c:96:30: error: 'counted_by' only applies to C99 flexible array members
+Date: Tue, 19 Dec 2023 02:19:54 +0000
+Message-Id: <20231219021954.105864-1-sj@kernel.org>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20231218135104.927894164@linuxfoundation.org>
+In-Reply-To: <202312190546.yhWbDA8A-lkp@intel.com>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -54,62 +39,58 @@ Content-Transfer-Encoding: 8bit
 
 Hello,
 
-On Mon, 18 Dec 2023 14:49:26 +0100 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+On Tue, 19 Dec 2023 05:30:54 +0800 kernel test robot <lkp@intel.com> wrote:
 
-> This is the start of the stable review cycle for the 6.6.8 release.
-> There are 166 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+> tree:   https://git.kernel.org/pub/scm/linux/kernel/git/sj/linux.git damon/next
+> head:   04cc9f72453632bf9e13e06f85c11147583e5d5d
+> commit: 375af4a6e206c1aeb2edb1d80cbb42fd3349b287 [18/24] mm/damon/sysfs: add __counted_by() annotation
+> config: arm-randconfig-001-20231219 (https://download.01.org/0day-ci/archive/20231219/202312190546.yhWbDA8A-lkp@intel.com/config)
+> compiler: clang version 18.0.0git (https://github.com/llvm/llvm-project 5ac12951b4e9bbfcc5791282d0961ec2b65575e9)
+> reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20231219/202312190546.yhWbDA8A-lkp@intel.com/reproduce)
 > 
-> Responses should be made by Wed, 20 Dec 2023 13:50:31 +0000.
-> Anything received after that time might be too late.
+> If you fix the issue in a separate patch/commit (i.e. not just a new version of
+> the same patch/commit), kindly add following tags
+> | Reported-by: kernel test robot <lkp@intel.com>
+> | Closes: https://lore.kernel.org/oe-kbuild-all/202312190546.yhWbDA8A-lkp@intel.com/
 > 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.8-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
-> and the diffstat can be found below.
+> All errors (new ones prefixed by >>):
+> 
+> >> mm/damon/sysfs.c:96:30: error: 'counted_by' only applies to C99 flexible array members
+>       96 |         struct damon_sysfs_region **regions_arr __counted_by(nr);
+>          |                                     ^~~~~~~~~~~
+>    mm/damon/sysfs.c:292:30: error: 'counted_by' only applies to C99 flexible array members
+>      292 |         struct damon_sysfs_target **targets_arr __counted_by(nr);
+>          |                                     ^~~~~~~~~~~
+>    mm/damon/sysfs.c:815:31: error: 'counted_by' only applies to C99 flexible array members
+>      815 |         struct damon_sysfs_context **contexts_arr __counted_by(nr);
+>          |                                      ^~~~~~~~~~~~
+>    mm/damon/sysfs.c:1666:31: error: 'counted_by' only applies to C99 flexible array members
+>     1666 |         struct damon_sysfs_kdamond **kdamonds_arr __counted_by(nr);
+>          |                                      ^~~~~~~~~~~~
+>    4 errors generated.
+> 
+> 
+> vim +/counted_by +96 mm/damon/sysfs.c
+> 
+>     89	
+>     90	/*
+>     91	 * init_regions directory
+>     92	 */
+>     93	
+>     94	struct damon_sysfs_regions {
+>     95		struct kobject kobj;
+>   > 96		struct damon_sysfs_region **regions_arr __counted_by(nr);
+>     97		int nr;
+>     98	};
+>     99	
 
-This rc kernel passes DAMON functionality test[1] on my test machine.
-Attaching the test results summary below.  Please note that I retrieved the
-kernel from linux-stable-rc tree[2].
+Thank you for this report.  I will remove the commit from the tree.
 
-Tested-by: SeongJae Park <sj@kernel.org>
-
-[1] https://github.com/awslabs/damon-tests/tree/next/corr
-[2] aa90f2b75bff ("Linux 6.6.8-rc1")
 
 Thanks,
 SJ
 
-[...]
-
----
-
-ok 1 selftests: damon: debugfs_attrs.sh
-ok 2 selftests: damon: debugfs_schemes.sh
-ok 3 selftests: damon: debugfs_target_ids.sh
-ok 4 selftests: damon: debugfs_empty_targets.sh
-ok 5 selftests: damon: debugfs_huge_count_read_write.sh
-ok 6 selftests: damon: debugfs_duplicate_context_creation.sh
-ok 7 selftests: damon: debugfs_rm_non_contexts.sh
-ok 8 selftests: damon: sysfs.sh
-ok 9 selftests: damon: sysfs_update_removed_scheme_dir.sh
-ok 10 selftests: damon: reclaim.sh
-ok 11 selftests: damon: lru_sort.sh
-ok 1 selftests: damon-tests: kunit.sh
-ok 2 selftests: damon-tests: huge_count_read_write.sh
-ok 3 selftests: damon-tests: buffer_overflow.sh
-ok 4 selftests: damon-tests: rm_contexts.sh
-ok 5 selftests: damon-tests: record_null_deref.sh
-ok 6 selftests: damon-tests: dbgfs_target_ids_read_before_terminate_race.sh
-ok 7 selftests: damon-tests: dbgfs_target_ids_pid_leak.sh
-ok 8 selftests: damon-tests: damo_tests.sh
-ok 9 selftests: damon-tests: masim-record.sh
-ok 10 selftests: damon-tests: build_i386.sh
-ok 11 selftests: damon-tests: build_arm64.sh
-ok 12 selftests: damon-tests: build_i386_idle_flag.sh
-ok 13 selftests: damon-tests: build_i386_highpte.sh
-ok 14 selftests: damon-tests: build_nomemcg.sh
- [33m
- [92mPASS [39m
+> 
+> -- 
+> 0-DAY CI Kernel Test Service
+> https://github.com/intel/lkp-tests/wiki
