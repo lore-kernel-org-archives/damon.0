@@ -1,48 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4018178E72;
-	Thu, 21 Dec 2023 23:37:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10DFC78E9D;
+	Thu, 21 Dec 2023 23:49:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IFPfwwSq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56196C433C8;
-	Thu, 21 Dec 2023 23:37:46 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Vp55ufAe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E26BC433C8;
+	Thu, 21 Dec 2023 23:49:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1703201867;
-	bh=nnpMukxOhsVF7BzbFrvuDgvY90F7VruqUihV1nw0oCw=;
+	s=k20201202; t=1703202589;
+	bh=DzS0lRbVCV60NGLtHqn9dKHYbNssxVYhq7y9jEs68bM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IFPfwwSqoJx11Au4847wkAJ57ApKlof/puk9gHkjRB8F97pnhvsazcmVz2tVDkEg1
-	 5xO/fkD9XyOMF28iCK2tR3UAgw4N32m3/DCN3Ul2WdYyxhgziwcVHnqq3ecaZNBjKD
-	 YaFdTQi/AE3I67fXFgfMeZlc4ztBb7Qp1ig27TeOYBkhe0PW6pJ4uvGXLxAiKhIZPO
-	 l0eJDGkS3ah/b+jtafvBxpBYBr/hqoepIpANuJiXLK6vFV+SR4vwUa7ugvrBzEdzvy
-	 8DQNbedMvCz9zg1Ge30JrXLLnMenDxontZajN9DSBlZVZcwaxA7gHN1qkNnr3rJB1m
-	 8cfVWx3yuYhXQ==
+	b=Vp55ufAeLpeinb2eUci6B5EAi0i6+wNoKKYCDj3OFsmm3urQo2FwvYBQTNtRCIKkN
+	 qm22cVkj82A1oLxfZLcQgS4cQX4jW30/DwgEmVz04Q+yerWQVZgn95EAegmyyu6OYL
+	 +Q7dtjWkGa/jyarkQDOUT9nEE8GQi7J5L3A53AZaynpnj45fuC/C9VEAX7MWF/6L+X
+	 8Qo+5zxDBRGlYh7cqYaCc2uacXMiBcCH15mhgl8Ht5wJRi0iYdlcegd+SjN+em28xP
+	 beG/e0dna1HSwEYSvDgiyTtzfPseeuO9SkjCpzfnbzn9fBDaXLnesaOuQv+Lw2PvJj
+	 ZwGCvtNXlZHRw==
 From: SeongJae Park <sj@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org,
-	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net,
-	rwarsow@gmx.de,
-	conor@kernel.org,
-	allen.lkml@gmail.com,
+To: Tanzir Hasan <tanzirh@google.com>
+Cc: SeongJae Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	damon@lists.linux.dev,
-	SeongJae Park <sj@kernel.org>
-Subject: Re: [PATCH 5.15 000/159] 5.15.145-rc1 review
-Date: Thu, 21 Dec 2023 23:37:44 +0000
-Message-Id: <20231221233744.43299-1-sj@kernel.org>
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org,
+	Nick Desaulniers <nnn@google.com>,
+	Al Viro <viro@zeniv.linux.org.uk>
+Subject: Re: [PATCH] mm/damon/vaddr: changed asm-generic/mman-common.h to linux/mman.h
+Date: Thu, 21 Dec 2023 23:49:47 +0000
+Message-Id: <20231221234947.59458-1-sj@kernel.org>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20231220160931.251686445@linuxfoundation.org>
+In-Reply-To: <20231221-asmgenericvaddr-v1-1-742b170c914e@google.com>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -52,55 +40,31 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hello,
+Hi Tanzir,
 
 
-On Wed, 20 Dec 2023 17:07:45 +0100 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+On Thu, 21 Dec 2023 23:11:01 +0000 Tanzir Hasan <tanzirh@google.com> wrote:
 
-> This is the start of the stable review cycle for the 5.15.145 release.
-> There are 159 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+> asm-generic/mman-common.h can be replaced by linux/mman.h and the file
+> will still build correctly. It is an asm-generic file which should be
+> avoided if possible.
 > 
-> Responses should be made by Fri, 22 Dec 2023 16:08:59 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.145-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
-> and the diffstat can be found below.
+> Suggested-by: Al Viro <viro@zeniv.linux.org.uk>
+> Signed-off-by: Tanzir Hasan <tanzirh@google.com>
 
-This rc kernel passes DAMON functionality test[1] on my test machine.
-Attaching the test results summary below.  Please note that I retrieved the
-kernel from linux-stable-rc tree[2].
+Thank you for this patch :)
 
-Tested-by: SeongJae Park <sj@kernel.org>
+Maybe we could add below Fixes: line?  I guess stable@ is intentionally not
+added and that makes sense, but please let me know if you think differently.
 
-[1] https://github.com/awslabs/damon-tests/tree/next/corr
-[2] e7911feb56b7 ("Linux 5.15.145-rc1")
+Fixes: 6dea8add4d28 ("mm/damon/vaddr: support DAMON-based Operation Schemes")
+
+Other than that, looks good to me.
+
+Reviewed-by: SeongJae Park <sj@kernel.org>
+
 
 Thanks,
 SJ
 
 [...]
-
----
-
-ok 1 selftests: damon: debugfs_attrs.sh
-ok 1 selftests: damon-tests: kunit.sh
-ok 2 selftests: damon-tests: huge_count_read_write.sh
-ok 3 selftests: damon-tests: buffer_overflow.sh
-ok 4 selftests: damon-tests: rm_contexts.sh
-ok 5 selftests: damon-tests: record_null_deref.sh
-ok 6 selftests: damon-tests: dbgfs_target_ids_read_before_terminate_race.sh
-ok 7 selftests: damon-tests: dbgfs_target_ids_pid_leak.sh
-ok 8 selftests: damon-tests: damo_tests.sh
-ok 9 selftests: damon-tests: masim-record.sh
-ok 10 selftests: damon-tests: build_i386.sh
-ok 11 selftests: damon-tests: build_arm64.sh
-ok 12 selftests: damon-tests: build_i386_idle_flag.sh
-ok 13 selftests: damon-tests: build_i386_highpte.sh
-ok 14 selftests: damon-tests: build_nomemcg.sh
- [33m
- [92mPASS [39m
