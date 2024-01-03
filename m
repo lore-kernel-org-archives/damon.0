@@ -1,48 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A829A1CA87;
-	Wed,  3 Jan 2024 18:57:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA3351D53F;
+	Wed,  3 Jan 2024 20:31:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VnSE4+8W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6D4EC433C9;
-	Wed,  3 Jan 2024 18:57:07 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="na6H05pt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFFDEC433C7;
+	Wed,  3 Jan 2024 20:31:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1704308229;
-	bh=K77hqv5yJIThScNYsdIvcflmJHvbuR+rwHJxDsqElf0=;
+	s=k20201202; t=1704313861;
+	bh=j9zOr4MVPJ7P77EoknA6MqX7RP+EKjOV1BsLDm3LS3s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VnSE4+8WPJsxD9S1CLlX+CTl1K4EAoNW2ar6B+y3kfWrgz/apYO7E3eaSaEx4W0gh
-	 irM16TjgSR4xVXzNZ5WcYy8HyIAqnHB920SP9HwggHGM1F0slh0VzH9xDJKwEryyZx
-	 rbt6TbPnky+WcspPPBCOeD6xs2WMnS73oXJ8nfSXUGjdwx3w+L2dGi6HVd46aYZM2K
-	 xqRyMOVbAlAbRfdv/k2sh2jWy+hMcnkUOLR6bdSkqKSwZS7sfo9w99hJWwACbyhdNJ
-	 M3Z7IGt3632pS/Dd+J1n6x1bMpkd6nXI3xd1e9BxTl0WMCS45PtQR6KZ3oIlx21edt
-	 m2ps/2RdpTH3A==
+	b=na6H05ptoQHv2N2mOeK7BhBfX1XY8t6VfEDsymLLtUfB4wKI/gT3RwAseRbNARMEc
+	 F3ZFZW5Z0zTDwnaN58ivBLOkZa9mFzk/Yi2gR7bJRZYbQMpLotlLQ5ZkvD0MtmV0hh
+	 cjeulpdf3iycI8bHW9SBR3hIJV0KWxZaDeCuaPz0plTjLqK+DycI59pn31GA3Ym7Vb
+	 gY2/2OPn1NCpb6WXdfPCgW+8aUxB/ZuXlXOrdz5Z3zO7SlmWfdUt2W42J5w3a93fiQ
+	 SWsUzm1jsyddGnIKga/+GlGgq3b+7a69dqGWYh2cncONZbctyT50cT85ifYdE5wB3s
+	 97AJulZQXXgCg==
 From: SeongJae Park <sj@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org,
-	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net,
-	rwarsow@gmx.de,
-	conor@kernel.org,
-	allen.lkml@gmail.com,
-	damon@lists.linux.dev,
-	SeongJae Park <sj@kernel.org>
-Subject: Re: [PATCH 6.6 00/49] 6.6.10-rc1 review
-Date: Wed,  3 Jan 2024 10:57:06 -0800
-Message-Id: <20240103185706.48008-1-sj@kernel.org>
+To: SeongJae Park <sj@kernel.org>
+Cc: damon@lists.linux.dev,
+	linux-damon@amazon.com,
+	linux-damon-trial@amazon.com,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: DAMON Beer/Coffee/Tea chat series
+Date: Wed,  3 Jan 2024 12:30:59 -0800
+Message-Id: <20240103203059.49225-1-sj@kernel.org>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20240103164834.970234661@linuxfoundation.org>
+In-Reply-To: <20231220202709.98507-1-sj@kernel.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -54,62 +40,55 @@ Content-Transfer-Encoding: 8bit
 
 Hello,
 
-On Wed,  3 Jan 2024 17:55:20 +0100 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+On Wed, 20 Dec 2023 20:27:09 +0000 SeongJae Park <sj@kernel.org> wrote:
 
-> This is the start of the stable review cycle for the 6.6.10 release.
-> There are 49 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+> Hello,
 > 
-> Responses should be made by Fri, 05 Jan 2024 16:47:49 +0000.
-> Anything received after that time might be too late.
+> On Wed, 10 Aug 2022 22:51:02 +0000 SeongJae Park <sj@kernel.org> wrote:
 > 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.10-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
-> and the diffstat can be found below.
+> > Hello,
+> > 
+> > 
+> > In short, I'd like to start an open, regular, and informal virtual bi-weekly
+> > meeting series for DAMON community.
+> > 
+> > Important links and dates
+> > -------------------------
+> > 
+> > Location: https://meet.google.com/ndx-evoc-gbu
+> > Agenda: https://docs.google.com/document/d/1v43Kcj3ly4CYqmAkMaZzLiM2GEnWfgdGbZAH3mi2vpM/edit?usp=sharing
+> [...]
+> >
+> > When
+> > ----
+> > 
+> > The meeting will be held every two weeks for 30 minutes.  To cover as many
+> > timezones as possible, the meeting will be held once at Monday evening (18:00)
+> > PDT, and then at Tuesday morning (09:00) PDT two weeks after the previous one,
+> > and repeat.
+> 
+> Based on the above plan, our next meeting should be scheduled for 2024-01-01
+> (Mon) 18:00 PT.  Because it is a holiday for many countries, I will schedule it
+> for 2024-01-12 (Tue) 18:00 PT.
 
-This rc kernel passes DAMON functionality test[1] on my test machine.
-Attaching the test results summary below.  Please note that I retrieved the
-kernel from linux-stable-rc tree[2].
+My intention was 2024-01-02, but I made a typo.  I also forgot joining the
+meeting yesterday, sorry for someone who got confused.  Let's have one instead
+on next Monday (2023-01-08) at 18:00 PT.  Hope to see you on the 2024's first
+instance of DAMON Beer/Coffee/Chat meeting :)
 
-Tested-by: SeongJae Park <sj@kernel.org>
+I also updated the schedule/agendas document:
+https://docs.google.com/document/d/1v43Kcj3ly4CYqmAkMaZzLiM2GEnWfgdGbZAH3mi2vpM/edit?usp=sharing
 
-[1] https://github.com/awslabs/damon-tests/tree/next/corr
-[2] 5fd1c89851c4 ("Linux 6.6.10-rc1")
 
 Thanks,
 SJ
 
-[...]
-
----
-
-ok 1 selftests: damon: debugfs_attrs.sh
-ok 2 selftests: damon: debugfs_schemes.sh
-ok 3 selftests: damon: debugfs_target_ids.sh
-ok 4 selftests: damon: debugfs_empty_targets.sh
-ok 5 selftests: damon: debugfs_huge_count_read_write.sh
-ok 6 selftests: damon: debugfs_duplicate_context_creation.sh
-ok 7 selftests: damon: debugfs_rm_non_contexts.sh
-ok 8 selftests: damon: sysfs.sh
-ok 9 selftests: damon: sysfs_update_removed_scheme_dir.sh
-ok 10 selftests: damon: reclaim.sh
-ok 11 selftests: damon: lru_sort.sh
-ok 1 selftests: damon-tests: kunit.sh
-ok 2 selftests: damon-tests: huge_count_read_write.sh
-ok 3 selftests: damon-tests: buffer_overflow.sh
-ok 4 selftests: damon-tests: rm_contexts.sh
-ok 5 selftests: damon-tests: record_null_deref.sh
-ok 6 selftests: damon-tests: dbgfs_target_ids_read_before_terminate_race.sh
-ok 7 selftests: damon-tests: dbgfs_target_ids_pid_leak.sh
-ok 8 selftests: damon-tests: damo_tests.sh
-ok 9 selftests: damon-tests: masim-record.sh
-ok 10 selftests: damon-tests: build_i386.sh
-ok 11 selftests: damon-tests: build_arm64.sh
-ok 12 selftests: damon-tests: build_i386_idle_flag.sh
-ok 13 selftests: damon-tests: build_i386_highpte.sh
-ok 14 selftests: damon-tests: build_nomemcg.sh
- [33m
- [92mPASS [39m
+> 
+> Looking forward to meet you in the first meeting of the next year.  Happy
+> holidays DAMON community :)
+> 
+> 
+> Thanks,
+> SJ
+> 
+> [...]
