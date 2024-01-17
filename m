@@ -1,60 +1,48 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDEE022EF8;
-	Tue, 16 Jan 2024 20:32:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+Received: from invmail4.hynix.com (exvmail4.hynix.com [166.125.252.92])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6EABE1DFC8
+	for <damon@lists.linux.dev>; Wed, 17 Jan 2024 11:50:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=166.125.252.92
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705437155; cv=none; b=rnCHkqTYQkYdqfjb5P9/AikTeZqhELfHgjgnY+WN42BOAM7jGAUkUi8RGAgYK9CWynj/PwyZi9AMUMQM9IBYz3vGYIh/3hEmmEXT4H2z9Vgez1KijPvg8vHPUHvgPINOSIp3XR77rNzcIiBjKH0fJdtdgZ9Jf/QGogDh1BT8540=
+	t=1705492226; cv=none; b=c2HUni/OqN6MUBTWAsSFUq5nckGAoRY4SusA+s4iomhO2RXGXQUZCiuf+fA03DhA053Rp5ti2D8xMdOueAQ+tcITFL3E0BsyLZjOAmf1prFIlthdxjvSIg8tlhBP6Q0Jz88x+g96UKitHIBCF10IAIus2epTtJUrNGLF3MU6e3Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705437155; c=relaxed/simple;
-	bh=P+kmQSxhZgr4dg4PgekC+SHUzy7heDMGuWouVasimHk=;
-	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-Id:
-	 X-Mailer:In-Reply-To:References:MIME-Version:
-	 Content-Transfer-Encoding; b=n9rKkbfnYaWa+x7Gt8rFup3Jg4fYJIaP61Z8Tbwqi3CbZvBQ833jbdIjQRI9rI2TUG60WEMOQO2DTrAIO5VmN570nkqoe//90PJe1RH5OuUHNqkJkWW00Aum8MjUnKD9wdhFyEBdU/h3nixN4n2ukoa8vuara+uhoUwlEBi8pp0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZIPatRbI; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZIPatRbI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFCB2C433C7;
-	Tue, 16 Jan 2024 20:32:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1705437155;
-	bh=P+kmQSxhZgr4dg4PgekC+SHUzy7heDMGuWouVasimHk=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZIPatRbIvA6bZ9bUbLXecMGket7gW6LedJSUyIibZq9SJQ8v72WMwLx/qrfujPyXE
-	 8mZl1t6y5pFaQALvExfkuK2OZ0MWCox3Ylw8nTnOs2/FBuCbtnJTbzw26ZHfSA8iY2
-	 FlvRXjRiyBDw2oSbg+mR4w15TTbwXXfj0XtxhSBpKurR9oLfDb/cHrRyQwEz5PiwA8
-	 edIwgrjppDq93BHPlCXU09S3mPVwMEuBf0xW929x5jsdDmkSYWmmhdFfAHJ0mqc8sY
-	 jWKLNg8XVG9VwBfxWeA8o2aumUISJUev5ianH5OxIObzJgh1CqTYWOmUmjcTCRLJtm
-	 EhV5WTKZTqD8Q==
-From: SeongJae Park <sj@kernel.org>
-To: Honggyu Kim <honggyu.kim@sk.com>
-Cc: sj@kernel.org,
-	damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	linux-trace-kernel@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	kernel_team@skhynix.com,
-	akpm@linux-foundation.org,
+	s=arc-20240116; t=1705492226; c=relaxed/simple;
+	bh=25knBT9VTw+U0/GeKpzOO1VvtIKW+nrpysiNA4cLf18=;
+	h=X-AuditID:From:To:Cc:Subject:Date:Message-ID:X-Mailer:In-Reply-To:
+	 References:MIME-Version:Content-Transfer-Encoding:
+	 X-Brightmail-Tracker:X-Brightmail-Tracker:X-CFilter-Loop; b=jaBoJJY6WOTWBdx42fSROUR40/CjRXqoF6ko5EPfiUcJGHNfR0HbAUIyA4xv7DUuDihWJ8MzhzErOJ4YEfZwQmrhJmO5Jci677/LsFSjYob+aWj1lTs4ZIu6LM+K6yC2OOCM5Ctr0MxnCG4siZyZrneH8USd01rIDhEHzeL6ADo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sk.com; spf=pass smtp.mailfrom=sk.com; arc=none smtp.client-ip=166.125.252.92
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sk.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sk.com
+X-AuditID: a67dfc5b-d85ff70000001748-af-65a7bef58307
+From: Honggyu Kim <honggyu.kim@sk.com>
+To: sj@kernel.org
+Cc: akpm@linux-foundation.org,
 	apopple@nvidia.com,
 	baolin.wang@linux.alibaba.com,
+	damon@lists.linux.dev,
 	dave.jiang@intel.com,
+	honggyu.kim@sk.com,
+	hyeongtak.ji@sk.com,
+	kernel_team@skhynix.com,
 	linmiaohe@huawei.com,
+	linux-kernel@vger.kernel.org,
+	linux-mm@kvack.org,
+	linux-trace-kernel@vger.kernel.org,
 	lizhijian@cn.fujitsu.com,
 	mathieu.desnoyers@efficios.com,
 	mhiramat@kernel.org,
+	rakie.kim@sk.com,
 	rostedt@goodmis.org,
 	surenb@google.com,
 	yangx.jy@fujitsu.com,
 	ying.huang@intel.com,
-	ziy@nvidia.com,
-	Hyeongtak Ji <hyeongtak.ji@sk.com>
-Subject: Re: [RFC PATCH 4/4] mm/damon: introduce DAMOS_PROMOTE action for promotion
-Date: Tue, 16 Jan 2024 12:32:30 -0800
-Message-Id: <20240116203231.52894-1-sj@kernel.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20240115045253.1775-5-honggyu.kim@sk.com>
-References: 
+	ziy@nvidia.com
+Subject: Re: [RFC PATCH 0/4] DAMON based 2-tier memory management for CXL memory
+Date: Wed, 17 Jan 2024 20:49:25 +0900
+Message-ID: <20240117114926.1895-1-honggyu.kim@sk.com>
+X-Mailer: git-send-email 2.43.0.windows.1
+In-Reply-To: <20240116203159.52826-1-sj@kernel.org>
+References: <20240116203159.52826-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -62,388 +50,150 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrAIsWRmVeSWpSXmKPExsXC9ZZnoe63fctTDaYoW8xZv4bNYteNEIv/
+	e48xWjz5/5vV4sTNRjaLzu9LWSwu75rDZnFvzX9WiyPrz7JYrLsFZG0+e4bZYvFyNYt9HQ+Y
+	LA5/fcNkMfnSAjaLF1POMFqcnDWZxWL20XvsDkIe/w9OYvZYevoNm8eGJiDRsu8Wu8eCTaUe
+	LUfesnos3vOSyWPTqk42j02fJrF7nJjxm8Vj50NLjxebZzJ69Da/Y/P4vEkugC+KyyYlNSez
+	LLVI3y6BK+P0qrPMBe90Kha2rGNpYJyu3MXIySEhYCKxbNl6Rhj7+t8jrCA2m4CaxJWXk5hA
+	bBEBQYn+xzOA4lwczAIzWCQu7jkOlhAWCJB4POcMM4jNIqAqMX35OrBmXgEziUsTp7FADNWU
+	eLz9JzuIzSlgLLHv6TWwXiEBI4ln318zQ9QLSpyc+QSsnllAXqJ562xmkGUSAvvYJT59fQQ1
+	SFLi4IobLBMY+Wch6ZmFpGcBI9MqRqHMvLLcxMwcE72MyrzMCr3k/NxNjMB4W1b7J3oH46cL
+	wYcYBTgYlXh4JeYtTxViTSwrrsw9xCjBwawkwutvsCxViDclsbIqtSg/vqg0J7X4EKM0B4uS
+	OK/Rt/IUIYH0xJLU7NTUgtQimCwTB6dUA+PMnKhJYaqddu+W5pqs29XOkd1Rc3NH1Lt0cwbT
+	Ln6zEJXoT+bvWp782ag2fekSPbui7T92+KRfl7362I5BWKD+QPUMr7y0HVeiddoMDix+EBpZ
+	f/O/xa1lD7faO85uc3r/88Z9ycurv0o+3Xw9QO2hLPuvqsu6C/IVbcs/l7b+blObV7QzQUqJ
+	pTgj0VCLuag4EQC9qooJswIAAA==
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprNIsWRmVeSWpSXmKPExsXCNUNLT/frvuWpBpP36lrMWb+GzWLXjRCL
+	/3uPMVo8+f+b1eLEzUY2i8/PXjNbdD75zmhxeO5JVovO70tZLC7vmsNmcW/Nf1aLI+vPslis
+	uwVkbT57htli8XI1i0PXnrNa7Ot4wGRx+OsbJovJlxawWbyYcobR4uSsySwWs4/eY3cQ8/h/
+	cBKzx9LTb9g8NjQBiZZ9t9g9Fmwq9Wg58pbVY/Gel0wem1Z1snls+jSJ3ePEjN8sHjsfWnq8
+	2DyT0aO3+R2bx7fbHh6LX3xg8vi8SS5AIIrLJiU1J7MstUjfLoEr4/Sqs8wF73QqFrasY2lg
+	nK7cxcjJISFgInH97xFWEJtNQE3iystJTCC2iICgRP/jGUBxLg5mgRksEhf3HAdLCAsESDye
+	c4YZxGYRUJWYvnwdWDOvgJnEpYnTWCCGako83v6THcTmFDCW2Pf0GlivkICRxLPvr5kh6gUl
+	Ts58AlbPLCAv0bx1NvMERp5ZSFKzkKQWMDKtYhTJzCvLTczMMdUrzs6ozMus0EvOz93ECIyy
+	ZbV/Ju5g/HLZ/RCjAAejEg/vgfxlqUKsiWXFlbmHGCU4mJVEeP0NgEK8KYmVValF+fFFpTmp
+	xYcYpTlYlMR5vcJTE4QE0hNLUrNTUwtSi2CyTBycUg2M6+s5N1UFqf9dIZP/4/WZ2OQnvlf3
+	F97QTGWpWnxV85bt2qvWM3bfWPRuupqE/4z/tYEXzqztMdBjzfvXtTu97Xm/9ZFDpaXiF0Pk
+	ZFR1ox/f2dLyaLPFt/tHRJoSM26tjGkTrXunkdDW3jx3ziHxB4x2TqUJjHtS2tmZO5Q+h+eL
+	/u2w4DBTYinOSDTUYi4qTgQA4IDdUa4CAAA=
+X-CFilter-Loop: Reflected
 
-On Mon, 15 Jan 2024 13:52:52 +0900 Honggyu Kim <honggyu.kim@sk.com> wrote:
+Hi SeongJae,
 
-> From: Hyeongtak Ji <hyeongtak.ji@sk.com>
+Thanks very much for your comments in details.
+
+On Tue, 16 Jan 2024 12:31:59 -0800 SeongJae Park <sj@kernel.org> wrote:
+
+> Thank you so much for this great patches and the above nice test results.  I
+> believe the test setup and results make sense, and merging a revised version of
+> this patchset would provide real benefits to the users.
+
+Glad to hear that!
+
+> In a high level, I think it might better to separate DAMON internal changes
+> from DAMON external changes.
+
+I agree.  I can't guarantee but I can move all the external changes
+inside mm/damon, but will try that as much as possible.
+
+> For DAMON part changes, I have no big concern other than trivial coding style
+> level comments.
+
+Sure.  I will fix those.
+
+> For DAMON-external changes that implementing demote_pages() and
+> promote_pages(), I'm unsure if the implementation is reusing appropriate
+> functions, and if those are placee in right source file.  Especially, I'm
+> unsure if vmscan.c is the right place for promotion code.  Also I don't know if
+> there is a good agreement on the promotion/demotion target node decision.  That
+> should be because I'm not that familiar with the areas and the files, but I
+> feel this might because our discussions on the promotion and the demotion
+> operations are having rooms for being more matured.  Because I'm not very
+> faimiliar with the part, I'd like to hear others' comments, too.
+
+I would also like to hear others' comments, but this might not be needed
+if most of external code can be moved to mm/damon.
+
+> To this end, I feel the problem might be able te be simpler, because this
+> patchset is trying to provide two sophisticated operations, while I think a
+> simpler approach might be possible.  My humble simpler idea is adding a DAMOS
+> operation for moving pages to a given node (like sys_move_phy_pages RFC[1]),
+> instead of the promote/demote.  Because the general pages migration can handle
+> multiple cases including the promote/demote in my humble assumption.
+
+My initial implementation was similar but I found that it's not accurate
+enough due to the nature of inaccuracy of DAMON regions.  I saw that
+many pages were demoted and promoted back and forth because migration
+target regions include both hot and cold pages together.
+
+So I have implemented the demotion and promotion logics based on the
+shrink_folio_list, which contains many corner case handling logics for
+reclaim.
+
+Having the current demotion and promotion logics makes the hot/cold
+migration pretty accurate as expected.  We made a simple program called
+"hot_cold" and it receives 2 arguments for hot size and cold size in MB.
+For example, "hot_cold 200 500" allocates 200MB of hot memory and 500MB
+of cold memory.  It basically allocates 2 large blocks of memory with
+mmap, then repeat memset for the initial 200MB to make it accessed in an
+infinite loop.
+
+Let's say there are 3 nodes in the system and the first node0 and node1
+are the first tier, and node2 is the second tier.
+
+  $ cat /sys/devices/virtual/memory_tiering/memory_tier4/nodelist
+  0-1
+
+  $ cat /sys/devices/virtual/memory_tiering/memory_tier22/nodelist
+  2
+
+Here is the result of partitioning hot/cold memory and I put execution
+command at the right side of numastat result.  I initially ran each
+hot_cold program with preferred setting so that they initially allocate
+memory on one of node0 or node2, but they gradually migrated based on
+their access frequencies.
+
+  $ numastat -c -p hot_cold
+  Per-node process memory usage (in MBs) 
+  PID              Node 0 Node 1 Node 2 Total 
+  ---------------  ------ ------ ------ ----- 
+  754 (hot_cold)     1800      0   2000  3800    <- hot_cold 1800 2000 
+  1184 (hot_cold)     300      0    500   800    <- hot_cold 300 500 
+  1818 (hot_cold)     801      0   3199  4000    <- hot_cold 800 3200 
+  30289 (hot_cold)      4      0      5    10    <- hot_cold 3 5 
+  30325 (hot_cold)     31      0     51    81    <- hot_cold 30 50 
+  ---------------  ------ ------ ------ ----- 
+  Total              2938      0   5756  8695
+
+The final node placement result shows that DAMON accurately migrated
+pages by their hotness for multiple processes.
+
+> In more detail, users could decide which is the appropriate node for promotion
+> or demotion and use the new DAMOS action to do promotion and demotion.  Users
+> would requested to decide which node is the proper promotion/demotion target
+> nodes, but that decision wouldn't be that hard in my opinion.
 > 
-> This patch introduces DAMOS_PROMOTE action for paddr mode.
+> For this, 'struct damos' would need to be updated for such argument-dependent
+> actions, like 'struct damos_filter' is haing a union.
+
+That might be a better solution.  I will think about it.
+
+> In future, we could extend the operation to the promotion and the demotion
+> after the dicussion around the promotion and demotion is matured, if required.
+> And assuming DAMON be extended for originating CPU-aware access monitoring, the
+> new DAMOS action would also cover more use cases such as general NUMA nodes
+> balancing (extending DAMON for CPU-aware monitoring would required), and some
+> complex configurations where having both CPU affinity and tiered memory.  I
+> also think that may well fit with my RFC idea[2] for tiered memory management.
 > 
-> It includes renaming alloc_demote_folio to alloc_migrate_folio to use it
-> for promotion as well.
+> Looking forward to opinions from you and others.  I admig I miss many things,
+> and more than happy to be enlightened.
 > 
-> The execution sequence of DAMOS_DEMOTE and DAMOS_PROMOTE look as
-> follows for comparison.
-> 
->   DAMOS_DEMOTE action
->     damo_pa_apply_scheme
->     -> damon_pa_reclaim
->     -> demote_pages
->     -> do_demote_folio_list
->     -> __demote_folio_list
->     -> demote_folio_list
-> 
->   DAMOS_PROMOTE action
->     damo_pa_apply_scheme
->     -> damon_pa_promote
->     -> promote_pages
->     -> do_promote_folio_list
->     -> __promote_folio_list
->     -> promote_folio_list
-> 
-> Signed-off-by: Hyeongtak Ji <hyeongtak.ji@sk.com>
-> Signed-off-by: Honggyu Kim <honggyu.kim@sk.com>
-> ---
->  include/linux/damon.h          |   2 +
->  include/linux/migrate_mode.h   |   1 +
->  include/linux/vm_event_item.h  |   1 +
->  include/trace/events/migrate.h |   3 +-
->  mm/damon/paddr.c               |  29 ++++++++
->  mm/damon/sysfs-schemes.c       |   1 +
->  mm/internal.h                  |   1 +
->  mm/vmscan.c                    | 129 ++++++++++++++++++++++++++++++++-
->  mm/vmstat.c                    |   1 +
->  9 files changed, 165 insertions(+), 3 deletions(-)
-> 
-> diff --git a/include/linux/damon.h b/include/linux/damon.h
-> index 4c0a0fef09c5..477060bb6718 100644
-> --- a/include/linux/damon.h
-> +++ b/include/linux/damon.h
-> @@ -107,6 +107,7 @@ struct damon_target {
->   * @DAMOS_LRU_DEPRIO:	Deprioritize the region on its LRU lists.
->   * @DAMOS_STAT:		Do nothing but count the stat.
->   * @DAMOS_DEMOTE:	Do demotion for the current region.
-> + * @DAMOS_PROMOTE:	Do promotion if possible, otherwise do nothing.
+> [1] https://lwn.net/Articles/944007/
+> [2] https://lore.kernel.org/damon/20231112195602.61525-1-sj@kernel.org/
 
-Like LRU_PRIO is defined before LRU_DEPRIO, what about defining PROMOTE before
-DEMOTE?
+Thanks very much for your comments.  I will need a few more days for the
+update but will try to address your concerns as much as possible.
 
->   * @NR_DAMOS_ACTIONS:	Total number of DAMOS actions
->   *
->   * The support of each action is up to running &struct damon_operations.
-> @@ -125,6 +126,7 @@ enum damos_action {
->  	DAMOS_LRU_DEPRIO,
->  	DAMOS_STAT,		/* Do nothing but only record the stat */
->  	DAMOS_DEMOTE,
-> +	DAMOS_PROMOTE,
->  	NR_DAMOS_ACTIONS,
->  };
->  
-> diff --git a/include/linux/migrate_mode.h b/include/linux/migrate_mode.h
-> index f37cc03f9369..63f75eb9abf3 100644
-> --- a/include/linux/migrate_mode.h
-> +++ b/include/linux/migrate_mode.h
-> @@ -29,6 +29,7 @@ enum migrate_reason {
->  	MR_CONTIG_RANGE,
->  	MR_LONGTERM_PIN,
->  	MR_DEMOTION,
-> +	MR_PROMOTION,
->  	MR_TYPES
->  };
->  
-> diff --git a/include/linux/vm_event_item.h b/include/linux/vm_event_item.h
-> index 8abfa1240040..63cf920afeaa 100644
-> --- a/include/linux/vm_event_item.h
-> +++ b/include/linux/vm_event_item.h
-> @@ -44,6 +44,7 @@ enum vm_event_item { PGPGIN, PGPGOUT, PSWPIN, PSWPOUT,
->  		PGDEMOTE_KSWAPD,
->  		PGDEMOTE_DIRECT,
->  		PGDEMOTE_KHUGEPAGED,
-> +		PGPROMOTE,
->  		PGSCAN_KSWAPD,
->  		PGSCAN_DIRECT,
->  		PGSCAN_KHUGEPAGED,
-> diff --git a/include/trace/events/migrate.h b/include/trace/events/migrate.h
-> index 0190ef725b43..f0dd569c1e62 100644
-> --- a/include/trace/events/migrate.h
-> +++ b/include/trace/events/migrate.h
-> @@ -22,7 +22,8 @@
->  	EM( MR_NUMA_MISPLACED,	"numa_misplaced")		\
->  	EM( MR_CONTIG_RANGE,	"contig_range")			\
->  	EM( MR_LONGTERM_PIN,	"longterm_pin")			\
-> -	EMe(MR_DEMOTION,	"demotion")
-> +	EM( MR_DEMOTION,	"demotion")			\
-> +	EMe(MR_PROMOTION,	"promotion")
->  
->  /*
->   * First define the enums in the above macros to be exported to userspace
-> diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
-> index d3e3f077cd00..360ce69d5898 100644
-> --- a/mm/damon/paddr.c
-> +++ b/mm/damon/paddr.c
-> @@ -257,6 +257,32 @@ static unsigned long damon_pa_reclaim(struct damon_region *r, struct damos *s, b
->  	return applied * PAGE_SIZE;
->  }
->  
-> +static unsigned long damon_pa_promote(struct damon_region *r, struct damos *s)
-> +{
-> +	unsigned long addr, applied;
-> +	LIST_HEAD(folio_list);
-> +
-> +	for (addr = r->ar.start; addr < r->ar.end; addr += PAGE_SIZE) {
-> +		struct folio *folio = damon_get_folio(PHYS_PFN(addr));
-> +
-> +		if (!folio)
-> +			continue;
-> +
-> +		if (damos_pa_filter_out(s, folio))
-> +			goto put_folio;
-> +
-> +		if (!folio_isolate_lru(folio))
-> +			goto put_folio;
-> +
-> +		list_add(&folio->lru, &folio_list);
-> +put_folio:
-> +		folio_put(folio);
-> +	}
-> +	applied = promote_pages(&folio_list);
-> +	cond_resched();
-> +	return applied * PAGE_SIZE;
-> +}
-> +
->  static inline unsigned long damon_pa_mark_accessed_or_deactivate(
->  		struct damon_region *r, struct damos *s, bool mark_accessed)
->  {
-> @@ -309,6 +335,8 @@ static unsigned long damon_pa_apply_scheme(struct damon_ctx *ctx,
->  		break;
->  	case DAMOS_DEMOTE:
->  		return damon_pa_reclaim(r, scheme, true);
-> +	case DAMOS_PROMOTE:
-> +		return damon_pa_promote(r, scheme);
->  	default:
->  		/* DAMOS actions that not yet supported by 'paddr'. */
->  		break;
-> @@ -326,6 +354,7 @@ static int damon_pa_scheme_score(struct damon_ctx *context,
->  	case DAMOS_DEMOTE:
->  		return damon_cold_score(context, r, scheme);
->  	case DAMOS_LRU_PRIO:
-> +	case DAMOS_PROMOTE:
->  		return damon_hot_score(context, r, scheme);
-
-As mentioned on the previous patch, I'd prefer keeping the order of operations
-and having dedicated branches for each operation.
-
->  	default:
->  		break;
-> diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
-> index ac7cd3f17b12..1b84d0af7e1f 100644
-> --- a/mm/damon/sysfs-schemes.c
-> +++ b/mm/damon/sysfs-schemes.c
-> @@ -1188,6 +1188,7 @@ static const char * const damon_sysfs_damos_action_strs[] = {
->  	"lru_deprio",
->  	"stat",
->  	"demote",
-> +	"promote",
->  };
->  
->  static struct damon_sysfs_scheme *damon_sysfs_scheme_alloc(
-> diff --git a/mm/internal.h b/mm/internal.h
-> index 2380397ec2f3..f159455e63d4 100644
-> --- a/mm/internal.h
-> +++ b/mm/internal.h
-> @@ -870,6 +870,7 @@ unsigned long reclaim_pages(struct list_head *folio_list);
->  unsigned int reclaim_clean_pages_from_list(struct zone *zone,
->  					    struct list_head *folio_list);
->  unsigned long demote_pages(struct list_head *folio_list);
-> +unsigned long promote_pages(struct list_head *folio_list);
->  /* The ALLOC_WMARK bits are used as an index to zone->watermark */
->  #define ALLOC_WMARK_MIN		WMARK_MIN
->  #define ALLOC_WMARK_LOW		WMARK_LOW
-> diff --git a/mm/vmscan.c b/mm/vmscan.c
-> index eaa3dd6b7562..f03be320f9ad 100644
-> --- a/mm/vmscan.c
-> +++ b/mm/vmscan.c
-> @@ -910,7 +910,7 @@ static void folio_check_dirty_writeback(struct folio *folio,
->  		mapping->a_ops->is_dirty_writeback(folio, dirty, writeback);
->  }
->  
-> -static struct folio *alloc_demote_folio(struct folio *src,
-> +static struct folio *alloc_migrate_folio(struct folio *src,
->  		unsigned long private)
-
-As also mentioned on the previous patch, I'm unsure if vmscan.c is the right
-place for general migration.
-
->  {
->  	struct folio *dst;
-> @@ -973,7 +973,7 @@ static unsigned int demote_folio_list(struct list_head *demote_folios,
->  	node_get_allowed_targets(pgdat, &allowed_mask);
->  
->  	/* Demotion ignores all cpuset and mempolicy settings */
-> -	migrate_pages(demote_folios, alloc_demote_folio, NULL,
-> +	migrate_pages(demote_folios, alloc_migrate_folio, NULL,
->  		      (unsigned long)&mtc, MIGRATE_ASYNC, MR_DEMOTION,
->  		      &nr_succeeded);
->  
-> @@ -982,6 +982,48 @@ static unsigned int demote_folio_list(struct list_head *demote_folios,
->  	return nr_succeeded;
->  }
->  
-> +/*
-> + * Take folios on @promote_folios and attempt to promote them to another node.
-> + * Folios which are not promoted are left on @promote_folios.
-> + */
-> +static unsigned int promote_folio_list(struct list_head *promote_folios,
-> +				     struct pglist_data *pgdat)
-> +{
-> +	int target_nid = next_promotion_node(pgdat->node_id);
-> +	unsigned int nr_succeeded;
-> +	nodemask_t allowed_mask = NODE_MASK_NONE;
-> +
-> +	struct migration_target_control mtc = {
-> +		/*
-> +		 * Allocate from 'node', or fail quickly and quietly.
-> +		 * When this happens, 'page' will likely be stayed
-> +		 * instead of migrated.
-> +		 */
-> +		.gfp_mask = (GFP_HIGHUSER_MOVABLE & ~__GFP_RECLAIM) | __GFP_NOWARN |
-> +			__GFP_NOMEMALLOC | GFP_NOWAIT,
-> +		.nid = target_nid,
-> +		.nmask = &allowed_mask
-> +	};
-> +
-> +	if (pgdat->node_id == target_nid)
-> +		return 0;
-> +
-> +	if (list_empty(promote_folios))
-> +		return 0;
-> +
-> +	if (target_nid == NUMA_NO_NODE)
-> +		return 0;
-> +
-> +	/* Promotion ignores all cpuset and mempolicy settings */
-> +	migrate_pages(promote_folios, alloc_migrate_folio, NULL,
-> +		      (unsigned long)&mtc, MIGRATE_ASYNC, MR_PROMOTION,
-> +		      &nr_succeeded);
-> +
-> +	__count_vm_events(PGPROMOTE, nr_succeeded);
-> +
-> +	return nr_succeeded;
-> +}
-> +
->  static bool may_enter_fs(struct folio *folio, gfp_t gfp_mask)
->  {
->  	if (gfp_mask & __GFP_FS)
-> @@ -1058,6 +1100,65 @@ static unsigned int __demote_folio_list(struct list_head *folio_list,
->  	return nr_demoted;
->  }
->  
-> +/*
-> + * __promote_folio_list() returns the number of promoted pages
-> + */
-> +static unsigned int __promote_folio_list(struct list_head *folio_list,
-> +		struct pglist_data *pgdat, struct scan_control *sc)
-> +{
-> +	LIST_HEAD(ret_folios);
-> +	LIST_HEAD(promote_folios);
-> +	unsigned int nr_promoted = 0;
-> +
-> +	cond_resched();
-> +
-> +	while (!list_empty(folio_list)) {
-> +		struct folio *folio;
-> +		enum folio_references references;
-> +
-> +		cond_resched();
-> +
-> +		folio = lru_to_folio(folio_list);
-> +		list_del(&folio->lru);
-> +
-> +		if (!folio_trylock(folio))
-> +			goto keep;
-> +
-> +		VM_BUG_ON_FOLIO(folio_test_active(folio), folio);
-> +
-> +		references = folio_check_references(folio, sc);
-> +		if (references == FOLIOREF_KEEP ||
-> +		    references == FOLIOREF_RECLAIM ||
-> +		    references == FOLIOREF_RECLAIM_CLEAN)
-> +			goto keep_locked;
-> +
-> +		/* Relocate its contents to another node. */
-> +		list_add(&folio->lru, &promote_folios);
-> +		folio_unlock(folio);
-> +		continue;
-> +keep_locked:
-> +		folio_unlock(folio);
-> +keep:
-> +		list_add(&folio->lru, &ret_folios);
-> +		VM_BUG_ON_FOLIO(folio_test_lru(folio), folio);
-> +	}
-> +	/* 'folio_list' is always empty here */
-> +
-> +	/* Migrate folios selected for promotion */
-> +	nr_promoted += promote_folio_list(&promote_folios, pgdat);
-
-Again as mentioned on the previous patch, I was thinking promote_folios_list()
-may call __promote_folio_list().  Making the __ prefix usage consistent with
-other functions might be better, in my opinion.
-
-> +	/* Folios that could not be promoted are still in @promote_folios */
-> +	if (!list_empty(&promote_folios)) {
-> +		/* Folios which weren't promoted go back on @folio_list */
-> +		list_splice_init(&promote_folios, folio_list);
-> +	}
-> +
-> +	try_to_unmap_flush();
-> +
-> +	list_splice(&ret_folios, folio_list);
-> +
-> +	return nr_promoted;
-> +}
-> +
->  /*
->   * shrink_folio_list() returns the number of reclaimed pages
->   */
-> @@ -2186,6 +2287,25 @@ static unsigned int do_demote_folio_list(struct list_head *folio_list,
->  	return nr_demoted;
->  }
->  
-> +static unsigned int do_promote_folio_list(struct list_head *folio_list,
-> +				      struct pglist_data *pgdat)
-> +{
-> +	unsigned int nr_promoted;
-> +	struct folio *folio;
-> +	struct scan_control sc = {
-> +		.gfp_mask = GFP_KERNEL,
-> +	};
-> +
-> +	nr_promoted = __promote_folio_list(folio_list, pgdat, &sc);
-> +	while (!list_empty(folio_list)) {
-> +		folio = lru_to_folio(folio_list);
-> +		list_del(&folio->lru);
-> +		folio_putback_lru(folio);
-> +	}
-> +
-> +	return nr_promoted;
-> +}
-> +
->  static unsigned long reclaim_or_migrate_folios(struct list_head *folio_list,
->  		unsigned int (*handler)(struct list_head *, struct pglist_data *))
->  {
-> @@ -2230,6 +2350,11 @@ unsigned long demote_pages(struct list_head *folio_list)
->  	return reclaim_or_migrate_folios(folio_list, do_demote_folio_list);
->  }
->  
-> +unsigned long promote_pages(struct list_head *folio_list)
-> +{
-> +	return reclaim_or_migrate_folios(folio_list, do_promote_folio_list);
-> +}
-> +
->  static unsigned long shrink_list(enum lru_list lru, unsigned long nr_to_scan,
->  				 struct lruvec *lruvec, struct scan_control *sc)
->  {
-> diff --git a/mm/vmstat.c b/mm/vmstat.c
-> index 359460deb377..c703abdb8137 100644
-> --- a/mm/vmstat.c
-> +++ b/mm/vmstat.c
-> @@ -1282,6 +1282,7 @@ const char * const vmstat_text[] = {
->  	"pgdemote_kswapd",
->  	"pgdemote_direct",
->  	"pgdemote_khugepaged",
-> +	"pgpromote",
->  	"pgscan_kswapd",
->  	"pgscan_direct",
->  	"pgscan_khugepaged",
-> -- 
-> 2.34.1
+Thanks,
+Honggyu
