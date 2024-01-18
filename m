@@ -1,40 +1,27 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59A7925572;
-	Wed, 17 Jan 2024 21:24:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+Received: from invmail3.skhynix.com (exvmail3.skhynix.com [166.125.252.90])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 311EB22323
+	for <damon@lists.linux.dev>; Thu, 18 Jan 2024 10:55:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=166.125.252.90
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705526662; cv=none; b=Z6BjP5bZQto2BWTRZm2qzqAjXd2atc9+T6M9A0wATjmAz/vgk9q1rxiwdSpZX6xwGmRtBV0CZ/NLVbnQtUNQP6ctxSDXA51+PwlmIlj/pco0L3jMUO18GXaGVZ3+30P3hkfNpDRE4s384ljXHcYV7OFkXqiMXBV8JY+aqa9s9OY=
+	t=1705575343; cv=none; b=tcHoxhT/9eLz8YD8f/kdy+WN+1bEe+6kZX+cTIfqL7DPEdN5UMNPvwxJ8eIlE8odaIijwvpJMlwnLE3NexEWxLSex6gQBS97iJsbAbP6wz3wx2CcIn8CO+fThxCcoQYYb0FliLZhyRbAXFpSN1bqfZg4/7Zrj5I0sd7f71d88Y8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705526662; c=relaxed/simple;
-	bh=Xi4AvMxwNhhjvnZxB9RNlBZlHJZqwbrZNMt87q40Y5Y=;
-	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-Id:
-	 X-Mailer:In-Reply-To:References:MIME-Version:
-	 Content-Transfer-Encoding; b=KZwX8hy1IMUI98dOxhdvI9Y1bryqsOtZfWWxon/UJxdFYZsQI3RpMDbn4T+0Wlf5M9W6HcdB0dnErHf2t+uJePCuazQBLqrp/6b68Pc/o2M/Co7YD9Ah1WTcC9irjfsiCJ/65tz63oLZSW/g6zRdOm/ebIVV+7mVo+Wqd0ORO68=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HetAil9r; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HetAil9r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 525B2C433F1;
-	Wed, 17 Jan 2024 21:24:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1705526661;
-	bh=Xi4AvMxwNhhjvnZxB9RNlBZlHJZqwbrZNMt87q40Y5Y=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HetAil9r8Am1raizRyvhUG/lw4wfYEoQA/9APIZG3YginIabgQH0C8ANZXjw2Y2Z3
-	 jBVjrKFMwSrWTLn5+kyKOecmhQiS5HLDw1e7N7aJ6y6K+KXuxtm9rfcb+RUqi5qZYK
-	 J+TU5//SgG++UfdgVeSTAcfsZQ7CHLh8fkX5jswzbSmylMVy55rY9f9ocr+c7NSVh0
-	 0D+XfW7JgkTo+N15+rIdFFNFFIa3FAivl41puNP0wvNdnAyEIq+k/UKVowd11bihWw
-	 LLQTad7/nsLlcwHxghws/cLDX45lAIIpJZaRky5TGeuv/8NZZN2XaK6cSVsLHVNR3A
-	 wBilBn7I31hAA==
-From: SeongJae Park <sj@kernel.org>
-To: SeongJae Park <sj@kernel.org>
-Cc: Honggyu Kim <honggyu.kim@sk.com>,
-	akpm@linux-foundation.org,
+	s=arc-20240116; t=1705575343; c=relaxed/simple;
+	bh=62k+DYNYiAToaJmsoXZKLChah95X0PxNNmBWywU7twk=;
+	h=X-AuditID:From:To:Cc:Subject:Date:Message-Id:X-Mailer:In-Reply-To:
+	 References:MIME-Version:Content-Transfer-Encoding:
+	 X-Brightmail-Tracker:X-Brightmail-Tracker:X-CFilter-Loop; b=NPGtj5c+Z8j/Qd8POZQdpwzPU470YKVYyJi3MfRhLrGpb5HTaO6eFbRtRFifrF9lLNVnQ+rO6O4gEuBvi9ypwPIppJ0zPZYkM+tgs5I9vyeEfmUEu4kveZ5Axjyc+Xi3GY/1JbFWXZBmTQTCzOhkIPR+3t7u4Rr/MNT3+6B9UQw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sk.com; spf=pass smtp.mailfrom=sk.com; arc=none smtp.client-ip=166.125.252.90
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sk.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sk.com
+X-AuditID: a67dfc59-bd5ff7000001c92b-70-65a9001d9683
+From: Hyeongtak Ji <hyeongtak.ji@sk.com>
+To: sj@kernel.org
+Cc: akpm@linux-foundation.org,
 	apopple@nvidia.com,
 	baolin.wang@linux.alibaba.com,
 	damon@lists.linux.dev,
 	dave.jiang@intel.com,
+	honggyu.kim@sk.com,
 	hyeongtak.ji@sk.com,
 	kernel_team@skhynix.com,
 	linmiaohe@huawei.com,
@@ -51,11 +38,11 @@ Cc: Honggyu Kim <honggyu.kim@sk.com>,
 	ying.huang@intel.com,
 	ziy@nvidia.com
 Subject: Re: [RFC PATCH 0/4] DAMON based 2-tier memory management for CXL memory
-Date: Wed, 17 Jan 2024 13:24:18 -0800
-Message-Id: <20240117212419.51845-1-sj@kernel.org>
-X-Mailer: git-send-email 2.39.2
+Date: Thu, 18 Jan 2024 19:40:16 +0900
+Message-Id: <20240118104017.2098-1-hyeongtak.ji@sk.com>
+X-Mailer: git-send-email 2.37.3.windows.1
 In-Reply-To: <20240117211103.51806-1-sj@kernel.org>
-References: 
+References: <20240117211103.51806-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -63,51 +50,149 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrMIsWRmVeSWpSXmKPExsXC9ZZnka4sw8pUgwe/tCzmrF/DZrHrRojF
+	/73HGC2e/P/NanHiZiObRef3pSwWl3fNYbO4t+Y/q8WR9WdZLNbdArI2nz3DbLF4uZrFvo4H
+	TBaHv75hsph8aQGbxYspZxgtTs6azGIx++g9dgchj/8HJzF7LD39hs1jQxOQaNl3i91jwaZS
+	j5Yjb1k9Fu95yeSxaVUnm8emT5PYPU7M+M3isfOhpceLzTMZPXqb37F5fN4kF8AXxWWTkpqT
+	WZZapG+XwJXx53YnW8EnzYpfkw+yNDBOkOti5OSQEDCRuL7kIjuMvfLICiYQm01AQ2Jaw2Jm
+	EFtEQFCi//EM1i5GLg5mgRksEhf3HAcrEhYIkHg85wxYEYuAqkTLgk4WEJtXwFxi5u41LBBD
+	NSUmbJkDVs8pYCwx+cREsGVCAkYS29smskHUC0qcnPkErJ5ZQF6ieetsZpBlEgKH2CVWbVjD
+	BDFIUuLgihssExj5ZyHpmYWkZwEj0ypGkcy8stzEzBxjveLsjMq8zAq95PzcTYzAqFtW+ydy
+	B+O3C8GHGAU4GJV4eDOeLE8VYk0sK67MPcQowcGsJMLrb7AsVYg3JbGyKrUoP76oNCe1+BCj
+	NAeLkjiv0bfyFCGB9MSS1OzU1ILUIpgsEwenVAOjhPXVy5c7udb/d02LtrKX1TU5sHLSLPZT
+	tyRZr1bv39J+aGZTSLi7gu7+8+71h6/orFrqe/Pmzs/eh9f//OG2a7Kgtprb028lO5e+qyt8
+	UTZxgsqiKWsuL3cvyfu1I5FjW/qsYnu3x0mV/QXsF6dcEunwaL0+w1L93/nA6NapItFaMxQm
+	KpYsV2Ipzkg01GIuKk4EAA04c1+2AgAA
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprNIsWRmVeSWpSXmKPExsXCNUPNU1eWYWWqwcW50hZz1q9hs9h1I8Ti
+	/95jjBZP/v9mtThxs5HN4vOz18wWnU++M1ocnnuS1aLz+1IWi8u75rBZ3Fvzn9XiyPqzLBbr
+	bgFZm8+eYbZYvFzN4tC156wW+zoeMFkc/vqGyWLypQVsFi+mnGG0ODlrMovF7KP32B3EPP4f
+	nMTssfT0GzaPDU1AomXfLXaPBZtKPVqOvGX1WLznJZPHplWdbB6bPk1i9zgx4zeLx86Hlh4v
+	Ns9k9Ohtfsfm8e22h8fiFx+YPD5vkgsQiOKySUnNySxLLdK3S+DK+HO7k63gk2bFr8kHWRoY
+	J8h1MXJySAiYSKw8soIJxGYT0JCY1rCYGcQWERCU6H88g7WLkYuDWWAGi8TFPcfBioQFAiQe
+	zzkDVsQioCrRsqCTBcTmFTCXmLl7DQvEUE2JCVvmgNVzChhLTD4xkR3EFhIwktjeNpENol5Q
+	4uTMJ2D1zALyEs1bZzNPYOSZhSQ1C0lqASPTKkaRzLyy3MTMHDO94uyMyrzMCr3k/NxNjMAo
+	W1b7Z9IOxm+X3Q8xCnAwKvHwdjxckSrEmlhWXJl7iFGCg1lJhNffYFmqEG9KYmVValF+fFFp
+	TmrxIUZpDhYlcV6v8NQEIYH0xJLU7NTUgtQimCwTB6dUA2NFlpnYb70PZ7i5l0jdVFHMfLD2
+	Tvp120lf3p2bI/1nh2CruuSsXqYYBu1jn0KbOft/Xw7v6n9RsevFU8VWz0/dRywL/rxiK2Iv
+	3nrIZOPEu0pHP8bvWbTt/j3+61Uz6sVXhWX/zPX9ED5BZKYoU9pKmxdCBZFntH01rTS5f/Bs
+	+ffZO+XUlDNKLMUZiYZazEXFiQBg223CrgIAAA==
+X-CFilter-Loop: Reflected
 
-On Wed, 17 Jan 2024 13:11:03 -0800 SeongJae Park <sj@kernel.org> wrote:
+Hi SeongJae,
 
-[...]
-> Hi Honggyu,
-> 
-> On Wed, 17 Jan 2024 20:49:25 +0900 Honggyu Kim <honggyu.kim@sk.com> wrote:
-> 
-> > Hi SeongJae,
-> > 
-> > Thanks very much for your comments in details.
-> > 
-> > On Tue, 16 Jan 2024 12:31:59 -0800 SeongJae Park <sj@kernel.org> wrote:
-> > 
-[...]
-> > > To this end, I feel the problem might be able te be simpler, because this
-> > > patchset is trying to provide two sophisticated operations, while I think a
-> > > simpler approach might be possible.  My humble simpler idea is adding a DAMOS
-> > > operation for moving pages to a given node (like sys_move_phy_pages RFC[1]),
-> > > instead of the promote/demote.  Because the general pages migration can handle
-> > > multiple cases including the promote/demote in my humble assumption.
-[...]
-> > > In more detail, users could decide which is the appropriate node for promotion
-> > > or demotion and use the new DAMOS action to do promotion and demotion.  Users
-> > > would requested to decide which node is the proper promotion/demotion target
-> > > nodes, but that decision wouldn't be that hard in my opinion.
-> > > 
-> > > For this, 'struct damos' would need to be updated for such argument-dependent
-> > > actions, like 'struct damos_filter' is haing a union.
-> > 
-> > That might be a better solution.  I will think about it.
-> 
-> More specifically, I think receiving an address range as the argument might
-> more flexible than just NUMA node.  Maybe we can imagine proactively migrating
-> cold movable pages from normal zones to movable zones, to avoid normal zone
-> memory pressure.
-
-Yet another crazy idea.  Finding hot regions in the middle of cold region and
-move to besides of other hot pages.  As a result, memory is sorted by access
-temperature even in same node, and the system gains more spatial locality,
-which benefits general locality-based algorithms including DAMON's adaptive
-regions adjustment.
-
-
-Thanks,
-SJ
+On Wed, 17 Jan 2024 SeongJae Park <sj@kernel.org> wrote:
 
 [...]
+>> Let's say there are 3 nodes in the system and the first node0 and node1
+>> are the first tier, and node2 is the second tier.
+>> 
+>>   $ cat /sys/devices/virtual/memory_tiering/memory_tier4/nodelist
+>>   0-1
+>> 
+>>   $ cat /sys/devices/virtual/memory_tiering/memory_tier22/nodelist
+>>   2
+>> 
+>> Here is the result of partitioning hot/cold memory and I put execution
+>> command at the right side of numastat result.  I initially ran each
+>> hot_cold program with preferred setting so that they initially allocate
+>> memory on one of node0 or node2, but they gradually migrated based on
+>> their access frequencies.
+>> 
+>>   $ numastat -c -p hot_cold
+>>   Per-node process memory usage (in MBs) 
+>>   PID              Node 0 Node 1 Node 2 Total 
+>>   ---------------  ------ ------ ------ ----- 
+>>   754 (hot_cold)     1800      0   2000  3800    <- hot_cold 1800 2000 
+>>   1184 (hot_cold)     300      0    500   800    <- hot_cold 300 500 
+>>   1818 (hot_cold)     801      0   3199  4000    <- hot_cold 800 3200 
+>>   30289 (hot_cold)      4      0      5    10    <- hot_cold 3 5 
+>>   30325 (hot_cold)     31      0     51    81    <- hot_cold 30 50 
+>>   ---------------  ------ ------ ------ ----- 
+>>   Total              2938      0   5756  8695
+>> 
+>> The final node placement result shows that DAMON accurately migrated
+>> pages by their hotness for multiple processes.
+>
+> What was the result when the corner cases handling logics were not applied?
+
+This is the result of the same test that Honggyu did, but with an insufficient
+corner cases handling logics.
+
+  $ numastat -c -p hot_cold
+
+  Per-node process memory usage (in MBs)
+  PID             Node 0 Node 1 Node 2 Total
+  --------------  ------ ------ ------ -----
+  862 (hot_cold)    2256      0   1545  3801   <- hot_cold 1800 2000
+  863 (hot_cold)     403      0    398   801   <- hot_cold 300 500
+  864 (hot_cold)    1520      0   2482  4001   <- hot_cold 800 3200
+  865 (hot_cold)       6      0      3     9   <- hot_cold 3 5
+  866 (hot_cold)      29      0     52    81   <- hot_cold 30 50
+  --------------  ------ ------ ------ -----
+  Total             4215      0   4480  8695
+
+As time goes by, DAMON keeps trying to split the hot/cold region, but it does
+not seem to be enough.
+
+  $ numastat -c -p hot_cold
+
+  Per-node process memory usage (in MBs)
+  PID             Node 0 Node 1 Node 2 Total
+  --------------  ------ ------ ------ -----
+  862 (hot_cold)    2022      0   1780  3801   <- hot_cold 1800 2000
+  863 (hot_cold)     351      0    450   801   <- hot_cold 300 500
+  864 (hot_cold)    1134      0   2868  4001   <- hot_cold 800 3200
+  865 (hot_cold)       7      0      2     9   <- hot_cold 3 5
+  866 (hot_cold)      43      0     39    81   <- hot_cold 30 50
+  --------------  ------ ------ ------ -----
+  Total             3557      0   5138  8695
+
+>
+> And, what are the corner cases handling logic that seemed essential?  I show
+> the page granularity active/reference check could indeed provide many
+> improvements, but that's only my humble assumption.
+
+Yes, the page granularity active/reference check is essential.  To make the
+above "insufficient" result, the only thing I did was to promote
+inactive/not_referenced pages.
+
+diff --git a/mm/vmscan.c b/mm/vmscan.c
+index f03be320f9ad..c2aefb883c54 100644
+--- a/mm/vmscan.c
++++ b/mm/vmscan.c
+@@ -1127,9 +1127,7 @@ static unsigned int __promote_folio_list(struct list_head *folio_list,
+                VM_BUG_ON_FOLIO(folio_test_active(folio), folio);
+
+                references = folio_check_references(folio, sc);
+-               if (references == FOLIOREF_KEEP ||
+-                   references == FOLIOREF_RECLAIM ||
+-                   references == FOLIOREF_RECLAIM_CLEAN)
++               if (references == FOLIOREF_KEEP )
+                        goto keep_locked;
+
+                /* Relocate its contents to another node. */
+
+>
+> If the corner cases are indeed better to be applied in page granularity, I
+> agree we need some more efforts since DAMON monitoring results are not page
+> granularity aware by the design.  Users could increase min_nr_regions to make
+> it more accurate, and we have plan to support page granularity monitoring,
+> though.  But maybe the overhead could be unacceptable.
+>
+> Ideal solution would be making DAMON more accurate while keeping current level
+> of overhead.  We indeed have TODO items for DAMON accuracy improvement, but
+> this may take some time that might unacceptable for your case.
+>
+> If that's the case, I think the additional corner handling (or, page gran
+> additional access check) could be made as DAMOS filters[1], since DAMOS filters
+> can be applied in page granularity, and designed for this kind of handling of
+> information that DAMON monitoring results cannot provide.  More specifically,
+> we could have filters for promotion-qualifying pages and demotion-qualifying
+> pages.  In this way, I think we can keep the action more flexible while the
+> filters can be applied in creative ways.
+
+Making corner handling as a new DAMOS filters is a good idea.  I'm just a bit
+concerned if adding new filters might cause users to care more.
+
+Kind regards,
+Hyeongtak
