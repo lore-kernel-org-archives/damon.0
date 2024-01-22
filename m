@@ -1,125 +1,225 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A93A02D03C;
-	Thu, 18 Jan 2024 20:17:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01E075226
+	for <damon@lists.linux.dev>; Mon, 22 Jan 2024 05:46:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705609035; cv=none; b=RvVg1D5mTh5nYYgR1x+SCwb6XbiYKl6PFxDlVyo6SCoH9Mfh/iS6mI1JweGb4VwIp4OjgfcgDD1DeVq089rU2fZoZg6c72adYPqNoYW8bxjDcbnoqxC7w95DdPGZvCej8khoOtQdom9LtIAC2kuKtohQaWQfw/ejLgi3ckYz1wA=
+	t=1705902398; cv=none; b=st6JbqATa+MsFJpizdHoxip2yiKhLLnlCQ3QirhO2OGcFOrPGMXdybl7OuHMV6cs38s1dhjIFL81ryCaZTf7XPmhG2EUmYNCk2Y6scRJbP+EAngzAyC3BdSJcfQmUR1v99FjXKoUzeqYbItwVzN/Er0CdKZSUbko5FZhncKf77g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705609035; c=relaxed/simple;
-	bh=b6ZY/1ULU74ptnFYteTCIH4Y8oRwvww/2IBdUJCHpUI=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=OkxWmqedd/KPbYmIoToheBDnvBAzm95K+gI+3WjYrrkFV1P3P8MhDgdyz7Z3SmUk/MVrRYwhzgrOy0TtDFk0U/91Rz4AqYoVXkVp9Ig+Mcjc0GO8w3xPFYoLs0cL+7QzBr3wg8Zykhg6z5rTfwFVs5bsUmvQO3Z9lS+rlCaTtZg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gQErISbG; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1705902398; c=relaxed/simple;
+	bh=1rBvZM1Ljwa8WBCUNlYPqcVcf0Xlz7obw+J+fO/FviM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=V8YF7/neRaThxXfA7vOJqNYZh5CHiwp2Z1PAmuW1WiT4C/Z/gmn7ZciDW1PsctriK3YxERfMI0yCcTt10tDPXGvRCpdOqoIqOsDr34mL9Ujoic9bKcQnQ8CIvwTdbo98Np7IG4x7MzDH2ivg1LA1GxqicCfF9nDjxgJ2m4I8znU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DB6bE9Z9; arc=none smtp.client-ip=209.85.214.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gQErISbG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C946EC433F1;
-	Thu, 18 Jan 2024 20:17:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1705609035;
-	bh=b6ZY/1ULU74ptnFYteTCIH4Y8oRwvww/2IBdUJCHpUI=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gQErISbGywbKb9ZYKZ/SB91VCn59q0iG044fDp5f+tF+pykWJM6AkX57UdGeK9Uvh
-	 OtZiLX5DNII1ZBTvcO4681MlBubJ7KFtXiRwXNoKHEjTAaZOWriBfq09hDjs4f/A43
-	 5TMwrJJVpFkC4LmXX/Z5E9VrXIbOqA/d19VQKgamiMc5+3vflNWqOIGRoGfdXC7DEV
-	 RUMXwrsSWuYrckuCrq9dhuV/SUYuHKcHS+7iJU6atVN+mCigMpLumBLHs/uGTbl81t
-	 7XB1ZT8SVhQ7+XLoUaP+xQvxFvu+hNh7Hc7gA7BDW5rXv6VXzvJQbJor4LBfFzX4xP
-	 yK8CoHrdvVwrg==
-From: SeongJae Park <sj@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org,
-	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net,
-	rwarsow@gmx.de,
-	conor@kernel.org,
-	allen.lkml@gmail.com,
-	damon@lists.linux.dev,
-	SeongJae Park <sj@kernel.org>
-Subject: Re: [PATCH 6.7 00/28] 6.7.1-rc1 review
-Date: Thu, 18 Jan 2024 12:17:12 -0800
-Message-Id: <20240118201712.80859-1-sj@kernel.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20240118104301.249503558@linuxfoundation.org>
-References: 
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DB6bE9Z9"
+Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-1d3eb299e2eso11942375ad.2
+        for <damon@lists.linux.dev>; Sun, 21 Jan 2024 21:46:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1705902396; x=1706507196; darn=lists.linux.dev;
+        h=user-agent:in-reply-to:content-disposition:mime-version:references
+         :message-id:subject:cc:to:from:date:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=IflNS6Etc8g12+qLnuO+gXfIx3jLJ1iHCnSoNRmsAEY=;
+        b=DB6bE9Z9p4YUsfAaPiSuQxnI+9KVArTlTL2qYaYHxpC6bkIFFZdJzzxGA7bnha8dS3
+         t5QLbbl9on0CzzwbWZUdACUsqJOJvmwpGwegLYclwP007Kf6KZ0er+xaIF3DT6LEwxhj
+         F8y/MwoAPBe/aDWV0EJTO4es+D15RHldVBAO7CwLFRtL3/0SozzQWrLB6CnQ47FKDk4B
+         vInSIiDMTxMvUXyHc4JILG+dFuQO3ulSqmAwaj+xx/o5DjNxtv62jmgCJbM++5GtYQdj
+         q5e5rRW3U8YSCKoCf0r446Sb1Qqk93RcixBwNAYmGeALXCpKhmPvI3ZcvQaGrH8mhcZZ
+         WGkg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1705902396; x=1706507196;
+        h=user-agent:in-reply-to:content-disposition:mime-version:references
+         :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=IflNS6Etc8g12+qLnuO+gXfIx3jLJ1iHCnSoNRmsAEY=;
+        b=ggv5QhWHbSp0OUXtjRkXy2LOzE3Az3kXXwnlq8AyQYRURmjHlY1SySCuKlAhhFc6nj
+         XMfTmFugd2UaeWaT+vYq0pcvSFVxR37tINw5ccPzH5t6XJyJvurpDbVJ4sRDuxdOTjP+
+         ViP7ladjvWUHNWlkdeRWT7g2zsos4131xoXqLjqiGL1nW7zP8NT2k5TqOwho3Uq+V56h
+         GCzF0XgkjzxLRarUF8imi75vK9Z8sDVNhN+G6dBHU1wu32Ptv+m2T1bsfhsAC5QGPgJn
+         YLBK6C6fIZ0wixOltC82TbfAlBm+pzVsu7+Twxlg/aEPoWeNwcNP0CrEz5mmZVQwzOfP
+         D3VQ==
+X-Gm-Message-State: AOJu0YxVeNhTxh2be6Q4SBOJaPGTZ1KvmAh/P7cYgJ1HsB82reXVYC+d
+	bjI8W3PJJNLyibleRr5Fq0oR3C0CPkdk1HdIABeV+h7eXKxQcTz0
+X-Google-Smtp-Source: AGHT+IHG1N155t3rfeAWb6fP/BEBG5N33Go4BNyWCFzghW9M1uDKo4TALaThs42HCSbSIuc5tQvc6w==
+X-Received: by 2002:a17:902:7794:b0:1d0:6ffd:6e85 with SMTP id o20-20020a170902779400b001d06ffd6e85mr1471333pll.125.1705902396245;
+        Sun, 21 Jan 2024 21:46:36 -0800 (PST)
+Received: from cuiyangpei ([43.224.245.227])
+        by smtp.gmail.com with ESMTPSA id kl5-20020a170903074500b001d72d445778sm3233018plb.204.2024.01.21.21.46.34
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Sun, 21 Jan 2024 21:46:35 -0800 (PST)
+Date: Mon, 22 Jan 2024 13:46:31 +0800
+From: cuiyangpei <cuiyangpei@gmail.com>
+To: SeongJae Park <sj@kernel.org>, akpm@linux-foundation.org,
+	damon@lists.linux.dev, linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org
+Cc: xiongping1@xiaomi.com
+Subject: Re: [PATCH 1/2] mm/damon/sysfs: Implement recording feature
+Message-ID: <20240122054631.GA7880@cuiyangpei>
+References: <20231203054313.GA14316@cuiyangpei>
+ <20231203193745.57035-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20231203193745.57035-1-sj@kernel.org>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 
-Hello,
-
-On Thu, 18 Jan 2024 11:48:50 +0100 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
-
-> This is the start of the stable review cycle for the 6.7.1 release.
-> There are 28 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+On Sun, Dec 03, 2023 at 07:37:45PM +0000, SeongJae Park wrote:
+> On 2023-12-03T13:43:13+08:00 cuiyangpei <cuiyangpei@gmail.com> wrote:
 > 
-> Responses should be made by Sat, 20 Jan 2024 10:42:49 +0000.
-> Anything received after that time might be too late.
+> > On Fri, Dec 01, 2023 at 05:31:12PM +0000, SeongJae Park wrote:
+> > > Hi Cuiyangpei,
+> > > 
+> > > On Fri, 1 Dec 2023 20:25:07 +0800 cuiyangpei <cuiyangpei@gmail.com> wrote:
+> > > 
+> > > > On Thu, Nov 30, 2023 at 07:44:20PM +0000, SeongJae Park wrote:
+> > > > > Hi Cuiyangpei,
+> > > > > 
+> > > > > On Thu, 30 Nov 2023 17:14:26 +0800 cuiyangpei <cuiyangpei@gmail.com> wrote:
+> > > > > 
+> > > > > > Hi SeongJae,
+> > > > > > 
+> > > > > > We also investigated the operation schemes you mentioned, but we don't
+> > > > > > think it can fit our needs.
+> > > > > > 
+> > > > > > On android, user will open many apps and switch between these apps as
+> > > > > > needs. We hope to monitor apps' memory access only when they are on
+> > > > > > foreground and record the memory access pattern when they are switched
+> > > > > > to the background. 
+> > > > > > 
+> > > > > > When avaliable memory reaches a threshold, we will use these access
+> > > > > > patterns with some strategies to recognize those memory that will have
+> > > > > > little impact on user experience and to reclaim them proactively.  
+> > > > > > 
+> > > > > > I'm not sure I have clarified it clearly, if you still have questions
+> > > > > > on this, please let us know.
+> > > > > 
+> > > > > So, to my understanding, you expect applications may keep similar access
+> > > > > pattern when they are in foreground, but have a different, less aggressive
+> > > > > access pattern in background, and therefore reclaim memory based on the
+> > > > > foreground-access pattern, right?
+> > > > >
+> > > > 
+> > > > Different apps may have different access pattern. On android, the apps will
+> > > > join in freeze cgroup and be frozen after switch to the background. So we 
+> > > > monitor apps' memory access only when they are in foreground.
+> > > 
+> > > Thank you for this enlightening me :)
+> > > 
+> > > > > Very interesting idea, thank you for sharing!
+> > > > > 
+> > > > > Then, yes, I agree current DAMOS might not that helpful for the situation, and
+> > > > > this record feature could be useful for your case.
+> > > > > 
+> > > > > That said, do you really need full recording of the monitoring results?  If
+> > > > > not, DAMOS provides DAMOS tried regions feature[1], which allows users get the
+> > > > > monitoring results snapshot that include both frequency and recency of all
+> > > > > regions in an efficient way.  If single snapshot is not having enough
+> > > > > information for you, you could collect multiple snapshots.
+> > > > > 
+> > > > > You mentioned absence of Python on Android as a blocker of DAMOS use on the
+> > > > > previous reply[2], but DAMOS tried regions feature is not depend on tracepoints
+> > > > > or Python.
+> > > > > 
+> > > > > Of course, I think you might already surveyed it but found some problems.
+> > > > > Could you please share that in detail if so?
+> > > > > 
+> > > > DAMOS tried regions feature you mentioned is not fully applicable. It needs to
+> > > > apply schemes on regions. There is no available scheme we can use for our use
+> > > > case. What we need is to return regions with access frequency and recency to
+> > > > userspace for later use.
+> > > 
+> > > 
+> > > Thank you for the answer, I understand your concern.  One of the available
+> > > DAMOS action is 'stat'[1], which does nothing but just count the statistic.
+> > > Using DAMOS scheme for any access pattern with 'stat' action, you can extract
+> > > the access pattern via DAMOS tried regions feature of DAMON sysfs interface,
+> > > without making any unnecessary impact to the workload.
+> > > 
+> > > Quote from [2]:
+> > > 
+> > >     The expected usage of this directory is investigations of schemes' behaviors,
+> > >     and query-like efficient data access monitoring results retrievals. For the
+> > >     latter use case, in particular, users can set the action as stat and set the
+> > >     access pattern as their interested pattern that they want to query.
+> > > 
+> > > For example, you could
+> > > 
+> > > # cd /sys/kernel/mm/damon/admin
+> > > #
+> > > # # populate directories
+> > > # echo 1 > kdamonds/nr_kdamonds; echo 1 > kdamonds/0/contexts/nr_contexts;
+> > > # echo 1 > kdamonds/0/contexts/0/schemes/nr_schemes
+> > > # cd kdamonds/0/contexts/0/schemes/0
+> > > #
+> > > # # set the access pattern for any case (max as 2**64 - 1), and action as stat
+> > > # echo 0 > access_pattern/sz/min
+> > > # echo 18446744073709551615 > access_pattern/sz/max
+> > > # echo 0 > access_pattern/nr_accesses/min
+> > > # echo 18446744073709551615 > access_pattern/nr_accesses/max
+> > > # echo 0 > access_pattern/age/min
+> > > # echo 18446744073709551615 > access_pattern/age/max
+> > > # echo stat > action
+> > > 
+> > > And this is how DAMON user-space tool is getting the snapshot with 'damo show'
+> > > command[3].
+> > > 
+> > > Could this be used for your case?  Please ask any question if you have :)
+> > > 
+> > > [1] https://docs.kernel.org/admin-guide/mm/damon/usage.html#schemes-n
+> > > [2] https://docs.kernel.org/admin-guide/mm/damon/usage.html#schemes-n-tried-regions,
+> > > [3] https://github.com/awslabs/damo/blob/next/USAGE.md#damo-show
+> > 
+> > Thank you for your detailed response, it is very helpful to us. We will look into it
+> > and contact you if we have any questions.
 > 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.7.1-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.7.y
-> and the diffstat can be found below.
+> So glad to hear this.  Please let me know if you have any questions or need any
+> help :)
+> 
+> 
+> Thanks,
+> SJ
+> 
+> > 
+> > > 
+> > > 
+> > > Thanks,
+> > > SJ
+> > > 
+> > > > > [1] https://docs.kernel.org/admin-guide/mm/damon/usage.html#schemes-n-tried-regions 
+> > > > > [2] https://lore.kernel.org/damon/20231129131315.GB12957@cuiyangpei/
+> > > > > 
+> > > > > 
+> > > > > Thanks,
+> > > > > SJ
+> > > > > 
+> > > > > > 
+> > > > > > Thanks.
 
-This rc kernel passes DAMON functionality test[1] on my test machine.
-Attaching the test results summary below.  Please note that I retrieved the
-kernel from linux-stable-rc tree[2].
+Hi SeongJae,
 
-Tested-by: SeongJae Park <sj@kernel.org>
+We set 'access_pattern' and 'stat' action in schemes when apps are on
+foreground, record apps' memory access pattern when they are switched
+to the background with 'update_schemes_tried_regions' state. But it
+catch the snapshot after next aggregation interval. DAMON is still
+sampling during the app switches to the background and the next
+aggregation time, which can cause the value of "age" to change. The
+sampling results during this period cannot accurately reflect the app's
+foreground access pattern.
 
-[1] https://github.com/awslabs/damon-tests/tree/next/corr
-[2] ef44e963b02e ("Linux 6.7.1-rc1")
+Is there any way to catch sampling result immediately after setting the
+"update_schemes_tried_regions" state? Alternatively, can it return the
+"last_nr_accesses" and "last_age" values in tried_regions/<N> directory?
 
-Thanks,
-SJ
+Do you have any other suggestions?
 
-[...]
+Thanks.
 
----
-
-ok 1 selftests: damon: debugfs_attrs.sh
-ok 2 selftests: damon: debugfs_schemes.sh
-ok 3 selftests: damon: debugfs_target_ids.sh
-ok 4 selftests: damon: debugfs_empty_targets.sh
-ok 5 selftests: damon: debugfs_huge_count_read_write.sh
-ok 6 selftests: damon: debugfs_duplicate_context_creation.sh
-ok 7 selftests: damon: debugfs_rm_non_contexts.sh
-ok 8 selftests: damon: sysfs.sh
-ok 9 selftests: damon: sysfs_update_removed_scheme_dir.sh
-ok 10 selftests: damon: reclaim.sh
-ok 11 selftests: damon: lru_sort.sh
-ok 1 selftests: damon-tests: kunit.sh
-ok 2 selftests: damon-tests: huge_count_read_write.sh
-ok 3 selftests: damon-tests: buffer_overflow.sh
-ok 4 selftests: damon-tests: rm_contexts.sh
-ok 5 selftests: damon-tests: record_null_deref.sh
-ok 6 selftests: damon-tests: dbgfs_target_ids_read_before_terminate_race.sh
-ok 7 selftests: damon-tests: dbgfs_target_ids_pid_leak.sh
-ok 8 selftests: damon-tests: damo_tests.sh
-ok 9 selftests: damon-tests: masim-record.sh
-ok 10 selftests: damon-tests: build_i386.sh
-ok 11 selftests: damon-tests: build_arm64.sh
-ok 12 selftests: damon-tests: build_m68k.sh
-ok 13 selftests: damon-tests: build_i386_idle_flag.sh
-ok 14 selftests: damon-tests: build_i386_highpte.sh
-ok 15 selftests: damon-tests: build_nomemcg.sh
- [33m
- [92mPASS [39m
