@@ -1,44 +1,57 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9F1450243;
-	Mon, 22 Jan 2024 17:56:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E9435251;
+	Tue, 23 Jan 2024 01:49:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705946175; cv=none; b=Rzq8BZCvebcfjKtY5EQbtGNUAwMnWA1XdOG5veTV3Aw1w5yBKtJwvUBvo8p4f6oxKxxEksbg3hB2vVvNEJ8dhOQMm9ihSUVXBt1Q2rqnr/rtYgQy55AUT6H5QhMrtbpO2QKKVhk9ylcDEtL9+KC1c+RBuSaSm09Spm4FELAPGn0=
+	t=1705974541; cv=none; b=PQ8HeWdMrmOfIgPLG4UKPGvjkJt/OJVy1oLuybbFBKagTQesSR/3uRMTNN98rfB6iyy8pPpPj5XBKRYqbLNWey/GiKTsC8LwvjUk1DBRuE8r0FkZfMAhyCMCgo8KH1w391CHgFPVnjlUAYBy8bmTkVseP/JV6FxdBgEG3zGLsvo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705946175; c=relaxed/simple;
-	bh=TV6kmzHej1eOV5PjQSphBRoan0WDagVe/CDQQutnVms=;
+	s=arc-20240116; t=1705974541; c=relaxed/simple;
+	bh=sTtD1ZLcUap9Qupl1UpXWxMXp6FKjjRtC3E3L5/bdyE=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=g5GItIKu4dEmhL7cbTOhxKrA/cesNX3HnVGZ3PhNrSnSIEc4AUcFa5wYvr3lB1xhMn0ChVG2fim/AdHnUCDGBJ9Np18pY07YD/An96BKF36r09pVFH9D0JCi6xfro1FIjDpUl6R09EGVeVSU0GimtyU9eJDhV/6Jf1PYS7EvkVs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=C99ZHiti; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=B9pScSQ4LfM5p+dm9aN/R5PN/gRguL5hMS5PLO8h5ZVOWt9KvEkbres+PFWejLrFrALdWhjrUl+ziILYgwYIgZFMpd/iEAdIocS4qKyDyyvE7xahl49wbsER2DpF6KaiSY5lLnw47aMbLi/+B7JSuc3dLegoUt06pqHxGUKAVvI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HDcLw5bD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="C99ZHiti"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAA75C43394;
-	Mon, 22 Jan 2024 17:56:13 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HDcLw5bD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C148BC433C7;
+	Tue, 23 Jan 2024 01:48:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1705946174;
-	bh=TV6kmzHej1eOV5PjQSphBRoan0WDagVe/CDQQutnVms=;
+	s=k20201202; t=1705974541;
+	bh=sTtD1ZLcUap9Qupl1UpXWxMXp6FKjjRtC3E3L5/bdyE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C99ZHitiFHDxHhxnoMTF5gAzLE7++CpQpMeXRlUQsFxHsUB8CvFe+EmaQnDkm1LxZ
-	 xTl8o7x6lP4TVp7f0WkAAmI+YG0zgsWuX8zny8qcmgY+I08A5Fkkbdu04b4nKgKRJG
-	 ASFLI8sp8Ske/N5O6nArJFNZP/pkaccnQR5XXDv5fCxOtZjk4hC6UE/i3ytTP05HXn
-	 DkSNQjk1tLz9gennB6lKei8WX947rjoz1FG1geXSR9xsLI6agR45ErxBZiTKYd/vo4
-	 agzQTg0fSaMXdekwuD3zWHOT5xRKRhboUT4Ht1j9+IHayslRyyJzjdECJ4QEpDfyKB
-	 fknoz4UgvnHAQ==
+	b=HDcLw5bDby5RiXcUbIh+7OvEuosokttsU7ZF1y6Xp5RsTc6g2dl/Bvv0HwjHrsZUy
+	 tXGfll6fwN5hi1FxDe8hHMv+CflpbwlCCS5sQwKu/RAbQFMWwqOf5USNGIPFBmmRaY
+	 ShpZw7dr1e/i53Lusn+7UsCWtkrvQ9y+Tir0rZJhCE83ZPoVJ8cMeNyS/cqpJCdp2P
+	 52IrpDeKbBfeFLEMbPzkPY1q63/V59tTBmKTn+xl8U02I9AEzwzV56ME3QlFWqktvZ
+	 hYWWo1IsHke65H7wrbtmPzoarNamQG+O0BRd2u0UZwULhPGzFdW48YI55eEbdkex1H
+	 Xue8QNCcjQXsQ==
 From: SeongJae Park <sj@kernel.org>
-To: cuiyangpei <cuiyangpei@gmail.com>
-Cc: SeongJae Park <sj@kernel.org>,
-	akpm@linux-foundation.org,
-	damon@lists.linux.dev,
-	linux-mm@kvack.org,
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org,
+	patches@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
-	xiongping1@xiaomi.com
-Subject: Re: [PATCH 1/2] mm/damon/sysfs: Implement recording feature
-Date: Mon, 22 Jan 2024 09:56:11 -0800
-Message-Id: <20240122175611.46371-1-sj@kernel.org>
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net,
+	rwarsow@gmx.de,
+	conor@kernel.org,
+	allen.lkml@gmail.com,
+	damon@lists.linux.dev,
+	SeongJae Park <sj@kernel.org>
+Subject: Re: [PATCH 5.15 000/374] 5.15.148-rc1 review
+Date: Mon, 22 Jan 2024 17:48:58 -0800
+Message-Id: <20240123014858.85820-1-sj@kernel.org>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20240122054631.GA7880@cuiyangpei>
+In-Reply-To: <20240122235744.598274724@linuxfoundation.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -48,74 +61,55 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hi cuiyangpei,
+Hello,
 
-On Mon, 22 Jan 2024 13:46:31 +0800 cuiyangpei <cuiyangpei@gmail.com> wrote:
+On Mon, 22 Jan 2024 15:54:16 -0800 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
 
-> On Sun, Dec 03, 2023 at 07:37:45PM +0000, SeongJae Park wrote:
-> > On 2023-12-03T13:43:13+08:00 cuiyangpei <cuiyangpei@gmail.com> wrote:
-> > 
-> > > On Fri, Dec 01, 2023 at 05:31:12PM +0000, SeongJae Park wrote:
-> > > > Hi Cuiyangpei,
-> > > > 
-> > > > On Fri, 1 Dec 2023 20:25:07 +0800 cuiyangpei <cuiyangpei@gmail.com> wrote:
-> > > > 
-> > > > > On Thu, Nov 30, 2023 at 07:44:20PM +0000, SeongJae Park wrote:
-> > > > > > Hi Cuiyangpei,
-> > > > > > 
-> > > > > > On Thu, 30 Nov 2023 17:14:26 +0800 cuiyangpei <cuiyangpei@gmail.com> wrote:
-[...]
+> This is the start of the stable review cycle for the 5.15.148 release.
+> There are 374 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 > 
-> Hi SeongJae,
+> Responses should be made by Wed, 24 Jan 2024 23:56:49 +0000.
+> Anything received after that time might be too late.
 > 
-> We set 'access_pattern' and 'stat' action in schemes when apps are on
-> foreground, record apps' memory access pattern when they are switched
-> to the background with 'update_schemes_tried_regions' state. But it
-> catch the snapshot after next aggregation interval. DAMON is still
-> sampling during the app switches to the background and the next
-> aggregation time, which can cause the value of "age" to change. The
-> sampling results during this period cannot accurately reflect the app's
-> foreground access pattern.
-> 
-> Is there any way to catch sampling result immediately after setting the
-> "update_schemes_tried_regions" state?
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.148-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
+> and the diffstat can be found below.
 
-There is no way for exactly doing this.  You would need to proactively collect
-snapshots while the app is foreground, and use the latest one that collected
-before the app goes background, like recording-based approach would do.
+This rc kernel passes DAMON functionality test[1] on my test machine.
+Attaching the test results summary below.  Please note that I retrieved the
+kernel from linux-stable-rc tree[2].
 
-I think recent DAMON changes might make an alternative approach available,
-though.  From v6.7, DAMON provides pseudo-moving-average monitoring result in
-sampling interval granualrity, since patchset "mm/damon: provide pseudo-moving
-sum based access rate".  And a followup patchset, namely "mm/damon: implement
-DAMOS apply intervals", has made DAMOS works in the sampling interval
-granualrity.  Both patchsets are merged into v6.7-rc1.
+Tested-by: SeongJae Park <sj@kernel.org>
 
-Hence, I think you could use 'update_schemes_tried_regions' after you noticed
-the app's state transition, with DAMOS apply interval of one sampling interval.
-Then you will get the monitoring results after one sampling interval.  Of
-course, the snapshot may contain some of background access pattern, but
-wouldn't made it changed significantly, unless you set aggregation interval too
-short.
-
-> Alternatively, can it return the "last_nr_accesses" and "last_age" values in
-> tried_regions/<N> directory?
-
-This could also be a good alternative in my think.  Nice idea.  But, because
-the previously mentioned alternative is already available while this require a
-bit small but additional changes, could we check if the previously one make
-sense and works first?  We could revisit this idea if it turns out the previous
-alternative is not suffice in my opinion.
-
-> 
-> Do you have any other suggestions?
-
-As I mentioned above, I'd suggest the DAMOS apply interval of single sampling
-interval for now.
-
+[1] https://github.com/awslabs/damon-tests/tree/next/corr
+[2] 59db9667b9d1 ("Linux 5.15.148-rc1")
 
 Thanks,
 SJ
 
-> 
-> Thanks.
+[...]
+
+---
+
+ok 1 selftests: damon: debugfs_attrs.sh
+ok 1 selftests: damon-tests: kunit.sh
+ok 2 selftests: damon-tests: huge_count_read_write.sh
+ok 3 selftests: damon-tests: buffer_overflow.sh
+ok 4 selftests: damon-tests: rm_contexts.sh
+ok 5 selftests: damon-tests: record_null_deref.sh
+ok 6 selftests: damon-tests: dbgfs_target_ids_read_before_terminate_race.sh
+ok 7 selftests: damon-tests: dbgfs_target_ids_pid_leak.sh
+ok 8 selftests: damon-tests: damo_tests.sh
+ok 9 selftests: damon-tests: masim-record.sh
+ok 10 selftests: damon-tests: build_i386.sh
+ok 11 selftests: damon-tests: build_arm64.sh
+ok 12 selftests: damon-tests: build_m68k.sh
+ok 13 selftests: damon-tests: build_i386_idle_flag.sh
+ok 14 selftests: damon-tests: build_i386_highpte.sh
+ok 15 selftests: damon-tests: build_nomemcg.sh
+ [33m
+ [92mPASS [39m
