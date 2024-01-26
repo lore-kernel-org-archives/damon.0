@@ -1,165 +1,162 @@
-Received: from mail-pf1-f179.google.com (mail-pf1-f179.google.com [209.85.210.179])
+Received: from mail-pg1-f178.google.com (mail-pg1-f178.google.com [209.85.215.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C18E021A0F
-	for <damon@lists.linux.dev>; Fri, 26 Jan 2024 06:57:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F8B38F45
+	for <damon@lists.linux.dev>; Fri, 26 Jan 2024 08:04:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706252235; cv=none; b=cOZROzHCcdjVmIUicX5FZXTvyGsGHiq6hkeuU94/KoyFFTMk6QVVLTPFaybF9hLOS7ErBWau8V+C8NH45IkFUcBO0dQVmMzni/HuGlEq95wLX3CdN92nyg0VRfA+CDw/X1Z1odY/vxruj205hMgc/Goy8OEAxECeBAOOSS4jBTk=
+	t=1706256299; cv=none; b=DFjHASdWOe2jWEw5u0xnCTtPLaGqw+2aaGIcROWzMIHpzC3qx2MRBJwvu+ZL5XPm5WcyyMbLyS972UhTzWlgifjPxsjUvVha5qYFXFabMkw6b+KOWOQpLH/SkqsgYxDcvBnepBI16+7hqk4XCw+mxUNmqCVDURqay+zk6BU9FCc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706252235; c=relaxed/simple;
-	bh=fmeJgmo1eTm45ia0BY+No10zL89lzqsqyA/OXLp4CYY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=E1ny9JO5BO8ZzX+tHVuIqKn92OfjLZhIFCahfk4Vz9Q07n6fIJ+cm2VH1/e3Gvtha8oVmNaemNzjoqp77qqIHVLjj0dppP5Kaa304V3vM247COA/IYmQlRBbeawZdBFnlbo/1Scp45HRsfOeqsDWmS6lQbMFuV9fpJDwnMA73Po=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=B7Qr0FGT; arc=none smtp.client-ip=209.85.210.179
+	s=arc-20240116; t=1706256299; c=relaxed/simple;
+	bh=vBWqTUqUZtCh3EPJLAcL8wR/fYdkX3CFgMZPjKfyz1o=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To; b=YsiWXLPa/81gU1LZXBx25YsxPRSRyAxUQz43xkgfQ+rN6x912nkNYKBQCO5Sb0qbcvm19uMsSXNec1/r1Nd2uwrK2Eq09WHJQZfH4C6ACe5lpfjVUtxxXkgYXTN4mdim68Qtl356CITc8+Zb2Ez6XeYza5dJoKr5a6keSVuO7Kw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RCuQSKEz; arc=none smtp.client-ip=209.85.215.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="B7Qr0FGT"
-Received: by mail-pf1-f179.google.com with SMTP id d2e1a72fcca58-6ddc0c02665so89781b3a.0
-        for <damon@lists.linux.dev>; Thu, 25 Jan 2024 22:57:13 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RCuQSKEz"
+Received: by mail-pg1-f178.google.com with SMTP id 41be03b00d2f7-5cec32dedf3so190930a12.0
+        for <damon@lists.linux.dev>; Fri, 26 Jan 2024 00:04:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1706252233; x=1706857033; darn=lists.linux.dev;
-        h=user-agent:in-reply-to:content-disposition:mime-version:references
-         :message-id:subject:cc:to:from:date:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=obmNILo/IhMsOn7tNaJgOnb5hD2rgV9SrDPKtcBkAB0=;
-        b=B7Qr0FGTZyXazjCVrJlju/O0tbua+YQE0nMCSoCF/Ve21R673M5voWtR1aA58q3EtK
-         MQjS42beKR7gkrciiHcQkgqH2EaY3wALLEuM/FYUPGRGHhjczr5eXFZQgpiqIPfWzmck
-         R0vislAS8drwFxCOUiChrsMvpSslJ707wjJJvmYa1ml3j7OZBeC8vfyRVAJ7oF+oBe15
-         +BApSvaty60yqigekz5cVV2UyQzi3FDgVvk5N5euiTws12Y8sLY8yeciOUUpmnyvoAVv
-         V9rpiTP+jkhT/jcn2iEGSk4nUztwe0g0YycXaULitUt2kdVrmA7xCdQahrGULpw72gxR
-         RRpw==
+        d=gmail.com; s=20230601; t=1706256298; x=1706861098; darn=lists.linux.dev;
+        h=in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=PQZqXjnfMiJnpMoo1+KQWc+QVfHQsa7SqRJloMMoGq0=;
+        b=RCuQSKEzDR64FSAPnCOdTmigXgMoN/cbOYVt3WkpP8o69ur3fAyN27KCMItUv1wRKb
+         4d8vIZE8AlFvDyeXVakjld+OlGJ/hz5cTVgwHog/e2Nz8joxjPQ6m1cp21ruBjmxfU5j
+         77qtXQ/B6m7/DlL0OcJQbTNAUc/lT2WqPJZjzpgIM3wrcnJo4ZGtEjbxOX5kvHAIxImt
+         h5/qzUVb+4uJwpVeosavxuVB5OZZg8PJGbdpjZG2hUdN1e6tQsA2TB9bjhZjAPp3fUtv
+         AY1qQtQ/vfMZcV+9Nt9yoHsLZrW8jjSBThF3Q0SoNUF9V2nwlZB/lywYClpLWKBG4HhX
+         iZhA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706252233; x=1706857033;
-        h=user-agent:in-reply-to:content-disposition:mime-version:references
-         :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=obmNILo/IhMsOn7tNaJgOnb5hD2rgV9SrDPKtcBkAB0=;
-        b=XKQ3UR+y2HTHJDS6ZiqNPpJAq8Afaeoyy7lPuDU3YLTwfa+KIS1acclC2OGswbWUxK
-         p0Oz1a6J9eKB+miVMWPoPXfzOgukxhusrDfrit4knG/quwnweg/XDuNTSyjqkXSzcKSu
-         hmkIejn5297U8MtiuOrEA4nT90dvGURiSQ9jSac3LsTcA1456jgYvmfV7IqAtXwGy8Vn
-         etnEswwM4PK0t5P+BTsjOxpcQdo0Z7vX05HCARYMJiI7rDXHlR8VTOMuaXQ/T5PTy5Su
-         9rdO8ozfBS8Ig4WyUk6SQTvQ8GMkeP4Sebfn4uHvDEekfHYP0FCK16MgeD027ShzqlDy
-         7T8g==
-X-Gm-Message-State: AOJu0YzNyLGhhOcC9wVEUMl0YEEWf8j8fKviMWBzvQfIgfYvbSLPwIXz
-	wptWOR8LE5r3Mgs2eH5DcOaMLRSts0HsNQcRw7/k4HNncsT/bm2wfv28MDvX
-X-Google-Smtp-Source: AGHT+IG7PKlIuVbF4dQed4/SZvmdfB0JA0BdDNlbOuweQSdzYs2QW8PJVNxyumqtKvz2V3xPIQE9Gw==
-X-Received: by 2002:aa7:86d7:0:b0:6da:8572:ecab with SMTP id h23-20020aa786d7000000b006da8572ecabmr587227pfo.64.1706252233040;
-        Thu, 25 Jan 2024 22:57:13 -0800 (PST)
-Received: from cuiyangpei ([43.224.245.227])
-        by smtp.gmail.com with ESMTPSA id lp17-20020a056a003d5100b006ddd182bf1csm533350pfb.46.2024.01.25.22.57.10
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 25 Jan 2024 22:57:12 -0800 (PST)
-Date: Fri, 26 Jan 2024 14:57:06 +0800
-From: cuiyangpei <cuiyangpei@gmail.com>
-To: SeongJae Park <sj@kernel.org>, akpm@linux-foundation.org,
-	damon@lists.linux.dev, linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org
-Cc: xiongping1@xiaom.com
+        d=1e100.net; s=20230601; t=1706256298; x=1706861098;
+        h=in-reply-to:message-id:date:subject:cc:to:from:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=PQZqXjnfMiJnpMoo1+KQWc+QVfHQsa7SqRJloMMoGq0=;
+        b=fO/I4D2x2D/lg7QiOtUPsT7JzDdyS3+JnY2OWDeEULjwJOSiyeof7jS93Bn6TKR3Kc
+         KXUQVIGvqe4dCiZGcHLSQTlBV0PtkwNd40FEqYJUjzEzFfksi99JOrDVQ3F2eBO/Qc5L
+         RsKA2DqCmAnteiXHLaMAiiKUxNHByEEsHzeJk9lVV5/7HoQhLdn6O9+yb72TFNJm5Tas
+         b0Pe1OEigdlKoCHC/vhQxg5lJS0rcEHeSh1OYWfzoinELziwnsgxM459rkV6JGInVqDr
+         SDY1sdvyc0EhBRi4zN4UX4bQ3SyPBPekzg+7YJpgoOPe4r+wnONOfJzUqIXqGqvWmjME
+         HcJQ==
+X-Gm-Message-State: AOJu0YwSR78R8ldbIv3F1vLdl5bQEDL2nXAeRiRvnVGu7j1pQSwikCZc
+	3npuAQMl5eFfAd4LNsxe6sk40ZqND4fJUccfPMIf03SnmEcjFxO2
+X-Google-Smtp-Source: AGHT+IGfmbZKkJqn5DYHsnUB/HlbsSD4b7U+wcFk2saImSWOh/tYsOuUy6DJa89k+5XYyr7wqpmGTA==
+X-Received: by 2002:a17:90a:6fe2:b0:290:b29a:5258 with SMTP id e89-20020a17090a6fe200b00290b29a5258mr526348pjk.29.1706256297570;
+        Fri, 26 Jan 2024 00:04:57 -0800 (PST)
+Received: from localhost.localdomain ([216.243.7.87])
+        by smtp.gmail.com with ESMTPSA id sk8-20020a17090b2dc800b00290701c8623sm669927pjb.28.2024.01.26.00.04.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 26 Jan 2024 00:04:56 -0800 (PST)
+From: SeongJae Park <sj38.park@gmail.com>
+X-Google-Original-From: SeongJae Park <sj@kernel.org>
+To: cuiyangpei <cuiyangpei@gmail.com>
+Cc: SeongJae Park <sj@kernel.org>,
+	akpm@linux-foundation.org,
+	damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org,
+	xiongping1@xiaom.com
 Subject: Re: [PATCH 1/2] mm/damon/sysfs: Implement recording feature
-Message-ID: <20240126065706.GA16652@cuiyangpei>
-References: <20240122054631.GA7880@cuiyangpei>
- <20240122175611.46371-1-sj@kernel.org>
+Date: Fri, 26 Jan 2024 00:04:54 -0800
+Message-Id: <20240126080454.15649-1-sj@kernel.org>
+X-Mailer: git-send-email 2.17.1
+In-Reply-To: <20240126065706.GA16652@cuiyangpei>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240122175611.46371-1-sj@kernel.org>
-User-Agent: Mutt/1.9.4 (2018-02-28)
 
-On Mon, Jan 22, 2024 at 09:56:11AM -0800, SeongJae Park wrote:
-> Hi cuiyangpei,
-> 
-> On Mon, 22 Jan 2024 13:46:31 +0800 cuiyangpei <cuiyangpei@gmail.com> wrote:
-> 
-> > On Sun, Dec 03, 2023 at 07:37:45PM +0000, SeongJae Park wrote:
-> > > On 2023-12-03T13:43:13+08:00 cuiyangpei <cuiyangpei@gmail.com> wrote:
-> > > 
-> > > > On Fri, Dec 01, 2023 at 05:31:12PM +0000, SeongJae Park wrote:
-> > > > > Hi Cuiyangpei,
-> > > > > 
-> > > > > On Fri, 1 Dec 2023 20:25:07 +0800 cuiyangpei <cuiyangpei@gmail.com> wrote:
-> > > > > 
-> > > > > > On Thu, Nov 30, 2023 at 07:44:20PM +0000, SeongJae Park wrote:
-> > > > > > > Hi Cuiyangpei,
-> > > > > > > 
-> > > > > > > On Thu, 30 Nov 2023 17:14:26 +0800 cuiyangpei <cuiyangpei@gmail.com> wrote:
-> [...]
+On Fri, 26 Jan 2024 14:57:06 +0800 cuiyangpei <cuiyangpei@gmail.com> wrote:
+
+> On Mon, Jan 22, 2024 at 09:56:11AM -0800, SeongJae Park wrote:
+> > Hi cuiyangpei,
 > > 
-> > Hi SeongJae,
+> > On Mon, 22 Jan 2024 13:46:31 +0800 cuiyangpei <cuiyangpei@gmail.com> wrote:
 > > 
-> > We set 'access_pattern' and 'stat' action in schemes when apps are on
-> > foreground, record apps' memory access pattern when they are switched
-> > to the background with 'update_schemes_tried_regions' state. But it
-> > catch the snapshot after next aggregation interval. DAMON is still
-> > sampling during the app switches to the background and the next
-> > aggregation time, which can cause the value of "age" to change. The
-> > sampling results during this period cannot accurately reflect the app's
-> > foreground access pattern.
+> > > On Sun, Dec 03, 2023 at 07:37:45PM +0000, SeongJae Park wrote:
+> > > > On 2023-12-03T13:43:13+08:00 cuiyangpei <cuiyangpei@gmail.com> wrote:
+> > > > 
+> > > > > On Fri, Dec 01, 2023 at 05:31:12PM +0000, SeongJae Park wrote:
+> > > > > > Hi Cuiyangpei,
+> > > > > > 
+> > > > > > On Fri, 1 Dec 2023 20:25:07 +0800 cuiyangpei <cuiyangpei@gmail.com> wrote:
+> > > > > > 
+> > > > > > > On Thu, Nov 30, 2023 at 07:44:20PM +0000, SeongJae Park wrote:
+> > > > > > > > Hi Cuiyangpei,
+> > > > > > > > 
+> > > > > > > > On Thu, 30 Nov 2023 17:14:26 +0800 cuiyangpei <cuiyangpei@gmail.com> wrote:
+[...]
+> > > Is there any way to catch sampling result immediately after setting the
+> > > "update_schemes_tried_regions" state?
 > > 
-> > Is there any way to catch sampling result immediately after setting the
-> > "update_schemes_tried_regions" state?
-> 
-> There is no way for exactly doing this.  You would need to proactively collect
-> snapshots while the app is foreground, and use the latest one that collected
-> before the app goes background, like recording-based approach would do.
-> 
-> I think recent DAMON changes might make an alternative approach available,
-> though.  From v6.7, DAMON provides pseudo-moving-average monitoring result in
-> sampling interval granualrity, since patchset "mm/damon: provide pseudo-moving
-> sum based access rate".  And a followup patchset, namely "mm/damon: implement
-> DAMOS apply intervals", has made DAMOS works in the sampling interval
-> granualrity.  Both patchsets are merged into v6.7-rc1.
-> 
-> Hence, I think you could use 'update_schemes_tried_regions' after you noticed
-> the app's state transition, with DAMOS apply interval of one sampling interval.
-> Then you will get the monitoring results after one sampling interval.  Of
-> course, the snapshot may contain some of background access pattern, but
-> wouldn't made it changed significantly, unless you set aggregation interval too
-> short.
-
-All other actions will apply at one sampling interval except for the
-`stat` action.
-
-We use 'update_schemes_tried_regions' after switch to the background. The 
-before_damos_apply callback function will only be set when the next aggregation
-interval arrives. The `tried_regions` will only be updated after setting the 
-callback function. 
-
-DAMON is still sampling during setting 'update_schemes_tried_regions' to the next
-aggregation time, which is not what we expected. The pseudo-moving-average
-monitoring result can reduce nr_accesees inaccuracy, but age is still being modified
-during this time, so it can't improve this issue.
-
-Please let me know if my understanding is incorrect. Thank you.
-> 
-> > Alternatively, can it return the "last_nr_accesses" and "last_age" values in
-> > tried_regions/<N> directory?
-> 
-> This could also be a good alternative in my think.  Nice idea.  But, because
-> the previously mentioned alternative is already available while this require a
-> bit small but additional changes, could we check if the previously one make
-> sense and works first?  We could revisit this idea if it turns out the previous
-> alternative is not suffice in my opinion.
-> 
-Can you consider adding "last_nr_accesses" and "last_age"  two files in
-'tried_regions/<N>' directory?
-
-Thanks.
+> > There is no way for exactly doing this.  You would need to proactively collect
+> > snapshots while the app is foreground, and use the latest one that collected
+> > before the app goes background, like recording-based approach would do.
 > > 
-> > Do you have any other suggestions?
-> 
-> As I mentioned above, I'd suggest the DAMOS apply interval of single sampling
-> interval for now.
-> 
-> 
-> Thanks,
-> SJ
-> 
+> > I think recent DAMON changes might make an alternative approach available,
+> > though.  From v6.7, DAMON provides pseudo-moving-average monitoring result in
+> > sampling interval granualrity, since patchset "mm/damon: provide pseudo-moving
+> > sum based access rate".  And a followup patchset, namely "mm/damon: implement
+> > DAMOS apply intervals", has made DAMOS works in the sampling interval
+> > granualrity.  Both patchsets are merged into v6.7-rc1.
 > > 
-> > Thanks.
+> > Hence, I think you could use 'update_schemes_tried_regions' after you noticed
+> > the app's state transition, with DAMOS apply interval of one sampling interval.
+> > Then you will get the monitoring results after one sampling interval.  Of
+> > course, the snapshot may contain some of background access pattern, but
+> > wouldn't made it changed significantly, unless you set aggregation interval too
+> > short.
+> 
+> All other actions will apply at one sampling interval except for the
+> `stat` action.
+> 
+> We use 'update_schemes_tried_regions' after switch to the background. The 
+> before_damos_apply callback function will only be set when the next aggregation
+> interval arrives. The `tried_regions` will only be updated after setting the 
+> callback function. 
+> 
+> DAMON is still sampling during setting 'update_schemes_tried_regions' to the next
+> aggregation time, which is not what we expected. The pseudo-moving-average
+> monitoring result can reduce nr_accesees inaccuracy, but age is still being modified
+> during this time, so it can't improve this issue.
+> 
+> Please let me know if my understanding is incorrect. Thank you.
+
+So, 'update_schemes_tried_regions' command is firstly handled by
+'damon_sysfs_cmd_request_callback()', which is registered as
+after_wmarks_check() and after_aggregation() callback.  Hence
+'update_schemes_tried_regions' command is still effectively working in
+aggregation interval granularity.  I think this is what you found, right?
+
+If I'm not wrongly understanding your point, I think the concern is valid.  I
+think we should make it works in sampling interval granularity.  I will try to
+make so.  Would that work for your use case?
+
+> > 
+> > > Alternatively, can it return the "last_nr_accesses" and "last_age" values in
+> > > tried_regions/<N> directory?
+> > 
+> > This could also be a good alternative in my think.  Nice idea.  But, because
+> > the previously mentioned alternative is already available while this require a
+> > bit small but additional changes, could we check if the previously one make
+> > sense and works first?  We could revisit this idea if it turns out the previous
+> > alternative is not suffice in my opinion.
+> > 
+> Can you consider adding "last_nr_accesses" and "last_age"  two files in
+> 'tried_regions/<N>' directory?
+
+Actually we don't have 'last_age' field, right?  And in case of
+'last_nr_accesses', it is a hidden private field, since it is intended to be
+accessed by only DAMON core code.  Making it exposed to user means exposing
+implementation details, and the mechanism that coupled with an exposed
+interface is hard to be changed, so be unflexible.  Hence I'd prefer making
+'update_schemes_tried_regions' works in sampling interval granularity, more
+than exposing the two information if it works for your use case.
+
+
+Thanks,
+SJ
+
+[...]
