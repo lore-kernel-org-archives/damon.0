@@ -1,125 +1,155 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from EUR05-DB8-obe.outbound.protection.outlook.com (mail-db8eur05olkn2109.outbound.protection.outlook.com [40.92.89.109])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F5DA60EE4;
-	Tue, 23 Jan 2024 20:23:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706041384; cv=none; b=IfSUVUIl5fxRfVfLjua7uadwQpWb9vxGjuiSAxxxDXfnKLSRS3BxZRZJk007SnROPAbt+hv9uTsq/5uhDdiY9SiD1cnHefXEl4o1v80UdL84s5vBrIJKEv440yIVW8ZJeZX7IT527gTz4QTcMWSt5nk5EwQzAPRYgYSAmF9f454=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706041384; c=relaxed/simple;
-	bh=Uc3CPYoXa1xgdWm4ozcRAySO3PLJd1TMPVuIn2a8TfA=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=IyBNMovvXuHYnwL2CAmRk+gcnGrSfT7NNqrBg4b0ne1mytBBy9vJpzl4/UTVMy5Y/uEk9gYBF1IZnbORH/Mn2YhJvSgzrBlyyaI8kN55PVcinwgT08e7IqtdtFv1LPAMjs7TpN5D84ydo0BAZa912pXxXYTiDuJb5pB3h+2B35o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cWSKoImh; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cWSKoImh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C2B4C433C7;
-	Tue, 23 Jan 2024 20:23:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1706041383;
-	bh=Uc3CPYoXa1xgdWm4ozcRAySO3PLJd1TMPVuIn2a8TfA=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cWSKoImhagqWR4Xw+vXw2oBHqg/U5p49xUmp7tmcVYDUw/HguPwZY+7zALZ3zk/8v
-	 YInixZ1047inlSqJ9Iiy9DKQNpR2QRMo0IKjGet5vzY3zIgmPxXS6e70PChEDz4hvS
-	 xebC+D34YiLv3nd2Tjuk+eYUBY1RvK1rieXbUh39ol/CZrrpxDeYxe1LwUaC6z2gnU
-	 ehNPxK3JjySo9ILnjTiRZgVyyN9Jf3QeZT3Fy9eTjcqfqgz51dd8yo8hbNlKKPjsU4
-	 TU06qCp2mVi7a5ZoZpueRbczCFIqilG6twoWscHhHotROSfEuVpiG0N86GnhSLMLWF
-	 R1uMYc3gY/5+Q==
-From: SeongJae Park <sj@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org,
-	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net,
-	rwarsow@gmx.de,
-	conor@kernel.org,
-	allen.lkml@gmail.com,
-	damon@lists.linux.dev,
-	SeongJae Park <sj@kernel.org>
-Subject: Re: [PATCH 6.7 000/638] 6.7.2-rc2 review
-Date: Tue, 23 Jan 2024 12:23:01 -0800
-Message-Id: <20240123202301.93566-1-sj@kernel.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20240123174544.648088948@linuxfoundation.org>
-References: 
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA48DB662
+	for <damon@lists.linux.dev>; Fri, 26 Jan 2024 05:23:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.92.89.109
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1706246617; cv=fail; b=Nj9qrJy9+mO2oMAqAWRS5VsVZBhQHFPDiTf07cYkZvpZr/uNnmI5Jpqff3Aj5wufodo3B5w5yyiAClMdoa3zttWV5AxwxzeZJcR5GjDEXKI38iudmft5b94Epc2GxFtAmrqdvP9JBjiLIjDBEx0XgCzo4E3JC/hTPApj4I3tksY=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1706246617; c=relaxed/simple;
+	bh=w2s2qdnZ/fGR2MSX3PaqtR1TdaokoiliusIqVWYRsWo=;
+	h=Message-ID:Date:To:From:Subject:Content-Type:MIME-Version; b=qZjryr5UwJuA/D4JWOQZYU5mFc9ATssi6n6lqSVnYU0375s+oThAxOe5RcRwbJiHIy+nw90ddtenflZPTX7DV738Lus+o6h4vD80yzsknu9+dCxwmLl616RKfAGl0fXc6vM6ZT3lLQR+3rMGr/aDq4AdA127x23vPeru3gIacjw=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=hotmail.de; spf=pass smtp.mailfrom=hotmail.de; arc=fail smtp.client-ip=40.92.89.109
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=hotmail.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hotmail.de
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=EFEjXrJM8aBahieUsK5h8j/UKXJgYHCJDWOue4grEm3pp+eln79BkL9ZulPMk0P9Ewqq83iUdenYe8yYG2RxQwivp6A4/LVq7/n04ozvMPqpUEf5GHYInZZJMNrWcTdSyejH2Z09bX2NBj/xvbiR6MUaTKj7L826jA+S0/gvDSW8owlOYQFEsKhOsiqwfQSkLBzNh2X2SJnHC+viXwqNkayW7zwgyhbdsFJxS9rINKdFIK9ISvcKWxFm2Yx/qTlclDfW+kyrAr8p+sHDJpBVdkSJzH/YS0DTP0ojWSPfxzOMtSaj44eZkf3COvyb6aQgwN8O1EMtv4bICiPsGq1iHQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=yDE4DC38trCN6DbAgZYvYfUfYN9iHjlr8cRpWNvtfGg=;
+ b=KR7WYssaq+2B7EWcPy3wblbVRY7pTHd08a65naFlqAyPir6pUUfFM1VR+zJHfnDuT8jdoaS71WN/IZx1jCP72JvfGljkBMe7qOw78bxQQlfq8uqpR/83qiuCFSKUJzmS15PZLKfiPuAiYLRbBdIcolqbCa49yM7upsXw3t/8uDxl4/hE//Rb0E8VUECKOqpJDHdubNPFks9MH/Og8kGECliSUs26AaYSkgdqSUMmzaz74xv21G5sRLg0bNr7e05ixqIloE3gccK39SZ5Blgm/ZTkhVmvoGM7qCUpFONqYQH+g0c6Fybe4FrllhROuN1ojJ4IIaZNo14kV+4rKvYS6Q==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+Received: from AS8P193MB1285.EURP193.PROD.OUTLOOK.COM (2603:10a6:20b:333::21)
+ by AS8P193MB1879.EURP193.PROD.OUTLOOK.COM (2603:10a6:20b:3fd::14) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7228.26; Fri, 26 Jan
+ 2024 05:23:32 +0000
+Received: from AS8P193MB1285.EURP193.PROD.OUTLOOK.COM
+ ([fe80::897e:cfd5:b29b:c611]) by AS8P193MB1285.EURP193.PROD.OUTLOOK.COM
+ ([fe80::897e:cfd5:b29b:c611%6]) with mapi id 15.20.7228.022; Fri, 26 Jan 2024
+ 05:23:32 +0000
+Message-ID:
+ <AS8P193MB1285C963658008F1B2702AF7E4792@AS8P193MB1285.EURP193.PROD.OUTLOOK.COM>
+Date: Fri, 26 Jan 2024 06:24:34 +0100
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
+To: SeongJae Park <sj@kernel.org>, Shuah Khan <shuah@kernel.org>,
+ Shuah Khan <shuah@kernel.org>, damon@lists.linux.dev, linux-mm@kvack.org,
+ linux-kselftest@vger.kernel.org
+From: Bernd Edlinger <bernd.edlinger@hotmail.de>
+Subject: [PATCH] selftests: Add missing gitignore entries
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-TMN: [h5/JnPzjPpzmLc76Ay5IQc65WWLkcfz98YTqFbEa5dLkErf+NNATIRinsMUX48dU]
+X-ClientProxiedBy: FR3P281CA0161.DEUP281.PROD.OUTLOOK.COM
+ (2603:10a6:d10:a2::20) To AS8P193MB1285.EURP193.PROD.OUTLOOK.COM
+ (2603:10a6:20b:333::21)
+X-Microsoft-Original-Message-ID:
+ <8239a770-e98e-4458-aea0-0a5d960ab836@hotmail.de>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+X-MS-Exchange-MessageSentRepresentingType: 1
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: AS8P193MB1285:EE_|AS8P193MB1879:EE_
+X-MS-Office365-Filtering-Correlation-Id: 0e912bf5-9278-494b-cfed-08dc1e2eef94
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info:
+	XCZC29DyY0DfbTKvLe16ZH1u6j7vhclq5b9zDSZegRr1HJCANGAv8GTvLTdF1LaKHO9RyZPHvtDlqd6qgEnSsfHc1Jyiy33gJ94VvzXUWGZSR2j1EqErQMs2LiG9PNgWQxCz7HzmyIDqzsgHE8IDRZfJD7+2nDhd6TfNMWztlIrvnIB4oFhhUaGQNc0HtL67+gm+gBgwItD1+Fk6hUhaFbSutocg26vQrCMkjZX6rAzlwijqfLMXCXoQ1JEys+Kr8AtY9/ZUYjC4iLqktlt4qBclnhe3j3DLZrn2p4z5kb+U4VgXLXYFdG9KWS4IaxxEte3/Kk8rQsi7MoUjb8LjuvIH830cQYF6/p7hK1B3iVmOYt7bztb3bI2mm037BXHM4JTTZei+77rE747SVb5La1n57b4lLBxAK29gcAFguCXBuhHsNsn8wwAdMEGVe6HXF+xXv8dIg38yt5V+Ea5lUi2tkp/oJVr8UVZepeOT8PqBf9+H8MgW4vIfXhuC/pGQA5z2q6vQt8/VtTSeA3cvTDoVHi5Q/NhnBH86VXjQSUui0fCvKBhwIDNqtjoLMR9Y
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?czZ5LzJxaDAyZmZoZlNhSDNrdXhNQjBoS0pQdUkxQUJXc3dvczVnaURDOHI0?=
+ =?utf-8?B?MW8xdjMydTIwOUJFeU5sMG9zL2dQcnpRVTBVejVtL2dtbGZCemYrelBoQWhU?=
+ =?utf-8?B?SjBZZGIwSWpQbWc5RlVYdjUzOU1PeGNPbHBtL0c5MmlQaVMycDZsUkxScjBT?=
+ =?utf-8?B?Z01pUnpJRFA0MVUxNHpQZlF1M01qNkpRbU12OW1ybElaMHF2MGliZk1sWFUr?=
+ =?utf-8?B?eW51OXN5WUo3NFBBU1dLNDUzdERtakYyVDh5TjVBM0J4M01zNW5pSVh3VUl0?=
+ =?utf-8?B?WkhnS3ZxQStSMTFYMDFFWjRycUtReUJNOVE2V0FQczhUcDMxUWdpMTRRUDZ1?=
+ =?utf-8?B?My9SSDBpcldUMWRZUVE2ZUtyeEJLZmdXaUxJN0J1djJZNG5QQStIRHhhWEpY?=
+ =?utf-8?B?bnRpTzZXUjdWVGlMQ1AzckJ2U3g3SEpXZ09Ga3JxbDU0QkdvYlZvWFZBMm5F?=
+ =?utf-8?B?ZWxKNDdLQjhlallEQ3J3NEFOT1FDbnNiMUZuSmRjK0hmdks4OVVzWGhra2px?=
+ =?utf-8?B?SjBaanNqRTVYOE1ZczBvUHhicThXdVZiSXJoVXNzWWpwR0pCVWtGR3VHM2VK?=
+ =?utf-8?B?Ky91RCt2b29EeFlkMmsxVmYrK3lHOW55K0N3bjR3TGVrS0o1OFdsZEJ2TVZi?=
+ =?utf-8?B?Q0Z0cnc2YzVyQjNOZzZIQTlqckJKYzdaem9TTXM2SkYzT0JaeEN1aHY5YkFW?=
+ =?utf-8?B?Vm9mcTZFbGx2YTM1Wnk2YnVMaGZqRk5TVGJqclJ1SWJTeFVLR2svWGRCVW9G?=
+ =?utf-8?B?RFRuOFZLTU5iZzFHSUcrUlg0KzdLT1J3ZUh2OUdXUTAwbEtTMWJlSkZQUk5Q?=
+ =?utf-8?B?RW5kWEVrOEtDelAxZWZQZnd4SWR0YkdsTWl3UHExVTYwMGhWOHA0Q25JRlg5?=
+ =?utf-8?B?ZldkTE1wWnJEQ2ZRaXptNXJsL3dmZEZ1YW5PcnRmcTY3R0UwZ2huT2VsMk5F?=
+ =?utf-8?B?M2F0S0dIalo2VkQzRnM1SVRDblY0eHRnUG90M2dQSkttSkIvazh6U0s0NkJa?=
+ =?utf-8?B?T0F5QTBvVkdJVlVoeURqL20yanh2WE13eVBrSGlNeHo0Uk1QQnNMdE00T2Ft?=
+ =?utf-8?B?cGlNcGdaaXJjY0dnZnlicHdqMStib0VSRXFWL1hwaU1CeEdyQlZyLzZZMi9U?=
+ =?utf-8?B?aWNYRENXcXl2WXh3RFczakxoeFVmUFdBLytwa1B1TGVkVkMramgxbS9IR3B1?=
+ =?utf-8?B?bGptVE5TQ1oyT3NTSGJTamJRM05nRVZIT3EwNEpjTEVoS0hFU0luMm9pSGJZ?=
+ =?utf-8?B?a1hXZWdMS3lsVUxaTDF6TzhKcFc3TFpwMUkvVjRJQll3UURXSnI1Q1haNTF0?=
+ =?utf-8?B?VmdBL2FPTUw3M0NaTVR3dldaRzhGSE9mQ1JkVEpRUjlTSTVZbDllZFFmS0RQ?=
+ =?utf-8?B?RzdoSlF3L3F6dWJMMnNDMkcwQVpwdW9zRE9CbUhRSnN2SkJDOTVGRktlcXp3?=
+ =?utf-8?B?WXVMNTkwNEREUU16c29JRUwvTjFUYUJyWXcvUVM2WkI5RXBWc0NTOGpleXFv?=
+ =?utf-8?B?Z004Q3NucTFFaStMcmlWWVVyWFBUTEZEUnh6UHlNRVBOUG54REw1T0txSGha?=
+ =?utf-8?B?L211eGxjYlhzZ1FrK3IwcXJITkhoMFhnSEV2WlFyZEkrR1Rqd3JKdHp5KzhM?=
+ =?utf-8?B?VTBCTm9aYTZRd2tSdXJ4eHdUZ0tuUzg3MEcyWENRUFF1TmFpU3dBY25kV0NP?=
+ =?utf-8?B?MFdDVGtXZTAxSGJudmxsYkt2U29DS204bnVGUzM0ZzVDQ3BsRkY0emFOY05v?=
+ =?utf-8?Q?yCUpJNB4CV4AVTt0co=3D?=
+X-OriginatorOrg: sct-15-20-4755-11-msonline-outlook-80ceb.templateTenant
+X-MS-Exchange-CrossTenant-Network-Message-Id: 0e912bf5-9278-494b-cfed-08dc1e2eef94
+X-MS-Exchange-CrossTenant-AuthSource: AS8P193MB1285.EURP193.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 Jan 2024 05:23:32.0049
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
+	00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS8P193MB1879
 
-Hello,
+Prevent them from polluting git status after building selftests.
 
-On Tue, 23 Jan 2024 09:47:30 -0800 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
-
-> This is the start of the stable review cycle for the 6.7.2 release.
-> There are 638 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Thu, 25 Jan 2024 17:44:25 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.7.2-rc2.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.7.y
-> and the diffstat can be found below.
-
-This rc kernel passes DAMON functionality test[1] on my test machine.
-Attaching the test results summary below.  Please note that I retrieved the
-kernel from linux-stable-rc tree[2].
-
-Tested-by: SeongJae Park <sj@kernel.org>
-
-[1] https://github.com/awslabs/damon-tests/tree/next/corr
-[2] 2320541f64ba ("Linux 6.7.2-rc2")
-
-Thanks,
-SJ
-
-[...]
-
+Signed-off-by: Bernd Edlinger <bernd.edlinger@hotmail.de>
 ---
+ tools/testing/selftests/damon/.gitignore                       | 1 +
+ tools/testing/selftests/thermal/intel/power_floor/.gitignore   | 2 ++
+ tools/testing/selftests/thermal/intel/workload_hint/.gitignore | 2 ++
+ tools/testing/selftests/uevent/.gitignore                      | 2 ++
+ 4 files changed, 7 insertions(+)
+ create mode 100644 tools/testing/selftests/thermal/intel/power_floor/.gitignore
+ create mode 100644 tools/testing/selftests/thermal/intel/workload_hint/.gitignore
+ create mode 100644 tools/testing/selftests/uevent/.gitignore
 
-ok 1 selftests: damon: debugfs_attrs.sh
-ok 2 selftests: damon: debugfs_schemes.sh
-ok 3 selftests: damon: debugfs_target_ids.sh
-ok 4 selftests: damon: debugfs_empty_targets.sh
-ok 5 selftests: damon: debugfs_huge_count_read_write.sh
-ok 6 selftests: damon: debugfs_duplicate_context_creation.sh
-ok 7 selftests: damon: debugfs_rm_non_contexts.sh
-ok 8 selftests: damon: sysfs.sh
-ok 9 selftests: damon: sysfs_update_removed_scheme_dir.sh
-ok 10 selftests: damon: reclaim.sh
-ok 11 selftests: damon: lru_sort.sh
-ok 1 selftests: damon-tests: kunit.sh
-ok 2 selftests: damon-tests: huge_count_read_write.sh
-ok 3 selftests: damon-tests: buffer_overflow.sh
-ok 4 selftests: damon-tests: rm_contexts.sh
-ok 5 selftests: damon-tests: record_null_deref.sh
-ok 6 selftests: damon-tests: dbgfs_target_ids_read_before_terminate_race.sh
-ok 7 selftests: damon-tests: dbgfs_target_ids_pid_leak.sh
-ok 8 selftests: damon-tests: damo_tests.sh
-ok 9 selftests: damon-tests: masim-record.sh
-ok 10 selftests: damon-tests: build_i386.sh
-ok 11 selftests: damon-tests: build_arm64.sh
-ok 12 selftests: damon-tests: build_m68k.sh
-ok 13 selftests: damon-tests: build_i386_idle_flag.sh
-ok 14 selftests: damon-tests: build_i386_highpte.sh
-ok 15 selftests: damon-tests: build_nomemcg.sh
- [33m
- [92mPASS [39m
+diff --git a/tools/testing/selftests/damon/.gitignore b/tools/testing/selftests/damon/.gitignore
+index c6c2965a6607..79b32e30fce3 100644
+--- a/tools/testing/selftests/damon/.gitignore
++++ b/tools/testing/selftests/damon/.gitignore
+@@ -1,2 +1,3 @@
+ # SPDX-License-Identifier: GPL-2.0-only
+ huge_count_read_write
++access_memory
+diff --git a/tools/testing/selftests/thermal/intel/power_floor/.gitignore b/tools/testing/selftests/thermal/intel/power_floor/.gitignore
+new file mode 100644
+index 000000000000..754810406b33
+--- /dev/null
++++ b/tools/testing/selftests/thermal/intel/power_floor/.gitignore
+@@ -0,0 +1,2 @@
++# SPDX-License-Identifier: GPL-2.0-only
++power_floor_test
+diff --git a/tools/testing/selftests/thermal/intel/workload_hint/.gitignore b/tools/testing/selftests/thermal/intel/workload_hint/.gitignore
+new file mode 100644
+index 000000000000..b5448c0576c9
+--- /dev/null
++++ b/tools/testing/selftests/thermal/intel/workload_hint/.gitignore
+@@ -0,0 +1,2 @@
++# SPDX-License-Identifier: GPL-2.0-only
++workload_hint_test
+diff --git a/tools/testing/selftests/uevent/.gitignore b/tools/testing/selftests/uevent/.gitignore
+new file mode 100644
+index 000000000000..15127939d872
+--- /dev/null
++++ b/tools/testing/selftests/uevent/.gitignore
+@@ -0,0 +1,2 @@
++# SPDX-License-Identifier: GPL-2.0-only
++uevent_filtering
+-- 
+2.39.2
