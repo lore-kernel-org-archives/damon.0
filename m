@@ -1,119 +1,127 @@
-Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9A635FEEF
-	for <damon@lists.linux.dev>; Mon, 29 Jan 2024 12:13:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3990F48790;
+	Mon, 29 Jan 2024 19:26:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706530405; cv=none; b=bSa5gWRueYbRgY7RLDLO1QThQdKjZxA8HBhku78mUqQgpP3aZXiiFVt9AEjB9tf0rN65GywNeOBmvv2tL+k4Cm/RzZEUARL1EsFpALkKkQ5uXceJ/7WGQ2JMLEQX6jGY+2/nDIkHEcidSTzsqqsD8eX5lMeiolZc8gmI96acl8w=
+	t=1706556405; cv=none; b=svGhejJsaCYXTeFcMUPX+a17CDPkZ/dXslpVLgfg+Ypxi+xapECYJVwbrJRDcLNd1/ExEK+uccYfaRxqzOhkA6mfqbUV0yeKDfnl3mb6coDyP1O4AvHvuPMqjmtlJ/JC32iHKoiFVi79YK/VuON5LOQ5QjMK4CUxl7xXF8alF8M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706530405; c=relaxed/simple;
-	bh=WLvrHrbgSBFuvT4E7HlrAAw1sNsWn7JBXxbApEH6mhE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=REA3vx9KqQnRxCUlh4dyrfbEZvVguvBDXHpMdsfukbumbAPw90ZgSS2Vev8i0bmhXzqigOZcyaruEHb+nogiGMBmAwY4mnCeTMtcSwSwKP8lkrtgjPLCWNx6MSSzPx+4GDMrYSKKHDeGNaACU1WMC/RPex5gwXyQi5jmbsD4f7o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=l1buU2Jk; arc=none smtp.client-ip=209.85.214.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1706556405; c=relaxed/simple;
+	bh=plWbGUJOEIziFL6QefrbA/05MPFIS6W43Vymo6o2EG4=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=IsLdzd/67Zt/Hen9Mq98mQlK5pMdPXMHcUAtefKwucyFHw3ct9pQiMwSSyC5SXAL/6WpGel6GFEeFy8YEpuZ1P53/skIK0Merzl8lVPOFL2ZQBJyfhTQZJQYUWgu0VXhZjAHJ5a1N2vbUmcWJtDJndpmSpcS/ImIM7+k+aPhzI0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cmzLN0ts; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="l1buU2Jk"
-Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-1d748d43186so11839545ad.0
-        for <damon@lists.linux.dev>; Mon, 29 Jan 2024 04:13:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1706530403; x=1707135203; darn=lists.linux.dev;
-        h=user-agent:in-reply-to:content-disposition:mime-version:references
-         :message-id:subject:cc:to:from:date:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=hoaRRVJZbpwuRBmsx74Q+sew1YTbfPVtekdObdLjHlE=;
-        b=l1buU2JkMokPIOKViGVyptiInYqigSCYJWxvkIrbDmZB91qfabA+mHAWOCDobjs8Fr
-         VqGGj8U/EDzEsGvACcS+myse7XRu6GtX+hI+fcpUOxI2/P5E2u0KDLu27Ueo/A6msK/0
-         zy+1rl6e+iWOXc36MeImfuku9zAMOWytNFfDuGjYdxg6VkD9cLX/P4kK0mq+1RR7kJg7
-         VTH1l2sIlEoMoS1FH8sTYCE3X33C2U1rv4ff493IXlRmfyZTlf99TeSzRAgGTWsix2N8
-         FXGkYcnijd7p9qr4dbJW52UyDnTMDwqpLJSQyPaF4WZkqnbd7IUlHM0nyORNEyStq7xA
-         RspQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706530403; x=1707135203;
-        h=user-agent:in-reply-to:content-disposition:mime-version:references
-         :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=hoaRRVJZbpwuRBmsx74Q+sew1YTbfPVtekdObdLjHlE=;
-        b=fhJ/Pg+DRTRqb1xDorbgPh/pvB5cL9jyoU+ImbdBmQHBrbQtseIz1WHirOhfv/G79z
-         0f1jBoKt4VaInG65caM3FuKE2LxS7PF3gwMkeGmGE6C2UbO91SoQrai7YW6vSjee6Sis
-         2NP3pCeD+s282b90vXrWxrp8KftJbrGUz/VvUdBqeWhPuEGAAhIugj0gcOVgh5RXUAmT
-         McNhg9NRLXD74YlLD41carnqItWYAvqAStpg8L4px1k4WIwBePW8D1ob3Ayf2niM4PoU
-         cFHCrmqewHJyWcZg8y9NmJvivRBo8Dycn0BQPymlXmyxSLfLqAG743dzmfsbtpkH13Jg
-         fwsA==
-X-Gm-Message-State: AOJu0YwiQU55SAfY79KhKXckylpCfQoQ6UoOVue/cQgebkKNvv4juW5c
-	tirbO1MLERGWJNBhCIuz5rBSOov0EZFxKf3ZDYhZiX0PcQ9xKxLq
-X-Google-Smtp-Source: AGHT+IGe75wXRfHfhKAZFoV1YLgi2pirWtWkd84BfMTXVJ46oMR/sFEsWExHX0KeLGpQuF/FiHFUMA==
-X-Received: by 2002:a17:902:6804:b0:1d4:e04b:4742 with SMTP id h4-20020a170902680400b001d4e04b4742mr2117030plk.58.1706530403008;
-        Mon, 29 Jan 2024 04:13:23 -0800 (PST)
-Received: from cuiyangpei ([43.224.245.227])
-        by smtp.gmail.com with ESMTPSA id s10-20020a170902ea0a00b001d714a1530bsm5242067plg.176.2024.01.29.04.13.20
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 29 Jan 2024 04:13:22 -0800 (PST)
-Date: Mon, 29 Jan 2024 20:13:16 +0800
-From: cuiyangpei <cuiyangpei@gmail.com>
-To: SeongJae Park <sj@kernel.org>
-Cc: akpm@linux-foundation.org, damon@lists.linux.dev, linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org, xiongping1@xiaomi.com
-Subject: Re: [PATCH 1/2] mm/damon/sysfs: Implement recording feature
-Message-ID: <20240129121316.GA9706@cuiyangpei>
-References: <ZbYanPU16klwz0HA@cyp-ubuntu>
- <20240128162804.17866-1-sj@kernel.org>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cmzLN0ts"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56363C433F1;
+	Mon, 29 Jan 2024 19:26:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1706556404;
+	bh=plWbGUJOEIziFL6QefrbA/05MPFIS6W43Vymo6o2EG4=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=cmzLN0tsnpXU4hUKsliFbl6vkJVhomHNBXIzdgwVfiqAJi10Mf+o9OFhnqNegfqqg
+	 3VLrHPEeG1N/wvbjjQuGHlN3deSbGZjJyxON4iV0hwvousWqPe3e2v0jqxRLN5uZEI
+	 Fdz9ZlKkhuXn5DaB2qfgIJfP5kDjJKbPQH7N9is2xppcAc0Qqz3NeoIbARoeTdeo/g
+	 0wVL6lE3QONsdbKin2GpDmiLPYfle+9JRUz6WuZwGRzRAzv9j41dyxuFZb+rr6ltJs
+	 OCTKjy1A4jxvD2y4nDdGyupRreHnKFRBR74A7wfY0rSbdfBtPJssrDXtq/LHClibuu
+	 gUXz1zQ3hDIrQ==
+From: SeongJae Park <sj@kernel.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org,
+	patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net,
+	rwarsow@gmx.de,
+	conor@kernel.org,
+	allen.lkml@gmail.com,
+	damon@lists.linux.dev,
+	SeongJae Park <sj@kernel.org>
+Subject: Re: [PATCH 6.6 000/331] 6.6.15-rc1 review
+Date: Mon, 29 Jan 2024 11:26:41 -0800
+Message-Id: <20240129192641.129294-1-sj@kernel.org>
+X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20240129170014.969142961@linuxfoundation.org>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240128162804.17866-1-sj@kernel.org>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+Content-Transfer-Encoding: 8bit
 
-On Sun, Jan 28, 2024 at 08:28:04AM -0800, SeongJae Park wrote:
-> On Sun, 28 Jan 2024 17:13:00 +0800 cuiyangpei <cuiyangpei@gmail.com> wrote:
-> 
-> > On Fri, Jan 26, 2024 at 12:04:54AM -0800, SeongJae Park wrote:
-> [...]
-> > > So, 'update_schemes_tried_regions' command is firstly handled by
-> > > 'damon_sysfs_cmd_request_callback()', which is registered as
-> > > after_wmarks_check() and after_aggregation() callback.  Hence
-> > > 'update_schemes_tried_regions' command is still effectively working in
-> > > aggregation interval granularity.  I think this is what you found, right?
-> > > 
-> > Yes.
-> > > If I'm not wrongly understanding your point, I think the concern is valid.  I
-> > > think we should make it works in sampling interval granularity.  I will try to
-> > > make so.  Would that work for your use case?
-> > > 
-> > It's much better than working in aggregation interval.
-> 
-> Thank you for confirming.  I will start working on this.
-> 
+Hello,
 
-Great, looking forward to seeing the progress.
+On Mon, 29 Jan 2024 09:01:04 -0800 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
 
-> > 
-> > I have a question. Why does the 'update_schemes_tried_regions' command need to work
-> > in the sampling time or aggregation time? 'update_schemes_tried_regions' is a
-> > relatively special state that updates the regions that corresponding operation scheme.
-> > Can it be separated from other states and controlled by sysfs node to respond immediately
-> > after being written?
+> This is the start of the stable review cycle for the 6.6.15 release.
+> There are 331 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 > 
-> Mainly because the region data is updated by a kdamond thread.  To safely
-> access the region, the accessor should do some kind of synchronization with the
-> kdamond thread.  To minimize such synchronization overhead, DAMON let the API
-> users (kernel components) to register callbacks which kdamond invokes under
-> specific events including 'after_sampling' or 'after_aggregate'.  Because the
-> callback is executed in the kdamond thread, callbacks can safely access the
-> data without additional synchronization.  DAMON sysfs interface is using the
-> callback mechanism, and hence need to work in the sampling or aggregation
-> times.
+> Responses should be made by Wed, 31 Jan 2024 16:59:28 +0000.
+> Anything received after that time might be too late.
 > 
-Thank you for the detailed explanation.
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.15-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
+> and the diffstat can be found below.
 
-> Thanks,
-> SJ
-> 
-> [...]
+This rc kernel passes DAMON functionality test[1] on my test machine.
+Attaching the test results summary below.  Please note that I retrieved the
+kernel from linux-stable-rc tree[2].
+
+Tested-by: SeongJae Park <sj@kernel.org>
+
+[1] https://github.com/awslabs/damon-tests/tree/next/corr
+[2] 1ff49073b88b ("Linux 6.6.15-rc1")
+
+Thanks,
+SJ
+
+[...]
+
+---
+
+ [32m
+ok 1 selftests: damon: debugfs_attrs.sh
+ok 2 selftests: damon: debugfs_schemes.sh
+ok 3 selftests: damon: debugfs_target_ids.sh
+ok 4 selftests: damon: debugfs_empty_targets.sh
+ok 5 selftests: damon: debugfs_huge_count_read_write.sh
+ok 6 selftests: damon: debugfs_duplicate_context_creation.sh
+ok 7 selftests: damon: debugfs_rm_non_contexts.sh
+ok 8 selftests: damon: sysfs.sh
+ok 9 selftests: damon: sysfs_update_removed_scheme_dir.sh
+ok 10 selftests: damon: reclaim.sh
+ok 11 selftests: damon: lru_sort.sh
+ok 1 selftests: damon-tests: kunit.sh
+ok 2 selftests: damon-tests: huge_count_read_write.sh
+ok 3 selftests: damon-tests: buffer_overflow.sh
+ok 4 selftests: damon-tests: rm_contexts.sh
+ok 5 selftests: damon-tests: record_null_deref.sh
+ok 6 selftests: damon-tests: dbgfs_target_ids_read_before_terminate_race.sh
+ok 7 selftests: damon-tests: dbgfs_target_ids_pid_leak.sh
+ok 8 selftests: damon-tests: damo_tests.sh
+ok 9 selftests: damon-tests: masim-record.sh
+ok 10 selftests: damon-tests: build_i386.sh
+ok 11 selftests: damon-tests: build_arm64.sh
+ok 12 selftests: damon-tests: build_m68k.sh
+ok 13 selftests: damon-tests: build_i386_idle_flag.sh
+ok 14 selftests: damon-tests: build_i386_highpte.sh
+ok 15 selftests: damon-tests: build_nomemcg.sh
+ [33m
+ [92mPASS [39m
+_remote_run_corr.sh SUCCESS
