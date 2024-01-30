@@ -1,45 +1,58 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95E2037712;
-	Tue, 30 Jan 2024 01:36:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D72A569E1E;
+	Tue, 30 Jan 2024 20:19:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706578562; cv=none; b=pouPSMUSf2gNnuwGoWrNVL8gPBiFH519Yeyg70OIarZHcYDbK0TlHnCwnWnd44rJXaU0TYd34agV+N3fFyeRlCA8T/rpRVF/2A0Wa525o+oj2h/UIeQlze+1ZH4ywf3drO+Zm8RwIWFF9yo7i8DG7zU1uxuygFdheI1OhciCFKI=
+	t=1706645969; cv=none; b=hUuw9ODs6CbJ16zrFiGvaKNs0XXfAdD+RwqRbh2FnSUVnztDgYW1DlveVrl67icVdSStsd+dyrUXYpb8XSM0QbqygOXVKgJpCRfH5jCRWy4B2q0oyduI8eqRGdhDaYug1MpPhVlaplAsDgSCmO6iIQL6T+cP+5+KiwRx6RdbbGc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706578562; c=relaxed/simple;
-	bh=gcC9dmoQX9j+tKrb8TrQMZADNHfkIGHlBl+HK47V+ww=;
+	s=arc-20240116; t=1706645969; c=relaxed/simple;
+	bh=nu45nRqzigmHcqbdARLL2KtDJB21XLNBDYQYq4LnuvE=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=OhAYper5gA2flDSwZUupx15y2KUuHwNsZhAwKEt/Z8D8sDpxS5huHKqqrt3JGYR+afVMtvEQ7neJX+rGXhYDmdcAQsiDL2GQL20ssoUuutJQAtUNNCE0DAKv4bBx6/Lrx/MedfHAYttptHECAXIqd6/inWWsHtQsWw4xqP2ARlI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DTmLfjtG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oDgbMRD4s9IN3ayJ9B3DTXqOpECs2Bi6lgforbhBwHyRX0/E/x8/Q3DFWy/L4136WJP2sgfLBPCpg1/7Sb+bBCyrr+tNSd8Z6IR4wh/bbz5NEmV4A89c9FlCZiuO4xV++1eK5M81JdGX3gTFIt3vSPN3DnMQEbVPM+6k8+83ob0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Z+W9xHNX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DTmLfjtG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95AE4C43399;
-	Tue, 30 Jan 2024 01:36:01 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Z+W9xHNX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E65B0C433C7;
+	Tue, 30 Jan 2024 20:19:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1706578562;
-	bh=gcC9dmoQX9j+tKrb8TrQMZADNHfkIGHlBl+HK47V+ww=;
+	s=k20201202; t=1706645968;
+	bh=nu45nRqzigmHcqbdARLL2KtDJB21XLNBDYQYq4LnuvE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DTmLfjtG2USxU7mvIhukf5t+rtNA8FRgHeVMxqey89fB+cw41bjtbJ0ueFc38YwMG
-	 1GZRhvbIf8nTIBUWdJNAhYNnK4dDfMcibwZaDavmibS4wMMyapIrWDLAvXdUdwneWl
-	 ev39nvyIALH6/rtT4PyCtZHilUMxBH6g9myOiTK+t5TsP+hnfNQGUsmEncCI/ikxjg
-	 7lQHveRVvEGITbaaGBHa3V3zlNBd7Je7mb2udpOJ+wZpXpegjej8rse/u3SpKAta3c
-	 bHEd2Xd4CnXuF3foqFXqLXiSLMsM0sX5S86kR2MIhHmmgTW4nOOcfuguf7K7YIdU6f
-	 4wg1U09cC5rGA==
+	b=Z+W9xHNXk3uukHMUq4Us9fIyCX/gCmOgkLZnjq/VWz85CVyNHJ6NmzJ9+UgaR+ZFU
+	 PggCQ/DZOZXIXeK3sV+/31DcHabZCws6P+aMwJEbyLp/iO3qOisZZ6zcyrZP7CZKjR
+	 0ZGEryHpI5NXbS34kDQt8TGgoUf4rsdvdMVLm5EIn45KXw2/HwXZJkQHNIFoyfqHAc
+	 KlXE6Q0MSEq+vn3XZgmQX+LRL9lt5km5bTr+ex4zXqsVVRYqio6xQy1cQADRVjTuHZ
+	 WbvUGc28DEEz8Jgjvy5wCeLgqgipSUXYM5NewKVHJkr3uhukuniDg7MJna+RhTB75X
+	 h9yW9W/infDoQ==
 From: SeongJae Park <sj@kernel.org>
-To: Andrew Morton <akpm@linux-foundation.org>
-Cc: SeongJae Park <sj@kernel.org>,
-	Jonathan Corbet <corbet@lwn.net>,
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org,
+	patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net,
+	rwarsow@gmx.de,
+	conor@kernel.org,
+	allen.lkml@gmail.com,
 	damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	linux-doc@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH 8/9] Docs/admin-guide/mm/damon/usage: update for monitor_on renaming
-Date: Mon, 29 Jan 2024 17:35:47 -0800
-Message-Id: <20240130013549.89538-9-sj@kernel.org>
+	SeongJae Park <sj@kernel.org>
+Subject: Re: [PATCH 6.1 000/186] 6.1.76-rc2 review
+Date: Tue, 30 Jan 2024 12:19:25 -0800
+Message-Id: <20240130201925.109728-1-sj@kernel.org>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20240130013549.89538-1-sj@kernel.org>
-References: <20240130013549.89538-1-sj@kernel.org>
+In-Reply-To: <20240130183318.454044155@linuxfoundation.org>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -48,77 +61,61 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Update DAMON debugfs interface sections on the usage document to reflect
-the fact that 'monitor_on' file has renamed to 'monitor_on_DEPRECATED'.
+Hello,
 
-Signed-off-by: SeongJae Park <sj@kernel.org>
+On Tue, 30 Jan 2024 10:47:38 -0800 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+
+> This is the start of the stable review cycle for the 6.1.76 release.
+> There are 186 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Thu, 01 Feb 2024 18:32:32 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.76-rc2.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+> and the diffstat can be found below.
+
+This rc kernel passes DAMON functionality test[1] on my test machine.
+Attaching the test results summary below.  Please note that I retrieved the
+kernel from linux-stable-rc tree[2].
+
+Tested-by: SeongJae Park <sj@kernel.org>
+
+[1] https://github.com/awslabs/damon-tests/tree/next/corr
+[2] ce3f6cd9e4cd ("Linux 6.1.76-rc2")
+
+Thanks,
+SJ
+
+[...]
+
 ---
- Documentation/admin-guide/mm/damon/usage.rst | 29 ++++++++++----------
- 1 file changed, 15 insertions(+), 14 deletions(-)
 
-diff --git a/Documentation/admin-guide/mm/damon/usage.rst b/Documentation/admin-guide/mm/damon/usage.rst
-index 5d3df18dfb9f..58c34e66b31b 100644
---- a/Documentation/admin-guide/mm/damon/usage.rst
-+++ b/Documentation/admin-guide/mm/damon/usage.rst
-@@ -629,8 +629,9 @@ debugfs Interface (DEPRECATED!)
-   linux-mm@kvack.org.
- 
- DAMON exports nine files, ``DEPRECATED``, ``attrs``, ``target_ids``,
--``init_regions``, ``schemes``, ``monitor_on``, ``kdamond_pid``, ``mk_contexts``
--and ``rm_contexts`` under its debugfs directory, ``<debugfs>/damon/``.
-+``init_regions``, ``schemes``, ``monitor_on_DEPRECATED``, ``kdamond_pid``,
-+``mk_contexts`` and ``rm_contexts`` under its debugfs directory,
-+``<debugfs>/damon/``.
- 
- 
- ``DEPRECATED`` is a read-only file for the DAMON debugfs interface deprecation
-@@ -855,16 +856,16 @@ Turning On/Off
- 
- Setting the files as described above doesn't incur effect unless you explicitly
- start the monitoring.  You can start, stop, and check the current status of the
--monitoring by writing to and reading from the ``monitor_on`` file.  Writing
--``on`` to the file starts the monitoring of the targets with the attributes.
--Writing ``off`` to the file stops those.  DAMON also stops if every target
--process is terminated.  Below example commands turn on, off, and check the
--status of DAMON::
-+monitoring by writing to and reading from the ``monitor_on_DEPRECATED`` file.
-+Writing ``on`` to the file starts the monitoring of the targets with the
-+attributes.  Writing ``off`` to the file stops those.  DAMON also stops if
-+every target process is terminated.  Below example commands turn on, off, and
-+check the status of DAMON::
- 
-     # cd <debugfs>/damon
--    # echo on > monitor_on
--    # echo off > monitor_on
--    # cat monitor_on
-+    # echo on > monitor_on_DEPRECATED
-+    # echo off > monitor_on_DEPRECATED
-+    # cat monitor_on_DEPRECATED
-     off
- 
- Please note that you cannot write to the above-mentioned debugfs files while
-@@ -880,11 +881,11 @@ can get the pid of the thread by reading the ``kdamond_pid`` file.  When the
- monitoring is turned off, reading the file returns ``none``. ::
- 
-     # cd <debugfs>/damon
--    # cat monitor_on
-+    # cat monitor_on_DEPRECATED
-     off
-     # cat kdamond_pid
-     none
--    # echo on > monitor_on
-+    # echo on > monitor_on_DEPRECATED
-     # cat kdamond_pid
-     18594
- 
-@@ -914,5 +915,5 @@ directory by putting the name of the context to the ``rm_contexts`` file. ::
-     # ls foo
-     # ls: cannot access 'foo': No such file or directory
- 
--Note that ``mk_contexts``, ``rm_contexts``, and ``monitor_on`` files are in the
--root directory only.
-+Note that ``mk_contexts``, ``rm_contexts``, and ``monitor_on_DEPRECATED`` files
-+are in the root directory only.
--- 
-2.39.2
-
+ok 1 selftests: damon: debugfs_attrs.sh
+ok 2 selftests: damon: debugfs_schemes.sh
+ok 3 selftests: damon: debugfs_target_ids.sh
+ok 4 selftests: damon: debugfs_empty_targets.sh
+ok 5 selftests: damon: debugfs_huge_count_read_write.sh
+ok 6 selftests: damon: debugfs_duplicate_context_creation.sh
+ok 7 selftests: damon: sysfs.sh
+ok 1 selftests: damon-tests: kunit.sh
+ok 2 selftests: damon-tests: huge_count_read_write.sh
+ok 3 selftests: damon-tests: buffer_overflow.sh
+ok 4 selftests: damon-tests: rm_contexts.sh
+ok 5 selftests: damon-tests: record_null_deref.sh
+ok 6 selftests: damon-tests: dbgfs_target_ids_read_before_terminate_race.sh
+ok 7 selftests: damon-tests: dbgfs_target_ids_pid_leak.sh
+ok 8 selftests: damon-tests: damo_tests.sh
+ok 9 selftests: damon-tests: masim-record.sh
+ok 10 selftests: damon-tests: build_i386.sh
+ok 11 selftests: damon-tests: build_arm64.sh
+ok 12 selftests: damon-tests: build_m68k.sh
+ok 13 selftests: damon-tests: build_i386_idle_flag.sh
+ok 14 selftests: damon-tests: build_i386_highpte.sh
+ok 15 selftests: damon-tests: build_nomemcg.sh
+ [33m
+ [92mPASS [39m
