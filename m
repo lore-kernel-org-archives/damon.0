@@ -1,41 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7F1F45BF3;
-	Fri,  2 Feb 2024 12:43:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52FA47E0E5;
+	Fri,  2 Feb 2024 17:14:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706877825; cv=none; b=E9eBcgmyegkE6C0CqMzTTVgerHsasxRA5RHyQPDwt5FBm9ZUstIp+Lvl9295u+Z9SQP4fAYW7g+lwhXN/fPS+JKp18E2XIy08g0BXKJG1TClNBqy+oapzNLb1g+6gauX1+8m/jDmJ9qGAHH1ZHF3Gpa/qVQhANqlMntI/FkZIsY=
+	t=1706894045; cv=none; b=a16BPKrKuimdhALrVzJn2sTgcsjp/rQeVI4/0ykAeyXaE6MnuvFwJwbHyBmD2htAfsb1aGHWPqXwVKAfhh9eKM2ZmH9VA4M4asrDtUUcB4QxRCkadxYaaRcHT0grIQaaZ2WKN37gSvJ7X7FjJEP7g9EP+vLgmSGi3F6lFLe+NAA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706877825; c=relaxed/simple;
-	bh=7w9jYsNrgzos+uYg26MrZfbM/Ib33qRnR69U9JTdFys=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=jogWZ2GZivXDp4AIYCGb4q7A3tLjBjv8di5SJ+9NRkW5Wsu21wBcwneURW92yiHhhmOvNpyWqBFbwqkEWj8S4rd05JxykaROzLT0AlGBUpCydCKBAA9LePFkU5wtCT7mSwN9H9mDjMAKG3hVKBZasOOcgzcxDs2zOYdsYqvuibE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jr4npCf1; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1706894045; c=relaxed/simple;
+	bh=CTr3UEtOevAFgGCu3DO+L25topN4UXf5ROEo1UZIWNQ=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=YYdM9zpbjqoUhh5px18eR9LiDFEPsL7Ulz5R5WDqjQ01q/YH/9eR+HRMO0zvRziKedb6k657Hkinee4t/7X6GYFX85rSqeBgY37z98pwbnQfG5VDFNbL70D+rrbYPT6WtquUqSy8idrIbgxgDE9DFBNn1RJH7aQ5leOnVwgo6EE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bmzz4TUu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jr4npCf1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5781C433C7;
-	Fri,  2 Feb 2024 12:43:43 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bmzz4TUu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CB76C433F1;
+	Fri,  2 Feb 2024 17:14:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1706877825;
-	bh=7w9jYsNrgzos+uYg26MrZfbM/Ib33qRnR69U9JTdFys=;
-	h=From:To:Cc:Subject:Date:From;
-	b=jr4npCf1yXqSmIqj7xe9gCzNMeVfBYQkr1mG5F4OiRKnJ0q/RXT19NhwuTafC8V06
-	 TIzjMVLfly2Z2XsKL38dwsimVb41gavpiZ2ay3lasXYq+GDzhAkXpzhSklJs1PuU0n
-	 v5JANdsDULyayLchy7vWfTRDq12h9FWKHdA+6s8Nvr2CzOBOepDtghhuawgwjrzmpZ
-	 vDJoSAgpQ2gcZ5xlruILoo5vjgwHwnrz095Ex7b2f1x2/mHEqLNgVF6tT44s9fyPLb
-	 7lY/wCGAgfauK7hEa0HJCHnCmVWGB3eOhlbYrCYAkTW7iX0hhf8RQIovbAoo/lTp51
-	 60g8FuueDWFYw==
-From: Arnd Bergmann <arnd@kernel.org>
-To: SeongJae Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Cc: Arnd Bergmann <arnd@arndb.de>,
+	s=k20201202; t=1706894044;
+	bh=CTr3UEtOevAFgGCu3DO+L25topN4UXf5ROEo1UZIWNQ=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=bmzz4TUuhznYAD4P+RMLOFk6Ifhy1aPXO6AwFnJXtKIyEtdN6GlkWLPbUoYrcoZBV
+	 dl216lb/hYo6ygy79ydOG6uhoLAO1w7gAakvrOql0CrbwpwLLIf4ty6mqeAx9MpSQA
+	 wvwtj7hMnWMRYeLArSRFRfHsvGzO5xtWJuVZz/5N8jkAv8obOe2FgVOiZlJVu02CRv
+	 dIr1xLUNMNTVaFAFiaJbcpsCSf6Tn9o7xfAoazABzpMGakcJnu7zxiKgRKZeni6qqT
+	 AZu59nK9qaksPT7JdvcH5f3RQZapuzYFSqIi8+hOsX6FOtLBYcI7ZHKzvQ4IS+mO63
+	 dO6U8LAybDl6w==
+From: SeongJae Park <sj@kernel.org>
+To: Arnd Bergmann <arnd@kernel.org>
+Cc: SeongJae Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Arnd Bergmann <arnd@arndb.de>,
 	damon@lists.linux.dev,
 	linux-mm@kvack.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH] mm/damon/dbgfs: fix bogus string length
-Date: Fri,  2 Feb 2024 13:43:26 +0100
-Message-Id: <20240202124339.892862-1-arnd@kernel.org>
+Subject: Re: [PATCH] mm/damon/dbgfs: fix bogus string length
+Date: Fri,  2 Feb 2024 09:14:02 -0800
+Message-Id: <20240202171402.46340-1-sj@kernel.org>
 X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20240202124339.892862-1-arnd@kernel.org>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -44,48 +48,39 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-From: Arnd Bergmann <arnd@arndb.de>
+Hi Arnd,
 
-gcc correctly points out that using strnlen() on a fixed size array
-is nonsense with an overlong limit:
+On Fri,  2 Feb 2024 13:43:26 +0100 Arnd Bergmann <arnd@kernel.org> wrote:
 
-mm/damon/dbgfs.c: In function 'damon_dbgfs_deprecated_read':
-mm/damon/dbgfs.c:814:19: error: 'strnlen' specified bound 1024 exceeds source size 512 [-Werror=stringop-overread]
-  814 |         int len = strnlen(kbuf, 1024);
-      |                   ^~~~~~~~~~~~~~~~~~~
-mm/damon/dbgfs.c:813:14: note: source object allocated here
-  813 |         char kbuf[512] = DAMON_DBGFS_DEPRECATION_NOTICE;
-      |              ^~~~
+> From: Arnd Bergmann <arnd@arndb.de>
+> 
+> gcc correctly points out that using strnlen() on a fixed size array
+> is nonsense with an overlong limit:
+> 
+> mm/damon/dbgfs.c: In function 'damon_dbgfs_deprecated_read':
+> mm/damon/dbgfs.c:814:19: error: 'strnlen' specified bound 1024 exceeds source size 512 [-Werror=stringop-overread]
+>   814 |         int len = strnlen(kbuf, 1024);
+>       |                   ^~~~~~~~~~~~~~~~~~~
+> mm/damon/dbgfs.c:813:14: note: source object allocated here
+>   813 |         char kbuf[512] = DAMON_DBGFS_DEPRECATION_NOTICE;
+>       |              ^~~~
+> 
+> In fact, neither of the arbitrary limits are needed here: The first
+> one can just be a static const string and avoid wasting any more
+> space then necessary, and the strnlen() can be either strlen() or
+> sizeof(kbuf)-1, both of which the compiler turns into the same
+> constant here.
 
-In fact, neither of the arbitrary limits are needed here: The first
-one can just be a static const string and avoid wasting any more
-space then necessary, and the strnlen() can be either strlen() or
-sizeof(kbuf)-1, both of which the compiler turns into the same
-constant here.
+Thank you for this fix!
 
-Fixes: adf9047adfff ("mm/damon/dbgfs: implement deprecation notice file")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
----
- mm/damon/dbgfs.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+> 
+> Fixes: adf9047adfff ("mm/damon/dbgfs: implement deprecation notice file")
+> Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 
-diff --git a/mm/damon/dbgfs.c b/mm/damon/dbgfs.c
-index f7abbc0633aa..4a189eb65d14 100644
---- a/mm/damon/dbgfs.c
-+++ b/mm/damon/dbgfs.c
-@@ -810,10 +810,9 @@ static void dbgfs_destroy_ctx(struct damon_ctx *ctx)
- static ssize_t damon_dbgfs_deprecated_read(struct file *file,
- 		char __user *buf, size_t count, loff_t *ppos)
- {
--	char kbuf[512] = DAMON_DBGFS_DEPRECATION_NOTICE;
--	int len = strnlen(kbuf, 1024);
-+	static const char kbuf[] = DAMON_DBGFS_DEPRECATION_NOTICE;
- 
--	return simple_read_from_buffer(buf, count, ppos, kbuf, len);
-+	return simple_read_from_buffer(buf, count, ppos, kbuf, strlen(kbuf));
- }
- 
- /*
--- 
-2.39.2
+Reviewed-by: SeongJae Park <sj@kernel.org>
 
+
+Thanks,
+SJ
+
+[...]
