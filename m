@@ -1,45 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52FA47E0E5;
-	Fri,  2 Feb 2024 17:14:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB85A15E5A0;
+	Fri,  2 Feb 2024 19:20:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706894045; cv=none; b=a16BPKrKuimdhALrVzJn2sTgcsjp/rQeVI4/0ykAeyXaE6MnuvFwJwbHyBmD2htAfsb1aGHWPqXwVKAfhh9eKM2ZmH9VA4M4asrDtUUcB4QxRCkadxYaaRcHT0grIQaaZ2WKN37gSvJ7X7FjJEP7g9EP+vLgmSGi3F6lFLe+NAA=
+	t=1706901601; cv=none; b=ipf2KbB9XuNA1d0d7qefM/AGjwwJv16/UAL5rpwE9IxYWfxlqAm1MNn5FcA7x7Y6LwPTIy3eTowqFGXFHLE+TYhRJtu6WFdTnH5BVcyS2iO24t4FBvbYCy1dFtwjRiYmDz2WicbvVHUeB8vaa2AOIXG0BUjfPaouU0igiY1Y0Q8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706894045; c=relaxed/simple;
-	bh=CTr3UEtOevAFgGCu3DO+L25topN4UXf5ROEo1UZIWNQ=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=YYdM9zpbjqoUhh5px18eR9LiDFEPsL7Ulz5R5WDqjQ01q/YH/9eR+HRMO0zvRziKedb6k657Hkinee4t/7X6GYFX85rSqeBgY37z98pwbnQfG5VDFNbL70D+rrbYPT6WtquUqSy8idrIbgxgDE9DFBNn1RJH7aQ5leOnVwgo6EE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bmzz4TUu; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1706901601; c=relaxed/simple;
+	bh=CbXReCX3ZlwbbZZ2LtMRe+PpRclG31Ljw0m0O0lK4fo=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=Oe0HPkht0TCMdpkHMpWI27bQfSalwAd2CB6cmjKOksRTAW/K1iNnXmNsrMWhXHWS61S0x/dGR3EKlSh6+Xqdd+l0Qh6j+gMy8ftG6nKKpctPlK/aCNFK/EbOYPCYVASrkc4zp0nkrnx0FIq66M4zlLEXPK/51YDwhkv7HLeBJjk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fWWnRyOf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bmzz4TUu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CB76C433F1;
-	Fri,  2 Feb 2024 17:14:04 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fWWnRyOf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12E5EC433F1;
+	Fri,  2 Feb 2024 19:20:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1706894044;
-	bh=CTr3UEtOevAFgGCu3DO+L25topN4UXf5ROEo1UZIWNQ=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bmzz4TUuhznYAD4P+RMLOFk6Ifhy1aPXO6AwFnJXtKIyEtdN6GlkWLPbUoYrcoZBV
-	 dl216lb/hYo6ygy79ydOG6uhoLAO1w7gAakvrOql0CrbwpwLLIf4ty6mqeAx9MpSQA
-	 wvwtj7hMnWMRYeLArSRFRfHsvGzO5xtWJuVZz/5N8jkAv8obOe2FgVOiZlJVu02CRv
-	 dIr1xLUNMNTVaFAFiaJbcpsCSf6Tn9o7xfAoazABzpMGakcJnu7zxiKgRKZeni6qqT
-	 AZu59nK9qaksPT7JdvcH5f3RQZapuzYFSqIi8+hOsX6FOtLBYcI7ZHKzvQ4IS+mO63
-	 dO6U8LAybDl6w==
+	s=k20201202; t=1706901600;
+	bh=CbXReCX3ZlwbbZZ2LtMRe+PpRclG31Ljw0m0O0lK4fo=;
+	h=From:To:Cc:Subject:Date:From;
+	b=fWWnRyOfm4mJOX4/eZm+IhaEuLd1JuKdV+JW9Cqe8Z9GKZLpYjLR+5gi8kaWErJYW
+	 3K2uTX+OuwDimwPLsJKDLMCcYTyK/9WaPRneECK2oHFpiWGS/psfiQHarTduW11vtq
+	 NJcFDB8Uird8U3HpiEpeO5H6m/aTS3hYKe5RoB4a9jLR2IBN27hS+e7QbL6zt8twBD
+	 Sxh2/kDFpF9026EJNrEwzxCygItSwYJ46LVz+a3FXjBJeloGejiKvT3ELuY3LSEfoZ
+	 VRqeGWicI+QLrMmr76xm0QYXyNbPgmJP8NmrhBMeJkFpZnhdPdnkahKMIR3hcQOn+b
+	 vAsjtwJfaQG3A==
 From: SeongJae Park <sj@kernel.org>
-To: Arnd Bergmann <arnd@kernel.org>
+To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SeongJae Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Arnd Bergmann <arnd@arndb.de>,
 	damon@lists.linux.dev,
 	linux-mm@kvack.org,
+	stable@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] mm/damon/dbgfs: fix bogus string length
-Date: Fri,  2 Feb 2024 09:14:02 -0800
-Message-Id: <20240202171402.46340-1-sj@kernel.org>
+Subject: [PATCH ] mm/damon/sysfs-schemes: fix wrong DAMOS tried regions update timeout setup
+Date: Fri,  2 Feb 2024 11:19:56 -0800
+Message-Id: <20240202191956.88791-1-sj@kernel.org>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20240202124339.892862-1-arnd@kernel.org>
-References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -48,39 +44,34 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hi Arnd,
+DAMON sysfs interface's update_schemes_tried_regions command has a
+timeout of two apply intervals of the DAMOS scheme.  Having zero value
+DAMOS scheme apply interval means it will use the aggregation interval
+as the value.  However, the timeout setup logic is mistakenly using the
+sampling interval insted of the aggregartion interval for the case.
+This could cause earlier-than-expected timeout of the command.  Fix it.
 
-On Fri,  2 Feb 2024 13:43:26 +0100 Arnd Bergmann <arnd@kernel.org> wrote:
+Fixes: 7d6fa31a2fd7 ("mm/damon/sysfs-schemes: add timeout for update_schemes_tried_regions")
+Cc: <stable@vger.kernel.org> # 6.7.x
+Signed-off-by: SeongJae Park <sj@kernel.org>
+---
 
-> From: Arnd Bergmann <arnd@arndb.de>
-> 
-> gcc correctly points out that using strnlen() on a fixed size array
-> is nonsense with an overlong limit:
-> 
-> mm/damon/dbgfs.c: In function 'damon_dbgfs_deprecated_read':
-> mm/damon/dbgfs.c:814:19: error: 'strnlen' specified bound 1024 exceeds source size 512 [-Werror=stringop-overread]
->   814 |         int len = strnlen(kbuf, 1024);
->       |                   ^~~~~~~~~~~~~~~~~~~
-> mm/damon/dbgfs.c:813:14: note: source object allocated here
->   813 |         char kbuf[512] = DAMON_DBGFS_DEPRECATION_NOTICE;
->       |              ^~~~
-> 
-> In fact, neither of the arbitrary limits are needed here: The first
-> one can just be a static const string and avoid wasting any more
-> space then necessary, and the strnlen() can be either strlen() or
-> sizeof(kbuf)-1, both of which the compiler turns into the same
-> constant here.
+ mm/damon/sysfs-schemes.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Thank you for this fix!
+diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
+index 8dbaac6e5c2d..dd2fb5127009 100644
+--- a/mm/damon/sysfs-schemes.c
++++ b/mm/damon/sysfs-schemes.c
+@@ -2194,7 +2194,7 @@ static void damos_tried_regions_init_upd_status(
+ 		sysfs_regions->upd_timeout_jiffies = jiffies +
+ 			2 * usecs_to_jiffies(scheme->apply_interval_us ?
+ 					scheme->apply_interval_us :
+-					ctx->attrs.sample_interval);
++					ctx->attrs.aggr_interval);
+ 	}
+ }
+ 
+-- 
+2.39.2
 
-> 
-> Fixes: adf9047adfff ("mm/damon/dbgfs: implement deprecation notice file")
-> Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-
-Reviewed-by: SeongJae Park <sj@kernel.org>
-
-
-Thanks,
-SJ
-
-[...]
