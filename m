@@ -1,41 +1,58 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB85A15E5A0;
-	Fri,  2 Feb 2024 19:20:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93ADC5FDA6;
+	Sat,  3 Feb 2024 19:49:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706901601; cv=none; b=ipf2KbB9XuNA1d0d7qefM/AGjwwJv16/UAL5rpwE9IxYWfxlqAm1MNn5FcA7x7Y6LwPTIy3eTowqFGXFHLE+TYhRJtu6WFdTnH5BVcyS2iO24t4FBvbYCy1dFtwjRiYmDz2WicbvVHUeB8vaa2AOIXG0BUjfPaouU0igiY1Y0Q8=
+	t=1706989768; cv=none; b=D42BeZ9CBe1e86OxxB/4JjIU8TLdNezL6nvoHyUcQbzz6LqhsdL3fVHVWruaanHrWgx9OsVdRP5vwnBShiil49tVwBUTJjpBBVPrb4p/qXmQbE9DqiGSbc8EL0bnVGUyx4lAyaUAPIXlgfNto9KNhY5tRwIcnWu2RTqaEApgoVo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706901601; c=relaxed/simple;
-	bh=CbXReCX3ZlwbbZZ2LtMRe+PpRclG31Ljw0m0O0lK4fo=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=Oe0HPkht0TCMdpkHMpWI27bQfSalwAd2CB6cmjKOksRTAW/K1iNnXmNsrMWhXHWS61S0x/dGR3EKlSh6+Xqdd+l0Qh6j+gMy8ftG6nKKpctPlK/aCNFK/EbOYPCYVASrkc4zp0nkrnx0FIq66M4zlLEXPK/51YDwhkv7HLeBJjk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fWWnRyOf; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1706989768; c=relaxed/simple;
+	bh=RPkDGhltlRSmswojXu0wqnDJU3OsxOI/QXh4xqwL0VA=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=DNX6+GJxUGLwuTo/z8KZ2z9f4FkSBTfCBiQBAT+7c/ADZ7JL++6pu19tiO5fAbQWSNqEwtuKYOPUpYEwM9sP5pFHq/PyuXiwLwPcIVifqVn+WQQJV2+Nf+EWCiMALVu5jh1cha4DD6lmeob5l1VFoPhbvabF4al6RDSclO8iQio=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bPpZLNKh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fWWnRyOf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12E5EC433F1;
-	Fri,  2 Feb 2024 19:20:00 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bPpZLNKh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CE6AC433C7;
+	Sat,  3 Feb 2024 19:49:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1706901600;
-	bh=CbXReCX3ZlwbbZZ2LtMRe+PpRclG31Ljw0m0O0lK4fo=;
-	h=From:To:Cc:Subject:Date:From;
-	b=fWWnRyOfm4mJOX4/eZm+IhaEuLd1JuKdV+JW9Cqe8Z9GKZLpYjLR+5gi8kaWErJYW
-	 3K2uTX+OuwDimwPLsJKDLMCcYTyK/9WaPRneECK2oHFpiWGS/psfiQHarTduW11vtq
-	 NJcFDB8Uird8U3HpiEpeO5H6m/aTS3hYKe5RoB4a9jLR2IBN27hS+e7QbL6zt8twBD
-	 Sxh2/kDFpF9026EJNrEwzxCygItSwYJ46LVz+a3FXjBJeloGejiKvT3ELuY3LSEfoZ
-	 VRqeGWicI+QLrMmr76xm0QYXyNbPgmJP8NmrhBMeJkFpZnhdPdnkahKMIR3hcQOn+b
-	 vAsjtwJfaQG3A==
+	s=k20201202; t=1706989768;
+	bh=RPkDGhltlRSmswojXu0wqnDJU3OsxOI/QXh4xqwL0VA=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=bPpZLNKhLuTIojnfHoTMg2hVqmdH+ISF3A4D7d4GBB8/bPSHoYo00GmWR99c9WnYp
+	 NEPuJuLNpAO3SzeSSqMXEHEAD6LApyDwt9A7z3urL0P/7Fu99ALfEKts7f4gX0GFpZ
+	 TcyfIgTbpSXoVMdof0PTDoExCRTAQTrJm4SaMimF+nHGqBe9nG31qQckkv1TRXEuFa
+	 qYF69EjPrCEnytkO66BhVBQoPUaYeHbwSRHnV8gpXyMAReftRlWfQ64UExcIE9ZF0y
+	 tVMUyzFYKuQkQEbuW7chCGnB3Pk4O9YtsXpcFHVCS2qXMoF4Q56UcG3FHyD64h90Hj
+	 3NV/YjaoBszDA==
 From: SeongJae Park <sj@kernel.org>
-To: Andrew Morton <akpm@linux-foundation.org>
-Cc: SeongJae Park <sj@kernel.org>,
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org,
+	patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net,
+	rwarsow@gmx.de,
+	conor@kernel.org,
+	allen.lkml@gmail.com,
 	damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	stable@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH ] mm/damon/sysfs-schemes: fix wrong DAMOS tried regions update timeout setup
-Date: Fri,  2 Feb 2024 11:19:56 -0800
-Message-Id: <20240202191956.88791-1-sj@kernel.org>
+	SeongJae Park <sj@kernel.org>
+Subject: Re: [PATCH 6.7 000/355] 6.7.4-rc2 review
+Date: Sat,  3 Feb 2024 11:49:25 -0800
+Message-Id: <20240203194925.56597-1-sj@kernel.org>
 X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20240203174813.681845076@linuxfoundation.org>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -44,34 +61,65 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-DAMON sysfs interface's update_schemes_tried_regions command has a
-timeout of two apply intervals of the DAMOS scheme.  Having zero value
-DAMOS scheme apply interval means it will use the aggregation interval
-as the value.  However, the timeout setup logic is mistakenly using the
-sampling interval insted of the aggregartion interval for the case.
-This could cause earlier-than-expected timeout of the command.  Fix it.
+Hello,
 
-Fixes: 7d6fa31a2fd7 ("mm/damon/sysfs-schemes: add timeout for update_schemes_tried_regions")
-Cc: <stable@vger.kernel.org> # 6.7.x
-Signed-off-by: SeongJae Park <sj@kernel.org>
+On Sat,  3 Feb 2024 09:53:10 -0800 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+
+> This is the start of the stable review cycle for the 6.7.4 release.
+> There are 355 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Mon, 05 Feb 2024 17:47:20 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.7.4-rc2.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.7.y
+> and the diffstat can be found below.
+
+This rc kernel passes DAMON functionality test[1] on my test machine.
+Attaching the test results summary below.  Please note that I retrieved the
+kernel from linux-stable-rc tree[2].
+
+Tested-by: SeongJae Park <sj@kernel.org>
+
+[1] https://github.com/awslabs/damon-tests/tree/next/corr
+[2] 10be46ba2b8a ("Linux 6.7.4-rc2")
+
+Thanks,
+SJ
+
+[...]
+
 ---
 
- mm/damon/sysfs-schemes.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
-index 8dbaac6e5c2d..dd2fb5127009 100644
---- a/mm/damon/sysfs-schemes.c
-+++ b/mm/damon/sysfs-schemes.c
-@@ -2194,7 +2194,7 @@ static void damos_tried_regions_init_upd_status(
- 		sysfs_regions->upd_timeout_jiffies = jiffies +
- 			2 * usecs_to_jiffies(scheme->apply_interval_us ?
- 					scheme->apply_interval_us :
--					ctx->attrs.sample_interval);
-+					ctx->attrs.aggr_interval);
- 	}
- }
- 
--- 
-2.39.2
-
+ok 1 selftests: damon: debugfs_attrs.sh
+ok 2 selftests: damon: debugfs_schemes.sh
+ok 3 selftests: damon: debugfs_target_ids.sh
+ok 4 selftests: damon: debugfs_empty_targets.sh
+ok 5 selftests: damon: debugfs_huge_count_read_write.sh
+ok 6 selftests: damon: debugfs_duplicate_context_creation.sh
+ok 7 selftests: damon: debugfs_rm_non_contexts.sh
+ok 8 selftests: damon: sysfs.sh
+ok 9 selftests: damon: sysfs_update_removed_scheme_dir.sh
+ok 10 selftests: damon: reclaim.sh
+ok 11 selftests: damon: lru_sort.sh
+ok 1 selftests: damon-tests: kunit.sh
+ok 2 selftests: damon-tests: huge_count_read_write.sh
+ok 3 selftests: damon-tests: buffer_overflow.sh
+ok 4 selftests: damon-tests: rm_contexts.sh
+ok 5 selftests: damon-tests: record_null_deref.sh
+ok 6 selftests: damon-tests: dbgfs_target_ids_read_before_terminate_race.sh
+ok 7 selftests: damon-tests: dbgfs_target_ids_pid_leak.sh
+ok 8 selftests: damon-tests: damo_tests.sh
+ok 9 selftests: damon-tests: masim-record.sh
+ok 10 selftests: damon-tests: build_i386.sh
+ok 11 selftests: damon-tests: build_arm64.sh
+ok 12 selftests: damon-tests: build_m68k.sh
+ok 13 selftests: damon-tests: build_i386_idle_flag.sh
+ok 14 selftests: damon-tests: build_i386_highpte.sh
+ok 15 selftests: damon-tests: build_nomemcg.sh
+ [33m
+ [92mPASS [39m
