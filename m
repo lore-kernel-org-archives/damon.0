@@ -1,93 +1,125 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f172.google.com (mail-pf1-f172.google.com [209.85.210.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95F6A1E87E;
-	Tue,  6 Feb 2024 02:57:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E5526E2AD
+	for <damon@lists.linux.dev>; Tue,  6 Feb 2024 03:27:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707188221; cv=none; b=OYhE8Vj6rW8BoNJ5OuxpxBNKQ8Tz4goISZvMb2Txs+shkQzuAxvQ26LrPKZPjJXgs88wR0UJTyx0Zs1/DKRUVb5bsF7gJ01c1is5xUF4jsCOsgtgLK4UbKrkiEJYSx436wD0ev65s8az6idT+EENbDQYrym20/3dmdDhRlCB0m0=
+	t=1707190026; cv=none; b=dCf6ODTCs6JlrXPZNlmsLP3ULlxPOsGnOQlOsBRt7I2YabsDoi08naSoW4NS+Q1z135ekAgbiyfJZUOnZW0+QP1ZNotph9OnuZWC9g4SFYjZz+VnyaA2wnfoC3yrRuXHV57bExP6/qJIPim0hFW3Mp1KgVoP2k3KqEz2WwT9zEo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707188221; c=relaxed/simple;
-	bh=HmtNX7BbgjVirQJOWQ5+9UqPhN2PgLjMAc9W23kPAGg=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=IFoUC1NB+aFsB2DzgcTV14zp3MhGItH5NkmQqHCx1wG3IbQNxfHp15oMETpcJO9umL8q6CceAf1cyrg7LCsmvbKy4y1Qror0YuiHHQncyWfrjEkLndCwf5NJnL/HnPOK+VQJJa78TAlhr1j+p4Aajq4+KEvYG+bxmZ+nxc2xKXI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ntZ8TfnI; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1707190026; c=relaxed/simple;
+	bh=Z/8kCrneIaAo61lJzR1eoZAFPuxh04I96DLlFzqiKkQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=TGrYeZor7FzCmxObOdd/lo4R/s7D//0OuC01v0LP9eIvsO8nTTrGHSAi+EYHvDIXNheQIgsjhGyWQigGz+FaoKlGo88z2iDtqDtDDCP/Oq0WNFj1yE8Sk0yN+Y7Q/bY3qc//3MQGpOlehw1bB6F8a9aqNVT0WsziFupjutAFexg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VQ9WYmPh; arc=none smtp.client-ip=209.85.210.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ntZ8TfnI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 871AEC433C7;
-	Tue,  6 Feb 2024 02:57:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1707188221;
-	bh=HmtNX7BbgjVirQJOWQ5+9UqPhN2PgLjMAc9W23kPAGg=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ntZ8TfnIyqeLdw9lHRGoflP8j9Cmq15Ar3I9cWYWl5PHrhn8ZjhVmB2bTIdwIlby/
-	 vdF3xBbqUIy59dcd21K8BrhHr+69chx1qc3W/b2/js/LAIgeshG88kHFmkKzkkz2MW
-	 Ce3gg5Whv3WEkI1H6SgxNwsx5Z0MI3JPdt94c5wBTuE0ALuwE4LO5iQUdmnIQ3TET1
-	 Czz2m7bwwGu3clopjmL+JtMZq97yGWJpEy49DzlfJc9sz6srK1XJ23UI6PJQKEda+4
-	 62hRdjER15h+TII6l1orz6Lxq+nGxo2z4uKD7/MGS2zu6r6rKRHsVx1wReCgHQIXIC
-	 ko6fADKzdamGQ==
-From: SeongJae Park <sj@kernel.org>
-To: cuiyangpei <cuiyangpei@gmail.com>
-Cc: SeongJae Park <sj@kernel.org>,
-	akpm@linux-foundation.org,
-	damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org,
-	xiongping1@xiaomi.com
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VQ9WYmPh"
+Received: by mail-pf1-f172.google.com with SMTP id d2e1a72fcca58-6e03bc0755bso911057b3a.0
+        for <damon@lists.linux.dev>; Mon, 05 Feb 2024 19:27:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1707190024; x=1707794824; darn=lists.linux.dev;
+        h=user-agent:in-reply-to:content-disposition:mime-version:references
+         :message-id:subject:cc:to:from:date:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=EWmE4W0F6JzWR2V7Cfi7Q0WB8ukiHYzdqVQ4h9OXpcs=;
+        b=VQ9WYmPh9RZ7EJGYY4Jgarozwb5mqfOdc/yuTu31iODnmT9iQIw0CmpcXwl0YbVgmN
+         Sd+fUb24+PY2ui9Q0d5xdE17bZ7OU4l0IJoEClOTbGrqWb0SiGJXXUFB0506wRRleNvO
+         xx59Bh1x5X0lylhFUciuAWf6TGyF4wTzU4C/tr7YeyVnc7TmUCHhZnG2WSMf7YgueSGT
+         nng7UCB4UksiaVOyh4R+cw6DgGenDftC02xnNiktdsQpg5XIHCqyYGlwdOhZkbVCHtdE
+         FaitZSVOW5RBefHXMnjNIlCP5g8t4NG/j3VNKR5rWRCYKSKuy8alYNMEOLrTGcPGdOr4
+         rWLw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1707190024; x=1707794824;
+        h=user-agent:in-reply-to:content-disposition:mime-version:references
+         :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=EWmE4W0F6JzWR2V7Cfi7Q0WB8ukiHYzdqVQ4h9OXpcs=;
+        b=uop0zvJe0ugun16bCQCrPNk5UO2iLaJAzLvhGZoreeOtsppKSwAqISMUD+IjqoE5W/
+         2Hucssfkr5kJezt8SRkFwqUBq7I1f5OJ1ytQkkaGVQol+GTySpXCWGh5ixOVmJ2OLRm2
+         rx7PF8VRVA5uTwU/f5ggji9E8RBPz7IK1b24kI6FKUMdNEcZaW7DtCSzPELkWhDV1T1t
+         NYFeWw6VAlcRIuMB+9b6SOf25QXAdN/xDlyVmE9uPECkZWzcGefw0ndvLXM7CG/ZLj6G
+         03g2aTzZmiIgsVF6NgLK+17gxxp2W7WSgI0WCM44jepbnJitk8hS6SCQ68HV4kCC+yee
+         zerw==
+X-Gm-Message-State: AOJu0Yzn+s8UGU5yG42hHpJ+e3FsVIWwpQEn+m+ARLkD1n2wUlbevH6p
+	wSi5MkvGHBcqWBv1oifJG5OHlsgi9LAdCkuhfpsgTHo3QvPc2wiI
+X-Google-Smtp-Source: AGHT+IFcLAO3UlSWN5NwuxhRD3zbinWJslbqmyaRKdP55n6E6QCBvshFD0VOa6+HmXyocmdEJv6olA==
+X-Received: by 2002:a05:6a00:1acf:b0:6dd:c7ea:29e with SMTP id f15-20020a056a001acf00b006ddc7ea029emr1709495pfv.12.1707190024482;
+        Mon, 05 Feb 2024 19:27:04 -0800 (PST)
+X-Forwarded-Encrypted: i=0; AJvYcCVOoTZB6QeEbsv+OMvjJIOJR9yNONXJ6Fa3btU7RT25GjtJvKHYD/g7kMHQrmp3NKnj1SzGTJg3zPzz98MjmbnGyyYQqNTjKP0uCCkgGrx2mW8D1APiQCivyRJsioj30os47Nz01o3SGML1y64mrfMzQOPzFNiB+8HzAb9UL1AgPK9i/uRuyGb4nRAtZcnJ
+Received: from cuiyangpei ([43.224.245.227])
+        by smtp.gmail.com with ESMTPSA id t12-20020a62d14c000000b006dfef3ed2d4sm689223pfl.110.2024.02.05.19.27.02
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 05 Feb 2024 19:27:04 -0800 (PST)
+Date: Tue, 6 Feb 2024 11:26:59 +0800
+From: cuiyangpei <cuiyangpei@gmail.com>
+To: SeongJae Park <sj@kernel.org>
+Cc: akpm@linux-foundation.org, damon@lists.linux.dev, linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org, xiongping1@xiaomi.com
 Subject: Re: [PATCH 1/2] mm/damon/sysfs: Implement recording feature
-Date: Mon,  5 Feb 2024 18:56:59 -0800
-Message-Id: <20240206025659.203155-1-sj@kernel.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20240129121316.GA9706@cuiyangpei>
-References: 
+Message-ID: <20240206032659.GA6910@cuiyangpei>
+References: <20240129121316.GA9706@cuiyangpei>
+ <20240206025659.203155-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240206025659.203155-1-sj@kernel.org>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 
-Hi Cuiyangpei,
-
-On Mon, 29 Jan 2024 20:13:16 +0800 cuiyangpei <cuiyangpei@gmail.com> wrote:
-
-> On Sun, Jan 28, 2024 at 08:28:04AM -0800, SeongJae Park wrote:
-> > On Sun, 28 Jan 2024 17:13:00 +0800 cuiyangpei <cuiyangpei@gmail.com> wrote:
-> > 
-> > > On Fri, Jan 26, 2024 at 12:04:54AM -0800, SeongJae Park wrote:
-> > [...]
-> > > > So, 'update_schemes_tried_regions' command is firstly handled by
-> > > > 'damon_sysfs_cmd_request_callback()', which is registered as
-> > > > after_wmarks_check() and after_aggregation() callback.  Hence
-> > > > 'update_schemes_tried_regions' command is still effectively working in
-> > > > aggregation interval granularity.  I think this is what you found, right?
-> > > > 
-> > > Yes.
-> > > > If I'm not wrongly understanding your point, I think the concern is valid.  I
-> > > > think we should make it works in sampling interval granularity.  I will try to
-> > > > make so.  Would that work for your use case?
-> > > > 
-> > > It's much better than working in aggregation interval.
-> > 
-> > Thank you for confirming.  I will start working on this.
-> > 
+On Mon, Feb 05, 2024 at 06:56:59PM -0800, SeongJae Park wrote:
+> Hi Cuiyangpei,
 > 
-> Great, looking forward to seeing the progress.
+> On Mon, 29 Jan 2024 20:13:16 +0800 cuiyangpei <cuiyangpei@gmail.com> wrote:
+> 
+> > On Sun, Jan 28, 2024 at 08:28:04AM -0800, SeongJae Park wrote:
+> > > On Sun, 28 Jan 2024 17:13:00 +0800 cuiyangpei <cuiyangpei@gmail.com> wrote:
+> > > 
+> > > > On Fri, Jan 26, 2024 at 12:04:54AM -0800, SeongJae Park wrote:
+> > > [...]
+> > > > > So, 'update_schemes_tried_regions' command is firstly handled by
+> > > > > 'damon_sysfs_cmd_request_callback()', which is registered as
+> > > > > after_wmarks_check() and after_aggregation() callback.  Hence
+> > > > > 'update_schemes_tried_regions' command is still effectively working in
+> > > > > aggregation interval granularity.  I think this is what you found, right?
+> > > > > 
+> > > > Yes.
+> > > > > If I'm not wrongly understanding your point, I think the concern is valid.  I
+> > > > > think we should make it works in sampling interval granularity.  I will try to
+> > > > > make so.  Would that work for your use case?
+> > > > > 
+> > > > It's much better than working in aggregation interval.
+> > > 
+> > > Thank you for confirming.  I will start working on this.
+> > > 
+> > 
+> > Great, looking forward to seeing the progress.
+> 
+> Just sent a patch[1] for this.
+> 
+> I also updated DAMON user-space tool, damo, to use this improvement[2].  I hope
+> that to help others who using DAMON with their own tool to easily understand
+> how they can get the improvement from this patch.
+> 
+> Also, please feel free to ask any questions and/or help.
+> 
+> [1] https://lore.kernel.org/r/20240206025158.203097-1-sj@kernel.org
+> [2] https://github.com/awslabs/damo/commit/75af3a1c0b3e79cd3207f0f8df5b5ac39f887450
+> 
+> 
+> Thanks,
+> SJ
+> 
+> [...]
 
-Just sent a patch[1] for this.
+Hi SeongJae,
 
-I also updated DAMON user-space tool, damo, to use this improvement[2].  I hope
-that to help others who using DAMON with their own tool to easily understand
-how they can get the improvement from this patch.
+Thank you for sending the patch. I will verify this feature on the phone and reach out
+if I have any questions or require assistance.
 
-Also, please feel free to ask any questions and/or help.
-
-[1] https://lore.kernel.org/r/20240206025158.203097-1-sj@kernel.org
-[2] https://github.com/awslabs/damo/commit/75af3a1c0b3e79cd3207f0f8df5b5ac39f887450
-
-
-Thanks,
-SJ
-
-[...]
+Thanks.
