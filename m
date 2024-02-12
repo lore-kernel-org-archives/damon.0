@@ -1,197 +1,133 @@
-Received: from EUR05-DB8-obe.outbound.protection.outlook.com (mail-db8eur05on2101.outbound.protection.outlook.com [40.107.20.101])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64FF96BB35
-	for <damon@lists.linux.dev>; Thu,  8 Feb 2024 09:07:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.20.101
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707383260; cv=fail; b=KJMUaOR7FtbZICFH1CLHWqBCO7zKbe9oljgEqDChldDewGCfYYwF5OaMPYhPZuVekPbOrJC+dmu9ERsiPxCxIUWnUOrtI5of933fAllaKIOxrk6pHhKlSElqWNw+HWCMFWOquZZ4Kotqpcu8ksUMKaBNsF1CK3FgwAoWjqxm7CI=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707383260; c=relaxed/simple;
-	bh=ZdTR+R7sjBcVclGWnM/OlntsWasQ0l3QHqzNLxX7Z+A=;
-	h=Message-ID:Date:Subject:To:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=XjPRk1L6vUqOcBPoZXTWfVCfQ3ygvBPy4NL1/AFUm7PC4oBoaEZCEpX8RWAzTIMcLuj955sibTvG5Ek04CJtCfAymMz4JvSniXh+dx/L8kWA+aHV7p+eRl5pS9mFutNnfIAziYtS3ayl71Li2FCKTXnulefZBol9LYuIicsTWGI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wolfvision.net; spf=pass smtp.mailfrom=wolfvision.net; dkim=pass (1024-bit key) header.d=wolfvision.net header.i=@wolfvision.net header.b=uhNxp1EG; arc=fail smtp.client-ip=40.107.20.101
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wolfvision.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=wolfvision.net
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D348145BFC
+	for <damon@lists.linux.dev>; Mon, 12 Feb 2024 19:43:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.50
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1707767021; cv=none; b=JgS5UFPVGkBcfP8vipLBqz/eiVTyMRakwpu2TC20q3mnhYZzqwbEsOYxEBWuy4QIbR1tjkllzMKnQ0wEGG3VZ/+Tecq7+jQ+qA14NiXiznOQBFnRMeF+lOVyGhIjBqRH3kNZxtXxfKLxRsIjfsNViLbTyK/Q6AM25gFdb/1NpuY=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1707767021; c=relaxed/simple;
+	bh=T0sehhjp1xWfnMxeOoCLszKthu4iGg8Z5jE5Gow6vMo=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=Xn+Msa+uw7ZknLTe4tcB8lQUakrD7iK+/vZq7m2dSulnsa3cas5c3dJa7KJmnMXL3ExUMf+nbXvIvgXEjBiGFrqDTuLHqOO8LoOQzFZCdW/EG0ISQjca9w+fl5baa9trtUUB7RRaxID+OF+NrUOVcp0GPefRYZ0sT0XUFWmw++c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=b/0yts9S; arc=none smtp.client-ip=209.85.208.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=wolfvision.net header.i=@wolfvision.net header.b="uhNxp1EG"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=A8p9wfI5Riayl1o8/zCLHq24zVp6mOZHGaQZ86npZktp/mViYJUNQBkqORiJiikXx95Hkz8dChATpwwbNwQjNPSdPWbCVXnnv6gsT7fzdS7kHPYboTH6SSEGem/1I4Q3YDfCHJ3yu+ODYHY6hXm/Ma+mOUJX7eI1+f/pQQXi1APAHZ/bfEvRAqZOT9sAgo2FfNHwgS+6UkGEySiWS3J+N949kEADpEw9xwfipJugpW5JN+VtstlufNT8KgYCU0j9n7d68UBB54oJz8pUTvJjrSnP93F0TyczZBY333uVy7tgcFu1UzCX76wARqUvoEoL2rpu8jU3RUHHq27iJ4WMBw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=4/QDUmchI/8giveOBkgQOOmdQlBw+oYeTjWUAGDah98=;
- b=S43rgsBNCUcOuTg2PRpQnjEqMaSo4Hhq8BdBnx06B8hXyZyVPuGQxqHYxsGGwpBMQMcz/6bYb840O0VeirW2T0RgHI6+QfIvhL0HR6fv9mYVJSIEuo9lVupGStwgIf9E4j+4Bv2mOlCv8yRwP24DmCayn9e1hjh3nECA1TE6mMthoDouKeaxpuHsVK2LDUrYS8BMbCxGMTkF/QbFr21XXUuJxUK8FIVSAWGkFXN7lYR+EwrkfB5P9HBIw6wB65z5lTf9jGt6LEJzPwRhpPkuzHDGUgR1+Yxe/U81L2/OUbj0R1j2b4wPHj3i0nugBT0FPLhnN/Jq2oZh5aiBkMprMA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=wolfvision.net; dmarc=pass action=none
- header.from=wolfvision.net; dkim=pass header.d=wolfvision.net; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=wolfvision.net;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=4/QDUmchI/8giveOBkgQOOmdQlBw+oYeTjWUAGDah98=;
- b=uhNxp1EGgeJ8nV5j15hqvKp39zKxgLHbXNF+TBk9XgcgzAemPoqpfUP3gxZDhCyxSs/FNEPcPoIZvQDjyuSswC/A80Eck0p5Wq94A2ObeSYfF5wKz+oRfrLGnec5mqu65dvwNrHIWRxSM3tx+RPo3VvSFwP3SLBxFN7o/vgvBB4=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=wolfvision.net;
-Received: from VE1PR08MB4974.eurprd08.prod.outlook.com (2603:10a6:803:111::15)
- by GV2PR08MB8415.eurprd08.prod.outlook.com (2603:10a6:150:ba::14) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7249.36; Thu, 8 Feb
- 2024 09:07:31 +0000
-Received: from VE1PR08MB4974.eurprd08.prod.outlook.com
- ([fe80::c8ee:9414:a0c6:42ab]) by VE1PR08MB4974.eurprd08.prod.outlook.com
- ([fe80::c8ee:9414:a0c6:42ab%7]) with mapi id 15.20.7249.039; Thu, 8 Feb 2024
- 09:07:31 +0000
-Message-ID: <bb312a1a-1103-471c-b32d-def068fc84db@wolfvision.net>
-Date: Thu, 8 Feb 2024 10:07:29 +0100
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] selftests: Add missing gitignore entries
-To: Bernd Edlinger <bernd.edlinger@hotmail.de>, SeongJae Park
- <sj@kernel.org>, Shuah Khan <shuah@kernel.org>, damon@lists.linux.dev,
- linux-mm@kvack.org, linux-kselftest@vger.kernel.org
-References: <AS8P193MB1285C963658008F1B2702AF7E4792@AS8P193MB1285.EURP193.PROD.OUTLOOK.COM>
-Content-Language: en-US
-From: Javier Carrasco <javier.carrasco@wolfvision.net>
-In-Reply-To: <AS8P193MB1285C963658008F1B2702AF7E4792@AS8P193MB1285.EURP193.PROD.OUTLOOK.COM>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: VI1PR0102CA0074.eurprd01.prod.exchangelabs.com
- (2603:10a6:803:15::15) To VE1PR08MB4974.eurprd08.prod.outlook.com
- (2603:10a6:803:111::15)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="b/0yts9S"
+Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-56001b47285so263654a12.1
+        for <damon@lists.linux.dev>; Mon, 12 Feb 2024 11:43:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1707767017; x=1708371817; darn=lists.linux.dev;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=n3vo9bp4gTksdR64ewvsApQF1O1XOI2NpsvTDAM0jX0=;
+        b=b/0yts9SicuyB0+JnCX36kEdMBHWE/lZWdJ9BBB4pcPhLLhfBK4LUjN4S/Ra4tMAes
+         JMj6VsLPZzJzOujV1/RnJdX9gGLl89HnJPPW76Jt/E0vhVMrTdlzaC0cfBsEoGQ5e+nE
+         315ZgVLRWwBz59mfthb8n7vOAkV7G+4rQgL/kScb0qsUNaPb5CvSlAOj0YNkfXDtLSeG
+         mjsjfjLDJcTkJKxdXBAeFRMs/01nDvdKkfiwjNy+kqWozRYYYdhD4MimxNgBLvOOJ5Bk
+         pvRbPAyXx2BErqc8Fq1ZNotC3B/b9fCf/NbWwdwEHYkQXKIArI5i6cbYgkwdNFJwbknv
+         gyDg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1707767017; x=1708371817;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=n3vo9bp4gTksdR64ewvsApQF1O1XOI2NpsvTDAM0jX0=;
+        b=Q5PReuJLkdpvWqXkpO/uwLJnw8stsMccsJJxS5d0JCXPG8TmJ46ahgnu3EhKG60lm1
+         uX1Ujc4esHvdmrzroEO8AFY9PjrD+RD93ylNfu5MlNEAshk6rJG1Fca4oZTJT9vC5FNf
+         KtzxmOizalmWvy/xSlTzeWel+A4Dmvsn1YxAfGeYCdbu3VHwm1JDj00XIM5qhlAj/hnb
+         fkcWOGUyEgNcwnLd+lr1yX1owt+w8igsXMlk+6oCSCSw009Agdet6TW1B7uhlXX1ufh6
+         hdtWzal6LckEyJf3fVM/KTVsZgR+OtfyYt/qM8KPXhK2T93i9ryG+gRJOmtsjMRg9DPK
+         uE3Q==
+X-Forwarded-Encrypted: i=1; AJvYcCWsFO/Ybks4EekY2MnvhET+bEB/Z8dqTTiInwk4jrD8753D2ie0J5AF1PaabllP0WOUWAKhueqnTUq/qXkh0FkxPipI6KA=
+X-Gm-Message-State: AOJu0YzI3BUpnYyM5dDqUiLcojF054CfLaKU+q3CgWRouG8XBLMN+aur
+	gra+7YqLGwsyP9FA7sgfwT8YZIBv6KTFYna1/NzQWmkTJxex62vZTuoJt3CMK4lpsw==
+X-Google-Smtp-Source: AGHT+IE7yigdKLPrssuNF0+DK51FR9eDvN/BkekJpQ0YRHo4CDw2MhxBYxDAHbV0fBzl3QdlTPNydg==
+X-Received: by 2002:a17:906:c318:b0:a3c:ee88:b600 with SMTP id s24-20020a170906c31800b00a3cee88b600mr358304ejz.47.1707767017591;
+        Mon, 12 Feb 2024 11:43:37 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCWaPcNnEqSOx5xmBXr4oPJxnbdhaRcWotPyFCOGuyrisp6R8oDGY8nM7U1oZh9qbTRbpVdTKZgep3cnPEM213tAUpxX/vWhyvvbF1/Gen7glHRCh1Yxbd+XnAM+nb7cyqsolXHt/SCjvCIhYrxc7ZQlhwIizQG6SvLi2p4e2RqYYiRJN3iWZ7ce8nCwFWJES3bu+jX8rSeAvyeMoZvFplWRN+PqLsT/QD6I8ooJo7jH/EZ9B7l2BRehTqt9j4D4759K
+Received: from [127.0.1.1] (2a02-8389-41cf-e200-8e14-1b8e-d285-8c63.cable.dynamic.v6.surfer.at. [2a02:8389:41cf:e200:8e14:1b8e:d285:8c63])
+        by smtp.gmail.com with ESMTPSA id s7-20020a17090699c700b00a3cb136aef0sm502323ejn.224.2024.02.12.11.43.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 12 Feb 2024 11:43:37 -0800 (PST)
+From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+Subject: [PATCH v2 0/4] selftests: add missing gitignore files and include
+ generated objects
+Date: Mon, 12 Feb 2024 20:43:35 +0100
+Message-Id: <20240212-selftest_gitignore-v2-0-75f0de50a178@gmail.com>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: VE1PR08MB4974:EE_|GV2PR08MB8415:EE_
-X-MS-Office365-Filtering-Correlation-Id: a535bff5-f974-4b4b-6cb2-08dc2885613e
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info:
-	sam2D+rSCtk1dbwPqIoMpHpIyEKx5ujuSiTjWcSAa0NPvYF2fEVjqPee26jcV1EuGnCo9AxQ8RFcx5VD4+QNUN60HHwplWMb8uXKDmhwePU6ttptkbAWb+cqmfHi/qjCifg5agaO+ewEYsRXOtCsdNlbvfZEVFIdHCZAGOQ8BuZMyhmFRsOXkZs3VAKbSe8GxX261oQ+Rf9iuKYXhWEWlKn9cFVMBBFMXP46EjcZ91wBA4/Qc+99GvUTce5kV+6pwsO5+uFflyI5NrcycePbdsr2WchXgfjRCxtiHxb4JSguNYXRhYOiqs5mfCYVrBqz8NtRoaC0jCdVK3XlKdBtevWmLiG7z5jKBpsDyj2p2Qwj4py0p8IfoPq9IctSQoJxsVkOBTAM/Q8PH0i8VzbAoLYGyLSgzciDsaVz1pqLZIB6oRAgn6dRhhddmzoHqpKRO1uJYwPUc58vjd/XZwfYmtiHV35kgMWRUL9Uk0X+jUYY/uKMG/yiKjiZCamDqvqLZzy23dh26VJOjw+ACJx/YdBEoNtk8z1mcYiTvU8Edrw=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:VE1PR08MB4974.eurprd08.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(396003)(376002)(39850400004)(136003)(366004)(346002)(230922051799003)(186009)(1800799012)(64100799003)(451199024)(41300700001)(8936002)(86362001)(8676002)(44832011)(31696002)(45080400002)(478600001)(6486002)(6506007)(6512007)(5660300002)(966005)(36756003)(53546011)(2616005)(316002)(110136005)(66476007)(66556008)(66946007)(26005)(83380400001)(38100700002)(2906002)(31686004);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?dE82YWlOd3ZNdlYyUnJCT2ZuVE82ZldwazV6ZEJYS2NtaE5uS3czaG50S1BI?=
- =?utf-8?B?SnNCOXBLNnk5WHA5V2RhWDlNRWpSejBEdk50cFROVEswbzdqa2JRS0Q1VWpE?=
- =?utf-8?B?UHVYOFZzcTkwTk5FQUlhMi9RVEVCOVNnYVBEWWJLRmdwQndXbFMxb1dPVHhW?=
- =?utf-8?B?NmFMbjNCVzgySFk2czJGTzIvTSt6WTVGTnBEL2VQelAxUkMzM2U4TDgxQTVl?=
- =?utf-8?B?cytUaERNanNrRXFhUHJ1a3BCL0VxdEtkb0E0MXV0ZFJkQndBb3VjWUhYeEw5?=
- =?utf-8?B?c2daVlNPWExvYUVGR1JJYlNIUkxoUFVuaEs5ck5XdnJOQ1JUeGZDRVdqL1pk?=
- =?utf-8?B?TFhtQkxGVDdrQlJhQTJ4bERRWjRxYmY1RGJNWlAyM2pjSU9DaDVsMUFmZ3dJ?=
- =?utf-8?B?SmZseWFkbHQxVFkxVSt5NWpkMkNIMGhwZm9WMEVvY2lvdDlVbnk2MnhXUTFt?=
- =?utf-8?B?eFFqNEl0QTgvK3RRYWJCSFV3NWMzQ2ZvU0N5Y09nSDdqVHlNYXRrdS9YVG93?=
- =?utf-8?B?VVBmY2djMWNOSXl6MGw1SHBuaTJ0cWNYY3ZTNm9wcUtlU0IyRlRNaE1pYmpi?=
- =?utf-8?B?MzFIazljY1BCN0hlU1dFcExjMDJpeUMyZlQxVDFGcVBBYWhjc3FBN3hLS0F3?=
- =?utf-8?B?OU52QlJTYTh0azNSb0xkUHk0dlpqbGdva3ZOK2NEM0E5Y0tjdThGLzVxRHps?=
- =?utf-8?B?VnVSWXVXcXoxdWpxcUhTbXlHdXBXNXlrQm1XSmFVbHNPVU01Qy9rMmlKVjN2?=
- =?utf-8?B?QkVIRHlZM0ZSenV3cG1DRkE0ZVdaYWxZM2gwK0d5eDJiS3gycm50dnlNellt?=
- =?utf-8?B?TnoyNWUybUlzaG52bzZLZjg5bHNXMEZRQllMS3FrYUFremRvczdnSEttNkNS?=
- =?utf-8?B?amVYcksydHRDYTdKcTdXTHh1cUlvVmRMWlZTUE1WcVZ5ZjM3RDdmVW0wbG1Z?=
- =?utf-8?B?bDRmc3I1bTZSUGUyNG94R0pJVi9VVnJoazc2WFNKVjZtVnVsUzNPT3BPYXll?=
- =?utf-8?B?V1Q2RnF2N2lVWEp0VFRSY0ZSSHh4d0VqK2NrcS9QYTk3T2ZSaDNVTitLcno4?=
- =?utf-8?B?LzhDN1QwS3JQSWFacnBldDEzMzZZSkxEK1hRSUpndkRUeWQxM0pPelUzZWQw?=
- =?utf-8?B?cE4vUmxzcUxCNFNXNUdONTlOVUp3Rjc0ZGNTdXJJdEg5ZytVQ2MyT3JQZnl5?=
- =?utf-8?B?dHg4NnhpUUtOWkV5TmhyNVlZQ1htb3V4RHM4ejBpcEsweWUxRldkRnZyd3ZX?=
- =?utf-8?B?QmVhWUFGUENLeUtnN1hXUWwwaGQ1MkIzWi9ySkQ0QU4ydGlmdU5CcmdsRGFk?=
- =?utf-8?B?cjVxbHhyMGRpQVhZM0lCUzJSS3BaeHBFdFdjbkJFSlZUcWJST25yTEx2U0ox?=
- =?utf-8?B?YXVIY0JZUS9MWHE5bkRHSEJ3aFdSWi9tYWNORG9QbFVhZk9TWTkvU1NSU3Jn?=
- =?utf-8?B?emo2Z3dZSzRSRGxCS3M0RFgyWDFFS2RWV0x3Z1gvZmNSR00vcllzYkJNSHZK?=
- =?utf-8?B?Zjh2YnUvMStsNWdTQUJncERhaHllcmdxcjJNZVkrNlhUd0hvYjIveGZSU0Yr?=
- =?utf-8?B?VlRPUUI5NE01S1dDeXN4T1BoSnhTQmVacGhWNDNmRTA4c2o4WmFQb1M1TU9p?=
- =?utf-8?B?cHdXN3hSMEZXdVpiOGQ5cy9hcWd6b2FKSlhCdUdQdTVMSkxHVDZTOXVNeXNF?=
- =?utf-8?B?OUsxV1ZScWxLdVVIWXl1MlFQd01FaG4vQ3FtQytqSW9rQ0VJZlp6L0ZkVlp2?=
- =?utf-8?B?SjJzdDhpN2tHaDJENG5GMmFoWDBhME5RcE9hdDB1dmtlNnFrMTAwcytPbWdU?=
- =?utf-8?B?YjBRM0ZCcmV3U1ovWEV2cGJySC8zWUZTNGFJYUxKNGoxdVc0UHk4NEVvc2Jr?=
- =?utf-8?B?M3NWMko2UnRJOC80UlR2L1NXQnBBVHJlL2pHUHNjQXBMZ1IzTTVNa3BNN2tw?=
- =?utf-8?B?djNZWGhlSWluMHVKZDVCdmJSZjd4VTNYN2diKzNpL1UraHVJSVpmaU9XWlh2?=
- =?utf-8?B?WFFsUXh2OTlrODhDSm5GZHByTmc4bHlGTngwUGpDVUI4WHdkWkI5YXcySDN0?=
- =?utf-8?B?bEd3ZTA4c2NVQWx4OHN6WHBTbkJIUEltNDNscUJENUs0aUZXZG5PaG9tWjkw?=
- =?utf-8?B?Y2dDSlF2NU9CT3Avb2pIeVZ3ZTM5SHJ1VUlzeXpOVU5EWDhEUklXK0g1YXNs?=
- =?utf-8?B?cWc9PQ==?=
-X-OriginatorOrg: wolfvision.net
-X-MS-Exchange-CrossTenant-Network-Message-Id: a535bff5-f974-4b4b-6cb2-08dc2885613e
-X-MS-Exchange-CrossTenant-AuthSource: VE1PR08MB4974.eurprd08.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 Feb 2024 09:07:30.9013
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: e94ec9da-9183-471e-83b3-51baa8eb804f
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 8rqSO0LXUppM63SAZAEobc3Twdbq33DMdIbqbd7q7RlJKmr4IifNIHuMWQJ7Pclg3n4V0CqgKOfssBebWwEIMUiNOZfcw+Xu1U62nlY2DOw=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: GV2PR08MB8415
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAOd0ymUC/32N0QrCIBRAf2Xc5wy1tlFP/UeMUHfnLjgNtVEM/
+ z3bB/R4DhzOBgkjYYJrs0HElRIFX0EeGjCz8hYZjZVBcnnmgguW0E0ZU35YymR9iMj6UUnT8lP
+ fdQg11Coh01F5M9fUv5yr8hlxovd+ug+VZ0o5xM8+XsXP/n2sgnGGuhOaX9SoeXuziyJ3NGGBo
+ ZTyBYK9TezJAAAA
+To: Shuah Khan <shuah@kernel.org>, SeongJae Park <sj@kernel.org>, 
+ Bernd Edlinger <bernd.edlinger@hotmail.de>
+Cc: linux-kselftest@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ damon@lists.linux.dev, linux-mm@kvack.org, 
+ Javier Carrasco <javier.carrasco.cruz@gmail.com>
+X-Mailer: b4 0.13-dev-0434a
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1707767016; l=2076;
+ i=javier.carrasco.cruz@gmail.com; s=20230509; h=from:subject:message-id;
+ bh=T0sehhjp1xWfnMxeOoCLszKthu4iGg8Z5jE5Gow6vMo=;
+ b=VI1nGBe+i3vNYwuDZEFPIb1hVKz6OMDvASuDHzixDrY9tuV3yfSZn2Em7pyH6ll9HFYsROH3d
+ 0GpiooV+liXDlVaNvEy+Ux8YTjm/JXAnilci/uX3VkTxiwefJIlR6Qw
+X-Developer-Key: i=javier.carrasco.cruz@gmail.com; a=ed25519;
+ pk=tIGJV7M+tCizagNijF0eGMBGcOsPD+0cWGfKjl4h6K8=
 
-On 26.01.24 06:24, Bernd Edlinger wrote:
-> Prevent them from polluting git status after building selftests.
-> 
-> Signed-off-by: Bernd Edlinger <bernd.edlinger@hotmail.de>
-> ---
->  tools/testing/selftests/damon/.gitignore                       | 1 +
->  tools/testing/selftests/thermal/intel/power_floor/.gitignore   | 2 ++
->  tools/testing/selftests/thermal/intel/workload_hint/.gitignore | 2 ++
->  tools/testing/selftests/uevent/.gitignore                      | 2 ++
->  4 files changed, 7 insertions(+)
->  create mode 100644 tools/testing/selftests/thermal/intel/power_floor/.gitignore
->  create mode 100644 tools/testing/selftests/thermal/intel/workload_hint/.gitignore
->  create mode 100644 tools/testing/selftests/uevent/.gitignore
-> 
-> diff --git a/tools/testing/selftests/damon/.gitignore b/tools/testing/selftests/damon/.gitignore
-> index c6c2965a6607..79b32e30fce3 100644
-> --- a/tools/testing/selftests/damon/.gitignore
-> +++ b/tools/testing/selftests/damon/.gitignore
-> @@ -1,2 +1,3 @@
->  # SPDX-License-Identifier: GPL-2.0-only
->  huge_count_read_write
-> +access_memory
-> diff --git a/tools/testing/selftests/thermal/intel/power_floor/.gitignore b/tools/testing/selftests/thermal/intel/power_floor/.gitignore
-> new file mode 100644
-> index 000000000000..754810406b33
-> --- /dev/null
-> +++ b/tools/testing/selftests/thermal/intel/power_floor/.gitignore
-> @@ -0,0 +1,2 @@
-> +# SPDX-License-Identifier: GPL-2.0-only
-> +power_floor_test
-> diff --git a/tools/testing/selftests/thermal/intel/workload_hint/.gitignore b/tools/testing/selftests/thermal/intel/workload_hint/.gitignore
-> new file mode 100644
-> index 000000000000..b5448c0576c9
-> --- /dev/null
-> +++ b/tools/testing/selftests/thermal/intel/workload_hint/.gitignore
-> @@ -0,0 +1,2 @@
-> +# SPDX-License-Identifier: GPL-2.0-only
-> +workload_hint_test
-> diff --git a/tools/testing/selftests/uevent/.gitignore b/tools/testing/selftests/uevent/.gitignore
-> new file mode 100644
-> index 000000000000..15127939d872
-> --- /dev/null
-> +++ b/tools/testing/selftests/uevent/.gitignore
-> @@ -0,0 +1,2 @@
-> +# SPDX-License-Identifier: GPL-2.0-only
-> +uevent_filtering
+This series aims to keep the git status clean after building the
+selftests by adding some missing .gitignore files and object inclusion
+in existing .gitignore files. This is one of the requirements listed in
+the selftests documentation for new tests, but it is not always followed
+as desired.
 
-Hi, there is already a series for this:
+After adding these .gitignore files and including the generated objects,
+the working tree appears clean again.
 
-https://lore.kernel.org/linux-kselftest/20240101-selftest_gitignore-v1-0-eb61b09adb05@gmail.com/
+The new version includes a missing entry fot the .gitignore in damon,
+which was reported by Bernd Edlinger <bernd.edlinger@hotmail.de>, who
+also proposed a patch for it as well as for other missing .gitignore
+files covered by v1. Bernd has been added to the corresponding patch as
+the reporter. If a different tag is desired, I am fine with it.
 
-which was sent longer than a month ago. That series still does not have
+To: Shuah Khan <shuah@kernel.org>
+To: SeongJae Park <sj@kernel.org>
+To: Bernd Edlinger <bernd.edlinger@hotmail.de>
+Cc: linux-kselftest@vger.kernel.org
+Cc: linux-kernel@vger.kernel.org
+Cc: damon@lists.linux.dev
+Cc: linux-mm@kvack.org
+Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
 
-tools/testing/selftests/damon/.gitignore
+Changes in v2:
+- Remove patch for netfilter (not relevant anymore).
+- Add patch for damon (missing binary in .gitignore).
+- Link to v1: https://lore.kernel.org/r/20240101-selftest_gitignore-v1-0-eb61b09adb05@gmail.com
 
-and includes
+---
+Javier Carrasco (4):
+      selftests: uevent: add missing gitignore
+      selftests: thermal: intel: power_floor: add missing gitignore
+      selftests: thermal: intel: workload_hint: add missing gitignore
+      selftests: damon: add access_memory to .gitignore
 
-tools/testing/selftests/netfilter/.gitignore
-
-which is not required anymore.
-
-tools/testing/selftests/thermal/intel/power_floor/.gitignore
-tools/testing/selftests/thermal/intel/workload_hint/.gitignore
-tools/testing/selftests/uevent/.gitignore
-
-are still in the queue.
+ tools/testing/selftests/damon/.gitignore                       | 1 +
+ tools/testing/selftests/thermal/intel/power_floor/.gitignore   | 1 +
+ tools/testing/selftests/thermal/intel/workload_hint/.gitignore | 1 +
+ tools/testing/selftests/uevent/.gitignore                      | 1 +
+ 4 files changed, 4 insertions(+)
+---
+base-commit: 716f4aaa7b48a55c73d632d0657b35342b1fefd7
+change-id: 20240101-selftest_gitignore-7da2c503766e
 
 Best regards,
-Javier Carrasco
+-- 
+Javier Carrasco <javier.carrasco.cruz@gmail.com>
 
