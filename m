@@ -1,103 +1,69 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 546A94644F;
-	Mon, 12 Feb 2024 20:23:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B3434D584;
+	Mon, 12 Feb 2024 22:14:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707769438; cv=none; b=KouoJSz9g4c0yw33VRkc2EYM+nA2Tmd6J9PaXNQI9ajvQnNHnKYt2vWhRRSzLtphswhVJIXQmdCtWrZ6u4Osh4QvEKtHTI6heC50huHKnF95fB8JpwILDqDIpcagx3duj4aCUxGXPH21oN/njkY5OmV4AIIr2xypdwLydnsrPao=
+	t=1707776091; cv=none; b=lzirXJ6kshoTXFdlLyoqxi6RmGSGel5nLCZmlhEMcbJ5acOX79ZbHhIpdn3EZ3Uzc7WskSFM+5vhmjYs6hS2cY+pxi7ZHBvoRJwYrA+LITEOFTgzJEhyXvBMS9Oqq15vvxJyMmHfu8p33e/AfJh4CWj29QJI4j2gFacwswyQwLI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707769438; c=relaxed/simple;
-	bh=JQf2lj/HzjPCnEf/bSiPcFb7iymUO94Ot5ZsNI7BFTQ=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=Htst9L72KrnAiv3U9nivqz232RrSiaaDBMkqb+2Z6+ZAjCPCugsbNRNUSQm4TbLfQtAh3WibUkIJSFMtlYhzinEq4d3wxKor34infTD2DOA8QRYg6lkEB5ClH5M0VmN7wMdDiP76GbptBOyUBQkm085XOfzm6jj0jXDOprK/LR8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=J2RLtG4g; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1707776091; c=relaxed/simple;
+	bh=toXHHTbqeffryJhHki02NqbDsdW7aRSndGKlscFHQkU=;
+	h=Date:From:To:Cc:Subject:Message-Id:In-Reply-To:References:
+	 Mime-Version:Content-Type; b=tG9pJKCkMPu9RnDR5iX94WPOEaCdxeJc029JwYpSRyk+gcEbuMtlwnJAbnlTmNvl60zQjQEIMYyYRDOPct/gjbSv9DbjQ+axuoYzWupQlgu4Zxrh0vUTCGYcCma3vRCMq3+No1H5SZZzB9nvrZ+4cVa/zyB/vjxH5wHYGKd85PU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linux-foundation.org header.i=@linux-foundation.org header.b=lg8wZKjp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="J2RLtG4g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6524FC433C7;
-	Mon, 12 Feb 2024 20:23:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1707769438;
-	bh=JQf2lj/HzjPCnEf/bSiPcFb7iymUO94Ot5ZsNI7BFTQ=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J2RLtG4g3Y8jRHRN96RqXggg8ZI07R9k9EXGIdTIJZZV5M4jwgikh+zBQwZPVDYn6
-	 mXQ07PE/UVuDnzO1WK7f99rY9D0K/eFRLsrUe2jnjU5CkYJBpWPlk7i9cW+WGZFf99
-	 y5ATK5fbpLwRtWxMBIHRLaG8Qoo8K/LyYkViIGI8liSuvywKbY1ySfMbWWXfXS+TlD
-	 ejHF+VsLi9rvdusRuU2SoqTgtB9Do7l7cHio8aDRKCIjKAxjiDDNdZWP1s53pVGC54
-	 5vCQTt1zcpXIISiVRGRakWQ2sjB8PksbyFmA/KYWc/WG4S4eDI4lExHRSTWP9vAaPu
-	 hcBqAZnTIhqTg==
-From: SeongJae Park <sj@kernel.org>
-To: Javier Carrasco <javier.carrasco.cruz@gmail.com>
-Cc: SeongJae Park <sj@kernel.org>,
-	Shuah Khan <shuah@kernel.org>,
-	Bernd Edlinger <bernd.edlinger@hotmail.de>,
-	linux-kselftest@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: Re: [PATCH v2 4/4] selftests: damon: add access_memory to .gitignore
-Date: Mon, 12 Feb 2024 12:23:56 -0800
-Message-Id: <20240212202356.73461-1-sj@kernel.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <34986860-41e5-4d03-a0c5-72af12e7e97c@gmail.com>
-References: 
+	dkim=pass (1024-bit key) header.d=linux-foundation.org header.i=@linux-foundation.org header.b="lg8wZKjp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D184C433C7;
+	Mon, 12 Feb 2024 22:14:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linux-foundation.org;
+	s=korg; t=1707776090;
+	bh=toXHHTbqeffryJhHki02NqbDsdW7aRSndGKlscFHQkU=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=lg8wZKjp289xTkn6gV3mdgQRoKqlXRvvQATwOA1IG2m/OTQpgOiYrm2yBj4G1KKd4
+	 FQlmTMd0pvfrJFq1i2sJEH09Z6I7u9n+Tduca9LcEiOqio1rjP0x5COybTadQ8Z1z+
+	 X8pbUtQI4nKViZmFpzSfobpvs1K8hwmigTdO7PlE=
+Date: Mon, 12 Feb 2024 14:14:49 -0800
+From: Andrew Morton <akpm@linux-foundation.org>
+To: SeongJae Park <sj@kernel.org>
+Cc: Javier Carrasco <javier.carrasco.cruz@gmail.com>, Shuah Khan
+ <shuah@kernel.org>, Bernd Edlinger <bernd.edlinger@hotmail.de>,
+ linux-kselftest@vger.kernel.org, linux-kernel@vger.kernel.org,
+ damon@lists.linux.dev, linux-mm@kvack.org
+Subject: Re: [PATCH v2 4/4] selftests: damon: add access_memory to
+ .gitignore
+Message-Id: <20240212141449.a72329a7ea28fd9ff828d1eb@linux-foundation.org>
+In-Reply-To: <20240212202356.73461-1-sj@kernel.org>
+References: <34986860-41e5-4d03-a0c5-72af12e7e97c@gmail.com>
+	<20240212202356.73461-1-sj@kernel.org>
+X-Mailer: Sylpheed 3.8.0beta1 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
-On Mon, 12 Feb 2024 21:07:34 +0100 Javier Carrasco <javier.carrasco.cruz@gmail.com> wrote:
+On Mon, 12 Feb 2024 12:23:56 -0800 SeongJae Park <sj@kernel.org> wrote:
 
-> 
-> 
-> On 12.02.24 20:53, SeongJae Park wrote:
-> > Hello,
 > > 
-> > On Mon, 12 Feb 2024 20:43:39 +0100 Javier Carrasco <javier.carrasco.cruz@gmail.com> wrote:
+> > > Also, note that this conflicts on mm-unstable.
 > > 
-> >> This binary is missing in the .gitignore and stays as an untracked file.
-> >>
-> >> Reported-by: Bernd Edlinger <bernd.edlinger@hotmail.de>
-> >> Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
-> > 
-> > 'checkpatch.pl' complains as below:
-> > 
-> >     WARNING: Reported-by: should be immediately followed by Closes: with a URL to the report
-> >     #11:
-> >     Reported-by: Bernd Edlinger <bernd.edlinger@hotmail.de>
-> >     Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
-> > 
-> > I guess the 'Closes:' could this link?
-> > https://lore.kernel.org/r/AS8P193MB1285C963658008F1B2702AF7E4792@AS8P193MB1285.EURP193.PROD.OUTLOOK.COM
-> >
+> > Should I use mm-unstable as basis to make sure no conflicts are introduced?
 > 
-> I will add the Closes tag with the right link, thank you.
-
-Thank you :)
-
+> DAMON selftest patches could be merged in mm-unstable or linux-kselftest
+> depending on cases.
 > 
-> > Also, note that this conflicts on mm-unstable.
+> If you rebase this on mm-unstable, it might conflict on linux-kselftest.
+> Letting Shuah merge this on linux-kselftest and asking Linus Torvalds to fix
+> the conflict in next merge window could be one possible option.
 > 
-> Should I use mm-unstable as basis to make sure no conflicts are introduced?
+> Or, making this split out of this series, rebase on mm-unstable, and asking
+> Andrew Morton to carry may be another option.
+> 
+> Andrew and Shuah, may I ask your opinions?
 
-DAMON selftest patches could be merged in mm-unstable or linux-kselftest
-depending on cases.
-
-If you rebase this on mm-unstable, it might conflict on linux-kselftest.
-Letting Shuah merge this on linux-kselftest and asking Linus Torvalds to fix
-the conflict in next merge window could be one possible option.
-
-Or, making this split out of this series, rebase on mm-unstable, and asking
-Andrew Morton to carry may be another option.
-
-Andrew and Shuah, may I ask your opinions?
-
-
-Thanks,
-SJ
-
-[...]
+I'd say base it on mm-unstable so we don't have conflicts for people to
+deal with?
