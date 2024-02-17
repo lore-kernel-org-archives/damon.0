@@ -1,44 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADDE11384A6;
-	Fri, 16 Feb 2024 19:40:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6C0822324;
+	Sat, 17 Feb 2024 00:58:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708112431; cv=none; b=lJU3NZP/RTLfNc+x7mRg4Iui7cOmBTjrfh3ZQQSAXrWDru5LOisx//1GG4raCTDjYcGlh3RcVE4dAhMGQgU2Ude3uLvgA9zBnIZQsCZbIXws1licfHmT5ctCVXa1cXrm0dWD2YCF8JALXmF2l9popdmozZSz+GyVWdXcTOSKmn8=
+	t=1708131527; cv=none; b=oxKrwtZK5CpiAV7ps/aJXd5Q16syT6yCPYtXqM6MoRUNHHX8sRQOT+EfcGkgK8PAjByBDeLMf00kWenS1vViD0988hHVn/RGCNocK7ywmgl4xbfv4hdDl0oGBuz8XHcXKryoyefzsQjDFjPv2XjftekFmSFUFhIKAwLAdkl4yH4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708112431; c=relaxed/simple;
-	bh=etiMiObm+F9ASsbV6LLYp5TjRxnoRmCToWxcmcZj1K8=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=J5tTS0RB+G3tckBtkYdkoIlZBrjZv8B730+ImBe3g+lTjjexXdKbsNH1WPRasoDOdoXxVAst3wirc+36y1V86TAMqqY6zc5AZtw1flgTWemICN5QU2vLx39NOjXE0WqybZJwqO7Md2DdePuZm+EadG4Hu7j1EYEHZyX6Lb8QUuM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fRYPNC/u; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1708131527; c=relaxed/simple;
+	bh=8h4idkcZ9/velcicL8yw70oYm4VFVe3u7WuORG7lR/U=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=FwP/FLCUQjhPvcKaVm/1SzTGJlJmDX+LBcLoSheecD0NUlSq1olpeo2ibBlAdvLAKblrCW0J1i1aNPkwfsz/y9AMr5RHQhYph9Y7cjiBdX1U5xPX+HOT3m7L+5HxdvUHROwd5MFr2uk5W9Bi1/8pXw0wCTZoIh115Z1rVqxfKIE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tAtziyMr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fRYPNC/u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4D2BC43390;
-	Fri, 16 Feb 2024 19:40:30 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tAtziyMr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1F96C43390;
+	Sat, 17 Feb 2024 00:58:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1708112431;
-	bh=etiMiObm+F9ASsbV6LLYp5TjRxnoRmCToWxcmcZj1K8=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fRYPNC/ufDnWbXmlor3hTrxVpeLeQeqoH5Tg7VzdZ22oqQ3qLjlcQJGqBrWZcR5Ub
-	 ouYrL/CbRvtNKpTdOFIQgPUaW+HhRLqCjz4l8rAGDGNrO52C4FMbK/n9mYfRqiHiPv
-	 aGFG8KmoVc6K1f8gwozQf+vRPWxBoA52ltgfVCsadI+uVfMglPoyrlqnAO+KNtD+n1
-	 1DvQocMmt7Xwv84fgFSDj4M3YX3JVe7P3r766bZ9OTsih9V3wg2dIz5eKUFtJed+uK
-	 1lf7O5mydvMnqpnEVljBemydiL1kyxZV7erNndJb4784B1DYoDaZ76h0PWLOynQ65z
-	 3gXRHCAU2KFCw==
+	s=k20201202; t=1708131526;
+	bh=8h4idkcZ9/velcicL8yw70oYm4VFVe3u7WuORG7lR/U=;
+	h=From:To:Cc:Subject:Date:From;
+	b=tAtziyMrc7FCbaofVYCTw1A3vCMjt0XX3cQIF6jFmHJqY/oalZ2Q7valmatDwSYue
+	 LlUjvwgPjnC/l/0STKV4suYFupObrmuTRLTK+9r72Cvt4Q0ElFJVtR6XaY1ez5MyYW
+	 w1XM+7WYtLUfc2wY6iW4KBhz9CNVasJk0aSZt55HfMAbgk9pnhmwjo113Jmk8fNxd/
+	 Kg5nYEozsNADjvRJkNdU7VeaCSXhfc6WL2FVl3TS5gcuYJX8/mZ5RnSNw3IjoY/gO5
+	 b7Ta7LVOgwhq+Hko4SZJWpzJU+vBwzlqYnqR6weeViGMT6muD8QqCiLcZmiYkn/sY9
+	 Ha4v5JtbRavbw==
 From: SeongJae Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SeongJae Park <sj@kernel.org>,
+	Jonathan Corbet <corbet@lwn.net>,
 	damon@lists.linux.dev,
 	linux-mm@kvack.org,
-	stable@vger.kernel.org,
+	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH 2/2] mm/damon/lru_sort: fix quota status loss due to online tunings
-Date: Fri, 16 Feb 2024 11:40:25 -0800
-Message-Id: <20240216194025.9207-3-sj@kernel.org>
+Subject: [PATCH 0/5] Docs/mm/damon: misc readability improvements
+Date: Fri, 16 Feb 2024 16:58:37 -0800
+Message-Id: <20240217005842.87348-1-sj@kernel.org>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20240216194025.9207-1-sj@kernel.org>
-References: <20240216194025.9207-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -47,97 +45,26 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-For online parameters change, DAMON_LRU_SORT creates new schemes based
-on latest values of the parameters and replaces the old schemes with the
-new one.  When creating it, the internal status of the quotas of the old
-schemes is not preserved.  As a result, charging of the quota starts
-from zero after the online tuning.  The data that collected to estimate
-the throughput of the scheme's action is also reset, and therefore the
-estimation should start from the scratch again.  Because the throughput
-estimation is being used to convert the time quota to the effective size
-quota, this could result in temporal time quota inaccuracy.  It would be
-recovered over time, though.  In short, the quota accuracy could be
-temporarily degraded after online parameters update.
+Fix trivial mistakes and improve layout of information on different
+documents for DAMON.
 
-Fix the problem by checking the case and copying the internal fields for
-the status.
+SeongJae Park (5):
+  Docs/mm/damon/maintainer-profile: fix reference links for
+    mm-[un]stable tree
+  Docs/mm/damon: move the list of DAMOS actions to design doc
+  Docs/mm/damon: move DAMON operation sets list from the usage to the
+    design document
+  Docs/mm/damon: move monitoring target regions setup detail from the
+    usage to the design document
+  Docs/admin-guide/mm/damon/usage: fix wrong quotas diabling condition
 
-Fixes: 40e983cca927 ("mm/damon: introduce DAMON-based LRU-lists Sorting")
-Cc: <stable@vger.kernel.org> # 6.0.x
-Signed-off-by: SeongJae Park <sj@kernel.org>
----
- mm/damon/lru_sort.c | 43 ++++++++++++++++++++++++++++++++++++-------
- 1 file changed, 36 insertions(+), 7 deletions(-)
+ Documentation/admin-guide/mm/damon/usage.rst  | 85 ++++++-------------
+ Documentation/mm/damon/design.rst             | 50 +++++++++--
+ Documentation/mm/damon/maintainer-profile.rst |  8 +-
+ 3 files changed, 73 insertions(+), 70 deletions(-)
 
-diff --git a/mm/damon/lru_sort.c b/mm/damon/lru_sort.c
-index f2e5f9431892..3de2916a65c3 100644
---- a/mm/damon/lru_sort.c
-+++ b/mm/damon/lru_sort.c
-@@ -185,9 +185,21 @@ static struct damos *damon_lru_sort_new_cold_scheme(unsigned int cold_thres)
- 	return damon_lru_sort_new_scheme(&pattern, DAMOS_LRU_DEPRIO);
- }
- 
-+static void damon_lru_sort_copy_quota_status(struct damos_quota *dst,
-+		struct damos_quota *src)
-+{
-+	dst->total_charged_sz = src->total_charged_sz;
-+	dst->total_charged_ns = src->total_charged_ns;
-+	dst->charged_sz = src->charged_sz;
-+	dst->charged_from = src->charged_from;
-+	dst->charge_target_from = src->charge_target_from;
-+	dst->charge_addr_from = src->charge_addr_from;
-+}
-+
- static int damon_lru_sort_apply_parameters(void)
- {
--	struct damos *scheme;
-+	struct damos *scheme, *hot_scheme, *cold_scheme;
-+	struct damos *old_hot_scheme = NULL, *old_cold_scheme = NULL;
- 	unsigned int hot_thres, cold_thres;
- 	int err = 0;
- 
-@@ -195,18 +207,35 @@ static int damon_lru_sort_apply_parameters(void)
- 	if (err)
- 		return err;
- 
-+	damon_for_each_scheme(scheme, ctx) {
-+		if (!old_hot_scheme) {
-+			old_hot_scheme = scheme;
-+			continue;
-+		}
-+		old_cold_scheme = scheme;
-+	}
-+
- 	hot_thres = damon_max_nr_accesses(&damon_lru_sort_mon_attrs) *
- 		hot_thres_access_freq / 1000;
--	scheme = damon_lru_sort_new_hot_scheme(hot_thres);
--	if (!scheme)
-+	hot_scheme = damon_lru_sort_new_hot_scheme(hot_thres);
-+	if (!hot_scheme)
- 		return -ENOMEM;
--	damon_set_schemes(ctx, &scheme, 1);
-+	if (old_hot_scheme)
-+		damon_lru_sort_copy_quota_status(&hot_scheme->quota,
-+				&old_hot_scheme->quota);
- 
- 	cold_thres = cold_min_age / damon_lru_sort_mon_attrs.aggr_interval;
--	scheme = damon_lru_sort_new_cold_scheme(cold_thres);
--	if (!scheme)
-+	cold_scheme = damon_lru_sort_new_cold_scheme(cold_thres);
-+	if (!cold_scheme) {
-+		damon_destroy_scheme(hot_scheme);
- 		return -ENOMEM;
--	damon_add_scheme(ctx, scheme);
-+	}
-+	if (old_cold_scheme)
-+		damon_lru_sort_copy_quota_status(&cold_scheme->quota,
-+				&old_cold_scheme->quota);
-+
-+	damon_set_schemes(ctx, &hot_scheme, 1);
-+	damon_add_scheme(ctx, cold_scheme);
- 
- 	return damon_set_region_biggest_system_ram_default(target,
- 					&monitor_region_start,
+
+base-commit: 1a09812aed136b8caa4b976c78135b1e99d16412
 -- 
 2.39.2
 
