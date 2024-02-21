@@ -1,45 +1,58 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F26015BAE1;
-	Mon, 19 Feb 2024 19:44:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1831193;
+	Wed, 21 Feb 2024 00:15:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708371891; cv=none; b=UVOjBbWalIEX+LFOUrO/ONFDudk4HA9B5HDFJVCcVyMyuNyqVM5+N4JSSFQPINXH8dnF9p8/cAxv5ZtFH7M3Lk9AWq82APAnQNcOOKlTQO1jT7mmXqag0dkTGtOQPMtsfCP4b4FCpH5YWYDuaBHLwXAfP2ARwiVzn72XBwloOB8=
+	t=1708474556; cv=none; b=ptP7jRi+iqPZbEhZLjheeo/n/wo8oETVlciTQPZqCY2lX7/pm4R7iOXOjcsomwZEQ3V9A/MqyUqlv04AxKAFlzQqOsMpTPBm0TwWl8/CepB4VtFbCfkxqMpS33cH2f+uNh+ZD4z1DiAEmFYfsi+T+f+JqtuOUyIjvVwL6e32fOI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708371891; c=relaxed/simple;
-	bh=N9nR7nwUdsukBui32rCfnM5+OryMCusxZ8X3or6m4gs=;
+	s=arc-20240116; t=1708474556; c=relaxed/simple;
+	bh=3UKf88/OO9PrlzxTprcbvLUA+oabicAk0A7ct1jS0Hk=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=nZixfB0rYYq8AcyKehY0F1SuScN/nMe2x4oLn1gX6KImqKaH4QQqQcOTRF3TAOczurA2uh2DxPkPXBava3JEv+B5g8xWvikndPXIXsCvoBCvrbkb/VEegmMYvsiW5OTzI06WBxRGcw1OM0Mc86y0lqRRArYayXXhRlyP6BBrfow=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KqdSM2r2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iJX25f2QzjInlRvKXOGupdGiGVGfmjuyFt+KQn6otaP8pLjgb+YPE/RNhqGn7twGax3BqZww2S1ZyLCsnnqk1XG0kV83o+fVXZPslPsYCArHkRQbTJMnGh58Z5zmT784OmgSewQhWwatjJN3K8/0EpYzVOu7njBzLJCxf3b3jRI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RkXi10iY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KqdSM2r2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D981C43394;
-	Mon, 19 Feb 2024 19:44:50 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RkXi10iY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CBE8C433C7;
+	Wed, 21 Feb 2024 00:15:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1708371890;
-	bh=N9nR7nwUdsukBui32rCfnM5+OryMCusxZ8X3or6m4gs=;
+	s=k20201202; t=1708474555;
+	bh=3UKf88/OO9PrlzxTprcbvLUA+oabicAk0A7ct1jS0Hk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KqdSM2r2arnrE2pBIUDFF7hZiMjke6At78DYHjdLpERwp7GzGMMfZrZD/XkvVsvoL
-	 iZ0gKt+cXZC2/Q6/wDxgAXwR2lScpDLfLDBK0fbWYh8QYEaBEUqQaD8GbSEYU19OnH
-	 U++3UpC6Jpa+GOpKK5QyaegBWlVfHsoysde0a5MGIv1cNeG+RjS1KFiSJb8z408nxj
-	 LTZLeZw/EPiwFOioMXDWha/73iN4Zoz2vCX2USa/2Djbqs9MMszoIsoedfNOl1FCfS
-	 7RKT1NeXBEKPFeYON6dpCo1wCv301lTmRD+TNX3etwdGvFarVDTz+/bbCnHbR5kJo9
-	 LiI+VOgnX3CPg==
+	b=RkXi10iYaVYVR6VWm0leETcV94QcWYGMz2HrbLzdfyOmSH3a00DymBH7cmNDfoCQi
+	 xVC3Lu24E7JnEX1XF/Lk9qhedRTkL3OJWZVSfh6VSA+WHQkPvKw6KxkWoONnnMoW/h
+	 ew/G06241W01m+IyrtIpnwkIlp5tZQ32JKZztZH6cokg57zT7x948cHRVRDB2OpqMP
+	 4D2Y/oIWNa7SjW4oCLM4i6kubdTmfezA1emHIPDkosedFLPgiJM6alKOo/n7A4Rfaj
+	 7NXD4LRnXH1QZfqEvUE6zVkzw702mkguz9NWymEOmKiIXZ/N/jRqSAl6Jah/G9ZU4j
+	 24DQUhf1xETRA==
 From: SeongJae Park <sj@kernel.org>
-To: Andrew Morton <akpm@linux-foundation.org>
-Cc: SeongJae Park <sj@kernel.org>,
-	Jonathan Corbet <corbet@lwn.net>,
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org,
+	patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net,
+	rwarsow@gmx.de,
+	conor@kernel.org,
+	allen.lkml@gmail.com,
 	damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	linux-doc@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH 20/20] Docs/admin-guide/mm/damon/reclaim: document auto-tuning parameters
-Date: Mon, 19 Feb 2024 11:44:31 -0800
-Message-Id: <20240219194431.159606-21-sj@kernel.org>
+	SeongJae Park <sj@kernel.org>
+Subject: Re: [PATCH 6.7 000/309] 6.7.6-rc1 review
+Date: Tue, 20 Feb 2024 16:15:52 -0800
+Message-Id: <20240221001552.46741-1-sj@kernel.org>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20240219194431.159606-1-sj@kernel.org>
-References: <20240219194431.159606-1-sj@kernel.org>
+In-Reply-To: <20240220205633.096363225@linuxfoundation.org>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -48,52 +61,65 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Update DAMON_RECLAIM usage document for the user/self feedback based
-auto-tuning of the quota.
+Hello,
 
-Signed-off-by: SeongJae Park <sj@kernel.org>
+On Tue, 20 Feb 2024 21:52:39 +0100 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+
+> This is the start of the stable review cycle for the 6.7.6 release.
+> There are 309 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Thu, 22 Feb 2024 20:55:42 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.7.6-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.7.y
+> and the diffstat can be found below.
+
+This rc kernel passes DAMON functionality test[1] on my test machine.
+Attaching the test results summary below.  Please note that I retrieved the
+kernel from linux-stable-rc tree[2].
+
+Tested-by: SeongJae Park <sj@kernel.org>
+
+[1] https://github.com/awslabs/damon-tests/tree/next/corr
+[2] c40c992a3e2e ("Linux 6.7.6-rc1")
+
+Thanks,
+SJ
+
+[...]
+
 ---
- .../admin-guide/mm/damon/reclaim.rst          | 27 +++++++++++++++++++
- 1 file changed, 27 insertions(+)
 
-diff --git a/Documentation/admin-guide/mm/damon/reclaim.rst b/Documentation/admin-guide/mm/damon/reclaim.rst
-index 343e25b252f4..af05ae617018 100644
---- a/Documentation/admin-guide/mm/damon/reclaim.rst
-+++ b/Documentation/admin-guide/mm/damon/reclaim.rst
-@@ -117,6 +117,33 @@ milliseconds.
- 
- 1 second by default.
- 
-+quota_mem_pressure_us
-+---------------------
-+
-+Desired level of memory pressure-stall time in microseconds.
-+
-+While keeping the caps that set by other quotas, DAMON_RECLAIM automatically
-+increases and decreases the effective level of the quota aiming this level of
-+memory pressure is incurred.  System-wide ``some`` memory PSI in microseconds
-+per quota reset interval (``quota_reset_interval_ms``) is collected and
-+compared to this value to see if the aim is satisfied.  Value zero means
-+disabling this auto-tuning feature.
-+
-+Disabled by default.
-+
-+quota_autotune_feedback
-+-----------------------
-+
-+User-specifiable feedback for auto-tuning of the effective quota.
-+
-+While keeping the caps that set by other quotas, DAMON_RECLAIM automatically
-+increases and decreases the effective level of the quota aiming receiving this
-+feedback of value ``10,000`` from the user.  DAMON_RECLAIM assumes the feedback
-+value and the quota are positively proportional.  Value zero means disabling
-+this auto-tuning feature.
-+
-+Disabled by default.
-+
- wmarks_interval
- ---------------
- 
--- 
-2.39.2
-
+ok 1 selftests: damon: debugfs_attrs.sh
+ok 2 selftests: damon: debugfs_schemes.sh
+ok 3 selftests: damon: debugfs_target_ids.sh
+ok 4 selftests: damon: debugfs_empty_targets.sh
+ok 5 selftests: damon: debugfs_huge_count_read_write.sh
+ok 6 selftests: damon: debugfs_duplicate_context_creation.sh
+ok 7 selftests: damon: debugfs_rm_non_contexts.sh
+ok 8 selftests: damon: sysfs.sh
+ok 9 selftests: damon: sysfs_update_removed_scheme_dir.sh
+ok 10 selftests: damon: reclaim.sh
+ok 11 selftests: damon: lru_sort.sh
+ok 1 selftests: damon-tests: kunit.sh
+ok 2 selftests: damon-tests: huge_count_read_write.sh
+ok 3 selftests: damon-tests: buffer_overflow.sh
+ok 4 selftests: damon-tests: rm_contexts.sh
+ok 5 selftests: damon-tests: record_null_deref.sh
+ok 6 selftests: damon-tests: dbgfs_target_ids_read_before_terminate_race.sh
+ok 7 selftests: damon-tests: dbgfs_target_ids_pid_leak.sh
+ok 8 selftests: damon-tests: damo_tests.sh
+ok 9 selftests: damon-tests: masim-record.sh
+ok 10 selftests: damon-tests: build_i386.sh
+ok 11 selftests: damon-tests: build_arm64.sh
+ok 12 selftests: damon-tests: build_m68k.sh
+ok 13 selftests: damon-tests: build_i386_idle_flag.sh
+ok 14 selftests: damon-tests: build_i386_highpte.sh
+ok 15 selftests: damon-tests: build_nomemcg.sh
+ [33m
+ [92mPASS [39m
