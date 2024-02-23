@@ -1,48 +1,69 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62472128826;
-	Wed, 21 Feb 2024 21:12:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D04B810A09
+	for <damon@lists.linux.dev>; Fri, 23 Feb 2024 04:17:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708549928; cv=none; b=WjnWPiVAkEBovAAK0p0JlQDUEQOg1UdPnQHw9yyj5zev+k4sxyhhLTpS8jjl2xk5p00UX3n6uYYui94hZ5WvzijPyzQNCt0rqPMbkOw8Yl0nutc7DFK4PMvtlxC2CG6MssHaCSeRPeLJoQG1uDDGx6WlGOzlLYpibhQH87xZmsg=
+	t=1708661861; cv=none; b=g84dvLzX5JMP2zaB8OvqT0qpG+WNodgyLiinl3JoOAdsqtibpL7z1s/FDgGDHnJLPH0jy4e4DUU86bIvePD/OtpkPlNUno32Q7UDoYHtC63Bll12LrvvtBGe1Whs7Uig170e4x3aaruo1YdNuv09HcGnm+0jPA4zEclp4Au1jxY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708549928; c=relaxed/simple;
-	bh=9BlBPgb/1NguIw/UJ8/Mo4WKvkfkqSFsJN+5E6ZcO44=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=nSeEcR13INJqVdEMx92oUbfc656od8WUsQl+jKDEYJvl+Y5D8xdwrMrQESfaWSN3xpb2rEDDGweRoQIRrt2B3MrYb07xH4JeWC3Cq77B0Y03iXyoHNwhvYu+bQza356t9Ltwl/L8D+34u8+8szli/I8nFXWUZoAgW47N1QplaNw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BJV8EzuQ; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1708661861; c=relaxed/simple;
+	bh=lBGBnghS4F7tZXGu+GMAmAoN/xklFqNUk5MgFHyDgjs=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=Jpdh/3LKH4DdXMy4MOalVajUU4MvKSRhBjTtePTbudhxZkQdWPl5nQNDz579Sm5Bsp/2LmUIsgqAIZMX8YHxf42MSBSuuM5ReOzHGt0R7np6OTOr5wHHxHoSibPS9d0W5H8vf87NcgG9RVag0Kto1epDdV5uH60LhD9SKZ69Vfo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=h4nomqMT; arc=none smtp.client-ip=209.85.214.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BJV8EzuQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35D0CC43390;
-	Wed, 21 Feb 2024 21:12:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1708549927;
-	bh=9BlBPgb/1NguIw/UJ8/Mo4WKvkfkqSFsJN+5E6ZcO44=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BJV8EzuQkcwQ0vqZ++PLUCIAcDW1cjYIPy0NBUhk330uJw3WU1BxY8SiPSfs0dhEM
-	 g6nW+RnYhKk3v1H1xkH+IU5xtq4+PUdks3mSUFKh0xLpDZPg6rsJIZiaoyBIc8CwIX
-	 8X4JKWbE6ZP8Qm7lfLU+/FE3A/iG8u+AGQbHcw7xQhw4Grvi34wqHWxQeWiWkTbsX1
-	 ct+uKKIe7wk9b+y5Jzt8rmVJOCWT/63YqZC3HgLO8Oqt7eXZIotEStmstZvRyPOizC
-	 26a5KWqsDj1YYRnZnG7ekVus4cjxGkDzxXw01570jMgHve4bCBFqNSAoEc52bS4fNt
-	 WAd6fCsvfJJcw==
-From: SeongJae Park <sj@kernel.org>
-To: akpm@linux-foundation.org
-Cc: vincenzo.mezzela@gmail.com,
-	javier.carrasco.cruz@gmail.com,
-	bernd.edlinger@hotmail.de,
-	shuah@kernel.org,
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="h4nomqMT"
+Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-1d7232dcb3eso2583385ad.2
+        for <damon@lists.linux.dev>; Thu, 22 Feb 2024 20:17:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1708661859; x=1709266659; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=5+9+uMP+Bu3TiyfCDkgIe0O8ZamRmCynrJ5soRd+G7M=;
+        b=h4nomqMTp1zzb1t7u4qe1ITQ6FQnwuJF3Vtkq/m10KbtkynZpVempJzDLyamEzYOu5
+         K2X9t/ylhk5/DS8sdUpnFxyiXo/EawKwc9FqmIySN8G33I+xOSzZthJVK94nOHFy7P/P
+         fPwyDiPIRVBtHZYL2zrjUEHJHx00Qser++c8pmXj9SSa5QmJIrZEuEAjOVDzCEK2vaz2
+         PE+mfHAQwkAO6dsDie2bJS1qYJvx+CshmFgcx0bLz1RFk4Kkkiche1VkntIA2bhyzJf1
+         xs0pmV7bRTXsu+Jqsm3yF9J5FkO351Jtt1c0wLrtIyWW+NkmY/pAn0yDggWqEXRQs9gj
+         K6aA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1708661859; x=1709266659;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=5+9+uMP+Bu3TiyfCDkgIe0O8ZamRmCynrJ5soRd+G7M=;
+        b=e0Sq8d4L78KWGQv1aUlH4PsmWe8Rw0hO7X7sJeffT+m1UF8rlO4oqJc+jnbsMC1SeL
+         lICmOpD58rMznVAeG2s8xcv8d7hNGn6TiBu9e7j9yTwwqr1+senyCo+PYK/pRShIJc3F
+         GKWK7LG+JNoZ8Ov4MndVzP1tFoHwWY4EBC2lU9pn9/WE8KzfV1wNxjV2OdZBm08Yi1hP
+         4IGc+xHOmQMrGzcV3V6NK3QYWS7uvgyCfIC1uepegYfodSbtK5kG97o3H0O/zc/CgXck
+         tY29E3KrmZ78YTBdyfXa4Ku5z2ea52hcY4dJ9Lnch1QIh1ybw6AEm7pFdPSq/xfrsMA+
+         NnMw==
+X-Forwarded-Encrypted: i=1; AJvYcCUvXF9FzICgM6scjfI5R4Nft1A+Z0xCz5LRT4aufVOrrMcA1eNIZj3Ry8ecB2HoW7VCJuwjs7PNgD+7yAoN6TwwQvhuP1k=
+X-Gm-Message-State: AOJu0YwlHKJIIyVSsiavZIB4RdUocsmS99OIMg5J+rXrwE/Rmj4VcWIa
+	IOO/eeBBM0L67liFC7Br+P1WXV6jJ05YNpc4DuZskLcHy8HdzeGi
+X-Google-Smtp-Source: AGHT+IEahzpjoCO4rsyjoYfjCIEkVvOSN5zx8vrEST2Nrht65jVZw1Eqx6UK2Bu6waRNM6E1tEjp/w==
+X-Received: by 2002:a17:902:be0a:b0:1dc:6373:3cc with SMTP id r10-20020a170902be0a00b001dc637303ccmr652610pls.50.1708661858923;
+        Thu, 22 Feb 2024 20:17:38 -0800 (PST)
+Received: from barry-desktop.hub ([2407:7000:8942:5500:5a27:dbae:d10:c2d6])
+        by smtp.gmail.com with ESMTPSA id p12-20020a170902eacc00b001dbb06b6133sm10662054pld.127.2024.02.22.20.17.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 22 Feb 2024 20:17:38 -0800 (PST)
+From: Barry Song <21cnbao@gmail.com>
+To: sj@kernel.org,
+	akpm@linux-foundation.org,
 	damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	linux-kselftest@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	SeongJae Park <sj@kernel.org>
-Subject: [PATCH 2/2] selftests: damon: add access_memory to .gitignore
-Date: Wed, 21 Feb 2024 13:11:48 -0800
-Message-Id: <20240221211148.46522-3-sj@kernel.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20240221211148.46522-1-sj@kernel.org>
-References: <20240221211148.46522-1-sj@kernel.org>
+	linux-mm@kvack.org
+Cc: linux-kernel@vger.kernel.org,
+	minchan@kernel.org,
+	mhocko@suse.com,
+	hannes@cmpxchg.org,
+	Barry Song <v-songbaohua@oppo.com>
+Subject: [PATCH RFC] mm: madvise: pageout: ignore references rather than clearing young
+Date: Fri, 23 Feb 2024 17:15:50 +1300
+Message-Id: <20240223041550.77157-1-21cnbao@gmail.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -51,29 +72,165 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+From: Barry Song <v-songbaohua@oppo.com>
 
-This binary is missing in the .gitignore and stays as an untracked file.
+While doing MADV_PAGEOUT, the current code will clear PTE young
+so that vmscan won't read young flags to allow the reclamation
+of madvised folios to go ahead.
+It seems we can do it by directly ignoring references, thus we
+can remove tlb flush in madvise and rmap overhead in vmscan.
 
-Link: https://lore.kernel.org/r/20240214-damon_selftest_gitignore-v1-1-f517d0f9f783@gmail.com
-Reported-by: Bernd Edlinger <bernd.edlinger@hotmail.de>
-Closes: https://lore.kernel.org/all/AS8P193MB1285C963658008F1B2702AF7E4792@AS8P193MB1285.EURP193.PROD.OUTLOOK.COM/
-Reviewed-by: SeongJae Park <sj@kernel.org>
-Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
-Singed-off-by: SeongJae Park <sj@kernel.org>
+Regarding the side effect, in the original code, if a parallel
+thread runs side by side to access the madvised memory with the
+thread doing madvise, folios will get a chance to be re-activated
+by vmscan. But with the patch, they will still be reclaimed. But
+this behaviour doing PAGEOUT and doing access at the same time is
+quite silly like DoS. So probably, we don't need to care.
+
+A microbench as below has shown 6% decrement on the latency of
+MADV_PAGEOUT,
+
+ #define PGSIZE 4096
+ main()
+ {
+ 	int i;
+ #define SIZE 512*1024*1024
+ 	volatile long *p = mmap(NULL, SIZE, PROT_READ | PROT_WRITE,
+ 			MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
+
+ 	for (i = 0; i < SIZE/sizeof(long); i += PGSIZE / sizeof(long))
+ 		p[i] =  0x11;
+
+ 	madvise(p, SIZE, MADV_PAGEOUT);
+ }
+
+w/o patch                    w/ patch
+root@10:~# time ./a.out      root@10:~# time ./a.out
+real	0m49.634s            real   0m46.334s
+user	0m0.637s             user   0m0.648s
+sys	0m47.434s            sys    0m44.265s
+
+Signed-off-by: Barry Song <v-songbaohua@oppo.com>
 ---
- tools/testing/selftests/damon/.gitignore | 1 +
- 1 file changed, 1 insertion(+)
+ mm/damon/paddr.c |  2 +-
+ mm/internal.h    |  2 +-
+ mm/madvise.c     |  8 ++++----
+ mm/vmscan.c      | 12 +++++++-----
+ 4 files changed, 13 insertions(+), 11 deletions(-)
 
-diff --git a/tools/testing/selftests/damon/.gitignore b/tools/testing/selftests/damon/.gitignore
-index d861701f0327..e65ef9d9cedc 100644
---- a/tools/testing/selftests/damon/.gitignore
-+++ b/tools/testing/selftests/damon/.gitignore
-@@ -2,3 +2,4 @@
- huge_count_read_write
- debugfs_target_ids_read_before_terminate_race
- debugfs_target_ids_pid_leak
-+access_memory
+diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
+index 081e2a325778..5e6dc312072c 100644
+--- a/mm/damon/paddr.c
++++ b/mm/damon/paddr.c
+@@ -249,7 +249,7 @@ static unsigned long damon_pa_pageout(struct damon_region *r, struct damos *s)
+ put_folio:
+ 		folio_put(folio);
+ 	}
+-	applied = reclaim_pages(&folio_list);
++	applied = reclaim_pages(&folio_list, false);
+ 	cond_resched();
+ 	return applied * PAGE_SIZE;
+ }
+diff --git a/mm/internal.h b/mm/internal.h
+index 93e229112045..36c11ea41f47 100644
+--- a/mm/internal.h
++++ b/mm/internal.h
+@@ -868,7 +868,7 @@ extern unsigned long  __must_check vm_mmap_pgoff(struct file *, unsigned long,
+         unsigned long, unsigned long);
+ 
+ extern void set_pageblock_order(void);
+-unsigned long reclaim_pages(struct list_head *folio_list);
++unsigned long reclaim_pages(struct list_head *folio_list, bool ignore_references);
+ unsigned int reclaim_clean_pages_from_list(struct zone *zone,
+ 					    struct list_head *folio_list);
+ /* The ALLOC_WMARK bits are used as an index to zone->watermark */
+diff --git a/mm/madvise.c b/mm/madvise.c
+index abde3edb04f0..44a498c94158 100644
+--- a/mm/madvise.c
++++ b/mm/madvise.c
+@@ -386,7 +386,7 @@ static int madvise_cold_or_pageout_pte_range(pmd_t *pmd,
+ 			return 0;
+ 		}
+ 
+-		if (pmd_young(orig_pmd)) {
++		if (!pageout && pmd_young(orig_pmd)) {
+ 			pmdp_invalidate(vma, addr, pmd);
+ 			orig_pmd = pmd_mkold(orig_pmd);
+ 
+@@ -410,7 +410,7 @@ static int madvise_cold_or_pageout_pte_range(pmd_t *pmd,
+ huge_unlock:
+ 		spin_unlock(ptl);
+ 		if (pageout)
+-			reclaim_pages(&folio_list);
++			reclaim_pages(&folio_list, true);
+ 		return 0;
+ 	}
+ 
+@@ -490,7 +490,7 @@ static int madvise_cold_or_pageout_pte_range(pmd_t *pmd,
+ 
+ 		VM_BUG_ON_FOLIO(folio_test_large(folio), folio);
+ 
+-		if (pte_young(ptent)) {
++		if (!pageout && pte_young(ptent)) {
+ 			ptent = ptep_get_and_clear_full(mm, addr, pte,
+ 							tlb->fullmm);
+ 			ptent = pte_mkold(ptent);
+@@ -524,7 +524,7 @@ static int madvise_cold_or_pageout_pte_range(pmd_t *pmd,
+ 		pte_unmap_unlock(start_pte, ptl);
+ 	}
+ 	if (pageout)
+-		reclaim_pages(&folio_list);
++		reclaim_pages(&folio_list, true);
+ 	cond_resched();
+ 
+ 	return 0;
+diff --git a/mm/vmscan.c b/mm/vmscan.c
+index 402c290fbf5a..ba2f37f46a73 100644
+--- a/mm/vmscan.c
++++ b/mm/vmscan.c
+@@ -2102,7 +2102,8 @@ static void shrink_active_list(unsigned long nr_to_scan,
+ }
+ 
+ static unsigned int reclaim_folio_list(struct list_head *folio_list,
+-				      struct pglist_data *pgdat)
++				      struct pglist_data *pgdat,
++				      bool ignore_references)
+ {
+ 	struct reclaim_stat dummy_stat;
+ 	unsigned int nr_reclaimed;
+@@ -2115,7 +2116,7 @@ static unsigned int reclaim_folio_list(struct list_head *folio_list,
+ 		.no_demotion = 1,
+ 	};
+ 
+-	nr_reclaimed = shrink_folio_list(folio_list, pgdat, &sc, &dummy_stat, false);
++	nr_reclaimed = shrink_folio_list(folio_list, pgdat, &sc, &dummy_stat, ignore_references);
+ 	while (!list_empty(folio_list)) {
+ 		folio = lru_to_folio(folio_list);
+ 		list_del(&folio->lru);
+@@ -2125,7 +2126,7 @@ static unsigned int reclaim_folio_list(struct list_head *folio_list,
+ 	return nr_reclaimed;
+ }
+ 
+-unsigned long reclaim_pages(struct list_head *folio_list)
++unsigned long reclaim_pages(struct list_head *folio_list, bool ignore_references)
+ {
+ 	int nid;
+ 	unsigned int nr_reclaimed = 0;
+@@ -2147,11 +2148,12 @@ unsigned long reclaim_pages(struct list_head *folio_list)
+ 			continue;
+ 		}
+ 
+-		nr_reclaimed += reclaim_folio_list(&node_folio_list, NODE_DATA(nid));
++		nr_reclaimed += reclaim_folio_list(&node_folio_list, NODE_DATA(nid),
++						   ignore_references);
+ 		nid = folio_nid(lru_to_folio(folio_list));
+ 	} while (!list_empty(folio_list));
+ 
+-	nr_reclaimed += reclaim_folio_list(&node_folio_list, NODE_DATA(nid));
++	nr_reclaimed += reclaim_folio_list(&node_folio_list, NODE_DATA(nid), ignore_references);
+ 
+ 	memalloc_noreclaim_restore(noreclaim_flag);
+ 
 -- 
-2.39.2
+2.34.1
 
