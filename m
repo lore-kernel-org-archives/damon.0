@@ -1,157 +1,115 @@
-Received: from mail-oi1-f181.google.com (mail-oi1-f181.google.com [209.85.167.181])
+Received: from mail-oa1-f51.google.com (mail-oa1-f51.google.com [209.85.160.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 413AD1E506
-	for <damon@lists.linux.dev>; Sat, 24 Feb 2024 22:33:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85D264EB33
+	for <damon@lists.linux.dev>; Sat, 24 Feb 2024 22:48:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708814034; cv=none; b=t1/fdSUMqkowoTCYoMPg/YnlhfACboBJ1+5Cg7N80D5+e82qs8oWjIS027yTP4qcUmUxC0hBbCFwEUwlJ8U6mMhlDNyO32GJItoBAV5CfslJtaTfk/jKCuBNgDCfQnuOwDH1aMfUIJyLfsEsxVte7h1gAboMzvHSjZpu24aYHPs=
+	t=1708814891; cv=none; b=c314Pt8NmIX+ccTuLNGhdCSVgEkpYCrcv8lzXbtfsji6VFPO+jtUBMaUMy4C8kTQlPjB9J+a1RnHawCMn0BaRqeTi9w75BqlrRayGgk8Et/FLieWSnviNFMJ855DXPOkTnsF0cywEWQnphKvKLQkaTj2Dfo+7oNhgzAl2mJAkU8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708814034; c=relaxed/simple;
-	bh=5cN6RyEs305wtcE1lbo5oKHKBFN5ZgQUw5ebMX49fcA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Dpkp4orUAT9Pe9hJaPMnArlhTOtUXeqZcI4pcl1Of/0+DALs2JLOgsXku12i2XpshLe+epV3impY7I3aEOtBihPwzkccjlDXwlt5D/XxydGAncVntjF34DPZdDZBPnVqIfbXjmdQzUCkjXa1a6ewXFXVuOIf8gv6IgKLDdwlW5c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=c6GjUi82; arc=none smtp.client-ip=209.85.167.181
+	s=arc-20240116; t=1708814891; c=relaxed/simple;
+	bh=Ta6daWl0ZVd61hh3oEvw2iF0kiGee521SeK6zSYDs70=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=Y/v3T8GmvYFNQ9jF5TnJU3vFmqpZ6M4Hhzdm7tixbMBXd/xiKJntjX+ZJz8CFbeAcRiUsOSA9mp9yil9uZaDoYvubU719+50CNJZLA3VJjNpqETWHIBz8Qfx592UIzUdag9n0sBFZtubDVe8eRGoVQNebtcoKOUMom9mSrZSFG0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=f0XbTDPT; arc=none smtp.client-ip=209.85.160.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="c6GjUi82"
-Received: by mail-oi1-f181.google.com with SMTP id 5614622812f47-3c18190000aso1821864b6e.0
-        for <damon@lists.linux.dev>; Sat, 24 Feb 2024 14:33:53 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="f0XbTDPT"
+Received: by mail-oa1-f51.google.com with SMTP id 586e51a60fabf-21eea6aab5eso1224703fac.0
+        for <damon@lists.linux.dev>; Sat, 24 Feb 2024 14:48:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1708814032; x=1709418832; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=l6gPHmRlLFFQMWkc4uxPzbDvlnlcPP+R+SMH5i+OHHA=;
-        b=c6GjUi821fOg+jvdAQAwbCgzd9fccK0SMEZaVFUOV93gBh4yNUdAuU+CtqCqLOp6S5
-         7Rs3IrMWPYToezhIFZ15ij3kWsakDzNDBjFrSdB3G5ClgnbDnWUDGDf7Xpc6NW9AJDGh
-         5JckloINOfqRgv+PPhpN9u8/GR3J1CaXDO6Eb20tJdro/7+0RT/kaxmS1drSWOweA9xN
-         fubCu+ndjDgNs4EK1bYnsrScNVZaX1xQWZ5f5xcGi6/crCCuBtAa0xn7CTsErteV9qFK
-         YuZvH3A/6wpjzRTp53Te2vx4r8XTtvn8FB0gYTswyhF6BCH+QvXQvaZJxwkSAfQ1Ay61
-         QQFQ==
+        d=gmail.com; s=20230601; t=1708814887; x=1709419687; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=BvzO7ZUsymLO2jBd+mJ7CM2X1lBqtVuXEd4hC3J8wSU=;
+        b=f0XbTDPTYOVj+UN6mYiS/nTEe806mUmnlxTi5+pWFXZ9R5ir+S9PpybK7fU+DBrhP4
+         wTykC1IQ6RE5Xah6Eco3tCPfchn8tDWBnP0SRVoxU0uBgHKb0SZBvH31xiHSlCQJUxfb
+         yQIraE6MYpvBtSKIzT/emN09n0+L9Qi3B09kEItDPOxayvzd7vI2Z90692Qkr3fSAN22
+         D+AG9H8qlT8viFfV6Es7SZiVFsAXz9yWHLv8OufQeSbWam3jnMb/hs6pSs6Wv+C+l53i
+         yLg8GxBx0gEz9/vv86basq1lGR0XZHFTrGhXSW+P8dUBFioIzQyYFA4180FkVXa1VJFg
+         DjvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708814032; x=1709418832;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=l6gPHmRlLFFQMWkc4uxPzbDvlnlcPP+R+SMH5i+OHHA=;
-        b=DH7rp6FN/21uXxulHLSbDq8+4csThvev/8NTeDdyzhX8Nw2cG9isZULVHPkl8+bOSL
-         k5bjftah0LQeh7oEZtpEfgGN0Jx4gECEWgx6bWrxZZbGneZsTPdHE9t0qbN4sinv3hNe
-         /2YUdmCQrQT47UfZkubH8jw7UmJrkmZ2LLKTz45GgpKyX+dhDR8t1CfnyoEiyzwk7pvA
-         O4nprFddhfFFtT6KGHgx1t3ImhDHNMmeZRiSfZs1HPgJ//A2jQdGXvDAFMZpKhZIhzMg
-         whFZ97edqrJY54RE4rqkg8GuoV/FmmZC/ZSMvOcuLELAcIhhiok0y4WSxtikKR/a0QcA
-         TcOQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWgB5BEIufXRFwYuLXwonX/9nkbIBoRFOL/lCR6xZsI6Nf4waRMfZCp006e56JWeTj8BO8g/tsc8EKma6ebCAtBawxC08g=
-X-Gm-Message-State: AOJu0YyVNzjDDpe+SmVx++eMzTada+Ybf/lwWlQ+gzMprNXiRahaW5Pd
-	IWJEIoVsdoR5EtUiHcDhT5KIqHP1U0L6tMOErRDMR1Ln21NOYCvf1sZnJNemY8z7uQCw5qUdXol
-	w9wFUEdisuIpUDuF6tCmjkqYE4f8=
-X-Google-Smtp-Source: AGHT+IEixbNflSAfDemWTfeO2tzJy5oyppYUIZrtnSDDjXS2qZU3KwpIovwEEi3NVJMYFTxUs4wxrPGKGjadb4aHu9Q=
-X-Received: by 2002:a05:6808:238b:b0:3be:a516:6ed5 with SMTP id
- bp11-20020a056808238b00b003bea5166ed5mr3578004oib.57.1708814032281; Sat, 24
- Feb 2024 14:33:52 -0800 (PST)
+        d=1e100.net; s=20230601; t=1708814887; x=1709419687;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=BvzO7ZUsymLO2jBd+mJ7CM2X1lBqtVuXEd4hC3J8wSU=;
+        b=X4Hr04h5TSv4YRwB+DIVZQwrFtxvGpl4f6/m5q4x66i91//ToPHcjH6bs0yr+3VvEy
+         ply9oAIOTO14W4ajGab1HD7nTx1lSZYjDO9gy/FdGaoz0w5Qp0Kg+3fPyqup/0OVyu8W
+         anGjorgoXbwQsAAUEpYJCHt/2HaCzYyxOX+WDlWAAqqjOQPL11kBGc5jXe6s8DNg8Gzb
+         nwfC/8IUUg1qWEeGh+oXApJebo/qw4cLxL1JwT0yNAGrddTuEqkSEGKHnxdeiqPGlfnf
+         EXjmrbGn8wzfkutBkH0yMcPlnHw7pI9VyDY4RQ6W+iv+q6Yj0L/Y3dQSY5zUKbuag4sl
+         UfKQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXFo8xuXuvsVLHT3DPsjd6INsY1BDTFjQSOJA1cb+RBcWys6K+Buc53E3GI1hYZy0UqbHIblr4cCluikMLW1N549hyIf9A=
+X-Gm-Message-State: AOJu0Yy8RFiLDbOefcHtyGXVBjpFqLlS3qsmsAkAHAbV1LrMkTNOxhIL
+	oTo1jbIP5zN3/ATa81NdNMgG1Pyk+CMjW+30nWq7Y7QIbtTG9g9V
+X-Google-Smtp-Source: AGHT+IGtgVmOgAMzHE/9QbMi+O3Hk+d0Dl2iKByTn0sco5cLzPXoOU8adxaZX9wsTwzocuE6fNNw6g==
+X-Received: by 2002:a05:6870:364c:b0:21f:dc71:c3f4 with SMTP id v12-20020a056870364c00b0021fdc71c3f4mr2515594oak.43.1708814887599;
+        Sat, 24 Feb 2024 14:48:07 -0800 (PST)
+Received: from barry-desktop.hub ([2407:7000:8942:5500:fae4:3bff:fecb:410])
+        by smtp.gmail.com with ESMTPSA id fy16-20020a17090b021000b0029aac9c523fsm595754pjb.47.2024.02.24.14.48.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 24 Feb 2024 14:48:07 -0800 (PST)
+From: Barry Song <21cnbao@gmail.com>
+To: corbet@lwn.net,
+	linux-mm@kvack.org,
+	akpm@linux-foundation.org,
+	damon@lists.linux.dev,
+	linux-doc@vger.kernel.org
+Cc: linux-kernel@vger.kernel.org,
+	Barry Song <v-songbaohua@oppo.com>,
+	SeongJae Park <sj@kernel.org>,
+	Minchan Kim <minchan@kernel.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Johannes Weiner <hannes@cmpxchg.org>
+Subject: [PATCH v2] Docs/mm/damon/design: remove the details for pageout as paddr doesn't use MADV_PAGEOUT
+Date: Sun, 25 Feb 2024 11:47:51 +1300
+Message-Id: <20240224224751.4673-1-21cnbao@gmail.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240224215023.5271-1-21cnbao@gmail.com> <20240224220819.49277-1-sj@kernel.org>
-In-Reply-To: <20240224220819.49277-1-sj@kernel.org>
-From: Barry Song <21cnbao@gmail.com>
-Date: Sun, 25 Feb 2024 11:33:40 +1300
-Message-ID: <CAGsJ_4wAx4fA3oR4=JogZ1HAj6fBFRH2c_KmvwSceuPiUWBYFQ@mail.gmail.com>
-Subject: Re: [PATCH] Docs/mm/damon/design: describe the differences for
- pageout's virtual address and physcial address
-To: SeongJae Park <sj@kernel.org>
-Cc: corbet@lwn.net, linux-mm@kvack.org, akpm@linux-foundation.org, 
-	damon@lists.linux.dev, linux-doc@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, Barry Song <v-songbaohua@oppo.com>, 
-	Minchan Kim <minchan@kernel.org>, Michal Hocko <mhocko@suse.com>, 
-	Johannes Weiner <hannes@cmpxchg.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Sun, Feb 25, 2024 at 11:08=E2=80=AFAM SeongJae Park <sj@kernel.org> wrot=
-e:
->
-> Hi Barry,
->
-> On Sun, 25 Feb 2024 10:50:23 +1300 Barry Song <21cnbao@gmail.com> wrote:
->
-> > From: Barry Song <v-songbaohua@oppo.com>
-> >
-> > The doc needs update. As only in the case of virtual address, we are
-> > calling madvise() with MADV_PAGEOUT; but in the case of physical
-> > address, we are actually calling reclaim_pages() directly. And
-> > madvise() with MADV_PAGEOUT is much more aggresive on reclamation
-> > compared to reclaim_pages() on paddr.
->
-> Thank you for this nice patch :)
->
-> >
-> > Cc: SeongJae Park <sj@kernel.org>
-> > Cc: Minchan Kim <minchan@kernel.org>
-> > Cc: Michal Hocko <mhocko@suse.com>
-> > Cc: Johannes Weiner <hannes@cmpxchg.org>
-> > Signed-off-by: Barry Song <v-songbaohua@oppo.com>
-> > ---
-> >  Documentation/mm/damon/design.rst | 8 +++++++-
-> >  1 file changed, 7 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/Documentation/mm/damon/design.rst b/Documentation/mm/damon=
-/design.rst
-> > index 8c89d26f0baa..6c50743552f5 100644
-> > --- a/Documentation/mm/damon/design.rst
-> > +++ b/Documentation/mm/damon/design.rst
-> > @@ -315,7 +315,13 @@ that supports each action are as below.
-> >     Supported by ``vaddr`` and ``fvaddr`` operations set.
-> >   - ``cold``: Call ``madvise()`` for the region with ``MADV_COLD``.
-> >     Supported by ``vaddr`` and ``fvaddr`` operations set.
-> > - - ``pageout``: Call ``madvise()`` for the region with ``MADV_PAGEOUT`=
-`.
-> > + - ``pageout``: Call ``madvise()`` for the region with ``MADV_PAGEOUT`=
-` if
-> > +   the region is using virtual address; otherwise, call ``reclaim_page=
-s()``
-> > +   for the region if physical address is used.
-> > +   ``madvise()``  with ``MADV_PAGEOUT``  is aggressively reclaiming me=
-mory
-> > +   when pages are not shared by multiple processes. Differently, paddr=
-'s
-> > +   pageout  will do the best-effort reclamation by scanning PTEs to fi=
-gure
-> > +   out if pages are young, if not, pages are reclaimed.
->
-> I think this might be too much details.  Especially, explanation of
-> ``MADV_PAGEOUT`` might better to be done on it's document.  We wouldn't w=
-ant to
-> update two places for future changes to ``MADV_PAGEOUT``.  What do you th=
-ink
-> about making it simple and independent from the implementation detail?  F=
-or
-> example,
->
->     - - ``pageout``: Call ``madvise()`` for the region with ``MADV_PAGEOU=
-T``.
->     + - ``pageout``: Reclaim the region.
+From: Barry Song <v-songbaohua@oppo.com>
 
-make sense. as someday we might rename reclaim_pages to reclaim_folios or
-something else. and we might not use madvise() for vaddr any more, who know=
-s:-)
-so it is more sensible to remove the details.
-I will send v2 to follow your proposal.
+The doc needs fix. As only in the case of virtual address, we
+are calling madvise() with MADV_PAGEOUT. But in the case of
+physical address, we are calling reclaim_pages() directly.
+MADV_PAGEOUT on virtual address is much more aggresive to
+reclaim memory compared to reclaim_pages() on paddr region.
+This patch removes the details so that the description can
+apply to both cases. And we don't need to couple with the
+implementation details.
 
->
-> Thanks,
-> SJ
->
-> >     Supported by ``vaddr``, ``fvaddr`` and ``paddr`` operations set.
-> >   - ``hugepage``: Call ``madvise()`` for the region with ``MADV_HUGEPAG=
-E``.
-> >     Supported by ``vaddr`` and ``fvaddr`` operations set.
-> > --
-> > 2.34.1
+Cc: SeongJae Park <sj@kernel.org>
+Cc: Minchan Kim <minchan@kernel.org>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Johannes Weiner <hannes@cmpxchg.org>
+Signed-off-by: Barry Song <v-songbaohua@oppo.com>
+---
+ -v2: decouple with the details according to SeongJae
+ -v1: https://lore.kernel.org/linux-mm/20240224215023.5271-1-21cnbao@gmail.com/
 
-Thanks
-Barry
+ Documentation/mm/damon/design.rst | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Documentation/mm/damon/design.rst b/Documentation/mm/damon/design.rst
+index 8c89d26f0baa..5620aab9b385 100644
+--- a/Documentation/mm/damon/design.rst
++++ b/Documentation/mm/damon/design.rst
+@@ -315,7 +315,7 @@ that supports each action are as below.
+    Supported by ``vaddr`` and ``fvaddr`` operations set.
+  - ``cold``: Call ``madvise()`` for the region with ``MADV_COLD``.
+    Supported by ``vaddr`` and ``fvaddr`` operations set.
+- - ``pageout``: Call ``madvise()`` for the region with ``MADV_PAGEOUT``.
++ - ``pageout``: Reclaim the region.
+    Supported by ``vaddr``, ``fvaddr`` and ``paddr`` operations set.
+  - ``hugepage``: Call ``madvise()`` for the region with ``MADV_HUGEPAGE``.
+    Supported by ``vaddr`` and ``fvaddr`` operations set.
+-- 
+2.34.1
+
