@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A8841DFE5;
-	Sat, 24 Feb 2024 20:54:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E51C44CDFB;
+	Sat, 24 Feb 2024 21:02:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708808096; cv=none; b=W4mqbH1tKPNfgg3dld7cQOOM3BGAfrPVz/llMjhVApvj9DpKMx4ZqBkJbzr9b9sOMYHkM6yvp9jwARJQFM2WocaXkIv1Fjv0Wclvmp12RDz7cEpGBu5cBaTCp6mkRk8SJFMBfWlYAm6GkPYAa8PNofOehV+1m9o4KXll2kYAMLk=
+	t=1708808549; cv=none; b=l8V9A9v7+5S+N3kQYeLsdiFjBNVgEplLIjtrDl1K2meanIi1Izs5LKMEnpJYBGJUDU8InA/PHV0kS8/tpVbExfU23u2L4N48npI5++QQZ/W6PO09XkI3WbVUuDQDA/a1QtgLKXpOpYlZtHuCg9gsy0SC3IisZd/Yt4oJgDviiuo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708808096; c=relaxed/simple;
-	bh=sAzkLyInW8vnZNRVOTYLy2onbr1cozPVspALWkhdV+M=;
+	s=arc-20240116; t=1708808549; c=relaxed/simple;
+	bh=DBksNLTYfjt6+EX3HN5+PfdJ9HZ1Fi3NzTEwfk1Wj9o=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=dUvWbrojvN36DS2lJAB6nnwskjK8g6VqrHtWc5GFg5VUf8W4jzLY+TGAhYk2fug2f7qTt8vhiEJnFZClbXrnQwQ7i0LwrHb8z/3syV603McdIROzDCkVsH2TeDFhhw9ul0q7lONX4WHNuxFJx7vN2IVd6OGuWEnEm//nNQRUjIA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=icvaP+T4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=uMO6Nz9+6hJNURGc12d5COIPaWmkG0uzGZpP6FaWVkhM2D+DhzkIP3/3PfF5okAvMy5+WZ8j/xXoUMfG0NWxE0xAfXoYscOryyENbIN20OEn/7xVSAxnElvqN/Re8In86EwsFgIsfWvmdl/3am8aMxVM81zwtfCbZgkvw+uUVAI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LIXU0YxG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="icvaP+T4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07E17C433C7;
-	Sat, 24 Feb 2024 20:54:54 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LIXU0YxG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93603C433C7;
+	Sat, 24 Feb 2024 21:02:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1708808095;
-	bh=sAzkLyInW8vnZNRVOTYLy2onbr1cozPVspALWkhdV+M=;
+	s=k20201202; t=1708808548;
+	bh=DBksNLTYfjt6+EX3HN5+PfdJ9HZ1Fi3NzTEwfk1Wj9o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=icvaP+T4vL8lB7rJAw7kuQPyoy5Z1d0qfqLK91Eo1y66kRKHm3r+iIv5nKlb0jqRc
-	 e8nWOD/9qE/pg4F7owoaH12r9daoQsAonOsUODrhb8+jnFbzwddfin86cks4REEmgh
-	 BbAvtx45d35WCYkxgwhZFvMtHikQu1uPOSqhpOlTRgNI1K+ptA8/nHWsMblAwz/+LQ
-	 lshJ3rm04YvFl4pi3t6rVyFFw5Hv8V0yT6l3A4hy71mxtKzOEUlXNIDQAAb0fHN5Bw
-	 nlbjmgCPwxnsKrGsbtjNPvVSXMax6XBdt6RsxcWXSO6jOM/gBEcpBZVsNeuddo4OcI
-	 w9gF+kZDN2Dpw==
+	b=LIXU0YxGcL2vXyF1XOBoBcPw3rrkRPzvqdj/mE4SgPvlIj/lK4sF7d93bkGTngfuQ
+	 qSlm74y0cI0vOODSbKmMFEKHyuFlrlxpsrcteyCwPGXBtfPaoFrt3w0Pp79VvePY7e
+	 Buk7Yfguhg5My1B56YP+UVna4Dcuy+OS537MGhwCji7vzPTvVGGsVx0pfQZuDhe0pj
+	 BwBw95v4h8+dUFHz3wh0yfMWeVijLI8OKvzOn1M90jQRHLEac670wYptO1Ut4FV7aq
+	 6OzpcYwkOJz39eJJnPqA8lhyez6C0tGKVZKh4D9zdxkkghpN+h77XLqCCVTE+8ZDka
+	 0Qic/paZ8CRSw==
 From: SeongJae Park <sj@kernel.org>
 To: Barry Song <21cnbao@gmail.com>
 Cc: SeongJae Park <sj@kernel.org>,
@@ -38,10 +38,10 @@ Cc: SeongJae Park <sj@kernel.org>,
 	hannes@cmpxchg.org,
 	Barry Song <v-songbaohua@oppo.com>
 Subject: Re: [PATCH RFC] mm: madvise: pageout: ignore references rather than clearing young
-Date: Sat, 24 Feb 2024 12:54:52 -0800
-Message-Id: <20240224205453.47096-1-sj@kernel.org>
+Date: Sat, 24 Feb 2024 13:02:25 -0800
+Message-Id: <20240224210225.47149-1-sj@kernel.org>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <CAGsJ_4w5JF8zjsM=vEiArUpnvN9LjAdnUn98mEUJSAhg4Y9XjQ@mail.gmail.com>
+In-Reply-To: <CAGsJ_4w4wnbryJaAKRtNGNMg_YTGkeG3QwL9_JkT=wtwq1+_+Q@mail.gmail.com>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -52,79 +52,75 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On Sun, 25 Feb 2024 04:01:40 +0800 Barry Song <21cnbao@gmail.com> wrote:
+On Sun, 25 Feb 2024 04:33:25 +0800 Barry Song <21cnbao@gmail.com> wrote:
 
-> On Sun, Feb 25, 2024 at 3:07 AM SeongJae Park <sj@kernel.org> wrote:
+> On Sun, Feb 25, 2024 at 4:12 AM SeongJae Park <sj@kernel.org> wrote:
 > >
-> > Hi Barry,
+> > On Sat, 24 Feb 2024 11:07:23 -0800 SeongJae Park <sj@kernel.org> wrote:
 > >
-> > On Sat, 24 Feb 2024 12:37:59 +0800 Barry Song <21cnbao@gmail.com> wrote:
-> >
-> > [...]
+> > > Hi Barry,
 > > >
-> > > BTW，
-> > > Hi SeongJae,
-> > > I am not quite sure if damon also needs this, so I have kept damon as is by
-> > > setting ignore_references = false.  MADV_PAGEOUT is an explicit hint users
-> > > don't want the memory to be reclaimed, I don't know if it is true for damon as
-> > > well. If you have some comments, please chime in.
+> > > On Sat, 24 Feb 2024 12:37:59 +0800 Barry Song <21cnbao@gmail.com> wrote:
+> > >
+> > > [...]
+> > > >
+> > > > BTW\uff0c
+> > > > Hi SeongJae,
+> > > > I am not quite sure if damon also needs this, so I have kept damon as is by
+> > > > setting ignore_references = false.  MADV_PAGEOUT is an explicit hint users
+> > > > don't want the memory to be reclaimed, I don't know if it is true for damon as
+> > > > well. If you have some comments, please chime in.
+> > >
+> > > Thank you for calling my name :)
+> > >
+> > > For DAMON's usecase, the document simply says the behavior would be same to
+> > > MADV_PAGEOUT, so if we conclude to change MADV_PAGEOUT, I think same change
+> > > should be made for DAMON's usecase, or update DAMON document.
 > >
-> > Thank you for calling my name :)
-> >
-> > For DAMON's usecase, the document simply says the behavior would be same to
-> > MADV_PAGEOUT, so if we conclude to change MADV_PAGEOUT, I think same change
-> > should be made for DAMON's usecase, or update DAMON document.
+> > Thanks to Barry's nice explanation on my other reply to the patch, now I think
+> > the change is modest, and therefore I'd prefer the first way: Changing DAMON's
+> > usecase, and keep the document as is.
 > 
 > Hi SeongJae,
 > 
-> I don't find similar clearing pte young in damon_pa_pageout(), so i
-> guess damon's
-> behaviour is actually different with MADV_PAGEOUT which has  pte-clearing. damon
-> is probably the best-effort but MADV_PAGEOUT isn't .
+> thanks! I actually blindly voted for keeping DAMON's behaviour but
+> slightly updated the
+> document as I set ignore_references to false for the DAMON case in the RFC :-)
 > 
-> static unsigned long damon_pa_pageout(struct damon_region *r, struct damos *s)
-> {
->         unsigned long addr, applied;
->         LIST_HEAD(folio_list);
+> --- a/mm/damon/paddr.c
+> +++ b/mm/damon/paddr.c
+> @@ -249,7 +249,7 @@ static unsigned long damon_pa_pageout(struct
+> damon_region *r, struct damos *s)
+>  put_folio:
+>   folio_put(folio);
+>   }
+> - applied = reclaim_pages(&folio_list);
+> + applied = reclaim_pages(&folio_list, false);
+>   cond_resched();
+>   return applied * PAGE_SIZE;
+>  }
 > 
->         for (addr = r->ar.start; addr < r->ar.end; addr += PAGE_SIZE) {
->                      struct folio *folio = damon_get_folio(PHYS_PFN(addr));
->                      ....
+> MADV_PAGEOUT comes from userspace by a specific process to tell the kernel
+> to reclaim its own memory(actually focus on non-shared memory as it
+> skips folios with
+> mapcount>1).
+> The range is a virtual address and the app does know it doesn't want
+> to access the
+> range in the foreseeable future.  and the affected app is itself not global.
 > 
->                      if (damos_pa_filter_out(s, folio))
->                                 goto put_folio;
+> In the DAMON case,  it seems the range is the physical address.  if
+> the pa is mapped
+> by more than one process, it seems safer to double-check in the kernel
+> as it might
+> affect multiple processes?
 > 
->                     folio_clear_referenced(folio);
->                     folio_test_clear_young(folio);
->                     if (!folio_isolate_lru(folio))
->                          goto put_folio;
->                     if (folio_test_unevictable(folio))
->                           folio_putback_lru(folio);
->                     else
->                           list_add(&folio->lru, &folio_list);
-> put_folio:
->                folio_put(folio);
->          }
->          applied = reclaim_pages(&folio_list);
->          cond_resched();
->          return applied * PAGE_SIZE;
-> }
-> 
-> am i missing something?
+> Please correct me if I am wrong.
 
-Thank you for checking this again.  You're right.
+You're correct.  Please consider below in my previous reply[1] as my opinion.
 
-Technically speaking, DAMON's usage of MADV_PAGEOUT is in vaddr.c.  paddr.c is
-using not MADV_PAGEOUT but reclaim_pages().  Usage of reclaim_pages() from
-paddr is different from that of MADV_PAGEOUT since paddr doesn't clear PTE.  I
-was confused from the difference between vaddr and paddr.  I actually wanted to
-document the difference but haven't had a time for that yet.  Thank you for
-letting me remind this.
+    let's keep the change for paddr.c in your patch as is.
 
-So, your change on MADV_PAGEOUT will make an effect to vaddr, and I think it's
-ok.  Your change on reclaim_pages() could make an effect to paddr, depending on
-the additional parameter's value.  I now think it would better to make no
-effect here.  That is, let's keep the change for paddr.c in your patch as is.
+[1] https://lore.kernel.org/r/20240224205453.47096-1-sj@kernel.org
 
 
 Thanks,
@@ -136,6 +132,10 @@ SJ
 > > Thanks,
 > > SJ
 > >
+> > >
+> > >
+> > > Thanks,
+> > > SJ
 > 
 > Thanks
-> Barry
+>  Barry
