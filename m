@@ -1,69 +1,45 @@
-Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32DE37460
-	for <damon@lists.linux.dev>; Mon, 26 Feb 2024 00:57:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
+Received: from invmail4.hynix.com (exvmail4.skhynix.com [166.125.252.92])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 637A16E5E4
+	for <damon@lists.linux.dev>; Mon, 26 Feb 2024 14:06:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=166.125.252.92
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708909077; cv=none; b=GfrSOuE9ZpW3qef2AZloTWnMzS4IjKDRvlhUnfMqQ4XeeDMyWCC1tzufgdAHVg6K358guiiOjsEB53YoSPKqadML9zLmErE58DRCxnHOiC/ZRetfzvlLR8keEz4tUyxiIdY6pQU9+odi7Dho8Jb8VbRPv9hNQQhbe6vqLwHNmj4=
+	t=1708956380; cv=none; b=i8/4Rhf+r5J+jVW9rquFz6zQqFN7g1dNpHRFO8KoO/TEJ47z6r9trhu5vqyrVwnDnnb/HE4ypsfsfqPPaaMPtReC6G7KVFzAjwf5EAoTu09IVcOv5zBXwTAamaf8ZFRPOkLeXAEUYAQfnN7TkVZaO+6AfelariGtWCcouKM1WmM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708909077; c=relaxed/simple;
-	bh=CtX34RBUciFcsMKMYUdNAjqsFbos8BsafvSXZJzhT38=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=NIahp5KqChSI4hPAUf8KDnaC6/BoOpkwHI8Fk8bc/4kkkk09+vdbOctkrXjFUA+whT2PD5a2RzjAHFze3Re8jVR0cfXqwzsQLDNsX0QVuRHpMgvQcJjhr+GhCzNI2ic/MgK/H+CM0cRDAUz5JBBXLaTDp2cbh5hM0Jt/pvvvQcY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EtFAFe7V; arc=none smtp.client-ip=209.85.214.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EtFAFe7V"
-Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-1dca160163dso3543675ad.3
-        for <damon@lists.linux.dev>; Sun, 25 Feb 2024 16:57:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1708909075; x=1709513875; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=o+qnvS94w9j3asRgT4N2c6CzHzKjC/brNsXbrYMqqhc=;
-        b=EtFAFe7V9LsXeLgJVUq9vTf+c5ZaMy/McwuS6lReG77WcS9ZNpd7MPCuMc+ainKSi3
-         uWqxOTK/eb+XG94qnivOmE7uAv/4oeR8MlsAluTLcRWelQGP2X7d618rn/d05t9rthUF
-         ujuwrxT/sQ5LcwEmSUF6A823NF25Klv8xyV7Y+njfcPYstrxVBUdz/48lYPT8sN4xUjY
-         F9VdE3K2y5/2lqFV9ll774ZlIv724bdR20XB8qXzEZ09W1UczmLdPQmLw9fONUjOV/Ao
-         LAUeZ/ClvoXjdy2zILP2NYLOK+/APwD6mgGI6h5YSLUBN5X3ZYgrgDxHa0xCDgiVN2XK
-         DEDQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708909075; x=1709513875;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=o+qnvS94w9j3asRgT4N2c6CzHzKjC/brNsXbrYMqqhc=;
-        b=c7w+lbsUod+4BkKUkTn7IyVFeKrXxF8HcNQFYof0I/cTPff9raNk4FdoJDQgdUVEQN
-         I0rpyF7qngIfXm2sj6AnN6/1gIGUPFqGDhBIQl4ePn1Bma+6BBPf0d/TBq3HvEE5XNx8
-         V0+siKVWyzMttDzhJNdA5N9dN8l0bFJ85LlfAvR3x+z9LzKuEgQZvYrVZ90eg9o80cqM
-         cXT+tpuSmBVm68SOkHfx/+y9op0pVG3JY/vPU9L0a3B7JwkJtvuKj8cpRR/UEQ2r8s5B
-         1oIZOObf5lz8hsXE5svS/LrcZiBPdGqhkHyWmG8AmHhydT0o7VgDbblD7qrs8LMBBI30
-         EuLA==
-X-Forwarded-Encrypted: i=1; AJvYcCUXqoqyJhrfzxrToaIiSLPpTa6zgSzpbhL70cVFMZnQRUX8OxYhGfpdOO+fsfwUN3r/7PUgzNBUZGFyWMDGXACXwoMJuKE=
-X-Gm-Message-State: AOJu0YyCG6Vz2CiD7p3BIZb4iGzQJ6F7AL3RUTB6NVJL9JNaAvlcvSOI
-	ek+Q8iFGgomRo4YO2QbVMATJqwbzWhI3IJ4llvqnLrBuwNTYkXjI
-X-Google-Smtp-Source: AGHT+IEEnPIrezItgpQtz9vMVuK973GBAY4uUa4MDgiciRSiYNpMa0fD9CU4OWpdrUxvsNp+guEXdg==
-X-Received: by 2002:a17:903:11c9:b0:1dc:7887:7723 with SMTP id q9-20020a17090311c900b001dc78877723mr8144378plh.61.1708909075362;
-        Sun, 25 Feb 2024 16:57:55 -0800 (PST)
-Received: from barry-desktop.hub ([2407:7000:8942:5500:fae4:3bff:fecb:410])
-        by smtp.gmail.com with ESMTPSA id mq3-20020a170902fd4300b001d949e663d5sm2741392plb.31.2024.02.25.16.57.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 25 Feb 2024 16:57:55 -0800 (PST)
-From: Barry Song <21cnbao@gmail.com>
-To: akpm@linux-foundation.org,
+	s=arc-20240116; t=1708956380; c=relaxed/simple;
+	bh=6J5lzZzJ2s6aeUaBDM+mo7+6ip9QBH9WEYMKkcPKvQI=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=qFzFzW89cO0MZxKrHT8W3KOAb3tjh4zwVceDfkvRVfWYmwka4KdNIo4gIu38dnNtH/atTYrvZUdUl3Z/JZH6s/ONQgy/zYlbQ3V0OWCQgvLwBHTUp5mHS85Yo5YrnueBmZzuLKO2Qw/ifrB/SzuVUyrkCR1lNOhb4Ab62vL1MVQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sk.com; spf=pass smtp.mailfrom=sk.com; arc=none smtp.client-ip=166.125.252.92
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sk.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sk.com
+X-AuditID: a67dfc5b-d6dff70000001748-5a-65dc9ad4fbd9
+From: Honggyu Kim <honggyu.kim@sk.com>
+To: sj@kernel.org,
 	damon@lists.linux.dev,
-	sj@kernel.org,
 	linux-mm@kvack.org
-Cc: linux-kernel@vger.kernel.org,
-	Barry Song <v-songbaohua@oppo.com>,
-	Minchan Kim <minchan@kernel.org>,
-	Michal Hocko <mhocko@suse.com>,
-	Johannes Weiner <hannes@cmpxchg.org>
-Subject: [PATCH v2] mm: madvise: pageout: ignore references rather than clearing young
-Date: Mon, 26 Feb 2024 13:57:39 +1300
-Message-Id: <20240226005739.24350-1-21cnbao@gmail.com>
-X-Mailer: git-send-email 2.34.1
+Cc: akpm@linux-foundation.org,
+	apopple@nvidia.com,
+	baolin.wang@linux.alibaba.com,
+	dave.jiang@intel.com,
+	honggyu.kim@sk.com,
+	hyeongtak.ji@sk.com,
+	kernel_team@skhynix.com,
+	linmiaohe@huawei.com,
+	linux-kernel@vger.kernel.org,
+	linux-trace-kernel@vger.kernel.org,
+	lizhijian@cn.fujitsu.com,
+	mathieu.desnoyers@efficios.com,
+	mhiramat@kernel.org,
+	rakie.kim@sk.com,
+	rostedt@goodmis.org,
+	surenb@google.com,
+	yangx.jy@fujitsu.com,
+	ying.huang@intel.com,
+	ziy@nvidia.com,
+	42.hyeyoo@gmail.com
+Subject: [RFC PATCH v2 0/7] DAMON based 2-tier memory management for CXL memory
+Date: Mon, 26 Feb 2024 23:05:46 +0900
+Message-ID: <20240226140555.1615-1-honggyu.kim@sk.com>
+X-Mailer: git-send-email 2.43.0.windows.1
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -71,184 +47,308 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprIIsWRmVeSWpSXmKPExsXC9ZZnoe6VWXdSDbZv1rGY2GNgMWf9GjaL
+	XTdCLP7vPcZo8eT/b1aLEzcb2Sw6vy9lsbi8aw6bxb01/1ktjqw/y2Kx7haQtfnsGWaLxcvV
+	LPZ1PGCyOPz1DZPF5EsL2CxeTDnDaHFy1mQWi9lH77E7CHv8PziJ2WPp6TdsHhuagMTOWXfZ
+	PVr23WL3WLCp1KPlyFtWj8V7XjJ5bFrVyeax6dMkdo8TM36zeOx8aOnxYvNMRo/e5ndsHp83
+	yQXwR3HZpKTmZJalFunbJXBlrH96mrHgQ3bFn+W/WBoYfwZ1MXJySAiYSOxoOsAIY09pWsIM
+	YrMJqElceTmJqYuRg0NEwEFi1VeFLkYuDmaBBhaJH58vsYDUCAv4S+z5NRHMZhFQlVjXNgds
+	Dq+AmcTy1kZWiJmaEo+3/2SHiAtKnJz5BKyeWUBeonnrbGaQoRIC69gltvfNZ4ZokJQ4uOIG
+	ywRG3llIemYh6VnAyLSKUSgzryw3MTPHRC+jMi+zQi85P3cTIzCiltX+id7B+OlC8CFGAQ5G
+	JR5eh9o7qUKsiWXFlbmHGCU4mJVEeMNlbqYK8aYkVlalFuXHF5XmpBYfYpTmYFES5zX6Vp4i
+	JJCeWJKanZpakFoEk2Xi4JRqYFRPuXQs1uzq9COu1uvXVG9+cOnb2miu04wpB9R/8v//mxvC
+	MG/N3MVrvMUnfrJ0kTY7/pqf98yb5wqcRjzeFvd43m2JUOCYsPjx8U3Pnm7fMiHvz6wZzbUP
+	XsW92Pth7YF/R+JTF15cnD7npFdTzP/i7Xe0tGOytc/E69rtufqnV1X3o67JvoZpSizFGYmG
+	WsxFxYkA5nVRkqQCAAA=
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFmpnkeLIzCtJLcpLzFFi42LhmqGlp3tl1p1Ug845khYTewws5qxfw2ax
+	60aIxf+9xxgtnvz/zWpx4mYjm8XnZ6+ZLTqffGe0ODz3JKtF5/elLBaXd81hs7i35j+rxZH1
+	Z1ks1t0CsjafPcNssXi5msWha89ZLfZ1PGCyOPz1DZPF5EsL2CxeTDnDaHFy1mQWi9lH77E7
+	iHv8PziJ2WPp6TdsHhuagMTOWXfZPVr23WL3WLCp1KPlyFtWj8V7XjJ5bFrVyeax6dMkdo8T
+	M36zeOx8aOnxYvNMRo/e5ndsHt9ue3gsfvGBKUAwissmJTUnsyy1SN8ugStj/dPTjAUfsiv+
+	LP/F0sD4M6iLkZNDQsBEYkrTEmYQm01ATeLKy0lMXYwcHCICDhKrvip0MXJxMAs0sEj8+HyJ
+	BaRGWMBfYs+viWA2i4CqxLq2OYwgNq+AmcTy1kZWiJmaEo+3/2SHiAtKnJz5BKyeWUBeonnr
+	bOYJjFyzkKRmIUktYGRaxSiSmVeWm5iZY6pXnJ1RmZdZoZecn7uJERg9y2r/TNzB+OWy+yFG
+	AQ5GJR5eh9o7qUKsiWXFlbmHGCU4mJVEeMNlbqYK8aYkVlalFuXHF5XmpBYfYpTmYFES5/UK
+	T00QEkhPLEnNTk0tSC2CyTJxcEo1MIZdeRoa+9WWx0PiOss9ke9ftFLLRbYJiFaXyHFcTZ8S
+	t2LjvUeST6OztkrvUdm/8Awj413hvc256k1nHB4JzP2RYKgt88HnxmmZu/6lb3KMfdlNT2l3
+	78jOljzfeuD431dneCpOvN79cfGpLu4tUmd658i+ZPKuOZ6UHyYZ5PQ3b97zVo6ra5RYijMS
+	DbWYi4oTATv31NWaAgAA
+X-CFilter-Loop: Reflected
 
-From: Barry Song <v-songbaohua@oppo.com>
+There was an RFC IDEA "DAMOS-based Tiered-Memory Management" previously
+posted at [1].
 
-While doing MADV_PAGEOUT, the current code will clear PTE young
-so that vmscan won't read young flags to allow the reclamation
-of madvised folios to go ahead.
-It seems we can do it by directly ignoring references, thus we
-can remove tlb flush in madvise and rmap overhead in vmscan.
+It says there is no implementation of the demote/promote DAMOS action
+are made.  This RFC is about its implementation for physical address
+space.
 
-Regarding the side effect, in the original code, if a parallel
-thread runs side by side to access the madvised memory with the
-thread doing madvise, folios will get a chance to be re-activated
-by vmscan (though the time gap is actually quite small since
-checking PTEs is done immediately after clearing PTEs young). But
-with this patch, they will still be reclaimed. But this behaviour
-doing PAGEOUT and doing access at the same time is quite silly
-like DoS. So probably, we don't need to care. Or ignoring the
-new access during the quite small time gap is even better.
 
-For DAMON's DAMOS_PAGEOUT based on physical address region, we
-still keep its behaviour as is since a physical address might
-be mapped by multiple processes. MADV_PAGEOUT based on virtual
-address is actually much more aggressive on reclamation. To
-untouch paddr's DAMOS_PAGEOUT, we simply pass ignore_references
-as false in reclaim_pages().
+Introduction
+============
 
-A microbench as below has shown 6% decrement on the latency of
-MADV_PAGEOUT,
+With the advent of CXL/PCIe attached DRAM, which will be called simply
+as CXL memory in this cover letter, some systems are becoming more
+heterogeneous having memory systems with different latency and bandwidth
+characteristics.  They are usually handled as different NUMA nodes in
+separate memory tiers and CXL memory is used as slow tiers because of
+its protocol overhead compared to local DRAM.
 
- #define PGSIZE 4096
- main()
- {
- 	int i;
- #define SIZE 512*1024*1024
- 	volatile long *p = mmap(NULL, SIZE, PROT_READ | PROT_WRITE,
- 			MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
+In this kind of systems, we need to be careful placing memory pages on
+proper NUMA nodes based on the memory access frequency.  Otherwise, some
+frequently accessed pages might reside on slow tiers and it makes
+performance degradation unexpectedly.  Moreover, the memory access
+patterns can be changed at runtime.
 
- 	for (i = 0; i < SIZE/sizeof(long); i += PGSIZE / sizeof(long))
- 		p[i] =  0x11;
+To handle this problem, we need a way to monitor the memory access
+patterns and migrate pages based on their access temperature.  The
+DAMON(Data Access MONitor) framework and its DAMOS(DAMON-based Operation
+Schemes) can be useful features for monitoring and migrating pages.
+DAMOS provides multiple actions based on DAMON monitoring results and it
+can be used for proactive reclaim, which means swapping cold pages out
+with DAMOS_PAGEOUT action, but it doesn't support migration actions such
+as demotion and promotion between tiered memory nodes.
 
- 	madvise(p, SIZE, MADV_PAGEOUT);
- }
+This series supports two new DAMOS actions; DAMOS_DEMOTE for demotion
+from fast tiers and DAMOS_PROMOTE for promotion from slow tiers.  This
+prevents hot pages from being stuck on slow tiers, which makes
+performance degradation and cold pages can be proactively demoted to
+slow tiers so that the system can increase the chance to allocate more
+hot pages to fast tiers.
 
-w/o patch                    w/ patch
-root@10:~# time ./a.out      root@10:~# time ./a.out
-real	0m49.634s            real   0m46.334s
-user	0m0.637s             user   0m0.648s
-sys	0m47.434s            sys    0m44.265s
+The DAMON provides various tuning knobs but we found that the proactive
+demotion for cold pages is especially useful when the system is running
+out of memory on its fast tier nodes.
 
-Cc: SeongJae Park <sj@kernel.org>
-Cc: Minchan Kim <minchan@kernel.org>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Johannes Weiner <hannes@cmpxchg.org>
-Signed-off-by: Barry Song <v-songbaohua@oppo.com>
----
- -v2:
- Add description about paddr's pageout of DAMON in commit message (Thanks
- for SeongJae's help on clarifying lots of things about DAMON)
+Our evaluation result shows that it reduces the performance slowdown
+compared to the default memory policy from 15~17% to 4~5% when the
+system runs under high memory pressure on its fast tier DRAM nodes.
 
- mm/damon/paddr.c |  2 +-
- mm/internal.h    |  2 +-
- mm/madvise.c     |  8 ++++----
- mm/vmscan.c      | 12 +++++++-----
- 4 files changed, 13 insertions(+), 11 deletions(-)
 
-diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
-index 081e2a325778..5e6dc312072c 100644
---- a/mm/damon/paddr.c
-+++ b/mm/damon/paddr.c
-@@ -249,7 +249,7 @@ static unsigned long damon_pa_pageout(struct damon_region *r, struct damos *s)
- put_folio:
- 		folio_put(folio);
- 	}
--	applied = reclaim_pages(&folio_list);
-+	applied = reclaim_pages(&folio_list, false);
- 	cond_resched();
- 	return applied * PAGE_SIZE;
- }
-diff --git a/mm/internal.h b/mm/internal.h
-index 93e229112045..36c11ea41f47 100644
---- a/mm/internal.h
-+++ b/mm/internal.h
-@@ -868,7 +868,7 @@ extern unsigned long  __must_check vm_mmap_pgoff(struct file *, unsigned long,
-         unsigned long, unsigned long);
- 
- extern void set_pageblock_order(void);
--unsigned long reclaim_pages(struct list_head *folio_list);
-+unsigned long reclaim_pages(struct list_head *folio_list, bool ignore_references);
- unsigned int reclaim_clean_pages_from_list(struct zone *zone,
- 					    struct list_head *folio_list);
- /* The ALLOC_WMARK bits are used as an index to zone->watermark */
-diff --git a/mm/madvise.c b/mm/madvise.c
-index abde3edb04f0..44a498c94158 100644
---- a/mm/madvise.c
-+++ b/mm/madvise.c
-@@ -386,7 +386,7 @@ static int madvise_cold_or_pageout_pte_range(pmd_t *pmd,
- 			return 0;
- 		}
- 
--		if (pmd_young(orig_pmd)) {
-+		if (!pageout && pmd_young(orig_pmd)) {
- 			pmdp_invalidate(vma, addr, pmd);
- 			orig_pmd = pmd_mkold(orig_pmd);
- 
-@@ -410,7 +410,7 @@ static int madvise_cold_or_pageout_pte_range(pmd_t *pmd,
- huge_unlock:
- 		spin_unlock(ptl);
- 		if (pageout)
--			reclaim_pages(&folio_list);
-+			reclaim_pages(&folio_list, true);
- 		return 0;
- 	}
- 
-@@ -490,7 +490,7 @@ static int madvise_cold_or_pageout_pte_range(pmd_t *pmd,
- 
- 		VM_BUG_ON_FOLIO(folio_test_large(folio), folio);
- 
--		if (pte_young(ptent)) {
-+		if (!pageout && pte_young(ptent)) {
- 			ptent = ptep_get_and_clear_full(mm, addr, pte,
- 							tlb->fullmm);
- 			ptent = pte_mkold(ptent);
-@@ -524,7 +524,7 @@ static int madvise_cold_or_pageout_pte_range(pmd_t *pmd,
- 		pte_unmap_unlock(start_pte, ptl);
- 	}
- 	if (pageout)
--		reclaim_pages(&folio_list);
-+		reclaim_pages(&folio_list, true);
- 	cond_resched();
- 
- 	return 0;
-diff --git a/mm/vmscan.c b/mm/vmscan.c
-index 402c290fbf5a..ba2f37f46a73 100644
---- a/mm/vmscan.c
-+++ b/mm/vmscan.c
-@@ -2102,7 +2102,8 @@ static void shrink_active_list(unsigned long nr_to_scan,
- }
- 
- static unsigned int reclaim_folio_list(struct list_head *folio_list,
--				      struct pglist_data *pgdat)
-+				      struct pglist_data *pgdat,
-+				      bool ignore_references)
- {
- 	struct reclaim_stat dummy_stat;
- 	unsigned int nr_reclaimed;
-@@ -2115,7 +2116,7 @@ static unsigned int reclaim_folio_list(struct list_head *folio_list,
- 		.no_demotion = 1,
- 	};
- 
--	nr_reclaimed = shrink_folio_list(folio_list, pgdat, &sc, &dummy_stat, false);
-+	nr_reclaimed = shrink_folio_list(folio_list, pgdat, &sc, &dummy_stat, ignore_references);
- 	while (!list_empty(folio_list)) {
- 		folio = lru_to_folio(folio_list);
- 		list_del(&folio->lru);
-@@ -2125,7 +2126,7 @@ static unsigned int reclaim_folio_list(struct list_head *folio_list,
- 	return nr_reclaimed;
- }
- 
--unsigned long reclaim_pages(struct list_head *folio_list)
-+unsigned long reclaim_pages(struct list_head *folio_list, bool ignore_references)
- {
- 	int nid;
- 	unsigned int nr_reclaimed = 0;
-@@ -2147,11 +2148,12 @@ unsigned long reclaim_pages(struct list_head *folio_list)
- 			continue;
- 		}
- 
--		nr_reclaimed += reclaim_folio_list(&node_folio_list, NODE_DATA(nid));
-+		nr_reclaimed += reclaim_folio_list(&node_folio_list, NODE_DATA(nid),
-+						   ignore_references);
- 		nid = folio_nid(lru_to_folio(folio_list));
- 	} while (!list_empty(folio_list));
- 
--	nr_reclaimed += reclaim_folio_list(&node_folio_list, NODE_DATA(nid));
-+	nr_reclaimed += reclaim_folio_list(&node_folio_list, NODE_DATA(nid), ignore_references);
- 
- 	memalloc_noreclaim_restore(noreclaim_flag);
- 
+DAMON configuration
+===================
+
+The specific DAMON configuration doesn't have to be in the scope of this
+patch series, but some rough idea is better to be shared to explain the
+evaluation result.
+
+The DAMON provides many knobs for fine tuning but its configuration file
+is generated by HMSDK[2].  It includes gen_config.py script that
+generates a json file with the full config of DAMON knobs and it creates
+multiple kdamonds for each NUMA node when the DAMON is enabled so that
+it can run hot/cold based migration for tiered memory.
+
+
+Evaluation Workload
+===================
+
+The performance evaluation is done with redis[3], which is a widely used
+in-memory database and the memory access patterns are generated via
+YCSB[4].  We have measured two different workloads with zipfian and
+latest distributions but their configs are slightly modified to make
+memory usage higher and execution time longer for better evaluation.
+
+The idea of evaluation using these demote and promote actions covers
+system-wide memory management rather than partitioning hot/cold pages of
+a single workload.  The default memory allocation policy creates pages
+to the fast tier DRAM node first, then allocates newly created pages to
+the slow tier CXL node when the DRAM node has insufficient free space.
+Once the page allocation is done then those pages never move between
+NUMA nodes.  It's not true when using numa balancing, but it is not the
+scope of this DAMON based 2-tier memory management support.
+
+If the working set of redis can be fit fully into the DRAM node, then
+the redis will access the fast DRAM only.  Since the performance of DRAM
+only is faster than partially accessing CXL memory in slow tiers, this
+environment is not useful to evaluate this patch series.
+
+To make pages of redis be distributed across fast DRAM node and slow
+CXL node to evaluate our demote and promote actions, we pre-allocate
+some cold memory externally using mmap and memset before launching
+redis-server.  We assumed that there are enough amount of cold memory in
+datacenters as TMO[5] and TPP[6] papers mentioned.
+
+The evaluation sequence is as follows.
+
+1. Turn on DAMON with DAMOS_DEMOTE action for DRAM node and
+   DAMOS_PROMOTE action for CXL node.  It demotes cold pages on DRAM
+   node and promotes hot pages on CXL node in a regular interval.
+2. Allocate a huge block of cold memory by calling mmap and memset at
+   the fast tier DRAM node, then make the process sleep to make the fast
+   tier has insufficient memory for redis-server.
+3. Launch redis-server and load prebaked snapshot image, dump.rdb.  The
+   redis-server consumes 52GB of anon pages and 33GB of file pages, but
+   due to the cold memory allocated at 2, it fails allocating the entire
+   memory of redis-server on the fast tier DRAM node so it partially
+   allocates the remaining on the slow tier CXL node.  The ratio of
+   DRAM:CXL depends on the size of the pre-allocated cold memory.
+4. Run YCSB to make zipfian or latest distribution of memory accesses to
+   redis-server, then measure its execution time when it's completed.
+5. Repeat 4 over 50 times to measure the average execution time for each
+   run.
+6. Increase the cold memory size then repeat goes to 2.
+
+For each test at 4 took about a minute so repeating it 50 times almost
+took about 1 hour for each test with a specific cold memory from 440GB
+to 500GB in 10GB increments for each evaluation.  So it took about more
+than 10 hours for both zipfian and latest workloads to get the entire
+evaluation results.  Repeating the same test set multiple times doesn't
+show much difference so I think it might be enough to make the result
+reliable.
+
+
+Evaluation Results
+==================
+
+All the result values are normalized to DRAM-only execution time because
+the workload cannot be faster than DRAM-only unless the workload hits
+the bandwidth peak but our redis test doesn't go beyond the bandwidth
+limit.
+
+So the DRAM-only execution time is the ideal result without affected by
+the gap between DRAM and CXL performance difference.  The NUMA node
+environment is as follows.
+
+  node0 - local DRAM, 512GB with a CPU socket (fast tier)
+  node1 - disabled
+  node2 - CXL DRAM, 96GB, no CPU attached (slow tier)
+
+The following is the result of generating zipfian distribution to
+redis-server and the numbers are averaged by 50 times of execution.
+
+  1. YCSB zipfian distribution read only workload
+  memory pressure with cold memory on node0 with 512GB of local DRAM.
+  =============+================================================+=========
+               |       cold memory occupied by mmap and memset  |
+               |   0G  440G  450G  460G  470G  480G  490G  500G |
+  =============+================================================+=========
+  Execution time normalized to DRAM-only values                 | GEOMEAN
+  -------------+------------------------------------------------+---------
+  DRAM-only    | 1.00     -     -     -     -     -     -     - | 1.00
+  CXL-only     | 1.21     -     -     -     -     -     -     - | 1.21
+  default      |    -  1.09  1.10  1.13  1.15  1.18  1.21  1.21 | 1.15
+  DAMON 2-tier |    -  1.02  1.04  1.05  1.04  1.05  1.05  1.06 | 1.04
+  =============+================================================+=========
+  CXL usage of redis-server in GB                               | AVERAGE
+  -------------+------------------------------------------------+---------
+  DRAM-only    |  0.0     -     -     -     -     -     -     - |  0.0
+  CXL-only     | 52.6     -     -     -     -     -     -     - | 52.6
+  default      |    -  19.4  26.1  32.3  38.5  44.7  50.5  50.3 | 37.4
+  DAMON 2-tier |    -   0.1   1.6   5.2   8.0   9.1  11.8  13.6 |  7.1
+  =============+================================================+=========
+
+Each test result is based on the exeuction environment as follows.
+
+  DRAM-only   : redis-server uses only local DRAM memory.
+  CXL-only    : redis-server uses only CXL memory.
+  default     : default memory policy(MPOL_DEFAULT).
+                numa balancing disabled.
+  DAMON 2-tier: DAMON enabled with DAMOS_DEMOTE for DRAM nodes and
+                DAMOS_PROMOTE for CXL nodes.
+
+The above result shows the "default" execution time goes up as the size
+of cold memory is increased from 440G to 500G because the more cold
+memory used, the more CXL memory is used for the target redis workload
+and this makes the execution time increase.
+
+However, "DAMON 2-tier" result shows less slowdown because the
+DAMOS_DEMOTE action at DRAM node proactively demotes pre-allocated cold
+memory to CXL node and this free space at DRAM increases more chance to
+allocate hot or warm pages of redis-server to fast DRAM node.  Moreover,
+DEMOS_PROMOTE action at CXL node also promotes hot pages of redis-server
+to DRAM node actively.
+
+As a result, it makes more memory of redis-server stay in DRAM node
+compared to "default" memory policy and this makes the performance
+improvement.
+
+The following result of latest distribution workload shows similar data.
+
+  2. YCSB latest distribution read only workload
+  memory pressure with cold memory on node0 with 512GB of local DRAM.
+  =============+================================================+=========
+               |       cold memory occupied by mmap and memset  |
+               |   0G  440G  450G  460G  470G  480G  490G  500G |
+  =============+================================================+=========
+  Execution time normalized to DRAM-only values                 | GEOMEAN
+  -------------+------------------------------------------------+---------
+  DRAM-only    | 1.00     -     -     -     -     -     -     - | 1.00
+  CXL-only     | 1.18     -     -     -     -     -     -     - | 1.18
+  default      |    -  1.16  1.15  1.17  1.18  1.16  1.18  1.15 | 1.17
+  DAMON 2-tier |    -  1.04  1.04  1.05  1.05  1.06  1.05  1.06 | 1.05
+  =============+================================================+=========
+  CXL usage of redis-server in GB                               | AVERAGE
+  -------------+------------------------------------------------+---------
+  DRAM-only    |  0.0     -     -     -     -     -     -     - |  0.0
+  CXL-only     | 52.6     -     -     -     -     -     -     - | 52.6
+  default      |    -  19.3  26.1  32.2  38.5  44.6  50.5  50.6 | 37.4
+  DAMON 2-tier |    -   1.3   3.8   7.0   4.1   9.4  12.5  16.7 |  7.8
+  =============+================================================+=========
+
+In summary of both results, our evaluation shows that "DAMON 2-tier"
+memory management reduces the performance slowdown compared to the
+"default" memory policy from 15~17% to 4~5% when the system runs with
+high memory pressure on its fast tier DRAM nodes.
+
+The similar evaluation was done in another machine that has 256GB of
+local DRAM and 96GB of CXL memory.  The performance slowdown is reduced
+from 20~24% for "default" to 5~7% for "DAMON 2-tier".
+
+Having these DAMOS_DEMOTE and DAMOS_PROMOTE actions can make 2-tier
+memory systems run more efficiently under high memory pressures.
+
+Signed-off-by: Honggyu Kim <honggyu.kim@sk.com>
+Signed-off-by: Hyeongtak Ji <hyeongtak.ji@sk.com>
+Signed-off-by: Rakie Kim <rakie.kim@sk.com>
+
+[1] https://lore.kernel.org/damon/20231112195602.61525-1-sj@kernel.org
+[2] https://github.com/skhynix/hmsdk
+[3] https://github.com/redis/redis/tree/7.0.0
+[4] https://github.com/brianfrankcooper/YCSB/tree/0.17.0
+[5] https://dl.acm.org/doi/10.1145/3503222.3507731
+[6] https://dl.acm.org/doi/10.1145/3582016.3582063
+
+Changes from RFC:
+  1. Move most of implementation from mm/vmscan.c to mm/damon/paddr.c.
+  2. Simplify some functions of vmscan.c and used in paddr.c, but need
+     to be reviewed more in depth.
+  3. Refactor most functions for common usage for both promote and
+     demote actions and introduce an enum migration_mode for its control.
+  4. Add "target_nid" sysfs knob for migration destination node for both
+     promote and demote actions.
+  5. Move DAMOS_PROMOTE before DAMOS_DEMOTE and move then even above
+     DAMOS_STAT.
+
+Honggyu Kim (3):
+  mm/damon: refactor DAMOS_PAGEOUT with migration_mode
+  mm: make alloc_demote_folio externally invokable for migration
+  mm/damon: introduce DAMOS_DEMOTE action for demotion
+
+Hyeongtak Ji (4):
+  mm/memory-tiers: add next_promotion_node to find promotion target
+  mm/damon: introduce DAMOS_PROMOTE action for promotion
+  mm/damon/sysfs-schemes: add target_nid on sysfs-schemes
+  mm/damon/sysfs-schemes: apply target_nid for promote and demote
+    actions
+
+ include/linux/damon.h          |  15 +-
+ include/linux/memory-tiers.h   |  11 ++
+ include/linux/migrate_mode.h   |   1 +
+ include/linux/vm_event_item.h  |   1 +
+ include/trace/events/migrate.h |   3 +-
+ mm/damon/core.c                |   5 +-
+ mm/damon/dbgfs.c               |   2 +-
+ mm/damon/lru_sort.c            |   3 +-
+ mm/damon/paddr.c               | 282 ++++++++++++++++++++++++++++++++-
+ mm/damon/reclaim.c             |   3 +-
+ mm/damon/sysfs-schemes.c       |  39 ++++-
+ mm/internal.h                  |   1 +
+ mm/memory-tiers.c              |  43 +++++
+ mm/vmscan.c                    |  10 +-
+ mm/vmstat.c                    |   1 +
+ 15 files changed, 404 insertions(+), 16 deletions(-)
+
+
+base-commit: 0dd3ee31125508cd67f7e7172247f05b7fd1753a
 -- 
 2.34.1
 
