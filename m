@@ -1,18 +1,18 @@
 Received: from invmail4.hynix.com (exvmail4.skhynix.com [166.125.252.92])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E0C2F12C7E6
-	for <damon@lists.linux.dev>; Mon, 26 Feb 2024 14:06:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6F1B812C804
+	for <damon@lists.linux.dev>; Mon, 26 Feb 2024 14:06:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=166.125.252.92
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708956385; cv=none; b=kEBpX4TB9OUG9KbELlWQD3xJDxsyaZ6otTrhoMtL/wViiCmN2RGcodV5CevFBx4gwvlj7V0vFvbooch7z+tKiJKiQLZ/RD9q+iZd9joLT57yoE9rrw1p6ax3A264B9f+hRtbv8ZF7ag4NMVXWtMgT9Gvq4xmmOH22ITjZ8CwS9o=
+	t=1708956385; cv=none; b=r4koVQ2C3JrLsrAnbR4PZHbqXZxa0izmvAfz89QetBT5Xal9O3rRJTOwEA04T4YVUa7t+1Pqpdh4C0kYyDz9Q+v/An8MWKxSPqc2q0hxjXk21EaMhSO/+1FA9OjHcwbUzzlz9yD1ULZHP4I/NrVgmC2SsRTA8mpe5nc44XZxkcU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1708956385; c=relaxed/simple;
-	bh=k6DbcpBVXMmCiXmnmNrP0yZrXB+ni5erIDbzS0ImpJ0=;
+	bh=tP11PJE+B44zfRXa8blWSPevKcbSiOSl0SgRA/mAjGs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RdIhKnZFGzAXco3Mdp77HHNyr9qGwP+KPIeut9fypum970GhvNa3WMxJMryTeQazybwn8Q2TtgLmxaVBZrr0vMHQrafzESCnX4MFcKn6b9Y6cWnvvEDNeXU6bxx6ofF5KpwlTb70lCPg9HFhGJOEist0PdX/s7SS3bsTbq16aiY=
+	 MIME-Version; b=ErackJ/PYxyMN03hspnFhRnWqaYLWlPEBe21EuDol25qUrE9iL9SeyDT+yTjrdDsUvLwHeEnX8WPb3aaD5QCe2nbRH3iEDsrDiqJc84y4T4TZCdHfrXcjQJ9K0ot0OADJmCAqEff/3qwET5zcQF5XkxOiwIsQcy38e+6GM6/NZ0=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sk.com; spf=pass smtp.mailfrom=sk.com; arc=none smtp.client-ip=166.125.252.92
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sk.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sk.com
-X-AuditID: a67dfc5b-d6dff70000001748-6b-65dc9ad87a7f
+X-AuditID: a67dfc5b-d6dff70000001748-7c-65dc9ad909a7
 From: Honggyu Kim <honggyu.kim@sk.com>
 To: sj@kernel.org,
 	damon@lists.linux.dev,
@@ -37,9 +37,9 @@ Cc: akpm@linux-foundation.org,
 	ying.huang@intel.com,
 	ziy@nvidia.com,
 	42.hyeyoo@gmail.com
-Subject: [PATCH v2 3/7] mm/damon: introduce DAMOS_DEMOTE action for demotion
-Date: Mon, 26 Feb 2024 23:05:49 +0900
-Message-ID: <20240226140555.1615-4-honggyu.kim@sk.com>
+Subject: [PATCH v2 4/7] mm/memory-tiers: add next_promotion_node to find promotion target
+Date: Mon, 26 Feb 2024 23:05:50 +0900
+Message-ID: <20240226140555.1615-5-honggyu.kim@sk.com>
 X-Mailer: git-send-email 2.43.0.windows.1
 In-Reply-To: <20240226140555.1615-1-honggyu.kim@sk.com>
 References: <20240226140555.1615-1-honggyu.kim@sk.com>
@@ -50,353 +50,137 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrBIsWRmVeSWpSXmKPExsXC9ZZnoe6NWXdSDebt0LaY2GNgMWf9GjaL
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrBIsWRmVeSWpSXmKPExsXC9ZZnoe6tWXdSDb7/YrOY2GNgMWf9GjaL
 	XTdCLP7vPcZo8eT/b1aLEzcb2Sw6vy9lsbi8aw6bxb01/1ktjqw/y2Kx7haQtfnsGWaLxcvV
 	LPZ1PGCyOPz1DZPF5EsL2CxeTDnDaHFy1mQWi9lH77E7CHv8PziJ2WPp6TdsHhuagMTOWXfZ
 	PVr23WL3WLCp1KPlyFtWj8V7XjJ5bFrVyeax6dMkdo8TM36zeOx8aOnxYvNMRo/e5ndsHp83
-	yQXwR3HZpKTmZJalFunbJXBlvDqzlrlgtU/FtxdbmBsYb9l2MXJySAiYSDy53M4IY8+dcZYN
-	xGYTUJO48nISUxcjB4eIgIPEqq8KXYxcHMwCDSwSPz5fYgGpERbwkeiceYYJxGYRUJW4N/sX
-	M4jNK2Am8afrFjPETE2Jx9t/soPYnALmEv8Pt7OBzBQCqjl6G6pcUOLkzCdgI5kF5CWat85m
-	BtklIXCKXeL/hLOsEHMkJQ6uuMEygZF/FpKeWUh6FjAyrWIUyswry03MzDHRy6jMy6zQS87P
-	3cQIjL9ltX+idzB+uhB8iFGAg1GJh9eh9k6qEGtiWXFl7iFGCQ5mJRHecJmbqUK8KYmVValF
-	+fFFpTmpxYcYpTlYlMR5jb6VpwgJpCeWpGanphakFsFkmTg4pRoYF79myP4s1c6u8d//s72H
-	10GOnSfll05a0zc/NefqohmNm5yW8SvZx17mdy5d4DTzk9Mm1nf+tR3xBXFvqrOi3OYKmW9s
-	DQ7f3iNuFle+aPHT9N9+XY8vW2WaL/0S91pgxwcGa/m47XcLrm1R5ew6+rVnd9v/oN37gnb7
-	mb53yFpdrqO0fw67EktxRqKhFnNRcSIAYaWl7rsCAAA=
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprHIsWRmVeSWpSXmKPExsXCNUNLT/fGrDupBj2n5C0m9hhYzFm/hs1i
-	140Qi/97jzFaPPn/m9XixM1GNovPz14zW3Q++c5ocXjuSVaLzu9LWSwu75rDZnFvzX9WiyPr
-	z7JYrLsFZG0+e4bZYvFyNYtD156zWuzreMBkcfjrGyaLyZcWsFm8mHKG0eLkrMksFrOP3mN3
-	EPf4f3ASs8fS02/YPDY0AYmds+6ye7Tsu8XusWBTqUfLkbesHov3vGTy2LSqk81j06dJ7B4n
-	Zvxm8dj50NLjxeaZjB69ze/YPL7d9vBY/OIDU4BgFJdNSmpOZllqkb5dAlfGqzNrmQtW+1R8
-	e7GFuYHxlm0XIyeHhICJxNwZZ9lAbDYBNYkrLycxdTFycIgIOEis+qrQxcjFwSzQwCLx4/Ml
-	FpAaYQEfic6ZZ5hAbBYBVYl7s38xg9i8AmYSf7puMUPM1JR4vP0nO4jNKWAu8f9wOxvITCGg
-	mqO3ocoFJU7OfAI2kllAXqJ562zmCYw8s5CkZiFJLWBkWsUokplXlpuYmWOqV5ydUZmXWaGX
-	nJ+7iREYa8tq/0zcwfjlsvshRgEORiUeXofaO6lCrIllxZW5hxglOJiVRHjDZW6mCvGmJFZW
-	pRblxxeV5qQWH2KU5mBREuf1Ck9NEBJITyxJzU5NLUgtgskycXBKNTAaWRvZp3m2y1/ukm7Z
-	eDFZ4tL0k58LjnHqsq/6ptO9xqZoWWKmmoSg0L7/OU7f7XUmMPPblv9dYWXUdH7eV6WXC9zO
-	qX+98VfRv0tGwWyLcf3TTyeexJ1nvOPaMjtHOX++sH1woepsPbWN15uPvCx83vNHwCe6/t1K
-	o9VOvCYWMoqJ2u6fVymxFGckGmoxFxUnAgBVpl34sQIAAA==
+	yQXwR3HZpKTmZJalFunbJXBl7FvZwFrwSLziz+vJzA2M+4S7GDk5JARMJF6+3sMGY1/cspYJ
+	xGYTUJO48nISkM3BISLgILHqq0IXIxcHs0ADi8SPz5dYQGqEBSIlZkxuYgWxWQRUJVpPXWIE
+	sXkFzCSuP9nHCjFTU+Lx9p/sIDangLnE/8PtbCAzhYBqjt5mhigXlDg58wnYSGYBeYnmrbOZ
+	QXZJCJxil9h0YC/UHEmJgytusExg5J+FpGcWkp4FjEyrGIUy88pyEzNzTPQyKvMyK/SS83M3
+	MQLjb1ntn+gdjJ8uBB9iFOBgVOLhdai9kyrEmlhWXJl7iFGCg1lJhDdc5maqEG9KYmVValF+
+	fFFpTmrxIUZpDhYlcV6jb+UpQgLpiSWp2ampBalFMFkmDk6pBsZ1bw5O7DnF3tp751DZCdvF
+	SZc3nJBMjJE8kaukLfLu0KoGno1X57gtVPktNfkX87orou/rHqcrGKrOaozWVr6mMb+o7NPs
+	1cURJ/UNo17N4WxQLdD9ev+6ZJxgk+HNFgPzlx/3lE1mEQkx3nWkLcLCKbjw085lJwrmT+V7
+	/0L2VEalS/Y01UQlluKMREMt5qLiRAATmp6xuwIAAA==
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprHIsWRmVeSWpSXmKPExsXCNUNLT/fmrDupBj39phYTewws5qxfw2ax
+	60aIxf+9xxgtnvz/zWpx4mYjm8XnZ6+ZLTqffGe0ODz3JKtF5/elLBaXd81hs7i35j+rxZH1
+	Z1ks1t0CsjafPcNssXi5msWha89ZLfZ1PGCyOPz1DZPF5EsL2CxeTDnDaHFy1mQWi9lH77E7
+	iHv8PziJ2WPp6TdsHhuagMTOWXfZPVr23WL3WLCp1KPlyFtWj8V7XjJ5bFrVyeax6dMkdo8T
+	M36zeOx8aOnxYvNMRo/e5ndsHt9ue3gsfvGBKUAwissmJTUnsyy1SN8ugStj38oG1oJH4hV/
+	Xk9mbmDcJ9zFyMkhIWAicXHLWiYQm01ATeLKy0lANgeHiICDxKqvCl2MXBzMAg0sEj8+X2IB
+	qREWiJSYMbmJFcRmEVCVaD11iRHE5hUwk7j+ZB8rxExNicfbf7KD2JwC5hL/D7ezgcwUAqo5
+	epsZolxQ4uTMJ2AjmQXkJZq3zmaewMgzC0lqFpLUAkamVYwimXlluYmZOaZ6xdkZlXmZFXrJ
+	+bmbGIGxtqz2z8QdjF8uux9iFOBgVOLhdai9kyrEmlhWXJl7iFGCg1lJhDdc5maqEG9KYmVV
+	alF+fFFpTmrxIUZpDhYlcV6v8NQEIYH0xJLU7NTUgtQimCwTB6dUA+PaINdoLfZf91+us46d
+	M+uS9dVZPGz5fwVbW9xXNF27aR175kvOuZl+M6Tc2xjtV9hLXT3SNv32Qf/yvKWX7ZYkSpxm
+	ur3k8ve/hVWzpmVtMmFR29aY9PC4cbLtp4U72J6/UF6+XuXSfvaQ7p0GDrz/q7uEtlbM5zYx
+	mm2td+9xbItPYfdB704lluKMREMt5qLiRABxHBSHsQIAAA==
 X-CFilter-Loop: Reflected
 
-This patch introduces DAMOS_DEMOTE action, which is similar to
-DAMOS_PAGEOUT, but demote folios instead of swapping them out.
+From: Hyeongtak Ji <hyeongtak.ji@sk.com>
 
-Since there are some common routines with pageout, many functions have
-similar logics between pageout and demote.
+This patch adds next_promotion_node that can be used to identify the
+appropriate promotion target based on memory tiers.  When multiple
+promotion target nodes are available, the nearest node is selected based
+on numa distance.
 
-damon_pa_migrate_folio_list() is a minimized version of
-shrink_folio_list(), but it's minified only for demotion.
-
-Signed-off-by: Honggyu Kim <honggyu.kim@sk.com>
 Signed-off-by: Hyeongtak Ji <hyeongtak.ji@sk.com>
 ---
- include/linux/damon.h    |   2 +
- mm/damon/paddr.c         | 222 ++++++++++++++++++++++++++++++++++++++-
- mm/damon/sysfs-schemes.c |   1 +
- 3 files changed, 224 insertions(+), 1 deletion(-)
+ include/linux/memory-tiers.h | 11 +++++++++
+ mm/memory-tiers.c            | 43 ++++++++++++++++++++++++++++++++++++
+ 2 files changed, 54 insertions(+)
 
-diff --git a/include/linux/damon.h b/include/linux/damon.h
-index e00ddf1ed39c..86e66772766b 100644
---- a/include/linux/damon.h
-+++ b/include/linux/damon.h
-@@ -105,6 +105,7 @@ struct damon_target {
-  * @DAMOS_NOHUGEPAGE:	Call ``madvise()`` for the region with MADV_NOHUGEPAGE.
-  * @DAMOS_LRU_PRIO:	Prioritize the region on its LRU lists.
-  * @DAMOS_LRU_DEPRIO:	Deprioritize the region on its LRU lists.
-+ * @DAMOS_DEMOTE:       Do demotion for the given region.
-  * @DAMOS_STAT:		Do nothing but count the stat.
-  * @NR_DAMOS_ACTIONS:	Total number of DAMOS actions
-  *
-@@ -122,6 +123,7 @@ enum damos_action {
- 	DAMOS_NOHUGEPAGE,
- 	DAMOS_LRU_PRIO,
- 	DAMOS_LRU_DEPRIO,
-+	DAMOS_DEMOTE,
- 	DAMOS_STAT,		/* Do nothing but only record the stat */
- 	NR_DAMOS_ACTIONS,
- };
-diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
-index 277a1c4d833c..23e37ce57202 100644
---- a/mm/damon/paddr.c
-+++ b/mm/damon/paddr.c
-@@ -12,6 +12,9 @@
- #include <linux/pagemap.h>
- #include <linux/rmap.h>
- #include <linux/swap.h>
-+#include <linux/memory-tiers.h>
-+#include <linux/migrate.h>
-+#include <linux/mm_inline.h>
+diff --git a/include/linux/memory-tiers.h b/include/linux/memory-tiers.h
+index 1e39d27bee41..0788e435fc50 100644
+--- a/include/linux/memory-tiers.h
++++ b/include/linux/memory-tiers.h
+@@ -50,6 +50,7 @@ int mt_set_default_dram_perf(int nid, struct node_hmem_attrs *perf,
+ int mt_perf_to_adistance(struct node_hmem_attrs *perf, int *adist);
+ #ifdef CONFIG_MIGRATION
+ int next_demotion_node(int node);
++int next_promotion_node(int node);
+ void node_get_allowed_targets(pg_data_t *pgdat, nodemask_t *targets);
+ bool node_is_toptier(int node);
+ #else
+@@ -58,6 +59,11 @@ static inline int next_demotion_node(int node)
+ 	return NUMA_NO_NODE;
+ }
  
- #include "../internal.h"
- #include "ops-common.h"
-@@ -226,8 +229,214 @@ static bool damos_pa_filter_out(struct damos *scheme, struct folio *folio)
- 
- enum migration_mode {
- 	MIG_PAGEOUT,
-+	MIG_DEMOTE,
- };
- 
-+/*
-+ * XXX: This is copied from demote_folio_list as renamed as migrate_folio_list.
-+ * Take folios on @migrate_folios and attempt to migrate them to another node.
-+ * Folios which are not migrated are left on @migrate_folios.
-+ */
-+static unsigned int migrate_folio_list(struct list_head *migrate_folios,
-+				       struct pglist_data *pgdat,
-+				       enum migration_mode mm)
++static inline int next_promotion_node(int node)
 +{
-+	int target_nid = next_demotion_node(pgdat->node_id);
-+	unsigned int nr_succeeded;
-+	nodemask_t allowed_mask;
-+
-+	struct migration_target_control mtc = {
-+		/*
-+		 * Allocate from 'node', or fail quickly and quietly.
-+		 * When this happens, 'page' will likely just be discarded
-+		 * instead of migrated.
-+		 */
-+		.gfp_mask = (GFP_HIGHUSER_MOVABLE & ~__GFP_RECLAIM) | __GFP_NOWARN |
-+			__GFP_NOMEMALLOC | GFP_NOWAIT,
-+		.nid = target_nid,
-+		.nmask = &allowed_mask
-+	};
-+
-+	if (pgdat->node_id == target_nid || target_nid == NUMA_NO_NODE)
-+		return 0;
-+
-+	if (list_empty(migrate_folios))
-+		return 0;
-+
-+	node_get_allowed_targets(pgdat, &allowed_mask);
-+
-+	/* Migration ignores all cpuset and mempolicy settings */
-+	migrate_pages(migrate_folios, alloc_migrate_folio, NULL,
-+		      (unsigned long)&mtc, MIGRATE_ASYNC, MR_DEMOTION,
-+		      &nr_succeeded);
-+
-+	__count_vm_events(PGDEMOTE_DIRECT, nr_succeeded);
-+
-+	return nr_succeeded;
++	return NUMA_NO_NODE;
 +}
 +
-+enum folio_references {
-+	FOLIOREF_RECLAIM,
-+	FOLIOREF_KEEP,
-+	FOLIOREF_ACTIVATE,
-+};
-+
-+/*
-+ * XXX: This is just copied and simplified from folio_check_references at
-+ *      mm/vmscan.c but without having scan_control.
-+ */
-+static enum folio_references folio_check_references(struct folio *folio)
-+{
-+	int referenced_ptes, referenced_folio;
-+	unsigned long vm_flags;
-+
-+	referenced_ptes = folio_referenced(folio, 1, NULL, &vm_flags);
-+	referenced_folio = folio_test_clear_referenced(folio);
-+
-+	/* rmap lock contention: rotate */
-+	if (referenced_ptes == -1)
-+		return FOLIOREF_KEEP;
-+
-+	if (referenced_ptes) {
-+		/*
-+		 * All mapped folios start out with page table
-+		 * references from the instantiating fault, so we need
-+		 * to look twice if a mapped file/anon folio is used more
-+		 * than once.
-+		 *
-+		 * Mark it and spare it for another trip around the
-+		 * inactive list.  Another page table reference will
-+		 * lead to its activation.
-+		 *
-+		 * Note: the mark is set for activated folios as well
-+		 * so that recently deactivated but used folios are
-+		 * quickly recovered.
-+		 */
-+		folio_set_referenced(folio);
-+
-+		if (referenced_folio || referenced_ptes > 1)
-+			return FOLIOREF_ACTIVATE;
-+
-+		/*
-+		 * Activate file-backed executable folios after first usage.
-+		 */
-+		if ((vm_flags & VM_EXEC) && folio_is_file_lru(folio))
-+			return FOLIOREF_ACTIVATE;
-+
-+		return FOLIOREF_KEEP;
-+	}
-+
-+	return FOLIOREF_RECLAIM;
-+}
-+
-+/*
-+ * XXX: This is minimized implmentation based on shrink_folio_list only for
-+ *      the demotion calling demote_folio_list.
-+ */
-+static unsigned int damon_pa_migrate_folio_list(struct list_head *folio_list,
-+						struct pglist_data *pgdat,
-+						enum migration_mode mm)
-+{
-+	unsigned int nr_migrated = 0;
-+	struct folio *folio;
-+	LIST_HEAD(ret_folios);
-+	LIST_HEAD(migrate_folios);
-+
-+	cond_resched();
-+
-+	while (!list_empty(folio_list)) {
-+		struct folio *folio;
-+		enum folio_references references;
-+
-+		cond_resched();
-+
-+		folio = lru_to_folio(folio_list);
-+		list_del(&folio->lru);
-+
-+		if (!folio_trylock(folio))
-+			goto keep;
-+
-+		VM_BUG_ON_FOLIO(folio_test_active(folio), folio);
-+
-+		references = folio_check_references(folio);
-+		if (references == FOLIOREF_KEEP)
-+			goto keep_locked;
-+
-+		/* Relocate its contents to another node. */
-+		list_add(&folio->lru, &migrate_folios);
-+		folio_unlock(folio);
-+		continue;
-+keep_locked:
-+		folio_unlock(folio);
-+keep:
-+		list_add(&folio->lru, &ret_folios);
-+		VM_BUG_ON_FOLIO(folio_test_lru(folio), folio);
-+	}
-+	/* 'folio_list' is always empty here */
-+
-+	/* Migrate folios selected for migration */
-+	nr_migrated += migrate_folio_list(&migrate_folios, pgdat, mm);
-+	/* Folios that could not be migrated are still in @migrate_folios */
-+	if (!list_empty(&migrate_folios)) {
-+		/* Folios which weren't migrated go back on @folio_list */
-+		list_splice_init(&migrate_folios, folio_list);
-+	}
-+
-+	try_to_unmap_flush();
-+
-+	list_splice(&ret_folios, folio_list);
-+
-+	while (!list_empty(folio_list)) {
-+		folio = lru_to_folio(folio_list);
-+		list_del(&folio->lru);
-+		folio_putback_lru(folio);
-+	}
-+
-+	return nr_migrated;
-+}
-+
-+/*
-+ * XXX: This is almost identical to reclaim_pages() in mm/vmscan.c, but it
-+ *      internally calls damon_pa_migrate_folio_list() instead of
-+ *      reclaim_folio_list().  We might be better to think if we can have a
-+ *      common function for both cases.
-+ */
-+static unsigned long damon_pa_migrate_pages(struct list_head *folio_list,
-+					    enum migration_mode mm)
-+{
-+	int nid;
-+	unsigned int nr_migrated = 0;
-+	LIST_HEAD(node_folio_list);
-+	unsigned int noreclaim_flag;
-+
-+	if (list_empty(folio_list))
-+		return nr_migrated;
-+
-+	noreclaim_flag = memalloc_noreclaim_save();
-+
-+	nid = folio_nid(lru_to_folio(folio_list));
-+	do {
-+		struct folio *folio = lru_to_folio(folio_list);
-+
-+		if (nid == folio_nid(folio)) {
-+			folio_clear_active(folio);
-+			list_move(&folio->lru, &node_folio_list);
-+			continue;
-+		}
-+
-+		nr_migrated += damon_pa_migrate_folio_list(&node_folio_list,
-+							   NODE_DATA(nid), mm);
-+		nid = folio_nid(lru_to_folio(folio_list));
-+	} while (!list_empty(folio_list));
-+
-+	nr_migrated += damon_pa_migrate_folio_list(&node_folio_list,
-+						   NODE_DATA(nid), mm);
-+
-+	memalloc_noreclaim_restore(noreclaim_flag);
-+
-+	return nr_migrated;
-+}
-+
- static unsigned long damon_pa_migrate(struct damon_region *r, struct damos *s,
- 				      enum migration_mode mm)
+ static inline void node_get_allowed_targets(pg_data_t *pgdat, nodemask_t *targets)
  {
-@@ -247,7 +456,11 @@ static unsigned long damon_pa_migrate(struct damon_region *r, struct damos *s,
- 		folio_test_clear_young(folio);
- 		if (!folio_isolate_lru(folio))
- 			goto put_folio;
--		if (folio_test_unevictable(folio))
-+		/*
-+		 * Since unevictable folios can be demoted or promoted,
-+		 * unevictable test is needed only for pageout.
-+		 */
-+		if (mm == MIG_PAGEOUT && folio_test_unevictable(folio))
- 			folio_putback_lru(folio);
- 		else
- 			list_add(&folio->lru, &folio_list);
-@@ -258,6 +471,9 @@ static unsigned long damon_pa_migrate(struct damon_region *r, struct damos *s,
- 	case MIG_PAGEOUT:
- 		applied = reclaim_pages(&folio_list);
- 		break;
-+	case MIG_DEMOTE:
-+		applied = damon_pa_migrate_pages(&folio_list, mm);
-+		break;
- 	default:
- 		/* Unexpected migration mode. */
- 		return 0;
-@@ -314,6 +530,8 @@ static unsigned long damon_pa_apply_scheme(struct damon_ctx *ctx,
- 		return damon_pa_mark_accessed(r, scheme);
- 	case DAMOS_LRU_DEPRIO:
- 		return damon_pa_deactivate_pages(r, scheme);
-+	case DAMOS_DEMOTE:
-+		return damon_pa_migrate(r, scheme, MIG_DEMOTE);
- 	case DAMOS_STAT:
- 		break;
- 	default:
-@@ -334,6 +552,8 @@ static int damon_pa_scheme_score(struct damon_ctx *context,
- 		return damon_hot_score(context, r, scheme);
- 	case DAMOS_LRU_DEPRIO:
- 		return damon_cold_score(context, r, scheme);
-+	case DAMOS_DEMOTE:
-+		return damon_cold_score(context, r, scheme);
- 	default:
- 		break;
- 	}
-diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
-index fe0fe2562000..53e47fad5021 100644
---- a/mm/damon/sysfs-schemes.c
-+++ b/mm/damon/sysfs-schemes.c
-@@ -1186,6 +1186,7 @@ static const char * const damon_sysfs_damos_action_strs[] = {
- 	"nohugepage",
- 	"lru_prio",
- 	"lru_deprio",
-+	"demote",
- 	"stat",
- };
+ 	*targets = NODE_MASK_NONE;
+@@ -101,6 +107,11 @@ static inline int next_demotion_node(int node)
+ 	return NUMA_NO_NODE;
+ }
  
++static inline int next_promotion_node(int node)
++{
++	return NUMA_NO_NODE;
++}
++
+ static inline void node_get_allowed_targets(pg_data_t *pgdat, nodemask_t *targets)
+ {
+ 	*targets = NODE_MASK_NONE;
+diff --git a/mm/memory-tiers.c b/mm/memory-tiers.c
+index 8d5291add2bc..0060ee571cf4 100644
+--- a/mm/memory-tiers.c
++++ b/mm/memory-tiers.c
+@@ -335,6 +335,49 @@ int next_demotion_node(int node)
+ 	return target;
+ }
+ 
++/*
++ * Select a promotion target that is close to the from node among the given
++ * two nodes.
++ *
++ * TODO: consider other decision policy as node_distance may not be precise.
++ */
++static int select_promotion_target(int a, int b, int from)
++{
++	if (node_distance(from, a) < node_distance(from, b))
++		return a;
++	else
++		return b;
++}
++
++/**
++ * next_promotion_node() - Get the next node in the promotion path
++ * @node: The starting node to lookup the next node
++ *
++ * Return: node id for next memory node in the promotion path hierarchy
++ * from @node; NUMA_NO_NODE if @node is the toptier.
++ */
++int next_promotion_node(int node)
++{
++	int target = NUMA_NO_NODE;
++	int nid;
++
++	if (node_is_toptier(node))
++		return NUMA_NO_NODE;
++
++	rcu_read_lock();
++	for_each_node_state(nid, N_MEMORY) {
++		if (node_isset(node, node_demotion[nid].preferred)) {
++			if (target == NUMA_NO_NODE)
++				target = nid;
++			else
++				target = select_promotion_target(nid, target, node);
++		}
++	}
++	rcu_read_unlock();
++
++	return target;
++}
++
+ static void disable_all_demotion_targets(void)
+ {
+ 	struct memory_tier *memtier;
 -- 
 2.34.1
 
