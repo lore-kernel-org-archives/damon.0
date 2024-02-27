@@ -1,124 +1,85 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8ECD052F72;
-	Tue, 27 Feb 2024 05:13:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0E4A15D0;
+	Tue, 27 Feb 2024 09:19:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709010821; cv=none; b=SoG2iiAFBFO4987RhIxOzH67jrFdinP6DemoYlJPWPqKe+Dwqn9R5SeEnKVEgiv4boU1sPwJ+w7M5YJxx98QgptYRV/KHzaq3P9LNlZFsrtDLEhT84JEubmcunxlPyEI8yVvNP1+zhYY994iObq/IoC38bchpSXKJ4BQ9UINFZM=
+	t=1709025585; cv=none; b=K1/LZxav9TyWweSU0X3VON56Y5R7cLXxbl3kHLRVQ2KL58ap9qENaPpe6usODzIb80g/LG5g9pY51x9no94TXFbIHGQg5B2Fl3LtrjEk0lV41sSAfCnkPkN5fja4mdL5D6Mg90JMahBIxYcezGyr1yngjHifysJKz6IZey/vuTk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709010821; c=relaxed/simple;
-	bh=FblEoF14u0FQ5LBEx30aLU8aFDWw7vRlULlYczoacwY=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=l8F/MNdpZgKqZ8WYtYmVLKlcio94xD0LvBPcN9znsj3lhTwbJHk6Afr0hdaStDXW4xAzwMDSrhQXgtY4iHXokTLc4jFcqObSxQHIdQDvwUudq+vpi7qSEQ5SDFDJSb3h/ap46cyN63nrDyl3gGKeri2Nu9989MsTXsE7rWY/onw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bjMyloyL; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1709025585; c=relaxed/simple;
+	bh=mWuQqMS4uz9qq4fM6oWFzkCwnWqLgdXy4FqN58EEn4c=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=N29ntVRvZCgXblh6WKAAZznnbhsSA+cpTJXAysAkxdCe1+eZ2naCFd80cMu1NqEmQ6PbAkJ5WXdkX8Q04IasOOASVD+v/tcA1Yy8r4kLVouednvGM8GSE7JTCNlLlaNCacph5fBHOlPd9nx1z87GfVpvVLO0YMYVrIV8762ASmI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FZ9fUI1F; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bjMyloyL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78257C433F1;
-	Tue, 27 Feb 2024 05:13:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1709010821;
-	bh=FblEoF14u0FQ5LBEx30aLU8aFDWw7vRlULlYczoacwY=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bjMyloyL3BblhgsKsNDeWWpXsxnbABWai9BH1FJqr4x4pd8ecOCvRPaTq1UMvd8h3
-	 t/4/E3QEr8muoqLmo6aN/FyoRVhUpIGUdJswHHrGcaUDEZBiQ5LVgYuz90ptW9HGiu
-	 IAWjKA7XnrS/aQpyCuXeYLxCdACLeJlTcvmm41QgTvtMPYq3R4rM0e9at/SE44CpSQ
-	 q7hASP1AxOpMXazqp1bQ+8CR9y3zMGyxVFIHtMXjCo1DoiQWplwncG6eS2mqnQGVqX
-	 QxFBMxUQRhdThwZj9ozJFZkf5RRXLxN2PDZAVyHTfFB4zXFh0wZKS6FxSxnmyS/t5a
-	 aMIq/g2UUyRUQ==
-From: SeongJae Park <sj@kernel.org>
-To: stable@vger.kernel.org
-Cc: sj@kernel.org,
-	damon@lists.linux.dev,
-	linux-mm@kvack.org,
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FZ9fUI1F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B2D7C433F1;
+	Tue, 27 Feb 2024 09:19:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1709025584;
+	bh=mWuQqMS4uz9qq4fM6oWFzkCwnWqLgdXy4FqN58EEn4c=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=FZ9fUI1FOL0OHcqIyA1oNWr2JN4APMm470UwK4REcPHycyrp7PaHwnZsss+fZcKTm
+	 lrQGaD6NgMzQ9yDMzvqFPwsarXiQshHptPGTnPOvse+em35/zAQrgi1D2t96j00G/S
+	 NYQUFFjozZswRZAfsvZC8/hZibXJH7PqT0ewI2H0=
+Date: Tue, 27 Feb 2024 10:19:41 +0100
+From: Greg KH <gregkh@linuxfoundation.org>
+To: SeongJae Park <sj@kernel.org>
+Cc: stable@vger.kernel.org, damon@lists.linux.dev, linux-mm@kvack.org,
 	linux-kernel@vger.kernel.org,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1.y] mm/damon/reclaim: fix quota stauts loss due to online tunings
-Date: Mon, 26 Feb 2024 21:13:35 -0800
-Message-Id: <20240227051335.168121-1-sj@kernel.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <2024022643-scorn-filtrate-8677@gregkh>
+Subject: Re: [PATCH 6.1.y] mm/damon/reclaim: fix quota stauts loss due to
+ online tunings
+Message-ID: <2024022731-varying-underpaid-c855@gregkh>
 References: <2024022643-scorn-filtrate-8677@gregkh>
+ <20240227051335.168121-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240227051335.168121-1-sj@kernel.org>
 
-Patch series "mm/damon: fix quota status loss due to online tunings".
+On Mon, Feb 26, 2024 at 09:13:35PM -0800, SeongJae Park wrote:
+> Patch series "mm/damon: fix quota status loss due to online tunings".
+> 
+> DAMON_RECLAIM and DAMON_LRU_SORT is not preserving internal quota status
+> when applying new user parameters, and hence could cause temporal quota
+> accuracy degradation.  Fix it by preserving the status.
+> 
+> This patch (of 2):
+> 
+> For online parameters change, DAMON_RECLAIM creates new scheme based on
+> latest values of the parameters and replaces the old scheme with the new
+> one.  When creating it, the internal status of the quota of the old
+> scheme is not preserved.  As a result, charging of the quota starts from
+> zero after the online tuning.  The data that collected to estimate the
+> throughput of the scheme's action is also reset, and therefore the
+> estimation should start from the scratch again.  Because the throughput
+> estimation is being used to convert the time quota to the effective size
+> quota, this could result in temporal time quota inaccuracy.  It would be
+> recovered over time, though.  In short, the quota accuracy could be
+> temporarily degraded after online parameters update.
+> 
+> Fix the problem by checking the case and copying the internal fields for
+> the status.
+> 
+> Link: https://lkml.kernel.org/r/20240216194025.9207-1-sj@kernel.org
+> Link: https://lkml.kernel.org/r/20240216194025.9207-2-sj@kernel.org
+> Fixes: e035c280f6df ("mm/damon/reclaim: support online inputs update")
+> Signed-off-by: SeongJae Park <sj@kernel.org>
+> Cc: <stable@vger.kernel.org>	[5.19+]
+> Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+> (cherry picked from commit 1b0ca4e4ff10a2c8402e2cf70132c683e1c772e4)
+> ---
+>  mm/damon/reclaim.c | 18 +++++++++++++++++-
+>  1 file changed, 17 insertions(+), 1 deletion(-)
+> 
 
-DAMON_RECLAIM and DAMON_LRU_SORT is not preserving internal quota status
-when applying new user parameters, and hence could cause temporal quota
-accuracy degradation.  Fix it by preserving the status.
+Now queued up, thanks.
 
-This patch (of 2):
-
-For online parameters change, DAMON_RECLAIM creates new scheme based on
-latest values of the parameters and replaces the old scheme with the new
-one.  When creating it, the internal status of the quota of the old
-scheme is not preserved.  As a result, charging of the quota starts from
-zero after the online tuning.  The data that collected to estimate the
-throughput of the scheme's action is also reset, and therefore the
-estimation should start from the scratch again.  Because the throughput
-estimation is being used to convert the time quota to the effective size
-quota, this could result in temporal time quota inaccuracy.  It would be
-recovered over time, though.  In short, the quota accuracy could be
-temporarily degraded after online parameters update.
-
-Fix the problem by checking the case and copying the internal fields for
-the status.
-
-Link: https://lkml.kernel.org/r/20240216194025.9207-1-sj@kernel.org
-Link: https://lkml.kernel.org/r/20240216194025.9207-2-sj@kernel.org
-Fixes: e035c280f6df ("mm/damon/reclaim: support online inputs update")
-Signed-off-by: SeongJae Park <sj@kernel.org>
-Cc: <stable@vger.kernel.org>	[5.19+]
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-(cherry picked from commit 1b0ca4e4ff10a2c8402e2cf70132c683e1c772e4)
----
- mm/damon/reclaim.c | 18 +++++++++++++++++-
- 1 file changed, 17 insertions(+), 1 deletion(-)
-
-diff --git a/mm/damon/reclaim.c b/mm/damon/reclaim.c
-index 162c9b1ca00f..cc337e94acfd 100644
---- a/mm/damon/reclaim.c
-+++ b/mm/damon/reclaim.c
-@@ -141,9 +141,20 @@ static struct damos *damon_reclaim_new_scheme(void)
- 			&damon_reclaim_wmarks);
- }
- 
-+static void damon_reclaim_copy_quota_status(struct damos_quota *dst,
-+		struct damos_quota *src)
-+{
-+	dst->total_charged_sz = src->total_charged_sz;
-+	dst->total_charged_ns = src->total_charged_ns;
-+	dst->charged_sz = src->charged_sz;
-+	dst->charged_from = src->charged_from;
-+	dst->charge_target_from = src->charge_target_from;
-+	dst->charge_addr_from = src->charge_addr_from;
-+}
-+
- static int damon_reclaim_apply_parameters(void)
- {
--	struct damos *scheme;
-+	struct damos *scheme, *old_scheme;
- 	int err = 0;
- 
- 	err = damon_set_attrs(ctx, &damon_reclaim_mon_attrs);
-@@ -154,6 +165,11 @@ static int damon_reclaim_apply_parameters(void)
- 	scheme = damon_reclaim_new_scheme();
- 	if (!scheme)
- 		return -ENOMEM;
-+	if (!list_empty(&ctx->schemes)) {
-+		damon_for_each_scheme(old_scheme, ctx)
-+			damon_reclaim_copy_quota_status(&scheme->quota,
-+					&old_scheme->quota);
-+	}
- 	damon_set_schemes(ctx, &scheme, 1);
- 
- 	return damon_set_region_biggest_system_ram_default(target,
--- 
-2.39.2
-
+greg k-h
