@@ -1,47 +1,61 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BB67107A9;
-	Thu,  7 Mar 2024 03:00:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7D9363D0;
+	Thu,  7 Mar 2024 03:05:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709780421; cv=none; b=UkRuRgzdYbw8asoirC4K4VNxyYdmu1sCXefoQIQgm2//BzF8Yg2WFcXhkZ4hJIHFEKsK9uorvSAk/Eb25iDkJ1qnUSZC00oUgGL1WraVYLrhXmC3tdmsp1USVx3xfFjyGOdFxeOAhANZCL11oanaL44HuGCw3efvVl3Dnm/F2Oc=
+	t=1709780753; cv=none; b=Ryga7N7nEkvhrYIYM/olcU+IENjG7OXxogOXTlyD8YmJlhrHs3HWk7QYBGrVsnV273e82HpsvIv/qh93xR1Yf7gu6HaQArvEc9XE4ViNj2cxkR/WfkOVTtcIkwjNPqC1ePJ/b8jp0+CzIrWav7pH2bFjrStYD1StKVMVedsuTvk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709780421; c=relaxed/simple;
-	bh=T4Zlt0HI2JO9pfzPw6anb118M3jARiv+TpO7SVPb1+s=;
+	s=arc-20240116; t=1709780753; c=relaxed/simple;
+	bh=8ful7sN8c0CPBqZwFl7Swppe+T+Tso7XnELEfEKpEhQ=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=u3JxvpEOsVzk5o5q2kUg+mFbCs68sUSeobZx0KUbFdSk8On4C9juCqaZozd+BVSGq28Fh6leJsF+Tzfe0r9m4n6dlow34l4DoxdE1gwNjJCeR/79OE3J+MKhpH5Ib3tZKMDhm8X29Hy7s/2qnayk+Z17aqjgaDpgIvWaE0cZO68=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Gr9yFIso; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QPqyx/xuWQQkLVNi6x/ax3+/0H1Z9w0NYX67ck2PJAQFLTYueNyk+l474VaIlRaXe1+/sK7lnm2oW/VbemdK43/7zaA7aPSL8jNihd6Lnt+GUFCJVKjDfbvVGFgUz59dhH0ABuK0zCyDRczRhs+esL1QyiJXEqLKXQ6dxElDgGE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Y4xIBEcl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Gr9yFIso"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CFA2C433A6;
-	Thu,  7 Mar 2024 03:00:20 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Y4xIBEcl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8F6DC43390;
+	Thu,  7 Mar 2024 03:05:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1709780420;
-	bh=T4Zlt0HI2JO9pfzPw6anb118M3jARiv+TpO7SVPb1+s=;
+	s=k20201202; t=1709780753;
+	bh=8ful7sN8c0CPBqZwFl7Swppe+T+Tso7XnELEfEKpEhQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Gr9yFIsoRpLje3SvSmfKYtWNR0uF3miMXc3LPHKsQdFSm9I+Tm4opJXvrkVMMmD3a
-	 jLeGpR1MNiipgS8Fs1hljL1UEMO0+qd9APCsbYJjrn0vZbc3dGYayyBIyW4qw++Q+f
-	 FJIxtv3yoBl4sUqUdis8IjJkjkkUm2xKA9Xr/eGFcN/S8cIiuRVBeWm636Z3k6qigh
-	 aMetigmopMzSlpeWgw3m1T481zUJtpufmVO0T2zISAyN/1SRgZUWDXOyKpgzLiNE30
-	 hqoEhcnBLYXzqzwYIeHdQOGTb9wQAQI64t7ETWJVBakfeE4XdXny8xIed3YHH5t28n
-	 lfVc8S8ugzlNQ==
+	b=Y4xIBEclaYjge0kRl9J0ZEMfTN13SWxQ5od+q5AOqu7p+AF20i9NUe0E+fXws3Sft
+	 ytWNrxRH9CPQHMcSYGFG1Yv3LewMySjQ2DntCwDIAYl/3Ctbl0F2fBrWbAxhmo+XiY
+	 a4+oF+fKXDHI6EBIh0OeopGIdHTSU6rhOiXuFW2VrgCzBUvo18ugeBftvpT1KIKX0h
+	 gbeulnr82Jz2kQfJMbP4RuqlwmrLuCh0VCRCoWOwxdcTJtR46hWU8mT5GxzxXpkyXZ
+	 2Gf6iu8XXkDXD5JF/HvmB8D9VMEnFkVGFH1FBP31xBEnkavdP74oqcM1Gb4UA/7Ss6
+	 G/NFgoeUidnqw==
 From: SeongJae Park <sj@kernel.org>
-To: 
-Cc: SeongJae Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	honggyu.kim@sk.com,
-	hyeongtak.ji@sk.com,
-	kernel_team@skhynix.com,
+To: SeongJae Park <sj@kernel.org>
+Cc: Honggyu Kim <honggyu.kim@sk.com>,
 	damon@lists.linux.dev,
 	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org
-Subject: [RFC PATCH 3/3] mm/damon/paddr: support DAMOS filter type YOUNG
-Date: Wed,  6 Mar 2024 19:00:13 -0800
-Message-Id: <20240307030013.47041-4-sj@kernel.org>
+	akpm@linux-foundation.org,
+	apopple@nvidia.com,
+	baolin.wang@linux.alibaba.com,
+	dave.jiang@intel.com,
+	hyeongtak.ji@sk.com,
+	kernel_team@skhynix.com,
+	linmiaohe@huawei.com,
+	linux-kernel@vger.kernel.org,
+	linux-trace-kernel@vger.kernel.org,
+	lizhijian@cn.fujitsu.com,
+	mathieu.desnoyers@efficios.com,
+	mhiramat@kernel.org,
+	rakie.kim@sk.com,
+	rostedt@goodmis.org,
+	surenb@google.com,
+	yangx.jy@fujitsu.com,
+	ying.huang@intel.com,
+	ziy@nvidia.com,
+	42.hyeyoo@gmail.com
+Subject: Re: [RFC PATCH v2 0/7] DAMON based 2-tier memory management for CXL memory
+Date: Wed,  6 Mar 2024 19:05:50 -0800
+Message-Id: <20240307030550.47095-1-sj@kernel.org>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20240307030013.47041-1-sj@kernel.org>
-References: <20240307030013.47041-1-sj@kernel.org>
+In-Reply-To: <20240227235121.153277-1-sj@kernel.org>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -50,29 +64,44 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-DAMOS filter of type YOUNG is defined, but not yet implemented by any
-DAMON operations set.  Add the implementation to the DAMON operations
-set for the physical address space, paddr.
+Hello,
 
-Signed-off-by: SeongJae Park <sj@kernel.org>
----
- mm/damon/paddr.c | 3 +++
- 1 file changed, 3 insertions(+)
+On Tue, 27 Feb 2024 15:51:20 -0800 SeongJae Park <sj@kernel.org> wrote:
 
-diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
-index deee0fdf2e5b..52e4be7351cc 100644
---- a/mm/damon/paddr.c
-+++ b/mm/damon/paddr.c
-@@ -209,6 +209,9 @@ static bool __damos_pa_filter_out(struct damos_filter *filter,
- 			matched = filter->memcg_id == mem_cgroup_id(memcg);
- 		rcu_read_unlock();
- 		break;
-+	case DAMOS_FILTER_TYPE_YOUNG:
-+		matched = damon_folio_young(folio);
-+		break;
- 	default:
- 		break;
- 	}
--- 
-2.39.2
+> On Mon, 26 Feb 2024 23:05:46 +0900 Honggyu Kim <honggyu.kim@sk.com> wrote:
+> 
+> > There was an RFC IDEA "DAMOS-based Tiered-Memory Management" previously
+> > posted at [1].
+> > 
+> > It says there is no implementation of the demote/promote DAMOS action
+> > are made.  This RFC is about its implementation for physical address
+> > space.
+[...]
+> Honggyu joined DAMON Beer/Coffee/Tea Chat[1] yesterday, and we discussed about
+> this patchset in high level.  Sharing the summary here for open discussion.  As
+> also discussed on the first version of this patchset[2], we want to make single
+> action for general page migration with minimum changes, but would like to keep
+> page level access re-check.  We also agreed the previously proposed DAMOS
+> filter-based approach could make sense for the purpose.
+> 
+> Because I was anyway planning making such DAMOS filter for not only
+> promotion/demotion but other types of DAMOS action, I will start developing the
+> page level access re-check results based DAMOS filter.  Once the implementation
+> of the prototype is done, I will share the early implementation.  Then, Honggyu
+> will adjust their implementation based on the filter, and run their tests again
+> and share the results.
 
+I just posted an RFC patchset for the page level access re-check DAMOS filter:
+https://lore.kernel.org/r/20240307030013.47041-1-sj@kernel.org
+
+I hope it to help you better understanding and testing the idea.
+
+> 
+> [1] https://lore.kernel.org/damon/20220810225102.124459-1-sj@kernel.org/
+> [2] https://lore.kernel.org/damon/20240118171756.80356-1-sj@kernel.org
+
+
+Thanks,
+SJ
+
+[...]
