@@ -1,94 +1,85 @@
-Received: from mail-pj1-f51.google.com (mail-pj1-f51.google.com [209.85.216.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3791B134721;
-	Wed,  6 Mar 2024 14:56:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0912963C7;
+	Thu,  7 Mar 2024 03:00:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709736974; cv=none; b=VKXHZfXUshtV3B3ywiGCX1e4S0aWvE8/BFV5mxHd+R8CJK89DIZ4MdahxMccLidtODhSWdO1eXhiv/fGfqpufDHC0gdsUlbZmo1e/6mjLPzKPuKJG4wBx63J2jS3uFT8+Kh+Qh9F54zk2Ff84UJA3ygKDzo+RpbNWlidgPhrIls=
+	t=1709780419; cv=none; b=iXrovgOTo2IpF8bEjfqQYdMS8/6QKuy1YSoj7y7YuHu3Gbav6rkKEHfwA/knSoeIYPkstMMNCoSB7MpskVBnOal02LtYbQcko4vSx0dCTMPb7PbVqc4XMX5ynDGJdMq48chU7uGnohBd+BfzyDG8KcZ+iDE4p3Mv8Tuw8wq+/gE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709736974; c=relaxed/simple;
-	bh=CyxIq1hc0Pg4DlvLuQjoD77rmVt1bi1Xy2iXBKgigWk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=CC2FTeQrjC+rmvDReyiNzi5ExdzOG4vFVnWhIHvrhvBpV7YaN/n4zKuF1ljLLt7o1vnH+jCFtXxlqApzgQ1E1wBLuFnlZ1JsVhvbRqfd8AxDKnHVibH51nLKRy++xiaAa3PLFTWSkQ6wo+2Vt+MMXodQd/fmiT0/ODjr9O6v6h0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OoqWYC1f; arc=none smtp.client-ip=209.85.216.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1709780419; c=relaxed/simple;
+	bh=SKDskSd9+RHTYzohWkfkmurFwjgubMDTQl6vfvCQs5Y=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=mwIqYeQO46KFpF5JC40IkN25AnHWXoWqQlKXZqDDsHsDypiVJXCpGNJr2q9Wp9t8/6Rnm2pr8eEgkoqPg5062QZv7rZ/PmlbRUd9pcR7exUtDA21gVAnSk8UDWNvgOr9JhiXdHkW7Jh+MFYV9ukzRpIFFdOeeNxJN7ZeQ45rX5c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MNWVZ5Ua; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OoqWYC1f"
-Received: by mail-pj1-f51.google.com with SMTP id 98e67ed59e1d1-29abd02d0d9so4594976a91.0;
-        Wed, 06 Mar 2024 06:56:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1709736972; x=1710341772; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=qdH3H/B03w3oeOKNshM2umjOgNwIvpOsc9RqYT8vJJI=;
-        b=OoqWYC1f67gysfCuc082Kyia4z90wZBZ70UyQyMhNPzWo2twARbkOxdM8Zrbl0SJNV
-         hx2qq773rK/UYfqOZUTkIQlxWwgBNA2wOARdTTr6SUrhDTgwEVGkF3Wv7/MSn4P4TnmC
-         IX8dhy+1fba9WKHFyRwhNVIqtqwWK3xatSbApaMBRFB6R6ADQ7Jn0Jn9EAMjS3vMzd9W
-         iBQ2KT7VNFgil+XsyewUSQOmnnwK7lCdQEVpLF2FV3cVX+zSWfWilhm4hJntcrAKCu8Q
-         Bf2zhQD/ahCyG0Z8LktMTm5p8ipv/JV/ZNcGokdVirGz/dOcg6HaY00NrI7pnBqTJjJ5
-         7cmg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709736972; x=1710341772;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=qdH3H/B03w3oeOKNshM2umjOgNwIvpOsc9RqYT8vJJI=;
-        b=ueQ7iw1rXWxlS1CgBrRy6x7gdLm82yHL6XYs9ChSUtr15uQEnT3LN6wR/Ll1KJEadV
-         V5Pd0SRrrYe1sd3bhm3SnAoVbXU2O9lpef3GciGZivb0tCDYuEEUaF2xwB3j9QFCf6tK
-         smwQsTHw/Nzo6ts6nxUEmvScq1QwupQklYLVsoQFEmZgtx3Aavjwz6Fk4zO+4m/LArEo
-         gCmoNX83jgR3DNCjTGJ2YMi4qBIvjXYlCkeF1UJFcJHg8jrVV81mXQfL9VlcA7ar98VR
-         YfCycPa4S940dJHkaSuWauNiPfG9FM5kgL1hHvBCUiy/Q2eygGm9DH9YuhqSF4pLchGd
-         /Uog==
-X-Forwarded-Encrypted: i=1; AJvYcCVo2RBv7KIQ30w9SxJ9lF1ZzpovRXj5vK63yA3Pv2/gTKn78oxoPN/LjgyxaOGXmTIDhp4wC+qPR2f0bNksgcP9NiSuTQPn0EE6/rcYE8kE5x5Aku8DJzPc0Nmkbmv1
-X-Gm-Message-State: AOJu0Yy0Uw3fQZqzQ53I4wZOSDAWloNqHSq+r3t1JQRNZv/Zb1mi2kkL
-	zf6BlrzrqQyEBSYkN0QPLcQlndbJu7l4H/yNGtzZSMD0BgiSUmvZZlx1cJMI9Yk/ul7Yo5tXrkM
-	zeRp6qzo94VwR2o8iQEgY9p9k0xQ=
-X-Google-Smtp-Source: AGHT+IE1Ifk2gRIsxJGsFMox+naGDQZbZsHvmMPliQl1ubSLocfF/8HdJ7TMoRwN8u/u/pDBMuXVrz0M0siJ9kYinmM=
-X-Received: by 2002:a17:90a:d514:b0:299:782e:25b0 with SMTP id
- t20-20020a17090ad51400b00299782e25b0mr12209886pju.8.1709736972572; Wed, 06
- Mar 2024 06:56:12 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MNWVZ5Ua"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0F5FC433C7;
+	Thu,  7 Mar 2024 03:00:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1709780418;
+	bh=SKDskSd9+RHTYzohWkfkmurFwjgubMDTQl6vfvCQs5Y=;
+	h=From:To:Cc:Subject:Date:From;
+	b=MNWVZ5UaOouUV0GmS9soRfvZz7uEDLs0c9qjfpsMFIyYID5x1KTMaegxXZoOlRuZN
+	 trL7xfGG4vS3gFvPPGpX5x0J1DPYqJD1dwSLAG1fwqMiLpQ3RwG07ErEiT1rAm7aLj
+	 bVuuPMrbUwmZ2QMMBPt4yCvO6f+KrvKCqGLKMQ2aSxSsgh1LNw8qTIrSnnmXcRPY7C
+	 kepNZ50op2NzFicOAZOu2amTBgA3aOaqfsrKnLv590qXwZi/N8EL2CGVEnyNeVKhBs
+	 WwzOzZ0rou2lMvnV6+lOjnBAMlp6GvtIatIj7xYnydboCnleokcqV1SjqS3vbiaArH
+	 Gt22LHfxmGU4Q==
+From: SeongJae Park <sj@kernel.org>
+To: 
+Cc: SeongJae Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	honggyu.kim@sk.com,
+	hyeongtak.ji@sk.com,
+	kernel_team@skhynix.com,
+	damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org
+Subject: [RFC PATCH 0/3] mm/damon: add a DAMOS filter type for page granularity access recheck
+Date: Wed,  6 Mar 2024 19:00:10 -0800
+Message-Id: <20240307030013.47041-1-sj@kernel.org>
+X-Mailer: git-send-email 2.39.2
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240304211551.833500257@linuxfoundation.org> <20240304224813.73380-1-sj@kernel.org>
- <CADo9pHi0az-CL_hktmpCVcuoiDaUJn2U208=TwAvBM6YQhfFqw@mail.gmail.com> <2024030653-reforest-gauze-149e@gregkh>
-In-Reply-To: <2024030653-reforest-gauze-149e@gregkh>
-From: Luna Jernberg <droidbittin@gmail.com>
-Date: Wed, 6 Mar 2024 15:56:00 +0100
-Message-ID: <CADo9pHi--q0XrROk=NXkf+YBHkj6s3JsWKpJgMJU5judaJrKwg@mail.gmail.com>
-Subject: Re: [PATCH 6.7 000/162] 6.7.9-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: SeongJae Park <sj@kernel.org>, stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, 
-	damon@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 
-Den ons 6 mars 2024 kl 15:52 skrev Greg Kroah-Hartman
-<gregkh@linuxfoundation.org>:
->
-> On Tue, Mar 05, 2024 at 12:05:33AM +0100, Luna Jernberg wrote:
-> > Works fine on my Arch Linux desktop with model name    : AMD Ryzen 5
-> > 5600 6-Core Processor
-> > after the Arch Linux manual intervention for new mkinitcpio settings
-> > and version in Arch
-> >
-> > Tested by: Luna Jernberg <droidbittin@gmail.com>
->
-> Nit, this should be "Tested-by:" without the ' ', otherwise our tools
-> will not pick this up.
->
-> thanks,
->
-> greg k-h
+DAMON allows users to specify desired ranges of overhead and accuracy of
+the monitoring, and do its best effort to make most lightweight and
+accurate results.  A recent discussion for tiered memory management
+support from DAMON[1] revealed that the best effort accuracy may not
+suffice in some use cases, while increasing the minimum accuracy can
+incur too high overhead.  The discussion further concluded finding
+memory regions of specific access pattern via DAMON first, and then
+double checking the access of the region again in finer granularity
+could help increasing the accuracy while keeping the low overhead.
 
-Alright resent the emails with the right tag format
-sorry for the trouble
+Add a new type of DAMOS filter, namely YOUNG for such a case.  Like anon
+and memcg, the type of filter is applied to each page of the memory
+region of DAMOS target memory region, and check if the page is accessed
+since the last check.  Because this is a filter type that applied in
+page granularity, the support depends on DAMON operations set.  Because
+there are expected usages of this filter for physical address space
+based DAMOS usage[1], implement the support for only DAMON operations
+set for the physical address space, paddr.
+
+[1] https://lore.kernel.org/r/20240227235121.153277-1-sj@kernel.org
+
+SeongJae Park (3):
+  mm/damon: add DAMOS filter type YOUNG
+  mm/damon/paddr: implement damon_folio_young()
+  mm/damon/paddr: support DAMOS filter type YOUNG
+
+ include/linux/damon.h    |  2 ++
+ mm/damon/paddr.c         | 29 +++++++++++++++++++----------
+ mm/damon/sysfs-schemes.c |  1 +
+ 3 files changed, 22 insertions(+), 10 deletions(-)
+
+
+base-commit: 78a854de1f605e99ccc20df1775f237120cca47c
+-- 
+2.39.2
+
