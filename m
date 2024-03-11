@@ -1,46 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF4872CAB;
-	Sat,  9 Mar 2024 01:53:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0AD3ECC;
+	Mon, 11 Mar 2024 20:45:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709949194; cv=none; b=ODXR3X7Vzr6EWp6AfVGoi3J+mIJvplZaWnSnReXRffbZ335Gp/XRfeOimED6UpscntHqi/5QRdKRnbSUMqajQNjKiXE9lnlU35hODvQx0fUioeBal0aBpmkDmRaFbXWMvpBOIqxUAHlbpHJMo/wTadBHCQ40l9UYXYDmgrv/Q0M=
+	t=1710189957; cv=none; b=M4qczGomWE69gfz+DXNy90w4yP1px2loa1Dx7TOJpE8oHyMZg3TOYDM+ov+XM6ks/xyIlZRi6k5yrqEDTKMG5LkiCIHwajEA2KClABI9uDu6wJpf4uRq1a9TYKP1NGcud30eAx7YAhdQ/goPIo2EWzXapvJ0c6Cz4B5dXFKywYM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709949194; c=relaxed/simple;
-	bh=2knyzT26kc/AoacFUv5gxCg0MX3pdvSH3cxpNCbbYtc=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=g/cYqauO0d0BOAQiQwAUFo+HgT+7KovEWM9Sd+Y3HWUb5Zrwx8vkjoCa16ns/VhmvgJpqtOruH9CSiHBwGYDJmJ2lXr+Am/MTZRDpDYTIMx44MH0MoqL+WN2vRUnhJCbjifHf/oyJjRnfrq0KHNTu8x+lMEVrFJzOn69C254Qec=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XdAyec9x; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1710189957; c=relaxed/simple;
+	bh=s5xI8mQzAoMjxpwEaBaKlaL9MAdSZsz/UtdcP8IG03A=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=VZB1ZXVK8J74vDrLSEZO9MclH3BfFh5Z+MOqf+x3t4+FpZhhHrTCWxF6LwYqrNvafme8bDyt64I49nphFQ69qvueycdFjjflTfrwqUgfg+WjX0DdGG34m9JanDF2JeKBK59nmssuPnGTOS4R8Soy4enevljVMYL8wH5b+tvyWEM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=A6fUVGPl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XdAyec9x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0E0DC433F1;
-	Sat,  9 Mar 2024 01:53:12 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="A6fUVGPl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A78E1C43390;
+	Mon, 11 Mar 2024 20:45:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1709949193;
-	bh=2knyzT26kc/AoacFUv5gxCg0MX3pdvSH3cxpNCbbYtc=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XdAyec9xU/ehyjyfJwe7qad+5r2egSexq8GXPXFLTw/wvmpAHxSLb9RsAXp2iJfHl
-	 AXLYRsMDs6Iv7r/wcMsKA1sRKlctdDv2IIEIj9m2XN6gH+qWydxczRmjCSDaOZYCFi
-	 WtLIoXdBINcFQOhRbPZvZ+Mk+b21HMlxN/Yp4J1pxNPLMJrSuOkozvhfpEaXph9ZJM
-	 qVpnfq/JyxY5OENt2OkgvaZe1SRgD71Ipd4m5Oh0K3imAJY2vU4YKYNpsP9EQFxt5D
-	 TIhYCU5jAf/IPZGjCb8J1jEFZM+EYRal1W2oYpiy/Y2wn0jjet/1EZ85l/CJPcVUDF
-	 SSIH04uWuZnAg==
+	s=k20201202; t=1710189957;
+	bh=s5xI8mQzAoMjxpwEaBaKlaL9MAdSZsz/UtdcP8IG03A=;
+	h=From:To:Cc:Subject:Date:From;
+	b=A6fUVGPlk5NuPRlI/mnP1O/IxeWLCbg00NHinziLuI6WiVNTXi/0/KI2drBkdkUSv
+	 9RfJ1iM7LmzejKD1R5IGpER9kAzambV0NRrW1TElkuDE1uT40NuKg69gC2IYzE+BX0
+	 ivzDHEL7sMthf+yv4+MZXmOvVSTytptVmO+GZ4fc622uSwwFyZ7HgTA1YC0fmTJyJv
+	 MZQoP4byqHrGOMEpMOH2vP57quYbdZPjcWO2cEeaoQ6N181rs64ojbqVP4QNpHw6Cn
+	 vYDGRXvFYL6ibPnaFqbU9q36RnANPS1XGkC6EqfjEoyhTZUxmRKB3iMnKqyvTaaZYO
+	 GJfROvh/RhfSA==
 From: SeongJae Park <sj@kernel.org>
-To: SeongJae Park <sj@kernel.org>
-Cc: Andrew Morton <akpm@linux-foundation.org>,
-	honggyu.kim@sk.com,
+To: 
+Cc: honggyu.kim@sk.com,
 	hyeongtak.ji@sk.com,
 	kernel_team@skhynix.com,
+	SeongJae Park <sj@kernel.org>,
 	damon@lists.linux.dev,
 	linux-mm@kvack.org,
 	linux-kernel@vger.kernel.org
-Subject: Re: [RFC PATCH 3/3] mm/damon/paddr: support DAMOS filter type YOUNG
-Date: Fri,  8 Mar 2024 17:53:11 -0800
-Message-Id: <20240309015311.45954-1-sj@kernel.org>
+Subject: [RFC PATCH v2 0/4] mm/damon: add a DAMOS filter type for page granularity access recheck
+Date: Mon, 11 Mar 2024 13:45:41 -0700
+Message-Id: <20240311204545.47097-1-sj@kernel.org>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20240307030013.47041-4-sj@kernel.org>
-References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -49,44 +46,46 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Wed,  6 Mar 2024 19:00:13 -0800 SeongJae Park <sj@kernel.org> wrote:
+Changes from RFC v1
+(https://lore.kernel.org/r/20240307030013.47041-1-sj@kernel.org)
+- Rename __damon_pa_young() to damon_folio_young_one()
+- Mark the folio as old from the filter for the next check
 
-> DAMOS filter of type YOUNG is defined, but not yet implemented by any
-> DAMON operations set.  Add the implementation to the DAMON operations
-> set for the physical address space, paddr.
-> 
-> Signed-off-by: SeongJae Park <sj@kernel.org>
-> ---
->  mm/damon/paddr.c | 3 +++
->  1 file changed, 3 insertions(+)
-> 
-> diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
-> index deee0fdf2e5b..52e4be7351cc 100644
-> --- a/mm/damon/paddr.c
-> +++ b/mm/damon/paddr.c
-> @@ -209,6 +209,9 @@ static bool __damos_pa_filter_out(struct damos_filter *filter,
->  			matched = filter->memcg_id == mem_cgroup_id(memcg);
->  		rcu_read_unlock();
->  		break;
-> +	case DAMOS_FILTER_TYPE_YOUNG:
-> +		matched = damon_folio_young(folio);
-> +		break;
+DAMON allows users to specify desired ranges of overhead and accuracy of
+the monitoring, and do its best effort to make most lightweight and
+accurate results.  A recent discussion for tiered memory management
+support from DAMON[1] revealed that the best effort accuracy may not
+suffice in some use cases, while increasing the minimum accuracy can
+incur too high overhead.  The discussion further concluded finding
+memory regions of specific access pattern via DAMON first, and then
+double checking the access of the region again in finer granularity
+could help increasing the accuracy while keeping the low overhead.
 
-damon_folio_young() doesn't reset the Accessed bit of the folio.  Hence, unless
-something is resetting the bit, this damon_folio_young() call will repeatedly
-return true even if there was no access to the folio since last check.  We
-should implement Accessed bit test-and-reset variant of this function and
-replace this, or call damon_pa_mkold() when 'matched' is 'true'.
+Add a new type of DAMOS filter, namely YOUNG for such a case.  Like anon
+and memcg, the type of filter is applied to each page of the memory
+region of DAMOS target memory region, and check if the page is accessed
+since the last check.  Because this is a filter type that applied in
+page granularity, the support depends on DAMON operations set.  Because
+there are expected usages of this filter for physical address space
+based DAMOS usage[1], implement the support for only DAMON operations
+set for the physical address space, paddr.
 
-I will fix this in the next spin.
+[1] https://lore.kernel.org/r/20240227235121.153277-1-sj@kernel.org
 
 
-Thanks,
-SJ
+SeongJae Park (4):
+  mm/damon/paddr: implement damon_folio_young()
+  mm/damon/paddr: implement damon_folio_mkold()
+  mm/damon: add DAMOS filter type YOUNG
+  mm/damon/paddr: support DAMOS filter type YOUNG
+
+ include/linux/damon.h    |  2 ++
+ mm/damon/paddr.c         | 64 +++++++++++++++++++++++++---------------
+ mm/damon/sysfs-schemes.c |  1 +
+ 3 files changed, 43 insertions(+), 24 deletions(-)
 
 
->  	default:
->  		break;
->  	}
-> -- 
-> 2.39.2
+base-commit: 13043cde46a19e72d37965b67b74e564623f65e7
+-- 
+2.39.2
+
