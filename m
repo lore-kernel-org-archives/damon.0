@@ -1,139 +1,277 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.15])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B64355E5F;
-	Mon, 18 Mar 2024 18:24:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.15
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76D721E52F;
+	Mon, 18 Mar 2024 19:07:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710786257; cv=none; b=HVBZUg79iLHCAgcUSQuZVRh/ImAhF/ZFL/7SBPotzQNdDQGSFiQIF0QvUUa/spYz//Q4+szfpHyn4bqDZlxD8W20cvEH5uoZmfYSFBJRE1RYilBo8qAz12AqBVfygJraLQTSmtzCKna8Pn/E3t3g5cS5FS8lSBVynTVYL8N3zEY=
+	t=1710788845; cv=none; b=qCRu/s91H0ECVg651AfjhOh81GM2VVPT6m2YuWgvdydEJna96qpluWESUDcaSblnifgEqPkDa8HD+evfVD/txNYQC+Mtd46lvufgE4/R9ZxvQc4mqMcbnZVv0YsbCKEabH7Kc8WGE+vDxwEnGep7aWa8MDTqW/Qk5UkOldV0ruQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710786257; c=relaxed/simple;
-	bh=qb54vpIYrxfWHlrOPLWIDVeU7BorvV33vlsD+5MlO7Q=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nyXI3WJaI6PIAsyozSbtic2NFxetd/y1nKxbFSqoIkDrRrpSroDvYEySk9klloOR56KuxgiW0tDmQVY8TOLNpKVTaP1Nw7rhMhd7+wvKxrkmhjvy1wdgm/IC4MPSTRGhEloIjuf49GLTtTn1/RcU4B1+1ITyVyfcZC5uaAHpiZ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=HGUB9zAK; arc=none smtp.client-ip=192.198.163.15
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	s=arc-20240116; t=1710788845; c=relaxed/simple;
+	bh=crlDe0LQdyFAPw+Ob2pqUFnMhq9i3YBhAXnA6BrWdOk=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=YtmbPc7Ka5+hOSrxzsFZoLn+4ufw/Q6CBf2m2QuD3zV5sCb/9X1PTRpPx6HV4HQGAuPH4CayrUQTkRsTlcxhAMfFvowAIm85FS9hNJ8IKza3RIj8bgcWncI7/ypSBiFiSF2REiX6kfJ4D6vOyk6/pmfVI8dTtMQkp9+p1z/GpRw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=j0M4QTAd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="HGUB9zAK"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1710786255; x=1742322255;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=qb54vpIYrxfWHlrOPLWIDVeU7BorvV33vlsD+5MlO7Q=;
-  b=HGUB9zAKpqXVZ0l22RvTme2FAxgNgG9c0vgfhUys1u3Rb+IxtCEDCDue
-   c2ty2kD1o4ZTxNWFQWxW+jlgtuKZSKzk0/bZ6Wwj1G+7ZXPaalrYe4CCc
-   19aiq0FxY6V9hm0xj94d770c6/LNe6fOWvE3bV11EcIu5QJwfi93RqWum
-   DRyhyTO892jl/BcXQX8+3x3Lq763u0lHlvFlj57t6ZIRQOLfJLMjWY75X
-   Z/Yw0RZN5ti+DkKM4g+OQio3f3CqWaDkpoPi0HVfD0RVTaJwd+T2gHLEu
-   Jd0ES+0vvJZxQFdJekIue1M4u7fJuX5MXnIrUhgBDn6NJJ7goPT4zyChi
-   w==;
-X-IronPort-AV: E=McAfee;i="6600,9927,11017"; a="5800116"
-X-IronPort-AV: E=Sophos;i="6.07,135,1708416000"; 
-   d="scan'208";a="5800116"
-Received: from fmviesa006.fm.intel.com ([10.60.135.146])
-  by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Mar 2024 11:24:14 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,135,1708416000"; 
-   d="scan'208";a="13635849"
-Received: from lkp-server01.sh.intel.com (HELO b21307750695) ([10.239.97.150])
-  by fmviesa006.fm.intel.com with ESMTP; 18 Mar 2024 11:24:11 -0700
-Received: from kbuild by b21307750695 with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1rmHea-000HAh-19;
-	Mon, 18 Mar 2024 18:24:08 +0000
-Date: Tue, 19 Mar 2024 02:23:23 +0800
-From: kernel test robot <lkp@intel.com>
-To: Aravinda Prasad <aravinda.prasad@intel.com>, damon@lists.linux.dev,
-	linux-mm@kvack.org, sj@kernel.org, linux-kernel@vger.kernel.org
-Cc: oe-kbuild-all@lists.linux.dev, aravinda.prasad@intel.com,
-	s2322819@ed.ac.uk, sandeep4.kumar@intel.com, ying.huang@intel.com,
-	dave.hansen@intel.com, dan.j.williams@intel.com,
-	sreenivas.subramoney@intel.com, antti.kervinen@intel.com,
-	alexander.kanevskiy@intel.com
-Subject: Re: [PATCH v2 2/3] mm/damon: profiling enhancement
-Message-ID: <202403190218.1tBSAJpX-lkp@intel.com>
-References: <20240318132848.82686-3-aravinda.prasad@intel.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="j0M4QTAd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31146C433C7;
+	Mon, 18 Mar 2024 19:07:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1710788844;
+	bh=crlDe0LQdyFAPw+Ob2pqUFnMhq9i3YBhAXnA6BrWdOk=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=j0M4QTAdmJE03FfauobXexJMJwG/HkoipIXA9CIs5F02BZXqOR3kwWb5DmzctyRfY
+	 jpqk4HHl+04/FKrPeHBWoYcCArIW/BM4bHV8zcFeHDr5SvjqKCqLSK3zcBiEURlC5o
+	 EbKnnXIljCGpJ63vPrj1L+TFS/Nm1KZcj/sNFVgyWeVMlzB7UEgtCP3Ly5HnFWxOp8
+	 UQxNUKp7oj8UqrJrT/a/yBQMGxpRX/X94HciY+en08jv+iLtGzWfOiLOHNxbrM70j8
+	 8kFEUp9os2ayya+gqgYqcx3ZdmRmMrPdD8MZTZqoItoZnqzp3hT2zW8sII0tQb4f3V
+	 6/Ri3Pdqa0pQQ==
+From: SeongJae Park <sj@kernel.org>
+To: Honggyu Kim <honggyu.kim@sk.com>
+Cc: SeongJae Park <sj@kernel.org>,
+	damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	akpm@linux-foundation.org,
+	apopple@nvidia.com,
+	baolin.wang@linux.alibaba.com,
+	dave.jiang@intel.com,
+	hyeongtak.ji@sk.com,
+	kernel_team@skhynix.com,
+	linmiaohe@huawei.com,
+	linux-kernel@vger.kernel.org,
+	linux-trace-kernel@vger.kernel.org,
+	mathieu.desnoyers@efficios.com,
+	mhiramat@kernel.org,
+	rakie.kim@sk.com,
+	rostedt@goodmis.org,
+	surenb@google.com,
+	yangx.jy@fujitsu.com,
+	ying.huang@intel.com,
+	ziy@nvidia.com,
+	42.hyeyoo@gmail.com
+Subject: Re: [RFC PATCH v2 0/7] DAMON based 2-tier memory management for CXL memory
+Date: Mon, 18 Mar 2024 12:07:21 -0700
+Message-Id: <20240318190721.99659-1-sj@kernel.org>
+X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20240318132749.2115-1-honggyu.kim@sk.com>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240318132848.82686-3-aravinda.prasad@intel.com>
+Content-Transfer-Encoding: 8bit
 
-Hi Aravinda,
+On Mon, 18 Mar 2024 22:27:45 +0900 Honggyu Kim <honggyu.kim@sk.com> wrote:
 
-kernel test robot noticed the following build errors:
+> Hi SeongJae,
+> 
+> On Sun, 17 Mar 2024 08:31:44 -0700 SeongJae Park <sj@kernel.org> wrote:
+> > Hi Honggyu,
+> > 
+> > On Sun, 17 Mar 2024 17:36:29 +0900 Honggyu Kim <honggyu.kim@sk.com> wrote:
+> > 
+> > > Hi SeongJae,
+> > > 
+> > > Thanks for the confirmation.  I have a few comments on young filter so
+> > > please read the inline comments again.
+> > > 
+> > > On Wed, 12 Mar 2024 08:53:00 -0800 SeongJae Park <sj@kernel.org> wrote:
+> > > > Hi Honggyu,
+> > > > 
+> > > > > > -----Original Message-----
+> > > > > > From: SeongJae Park <sj@kernel.org>
+> > > > > > Sent: Tuesday, March 12, 2024 3:33 AM
+> > > > > > To: Honggyu Kim <honggyu.kim@sk.com>
+> > > > > > Cc: SeongJae Park <sj@kernel.org>; kernel_team <kernel_team@skhynix.com>
+> > > > > > Subject: RE: Re: [RFC PATCH v2 0/7] DAMON based 2-tier memory management for CXL memory
+> > > > > >
+> > > > > > Hi Honggyu,
+> > > > > >
+> > > > > > On Mon, 11 Mar 2024 12:51:12 +0000 "honggyu.kim@sk.com" <honggyu.kim@sk.com> wrote:
+> > > > > >
+> > > > > > > Hi SeongJae,
+> > > > > > >
+> > > > > > > I've tested it again and found that "young" filter has to be set
+> > > > > > > differently as follows.
+> > > > > > > - demote action: set "young" filter with "matching" true
+> > > > > > > - promote action: set "young" filter with "matching" false
+> 
+> Thinking it again, I feel like "matching" true or false looks quite
+> vague to me as a general user.
+> 
+> Instead, I would like to have more meaningful names for "matching" as
+> follows.
+> 
+> - matching "true" can be either (filter) "out" or "skip".
+> - matching "false" can be either (filter) "in" or "apply".
 
-[auto build test ERROR on akpm-mm/mm-everything]
+I agree the naming could be done much better.  And thank you for the nice
+suggestions.  I have a few concerns, though.
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Aravinda-Prasad/mm-damon-mm-infrastructure-support/20240318-212723
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/akpm/mm.git mm-everything
-patch link:    https://lore.kernel.org/r/20240318132848.82686-3-aravinda.prasad%40intel.com
-patch subject: [PATCH v2 2/3] mm/damon: profiling enhancement
-config: m68k-allmodconfig (https://download.01.org/0day-ci/archive/20240319/202403190218.1tBSAJpX-lkp@intel.com/config)
-compiler: m68k-linux-gcc (GCC) 13.2.0
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20240319/202403190218.1tBSAJpX-lkp@intel.com/reproduce)
+Firstly, increasing the number of behavioral concepts.  DAMOS filter feature
+has only single behavior: excluding some types of memory from DAMOS action
+target.  The "matching" is to provide a flexible way for further specifying the
+target to exclude in a bit detail.  Without it, we would need non-variant for
+each filter type.  Comapred to the current terms, the new terms feel like
+implying there are two types of behaviors.  I think one behavior is easier to
+understand than two behaviors, and better match what internal code is doing.
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202403190218.1tBSAJpX-lkp@intel.com/
+Secondly, ambiguity in "in" and "apply".  To me, the terms sound like _adding_
+something more than _excluding_.  I think that might confuse people in some
+cases.  Actually, I have used the term "filter-out" and "filter-in" on
+this  and several threads.  When saying about "filter-in" scenario, I had to
+emphasize the fact that it is not adding something but excluding others.  I now
+think that was not a good approach.
 
-All errors (new ones prefixed by >>):
+Finally, "apply" sounds a bit deterministic.  I think it could be a bit
+confusing in some cases such as when using multiple filters in a combined way.
+For example, if we have two filters for 1) "apply" a memcg and 2) skip anon
+pages, the given DAMOS action will not be applied to anon pages of the memcg.
+I think this might be a bit confusing.
 
-   mm/damon/vaddr.c: In function 'pick_profile_level':
->> mm/damon/vaddr.c:78:13: error: implicit declaration of function 'pgtable_l5_enabled' [-Werror=implicit-function-declaration]
-      78 |         if (pgtable_l5_enabled()) {
-         |             ^~~~~~~~~~~~~~~~~~
-   cc1: some warnings being treated as errors
+> 
+> Internally, the type of "matching" can be boolean, but it'd be better
+> for general users have another ways to set it such as "out"/"in" or
+> "skip"/"apply" via sysfs interface.  I prefer "skip" and "apply" looks
+> more intuitive, but I don't have strong objection on "out" and "in" as
+> well.
+
+Unfortunately, DAMON sysfs interface is an ABI that we want to keep stable.  Of
+course we could make some changes on it if really required.  But I'm unsure if
+the problem of current naming and benefit of the sugegsted change are big
+enough to outweighs the stability risk and additional efforts.
+
+Also, DAMON sysfs interface is arguably not for _very_ general users.  DAMON
+user-space tool is the one for _more_ general users.  To quote DAMON usage
+document,
+
+    - *DAMON user space tool.*
+      `This <https://github.com/awslabs/damo>`_ is for privileged people such as
+      system administrators who want a just-working human-friendly interface.
+      [...]
+    - *sysfs interface.*
+      :ref:`This <sysfs_interface>` is for privileged user space programmers who
+      want more optimized use of DAMON. [...]
+ 
+If the concept is that confused, I think we could improve the documentation, or
+the user space tool.  But for DAMON sysfs interface, I think we need more
+discussions for getting clear pros/cons that justifies the risk and the effort.
+
+> 
+> I also feel the filter name "young" is more for developers not for
+> general users.  I think this can be changed to "accessed" filter
+> instead.
+
+In my humble opinion, "accessed" might be confusing with the term that being
+used by DAMON, specifically, the concept of "nr_accesses".  I also thought
+about using more specific term such as "pg-accessed" or something else, but I
+felt it is still unclear or making it too verbose.
+
+I agree "young" sounds more for developers.  But, again, DAMON sysfs is for not
+_very_ general users.  And the term is used commonly on relcaimation part and
+LRU, so I think this is not too bad as long as we provide nice documentation or
+abstraction from user-space tool.
+
+> 
+> The demote and promote filters can be set as follows using these.
+> 
+> - demote action: set "accessed" filter with "matching" to "skip"
+> - promote action: set "accessed" filter with "matching" to "apply"
+> 
+> I also think that you can feel this is more complicated so I would like
+> to hear how you think about this.
+
+To my humble brain, this looks intuitive for this use case.  But as I also
+mentioned above, I worry if this could keep simple and intuitive in complicated
+filter usages.
+
+> 
+> > > > > >
+> > > > > > DAMOS filter is basically for filtering "out" memory regions that matches to
+> > > > > > the condition.
+> 
+> Right.  In other tools, I see filters are more used as filtering "in"
+> rather than filtering "out".  I feel this makes me more confused.
+
+I understand that the word, "filtering", can be used for both, and therefore
+can be confused.  I was also spending no small times at naming since I was
+thinking about both coffee filters and color filters (of photoshop or glasses).
+But it turned out that I'm more familiar with coffee filters, and might be same
+for DAMON community, since the community is having beer/coffee/tea chat series
+;) (https://lore.kernel.org/damon/20220810225102.124459-1-sj@kernel.org/)
+
+That said, I think we may be able to make this better documented, or add a
+layer of abstraction on DAMON user-space tool.
+
+[...]
+> > > > > Yes, I understand "promote non-non-young pages" means "promote young pages".
+> > > > > This might be understood as "young pages are NOT filtered out" for promotion
+> > > > > but it doesn't mean that "old pages are filtered out" instead.
+> > > > > And we just rely hot detection only on DAMOS logics such as access frequency
+> > > > > and age. Am I correct?
+> > > > 
+> > > > You're correct.
+> > > 
+> > > Ack.  But if it doesn't mean that "old pages are filtered out" instead,
+> > 
+> > It does mean that.  Here, filtering is exclusive.  Hence, "filter-in a type of
+> > pages" means "filter-out pages of other types".  At least that's the intention.
+> > To quote the documentation
+> > (https://docs.kernel.org/mm/damon/design.html#filters),
+> > 
+> >     Each filter specifies the type of target memory, and whether it should
+> >     exclude the memory of the type (filter-out), or all except the memory of
+> >     the type (filter-in).
+> 
+> Thanks for the correction.
+> 
+> > > then do we really need this filter for promotion?  If not, maybe should
+> > > we create another "old" filter for promotion?  As of now, the promotion
+> > > is mostly done inaccurately, but the accurate migration is done at
+> > > demotion level.
+> > 
+> > Is this based on your theory?  Or, a real behavior that you're seeing from your
+> > setup?  If this is a real behavior, I think that should be a bug that need to
+> > be fixed.
+> 
+> I have observed this in the hot_cold example, but I also found that the
+> promotion is done very quickly because the age for promote action is set
+> to 0 to max in my json setup.  It makes most pages of the region are
+> young because there is not enough time for those pages being old.  That
+> means I was wrong.
+[...]
+> > > I understand the function name of internal implementation is
+> > > "damos_pa_filter_out" so the basic action is filtering out, but the
+> > > cgroup filter works in the opposite way for now.
+> > 
+> > Does memcg filter works in the opposite way?  I don't think so because
+> > __damos_pa_filter_out() sets 'matches' as 'true' only if the the given folio is
+> > contained in the given memcg.  'young' filter also simply sets 'matches' as
+> > 'true' only if the given folio is young.
+> > 
+> > If it works in the opposite way, it's a bug that need to be fixed.  Please let
+> > me know if I'm missing something.
+> 
+> No, it was also my misunderstanding.  I used to set the matching false
+> using my script.
+
+Thank you for confirming.  I understand we found no bug at the moment.
 
 
-vim +/pgtable_l5_enabled +78 mm/damon/vaddr.c
+To summarize my opinion again,
 
-    54	
-    55	/* Pick the highest possible page table profiling level for addr
-    56	 * in the region defined by start and end
-    57	 */
-    58	static int pick_profile_level(unsigned long start, unsigned long end,
-    59			unsigned long addr)
-    60	{
-    61		/* Start with PTE and check if higher levels can be picked */
-    62		int level = 0;
-    63	
-    64		if (!arch_has_hw_nonleaf_pmd_young())
-    65			return level;
-    66	
-    67		/* Check if PMD or higher can be picked, else use PTE */
-    68		if (pmd_addr_start(addr, (start) - 1) < start
-    69				|| pmd_addr_end(addr, (end) + 1) > end)
-    70			return level;
-    71	
-    72		level++;
-    73		/* Check if PUD or higher can be picked, else use PMD */
-    74		if (pud_addr_start(addr, (start) - 1) < start
-    75				|| pud_addr_end(addr, (end) + 1) > end)
-    76			return level;
-    77	
-  > 78		if (pgtable_l5_enabled()) {
-    79			level++;
-    80			/* Check if P4D or higher can be picked, else use PUD */
-    81			if (p4d_addr_start(addr, (start) - 1) < start
-    82					|| p4d_addr_end(addr, (end) + 1) > end)
-    83				return level;
-    84		}
-    85	
-    86		level++;
-    87		/* Check if PGD can be picked, else return PUD level */
-    88		if (pgd_addr_start(addr, (start) - 1) < start
-    89				|| pgd_addr_end(addr, (end) + 1) > end)
-    90			return level;
-    91	
+1. I agree the concept and names of DAMOS filters are confusing and not very
+   intuitive.
+2. However, it's unclear if the problem and the benefit from the suggested new
+   names are huge enough to take the risk and effort on changing ABI.
+3. We could improve documentation and/or user-space tool.
 
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+Thank you again for the suggestion and confirmations to my questions.
+
+
+Thanks,
+SJ
+
+[...]
