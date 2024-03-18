@@ -1,153 +1,139 @@
-Received: from invmail4.hynix.com (exvmail4.skhynix.com [166.125.252.92])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5F7BD2D022
-	for <damon@lists.linux.dev>; Mon, 18 Mar 2024 13:33:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=166.125.252.92
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.15])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B64355E5F;
+	Mon, 18 Mar 2024 18:24:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.15
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710768828; cv=none; b=EebzyFUlcb5NRx6t9SIxCuyUWQvhyJHJ/r4Xrzo5WMIDtiIctpj/qmCMx8HQVr1g6zEAE+MCPw8p2m+07+R0g6QXw5eFlRzAD1ASP6LHWS3MzVCfVW8kcLSnO4O7/DLqXpWRAfO6jrg5O6whckAWXdmRhhOweLR2XASdzL55BI0=
+	t=1710786257; cv=none; b=HVBZUg79iLHCAgcUSQuZVRh/ImAhF/ZFL/7SBPotzQNdDQGSFiQIF0QvUUa/spYz//Q4+szfpHyn4bqDZlxD8W20cvEH5uoZmfYSFBJRE1RYilBo8qAz12AqBVfygJraLQTSmtzCKna8Pn/E3t3g5cS5FS8lSBVynTVYL8N3zEY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710768828; c=relaxed/simple;
-	bh=q0xLpqYTqkB9ibXN1mY5JqcfX9PKUlK+8T5l2q2RBq4=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=On5KFJ0aRgxwuARNdyISbVdN1TCJMzLrcznfkdNX9dQlCwelS1AIZWP7HoiTVTk90gLYKETrCrWqg2hO0MVdshnNV5EBHaWOzNq3cB9a+qIKXiIisVc5EdTvwuUAjZlj7lGWWDRs6rLh0/Y3qBTCkjHabF8CSB1yo+K+iGKuZzU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sk.com; spf=pass smtp.mailfrom=sk.com; arc=none smtp.client-ip=166.125.252.92
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sk.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sk.com
-X-AuditID: a67dfc5b-d85ff70000001748-7a-65f842b48e22
-From: Honggyu Kim <honggyu.kim@sk.com>
-To: SeongJae Park <sj@kernel.org>
-Cc: Honggyu Kim <honggyu.kim@sk.com>,
-	damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	akpm@linux-foundation.org,
-	apopple@nvidia.com,
-	baolin.wang@linux.alibaba.com,
-	dave.jiang@intel.com,
-	hyeongtak.ji@sk.com,
-	kernel_team@skhynix.com,
-	linmiaohe@huawei.com,
-	linux-kernel@vger.kernel.org,
-	linux-trace-kernel@vger.kernel.org,
-	mathieu.desnoyers@efficios.com,
-	mhiramat@kernel.org,
-	rakie.kim@sk.com,
-	rostedt@goodmis.org,
-	surenb@google.com,
-	yangx.jy@fujitsu.com,
-	ying.huang@intel.com,
-	ziy@nvidia.com,
-	42.hyeyoo@gmail.com
-Subject: Re: [RFC PATCH v2 0/7] DAMON based 2-tier memory management for CXL memory
-Date: Mon, 18 Mar 2024 22:33:34 +0900
-Message-ID: <20240318133338.2135-1-honggyu.kim@sk.com>
-X-Mailer: git-send-email 2.43.0.windows.1
-In-Reply-To: <20240317191358.97578-1-sj@kernel.org>
-References: 
+	s=arc-20240116; t=1710786257; c=relaxed/simple;
+	bh=qb54vpIYrxfWHlrOPLWIDVeU7BorvV33vlsD+5MlO7Q=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=nyXI3WJaI6PIAsyozSbtic2NFxetd/y1nKxbFSqoIkDrRrpSroDvYEySk9klloOR56KuxgiW0tDmQVY8TOLNpKVTaP1Nw7rhMhd7+wvKxrkmhjvy1wdgm/IC4MPSTRGhEloIjuf49GLTtTn1/RcU4B1+1ITyVyfcZC5uaAHpiZ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=HGUB9zAK; arc=none smtp.client-ip=192.198.163.15
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="HGUB9zAK"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1710786255; x=1742322255;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=qb54vpIYrxfWHlrOPLWIDVeU7BorvV33vlsD+5MlO7Q=;
+  b=HGUB9zAKpqXVZ0l22RvTme2FAxgNgG9c0vgfhUys1u3Rb+IxtCEDCDue
+   c2ty2kD1o4ZTxNWFQWxW+jlgtuKZSKzk0/bZ6Wwj1G+7ZXPaalrYe4CCc
+   19aiq0FxY6V9hm0xj94d770c6/LNe6fOWvE3bV11EcIu5QJwfi93RqWum
+   DRyhyTO892jl/BcXQX8+3x3Lq763u0lHlvFlj57t6ZIRQOLfJLMjWY75X
+   Z/Yw0RZN5ti+DkKM4g+OQio3f3CqWaDkpoPi0HVfD0RVTaJwd+T2gHLEu
+   Jd0ES+0vvJZxQFdJekIue1M4u7fJuX5MXnIrUhgBDn6NJJ7goPT4zyChi
+   w==;
+X-IronPort-AV: E=McAfee;i="6600,9927,11017"; a="5800116"
+X-IronPort-AV: E=Sophos;i="6.07,135,1708416000"; 
+   d="scan'208";a="5800116"
+Received: from fmviesa006.fm.intel.com ([10.60.135.146])
+  by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Mar 2024 11:24:14 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.07,135,1708416000"; 
+   d="scan'208";a="13635849"
+Received: from lkp-server01.sh.intel.com (HELO b21307750695) ([10.239.97.150])
+  by fmviesa006.fm.intel.com with ESMTP; 18 Mar 2024 11:24:11 -0700
+Received: from kbuild by b21307750695 with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1rmHea-000HAh-19;
+	Mon, 18 Mar 2024 18:24:08 +0000
+Date: Tue, 19 Mar 2024 02:23:23 +0800
+From: kernel test robot <lkp@intel.com>
+To: Aravinda Prasad <aravinda.prasad@intel.com>, damon@lists.linux.dev,
+	linux-mm@kvack.org, sj@kernel.org, linux-kernel@vger.kernel.org
+Cc: oe-kbuild-all@lists.linux.dev, aravinda.prasad@intel.com,
+	s2322819@ed.ac.uk, sandeep4.kumar@intel.com, ying.huang@intel.com,
+	dave.hansen@intel.com, dan.j.williams@intel.com,
+	sreenivas.subramoney@intel.com, antti.kervinen@intel.com,
+	alexander.kanevskiy@intel.com
+Subject: Re: [PATCH v2 2/3] mm/damon: profiling enhancement
+Message-ID: <202403190218.1tBSAJpX-lkp@intel.com>
+References: <20240318132848.82686-3-aravinda.prasad@intel.com>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprHIsWRmVeSWpSXmKPExsXC9ZZnke4Wpx+pBs+6lS0m9hhYzFm/hs1i
-	140Qi/97jzFaPPn/m9XixM1GNovO70tZLC7vmsNmcW/Nf1aLI+vPslhsPnuG2WLxcjWLfR0P
-	mCwOf33DZDH50gI2ixdTzjBanJw1mcVi9tF77A5CHktPv2Hz2NAEJHbOusvu0bLvFrvHgk2l
-	Hi1H3rJ6LN7zkslj06pONo9Nnyaxe5yY8ZvFY+dDS48Xm2cyevQ2v2Pz+LxJLoAvissmJTUn
-	syy1SN8ugStjxcu3zAVdEhX9J1ezNDBOF+pi5OSQEDCRWLf8NhuM/fBbNzuIzSagJnHl5SQm
-	EFtEQFHi3OOLrF2MXBzMAgtZJHq/bwBLCAsES8w9+5+xi5GDg0VAVeLGLl6QMK+AmcT+M8cZ
-	IWZqSjze/hNsJqeAscT6BU1gtpAAj8SrDfsZIeoFJU7OfMICYjMLyEs0b53NDNF7iF3i8npH
-	CFtS4uCKGywTGPlnIWmZhaRlASPTKkahzLyy3MTMHBO9jMq8zAq95PzcTYzAWFtW+yd6B+On
-	C8GHGAU4GJV4eA/o/EgVYk0sK67MPcQowcGsJMLrKvY1VYg3JbGyKrUoP76oNCe1+BCjNAeL
-	kjiv0bfyFCGB9MSS1OzU1ILUIpgsEwenVAOjQ/qcys2LU1YKRdSH1Jnf3rwkv2LdvdPdoV/8
-	5tgUq+5tzE9adfb0ksDtlRUFVmp/P7UfU2x/EzZlzr5CyYA1EbW3ud/vMmPiPdg/f1rJ7G/8
-	lxPFz59cP7tcRf1A/zvDbzI7y5u+Lm3P0moOfaka+cFQJ6Fn06SNL54vnfKwic272nravw/p
-	SizFGYmGWsxFxYkAt5lNN7ECAAA=
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprJIsWRmVeSWpSXmKPExsXCNUNLT3eL049Ug+5nIhYTewws5qxfw2ax
-	60aIxf+9xxgtnvz/zWpx4mYjm8XnZ6+ZLTqffGe0ODz3JKtF5/elLBaXd81hs7i35j+rxZH1
-	Z1ksNp89w2yxeLmaxaFrz1kt9nU8YLI4/PUNk8XkSwvYLF5MOcNocXLWZBaL2UfvsTuIeSw9
-	/YbNY0MTkNg56y67R8u+W+weCzaVerQcecvqsXjPSyaPTas62Tw2fZrE7nFixm8Wj50PLT1e
-	bJ7J6NHb/I7N49ttD4/FLz4weXzeJBcgEMVlk5Kak1mWWqRvl8CVseLlW+aCLomK/pOrWRoY
-	pwt1MXJySAiYSDz81s0OYrMJqElceTmJCcQWEVCUOPf4ImsXIxcHs8BCFone7xvAEsICwRJz
-	z/5n7GLk4GARUJW4sYsXJMwrYCax/8xxRoiZmhKPt/8Em8kpYCyxfkETmC0kwCPxasN+Roh6
-	QYmTM5+wgNjMAvISzVtnM09g5JmFJDULSWoBI9MqRpHMvLLcxMwcU73i7IzKvMwKveT83E2M
-	wAhbVvtn4g7GL5fdDzEKcDAq8fAe0PmRKsSaWFZcmXuIUYKDWUmE11Xsa6oQb0piZVVqUX58
-	UWlOavEhRmkOFiVxXq/w1AQhgfTEktTs1NSC1CKYLBMHp1QD4yR+9nk/bxYF/6qWNjOTrcy8
-	s+TuJYFpxy8edpookeYfaFbUp58d6rf1U+a3/gmrV7sEb+fLf9uTu1RrjYIOP8eWjsy66lUr
-	tEt32SX2vatL/dfM84FlZdbSlq0nP7H+2/vd7fVdrxdbT1jLv/s5TViMa+aqlFyOUBeZ8+3r
-	1rw2k5VNjbm8RYmlOCPRUIu5qDgRAHvKqbKsAgAA
-X-CFilter-Loop: Reflected
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240318132848.82686-3-aravinda.prasad@intel.com>
 
-Hi SeongJae,
+Hi Aravinda,
 
-On Sun, 17 Mar 2024 12:13:57 -0700 SeongJae Park <sj@kernel.org> wrote:
-> On Sun, 17 Mar 2024 08:31:44 -0700 SeongJae Park <sj@kernel.org> wrote:
-> 
-> > Hi Honggyu,
-> > 
-> > On Sun, 17 Mar 2024 17:36:29 +0900 Honggyu Kim <honggyu.kim@sk.com> wrote:
-> > 
-> > > Hi SeongJae,
-> > > 
-> > > Thanks for the confirmation.  I have a few comments on young filter so
-> > > please read the inline comments again.
-> > > 
-> > > On Wed, 12 Mar 2024 08:53:00 -0800 SeongJae Park <sj@kernel.org> wrote:
-> > > > Hi Honggyu,
-> [...]
-> > > Thanks.  I see that it works fine, but I would like to have more
-> > > discussion about "young" filter.  What I think about filter is that if I
-> > > apply "young" filter "true" for demotion, then the action applies only
-> > > for "young" pages, but the current implementation works opposite.
-> > > 
-> > > I understand the function name of internal implementation is
-> > > "damos_pa_filter_out" so the basic action is filtering out, but the
-> > > cgroup filter works in the opposite way for now.
-> > 
-> > Does memcg filter works in the opposite way?  I don't think so because
-> > __damos_pa_filter_out() sets 'matches' as 'true' only if the the given folio is
-> > contained in the given memcg.  'young' filter also simply sets 'matches' as
-> > 'true' only if the given folio is young.
-> > 
-> > If it works in the opposite way, it's a bug that need to be fixed.  Please let
-> > me know if I'm missing something.
-> 
-> I just read the DAMOS filters part of the documentation for DAMON sysfs
-> interface again.  I believe it is explaining the meaning of 'matching' as I
-> intended to, as below:
-> 
->     You can write ``Y`` or ``N`` to ``matching`` file to filter out pages that does
->     or does not match to the type, respectively.  Then, the scheme's action will
->     not be applied to the pages that specified to be filtered out.
-> 
-> But, I found the following example for memcg filter is wrong, as below:
-> 
->     For example, below restricts a DAMOS action to be applied to only non-anonymous
->     pages of all memory cgroups except ``/having_care_already``.::
->     
->         # echo 2 > nr_filters
->         # # filter out anonymous pages
->         echo anon > 0/type
->         echo Y > 0/matching
->         # # further filter out all cgroups except one at '/having_care_already'
->         echo memcg > 1/type
->         echo /having_care_already > 1/memcg_path
->         echo N > 1/matching
-> 
-> Specifically, the last line of the commands should write 'Y' instead of 'N' to
-> do what explained.  Without the fix, the action will be applied to only
-> non-anonymous pages of 'having_care_already' memcg.  This is definitely wrong.
-> I will fix this soon.  I'm unsure if this is what made you to believe memcg
-> DAMOS filter is working in the opposite way, though.
+kernel test robot noticed the following build errors:
 
-I got confused not because of this.  I just think it again that this
-user interface is better to be more intuitive as I mentioned in the
-previous thread.
+[auto build test ERROR on akpm-mm/mm-everything]
 
-Thanks,
-Honggyu
+url:    https://github.com/intel-lab-lkp/linux/commits/Aravinda-Prasad/mm-damon-mm-infrastructure-support/20240318-212723
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/akpm/mm.git mm-everything
+patch link:    https://lore.kernel.org/r/20240318132848.82686-3-aravinda.prasad%40intel.com
+patch subject: [PATCH v2 2/3] mm/damon: profiling enhancement
+config: m68k-allmodconfig (https://download.01.org/0day-ci/archive/20240319/202403190218.1tBSAJpX-lkp@intel.com/config)
+compiler: m68k-linux-gcc (GCC) 13.2.0
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20240319/202403190218.1tBSAJpX-lkp@intel.com/reproduce)
 
-> 
-> Thanks,
-> SJ
-> 
-> [...]
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202403190218.1tBSAJpX-lkp@intel.com/
+
+All errors (new ones prefixed by >>):
+
+   mm/damon/vaddr.c: In function 'pick_profile_level':
+>> mm/damon/vaddr.c:78:13: error: implicit declaration of function 'pgtable_l5_enabled' [-Werror=implicit-function-declaration]
+      78 |         if (pgtable_l5_enabled()) {
+         |             ^~~~~~~~~~~~~~~~~~
+   cc1: some warnings being treated as errors
+
+
+vim +/pgtable_l5_enabled +78 mm/damon/vaddr.c
+
+    54	
+    55	/* Pick the highest possible page table profiling level for addr
+    56	 * in the region defined by start and end
+    57	 */
+    58	static int pick_profile_level(unsigned long start, unsigned long end,
+    59			unsigned long addr)
+    60	{
+    61		/* Start with PTE and check if higher levels can be picked */
+    62		int level = 0;
+    63	
+    64		if (!arch_has_hw_nonleaf_pmd_young())
+    65			return level;
+    66	
+    67		/* Check if PMD or higher can be picked, else use PTE */
+    68		if (pmd_addr_start(addr, (start) - 1) < start
+    69				|| pmd_addr_end(addr, (end) + 1) > end)
+    70			return level;
+    71	
+    72		level++;
+    73		/* Check if PUD or higher can be picked, else use PMD */
+    74		if (pud_addr_start(addr, (start) - 1) < start
+    75				|| pud_addr_end(addr, (end) + 1) > end)
+    76			return level;
+    77	
+  > 78		if (pgtable_l5_enabled()) {
+    79			level++;
+    80			/* Check if P4D or higher can be picked, else use PUD */
+    81			if (p4d_addr_start(addr, (start) - 1) < start
+    82					|| p4d_addr_end(addr, (end) + 1) > end)
+    83				return level;
+    84		}
+    85	
+    86		level++;
+    87		/* Check if PGD can be picked, else return PUD level */
+    88		if (pgd_addr_start(addr, (start) - 1) < start
+    89				|| pgd_addr_end(addr, (end) + 1) > end)
+    90			return level;
+    91	
+
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
