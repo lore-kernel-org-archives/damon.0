@@ -1,193 +1,150 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.10])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F0EF5A0F2;
-	Mon, 18 Mar 2024 22:00:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.10
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30D7A4C90
+	for <damon@lists.linux.dev>; Tue, 19 Mar 2024 00:51:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710799221; cv=none; b=oh7Db3feG+a5m1JB6LG4QMP6LA9txd9dAH21s+5Qdytzdvh8eoi6aTRKH/o12GRgtB/tZUTU6fiaQZir11Od3mcXrBJ3b2YVNSjNC23T/OuubwuB1N2IsfrGdn+rCKjkvtyKlxhNTDeKJKONcz5rveF9Fas0awSjuBV8d/p/FyI=
+	t=1710809502; cv=none; b=LR8kWj2IgDjSi6+1kytGrKaRKFEE6sEfLyd5UCZsYj/g+LO0T6pjiXT1FfNpk2HdhAR+dxJk15+QReKShDdWRtfS4RQUhXxKbPKAHt2TIYmoRvxboYP5ZSQhE6Lg0Z9JuoTAfiC09Nb6S2YPGkKmVQvqk1A/AOSgkeevyIk8z4E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710799221; c=relaxed/simple;
-	bh=GH6BWPSigJxYv51qRplfTJgCiA30VVhLkJmJtG7tqU4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=syOASxead6bEFq5fr0zqW89vCUoltaxrzhhLuI4H8OIUau7Q2trmCu8YIc5a40bymNP8kPyrg5VEUnksHR38jDBiEM0yR0wmKOzcZzXNLgTF3EkrkYVCmalKMpGf1D6IFem0hQhCPI2HJcwe6PMXw/jtbvC7U1z1hVxLu2hZPr4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=FbIDl7lN; arc=none smtp.client-ip=198.175.65.10
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	s=arc-20240116; t=1710809502; c=relaxed/simple;
+	bh=HBeMcQvgxDv8cJ7fNi77ty7lDhfxxyKirL3rYdRCbzU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Z99Wwr9gBqcn9EqiIbI18TL+f/9zIjRx7nYBwiCFAjr7NYYV0zyQbaWn3EGNf4t558AeO2U/69iIcsTkOppp/sxWe5EvFEfUraUGR1ZL2GubdlA3E7FtSizB+mrkamMRcg1vJ/5iSXF0tcxRLFsofT3NrDDijzvC4CuHEK6Queg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=kVFnJE4g; arc=none smtp.client-ip=209.85.128.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="FbIDl7lN"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1710799220; x=1742335220;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=GH6BWPSigJxYv51qRplfTJgCiA30VVhLkJmJtG7tqU4=;
-  b=FbIDl7lN/qxN6wv+BoqfLNg+6zvO8yP9AL1QOXetXcrKsiDd1egN3rjF
-   fdzw7uZ9Rorkg/BTcan5VcFhkV2AEzXHZ34Giz9XmGOWIFBOmytY8pXQE
-   PzlqxNPdX8+BAIoBeLqc4NVDBCAiR/kqTbuxdmSVpbuEDTRZhwUEkR+5F
-   WmIEUGSbUtK92F6XH9vJPi0qapurmRG1KcURlCV/en2k1eqDetCDSudRK
-   PubbIKsFEJ7QDofbTvaHGg+JPVKrTj3bQZVHemE/mTMNrVP+rBEuXqn6n
-   xbTYcnQv2VA05241ED0gb/xTPzYDGkDZi+J1zMyKVa7Mf6gyi9bxUzyqO
-   Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,11017"; a="23095578"
-X-IronPort-AV: E=Sophos;i="6.07,135,1708416000"; 
-   d="scan'208";a="23095578"
-Received: from fmviesa007.fm.intel.com ([10.60.135.147])
-  by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Mar 2024 15:00:19 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,135,1708416000"; 
-   d="scan'208";a="13559456"
-Received: from lkp-server01.sh.intel.com (HELO b21307750695) ([10.239.97.150])
-  by fmviesa007.fm.intel.com with ESMTP; 18 Mar 2024 15:00:15 -0700
-Received: from kbuild by b21307750695 with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1rmL1g-000HG7-1M;
-	Mon, 18 Mar 2024 22:00:12 +0000
-Date: Tue, 19 Mar 2024 05:59:58 +0800
-From: kernel test robot <lkp@intel.com>
-To: Aravinda Prasad <aravinda.prasad@intel.com>, damon@lists.linux.dev,
-	linux-mm@kvack.org, sj@kernel.org, linux-kernel@vger.kernel.org
-Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
-	aravinda.prasad@intel.com, s2322819@ed.ac.uk,
-	sandeep4.kumar@intel.com, ying.huang@intel.com,
-	dave.hansen@intel.com, dan.j.williams@intel.com,
-	sreenivas.subramoney@intel.com, antti.kervinen@intel.com,
-	alexander.kanevskiy@intel.com
-Subject: Re: [PATCH v2 2/3] mm/damon: profiling enhancement
-Message-ID: <202403190550.8chO4Zt4-lkp@intel.com>
-References: <20240318132848.82686-3-aravinda.prasad@intel.com>
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="kVFnJE4g"
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-4140eed8a4fso32865e9.0
+        for <damon@lists.linux.dev>; Mon, 18 Mar 2024 17:51:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1710809499; x=1711414299; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ubavkzthuO7FFM43XgPG5WP9PAb9aevt0/P5aVLiPkg=;
+        b=kVFnJE4gWmLFKVsC4zIEe+0BWhdGhrgfcBQL+r0d8+EqvBIhQbUu+b11Ra/Lg2zFAU
+         T+oQ3hnRn/gm98sDWdKam7qenFQ8yJvdq5r9n3IWy2SB9d+7wUoq7dy0kFNxsQ+T+QI2
+         wsfHekRlKoxzAZCCsDvRB7gZT3JM1zatBbvNa7CifA1aGB60yqBOMC0Rb6x5BHw9RvVe
+         B1Ooo7tmHPWH6+ssIpqziO5PcbkR21wTgrvNwpzZqUCrJIM6XsAAqBeIdhHZull9bBtA
+         GUf6UIDf9U9Yt5JpFmNkItUbOPXWUruxwqd+Kh/7vIxqpFdoW60unqFP9iFyI5j1JEo1
+         uX6A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1710809499; x=1711414299;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ubavkzthuO7FFM43XgPG5WP9PAb9aevt0/P5aVLiPkg=;
+        b=YuGyVpLOV7PgLS6noimR1r6+jwS/NUE6BE/QANpgxZP3riaIL0BeFMhLP88ibbnOq1
+         DxS1OfCUWpLL7zNWNNKWY1gFh8rSFunYtJfHeGrwubdm2gTmVbVViCthpjpf5IK6WpIe
+         PLVQlXMaXi2KXD6r69QRtGtta2RLenjt62byaK//Fh7GCJ9E4ZBnEefZmoL9Bfar7eIe
+         ZgL6SNlIG6VRNe/DTBbYVQBvv4dbFvLcq0FdqT1kTKpoDucv8utBSiEWdxBhCiuXxgc5
+         /iIsV74zzEjdJTUZ+2HqlBVPMTMSWI3DWxvMRem8eRnRnPuX2LLKQAY6mDtBhkTlf+1l
+         Bk0g==
+X-Gm-Message-State: AOJu0YyHNGlJzfA3jhDuS/vtc1WqEXprD3CaNlZx/UcDWvq+Y32HTOne
+	eugO1bBHrY3bAqwbW2If0Tx5CDf1FOZCrw20MiQvfZdIjDKlNNLNVwjhmOK2rGtL5s69UjYV6cf
+	v6gATZDIzoBra92C6+x6DFClXN4HWjW+Uf5xR
+X-Google-Smtp-Source: AGHT+IHfRln6v044hZGAlSuMPi3J0FOHg5vrtS307mpMoHwBCb0TtGiONlvOul2Ord2/xXZWPGRPnOrWFfjX4JJ6H5s=
+X-Received: by 2002:a05:600c:1da0:b0:414:8b7:638 with SMTP id
+ p32-20020a05600c1da000b0041408b70638mr97055wms.4.1710809499211; Mon, 18 Mar
+ 2024 17:51:39 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240318132848.82686-3-aravinda.prasad@intel.com>
+References: <20240318132848.82686-1-aravinda.prasad@intel.com>
+In-Reply-To: <20240318132848.82686-1-aravinda.prasad@intel.com>
+From: Yu Zhao <yuzhao@google.com>
+Date: Mon, 18 Mar 2024 20:51:01 -0400
+Message-ID: <CAOUHufZq9=3wtFtUg0y_=OJjBcG59W9Dw2gkSG1nOOfKP83EoA@mail.gmail.com>
+Subject: Re: [PATCH v2 0/3] mm/damon: Profiling enhancements for DAMON
+To: Aravinda Prasad <aravinda.prasad@intel.com>
+Cc: damon@lists.linux.dev, linux-mm@kvack.org, sj@kernel.org, 
+	linux-kernel@vger.kernel.org, s2322819@ed.ac.uk, sandeep4.kumar@intel.com, 
+	ying.huang@intel.com, dave.hansen@intel.com, dan.j.williams@intel.com, 
+	sreenivas.subramoney@intel.com, antti.kervinen@intel.com, 
+	alexander.kanevskiy@intel.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi Aravinda,
+On Mon, Mar 18, 2024 at 9:24=E2=80=AFAM Aravinda Prasad
+<aravinda.prasad@intel.com> wrote:
+>
+> DAMON randomly samples one or more pages in every region and tracks
+> accesses to them using the ACCESSED bit in PTE (or PMD for 2MB pages).
+> When the region size is large (e.g., several GBs), which is common
+> for large footprint applications, detecting whether the region is
+> accessed or not completely depends on whether the pages that are
+> actively accessed in the region are picked during random sampling.
+> If such pages are not picked for sampling, DAMON fails to identify
+> the region as accessed. However, increasing the sampling rate or
+> increasing the number of regions increases CPU overheads of kdamond.
+>
+> This patch proposes profiling different levels of the application=E2=80=
+=99s
+> page table tree to detect whether a region is accessed or not. This
+> patch set is based on the observation that, when the accessed bit for a
+> page is set, the accessed bits at the higher levels of the page table
+> tree (PMD/PUD/PGD) corresponding to the path of the page table walk
+> are also set. Hence, it is efficient to check the accessed bits at
+> the higher levels of the page table tree to detect whether a region
+> is accessed or not. For example, if the access bit for a PUD entry
+> is set, then one or more pages in the 1GB PUD subtree is accessed as
+> each PUD entry covers 1GB mapping. Hence, instead of sampling
+> thousands of 4K/2M pages to detect accesses in a large region,
+> sampling at the higher level of page table tree is faster and efficient.
+>
+> This patch set is based on 6.8-rc5 kernel (commit: f48159f8, mm-unstable
+> tree)
+>
+> Changes since v1 [1]
+> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+>
+>  - Added support for 5-level page table tree
+>  - Split the patch to mm infrastructure changes and DAMON enhancements
+>  - Code changes as per comments on v1
+>  - Added kerneldoc comments
+>
+> [1] https://lkml.org/lkml/2023/12/15/272
+>
+> Evaluation:
+>
+> - MASIM benchmark with 1GB, 10GB, 100GB footprint with 10% hot data
+>   and 5TB with 10GB hot data.
+> - DAMON: 5ms sampling, 200ms aggregation interval. Rest all
+>   parameters set to default value.
+> - DAMON+PTP: Page table profiling applied to DAMON with the above
+>   parameters.
+>
+> Profiling efficiency in detecting hot data:
+>
+> Footprint       1GB     10GB    100GB   5TB
+> ---------------------------------------------
+> DAMON           >90%    <50%     ~0%      0%
+> DAMON+PTP       >90%    >90%    >90%    >90%
+>
+> CPU overheads (in billion cycles) for kdamond:
+>
+> Footprint       1GB     10GB    100GB   5TB
+> ---------------------------------------------
+> DAMON           1.15    19.53   3.52    9.55
+> DAMON+PTP       0.83     3.20   1.27    2.55
+>
+> A detailed explanation and evaluation can be found in the arXiv paper:
+> https://arxiv.org/pdf/2311.10275.pdf
 
-kernel test robot noticed the following build errors:
+NAK, on the ground of citing the nonfactual source above and
+misrespenting the existing idea as your own invention [1].
 
-[auto build test ERROR on akpm-mm/mm-everything]
+The existing idea was purposely not patented so that all CPU vendors
+are free to use it. Not sure what kind of peer review that source had,
+but it's not getting around the reviewers here easily. Please do feel
+free to ask any 3rd party that has no conflict of interest to override
+my NAK though.
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Aravinda-Prasad/mm-damon-mm-infrastructure-support/20240318-212723
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/akpm/mm.git mm-everything
-patch link:    https://lore.kernel.org/r/20240318132848.82686-3-aravinda.prasad%40intel.com
-patch subject: [PATCH v2 2/3] mm/damon: profiling enhancement
-config: hexagon-allmodconfig (https://download.01.org/0day-ci/archive/20240319/202403190550.8chO4Zt4-lkp@intel.com/config)
-compiler: clang version 19.0.0git (https://github.com/llvm/llvm-project 8f68022f8e6e54d1aeae4ed301f5a015963089b7)
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20240319/202403190550.8chO4Zt4-lkp@intel.com/reproduce)
-
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202403190550.8chO4Zt4-lkp@intel.com/
-
-All errors (new ones prefixed by >>):
-
-   In file included from mm/damon/vaddr.c:10:
-   In file included from include/linux/highmem.h:10:
-   In file included from include/linux/mm.h:2194:
-   include/linux/vmstat.h:522:36: warning: arithmetic between different enumeration types ('enum node_stat_item' and 'enum lru_list') [-Wenum-enum-conversion]
-     522 |         return node_stat_name(NR_LRU_BASE + lru) + 3; // skip "nr_"
-         |                               ~~~~~~~~~~~ ^ ~~~
-   In file included from mm/damon/vaddr.c:10:
-   In file included from include/linux/highmem.h:12:
-   In file included from include/linux/hardirq.h:11:
-   In file included from ./arch/hexagon/include/generated/asm/hardirq.h:1:
-   In file included from include/asm-generic/hardirq.h:17:
-   In file included from include/linux/irq.h:20:
-   In file included from include/linux/io.h:13:
-   In file included from arch/hexagon/include/asm/io.h:328:
-   include/asm-generic/io.h:547:31: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
-     547 |         val = __raw_readb(PCI_IOBASE + addr);
-         |                           ~~~~~~~~~~ ^
-   include/asm-generic/io.h:560:61: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
-     560 |         val = __le16_to_cpu((__le16 __force)__raw_readw(PCI_IOBASE + addr));
-         |                                                         ~~~~~~~~~~ ^
-   include/uapi/linux/byteorder/little_endian.h:37:51: note: expanded from macro '__le16_to_cpu'
-      37 | #define __le16_to_cpu(x) ((__force __u16)(__le16)(x))
-         |                                                   ^
-   In file included from mm/damon/vaddr.c:10:
-   In file included from include/linux/highmem.h:12:
-   In file included from include/linux/hardirq.h:11:
-   In file included from ./arch/hexagon/include/generated/asm/hardirq.h:1:
-   In file included from include/asm-generic/hardirq.h:17:
-   In file included from include/linux/irq.h:20:
-   In file included from include/linux/io.h:13:
-   In file included from arch/hexagon/include/asm/io.h:328:
-   include/asm-generic/io.h:573:61: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
-     573 |         val = __le32_to_cpu((__le32 __force)__raw_readl(PCI_IOBASE + addr));
-         |                                                         ~~~~~~~~~~ ^
-   include/uapi/linux/byteorder/little_endian.h:35:51: note: expanded from macro '__le32_to_cpu'
-      35 | #define __le32_to_cpu(x) ((__force __u32)(__le32)(x))
-         |                                                   ^
-   In file included from mm/damon/vaddr.c:10:
-   In file included from include/linux/highmem.h:12:
-   In file included from include/linux/hardirq.h:11:
-   In file included from ./arch/hexagon/include/generated/asm/hardirq.h:1:
-   In file included from include/asm-generic/hardirq.h:17:
-   In file included from include/linux/irq.h:20:
-   In file included from include/linux/io.h:13:
-   In file included from arch/hexagon/include/asm/io.h:328:
-   include/asm-generic/io.h:584:33: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
-     584 |         __raw_writeb(value, PCI_IOBASE + addr);
-         |                             ~~~~~~~~~~ ^
-   include/asm-generic/io.h:594:59: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
-     594 |         __raw_writew((u16 __force)cpu_to_le16(value), PCI_IOBASE + addr);
-         |                                                       ~~~~~~~~~~ ^
-   include/asm-generic/io.h:604:59: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
-     604 |         __raw_writel((u32 __force)cpu_to_le32(value), PCI_IOBASE + addr);
-         |                                                       ~~~~~~~~~~ ^
->> mm/damon/vaddr.c:78:6: error: call to undeclared function 'pgtable_l5_enabled'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
-      78 |         if (pgtable_l5_enabled()) {
-         |             ^
-   7 warnings and 1 error generated.
-
-
-vim +/pgtable_l5_enabled +78 mm/damon/vaddr.c
-
-    54	
-    55	/* Pick the highest possible page table profiling level for addr
-    56	 * in the region defined by start and end
-    57	 */
-    58	static int pick_profile_level(unsigned long start, unsigned long end,
-    59			unsigned long addr)
-    60	{
-    61		/* Start with PTE and check if higher levels can be picked */
-    62		int level = 0;
-    63	
-    64		if (!arch_has_hw_nonleaf_pmd_young())
-    65			return level;
-    66	
-    67		/* Check if PMD or higher can be picked, else use PTE */
-    68		if (pmd_addr_start(addr, (start) - 1) < start
-    69				|| pmd_addr_end(addr, (end) + 1) > end)
-    70			return level;
-    71	
-    72		level++;
-    73		/* Check if PUD or higher can be picked, else use PMD */
-    74		if (pud_addr_start(addr, (start) - 1) < start
-    75				|| pud_addr_end(addr, (end) + 1) > end)
-    76			return level;
-    77	
-  > 78		if (pgtable_l5_enabled()) {
-    79			level++;
-    80			/* Check if P4D or higher can be picked, else use PUD */
-    81			if (p4d_addr_start(addr, (start) - 1) < start
-    82					|| p4d_addr_end(addr, (end) + 1) > end)
-    83				return level;
-    84		}
-    85	
-    86		level++;
-    87		/* Check if PGD can be picked, else return PUD level */
-    88		if (pgd_addr_start(addr, (start) - 1) < start
-    89				|| pgd_addr_end(addr, (end) + 1) > end)
-    90			return level;
-    91	
-
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+[1] https://lore.kernel.org/CAOUHufbDzy5dMcLR9ex25VdB_QBmSrW_We-2+KftZVYKNn=
+4s9g@mail.gmail.com/
+[2] https://lore.kernel.org/YE6yrQC1Ps195wPw@google.com/
