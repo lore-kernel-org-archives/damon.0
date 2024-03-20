@@ -1,440 +1,372 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.9])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A9943D0C6
-	for <damon@lists.linux.dev>; Wed, 20 Mar 2024 12:31:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=198.175.65.9
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710937888; cv=fail; b=FpkZmY9JK70GwC8qYZqSlW9F0RKAIqB2o/pUdKoIb9jKfEbNoGqk8wyK13tH0cz3JD4QTIx9N1U8rQIcpsGjK+HkQuMk8SIfhAPive9xeZe5ji96NuLiYbIg3fYf3UIJcQDI75V30kK/puHDMC3L3BNI7eS5kpS7GVHsCAuecFw=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710937888; c=relaxed/simple;
-	bh=/vfyFUEnNyyMQoCe0NVRyRb6AtPfbi1M0UPNTIXmHS8=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=KyUDfKqtB9ZsTnQcfEtwQo+ns2GND33eFHAMN7pstOmTybyrV/6SMl/0JT7ASoYusk+xmikOMOCo5gLMJq5vITI2eNB8CH4+IxtmPzaWFNn4e4fplOYJL+kE37LjWoqrD1G1fk7Lv63Jgn4m0MaAYgyfZIRqTOZC+/M0a3u342w=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=KTWSKouq; arc=fail smtp.client-ip=198.175.65.9
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E84B63EA64;
+	Wed, 20 Mar 2024 16:56:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1710953783; cv=none; b=YVe4qfV1lrg8EPNxfqINGd7t72KbzQHpoXvX1qNrxn8Oi6B7SPo7Qvg4X9fkqoVL8kJPqB2Zy6cdqXtaOGHDS7r/C8tlW87Qz2pigX/ABU+13LHo/gxNpqXHqFzwo1iHeqL2mD6jJc51UNaHgB7/LyfcHjnl7rfEjNUNuhz8KE4=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1710953783; c=relaxed/simple;
+	bh=zu9ZgxVsggb5c9uyXDMMnA+IZ9Ir5Zxd+rhNipYo0b0=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=DezI5WdVWRC/b0ugxIhRc5mM//5cz0eXLtiLe0jihtmz0RmyjgwP9GmRQRTr38vzc6P/AjJPAbda17Pq2EqBpa8bnSJ5QYlMxSn7fTXGCri9ALCTw6zXcH3iyjAE+wftIkI21A/pOvnOa2SAzYaPLIIfYL9P9wSclA+cB1Mf1b8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ik97f2GJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="KTWSKouq"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1710937886; x=1742473886;
-  h=from:to:cc:subject:date:message-id:references:
-   in-reply-to:content-transfer-encoding:mime-version;
-  bh=/vfyFUEnNyyMQoCe0NVRyRb6AtPfbi1M0UPNTIXmHS8=;
-  b=KTWSKouqKc8Y1eIkb3H7sozEiDKDVOBKpQ3AFt1hbuSuHIizw9FYwXck
-   I4WlowamQHaIi3sr9HEehctsjxOMVp0r4e9EKwtK3FLHowteJLyyMaoba
-   K00qnM+w9OfVVg8W/7o/vrYWBxUDITagqZXZsV1iMjJT6G6sb4udj1flT
-   pRGgK9UC3LY3AIuWlWYOOafh2rkHrniz/KCQanGcOY7ExcZggCMtema+Z
-   2yVPgWO7kxqAwbbcEmRkcS7SURT2xAniYL/MTlGOY2CGYdTlBAAiXRjqp
-   Q34Z+AEL8SkwYEmk7LN+Jh+usqeiUm+tNzw8p6b9BdquGLRNtJu/6TwNO
-   Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,11018"; a="28332950"
-X-IronPort-AV: E=Sophos;i="6.07,140,1708416000"; 
-   d="scan'208";a="28332950"
-Received: from orviesa003.jf.intel.com ([10.64.159.143])
-  by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Mar 2024 05:31:25 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,140,1708416000"; 
-   d="scan'208";a="18862649"
-Received: from fmsmsx601.amr.corp.intel.com ([10.18.126.81])
-  by orviesa003.jf.intel.com with ESMTP/TLS/AES256-GCM-SHA384; 20 Mar 2024 05:31:26 -0700
-Received: from fmsmsx612.amr.corp.intel.com (10.18.126.92) by
- fmsmsx601.amr.corp.intel.com (10.18.126.81) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.35; Wed, 20 Mar 2024 05:31:24 -0700
-Received: from fmsedg601.ED.cps.intel.com (10.1.192.135) by
- fmsmsx612.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.35 via Frontend Transport; Wed, 20 Mar 2024 05:31:24 -0700
-Received: from NAM11-DM6-obe.outbound.protection.outlook.com (104.47.57.168)
- by edgegateway.intel.com (192.55.55.70) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.35; Wed, 20 Mar 2024 05:31:24 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=ZPhAbh4BdBC6w46e3B9pFzG9cEDp2T4Fweu8BfExkoMRt3dRNKyuOWfHPwniYUEdp9SfItomK/57r9jxTNBfqBiee6mRXMA2irgIbsxFcYmb2kSvQsCkIMFrs/KhVimBpH3onrHksINUZyAnLSswH2MXLVnQF7SUpe5PSV0th2wp8GUf+kqSLqisHq9pJekXGA5P270jrwSWtKeEvEMPul74W9e2qx9cQetZ6q/6StZVYSeybfnf8pTWTzCKEKH9qvE/eHSbZNLi8LAP/ZFgusUVyMyQ1IDOved75qzxAL26AtlwJvlxehGu2YJc9lJ0Zg+V/l6xzYUpNChqFSUNVw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=SMER5pQnh0Rjqc6NfgwWO9pfWBCvMamsBb1C6JvPvpQ=;
- b=OVOOl5/OLKcOTTBmq6uNQqyUkF0LgnD58tyLNKofAitJeWDvi/l+XxMQfZeRpMVZfSokHvpYo+EsV8shGjM61kXu2W6xSU64OCHV6Pt2hKBisi+SqomXG5msisSAyXoQ0LQ0736aJ4obRrLOsbc2H1ZIeyYslZDxc7ylFEyBI298OT/KTiRbSoFbIvYqH6ru1/18/LMmYbs90ztOj7zRhbLWi7kuQkn3xeGOf9rbk3mSiTCnx+YnC2wNFmKZg+HgU/hE00HCOAQIu/WzU2024PkifnqVZ8jrpaEkVKVMFQbMEcErTEvGY5Q4J90w7Y7Cou5DrZhPTFVStIeq6aWvAw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Received: from MW5PR11MB5907.namprd11.prod.outlook.com (2603:10b6:303:1a1::13)
- by BN9PR11MB5257.namprd11.prod.outlook.com (2603:10b6:408:132::18) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7409.12; Wed, 20 Mar
- 2024 12:31:17 +0000
-Received: from MW5PR11MB5907.namprd11.prod.outlook.com
- ([fe80::bcbf:4501:30f4:843b]) by MW5PR11MB5907.namprd11.prod.outlook.com
- ([fe80::bcbf:4501:30f4:843b%4]) with mapi id 15.20.7409.010; Wed, 20 Mar 2024
- 12:31:17 +0000
-From: "Prasad, Aravinda" <aravinda.prasad@intel.com>
-To: SeongJae Park <sj@kernel.org>
-CC: "damon@lists.linux.dev" <damon@lists.linux.dev>, "linux-mm@kvack.org"
-	<linux-mm@kvack.org>, "linux-kernel@vger.kernel.org"
-	<linux-kernel@vger.kernel.org>, "s2322819@ed.ac.uk" <s2322819@ed.ac.uk>,
-	"Kumar, Sandeep4" <sandeep4.kumar@intel.com>, "Huang, Ying"
-	<ying.huang@intel.com>, "Hansen, Dave" <dave.hansen@intel.com>, "Williams,
- Dan J" <dan.j.williams@intel.com>, "Subramoney, Sreenivas"
-	<sreenivas.subramoney@intel.com>, "Kervinen, Antti"
-	<antti.kervinen@intel.com>, "Kanevskiy, Alexander"
-	<alexander.kanevskiy@intel.com>
-Subject: RE: [PATCH v2 0/3] mm/damon: Profiling enhancements for DAMON
-Thread-Topic: [PATCH v2 0/3] mm/damon: Profiling enhancements for DAMON
-Thread-Index: AQHaeTeYeVMaFIFnV0yMrKTBAlKavbE+h/4AgAIFciA=
-Date: Wed, 20 Mar 2024 12:31:17 +0000
-Message-ID: <MW5PR11MB5907D65A7557AA1381B477B0F2332@MW5PR11MB5907.namprd11.prod.outlook.com>
-References: <20240318132848.82686-1-aravinda.prasad@intel.com>
- <20240319052054.100167-1-sj@kernel.org>
-In-Reply-To: <20240319052054.100167-1-sj@kernel.org>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: MW5PR11MB5907:EE_|BN9PR11MB5257:EE_
-x-ms-office365-filtering-correlation-id: 62415b93-d340-446b-8b45-08dc48d9a3c5
-x-ld-processed: 46c98d88-e344-4ed4-8496-4ed7712e255d,ExtAddr
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: WZcUQyDeYxQYSSinpq4GTRLZ+CeS30e1DbZqOKFxvLFLqvJun9dX5yIv6a/RJgijkpUbie04Y0HQF1r38iG+lbCQyyuXBUX9kmhOme9rMf8RQ8lx4BOn8Cqem88RuIqbGAPQrBzh39HRpgukVIsEZfnKCrTogJUm7/3+vN3v8eZ4bFyHOAzOGh8OaNwjV68wQmyDC3QB9vj9LBi+EY/MmFHxLsSs1X+LjtJ6Ug8QSJnMZ4FGNM2fg7zSqnqkvEGGO/2zqD9mCFFwsPwIUsxOZmVSglkHh//4x8x4id3xINaZm2lDNOz2zrzhB07NkG38QirTT860pqcsXH2xknZBvDrqiE4n7v3Z6qOFilguGgBuTNWzWrWa89TXqwtsdIgQzTdn7U73SCVw3qNAo/ZS1wZPuz5cN7gS0iXMoy1mN3xFxx3X7YPJbKtKUu/YEXcxrq8MO/0Dp3Zik81ay6Fe5A93rVw9IMnpVFRQwOZLpbLq/VeJMQLJQaGf4iovVTnteHHZI5rVXkJX1uuQZbroT3ybW5ADXvClVfTBtPW47zS5seCFWBXfcXYE1ImCV2d5NiaqnrwQzW+h4GSSMWq2uxRuLEhM0lRnLj24b6JYS9oSufhV16AlI5L9FV9AGkohfRJbkApDfZlFzhg5iYNXF6h02VavBRCCZSTsLTyf4Me5aLUebpE6/jgTQffelJVv
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MW5PR11MB5907.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(1800799015)(366007)(376005)(38070700009);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?6LX8PS8AgSUIf2j90KrErpZYY95KBhKugFpuXuRmXdl+q1yr8OihjFWsYEee?=
- =?us-ascii?Q?pqi0de+kHaot6j+kdeTXGiB5E+xsR39CeanU8H/5P88IYUMqBvf2yTlZ6Qk9?=
- =?us-ascii?Q?Lvmkw5fAmfUAKarNkKR2Xr+AssfInCtnJvGo21lYAhZtU42Wbm94LiVvVEQF?=
- =?us-ascii?Q?O41moQKD+cHarSe0kW7st97IFuqUARf2jvyeYcdFKHqa3PL8twD2/0PQ88sp?=
- =?us-ascii?Q?NfPf3SXUBc4HqiLg9jwm8s/i/bjAQkV8rzUZrqMArAFIjkcaB4IRpk5v92pA?=
- =?us-ascii?Q?1l/iIMFKL7VxoK3aVPXcWXiu4UOW+rU/B6HHMGrOy+n71c1eRbDFEfkaUpLl?=
- =?us-ascii?Q?ck9ajYCQBc/+j26ZodQEOhIWeu8hmSlbsETVFIr45ZjL3u9rzOMFGe69z1Ie?=
- =?us-ascii?Q?4VAVClKcAYvL5oN2X+prfBLVb0donjWHlZeC7Q/vsLaR/Tezshd9/mj0e0bX?=
- =?us-ascii?Q?ChqhkQEXoQVkRwJ4BkrROTB/3bmxC9U2s23hrUSp32/d0/wi2pwIIabJ/c21?=
- =?us-ascii?Q?xauvLGu8DexOWC2vc69PSGZy+CGMdfu+skJi2XYgI39Hd/WVnasvHrODr+Je?=
- =?us-ascii?Q?5jGdhMEON/ZKIA+hhzgeMUDjemoM5N9P21+E8QRK4R4n/7JPT+11+y4nO8RR?=
- =?us-ascii?Q?6HQnyfwcOCiWI+9NIzVXRxeizX7TAMdoP/CgBE0gMFwG5+ZjZRW+UMyTwPDd?=
- =?us-ascii?Q?J/U9HQv9VRWiwLi4botvWa/gQe+vWTbx6Fo7Z7nF7Zs8rVv8S4Z7/7hmFsZ1?=
- =?us-ascii?Q?f1WUlSW3D1/dRfPN+3wVo8wyOehDk7ZSTxLI4KWKMe4+V2eM8R4ssdOmvPg3?=
- =?us-ascii?Q?AHbP5ooIGLCVFTZFGBDyhyfmZrGzPpZanCzN1ojcRHcrwkajtHawfw14QMM1?=
- =?us-ascii?Q?1+oya0PersUMYqBG1kysNt56IqS6inXYoEuztbtL1j3jLyC/DmhZmYBh3Vgi?=
- =?us-ascii?Q?LVTIzmcPKvLIPbu/kxNJI7s2sev0I3u+8G4JphLOxJ8H8WNRmohbuFqHVaYs?=
- =?us-ascii?Q?PWVb6BLRpyCkZkTZfQIg+VwhjyNpJQnYfmEZCJSg9jLK2Eu0Q1hM3IA0dK12?=
- =?us-ascii?Q?BYr7nOOUKnf7DX/EgxiMABnxTF5/i5xhNrrXmu9PEeQQ8zeKQrLMZiK0NjIx?=
- =?us-ascii?Q?77c8CFgtlo1iHMFMm9wenlIlWEpOBONlCYzoNpAWYceeTCyLqjRY+i4mg1j0?=
- =?us-ascii?Q?qEvBM7SUGXAkjUfTw0FA7YzeagyL6RLIY3WoAUtiePHUBMr/clfeagDJcAI0?=
- =?us-ascii?Q?hzwW2w7iB+lOgUU6CndEOMv0zY/vMzniJ8L5g4Rk8pfC2jqYKt+ErC9bGtA0?=
- =?us-ascii?Q?StfXLxGySSL6evENecBn7pT8X/PNngcK+AMndtyW+k3ky9ZzYkD29Ay2NGEF?=
- =?us-ascii?Q?NVIhihCHf2Cx6E//hWWnqpawjPNCBv5HSaXIMTb20pE2AgjMt3f8DucestCt?=
- =?us-ascii?Q?Y5/cMxob3pIqxgtNADvQsDOVfOlQlDAgF1RlOWXuVnyt0K1wnX8OKo1DLEzZ?=
- =?us-ascii?Q?8MjXlWEV+t0AykvYUbCIxDcyy7QeczsRUb4Vu7c53ErbJyU8HH2+HiodVeg0?=
- =?us-ascii?Q?PgMn9coVLqsRaqiXZNko01GgSeDQns/Q9QZRzPCT?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ik97f2GJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5524C43390;
+	Wed, 20 Mar 2024 16:56:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1710953782;
+	bh=zu9ZgxVsggb5c9uyXDMMnA+IZ9Ir5Zxd+rhNipYo0b0=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=ik97f2GJUZArWdtgkM2jyo/Dm9KXMaqdIrmmmBR8EU0gUinrWw3L5tg7YEHrv9t/z
+	 +lW/9rM/ZZhw27PCF/E2pkmUd2yiwtcpOpQQAgta+Fyn7jG7idVCmVXCqjG0AZpHVi
+	 IWPbM9DcCqYKjQFpjis0xdZPAX7Y0mp+igUIofZr9qyBb1YCPiAtBtsEEDFyrVNU0K
+	 WIoBKlrcUaS9ZBpInEv0j47UxCZU69EbM+RbIQ2ysTtJ59BW8rvA1lKxjfQh18mo/L
+	 RAmIpYvN0sPojakMdCet3pU2+S60zxPZyGLcUDEaieaWOH2K3yUm6boWrk6oETbpB8
+	 oolTHWTgTaIVg==
+From: SeongJae Park <sj@kernel.org>
+To: Honggyu Kim <honggyu.kim@sk.com>
+Cc: SeongJae Park <sj@kernel.org>,
+	damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	akpm@linux-foundation.org,
+	apopple@nvidia.com,
+	baolin.wang@linux.alibaba.com,
+	dave.jiang@intel.com,
+	hyeongtak.ji@sk.com,
+	kernel_team@skhynix.com,
+	linmiaohe@huawei.com,
+	linux-kernel@vger.kernel.org,
+	linux-trace-kernel@vger.kernel.org,
+	mathieu.desnoyers@efficios.com,
+	mhiramat@kernel.org,
+	rakie.kim@sk.com,
+	rostedt@goodmis.org,
+	surenb@google.com,
+	yangx.jy@fujitsu.com,
+	ying.huang@intel.com,
+	ziy@nvidia.com,
+	42.hyeyoo@gmail.com,
+	art.jeongseob@gmail.com
+Subject: Re: [RFC PATCH v2 0/7] DAMON based 2-tier memory management for CXL memory
+Date: Wed, 20 Mar 2024 09:56:19 -0700
+Message-Id: <20240320165619.71478-1-sj@kernel.org>
+X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20240320070754.2165-1-honggyu.kim@sk.com>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: MW5PR11MB5907.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 62415b93-d340-446b-8b45-08dc48d9a3c5
-X-MS-Exchange-CrossTenant-originalarrivaltime: 20 Mar 2024 12:31:17.2051
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: 8qoX0cJjbOPNLqrapUoVw9VtT8b5y/8GzHxz0VZO++eg2xlSEviML5Pa/vCpp0M3EYX4eTk1dAeIvtZxAnSZhYDDXARhiVaQxaUZmXZbvJ4=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN9PR11MB5257
-X-OriginatorOrg: intel.com
+Content-Transfer-Encoding: 8bit
+
+Hi Honggyu,
+
+On Wed, 20 Mar 2024 16:07:48 +0900 Honggyu Kim <honggyu.kim@sk.com> wrote:
+
+> Hi SeongJae,
+> 
+> On Mon, 18 Mar 2024 12:07:21 -0700 SeongJae Park <sj@kernel.org> wrote:
+> > On Mon, 18 Mar 2024 22:27:45 +0900 Honggyu Kim <honggyu.kim@sk.com> wrote:
+> > 
+> > > Hi SeongJae,
+> > > 
+> > > On Sun, 17 Mar 2024 08:31:44 -0700 SeongJae Park <sj@kernel.org> wrote:
+> > > > Hi Honggyu,
+> > > > 
+> > > > On Sun, 17 Mar 2024 17:36:29 +0900 Honggyu Kim <honggyu.kim@sk.com> wrote:
+> > > > 
+> > > > > Hi SeongJae,
+> > > > > 
+> > > > > Thanks for the confirmation.  I have a few comments on young filter so
+> > > > > please read the inline comments again.
+> > > > > 
+> > > > > On Wed, 12 Mar 2024 08:53:00 -0800 SeongJae Park <sj@kernel.org> wrote:
+> > > > > > Hi Honggyu,
+> > > > > > 
+> > > > > > > > -----Original Message-----
+> > > > > > > > From: SeongJae Park <sj@kernel.org>
+> > > > > > > > Sent: Tuesday, March 12, 2024 3:33 AM
+> > > > > > > > To: Honggyu Kim <honggyu.kim@sk.com>
+> > > > > > > > Cc: SeongJae Park <sj@kernel.org>; kernel_team <kernel_team@skhynix.com>
+> > > > > > > > Subject: RE: Re: [RFC PATCH v2 0/7] DAMON based 2-tier memory management for CXL memory
+> > > > > > > >
+> > > > > > > > Hi Honggyu,
+> > > > > > > >
+> > > > > > > > On Mon, 11 Mar 2024 12:51:12 +0000 "honggyu.kim@sk.com" <honggyu.kim@sk.com> wrote:
+> > > > > > > >
+> > > > > > > > > Hi SeongJae,
+> > > > > > > > >
+> > > > > > > > > I've tested it again and found that "young" filter has to be set
+> > > > > > > > > differently as follows.
+> > > > > > > > > - demote action: set "young" filter with "matching" true
+> > > > > > > > > - promote action: set "young" filter with "matching" false
+> > > 
+> > > Thinking it again, I feel like "matching" true or false looks quite
+> > > vague to me as a general user.
+> > > 
+> > > Instead, I would like to have more meaningful names for "matching" as
+> > > follows.
+> > > 
+> > > - matching "true" can be either (filter) "out" or "skip".
+> > > - matching "false" can be either (filter) "in" or "apply".
+> > 
+> > I agree the naming could be done much better.  And thank you for the nice
+> > suggestions.  I have a few concerns, though.
+> 
+> I don't think my suggestion is best.  I just would like to have more
+> discussion about it.
+
+I also understand my naming sense is far from good :)  I'm grateful to have
+this constructive discussion!
+
+> 
+> > Firstly, increasing the number of behavioral concepts.  DAMOS filter feature
+> > has only single behavior: excluding some types of memory from DAMOS action
+> > target.  The "matching" is to provide a flexible way for further specifying the
+> > target to exclude in a bit detail.  Without it, we would need non-variant for
+> > each filter type.  Comapred to the current terms, the new terms feel like
+> > implying there are two types of behaviors.  I think one behavior is easier to
+> > understand than two behaviors, and better match what internal code is doing.
+> > 
+> > Secondly, ambiguity in "in" and "apply".  To me, the terms sound like _adding_
+> > something more than _excluding_.
+> 
+> I understood that young filter "matching" "false" means apply action
+> only to young pages.  Do I misunderstood something here?  If not,
+
+Technically speaking, having a DAMOS filter with 'matching' parameter as
+'false' for 'young pages' type means you want DAMOS to "exclude pages that not
+young from the scheme's action target".  That's the only thing it truly does,
+and what it tries to guarantee.  Whether the action will be applied to young
+pages or not depends on more factors including additional filters and DAMOS
+parameter.  IOW, that's not what the simple setting promises.
+
+Of course, I know you are assuming there is only the single filter.  Hence,
+effectively you're correct.  And the sentence may be a better wording for end
+users.  However, it tooke me a bit time to understand your assumption and
+concluding whether your sentence is correct or not, since I had to think about
+the assumptions.
+
+I'd say this also reminds me the first concern that I raised on the previous
+mail.  IOW, I feel this sentence is introducing one more behavior and making it
+bit taking longer time to digest, for developers who should judge it based on
+the source code.  I'd suggest use only one behavioral term, "exclude", since it
+is what the code really does, unless it is wording for end users.
+
+> "apply" means _adding_ or _including_ only the matched pages for action.
+> It looks like you thought about _excluding_ non matched pages here.
+
+Yes.  I'd prefer using only single term, _excluding_.  It fits with the code,
+and require one word less that "adding" or "including", since "adding" or
+"including" require one more word, "only".
+
+Also, even with "only", the fact that there could be more filters makes me
+unsure what is the consequence of having it.  That is, if we have a filter that
+includes only pages of type A, but if there could be yet another filter that
+includes only pages of type B, would the consequence is the action being
+applied to pages of type A and B?  Or, type A or type B?
+
+In my opinion, exclusion based approach is simpler for understanding the
+consequence of such combinational usage.
+
+> 
+> > I think that might confuse people in some
+> > cases.  Actually, I have used the term "filter-out" and "filter-in" on
+> > this  and several threads.  When saying about "filter-in" scenario, I had to
+> > emphasize the fact that it is not adding something but excluding others.
+> 
+> Excluding others also means including matched pages.  I think we better
+> focus on what to do only for the matched pages.
+
+I agree that is true for the end-users in many cases.  But I think that depends
+on the case, and at least this specific case (kernel ABI level discussion about
+DAMOS filters), I don't really feel that's better.
+
+> 
+> > I now think that was not a good approach.
+> > 
+> > Finally, "apply" sounds a bit deterministic.  I think it could be a bit
+> > confusing in some cases such as when using multiple filters in a combined way.
+> > For example, if we have two filters for 1) "apply" a memcg and 2) skip anon
+> > pages, the given DAMOS action will not be applied to anon pages of the memcg.
+> > I think this might be a bit confusing.
+> 
+> No objection on this.  If so, I think "in" sounds better than "apply".
+
+Thanks for understanding.  I think allowlists or denylists might also been
+better names.
+
+> 
+> > > 
+> > > Internally, the type of "matching" can be boolean, but it'd be better
+> > > for general users have another ways to set it such as "out"/"in" or
+> > > "skip"/"apply" via sysfs interface.  I prefer "skip" and "apply" looks
+> > > more intuitive, but I don't have strong objection on "out" and "in" as
+> > > well.
+> > 
+> > Unfortunately, DAMON sysfs interface is an ABI that we want to keep stable.  Of
+> > course we could make some changes on it if really required.  But I'm unsure if
+> > the problem of current naming and benefit of the sugegsted change are big
+> > enough to outweighs the stability risk and additional efforts.
+> 
+> I don't ask to change the interface, but just provide another way for
+> the setting.  For example, the current "matching" accepts either 1,
+> true, or Y but internally keeps as "true" as a boolean type.
+> 
+>   $ cd /sys/kernel/mm/damon/admin/kdamonds/0/contexts/0/schemes/0/filters/0
+> 
+>   $ echo 1 | tee matching && cat matching
+>   1
+>   Y
+> 
+>   $ echo true | tee matching && cat matching
+>   true
+>   Y
+> 
+>   $ echo Y | tee matching && cat matching
+>   Y
+>   Y
+> 
+> I'm asking if it's okay making "matching" receive "out" or "skip" as
+> follows.
+> 
+>   $ echo out | tee matching && cat matching
+>   out
+>   Y
+> 
+>   $ echo skip | tee matching && cat matching
+>   skip
+>   Y
+
+I have no strong concern about this.  But also not seeing significant benefit
+of this change.  This will definitely not regress user experience.  But it will
+require introducing more kernel code, though the amount will be fairly small.
+And this new interface will be something that we need to keep maintain, so
+adding a tiny bit of maintenance burden.  I'd prefer improving the documents or
+user-space tool and keep the kernel code simple.
+
+IMHO, end users shouldn't deal directly with DAMOS filters at all, and kernel
+ABI document should be clear enough to avoid confusion.  But, if someone uses
+kernel ABI on production without reading the document, I'd say it might better
+to crash or OOPS to give clear warning and lessons.
+
+> 
+> > Also, DAMON sysfs interface is arguably not for _very_ general users.  DAMON
+> > user-space tool is the one for _more_ general users.  To quote DAMON usage
+> > document,
+> > 
+> >     - *DAMON user space tool.*
+> >       `This <https://github.com/awslabs/damo>`_ is for privileged people such as
+> >       system administrators who want a just-working human-friendly interface.
+> >       [...]
+> >     - *sysfs interface.*
+> >       :ref:`This <sysfs_interface>` is for privileged user space programmers who
+> >       want more optimized use of DAMON. [...]
+> >  
+> > If the concept is that confused, I think we could improve the documentation, or
+> > the user space tool.  But for DAMON sysfs interface, I think we need more
+> > discussions for getting clear pros/cons that justifies the risk and the effort.
+> 
+> If my suggestion is not what you want in sysfs interface, then "damo"
+> can receive these more meaningful names and translate to "true" or
+> "false" when writing to sysfs.
+
+Yes, I agree.  We could further hide filter concept at all.  For example, we
+could let damo user call "migrate" DAMOS action plus "non-young" filter as
+"promote" action.  Or, have a dedicated command for tiered-memory management.
+Similar to the gen_config.py of HMSDK
+(https://github.com/skhynix/hmsdk/blob/main/tools/gen_config.py).  But this
+would be something to further discuss on different threads.
+
+> 
+> > > 
+> > > I also feel the filter name "young" is more for developers not for
+> > > general users.  I think this can be changed to "accessed" filter
+> > > instead.
+> > 
+> > In my humble opinion, "accessed" might be confusing with the term that being
+> > used by DAMON, specifically, the concept of "nr_accesses".  I also thought
+> > about using more specific term such as "pg-accessed" or something else, but I
+> > felt it is still unclear or making it too verbose.
+> > 
+> > I agree "young" sounds more for developers.  But, again, DAMON sysfs is for not
+> > _very_ general users.
+> 
+> I worried the developer term is also going to be used for "damo" user
+> space tool as "young" filter.  But if you think it's good enough, then I
+> will follow the decision as I also think "accessed" is not the best term
+> for this.
+
+The line is not very clear, but I think the line for "damo" should be different
+from that for DAMON sysfs interface.
+
+[...]
+> > > > > > > > DAMOS filter is basically for filtering "out" memory regions that matches to
+> > > > > > > > the condition.
+> > > 
+> > > Right.  In other tools, I see filters are more used as filtering "in"
+> > > rather than filtering "out".  I feel this makes me more confused.
+> > 
+> > I understand that the word, "filtering", can be used for both, and therefore
+> > can be confused.  I was also spending no small times at naming since I was
+> > thinking about both coffee filters and color filters (of photoshop or glasses).
+> > But it turned out that I'm more familiar with coffee filters, and might be same
+> > for DAMON community, since the community is having beer/coffee/tea chat series
+> > ;) (https://lore.kernel.org/damon/20220810225102.124459-1-sj@kernel.org/)
+> 
+> Yeah, I thought about filter for including pages for given config as
+> follows.
+> 
+>     \    /
+>      \  /     only matched items pass this filter.
+>       ||
+> 
+> But the current DAMOS filter is about excluding pages for given config
+> as follows just like a strainer.
+>       ___
+>      /###\
+>     |#####|   matched items are excluded via this filter.
+>      \###/
+>       ---
+> 
+> I think I won't get confused after keeping this difference in mind.
+
+My mind model was describing it as "excluding" coffee beans, but I'd say these
+are just different perspectives, not a thing about right or wrong.  I'm
+grateful to learn one more perspective that is different from mine :)
+
+> 
+> > That said, I think we may be able to make this better documented, or add a
+> > layer of abstraction on DAMON user-space tool.
+> > 
+[...]
+> > To summarize my opinion again,
+> > 
+> > 1. I agree the concept and names of DAMOS filters are confusing and not very
+> >    intuitive.
+> > 2. However, it's unclear if the problem and the benefit from the suggested new
+> >    names are huge enough to take the risk and effort on changing ABI.
+> > 3. We could improve documentation and/or user-space tool.
+> 
+> I think improving "damo" can be a good solution.
+
+Looking forward to the discussion on it! :)
+
+> 
+> > Thank you again for the suggestion and confirmations to my questions.
+> 
+> Likewise, thank you for the explanation in details.
+
+My great pleasure, and thank you for patiently keeping this grateful
+discussion!
 
 
+Thanks,
+SJ
 
-> -----Original Message-----
-> From: SeongJae Park <sj@kernel.org>
-> Sent: Tuesday, March 19, 2024 10:51 AM
-> To: Prasad, Aravinda <aravinda.prasad@intel.com>
-> Cc: damon@lists.linux.dev; linux-mm@kvack.org; sj@kernel.org; linux-
-> kernel@vger.kernel.org; s2322819@ed.ac.uk; Kumar, Sandeep4
-> <sandeep4.kumar@intel.com>; Huang, Ying <ying.huang@intel.com>; Hansen,
-> Dave <dave.hansen@intel.com>; Williams, Dan J <dan.j.williams@intel.com>;
-> Subramoney, Sreenivas <sreenivas.subramoney@intel.com>; Kervinen, Antti
-> <antti.kervinen@intel.com>; Kanevskiy, Alexander
-> <alexander.kanevskiy@intel.com>
-> Subject: Re: [PATCH v2 0/3] mm/damon: Profiling enhancements for DAMON
->=20
-> Hi Aravinda,
->=20
->=20
-> Thank you for posting this new revision!
->=20
-> I remember I told you that I don't see a high level significant problems =
-on on the
-> reply to the previous revision of this patch[1], but I show a concern now=
-.
-> Sorry for not raising this earlier, but let me explain my humble concerns=
- before
-> being even more late.
-
-Please find my comments below:
-
->=20
-> On Mon, 18 Mar 2024 18:58:45 +0530 Aravinda Prasad
-> <aravinda.prasad@intel.com> wrote:
->=20
-> > DAMON randomly samples one or more pages in every region and tracks
-> > accesses to them using the ACCESSED bit in PTE (or PMD for 2MB pages).
-> > When the region size is large (e.g., several GBs), which is common for
-> > large footprint applications, detecting whether the region is accessed
-> > or not completely depends on whether the pages that are actively
-> > accessed in the region are picked during random sampling.
-> > If such pages are not picked for sampling, DAMON fails to identify the
-> > region as accessed. However, increasing the sampling rate or
-> > increasing the number of regions increases CPU overheads of kdamond.
->=20
-> DAMON uses sampling because it considers a region as accessed if a portio=
-n of
-> the region that big enough to be detected via sampling is all accessed.  =
-If a region
-> is having some pages that really accessed but the proportion is too small=
- to be
-> found via sampling, I think DAMON could say the overall access to the reg=
-ion is
-> only modest and could even be ignored.  In my humble opinion, this fits w=
-ith the
-> definition of DAMON region: A memory address range that constructed with
-> pages having similar access frequency.
-
-Agree that DAMON considers a region as accessed if a good portion of the re=
-gion
-is accessed. But few points I would like to discuss:
-
-For large regions (say 10GB, that has 2,621,440 4K pages), sampling at PTE =
-level
-will not cover a good portion of the region. For example, default 5ms sampl=
-ing
-and 100ms aggregation samples only 20 4K pages in an aggregation interval.=
-=20
-Increasing sampling to 1 ms and aggregation to 1 second can only cover=20
-1000 4K pages, but results in higher CPU overheads due to frequent sampling=
-.=20
-Even increasing the aggregation interval to 60 seconds but sampling at 5ms =
-can
-only cover 12000 samples, but region splitting and merging happens once
-in 60 seconds.
-
-In addition, this worsens when region sizes are say 100GB+. We observe that
-sampling at PTE level does not help for large regions as more samples are
-are required. So, decreasing/increasing the sampling or aggressions interva=
-ls
-proportional to the region size is not practical as all regions are of not =
-equal
-size, we can have 100GB regions as well as many small regions (e.g., 16KB
-to 1MB). So tuning sampling rate and aggregation interval did not help
-for large regions.
-
-It can also be observed that large regions cannot be avoided. Large regions
-are created by merging adjacent smaller regions or at the beginning of
-profiling (depending on min regions parameter which defaults to 10).=20
-Increasing min region reduces the size of regions but increases kdamond
-overheads, hence, not preferable.
-
-So, sampling at PTE level cannot precisely detect accesses to large regions
-resulting in inaccuracies, even though it works for small regions.=20
-From our experiments, we found that with 10% hot data in a large region
-(80+GB regions in a 1TB+ footprint application), DAMON was not able to
-detect a single access to that region in 95+% cases with different sample
-and aggregation interval combinations. But DAMON works good for
-applications with footprint <50GB where regions are typically small.
-
-Now consider the scenario with the proposed enhancement. With a
-100GB region, if we sample a PUD entry that covers 1GB address
-space, then the default 5ms sampling and 100ms aggregation samples
-20 PUD entries that is 20 GB portion of the region. This gives a good
-estimate of the portion of the region that is accessed. But the downside
-is that as PUD accessed bit is set even if a small set of pages are accesse=
-d
-under its subtree this can report more access as real as you noted.
-
-But such large regions are split into two in the next aggregation interval.=
-=20
-As the splitting of the regions continues, in next few aggregation interval=
-s
-many smaller regions are formed. Once smaller regions are formed,
-the proposed enhancement cannot pick higher levels of the page table
-tree and behaves as good as default DAMON. So, with the proposed
-enhancement, larger regions are quickly split into smaller regions if they
-have only small set of pages accessed.
-
-To avoid misinterpreting region access count, I feel that the "age" of the
-region is of real help and should be considered by both DAMON and the
-proposed enhancement. If the age of a region is small (<10) then that
-region should not be considered stable and hence should not be
-considered for any memory tiering decisions. For regions with age,=20
-say >10, can be considered as stable as they reflect the actual access
-frequency.
-
->=20
-> >
-> > This patch proposes profiling different levels of the
-> > application\u2019s page table tree to detect whether a region is
-> > accessed or not. This patch set is based on the observation that, when
-> > the accessed bit for a page is set, the accessed bits at the higher
-> > levels of the page table tree (PMD/PUD/PGD) corresponding to the path
-> > of the page table walk are also set. Hence, it is efficient to check
-> > the accessed bits at the higher levels of the page table tree to
-> > detect whether a region is accessed or not. For example, if the access
-> > bit for a PUD entry is set, then one or more pages in the 1GB PUD
-> > subtree is accessed as each PUD entry covers 1GB mapping. Hence,
-> > instead of sampling thousands of 4K/2M pages to detect accesses in a
-> > large region, sampling at the higher level of page table tree is faster=
- and
-> efficient.
->=20
-> Due to the above reason, I concern this could result in making DAMON moni=
-toring
-> results be inaccurately biased to report more than real accesses.
-
-DAMON, even without the proposed enhancement, can result in inaccuracies
-for large regions, (see examples above).
-
->=20
-> >
-> > This patch set is based on 6.8-rc5 kernel (commit: f48159f8,
-> > mm-unstable
-> > tree)
-> >
-> > Changes since v1 [1]
-> > =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> >
-> >  - Added support for 5-level page table tree
-> >  - Split the patch to mm infrastructure changes and DAMON enhancements
-> >  - Code changes as per comments on v1
-> >  - Added kerneldoc comments
-> >
-> > [1] https://lkml.org/lkml/2023/12/15/272
-> >
-> > Evaluation:
-> >
-> > - MASIM benchmark with 1GB, 10GB, 100GB footprint with 10% hot data
-> >   and 5TB with 10GB hot data.
-> > - DAMON: 5ms sampling, 200ms aggregation interval. Rest all
-> >   parameters set to default value.
-> > - DAMON+PTP: Page table profiling applied to DAMON with the above
-> >   parameters.
-> >
-> > Profiling efficiency in detecting hot data:
-> >
-> > Footprint	1GB	10GB	100GB	5TB
-> > ---------------------------------------------
-> > DAMON		>90%	<50%	 ~0%	  0%
-> > DAMON+PTP	>90%	>90%	>90%	>90%
->=20
-> Sampling interval is the time interval that assumed to be large enough fo=
-r the
-> workload to make meaningful amount of accesses within the interval.  Henc=
-e,
-> meaningful amount of sampling interval depends on the workload's characte=
-ristic
-> and system's memory bandwidth.
->=20
-> Here, the size of the hot memory region is about 100MB, 1GB, 10GB, and 10=
-GB
-> for the four cases, respectively.  And you set the sampling interval as 5=
-ms.  Let's
-> assume the system can access, say, 50 GB per second, and hence it could b=
-e able
-> to access only up to 250 MB per 5ms.  So, in case of 1GB and footprint, a=
-ll hot
-> memory region would be accessed while DAMON is waiting for next sampling
-> interval.  Hence, DAMON would be able to see most accesses via sampling. =
- But
-> for 100GB footprint case, only 250MB / 10GB =3D about 2.5% of the hot mem=
-ory
-> region would be accessed between the sampling interval.  DAMON cannot see
-> whole accesses, and hence the precision could be low.
->=20
-> I don't know exact memory bandwith of the system, but to detect the 10 GB=
- hot
-> region with 5ms sampling interval, the system should be able to access 2G=
-B
-> memory per millisecond, or about 2TB memory per second.  I think systems =
-of
-> such memory bandwidth is not that common.
->=20
-> I show you also explored a configuration setting the aggregation interval=
- higher.
-> But because each sampling checks only access between the sampling interva=
-l,
-> that might not help in this setup.  I'm wondering if you also explored in=
-creasing
-> sampling interval.
->
-
-What we have observed that many real-world benchmarks we experimented
-with do not saturate the memory bandwidth. We also experimented with
-masim microbenchmark to understand the impact on memory access rate
-(we inserted delay between memory access operations in do_rnd_ro() and
-other functions). We see decrease in the precision as access intensity is
-reduced. We have experimented with different sampling and aggregation
-intervals, but that did not help much in improving precision.=20
-
-So, what I think is it that most of the cases the precision depends on the =
-page
-(hot or cold) that is randomly picked for sampling than the sampling rate. =
-Most
-of the time only cold 4K pages are picked in a large region as they typical=
-ly
-account for 90% of the pages in the region and hence DAMON does not
-detect any accesses at all. By profiling higher levels of the page table tr=
-ee
-this can be improved.
-=20
-> Sorry again for finding this concern not early enough.  But I think we ma=
-y need to
-> discuss about this first.
-
-Absolutely no problem. Please let me know your thoughts.
-
-Regards,
-Aravinda
-
->=20
-> [1] https://lkml.kernel.org/r/20231215201159.73845-1-sj@kernel.org
->=20
->=20
-> Thanks,
-> SJ
->=20
->=20
-> >
-> > CPU overheads (in billion cycles) for kdamond:
-> >
-> > Footprint	1GB	10GB	100GB	5TB
-> > ---------------------------------------------
-> > DAMON		1.15	19.53	3.52	9.55
-> > DAMON+PTP	0.83	 3.20	1.27	2.55
-> >
-> > A detailed explanation and evaluation can be found in the arXiv paper:
-> > https://arxiv.org/pdf/2311.10275.pdf
-> >
-> >
-> > Aravinda Prasad (3):
-> >   mm/damon: mm infrastructure support
-> >   mm/damon: profiling enhancement
-> >   mm/damon: documentation updates
-> >
-> >  Documentation/mm/damon/design.rst |  42 ++++++
-> >  arch/x86/include/asm/pgtable.h    |  20 +++
-> >  arch/x86/mm/pgtable.c             |  28 +++-
-> >  include/linux/mmu_notifier.h      |  36 +++++
-> >  include/linux/pgtable.h           |  79 ++++++++++
-> >  mm/damon/vaddr.c                  | 233 ++++++++++++++++++++++++++++--
-> >  6 files changed, 424 insertions(+), 14 deletions(-)
-> >
-> > --
-> > 2.21.3
+[...]
