@@ -1,410 +1,653 @@
-Received: from invmail4.hynix.com (exvmail4.skhynix.com [166.125.252.92])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DD57B1BC3A
-	for <damon@lists.linux.dev>; Fri, 22 Mar 2024 09:02:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=166.125.252.92
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711098157; cv=none; b=EQJhyFsJllXcj+6I/wpyhgcWz3Ax0ptqJjkZd3mJ1tLgwGnJng5PfPs31RuG7xpQbNOozdlgKfEyfoH8hG4FZ045uiVtDedczgZpL3sy20O1Zjn+vy6ErNt2qoHD9oCe/2UkanfmoLVV3gJJVYJiLM9GPjhA6f/pgd/s8kM8W1E=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711098157; c=relaxed/simple;
-	bh=uLRm+x/u06k/v7a4CovXxbNGCwI4mkizG4isyYjBp1M=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MHj28daS6Bv1GruMCpKDqKqjMynfa9M9UfuKn9BhQm+SAHMQyo/QaixhmK3Hram/Eesx2jpzMRuMYxlSEH5bOYYvBWDxfhmwoW8lkPATZTGDRW2+2xqYCzLYJnenKUnXKDyn6PdVLAkfw3py8RD9ckB8AlGEE4rE4U/27zj1ziU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sk.com; spf=pass smtp.mailfrom=sk.com; arc=none smtp.client-ip=166.125.252.92
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sk.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sk.com
-X-AuditID: a67dfc5b-d6dff70000001748-ad-65fd4925a14a
-From: Honggyu Kim <honggyu.kim@sk.com>
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.14])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F580405DF
+	for <damon@lists.linux.dev>; Fri, 22 Mar 2024 12:12:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=198.175.65.14
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1711109536; cv=fail; b=LsCVemvDqxsOZtFJS2+0XpV2V3p0GWrxQl5ck09CNKuQU0xA7k4g1W/wcFpCJGPt2j5iXr9JUeE+ia3ggX4O3OgKayWSPd2ZobPJY8iGhG35dLMB6aefEKyfK8+M2TFLuBz+t2hf5k5M8Qyd32BuAxFnHozu7kPdJX3c7Bnx26w=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1711109536; c=relaxed/simple;
+	bh=BPxY2nA7ofeAc4e/DQYGX8yiDwHkY7ouWG7cDp8YaAA=;
+	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=NdPPEQQD68MYUHUgAheOmp2J6icrQGn1WeIgzdg/GETNOQZtQMqcYiS7TPupGVAQfP/PSrR7p0zSWQxQl2m005zOxm3ePWoAAuc8WFvgeT2EZAK2E9OZm5fXPW1eI+7K+vGE/uewpMK+B7IUDUl/q/q9/mh8hcOfy0Nz/GKPErA=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=l9+VeJG3; arc=fail smtp.client-ip=198.175.65.14
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="l9+VeJG3"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1711109534; x=1742645534;
+  h=from:to:cc:subject:date:message-id:references:
+   in-reply-to:content-transfer-encoding:mime-version;
+  bh=BPxY2nA7ofeAc4e/DQYGX8yiDwHkY7ouWG7cDp8YaAA=;
+  b=l9+VeJG3C69G4sbGAYFlDcjs0IOdM9vTbuy55dsrKXwSNuGkLVY5hThq
+   tzbP/i/okk1yPACYiFKZ95DSGFkE8qzeKvzsc5s4roxQr8kaKbBniRg5n
+   3KYERNOzzZDEWTvqiwj9s2WmRXNhhrfbgEx4bhQznBJBUK0O+fOboB/Yt
+   51dRJ3FGj03zo1RJhLM1AqqhO71ZRD6wsQ2nOsJTUbxddCEHESKMWrkVj
+   Q2kHop3AuGvn5Rxa5kpdEr3GDlJllPbifAI3MnFujpwdTX7+xUHwRpnC4
+   qopw9bcFzNNftNqKtLLpQItxLTI3rdgjGHQqKosuYu2gRZWxWtPr7nSHh
+   g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,11020"; a="9958394"
+X-IronPort-AV: E=Sophos;i="6.07,145,1708416000"; 
+   d="scan'208";a="9958394"
+Received: from fmviesa007.fm.intel.com ([10.60.135.147])
+  by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Mar 2024 05:12:13 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.07,145,1708416000"; 
+   d="scan'208";a="14853565"
+Received: from fmsmsx601.amr.corp.intel.com ([10.18.126.81])
+  by fmviesa007.fm.intel.com with ESMTP/TLS/AES256-GCM-SHA384; 22 Mar 2024 05:12:12 -0700
+Received: from fmsmsx603.amr.corp.intel.com (10.18.126.83) by
+ fmsmsx601.amr.corp.intel.com (10.18.126.81) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.35; Fri, 22 Mar 2024 05:12:12 -0700
+Received: from fmsedg601.ED.cps.intel.com (10.1.192.135) by
+ fmsmsx603.amr.corp.intel.com (10.18.126.83) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.35 via Frontend Transport; Fri, 22 Mar 2024 05:12:12 -0700
+Received: from NAM10-MW2-obe.outbound.protection.outlook.com (104.47.55.100)
+ by edgegateway.intel.com (192.55.55.70) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.35; Fri, 22 Mar 2024 05:12:12 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=a3uvX8hwXeD9t5eV2awFPOTXcG7+7HDk/62HN1MI/TI9Xc0geimPI/lKgj3Bjhmv14Vcig9lSvTx61WvsFBiVrWBtZUy4O+1058U1/MOA8bZM5BDObuGJAr0AsrHPExM8zJbuslPy5jggcp0ijMmkTFWxqfXyCWIHP29BOUXC239/+9/N99U+zB925BOEdrw1rXmkjk2cXuvYLaa8f11cwon3s3jsEQtXFoMwkGDLYlKW8fyuECutbyOB+OO/FCRS/QF0tWrvIlVkJStkBb0iaNrmybyRrcL9r+MUiVHrbP725PNgmhMVSGw4d+uSytYBycS3aJyKkHvcln2JUMM5A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=ysDgAvpgvLWJp7Qj+JbiyFhJYabLRKEVEg2slMHbyUY=;
+ b=njz2XuRvgq6Rc+IuReqwDWmzqGZKfUtOrgLQLz1Zl2aBvT/bAoccOaiTySDV+wvGbuKqyFzIwMW/vx2pMoMCI00oF0lXMyrlTGYG6xEHkv3Tix4ZlYZGp0eUU8x7eO4dIUA0MXnoyOpCKY8QF8m7lt0YDnwCTR6RG9hD5L0hkBDtQ/EdiJ9zkHBw0XHgjvMWtJequ3BKRKXdCzNSV4CmtpGLHEDT7z3HMGneyCEGNhMia4y9zRDA3wZ/cD8Ijx8SOasGRx7fnrjCFJ35/UI0VtJC4z7ecYarpOoUniyFL9st65RbYjxy/YbJByWeTMTYf26yYW1wMBerALV5yd5wYA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Received: from MW5PR11MB5907.namprd11.prod.outlook.com (2603:10b6:303:1a1::13)
+ by SA3PR11MB7435.namprd11.prod.outlook.com (2603:10b6:806:305::6) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7409.11; Fri, 22 Mar
+ 2024 12:12:09 +0000
+Received: from MW5PR11MB5907.namprd11.prod.outlook.com
+ ([fe80::bcbf:4501:30f4:843b]) by MW5PR11MB5907.namprd11.prod.outlook.com
+ ([fe80::bcbf:4501:30f4:843b%4]) with mapi id 15.20.7409.010; Fri, 22 Mar 2024
+ 12:12:09 +0000
+From: "Prasad, Aravinda" <aravinda.prasad@intel.com>
 To: SeongJae Park <sj@kernel.org>
-Cc: damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	akpm@linux-foundation.org,
-	apopple@nvidia.com,
-	baolin.wang@linux.alibaba.com,
-	dave.jiang@intel.com,
-	hyeongtak.ji@sk.com,
-	kernel_team@skhynix.com,
-	linmiaohe@huawei.com,
-	linux-kernel@vger.kernel.org,
-	linux-trace-kernel@vger.kernel.org,
-	lizhijian@cn.fujitsu.com,
-	mathieu.desnoyers@efficios.com,
-	mhiramat@kernel.org,
-	rakie.kim@sk.com,
-	rostedt@goodmis.org,
-	surenb@google.com,
-	yangx.jy@fujitsu.com,
-	ying.huang@intel.com,
-	ziy@nvidia.com,
-	42.hyeyoo@gmail.com
-Subject: Re: [RFC PATCH v2 0/7] DAMON based 2-tier memory management for CXL memory
-Date: Fri, 22 Mar 2024 18:02:23 +0900
-Message-ID: <20240322090227.2253-1-honggyu.kim@sk.com>
-X-Mailer: git-send-email 2.43.0.windows.1
-In-Reply-To: <20240227235121.153277-1-sj@kernel.org>
-References: 
+CC: "damon@lists.linux.dev" <damon@lists.linux.dev>, "linux-mm@kvack.org"
+	<linux-mm@kvack.org>, "linux-kernel@vger.kernel.org"
+	<linux-kernel@vger.kernel.org>, "s2322819@ed.ac.uk" <s2322819@ed.ac.uk>,
+	"Kumar, Sandeep4" <sandeep4.kumar@intel.com>, "Huang, Ying"
+	<ying.huang@intel.com>, "Hansen, Dave" <dave.hansen@intel.com>, "Williams,
+ Dan J" <dan.j.williams@intel.com>, "Subramoney, Sreenivas"
+	<sreenivas.subramoney@intel.com>, "Kervinen, Antti"
+	<antti.kervinen@intel.com>, "Kanevskiy, Alexander"
+	<alexander.kanevskiy@intel.com>
+Subject: RE: [PATCH v2 0/3] mm/damon: Profiling enhancements for DAMON
+Thread-Topic: [PATCH v2 0/3] mm/damon: Profiling enhancements for DAMON
+Thread-Index: AQHaeTeYeVMaFIFnV0yMrKTBAlKavbE+h/4AgAIFciCAAkoDgIAApzzw
+Date: Fri, 22 Mar 2024 12:12:09 +0000
+Message-ID: <MW5PR11MB5907D17C1EBC1869C553256DF2312@MW5PR11MB5907.namprd11.prod.outlook.com>
+References: <MW5PR11MB5907D65A7557AA1381B477B0F2332@MW5PR11MB5907.namprd11.prod.outlook.com>
+ <20240321231019.81064-1-sj@kernel.org>
+In-Reply-To: <20240321231019.81064-1-sj@kernel.org>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: MW5PR11MB5907:EE_|SA3PR11MB7435:EE_
+x-ms-office365-filtering-correlation-id: 84736e5d-154c-4387-600f-08dc4a694c66
+x-ld-processed: 46c98d88-e344-4ed4-8496-4ed7712e255d,ExtAddr
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: iM8Q6dlf9IZKhcUOvGOe+uE2dFk04YsX7Efr68Tm2b0Au50Fsx/gwA5ramGlS0nEighGeye1Rw3OPfUM5Qbt5IEAxcBsf6nMtlvSHIH4MztJNYvQM54qg93nEnTver/WsAaBRG8FnN3wdK0g1Z9dTVJyD2G1x5N572DbMw8VKtXvHi98O5N1jbo3Tsn2xmrLcHWF0v75UupYWBOuV72Tm87KeckNcOIZm+809aFfO+VipyXlog0psnkfQHChayGN2OMNg+GvuGf/sR6PGDQ6Wn+FSnaoaR8gLZPJvUp/YH/KAmxijYViOte2GdvaY6sLIP1NKmZiphBWCclFX6mTCEBLucVIB9pxOv6IizBukxsVwt2by4xuJrR9skw58L75v6HTbnyMtFK98WN6FqxoXuhVs/RfWp1WIwSf3k0eLUQHwmEWXiw89EPD5vf3yGOpkSumn/Js5MB+M81OLhwqXUzGKAv1CJJUPuVoXCcuWnj3WV8NdZn4UmyWyKoFrfYsAS/xkj1+rsgU1LU7Jl7MeGy/WXruNNQrUS7XpHuvk+TYGKGSRikcgfnb6DlWxp8xz3XmuhShMbTKeZZ3ykaubui9dDDEO4gwMkLrvx0AaUbinHENxw84ykMjOn0bwL+mYBDcEg6oXwAvARH8m3hkTIxH318ekW/c6umFzz300H49OWYh5xAElt+bY1qDLt29
+x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MW5PR11MB5907.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(376005)(1800799015)(366007)(38070700009);DIR:OUT;SFP:1101;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?LkBXWm0uDNkhRPWHotQY7EctoTEONG8/MavHK+7i/FQ05FmhKyxvWJIOGQpl?=
+ =?us-ascii?Q?hSwUoJMoVsScbV2aYBZFyNlnWfheHAtwJEl0p59ucfwZ05/PM6wLZwu3IDOw?=
+ =?us-ascii?Q?GE678JY4eoSCXLkCo7clE/oD23JCNDlgNbtNLck4z9FXHgVB9csC2RATn80t?=
+ =?us-ascii?Q?7LOW8q6xtbntzMqCm0jzwTrHGSZPjC9a7OCGWK2OcBmOAvkC6dvW8lNjUDgS?=
+ =?us-ascii?Q?ZpDXxsxnDX9WhqeQDlD/DZLpegWaq8lyryWpe39Gg9deeoMZjIAoJXh5MD+a?=
+ =?us-ascii?Q?klFQzJW9x/ss6Oa+4sPQS4KdeMK/RJbjrL7wDNWwMujjbhjkmjs/aZhJSL+k?=
+ =?us-ascii?Q?hpBwcb3LxgLE6PHcIRWe9QnCAI9q/g8lvFEJ4Y4tHPzBLxzgSZnUUgn+jXuR?=
+ =?us-ascii?Q?WYUwhdP7D3ZJ6nMooX+YWNgLqYv1kv8W+/7MkTsKP0icwNVjVN1DVQVz6SF7?=
+ =?us-ascii?Q?gURSgjiEvJT5OLEKCdH5md5XaZel1+YSj7QGnFA19ThYgqx904BCZf86kTe+?=
+ =?us-ascii?Q?1NGxxKZ84AP5EGvCs1EbP4fSTrWMk2TtEL/B+p9yz91tnE0ajdl816e0+M/L?=
+ =?us-ascii?Q?FbBkXyjtOBsaqak1SdJJt4yVbFBCZrvVwALiUfBtLG7KoJMUCHrhKhObC1hm?=
+ =?us-ascii?Q?D7JK3RHi9H5KMaXxSq96vLRXbj3jfqoAKaaK5DstA5eHl16zIT3MtZXSphIz?=
+ =?us-ascii?Q?R/m9UG+98SJWSZOyfivxQGprVOZeAYi9zLrF8KOosC16M+7qwzkB1cKSHODb?=
+ =?us-ascii?Q?sEEVskZg+THbk58Z2K8PfqLQID8LN1X3x8FeZPPrSFUqC4ZATk42bkis/oBT?=
+ =?us-ascii?Q?+/B3SANV8HUHA6QZVydusegEScvfwbIMRKeM+bijtZi7cAd1n+CduCRK5pjj?=
+ =?us-ascii?Q?Bf4lwMPdPA+DDf0iq7XcbVbkhSnFnvqwHAz7TFZoiSx7KYeIGXbrYtDPNu78?=
+ =?us-ascii?Q?8Z6rJuwnPupzTMz/Ljaha6y2n9siRdd4nv0f/M0Wly5mz7YPbi9K9vziJXyK?=
+ =?us-ascii?Q?JBMZO4FSXnHT4mEaqloB5YQ8l2TQN7vRTKvyHAX8QVxDjYz8g1P1VVT+qg1N?=
+ =?us-ascii?Q?OLxqvDfcTOTSFJ+eHXcDG5imTtp+efSiTqN5rCwM6jgTCTQUI715l/v30Z80?=
+ =?us-ascii?Q?uwxNjZ3ZL93WkKz/ePWG2DkcadTARi6iEtq3LWRLm0PElxO4isXU+rAPMzp4?=
+ =?us-ascii?Q?iBzi6x4xkGFFdlP4b/Yyt5kfMCFlMa+EtpMgMqw3ta79v852aXg+58RntgWx?=
+ =?us-ascii?Q?csoLK8d/DcQnPmcSLCEvLmIG/frmVqQg0634O7wnpsVG2EAk8XEuEmery5DR?=
+ =?us-ascii?Q?xptkapwNc6l2F/poNN0UqIutWZQGxx7Xzk6dQrNBXrM4EUFsmoJGc0F0xW3D?=
+ =?us-ascii?Q?+crC8MnMJUChm8VjBeTmy7DwgzpaRAUtrLa5BVWNgPvdBA8o4pboUGujjEIl?=
+ =?us-ascii?Q?2Xr4SeLWGN9u98s58sra5S8CHrQfnqCe4OtOlTkFgaDi5r8cnrz4pAKZVLZM?=
+ =?us-ascii?Q?RbEggGKCAc7wM0OX0Qmp5jguerx3WNSLQngzOuXtKycLEI0UHIY1t9Iotqw8?=
+ =?us-ascii?Q?lOj1xWoldRX78BSnNTMKDHBSnaL6WhovX9meq+t/?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrJIsWRmVeSWpSXmKPExsXC9ZZnoa6q599Ug/3zNC0m9hhYzFm/hs1i
-	140Qi/97jzFaPPn/m9XixM1GNovO70tZLC7vmsNmcW/Nf1aLI+vPslisuwVkbT57htli8XI1
-	i30dD5gsDn99w2Qx+dICNosXU84wWpycNZnFYvbRe+wOwh7/D05i9lh6+g2bx4YmILFz1l12
-	j5Z9t9g9Fmwq9Wg58pbVY/Gel0wem1Z1snls+jSJ3ePEjN8sHjsfWnq82DyT0aO3+R2bx+dN
-	cgH8UVw2Kak5mWWpRfp2CVwZTaeFCk63MVb8fHefrYHxbWoXIweHhICJxMX/jl2MnGDm3A9/
-	2EBsNgE1iSsvJzGB2CICihLnHl9k7WLk4mAWmMkiceHsblaQhLBAsMTcs/8ZQWwWAVWJ5y8X
-	gcV5Bcwkvry5zwIxVFPi8faf7CA2J9CCR/vugtULCfBIvNqwnxGiXlDi5MwnYPXMAvISzVtn
-	M4MskxDYxy5xu/cW1CBJiYMrbrBMYOSfhaRnFpKeBYxMqxiFMvPKchMzc0z0MirzMiv0kvNz
-	NzECI3BZ7Z/oHYyfLgQfYhTgYFTi4TUQ/pMqxJpYVlyZe4hRgoNZSYR3x3+gEG9KYmVValF+
-	fFFpTmrxIUZpDhYlcV6jb+UpQgLpiSWp2ampBalFMFkmDk6pBsZ55ydY1PFGcNz+7Zoz4Wfp
-	vl+r2RsKa7xLZlktUgidyCVfvaK7liclJFVc9FS8eKUcZ5nt+r6oE/HqlozzzIX/ajI5Ltxh
-	9WtW+5Oi419CBdiyhDJ/LPyVmcOUZyYmo/4grG6DLdOTnq5VNzNPxf9O8VD7LcdhPntTUKXV
-	29vXdvWcdvF9psRSnJFoqMVcVJwIAKNKttm8AgAA
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprNIsWRmVeSWpSXmKPExsXCNUNLT1fV82+qwflXohYTewws5qxfw2ax
-	60aIxf+9xxgtnvz/zWpx4mYjm0Xnk++MFofnnmS16Py+lMXi8q45bBb31vxntTiy/iyLxbpb
-	QNbms2eYLRYvV7M4dO05q8W+jgdMFoe/vmGymHxpAZvFiylnGC1OzprMYjH76D12BzGP/wcn
-	MXssPf2GzWNDE5DYOesuu0fLvlvsHgs2lXq0HHnL6rF4z0smj02rOtk8Nn2axO5xYsZvFo+d
-	Dy09XmyeyejR2/yOzePbbQ+PxS8+MAUIRnHZpKTmZJalFunbJXBlNJ0WKjjdxljx8919tgbG
-	t6ldjJwcEgImEnM//GEDsdkE1CSuvJzEBGKLCChKnHt8kbWLkYuDWWAmi8SFs7tZQRLCAsES
-	c8/+ZwSxWQRUJZ6/XAQW5xUwk/jy5j4LxFBNicfbf7KD2JxACx7tuwtWLyTAI/Fqw35GiHpB
-	iZMzn4DVMwvISzRvnc08gZFnFpLULCSpBYxMqxhFMvPKchMzc0z1irMzKvMyK/SS83M3MQKj
-	bFntn4k7GL9cdj/EKMDBqMTDayH1J1WINbGsuDL3EKMEB7OSCO+O/0Ah3pTEyqrUovz4otKc
-	1OJDjNIcLErivF7hqQlCAumJJanZqakFqUUwWSYOTqkGxknKnP5fmRj9Teavy6n69m7StnlB
-	c37cf2XDrJb7ccqEh02rOqeb/J+tyT3Xc7oVr5VaypK3vOIaC4us5FOOx66tLCxW/+lVevF6
-	wql8th+XWZTEbju9v/J0cqGVG/8S6xvmF+buMHrz4cTlqJ/dJw7eMOXkS29/yfR6oS/79iie
-	lISFXlohxUosxRmJhlrMRcWJAGQNlHiuAgAA
-X-CFilter-Loop: Reflected
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: MW5PR11MB5907.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 84736e5d-154c-4387-600f-08dc4a694c66
+X-MS-Exchange-CrossTenant-originalarrivaltime: 22 Mar 2024 12:12:09.3296
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: GRbRTEOgbKPqVmMtoOv+3NK0HcsAMKCnMZp69Af7LshoEmvRfyiwnWrpNexbUg6NmIBBA/oAXzGTMYtxonuE/A45OUfe4e9P3c0APCvbiDc=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA3PR11MB7435
+X-OriginatorOrg: intel.com
 
-Hi SeongJae,
 
-On Tue, 27 Feb 2024 15:51:20 -0800 SeongJae Park <sj@kernel.org> wrote:
-> On Mon, 26 Feb 2024 23:05:46 +0900 Honggyu Kim <honggyu.kim@sk.com> wrote:
-> 
-> > There was an RFC IDEA "DAMOS-based Tiered-Memory Management" previously
-> > posted at [1].
-> > 
-> > It says there is no implementation of the demote/promote DAMOS action
-> > are made.  This RFC is about its implementation for physical address
-> > space.
-> > 
-> > 
-> > Introduction
-> > ============
-> > 
-> > With the advent of CXL/PCIe attached DRAM, which will be called simply
-> > as CXL memory in this cover letter, some systems are becoming more
-> > heterogeneous having memory systems with different latency and bandwidth
-> > characteristics.  They are usually handled as different NUMA nodes in
-> > separate memory tiers and CXL memory is used as slow tiers because of
-> > its protocol overhead compared to local DRAM.
-> > 
-> > In this kind of systems, we need to be careful placing memory pages on
-> > proper NUMA nodes based on the memory access frequency.  Otherwise, some
-> > frequently accessed pages might reside on slow tiers and it makes
-> > performance degradation unexpectedly.  Moreover, the memory access
-> > patterns can be changed at runtime.
-> > 
-> > To handle this problem, we need a way to monitor the memory access
-> > patterns and migrate pages based on their access temperature.  The
-> > DAMON(Data Access MONitor) framework and its DAMOS(DAMON-based Operation
-> > Schemes) can be useful features for monitoring and migrating pages.
-> > DAMOS provides multiple actions based on DAMON monitoring results and it
-> > can be used for proactive reclaim, which means swapping cold pages out
-> > with DAMOS_PAGEOUT action, but it doesn't support migration actions such
-> > as demotion and promotion between tiered memory nodes.
-> > 
-> > This series supports two new DAMOS actions; DAMOS_DEMOTE for demotion
-> > from fast tiers and DAMOS_PROMOTE for promotion from slow tiers.  This
-> > prevents hot pages from being stuck on slow tiers, which makes
-> > performance degradation and cold pages can be proactively demoted to
-> > slow tiers so that the system can increase the chance to allocate more
-> > hot pages to fast tiers.
-> > 
-> > The DAMON provides various tuning knobs but we found that the proactive
-> > demotion for cold pages is especially useful when the system is running
-> > out of memory on its fast tier nodes.
-> > 
-> > Our evaluation result shows that it reduces the performance slowdown
-> > compared to the default memory policy from 15~17% to 4~5% when the
-> > system runs under high memory pressure on its fast tier DRAM nodes.
-> > 
-> > 
-> > DAMON configuration
-> > ===================
-> > 
-> > The specific DAMON configuration doesn't have to be in the scope of this
-> > patch series, but some rough idea is better to be shared to explain the
-> > evaluation result.
-> > 
-> > The DAMON provides many knobs for fine tuning but its configuration file
-> > is generated by HMSDK[2].  It includes gen_config.py script that
-> > generates a json file with the full config of DAMON knobs and it creates
-> > multiple kdamonds for each NUMA node when the DAMON is enabled so that
-> > it can run hot/cold based migration for tiered memory.
-> 
-> I was feeling a bit confused from here since DAMON doesn't receive parameters
-> via a file.  To my understanding, the 'configuration file' means the input file
-> for DAMON user-space tool, damo, not DAMON.  Just a trivial thing, but making
-> it clear if possible could help readers in my opinion.
-> 
-> > 
-> > 
-> > Evaluation Workload
-> > ===================
-> > 
-> > The performance evaluation is done with redis[3], which is a widely used
-> > in-memory database and the memory access patterns are generated via
-> > YCSB[4].  We have measured two different workloads with zipfian and
-> > latest distributions but their configs are slightly modified to make
-> > memory usage higher and execution time longer for better evaluation.
-> > 
-> > The idea of evaluation using these demote and promote actions covers
-> > system-wide memory management rather than partitioning hot/cold pages of
-> > a single workload.  The default memory allocation policy creates pages
-> > to the fast tier DRAM node first, then allocates newly created pages to
-> > the slow tier CXL node when the DRAM node has insufficient free space.
-> > Once the page allocation is done then those pages never move between
-> > NUMA nodes.  It's not true when using numa balancing, but it is not the
-> > scope of this DAMON based 2-tier memory management support.
-> > 
-> > If the working set of redis can be fit fully into the DRAM node, then
-> > the redis will access the fast DRAM only.  Since the performance of DRAM
-> > only is faster than partially accessing CXL memory in slow tiers, this
-> > environment is not useful to evaluate this patch series.
-> > 
-> > To make pages of redis be distributed across fast DRAM node and slow
-> > CXL node to evaluate our demote and promote actions, we pre-allocate
-> > some cold memory externally using mmap and memset before launching
-> > redis-server.  We assumed that there are enough amount of cold memory in
-> > datacenters as TMO[5] and TPP[6] papers mentioned.
-> > 
-> > The evaluation sequence is as follows.
-> > 
-> > 1. Turn on DAMON with DAMOS_DEMOTE action for DRAM node and
-> >    DAMOS_PROMOTE action for CXL node.  It demotes cold pages on DRAM
-> >    node and promotes hot pages on CXL node in a regular interval.
-> > 2. Allocate a huge block of cold memory by calling mmap and memset at
-> >    the fast tier DRAM node, then make the process sleep to make the fast
-> >    tier has insufficient memory for redis-server.
-> > 3. Launch redis-server and load prebaked snapshot image, dump.rdb.  The
-> >    redis-server consumes 52GB of anon pages and 33GB of file pages, but
-> >    due to the cold memory allocated at 2, it fails allocating the entire
-> >    memory of redis-server on the fast tier DRAM node so it partially
-> >    allocates the remaining on the slow tier CXL node.  The ratio of
-> >    DRAM:CXL depends on the size of the pre-allocated cold memory.
-> > 4. Run YCSB to make zipfian or latest distribution of memory accesses to
-> >    redis-server, then measure its execution time when it's completed.
-> > 5. Repeat 4 over 50 times to measure the average execution time for each
-> >    run.
-> > 6. Increase the cold memory size then repeat goes to 2.
-> > 
-> > For each test at 4 took about a minute so repeating it 50 times almost
-> > took about 1 hour for each test with a specific cold memory from 440GB
-> > to 500GB in 10GB increments for each evaluation.  So it took about more
-> > than 10 hours for both zipfian and latest workloads to get the entire
-> > evaluation results.  Repeating the same test set multiple times doesn't
-> > show much difference so I think it might be enough to make the result
-> > reliable.
-> > 
-> > 
-> > Evaluation Results
-> > ==================
-> > 
-> > All the result values are normalized to DRAM-only execution time because
-> > the workload cannot be faster than DRAM-only unless the workload hits
-> > the bandwidth peak but our redis test doesn't go beyond the bandwidth
-> > limit.
-> > 
-> > So the DRAM-only execution time is the ideal result without affected by
-> > the gap between DRAM and CXL performance difference.  The NUMA node
-> > environment is as follows.
-> > 
-> >   node0 - local DRAM, 512GB with a CPU socket (fast tier)
-> >   node1 - disabled
-> >   node2 - CXL DRAM, 96GB, no CPU attached (slow tier)
-> > 
-> > The following is the result of generating zipfian distribution to
-> > redis-server and the numbers are averaged by 50 times of execution.
-> > 
-> >   1. YCSB zipfian distribution read only workload
-> >   memory pressure with cold memory on node0 with 512GB of local DRAM.
-> >   =============+================================================+=========
-> >                |       cold memory occupied by mmap and memset  |
-> >                |   0G  440G  450G  460G  470G  480G  490G  500G |
-> >   =============+================================================+=========
-> >   Execution time normalized to DRAM-only values                 | GEOMEAN
-> >   -------------+------------------------------------------------+---------
-> >   DRAM-only    | 1.00     -     -     -     -     -     -     - | 1.00
-> >   CXL-only     | 1.21     -     -     -     -     -     -     - | 1.21
-> >   default      |    -  1.09  1.10  1.13  1.15  1.18  1.21  1.21 | 1.15
-> >   DAMON 2-tier |    -  1.02  1.04  1.05  1.04  1.05  1.05  1.06 | 1.04
-> >   =============+================================================+=========
-> >   CXL usage of redis-server in GB                               | AVERAGE
-> >   -------------+------------------------------------------------+---------
-> >   DRAM-only    |  0.0     -     -     -     -     -     -     - |  0.0
-> >   CXL-only     | 52.6     -     -     -     -     -     -     - | 52.6
-> >   default      |    -  19.4  26.1  32.3  38.5  44.7  50.5  50.3 | 37.4
-> >   DAMON 2-tier |    -   0.1   1.6   5.2   8.0   9.1  11.8  13.6 |  7.1
-> >   =============+================================================+=========
-> > 
-> > Each test result is based on the exeuction environment as follows.
-> > 
-> >   DRAM-only   : redis-server uses only local DRAM memory.
-> >   CXL-only    : redis-server uses only CXL memory.
-> >   default     : default memory policy(MPOL_DEFAULT).
-> >                 numa balancing disabled.
-> >   DAMON 2-tier: DAMON enabled with DAMOS_DEMOTE for DRAM nodes and
-> >                 DAMOS_PROMOTE for CXL nodes.
-> > 
-> > The above result shows the "default" execution time goes up as the size
-> > of cold memory is increased from 440G to 500G because the more cold
-> > memory used, the more CXL memory is used for the target redis workload
-> > and this makes the execution time increase.
-> > 
-> > However, "DAMON 2-tier" result shows less slowdown because the
-> > DAMOS_DEMOTE action at DRAM node proactively demotes pre-allocated cold
-> > memory to CXL node and this free space at DRAM increases more chance to
-> > allocate hot or warm pages of redis-server to fast DRAM node.  Moreover,
-> > DEMOS_PROMOTE action at CXL node also promotes hot pages of redis-server
-> > to DRAM node actively.
-> > 
-> > As a result, it makes more memory of redis-server stay in DRAM node
-> > compared to "default" memory policy and this makes the performance
-> > improvement.
-> > 
-> > The following result of latest distribution workload shows similar data.
-> > 
-> >   2. YCSB latest distribution read only workload
-> >   memory pressure with cold memory on node0 with 512GB of local DRAM.
-> >   =============+================================================+=========
-> >                |       cold memory occupied by mmap and memset  |
-> >                |   0G  440G  450G  460G  470G  480G  490G  500G |
-> >   =============+================================================+=========
-> >   Execution time normalized to DRAM-only values                 | GEOMEAN
-> >   -------------+------------------------------------------------+---------
-> >   DRAM-only    | 1.00     -     -     -     -     -     -     - | 1.00
-> >   CXL-only     | 1.18     -     -     -     -     -     -     - | 1.18
-> >   default      |    -  1.16  1.15  1.17  1.18  1.16  1.18  1.15 | 1.17
-> >   DAMON 2-tier |    -  1.04  1.04  1.05  1.05  1.06  1.05  1.06 | 1.05
-> >   =============+================================================+=========
-> >   CXL usage of redis-server in GB                               | AVERAGE
-> >   -------------+------------------------------------------------+---------
-> >   DRAM-only    |  0.0     -     -     -     -     -     -     - |  0.0
-> >   CXL-only     | 52.6     -     -     -     -     -     -     - | 52.6
-> >   default      |    -  19.3  26.1  32.2  38.5  44.6  50.5  50.6 | 37.4
-> >   DAMON 2-tier |    -   1.3   3.8   7.0   4.1   9.4  12.5  16.7 |  7.8
-> >   =============+================================================+=========
-> > 
-> > In summary of both results, our evaluation shows that "DAMON 2-tier"
-> > memory management reduces the performance slowdown compared to the
-> > "default" memory policy from 15~17% to 4~5% when the system runs with
-> > high memory pressure on its fast tier DRAM nodes.
-> > 
-> > The similar evaluation was done in another machine that has 256GB of
-> > local DRAM and 96GB of CXL memory.  The performance slowdown is reduced
-> > from 20~24% for "default" to 5~7% for "DAMON 2-tier".
-> > 
-> > Having these DAMOS_DEMOTE and DAMOS_PROMOTE actions can make 2-tier
-> > memory systems run more efficiently under high memory pressures.
-> 
-> Thank you for running the tests again with the new version of the patches and
-> sharing the results!
 
-It's a bit late answer, but the result was from the previous evaluation.
-I ran it again with RFC v2, but didn't see much difference so just
-pasted the same result here.
+> -----Original Message-----
+> From: SeongJae Park <sj@kernel.org>
+> Sent: Friday, March 22, 2024 4:40 AM
+> To: Prasad, Aravinda <aravinda.prasad@intel.com>
+> Cc: SeongJae Park <sj@kernel.org>; damon@lists.linux.dev; linux-
+> mm@kvack.org; linux-kernel@vger.kernel.org; s2322819@ed.ac.uk; Kumar,
+> Sandeep4 <sandeep4.kumar@intel.com>; Huang, Ying <ying.huang@intel.com>;
+> Hansen, Dave <dave.hansen@intel.com>; Williams, Dan J
+> <dan.j.williams@intel.com>; Subramoney, Sreenivas
+> <sreenivas.subramoney@intel.com>; Kervinen, Antti <antti.kervinen@intel.c=
+om>;
+> Kanevskiy, Alexander <alexander.kanevskiy@intel.com>
+> Subject: RE: [PATCH v2 0/3] mm/damon: Profiling enhancements for DAMON
+>=20
+> On Wed, 20 Mar 2024 12:31:17 +0000 "Prasad, Aravinda"
+> <aravinda.prasad@intel.com> wrote:
+>=20
+> >
+> >
+> > > -----Original Message-----
+> > > From: SeongJae Park <sj@kernel.org>
+> > > Sent: Tuesday, March 19, 2024 10:51 AM
+> > > To: Prasad, Aravinda <aravinda.prasad@intel.com>
+> > > Cc: damon@lists.linux.dev; linux-mm@kvack.org; sj@kernel.org; linux-
+> > > kernel@vger.kernel.org; s2322819@ed.ac.uk; Kumar, Sandeep4
+> > > <sandeep4.kumar@intel.com>; Huang, Ying <ying.huang@intel.com>;
+> > > Hansen, Dave <dave.hansen@intel.com>; Williams, Dan J
+> > > <dan.j.williams@intel.com>; Subramoney, Sreenivas
+> > > <sreenivas.subramoney@intel.com>; Kervinen, Antti
+> > > <antti.kervinen@intel.com>; Kanevskiy, Alexander
+> > > <alexander.kanevskiy@intel.com>
+> > > Subject: Re: [PATCH v2 0/3] mm/damon: Profiling enhancements for
+> > > DAMON
+> > >
+> > > Hi Aravinda,
+> > >
+> > >
+> > > Thank you for posting this new revision!
+> > >
+> > > I remember I told you that I don't see a high level significant
+> > > problems on on the reply to the previous revision of this patch[1], b=
+ut I show a
+> concern now.
+> > > Sorry for not raising this earlier, but let me explain my humble
+> > > concerns before being even more late.
+> >
+> > Please find my comments below:
+> >
+> > >
+> > > On Mon, 18 Mar 2024 18:58:45 +0530 Aravinda Prasad
+> > > <aravinda.prasad@intel.com> wrote:
+> > >
+> > > > DAMON randomly samples one or more pages in every region and
+> > > > tracks accesses to them using the ACCESSED bit in PTE (or PMD for 2=
+MB
+> pages).
+> > > > When the region size is large (e.g., several GBs), which is common
+> > > > for large footprint applications, detecting whether the region is
+> > > > accessed or not completely depends on whether the pages that are
+> > > > actively accessed in the region are picked during random sampling.
+> > > > If such pages are not picked for sampling, DAMON fails to identify
+> > > > the region as accessed. However, increasing the sampling rate or
+> > > > increasing the number of regions increases CPU overheads of kdamond=
+.
+> > >
+> > > DAMON uses sampling because it considers a region as accessed if a
+> > > portion of the region that big enough to be detected via sampling is
+> > > all accessed.  If a region is having some pages that really accessed
+> > > but the proportion is too small to be found via sampling, I think
+> > > DAMON could say the overall access to the region is only modest and
+> > > could even be ignored.  In my humble opinion, this fits with the
+> > > definition of DAMON region: A memory address range that constructed w=
+ith
+> pages having similar access frequency.
+> >
+> > Agree that DAMON considers a region as accessed if a good portion of
+> > the region is accessed. But few points I would like to discuss:
+> >
+> > For large regions (say 10GB, that has 2,621,440 4K pages), sampling at
+> > PTE level will not cover a good portion of the region. For example,
+> > default 5ms sampling and 100ms aggregation samples only 20 4K pages in =
+an
+> aggregation interval.
+>=20
+> If the 20 attempts all failed at finding any single accessed 4K page, I t=
+hink it
+> roughly means less than 5% of the region is accessed within the user-spec=
+ified
+> time (aggregation interval).  I would translate that as only tiny portion=
+ of the
+> region is accessed within the user-specified time, and hence DAMON is ok =
+to say
+> the region is nearly not accessed.
 
-> > 
-> > Signed-off-by: Honggyu Kim <honggyu.kim@sk.com>
-> > Signed-off-by: Hyeongtak Ji <hyeongtak.ji@sk.com>
-> > Signed-off-by: Rakie Kim <rakie.kim@sk.com>
-> > 
-> > [1] https://lore.kernel.org/damon/20231112195602.61525-1-sj@kernel.org
-> > [2] https://github.com/skhynix/hmsdk
-> > [3] https://github.com/redis/redis/tree/7.0.0
-> > [4] https://github.com/brianfrankcooper/YCSB/tree/0.17.0
-> > [5] https://dl.acm.org/doi/10.1145/3503222.3507731
-> > [6] https://dl.acm.org/doi/10.1145/3582016.3582063
-> > 
-> > Changes from RFC:
-> >   1. Move most of implementation from mm/vmscan.c to mm/damon/paddr.c.
-> >   2. Simplify some functions of vmscan.c and used in paddr.c, but need
-> >      to be reviewed more in depth.
-> >   3. Refactor most functions for common usage for both promote and
-> >      demote actions and introduce an enum migration_mode for its control.
-> >   4. Add "target_nid" sysfs knob for migration destination node for both
-> >      promote and demote actions.
-> >   5. Move DAMOS_PROMOTE before DAMOS_DEMOTE and move then even above
-> >      DAMOS_STAT.
-> 
-> Thank you very much for addressing many of my comments.
+I am looking at it from the other way:
 
-Thanks for your feedback in details.
+To detect if a region is hot or cold at least 1% of the pages in the region=
+ should
+be sampled. For a 10GB region (with 2,621,440 4K pages) this requires sampl=
+ing
+at least 26,214 pages. For a 100GB region this will require sampling at lea=
+st
+262,144 pages.
 
-> > 
-> > Honggyu Kim (3):
-> >   mm/damon: refactor DAMOS_PAGEOUT with migration_mode
-> >   mm: make alloc_demote_folio externally invokable for migration
-> >   mm/damon: introduce DAMOS_DEMOTE action for demotion
-> > 
-> > Hyeongtak Ji (4):
-> >   mm/memory-tiers: add next_promotion_node to find promotion target
-> >   mm/damon: introduce DAMOS_PROMOTE action for promotion
-> >   mm/damon/sysfs-schemes: add target_nid on sysfs-schemes
-> >   mm/damon/sysfs-schemes: apply target_nid for promote and demote
-> >     actions
-> 
-> Honggyu joined DAMON Beer/Coffee/Tea Chat[1] yesterday, and we discussed about
-> this patchset in high level.  Sharing the summary here for open discussion.  As
-> also discussed on the first version of this patchset[2], we want to make single
-> action for general page migration with minimum changes, but would like to keep
-> page level access re-check.  We also agreed the previously proposed DAMOS
-> filter-based approach could make sense for the purpose.
+If we sample at 5ms, this takes 131.072 seconds to cover 1% of 10GB and 131=
+0.72
+seconds to cover 100GB.=20
 
-Thanks very much for the summary.  I have been trying to merge promote
-and demote actions into a single migrate action, but I found an issue
-regarding damon_pa_scheme_score.  It currently calls damon_cold_score()
-for demote action and damon_hot_score() for promote action, but what
-should we call when we use a single migrate action?
+DAMON shows that the selected page as accessed if that page was accessed
+during the 5ms sampling window. Now if we increase the sampling to 20ms to
+improve access detection, then covering 1% of the region takes even longer.
 
-Thanks,
-Honggyu
+>=20
+> > Increasing sampling to 1 ms and aggregation to 1 second can only cover
+> > 1000 4K pages, but results in higher CPU overheads due to frequent samp=
+ling.
+> > Even increasing the aggregation interval to 60 seconds but sampling at
+> > 5ms can only cover 12000 samples, but region splitting and merging
+> > happens once in 60 seconds.
+>=20
+> At the beginning of each sampling interval, DAMON randomly picks one page=
+ per
+> region, clear their accessed bits, wait until the sampling interval is fi=
+nished, and
+> check the accessed bits again.  In other words, DAMON shows only accesses=
+ that
+> made in last sampling interval.
 
-> Because I was anyway planning making such DAMOS filter for not only
-> promotion/demotion but other types of DAMOS action, I will start developing the
-> page level access re-check results based DAMOS filter.  Once the implementation
-> of the prototype is done, I will share the early implementation.  Then, Honggyu
-> will adjust their implementation based on the filter, and run their tests again
-> and share the results.
-> 
-> [1] https://lore.kernel.org/damon/20220810225102.124459-1-sj@kernel.org/
-> [2] https://lore.kernel.org/damon/20240118171756.80356-1-sj@kernel.org
-> 
-> 
+Yes, I see this in the code:
+
+while(time < aggregation_interval)
+{
+  clear_access_bit
+  sleep(sampling_time)
+  check_access_bit
+}
+
+I would suggest this logic instead.
+
+while(time < aggregation_interval)
+{
+  Number_of_samples =3D aggregation_interval / sampling_time;
+
+  for (i =3D 0, I < number_of_samples; i++)=20
+  {
+    clear_access_bit
+  }=20
+
+  sleep(aggregation_time)
+
+  for (i =3D 0, I < number_of_samples; i++)=20
+  {
+    check_access_bit
+  }
+}
+
+This can help in better access detection. I am sure you would
+have already explored it.  =20
+
+>=20
+> Increasing number of samples per aggregation interval can help DAMON know=
+s
+> the access frequency of regions in finer granularity, but doesn't allow D=
+AMON see
+> more accesses.  Rather than that, if the aggregation interval is fixed (r=
+educing
+> sampling interval), DAMON can show even less amount of accesses.
+>=20
+> What we need here is giving the workload longer sampling time so that the
+> workload can make access to a size of memory regions that large enough to=
+ be
+> found by DAMON.
+
+But even with longer sampling time, we may miss the access. For example,=20
+consider all the pages in the region are accessed sequentially. Now if DAMO=
+N samples
+a different page other than the page that is being accessed it will miss. N=
+ow even if we
+have longer sampling time it is possible that none of the accesses are dete=
+cted.
+
+>=20
+> >
+> > In addition, this worsens when region sizes are say 100GB+. We observe
+> > that sampling at PTE level does not help for large regions as more
+> > samples are are required. So, decreasing/increasing the sampling or
+> > aggressions intervals proportional to the region size is not practical
+> > as all regions are of not equal size, we can have 100GB regions as
+> > well as many small regions (e.g., 16KB to 1MB).
+>=20
+> IMO, it becomes worse because the minimum size of accessed memory regions
+> that can be found by DAMON via sampling has increased together, while you
+> didn't give more sampling time (a.k.a the time to let the workload make a=
+ccesses
+> that DAMON can show).
+>=20
+> > So tuning sampling rate and aggregation interval did not help for
+> > large regions.
+>=20
+> Due to the mechanism of the DAMON's sampling I mentioned above, I think t=
+his
+> is what expected.  We need to increase sampling interval.
+>=20
+> >
+> > It can also be observed that large regions cannot be avoided. Large
+> > regions are created by merging adjacent smaller regions or at the
+> > beginning of profiling (depending on min regions parameter which defaul=
+ts to
+> 10).
+> > Increasing min region reduces the size of regions but increases
+> > kdamond overheads, hence, not preferable.
+> >
+> > So, sampling at PTE level cannot precisely detect accesses to large
+> > regions resulting in inaccuracies, even though it works for small regio=
+ns.
+> > From our experiments, we found that with 10% hot data in a large
+> > region (80+GB regions in a 1TB+ footprint application), DAMON was not
+> > able to detect a single access to that region in 95+% cases with
+> > different sample and aggregation interval combinations. But DAMON
+> > works good for applications with footprint <50GB where regions are typi=
+cally
+> small.
+> >
+> > Now consider the scenario with the proposed enhancement. With a 100GB
+> > region, if we sample a PUD entry that covers 1GB address space, then
+> > the default 5ms sampling and 100ms aggregation samples
+> > 20 PUD entries that is 20 GB portion of the region. This gives a good
+> > estimate of the portion of the region that is accessed. But the
+> > downside is that as PUD accessed bit is set even if a small set of
+> > pages are accessed under its subtree this can report more access as rea=
+l as you
+> noted.
+> >
+> > But such large regions are split into two in the next aggregation inter=
+val.
+> > As the splitting of the regions continues, in next few aggregation
+> > intervals many smaller regions are formed. Once smaller regions are
+> > formed, the proposed enhancement cannot pick higher levels of the page
+> > table tree and behaves as good as default DAMON. So, with the proposed
+> > enhancement, larger regions are quickly split into smaller regions if
+> > they have only small set of pages accessed.
+>=20
+> I fully agree.  This is what could be a real and important benefits.
+>=20
+> >
+> > To avoid misinterpreting region access count, I feel that the "age" of
+> > the region is of real help and should be considered by both DAMON and
+> > the proposed enhancement. If the age of a region is small (<10) then
+> > that region should not be considered stable and hence should not be
+> > considered for any memory tiering decisions. For regions with age, say
+> > >10, can be considered as stable as they reflect the actual access
+> > frequency.
+>=20
+> I think this is a good approach, but difficult to be used by default.  I =
+think we
+> might be able to get the benefit without making problem at the over-repor=
+ting
+> accesses by using the high level accessed bit check results as a hint for=
+ better
+> quality of region split?
+
+I agree, high level page table profiling can give hints to split the region=
+ instead of
+using it to detect accesses to the region.
+
+>=20
+> Also, if we can allow large enough age, the random region split will even=
+tually find
+> the small hot regions even without high level accessed bit hint.  Of cour=
+se the hint
+> could help finding it earlier.  I think that was one of my comment on the=
+ first
+> version of this patch.
+
+The problem is that a large region that is split is immediately merged as t=
+he split
+regions have access count zero.
+
+We observe that large regions are never getting split at all due to this.
+
+Regards,
+Aravinda
+
+>=20
+> >
+> > >
+> > > >
+> > > > This patch proposes profiling different levels of the
+> > > > application\u2019s page table tree to detect whether a region is
+> > > > accessed or not. This patch set is based on the observation that,
+> > > > when the accessed bit for a page is set, the accessed bits at the
+> > > > higher levels of the page table tree (PMD/PUD/PGD) corresponding
+> > > > to the path of the page table walk are also set. Hence, it is
+> > > > efficient to check the accessed bits at the higher levels of the
+> > > > page table tree to detect whether a region is accessed or not. For
+> > > > example, if the access bit for a PUD entry is set, then one or
+> > > > more pages in the 1GB PUD subtree is accessed as each PUD entry
+> > > > covers 1GB mapping. Hence, instead of sampling thousands of 4K/2M
+> > > > pages to detect accesses in a large region, sampling at the higher
+> > > > level of page table tree is faster and
+> > > efficient.
+> > >
+> > > Due to the above reason, I concern this could result in making DAMON
+> > > monitoring results be inaccurately biased to report more than real ac=
+cesses.
+> >
+> > DAMON, even without the proposed enhancement, can result in
+> > inaccuracies for large regions, (see examples above).
+>=20
+> I think temporarily missing such tiny portion of accesses is not a critic=
+al problem.
+> If this is a problem, the user should increase the sampling interval in m=
+y opinion.
+> That said, as mentioned above, DAMON would better to improve its regions =
+split
+> mechanism.
+>=20
+> >
+> > >
+> > > >
+> > > > This patch set is based on 6.8-rc5 kernel (commit: f48159f8,
+> > > > mm-unstable
+> > > > tree)
+> > > >
+> > > > Changes since v1 [1]
+> > > > =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> > > >
+> > > >  - Added support for 5-level page table tree
+> > > >  - Split the patch to mm infrastructure changes and DAMON
+> > > > enhancements
+> > > >  - Code changes as per comments on v1
+> > > >  - Added kerneldoc comments
+> > > >
+> > > > [1] https://lkml.org/lkml/2023/12/15/272
+> > > >
+> > > > Evaluation:
+> > > >
+> > > > - MASIM benchmark with 1GB, 10GB, 100GB footprint with 10% hot data
+> > > >   and 5TB with 10GB hot data.
+> > > > - DAMON: 5ms sampling, 200ms aggregation interval. Rest all
+> > > >   parameters set to default value.
+> > > > - DAMON+PTP: Page table profiling applied to DAMON with the above
+> > > >   parameters.
+> > > >
+> > > > Profiling efficiency in detecting hot data:
+> > > >
+> > > > Footprint	1GB	10GB	100GB	5TB
+> > > > ---------------------------------------------
+> > > > DAMON		>90%	<50%	 ~0%	  0%
+> > > > DAMON+PTP	>90%	>90%	>90%	>90%
+> > >
+> > > Sampling interval is the time interval that assumed to be large
+> > > enough for the workload to make meaningful amount of accesses within
+> > > the interval.  Hence, meaningful amount of sampling interval depends
+> > > on the workload's characteristic and system's memory bandwidth.
+> > >
+> > > Here, the size of the hot memory region is about 100MB, 1GB, 10GB,
+> > > and 10GB for the four cases, respectively.  And you set the sampling
+> > > interval as 5ms.  Let's assume the system can access, say, 50 GB per
+> > > second, and hence it could be able to access only up to 250 MB per
+> > > 5ms.  So, in case of 1GB and footprint, all hot memory region would
+> > > be accessed while DAMON is waiting for next sampling interval.
+> > > Hence, DAMON would be able to see most accesses via sampling.  But
+> > > for 100GB footprint case, only 250MB / 10GB =3D about 2.5% of the hot
+> > > memory region would be accessed between the sampling interval.  DAMON
+> cannot see whole accesses, and hence the precision could be low.
+> > >
+> > > I don't know exact memory bandwith of the system, but to detect the
+> > > 10 GB hot region with 5ms sampling interval, the system should be
+> > > able to access 2GB memory per millisecond, or about 2TB memory per
+> > > second.  I think systems of such memory bandwidth is not that common.
+> > >
+> > > I show you also explored a configuration setting the aggregation inte=
+rval
+> higher.
+> > > But because each sampling checks only access between the sampling
+> > > interval, that might not help in this setup.  I'm wondering if you
+> > > also explored increasing sampling interval.
+> > >
+> >
+> > What we have observed that many real-world benchmarks we experimented
+> > with do not saturate the memory bandwidth. We also experimented with
+> > masim microbenchmark to understand the impact on memory access rate
+> > (we inserted delay between memory access operations in do_rnd_ro() and
+> > other functions). We see decrease in the precision as access intensity
+> > is reduced. We have experimented with different sampling and
+> > aggregation intervals, but that did not help much in improving precisio=
+n.
+>=20
+> Again, please note that DAMON can show only accesses made between each
+> sampling interval at a time.  The important factor for expectation of DAM=
+ON's
+> accuracy is, the balance between the memory access intensity of the workl=
+oad,
+> and the length of the sampling interval.  The workload should be access i=
+ntensive
+> enough to make sufficient amount of accesses between sampling interval.  =
+The
+> sampling interval should be long enough to allow the workload makes suffi=
+cient
+> amount of accesses within the time interval.
+>=20
+> The fact that the workloads were not saturating the memory bandwidth is n=
+ot
+> enough to know if that means the workload was memory intensive enough, an=
+d
+> the sampling interval was long enough.
+>=20
+> I was mentioning the memory bandwidth as only the maximum memory intensit=
+y
+> of the system that could be achieved.
+>=20
+> >
+> > So, what I think is it that most of the cases the precision depends on
+> > the page (hot or cold) that is randomly picked for sampling than the
+> > sampling rate. Most of the time only cold 4K pages are picked in a
+> > large region as they typically account for 90% of the pages in the
+> > region and hence DAMON does not detect any accesses at all. By
+> > profiling higher levels of the page table tree this can be improved.
+>=20
+> Again, agreed.  This is an important and grateful finding.  Thank you.  A=
+nd again as
+> mentioned above, I don't think we can merge this patch as is, but we coul=
+d think
+> about using the high level access bit check results as a hint to better s=
+plit the
+> regions.
+>=20
+> Indeed, DAMON's monitoring mechanism has many rooms for improvements.  I
+> also have some ideas but my time was more spent on more capabilities of
+> DAMON/DAMOS so far.  It was a bit intentional proiority setting since I g=
+ot no real
+> DAMON accuracy problem report from the production usage, and improving th=
+e
+> accuracy will deliver the benefit to all DAMON/DAMOS features.
+>=20
+> Since an important milestone of DAMOS, namely auto-tuning, has merged int=
+o
+> the mainline, I think I may better to spend more time on monitoring accur=
+acy
+> improvement.  I have some immature ideas in my head.  I will try to summa=
+rize
+> and share the ideas in near future.
+>=20
+> >
+> > > Sorry again for finding this concern not early enough.  But I think
+> > > we may need to discuss about this first.
+> >
+> > Absolutely no problem. Please let me know your thoughts.
+>=20
+> Thank you for patiently walking with me :)
+>=20
+>=20
 > Thanks,
 > SJ
-> 
-> > 
-> >  include/linux/damon.h          |  15 +-
-> >  include/linux/memory-tiers.h   |  11 ++
-> >  include/linux/migrate_mode.h   |   1 +
-> >  include/linux/vm_event_item.h  |   1 +
-> >  include/trace/events/migrate.h |   3 +-
-> >  mm/damon/core.c                |   5 +-
-> >  mm/damon/dbgfs.c               |   2 +-
-> >  mm/damon/lru_sort.c            |   3 +-
-> >  mm/damon/paddr.c               | 282 ++++++++++++++++++++++++++++++++-
-> >  mm/damon/reclaim.c             |   3 +-
-> >  mm/damon/sysfs-schemes.c       |  39 ++++-
-> >  mm/internal.h                  |   1 +
-> >  mm/memory-tiers.c              |  43 +++++
-> >  mm/vmscan.c                    |  10 +-
-> >  mm/vmstat.c                    |   1 +
-> >  15 files changed, 404 insertions(+), 16 deletions(-)
-> > 
-> > 
-> > base-commit: 0dd3ee31125508cd67f7e7172247f05b7fd1753a
-> > -- 
-> > 2.34.1
+>=20
+> >
+> > Regards,
+> > Aravinda
+> >
+> > >
+> > > [1] https://lkml.kernel.org/r/20231215201159.73845-1-sj@kernel.org
+> > >
+> > >
+> > > Thanks,
+> > > SJ
+> > >
+> > >
+> > > >
+> > > > CPU overheads (in billion cycles) for kdamond:
+> > > >
+> > > > Footprint	1GB	10GB	100GB	5TB
+> > > > ---------------------------------------------
+> > > > DAMON		1.15	19.53	3.52	9.55
+> > > > DAMON+PTP	0.83	 3.20	1.27	2.55
+> > > >
+> > > > A detailed explanation and evaluation can be found in the arXiv pap=
+er:
+> > > > https://arxiv.org/pdf/2311.10275.pdf
+> > > >
+> > > >
+> > > > Aravinda Prasad (3):
+> > > >   mm/damon: mm infrastructure support
+> > > >   mm/damon: profiling enhancement
+> > > >   mm/damon: documentation updates
+> > > >
+> > > >  Documentation/mm/damon/design.rst |  42 ++++++
+> > > >  arch/x86/include/asm/pgtable.h    |  20 +++
+> > > >  arch/x86/mm/pgtable.c             |  28 +++-
+> > > >  include/linux/mmu_notifier.h      |  36 +++++
+> > > >  include/linux/pgtable.h           |  79 ++++++++++
+> > > >  mm/damon/vaddr.c                  | 233 ++++++++++++++++++++++++++=
+++--
+> > > >  6 files changed, 424 insertions(+), 14 deletions(-)
+> > > >
+> > > > --
+> > > > 2.21.3
