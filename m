@@ -1,447 +1,182 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.13])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF74F13958F
-	for <damon@lists.linux.dev>; Mon, 25 Mar 2024 07:50:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=192.198.163.13
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711353011; cv=fail; b=KS826znzIpajFTHnS2nwG6jm3TOihZli+HuMH2yK0R1aPCniALtIN1v1ZAnyi0Ziz/rsiUMw2O7AYBWbHyWzFK3ZaqGw2CCDbDBs/mkc2c1sQcV8MYW4rsNJRNNsrZY5eKEE6P7Ql3SnvzW6uC+Ce5esdxHtK0MRBsEluKydfXk=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711353011; c=relaxed/simple;
-	bh=fr/qXZxPB4gXTDbnY97jtYEHJLi65+XwwBg3a14T5Zc=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=HyOuhVDsmGKIaHiQeDEbh2IMuyPU/NuokksEkK374Gf7GvCqn9L5D345xU+CV42K36iSdGzcWpq4ljwzBZ8aS4fhI0e5DD/4k0IDJVKS2scfcKBpTomlnTWPjWPud3lG9RYtLtzeGtsmfwVBUgekUafC/+2dvDAtICLuRhSuZ5E=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=ExDpmLCH; arc=fail smtp.client-ip=192.198.163.13
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="ExDpmLCH"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1711353010; x=1742889010;
-  h=from:to:cc:subject:date:message-id:references:
-   in-reply-to:content-transfer-encoding:mime-version;
-  bh=fr/qXZxPB4gXTDbnY97jtYEHJLi65+XwwBg3a14T5Zc=;
-  b=ExDpmLCHK44t8gJAOpQMzjVWKZoBVn7R16G9X+pM6QIwgrZqKTe/4d2d
-   VhnCCW66PGB1h5AJERT8+cVcAeDsUUNA25tFedwCOdc5WCcNWZFCcu3jR
-   2gB1F0v9KZ+YEfIT65gvUN3TtI7jE3K/z9e4iykTeVefdTunbvP7FWqAJ
-   T1M+81MjO3/pxC+/xLLSLrVmDJwrEL/wT1Zav0ARV5e0IUsJr9yAKIW/R
-   CGJUiV6ND3OscKqhAw+oJZ6DImb4Nxwo7b+dGjC0CJaKX+aICEdWbNwzL
-   RuCOMRLSHCxGWTbgGkUpHvPYMb5c4EyORdvfnzpTOAlpLDOO6pWnXAT9L
-   Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,11023"; a="9297285"
-X-IronPort-AV: E=Sophos;i="6.07,152,1708416000"; 
-   d="scan'208";a="9297285"
-Received: from orviesa002.jf.intel.com ([10.64.159.142])
-  by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Mar 2024 00:50:09 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,152,1708416000"; 
-   d="scan'208";a="46528646"
-Received: from fmsmsx601.amr.corp.intel.com ([10.18.126.81])
-  by orviesa002.jf.intel.com with ESMTP/TLS/AES256-GCM-SHA384; 25 Mar 2024 00:50:09 -0700
-Received: from fmsmsx603.amr.corp.intel.com (10.18.126.83) by
- fmsmsx601.amr.corp.intel.com (10.18.126.81) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.35; Mon, 25 Mar 2024 00:50:08 -0700
-Received: from fmsedg602.ED.cps.intel.com (10.1.192.136) by
- fmsmsx603.amr.corp.intel.com (10.18.126.83) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.35 via Frontend Transport; Mon, 25 Mar 2024 00:50:08 -0700
-Received: from NAM12-MW2-obe.outbound.protection.outlook.com (104.47.66.41) by
- edgegateway.intel.com (192.55.55.71) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.35; Mon, 25 Mar 2024 00:50:07 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=RianoT9wu8Wlot8hpdL4V51Zwctdgqap7k7OBfUDpd0XWatEyNp/6XeD9pkpPxEj/T50af46+b8aiMkUBcgaJaXfPeFZ5Q0toLzUu317/48Rz12492VCfCgI7rcRGIirnNfm27B4yYS5QYQDOgPxhZ7dGU3TPw0vTLGzHgp6yjz0YXva0lBADs9FyMiOmUDHi4WTM1hTlRUBT5DcNt/IqmTnaOYVgY15XiBcTSM/8vLxuArpUqmZtWkkRU6PY+W+kkx2f9RGQFUCwxcTL0IGtMkgLeX5opxkV6J0WxLAeGpLjspotzHCxDbZ34w6gBNE0t18J0oyj/i1AN1PmH1zFQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=AH8Q/Dg6A2c1bW1MUWSO29dSSVqHARNt4wbOfpD65hE=;
- b=WPUdboVPvOvh3d0p1TWfPeE5vFNH+u/ZIuszMWbjMoJWyUWFl/DrPRJESr3OUsPHZekT44SgJmYzNGYhp5xxdABTIAoNfKF+4RrseN7sVRHO6Azu/kirK5jGyvPI61fjoMt9B5s8X5D4X9QQ51zxfOGYOX5vHNBA3pG0XxtsIoYL4wpyOq4Sc33qB7qC0WDyFV678uIJdvknNTP5OYKLqTbVbRfOW+ZAeUFtHqF9D6OZ6uCMI0ke3fMPbnVpHhmLgRRu04VcM2Mja5r3xILsgv9Bz1oE6yUW54CBBYiUS/kD2LpYwzCtrdD9O2nDanS9HPn5ZWdVG9wYNy/B1bjc4A==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Received: from MW5PR11MB5907.namprd11.prod.outlook.com (2603:10b6:303:1a1::13)
- by SA2PR11MB5098.namprd11.prod.outlook.com (2603:10b6:806:11c::23) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7409.31; Mon, 25 Mar
- 2024 07:50:05 +0000
-Received: from MW5PR11MB5907.namprd11.prod.outlook.com
- ([fe80::bcbf:4501:30f4:843b]) by MW5PR11MB5907.namprd11.prod.outlook.com
- ([fe80::bcbf:4501:30f4:843b%4]) with mapi id 15.20.7409.028; Mon, 25 Mar 2024
- 07:50:03 +0000
-From: "Prasad, Aravinda" <aravinda.prasad@intel.com>
+Received: from invmail4.hynix.com (exvmail4.hynix.com [166.125.252.92])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 382D1184EE9
+	for <damon@lists.linux.dev>; Mon, 25 Mar 2024 12:01:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=166.125.252.92
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1711368083; cv=none; b=lc71AeqMdtAQBfr0i69YqOV9vV46c0nWYUtNg6ncic6LvhPi9MMSZqm0/SVSim/hJax2Q2YWcDxBxb1Zr4fuX50XfJlLUe78/eYW0Nf/gU8ZzurJqIVaogZCeW9PWpI44MSq+OiNgEL4uJjyUM2M9cdhVhYIihJQOT73aBXsLVw=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1711368083; c=relaxed/simple;
+	bh=xNG1ygbpXGYY1nx407tvVJZqYfru8GJYQcuUl1vrWco=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=rGcMEBnyntzyNh9cqtKC9oZ56G0QJ7B5WALOSPo7ethtU4WK+/JZRKSNr7kUfCUD0zKOHT1+wEyu/Maoy84rzCsz60ui3UAt8bTfn/g+cgvfWNRe554fro7JEU9q+oEsKcN4QIhqeAmYq+aPWWDP7Yzm6a0FchKTwkwgKhTMkEg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sk.com; spf=pass smtp.mailfrom=sk.com; arc=none smtp.client-ip=166.125.252.92
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sk.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sk.com
+X-AuditID: a67dfc5b-d6dff70000001748-72-660167861140
+From: Honggyu Kim <honggyu.kim@sk.com>
 To: SeongJae Park <sj@kernel.org>
-CC: "damon@lists.linux.dev" <damon@lists.linux.dev>, "linux-mm@kvack.org"
-	<linux-mm@kvack.org>, "linux-kernel@vger.kernel.org"
-	<linux-kernel@vger.kernel.org>, "s2322819@ed.ac.uk" <s2322819@ed.ac.uk>,
-	"Kumar, Sandeep4" <sandeep4.kumar@intel.com>, "Huang, Ying"
-	<ying.huang@intel.com>, "Hansen, Dave" <dave.hansen@intel.com>, "Williams,
- Dan J" <dan.j.williams@intel.com>, "Subramoney, Sreenivas"
-	<sreenivas.subramoney@intel.com>, "Kervinen, Antti"
-	<antti.kervinen@intel.com>, "Kanevskiy, Alexander"
-	<alexander.kanevskiy@intel.com>
-Subject: RE: [PATCH v2 0/3] mm/damon: Profiling enhancements for DAMON
-Thread-Topic: [PATCH v2 0/3] mm/damon: Profiling enhancements for DAMON
-Thread-Index: AQHaeTeYeVMaFIFnV0yMrKTBAlKavbE+h/4AgAIFciCAAkoDgIAApzzwgACdgQCAA+/JMA==
-Date: Mon, 25 Mar 2024 07:50:03 +0000
-Message-ID: <MW5PR11MB590713C19D7BFBD861A990E0F2362@MW5PR11MB5907.namprd11.prod.outlook.com>
-References: <MW5PR11MB5907D17C1EBC1869C553256DF2312@MW5PR11MB5907.namprd11.prod.outlook.com>
- <20240322183236.119419-1-sj@kernel.org>
-In-Reply-To: <20240322183236.119419-1-sj@kernel.org>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: MW5PR11MB5907:EE_|SA2PR11MB5098:EE_
-x-ms-office365-filtering-correlation-id: 8fbac515-abbe-42e1-2a1c-08dc4ca02e8b
-x-ld-processed: 46c98d88-e344-4ed4-8496-4ed7712e255d,ExtAddr
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: F1RoKz2Twqz3+4bfyAjlS0uAMx1/fB186+AuW8ndMNnTL5GGBOwgzJpW/tOoEk4Q4GGexrfNtWBf7PrZbauz5Ww/dHvw6FanSSHWtT6sdaOVda5/utSG9+cB8DVqCJtduwQgOWD2mijfVINmfU+eywnuvYN9mjSYFGW97UJFa/BOtUf1uW3Uts4RCYyeGwIZC1tQ9rTPSRdxXfvMZcvDItbYfj/AAD/kxczYGL792VjsANPBn5K4JXg16Es3X9kvfbHyNnyatyo3Qu168q0HO5cBiwxg24tcMaTS0Xg2PfpseNj9J414p4Kc7E63ZsC3lBn+rJFFrh3HHPLpJp11HDLh1lvKzs959s+WLwBfnLk+TOEWKQoXb4C1Lv9PESYl8kFn+MefpaqXTS5UnZcOD/RVYCZ1M1ohwiT7HJ8WE107HdUELSXT25wZumBuevFL9lQou06DA5YGitN62zvAgSqQLEe7xVRIicGtXlhQKFoQgm4DQGate7fLUNUvVe2BRc1JhoIBjPCeK3m8udq4LVec7kxQkYFEXNCPwiwXh/M2iE7Ug4C/NNVGb3mmO4/kqjIM7iHEGrh93xWHXXLOR9HdvjUngpspOX3gSjkOenNOk+f2YH1vEt59EuIGNw8DWhTX3I3/XiTT+xNId9nyWDMHH1CipgUsj4fkn5R1t/pD23T+bGCf1+nruXC0FSggJG99SObfTsEI3DF/gPnUwPC83efw3gAeIhT0kR2MPSk=
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MW5PR11MB5907.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(376005)(366007)(1800799015)(38070700009);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?WXe52CZ/Ja7qqfwImhoE1P6Nk8FYW2nk+cA+WWmnBJSjBNj40+x9MNxp5aON?=
- =?us-ascii?Q?tesLRy/GZD0pJnbf3qIJMzwMSxblK9abzlGkx/lYm6x+CTeDtU1znR7+s5dU?=
- =?us-ascii?Q?9GBSeaDq0pMcfYRhvZ+EzsJiS0/gHuqhg8Taspv/VwyxB7+LrGxjjaEFlFTh?=
- =?us-ascii?Q?bXIvt/eqNpoCDDmf4xyLMM05pC+5T4m/Wai83yj6JwbOveAR7PvuIS/kOREk?=
- =?us-ascii?Q?81N0+OnqoSUAGAmguJMbOzh17tPij9lRG4RQRlk4wJhspymEDHGFrjUZc7b1?=
- =?us-ascii?Q?8ViDyRjcVm722wv4bxZYJsxmZSfx/pWQ8s1SwJhxuG0NqCFyDNvZVaVQvZAL?=
- =?us-ascii?Q?MNscgcBMKrUjiayJFzYZ8Lid17QEwQj8sk1se6ISNGPKBDNzQxSfIrUl0Tq5?=
- =?us-ascii?Q?XwM8xV7bCI5qWK3w4YucRrZSVGdspGQbVLsdL83u5kG3+PzFEfwkbFTFNTQn?=
- =?us-ascii?Q?O1+Vz9f0vG8+/ZtIj9vMounWhSIXFkO1ICEAoUuCA//BN34pEdj1J/rZg6df?=
- =?us-ascii?Q?ESYYPvhG/IJallgL8cjeqkb/E7WpHSG67KbAKjNcT9gWqWp82AGP5nd24aJ4?=
- =?us-ascii?Q?H/jiz+oQpmqSihbFTyvr+/EmstrIwiMESwH3etAtp7Ymj7ZkPESydG3WkYBX?=
- =?us-ascii?Q?nI5l5uqveBJQL6jTY+DVBKIwUg+VUm+P2nrE04kCfqV5pdBxMTmH2nwheIvs?=
- =?us-ascii?Q?jQRmqWrJmi5HFI5lGls23ozFnoM6sFI+JSX/ldmwwU+mqFUFozvCAuFOcyr7?=
- =?us-ascii?Q?aEiBAtTDWsnOq/BNBpYNegazg/gTsnHT2TUU2ANaH7PsVdg4Qdq+hK9YzDxW?=
- =?us-ascii?Q?NrWPAxShZs1pAOUy7BKZCTG1VAJHrrPMDcoT1yX037l/euuaQNum/EgksF3U?=
- =?us-ascii?Q?WnPcGtm5sP0JfPod/Vh54pzJ75gs7HL2gNweT1j0ETrtJOTtttesaxQSV2AN?=
- =?us-ascii?Q?GU0dPdky2nsUa548Y9evAyBD1EmfphBPj1sd6oXp9kc0WmjZj89AIaLZMj58?=
- =?us-ascii?Q?XJpqZoujwyAyGskUmc6OWbNEAxofLma2D4dJkMJndlnyC6SRoqNSvpxSFAWb?=
- =?us-ascii?Q?0SqBrwYlFFIC3tkTZOEu4pZzmZRlSr4/i6Zj/hhxp7NJMZ0m5yS3daxvJ7bU?=
- =?us-ascii?Q?q4FSPX53kYZWBHTHqNV6Tw3gBv9+Lo9DiwPaV0a8bj9jRPiRH+H1G/yPRPqq?=
- =?us-ascii?Q?Llm/VutjsBh34EMGDes9pnK27yZloinrj+3ge7tPKn+7LCtM9FGQ4xe2+2Br?=
- =?us-ascii?Q?qPi80rS59YX5pIXMEHtNMN8eXiE06CDV2VuIbR6BIHfW7zuyDX7uVmFsHUF2?=
- =?us-ascii?Q?xttFkOrEcB+UUN702v5XQYtVJ+pO0rgTXardVo8uK9vC1q6JCeORwfFV7amY?=
- =?us-ascii?Q?VVn4AE55cuvqHMWflUguIFq+OGKezOx2bmQGgAZ8L6Dx6Z+AaEiur1hNSfEe?=
- =?us-ascii?Q?wXalhhfG1rvwcvmJOzQIrfABMUsUEd5an/heq9JsZBvD76rGvcc6gBa3V9rO?=
- =?us-ascii?Q?0LSBkpSe5nOj46OuWgzbZ4IFcPMWZITdjrQutHK4RY6Iw+uyOyhxNQzoccxp?=
- =?us-ascii?Q?f0+ch0mxitLdJUcxUE3fkwnOOIzGSbp3/f4JbYa6?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+Cc: damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	akpm@linux-foundation.org,
+	apopple@nvidia.com,
+	baolin.wang@linux.alibaba.com,
+	dave.jiang@intel.com,
+	hyeongtak.ji@sk.com,
+	kernel_team@skhynix.com,
+	linmiaohe@huawei.com,
+	linux-kernel@vger.kernel.org,
+	linux-trace-kernel@vger.kernel.org,
+	mathieu.desnoyers@efficios.com,
+	mhiramat@kernel.org,
+	rakie.kim@sk.com,
+	rostedt@goodmis.org,
+	surenb@google.com,
+	yangx.jy@fujitsu.com,
+	ying.huang@intel.com,
+	ziy@nvidia.com,
+	42.hyeyoo@gmail.com
+Subject: Re: [RFC PATCH v2 0/7] DAMON based 2-tier memory management for CXL memory
+Date: Mon, 25 Mar 2024 21:01:04 +0900
+Message-ID: <20240325120108.2328-1-honggyu.kim@sk.com>
+X-Mailer: git-send-email 2.43.0.windows.1
+In-Reply-To: <20240322163223.68414-1-sj@kernel.org>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: MW5PR11MB5907.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 8fbac515-abbe-42e1-2a1c-08dc4ca02e8b
-X-MS-Exchange-CrossTenant-originalarrivaltime: 25 Mar 2024 07:50:03.8846
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: r8lkvxblIz6eQhrPsKoi8GHauWiPqxaJckfUQS5NMC26MJ78lvyxOx8d4FbPBNiJLG/cx/UfTqBuIbUq14kAyOZFBheCGfP3cYcxyqyowok=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA2PR11MB5098
-X-OriginatorOrg: intel.com
+Content-Transfer-Encoding: 8bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprPIsWRmVeSWpSXmKPExsXC9ZZnoW5bOmOawZwnKhYTewws5qxfw2ax
+	60aIxf+9xxgtnvz/zWpx4mYjm0Xn96UsFpd3zWGzuLfmP6vFkfVnWSw2nz3DbLF4uZrFvo4H
+	TBaHv75hsph8aQGbxYspZxgtTs6azGIx++g9dgchj6Wn37B5bGgCEjtn3WX3aNl3i91jwaZS
+	j5Yjb1k9Fu95yeSxaVUnm8emT5PYPU7M+M3isfOhpceLzTMZPXqb37F5fN4kF8AXxWWTkpqT
+	WZZapG+XwJXx/MwJloI7KhUr3nA0ML6Q6WLk5JAQMJG4t+EQI4z9dFoXO4jNJqAmceXlJCYQ
+	W0RAUeLc44usXYxcHMwCf5klXs85xwaSEBYIlph79j9YM4uAqsT8u9fAbF4BM4lnvz6yQAzV
+	lHi8/SfYUE4BY4kNsx+BDRUS4JF4tWE/VL2gxMmZT8DqmQXkJZq3zmYGWSYhsItdomfeMWaI
+	QZISB1fcYJnAyD8LSc8sJD0LGJlWMQpl5pXlJmbmmOhlVOZlVugl5+duYgRG27LaP9E7GD9d
+	CD7EKMDBqMTDa5HAmCbEmlhWXJl7iFGCg1lJhLflC0OaEG9KYmVValF+fFFpTmrxIUZpDhYl
+	cV6jb+UpQgLpiSWp2ampBalFMFkmDk6pBkZFxeuTvJh2Zpe4qGqUCsiem78gLsH3WqxioqDS
+	3itKiR+sF35yYmaYl+vx5cyxgrvPXKd0PKl95Km7O/1ez51Vhr+8JT7sOXDi8tR5m5K6DVeI
+	7++8unPH8oN9CsmLZx1b/zj5zK0ow4i9zRts6m50hF74vmblrS7Xicve6eTfCys+am90Ofm2
+	EktxRqKhFnNRcSIAQ1tOFbICAAA=
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprCIsWRmVeSWpSXmKPExsXCNUNLT7ctnTHNoPuMiMXEHgOLOevXsFns
+	uhFi8X/vMUaLJ/9/s1qcuNnIZtH55DujxeG5J1ktOr8vZbG4vGsOm8W9Nf9ZLY6sP8tisfns
+	GWaLxcvVLA5de85qsa/jAZPF4a9vmCwmX1rAZvFiyhlGi5OzJrNYzD56j91B1GPp6TdsHhua
+	gMTOWXfZPVr23WL3WLCp1KPlyFtWj8V7XjJ5bFrVyeax6dMkdo8TM36zeOx8aOnxYvNMRo/e
+	5ndsHt9ue3gsfvGByePzJrkAgSgum5TUnMyy1CJ9uwSujOdnTrAU3FGpWPGGo4HxhUwXIyeH
+	hICJxNNpXewgNpuAmsSVl5OYQGwRAUWJc48vsnYxcnEwC/xllng95xwbSEJYIFhi7tn/jCA2
+	i4CqxPy718BsXgEziWe/PrJADNWUeLz9J9hQTgFjiQ2zH4ENFRLgkXi1YT9UvaDEyZlPwOqZ
+	BeQlmrfOZp7AyDMLSWoWktQCRqZVjCKZeWW5iZk5pnrF2RmVeZkVesn5uZsYgXG1rPbPxB2M
+	Xy67H2IU4GBU4uG1SGBME2JNLCuuzD3EKMHBrCTC2/KFIU2INyWxsiq1KD++qDQntfgQozQH
+	i5I4r1d4aoKQQHpiSWp2ampBahFMlomDU6qBcceZj8t03hbOPG5lN+XxY9blBzlSa8+IzS/8
+	ez7Tfd63FdxyTopy7crhkc+lZ5089dJ0zVJpj0UMKT8eG3+NTvpw9N7Dz5uc2z51563Z2+Us
+	xnhnY3tX+HfF8xcidVcFWSds1vM1qn09z1k9xMN9mdQZpkezF7e7XQtddTP48+dMV/1HP5xr
+	3imxFGckGmoxFxUnAgC6+TBEpwIAAA==
+X-CFilter-Loop: Reflected
 
+Hi SeongJae,
 
-
-> -----Original Message-----
-> From: SeongJae Park <sj@kernel.org>
-> Sent: Saturday, March 23, 2024 12:03 AM
-> To: Prasad, Aravinda <aravinda.prasad@intel.com>
-> Cc: SeongJae Park <sj@kernel.org>; damon@lists.linux.dev; linux-
-> mm@kvack.org; linux-kernel@vger.kernel.org; s2322819@ed.ac.uk; Kumar,
-> Sandeep4 <sandeep4.kumar@intel.com>; Huang, Ying <ying.huang@intel.com>;
-> Hansen, Dave <dave.hansen@intel.com>; Williams, Dan J
-> <dan.j.williams@intel.com>; Subramoney, Sreenivas
-> <sreenivas.subramoney@intel.com>; Kervinen, Antti <antti.kervinen@intel.c=
-om>;
-> Kanevskiy, Alexander <alexander.kanevskiy@intel.com>
-> Subject: RE: [PATCH v2 0/3] mm/damon: Profiling enhancements for DAMON
->=20
-> On Fri, 22 Mar 2024 12:12:09 +0000 "Prasad, Aravinda"
-> <aravinda.prasad@intel.com> wrote:
->=20
+On Fri, 22 Mar 2024 09:32:23 -0700 SeongJae Park <sj@kernel.org> wrote:
+> On Fri, 22 Mar 2024 18:02:23 +0900 Honggyu Kim <honggyu.kim@sk.com> wrote:
+> 
+> > Hi SeongJae,
+> > 
+> > On Tue, 27 Feb 2024 15:51:20 -0800 SeongJae Park <sj@kernel.org> wrote:
+> > > On Mon, 26 Feb 2024 23:05:46 +0900 Honggyu Kim <honggyu.kim@sk.com> wrote:
+> > > 
+> > > > There was an RFC IDEA "DAMOS-based Tiered-Memory Management" previously
+> > > > posted at [1].
+> > > > 
+> > > > It says there is no implementation of the demote/promote DAMOS action
+> > > > are made.  This RFC is about its implementation for physical address
+> > > > space.
+> > > > 
+> > > > 
 > [...]
-> > > > For large regions (say 10GB, that has 2,621,440 4K pages),
-> > > > sampling at PTE level will not cover a good portion of the region.
-> > > > For example, default 5ms sampling and 100ms aggregation samples
-> > > > only 20 4K pages in an aggregation interval.
-> > >
-> > > If the 20 attempts all failed at finding any single accessed 4K
-> > > page, I think it roughly means less than 5% of the region is
-> > > accessed within the user-specified time (aggregation interval).  I
-> > > would translate that as only tiny portion of the
->=20
-> I now find the above sentence is not correct.  Sorry, my bad.  Let me re-=
-write.
->=20
-> I think it roughly means the workload is not accessing the region in a fr=
-equency
-> that high enough for DAMON to observe within the user-specified time (sam=
-pling
-> interval).
->=20
-> > > region is accessed within the user-specified time, and hence DAMON
-> > > is ok to say the region is nearly not accessed.
-> >
-> > I am looking at it from the other way:
-> >
-> > To detect if a region is hot or cold at least 1% of the pages in the
-> > region should be sampled. For a 10GB region (with 2,621,440 4K pages)
-> > this requires sampling at least 26,214 pages. For a 100GB region this
-> > will require sampling at least
-> > 262,144 pages.
->=20
-> Why do you think 1% of the pages should be sampled?
-
-1% is just an example.=20
-
->=20
-> DAMON defines the region as an address range that contains pages having s=
-imilar
-> access frequency.  Hence if we see a page was accessed within a given tim=
-e
-> interval, we can assume all pages in the page is also accessed within the=
- interval,
-> and vice versa.  That's why we sample only single page per region, and ho=
-w
-> DAMON's monitoring overhead can be controlled regardless of the size of t=
-he
-> monitoring target memory.
-
-Initially when DAMON creates "min" regions, it does not consider access fre=
-quency.=20
-They are created by diving the address space. So, at the beginning, these r=
-egions
-need not have pages with similar access frequency. But eventually, as regio=
-ns are
-split and merged then regions are formed that have similar access frequency=
-.
-
-We observe that hot sets are spread across the address space of the applica=
-tion
-and many times, only a portion of the DAMON created regions contain a hot d=
-ata
-as per the application's access pattern. In such cases a single sample per
-region is not enough.=20
-
-For small memory footprint applications with small region size, I agree the=
-re are
-absolutely no issues (also confirmed by our experiments). But for large foo=
-tprint
-applications (1TB+) that can have large regions (50GB+) we see these issues=
-.
-
->=20
-> To detect if the region is hot or cold, DAMON continues sampling multiple=
- times
-> and use number of sampling intervals that seen the access to the region
-> (nr_accesses) as the relative hotness of the region.  Hence, how many sam=
-pling is
-> required depends on what precision of the relative hotness the user wants=
-.
-> The size of the region doesn't matter here.
->=20
-> Am I missing something?
-
-As mentioned before all these are working fine for small footprint applicat=
-ions (<100GB).
-But as we go beyond 1TB footprint we start seeing issues. I can show you a =
-demo
-on 1TB+ footprint applications.
-
->=20
-> >
-> > If we sample at 5ms, this takes 131.072 seconds to cover 1% of 10GB
-> > and 1310.72 seconds to cover 100GB.
-> >
-> > DAMON shows that the selected page as accessed if that page was
-> > accessed during the 5ms sampling window. Now if we increase the
-> > sampling to 20ms to improve access detection, then covering 1% of the r=
-egion
-> takes even longer.
-> >
-> > >
-> > > > Increasing sampling to 1 ms and aggregation to 1 second can only
-> > > > cover
-> > > > 1000 4K pages, but results in higher CPU overheads due to frequent
-> sampling.
-> > > > Even increasing the aggregation interval to 60 seconds but
-> > > > sampling at 5ms can only cover 12000 samples, but region splitting
-> > > > and merging happens once in 60 seconds.
-> > >
-> > > At the beginning of each sampling interval, DAMON randomly picks one
-> > > page per region, clear their accessed bits, wait until the sampling
-> > > interval is finished, and check the accessed bits again.  In other
-> > > words, DAMON shows only accesses that made in last sampling interval.
-> >
-> > Yes, I see this in the code:
-> >
-> > while(time < aggregation_interval)
-> > {
-> >   clear_access_bit
-> >   sleep(sampling_time)
-> >   check_access_bit
-> > }
-> >
-> > I would suggest this logic instead.
-> >
-> > while(time < aggregation_interval)
-> > {
-> >   Number_of_samples =3D aggregation_interval / sampling_time;
-> >
-> >   for (i =3D 0, I < number_of_samples; i++)
-> >   {
-> >     clear_access_bit
-> >   }
-> >
-> >   sleep(aggregation_time)
-> >
-> >   for (i =3D 0, I < number_of_samples; i++)
-> >   {
-> >     check_access_bit
-> >   }
-> > }
-> >
-> > This can help in better access detection. I am sure you would
-> > have already explored it.
->=20
-> The way to detect the access in the region is implemented by each monitor=
-ing
-> operations set (vaddr, fvaddr, and paddr).  We could implement yet anothe=
-r
-> monitoring operations set with a new access detection method.  Nonetheles=
-s, I
-> think changing existing monitoring operations sets to use this suggestion=
- while
-> keeping their concepts would be not easy.
-
-Agree.
-
->=20
-> >
-> > >
-> > > Increasing number of samples per aggregation interval can help DAMON
-> > > knows the access frequency of regions in finer granularity, but
-> > > doesn't allow DAMON see more accesses.  Rather than that, if the
-> > > aggregation interval is fixed (reducing sampling interval), DAMON can=
- show
-> even less amount of accesses.
-> > >
-> > > What we need here is giving the workload longer sampling time so
-> > > that the workload can make access to a size of memory regions that
-> > > large enough to be found by DAMON.
-> >
-> > But even with longer sampling time, we may miss the access. For
-> > example, consider all the pages in the region are accessed
-> > sequentially. Now if DAMON samples a different page other than the
-> > page that is being accessed it will miss. Now even if we have longer sa=
-mpling
-> time it is possible that none of the accesses are detected.
->=20
-> If there was accesses to some pages of the region but unaccessed page has
-> picked as the sampling target, someone could say only a tiny portion of t=
-he region
-> is accessed, so we can treat the region as not accessed at all.  That's a=
-t least what
-> the monitoring operations set you use here ('vaddr') thinks.
->=20
+> > > Thank you for running the tests again with the new version of the patches and
+> > > sharing the results!
+> > 
+> > It's a bit late answer, but the result was from the previous evaluation.
+> > I ran it again with RFC v2, but didn't see much difference so just
+> > pasted the same result here.
+> 
+> No problem, thank you for clarifying :)
+> 
 > [...]
-> > > Also, if we can allow large enough age, the random region split will
-> > > eventually find the small hot regions even without high level
-> > > accessed bit hint.  Of course the hint could help finding it
-> > > earlier.  I think that was one of my comment on the first version of =
-this patch.
-> >
-> > The problem is that a large region that is split is immediately merged
-> > as the split regions have access count zero.
-> >
-> > We observe that large regions are never getting split at all due to thi=
-s.
->=20
-> I understand this is a valid concern.  Especially because we currently sp=
-lit each
-> region into two sub-regions, finding small hot memory region in the middl=
-e of a
-> huge region could be challenging.  This concern has raised before DAMON h=
-as
-> merged into the mainline by Jonathan Cameron.  There was also a research =
-from
-> my previous colleague saying incresing the sub-regions for each split imp=
-roves the
-> accuracy.  Nonetheless, it increases overall number of regions and hence
-> increased the overhead.  And we didn't get real issue due to this from th=
-e
-> production so far, so we still keeping the old behavior.  I'm thinking ab=
-out a way to
-> make this better.
+> > > > Honggyu Kim (3):
+> > > >   mm/damon: refactor DAMOS_PAGEOUT with migration_mode
+> > > >   mm: make alloc_demote_folio externally invokable for migration
+> > > >   mm/damon: introduce DAMOS_DEMOTE action for demotion
+> > > > 
+> > > > Hyeongtak Ji (4):
+> > > >   mm/memory-tiers: add next_promotion_node to find promotion target
+> > > >   mm/damon: introduce DAMOS_PROMOTE action for promotion
+> > > >   mm/damon/sysfs-schemes: add target_nid on sysfs-schemes
+> > > >   mm/damon/sysfs-schemes: apply target_nid for promote and demote
+> > > >     actions
+> > > 
+> > > Honggyu joined DAMON Beer/Coffee/Tea Chat[1] yesterday, and we discussed about
+> > > this patchset in high level.  Sharing the summary here for open discussion.  As
+> > > also discussed on the first version of this patchset[2], we want to make single
+> > > action for general page migration with minimum changes, but would like to keep
+> > > page level access re-check.  We also agreed the previously proposed DAMOS
+> > > filter-based approach could make sense for the purpose.
+> > 
+> > Thanks very much for the summary.  I have been trying to merge promote
+> > and demote actions into a single migrate action, but I found an issue
+> > regarding damon_pa_scheme_score.  It currently calls damon_cold_score()
+> > for demote action and damon_hot_score() for promote action, but what
+> > should we call when we use a single migrate action?
+> 
+> Good point!  This is what I didn't think about when suggesting that.  Thank you
+> for letting me know this gap!  I think there could be two approach, off the top
+> of my head.
+> 
+> The first one would be extending the interface so that the user can select the
+> score function.  This would let flexible usage, but I'm bit concerned if this
+> could make things unnecessarily complex, and would really useful in many
+> general use case.
 
-These issues are observed only when memory footprint is large enough (1TB+)=
-.
-Production systems may not be using such large footprint applications yet. =
-=20
+I also think this looks complicated and may not be useful for general
+users.
 
->=20
-> That said, the real system would have more than the single region, and th=
-e access
-> pattern will be more dynamic.  It will cause the region to be merged and =
-split in
-> more random and chaotic way.  Hence I think there is still a chance to fi=
-nd the
-> small hot portion eventually.  Also, the sampling regions are picked rand=
-omly.  A
-> page of the small hot portion will eventually picked as sampling target, =
-even
-> multiple times, and at least reset the 'age' of the region.
->=20
-> I sometimes turn on DAMON to monitor entire physical address space (about=
- 128
-> GiB) of my machine and run no active workload but just a few background
-> deamons.  So the system would have only small amount of accesses.  At the
-> beginning, the monitoring output shows all regions as not accessed (nr_ac=
-cesses
-> 0) and having same 'age'.  But as time goes by, the regions are still sho=
-wing no
-> access (nr_accesses 0), but different ages and sizes.
+> The second approach would be letting DAMON infer the intention.  In this case,
+> I think we could know the intention is the demotion if the scheme has a youg
+> pages exclusion filter.  Then, we could use the cold_score().  And vice versa.
+> To cover a case that there is no filter at all, I think we could have one
+> assumption.  My humble intuition says the new action (migrate) may be used more
+> for promotion use case.  So, in damon_pa_scheme_score(), if the action of the
+> given scheme is the new one (say, MIGRATE), the function will further check if
+> the scheme has a filter for excluding young pages.  If so, the function will
+> use cold_score().  Otherwise, the function will use hot_score().
 
-Have not tired with physical address space monitoring. But for "vaddr", we =
-see DAMON
-working good up to 100GB footprint.=20
+Thanks for suggesting many ideas but I'm afraid that I feel this doesn't
+look good.  Thinking it again, I think we can think about keep using
+DAMOS_PROMOTE and DAMOS_DEMOTE, but I can make them directly call
+damon_folio_young() for access check instead of using young filter.
 
->=20
-> Again, I'm not saying existing monitoring mechanism is perfect and optimu=
-m.  We
-> should continue optimizing it.  Nonetheless, the current accuracy is not =
-perfectly
-> proved to be too awful to be used in real world.  I know at least a few u=
-nnamed
-> production usages of DAMON, and they didn't complained about DAMON's
-> accuracy so far.
+And we can internally handle the complicated combination such as demote
+action sets "young" filter with "matching" true and promote action sets
+"young" filter with "matching" false.  IMHO, this will make the usage
+simpler.
 
-We see this problem very consistently on large footprint applications, so c=
-ould be
-working fine for small footprint applications in production.
+I would like to hear how you think about this.
 
-Regards,
-Aravinda
+> So I'd more prefer the second approach.  I think it would be not too late to
+> consider the first approach after waiting for it turns out more actions have
+> such ambiguity and need more general interface for explicitly set the score
+> function.
 
+I will join the DAMON Beer/Coffee/Tea Chat tomorrow as scheduled so I
+can talk more about this issue.
 
->=20
->=20
+Thanks,
+Honggyu
+
+> 
 > Thanks,
 > SJ
->=20
-> >
-> > Regards,
-> > Aravinda
+> 
 > [...]
