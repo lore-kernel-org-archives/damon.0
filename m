@@ -1,45 +1,50 @@
-Received: from invmail4.hynix.com (exvmail4.hynix.com [166.125.252.92])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 382D1184EE9
-	for <damon@lists.linux.dev>; Mon, 25 Mar 2024 12:01:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=166.125.252.92
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6349D3DABE9;
+	Mon, 25 Mar 2024 17:56:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711368083; cv=none; b=lc71AeqMdtAQBfr0i69YqOV9vV46c0nWYUtNg6ncic6LvhPi9MMSZqm0/SVSim/hJax2Q2YWcDxBxb1Zr4fuX50XfJlLUe78/eYW0Nf/gU8ZzurJqIVaogZCeW9PWpI44MSq+OiNgEL4uJjyUM2M9cdhVhYIihJQOT73aBXsLVw=
+	t=1711389374; cv=none; b=SWDqGmtZ79GE2B+WLoMjM2DZ0Cfb07p/y0/gIzrl78lqYTG/54nKIOJ3e4EQIkMxd3/jPTPN4vhYlYv8DWRR/9OH36DjJ9wf/anD33BgoM495NvBT66VBrL/aF4vzXCAQwDlcwnDQ0Mxdn1NKFmpHY/vATXwjER05urFkP9bcnA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711368083; c=relaxed/simple;
-	bh=xNG1ygbpXGYY1nx407tvVJZqYfru8GJYQcuUl1vrWco=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rGcMEBnyntzyNh9cqtKC9oZ56G0QJ7B5WALOSPo7ethtU4WK+/JZRKSNr7kUfCUD0zKOHT1+wEyu/Maoy84rzCsz60ui3UAt8bTfn/g+cgvfWNRe554fro7JEU9q+oEsKcN4QIhqeAmYq+aPWWDP7Yzm6a0FchKTwkwgKhTMkEg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sk.com; spf=pass smtp.mailfrom=sk.com; arc=none smtp.client-ip=166.125.252.92
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sk.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sk.com
-X-AuditID: a67dfc5b-d6dff70000001748-72-660167861140
-From: Honggyu Kim <honggyu.kim@sk.com>
-To: SeongJae Park <sj@kernel.org>
-Cc: damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	akpm@linux-foundation.org,
-	apopple@nvidia.com,
-	baolin.wang@linux.alibaba.com,
-	dave.jiang@intel.com,
-	hyeongtak.ji@sk.com,
-	kernel_team@skhynix.com,
-	linmiaohe@huawei.com,
+	s=arc-20240116; t=1711389374; c=relaxed/simple;
+	bh=qANVYsuYeiZZpzSQmNMZQfxwkIrdqpCYu2NFzyyFfI4=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=YPkm2fw9TwF0lnvFRcI8G4qyts64cc/zmTD5uBi7Kz1H65LmLDF33NMUMevUXP+7dtrvtunIsYTVW2ZFmbA+TtvStw+iqBrwMCUAYhsIyRgSBx3UD5r07NntAGTkrcIJvVCdOu2f4sw8A3KDb3AO/Y3LiYRmCkY6WRuTmEL2msc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LfQmnWu+; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LfQmnWu+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EE4BC43394;
+	Mon, 25 Mar 2024 17:56:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1711389374;
+	bh=qANVYsuYeiZZpzSQmNMZQfxwkIrdqpCYu2NFzyyFfI4=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=LfQmnWu+nkb74apEThjxwCp6nWhL+5BatypxMTGDBzaFQti3mM8Y+VjeXHrkFGBcR
+	 oRvrx9jjZfGX/bTHr6PEEzq3zv1iLSRSQI268pc4T+9v1D7PxhLaOTXCx/mExW5395
+	 Ue2/s1JlXiaI5Nlerc66B6NwUKzDwTLGb4c1ImYB+LN5LLMF/vF7Xlp0yOIoRvHerx
+	 PqrTopNFVb8/u/p0PN6Nr8tbqe/8YBWy4QBQCIyNdaTi5CHKZkeEf+ygM+Ko2I0J8y
+	 8JAivLtZt5YduD82jjT1id3IuhrljZKEZArqq2a2Kwu0e/+g442yJ9S2QSehZCHNT+
+	 KQmYGy0NVDI9w==
+From: SeongJae Park <sj@kernel.org>
+To: Sasha Levin <sashal@kernel.org>
+Cc: SeongJae Park <sj@kernel.org>,
 	linux-kernel@vger.kernel.org,
-	linux-trace-kernel@vger.kernel.org,
-	mathieu.desnoyers@efficios.com,
-	mhiramat@kernel.org,
-	rakie.kim@sk.com,
-	rostedt@goodmis.org,
-	surenb@google.com,
-	yangx.jy@fujitsu.com,
-	ying.huang@intel.com,
-	ziy@nvidia.com,
-	42.hyeyoo@gmail.com
-Subject: Re: [RFC PATCH v2 0/7] DAMON based 2-tier memory management for CXL memory
-Date: Mon, 25 Mar 2024 21:01:04 +0900
-Message-ID: <20240325120108.2328-1-honggyu.kim@sk.com>
-X-Mailer: git-send-email 2.43.0.windows.1
-In-Reply-To: <20240322163223.68414-1-sj@kernel.org>
+	stable@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	florian.fainelli@broadcom.com,
+	pavel@denx.de,
+	damon@lists.linux.dev
+Subject: Re: [PATCH 6.8 000/710] 6.8.2-rc2 review
+Date: Mon, 25 Mar 2024 10:56:11 -0700
+Message-Id: <20240325175611.233537-1-sj@kernel.org>
+X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20240325120018.1768449-1-sashal@kernel.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -48,135 +53,68 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprPIsWRmVeSWpSXmKPExsXC9ZZnoW5bOmOawZwnKhYTewws5qxfw2ax
-	60aIxf+9xxgtnvz/zWpx4mYjm0Xn96UsFpd3zWGzuLfmP6vFkfVnWSw2nz3DbLF4uZrFvo4H
-	TBaHv75hsph8aQGbxYspZxgtTs6azGIx++g9dgchj6Wn37B5bGgCEjtn3WX3aNl3i91jwaZS
-	j5Yjb1k9Fu95yeSxaVUnm8emT5PYPU7M+M3isfOhpceLzTMZPXqb37F5fN4kF8AXxWWTkpqT
-	WZZapG+XwJXx/MwJloI7KhUr3nA0ML6Q6WLk5JAQMJG4t+EQI4z9dFoXO4jNJqAmceXlJCYQ
-	W0RAUeLc44usXYxcHMwCf5klXs85xwaSEBYIlph79j9YM4uAqsT8u9fAbF4BM4lnvz6yQAzV
-	lHi8/SfYUE4BY4kNsx+BDRUS4JF4tWE/VL2gxMmZT8DqmQXkJZq3zmYGWSYhsItdomfeMWaI
-	QZISB1fcYJnAyD8LSc8sJD0LGJlWMQpl5pXlJmbmmOhlVOZlVugl5+duYgRG27LaP9E7GD9d
-	CD7EKMDBqMTDa5HAmCbEmlhWXJl7iFGCg1lJhLflC0OaEG9KYmVValF+fFFpTmrxIUZpDhYl
-	cV6jb+UpQgLpiSWp2ampBalFMFkmDk6pBkZFxeuTvJh2Zpe4qGqUCsiem78gLsH3WqxioqDS
-	3itKiR+sF35yYmaYl+vx5cyxgrvPXKd0PKl95Km7O/1ez51Vhr+8JT7sOXDi8tR5m5K6DVeI
-	7++8unPH8oN9CsmLZx1b/zj5zK0ow4i9zRts6m50hF74vmblrS7Xicve6eTfCys+am90Ofm2
-	EktxRqKhFnNRcSIAQ1tOFbICAAA=
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprCIsWRmVeSWpSXmKPExsXCNUNLT7ctnTHNoPuMiMXEHgOLOevXsFns
-	uhFi8X/vMUaLJ/9/s1qcuNnIZtH55DujxeG5J1ktOr8vZbG4vGsOm8W9Nf9ZLY6sP8tisfns
-	GWaLxcvVLA5de85qsa/jAZPF4a9vmCwmX1rAZvFiyhlGi5OzJrNYzD56j91B1GPp6TdsHhua
-	gMTOWXfZPVr23WL3WLCp1KPlyFtWj8V7XjJ5bFrVyeax6dMkdo8TM36zeOx8aOnxYvNMRo/e
-	5ndsHt9ue3gsfvGByePzJrkAgSgum5TUnMyy1CJ9uwSujOdnTrAU3FGpWPGGo4HxhUwXIyeH
-	hICJxNNpXewgNpuAmsSVl5OYQGwRAUWJc48vsnYxcnEwC/xllng95xwbSEJYIFhi7tn/jCA2
-	i4CqxPy718BsXgEziWe/PrJADNWUeLz9J9hQTgFjiQ2zH4ENFRLgkXi1YT9UvaDEyZlPwOqZ
-	BeQlmrfOZp7AyDMLSWoWktQCRqZVjCKZeWW5iZk5pnrF2RmVeZkVesn5uZsYgXG1rPbPxB2M
-	Xy67H2IU4GBU4uG1SGBME2JNLCuuzD3EKMHBrCTC2/KFIU2INyWxsiq1KD++qDQntfgQozQH
-	i5I4r1d4aoKQQHpiSWp2ampBahFMlomDU6qBcceZj8t03hbOPG5lN+XxY9blBzlSa8+IzS/8
-	ez7Tfd63FdxyTopy7crhkc+lZ5089dJ0zVJpj0UMKT8eG3+NTvpw9N7Dz5uc2z51563Z2+Us
-	xnhnY3tX+HfF8xcidVcFWSds1vM1qn09z1k9xMN9mdQZpkezF7e7XQtddTP48+dMV/1HP5xr
-	3imxFGckGmoxFxUnAgC6+TBEpwIAAA==
-X-CFilter-Loop: Reflected
 
-Hi SeongJae,
+Hello,
 
-On Fri, 22 Mar 2024 09:32:23 -0700 SeongJae Park <sj@kernel.org> wrote:
-> On Fri, 22 Mar 2024 18:02:23 +0900 Honggyu Kim <honggyu.kim@sk.com> wrote:
+On Mon, 25 Mar 2024 08:00:18 -0400 Sasha Levin <sashal@kernel.org> wrote:
+
 > 
-> > Hi SeongJae,
-> > 
-> > On Tue, 27 Feb 2024 15:51:20 -0800 SeongJae Park <sj@kernel.org> wrote:
-> > > On Mon, 26 Feb 2024 23:05:46 +0900 Honggyu Kim <honggyu.kim@sk.com> wrote:
-> > > 
-> > > > There was an RFC IDEA "DAMOS-based Tiered-Memory Management" previously
-> > > > posted at [1].
-> > > > 
-> > > > It says there is no implementation of the demote/promote DAMOS action
-> > > > are made.  This RFC is about its implementation for physical address
-> > > > space.
-> > > > 
-> > > > 
-> [...]
-> > > Thank you for running the tests again with the new version of the patches and
-> > > sharing the results!
-> > 
-> > It's a bit late answer, but the result was from the previous evaluation.
-> > I ran it again with RFC v2, but didn't see much difference so just
-> > pasted the same result here.
+> This is the start of the stable review cycle for the 6.8.2 release.
+> There are 710 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 > 
-> No problem, thank you for clarifying :)
+> Responses should be made by Wed Mar 27 12:00:13 PM UTC 2024.
+> Anything received after that time might be too late.
 > 
-> [...]
-> > > > Honggyu Kim (3):
-> > > >   mm/damon: refactor DAMOS_PAGEOUT with migration_mode
-> > > >   mm: make alloc_demote_folio externally invokable for migration
-> > > >   mm/damon: introduce DAMOS_DEMOTE action for demotion
-> > > > 
-> > > > Hyeongtak Ji (4):
-> > > >   mm/memory-tiers: add next_promotion_node to find promotion target
-> > > >   mm/damon: introduce DAMOS_PROMOTE action for promotion
-> > > >   mm/damon/sysfs-schemes: add target_nid on sysfs-schemes
-> > > >   mm/damon/sysfs-schemes: apply target_nid for promote and demote
-> > > >     actions
-> > > 
-> > > Honggyu joined DAMON Beer/Coffee/Tea Chat[1] yesterday, and we discussed about
-> > > this patchset in high level.  Sharing the summary here for open discussion.  As
-> > > also discussed on the first version of this patchset[2], we want to make single
-> > > action for general page migration with minimum changes, but would like to keep
-> > > page level access re-check.  We also agreed the previously proposed DAMOS
-> > > filter-based approach could make sense for the purpose.
-> > 
-> > Thanks very much for the summary.  I have been trying to merge promote
-> > and demote actions into a single migrate action, but I found an issue
-> > regarding damon_pa_scheme_score.  It currently calls damon_cold_score()
-> > for demote action and damon_hot_score() for promote action, but what
-> > should we call when we use a single migrate action?
-> 
-> Good point!  This is what I didn't think about when suggesting that.  Thank you
-> for letting me know this gap!  I think there could be two approach, off the top
-> of my head.
-> 
-> The first one would be extending the interface so that the user can select the
-> score function.  This would let flexible usage, but I'm bit concerned if this
-> could make things unnecessarily complex, and would really useful in many
-> general use case.
+> The whole patch series can be found in one patch at:
+>         https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git/patch/?id=linux-6.8.y&id2=v6.8.1
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.8.y
+> and the diffstat can be found below.
 
-I also think this looks complicated and may not be useful for general
-users.
+This rc kernel passes DAMON functionality test[1] on my test machine.
+Attaching the test results summary below.  Please note that I retrieved the
+kernel from linux-stable-rc tree[2].
 
-> The second approach would be letting DAMON infer the intention.  In this case,
-> I think we could know the intention is the demotion if the scheme has a youg
-> pages exclusion filter.  Then, we could use the cold_score().  And vice versa.
-> To cover a case that there is no filter at all, I think we could have one
-> assumption.  My humble intuition says the new action (migrate) may be used more
-> for promotion use case.  So, in damon_pa_scheme_score(), if the action of the
-> given scheme is the new one (say, MIGRATE), the function will further check if
-> the scheme has a filter for excluding young pages.  If so, the function will
-> use cold_score().  Otherwise, the function will use hot_score().
+Tested-by: SeongJae Park <sj@kernel.org>
 
-Thanks for suggesting many ideas but I'm afraid that I feel this doesn't
-look good.  Thinking it again, I think we can think about keep using
-DAMOS_PROMOTE and DAMOS_DEMOTE, but I can make them directly call
-damon_folio_young() for access check instead of using young filter.
-
-And we can internally handle the complicated combination such as demote
-action sets "young" filter with "matching" true and promote action sets
-"young" filter with "matching" false.  IMHO, this will make the usage
-simpler.
-
-I would like to hear how you think about this.
-
-> So I'd more prefer the second approach.  I think it would be not too late to
-> consider the first approach after waiting for it turns out more actions have
-> such ambiguity and need more general interface for explicitly set the score
-> function.
-
-I will join the DAMON Beer/Coffee/Tea Chat tomorrow as scheduled so I
-can talk more about this issue.
+[1] https://github.com/awslabs/damon-tests/tree/next/corr
+[2] f44e3394ca9c ("Linux 6.8.2-rc2")
 
 Thanks,
-Honggyu
+SJ
 
-> 
-> Thanks,
-> SJ
-> 
-> [...]
+[...]
+
+---
+
+ok 2 selftests: damon: debugfs_schemes.sh
+ok 3 selftests: damon: debugfs_target_ids.sh
+ok 4 selftests: damon: debugfs_empty_targets.sh
+ok 5 selftests: damon: debugfs_huge_count_read_write.sh
+ok 6 selftests: damon: debugfs_duplicate_context_creation.sh
+ok 7 selftests: damon: debugfs_rm_non_contexts.sh
+ok 8 selftests: damon: sysfs.sh
+ok 9 selftests: damon: sysfs_update_removed_scheme_dir.sh
+ok 10 selftests: damon: sysfs_update_schemes_tried_regions_hang.py
+ok 11 selftests: damon: sysfs_update_schemes_tried_regions_wss_estimation.py
+ok 12 selftests: damon: reclaim.sh
+ok 13 selftests: damon: lru_sort.sh
+ok 1 selftests: damon-tests: kunit.sh
+ok 2 selftests: damon-tests: huge_count_read_write.sh
+ok 3 selftests: damon-tests: buffer_overflow.sh
+ok 4 selftests: damon-tests: rm_contexts.sh
+ok 5 selftests: damon-tests: record_null_deref.sh
+ok 6 selftests: damon-tests: dbgfs_target_ids_read_before_terminate_race.sh
+ok 7 selftests: damon-tests: dbgfs_target_ids_pid_leak.sh
+ok 8 selftests: damon-tests: damo_tests.sh
+ok 9 selftests: damon-tests: masim-record.sh
+ok 10 selftests: damon-tests: build_i386.sh
+ok 11 selftests: damon-tests: build_arm64.sh
+ok 12 selftests: damon-tests: build_m68k.sh
+ok 13 selftests: damon-tests: build_i386_idle_flag.sh
+ok 14 selftests: damon-tests: build_i386_highpte.sh
+ok 15 selftests: damon-tests: build_nomemcg.sh
+ [33m
+ [92mPASS [39m
