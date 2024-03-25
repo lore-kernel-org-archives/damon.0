@@ -1,50 +1,59 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5258A8665D;
-	Mon, 25 Mar 2024 18:00:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 557FF7FBDC;
+	Mon, 25 Mar 2024 22:53:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711389600; cv=none; b=VIZy0XVE6Yw/GHnv4lDF+I37XGFLmFdvQoDmnUQj0dfxKwoijUU/P8L1hoccnaZx5zCh06vUQDKxSOJNoYdj9xt52k/oeQUoWvxPAP455IMqUf0LS1IvSpUQtt0lRzkV4pKe81pK9N8ZavL6M5QRn0ZR53h9bioR6QDUm6kO4r4=
+	t=1711407187; cv=none; b=GrIB/w+qzTsixucdAKPgO/goil5nosYkwQA2ds/fmckWtoPxOGqnLxvKt2FvsjK5X6MZcd9PC3OMZfIDKkNMTWGCqXR0kEuecJ6EeWx/xo40G85/zjGwLeEFmkkcEvGDgEQAXVFF1aI9wqXlr6FYyXDqtQLWF7FcFTc3HMFold8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711389600; c=relaxed/simple;
-	bh=b7IDzaWT6uTJU6g7eRyocNkJQUp3OphZOZR1xJLUO38=;
+	s=arc-20240116; t=1711407187; c=relaxed/simple;
+	bh=ljVYVSahgnqQzJ4KwzCiQ0uzQsg+xQTx/hr9gGB+Iug=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=ub9ezzUoU/HBqKe5bDNiM2TmnsZJ5AgZWBPOnIg2XDRoYMFHpbJpOV6/DR86A+fXdN3AkMUf49vH5Y/JxtIdkJ7ZK/vgJPVs/b1g0+WyAN++FwwvRzowNjmNNADEEFKimGIj4jLKo8jGdnSQ6lnVK2bwr6Trkv9Oks03aP5tE00=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CFHHkLtK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iNV+j5cXX+dG+f+Kq/EBVJWC+gyGzokLr2ODtqscc0UfOJOrE8YBmJDS1ywCrjncpTeIh1ohkSS/uoza0Kvn/ZjNHmaXe0luGjgiiG2MYb7OJLIQmZsl5miupGdWdzm8RZPldXak6sG02tsfdOb+QmsS6RJ2RgAUJMH5EKUaryU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Keb4PkxS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CFHHkLtK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FECBC43390;
-	Mon, 25 Mar 2024 17:59:59 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Keb4PkxS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 449C6C433F1;
+	Mon, 25 Mar 2024 22:53:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1711389600;
-	bh=b7IDzaWT6uTJU6g7eRyocNkJQUp3OphZOZR1xJLUO38=;
+	s=k20201202; t=1711407186;
+	bh=ljVYVSahgnqQzJ4KwzCiQ0uzQsg+xQTx/hr9gGB+Iug=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CFHHkLtK0iqzTrNEuYBrrPTak21KVQUboVe3FJY6KPE5A4jjRIUG9LZSJ+xM3IEVH
-	 x//eB9RmYyniy5zHYIrLU1NmVqE9BG0a7qXhjOxxnq9J4MZDLKkhU8a69K41H+krDG
-	 QTwed3DQGN7ETpmW+JSNywKrK+q8XScD1pbVoRliqDbDPnCPkmleN7rpNRKoFjqCLF
-	 Iu/ZYoJxEgb4xRGOhXETGRFSi5NOhZlSSdoSsP+WFM6BIuiCwI8gqml/dwTi2Rbxh9
-	 6p8UDU72yrDsFLEBIquZZhZ1a9Hfre4BnquVXD+1G3PFB0CZ1H9byEnUc7IldwFQsi
-	 WxaF+1CQi02TA==
+	b=Keb4PkxST0YJtRTWJGR3/6IYV4hiyPQbiDkAtjnGFDOcKDRmhP9T4PSsB5vYxOLJb
+	 f6nHJTY6WbxH6hUnbXFpH32SP8mvMoWBC18au9J7XPsD00v/QKiVeGSugyg9HkyMrx
+	 6GciER951lyA1LFnabSPpK5pGzT7yL3u+NHjn5grhHxNKURmT+Z1q6PqAAVwdiUvmR
+	 yYibofWAuA5liLoUXKEOl0i0Ldkc3wBJ/qWqB634mWK834xMQbhj9L9j3NJh27vBaG
+	 gpHoPGF4E+KqfiLF7O1AlSyI2fDIISl2nT1fxgAQ7rCNxo63CZDyf8ROrQwixuoEjZ
+	 ppwiZ6N4NmMMg==
 From: SeongJae Park <sj@kernel.org>
-To: Sasha Levin <sashal@kernel.org>
+To: Honggyu Kim <honggyu.kim@sk.com>
 Cc: SeongJae Park <sj@kernel.org>,
-	linux-kernel@vger.kernel.org,
-	stable@vger.kernel.org,
-	torvalds@linux-foundation.org,
+	damon@lists.linux.dev,
+	linux-mm@kvack.org,
 	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	florian.fainelli@broadcom.com,
-	pavel@denx.de,
-	damon@lists.linux.dev
-Subject: Re: [PATCH 5.15 000/309] 5.15.153-rc2 review
-Date: Mon, 25 Mar 2024 10:59:57 -0700
-Message-Id: <20240325175957.233640-1-sj@kernel.org>
+	apopple@nvidia.com,
+	baolin.wang@linux.alibaba.com,
+	dave.jiang@intel.com,
+	hyeongtak.ji@sk.com,
+	kernel_team@skhynix.com,
+	linmiaohe@huawei.com,
+	linux-kernel@vger.kernel.org,
+	linux-trace-kernel@vger.kernel.org,
+	mathieu.desnoyers@efficios.com,
+	mhiramat@kernel.org,
+	rakie.kim@sk.com,
+	rostedt@goodmis.org,
+	surenb@google.com,
+	yangx.jy@fujitsu.com,
+	ying.huang@intel.com,
+	ziy@nvidia.com,
+	42.hyeyoo@gmail.com
+Subject: Re: [RFC PATCH v2 0/7] DAMON based 2-tier memory management for CXL memory
+Date: Mon, 25 Mar 2024 15:53:03 -0700
+Message-Id: <20240325225304.235736-1-sj@kernel.org>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20240325115928.1765766-1-sashal@kernel.org>
+In-Reply-To: <20240325120108.2328-1-honggyu.kim@sk.com>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -54,56 +63,143 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hello,
+On Mon, 25 Mar 2024 21:01:04 +0900 Honggyu Kim <honggyu.kim@sk.com> wrote:
 
-On Mon, 25 Mar 2024 07:59:28 -0400 Sasha Levin <sashal@kernel.org> wrote:
+> Hi SeongJae,
+> 
+> On Fri, 22 Mar 2024 09:32:23 -0700 SeongJae Park <sj@kernel.org> wrote:
+> > On Fri, 22 Mar 2024 18:02:23 +0900 Honggyu Kim <honggyu.kim@sk.com> wrote:
+[...]
+> > > > Honggyu joined DAMON Beer/Coffee/Tea Chat[1] yesterday, and we discussed about
+> > > > this patchset in high level.  Sharing the summary here for open discussion.  As
+> > > > also discussed on the first version of this patchset[2], we want to make single
+> > > > action for general page migration with minimum changes, but would like to keep
+> > > > page level access re-check.  We also agreed the previously proposed DAMOS
+> > > > filter-based approach could make sense for the purpose.
+> > > 
+> > > Thanks very much for the summary.  I have been trying to merge promote
+> > > and demote actions into a single migrate action, but I found an issue
+> > > regarding damon_pa_scheme_score.  It currently calls damon_cold_score()
+> > > for demote action and damon_hot_score() for promote action, but what
+> > > should we call when we use a single migrate action?
+> > 
+> > Good point!  This is what I didn't think about when suggesting that.  Thank you
+> > for letting me know this gap!  I think there could be two approach, off the top
+> > of my head.
+> > 
+> > The first one would be extending the interface so that the user can select the
+> > score function.  This would let flexible usage, but I'm bit concerned if this
+> > could make things unnecessarily complex, and would really useful in many
+> > general use case.
+> 
+> I also think this looks complicated and may not be useful for general
+> users.
+> 
+> > The second approach would be letting DAMON infer the intention.  In this case,
+> > I think we could know the intention is the demotion if the scheme has a youg
+> > pages exclusion filter.  Then, we could use the cold_score().  And vice versa.
+> > To cover a case that there is no filter at all, I think we could have one
+> > assumption.  My humble intuition says the new action (migrate) may be used more
+> > for promotion use case.  So, in damon_pa_scheme_score(), if the action of the
+> > given scheme is the new one (say, MIGRATE), the function will further check if
+> > the scheme has a filter for excluding young pages.  If so, the function will
+> > use cold_score().  Otherwise, the function will use hot_score().
+> 
+> Thanks for suggesting many ideas but I'm afraid that I feel this doesn't
+> look good.  Thinking it again, I think we can think about keep using
+> DAMOS_PROMOTE and DAMOS_DEMOTE,
+
+In other words, keep having dedicated DAMOS action for intuitive prioritization
+score function, or, coupling the prioritization with each action, right?  I
+think this makes sense, and fit well with the documentation.
+
+    The prioritization mechanism should be different for each action.  For example,
+    rarely accessed (colder) memory regions would be prioritized for page-out
+    scheme action.  In contrast, the colder regions would be deprioritized for huge
+    page collapse scheme action.  Hence, the prioritization mechanisms for each
+    action are implemented in each DAMON operations set, together with the actions.
+
+In other words, each DAMOS action should allow users intuitively understand
+what types of regions will be prioritized.  We already have such couples of
+DAMOS actions such as DAMOS_[NO]HUGEPAGE and DAMOS_LRU_[DE]PRIO.  So adding a
+couple of action for this case sounds reasonable to me.  And I think this is
+better and simpler than having the inferrence based behavior.
+
+That said, I concern if 'PROMOTE' and 'DEMOTE' still sound bit ambiguous to
+people who don't know 'demote_folio_list()' and its friends.  Meanwhile, the
+name might sound too detail about what it does to people who know the
+functions, so make it bit unflexible.  They might also get confused since we
+don't have 'promote_folio_list()'.
+
+To my humble understanding, what you really want to do is migrating pages to
+specific address range (or node) prioritizing the pages based on the hotness.
+What about, say, MIGRATE_{HOT,COLD}?
+
+> but I can make them directly call
+> damon_folio_young() for access check instead of using young filter.
+> 
+> And we can internally handle the complicated combination such as demote
+> action sets "young" filter with "matching" true and promote action sets
+> "young" filter with "matching" false.  IMHO, this will make the usage
+> simpler.
+
+I think whether to exclude young/non-young (maybe idle is better than
+non-young?) pages from the action is better to be decoupled for following
+reasons.
+
+Firstly, we want to check the page granularity youngness mainly because we
+found DAMON's monitoring result is not accurate enough for this use case.  Or,
+we could say that's because you cannot wait until DAMON's monitoring result
+becomes accurate enough.  For more detail, you could increase minimum age of
+your scheme's target access pattern.  I show you set minimum age of your demote
+scheme as 30 seconds, but set promote scheme as 0 sec
+(https://github.com/skhynix/hmsdk/blob/main/tools/gen_config.py).  Increasing
+the minimum age for promote scheme may reduce amount of wrong promotion.  But I
+assume you don't want to do that, maybe because you want to make promotion
+fast.  That's 100% valid use case in my opinion.  And for such use case, making
+the DAMOS action to do the page granularity access check would be helpful.  But
+if the user can set minimum age of two schemes large enough, or somehow DAMON's
+monitoring accuracy is much improved, this page granularity access check might
+not really required.
+
+Secondly, I think we might want to migrate pages to other nodes in coldest
+pages first way, but even if the page is young.  One such case would be when
+the top tier cannot accommodate all young pages.  Especially when there are no
+small number of tiers, I think this could happen.  That is, we would prefer
+migrating coldest page first, but that depend on only relative temperature and
+hence young pages could also need to be migrated.  Of course, this would be the
+real case only if the user is convinced with DAMON's monitoring accuracy.
 
 > 
-> This is the start of the stable review cycle for the 5.15.153 release.
-> There are 309 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+> I would like to hear how you think about this.
+
+So, to summarize my humble opinion,
+
+1. I like the idea of having two actions.  But I'd like to use names other than
+   'promote' and 'demote'.
+2. I still prefer having a filter for the page granularity access re-check.
+
 > 
-> Responses should be made by Wed Mar 27 11:59:27 AM UTC 2024.
-> Anything received after that time might be too late.
+> > So I'd more prefer the second approach.  I think it would be not too late to
+> > consider the first approach after waiting for it turns out more actions have
+> > such ambiguity and need more general interface for explicitly set the score
+> > function.
 > 
-> The whole patch series can be found in one patch at:
->         https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git/patch/?id=linux-5.15.y&id2=v5.15.152
-> or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
-> and the diffstat can be found below.
+> I will join the DAMON Beer/Coffee/Tea Chat tomorrow as scheduled so I
+> can talk more about this issue.
 
-This rc kernel passes DAMON functionality test[1] on my test machine.
-Attaching the test results summary below.  Please note that I retrieved the
-kernel from linux-stable-rc tree[2].
+Looking forward to chatting with you :)
 
-Tested-by: SeongJae Park <sj@kernel.org>
-
-[1] https://github.com/awslabs/damon-tests/tree/next/corr
-[2] d978081b2581 ("Linux 5.15.153-rc2")
 
 Thanks,
 SJ
 
-[...]
-
----
-
-ok 1 selftests: damon: debugfs_attrs.sh
-ok 1 selftests: damon-tests: kunit.sh
-ok 2 selftests: damon-tests: huge_count_read_write.sh
-ok 3 selftests: damon-tests: buffer_overflow.sh
-ok 4 selftests: damon-tests: rm_contexts.sh
-ok 5 selftests: damon-tests: record_null_deref.sh
-ok 6 selftests: damon-tests: dbgfs_target_ids_read_before_terminate_race.sh
-ok 7 selftests: damon-tests: dbgfs_target_ids_pid_leak.sh
-ok 8 selftests: damon-tests: damo_tests.sh
-ok 9 selftests: damon-tests: masim-record.sh
-ok 10 selftests: damon-tests: build_i386.sh
-ok 11 selftests: damon-tests: build_arm64.sh
-ok 12 selftests: damon-tests: build_m68k.sh
-ok 13 selftests: damon-tests: build_i386_idle_flag.sh
-ok 14 selftests: damon-tests: build_i386_highpte.sh
-ok 15 selftests: damon-tests: build_nomemcg.sh
- [33m
- [92mPASS [39m
+> 
+> Thanks,
+> Honggyu
+> 
+> > 
+> > Thanks,
+> > SJ
+> > 
+> > [...]
