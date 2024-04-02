@@ -1,59 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D4AA4B5CD;
-	Mon,  1 Apr 2024 18:29:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D12B415B117;
+	Tue,  2 Apr 2024 19:12:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711996184; cv=none; b=sFODu36QX8e4IkFAP2cfx3IgPPfxFoIk3NqxEYIbHKKMIMCQKqAMllPPmPpzqLj2zN+vDH49fNQT31gRDv3MBH+BPdyD1F0nkAUg7s4KYjktUUuPsHNEnVup9xZhUJv+yQYqknMUzPG7vwTfdVdb719op1IF3oNVoKYj8hPzUrM=
+	t=1712085146; cv=none; b=cT3YlsAHmMjt+wT2yjOQ0MhNWVkvoFIwljqAMv3H4hjzz96l+XSu5ckxEkTZVCnWtplLQjog+Vl1iHI4io9CwdMk+z7zeVBGRfUNVcF75E6VT6pvSHDw+Ac530bnpFiwE9uiEl7vaK8rRcXq1UdkARTHCilfG9uq43jc0v+6A3g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711996184; c=relaxed/simple;
-	bh=dJyu+rE31S9XlRxTHt0dAC62aJeG94nr3456AZKenlY=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=Praf1mKfMdSKfwnsgTyvyb6XZs+p6R9+45pJkR5nqk98eCt7JxGttkK+N7wcl/z8Y7r2GPnl+wMlHxIzKp667GwJQEqKxutn1rudJxT029xKFg9xnmRWbremAx0KpBfxyf6xC1tAuqDtWVJm+j8i/5DR7bt9DdXqy9d62/1MLm8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fCe3Wg5f; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1712085146; c=relaxed/simple;
+	bh=VkeMLGAFW5//bstFf8gEidTfiDwlUjD0+6EaPVW/RZw=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=P0FKSj9bOJxSdNYd9aNE7v68wiUrBoNgzOKVlDr8pQxHrPepGZRQMINRjwQ1rugmV2rtquFYNYP2z3sBWHn20Zqt5dLva2Acsw4TD14uxjlv0+roMT/2ESnqkeaR184bFyUYKDpjZMV/yMB0plPBaJBO6lyd1bGC1HcJtCu4yMg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bu1IJvQ9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fCe3Wg5f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C61AC433C7;
-	Mon,  1 Apr 2024 18:29:42 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bu1IJvQ9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15744C433F1;
+	Tue,  2 Apr 2024 19:12:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1711996183;
-	bh=dJyu+rE31S9XlRxTHt0dAC62aJeG94nr3456AZKenlY=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fCe3Wg5fXgtMHUsO8oEjfE4uGGAoYMR5b/+D0aCb0dwxF2sNUlb6hu+Z8hke+lwUL
-	 jrr/Ftz+fSwmofMMbm8ykNXrCsMJbQdBOwYPHv0LN3ucVjparNRqMI6XpGKouTUWYV
-	 VGjx1d62sdx8Qi8De30wQcFzZtuALf1fK8oMYz91iWowPDgG9ELgmOVGJodr7N2YQM
-	 1WptT3YY6bdFiYTL0aDCssM+RO5tPTEkOWrs87Fk1DkSblcK49ddU4j3Xvho3AjVsG
-	 xFttjZRCvo2VwJN8Ib7RKeNiEc3FuOLiEHgjbl12kp8HIlGCA1lBOpEbgBymtDDr7I
-	 0ZZVfd03T8bWQ==
+	s=k20201202; t=1712085146;
+	bh=VkeMLGAFW5//bstFf8gEidTfiDwlUjD0+6EaPVW/RZw=;
+	h=From:To:Cc:Subject:Date:From;
+	b=bu1IJvQ9VVWqhvPIcIUUDwnnsAAuIZsq79OaI+ekyVJsAXxd/qlHUZ1fL5WSfuWZG
+	 rRuBUFMXfP6e0wo+m7jIA82OeU4QxtRZNxzcHl8hVzi+pHwoe6hmtsIw6fZ/j6W0zk
+	 00qrwSzv0hD7P/pallol9lwIHKqRvq+4RJ6BPOtzJz0MrEC3abj3x1VdtYmzlZJb0r
+	 lLDa6VDr9Nl3noLR+w0wQS6hQrxYV0NjufY2n8WiS5+BfRhPd9IK6R8k0/VI6vGsYm
+	 psRAErL585HWU/01Hdw4mkhNxaFQXwRmG4SSuPxojUSyl2qbcOPcXkX712Rvp4fXiM
+	 ra2Nlf9HdGNWA==
 From: SeongJae Park <sj@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: 
 Cc: SeongJae Park <sj@kernel.org>,
-	stable@vger.kernel.org,
-	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net,
-	rwarsow@gmx.de,
-	conor@kernel.org,
-	allen.lkml@gmail.com,
-	broonie@kernel.org,
-	damon@lists.linux.dev
-Subject: Re: [PATCH 6.8 000/399] 6.8.3-rc1 review
-Date: Mon,  1 Apr 2024 11:29:40 -0700
-Message-Id: <20240401182941.249008-1-sj@kernel.org>
+	damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org
+Subject: DAMON Quaterly News Letter (2024 Q1)
+Date: Tue,  2 Apr 2024 12:12:24 -0700
+Message-Id: <20240402191224.92305-1-sj@kernel.org>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20240401152549.131030308@linuxfoundation.org>
-References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -62,66 +43,72 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hello,
+Hello DAMON community,
 
-On Mon,  1 Apr 2024 17:39:26 +0200 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
 
-> This is the start of the stable review cycle for the 6.8.3 release.
-> There are 399 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Wed, 03 Apr 2024 15:24:46 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.8.3-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.8.y
-> and the diffstat can be found below.
+Already the first quater of 2024 has passed.  Meanwhile, there were some
+exciting news on DAMON community.  Let me share my humble summary of those.
 
-This rc kernel passes DAMON functionality test[1] on my test machine.
-Attaching the test results summary below.  Please note that I retrieved the
-kernel from linux-stable-rc tree[2].
+Januarry 2024
+=============
 
-Tested-by: SeongJae Park <sj@kernel.org>
+Memory management subsystem pull request[1] for Linux v6.8-rc1 that contains
+aim-oriented user-feedback driven DAMOS aggressiveness auto-tuning has merged.
 
-[1] https://github.com/awslabs/damon-tests/tree/next/corr
-[2] bffeaccf18b5 ("Linux 6.8.3-rc1")
+SK Hynix shared[2] their DAMOS-based tiered memory management test results
+showing 4-17% performance slowdown reduction, with patches for that.
+
+LSF/MM/BPF 2024 topic proposal for DAMON has posted[3].
+
+February 2024
+=============
+
+DAMON in Amazon Linux 5.10.y kernel[4] has updated to that of v6.7 Linux
+kernel.
+
+DAMON talk for OSSummit NA 2024 has been accepted and scheduled[5].
+
+DAMO v2.2.2 is released with a new command, 'replay'[6].  It is aimed to help
+reproducing the real-world memory access pattern for analysis and benchmarks.
+
+Yet another academic paper[7] exploring DAMON for tiered memory management will
+be presented at EuroSys 2024[8].
+
+March 2024
+==========
+
+DAMO v2.2.4 is released with a new feature for access pattern-based
+profiling[9].  Users can know which code is making their program's memory usage
+unexpectedly high, or which code is intensively accessing memory, and optimize.
+
+DAMON maintainer received the invitation for LSF/MM/BPF 2024.
+
+Memory management subsystem pull request[10] for Linux 6.9-rc1 that contains
+aim-oriented self-feedback driven DAMOS aggressiveness auto-tuning has merged.
+
+References
+==========
+
+[1] https://lore.kernel.org/linux-mm/20240108155039.fd2798712a2a93a108b710ce@linux-foundation.org/
+[2] https://lore.kernel.org/damon/20240115045253.1775-1-honggyu.kim@sk.com/
+[3] https://lore.kernel.org/linux-mm/20240129204749.68549-1-sj@kernel.org/
+[4] https://github.com/amazonlinux/linux/tree/amazon-5.10.y/master/mm/damon
+[5] https://sched.co/1aBOg
+[6] https://github.com/awslabs/damo/blob/v2.2.2/release_note#L5
+[7] https://pasalabs.org/papers/2024/Eurosys24_M3_Camera_Ready.pdf
+[8] https://2024.eurosys.org/
+[9] https://github.com/awslabs/damo/blob/v2.2.4/USAGE.md#profile
+[10] https://lore.kernel.org/all/20240313200532.34e4cff216acd3db8def4637@linux-foundation.org/
+
+
+To recap, the long-awaited DAMOS auto-tuning feature has merged.  More people
+from the academy and the industry explored and contributed on DAMON.  DAMON
+user-space tool got more useful features.  We will have yet another DAMON
+presentation and discussion at OSSummit NA and LSF/MM/BPF.
+
+It was a grateful quarter.  Looking forward to next news of the second quarter.
+Happy second quarter and hacking, community!
+
 
 Thanks,
 SJ
-
-[...]
-
----
-
-ok 2 selftests: damon: debugfs_schemes.sh
-ok 3 selftests: damon: debugfs_target_ids.sh
-ok 4 selftests: damon: debugfs_empty_targets.sh
-ok 5 selftests: damon: debugfs_huge_count_read_write.sh
-ok 6 selftests: damon: debugfs_duplicate_context_creation.sh
-ok 7 selftests: damon: debugfs_rm_non_contexts.sh
-ok 8 selftests: damon: sysfs.sh
-ok 9 selftests: damon: sysfs_update_removed_scheme_dir.sh
-ok 10 selftests: damon: sysfs_update_schemes_tried_regions_hang.py
-ok 11 selftests: damon: sysfs_update_schemes_tried_regions_wss_estimation.py
-ok 12 selftests: damon: reclaim.sh
-ok 13 selftests: damon: lru_sort.sh
-ok 1 selftests: damon-tests: kunit.sh
-ok 2 selftests: damon-tests: huge_count_read_write.sh
-ok 3 selftests: damon-tests: buffer_overflow.sh
-ok 4 selftests: damon-tests: rm_contexts.sh
-ok 5 selftests: damon-tests: record_null_deref.sh
-ok 6 selftests: damon-tests: dbgfs_target_ids_read_before_terminate_race.sh
-ok 7 selftests: damon-tests: dbgfs_target_ids_pid_leak.sh
-ok 8 selftests: damon-tests: damo_tests.sh
-ok 9 selftests: damon-tests: masim-record.sh
-ok 10 selftests: damon-tests: build_i386.sh
-ok 11 selftests: damon-tests: build_arm64.sh
-ok 12 selftests: damon-tests: build_m68k.sh
-ok 13 selftests: damon-tests: build_i386_idle_flag.sh
-ok 14 selftests: damon-tests: build_i386_highpte.sh
-ok 15 selftests: damon-tests: build_nomemcg.sh
- [33m
- [92mPASS [39m
