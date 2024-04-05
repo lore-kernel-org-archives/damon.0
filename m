@@ -1,27 +1,27 @@
 Received: from invmail4.hynix.com (exvmail4.skhynix.com [166.125.252.92])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 81A24762E5
-	for <damon@lists.linux.dev>; Fri,  5 Apr 2024 06:09:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 89F64142E73
+	for <damon@lists.linux.dev>; Fri,  5 Apr 2024 10:13:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=166.125.252.92
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712297363; cv=none; b=Nw1i2l4x0oRt3WtlysVbHFtCARfptbe/nXJNQSgFK6i9QqdcQc63243vD6R8ridyxYwQvq0pLZ/pDcF4uBrIf6MnRm33gfFwNbmI2WEtshDb8aLXkaUHOe5upb5urIeG41Az0oH1bkZbPJcHFizdKzFkMfIxV4Vi2OPvFN2Ni5w=
+	t=1712312022; cv=none; b=cUKLR/pXXqTG6zJm4lPmjZFLLWyVPF0KUbgrKXZeH1AdOfRA/4kUgTqc1H4C+9m1O+7iPCIL8sC/nF104ne8dAKhW/dELhxGbfOSa8R9D3cxdsYB0AoD7i2I4Tos7wvYKIfb1iS38LWFdeX1DAFhQOQKT9JE8H7wpAaQvHVcANw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712297363; c=relaxed/simple;
-	bh=XUA4CVfhy0+KcI2uVKXxc554ESRbQuU/raIL43nW8B8=;
+	s=arc-20240116; t=1712312022; c=relaxed/simple;
+	bh=LwBk8Tg6gmrWwVs84PJrcHAHXc38aGhozruApm71iwg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gvFtunnBt1Fu0R081yfj9yqFl7qhcJy1JZ9QQr+jWs2E4M0Dj/1SH3Uc3eEa5lEkDdLD8Z3CZ9iB1FXh86tS8HJcAWlnxZXjFj7xHbUrsNuSoQrROJ9NmRqRwQfo8lGpylrcX8AtOEv6l/fMCxj1tcOG4MMrdAVZOpjJLaidjzY=
+	 MIME-Version; b=gZBNyVRHfcWea3HeuHWpHjMEL/dFPokU8qya7/v9v8e5LQuDi46R2k885WcvgsxCBDuzI5IF2epom5zAKLC/yXGqTLsMtaI3QzFDDwfxJmVRJu/slWxTu1yvz/uqzXPl04QQ/K7+sT9vrvliweIal5SjWyMUvfHK4AJ2sYuSHWQ=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sk.com; spf=pass smtp.mailfrom=sk.com; arc=none smtp.client-ip=166.125.252.92
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sk.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sk.com
-X-AuditID: a67dfc5b-d6dff70000001748-e9-660f9587c0c4
+X-AuditID: a67dfc5b-d85ff70000001748-5f-660fcecfde3b
 From: Honggyu Kim <honggyu.kim@sk.com>
-To: sj@kernel.org,
+To: SeongJae Park <sj@kernel.org>
+Cc: Honggyu Kim <honggyu.kim@sk.com>,
 	damon@lists.linux.dev,
-	linux-mm@kvack.org
-Cc: akpm@linux-foundation.org,
+	linux-mm@kvack.org,
+	akpm@linux-foundation.org,
 	apopple@nvidia.com,
 	baolin.wang@linux.alibaba.com,
 	dave.jiang@intel.com,
-	honggyu.kim@sk.com,
 	hyeongtak.ji@sk.com,
 	kernel_team@skhynix.com,
 	linmiaohe@huawei.com,
@@ -35,14 +35,13 @@ Cc: akpm@linux-foundation.org,
 	yangx.jy@fujitsu.com,
 	ying.huang@intel.com,
 	ziy@nvidia.com,
-	42.hyeyoo@gmail.com,
-	art.jeongseob@gmail.com
-Subject: [RFC PATCH v3 7/7] mm/damon: Add "damon_migrate_{hot,cold}" vmstat
-Date: Fri,  5 Apr 2024 15:08:56 +0900
-Message-ID: <20240405060858.2818-8-honggyu.kim@sk.com>
+	42.hyeyoo@gmail.com
+Subject: Re: [RFC PATCH v2 0/7] DAMON based 2-tier memory management for CXL memory
+Date: Fri,  5 Apr 2024 19:13:12 +0900
+Message-ID: <20240405101316.2890-1-honggyu.kim@sk.com>
 X-Mailer: git-send-email 2.43.0.windows.1
-In-Reply-To: <20240405060858.2818-1-honggyu.kim@sk.com>
-References: <20240405060858.2818-1-honggyu.kim@sk.com>
+In-Reply-To: <20240326230309.47079-1-sj@kernel.org>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -50,125 +49,89 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrMIsWRmVeSWpSXmKPExsXC9ZZnkW77VP40g/v3jS0m9hhYzFm/hs1i
-	140Qi/sPXrNb/N97jNHiyf/frBYnbjayWXR+X8picXnXHDaLe2v+s1ocWX+WxWLz2TPMFouX
-	q1ns63jAZHH46xsmi8mXFrBZvJhyhtHi5KzJLBazj95jdxD2WHr6DZvHhiYgsXPWXXaPln23
-	2D0WbCr1aDnyltVj8Z6XTB6bVnWyeWz6NInd48SM3yweOx9aerzYPJPRo7f5HZvH501yAXxR
-	XDYpqTmZZalF+nYJXBknXi5iL+gWqzi65j5TA+NXwS5GTg4JAROJG51nGGHsbfvbmEFsNgE1
-	iSsvJzF1MXJwiAg4SKz6qtDFyMXBLPCfWeJy7y9WkBphAW+J6xuOMoLUsAioSnxbbwsS5hUw
-	k1iz7wU7xEhNicfbf4LZnALmEvMebwCzhYBqPh08xg5RLyhxcuYTFhCbWUBeonnrbGaQXRIC
-	p9glfm1+BnWbpMTBFTdYJjDyz0LSMwtJzwJGplWMQpl5ZbmJmTkmehmVeZkVesn5uZsYgVG3
-	rPZP9A7GTxeCDzEKcDAq8fB6zOVLE2JNLCuuzD3EKMHBrCTC2+3AmybEm5JYWZValB9fVJqT
-	WnyIUZqDRUmc1+hbeYqQQHpiSWp2ampBahFMlomDU6qBsVOshzOZ2dzpVu0tg5VW/auevHjv
-	lv74yKOknQeNZLdk2M0SyAxVPnR3b9MiiUMsG4+4qt5cNJt1O1MnY3bv3MNZT/v/X7zGd6t0
-	xa0yodMLvFNXz3zEe+r2/wB55ddRLDfYdkTkzmyN+znPQa9/4aV4vwcd9SWtFyQPL21K48ru
-	+aJ+/KVqhxJLcUaioRZzUXEiAKaMzZm2AgAA
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprLIsWRmVeSWpSXmKPExsXCNUNLT7d9Kn+awe31qhYTewws5qxfw2ax
-	60aIxf0Hr9kt/u89xmjx5P9vVosTNxvZLD4/e81s0fnkO6PF4bknWS06vy9lsbi8aw6bxb01
-	/1ktjqw/y2Kx+ewZZovFy9UsDl17zmqxr+MBk8Xhr2+YLCZfWsBm8WLKGUaLk7Mms1jMPnqP
-	3UHcY+npN2weG5qAxM5Zd9k9WvbdYvdYsKnUo+XIW1aPxXteMnlsWtXJ5rHp0yR2jxMzfrN4
-	7Hxo6fFi80xGj97md2we3257eCx+8YHJ4/MmuQCBKC6blNSczLLUIn27BK6MEy8XsRd0i1Uc
-	XXOfqYHxq2AXIyeHhICJxLb9bcwgNpuAmsSVl5OYuhg5OEQEHCRWfVXoYuTiYBb4zyxxufcX
-	K0iNsIC3xPUNRxlBalgEVCW+rbcFCfMKmEms2feCHWKkpsTj7T/BbE4Bc4l5jzeA2UJANZ8O
-	HmOHqBeUODnzCQuIzSwgL9G8dTbzBEaeWUhSs5CkFjAyrWIUycwry03MzDHVK87OqMzLrNBL
-	zs/dxAiMtGW1fybuYPxy2f0QowAHoxIPr8dcvjQh1sSy4srcQ4wSHMxKIrzdDrxpQrwpiZVV
-	qUX58UWlOanFhxilOViUxHm9wlMThATSE0tSs1NTC1KLYLJMHJxSDYxVlz35HuTVFB8uXW0c
-	wjiDP7l55bRvM1lzQlf5/pHbt+Ju/QXuj0VPxP96evh9mLw/5d0spTs+1asmvjH9eumt7E03
-	nak8E/sSe2Orte2YEwusOjnfNhlmTrYItvHXaPi0q+z9eh2mhy+EVF0U9eLb9Ez0tl0rMM9/
-	PfOVi+dvH9Fbn01mGymxFGckGmoxFxUnAgDlDExNsAIAAA==
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrAIsWRmVeSWpSXmKPExsXC9ZZnke75c/xpBt1tVhYTewws5qxfw2ax
+	60aIxf+9xxgtnvz/zWpx4mYjm0Xn96UsFpd3zWGzuLfmP6vFkfVnWSw2nz3DbLF4uZrFvo4H
+	TBaHv75hsph8aQGbxYspZxgtTs6azGIx++g9dgchj6Wn37B5bGgCEjtn3WX3aNl3i91jwaZS
+	j5Yjb1k9Fu95yeSxaVUnm8emT5PYPU7M+M3isfOhpceLzTMZPXqb37F5fN4kF8AXxWWTkpqT
+	WZZapG+XwJXx43gHa8FdgYre7++YGhin8nYxcnJICJhI/DvRwA5jf97yiwXEZhNQk7jychIT
+	iC0ioChx7vFF1i5GLg5mgYUsEr3fN4AlhAWCJeae/c8IYrMIqEpMv/EabBCvgJnEsovHWCCG
+	ako83v4TLM4pYCzxZNtZNhBbSIBH4tWG/YwQ9YISJ2c+AatnFpCXaN46mxlkmYTAIXaJk20T
+	mSAGSUocXHGDZQIj/ywkPbOQ9CxgZFrFKJSZV5abmJljopdRmZdZoZecn7uJERhvy2r/RO9g
+	/HQh+BCjAAejEg+vx1y+NCHWxLLiytxDjBIczEoivN0OvGlCvCmJlVWpRfnxRaU5qcWHGKU5
+	WJTEeY2+lacICaQnlqRmp6YWpBbBZJk4OKUaGD1tPp1nd9rGfHJH6sZfm5MTVj+c/PTzzpxX
+	tkIX7k6xu7i4we3CGo48katL2c49YjS6+pD5v+uN+seTXyf9FhauWnLp1OSkmef+vM076Ztj
+	wjVDKsG1c9oNQVPv/IuhXWz/giuUwiX7XkW72q98HFN0d9W2ZoE3RYGJ0j6TDbc/nnCg1vWg
+	+34lluKMREMt5qLiRABjQ3agswIAAA==
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprFIsWRmVeSWpSXmKPExsXCNUNLT/f8Of40g/vL1S0m9hhYzFm/hs1i
+	140Qi/97jzFaPPn/m9XixM1GNovPz14zW3Q++c5ocXjuSVaLzu9LWSwu75rDZnFvzX9WiyPr
+	z7JYbD57htli8XI1i0PXnrNa7Ot4wGRx+OsbJovJlxawWbyYcobR4uSsySwWs4/eY3cQ81h6
+	+g2bx4YmILFz1l12j5Z9t9g9Fmwq9Wg58pbVY/Gel0wem1Z1snls+jSJ3ePEjN8sHjsfWnq8
+	2DyT0aO3+R2bx7fbHh6LX3xg8vi8SS5AIIrLJiU1J7MstUjfLoEr48fxDtaCuwIVvd/fMTUw
+	TuXtYuTkkBAwkfi85RcLiM0moCZx5eUkJhBbREBR4tzji6xdjFwczAILWSR6v28ASwgLBEvM
+	PfufEcRmEVCVmH7jNTuIzStgJrHs4jEWiKGaEo+3/wSLcwoYSzzZdpYNxBYS4JF4tWE/I0S9
+	oMTJmU/A6pkF5CWat85mnsDIMwtJahaS1AJGplWMIpl5ZbmJmTmmesXZGZV5mRV6yfm5mxiB
+	Mbas9s/EHYxfLrsfYhTgYFTi4fWYy5cmxJpYVlyZe4hRgoNZSYS324E3TYg3JbGyKrUoP76o
+	NCe1+BCjNAeLkjivV3hqgpBAemJJanZqakFqEUyWiYNTqoHRtXLTnQvWpu3XZG6fz58ebOTs
+	0v/i7L8rem+YPm4MZQ1apjntbrBLr51DdusE/V2N8rtdWW/aVt1ZavFZ59gJEYWnm62zKvZ+
+	vut93LNKk+1QWpBTXWOAi/6E2/wiizvdLjSt65yRtv2xvxFHh9obr8fXxGdeNePbFKtuOfmY
+	gKzSiu0BqUFKLMUZiYZazEXFiQD3vveyrQIAAA==
 X-CFilter-Loop: Reflected
 
-This patch adds "damon_migrate_{hot,cold}" under node specific vmstat
-counters at the following location.
+Hi SeongJae,
 
-  /sys/devices/system/node/node*/vmstat
+On Tue, 26 Mar 2024 16:03:09 -0700 SeongJae Park <sj@kernel.org> wrote:
+> On Mon, 25 Mar 2024 15:53:03 -0700 SeongJae Park <sj@kernel.org> wrote:
+> 
+> > On Mon, 25 Mar 2024 21:01:04 +0900 Honggyu Kim <honggyu.kim@sk.com> wrote:
+> [...]
+> > > On Fri, 22 Mar 2024 09:32:23 -0700 SeongJae Park <sj@kernel.org> wrote:
+> > > > On Fri, 22 Mar 2024 18:02:23 +0900 Honggyu Kim <honggyu.kim@sk.com> wrote:
+> [...]
+> > >
+> > > I would like to hear how you think about this.
+> > 
+> > So, to summarize my humble opinion,
+> > 
+> > 1. I like the idea of having two actions.  But I'd like to use names other than
+> >    'promote' and 'demote'.
+> > 2. I still prefer having a filter for the page granularity access re-check.
+> > 
+> [...]
+> > > I will join the DAMON Beer/Coffee/Tea Chat tomorrow as scheduled so I
+> > > can talk more about this issue.
+> > 
+> > Looking forward to chatting with you :)
+> 
+> We met and discussed about this topic in the chat series yesterday.  Sharing
+> the summary for keeping the open discussion.
+> 
+> Honggyu thankfully accepted my humble suggestions on the last reply.  Honggyu
+> will post the third version of this patchset soon.  The patchset will implement
+> two new DAMOS actions, namely MIGRATE_HOT and MIGRATE_COLD.  Those will migrate
+> the DAMOS target regions to a user-specified NUMA node, but will have different
+> prioritization score function.  As name implies, they will prioritize more hot
+> regions and cold regions, respectively.
 
-The counted values are accumulcated to the global vmstat so it also
-introduces the same counter at /proc/vmstat as well.
+It's a late answer but thanks very much for the summary.  It was really
+helpful discussion in the chat series.
 
-Signed-off-by: Honggyu Kim <honggyu.kim@sk.com>
----
- include/linux/mmzone.h |  4 ++++
- mm/damon/paddr.c       | 17 ++++++++++++++++-
- mm/vmstat.c            |  4 ++++
- 3 files changed, 24 insertions(+), 1 deletion(-)
+I'm leaving a message so that anyone can follow for the update.  The v3
+is posted at https://lore.kernel.org/damon/20240405060858.2818-1-honggyu.kim@sk.com.
 
-diff --git a/include/linux/mmzone.h b/include/linux/mmzone.h
-index a497f189d988..0005372c5503 100644
---- a/include/linux/mmzone.h
-+++ b/include/linux/mmzone.h
-@@ -214,6 +214,10 @@ enum node_stat_item {
- 	PGDEMOTE_KSWAPD,
- 	PGDEMOTE_DIRECT,
- 	PGDEMOTE_KHUGEPAGED,
-+#ifdef CONFIG_DAMON_PADDR
-+	DAMON_MIGRATE_HOT,
-+	DAMON_MIGRATE_COLD,
-+#endif
- 	NR_VM_NODE_STAT_ITEMS
- };
- 
-diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
-index fd9d35b5cc83..d559c242d151 100644
---- a/mm/damon/paddr.c
-+++ b/mm/damon/paddr.c
-@@ -235,10 +235,23 @@ enum migration_mode {
- 
- static unsigned int migrate_folio_list(struct list_head *migrate_folios,
- 				       struct pglist_data *pgdat,
-+				       enum migration_mode mm,
- 				       int target_nid)
- {
- 	unsigned int nr_succeeded;
- 	nodemask_t allowed_mask = NODE_MASK_NONE;
-+	enum node_stat_item node_stat;
-+
-+	switch (mm) {
-+	case MIG_MIGRATE_HOT:
-+		node_stat = DAMON_MIGRATE_HOT;
-+		break;
-+	case MIG_MIGRATE_COLD:
-+		node_stat = DAMON_MIGRATE_COLD;
-+		break;
-+	default:
-+		return 0;
-+	}
- 
- 	struct migration_target_control mtc = {
- 		/*
-@@ -263,6 +276,8 @@ static unsigned int migrate_folio_list(struct list_head *migrate_folios,
- 		      (unsigned long)&mtc, MIGRATE_ASYNC, MR_DAMON,
- 		      &nr_succeeded);
- 
-+	mod_node_page_state(pgdat, node_stat, nr_succeeded);
-+
- 	return nr_succeeded;
- }
- 
-@@ -302,7 +317,7 @@ static unsigned int damon_pa_migrate_folio_list(struct list_head *folio_list,
- 	/* 'folio_list' is always empty here */
- 
- 	/* Migrate folios selected for migration */
--	nr_migrated += migrate_folio_list(&migrate_folios, pgdat, target_nid);
-+	nr_migrated += migrate_folio_list(&migrate_folios, pgdat, mm, target_nid);
- 	/* Folios that could not be migrated are still in @migrate_folios */
- 	if (!list_empty(&migrate_folios)) {
- 		/* Folios which weren't migrated go back on @folio_list */
-diff --git a/mm/vmstat.c b/mm/vmstat.c
-index db79935e4a54..be9ba89fede1 100644
---- a/mm/vmstat.c
-+++ b/mm/vmstat.c
-@@ -1252,6 +1252,10 @@ const char * const vmstat_text[] = {
- 	"pgdemote_kswapd",
- 	"pgdemote_direct",
- 	"pgdemote_khugepaged",
-+#ifdef CONFIG_DAMON_PADDR
-+	"damon_migrate_hot",
-+	"damon_migrate_cold",
-+#endif
- 
- 	/* enum writeback_stat_item counters */
- 	"nr_dirty_threshold",
--- 
-2.34.1
+> Honggyu, please feel free to fix if there is anything wrong or missed.
 
+I don't have anything to fix from your summary.
+
+> And thanks to Honggyu again for patiently keeping this productive discussion
+> and their awesome work.
+
+I appreciate your persistent support and kind reviews. 
+
+Thanks,
+Honggyu
+
+> 
+> Thanks,
+> SJ
+> 
+> [...]
