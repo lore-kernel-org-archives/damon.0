@@ -1,58 +1,60 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A5A01422A5;
-	Mon,  8 Apr 2024 16:05:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 279EF1E489;
+	Mon,  8 Apr 2024 17:52:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712592328; cv=none; b=TELszdc+2XLiWbwjwl7YNonOKIaBEILGq1usPAXOYVGWDUcgnzJ02R1sOv76zHsAe8EuFMTgM1AJ67xI6UHjbxJYcIMyUpZjWMqKgZQZrZyFhA8c1YGDx4e3TAbwFyRoTdOngqUWKNfcIVCjVjuVOB90i6tCJGLklOjQ7p7fGvA=
+	t=1712598752; cv=none; b=KDOa9hUn0IvIqwGTq1H9s4it83fdKd+BbEZJAKXlXAy9xfWD531tuB7ZQeODhyFO4876MfY0cGZyBcpxFwewJoIjJSiRnV1Ns9ojrKR9nC/uWtGJLkEwDapJwlVpFPH2L6053WwTDblutAM4RkL1UccQ+xCf9uvjt62MvDI7gSI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712592328; c=relaxed/simple;
-	bh=89yc5QMbAbaIHZrgRhtGJe2HiTHmQje9pz5N+ruQzp0=;
+	s=arc-20240116; t=1712598752; c=relaxed/simple;
+	bh=lqMYSwhK0qnhw09eJ1+Ailh7I3TSY0ZybkqE6/ufJ1c=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=cUe3rCQQMqAgcFYKBzMxCrwUoUNVGuUGZcbULTq9WyME1QsMpAK1ZsTyguyxVCA92SdJMBmmx5mdqNnEGpM7YYqE0c2BxghRHbWJKaWgScWD5b5yQOwEO+3Uu/cOcZ/oA+k+0Scq/HUvUH8DvWmr/oWchtOfeAAE/0YH8OInN1s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=u3FP3lWI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=B7uK9PxtrRUT9Wn28eO99LDoBx7SjBMH6h0NyWpORG/OyatYQpiYUxQcH9MWA7xVamNKvUZdiM5YzPv6344HO75GPeldaEnEbDkHdNpmVv/wDelg6psExKGH9wiQdnt2G1+NuYGrptF2IAhEifW1Fe0ZvYRY0O6QxBAZpYIuiwo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dETVU4z5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="u3FP3lWI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E214C433C7;
-	Mon,  8 Apr 2024 16:05:26 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dETVU4z5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A4BDC433F1;
+	Mon,  8 Apr 2024 17:52:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1712592328;
-	bh=89yc5QMbAbaIHZrgRhtGJe2HiTHmQje9pz5N+ruQzp0=;
+	s=k20201202; t=1712598751;
+	bh=lqMYSwhK0qnhw09eJ1+Ailh7I3TSY0ZybkqE6/ufJ1c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u3FP3lWIukvhD5sQ1VuVWLq5upMZ0iDspSTDO2+zdvNEN7VDTJ5tKLJzkXUQ8XJkd
-	 QJPAdbC96ZzFQfHUURPaKklRVlgdO92AKuET3PxVcdo4Dbd0z4quQndPtg1v3HH6VP
-	 Agm+bJc0TTZu0WXMdca90qFmjsuMrD01tJ0bRXnIIZlrtbs/0ORVL7kDf0q2zLU0nh
-	 nbv/Zc1ma/GWBgRGNRjG0+UZb21g1dkErecQ3faSPg2+ko4vGd23bnRUHFGBGvamKI
-	 Y4aIljYZohYJHEXwStl0bvUHCq38pXNV0LcO7mKG0me7qNo+7ZMUYyrT/VQdTYgZmt
-	 rpbXRCsq8TAfg==
+	b=dETVU4z5saCmnOtTCAvVfwcmZVyqiTbnvhnbyUHMbHRPFAUROww0oKuWoO6NtGdHS
+	 5f2+06+UOqSYXziqPLu06ZUoMs6i8czPHx+n8SKi1degY9Q7ekGgozVIJs3ohkrJ6u
+	 eVb082wPFbA236byh5LRflA46GI8PnahThrnYv9U7l2cgsiVcnAy1LJgzLDiuXHsXB
+	 /y1q/lwED31nG8qIWpqvtS3jtO4jwWtmHMTk7RdZ3ieR/Pz/vgfiImOrVtvDHFhP6e
+	 j2ZLcku9F1MTc7OtG9myVWttU/0DWkGZAQQle8+TV5q+4FHVQnvvFG0XsVG4MRycMn
+	 0K8vJS4x5hJxg==
 From: SeongJae Park <sj@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Honggyu Kim <honggyu.kim@sk.com>
 Cc: SeongJae Park <sj@kernel.org>,
-	stable@vger.kernel.org,
-	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
+	damon@lists.linux.dev,
+	linux-mm@kvack.org,
 	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net,
-	rwarsow@gmx.de,
-	conor@kernel.org,
-	allen.lkml@gmail.com,
-	broonie@kernel.org,
-	damon@lists.linux.dev
-Subject: Re: [PATCH 6.8 000/273] 6.8.5-rc1 review
-Date: Mon,  8 Apr 2024 09:05:24 -0700
-Message-Id: <20240408160524.90792-1-sj@kernel.org>
+	apopple@nvidia.com,
+	baolin.wang@linux.alibaba.com,
+	dave.jiang@intel.com,
+	hyeongtak.ji@sk.com,
+	kernel_team@skhynix.com,
+	linmiaohe@huawei.com,
+	linux-kernel@vger.kernel.org,
+	linux-trace-kernel@vger.kernel.org,
+	mathieu.desnoyers@efficios.com,
+	mhiramat@kernel.org,
+	rakie.kim@sk.com,
+	rostedt@goodmis.org,
+	surenb@google.com,
+	yangx.jy@fujitsu.com,
+	ying.huang@intel.com,
+	ziy@nvidia.com,
+	42.hyeyoo@gmail.com,
+	art.jeongseob@gmail.com
+Subject: Re: [RFC PATCH v3 5/7] mm/damon/paddr: introduce DAMOS_MIGRATE_COLD action for demotion
+Date: Mon,  8 Apr 2024 10:52:28 -0700
+Message-Id: <20240408175228.91414-1-sj@kernel.org>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
+In-Reply-To: <20240408120648.2947-1-honggyu.kim@sk.com>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -62,66 +64,133 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hello,
+On Mon,  8 Apr 2024 21:06:44 +0900 Honggyu Kim <honggyu.kim@sk.com> wrote:
 
-On Mon,  8 Apr 2024 14:54:35 +0200 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
-
-> This is the start of the stable review cycle for the 6.8.5 release.
-> There are 273 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+> On Fri,  5 Apr 2024 12:24:30 -0700 SeongJae Park <sj@kernel.org> wrote:
+> > On Fri,  5 Apr 2024 15:08:54 +0900 Honggyu Kim <honggyu.kim@sk.com> wrote:
+[...]
+> > > Here is one of the example usage of this 'migrate_cold' action.
+> > > 
+> > >   $ cd /sys/kernel/mm/damon/admin/kdamonds/<N>
+> > >   $ cat contexts/<N>/schemes/<N>/action
+> > >   migrate_cold
+> > >   $ echo 2 > contexts/<N>/schemes/<N>/target_nid
+> > >   $ echo commit > state
+> > >   $ numactl -p 0 ./hot_cold 500M 600M &
+> > >   $ numastat -c -p hot_cold
+> > > 
+> > >   Per-node process memory usage (in MBs)
+> > >   PID             Node 0 Node 1 Node 2 Total
+> > >   --------------  ------ ------ ------ -----
+> > >   701 (hot_cold)     501      0    601  1101
+> > > 
+> > > Since there are some common routines with pageout, many functions have
+> > > similar logics between pageout and migrate cold.
+> > > 
+> > > damon_pa_migrate_folio_list() is a minimized version of
+> > > shrink_folio_list(), but it's minified only for demotion.
+> > 
+> > MIGRATE_COLD is not only for demotion, right?  I think the last two words are
+> > better to be removed for reducing unnecessary confuses.
 > 
-> Responses should be made by Wed, 10 Apr 2024 12:52:23 +0000.
-> Anything received after that time might be too late.
+> You mean the last two sentences?  I will remove them if you feel it's
+> confusing.
+
+Yes.  My real intended suggestion was 's/only for demotion/only for
+migration/', but entirely removing the sentences is also ok for me.
+
 > 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.8.5-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.8.y
-> and the diffstat can be found below.
+> > > 
+> > > Signed-off-by: Honggyu Kim <honggyu.kim@sk.com>
+> > > Signed-off-by: Hyeongtak Ji <hyeongtak.ji@sk.com>
+> > > ---
+> > >  include/linux/damon.h    |   2 +
+> > >  mm/damon/paddr.c         | 146 ++++++++++++++++++++++++++++++++++++++-
+> > >  mm/damon/sysfs-schemes.c |   4 ++
+> > >  3 files changed, 151 insertions(+), 1 deletion(-)
+[...]
+> > > --- a/mm/damon/paddr.c
+> > > +++ b/mm/damon/paddr.c
+[...]
+> > > +{
+> > > +	unsigned int nr_succeeded;
+> > > +	nodemask_t allowed_mask = NODE_MASK_NONE;
+> > > +
+> > 
+> > I personally prefer not having empty lines in the middle of variable
+> > declarations/definitions.  Could we remove this empty line?
+> 
+> I can remove it, but I would like to have more discussion about this
+> issue.  The current implementation allows only a single migration
+> target with "target_nid", but users might want to provide fall back
+> migration target nids.
+> 
+> For example, if more than two CXL nodes exist in the system, users might
+> want to migrate cold pages to any CXL nodes.  In such cases, we might
+> have to make "target_nid" accept comma separated node IDs.  nodemask can
+> be better but we should provide a way to change the scanning order.
+> 
+> I would like to hear how you think about this.
 
-This rc kernel passes DAMON functionality test[1] on my test machine.
-Attaching the test results summary below.  Please note that I retrieved the
-kernel from linux-stable-rc tree[2].
+Good point.  I think we could later extend the sysfs file to receive the
+comma-separated numbers, or even mask.  For simplicity, adding sysfs files
+dedicated for the different format of inputs could also be an option (e.g.,
+target_nids_list, target_nids_mask).  But starting from this single node as is
+now looks ok to me.
 
-Tested-by: SeongJae Park <sj@kernel.org>
+[...]
+> > > +	/* 'folio_list' is always empty here */
+> > > +
+> > > +	/* Migrate folios selected for migration */
+> > > +	nr_migrated += migrate_folio_list(&migrate_folios, pgdat, target_nid);
+> > > +	/* Folios that could not be migrated are still in @migrate_folios */
+> > > +	if (!list_empty(&migrate_folios)) {
+> > > +		/* Folios which weren't migrated go back on @folio_list */
+> > > +		list_splice_init(&migrate_folios, folio_list);
+> > > +	}
+> > 
+> > Let's not use braces for single statement
+> > (https://docs.kernel.org/process/coding-style.html#placing-braces-and-spaces).
+> 
+> Hmm.. I know the convention but left it as is because of the comment.
+> If I remove the braces, it would have a weird alignment for the two
+> lines for comment and statement lines.
 
-[1] https://github.com/awslabs/damon-tests/tree/next/corr
-[2] 51d60edf2813 ("Linux 6.8.5-rc1")
+I don't really hate such alignment.  But if you don't like it, how about moving
+the comment out of the if statement?  Having one comment for one-line if
+statement looks not bad to me.
+
+> 
+> > > +
+> > > +	try_to_unmap_flush();
+> > > +
+> > > +	list_splice(&ret_folios, folio_list);
+> > 
+> > Can't we move remaining folios in migrate_folios to ret_folios at once?
+> 
+> I will see if it's possible.
+
+Thank you.  Not a strict request, though.
+
+[...]
+> > > +	nid = folio_nid(lru_to_folio(folio_list));
+> > > +	do {
+> > > +		struct folio *folio = lru_to_folio(folio_list);
+> > > +
+> > > +		if (nid == folio_nid(folio)) {
+> > > +			folio_clear_active(folio);
+> > 
+> > I think this was necessary for demotion, but now this should be removed since
+> > this function is no more for demotion but for migrating random pages, right?
+> 
+> Yeah,  it can be removed because we do migration instead of demotion,
+> but I need to make sure if it doesn't change the performance evaluation
+> results.
+
+Yes, please ensure the test results are valid :)
+
 
 Thanks,
 SJ
 
 [...]
-
----
-
-ok 2 selftests: damon: debugfs_schemes.sh
-ok 3 selftests: damon: debugfs_target_ids.sh
-ok 4 selftests: damon: debugfs_empty_targets.sh
-ok 5 selftests: damon: debugfs_huge_count_read_write.sh
-ok 6 selftests: damon: debugfs_duplicate_context_creation.sh
-ok 7 selftests: damon: debugfs_rm_non_contexts.sh
-ok 8 selftests: damon: sysfs.sh
-ok 9 selftests: damon: sysfs_update_removed_scheme_dir.sh
-ok 10 selftests: damon: sysfs_update_schemes_tried_regions_hang.py
-ok 11 selftests: damon: sysfs_update_schemes_tried_regions_wss_estimation.py
-ok 12 selftests: damon: reclaim.sh
-ok 13 selftests: damon: lru_sort.sh
-ok 1 selftests: damon-tests: kunit.sh
-ok 2 selftests: damon-tests: huge_count_read_write.sh
-ok 3 selftests: damon-tests: buffer_overflow.sh
-ok 4 selftests: damon-tests: rm_contexts.sh
-ok 5 selftests: damon-tests: record_null_deref.sh
-ok 6 selftests: damon-tests: dbgfs_target_ids_read_before_terminate_race.sh
-ok 7 selftests: damon-tests: dbgfs_target_ids_pid_leak.sh
-ok 8 selftests: damon-tests: damo_tests.sh
-ok 9 selftests: damon-tests: masim-record.sh
-ok 10 selftests: damon-tests: build_i386.sh
-ok 11 selftests: damon-tests: build_arm64.sh
-ok 12 selftests: damon-tests: build_m68k.sh
-ok 13 selftests: damon-tests: build_i386_idle_flag.sh
-ok 14 selftests: damon-tests: build_i386_highpte.sh
-ok 15 selftests: damon-tests: build_nomemcg.sh
- [33m
- [92mPASS [39m
