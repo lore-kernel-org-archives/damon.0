@@ -1,21 +1,22 @@
 Received: from invmail4.hynix.com (exvmail4.skhynix.com [166.125.252.92])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5E2936A029
-	for <damon@lists.linux.dev>; Mon,  8 Apr 2024 12:06:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DF8C57C6C8
+	for <damon@lists.linux.dev>; Mon,  8 Apr 2024 13:41:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=166.125.252.92
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712578026; cv=none; b=nY5WLGxmVaSlWfirF/32HupGRqufqt40NcJhGC7l75jiSDyu50RBi1ATkx9SAoMEfmLHHaUItV5BeMOv+8LhV7o0P9n8g3KUsPasVXNx8kQ9zsURuONXA6ba31VMpU6SEaTl17FerNyp/PC/rQDjjIyipGJVbFYojlvvjnicUi4=
+	t=1712583695; cv=none; b=b/RfSrNf3rskAz42oL1FHWPdxbBcT896qm7La+FgFr0IpairK4AR696YDXsnBYrwdgWeIGj0PWwpxbpkutu0ACFXCIvYkSDLSckRRCCyGiRWBBdm9xbB06iqtf0vPxrLUxOf1PvRuRRaEZWAolHezVIeqh7cK+GQOEUXKYUlWmU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712578026; c=relaxed/simple;
-	bh=WKSmpMAYsLBJV7k1A1XvG5fWMhX00XretvQcvSHo02I=;
+	s=arc-20240116; t=1712583695; c=relaxed/simple;
+	bh=zTxukDcymNLo4kdv3AYB9kakG77M4JYjFvwcAVkrN1E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rW08STdJXQi0SjGbHVowlIxWmVBFGJOAxGAdr8rj1oucyCiHXWntUAGcE3dzG6MBsHXZJxxza0WsMNW0s8DYg0taR93XjcN2Vtt/pJVYEaOeDUnHAwW4Ib3Pf/t0vM+l9GxGXFHQOz6m1dnqpXhIW3DuU6KGEOyFMbFzkhXY6zE=
+	 MIME-Version; b=llsPvxilEagvgisQff6fH7kFpHevQVTFcpXdhrvHQaPPti3rjJTdZS01aSaIiwfR4PYOQskP9erRmt85Er89QIXENvbphoEOUQXiUiVpEtWzqMgR9m2n7Frd/KTq5c51kSe59/RMv8qZVaBatG46HYPOj5Pj4lN9WfS9UYd/Vk0=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sk.com; spf=pass smtp.mailfrom=sk.com; arc=none smtp.client-ip=166.125.252.92
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sk.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sk.com
-X-AuditID: a67dfc5b-d6dff70000001748-6b-6613dde2594e
+X-AuditID: a67dfc5b-d6dff70000001748-66-6613f40876fb
 From: Honggyu Kim <honggyu.kim@sk.com>
-To: SeongJae Park <sj@kernel.org>
-Cc: damon@lists.linux.dev,
+To: Gregory Price <gregory.price@memverge.com>
+Cc: sj@kernel.org,
+	damon@lists.linux.dev,
 	linux-mm@kvack.org,
 	akpm@linux-foundation.org,
 	apopple@nvidia.com,
@@ -36,11 +37,11 @@ Cc: damon@lists.linux.dev,
 	ziy@nvidia.com,
 	42.hyeyoo@gmail.com,
 	art.jeongseob@gmail.com
-Subject: Re: [RFC PATCH v3 5/7] mm/damon/paddr: introduce DAMOS_MIGRATE_COLD action for demotion
-Date: Mon,  8 Apr 2024 21:06:44 +0900
-Message-ID: <20240408120648.2947-1-honggyu.kim@sk.com>
+Subject: Re: [RFC PATCH v3 0/7] DAMON based tiered memory management for CXL
+Date: Mon,  8 Apr 2024 22:41:04 +0900
+Message-ID: <20240408134108.2970-1-honggyu.kim@sk.com>
 X-Mailer: git-send-email 2.43.0.windows.1
-In-Reply-To: <20240405192430.67046-1-sj@kernel.org>
+In-Reply-To: <ZhAtLhcU3KfT/9i7@memverge.com>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -49,442 +50,300 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrMIsWRmVeSWpSXmKPExsXC9ZZnke6ju8JpBpduG1tM7DGwmLN+DZvF
-	rhshFvcfvGa3+L/3GKPFk/+/WS1O3Gxks+j8vpTF4vKuOWwW99b8Z7U4sv4si8Xms2eYLRYv
-	V7PY1/GAyeLw1zdMFpMvLWCzeDHlDKPFyVmTWSxmH73H7iDssfT0GzaPDU1AYuesu+weLftu
-	sXss2FTq0XLkLavH4j0vmTw2repk89j0aRK7x4kZv1k8dj609HixeSajR2/zOzaPz5vkAvii
-	uGxSUnMyy1KL9O0SuDKuL3nPXNCbU/GhaQ9TA+Pe4C5GTg4JAROJby27WboYOcDsuzf5QcJs
-	AmoSV15OYgKxRQQUJc49vsjaxcjFwSwwg0Xi8MIuRpCEsECCRNuNj6wgNouAqsTX/qNgc3gF
-	zCS+z1OEGK8p8Xj7T3YQm1PAWOJf8x4WEFtIgEfi1Yb9YGN4BQQlTs58AhZnFpCXaN46mxlk
-	l4TAKXaJGY9fM0EMkpQ4uOIGywRG/llIemYh6VnAyLSKUSgzryw3MTPHRC+jMi+zQi85P3cT
-	IzDqltX+id7B+OlC8CFGAQ5GJR5ei6vCaUKsiWXFlbmHGCU4mJVEeINNBdOEeFMSK6tSi/Lj
-	i0pzUosPMUpzsCiJ8xp9K08REkhPLEnNTk0tSC2CyTJxcEo1MBosWLTgofmMp6u6xJMOLNQv
-	vsK729unJv3Ve3bhR6apRVOzTiw9+zV8m7PwjZm8O/M/apa/+Xc1cpf7nn5ZH7mU+vCsZzI7
-	LBN5xVe4NkemLL2qrb2VzbRsXbj8rucsFx3yGxs2/2v+8kJUQkfV+0LOP7nGA0lps3dsmOXK
-	WzVlrWW8m2GxhBJLcUaioRZzUXEiADhtLDS2AgAA
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprBIsWRmVeSWpSXmKPExsXCNUNLT/fRXeE0g/3/lSwm9hhYzFm/hs1i
-	140Qi/sPXrNb/N97jNHiyf/frBYnbjayWXQ++c5ocXjuSVaLzu9LWSwu75rDZnFvzX9WiyPr
-	z7JYbD57htli8XI1i0PXnrNa7Ot4wGRx+OsbJovJlxawWbyYcobR4uSsySwWs4/eY3cQ81h6
-	+g2bx4YmILFz1l12j5Z9t9g9Fmwq9Wg58pbVY/Gel0wem1Z1snls+jSJ3ePEjN8sHjsfWnq8
-	2DyT0aO3+R2bx7fbHh6LX3xg8vi8SS5AIIrLJiU1J7MstUjfLoEr4/qS98wFvTkVH5r2MDUw
-	7g3uYuTgkBAwkbh7k7+LkZODTUBN4srLSUwgtoiAosS5xxdZuxi5OJgFZrBIHF7YxQiSEBZI
-	kGi78ZEVxGYRUJX42n+UBWQOr4CZxPd5iiBhCQFNicfbf7KD2JwCxhL/mvewgNhCAjwSrzbs
-	BxvDKyAocXLmE7A4s4C8RPPW2cwTGHlmIUnNQpJawMi0ilEkM68sNzEzx1SvODujMi+zQi85
-	P3cTIzC+ltX+mbiD8ctl90OMAhyMSjy8DneE04RYE8uKK3MPMUpwMCuJ8AabCqYJ8aYkVlal
-	FuXHF5XmpBYfYpTmYFES5/UKT00QEkhPLEnNTk0tSC2CyTJxcEo1MNY7hjFPabxx5mFWp/n7
-	ZZub/MzL4ww/v0mqvb5a4UYI40sGuR3Lev/1Lmrp2378RO6yo2GW0bmrr+0s3ql86/Xvmuq9
-	ho0X4g+1KJw/6Dn9/dvsm6ZLKh/ZHH2u1XS39IPq1L33svoSmtsurYmc9XbfwVgrh1bfDcIM
-	fRtOmLC825iwv2uniKcSS3FGoqEWc1FxIgCHbSUfqwIAAA==
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrHIsWRmVeSWpSXmKPExsXC9ZZnoS7HF+E0g7Y9GhYTewws5qxfw2ax
+	60aIxf0Hr9kt/u89xmjx5P9vVosTNxvZLBqaHrFYdH5fymJxedccNot7a/6zWhxZf5bFYvPZ
+	M8wWi5erWezreMBkcfjrGyaLyZcWsFm8mHKG0eLkrMksFrOP3mN3EPFYevoNm8eGJiCxc9Zd
+	do+WfbfYPRZsKvVoOfKW1WPxnpdMHptWdbJ5bPo0id3jxIzfLB47H1p6vNg8k9Fj48f/7B69
+	ze/YPD5vkgvgj+KySUnNySxLLdK3S+DK2H56AWvB9LKKg/NusTUwngvuYuTkkBAwkThzfD8L
+	jH1g0XYwm01ATeLKy0lMXYwcHCICehIf/3t2MXJxMAusZJHYfncXG0iNsICPxJQ5HewgNouA
+	qsSHGRBxXgEziffTljNDzNSUeLz9J1gNp4COxOlf18FsIQEeiVcb9jNC1AtKnJz5BGwvs4C8
+	RPPW2cwgyyQETrFLzJ4xDeo4SYmDK26wTGDkn4WkZxaSngWMTKsYhTLzynITM3NM9DIq8zIr
+	9JLzczcxAmNxWe2f6B2Mny4EH2IU4GBU4uG1uCqcJsSaWFZcmXuIUYKDWUmEN9hUME2INyWx
+	siq1KD++qDQntfgQozQHi5I4r9G38hQhgfTEktTs1NSC1CKYLBMHp1QD4zrmT5OzT66YnNbz
+	ZuV7lh/bGfm8Vqo9MLhx95X6Fs//H79ZWZlpNpxrXGS24dxeqUl681dNq3i5qvp/aMz3z4oL
+	zHYyfJr0tuqdZzkHexdH9opVq87WKtSpP79QVJVw51/170RN/6AVv+Xq09XORiwKncv1MMX8
+	x13htCPpYZm+TexTzX0KApRYijMSDbWYi4oTAc9/WVTBAgAA
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprPIsWRmVeSWpSXmKPExsXCNUNLT5fji3CawcYvghYTewws5qxfw2ax
+	60aIxf0Hr9kt/u89xmjx5P9vVosTNxvZLBqaHrFYdD75zmhxeO5JVovO70tZLC7vmsNmcW/N
+	f1aLI+vPslhsPnuG2WLxcjWLQ9ees1rs63jAZHH46xsmi8mXFrBZvJhyhtHi5KzJLBazj95j
+	dxD3WHr6DZvHhiYgsXPWXXaPln232D0WbCr1aDnyltVj8Z6XTB6bVnWyeWz6NInd48SM3ywe
+	Ox9aerzYPJPRY+PH/+wevc3v2Dy+3fbwWPziA1OAYBSXTUpqTmZZapG+XQJXxvbTC1gLppdV
+	HJx3i62B8VxwFyMnh4SAicSBRdtZQGw2ATWJKy8nMXUxcnCICOhJfPzv2cXIxcEssJJFYvvd
+	XWwgNcICPhJT5nSwg9gsAqoSH2ZAxHkFzCTeT1vODDFTU+Lx9p9gNZwCOhKnf10Hs4UEeCRe
+	bdjPCFEvKHFy5hOwvcwC8hLNW2czT2DkmYUkNQtJagEj0ypGkcy8stzEzBxTveLsjMq8zAq9
+	5PzcTYzAaFtW+2fiDsYvl90PMQpwMCrx8DrcEU4TYk0sK67MPcQowcGsJMIbbCqYJsSbklhZ
+	lVqUH19UmpNafIhRmoNFSZzXKzw1QUggPbEkNTs1tSC1CCbLxMEp1cAY80VYyexGv8H9yw2v
+	3xytYXvV1h+o9ass/OqMX1388zNvOfRqRvxPmrE5+8dl9pmMa3XOp/y4efKK0NLAxvdn7syR
+	X+qxQEM/d5PK+6Av4vstm8L+1h381i4s9bJBqnqtm+aOBZf9DxRdjfz45/ibJUn2kYaVgiUH
+	T105F5c27QD3ootXfSValFiKMxINtZiLihMBXWtiZLICAAA=
 X-CFilter-Loop: Reflected
 
-On Fri,  5 Apr 2024 12:24:30 -0700 SeongJae Park <sj@kernel.org> wrote:
-> On Fri,  5 Apr 2024 15:08:54 +0900 Honggyu Kim <honggyu.kim@sk.com> wrote:
-> 
-> > This patch introduces DAMOS_MIGRATE_COLD action, which is similar to
-> > DAMOS_PAGEOUT, but migrate folios to the given 'target_nid' in the sysfs
-> > instead of swapping them out.
+Hi Gregory,
+
+On Fri, 5 Apr 2024 12:56:14 -0400 Gregory Price <gregory.price@memverge.com> wrote:
+> On Fri, Apr 05, 2024 at 03:08:49PM +0900, Honggyu Kim wrote:
+> > There was an RFC IDEA "DAMOS-based Tiered-Memory Management" previously
+> > posted at [1].
 > > 
-> > The 'target_nid' sysfs knob is created by this patch to inform the
-> > migration target node ID.
-> 
-> Isn't it created by the previous patch?
-
-Right.  I didn't fix the commit message after split this patch.  I will
-fix it.
-
+> >   1. YCSB zipfian distribution read only workload
+> >   memory pressure with cold memory on node0 with 512GB of local DRAM.
+> >   =============+================================================+=========
+> >                |       cold memory occupied by mmap and memset  |
+> >                |   0G  440G  450G  460G  470G  480G  490G  500G |
+> >   =============+================================================+=========
+> >   Execution time normalized to DRAM-only values                 | GEOMEAN
+> >   -------------+------------------------------------------------+---------
+> >   DRAM-only    | 1.00     -     -     -     -     -     -     - | 1.00
+> >   CXL-only     | 1.22     -     -     -     -     -     -     - | 1.22
+> >   default      |    -  1.12  1.13  1.14  1.16  1.19  1.21  1.21 | 1.17 
+> >   DAMON tiered |    -  1.04  1.03  1.04  1.06  1.05  1.05  1.05 | 1.05 
+> >   =============+================================================+=========
+> >   CXL usage of redis-server in GB                               | AVERAGE
+> >   -------------+------------------------------------------------+---------
+> >   DRAM-only    |  0.0     -     -     -     -     -     -     - |  0.0
+> >   CXL-only     | 52.6     -     -     -     -     -     -     - | 52.6
+> >   default      |    -  20.4  27.0  33.1  39.5  45.6  50.5  50.3 | 38.1
+> >   DAMON tiered |    -   0.1   0.3   0.8   0.6   0.7   1.3   0.9 |  0.7
+> >   =============+================================================+=========
 > > 
-> > Here is one of the example usage of this 'migrate_cold' action.
+> > Each test result is based on the exeuction environment as follows.
 > > 
-> >   $ cd /sys/kernel/mm/damon/admin/kdamonds/<N>
-> >   $ cat contexts/<N>/schemes/<N>/action
-> >   migrate_cold
-> >   $ echo 2 > contexts/<N>/schemes/<N>/target_nid
-> >   $ echo commit > state
-> >   $ numactl -p 0 ./hot_cold 500M 600M &
-> >   $ numastat -c -p hot_cold
+> >   DRAM-only   : redis-server uses only local DRAM memory.
+> >   CXL-only    : redis-server uses only CXL memory.
+> >   default     : default memory policy(MPOL_DEFAULT).
+> >                 numa balancing disabled.
+> >   DAMON tiered: DAMON enabled with DAMOS_MIGRATE_COLD for DRAM nodes and
+> >                 DAMOS_MIGRATE_HOT for CXL nodes.
 > > 
-> >   Per-node process memory usage (in MBs)
-> >   PID             Node 0 Node 1 Node 2 Total
-> >   --------------  ------ ------ ------ -----
-> >   701 (hot_cold)     501      0    601  1101
+> > The above result shows the "default" execution time goes up as the size
+> > of cold memory is increased from 440G to 500G because the more cold
+> > memory used, the more CXL memory is used for the target redis workload
+> > and this makes the execution time increase.
 > > 
-> > Since there are some common routines with pageout, many functions have
-> > similar logics between pageout and migrate cold.
+> > However, "DAMON tiered" result shows less slowdown because the
+> > DAMOS_MIGRATE_COLD action at DRAM node proactively demotes pre-allocated
+> > cold memory to CXL node and this free space at DRAM increases more
+> > chance to allocate hot or warm pages of redis-server to fast DRAM node.
+> > Moreover, DAMOS_MIGRATE_HOT action at CXL node also promotes hot pages
+> > of redis-server to DRAM node actively.
 > > 
-> > damon_pa_migrate_folio_list() is a minimized version of
-> > shrink_folio_list(), but it's minified only for demotion.
-> 
-> MIGRATE_COLD is not only for demotion, right?  I think the last two words are
-> better to be removed for reducing unnecessary confuses.
-
-You mean the last two sentences?  I will remove them if you feel it's
-confusing.
-
+> > As a result, it makes more memory of redis-server stay in DRAM node
+> > compared to "default" memory policy and this makes the performance
+> > improvement.
 > > 
-> > Signed-off-by: Honggyu Kim <honggyu.kim@sk.com>
-> > Signed-off-by: Hyeongtak Ji <hyeongtak.ji@sk.com>
-> > ---
-> >  include/linux/damon.h    |   2 +
-> >  mm/damon/paddr.c         | 146 ++++++++++++++++++++++++++++++++++++++-
-> >  mm/damon/sysfs-schemes.c |   4 ++
-> >  3 files changed, 151 insertions(+), 1 deletion(-)
+> > The following result of latest distribution workload shows similar data.
 > > 
-> > diff --git a/include/linux/damon.h b/include/linux/damon.h
-> > index 24ea33a03d5d..df8671e69a70 100644
-> > --- a/include/linux/damon.h
-> > +++ b/include/linux/damon.h
-> > @@ -105,6 +105,7 @@ struct damon_target {
-> >   * @DAMOS_NOHUGEPAGE:	Call ``madvise()`` for the region with MADV_NOHUGEPAGE.
-> >   * @DAMOS_LRU_PRIO:	Prioritize the region on its LRU lists.
-> >   * @DAMOS_LRU_DEPRIO:	Deprioritize the region on its LRU lists.
-> > + * @DAMOS_MIGRATE_COLD: Migrate for the given cold region.
+> >   2. YCSB latest distribution read only workload
+> >   memory pressure with cold memory on node0 with 512GB of local DRAM.
+> >   =============+================================================+=========
+> >                |       cold memory occupied by mmap and memset  |
+> >                |   0G  440G  450G  460G  470G  480G  490G  500G |
+> >   =============+================================================+=========
+> >   Execution time normalized to DRAM-only values                 | GEOMEAN
+> >   -------------+------------------------------------------------+---------
+> >   DRAM-only    | 1.00     -     -     -     -     -     -     - | 1.00
+> >   CXL-only     | 1.18     -     -     -     -     -     -     - | 1.18
+> >   default      |    -  1.18  1.19  1.18  1.18  1.17  1.19  1.18 | 1.18 
+> >   DAMON tiered |    -  1.04  1.04  1.04  1.05  1.04  1.05  1.05 | 1.04 
+> >   =============+================================================+=========
+> >   CXL usage of redis-server in GB                               | AVERAGE
+> >   -------------+------------------------------------------------+---------
+> >   DRAM-only    |  0.0     -     -     -     -     -     -     - |  0.0
+> >   CXL-only     | 52.6     -     -     -     -     -     -     - | 52.6
+> >   default      |    -  20.5  27.1  33.2  39.5  45.5  50.4  50.5 | 38.1
+> >   DAMON tiered |    -   0.2   0.4   0.7   1.6   1.2   1.1   3.4 |  1.2
+> >   =============+================================================+=========
+> > 
+> > In summary of both results, our evaluation shows that "DAMON tiered"
+> > memory management reduces the performance slowdown compared to the
+> > "default" memory policy from 17~18% to 4~5% when the system runs with
+> > high memory pressure on its fast tier DRAM nodes.
+> > 
+> > Having these DAMOS_MIGRATE_HOT and DAMOS_MIGRATE_COLD actions can make
+> > tiered memory systems run more efficiently under high memory pressures.
+> > 
 > 
-> Whether it will be for cold region or not is depending on the target access
-> pattern.  What about 'Migrate the regions in coldest regions first manner.'?
-> Or, simply 'Migrate the regions (prioritize cold)' here, and explain about the
-> prioritization under quota on the detailed comments part?
-
-"Migrate the regions in coldest regions first manner under quota" sounds
-better.  I will change it.
-
-> Also, let's use tab consistently.
-
-Yeah, it's a mistake.  will fix it.
-
-> >   * @DAMOS_STAT:		Do nothing but count the stat.
-> >   * @NR_DAMOS_ACTIONS:	Total number of DAMOS actions
-> >   *
-> > @@ -122,6 +123,7 @@ enum damos_action {
-> >  	DAMOS_NOHUGEPAGE,
-> >  	DAMOS_LRU_PRIO,
-> >  	DAMOS_LRU_DEPRIO,
-> > +	DAMOS_MIGRATE_COLD,
-> >  	DAMOS_STAT,		/* Do nothing but only record the stat */
-> >  	NR_DAMOS_ACTIONS,
-> >  };
-> > diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
-> > index 277a1c4d833c..fe217a26f788 100644
-> > --- a/mm/damon/paddr.c
-> > +++ b/mm/damon/paddr.c
-> > @@ -12,6 +12,9 @@
-> >  #include <linux/pagemap.h>
-> >  #include <linux/rmap.h>
-> >  #include <linux/swap.h>
-> > +#include <linux/memory-tiers.h>
-> > +#include <linux/migrate.h>
-> > +#include <linux/mm_inline.h>
-> >  
-> >  #include "../internal.h"
-> >  #include "ops-common.h"
-> > @@ -226,8 +229,137 @@ static bool damos_pa_filter_out(struct damos *scheme, struct folio *folio)
-> >  
-> >  enum migration_mode {
-> >  	MIG_PAGEOUT,
-> > +	MIG_MIGRATE_COLD,
-> >  };
-> >  
-> > +static unsigned int migrate_folio_list(struct list_head *migrate_folios,
-> > +				       struct pglist_data *pgdat,
-> > +				       int target_nid)
+> Hi,
 > 
-> To avoid name collisions, I'd prefer having damon_pa_prefix.  I show this patch
-> is defining damon_pa_migrate_folio_list() below, though.  What about
-> __damon_pa_migrate_folio_list()?
+> It's hard to determine from your results whether the performance
+> mitigation is being caused primarily by MIGRATE_COLD freeing up space
+> for new allocations, or from some combination of HOT/COLD actions
+> occurring during execution but after the database has already been
+> warmed up.
 
-Ack.  I will change it to __damon_pa_migrate_folio_list().
+Thanks for the question.  I didn't include all the details for the
+evaluation result, but this is a chance to share more in details.
 
-> > +{
-> > +	unsigned int nr_succeeded;
-> > +	nodemask_t allowed_mask = NODE_MASK_NONE;
-> > +
+I would say the mitigation comes from both.  DAMOS_MIGRATE_COLD demotes
+some cold data to CXL so redis can allocate more data on the fast DRAM
+during launching time as the mmap+memset and redis launching takes
+several minutes.  But it also promotes some redis data while running.
+
+> Do you have test results which enable only DAMOS_MIGRATE_COLD actions
+> but not DAMOS_MIGRATE_HOT actions? (and vice versa)
 > 
-> I personally prefer not having empty lines in the middle of variable
-> declarations/definitions.  Could we remove this empty line?
+> The question I have is exactly how often is MIGRATE_HOT actually being
+> utilized, and how much data is being moved. Testing MIGRATE_COLD only
+> would at least give a rough approximation of that.
 
-I can remove it, but I would like to have more discussion about this
-issue.  The current implementation allows only a single migration
-target with "target_nid", but users might want to provide fall back
-migration target nids.
+To explain this, I better share more test results.  In the section of
+"Evaluation Workload", the test sequence can be summarized as follows.
 
-For example, if more than two CXL nodes exist in the system, users might
-want to migrate cold pages to any CXL nodes.  In such cases, we might
-have to make "target_nid" accept comma separated node IDs.  nodemask can
-be better but we should provide a way to change the scanning order.
+  *. "Turn on DAMON."
+  1. Allocate cold memory(mmap+memset) at DRAM node, then make the
+     process sleep.
+  2. Launch redis-server and load prebaked snapshot image, dump.rdb.
+     (85GB consumed: 52GB for anon and 33GB for file cache)
+  3. Run YCSB to make zipfian distribution of memory accesses to
+     redis-server, then measure execution time.
+  4. Repeat 4 over 50 times to measure the average execution time for
+     each run.
+  5. Increase the cold memory size then repeat goes to 2.
 
-I would like to hear how you think about this.
+I didn't want to make the evaluation too long in the cover letter, but
+I have also evaluated another senario, which lazyly enabled DAMON just
+before YCSB run at step 4.  I will call this test as "DAMON lazy".  This
+is missing part from the cover letter.
 
-> > +	struct migration_target_control mtc = {
-> > +		/*
-> > +		 * Allocate from 'node', or fail quickly and quietly.
-> > +		 * When this happens, 'page' will likely just be discarded
-> > +		 * instead of migrated.
-> > +		 */
-> > +		.gfp_mask = (GFP_HIGHUSER_MOVABLE & ~__GFP_RECLAIM) | __GFP_NOWARN |
-> > +			__GFP_NOMEMALLOC | GFP_NOWAIT,
-> > +		.nid = target_nid,
-> > +		.nmask = &allowed_mask
-> > +	};
-> > +
-> > +	if (pgdat->node_id == target_nid || target_nid == NUMA_NO_NODE)
-> > +		return 0;
-> > +
-> > +	if (list_empty(migrate_folios))
-> > +		return 0;
+  1. Allocate cold memory(mmap+memset) at DRAM node, then make the
+     process sleep.
+  2. Launch redis-server and load prebaked snapshot image, dump.rdb.
+     (85GB consumed: 52GB for anon and 33GB for file cache)
+  *. "Turn on DAMON."
+  4. Run YCSB to make zipfian distribution of memory accesses to
+     redis-server, then measure execution time.
+  5. Repeat 4 over 50 times to measure the average execution time for
+     each run.
+  6. Increase the cold memory size then repeat goes to 2.
+
+In the "DAMON lazy" senario, DAMON started monitoring late so the
+initial redis-server placement is same as "default", but started to
+demote cold data and promote redis data just before YCSB run.
+
+The full test result is as follows.
+
+  1. YCSB zipfian distribution read only workload
+  memory pressure with cold memory on node0 with 512GB of local DRAM.
+  =============+================================================+=========
+               |       cold memory occupied by mmap and memset  |
+               |   0G  440G  450G  460G  470G  480G  490G  500G |
+  =============+================================================+=========
+  Execution time normalized to DRAM-only values                 | GEOMEAN
+  -------------+------------------------------------------------+---------
+  DRAM-only    | 1.00     -     -     -     -     -     -     - | 1.00
+  CXL-only     | 1.22     -     -     -     -     -     -     - | 1.22
+  default      |    -  1.12  1.13  1.14  1.16  1.19  1.21  1.21 | 1.17
+  DAMON tiered |    -  1.04  1.03  1.04  1.06  1.05  1.05  1.05 | 1.05
+  DAMON lazy   |    -  1.04  1.05  1.05  1.06  1.06  1.07  1.07 | 1.06
+  =============+================================================+=========
+  CXL usage of redis-server in GB                               | AVERAGE
+  -------------+------------------------------------------------+---------
+  DRAM-only    |  0.0     -     -     -     -     -     -     - |  0.0
+  CXL-only     | 52.6     -     -     -     -     -     -     - | 52.6
+  default      |    -  20.4  27.0  33.1  39.5  45.6  50.5  50.3 | 38.1
+  DAMON tiered |    -   0.1   0.3   0.8   0.6   0.7   1.3   0.9 |  0.7
+  DAMON lazy   |    -   2.9   3.1   3.7   4.7   6.6   8.2   9.7 |  5.6
+  =============+================================================+=========
+  Migration size in GB by DAMOS_MIGRATE_COLD(demotion) and      |
+  DAMOS_MIGRATE_HOT(promotion)                                  | AVERAGE
+  -------------+------------------------------------------------+---------
+  DAMON tiered |                                                |
+  - demotion   |    -   522   510   523   520   513   558   558 |  529
+  - promotion  |    -   0.1   1.3   6.2   8.1   7.2    22    17 |  8.8
+  DAMON lazy   |                                                |
+  - demotion   |    -   288   277   322   343   315   312   320 |  311
+  - promotion  |    -    33    44    41    55    73    89   101 |  5.6
+  =============+================================================+=========
+
+I have included "DAMON lazy" result and also the migration size by new
+DAMOS migrate actions.  Please note that demotion size is way higher
+than promotion because promotion target is only for redis data, but
+demotion target includes huge cold memory allocated by mmap + memset.
+(there could be some ping-pong issue though.)
+
+As you mentioned, "DAMON tiered" case gets more benefit because new
+redis allocations go to DRAM more than "default", but it also gets
+benefit from promotion when it is under higher memory pressure as shown
+in 490G and 500G cases.  It promotes 22GB and 17GB of redis data to DRAM
+from CXL.
+
+In the case of "DAMON lazy", it shows more promotion size as expected
+and it gets increases as memory pressure goes higher from left to right.
+
+I will share "latest" workload result as well and it shows similar
+tendency.
+
+  2. YCSB latest distribution read only workload
+  memory pressure with cold memory on node0 with 512GB of local DRAM.
+  =============+================================================+=========
+               |       cold memory occupied by mmap and memset  |
+               |   0G  440G  450G  460G  470G  480G  490G  500G |
+  =============+================================================+=========
+  Execution time normalized to DRAM-only values                 | GEOMEAN
+  -------------+------------------------------------------------+---------
+  DRAM-only    | 1.00     -     -     -     -     -     -     - | 1.00
+  CXL-only     | 1.18     -     -     -     -     -     -     - | 1.18
+  default      |    -  1.18  1.19  1.18  1.18  1.17  1.19  1.18 | 1.18 
+  DAMON tiered |    -  1.04  1.04  1.04  1.05  1.04  1.05  1.05 | 1.04 
+  DAMON lazy   |    -  1.05  1.05  1.06  1.06  1.07  1.06  1.07 | 1.06
+  =============+================================================+=========
+  CXL usage of redis-server in GB                               | AVERAGE
+  -------------+------------------------------------------------+---------
+  DRAM-only    |  0.0     -     -     -     -     -     -     - |  0.0
+  CXL-only     | 52.6     -     -     -     -     -     -     - | 52.6
+  default      |    -  20.5  27.1  33.2  39.5  45.5  50.4  50.5 | 38.1
+  DAMON tiered |    -   0.2   0.4   0.7   1.6   1.2   1.1   3.4 |  1.2
+  DAMON lazy   |    -   5.3   4.1   3.9   6.4   8.8  10.1  11.3 |  7.1
+  =============+================================================+=========
+  Migration size in GB by DAMOS_MIGRATE_COLD(demotion) and      |
+  DAMOS_MIGRATE_HOT(promotion)                                  | AVERAGE
+  -------------+------------------------------------------------+---------
+  DAMON tiered |                                                |
+  - demotion   |    -   493   478   487   516   510   540   512 |  505
+  - promotion  |    -   0.1   0.2   8.2   5.6   4.0   5.9    29 |  7.5
+  DAMON lazy   |                                                |
+  - demotion   |    -   315   318   293   290   308   322   286 |  305
+  - promotion  |    -    36    45    38    56    74    91    99 |   63
+  =============+================================================+=========
+
+> Additionally, do you have any data on workloads that exceed the capacity
+> of the DRAM tier?  Here you say you have 512GB of local DRAM, but only
+> test a workload that caps out at 500G.  Have you run a test of, say,
+> 550GB to see the effect of DAMON HOT/COLD migration actions when DRAM
+> capacity is exceeded?
+
+I didn't want to remove DRAM from my server so kept using 512GB of DRAM,
+but I couldn't make a single workload that consumes more than the DRAM
+size.
+
+I wanted to use more realistic workload rather than micro benchmarks.
+And the core concept of this test is to cover realisitic senarios with
+the system wide view.  I think if the system has 512GB of local DRAM,
+then it wouldn't be possible to make the entire 512GB of DRAM hot and
+it'd have some amount of cold memory, which can be the target of
+demotion.  Then we can find some workload that is actively used and
+promote it as much as possible.  That's why I made the promotion policy
+aggressively.
+
+> Can you also provide the DRAM-only results for each test?  Presumably,
+> as workload size increases from 440G to 500G, the system probably starts
+> using some amount of swap/zswap/whatever.  It would be good to know how
+> this system compares to swap small amounts of overflow.
+
+It looks like my explanation doesn't correctly inform you.   The size
+from 440GB to 500GB is for pre allocated cold data to give memory
+pressure on the system so that redis-server cannot be fully allocated at
+fast DRAM, then partially allocated at CXL memory as well.
+
+And my evaluation environment doesn't have swap space to focus on
+migration rather than swap.
+
 > 
-> Can't these checks be done by the caller?
+> ~Gregory
 
-Sure.  I will move them to the caller.
-
-> > +
-> > +	/* Migration ignores all cpuset and mempolicy settings */
-> > +	migrate_pages(migrate_folios, alloc_migrate_folio, NULL,
-> > +		      (unsigned long)&mtc, MIGRATE_ASYNC, MR_DAMON,
-> > +		      &nr_succeeded);
-> > +
-> > +	return nr_succeeded;
-> > +}
-> > +
-> > +static unsigned int damon_pa_migrate_folio_list(struct list_head *folio_list,
-> > +						struct pglist_data *pgdat,
-> > +						enum migration_mode mm,
-> 
-> Again, 'mm' makes my poor brain a bit confused.  What about 'mode'?
-> And, seems this is not used at all in this function?  Can we just drop this?
-
-Ack.  I will remove it in this patch and introduce it in the patch where
-it's used.
-
-> > +						int target_nid)
-> > +{
-> > +	unsigned int nr_migrated = 0;
-> > +	struct folio *folio;
-> > +	LIST_HEAD(ret_folios);
-> > +	LIST_HEAD(migrate_folios);
-> > +
-> > +	cond_resched();
-> 
-> We will do this again at the beginning of the loop.  Do we need this here?
-
-This comes from shrink_folio_list() but this function is way simpler so
-it can be removed.
-
-> > +
-> > +	while (!list_empty(folio_list)) {
-> > +		struct folio *folio;
-> > +
-> > +		cond_resched();
-> > +
-> > +		folio = lru_to_folio(folio_list);
-> > +		list_del(&folio->lru);
-> > +
-> > +		if (!folio_trylock(folio))
-> > +			goto keep;
-> > +
-> > +		VM_BUG_ON_FOLIO(folio_test_active(folio), folio);
-> 
-> Why?  I think we could want to migrate active pages in some use case, e.g., to
-> reduce memory bandwidth?
-
-Yeah, I will remove it.
-
-> > +
-> > +		/* Relocate its contents to another node. */
-> > +		list_add(&folio->lru, &migrate_folios);
-> > +		folio_unlock(folio);
-> > +		continue;
-> > +keep:
-> > +		list_add(&folio->lru, &ret_folios);
-> > +		VM_BUG_ON_FOLIO(folio_test_lru(folio), folio);
-> 
-> Can this happen?  I think this could be too much test?  checkpatch.pl also
-> warns.
-
-Likewise, the current shrink_folio_list does so brought it in this patch
-as well, but I think we can remove it here.
-
-> > +	}
-> > +	/* 'folio_list' is always empty here */
-> > +
-> > +	/* Migrate folios selected for migration */
-> > +	nr_migrated += migrate_folio_list(&migrate_folios, pgdat, target_nid);
-> > +	/* Folios that could not be migrated are still in @migrate_folios */
-> > +	if (!list_empty(&migrate_folios)) {
-> > +		/* Folios which weren't migrated go back on @folio_list */
-> > +		list_splice_init(&migrate_folios, folio_list);
-> > +	}
-> 
-> Let's not use braces for single statement
-> (https://docs.kernel.org/process/coding-style.html#placing-braces-and-spaces).
-
-Hmm.. I know the convention but left it as is because of the comment.
-If I remove the braces, it would have a weird alignment for the two
-lines for comment and statement lines.
-
-> > +
-> > +	try_to_unmap_flush();
-> > +
-> > +	list_splice(&ret_folios, folio_list);
-> 
-> Can't we move remaining folios in migrate_folios to ret_folios at once?
-
-I will see if it's possible.
-
-> > +
-> > +	while (!list_empty(folio_list)) {
-> > +		folio = lru_to_folio(folio_list);
-> > +		list_del(&folio->lru);
-> > +		folio_putback_lru(folio);
-> > +	}
-> > +
-> > +	return nr_migrated;
-> > +}
-> > +
-> > +static unsigned long damon_pa_migrate_pages(struct list_head *folio_list,
-> > +					    enum migration_mode mm,
-> 
-> Again, I'd prefer calling this 'mode' or something other than 'mm'.
-> And, seems 'mm' is not really used in this function.  It is passed to
-> 'damon_pa_migrate_folio_list()' but it deosn't really use it.  Can we drop
-> this?
-
-Sure.  I will drop it here and rename it to "mode" where it's used.
-
-> > +					    int target_nid)
-> > +{
-> > +	int nid;
-> > +	unsigned int nr_migrated = 0;
-> 
-> Let's make this matches with the return type of this function.
-
-Ack.  will change it to unsigned long.
-
-> > +	LIST_HEAD(node_folio_list);
-> > +	unsigned int noreclaim_flag;
-> > +
-> > +	if (list_empty(folio_list))
-> > +		return nr_migrated;
-> > +
-> > +	noreclaim_flag = memalloc_noreclaim_save();
-> > +
-> > +	nid = folio_nid(lru_to_folio(folio_list));
-> > +	do {
-> > +		struct folio *folio = lru_to_folio(folio_list);
-> > +
-> > +		if (nid == folio_nid(folio)) {
-> > +			folio_clear_active(folio);
-> 
-> I think this was necessary for demotion, but now this should be removed since
-> this function is no more for demotion but for migrating random pages, right?
-
-Yeah,  it can be removed because we do migration instead of demotion,
-but I need to make sure if it doesn't change the performance evaluation
-results.
-
-> > +			list_move(&folio->lru, &node_folio_list);
-> > +			continue;
-> > +		}
-> > +
-> > +		nr_migrated += damon_pa_migrate_folio_list(&node_folio_list,
-> > +							   NODE_DATA(nid), mm,
-> > +							   target_nid);
-> > +		nid = folio_nid(lru_to_folio(folio_list));
-> > +	} while (!list_empty(folio_list));
-> > +
-> > +	nr_migrated += damon_pa_migrate_folio_list(&node_folio_list,
-> > +						   NODE_DATA(nid), mm,
-> > +						   target_nid);
-> > +
-> > +	memalloc_noreclaim_restore(noreclaim_flag);
-> > +
-> > +	return nr_migrated;
-> > +}
-> > +
-> >  static unsigned long damon_pa_migrate(struct damon_region *r, struct damos *s,
-> >  				      enum migration_mode mm)
-> >  {
-> > @@ -247,7 +379,11 @@ static unsigned long damon_pa_migrate(struct damon_region *r, struct damos *s,
-> >  		folio_test_clear_young(folio);
-> >  		if (!folio_isolate_lru(folio))
-> >  			goto put_folio;
-> > -		if (folio_test_unevictable(folio))
-> > +		/*
-> > +		 * Since unevictable folios can be demoted or promoted,
-> 
-> Let's use the term 'migrated' instead of 'demoted' or 'promoted'.
-
-Ack.
-
-> > +		 * unevictable test is needed only for pageout.
-> > +		 */
-> > +		if (mm == MIG_PAGEOUT && folio_test_unevictable(folio))
-> >  			folio_putback_lru(folio);
-> >  		else
-> >  			list_add(&folio->lru, &folio_list);
-> > @@ -258,6 +394,10 @@ static unsigned long damon_pa_migrate(struct damon_region *r, struct damos *s,
-> >  	case MIG_PAGEOUT:
-> >  		applied = reclaim_pages(&folio_list);
-> >  		break;
-> > +	case MIG_MIGRATE_COLD:
-> > +		applied = damon_pa_migrate_pages(&folio_list, mm,
-> > +						 s->target_nid);
-> > +		break;
-> >  	default:
-> >  		/* Unexpected migration mode. */
-> >  		return 0;
-> > @@ -314,6 +454,8 @@ static unsigned long damon_pa_apply_scheme(struct damon_ctx *ctx,
-> >  		return damon_pa_mark_accessed(r, scheme);
-> >  	case DAMOS_LRU_DEPRIO:
-> >  		return damon_pa_deactivate_pages(r, scheme);
-> > +	case DAMOS_MIGRATE_COLD:
-> > +		return damon_pa_migrate(r, scheme, MIG_MIGRATE_COLD);
-> >  	case DAMOS_STAT:
-> >  		break;
-> >  	default:
-> > @@ -334,6 +476,8 @@ static int damon_pa_scheme_score(struct damon_ctx *context,
-> >  		return damon_hot_score(context, r, scheme);
-> >  	case DAMOS_LRU_DEPRIO:
-> >  		return damon_cold_score(context, r, scheme);
-> > +	case DAMOS_MIGRATE_COLD:
-> > +		return damon_cold_score(context, r, scheme);
-> >  	default:
-> >  		break;
-> >  	}
-> > diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
-> > index 1a30ea82c890..18b7d054c748 100644
-> > --- a/mm/damon/sysfs-schemes.c
-> > +++ b/mm/damon/sysfs-schemes.c
-> > @@ -1406,6 +1406,7 @@ static const char * const damon_sysfs_damos_action_strs[] = {
-> >  	"nohugepage",
-> >  	"lru_prio",
-> >  	"lru_deprio",
-> > +	"migrate_cold",
-> >  	"stat",
-> >  };
-> >  
-> > @@ -1659,6 +1660,9 @@ static ssize_t target_nid_store(struct kobject *kobj,
-> >  			struct damon_sysfs_scheme, kobj);
-> >  	int err = 0;
-> >  
-> > +        if (scheme->action != DAMOS_MIGRATE_COLD)
-> > +                return -EINVAL;
-> > +
-> 
-> I think user could set target_nid first, and then action.  So I think this
-> should not return error?
-
-Make sense.  I will drop this check.
+I hope my explanation is helpful for you to understand.  Please let me
+know if you have more questions.
 
 Thanks,
 Honggyu
 
-> >  	/* TODO: error handling for target_nid range. */
-> >  	err = kstrtoint(buf, 0, &scheme->target_nid);
-> >  
-> > -- 
-> > 2.34.1
-> > 
-> > 
-> 
-> 
-> Thanks,
-> SJ
