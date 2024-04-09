@@ -1,61 +1,29 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 279EF1E489;
-	Mon,  8 Apr 2024 17:52:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+Received: from invmail4.hynix.com (exvmail4.skhynix.com [166.125.252.92])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 88FEF2B2DD
+	for <damon@lists.linux.dev>; Tue,  9 Apr 2024 09:19:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=166.125.252.92
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712598752; cv=none; b=KDOa9hUn0IvIqwGTq1H9s4it83fdKd+BbEZJAKXlXAy9xfWD531tuB7ZQeODhyFO4876MfY0cGZyBcpxFwewJoIjJSiRnV1Ns9ojrKR9nC/uWtGJLkEwDapJwlVpFPH2L6053WwTDblutAM4RkL1UccQ+xCf9uvjt62MvDI7gSI=
+	t=1712654385; cv=none; b=JKZOkTBVjBSZZdFw/V6RkCCecnrCMg+TtZvR9GnZxwgwzHuX4wjJ94HxnnWpD4q+v3dISDEDSN09G8ymzgm4QrIvLzKLRuAmqZJ8oEtOWN2uL8W3PCBV40/nmkpXEJeVs9dGYVRCgqwTouS987g1Hl4kDT7KnaEp/4A0EZGjK7s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712598752; c=relaxed/simple;
-	bh=lqMYSwhK0qnhw09eJ1+Ailh7I3TSY0ZybkqE6/ufJ1c=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=B7uK9PxtrRUT9Wn28eO99LDoBx7SjBMH6h0NyWpORG/OyatYQpiYUxQcH9MWA7xVamNKvUZdiM5YzPv6344HO75GPeldaEnEbDkHdNpmVv/wDelg6psExKGH9wiQdnt2G1+NuYGrptF2IAhEifW1Fe0ZvYRY0O6QxBAZpYIuiwo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dETVU4z5; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dETVU4z5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A4BDC433F1;
-	Mon,  8 Apr 2024 17:52:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1712598751;
-	bh=lqMYSwhK0qnhw09eJ1+Ailh7I3TSY0ZybkqE6/ufJ1c=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dETVU4z5saCmnOtTCAvVfwcmZVyqiTbnvhnbyUHMbHRPFAUROww0oKuWoO6NtGdHS
-	 5f2+06+UOqSYXziqPLu06ZUoMs6i8czPHx+n8SKi1degY9Q7ekGgozVIJs3ohkrJ6u
-	 eVb082wPFbA236byh5LRflA46GI8PnahThrnYv9U7l2cgsiVcnAy1LJgzLDiuXHsXB
-	 /y1q/lwED31nG8qIWpqvtS3jtO4jwWtmHMTk7RdZ3ieR/Pz/vgfiImOrVtvDHFhP6e
-	 j2ZLcku9F1MTc7OtG9myVWttU/0DWkGZAQQle8+TV5q+4FHVQnvvFG0XsVG4MRycMn
-	 0K8vJS4x5hJxg==
-From: SeongJae Park <sj@kernel.org>
-To: Honggyu Kim <honggyu.kim@sk.com>
-Cc: SeongJae Park <sj@kernel.org>,
-	damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	akpm@linux-foundation.org,
-	apopple@nvidia.com,
-	baolin.wang@linux.alibaba.com,
-	dave.jiang@intel.com,
+	s=arc-20240116; t=1712654385; c=relaxed/simple;
+	bh=+QH8pQ8pxmAzwSQ6qHfXOk91jAy/6zzv7tELaUaMvE0=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=kqri8oAdPK+ZP2XBuuwoS1F55loUr7dpxw/7szTXdcr4CZ+YwdjiQ+yMSyYd3bfuxYM8WQNmUuqEdYovs0xgaByqOgxCPrPHF997Wz+xW53QlCSFRlMthqUc9Wjw++1TxF1wa5OWgCBTeXY0y4l93+dqUDS3PSR7qhoXlQGEaIw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sk.com; spf=pass smtp.mailfrom=sk.com; arc=none smtp.client-ip=166.125.252.92
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sk.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sk.com
+X-AuditID: a67dfc5b-d6dff70000001748-25-6615082a1610
+From: Honggyu Kim <honggyu.kim@sk.com>
+To: SeongJae Park <sj@kernel.org>
+Cc: honggyu.kim@sk.com,
 	hyeongtak.ji@sk.com,
 	kernel_team@skhynix.com,
-	linmiaohe@huawei.com,
-	linux-kernel@vger.kernel.org,
-	linux-trace-kernel@vger.kernel.org,
-	mathieu.desnoyers@efficios.com,
-	mhiramat@kernel.org,
-	rakie.kim@sk.com,
-	rostedt@goodmis.org,
-	surenb@google.com,
-	yangx.jy@fujitsu.com,
-	ying.huang@intel.com,
-	ziy@nvidia.com,
-	42.hyeyoo@gmail.com,
-	art.jeongseob@gmail.com
-Subject: Re: [RFC PATCH v3 5/7] mm/damon/paddr: introduce DAMOS_MIGRATE_COLD action for demotion
-Date: Mon,  8 Apr 2024 10:52:28 -0700
-Message-Id: <20240408175228.91414-1-sj@kernel.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20240408120648.2947-1-honggyu.kim@sk.com>
-References: 
+	damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org
+Subject: 
+Date: Tue,  9 Apr 2024 18:18:09 +0900
+Message-ID: <20240409091812.3003-1-honggyu.kim@sk.com>
+X-Mailer: git-send-email 2.43.0.windows.1
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -63,134 +31,81 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprMLMWRmVeSWpSXmKPExsXC9ZZnoa4Wh2iawdlflhZP/v9mtbi8aw6b
+	xb01/1ktDn99w+TA4rFpVSebx6ZPk9g9XmyeyejxeZNcAEsUl01Kak5mWWqRvl0CV8biqV8Y
+	C44JV6w/WNzA+Iu/i5GDQ0LARGLpjtwuRk4w8/Llr2wgNpuAmsSVl5OYQGwRAUWJc48vsnYx
+	cnEwC0xnlNh4YjMrSEJYgFNiU/d5dhCbRUBVYsHjjWA2r4CZxNv2g+wQQzUlHm//CRUXlDg5
+	8wkLiM0sIC/RvHU2M8hQCYGvrBJLl06HapCUOLjiBssERt5ZSHpmIelZwMi0ilEoM68sNzEz
+	x0QvozIvs0IvOT93EyMwqJbV/onewfjpQvAhRgEORiUeXourwmlCrIllxZW5hxglOJiVRHiD
+	TQXThHhTEiurUovy44tKc1KLDzFKc7AoifMafStPERJITyxJzU5NLUgtgskycXBKNTDqWnD5
+	/FVb/SBf/ND211Nkr7+ZXuLv7303r449s82OtcDp7keGCsX85cnb79zZeP624oXr7f++705a
+	1i1uEShluzLvyALGJBF+g65fX+MC1EU35Rzh6ghOeMW079rJNZJsVQukYt0i9qTyn4xNizvg
+	4L/jw60nK0K2Hrx3bc5+2Xu9pXsPSNsosRRnJBpqMRcVJwIA7V/FaiYCAAA=
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFupkluLIzCtJLcpLzFFi42LhmqGlp6vFIZpm8Ou/nsWT/79ZLT4/e81s
+	0fnkO6PF4bknWS0u75rDZnFvzX9Wi8Nf3zA5sHtsWtXJ5rHp0yR2jxebZzJ6fLvt4bH4xQcm
+	j8+b5ALYorhsUlJzMstSi/TtErgyFk/9wlhwTLhi/cHiBsZf/F2MnBwSAiYSly9/ZQOx2QTU
+	JK68nMQEYosIKEqce3yRtYuRi4NZYDqjxMYTm1lBEsICnBKbus+zg9gsAqoSCx5vBLN5Bcwk
+	3rYfZIcYqinxePtPqLigxMmZT1hAbGYBeYnmrbOZJzByzUKSmoUktYCRaRWjSGZeWW5iZo6p
+	XnF2RmVeZoVecn7uJkZgAC2r/TNxB+OXy+6HGAU4GJV4eB3uCKcJsSaWFVfmHmKU4GBWEuEN
+	NhVME+JNSaysSi3Kjy8qzUktPsQozcGiJM7rFZ6aICSQnliSmp2aWpBaBJNl4uCUamDcX7Op
+	iD30Q93GCaJXp7I0pTNXN3D4Ru0SN/V9/bTdZZ/sn68+evdj/3/W/t8qpPv73UP+A8rtjxYv
+	8J6TfkS+b7nu9cmSD32tg89bZ29kSZ3Ycrbeiv3e+WnXDk47FZO/ssg4ZyV3vEWEmGw3t+m8
+	9x8jGKa8Oaw/Z/fTiKwXkQbcZ4/POzdLiaU4I9FQi7moOBEAhApk3RwCAAA=
+X-CFilter-Loop: Reflected
 
-On Mon,  8 Apr 2024 21:06:44 +0900 Honggyu Kim <honggyu.kim@sk.com> wrote:
+Subject: Re: [RFC PATCH v2 0/4] mm/damon: add a DAMOS filter type for page granularity access recheck
+In-Reply-To: <20240311204545.47097-1-sj@kernel.org>
 
-> On Fri,  5 Apr 2024 12:24:30 -0700 SeongJae Park <sj@kernel.org> wrote:
-> > On Fri,  5 Apr 2024 15:08:54 +0900 Honggyu Kim <honggyu.kim@sk.com> wrote:
-[...]
-> > > Here is one of the example usage of this 'migrate_cold' action.
-> > > 
-> > >   $ cd /sys/kernel/mm/damon/admin/kdamonds/<N>
-> > >   $ cat contexts/<N>/schemes/<N>/action
-> > >   migrate_cold
-> > >   $ echo 2 > contexts/<N>/schemes/<N>/target_nid
-> > >   $ echo commit > state
-> > >   $ numactl -p 0 ./hot_cold 500M 600M &
-> > >   $ numastat -c -p hot_cold
-> > > 
-> > >   Per-node process memory usage (in MBs)
-> > >   PID             Node 0 Node 1 Node 2 Total
-> > >   --------------  ------ ------ ------ -----
-> > >   701 (hot_cold)     501      0    601  1101
-> > > 
-> > > Since there are some common routines with pageout, many functions have
-> > > similar logics between pageout and migrate cold.
-> > > 
-> > > damon_pa_migrate_folio_list() is a minimized version of
-> > > shrink_folio_list(), but it's minified only for demotion.
-> > 
-> > MIGRATE_COLD is not only for demotion, right?  I think the last two words are
-> > better to be removed for reducing unnecessary confuses.
+Hi SeongJae,
+
+On Mon, 11 Mar 2024 13:45:41 -0700 SeongJae Park <sj@kernel.org> wrote:
+> Changes from RFC v1
+> (https://lore.kernel.org/r/20240307030013.47041-1-sj@kernel.org)
+> - Rename __damon_pa_young() to damon_folio_young_one()
+> - Mark the folio as old from the filter for the next check
 > 
-> You mean the last two sentences?  I will remove them if you feel it's
-> confusing.
-
-Yes.  My real intended suggestion was 's/only for demotion/only for
-migration/', but entirely removing the sentences is also ok for me.
-
+> DAMON allows users to specify desired ranges of overhead and accuracy of
+> the monitoring, and do its best effort to make most lightweight and
+> accurate results.  A recent discussion for tiered memory management
+> support from DAMON[1] revealed that the best effort accuracy may not
+> suffice in some use cases, while increasing the minimum accuracy can
+> incur too high overhead.  The discussion further concluded finding
+> memory regions of specific access pattern via DAMON first, and then
+> double checking the access of the region again in finer granularity
+> could help increasing the accuracy while keeping the low overhead.
 > 
-> > > 
-> > > Signed-off-by: Honggyu Kim <honggyu.kim@sk.com>
-> > > Signed-off-by: Hyeongtak Ji <hyeongtak.ji@sk.com>
-> > > ---
-> > >  include/linux/damon.h    |   2 +
-> > >  mm/damon/paddr.c         | 146 ++++++++++++++++++++++++++++++++++++++-
-> > >  mm/damon/sysfs-schemes.c |   4 ++
-> > >  3 files changed, 151 insertions(+), 1 deletion(-)
-[...]
-> > > --- a/mm/damon/paddr.c
-> > > +++ b/mm/damon/paddr.c
-[...]
-> > > +{
-> > > +	unsigned int nr_succeeded;
-> > > +	nodemask_t allowed_mask = NODE_MASK_NONE;
-> > > +
-> > 
-> > I personally prefer not having empty lines in the middle of variable
-> > declarations/definitions.  Could we remove this empty line?
+> Add a new type of DAMOS filter, namely YOUNG for such a case.  Like anon
+> and memcg, the type of filter is applied to each page of the memory
+> region of DAMOS target memory region, and check if the page is accessed
+> since the last check.  Because this is a filter type that applied in
+> page granularity, the support depends on DAMON operations set.  Because
+> there are expected usages of this filter for physical address space
+> based DAMOS usage[1], implement the support for only DAMON operations
+> set for the physical address space, paddr.
 > 
-> I can remove it, but I would like to have more discussion about this
-> issue.  The current implementation allows only a single migration
-> target with "target_nid", but users might want to provide fall back
-> migration target nids.
+> [1] https://lore.kernel.org/r/20240227235121.153277-1-sj@kernel.org
 > 
-> For example, if more than two CXL nodes exist in the system, users might
-> want to migrate cold pages to any CXL nodes.  In such cases, we might
-> have to make "target_nid" accept comma separated node IDs.  nodemask can
-> be better but we should provide a way to change the scanning order.
 > 
-> I would like to hear how you think about this.
+> SeongJae Park (4):
+>   mm/damon/paddr: implement damon_folio_young()
+>   mm/damon/paddr: implement damon_folio_mkold()
+>   mm/damon: add DAMOS filter type YOUNG
+>   mm/damon/paddr: support DAMOS filter type YOUNG
 
-Good point.  I think we could later extend the sysfs file to receive the
-comma-separated numbers, or even mask.  For simplicity, adding sysfs files
-dedicated for the different format of inputs could also be an option (e.g.,
-target_nids_list, target_nids_mask).  But starting from this single node as is
-now looks ok to me.
+I have tested your patches for evaluation of [1] and it all works fine.
+Thanks very much for doing this work!
 
-[...]
-> > > +	/* 'folio_list' is always empty here */
-> > > +
-> > > +	/* Migrate folios selected for migration */
-> > > +	nr_migrated += migrate_folio_list(&migrate_folios, pgdat, target_nid);
-> > > +	/* Folios that could not be migrated are still in @migrate_folios */
-> > > +	if (!list_empty(&migrate_folios)) {
-> > > +		/* Folios which weren't migrated go back on @folio_list */
-> > > +		list_splice_init(&migrate_folios, folio_list);
-> > > +	}
-> > 
-> > Let's not use braces for single statement
-> > (https://docs.kernel.org/process/coding-style.html#placing-braces-and-spaces).
+Tested-by: Honggyu Kim <honggyu.kim@sk.com>
+
+[1] https://lore.kernel.org/damon/20240405060858.2818-1-honggyu.kim@sk.com
+
+>  include/linux/damon.h    |  2 ++
+>  mm/damon/paddr.c         | 64 +++++++++++++++++++++++++---------------
+>  mm/damon/sysfs-schemes.c |  1 +
+>  3 files changed, 43 insertions(+), 24 deletions(-)
 > 
-> Hmm.. I know the convention but left it as is because of the comment.
-> If I remove the braces, it would have a weird alignment for the two
-> lines for comment and statement lines.
-
-I don't really hate such alignment.  But if you don't like it, how about moving
-the comment out of the if statement?  Having one comment for one-line if
-statement looks not bad to me.
-
 > 
-> > > +
-> > > +	try_to_unmap_flush();
-> > > +
-> > > +	list_splice(&ret_folios, folio_list);
-> > 
-> > Can't we move remaining folios in migrate_folios to ret_folios at once?
+> base-commit: 13043cde46a19e72d37965b67b74e564623f65e7
+> -- 
+> 2.39.2
 > 
-> I will see if it's possible.
-
-Thank you.  Not a strict request, though.
-
-[...]
-> > > +	nid = folio_nid(lru_to_folio(folio_list));
-> > > +	do {
-> > > +		struct folio *folio = lru_to_folio(folio_list);
-> > > +
-> > > +		if (nid == folio_nid(folio)) {
-> > > +			folio_clear_active(folio);
-> > 
-> > I think this was necessary for demotion, but now this should be removed since
-> > this function is no more for demotion but for migrating random pages, right?
-> 
-> Yeah,  it can be removed because we do migration instead of demotion,
-> but I need to make sure if it doesn't change the performance evaluation
-> results.
-
-Yes, please ensure the test results are valid :)
-
-
-Thanks,
-SJ
-
-[...]
