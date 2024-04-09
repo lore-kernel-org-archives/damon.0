@@ -1,21 +1,34 @@
-Received: from invmail4.hynix.com (exvmail4.skhynix.com [166.125.252.92])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D49335339A
-	for <damon@lists.linux.dev>; Tue,  9 Apr 2024 10:00:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=166.125.252.92
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA2624F883;
+	Tue,  9 Apr 2024 16:18:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712656808; cv=none; b=Tj7Dgtlq/UGiRW9xRKmnsa3vMLk/z8jK5UwkoedVGaW5PrtM6+uOByhVa9zmkj9ibVCJG1+tPHRj6iryH2v5L1gyPmI/Db+cdM8/dPe+9WMyA9QsowuAUAS0zogXCmLU18mLcZK/phnccLy4xZnpaz/SEZEGBZYC1ZfV24enRNw=
+	t=1712679531; cv=none; b=LhMo76AITzhTtAxZGvveoen8sZGOYpVq35UN0bAW2o00zMyjY1aDFAlbdJVrHv63I2RF2qZ4OCWKHbfI80D9irqqFdCFFOMzBvjItKzYxgFJ9LV0BUKllQQlDHo1SaV++BlZtZUET7mBWPZcCQz6W80BktMdeM85yG5mGpRWglQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712656808; c=relaxed/simple;
-	bh=PWHWpU3HfxEIvM1NEYrjRyi00N8E+szL532KiAT9qu8=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CbEXQFeFLPH78y+5ge6xzMdWZoYYcCFzww0Oex5ov5ukYmBVp4htF6W5/X10HVjyqtMVUdW/p55K18YhUAcR8QY9kUKieSjAO/gO24MGmfs8V7CimKiP4VCVUMXXTwvCQursXq0yZedN6UJMkL7Il4Q40bi90gwsQO0zIjOuaoQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sk.com; spf=pass smtp.mailfrom=sk.com; arc=none smtp.client-ip=166.125.252.92
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sk.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sk.com
-X-AuditID: a67dfc5b-d85ff70000001748-01-661511a3ac4d
-From: Honggyu Kim <honggyu.kim@sk.com>
+	s=arc-20240116; t=1712679531; c=relaxed/simple;
+	bh=a7Fm72paZyRNRsqpCjczySMYH6WBySfKD6PeLYfDdc8=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=hIo74OUWufr+LG+sTSFNL6KWCjpJcM5KpBp5u9Nfud64jWD+ELvmjDhr+lIveXNdmpcIOC7j6BPY33XTRt/TsmupO86SkXX9LQXilxRP8rEbUS7m78gzHDYZ0rnkNfmT6qLh9P2uySs7ajA63CChqMRGTd2IN+VJQ0rEKm01Rtk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CbH0ZbOo; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CbH0ZbOo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C6D6C433F1;
+	Tue,  9 Apr 2024 16:18:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1712679531;
+	bh=a7Fm72paZyRNRsqpCjczySMYH6WBySfKD6PeLYfDdc8=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=CbH0ZbOoWsMrhL0l3zU/ykCadFbwmA849ytybkTc3goAXFXVXT1+T3MHAVioTeAMa
+	 HLIOD408RCHYNsYlbVsRzhoQlWayG0IRriXNowb2NudweVWcZQRFS3Qw8o4znU5iSR
+	 cl6cjLy5/9VgJEEGo8mmrg4WSMBsaBMS2xHnXICnvD7wZZfjJNsDYhH9un7v5/EUPH
+	 qRbOp61cjpMyA5+8D3+iJzXgbfzS5uk98bDmjxA6YjW5HEdb4v2/Qu57TuluRK+oSz
+	 qxqSgs/m+yQ1txjhzKkr/SvOQ597RyxCoqGzG8+DYbUiF/ylbrvKq9Ini5ochsFJJg
+	 6ajcY56aBrZhA==
+From: SeongJae Park <sj@kernel.org>
 To: Honggyu Kim <honggyu.kim@sk.com>
-Cc: sj@kernel.org,
+Cc: SeongJae Park <sj@kernel.org>,
 	damon@lists.linux.dev,
 	linux-mm@kvack.org,
 	akpm@linux-foundation.org,
@@ -36,13 +49,12 @@ Cc: sj@kernel.org,
 	ying.huang@intel.com,
 	ziy@nvidia.com,
 	42.hyeyoo@gmail.com,
-	art.jeongseob@gmail.com,
-	Gregory Price <gregory.price@memverge.com>
-Subject: Re: [RFC PATCH v3 0/7] DAMON based tiered memory management for CXL
-Date: Tue,  9 Apr 2024 18:59:38 +0900
-Message-ID: <20240409095958.3067-1-honggyu.kim@sk.com>
-X-Mailer: git-send-email 2.43.0.windows.1
-In-Reply-To: <20240408134108.2970-1-honggyu.kim@sk.com>
+	art.jeongseob@gmail.com
+Subject: Re: [RFC PATCH v3 5/7] mm/damon/paddr: introduce DAMOS_MIGRATE_COLD action for demotion
+Date: Tue,  9 Apr 2024 09:18:47 -0700
+Message-Id: <20240409161847.65803-1-sj@kernel.org>
+X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20240409095418.3051-1-honggyu.kim@sk.com>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -51,74 +63,50 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrHIsWRmVeSWpSXmKPExsXC9ZZnoe5iQdE0g6UT9Swm9hhYzFm/hs1i
-	140Qi/sPXrNb/N97jNHiyf/frBYnbjayWTQ0PWKx6Py+lMXi8q45bBb31vxntTiy/iyLxeaz
-	Z5gtFi9Xs9jX8YDJ4vDXN0wWky8tYLN4MeUMo8XJWZNZLGYfvcfuIOKx9PQbNo8NTUBi56y7
-	7B4t+26xeyzYVOrRcuQtq8fiPS+ZPDat6mTz2PRpErvHiRm/WTx2PrT0eLF5JqPHxo//2T16
-	m9+xeXzeJBfAH8Vlk5Kak1mWWqRvl8CVcejOTJaCe3wVS19eYWtgXM7dxcjJISFgIrHm4SV2
-	GLv3VR8jiM0moCZx5eUkJhBbREBFYu3BKWxdjFwczALXWSRWT7gBlhAW8JGYMqcDqJmDg0VA
-	VeLoNjmQMK+AmcSkJYuYIGZqSjze/hNsPqeAucT265vB5gsJ8Ei82rCfEaJeUOLkzCcsIDaz
-	gLxE89bZzCC7JASusUv0zZnOBjFIUuLgihssExj5ZyHpmYWkZwEj0ypGocy8stzEzBwTvYzK
-	vMwKveT83E2MwFhcVvsnegfjpwvBhxgFOBiVeHgtrgqnCbEmlhVX5h5ilOBgVhLhDTYVTBPi
-	TUmsrEotyo8vKs1JLT7EKM3BoiTOa/StPEVIID2xJDU7NbUgtQgmy8TBKdXA6M/sueVy0H/5
-	+y9maaefid82gePI9o0ceV9k/86e3bBiYahKuPJTg+OBHu1CE3bMzGBIdVne4b9P5u2THz5X
-	I6VuN7MHFC0p+Mn/Qjxqf0vNFtafPK9v8PC9mfi/d13TxrjoaZHT76rqzzvhw/6ny3BST19C
-	wnL5N36mzsFLXyV0/CsT2PWQW4mlOCPRUIu5qDgRAPb8mdPBAgAA
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrCIsWRmVeSWpSXmKPExsXCNUNLT3exoGiawYtDMhYTewws5qxfw2ax
-	60aIxf0Hr9kt/u89xmjx5P9vVosTNxvZLBqaHrFYfH72mtmi88l3RovDc0+yWnR+X8picXnX
-	HDaLe2v+s1ocWX+WxWLz2TPMFouXq1kcuvac1WJfxwMmi8Nf3zBZTL60gM3ixZQzjBYnZ01m
-	sZh99B67g4TH0tNv2Dw2NAGJnbPusnu07LvF7rFgU6lHy5G3rB6L97xk8ti0qpPNY9OnSewe
-	J2b8ZvHY+dDS48XmmYweGz/+Z/fobX7H5vHttofH4hcfmAIEo7hsUlJzMstSi/TtErgyDt2Z
-	yVJwj69i6csrbA2My7m7GDk5JARMJHpf9TGC2GwCahJXXk5iArFFBFQk1h6cwtbFyMXBLHCd
-	RWL1hBtgCWEBH4kpczrYuxg5OFgEVCWObpMDCfMKmElMWrKICWKmpsTj7T/ZQWxOAXOJ7dc3
-	g80XEuCReLVhPyNEvaDEyZlPWEBsZgF5ieats5knMPLMQpKahSS1gJFpFaNIZl5ZbmJmjqle
-	cXZGZV5mhV5yfu4mRmDcLav9M3EH45fL7ocYBTgYlXh4He4IpwmxJpYVV+YeYpTgYFYS4Q02
-	FUwT4k1JrKxKLcqPLyrNSS0+xCjNwaIkzusVnpogJJCeWJKanZpakFoEk2Xi4JRqYIxWmBC2
-	MSDafAX3Y9vnLOHHf5boPnvueKjxppyrz4kzro8NGue6cdZvvmG8uNpw5x7uWWsuc+41Un8f
-	+ds67/GkDLWwB93z/tbMEb++0PJHv1vOLmO7a77Lr6cx3r5zjTsv8FLpnuqdja8Xt8gssWj4
-	N7vrn9o0y3jhd5uLf3DYdPAICG+NclViKc5INNRiLipOBAAVrgmltwIAAA==
-X-CFilter-Loop: Reflected
 
-On Mon,  8 Apr 2024 22:41:04 +0900 Honggyu Kim <honggyu.kim@sk.com> wrote:
+Hi Honggyu,
+
+On Tue,  9 Apr 2024 18:54:14 +0900 Honggyu Kim <honggyu.kim@sk.com> wrote:
+> On Mon,  8 Apr 2024 10:52:28 -0700 SeongJae Park <sj@kernel.org> wrote:
+> > On Mon,  8 Apr 2024 21:06:44 +0900 Honggyu Kim <honggyu.kim@sk.com> wrote:
+> > > On Fri,  5 Apr 2024 12:24:30 -0700 SeongJae Park <sj@kernel.org> wrote:
+> > > > On Fri,  5 Apr 2024 15:08:54 +0900 Honggyu Kim <honggyu.kim@sk.com> wrote:
 [...]
-> To explain this, I better share more test results.  In the section of
-> "Evaluation Workload", the test sequence can be summarized as follows.
+> > > I can remove it, but I would like to have more discussion about this
+> > > issue.  The current implementation allows only a single migration
+> > > target with "target_nid", but users might want to provide fall back
+> > > migration target nids.
+> > > 
+> > > For example, if more than two CXL nodes exist in the system, users might
+> > > want to migrate cold pages to any CXL nodes.  In such cases, we might
+> > > have to make "target_nid" accept comma separated node IDs.  nodemask can
+> > > be better but we should provide a way to change the scanning order.
+> > > 
+> > > I would like to hear how you think about this.
+> > 
+> > Good point.  I think we could later extend the sysfs file to receive the
+> > comma-separated numbers, or even mask.  For simplicity, adding sysfs files
+> > dedicated for the different format of inputs could also be an option (e.g.,
+> > target_nids_list, target_nids_mask).  But starting from this single node as is
+> > now looks ok to me.
 > 
->   *. "Turn on DAMON."
->   1. Allocate cold memory(mmap+memset) at DRAM node, then make the
->      process sleep.
->   2. Launch redis-server and load prebaked snapshot image, dump.rdb.
->      (85GB consumed: 52GB for anon and 33GB for file cache)
->   3. Run YCSB to make zipfian distribution of memory accesses to
->      redis-server, then measure execution time.
->   4. Repeat 4 over 50 times to measure the average execution time for
->      each run.
+> If you think we can start from a single node, then I will keep it as is.
+> But are you okay if I change the same 'target_nid' to accept
+> comma-separated numbers later?  Or do you want to introduce another knob
+> such as 'target_nids_list'?  What about rename 'target_nid' to
+> 'target_nids' at the first place?
 
-Sorry, "Repeat 4 over 50 times" is incorrect.  This should be "Repeat 3
-over 50 times".
+I have no strong concern or opinion about this at the moment.  Please feel free
+to renaming it to 'taget_nids' if you think that's better.
 
->   5. Increase the cold memory size then repeat goes to 2.
-> 
-> I didn't want to make the evaluation too long in the cover letter, but
-> I have also evaluated another senario, which lazyly enabled DAMON just
-> before YCSB run at step 4.  I will call this test as "DAMON lazy".  This
-> is missing part from the cover letter.
-> 
->   1. Allocate cold memory(mmap+memset) at DRAM node, then make the
->      process sleep.
->   2. Launch redis-server and load prebaked snapshot image, dump.rdb.
->      (85GB consumed: 52GB for anon and 33GB for file cache)
->   *. "Turn on DAMON."
->   4. Run YCSB to make zipfian distribution of memory accesses to
->      redis-server, then measure execution time.
->   5. Repeat 4 over 50 times to measure the average execution time for
->      each run.
->   6. Increase the cold memory size then repeat goes to 2.
-> 
-> In the "DAMON lazy" senario, DAMON started monitoring late so the
-> initial redis-server placement is same as "default", but started to
-> demote cold data and promote redis data just before YCSB run.
 [...]
+> Please note that I will be out of office this week so won't be able to
+> answer quickly.
+
+No problem, I hope you to take and enjoy your time :)
+
 
 Thanks,
-Honggyu
+SJ
+
+[...]
