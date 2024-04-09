@@ -1,60 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA2624F883;
-	Tue,  9 Apr 2024 16:18:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 876CE158D9C;
+	Tue,  9 Apr 2024 23:05:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712679531; cv=none; b=LhMo76AITzhTtAxZGvveoen8sZGOYpVq35UN0bAW2o00zMyjY1aDFAlbdJVrHv63I2RF2qZ4OCWKHbfI80D9irqqFdCFFOMzBvjItKzYxgFJ9LV0BUKllQQlDHo1SaV++BlZtZUET7mBWPZcCQz6W80BktMdeM85yG5mGpRWglQ=
+	t=1712703913; cv=none; b=uAHKNR9+Ta99QhvtFZBgW0pwG6iQB5FcPx0y8HrKxFiO/MPEnfMTvlUgXFN51uyxW3j/hl2zgPXy4+2TGsj6Ez/KPEaqG5eHBRCjTWnwAy1zrS0XtP6BoqTiE3QyhS9htaY5Mu87kCltT6WZ9kIXrH15YG1ppb6hTMd22e92eEI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712679531; c=relaxed/simple;
-	bh=a7Fm72paZyRNRsqpCjczySMYH6WBySfKD6PeLYfDdc8=;
+	s=arc-20240116; t=1712703913; c=relaxed/simple;
+	bh=JpiDdYF+w6gmwqQJ37NKkF9DXGvg/Cm8SjNiCArVRFg=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=hIo74OUWufr+LG+sTSFNL6KWCjpJcM5KpBp5u9Nfud64jWD+ELvmjDhr+lIveXNdmpcIOC7j6BPY33XTRt/TsmupO86SkXX9LQXilxRP8rEbUS7m78gzHDYZ0rnkNfmT6qLh9P2uySs7ajA63CChqMRGTd2IN+VJQ0rEKm01Rtk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CbH0ZbOo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lqz5gai/l4Zd9ZbC+/bEQxxjcX2kL6rImaf/w6VLdJy9StQKg7wxQppDFxR2j5WCHD3wDaIeEWoHFY2Ujo/qK/Z7UVn1ohRtEEOvhgLQVmRjkKVCdicwUA9YrW6r/8wGt9AxuMLFqA+iNMR+b6lzPbPc6dH0yJIdQ92PVKoVHrQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZRYkmkzu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CbH0ZbOo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C6D6C433F1;
-	Tue,  9 Apr 2024 16:18:49 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZRYkmkzu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DBE3C433C7;
+	Tue,  9 Apr 2024 23:05:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1712679531;
-	bh=a7Fm72paZyRNRsqpCjczySMYH6WBySfKD6PeLYfDdc8=;
+	s=k20201202; t=1712703913;
+	bh=JpiDdYF+w6gmwqQJ37NKkF9DXGvg/Cm8SjNiCArVRFg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CbH0ZbOoWsMrhL0l3zU/ykCadFbwmA849ytybkTc3goAXFXVXT1+T3MHAVioTeAMa
-	 HLIOD408RCHYNsYlbVsRzhoQlWayG0IRriXNowb2NudweVWcZQRFS3Qw8o4znU5iSR
-	 cl6cjLy5/9VgJEEGo8mmrg4WSMBsaBMS2xHnXICnvD7wZZfjJNsDYhH9un7v5/EUPH
-	 qRbOp61cjpMyA5+8D3+iJzXgbfzS5uk98bDmjxA6YjW5HEdb4v2/Qu57TuluRK+oSz
-	 qxqSgs/m+yQ1txjhzKkr/SvOQ597RyxCoqGzG8+DYbUiF/ylbrvKq9Ini5ochsFJJg
-	 6ajcY56aBrZhA==
+	b=ZRYkmkzu0SpZIT3Cmp7T6WKaPrI47XIfmURZ7LbmhFv8BUzR+Tt/au4Kwder3xPBB
+	 wWCins93lPAjUPblcvKZdc41f+Uk2omSqvNFLJKI4HoPFnu/fqiifxfYLPuP48DFKN
+	 sY93h3H4HoMBwYH0ZfjhsnAfCCLDg1gEhCBiJ0VGuOhEYfK3dqlUZ93ygd91eg9xjJ
+	 +9bpNRvmzzn5QefWTZqY/q1PQCnagkWEnUxrbyW9KoLsAYsV/ErCxLUhoN4I5suWnQ
+	 JEOd/jxNakMq5zIkLtAWNMdgViQ8d/9qxLBk6AlF47nYIYruxTe7v/tu/7RSgRro/0
+	 NRh1vru6unBhA==
 From: SeongJae Park <sj@kernel.org>
-To: Honggyu Kim <honggyu.kim@sk.com>
-Cc: SeongJae Park <sj@kernel.org>,
-	damon@lists.linux.dev,
+To: SeongJae Park <sj@kernel.org>
+Cc: damon@lists.linux.dev,
+	linux-damon@amazon.com,
+	linux-damon-trial@amazon.com,
 	linux-mm@kvack.org,
-	akpm@linux-foundation.org,
-	apopple@nvidia.com,
-	baolin.wang@linux.alibaba.com,
-	dave.jiang@intel.com,
-	hyeongtak.ji@sk.com,
-	kernel_team@skhynix.com,
-	linmiaohe@huawei.com,
-	linux-kernel@vger.kernel.org,
-	linux-trace-kernel@vger.kernel.org,
-	mathieu.desnoyers@efficios.com,
-	mhiramat@kernel.org,
-	rakie.kim@sk.com,
-	rostedt@goodmis.org,
-	surenb@google.com,
-	yangx.jy@fujitsu.com,
-	ying.huang@intel.com,
-	ziy@nvidia.com,
-	42.hyeyoo@gmail.com,
-	art.jeongseob@gmail.com
-Subject: Re: [RFC PATCH v3 5/7] mm/damon/paddr: introduce DAMOS_MIGRATE_COLD action for demotion
-Date: Tue,  9 Apr 2024 09:18:47 -0700
-Message-Id: <20240409161847.65803-1-sj@kernel.org>
+	linux-kernel@vger.kernel.org
+Subject: Re: DAMON Beer/Coffee/Tea chat series
+Date: Tue,  9 Apr 2024 16:05:10 -0700
+Message-Id: <20240409230510.74265-1-sj@kernel.org>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20240409095418.3051-1-honggyu.kim@sk.com>
+In-Reply-To: <20220810225102.124459-1-sj@kernel.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -64,46 +47,38 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hi Honggyu,
+Hello community,
 
-On Tue,  9 Apr 2024 18:54:14 +0900 Honggyu Kim <honggyu.kim@sk.com> wrote:
-> On Mon,  8 Apr 2024 10:52:28 -0700 SeongJae Park <sj@kernel.org> wrote:
-> > On Mon,  8 Apr 2024 21:06:44 +0900 Honggyu Kim <honggyu.kim@sk.com> wrote:
-> > > On Fri,  5 Apr 2024 12:24:30 -0700 SeongJae Park <sj@kernel.org> wrote:
-> > > > On Fri,  5 Apr 2024 15:08:54 +0900 Honggyu Kim <honggyu.kim@sk.com> wrote:
-[...]
-> > > I can remove it, but I would like to have more discussion about this
-> > > issue.  The current implementation allows only a single migration
-> > > target with "target_nid", but users might want to provide fall back
-> > > migration target nids.
-> > > 
-> > > For example, if more than two CXL nodes exist in the system, users might
-> > > want to migrate cold pages to any CXL nodes.  In such cases, we might
-> > > have to make "target_nid" accept comma separated node IDs.  nodemask can
-> > > be better but we should provide a way to change the scanning order.
-> > > 
-> > > I would like to hear how you think about this.
-> > 
-> > Good point.  I think we could later extend the sysfs file to receive the
-> > comma-separated numbers, or even mask.  For simplicity, adding sysfs files
-> > dedicated for the different format of inputs could also be an option (e.g.,
-> > target_nids_list, target_nids_mask).  But starting from this single node as is
-> > now looks ok to me.
+On Wed, 10 Aug 2022 22:51:02 +0000 SeongJae Park <sj@kernel.org> wrote:
+
+> Hello,
 > 
-> If you think we can start from a single node, then I will keep it as is.
-> But are you okay if I change the same 'target_nid' to accept
-> comma-separated numbers later?  Or do you want to introduce another knob
-> such as 'target_nids_list'?  What about rename 'target_nid' to
-> 'target_nids' at the first place?
+> 
+> In short, I'd like to start an open, regular, and informal virtual bi-weekly
+> meeting series for DAMON community.
+> 
+> Important links and dates
+> -------------------------
+> 
+> Location: https://meet.google.com/ndx-evoc-gbu
+> Agenda: https://docs.google.com/document/d/1v43Kcj3ly4CYqmAkMaZzLiM2GEnWfgdGbZAH3mi2vpM/edit?usp=sharing
 
-I have no strong concern or opinion about this at the moment.  Please feel free
-to renaming it to 'taget_nids' if you think that's better.
+If you tried to join today's meeting and if you were unable to join, it's all
+my fault.  Sorry, I again missed my alarm.
 
-[...]
-> Please note that I will be out of office this week so won't be able to
-> answer quickly.
+I was about to schedule another meeting instance for this on next Tuesday, but
+I realized that it will conflict with OpenSource Summit NA
+(https://events.linuxfoundation.org/open-source-summit-north-america/).
 
-No problem, I hope you to take and enjoy your time :)
+So let's have yet another meeting on a week after that.  That is, 2024-04-23
+Tuesday, 09:30 PT.  My apology again for anyone who were unable to join the
+meeting due to my fault, and looking forward to chat with you on the meeting.
+I also updated the agenda doc
+(https://docs.google.com/document/d/1v43Kcj3ly4CYqmAkMaZzLiM2GEnWfgdGbZAH3mi2vpM/edit?usp=sharing).
+
+FYI, I will also attend the OSSummit next week in person, and DAMON will again
+be presented there (https://sched.co/1aBOg).  Looking forward to meet you in
+person if possible!
 
 
 Thanks,
