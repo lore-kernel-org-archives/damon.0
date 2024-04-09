@@ -1,17 +1,18 @@
-Received: from invmail4.hynix.com (exvmail4.skhynix.com [166.125.252.92])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 88FEF2B2DD
-	for <damon@lists.linux.dev>; Tue,  9 Apr 2024 09:19:40 +0000 (UTC)
+Received: from invmail4.hynix.com (exvmail4.hynix.com [166.125.252.92])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CEE1F7F474
+	for <damon@lists.linux.dev>; Tue,  9 Apr 2024 09:24:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=166.125.252.92
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712654385; cv=none; b=JKZOkTBVjBSZZdFw/V6RkCCecnrCMg+TtZvR9GnZxwgwzHuX4wjJ94HxnnWpD4q+v3dISDEDSN09G8ymzgm4QrIvLzKLRuAmqZJ8oEtOWN2uL8W3PCBV40/nmkpXEJeVs9dGYVRCgqwTouS987g1Hl4kDT7KnaEp/4A0EZGjK7s=
+	t=1712654700; cv=none; b=AiRuoVHHenPaQ6xTfuFZ/eAilVgjM0AO4eQ7JkAi3lxjIbe9cTxaXK8xpTEkUN0pfdAka2PHLlKHfNKhfoDu9sHL4GqqJzZhU/ein1oXNF9VgqEb6ojR9ktgHAydSWPZT+8WsLMrL5omojdtQb0+hvK9cI0ZSFj1J194IFW51iQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712654385; c=relaxed/simple;
-	bh=+QH8pQ8pxmAzwSQ6qHfXOk91jAy/6zzv7tELaUaMvE0=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=kqri8oAdPK+ZP2XBuuwoS1F55loUr7dpxw/7szTXdcr4CZ+YwdjiQ+yMSyYd3bfuxYM8WQNmUuqEdYovs0xgaByqOgxCPrPHF997Wz+xW53QlCSFRlMthqUc9Wjw++1TxF1wa5OWgCBTeXY0y4l93+dqUDS3PSR7qhoXlQGEaIw=
+	s=arc-20240116; t=1712654700; c=relaxed/simple;
+	bh=fVzMBpVHDCYnJyjVzpHAN3PRUyFt/fDMP73sAiKyMqc=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=sOx5SEqdoM35w3oGJ86dnHKH+/tqyjTMj7pLhsioEQsSRpBhtV9r5mHZvP/mgc75JONklJ6JMKNxF8M/PPZrM5XwF9Uu5Cwn7AiMrfsXWKZBONl0cFstaJdeEtfx8OPEhJpmEzow5w7WSK5z5AY6uZSGzFgVggmzOWr767QJL20=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sk.com; spf=pass smtp.mailfrom=sk.com; arc=none smtp.client-ip=166.125.252.92
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sk.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sk.com
-X-AuditID: a67dfc5b-d6dff70000001748-25-6615082a1610
+X-AuditID: a67dfc5b-d85ff70000001748-7f-661509649d67
 From: Honggyu Kim <honggyu.kim@sk.com>
 To: SeongJae Park <sj@kernel.org>
 Cc: honggyu.kim@sk.com,
@@ -20,10 +21,12 @@ Cc: honggyu.kim@sk.com,
 	damon@lists.linux.dev,
 	linux-mm@kvack.org,
 	linux-kernel@vger.kernel.org
-Subject: 
-Date: Tue,  9 Apr 2024 18:18:09 +0900
-Message-ID: <20240409091812.3003-1-honggyu.kim@sk.com>
+Subject: Re: [RFC PATCH v2 0/4] mm/damon: add a DAMOS filter type for page granularity access recheck
+Date: Tue,  9 Apr 2024 18:24:31 +0900
+Message-ID: <20240409092434.3031-1-honggyu.kim@sk.com>
 X-Mailer: git-send-email 2.43.0.windows.1
+In-Reply-To: <20240311204545.47097-1-sj@kernel.org>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -31,30 +34,29 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprMLMWRmVeSWpSXmKPExsXC9ZZnoa4Wh2iawdlflhZP/v9mtbi8aw6b
-	xb01/1ktDn99w+TA4rFpVSebx6ZPk9g9XmyeyejxeZNcAEsUl01Kak5mWWqRvl0CV8biqV8Y
-	C44JV6w/WNzA+Iu/i5GDQ0LARGLpjtwuRk4w8/Llr2wgNpuAmsSVl5OYQGwRAUWJc48vsnYx
-	cnEwC0xnlNh4YjMrSEJYgFNiU/d5dhCbRUBVYsHjjWA2r4CZxNv2g+wQQzUlHm//CRUXlDg5
-	8wkLiM0sIC/RvHU2M8hQCYGvrBJLl06HapCUOLjiBssERt5ZSHpmIelZwMi0ilEoM68sNzEz
-	x0QvozIvs0IvOT93EyMwqJbV/onewfjpQvAhRgEORiUeXourwmlCrIllxZW5hxglOJiVRHiD
-	TQXThHhTEiurUovy44tKc1KLDzFKc7AoifMafStPERJITyxJzU5NLUgtgskycXBKNTDqWnD5
-	/FVb/SBf/ND211Nkr7+ZXuLv7303r449s82OtcDp7keGCsX85cnb79zZeP624oXr7f++705a
-	1i1uEShluzLvyALGJBF+g65fX+MC1EU35Rzh6ghOeMW079rJNZJsVQukYt0i9qTyn4xNizvg
-	4L/jw60nK0K2Hrx3bc5+2Xu9pXsPSNsosRRnJBpqMRcVJwIA7V/FaiYCAAA=
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFupkluLIzCtJLcpLzFFi42LhmqGlp6vFIZpm8Ou/nsWT/79ZLT4/e81s
-	0fnkO6PF4bknWS0u75rDZnFvzX9Wi8Nf3zA5sHtsWtXJ5rHp0yR2jxebZzJ6fLvt4bH4xQcm
-	j8+b5ALYorhsUlJzMstSi/TtErgyFk/9wlhwTLhi/cHiBsZf/F2MnBwSAiYSly9/ZQOx2QTU
-	JK68nMQEYosIKEqce3yRtYuRi4NZYDqjxMYTm1lBEsICnBKbus+zg9gsAqoSCx5vBLN5Bcwk
-	3rYfZIcYqinxePtPqLigxMmZT1hAbGYBeYnmrbOZJzByzUKSmoUktYCRaRWjSGZeWW5iZo6p
-	XnF2RmVeZoVecn7uJkZgAC2r/TNxB+OXy+6HGAU4GJV4eB3uCKcJsSaWFVfmHmKU4GBWEuEN
-	NhVME+JNSaysSi3Kjy8qzUktPsQozcGiJM7rFZ6aICSQnliSmp2aWpBaBJNl4uCUamDcX7Op
-	iD30Q93GCaJXp7I0pTNXN3D4Ru0SN/V9/bTdZZ/sn68+evdj/3/W/t8qpPv73UP+A8rtjxYv
-	8J6TfkS+b7nu9cmSD32tg89bZ29kSZ3Ycrbeiv3e+WnXDk47FZO/ssg4ZyV3vEWEmGw3t+m8
-	9x8jGKa8Oaw/Z/fTiKwXkQbcZ4/POzdLiaU4I9FQi7moOBEAhApk3RwCAAA=
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrDLMWRmVeSWpSXmKPExsXC9ZZnoW4Kp2iaweJDZhZP/v9mtbi8aw6b
+	xb01/1ktDn99w+TA4rFpVSebx6ZPk9g9XmyeyejxeZNcAEsUl01Kak5mWWqRvl0CV8aliX+Z
+	ClYIVTRcPs7WwPiZr4uRk0NCwESi581Xti5GDjB78v4gkDCbgJrElZeTmEBsEQFFiXOPL7J2
+	MXJxMAtMZ5TYeGIzK0hCWCBV4sbcPrAiFgFVid8v37CD2LwCZhLrp11lh5ivKfF4+08wm1PA
+	WOL465NgvUICPBKvNuxnhKgXlDg58wkLiM0sIC/RvHU2M8gyCYEZbBKd698yQQySlDi44gbL
+	BEb+WUh6ZiHpWcDItIpRKDOvLDcxM8dEL6MyL7NCLzk/dxMjMAyX1f6J3sH46ULwIUYBDkYl
+	Hl6Lq8JpQqyJZcWVuYcYJTiYlUR4g00F04R4UxIrq1KL8uOLSnNSiw8xSnOwKInzGn0rTxES
+	SE8sSc1OTS1ILYLJMnFwSjUwTov7HcNzQTlqjxmne+ApsVcGnCEvhHxeB0UxOe+tsuDtnq3M
+	pNRcPitlmrud5oGItJsvn6cFvMw7L/yWVXyOpIOI7hOTDXKOm57dvycRYHLkHbdQkIzi94tv
+	rxjzfNFp23/yxJ4a3V0cOUdL4g2D7sydnCKp83ASG/ejwp4b65rCys38fwcqsRRnJBpqMRcV
+	JwIAHN1XZT8CAAA=
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrILMWRmVeSWpSXmKPExsXCNUNLTzeFUzTN4O42I4sn/3+zWnx+9prZ
+	ovPJd0aLw3NPslpc3jWHzeLemv+sFoe/vmFyYPfYtKqTzWPTp0nsHi82z2T0+Hbbw2Pxiw9M
+	Hp83yQWwRXHZpKTmZJalFunbJXBlXJr4l6lghVBFw+XjbA2Mn/m6GDk4JARMJCbvD+pi5ORg
+	E1CTuPJyEhOILSKgKHHu8UXWLkYuDmaB6YwSG09sZgVJCAukStyY2wdWxCKgKvH75Rt2EJtX
+	wExi/bSrYLaEgKbE4+0/wWxOAWOJ469PgvUKCfBIvNqwnxGiXlDi5MwnLCA2s4C8RPPW2cwT
+	GHlmIUnNQpJawMi0ilEkM68sNzEzx1SvODujMi+zQi85P3cTIzDgltX+mbiD8ctl90OMAhyM
+	Sjy8DneE04RYE8uKK3MPMUpwMCuJ8AabCqYJ8aYkVlalFuXHF5XmpBYfYpTmYFES5/UKT00Q
+	EkhPLEnNTk0tSC2CyTJxcEo1MOYLVq/J+B4XG6S5R8f8SNmatP3GMp0zlpmJNt+XtOZaIrz7
+	aT97xs7C97fqA8xZD79miZ6UspaldXmFesKE69PvTrfa+HDnrQiOJNMrt0QmphmaHfKZ6WRR
+	PXdfheOOUzGKJhKuxZ1b+D4ufnA5xHTbVu1pN/v+Tby3bYnXr+PH1srffW6bwabEUpyRaKjF
+	XFScCAAwE2uBNAIAAA==
 X-CFilter-Loop: Reflected
-
-Subject: Re: [RFC PATCH v2 0/4] mm/damon: add a DAMOS filter type for page granularity access recheck
-In-Reply-To: <20240311204545.47097-1-sj@kernel.org>
 
 Hi SeongJae,
 
