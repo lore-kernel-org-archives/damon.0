@@ -1,80 +1,116 @@
-Received: from mail-qk1-f177.google.com (mail-qk1-f177.google.com [209.85.222.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1211D29AB
-	for <damon@lists.linux.dev>; Tue, 23 Apr 2024 00:51:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AFB41C6BE;
+	Tue, 23 Apr 2024 23:00:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713833495; cv=none; b=AGxk8b4u1xG2lYUEuMGNtf2HOEpPYR39qQ8xgAK79dy/QpgogUNa5WYwmrS3FkPuWypTSUWHJ8SWUgLbhi/yGSCZIkJw1XC3SC3GT+GXrR93YJNsbW+WgV/0IvSyRRuXZFl3FwpASFjkOtHKX7UUhg+KlzEsfxo8mMrlnmRAsUc=
+	t=1713913205; cv=none; b=HCALKylzOHNRowoSuoXqDRXBJLhQjKUPIXqHSQJSNYxpweyTcNoauhmf9tYeYiDKOlBsZES6TLUnFRTqR1xPEdMdwazi0Fit3nbQWzneWKtk6+DyxqMCWpyDz1jKmH9dYx8He3mWTVgQ1M7ETCHiY/zKM/IE6SkWcw8gJisuxqI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713833495; c=relaxed/simple;
-	bh=CHdZFMuoe6tNgw3BbiZnQmeY4DiLW7I864pHmn1mcCw=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=aQZ2j19pO94HMsNDi9yJYYulBgW2NJMtuEJRlSEg7KT/qhunsh1ux2dpNK7PV1KvSQWnNjgb5Zi1tv+qElWL2BAaYp+fo2fTLfkOT4p2MPODfINSjXyBJft7mrt1oXp9XB6201kpVdbllcZf+s6gMBaLLeOZlYb15gEWFj4m7h8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TkHDgF8M; arc=none smtp.client-ip=209.85.222.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1713913205; c=relaxed/simple;
+	bh=3mvO4GVsprVt1iFW3+idrrVMdXMu8WnVO3kCE4KvApQ=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=JwQKLuYiAjkg5pRNVwDNo+WnzUSS/OHUD69NjtUoZO3ZVR+rnqOwDqb/D0icu/TC65UpTIowXWM8gBd144nKMABi241yfAXSaCvCkgbvypUmvTRxvX9lGs50/MPoC7MvLECc4GLxsyJMmhXLysFCqL7lNzP6KCyHEV5Po3N5ozs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ADsHxsE8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TkHDgF8M"
-Received: by mail-qk1-f177.google.com with SMTP id af79cd13be357-78f04581a66so348650985a.2
-        for <damon@lists.linux.dev>; Mon, 22 Apr 2024 17:51:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1713833492; x=1714438292; darn=lists.linux.dev;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=CHdZFMuoe6tNgw3BbiZnQmeY4DiLW7I864pHmn1mcCw=;
-        b=TkHDgF8MDSB2SHUtNX0QKI8mZYkK1yhjbHhTxeZtDwbjgx+X3f5YLJJhQi57b3r3FI
-         rO4efQgcVkh3MFcCYVRvR5U5c8/C0bOeaw1o0GxMR6icCLPcQf+7CNJumwrrInPvDTZl
-         vi9wEgcc1TqYU/RDk407LV137l7k5JMBpDuz6RCtYMVNSIA1K1ZGYpNZRrWfxMOs+CV7
-         1HQ47XuFfOkKVtXHDRkGCGWCxa07Qlh6LbSWEY5p+VuHB80ecOXz3IrqSBu6OTBzVRQu
-         Pu9C7HaYJVVSc7/E9E48v+jYo1r1YFRenJDeBjJnzIgEvL4SSiUn46tCfm+pcVI8i6dT
-         Ah8A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713833492; x=1714438292;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=CHdZFMuoe6tNgw3BbiZnQmeY4DiLW7I864pHmn1mcCw=;
-        b=AnP9UwErmk/fCPQKZjnBgZGMWlp6ba9cJFO3XPHIW4mnK8FK+wPYk4NFwBKDbLPRmg
-         AOl7snEDZnDgd3q69qEt+eStAyIvqcXu3Hkjuwm3mrQVOZd4PhRGiIZptZ9gLtsBM7yU
-         hJr4gPo67XsncftsblaJ+8P//An8OEAoBiNY90/mollsr3hFLzJNRPPCT9wuI7tDm1Wb
-         4NUdjgMyy5dlSTu9MEAxePPS9cSQttPblMEyxestNkYNvNwwqKnFXVEFeOiOa3aqLis+
-         2A0PMT5x/kNqjbwh0fgo7eiX1lKiguzfUt3wIbd4aXDjsReRxTxkQS7SctAz7Zvlh/21
-         M4Pw==
-X-Gm-Message-State: AOJu0YzgeHFNcmiCQDeCD9JLZruGJ70HJw/oUCVmxwzGNaCx2GI5z5bJ
-	US9Q/jyPFUmqjVB4Zq6ZAdJlNwH+PuUzBXmOecWcBwAttUevK4PB9l/qwmbMKucdOfZ6k/3T8/p
-	MIwOyOFPERPSpsiT9cmhFRZfNAHb2zOW/ahU=
-X-Google-Smtp-Source: AGHT+IFDZY2vyw31VCZlt7lKr9oxy8NoKFyDc1qnQ/X8jGJkCVXk0jS06PrEzgKbFWnq0/4zTqtMqxMCywdk9SOulzU=
-X-Received: by 2002:a05:6214:4991:b0:6a0:7c81:cc1a with SMTP id
- pf17-20020a056214499100b006a07c81cc1amr8991848qvb.39.1713833492482; Mon, 22
- Apr 2024 17:51:32 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ADsHxsE8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C5CAC116B1;
+	Tue, 23 Apr 2024 23:00:03 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1713913204;
+	bh=3mvO4GVsprVt1iFW3+idrrVMdXMu8WnVO3kCE4KvApQ=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=ADsHxsE8+WcFvZ3Dl7VmoJOkqCxmMEANfRaC0doXxVqBiUDaAsKGTsGlcJ7P4yhy0
+	 GfE+Cn8Ymn+2q5fLKZaL91QHvxmx1o3VEq3ZBrj/I3e1Iv3tDk0VNaW56H1NHpb2d7
+	 HaTsade2bNmSgwKcciZ0t2TcwwYpuTqwjhIyaFe9u+dFh09GTDLRmuLrC1Hiw+gwct
+	 KxTbakz7a4ZDqTQYDIO078LU7H8m/xdOi85xHRwhjQMtexfQs8LiOQOQ8QXd9ebHgA
+	 4WNSVomgyaT3DPt3WdncoL0n5IZxYNGREzNhQ2RvwqoPW0/US4Un5dzt4EGxswTPVn
+	 zrWuv1XOcmCuw==
+From: SeongJae Park <sj@kernel.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: SeongJae Park <sj@kernel.org>,
+	stable@vger.kernel.org,
+	patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net,
+	rwarsow@gmx.de,
+	conor@kernel.org,
+	allen.lkml@gmail.com,
+	broonie@kernel.org,
+	damon@lists.linux.dev
+Subject: Re: [PATCH 5.15 00/71] 5.15.157-rc1 review
+Date: Tue, 23 Apr 2024 16:00:01 -0700
+Message-Id: <20240423230001.346377-1-sj@kernel.org>
+X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20240423213844.122920086@linuxfoundation.org>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-From: lokesh jaliminche <lokesh.jaliminche@gmail.com>
-Date: Mon, 22 Apr 2024 17:51:21 -0700
-Message-ID: <CAKJOkCr86bMoOgxnJQu8Ry-W-2XHYn_xgyZWL4pTPCgcGK3_rg@mail.gmail.com>
-Subject: Regarding DAMON sysfs usage to get memory access stats
-To: damon@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 
-Hi Everyone,
+Hello,
 
-I am currently experimenting with DAMON to gather memory access
-statistics for virtual address ranges associated with specific
-processes. I have followed the detailed instructions provided in the
-usage documentation, but it's unclear where to find the resulting
-memory access statistics.
- Any pointers on where to get these statistics?
+On Tue, 23 Apr 2024 14:39:13 -0700 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
 
-Steps
-# cd /sys/kernel/mm/damon/admin/
-# echo 1 > kdamonds/nr_kdamonds && echo 1 > kdamonds/0/contexts/nr_contexts
-# echo vaddr > kdamonds/0/contexts/0/operations
-# echo 1 > kdamonds/0/contexts/0/targets/nr_targets
-# echo $(pidof masim) > kdamonds/0/contexts/0/targets/0/pid_target
-# echo on > kdamonds/0/state
+> This is the start of the stable review cycle for the 5.15.157 release.
+> There are 71 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Thu, 25 Apr 2024 21:38:28 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.157-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
+> and the diffstat can be found below.
 
-Thanks & Regards,
-Lokesh
+This rc kernel passes DAMON functionality test[1] on my test machine.
+Attaching the test results summary below.  Please note that I retrieved the
+kernel from linux-stable-rc tree[2].
+
+Tested-by: SeongJae Park <sj@kernel.org>
+
+[1] https://github.com/awslabs/damon-tests/tree/next/corr
+[2] 70f39a25a6b8 ("Linux 5.15.157-rc1")
+
+Thanks,
+SJ
+
+[...]
+
+---
+
+ok 1 selftests: damon: debugfs_attrs.sh
+ok 1 selftests: damon-tests: kunit.sh
+ok 2 selftests: damon-tests: huge_count_read_write.sh
+ok 3 selftests: damon-tests: buffer_overflow.sh
+ok 4 selftests: damon-tests: rm_contexts.sh
+ok 5 selftests: damon-tests: record_null_deref.sh
+ok 6 selftests: damon-tests: dbgfs_target_ids_read_before_terminate_race.sh
+ok 7 selftests: damon-tests: dbgfs_target_ids_pid_leak.sh
+ok 8 selftests: damon-tests: damo_tests.sh
+ok 9 selftests: damon-tests: masim-record.sh
+ok 10 selftests: damon-tests: build_i386.sh
+ok 11 selftests: damon-tests: build_arm64.sh
+ok 12 selftests: damon-tests: build_m68k.sh
+ok 13 selftests: damon-tests: build_i386_idle_flag.sh
+ok 14 selftests: damon-tests: build_i386_highpte.sh
+ok 15 selftests: damon-tests: build_nomemcg.sh
+ [33m
+ [92mPASS [39m
