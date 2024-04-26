@@ -1,59 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71BE138DC0;
-	Tue, 23 Apr 2024 23:58:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 883A1BE4A;
+	Fri, 26 Apr 2024 19:53:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713916699; cv=none; b=lhwCXVstUW9QUiGKvu2KquZG2p53+1wD/hLXr4qVaC+pwb7StLD2u1lYhWuDqUade9YWsl1ntVQcvDtRK7Og5HxEna6qfaUzlqL7oRPyOFdkkmrJRUULY7boBT7rWoxA+A+Qu+zZRXVETSUOslaF5P/ZmKhRbkYEBOixrFQ6mzE=
+	t=1714161180; cv=none; b=fvRfvWaBlEdDwiY5xXC5MeuoBqcfaV0mKZXKyd+Cu/gbgDdbQNeCaDTQh664jYLGngT9XNOQvwXdwgTAQhFv3/l9+gE99zShdPn6q2pVljbdoCakTCWPOPUhSmwFOy5CkJeskUPNXnx5bWjKI2ZFYEfvmw45bziH6iv9lJjhvPg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713916699; c=relaxed/simple;
-	bh=0VsxHeuItHVZwvyMzPuXTVw/feEB6Ahxq8LQQRsIzJ4=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=mh3pVrpkpRYIZVKDGQM8L98n8QBc37M9frHnvbLg4s3U+MgXAnYQ2nmCVmTsrMeYDzY9F4CN1z35ClhqlS9cORRjsx9AZ521zi67o5oYlo4cqgr8me7O45C3E/f852j0bz+oMqNKrNpMHtbfFQlfZ0Paw7f+c+RV05/FE4wZD0w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TfiMBpSh; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1714161180; c=relaxed/simple;
+	bh=KDQABXFXICsHnj+v3YhXIoEGy+Tp7EqKpAZ8dhNvvfY=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=LZHIra1oLEoZc1QKFY1zrrdYAEBGtZbHBtIljPRDVrcpnn/TAe4nxa45rKFMIpkD7+2qHdzhiB83Eec6HwgsaRZS/4ZBOBbcxN21hjuQconFNNvmQye/sg/9rxeexKIlHXAsb0Yh482oZ/C2By/l7YR2+ssccjF1sKNbDc1rCEc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BVVGWpEo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TfiMBpSh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 735C7C116B1;
-	Tue, 23 Apr 2024 23:58:17 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BVVGWpEo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F525C113CD;
+	Fri, 26 Apr 2024 19:52:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1713916699;
-	bh=0VsxHeuItHVZwvyMzPuXTVw/feEB6Ahxq8LQQRsIzJ4=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TfiMBpShLbj6EDbMaJ98jABOgIGD0CVYyCFvUaA2yTTAFa8i1gO09JQ+TvYlHg8AL
-	 2MLp7FwzHtkbjNM6qNR0TjLkrTsN3aagWOQdRVQlRJjuBS46y2e67qwlYdofG5tkx4
-	 ZlLlteX6IdnQY8tcf9ZOoyHxLOp5X5jxZLkH+JanJJbvNQ7NHR492mLEnovxfyWyFU
-	 CalHilkeq8XPAcJAANx6N4yKippElXcSEFlsc8cRLfUl3vGImxmA1n9xrIfUmDTyZJ
-	 ZYi3p3HTG1do0kmR6bqNglekXwomnvGPeGaM9pTYHA27T3Sx3qMwRwTD69wpEHWUh8
-	 LbKHj6PaNpOLw==
+	s=k20201202; t=1714161180;
+	bh=KDQABXFXICsHnj+v3YhXIoEGy+Tp7EqKpAZ8dhNvvfY=;
+	h=From:To:Cc:Subject:Date:From;
+	b=BVVGWpEoAs/HVIHW1jVbh/MGwqLjrbJJESwz32Kkj9LuwJ2IL5OXifVSlfWAbA5Ce
+	 eECBaZlWlXZF+bSDyrZlFkjGOW4iDt41a/tmJEaGcI/iDhioMwYsXYr/Owm3d0OTyR
+	 y+m4GRFg5UXOJKz58ElhqUoqEDxSmOFWLDTtSHiPi2pHWM+VTGbmMk6bU19VkD74m3
+	 snsA/YQyeJQLeZIknVZcuxpLWlGx/U6PNcEM4UqVF/jmIGZAJQIOv6US7qQs3TRcDh
+	 xlBqfihJ81nPUHd5Tl8XMItzJDDpmZzyxY27WnknsG1uuK7ipjIezKg9PR6aT9T8Xi
+	 O8hDAE9+BMYzg==
 From: SeongJae Park <sj@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SeongJae Park <sj@kernel.org>,
-	stable@vger.kernel.org,
-	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net,
-	rwarsow@gmx.de,
-	conor@kernel.org,
-	allen.lkml@gmail.com,
-	broonie@kernel.org,
-	damon@lists.linux.dev
-Subject: Re: [PATCH 6.8 000/158] 6.8.8-rc1 review
-Date: Tue, 23 Apr 2024 16:58:15 -0700
-Message-Id: <20240423235815.1118-1-sj@kernel.org>
+	Jonathan Corbet <corbet@lwn.net>,
+	damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	linux-doc@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH 0/7] mm/damon: add a DAMOS filter type for page granularity access recheck
+Date: Fri, 26 Apr 2024 12:52:39 -0700
+Message-Id: <20240426195247.100306-1-sj@kernel.org>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20240423213855.824778126@linuxfoundation.org>
-References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -62,66 +45,58 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hello,
+Changes from RFC v2
+(https://lore.kernel.org/r/20240311204545.47097-1-sj@kernel.org)
+- Add documentation
+- Add Tested-by: Honggyu Kim <honggyu.kim@sk.com>
+- Wordsmith commit messages
 
-On Tue, 23 Apr 2024 14:37:02 -0700 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+Changes from RFC v1
+(https://lore.kernel.org/r/20240307030013.47041-1-sj@kernel.org)
+- Mark the folio as old if it was young
+- Rename __damon_pa_young() to damon_folio_young_one()
 
-> This is the start of the stable review cycle for the 6.8.8 release.
-> There are 158 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Thu, 25 Apr 2024 21:38:28 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.8.8-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.8.y
-> and the diffstat can be found below.
+DAMON provides its best-effort accuracy-overhead tradeoff under the
+user-defined ranges of acceptable level of the monitoring accuracy and
+overhead.  A recent discussion for tiered memory management support from
+DAMON[1] concluded that finding memory regions of specific access
+pattern with low overhead despite of low accuracy via DAMON first, and
+then double checking the access of the region again in a finer (e.g.,
+page) granularity could be a useful strategy for some DAMOS schemes.
 
-This rc kernel passes DAMON functionality test[1] on my test machine.
-Attaching the test results summary below.  Please note that I retrieved the
-kernel from linux-stable-rc tree[2].
+Add a new type of DAMOS filter, namely 'young' for such a case.  It
+checks each page of DAMOS target region is accessed since the last
+check, and filters it out or in if 'matching' parameter is 'true' or
+'false', respectively.
 
-Tested-by: SeongJae Park <sj@kernel.org>
+Because this is a filter type that applied in page granularity, the
+support depends on DAMON operations set, similar to 'anon' and 'memcg'
+DAMOS filter types.  Implement the support on the DAMON operations set
+for the physical address space, 'paddr', since one of the expected
+usages[1] is based on the physical address space.
 
-[1] https://github.com/awslabs/damon-tests/tree/next/corr
-[2] 9919cd9ab988 ("Linux 6.8.8-rc1")
+[1] https://lore.kernel.org/r/20240227235121.153277-1-sj@kernel.org
 
-Thanks,
-SJ
+SeongJae Park (7):
+  mm/damon/paddr: implement damon_folio_young()
+  mm/damon/paddr: implement damon_folio_mkold()
+  mm/damon: add DAMOS filter type YOUNG
+  mm/damon/paddr: implement DAMOS filter type YOUNG
+  Docs/mm/damon/design: document 'young page' type DAMOS filter
+  Docs/admin-guide/mm/damon/usage: update for young page type DAMOS
+    filter
+  Docs/ABI/damon: update for 'youg page' type DAMOS filter
 
-[...]
+ .../ABI/testing/sysfs-kernel-mm-damon         |  6 +-
+ Documentation/admin-guide/mm/damon/usage.rst  | 26 ++++----
+ Documentation/mm/damon/design.rst             | 20 +++---
+ include/linux/damon.h                         |  2 +
+ mm/damon/paddr.c                              | 64 ++++++++++++-------
+ mm/damon/sysfs-schemes.c                      |  1 +
+ 6 files changed, 70 insertions(+), 49 deletions(-)
 
----
 
-ok 2 selftests: damon: debugfs_schemes.sh
-ok 3 selftests: damon: debugfs_target_ids.sh
-ok 4 selftests: damon: debugfs_empty_targets.sh
-ok 5 selftests: damon: debugfs_huge_count_read_write.sh
-ok 6 selftests: damon: debugfs_duplicate_context_creation.sh
-ok 7 selftests: damon: debugfs_rm_non_contexts.sh
-ok 8 selftests: damon: sysfs.sh
-ok 9 selftests: damon: sysfs_update_removed_scheme_dir.sh
-ok 10 selftests: damon: sysfs_update_schemes_tried_regions_hang.py
-ok 11 selftests: damon: sysfs_update_schemes_tried_regions_wss_estimation.py
-ok 12 selftests: damon: reclaim.sh
-ok 13 selftests: damon: lru_sort.sh
-ok 1 selftests: damon-tests: kunit.sh
-ok 2 selftests: damon-tests: huge_count_read_write.sh
-ok 3 selftests: damon-tests: buffer_overflow.sh
-ok 4 selftests: damon-tests: rm_contexts.sh
-ok 5 selftests: damon-tests: record_null_deref.sh
-ok 6 selftests: damon-tests: dbgfs_target_ids_read_before_terminate_race.sh
-ok 7 selftests: damon-tests: dbgfs_target_ids_pid_leak.sh
-ok 8 selftests: damon-tests: damo_tests.sh
-ok 9 selftests: damon-tests: masim-record.sh
-ok 10 selftests: damon-tests: build_i386.sh
-ok 11 selftests: damon-tests: build_arm64.sh
-ok 12 selftests: damon-tests: build_m68k.sh
-ok 13 selftests: damon-tests: build_i386_idle_flag.sh
-ok 14 selftests: damon-tests: build_i386_highpte.sh
-ok 15 selftests: damon-tests: build_nomemcg.sh
- [33m
- [92mPASS [39m
+base-commit: 4b4dd809460911d6c406bb45d2c627a9e5734468
+-- 
+2.39.2
+
