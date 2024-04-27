@@ -1,110 +1,161 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f181.google.com (mail-qk1-f181.google.com [209.85.222.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2072B2232A
-	for <damon@lists.linux.dev>; Fri, 26 Apr 2024 20:04:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB1793A1D3
+	for <damon@lists.linux.dev>; Sat, 27 Apr 2024 21:18:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714161851; cv=none; b=KdK6v5vLu1g3BiBR0Sz6lOZggwd4NRZT4d3DiaTWhKXZQ/IIscukEnhexfhbxj+aCanberYY9YFpMhRVZow05KQqNGMlmKgR52MZ0JvxEhqXZXuTY4f7PPP7f1GBqHeJbZzZ3cLYi01m3t/a+2mkCC+DYCWUc5DN0s+vHwUp/9M=
+	t=1714252725; cv=none; b=n1qMybWxC87o7LiPSMNxtDSm6l5BDPIANoDoUnexxFNpEsJ06meQpQfVWGyWcQ2tYBNRiubmEc1fvOjxEgCd0yRbs8V3vWwifmJMsfu43k6CQfA2NnSuAC6EXsXm+EISBchXZGtgTtLH56BVyrizQTjjZ6xq+vXBKtuUZXaMGaI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714161851; c=relaxed/simple;
-	bh=gHnh8P+t9/HBBiqlZNc7ytcFU5qE0Akv4uHOQqt7FOc=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=I2KAubNsvttY054XT3yF3jXl9k95rHwzDmb13JVG5egM8fDK/T9mgFniiCFgjSOZtZd+gmNKRtdvj057vP2DkpGuD5qjYtcjCzheMN4Uu+6oX8YMOwASYVIlgOb97IfPYiweZ1aawq9TtzWUOBbsuRx0kUUz63fT4bo+zgMTYjQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WMISQJbn; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1714252725; c=relaxed/simple;
+	bh=PZkxCYjpRSskE3adKCC/dSB0Ivo1igvSmzkjrqqYFjk=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=kYQgK6sFexURLwBfbIFZrpn+wYBN1mjAgWbjN8XdlH/CU8oTaSedsJKPx8KqnbxH+qkW2Vyp+ItRwTmtHO79lkC3lymJgE+VzMVrGw2uGS0sFuLEse8ZSj3hXLhNFdiC8DMZUzNZ/2rzCAU1dTtrWlXForHoo/YcgVOddwcPCWc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NaMCtwWs; arc=none smtp.client-ip=209.85.222.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WMISQJbn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64474C113CD;
-	Fri, 26 Apr 2024 20:04:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1714161850;
-	bh=gHnh8P+t9/HBBiqlZNc7ytcFU5qE0Akv4uHOQqt7FOc=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WMISQJbnQeJL/r+V9wWj9FZoJOA9mXXZ8Q4xLGf3jYZnfQSpJb8IBxXsTc91L0GTl
-	 OT3HI1IkUMb2cOVevVHwgLA8CMVr4S0PclL2mTVJ+MSfbrQnO9uopQg6C4gxI5WcbW
-	 mMxKe9H1JBQ5CGGF3vbvoV4Q2jIQE9V1CRFQDqCFm6cQ8cuZ6esK30ylsGEgNt/Xbi
-	 1Qxb65oikWks+Gbqk31Dg5o3SICm1/izVOEwsFngYEOWVlSxOIYMY2gCRMcysxWFGi
-	 OTsYOe4veGY28JJuahIFzrO3E8WE42lfZ9yEp4aNSqnvthkzBAVDWWU9qP5TzoV6YY
-	 cd/y3x8WKyMYA==
-From: SeongJae Park <sj@kernel.org>
-To: lokesh jaliminche <lokesh.jaliminche@gmail.com>
-Cc: SeongJae Park <sj@kernel.org>,
-	damon@lists.linux.dev
-Subject: Re: Regarding DAMON sysfs usage to get memory access stats
-Date: Fri, 26 Apr 2024 13:04:08 -0700
-Message-Id: <20240426200408.100431-1-sj@kernel.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <CAKJOkCr86bMoOgxnJQu8Ry-W-2XHYn_xgyZWL4pTPCgcGK3_rg@mail.gmail.com>
-References: 
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NaMCtwWs"
+Received: by mail-qk1-f181.google.com with SMTP id af79cd13be357-790c36dcee9so66807985a.2
+        for <damon@lists.linux.dev>; Sat, 27 Apr 2024 14:18:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1714252723; x=1714857523; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=o7HwBzLdUfmNx2DoKYy1/a8lmkPXgeOEF4KRwlhT4mc=;
+        b=NaMCtwWsiKO5FPEECpf813c6ZKZv589j6mhcbvDckeXZIxKi7lnWI3PxP5Zw3HpFIS
+         55BNunkKPMUPOaZjZGKEstyaBf0Eay7ipw7emuz219YmrusQ3v7JOG7diUKWJMPE2w22
+         pwWnd4ls13INHFp7FK666aNldnzMplTah99aTxmGTk2K5QIOQ7wQ8QweJJisNOgUM9+U
+         LYtaCix+B16sTwiLf/AIXxYbMRLhj3wKRZnDrzFXuj3j7XdyoX75QnxTZL8uhbtr7ZZV
+         vbfikSs4blfQ6WNOtNcmQrCZxFMWFUc+uWJ3zFHooihzXcumqL73rsm80QAq40iB7UKN
+         aR0Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1714252723; x=1714857523;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=o7HwBzLdUfmNx2DoKYy1/a8lmkPXgeOEF4KRwlhT4mc=;
+        b=vemL/mRwvjKR6kuD1Jbn4PJvNnK5U1rysAzIInofShMvGtteskfRfxN51T4gasTn+X
+         PSnOf4885KpZPAMIM5tjgzClqlbh64nVCJEC41ATDbaUUqn6THEL66Ucsuw9uN3W5Pe0
+         UtHMIBfWIq7s1CO5nn80R84ZE9kydfI95HuQJulRay8feQ2O0EbiOi0hvD/MCSYNR+g8
+         svvgzAM3gCHyKaHNnBs9uiVGTNGfSRznORu4cLSRi1z1YosisT7nqnosMHWNg/iNwG2c
+         18ZSmspyNCL/SAnQEPrKvxPkDR9R5AFB0/tfyC58jR6zx8G4HkcsKUAUnva/TdzlkDXB
+         A7aw==
+X-Gm-Message-State: AOJu0YyeXzE1KXVD8hTtWIaQOxu9PFDvEsDnhnZeGXfZkgS8If1PfA44
+	v7U7oM/NCHTLup79zfQ8bwl71Yt6GaZ+IC+p5H0i8HPriRFGrSieRAgjcvColbCtq16hZ173ov+
+	c4uUX0cmfe2yusOq3495++0O/B4Q=
+X-Google-Smtp-Source: AGHT+IEFQcHxZbPmmQZiZWYxulCeqXN3h3N048XAvqB8jef8qrsD+G/ivfT95keh+4wULYp601O2Zw7mDjaVS6b1FXk=
+X-Received: by 2002:ad4:5de4:0:b0:6a0:ae4f:cd4 with SMTP id
+ jn4-20020ad45de4000000b006a0ae4f0cd4mr6248935qvb.40.1714252722491; Sat, 27
+ Apr 2024 14:18:42 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <CAKJOkCr86bMoOgxnJQu8Ry-W-2XHYn_xgyZWL4pTPCgcGK3_rg@mail.gmail.com>
+ <20240426200408.100431-1-sj@kernel.org>
+In-Reply-To: <20240426200408.100431-1-sj@kernel.org>
+From: lokesh jaliminche <lokesh.jaliminche@gmail.com>
+Date: Sat, 27 Apr 2024 14:18:32 -0700
+Message-ID: <CAKJOkCpsGfRk-KiWg365=shgs5_Rki07=dhF4_b-Zr2Wznz08Q@mail.gmail.com>
+Subject: Re: Regarding DAMON sysfs usage to get memory access stats
+To: SeongJae Park <sj@kernel.org>
+Cc: damon@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi Lokesh,
+Sounds good! Thank you for the pointers; I will check them out.
 
+Thanks & Regards,
+Lokesh
 
-Sorry for late reply.  Somehow I missed this mail.
-
-On Mon, 22 Apr 2024 17:51:21 -0700 lokesh jaliminche <lokesh.jaliminche@gmail.com> wrote:
-
-> Hi Everyone,
-> 
-> I am currently experimenting with DAMON to gather memory access
-> statistics for virtual address ranges associated with specific
-> processes. I have followed the detailed instructions provided in the
-> usage documentation, but it's unclear where to find the resulting
-> memory access statistics.
->  Any pointers on where to get these statistics?
-> 
-> Steps
-> # cd /sys/kernel/mm/damon/admin/
-> # echo 1 > kdamonds/nr_kdamonds && echo 1 > kdamonds/0/contexts/nr_contexts
-> # echo vaddr > kdamonds/0/contexts/0/operations
-> # echo 1 > kdamonds/0/contexts/0/targets/nr_targets
-> # echo $(pidof masim) > kdamonds/0/contexts/0/targets/0/pid_target
-> # echo on > kdamonds/0/state
-
-After the above steps, you can get the monitoring results from 'tried_regions'
-directory[1] of the sysfs interface, or by collecting damon:damon_aggregatred
-tracepoint[2].
-
-However, I'd recommend using the user-space tool, 'damo'[3], if you could.  It
-provides more human-friendly interface and visualization of the monitoring
-results.  For example, the above step could be reduced to single command like
-below:
-
-    $ sudo damo start $(pidof masim)
-
-Then you could show the monitoring results snapshot in realtime like below:
-
-    $ sudo damo show
-    0   addr [4.000 GiB   , 16.245 GiB ) (12.245 GiB ) access 0 %   age 7 m 32.100 s
-    1   addr [16.245 GiB  , 28.529 GiB ) (12.284 GiB ) access 0 %   age 12 m 40.500 s
-    2   addr [28.529 GiB  , 40.800 GiB ) (12.271 GiB ) access 0 %   age 15 m 10.100 s
-    3   addr [40.800 GiB  , 52.866 GiB ) (12.066 GiB ) access 0 %   age 15 m 58.600 s
-    4   addr [52.866 GiB  , 65.121 GiB ) (12.255 GiB ) access 0 %   age 16 m 15.900 s
-    5   addr [65.121 GiB  , 77.312 GiB ) (12.191 GiB ) access 0 %   age 16 m 22.400 s
-    6   addr [77.312 GiB  , 89.537 GiB ) (12.225 GiB ) access 0 %   age 16 m 24.200 s
-    7   addr [89.537 GiB  , 101.824 GiB) (12.287 GiB ) access 0 %   age 16 m 25 s
-    8   addr [101.824 GiB , 126.938 GiB) (25.114 GiB ) access 0 %   age 16 m 25.300 s
-    total size: 122.938 GiB
-
-The above is only a small part of the features of the tool.  You can get more
-details of the tool from its usage document[4].
-
-[1] https://docs.kernel.org/admin-guide/mm/damon/usage.html#sysfs-schemes-tried-regions
-[2] https://docs.kernel.org/admin-guide/mm/damon/usage.html#tracepoints-for-monitoring-results
-[3] https://github.com/awslabs/damo
-[4] https://github.com/awslabs/damo/blob/next/USAGE.md
-
-
-Thanks,
-SJ
-
-> 
-> Thanks & Regards,
-> Lokesh
+On Fri, Apr 26, 2024 at 1:04=E2=80=AFPM SeongJae Park <sj@kernel.org> wrote=
+:
+>
+> Hi Lokesh,
+>
+>
+> Sorry for late reply.  Somehow I missed this mail.
+>
+> On Mon, 22 Apr 2024 17:51:21 -0700 lokesh jaliminche <lokesh.jaliminche@g=
+mail.com> wrote:
+>
+> > Hi Everyone,
+> >
+> > I am currently experimenting with DAMON to gather memory access
+> > statistics for virtual address ranges associated with specific
+> > processes. I have followed the detailed instructions provided in the
+> > usage documentation, but it's unclear where to find the resulting
+> > memory access statistics.
+> >  Any pointers on where to get these statistics?
+> >
+> > Steps
+> > # cd /sys/kernel/mm/damon/admin/
+> > # echo 1 > kdamonds/nr_kdamonds && echo 1 > kdamonds/0/contexts/nr_cont=
+exts
+> > # echo vaddr > kdamonds/0/contexts/0/operations
+> > # echo 1 > kdamonds/0/contexts/0/targets/nr_targets
+> > # echo $(pidof masim) > kdamonds/0/contexts/0/targets/0/pid_target
+> > # echo on > kdamonds/0/state
+>
+> After the above steps, you can get the monitoring results from 'tried_reg=
+ions'
+> directory[1] of the sysfs interface, or by collecting damon:damon_aggrega=
+tred
+> tracepoint[2].
+>
+> However, I'd recommend using the user-space tool, 'damo'[3], if you could=
+.  It
+> provides more human-friendly interface and visualization of the monitorin=
+g
+> results.  For example, the above step could be reduced to single command =
+like
+> below:
+>
+>     $ sudo damo start $(pidof masim)
+>
+> Then you could show the monitoring results snapshot in realtime like belo=
+w:
+>
+>     $ sudo damo show
+>     0   addr [4.000 GiB   , 16.245 GiB ) (12.245 GiB ) access 0 %   age 7=
+ m 32.100 s
+>     1   addr [16.245 GiB  , 28.529 GiB ) (12.284 GiB ) access 0 %   age 1=
+2 m 40.500 s
+>     2   addr [28.529 GiB  , 40.800 GiB ) (12.271 GiB ) access 0 %   age 1=
+5 m 10.100 s
+>     3   addr [40.800 GiB  , 52.866 GiB ) (12.066 GiB ) access 0 %   age 1=
+5 m 58.600 s
+>     4   addr [52.866 GiB  , 65.121 GiB ) (12.255 GiB ) access 0 %   age 1=
+6 m 15.900 s
+>     5   addr [65.121 GiB  , 77.312 GiB ) (12.191 GiB ) access 0 %   age 1=
+6 m 22.400 s
+>     6   addr [77.312 GiB  , 89.537 GiB ) (12.225 GiB ) access 0 %   age 1=
+6 m 24.200 s
+>     7   addr [89.537 GiB  , 101.824 GiB) (12.287 GiB ) access 0 %   age 1=
+6 m 25 s
+>     8   addr [101.824 GiB , 126.938 GiB) (25.114 GiB ) access 0 %   age 1=
+6 m 25.300 s
+>     total size: 122.938 GiB
+>
+> The above is only a small part of the features of the tool.  You can get =
+more
+> details of the tool from its usage document[4].
+>
+> [1] https://docs.kernel.org/admin-guide/mm/damon/usage.html#sysfs-schemes=
+-tried-regions
+> [2] https://docs.kernel.org/admin-guide/mm/damon/usage.html#tracepoints-f=
+or-monitoring-results
+> [3] https://github.com/awslabs/damo
+> [4] https://github.com/awslabs/damo/blob/next/USAGE.md
+>
+>
+> Thanks,
+> SJ
+>
+> >
+> > Thanks & Regards,
+> > Lokesh
