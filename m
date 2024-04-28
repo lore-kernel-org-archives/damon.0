@@ -1,161 +1,108 @@
-Received: from mail-qk1-f181.google.com (mail-qk1-f181.google.com [209.85.222.181])
+Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com [209.85.167.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB1793A1D3
-	for <damon@lists.linux.dev>; Sat, 27 Apr 2024 21:18:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB3C61C2D
+	for <damon@lists.linux.dev>; Sun, 28 Apr 2024 15:49:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714252725; cv=none; b=n1qMybWxC87o7LiPSMNxtDSm6l5BDPIANoDoUnexxFNpEsJ06meQpQfVWGyWcQ2tYBNRiubmEc1fvOjxEgCd0yRbs8V3vWwifmJMsfu43k6CQfA2NnSuAC6EXsXm+EISBchXZGtgTtLH56BVyrizQTjjZ6xq+vXBKtuUZXaMGaI=
+	t=1714319395; cv=none; b=Wf6h7bfQ4S5VE+HSZtDQOEnlw/ffvylzAJryuLGaavP9pwNDf2weCDXROUBfasS9a8FNK7GOFdoNcKg77+ZEvIS699Tx/DO0A77AgYdP9GUfQs8Ttt0mL0tb2xtuaAAl3SHQCGSzyKm9aORryQD2yFc2razT1E939RUqbKkkvuM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714252725; c=relaxed/simple;
-	bh=PZkxCYjpRSskE3adKCC/dSB0Ivo1igvSmzkjrqqYFjk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=kYQgK6sFexURLwBfbIFZrpn+wYBN1mjAgWbjN8XdlH/CU8oTaSedsJKPx8KqnbxH+qkW2Vyp+ItRwTmtHO79lkC3lymJgE+VzMVrGw2uGS0sFuLEse8ZSj3hXLhNFdiC8DMZUzNZ/2rzCAU1dTtrWlXForHoo/YcgVOddwcPCWc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NaMCtwWs; arc=none smtp.client-ip=209.85.222.181
+	s=arc-20240116; t=1714319395; c=relaxed/simple;
+	bh=FEuHsNr9sHQu/PKrfT6+Fgj0YmZ2ha3SJ+R+uNmZfe0=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=GTKi45cZMONP/g2Ms+M1s9WKJzFfoKSJPu0gHjeFXk6GNEP7NRaloAsezb35RhE4+m3QvG1aUnc3B61M7NMDkwOOO75DZ7ZFQZ3N6nCAEvjXbvBew8l0iCNcDZvPTdaycsFp9iWuZ3NrA1SZcmwvh9q8/UzcA78yo8MuYwI6R/4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fOTHbnzN; arc=none smtp.client-ip=209.85.167.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NaMCtwWs"
-Received: by mail-qk1-f181.google.com with SMTP id af79cd13be357-790c36dcee9so66807985a.2
-        for <damon@lists.linux.dev>; Sat, 27 Apr 2024 14:18:43 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fOTHbnzN"
+Received: by mail-lf1-f54.google.com with SMTP id 2adb3069b0e04-51967f75763so4254178e87.2
+        for <damon@lists.linux.dev>; Sun, 28 Apr 2024 08:49:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1714252723; x=1714857523; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=o7HwBzLdUfmNx2DoKYy1/a8lmkPXgeOEF4KRwlhT4mc=;
-        b=NaMCtwWsiKO5FPEECpf813c6ZKZv589j6mhcbvDckeXZIxKi7lnWI3PxP5Zw3HpFIS
-         55BNunkKPMUPOaZjZGKEstyaBf0Eay7ipw7emuz219YmrusQ3v7JOG7diUKWJMPE2w22
-         pwWnd4ls13INHFp7FK666aNldnzMplTah99aTxmGTk2K5QIOQ7wQ8QweJJisNOgUM9+U
-         LYtaCix+B16sTwiLf/AIXxYbMRLhj3wKRZnDrzFXuj3j7XdyoX75QnxTZL8uhbtr7ZZV
-         vbfikSs4blfQ6WNOtNcmQrCZxFMWFUc+uWJ3zFHooihzXcumqL73rsm80QAq40iB7UKN
-         aR0Q==
+        d=gmail.com; s=20230601; t=1714319391; x=1714924191; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=+eC0uh5DnA8Lr/h0xRVODqCfHrWrk7DcxZB4WXuckG4=;
+        b=fOTHbnzNAoEN5wmqC7S+26I7qP/HlRNlxXJV2r86Qewb6XOQ1jmlZQHNT07v/ow4XV
+         SPj5P8I6n7vHaWSYa7HKfna3u/jhPq/66wu8Rku7MZ1fRYmdechzzvKjahM/EyZS5CYI
+         NCYMIPl/CUAhMnyi4J3u9aPoMs2VnXND4rfpLz6YS6nADsSFWoy1//1ZF3XJ7cSgg6Rr
+         nfxulUz3AL5lCOBXUMSAxez6CneqZ0uVP4N9hAOeAhBGf8d88Oh+RdaTq9UcEqnhvdcY
+         JdnHP810t9RcbBRk8nVjKpTlzKJSsS9vGO+Crwu1PA2LIj4NQNnIg/hJwwsUEfMrk1Rq
+         4xhw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714252723; x=1714857523;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=o7HwBzLdUfmNx2DoKYy1/a8lmkPXgeOEF4KRwlhT4mc=;
-        b=vemL/mRwvjKR6kuD1Jbn4PJvNnK5U1rysAzIInofShMvGtteskfRfxN51T4gasTn+X
-         PSnOf4885KpZPAMIM5tjgzClqlbh64nVCJEC41ATDbaUUqn6THEL66Ucsuw9uN3W5Pe0
-         UtHMIBfWIq7s1CO5nn80R84ZE9kydfI95HuQJulRay8feQ2O0EbiOi0hvD/MCSYNR+g8
-         svvgzAM3gCHyKaHNnBs9uiVGTNGfSRznORu4cLSRi1z1YosisT7nqnosMHWNg/iNwG2c
-         18ZSmspyNCL/SAnQEPrKvxPkDR9R5AFB0/tfyC58jR6zx8G4HkcsKUAUnva/TdzlkDXB
-         A7aw==
-X-Gm-Message-State: AOJu0YyeXzE1KXVD8hTtWIaQOxu9PFDvEsDnhnZeGXfZkgS8If1PfA44
-	v7U7oM/NCHTLup79zfQ8bwl71Yt6GaZ+IC+p5H0i8HPriRFGrSieRAgjcvColbCtq16hZ173ov+
-	c4uUX0cmfe2yusOq3495++0O/B4Q=
-X-Google-Smtp-Source: AGHT+IEFQcHxZbPmmQZiZWYxulCeqXN3h3N048XAvqB8jef8qrsD+G/ivfT95keh+4wULYp601O2Zw7mDjaVS6b1FXk=
-X-Received: by 2002:ad4:5de4:0:b0:6a0:ae4f:cd4 with SMTP id
- jn4-20020ad45de4000000b006a0ae4f0cd4mr6248935qvb.40.1714252722491; Sat, 27
- Apr 2024 14:18:42 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1714319391; x=1714924191;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=+eC0uh5DnA8Lr/h0xRVODqCfHrWrk7DcxZB4WXuckG4=;
+        b=YihpmS3uS0C33wv+s26SoN+w9o2DwLAWeyfSbU98HEdfbdnd0FNcg9rgJEg3T9bKGE
+         a/MGuRdMKSjdoJzdZVTBwrdBzf9bRTtgKFOrkMBMdhjZRUqarB9jZf68mrzLHLd3XKXm
+         UObjVaLxT9XDIQ6FU6za5T/6v+cB2/M2y8zxc8eSq6MfcKgUg2jNr7c3YDlg01VFle/y
+         4Z3x+qcnMBGi8BpOVYrE4axR2KdPvxJde5Icp2CTw6jqzssQbj/NaOXo6BPBcHZe2dLS
+         DUqM+nMhj0AX8RAKnCAqUTEPozpT/3pe9ASIfDhbHHd0FVWmVeO0zMiAHL3CwfeRKQdL
+         pxJw==
+X-Gm-Message-State: AOJu0YzQJYb/8zNoWNY9A3Y9Wfj0QX+NSUmATJV1oO2jpqzBBJZSWVOc
+	geT09qD7AAV+3CiZEGb5NBmF+rYxjmERLrhnllHZfJxxqwQXt0smDYnATQ==
+X-Google-Smtp-Source: AGHT+IHvQfX1l1nvvDRkFdQxuR9LImGByrcJN5JOvH/vKAXoHK47NgIWHf4TfVWhJyrYwO8rIJnAZQ==
+X-Received: by 2002:a05:6512:ba5:b0:51c:a0e1:2a44 with SMTP id b37-20020a0565120ba500b0051ca0e12a44mr6898746lfv.26.1714319391207;
+        Sun, 28 Apr 2024 08:49:51 -0700 (PDT)
+Received: from localhost.localdomain ([217.107.125.136])
+        by smtp.gmail.com with ESMTPSA id v19-20020a05651203b300b005159412ab81sm3803147lfp.216.2024.04.28.08.49.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 28 Apr 2024 08:49:50 -0700 (PDT)
+From: Alex Rusuf <yorha.op@gmail.com>
+To: damon@lists.linux.dev
+Cc: sj@kernel.org
+Subject: [PATCH] DAMON: Fix return value from damos_wmark_metric_value
+Date: Sun, 28 Apr 2024 18:49:33 +0300
+Message-ID: <20240428154933.183760-1-yorha.op@gmail.com>
+X-Mailer: git-send-email 2.42.0
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <CAKJOkCr86bMoOgxnJQu8Ry-W-2XHYn_xgyZWL4pTPCgcGK3_rg@mail.gmail.com>
- <20240426200408.100431-1-sj@kernel.org>
-In-Reply-To: <20240426200408.100431-1-sj@kernel.org>
-From: lokesh jaliminche <lokesh.jaliminche@gmail.com>
-Date: Sat, 27 Apr 2024 14:18:32 -0700
-Message-ID: <CAKJOkCpsGfRk-KiWg365=shgs5_Rki07=dhF4_b-Zr2Wznz08Q@mail.gmail.com>
-Subject: Re: Regarding DAMON sysfs usage to get memory access stats
-To: SeongJae Park <sj@kernel.org>
-Cc: damon@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 7bit
 
-Sounds good! Thank you for the pointers; I will check them out.
+Signed-off-by: Alex Rusuf <yorha.op@gmail.com>
+---
+ mm/damon/core.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-Thanks & Regards,
-Lokesh
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index 6d503c1c125e..994ccd272555 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -1480,12 +1480,14 @@ static bool kdamond_need_stop(struct damon_ctx *ctx)
+ 	return true;
+ }
+ 
+-static unsigned long damos_wmark_metric_value(enum damos_wmark_metric metric)
++static int damos_wmark_metric_value(enum damos_wmark_metric metric,
++				    unsigned long *metric_value)
+ {
+ 	switch (metric) {
+ 	case DAMOS_WMARK_FREE_MEM_RATE:
+-		return global_zone_page_state(NR_FREE_PAGES) * 1000 /
++		*metric_value = global_zone_page_state(NR_FREE_PAGES) * 1000 /
+ 		       totalram_pages();
++		return 0;
+ 	default:
+ 		break;
+ 	}
+@@ -1500,10 +1502,10 @@ static unsigned long damos_wmark_wait_us(struct damos *scheme)
+ {
+ 	unsigned long metric;
+ 
+-	if (scheme->wmarks.metric == DAMOS_WMARK_NONE)
++	if (scheme->wmarks.metric == DAMOS_WMARK_NONE ||
++	    damos_wmark_metric_value(scheme->wmarks.metric, &metric))
+ 		return 0;
+ 
+-	metric = damos_wmark_metric_value(scheme->wmarks.metric);
+ 	/* higher than high watermark or lower than low watermark */
+ 	if (metric > scheme->wmarks.high || scheme->wmarks.low > metric) {
+ 		if (scheme->wmarks.activated)
+-- 
+2.42.0
 
-On Fri, Apr 26, 2024 at 1:04=E2=80=AFPM SeongJae Park <sj@kernel.org> wrote=
-:
->
-> Hi Lokesh,
->
->
-> Sorry for late reply.  Somehow I missed this mail.
->
-> On Mon, 22 Apr 2024 17:51:21 -0700 lokesh jaliminche <lokesh.jaliminche@g=
-mail.com> wrote:
->
-> > Hi Everyone,
-> >
-> > I am currently experimenting with DAMON to gather memory access
-> > statistics for virtual address ranges associated with specific
-> > processes. I have followed the detailed instructions provided in the
-> > usage documentation, but it's unclear where to find the resulting
-> > memory access statistics.
-> >  Any pointers on where to get these statistics?
-> >
-> > Steps
-> > # cd /sys/kernel/mm/damon/admin/
-> > # echo 1 > kdamonds/nr_kdamonds && echo 1 > kdamonds/0/contexts/nr_cont=
-exts
-> > # echo vaddr > kdamonds/0/contexts/0/operations
-> > # echo 1 > kdamonds/0/contexts/0/targets/nr_targets
-> > # echo $(pidof masim) > kdamonds/0/contexts/0/targets/0/pid_target
-> > # echo on > kdamonds/0/state
->
-> After the above steps, you can get the monitoring results from 'tried_reg=
-ions'
-> directory[1] of the sysfs interface, or by collecting damon:damon_aggrega=
-tred
-> tracepoint[2].
->
-> However, I'd recommend using the user-space tool, 'damo'[3], if you could=
-.  It
-> provides more human-friendly interface and visualization of the monitorin=
-g
-> results.  For example, the above step could be reduced to single command =
-like
-> below:
->
->     $ sudo damo start $(pidof masim)
->
-> Then you could show the monitoring results snapshot in realtime like belo=
-w:
->
->     $ sudo damo show
->     0   addr [4.000 GiB   , 16.245 GiB ) (12.245 GiB ) access 0 %   age 7=
- m 32.100 s
->     1   addr [16.245 GiB  , 28.529 GiB ) (12.284 GiB ) access 0 %   age 1=
-2 m 40.500 s
->     2   addr [28.529 GiB  , 40.800 GiB ) (12.271 GiB ) access 0 %   age 1=
-5 m 10.100 s
->     3   addr [40.800 GiB  , 52.866 GiB ) (12.066 GiB ) access 0 %   age 1=
-5 m 58.600 s
->     4   addr [52.866 GiB  , 65.121 GiB ) (12.255 GiB ) access 0 %   age 1=
-6 m 15.900 s
->     5   addr [65.121 GiB  , 77.312 GiB ) (12.191 GiB ) access 0 %   age 1=
-6 m 22.400 s
->     6   addr [77.312 GiB  , 89.537 GiB ) (12.225 GiB ) access 0 %   age 1=
-6 m 24.200 s
->     7   addr [89.537 GiB  , 101.824 GiB) (12.287 GiB ) access 0 %   age 1=
-6 m 25 s
->     8   addr [101.824 GiB , 126.938 GiB) (25.114 GiB ) access 0 %   age 1=
-6 m 25.300 s
->     total size: 122.938 GiB
->
-> The above is only a small part of the features of the tool.  You can get =
-more
-> details of the tool from its usage document[4].
->
-> [1] https://docs.kernel.org/admin-guide/mm/damon/usage.html#sysfs-schemes=
--tried-regions
-> [2] https://docs.kernel.org/admin-guide/mm/damon/usage.html#tracepoints-f=
-or-monitoring-results
-> [3] https://github.com/awslabs/damo
-> [4] https://github.com/awslabs/damo/blob/next/USAGE.md
->
->
-> Thanks,
-> SJ
->
-> >
-> > Thanks & Regards,
-> > Lokesh
