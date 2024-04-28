@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4913764CC0
-	for <damon@lists.linux.dev>; Sun, 28 Apr 2024 19:18:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B18D74407
+	for <damon@lists.linux.dev>; Sun, 28 Apr 2024 19:36:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714331926; cv=none; b=ZzIAkTFIrfOEpUfBIJtNSIY9Nfq14gfW8kAG/gt8xYTcsjT+ffgio27/4RuUnqbxB8Q/SKsL9TuzeOORulrA5TNJ6NbUeqZFLT8KmJjRy8l6wGFwZP0QGh/YHCi6E4pN623CbP7v3dOnrn9nIzePuYhXp9EN3QgzwFAeB5DZJpE=
+	t=1714332984; cv=none; b=TaZ1xmNssCJNhZBAcID4KbByZpnBDwwc76qjj/3CeZ54XMsWvQNS1gl1E+6iDtWu0Ag/pGIdG6g23nI9YArm4nJKOalL+m9Crm3s5gVdA8uCp47HKlcPH9a+TdTXmUWtYUfWpFIUIrFfbYyPzkKT7T/Ua1aQvz7FJOA+/becZkM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714331926; c=relaxed/simple;
-	bh=zqbqGwJEz0gDkyq8DuVznseJOL7uJk6I0GVYIzg71P8=;
+	s=arc-20240116; t=1714332984; c=relaxed/simple;
+	bh=ABEfOmLcf1ftGDsVZv49Fkz3a6SXVYqVal7ixHKCNYA=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=GyB9TcwBjnsKZ3U7n78W6xr52F0Yhph+/loPiqb12gDKjPoNMCYyo1qFh5eXl+1NbS0FzhaSq0gfv6tvABhlh4WocCVxVcwtYXEmnaVGJr2BqTXbxU0T0eWyYc4Yxs25OTR8KSqb4eiBzC6dzeZ6xvl1x2nsKx8kxJNWkjzzqWQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KLHR3cgH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=acxHuzltrWniaj4EJIm/HivO8pE5Q3MtjqeQciLM6ragkkufBMRuPUlV4ivnGaXxGo3kzgM5J/PwNC5YTR1WogIuSubjPH2nJ4zM8F5mM1cnFuiROI1Ejt9LbRiPTKmHEXTfr4PlefTYPYY1N8eyBTotzDdjufBG6XNpuEPTG7M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VkqSLDYH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KLHR3cgH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 830B4C113CC;
-	Sun, 28 Apr 2024 19:18:45 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VkqSLDYH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABCB7C113CC;
+	Sun, 28 Apr 2024 19:36:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1714331925;
-	bh=zqbqGwJEz0gDkyq8DuVznseJOL7uJk6I0GVYIzg71P8=;
+	s=k20201202; t=1714332983;
+	bh=ABEfOmLcf1ftGDsVZv49Fkz3a6SXVYqVal7ixHKCNYA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KLHR3cgHXv3o2geeFxITJo7Isl/tYuZjfYj1hIaAr59XfvbDKHWko7pUEuhr0fHvU
-	 dg2ONU2ZhlPh3G79VSNDhCUi6uDkK/MwHpTHtw+1PBXdy02tXTGmBKZ1nvzmM4Vu6X
-	 9Yrw0RDHWVnxvb7PiXAm4U3MiB6QDk71WNnRtOxBC0BF1DeOAoCKham7eUgXRbCX25
-	 3Z8EvORo3an0yAkN0PLO8vei3ZzezyFa8pyyh5p/sGKP/Bu4FPRbn8KtdGxrZbipLx
-	 Um/F/wc6hvD89PwQWDmO1Z7SSS5f0TRR1ZfcRUYUsRF8jUJUShFajkaOYqdwUFcwgH
-	 1xyRCZ1VfE5pw==
+	b=VkqSLDYHg0QGGm4EOPZyAWR01/g6LC1r1HPxSYlrWHfg8QvzgzXl6eB8/1GW5QM7O
+	 1uupKPQDBRbeaM24lq01i76YR/CsoXLnVfBE2rH1urU19jMhRvYsqEEguP/XAxqW9b
+	 hqBQmaHuMdBS5XXm9uG0Vu/lt92ct0x/XANoovbH/NHLofycaWCYYKOufeOYpK6g71
+	 c5Ohfn/81XcHI/2HtbV4/1Y1+PZs6mjovgSfczGlSyBw1pJKmAkUrWJc5Ob2MNaw30
+	 e+YohTMn2rLDOBsqqG6z8Ri2kn8iuIeegGZwu+Wascyu078z78EoPplTQx3SqhuJU/
+	 wCn8aBKl1EPmQ==
 From: SeongJae Park <sj@kernel.org>
 To: Alex Rusuf <yorha.op@gmail.com>
 Cc: SeongJae Park <sj@kernel.org>,
 	damon@lists.linux.dev
-Subject: Re: [PATCH v3] mm/damon/core: Fix return value from damos_wmark_metric_value
-Date: Sun, 28 Apr 2024 12:18:43 -0700
-Message-Id: <20240428191843.92093-1-sj@kernel.org>
+Subject: Re: [PATCH v2] mm/damon/core: Fix return value from damos_wmark_metric_value
+Date: Sun, 28 Apr 2024 12:36:22 -0700
+Message-Id: <20240428193622.92923-1-sj@kernel.org>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20240428191439.194027-1-yorha.op@gmail.com>
+In-Reply-To: <d14a5a00-782f-48c7-a3a8-2b62846d29a6@gmail.com>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -46,23 +46,23 @@ Content-Transfer-Encoding: 8bit
 
 Hi Alex,
 
-On Sun, 28 Apr 2024 22:14:39 +0300 Alex Rusuf <yorha.op@gmail.com> wrote:
+On Sun, 28 Apr 2024 22:17:26 +0300 Alex Rusuf <yorha.op@gmail.com> wrote:
 
-> damos_wmark_metric_value's return value is 'unsigned long', so
-> returning -EINVAL as 'unsigned long' may turn out to be
-> very different from the expected one (using 2's complement) and
-> treat as usual matric's value. So, fix that, checking if
-> returned value is not 0.
+> SJ,
 > 
-> Fixes: ee801b7dd782 ("mm/damon/schemes: activate schemes based on a watermarks mechanism")
-> Signed-off-by: Alex Rusuf <yorha.op@gmail.com>
+> thank you again for your comments, I'm not very familiar with sending 
+> patches here, so I'll try my best, thank you again!
 
-Thank you for patiently revisioning the patch!
+No problem at all.  Nobody is familiar with the process from the beginning, and
+you're doing great.  I'm happy to help you. :)
 
-Reviewed-by: SeongJae Park <sj@kernel.org>
+I'll also try my best for making the process easier.
 
 
 Thanks,
 SJ
 
-[...]
+> 
+> BR,
+> 
+> Alex
