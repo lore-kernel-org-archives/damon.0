@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B18D74407
-	for <damon@lists.linux.dev>; Sun, 28 Apr 2024 19:36:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E8B5BA2B;
+	Mon, 29 Apr 2024 22:44:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714332984; cv=none; b=TaZ1xmNssCJNhZBAcID4KbByZpnBDwwc76qjj/3CeZ54XMsWvQNS1gl1E+6iDtWu0Ag/pGIdG6g23nI9YArm4nJKOalL+m9Crm3s5gVdA8uCp47HKlcPH9a+TdTXmUWtYUfWpFIUIrFfbYyPzkKT7T/Ua1aQvz7FJOA+/becZkM=
+	t=1714430697; cv=none; b=kElbsiEWYKWS74/caI1+W1F9Vjifjg43RaMhSq7pcz1/zg+PN3HZ5glyPnG5BybaRZ2Jo1TMxdApYquIhb1S4PlJMDCbJKRj4M28n0zWolB3ttcyDvLlULqrAp+i8upmus8IHcIXKAfyWhoRoIJL6WlGHPQCp95UetcPLSGTC9w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714332984; c=relaxed/simple;
-	bh=ABEfOmLcf1ftGDsVZv49Fkz3a6SXVYqVal7ixHKCNYA=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=acxHuzltrWniaj4EJIm/HivO8pE5Q3MtjqeQciLM6ragkkufBMRuPUlV4ivnGaXxGo3kzgM5J/PwNC5YTR1WogIuSubjPH2nJ4zM8F5mM1cnFuiROI1Ejt9LbRiPTKmHEXTfr4PlefTYPYY1N8eyBTotzDdjufBG6XNpuEPTG7M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VkqSLDYH; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1714430697; c=relaxed/simple;
+	bh=SuQisH3NEJlIi/U4/Jd+S9JnCjk1XX4cGbCrJ1G43QQ=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=jpBx/YV4hLnjRtJWQMvhRruqCGGcKdDbdXVSn+Cg9Atz7mFI6m13KWF5gdz2ErmpiTw/hdakIlKWQzoPIDU4TKpqZKaoasltuk18BOuBDeriX5kouHleA2PCiSjCeCFL7KOvNPGY/Dlsr/Yxq1EcCvT5pk4OYmc/xfQhd6XBbx0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XOrOnr+k; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VkqSLDYH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABCB7C113CC;
-	Sun, 28 Apr 2024 19:36:23 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XOrOnr+k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83B92C113CD;
+	Mon, 29 Apr 2024 22:44:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1714332983;
-	bh=ABEfOmLcf1ftGDsVZv49Fkz3a6SXVYqVal7ixHKCNYA=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VkqSLDYHg0QGGm4EOPZyAWR01/g6LC1r1HPxSYlrWHfg8QvzgzXl6eB8/1GW5QM7O
-	 1uupKPQDBRbeaM24lq01i76YR/CsoXLnVfBE2rH1urU19jMhRvYsqEEguP/XAxqW9b
-	 hqBQmaHuMdBS5XXm9uG0Vu/lt92ct0x/XANoovbH/NHLofycaWCYYKOufeOYpK6g71
-	 c5Ohfn/81XcHI/2HtbV4/1Y1+PZs6mjovgSfczGlSyBw1pJKmAkUrWJc5Ob2MNaw30
-	 e+YohTMn2rLDOBsqqG6z8Ri2kn8iuIeegGZwu+Wascyu078z78EoPplTQx3SqhuJU/
-	 wCn8aBKl1EPmQ==
+	s=k20201202; t=1714430696;
+	bh=SuQisH3NEJlIi/U4/Jd+S9JnCjk1XX4cGbCrJ1G43QQ=;
+	h=From:To:Cc:Subject:Date:From;
+	b=XOrOnr+k4jD2edkwQH3alhSvEJoLSHQeQbV0IZQTMjxdfbJwZQZRsdBR3PS4/r0+o
+	 RSZ+qPe8sEex/FzLlqZkdxpgSh8+c9SF3oTjCxcAZrso/Ys7Jg1CGUyCv2QBp9U/hf
+	 T3lePgdYhBulF9RuQaGzTEbL+/3iZBhtgwof2KGvpCMKwl4rNDlTL5X4YgCz/hxTH/
+	 MATA+vdGM6qW8pX7J08BRd7JxGyKcNDlqh+qmcS1TSxqym+TuymaBXReeybt3MfFxC
+	 4HBtfSMIRPZ/YgwVyORSATuv248HePKWfKYmVPndfhb73bvGsi/Sp39M9jJs3QdHTX
+	 G5trp2uS3WOzQ==
 From: SeongJae Park <sj@kernel.org>
-To: Alex Rusuf <yorha.op@gmail.com>
+To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SeongJae Park <sj@kernel.org>,
-	damon@lists.linux.dev
-Subject: Re: [PATCH v2] mm/damon/core: Fix return value from damos_wmark_metric_value
-Date: Sun, 28 Apr 2024 12:36:22 -0700
-Message-Id: <20240428193622.92923-1-sj@kernel.org>
+	damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH 0/4] mm/damon/paddr: simplify page level access re-check for pageout
+Date: Mon, 29 Apr 2024 15:44:47 -0700
+Message-Id: <20240429224451.67081-1-sj@kernel.org>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <d14a5a00-782f-48c7-a3a8-2b62846d29a6@gmail.com>
-References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -44,25 +43,34 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hi Alex,
+The 'pageout' DAMOS action implementation of 'paddr' asks
+reclaim_pages() to do page level access check again.  But the user can
+ask 'paddr' to do the page level access check on its own, using DAMOS
+filter of 'young page' type.  Meanwhile, 'paddr' is the only user of
+reclaim_pages() that asks the page level access check.
 
-On Sun, 28 Apr 2024 22:17:26 +0300 Alex Rusuf <yorha.op@gmail.com> wrote:
+Make 'paddr' does the page level access check on its own always, and
+simplify reclaim_pages() by removing the page level access check request
+handling logic.  As a result of the change for reclaim_pages(),
+reclaim_folio_list(), which is called by reclaim_pages(), also no more
+need to do the page level access check.  Simplify the function, too.
 
-> SJ,
-> 
-> thank you again for your comments, I'm not very familiar with sending 
-> patches here, so I'll try my best, thank you again!
+SeongJae Park (4):
+  mm/damon/paddr: avoid unnecessary page level access check for pageout
+    DAMOS action
+  mm/damon/paddr: do page level access check for pageout DAMOS action on
+    its own
+  mm/vmscan: remove ignore_references argument of reclaim_pages()
+  mm/vmscan: remove ignore_references argument of reclaim_folio_list()
 
-No problem at all.  Nobody is familiar with the process from the beginning, and
-you're doing great.  I'm happy to help you. :)
+ mm/damon/paddr.c | 20 +++++++++++++++++++-
+ mm/internal.h    |  2 +-
+ mm/madvise.c     |  4 ++--
+ mm/vmscan.c      | 12 +++++-------
+ 4 files changed, 27 insertions(+), 11 deletions(-)
 
-I'll also try my best for making the process easier.
 
+base-commit: 784e2d5fd3231ad7cad0ac907be4bc3db30520c0
+-- 
+2.39.2
 
-Thanks,
-SJ
-
-> 
-> BR,
-> 
-> Alex
