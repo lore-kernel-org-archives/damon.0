@@ -1,43 +1,59 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8D807BB1A;
-	Mon, 29 Apr 2024 22:44:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF889DDBE;
+	Tue, 30 Apr 2024 16:47:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714430698; cv=none; b=nkVNEzJjW48mwmO9b5FkSuhMWyh3vBkNuyLgNWJm2BoTy/pWOupUWf7LB7zHSt93R42SaYPVhlx0gLTPxwGnPKeEYW7+yGKNfpt/SDnoLtkFhRVAh+mSSVhndK4itzbSe7nOFQgPimw8lS+Y/O6/qzdsZhYxPC8fUxTA5pJrtbM=
+	t=1714495627; cv=none; b=JqjolFgo4tjj7C80Ue9Ooc0M014B39Nh3KvQz/FhKouTRbci5AlRPjeQ7vbnAIXA2PiTCu6dxwttt8VQew+d4SBpHMzFMC6/gQ5tbR5BEz0+iZMEj6oDG0GyjCKENpBTGwPQkl/fAJpU4x8XBqlEXn77uXfUEp/9XIjwxj03sYc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714430698; c=relaxed/simple;
-	bh=rwwV4wTGLuB7cXfIuHMVaw/1/iqBkA9IvJM9bkgx3iA=;
+	s=arc-20240116; t=1714495627; c=relaxed/simple;
+	bh=Ep6cDDu/SerRR+kyfc1AOQSffwbLwETmOR0ksOogg9U=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=VP/cW25N8OKlHXgdHlWLzPcLqPe12lNNvwdcjFjcKhREDSDK1M6bJapcinq4os2PnidbLOd5drZWYLuXrxOcM2guYMyaX6wnbcmw8yMLD696R2Pqc58VnzjTH/0rjSgmleHTH6xNC0ADoxtsYyhsmHZJPiLTKkz9EZ2vIR36swc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DbJ0bdvv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pOM29Y9aTg7G80gISHQg1bZbEAFSazyVvP1QxAyrHwkkfB1m2fY/3Vs8H5yk7uwyZXnBzes/BQsMycS4m4v/PdFYGiVy2eXHpf8cAE9gtkA+l8uoJ7JzgL4WfqE1mekutQtB/tg5i7dEhXIjKxpsTr415wgUmAk7SqVT9UclmgE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kK2b9tbb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DbJ0bdvv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 449E6C4AF1A;
-	Mon, 29 Apr 2024 22:44:58 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kK2b9tbb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1905C2BBFC;
+	Tue, 30 Apr 2024 16:47:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1714430698;
-	bh=rwwV4wTGLuB7cXfIuHMVaw/1/iqBkA9IvJM9bkgx3iA=;
+	s=k20201202; t=1714495627;
+	bh=Ep6cDDu/SerRR+kyfc1AOQSffwbLwETmOR0ksOogg9U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DbJ0bdvvJr2AhyvwGW00oQOrnMQxpSdiFdku3EzCB5Pf8qz+KnEJFsIAVPLJBn7LI
-	 fOmyoYPY5MRuwZBCR4WOPYYORsXzorDi6hZCCTY3ru1Roc99UOGEbt5PTsJSlX/pnH
-	 2redK7kxVZ2sOhiba6ZfAHri7YUTXSUDxn3qDmziId7BKHORNZ9aiMm8QskuSYduu9
-	 MRbV+SnE0GV7XVoDV142dQ3T5d8IXuFLGuaud4T5UEBhwFbJAeAYHQgYOzW23RlSV8
-	 qlmXHL6C1cICKky/VRmu1IKaIVZPSOHqyfco/70bB7Psw5rlpb5iCxgzlWwiBiMrfN
-	 cRbHEA0E3zluQ==
+	b=kK2b9tbb3GIfI5yf/ovq0F7tG3hwFt0RWxMtdQYyxKTIbBbxNgJPnl2v9KRCCj/oV
+	 jn6+EcqZsK0V1y1cfwvgQC4SwxiqxwzkLmWct1/wOXuQV/Rm5AK10qklVzehAeD1Cp
+	 JStyZpUzM3xTA5/0CByuZYAvMx/fS2zv+DRN4WONdB08v4qRUiPRwOL2k0d03dHhRN
+	 nbxmkn55kNBA57Z/dgYjqb96RJLKmYvORqiu2dulye6oq9i8baYdThpzQElb6jwawI
+	 RnDJJ7+9bvvdBSzADQ3NrTlbXBNfYCbRVioHZSxWxjmq0h0GW6Tt+vbcPUzWncQIoY
+	 aMF6skztqdhjQ==
 From: SeongJae Park <sj@kernel.org>
-To: Andrew Morton <akpm@linux-foundation.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: SeongJae Park <sj@kernel.org>,
-	damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH 3/4] mm/vmscan: remove ignore_references argument of reclaim_pages()
-Date: Mon, 29 Apr 2024 15:44:50 -0700
-Message-Id: <20240429224451.67081-4-sj@kernel.org>
+	stable@vger.kernel.org,
+	patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net,
+	rwarsow@gmx.de,
+	conor@kernel.org,
+	allen.lkml@gmail.com,
+	broonie@kernel.org,
+	damon@lists.linux.dev
+Subject: Re: [PATCH 5.15 00/80] 5.15.158-rc1 review
+Date: Tue, 30 Apr 2024 09:47:03 -0700
+Message-Id: <20240430164704.75413-1-sj@kernel.org>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20240429224451.67081-1-sj@kernel.org>
-References: <20240429224451.67081-1-sj@kernel.org>
+In-Reply-To: <20240430103043.397234724@linuxfoundation.org>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -46,93 +62,55 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-All reclaim_pages() callers are setting 'ignore_references' parameter
-'true'.  In other words, the parameter is not really being used.  Remove
-the argument to make it simple.
+Hello,
 
-Signed-off-by: SeongJae Park <sj@kernel.org>
+On Tue, 30 Apr 2024 12:39:32 +0200 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+
+> This is the start of the stable review cycle for the 5.15.158 release.
+> There are 80 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Thu, 02 May 2024 10:30:27 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.158-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
+> and the diffstat can be found below.
+
+This rc kernel passes DAMON functionality test[1] on my test machine.
+Attaching the test results summary below.  Please note that I retrieved the
+kernel from linux-stable-rc tree[2].
+
+Tested-by: SeongJae Park <sj@kernel.org>
+
+[1] https://github.com/awslabs/damon-tests/tree/next/corr
+[2] d6b90d569cec ("Linux 5.15.158-rc1")
+
+Thanks,
+SJ
+
+[...]
+
 ---
- mm/damon/paddr.c | 2 +-
- mm/internal.h    | 2 +-
- mm/madvise.c     | 4 ++--
- mm/vmscan.c      | 6 +++---
- 4 files changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
-index 974edef1740d..18797c1b419b 100644
---- a/mm/damon/paddr.c
-+++ b/mm/damon/paddr.c
-@@ -283,7 +283,7 @@ static unsigned long damon_pa_pageout(struct damon_region *r, struct damos *s)
- 	}
- 	if (install_young_filter)
- 		damos_destroy_filter(filter);
--	applied = reclaim_pages(&folio_list, true);
-+	applied = reclaim_pages(&folio_list);
- 	cond_resched();
- 	return applied * PAGE_SIZE;
- }
-diff --git a/mm/internal.h b/mm/internal.h
-index c5552d35d995..b2c75b12014e 100644
---- a/mm/internal.h
-+++ b/mm/internal.h
-@@ -1052,7 +1052,7 @@ extern unsigned long  __must_check vm_mmap_pgoff(struct file *, unsigned long,
-         unsigned long, unsigned long);
- 
- extern void set_pageblock_order(void);
--unsigned long reclaim_pages(struct list_head *folio_list, bool ignore_references);
-+unsigned long reclaim_pages(struct list_head *folio_list);
- unsigned int reclaim_clean_pages_from_list(struct zone *zone,
- 					    struct list_head *folio_list);
- /* The ALLOC_WMARK bits are used as an index to zone->watermark */
-diff --git a/mm/madvise.c b/mm/madvise.c
-index c49fef453491..a77893462b92 100644
---- a/mm/madvise.c
-+++ b/mm/madvise.c
-@@ -423,7 +423,7 @@ static int madvise_cold_or_pageout_pte_range(pmd_t *pmd,
- huge_unlock:
- 		spin_unlock(ptl);
- 		if (pageout)
--			reclaim_pages(&folio_list, true);
-+			reclaim_pages(&folio_list);
- 		return 0;
- 	}
- 
-@@ -547,7 +547,7 @@ static int madvise_cold_or_pageout_pte_range(pmd_t *pmd,
- 		pte_unmap_unlock(start_pte, ptl);
- 	}
- 	if (pageout)
--		reclaim_pages(&folio_list, true);
-+		reclaim_pages(&folio_list);
- 	cond_resched();
- 
- 	return 0;
-diff --git a/mm/vmscan.c b/mm/vmscan.c
-index 49bd94423961..fc9dd9a24739 100644
---- a/mm/vmscan.c
-+++ b/mm/vmscan.c
-@@ -2150,7 +2150,7 @@ static unsigned int reclaim_folio_list(struct list_head *folio_list,
- 	return nr_reclaimed;
- }
- 
--unsigned long reclaim_pages(struct list_head *folio_list, bool ignore_references)
-+unsigned long reclaim_pages(struct list_head *folio_list)
- {
- 	int nid;
- 	unsigned int nr_reclaimed = 0;
-@@ -2173,11 +2173,11 @@ unsigned long reclaim_pages(struct list_head *folio_list, bool ignore_references
- 		}
- 
- 		nr_reclaimed += reclaim_folio_list(&node_folio_list, NODE_DATA(nid),
--						   ignore_references);
-+						   true);
- 		nid = folio_nid(lru_to_folio(folio_list));
- 	} while (!list_empty(folio_list));
- 
--	nr_reclaimed += reclaim_folio_list(&node_folio_list, NODE_DATA(nid), ignore_references);
-+	nr_reclaimed += reclaim_folio_list(&node_folio_list, NODE_DATA(nid), true);
- 
- 	memalloc_noreclaim_restore(noreclaim_flag);
- 
--- 
-2.39.2
-
+ok 1 selftests: damon: debugfs_attrs.sh
+ok 1 selftests: damon-tests: kunit.sh
+ok 2 selftests: damon-tests: huge_count_read_write.sh
+ok 3 selftests: damon-tests: buffer_overflow.sh
+ok 4 selftests: damon-tests: rm_contexts.sh
+ok 5 selftests: damon-tests: record_null_deref.sh
+ok 6 selftests: damon-tests: dbgfs_target_ids_read_before_terminate_race.sh
+ok 7 selftests: damon-tests: dbgfs_target_ids_pid_leak.sh
+ok 8 selftests: damon-tests: damo_tests.sh
+ok 9 selftests: damon-tests: masim-record.sh
+ok 10 selftests: damon-tests: build_i386.sh
+ok 11 selftests: damon-tests: build_arm64.sh
+ok 12 selftests: damon-tests: build_m68k.sh
+ok 13 selftests: damon-tests: build_i386_idle_flag.sh
+ok 14 selftests: damon-tests: build_i386_highpte.sh
+ok 15 selftests: damon-tests: build_nomemcg.sh
+ [33m
+ [92mPASS [39m
