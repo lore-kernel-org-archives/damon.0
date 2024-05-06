@@ -1,47 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 914D715359B;
-	Fri,  3 May 2024 18:06:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 360D3158845;
+	Mon,  6 May 2024 18:02:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714759596; cv=none; b=RxUSkquVJoGNmhzrpAAWm31/aissZCJ/VFbe6F7274oD/AzmYz01JOcKGmIuFV6qnsluXB+4wtpSia7mEdmiS0SZF07DAzLHSXowh9fc1N34HY6VMB4kmDHTEA7Wfff+B0NYCQBeKmzyfEz+kmR9XKm4umRGW2VHz6amt1EYols=
+	t=1715018565; cv=none; b=fKLX/ATH5C/Oy5MWIEPgkUhoWVl1zNnZVuT1Zmco7msotpW83lnPWiFWBK9OLvw2f0fCkmaQaKT1E4BuPuO0wO4t8peOEYzdEaS0GX3f7is/jDb9t+cUtRb5kqXmyAT4nx4R/t08KX20GtJ+0ho+oiQqBMVT9X6OBIu6rajTAnE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714759596; c=relaxed/simple;
-	bh=eZHc3+HDuXQRkSr68soKZWf/U0hOwVb3v5Yz0qKASQg=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=S+RiCfShY5f+cfWYdfWDckyfb//e9GSLQAJNxhnOkli/4lNzFStxKrOu6ORmZswE8hL7sTu4UQEIHEl5ddKepM0v0VyLHJqg+H0AkDEM65IzbR5z5WGo+PxX0FeZPV2Z9clxj+D1i5Tqz7dq38BnSYqGofzoMoS1bjhH6C4zCK4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hr6+aV4S; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1715018565; c=relaxed/simple;
+	bh=fqRLeDpMpLEhNJVbHZLCTU75BBCRbuwZMSWodHnJdO0=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=pF81mP2+1f+JiDsj8mDCK0F9viXkqVKL+4WPN7cfw75zynXLEonWEK/Hdon+hDqiiV6UhbDvfvBjsV0eHyN8UvuTenLJn0soUcJ+tYlqgJFEpC4lAsXuuU1gNy/jyIfGcZOe4+FORXpJq4PUUuPrxhTzmpDsJ2VJ7h19LgSpFqc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qhkBB7in; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hr6+aV4S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A216C116B1;
-	Fri,  3 May 2024 18:06:35 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qhkBB7in"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40D56C116B1;
+	Mon,  6 May 2024 18:02:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1714759596;
-	bh=eZHc3+HDuXQRkSr68soKZWf/U0hOwVb3v5Yz0qKASQg=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hr6+aV4S49DHFrNX7b8XaR0ZcqrILVkIeva6hMX92BrKJhaEtfus465cVAmKtH8L0
-	 9p+lbt8q60KgnTLIlBO28xLeL7iiHDt7jJJGqxbeydDaIt2ZQbI+QwCppPaA1Kpf/P
-	 2VOSRRuztTku7/K0K8PHRnJ8VK8Ugm9+sCV4oK5boXyt64KiYZvj/afQ9Va8V1PWt5
-	 PWpr18PSV6tdXlaAaurrnMrF2WrRjCqwCUGJbQZSW6nPxJHR6EkNlw7NXEU+W5oaX+
-	 gdE+qQYorwe4s3r9aamQG5HXkdkvD6vF3oraymiSxEOfT75cKS8MXp+KWlOTRQgEh6
-	 6JquVKs10WSoA==
+	s=k20201202; t=1715018564;
+	bh=fqRLeDpMpLEhNJVbHZLCTU75BBCRbuwZMSWodHnJdO0=;
+	h=From:To:Cc:Subject:Date:From;
+	b=qhkBB7in8mS9W1tIqHCEPWz5aZqW5cfimQodAJooz4TEaNkJOLCX7+MGkuP34BBCq
+	 v9aFDXNjhEBjTusv8n/LIGzL+Ar/JOJInwutge/ypD6XICQWSsgLOl3Z1Db9K4HdCV
+	 Bkmij/ktc1VwJL6egTUmTNt3vH6nd5GfYKNvWj73mMnIN+dHgdwStaytOWY6HVsTGH
+	 YD/cEcOhmatDTuifUAQZA2QD8IJ3JnIi/g5TbtR6hdEu7KBZ53rYmAytXyUaM1ZO3C
+	 Jo4+gsoS3k/m9xpP3sgdJLX3cYV+TLKA13sx16j+/ww9WmF84zDPYhFRAkOMcqK5N6
+	 ZDWNbgu58Nmsg==
 From: SeongJae Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
-Cc: SeongJae Park <sj@kernel.org>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Shuah Khan <shuah@kernel.org>,
+Cc: Alex Rusuf <yorha.op@gmail.com>,
+	SeongJae Park <sj@kernel.org>,
 	damon@lists.linux.dev,
 	linux-mm@kvack.org,
-	linux-doc@vger.kernel.org,
-	linux-kselftest@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 00/10] mm/damon: misc fixes and improvements
-Date: Fri,  3 May 2024 11:06:33 -0700
-Message-Id: <20240503180633.72917-1-sj@kernel.org>
+Subject: [PATCH v4] mm/damon/core: Fix return value from damos_wmark_metric_value
+Date: Mon,  6 May 2024 11:02:38 -0700
+Message-Id: <20240506180238.53842-1-sj@kernel.org>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20240503180318.72798-1-sj@kernel.org>
-References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -50,45 +44,61 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Andrew, please add DAMON selftests patchset[1] that I posted yesterday before
-this patchset.  Otherwise, patches would get conflicts.
+From: Alex Rusuf <yorha.op@gmail.com>
 
-[1] https://lore.kernel.org/20240502172718.74166-1-sj@kernel.org
+damos_wmark_metric_value's return value is 'unsigned long', so
+returning -EINVAL as 'unsigned long' may turn out to be
+very different from the expected one (using 2's complement) and
+treat as usual matric's value. So, fix that, checking if
+returned value is not 0.
 
+Fixes: ee801b7dd782 ("mm/damon/schemes: activate schemes based on a watermarks mechanism")
+Signed-off-by: Alex Rusuf <yorha.op@gmail.com>
+Reviewed-by: SeongJae Park <sj@kernel.org>
+Signed-off-by: SeongJae Park <sj@kernel.org>
+---
 
-Thanks,
-SJ
+Changes from v3
+(https://lore.kernel.org/20240428191439.194027-1-yorha.op@gmail.com)
+- Add Reviewed-by: SeongJae Park <sj@kernel.org>
+- Send to Andrew and linux-mm@ for being merged in mm tree
 
-On Fri,  3 May 2024 11:03:08 -0700 SeongJae Park <sj@kernel.org> wrote:
+ mm/damon/core.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-> Add miscelleneous and non-urgent fixes and improvements for DAMON code,
-> selftests, and documents.
-> 
-> SeongJae Park (10):
->   mm/damon/core: initialize ->esz_bp from damos_quota_init_priv()
->   selftests/damon/_damon_sysfs: check errors from nr_schemes file reads
->   selftests/damon/_damon_sysfs: find sysfs mount point from /proc/mounts
->   selftests/damon/_damon_sysfs: use 'is' instead of '==' for 'None'
->   selftests/damon: classify tests for functionalities and regressions
->   Docs/admin-guide/mm/damon/usage: fix wrong example of DAMOS filter
->     matching sysfs file
->   Docs/admin-guide/mm/damon/usage: fix wrong schemes effective quota
->     update command
->   Docs/mm/damon/design: use a list for supported filters
->   Docs/mm/damon/maintainer-profile: change the maintainer's timezone
->     from PST to PT
->   Docs/mm/damon/maintainer-profile: allow posting patches based on
->     damon/next tree
-> 
->  Documentation/admin-guide/mm/damon/usage.rst  |  6 +-
->  Documentation/mm/damon/design.rst             | 46 +++++----
->  Documentation/mm/damon/maintainer-profile.rst | 13 +--
->  mm/damon/core.c                               |  1 +
->  tools/testing/selftests/damon/Makefile        | 13 ++-
->  tools/testing/selftests/damon/_damon_sysfs.py | 95 +++++++++++--------
->  6 files changed, 100 insertions(+), 74 deletions(-)
-> 
-> 
-> base-commit: fc7314cb6b750187a1366e0bf9da4c3ca8cfd064
-> -- 
-> 2.39.2
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index 939ecfcd4641..6392f1cc97a3 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -1481,12 +1481,14 @@ static bool kdamond_need_stop(struct damon_ctx *ctx)
+ 	return true;
+ }
+ 
+-static unsigned long damos_wmark_metric_value(enum damos_wmark_metric metric)
++static int damos_get_wmark_metric_value(enum damos_wmark_metric metric,
++					unsigned long *metric_value)
+ {
+ 	switch (metric) {
+ 	case DAMOS_WMARK_FREE_MEM_RATE:
+-		return global_zone_page_state(NR_FREE_PAGES) * 1000 /
++		*metric_value = global_zone_page_state(NR_FREE_PAGES) * 1000 /
+ 		       totalram_pages();
++		return 0;
+ 	default:
+ 		break;
+ 	}
+@@ -1501,10 +1503,9 @@ static unsigned long damos_wmark_wait_us(struct damos *scheme)
+ {
+ 	unsigned long metric;
+ 
+-	if (scheme->wmarks.metric == DAMOS_WMARK_NONE)
++	if (damos_get_wmark_metric_value(scheme->wmarks.metric, &metric))
+ 		return 0;
+ 
+-	metric = damos_wmark_metric_value(scheme->wmarks.metric);
+ 	/* higher than high watermark or lower than low watermark */
+ 	if (metric > scheme->wmarks.high || scheme->wmarks.low > metric) {
+ 		if (scheme->wmarks.activated)
+-- 
+2.39.2
+
