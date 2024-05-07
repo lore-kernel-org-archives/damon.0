@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 360D3158845;
-	Mon,  6 May 2024 18:02:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D443F1635AD;
+	Tue,  7 May 2024 16:17:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715018565; cv=none; b=fKLX/ATH5C/Oy5MWIEPgkUhoWVl1zNnZVuT1Zmco7msotpW83lnPWiFWBK9OLvw2f0fCkmaQaKT1E4BuPuO0wO4t8peOEYzdEaS0GX3f7is/jDb9t+cUtRb5kqXmyAT4nx4R/t08KX20GtJ+0ho+oiQqBMVT9X6OBIu6rajTAnE=
+	t=1715098674; cv=none; b=bi0qLqA4dE7XxUkV8Q/Wel6fQZEvz5M545SGi6VsSRrNYYiELW9h1OXYX3Bj7MEF9L/KtvqT8CR6DCbJTrRlXuDjTmrPGxVg+YySyd7/1HjSeCZmh3EV+s30+0fkrg7jWIrx3OfXtoWjqhy9lkoWGfhLykdb7QTUhXnmcsCxb1U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715018565; c=relaxed/simple;
-	bh=fqRLeDpMpLEhNJVbHZLCTU75BBCRbuwZMSWodHnJdO0=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=pF81mP2+1f+JiDsj8mDCK0F9viXkqVKL+4WPN7cfw75zynXLEonWEK/Hdon+hDqiiV6UhbDvfvBjsV0eHyN8UvuTenLJn0soUcJ+tYlqgJFEpC4lAsXuuU1gNy/jyIfGcZOe4+FORXpJq4PUUuPrxhTzmpDsJ2VJ7h19LgSpFqc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qhkBB7in; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1715098674; c=relaxed/simple;
+	bh=+EdSyGJvH/21wvtCtdWqpIduQUpmlkNHvWInRhO/rfM=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=HrsxHnhH3WXOx1vIgr5aHBSu5BVzj/iHIMce25SVUdO170pKQh/J1jvmQsGSv0i165t67JRRqqPqztUyAcVB4kadyUpL8h0PG3yPG3Zqe0i7cqj2H7ezCt9IZ9uhWTwxg0pcFXbrjUYWTr8mO9CWbLF7Lwb9GfYhK3zPMcd3yzo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DzyCpRuS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qhkBB7in"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40D56C116B1;
-	Mon,  6 May 2024 18:02:44 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DzyCpRuS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E230FC2BBFC;
+	Tue,  7 May 2024 16:17:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1715018564;
-	bh=fqRLeDpMpLEhNJVbHZLCTU75BBCRbuwZMSWodHnJdO0=;
+	s=k20201202; t=1715098673;
+	bh=+EdSyGJvH/21wvtCtdWqpIduQUpmlkNHvWInRhO/rfM=;
 	h=From:To:Cc:Subject:Date:From;
-	b=qhkBB7in8mS9W1tIqHCEPWz5aZqW5cfimQodAJooz4TEaNkJOLCX7+MGkuP34BBCq
-	 v9aFDXNjhEBjTusv8n/LIGzL+Ar/JOJInwutge/ypD6XICQWSsgLOl3Z1Db9K4HdCV
-	 Bkmij/ktc1VwJL6egTUmTNt3vH6nd5GfYKNvWj73mMnIN+dHgdwStaytOWY6HVsTGH
-	 YD/cEcOhmatDTuifUAQZA2QD8IJ3JnIi/g5TbtR6hdEu7KBZ53rYmAytXyUaM1ZO3C
-	 Jo4+gsoS3k/m9xpP3sgdJLX3cYV+TLKA13sx16j+/ww9WmF84zDPYhFRAkOMcqK5N6
-	 ZDWNbgu58Nmsg==
+	b=DzyCpRuSW/aH3TOPxd84HNZGAObZKBcn5x5F//oO1euvpIRhnP0WaO52llBFnJNuz
+	 OPjNCF5G2gn/nSm7wIj9fNBD9PW+rpNwirCVy0FVfkARGLWZ2vbq8lMAIlRazgjwfB
+	 ckLJDeJEsrnjhjM4aFOaAHQ4MdmNgwGB8YuBZ+MZUZLO0lBIqDNkimAJm1HjI0iTTv
+	 Ay8d+b8Gpri7hKmkK3QYzsSG8P19Fwirec8qN8GXM+ZYfNBdhwEKPt+vO3MnzJLx8v
+	 bk1GFZuDDo8L64XcudNko1z4hZs0/m9UvUX8Rv2LWxTOuTGQ5cTAXAHpqfjLgSFnVW
+	 Dd10P6V/FK/yQ==
 From: SeongJae Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
-Cc: Alex Rusuf <yorha.op@gmail.com>,
-	SeongJae Park <sj@kernel.org>,
+Cc: SeongJae Park <sj@kernel.org>,
+	Stephen Rothwell <sfr@canb.auug.org.au>,
+	Jonathan Corbet <corbet@lwn.net>,
 	damon@lists.linux.dev,
 	linux-mm@kvack.org,
+	linux-next@vger.kernel.org,
+	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH v4] mm/damon/core: Fix return value from damos_wmark_metric_value
-Date: Mon,  6 May 2024 11:02:38 -0700
-Message-Id: <20240506180238.53842-1-sj@kernel.org>
+Subject: [PATCH mm-unstable] Docs/mm/damon/design: fix build warning
+Date: Tue,  7 May 2024 09:17:47 -0700
+Message-Id: <20240507161747.52430-1-sj@kernel.org>
 X-Mailer: git-send-email 2.39.2
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -44,61 +47,61 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-From: Alex Rusuf <yorha.op@gmail.com>
+Commit b7138c7d40b0 ("Docs/mm/damon/design: use a list for supported
+filters") of mm-unstable tree is causing below warning and error with
+'make htmldocs'.
 
-damos_wmark_metric_value's return value is 'unsigned long', so
-returning -EINVAL as 'unsigned long' may turn out to be
-very different from the expected one (using 2's complement) and
-treat as usual matric's value. So, fix that, checking if
-returned value is not 0.
+    Documentation/mm/damon/design.rst:482: ERROR: Unexpected indentation.
+    Documentation/mm/damon/design.rst:483: WARNING: Block quote ends without a blank line; unexpected unindent.
 
-Fixes: ee801b7dd782 ("mm/damon/schemes: activate schemes based on a watermarks mechanism")
-Signed-off-by: Alex Rusuf <yorha.op@gmail.com>
-Reviewed-by: SeongJae Park <sj@kernel.org>
+The problem caused by wrong indentation for nested list items.  Fix the
+wrong indentation.
+
+Fixes: b7138c7d40b0 ("Docs/mm/damon/design: use a list for supported filters")
+Reported-by: Stephen Rothwell <sfr@canb.auug.org.au>
+Closes: https://lore.kernel.org/20240507162623.4d94d455@canb.auug.org.au
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
+ Documentation/mm/damon/design.rst | 22 +++++++++++-----------
+ 1 file changed, 11 insertions(+), 11 deletions(-)
 
-Changes from v3
-(https://lore.kernel.org/20240428191439.194027-1-yorha.op@gmail.com)
-- Add Reviewed-by: SeongJae Park <sj@kernel.org>
-- Send to Andrew and linux-mm@ for being merged in mm tree
-
- mm/damon/core.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
-
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index 939ecfcd4641..6392f1cc97a3 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -1481,12 +1481,14 @@ static bool kdamond_need_stop(struct damon_ctx *ctx)
- 	return true;
- }
+diff --git a/Documentation/mm/damon/design.rst b/Documentation/mm/damon/design.rst
+index 1873755358af..3df387249937 100644
+--- a/Documentation/mm/damon/design.rst
++++ b/Documentation/mm/damon/design.rst
+@@ -472,21 +472,21 @@ counted as the scheme has tried.  This difference affects the statistics.
+ Below types of filters are currently supported.
  
--static unsigned long damos_wmark_metric_value(enum damos_wmark_metric metric)
-+static int damos_get_wmark_metric_value(enum damos_wmark_metric metric,
-+					unsigned long *metric_value)
- {
- 	switch (metric) {
- 	case DAMOS_WMARK_FREE_MEM_RATE:
--		return global_zone_page_state(NR_FREE_PAGES) * 1000 /
-+		*metric_value = global_zone_page_state(NR_FREE_PAGES) * 1000 /
- 		       totalram_pages();
-+		return 0;
- 	default:
- 		break;
- 	}
-@@ -1501,10 +1503,9 @@ static unsigned long damos_wmark_wait_us(struct damos *scheme)
- {
- 	unsigned long metric;
+ - anonymous page
+-  - Applied to pages that containing data that not stored in files.
+-  - Handled by operations set layer.  Supported by only ``paddr`` set.
++    - Applied to pages that containing data that not stored in files.
++    - Handled by operations set layer.  Supported by only ``paddr`` set.
+ - memory cgroup
+-  - Applied to pages that belonging to a given cgroup.
+-  - Handled by operations set layer.  Supported by only ``paddr`` set.
++    - Applied to pages that belonging to a given cgroup.
++    - Handled by operations set layer.  Supported by only ``paddr`` set.
+ - young page
+-  - Applied to pages that are accessed after the last access check from the
+-    scheme.
+-  - Handled by operations set layer.  Supported by only ``paddr`` set.
++    - Applied to pages that are accessed after the last access check from the
++      scheme.
++    - Handled by operations set layer.  Supported by only ``paddr`` set.
+ - address range
+-  - Applied to pages that belonging to a given address range.
+-  - Handled by the core logic.
++    - Applied to pages that belonging to a given address range.
++    - Handled by the core logic.
+ - DAMON monitoring target
+-  - Applied to pages that belonging to a given DAMON monitoring target.
+-  - Handled by the core logic.
++    - Applied to pages that belonging to a given DAMON monitoring target.
++    - Handled by the core logic.
  
--	if (scheme->wmarks.metric == DAMOS_WMARK_NONE)
-+	if (damos_get_wmark_metric_value(scheme->wmarks.metric, &metric))
- 		return 0;
  
--	metric = damos_wmark_metric_value(scheme->wmarks.metric);
- 	/* higher than high watermark or lower than low watermark */
- 	if (metric > scheme->wmarks.high || scheme->wmarks.low > metric) {
- 		if (scheme->wmarks.activated)
+ Application Programming Interface
 -- 
 2.39.2
 
