@@ -1,406 +1,437 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4BED1E49B;
-	Sun, 12 May 2024 19:37:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 765E7535A8;
+	Sun, 12 May 2024 19:37:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715542622; cv=none; b=uU1tZi8qS0UvuJ36C3QNvjS1Lsk5luZdfPnpYJ5HinDxf3srQrP+Moe8ZodlSlM9BQImAljiGuXcHEcjariGE4kG1WCs8mJOusNcrtHDQdcueQG/xNWoM304sh5jXyOZL7qj4sEi6ivPB9OjGRvWkHrb2Jk7LBjUcEJFuv9NSCY=
+	t=1715542623; cv=none; b=KNYkXbeMs2bnto3UYKyDUw+hDF7078v8hfTnNJe2zIPWyBBGPbCPZgPGevb8yUUT+GtgTg+oRU1EqKtOF6FK8+c+4OKIfrs2bCC/P9BpN7Dab+13yqDEtdej2o8JTo0mQ4HiFUggAw3QdDG1GXtcJLdgdmET+VvBqmdlfccssG8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715542622; c=relaxed/simple;
-	bh=G3fKAHoXNuSOhxG4z6fY0m1GA0VfSM6YMAmFNFcbFIs=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version:Content-Type; b=P7Y5A9phh85cMbPYyMorrONIYWrQlmpk4thrwNmZggsU4paQqEVlCaOvnJnY2RicGqCuf61YrCXN4wbRhNw4lOqg4oQEtx8O7RJ8Bj4ARME+Jym8NeEwG08E0K4IAvyvzntfOdQoDNAcF+JbLU4zmOq6Wwjrw/74AaVkcoK2dys=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=F4AKdaBm; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1715542623; c=relaxed/simple;
+	bh=eA97GqCkk4n26tmC1Bwl8xISrSNwe8VkWXSlnv6HYfA=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=puCI53kN1fvUmGKuci8EOCL1plF/M9DVqgS5qhvqoeCCkJK0C/cY/FjGnE/IO6nYGBj3palGJzD/vvDlytfvYnPfFwGEHbpT2W+5qKz1AWNq3mL5X1ZBvJ+EmwchEOytxhqspiss/bfSSecykzKU05LZslu2rpehrlxhHs83Llo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dHtVn72x; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="F4AKdaBm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EA7CC116B1;
-	Sun, 12 May 2024 19:37:01 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dHtVn72x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 041D4C4AF07;
+	Sun, 12 May 2024 19:37:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1715542622;
-	bh=G3fKAHoXNuSOhxG4z6fY0m1GA0VfSM6YMAmFNFcbFIs=;
-	h=From:To:Cc:Subject:Date:From;
-	b=F4AKdaBmJKF6MiTekaIcFuljt1y9pAAHHFxActeMtbAVulgDn9sCdvYF6ZotuFbpm
-	 RWM2y44ZKXy+PJWJAwDKGQivqoLuLWmPdEXlLbk8d09uKUFBj10lxlXkIgFJDuO+18
-	 vurXRNl739aGh5X+tTbkA8udQeSqHVY7TqtCRj9PZIBjGUXP88Bvhy4a7QYgrYrRzU
-	 db1uVfBl0Bhj/1j7ISuG1sCE1NV+QE6E04G+u/0yWhAE9N9sf2CWnd8jZsnPwEmUrp
-	 DeJyHL5ruE3LgnV/iip3w+e2Mvzo42FSJjWHN3T4EXHaeTX0Tq7NR4LNY4dkISa606
-	 KmhQgCz9JVpTQ==
+	s=k20201202; t=1715542623;
+	bh=eA97GqCkk4n26tmC1Bwl8xISrSNwe8VkWXSlnv6HYfA=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=dHtVn72xYanh37wq6PWLMmhIrGmLcFVVTyjKYs678JRv84j1w/tfkahirKvFO1q5x
+	 KpzfcFr+27uNWoBMN8YdM80ZeBJ5ntYkDpqAErYH7phfT6V590NZUktHP8hsr43shj
+	 11SHgTqjq0kCs7enVwWeRpyBVqFmTOriugipY96/eVvnDk9EZ+Z+6r+lB9pPMTAmtX
+	 BN0DAcW7f2aFzZbfqdjP11FAyLFauYphcj627BL3rQ9IXTqplr7+t6vFjcGIXhSeQr
+	 YDgGuvsR+uZ3BXoeBY8JWh3eRCppv3gXv1YppMLMiExGwYaA9AqtUUWTyPPrEVZfNP
+	 5A4fMn01yEfdg==
 From: SeongJae Park <sj@kernel.org>
 To: 
 Cc: SeongJae Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	David Hildenbrand <david@redhat.com>,
-	Jason Wang <jasowang@redhat.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
-	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org,
-	virtualization@lists.linux.dev,
-	cxiaoyi@amazon.com,
-	sieberf@amazon.com,
-	bodeddub@amazon.com,
-	jiamingy@amazon.com
-Subject: [RFC IDEA v2 0/6] mm/damon: introduce Access/Contiguity-aware Memory Auto-scaling (ACMA)
-Date: Sun, 12 May 2024 12:36:51 -0700
-Message-Id: <20240512193657.79298-1-sj@kernel.org>
+	damon@lists.linux.dev,
+	linux-mm@kvack.org
+Subject: [RFC IDEA v2 2/6] mm/damon: add the initial part of access/contiguity-aware memory auto-scaling module
+Date: Sun, 12 May 2024 12:36:53 -0700
+Message-Id: <20240512193657.79298-3-sj@kernel.org>
 X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20240512193657.79298-1-sj@kernel.org>
+References: <20240512193657.79298-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Extend DAMOS for access-aware gradual contiguous memory regions
-allocation, and implement a module for efficiently and automatically
-scaling system memory using the feature.
+Start adding a DAMON application module for access/contiguity-aware
+memory auto-scaling.  The module does proactive reclamation, scale-down,
+and scale-up of memory under user-defined min/max memory and acceptable
+level of memory pressure using three DAMOS schemes each designed for
+each of the three main operations.  Nonetheless, this is only the
+initial part of the implementation.  Hence this commit implements only
+the memory pressure-aware auto-tuning proactive reclamation feature.
+Following commits will implement scale down and up, respectively.
 
-This is not a valid patchset but a summary of the idea and pseudo-code
-level partial implementation examples of the idea.  The implementation
-examples are only for helping people's understanding of the idea and how
-it would be implemented.  The code is not tested at all.  It is even not
-attempted to be compiled ever.
-
-Motivation: Memory Overcommit Virtual Machine Systems
-=====================================================
-
-This work is motivated by an effort to improve efficiency and
-reliability of a memory over-committed virtual machine system operation
-method.  This section describes a business model of such systems, an
-available approach, and its limitations.
-
-Business Model
---------------
-
-The business services compute/memory resource for users' workloads.  The
-service provider receives the workload from the user, runs the workload
-on their guest virtual machines, and returns the workload's output back
-to the user.  The provider calculates how much of their resource is
-consumed by the workload, and ask the user to pay for the real usage.
-
-To maximize the host-level memory utilization while providing the
-highest performance and lowest price to the user, the provider
-overcommit the host's memory and automatically scales the guests' memory
-based on their estimation of the workload's true memory demand in
-runtime.  To avoid low performance or high price resulting from the
-provider's mistakes in the auto-scaling, the user can specify the
-minimum and maximum amount of memory for their guest machine.
-
-  User                              Service Provider
-                                   ┌─────────────────┐
-  workload, min/max memory ──────► │                 │
-                                   │      ???        │
-  workload output, bill    ◄────── │                 │
-                                   └─────────────────┘
-
-Existing Approach
------------------
-
-It is challenging to estimate real memory demand of guests from the host
-in high accuracy.  Meanwhile, the service provider owns the control of
-both the host and guests.  Therefore they use a guests-driven
-cooperative management.  The guest reports unnecessary pages to the
-host, and the host reallocates the reported pages to other guests.
-Specifically, free pages reporting is being used.
-
-The host-level reuse of the page is invisible to guests.  Guests can
-simply use their pages regardless of the reporting.  If a guest access a
-page that reported before, the host detects it via page faults, and give
-the memory back to the guest.
-
-Unless the guest is memory-frugal, only small amount of the guests'
-memory is reported to the host, and the host-level memory utilization
-drops.  To make the guests be memory-frugal with minimum performance
-impact, the guests run access-aware proactive memory reclamation using
-DAMON.  The basic structure of the system looks like below.
-
-  ┌─────────────────────────────┐      ┌─────────┐
-  │  Guest 1                    │      │ Guest 2 │
-  │ ┌─────────────────────────┐ │      │         │
-  │ │ DAMON-based ReClamation │ │      │         │
-  │ └────────────┬────────────┘ │      │         │
-  │              │ Reclaim      │      │         │
-  │              ▼              │      │         │
-  │ ┌─────────────────────────┐ │      │         │
-  │ │  Free pages reporting   │ │      │         │
-  │ └────────────┬────────────┘ │      │         │
-  │              │              │      │         │
-  └──────────────┼──────────────┘      └─────────┘
-                 │ Report reclaimed         ▲
-                 ▼ (free) pages             │ Alloc Guest 1
-  ┌───────────────────────────────┐         │ freed memory
-  │            Host               ├─────────┘
-  └───────────────────────────────┘
-
-The guest uses 4 KiB-size regular page by default while the host uses 2
-MiB-size regular page for efficient management of the huge host-level
-memory.  Hence, even if a guest reports a 4 KiB-page, the host cannot
-use it unless its 511 neighbor pages are also reported.  Letting the
-guest reports every 4 KiB-page only increase the reporting overhead.
-Hence the free pages reporting is tuned to work in 2 MiB granularity.
-To avoid fragmented free pages not being reported, guests also
-proactively run memory compaction ('/proc/sys/vm/compact_memory').
-
-The provider further wants to minimize the 'struct page' overhead.  For
-that, the guests continuously estimate real memory demands of the
-running workload, and hot-[un]plug memory blocks with
-'memory_hotplug.memmap_on_memory' so that 'struct page' objects for
-offlined memory blocks can also be deallocated.  The guest kernel is
-modified to let the user space do hot-[un]plug memory blocks, and report
-the hot-unplugged memory block to the host.  This memory
-hot-[un]plugging is also being used to keep the user-specified maximum
-memory limit.
-
-Limitations
------------
-
-The approach uses four kernel features, namely free pages reporting,
-DAMON-based proactive reclamation, compaction, and memory
-hot-[un]plugging.  Utilizing the four kernel features that not designed
-to be used together for the specific case from user space in an
-efficient way is somewhat challenging.
-
-Memory hot-unplugging is slow and easy to fail.  The problem mainly
-comes from the fact that the operation requires isolating and migrating
-pages in the block to other blocks, and the operation works in memory
-block granularity, which is huge compared to pages.  The minimum amount
-of works for doing it is not small, and the probability to meet
-unmovable pages in the huge block is not low.  This makes the
-guest-level memory scaling beocmes slow and unreliable, which results in
-low host-level memory efficiency.
-
-The system-level compaction is not optimized for only the reporting
-purpose.  It could consume resource for compacting some part of memory
-that anyway will not be able to be reported to the host for reuse.
-
-Both hot-unplugging and compaction require pages isolations and
-migrations, which are valid to fail for some reasons.  The operations
-may better to be applied to cold pages first, since cold pages would
-have lower probability to be pinned or making performance impact.  But
-both hot-unplugging and compaction are access pattern oblivious.
-
-There is no control to the reported pages.  This helps keeping the
-system simple, but it makes reusing reported pages unreliable.  Any
-reported page can be accessed again by the guest.  And even if only one
-page among the reported 512 pages are accessed again, the entire 512
-pages need to be returned to the guest.
-
-Both the host and guest systems are under the service provider's
-control, but the workload is not.  Occasional host-level memory pressure
-is hence inevitable.  The host could avoid such situation by setting
-the host-driven hard memory limit on guests.  Balloon drivers like
-methods could be used.  However, such existing mechanisms lacks the
-understanding of the host's different page size and access-oblivious.
-
-Design
-======
-
-We mitigate the limitations by introducing a way to get ownership of
-contiguous memory regions in an access-aware way, implementing a kernel
-module that automatically scales the memory of the system in an
-access/contiguity-aware way, and replacing the approach with the module.
-
-Access-aware Contiguous Memory Allocation
------------------------------------------
-
-As mentioned on the above limitations section, doing page isolations and
-migrations, which are core operations of the memory scaling usage, in
-fine granularity for cold pages first may makes some improvements.
-DAMOS helps applying specific memory operations in an access-aware
-manner.  Therefore, we implement the core operations as DAMOS schemes.
-For this, we design two new DAMOS actions, namely 'alloc' and 'free'.
-
-'Alloc' DAMOS action migrates in-use pages of the DAMOS target memory
-region out of the region, and get the ownership of the pages.  The
-action also receives the granularity of the operation to apply at once.
-In implementation, 'alloc_contig_range()' may simply be used.  For each
-given-granular contig pages that successfully allocated, DAMOS does
-nothing but notifies those to the user.  Then the user can use the pages
-for their purpose.  In other words, 'alloc' DAMOS action takes ownership
-of DAMON-found region of specific access pattern in specific granularity
-and passes it to the user.  For example, the guest of the motivation use
-case can ask DAMOS to 'alloc' cold regions in 2 MiB granularity and
-report those to the host as unnecessary, to scale the memory down.
-
-'Free' DAMOS action returns the ownership of the DAMOS target memory
-region to the system.  Same to 'alloc', the user can specify the
-granularity of each operation.  Before returning the ownership, DAMOS
-notifies the user which pages are gonna be returned to the system, so
-that the user can safely forgive the ownership.  In the page fault based
-memory overcommit use case, the user would need to do nothing for such
-notification, though.
-
-Access/Contiguity-aware Memory Auto-scaling (ACMA)
---------------------------------------------------
-
-Using the two new DAMOS actions, we design a kernel module for replacing
-the abovely mentioned approach.  The module is called
-Access/Contiguity-aware Memory Auto-scaling (ACMA).  ACMA receives three
-user inputs.  Those are the minimum amount of memory to let the system
-use ('min-mem'), the maximum amount of memory to let the system use
-('max-mem'), and the acceptable level of memory pressure
-('mem-pressure').  'Mem-pressure' is represented by memory pressure
-stall information (PSI).  Then, it scales the memory of the system while
-meeting the condition utilizing three DAMON-based operation schemes,
-namely 'reclaim', 'scale-down', and 'scale-up'.
-
-'Reclaim' scheme reclaims memory of the system, coldest pages first,
-aiming the 'mem-pressure' amount of memory pressure.  That is, if the
-system's memory pressure level is lower than 'mem-pressure', it reclaims
-some coldest pages of the system.  The amount of memory to reclaim is
-proportional to distance between current pressure level and
-'mem-pressure'.  If the memory pressure level becomes higher than
-'mem-pressure', it reduces the amount again in a proportional way until
-the memory pressure level becomes same to or lower than 'mem-pressure'.
-This can be implemented as a DAMOS scheme of 'pageout' action with a
-memory pressure type quota tuning goal of 'mem-pressure' value.
-
-'Scale-down' scheme scales the memory down aiming the 'mem-pressure'
-memory pressure.  It is implemented as a DAMOS scheme of 'alloc' action
-with 2 MiB operation granularity.  Similar to 'reclaim' scheme, it has a
-memory pressure type quota tuning goal of 'mem-pressure' target value.
-For each allocated 2 MiB contig pages, it applies a vmemmap-remapping
-based 'struct page' optimization and reports those to the host so that
-the host can reuse.  The scheme has 'address range' type scheme filter.
-The filter makes the scheme to be applied to only the memory block of
-highest physical address that not completely allocated/reported, and in
-the physical address range starting from 'min-mem' and enging at the end
-of the physical address space of the system.  Once current 'scale-down'
-target memory block is entirely allocated/reported, ACMA updates the
-filter to apply the action to next lower-address memory block.
-
-'Scale-up' scheme scales the memory up aiming the 'mem-pressure' memory
-pressure.  It is implemented as a DAMOS scheme of 'free' action with 2
-MiB operation granularity.  It also uses a memory pressure type quota
-tuning goal with 'mem-pressure' target value, but it notifies DAMOS that
-the aggressiveness of the scheme and the memory pressure are inversely
-proportional.  Similar to 'scale-up' scheme, it uses an 'address range'
-type scheme filter.  The filter makes the scheme to be applied to only
-the partially or completely 'alloc'-ed and reported memory block of
-lowest starting address in the physical address range starting from '0'
-and ending at the 'max-mem' of the address space.  Inside the
-to-free-pages notification callback, ACMA cancels the vmemmap-remapping
-based 'struct page' optimization for the pages.  Once current 'scale-up'
-target address range is entirely 'free'-ed, ACMA updates the filter to
-apply the action to the just-hotplugged memory block.
-
-Overall Picture of ACMA-running System
---------------------------------------
-
-Below illustrates how the ACMA's three schemes will be applied to
-different address ranges.  The effective memory size of the system
-starts from 'end' bytes, and automatically be changed depends on the
-real memory pressure of the system.  Once it becomes lower than 'max'
-bytes, it will never get greater than 'max' bytes, since 'scale-up'
-cannot make impact over the limit.  It can also never gets lower than
-'min' bytes because 'scale-down' does not cross the line.  'reclaim'
-scheme makes the system memory-frugal and helps 'scale-down' by making
-free pages that can be migration destinations.  Because all the schemes
-auto-tune their aggressiveness based on 'mem-pressure', the system's
-memory pressure cannot exceed the user-acceptable level.
-
-          Reclaim
-             │
-  ┌──────────┴────────────┐
-  │                       │
-  │          scale-down   │
-                 │
-         ┌───────┴────────┐
-         │                │
-  0      min-mem max-mem  end (memory address)
-  │              │
-  └──────┬───────┘
-         │
-     Scale-up
-
-Ballooning-ACMA Integration
----------------------------
-
-As mentioned on the limitations section above, the host may want to use
-ballooning-like host-driven guest memory limit setup, while existing
-implementation is not access/contiguity-aware.  We integrate ballooning
-driver and ACMA for such a case.  We modify ballooning to set the
-'max-mem' of ACMA instead of the classic page allocation-based
-ballooning inflation.  Specifically, we expose a function for setting
-the 'max-mem' of ACMA, and update virtio-balloon driver's
-virtballoon_changed() to use the function to set effective hard memory
-limit of the guest.  In this way, the host can simply use the classical
-virtio-balloon interface while the ballooning driver is working in the
-access/contiguity-aware efficient way.
-
-Possible Future Usage of Access-aware Memory Allocation
-=======================================================
-
-As mentioned on the motivation section above, this work is motivated by
-the memory over-commit VM systems.  However, we believe similar
-approaches could be used for more use cases.  Introducing two such cases
-below.
-
-Contiguous Memory Allocation
-----------------------------
-
-For contiguous memory allocation, a large contiguous memory pool is
-required.  Current approaches reserve such regions in early boot time
-before the memory is fragmented, or define zones of specific types.  The
-pool can exclusively used for only the contiguous memory allocation, or
-allow non-contiguous memory allocation to use it under special condition
-such as allowing only movable pages.  The second approach improves the
-memory utilization, but sometimes suffers from pages that movable by
-definition, but not easily movable in practice, similar to the memory
-block-level page migration for memory hot unplugging that described on
-the limitation section.  Even without the migration reliability and the
-speed, finding the optimum size of the pool is challenging.
-
-We could use ACMA-like approach for dynamically allocating a memory pool
-for contiguous memory allocation.  It will be similar to ACMA but do not
-report DAMOS-alloc-ed pages to the host.  Instead, use the regions as
-contiguous memory allocation pool.
-
-DRAM Consuming Power Saving
----------------------------
-
-DRAM consumes and emits huge amount of power and carbon, respectively.
-On bare-meta machines, we could scale down memory using ACMA, hot-unplug
-completely DAMOS-alloc-ed memory blocks, and power off the DRAM device if
-the hardware supports such operation.
-
-Discussion Points
-=================
-
-- Is there existing better alternatives for memory over-commit VM
-  systems?
-- Is it ok to reuse pages reporting infrastructure from ACMA?
-- Is it ok to reuse virtio-balloon's interface for ACMA-integration?
-- Will access-aware migration make real benefit?
-- Does future usages of access-aware memory allocation make sense?
-
-SeongJae Park (6):
-  mm/damon: implement DAMOS actions for access-aware contiguous memory
-    allocation
-  mm/damon: add the initial part of access/contiguity-aware memory
-    auto-scaling module
-  mm/page_reporting: implement a function for reporting specific pfn
-    range
-  mm/damon/acma: implement scale down feature
-  mm/damon/acma: implement scale up feature
-  drivers/virtio/virtio_balloon: integrate ACMA and ballooning
-
- drivers/virtio/virtio_balloon.c |  26 ++
- include/linux/damon.h           |  37 +++
- mm/damon/Kconfig                |  10 +
- mm/damon/Makefile               |   1 +
- mm/damon/acma.c                 | 546 ++++++++++++++++++++++++++++++++
- mm/damon/paddr.c                |  93 ++++++
- mm/damon/sysfs-schemes.c        |   4 +
- mm/page_reporting.c             |  27 ++
- 8 files changed, 744 insertions(+)
+Signed-off-by: SeongJae Park <sj@kernel.org>
+---
+ mm/damon/Kconfig  |  10 ++
+ mm/damon/Makefile |   1 +
+ mm/damon/acma.c   | 335 ++++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 346 insertions(+)
  create mode 100644 mm/damon/acma.c
 
-
-base-commit: 40475439de721986370c9d26f53596e2bd4e1416
+diff --git a/mm/damon/Kconfig b/mm/damon/Kconfig
+index fecb8172410c..4fe7520601dd 100644
+--- a/mm/damon/Kconfig
++++ b/mm/damon/Kconfig
+@@ -121,4 +121,14 @@ config DAMON_LRU_SORT
+ 	  protect frequently accessed (hot) pages while rarely accessed (cold)
+ 	  pages reclaimed first under memory pressure.
+ 
++config DAMON_ACMA
++	bool "Build Access/Contiguity-aware Memory Auto-scaling (DAMON_ACMA)"
++	depends on DAMON_PADDR
++	help
++	  This builds the DAMON-based Access/Contiguity-aware Memory
++	  Auto-scaling subsystem.  It preempts unnecessary memory from the
++	  system and report it to the host while respecting user-specified
++	  min/max memory for the system and maximum memory pressure stall time
++	  ratio.
++
+ endmenu
+diff --git a/mm/damon/Makefile b/mm/damon/Makefile
+index f7add3f4aa79..814c8da3081b 100644
+--- a/mm/damon/Makefile
++++ b/mm/damon/Makefile
+@@ -7,3 +7,4 @@ obj-$(CONFIG_DAMON_SYSFS)	+= sysfs-common.o sysfs-schemes.o sysfs.o
+ obj-$(CONFIG_DAMON_DBGFS)	+= dbgfs.o
+ obj-$(CONFIG_DAMON_RECLAIM)	+= modules-common.o reclaim.o
+ obj-$(CONFIG_DAMON_LRU_SORT)	+= modules-common.o lru_sort.o
++obj-$(CONFIG_DAMON_ACMA)	+= modules-common.o acma.o
+diff --git a/mm/damon/acma.c b/mm/damon/acma.c
+new file mode 100644
+index 000000000000..276b61fd4e26
+--- /dev/null
++++ b/mm/damon/acma.c
+@@ -0,0 +1,335 @@
++// SPDX-License-Identifier: GPL-2.0
++/*
++ * DAMON-based Access/Contiguity-aware Memory Auto-scaling
++ *
++ * Let user specifies min/max memory of the system and acceptable level of
++ * memory pressure stall level.  While respecting those, automatically scale
++ * the memory of the system up and down by scale_downing memory from the system
++ * and report it to the host when the system is having memory pressure level
++ * under the threshold, and vice versa, respectively.
++ *
++ * At this moment, the scaling is not implemented, hence this is just a memory
++ * pressure-aware proactive reclamation module.
++ *
++ * Author: SeongJae Park <sj@kernel.org>
++ */
++
++#define pr_fmt(fmt) "damon-acma: " fmt
++
++#include <linux/damon.h>
++#include <linux/kstrtox.h>
++#include <linux/module.h>
++
++#include "modules-common.h"
++
++#ifdef MODULE_PARAM_PREFIX
++#undef MODULE_PARAM_PREFIX
++#endif
++#define MODULE_PARAM_PREFIX "damon_acma."
++
++/*
++ * Enable or disable DAMON_ACMA.
++ *
++ * You can enable DAMON_ACMA by setting the value of this parameter as ``Y``.
++ * Setting it as ``N`` disables DAMON_ACMA.  Note that DAMON_ACMA could do no
++ * real monitoring and memory auto-scaling due to the watermarks-based
++ * activation condition.  Refer to below descriptions for the watermarks
++ * parameter for this.
++ */
++static bool enabled __read_mostly;
++
++/*
++ * Make DAMON_ACMA reads the input parameters again, except ``enabled``.
++ *
++ * Input parameters that updated while DAMON_ACMA is running are not
++ * applied by default.  Once this parameter is set as ``Y``, DAMON_ACMA
++ * reads values of parametrs except ``enabled`` again.  Once the re-reading is
++ * done, this parameter is set as ``N``.  If invalid parameters are found while
++ * the re-reading, DAMON_ACMA will be disabled.
++ */
++static bool commit_inputs __read_mostly;
++module_param(commit_inputs, bool, 0600);
++
++/*
++ * Desired level of memory pressure-stall time in microseconds.
++ *
++ * While keeping the caps that set by other quotas, DAMON_RECLAIM automatically
++ * increases and decreases the effective level of the quota aiming this level of
++ * memory pressure is incurred.  System-wide ``some`` memory PSI in microseconds
++ * per quota reset interval (``quota_reset_interval_ms``) is collected and
++ * compared to this value to see if the aim is satisfied.  Value zero means
++ * disabling this auto-tuning feature.
++ *
++ * 1 ms/ 1 second (0.1%) by default.  Inspired by the PSI threshold of TMO
++ * (https://dl.acm.org/doi/10.1145/3503222.3507731).
++ */
++static unsigned long quota_mem_pressure_us __read_mostly = 1000;
++module_param(quota_mem_pressure_us, ulong, 0600);
++
++static struct damos_quota damon_acma_quota = {
++	/* Use up to 15 ms per 1 sec for scaling, by default */
++	.ms = 15,
++	.sz = 0,
++	.reset_interval = 1000,
++	/* Within the quota, mark hotter regions accessed first. */
++	.weight_sz = 0,
++	.weight_nr_accesses = 1,
++	.weight_age = 0,
++};
++DEFINE_DAMON_MODULES_DAMOS_TIME_QUOTA(damon_acma_quota);
++
++static struct damos_watermarks damon_acma_wmarks = {
++	.metric = DAMOS_WMARK_NONE,
++};
++
++static struct damon_attrs damon_acma_mon_attrs = {
++	.sample_interval = 1000000,	/* 1 second */
++	.aggr_interval = 20000000,	/* 20 seconds */
++	.ops_update_interval = 0,
++	.min_nr_regions = 10,
++	.max_nr_regions = 1000,
++};
++DEFINE_DAMON_MODULES_MON_ATTRS_PARAMS(damon_acma_mon_attrs);
++
++/*
++ * Start of the target memory region in physical address.
++ *
++ * The start physical address of memory region that DAMON_ACMA will do work
++ * against.  By default, biggest System RAM is used as the region.
++ */
++static unsigned long monitor_region_start __read_mostly;
++module_param(monitor_region_start, ulong, 0600);
++
++/*
++ * End of the target memory region in physical address.
++ *
++ * The end physical address of memory region that DAMON_ACMA will do work
++ * against.  By default, biggest System RAM is used as the region.
++ */
++static unsigned long monitor_region_end __read_mostly;
++module_param(monitor_region_end, ulong, 0600);
++
++/*
++ * PID of the DAMON thread
++ *
++ * If DAMON_ACMA is enabled, this becomes the PID of the worker thread.
++ * Else, -1.
++ */
++static int kdamond_pid __read_mostly = -1;
++module_param(kdamond_pid, int, 0400);
++
++static struct damos_stat damon_acma_reclaim_stat;
++DEFINE_DAMON_MODULES_DAMOS_STATS_PARAMS(damon_acma_reclaim_stat,
++		acma_reclaim_tried_regions, acma_reclaim_succ_regions,
++		acma_reclaim_quota_exceeds);
++
++static struct damos_access_pattern damon_acma_stub_pattern = {
++	/* Find regions having PAGE_SIZE or larger size */
++	.min_sz_region = PAGE_SIZE,
++	.max_sz_region = ULONG_MAX,
++	/* no matter its access frequency */
++	.min_nr_accesses = 0,
++	.max_nr_accesses = UINT_MAX,
++	/* no matter its age */
++	.min_age_region = 0,
++	.max_age_region = UINT_MAX,
++};
++
++static struct damon_ctx *ctx;
++static struct damon_target *target;
++
++static struct damos *damon_acma_new_scheme(
++		struct damos_access_pattern *pattern, enum damos_action action)
++{
++	struct damos_quota quota = damon_acma_quota;
++
++	return damon_new_scheme(
++			pattern,
++			action,
++			/* work for every second */
++			1000000,
++			/* under the quota. */
++			&quota,
++			/* (De)activate this according to the watermarks. */
++			&damon_acma_wmarks);
++}
++
++static void damon_acma_copy_quota_status(struct damos_quota *dst,
++		struct damos_quota *src)
++{
++	dst->total_charged_sz = src->total_charged_sz;
++	dst->total_charged_ns = src->total_charged_ns;
++	dst->charged_sz = src->charged_sz;
++	dst->charged_from = src->charged_from;
++	dst->charge_target_from = src->charge_target_from;
++	dst->charge_addr_from = src->charge_addr_from;
++}
++
++static int damon_acma_set_scheme_quota(struct damos *scheme, struct damos *old,
++		damos_quota_goal_metric goal_metric)
++{
++	if (old)
++		damon_acma_copy_quota_status(&scheme->quota, &old->quota);
++	goal = damos_new_quota_goal(goal_metric, quota_mem_pressure_us);
++	if (!goal)
++		return -ENOMEM;
++	damos_add_quota_goal(&scheme->quota, goal);
++	return 0;
++}
++
++/*
++ * Reclaim cold pages on entire physical address space
++ */
++static struct damos *damon_acma_new_reclaim_scheme(struct damos *old)
++{
++	struct damos_access_pattern pattern = damon_acma_stub_pattern;
++	struct damos *scheme;
++	int err;
++
++	pattern.max_nr_accesses = 0;
++	scheme = damon_acma_new_scheme(&pattern, DAMOS_PAGEOUT);
++	if (!scheme)
++		return NULL;
++	err = damon_acma_set_scheme_quota(scheme, old,
++			DAMOS_QUOTA_SOME_MEM_PSI_US);
++	if (err) {
++		damon_destroy_scheme(scheme);
++		return NULL;
++	}
++	return scheme;
++}
++
++static int damon_acma_apply_parameters(void)
++{
++	struct damos *scheme, *reclaim_scheme;
++	struct damos *old_reclaim_scheme = NULL;
++	struct damos_quota_goal *goal;
++	int err = 0;
++
++	err = damon_set_attrs(ctx, &damon_acma_mon_attrs);
++	if (err)
++		return err;
++
++	damon_for_each_scheme(scheme, ctx)
++		old_reclaim_scheme = scheme;
++
++	reclaim_scheme = damon_acma_new_reclaim_scheme(old_reclaim_scheme);
++	if (!reclaim_scheme)
++		return -ENOMEM;
++	damon_set_schemes(ctx, &reclaim_scheme, 1);
++
++	return damon_set_region_biggest_system_ram_default(target,
++					&monitor_region_start,
++					&monitor_region_end);
++}
++
++static int damon_acma_turn(bool on)
++{
++	int err;
++
++	if (!on) {
++		err = damon_stop(&ctx, 1);
++		if (!err)
++			kdamond_pid = -1;
++		return err;
++	}
++
++	err = damon_acma_apply_parameters();
++	if (err)
++		return err;
++
++	err = damon_start(&ctx, 1, true);
++	if (err)
++		return err;
++	kdamond_pid = ctx->kdamond->pid;
++	return 0;
++}
++
++static int damon_acma_enabled_store(const char *val,
++		const struct kernel_param *kp)
++{
++	bool is_enabled = enabled;
++	bool enable;
++	int err;
++
++	err = kstrtobool(val, &enable);
++	if (err)
++		return err;
++
++	if (is_enabled == enable)
++		return 0;
++
++	/* Called before init function.  The function will handle this. */
++	if (!ctx)
++		goto set_param_out;
++
++	err = damon_acma_turn(enable);
++	if (err)
++		return err;
++
++set_param_out:
++	enabled = enable;
++	return err;
++}
++
++static const struct kernel_param_ops enabled_param_ops = {
++	.set = damon_acma_enabled_store,
++	.get = param_get_bool,
++};
++
++module_param_cb(enabled, &enabled_param_ops, &enabled, 0600);
++MODULE_PARM_DESC(enabled,
++	"Enable or disable DAMON_ACMA (default: disabled)");
++
++static int damon_acma_handle_commit_inputs(void)
++{
++	int err;
++
++	if (!commit_inputs)
++		return 0;
++
++	err = damon_acma_apply_parameters();
++	commit_inputs = false;
++	return err;
++}
++
++static int damon_acma_after_aggregation(struct damon_ctx *c)
++{
++	struct damos *s;
++
++	/* update the stats parameter */
++	damon_for_each_scheme(s, c) {
++		switch (s->action) {
++		case DAMOS_LRU_RECLAIM:
++			damon_acma_reclaim_stat = s->stat;
++			break;
++		default:
++			break;
++	}
++
++	return damon_acma_handle_commit_inputs();
++}
++
++static int damon_acma_after_wmarks_check(struct damon_ctx *c)
++{
++	return damon_acma_handle_commit_inputs();
++}
++
++static int __init damon_acma_init(void)
++{
++	int err = damon_modules_new_paddr_ctx_target(&ctx, &target);
++
++	if (err)
++		return err;
++
++	ctx->callback.after_wmarks_check = damon_acma_after_wmarks_check;
++	ctx->callback.after_aggregation = damon_acma_after_aggregation;
++
++	/* 'enabled' has set before this function, probably via command line */
++	if (enabled)
++		err = damon_acma_turn(true);
++
++	return err;
++}
++
++module_init(damon_acma_init);
 -- 
 2.39.2
 
