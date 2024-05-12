@@ -1,46 +1,61 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FD0953804;
-	Sun, 12 May 2024 17:54:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 643F04AED7;
+	Sun, 12 May 2024 18:00:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715536498; cv=none; b=ngL2mn4KPxXJmvFnwiBa53Jip2bfRI5Tv40vrZXZt4TaeCJT7W6oGGPFmfouWqGniZ60tGwuql6zeOXJ0y+suvGmkOFe+l5YlyZZ9XXxOLkYClekl/fPYM99YU/aHp0aXQtABjQ7gJfxJWxVpLuCNI4BY73UlQyZDWFOTU6S20Q=
+	t=1715536850; cv=none; b=slnY30c4iEmjzyKkwNHjESCq7cAymtn0WffawOLA3H5Jv+BzJuNlqUGib24+OY7F0aBYBdqscm9atjl7rwQz7eBChwQ9/EFkqYxEkzPHpywlzzK4Yi0cZp3m+L1Ku6oIL0ZtVBdHwDVbuXfL4u5VDfAVHTVkO19yICwmagkWCkk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715536498; c=relaxed/simple;
-	bh=HjyWpv2l8S24lCKx7/me+IFm1iDwuNsUj8wbeOXFYY0=;
+	s=arc-20240116; t=1715536850; c=relaxed/simple;
+	bh=qpiFUol8P0zNhvUFVoN6iW1e1aeFqNHpooxXO9xEl04=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=bSRsFcKnnn6pv6w5sCjAUkfc0F8t/nIbTxgebOeeDyvJ7Ep7TmqhrNxg45XrCHW8ucbwc0IJ3LnZsquvVgeEILYJeezJTUG8gPLqnqvplb5dn/zynNQECtktVXdQwLAAkhnzVA8vNE3y9CHqkHuHzeZb6y+8zrcKGRNH6aKslXc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fOCDVk1p; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Z3io7xhNiKtUR28p7MbImg6xx3jAGvjtzCItlXH/C8KO2fJVGxD+c7cjI4RH7yKq4YWjt5RN5c8jiG3ofQ60QI2xichtQ9WEbpRgRnjOZK4GrGgfRtWu14dkbxs1kr+keCTuFd+1222uDGxw+2OZqviQubtHwzhkeeuYlUhgViU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EFvWblmk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fOCDVk1p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9859EC32781;
-	Sun, 12 May 2024 17:54:57 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EFvWblmk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 546D0C116B1;
+	Sun, 12 May 2024 18:00:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1715536498;
-	bh=HjyWpv2l8S24lCKx7/me+IFm1iDwuNsUj8wbeOXFYY0=;
+	s=k20201202; t=1715536850;
+	bh=qpiFUol8P0zNhvUFVoN6iW1e1aeFqNHpooxXO9xEl04=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fOCDVk1p+QvsfPxFZGFuR7GWACBBP/DSQaaw966CnXovAR+eXd/oKQbhPIvBEGNJW
-	 WTQHUMZ9Tir6K0G1me1gLjTnFp8gxKD5G54IzI7k95vWlEOnVljY1wuxU7/QDBBCl8
-	 TDHLXrizha9Gkc88qZSd6RHLzJj7UZOJJ94y5SfZp0Bmlp1AxP2d6Ny1kiFKaOUi65
-	 ZwJmbuljvTEJPIEv2qWLpvi27KZPbt50udjXkXo31GtgNtfkvlqK9vP6z8JLVmTpW/
-	 +PKLUiobEZ0l3l+PoNCQZwFIZOS6ibjGA+OecvuI6B5vyICO5mrBbMg2/WaES2jZx9
-	 gnXanyNFEMxhw==
+	b=EFvWblmkErJHGxYytEKfxEysBzLmbIM1r9/FpIWdKSUtJmY/U2D408Fqajysf+2wy
+	 1OEGeICXddpUU7816eua76jSCGLa3khOL4jBE5/hV2RHLXU4IyqDGvxmlkTDMHdYJJ
+	 dJu6exgqHN0EpZKLZ08wO/hmB9yhwJFNnAjGCrRMnnNByWIBs9TPWR2W1Un6aJdRSO
+	 v3gh9cJoOeUO1XTGtlrZa5ZZEvzjZISkE64pDrJfRwseEA6JBmMmPNv9w5J51KMFPb
+	 lIDka2y6oiq2EFiW8BPHmL+BegmoiZ+kByDB5JQiFD67l1COYYV1BGb7WCna3hUfgW
+	 hsTuaOIzCGm6A==
 From: SeongJae Park <sj@kernel.org>
-To: 
-Cc: Hyeongtak Ji <hyeongtak.ji@sk.com>,
-	SeongJae Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
+To: SeongJae Park <sj@kernel.org>
+Cc: Honggyu Kim <honggyu.kim@sk.com>,
 	damon@lists.linux.dev,
 	linux-mm@kvack.org,
+	akpm@linux-foundation.org,
+	apopple@nvidia.com,
+	baolin.wang@linux.alibaba.com,
+	dave.jiang@intel.com,
+	hyeongtak.ji@sk.com,
+	kernel_team@skhynix.com,
+	linmiaohe@huawei.com,
 	linux-kernel@vger.kernel.org,
-	Honggyu Kim <honggyu.kim@sk.com>
-Subject: [RFC PATCH v4 5/5] mm/damon/paddr: introduce DAMOS_MIGRATE_HOT action for promotion
-Date: Sun, 12 May 2024 10:54:47 -0700
-Message-Id: <20240512175447.75943-6-sj@kernel.org>
+	linux-trace-kernel@vger.kernel.org,
+	mathieu.desnoyers@efficios.com,
+	mhiramat@kernel.org,
+	rakie.kim@sk.com,
+	rostedt@goodmis.org,
+	surenb@google.com,
+	yangx.jy@fujitsu.com,
+	ying.huang@intel.com,
+	ziy@nvidia.com,
+	42.hyeyoo@gmail.com,
+	art.jeongseob@gmail.com
+Subject: Re: [RFC PATCH v3 1/7] mm/damon/paddr: refactor DAMOS_PAGEOUT with migration_mode
+Date: Sun, 12 May 2024 11:00:44 -0700
+Message-Id: <20240512180044.76086-1-sj@kernel.org>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20240512175447.75943-1-sj@kernel.org>
-References: <20240512175447.75943-1-sj@kernel.org>
+In-Reply-To: <20240511201617.292811-1-sj@kernel.org>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -49,91 +64,39 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-From: Hyeongtak Ji <hyeongtak.ji@sk.com>
+On Sat, 11 May 2024 13:16:17 -0700 SeongJae Park <sj@kernel.org> wrote:
 
-This patch introduces DAMOS_MIGRATE_HOT action, which is similar to
-DAMOS_MIGRATE_COLD, but proritizes hot pages.
+> On Fri,  5 Apr 2024 12:19:07 -0700 SeongJae Park <sj@kernel.org> wrote:
+> 
+> > On Fri,  5 Apr 2024 15:08:50 +0900 Honggyu Kim <honggyu.kim@sk.com> wrote:
+> > 
+> > > This is a preparation patch that introduces migration modes.
+> > > 
+> > > The damon_pa_pageout is renamed to damon_pa_migrate and it receives an
+> > > extra argument for migration_mode.
+> > 
+> > I personally think keeping damon_pa_pageout() as is and adding a new function
+> > (damon_pa_migrate()) with some duplicated code is also ok, but this approach
+> > also looks fine to me.  So I have no strong opinion here, but just letting you
+> > know I would have no objection at both approaches.
+> 
+> Meanwhile, we added one more logic in damon_pa_pageout() for doing page
+> idleness double check on its own[1].  It makes reusing damon_pa_pageout() for
+> multiple reason a bit complex.  I think the complexity added a problem in this
+> patch that I also missed before due to the complexity.  Show below comment in
+> line.  Hence now I think it would be better to do the suggested way.
+> 
+> If we use the approach, this patch is no more necessary, and therefore can be
+> dropped.
+> 
+> [1] https://lore.kernel.org/20240426195247.100306-1-sj@kernel.org
 
-It migrates pages inside the given region to the 'target_nid' NUMA node
-in the sysfs.
+I updated this patchset to address comments on this thread, and posted it as
+RFC patchset v4 on behalf of Honggyu under his approval:
+https://lore.kernel.org/20240512175447.75943-1-sj@kernel.org
 
-Here is one of the example usage of this 'migrate_hot' action.
 
-  $ cd /sys/kernel/mm/damon/admin/kdamonds/<N>
-  $ cat contexts/<N>/schemes/<N>/action
-  migrate_hot
-  $ echo 0 > contexts/<N>/schemes/<N>/target_nid
-  $ echo commit > state
-  $ numactl -p 2 ./hot_cold 500M 600M &
-  $ numastat -c -p hot_cold
+Thanks,
+SJ
 
-  Per-node process memory usage (in MBs)
-  PID             Node 0 Node 1 Node 2 Total
-  --------------  ------ ------ ------ -----
-  701 (hot_cold)     501      0    601  1101
-
-Signed-off-by: Hyeongtak Ji <hyeongtak.ji@sk.com>
-Signed-off-by: Honggyu Kim <honggyu.kim@sk.com>
-Signed-off-by: SeongJae Park <sj@kernel.org>
----
- include/linux/damon.h    | 2 ++
- mm/damon/paddr.c         | 3 +++
- mm/damon/sysfs-schemes.c | 1 +
- 3 files changed, 6 insertions(+)
-
-diff --git a/include/linux/damon.h b/include/linux/damon.h
-index 56714b6eb0d7..3d62d98d6359 100644
---- a/include/linux/damon.h
-+++ b/include/linux/damon.h
-@@ -105,6 +105,7 @@ struct damon_target {
-  * @DAMOS_NOHUGEPAGE:	Call ``madvise()`` for the region with MADV_NOHUGEPAGE.
-  * @DAMOS_LRU_PRIO:	Prioritize the region on its LRU lists.
-  * @DAMOS_LRU_DEPRIO:	Deprioritize the region on its LRU lists.
-+ * @DAMOS_MIGRATE_HOT:  Migrate the regions prioritizing warmer regions.
-  * @DAMOS_MIGRATE_COLD:	Migrate the regions prioritizing colder regions.
-  * @DAMOS_STAT:		Do nothing but count the stat.
-  * @NR_DAMOS_ACTIONS:	Total number of DAMOS actions
-@@ -123,6 +124,7 @@ enum damos_action {
- 	DAMOS_NOHUGEPAGE,
- 	DAMOS_LRU_PRIO,
- 	DAMOS_LRU_DEPRIO,
-+	DAMOS_MIGRATE_HOT,
- 	DAMOS_MIGRATE_COLD,
- 	DAMOS_STAT,		/* Do nothing but only record the stat */
- 	NR_DAMOS_ACTIONS,
-diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
-index a468792d9162..81163206e70c 100644
---- a/mm/damon/paddr.c
-+++ b/mm/damon/paddr.c
-@@ -486,6 +486,7 @@ static unsigned long damon_pa_apply_scheme(struct damon_ctx *ctx,
- 		return damon_pa_mark_accessed(r, scheme);
- 	case DAMOS_LRU_DEPRIO:
- 		return damon_pa_deactivate_pages(r, scheme);
-+	case DAMOS_MIGRATE_HOT:
- 	case DAMOS_MIGRATE_COLD:
- 		return damon_pa_migrate(r, scheme);
- 	case DAMOS_STAT:
-@@ -508,6 +509,8 @@ static int damon_pa_scheme_score(struct damon_ctx *context,
- 		return damon_hot_score(context, r, scheme);
- 	case DAMOS_LRU_DEPRIO:
- 		return damon_cold_score(context, r, scheme);
-+	case DAMOS_MIGRATE_HOT:
-+		return damon_hot_score(context, r, scheme);
- 	case DAMOS_MIGRATE_COLD:
- 		return damon_cold_score(context, r, scheme);
- 	default:
-diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
-index 880015d5b5ea..66fccfa776d7 100644
---- a/mm/damon/sysfs-schemes.c
-+++ b/mm/damon/sysfs-schemes.c
-@@ -1458,6 +1458,7 @@ static const char * const damon_sysfs_damos_action_strs[] = {
- 	"nohugepage",
- 	"lru_prio",
- 	"lru_deprio",
-+	"migrate_hot",
- 	"migrate_cold",
- 	"stat",
- };
--- 
-2.39.2
-
+[...]
