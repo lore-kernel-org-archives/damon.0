@@ -1,62 +1,62 @@
-Received: from mail-lf1-f53.google.com (mail-lf1-f53.google.com [209.85.167.53])
+Received: from mail-lf1-f42.google.com (mail-lf1-f42.google.com [209.85.167.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F1BA15573E
-	for <damon@lists.linux.dev>; Wed, 15 May 2024 15:25:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36DD4155759
+	for <damon@lists.linux.dev>; Wed, 15 May 2024 15:25:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715786719; cv=none; b=FttaxNUBPOeZRC8ax+GOBk8ikbj4Qj7nWNfFAufz7qE3lhMidTttxBn5cgM5kY4FQRRuTcxIX8ncUp69kowZAp30GjBuldZOcG5V26aVAgJWOMITf+vqLFwrB1ngg7IluzQDYGQ5sOKVVs7wCu8RpddVd7/xdJg5GIoU1uKizKg=
+	t=1715786720; cv=none; b=IojgEhAlGwxjM/DTpDxCclTAFHsQpLVt+jmhfUvuNiKjLdMA6UadMYS8smy4zVYI1NhF1iR7Y+jS7JoC5Hm6Xcg0QqiE8XLHm/RTpMwlfzuDNXHk3oseGphdvcWuisNhyXOjAu08UmimrQ6KsY1xb9jBAtr0xAtzwget2neYUD0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715786719; c=relaxed/simple;
-	bh=GL0VdvrYXZuO6pdGCdsuS4qDsnIWOGSYuTZ2G3rJYn4=;
+	s=arc-20240116; t=1715786720; c=relaxed/simple;
+	bh=+z/qE1Rb5ux5/66nSJ9KMmOhByIY1Rvw70Yvxp0cKSo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Jgizt2yeHd2xZf/SRuyw3gbrPz0EpuckmDr55FPqIRlAcuNQawlDC11BpJwgeJURwDPMkKJR6Wdb3p4jx/oGpVkbv5C19ZDiosJQvPshfkw737yIRguQrXPC4nwwj2DQrejQsi3P1q9wmFlgtx7GQBh3y63hIxIbWekMnQrbEHM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WJhAzva+; arc=none smtp.client-ip=209.85.167.53
+	 MIME-Version; b=a8teO6WUQrRB3zZ4d6BZFWmXURD7SgMOYy5oPSTicqphrQZTB9t4y+D8Ig5rrT1nOZAQsumA4cUXau9qEEi3ZicYmfgmC4OvBjp+PxidEUx1+Nc3IDJsN1Jth6x7w9vU+SuYRpVNfFPgfno/qIs+sbd6yyz3cfWdamd+cUpMj/8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GwcUMTSc; arc=none smtp.client-ip=209.85.167.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WJhAzva+"
-Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-51f74fa2a82so8315205e87.0
-        for <damon@lists.linux.dev>; Wed, 15 May 2024 08:25:17 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GwcUMTSc"
+Received: by mail-lf1-f42.google.com with SMTP id 2adb3069b0e04-5238fe0cfc9so893029e87.0
+        for <damon@lists.linux.dev>; Wed, 15 May 2024 08:25:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1715786715; x=1716391515; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1715786717; x=1716391517; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=OBq7qQtY+s9zT3i/odIQ1rLKUFP/64Y9F7eSqAck0J0=;
-        b=WJhAzva+N1SnokD3hbB1AucrMvjvdhocondPl6kwKzCVVv6okqEw4zd9u62V7IFv+x
-         we/4NKSwFJ4GDfGX7mMIvY8F4miMkwLmteel8UTSp6aS9GiQwEFw4FG2dt1kKOwdGIyE
-         toGzUdpCxkq2x3k7kCuK1SvDoefQky/h/84HCHLz/1KHsjtW2b48mXOsQwX+bjGtlcwx
-         D9efo5QAZHwM0A5qYDrx+Wg7zSDyPuRHmAOUFWlRfScd0ZKSJ/f3qjVYVSSGnu6JKgjo
-         4sMkPR4XrWLDjgnzMAQDty0V27BB7lslcM4ACi7HX5wgCxEaOLdDl6dNCansnT0PyquW
-         AN6g==
+        bh=yvljPjgjX6lR6mHciKscjK5EYNju7xwuH9ssF+hIclY=;
+        b=GwcUMTSc/k/uqM0IQPX6oBGaPAbmuUlCgmkchQhj3UL0yLHTrHv5WVdqwsjcqZbgPv
+         OP8GmBc5rZ5+xHUD8eRIgXR84Pia6eYKLIgA+hIye7VMGtbKbfW6c5DceFN+LctfS9w2
+         6h4AtUpJZJqsYvx3CtsohVZpDH9NX5ZV8LCTQYCRljf+8ErtFYN40DC3X4P2r30GVlN+
+         gzj3TGP8/4k54r7nRLjcSQgs0Jx6YO8rA5w6BedMe9ZCmZqzawKTsivF3Qvp3/5BX4op
+         Fi2Hl9K3kU28sbq+pEuBkn89tC4g7WQaCVXUr9+KgZhxCa7jqOcUM+tPrTRr/dWkiK6A
+         Jzvg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1715786715; x=1716391515;
+        d=1e100.net; s=20230601; t=1715786717; x=1716391517;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=OBq7qQtY+s9zT3i/odIQ1rLKUFP/64Y9F7eSqAck0J0=;
-        b=YGTrHKDqssiJvz5WR53TPsElevnJndh7lvuT/N8rOlpRKioeUyK8bBEBZfAZEnF7FX
-         k94rpI/wmwS4+MP9ZmvXEDlJ6vnHxi9vNe8gBPguwGNeAIkxhtSPd7tHdjpejHRJuUzp
-         0HYWeE8cZLUlXXjFAAQ8eUyuELy+0EyJ4N1x2SRi4nKDC8No07oK1KA0n62/bmHGsLkE
-         C0pXhze2F8rOuwJEUst23ikdrrw8d/ddyp/PAUY03jc+gPViFd5h4H66JcxjGKqPodr2
-         P4LrEBNly8khnNbjXRv0XaacYop68e9lZcEUB1K8Pszxs0M/azoZH1Bq/HMqVH8Wgj+j
-         5IZQ==
-X-Gm-Message-State: AOJu0Yy6fNIN9wwTtg5QCThNPrroUmSQ3mKCywUASpIreaO4MAQZ+2UI
-	cs05nC5FYzfPbcr3QUpZQoEiTS5Nc1p7g1yqeXQYtI17wsmXsjVXSOt95A==
-X-Google-Smtp-Source: AGHT+IGeWfAuJ6YnFkuU+kNgFWgKD9fmzDFs/xYk11A0K66FmiKcAMBayy+mVeVkSYffH3fLKCuRYg==
-X-Received: by 2002:ac2:454b:0:b0:523:8723:32de with SMTP id 2adb3069b0e04-5238723342fmr2909032e87.53.1715786715334;
-        Wed, 15 May 2024 08:25:15 -0700 (PDT)
+        bh=yvljPjgjX6lR6mHciKscjK5EYNju7xwuH9ssF+hIclY=;
+        b=s+gMHpwW1wm0MpVkqGVtOn1Yf56CpTYjN28TYJa5qqKD3FSWKWPaAwajvfmoUGjsTT
+         Iy4DDg322qz0f4XabivZXMMRt4Vz5b2g9V5lTLkKogVZNn4ThIqf7JKRdQq2vwQe++ZB
+         OTLyIU6fdf2Pb5spJYcKRY8wq9+vLslr3/TeSjIR1UBTmxvJgHtA//U/KDk/r8G9VDbl
+         kyBkj7rUEo0FvjrqvE/LyW6/T5OJCazb5axMzuB7AxoFHfUEYFTmNZ8u8wy4mLHjgKAS
+         0O8uDcMbsg5qY195ShP2/Auk2hN65qkpUJELooFuhBYSs1IoAWNtIG0x+hIMu6Vr+amm
+         ByZw==
+X-Gm-Message-State: AOJu0Yyxh8PqdTzuRE8G6CLmkM9iite9xHwX/8ZZFpNklze9cQ89cRrt
+	91UnGS2LPwJ6QNV0cdaJ8UTzdfebUBsZ6MnBOtR0AufrghYygcZhQ83kYA==
+X-Google-Smtp-Source: AGHT+IFkDYkWionD3q0O6nMHtjkRx2IPD38khrTh2sZ94PtfOzQbRvNvxHEWq+6uVEjcoRdr2mZCkA==
+X-Received: by 2002:ac2:483b:0:b0:520:ed4e:2206 with SMTP id 2adb3069b0e04-521e0c63f33mr6239718e87.17.1715786716561;
+        Wed, 15 May 2024 08:25:16 -0700 (PDT)
 Received: from localhost.localdomain ([176.59.160.194])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-521f38d33c3sm2646048e87.161.2024.05.15.08.25.14
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-521f38d33c3sm2646048e87.161.2024.05.15.08.25.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 May 2024 08:25:15 -0700 (PDT)
+        Wed, 15 May 2024 08:25:16 -0700 (PDT)
 From: Alex Rusuf <yorha.op@gmail.com>
 To: damon@lists.linux.dev
 Cc: sj@kernel.org
-Subject: [RFC PATCH v1 4/7] mm/damon/reclaim: kdamon_struct abstraction layer
-Date: Wed, 15 May 2024 18:24:54 +0300
-Message-ID: <20240515152457.603724-5-yorha.op@gmail.com>
+Subject: [RFC PATCH v1 5/7] mm/damon/core: rename nr_running_ctxs -> nr_running_kdamonds
+Date: Wed, 15 May 2024 18:24:55 +0300
+Message-ID: <20240515152457.603724-6-yorha.op@gmail.com>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20240515152457.603724-1-yorha.op@gmail.com>
 References: <20240515152457.603724-1-yorha.op@gmail.com>
@@ -68,103 +68,90 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 7bit
 
-This patch implements support for DAMON_RECLAIM
-to use kdamond_struct abstraction layer
-brought in by previous patches.
+nr_running_ctxs tracked number of currently running
+kdamond daemons, but since kdamond could only have
+one contexts per kdamond thread name was acceptable.
+
+Starting from this patch series nr_running_ctxs no longer
+tracks currently running number of contexts, but
+rather number of kdamonds, so rename it this way to
+keep sense on this variable.
 
 Signed-off-by: Alex Rusuf <yorha.op@gmail.com>
 ---
- mm/damon/reclaim.c | 30 ++++++++++++++++++++++--------
- 1 file changed, 22 insertions(+), 8 deletions(-)
+ mm/damon/core.c | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/mm/damon/reclaim.c b/mm/damon/reclaim.c
-index 9bd341d62..ee760cbcc 100644
---- a/mm/damon/reclaim.c
-+++ b/mm/damon/reclaim.c
-@@ -150,8 +150,18 @@ static struct damos_stat damon_reclaim_stat;
- DEFINE_DAMON_MODULES_DAMOS_STATS_PARAMS(damon_reclaim_stat,
- 		reclaim_tried_regions, reclaimed_regions, quota_exceeds);
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index 899487f38..822e54f29 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -24,7 +24,7 @@
+ #endif
  
--static struct damon_ctx *ctx;
--static struct damon_target *target;
-+static struct kdamond_struct *kdamond;
-+
-+static inline struct damon_ctx *damon_reclaim_ctx(void)
-+{
-+	return damon_first_ctx(kdamond);
-+}
-+
-+static inline struct damon_target *damon_reclaim_target(void)
-+{
-+	return damon_first_target(
-+			damon_reclaim_ctx());
-+}
+ static DEFINE_MUTEX(damon_lock);
+-static int nr_running_ctxs;
++static int nr_running_kdamonds;
+ static bool running_exclusive_ctxs;
  
- static struct damos *damon_reclaim_new_scheme(void)
+ static DEFINE_MUTEX(damon_ops_lock);
+@@ -707,13 +707,13 @@ void damon_set_schemes(struct damon_ctx *ctx, struct damos **schemes,
+  */
+ int damon_nr_running_ctxs(void)
  {
-@@ -197,6 +207,7 @@ static int damon_reclaim_apply_parameters(void)
- 	struct damos *scheme, *old_scheme;
- 	struct damos_quota_goal *goal;
- 	struct damos_filter *filter;
-+	struct damon_ctx *ctx = damon_reclaim_ctx();
- 	int err = 0;
+-	int nr_ctxs;
++	int nr_kdamonds;
  
- 	err = damon_set_attrs(ctx, &damon_reclaim_mon_attrs);
-@@ -244,7 +255,8 @@ static int damon_reclaim_apply_parameters(void)
- 	}
- 	damon_set_schemes(ctx, &scheme, 1);
+ 	mutex_lock(&damon_lock);
+-	nr_ctxs = nr_running_ctxs;
++	nr_kdamonds = nr_running_kdamonds;
+ 	mutex_unlock(&damon_lock);
  
--	return damon_set_region_biggest_system_ram_default(target,
-+	return damon_set_region_biggest_system_ram_default(
-+					damon_reclaim_target(),
- 					&monitor_region_start,
- 					&monitor_region_end);
- }
-@@ -254,7 +266,7 @@ static int damon_reclaim_turn(bool on)
- 	int err;
- 
- 	if (!on) {
--		err = damon_stop(&ctx, 1);
-+		err = damon_stop(kdamond);
- 		if (!err)
- 			kdamond_pid = -1;
- 		return err;
-@@ -264,10 +276,10 @@ static int damon_reclaim_turn(bool on)
- 	if (err)
- 		return err;
- 
--	err = damon_start(&ctx, 1, true);
-+	err = damon_start(kdamond, true);
- 	if (err)
- 		return err;
--	kdamond_pid = ctx->kdamond->pid;
-+	kdamond_pid = kdamond->self->pid;
- 	return 0;
+-	return nr_ctxs;
++	return nr_kdamonds;
  }
  
-@@ -286,7 +298,7 @@ static int damon_reclaim_enabled_store(const char *val,
- 		return 0;
+ /**
+@@ -769,7 +769,7 @@ static int __damon_start(struct kdamond_struct *kdamond)
+ 		err = 0;
+ 		reinit_completion(&kdamond->kdamond_started);
+ 		kdamond->self = kthread_run(kdamond_fn, kdamond, "kdamond.%d",
+-				nr_running_ctxs);
++				nr_running_kdamonds);
+ 		if (IS_ERR(kdamond->self)) {
+ 			err = PTR_ERR(kdamond->self);
+ 			kdamond->self = NULL;
+@@ -808,7 +808,7 @@ int damon_start(struct kdamond_struct *kdamond, bool exclusive)
+ 		return -EINVAL;
  
- 	/* Called before init function.  The function will handle this. */
--	if (!ctx)
-+	if (!kdamond)
- 		goto set_param_out;
- 
- 	err = damon_reclaim_turn(enable);
-@@ -337,11 +349,13 @@ static int damon_reclaim_after_wmarks_check(struct damon_ctx *c)
- 
- static int __init damon_reclaim_init(void)
- {
--	int err = damon_modules_new_paddr_ctx_target(&ctx, &target);
-+	struct damon_ctx *ctx;
-+	int err = damon_modules_new_paddr_kdamond(&kdamond);
- 
+ 	mutex_lock(&damon_lock);
+-	if ((exclusive && nr_running_ctxs) ||
++	if ((exclusive && nr_running_kdamonds) ||
+ 			(!exclusive && running_exclusive_ctxs)) {
+ 		mutex_unlock(&damon_lock);
+ 		return -EBUSY;
+@@ -817,9 +817,9 @@ int damon_start(struct kdamond_struct *kdamond, bool exclusive)
+ 	err = __damon_start(kdamond);
  	if (err)
  		return err;
+-	nr_running_ctxs++;
++	nr_running_kdamonds++;
  
-+	ctx = damon_reclaim_ctx();
- 	ctx->callback.after_wmarks_check = damon_reclaim_after_wmarks_check;
- 	ctx->callback.after_aggregation = damon_reclaim_after_aggregation;
+-	if (exclusive && nr_running_ctxs)
++	if (exclusive && nr_running_kdamonds)
+ 		running_exclusive_ctxs = true;
+ 	mutex_unlock(&damon_lock);
+ 
+@@ -1755,8 +1755,8 @@ static int kdamond_fn(void *data)
+ 	mutex_unlock(&kdamond->lock);
+ 
+ 	mutex_lock(&damon_lock);
+-	nr_running_ctxs--;
+-	if (!nr_running_ctxs && running_exclusive_ctxs)
++	nr_running_kdamonds--;
++	if (!nr_running_kdamonds && running_exclusive_ctxs)
+ 		running_exclusive_ctxs = false;
+ 	mutex_unlock(&damon_lock);
  
 -- 
 2.42.0
