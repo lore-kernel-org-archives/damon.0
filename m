@@ -1,62 +1,62 @@
-Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
+Received: from mail-lf1-f52.google.com (mail-lf1-f52.google.com [209.85.167.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF65F15573E
-	for <damon@lists.linux.dev>; Wed, 15 May 2024 15:25:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C59D15575A
+	for <damon@lists.linux.dev>; Wed, 15 May 2024 15:25:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715786714; cv=none; b=t4EXQ2a6YuRxKgFkyct1w/rM5DzmnezCrGB8iQwGFozSrhhpauDk0UdzGKbpNJloWOysKMhcE6Ud1g405FKXoF8nk5CPCQvYpCCcOTQPbMQoEMHrnjZdwMRz6LocIoux0fnc52OTffIth4/HsLdkZGZ0Q3b9XtKgOiGoINXYifg=
+	t=1715786715; cv=none; b=jASPwQwZAjf28FhxVP0hKoZfWnl3ypfLfnwreT/SMBjQ0uP2wPU34komi0Y9pGG7yhCFuqETwK1rlJeUtNx4ifo2qlIlSTsC3RqSbyvYQGIkyEIsR/0AffYwet+HpRdTi1RbD4rzEr1W2T7W/+UbNg+Ze5V/btg9/s7RmsOzx5E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715786714; c=relaxed/simple;
-	bh=F8r1BqFaFs+GbwujB084oSFOgZhXTcgcVdT344sJA6Q=;
+	s=arc-20240116; t=1715786715; c=relaxed/simple;
+	bh=9e70Vrim5jIcqTp3CcouWXIv4MNXQnMHbq5cxZTOGoc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=saEIVH7IHN3OzWHnLbMn9arbQv3dIosE8IRcd/y0WWuRldg/42wjAk50YD2kzidf/8GNrkVVcyjyeQGZMvIrlZFzizidUOFqV7S/gKDmbXBJ65ODxT6ac/Y+2CM+DZ3stYxobXZBc5LIEIVwUavQPdGknqXtG+zwOAbt8kZuWo8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GZdfErKU; arc=none smtp.client-ip=209.85.167.50
+	 MIME-Version; b=gkE9FCpVgBQ0D4PwiSKbDobFHP9KEnWqh2MY2tl2SugKoXYQMaZp2aD4weFHgzdErK7/ZApnQWwr0sboI2vBawd6aqAyIToBQJfHBPbNSf2ThSXaunze4eRiUXGEPuihyabL7xwuLD4GA5pOKC88vuuPMOEzYfjxHhX//92PZuA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EqM+94PY; arc=none smtp.client-ip=209.85.167.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GZdfErKU"
-Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-51f40b5e059so8389146e87.0
-        for <damon@lists.linux.dev>; Wed, 15 May 2024 08:25:11 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EqM+94PY"
+Received: by mail-lf1-f52.google.com with SMTP id 2adb3069b0e04-51f0602bc58so7019338e87.0
+        for <damon@lists.linux.dev>; Wed, 15 May 2024 08:25:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1715786710; x=1716391510; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1715786711; x=1716391511; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=xzasYJfRqKciwCdQnL9VFAj+OYJ4tl4r2d31KURnjAM=;
-        b=GZdfErKUugwkP6a8+2du211rK7LenMVxiJ6Aj4Jt1sANvTJG6AzHg50h/ibfsdruI6
-         10PmGmK3rIxUHV3C9cZ/Fz+bYpzjJ9ZhHqhwSimCdZtSxtVhRAnHzAIqji8E7ew8ZlQ2
-         1tgCrDFLr5cwWX36T4qMDTrJeZda38XgWgo0AUFglY1ye+g1x/9jzDQn2AKz2lBE0ody
-         9Yhqbzewysf3t7ddUmXUoQ3DmC1E2eEzw+7sQ9zBmq9llSTxoKkbcIz7jFJg8ToqbuAE
-         ig/aM9PRDl/LM4/Zd1YnCZtJ3Efh2ti98sizskaqmX0vlUMht6vPqNdArSH+bVgvdScj
-         SCtQ==
+        bh=t/O5vmUEibrKREO3bDjzq4AlG9EFIs64uAChXha0KuQ=;
+        b=EqM+94PYYWz8uGEPdgq7c3Ye8r9timipWRq9zMNkxUf/dycxpKp1+QFylBY5ZEnfKQ
+         t3Pxts70lBP7sy5umS6Xs8DhcujucTE1AkLtHGBVIu/tn1m0DVtGxllPk7hw8n1dKVQs
+         m7nZILFVNZY5v235TJQ0yEOFIU1KTgEkXbZrTkt0a1Q5HX00wo7BefNVbRPrZKAAS3g2
+         y9N2ehI9oDdt37A1VspwCdNx3brGEjHc8b3hnXvbdVMHhVbSYoGCFcb5oS06N7g1OFJ7
+         4MyESlRzXCuBn4AHL2iCk6F+hQzZ1SZY167s1u2aiuCo9mtFfJJ1vhq+U2kErnxeUFci
+         +fjg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1715786710; x=1716391510;
+        d=1e100.net; s=20230601; t=1715786711; x=1716391511;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=xzasYJfRqKciwCdQnL9VFAj+OYJ4tl4r2d31KURnjAM=;
-        b=ZP8/HBT47Ovgg7VfinXuWINxkkEeX/yqqnPUReGY+Qgc5aH8BmFuctUHVlSziEjm2R
-         BK5LUnDMo7yMdv3BGQbG0NzXADax93rg3apsMUVIOYt07pvL9tTX8KvoQDTmT0epiqHC
-         YNEq4kQZpLFIbMCCTtZuAAFGW3Ofacxs10t75HLMZF9R101NBIvz28RDJvlKFVe6XAj3
-         lLog78M1DbGg479zW5WxaFvuyTu7F8isJPjo6iI8jHaSSEw5pBlaYq3yhH5sNPOsI8Z1
-         T2MC/lV7zZtPF4hcKhMdSQEzsdOYqHgliU3Uba68egpqsjnQNN83qvDGKIBhyDeZCWEz
-         FumQ==
-X-Gm-Message-State: AOJu0YzIX14Su0lqeAA6Cy6fGpugfRN45XsTkudONBpY5LQPSgFrapIm
-	ZfF6wY/lbw4ciJfGMjGHO5BdY9IAYgvG4+niwtS81LrC0qc5PEpmDLuBzw==
-X-Google-Smtp-Source: AGHT+IHrRZ/rrcrXOi5t23sx+kBnyPeoD8EKz4Dfrh8zcQ7OG0scMGSB/selwKkHx3jkdqJNmyODLw==
-X-Received: by 2002:ac2:5331:0:b0:523:96ad:51a8 with SMTP id 2adb3069b0e04-52396ad5348mr1375417e87.7.1715786709500;
-        Wed, 15 May 2024 08:25:09 -0700 (PDT)
+        bh=t/O5vmUEibrKREO3bDjzq4AlG9EFIs64uAChXha0KuQ=;
+        b=aGbeeDeEDqeMxSGpfn80E4b0bglAwI1sHS2FphBdNgxaDrpdpxT/qk8h8Fr0heMmxI
+         vtV8bWsbjZdrVQhqCwG91lt2osGly1c/wSo1m1gkMjzkXtS6HHPIN6Jg6G1FMWVnsV3q
+         VFDI2TvinBV+gtPeqiN4EVl5oRbMXMg17h/apuCn6jt/VxklgywyXLPJgTriwuHrc8MI
+         YHkqxBJtqthq+KQnNKLeGgIpnipAx0Mehn5yg3aGFBANDPJrz+Wb874c3hZC9NjHvG9H
+         tKFO0GZ+j9GmG3GadvPkr9Gs1u/W33ssHFDSF9/wPie8Oz3zmbHbA2XvY5drT3wPkxxI
+         0iMQ==
+X-Gm-Message-State: AOJu0YyDe2XmXRfJgq3zycomqa4th4/BK6OwsT/9OounH0ORZFqn3QEV
+	x+/QmasKL0ZmOWAU0+WzQvkHw+NLt2n5xsjMQPz/sM7g938Zkg7cFz17wg==
+X-Google-Smtp-Source: AGHT+IEkMfb6LR27OO0jborcGALWBrLm5UV3kS6fecAu/yxiUhrzZ3mmwD2joGJfM+wsbaWAfVAJYg==
+X-Received: by 2002:ac2:4d15:0:b0:51d:7d4a:517e with SMTP id 2adb3069b0e04-521e0c44819mr6115847e87.9.1715786710584;
+        Wed, 15 May 2024 08:25:10 -0700 (PDT)
 Received: from localhost.localdomain ([176.59.160.194])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-521f38d33c3sm2646048e87.161.2024.05.15.08.25.08
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-521f38d33c3sm2646048e87.161.2024.05.15.08.25.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 May 2024 08:25:08 -0700 (PDT)
+        Wed, 15 May 2024 08:25:10 -0700 (PDT)
 From: Alex Rusuf <yorha.op@gmail.com>
 To: damon@lists.linux.dev
 Cc: sj@kernel.org
-Subject: [RFC PATCH v1 1/7] mm/damon/core: kdamond_struct abstraction layer
-Date: Wed, 15 May 2024 18:24:51 +0300
-Message-ID: <20240515152457.603724-2-yorha.op@gmail.com>
+Subject: [RFC PATCH v1 2/7] mm/damon/core: list-based contexts organization
+Date: Wed, 15 May 2024 18:24:52 +0300
+Message-ID: <20240515152457.603724-3-yorha.op@gmail.com>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20240515152457.603724-1-yorha.op@gmail.com>
 References: <20240515152457.603724-1-yorha.op@gmail.com>
@@ -68,716 +68,488 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 7bit
 
-In current implementation kdamond tracks only 1
-context, that is kdamond _is_ damon_ctx what makes
-it very difficult to implement multiple contexts.
-
-This patch adds another level of abstraction, that is
-kdamond_struct - structure which represents kdamond itself.
-It holds references to all contexts organized in list.
-
-Few fields like ->kdamond_started and ->kdamond_lock
-(just ->lock for kdamond_struct) also has been moved
-to kdamond_struct, because they have nothing to do
-with the context itself, but with the whole kdamond
-daemon.
+This patch implements list-based approach to manage
+damon contexts, described in previous patch.
 
 Signed-off-by: Alex Rusuf <yorha.op@gmail.com>
 ---
- include/linux/damon.h |  24 ++++--
- mm/damon/core.c       | 125 +++++++++++++++++-------------
- mm/damon/sysfs.c      | 176 +++++++++++++++++++++++-------------------
- 3 files changed, 183 insertions(+), 142 deletions(-)
+ include/linux/damon.h |  22 ++++++-
+ mm/damon/core.c       |  98 ++++++++++++++++++++++-------
+ mm/damon/sysfs.c      | 140 ++++++++++++++++++++++++++++++------------
+ 3 files changed, 197 insertions(+), 63 deletions(-)
 
 diff --git a/include/linux/damon.h b/include/linux/damon.h
-index 886d07294..089d4a9cf 100644
+index 089d4a9cf..ec291a2eb 100644
 --- a/include/linux/damon.h
 +++ b/include/linux/damon.h
-@@ -568,6 +568,18 @@ struct damon_attrs {
- 	unsigned long max_nr_regions;
- };
+@@ -571,8 +571,7 @@ struct damon_attrs {
+ struct kdamond_struct {
+ 	struct mutex lock;
+ 	struct task_struct *self;
+-	/* TODO: support multiple contexts */
+-	struct damon_ctx *ctx;
++	struct list_head contexts;
+ 	size_t nr_ctxs;
  
-+struct kdamond_struct {
-+	struct mutex lock;
-+	struct task_struct *self;
-+	/* TODO: support multiple contexts */
-+	struct damon_ctx *ctx;
-+	size_t nr_ctxs;
-+
-+/* private: */
-+	/* for waiting until the execution of the kdamond_fn is started */
-+	struct completion kdamond_started;
-+};
-+
- /**
-  * struct damon_ctx - Represents a context for each monitoring.  This is the
-  * main interface that allows users to set the attributes and get the results
-@@ -614,12 +626,9 @@ struct damon_ctx {
+ /* private: */
+@@ -626,9 +625,11 @@ struct damon_ctx {
  	 * update
  	 */
  	unsigned long next_ops_update_sis;
--	/* for waiting until the execution of the kdamond_fn is started */
--	struct completion kdamond_started;
++	unsigned long sz_limit;
  
  /* public: */
--	struct task_struct *kdamond;
--	struct mutex kdamond_lock;
-+	struct kdamond_struct *kdamond;
+ 	struct kdamond_struct *kdamond;
++	struct list_head list;
  
  	struct damon_operations ops;
  	struct damon_callback callback;
-@@ -736,7 +745,10 @@ void damon_destroy_target(struct damon_target *t);
+@@ -662,6 +663,15 @@ static inline unsigned long damon_sz_region(struct damon_region *r)
+ 	return r->ar.end - r->ar.start;
+ }
+ 
++static inline struct damon_target *damon_first_target(struct damon_ctx *ctx)
++{
++	return list_first_entry(&ctx->adaptive_targets, struct damon_target, list);
++}
++
++static inline struct damon_ctx *damon_first_ctx(struct kdamond_struct *kdamond)
++{
++	return list_first_entry(&kdamond->contexts, struct damon_ctx, list);
++}
+ 
+ #define damon_for_each_region(r, t) \
+ 	list_for_each_entry(r, &t->regions_list, list)
+@@ -684,6 +694,12 @@ static inline unsigned long damon_sz_region(struct damon_region *r)
+ #define damon_for_each_scheme_safe(s, next, ctx) \
+ 	list_for_each_entry_safe(s, next, &(ctx)->schemes, list)
+ 
++#define damon_for_each_context(c, kdamond) \
++	list_for_each_entry(c, &(kdamond)->contexts, list)
++
++#define damon_for_each_context_safe(c, next, kdamond) \
++	list_for_each_entry_safe(c, next, &(kdamond)->contexts, list)
++
+ #define damos_for_each_quota_goal(goal, quota) \
+ 	list_for_each_entry(goal, &quota->goals, list)
+ 
+@@ -745,8 +761,10 @@ void damon_destroy_target(struct damon_target *t);
  unsigned int damon_nr_regions(struct damon_target *t);
  
  struct damon_ctx *damon_new_ctx(void);
-+struct kdamond_struct *damon_new_kdamond(void);
++void damon_add_ctx(struct kdamond_struct *kdamond, struct damon_ctx *ctx);
+ struct kdamond_struct *damon_new_kdamond(void);
  void damon_destroy_ctx(struct damon_ctx *ctx);
-+void damon_destroy_kdamond(struct kdamond_struct *kdamond);
-+bool damon_kdamond_running(struct kdamond_struct *kdamond);
++void damon_destroy_ctxs(struct kdamond_struct *kdamond);
+ void damon_destroy_kdamond(struct kdamond_struct *kdamond);
+ bool damon_kdamond_running(struct kdamond_struct *kdamond);
  int damon_set_attrs(struct damon_ctx *ctx, struct damon_attrs *attrs);
- void damon_set_schemes(struct damon_ctx *ctx,
- 			struct damos **schemes, ssize_t nr_schemes);
-@@ -758,8 +770,8 @@ static inline unsigned int damon_max_nr_accesses(const struct damon_attrs *attrs
- }
- 
- 
--int damon_start(struct damon_ctx **ctxs, int nr_ctxs, bool exclusive);
--int damon_stop(struct damon_ctx **ctxs, int nr_ctxs);
-+int damon_start(struct kdamond_struct *kdamond, bool exclusive);
-+int damon_stop(struct kdamond_struct *kdamond);
- 
- int damon_set_region_biggest_system_ram_default(struct damon_target *t,
- 				unsigned long *start, unsigned long *end);
 diff --git a/mm/damon/core.c b/mm/damon/core.c
-index 6d503c1c1..b592a2865 100644
+index b592a2865..899487f38 100644
 --- a/mm/damon/core.c
 +++ b/mm/damon/core.c
-@@ -488,8 +488,6 @@ struct damon_ctx *damon_new_ctx(void)
- 	if (!ctx)
- 		return NULL;
+@@ -502,10 +502,17 @@ struct damon_ctx *damon_new_ctx(void)
  
--	init_completion(&ctx->kdamond_started);
--
- 	ctx->attrs.sample_interval = 5 * 1000;
- 	ctx->attrs.aggr_interval = 100 * 1000;
- 	ctx->attrs.ops_update_interval = 60 * 1000 * 1000;
-@@ -499,8 +497,6 @@ struct damon_ctx *damon_new_ctx(void)
- 	ctx->next_aggregation_sis = 0;
- 	ctx->next_ops_update_sis = 0;
+ 	INIT_LIST_HEAD(&ctx->adaptive_targets);
+ 	INIT_LIST_HEAD(&ctx->schemes);
++	INIT_LIST_HEAD(&ctx->list);
  
--	mutex_init(&ctx->kdamond_lock);
--
- 	ctx->attrs.min_nr_regions = 10;
- 	ctx->attrs.max_nr_regions = 1000;
- 
-@@ -510,6 +506,20 @@ struct damon_ctx *damon_new_ctx(void)
  	return ctx;
  }
  
-+struct kdamond_struct *damon_new_kdamond(void)
++void damon_add_ctx(struct kdamond_struct *kdamond, struct damon_ctx *ctx)
 +{
-+	struct kdamond_struct *kdamond;
-+
-+	kdamond = kzalloc(sizeof(*kdamond), GFP_KERNEL);
-+	if (!kdamond)
-+		return NULL;
-+
-+	init_completion(&kdamond->kdamond_started);
-+	mutex_init(&kdamond->lock);
-+
-+	return kdamond;
++	list_add_tail(&ctx->list, &kdamond->contexts);
++	++kdamond->nr_ctxs;
 +}
 +
- static void damon_destroy_targets(struct damon_ctx *ctx)
+ struct kdamond_struct *damon_new_kdamond(void)
  {
- 	struct damon_target *t, *next_t;
-@@ -535,6 +545,13 @@ void damon_destroy_ctx(struct damon_ctx *ctx)
+ 	struct kdamond_struct *kdamond;
+@@ -517,6 +524,8 @@ struct kdamond_struct *damon_new_kdamond(void)
+ 	init_completion(&kdamond->kdamond_started);
+ 	mutex_init(&kdamond->lock);
+ 
++	INIT_LIST_HEAD(&kdamond->contexts);
++
+ 	return kdamond;
+ }
+ 
+@@ -533,6 +542,11 @@ static void damon_destroy_targets(struct damon_ctx *ctx)
+ 		damon_destroy_target(t);
+ }
+ 
++static inline void damon_del_ctx(struct damon_ctx *ctx)
++{
++	list_del(&ctx->list);
++}
++
+ void damon_destroy_ctx(struct damon_ctx *ctx)
+ {
+ 	struct damos *s, *next_s;
+@@ -542,12 +556,21 @@ void damon_destroy_ctx(struct damon_ctx *ctx)
+ 	damon_for_each_scheme_safe(s, next_s, ctx)
+ 		damon_destroy_scheme(s);
+ 
++	damon_del_ctx(ctx);
  	kfree(ctx);
  }
  
-+void damon_destroy_kdamond(struct kdamond_struct *kdamond)
++void damon_destroy_ctxs(struct kdamond_struct *kdamond)
 +{
-+	damon_destroy_ctx(kdamond->ctx);
-+	mutex_destroy(&kdamond->lock);
-+	kfree(kdamond);
++	struct damon_ctx *c, *next;
++
++	damon_for_each_context_safe(c, next, kdamond)
++		damon_destroy_ctx(c);
 +}
 +
- static unsigned int damon_age_for_new_attrs(unsigned int age,
- 		struct damon_attrs *old_attrs, struct damon_attrs *new_attrs)
+ void damon_destroy_kdamond(struct kdamond_struct *kdamond)
  {
-@@ -676,6 +693,20 @@ int damon_nr_running_ctxs(void)
- 	return nr_ctxs;
+-	damon_destroy_ctx(kdamond->ctx);
++	damon_destroy_ctxs(kdamond);
+ 	mutex_destroy(&kdamond->lock);
+ 	kfree(kdamond);
+ }
+@@ -1596,30 +1619,68 @@ static void kdamond_init_intervals_sis(struct damon_ctx *ctx)
+ 	}
  }
  
-+/**
-+ * damon_kdamond_running() - Return true if kdamond is running
-+ * false otherwise.
-+ */
-+bool damon_kdamond_running(struct kdamond_struct *kdamond)
++static bool kdamond_init_ctx(struct damon_ctx *ctx)
 +{
-+	bool running;
++	if (ctx->ops.init)
++		ctx->ops.init(ctx);
++	if (ctx->callback.before_start && ctx->callback.before_start(ctx))
++		return false;
 +
-+	mutex_lock(&kdamond->lock);
-+	running = kdamond->self != NULL;
-+	mutex_unlock(&kdamond->lock);
-+	return running;
++	kdamond_init_intervals_sis(ctx);
++	ctx->sz_limit = damon_region_sz_limit(ctx);
++
++	return true;
 +}
 +
- /* Returns the size upper limit for each monitoring region */
- static unsigned long damon_region_sz_limit(struct damon_ctx *ctx)
- {
-@@ -706,24 +737,24 @@ static int kdamond_fn(void *data);
-  *
-  * Return: 0 on success, negative error code otherwise.
-  */
--static int __damon_start(struct damon_ctx *ctx)
-+static int __damon_start(struct kdamond_struct *kdamond)
- {
- 	int err = -EBUSY;
- 
--	mutex_lock(&ctx->kdamond_lock);
--	if (!ctx->kdamond) {
-+	mutex_lock(&kdamond->lock);
-+	if (!kdamond->self) {
- 		err = 0;
--		reinit_completion(&ctx->kdamond_started);
--		ctx->kdamond = kthread_run(kdamond_fn, ctx, "kdamond.%d",
-+		reinit_completion(&kdamond->kdamond_started);
-+		kdamond->self = kthread_run(kdamond_fn, kdamond, "kdamond.%d",
- 				nr_running_ctxs);
--		if (IS_ERR(ctx->kdamond)) {
--			err = PTR_ERR(ctx->kdamond);
--			ctx->kdamond = NULL;
-+		if (IS_ERR(kdamond->self)) {
-+			err = PTR_ERR(kdamond->self);
-+			kdamond->self = NULL;
- 		} else {
--			wait_for_completion(&ctx->kdamond_started);
-+			wait_for_completion(&kdamond->kdamond_started);
- 		}
- 	}
--	mutex_unlock(&ctx->kdamond_lock);
-+	mutex_unlock(&kdamond->lock);
- 
- 	return err;
- }
-@@ -743,11 +774,16 @@ static int __damon_start(struct damon_ctx *ctx)
-  *
-  * Return: 0 on success, negative error code otherwise.
-  */
--int damon_start(struct damon_ctx **ctxs, int nr_ctxs, bool exclusive)
-+int damon_start(struct kdamond_struct *kdamond, bool exclusive)
- {
--	int i;
- 	int err = 0;
- 
-+	BUG_ON(!kdamond);
-+	BUG_ON(!kdamon->nr_ctxs);
++static bool kdamond_init_ctxs(struct kdamond_struct *kdamond)
++{
++	struct damon_ctx *c;
 +
-+	if (kdamond->nr_ctxs != 1)
-+		return -EINVAL;
++	damon_for_each_context(c, kdamond)
++		if (!kdamond_init_ctx(c))
++			return false;
++	return true;
++}
 +
- 	mutex_lock(&damon_lock);
- 	if ((exclusive && nr_running_ctxs) ||
- 			(!exclusive && running_exclusive_ctxs)) {
-@@ -755,12 +791,11 @@ int damon_start(struct damon_ctx **ctxs, int nr_ctxs, bool exclusive)
- 		return -EBUSY;
- 	}
- 
--	for (i = 0; i < nr_ctxs; i++) {
--		err = __damon_start(ctxs[i]);
--		if (err)
--			break;
--		nr_running_ctxs++;
--	}
-+	err = __damon_start(kdamond);
-+	if (err)
-+		return err;
-+	nr_running_ctxs++;
++static void kdamond_finish_ctx(struct damon_ctx *ctx)
++{
++	struct damon_target *t;
++	struct damon_region *r, *next;
 +
- 	if (exclusive && nr_running_ctxs)
- 		running_exclusive_ctxs = true;
- 	mutex_unlock(&damon_lock);
-@@ -768,49 +803,28 @@ int damon_start(struct damon_ctx **ctxs, int nr_ctxs, bool exclusive)
- 	return err;
- }
- 
--/*
-- * __damon_stop() - Stops monitoring of a given context.
-- * @ctx:	monitoring context
-+/**
-+ * damon_stop() - Stops the monitorings for a given group of contexts.
-  *
-  * Return: 0 on success, negative error code otherwise.
-  */
--static int __damon_stop(struct damon_ctx *ctx)
-+int damon_stop(struct kdamond_struct *kdamond)
- {
- 	struct task_struct *tsk;
- 
--	mutex_lock(&ctx->kdamond_lock);
--	tsk = ctx->kdamond;
-+	mutex_lock(&kdamond->lock);
-+	tsk = kdamond->self;
- 	if (tsk) {
- 		get_task_struct(tsk);
--		mutex_unlock(&ctx->kdamond_lock);
-+		mutex_unlock(&kdamond->lock);
- 		kthread_stop_put(tsk);
- 		return 0;
- 	}
--	mutex_unlock(&ctx->kdamond_lock);
-+	mutex_unlock(&kdamond->lock);
- 
- 	return -EPERM;
- }
- 
--/**
-- * damon_stop() - Stops the monitorings for a given group of contexts.
-- * @ctxs:	an array of the pointers for contexts to stop monitoring
-- * @nr_ctxs:	size of @ctxs
-- *
-- * Return: 0 on success, negative error code otherwise.
-- */
--int damon_stop(struct damon_ctx **ctxs, int nr_ctxs)
--{
--	int i, err = 0;
--
--	for (i = 0; i < nr_ctxs; i++) {
--		/* nr_running_ctxs is decremented in kdamond_fn */
--		err = __damon_stop(ctxs[i]);
--		if (err)
--			break;
--	}
--	return err;
--}
--
++	damon_for_each_target(t, ctx) {
++		damon_for_each_region_safe(r, next, t)
++			damon_destroy_region(r, t);
++	}
++
++	if (ctx->callback.before_terminate)
++		ctx->callback.before_terminate(ctx);
++	if (ctx->ops.cleanup)
++		ctx->ops.cleanup(ctx);
++}
++
++static void kdamond_finish_ctxs(struct kdamond_struct *kdamond)
++{
++	struct damon_ctx *c;
++
++	damon_for_each_context(c, kdamond)
++		kdamond_finish_ctx(c);
++}
++
  /*
-  * Reset the aggregated monitoring results ('nr_accesses' of each region).
-  */
-@@ -1587,7 +1601,8 @@ static void kdamond_init_intervals_sis(struct damon_ctx *ctx)
+  * The monitoring daemon that runs as a kernel thread
   */
  static int kdamond_fn(void *data)
  {
--	struct damon_ctx *ctx = data;
-+	struct kdamond_struct *kdamond = data;
-+	struct damon_ctx *ctx = kdamond->ctx;
- 	struct damon_target *t;
- 	struct damon_region *r, *next;
+ 	struct kdamond_struct *kdamond = data;
+-	struct damon_ctx *ctx = kdamond->ctx;
+-	struct damon_target *t;
+-	struct damon_region *r, *next;
++	struct damon_ctx *ctx = damon_first_ctx(kdamond);
  	unsigned int max_nr_accesses = 0;
-@@ -1595,7 +1610,7 @@ static int kdamond_fn(void *data)
+-	unsigned long sz_limit = 0;
  
  	pr_debug("kdamond (%d) starts\n", current->pid);
  
--	complete(&ctx->kdamond_started);
-+	complete(&kdamond->kdamond_started);
- 	kdamond_init_intervals_sis(ctx);
+ 	complete(&kdamond->kdamond_started);
+-	kdamond_init_intervals_sis(ctx);
+-
+-	if (ctx->ops.init)
+-		ctx->ops.init(ctx);
+-	if (ctx->callback.before_start && ctx->callback.before_start(ctx))
++	if (!kdamond_init_ctxs(kdamond))
+ 		goto done;
  
- 	if (ctx->ops.init)
-@@ -1681,9 +1696,9 @@ static int kdamond_fn(void *data)
- 		ctx->ops.cleanup(ctx);
+-	sz_limit = damon_region_sz_limit(ctx);
+-
+ 	while (!kdamond_need_stop(ctx)) {
+ 		/*
+ 		 * ctx->attrs and ctx->next_{aggregation,ops_update}_sis could
+@@ -1631,6 +1692,7 @@ static int kdamond_fn(void *data)
+ 		unsigned long next_aggregation_sis = ctx->next_aggregation_sis;
+ 		unsigned long next_ops_update_sis = ctx->next_ops_update_sis;
+ 		unsigned long sample_interval = ctx->attrs.sample_interval;
++		unsigned long sz_limit = ctx->sz_limit;
+ 
+ 		if (kdamond_wait_activation(ctx))
+ 			break;
+@@ -1681,19 +1743,11 @@ static int kdamond_fn(void *data)
+ 				sample_interval;
+ 			if (ctx->ops.update)
+ 				ctx->ops.update(ctx);
+-			sz_limit = damon_region_sz_limit(ctx);
++			ctx->sz_limit = damon_region_sz_limit(ctx);
+ 		}
+ 	}
+ done:
+-	damon_for_each_target(t, ctx) {
+-		damon_for_each_region_safe(r, next, t)
+-			damon_destroy_region(r, t);
+-	}
+-
+-	if (ctx->callback.before_terminate)
+-		ctx->callback.before_terminate(ctx);
+-	if (ctx->ops.cleanup)
+-		ctx->ops.cleanup(ctx);
++	kdamond_finish_ctxs(kdamond);
  
  	pr_debug("kdamond (%d) finishes\n", current->pid);
--	mutex_lock(&ctx->kdamond_lock);
--	ctx->kdamond = NULL;
--	mutex_unlock(&ctx->kdamond_lock);
-+	mutex_lock(&kdamond->lock);
-+	kdamond->self = NULL;
-+	mutex_unlock(&kdamond->lock);
- 
- 	mutex_lock(&damon_lock);
- 	nr_running_ctxs--;
+ 	mutex_lock(&kdamond->lock);
 diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
-index 6fee383bc..c55c0b200 100644
+index c55c0b200..db2d48361 100644
 --- a/mm/damon/sysfs.c
 +++ b/mm/damon/sysfs.c
-@@ -939,7 +939,7 @@ static const struct kobj_type damon_sysfs_contexts_ktype = {
- struct damon_sysfs_kdamond {
- 	struct kobject kobj;
- 	struct damon_sysfs_contexts *contexts;
--	struct damon_ctx *damon_ctx;
-+	struct kdamond_struct *kdamond;
- };
- 
- static struct damon_sysfs_kdamond *damon_sysfs_kdamond_alloc(void)
-@@ -974,16 +974,6 @@ static void damon_sysfs_kdamond_rm_dirs(struct damon_sysfs_kdamond *kdamond)
- 	kobject_put(&kdamond->contexts->kobj);
- }
- 
--static bool damon_sysfs_ctx_running(struct damon_ctx *ctx)
--{
--	bool running;
--
--	mutex_lock(&ctx->kdamond_lock);
--	running = ctx->kdamond != NULL;
--	mutex_unlock(&ctx->kdamond_lock);
--	return running;
--}
--
- /*
-  * enum damon_sysfs_cmd - Commands for a specific kdamond.
+@@ -1271,46 +1271,82 @@ static void damon_sysfs_before_terminate(struct damon_ctx *ctx)
   */
-@@ -1065,15 +1055,15 @@ static struct damon_sysfs_cmd_request damon_sysfs_cmd_request;
- static ssize_t state_show(struct kobject *kobj, struct kobj_attribute *attr,
- 		char *buf)
+ static int damon_sysfs_upd_schemes_stats(struct damon_sysfs_kdamond *sys_kdamond)
  {
--	struct damon_sysfs_kdamond *kdamond = container_of(kobj,
-+	struct damon_sysfs_kdamond *sys_kdamond = container_of(kobj,
- 			struct damon_sysfs_kdamond, kobj);
--	struct damon_ctx *ctx = kdamond->damon_ctx;
-+	struct kdamond_struct *kdamond = sys_kdamond->kdamond;
- 	bool running;
+-	struct damon_ctx *ctx = sys_kdamond->kdamond->ctx;
++	struct damon_ctx *c;
++	struct damon_sysfs_context **sysfs_ctxs;
  
 -	if (!ctx)
-+	if (!kdamond)
- 		running = false;
- 	else
--		running = damon_sysfs_ctx_running(ctx);
-+		running = damon_kdamond_running(kdamond);
- 
- 	return sysfs_emit(buf, "%s\n", running ?
- 			damon_sysfs_cmd_strs[DAMON_SYSFS_CMD_ON] :
-@@ -1242,13 +1232,15 @@ static bool damon_sysfs_schemes_regions_updating;
- static void damon_sysfs_before_terminate(struct damon_ctx *ctx)
- {
- 	struct damon_target *t, *next;
--	struct damon_sysfs_kdamond *kdamond;
-+	struct damon_sysfs_kdamond *sys_kdamond;
-+	struct kdamond_struct *kdamond;
- 	enum damon_sysfs_cmd cmd;
- 
- 	/* damon_sysfs_schemes_update_regions_stop() might not yet called */
--	kdamond = damon_sysfs_cmd_request.kdamond;
-+	kdamond = ctx->kdamond;
-+	sys_kdamond = damon_sysfs_cmd_request.kdamond;
- 	cmd = damon_sysfs_cmd_request.cmd;
--	if (kdamond && ctx == kdamond->damon_ctx &&
-+	if (sys_kdamond && kdamond == sys_kdamond->kdamond &&
- 			(cmd == DAMON_SYSFS_CMD_UPDATE_SCHEMES_TRIED_REGIONS ||
- 			 cmd == DAMON_SYSFS_CMD_UPDATE_SCHEMES_TRIED_BYTES) &&
- 			damon_sysfs_schemes_regions_updating) {
-@@ -1260,12 +1252,12 @@ static void damon_sysfs_before_terminate(struct damon_ctx *ctx)
- 	if (!damon_target_has_pid(ctx))
- 		return;
- 
--	mutex_lock(&ctx->kdamond_lock);
-+	mutex_lock(&kdamond->lock);
- 	damon_for_each_target_safe(t, next, ctx) {
- 		put_pid(t->pid);
- 		damon_destroy_target(t);
- 	}
--	mutex_unlock(&ctx->kdamond_lock);
-+	mutex_unlock(&kdamond->lock);
- }
- 
- /*
-@@ -1277,33 +1269,33 @@ static void damon_sysfs_before_terminate(struct damon_ctx *ctx)
-  * callbacks while holding ``damon_syfs_lock``, to safely access the DAMON
-  * contexts-internal data and DAMON sysfs variables.
-  */
--static int damon_sysfs_upd_schemes_stats(struct damon_sysfs_kdamond *kdamond)
-+static int damon_sysfs_upd_schemes_stats(struct damon_sysfs_kdamond *sys_kdamond)
- {
--	struct damon_ctx *ctx = kdamond->damon_ctx;
-+	struct damon_ctx *ctx = sys_kdamond->kdamond->ctx;
- 
- 	if (!ctx)
++	if (!sys_kdamond->kdamond)
  		return -EINVAL;
- 	damon_sysfs_schemes_update_stats(
--			kdamond->contexts->contexts_arr[0]->schemes, ctx);
-+			sys_kdamond->contexts->contexts_arr[0]->schemes, ctx);
+-	damon_sysfs_schemes_update_stats(
+-			sys_kdamond->contexts->contexts_arr[0]->schemes, ctx);
++
++	sysfs_ctxs = sys_kdamond->contexts->contexts_arr;
++	damon_for_each_context(c, sys_kdamond->kdamond) {
++		struct damon_sysfs_context *sysfs_ctx = *sysfs_ctxs;
++
++		damon_sysfs_schemes_update_stats(sysfs_ctx->schemes, c);
++		++sysfs_ctxs;
++	}
  	return 0;
  }
  
  static int damon_sysfs_upd_schemes_regions_start(
--		struct damon_sysfs_kdamond *kdamond, bool total_bytes_only)
-+		struct damon_sysfs_kdamond *sys_kdamond, bool total_bytes_only)
+ 		struct damon_sysfs_kdamond *sys_kdamond, bool total_bytes_only)
  {
--	struct damon_ctx *ctx = kdamond->damon_ctx;
-+	struct damon_ctx *ctx = sys_kdamond->kdamond->ctx;
+-	struct damon_ctx *ctx = sys_kdamond->kdamond->ctx;
++	struct damon_ctx *c;
++	struct damon_sysfs_context **sysfs_ctxs;
++	int err;
  
- 	if (!ctx)
+-	if (!ctx)
++	if (!sys_kdamond->kdamond)
  		return -EINVAL;
- 	return damon_sysfs_schemes_update_regions_start(
--			kdamond->contexts->contexts_arr[0]->schemes, ctx,
-+			sys_kdamond->contexts->contexts_arr[0]->schemes, ctx,
- 			total_bytes_only);
+-	return damon_sysfs_schemes_update_regions_start(
+-			sys_kdamond->contexts->contexts_arr[0]->schemes, ctx,
+-			total_bytes_only);
++
++	sysfs_ctxs = sys_kdamond->contexts->contexts_arr;
++	damon_for_each_context(c, sys_kdamond->kdamond) {
++		struct damon_sysfs_context *sysfs_ctx = *sysfs_ctxs;
++
++		err = damon_sysfs_schemes_update_regions_start(sysfs_ctx->schemes, c,
++							       total_bytes_only);
++		if (err)
++			return err;
++		++sysfs_ctxs;
++	}
++	return 0;
  }
  
  static int damon_sysfs_upd_schemes_regions_stop(
--		struct damon_sysfs_kdamond *kdamond)
-+		struct damon_sysfs_kdamond *sys_kdamond)
+ 		struct damon_sysfs_kdamond *sys_kdamond)
  {
--	struct damon_ctx *ctx = kdamond->damon_ctx;
-+	struct damon_ctx *ctx = sys_kdamond->kdamond->ctx;
+-	struct damon_ctx *ctx = sys_kdamond->kdamond->ctx;
++	struct damon_ctx *c;
++	int err;
  
- 	if (!ctx)
+-	if (!ctx)
++	if (!sys_kdamond->kdamond)
  		return -EINVAL;
-@@ -1311,21 +1303,21 @@ static int damon_sysfs_upd_schemes_regions_stop(
+-	return damon_sysfs_schemes_update_regions_stop(ctx);
++
++	damon_for_each_context(c, sys_kdamond->kdamond) {
++		err = damon_sysfs_schemes_update_regions_stop(c);
++		if (err)
++			return err;
++	}
++	return 0;
  }
  
  static int damon_sysfs_clear_schemes_regions(
--		struct damon_sysfs_kdamond *kdamond)
-+		struct damon_sysfs_kdamond *sys_kdamond)
+ 		struct damon_sysfs_kdamond *sys_kdamond)
  {
--	struct damon_ctx *ctx = kdamond->damon_ctx;
-+	struct damon_ctx *ctx = sys_kdamond->kdamond->ctx;
+-	struct damon_ctx *ctx = sys_kdamond->kdamond->ctx;
++	struct damon_ctx *c;
++	struct damon_sysfs_context **sysfs_ctxs;
++	int err;
  
- 	if (!ctx)
+-	if (!ctx)
++	if (!sys_kdamond->kdamond)
  		return -EINVAL;
- 	return damon_sysfs_schemes_clear_regions(
--			kdamond->contexts->contexts_arr[0]->schemes, ctx);
-+			sys_kdamond->contexts->contexts_arr[0]->schemes, ctx);
+-	return damon_sysfs_schemes_clear_regions(
+-			sys_kdamond->contexts->contexts_arr[0]->schemes, ctx);
++
++	sysfs_ctxs = sys_kdamond->contexts->contexts_arr;
++	damon_for_each_context(c, sys_kdamond->kdamond) {
++		struct damon_sysfs_context *sysfs_ctx = *sysfs_ctxs;
++
++		err = damon_sysfs_schemes_clear_regions(sysfs_ctx->schemes, c);
++		if (err)
++			return err;
++		++sysfs_ctxs;
++	}
++	return 0;
  }
  
  static inline bool damon_sysfs_kdamond_running(
--		struct damon_sysfs_kdamond *kdamond)
-+		struct damon_sysfs_kdamond *sys_kdamond)
- {
--	return kdamond->damon_ctx &&
--		damon_sysfs_ctx_running(kdamond->damon_ctx);
-+	return sys_kdamond->kdamond &&
-+		damon_kdamond_running(sys_kdamond->kdamond);
- }
- 
- static int damon_sysfs_apply_inputs(struct damon_ctx *ctx,
-@@ -1351,16 +1343,16 @@ static int damon_sysfs_apply_inputs(struct damon_ctx *ctx,
-  *
-  * If the sysfs input is wrong, the kdamond will be terminated.
+@@ -1345,21 +1381,32 @@ static int damon_sysfs_apply_inputs(struct damon_ctx *ctx,
   */
--static int damon_sysfs_commit_input(struct damon_sysfs_kdamond *kdamond)
-+static int damon_sysfs_commit_input(struct damon_sysfs_kdamond *sys_kdamond)
+ static int damon_sysfs_commit_input(struct damon_sysfs_kdamond *sys_kdamond)
  {
--	if (!damon_sysfs_kdamond_running(kdamond))
-+	if (!damon_sysfs_kdamond_running(sys_kdamond))
++	struct damon_ctx *c;
++	struct damon_sysfs_context *sysfs_ctx;
++	int err;
++
+ 	if (!damon_sysfs_kdamond_running(sys_kdamond))
  		return -EINVAL;
  	/* TODO: Support multiple contexts per kdamond */
--	if (kdamond->contexts->nr != 1)
-+	if (sys_kdamond->contexts->nr != 1)
+ 	if (sys_kdamond->contexts->nr != 1)
  		return -EINVAL;
  
--	return damon_sysfs_apply_inputs(kdamond->damon_ctx,
--			kdamond->contexts->contexts_arr[0]);
-+	return damon_sysfs_apply_inputs(sys_kdamond->kdamond->ctx,
-+			sys_kdamond->contexts->contexts_arr[0]);
+-	return damon_sysfs_apply_inputs(sys_kdamond->kdamond->ctx,
+-			sys_kdamond->contexts->contexts_arr[0]);
++	sysfs_ctx = sys_kdamond->contexts->contexts_arr[0];
++	damon_for_each_context(c, sys_kdamond->kdamond) {
++		err = damon_sysfs_apply_inputs(c, sysfs_ctx);
++		if (err)
++			return err;
++		++sysfs_ctx;
++	}
++	return 0;
  }
  
  static int damon_sysfs_commit_schemes_quota_goals(
-@@ -1375,7 +1367,7 @@ static int damon_sysfs_commit_schemes_quota_goals(
+ 		struct damon_sysfs_kdamond *sysfs_kdamond)
+ {
+-	struct damon_ctx *ctx;
+-	struct damon_sysfs_context *sysfs_ctx;
++	struct damon_ctx *c;
++	struct damon_sysfs_context **sysfs_ctxs;
++	int err;
+ 
+ 	if (!damon_sysfs_kdamond_running(sysfs_kdamond))
+ 		return -EINVAL;
+@@ -1367,9 +1414,16 @@ static int damon_sysfs_commit_schemes_quota_goals(
  	if (sysfs_kdamond->contexts->nr != 1)
  		return -EINVAL;
  
--	ctx = sysfs_kdamond->damon_ctx;
-+	ctx = sysfs_kdamond->kdamond->ctx;
- 	sysfs_ctx = sysfs_kdamond->contexts->contexts_arr[0];
- 	return damos_sysfs_set_quota_scores(sysfs_ctx->schemes, ctx);
+-	ctx = sysfs_kdamond->kdamond->ctx;
+-	sysfs_ctx = sysfs_kdamond->contexts->contexts_arr[0];
+-	return damos_sysfs_set_quota_scores(sysfs_ctx->schemes, ctx);
++	sysfs_ctxs = sysfs_kdamond->contexts->contexts_arr;
++	damon_for_each_context(c, sysfs_kdamond->kdamond) {
++		struct damon_sysfs_context *sysfs_ctx = *sysfs_ctxs;
++
++		err = damos_sysfs_set_quota_scores(sysfs_ctx->schemes, c);
++		if (err)
++			return err;
++		++sysfs_ctxs;
++	}
++	return 0;
  }
-@@ -1391,14 +1383,14 @@ static int damon_sysfs_commit_schemes_quota_goals(
-  * DAMON contexts-internal data and DAMON sysfs variables.
-  */
- static int damon_sysfs_upd_schemes_effective_quotas(
--		struct damon_sysfs_kdamond *kdamond)
-+		struct damon_sysfs_kdamond *sys_kdamond)
- {
--	struct damon_ctx *ctx = kdamond->damon_ctx;
-+	struct damon_ctx *ctx = sys_kdamond->kdamond->ctx;
  
- 	if (!ctx)
+ /*
+@@ -1385,12 +1439,19 @@ static int damon_sysfs_commit_schemes_quota_goals(
+ static int damon_sysfs_upd_schemes_effective_quotas(
+ 		struct damon_sysfs_kdamond *sys_kdamond)
+ {
+-	struct damon_ctx *ctx = sys_kdamond->kdamond->ctx;
++	struct damon_ctx *c;
++	struct damon_sysfs_context **sysfs_ctxs;
+ 
+-	if (!ctx)
++	if (!sys_kdamond->kdamond)
  		return -EINVAL;
- 	damos_sysfs_update_effective_quotas(
--			kdamond->contexts->contexts_arr[0]->schemes, ctx);
-+			sys_kdamond->contexts->contexts_arr[0]->schemes, ctx);
+-	damos_sysfs_update_effective_quotas(
+-			sys_kdamond->contexts->contexts_arr[0]->schemes, ctx);
++
++	sysfs_ctxs = sys_kdamond->contexts->contexts_arr;
++	damon_for_each_context(c, sys_kdamond->kdamond) {
++		struct damon_sysfs_context *sysfs_ctx = *sysfs_ctxs;
++
++		damos_sysfs_update_effective_quotas(sysfs_ctx->schemes, c);
++		++sysfs_ctxs;
++	}
  	return 0;
  }
  
-@@ -1415,7 +1407,7 @@ static int damon_sysfs_upd_schemes_effective_quotas(
- static int damon_sysfs_cmd_request_callback(struct damon_ctx *c, bool active,
- 		bool after_aggregation)
- {
--	struct damon_sysfs_kdamond *kdamond;
-+	struct damon_sysfs_kdamond *sys_kdamond;
- 	bool total_bytes_only = false;
- 	int err = 0;
- 
-@@ -1423,27 +1415,27 @@ static int damon_sysfs_cmd_request_callback(struct damon_ctx *c, bool active,
- 	if (!damon_sysfs_schemes_regions_updating &&
- 			!mutex_trylock(&damon_sysfs_lock))
- 		return 0;
--	kdamond = damon_sysfs_cmd_request.kdamond;
--	if (!kdamond || kdamond->damon_ctx != c)
-+	sys_kdamond = damon_sysfs_cmd_request.kdamond;
-+	if (!sys_kdamond || !c || sys_kdamond->kdamond != c->kdamond)
- 		goto out;
- 	switch (damon_sysfs_cmd_request.cmd) {
- 	case DAMON_SYSFS_CMD_UPDATE_SCHEMES_STATS:
--		err = damon_sysfs_upd_schemes_stats(kdamond);
-+		err = damon_sysfs_upd_schemes_stats(sys_kdamond);
- 		break;
- 	case DAMON_SYSFS_CMD_COMMIT:
- 		if (!after_aggregation)
- 			goto out;
--		err = damon_sysfs_commit_input(kdamond);
-+		err = damon_sysfs_commit_input(sys_kdamond);
- 		break;
- 	case DAMON_SYSFS_CMD_COMMIT_SCHEMES_QUOTA_GOALS:
--		err = damon_sysfs_commit_schemes_quota_goals(kdamond);
-+		err = damon_sysfs_commit_schemes_quota_goals(sys_kdamond);
- 		break;
- 	case DAMON_SYSFS_CMD_UPDATE_SCHEMES_TRIED_BYTES:
- 		total_bytes_only = true;
- 		fallthrough;
- 	case DAMON_SYSFS_CMD_UPDATE_SCHEMES_TRIED_REGIONS:
- 		if (!damon_sysfs_schemes_regions_updating) {
--			err = damon_sysfs_upd_schemes_regions_start(kdamond,
-+			err = damon_sysfs_upd_schemes_regions_start(sys_kdamond,
- 					total_bytes_only);
- 			if (!err) {
- 				damon_sysfs_schemes_regions_updating = true;
-@@ -1458,15 +1450,15 @@ static int damon_sysfs_cmd_request_callback(struct damon_ctx *c, bool active,
- 			 */
- 			if (active && !damos_sysfs_regions_upd_done())
- 				goto keep_lock_out;
--			err = damon_sysfs_upd_schemes_regions_stop(kdamond);
-+			err = damon_sysfs_upd_schemes_regions_stop(sys_kdamond);
- 			damon_sysfs_schemes_regions_updating = false;
- 		}
- 		break;
- 	case DAMON_SYSFS_CMD_CLEAR_SCHEMES_TRIED_REGIONS:
--		err = damon_sysfs_clear_schemes_regions(kdamond);
-+		err = damon_sysfs_clear_schemes_regions(sys_kdamond);
- 		break;
- 	case DAMON_SYSFS_CMD_UPDATE_SCHEMES_EFFECTIVE_QUOTAS:
--		err = damon_sysfs_upd_schemes_effective_quotas(kdamond);
-+		err = damon_sysfs_upd_schemes_effective_quotas(sys_kdamond);
- 		break;
- 	default:
- 		break;
-@@ -1529,40 +1521,62 @@ static struct damon_ctx *damon_sysfs_build_ctx(
- 	return ctx;
+@@ -1522,24 +1583,24 @@ static struct damon_ctx *damon_sysfs_build_ctx(
  }
  
--static int damon_sysfs_turn_damon_on(struct damon_sysfs_kdamond *kdamond)
-+static struct kdamond_struct *damon_sysfs_build_kdamond(
-+		struct damon_sysfs_context *sys_ctx)
+ static struct kdamond_struct *damon_sysfs_build_kdamond(
+-		struct damon_sysfs_context *sys_ctx)
++		struct damon_sysfs_context **sys_ctx, size_t nr_ctxs)
  {
  	struct damon_ctx *ctx;
-+	struct kdamond_struct *kdamond = damon_new_kdamond();
-+
-+	if (!kdamond)
-+		return ERR_PTR(-ENOMEM);
-+
-+	ctx = damon_sysfs_build_ctx(sys_ctx);
-+	if (IS_ERR(ctx)) {
-+		damon_destroy_kdamond(kdamond);
-+		return ERR_PTR(PTR_ERR(ctx));
-+	}
-+	ctx->kdamond = kdamond;
-+
-+	kdamond->ctx = ctx;
-+	kdamond->nr_ctxs = 1;
-+
-+	return kdamond;
-+}
-+
-+static int damon_sysfs_turn_damon_on(struct damon_sysfs_kdamond *sys_kdamond)
-+{
+-	struct kdamond_struct *kdamond = damon_new_kdamond();
 +	struct kdamond_struct *kdamond;
- 	int err;
  
--	if (damon_sysfs_kdamond_running(kdamond))
-+	if (damon_sysfs_kdamond_running(sys_kdamond))
- 		return -EBUSY;
--	if (damon_sysfs_cmd_request.kdamond == kdamond)
-+	if (damon_sysfs_cmd_request.kdamond == sys_kdamond)
- 		return -EBUSY;
- 	/* TODO: support multiple contexts per kdamond */
--	if (kdamond->contexts->nr != 1)
-+	if (sys_kdamond->contexts->nr != 1)
- 		return -EINVAL;
++	kdamond = damon_new_kdamond();
+ 	if (!kdamond)
+ 		return ERR_PTR(-ENOMEM);
  
--	if (kdamond->damon_ctx)
--		damon_destroy_ctx(kdamond->damon_ctx);
--	kdamond->damon_ctx = NULL;
-+	if (sys_kdamond->kdamond)
-+		damon_destroy_kdamond(sys_kdamond->kdamond);
-+	sys_kdamond->kdamond = NULL;
- 
--	ctx = damon_sysfs_build_ctx(kdamond->contexts->contexts_arr[0]);
--	if (IS_ERR(ctx))
--		return PTR_ERR(ctx);
--	err = damon_start(&ctx, 1, false);
-+	kdamond = damon_sysfs_build_kdamond(sys_kdamond->contexts->contexts_arr[0]);
-+	if (IS_ERR(kdamond))
-+		return PTR_ERR(kdamond);
-+	err = damon_start(kdamond, false);
- 	if (err) {
--		damon_destroy_ctx(ctx);
-+		damon_destroy_kdamond(kdamond);
- 		return err;
+-	ctx = damon_sysfs_build_ctx(sys_ctx);
+-	if (IS_ERR(ctx)) {
+-		damon_destroy_kdamond(kdamond);
+-		return ERR_PTR(PTR_ERR(ctx));
++	for (size_t i = 0; i < nr_ctxs; ++i) {
++		ctx = damon_sysfs_build_ctx(sys_ctx[i]);
++		if (IS_ERR(ctx)) {
++			damon_destroy_kdamond(kdamond);
++			return ERR_PTR(PTR_ERR(ctx));
++		}
++		ctx->kdamond = kdamond;
++		damon_add_ctx(kdamond, ctx);
  	}
--	kdamond->damon_ctx = ctx;
-+	sys_kdamond->kdamond = kdamond;
- 	return err;
+-	ctx->kdamond = kdamond;
+-
+-	kdamond->ctx = ctx;
+-	kdamond->nr_ctxs = 1;
+-
+ 	return kdamond;
  }
  
--static int damon_sysfs_turn_damon_off(struct damon_sysfs_kdamond *kdamond)
-+static int damon_sysfs_turn_damon_off(struct damon_sysfs_kdamond *sys_kdamond)
- {
--	if (!kdamond->damon_ctx)
-+	if (!sys_kdamond->kdamond)
- 		return -EINVAL;
--	return damon_stop(&kdamond->damon_ctx, 1);
-+	return damon_stop(sys_kdamond->kdamond);
- 	/*
- 	 * To allow users show final monitoring results of already turned-off
- 	 * DAMON, we free kdamond->damon_ctx in next
-@@ -1654,21 +1668,21 @@ static ssize_t state_store(struct kobject *kobj, struct kobj_attribute *attr,
- static ssize_t pid_show(struct kobject *kobj,
- 		struct kobj_attribute *attr, char *buf)
- {
--	struct damon_sysfs_kdamond *kdamond = container_of(kobj,
-+	struct damon_sysfs_kdamond *sys_kdamond = container_of(kobj,
- 			struct damon_sysfs_kdamond, kobj);
--	struct damon_ctx *ctx;
-+	struct kdamond_struct *kdamond;
- 	int pid = -1;
+@@ -1560,7 +1621,8 @@ static int damon_sysfs_turn_damon_on(struct damon_sysfs_kdamond *sys_kdamond)
+ 		damon_destroy_kdamond(sys_kdamond->kdamond);
+ 	sys_kdamond->kdamond = NULL;
  
- 	if (!mutex_trylock(&damon_sysfs_lock))
- 		return -EBUSY;
--	ctx = kdamond->damon_ctx;
--	if (!ctx)
-+	kdamond = sys_kdamond->kdamond;
-+	if (!kdamond)
- 		goto out;
- 
--	mutex_lock(&ctx->kdamond_lock);
--	if (ctx->kdamond)
--		pid = ctx->kdamond->pid;
--	mutex_unlock(&ctx->kdamond_lock);
-+	mutex_lock(&kdamond->lock);
-+	if (kdamond->self)
-+		pid = kdamond->self->pid;
-+	mutex_unlock(&kdamond->lock);
- out:
- 	mutex_unlock(&damon_sysfs_lock);
- 	return sysfs_emit(buf, "%d\n", pid);
-@@ -1676,12 +1690,12 @@ static ssize_t pid_show(struct kobject *kobj,
- 
- static void damon_sysfs_kdamond_release(struct kobject *kobj)
- {
--	struct damon_sysfs_kdamond *kdamond = container_of(kobj,
-+	struct damon_sysfs_kdamond *sys_kdamond = container_of(kobj,
- 			struct damon_sysfs_kdamond, kobj);
- 
--	if (kdamond->damon_ctx)
--		damon_destroy_ctx(kdamond->damon_ctx);
--	kfree(kdamond);
-+	if (sys_kdamond->kdamond)
-+		damon_destroy_kdamond(sys_kdamond->kdamond);
-+	kfree(sys_kdamond);
- }
- 
- static struct kobj_attribute damon_sysfs_kdamond_state_attr =
+-	kdamond = damon_sysfs_build_kdamond(sys_kdamond->contexts->contexts_arr[0]);
++	kdamond = damon_sysfs_build_kdamond(sys_kdamond->contexts->contexts_arr,
++					    sys_kdamond->contexts->nr);
+ 	if (IS_ERR(kdamond))
+ 		return PTR_ERR(kdamond);
+ 	err = damon_start(kdamond, false);
 -- 
 2.42.0
 
