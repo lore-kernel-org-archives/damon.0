@@ -1,44 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9358164CFC;
-	Wed, 15 May 2024 16:10:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E3AD43144;
+	Wed, 15 May 2024 16:18:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715789443; cv=none; b=BbC2TTD6AjchdYCkTuDG32qWbl2k2fJF2K+zWWLQqDM22cDJFBNcpuQ7vn73NnemmKtcqf8WSKhyCS1Z9ziiravmcEUw5TPxwKVUs24kYN9gDDMESHI58m5z9CirPOtgYLzJWXt0p63sPBWh7+2BFSbOdMmqIYk5HrX3GE3VeSs=
+	t=1715789919; cv=none; b=fFB2o5AOoqAKC9rUhTIxNd7D6xIIkYfb+ZG63XYdDmRL5q6ZqgcD2p04fBMmKVZ2h7/QgJgv3zGARENtTUfsf1V4xVq6d0MMeooQk49V7f/zbFrtG1alt3mYm4rs/DWYKFyubF3iqIUnEDEYLdTE8dQ4xMqGg++PvwyuWGE73yg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715789443; c=relaxed/simple;
-	bh=5xAfxwaPOj0PDLQIrXWQC4UVdY3a65c4Z2mw1Rdp9lY=;
+	s=arc-20240116; t=1715789919; c=relaxed/simple;
+	bh=UMfHPJyXzxgzFEud5yIQpsOUvadwlPqB7VqN5ZzAC3o=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=H/bWJKl8PFocLy28p8uwFTk+b+lgf4w4waf9ypyEOQ6K6xv1nope8bAAYc3owl9L9E9MAOBOSoFLmGzfaC+p13HYcKQsF3J/0ygKR5csdedvXPl1EKAToWkvwTRTgHlPor1fe0gq46047GIhg7VJHZtfweYqd/AvgR3OJ6V7+40=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AKHNmsvz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=az/NTZI6cV7dwiNyKj6OcpzrSDDAyMr6n8ypiJevbBnR+kym0UO6BIqeCoqPP4ZCra9wKiiGoXbHy6jJFXsta6eJ5WupP1CFdGAMYPYCq0wkDo2yzEUQDPSA7TnQul4eIPoKDIt4YJSPwwxbIGd6/OwvnGb0By58CHozEu3FeUM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lHXMfcKa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AKHNmsvz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AEC9C116B1;
-	Wed, 15 May 2024 16:10:42 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lHXMfcKa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B679C116B1;
+	Wed, 15 May 2024 16:18:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1715789443;
-	bh=5xAfxwaPOj0PDLQIrXWQC4UVdY3a65c4Z2mw1Rdp9lY=;
+	s=k20201202; t=1715789919;
+	bh=UMfHPJyXzxgzFEud5yIQpsOUvadwlPqB7VqN5ZzAC3o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AKHNmsvzGiiFfggvMDXWGtz/DhV6rLSJn3ZEn8DZFy3hpSs9v4PGz+g9dyi9zorG/
-	 NUdyzYo54aI4xVkH0aA0j+xd6NtcR4ukkR7RLlgge9OQsV2ohM9EXIKtNM4s/6y55P
-	 gDSDCuIlD5vTvglTeUgUW4L4xtyz7Pw/SIxbCbD7I9ew4kP2juhacSy3Q7KFlgOSRC
-	 2ZGBqE/B0rTxKFAc2vKqJFqiE4m0zfQK/468RI0UJFni7ETDuvYzh3ZitnEMOo2ZzO
-	 GQ+fmUgd6f34aeIcdy/dDp+iAgfC1eiTHZMloiBNvJ7krLAmQKCPw/QcSqlqXoRugT
-	 Kf4uAjMuZlEJg==
+	b=lHXMfcKav5r0I7ORkDgFdS5FZtTc2v/NsQTQTv2TlwmceVoCi2/Dk2+3se4u+ukdD
+	 yembcZx6USAJww2YGhH5koDlQ4w+eUTtADowT22gZ7Yitu7qBK98tsVJpWo7w24oOA
+	 i0wfT3SrO0DGfRUxETRRf299eLdJ7Q7W8P47iP5dmqwyJw4GyxGm/xL9gWzB8oDiwD
+	 LcHAqQA0dn+ZV+NMZhVOEqVfQrmDGNv66KxfKiW4V28l50BDoxo2ZocRy/1Hh8MDv0
+	 gDKqjrNIryOlWaxpOA3wWrHFmA0vEhoHmFCiDpJu8LkeZJtGW4uWKNg4En7hqxKlHP
+	 xfhuoPzGaq58Q==
 From: SeongJae Park <sj@kernel.org>
 To: Honggyu Kim <honggyu.kim@sk.com>
 Cc: SeongJae Park <sj@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	linux-mm@kvack.org,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
 	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
+	linux-mm@kvack.org,
+	linux-trace-kernel@vger.kernel.org,
+	Hyeongtak Ji <hyeongtak.ji@sk.com>,
+	Rakie Kim <rakie.kim@sk.com>,
 	kernel_team@skhynix.com
-Subject: Re: [RFC PATCH v4 1/5] mm: make alloc_demote_folio externally invokable for migration
-Date: Wed, 15 May 2024 09:10:40 -0700
-Message-Id: <20240515161040.69242-1-sj@kernel.org>
+Subject: Re: [RFC PATCH v4 0/5] DAMON based tiered memory management for CXL memory
+Date: Wed, 15 May 2024 09:18:35 -0700
+Message-Id: <20240515161835.69311-1-sj@kernel.org>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20240513120358.1503-1-honggyu.kim@sk.com>
+In-Reply-To: <20240513115918.1479-1-honggyu.kim@sk.com>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -48,80 +54,74 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Mon, 13 May 2024 21:03:56 +0900 Honggyu Kim <honggyu.kim@sk.com> wrote:
+Hi Honggyu,
 
-> On Sun, 12 May 2024 10:54:43 -0700 SeongJae Park <sj@kernel.org> wrote:
-> > From: Honggyu Kim <honggyu.kim@sk.com>
+On Mon, 13 May 2024 20:59:15 +0900 Honggyu Kim <honggyu.kim@sk.com> wrote:
+
+> Hi SeongJae,
+> 
+> Thanks very much for your work!  It got delayed due to the priority
+> changes in my workplace for building another heterogeneous memory
+> allocator.
+> https://github.com/skhynix/hmsdk/wiki/hmalloc
+
+No problem at all.  We all work on our own schedule and nobody can chase/push
+anybody :)
+
+> 
+> On Sun, 12 May 2024 10:54:42 -0700 SeongJae Park <sj@kernel.org> wrote:
+> > There was an RFC IDEA "DAMOS-based Tiered-Memory Management" previously
+> > posted at [1].
 > > 
-> > The alloc_demote_folio can be used out of vmscan.c so it'd be better to
-> > remove static keyword from it.
+> > It says there is no implementation of the demote/promote DAMOS action
+> > are made.  This RFC is about its implementation for physical address
+> > space.
 > > 
-> > This function can also be used for both demotion and promotion so it'd
-> > be better to rename it from alloc_demote_folio to alloc_migrate_folio.
+> > Changes from RFC v3
+> > (https://lore.kernel.org/20240405060858.2818-1-honggyu.kim@sk.com):
 > 
-> This description doesn't match with the changes below.
+> This link cannot be opened.  I will share the link again here.
+> https://lore.kernel.org/all/20240405060858.2818-1-honggyu.kim@sk.com
 
-You're right.  Thank you for checking this.
-
-> 
-> > Signed-off-by: Honggyu Kim <honggyu.kim@sk.com>
-> > Reviewed-by: SeongJae Park <sj@kernel.org>
-> > Signed-off-by: SeongJae Park <sj@kernel.org>
-> > ---
-> >  mm/internal.h | 1 +
-> >  mm/vmscan.c   | 3 +--
-> >  2 files changed, 2 insertions(+), 2 deletions(-)
-> > 
-> > diff --git a/mm/internal.h b/mm/internal.h
-> > index b2c75b12014e..b3ca996a4efc 100644
-> > --- a/mm/internal.h
-> > +++ b/mm/internal.h
-> > @@ -1052,6 +1052,7 @@ extern unsigned long  __must_check vm_mmap_pgoff(struct file *, unsigned long,
-> >          unsigned long, unsigned long);
-> >  
-> >  extern void set_pageblock_order(void);
-> > +struct folio *alloc_demote_folio(struct folio *src, unsigned long private);
-> 
-> I still prefer to rename it to alloc_migrate_folio.
-
-And I still have no objection at renaming.  I didn't make the change here not
-because I want the change removed, but just because I wrote this RFC v4 in hope
-of seeing how minimum this patchset can be while addressing my comments.
-Please feel free to add the change back on the next revision of this patch if
-you write.  Maybe keeping this patchset without the renaming change, and
-discussing the renaming with a separate patch is also an option in my opinion.
+Thank you for checking the link!  It's weird though, since I can open the link
+on my Chrome browser.
 
 > 
-> >  unsigned long reclaim_pages(struct list_head *folio_list);
-> >  unsigned int reclaim_clean_pages_from_list(struct zone *zone,
-> >  					    struct list_head *folio_list);
-> > diff --git a/mm/vmscan.c b/mm/vmscan.c
-> > index 6981a71c8ef0..27269bc2bcc5 100644
-> > --- a/mm/vmscan.c
-> > +++ b/mm/vmscan.c
-> > @@ -933,8 +933,7 @@ static void folio_check_dirty_writeback(struct folio *folio,
-> >  		mapping->a_ops->is_dirty_writeback(folio, dirty, writeback);
-> >  }
-> >  
-> > -static struct folio *alloc_demote_folio(struct folio *src,
-> > -		unsigned long private)
-> > +struct folio *alloc_demote_folio(struct folio *src, unsigned long private)
+> >   0. updated from v3 and posted by SJ on behalf of Hunggyu under his
+> >      approval.
+> >   1. Do not reuse damon_pa_pageout() and drop 'enum migration_mode'
+> >   2. Drop vmstat change
 > 
-> Here as well.
+> I haven't checked whether I can collect useful information without
+> vmstat, but the changes look good in general except for that.
 
-Ditto.
+I was thinking you could use DAMOS stat[1] for the schemes and assuming no
+reply to it as an agreement, but maybe I should made it clear.  Do you think
+DAMOS stat cannot be used instead?  If so, what would be the limitation of
+DAMOS stat for your usage?
 
 > 
-> >  {
-> >  	struct folio *dst;
-> >  	nodemask_t *allowed_mask;
-> > -- 
-> > 2.39.2
-> > 
+> >   3. Drop unnecessary page reference check
 > 
-> Thanks,
-> Honggyu
+> I will compare this patch series with my previous v3 patchset and get
+> back to you later maybe next week.
+
+Thank you very much!  Unless I get a good enough test setup and results from it
+on my own or from others' help, your test result would be the last requirement
+for dropping RFC from this patchset.
+
+> Sorry, I will have another break this week.
+
+No problem, I hope you to have nice break.  Nobody can chase/push others.  We
+all do this work voluntarily for our own fun and profit, right? ;)
+
+
+[1] https://lore.kernel.org/damon/20240405060858.2818-1-honggyu.kim@sk.com
 
 
 Thanks,
 SJ
+
+> 
+> Thanks,
+> Honggyu
