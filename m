@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E51D14036E;
-	Fri, 17 May 2024 22:59:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF85E33D5;
+	Sun, 19 May 2024 16:33:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715986765; cv=none; b=CA/7N1gcCZm8/BUgpvz1K7gk/sz0Ciyrj6bkU9OkYsOvp6xZx7bYsQ0YcNvWE6sYdH9iHR8giQuvx9ufMCXJc3GiRMVKlEpYhCse7wc8SfmS+NcFSRNLiFvHwdn4EsqoxN82cKGU3Q2XpcIySG9o+0xt+3I3FW0IoEHQ7oScCVQ=
+	t=1716136412; cv=none; b=XqLqZDzYV5ee6yTnjB+D7kowM57C/cOeiN4EetNA/pzuorbyibDPRTPwD3zo74A+iqRKT9cmuMjNOWGWWla7uoMQ+HSQ02MVdstDHUK3w6G/6pZcocvBKa06U57xFKo0xDWI5MWEibj9nsvKEOcGOnZ/NdoWLHmGi0FY1kAr9bY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715986765; c=relaxed/simple;
-	bh=i/lf2TVxejq4yug3FFuoGpl/sEmPNn8np1eVzk7EMx0=;
+	s=arc-20240116; t=1716136412; c=relaxed/simple;
+	bh=fmMSUyNHsE6VoUCYl0X/LyZxkscRpgZwZMpd5XJNtEM=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=d2XIa5Jl6o6RXbTeAYI7PUBBS4fbQalvr8tro4CPAL7n5J1SQsftvE9s3HUOHGC2TKKVDx6rdGerTj6vOUkV5OKLb8KeOpbOIYHoF4GD+h9KfzGT4Fqao6DdIKCB6a7Mfog7+jZ4tyEcjLgYAeser9zAtwu1G9dIE1e7G9L3sMI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VfdxB9f5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kgje7L7wXEl6GxZucUZkMAvP/eHMrfb9jHjsjnqdPKnLToadlEU3sQPJ1njTSeRKg1qwT7xI8RTzhLVZmP3ilYb+wPksZ29xf9mVd3OPUAq/1LSNbNZ+i2h1/kBh1Cwj9Mw1f15CJ4TTRPSMz13RHMT0vydQts6jnc/GRBlVu1s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LA0TvzOd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VfdxB9f5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34440C2BD10;
-	Fri, 17 May 2024 22:59:24 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LA0TvzOd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B15CCC32781;
+	Sun, 19 May 2024 16:33:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1715986764;
-	bh=i/lf2TVxejq4yug3FFuoGpl/sEmPNn8np1eVzk7EMx0=;
+	s=k20201202; t=1716136412;
+	bh=fmMSUyNHsE6VoUCYl0X/LyZxkscRpgZwZMpd5XJNtEM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VfdxB9f5UkPBi+DVIpPNNx1wh81JGtsYu2nbc/+ACQtcMligzURaYIG5SvChMswLe
-	 Cf2HHR5Dy4FS/SH+1ft1ngHqNSSsgsQlLr2mTwD0CKuQ04ua+/0bs0qwemDBVceAng
-	 GiWKCUqXL4HG/ojnBJ3y+AU0va9YxScuBtZn/OmjnNphbm9x9dCK8Xc8GhnsdnzqKs
-	 t49qjD71YJMe/17NEuRmVPyYKkKFlCMbCa8eo0xT4qXRnzynXxXJPKo4KfRnVHVg9x
-	 OutgHRJ20LyAbf0Yoj+BQOokoFf9qqGo6CG1SPv0tXZyKtumbqcCe4UI78wPac32ae
-	 o7oGKOjVJmv9g==
+	b=LA0TvzOduIiTuOsOJhkeQWTJCtEG/htBtBgK7tt1AFrnZW47/44pX6laki5jNG1LX
+	 nLztUHKT/RiFU53d4cPnOiF9UKmcXz09BkAjDSotJ5yg2pfV9KrCn3MBAfDVTluqLs
+	 HsuBWui+DAUDdcy9X5EzY6hCQl8XCRA1G2W8kPoY3Xy/jhpHfK2LTwcH0pWYfwqBeD
+	 PqRi9Ara5zLpGbLFLpR2eTRObz4/9jXALrHt3vrWidICdJBqab2uJ+Syxygk+y3ILj
+	 eMBTLlyzDpoBGJcIYAtXEhm440Rco2GwDN2BBm7aR9KAXiIkDNP1neqG5CFeW7vrlb
+	 y4whcdOceXPqQ==
 From: SeongJae Park <sj@kernel.org>
-To: Alex Rusuf <yorha.op@gmail.com>
-Cc: SeongJae Park <sj@kernel.org>,
-	damon@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org
-Subject: Re: [RFC PATCH v1 0/7] DAMON multiple contexts support
-Date: Fri, 17 May 2024 15:59:21 -0700
-Message-Id: <20240517225921.128477-1-sj@kernel.org>
+To: SeongJae Park <sj@kernel.org>
+Cc: damon@lists.linux.dev,
+	linux-damon@amazon.com,
+	linux-damon-trial@amazon.com,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org
+Subject: DAMON Beer/Coffee/Tea chat reminder and extending for office hour
+Date: Sun, 19 May 2024 09:33:29 -0700
+Message-Id: <20240519163329.150340-1-sj@kernel.org>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20240517085151.630844-1-yorha.op@gmail.com>
+In-Reply-To: <20220810225102.124459-1-sj@kernel.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -46,100 +47,55 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Fri, 17 May 2024 11:51:51 +0300 Alex Rusuf <yorha.op@gmail.com> wrote:
+Hello,
 
-> Hi SJ
-> 
-> > Hello Alex,
-> > 
-> > 
-> > Adding high level comments first.  I will try to read each patch and add
-> > detailed comments to those as soon as I get some time.
-> > 
-> > Also, please Cc linux-mm@ for DAMON patches.  I'd also recommend cc-ing
-> > linux-kernel@.
-> 
-> Thank you for clarification, I'll add them!
-> 
-> > 
-> > On Wed, 15 May 2024 18:24:50 +0300 Alex Rusuf <yorha.op@gmail.com> wrote:
-> > > Currently kdamond uses only one context per kthread
-> > > and most of its time it sleeps, so utilizing several
-> > > contexts can scale kdamond and allow it to use
-> > > another set of operations.
-[...]
-> > > 	[3] https://github.com/onlyoneofme/damon-multi-contexts-tests.git
-> > 
-> > Do you have a plan to integrate this into DAMON selftests or damon-tests?
-> 
-> Not in the form they are for time being. These are just simple shell scripts
-> that set up kdamond to use multiple contexts and these scripts only
-> collect information like DAMO (but only as perf.data).
-> 
-> Anyway, I think we can integrate them with damon-tests with some modifications
-> to be able to actually _test_ if multiple contexts work.
-> 
-> As for DAMON selftests, I didn't touch them for time being, so they truly
-> need to be modified and expanded, but before doing that I would like
-> you to look at implementation first, because changes in implementation
-> could affect selftests, so once we agree on that I will implement selftests.
-> 
-> Also note, that I didn't integrate changes with debugfs. I remember this is
-> deprecated interface, but I'm not sure if compatibility need to be preseved
-> with it, so do we need to expand debugfs for this?
 
-I think we should keep debugfs work as was.  So I think we should ensure it's
-not broken, but don't need to expand it to support this new feature.
+On Wed, 10 Aug 2022 22:51:02 +0000 SeongJae Park <sj@kernel.org> wrote:
 
+> Hello,
 > 
-> > 
-> > > Alex Rusuf (7):
-> > >   mm/damon/core: kdamond_struct abstraction layer
-> > 
-> > Let's make the subjects clear what it does.  For example, this patch's
-> > subject could be "add kdamonds_struct abstraction layer".  Similar comment
-> > for other patches.  Also, I think '_struct' suffix of 'kdamond_struct' is
-> > not really needed.  Let's remove it if there is no special reason to add
-> > it.
 > 
-> Sure, I'll change that in next version, thanks!
+> In short, I'd like to start an open, regular, and informal virtual bi-weekly
+> meeting series for DAMON community.
 > 
-> > 
-> > >   mm/damon/core: list-based contexts organization
-> > 
-> > I think this can be squashed into the first patch?  If not, could you please
-> > let clarify?
+> Important links and dates
+> -------------------------
 > 
-> I just tried to separate those patches for them to be as simple as
-> possible (actually I failed at that...), but sure, we can squash them.
-> 
-> > 
-> > >   mm/damon/lru_sort: kdamond_struct abstraction layer
-> > >   mm/damon/reclaim: kdamon_struct abstraction layer
-> > 
-> > Does these two patches mean lru_sort and reclaim are broken by the first
-> > patch? Let's keep everything unbroken in middle of the patchset, to help
-> > bisect.
-> 
-> Yes, they're broken by the first patch, I'll squash them, thanks!
-> 
-> > >   mm/damon/core: rename nr_running_ctxs -> nr_running_kdamonds
-> > 
-> > I think this would also better to be together with the first patch?  I know
-> > this does not break something, but makes reading patch bit complex.
-> 
-> No problem, thanks!
-> 
-> > 
-> > >   mm/damon/core: multi-context support
-> > >   mm/damon/core: multi-context awarness for trace events
-> > 
-> > I think these two patches should be squashed into one patch.  Otherwise, the
-> > trace point is broken in the middle of the patch series, right?
-> 
-> You're right, I'll squash them, thanks!
+> Location: https://meet.google.com/ndx-evoc-gbu
+> Agenda: https://docs.google.com/document/d/1v43Kcj3ly4CYqmAkMaZzLiM2GEnWfgdGbZAH3mi2vpM/edit?usp=sharing
 
-Cool, I'm looking forward to the next version of this great patchset!
+
+Recently I got some feedback about DAMON Beer/Coffee/Tea chat.  They told me
+having regular reminders of the series would be nice, and official time slots
+for private discussion could be helpful.  I encouraged scheduling private
+meetings for such deep level dicussions, but I understand it could be more
+easier if we have more official things for that.  Hence, I'm making below two
+changes.
+
+Firstly, I will regularly provide reminder of the series, probably 1-2 days
+before every instance.
+
+Secondly, I'm extending this series for reservation-based office hour.  That
+is, I will reserve my time for 30 minutes every two weeks, keep the schedule
+public, and encourage people to reserve the time for discussion on a special
+topic for them.  The reservation should be made at least one day before the
+time slot, and will be first-come first-served basis.  In detail, I will
+reserve Monday afternoon or Tuesday morning of the group chat scheduled week.
+Note that this is not necessarily only time slot for such discussion.  You're
+still encouraged to schedule private meetings on your convenience.
+
+So, the reminders.  Next open group chat will be held 2024-05-20 (Monday) 18:00
+(PT) on Google Meet (https://meet.google.com/ndx-evoc-gbu).
+
+Next reservation-based chats are scheduled for 2024-05-21 (Tuesday) 09:30 (PT)
+and 2024-06-03 (Monday) 18:00 (PT).  If you have some topics that you want to
+discuss with me on the time slot, please reach out to me for the reservation,
+at least one day before the time slot.
+
+Every meeting is 30-minutes length by default.
+
+Entire schedules are also available at the Agenda doc
+(https://docs.google.com/document/d/1v43Kcj3ly4CYqmAkMaZzLiM2GEnWfgdGbZAH3mi2vpM/edit?usp=sharing)
 
 
 Thanks,
