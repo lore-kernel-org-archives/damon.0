@@ -1,133 +1,117 @@
-Received: from mail-pf1-f178.google.com (mail-pf1-f178.google.com [209.85.210.178])
+Received: from mail-pj1-f73.google.com (mail-pj1-f73.google.com [209.85.216.73])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C9D8136E20
-	for <damon@lists.linux.dev>; Mon, 20 May 2024 14:31:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8721C7E575
+	for <damon@lists.linux.dev>; Wed, 22 May 2024 01:00:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.73
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716215469; cv=none; b=rHw9xotxUSuzMi8K2NEJetYKi8HJRJBv1Owf2GWeFQ9J9k7Q/Y7NakSNKWNX7OXNgq0BfQKdUEiJP/KExloBlxYPl99UvDYA3EpU6oKr/qAlqJeeHPjaZVxM5oMe+gfXOk/+l4u/aLMAowBEolu0b1BjeHozcE7LCQF85ozuKDk=
+	t=1716339610; cv=none; b=oVXI22kV8nzETjDsOiB3GIadIDUtRsNvYkYrBdG/tzfq1ODcjmwOM/bYPxqld7k19x/QwYfmAKvlWBQC0UfHc43LI2eiBYYUDgXY3haMzNT6rNLL9XCAZ/z/Fbg/7DolWjf7FoJwFDGIiWN4JHsH0AcWVGd0YiX6bs8CuQCJgHo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716215469; c=relaxed/simple;
-	bh=Vark2tHasfjiq5qm7fVNYZJGTwQjSUnZIgp4elkLUqA=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=otXcPkZZKzVd+v7hcJOsG6vTLjF4fqXYm60+7Y3AkXprxVvT6jPE8MlvxP8Qa1faZmbysG9bdCvgDofbvvgCRF/ehdw7lvJu1hzeAP4hf1mkZK9tsuYFDoSh/LVhBYsJp+vEOMhIB+rR/wnZPQPcsf95z9ZLqESXIqieXi4ngQI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=ajou.ac.kr; spf=pass smtp.mailfrom=ajou.ac.kr; dkim=pass (1024-bit key) header.d=ajou.ac.kr header.i=@ajou.ac.kr header.b=vZtOdzg3; arc=none smtp.client-ip=209.85.210.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=ajou.ac.kr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ajou.ac.kr
+	s=arc-20240116; t=1716339610; c=relaxed/simple;
+	bh=62O3V38af8AfBVqt/HK7S1eFdYifF40ZLMchODVkB8g=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=HyvHcxmXFKJNpJfFpJrKCThkEX+968mA3al/OcT8vQ0f7ddLRlwFE6LMJBnX9fT6I00OZxHf98/OAE9AoLUZwr+IcyYhp9Lf7J9bKg34gIdJ0r2cLESri7z/C3Mrz7JzZBycmcFW+RDYU+gEPeAVJWKlwBYGdx0ixoblkcOBUPI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--edliaw.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=PhULvJ8p; arc=none smtp.client-ip=209.85.216.73
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--edliaw.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ajou.ac.kr header.i=@ajou.ac.kr header.b="vZtOdzg3"
-Received: by mail-pf1-f178.google.com with SMTP id d2e1a72fcca58-6f47787a0c3so149917b3a.0
-        for <damon@lists.linux.dev>; Mon, 20 May 2024 07:31:07 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="PhULvJ8p"
+Received: by mail-pj1-f73.google.com with SMTP id 98e67ed59e1d1-2ba04ab5e2cso6201662a91.1
+        for <damon@lists.linux.dev>; Tue, 21 May 2024 18:00:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ajou.ac.kr; s=google; t=1716215466; x=1716820266; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ZNZVb3aalyckzv+MvkSwf98x3ypuajbAEW8swaTd5w8=;
-        b=vZtOdzg3N0m+s8m7rtKUiJCQg/yx4jitt5TC/oDUL4o2Une36YKqmNnt3RNYbD2oBx
-         gO7kL4mRLa2YiCG4P1E5rcvzZNEV+1Z1954IZ7nEKt4hTj/sCYhu/Dq0KywXHpOf5Slk
-         L5sSjJqNzdCr+U7T7eYqUfU5I/BzrV2d7DDqA=
+        d=google.com; s=20230601; t=1716339608; x=1716944408; darn=lists.linux.dev;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=qBN6dKvcn7a1ilrAwfzcd0ocDzyyL7QD4f+HvB8bOIQ=;
+        b=PhULvJ8pi+sRjDgNKjZWw7tHiqITdomHKPNg/2mCe+QyXTF81oiiv/Bh3jtZosaIBm
+         gNbgxhEUW/MZf+MTtrOr7Egjk8DTieAsewygj06HGJcEYMgPsAAqO//fhA+2SitNevNr
+         YMMVDbP7H/R5JkHXTjCGCipiQJjdB2/5WjjHgCwY2vlV5Pgtx8kLWafbBaW/HlsitWhT
+         /td1G5ImiNXaT08ApehK4Zgha2JYrAskQEFPxxocGxxakYi5djpqrHMdWO3KPXpiaeRw
+         u9d4IGT2WqYPnj24MwBBirdqsu9iwJ1gdskuv3zwj2IL2pGjIiZVkoqBsx7LpOWR5jH+
+         mv/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1716215466; x=1716820266;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ZNZVb3aalyckzv+MvkSwf98x3ypuajbAEW8swaTd5w8=;
-        b=QEpdd8hrdZQoG7EO8hOvrHFjQ8Du0p3n5n2tIlnvc+TSov2ctvDVbaJA5EKalaFWS3
-         m0QLfpra4IRVaun4yixQHhDSnXpKWeY3ATQAGNsk0gebKJBTcrlUDJAMFjMZ0wVwlUKQ
-         3BMgnYN5t8HMfvn2a/5eC5OoeQwtCEWGfQT21srw4lnSil+Tn8q3LugycnyvbLFMjM7t
-         Zmxm4dIDkNMEP+CEDTH/VENFPZEh7z9cjgWP/6lsuyGf2rVI7D+4iXupfde9qXbZXXwl
-         SHq/WbOZc5xjHxmBZvp81lux7i8WrXToF/G6bFyBE9NRoh4CDeBBFF6FS68epBBnXMWB
-         0QJQ==
-X-Forwarded-Encrypted: i=1; AJvYcCV4dvdebCXwl/AONAWarl/8tEdEkw5PKYl3hGpxfpF9RSmYoE8KhhpaNUuXLes/1MYz5HsIkSWaA5Kjk5qP4Wzbtb79hSM=
-X-Gm-Message-State: AOJu0YwC7PdYTbL1wcS27MHnihp6dTgz6sXMECq5dqNboHZTVKgZ6LBD
-	BvQNTVf9r75c5G8ESEfKz556QQQgHvptqN/ue4VBomQ4mcnY7dqHE4nUMX47kEU=
-X-Google-Smtp-Source: AGHT+IGTqWX6KLCAkFgNmkNZOQ7jdXH7YUcuBwf3ViNWwc7ehoGXbRn6Xn9m06QND/xMKX5Gz7ws0g==
-X-Received: by 2002:a05:6a00:b4f:b0:6f3:b041:716d with SMTP id d2e1a72fcca58-6f4e0296f83mr37942698b3a.17.1716215466453;
-        Mon, 20 May 2024 07:31:06 -0700 (PDT)
-Received: from swarm07.ajou.ac.kr ([210.107.197.31])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-6f4d2aa017dsm19714531b3a.96.2024.05.20.07.31.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 May 2024 07:31:06 -0700 (PDT)
-From: Jonghyeon Kim <tome01@ajou.ac.kr>
-To: SeongJae Park <sj@kernel.org>,
-	damon@lists.linux.dev,
-	linux-mm@kvack.org
-Cc: Andrew Morton <akpm@linux-foundation.org>,
-	linux-kernel@vger.kernel.org,
-	Jonghyeon Kim <tome01@ajou.ac.kr>
-Subject: [RFC PATCH v2 3/3] mm/damon: add NUMA-awareness to DAMON modules
-Date: Mon, 20 May 2024 14:30:38 +0000
-Message-Id: <20240520143038.189061-4-tome01@ajou.ac.kr>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240520143038.189061-1-tome01@ajou.ac.kr>
-References: <20240520143038.189061-1-tome01@ajou.ac.kr>
+        d=1e100.net; s=20230601; t=1716339608; x=1716944408;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=qBN6dKvcn7a1ilrAwfzcd0ocDzyyL7QD4f+HvB8bOIQ=;
+        b=HC+CL8+LqGz9EFE/JuBe3geiylQ+mZpkKR10BNC8RGO30chQ969DC7Zbj215NYYyLl
+         jbz88q30GnkI8Z+8ea5qzLLSp/fFa6VvBzB3nn0xQ/ANM3jkDC80DSqVLaf0zC7odQAb
+         GZKGXuHnsy5CeIuEEgBsEG//SOjwZkEwHL4lUfmJDff6K63hJf1emkyeyypjK2ADO75M
+         yghdZFtgO7t53VDH05nQ0qkW1nWighK2V2zY9wddbXJfrujybGRBowGgvX3m6wVLFysC
+         jL6HJJe6zhWnTW5MsQkhcbxwSa0acNAUUVPw9BwhxFEEuPONRW84lgIEQP3SJc3ZFimr
+         i6IA==
+X-Forwarded-Encrypted: i=1; AJvYcCUdEtIWH7UmiwM65TQUBIMSksyUmaHzu9xK7111QWhdqBpUXZEup3pQb4M7BxO4K8KSCKAfo5b/nE+3Z4VXpaF2qOvWSgU=
+X-Gm-Message-State: AOJu0YxQXcA2xsGGfBGJWEw/H+LoiCNzPJODl5b57a/HMPSUVfEm80Jl
+	DEPEboOqljskMFpUNtVJ3x6GCALG7gol5MNr1h0HCJtGFxEV7IvS4rs+gxWYeTdkSUiV8qCgEQl
+	mHw==
+X-Google-Smtp-Source: AGHT+IHt7Kr5feX1gdf4rvQKP41zb9M+M6WWZuA6mfud336Es8VWWBsR3GXtiDGmwzCkNXAVdnqYPJZFEdE=
+X-Received: from edliaw.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:305d])
+ (user=edliaw job=sendgmr) by 2002:a17:90a:9f8f:b0:2bd:9285:c147 with SMTP id
+ 98e67ed59e1d1-2bd9f4a593cmr5758a91.5.1716339607777; Tue, 21 May 2024 18:00:07
+ -0700 (PDT)
+Date: Wed, 22 May 2024 00:56:58 +0000
+In-Reply-To: <20240522005913.3540131-1-edliaw@google.com>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0
+References: <20240522005913.3540131-1-edliaw@google.com>
+X-Mailer: git-send-email 2.45.1.288.g0e0cd299f1-goog
+Message-ID: <20240522005913.3540131-13-edliaw@google.com>
+Subject: [PATCH v5 12/68] selftests/damon: Drop define _GNU_SOURCE
+From: Edward Liaw <edliaw@google.com>
+To: shuah@kernel.org, "=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?=" <mic@digikod.net>, 
+	"=?UTF-8?q?G=C3=BCnther=20Noack?=" <gnoack@google.com>, Christian Brauner <brauner@kernel.org>, 
+	Richard Cochran <richardcochran@gmail.com>, Paul Walmsley <paul.walmsley@sifive.com>, 
+	Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
+	Alexei Starovoitov <ast@kernel.org>, Daniel Borkmann <daniel@iogearbox.net>, 
+	"David S. Miller" <davem@davemloft.net>, Jakub Kicinski <kuba@kernel.org>, 
+	Jesper Dangaard Brouer <hawk@kernel.org>, John Fastabend <john.fastabend@gmail.com>, 
+	SeongJae Park <sj@kernel.org>
+Cc: linux-kernel@vger.kernel.org, linux-kselftest@vger.kernel.org, 
+	kernel-team@android.com, Edward Liaw <edliaw@google.com>, 
+	linux-security-module@vger.kernel.org, netdev@vger.kernel.org, 
+	linux-riscv@lists.infradead.org, bpf@vger.kernel.org, damon@lists.linux.dev, 
+	linux-mm@kvack.org
+Content-Type: text/plain; charset="UTF-8"
 
-Using the 'target_nid' parameter of DAMOS watermark, both DAMON_RECLAIM and
-DAMON_LRU_SORT modules can set the monitoring range to a specific NUMA
-memory node.
+_GNU_SOURCE is provided by lib.mk, so it should be dropped to prevent
+redefinition warnings.
 
-Signed-off-by: Jonghyeon Kim <tome01@ajou.ac.kr>
+Reviewed-by: SeongJae Park <sj@kernel.org>
+Signed-off-by: Edward Liaw <edliaw@google.com>
 ---
- mm/damon/lru_sort.c | 13 +++++++++++++
- mm/damon/reclaim.c  | 13 +++++++++++++
- 2 files changed, 26 insertions(+)
+ tools/testing/selftests/damon/debugfs_target_ids_pid_leak.c     | 2 --
+ .../damon/debugfs_target_ids_read_before_terminate_race.c       | 1 -
+ 2 files changed, 3 deletions(-)
 
-diff --git a/mm/damon/lru_sort.c b/mm/damon/lru_sort.c
-index 3e25a52de..ed136ccba 100644
---- a/mm/damon/lru_sort.c
-+++ b/mm/damon/lru_sort.c
-@@ -238,6 +238,19 @@ static int damon_lru_sort_apply_parameters(void)
- 	damon_set_schemes(ctx, &hot_scheme, 1);
- 	damon_add_scheme(ctx, cold_scheme);
+diff --git a/tools/testing/selftests/damon/debugfs_target_ids_pid_leak.c b/tools/testing/selftests/damon/debugfs_target_ids_pid_leak.c
+index 0cc2eef7d142..3f0dd30f61ef 100644
+--- a/tools/testing/selftests/damon/debugfs_target_ids_pid_leak.c
++++ b/tools/testing/selftests/damon/debugfs_target_ids_pid_leak.c
+@@ -3,8 +3,6 @@
+  * Author: SeongJae Park <sj@kernel.org>
+  */
  
-+	/* Set monitoring range from target node */
-+	if (hot_scheme->wmarks.metric == DAMOS_WMARK_NODE_FREE_MEM_RATE) {
-+		int target_nid = hot_scheme->wmarks.target_nid;
-+
-+		if (target_nid == NUMA_NO_NODE)
-+			return -EINVAL;
-+		monitor_region_start = PFN_PHYS(node_start_pfn(target_nid));
-+		monitor_region_end = PFN_PHYS(node_start_pfn(target_nid) +
-+				node_present_pages(target_nid) - 1);
-+		if (monitor_region_end < monitor_region_start)
-+			return -EINVAL;
-+	}
-+
- 	return damon_set_region_biggest_system_ram_default(target,
- 					&monitor_region_start,
- 					&monitor_region_end);
-diff --git a/mm/damon/reclaim.c b/mm/damon/reclaim.c
-index 31b8830a8..9c0c0096b 100644
---- a/mm/damon/reclaim.c
-+++ b/mm/damon/reclaim.c
-@@ -192,6 +192,19 @@ static int damon_reclaim_apply_parameters(void)
- 	}
- 	damon_set_schemes(ctx, &scheme, 1);
+-#define _GNU_SOURCE
+-
+ #include <fcntl.h>
+ #include <stdbool.h>
+ #include <stdint.h>
+diff --git a/tools/testing/selftests/damon/debugfs_target_ids_read_before_terminate_race.c b/tools/testing/selftests/damon/debugfs_target_ids_read_before_terminate_race.c
+index b06f52a8ce2d..611396076420 100644
+--- a/tools/testing/selftests/damon/debugfs_target_ids_read_before_terminate_race.c
++++ b/tools/testing/selftests/damon/debugfs_target_ids_read_before_terminate_race.c
+@@ -2,7 +2,6 @@
+ /*
+  * Author: SeongJae Park <sj@kernel.org>
+  */
+-#define _GNU_SOURCE
  
-+	/* Set monitoring range from target node */
-+	if (scheme->wmarks.metric == DAMOS_WMARK_NODE_FREE_MEM_RATE) {
-+		int target_nid = scheme->wmarks.target_nid;
-+
-+		if (target_nid == NUMA_NO_NODE)
-+			return -EINVAL;
-+		monitor_region_start = PFN_PHYS(node_start_pfn(target_nid));
-+		monitor_region_end = PFN_PHYS(node_start_pfn(target_nid) +
-+					node_present_pages(target_nid) - 1);
-+		if (monitor_region_end < monitor_region_start)
-+			return -EINVAL;
-+	}
-+
- 	return damon_set_region_biggest_system_ram_default(target,
- 					&monitor_region_start,
- 					&monitor_region_end);
+ #include <fcntl.h>
+ #include <stdbool.h>
 -- 
-2.34.1
+2.45.1.288.g0e0cd299f1-goog
 
