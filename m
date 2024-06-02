@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BECF848CCC;
-	Sun,  2 Jun 2024 15:48:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EDF647F6A;
+	Sun,  2 Jun 2024 15:56:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717343331; cv=none; b=JpIg971DhaALMQ+31cvOqo3s4EwhBzaRgVSCLF3XbjDM1HPvndyPv86IvtYIOpUdz6znca3kfEZLvyhYVunbMZl4bpD+sObtcHroZ5hESEHToQx/p8s81UwbTctr+mdN9GWXJfguIXxuLZDPmIfB+7Blz5WH9QxbE5v/w8LgR18=
+	t=1717343776; cv=none; b=mnrw8GhlxRUt7vzY6YDwtnbrsoy/JcUEnv1wGcEJSDb5PInaA61/rnVdqnD5HGTo8ILtcLSPy7awfmfDHCm7nEet2PDnbnNyvEkqQ15TRTlt+C6rkPkPr19pI430wFjBOZHIX2W7bg+V4yF1OqJ16BdvF0o7ghUmP2JVFFmcA2M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717343331; c=relaxed/simple;
-	bh=h2Zsso7dcCkUN4/x/26T9SY7gQTavcGtKfBd8Ge9jzY=;
+	s=arc-20240116; t=1717343776; c=relaxed/simple;
+	bh=l8+GXFRaLRqbnJKvA06bKbF87+GahGFEyqWYIo+UKmI=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=CHfRQW/Kn2xDpWCB/54Je2cFAUK6ikQP4/LSzBQdlGiZSdiUvm7UL0RjmiF0K4dI3zstzEiqEgTynEkmdm3C0rJkDtZg0xT/2qh9pdD21iJ82BSlbJp4kcGkk89Ks/XYKViVc/5BoEU3fRKfJwYeK9ndxMdHJuSWX0TLZvoCilw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=p0Ejmb6y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HaKrPZWKsUa7r2ftipmjp6cly3DX6Z2is5qDsH0idEri1vsBi39AwLA1tnZeo+o7Uvl5Y1QBF5fefS6yG2nSjZZOKDKv3qRbqixpyNuZqbykKj7ieMpgO4RRyRBMAE1Dddc4u3GzNj5mA8yWpvIuS3GTMY7nDmnQ/7SdRaemC4Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GHHH/F8E; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="p0Ejmb6y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D295BC2BBFC;
-	Sun,  2 Jun 2024 15:48:50 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GHHH/F8E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B9F6C2BBFC;
+	Sun,  2 Jun 2024 15:56:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1717343331;
-	bh=h2Zsso7dcCkUN4/x/26T9SY7gQTavcGtKfBd8Ge9jzY=;
+	s=k20201202; t=1717343775;
+	bh=l8+GXFRaLRqbnJKvA06bKbF87+GahGFEyqWYIo+UKmI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p0Ejmb6yxHH7PyY3hScoX2x/JUGSNNHwey3kWWukQNvDI/rQNuzii541CcglH34WN
-	 OXmJMjhNbjTEqZ+5gyNtqohQziBQm9TCZ1uzHm1Fvc0qTdS2Bc448XGy2iYJIy824q
-	 VMx+btEARHSYACsqGPefynIyA/KaZDmuhj/Le5Iuyz65lMe/oV9kpgPH6NG7x2St4A
-	 hkZmlfcA2Uiy2A1WmgnRbIkiUNCn4X3LfiDnYUf8c+pDmJ58ouP1FM0AJSbyDWU1hp
-	 LlVI9h9IzDiHOfzd92ZC2xYGUHWFkbFMWWxcJorgxJk1hxjAC+pvIxdmiJecbqzP2G
-	 Z/xCFIdv7LVMg==
+	b=GHHH/F8EXYJMsAai0VU+CJMTOUNXqZIau8RCzKJctcAEnyH8MyrsvvKNy7kbpNnSH
+	 icwF4JZIw7Ll17LUc4B50WQQIawFqsr2ovJwN2+WtJgGNXGna3XJM2Dc6G/wOzotti
+	 FU5FcEY4qVC0LfQzcx3NxIMx20LDMWvRGtLQvaTYt20QdcxkXBRYbDo+dNTY+u0XjG
+	 v+x3FXaFps7m7UayW0HUucDDobSfC6ePU+0miVu7imnOeRPwLfSeRE0j2PSiqvwpgM
+	 s65+0gqM4555/QinXnWeFQTWxDeoU9Cux2wXDgR5aTUkx0Ob9bftYM9fYStKAPKebO
+	 LoKsqlyjI+Qfg==
 From: SeongJae Park <sj@kernel.org>
 To: Alex Rusuf <yorha.op@gmail.com>
 Cc: SeongJae Park <sj@kernel.org>,
 	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: Re: [PATCH v2 2/2] mm/damon/core: implement multi-context support
-Date: Sun,  2 Jun 2024 08:48:48 -0700
-Message-Id: <20240602154848.91322-1-sj@kernel.org>
+Subject: Re: [PATCH v2 0/2] DAMON multiple contexts support
+Date: Sun,  2 Jun 2024 08:56:12 -0700
+Message-Id: <20240602155612.91435-1-sj@kernel.org>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20240602150816.926407-1-yorha.op@gmail.com>
+In-Reply-To: <20240602153102.926789-1-yorha.op@gmail.com>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -46,414 +46,79 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Sun,  2 Jun 2024 18:08:16 +0300 Alex Rusuf <yorha.op@gmail.com> wrote:
+On Sun,  2 Jun 2024 18:31:02 +0300 Alex Rusuf <yorha.op@gmail.com> wrote:
 
 > Hi SJ,
 > 
-> > Hi Alex,
+> > Hello Alex,
 > > 
-> > On Fri, 31 May 2024 15:23:20 +0300 Alex Rusuf <yorha.op@gmail.com> wrote:
+> > On Fri, 31 May 2024 15:23:18 +0300 Alex Rusuf <yorha.op@gmail.com> wrote:
 > > 
-> > > This patch actually implements support for
-> > > multi-context design for kdamond daemon.
+> > > Currently kdamond uses only one context per kthread
+> > > and most of its time it sleeps, so utilizing several
+> > > contexts can scale kdamond and allow it to use
+> > > another set of operations.
 > > > 
-> > > In pseudo code previous versions worked like
-> > > the following:
+> > > This patch-set implements support for multiple contexts
+> > > per kdamond.
+> > >
+> > [...]
 > > > 
-> > >     while (!kdamond_should_stop()) {
-> > > 
-> > > 	/* prepare accesses for only 1 context */
-> > > 	prepare_accesses(damon_context);
-> > > 
-> > > 	sleep(sample_interval);
-> > > 
-> > > 	/* check accesses for only 1 context */
-> > > 	check_accesses(damon_context);
-> > > 
-> > > 	...
-> > >     }
-> > > 
-> > > With this patch kdamond workflow will look
-> > > like the following:
-> > > 
-> > >     while (!kdamond_shoule_stop()) {
-> > > 
-> > > 	/* prepare accesses for all contexts in kdamond */
-> > > 	damon_for_each_context(ctx, kdamond)
-> > > 	    prepare_accesses(ctx);
-> > > 
-> > > 	sleep(sample_interval);
-> > > 
-> > > 	/* check_accesses for all contexts in kdamond */
-> > > 	damon_for_each_context(ctx, kdamond)
-> > > 	    check_accesses(ctx);
-> > > 
-> > > 	...
-> > >     }
-> > 
-> > This is not what you do now, but on previous patch, right?  Let's modify the
-> > mesage appropriately.
-> 
-> No, this is exactly what this patch is for, previous one only introduced
-> 'struct kdamond' and made all interfaces (sysfs/dbgfs/core) to use it.
-> I mean previous patch doesn't include support for multiple contexts,
-> functionality was the same as before.
-
-Thank you for clarifying.  Indeed the first patch didn't update access check
-part, but did update contexts initializations (kdamond_init_ctx()) and
-termination (kdamond_finish_ctxs()) logics to support multiple contexts.  Let's
-do such things in one separate patch, as I suggested on the reply to the cover
-letter.
-
-> 
-> > 
-> > > 
-> > > Another point to note is watermarks. Previous versions
-> > > checked watermarks on each iteration for current context
-> > > and if matric's value wan't acceptable kdamond waited
-> > > for watermark's sleep interval.
-> > 
-> > Mention changes of versions on cover letter.
-> > 
-> > > 
-> > > Now there's no need to wait for each context, we can
-> > > just skip context if watermark's metric isn't ready,
-> > > but if there's no contexts that can run we
-> > > check for each context's watermark metric and
-> > > sleep for the lowest interval of all contexts.
-> > > 
-> > > Signed-off-by: Alex Rusuf <yorha.op@gmail.com>
 > > > ---
-> > >  include/linux/damon.h        |  11 +-
-> > >  include/trace/events/damon.h |  14 +-
-> > >  mm/damon/core-test.h         |   2 +-
-> > >  mm/damon/core.c              | 286 +++++++++++++++++------------
-> > >  mm/damon/dbgfs-test.h        |   4 +-
-> > >  mm/damon/dbgfs.c             | 342 +++++++++++++++++++++--------------
-> > >  mm/damon/modules-common.c    |   1 -
-> > >  mm/damon/sysfs.c             |  47 +++--
-> > >  8 files changed, 431 insertions(+), 276 deletions(-)
-> > > 
-> > > diff --git a/include/linux/damon.h b/include/linux/damon.h
-> > > index 7cb9979a0..2facf3a5f 100644
-> > > --- a/include/linux/damon.h
-> > > +++ b/include/linux/damon.h
-> > > @@ -575,7 +575,6 @@ struct damon_attrs {
-> > >   * @lock:	Kdamond's global lock, serializes accesses to any field.
-> > >   * @self:	Kernel thread which is actually being executed.
-> > >   * @contexts:	Head of contexts (&damon_ctx) list.
-> > > - * @nr_ctxs:	Number of contexts being monitored.
-> > >   *
-> > >   * Each DAMON's background daemon has this structure. Once
-> > >   * configured, daemon can be started by calling damon_start().
-> > > @@ -589,7 +588,6 @@ struct kdamond {
-> > >  	struct mutex lock;
-> > >  	struct task_struct *self;
-> > >  	struct list_head contexts;
-> > > -	size_t nr_ctxs;
+> > > Changes from v1 (https://lore.kernel.org/damon/20240515152457.603724-1-yorha.op@gmail.com/)
+> > > - Compatibility for DebugFS interface is kept
+> > > - Kunit tests build/execution issues are fixed
+> > > - Patches from v1 are sqaushed, so that consistency between patches is
+> > > kept
 > > 
-> > Why we add this on first patch, and then remove here?  Let's not make
-> > unnecessary temporal change.  It only increase review time.
+> > My request was to avoid unnecessary temporal changes that will be removed in
+> > next patches.  Some of those are well removed in this version, but I still show
+> > some.  E.g., nr_contexts field.  Also, this resulted in two big patches.
 > 
-> This temporal change is needed only to not break DAMON functionality
-> once first patch is applied (i.e. only 1st patch is applied). I mean
-> to have constistancy between patches.
-> 
-> I think, if I change the patch-history (the one you suggested in another
-> reply) this could be avoided.
+> This makes sense and I actually wanted that as well, so I tried to separate
+> them in previous version, looks like I misunderstood your request.
 
-Yes, I think that would be helpful for reviewing :)
+No problem, I think I should also be more clear about the point.  Happy to have
+a chance to develop my humble communication skill with the conversaions with
+you.
+
+> 
+> Anyway, don't you mind if lru_sort/traceevents/etc. will not function
+> correctly without applying the whole patch-set? I mean if we use the
+> approach below, once core.c is modified at least lru_sort and reclaim
+> will not work correctly, they even will not be built.
+
+I mind those.  Everything should work without regression in the middle of the
+patchset.  Nonetheless, we should avoid only regression.  We don't need to make
+everything perfect.  Let's minimize changes to the other modules in the way.
+
+I believe below suggested patches flow and my second reply to the second patch
+of this patchset can clarify the point.  Please let me know if not.
 
 > 
 > > 
-> > >  
-> > >  /* private: */
-> > >  	/* for waiting until the execution of the kdamond_fn is started */
-> > > @@ -634,7 +632,10 @@ struct damon_ctx {
-> > >  	 * update
-> > >  	 */
-> > >  	unsigned long next_ops_update_sis;
-> > > +	/* upper limit for each monitoring region */
-> > >  	unsigned long sz_limit;
-> > > +	/* marker to check if context is valid */
-> > > +	bool valid;
+> > I'd also appreciate if you can separate changes into smaller ones of logical
+> > single change.  For example, changes for lru_sort.c, reclaim.c, and sysfs.c on
+> > first patch could be much smaller in my opinion.  Traceevent change can also be
+> > separated from patch 2.  Some of multi-context support seems mixed in patch 1.
 > > 
-> > What is the validity?
-> 
-> This is a "flag" which indicates that the context is "valid" for kdamond
-> to be able to call ->check_accesses() on it. Because we have many contexts
-> we need a way to identify which context is valid while iterating over
-> all of them (please, see kdamond_prepare_access_checks_ctx() function).
-
-It's still not very clear to me.  When it is "valid" or not for kdamond to be
-able to call ->check_accesses()?  I assume you mean it is valid if the
-monitoring operations set's ->target_valid() returns zero?
-
-The callback is not for preventing unnecessary ->check_accesses(), but for
-knowing if continuing the monitoring makes sense or not.  For example, the
-callback of 'vaddr' operation set checks if the virtual address space still
-exists (whether the target process is still running)  Calling
-->check_accesses() for ->target_valid() returned non-zero target is totally ok,
-though it is meaningless.  And therefore kdamond stops if it returns non-zero.
-
-> 
-> Maybe name should be changed,
-
-At least some more detailed comment would be appreciated, imo.
-
-> but now I don't see a way how we could merge
-> this into kdamond_valid_ctx() or so, because the main cause of this "valid"
-> bit is that there's no more "valid" targets for this context, but also we could
-> have ->after_sampling() returned something bad.
-
-As mentioned above, calling ->check_accesses() or others towards invalidated
-targets (e.g., terminated processes's virtual address spaces) should be ok, if
-any of the targets are still valid.  So I don't show special technical
-difficulties here.  Please let me know if I'm missing something.
-
-> 
+> > I'd suggest below patches flow.
 > > 
-> > >  
-> > >  /* public: */
-> > >  	struct kdamond *kdamond;
-> > > @@ -682,6 +683,12 @@ static inline struct damon_ctx *damon_first_ctx(struct kdamond *kdamond)
-> > >  	return list_first_entry(&kdamond->contexts, struct damon_ctx, list);
-> > >  }
-> > >  
-> > > +static inline bool damon_is_last_ctx(struct damon_ctx *ctx,
-> > > +				     struct kdamond *kdamond)
-> > > +{
-> > > +	return list_is_last(&ctx->list, &kdamond->contexts);
-> > > +}
-> > > +
-> > >  #define damon_for_each_region(r, t) \
-> > >  	list_for_each_entry(r, &t->regions_list, list)
-> > >  
-> > > diff --git a/include/trace/events/damon.h b/include/trace/events/damon.h
-> > > index 23200aabc..d5287566c 100644
-> > > --- a/include/trace/events/damon.h
-> > > +++ b/include/trace/events/damon.h
+> > Patch 1: Introduce new struct and control functions for the struct.  Don't
+> > really use the struct and the functions.
 > > 
-> > Let's separate this change to another patch.
-> 
-> Separating patches we hardly be able to reach at least build
-> consistency between patches. Moreover DAMON won't be able
-> to function corretly in between.
-
-I agree that it's not very easy, indeed.  But let's try.  In terms of
-functionality, we need to keep the old behavior that visible to users.  For
-example, this change tries to make the traceevent changed for the multi
-contexts support.  It is for making the behavior _better_, not for keeping old
-behavior.  Rather than that, this is introducing a new change to the tracepoint
-output.  Just make no change here.  Users may get confused when they use
-multiple contexts, but what they see is not changed.
-
-Further, you can delay letting users (user-space) using the multiple contexts
-(allowing >1 input to nr_contexts of DAMON sysfs interface) after making this
-change in a separate patch.
-
-> 
+> > Patch 2: Modify core.c to use the struct and implement multiple contexts
+> > support.  Minimize changes to core.c users.  Just keep those work as before.
+> > Don't implement multi contexts support on sysfs.c or trace events at this
+> > point.
 > > 
-> > > @@ -50,12 +50,13 @@ TRACE_EVENT_CONDITION(damos_before_apply,
-> > >  
-> > >  TRACE_EVENT(damon_aggregated,
-> > >  
-> > > -	TP_PROTO(unsigned int target_id, struct damon_region *r,
-> > > -		unsigned int nr_regions),
-> > > +	TP_PROTO(unsigned int context_id, unsigned int target_id,
-> > > +		struct damon_region *r, unsigned int nr_regions),
-> > >  
-> > > -	TP_ARGS(target_id, r, nr_regions),
-> > > +	TP_ARGS(context_id, target_id, r, nr_regions),
-> > >  
-> > >  	TP_STRUCT__entry(
-> > > +		__field(unsigned long, context_id)
-> > >  		__field(unsigned long, target_id)
-> > >  		__field(unsigned int, nr_regions)
-> > >  		__field(unsigned long, start)
-> > > @@ -65,6 +66,7 @@ TRACE_EVENT(damon_aggregated,
-> > >  	),
-> > >  
-> > >  	TP_fast_assign(
-> > > +		__entry->context_id = context_id;
-> > >  		__entry->target_id = target_id;
-> > >  		__entry->nr_regions = nr_regions;
-> > >  		__entry->start = r->ar.start;
-> > > @@ -73,9 +75,9 @@ TRACE_EVENT(damon_aggregated,
-> > >  		__entry->age = r->age;
-> > >  	),
-> > >  
-> > > -	TP_printk("target_id=%lu nr_regions=%u %lu-%lu: %u %u",
-> > > -			__entry->target_id, __entry->nr_regions,
-> > > -			__entry->start, __entry->end,
-> > > +	TP_printk("context_id=%lu target_id=%lu nr_regions=%u %lu-%lu: %u %u",
-> > > +			__entry->context_id, __entry->target_id,
-> > > +			__entry->nr_regions, __entry->start, __entry->end,
-> > >  			__entry->nr_accesses, __entry->age)
-> > >  );
-> > >  
-> > > diff --git a/mm/damon/core-test.h b/mm/damon/core-test.h
-> > > index 0cee634f3..7962c9a0e 100644
-> > > --- a/mm/damon/core-test.h
-> > > +++ b/mm/damon/core-test.h
-> > > @@ -99,7 +99,7 @@ static void damon_test_aggregate(struct kunit *test)
-> > >  		}
-> > >  		it++;
-> > >  	}
-> > > -	kdamond_reset_aggregated(ctx);
-> > > +	kdamond_reset_aggregated(ctx, 0);
-> > >  	it = 0;
-> > >  	damon_for_each_target(t, ctx) {
-> > >  		ir = 0;
-> > > diff --git a/mm/damon/core.c b/mm/damon/core.c
-> > > index cfc9c803d..ad73752af 100644
-> > > --- a/mm/damon/core.c
-> > > +++ b/mm/damon/core.c
-> > > @@ -500,6 +500,8 @@ struct damon_ctx *damon_new_ctx(void)
-> > >  	ctx->attrs.min_nr_regions = 10;
-> > >  	ctx->attrs.max_nr_regions = 1000;
-> > >  
-> > > +	ctx->valid = true;
-> > > +
-> > >  	INIT_LIST_HEAD(&ctx->adaptive_targets);
-> > >  	INIT_LIST_HEAD(&ctx->schemes);
-> > >  	INIT_LIST_HEAD(&ctx->list);
-> > > @@ -513,7 +515,7 @@ struct damon_ctx *damon_new_ctx(void)
-> > >  void damon_add_ctx(struct kdamond *kdamond, struct damon_ctx *ctx)
-> > >  {
-> > >  	list_add_tail(&ctx->list, &kdamond->contexts);
-> > > -	++kdamond->nr_ctxs;
-> > > +	ctx->kdamond = kdamond;
-> > >  }
-> > >  
-> > >  struct kdamond *damon_new_kdamond(void)
-> > > @@ -567,10 +569,8 @@ void damon_destroy_ctxs(struct kdamond *kdamond)
-> > >  {
-> > >  	struct damon_ctx *c, *next;
-> > >  
-> > > -	damon_for_each_context_safe(c, next, kdamond) {
-> > > +	damon_for_each_context_safe(c, next, kdamond)
-> > >  		damon_destroy_ctx(c);
-> > > -		--kdamond->nr_ctxs;
-> > > -	}
-> > >  }
-> > >  
-> > >  void damon_destroy_kdamond(struct kdamond *kdamond)
-> > > @@ -735,6 +735,20 @@ bool damon_kdamond_running(struct kdamond *kdamond)
-> > >  	return running;
-> > >  }
-> > >  
-> > > +/**
-> > > + * kdamond_nr_ctxs() - Return number of contexts for this kdamond.
-> > > + */
-> > > +static int kdamond_nr_ctxs(struct kdamond *kdamond)
-> > > +{
-> > > +	struct list_head *pos;
-> > > +	int nr_ctxs = 0;
-> > > +
-> > > +	list_for_each(pos, &kdamond->contexts)
-> > > +		++nr_ctxs;
-> > > +
-> > > +	return nr_ctxs;
-> > > +}
-> > > +
-> > >  /* Returns the size upper limit for each monitoring region */
-> > >  static unsigned long damon_region_sz_limit(struct damon_ctx *ctx)
-> > >  {
-> > > @@ -793,11 +807,11 @@ static int __damon_start(struct kdamond *kdamond)
-> > >   * @exclusive:	exclusiveness of this contexts group
-> > >   *
-> > >   * This function starts a group of monitoring threads for a group of monitoring
-> > > - * contexts.  One thread per each context is created and run in parallel.  The
-> > > - * caller should handle synchronization between the threads by itself.  If
-> > > - * @exclusive is true and a group of threads that created by other
-> > > + * contexts. If @exclusive is true and a group of contexts that created by other
-> > >   * 'damon_start()' call is currently running, this function does nothing but
-> > > - * returns -EBUSY.
-> > > + * returns -EBUSY, if @exclusive is true and a given kdamond wants to run
-> > > + * several contexts, then this function returns -EINVAL. kdamond can run
-> > > + * exclusively only one context.
-> > >   *
-> > >   * Return: 0 on success, negative error code otherwise.
-> > >   */
-> > > @@ -806,10 +820,6 @@ int damon_start(struct kdamond *kdamond, bool exclusive)
-> > >  	int err = 0;
-> > >  
-> > >  	BUG_ON(!kdamond);
-> > > -	BUG_ON(!kdamond->nr_ctxs);
-> > > -
-> > > -	if (kdamond->nr_ctxs != 1)
-> > > -		return -EINVAL;
-> > >  
-> > >  	mutex_lock(&damon_lock);
-> > >  	if ((exclusive && nr_running_kdamonds) ||
-> > > @@ -818,6 +828,11 @@ int damon_start(struct kdamond *kdamond, bool exclusive)
-> > >  		return -EBUSY;
-> > >  	}
-> > >  
-> > > +	if (exclusive && kdamond_nr_ctxs(kdamond) > 1) {
-> > > +		mutex_unlock(&damon_lock);
-> > > +		return -EINVAL;
-> > > +	}
-> > > +
-> > >  	err = __damon_start(kdamond);
-> > >  	if (err)
-> > >  		return err;
-> > > @@ -857,7 +872,7 @@ int damon_stop(struct kdamond *kdamond)
-> > >  /*
-> > >   * Reset the aggregated monitoring results ('nr_accesses' of each region).
-> > >   */
-> > > -static void kdamond_reset_aggregated(struct damon_ctx *c)
-> > > +static void kdamond_reset_aggregated(struct damon_ctx *c, unsigned int ci)
-> > >  {
-> > >  	struct damon_target *t;
-> > >  	unsigned int ti = 0;	/* target's index */
-> > > @@ -866,7 +881,7 @@ static void kdamond_reset_aggregated(struct damon_ctx *c)
-> > >  		struct damon_region *r;
-> > >  
-> > >  		damon_for_each_region(r, t) {
-> > > -			trace_damon_aggregated(ti, r, damon_nr_regions(t));
-> > > +			trace_damon_aggregated(ci, ti, r, damon_nr_regions(t));
+> > Patch 3: Update sysfs.c to support the multiple contexts.
 > > 
-> > Separate traceevent change into another patch.
-> > 
-> > >  			r->last_nr_accesses = r->nr_accesses;
-> > >  			r->nr_accesses = 0;
-> > >  		}
-> > > @@ -1033,21 +1048,15 @@ static bool damos_filter_out(struct damon_ctx *ctx, struct damon_target *t,
-> > >  	return false;
-> > >  }
-> > >  
-> > > -static void damos_apply_scheme(struct damon_ctx *c, struct damon_target *t,
-> > > -		struct damon_region *r, struct damos *s)
-> > > +static void damos_apply_scheme(unsigned int cidx, struct damon_ctx *c,
-> > > +			       struct damon_target *t, struct damon_region *r,
-> > > +			       struct damos *s)
-> > 
-> > Unnecesary change.
-> 
-> What do you mean? Why is this unnecessary? Now DAMON iterates over
-> contexts and calls kdamond_apply_schemes(ctx), so how can we know
-> which context we print trace for? Sorry, maybe I misunderstood
-> how DAMON does it, but I'm a bit confused.
+> > Patch 4: Update trace events to better support it.
 
-I believe the above comment to tracevent change explains this.
-
-> 
-> Or maybe you mean indentation? The actual change is adding "cidx":
-> 
-> 	-static void damos_apply_scheme(struct damon_ctx *c, ...
-> 	+static void damos_apply_scheme(unsigned int cidx, struct damon_ctx *c,
-> 
-> > 
-> > As also mentioned on the reply to the first patch, I think this patch can
-> > significantly changed if you agree to my opinion about the flow of patches that
-> > I mentioned on the reply to the cover letter.  Hence, stopping review from here
-> > for now.  Please let me know if you have a different opinion.
-> 
-> I see. Anyway, thank you for your comments, I'll try my best to improve the patch.
-
-No problem, appreciate your patience and great works on this patchset!
+As I mentioned on my second reply to the second patch, you could swich patches
+3 and 4 if you want trace events to work perfect from the beginning of
+user-visible multi contexts support.
 
 
 Thanks,
