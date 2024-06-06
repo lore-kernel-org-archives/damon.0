@@ -1,42 +1,58 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDDA01386C5;
-	Mon,  3 Jun 2024 18:45:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A19ED199239;
+	Thu,  6 Jun 2024 17:51:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717440304; cv=none; b=A5FgcTuLMCGAFcHpRPDjwLsbh1c767iDKX+4Ds+XPn6bUh/bP4soIZXpld3DQIPPQ8LTCjmVlc2Cp7h1S6ONrdWs7oiZBjBwbfhlNoiWE000aLDkGYv95V/udCIGGZYnE1JyOYQCQk0ZVly2kgoSQKoF9kdLUJlKqHVfg7SC7JA=
+	t=1717696315; cv=none; b=hy14E8oExDQUD22eRlHh8H9KU6EqIPZ+qmWDEMlIIlF1zmRHQE81hbkBEggJmg13YZ3uCU9IzMGkC6peOkN0QUMq8x8jYN1bYfD18r4o0DQpA5BHUfc0BNxOY8unexubGihNcW5ioMLopRLukxMTuMIppmm09RNo41wwtfeIiXs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717440304; c=relaxed/simple;
-	bh=VGBp8Um3wObQGvuZF4EnQDH/utHRzJD1Fwno53k5PYo=;
+	s=arc-20240116; t=1717696315; c=relaxed/simple;
+	bh=QtCyvcgciIZk5s3k7PJBwdIzJjsR6DM+WS9zSM/VA/4=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=Q76Kr+kPrszkib3hZrz5xGF+xHfabr6UlyE+JCl5V73hjYMH2D0Mod7FBFin0ffkK3M6bNG+BiAoQdlvnCSv/MgPpKIp8dp9Ui4hR25kjm2D1iJApOI8YytbIXdWfZeJI9819YDYmTU3prihNd9w2Ea2it5w4wu9mYvcpPIpMf8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qA754UYK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Spafhly3jAigSfN06dImi889dFbYDllyUsl343kgb7pcOL9T0307BbNeg49fdS0GCv8EVg9qTcQxG65Wmdv5Op02PL93ZUyJrwjiyS+FfCWFMk8ou1U3lcw4gOQS0hmKpvpri9OaZfXrGq8XLzGtQiJ55HVa5GQ5ql5CXwNpOX8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cxUmsLGh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qA754UYK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B89BC2BD10;
-	Mon,  3 Jun 2024 18:45:02 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cxUmsLGh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF2FDC2BD10;
+	Thu,  6 Jun 2024 17:51:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1717440303;
-	bh=VGBp8Um3wObQGvuZF4EnQDH/utHRzJD1Fwno53k5PYo=;
+	s=k20201202; t=1717696315;
+	bh=QtCyvcgciIZk5s3k7PJBwdIzJjsR6DM+WS9zSM/VA/4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qA754UYKlUnk+Qhx8Pv/DYBWPN0GFGcXOmvQxad+Kcioj30QdOg5LbY+zGbityjJl
-	 KuZvqZag+8nvXagwiJBC/sibN/A7QgQ50C194DrOudHh4/B0MvKhZ7poMVDtcbIBQA
-	 E6Z4a+KJKq1+neyXoWmZ5MvdrBGwd3SzKjLv66pmoaA+PlacP0ExZGajcqKcQqCr2V
-	 Qx0C4INkmubpZubYdWRLl3wX80XD6wZGlPE08tcId2ZI3GVnF/dE/mGdwJTOr9v5rO
-	 s1A+yIe5Rjfdeh6kG3kBuoxGTA4tdSYHZTxTa/LH1dXDxJVS3yTvEdk/WQrmYrMW9l
-	 CT1hTtvvYRCZA==
+	b=cxUmsLGhUOhG9vKX4ggX1t/qB8YABjH0QE5zVYdnNlCat1yERxDaK8rOFC+wdB61z
+	 8Dcb4kbZxpUzSONrar3tJOWYm8jYWGMCl8gYnUOijcxjRFNWHC3UITPlFgTx1epRU0
+	 gd6kiUIcWZI+Y2ZYluN7rqXNVW4kQhSOOn3bVWR4M4PzwoXiRxEAljiVrrj45d75D3
+	 4KiHliwbY5g607UGW4PXKWLGBQSuFS1jy/AFeGbdLTDv1RdqDmt2PSNAwVrNrBFYXa
+	 Bja6Ds/Y+WTTLlrEToUzBXsR0SbgrxmooytTNiQsUVJz3vQkLy6Lqrq4XsqsuoZwwe
+	 JvsOy8UEDdNtQ==
 From: SeongJae Park <sj@kernel.org>
-To: Alex Rusuf <yorha.op@gmail.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: SeongJae Park <sj@kernel.org>,
-	damon@lists.linux.dev,
+	stable@vger.kernel.org,
+	patches@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org
-Subject: Re: [PATCH v2 2/2] mm/damon/core: implement multi-context support
-Date: Mon,  3 Jun 2024 11:45:00 -0700
-Message-Id: <20240603184500.104495-1-sj@kernel.org>
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net,
+	rwarsow@gmx.de,
+	conor@kernel.org,
+	allen.lkml@gmail.com,
+	broonie@kernel.org,
+	damon@lists.linux.dev
+Subject: Re: [PATCH 6.1 000/473] 6.1.93-rc1 review
+Date: Thu,  6 Jun 2024 10:51:50 -0700
+Message-Id: <20240606175150.20439-1-sj@kernel.org>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20240602194814.929457-1-yorha.op@gmail.com>
+In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -46,88 +62,61 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Sun,  2 Jun 2024 22:48:14 +0300 Alex Rusuf <yorha.op@gmail.com> wrote:
+Hello,
 
-> [...]
+On Thu,  6 Jun 2024 15:58:49 +0200 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+
+> This is the start of the stable review cycle for the 6.1.93 release.
+> There are 473 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 > 
-> > > 
-> > > > 
-> > > > >  
-> > > > >  /* private: */
-> > > > >  	/* for waiting until the execution of the kdamond_fn is started */
-> > > > > @@ -634,7 +632,10 @@ struct damon_ctx {
-> > > > >  	 * update
-> > > > >  	 */
-> > > > >  	unsigned long next_ops_update_sis;
-> > > > > +	/* upper limit for each monitoring region */
-> > > > >  	unsigned long sz_limit;
-> > > > > +	/* marker to check if context is valid */
-> > > > > +	bool valid;
-> > > > 
-> > > > What is the validity?
-> > > 
-> > > This is a "flag" which indicates that the context is "valid" for kdamond
-> > > to be able to call ->check_accesses() on it. Because we have many contexts
-> > > we need a way to identify which context is valid while iterating over
-> > > all of them (please, see kdamond_prepare_access_checks_ctx() function).
-> > 
-> > It's still not very clear to me.  When it is "valid" or not for kdamond to be
-> > able to call ->check_accesses()?  I assume you mean it is valid if the
-> > monitoring operations set's ->target_valid() returns zero?
-> > 
-> > The callback is not for preventing unnecessary ->check_accesses(), but for
-> > knowing if continuing the monitoring makes sense or not.  For example, the
-> > callback of 'vaddr' operation set checks if the virtual address space still
-> > exists (whether the target process is still running)  Calling
-> > ->check_accesses() for ->target_valid() returned non-zero target is totally ok,
-> > though it is meaningless.  And therefore kdamond stops if it returns non-zero.
-> > 
-> > > 
-> > > Maybe name should be changed,
-> > 
-> > At least some more detailed comment would be appreciated, imo.
-> > 
-> > > but now I don't see a way how we could merge
-> > > this into kdamond_valid_ctx() or so, because the main cause of this "valid"
-> > > bit is that there's no more "valid" targets for this context, but also we could
-> > > have ->after_sampling() returned something bad.
-> > 
-> > As mentioned above, calling ->check_accesses() or others towards invalidated
-> > targets (e.g., terminated processes's virtual address spaces) should be ok, if
-> > any of the targets are still valid.  So I don't show special technical
-> > difficulties here.  Please let me know if I'm missing something.
+> Responses should be made by Sat, 08 Jun 2024 13:15:55 +0000.
+> Anything received after that time might be too late.
 > 
-> This is true in case of only 1 context. kdamond can be stopped if there's
-> no valid targets for this context (e.g. no address space exists anymore),
-> but when there are many contexts we need to check if any of contexts has
-> valid target(s). For example, we have 3 contexts per kdamond, at some
-> point of time we have 1st context having no valid targets (process has been
-> finished), but other 2 contexts do have valid targets, so we don't need
-> to call ->prepare_access_checks() and ->check_accesses() as well for 1st
-> context, but we do need to call them for other contexts.
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.93-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+> and the diffstat can be found below.
 
-Yes, we don't need to.  Nonetheless, calling ->prepare_access_checks() is also
-not a big problem, right?  If I'm not wrong, I don't want to add more
-complexity for unclear benefit.  In other words, I think simply letting a
-kdamond continues access monitoring for virtual address space targets even
-after the processes are terminated while there are other contexts that need to
-continue access monitoring is ok, unless it has clear and significant problem.
+This rc kernel passes DAMON functionality test[1] on my test machine.
+Attaching the test results summary below.  Please note that I retrieved the
+kernel from linux-stable-rc tree[2].
 
-> 
-> We can call ->kdamond_valid_ctx() before calling ->check_accesses(),
-> but then we also need to check if nothing bad has been returned from
-> ->after_sampling() call, so that we're allowed to further call
-> ->check_accesses().
-> 
-> I decided to use a "valid" flag inside damon_ctx structure, so
-> that if this context isn't valid, we will just skip it while
-> iterating over all contexts.
+Tested-by: SeongJae Park <sj@kernel.org>
 
-If this is really needed, why don't you simply call ->target_valid() for each
-target for whenever we need to know if the target is valid?
-
+[1] https://github.com/awslabs/damon-tests/tree/next/corr
+[2] d2106b62e226 ("Linux 6.1.93-rc1")
 
 Thanks,
 SJ
 
 [...]
+
+---
+
+ok 1 selftests: damon: debugfs_attrs.sh
+ok 2 selftests: damon: debugfs_schemes.sh
+ok 3 selftests: damon: debugfs_target_ids.sh
+ok 4 selftests: damon: debugfs_empty_targets.sh
+ok 5 selftests: damon: debugfs_huge_count_read_write.sh
+ok 6 selftests: damon: debugfs_duplicate_context_creation.sh
+ok 7 selftests: damon: sysfs.sh
+ok 1 selftests: damon-tests: kunit.sh
+ok 2 selftests: damon-tests: huge_count_read_write.sh
+ok 3 selftests: damon-tests: buffer_overflow.sh
+ok 4 selftests: damon-tests: rm_contexts.sh
+ok 5 selftests: damon-tests: record_null_deref.sh
+ok 6 selftests: damon-tests: dbgfs_target_ids_read_before_terminate_race.sh
+ok 7 selftests: damon-tests: dbgfs_target_ids_pid_leak.sh
+ok 8 selftests: damon-tests: damo_tests.sh
+ok 9 selftests: damon-tests: masim-record.sh
+ok 10 selftests: damon-tests: build_i386.sh
+ok 11 selftests: damon-tests: build_arm64.sh
+ok 12 selftests: damon-tests: build_m68k.sh
+ok 13 selftests: damon-tests: build_i386_idle_flag.sh
+ok 14 selftests: damon-tests: build_i386_highpte.sh
+ok 15 selftests: damon-tests: build_nomemcg.sh
+ [33m
+ [92mPASS [39m
