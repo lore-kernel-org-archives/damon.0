@@ -1,33 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2579C8C7;
-	Thu, 13 Jun 2024 13:57:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93C06144D36;
+	Thu, 13 Jun 2024 14:03:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718287030; cv=none; b=s1YrFMJLburTTKcC5Ga4au9up11V1ALPnmQ4JVS6C4QmE/Gazx13+3G7OOugGG99qpTr+GREAyDJ6gm0mFxsN2w9xnwp0H6Nr/5ceI3D/UQRSG+o+s+rx18Xd7Nja0ov1GxJvHPhbOp+ggb1+6LHHDSAZgL/hQfydmQb3uutXDY=
+	t=1718287417; cv=none; b=RVQ4TUy1/KwBug8ICV+5Z9hOQXrpvQH8B5XH3IrBs6AQl4tPhXEo4Q4axDP14vcZXKuoU9FnqmNyWC5HXVUj/pC291dsqg75tK+zuy4io9wVcXHAxbfwrj/idETJsJeA6YFStPNHPSDUKib6ii98pbasouDMKrmLZGzphnLPOZ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718287030; c=relaxed/simple;
-	bh=ObQi8NQBz2Y2ivnMx8cOhGMCyJoPmV4ZTrlIbXTx9Tk=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To; b=DQtBCPko9EdQ+eEg8zQWnd80BvVHwTYpGnuEOTYqNdicrCoeg6mFiCcqIAqWMijTyEZ5FjCGytwNc7J5kK30KtQiKy7F7TRuKgvMOIWIAd89NYkEMkG/KLiNbttG0fwNwzLIq8xU784m6p5v/NZ2aSd027dswkzUwtxbsNWI7nc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=a0b1XjhM; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1718287417; c=relaxed/simple;
+	bh=ZEB6dzh79zObt/arRlHAONB0K6ulFY49wVE8g2mqSDQ=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To; b=DATOrv48xT3vo4qkgpH9KCVMeaD/tTmNYyua+sV+bOBMbm2WuKpWL9sarExOjVTvhhSbTnSm0rHS5vPqbnGGKfho43n6XqAr7d0ad/VNByf/g9cpJPECmMNZLu6V7K4vV0sQMmaPnJHVublwrC3PnBqWGMXLMS/ZR9HdEn/alvU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rVCE3pN+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="a0b1XjhM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2862C32786;
-	Thu, 13 Jun 2024 13:57:09 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rVCE3pN+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA84DC2BBFC;
+	Thu, 13 Jun 2024 14:03:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1718287030;
-	bh=ObQi8NQBz2Y2ivnMx8cOhGMCyJoPmV4ZTrlIbXTx9Tk=;
+	s=k20201202; t=1718287417;
+	bh=ZEB6dzh79zObt/arRlHAONB0K6ulFY49wVE8g2mqSDQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:From;
-	b=a0b1XjhMsfH4Sqk6NUmSEhBElTllzhWkO6RxuD2Xx5kDWbfnL+BwAMOc5tYgTN0fk
-	 cYM6R110WMdmH9pcG6X7bjdanPK1g9NAAnTplpB9AocDh5qervqUNf6ofnrCgrFolI
-	 HIFqQPvBgeaRUzUtU6gyzUnLpEtlN/gzREeo+f3ZNArOm2l6Jxr54LXSCxew7+4Jc9
-	 Rr+3vnFfRSf5CrxmlW4ATJibSy1WE8zRc4BhaBjrZQ993yZTyijs6NZT7vuwRffkYz
-	 r5eQgHxIbDCXAB8Y3FJb96vVpvdSwJ7CWsvk+mO8tsDaXRNZCBZdh1l2gsHW05364M
-	 lYf+sflfW8bpw==
+	b=rVCE3pN+CZIlRQ3pVHTyddDPv54KujZjVQXZOR5yrzQreclhZO6QdwQXA61WK94KR
+	 FI6RAMT1WM3quDNPt9wDIXlvn8WXx+0uUV8a6tvuFpzSyGt3rQpnI6N83WZ9stVaVA
+	 svtBvuCzW4IwnBhO49YJ7RibVJaMLkOqXHnXFjjSHrAjW/fSyPHrcrEZJdgvZZ2GIC
+	 9Ve3IgV1IErMm4BU++/30tPoP/EDPU3MignAdvcsPOje3FuOT1ON68IrjDfL+kvpyo
+	 EauqeymaSlKV7NrdCyfu01gQY7EQVoD5xoKT63ld5vg0PX6B4vbKKMPUdX95R41hLg
+	 zfgaMdGSBThsg==
 From: SeongJae Park <sj@kernel.org>
 To: Honggyu Kim <honggyu.kim@sk.com>
 Cc: SeongJae Park <sj@kernel.org>,
+	damon@lists.linux.dev,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Masami Hiramatsu <mhiramat@kernel.org>,
 	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
@@ -38,52 +39,51 @@ Cc: SeongJae Park <sj@kernel.org>,
 	linux-trace-kernel@vger.kernel.org,
 	42.hyeyoo@gmail.com,
 	art.jeongseob@gmail.com,
-	kernel_team@skhynix.com,
-	Hyeongtak Ji <hyeongtak.ji@sk.com>,
-	Rakie Kim <rakie.kim@sk.com>,
-	Yunjeong Mun <yunjeong.mun@sk.com>,
-	damon@lists.linux.dev
-Subject: Re: [PATCH 0/8] DAMON based tiered memory management for CXL memory
-Date: Thu, 13 Jun 2024 06:56:49 -0700
-Message-Id: <20240613135649.26707-1-sj@kernel.org>
+	kernel_team@skhynix.com
+Subject: Re: [PATCH v5 7/8] Docs/admin-guide/mm/damon/usage: add missing actions
+Date: Thu, 13 Jun 2024 07:03:19 -0700
+Message-Id: <20240613140319.27075-1-sj@kernel.org>
 X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20240613132730.650-1-honggyu.kim@sk.com>
+In-Reply-To: <20240613132056.608-8-honggyu.kim@sk.com>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 
-On Thu, 13 Jun 2024 22:27:26 +0900 Honggyu Kim <honggyu.kim@sk.com> wrote:
+Hi Honggyu,
 
-> On Thu, 13 Jun 2024 22:17:31 +0900 Honggyu Kim <honggyu.kim@sk.com> wrote:
-> > There was an RFC IDEA "DAMOS-based Tiered-Memory Management" previously
-> > posted at [1].
-> >
-> > It says there is no implementation of the demote/promote DAMOS action
-> > are made.  This patch series is about its implementation for physical
-> > address space so that this scheme can be applied in system wide level.
-> >
-> > Changes from RFC v4:
-> > https://lore.kernel.org/20240512175447.75943-1-sj@kernel.org
-> >   1. Add usage and design documents
-> >   2. Rename alloc_demote_folio to alloc_migrate_folio
-> >   3. Add evaluation results with "demotion_enabled" true
-> >   4. Rebase based on v6.10-rc3
+On Thu, 13 Jun 2024 22:20:54 +0900 Honggyu Kim <honggyu.kim@sk.com> wrote:
+
+> "lru_prio" and "lru_deprio" are missing in the damos action list so they
+> have to be added properly at damon usage document.
 > 
-> Sorry for making confusion, I didn't add "PATCH v5" tag for this patch
-> series so please ignore and see the resent one.
+> Signed-off-by: Honggyu Kim <honggyu.kim@sk.com>
+> ---
+>  Documentation/admin-guide/mm/damon/usage.rst | 4 +++-
+>  1 file changed, 3 insertions(+), 1 deletion(-)
+> 
+> diff --git a/Documentation/admin-guide/mm/damon/usage.rst b/Documentation/admin-guide/mm/damon/usage.rst
+> index e58ceb89ea2a..7bff54963975 100644
+> --- a/Documentation/admin-guide/mm/damon/usage.rst
+> +++ b/Documentation/admin-guide/mm/damon/usage.rst
+> @@ -757,7 +757,9 @@ list on :ref:`design doc <damon_design_damos_action>`.
+>   - 2: ``pageout``
+>   - 3: ``hugepage``
+>   - 4: ``nohugepage``
+> - - 5: ``stat``
+> + - 5: ``lru_prio``
+> + - 6: ``lru_deprio``
+> + - 7: ``stat``
 
-Thank you for clarifying this.
+This section is for DAMON debugfs interface, which is deprecated.  After the
+deprecation, we stopped supporting new DAMOS actions.  This section is not
+documenting lru_[de]prio for the reason.  I think this patch is not needed.
 
-Nonetheless, I don't mine resetting the version number of a patchset after
-dropping RFC.  Actually, I personally rather prefer resetting the version
-number.  Anyway, I don't care that much.  Please use any way that you feel more
-comfortable :)  Please just keep the number monotonically increase.
+Please let me know if I'm missing something, though.
 
 
 Thanks,
 SJ
 
-> 
-> Honggyu
+[...]
