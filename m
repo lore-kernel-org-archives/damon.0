@@ -1,18 +1,18 @@
-Received: from invmail4.hynix.com (exvmail4.hynix.com [166.125.252.92])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 26E341862A3
+Received: from invmail4.hynix.com (exvmail4.skhynix.com [166.125.252.92])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 571E21862B6
 	for <damon@lists.linux.dev>; Fri, 14 Jun 2024 03:00:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=166.125.252.92
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718334030; cv=none; b=aN8SuaxgjjB1H3tqDYK8IfpuGMcRFftyMIk+ZisNdVh9ZxGLGIWjA54U78njTUouyTP11RglIkK13W/Kc+w1ivLFqO5IcJ7APpFGV9OpjbSerZCOngaC2tMeTnQ+QihSRF3qhp1klVMvIiwjs6MpwJ8YziTPTadM0fPu88EgLdE=
+	t=1718334030; cv=none; b=M4FtX1ebDpUj5zn2pKSiUZ1FbBemHaBB7vB2HtSBRRPR75vlQWmb+w2BoefwIuDaePQ6EHLg+k7dacOSDfEeFESk1IK8NHCbtipqVvZbxR0HXvpPbOa/uNkY0Z/8iXpbK17y3K5pPn6WamB902G/G9mZDcRTGKQwLLv0HI2sWAQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1718334030; c=relaxed/simple;
-	bh=/fG6BOMu3pDqWuzCvSk+FHfqzO4oGlow/E9AiQiJ9Bs=;
+	bh=c2VM23Et//rTo7WvAQZoEXKmrE9QyrPIRFHO75KuJoE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dd4MnANw0cg9h+0i2KGG+1opkcMMXB04rL0vgdKeAOawg2QGYR4BIwJWzIVKf/9fLlLqsvhjkC0vYH4+AZ5LJ4Eukzl83myRFKjV44kP4jVFpomy72syTl4PugchLbhmMkUvs+8xnPurShuvSDbcABcP6TYW1q2fgD2Xnk2HeS4=
+	 MIME-Version; b=IpVTdVQzjYjxtPTr3tMLfFJXlIexBxCcuN4YXPUpLMdnoS35zhpe/s02+YVhG+7fvFDegW4lr8JDok0f2DqTYD7Hx8ooa5XOOm9ZdkxJVoxeStJMPuQ6AMnCsyuPT/hlhfYn7I7KEZpjachKEMpySPahgf1RhVzTbT6exmRkWCc=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sk.com; spf=pass smtp.mailfrom=sk.com; arc=none smtp.client-ip=166.125.252.92
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sk.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sk.com
-X-AuditID: a67dfc5b-d85ff70000001748-4b-666bb2473bfa
+X-AuditID: a67dfc5b-d85ff70000001748-59-666bb2482600
 From: Honggyu Kim <honggyu.kim@sk.com>
 To: SeongJae Park <sj@kernel.org>,
 	damon@lists.linux.dev
@@ -27,11 +27,10 @@ Cc: Andrew Morton <akpm@linux-foundation.org>,
 	42.hyeyoo@gmail.com,
 	art.jeongseob@gmail.com,
 	kernel_team@skhynix.com,
-	Hyeongtak Ji <hyeongtak.ji@sk.com>,
 	Honggyu Kim <honggyu.kim@sk.com>
-Subject: [PATCH v6 6/7] mm/damon/paddr: introduce DAMOS_MIGRATE_HOT action for promotion
-Date: Fri, 14 Jun 2024 12:00:08 +0900
-Message-ID: <20240614030010.751-7-honggyu.kim@sk.com>
+Subject: [PATCH v6 7/7] Docs/damon: document damos_migrate_{hot,cold}
+Date: Fri, 14 Jun 2024 12:00:09 +0900
+Message-ID: <20240614030010.751-8-honggyu.kim@sk.com>
 X-Mailer: git-send-email 2.43.0.windows.1
 In-Reply-To: <20240614030010.751-1-honggyu.kim@sk.com>
 References: <20240614030010.751-1-honggyu.kim@sk.com>
@@ -42,117 +41,72 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrNLMWRmVeSWpSXmKPExsXC9ZZnka77puw0g6Y9IhYTewws5qxfw2Zx
-	/8Frdosn/3+zWjQ0PWKxuLxrDpvFvTX/WS2OrD/LYrH57Blmi8XL1Sz2dTxgsjj89Q2TA4/H
-	0tNv2Dx2zrrL7tGy7xa7x6ZVnWwemz5NYvc4MeM3i8eLzTMZPTZ+/M/u8XmTXABnFJdNSmpO
-	Zllqkb5dAlfGzqNPWQv2SVRcWHyWtYGxU6SLkZNDQsBE4tacfSww9u5ry9hBbDYBNYkrLycx
-	dTFycIgIWElM2xHbxcjFwSxwjVlid/dJZpAaYYEIifkr+8F6WQRUJQ5fawPr5RUwlTj+fjET
-	xExNicfbf4LFOQXMJKYfuwcWFwKquXBlKxNEvaDEyZlPwOYwC8hLNG+dzQyyTELgPZtEd9M3
-	RohBkhIHV9xgmcDIPwtJzywkPQsYmVYxCmXmleUmZuaY6GVU5mVW6CXn525iBEbBsto/0TsY
-	P10IPsQowMGoxMPr8SwrTYg1say4MvcQowQHs5II76yFQCHelMTKqtSi/Pii0pzU4kOM0hws
-	SuK8Rt/KU4QE0hNLUrNTUwtSi2CyTBycUg2MvWemTDFameYcdPxMOsfvclG7zvn7S/rULGvX
-	nF6yWn9uEtP2WeaK/7xFuOV3z7DWP/Q6/Jqi0vUZwseZf5x8biJp83L6tLvBrg7aprMS4hjn
-	iyoIiiyZui46pUZha8vVlEWX5L99+2GQ9JBjUsR36eu7LPpOrmSZ97xsg2tdzIfFCU2Ppk9X
-	VmIpzkg01GIuKk4EAC1V+Nd+AgAA
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrALMWRmVeSWpSXmKPExsXCNUNLT9d9U3aaQeM7TouJPQYWc9avYbO4
-	/+A1u8WT/79ZLRqaHrFYfH72mtmi88l3RovDc0+yWlzeNYfN4t6a/6wWR9afZbHYfPYMs8Xi
-	5WoW+zoeMFkc/vqGyYHfY+npN2weO2fdZfdo2XeL3WPTqk42j02fJrF7nJjxm8XjxeaZjB4b
-	P/5n9/h228Nj8YsPTB6fN8kFcEdx2aSk5mSWpRbp2yVwZew8+pS1YJ9ExYXFZ1kbGDtFuhg5
-	OSQETCR2X1vGDmKzCahJXHk5iamLkYNDRMBKYtqO2C5GLg5mgWvMEru7TzKD1AgLREjMX9nP
-	AmKzCKhKHL7WBtbLK2Aqcfz9YiaImZoSj7f/BItzCphJTD92DywuBFRz4cpWJoh6QYmTM5+A
-	zWEWkJdo3jqbeQIjzywkqVlIUgsYmVYximTmleUmZuaY6hVnZ1TmZVboJefnbmIEhvuy2j8T
-	dzB+uex+iFGAg1GJh9fjWVaaEGtiWXFl7iFGCQ5mJRHeWQuBQrwpiZVVqUX58UWlOanFhxil
-	OViUxHm9wlMThATSE0tSs1NTC1KLYLJMHJxSDYyqDI+8Tt/P3Lv7nzRvW4dE2LW3iz4fLuG+
-	rrJQsz8my+Rd9+sW3ach1rt1wqQsO9tur9zJv2vmbrkvDu/WPDus91bzXuWUQzpR0s925X/g
-	dzc7qHQwLUs1c+deNpnNT1LfzY7wKXm9szDKu9LvQgV/5Y3Sq3/TBYxdX80KV0g6ufuTt2y2
-	TJoSS3FGoqEWc1FxIgC08WiccwIAAA==
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrJLMWRmVeSWpSXmKPExsXC9ZZnka7Hpuw0g/PbhC0m9hhYzFm/hs3i
+	/oPX7BZP/v9mtWhoesRicXnXHDaLe2v+s1ocWX+WxWLz2TPMFouXq1ns63jAZHH46xsmBx6P
+	paffsHnsnHWX3aNl3y12j02rOtk8Nn2axO5xYsZvFo8Xm2cyemz8+J/d4/MmuQDOKC6blNSc
+	zLLUIn27BK6Mrh89zAUH+CpW9TezNTDO5uli5OCQEDCRODClqIuRE8y89PkYE4jNJqAmceXl
+	JCaQEhEBK4lpO2K7GLk4mAU2MEtMOvcCrEZYwFViy6H7jCA2i4CqxI+1fWBxXgFTif9T+tkh
+	ZmpKPN7+E8zmFDCTmH7sHliNEFDNhStboeoFJU7OfMICYjMLyEs0b53NDNH7mE1i83p3CFtS
+	4uCKGywTGPlnIWmZhaRlASPTKkahzLyy3MTMHBO9jMq8zAq95PzcTYzACFhW+yd6B+OnC8GH
+	GAU4GJV4eD2eZaUJsSaWFVfmHmKU4GBWEuGdtRAoxJuSWFmVWpQfX1Sak1p8iFGag0VJnNfo
+	W3mKkEB6YklqdmpqQWoRTJaJg1OqgVG27zOnZi6j6OMpxbu5O57Zh22+LK3CcdKk1uqCvf0m
+	HWe3qZL7uoPmrUgOYYh/kfdn3u0Vkl/NjnL6r3E7tfXnlR0WQh9LvD9c97p5/vSBq7NyZrx6
+	5Tu5NWHXIq9NjRk80cXsqSt49GubWsQVI+Ze1dV/MuHt69+H5jPaZBxnuduiG6uQMFWJpTgj
+	0VCLuag4EQBn1JaJfAIAAA==
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrNLMWRmVeSWpSXmKPExsXCNUNLT9djU3aawac9HBYTewws5qxfw2Zx
+	/8Frdosn/3+zWjQ0PWKx+PzsNbPF4bknWS0u75rDZnFvzX9WiyPrz7JYbD57htli8XI1i30d
+	D5gsDn99w+TA57H09Bs2j52z7rJ7tOy7xe6xaVUnm8emT5PYPU7M+M3i8WLzTEaPjR//s3t8
+	u+3hsfjFByaPz5vkArijuGxSUnMyy1KL9O0SuDK6fvQwFxzgq1jV38zWwDibp4uRk0NCwETi
+	0udjTCA2m4CaxJWXk4BsDg4RASuJaTtiuxi5OJgFNjBLTDr3AqxGWMBVYsuh+4wgNouAqsSP
+	tX1gcV4BU4n/U/rZIWZqSjze/hPM5hQwk5h+7B5YjRBQzYUrW6HqBSVOznzCAmIzC8hLNG+d
+	zTyBkWcWktQsJKkFjEyrGEUy88pyEzNzTPWKszMq8zIr9JLzczcxAoN8We2fiTsYv1x2P8Qo
+	wMGoxMPr8SwrTYg1say4MvcQowQHs5II76yFQCHelMTKqtSi/Pii0pzU4kOM0hwsSuK8XuGp
+	CUIC6YklqdmpqQWpRTBZJg5OqQbG/kSbHx8jjipynP52261/4XaTl1Wh/omTsr7u+Fma9oL/
+	vNydvJqm3ymFAXVHjn5q2BP+aQJ7iNCLtx/FJl1+Kc83KXr1Q7NIz2rTPdqZP5rNG/wLTy4+
+	lrEjh39TR6fsg+tnrnXenud5rGrRt00aHgp9UW7qoY9aoqfOCOp7tXDCWZf4iF1HlFiKMxIN
+	tZiLihMBFQfDUG4CAAA=
 X-CFilter-Loop: Reflected
 
-From: Hyeongtak Ji <hyeongtak.ji@sk.com>
+This patch adds damon description for "migrate_hot" and "migrate_cold"
+actions for both usage and design documents as long as a new
+"target_nid" knob to set the migration target node.
 
-This patch introduces DAMOS_MIGRATE_HOT action, which is similar to
-DAMOS_MIGRATE_COLD, but proritizes hot pages.
-
-It migrates pages inside the given region to the 'target_nid' NUMA node
-in the sysfs.
-
-Here is one of the example usage of this 'migrate_hot' action.
-
-  $ cd /sys/kernel/mm/damon/admin/kdamonds/<N>
-  $ cat contexts/<N>/schemes/<N>/action
-  migrate_hot
-  $ echo 0 > contexts/<N>/schemes/<N>/target_nid
-  $ echo commit > state
-  $ numactl -p 2 ./hot_cold 500M 600M &
-  $ numastat -c -p hot_cold
-
-  Per-node process memory usage (in MBs)
-  PID             Node 0 Node 1 Node 2 Total
-  --------------  ------ ------ ------ -----
-  701 (hot_cold)     501      0    601  1101
-
-Signed-off-by: Hyeongtak Ji <hyeongtak.ji@sk.com>
 Signed-off-by: Honggyu Kim <honggyu.kim@sk.com>
-Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- include/linux/damon.h    | 2 ++
- mm/damon/paddr.c         | 3 +++
- mm/damon/sysfs-schemes.c | 1 +
- 3 files changed, 6 insertions(+)
+ Documentation/admin-guide/mm/damon/usage.rst | 4 ++++
+ Documentation/mm/damon/design.rst            | 4 ++++
+ 2 files changed, 8 insertions(+)
 
-diff --git a/include/linux/damon.h b/include/linux/damon.h
-index 56714b6eb0d7..3d62d98d6359 100644
---- a/include/linux/damon.h
-+++ b/include/linux/damon.h
-@@ -105,6 +105,7 @@ struct damon_target {
-  * @DAMOS_NOHUGEPAGE:	Call ``madvise()`` for the region with MADV_NOHUGEPAGE.
-  * @DAMOS_LRU_PRIO:	Prioritize the region on its LRU lists.
-  * @DAMOS_LRU_DEPRIO:	Deprioritize the region on its LRU lists.
-+ * @DAMOS_MIGRATE_HOT:  Migrate the regions prioritizing warmer regions.
-  * @DAMOS_MIGRATE_COLD:	Migrate the regions prioritizing colder regions.
-  * @DAMOS_STAT:		Do nothing but count the stat.
-  * @NR_DAMOS_ACTIONS:	Total number of DAMOS actions
-@@ -123,6 +124,7 @@ enum damos_action {
- 	DAMOS_NOHUGEPAGE,
- 	DAMOS_LRU_PRIO,
- 	DAMOS_LRU_DEPRIO,
-+	DAMOS_MIGRATE_HOT,
- 	DAMOS_MIGRATE_COLD,
- 	DAMOS_STAT,		/* Do nothing but only record the stat */
- 	NR_DAMOS_ACTIONS,
-diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
-index 882ae54af829..af6aac388a43 100644
---- a/mm/damon/paddr.c
-+++ b/mm/damon/paddr.c
-@@ -486,6 +486,7 @@ static unsigned long damon_pa_apply_scheme(struct damon_ctx *ctx,
- 		return damon_pa_mark_accessed(r, scheme);
- 	case DAMOS_LRU_DEPRIO:
- 		return damon_pa_deactivate_pages(r, scheme);
-+	case DAMOS_MIGRATE_HOT:
- 	case DAMOS_MIGRATE_COLD:
- 		return damon_pa_migrate(r, scheme);
- 	case DAMOS_STAT:
-@@ -508,6 +509,8 @@ static int damon_pa_scheme_score(struct damon_ctx *context,
- 		return damon_hot_score(context, r, scheme);
- 	case DAMOS_LRU_DEPRIO:
- 		return damon_cold_score(context, r, scheme);
-+	case DAMOS_MIGRATE_HOT:
-+		return damon_hot_score(context, r, scheme);
- 	case DAMOS_MIGRATE_COLD:
- 		return damon_cold_score(context, r, scheme);
- 	default:
-diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
-index 880015d5b5ea..66fccfa776d7 100644
---- a/mm/damon/sysfs-schemes.c
-+++ b/mm/damon/sysfs-schemes.c
-@@ -1458,6 +1458,7 @@ static const char * const damon_sysfs_damos_action_strs[] = {
- 	"nohugepage",
- 	"lru_prio",
- 	"lru_deprio",
-+	"migrate_hot",
- 	"migrate_cold",
- 	"stat",
- };
+diff --git a/Documentation/admin-guide/mm/damon/usage.rst b/Documentation/admin-guide/mm/damon/usage.rst
+index e58ceb89ea2a..98804e34448b 100644
+--- a/Documentation/admin-guide/mm/damon/usage.rst
++++ b/Documentation/admin-guide/mm/damon/usage.rst
+@@ -300,6 +300,10 @@ from the file and their meaning are same to those of the list on
+ The ``apply_interval_us`` file is for setting and getting the scheme's
+ :ref:`apply_interval <damon_design_damos>` in microseconds.
+ 
++The ``target_nid`` file is for setting the migration target node, which is
++only meaningful when the ``action`` is either ``migrate_hot`` or
++``migrate_cold``.
++
+ .. _sysfs_access_pattern:
+ 
+ schemes/<N>/access_pattern/
+diff --git a/Documentation/mm/damon/design.rst b/Documentation/mm/damon/design.rst
+index 3df387249937..3f12c884eb3a 100644
+--- a/Documentation/mm/damon/design.rst
++++ b/Documentation/mm/damon/design.rst
+@@ -325,6 +325,10 @@ that supports each action are as below.
+    Supported by ``paddr`` operations set.
+  - ``lru_deprio``: Deprioritize the region on its LRU lists.
+    Supported by ``paddr`` operations set.
++ - ``migrate_hot``: Migrate the regions prioritizing warmer regions.
++   Supported by ``paddr`` operations set.
++ - ``migrate_cold``: Migrate the regions prioritizing colder regions.
++   Supported by ``paddr`` operations set.
+  - ``stat``: Do nothing but count the statistics.
+    Supported by all operations sets.
+ 
 -- 
 2.34.1
 
