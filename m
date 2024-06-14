@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD55617BCC;
-	Fri, 14 Jun 2024 17:55:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BABD125601;
+	Fri, 14 Jun 2024 18:42:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718387708; cv=none; b=MhNWWhqIzGikOzXmJrCY3zHvYqcbg9KElDkkVv5gZ3T7LZl6sXxW7JQNcLIxqqsg2YL3AGwM7sSzliFI+n+YH7qcv+un9W4EmCsZilwqAIhDJPXk6PX06fEDxtuwGpLW7w+9S5j7DqJmXK6TvTxka6bQBEu0n/uJSEQZTvbNzOM=
+	t=1718390568; cv=none; b=OZEbl+JzZXxNBpr0pmp+nvLVqIqWdqgyHLmfWBCqyq5uQJ8ZNAbLpDhHm0NN5GtDAYt9w4spvK7PpKBWM3zGdtz3B/mLL+m/opqUpQgryLzZTYDs3bi3/xbCq/U+QEu8OXhk0Llie3vzeD1v5HZoLhIlRL4trly0dar0S8ZQ6wQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718387708; c=relaxed/simple;
-	bh=X7crwSjtAikzkXUXQq6L5MyYcvne07jWwyU6ygV+oZE=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=hazzkr8RxAM14gtzQTQCIN6SSOJs0IVkPbP9bOTI83VuZ6XM2NfQjGbPs4zCGeWCLBsJgTV9MN1dbWUpF17y7dirETI+gCPJeH1EGsFfUiIUdXxaiDHLDC5CulnirdgEYKO2RwmqYtOPvZPS8Xm8Sc0BXtiXOV3vE1YId6bsstA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cFY9VHuj; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1718390568; c=relaxed/simple;
+	bh=r3V8uORqgOShk02c6OFxElT3YBFjzYzIlhjvqyeiKeE=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=cT0aUcCQdHKJ/zhaCMD/sOVOUlGBwJs2wjEgAmR4bpW7MZhNSJh3Lb8J2yuXIU67H7jAzxC5f7cst/oNkuaD8Wwbt+5hFhVmSI3RNR37ZKHrNAMXcvvgh1U9+ElLs2e6dMBp80YvI1/8pfauDbfO6aaF/OeMVOip9LCQ+tq1fLE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SvU8f1C3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cFY9VHuj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB08EC2BD10;
-	Fri, 14 Jun 2024 17:55:07 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SvU8f1C3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA22BC2BD10;
+	Fri, 14 Jun 2024 18:42:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1718387708;
-	bh=X7crwSjtAikzkXUXQq6L5MyYcvne07jWwyU6ygV+oZE=;
-	h=From:To:Cc:Subject:Date:From;
-	b=cFY9VHujpqGCImIP5ckXr1PbMDiNWmbQcbocNCjWoCvHU02NezTKJ85c/Lsz9n1Id
-	 IZ4H8jWf+2Ztjgrnui7+RCFX7aDMsox3FkGdFPaAYHlmGxW0E4o8p/b9EUjCT1j7c8
-	 1MufaKIMwOZA7Wf6nFK2eqcK6DQqop3CUiTXjIuEuEH4xOHYtXHPqyUy2I37Qa1yjm
-	 PhoaATLYIgKIro48jH26YssLUzCzENeUS1csY1RgL9fVpoNu8ZqR2qSf28i1KKE/BX
-	 HIjJbpMXz6WBmY6FaOHMWHUWRQeGgbBW3ZddzK6+LSCG4fErX/YOdBYQsobHQgBj5c
-	 pyrJyi7DlqrvA==
+	s=k20201202; t=1718390568;
+	bh=r3V8uORqgOShk02c6OFxElT3YBFjzYzIlhjvqyeiKeE=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=SvU8f1C3HJ9SSrYwuhffp9UEDc4x9qJIVsqb6Os26CMYNefSixh2EtYTwr7O7VAWc
+	 1dNaUxYLtJoDgPbpIcGdFSV6nJ/quG4kuIeP+VkvTslQjfoz5L5bjsPTsl2AjEW1/u
+	 905s7Zo7dg8T1C1PBrgoLhELthL1rMv5bOKpsTuabukAUnVhMUguUGRPAy7x66C6Nw
+	 c+MGbaELnbrs8ewiKPP6thQCJgtthNHS3Py9fdheQN0Y/n4HunywKw7hNK6BQ5l1Wb
+	 Bch0NCjLskk9ii/XfStNKB6dCnKZ101b7h9HcRfoUsR6hWZdll1HG8XIzypiSmjaKu
+	 FKKmtt/t891ww==
 From: SeongJae Park <sj@kernel.org>
-To: ksummit@lists.linux.dev
-Cc: SeongJae Park <sj@kernel.org>,
+To: SeongJae Park <sj@kernel.org>
+Cc: ksummit@lists.linux.dev,
 	damon@lists.linux.dev,
-	inux-mm@kvack.org,
-	linux-kernel@vger.kernel.org
-Subject: [TECH TOPIC] DAMON: Updates and Plans
-Date: Fri, 14 Jun 2024 10:55:04 -0700
-Message-Id: <20240614175504.87365-1-sj@kernel.org>
+	linux-kernel@vger.kernel.org,
+	linux-mm@kvack.org
+Subject: Fwd: [TECH TOPIC] DAMON: Updates and Plans
+Date: Fri, 14 Jun 2024 11:42:45 -0700
+Message-Id: <20240614184245.88080-1-sj@kernel.org>
 X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20240614175504.87365-1-sj@kernel.org>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -42,6 +45,11 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+
+I made a typo on the mail address for linux-mm@, on the original mail.  So
+forwarding to linux-mm@ as a reply-to-all.  Sorry for making noise.
+
+================================= >8 ========================================
 
 Hello all,
 
