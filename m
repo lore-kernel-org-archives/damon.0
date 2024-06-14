@@ -1,18 +1,18 @@
 Received: from invmail4.hynix.com (exvmail4.hynix.com [166.125.252.92])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DE748184102
-	for <damon@lists.linux.dev>; Fri, 14 Jun 2024 03:00:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 607A91482E0
+	for <damon@lists.linux.dev>; Fri, 14 Jun 2024 03:00:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=166.125.252.92
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718334028; cv=none; b=WIUEWG7L6f8hhzu6YgbDPoAYKlJ06xa8kaByMhSaDNggnCBtp+/u2VeBzPnZaNkoH2tlByNAYwnNdAFM+rkrULvjl6NIV1YNgoteaX2SGZzb3AkN9+tpt6KPYeHR3YjQHX4N+Np6ibvnfPrdgN+4/50x0AdjCh4GyHad/ZEu3Jk=
+	t=1718334029; cv=none; b=r/qws8FEL2CYz+ZSsYfOav9FBYfQIKxVv65F6z7juEBaOQZHMEJq/f4r9eKYw5b6AhLCnBgeKd6eNFDTVvd3r+M06SXIL2TX9u0RxoFRX9NwK+pBOrQPu9C4pauhD+DRVQoKXJ7hbs+hf13SjpVC7rCBb1MAleC050xqoj2k+28=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718334028; c=relaxed/simple;
-	bh=PBLigDFeoVj/3sesODDma7eu2K0yE9gUuHQjzZnRg4I=;
+	s=arc-20240116; t=1718334029; c=relaxed/simple;
+	bh=gK7IYwCVAC/BaeHUelw2TAZSnFTHiuHeoYJ/b8GUzHc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mhQyAfGuURWc4UnLDFAnkieOxdYuSRf3yG1WM41+MJIlmmotjOmEPDXj9Rammq4rAvG6y9VAakO++3w0guXP8TxaKXEGooOIoUEw3kusvtYKAIrTo6PK8DOGWofuPrarL3+XtvfwWk/hrACWXGDHglDZS0wADoSIsA2/Al+OefU=
+	 MIME-Version; b=Jxg+XDtwNLO7z3ywd2/bH4ppaX9KDri9SZ+kGXbdiK8e93OSs1Cf61wUdhhk5fx0cc9YEMeqYFDtlAb74trjPjb1IGZh7n6ZbdLcv2CJ1dgBGICLlEd+1rpOrbQAOf2TAwCcfyJ3LYnv58zXmcJ4YyeEILxmbTkRWxQ7g7tyI2k=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sk.com; spf=pass smtp.mailfrom=sk.com; arc=none smtp.client-ip=166.125.252.92
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sk.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sk.com
-X-AuditID: a67dfc5b-d85ff70000001748-35-666bb2448c76
+X-AuditID: a67dfc5b-d85ff70000001748-3e-666bb24685fe
 From: Honggyu Kim <honggyu.kim@sk.com>
 To: SeongJae Park <sj@kernel.org>,
 	damon@lists.linux.dev
@@ -27,11 +27,11 @@ Cc: Andrew Morton <akpm@linux-foundation.org>,
 	42.hyeyoo@gmail.com,
 	art.jeongseob@gmail.com,
 	kernel_team@skhynix.com,
-	Hyeongtak Ji <hyeongtak.ji@sk.com>,
-	Honggyu Kim <honggyu.kim@sk.com>
-Subject: [PATCH v6 3/7] mm/damon/sysfs-schemes: add target_nid on sysfs-schemes
-Date: Fri, 14 Jun 2024 12:00:05 +0900
-Message-ID: <20240614030010.751-4-honggyu.kim@sk.com>
+	Honggyu Kim <honggyu.kim@sk.com>,
+	Hyeongtak Ji <hyeongtak.ji@sk.com>
+Subject: [PATCH v6 5/7] mm/damon/paddr: introduce DAMOS_MIGRATE_COLD action for demotion
+Date: Fri, 14 Jun 2024 12:00:07 +0900
+Message-ID: <20240614030010.751-6-honggyu.kim@sk.com>
 X-Mailer: git-send-email 2.43.0.windows.1
 In-Reply-To: <20240614030010.751-1-honggyu.kim@sk.com>
 References: <20240614030010.751-1-honggyu.kim@sk.com>
@@ -42,248 +42,286 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrFLMWRmVeSWpSXmKPExsXC9ZZnka7Lpuw0g8l/eCwm9hhYzFm/hs3i
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrNLMWRmVeSWpSXmKPExsXC9ZZnka7bpuw0gyubhC0m9hhYzFm/hs3i
 	/oPX7BZP/v9mtWhoesRicXnXHDaLe2v+s1ocWX+WxWLz2TPMFouXq1ns63jAZHH46xsmBx6P
 	paffsHnsnHWX3aNl3y12j02rOtk8Nn2axO5xYsZvFo8Xm2cyemz8+J/d4/MmuQDOKC6blNSc
-	zLLUIn27BK6M4+vbWAouW1U82vGIsYFxo0EXIyeHhICJxPHzneww9qVHJxlBbDYBNYkrLycx
-	dTFycIgIWElM2xHbxcjFwSxwjVlid/dJZpAaYQF/ibOPVoLVsAioSqy65goS5hUwlfh3fQIb
-	xEhNicfbf4KN5xQwk5h+7B4TiC0EVHPhylYmiHpBiZMzn7CA2MwC8hLNW2czg+ySEHjPJvF7
-	/m8WiEGSEgdX3GCZwMg/C0nPLCQ9CxiZVjEKZeaV5SZm5pjoZVTmZVboJefnbmIExsCy2j/R
-	Oxg/XQg+xCjAwajEw+vxLCtNiDWxrLgy9xCjBAezkgjvrIVAId6UxMqq1KL8+KLSnNTiQ4zS
-	HCxK4rxG38pThATSE0tSs1NTC1KLYLJMHJxSDYxam9TsTtimGdXsfeqbMl24QO/QWclZ5mmJ
-	EnOyTyR37npz9Kj8uzcRrwW3OWx41fP0xiOOqe+lrs2udf+nlPGP9WLsgaRSy49qP4zMG+tc
-	OdL31X2w7LXz2Xz6a/CRmUo2H5OO2N20VI2ek+FcaVKud/3uM5GvTyy0olXKHM7LLmbTsnAo
-	m6LEUpyRaKjFXFScCADJ3Mu7fQIAAA==
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrPLMWRmVeSWpSXmKPExsXCNUNLT9d5U3aawe7p1hYTewws5qxfw2Zx
+	zLLUIn27BK6M94efshRssq5Y+3s1ewPjUoMuRk4OCQETifl9rxhh7Oc/HrOA2GwCahJXXk5i
+	6mLk4BARsJKYtiO2i5GLg1ngGrPE8uZFTCA1wgIREtd+/AKzWQRUJZr2fmYHsXkFTCVWNW9n
+	gpipKfF4+0+wOKeAmcT0Y/fA4kJANReubGWCqBeUODnzCdheZgF5ieats5lBlkkIvGeTePKh
+	ixVikKTEwRU3WCYw8s9C0jMLSc8CRqZVjEKZeWW5iZk5JnoZlXmZFXrJ+bmbGIFRsKz2T/QO
+	xk8Xgg8xCnAwKvHwejzLShNiTSwrrsw9xCjBwawkwjtrIVCINyWxsiq1KD++qDQntfgQozQH
+	i5I4r9G38hQhgfTEktTs1NSC1CKYLBMHp1QDo74V8/MvJvcvn4rJfxC0r8+/xex03kzB82e9
+	i4T1Wpr3OuqZ/Zi++b1rwl8joTrx3x7SCsaLzH8aZhnExRzZN/nyimgP/VV/r/RmcPpbxrmZ
+	saXGdaib+xR+TXnK5rf7gmF96KOZ/G/na1+rfVsZ3RfcW/RbmOVqgsKa52HzvYyLF/ydpR+l
+	xFKckWioxVxUnAgABtLRkH4CAAA=
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrALMWRmVeSWpSXmKPExsXCNUNLT9dtU3aawYYb7BYTewws5qxfw2Zx
 	/8Frdosn/3+zWjQ0PWKx+PzsNbNF55PvjBaH555ktbi8aw6bxb01/1ktjqw/y2Kx+ewZZovF
 	y9Us9nU8YLI4/PUNkwO/x9LTb9g8ds66y+7Rsu8Wu8emVZ1sHps+TWL3ODHjN4vHi80zGT02
-	fvzP7vHttofH4hcfmDw+b5IL4I7isklJzcksSy3St0vgyji+vo2l4LJVxaMdjxgbGDcadDFy
-	ckgImEhcenSSEcRmE1CTuPJyElMXIweHiICVxLQdsV2MXBzMAteYJXZ3n2QGqREW8Jc4+2gl
-	WA2LgKrEqmuuIGFeAVOJf9cnsEGM1JR4vP0nO4jNKWAmMf3YPSYQWwio5sKVrUwQ9YISJ2c+
-	YQGxmQXkJZq3zmaewMgzC0lqFpLUAkamVYwimXlluYmZOaZ6xdkZlXmZFXrJ+bmbGIHBvqz2
-	z8QdjF8uux9iFOBgVOLh9XiWlSbEmlhWXJl7iFGCg1lJhHfWQqAQb0piZVVqUX58UWlOavEh
-	RmkOFiVxXq/w1AQhgfTEktTs1NSC1CKYLBMHp1QDo77Msjnbui94CDIE7/oeziMs++led6bc
-	Ro0DIawSF9bPMP7E8srh5Op9PRUWnssv7bJWW/B0ubc7Ewvred6OgAnNu094Ps7ZuDH5xVav
-	b5u37vne+/+z6Uk3J89Nrp/ruFbKPz3EMe1DugKXwuuQW3+KpweYB2vKqj7aXxUuv507qSu8
-	lJF3vRJLcUaioRZzUXEiAOpKILpyAgAA
+	fvzP7vHttofH4hcfmDw+b5IL4I7isklJzcksSy3St0vgynh/+ClLwSbrirW/V7M3MC416GLk
+	5JAQMJF4/uMxC4jNJqAmceXlJKYuRg4OEQEriWk7YrsYuTiYBa4xSyxvXsQEUiMsECFx7ccv
+	MJtFQFWiae9ndhCbV8BUYlXzdiaImZoSj7f/BItzCphJTD92DywuBFRz4cpWJoh6QYmTM5+A
+	7WUWkJdo3jqbeQIjzywkqVlIUgsYmVYximTmleUmZuaY6hVnZ1TmZVboJefnbmIEhvuy2j8T
+	dzB+uex+iFGAg1GJh9fjWVaaEGtiWXFl7iFGCQ5mJRHeWQuBQrwpiZVVqUX58UWlOanFhxil
+	OViUxHm9wlMThATSE0tSs1NTC1KLYLJMHJxSDYx7Nbt/yU587PvdWq1HQXnGepebH98t/za/
+	w+TzS8lfYdYuOp+Wim/9fP0rg4JYw/OYY93qfu0PFysLqDmX6ZtlnrVks9+vc+V3dY1O0+td
+	N+4Lu29rex8lcXzOjbNz0xd84nVI+qByvnH67qu+r4/skzppPq0pt3nDi/Uz/SfprJjAbmew
+	9KKwEktxRqKhFnNRcSIAHi2Lb3MCAAA=
 X-CFilter-Loop: Reflected
 
-From: Hyeongtak Ji <hyeongtak.ji@sk.com>
+This patch introduces DAMOS_MIGRATE_COLD action, which is similar to
+DAMOS_PAGEOUT, but migrate folios to the given 'target_nid' in the sysfs
+instead of swapping them out.
 
-This patch adds target_nid under
-  /sys/kernel/mm/damon/admin/kdamonds/<N>/contexts/<N>/schemes/<N>/
+The 'target_nid' sysfs knob informs the migration target node ID.
 
-The 'target_nid' can be used as the destination node for DAMOS actions
-such as DAMOS_MIGRATE_{HOT,COLD} in the follow up patches.
+Here is one of the example usage of this 'migrate_cold' action.
 
-Signed-off-by: Hyeongtak Ji <hyeongtak.ji@sk.com>
+  $ cd /sys/kernel/mm/damon/admin/kdamonds/<N>
+  $ cat contexts/<N>/schemes/<N>/action
+  migrate_cold
+  $ echo 2 > contexts/<N>/schemes/<N>/target_nid
+  $ echo commit > state
+  $ numactl -p 0 ./hot_cold 500M 600M &
+  $ numastat -c -p hot_cold
+
+  Per-node process memory usage (in MBs)
+  PID             Node 0 Node 1 Node 2 Total
+  --------------  ------ ------ ------ -----
+  701 (hot_cold)     501      0    601  1101
+
+Since there are some common routines with pageout, many functions have
+similar logics between pageout and migrate cold.
+
+damon_pa_migrate_folio_list() is a minimized version of
+shrink_folio_list().
+
 Signed-off-by: Honggyu Kim <honggyu.kim@sk.com>
+Signed-off-by: Hyeongtak Ji <hyeongtak.ji@sk.com>
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- include/linux/damon.h    | 11 ++++++++++-
- mm/damon/core.c          |  5 ++++-
- mm/damon/dbgfs.c         |  2 +-
- mm/damon/lru_sort.c      |  3 ++-
- mm/damon/reclaim.c       |  3 ++-
- mm/damon/sysfs-schemes.c | 33 ++++++++++++++++++++++++++++++++-
- 6 files changed, 51 insertions(+), 6 deletions(-)
+ include/linux/damon.h    |   2 +
+ mm/damon/paddr.c         | 154 +++++++++++++++++++++++++++++++++++++++
+ mm/damon/sysfs-schemes.c |   1 +
+ 3 files changed, 157 insertions(+)
 
 diff --git a/include/linux/damon.h b/include/linux/damon.h
-index f7da65e1ac04..21d6b69a015c 100644
+index 21d6b69a015c..56714b6eb0d7 100644
 --- a/include/linux/damon.h
 +++ b/include/linux/damon.h
-@@ -374,6 +374,7 @@ struct damos_access_pattern {
-  * @apply_interval_us:	The time between applying the @action.
-  * @quota:		Control the aggressiveness of this scheme.
-  * @wmarks:		Watermarks for automated (in)activation of this scheme.
-+ * @target_nid:		Destination node if @action is "migrate_{hot,cold}".
-  * @filters:		Additional set of &struct damos_filter for &action.
-  * @stat:		Statistics of this scheme.
-  * @list:		List head for siblings.
-@@ -389,6 +390,10 @@ struct damos_access_pattern {
-  * monitoring context are inactive, DAMON stops monitoring either, and just
-  * repeatedly checks the watermarks.
+@@ -105,6 +105,7 @@ struct damon_target {
+  * @DAMOS_NOHUGEPAGE:	Call ``madvise()`` for the region with MADV_NOHUGEPAGE.
+  * @DAMOS_LRU_PRIO:	Prioritize the region on its LRU lists.
+  * @DAMOS_LRU_DEPRIO:	Deprioritize the region on its LRU lists.
++ * @DAMOS_MIGRATE_COLD:	Migrate the regions prioritizing colder regions.
+  * @DAMOS_STAT:		Do nothing but count the stat.
+  * @NR_DAMOS_ACTIONS:	Total number of DAMOS actions
   *
-+ * @target_nid is used to set the migration target node for migrate_hot or
-+ * migrate_cold actions, which means it's only meaningful when @action is either
-+ * "migrate_hot" or "migrate_cold".
-+ *
-  * Before applying the &action to a memory region, &struct damon_operations
-  * implementation could check pages of the region and skip &action to respect
-  * &filters
-@@ -410,6 +415,9 @@ struct damos {
- /* public: */
- 	struct damos_quota quota;
- 	struct damos_watermarks wmarks;
-+	union {
-+		int target_nid;
+@@ -122,6 +123,7 @@ enum damos_action {
+ 	DAMOS_NOHUGEPAGE,
+ 	DAMOS_LRU_PRIO,
+ 	DAMOS_LRU_DEPRIO,
++	DAMOS_MIGRATE_COLD,
+ 	DAMOS_STAT,		/* Do nothing but only record the stat */
+ 	NR_DAMOS_ACTIONS,
+ };
+diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
+index 18797c1b419b..882ae54af829 100644
+--- a/mm/damon/paddr.c
++++ b/mm/damon/paddr.c
+@@ -12,6 +12,9 @@
+ #include <linux/pagemap.h>
+ #include <linux/rmap.h>
+ #include <linux/swap.h>
++#include <linux/memory-tiers.h>
++#include <linux/migrate.h>
++#include <linux/mm_inline.h>
+ 
+ #include "../internal.h"
+ #include "ops-common.h"
+@@ -325,6 +328,153 @@ static unsigned long damon_pa_deactivate_pages(struct damon_region *r,
+ 	return damon_pa_mark_accessed_or_deactivate(r, s, false);
+ }
+ 
++static unsigned int __damon_pa_migrate_folio_list(
++		struct list_head *migrate_folios, struct pglist_data *pgdat,
++		int target_nid)
++{
++	unsigned int nr_succeeded;
++	nodemask_t allowed_mask = NODE_MASK_NONE;
++	struct migration_target_control mtc = {
++		/*
++		 * Allocate from 'node', or fail quickly and quietly.
++		 * When this happens, 'page' will likely just be discarded
++		 * instead of migrated.
++		 */
++		.gfp_mask = (GFP_HIGHUSER_MOVABLE & ~__GFP_RECLAIM) |
++			__GFP_NOWARN | __GFP_NOMEMALLOC | GFP_NOWAIT,
++		.nid = target_nid,
++		.nmask = &allowed_mask
 +	};
- 	struct list_head filters;
- 	struct damos_stat stat;
- 	struct list_head list;
-@@ -726,7 +734,8 @@ struct damos *damon_new_scheme(struct damos_access_pattern *pattern,
- 			enum damos_action action,
- 			unsigned long apply_interval_us,
- 			struct damos_quota *quota,
--			struct damos_watermarks *wmarks);
-+			struct damos_watermarks *wmarks,
-+			int target_nid);
- void damon_add_scheme(struct damon_ctx *ctx, struct damos *s);
- void damon_destroy_scheme(struct damos *s);
- 
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index 6392f1cc97a3..c0ec5be4f56e 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -354,7 +354,8 @@ struct damos *damon_new_scheme(struct damos_access_pattern *pattern,
- 			enum damos_action action,
- 			unsigned long apply_interval_us,
- 			struct damos_quota *quota,
--			struct damos_watermarks *wmarks)
-+			struct damos_watermarks *wmarks,
-+			int target_nid)
- {
- 	struct damos *scheme;
- 
-@@ -381,6 +382,8 @@ struct damos *damon_new_scheme(struct damos_access_pattern *pattern,
- 	scheme->wmarks = *wmarks;
- 	scheme->wmarks.activated = true;
- 
-+	scheme->target_nid = target_nid;
 +
- 	return scheme;
- }
- 
-diff --git a/mm/damon/dbgfs.c b/mm/damon/dbgfs.c
-index 2461cfe2e968..51a6f1cac385 100644
---- a/mm/damon/dbgfs.c
-+++ b/mm/damon/dbgfs.c
-@@ -281,7 +281,7 @@ static struct damos **str_to_schemes(const char *str, ssize_t len,
- 
- 		pos += parsed;
- 		scheme = damon_new_scheme(&pattern, action, 0, &quota,
--				&wmarks);
-+				&wmarks, NUMA_NO_NODE);
- 		if (!scheme)
- 			goto fail;
- 
-diff --git a/mm/damon/lru_sort.c b/mm/damon/lru_sort.c
-index 3de2916a65c3..3775f0f2743d 100644
---- a/mm/damon/lru_sort.c
-+++ b/mm/damon/lru_sort.c
-@@ -163,7 +163,8 @@ static struct damos *damon_lru_sort_new_scheme(
- 			/* under the quota. */
- 			&quota,
- 			/* (De)activate this according to the watermarks. */
--			&damon_lru_sort_wmarks);
-+			&damon_lru_sort_wmarks,
-+			NUMA_NO_NODE);
- }
- 
- /* Create a DAMON-based operation scheme for hot memory regions */
-diff --git a/mm/damon/reclaim.c b/mm/damon/reclaim.c
-index 9bd341d62b4c..a05ccb41749b 100644
---- a/mm/damon/reclaim.c
-+++ b/mm/damon/reclaim.c
-@@ -177,7 +177,8 @@ static struct damos *damon_reclaim_new_scheme(void)
- 			/* under the quota. */
- 			&damon_reclaim_quota,
- 			/* (De)activate this according to the watermarks. */
--			&damon_reclaim_wmarks);
-+			&damon_reclaim_wmarks,
-+			NUMA_NO_NODE);
- }
- 
- static void damon_reclaim_copy_quota_status(struct damos_quota *dst,
++	if (pgdat->node_id == target_nid || target_nid == NUMA_NO_NODE)
++		return 0;
++
++	if (list_empty(migrate_folios))
++		return 0;
++
++	/* Migration ignores all cpuset and mempolicy settings */
++	migrate_pages(migrate_folios, alloc_migrate_folio, NULL,
++		      (unsigned long)&mtc, MIGRATE_ASYNC, MR_DAMON,
++		      &nr_succeeded);
++
++	return nr_succeeded;
++}
++
++static unsigned int damon_pa_migrate_folio_list(struct list_head *folio_list,
++						struct pglist_data *pgdat,
++						int target_nid)
++{
++	unsigned int nr_migrated = 0;
++	struct folio *folio;
++	LIST_HEAD(ret_folios);
++	LIST_HEAD(migrate_folios);
++
++	while (!list_empty(folio_list)) {
++		struct folio *folio;
++
++		cond_resched();
++
++		folio = lru_to_folio(folio_list);
++		list_del(&folio->lru);
++
++		if (!folio_trylock(folio))
++			goto keep;
++
++		/* Relocate its contents to another node. */
++		list_add(&folio->lru, &migrate_folios);
++		folio_unlock(folio);
++		continue;
++keep:
++		list_add(&folio->lru, &ret_folios);
++	}
++	/* 'folio_list' is always empty here */
++
++	/* Migrate folios selected for migration */
++	nr_migrated += __damon_pa_migrate_folio_list(
++			&migrate_folios, pgdat, target_nid);
++	/*
++	 * Folios that could not be migrated are still in @migrate_folios.  Add
++	 * those back on @folio_list
++	 */
++	if (!list_empty(&migrate_folios))
++		list_splice_init(&migrate_folios, folio_list);
++
++	try_to_unmap_flush();
++
++	list_splice(&ret_folios, folio_list);
++
++	while (!list_empty(folio_list)) {
++		folio = lru_to_folio(folio_list);
++		list_del(&folio->lru);
++		folio_putback_lru(folio);
++	}
++
++	return nr_migrated;
++}
++
++static unsigned long damon_pa_migrate_pages(struct list_head *folio_list,
++					    int target_nid)
++{
++	int nid;
++	unsigned long nr_migrated = 0;
++	LIST_HEAD(node_folio_list);
++	unsigned int noreclaim_flag;
++
++	if (list_empty(folio_list))
++		return nr_migrated;
++
++	noreclaim_flag = memalloc_noreclaim_save();
++
++	nid = folio_nid(lru_to_folio(folio_list));
++	do {
++		struct folio *folio = lru_to_folio(folio_list);
++
++		if (nid == folio_nid(folio)) {
++			list_move(&folio->lru, &node_folio_list);
++			continue;
++		}
++
++		nr_migrated += damon_pa_migrate_folio_list(&node_folio_list,
++							   NODE_DATA(nid),
++							   target_nid);
++		nid = folio_nid(lru_to_folio(folio_list));
++	} while (!list_empty(folio_list));
++
++	nr_migrated += damon_pa_migrate_folio_list(&node_folio_list,
++						   NODE_DATA(nid),
++						   target_nid);
++
++	memalloc_noreclaim_restore(noreclaim_flag);
++
++	return nr_migrated;
++}
++
++static unsigned long damon_pa_migrate(struct damon_region *r, struct damos *s)
++{
++	unsigned long addr, applied;
++	LIST_HEAD(folio_list);
++
++	for (addr = r->ar.start; addr < r->ar.end; addr += PAGE_SIZE) {
++		struct folio *folio = damon_get_folio(PHYS_PFN(addr));
++
++		if (!folio)
++			continue;
++
++		if (damos_pa_filter_out(s, folio))
++			goto put_folio;
++
++		if (!folio_isolate_lru(folio))
++			goto put_folio;
++		list_add(&folio->lru, &folio_list);
++put_folio:
++		folio_put(folio);
++	}
++	applied = damon_pa_migrate_pages(&folio_list, s->target_nid);
++	cond_resched();
++	return applied * PAGE_SIZE;
++}
++
++
+ static unsigned long damon_pa_apply_scheme(struct damon_ctx *ctx,
+ 		struct damon_target *t, struct damon_region *r,
+ 		struct damos *scheme)
+@@ -336,6 +486,8 @@ static unsigned long damon_pa_apply_scheme(struct damon_ctx *ctx,
+ 		return damon_pa_mark_accessed(r, scheme);
+ 	case DAMOS_LRU_DEPRIO:
+ 		return damon_pa_deactivate_pages(r, scheme);
++	case DAMOS_MIGRATE_COLD:
++		return damon_pa_migrate(r, scheme);
+ 	case DAMOS_STAT:
+ 		break;
+ 	default:
+@@ -356,6 +508,8 @@ static int damon_pa_scheme_score(struct damon_ctx *context,
+ 		return damon_hot_score(context, r, scheme);
+ 	case DAMOS_LRU_DEPRIO:
+ 		return damon_cold_score(context, r, scheme);
++	case DAMOS_MIGRATE_COLD:
++		return damon_cold_score(context, r, scheme);
+ 	default:
+ 		break;
+ 	}
 diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
-index bea5bc52846a..0632d28b67f8 100644
+index 0632d28b67f8..880015d5b5ea 100644
 --- a/mm/damon/sysfs-schemes.c
 +++ b/mm/damon/sysfs-schemes.c
-@@ -6,6 +6,7 @@
-  */
- 
- #include <linux/slab.h>
-+#include <linux/numa.h>
- 
- #include "sysfs-common.h"
- 
-@@ -1445,6 +1446,7 @@ struct damon_sysfs_scheme {
- 	struct damon_sysfs_scheme_filters *filters;
- 	struct damon_sysfs_stats *stats;
- 	struct damon_sysfs_scheme_regions *tried_regions;
-+	int target_nid;
+@@ -1458,6 +1458,7 @@ static const char * const damon_sysfs_damos_action_strs[] = {
+ 	"nohugepage",
+ 	"lru_prio",
+ 	"lru_deprio",
++	"migrate_cold",
+ 	"stat",
  };
  
- /* This should match with enum damos_action */
-@@ -1470,6 +1472,7 @@ static struct damon_sysfs_scheme *damon_sysfs_scheme_alloc(
- 	scheme->kobj = (struct kobject){};
- 	scheme->action = action;
- 	scheme->apply_interval_us = apply_interval_us;
-+	scheme->target_nid = NUMA_NO_NODE;
- 	return scheme;
- }
- 
-@@ -1692,6 +1695,28 @@ static ssize_t apply_interval_us_store(struct kobject *kobj,
- 	return err ? err : count;
- }
- 
-+static ssize_t target_nid_show(struct kobject *kobj,
-+		struct kobj_attribute *attr, char *buf)
-+{
-+	struct damon_sysfs_scheme *scheme = container_of(kobj,
-+			struct damon_sysfs_scheme, kobj);
-+
-+	return sysfs_emit(buf, "%d\n", scheme->target_nid);
-+}
-+
-+static ssize_t target_nid_store(struct kobject *kobj,
-+		struct kobj_attribute *attr, const char *buf, size_t count)
-+{
-+	struct damon_sysfs_scheme *scheme = container_of(kobj,
-+			struct damon_sysfs_scheme, kobj);
-+	int err = 0;
-+
-+	/* TODO: error handling for target_nid range. */
-+	err = kstrtoint(buf, 0, &scheme->target_nid);
-+
-+	return err ? err : count;
-+}
-+
- static void damon_sysfs_scheme_release(struct kobject *kobj)
- {
- 	kfree(container_of(kobj, struct damon_sysfs_scheme, kobj));
-@@ -1703,9 +1728,13 @@ static struct kobj_attribute damon_sysfs_scheme_action_attr =
- static struct kobj_attribute damon_sysfs_scheme_apply_interval_us_attr =
- 		__ATTR_RW_MODE(apply_interval_us, 0600);
- 
-+static struct kobj_attribute damon_sysfs_scheme_target_nid_attr =
-+		__ATTR_RW_MODE(target_nid, 0600);
-+
- static struct attribute *damon_sysfs_scheme_attrs[] = {
- 	&damon_sysfs_scheme_action_attr.attr,
- 	&damon_sysfs_scheme_apply_interval_us_attr.attr,
-+	&damon_sysfs_scheme_target_nid_attr.attr,
- 	NULL,
- };
- ATTRIBUTE_GROUPS(damon_sysfs_scheme);
-@@ -2031,7 +2060,8 @@ static struct damos *damon_sysfs_mk_scheme(
- 	};
- 
- 	scheme = damon_new_scheme(&pattern, sysfs_scheme->action,
--			sysfs_scheme->apply_interval_us, &quota, &wmarks);
-+			sysfs_scheme->apply_interval_us, &quota, &wmarks,
-+			sysfs_scheme->target_nid);
- 	if (!scheme)
- 		return NULL;
- 
-@@ -2068,6 +2098,7 @@ static void damon_sysfs_update_scheme(struct damos *scheme,
- 
- 	scheme->action = sysfs_scheme->action;
- 	scheme->apply_interval_us = sysfs_scheme->apply_interval_us;
-+	scheme->target_nid = sysfs_scheme->target_nid;
- 
- 	scheme->quota.ms = sysfs_quotas->ms;
- 	scheme->quota.sz = sysfs_quotas->sz;
 -- 
 2.34.1
 
