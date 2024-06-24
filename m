@@ -1,46 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2A5B1607AF;
-	Fri, 21 Jun 2024 16:36:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3B0019EEDA;
+	Mon, 24 Jun 2024 17:58:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718987794; cv=none; b=AGHFYJ4A+kAiRzqhBqyO+R/r4zGwwB1Ng+1EXfOrk+XoTtUVLOzGma+6l2Eu9pr3le0pBX9M60l0Hp9cAOFkdp9MudU9Q9c9GFqpbCL/DCVDDIiUo+1WNESMPn0PifMKPUTZRE1qZ7itnW++zBBSzywm1elvyFeBskEaEoEHhdE=
+	t=1719251897; cv=none; b=RS1qLa+jg5IXLGTXIEoLH0lw1XXjdppqeaJ5C9VZEiKzZB6iZwA5G/4r/PU79oN07TwGlJFx72JSkd8RVGFL0Lyl7tyGS+FUQq2h/XU1AjDZdNJFqfg5sryF42zr+9ZyvcaRUNWgre/MrVyxoKS5AhumGgCkYJYZgLeqRkQSwvc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718987794; c=relaxed/simple;
-	bh=ag+0LTSvLc7p7uZDX+MobUWjPrOwOdBj/IVIopBLENw=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=kKPmgQB43VdIp82uEEW1Nb5C61BKEn/rnAzIhgUHnvogxBdgs595f1d7cdq0VZ9viYo2010yuMaBbjaTNnMQdZZde0hEvgZlSqVsoy5zWZLrlwqSDJnq0WG0T3bHvzGbkzNw180m+QOx7YpdJutxeWT+zJ938Zp8u7GijpD+RGI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Qc4zEfVZ; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1719251897; c=relaxed/simple;
+	bh=YTBdXq2TGG2GhM+XlgLTSVVwIadpxauvL8szohE7zO0=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=QJzLZyzE3RJBtCbsRyFuexlwTis5y2rndCvyaRSRKoPuI2dPG4BmLyET9Ov9Jkce1pMAmdFSdAOuDTHUPJeNYX7sN+xc2fQabXPOSSoc7Sqf5z4SPr5zbjtGlF0GOvJcCTkZUnlucA5F+BbXRTOTqJ8ILtVmXbFWFnPNNUccYZo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ENjwz9wd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Qc4zEfVZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28ED3C3277B;
-	Fri, 21 Jun 2024 16:36:33 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ENjwz9wd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DADCEC2BBFC;
+	Mon, 24 Jun 2024 17:58:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1718987793;
-	bh=ag+0LTSvLc7p7uZDX+MobUWjPrOwOdBj/IVIopBLENw=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qc4zEfVZNnBg2XbzQFMVaWNzba5Lb2AR7x1cjKKbPMm7+Mt3o+0gRADFEeX04DJg9
-	 hwFmg23uXZJ38e6Xq9i0zj7K3vr9CPEGwK3QxFWRozF9LX/CndLlZfB2IOvOkDoV4B
-	 L1Ir1me/v8eVWzmuRM6IT+dGOHU+4sSE8C8wmIa43PZ+RAgjliCspaCA34RetYnq4k
-	 G9UoT6W4Goxu0gPVL4MbQYOmfpOOFQXbKz5IOeHs8Qs6CRWaqn4z5aJXPMGQFyTdpD
-	 KuRQWtw2+NZYswdhNTqB52BQnmEBviBoPW233JqFX6L/L+sqNUEi+fVbG7xx7EwPiv
-	 7APPyYdixr9/Q==
+	s=k20201202; t=1719251897;
+	bh=YTBdXq2TGG2GhM+XlgLTSVVwIadpxauvL8szohE7zO0=;
+	h=From:To:Cc:Subject:Date:From;
+	b=ENjwz9wdsaeRlckaB8ZWYIdy5ErpdGluAMVz1vjPPy1hd7Uvf31aeWSt87r96sab/
+	 RQl+VYURfa2tZJShM21Bdsrvw8sTmFl8XY5sezW25kc0WhW1Gi0mZmAFan6yDB/NC7
+	 erwKzeamoUHkFvVBysnGh2R2j5PPndzfdt51UjaKC/A4R88J/hdN0rlolmDJY10Wsu
+	 /9XDUMWTOQkZkrm2+LQcNVKxmJaz0kYUl9/MFAvfrO1ktlPgNPiDTs4zIF+ChgSBW7
+	 DZ+oszY0aqJWKacBJLwCa89ogO2KfnlbEXq9Xz+GDZ+TBG/73xptVAAjzSCuAvpIIC
+	 QXTLDTXtwYIbQ==
 From: SeongJae Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SeongJae Park <sj@kernel.org>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Randy Dunlap <rdunlap@infradead.org>,
 	damon@lists.linux.dev,
 	linux-mm@kvack.org,
-	linux-doc@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH v2 2/2] Docs/mm/damon/maintainer-profile: document DAMON community meetups
-Date: Fri, 21 Jun 2024 09:36:26 -0700
-Message-Id: <20240621163626.74815-3-sj@kernel.org>
+	linux-kernel@vger.kernel.org,
+	stable@vger.kernel.org
+Subject: [PATCH] mm/damon/core: merge regions aggressively when max_nr_regions is unmet
+Date: Mon, 24 Jun 2024 10:58:14 -0700
+Message-Id: <20240624175814.89611-1-sj@kernel.org>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20240621163626.74815-1-sj@kernel.org>
-References: <20240621163626.74815-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -49,56 +44,65 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-DAMON bi-weekly community meetup series has continued since 2022-08-15
-for community members who prefer synchronous chat over asynchronous
-mails.  Recently I got some feedbacks about the series from a few
-people.  They told me the series is helpful for understanding of the
-project and particiapting to the development, but it could be further
-better in terms of the visibility.  Based on that, I started sending
-meeting reminder for every occurrence.  For people who don't subscribe
-the mailing list, however, adding an announcement on the official
-document could be helpful.  Document the series on DAMON maintainer's
-profile for the purpose.
+DAMON keeps the number of regions under max_nr_regions by skipping
+regions split operations when doing so can make the number higher than
+the limit.  It works well for preventing violation of the limit.  But,
+if somehow the violation happens, it cannot recovery well depending on
+the situation.  In detail, if the real number of regions having
+different access pattern is higher than the limit, the mechanism cannot
+reduce the number below the limit.  In such a case, the system could
+suffer from high monitoring overhead of DAMON.
 
+The violation can actually happen.  For an example, the user could
+reduce max_nr_regions while DAMON is running, to be lower than the
+current number of regions.  Fix the problem by repeating the merge
+operations with increasing aggressiveness in kdamond_merge_regions() for
+the case, until the limit is met.
+
+Fixes: b9a6ac4e4ede ("mm/damon: adaptively adjust regions")
+Cc: <stable@vger.kernel.org> # 5.15.x
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- Documentation/mm/damon/maintainer-profile.rst | 19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
+ mm/damon/core.c | 20 ++++++++++++++++++--
+ 1 file changed, 18 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/mm/damon/maintainer-profile.rst b/Documentation/mm/damon/maintainer-profile.rst
-index c7db0572faa9..feccf6a0f6c3 100644
---- a/Documentation/mm/damon/maintainer-profile.rst
-+++ b/Documentation/mm/damon/maintainer-profile.rst
-@@ -69,6 +69,24 @@ In other words, ``hkml`` [8]_ is a mailing tool for DAMON community, which
- DAMON maintainer is committed to support.  Please feel free to try and report
- issues or feature requests for the tool to the maintainer.
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index f69250b68bcc..e6598c44b53c 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -1694,14 +1694,30 @@ static void damon_merge_regions_of(struct damon_target *t, unsigned int thres,
+  * access frequencies are similar.  This is for minimizing the monitoring
+  * overhead under the dynamically changeable access pattern.  If a merge was
+  * unnecessarily made, later 'kdamond_split_regions()' will revert it.
++ *
++ * The total number of regions could be temporarily higher than the
++ * user-defined limit, max_nr_regions for some cases.  For an example, the user
++ * updates max_nr_regions to a number that lower than the current number of
++ * regions while DAMON is running.  Depending on the access pattern, it could
++ * take indefinitve time to reduce the number below the limit.  For such a
++ * case, repeat merging until the limit is met while increasing @threshold and
++ * @sz_limit.
+  */
+ static void kdamond_merge_regions(struct damon_ctx *c, unsigned int threshold,
+ 				  unsigned long sz_limit)
+ {
+ 	struct damon_target *t;
++	unsigned int nr_regions;
  
-+Community meetup
-+----------------
-+
-+DAMON community is maintaining two bi-weekly meetup series for community
-+members who prefer synchronous conversations over mails.
-+
-+The first one is for any discussion between every community member.  No
-+reservation is needed.
-+
-+The seconds one is for discussions on specific topics between restricted
-+members including the maintainer.  The maintainer shares the available time
-+slots, and attendees should reserve one of those at least 24 hours before the
-+time slot, by reaching out to the maintainer.
-+
-+Schedules and available reservation time slots are available at the Google doc
-+[9]_ .  DAMON maintainer will also provide periodic reminder to the mailing
-+list (damon@lists.linux.dev).
-+
+-	damon_for_each_target(t, c)
+-		damon_merge_regions_of(t, threshold, sz_limit);
++	do {
++		nr_regions = 0;
++		damon_for_each_target(t, c) {
++			damon_merge_regions_of(t, threshold, sz_limit);
++			nr_regions += damon_nr_regions(t);
++		}
++		threshold = max(1, threshold * 2);
++		sz_limit = max(1, sz_limit * 2);
++	} while (nr_regions > c->attrs.max_nr_regions);
+ }
  
- .. [1] https://git.kernel.org/akpm/mm/h/mm-unstable
- .. [2] https://git.kernel.org/sj/h/damon/next
-@@ -78,3 +96,4 @@ issues or feature requests for the tool to the maintainer.
- .. [6] https://github.com/awslabs/damon-tests/tree/master/corr
- .. [7] https://github.com/awslabs/damon-tests/tree/master/perf
- .. [8] https://github.com/damonitor/hackermail
-+.. [9] https://docs.google.com/document/d/1v43Kcj3ly4CYqmAkMaZzLiM2GEnWfgdGbZAH3mi2vpM/edit?usp=sharing
+ /*
 -- 
 2.39.2
 
