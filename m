@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0C351459E2;
-	Tue, 25 Jun 2024 18:05:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 154B517837C;
+	Tue, 25 Jun 2024 18:05:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719338744; cv=none; b=tY6VSjy7dL85+K7gu+mTZ0td443mC7cucUDyG+qZKbSW9rWGZwvVICyK6ePiuDqrzRP/MlTfJ3C0Cm5wOqXrtUYfBe+ELUP9oZlPXqHGziMC1JXqPT/LlLRPtNOXeCqVaZw30FRZeMWz+jfOJvwpIwmZcjIgAGsOgh6oaGJYjWo=
+	t=1719338745; cv=none; b=kb/hudi6deoBbEzOvWcHqyHXLbrErLlb2tRknLtH/gmHPWPY7z/HppBqzIZxIbNre7awAiZWAPEX7XBLa5SFTMOaiv/lFFpGJXaz1IISZsqRGzeoY2jS0jyj4sf/p8415QvDm1B06h/eflkNm8dFGjLM6bRxyxQ7fPbrJ+4ENk0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719338744; c=relaxed/simple;
-	bh=shsXNhCfXHTnED5QM8sxuSUHkfSGO2/rCdvA/fWyJng=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=uV94zLPU6VDFarF9nA7hZKqOZbxvVjWAsg449xjzX/sNhawIA3CTTqVZNMmqv5wFTeYPwUSR9E8YJ7Loh+C2TLK0EnR+Vf0XwKRqfl6WnZwUtOlu0uv1PibO5Z99/jLlrLo6twQG0T3fKOzO9mM54YuMl7g0BFDZYs9ZB/4Jtdc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=i08owaJA; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1719338745; c=relaxed/simple;
+	bh=1TXG9SZrMDwPCPN1jihDIbGlXNgSRELots2zUsHDeb4=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=LN02jYNGHdKbDY6VmYLJLPAS0K+DYqQsaNZQu73jXyjde5wVoRBWasuXwGzMb9/KxK7Lt6mOW3dsBGAmFuJuvURachuvpSnbECUGBDYeeR1kzx8FrggtA4As9QZQcxuLqCD5JSgsuyRwYrmuGsLeb9K3dotEgVvykKmKWJ9cFGg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bu47WY5C; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="i08owaJA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3E08C32781;
-	Tue, 25 Jun 2024 18:05:43 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bu47WY5C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69C14C32782;
+	Tue, 25 Jun 2024 18:05:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1719338744;
-	bh=shsXNhCfXHTnED5QM8sxuSUHkfSGO2/rCdvA/fWyJng=;
-	h=From:To:Cc:Subject:Date:From;
-	b=i08owaJAQt4aQchFM+u1qNEciFAPS0MtFm3d+XrItCAi03MbkfywUVJCPFQrtiEkz
-	 6L8Sm++wHq1fziDzl/2RdxLSerhuTj0UqArRMJsK9km/JpoNdsxLTFTDHQ2Rs4sRL/
-	 DHea+PYzDOc042LpGCa5Ta/jTvaY2pCb6e2hfx61IfXYiequnH11XLO4ubRlrJ6C7t
-	 jXTfmo8lhkgi/2L+Vb3nxEi68oKg8LVCXpi4d0SMx1BgjU30NyTAHO9EwlMDxkLlYw
-	 1D4q14SJksE9qNfDQVqi3aot+sqcLrjB6ozPmcRUnVS9r866blRB0IU4Pv3d1P3/ro
-	 OqzSK1cQDgslg==
+	bh=1TXG9SZrMDwPCPN1jihDIbGlXNgSRELots2zUsHDeb4=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=bu47WY5CMcvz7hkGfMSJ2ELpSfKOgCjBYGqBqcSlmujahvS5mLk5/0/RqH31GIAq3
+	 viEOPXasgnf2Bj/tW6jbbfRnYknmObLlrzy8U3lmX7dDR8v458+VGlKPrD6Cl2Jf55
+	 JB0qK1boaZF/go0H3yZHxDp8cw+FroebV6s8ho7ZWsYgCROwQbbdUMVBq7Axj7YujR
+	 H5qEHPZRB/Fs2UpvtxwHvX6y2VPoMmJ4nobljvvqRNR3sSgrCQmp54+RwTxCU86hC3
+	 mqo6UPK+gl+gPGply5HtOyHnDDdFJldiXlzVh4P/hfK8oJp38yCkyjvu6eFAae7kO0
+	 jn7MW6yAW0s2A==
 From: SeongJae Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SeongJae Park <sj@kernel.org>,
@@ -33,10 +34,12 @@ Cc: SeongJae Park <sj@kernel.org>,
 	linux-mm@kvack.org,
 	linux-kselftest@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH 0/8] selftests/damon: test DAMOS tried regions and {min,max}_nr_regions
-Date: Tue, 25 Jun 2024 11:05:30 -0700
-Message-Id: <20240625180538.73134-1-sj@kernel.org>
+Subject: [PATCH 1/8] selftests/damon/access_memory: use user-defined region size
+Date: Tue, 25 Jun 2024 11:05:31 -0700
+Message-Id: <20240625180538.73134-2-sj@kernel.org>
 X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20240625180538.73134-1-sj@kernel.org>
+References: <20240625180538.73134-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -45,45 +48,35 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-This patch series fix a minor issue in a program for DAMON selftest, and
-implement new functionality selftests for DAMOS tried regions and
-{min,max}_nr_regions.  The test for max_nr_regions also test the
-recovery from online tuning-caused limit violation, which was fixed by a
-previous patch [1] titled "mm/damon/core: merge regions aggressively
-when max_nr_regions is unmet".
+'access_memory' is an artificial memory access pattern generator for
+DAMON tests.  It creates and accesses memory regions that the user
+specified the number and size via the command line.  However, real
+access part of the program ignores the user-specified size of each
+region.  Instead, it uses a hard-coded value, 10 MiB.  Fix it to use
+user-defined size.
 
-The first patch fixes a minor problem in the articial memory access
-pattern generator for tests.  Following 3 patches (2-4) implement
-schemes tried regions test.  Then a couple of patches (5-6) implementing
-static setup based {min,max}_nr_regions functionality test follows.
-Final two patches (7-8) implement dynamic max_nr_regions update test.
+Note that all existing 'access_memory' users are setting the region size
+as 10 MiB.  Hence no real problem has happened so far.
 
-[1] https://lore.kernel.org/20240624210650.53960C2BBFC@smtp.kernel.org
+Fixes: b5906f5f7359 ("selftests/damon: add a test for update_schemes_tried_regions sysfs command")
+Signed-off-by: SeongJae Park <sj@kernel.org>
+---
+ tools/testing/selftests/damon/access_memory.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-SeongJae Park (8):
-  selftests/damon/access_memory: use user-defined region size
-  selftests/damon/_damon_sysfs: support schemes_update_tried_regions
-  selftests/damon: implement a program for even-numbered memory regions
-    access
-  selftests/damon: implement DAMOS tried regions test
-  selftests/damon/_damon_sysfs: implement kdamonds stop function
-  selftests/damon: implement test for min/max_nr_regions
-  _damon_sysfs: implement commit() for online parameters update
-  selftests/damon/damon_nr_regions: test online-tuned max_nr_regions
-
- tools/testing/selftests/damon/Makefile        |   3 +-
- tools/testing/selftests/damon/_damon_sysfs.py |  65 +++++++-
- tools/testing/selftests/damon/access_memory.c |   2 +-
- .../selftests/damon/access_memory_even.c      |  42 +++++
- .../selftests/damon/damon_nr_regions.py       | 145 ++++++++++++++++++
- .../selftests/damon/damos_tried_regions.py    |  65 ++++++++
- 6 files changed, 319 insertions(+), 3 deletions(-)
- create mode 100644 tools/testing/selftests/damon/access_memory_even.c
- create mode 100644 tools/testing/selftests/damon/damon_nr_regions.py
- create mode 100644 tools/testing/selftests/damon/damos_tried_regions.py
-
-
-base-commit: 99348045d11f3bac71146b381f90b0aa39855ee7
+diff --git a/tools/testing/selftests/damon/access_memory.c b/tools/testing/selftests/damon/access_memory.c
+index 585a2fa54329..56b17e8fe1be 100644
+--- a/tools/testing/selftests/damon/access_memory.c
++++ b/tools/testing/selftests/damon/access_memory.c
+@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
+ 		start_clock = clock();
+ 		while ((clock() - start_clock) * 1000 / CLOCKS_PER_SEC <
+ 				access_time_ms)
+-			memset(regions[i], i, 1024 * 1024 * 10);
++			memset(regions[i], i, sz_region);
+ 	}
+ 	return 0;
+ }
 -- 
 2.39.2
 
