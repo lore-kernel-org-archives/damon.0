@@ -1,59 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A889F2F56;
-	Tue, 25 Jun 2024 17:04:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0C351459E2;
+	Tue, 25 Jun 2024 18:05:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719335089; cv=none; b=WKGy0V95W35PvKsNBQgAV1Q+8lHGF0FNLoUsvhrmEC+TIKg3qG9EHIUZNpl7mt/u+C2SNGbrdg+81vFhX/Nn06seEmaDzXbzF9Hmf2QqF+nQkrol493QMnHabkgsxXpzW35kYtvfDF0f6Cic6L7APft2zk06rwn2t5cAKINy1pE=
+	t=1719338744; cv=none; b=tY6VSjy7dL85+K7gu+mTZ0td443mC7cucUDyG+qZKbSW9rWGZwvVICyK6ePiuDqrzRP/MlTfJ3C0Cm5wOqXrtUYfBe+ELUP9oZlPXqHGziMC1JXqPT/LlLRPtNOXeCqVaZw30FRZeMWz+jfOJvwpIwmZcjIgAGsOgh6oaGJYjWo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719335089; c=relaxed/simple;
-	bh=W+4hpxSJ/DjeJYXmfvxcPGCqBdNCqe1xjMXrVCSUVms=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=Dn4Ame738kFYDq9TvcsiL9IHNZmz8uSwiDIK54YZc7T5N3whoXgUukH11YK9vvpE8zEGHV0KcXCUImTFM8R7QBZPaC7AJGe0fZya9caGa5iSv3PWLye1g/Zr9mdD0/M4EFTxmRJvEGvc1qae8YrM2b5e5JMtSgcbijSGOehoJkk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hPVljKwm; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1719338744; c=relaxed/simple;
+	bh=shsXNhCfXHTnED5QM8sxuSUHkfSGO2/rCdvA/fWyJng=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=uV94zLPU6VDFarF9nA7hZKqOZbxvVjWAsg449xjzX/sNhawIA3CTTqVZNMmqv5wFTeYPwUSR9E8YJ7Loh+C2TLK0EnR+Vf0XwKRqfl6WnZwUtOlu0uv1PibO5Z99/jLlrLo6twQG0T3fKOzO9mM54YuMl7g0BFDZYs9ZB/4Jtdc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=i08owaJA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hPVljKwm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1878C32786;
-	Tue, 25 Jun 2024 17:04:47 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="i08owaJA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3E08C32781;
+	Tue, 25 Jun 2024 18:05:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1719335089;
-	bh=W+4hpxSJ/DjeJYXmfvxcPGCqBdNCqe1xjMXrVCSUVms=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hPVljKwmYcZXnzyT5W9r1AAyh+xHVMQDkpTEReWz1CzOEAiXJDJYp/QEnkHtUPA6b
-	 rIOV9BDfH2Q+C8OFQnIXkFXRrHTOwZ1sRz4ReshPjlnu3dcjvCQ6LanRDFFK5NVtr9
-	 rccqJ7uYgybEqG+vU8wZwaZU3kxKlBXEHW1sHuZ+pnmjIwtiFgTLjOZvix3MYt5Ym/
-	 ONJbL7xexSf8hJBQB5RXlOF9QUbWm35BsXdiVjZXkQflqJrG85iPgg9ZRQk/CQULGf
-	 pfLoU3LtgqgDzvJhXJ3mcF3ZeJGmjToNrSc+A75c/TBHkrQ8j1ssv5qGhPDbjoA5Mu
-	 l5vdDVCXYFQRA==
+	s=k20201202; t=1719338744;
+	bh=shsXNhCfXHTnED5QM8sxuSUHkfSGO2/rCdvA/fWyJng=;
+	h=From:To:Cc:Subject:Date:From;
+	b=i08owaJAQt4aQchFM+u1qNEciFAPS0MtFm3d+XrItCAi03MbkfywUVJCPFQrtiEkz
+	 6L8Sm++wHq1fziDzl/2RdxLSerhuTj0UqArRMJsK9km/JpoNdsxLTFTDHQ2Rs4sRL/
+	 DHea+PYzDOc042LpGCa5Ta/jTvaY2pCb6e2hfx61IfXYiequnH11XLO4ubRlrJ6C7t
+	 jXTfmo8lhkgi/2L+Vb3nxEi68oKg8LVCXpi4d0SMx1BgjU30NyTAHO9EwlMDxkLlYw
+	 1D4q14SJksE9qNfDQVqi3aot+sqcLrjB6ozPmcRUnVS9r866blRB0IU4Pv3d1P3/ro
+	 OqzSK1cQDgslg==
 From: SeongJae Park <sj@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SeongJae Park <sj@kernel.org>,
-	stable@vger.kernel.org,
-	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net,
-	rwarsow@gmx.de,
-	conor@kernel.org,
-	allen.lkml@gmail.com,
-	broonie@kernel.org,
-	damon@lists.linux.dev
-Subject: Re: [PATCH 6.1 000/131] 6.1.96-rc1 review
-Date: Tue, 25 Jun 2024 10:04:45 -0700
-Message-Id: <20240625170445.100122-1-sj@kernel.org>
+	Shuah Khan <shuah@kernel.org>,
+	damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	linux-kselftest@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH 0/8] selftests/damon: test DAMOS tried regions and {min,max}_nr_regions
+Date: Tue, 25 Jun 2024 11:05:30 -0700
+Message-Id: <20240625180538.73134-1-sj@kernel.org>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20240625085525.931079317@linuxfoundation.org>
-References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -62,61 +45,45 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hello,
+This patch series fix a minor issue in a program for DAMON selftest, and
+implement new functionality selftests for DAMOS tried regions and
+{min,max}_nr_regions.  The test for max_nr_regions also test the
+recovery from online tuning-caused limit violation, which was fixed by a
+previous patch [1] titled "mm/damon/core: merge regions aggressively
+when max_nr_regions is unmet".
 
-On Tue, 25 Jun 2024 11:32:35 +0200 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+The first patch fixes a minor problem in the articial memory access
+pattern generator for tests.  Following 3 patches (2-4) implement
+schemes tried regions test.  Then a couple of patches (5-6) implementing
+static setup based {min,max}_nr_regions functionality test follows.
+Final two patches (7-8) implement dynamic max_nr_regions update test.
 
-> This is the start of the stable review cycle for the 6.1.96 release.
-> There are 131 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Thu, 27 Jun 2024 08:54:55 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.96-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
-> and the diffstat can be found below.
+[1] https://lore.kernel.org/20240624210650.53960C2BBFC@smtp.kernel.org
 
-This rc kernel passes DAMON functionality test[1] on my test machine.
-Attaching the test results summary below.  Please note that I retrieved the
-kernel from linux-stable-rc tree[2].
+SeongJae Park (8):
+  selftests/damon/access_memory: use user-defined region size
+  selftests/damon/_damon_sysfs: support schemes_update_tried_regions
+  selftests/damon: implement a program for even-numbered memory regions
+    access
+  selftests/damon: implement DAMOS tried regions test
+  selftests/damon/_damon_sysfs: implement kdamonds stop function
+  selftests/damon: implement test for min/max_nr_regions
+  _damon_sysfs: implement commit() for online parameters update
+  selftests/damon/damon_nr_regions: test online-tuned max_nr_regions
 
-Tested-by: SeongJae Park <sj@kernel.org>
+ tools/testing/selftests/damon/Makefile        |   3 +-
+ tools/testing/selftests/damon/_damon_sysfs.py |  65 +++++++-
+ tools/testing/selftests/damon/access_memory.c |   2 +-
+ .../selftests/damon/access_memory_even.c      |  42 +++++
+ .../selftests/damon/damon_nr_regions.py       | 145 ++++++++++++++++++
+ .../selftests/damon/damos_tried_regions.py    |  65 ++++++++
+ 6 files changed, 319 insertions(+), 3 deletions(-)
+ create mode 100644 tools/testing/selftests/damon/access_memory_even.c
+ create mode 100644 tools/testing/selftests/damon/damon_nr_regions.py
+ create mode 100644 tools/testing/selftests/damon/damos_tried_regions.py
 
-[1] https://github.com/awslabs/damon-tests/tree/next/corr
-[2] 80ee32f97e81 ("Linux 6.1.96-rc1")
 
-Thanks,
-SJ
+base-commit: 99348045d11f3bac71146b381f90b0aa39855ee7
+-- 
+2.39.2
 
-[...]
-
----
-
-ok 1 selftests: damon: debugfs_attrs.sh
-ok 2 selftests: damon: debugfs_schemes.sh
-ok 3 selftests: damon: debugfs_target_ids.sh
-ok 4 selftests: damon: debugfs_empty_targets.sh
-ok 5 selftests: damon: debugfs_huge_count_read_write.sh
-ok 6 selftests: damon: debugfs_duplicate_context_creation.sh
-ok 7 selftests: damon: sysfs.sh
-ok 1 selftests: damon-tests: kunit.sh
-ok 2 selftests: damon-tests: huge_count_read_write.sh
-ok 3 selftests: damon-tests: buffer_overflow.sh
-ok 4 selftests: damon-tests: rm_contexts.sh
-ok 5 selftests: damon-tests: record_null_deref.sh
-ok 6 selftests: damon-tests: dbgfs_target_ids_read_before_terminate_race.sh
-ok 7 selftests: damon-tests: dbgfs_target_ids_pid_leak.sh
-ok 8 selftests: damon-tests: damo_tests.sh
-ok 9 selftests: damon-tests: masim-record.sh
-ok 10 selftests: damon-tests: build_i386.sh
-ok 11 selftests: damon-tests: build_arm64.sh
-ok 12 selftests: damon-tests: build_m68k.sh
-ok 13 selftests: damon-tests: build_i386_idle_flag.sh
-ok 14 selftests: damon-tests: build_i386_highpte.sh
-ok 15 selftests: damon-tests: build_nomemcg.sh
- [33m
- [92mPASS [39m
