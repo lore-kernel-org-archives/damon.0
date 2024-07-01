@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF80F16FF44;
-	Mon,  1 Jul 2024 19:27:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55CAB171064;
+	Mon,  1 Jul 2024 19:27:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719862034; cv=none; b=Y8ydFRjpKCSYPR7H+glYQF45e7SHiMRsD0DfqK3HH5OqUc56HaNST49ebhBAbhc/kJCkOYlMEX72dl3EWTZJNF+8MFcw5LYrQarvFQib5G2sqh7qJ4WLRo0QllHTP+PTA/rTTwe/3qzdvY5t0hRc+Mfm5MmpXY6DpIZlbDxfZjo=
+	t=1719862034; cv=none; b=aWCBPdZEqLD5aOJj4AmlmHk12WQ7m800JnnLow246iypsDK14ghguk1TSbLglXBbJSmboeFFrhJtoKjOqPoRD2YMtpfbubrKDiaIOcJMHQa5CI9gnpBjpuWAtWIfXMhyQRs0zB71dX4XGhgP/IxB9UhK80G37+UXgrH3D0bVF6Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1719862034; c=relaxed/simple;
-	bh=xIHZ0L/qw5eQQs5fbReQPpk6P9pGxGMQqK3yOrF7MWg=;
+	bh=KZDwSh9p7bgKe4AljWzfhXg05QxoAGNbBrR/qAsRtMM=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=q1NelJ2uzubn/8u+R8fKxpAX8CpXxBggGxhkEx5oo+7MJYqN9iuF6Q+yRUbitMHASfTCe/nEGSKC/BpttMyh8lZuTgwGePLTPj4locGvJ+h0qG7iRR0ElEU9P7V2nEpkm6iwGMChuk2i48F/uYn/jVvL6dWrzz/BwN89FHRPmEs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=O+nK9tiY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cuR21GCRiZ9jPXmJfo60sfXayqjkCpNCkgnNCWnQgyEyCUyztBn20cV+jLl3EsdS62QsF1qB3N1iph1/zfhFNW31EoCEfzyryi9fP15FbDHossgZqZcwBnR0Wg55ojLax1dbe56FwIUfCfo7pcNgHaDqt518rYcnlDd7uaLN8go=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=acEBW/Cf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="O+nK9tiY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5AC5C4AF0A;
-	Mon,  1 Jul 2024 19:27:12 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="acEBW/Cf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC91CC32786;
+	Mon,  1 Jul 2024 19:27:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1719862033;
-	bh=xIHZ0L/qw5eQQs5fbReQPpk6P9pGxGMQqK3yOrF7MWg=;
+	s=k20201202; t=1719862034;
+	bh=KZDwSh9p7bgKe4AljWzfhXg05QxoAGNbBrR/qAsRtMM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O+nK9tiYcgMpX53+AWbsywu8xs749rQaWCssGXzuDSadnTFeYIMlrXu0ew3T9dogi
-	 IkTIfMtrF4gwrS8lz31uYJoiseCCJZBN6IK42mV5Ps+naC34CloIetMhyW+IIW0Tzm
-	 a3kLjxoOisBw1iI+iRFYDLkTJ9sfD7S87UQtjomfKCfkGG2nQKLRtrEbXiCK4xBjNB
-	 OxX6IPFsLg/kxTSojMTgp7r4eDXpkwob7xOWZAfAWVb9R2EKvi3clvf/8ukmnI4FaX
-	 /62gWPAvoqSIs4yka7Lz/BmMO2EbhNhKKwygKrTXIXoPsFmunFbrhZahPo/WoEyVKy
-	 clgLU8P1HYwIA==
+	b=acEBW/CfXYpxJ7Qs4Hki2GqyCzUUrPw4pqEv3Nlh57QhGTmKz28R5rbpX5MY2czmS
+	 q9DDEMMHeykfSZN5ecFSIgfCjSl8dMqFEawJFaG/X2Rx6omwQBB5WjyJB6jmvfaZhf
+	 vBg8NNBZijEK6ydJeaz7l7CgJyXoA/OF3cPuLhNrTf+Ioml4t7W/SsHyA0XiqZEqnu
+	 8uQ/n/1WNwUKR2oGEji4eLpUyXjY92uWAdBU7b5ka9byhyJN/Pw+2ppDu/1R9GlcF9
+	 v/kmZGNwOf62Pl3G8xNksQuc3hf3pcoHdh7Eg68z/t9/Ei9NrmTWc5vBBCNR3EXPVb
+	 qJf9xR92LDAbg==
 From: SeongJae Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SeongJae Park <sj@kernel.org>,
@@ -34,9 +34,9 @@ Cc: SeongJae Park <sj@kernel.org>,
 	linux-mm@kvack.org,
 	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH 3/9] Docs/admin-guide/mm/damon/start: add access pattern snapshot example
-Date: Mon,  1 Jul 2024 12:27:00 -0700
-Message-Id: <20240701192706.51415-4-sj@kernel.org>
+Subject: [PATCH 4/9] Docs/mm/damon/design: add links from overall architecture to sections of details
+Date: Mon,  1 Jul 2024 12:27:01 -0700
+Message-Id: <20240701192706.51415-5-sj@kernel.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240701192706.51415-1-sj@kernel.org>
 References: <20240701192706.51415-1-sj@kernel.org>
@@ -48,88 +48,63 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-DAMON user-space tool (damo) provides access pattern snapshot feature,
-which is expected to be frequently used for real time access pattern
-analysis.  The snapshot output is also showing what DAMON provides
-on its own, including the 'age' information.
-
-In contrast, the recorded access patterns, which is shown as an example
-usage on the quick start section, shows what users can make from what
-DAMON provided.  It includes information that generated outside of DAMON
-and makes the 'age' concept bit unclear.  Hence snapshot output is
-easier at understanding the raw realtime output of DAMON.  Add the
-snapshot usage example on the quick start section.
+DAMON design document briefly explains the overall layers architecture
+first, and then provides detailed explanations of each layer with
+dedicated sections.  Letting readers go directly to the detailed
+sections for specific layers could help easy browsing of the
+not-very-short document.  Add links from the overall summary to the
+sections of details.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- Documentation/admin-guide/mm/damon/start.rst | 46 ++++++++++++++++++--
- 1 file changed, 42 insertions(+), 4 deletions(-)
+ Documentation/mm/damon/design.rst | 20 +++++++++++++-------
+ 1 file changed, 13 insertions(+), 7 deletions(-)
 
-diff --git a/Documentation/admin-guide/mm/damon/start.rst b/Documentation/admin-guide/mm/damon/start.rst
-index 7aa0071ff1c3..054010a7f3d8 100644
---- a/Documentation/admin-guide/mm/damon/start.rst
-+++ b/Documentation/admin-guide/mm/damon/start.rst
-@@ -34,18 +34,56 @@ detail) of DAMON, you should ensure :doc:`sysfs </filesystems/sysfs>` is
- mounted.
+diff --git a/Documentation/mm/damon/design.rst b/Documentation/mm/damon/design.rst
+index fe08a3796e60..991839200f80 100644
+--- a/Documentation/mm/damon/design.rst
++++ b/Documentation/mm/damon/design.rst
+@@ -22,13 +22,15 @@ Overall Architecture
+ 
+ DAMON subsystem is configured with three layers including
+ 
+-- Operations Set: Implements fundamental operations for DAMON that depends on
+-  the given monitoring target address-space and available set of
+-  software/hardware primitives,
+-- Core: Implements core logics including monitoring overhead/accuracy control
+-  and access-aware system operations on top of the operations set layer, and
+-- Modules: Implements kernel modules for various purposes that provides
+-  interfaces for the user space, on top of the core layer.
++- :ref:`Operations Set <damon_operations_set>`: Implements fundamental
++  operations for DAMON that depends on the given monitoring target
++  address-space and available set of software/hardware primitives,
++- :ref:`Core <damon_core_logic>`: Implements core logics including monitoring
++  overhead/accuracy control and access-aware system operations on top of the
++  operations set layer, and
++- :ref:`Modules <damon_modules>`: Implements kernel modules for various
++  purposes that provides interfaces for the user space, on top of the core
++  layer.
  
  
-+Snapshot Data Access Patterns
-+=============================
-+
-+The commands below show the memory access pattern of a program at the moment of
-+the execution. ::
-+
-+    $ git clone https://github.com/sjp38/masim; cd masim; make
-+    $ sudo damo start "./masim ./configs/stairs.cfg --quiet"
-+    $ sudo ./damo show
-+    0   addr [85.541 TiB  , 85.541 TiB ) (57.707 MiB ) access 0 %   age 10.400 s
-+    1   addr [85.541 TiB  , 85.542 TiB ) (413.285 MiB) access 0 %   age 11.400 s
-+    2   addr [127.649 TiB , 127.649 TiB) (57.500 MiB ) access 0 %   age 1.600 s
-+    3   addr [127.649 TiB , 127.649 TiB) (32.500 MiB ) access 0 %   age 500 ms
-+    4   addr [127.649 TiB , 127.649 TiB) (9.535 MiB  ) access 100 % age 300 ms
-+    5   addr [127.649 TiB , 127.649 TiB) (8.000 KiB  ) access 60 %  age 0 ns
-+    6   addr [127.649 TiB , 127.649 TiB) (6.926 MiB  ) access 0 %   age 1 s
-+    7   addr [127.998 TiB , 127.998 TiB) (120.000 KiB) access 0 %   age 11.100 s
-+    8   addr [127.998 TiB , 127.998 TiB) (8.000 KiB  ) access 40 %  age 100 ms
-+    9   addr [127.998 TiB , 127.998 TiB) (4.000 KiB  ) access 0 %   age 11 s
-+    total size: 577.590 MiB
-+    $ sudo ./damo stop
-+
-+The first command of the above example downloads and builds an artificial
-+memory access generator program called ``masim``.  The second command asks DAMO
-+to execute the artificial generator process start via the given command and
-+make DAMON monitors the generator process.  The third command retrieves the
-+current snapshot of the monitored access pattern of the process from DAMON and
-+shows the pattern in a human readable format.
-+
-+Each line of the output shows which virtual address range (``addr [XX, XX)``)
-+of the process is how frequently (``access XX %``) accessed for how long time
-+(``age XX``).  For example, the fifth region of ~9 MiB size is being most
-+frequently accessed for last 300 milliseconds.  Finally, the fourth command
-+stops DAMON.
-+
-+Note that DAMON can monitor not only virtual address spaces but multiple types
-+of address spaces including the physical address space.
-+
-+
- Recording Data Access Patterns
- ==============================
+ .. _damon_design_configurable_operations_set:
+@@ -140,6 +142,8 @@ conflict with the reclaim logic using ``PG_idle`` and ``PG_young`` page flags,
+ as Idle page tracking does.
  
- The commands below record the memory access patterns of a program and save the
- monitoring results to a file. ::
  
--    $ git clone https://github.com/sjp38/masim
--    $ cd masim; make; ./masim ./configs/zigzag.cfg &
-+    $ ./masim ./configs/zigzag.cfg &
-     $ sudo damo record -o damon.data $(pidof masim)
++.. _damon_core_logic:
++
+ Core Logics
+ ===========
  
--The first two lines of the commands download an artificial memory access
--generator program and run it in the background.  The generator will repeatedly
-+The line of the commands run the artificial memory access
-+generator program again.  The generator will repeatedly
- access two 100 MiB sized memory regions one by one.  You can substitute this
- with your real workload.  The last line asks ``damo`` to record the access
- pattern in the ``damon.data`` file.
+@@ -512,6 +516,8 @@ interface, namely ``include/linux/damon.h``.  Please refer to the API
+ :doc:`document </mm/damon/api>` for details of the interface.
+ 
+ 
++.. _damon_modules:
++
+ Modules
+ =======
+ 
 -- 
 2.39.2
 
