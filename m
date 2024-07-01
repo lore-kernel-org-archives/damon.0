@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2C4C171E6A;
-	Mon,  1 Jul 2024 19:27:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 752D2172BAB;
+	Mon,  1 Jul 2024 19:27:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719862036; cv=none; b=SJ8zzOvOg5CdZnLp1/4xa3zT3ynkZh4eUyMN1u2QT2CfH03MVHHryyuGweacQZkV19gm2ZHoCLHhSjwCl1T8CC7BWW4Hq388YhWSueTAREl24gogYUcBruoU1FVKjQzVgML+E8DGdDc3giPuiFMCjXDe9pw549hbJPAS9B3bYbQ=
+	t=1719862037; cv=none; b=HaZxmNg3S7oL9/FePB2/95a4H/x0jNtEttFpEwv1VbyxiuRVqnoRLFmKVKVWqI64oGlPlMJH32ShgQ7PQwxEYoRpkVd9RP7PmBir1J4wzHmJAw1AZJO5R8qrnlqlkCw4l/YYQBjw/3nqytESyt7oFJaVZxd5mtUX4qT6h59uI5w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719862036; c=relaxed/simple;
-	bh=ZnT7QNZiiuEpgT4tYIiBE2EHtfYlH/fKceMtToSKPPY=;
+	s=arc-20240116; t=1719862037; c=relaxed/simple;
+	bh=W9d4cUx1EjXG3O2nC/ytqNez6Roq0dChgJMH8XJ7CE8=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=SLvaJEw7e5qP7CfHLyXg9Sn46zv7cphxkD7VH/l84LpGzH2npCXCScao/BfP+dl5QlJiJZQ5xUuQdt1RsqlmixBsBs7rLXgRGgAWpwsd91l+Sly8BokSv2SZGGKr1TdeSeHfWz7pYeJGE81zPn03yjfZhPmpWNs3TR4s9aeUHC4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pSsroV1U; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YFsDXDJoirRyPZhqPTJRKK9q4SGU/NJoPE1UTEOltkUuiaeiZerl2Gb6UXd1SmvDCUQXQh16rY4F75QIxEkKQqvrwmn5DA0bbqTls/g0lLtNql46fZzaIJUs7BRN/2LJgzJwZEFlbI5Ak22x6oQdRsnFZXE+ziUvh3vmejsxPPk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IXU6KryR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pSsroV1U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA5A9C32781;
-	Mon,  1 Jul 2024 19:27:15 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IXU6KryR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9226FC4AF0D;
+	Mon,  1 Jul 2024 19:27:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1719862036;
-	bh=ZnT7QNZiiuEpgT4tYIiBE2EHtfYlH/fKceMtToSKPPY=;
+	s=k20201202; t=1719862037;
+	bh=W9d4cUx1EjXG3O2nC/ytqNez6Roq0dChgJMH8XJ7CE8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pSsroV1UZFnezFKy/slb8Tj9vjjvce9bJP1JFpky/QnyvTug16ElPmCjL3vuaEElJ
-	 KBiRty1iMUl4AxQEwHmBZvyUoIv63L6CIVHl7ROUWYQeriAs71CzH08x+HURlSu2iD
-	 CtY7nQ6GBZGqEfD4ACjHSbSCvTkmdDdMYCObfGAn3y9qF35ky7tK3Wl8KmrEu5ThBF
-	 pr+3V3cFw8Nh3WcaWsD+bVvVK5rtsjxqZnWLQrr2LSRfARIc1dCZN9WeM5ufvS9VWa
-	 5A7IFxxUNyTKPZkgFxBBk7V4tsanJHQwfcegLxhG0KN3GSNvUrDl3xjmwZtc99Tbg8
-	 4MzdcmVCUVEbQ==
+	b=IXU6KryR88jDAsOwngkduDOqIYRUMZ3Zx6gSiN32pgbA9QsG3NtQ71mfMPlhVZpsV
+	 3DTrttmY6WafRHkIIVnDhir3Nw3hQa7//04K5Ucxf92WnBeG92/BlbHKEj+NWfv0ke
+	 nH58B14RusmqUVBu8o1UA89LsYIs441aD8Vk3PiyWsW5uegD7pPUWS4I0pfAdV5JE3
+	 EFD+zqjVWjGWOXksvVlKhX4IRRnygeY3kA/qu8orOL3eFt1A0Bm2uxMJ3vwReE8ZBS
+	 mb68L1pa8dImiQoboeisyLrVx1jQ5NAIDEUt34bVZwS7LLEu4gPhozkKAyCLKuQDWg
+	 jtvxepdW0s4Bg==
 From: SeongJae Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SeongJae Park <sj@kernel.org>,
@@ -34,9 +34,9 @@ Cc: SeongJae Park <sj@kernel.org>,
 	linux-mm@kvack.org,
 	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH 7/9] Docs/mm/damon/design: add links to sections of DAMON sysfs interface usage doc
-Date: Mon,  1 Jul 2024 12:27:04 -0700
-Message-Id: <20240701192706.51415-8-sj@kernel.org>
+Subject: [PATCH 8/9] Docs/mm/damon/index: add links to design
+Date: Mon,  1 Jul 2024 12:27:05 -0700
+Message-Id: <20240701192706.51415-9-sj@kernel.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240701192706.51415-1-sj@kernel.org>
 References: <20240701192706.51415-1-sj@kernel.org>
@@ -48,151 +48,57 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Readers of the design document would wonder how they can configure and
-use specific DAMON features.  Add links to sections of DAMON sysfs
-interface usage document that provides the answers for easier browsing.
+DAMON subsystem documents index page provides a short intro of DAMON
+core concepts.  Add links to sections of the design document to let
+users easily browse to the details.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- Documentation/mm/damon/design.rst | 48 +++++++++++++++++++++++++++++++
- 1 file changed, 48 insertions(+)
+ Documentation/mm/damon/design.rst |  1 +
+ Documentation/mm/damon/index.rst  | 11 ++++++-----
+ 2 files changed, 7 insertions(+), 5 deletions(-)
 
 diff --git a/Documentation/mm/damon/design.rst b/Documentation/mm/damon/design.rst
-index 39e686c6862d..89f5330e003f 100644
+index 89f5330e003f..8730c246ceaa 100644
 --- a/Documentation/mm/damon/design.rst
 +++ b/Documentation/mm/damon/design.rst
-@@ -16,6 +16,9 @@ called DAMON ``context``.  DAMON executes each context with a kernel thread
- called ``kdamond``.  Multiple kdamonds could run in parallel, for different
- types of monitoring.
+@@ -141,6 +141,7 @@ as Idle page tracking does.
+ Core Logics
+ ===========
  
-+To know how user-space can do the configurations and start/stop DAMON, refer to
-+:ref:`DAMON sysfs interface <sysfs_interface>` documentation.
-+
++.. _damon_design_monitoring:
  
- Overall Architecture
- ====================
-@@ -71,6 +74,10 @@ describe how those work.
-  - fvaddr: Monitor fixed virtual address ranges
-  - paddr: Monitor the physical address space of the system
+ Monitoring
+ ----------
+diff --git a/Documentation/mm/damon/index.rst b/Documentation/mm/damon/index.rst
+index 5e0a50583500..3d3b345d8889 100644
+--- a/Documentation/mm/damon/index.rst
++++ b/Documentation/mm/damon/index.rst
+@@ -6,7 +6,7 @@ DAMON: Data Access MONitor
  
-+To know how user-space can do the configuration via :ref:`DAMON sysfs interface
-+<sysfs_interface>`, refer to :ref:`operations <sysfs_context>` file part of the
-+documentation.
-+
+ DAMON is a Linux kernel subsystem that provides a framework for data access
+ monitoring and the monitoring results based system operations.  The core
+-monitoring mechanisms of DAMON (refer to :doc:`design` for the detail) make it
++monitoring :ref:`mechanisms <damon_design_monitoring>` of DAMON make it
  
-  .. _damon_design_vaddr_target_regions_construction:
+  - *accurate* (the monitoring output is useful enough for DRAM level memory
+    management; It might not appropriate for CPU Cache levels, though),
+@@ -21,10 +21,11 @@ users who have special information about their workloads can write personalized
+ applications for better understanding and optimizations of their workloads and
+ systems.
  
-@@ -143,6 +150,10 @@ monitoring attributes, ``sampling interval``, ``aggregation interval``,
- ``update interval``, ``minimum number of regions``, and ``maximum number of
- regions``.
+-For easier development of such systems, DAMON provides a feature called DAMOS
+-(DAMon-based Operation Schemes) in addition to the monitoring.  Using the
+-feature, DAMON users in both kernel and user spaces can do access-aware system
+-operations with no code but simple configurations.
++For easier development of such systems, DAMON provides a feature called
++:ref:`DAMOS <damon_design_damos>` (DAMon-based Operation Schemes) in addition
++to the monitoring.  Using the feature, DAMON users in both kernel and user
++spaces can do access-aware system operations with no code but simple
++configurations.
  
-+To know how user-space can set the attributes via :ref:`DAMON sysfs interface
-+<sysfs_interface>`, refer to :ref:`monitoring_attrs <sysfs_monitoring_attrs>`
-+part of the documentation.
-+
- 
- Access Frequency Monitoring
- ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-@@ -246,6 +257,11 @@ and applies it to monitoring operations-related data structures such as the
- abstracted monitoring target memory area only for each of a user-specified time
- interval (``update interval``).
- 
-+User-space can get the monitoring results via DAMON sysfs interface and/or
-+tracepoints.  For more details, please refer to the documentations for
-+:ref:`DAMOS tried regions <sysfs_schemes_tried_regions>` and :ref:`tracepoint`,
-+respectively.
-+
- 
- .. _damon_design_damos:
- 
-@@ -286,6 +302,10 @@ the access pattern of interest, and applies the user-desired operation actions
- to the regions, for every user-specified time interval called
- ``apply_interval``.
- 
-+To know how user-space can set ``apply_interval`` via :ref:`DAMON sysfs
-+interface <sysfs_interface>`, refer to :ref:`apply_interval_us <sysfs_scheme>`
-+part of the documentation.
-+
- 
- .. _damon_design_damos_action:
- 
-@@ -334,6 +354,10 @@ Applying the actions except ``stat`` to a region is considered as changing the
- region's characteristics.  Hence, DAMOS resets the age of regions when any such
- actions are applied to those.
- 
-+To know how user-space can set the action via :ref:`DAMON sysfs interface
-+<sysfs_interface>`, refer to :ref:`action <sysfs_scheme>` part of the
-+documentation.
-+
- 
- .. _damon_design_damos_access_pattern:
- 
-@@ -347,6 +371,10 @@ interest by setting minimum and maximum values of the three properties.  If a
- region's three properties are in the ranges, DAMOS classifies it as one of the
- regions that the scheme is having an interest in.
- 
-+To know how user-space can set the access pattern via :ref:`DAMON sysfs
-+interface <sysfs_interface>`, refer to :ref:`access_pattern
-+<sysfs_access_pattern>` part of the documentation.
-+
- 
- .. _damon_design_damos_quotas:
- 
-@@ -366,6 +394,10 @@ feature called quotas.  It lets users specify an upper limit of time that DAMOS
- can use for applying the action, and/or a maximum bytes of memory regions that
- the action can be applied within a user-specified time duration.
- 
-+To know how user-space can set the basic quotas via :ref:`DAMON sysfs interface
-+<sysfs_interface>`, refer to :ref:`quotas <sysfs_quotas>` part of the
-+documentation.
-+
- 
- .. _damon_design_damos_quotas_prioritization:
- 
-@@ -393,6 +425,10 @@ information to the underlying mechanism.  Nevertheless, how and even whether
- the weight will be respected are up to the underlying prioritization mechanism
- implementation.
- 
-+To know how user-space can set the prioritization weights via :ref:`DAMON sysfs
-+interface <sysfs_interface>`, refer to :ref:`weights <sysfs_quotas>` part of
-+the documentation.
-+
- 
- .. _damon_design_damos_quotas_auto_tuning:
- 
-@@ -422,6 +458,10 @@ Currently, two ``target_metric`` are provided.
-   DAMOS does the measurement on its own, so only ``target_value`` need to be
-   set by users at the initial time.  In other words, DAMOS does self-feedback.
- 
-+To know how user-space can set the tuning goal metric, the target value, and/or
-+the current value via :ref:`DAMON sysfs interface <sysfs_interface>`, refer to
-+:ref:`quota goals <sysfs_schemes_quota_goals>` part of the documentation.
-+
- 
- .. _damon_design_damos_watermarks:
- 
-@@ -444,6 +484,10 @@ is activated.  If all schemes are deactivated by the watermarks, the monitoring
- is also deactivated.  In this case, the DAMON worker thread only periodically
- checks the watermarks and therefore incurs nearly zero overhead.
- 
-+To know how user-space can set the watermarks via :ref:`DAMON sysfs interface
-+<sysfs_interface>`, refer to :ref:`watermarks <sysfs_watermarks>` part of the
-+documentation.
-+
- 
- .. _damon_design_damos_filters:
- 
-@@ -490,6 +534,10 @@ Below types of filters are currently supported.
-     - Applied to pages that belonging to a given DAMON monitoring target.
-     - Handled by the core logic.
- 
-+To know how user-space can set the watermarks via :ref:`DAMON sysfs interface
-+<sysfs_interface>`, refer to :ref:`filters <sysfs_filters>` part of the
-+documentation.
-+
- 
- Application Programming Interface
- ---------------------------------
+ .. toctree::
+    :maxdepth: 2
 -- 
 2.39.2
 
