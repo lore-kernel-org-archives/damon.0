@@ -1,45 +1,59 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0195172BD1;
-	Mon,  1 Jul 2024 19:27:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8664A1514DC;
+	Tue,  2 Jul 2024 19:18:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719862038; cv=none; b=VODGaWEuDdCX+JRqS0gf0r8dun5Wpfouzy1HjNiDDkOEEl7B8GoHpfDS4Zb4ANFpNejhW5sjCBe4I3nQiXeq6GphWxyZ/3xacQdUzgHnFZ7+ba1cpxfjzncGwbOnbm1xMKDv2EywZN9jC448kkAaN1GOY9+toHxgCivV6zSpGZs=
+	t=1719947889; cv=none; b=Z0ZSLsslNXFD4+2tFB4N6plIJWIIdP0vSLDoDHttnV3qe6GT5gVCfuunmyCu8Hma6luJ7RurfISqlTHRfiT06DXovBmdHX/bISONQ2mOiQuSNQ+wpF8hDaA4loZ+2BBHkS1evydnGRrflcrqcWc56suRxeW/90I4zKdJAWIV/fA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719862038; c=relaxed/simple;
-	bh=fBlkxk1Ff29Zv5hf2sNJnmiHJF0MltvzTSJLNhDvsG8=;
+	s=arc-20240116; t=1719947889; c=relaxed/simple;
+	bh=xd/DF0+Gmml8wqZbl8HrFxX/XgUfPC57AW2BJIJfTXY=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=C1LCS26pfOteAuIrFxPbjbCFXYyN7nGti7dHfZhwSwZxDjkNlTvX5Qszb1AvXSEZfXn3ZSM5JJHuTTwaXP4yjPeHEwtFsz4yQ9Ci4cQRz4M1vCZZsjfNSyQz++au13K0O8IpW8V4SFtO/TVp41oD9hC7T59jeIA3wr8X4w5aPuU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=X4uyulKb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Xlu66eW1uYcbhV4bqMkslCNa4hN9iI7g1XPAtRNew9FsahN+z6jhQk3+lodYy30ZOC7ug1HLvqG1bHxb165253VLMRmAnd1AIH/lq6fKoYSiSQecogeP69d3SU2zBUZZdANaJGGGDdwxgDgXj5YSJEE/0fdoMe4aRW5bQT8tcc8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Bqq7tp5+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="X4uyulKb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BA6FC32786;
-	Mon,  1 Jul 2024 19:27:17 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Bqq7tp5+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95910C116B1;
+	Tue,  2 Jul 2024 19:18:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1719862037;
-	bh=fBlkxk1Ff29Zv5hf2sNJnmiHJF0MltvzTSJLNhDvsG8=;
+	s=k20201202; t=1719947889;
+	bh=xd/DF0+Gmml8wqZbl8HrFxX/XgUfPC57AW2BJIJfTXY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X4uyulKbdcl37BYLf/rxxpfmLRRiHxgo0DdJC/AznGxFaPaD2j5tC1707zu7MB4m+
-	 oJHVeSBr7Hsz/iQ3j/bCS+ZvrNDhcRNnbYDp38oh1BejNsY6D2hqBEd7NFK9vT7oPL
-	 F9tXsQ2/A3l7gcSZ0M8xHvwtA/eaBmHnRDfcG8tEVoGMwvD/AvmZpVT3QDVEMiZ+1r
-	 NTLTFMinIq0OI2PmAO8xdUtoayV+W+xeFoncTB63jXwm2TR/4ALWSu+g6IBJW38x1P
-	 4iPYzXgQ/QfldH4VQCg/4E/SXPmzn6KWDXXGiOWQGfl6aYfF94MwLNs97Pu3CFNO6b
-	 AFaxzonaM27Cg==
+	b=Bqq7tp5+hTMiyNGbgSMgQ99TOX6fR/z/muDMhS47Fi1dhftU0tmbkDaEEaFHAvZXz
+	 mdNw8t485NLwPbQr2YpPSTFz7OiC6y710mTHr6YVdXO9NGXkKqS/r0tz3b2p+V1jyl
+	 IdlI0XdDF7BGCcoxGEe9nmFDptDR0Lo6HfTS9quvcp+zkLcXVT8dsOI5apTFcJTRFS
+	 phjwIfQSm9hZAIqIQyJZACpJuh2E9Qdz/b2J9AhqgLZlnOwyVx9CtunBEz1cueGYd1
+	 lYh8MVFJ/+fmprUw7aV4CVYoYZ0Oc4f9BPD3gGUHBlBdslsyUza4iTqaw3iaMbRvfp
+	 6cGIBp7ep8MDg==
 From: SeongJae Park <sj@kernel.org>
-To: Andrew Morton <akpm@linux-foundation.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: SeongJae Park <sj@kernel.org>,
-	Jonathan Corbet <corbet@lwn.net>,
-	damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	linux-doc@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH 9/9] Docs/mm/damon/index: add links to admin-guide doc
-Date: Mon,  1 Jul 2024 12:27:06 -0700
-Message-Id: <20240701192706.51415-10-sj@kernel.org>
+	stable@vger.kernel.org,
+	patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net,
+	rwarsow@gmx.de,
+	conor@kernel.org,
+	allen.lkml@gmail.com,
+	broonie@kernel.org,
+	damon@lists.linux.dev
+Subject: Re: [PATCH 6.1 000/128] 6.1.97-rc1 review
+Date: Tue,  2 Jul 2024 12:18:05 -0700
+Message-Id: <20240702191805.70782-1-sj@kernel.org>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20240701192706.51415-1-sj@kernel.org>
-References: <20240701192706.51415-1-sj@kernel.org>
+In-Reply-To: <20240702170226.231899085@linuxfoundation.org>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -48,50 +62,61 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Readers of DAMON subsystem documents index would want to further learn
-how they can use DAMON from the user-space.  Add the link to the admin
-guide.
+Hello,
 
-Signed-off-by: SeongJae Park <sj@kernel.org>
+On Tue,  2 Jul 2024 19:03:21 +0200 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+
+> This is the start of the stable review cycle for the 6.1.97 release.
+> There are 128 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Thu, 04 Jul 2024 17:01:55 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.97-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+> and the diffstat can be found below.
+
+This rc kernel passes DAMON functionality test[1] on my test machine.
+Attaching the test results summary below.  Please note that I retrieved the
+kernel from linux-stable-rc tree[2].
+
+Tested-by: SeongJae Park <sj@kernel.org>
+
+[1] https://github.com/awslabs/damon-tests/tree/next/corr
+[2] 54f35067ea4e ("Linux 6.1.97-rc1")
+
+Thanks,
+SJ
+
+[...]
+
 ---
- Documentation/mm/damon/index.rst | 17 ++++++++++-------
- 1 file changed, 10 insertions(+), 7 deletions(-)
 
-diff --git a/Documentation/mm/damon/index.rst b/Documentation/mm/damon/index.rst
-index 3d3b345d8889..dafd6d028924 100644
---- a/Documentation/mm/damon/index.rst
-+++ b/Documentation/mm/damon/index.rst
-@@ -16,16 +16,16 @@ monitoring :ref:`mechanisms <damon_design_monitoring>` of DAMON make it
-    of the size of target workloads).
- 
- Using this framework, therefore, the kernel can operate system in an
--access-aware fashion.  Because the features are also exposed to the user space,
--users who have special information about their workloads can write personalized
--applications for better understanding and optimizations of their workloads and
--systems.
-+access-aware fashion.  Because the features are also exposed to the :doc:`user
-+space </admin-guide/mm/damon/index>`, users who have special information about
-+their workloads can write personalized applications for better understanding
-+and optimizations of their workloads and systems.
- 
- For easier development of such systems, DAMON provides a feature called
- :ref:`DAMOS <damon_design_damos>` (DAMon-based Operation Schemes) in addition
--to the monitoring.  Using the feature, DAMON users in both kernel and user
--spaces can do access-aware system operations with no code but simple
--configurations.
-+to the monitoring.  Using the feature, DAMON users in both kernel and :doc:`user
-+spaces </admin-guide/mm/damon/index>` can do access-aware system operations
-+with no code but simple configurations.
- 
- .. toctree::
-    :maxdepth: 2
-@@ -34,3 +34,6 @@ configurations.
-    design
-    api
-    maintainer-profile
-+
-+To utilize and control DAMON from the user-space, please refer to the
-+administration :doc:`guide </admin-guide/mm/damon/index>`.
--- 
-2.39.2
-
+ok 1 selftests: damon: debugfs_attrs.sh
+ok 2 selftests: damon: debugfs_schemes.sh
+ok 3 selftests: damon: debugfs_target_ids.sh
+ok 4 selftests: damon: debugfs_empty_targets.sh
+ok 5 selftests: damon: debugfs_huge_count_read_write.sh
+ok 6 selftests: damon: debugfs_duplicate_context_creation.sh
+ok 7 selftests: damon: sysfs.sh
+ok 1 selftests: damon-tests: kunit.sh
+ok 2 selftests: damon-tests: huge_count_read_write.sh
+ok 3 selftests: damon-tests: buffer_overflow.sh
+ok 4 selftests: damon-tests: rm_contexts.sh
+ok 5 selftests: damon-tests: record_null_deref.sh
+ok 6 selftests: damon-tests: dbgfs_target_ids_read_before_terminate_race.sh
+ok 7 selftests: damon-tests: dbgfs_target_ids_pid_leak.sh
+ok 8 selftests: damon-tests: damo_tests.sh
+ok 9 selftests: damon-tests: masim-record.sh
+ok 10 selftests: damon-tests: build_i386.sh
+ok 11 selftests: damon-tests: build_arm64.sh
+ok 12 selftests: damon-tests: build_m68k.sh
+ok 13 selftests: damon-tests: build_i386_idle_flag.sh
+ok 14 selftests: damon-tests: build_i386_highpte.sh
+ok 15 selftests: damon-tests: build_nomemcg.sh
+ [33m
+ [92mPASS [39m
