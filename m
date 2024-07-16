@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A65EE17C79
-	for <damon@lists.linux.dev>; Fri, 12 Jul 2024 17:27:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4751654BD4;
+	Tue, 16 Jul 2024 17:52:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720805255; cv=none; b=gD6zZB/rDcZhfZOip3Jkl12aQTDHUJdHr9MJdLrv6cECgHmS6uBxccJ1GRYsHSl8oWAY34rk+pn4bm+xWMXbXSpB6k3o0McYnak4sGR/s0mmJgQ/Yod6rXAl22MqbgqqmOub0tO5zIXYxNvzU40jN2O5PtDAQ5qgLPB7YHV0AyM=
+	t=1721152335; cv=none; b=T1UQ7IL7crSldL06jQNGMofaGcU17SXUnW5j+LikznkyiZhJ/JCI9RhlWgd2IMr4WG499DezcYMfbbV3kfYc7+6IJw1qTnFszmVDDf4Zd468uuycA8eh2PMJ2mzz5FVoejwwJcflddzgIzJGvNmjSuHO2YL3dzZHaofTLX9qXmE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720805255; c=relaxed/simple;
-	bh=7waMwwNK8MYf+jpgfhqNF3xyWHGhNY0MK7uo9wOHPCc=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=tZpBbTXAIumpNzL7NaZfZ0Mkb1OkA2QPUUoUP2RveVOysPKIQjzhljzxCdzLIASsk3N1w1xq1UZJXC/9dkMKzrrKbaA67c2fX5VhQtnto/gsdPmqQc7vkgE1eQBaRH1ubs2+LTr0cPL2xXxnpcOmlH7yLC1VFgzRM1VDbIGRLyE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ANo4p/cf; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1721152335; c=relaxed/simple;
+	bh=3INfJTBuIGPGIxdF53Rc/9nUYk4n6kQ4mowWADu56tE=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=gh9xTmL/K5g2ZkoTMAkZEB2XPY8jGxlnvo4n4PYV5de9NhluKVXUF9Oas7/fc5rK0r9DyA+WvrSAB3sRDu++e1705a3g2v7MUyKkhjaPT1+oXpWPR/USsx+7fnr2tGOabnsMWZCZ8VA3eTrhdYuh/PYklfJo1JftZkiun1Yx9yw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WZFuk6Fd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ANo4p/cf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B582AC32782;
-	Fri, 12 Jul 2024 17:27:34 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WZFuk6Fd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 615F9C116B1;
+	Tue, 16 Jul 2024 17:52:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1720805255;
-	bh=7waMwwNK8MYf+jpgfhqNF3xyWHGhNY0MK7uo9wOHPCc=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ANo4p/cfHrfeF1qdKgI7qS0eo/0/NmxUhEotj9otTMP/T9k6u5XkW4sBLgCgbXdWl
-	 6YsQorbI5vjbaa+UjAFNoKPprYRm8lsza20IPfiMVQyRr6d/3F3GoqlvJGorFoqVhu
-	 QyUYA7ZrBeKBvOKCqW99LwV54hkyUkXzVw6coXMTb8znkCxLJZFp3uxc1vawP0I/LZ
-	 WMYrCLcYNEaCw4d1fA+FdLeqSsFb3QMFTYtxP7cqHsy52VcJhkKP6l95wthhLZlpGD
-	 jKD533gSQqXWVE94+SlVcXR4jjXSHQKDP0JVS5c98tJP0NunjSj3QVcREu0sh+/z0y
-	 F7RDphXt2Zj/A==
+	s=k20201202; t=1721152334;
+	bh=3INfJTBuIGPGIxdF53Rc/9nUYk4n6kQ4mowWADu56tE=;
+	h=From:To:Cc:Subject:Date:From;
+	b=WZFuk6FdDQEkzsYkBlCgHKnPQIDagWQ30YEHBH9MGPXMIThAsPRpBYakiokDLaL/X
+	 rMmGRVFhlHwxwyWqc30cgxF1im+jcBG0ffTxe+LhZ6hSypzt9fJHPfiknvWV5MGkSh
+	 iBX5251Xad6ujunkUiT7E7sEs1YSixB1Rn3qHVVOxi2PmhJCH/tkoBYmXAhMtfr6oM
+	 EQ6oGvtG1NjLnWKT8OaLzZl2dAAJBJuDqwMqhKn7upOvLZCrwLjYj9d4qRnU4Oi6eI
+	 5vyq+iK9hUGJnIXrtVcFiyjxqjIt/+hh9qDEwfwaqxDWuEF+wx6KUgI4j4D/fqfefv
+	 ji60aKb1P/itA==
 From: SeongJae Park <sj@kernel.org>
-To: flyingpenghao@gmail.com
+To: stable@vger.kernel.org,
+	gregkh@linuxfoundation.org
 Cc: SeongJae Park <sj@kernel.org>,
-	akpm@linux-foundation.org,
+	Andrew Morton <akpm@linux-foundation.org>,
 	damon@lists.linux.dev,
-	Peng Hao <flyingpeng@tencent.com>
-Subject: Re: [PATCH v2]  damon: adjust large arrays to dynamic allocation
-Date: Fri, 12 Jul 2024 10:27:31 -0700
-Message-Id: <20240712172731.78545-1-sj@kernel.org>
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH 6.1.y 0/7] Backport patches for DAMON merge regions fix
+Date: Tue, 16 Jul 2024 10:51:58 -0700
+Message-Id: <20240716175205.51280-1-sj@kernel.org>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20240712010742.26180-1-flyingpeng@tencent.com>
-References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -46,100 +45,43 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hi Peng,
+Commit 310d6c15e910 ("mm/damon/core: merge regions aggressively when
+max_nr_regions") causes a build warning [1] on 6.1.y.  That was due to
+unnecessarily strict type check from max().
 
-On Fri, 12 Jul 2024 09:07:42 +0800 flyingpenghao@gmail.com wrote:
+Fix the warning by backporting a minmax.h upstream commit that made the
+type check less strict for unnecessary case, and upstream commits that
+it depends on.
 
-> From: Peng Hao <flyingpeng@tencent.com>
-> 
-> When KASAN is enabled and built with clang:
->     mm/damon/lru_sort.c:199:12: error: stack frame size (2328) exceeds limit (2048) in 'damon_lru_sort_apply_parameters' [-Werror,-Wframe-larger-than]
->     static int damon_lru_sort_apply_parameters(void)
->                ^
->     1 error generated.
-> 
-> This is because damon_lru_sort_quota contains a large array, and
-> assigning this variable to a local variable causes a large amount of
-> stack space to be occupied.
+Note that all patches except the third one ("minmax: fix header
+inclusions") are clean cherry-picks of upstream commit.  For the third
+one, a minor conflict fix was needed.
 
-Is this a successor of a patch[1] that you sent yesterday?  If so, could you
-please explain what's the change from the version and why such changes have
-made?
+[1] https://lore.kernel.org/2024071519-janitor-robe-779f@gregkh
 
-[1] https://lore.kernel.org/20240711081051.66560-1-flyingpeng@tencent.com
+Andy Shevchenko (1):
+  minmax: fix header inclusions
 
-> 
-> Signed-off-by: Peng Hao <flyingpeng@tencent.com>
-> ---
->  include/linux/damon.h | 2 +-
->  mm/damon/core.c       | 8 +++++++-
->  2 files changed, 8 insertions(+), 2 deletions(-)
-> 
-> diff --git a/include/linux/damon.h b/include/linux/damon.h
-> index f7da65e1ac04..8ba0457ab538 100644
-> --- a/include/linux/damon.h
-> +++ b/include/linux/damon.h
-> @@ -229,7 +229,7 @@ struct damos_quota {
->  	unsigned long charge_addr_from;
->  
->  	/* For prioritization */
-> -	unsigned long histogram[DAMOS_MAX_SCORE + 1];
-> +	unsigned long *histogram; //size:DAMOS_MAX_SCORE + 1;
->  	unsigned int min_score;
->  
->  	/* For feedback loop */
-> diff --git a/mm/damon/core.c b/mm/damon/core.c
-> index 6392f1cc97a3..0614b49fbc35 100644
-> --- a/mm/damon/core.c
-> +++ b/mm/damon/core.c
-> @@ -358,6 +358,10 @@ struct damos *damon_new_scheme(struct damos_access_pattern *pattern,
->  {
->  	struct damos *scheme;
->  
-> +	unsigned long *histogram = kmalloc(DAMOS_MAX_SCORE + 1, GFP_KERNEL);
-> +	if (!histogram)
-> +		return NULL;
-> +
->  	scheme = kmalloc(sizeof(*scheme), GFP_KERNEL);
->  	if (!scheme)
->  		return NULL;
+David Laight (3):
+  minmax: allow min()/max()/clamp() if the arguments have the same
+    signedness.
+  minmax: allow comparisons of 'int' against 'unsigned char/short'
+  minmax: relax check to allow comparison between unsigned arguments and
+    signed constants
 
-Some code allocate damos_quota objects without damon_new_scheme().  For
-example, damon_lru_sort_quota.  I think such code should also be updated, to
-get this change?  I think it is simpler to keep the histogram as an array as
-is and change the stack-allocations as I suggested on the v1, though.
+Jason A. Donenfeld (2):
+  minmax: sanity check constant bounds when clamping
+  minmax: clamp more efficiently by avoiding extra comparison
 
-> @@ -375,6 +379,7 @@ struct damos *damon_new_scheme(struct damos_access_pattern *pattern,
->  	INIT_LIST_HEAD(&scheme->list);
->  
->  	scheme->quota = *(damos_quota_init(quota));
-> +	cheme->quota.histogram = histogram;
+SeongJae Park (1):
+  mm/damon/core: merge regions aggressively when max_nr_regions is unmet
 
-I think this should s/cheme/scheme/?  Have you checked if this can be compiled?
-
->  	/* quota.goals should be separately set by caller */
->  	INIT_LIST_HEAD(&scheme->quota.goals);
->  
-> @@ -408,6 +413,7 @@ static void damon_del_scheme(struct damos *s)
->  
->  static void damon_free_scheme(struct damos *s)
->  {
-> +	kfree(s->quota.histogram);
->  	kfree(s);
->  }
->  
-> @@ -1246,7 +1252,7 @@ static void damos_adjust_quota(struct damon_ctx *c, struct damos *s)
->  		return;
->  
->  	/* Fill up the score histogram */
-> -	memset(quota->histogram, 0, sizeof(quota->histogram));
-> +	memset(quota->histogram, 0, sizeof(*quota->histogram) * (DAMOS_MAX_SCORE + 1));
->  	damon_for_each_target(t, c) {
->  		damon_for_each_region(r, t) {
->  			if (!__damos_valid_target(r, s))
-> -- 
-> 2.27.0
+ include/linux/minmax.h | 89 ++++++++++++++++++++++++++++++------------
+ mm/damon/core.c        | 21 +++++++++-
+ 2 files changed, 83 insertions(+), 27 deletions(-)
 
 
-Thanks,
-SJ
+base-commit: 291e563ecab1ea89c70172ecf0d6bff7b725d3cb
+-- 
+2.39.2
+
