@@ -1,44 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59CBF1A0AFB;
-	Tue, 16 Jul 2024 17:52:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5EAC54BD4;
+	Tue, 16 Jul 2024 18:23:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721152341; cv=none; b=a3/eXAqK4WSRNQ2PE6a9q9MtDx2dWV5crkr/fP/MLz9KvH6bwH5ym/Fx0wggtjsik0pLFRRaKgG4/lamZRl0xmE6/1FWHaG26OkI2xm6wgkRQvBu6lP+SHtEcztkMQe4XQtXEJDhh7o67bAVeWuDmYmu+wkAPyNRvFom+SrQWKY=
+	t=1721154230; cv=none; b=scMbA6iuUanm0q6fnKHEXrTVekldvlPZg1Vvgr7LatCbXR5qITf+rlLRqIRegaz+Id/eLel98iQJcgYTUF3xMnCAmGeRv45W9TU2ei2DUipPUwt/Pq6LI4s1GIqK/S9YerWi7Qm7Yz6psEK2i70xLEd/jV2DtpQSw1LlTEwvuVM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721152341; c=relaxed/simple;
-	bh=T/pNo+yJuvE1fTBndW2I+PGWWQSfcSQHEgmL3hp/wPM=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=IJiSbT6Gd6jXUPu5/NwGkA8qNe8gNjECqg6cMpjHmJVW5RQdDk8IMjCe8LKWQlBke3WTm6VegJKNuzmUwT0O/7XTZxfOeVDhOJdjq5ZxT3UayGwM46yb62hyTdd08JBL7Nrmh/5uSh7Z9peNutrB7EjPWCJO1MNpKu1PlLB38lk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QJ5HFnrA; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1721154230; c=relaxed/simple;
+	bh=z5yTdBXbmrMVIksJABLAp8nR3U28hpuOwDGdNX8jAWc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=KLYSsvb7CIjGJ7LTaDU89BJFKPn/zvJ5ZPRsdMcEaqVp1eBz78YGxivdjM8JEEHxi3PcqSAeM1KuaO6IbOBcrWnWuGOMFhD15mU/iBoFOJTuYp5/Am8QB7QAr0dsR4nyre6SASV3hbXpMSsK0FC3KpM426d6c+dGQ6WISe4VflE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sScQPm+b; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QJ5HFnrA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FFEAC4AF0D;
-	Tue, 16 Jul 2024 17:52:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1721152340;
-	bh=T/pNo+yJuvE1fTBndW2I+PGWWQSfcSQHEgmL3hp/wPM=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QJ5HFnrA0gGqZLuEPeEMN1mg0jqaTM9UDLRevr0HupKNYdGfGxKDjFNarBVKFdQwQ
-	 e9gWRGiwBUzViaku+L9z1QoGNXBFu0xxwBvLWEqvxy659vuNIFJkesFvVhZb/gmDA1
-	 DtVcN0V4mlwXWuTzJs9Ds0lpaSumxhEIZrL8TivBWgkzvrrZtRgGr60m/TEuROCmUj
-	 LCPNzOK+6pnJ/ORW6Z12e6u8Bjh6POkH4TYu1LwcWFdRlnMiOU+EJRWd+nz1qKKYJQ
-	 Sm/9+SnNFATTz0WNRcFk2GP6CUkYETY46eEDeijaaTAFXQztYjJvYpviBpFHBL/rwu
-	 jJxqBsRex9eHA==
-From: SeongJae Park <sj@kernel.org>
-To: stable@vger.kernel.org,
-	gregkh@linuxfoundation.org
-Cc: SeongJae Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	damon@lists.linux.dev,
-	linux-mm@kvack.org,
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sScQPm+b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7832C116B1;
+	Tue, 16 Jul 2024 18:23:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1721154230;
+	bh=z5yTdBXbmrMVIksJABLAp8nR3U28hpuOwDGdNX8jAWc=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=sScQPm+bxV6RPHIQdQPUJ9LyeWwGPcuCOO/uBdtHabJv0sB1PVQjeoGSOafTCk67A
+	 1pNvASiVdhDM88B2yT5WDhciJ2yOpD2nuAuwIJ6K6/cxbNQIm7goa1pHCMkgPOYb9w
+	 eUCRwMmLnc+5RMtg0XOyG2MfAE3uZ3vjUaUNQerY=
+Date: Tue, 16 Jul 2024 20:23:46 +0200
+From: Greg KH <gregkh@linuxfoundation.org>
+To: SeongJae Park <sj@kernel.org>
+Cc: stable@vger.kernel.org, Andrew Morton <akpm@linux-foundation.org>,
+	damon@lists.linux.dev, linux-mm@kvack.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH 6.1.y 7/7] mm/damon/core: merge regions aggressively when max_nr_regions is unmet
-Date: Tue, 16 Jul 2024 10:52:05 -0700
-Message-Id: <20240716175205.51280-8-sj@kernel.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20240716175205.51280-1-sj@kernel.org>
+Subject: Re: [PATCH 6.1.y 0/7] Backport patches for DAMON merge regions fix
+Message-ID: <2024071624-mustiness-quarterly-f34e@gregkh>
 References: <20240716175205.51280-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -46,77 +38,26 @@ List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240716175205.51280-1-sj@kernel.org>
 
-commit 310d6c15e9104c99d5d9d0ff8e5383a79da7d5e6 upstream.
+On Tue, Jul 16, 2024 at 10:51:58AM -0700, SeongJae Park wrote:
+> Commit 310d6c15e910 ("mm/damon/core: merge regions aggressively when
+> max_nr_regions") causes a build warning [1] on 6.1.y.  That was due to
+> unnecessarily strict type check from max().
+> 
+> Fix the warning by backporting a minmax.h upstream commit that made the
+> type check less strict for unnecessary case, and upstream commits that
+> it depends on.
+> 
+> Note that all patches except the third one ("minmax: fix header
+> inclusions") are clean cherry-picks of upstream commit.  For the third
+> one, a minor conflict fix was needed.
+> 
+> [1] https://lore.kernel.org/2024071519-janitor-robe-779f@gregkh
 
-DAMON keeps the number of regions under max_nr_regions by skipping regions
-split operations when doing so can make the number higher than the limit.
-It works well for preventing violation of the limit.  But, if somehow the
-violation happens, it cannot recovery well depending on the situation.  In
-detail, if the real number of regions having different access pattern is
-higher than the limit, the mechanism cannot reduce the number below the
-limit.  In such a case, the system could suffer from high monitoring
-overhead of DAMON.
+Thanks for these, I'll queue them up after this round of -rc releases go
+out in a few days.
 
-The violation can actually happen.  For an example, the user could reduce
-max_nr_regions while DAMON is running, to be lower than the current number
-of regions.  Fix the problem by repeating the merge operations with
-increasing aggressiveness in kdamond_merge_regions() for the case, until
-the limit is met.
-
-[sj@kernel.org: increase regions merge aggressiveness while respecting min_nr_regions]
-  Link: https://lkml.kernel.org/r/20240626164753.46270-1-sj@kernel.org
-[sj@kernel.org: ensure max threshold attempt for max_nr_regions violation]
-  Link: https://lkml.kernel.org/r/20240627163153.75969-1-sj@kernel.org
-Link: https://lkml.kernel.org/r/20240624175814.89611-1-sj@kernel.org
-Fixes: b9a6ac4e4ede ("mm/damon: adaptively adjust regions")
-Signed-off-by: SeongJae Park <sj@kernel.org>
-Cc: <stable@vger.kernel.org>	[5.15+]
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-(cherry picked from commit 310d6c15e9104c99d5d9d0ff8e5383a79da7d5e6)
----
- mm/damon/core.c | 21 +++++++++++++++++++--
- 1 file changed, 19 insertions(+), 2 deletions(-)
-
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index 5db9bec8ae67..ab5c351b276c 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -921,14 +921,31 @@ static void damon_merge_regions_of(struct damon_target *t, unsigned int thres,
-  * access frequencies are similar.  This is for minimizing the monitoring
-  * overhead under the dynamically changeable access pattern.  If a merge was
-  * unnecessarily made, later 'kdamond_split_regions()' will revert it.
-+ *
-+ * The total number of regions could be higher than the user-defined limit,
-+ * max_nr_regions for some cases.  For example, the user can update
-+ * max_nr_regions to a number that lower than the current number of regions
-+ * while DAMON is running.  For such a case, repeat merging until the limit is
-+ * met while increasing @threshold up to possible maximum level.
-  */
- static void kdamond_merge_regions(struct damon_ctx *c, unsigned int threshold,
- 				  unsigned long sz_limit)
- {
- 	struct damon_target *t;
-+	unsigned int nr_regions;
-+	unsigned int max_thres;
- 
--	damon_for_each_target(t, c)
--		damon_merge_regions_of(t, threshold, sz_limit);
-+	max_thres = c->attrs.aggr_interval /
-+		(c->attrs.sample_interval ?  c->attrs.sample_interval : 1);
-+	do {
-+		nr_regions = 0;
-+		damon_for_each_target(t, c) {
-+			damon_merge_regions_of(t, threshold, sz_limit);
-+			nr_regions += damon_nr_regions(t);
-+		}
-+		threshold = max(1, threshold * 2);
-+	} while (nr_regions > c->attrs.max_nr_regions &&
-+			threshold / 2 < max_thres);
- }
- 
- /*
--- 
-2.39.2
-
+greg k-h
