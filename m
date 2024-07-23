@@ -1,71 +1,94 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2160E14D28A;
-	Tue, 23 Jul 2024 12:16:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94F43157493
+	for <damon@lists.linux.dev>; Tue, 23 Jul 2024 16:08:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721736961; cv=none; b=WPsVU75jUSQRqbQXfbx+4j+Xrlr86VEvx7Hm1N23AEUJbg9LYJ6ZqARpCtSgKdOpxrUmtTMRWWQS/2Pp10aJk6s5JLuYUGJyJ1DnzCyXb0P2xwtHF9IAg9SzFxpTyGJqDUx+Cst8m2pnnCdDfcv0UuTzBZ1xzbjob1t1r95Wlh0=
+	t=1721750928; cv=none; b=qRnRwWB02n8ncgXxhMhlbLXTWwU910siMX2WxMK3Yr1C55ep15J6nLYARNL8f8uYye2SizxHo3PBjhilKwRC7FSaRedzfLuwP1sMsFp1aKScPfprQjozNWQF+4CdkhZm7TslyQiyjDJb+yszwgSw0t6EFWq/Wn8kcwQrQ4thMUM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721736961; c=relaxed/simple;
-	bh=GsauTDQRk0OPijEvOegqEpkfA+zhQq8Ca9baXNXV63o=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OouLY+7yIzi+POhLOdlRSKBxjV03wiYQo5BAB6SJyRUyusggP55MgqtdT0wIKkbW1KAl/jVhH2RFNjjJ4VTMETvx43QdkWUuJZ3wF9F1TLVSHgTFQXl5WItJpIhX/9jOzRT3DZhGONVOoDBGq5Qs1PirJ9959veLGg3vni53TxI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FU31NFMS; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1721750928; c=relaxed/simple;
+	bh=TVPc1L8ah/pJaakJ94/QGIwGWqWh3TdItfYh+mGDVDc=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=RX4J9AVKHmJ3rvAf0koeDgWl2lm1q6obkbSva58Bl/LVulGgii3J3aMWKVTeXN0n/bIuF3q5mMfAhoM38OnjXqsd9YYrjXldjyTAUDJUls0u0EGb8bHfxUERKBVkUOCQOxF8sn2fhGz5Oab4pyhl5PYz76VQVV/LdhmIOmNqloM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jb9AvqCN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FU31NFMS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D087C4AF0A;
-	Tue, 23 Jul 2024 12:16:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721736961;
-	bh=GsauTDQRk0OPijEvOegqEpkfA+zhQq8Ca9baXNXV63o=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=FU31NFMSfZimcH5DCRUPdlNNIjZQMRwtNSiD3vRxXOdSRbIA8GnQWCUIboeumaGNk
-	 BUWHftKLIs3kVfqSDrdiGXQzqze56b3HbAJD5l0fnEXlq+Se5uBybBdidvRM7C8b4m
-	 vvm4v3uDCiVBwmaG1oVlsMlBrZD8Ru0S8la378Yo=
-Date: Tue, 23 Jul 2024 14:15:50 +0200
-From: Greg KH <gregkh@linuxfoundation.org>
-To: SeongJae Park <sj@kernel.org>
-Cc: stable@vger.kernel.org, Andrew Morton <akpm@linux-foundation.org>,
-	Ingo Molnar <mingo@redhat.com>,
-	Luc Van Oostenryck <luc.vanoostenryck@gmail.com>,
-	Steven Rostedt <rostedt@goodmis.org>, damon@lists.linux.dev,
-	linux-mm@kvack.org, linux-sparse@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 5.15.y 0/8] Backport patches for DAMON merge regions fix
-Message-ID: <2024072335-gills-washtub-35a9@gregkh>
-References: <20240716183333.138498-1-sj@kernel.org>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jb9AvqCN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A813EC4AF0A;
+	Tue, 23 Jul 2024 16:08:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1721750928;
+	bh=TVPc1L8ah/pJaakJ94/QGIwGWqWh3TdItfYh+mGDVDc=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=jb9AvqCNPdExLJtTo6a2ZcsaRTiO0dyFlFtR/UqyspiF3PDDwv2yd0p3EY1Wz7xKO
+	 IgoxhsD2rMksoB7aqVXCf5LiegQu7stE64K2RFXYlw3GqjUPzxlDiVpzKvDRgrmLZ/
+	 JlzC0iB/At05koblM47UiNrX77yPLKmmRgXT4y0pj2q+NI6Xx50BhKws2NXvtk9tDV
+	 X5zdhb/nO1R9EnmvTVtShDs24gEu5zRZP0s29FTlZECLvWghB/cybk8iS+RP0uOy8l
+	 kvdyC/fMVKGuMmXQeGS4QgYbCxy7b+CxKh4OWu5T+DQY8xd7ij7Yy63YLZnSuj+W+N
+	 jK4c4kdRDxvsQ==
+From: SeongJae Park <sj@kernel.org>
+To: flyingpenghao@gmail.com
+Cc: SeongJae Park <sj@kernel.org>,
+	akpm@linux-foundation.org,
+	damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	Peng Hao <flyingpeng@tencent.com>
+Subject: Re: [PATCH v5]  mm/damon/lru_sort: adjust local variable to dynamic allocation
+Date: Tue, 23 Jul 2024 09:08:43 -0700
+Message-Id: <20240723160843.99979-1-sj@kernel.org>
+X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20240723035513.20153-1-flyingpeng@tencent.com>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240716183333.138498-1-sj@kernel.org>
+Content-Transfer-Encoding: 8bit
 
-On Tue, Jul 16, 2024 at 11:33:25AM -0700, SeongJae Park wrote:
-> Commit 310d6c15e910 ("mm/damon/core: merge regions aggressively when
-> max_nr_regions") causes a build warning and a build failure [1] on
-> 5.15.y.  Those are due to
-> 1) unnecessarily strict type check from max(), and
-> 2) use of not-yet-introduced damon_ctx->attrs field, respectively.
-> 
-> Fix the warning by backporting a minmax.h upstream commit that made the
-> type check less strict for unnecessary case, and upstream commits that
-> it depends on.
-> 
-> Note that all patches except the fourth one ("minmax: fix header
-> inclusions") are clean cherry-picks of upstream commit.  For the fourth
-> one, minor conflict resolving was needed.
-> 
-> Also, the last patch, which is the backport of the DAMON fix, was
-> cleanly cherry-picked, but added manual fix for the build failure.
-> 
-> [1] https://lore.kernel.org/2024071532-pebble-jailhouse-48b2@gregkh
+Hi Peng,
 
-All now queued up, again, thank you for the minmax backports, much
-appreciated.
 
-greg k-h
+Thank you for patiently following the discussion and sending this, Peng!
+
+On Tue, 23 Jul 2024 11:55:13 +0800 flyingpenghao@gmail.com wrote:
+
+> From: Peng Hao <flyingpeng@tencent.com>
+> 
+> When KASAN is enabled and built with clang:
+>     mm/damon/lru_sort.c:199:12: error: stack frame size (2328) exceeds
+> limit (2048) in 'damon_lru_sort_apply_parameters' [-Werror,-Wframe-larger-than]
+>     static int damon_lru_sort_apply_parameters(void)
+>                ^
+>     1 error generated.
+> 
+> This is because damon_lru_sort_quota contains a large array, and
+> assigning this variable to a local variable causes a large amount of
+> stack space to be occupied.
+> 
+> So adjust local variable to dynamic allocation.
+> 
+> Link: https://lore.kernel.org/all/20240711081051.66560-1-flyingpeng@tencent.com/
+> Link: https://lore.kernel.org/linux-mm/20240719174234.47017-1-sj@kernel.org/T/
+
+I guess above two links are for revision history of this patch?  If so, it
+would better to put together with revision history under the below '---' line.
+If not, it would be better to add more clear contexts on the commit message.
+
+> 
+> Signed-off-by: Peng Hao <flyingpeng@tencent.com>
+
+Except the above trivial comment,
+
+Reviewed-by: SeongJae Park <sj@kernel.org>
+
+I think Andrew would handle the trivial comment on his own when he add this
+patch to mm tree.  You could post v6 with the above my Reviewed-by: tag if you
+prefer to, of course.
+
+
+Thanks,
+SJ
+
+[...]
