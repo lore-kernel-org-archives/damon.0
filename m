@@ -1,44 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94F43157493
-	for <damon@lists.linux.dev>; Tue, 23 Jul 2024 16:08:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB74313A24D;
+	Wed, 24 Jul 2024 22:21:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721750928; cv=none; b=qRnRwWB02n8ncgXxhMhlbLXTWwU910siMX2WxMK3Yr1C55ep15J6nLYARNL8f8uYye2SizxHo3PBjhilKwRC7FSaRedzfLuwP1sMsFp1aKScPfprQjozNWQF+4CdkhZm7TslyQiyjDJb+yszwgSw0t6EFWq/Wn8kcwQrQ4thMUM=
+	t=1721859685; cv=none; b=WDRYj1m8eBesvsTmmgsX4yj6UXAcmnb+5s75ume3zgk9yOJJxpLXmdvwSOlCe81GjrYU1P7wi9pqEghezWvCvDbmN0YwVfEqik+2fuSigmid91muVOivHoS6+iIgHMao7E2xOjxj6z0mMbhEfhG/KQ/fAa/BviOmHsnEwG6O9OU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721750928; c=relaxed/simple;
-	bh=TVPc1L8ah/pJaakJ94/QGIwGWqWh3TdItfYh+mGDVDc=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=RX4J9AVKHmJ3rvAf0koeDgWl2lm1q6obkbSva58Bl/LVulGgii3J3aMWKVTeXN0n/bIuF3q5mMfAhoM38OnjXqsd9YYrjXldjyTAUDJUls0u0EGb8bHfxUERKBVkUOCQOxF8sn2fhGz5Oab4pyhl5PYz76VQVV/LdhmIOmNqloM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jb9AvqCN; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1721859685; c=relaxed/simple;
+	bh=7U/BfhOp1guJ+/v/2bYZDnABsM2iqQV8bcRGFRmsEt4=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=gard+dSrxUb/OTUwN2/suQiFS+4OEGpJij/2v1ZdyGklK4Caam7ncxujaksXxnOZhdlrxhvHaS7MCWDwKC183qgFn60TAULWHkiedJ3FWJHcungHIT3Nl+8GrNu1vWuHmCU0fkd5k3oLBcGuCXryMA0Lx6pK0/3Bsv9QWTI+wcs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dwtWqghm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jb9AvqCN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A813EC4AF0A;
-	Tue, 23 Jul 2024 16:08:47 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dwtWqghm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F96BC32781;
+	Wed, 24 Jul 2024 22:21:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1721750928;
-	bh=TVPc1L8ah/pJaakJ94/QGIwGWqWh3TdItfYh+mGDVDc=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jb9AvqCNPdExLJtTo6a2ZcsaRTiO0dyFlFtR/UqyspiF3PDDwv2yd0p3EY1Wz7xKO
-	 IgoxhsD2rMksoB7aqVXCf5LiegQu7stE64K2RFXYlw3GqjUPzxlDiVpzKvDRgrmLZ/
-	 JlzC0iB/At05koblM47UiNrX77yPLKmmRgXT4y0pj2q+NI6Xx50BhKws2NXvtk9tDV
-	 X5zdhb/nO1R9EnmvTVtShDs24gEu5zRZP0s29FTlZECLvWghB/cybk8iS+RP0uOy8l
-	 kvdyC/fMVKGuMmXQeGS4QgYbCxy7b+CxKh4OWu5T+DQY8xd7ij7Yy63YLZnSuj+W+N
-	 jK4c4kdRDxvsQ==
+	s=k20201202; t=1721859684;
+	bh=7U/BfhOp1guJ+/v/2bYZDnABsM2iqQV8bcRGFRmsEt4=;
+	h=From:To:Cc:Subject:Date:From;
+	b=dwtWqghm/4Ggmzfmjs4vIC8dKLL9yYavoQGgD7XYKM7i9zQzNB41+sbs8TmbIBUUq
+	 /yFpuemuiqenTNJCnA7zXkEa2iixIWm4MFafm8uWJh9uej5224vBjIim3CcghTts0Y
+	 3tkPV4nd82gVBi/v4248jNwVN8RudwwpWOitPM63HacAwzBCmQMkUQyF/6M0V455Cc
+	 Q8wsZVeQd8JZ1pgPg/Y2gS9Odi/DRGDsCCke1l64FTiPHyNASznVKHiP6YFDdbUStP
+	 nRWyPxRsQsfUlU3S5Nsini367ZhPGO6K4r2iI1l6b72s3tpaTsL654ma6p/g0VDsjw
+	 vH/z3qCvBn3Cg==
 From: SeongJae Park <sj@kernel.org>
-To: flyingpenghao@gmail.com
+To: damon@lists.linux.dev
 Cc: SeongJae Park <sj@kernel.org>,
-	akpm@linux-foundation.org,
-	damon@lists.linux.dev,
 	linux-mm@kvack.org,
-	Peng Hao <flyingpeng@tencent.com>
-Subject: Re: [PATCH v5]  mm/damon/lru_sort: adjust local variable to dynamic allocation
-Date: Tue, 23 Jul 2024 09:08:43 -0700
-Message-Id: <20240723160843.99979-1-sj@kernel.org>
+	linux-kernel@vger.kernel.org
+Subject: Call for DAMON Recipies
+Date: Wed, 24 Jul 2024 15:21:19 -0700
+Message-Id: <20240724222119.58477-1-sj@kernel.org>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20240723035513.20153-1-flyingpeng@tencent.com>
-References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -47,48 +42,35 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hi Peng,
+Hello DAMON community,
 
 
-Thank you for patiently following the discussion and sending this, Peng!
+As a humble DAMON maintainer, I'm having a privilege to hear many interesting
+and creative DAMON usages.  At OSSummit EU 2024, I'm going to share[1] those.
+While preparing the talk, I again reminded that my best knowledge is always
+only a small part of that of the community.
 
-On Tue, 23 Jul 2024 11:55:13 +0800 flyingpenghao@gmail.com wrote:
+So I'm asking help to the community for collecting more DAMON recipes.  If you
+are using DAMON for any purpose, or know someone who uses DAMON, and if you
+think it might be worthy to share, please reach out to me or foward this to
+them.  Even if you don't want to share it, or you think it is not worthy to
+share, please consider reaching out to me, to make DAMON be more optimzied for
+your use case.  You could reply to this email, attend upcoming DAMON
+meetups[2], or use whatever you feel most comfortable.
 
-> From: Peng Hao <flyingpeng@tencent.com>
-> 
-> When KASAN is enabled and built with clang:
->     mm/damon/lru_sort.c:199:12: error: stack frame size (2328) exceeds
-> limit (2048) in 'damon_lru_sort_apply_parameters' [-Werror,-Wframe-larger-than]
->     static int damon_lru_sort_apply_parameters(void)
->                ^
->     1 error generated.
-> 
-> This is because damon_lru_sort_quota contains a large array, and
-> assigning this variable to a local variable causes a large amount of
-> stack space to be occupied.
-> 
-> So adjust local variable to dynamic allocation.
-> 
-> Link: https://lore.kernel.org/all/20240711081051.66560-1-flyingpeng@tencent.com/
-> Link: https://lore.kernel.org/linux-mm/20240719174234.47017-1-sj@kernel.org/T/
+You don't need to unveil anything you don't want to.  If you prefer to, we
+could adjust the talk so that you can present your usage directly to the
+audiences.
 
-I guess above two links are for revision history of this patch?  If so, it
-would better to put together with revision history under the below '---' line.
-If not, it would be better to add more clear contexts on the commit message.
+Looking forward to your interesting stories!
 
-> 
-> Signed-off-by: Peng Hao <flyingpeng@tencent.com>
+And of course, this is not limited to only OSSummit EU.  Depending on responses
+to this request, I may think about proposing DAMON microconference to LPC of
+next year.
 
-Except the above trivial comment,
-
-Reviewed-by: SeongJae Park <sj@kernel.org>
-
-I think Andrew would handle the trivial comment on his own when he add this
-patch to mm tree.  You could post v6 with the above my Reviewed-by: tag if you
-prefer to, of course.
+[1] https://sched.co/1ej2S
+[2] https://lore.kernel.org/20220810225102.124459-1-sj@kernel.org
 
 
 Thanks,
 SJ
-
-[...]
