@@ -1,39 +1,59 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB74313A24D;
-	Wed, 24 Jul 2024 22:21:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11F1FDF6C;
+	Thu, 25 Jul 2024 23:19:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721859685; cv=none; b=WDRYj1m8eBesvsTmmgsX4yj6UXAcmnb+5s75ume3zgk9yOJJxpLXmdvwSOlCe81GjrYU1P7wi9pqEghezWvCvDbmN0YwVfEqik+2fuSigmid91muVOivHoS6+iIgHMao7E2xOjxj6z0mMbhEfhG/KQ/fAa/BviOmHsnEwG6O9OU=
+	t=1721949599; cv=none; b=QziAfcBim1pbOjcZzJmnqsrbNyd/BfxvU9tVkE1zr4O485V2NHdVzhJzHUkU0npUXLyldL0dcXyX6W1UdBAVc413LbNVK5NvLxGiyp4upKhIZj5SJCE+pkPpDgSs3ZmDe0wxBTkEY9OQnP3UZNG8/BQeYKiorIJAzj1NDYia2Zg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721859685; c=relaxed/simple;
-	bh=7U/BfhOp1guJ+/v/2bYZDnABsM2iqQV8bcRGFRmsEt4=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=gard+dSrxUb/OTUwN2/suQiFS+4OEGpJij/2v1ZdyGklK4Caam7ncxujaksXxnOZhdlrxhvHaS7MCWDwKC183qgFn60TAULWHkiedJ3FWJHcungHIT3Nl+8GrNu1vWuHmCU0fkd5k3oLBcGuCXryMA0Lx6pK0/3Bsv9QWTI+wcs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dwtWqghm; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1721949599; c=relaxed/simple;
+	bh=fFLl0hAitZmOOqVCrDvGkWFfVVQEqRB91EVNTgaCn3E=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=uVI1S8SKyEqxxbJeji6a39hHkl9eONkN+4BgYbhCzpjkicEm1E5pYl7cs8PthItSlvsdTxvnIvrH2lf2kfHL+sg65SoLHRH1H3OyR6J+pdZNeUHIYEbZXYGUs9I23TiMumrwPLnfL09UV3+Hd9pW1Hx4QLbQgvOtlJ7AAIExkI4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GTydJ4xB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dwtWqghm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F96BC32781;
-	Wed, 24 Jul 2024 22:21:23 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GTydJ4xB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32520C116B1;
+	Thu, 25 Jul 2024 23:19:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1721859684;
-	bh=7U/BfhOp1guJ+/v/2bYZDnABsM2iqQV8bcRGFRmsEt4=;
-	h=From:To:Cc:Subject:Date:From;
-	b=dwtWqghm/4Ggmzfmjs4vIC8dKLL9yYavoQGgD7XYKM7i9zQzNB41+sbs8TmbIBUUq
-	 /yFpuemuiqenTNJCnA7zXkEa2iixIWm4MFafm8uWJh9uej5224vBjIim3CcghTts0Y
-	 3tkPV4nd82gVBi/v4248jNwVN8RudwwpWOitPM63HacAwzBCmQMkUQyF/6M0V455Cc
-	 Q8wsZVeQd8JZ1pgPg/Y2gS9Odi/DRGDsCCke1l64FTiPHyNASznVKHiP6YFDdbUStP
-	 nRWyPxRsQsfUlU3S5Nsini367ZhPGO6K4r2iI1l6b72s3tpaTsL654ma6p/g0VDsjw
-	 vH/z3qCvBn3Cg==
+	s=k20201202; t=1721949598;
+	bh=fFLl0hAitZmOOqVCrDvGkWFfVVQEqRB91EVNTgaCn3E=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=GTydJ4xBjXI+kYdNiqhkc/G2zVT6SVXK+sLxGyuWPBZqarEIgJyl7572gYwrg6fCE
+	 yInLltTwCx8BwidF6E56os7Xw8TaUCuTTY8l/arXKbVlwN4t8hFsWdUuajD2uvbNd5
+	 hJMBafDlH3MjQMe9q/QhPn9mAmVuvLtxJYVpZS3HOwUpQm9Ti4raFv2xoQd0fWpfM2
+	 a/ecAYnkWHKOqw+19zOrGBrixCFD6ezu4dqjfrLA7B8v95hMFBEodeUItfB+uAY3Mr
+	 I6dDy48TiyStPU7mxIOAbjt0qs1JdRuhtWCpBjaopFVEgsg/5KDW99eu9wx3HRiqj2
+	 xtGPfeSBH8s+A==
 From: SeongJae Park <sj@kernel.org>
-To: damon@lists.linux.dev
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: SeongJae Park <sj@kernel.org>,
-	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org
-Subject: Call for DAMON Recipies
-Date: Wed, 24 Jul 2024 15:21:19 -0700
-Message-Id: <20240724222119.58477-1-sj@kernel.org>
+	stable@vger.kernel.org,
+	patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net,
+	rwarsow@gmx.de,
+	conor@kernel.org,
+	allen.lkml@gmail.com,
+	broonie@kernel.org,
+	damon@lists.linux.dev
+Subject: Re: [PATCH 5.15 00/87] 5.15.164-rc1 review
+Date: Thu, 25 Jul 2024 16:19:54 -0700
+Message-Id: <20240725231954.28903-1-sj@kernel.org>
 X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20240725142738.422724252@linuxfoundation.org>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -42,35 +62,55 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hello DAMON community,
+Hello,
 
+On Thu, 25 Jul 2024 16:36:33 +0200 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
 
-As a humble DAMON maintainer, I'm having a privilege to hear many interesting
-and creative DAMON usages.  At OSSummit EU 2024, I'm going to share[1] those.
-While preparing the talk, I again reminded that my best knowledge is always
-only a small part of that of the community.
+> This is the start of the stable review cycle for the 5.15.164 release.
+> There are 87 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Sat, 27 Jul 2024 14:27:16 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.164-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
+> and the diffstat can be found below.
 
-So I'm asking help to the community for collecting more DAMON recipes.  If you
-are using DAMON for any purpose, or know someone who uses DAMON, and if you
-think it might be worthy to share, please reach out to me or foward this to
-them.  Even if you don't want to share it, or you think it is not worthy to
-share, please consider reaching out to me, to make DAMON be more optimzied for
-your use case.  You could reply to this email, attend upcoming DAMON
-meetups[2], or use whatever you feel most comfortable.
+This rc kernel passes DAMON functionality test[1] on my test machine.
+Attaching the test results summary below.  Please note that I retrieved the
+kernel from linux-stable-rc tree[2].
 
-You don't need to unveil anything you don't want to.  If you prefer to, we
-could adjust the talk so that you can present your usage directly to the
-audiences.
+Tested-by: SeongJae Park <sj@kernel.org>
 
-Looking forward to your interesting stories!
-
-And of course, this is not limited to only OSSummit EU.  Depending on responses
-to this request, I may think about proposing DAMON microconference to LPC of
-next year.
-
-[1] https://sched.co/1ej2S
-[2] https://lore.kernel.org/20220810225102.124459-1-sj@kernel.org
-
+[1] https://github.com/awslabs/damon-tests/tree/next/corr
+[2] 1d0703aa8114 ("Linux 5.15.164-rc1")
 
 Thanks,
 SJ
+
+[...]
+
+---
+
+ok 1 selftests: damon: debugfs_attrs.sh
+ok 1 selftests: damon-tests: kunit.sh
+ok 2 selftests: damon-tests: huge_count_read_write.sh
+ok 3 selftests: damon-tests: buffer_overflow.sh
+ok 4 selftests: damon-tests: rm_contexts.sh
+ok 5 selftests: damon-tests: record_null_deref.sh
+ok 6 selftests: damon-tests: dbgfs_target_ids_read_before_terminate_race.sh
+ok 7 selftests: damon-tests: dbgfs_target_ids_pid_leak.sh
+ok 8 selftests: damon-tests: damo_tests.sh
+ok 9 selftests: damon-tests: masim-record.sh
+ok 10 selftests: damon-tests: build_i386.sh
+ok 11 selftests: damon-tests: build_arm64.sh
+ok 12 selftests: damon-tests: build_m68k.sh
+ok 13 selftests: damon-tests: build_i386_idle_flag.sh
+ok 14 selftests: damon-tests: build_i386_highpte.sh
+ok 15 selftests: damon-tests: build_nomemcg.sh
+ [33m
+ [92mPASS [39m
