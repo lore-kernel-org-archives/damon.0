@@ -1,41 +1,58 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 823C5368;
-	Fri, 26 Jul 2024 00:37:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E97416C68F;
+	Wed, 31 Jul 2024 22:39:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721954255; cv=none; b=QMMvdYl6uX3/wnVYelgEmdGTHc+YEFAXj6oV+n42+YMiwlna05MfMHm0OxupAq37WKmV9R87SqCe/+nuHwSCNBy9YXgWca582HI2nXVtz8BCP9nNuDExexNNaNwblwVvg/QhMqiHQLJILtTnIkJ5erZcGMzpL1RKe24lQkVHD6c=
+	t=1722465583; cv=none; b=n/bWPsXFA/0PMsT7fBLKpv3Mh8ickcjcWPtqicbEkyUxwTYtCm4kd6eOkTkBB02U0taDDgg4nP+4SlumWMaG6G4VkzWTYYv7z22a6aAQFpeylQnmWCE7es3jVa4hydESrYtUXK2ZZwYOQHsZzjB9TSc5gxQcfzcxPFDdhrzbNlY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721954255; c=relaxed/simple;
-	bh=wqIff2sCJxyCkhd5vzmXpYM9Xsdp8Np1s/Dl96BuX08=;
+	s=arc-20240116; t=1722465583; c=relaxed/simple;
+	bh=JwJgS4ZEi+dNRXnCzB6M5oT1KbGa3Ll2QdVxKK74QkA=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=Tsz2CqOrDBUPUYvL1PzWkrwBSz3wTmd3X0IDykuXTK9izu2/eiO2b1mN8TabFNua2K5PjUUCm04MaLgN2BGgbARS5tWHDBNPH4eJngJ4vg1kvnHSbdgVhMErpLvB21BJXd85Fo02XPFg7x0kN6whSyFnURA3HztudBf/MmtzaZo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gQCGSdWi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O2uhW12gyNNuwLlBlorKQiNDX+xckANwkJVMdkZq3MTd0BH+idbldBbY2UYGz4Ni05l76edYgTPoJXvYgzDbgU/kZD1J8+aaARa3qagUs+ScEmpTZzU6nrPpxFlcpucqpfruV3ZP0SzLQQRp+78ZPor7ZmNLgszJ9tzUt3cY4YY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iGAO92sS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gQCGSdWi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEB6EC116B1;
-	Fri, 26 Jul 2024 00:37:34 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iGAO92sS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA205C116B1;
+	Wed, 31 Jul 2024 22:39:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1721954255;
-	bh=wqIff2sCJxyCkhd5vzmXpYM9Xsdp8Np1s/Dl96BuX08=;
+	s=k20201202; t=1722465583;
+	bh=JwJgS4ZEi+dNRXnCzB6M5oT1KbGa3Ll2QdVxKK74QkA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gQCGSdWiNin82MMGIuNreTmIdunT9mRTrMhIUpPiyySFfwsnKURSe2xTVOO4Q+e9Q
-	 bgx+RZO39jB2P1I99tnT/dNGbQdnKdWvzZxEKSZ0LGwDbM2BoiRJTabrecUfn6iz2H
-	 +wfKH/qmgjO1VqFCSm9oSa/cllXeQzL4iB6I8fBgeWVuD29FzCE5Rq+iFLO4QaZVL1
-	 eQ/X6fEXtxXzdA4W1VitezOy8DKMYwlWytG7NIOnAbGpaB323SmKxRIi+F/novEyfy
-	 i1M/08yec3Nhkqo5vOdKtZb+0s5/INjy8Cl61cptlKb1f1qqGIDPeSCqpcvdAc0Y+M
-	 x9YRENvjeCVxw==
+	b=iGAO92sSuwp1PSSHZR6s+YE4MMYmUIfObWaOXWGgdJX75yaYHme9ZdeaTQanVymzu
+	 7YUhC3Ug5TwXuPMCd6F6RzLDTe+6JkGLrwSzoeXumbhqHiT+ZwfhohGnn9/zaA3OrK
+	 dmb5qgamOZvCU6OSo6ENiXpArGZzIWPe2KoRI+LVMPkFRJ4W/DLvhSquufJi6nGjn2
+	 WH+poJ4vdvI7PUAH3qadSen/aoiSh4OoTcGVbwuGlCp7kwPSz7DyWM9zJbe+zfSgBU
+	 zJPrNRYraB/K4fK6t/ZnyzLH0GYjj/+OH4UpovrK4FVUMyZOBUDOz+xuplZdzpUhC/
+	 pleSnocXyTyIQ==
 From: SeongJae Park <sj@kernel.org>
-To: damon@lists.linux.dev
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: SeongJae Park <sj@kernel.org>,
-	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org
-Subject: DAMON Beer/Coffee/Tea chat reminder (was: Re: DAMON Beer/Coffee/Tea chat reminder and extending for office hour)
-Date: Thu, 25 Jul 2024 17:37:32 -0700
-Message-Id: <20240726003732.47346-1-sj@kernel.org>
+	stable@vger.kernel.org,
+	patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net,
+	rwarsow@gmx.de,
+	conor@kernel.org,
+	allen.lkml@gmail.com,
+	broonie@kernel.org,
+	damon@lists.linux.dev
+Subject: Re: [PATCH 6.1 000/440] 6.1.103-rc3 review
+Date: Wed, 31 Jul 2024 15:39:38 -0700
+Message-Id: <20240731223939.42341-1-sj@kernel.org>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20240519163329.150340-1-sj@kernel.org>
+In-Reply-To: <20240731100057.990016666@linuxfoundation.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -47,73 +64,59 @@ Content-Transfer-Encoding: 8bit
 
 Hello,
 
-On Sun, 19 May 2024 09:33:29 -0700 SeongJae Park <sj@kernel.org> wrote:
-> On Wed, 10 Aug 2022 22:51:02 +0000 SeongJae Park <sj@kernel.org> wrote:
+On Wed, 31 Jul 2024 12:02:57 +0200 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+
+> This is the start of the stable review cycle for the 6.1.103 release.
+> There are 440 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 > 
-> > Hello,
-> > 
-> > 
-> > In short, I'd like to start an open, regular, and informal virtual bi-weekly
-> > meeting series for DAMON community.
-> > 
-> > Important links and dates
-> > -------------------------
-> > 
-> > Location: https://meet.google.com/ndx-evoc-gbu
-> > Agenda: https://docs.google.com/document/d/1v43Kcj3ly4CYqmAkMaZzLiM2GEnWfgdGbZAH3mi2vpM/edit?usp=sharing
+> Responses should be made by Fri, 02 Aug 2024 09:59:35 +0000.
+> Anything received after that time might be too late.
 > 
-[...]
-> Firstly, I will regularly provide reminder of the series, probably 1-2 days
-> before every instance.
-> 
-> Secondly, I'm extending this series for reservation-based office hour.  That
-> is, I will reserve my time for 30 minutes every two weeks, keep the schedule
-> public, and encourage people to reserve the time for discussion on a special
-> topic for them.  The reservation should be made at least one day before the
-> time slot, and will be first-come first-served basis.  In detail, I will
-> reserve Monday afternoon or Tuesday morning of the group chat scheduled week.
-> Note that this is not necessarily only time slot for such discussion.  You're
-> still encouraged to schedule private meetings on your convenience.
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.103-rc3.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+> and the diffstat can be found below.
 
-So, yet another reminder.
+This rc kernel passes DAMON functionality test[1] on my test machine.
+Attaching the test results summary below.  Please note that I retrieved the
+kernel from linux-stable-rc tree[2].
 
-Dedicated-topic discussions
----------------------------
+Tested-by: SeongJae Park <sj@kernel.org>
 
-Next three time slots that I reserved in advance for possible future dedicated
-topic discussions are as below.
-
-- 2024-07-29 (Mon) 18:00 PT (reserved)
-- 2024-08-13 (Tue) 09:30 PT (not yet reserved)
-- 2024-08-26 (Mon) 18:00 PT (not yet reserved)
-
-Please reach out to me (sj@kernel.org or whatever) to reserve the
-not-yet-reserved time slots for your topics.  The reservation is made in a
-First-Come First-Served way, and I will send a Google Meet link to
-reservation-confirmed attendees.
-
-Please note that other time slots are also available based on the discussion.
-
-Any-topic discussions
----------------------
-
-Next two chat instance for any topic (no reservation is required) are scheduled
-as below:
-
-- 2024-07-30 (Tue) 09:30 PT (https://meet.google.com/ndx-evoc-gbu)
-- 2024-08-12 (Mon) 18:00 PT (https://meet.google.com/ndx-evoc-gbu)
-
-Shared Calendar
----------------
-
-You can get the schedule via this shared Google Calendar:
-https://calendar.google.com/calendar/u/0?cid=ZDIwOTA4YTMxNjc2MDQ3NTIyMmUzYTM5ZmQyM2U4NDA0ZGIwZjBiYmJlZGQxNDM0MmY4ZTRjOTE0NjdhZDRiY0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t
-
-You can also get the past and upcoming schedules via
-https://docs.google.com/document/d/1v43Kcj3ly4CYqmAkMaZzLiM2GEnWfgdGbZAH3mi2vpM/edit?usp=sharing
-
+[1] https://github.com/awslabs/damon-tests/tree/next/corr
+[2] dbbffaaee188 ("Linux 6.1.103-rc3")
 
 Thanks,
 SJ
 
 [...]
+
+---
+
+ok 1 selftests: damon: debugfs_attrs.sh
+ok 2 selftests: damon: debugfs_schemes.sh
+ok 3 selftests: damon: debugfs_target_ids.sh
+ok 4 selftests: damon: debugfs_empty_targets.sh
+ok 5 selftests: damon: debugfs_huge_count_read_write.sh
+ok 6 selftests: damon: debugfs_duplicate_context_creation.sh
+ok 7 selftests: damon: sysfs.sh
+ok 1 selftests: damon-tests: kunit.sh
+ok 2 selftests: damon-tests: huge_count_read_write.sh
+ok 3 selftests: damon-tests: buffer_overflow.sh
+ok 4 selftests: damon-tests: rm_contexts.sh
+ok 5 selftests: damon-tests: record_null_deref.sh
+ok 6 selftests: damon-tests: dbgfs_target_ids_read_before_terminate_race.sh
+ok 7 selftests: damon-tests: dbgfs_target_ids_pid_leak.sh
+ok 8 selftests: damon-tests: damo_tests.sh
+ok 9 selftests: damon-tests: masim-record.sh
+ok 10 selftests: damon-tests: build_i386.sh
+ok 11 selftests: damon-tests: build_arm64.sh
+ok 12 selftests: damon-tests: build_m68k.sh
+ok 13 selftests: damon-tests: build_i386_idle_flag.sh
+ok 14 selftests: damon-tests: build_i386_highpte.sh
+ok 15 selftests: damon-tests: build_nomemcg.sh
+ [33m
+ [92mPASS [39m
