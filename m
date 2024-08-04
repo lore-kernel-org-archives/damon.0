@@ -1,59 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80CE016D4DE;
-	Wed, 31 Jul 2024 22:40:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B108F2FB6
+	for <damon@lists.linux.dev>; Sun,  4 Aug 2024 19:05:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722465636; cv=none; b=Q2xXLVn8ksxESfifAEsuu2e0LYC3IKT50WjBbfSAPcAptRwMsHtiqaYydI2zKvpEnK7n0HXj21wO4FenRWHh9I+Vb4qutoYp9qI0OCBzE9qZeqkMIRQhrYkkmmZ7EzbOs3P6ophRqhb1SAgtoNCmnkwDOu1LBtvsftWAKqgCmjY=
+	t=1722798305; cv=none; b=rrTUL7Naif9BMQ4yuQbJr0Pht2FC/zOnxYgM70ykEKhhbcpREeI2RRF1I3C1+Ncr7KofnTCcGoMd5ZbJC2Lggxh7RfH6esXYTd0342Js8gB4HZwR5C2c8MlDK8FQEQcWUqS7ymQzF2hSbSGbHqkOXFSoCSWAoADlquX/y/ZFfRo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722465636; c=relaxed/simple;
-	bh=tETh/Vi+zu7QxmeEC8V1A7sujbIPE5A3qowdiWZFMAI=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=SGVS0YMxYZh6CgmdUK60KSuTz/I/fW+kDhrNyQrvTG0gJmL7bLK9Jismv69ENoVU/h33HvMZHlvLSECENWRLXDf5ki4IB0W7kzCNx7UJe92AiomqgHzZ6G6Rn3JMUqxX0XwhYWDEnxCU2+H7yI45I5UQnLJPvM0by0oMLAMTavs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PL8kEFJU; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1722798305; c=relaxed/simple;
+	bh=LS6IV+czE9tPUoVn3wLrwyLpgpUolytZqciMdRFna3I=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=BovvAKhDVv8Lee+2Q0V2BeihB4TePIbwP4Kd8xbvNw5HVzH0v/sZ46eUylux/3Tn++x92ZcrHMAvOSSnD92fMYC3LGzHOSn9tkDs11+CUpkcVvz1jTrPjAtK6klPf0pwTKii3fcrmdTweVz5I8UVU07EIMMIsS3/B2QsC62kvYY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SPuPwxRp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PL8kEFJU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E0C1C116B1;
-	Wed, 31 Jul 2024 22:40:34 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SPuPwxRp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40732C32786;
+	Sun,  4 Aug 2024 19:05:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1722465636;
-	bh=tETh/Vi+zu7QxmeEC8V1A7sujbIPE5A3qowdiWZFMAI=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PL8kEFJUwuKDQ96sVz+7vf2ksowpTkoFYV+yVS9QjA9oNKxIOf/6frotb6tnoWpun
-	 4k9o3DRE7j+SMXqK5JzRTIS9LHV2sEiqvbxqdy7ZvvsUyPdCCyA66XB5LCGKv3bkDX
-	 ZdZwrozaMUB3i33hU6jPz8JREYhnUR7xDl08BIzDGWCqi3X5EggyZTKV6frumtv4I3
-	 5IePQzVuyA4kgaxmV19SY97cOuQALXDCz9JIGBY4azGGPupjd87G2yTiu0PfUidN8Z
-	 iImaeUiqqMiQLggEZO6a2cqq+oxn20PE+j/2J/d9vL6GTtV1INzypIDIca0q1e+KCk
-	 5f8Kb+f/l/F+Q==
+	s=k20201202; t=1722798305;
+	bh=LS6IV+czE9tPUoVn3wLrwyLpgpUolytZqciMdRFna3I=;
+	h=From:To:Cc:Subject:Date:From;
+	b=SPuPwxRpHgCPAlSSvGk8ShZlN/8wvmgL0TUSzbfj+G0Hk0YCKKn8kVux7VLwJoRi/
+	 A6fD+J/prtq8mTfhPiMUFE4zpXwZuymh8xFK/tNhfE2z8anXQoAHYcAiUJzwcqMpLY
+	 PgJqkagaz2/IW0L/CSE5mrfR1cz2pYZQxXMRP7wN1wSDNiiRVyOp6OoKV9IUpauxj/
+	 THHtVwp5AmjHMpfG7rd4+Hbi5JW8Ac2u2MH2ghRbUkR2EPzhpjd9thsaOT1uwTHNJ6
+	 U4xyzCO5o/T6SUulQ0BUSIVvcjvRB0JnzB220Y1XnzDvma21FOE2z7DUdotEcaNF5g
+	 ma9Osd2EcoJtg==
 From: SeongJae Park <sj@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: SeongJae Park <sj@kernel.org>,
-	stable@vger.kernel.org,
-	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net,
-	rwarsow@gmx.de,
-	conor@kernel.org,
-	allen.lkml@gmail.com,
-	broonie@kernel.org,
-	damon@lists.linux.dev
-Subject: Re: [PATCH 6.6 000/568] 6.6.44-rc1 review
-Date: Wed, 31 Jul 2024 15:40:31 -0700
-Message-Id: <20240731224031.55620-1-sj@kernel.org>
+To: damon@lists.linux.dev
+Cc: SeongJae Park <sj@kernel.org>
+Subject: Fwd: Re: [sj:damon/next 36/44] mm/damon/vaddr.c:311:22: error: implicit declaration of function 'pmd_present'; did you mean 'p4d_present'?
+Date: Sun,  4 Aug 2024 12:05:01 -0700
+Message-Id: <20240804190501.92540-1-sj@kernel.org>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -62,65 +40,57 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hello,
+Forwarding below to DAMON mailing list for future references.
 
-On Tue, 30 Jul 2024 17:41:47 +0200 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+=== >8 ===
+From: SeongJae Park <sj@kernel.org>
+To: kernel test robot <lkp@intel.com>
+CC: SeongJae Park <sj@kernel.org>, oe-kbuild-all@lists.linux.dev
+Subject: Re: [sj:damon/next 36/44] mm/damon/vaddr.c:311:22: error: implicit declaration of function 'pmd_present'; did you mean 'p4d_present'?
+Message-Id: <20240804185944.92344-1-sj@kernel.org>
+In-Reply-To: <202408040440.Oe31R40L-lkp@intel.com>
+Date: Sun,  4 Aug 2024 11:59:44 -0700
+Local-Date: 2024-08-04 11:59:44-07:00
 
-> This is the start of the stable review cycle for the 6.6.44 release.
-> There are 568 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+Hi robot,
+
+On Sun, 4 Aug 2024 04:54:56 +0800 kernel test robot <lkp@intel.com> wrote:
+
+> Hi SeongJae,
 > 
-> Responses should be made by Thu, 01 Aug 2024 15:14:54 +0000.
-> Anything received after that time might be too late.
+> First bad commit (maybe != root cause):
 > 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.44-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
-> and the diffstat can be found below.
+> tree:   https://git.kernel.org/pub/scm/linux/kernel/git/sj/linux.git damon/next
+> head:   fec73193b080d068291509554d3e4b21622ede2d
+> commit: 069dc62c4181e3c1a10fa833c176b52765c05564 [36/44] mm/damon/Kconfig: select DAMON modules to test when test config is set
+> config: arm-randconfig-001-20240804 (https://download.01.org/0day-ci/archive/20240804/202408040440.Oe31R40L-lkp@intel.com/config)
+> compiler: arm-linux-gnueabi-gcc (GCC) 14.1.0
+> reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20240804/202408040440.Oe31R40L-lkp@intel.com/reproduce)
+> 
+> If you fix the issue in a separate patch/commit (i.e. not just a new version of
+> the same patch/commit), kindly add following tags
+> | Reported-by: kernel test robot <lkp@intel.com>
+> | Closes: https://lore.kernel.org/oe-kbuild-all/202408040440.Oe31R40L-lkp@intel.com/
+> 
+> All errors (new ones prefixed by >>):
+> 
+>    mm/damon/vaddr.c: In function 'damon_mkold_pmd_entry':
+>    mm/damon/vaddr.c:307:13: error: implicit declaration of function 'pmd_trans_huge'; did you mean 'pmd_trans_huge_lock'? [-Wimplicit-function-declaration]
+>      307 |         if (pmd_trans_huge(pmdp_get(pmd))) {
+>          |             ^~~~~~~~~~~~~~
+>          |             pmd_trans_huge_lock
 
-This rc kernel passes DAMON functionality test[1] on my test machine.
-Attaching the test results summary below.  Please note that I retrieved the
-kernel from linux-stable-rc tree[2].
+Thank you for this report.  This specific issue can be fixed by making
+DAMON_VADDR_KUNIT_TEST depends on MMU, or select MMU.  However, I think this
+might be abusing the 'select' too much.
 
-Tested-by: SeongJae Park <sj@kernel.org>
+I'll revert[1] the commit and consider adding '.kunitconfig' file for DAMON kunit
+tests, like others.
 
-[1] https://github.com/awslabs/damon-tests/tree/next/corr
-[2] 7d0be44d622f ("Linux 6.6.44-rc1")
+[1] https://git.kernel.org/pub/scm/linux/kernel/git/sj/damon-hack.git/commit/?id=ef79e03b2a6355bd234cf611e5ad55f4f379fbc9
+
 
 Thanks,
 SJ
 
 [...]
-
----
-
-ok 1 selftests: damon: debugfs_attrs.sh
-ok 2 selftests: damon: debugfs_schemes.sh
-ok 3 selftests: damon: debugfs_target_ids.sh
-ok 4 selftests: damon: debugfs_empty_targets.sh
-ok 5 selftests: damon: debugfs_huge_count_read_write.sh
-ok 6 selftests: damon: debugfs_duplicate_context_creation.sh
-ok 7 selftests: damon: debugfs_rm_non_contexts.sh
-ok 8 selftests: damon: sysfs.sh
-ok 9 selftests: damon: sysfs_update_removed_scheme_dir.sh
-ok 10 selftests: damon: reclaim.sh
-ok 11 selftests: damon: lru_sort.sh
-ok 1 selftests: damon-tests: kunit.sh
-ok 2 selftests: damon-tests: huge_count_read_write.sh
-ok 3 selftests: damon-tests: buffer_overflow.sh
-ok 4 selftests: damon-tests: rm_contexts.sh
-ok 5 selftests: damon-tests: record_null_deref.sh
-ok 6 selftests: damon-tests: dbgfs_target_ids_read_before_terminate_race.sh
-ok 7 selftests: damon-tests: dbgfs_target_ids_pid_leak.sh
-ok 8 selftests: damon-tests: damo_tests.sh
-ok 9 selftests: damon-tests: masim-record.sh
-ok 10 selftests: damon-tests: build_i386.sh
-ok 11 selftests: damon-tests: build_arm64.sh
-ok 12 selftests: damon-tests: build_m68k.sh
-ok 13 selftests: damon-tests: build_i386_idle_flag.sh
-ok 14 selftests: damon-tests: build_i386_highpte.sh
-ok 15 selftests: damon-tests: build_nomemcg.sh
- [33m
- [92mPASS [39m
