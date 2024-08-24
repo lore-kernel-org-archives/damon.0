@@ -1,123 +1,83 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f177.google.com (mail-pg1-f177.google.com [209.85.215.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E440B66F;
-	Fri, 23 Aug 2024 00:21:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A174142A97
+	for <damon@lists.linux.dev>; Sat, 24 Aug 2024 17:26:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724372468; cv=none; b=fRofdG64q1lnDfH6MXOR5v6+ZUQeOTpl7XrX2vdw7CTx+4aH0rysIKkdyu7qQJ3gu71MpK0eMCU1vvNRAEIaBTI5RxOB1IEKTzR0XbujuT6ctR2TLy3cBHFCbf1IfjpJF5bgo7u6/lQTXm6XAsK8638q1Q8eyztt8DeaM3G9ENg=
+	t=1724520376; cv=none; b=Wd3UmFJQBgDKjnCYgqpfb4L+XR2zQcESxpVPJXPOjMzw3ipBCTCyP3Vt/BwMyToPWg6OgAAOBDT2N7MhmdxO5YCPSnPO8HvA+F0TP53oiG5iNDgCqoM0Tx5l4+8NSxY2sJCjZnM+99zhg5cioLcGdSiRdflp/iilQ+Wi8vD7/L4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724372468; c=relaxed/simple;
-	bh=ztMGBRwSXyZVCArMNbSo7WIxlHtGw+CbddsI7Azg6hI=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=WRm8Iyj8OlXXKwF3m0HiL0o+jWLbA+5/wndrD87Kbj6Bl+69jc7f3seQJkeSE7ip9JYcbeSEZRRw76Uu2eu/LzYyIgI5tUmJHrw2hE5nEgD1iB6rzjnlCJXidFt+bSR/CTWhEzBv4WwYQhxATLte1qsYa+JQyK0k2CUSb119+4Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Q1PjvAtt; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1724520376; c=relaxed/simple;
+	bh=+klTtOaxzSCfE3uUpW74cWNQDK1+OU78TMXzAGbe9nc=;
+	h=Message-ID:Date:MIME-Version:To:Cc:From:Subject:Content-Type; b=QdaSpOZ31e47SPwA5Uw7RbqKmXcG4GlU7Vnrlrofy/GqNBq0QTuYlECQS/KXoXMeETfsR4GfRwvmUXXmRfJrWtKC3tDRp33UHF2Uta7mzl68kmNLk1Urc8K5Qhi6JAY4c5udwG5gXIimSrzMr1o6MwVAJoZ3TZIUA5OTTqJnbjc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=D9fwoF76; arc=none smtp.client-ip=209.85.215.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Q1PjvAtt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EE12C32782;
-	Fri, 23 Aug 2024 00:21:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1724372468;
-	bh=ztMGBRwSXyZVCArMNbSo7WIxlHtGw+CbddsI7Azg6hI=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q1PjvAtt2Eyezud2yRCDBzOTyyL+OoqeHZH01mpzrAAKKT/M8+va6AHf+2NaD727m
-	 c6+3/3+YX2TaeyPrNBNeaZnoAhd4MCdLORgr3Rx25320u+nlbop4U1NZwAFJeZ+T+y
-	 h4BVQAULwbiBKr0GLE64/3sGwfY9A8S/9z/hGQzWh/CPwEs37NEsVi4J3KIaW6uoPm
-	 wVpPjeGvT1UCEmnNB5S8q7X9WGwhAHun3gMweRqqanRueX9ux2fj/RG/DivCqp9oJe
-	 zIRQEL/ZoIRy6gCEf4Y3xICuzXVOnZvEbFpUgx1+yPeNsUjCLyWpoia8T7lY9HUUNW
-	 0XGWEIwf2DlTg==
-From: SeongJae Park <sj@kernel.org>
-To: damon@lists.linux.dev
-Cc: SeongJae Park <sj@kernel.org>,
-	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org
-Subject: DAMON Beer/Coffee/Tea chat reminder (was: Re: DAMON Beer/Coffee/Tea chat reminder and extending for office hour)
-Date: Thu, 22 Aug 2024 17:21:05 -0700
-Message-Id: <20240823002105.112390-1-sj@kernel.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20240519163329.150340-1-sj@kernel.org>
-References: 
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="D9fwoF76"
+Received: by mail-pg1-f177.google.com with SMTP id 41be03b00d2f7-7c3d415f85eso452446a12.0
+        for <damon@lists.linux.dev>; Sat, 24 Aug 2024 10:26:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1724520375; x=1725125175; darn=lists.linux.dev;
+        h=content-transfer-encoding:subject:from:cc:to:content-language
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=+klTtOaxzSCfE3uUpW74cWNQDK1+OU78TMXzAGbe9nc=;
+        b=D9fwoF761Mc5iqKw6DGlCWK1VwXt/n8z1gosTgezCh2wzmg6nrtT/AoGfNHkkXdwyN
+         K+LX58a28yfDoDd96rvHf/qEqvtytPzJijggg2lv/qIwCeKYiI0HDGpSqhu4bCkn7xi2
+         lmxOAxjODyQbpb2U1h3jxWX9CnRUiCsurvLMJFJ9fEbXvtiGOygcYFbXxzrTkbRb+N8s
+         IL05ojcnKvr/enwIB987JF8f9Q6Vz0Axx25HfAYJMX3kHsCW8b9qBrg/A0l1QXJ1lDWo
+         9G8SoJSrHzuh9h8GZo/Zs/XxWDYQX95M6Fi0HAHyOsxwDuslb6krQEaTMiMGzl4uI09K
+         N9IA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1724520375; x=1725125175;
+        h=content-transfer-encoding:subject:from:cc:to:content-language
+         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=+klTtOaxzSCfE3uUpW74cWNQDK1+OU78TMXzAGbe9nc=;
+        b=RLf3khcsI0jT4lknbnBQpnfVvJ+bwbUxyKJ/AAoRpPY2gbF3rc7Kp/4hCMbG9f0ksq
+         rtU0pf/mQZRbb2MPF/UeCVrvdUVjHxEWKDQLP0OO9U+jGBy4o8o//eptpu+Sf5W12rak
+         pF8UmVN1GPtO7kccOFhBPUhQl+H8muVg5YUqNEy+lyH9G9m+UcEE2QPSxsD4tYXXQVp6
+         RVLeyZgK15asvxfpJPeFt6IJGKXbim7n/JsMOc/XmgvQgwPWQwpGpUtTfoOUKpcHRQa+
+         8zvD74WtfoioSIbrdD4mlVXNQHw9k42RSqrsoWXw5O9/etznanbdLvTS6XwQ+TMLngA2
+         YQGg==
+X-Forwarded-Encrypted: i=1; AJvYcCVuZX1u73UkI6sQIgZYGeYEs0XkzbFWxb4V6yyG2kc4CiHHGKAXr9dq+/PQoOh1ArHrE6sZpA==@lists.linux.dev
+X-Gm-Message-State: AOJu0YyfeL3/HwynrT19/VBNqBl9lSkYHiU8/dFaGf+tHEJECK9AtSRD
+	GDf9lK9+NxipkvMAIcaqDPz28RopULjTmlt4vdTIrLVhCrOjjUDE
+X-Google-Smtp-Source: AGHT+IH4y8YoixXjfQsjKAp5ZAkJC8wibI9YyJ0SVmuJae7rrDHkmW8s6pA+QQlHtjPutPdTPW0Ljw==
+X-Received: by 2002:a17:90b:2e83:b0:2d3:c2a3:2383 with SMTP id 98e67ed59e1d1-2d6465fad68mr3980264a91.0.1724520374617;
+        Sat, 24 Aug 2024 10:26:14 -0700 (PDT)
+Received: from [192.168.50.95] ([118.32.98.101])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2d613a7384fsm6401504a91.34.2024.08.24.10.26.13
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 24 Aug 2024 10:26:14 -0700 (PDT)
+Message-ID: <170c9341-2cd2-48f5-97cf-66ca059a5d66@gmail.com>
+Date: Sun, 25 Aug 2024 02:26:11 +0900
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
+To: SeongJae Park <sj@kernel.org>
+Cc: michel@michel-slm.name, damon@lists.linux.dev
+From: Yunseong Kim <yskelg@gmail.com>
+Subject: debian/config: add DAMON support for debian kernel
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Hello,
+Hi SeongJae,
 
-On Sun, 19 May 2024 09:33:29 -0700 SeongJae Park <sj@kernel.org> wrote:
-> On Wed, 10 Aug 2022 22:51:02 +0000 SeongJae Park <sj@kernel.org> wrote:
-> 
-> > Hello,
-> > 
-> > 
-> > In short, I'd like to start an open, regular, and informal virtual bi-weekly
-> > meeting series for DAMON community.
-> > 
-> > Important links and dates
-> > -------------------------
-> > 
-> > Location: https://meet.google.com/ndx-evoc-gbu
-> > Agenda: https://docs.google.com/document/d/1v43Kcj3ly4CYqmAkMaZzLiM2GEnWfgdGbZAH3mi2vpM/edit?usp=sharing
-> 
-[...]
-> Firstly, I will regularly provide reminder of the series, probably 1-2 days
-> before every instance.
-> 
-> Secondly, I'm extending this series for reservation-based office hour.  That
-> is, I will reserve my time for 30 minutes every two weeks, keep the schedule
-> public, and encourage people to reserve the time for discussion on a special
-> topic for them.  The reservation should be made at least one day before the
-> time slot, and will be first-come first-served basis.  In detail, I will
-> reserve Monday afternoon or Tuesday morning of the group chat scheduled week.
-> Note that this is not necessarily only time slot for such discussion.  You're
-> still encouraged to schedule private meetings on your convenience.
+I have submitted a patch to the Debian Linux kernel team as follows:
+Link: https://salsa.debian.org/kernel-team/linux/-/merge_requests/1172/diffs?commit_id=1c5f4aefc7791367bbf43adcd81594d1cb42aa66
 
-So, yet another reminder.
+Please let me know if there are any additional details or improvements needed for my patch.
 
-Due to some conflicts, there are some changes to the schedule as following.
-The meetings that originally scheduled for the last week of August have
-rescheduled to first week of September.  The meetings originally scheduled for
-the second week of September has cancelled.
+Thank you!
 
-Dedicated-topic discussions
----------------------------
-
-Next three time slots that I reserved in advance for possible future dedicated
-topic discussions are as below.
-
-- 2024-09-02 (Mon) 18:00 PT (reserved)
-- 2024-09-24 (Tue) 09:30 PT (not yet reserved)
-
-Please reach out to me (sj@kernel.org or whatever) to reserve the
-not-yet-reserved time slots for your topics.  The reservation is made in a
-First-Come First-Served way, and I will send a Google Meet link to
-reservation-confirmed attendees.  Sorry for any inconvenience.
-
-Please note that other time slots are also available based on the discussion.
-
-Any-topic discussions
----------------------
-
-Next two chat instance for any topic (no reservation is required) are scheduled
-as below:
-
-- 2024-09-03 (Tue) 09:30 PT (https://meet.google.com/ndx-evoc-gbu)
-- 2024-09-23 (Mon) 18:00 PT (https://meet.google.com/ndx-evoc-gbu)
-
-Shared Calendar
----------------
-
-You can get the schedule via this shared Google Calendar:
-https://calendar.google.com/calendar/u/0?cid=ZDIwOTA4YTMxNjc2MDQ3NTIyMmUzYTM5ZmQyM2U4NDA0ZGIwZjBiYmJlZGQxNDM0MmY4ZTRjOTE0NjdhZDRiY0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t
-
-You can also get the past and upcoming schedules via
-https://docs.google.com/document/d/1v43Kcj3ly4CYqmAkMaZzLiM2GEnWfgdGbZAH3mi2vpM/edit?usp=sharing
+Sincerely,
+Yunseong Kim
 
 
-Thanks,
-SJ
-
-[...]
