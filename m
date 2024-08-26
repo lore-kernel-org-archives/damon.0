@@ -1,42 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 574AF39FE5
-	for <damon@lists.linux.dev>; Sat, 24 Aug 2024 23:32:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC125D2E5;
+	Mon, 26 Aug 2024 01:57:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724542347; cv=none; b=kOzLuA/qf55b/MQ/WN3LocrAQ1idYd7SBM3qRtAbTECXM9TlHQukYQS44MKvG+q7MK9sL4T9VqRWj0vMduYmxDfUPY8II0TaaJYfXZYr6YhpOj9bPWHDD0uVJMqirMiozSqUtl6scJClFG+LX5v9ppHgUodL0WwZAXBQbvojV1o=
+	t=1724637466; cv=none; b=Ao46xb2XtWG23BmfNWdasG3ybk6pEfh2w7KzF7U8Wa/o/dkUZuFr5k4W8BIpejCX3nucmDzHjw/CbTyzxYiAeKeSKVehoa9cnxGd5EYvyqQRDcWRI5+b1yaB6zec+oty6tDM8uPHXGQkvWHQF+x3ADiQvElbPrXlTK3HVy5rOnQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724542347; c=relaxed/simple;
-	bh=T9lfm22KHIWY1lbYCOfKq8aBzxayxTnGTXykyBERHFs=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=SibaJmhonC/d2VZj36BI8YtOJLGbkusW041q6HGT2j9pXReDudYA7fDLj2lMvn4TWFIN60co6+Fsac55rgEMB76jskob42sV9CuROJ43uQGnZBEPME/2ycq2MjX+zDvHKyik4n6fnVJvHWpRuAqESvPAF0/jNGTf1M5J05Yhoss=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=h5AvDO0a; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1724637466; c=relaxed/simple;
+	bh=1DWacq6Bie9HfW9DxzVr4yQ9ts9B9V5LvU0EHPMdUGw=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=CZPDTd6jZxmAvbfmuh0pEXmEVB5OgjFKLFs+hLhpQR5W9L6kQeLiTDG+9crzwqmJGD1ypPdWllTtIEbdxC+9AgCsfK0kYMbeXv4hPVPYx8fDCQ8qg6QstBPlez94x5WhvbB38CPMlWJzwjY2uPgrE3lmTCwKUff1nW4Nl6maFGY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Yw1AqE3f; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="h5AvDO0a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 878DFC32781;
-	Sat, 24 Aug 2024 23:32:26 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Yw1AqE3f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A54E0C4AF52;
+	Mon, 26 Aug 2024 01:57:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1724542346;
-	bh=T9lfm22KHIWY1lbYCOfKq8aBzxayxTnGTXykyBERHFs=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h5AvDO0aAmrNYLW47KCJk2M/+tuldad9MOB+aPhou3cWXZ+7v0WNeV3LpiQyDcUMO
-	 gLfLemvM3TA7ON/F8sGlsYMtEczmXaziAdGFg3w0Jad0rV8K759YWxde9vLGR59REG
-	 UHuEwhLalUSPlqQ1Iqlf7WFHupN5GPZ/78U5r8dWAmdYBYl7jigAJ/PVEWKf/2w12m
-	 PFBypK3cwno6jb/TewJPsl2KGTtx2NI24pfdVBNu0xdwvlusN4RUZJDcVf+OHFEPIx
-	 zSERuk06CoeduyZO6jH482wGZhwQVX9PhU6DESBCydmVW5QT6BiztgSRAaBOyuKgz/
-	 knPAXpovlYAlw==
+	s=k20201202; t=1724637465;
+	bh=1DWacq6Bie9HfW9DxzVr4yQ9ts9B9V5LvU0EHPMdUGw=;
+	h=From:To:Cc:Subject:Date:From;
+	b=Yw1AqE3fnbVRtScAmhwhQ+RuB6Xj9tAwihT8mQ1DhcRf66iD/AnC/GX57dizJd8NO
+	 hqHet9ohD47qyY+FW4SFdasYgTdDyfoToUGRdcdy6moOqc2uPluPS9UmU7pjXSmrYx
+	 ssxdE761f0ejd++67XPMGmf76gN0nWh3K7R21aD8v2ZkWEpyQIeHEsSoeO+FraSwcD
+	 YRiVJ9NSAPjkhD6oev24Aetu/jBH5r3dfsn0VILfCB1Sn1mad4cTy6Grdun0yvn2nl
+	 QrlRJxRI3hVMUevDw+z52rDrtZa6luom246ziYI48ZG5pGCrj9ZxJNTW0i3dOZc1jd
+	 TqAvPiIlUSUSQ==
 From: SeongJae Park <sj@kernel.org>
-To: Yunseong Kim <yskelg@gmail.com>
+To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SeongJae Park <sj@kernel.org>,
-	michel@michel-slm.name,
-	damon@lists.linux.dev
-Subject: Re: debian/config: add DAMON support for debian kernel
-Date: Sat, 24 Aug 2024 16:32:23 -0700
-Message-Id: <20240824233224.66696-1-sj@kernel.org>
+	Jonathan Corbet <corbet@lwn.net>,
+	Alex Shi <alexs@kernel.org>,
+	Hu Haowen <2023002089@link.tyut.edu.cn>,
+	Yanteng Si <siyanteng@loongson.cn>,
+	damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	linux-doc@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH 0/3] Docs/damon: update GitHub repo URLs and maintainer-profile
+Date: Sun, 25 Aug 2024 18:57:38 -0700
+Message-Id: <20240826015741.80707-1-sj@kernel.org>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <170c9341-2cd2-48f5-97cf-66ca059a5d66@gmail.com>
-References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -45,29 +48,33 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hi Yunseong,
+Misc updates for DAMON documentation.
 
-On Sun, 25 Aug 2024 02:26:11 +0900 Yunseong Kim <yskelg@gmail.com> wrote:
+Replace GitHub URLS on DAMON documents for none-kernel parts DAMON repos
+with new ones[1] via the first patch.  With following two patches,
+wordsmith maitnainer-profile for better readability, and document the
+Google clendsar for bi-weekly meetups, respectively.
 
-> Hi SeongJae,
-> 
-> I have submitted a patch to the Debian Linux kernel team as follows:
-> Link: https://salsa.debian.org/kernel-team/linux/-/merge_requests/1172/diffs?commit_id=1c5f4aefc7791367bbf43adcd81594d1cb42aa66
+[1] https://lore.kernel.org/20240813232158.83903-1-sj@kernel.org
 
-Thank you very much for doing this great work and letting me know!
+SeongJae Park (3):
+  Docs/damon: use damonitor GitHub organization instead of awslabs
+  Docs/damon/maintainer-profile: add links in place
+  Docs/damon/maintainer-profile: document Google calendar for bi-weekly
+    meetups
 
-> 
-> Please let me know if there are any additional details or improvements needed for my patch.
+ Documentation/admin-guide/mm/damon/start.rst  |  4 +-
+ Documentation/admin-guide/mm/damon/usage.rst  |  8 +-
+ Documentation/mm/damon/design.rst             |  2 +-
+ Documentation/mm/damon/maintainer-profile.rst | 86 ++++++++++---------
+ .../zh_CN/admin-guide/mm/damon/start.rst      |  4 +-
+ .../zh_CN/admin-guide/mm/damon/usage.rst      |  8 +-
+ .../zh_TW/admin-guide/mm/damon/start.rst      |  4 +-
+ .../zh_TW/admin-guide/mm/damon/usage.rst      |  8 +-
+ 8 files changed, 65 insertions(+), 59 deletions(-)
 
-All looks good to me.  Nonetheless, Salvatore's comments also makes sense to
-me.
 
+base-commit: c7968eec021805d3259f06bd85a5d285fec4e9af
+-- 
+2.39.2
 
-Thanks,
-SJ
-
-> 
-> Thank you!
-> 
-> Sincerely,
-> Yunseong Kim
