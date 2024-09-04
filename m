@@ -1,247 +1,193 @@
-Received: from mx0a-00069f02.pphosted.com (mx0a-00069f02.pphosted.com [205.220.165.32])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E47F10A12
-	for <damon@lists.linux.dev>; Wed,  4 Sep 2024 02:46:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=205.220.165.32
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725418003; cv=fail; b=BPo0bKMJeOMSdnrEmMK2BJQoH4jg/FrEvE+4x69PhLQLvCupViZ2bc1EPCSnE92qARj8rptlZnkmX0D82YP8G/U+hD9jajz4/Q0eg7bZO8D1Wri0LMi9Z0RAQT01e1hgnyIB8tZefe09mXWN4OYj5NgQHFAYHPAfBlJOvBqRQPA=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725418003; c=relaxed/simple;
-	bh=UvMZ7iVR1ZO/GqbESyK63+OFRLiPEyAa79T++Wnp3cY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=YwAdBQVAwffEKBIAXOxGGURTpTaqOQgP4J7T+ezrIky+2EAUkLWLLh/cQD0XnGxPlp651Vx/pWwhfIQTV4NyOPHZvf19ueaEqdIvbDgA27hNNJckqcUxsOwoNDNUSkcUPpod1JNtL0Mf03uUji9cgSkePKiiYCo59mrcdbw/PDE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oracle.com; spf=pass smtp.mailfrom=oracle.com; dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b=mvm3G0Ju; dkim=pass (1024-bit key) header.d=oracle.onmicrosoft.com header.i=@oracle.onmicrosoft.com header.b=KwvdLiv4; arc=fail smtp.client-ip=205.220.165.32
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oracle.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oracle.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6506D2562E
+	for <damon@lists.linux.dev>; Wed,  4 Sep 2024 02:46:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.180
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1725418009; cv=none; b=VUPwW8tPEuvvGo5LKZteMtoClRjgy2PijZo+tnE2lpBmZV82wNU2BJqGVVFipHMG7GNm/FRaJdj66FkJcqzrjTxToSmuDNRByMItYKDt/+keWi0Oa7LthJEDdYfeW0tuK9zzOOVtxoVv9vdbgj0ZhAbuB7a14vuPcCUmM8j1jjk=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1725418009; c=relaxed/simple;
+	bh=VehBtiKfeNTNkBZI5hDR0mvVrqhLAZBQ/XrVFsNl3Ww=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=jG5/w1odIpmsnaRLGpyJr6YvrB2DQES7p7w5WezLeN/WtRdqZZHOEqwOTfn/9VYkLAHSYf1RaY2IqdMX61Y8YpiguBVn/m1+aQuq500hA1WJNwvx2Jna2C3B6f5ASl7wvVkD2zSh4hBRPiOzEGvkbz1M+DffT3LIXGQwLpuWwyo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BDVUmvoO; arc=none smtp.client-ip=209.85.210.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b="mvm3G0Ju";
-	dkim=pass (1024-bit key) header.d=oracle.onmicrosoft.com header.i=@oracle.onmicrosoft.com header.b="KwvdLiv4"
-Received: from pps.filterd (m0246627.ppops.net [127.0.0.1])
-	by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4841MWoa029462;
-	Wed, 4 Sep 2024 02:46:29 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=
-	date:from:to:cc:subject:message-id:references:content-type
-	:in-reply-to:mime-version; s=corp-2023-11-20; bh=707zmDN2C/mjR8I
-	yCE+5lrSVp1JnLTGTr+9yQ9EgcsQ=; b=mvm3G0Ju4Lt6hwhiEFd8uKygYrgw740
-	TIXgSS5MwrxlIFZHmwUceYoo0qAhS6l3XBD+9VvOsSPjg45QCyWmKwkknJ+jP5RN
-	6pKRAPZJztt0nmoLmrag6G4z3F3CISnY/UuQjF4ShkzZMshhhYNPPDYmYjO8RApm
-	IR7cVgrWOB9Ha1Y2tE2EXPghRbihlzgcwmclJu+qOEccsnhjoV7Uqpkse+rOXfrc
-	E9sdhL3MFivgdW9afUwqTK5s+RK8bTqFBNunJwb4uw6Dq5UsN95+dMynT9l8Exqy
-	GCHhDvxE2Cmns+Hq1NiG+p2rmOlH7/lRtoZlaPtAQQCM8qzHx/aAHhw==
-Received: from iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (iadpaimrmta03.appoci.oracle.com [130.35.103.27])
-	by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 41duyj2dmp-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Wed, 04 Sep 2024 02:46:29 +0000 (GMT)
-Received: from pps.filterd (iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
-	by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2) with ESMTP id 4842YHKH039591;
-	Wed, 4 Sep 2024 02:46:27 GMT
-Received: from nam04-mw2-obe.outbound.protection.outlook.com (mail-mw2nam04lp2177.outbound.protection.outlook.com [104.47.73.177])
-	by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id 41bsm9hfxy-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Wed, 04 Sep 2024 02:46:27 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=EDuOZ5Vppv9CR+l/7bxmIp6vNbraPXqjdahDNilxBJsXKlZDsRG2hoJvmQ4F6FUY4fUhw5FGk+vrboiqw8doEieUGTY6A87ZCsUOUgkslZVlHPVuXoJaMrWFzucodMUeAfUMybRu0kDajNOd/Hztm1SjtigYSt8CC3o2j/1zXP+359RqKLI22RVJJx2X5AxYrWE9AwgLrX9y7g4+4OJFEUrR5JfVYI/59qD7PNG2Bq+PzCSENxLUlI+dT6Yj6GHJ2W2GV6fjewq/5TNLHKZU7TDKBp7Cc8KbD7Oy94hw93B4+/4WqZjb8aBUx7VXjkwrWrRbH9lFbQU9C+3epWanyw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=707zmDN2C/mjR8IyCE+5lrSVp1JnLTGTr+9yQ9EgcsQ=;
- b=YTdxcXzLxg0l3GvsqwoAJaQkxKKEEV7grQ03zpo/ZqobdQ1hP46o7B+gjzxWoG17p+G0+xCEFnTiO6lI35n8J0q2/YXEK3IM1Mry1iZBHhwqCDJ9EQxg5gdEE69R43kHSsW3AkVNAYBFjAmGLlzMdgPxYQalTclMNHxibdF07qV95nGksEV54X1erMJxCnODCgxLb0Sxfn/qKCOEiuapM9he7Qbp0XoFtazVLJ+PHgrdoXpEYUTqgV6gje2QS2Xu1sv0O2SifXOc6Xh7fl9p7E1bwm1EpRG5W2sS9rLMIaaDn4D6CCvZG19ZNHyzBVf6qbB6MuKvdS7A7MfM4U5Npg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
- dkim=pass header.d=oracle.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BDVUmvoO"
+Received: by mail-pf1-f180.google.com with SMTP id d2e1a72fcca58-7140ff4b1e9so4670321b3a.3
+        for <damon@lists.linux.dev>; Tue, 03 Sep 2024 19:46:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=707zmDN2C/mjR8IyCE+5lrSVp1JnLTGTr+9yQ9EgcsQ=;
- b=KwvdLiv42Sj4kR1qq8EJ+jB+5YNp48GZdHZ8DFngInP0JGjCGhfudJFBeHVpY2Q6Ogg8fz13vZpuVrJOKFjCM838RlysmJpxlOjWtz30QgrVlKpIlQ3aW23t4IGyX1hm0MxUz0kX6hxH3g9G9uSYAd78LX8lG5anfl/af2fQgCE=
-Received: from LV8PR10MB7943.namprd10.prod.outlook.com (2603:10b6:408:1f9::22)
- by PH0PR10MB7077.namprd10.prod.outlook.com (2603:10b6:510:286::13) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7939.12; Wed, 4 Sep
- 2024 02:46:24 +0000
-Received: from LV8PR10MB7943.namprd10.prod.outlook.com
- ([fe80::a8ec:6b6b:e1a:782d]) by LV8PR10MB7943.namprd10.prod.outlook.com
- ([fe80::a8ec:6b6b:e1a:782d%7]) with mapi id 15.20.7918.020; Wed, 4 Sep 2024
- 02:46:24 +0000
-Date: Tue, 3 Sep 2024 22:46:22 -0400
-From: "Liam R. Howlett" <Liam.Howlett@oracle.com>
-To: Guenter Roeck <linux@roeck-us.net>
-Cc: SeongJae Park <sj@kernel.org>, Andrew Morton <akpm@linux-foundation.org>,
-        "Matthew Wilcox (Oracle)" <willy@infradead.org>,
-        David Hildenbrand <david@redhat.com>,
-        Brendan Higgins <brendanhiggins@google.com>,
-        David Gow <davidgow@google.com>, damon@lists.linux.dev,
-        linux-mm@kvack.org, kunit-dev@googlegroups.com,
-        linux-kselftest@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] mm/damon/tests/vaddr-kunit: don't use mas_lock for
- MM_MT_FLAGS-initialized maple tree
-Message-ID: <zi5ahfi3pwwmirkbxcipl7jjx56qsgopvgjb2pnrj6yz6dxb6p@fhjivxhiiweg>
-Mail-Followup-To: "Liam R. Howlett" <Liam.Howlett@oracle.com>, 
-	Guenter Roeck <linux@roeck-us.net>, SeongJae Park <sj@kernel.org>, 
-	Andrew Morton <akpm@linux-foundation.org>, "Matthew Wilcox (Oracle)" <willy@infradead.org>, 
-	David Hildenbrand <david@redhat.com>, Brendan Higgins <brendanhiggins@google.com>, 
-	David Gow <davidgow@google.com>, damon@lists.linux.dev, linux-mm@kvack.org, 
-	kunit-dev@googlegroups.com, linux-kselftest@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20240904005815.1388-1-sj@kernel.org>
- <20240904011840.973-1-sj@kernel.org>
- <whdjeq6qpccj6ms4wgiyjcnizht4nl5qbt7rbaeqfwzt67smxt@vvduwpqcuizl>
- <e83dedb2-89a3-4327-9a2f-610d3199f0e1@roeck-us.net>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <e83dedb2-89a3-4327-9a2f-610d3199f0e1@roeck-us.net>
-User-Agent: NeoMutt/20240425
-X-ClientProxiedBy: YT4PR01CA0287.CANPRD01.PROD.OUTLOOK.COM
- (2603:10b6:b01:109::9) To LV8PR10MB7943.namprd10.prod.outlook.com
- (2603:10b6:408:1f9::22)
+        d=gmail.com; s=20230601; t=1725418008; x=1726022808; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+         :references:cc:to:from:subject:user-agent:mime-version:date
+         :message-id:sender:from:to:cc:subject:date:message-id:reply-to;
+        bh=91wnk1h0jo8mlWeBJTtjJeui3QHlIfGd0ANy4U8x5bE=;
+        b=BDVUmvoOyu5HfB2mKr3D3uZsgeu3G/U4AKMLGBIFSVk/1k4n49fKyJL/Ott+pufZ0B
+         6CHHO2sgEUf2Be464UU9C1kaz4M/BUPhZmNFg+KWyw9TlA+zmlvl6AGhswUF78EIr14x
+         xfxvCsb7lIhphgR1xXokcLuKqnJw/lPr4jVxtobWVbyS8kydUAuSAqTliLLHoME06a+3
+         ms78isC9uFLrxE7NKRm8Xn4V4Vby8jTqG1o1AemEPtogewR8Z6Ot1oZjH563dzVbI+qJ
+         9uUoOttviuENvP5Q/2TwrTTy7g+b7A9VW7qLaY93qON8ozoaiHNl/OojKnoUahIGGv0u
+         VXsw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1725418008; x=1726022808;
+        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+         :references:cc:to:from:subject:user-agent:mime-version:date
+         :message-id:sender:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=91wnk1h0jo8mlWeBJTtjJeui3QHlIfGd0ANy4U8x5bE=;
+        b=YELhKQIyXArfgM6TjU1ETf0EqXRN6Q1i3qm2jhYIBPh9CH5//zdsWKvAu7ExY/JlGN
+         yboGqmOYsriC34rL/hYAseQaGy4ZCE/x1W9iVumzm1cawv+ao1tfaFdppxPsGZB6cNvr
+         Nu/WGqn5Os3SPJMQvoyZrr9TDntNTsGOe/j6m0gXMPmLVByhKS2PrcMq8KDqfBbBM6t8
+         he3zDtC92aABwVDq3izGXBjyz1bIQ5n1UD768Tt+KlFKH2o7EbEfRPF4TUWQ+5Epwvpt
+         Y2e9hwg86tmV/eQUnKTYUY9kfban252L8fWWNFhmCFnq0Rnmt1UDVHEDFoDcFyoAszj5
+         pmbQ==
+X-Gm-Message-State: AOJu0YySy0BDRUtSulVs8uj0kf3UbY2XZ1sakchugPPdH3KCi23UmtoV
+	PazENb7E/rqJAgmKvU1Qj4Ec1fl+32MxBPFwuMQkROhuh4N/K88T
+X-Google-Smtp-Source: AGHT+IHfyxtWh+ZkeWvOUsk0famMTItO9e3LezuSHmliURIYVLkgnxPILcug0ecdZWG/RD/wz7Rayg==
+X-Received: by 2002:a05:6a00:23c3:b0:706:3329:5533 with SMTP id d2e1a72fcca58-7173c589cfcmr13292066b3a.24.1725418007526;
+        Tue, 03 Sep 2024 19:46:47 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e321:62f0:329c:23ff:fee3:9d7c? ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-717785216c6sm560331b3a.28.2024.09.03.19.46.45
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 03 Sep 2024 19:46:45 -0700 (PDT)
+Sender: Guenter Roeck <groeck7@gmail.com>
+Message-ID: <53123051-3b53-4fbc-9e16-052481e6725f@roeck-us.net>
+Date: Tue, 3 Sep 2024 19:46:44 -0700
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: LV8PR10MB7943:EE_|PH0PR10MB7077:EE_
-X-MS-Office365-Filtering-Correlation-Id: 151afd4d-a5da-419d-23fb-08dccc8bc44d
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|1800799024|7416014|376014|366016|27256017;
-X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?X68DkbW74bpDxT9FOQ32kpk0xeIONDQhhEttf/OBkI8NIgJguYyfPzsXXex+?=
- =?us-ascii?Q?8J4phGM7RjUC+OCD7CPJKHT+Av0lNOsKCgLmgXDiI+kmIUU8BGEEJYBc3j/5?=
- =?us-ascii?Q?xAHdGat5ejwCg2QGpT5OgG4DsEV51Z+vQsXHDTYAIiBJMMaYG7nYsWPyIbcI?=
- =?us-ascii?Q?glu4IdC24b/8jPm7QDacBfn9NzfaBO+FEHWbQ1oVmQ5+x5T0gd0hPNzguHBr?=
- =?us-ascii?Q?9v3Wx7LYuQZG2rJk1UtXNSUxg2/axy3NeJTz+GVIWZe1uK/CzfTRQyJ+NUY7?=
- =?us-ascii?Q?XZwG+QbZbkKKyk1k0vv55MVRdlVEn2wraRNaPJoZTVZS/cP5wUJp7U7sqtN4?=
- =?us-ascii?Q?D8+AAzLB4IC3NriOsjWO1Bn8/OgxQpolKCbmjDAZh3jKCx6QRYrHGQ7ehUZM?=
- =?us-ascii?Q?ybHxciJjijiEUsgirUC3VDqShbdcr5wjBh8CjF1g/HLWCfQHz0xVz7rg6qfq?=
- =?us-ascii?Q?d+Qm7Gt43rkl9nyTINnP7ImBsI4jfFf4WgbsMlzIWtWRdbiQxnrJPwd3NROd?=
- =?us-ascii?Q?zhnYel2jQcq37/wyXL3CuUPNJHC1mut1T6ve/VddFbzedWG//QSm19mI7aDl?=
- =?us-ascii?Q?Jf2b76k+eJIMSoaQA2se2hYEdOV8IhGuw+sVhLjtQHDNuavvcxwpvJoa2hzu?=
- =?us-ascii?Q?5c5/I67diD3pcz4/P4dR4Nm6HztiW5X21lo+t+1Kn87jGiMG/hmtb0EWKU7e?=
- =?us-ascii?Q?/38RUFg/yDZtjr60+eWBVRtFLsWE+8AKgzxglJJvuAb6aoxErug0y4cMsW3r?=
- =?us-ascii?Q?tlHcjrdoDb/7Um99CnDPsLZIiRVzDBWnFQg/aER1jvCpxjOaGrv94T+2us0u?=
- =?us-ascii?Q?+dBmqXJV6cF89qIJrMA8eulNbML+VCHY6iOVgFP4o23hDCb58hwjMVHLf+uZ?=
- =?us-ascii?Q?FGl2okHlz6VbzaLgPUHsmPsDnpWPYvd4rQspIwnSMqeWWL83iUekjUElTWcX?=
- =?us-ascii?Q?sbdo9NB646thb7jJDJf7KhmoC6aWzYf3WF9GUEXPfFAIi4i3HKrZx/LAlvn6?=
- =?us-ascii?Q?Avwva7cAVPjH/rTf2804S3rxXDZVtwXZ0zk+UtJDCRSLVXTmHkLjG8kZYTZp?=
- =?us-ascii?Q?dAgqt9WZyroLOHRfA+HhHnpepdmIWRii46j367W2O2vcHdT+pN5+4ni0HSHN?=
- =?us-ascii?Q?3NHLTn0aC2o2Tn8hP4xUXjpmP+ZS1hg6511EXsoaJG1OvkVqp8yud/Q5J7/Z?=
- =?us-ascii?Q?74gTWvh29MFlazKDRLKstqCPFxii1Siu08eAfl/PZR8mmAqzVoyPjaWT6Csr?=
- =?us-ascii?Q?PG3nfN9dSSHIfPxwtxpAx7oOoQaaVdqa94UvSU5zK9RGHXV8H7mUpLzAvPgj?=
- =?us-ascii?Q?NMHNnAMx0BqaNR4rDRowf5dIvSr2mz+G1PYgqYE0kOSVWL5v7oohwf5kGdBs?=
- =?us-ascii?Q?MgDdgf9TIfNscrpQgXLANmbDLYOtRkdCorb4irLuwM8g2vF56A=3D=3D?=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR10MB7943.namprd10.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(7416014)(376014)(366016)(27256017);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?mFGO4/tYZYYFPbSswFTfX7M9KILmYtw7GYpw39Fzac320eZl6Va4eAWlMKSK?=
- =?us-ascii?Q?RocAeewkwV+ucxJOnEJmT+0XE32DPd6bv/JL9ujw9fsoisEqrjVnx86eyqFp?=
- =?us-ascii?Q?VV9QXLL7cgb0URjFMyxmaMoMEFTMnP/bRBwQuURVSZc+01gEYrdXE3Za+WoP?=
- =?us-ascii?Q?cpa6KJ/L3STQxQZL3MfxcIAk5RqI/AErOoLM5mnaoWSjnH0U6GCg77JX5jdD?=
- =?us-ascii?Q?fMEAtFd1+akFkJMuol9V2hLhRVXj85XT+SCI1jvC5LXzfaog0ExR1dQyPMGS?=
- =?us-ascii?Q?tzw17JKA+TUika6ZKhHTHlFmTwNMPcFUBZDN/ZTKrWdvzqmrUbHscjUvEMw9?=
- =?us-ascii?Q?mAPNsL0Db8VBzqD4YFIb7l1w4FlrYYdKgbe02LVChSzQvq/7avOhp8RjcTVY?=
- =?us-ascii?Q?UImER1t+4x2PjPblrOtoro5b6kx7NNTC/v/2z5fg7AYOrOlDzliiJidMaAHH?=
- =?us-ascii?Q?5KEfeA5kFZM7llHjuYzT1ZGZ4NGGUlwxB46rkNsk7WjCBbRjNkJ+q0Q5lRPy?=
- =?us-ascii?Q?tgHQlmKfD1CTvcovdOoz9JZbnolcFigAON75MCYKnlk4xGZ6n2oBebeqO4N6?=
- =?us-ascii?Q?Wc6xr6ZnhNof4t5UYxactrzdZwLh+V/jzWNCviXYz68hBXhKlPwhfPSpo9/V?=
- =?us-ascii?Q?9hRmo/G749i5lVCFTaXVyY2vaeZmbAkcgzd/p5jDxwPbPhnJR+dBOqb0mmlg?=
- =?us-ascii?Q?504a3u7WD1RZxuFeZyXY3YGAEWFrIlHkjH4bRr6sMeUeJnBYguon1F2Td8MF?=
- =?us-ascii?Q?NV8pT8i6m/19UC94RJmrX38+RwA8qmSbxConAGOR6MQrE2uFSQMPvVInNb0u?=
- =?us-ascii?Q?mKqTJyXRyl46l5ulo2QLo4a8eb/OxaY3erL7rnmyH3q0cMSzZdk6cUF6skIS?=
- =?us-ascii?Q?niWluF8DpgzOxM5BHlSy7Vtxd5AXi6nlp7PsBmka0xBWLj2Gq64FPXWFOnID?=
- =?us-ascii?Q?sejnjukvnLBzhDC2He6v+oxDnZnxiZ2n1U/XuwMQQCCsZn5au+3+Mt95Nt3I?=
- =?us-ascii?Q?O2ZMxT1bDeJoFHP9r+w/xRmYLkbzs4FxGAYKyUs6Et/0isSIOTsVFrp8k4kP?=
- =?us-ascii?Q?TZoMFISQhfsM3HaBTFZG4jIowel9AbzXcYKRk82alWhYDHJvqnLJsyRDxhCT?=
- =?us-ascii?Q?sNnto8F8CknWYojW405Gpvow4e8MsbX55QAUWXjCF4d87HTb+hZTl81C174K?=
- =?us-ascii?Q?idBOli5UK5PNMqZN+dCn+Qf5ODGcUkAatBjdhxW5eX9udPgvYqF8xJAfRnIP?=
- =?us-ascii?Q?zcOxrTopX3i2OkY2PdghopotbxKwlf9I2gwgPY/gMXdotFM/PZEqwah+Ozgw?=
- =?us-ascii?Q?ebEXTmHUSqN3Jx7mx8zwwPbk1Jze/ONFjTNcM3mAPOtryfWW6YZxllA0jpX+?=
- =?us-ascii?Q?SxkCqUxltHjQESDlKw8wkQrVwLmvVsyDu7vcbplYAH0g64EKp8S/A0UL5yHM?=
- =?us-ascii?Q?BCNDt3uzrNqxcd8F5nLKWv5dEDRh2m6s2oj4iMiShvFZNiiyC/RRVIzBLa2H?=
- =?us-ascii?Q?PIG/QqhW+YiRyNT5e/3946lVLUQbKp2pul/5Zzk1knrgdgmAJWZe76FiF28c?=
- =?us-ascii?Q?JXx6iRj+yzP4k7ZWw0wQaLp2FFI4bz83oEpUSsV1TWSUTJxGihBil89+L9i8?=
- =?us-ascii?Q?NQ=3D=3D?=
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0:
-	CVszeNXBeyibMoPpQdGZ06BZNIkt7Vf3w3RWXjf8JNHAAjFGUKmqO8o1sZacSIad26gfiOEElLzCZYGKZ4pG6pXshfkFxNk9rKQE1xCbbBKlTiZL4439aU7q+Pt48DzWvW+8Iy3fqvaYQ1jrnbWGOej601tyJM0nO3d0Vw5aAMjfMu9yXbzd7sxgVyzTJcgoVpP1Rq1ZvQuNZ5BX412uPwxPzBTFKi+DbujMh6VhgVrjr1r/hnifRS1IFkq+3xuOcUoH1cBmG7A+s4JS2+FBW5Lsu474Jq+cOA739SmVUI0VtfPBH8uf3+G2OAwvDBeJax2vXZapwtrQZyd6N4huwgKOpLq7fopOG42jkeycOhgMheN8BNhm+HntXnhl8lpGvaI2W1kZEEmn2BLifG7WPs7WtBx2ZaF+CTJOHrppwxHdEQNEMe5fGPngtYe7Orb7X31kwZTJuEQFKqakFHXg58YxqP17yk7lPCtfgzHY9UzDnR6BgnZeNOT5jOZGt3PmNePt3V7s0Up3PYg85j2eTgbCB1XVXy22kiCnHAO4kuHXz1I0lNSd0gpy8yj8+LSGngdxXgRBHLVkVQLi+PZ0d0LbWk0gTMPYTAWzS0agClA=
-X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 151afd4d-a5da-419d-23fb-08dccc8bc44d
-X-MS-Exchange-CrossTenant-AuthSource: LV8PR10MB7943.namprd10.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Sep 2024 02:46:24.6735
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: K/9SyyBfRg17B2fkDXqvY1Ksl74kTLTOSKcLU5+MBRisce9DcVfv8NTeQQDmHiwklwUxzKAKl+V0PflsjQWgRA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR10MB7077
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-04_01,2024-09-03_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0 malwarescore=0
- mlxlogscore=999 suspectscore=0 bulkscore=0 spamscore=0 adultscore=0
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2407110000 definitions=main-2409040018
-X-Proofpoint-GUID: AdGj198ReTvjA1ERqK1G5zM6ruA58yI3
-X-Proofpoint-ORIG-GUID: AdGj198ReTvjA1ERqK1G5zM6ruA58yI3
+User-Agent: Mozilla Thunderbird
+Subject: Re: Problems running DAMON kunit tests with spinlock debugging
+ enabled
+From: Guenter Roeck <linux@roeck-us.net>
+To: SeongJae Park <sj@kernel.org>
+Cc: damon@lists.linux.dev
+References: <20240904010016.1451-1-sj@kernel.org>
+ <c771b962-a58f-435b-89e4-1211a9323181@roeck-us.net>
+Content-Language: en-US
+Autocrypt: addr=linux@roeck-us.net; keydata=
+ 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
+ mDW4+i+XlNFUPUYMrIKi9joBhu18ssf5i5Q=
+In-Reply-To: <c771b962-a58f-435b-89e4-1211a9323181@roeck-us.net>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-* Guenter Roeck <linux@roeck-us.net> [240903 22:38]:
-> On 9/3/24 19:31, Liam R. Howlett wrote:
-> > * SeongJae Park <sj@kernel.org> [240903 21:18]:
-> > > On Tue,  3 Sep 2024 17:58:15 -0700 SeongJae Park <sj@kernel.org> wrote:
-> > > 
-> > > > On Tue, 3 Sep 2024 20:48:53 -0400 "Liam R. Howlett" <Liam.Howlett@oracle.com> wrote:
-> > > > 
-> > > > > * SeongJae Park <sj@kernel.org> [240903 20:45]:
-> > > > > > damon_test_three_regions_in_vmas() initializes a maple tree with
-> > > > > > MM_MT_FLAGS.  The flags contains MT_FLAGS_LOCK_EXTERN, which means
-> > > > > > mt_lock of the maple tree will not be used.  And therefore the maple
-> > > > > > tree initialization code skips initialization of the mt_lock.  However,
-> > > > > > __link_vmas(), which adds vmas for test to the maple tree, uses the
-> > > > > > mt_lock.  In other words, the uninitialized spinlock is used.  The
-> > > > > > problem becomes celar when spinlock debugging is turned on, since it
-> > > > > > reports spinlock bad magic bug.  Fix the issue by not using the mt_lock
-> > > > > > as promised.
-> > > > > 
-> > > > > You can't do this, lockdep will tell you this is wrong.
-> > > > 
-> > > > Hmm, but lockdep was silence on my setup?
-> > > > 
-> > > > > We need a lock and to use the lock for writes.
-> > > > 
-> > > > This code is executed by a single-thread test code.  Do we still need the lock?
-> > > > 
-> > > > > 
-> > > > > I'd suggest using different flags so the spinlock is used.
-> > > > 
-> > > > The reporter mentioned simply dropping MT_FLAGS_LOCK_EXTERN from the flags
-> > > > causes suspicious RCU usage message.  May I ask if you have a suggestion of
-> > > > better flags?
-> > 
-> > That would be the lockdep complaining, so that's good.
-> > 
-> > > 
-> > > I was actually thinking replacing the mt_init_flags() with mt_init(), which
-> > > same to mt_init_flags() with zero flag, like below.
-> > 
-> > Yes.  This will use the spinlock which should fix your issue, but it
-> > will use a different style of maple tree.
-> > 
-> > Perhaps use MT_FLAGS_ALLOC_RANGE to use the same type of maple tree, if
-> > you ever add threading you will want the rcu flag as well
-> > (MT_FLAGS_USE_RCU).
-> > 
-> > I would recommend those two and just use the spinlock.
-> > 
+On 9/3/24 19:24, Guenter Roeck wrote:
+> On 9/3/24 18:00, SeongJae Park wrote:
+>> Hi Guenter,
+>>
+>> On Tue, 3 Sep 2024 12:23:50 -0700 Guenter Roeck <linux@roeck-us.net> wrote:
+>>
+>>> Hi,
+>>>
+>>> when trying to run DAMON kunit tests with spinlock debugging enabled,
+>>> I get the following error messages.
+>>>
+>>>      BUG: spinlock bad magic on CPU#0, kunit_try_catch/209
+>>>       lock: mm.13+0x40/0x840, .magic: 00000000, .owner: <none>/-1, .owner_cpu: 0
+>>>      CPU: 0 UID: 0 PID: 209 Comm: kunit_try_catch Tainted: G                 N 6.11.0-rc6-00148-g178297ec52d6 #1
+>>>      Tainted: [N]=TEST
+>>>      Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.16.3-0-ga6ed6b701f0a-prebuilt.qemu.org 04/01/2014
+>>>      Call Trace:
+>>>       <TASK>
+>>>       dump_stack_lvl+0x9e/0xe0
+>>>       do_raw_spin_lock+0x63/0xb0
+>>>       damon_test_three_regions_in_vmas+0x121/0x450S
+>>>       ...
+>>>
+>>> This happens because damon_test_three_regions_in_vmas() calls
+>>> mt_init_flags() with MM_MT_FLAGS, which sets MT_FLAGS_LOCK_EXTERN.
+>>> Because of this, the spinlock is not initialized, which then results
+>>> in the error message when mas_lock() is called during the test.
+>>>
+>>> Unfortunately, replacing MM_MT_FLAGS with MT_FLAGS_ALLOC_RANGE |
+>>> MT_FLAGS_USE_RCU or just with MT_FLAGS_ALLOC_RANGE doesn't help;
+>>> it results in various "suspicious RCU usage" messages.
+>>
+>> Thank you very much for this report with the grateful detailed investigation!
+>> I was able to make and send a fix[1], thanks to the investigation.  Seems it
+>> may need some more revisions[2], though.  I'll continue discussion on the
+>> thread.
+>>
+>> [1] https://lore.kernel.org/20240904004534.1189-1-sj@kernel.org
+>> [2] https://lore.kernel.org/jy6263g6em4jsdhp6tknmh2cljpuvq652kvcet4ko3z2xt7pym@ltc5h5twsszu/
+>>
+>>
 > 
-> I tried that (MT_FLAGS_ALLOC_RANGE | MT_FLAGS_USE_RCU). it also triggers
-> the suspicious RCU usage message.
+> Some more problems. I tried your patch on various architectures.
+> Unfortunately, that didn't turn out well. See below for some of the failures.
+> 
+> [ I am not sure I understand the code in damon_test_nr_accesses_to_accesses_bp(),
+>    especially
+>      .aggr_interval = ((unsigned long)UINT_MAX + 1) * 10
+>    What happens if sizeof(int) == sizeof(long) ?
+>    Unless I am really missing something, .aggr_interval will be
+>    0 in that case.
+> ]
+> 
+The diff below fixes the problem in damon_test_nr_accesses_to_accesses_bp().
+Obviously I don't know if this is the correct fix.
 
-Just to be clear, you changed the init flags and kept the mas_lock() and
-mas_unlock() ?
+Guenter
 
-Thanks,
-Liam
+---
+diff --git a/mm/damon/core-test.h b/mm/damon/core-test.h
+index 0cee634f3544..8072f83b2bba 100644
+--- a/mm/damon/core-test.h
++++ b/mm/damon/core-test.h
+@@ -309,6 +309,9 @@ static void damon_test_nr_accesses_to_accesses_bp(struct kunit *test)
+                 .aggr_interval = ((unsigned long)UINT_MAX + 1) * 10
+         };
+
++       if (sizeof(int) == sizeof(long))
++               kunit_skip(test, "Test requires sizeof(int) != sizeof(long)");
++
+         KUNIT_EXPECT_EQ(test, damon_nr_accesses_to_accesses_bp(123, &attrs), 0);
+  }
+
+
