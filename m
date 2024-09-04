@@ -1,233 +1,261 @@
-Received: from mx0a-00069f02.pphosted.com (mx0a-00069f02.pphosted.com [205.220.165.32])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f170.google.com (mail-pg1-f170.google.com [209.85.215.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3BB41E6311
-	for <damon@lists.linux.dev>; Wed,  4 Sep 2024 19:28:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=205.220.165.32
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725478133; cv=fail; b=tdx39s2VohnIV2wU4mMfJlaN1i7xLCTg2kshUx/vnC6W92+XsgpuD3ntHpkylCP5PWPJoKutz/2IZ1ZTiAe52/snMSrzIPhIbgIGJUaxMg7d5C+WT6f9vwU7n5IgiYIEsdVDBm1vmlvQWKmLAvQEZ7BBfbDYT7631+pwT2/Ofdc=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725478133; c=relaxed/simple;
-	bh=T7dFZfWQcpkIZdrU2leI7dS9TOHoKGvvgtofVMeR5Vw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=cw9YkXMusSQnQS5Uk8k5Mi9BVJLdxepEfxpPkHFMedNkfYJNo5pr9FN7bpJWe1DSbKzWzNhdjEgBhl4F717mRwUFfEbFX6WJ8z+6BOxa7rvzVsm6ARRX9l1VrthEwiNdzf/w9xqIo4GgYd15mys5PjXXe/4NXuzi8CixNWM2kco=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oracle.com; spf=pass smtp.mailfrom=oracle.com; dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b=l4zImRp5; dkim=pass (1024-bit key) header.d=oracle.onmicrosoft.com header.i=@oracle.onmicrosoft.com header.b=nDO/Kkz5; arc=fail smtp.client-ip=205.220.165.32
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oracle.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oracle.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E01F13DDA7
+	for <damon@lists.linux.dev>; Wed,  4 Sep 2024 19:56:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.170
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1725479798; cv=none; b=fiMWguRGiDVC3ZrzZTba4qMiDXcrNs8fHKE7mv5SkyJDA9WypyRMujwCspC9m8tT69DftXEfvRk9YA4dfGkrhOxs615n8MhRVyeBro5KhTGyAmg5/cs+kKyAw1y1S4f1xZo0FE++Z3oRZ0WmUaKdTXw/5MR/bE/iLOTeWfJ2ClM=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1725479798; c=relaxed/simple;
+	bh=CmqK9+vTkOMpYW7nHEUEo+VDtwDBAFd1ta4JGBxPy8o=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=qzRU5CjwGoNe2uuVFFQr7f+4JDMgkBH0+bhYjpWg/Hgj8OeR5zuW2wVKbfwiq+oCUfcf+PFPfoCyHrWQVs5iUBpjeV0eRy/fSHTBPYNgzZe36g+OW3RacmtF3uLKovp3ssKhIV0xxJT63HbftIcSaJCwgSwnIQ2WhdRoNMwUHV8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=j3N7WgbB; arc=none smtp.client-ip=209.85.215.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b="l4zImRp5";
-	dkim=pass (1024-bit key) header.d=oracle.onmicrosoft.com header.i=@oracle.onmicrosoft.com header.b="nDO/Kkz5"
-Received: from pps.filterd (m0246629.ppops.net [127.0.0.1])
-	by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 484I0WAc003755;
-	Wed, 4 Sep 2024 19:28:40 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=
-	date:from:to:cc:subject:message-id:references:content-type
-	:in-reply-to:mime-version; s=corp-2023-11-20; bh=Sy1diGiuTmU7VIU
-	fM5JFBDSfz0cjC33Q7PeB9PGQBXc=; b=l4zImRp5tdjQuNkiJwgMLtE4Ht0N4HT
-	XMUVxYrYrTeX/Q/sH0FVbGSTmqajMBspQH2rWJHwIaipgrjubtGGyYXqomAyGlK6
-	eJ361EPQqX2FhZm225tw9Mmd/t3rMdLL3P2mfQ7nxW/D9Znuu7C+HH5RtJLJoUQY
-	tbMMfA1vfv7VtjnzKck30TU8FDgP3UJDwWkUAoUmNFKYgSIbcUlRL9VIBPAe1KVe
-	fCLs6O0+6FBuyJDbm5OMjp0H0uhFR5SJMMbAAlIw7XMYuvMs2aeG9tKNlHPXGQwj
-	lZUv2Ud6ZWQziwLSSdCH28KPpHROmo1TpLUDaNs9UFqKYYkKYSoob7A==
-Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (phxpaimrmta01.appoci.oracle.com [138.1.114.2])
-	by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 41duw7verv-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Wed, 04 Sep 2024 19:28:40 +0000 (GMT)
-Received: from pps.filterd (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
-	by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2) with ESMTP id 484IMBKp036727;
-	Wed, 4 Sep 2024 19:28:39 GMT
-Received: from nam12-mw2-obe.outbound.protection.outlook.com (mail-mw2nam12lp2048.outbound.protection.outlook.com [104.47.66.48])
-	by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id 41bsmah4qu-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Wed, 04 Sep 2024 19:28:38 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=b6uWq0Ji0qbrQksUmy5RoRdHKQeF1isyUlWihgsWCxLJKXPtpVBhb2gIOeJMsrhwsLNFDy7t/S1ORaeYy/XKtKWBN3mIL6YLrDHAykCJP+Y2+zaaVRjwrOi0KiSdxIqBCWKEbVK9LQ40qMiMst/h+bBY1QoAx8of6Kjo9lpun8Udk1TF8/3L8XiMrKjMFjVTF6Y16gf0TS0fJQYeG0llEbs8LG6JbGKUmubnC2RlShiONDfPXSPAKK1eqxKKIuGH1BrJpItJzYMobGy8EaE7ZyIgi71qnvemc1Bjl0JWlwRD648kRRPy6dAJ72Px0bgecGJ4ctG0j2Yyc6XXf9z3Pw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Sy1diGiuTmU7VIUfM5JFBDSfz0cjC33Q7PeB9PGQBXc=;
- b=lzz92Jx6TjYenVnLS9gvS4+1OGU9qkcCHVuQk9HiZOOnbh4P5D7U7R1A7jiotP1fh7OUYZreHKPu3/lNdWGjCrTs8SaxGG5t7rEmqmblJlZL0DJRzsZckfH5fV2W/Mb5/cLYqX2yA9cgeKJ26/4TZ93sz1Cya2IGEGpHKAsTsYo1u0kxs645Knd3b8ZXw+EmsqjMwOF6cY0gb/YXQ+chtVbz/vw2n1GhVdaGOEVrbK+ugM/8yRPVvUY+DanGa9Cl2QfypnKp//zGKwC1eUuAtimmdWO0RgkAgRrcl2jZMCz2v0kdM4lEFRBT7X1f2RjLoxt2IWsGU0hDsXwlND5m4Q==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
- dkim=pass header.d=oracle.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="j3N7WgbB"
+Received: by mail-pg1-f170.google.com with SMTP id 41be03b00d2f7-656d8b346d2so18900a12.2
+        for <damon@lists.linux.dev>; Wed, 04 Sep 2024 12:56:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Sy1diGiuTmU7VIUfM5JFBDSfz0cjC33Q7PeB9PGQBXc=;
- b=nDO/Kkz5jjpX7pugK6KAwf6NCPRsanhDxWlJoEBKjmJdCTc3dEGulTyihopsV7wvLQ1P50jnrm8pH9SlBYc6XubIaj/08h/Lv8vx1LAeww7voXwtC/+Qa3zDO2l1sGjyt4OCfBWSoXnIAPiQZ6zqUkixufKyMec6EsbdgFyMeKs=
-Received: from LV8PR10MB7943.namprd10.prod.outlook.com (2603:10b6:408:1f9::22)
- by CO1PR10MB4658.namprd10.prod.outlook.com (2603:10b6:303:91::13) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7939.10; Wed, 4 Sep
- 2024 19:28:09 +0000
-Received: from LV8PR10MB7943.namprd10.prod.outlook.com
- ([fe80::a8ec:6b6b:e1a:782d]) by LV8PR10MB7943.namprd10.prod.outlook.com
- ([fe80::a8ec:6b6b:e1a:782d%7]) with mapi id 15.20.7918.020; Wed, 4 Sep 2024
- 19:28:09 +0000
-Date: Wed, 4 Sep 2024 15:28:07 -0400
-From: "Liam R. Howlett" <Liam.Howlett@oracle.com>
-To: SeongJae Park <sj@kernel.org>
-Cc: Guenter Roeck <linux@roeck-us.net>,
-        Andrew Morton <akpm@linux-foundation.org>,
-        David Hildenbrand <david@redhat.com>,
-        "Matthew Wilcox (Oracle)" <willy@infradead.org>,
-        Brendan Higgins <brendanhiggins@google.com>,
-        David Gow <davidgow@google.com>, damon@lists.linux.dev,
-        linux-mm@kvack.org, kunit-dev@googlegroups.com,
-        linux-kselftest@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2] mm/damon/tests/vaddr-kunit: init maple tree without
- MT_FLAGS_LOCK_EXTERN
-Message-ID: <kuy4nfsjxjul54dj6u7p3gazov4mb2no7svxs37arbhcv34hhf@qmk7fmgc3ns4>
-Mail-Followup-To: "Liam R. Howlett" <Liam.Howlett@oracle.com>, 
-	SeongJae Park <sj@kernel.org>, Guenter Roeck <linux@roeck-us.net>, 
-	Andrew Morton <akpm@linux-foundation.org>, David Hildenbrand <david@redhat.com>, 
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>, Brendan Higgins <brendanhiggins@google.com>, 
-	David Gow <davidgow@google.com>, damon@lists.linux.dev, linux-mm@kvack.org, 
-	kunit-dev@googlegroups.com, linux-kselftest@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <34f3e9bd-9323-43cc-8371-00d8847d8664@roeck-us.net>
- <20240904185347.2253-1-sj@kernel.org>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240904185347.2253-1-sj@kernel.org>
-User-Agent: NeoMutt/20240425
-X-ClientProxiedBy: YT4PR01CA0273.CANPRD01.PROD.OUTLOOK.COM
- (2603:10b6:b01:109::21) To LV8PR10MB7943.namprd10.prod.outlook.com
- (2603:10b6:408:1f9::22)
+        d=gmail.com; s=20230601; t=1725479796; x=1726084596; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:to:subject:user-agent:mime-version:date
+         :message-id:sender:from:to:cc:subject:date:message-id:reply-to;
+        bh=SXKm5OoeNAj97zv6xdsq0+8Sntxl3zYdIrsZpJIIln4=;
+        b=j3N7WgbB2BvQ/AJLefgD/7Iwx7vjkso1tptLKevcTpP1VEcwNBCHJcEXBnYjm9qwAo
+         TpHKaQ00kyeOM5DrnF5yliE1xa/1wVfBw14tE49Fesv/KQjcdxOmti47kW+57fF0F5TE
+         DuEKHPj+mwTF1rPBveg6Zko7Euqw9ZAeU46g1GR76D6n4bfUjC2IlyDrKyoBpGFBJuHT
+         bzYNgelRsIXr9R7ts5bUOiXRTxCo1N7+g5HpQxfTgMUrZF7BbFBg6m7hrEceaawZ06bP
+         bzrRFvTd8L6l5VcnCeodD3KFY59Rm3Ry6JoRFLNSm0tOrycC2xAABEEUOG6aGFesu0FT
+         78SA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1725479796; x=1726084596;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:to:subject:user-agent:mime-version:date
+         :message-id:sender:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=SXKm5OoeNAj97zv6xdsq0+8Sntxl3zYdIrsZpJIIln4=;
+        b=h8seIvfASDj16wwT4tFp3+jLxBN3X3BL81Jdi6etXIuk9SXriMymOIV9fB98inM08o
+         aMvmtEj52R9jHSxjemM2eulg2AEsr2K0sYjapsiYnLjVkhks9KHHDO8QZf4kNwzl1FqC
+         2l1dGKUwj3FKDovuNVjClNVO9D5HxkbCYrcAQXnzT/dSggONKaf2j46qzAEQvS3B4BVE
+         PILS8WfTESUzRiAAEpawsJ/zSgyA/zbVuhgC1T9RvGQ4Tj9AKCGqy9ZS3rb2YXaPLGoP
+         /c2hFEpzddGJDRk7nspcH6WRiigg1Rk4oI9Q63Fe2+W8rZnewjxI1jVtlHaVLFbisj2F
+         MCLA==
+X-Forwarded-Encrypted: i=1; AJvYcCU0f4cwGdT9Dg4PlAHIweNR4tzGrG7vmLQAAC6me/5jzd2+WOB3Usbm382Mg0C4JFEdBge3TQ==@lists.linux.dev
+X-Gm-Message-State: AOJu0Yxu57zX28kp9LiSmF//BaLKf0wN/vrarlVmXyRgLW5D1AgBYdBv
+	kfCp5/90meCssZZCIpyjOlij/IT9gY/ocWumPaDC2MPc/Ibz7SE6
+X-Google-Smtp-Source: AGHT+IGINGeaim4TRvhIQEM6ykwPKxm1evYG+kcEU10qSCo5XXM0SNJkXOvufjI9dUiZdkGv7hyW3A==
+X-Received: by 2002:a17:90a:1109:b0:2cf:eaec:d74c with SMTP id 98e67ed59e1d1-2d89728e55amr13615483a91.16.1725479795574;
+        Wed, 04 Sep 2024 12:56:35 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e321:62f0:329c:23ff:fee3:9d7c? ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2da788d1db1sm3145888a91.44.2024.09.04.12.56.34
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 04 Sep 2024 12:56:34 -0700 (PDT)
+Sender: Guenter Roeck <groeck7@gmail.com>
+Message-ID: <274f253a-e44e-431b-9dd3-a499843be96f@roeck-us.net>
+Date: Wed, 4 Sep 2024 12:56:33 -0700
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: LV8PR10MB7943:EE_|CO1PR10MB4658:EE_
-X-MS-Office365-Filtering-Correlation-Id: 11b3d2c5-e3cb-4221-241d-08dccd17b582
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|7416014|1800799024|366016|376014;
-X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?lcT51v2aqBU8sOmgYo/qBmE96iwxRn4+8OFCIDubC80VmLde0SApkhhRLED+?=
- =?us-ascii?Q?oBKRMioS4QKgQoiMDm+UnFNEdg5EZbVY07ldHfwkAYA18j7UElMGMtDZofr7?=
- =?us-ascii?Q?DVxIomkH24Dio1thJxG1KlzbIDWaFDti6djrneXSBiq9OfmE/NG5Tae+xj5k?=
- =?us-ascii?Q?gZoZyYnPtpI1JyjRFyTZ92vGtkr7gF9VEZA8ZTuyc8Rc7lw0v7KsJe3f1TQm?=
- =?us-ascii?Q?doia4GHOOjpxWX4NyLcjhTen3H7Bmufw1jNe5f6nq1g2UsTBU5GXnRkYqtwq?=
- =?us-ascii?Q?be4+Ghmd/j/eeyyoCSdFl5sNc6+92Fc4Zh3PMfOrVEIUAbtm2ZgApaM1Cd4S?=
- =?us-ascii?Q?l6XzibkbQvhV/B6M21wEPWvsQyz64pCttoxM+iCoJSp6tZqzSZPQ86nVGC/A?=
- =?us-ascii?Q?K7qo7qo2gdEL3RFJ52fUnIkzWUyST8uWJxOXn+qPQq+QjJ+OCjYh6F1PPRLl?=
- =?us-ascii?Q?2IsAqzcVFtrjDuGf6doXsYT2vzLGbVAROdu3HmDTvnVWC/C44wjwusEU61jd?=
- =?us-ascii?Q?Lo7okfG4vFDF3lbzbhuS1LQQAXHjpRoGwmq4Gb76dIyqk6YkP76yVkKSxSx/?=
- =?us-ascii?Q?xCcqdrInDdw4MhU9StbZYDF0bsakAUQv/BSVBtVbida9b9JGB7wedMOm9IzJ?=
- =?us-ascii?Q?DkybofBlmeZR+hIDTJuMRmVjb6DKMPvaCp5Nwr13lYLgqZSD39AS4DXkOpsC?=
- =?us-ascii?Q?552rGn9Tl2GYhqtalZ0ETzj3ynZ1JjjK079uFPbfKUSo3Rz91Dw8e6MnqJt5?=
- =?us-ascii?Q?tSju5NMhvfYbou+GxO+xDqYu1Dh6izBepeaa78E62Yu1i4mhp83rkr/ReJ6d?=
- =?us-ascii?Q?bvIK/jQEf62bVf+SYO8dCAWG5jTW77tZvrMvtwOBwWzu/KIvrd9ydr8r0Wz3?=
- =?us-ascii?Q?fdtKF0KsbSLjI7yH3VnLlyhV0lRVRTXmCqkNIlwvufH6/jYCEejGWF/6MkC9?=
- =?us-ascii?Q?1TpX2Q4mcXZPZsVQTv/2Eq0LvFlBBS1Z2n9Gj6zbqJXFgy5iuJatErzY03Aq?=
- =?us-ascii?Q?NuPYx0dmyZa4TU6DoTcBpjSetyZTUey6aCM/RaZJ6Hq6JzmUDK6oH+0rvleb?=
- =?us-ascii?Q?dkwGG8ABrQ7RhWO9BQoo9ARfjuQXWrDCaoh2v9o9pYMzuRAuuU8iEc0rYTLD?=
- =?us-ascii?Q?Z3qPsJNsjOAb7XGD2ud8W6sRtQOHskZkAamfAmmbEhnZfjg5x15eTKYOZbVG?=
- =?us-ascii?Q?zzkV56iAlZecWflY9rRRN8bWCArqHKLMAWSIJjuo5UmmbtZKlOeMfg7G0aDK?=
- =?us-ascii?Q?t7s357tXyX3eRJoJ7nnwa3ZJ5E0oECd+EjOaT7kT8F19ZMryezgZGWbzaK/u?=
- =?us-ascii?Q?aw+vLdg/GZcSj2yDRYlATdWEqZs+4fdeuQnKLy4M4tWO/jvdK5UJD2TIpb2r?=
- =?us-ascii?Q?uvuOhps=3D?=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR10MB7943.namprd10.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(7416014)(1800799024)(366016)(376014);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?PNNf7VqedfvryQPG6ZNJcaXa8pbR1IrxEj8Y4i1x7rFXDOCdKZSo+wy8GtcJ?=
- =?us-ascii?Q?hmI3W4pQAbXIbE1xg16db26A1xNkCTqCYVFhBMN3JodtOKGZ3zQWJZnovpqI?=
- =?us-ascii?Q?DZkiwxRreYFnISoebVog5uxLkTUImJDZU6twN35poPlJSZCD+N0WkLmQ8kiZ?=
- =?us-ascii?Q?BK0Ty7YZ7HMFCxibpW8HqJlrAZ9m7Gkri+xHPBrN77mEtamWseb+iBdng9ix?=
- =?us-ascii?Q?YWhpoPyp9u4gUllOeGSnekK1EeVGBiIrOBGkMIpqurhCTbrVTUCGJYobaQFK?=
- =?us-ascii?Q?xq/5X49VKHxZ+VLFDD8DBE07jH84AiqmmynO9cPcv1GKl6uSiANfNdx+dYn/?=
- =?us-ascii?Q?B22DZrHvqrj2FaiTBWj2esI/LLTNxKJ7EooMP6X2s8gd3QRNatNdRwr0fkHa?=
- =?us-ascii?Q?qt0c7EADlND20IO46Jfwr+q48xJOeYP99t5a8mq583JOK4yM5p6diuuoI6cq?=
- =?us-ascii?Q?e1P193aspr2IprsTLPRv0hur4WupGwLDSkaJOq6oqKsb4Ty/kAPuCEq3W291?=
- =?us-ascii?Q?VkWgVpw1eDc6jcYcnwai5ZFJkZS1P+A40KDDCboTVwYGRQwzrNV9dhseKq4j?=
- =?us-ascii?Q?S/Ok9gbWRgaslu0/+WGxnrzpIUOUBqnYxoWbJnXQY0w5CjSo8J1G2GB6R6BW?=
- =?us-ascii?Q?cu/B3dktq/ckvWfG8Lwt562iz/9SiS/cio4MY9xw7n4DwOT1E1FMWKe1KrrY?=
- =?us-ascii?Q?gzMZcw7NAJQONJf8RCsTW7ipEHZ3nMj/AiECzWb1+i51a6w4jAJY9J6UFUAI?=
- =?us-ascii?Q?AfB0aOv8WoEPAR+jglygb767B043Ys+HdGu86gSGJTKb3BGO7ZCTJs/LD3/2?=
- =?us-ascii?Q?2gal3+dcC/VS8F3KaqxM6673i+jzzeJXkWJBuzUFxxY9MTcr1cl1IibzPW/e?=
- =?us-ascii?Q?dcn9cU7yGPc2MzuNx9cOfGvigisy6oABjoS+tYv5TMDvBecKOTD9XrCGKnl4?=
- =?us-ascii?Q?M7Ys2QB6oM9xVebxYnPYUHMUsytB3e5qbkLM+CgKfvjoCybsG+j/7ntqZ+zD?=
- =?us-ascii?Q?UlcxtuGJOizuT+kKrQNfZePwZha532orFacdqDxIao/87p1Ua8PWsgBjjZDH?=
- =?us-ascii?Q?4KVyBNh6/uoni3T8NtQvOr9ww/lClT0eFcYzxdlKjxCDQt/SInAHKx0UYHXJ?=
- =?us-ascii?Q?hz7akHDgGDtiRcOkirfjeGGvdhBNTHo4bf8fsBU1M3u7PsbsVj1gqQbgUJRx?=
- =?us-ascii?Q?usr9ECj3Z82Ps6nJiXnLv5hvqSQgbem/6t52UNiwBZk+ElvR8YP4BkylQs+D?=
- =?us-ascii?Q?AP4muImzE1eq6eFlQH0xVfET973B+cB2bHP/L0jHZ1EEKynGh8mSzDW7+47G?=
- =?us-ascii?Q?9JlBIlfPqPTKxIC60HsxEi/qbUOmbVZQ2QTdZ+mpXRnOcJ2b+WjOnia8JLF5?=
- =?us-ascii?Q?pfA1vqN/3IuBExJP+H1qqKqgd7g9EfiEmXpcOlel26Z5xxNoR61lnv1U3j5e?=
- =?us-ascii?Q?7RT/s13RlZokc4ZPkLookQJsbP6spzfve087nnrYJXmp0Qc6tzKs3Uf5Ilts?=
- =?us-ascii?Q?qrhvtqj8Q6KbT15vGVvXGGnXfJv0NJhaaVw0XhPQDrHCwhYEG/3JZ9zNeIj6?=
- =?us-ascii?Q?coSG8Xeyfh+R7OgvcAzmM4pkIoORRESvAnwgGh3ULXDQTrQqcEexeAMH2Z1T?=
- =?us-ascii?Q?Wg=3D=3D?=
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0:
-	Le7HdHiTGTNzf9hIFgFtlMhduNbFX910xM1zTnFgOaTh5iUkDM7jgc5iDLjCOA+Fjyr39M9jbAJJxIksmijss4FbTX+jzzBzZv8K/8voIgj8oOwUJ+PrDjGmI8cdMgSYacbLwY0YiVNSG2o1KL8bGxBeGD9GCONrCakSUtNBhHshkIz9j/U6tI+E5cM9gSPMgALAoPJW6A9xhO3vCt0g93118e+7lPa13xiF4HvveOaSdwqso0szz2qPnw/IjY3y85igoMcPBM5hCYnxXb+rUJqrl8DsKaD/41+0RuPiRJywLQrk+WJMROpQqbWRRQZUiKzQALzli6YsXC2dZySvY10Ni5ZLhxR5oSi1zw28WXfBv0Hwt7/KuhnHzOT0X9iM0aJqGSnyXXIkSBjUlD/zt+JrL/hjVybrxrGpan/R1gKMLzdpV19Y6dErENm92PmiuVpiF0AHaepuxSQjiMjmc/BpGvHgcW6GZsuUO7zaAYWajmLCI/RPCzyMVYtcKeAfMigeXKHE815JfaCn8dXG9faqJr8aGjLNQJieZqEQ6hePNeuetircgsJ6DEJl3FRbop3Sb/j4El6Iyo6MoHOibrFC0Kd1FkTNlSdyzAYBc+I=
-X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 11b3d2c5-e3cb-4221-241d-08dccd17b582
-X-MS-Exchange-CrossTenant-AuthSource: LV8PR10MB7943.namprd10.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Sep 2024 19:28:09.4274
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: x1uAElgtWT26aQtusCkZpngdtY3azDYEMGou+5Ei5w4MeTZbyRhU1m0zqJsgZBf8kBFBwV39K4rnU2ZwB0WBPg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CO1PR10MB4658
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-04_17,2024-09-04_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0 phishscore=0
- suspectscore=0 bulkscore=0 mlxscore=0 spamscore=0 mlxlogscore=999
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2407110000 definitions=main-2409040147
-X-Proofpoint-GUID: KkEHw1o6ZvnYfkAumSxJQsq9zdOD9HMH
-X-Proofpoint-ORIG-GUID: KkEHw1o6ZvnYfkAumSxJQsq9zdOD9HMH
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] mm/damon/tests/vaddr-kunit: don't use mas_lock for
+ MM_MT_FLAGS-initialized maple tree
+To: "Liam R. Howlett" <Liam.Howlett@oracle.com>, SeongJae Park
+ <sj@kernel.org>, Andrew Morton <akpm@linux-foundation.org>,
+ "Matthew Wilcox (Oracle)" <willy@infradead.org>,
+ David Hildenbrand <david@redhat.com>,
+ Brendan Higgins <brendanhiggins@google.com>, David Gow
+ <davidgow@google.com>, damon@lists.linux.dev, linux-mm@kvack.org,
+ kunit-dev@googlegroups.com, linux-kselftest@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20240904005815.1388-1-sj@kernel.org>
+ <20240904011840.973-1-sj@kernel.org>
+ <whdjeq6qpccj6ms4wgiyjcnizht4nl5qbt7rbaeqfwzt67smxt@vvduwpqcuizl>
+ <e83dedb2-89a3-4327-9a2f-610d3199f0e1@roeck-us.net>
+ <54zu64vxrhdxr4wtmwbewga44shu4f7lz4ffx2hxhag46b56hn@qgrgfrb6mhbv>
+ <b83651a0-5b24-4206-b860-cb54ffdf209b@roeck-us.net>
+ <gaouhgel2kmzkm7pofpkjkt5ya3a44rwsal74zsgzh76xzh4qo@ne6sqvzj5qor>
+Content-Language: en-US
+From: Guenter Roeck <linux@roeck-us.net>
+Autocrypt: addr=linux@roeck-us.net; keydata=
+ xsFNBE6H1WcBEACu6jIcw5kZ5dGeJ7E7B2uweQR/4FGxH10/H1O1+ApmcQ9i87XdZQiB9cpN
+ RYHA7RCEK2dh6dDccykQk3bC90xXMPg+O3R+C/SkwcnUak1UZaeK/SwQbq/t0tkMzYDRxfJ7
+ nyFiKxUehbNF3r9qlJgPqONwX5vJy4/GvDHdddSCxV41P/ejsZ8PykxyJs98UWhF54tGRWFl
+ 7i1xvaDB9lN5WTLRKSO7wICuLiSz5WZHXMkyF4d+/O5ll7yz/o/JxK5vO/sduYDIlFTvBZDh
+ gzaEtNf5tQjsjG4io8E0Yq0ViobLkS2RTNZT8ICq/Jmvl0SpbHRvYwa2DhNsK0YjHFQBB0FX
+ IdhdUEzNefcNcYvqigJpdICoP2e4yJSyflHFO4dr0OrdnGLe1Zi/8Xo/2+M1dSSEt196rXaC
+ kwu2KgIgmkRBb3cp2vIBBIIowU8W3qC1+w+RdMUrZxKGWJ3juwcgveJlzMpMZNyM1jobSXZ0
+ VHGMNJ3MwXlrEFPXaYJgibcg6brM6wGfX/LBvc/haWw4yO24lT5eitm4UBdIy9pKkKmHHh7s
+ jfZJkB5fWKVdoCv/omy6UyH6ykLOPFugl+hVL2Prf8xrXuZe1CMS7ID9Lc8FaL1ROIN/W8Vk
+ BIsJMaWOhks//7d92Uf3EArDlDShwR2+D+AMon8NULuLBHiEUQARAQABzTJHdWVudGVyIFJv
+ ZWNrIChMaW51eCBhY2NvdW50KSA8bGludXhAcm9lY2stdXMubmV0PsLBgQQTAQIAKwIbAwYL
+ CQgHAwIGFQgCCQoLBBYCAwECHgECF4ACGQEFAlVcphcFCRmg06EACgkQyx8mb86fmYFg0RAA
+ nzXJzuPkLJaOmSIzPAqqnutACchT/meCOgMEpS5oLf6xn5ySZkl23OxuhpMZTVX+49c9pvBx
+ hpvl5bCWFu5qC1jC2eWRYU+aZZE4sxMaAGeWenQJsiG9lP8wkfCJP3ockNu0ZXXAXwIbY1O1
+ c+l11zQkZw89zNgWgKobKzrDMBFOYtAh0pAInZ9TSn7oA4Ctejouo5wUugmk8MrDtUVXmEA9
+ 7f9fgKYSwl/H7dfKKsS1bDOpyJlqhEAH94BHJdK/b1tzwJCFAXFhMlmlbYEk8kWjcxQgDWMu
+ GAthQzSuAyhqyZwFcOlMCNbAcTSQawSo3B9yM9mHJne5RrAbVz4TWLnEaX8gA5xK3uCNCeyI
+ sqYuzA4OzcMwnnTASvzsGZoYHTFP3DQwf2nzxD6yBGCfwNGIYfS0i8YN8XcBgEcDFMWpOQhT
+ Pu3HeztMnF3HXrc0t7e5rDW9zCh3k2PA6D2NV4fews9KDFhLlTfCVzf0PS1dRVVWM+4jVl6l
+ HRIAgWp+2/f8dx5vPc4Ycp4IsZN0l1h9uT7qm1KTwz+sSl1zOqKD/BpfGNZfLRRxrXthvvY8
+ BltcuZ4+PGFTcRkMytUbMDFMF9Cjd2W9dXD35PEtvj8wnEyzIos8bbgtLrGTv/SYhmPpahJA
+ l8hPhYvmAvpOmusUUyB30StsHIU2LLccUPPOwU0ETofVZwEQALlLbQeBDTDbwQYrj0gbx3bq
+ 7kpKABxN2MqeuqGr02DpS9883d/t7ontxasXoEz2GTioevvRmllJlPQERVxM8gQoNg22twF7
+ pB/zsrIjxkE9heE4wYfN1AyzT+AxgYN6f8hVQ7Nrc9XgZZe+8IkuW/Nf64KzNJXnSH4u6nJM
+ J2+Dt274YoFcXR1nG76Q259mKwzbCukKbd6piL+VsT/qBrLhZe9Ivbjq5WMdkQKnP7gYKCAi
+ pNVJC4enWfivZsYupMd9qn7Uv/oCZDYoBTdMSBUblaLMwlcjnPpOYK5rfHvC4opxl+P/Vzyz
+ 6WC2TLkPtKvYvXmdsI6rnEI4Uucg0Au/Ulg7aqqKhzGPIbVaL+U0Wk82nz6hz+WP2ggTrY1w
+ ZlPlRt8WM9w6WfLf2j+PuGklj37m+KvaOEfLsF1v464dSpy1tQVHhhp8LFTxh/6RWkRIR2uF
+ I4v3Xu/k5D0LhaZHpQ4C+xKsQxpTGuYh2tnRaRL14YMW1dlI3HfeB2gj7Yc8XdHh9vkpPyuT
+ nY/ZsFbnvBtiw7GchKKri2gDhRb2QNNDyBnQn5mRFw7CyuFclAksOdV/sdpQnYlYcRQWOUGY
+ HhQ5eqTRZjm9z+qQe/T0HQpmiPTqQcIaG/edgKVTUjITfA7AJMKLQHgp04Vylb+G6jocnQQX
+ JqvvP09whbqrABEBAAHCwWUEGAECAA8CGwwFAlVcpi8FCRmg08MACgkQyx8mb86fmYHNRQ/+
+ J0OZsBYP4leJvQF8lx9zif+v4ZY/6C9tTcUv/KNAE5leyrD4IKbnV4PnbrVhjq861it/zRQW
+ cFpWQszZyWRwNPWUUz7ejmm9lAwPbr8xWT4qMSA43VKQ7ZCeTQJ4TC8kjqtcbw41SjkjrcTG
+ wF52zFO4bOWyovVAPncvV9eGA/vtnd3xEZXQiSt91kBSqK28yjxAqK/c3G6i7IX2rg6pzgqh
+ hiH3/1qM2M/LSuqAv0Rwrt/k+pZXE+B4Ud42hwmMr0TfhNxG+X7YKvjKC+SjPjqp0CaztQ0H
+ nsDLSLElVROxCd9m8CAUuHplgmR3seYCOrT4jriMFBtKNPtj2EE4DNV4s7k0Zy+6iRQ8G8ng
+ QjsSqYJx8iAR8JRB7Gm2rQOMv8lSRdjva++GT0VLXtHULdlzg8VjDnFZ3lfz5PWEOeIMk7Rj
+ trjv82EZtrhLuLjHRCaG50OOm0hwPSk1J64R8O3HjSLdertmw7eyAYOo4RuWJguYMg5DRnBk
+ WkRwrSuCn7UG+qVWZeKEsFKFOkynOs3pVbcbq1pxbhk3TRWCGRU5JolI4ohy/7JV1TVbjiDI
+ HP/aVnm6NC8of26P40Pg8EdAhajZnHHjA7FrJXsy3cyIGqvg9os4rNkUWmrCfLLsZDHD8FnU
+ mDW4+i+XlNFUPUYMrIKi9joBhu18ssf5i5Q=
+In-Reply-To: <gaouhgel2kmzkm7pofpkjkt5ya3a44rwsal74zsgzh76xzh4qo@ne6sqvzj5qor>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-* SeongJae Park <sj@kernel.org> [240904 14:53]:
-> On Wed, 4 Sep 2024 11:41:28 -0700 Guenter Roeck <linux@roeck-us.net> wrote:
+On 9/4/24 12:26, Liam R. Howlett wrote:
+> * Guenter Roeck <linux@roeck-us.net> [240904 00:27]:
+>> On 9/3/24 20:36, Liam R. Howlett wrote:
+>>> * Guenter Roeck <linux@roeck-us.net> [240903 22:38]:
+>>>> On 9/3/24 19:31, Liam R. Howlett wrote:
+>>>>> * SeongJae Park <sj@kernel.org> [240903 21:18]:
+>>>>>> On Tue,  3 Sep 2024 17:58:15 -0700 SeongJae Park <sj@kernel.org> wrote:
+>>>>>>
+>>>>>>> On Tue, 3 Sep 2024 20:48:53 -0400 "Liam R. Howlett" <Liam.Howlett@oracle.com> wrote:
+>>>>>>>
+>>>>>>>> * SeongJae Park <sj@kernel.org> [240903 20:45]:
+>>>>>>>>> damon_test_three_regions_in_vmas() initializes a maple tree with
+>>>>>>>>> MM_MT_FLAGS.  The flags contains MT_FLAGS_LOCK_EXTERN, which means
+>>>>>>>>> mt_lock of the maple tree will not be used.  And therefore the maple
+>>>>>>>>> tree initialization code skips initialization of the mt_lock.  However,
+>>>>>>>>> __link_vmas(), which adds vmas for test to the maple tree, uses the
+>>>>>>>>> mt_lock.  In other words, the uninitialized spinlock is used.  The
+>>>>>>>>> problem becomes celar when spinlock debugging is turned on, since it
+>>>>>>>>> reports spinlock bad magic bug.  Fix the issue by not using the mt_lock
+>>>>>>>>> as promised.
+>>>>>>>>
+>>>>>>>> You can't do this, lockdep will tell you this is wrong.
+>>>>>>>
+>>>>>>> Hmm, but lockdep was silence on my setup?
+>>>>>>>
+>>>>>>>> We need a lock and to use the lock for writes.
+>>>>>>>
+>>>>>>> This code is executed by a single-thread test code.  Do we still need the lock?
+>>>>>>>
+>>>>>>>>
+>>>>>>>> I'd suggest using different flags so the spinlock is used.
+>>>>>>>
+>>>>>>> The reporter mentioned simply dropping MT_FLAGS_LOCK_EXTERN from the flags
+>>>>>>> causes suspicious RCU usage message.  May I ask if you have a suggestion of
+>>>>>>> better flags?
+>>>>>
+>>>>> That would be the lockdep complaining, so that's good.
+>>>>>
+>>>>>>
+>>>>>> I was actually thinking replacing the mt_init_flags() with mt_init(), which
+>>>>>> same to mt_init_flags() with zero flag, like below.
+>>>>>
+>>>>> Yes.  This will use the spinlock which should fix your issue, but it
+>>>>> will use a different style of maple tree.
+>>>>>
+>>>>> Perhaps use MT_FLAGS_ALLOC_RANGE to use the same type of maple tree, if
+>>>>> you ever add threading you will want the rcu flag as well
+>>>>> (MT_FLAGS_USE_RCU).
+>>>>>
+>>>>> I would recommend those two and just use the spinlock.
+>>>>>
+>>>>
+>>>> I tried that (MT_FLAGS_ALLOC_RANGE | MT_FLAGS_USE_RCU). it also triggers
+>>>> the suspicious RCU usage message.
+>>>>
+>>>
+>>> I am running ./tools/testing/kunit/kunit.py run '*damon*' --arch x86_64 --raw
+>>> with:
+>>> CONFIG_LOCKDEP=y
+>>> CONFIG_DEBUG_SPINLOCK=y
+>>>
+>>> and I don't have any issue with locking in the existing code.  How do I
+>>> recreate this issue?
+>>>
+>>
+>> I tested again, and I still see
+>>
+>>
+>> [    6.233483] ok 4 damon
+>> [    6.234190]     KTAP version 1
+>> [    6.234263]     # Subtest: damon-operations
+>> [    6.234335]     # module: vaddr
+>> [    6.234384]     1..6
+>> [    6.235726]
+>> [    6.235931] =============================
+>> [    6.236018] WARNING: suspicious RCU usage
+>> [    6.236280] 6.11.0-rc6-00029-gda66250b210f-dirty #1 Tainted: G                 N
+>> [    6.236398] -----------------------------
+>> [    6.236474] lib/maple_tree.c:832 suspicious rcu_dereference_check() usage!
+>> [    6.236579]
+>> [    6.236579] other info that might help us debug this:
+>> [    6.236579]
+>> [    6.236738]
+>> [    6.236738] rcu_scheduler_active = 2, debug_locks = 1
+>> [    6.237039] no locks held by kunit_try_catch/208.
+>> [    6.237166]
+>> [    6.237166] stack backtrace:
+>> [    6.237385] CPU: 0 UID: 0 PID: 208 Comm: kunit_try_catch Tainted: G                 N 6.11.0-rc6-00029-gda66250b210f-dirty #1
+>> [    6.237629] Tainted: [N]=TEST
+>> [    6.237714] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.16.3-0-ga6ed6b701f0a-prebuilt.qemu.org 04/01/2014
+>> [    6.238065] Call Trace:
+>> [    6.238233]  <TASK>
+>> [    6.238547]  dump_stack_lvl+0x9e/0xe0
+>> [    6.239473]  lockdep_rcu_suspicious+0x145/0x1b0
+>> [    6.239621]  mas_walk+0x19f/0x1d0
+>> [    6.239765]  mas_find+0xb5/0x150
+>> [    6.239873]  __damon_va_three_regions+0x7e/0x130
 > 
-> > On 9/4/24 10:29, SeongJae Park wrote:
-> > > damon_test_three_regions_in_vmas() initializes a maple tree with
-> > > MM_MT_FLAGS.  The flags contains MT_FLAGS_LOCK_EXTERN, which means
-> > > mt_lock of the maple tree will not be used.  And therefore the maple
-> > > tree initialization code skips initialization of the mt_lock.  However,
-> > > __link_vmas(), which adds vmas for test to the maple tree, uses the
-> > > mt_lock.  In other words, the uninitialized spinlock is used.  The
-> > > problem becomes clear when spinlock debugging is turned on, since it
-> > > reports spinlock bad magic bug.
-> > > 
-> > > Fix the issue by excluding MT_FLAGS_LOCK_EXTERN from the maple tree
-> > > initialization flags.  Note that we don't use empty flags to make it
-> > > further similar to the usage of mm maple tree, and to be prepared for
-> > > possible future changes, as suggested by Liam.
-> > > 
-> > > Reported-by: Guenter Roeck <linux@roeck-us.net>
-> > > Closes: https://lore.kernel.org/1453b2b2-6119-4082-ad9e-f3c5239bf87e@roeck-us.net
-> > > Fixes: d0cf3dd47f0d ("damon: convert __damon_va_three_regions to use the VMA iterator")
-> > > Suggested-by: Liam R. Howlett <Liam.Howlett@oracle.com>
-> > > Signed-off-by: SeongJae Park <sj@kernel.org>
-> > > ---
-> > > Changes from v1
-> > > (https://lore.kernel.org/20240904004534.1189-1-sj@kernel.org)
-> > > - Keep lock usage and update the initialization flags (Liam)
-> > 
-> > Not sure I understand how this is better. Is the resulting rcu warning
-> > considered to be irrelevant or a separate problem ?
+> This function isn't taking the rcu read lock while iterating the tree.
 > 
-> I believe it's a separate potential problem (warning) that deserves a look.
-> Meanwhile, this patch is fixing an issue that is definitely a bug, so better to
-> fix right now, imho.
+> Try this:
+> 
+> diff --git a/mm/damon/vaddr.c b/mm/damon/vaddr.c
+> index b0e8b361891d..08cfd22b5249 100644
+> --- a/mm/damon/vaddr.c
+> +++ b/mm/damon/vaddr.c
+> @@ -126,6 +126,7 @@ static int __damon_va_three_regions(struct mm_struct *mm,
+>           * If this is too slow, it can be optimised to examine the maple
+>           * tree gaps.
+>           */
+> +       rcu_read_lock();
+>          for_each_vma(vmi, vma) {
+>                  unsigned long gap;
+>   
+> @@ -146,6 +147,7 @@ static int __damon_va_three_regions(struct mm_struct *mm,
+>   next:
+>                  prev = vma;
+>          }
+> +       rcu_read_unlock();
+>   
+>          if (!sz_range(&second_gap) || !sz_range(&first_gap))
+>                  return -EINVAL;
 > 
 
-Whenever you walk the tree, you need to hold the write lock or the rcu
-read lock.  I believe that __damon_va_three_regions() needs to have the
-rcu_read_lock()/ruc_read_unlock() around the for_each_vma() loop.
 
-I sent a patch to the old thread that I suspect will fix it - but I
-don't see the issue so it is hard to say for sure.
+Yes, that fixes the problem for me.
 
 Thanks,
-Liam
+Guenter
+
