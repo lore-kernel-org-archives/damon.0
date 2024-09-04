@@ -1,296 +1,174 @@
-Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65E6D43152
-	for <damon@lists.linux.dev>; Wed,  4 Sep 2024 04:27:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E364D1DB547
+	for <damon@lists.linux.dev>; Wed,  4 Sep 2024 13:05:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725424048; cv=none; b=S3FHPBLwJWcfmQnNUO9e1LxAl87X8T6sjHdPidD06vPIUPKr1ahuImU/tnbkv0HYki2nB5ClzKm9ZlqfOge7l0E2sv3AK2aWCgwOIlpo6KiUn8kOLwg+P3pXxe3Vf4qMqzwxq0cCM1vQqpNJ4jURQRhugOv7NARULN5TfKjCVS4=
+	t=1725455135; cv=none; b=suiRo6uFmD+wba8Ipl6vqPURIv8Ltqb+Eo43mmkEbCq0CXXkODBAXrdOUhWIz8Vt38w7EVl/KYxWEM07jow7+3/wqgE+qJ7WkUHuJ1zs6sP2Q5GA+JjOsDW7IDTjttthGhG/ZHsl8bh2QAXli/L6UvWrq1sqE0Lkyumpe4cv9aw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725424048; c=relaxed/simple;
-	bh=qR9oGFQRB424fWSF9MV9wyUOeQr2omNeiSnzmDW3Cyk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=Fq/o6P2YS4KNqqSKjQwd1x/2ZJB3acnuFazyxWDPbYkKtCRKAb3wnZN47rYDT4GaOFvM6RfuL83ByOfHshnZkhR2AZSL69NgPysr7HNTCEj5zJF6AaIZdZFWh8wFmlvsog9yJGA9JhmaXZ0Si18fbfZt7Ni0ROCqU52KOJ+Wdp4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Si8lDZcv; arc=none smtp.client-ip=209.85.214.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1725455135; c=relaxed/simple;
+	bh=i8qpq2Ga+wz0kEB5v7nBbytJkFEqZR2QrJQmK0J2+Aw=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=fxaGGdp64iMGuTVNLICnyvqFyxKQbRH5+dBx6LtcmQegLhwW+PwnhwjSWaBCmtYBUT5jmToUY6+BmeWnKJuR6KsfqPsbFNOsoPK5h+mAEviDpe7b0DXCIMEY/ex5GdHJbeJUHdA8y4y7e+Urr1ZlSy8UQTC1LEO5vcmOArd3zlE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=pKIctVY4; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=E+eXvp9U; arc=none smtp.client-ip=193.142.43.55
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Si8lDZcv"
-Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-202508cb8ebso37939235ad.3
-        for <damon@lists.linux.dev>; Tue, 03 Sep 2024 21:27:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1725424046; x=1726028846; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:to:subject:user-agent:mime-version:date
-         :message-id:sender:from:to:cc:subject:date:message-id:reply-to;
-        bh=VeECqBgljIaFzBqVZOaZS1qp1kp+xe6RJCJ5Xa6Fxk4=;
-        b=Si8lDZcvfa8Yf6QzgI0EN2dUriGqWTpyZy8VXJO7qy2bRRB3UZVvgN+ZqizpS0IXfJ
-         P6KB0q6eHjx38Y2DHHOC/Vnj3+upGqE28AmmjHNaT5HxWY1qZFtBj2TuBQGrwUBW2bw5
-         D8OPPlm8xNsed5t9m+tWBUBwTC0CQvYjBGtJx3/m1YDhM+20S/Y/XKKdjRD5DEoow79m
-         sTTB8Utb3OcZ8IHjVWIDd4VjwM17CTCnsGHOe2MB9DplJTSVOExnSf+jONYfG8n5V0um
-         BEueKVAKayYmwkUfaV/OHyfrCps9dWfxrc+7brgx01HkSZrW6DgAIkBbSSifsNll5Gz1
-         hVNQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725424046; x=1726028846;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:to:subject:user-agent:mime-version:date
-         :message-id:sender:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=VeECqBgljIaFzBqVZOaZS1qp1kp+xe6RJCJ5Xa6Fxk4=;
-        b=RppxpnpVBNVVelSvwXOnF9r52QPpZCLBVlLQOv2VwQWkX4U1N3zJwEZG/p/N0JRW4c
-         v1ywRCp8g70mWxbJsZ/G3HLvSReajRlBLqTUXpAjcQXGzywnFSDN1dzI8AZx2XXmY0Xf
-         AFm1KkB/P948EC0e1nIR67yYyz2xkd2vO/ReX8iBxEv3MpPToQvNModHTOfKGfmDNcq9
-         9LAuF+DRZVD8jjuONwaXrL9xgt43IIuXANJRrqKRE/2xG4MVlaw9KbbxUe8Boruf1R/P
-         d6ERxovMUo57I+K7J90CcoAhI0k78EtpJYL8QcbccxVa8E2HvpCykSj59pUN4UFTbzN5
-         YSug==
-X-Forwarded-Encrypted: i=1; AJvYcCV9RpWodyNe7SE1QAoadmt//RrYLbjq21Mjq7DJGpGeYSAWjXu+VELU2vF1zXpa9lBJBUqjeQ==@lists.linux.dev
-X-Gm-Message-State: AOJu0YxpojetFm13zp7xLGl2RUJS4A/KbgJ+l4KzAS4jxAgaYe2MMg1d
-	xYqvMkT4Frfy/Nc6iFrT3jrABTu5Pz74pEEkjDV0r+2G/bxvLsVJ
-X-Google-Smtp-Source: AGHT+IG2jdQF312Ixt7guXL5uHCtJ9KmhjBnwxSu1MjlGaBSMDPTepH+DUYUSGG6QaluU2eJQGEjnA==
-X-Received: by 2002:a17:903:32c8:b0:205:79b4:c5b1 with SMTP id d9443c01a7336-20579b4c7e1mr87665825ad.16.1725424045436;
-        Tue, 03 Sep 2024 21:27:25 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e321:62f0:329c:23ff:fee3:9d7c? ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-206ae912facsm5545075ad.45.2024.09.03.21.27.23
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 03 Sep 2024 21:27:24 -0700 (PDT)
-Sender: Guenter Roeck <groeck7@gmail.com>
-Message-ID: <b83651a0-5b24-4206-b860-cb54ffdf209b@roeck-us.net>
-Date: Tue, 3 Sep 2024 21:27:22 -0700
+	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="pKIctVY4";
+	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="E+eXvp9U"
+From: Anna-Maria Behnsen <anna-maria@linutronix.de>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
+	s=2020; t=1725455132;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=IcwSc34LvXMP/cT7noBpbT1jqfRVjScu2K4oFpyriwE=;
+	b=pKIctVY4axfpzaDAkuW89nfEerNMQNXGr4oRrZz38wPjBOmrxBuAnOBWaEizzBAwauAjPh
+	iSPCWacRZvzl6CCp1is+uBZAeRqXH7FmxMsCNUd2XW7fLBRd3R2v/gVjNOtuOAe97g20n4
+	iyKyv4M3SsAHlQyN0Bb5+/WPEPJl38gvPLOQnPCVAYjWpdHo54oO5T6wTZVXJJDlbqXkkE
+	3oyAKI4DEAwwq/8zn1lI0pDDGpx/h1p9ThiWQxIDIVUHt673XGvyw0iUaWqSDLv7yLyqpo
+	Anfa2HXMo+/DXNdDrHE8hi9N5LqhVKzPFFuFJBaC1IHamnKd3WZ2Kp5fjH9bRQ==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
+	s=2020e; t=1725455132;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=IcwSc34LvXMP/cT7noBpbT1jqfRVjScu2K4oFpyriwE=;
+	b=E+eXvp9UB9r1HGGHMLtT0w+geizfWK2j8vOahsM5RXh4xyoJXjN+XNIwwk0C+aPRWMYALP
+	cm7NexPhzPCUw2DQ==
+Subject: [PATCH 00/15] timers: Cleanup delay/sleep related mess
+Date: Wed, 04 Sep 2024 15:04:50 +0200
+Message-Id: <20240904-devel-anna-maria-b4-timers-flseep-v1-0-e98760256370@linutronix.de>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] mm/damon/tests/vaddr-kunit: don't use mas_lock for
- MM_MT_FLAGS-initialized maple tree
-To: "Liam R. Howlett" <Liam.Howlett@oracle.com>, SeongJae Park
- <sj@kernel.org>, Andrew Morton <akpm@linux-foundation.org>,
- "Matthew Wilcox (Oracle)" <willy@infradead.org>,
- David Hildenbrand <david@redhat.com>,
- Brendan Higgins <brendanhiggins@google.com>, David Gow
- <davidgow@google.com>, damon@lists.linux.dev, linux-mm@kvack.org,
- kunit-dev@googlegroups.com, linux-kselftest@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20240904005815.1388-1-sj@kernel.org>
- <20240904011840.973-1-sj@kernel.org>
- <whdjeq6qpccj6ms4wgiyjcnizht4nl5qbt7rbaeqfwzt67smxt@vvduwpqcuizl>
- <e83dedb2-89a3-4327-9a2f-610d3199f0e1@roeck-us.net>
- <54zu64vxrhdxr4wtmwbewga44shu4f7lz4ffx2hxhag46b56hn@qgrgfrb6mhbv>
-Content-Language: en-US
-From: Guenter Roeck <linux@roeck-us.net>
-Autocrypt: addr=linux@roeck-us.net; keydata=
- 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
- mDW4+i+XlNFUPUYMrIKi9joBhu18ssf5i5Q=
-In-Reply-To: <54zu64vxrhdxr4wtmwbewga44shu4f7lz4ffx2hxhag46b56hn@qgrgfrb6mhbv>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAPJa2GYC/x3NQQqDMBBG4avIrDsQ07QkvUrpYtTfdkBTmYgUx
+ Ls3uPw27+1UYIpCj2Ynw6ZFv7mivTTUfyS/wTpUk3c+uOQCD9gwseQsPIupcBd41RlWeJwKsHC
+ 8xltqfZfuKVLtLIZRf+fj+TqOPzF6qSBzAAAA
+To: Frederic Weisbecker <frederic@kernel.org>, 
+ Thomas Gleixner <tglx@linutronix.de>, Jonathan Corbet <corbet@lwn.net>
+Cc: linux-kernel@vger.kernel.org, Len Brown <len.brown@intel.com>, 
+ "Rafael J. Wysocki" <rafael@kernel.org>, 
+ Anna-Maria Behnsen <anna-maria@linutronix.de>, 
+ Peter Zijlstra <peterz@infradead.org>, SeongJae Park <sj@kernel.org>, 
+ Andrew Morton <akpm@linux-foundation.org>, damon@lists.linux.dev, 
+ linux-mm@kvack.org, Arnd Bergmann <arnd@arndb.de>, 
+ linux-arch@vger.kernel.org, Heiner Kallweit <hkallweit1@gmail.com>, 
+ "David S. Miller" <davem@davemloft.net>, Andy Whitcroft <apw@canonical.com>, 
+ Joe Perches <joe@perches.com>, Dwaipayan Ray <dwaipayanray1@gmail.com>, 
+ Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
+ Andrew Lunn <andrew@lunn.ch>, Jaroslav Kysela <perex@perex.cz>, 
+ Takashi Iwai <tiwai@suse.com>, netdev@vger.kernel.org, 
+ linux-sound@vger.kernel.org, Michael Ellerman <mpe@ellerman.id.au>, 
+ Nathan Lynch <nathanl@linux.ibm.com>, linuxppc-dev@lists.ozlabs.org, 
+ Mauro Carvalho Chehab <mchehab@kernel.org>, linux-media@vger.kernel.org
 
-On 9/3/24 20:36, Liam R. Howlett wrote:
-> * Guenter Roeck <linux@roeck-us.net> [240903 22:38]:
->> On 9/3/24 19:31, Liam R. Howlett wrote:
->>> * SeongJae Park <sj@kernel.org> [240903 21:18]:
->>>> On Tue,  3 Sep 2024 17:58:15 -0700 SeongJae Park <sj@kernel.org> wrote:
->>>>
->>>>> On Tue, 3 Sep 2024 20:48:53 -0400 "Liam R. Howlett" <Liam.Howlett@oracle.com> wrote:
->>>>>
->>>>>> * SeongJae Park <sj@kernel.org> [240903 20:45]:
->>>>>>> damon_test_three_regions_in_vmas() initializes a maple tree with
->>>>>>> MM_MT_FLAGS.  The flags contains MT_FLAGS_LOCK_EXTERN, which means
->>>>>>> mt_lock of the maple tree will not be used.  And therefore the maple
->>>>>>> tree initialization code skips initialization of the mt_lock.  However,
->>>>>>> __link_vmas(), which adds vmas for test to the maple tree, uses the
->>>>>>> mt_lock.  In other words, the uninitialized spinlock is used.  The
->>>>>>> problem becomes celar when spinlock debugging is turned on, since it
->>>>>>> reports spinlock bad magic bug.  Fix the issue by not using the mt_lock
->>>>>>> as promised.
->>>>>>
->>>>>> You can't do this, lockdep will tell you this is wrong.
->>>>>
->>>>> Hmm, but lockdep was silence on my setup?
->>>>>
->>>>>> We need a lock and to use the lock for writes.
->>>>>
->>>>> This code is executed by a single-thread test code.  Do we still need the lock?
->>>>>
->>>>>>
->>>>>> I'd suggest using different flags so the spinlock is used.
->>>>>
->>>>> The reporter mentioned simply dropping MT_FLAGS_LOCK_EXTERN from the flags
->>>>> causes suspicious RCU usage message.  May I ask if you have a suggestion of
->>>>> better flags?
->>>
->>> That would be the lockdep complaining, so that's good.
->>>
->>>>
->>>> I was actually thinking replacing the mt_init_flags() with mt_init(), which
->>>> same to mt_init_flags() with zero flag, like below.
->>>
->>> Yes.  This will use the spinlock which should fix your issue, but it
->>> will use a different style of maple tree.
->>>
->>> Perhaps use MT_FLAGS_ALLOC_RANGE to use the same type of maple tree, if
->>> you ever add threading you will want the rcu flag as well
->>> (MT_FLAGS_USE_RCU).
->>>
->>> I would recommend those two and just use the spinlock.
->>>
->>
->> I tried that (MT_FLAGS_ALLOC_RANGE | MT_FLAGS_USE_RCU). it also triggers
->> the suspicious RCU usage message.
->>
-> 
-> I am running ./tools/testing/kunit/kunit.py run '*damon*' --arch x86_64 --raw
-> with:
-> CONFIG_LOCKDEP=y
-> CONFIG_DEBUG_SPINLOCK=y
-> 
-> and I don't have any issue with locking in the existing code.  How do I
-> recreate this issue?
-> 
+Hi,
 
-I tested again, and I still see
+a question about which sleeping function should be used in acpi_os_sleep()
+started a discussion and examination about the existing documentation and
+implementation of functions which insert a sleep/delay.
 
+The result of the discussion was, that the documentation is outdated and
+the implemented fsleep() reflects the outdated documentation but doesn't
+help to reflect reality which in turns leads to the queue which covers the
+following things:
 
-[    6.233483] ok 4 damon
-[    6.234190]     KTAP version 1
-[    6.234263]     # Subtest: damon-operations
-[    6.234335]     # module: vaddr
-[    6.234384]     1..6
-[    6.235726]
-[    6.235931] =============================
-[    6.236018] WARNING: suspicious RCU usage
-[    6.236280] 6.11.0-rc6-00029-gda66250b210f-dirty #1 Tainted: G                 N
-[    6.236398] -----------------------------
-[    6.236474] lib/maple_tree.c:832 suspicious rcu_dereference_check() usage!
-[    6.236579]
-[    6.236579] other info that might help us debug this:
-[    6.236579]
-[    6.236738]
-[    6.236738] rcu_scheduler_active = 2, debug_locks = 1
-[    6.237039] no locks held by kunit_try_catch/208.
-[    6.237166]
-[    6.237166] stack backtrace:
-[    6.237385] CPU: 0 UID: 0 PID: 208 Comm: kunit_try_catch Tainted: G                 N 6.11.0-rc6-00029-gda66250b210f-dirty #1
-[    6.237629] Tainted: [N]=TEST
-[    6.237714] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.16.3-0-ga6ed6b701f0a-prebuilt.qemu.org 04/01/2014
-[    6.238065] Call Trace:
-[    6.238233]  <TASK>
-[    6.238547]  dump_stack_lvl+0x9e/0xe0
-[    6.239473]  lockdep_rcu_suspicious+0x145/0x1b0
-[    6.239621]  mas_walk+0x19f/0x1d0
-[    6.239765]  mas_find+0xb5/0x150
-[    6.239873]  __damon_va_three_regions+0x7e/0x130
-[    6.240039]  damon_test_three_regions_in_vmas+0x1ea/0x480
-[    6.240551]  ? __pfx_kunit_generic_run_threadfn_adapter+0x10/0x10
-[    6.240712]  kunit_try_run_case+0x93/0x190
-[    6.240850]  ? __pfx_kunit_generic_run_threadfn_adapter+0x10/0x10
-[    6.240990]  kunit_generic_run_threadfn_adapter+0x1c/0x40
-[    6.241124]  kthread+0xdd/0x110
-[    6.241256]  ? __pfx_kthread+0x10/0x10
-[    6.241368]  ret_from_fork+0x2f/0x50
-[    6.241468]  ? __pfx_kthread+0x10/0x10
-[    6.241573]  ret_from_fork_asm+0x1a/0x30
-[    6.241765]  </TASK>
-[    6.242180]
-[    6.242270] =============================
-[    6.242375] WARNING: suspicious RCU usage
-[    6.242478] 6.11.0-rc6-00029-gda66250b210f-dirty #1 Tainted: G                 N
-[    6.242634] -----------------------------
-[    6.242734] lib/maple_tree.c:788 suspicious rcu_dereference_check() usage!
-[    6.242955]
-[    6.242955] other info that might help us debug this:
-[    6.242955]
-[    6.243098]
-[    6.243098] rcu_scheduler_active = 2, debug_locks = 1
-[    6.243215] no locks held by kunit_try_catch/208.
-[    6.243331]
-[    6.243331] stack backtrace:
-[    6.243420] CPU: 0 UID: 0 PID: 208 Comm: kunit_try_catch Tainted: G                 N 6.11.0-rc6-00029-gda66250b210f-dirty #1
-[    6.243599] Tainted: [N]=TEST
-[    6.243665] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.16.3-0-ga6ed6b701f0a-prebuilt.qemu.org 04/01/2014
-[    6.243844] Call Trace:
-[    6.243907]  <TASK>
-[    6.243961]  dump_stack_lvl+0x9e/0xe0
-[    6.244032]  lockdep_rcu_suspicious+0x145/0x1b0
-[    6.244121]  mtree_range_walk+0x2b9/0x350
-[    6.244211]  mas_walk+0x107/0x1d0
-[    6.244278]  mas_find+0xb5/0x150
-[    6.244341]  __damon_va_three_regions+0x7e/0x130
-[    6.244445]  damon_test_three_regions_in_vmas+0x1ea/0x480
-[    6.244770]  ? __pfx_kunit_generic_run_threadfn_adapter+0x10/0x10
-[    6.244865]  kunit_try_run_case+0x93/0x190
-[    6.244952]  ? __pfx_kunit_generic_run_threadfn_adapter+0x10/0x10
-[    6.245044]  kunit_generic_run_threadfn_adapter+0x1c/0x40
-[    6.245130]  kthread+0xdd/0x110
-[    6.245191]  ? __pfx_kthread+0x10/0x10
-[    6.245262]  ret_from_fork+0x2f/0x50
-[    6.245326]  ? __pfx_kthread+0x10/0x10
-[    6.245394]  ret_from_fork_asm+0x1a/0x30
-[    6.245497]  </TASK>
-[    6.246605]     # damon_test_three_regions_in_vmas: pass:1 fail:0 skip:0 total:1
-[    6.246668]     ok 1 damon_test_three_regions_in_vmas
+- Minor changes (naming and typo fixes)
 
-This is with
+- Split out all timeout and sleep related functions from hrtimer.c and timer.c
+  into a separate file
 
-diff --git a/mm/damon/vaddr-test.h b/mm/damon/vaddr-test.h
-index 83626483f82b..a339d117150f 100644
---- a/mm/damon/vaddr-test.h
-+++ b/mm/damon/vaddr-test.h
-@@ -77,7 +77,7 @@ static void damon_test_three_regions_in_vmas(struct kunit *test)
-                 (struct vm_area_struct) {.vm_start = 307, .vm_end = 330},
-         };
+- Update function descriptions of sleep related functions
 
--       mt_init_flags(&mm.mm_mt, MM_MT_FLAGS);
-+       mt_init_flags(&mm.mm_mt, MT_FLAGS_ALLOC_RANGE | MT_FLAGS_USE_RCU);
-         if (__link_vmas(&mm.mm_mt, vmas, ARRAY_SIZE(vmas)))
-                 kunit_skip(test, "Failed to create VMA tree");
+- Change fsleep() to reflect reality
 
-I'll put it all together and make it available, but that will have to wait until
-tomorrow.
+- Rework all comments or users which obviously rely on the outdated
+  documentation as they reference "Documentation/timers/timers-howto.rst"
+
+- Last but not least (as there are no more references): Update the outdated
+  documentation and move it into a file with a self explaining file name
+
+The queue is available here and applies on top of tip/timers/core:
+
+  git://git.kernel.org/pub/scm/linux/kernel/git/anna-maria/linux-devel.git timers/misc
+
+Cc: linux-kernel@vger.kernel.org
+Cc: Len Brown <len.brown@intel.com>
+Cc: Rafael J. Wysocki <rafael@kernel.org>
+To: Frederic Weisbecker <frederic@kernel.org>
+To: Thomas Gleixner <tglx@linutronix.de>
+To: Jonathan Corbet <corbet@lwn.net>
+Signed-off-by: Anna-Maria Behnsen <anna-maria@linutronix.de>
 
 Thanks,
-Guenter
 
+Anna-Maria
+
+---
+Anna-Maria Behnsen (15):
+      timers: Rename next_expiry_recalc() to be unique
+      cpu: Use already existing usleep_range()
+      Comments: Fix wrong singular form of jiffies
+      timers: Move *sleep*() and timeout functions into a separate file
+      timers: Rename sleep_idle_range() to sleep_range_idle()
+      timers: Update function descriptions of sleep/delay related functions
+      timers: Adjust flseep() to reflect reality
+      mm/damon/core: Use generic upper bound recommondation for usleep_range()
+      timers: Add a warning to usleep_range_state() for wrong order of arguments
+      checkpatch: Remove broken sleep/delay related checks
+      regulator: core: Use fsleep() to get best sleep mechanism
+      iopoll/regmap/phy/snd: Fix comment referencing outdated timer documentation
+      powerpc/rtas: Use fsleep() to minimize additional sleep duration
+      media: anysee: Fix link to outdated sleep function documentation
+      timers/Documentation: Cleanup delay/sleep documentation
+
+ Documentation/admin-guide/media/vivid.rst          |   2 +-
+ Documentation/dev-tools/checkpatch.rst             |   6 -
+ Documentation/timers/delay_sleep_functions.rst     | 122 +++++++
+ Documentation/timers/index.rst                     |   2 +-
+ Documentation/timers/timers-howto.rst              | 115 -------
+ .../sp_SP/scheduler/sched-design-CFS.rst           |   2 +-
+ MAINTAINERS                                        |   2 +
+ arch/arm/mach-versatile/spc.c                      |   2 +-
+ arch/m68k/q40/q40ints.c                            |   2 +-
+ arch/powerpc/kernel/rtas.c                         |  21 +-
+ arch/x86/kernel/cpu/mce/dev-mcelog.c               |   2 +-
+ drivers/char/ipmi/ipmi_ssif.c                      |   2 +-
+ drivers/dma-buf/st-dma-fence.c                     |   2 +-
+ drivers/gpu/drm/i915/gem/i915_gem_wait.c           |   2 +-
+ drivers/gpu/drm/i915/gt/selftest_execlists.c       |   4 +-
+ drivers/gpu/drm/i915/i915_utils.c                  |   2 +-
+ drivers/gpu/drm/v3d/v3d_bo.c                       |   2 +-
+ drivers/isdn/mISDN/dsp_cmx.c                       |   2 +-
+ drivers/media/usb/dvb-usb-v2/anysee.c              |   6 +-
+ drivers/net/ethernet/marvell/mvmdio.c              |   2 +-
+ drivers/regulator/core.c                           |  33 +-
+ fs/xfs/xfs_buf.h                                   |   2 +-
+ include/asm-generic/delay.h                        |  46 ++-
+ include/linux/delay.h                              |  79 ++++-
+ include/linux/iopoll.h                             |  24 +-
+ include/linux/jiffies.h                            |   2 +-
+ include/linux/phy.h                                |   7 +-
+ include/linux/regmap.h                             |  18 +-
+ include/linux/timekeeper_internal.h                |   2 +-
+ kernel/cpu.c                                       |   2 +-
+ kernel/time/Makefile                               |   2 +-
+ kernel/time/alarmtimer.c                           |   2 +-
+ kernel/time/clockevents.c                          |   2 +-
+ kernel/time/hrtimer.c                              | 122 +------
+ kernel/time/posix-timers.c                         |   4 +-
+ kernel/time/sleep_timeout.c                        | 363 +++++++++++++++++++++
+ kernel/time/timer.c                                | 210 +-----------
+ lib/Kconfig.debug                                  |   2 +-
+ mm/damon/core.c                                    |   5 +-
+ net/batman-adv/types.h                             |   2 +-
+ scripts/checkpatch.pl                              |  38 ---
+ sound/soc/sof/ops.h                                |   6 +-
+ 42 files changed, 668 insertions(+), 607 deletions(-)
 
