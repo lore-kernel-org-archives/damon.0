@@ -1,261 +1,128 @@
-Received: from mail-pg1-f170.google.com (mail-pg1-f170.google.com [209.85.215.170])
+Received: from mail-pg1-f180.google.com (mail-pg1-f180.google.com [209.85.215.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E01F13DDA7
-	for <damon@lists.linux.dev>; Wed,  4 Sep 2024 19:56:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 728011E764D
+	for <damon@lists.linux.dev>; Wed,  4 Sep 2024 19:58:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725479798; cv=none; b=fiMWguRGiDVC3ZrzZTba4qMiDXcrNs8fHKE7mv5SkyJDA9WypyRMujwCspC9m8tT69DftXEfvRk9YA4dfGkrhOxs615n8MhRVyeBro5KhTGyAmg5/cs+kKyAw1y1S4f1xZo0FE++Z3oRZ0WmUaKdTXw/5MR/bE/iLOTeWfJ2ClM=
+	t=1725479899; cv=none; b=HyCgGIeDtGvfqbfmMHBrtQfZcOPjcbgmlNoPIU9aeGoAMw1EX5rulmM12GaI1RwEsZU9KonlyFpyOeV1fKTYYzpdLpuFi+VbkijKQ6lQM1gtKksAstFPq7r5st+4yZCcLPyjYqq3/RwNz6RlU2Sy98NLxFs4egbQq0Ieg2fy4UY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725479798; c=relaxed/simple;
-	bh=CmqK9+vTkOMpYW7nHEUEo+VDtwDBAFd1ta4JGBxPy8o=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=qzRU5CjwGoNe2uuVFFQr7f+4JDMgkBH0+bhYjpWg/Hgj8OeR5zuW2wVKbfwiq+oCUfcf+PFPfoCyHrWQVs5iUBpjeV0eRy/fSHTBPYNgzZe36g+OW3RacmtF3uLKovp3ssKhIV0xxJT63HbftIcSaJCwgSwnIQ2WhdRoNMwUHV8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=j3N7WgbB; arc=none smtp.client-ip=209.85.215.170
+	s=arc-20240116; t=1725479899; c=relaxed/simple;
+	bh=zavzUwXlxjfb5MjitZxKh7537njoiHYD+hBJaxyi3B8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=tChPEIWAKW95PPVQ+Ee1u176AWFbvlRygTT6ry2PEkw3vsEEgD2qd7bHEyqpxiPR8lwWxiLMUVZDoblze/GrJ8CfR31zGz9TmXWyu5sfxsEkW47gt8vC5KnRJpgtsVlRfyliRKumDxPZc7mIiPabSwNzVYYnJzM1dRcsBa3yAUc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PMYcn28Q; arc=none smtp.client-ip=209.85.215.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="j3N7WgbB"
-Received: by mail-pg1-f170.google.com with SMTP id 41be03b00d2f7-656d8b346d2so18900a12.2
-        for <damon@lists.linux.dev>; Wed, 04 Sep 2024 12:56:36 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PMYcn28Q"
+Received: by mail-pg1-f180.google.com with SMTP id 41be03b00d2f7-7cd9cfe4748so29350a12.2
+        for <damon@lists.linux.dev>; Wed, 04 Sep 2024 12:58:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1725479796; x=1726084596; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:to:subject:user-agent:mime-version:date
-         :message-id:sender:from:to:cc:subject:date:message-id:reply-to;
-        bh=SXKm5OoeNAj97zv6xdsq0+8Sntxl3zYdIrsZpJIIln4=;
-        b=j3N7WgbB2BvQ/AJLefgD/7Iwx7vjkso1tptLKevcTpP1VEcwNBCHJcEXBnYjm9qwAo
-         TpHKaQ00kyeOM5DrnF5yliE1xa/1wVfBw14tE49Fesv/KQjcdxOmti47kW+57fF0F5TE
-         DuEKHPj+mwTF1rPBveg6Zko7Euqw9ZAeU46g1GR76D6n4bfUjC2IlyDrKyoBpGFBJuHT
-         bzYNgelRsIXr9R7ts5bUOiXRTxCo1N7+g5HpQxfTgMUrZF7BbFBg6m7hrEceaawZ06bP
-         bzrRFvTd8L6l5VcnCeodD3KFY59Rm3Ry6JoRFLNSm0tOrycC2xAABEEUOG6aGFesu0FT
-         78SA==
+        d=gmail.com; s=20230601; t=1725479893; x=1726084693; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=cPICdxGtZMm7EVbsBiDOXLzIL+MnaADtVMssqy1cp2c=;
+        b=PMYcn28QvAGmvnjR1I7nNcITBK+xjN4Ztna3AlDMbxAX8OASknwdHMD5GFqWkIpoTN
+         QtUvLjgWuSovTpjLrk7OAE4CrjCA53JfcTndx1LWzLzMuxLensYE0crMcDc33/C6MiBW
+         DN3ccs3+TzEuO5gpzpMxnu4hcZfhABOGHlqTjtwKrfmfP4KelJOkTOUm7O786WN/dSzB
+         Pbh4sydWesNbIJPY7zbIwRDctaPC2WN6qFCPyz2B6CB71eiaH7YWBfR7Vvao9QS71bRq
+         gOB33mK/xom9tKKL2X38izGhL3A+4npzs8FxEL98XU/jAErKRV3J0Sa1qqpAi0CVSoOO
+         i4WQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725479796; x=1726084596;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:to:subject:user-agent:mime-version:date
-         :message-id:sender:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=SXKm5OoeNAj97zv6xdsq0+8Sntxl3zYdIrsZpJIIln4=;
-        b=h8seIvfASDj16wwT4tFp3+jLxBN3X3BL81Jdi6etXIuk9SXriMymOIV9fB98inM08o
-         aMvmtEj52R9jHSxjemM2eulg2AEsr2K0sYjapsiYnLjVkhks9KHHDO8QZf4kNwzl1FqC
-         2l1dGKUwj3FKDovuNVjClNVO9D5HxkbCYrcAQXnzT/dSggONKaf2j46qzAEQvS3B4BVE
-         PILS8WfTESUzRiAAEpawsJ/zSgyA/zbVuhgC1T9RvGQ4Tj9AKCGqy9ZS3rb2YXaPLGoP
-         /c2hFEpzddGJDRk7nspcH6WRiigg1Rk4oI9Q63Fe2+W8rZnewjxI1jVtlHaVLFbisj2F
-         MCLA==
-X-Forwarded-Encrypted: i=1; AJvYcCU0f4cwGdT9Dg4PlAHIweNR4tzGrG7vmLQAAC6me/5jzd2+WOB3Usbm382Mg0C4JFEdBge3TQ==@lists.linux.dev
-X-Gm-Message-State: AOJu0Yxu57zX28kp9LiSmF//BaLKf0wN/vrarlVmXyRgLW5D1AgBYdBv
-	kfCp5/90meCssZZCIpyjOlij/IT9gY/ocWumPaDC2MPc/Ibz7SE6
-X-Google-Smtp-Source: AGHT+IGINGeaim4TRvhIQEM6ykwPKxm1evYG+kcEU10qSCo5XXM0SNJkXOvufjI9dUiZdkGv7hyW3A==
-X-Received: by 2002:a17:90a:1109:b0:2cf:eaec:d74c with SMTP id 98e67ed59e1d1-2d89728e55amr13615483a91.16.1725479795574;
-        Wed, 04 Sep 2024 12:56:35 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e321:62f0:329c:23ff:fee3:9d7c? ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2da788d1db1sm3145888a91.44.2024.09.04.12.56.34
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 04 Sep 2024 12:56:34 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1725479893; x=1726084693;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=cPICdxGtZMm7EVbsBiDOXLzIL+MnaADtVMssqy1cp2c=;
+        b=HC3uTJfCDmtfRbZnpR9ZEmj3g+E5sZqVWbt99RxZw4IOJ9x4V81haeS91mBgNjRXR2
+         c5lnPLE9X7y7U8Zi9NhJlQiw5uShGj7u9zzm8tTsDMQhBqOYl1dOCDRPdt7OsfeWbmnF
+         rk5qpQ1BcpyslHZJL8degPo7hWMr8maw5OcVvKiLQtixgWvF/5DVz24MhCPSMTE5rmGq
+         XR6sotS21KnbhtVopEPaET2tra5C/D9Z5GOLIzWB5CtDe2/O6tveGd4XKZTiBo6C6pUk
+         vkRm1bMMiTN7JniIJFUCfWeAZdBT54Jj1w3jPOrtC5d73pHt5W5mt0qcm70J5MXB4j6B
+         WYkA==
+X-Forwarded-Encrypted: i=1; AJvYcCUl+jRtWaPP9Ya4VUsXns2KHdOOuU02w7qSSuypS+3w6kjdi6SUiJKbroAG6xxpmhZC7T9JbQ==@lists.linux.dev
+X-Gm-Message-State: AOJu0YzorZA+AKNmWlf9BiXvLMV9y5c/MoX42g5GRx416cQgLXICJj04
+	RnkRDQa2zdSHV/YhG4ZRyzO51P97eDPzqQvhxhoevdJ9MUsW92wv
+X-Google-Smtp-Source: AGHT+IHiuHFL/47pKWStSEZDU1pmVIBJvuKjwmas3mljqR/n/RvBLMuLXDlS66q4XOAagB8218fbcQ==
+X-Received: by 2002:a17:90a:70cf:b0:2d8:f12f:6bed with SMTP id 98e67ed59e1d1-2da5592440bmr7912187a91.3.1725479892758;
+        Wed, 04 Sep 2024 12:58:12 -0700 (PDT)
+Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2da53740084sm4907126a91.32.2024.09.04.12.58.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 04 Sep 2024 12:58:12 -0700 (PDT)
 Sender: Guenter Roeck <groeck7@gmail.com>
-Message-ID: <274f253a-e44e-431b-9dd3-a499843be96f@roeck-us.net>
-Date: Wed, 4 Sep 2024 12:56:33 -0700
+Date: Wed, 4 Sep 2024 12:58:11 -0700
+From: Guenter Roeck <linux@roeck-us.net>
+To: SeongJae Park <sj@kernel.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>,
+	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
+	David Hildenbrand <david@redhat.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Brendan Higgins <brendanhiggins@google.com>,
+	David Gow <davidgow@google.com>, damon@lists.linux.dev,
+	linux-mm@kvack.org, kunit-dev@googlegroups.com,
+	linux-kselftest@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2] mm/damon/tests/vaddr-kunit: init maple tree without
+ MT_FLAGS_LOCK_EXTERN
+Message-ID: <b253cae1-8363-4f26-9698-97e76b4b17dd@roeck-us.net>
+References: <20240904172931.1284-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] mm/damon/tests/vaddr-kunit: don't use mas_lock for
- MM_MT_FLAGS-initialized maple tree
-To: "Liam R. Howlett" <Liam.Howlett@oracle.com>, SeongJae Park
- <sj@kernel.org>, Andrew Morton <akpm@linux-foundation.org>,
- "Matthew Wilcox (Oracle)" <willy@infradead.org>,
- David Hildenbrand <david@redhat.com>,
- Brendan Higgins <brendanhiggins@google.com>, David Gow
- <davidgow@google.com>, damon@lists.linux.dev, linux-mm@kvack.org,
- kunit-dev@googlegroups.com, linux-kselftest@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20240904005815.1388-1-sj@kernel.org>
- <20240904011840.973-1-sj@kernel.org>
- <whdjeq6qpccj6ms4wgiyjcnizht4nl5qbt7rbaeqfwzt67smxt@vvduwpqcuizl>
- <e83dedb2-89a3-4327-9a2f-610d3199f0e1@roeck-us.net>
- <54zu64vxrhdxr4wtmwbewga44shu4f7lz4ffx2hxhag46b56hn@qgrgfrb6mhbv>
- <b83651a0-5b24-4206-b860-cb54ffdf209b@roeck-us.net>
- <gaouhgel2kmzkm7pofpkjkt5ya3a44rwsal74zsgzh76xzh4qo@ne6sqvzj5qor>
-Content-Language: en-US
-From: Guenter Roeck <linux@roeck-us.net>
-Autocrypt: addr=linux@roeck-us.net; keydata=
- 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
- mDW4+i+XlNFUPUYMrIKi9joBhu18ssf5i5Q=
-In-Reply-To: <gaouhgel2kmzkm7pofpkjkt5ya3a44rwsal74zsgzh76xzh4qo@ne6sqvzj5qor>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240904172931.1284-1-sj@kernel.org>
 
-On 9/4/24 12:26, Liam R. Howlett wrote:
-> * Guenter Roeck <linux@roeck-us.net> [240904 00:27]:
->> On 9/3/24 20:36, Liam R. Howlett wrote:
->>> * Guenter Roeck <linux@roeck-us.net> [240903 22:38]:
->>>> On 9/3/24 19:31, Liam R. Howlett wrote:
->>>>> * SeongJae Park <sj@kernel.org> [240903 21:18]:
->>>>>> On Tue,  3 Sep 2024 17:58:15 -0700 SeongJae Park <sj@kernel.org> wrote:
->>>>>>
->>>>>>> On Tue, 3 Sep 2024 20:48:53 -0400 "Liam R. Howlett" <Liam.Howlett@oracle.com> wrote:
->>>>>>>
->>>>>>>> * SeongJae Park <sj@kernel.org> [240903 20:45]:
->>>>>>>>> damon_test_three_regions_in_vmas() initializes a maple tree with
->>>>>>>>> MM_MT_FLAGS.  The flags contains MT_FLAGS_LOCK_EXTERN, which means
->>>>>>>>> mt_lock of the maple tree will not be used.  And therefore the maple
->>>>>>>>> tree initialization code skips initialization of the mt_lock.  However,
->>>>>>>>> __link_vmas(), which adds vmas for test to the maple tree, uses the
->>>>>>>>> mt_lock.  In other words, the uninitialized spinlock is used.  The
->>>>>>>>> problem becomes celar when spinlock debugging is turned on, since it
->>>>>>>>> reports spinlock bad magic bug.  Fix the issue by not using the mt_lock
->>>>>>>>> as promised.
->>>>>>>>
->>>>>>>> You can't do this, lockdep will tell you this is wrong.
->>>>>>>
->>>>>>> Hmm, but lockdep was silence on my setup?
->>>>>>>
->>>>>>>> We need a lock and to use the lock for writes.
->>>>>>>
->>>>>>> This code is executed by a single-thread test code.  Do we still need the lock?
->>>>>>>
->>>>>>>>
->>>>>>>> I'd suggest using different flags so the spinlock is used.
->>>>>>>
->>>>>>> The reporter mentioned simply dropping MT_FLAGS_LOCK_EXTERN from the flags
->>>>>>> causes suspicious RCU usage message.  May I ask if you have a suggestion of
->>>>>>> better flags?
->>>>>
->>>>> That would be the lockdep complaining, so that's good.
->>>>>
->>>>>>
->>>>>> I was actually thinking replacing the mt_init_flags() with mt_init(), which
->>>>>> same to mt_init_flags() with zero flag, like below.
->>>>>
->>>>> Yes.  This will use the spinlock which should fix your issue, but it
->>>>> will use a different style of maple tree.
->>>>>
->>>>> Perhaps use MT_FLAGS_ALLOC_RANGE to use the same type of maple tree, if
->>>>> you ever add threading you will want the rcu flag as well
->>>>> (MT_FLAGS_USE_RCU).
->>>>>
->>>>> I would recommend those two and just use the spinlock.
->>>>>
->>>>
->>>> I tried that (MT_FLAGS_ALLOC_RANGE | MT_FLAGS_USE_RCU). it also triggers
->>>> the suspicious RCU usage message.
->>>>
->>>
->>> I am running ./tools/testing/kunit/kunit.py run '*damon*' --arch x86_64 --raw
->>> with:
->>> CONFIG_LOCKDEP=y
->>> CONFIG_DEBUG_SPINLOCK=y
->>>
->>> and I don't have any issue with locking in the existing code.  How do I
->>> recreate this issue?
->>>
->>
->> I tested again, and I still see
->>
->>
->> [    6.233483] ok 4 damon
->> [    6.234190]     KTAP version 1
->> [    6.234263]     # Subtest: damon-operations
->> [    6.234335]     # module: vaddr
->> [    6.234384]     1..6
->> [    6.235726]
->> [    6.235931] =============================
->> [    6.236018] WARNING: suspicious RCU usage
->> [    6.236280] 6.11.0-rc6-00029-gda66250b210f-dirty #1 Tainted: G                 N
->> [    6.236398] -----------------------------
->> [    6.236474] lib/maple_tree.c:832 suspicious rcu_dereference_check() usage!
->> [    6.236579]
->> [    6.236579] other info that might help us debug this:
->> [    6.236579]
->> [    6.236738]
->> [    6.236738] rcu_scheduler_active = 2, debug_locks = 1
->> [    6.237039] no locks held by kunit_try_catch/208.
->> [    6.237166]
->> [    6.237166] stack backtrace:
->> [    6.237385] CPU: 0 UID: 0 PID: 208 Comm: kunit_try_catch Tainted: G                 N 6.11.0-rc6-00029-gda66250b210f-dirty #1
->> [    6.237629] Tainted: [N]=TEST
->> [    6.237714] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.16.3-0-ga6ed6b701f0a-prebuilt.qemu.org 04/01/2014
->> [    6.238065] Call Trace:
->> [    6.238233]  <TASK>
->> [    6.238547]  dump_stack_lvl+0x9e/0xe0
->> [    6.239473]  lockdep_rcu_suspicious+0x145/0x1b0
->> [    6.239621]  mas_walk+0x19f/0x1d0
->> [    6.239765]  mas_find+0xb5/0x150
->> [    6.239873]  __damon_va_three_regions+0x7e/0x130
+On Wed, Sep 04, 2024 at 10:29:31AM -0700, SeongJae Park wrote:
+> damon_test_three_regions_in_vmas() initializes a maple tree with
+> MM_MT_FLAGS.  The flags contains MT_FLAGS_LOCK_EXTERN, which means
+> mt_lock of the maple tree will not be used.  And therefore the maple
+> tree initialization code skips initialization of the mt_lock.  However,
+> __link_vmas(), which adds vmas for test to the maple tree, uses the
+> mt_lock.  In other words, the uninitialized spinlock is used.  The
+> problem becomes clear when spinlock debugging is turned on, since it
+> reports spinlock bad magic bug.
 > 
-> This function isn't taking the rcu read lock while iterating the tree.
+> Fix the issue by excluding MT_FLAGS_LOCK_EXTERN from the maple tree
+> initialization flags.  Note that we don't use empty flags to make it
+> further similar to the usage of mm maple tree, and to be prepared for
+> possible future changes, as suggested by Liam.
 > 
-> Try this:
+> Reported-by: Guenter Roeck <linux@roeck-us.net>
+> Closes: https://lore.kernel.org/1453b2b2-6119-4082-ad9e-f3c5239bf87e@roeck-us.net
+> Fixes: d0cf3dd47f0d ("damon: convert __damon_va_three_regions to use the VMA iterator")
+> Suggested-by: Liam R. Howlett <Liam.Howlett@oracle.com>
+> Signed-off-by: SeongJae Park <sj@kernel.org>
+
+Tested-by: Guenter Roeck <linux@roeck-us.net>
+
+> ---
+> Changes from v1
+> (https://lore.kernel.org/20240904004534.1189-1-sj@kernel.org)
+> - Keep lock usage and update the initialization flags (Liam)
+> - Fix a typo: s/celar/clear/ (Guenter)
 > 
-> diff --git a/mm/damon/vaddr.c b/mm/damon/vaddr.c
-> index b0e8b361891d..08cfd22b5249 100644
-> --- a/mm/damon/vaddr.c
-> +++ b/mm/damon/vaddr.c
-> @@ -126,6 +126,7 @@ static int __damon_va_three_regions(struct mm_struct *mm,
->           * If this is too slow, it can be optimised to examine the maple
->           * tree gaps.
->           */
-> +       rcu_read_lock();
->          for_each_vma(vmi, vma) {
->                  unsigned long gap;
->   
-> @@ -146,6 +147,7 @@ static int __damon_va_three_regions(struct mm_struct *mm,
->   next:
->                  prev = vma;
->          }
-> +       rcu_read_unlock();
->   
->          if (!sz_range(&second_gap) || !sz_range(&first_gap))
->                  return -EINVAL;
+>  mm/damon/tests/vaddr-kunit.h | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-
-
-Yes, that fixes the problem for me.
-
-Thanks,
-Guenter
-
+> diff --git a/mm/damon/tests/vaddr-kunit.h b/mm/damon/tests/vaddr-kunit.h
+> index 83626483f82b..a339d117150f 100644
+> --- a/mm/damon/tests/vaddr-kunit.h
+> +++ b/mm/damon/tests/vaddr-kunit.h
+> @@ -77,7 +77,7 @@ static void damon_test_three_regions_in_vmas(struct kunit *test)
+>  		(struct vm_area_struct) {.vm_start = 307, .vm_end = 330},
+>  	};
+>  
+> -	mt_init_flags(&mm.mm_mt, MM_MT_FLAGS);
+> +	mt_init_flags(&mm.mm_mt, MT_FLAGS_ALLOC_RANGE | MT_FLAGS_USE_RCU);
+>  	if (__link_vmas(&mm.mm_mt, vmas, ARRAY_SIZE(vmas)))
+>  		kunit_skip(test, "Failed to create VMA tree");
+>  
+> -- 
+> 2.39.2
+> 
