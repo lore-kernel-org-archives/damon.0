@@ -1,44 +1,47 @@
 Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E364D1DB547
-	for <damon@lists.linux.dev>; Wed,  4 Sep 2024 13:05:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66F1A1DC053
+	for <damon@lists.linux.dev>; Wed,  4 Sep 2024 13:05:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725455135; cv=none; b=suiRo6uFmD+wba8Ipl6vqPURIv8Ltqb+Eo43mmkEbCq0CXXkODBAXrdOUhWIz8Vt38w7EVl/KYxWEM07jow7+3/wqgE+qJ7WkUHuJ1zs6sP2Q5GA+JjOsDW7IDTjttthGhG/ZHsl8bh2QAXli/L6UvWrq1sqE0Lkyumpe4cv9aw=
+	t=1725455137; cv=none; b=oGsEIkmrkaHrNX4RghdndJjTSthFCenwO9W/uEMA0iCp3KNg97tjd+cnpxfW/9pjq8GzD5lH+pVN2WAUHRby0eTQjN3krHdJSf0uHrry2kA2whHLPRJY2TtWE2Q5Q+v7Bzq5LpD39MW0+nsoqSiyPwcTKEgDhZ5GZsf7/5OF714=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725455135; c=relaxed/simple;
-	bh=i8qpq2Ga+wz0kEB5v7nBbytJkFEqZR2QrJQmK0J2+Aw=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=fxaGGdp64iMGuTVNLICnyvqFyxKQbRH5+dBx6LtcmQegLhwW+PwnhwjSWaBCmtYBUT5jmToUY6+BmeWnKJuR6KsfqPsbFNOsoPK5h+mAEviDpe7b0DXCIMEY/ex5GdHJbeJUHdA8y4y7e+Urr1ZlSy8UQTC1LEO5vcmOArd3zlE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=pKIctVY4; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=E+eXvp9U; arc=none smtp.client-ip=193.142.43.55
+	s=arc-20240116; t=1725455137; c=relaxed/simple;
+	bh=xONkljkqAACvrhcLR/IpmJ9rZkgqlFfHZySmfYcCH4s=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=ru44eTf/vxTATMlJEOVL0Yp3SlX6w2lKX4bSLuwrNQ01NprFg5PX1R9v0JeLU1cfQQzZ3S4hRY+rXtQiyrCKka7+qE3DP118rV+Q/E8f6UmU3nm4RgZXE/qQR2tqcwD+llYv/thFYDi+0GNIDdMuNMiDe71sDTQgXo2gHT7Blbg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=K1fHHPDD; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=VmFDXr0l; arc=none smtp.client-ip=193.142.43.55
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="pKIctVY4";
-	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="E+eXvp9U"
+	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="K1fHHPDD";
+	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="VmFDXr0l"
 From: Anna-Maria Behnsen <anna-maria@linutronix.de>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1725455132;
+	s=2020; t=1725455134;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=IcwSc34LvXMP/cT7noBpbT1jqfRVjScu2K4oFpyriwE=;
-	b=pKIctVY4axfpzaDAkuW89nfEerNMQNXGr4oRrZz38wPjBOmrxBuAnOBWaEizzBAwauAjPh
-	iSPCWacRZvzl6CCp1is+uBZAeRqXH7FmxMsCNUd2XW7fLBRd3R2v/gVjNOtuOAe97g20n4
-	iyKyv4M3SsAHlQyN0Bb5+/WPEPJl38gvPLOQnPCVAYjWpdHo54oO5T6wTZVXJJDlbqXkkE
-	3oyAKI4DEAwwq/8zn1lI0pDDGpx/h1p9ThiWQxIDIVUHt673XGvyw0iUaWqSDLv7yLyqpo
-	Anfa2HXMo+/DXNdDrHE8hi9N5LqhVKzPFFuFJBaC1IHamnKd3WZ2Kp5fjH9bRQ==
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=R6JzfinROxb0cF6NxXq0JcmrJuw7pVBPvlFaejLfwHs=;
+	b=K1fHHPDD27YunAkdxRxKlxq7v0mgwE/YXfmGTccsLisSDbEUJP5ilOZ/AOSa8xlcm5JLZE
+	ZLWQ2TfNLuirTGa9IWwYtePyYKOwoh++7/zmmWgD9ivb5c6RTvf0wOlpX/GKY13Kyl0seU
+	BImyKU9xR37tQ82WpC1Zow2CrcJo9KJL+z4IGxHDGV8G2w/NdFm3/qMJ1UGSvJR679MCTo
+	7uGRz3apBsEUNJlIXVAWnn5SbZqusjwabJCNmzHHcguNXR0AJ0mYyMzbZujKiKu1gne04r
+	z8YFjvYcwCf2Qn2DLHU6hIqDJis0IaNf+iV5b2HHROWjLZmmKN+TEFlDvjQeLg==
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1725455132;
+	s=2020e; t=1725455134;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=IcwSc34LvXMP/cT7noBpbT1jqfRVjScu2K4oFpyriwE=;
-	b=E+eXvp9UB9r1HGGHMLtT0w+geizfWK2j8vOahsM5RXh4xyoJXjN+XNIwwk0C+aPRWMYALP
-	cm7NexPhzPCUw2DQ==
-Subject: [PATCH 00/15] timers: Cleanup delay/sleep related mess
-Date: Wed, 04 Sep 2024 15:04:50 +0200
-Message-Id: <20240904-devel-anna-maria-b4-timers-flseep-v1-0-e98760256370@linutronix.de>
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=R6JzfinROxb0cF6NxXq0JcmrJuw7pVBPvlFaejLfwHs=;
+	b=VmFDXr0lbLciL542cJmYJCDZ6Oumihap+7q+8O9BQBdroT1ZJJulw0rGnYOb5gGnS5egov
+	SD8iMVd4PfPjvBBQ==
+Date: Wed, 04 Sep 2024 15:04:55 +0200
+Subject: [PATCH 05/15] timers: Rename sleep_idle_range() to
+ sleep_range_idle()
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -47,128 +50,60 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAPJa2GYC/x3NQQqDMBBG4avIrDsQ07QkvUrpYtTfdkBTmYgUx
- Ls3uPw27+1UYIpCj2Ynw6ZFv7mivTTUfyS/wTpUk3c+uOQCD9gwseQsPIupcBd41RlWeJwKsHC
- 8xltqfZfuKVLtLIZRf+fj+TqOPzF6qSBzAAAA
+Message-Id: <20240904-devel-anna-maria-b4-timers-flseep-v1-5-e98760256370@linutronix.de>
+References: <20240904-devel-anna-maria-b4-timers-flseep-v1-0-e98760256370@linutronix.de>
+In-Reply-To: <20240904-devel-anna-maria-b4-timers-flseep-v1-0-e98760256370@linutronix.de>
 To: Frederic Weisbecker <frederic@kernel.org>, 
  Thomas Gleixner <tglx@linutronix.de>, Jonathan Corbet <corbet@lwn.net>
 Cc: linux-kernel@vger.kernel.org, Len Brown <len.brown@intel.com>, 
  "Rafael J. Wysocki" <rafael@kernel.org>, 
  Anna-Maria Behnsen <anna-maria@linutronix.de>, 
- Peter Zijlstra <peterz@infradead.org>, SeongJae Park <sj@kernel.org>, 
- Andrew Morton <akpm@linux-foundation.org>, damon@lists.linux.dev, 
- linux-mm@kvack.org, Arnd Bergmann <arnd@arndb.de>, 
- linux-arch@vger.kernel.org, Heiner Kallweit <hkallweit1@gmail.com>, 
- "David S. Miller" <davem@davemloft.net>, Andy Whitcroft <apw@canonical.com>, 
- Joe Perches <joe@perches.com>, Dwaipayan Ray <dwaipayanray1@gmail.com>, 
- Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
- Andrew Lunn <andrew@lunn.ch>, Jaroslav Kysela <perex@perex.cz>, 
- Takashi Iwai <tiwai@suse.com>, netdev@vger.kernel.org, 
- linux-sound@vger.kernel.org, Michael Ellerman <mpe@ellerman.id.au>, 
- Nathan Lynch <nathanl@linux.ibm.com>, linuxppc-dev@lists.ozlabs.org, 
- Mauro Carvalho Chehab <mchehab@kernel.org>, linux-media@vger.kernel.org
+ SeongJae Park <sj@kernel.org>, Andrew Morton <akpm@linux-foundation.org>, 
+ damon@lists.linux.dev, linux-mm@kvack.org
 
-Hi,
+sleep_idle_range() is a variant of sleep_range(). Both are using
+sleep_range_state() as a base. To be able to find all the related functions
+in one go, rename it sleep_idle_range() to sleep_range_idle().
 
-a question about which sleeping function should be used in acpi_os_sleep()
-started a discussion and examination about the existing documentation and
-implementation of functions which insert a sleep/delay.
+No functional change.
 
-The result of the discussion was, that the documentation is outdated and
-the implemented fsleep() reflects the outdated documentation but doesn't
-help to reflect reality which in turns leads to the queue which covers the
-following things:
-
-- Minor changes (naming and typo fixes)
-
-- Split out all timeout and sleep related functions from hrtimer.c and timer.c
-  into a separate file
-
-- Update function descriptions of sleep related functions
-
-- Change fsleep() to reflect reality
-
-- Rework all comments or users which obviously rely on the outdated
-  documentation as they reference "Documentation/timers/timers-howto.rst"
-
-- Last but not least (as there are no more references): Update the outdated
-  documentation and move it into a file with a self explaining file name
-
-The queue is available here and applies on top of tip/timers/core:
-
-  git://git.kernel.org/pub/scm/linux/kernel/git/anna-maria/linux-devel.git timers/misc
-
-Cc: linux-kernel@vger.kernel.org
-Cc: Len Brown <len.brown@intel.com>
-Cc: Rafael J. Wysocki <rafael@kernel.org>
-To: Frederic Weisbecker <frederic@kernel.org>
-To: Thomas Gleixner <tglx@linutronix.de>
-To: Jonathan Corbet <corbet@lwn.net>
+Cc: SeongJae Park <sj@kernel.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Cc: damon@lists.linux.dev
+Cc: linux-mm@kvack.org
 Signed-off-by: Anna-Maria Behnsen <anna-maria@linutronix.de>
-
-Thanks,
-
-Anna-Maria
-
 ---
-Anna-Maria Behnsen (15):
-      timers: Rename next_expiry_recalc() to be unique
-      cpu: Use already existing usleep_range()
-      Comments: Fix wrong singular form of jiffies
-      timers: Move *sleep*() and timeout functions into a separate file
-      timers: Rename sleep_idle_range() to sleep_range_idle()
-      timers: Update function descriptions of sleep/delay related functions
-      timers: Adjust flseep() to reflect reality
-      mm/damon/core: Use generic upper bound recommondation for usleep_range()
-      timers: Add a warning to usleep_range_state() for wrong order of arguments
-      checkpatch: Remove broken sleep/delay related checks
-      regulator: core: Use fsleep() to get best sleep mechanism
-      iopoll/regmap/phy/snd: Fix comment referencing outdated timer documentation
-      powerpc/rtas: Use fsleep() to minimize additional sleep duration
-      media: anysee: Fix link to outdated sleep function documentation
-      timers/Documentation: Cleanup delay/sleep documentation
+ include/linux/delay.h | 2 +-
+ mm/damon/core.c       | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
- Documentation/admin-guide/media/vivid.rst          |   2 +-
- Documentation/dev-tools/checkpatch.rst             |   6 -
- Documentation/timers/delay_sleep_functions.rst     | 122 +++++++
- Documentation/timers/index.rst                     |   2 +-
- Documentation/timers/timers-howto.rst              | 115 -------
- .../sp_SP/scheduler/sched-design-CFS.rst           |   2 +-
- MAINTAINERS                                        |   2 +
- arch/arm/mach-versatile/spc.c                      |   2 +-
- arch/m68k/q40/q40ints.c                            |   2 +-
- arch/powerpc/kernel/rtas.c                         |  21 +-
- arch/x86/kernel/cpu/mce/dev-mcelog.c               |   2 +-
- drivers/char/ipmi/ipmi_ssif.c                      |   2 +-
- drivers/dma-buf/st-dma-fence.c                     |   2 +-
- drivers/gpu/drm/i915/gem/i915_gem_wait.c           |   2 +-
- drivers/gpu/drm/i915/gt/selftest_execlists.c       |   4 +-
- drivers/gpu/drm/i915/i915_utils.c                  |   2 +-
- drivers/gpu/drm/v3d/v3d_bo.c                       |   2 +-
- drivers/isdn/mISDN/dsp_cmx.c                       |   2 +-
- drivers/media/usb/dvb-usb-v2/anysee.c              |   6 +-
- drivers/net/ethernet/marvell/mvmdio.c              |   2 +-
- drivers/regulator/core.c                           |  33 +-
- fs/xfs/xfs_buf.h                                   |   2 +-
- include/asm-generic/delay.h                        |  46 ++-
- include/linux/delay.h                              |  79 ++++-
- include/linux/iopoll.h                             |  24 +-
- include/linux/jiffies.h                            |   2 +-
- include/linux/phy.h                                |   7 +-
- include/linux/regmap.h                             |  18 +-
- include/linux/timekeeper_internal.h                |   2 +-
- kernel/cpu.c                                       |   2 +-
- kernel/time/Makefile                               |   2 +-
- kernel/time/alarmtimer.c                           |   2 +-
- kernel/time/clockevents.c                          |   2 +-
- kernel/time/hrtimer.c                              | 122 +------
- kernel/time/posix-timers.c                         |   4 +-
- kernel/time/sleep_timeout.c                        | 363 +++++++++++++++++++++
- kernel/time/timer.c                                | 210 +-----------
- lib/Kconfig.debug                                  |   2 +-
- mm/damon/core.c                                    |   5 +-
- net/batman-adv/types.h                             |   2 +-
- scripts/checkpatch.pl                              |  38 ---
- sound/soc/sof/ops.h                                |   6 +-
- 42 files changed, 668 insertions(+), 607 deletions(-)
+diff --git a/include/linux/delay.h b/include/linux/delay.h
+index ff9cda975e30..2bc586aa2068 100644
+--- a/include/linux/delay.h
++++ b/include/linux/delay.h
+@@ -68,7 +68,7 @@ static inline void usleep_range(unsigned long min, unsigned long max)
+ 	usleep_range_state(min, max, TASK_UNINTERRUPTIBLE);
+ }
+ 
+-static inline void usleep_idle_range(unsigned long min, unsigned long max)
++static inline void usleep_range_idle(unsigned long min, unsigned long max)
+ {
+ 	usleep_range_state(min, max, TASK_IDLE);
+ }
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index 7a87628b76ab..94fe2f1f9b0e 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -1887,7 +1887,7 @@ static void kdamond_usleep(unsigned long usecs)
+ 	if (usecs > 20 * USEC_PER_MSEC)
+ 		schedule_timeout_idle(usecs_to_jiffies(usecs));
+ 	else
+-		usleep_idle_range(usecs, usecs + 1);
++		usleep_range_idle(usecs, usecs + 1);
+ }
+ 
+ /* Returns negative error code if it's not activated but should return */
+
+-- 
+2.39.2
 
