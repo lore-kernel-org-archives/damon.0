@@ -1,61 +1,61 @@
-Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
+Received: from mail-pg1-f170.google.com (mail-pg1-f170.google.com [209.85.215.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0101379DE
-	for <damon@lists.linux.dev>; Wed,  4 Sep 2024 01:28:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12489DF60
+	for <damon@lists.linux.dev>; Wed,  4 Sep 2024 01:54:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725413309; cv=none; b=p2LDpR+5jD4GPcOcCfJvmHOu1y55nyUw1PCC0FoU7JmeLAdcsa/RsWrUYqEDAYmjiMEVkf1CdwKednHjm+FwIiFmoYEkxRg7naZYhZ3ZNnms7T4PG0UvNyVDwhY97bPt39rjJSDATIxaKBXmie8M85Nt4PRndQU8QTgxsFyu5u0=
+	t=1725414873; cv=none; b=FGUW2gPqNkmK2/swmDnayKfoIHvTpIZepZ25sModgVFRb/MvWJ9xV5HOR8sh82gIZuCzL649z5Hq3kXG0g1O4Varxy8oQxFdNxpzjeeT7lc6M4ck3yhs3YCLUCtPp3AZ1m0foiZtDF82MnMt2/eEu30B4mA2SMRHxUw5jmZX+ts=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725413309; c=relaxed/simple;
-	bh=869an7QuVDta4KU4pjwwOQa6ZKA85BOLwZnAn+4njPo=;
+	s=arc-20240116; t=1725414873; c=relaxed/simple;
+	bh=8b/nagbitnKcWOzyEcnGY06sbCkaMXu1Gh0SIeftmXg=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=uMBPC8BuafffuNlRV/qPpePeNn3HnauBNzsssKA4+7NgfnzWiawzMckzfyh8SOzQWvKfOSvkvf1SEl1/yhLMkxL53QeQ1/M8aypDWUS/3FAx4VeSVupZ5IfW6wie8A5QkV1XaOEawceUH1UgMPVeR31zSpwbwN9SitXrGLXFsks=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QHwwHn3A; arc=none smtp.client-ip=209.85.214.174
+	 In-Reply-To:Content-Type; b=hqlqI2GYB7iIXKkiOKaJsvpVqoQvgaoJ3bm4UG7CGc75bJbJKSuuhBeDPxvuQyLaqDAwdtKZ6Zq7P2OuOJY9LmJU1c/monMc1zgjaZ0w5espBYMcPypxESI2UqBQ6NoMrM8VEkUSYmv9GjVJYUm7Sp8jm/L0mCTk/WIfVFS3SaU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RElRawwH; arc=none smtp.client-ip=209.85.215.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QHwwHn3A"
-Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-20551e2f1f8so30141545ad.2
-        for <damon@lists.linux.dev>; Tue, 03 Sep 2024 18:28:27 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RElRawwH"
+Received: by mail-pg1-f170.google.com with SMTP id 41be03b00d2f7-656d8b346d2so3635287a12.2
+        for <damon@lists.linux.dev>; Tue, 03 Sep 2024 18:54:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1725413307; x=1726018107; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1725414871; x=1726019671; darn=lists.linux.dev;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZKcGcLiluE4oplvfFGxfWezTU3/P7wua4OuY0w4lgrQ=;
-        b=QHwwHn3A/rMqNRNbxHmlPg/cSyTF8qLVCxikoVPfOXEmHv5rdeP0AO0Svb8UmxuP0a
-         39yAe4Djl+kVfvhwrQb3YRZq7LzzK7oQc+3BRp+TZ3rP6wyXqH+RCjeJp1jYIHcmz52W
-         axw+1L5B6S/iqnEEWIeYGPHgBsESBNpRnsomvnhHpuegSzl7phFn27KJYGByuBcHDNkr
-         z5v3YGdGuM8gaX/Zg81S6LFASJ8FCY60K5XyDC+aJbnZIqYaJzph4sgUgchNhQyLqd0c
-         VDYNaU++d3Fzuslv0OLCXBS8harxXyswq2lPGsVgCZtlIyZTwXA0jJEsDWypEoKm1toX
-         nY3Q==
+        bh=CisdtnKEerpy0QokjP5pH46AQQjjuc5fegYZvSOfX6A=;
+        b=RElRawwH1BrJTbmtIW9Uct2zsSqLAdzOdAh+7HRRNUYrnI83CcLQRAduDQA/G5/mD7
+         IA+OD9gcZ4Vqn5quXTn/MGa/eMJ8/Erbm75sQAK4BuKSoh1ybUPFtyKsR0LYufgQBMaE
+         NsXwMU/FTz1ETixeILopBFd3FegjNWHNcUXS9mTWlGUjfOGAPvhcaruwuaahRSVMMLfd
+         iUzmPLJAfWf2WqWWnICWxJvPP0ar01oJlFN+tsPA5hT0PJkSZL2JAa5ncU7ZksPNbDR5
+         vUIzSktD3PzrVmbd22ebS8Fp4Tnt00utHPpvWV40Jh3DINDzbh6d4P1+v+EGRIakZGqh
+         hNgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725413307; x=1726018107;
+        d=1e100.net; s=20230601; t=1725414871; x=1726019671;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:sender:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ZKcGcLiluE4oplvfFGxfWezTU3/P7wua4OuY0w4lgrQ=;
-        b=YPQ8eXfXJhVzk+C41qVYhRiyJvatZT3MUBnuQmD9+9vVF/Nf1YtPethT2HighIbDua
-         LTZbOWjcl+OQbhlxtkTuDA0/aM5pB6WRNvP4SDV4Tvvb+UxgOXWOR63utqihH2vl5o/y
-         p8vN+JWa5uONjfF4wmjQrzRDb2kjbXNYMCEhy/k4DWylLuucCWWlm9mFH1DtkmU80r4C
-         1DhUkwWbfORr1IGRkU+CpmMqNoXxXHCskrpKTlk2x0C13GOoH5wSOHebJKCYJdXucIN6
-         JgVyhcBR3Ch5W7isDmRJIyGx84c5mM8/HOy0bcmuGrXb8Ttw0UUJtKZMRhe6SmmrsUWS
-         9w4g==
-X-Forwarded-Encrypted: i=1; AJvYcCWLIstdS1oNZEnApFgP0784U6HpL548xxEEaFb+wDj8SjPwWnPKWzgdz7iPXcHEsqIg1GCeag==@lists.linux.dev
-X-Gm-Message-State: AOJu0YySQvKKcxKkT3ET5x7JqONeuQ7/jo3DHbt+KNw9WzFcwMMAw6O3
-	VMIpJ28xkWXdKOxdFiI1tt92IHxf1o116aFrKNuKr8dKFBkA7vrq
-X-Google-Smtp-Source: AGHT+IGkiZVGShX0cNi+6EQ+b3HmkSKFDA5Zw7fxes8vn2v7cYypiVQFXqAdhtgXUN2x/ewlPt0doA==
-X-Received: by 2002:a17:902:e752:b0:1fb:701b:7298 with SMTP id d9443c01a7336-205841ba17emr96382505ad.32.1725413307103;
-        Tue, 03 Sep 2024 18:28:27 -0700 (PDT)
+        bh=CisdtnKEerpy0QokjP5pH46AQQjjuc5fegYZvSOfX6A=;
+        b=rYt1hfq5H5Tc4vv7EpaTxLzM9y4SYB5SMExrcjzGZ7MfVs/pKaKp95UZ9FrlR07XvO
+         b2MQ7W0biUFLRhel6O/2YXTfhFhWoPu57azIau7qjuE4Mg+g0+7xyCfJQIHa1NFIwaFi
+         jVyhnqRt0gzuSOJEhcg1i+apzLHoqVjX2TeFkMPMQdh6+6YbJkXc5wHwX3ZSrGgaEEDN
+         6i8a4ajHlsEeZdJOJd+o5Z/daq7YtwORaAyXYNwmSgWHuWV3P8ZzKMdqWDLnjrv655zD
+         IWc+BgX7gKgJMM0sXUOwd0Rk4kQmc2W0Cj5OSxFXvxxavPYhrLYDgNViauTap6I/8+Gz
+         R7Wg==
+X-Forwarded-Encrypted: i=1; AJvYcCXmQCzHMjSI/nL9qBtt7cD5qIdTyBugZ71VSwbHvoByDhKNoPN0i6rw10rHYiVIymOYppIsyA==@lists.linux.dev
+X-Gm-Message-State: AOJu0Yxr81w+BOutT8oe22JVjkRrj07iIdR+iNZ0cVIJtZLv6H5GkZlq
+	MpedZKqPTjE6zWLL2ewYWKVvYkumX1YBHxxEwTUH7h7j8iSdGGRc
+X-Google-Smtp-Source: AGHT+IHXYOi8OP9XYA1Qdvbzpe21teNaeNAJcKIyj5+H8sosQACX2TLwSECTQpwAHdzo0peFxAzi9Q==
+X-Received: by 2002:a05:6a21:114d:b0:1c6:fc7d:5546 with SMTP id adf61e73a8af0-1cece5d166dmr14010663637.37.1725414871203;
+        Tue, 03 Sep 2024 18:54:31 -0700 (PDT)
 Received: from ?IPV6:2600:1700:e321:62f0:329c:23ff:fee3:9d7c? ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-206ae95a51csm4067425ad.117.2024.09.03.18.28.25
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-206aea684bdsm4118095ad.254.2024.09.03.18.54.29
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 03 Sep 2024 18:28:26 -0700 (PDT)
+        Tue, 03 Sep 2024 18:54:30 -0700 (PDT)
 Sender: Guenter Roeck <groeck7@gmail.com>
-Message-ID: <c51a7a9e-5d37-4c30-b1e5-c873cfb64cd5@roeck-us.net>
-Date: Tue, 3 Sep 2024 18:28:24 -0700
+Message-ID: <ab03b853-07c5-4997-8983-68e547e3c873@roeck-us.net>
+Date: Tue, 3 Sep 2024 18:54:28 -0700
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -65,15 +65,16 @@ MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH] mm/damon/tests/vaddr-kunit: don't use mas_lock for
  MM_MT_FLAGS-initialized maple tree
-To: SeongJae Park <sj@kernel.org>, "Liam R. Howlett" <Liam.Howlett@oracle.com>
-Cc: Andrew Morton <akpm@linux-foundation.org>,
+To: SeongJae Park <sj@kernel.org>
+Cc: "Liam R. Howlett" <Liam.Howlett@oracle.com>,
+ Andrew Morton <akpm@linux-foundation.org>,
  "Matthew Wilcox (Oracle)" <willy@infradead.org>,
  David Hildenbrand <david@redhat.com>,
  Brendan Higgins <brendanhiggins@google.com>, David Gow
  <davidgow@google.com>, damon@lists.linux.dev, linux-mm@kvack.org,
  kunit-dev@googlegroups.com, linux-kselftest@vger.kernel.org,
  linux-kernel@vger.kernel.org
-References: <20240904005815.1388-1-sj@kernel.org>
+References: <20240904011840.973-1-sj@kernel.org>
 Content-Language: en-US
 From: Guenter Roeck <linux@roeck-us.net>
 Autocrypt: addr=linux@roeck-us.net; keydata=
@@ -119,47 +120,66 @@ Autocrypt: addr=linux@roeck-us.net; keydata=
  WkRwrSuCn7UG+qVWZeKEsFKFOkynOs3pVbcbq1pxbhk3TRWCGRU5JolI4ohy/7JV1TVbjiDI
  HP/aVnm6NC8of26P40Pg8EdAhajZnHHjA7FrJXsy3cyIGqvg9os4rNkUWmrCfLLsZDHD8FnU
  mDW4+i+XlNFUPUYMrIKi9joBhu18ssf5i5Q=
-In-Reply-To: <20240904005815.1388-1-sj@kernel.org>
+In-Reply-To: <20240904011840.973-1-sj@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 9/3/24 17:58, SeongJae Park wrote:
-> On Tue, 3 Sep 2024 20:48:53 -0400 "Liam R. Howlett" <Liam.Howlett@oracle.com> wrote:
+On 9/3/24 18:18, SeongJae Park wrote:
+> On Tue,  3 Sep 2024 17:58:15 -0700 SeongJae Park <sj@kernel.org> wrote:
 > 
->> * SeongJae Park <sj@kernel.org> [240903 20:45]:
->>> damon_test_three_regions_in_vmas() initializes a maple tree with
->>> MM_MT_FLAGS.  The flags contains MT_FLAGS_LOCK_EXTERN, which means
->>> mt_lock of the maple tree will not be used.  And therefore the maple
->>> tree initialization code skips initialization of the mt_lock.  However,
->>> __link_vmas(), which adds vmas for test to the maple tree, uses the
->>> mt_lock.  In other words, the uninitialized spinlock is used.  The
->>> problem becomes celar when spinlock debugging is turned on, since it
-
-Just in case you need to resend: s/celar/clear/
-
->>> reports spinlock bad magic bug.  Fix the issue by not using the mt_lock
->>> as promised.
+>> On Tue, 3 Sep 2024 20:48:53 -0400 "Liam R. Howlett" <Liam.Howlett@oracle.com> wrote:
 >>
->> You can't do this, lockdep will tell you this is wrong.
-> 
-> Hmm, but lockdep was silence on my setup?
-> 
->> We need a lock and to use the lock for writes.
-> 
-> This code is executed by a single-thread test code.  Do we still need the lock?
-> 
+>>> * SeongJae Park <sj@kernel.org> [240903 20:45]:
+>>>> damon_test_three_regions_in_vmas() initializes a maple tree with
+>>>> MM_MT_FLAGS.  The flags contains MT_FLAGS_LOCK_EXTERN, which means
+>>>> mt_lock of the maple tree will not be used.  And therefore the maple
+>>>> tree initialization code skips initialization of the mt_lock.  However,
+>>>> __link_vmas(), which adds vmas for test to the maple tree, uses the
+>>>> mt_lock.  In other words, the uninitialized spinlock is used.  The
+>>>> problem becomes celar when spinlock debugging is turned on, since it
+>>>> reports spinlock bad magic bug.  Fix the issue by not using the mt_lock
+>>>> as promised.
+>>>
+>>> You can't do this, lockdep will tell you this is wrong.
 >>
->> I'd suggest using different flags so the spinlock is used.
+>> Hmm, but lockdep was silence on my setup?
+>>
+>>> We need a lock and to use the lock for writes.
+>>
+>> This code is executed by a single-thread test code.  Do we still need the lock?
+>>
+>>>
+>>> I'd suggest using different flags so the spinlock is used.
+>>
+>> The reporter mentioned simply dropping MT_FLAGS_LOCK_EXTERN from the flags
+>> causes suspicious RCU usage message.  May I ask if you have a suggestion of
+>> better flags?
 > 
-> The reporter mentioned simply dropping MT_FLAGS_LOCK_EXTERN from the flags
-> causes suspicious RCU usage message.  May I ask if you have a suggestion of
-> better flags?
+> I was actually thinking replacing the mt_init_flags() with mt_init(), which
+> same to mt_init_flags() with zero flag, like below.
 > 
+> ```
+> --- a/mm/damon/tests/vaddr-kunit.h
+> +++ b/mm/damon/tests/vaddr-kunit.h
+> @@ -77,7 +77,7 @@ static void damon_test_three_regions_in_vmas(struct kunit *test)
+>                  (struct vm_area_struct) {.vm_start = 307, .vm_end = 330},
+>          };
+> 
+> -       mt_init_flags(&mm.mm_mt, MM_MT_FLAGS);
+> +       mt_init(&mm.mm_mt);
+>          if (__link_vmas(&mm.mm_mt, vmas, ARRAY_SIZE(vmas)))
+>                  kunit_skip(test, "Failed to create VMA tree");
+> ```
+> 
+> And just confirmed it also convinces the reproducer.  But because I'm obviously
+> not familiar with maple tree, would like to hear some comments from Liam or
+> others first.
+> 
+Same here. That is why I gave up after trying MT_FLAGS_ALLOC_RANGE and
+"MT_FLAGS_ALLOC_RANGE | MT_FLAGS_USE_RCU". After all, I really don't know what
+I am doing and was just playing around ... and there isn't really a good
+explanation why initializing the maple tree with MT_FLAGS_ALLOC_RANGE (but not
+MT_FLAGS_USE_RCU) would trigger rcu warnings.
 
-Correct. I don't see those messages with your patch. From my perspective, this is
-
-Tested-by: Guenter Roeck <linux@roeck-us.net>
-
-Thanks,
 Guenter
 
