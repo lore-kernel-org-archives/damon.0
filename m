@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F0CF192D96;
-	Thu,  5 Sep 2024 17:24:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FAFB1A3A9D
+	for <damon@lists.linux.dev>; Thu,  5 Sep 2024 17:35:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725557051; cv=none; b=bpR6ytBZolR3tNAQ9tDkYI/9ajQlZIPCdOyS6Wj96HFZIvq9DGBS2BxWWX6/+ALdaWzFx6D+Gaszfk1QKgdW0YE+Td4jS50DdVoB9rVyR411Q+h9kV3n+oY6OQGhtJM1Gsexfy+2N/PRx5hZLcV/YynPVQaVoWsZcQZX/fwR8Cg=
+	t=1725557711; cv=none; b=oAhXaaH4b+n1yl6aJTL+PuRDyoZhXaRo5Hf6D+KkcU9HrhUW8QpVSyN/Dmw+aYPVTI4Mfd6M0L9dznn0kY02UB/qzJpNSB3hSmCmveBuBdfTx5A3n3E/5kYGZH7MSKompS+upDtt2slMZO9/j0kjdQurDDs4zT5rTqlMjdCAn78=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725557051; c=relaxed/simple;
-	bh=qZcBj0EB8G0ORdOMeKcxDRY4297XFxFpbti5X8aE3Ng=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=PY57gG8kCH+7P7tLBLxvOD8YmOCqiZMc6NG/DSKvNwsTFZNlDw/nuCu0KTU3eB5gtDdzp366rYCJ0+x0patC8XqBNOSB8tJG8AOwY7PxEMTp3i9tVOqgH10a1qOROVtpL0UkgmgfiY/WBRlCUDltTc1MorXHsbZEQm2A7XV6JfQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ah7zBwWi; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1725557711; c=relaxed/simple;
+	bh=MJdenvQvCyO3+Lbld4ggLe3q56cyEuPbMle8Vr6UWc8=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=Qp9UZwqBOkx0wuIzNTmwvOg9RyBmcVGV93SUlODJ1V+uVIyfFprKnZ0KADTlO/MUH5yIWhfVg2NiI7zqME9hIbOvBFBU66rEM9TzJqXYFhemxjr0YfJJX9t42yUtkkxVA5iEDxbSq2NwkgLs2TMs2gwg4/DzKgRaJ6ecxClj1S0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Y+ZSyXI6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ah7zBwWi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76494C4CEC6;
-	Thu,  5 Sep 2024 17:24:10 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Y+ZSyXI6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 414C7C4CEC3;
+	Thu,  5 Sep 2024 17:35:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1725557050;
-	bh=qZcBj0EB8G0ORdOMeKcxDRY4297XFxFpbti5X8aE3Ng=;
-	h=From:To:Cc:Subject:Date:From;
-	b=ah7zBwWiGJ0NIp2n9juU/LpFhavcxTGPFb1NfC5DhDhAoxksbi7YROk8Ak7Kz/ufM
-	 XnSJH1Sy8EkaUblI3N/n01OShRkyv5/YMuQSpL2XpG4ziUd/0aXBOkY4j7PPNJ2GKO
-	 IMoB38EnGTrZ+ohqsG14MA8fYM9VWTyCf2qChOatOXakanv4fLze6xFl/kMRjx8WDi
-	 P8KjGXy6DJ2jO7vOSNsvAN/vm6fTiRRR8E22k4fFJlSe5oc+yDjuW1/YNfqeuF2H3Q
-	 8kYeKdqzHQuquIhh2Srf6GyqIuRw2pYY5/i2HWwai1sDl193xChSbe2ikYsIWZA7my
-	 urWo/1Frt/H2Q==
+	s=k20201202; t=1725557710;
+	bh=MJdenvQvCyO3+Lbld4ggLe3q56cyEuPbMle8Vr6UWc8=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=Y+ZSyXI6wFp0O2Z25jwUids7KsMUS2kdAaaXAro3DvtUVWKcW4YcIVwheeJA2cPmM
+	 fGH+A0X/o3GvRJJXoqgBRsQhDcAE7tUtQ3ZU/xR6YZkVwSRwlKnyABCMeV5H6D1r6D
+	 B5Gbi5u8ucstXz2U8cFDjLv0BxiyXSRFfmKUJqsYRJxo298RS6arlqAErPbTfOizsi
+	 FPpFEMR2hVikr8lptLZyzlwbiMCI0jXAnjele8vnWhChtmoD0/Y5i0kAHn6toAlWdz
+	 jc93OEGVrkUTTEuYVykkKyGObeE6Nyj2Q++hAyqmUNlp1ctihsiSdKDHDPQw2SlrlE
+	 Z3rY7yBhlKxng==
 From: SeongJae Park <sj@kernel.org>
-To: 
+To: Guenter Roeck <linux@roeck-us.net>
 Cc: SeongJae Park <sj@kernel.org>,
-	Guenter Roeck <linux@roeck-us.net>,
-	damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org
-Subject: [RFC PATCH] mm/damon/core: avoid overflow in damon_feed_loop_next_input()
-Date: Thu,  5 Sep 2024 10:24:05 -0700
-Message-Id: <20240905172405.46995-1-sj@kernel.org>
+	damon@lists.linux.dev
+Subject: Re: Problems running DAMON kunit tests with spinlock debugging enabled
+Date: Thu,  5 Sep 2024 10:35:07 -0700
+Message-Id: <20240905173507.47124-1-sj@kernel.org>
 X-Mailer: git-send-email 2.39.2
+In-Reply-To: <944f3d5b-9177-48e7-8ec9-7f1331a3fea3@roeck-us.net>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -44,67 +44,86 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-damon_feed_loop_next_input() is fragile to overflows.  Rewrite code to
-avoid overflows.  This is not yet well tested on 32bit archs.
+Hi Guenter,
 
-Reported-by: Guenter Roeck <linux@roeck-us.net>
-Closes: https://lore.kernel.org/944f3d5b-9177-48e7-8ec9-7f1331a3fea3@roeck-us.net
-Fixes: 9294a037c015 ("mm/damon/core: implement goal-oriented feedback-driven quota auto-tuning")
-Signed-off-by: SeongJae Park <sj@kernel.org>
----
-As mentioned on the commit message, this is not yet sufficiently tested
-on 32bit machines.  That's why this is RFC.
+On Wed, 4 Sep 2024 14:04:03 -0700 Guenter Roeck <linux@roeck-us.net> wrote:
 
- mm/damon/core.c | 33 +++++++++++++++++++++++++++------
- 1 file changed, 27 insertions(+), 6 deletions(-)
+[...]
+> Here is another problem. With all other problems fixed, when running on a 32-bit system:
+> 
+>      # damon_test_feed_loop_next_input: EXPECTATION FAILED at mm/damon/core-test.h:488
+>      Expected damon_feed_loop_next_input(last_input, 200) > damon_feed_loop_next_input(last_input, 2000), but
+>          damon_feed_loop_next_input(last_input, 200) == 923006 (0xe157e)
+>          damon_feed_loop_next_input(last_input, 2000) == 1190503 (0x122a67)
+>      # damon_test_feed_loop_next_input: pass:0 fail:1 skip:0 total:1
+>      not ok 16 damon_test_feed_loop_next_input
+> # damon: pass:14 fail:1 skip:1 total:16
+> 
+> Problem is that both damon_feed_loop_next_input(900000, 200) and
+> damon_feed_loop_next_input(900000, 2000) overflow on 32-bit systems.
 
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index 32677f13f437..1d951c2a1d85 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -1494,15 +1494,36 @@ static unsigned long damon_feed_loop_next_input(unsigned long last_input,
- 		unsigned long score)
- {
- 	const unsigned long goal = 10000;
--	unsigned long score_goal_diff = max(goal, score) - min(goal, score);
--	unsigned long score_goal_diff_bp = score_goal_diff * 10000 / goal;
--	unsigned long compensation = last_input * score_goal_diff_bp / 10000;
- 	/* Set minimum input as 10000 to avoid compensation be zero */
- 	const unsigned long min_input = 10000;
-+	unsigned long score_goal_diff;
-+	unsigned long compensation;
-+
-+	if (score == goal)
-+		return last_input;
-+
-+	/* last_input, score <= ULONG_MAX */
-+	if (score < goal) {
-+		score_goal_diff = goal - score;
-+	} else {
-+		/* if score_goal_diff > goal, will return min_input anyway */
-+		score_goal_diff = min(score - goal, goal);
-+	}
-+
-+	if (last_input < ULONG_MAX / score_goal_diff)
-+		compensation = last_input * score_goal_diff / goal;
-+	else
-+		compensation = last_input / goal * score_goal_diff;
-+
-+	/* compensation <= last_input <= ULONG_MAX */
-+
-+	if (goal > score) {
-+		if (last_input < ULONG_MAX - compensation)
-+			return last_input + compensation;
-+		return ULONG_MAX;
-+	}
- 
--	if (goal > score)
--		return last_input + compensation;
--	if (last_input > compensation + min_input)
-+	if (last_input - compensation > min_input)
- 		return last_input - compensation;
- 	return min_input;
- }
--- 
-2.39.2
+Thank you for reporting this yet another important issue!
 
+> 
+> Also,
+> 
+> static unsigned long damon_feed_loop_next_input(unsigned long last_input,
+>                  unsigned long score)
+> {
+>          const unsigned long goal = 10000;
+>          unsigned long score_goal_diff = max(goal, score) - min(goal, score);
+>          unsigned long score_goal_diff_bp = score_goal_diff * 10000 / goal;
+>                                                            ^^^^^^^^^^^^^^^
+> 
+> Since goal == 10000, the last statement has no effect.
+
+You're right, thank you.
+
+> 
+> The diff below should address the problem for the most part, though the calculations
+> may still overflow for large parameter values.
+> 
+> Guenter
+> 
+> ---
+> diff --git a/mm/damon/core.c b/mm/damon/core.c
+> index 7a87628b76ab..ab9c625ee2e0 100644
+> --- a/mm/damon/core.c
+> +++ b/mm/damon/core.c
+> @@ -10,6 +10,7 @@
+>   #include <linux/damon.h>
+>   #include <linux/delay.h>
+>   #include <linux/kthread.h>
+> +#include <linux/math64.h>
+>   #include <linux/mm.h>
+>   #include <linux/psi.h>
+>   #include <linux/slab.h>
+> @@ -1451,8 +1452,7 @@ static unsigned long damon_feed_loop_next_input(unsigned long last_input,
+>   {
+>          const unsigned long goal = 10000;
+>          unsigned long score_goal_diff = max(goal, score) - min(goal, score);
+> -       unsigned long score_goal_diff_bp = score_goal_diff * 10000 / goal;
+> -       unsigned long compensation = last_input * score_goal_diff_bp / 10000;
+> +       unsigned long compensation = div_u64((unsigned long long)last_input * score_goal_diff, 10000);
+>          /* Set minimum input as 10000 to avoid compensation be zero */
+>          const unsigned long min_input = 10000;
+
+Thank you for kindly sharing this, too.  Your detailed reports of symptoms,
+root cause, and possible fix help a lot.
+
+As you also mentioned, this function may better to be significantly re-written
+with overflows in mind.  However, I have no enough time and setup to
+sufficiently test the fix for now, due to some personal reasons.  Also, the
+issue is important, but not time-critical for now, in my humble opinion.
+Please let me know if someone has different opinions.
+
+So, I made one possible fix off the top of my head, and posted as an RFC patch:
+https://lore.kernel.org/20240905172405.46995-1-sj@kernel.org
+
+I only tested that against the kunit test on my 64bit machine.  After I get
+some time and setup (maybe 1-2 weeks later), I will take more time to review
+the code, do more tests, and post RFC-dropped version.
+
+
+Thanks,
+SJ
