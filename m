@@ -1,97 +1,111 @@
-Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f47.google.com (mail-ej1-f47.google.com [209.85.218.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 261E378C9D
-	for <damon@lists.linux.dev>; Wed, 11 Sep 2024 05:13:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AF0C3F9CC
+	for <damon@lists.linux.dev>; Mon, 16 Sep 2024 06:47:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726031636; cv=none; b=rr1IaykINwyQTGTtXQeKqQJAhzIwYqtow0cNmUtHix8ixVa5LnEX9BzfIuRA2NoQlUyXGGESehnqExCixlpBUoE/TDAKXOtKv46V+EbOOu7Tlj7EzJStGBBjxez3xu8zY8I1j+8Oov6huyhQLKs1tZzE9xZu5UOg/ba8qyHFcF4=
+	t=1726469230; cv=none; b=SZX99evfJsYOkXekVaOKWw7VZt6zD8AYnsdwoKPBH7V+FfVrZK3tEYH/BnqcPJPSWo8aQ25i9CkZP5/1QBc3PCR6kkf4r+EP4j8jqr1/5ASCYVe9Xxy14SAmzgKRl+WnWuj5yOPfSyHToJu9vmZ3vNGDhbKAI6ZJtN6ETuGWXQ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726031636; c=relaxed/simple;
-	bh=slPR/XUl9n4yCnGskGvmFLbw4vNgR0nqofOb59d+i2I=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=C1WXMBs0YbCMCtcDSk7DRnIJZWadL+RK4bmL/sG6neCUDMNS5rl6U30fr2Z/oIwIuQHcNKik7E2jD1k0swrxqUKe7NLVyg1cGdBKC3LlcOyA90Go0Fyzh2dqhCSvFb0Z17wJcrrxr7Y0xcy7l0EITxSXYeuaRi2HDkPi74zP9oA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=tZ7Jo8+P; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=FLfAgtOq; arc=none smtp.client-ip=193.142.43.55
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
+	s=arc-20240116; t=1726469230; c=relaxed/simple;
+	bh=OG80MgUAOJqinc6SLwoLsrWGi0TgbXin9kAPTazF1Yw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Z2yGBKL83tJjgmE/uk7Kj5yOW6yGqWCNOEWA9VF9dOlD1PzBJC1rwRxN2BBCeKEwfWj0ZoaRC8BfJ4vEqgwSvr7/LzevJ2uHOpby6lZbgfgxKkZEVCn4sF9tEz+VjU2NZHXsaGu6VYDDcBj6s2biPa6AyuI02DLjp09YZLC/NdE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Xb4A8AaG; arc=none smtp.client-ip=209.85.218.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="tZ7Jo8+P";
-	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="FLfAgtOq"
-From: Anna-Maria Behnsen <anna-maria@linutronix.de>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1726031633;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=z6vDQ8OrtE5tfTIWOA9AkJWnV/XdCc+NosMWCRhCJCs=;
-	b=tZ7Jo8+P/9B40FBGihKmE6n5MfupBcXrXJ0RzEgsKoQ+IY09Fnp4IHAMQeJD2A2EPG0Dh8
-	ixHIMvr2nMXTiuFzRYuKAnyaF+mDTFQYcWZej6x2al+8hQwT701UWn+yk/G3vU9+G0038T
-	NlfHzHhMaraRZgoNjRFbrByExUEdzjy72WHp61JD6tC4Tcnr+VtcLldy+czOmrvCeDRW7n
-	L+yClvg23Cq3DUrsYlyzfqsA4OEQ2xu56oRfqp58gHzklFVBzm5n8o0Wj/hq/zNrheE2ZA
-	GUFDMgUtZbGWsMpCiYhK0ODGPi2zpiTiRPWjNuXPWE//3hT7YQP2If0jtZmSMQ==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1726031633;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=z6vDQ8OrtE5tfTIWOA9AkJWnV/XdCc+NosMWCRhCJCs=;
-	b=FLfAgtOqurk66aa8g8iQTkdDuocQxfo8snrO0+LncEvZ+h8IjnLSVutdhxUA1cZoWccM7y
-	sgFxwKMnEsrBA3Cw==
-Date: Wed, 11 Sep 2024 07:13:34 +0200
-Subject: [PATCH v2 08/15] mm/damon/core: Use generic upper bound
- recommondation for usleep_range()
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Xb4A8AaG"
+Received: by mail-ej1-f47.google.com with SMTP id a640c23a62f3a-a8a7dddd2aaso61772566b.3
+        for <damon@lists.linux.dev>; Sun, 15 Sep 2024 23:47:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1726469227; x=1727074027; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=gPdxaFerpi8bwNdZqSdcGom7xPXL0OluVDs81MP+KUw=;
+        b=Xb4A8AaG/XAaA0ZPwNPcYQP/5h58JNxWXnC+1sXy2+xX+VUhbXfb3okDpAu9OT6bBl
+         fP4qgBu8SZOqApSgzaOowK77Y5wgLMrvYhq2KVrD02nNALxJu5wSMbbWFE/GOJnw47J3
+         wxJx3vwePCIPns2DE+xcJYIA3YWNIlIMlVcvf7r7vmEi1rcATe1GUv29Ws31SOg1KV/B
+         LselHkmuWI+ZMXnr6AgvywfHYwHHt0eKwzGsaV7iU7evUEfhbzFO0HSqrNcU2/sJQ6kp
+         i9tfoImQZ+sC7vEP1mEmi4HgTzUVzzt+FhIqX/eA43qZ25w5SxrYH5zLQKQgNpQX1YcV
+         7YYg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1726469227; x=1727074027;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=gPdxaFerpi8bwNdZqSdcGom7xPXL0OluVDs81MP+KUw=;
+        b=vxXExFASuf44d4kw9yjtg6CQZraHLjJfSSEqf8Bc5kdB4zyem9ZQNb7ABWchzwZR+l
+         h3VBvfM3g7hDe3rvdIm2zLXa8g1BDcQNDqnXWqYAmFi8kg671R6wsFLz0tpJGPGI4gH1
+         I03pi/05t3wfLfbymOwz7ZoC7dj86Cmx6e7M+d8r/NMuD38qiccrFq484erw/Hzl+hpM
+         MP31ohPiGrCOstXqCwoGAFCoLznsJymlsGcqfPw6VUQHZ3OU+EAQGDDVxKzHG6/NIPYA
+         kxC80ag42wiIGE5WOu09MXC+5GYAhieG7+9h/Ergj23priqOa4qvCbpDw/cGvuqsle9x
+         Jm+A==
+X-Forwarded-Encrypted: i=1; AJvYcCVkf0CVHBdRpFN5CYRM39Zy2Jimx7cTZdAhZl7NYbgzfOB2S9lcjI3SWprJ3oHJQv/NTXZFDg==@lists.linux.dev
+X-Gm-Message-State: AOJu0YwJEVBRjquxx2WAPbuGJNYJb6zBFQH3iTOjDi/tyGsvMXPOQiAv
+	4TNN9vHxqaMWvfUnyZCudmQZDUQXDtm6dHh0VK16ru4MkpjlutJ3
+X-Google-Smtp-Source: AGHT+IEwDhcfs+zzxfqE7NF3pDPcvvh0KZPW/lPpb4hhRm4vVX1oAq0nk+Pi5hmaZt1Qh32LMsWmSA==
+X-Received: by 2002:a17:907:7f2a:b0:a8d:2623:dd17 with SMTP id a640c23a62f3a-a902963723dmr598254566b.12.1726469226387;
+        Sun, 15 Sep 2024 23:47:06 -0700 (PDT)
+Received: from [172.20.5.37] (ip212232028077.rev.nessus.at. [212.232.28.77])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a906109688bsm270102266b.28.2024.09.15.23.47.05
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 15 Sep 2024 23:47:06 -0700 (PDT)
+Message-ID: <da7345af-1a7f-4480-aa59-153549714229@gmail.com>
+Date: Mon, 16 Sep 2024 08:47:05 +0200
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240911-devel-anna-maria-b4-timers-flseep-v2-8-b0d3f33ccfe0@linutronix.de>
-References: <20240911-devel-anna-maria-b4-timers-flseep-v2-0-b0d3f33ccfe0@linutronix.de>
-In-Reply-To: <20240911-devel-anna-maria-b4-timers-flseep-v2-0-b0d3f33ccfe0@linutronix.de>
-To: Frederic Weisbecker <frederic@kernel.org>, 
- Thomas Gleixner <tglx@linutronix.de>, Jonathan Corbet <corbet@lwn.net>
-Cc: linux-kernel@vger.kernel.org, Len Brown <len.brown@intel.com>, 
- "Rafael J. Wysocki" <rafael@kernel.org>, 
- Anna-Maria Behnsen <anna-maria@linutronix.de>, 
- SeongJae Park <sj@kernel.org>, Andrew Morton <akpm@linux-foundation.org>, 
- damon@lists.linux.dev, linux-mm@kvack.org
+User-Agent: Mozilla Thunderbird
+Subject: Re: debian/config: add DAMON support for debian kernel
+To: SeongJae Park <sj@kernel.org>
+Cc: michel@michel-slm.name, damon@lists.linux.dev
+References: <20240824233224.66696-1-sj@kernel.org>
+Content-Language: en-US
+From: Yunseong Kim <yskelg@gmail.com>
+In-Reply-To: <20240824233224.66696-1-sj@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-The upper bound for usleep_range_idle() was taken from the outdated
-documentation. As a recommondation for the upper bound of usleep_range()
-depends on HZ configuration it is not possible to hard code it.
+Hi,
 
-Use the define "USLEEP_RANGE_UPPER_BOUND" instead.
+This is really exciting news! With DAMON being enabled in the Debian kernel.
 
-Cc: SeongJae Park <sj@kernel.org>
-Cc: Andrew Morton <akpm@linux-foundation.org>
-Cc: damon@lists.linux.dev
-Cc: linux-mm@kvack.org
-Signed-off-by: Anna-Maria Behnsen <anna-maria@linutronix.de>
-Reviewed-by: SeongJae Park <sj@kernel.org>
----
- mm/damon/core.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+Link: https://salsa.debian.org/kernel-team/linux/-/merge_requests/1172
 
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index 94fe2f1f9b0e..4b971871da75 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -1883,8 +1883,7 @@ static unsigned long damos_wmark_wait_us(struct damos *scheme)
- 
- static void kdamond_usleep(unsigned long usecs)
- {
--	/* See Documentation/timers/timers-howto.rst for the thresholds */
--	if (usecs > 20 * USEC_PER_MSEC)
-+	if (usecs >= USLEEP_RANGE_UPPER_BOUND)
- 		schedule_timeout_idle(usecs_to_jiffies(usecs));
- 	else
- 		usleep_range_idle(usecs, usecs + 1);
+On 8/25/24 1:32 오전, SeongJae Park wrote:
+> Hi Yunseong,
+> 
+> On Sun, 25 Aug 2024 02:26:11 +0900 Yunseong Kim <yskelg@gmail.com> wrote:
+> 
+>> Hi SeongJae,
+>>
+>> I have submitted a patch to the Debian Linux kernel team as follows:
+>> Link: https://salsa.debian.org/kernel-team/linux/-/merge_requests/1172/diffs?commit_id=1c5f4aefc7791367bbf43adcd81594d1cb42aa66
+> 
+> Thank you very much for doing this great work and letting me know!
+> 
+>>
+>> Please let me know if there are any additional details or improvements needed for my patch.
+> 
+> All looks good to me.  Nonetheless, Salvatore's comments also makes sense to
+> me.
+> 
+> 
+> Thanks,
+> SJ
 
--- 
-2.39.2
 
+Thanks to DAMON maintainers Dr. SeongJae and Debian Maintainer Michel,
+
+and every contributors involved in DAMON and the DAMO user space tool, this achievement has been made possible.
+
+I’m also very grateful for the reviews from the Debian Linux kernel team, Salvatore and Ben.
+
+
+Best regards,
+Yunseong Kim
