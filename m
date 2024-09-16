@@ -1,59 +1,40 @@
-Received: from mail-ej1-f47.google.com (mail-ej1-f47.google.com [209.85.218.47])
+Received: from smtp.smtpout.orange.fr (smtp-24.smtpout.orange.fr [80.12.242.24])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AF0C3F9CC
-	for <damon@lists.linux.dev>; Mon, 16 Sep 2024 06:47:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF22D13B2A5
+	for <damon@lists.linux.dev>; Mon, 16 Sep 2024 20:20:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.12.242.24
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726469230; cv=none; b=SZX99evfJsYOkXekVaOKWw7VZt6zD8AYnsdwoKPBH7V+FfVrZK3tEYH/BnqcPJPSWo8aQ25i9CkZP5/1QBc3PCR6kkf4r+EP4j8jqr1/5ASCYVe9Xxy14SAmzgKRl+WnWuj5yOPfSyHToJu9vmZ3vNGDhbKAI6ZJtN6ETuGWXQ8=
+	t=1726518035; cv=none; b=XR8hFMksygcKa2g3uo+qtTJx286acXzohBuAx/LQkL76+AdO3ub3z83c8TZhI7zu7GDjEFeYWkBXrIwzyCH76ku7KW1I6mhOXvHV/CmtBxDyx8WKHf6YJU1kp8bKIar0eQgIDpK2h7iRyqn9wG8nRw8srh1FDgiJ/XmXs+NjIRM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726469230; c=relaxed/simple;
-	bh=OG80MgUAOJqinc6SLwoLsrWGi0TgbXin9kAPTazF1Yw=;
+	s=arc-20240116; t=1726518035; c=relaxed/simple;
+	bh=AIia4lKEZbObyaFYhUbFcNZrhB13MUM4zPKIfR30Obo=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Z2yGBKL83tJjgmE/uk7Kj5yOW6yGqWCNOEWA9VF9dOlD1PzBJC1rwRxN2BBCeKEwfWj0ZoaRC8BfJ4vEqgwSvr7/LzevJ2uHOpby6lZbgfgxKkZEVCn4sF9tEz+VjU2NZHXsaGu6VYDDcBj6s2biPa6AyuI02DLjp09YZLC/NdE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Xb4A8AaG; arc=none smtp.client-ip=209.85.218.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 In-Reply-To:Content-Type; b=j5yGw+JlVs/gNVUuNfqqbFgB9Eko6wUoJMsVxDHWvUBYaE112P+wG4UTeu+kh6/rA9/XsXEzpt5KOXVt2t7g88tGhg7NxQ95nY853w0VPQLxf5g/H4TpPNKRMUWfiIhHTyWU/gjca4Iga0Ep3n/D9uM7g+FoqnEb8sLBDp21cCc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wanadoo.fr; spf=pass smtp.mailfrom=wanadoo.fr; dkim=pass (2048-bit key) header.d=wanadoo.fr header.i=@wanadoo.fr header.b=QrriRmjV; arc=none smtp.client-ip=80.12.242.24
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wanadoo.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=wanadoo.fr
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Xb4A8AaG"
-Received: by mail-ej1-f47.google.com with SMTP id a640c23a62f3a-a8a7dddd2aaso61772566b.3
-        for <damon@lists.linux.dev>; Sun, 15 Sep 2024 23:47:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1726469227; x=1727074027; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=gPdxaFerpi8bwNdZqSdcGom7xPXL0OluVDs81MP+KUw=;
-        b=Xb4A8AaG/XAaA0ZPwNPcYQP/5h58JNxWXnC+1sXy2+xX+VUhbXfb3okDpAu9OT6bBl
-         fP4qgBu8SZOqApSgzaOowK77Y5wgLMrvYhq2KVrD02nNALxJu5wSMbbWFE/GOJnw47J3
-         wxJx3vwePCIPns2DE+xcJYIA3YWNIlIMlVcvf7r7vmEi1rcATe1GUv29Ws31SOg1KV/B
-         LselHkmuWI+ZMXnr6AgvywfHYwHHt0eKwzGsaV7iU7evUEfhbzFO0HSqrNcU2/sJQ6kp
-         i9tfoImQZ+sC7vEP1mEmi4HgTzUVzzt+FhIqX/eA43qZ25w5SxrYH5zLQKQgNpQX1YcV
-         7YYg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1726469227; x=1727074027;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=gPdxaFerpi8bwNdZqSdcGom7xPXL0OluVDs81MP+KUw=;
-        b=vxXExFASuf44d4kw9yjtg6CQZraHLjJfSSEqf8Bc5kdB4zyem9ZQNb7ABWchzwZR+l
-         h3VBvfM3g7hDe3rvdIm2zLXa8g1BDcQNDqnXWqYAmFi8kg671R6wsFLz0tpJGPGI4gH1
-         I03pi/05t3wfLfbymOwz7ZoC7dj86Cmx6e7M+d8r/NMuD38qiccrFq484erw/Hzl+hpM
-         MP31ohPiGrCOstXqCwoGAFCoLznsJymlsGcqfPw6VUQHZ3OU+EAQGDDVxKzHG6/NIPYA
-         kxC80ag42wiIGE5WOu09MXC+5GYAhieG7+9h/Ergj23priqOa4qvCbpDw/cGvuqsle9x
-         Jm+A==
-X-Forwarded-Encrypted: i=1; AJvYcCVkf0CVHBdRpFN5CYRM39Zy2Jimx7cTZdAhZl7NYbgzfOB2S9lcjI3SWprJ3oHJQv/NTXZFDg==@lists.linux.dev
-X-Gm-Message-State: AOJu0YwJEVBRjquxx2WAPbuGJNYJb6zBFQH3iTOjDi/tyGsvMXPOQiAv
-	4TNN9vHxqaMWvfUnyZCudmQZDUQXDtm6dHh0VK16ru4MkpjlutJ3
-X-Google-Smtp-Source: AGHT+IEwDhcfs+zzxfqE7NF3pDPcvvh0KZPW/lPpb4hhRm4vVX1oAq0nk+Pi5hmaZt1Qh32LMsWmSA==
-X-Received: by 2002:a17:907:7f2a:b0:a8d:2623:dd17 with SMTP id a640c23a62f3a-a902963723dmr598254566b.12.1726469226387;
-        Sun, 15 Sep 2024 23:47:06 -0700 (PDT)
-Received: from [172.20.5.37] (ip212232028077.rev.nessus.at. [212.232.28.77])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a906109688bsm270102266b.28.2024.09.15.23.47.05
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 15 Sep 2024 23:47:06 -0700 (PDT)
-Message-ID: <da7345af-1a7f-4480-aa59-153549714229@gmail.com>
-Date: Mon, 16 Sep 2024 08:47:05 +0200
+	dkim=pass (2048-bit key) header.d=wanadoo.fr header.i=@wanadoo.fr header.b="QrriRmjV"
+Received: from [192.168.1.37] ([90.11.132.44])
+	by smtp.orange.fr with ESMTPA
+	id qICnsCJi7wFpSqICnsB9XJ; Mon, 16 Sep 2024 22:20:25 +0200
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=wanadoo.fr;
+	s=t20230301; t=1726518025;
+	bh=3Knrr3RbC4JV3H2uQiTkpSAIzSvcPBfz3YbMOwmqzNs=;
+	h=Message-ID:Date:MIME-Version:Subject:To:From;
+	b=QrriRmjVayvdZ9yvTrDorx9oh8DoqEJ9P43q3xnDcEZNreDtgqJE3mJ5HkFLby/Xx
+	 jyAeNmPyXwcG/0ceO29wqGO1fVfkmlk1m+a2ocC8mtq9sHA9PcQHat6bT7aUMIAPfu
+	 xyQzpH6ueoDHTTIWVUSR8dA3vMlIuJoP/Rrmxe3lVHgAJENm4GJBj6hLz3GeRvlfgW
+	 sQfLtTHbVfptWrMxz5esjpPqqVSHbo+NTWyg4ZzGQQHah8gi/ZidOtVZESucMZM+PV
+	 0Hrat1oFOHpBoWeQ5krLf+YsQelixQWf0T2GQqvdF2wNcVD388coEnvVe8JjJzYXeU
+	 E5ApLFFl6o2fQ==
+X-ME-Helo: [192.168.1.37]
+X-ME-Auth: bWFyaW9uLmphaWxsZXRAd2FuYWRvby5mcg==
+X-ME-Date: Mon, 16 Sep 2024 22:20:25 +0200
+X-ME-IP: 90.11.132.44
+Message-ID: <c794b4a6-468d-4552-a6d6-8185f49339d3@wanadoo.fr>
+Date: Mon, 16 Sep 2024 22:20:15 +0200
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -61,51 +42,82 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: debian/config: add DAMON support for debian kernel
-To: SeongJae Park <sj@kernel.org>
-Cc: michel@michel-slm.name, damon@lists.linux.dev
-References: <20240824233224.66696-1-sj@kernel.org>
-Content-Language: en-US
-From: Yunseong Kim <yskelg@gmail.com>
-In-Reply-To: <20240824233224.66696-1-sj@kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Subject: Re: [PATCH v2 00/15] timers: Cleanup delay/sleep related mess
+To: Frederic Weisbecker <frederic@kernel.org>,
+ Thomas Gleixner <tglx@linutronix.de>, Jonathan Corbet <corbet@lwn.net>,
+ Anna-Maria Behnsen <anna-maria@linutronix.de>
+Cc: linux-kernel@vger.kernel.org, Len Brown <len.brown@intel.com>,
+ "Rafael J. Wysocki" <rafael@kernel.org>,
+ Anna-Maria Behnsen <anna-maria@linutronix.de>,
+ Andrew Morton <akpm@linux-foundation.org>, damon@lists.linux.dev,
+ linux-mm@kvack.org, SeongJae Park <sj@kernel.org>,
+ Arnd Bergmann <arnd@arndb.de>, linux-arch@vger.kernel.org,
+ Heiner Kallweit <hkallweit1@gmail.com>, "David S. Miller"
+ <davem@davemloft.net>, Andy Whitcroft <apw@canonical.com>,
+ Joe Perches <joe@perches.com>, Dwaipayan Ray <dwaipayanray1@gmail.com>,
+ Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
+ Andrew Lunn <andrew@lunn.ch>, Jaroslav Kysela <perex@perex.cz>,
+ Takashi Iwai <tiwai@suse.com>, netdev@vger.kernel.org,
+ linux-sound@vger.kernel.org, Michael Ellerman <mpe@ellerman.id.au>,
+ Nathan Lynch <nathanl@linux.ibm.com>, linuxppc-dev@lists.ozlabs.org,
+ Mauro Carvalho Chehab <mchehab@kernel.org>, linux-media@vger.kernel.org
+References: <20240911-devel-anna-maria-b4-timers-flseep-v2-0-b0d3f33ccfe0@linutronix.de>
+Content-Language: en-US, fr-FR
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+In-Reply-To: <20240911-devel-anna-maria-b4-timers-flseep-v2-0-b0d3f33ccfe0@linutronix.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
+
+Le 11/09/2024 à 07:13, Anna-Maria Behnsen a écrit :
+> Hi,
+> 
+> a question about which sleeping function should be used in acpi_os_sleep()
+> started a discussion and examination about the existing documentation and
+> implementation of functions which insert a sleep/delay.
+> 
+> The result of the discussion was, that the documentation is outdated and
+> the implemented fsleep() reflects the outdated documentation but doesn't
+> help to reflect reality which in turns leads to the queue which covers the
+> following things:
+> 
+> - Split out all timeout and sleep related functions from hrtimer.c and timer.c
+>    into a separate file
+> 
+> - Update function descriptions of sleep related functions
+> 
+> - Change fsleep() to reflect reality
+> 
+> - Rework all comments or users which obviously rely on the outdated
+>    documentation as they reference "Documentation/timers/timers-howto.rst"
+> 
+> - Last but not least (as there are no more references): Update the outdated
+>    documentation and move it into a file with a self explaining file name
+> 
+> The queue is available here and applies on top of tip/timers/core:
+> 
+>    git://git.kernel.org/pub/scm/linux/kernel/git/anna-maria/linux-devel.git timers/misc
+> 
+> Signed-off-by: Anna-Maria Behnsen <anna-maria@linutronix.de>
 
 Hi,
 
-This is really exciting news! With DAMON being enabled in the Debian kernel.
+not directly related to your serie, but some time ago I sent a patch to 
+micro-optimize Optimize usleep_range(). (See [1])
 
-Link: https://salsa.debian.org/kernel-team/linux/-/merge_requests/1172
+The idea is that the 2 parameters of usleep_range() are usually 
+constants and some code reordering could easily let the compiler compute 
+a few things at compilation time.
 
-On 8/25/24 1:32 오전, SeongJae Park wrote:
-> Hi Yunseong,
-> 
-> On Sun, 25 Aug 2024 02:26:11 +0900 Yunseong Kim <yskelg@gmail.com> wrote:
-> 
->> Hi SeongJae,
->>
->> I have submitted a patch to the Debian Linux kernel team as follows:
->> Link: https://salsa.debian.org/kernel-team/linux/-/merge_requests/1172/diffs?commit_id=1c5f4aefc7791367bbf43adcd81594d1cb42aa66
-> 
-> Thank you very much for doing this great work and letting me know!
-> 
->>
->> Please let me know if there are any additional details or improvements needed for my patch.
-> 
-> All looks good to me.  Nonetheless, Salvatore's comments also makes sense to
-> me.
-> 
-> 
-> Thanks,
-> SJ
+There was consensus on the value of the change (see [2]), but as you are 
+touching things here, maybe it makes sense now to save a few cycles at 
+runtime and a few bytes of code?
+
+CJ
+
+[1]: 
+https://lore.kernel.org/all/f0361b83a0a0b549f8ec5ab8134905001a6f2509.1659126514.git.christophe.jaillet@wanadoo.fr/
+
+[2]: 
+https://lore.kernel.org/all/03c2bbe795fe4ddcab66eb852bae3715@AcuMS.aculab.com/
 
 
-Thanks to DAMON maintainers Dr. SeongJae and Debian Maintainer Michel,
-
-and every contributors involved in DAMON and the DAMO user space tool, this achievement has been made possible.
-
-I’m also very grateful for the reviews from the Debian Linux kernel team, Salvatore and Ben.
-
-
-Best regards,
-Yunseong Kim
