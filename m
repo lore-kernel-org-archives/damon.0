@@ -1,144 +1,92 @@
-Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71B4112CDB6
-	for <damon@lists.linux.dev>; Mon, 23 Sep 2024 15:12:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 257AA28E7;
+	Mon, 23 Sep 2024 16:32:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727104381; cv=none; b=ZGo9tdZl5yAFrXG7JM570DRLGThoaQWbjQ6we/oBm42+Q2c6o23gQDIvFVnEAcKvBdjPKjYF4/a8J+DawN5JKovPya34881evC51OjIxiQqz4M3qgLJZm/CXF+Y4Qsfez+NyM/LjTdtCAkPzFTKKbH92pb54nwGXIXBQd7smCnQ=
+	t=1727109152; cv=none; b=LuvW0bQEu4JDUpA3DV2J1xppxKhdDEmYuwDdUktZ6GPt5FtwP/kSdQ+S7mxyaQ6r6nPZcL3niiufjW5ZkryB3OjMlpkP3AAt3ysXwTKbqltTnnkemTINe7oDylB/QRwinG/lu2JQC6q46vMkV5mKH38XTMJCbcA7vSZNn8yXcYA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727104381; c=relaxed/simple;
-	bh=cMr7bXWI7gtfyAzSse1AawSl0oobveTp5Oo0fERlJx4=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=jSomddfwlgRRhGhrKs24LtLAgDW5D9LvieIo+ce1/YOyfUcmyzO0h1HQ9y23BGzoEWSGCJ3GcBgRcQ+icnlxZ/gKqKT8TTc77iaGMh/Z7716TrCayAqz6bc24cm+svOaoSI2h36uskrtIcZYKCg6E0YKV+oSbIXjm12QqdordAs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=PBfKNMCo; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=Ncg/SvYz; arc=none smtp.client-ip=193.142.43.55
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
+	s=arc-20240116; t=1727109152; c=relaxed/simple;
+	bh=YO604i0btXRLSH/R8dJ9t/pxBIj0haKRMoLVAQlx9K0=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=NJq8R14RBUs5FWX0+m7NglU1N18RVSPuDtJfleDqAgKHrsUEULTnFKbZ1tdysLEqpzaoXMNXTi2fgNFFRWEopWMsaChbDHvzN7wK7txCKav24cdmz4AhMQhq+PVJsORjfDWJpejOHsiKRTA0buh0W9wtslOtViGLPytfXxL0V5E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rxSPPala; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="PBfKNMCo";
-	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="Ncg/SvYz"
-From: Anna-Maria Behnsen <anna-maria@linutronix.de>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1727104377;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=elBGvOspzH3iGmK1fYd/bVgzyP8I6OQGyztmlAKbFJU=;
-	b=PBfKNMCoXVgqUMQ+jS8J96N56vpHFkiEIv7N0xlOaDipsFXHcUA3PDP3QEcMOcBBsigKcu
-	ep2rSt1lLmY2DOAonrtcys3ggssiwc2a9tr/YB5alUERWPb6VXbNoKRZigHzcgV4755VTn
-	wYk2+oEYFTBeLTvaEZ2pCcfw4KlNVPS6/D7TaIAiY0D8BB+WIJhmIwmXannp8UhBY3G1mi
-	G3uxSUcypZgacKtqZK/L7EwPqpg1IfqrNDdQvgliRnYaxsk4TTzPhYuwSgE1DT6uKROso/
-	5t/eiTVejV5slXI2ZzVLWwCneMD86d/J/xsNeJTYKgO8rphcsMBTmkNWCz+K2w==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1727104377;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=elBGvOspzH3iGmK1fYd/bVgzyP8I6OQGyztmlAKbFJU=;
-	b=Ncg/SvYzGFuvGC711XUusZn2/nNt5VKfdynTFfYe/Dj4+RDnjWTCN3ea404B/VToJ/4LZq
-	lwKy9a1/BRdLjSCQ==
-To: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Cc: linux-kernel@vger.kernel.org, Len Brown <len.brown@intel.com>, "Rafael
- J. Wysocki" <rafael@kernel.org>, Andrew Morton
- <akpm@linux-foundation.org>, damon@lists.linux.dev, linux-mm@kvack.org,
- SeongJae Park <sj@kernel.org>, Arnd Bergmann <arnd@arndb.de>,
- linux-arch@vger.kernel.org, Heiner Kallweit <hkallweit1@gmail.com>, "David
- S. Miller" <davem@davemloft.net>, Andy Whitcroft <apw@canonical.com>, Joe
- Perches <joe@perches.com>, Dwaipayan Ray <dwaipayanray1@gmail.com>, Liam
- Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, Andrew
- Lunn <andrew@lunn.ch>, Jaroslav Kysela <perex@perex.cz>, Takashi Iwai
- <tiwai@suse.com>, netdev@vger.kernel.org, linux-sound@vger.kernel.org,
- Michael Ellerman <mpe@ellerman.id.au>, Nathan Lynch
- <nathanl@linux.ibm.com>, linuxppc-dev@lists.ozlabs.org, Mauro Carvalho
- Chehab <mchehab@kernel.org>, linux-media@vger.kernel.org, Frederic
- Weisbecker <frederic@kernel.org>, Thomas Gleixner <tglx@linutronix.de>,
- Jonathan Corbet <corbet@lwn.net>
-Subject: Re: [PATCH v2 00/15] timers: Cleanup delay/sleep related mess
-In-Reply-To: <6cbedd50-c2d5-4ad7-8133-774eebd9d2f1@wanadoo.fr>
-References: <20240911-devel-anna-maria-b4-timers-flseep-v2-0-b0d3f33ccfe0@linutronix.de>
- <c794b4a6-468d-4552-a6d6-8185f49339d3@wanadoo.fr>
- <6cbedd50-c2d5-4ad7-8133-774eebd9d2f1@wanadoo.fr>
-Date: Mon, 23 Sep 2024 17:12:56 +0200
-Message-ID: <87ed5aietj.fsf@somnus>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rxSPPala"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 272C4C4CEC4;
+	Mon, 23 Sep 2024 16:32:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1727109149;
+	bh=YO604i0btXRLSH/R8dJ9t/pxBIj0haKRMoLVAQlx9K0=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=rxSPPala991VsSBaiVSimW1aA+GV1B5vn9mkxN1LmSZxWdLQG/XYFTNRuHm5mNdKd
+	 DgD9a3TrfhGbYBBuhurhDF/4OLsFVl7ZtpE/ezJFPFBiVyJXQRUHX8TUXY5fQ2UErq
+	 uhw79E2wStEWwWgcGBE0FUm0Q9iSjZQ4kS4BkA8NQCrW8av3I/RxEpkj4jTy9jyfdd
+	 FrQlonj0kt0r51u6AvtOBzM3nk1jKG+xFIrVjr735jOx9JGJg2JOZ/IWKrxsSyd5zc
+	 kmhYpD/U/kEytV1rjqYC1QuYzLLzLGckNjteEJMtsg/2NmLCgXzsOldSe2prWE6iyB
+	 ZHSSnHzbd59qw==
+From: SeongJae Park <sj@kernel.org>
+To: Diederik de Haas <didi.debian@cknow.org>
+Cc: SeongJae Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] mm/damon: Update DAMON doc URL
+Date: Mon, 23 Sep 2024 09:32:26 -0700
+Message-ID: <20240923163226.550729-1-sj@kernel.org>
+X-Mailer: git-send-email 2.46.1
+In-Reply-To: <20240923100615.14160-1-didi.debian@cknow.org>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-Christophe JAILLET <christophe.jaillet@wanadoo.fr> writes:
+Hi Diederik,
 
-> Le 16/09/2024 =C3=A0 22:20, Christophe JAILLET a =C3=A9crit=C2=A0:
->> Le 11/09/2024 =C3=A0 07:13, Anna-Maria Behnsen a =C3=A9crit=C2=A0:
->>> Hi,
->>>
->>> a question about which sleeping function should be used in=20
->>> acpi_os_sleep()
->>> started a discussion and examination about the existing documentation a=
-nd
->>> implementation of functions which insert a sleep/delay.
->>>
->>> The result of the discussion was, that the documentation is outdated and
->>> the implemented fsleep() reflects the outdated documentation but doesn't
->>> help to reflect reality which in turns leads to the queue which covers=
-=20
->>> the
->>> following things:
->>>
->>> - Split out all timeout and sleep related functions from hrtimer.c and=
-=20
->>> timer.c
->>> =C2=A0=C2=A0 into a separate file
->>>
->>> - Update function descriptions of sleep related functions
->>>
->>> - Change fsleep() to reflect reality
->>>
->>> - Rework all comments or users which obviously rely on the outdated
->>> =C2=A0=C2=A0 documentation as they reference "Documentation/timers/time=
-rs-=20
->>> howto.rst"
->>>
->>> - Last but not least (as there are no more references): Update the=20
->>> outdated
->>> =C2=A0=C2=A0 documentation and move it into a file with a self explaini=
-ng file name
->>>
->>> The queue is available here and applies on top of tip/timers/core:
->>>
->>> =C2=A0=C2=A0 git://git.kernel.org/pub/scm/linux/kernel/git/anna-maria/l=
-inux-=20
->>> devel.git timers/misc
->>>
->>> Signed-off-by: Anna-Maria Behnsen <anna-maria@linutronix.de>
->>=20
->> Hi,
->>=20
->> not directly related to your serie, but some time ago I sent a patch to=
-=20
->> micro-optimize Optimize usleep_range(). (See [1])
->>=20
->> The idea is that the 2 parameters of usleep_range() are usually=20
->> constants and some code reordering could easily let the compiler compute=
-=20
->> a few things at compilation time.
->>=20
->> There was consensus on the value of the change (see [2]), but as you are=
-=20
->
-> Typo: there was *no* consensus...
->
->> touching things here, maybe it makes sense now to save a few cycles at=20
->> runtime and a few bytes of code?
->>=20
+On Mon, 23 Sep 2024 12:05:58 +0200 Diederik de Haas <didi.debian@cknow.org> wrote:
 
-Sorry for the late reply. I'll check it and will come back to you.
+> The old URL doesn't really work anymore and as the documentation has
+> been integrated in the main kernel documentation site, change the URL to
+> point to that.
+
+Nice finding!  Thank you for fixing this!
+
+Nonetheless, I'd prefer having 'mm/damon/Kconfig:' as the prefix of the commit
+subject.
+
+> 
+> Signed-off-by: Diederik de Haas <didi.debian@cknow.org>
+
+Other than the trivial nit,
+
+Reviewed-by: SeongJae Park <sj@kernel.org>
+
 
 Thanks,
-	Anna-Maria
+SJ
 
+> ---
+>  mm/damon/Kconfig | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/mm/damon/Kconfig b/mm/damon/Kconfig
+> index fecb8172410c..35b72f88983a 100644
+> --- a/mm/damon/Kconfig
+> +++ b/mm/damon/Kconfig
+> @@ -9,7 +9,7 @@ config DAMON
+>  	  access frequency of each memory region. The information can be useful
+>  	  for performance-centric DRAM level memory management.
+>  
+> -	  See https://damonitor.github.io/doc/html/latest-damon/index.html for
+> +	  See https://www.kernel.org/doc/html/latest/mm/damon/index.html for
+>  	  more information.
+>  
+>  config DAMON_KUNIT_TEST
+> -- 
+> 2.45.2
