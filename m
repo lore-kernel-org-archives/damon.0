@@ -1,43 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 257AA28E7;
-	Mon, 23 Sep 2024 16:32:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3AFB28E7;
+	Mon, 23 Sep 2024 16:36:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727109152; cv=none; b=LuvW0bQEu4JDUpA3DV2J1xppxKhdDEmYuwDdUktZ6GPt5FtwP/kSdQ+S7mxyaQ6r6nPZcL3niiufjW5ZkryB3OjMlpkP3AAt3ysXwTKbqltTnnkemTINe7oDylB/QRwinG/lu2JQC6q46vMkV5mKH38XTMJCbcA7vSZNn8yXcYA=
+	t=1727109372; cv=none; b=eGuerSNee0cO+48vx9bKm1cDnKc5jBpFqid4XfwZp8ILw/ekO2ye2zluuSNbFcd6+pAcEOyYctCo5HT21Fj0nDsVm2lBeAYYvYXn70AD9MNg3LopjJpdyrJA/qjlspfIT90qUiPFdMsSAzb1U36Us1tuk/DTlJlvlwxRYTqRJlk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727109152; c=relaxed/simple;
-	bh=YO604i0btXRLSH/R8dJ9t/pxBIj0haKRMoLVAQlx9K0=;
+	s=arc-20240116; t=1727109372; c=relaxed/simple;
+	bh=1XU4JWrWMckwknKVBBKhzkqovdaB9PtL+kY6TeZaKKY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NJq8R14RBUs5FWX0+m7NglU1N18RVSPuDtJfleDqAgKHrsUEULTnFKbZ1tdysLEqpzaoXMNXTi2fgNFFRWEopWMsaChbDHvzN7wK7txCKav24cdmz4AhMQhq+PVJsORjfDWJpejOHsiKRTA0buh0W9wtslOtViGLPytfXxL0V5E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rxSPPala; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=apiONFK9Bot0Lt1e83mQLcikiUZzAaALa+/CL9CrvFS8A1ki3h0tpiY9SB7URsTfTb+8RL21HMTa0p2p4g6n5oFRuXLl0VEU5rL6MxLLQxGoeWiAXyNv4w9xlXTyFVUPM5gyL4gSxtNCnUXi8kTgorKKYX/yeOUCY/4t4zwGamw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OFpQbNg7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rxSPPala"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 272C4C4CEC4;
-	Mon, 23 Sep 2024 16:32:29 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OFpQbNg7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA204C4CEC4;
+	Mon, 23 Sep 2024 16:36:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1727109149;
-	bh=YO604i0btXRLSH/R8dJ9t/pxBIj0haKRMoLVAQlx9K0=;
+	s=k20201202; t=1727109372;
+	bh=1XU4JWrWMckwknKVBBKhzkqovdaB9PtL+kY6TeZaKKY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rxSPPala991VsSBaiVSimW1aA+GV1B5vn9mkxN1LmSZxWdLQG/XYFTNRuHm5mNdKd
-	 DgD9a3TrfhGbYBBuhurhDF/4OLsFVl7ZtpE/ezJFPFBiVyJXQRUHX8TUXY5fQ2UErq
-	 uhw79E2wStEWwWgcGBE0FUm0Q9iSjZQ4kS4BkA8NQCrW8av3I/RxEpkj4jTy9jyfdd
-	 FrQlonj0kt0r51u6AvtOBzM3nk1jKG+xFIrVjr735jOx9JGJg2JOZ/IWKrxsSyd5zc
-	 kmhYpD/U/kEytV1rjqYC1QuYzLLzLGckNjteEJMtsg/2NmLCgXzsOldSe2prWE6iyB
-	 ZHSSnHzbd59qw==
+	b=OFpQbNg7smZpnzLGjeV8w9DSE4xMPILouyTi7L540cGP/iKWjZUzwvwYg2yRKfJsr
+	 /Dc2jBLu7HNMK2YpeWahGi4FeB4NGrS8lndRHrIYPmNHABgWO6WENKQRUzpAdcD9us
+	 w2fyym4zmDIwQTiJMGd24yWpIis7CxeAJmvDVjoMjRtbchQ0rajm7u/KVZs0AAKK5U
+	 GREfYS0MUNRl0MS+c88j0geea68zzr2uOrCiNml7ywk44PqVzuSZKQ4oPsmWtgbfxN
+	 bOYvaNl/lzO/eA6mQyBEQx8vQwmRT6gSyIl2GhyxXGe2M4wUNNQc+n1K3AJWDf5CoP
+	 2JSVdg4h/FeuA==
 From: SeongJae Park <sj@kernel.org>
-To: Diederik de Haas <didi.debian@cknow.org>
+To: Ba Jing <bajing@cmss.chinamobile.com>
 Cc: SeongJae Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	shuah@kernel.org,
 	damon@lists.linux.dev,
 	linux-mm@kvack.org,
+	linux-kselftest@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] mm/damon: Update DAMON doc URL
-Date: Mon, 23 Sep 2024 09:32:26 -0700
-Message-ID: <20240923163226.550729-1-sj@kernel.org>
+Subject: Re: [PATCH] damon: access_memory_even: remove unused variables
+Date: Mon, 23 Sep 2024 09:36:07 -0700
+Message-ID: <20240923163608.552593-1-sj@kernel.org>
 X-Mailer: git-send-email 2.46.1
-In-Reply-To: <20240923100615.14160-1-didi.debian@cknow.org>
+In-Reply-To: <20240903034300.10443-1-bajing@cmss.chinamobile.com>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -47,23 +48,21 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hi Diederik,
+Hi Ba,
 
-On Mon, 23 Sep 2024 12:05:58 +0200 Diederik de Haas <didi.debian@cknow.org> wrote:
+On Tue,  3 Sep 2024 11:43:00 +0800 Ba Jing <bajing@cmss.chinamobile.com> wrote:
 
-> The old URL doesn't really work anymore and as the documentation has
-> been integrated in the main kernel documentation site, change the URL to
-> point to that.
+> These variables are never referenced in the code, just remove it.
 
-Nice finding!  Thank you for fixing this!
+Nice finding, thank you!
 
-Nonetheless, I'd prefer having 'mm/damon/Kconfig:' as the prefix of the commit
-subject.
+I'd prefer having 'selftests/damon/access_memory_even: ' as the commit subject
+prefix.
 
 > 
-> Signed-off-by: Diederik de Haas <didi.debian@cknow.org>
+> Signed-off-by: Ba Jing <bajing@cmss.chinamobile.com>
 
-Other than the trivial nit,
+Other than the above trivial nitpick,
 
 Reviewed-by: SeongJae Park <sj@kernel.org>
 
@@ -72,21 +71,23 @@ Thanks,
 SJ
 
 > ---
->  mm/damon/Kconfig | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>  tools/testing/selftests/damon/access_memory_even.c | 2 --
+>  1 file changed, 2 deletions(-)
 > 
-> diff --git a/mm/damon/Kconfig b/mm/damon/Kconfig
-> index fecb8172410c..35b72f88983a 100644
-> --- a/mm/damon/Kconfig
-> +++ b/mm/damon/Kconfig
-> @@ -9,7 +9,7 @@ config DAMON
->  	  access frequency of each memory region. The information can be useful
->  	  for performance-centric DRAM level memory management.
+> diff --git a/tools/testing/selftests/damon/access_memory_even.c b/tools/testing/selftests/damon/access_memory_even.c
+> index 3be121487432..a9f4e9aaf3a9 100644
+> --- a/tools/testing/selftests/damon/access_memory_even.c
+> +++ b/tools/testing/selftests/damon/access_memory_even.c
+> @@ -14,10 +14,8 @@
+>  int main(int argc, char *argv[])
+>  {
+>  	char **regions;
+> -	clock_t start_clock;
+>  	int nr_regions;
+>  	int sz_region;
+> -	int access_time_ms;
+>  	int i;
 >  
-> -	  See https://damonitor.github.io/doc/html/latest-damon/index.html for
-> +	  See https://www.kernel.org/doc/html/latest/mm/damon/index.html for
->  	  more information.
->  
->  config DAMON_KUNIT_TEST
+>  	if (argc != 3) {
 > -- 
-> 2.45.2
+> 2.33.0
