@@ -1,108 +1,120 @@
-Received: from mail-io1-f41.google.com (mail-io1-f41.google.com [209.85.166.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out-189.mta1.migadu.com (out-189.mta1.migadu.com [95.215.58.189])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3425719E974
-	for <damon@lists.linux.dev>; Mon, 23 Sep 2024 16:44:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 627D519E7E2
+	for <damon@lists.linux.dev>; Mon, 23 Sep 2024 16:47:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.189
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727109888; cv=none; b=k1M/6Vdr+qo1pRaykRrfugKwYE5IVjNWoDqaS13HkwZ61t8q1kFEux9NlDjgjJS2Z7jv6acImoCHgIb0tC1//SgVlErlmHbL/nOD3J71phVR8GiuyC+0UpXrF6KvjaZfJo+AacdN83vdpPcxToT+FELcHTq4CETV5ygx+eMk+BI=
+	t=1727110035; cv=none; b=tuMMN7UGv9pmjJ0swWgbEjqB3zr2pWls00xgrQVDkBw9gRVEgMUmsX50qFMG1fNinTEbY7kO0gJf0DR/fuFtFj/IPBHpGqHt4hZdy04GeYEX3J9C0c0v2J7s9uy/1vnhYU35aFti17KNzPnRnPOGD7RGOyZeNHVOhV/U3pR58aQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727109888; c=relaxed/simple;
-	bh=jIzpwkBvohPZ42RJk7QZSzfZGSTG+zibn9cWdNgkWoY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=fECWS8Fa0t5EEZhxhi0bwXk1/0QsPuePAPlw12YyNzUEu7Cj3q2i/m4X1EtDZeB3/GnpIignGgiWQnkNPawoT6gzUVB+BQQfSJLfAbk0g/wfghwtDPCEAV67Vv9Y9FDUJeWZZwO9N5MBWdGSxxnAmyQRE8/w0PIju0fkJmbKQqA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org; spf=pass smtp.mailfrom=linuxfoundation.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KOmf87+3; arc=none smtp.client-ip=209.85.166.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxfoundation.org
+	s=arc-20240116; t=1727110035; c=relaxed/simple;
+	bh=C/WqVMj4DrTy4lgLnjS672bib2conoZWLJv3A7cquOg=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=SdQVjlEkIq3rJD8bZ6yHf0setf2bPdZ2UNb/AuheybL7kKPWYmLzmSE8phjJ/icQw38dhgTU7Peouo5EAGeXizJankP91CQVMlXQx7JaP22Pkh1jQFCttWwRuD8oC4iNI9GXxnKYNfk1VB59Bu8s1aBE6PbnvTVf5efqn0gVBLc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=cknow.org; spf=pass smtp.mailfrom=cknow.org; dkim=pass (2048-bit key) header.d=cknow.org header.i=@cknow.org header.b=OLH/k+Jk; arc=none smtp.client-ip=95.215.58.189
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=cknow.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cknow.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KOmf87+3"
-Received: by mail-io1-f41.google.com with SMTP id ca18e2360f4ac-82ce1cd2026so167117639f.3
-        for <damon@lists.linux.dev>; Mon, 23 Sep 2024 09:44:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google; t=1727109885; x=1727714685; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=gjDcu1qjAZXv0N7bHIy/5adY2cLrLfFMbmRWe9h7RCA=;
-        b=KOmf87+3EdU2XJQNoKsUIGhxOSyFJEto7z8kmDM6scIHI/Qeo08d80W2+WohU/Cs0e
-         ZVI+Ry0tcBcclT0PzxcGpi3bpdA4clLkjIvfpXRn3cTNiry9dAIE+pXVWUQr7kNF6e5N
-         lXqsTimeDigY3dTrl1VI8Syjr/uMsmskSX138=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727109885; x=1727714685;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=gjDcu1qjAZXv0N7bHIy/5adY2cLrLfFMbmRWe9h7RCA=;
-        b=WE3QEac92ssdkmSnhwY94CLr/yLA1hR+LhjcUnu8iYE1ylGkvLe2WceHSaHr8rZ+7F
-         JpFx2Vok0Kv2AmC6bGVuJJSnlUXgTbctpjFQpLOZKHDU7bbMfpF5d0bsfdq9sjSm5QgX
-         t9R8Yf89nzD0tlxgBNwPt9ElkZsgN5pHQCzJ0ep4eH/xuiGLVnktoWw9KMthJ3RUac6N
-         fnfFnWndnqaqxLAAh7bQvgRbnM2Du3S/kT5BHme/OfUsr14vQzb4jfRvL20DHU8h0twq
-         aUcqegH5PEVyG2rpDkT1mB37ZbMUBWedftwu2CV9Yx1iCCGN2YOUr6sArKI6Z9ATBodz
-         PWMg==
-X-Forwarded-Encrypted: i=1; AJvYcCU3cxxLubM0KYgXi8tYS3OYnNtSwACja3UhmO0b0lJrhnbvhNsAE082lDS6zGFjyx6YTvlydQ==@lists.linux.dev
-X-Gm-Message-State: AOJu0Yx3gkswtTx2cHcLV7w8jK4gBfgIVFhkpoxdEYGKVDmUKCZEeVl1
-	2HfFGgAoRJBtuh1yWgNknLD7Ju86gRUQJeiOn42CR0fmOoozlTI5V/0qUXiurCw=
-X-Google-Smtp-Source: AGHT+IFeE7PSHtYTy6cCbJSWJ5DjlBn+o1h78m0KFuLtOxLv7/WV1afXrTm5YCgUpVC62dLJGRMTmg==
-X-Received: by 2002:a05:6e02:1a67:b0:3a0:451b:ade3 with SMTP id e9e14a558f8ab-3a0c8c9e4e6mr103481185ab.10.1727109885323;
-        Mon, 23 Sep 2024 09:44:45 -0700 (PDT)
-Received: from [192.168.1.128] ([38.175.170.29])
-        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-4d37ed597dfsm5222919173.166.2024.09.23.09.44.44
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 23 Sep 2024 09:44:44 -0700 (PDT)
-Message-ID: <6e71e7e2-5b69-488d-b3fc-e547d6b4b042@linuxfoundation.org>
-Date: Mon, 23 Sep 2024 10:44:43 -0600
+	dkim=pass (2048-bit key) header.d=cknow.org header.i=@cknow.org header.b="OLH/k+Jk"
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] damon: access_memory_even: remove unused variables
-To: Ba Jing <bajing@cmss.chinamobile.com>, sj@kernel.org
-Cc: shuah@kernel.org, damon@lists.linux.dev, linux-mm@kvack.org,
- linux-kselftest@vger.kernel.org, linux-kernel@vger.kernel.org,
- Shuah Khan <skhan@linuxfoundation.org>
-References: <20240903034300.10443-1-bajing@cmss.chinamobile.com>
-Content-Language: en-US
-From: Shuah Khan <skhan@linuxfoundation.org>
-In-Reply-To: <20240903034300.10443-1-bajing@cmss.chinamobile.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cknow.org; s=key1;
+	t=1727110030;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=lUIdOEihVUyd1ilWFDy6GeBjW5ZBlK+M2N/8lsqNaFg=;
+	b=OLH/k+JkMD65LcM9ljhdOWgI81PmyWYDWuO4SqZQE3qTMNTvIbIqd0xEOVR++mv9Z/YCkf
+	SQtRCpgscxtcGMFK3ozjWV344d6z3xCe5eJcNQJwzLrrjBdv+1anH6y1X0VgZADK/RoZVU
+	NJaQoTpTWQDI2mdd754TCNHIKvM2S5adC99FOl43WrsQE+OkzKWUGSKVfdtVNfnXcVHeJr
+	EsdkUgTVmfLP/8/gvYg98bthqmxqkQS1dqVtBi8GEh/Fcweaof4MihgD/ev2hpwO5Zrnse
+	hJaYh4tNNaOyJa+DvBvIMuZvC8q0EEIwbQheSxnJpYKoCqZmoWcYpV+fzlXbsA==
+Content-Type: multipart/signed;
+ boundary=d0baebba785571bdc3f21f5e5605455d839280196496138da20ab2852bd8;
+ micalg=pgp-sha256; protocol="application/pgp-signature"
+Date: Mon, 23 Sep 2024 18:46:57 +0200
+Message-Id: <D4DTEKH7A93W.1MGHTQZGU5UCC@cknow.org>
+Cc: "Andrew Morton" <akpm@linux-foundation.org>, <damon@lists.linux.dev>,
+ <linux-mm@kvack.org>, <linux-kernel@vger.kernel.org>, "Diederik de Haas"
+ <didi.debian@cknow.org>
+Subject: Re: [PATCH] mm/damon: Update DAMON doc URL
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: "Diederik de Haas" <didi.debian@cknow.org>
+To: "SeongJae Park" <sj@kernel.org>
+References: <20240923100615.14160-1-didi.debian@cknow.org>
+ <20240923163226.550729-1-sj@kernel.org>
+In-Reply-To: <20240923163226.550729-1-sj@kernel.org>
+X-Migadu-Flow: FLOW_OUT
 
-On 9/2/24 21:43, Ba Jing wrote:
-> These variables are never referenced in the code, just remove it.
+--d0baebba785571bdc3f21f5e5605455d839280196496138da20ab2852bd8
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
 
-remove them?
+Hi SeongJae,
 
-Add details on how you found this problem in the commit log.
-Send v2 with these changes.
+On Mon Sep 23, 2024 at 6:32 PM CEST, SeongJae Park wrote:
+> On Mon, 23 Sep 2024 12:05:58 +0200 Diederik de Haas <didi.debian@cknow.or=
+g> wrote:
+>
+> > The old URL doesn't really work anymore and as the documentation has
+> > been integrated in the main kernel documentation site, change the URL t=
+o
+> > point to that.
+>
+> Nice finding!  Thank you for fixing this!
+>
+> Nonetheless, I'd prefer having 'mm/damon/Kconfig:' as the prefix of the c=
+ommit
+> subject.
 
-> 
-> Signed-off-by: Ba Jing <bajing@cmss.chinamobile.com>
-> ---
->   tools/testing/selftests/damon/access_memory_even.c | 2 --
->   1 file changed, 2 deletions(-)
-> 
-> diff --git a/tools/testing/selftests/damon/access_memory_even.c b/tools/testing/selftests/damon/access_memory_even.c
-> index 3be121487432..a9f4e9aaf3a9 100644
-> --- a/tools/testing/selftests/damon/access_memory_even.c
-> +++ b/tools/testing/selftests/damon/access_memory_even.c
-> @@ -14,10 +14,8 @@
->   int main(int argc, char *argv[])
->   {
->   	char **regions;
-> -	clock_t start_clock;
->   	int nr_regions;
->   	int sz_region;
-> -	int access_time_ms;
->   	int i;
->   
->   	if (argc != 3) {
+Do you want me to send a v2 for it or will that be fixed when
+committing?
 
-With these changes:
+> Other than the trivial nit,
+>
+> Reviewed-by: SeongJae Park <sj@kernel.org>
 
-Reviewed-by: Shuah Khan <skhan@linuxfoundation.org>
+Thanks :)
 
-thanks,
--- Shuah
+Cheers,
+  Diederik
+
+> > ---
+> >  mm/damon/Kconfig | 2 +-
+> >  1 file changed, 1 insertion(+), 1 deletion(-)
+> >=20
+> > diff --git a/mm/damon/Kconfig b/mm/damon/Kconfig
+> > index fecb8172410c..35b72f88983a 100644
+> > --- a/mm/damon/Kconfig
+> > +++ b/mm/damon/Kconfig
+> > @@ -9,7 +9,7 @@ config DAMON
+> >  	  access frequency of each memory region. The information can be usef=
+ul
+> >  	  for performance-centric DRAM level memory management.
+> > =20
+> > -	  See https://damonitor.github.io/doc/html/latest-damon/index.html fo=
+r
+> > +	  See https://www.kernel.org/doc/html/latest/mm/damon/index.html for
+> >  	  more information.
+> > =20
+> >  config DAMON_KUNIT_TEST
+> > --=20
+> > 2.45.2
+
+
+--d0baebba785571bdc3f21f5e5605455d839280196496138da20ab2852bd8
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYIAB0WIQT1sUPBYsyGmi4usy/XblvOeH7bbgUCZvGbhQAKCRDXblvOeH7b
+bgEuAP9mbmpuhXYnoewUSGm6j4/Aq6MUtLwvMFewMTfmHmJ+5AD+N0cfqRmmPGKA
+wmqOoiQJAHlViCo+NtMp9Any5X3AEA4=
+=lQP8
+-----END PGP SIGNATURE-----
+
+--d0baebba785571bdc3f21f5e5605455d839280196496138da20ab2852bd8--
