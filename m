@@ -1,40 +1,42 @@
-Received: from cmccmta1.chinamobile.com (cmccmta4.chinamobile.com [111.22.67.137])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 419361C3D
-	for <damon@lists.linux.dev>; Mon, 23 Sep 2024 06:58:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=111.22.67.137
+Received: from out-184.mta0.migadu.com (out-184.mta0.migadu.com [91.218.175.184])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 523C319580A
+	for <damon@lists.linux.dev>; Mon, 23 Sep 2024 10:07:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.184
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727074722; cv=none; b=W/OCkGch2/Fh73D/WMM0TXpOvlRF20Qi5BBaxkrVH7IOjHSYOQJSXYC+qbscTjiR+d04y39Tav9aiaydYmv1UsoFmWMMB1iwmh2Or2GgoJYfmDYIwrfcymkkzgCm2An5E93lDmmHwbU//YmlC6EadcsEW1TggMSCYHC/TPljdpY=
+	t=1727086051; cv=none; b=J+vUXpBjHNRgbV397ZgkpVMzR3FTKxQ3iBQEvcAT1hdovdmoCPVXCpGvNcQvpP21x5qtQUTZfNNOdhWkkRqHSeck4TutYnAGx9+sMd5Za9vIlqD82JlFSF3ixQZ3uLdrOh/meKvWwd794SncT2wYJ7m8kFhBUXuEYNM+At4N5+M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727074722; c=relaxed/simple;
-	bh=/2JVorIG7th0ajxlD50o5U0sBCabrYn/8381IRn39OU=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=IQNtZf7xCMQabpjYzjP0ml75YytBNEJzQqf8u3Kijlv8fcc6cXyuyB4jbGIU6rkFKcqWRU6WyzHbjeCwqpBHg3BKd0Wk1jJ2Trm3YtJBlOWdoPOk27sjatoMnD2m/kYZnHwia59Qze26aCLpp6/GCmV5Cmm+1eFVn5hQeqhSYs4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=cmss.chinamobile.com; spf=pass smtp.mailfrom=cmss.chinamobile.com; arc=none smtp.client-ip=111.22.67.137
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=cmss.chinamobile.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cmss.chinamobile.com
-X-RM-TagInfo: emlType=0                                       
-X-RM-SPAM-FLAG:00000000
-Received:from spf.mail.chinamobile.com (unknown[10.188.0.87])
-	by rmmx-syy-dmz-app04-12004 (RichMail) with SMTP id 2ee466f1119a2f1-48be8;
-	Mon, 23 Sep 2024 14:58:37 +0800 (CST)
-X-RM-TRANSID:2ee466f1119a2f1-48be8
-X-RM-TagInfo: emlType=0                                       
-X-RM-SPAM-FLAG:00000000
-Received:from localhost.localdomain (unknown[223.108.79.101])
-	by rmsmtp-syy-appsvr05-12005 (RichMail) with SMTP id 2ee566f1118bd55-540c9;
-	Mon, 23 Sep 2024 14:58:37 +0800 (CST)
-X-RM-TRANSID:2ee566f1118bd55-540c9
-From: Ba Jing <bajing@cmss.chinamobile.com>
-To: sj@kernel.org
-Cc: shuah@kernel.org,
-	damon@lists.linux.dev,
+	s=arc-20240116; t=1727086051; c=relaxed/simple;
+	bh=TQpL3doUAOzqaH4/O3lCAacdc2AFb3+M/efOrt9mt74=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=m0LSSddln55we+tqnru/Tzt3mPBpcUIWTpYuuNCKB8nBcvwxxSfmcz0nTDu3pluDYVul7MdOwFH5L1ndFtTnNHvx90MqKcp4eTQ1fOoawz9w0TsdMFe9E3JeAoJX0EFXSzbPRJxWKrkBjXSOj5C3VKzP5c70ojkFB+hHaZ9MbcM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=cknow.org; spf=pass smtp.mailfrom=cknow.org; dkim=pass (2048-bit key) header.d=cknow.org header.i=@cknow.org header.b=Sej25HZv; arc=none smtp.client-ip=91.218.175.184
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=cknow.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cknow.org
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=cknow.org header.i=@cknow.org header.b="Sej25HZv"
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cknow.org; s=key1;
+	t=1727086043;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=oCYcTAl+PnkECGw3Xrm07VTjSkzOitgt3KoVAnQzsKE=;
+	b=Sej25HZvJ5ZCAj6DXEJVKc8iRhTq9vBj2P99vmv82/IeV8OHXq9Oegowka8vD7wCYOi7N2
+	q011T3UJ8ulPlmLETWCRzIN7zOmhH+toIG24XoEQf57Y9EJiO1IDc18lf7qCy8fWQIWJIV
+	+t+taNC/p3jmBjVbNTSx7a+ig6gXC8GqImzz9BY9RyiKikfVUOKyKSbfLdFUInBaYl9bKC
+	G+iEKhUomQ3QO+neJluHwGiVkP/MQweBKN9GypNq18SgZyuXCE0Zh/J1R6EIBsav8AuvaA
+	9u04oGh1qzBqwDPhtS1GwWR+X1p/LIn89wdadiSiDuMtWLuLUWqOA2ubD4ku/w==
+From: Diederik de Haas <didi.debian@cknow.org>
+To: SeongJae Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Cc: damon@lists.linux.dev,
 	linux-mm@kvack.org,
-	linux-kselftest@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	Ba Jing <bajing@cmss.chinamobile.com>
-Subject: [PATCH] damon: access_memory_even: remove unused variables
-Date: Tue,  3 Sep 2024 11:43:00 +0800
-Message-Id: <20240903034300.10443-1-bajing@cmss.chinamobile.com>
-X-Mailer: git-send-email 2.33.0
+	Diederik de Haas <didi.debian@cknow.org>
+Subject: [PATCH] mm/damon: Update DAMON doc URL
+Date: Mon, 23 Sep 2024 12:05:58 +0200
+Message-ID: <20240923100615.14160-1-didi.debian@cknow.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -42,31 +44,30 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+X-Migadu-Flow: FLOW_OUT
 
-These variables are never referenced in the code, just remove it.
+The old URL doesn't really work anymore and as the documentation has
+been integrated in the main kernel documentation site, change the URL to
+point to that.
 
-Signed-off-by: Ba Jing <bajing@cmss.chinamobile.com>
+Signed-off-by: Diederik de Haas <didi.debian@cknow.org>
 ---
- tools/testing/selftests/damon/access_memory_even.c | 2 --
- 1 file changed, 2 deletions(-)
+ mm/damon/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/damon/access_memory_even.c b/tools/testing/selftests/damon/access_memory_even.c
-index 3be121487432..a9f4e9aaf3a9 100644
---- a/tools/testing/selftests/damon/access_memory_even.c
-+++ b/tools/testing/selftests/damon/access_memory_even.c
-@@ -14,10 +14,8 @@
- int main(int argc, char *argv[])
- {
- 	char **regions;
--	clock_t start_clock;
- 	int nr_regions;
- 	int sz_region;
--	int access_time_ms;
- 	int i;
+diff --git a/mm/damon/Kconfig b/mm/damon/Kconfig
+index fecb8172410c..35b72f88983a 100644
+--- a/mm/damon/Kconfig
++++ b/mm/damon/Kconfig
+@@ -9,7 +9,7 @@ config DAMON
+ 	  access frequency of each memory region. The information can be useful
+ 	  for performance-centric DRAM level memory management.
  
- 	if (argc != 3) {
+-	  See https://damonitor.github.io/doc/html/latest-damon/index.html for
++	  See https://www.kernel.org/doc/html/latest/mm/damon/index.html for
+ 	  more information.
+ 
+ config DAMON_KUNIT_TEST
 -- 
-2.33.0
-
-
+2.45.2
 
