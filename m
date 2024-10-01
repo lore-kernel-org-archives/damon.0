@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 103A3B67D;
-	Tue,  1 Oct 2024 00:24:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 937ED1BCA19;
+	Tue,  1 Oct 2024 19:14:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727742299; cv=none; b=teddnJ+iFR9bBFLAjF79UJ1ZwLUoqZmZKCOiLw7+6m0t61S6PJzhwivedGC6rxI2bzZfHrVo2wb1kzobW00L2cvts7LhOJWuIWHf7gWOSyEnCoNU5SL7dvbQIgwDX3D6vA2on5GHt2U9tcbLdJM/sNrrnoqzJlShrWhumWD+YRs=
+	t=1727810071; cv=none; b=ZvT5CRoei8l1Lh2P1qIMEnliMaviraN0vwRJwyHXndiiVuhQtZH9ux4g4hlWODxIJJC1gNm7Cc8/hz9j+56RSNxyAfarnEDdRcKPS2tBg7nqEMuuBQtaEg1BslSUKGxeADiHAAb7sYSAXAczcMRcduqJbVC7/DicaWQar9BUcpc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727742299; c=relaxed/simple;
-	bh=uCi8FZAUBCp8PctpTkjzSSZRmnhrDQzi/kGGWkQE/8c=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=rK9bzTIG6zQDkDsRRZ4qdic9xNLHGynd9a80DebSYXBPdV9jEfXr5PoftVQQZd0Fth3tWHGkFIzNePZw93RSCc+a2KTBrzGLK6sB9ujaCiWQF6bh4W7d3mDWnnmTJ1fDq9YZr0AGdNHLvaUYjAYAUhnobZ6jSH7kxdhrTcW9/7E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NMyzXyjd; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1727810071; c=relaxed/simple;
+	bh=1o3xkKDxJdtkE8fgqL+WN2XSbXjNaOd+iHfQfqSiNLY=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=pmq/WdUXffhq5/HJVqq+6GXrjzsRhX1SKHyiN3KmVOFYVXsgsnpyNLAeklNAJvhqKAQ4oAt8qbX3rwVgQBPgPOBivG/1R3BUsxjtDbEYT73135in/u6R/Im8YXtAj0+Nt2MtO5pVIgHUeSHtnfeeNUAQnzVaTm8+E/EvkDcyV90=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=t4dXciEH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NMyzXyjd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C88DC4CEC7;
-	Tue,  1 Oct 2024 00:24:58 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="t4dXciEH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF9C5C4CEC6;
+	Tue,  1 Oct 2024 19:14:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1727742298;
-	bh=uCi8FZAUBCp8PctpTkjzSSZRmnhrDQzi/kGGWkQE/8c=;
+	s=k20201202; t=1727810071;
+	bh=1o3xkKDxJdtkE8fgqL+WN2XSbXjNaOd+iHfQfqSiNLY=;
 	h=From:To:Cc:Subject:Date:From;
-	b=NMyzXyjd0PiLJMrdw8SO8ZrsYLWQEryDYYfQ19QoO72bA8ufT8udKC8deMBSpi2c4
-	 su4g1NTDvk/+yAEJcbBfQxgZnkjPirTFMBXbl1Hz2etyu9CRzriBNSw4bSQsmlFhbY
-	 4KzH7OTH56HgcsZ+Cm6jVoM5nU8Rb3ZW8qErROjV0xSafYg3A0ITLoAi569Bc0ZaGE
-	 p2m4GuL8zbtYBNskCT5cLHKdFIndJ0KQTqnozqT3GX4BQqq0PINHSdp+oH39886q6A
-	 ByFlja4ThSZ8uiE5b19Ciah81EFVkZi6wMyLnjuD6AjN9FhWFs0TL4h8GDyZokM4uO
-	 dBSOjbE1cAwig==
+	b=t4dXciEHyaKIkUR03pyVn5lnVZEGNg7JvOVwcOx9OOH2n6PuxRZDwXQz5cYV2fACi
+	 yTqQqTjUkPN8uhrrustRtTTQWKS3ZNOEemLNam/SBbkoMpQsf4BkMgLUqaOQmsJsoO
+	 2tQISWwvsktjKXQv/CUkZArnmElzGMQEeSmmxZaGZNn6LxTzhFApuzb2kGQem6a6e2
+	 /VVifbZMoOCpqMCgepS+y8qlBaEaBLBJmc8XfQ+21hV9RyqQBFMkWrW+D/dBJp94kK
+	 jfWLiKWlkOLsCamFJ+TfLjJ0YY+BuBt+EKmFm2MJf4CQTov3ylipp9KXe8ZUJC/3By
+	 uEZ7OG2NZnn4A==
 From: SeongJae Park <sj@kernel.org>
-To: damon@lists.linux.dev
+To: 
 Cc: SeongJae Park <sj@kernel.org>,
+	damon@lists.linux.dev,
 	linux-mm@kvack.org,
 	linux-kernel@vger.kernel.org
-Subject: Fwd: DAMON Quaterly News Letter (2024 Q2)
-Date: Mon, 30 Sep 2024 17:24:48 -0700
-Message-ID: <20241001002449.515043-1-sj@kernel.org>
+Subject: DAMON Quaterly News Letter (2024 Q3)
+Date: Tue,  1 Oct 2024 12:14:24 -0700
+Message-ID: <20241001191425.588219-1-sj@kernel.org>
 X-Mailer: git-send-email 2.46.2
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -42,88 +43,75 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hello,
-
-
-I just realized that I made a typo to recipients field for DAMON mailing list.
-As a result, the original news letter has not saved on DAMON maling list
-archive.  Forwarding the news letter again with correct recipients fields,
-since being late is better than nothing in my opinion.
-
-
-Thanks,
-SJ
-
-=== >8 ===
-From: SeongJae Park <sj@kernel.org>
-CC: SeongJae Park <sj@kernel.org>, damon@lists.linuxdev, linux-mm@kvack.org, linux-kernel@vger.kernel.org
-Subject: DAMON Quaterly News Letter (2024 Q2)
-Message-Id: <20240701212244.52288-1-sj@kernel.org>
-Date: Mon,  1 Jul 2024 14:22:44 -0700
-Local-Date: 2024-07-01 14:22:44-07:00
-
 Hello DAMON community,
 
 
-Time flies.  The second quater of 2024 has passed.  Let me take a time to look
-back what happened to DAMON community in the last three months and share my
-humble summary with this quaterly news letter.
+Three more months have passed since the last DAMON quaterly news letter[0].
+Let's look back what happened in the last three months.
 
 Highlights of Highlights
 ========================
 
-DAMON gained a feature [10] for CXL-based tiered memory management.  HacKerMaiL
-(hkml), a simple mailing tool that DAMON maintainer is developing, made an
-official commitment [12] to support DAMON community.  DAMON has presented and
-discussed with more people from OSSummit NA [4] and LSF/MM+BPF [7].  It will
-again be presented and discussed with more folks in September [10,13].
+- New features.  DAMON-based CXL memory tiering patchset has merged[1] into the
+  mainline.
+- More users.  DAMON usages from AWS Aurora Serverless v2 has unveiled[6].
+  CONFIG_DAMON has enabled[9] on Debian kernels.  Six more academic papers that
+  exploring and/or utilizing DAMON has published or archived on OSDI[2,3],
+  ATC[4,5], VLDB[6], and ArXiv[7].  Monthly PyPI downloads of DAMON user-space
+  tool (DAMO) has significantly increase.
+- Re:org.  DAMON github repos have moved[8] from awslabs org to damonitor org. 
+- Conferences:   Detailed DAMON usages from products and labs have presented on
+  OSS EU[10] and the VLDB paper[6].  Long-term DAMON plans for kernel that
+  extensible and just works have shared and discussed[11] on LPC.
 
-Please read below for more highlights for each month.
+More detailed list of news per each month follows.
 
-April 2024
-==========
-
-DAMO v2.2.8 has released [1] with memory footprint monitoring feature.
-
-DAMON news letter for 2024-Q1 has posted [2].
-
-Using Oracle's awesome kernel configs comparison tool, we found some dsitros
-that enable DAMON on their kernel [3].
-
-DAMON has presented[4] on Open Source Summit North America 2024.  The third
-in-person DAMON meetup has also held [5] on the conference.
-
-May 2024
-========
-
-Access/Contiguity-aware Memory Auto-scaling second RFC idea with example
-implementation is posted [6].
-
-DAMON's status and future plans have shared and discussed on LSFMM+BPF.  LWN's
-summary of the session is available [7].
-
-Memory managment subsystem pull request [8] for Linux 6.10-rc1 that contains
-DAMOS young page filter has merged.
-
-Beer/Coffee/Tea DAMON meetup has extended [9] for reservation-based ones.
-
-June 2024
+July 2024
 =========
 
-DAMON talk for Open Source Summit Europe 2024 has been accepted and
-scheduled [10].
+A couple of OSDI'24 papers[2,3] for memory tiering that references and
+exploring DAMON as a part of them are published.
 
-SK hynix' patch series titled "DAMON based tiered memory managment for CXL
-memory" has been merged [11] into mm-unstable tree.
+ATC'24 also published two DAMON-citing papers at the same time. The first
+one[4] proposes a way to improve monitoring accuracy of DAMON, while the second
+one[5] mentions DAMON can be useful for extensible memory management.
 
-DAMON community got a simple mailing tool called HacKerMaiL (hkml), which is
-officially committed [12] to support the development workflow.
+VLDB paper about Aurora Serverless V2, which reveals their usage of DAMON on
+the product, is uploaded[6].
 
-A session for DAMON at kernel summit 2024 has proposed [13] .
+Memory Management subsystem pull request for Linux v6.11-rc1 with DAMON changes
+for CXL memory tiering has merged[1].
 
-Previous news letters
-=====================
+August 2024
+===========
 
+GitHub repos for non-kernel parts of DAMON project including 'damo',
+'damon-tests' and 'damoos' have announced[8] to be moved from awslabs org to
+damonitor org.  As of this writing, the reorganization is completed.
+
+September 2024
+==============
+
+CONFIG_DAMON is enabled[9] on Debian kernels.
+
+An academic paper preprint that optimizes THP using DAMON and BPF has
+uploaded[7] to ArXiv.
+
+DAMON usages from labs and real-world products for profiling-guided
+optimizations, proactive reclamation (Auroa Serverless v2), and CXL memory
+tiering (SK hynix HMSDK) have shared[10] on Linux Conference at OSSummit EU'24.
+
+DAMON long-term plans for making kernel extensible and just works have shared
+and discussed on Kernel Memory Management Micro-Conference[11] at LPC'24.
+
+Monthly PyPI downloads of DAMON user-space tool (DAMO) surpassed 4,000.  It
+took about 7 months since the record of 2,000 (2024-02), which took about 18
+months from the beginning.  The speed is apparently growing.
+
+Previous quaterly news letters
+==============================
+
+- 2024 Q2: https://lore.kernel.org/20240701212244.52288-1-sj@kernel.org
 - 2024 Q1: https://lore.kernel.org/20240402191224.92305-1-sj@kernel.org
 
 More Past DAMON News
@@ -131,22 +119,42 @@ More Past DAMON News
 
 If you're interested in a humblie list of more DAMON events that happened in
 past and curated by DAMON maintainer, please reach out to the project site's
-news page [14].
+news page [12].
 
 References
 ==========
 
-[1] https://github.com/awslabs/damo/blob/v2.2.8/USAGE.md#recording-memory-footprints
-[2] https://lore.kernel.org/damon/20240402191224.92305-1-sj@kernel.org/
-[3] https://oracle.github.io/kconfigs/?config=UTS_RELEASE&config=DAMON
-[4] https://sched.co/1aBOg
-[5] https://sched.co/1cP4G
-[6] https://lore.kernel.org/20240512193657.79298-1-sj@kernel.org
-[7] https://lwn.net/Articles/973702/
-[8] https://lore.kernel.org/20240517192239.9285edd85f8ef893bb508a61@linux-foundation.org
-[9] https://lore.kernel.org/20240519163329.150340-1-sj@kernel.org
-[10] https://sched.co/1ej2S
-[11] https://lore.kernel.org/all/20240614185328.BA2C1C2BD10@smtp.kernel.org/
-[12] https://lore.kernel.org/20240621163626.74815-2-sj@kernel.org
-[13] https://lore.kernel.org/20240614175504.87365-1-sj@kernel.org/
-[14] https://sjp38.github.io/post/damon_news/
+[0] "DAMON Quaterly News Letter (2024 Q3)",
+    https://lore.kernel.org/20240701212244.52288-1-sj@kernel.org
+[1] "MM updates for 6.11-rc1",
+    https://lore.kernel.org/20240721145415.fbeb01a853962ef91334f3d1@linux-foundation.org
+[2] "Nomad: Non-Exclusive Memory Tiering via Transactional Page Migration",
+    https://www.usenix.org/conference/osdi24/presentation/xiang
+[3] "Managing Memory Tiers with CXL in Virtualized Environments",
+    https://www.usenix.org/conference/osdi24/presentation/zhong-yuhong
+[4] "Telescope: Telemetry for Gargantuan Memory Footprint Applications",
+    https://www.usenix.org/conference/atc24/presentation/nair
+[5] "FBMM: Making Memory Management Extensible With Filesystems",
+    https://www.usenix.org/conference/atc24/presentation/tabatabai
+[6] "Resource management in Aurora Serverless",
+    https://www.amazon.science/publications/resource-management-in-aurora-serverless
+[7] "eBPF-mm: Userspace-guided memory management in Linux with eBPF",
+    https://arxiv.org/pdf/2409.11220
+[8] https://lore.kernel.org/all/20240813232158.83903-1-sj@kernel.org/
+[9] https://salsa.debian.org/kernel-team/linux/-/merge_requests/1172
+[10] "DAMON Recipes: Ways to Save Memory Using a Linux Kernel Subsystem in the Real World",
+     https://sched.co/1ej2S
+[11] "DAMON: Long-term Plans for Kernel That {Just Works,Extensible}",
+     https://lpc.events/event/18/contributions/1768/
+[12] https://sjp38.github.io/post/damon_news/
+
+Wrapup
+======
+
+So, those were yet another grateful three months.  Looking forward to get more
+news!  If you have any question regarding DAMON, please feel free to reach out
+to the community and/or me.
+
+
+Thanks,
+SJ
