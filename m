@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53E1D8BF0;
-	Thu,  3 Oct 2024 18:25:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E44BD18E1F;
+	Sat,  5 Oct 2024 20:43:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727979947; cv=none; b=RyG9Z1wpD8Z7FqbhvRlpGNTmhcysMYMbQhBXNui64Pq8LkzoRLQna2eJkLnYhY/6I9VPBinhmoUK2m8qmUJlk8YFXfZzGCrORMa5ldU3Ul9h2q1hwbbd3yaYAIPWDiYndZtpndoIYY31vbap0mgkRWQLz3Mbn8UmltVzBT5fx0k=
+	t=1728161004; cv=none; b=ZdoPe1Z/EGVG8jEJti8DDOE7ZetkUO8u4xDSzOnRMKAztGVA7IEuQuq/nO1YLjVRfYP5qCTqvh7VVggkYScB4CuazTVIjP44lvl4bafb4Q4cdZPxAsetJu7aIJHOX71aHp1GrIGeI1L7SXmmV1xQvLTCpKSsruJvcpHvrSIK5Mw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727979947; c=relaxed/simple;
-	bh=1RQTQfqzQYyIHZWAuqX1DmxIhKDqELflCG0wChfYsis=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=RiA4QJ69H/pqrVLn0KEUgHQxfGZ6V5k8SHsBC3NvahgovkrvFGdkPJ683fX/VsVWW3Baf32vWhu2K6wYJJpcWz53wQEmY22OE5Jjhq4e3j7TutrB2sVTz7kO2bRzbrkw8McPcHdzjl6NeezXfebEfo2jrloqy9RbYU2ei3596xc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HOeHKNB4; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1728161004; c=relaxed/simple;
+	bh=w1S1kccVHqOlIDjO7bcM2/Es9N01G0yiryLEDKVmDgQ=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=XsAclDyy9fztD5vcLA7n0nkXBsUtfKDt9beA21XvBIsHwqcBy6EN6EjARiu9a8lPildmAbq5NCatsGIDXGfNG9AEj6nef10EQ2ZFd0/vvcdF2EtAc0IP6GAwQx8OuP9JY/DoBLeHZyemJXRRnzuNWKu8VtfFlIIClxax1wjaPQ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=akKSLHmV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HOeHKNB4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8288C4CEC5;
-	Thu,  3 Oct 2024 18:25:46 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="akKSLHmV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46FA9C4CEC2;
+	Sat,  5 Oct 2024 20:43:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1727979946;
-	bh=1RQTQfqzQYyIHZWAuqX1DmxIhKDqELflCG0wChfYsis=;
+	s=k20201202; t=1728161003;
+	bh=w1S1kccVHqOlIDjO7bcM2/Es9N01G0yiryLEDKVmDgQ=;
 	h=From:To:Cc:Subject:Date:From;
-	b=HOeHKNB4zkuyk7F+U7JBOvJ380Hp7hVQvZvDmMMGYI/il6RGQBru5O4iX+8swf22w
-	 ZtfXSLwupmV8pI+6A63MZdcx6G1pa4IHaPhEt9QVpMO+i1Rg0ZkyU/31p+mH1m63lo
-	 sTgT5Rc7tiYkBn+dvVlqVWf1uTu+/d2lQlYpPua8nXYfQsmiiHCBVzudZiQHEoVxHG
-	 FLJ5kWZfDZVSvapyczyFFhI2jvUlrtQ0+gbWg631oscofiMx6+v3hDIra8guaXx98z
-	 xACWrsSbDXpYkLb99A3cAm/1l864+0ImDB2v0agDPbS0caeGRiFxWMXhXhjuf+Xc68
-	 T+HCMbExwejpw==
+	b=akKSLHmV8HXhgGgjFFzr0V2j+M241Jd+TvB7ccDDP0oUnxd2VWMzeWmcs85ulS6Gw
+	 4Ts28h2dvqLkBOLlfhy/BdUPnPR+ecOys0NtIDOREoZll/pQwwYGdwifYiYfYXa0bQ
+	 ZbyWwlocmY1+G9McNtcrw2F66lz19NMD/VVkVQJMFSIcaxoMQXz/xl/1mqUgexGZyh
+	 YxEA7shMgJzGtLjoRDM2R4ovOQbLjftjIr5IgBJYVTAzlI0t7tMy2cQQ5YIH+hRdKo
+	 IGqJLUqlDyiUhZPfAbJZrgxRFo2JyRQl/ty/dJZq2TPUCzDQoQZcCaGwzZC8fmQQPW
+	 77X3qwmuf35pQ==
 From: SeongJae Park <sj@kernel.org>
 To: damon@lists.linux.dev
-Cc: sj@kernel.org,
+Cc: SeongJae Park <sj@kernel.org>,
 	linux-mm@kvack.org,
 	linux-kernel@vger.kernel.org
-Subject: [DAMON Beer/Coffee/Tea Chat] Re-scheduling Tuesday instances to Wednesday
-Date: Thu,  3 Oct 2024 11:25:43 -0700
-Message-Id: <20241003182543.66235-1-sj@kernel.org>
+Subject: DAMON Beer/Coffee/Tea chat reminder for the week of 2024-10-07
+Date: Sat,  5 Oct 2024 13:43:20 -0700
+Message-Id: <20241005204320.68531-1-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -42,23 +42,50 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-From: sj@kernel.org
-
-Hello DAMON community,
+Hello,
 
 
-We're currently having the bi-weekly DAMON Beer/Coffee/Tea chat series [1] on
-Monday 6 PM and Tuesday 9:30 AM in Pacific Time of relevant weeks.  Due to a
-conflict, moving all upcoming Tuesday instances to same time on Wednesday.  The 
-Google doc [2] and shared calendar [3] for the meeting are also updated for the
-change.
+This is yet another reminder of upcoming DAMON Beer/Coffee/Tea chats
+(https://docs.google.com/document/d/1v43Kcj3ly4CYqmAkMaZzLiM2GEnWfgdGbZAH3mi2vpM/edit?usp=sharing).
 
-Thank you for your understanding of the change.  Please note that you can
-whenever ask reschedules or additional meetings on your needs, though.
+Please note that time slots for Tuesday are rescheduled to Wednesday
+(https://lore.kernel.org/all/20241003182543.66235-1-sj@kernel.org/).
 
-[1] https://lore.kernel.org/20220810225102.124459-1-sj@kernel.org
-[2] https://docs.google.com/document/d/1v43Kcj3ly4CYqmAkMaZzLiM2GEnWfgdGbZAH3mi2vpM/edit?usp=sharing
-[3] https://calendar.google.com/calendar/u/0?cid=ZDIwOTA4YTMxNjc2MDQ3NTIyMmUzYTM5ZmQyM2U4NDA0ZGIwZjBiYmJlZGQxNDM0MmY4ZTRjOTE0NjdhZDRiY0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t
+Dedicated-topic discussions
+---------------------------
+
+Next three time slots that I reserved in advance for possible future dedicated
+topic discussions are as below.
+
+- 2024-10-07 (Mon) 18:00 PT (not yet reserved)
+- 2024-10-23 (Wed) 09:30 PT (not yet reserved)
+- 2024-11-04 (Mon) 18:00 PT (not yet reserved)
+
+Please reach out to me (sj@kernel.org or whatever) to reserve the
+not-yet-reserved time slots for your topics.  The reservation is made in a
+First-Come First-Served way, and I will send a Google Meet link to
+reservation-confirmed attendees.
+
+Please note that other time slots are also available based on the demands.
+
+Any-topic discussions
+---------------------
+
+Next three time slots for any topic (no reservation is required) are scheduled
+as below:
+
+- 2024-10-09 (Wed) 09:30 PT (https://meet.google.com/ndx-evoc-gbu)
+- 2024-10-21 (Mon) 18:00 PT (https://meet.google.com/ndx-evoc-gbu)
+- 2024-11-06 (Wed) 09:30 PT (https://meet.google.com/ndx-evoc-gbu)
+
+Shared Calendar
+---------------
+
+You can get the schedule via this shared Google Calendar:
+https://calendar.google.com/calendar/u/0?cid=ZDIwOTA4YTMxNjc2MDQ3NTIyMmUzYTM5ZmQyM2U4NDA0ZGIwZjBiYmJlZGQxNDM0MmY4ZTRjOTE0NjdhZDRiY0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t
+
+You can also get the past and upcoming schedules via
+https://docs.google.com/document/d/1v43Kcj3ly4CYqmAkMaZzLiM2GEnWfgdGbZAH3mi2vpM/edit?usp=sharing
 
 
 Thanks,
