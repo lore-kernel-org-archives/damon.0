@@ -1,43 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B1DB212D0A;
-	Tue, 15 Oct 2024 17:54:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCF262281C9;
+	Tue, 15 Oct 2024 17:54:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729014865; cv=none; b=FpR/ZcwauabyBeFPzO9uKd/VEjf+raDZrhka0pvko36ZWzt5ZgQBxx40udaEzpfAlBoGPHTZnC0TlLeC+8FIy8kUemDClMU2o669d1m4THOXW0+/DWhHqQL/TQI1slIkYxB3CY+xC4DrMJLSII2H9pNjyt79QqjrD33jl+mejsY=
+	t=1729014867; cv=none; b=HG5xvZODYx0P5XiiRIEs/RHeOMUJClzADNMB1jz9/p/QQ3l9xWuXGQEDyZZZUvRcfib2PBGqSSr7FEtGLs4VsbO8tYtLkkbo5rvKfve0U62ETTzt1xVE3G+tJ7A5SLoQyiQeWy2oiso6T7sBVu25Y18jFmyGljIb76aRxI6OUbk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729014865; c=relaxed/simple;
-	bh=7oF79jn9lmm7ZWBErpi45JOkdTnxIklx6KgFpgZJtWk=;
+	s=arc-20240116; t=1729014867; c=relaxed/simple;
+	bh=oYXb5ELfdFSBlBTaf0WAv5hcBOQ7eaf8Vl277fIm8X4=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=hhT8xwZKyjFP2k42xK+Ss+Akv5N+LfbzGAvPJhUcHqC4HdaG90JIdiQDqjVGCtJ213f0qxZcWDfL+Ex6Km0Wtdut3f8FmnxwrtIEzEch2CPaWHfPgRGErvNJ3Z/YBKr8HkpPxPWSPGIETzdZqXS561sIbD9gzgWSTjMB2Jqrd74=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZRwj6O7a; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gejJF1qUFPE8gQ2wLd+GdFDXwgHgDRTC3qH0YoeuC+NpB9TC/Jv0Ir6TJYipSzfSc7K10gI1gZ5McaqR5CTkyp9mPtLGOMndHpMSWdw6lywMjMIZgU99GP0plbyis+klZAJvf/jGtZBQbQDztuHVe4mNvxcPLxu9BHnT57oSMdU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jgEoebN5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZRwj6O7a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7A90C4CEC6;
-	Tue, 15 Oct 2024 17:54:24 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jgEoebN5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25B67C4CEDA;
+	Tue, 15 Oct 2024 17:54:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1729014865;
-	bh=7oF79jn9lmm7ZWBErpi45JOkdTnxIklx6KgFpgZJtWk=;
+	s=k20201202; t=1729014867;
+	bh=oYXb5ELfdFSBlBTaf0WAv5hcBOQ7eaf8Vl277fIm8X4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZRwj6O7az1k0rfe6QUN4UubDGCnxPfRgD/fFV9O7VgOyvZFYeHAmHatrF8iS2c48M
-	 HM+HZ3n/9fe5ENK+9k3PjOB51b+jiHU20qYQG04hYhGRJpLLxf4dt/C0KEt9i4vRUK
-	 i3Ez5U6z09AFYIGB9vOPBbM8mSMIgGvnpWOoIJnsVzJWeG3RvUAFJlwZ9dGplaiXGS
-	 4hyo7A4iwzGUkeq6Pt1SAVXXvWRH4zKaiI9gLAGimKhGYoxVtYcOCTLry+rbQ8sx/d
-	 SFBVntz5401F/cpYK0Qm2uvufvwIZpjWtnXsYrBU9/NrLjYEtNmv3rD/ImYBlmhgE0
-	 azYvLs6q6ND8w==
+	b=jgEoebN5ggv7bJIo+tsNgprDtKq52wrOPozQdSYwCVYN+SgZfqUvnrAPLS8D/ibpJ
+	 4tRo5REmWLrJjKyeBovXYKZA5W9qTNPB9fltaGLfZV72T48xutIrBPinTlwTVcTBwf
+	 55J4Li7dQGrXMBg08rbbkW6nYCOggKydEWolHwTj1SDocyvqL+RDJozEtZo8EP562L
+	 8tbIhbmmyQJ0NlLTdXu+URKTqB+H+IsV+Apl84HDOwKXJVFZTFuFkHA4CvE3qv6WOv
+	 C1y3HDKtF2X3pvYNbtG5f3Qb0IH1f9yPMPu9t2xKZK659xiYZFUGZeR/yk125lTTvH
+	 9O8PwBMbOubuA==
 From: SeongJae Park <sj@kernel.org>
 To: 
 Cc: SeongJae Park <sj@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Shuah Khan <shuah@kernel.org>,
+	Brendan Higgins <brendan.higgins@linux.dev>,
+	David Gow <davidgow@google.com>,
+	Rae Moar <rmoar@google.com>,
 	damon@lists.linux.dev,
 	linux-mm@kvack.org,
 	linux-kselftest@vger.kernel.org,
+	kunit-dev@googlegroups.com,
 	linux-kernel@vger.kernel.org
-Subject: [RFC PATCH 3/7] selftests/damon/config: remove configs for DAMON debugfs interface selftests
-Date: Tue, 15 Oct 2024 10:54:08 -0700
-Message-Id: <20241015175412.60563-4-sj@kernel.org>
+Subject: [RFC PATCH 5/7] kunit: configs: remove configs for DAMON debugfs interface tests
+Date: Tue, 15 Oct 2024 10:54:10 -0700
+Message-Id: <20241015175412.60563-6-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20241015175412.60563-1-sj@kernel.org>
 References: <20241015175412.60563-1-sj@kernel.org>
@@ -53,27 +56,29 @@ It's time to remove DAMON debugfs interface, which has deprecated long
 before in February 2023.  Read the cover letter of this patch series for
 more details.
 
-Remove configs for selftests of it from DAMON selftests config file, to
-prevent unnecessary noises from the tests.
-
-[1] https://lore.kernel.org/20230209192009.7885-1-sj@kernel.org
+Remove kernel configs for running DAMON debugfs interface kunit tests
+from the kunit all_tests configuration, to prevent unnecessary noises
+from tests.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- tools/testing/selftests/damon/config | 1 -
- 1 file changed, 1 deletion(-)
+ tools/testing/kunit/configs/all_tests.config | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/tools/testing/selftests/damon/config b/tools/testing/selftests/damon/config
-index 0daf38974eb0..a68a9fead5dc 100644
---- a/tools/testing/selftests/damon/config
-+++ b/tools/testing/selftests/damon/config
-@@ -1,6 +1,5 @@
+diff --git a/tools/testing/kunit/configs/all_tests.config b/tools/testing/kunit/configs/all_tests.config
+index b3b00269a52a..b0049be00c70 100644
+--- a/tools/testing/kunit/configs/all_tests.config
++++ b/tools/testing/kunit/configs/all_tests.config
+@@ -38,9 +38,6 @@ CONFIG_IWLWIFI=y
  CONFIG_DAMON=y
- CONFIG_DAMON_SYSFS=y
--CONFIG_DAMON_DBGFS=y
- CONFIG_DAMON_PADDR=y
  CONFIG_DAMON_VADDR=y
- CONFIG_DAMON_RECLAIM=y
+ CONFIG_DAMON_PADDR=y
+-CONFIG_DEBUG_FS=y
+-CONFIG_DAMON_DBGFS=y
+-CONFIG_DAMON_DBGFS_DEPRECATED=y
+ 
+ CONFIG_REGMAP_BUILD=y
+ 
 -- 
 2.39.5
 
