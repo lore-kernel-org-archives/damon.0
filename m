@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D1541C8FCA;
-	Tue, 22 Oct 2024 17:57:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A705E18037;
+	Tue, 22 Oct 2024 18:00:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729619841; cv=none; b=WSNq27oX5YT3CRFoiUOEBbLbFIiAcuErsopiCqMxaTMp4F7sYHaZbqRJWjLAeIuc2zCP8l/EYq7/O+hAdfZTkLquA8NxWqnAEQqz3lCie51SOfciZOZXRXpmfzK8AG6Sspr3koQE4qq0cG8QctBj9364U2AIjLSr1LHWqH7FCzM=
+	t=1729620044; cv=none; b=AvY1smwdhCZTbX0Oxi6zrYyQTavwu4Pn8LCmytO9BLqcHeJx3vuB7rTLhtAetm/FpdaOX33ikZmlCFZbSGFDV7nXmG700pcVUhAy4K2KicWxp8jO46KPpqYhu5orsShw0KNSW2hwOGv2o3sLPGz+zGFKGvJdAQdCxCZXa8YsYtk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729619841; c=relaxed/simple;
-	bh=fVSacvrMFuJP0Mfs887XpqYZFDZCM7QwCNWKBhVKDyM=;
+	s=arc-20240116; t=1729620044; c=relaxed/simple;
+	bh=wUmPYWpDbdK0aiE7pA+ZEzsAVI50NPFCo/x/WIwyr6A=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=OQJc3l3/OP/Ja9ZU68tHk7yKBZGbs5HblNHJWJD7P1ZDu4WNqyRAuG4qtwZW2YJi6luwIMv58cWg2b0ShomLuIAPDrY1QBp0qy2BM+4TRRf7OE6RlzCn17n45iwF72NyRZSkA8ctBCurKIEz2WyC314KzHSTaPaMK0KvvvkCGVA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=n/IO+82w; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tfs42dRUIuI5bUlmKSPfmoFuC7nhMuCBqQZIeUONppGiptdou8l1NDLA7aKNHMzuO7w6USCcleO9jgD9nLqy6/jf97jNUJv+xwW25vY6TF4NkuXrHnlrYpcPl9lIvFtqePx86HdkKKnHsaqvVV+CS80IbrHISAw8rszToC6fkjw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bz09EeT+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="n/IO+82w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B3B3C4CEE4;
-	Tue, 22 Oct 2024 17:57:21 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bz09EeT+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18048C4CEC3;
+	Tue, 22 Oct 2024 18:00:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1729619841;
-	bh=fVSacvrMFuJP0Mfs887XpqYZFDZCM7QwCNWKBhVKDyM=;
+	s=k20201202; t=1729620044;
+	bh=wUmPYWpDbdK0aiE7pA+ZEzsAVI50NPFCo/x/WIwyr6A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n/IO+82wcF+7WjQjZo43qz6iQuJ7/l7lssH3ngnLRAbM16XmFLGwgAJbX2fwyR5et
-	 Aypp50txByq15SbbQ3tWpLQlCgWVdjJn+2/8+qkEPQBKXPCRukiX73hLRhRV0Hgnwe
-	 BzUeU5X1aXXUzrXRcSZXRFtYY+JVgDnriW/a0Ep1xCadvJ1n14X3spH4+f65YygJJt
-	 SnTzdNqGUqmwpkhGqaaXFgnZypasiJFSZOgJ17hQ4hdfacTUhKv0G2cNOFRsmmfINd
-	 Fkhmkarf1tHFtaTmZb4x/W7UKTkClRB/O99To1fW77d2i4gbtY70lCQKuZ7d/qTAjF
-	 WqW2T2KZAzZ8w==
+	b=bz09EeT+hgvcgQIK271BfD5uJ1styrPYjWTmI2P8q4k4EVa47oEyEuqLQvCUo4bxm
+	 uNF1leVmdVRiHeXxFs07vSmWkmR4pujOkTXlSGSOzXYTVQ0RhOp8NWYW6rfcgDqJr6
+	 HsR62cAMR/MlcgDo3pLajmQfDSawjwIrko3HMLLzLcu3ZwFy5PDHFCWj3pwJjrWR3o
+	 Cvr0uOZNr78f+o/bmeEvyu9cC2wfUBiekB0tf0iaJJYlNrJV9X4HP6DcWhJLc02xZB
+	 doSaMK1mPJEpjS8t8RpiYCrv5TFKCJvGRFnqeFam0PkMa6UjQmYKly4OXt/Wm45J93
+	 rVymnhdtSC3eg==
 From: SeongJae Park <sj@kernel.org>
 To: Zheng Yejian <zhengyejian@huaweicloud.com>
 Cc: SeongJae Park <sj@kernel.org>,
@@ -36,17 +36,12 @@ Cc: SeongJae Park <sj@kernel.org>,
 	linux-mm@kvack.org,
 	shakeel.butt@linux.dev,
 	sieberf@amazon.com,
-	yeweihua4@huawei.com,
-	brendanhiggins@google.com,
-	davidgow@google.com,
-	rmoar@google.com,
-	linux-kselftest@vger.kernel.org,
-	kunit-dev@googlegroups.com
-Subject: Re: [PATCH v2 2/2] mm/damon/vaddr: Add 'nr_piece == 1' check in damon_va_evenly_split_region()
-Date: Tue, 22 Oct 2024 10:57:10 -0700
-Message-Id: <20241022175710.42308-1-sj@kernel.org>
+	yeweihua4@huawei.com
+Subject: Re: [PATCH v2 1/2] mm/damon/vaddr: Fix issue in damon_va_evenly_split_region()
+Date: Tue, 22 Oct 2024 11:00:41 -0700
+Message-Id: <20241022180041.42411-1-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20241022083927.3592237-3-zhengyejian@huaweicloud.com>
+In-Reply-To: <20241022083927.3592237-2-zhengyejian@huaweicloud.com>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -56,23 +51,22 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hi Zheng,
+On Tue, 22 Oct 2024 16:39:26 +0800 Zheng Yejian <zhengyejian@huaweicloud.com> wrote:
 
-
-Cc-ed kunit folks, as we usually do for DAMON kunit test changes.
-
-On Tue, 22 Oct 2024 16:39:27 +0800 Zheng Yejian <zhengyejian@huaweicloud.com> wrote:
-
-> As discussed in [1], damon_va_evenly_split_region() is called to
-> size-evenly split a region into 'nr_pieces' small regions,
-> when nr_pieces == 1, no actual split is required. Check that case
-> for better code readability and add a simple kunit testcase.
-> 
-> [1] https://lore.kernel.org/all/20241021163316.12443-1-sj@kernel.org/
-> 
+[...]
+> Fixes: 3f49584b262c ("mm/damon: implement primitives for the virtual memory address spaces")
 > Signed-off-by: Zheng Yejian <zhengyejian@huaweicloud.com>
+> ---
+> 
+> v1 -> v2:
+> - Move 'nr_pieces == 1' check into separate patch and update commit messages;
+> - Change type of variable 'i' to be 'unsigned int';
+> - Remove a puzzling comment;
+> 
+> v1: https://lore.kernel.org/all/20241018035304.1050135-1-zhengyejian@huaweicloud.com/
 
-Reviewed-by: SeongJae Park <sj@kernel.org>
+Nit.  If the patch series has a cover letter, we usually put this kind of
+revision history on the cover letter.
 
 
 Thanks,
