@@ -1,59 +1,45 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from dggsgout11.his.huawei.com (dggsgout11.his.huawei.com [45.249.212.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C99F1EB9EF;
-	Mon, 21 Oct 2024 18:09:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AACF4140E38
+	for <damon@lists.linux.dev>; Tue, 22 Oct 2024 08:39:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729534176; cv=none; b=fS1IKkCRWaAgRMDAw9+spH2hkZ6yunjSGWNMJYiL9EqzB8vEVDFNHAM8C7KYcFBejze7pofw4+yWFi8UqEr/xxyxTb0pCSpTN0ePezadZWS4wF2XpH75IbL0xPLnx9SY+Hh3UtggvVxfjdoJ9pr6wQ+3bWL5+Lwu9rEOXQskamo=
+	t=1729586370; cv=none; b=ETEgzc4Dtaz2yH9zx6yrI8Eob+fRKxyGBduZAVA0diAIPFFdtrrdHwmNrESYRlB0LhjR3pa/+ZU69ivj/fQDtq+zxk13EMo5YqTRQyIyNyBs0ohXqIJbh0lHBpUTphoO2oYrs2a24uDjFAT4BMrHSq5V80Fq7s2Yegm6o65lYsw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729534176; c=relaxed/simple;
-	bh=LC0A/Rdjec5aDSJht41Id9IaHLYV+tuUkNDUK8OL93s=;
+	s=arc-20240116; t=1729586370; c=relaxed/simple;
+	bh=/39Qe/P5cSaW5cZYrOZN1mnYWBJfyx9L3y74EOD7STQ=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=OOawYbtghBga6AKdQZQjyIwtAH9krUpUaHECoM3ZYDPsP7D95+gquIfvcAMCImfnoELpJYhP6FupoXsa29a+DT3geyxZX9jQ4JjYIsCSe7Rx+AW1l6bRnqjFIDqoe6rKBjLqFrVfrmOQ/aJPrKafJdbEn85TA1vxJe+qK698M/A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fJrVradM; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fJrVradM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C798C4CEC3;
-	Mon, 21 Oct 2024 18:09:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1729534176;
-	bh=LC0A/Rdjec5aDSJht41Id9IaHLYV+tuUkNDUK8OL93s=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fJrVradMxURiouC+jgE/SGFb2gIoiG4mvYFoZ8W5cwMHNdUmON4B2caiRjaA7Pc/i
-	 UtWfklugQZydjf5fVb5Xa0uy5yD++79KuiCBJaFbqB73ECEJTvHOkR6/xTfxkbNFp0
-	 NZewGc/TD7ICjHDwbtHVctz2jGV9JHcpD93Ojiu2PWttwgyRtTjMtjStSeQ2RwzZu2
-	 aDm1yp3WDPzGTJfGsgCEl5t5PGsfnIeBt5mmU5l/evrLN/osbZcP3MzMHdtTshtgUC
-	 rHDN7rcq6U4vO2Ys28sgGY8u55sZE8FURd7gBSAtyQ2LxMQmR6gyHM/cBcydUitckN
-	 l3+XQnTzO/04A==
-From: SeongJae Park <sj@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: SeongJae Park <sj@kernel.org>,
-	stable@vger.kernel.org,
-	patches@lists.linux.dev,
+	 MIME-Version; b=hEDRYeBebMqkF3XmH9iX/kmkhMgMq3lgMc6A79wIkASPk8Bu+Xmg9h1rwi1Pa0yooKJ3ijj5s/+Jx4ohcAzxAWN5W2JeNUBMtF/+5dE/PXqNJHYNWS2dS9b00/aTvhsC55sHHpESu2net2BDjskLZvlv2evmb3hvBIHeAaYks+E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=pass smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=45.249.212.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huaweicloud.com
+Received: from mail.maildlp.com (unknown [172.19.163.235])
+	by dggsgout11.his.huawei.com (SkyGuard) with ESMTP id 4XXlvt6xzjz4f3m76
+	for <damon@lists.linux.dev>; Tue, 22 Oct 2024 16:39:06 +0800 (CST)
+Received: from mail02.huawei.com (unknown [10.116.40.252])
+	by mail.maildlp.com (Postfix) with ESMTP id 2C5251A0568
+	for <damon@lists.linux.dev>; Tue, 22 Oct 2024 16:39:25 +0800 (CST)
+Received: from localhost.localdomain (unknown [10.67.175.61])
+	by APP3 (Coremail) with SMTP id _Ch0CgCnRoO3ZBdndQiQEg--.6910S2;
+	Tue, 22 Oct 2024 16:39:24 +0800 (CST)
+From: Zheng Yejian <zhengyejian@huaweicloud.com>
+To: sj@kernel.org
+Cc: akpm@linux-foundation.org,
+	damon@lists.linux.dev,
+	foersleo@amazon.de,
 	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net,
-	rwarsow@gmx.de,
-	conor@kernel.org,
-	allen.lkml@gmail.com,
-	broonie@kernel.org,
-	damon@lists.linux.dev
-Subject: Re: [PATCH 6.11 000/135] 6.11.5-rc1 review
-Date: Mon, 21 Oct 2024 11:09:32 -0700
-Message-Id: <20241021180932.15092-1-sj@kernel.org>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20241021102259.324175287@linuxfoundation.org>
-References: 
+	linux-mm@kvack.org,
+	shakeel.butt@linux.dev,
+	sieberf@amazon.com,
+	yeweihua4@huawei.com,
+	zhengyejian@huaweicloud.com
+Subject: [PATCH v2 0/2] mm/damon/vaddr: Fix issue in damon_va_evenly_split_region()
+Date: Tue, 22 Oct 2024 16:39:25 +0800
+Message-Id: <20241022083927.3592237-1-zhengyejian@huaweicloud.com>
+X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20241021163316.12443-1-sj@kernel.org>
+References: <20241021163316.12443-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -61,66 +47,59 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+X-CM-TRANSID:_Ch0CgCnRoO3ZBdndQiQEg--.6910S2
+X-Coremail-Antispam: 1UD129KBjvJXoW7ZryUKr4kKF4rWF4fCF45ZFb_yoW8Jw43p3
+	WfWr45GF4vkryav3Z3u3WYvwn0yrW8Jr1DGry3JF1Yka4vga4YyFy7tr90yFyUCFWfJ34S
+	93W8XrW3CF93uaUanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUU9Y14x267AKxVW8JVW5JwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
+	rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK02
+	1l84ACjcxK6xIIjxv20xvE14v26F1j6w1UM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26r4U
+	JVWxJr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_Gc
+	CE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E
+	2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE14v26r1j6r4UMcvjeVCFs4IE7xkEbVWUJV
+	W8JwACjcxG0xvY0x0EwIxGrwACjI8F5VA0II8E6IAqYI8I648v4I1lFIxGxcIEc7CjxVA2
+	Y2ka0xkIwI1lc7CjxVAaw2AFwI0_Jw0_GFyl42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x
+	0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2
+	zVAF1VAY17CE14v26r1q6r43MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF
+	4lIxAIcVC0I7IYx2IY6xkF7I0E14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWU
+	CwCI42IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E14v26r4j6r4UJbIYCT
+	nIWIevJa73UjIFyTuYvjfUonmRUUUUU
+X-CM-SenderInfo: x2kh0w51hmxt3q6k3tpzhluzxrxghudrp/
 
-Hello,
+According to the logic of damon_va_evenly_split_region(), currently
+following split case would not meet the expectation:
 
-On Mon, 21 Oct 2024 12:22:36 +0200 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+  Suppose DAMON_MIN_REGION=0x1000,
+  Case: Split [0x0, 0x3000) into 2 pieces, then the result would be
+        acutually 3 regions:
+          [0x0, 0x1000), [0x1000, 0x2000), [0x2000, 0x3000)
+        but NOT the expected 2 regions:
+          [0x0, 0x1000), [0x1000, 0x3000) !!!
 
-> This is the start of the stable review cycle for the 6.11.5 release.
-> There are 135 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Wed, 23 Oct 2024 10:22:25 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.11.5-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.11.y
+The root cause is that when calculating size of each split piece in
+damon_va_evenly_split_region():
 
-This rc kernel passes DAMON functionality test[1] on my test machine.
-Attaching the test results summary below.  Please note that I retrieved the
-kernel from linux-stable-rc tree[2].
+  `sz_piece = ALIGN_DOWN(sz_orig / nr_pieces, DAMON_MIN_REGION);`
 
-Tested-by: SeongJae Park <sj@kernel.org>
+both the dividing and the ALIGN_DOWN may cause loss of precision,
+then each time split one piece of size 'sz_piece' from origin 'start' to
+'end' would cause more pieces are split out than expected!!!
 
-[1] https://github.com/damonitor/damon-tests/tree/next/corr
-[2] 96563e3507d7 ("Linux 6.11.5-rc1")
+To fix it, count for each piece split and make sure no more than
+'nr_pieces'. In addition, add above case into damon_test_split_evenly().
 
-Thanks,
-SJ
+And add 'nr_piece == 1' check in damon_va_evenly_split_region()
+for better code readability and add a corresponding kunit testcase.
 
-[...]
+Zheng Yejian (2):
+  mm/damon/vaddr: Fix issue in damon_va_evenly_split_region()
+  mm/damon/vaddr: Check 'nr_piece == 1' case in
+    damon_va_evenly_split_region()
 
----
+ mm/damon/tests/vaddr-kunit.h | 2 ++
+ mm/damon/vaddr.c             | 7 +++++--
+ 2 files changed, 7 insertions(+), 2 deletions(-)
 
-ok 9 selftests: damon: damos_tried_regions.py
-ok 10 selftests: damon: damon_nr_regions.py
-ok 11 selftests: damon: reclaim.sh
-ok 12 selftests: damon: lru_sort.sh
-ok 13 selftests: damon: debugfs_empty_targets.sh
-ok 14 selftests: damon: debugfs_huge_count_read_write.sh
-ok 15 selftests: damon: debugfs_duplicate_context_creation.sh
-ok 16 selftests: damon: debugfs_rm_non_contexts.sh
-ok 17 selftests: damon: debugfs_target_ids_read_before_terminate_race.sh
-ok 18 selftests: damon: debugfs_target_ids_pid_leak.sh
-ok 19 selftests: damon: sysfs_update_removed_scheme_dir.sh
-ok 20 selftests: damon: sysfs_update_schemes_tried_regions_hang.py
-ok 1 selftests: damon-tests: kunit.sh
-ok 2 selftests: damon-tests: huge_count_read_write.sh
-ok 3 selftests: damon-tests: buffer_overflow.sh
-ok 4 selftests: damon-tests: rm_contexts.sh
-ok 5 selftests: damon-tests: record_null_deref.sh
-ok 6 selftests: damon-tests: dbgfs_target_ids_read_before_terminate_race.sh
-ok 7 selftests: damon-tests: dbgfs_target_ids_pid_leak.sh
-ok 8 selftests: damon-tests: damo_tests.sh
-ok 9 selftests: damon-tests: masim-record.sh
-ok 10 selftests: damon-tests: build_i386.sh
-ok 11 selftests: damon-tests: build_arm64.sh # SKIP
-ok 12 selftests: damon-tests: build_m68k.sh # SKIP
-ok 13 selftests: damon-tests: build_i386_idle_flag.sh
-ok 14 selftests: damon-tests: build_i386_highpte.sh
-ok 15 selftests: damon-tests: build_nomemcg.sh
- [33m
- [92mPASS [39m
+-- 
+2.25.1
+
