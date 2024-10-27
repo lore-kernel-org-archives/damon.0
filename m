@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D215217F2C
-	for <damon@lists.linux.dev>; Sat, 26 Oct 2024 21:53:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7511A17E8E2;
+	Sun, 27 Oct 2024 20:49:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729979600; cv=none; b=bUxBy/bsPU+yNsEkBvAAjewIRRGNwvMcFSYrF96GNTbw/Kx6EQ1KpL5ZuLUXVAEVGWOBzmZcO+h6vKaRdWwf2zfsVtTms6ofgPCla+35BJK7aDsY/v2ldJ94PapYHr8uHq3H6cOKhvh8WsJ41wf0qBLWtmcui4IzXStV2ZbUIqE=
+	t=1730062153; cv=none; b=NMhZ7cou21iIBMzkE4LfefBmKcWGakmZ0FRv/LwVC2R7irDhFooTD4qIQfy7o47lg6z5vDnmeGZ1xoeL/4x4Fn7bgH1Na8DbWTh0jyZBzfRGTs3DP4LjkNeg1cWUiAsEy+3ysFiKLLN8Th7yEGgur4/c/c2Mq0zelRzyZ8N3DFE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729979600; c=relaxed/simple;
-	bh=JbGyPx6YfcrM/u7KW9v0IoAVDUIDwOzYrsqXQfQ+Cao=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=L4IbzW8HQN4+VBIhjQlIIXNmzFQN4wBlp6ZelAqWOOINMsxONRKGcZtXLdyZIPAbI8iyb7elhmnJcIi4YwwZ5R5AIQk4Cu6uzHJA8NyZRfJh+Gff34TKNSczCSjDKLVJTzEp4nVq7Rznp1MGyw03uxVbNaO/hslJQk5Kj784rQw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=E/xdfS/8; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1730062153; c=relaxed/simple;
+	bh=4N2IXPd0awSUXc0msCMuY8ABxxknYk5+HRsYIZWs06E=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=AVl/YY5kmH/Q3AQI4nJxEOrJuWF8bcOhcoVPJqx498MTmkQPmv+f4BB9zd+iQtH3DQYb6CKXw8sJ4eC8jQ8XamMj1q7EvVojX8x4XS89x3DytBuxWBrhnOhXxx7qXIGx3InYsI0bQfAazUTCw78qWrfww9YIFlBM02hAf2lop40=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DYcDLOlk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="E/xdfS/8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6DD6C4CEC6;
-	Sat, 26 Oct 2024 21:53:19 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DYcDLOlk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA693C4CEC3;
+	Sun, 27 Oct 2024 20:49:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1729979600;
-	bh=JbGyPx6YfcrM/u7KW9v0IoAVDUIDwOzYrsqXQfQ+Cao=;
+	s=k20201202; t=1730062153;
+	bh=4N2IXPd0awSUXc0msCMuY8ABxxknYk5+HRsYIZWs06E=;
 	h=From:To:Cc:Subject:Date:From;
-	b=E/xdfS/8/+GaMF3psLjV2/p4bVUjHe4sVtwqZYxkYemt2wc4h2XBFTO/9IwKnhP/D
-	 UliUAUyEpwSd3I2Hfj8uwRNmKtALakcYsEaEUngPy4LWspGHs84MflVqnAeF0HScZI
-	 6A3mS0qDiVsoQEDZEjDjhjJlJPiwivAVvbnY35dY3XLMLArcuOMJGvf3tAdZiowsvE
-	 VXz8aWdT/LP2bdGdjDRU3QbNr57qMkUAKJTQ5hydjOyiEH9033fLGVaZ+MxUG0wndH
-	 JSdpAotzfapJ+0h/hCWcOalOqJ13SYkt2rKk1pDUVwmswurQHlru+9OdOlg61BLfLR
-	 OQJMvXgJy184w==
+	b=DYcDLOlknuhLoF8/ob1wzrJGL6pq4r8WcONkTREQ0gDiMWsg2Klsx3I6SK6k0qA2p
+	 4f9ayVqpEwYdf6LBOtDJwOoDRjFTC2Da5nzWwF3Uogr9XaK8T6LK7oUEjFc9y+jT9d
+	 EhXlVbg94ty1yz4FRBNfzGZ81K1MOy7YJEJxbzn0EnNCe66jdjouPdHZyxagxD06WI
+	 bWWDvAw9tu4q4o3+NoByjOT7ZiF4yiksBS3By6mAG0zvVhdCRYIX3vemM6RAYJRHQp
+	 pwga4s04gf9G3WSazUJ1XMRuwJ1R32Rbtj3+3K8Io/JtYsyXN9ouljRjrXD1LDZMG8
+	 LLvac85nUiPng==
 From: SeongJae Park <sj@kernel.org>
 To: damon@lists.linux.dev
 Cc: SeongJae Park <sj@kernel.org>,
-	kernel-team@meta.com
-Subject: Two simple ideas for DAMON accuracy improvement
-Date: Sat, 26 Oct 2024 14:53:11 -0700
-Message-Id: <20241026215311.148363-1-sj@kernel.org>
+	kernel-team@meta.com,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org
+Subject: Fwd: Two simple ideas for DAMON accuracy improvement
+Date: Sun, 27 Oct 2024 13:49:10 -0700
+Message-Id: <20241027204910.155254-1-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -40,6 +42,21 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+
+Forgot Cc-ing linux-mm@ and linux-kernel@.  Forwarding.  Sorry for noise.
+
+
+Thanks,
+SJ
+
+=== >8 ===
+From: SeongJae Park <sj@kernel.org>
+To: damon@lists.linux.dev
+CC: SeongJae Park <sj@kernel.org>, kernel-team@meta.com
+Subject: Two simple ideas for DAMON accuracy improvement
+Message-Id: <20241026215311.148363-1-sj@kernel.org>
+Date: Sat, 26 Oct 2024 14:53:11 -0700
+Local-Date: 2024-10-26 14:53:11-07:00
 
 Hello DAMON community,
 
