@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D3CF1F9AB8;
-	Mon, 28 Oct 2024 23:31:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F4ED200C81;
+	Mon, 28 Oct 2024 23:31:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730158269; cv=none; b=VFpvMvZXoAFjO3XL7gfEDENZ01mgVSPAgfmI2RremP/aLr7puZCTsh1UtjW+yHa00ZMXE8maB9e8PcOC6926VKbHLMj0kjI5HISQBGQibYp+MYo2ywzbFVMDZ8DA5/HWoG2mN/vI2e3cWlC2eX90OHLbC5MIY7Lrv/BcAu3StaU=
+	t=1730158270; cv=none; b=tIJ3NwF7w/uRmd0MeN8autcEjl5i5+SPiXUSYLbfrUwpEWYQxpuVGlC727eBgBSiMdjMX1EK20Lfyu6k7VtdLmA95ABUtlQXR5AynzAfduoxdIUsTH6IZc5jyXRfZkmw1ilB6fGo27iG3HyJ06diIkys/1oc9cRr3GsRFqxgfus=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730158269; c=relaxed/simple;
-	bh=GazCT9AHFa10tZyGrGFsqkLPKdoAkhFdaCC0h4kcK1s=;
+	s=arc-20240116; t=1730158270; c=relaxed/simple;
+	bh=LXvmRzX05dupx2R/ol4gf8N18g44uMKZvueRyAo+O7o=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=lXGFo1JDxW/ClDQMX5XueEw7MalQEZBnivrLui5Xm3KkX/bRQd2VfM7PAcHbuVxgWYjNuQcftvD5JvGdna5so+pyE5QGxu/rIXGK3aqxFn3fsSxiVn2SR4TMBUUESJadfstq4MdQBWeAezuH9X648h8nAi4j/CksBV2fLFYxXNQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gXD/8k8V; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cVaX+JhpzZFZuWA0saG63Z770brduSGLyB8oQX2tkE+lB73wCam6Y3IXopKFraqvhkBR6fiiYmueE/lL9TWcy+yNHqKCcDoxAM21/hggGNHdx8ceenX9CbctJMgepEhGhDippxh4dsBF37Y9Nao2ZvEFHurKyStmCxKwMwGxhog=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tl9JEZq8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gXD/8k8V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D558BC4CEEB;
-	Mon, 28 Oct 2024 23:31:08 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tl9JEZq8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E83B6C4CEE4;
+	Mon, 28 Oct 2024 23:31:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1730158269;
-	bh=GazCT9AHFa10tZyGrGFsqkLPKdoAkhFdaCC0h4kcK1s=;
+	s=k20201202; t=1730158270;
+	bh=LXvmRzX05dupx2R/ol4gf8N18g44uMKZvueRyAo+O7o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gXD/8k8VqVOm4RDi4oU8W+BChyCQbhmPOHNch3H9ndxa8GFgOtX0b7LfvP4kS9dCl
-	 gmsLOPpi4OuRJyZEHj4D6P5mRA4krvdaObS7WkZR7dQ474Y6mXbWEGn/OpZit4m+bM
-	 5KCFrXNCwY4kJtiapUD4TGSi4U36D0h8vsu3OfgcPRR68ul1J/tYUt5E1CPK8rdzzb
-	 JHrMJt7mVd9uWR3ED80xPZlflvbMVorv0vFe1reVnRR4MjLwwxT9zsUCjevOKEDd5l
-	 7GXZgHOe8y107TcfC02dDR3bK+Ws9m3MJroG8P1Ep6sCRSOfev84ce6c2cTR+egrrw
-	 c4GuMghCNXZWw==
+	b=tl9JEZq8genpVpYgIfEAampWnoalM7E2kRfFjipYpMBWx6Pj7yoA73tBajfZNLRS0
+	 jBPTTpNgn4Zq3zG+lbvyYF0fqbXDOYin2n2nF1UY3NdPRbmAjzAOyb5Y6eUiRSeJOW
+	 luAcrTRJ2Uai9vC9PoxqJMkzw9eDSxH+3uedpVS6g1xVW5UkbuWKU/w9xTayStpq3q
+	 LhFsSjrb4xMWq1fuvtKcSolx2mlHw84WbWK95I7zhED+3aPiByVtsQXK7nfkaB47wN
+	 uKRNBCclbg1lnFPSZmJycYgOUhJfXWsDktg94BMaMIrVT5+PjT542wwpsc5+jjh80a
+	 R/KUiGSPIwv4Q==
 From: SeongJae Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SeongJae Park <sj@kernel.org>,
-	Shuah Khan <shuah@kernel.org>,
 	damon@lists.linux.dev,
 	linux-mm@kvack.org,
-	linux-kselftest@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH 4/6] selftests/damon/debugfs_duplicate_context_creation: hide errors from expected file write failures
-Date: Mon, 28 Oct 2024 16:30:56 -0700
-Message-Id: <20241028233058.283381-5-sj@kernel.org>
+Subject: [PATCH 5/6] mm/damon/Kconfig: update DBGFS_KUNIT prompt copy for SYSFS_KUNIT
+Date: Mon, 28 Oct 2024 16:30:57 -0700
+Message-Id: <20241028233058.283381-6-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20241028233058.283381-1-sj@kernel.org>
 References: <20241028233058.283381-1-sj@kernel.org>
@@ -48,30 +46,28 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-debugfs_duplicate_context_creation.sh does an invalid file write to
-ensure it fails.  Check of the failure is sufficient, so the error
-message from the failure only makes the output unnecessarily noisy.
-Hide it.
+CONFIG_DAMON_SYSFS_KUNIT_TEST prompt is copied from that for DAMON
+debugfs interface kunit tests, and not correctly updated.  Fix it.
 
-Fixes: ade38b8ca5ce ("selftest/damon: add a test for duplicate context dirs creation")
+Fixes: b8ee5575f763 ("mm/damon/sysfs-test: add a unit test for damon_sysfs_set_targets()")
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- .../selftests/damon/debugfs_duplicate_context_creation.sh       | 2 +-
+ mm/damon/Kconfig | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/damon/debugfs_duplicate_context_creation.sh b/tools/testing/selftests/damon/debugfs_duplicate_context_creation.sh
-index 4a76e37ef16b..bd6c22d96ead 100755
---- a/tools/testing/selftests/damon/debugfs_duplicate_context_creation.sh
-+++ b/tools/testing/selftests/damon/debugfs_duplicate_context_creation.sh
-@@ -12,7 +12,7 @@ then
- 	exit 1
- fi
+diff --git a/mm/damon/Kconfig b/mm/damon/Kconfig
+index 35b72f88983a..d0357f3e9372 100644
+--- a/mm/damon/Kconfig
++++ b/mm/damon/Kconfig
+@@ -60,7 +60,7 @@ config DAMON_SYSFS
+ 	  the interface for arbitrary data access monitoring.
  
--if echo foo > "$DBGFS/mk_contexts"
-+if echo foo > "$DBGFS/mk_contexts" 2> /dev/null
- then
- 	echo "duplicate context creation success"
- 	exit 1
+ config DAMON_SYSFS_KUNIT_TEST
+-	bool "Test for damon debugfs interface" if !KUNIT_ALL_TESTS
++	bool "Test for damon sysfs interface" if !KUNIT_ALL_TESTS
+ 	depends on DAMON_SYSFS && KUNIT=y
+ 	default KUNIT_ALL_TESTS
+ 	help
 -- 
 2.39.5
 
