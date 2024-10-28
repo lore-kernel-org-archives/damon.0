@@ -1,40 +1,59 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7511A17E8E2;
-	Sun, 27 Oct 2024 20:49:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5643F1DF972;
+	Mon, 28 Oct 2024 17:49:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730062153; cv=none; b=NMhZ7cou21iIBMzkE4LfefBmKcWGakmZ0FRv/LwVC2R7irDhFooTD4qIQfy7o47lg6z5vDnmeGZ1xoeL/4x4Fn7bgH1Na8DbWTh0jyZBzfRGTs3DP4LjkNeg1cWUiAsEy+3ysFiKLLN8Th7yEGgur4/c/c2Mq0zelRzyZ8N3DFE=
+	t=1730137759; cv=none; b=SAyn7Jh3Y+XoLqVrQxx6pTPKWTse2EAQd8LnsQPIHxThz5fc74BKKiRpXNtDcHOYaLx0TSEANyaepPDmnJXUYGWiANsljnDUTe0W25K90nZ+T4I2guIz74TIkbHwZ9Bkoh8p6CvqGYGGUAE13ogc6YJOiZwh2wGln84Oby4L988=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730062153; c=relaxed/simple;
-	bh=4N2IXPd0awSUXc0msCMuY8ABxxknYk5+HRsYIZWs06E=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=AVl/YY5kmH/Q3AQI4nJxEOrJuWF8bcOhcoVPJqx498MTmkQPmv+f4BB9zd+iQtH3DQYb6CKXw8sJ4eC8jQ8XamMj1q7EvVojX8x4XS89x3DytBuxWBrhnOhXxx7qXIGx3InYsI0bQfAazUTCw78qWrfww9YIFlBM02hAf2lop40=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DYcDLOlk; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1730137759; c=relaxed/simple;
+	bh=Hroi2NQYXOr47zG5Kz6WK7ouM5FbBDqTfo6anyTINnI=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=QpKEB0NsTr6dW8mLzjM4Fwu9cXvAgdYLJT+TQLOQqKDbFbTkWD9Jmgph0EtmPzsVgDA6HmkY3mHXz7XW55lGayzVfuhJbg6+CNN5D85pV2sEKfX4rfjHBYH3LMvmQuowuZN5ZMK/l5aRNx/BXSPSw1aABbv5deYHU7fBQETPgKM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XhLUsFPs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DYcDLOlk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA693C4CEC3;
-	Sun, 27 Oct 2024 20:49:12 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XhLUsFPs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3726C4CEC3;
+	Mon, 28 Oct 2024 17:49:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1730062153;
-	bh=4N2IXPd0awSUXc0msCMuY8ABxxknYk5+HRsYIZWs06E=;
-	h=From:To:Cc:Subject:Date:From;
-	b=DYcDLOlknuhLoF8/ob1wzrJGL6pq4r8WcONkTREQ0gDiMWsg2Klsx3I6SK6k0qA2p
-	 4f9ayVqpEwYdf6LBOtDJwOoDRjFTC2Da5nzWwF3Uogr9XaK8T6LK7oUEjFc9y+jT9d
-	 EhXlVbg94ty1yz4FRBNfzGZ81K1MOy7YJEJxbzn0EnNCe66jdjouPdHZyxagxD06WI
-	 bWWDvAw9tu4q4o3+NoByjOT7ZiF4yiksBS3By6mAG0zvVhdCRYIX3vemM6RAYJRHQp
-	 pwga4s04gf9G3WSazUJ1XMRuwJ1R32Rbtj3+3K8Io/JtYsyXN9ouljRjrXD1LDZMG8
-	 LLvac85nUiPng==
+	s=k20201202; t=1730137758;
+	bh=Hroi2NQYXOr47zG5Kz6WK7ouM5FbBDqTfo6anyTINnI=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=XhLUsFPskUJSqgYjxgrEDJWM+0cMhsVI4Q7ms71TcdkDUOW4/OTHl/AtYbXMpxcu+
+	 6U12U0VvKlNiPuhnClKKEnYQ5kP5IEvV5Y7BMmipk9Kd8tcnpZ1T2GnxBL693VI2mN
+	 yxwb0wGWVGJ72yCQD4XJvJW8GYVCS9H35i+ZhhvkwtaVb29BcZz2OVRyfpzNgwA6Cs
+	 s+XdaT6SZCSuDk28mB82Uoop7AfxR5Z4pKFZ+sZYeAgalnU4MFRuyoZBWfiusRz6R2
+	 xt09eSgS1z4z9LECSsJ0sGLYZTd95mq6+h0sS4sY+UizhKOFGPBwzNZIQXv34t+gwe
+	 s1KZaAwJUm30A==
 From: SeongJae Park <sj@kernel.org>
-To: damon@lists.linux.dev
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: SeongJae Park <sj@kernel.org>,
-	kernel-team@meta.com,
-	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org
-Subject: Fwd: Two simple ideas for DAMON accuracy improvement
-Date: Sun, 27 Oct 2024 13:49:10 -0700
-Message-Id: <20241027204910.155254-1-sj@kernel.org>
+	stable@vger.kernel.org,
+	patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net,
+	rwarsow@gmx.de,
+	conor@kernel.org,
+	allen.lkml@gmail.com,
+	broonie@kernel.org,
+	damon@lists.linux.dev
+Subject: Re: [PATCH 5.15 00/80] 5.15.170-rc1 review
+Date: Mon, 28 Oct 2024 10:49:12 -0700
+Message-Id: <20241028174912.276586-1-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20241028062252.611837461@linuxfoundation.org>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -43,98 +62,49 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Forgot Cc-ing linux-mm@ and linux-kernel@.  Forwarding.  Sorry for noise.
+Hello,
 
+On Mon, 28 Oct 2024 07:24:40 +0100 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
 
-Thanks,
-SJ
+> This is the start of the stable review cycle for the 5.15.170 release.
+> There are 80 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Wed, 30 Oct 2024 06:22:39 +0000.
+> Anything received after that time might be too late.
 
-=== >8 ===
-From: SeongJae Park <sj@kernel.org>
-To: damon@lists.linux.dev
-CC: SeongJae Park <sj@kernel.org>, kernel-team@meta.com
-Subject: Two simple ideas for DAMON accuracy improvement
-Message-Id: <20241026215311.148363-1-sj@kernel.org>
-Date: Sat, 26 Oct 2024 14:53:11 -0700
-Local-Date: 2024-10-26 14:53:11-07:00
+This rc kernel passes DAMON functionality test[1] on my test machine.
+Attaching the test results summary below.  Please note that I retrieved the
+kernel from linux-stable-rc tree[2].
 
-Hello DAMON community,
+Tested-by: SeongJae Park <sj@kernel.org>
 
-
-There were a number of grateful questions, concerns, and improvement ideas
-around monitoring output accuracy of DAMON.  I always admitted the fact that
-DAMON has many rooms for improvement, but was bit awary at changes for some
-reasons.  Now I think it caused some unnecessarily long delay.  Sorry about
-that.  Now I want to invest some time on the topic.  So starting by sharing
-below two simple ideas first.
-
-User-defined Regions Split Factor
----------------------------------
-
-DAMON's "Adasptive Regions Adjustment (ARA)" mechanism splits each region into
-randomly sized sub regions, show their access temperature, and merge back
-adjacent regions having similar temperature.  The split factor is hard-coded as
-two.  Increasing the number make DAMON regions more quickly converges in right
-shape.  However, it makes number of DAMON regions in usual situation higher,
-and therefore induce more overhead.  It will still keep the user-defined upper
-limit (max_nr_regions), though.
-
-The optimum value of the split factor would depend on the use case.  We will
-therefore add another knob to let users set the factor on runtime.  The default
-value will be two, so this will not introduce any regression or behavioral
-change to existing users.
-
-Periodic Fine-grain Split of Aged Regions
------------------------------------------
-
-If a region is continuously changing its boundary and access temperature, it
-means it is converging, or the access pattern of the workload is not
-stabilized.  Either case, this is a healthy signal.
-
-If a region is consistently showing same access pattern for long time, it may
-because the access pattern is stabilized, and the region is correctly
-converged.  However, it might be because the access pattern is changed, but the
-converging is slow.
-
-To avoid the too slow converging of aged regions, we will let users
-periodically increase the split factor for regions that kept current access
-pattern for long time (high 'age').  Users will be able to set the 'age'
-offset, the split factor for the aged regions, and time interval between the
-periodic fine-grain split of the regions.  For example, users can ask DAMON to
-"split regions keeping current access pattern for ten minutes or higher to five
-sub-regions every minute".
-
-The feature will be ignored unless users explicitly set those, so that it does
-not introduce any regression of behavioral change to existing users.
-
-Discussions
------------
-
-Someone might worry if these are adding too much knobs.  As I shared the long
-term plan on last LPC[1], we will keep supporting those new knobs in long term,
-and may introduce auto-tuning feature in future.  By letting these user-tunable
-first, we can collect experiment results and use those for the future
-improvements.  Anyway, these changes will not introduce any regresion or
-behavioral change to existing users based on the idea, so I believe these are
-safe to be added.
-
-One of the factors that made my work on this topic was absence of a formal
-DAMON accuracy evaluation method.  Using damon-tests, we were able to do the
-evaluation by drawing heatmaps of test workloads and comparing those from
-different versions of DAMON.  Comparing several DAMOS schemes results on test
-workloads were also one way for that.  But, those are not formal.  We still
-don't have a formal way for accuracy evaluation.  However, the two features
-will introduce no regression to existing users, so I believe this is the path
-forward for now.
-
-I believe implementing the features would be not difficult.  So unless someone
-voluntarily steps up, I will start implementation of the features, targeting
-v6.14 merge window.
-
-I'm looking forward to any comments.
-
-[1] https://lpc.events/event/18/contributions/1768/
-
+[1] https://github.com/damonitor/damon-tests/tree/next/corr
+[2] be79a1947245 ("Linux 5.15.170-rc1")
 
 Thanks,
 SJ
+
+[...]
+
+---
+
+ok 1 selftests: damon: debugfs_attrs.sh
+ok 1 selftests: damon-tests: kunit.sh
+ok 2 selftests: damon-tests: huge_count_read_write.sh
+ok 3 selftests: damon-tests: buffer_overflow.sh
+ok 4 selftests: damon-tests: rm_contexts.sh
+ok 5 selftests: damon-tests: record_null_deref.sh
+ok 6 selftests: damon-tests: dbgfs_target_ids_read_before_terminate_race.sh
+ok 7 selftests: damon-tests: dbgfs_target_ids_pid_leak.sh
+ok 8 selftests: damon-tests: damo_tests.sh
+ok 9 selftests: damon-tests: masim-record.sh
+ok 10 selftests: damon-tests: build_i386.sh
+ok 11 selftests: damon-tests: build_arm64.sh # SKIP
+ok 12 selftests: damon-tests: build_m68k.sh # SKIP
+ok 13 selftests: damon-tests: build_i386_idle_flag.sh
+ok 14 selftests: damon-tests: build_i386_highpte.sh
+ok 15 selftests: damon-tests: build_nomemcg.sh
+ [33m
+ [92mPASS [39m
