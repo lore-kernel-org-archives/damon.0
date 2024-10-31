@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81569126BFC;
-	Thu, 31 Oct 2024 05:21:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6361B19DF49;
+	Thu, 31 Oct 2024 16:12:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730352076; cv=none; b=cfyTfbhGJusm8WesRJ6BXKlhZcJ/dnToXPfPu2S1Nc/vdOA9YrRxB8mmHC6jVdsKpTJEH+orLcgtjEyvfwaEy0k2e3qAqjGWa25ID9k03zHVREGZug1/xkvPIxu9NU0hi3bHoDByLoHRjRoldojQvPUs2HoKZJwFz4AKH8AYCLs=
+	t=1730391130; cv=none; b=e5CwSACYC2hCO2KkBVq/ak+ApjjSBnDBXY41tszQuq3h8UQxGJl5msLe1end7Bw1c2QZ7PjZ/plkyksW6gGMYTh+kdH8jOBeTerKb44hb23SP97Jx0r18pzgKkt51Ep0RG8xmv3L+GTiiicQJPeTHgUiFJbRoYTC6iDQU+a1hY8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730352076; c=relaxed/simple;
-	bh=oKvzKHSIFV/9a64ZyFXNr4nz7kAn5pfeSQBzNS7WmCg=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=Pd5nxHFwKkm7g8qhawsFvYuE2SuoIU6OY6OoImMJn3LKZW5mVnZbVoiQLiIeUS2/yAzrlxvsXbv15yx4+C6WG56wVyeszMXIF4H78rswMEjNBub36biIwxxw7vNkohkEhZQ+q0Iluj+XwJvyI8AEZ23NpB8rW36mRIjfWXyoKbo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=caiZOHyS; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1730391130; c=relaxed/simple;
+	bh=eJEmZyDPLbC02Dw1bjFmNYjwx8wPuh7E/dUJfe6XCXs=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=KH8nH+EuRxKiCJMXxw5RE0dZGLNOJQ1tx56J+zydNB3SR5IHqLOXB5UYUB2W2hzohKFHmmqSmJee5Nhbspuq29qfeI35m/1TiMcwmCK/LicgO0azngIOK9kbivcX31S1Efr9k6JGD5wXVPPZWPw5QI8CukJ92QVQOyeIqCL7VOQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lwKi8rgs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="caiZOHyS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFE78C4CEC3;
-	Thu, 31 Oct 2024 05:21:15 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lwKi8rgs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1A0CC4FDF8;
+	Thu, 31 Oct 2024 16:12:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1730352076;
-	bh=oKvzKHSIFV/9a64ZyFXNr4nz7kAn5pfeSQBzNS7WmCg=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=caiZOHyS42Gmy/N5hIh3F5TJLHa7uuNoOGhtp8aCIsFwS4zu/CDMaOaZagD+I791m
-	 umBpbe/HVeTlgmX9sTjx40wXeASJem12UVa22xfvhINX4WH+LdXv3DchJhTMGTpuCJ
-	 kUsy98+o/QOcdK9jOqEHe0vruZpJxUpPx5bo7OaRLWft8meWBp6b9+3JRxmVKt6jxZ
-	 rphERfYhjCK+GyYjGcEX0Vh5CmxX+KgxdBEhSccOJVNblIInleRdzznjPmSWSG4N/b
-	 sH596P1e521UefZSXg4HSDvW6KGQc3pKdD/OXEgnWt8dOCr134Gc3CrXDl0AG/i3r0
-	 ZqPWmhX1Igq5g==
+	s=k20201202; t=1730391130;
+	bh=eJEmZyDPLbC02Dw1bjFmNYjwx8wPuh7E/dUJfe6XCXs=;
+	h=From:To:Cc:Subject:Date:From;
+	b=lwKi8rgs00fdO2QE9BMW6hi2NXzjy6NXFt7VzFB2pNgQAHatvcKXpR3WB3yncLNUx
+	 aGLF8/lLm9TUuegjSXYis0qqiaYe6g4ONQBdL+prOUET9SemlRs3jn3dGHimQxAL+b
+	 6FzPwJEqBm3xdSi5brDCH4GbYcYBDHOodpPWFQH43SeBm08a5luahqa4pJ040IyYDU
+	 d4CG/Ul6tP4nNy6oXvhX8odQygIvHNmCb2J0ABRRASiqaLa9BU88GE0eSasSRlsdAW
+	 VOojFRiT2qVwNjAsmlI/FQniRvMppkdS+M004rbPZ3RYFDIriFNcaTThiO1ivglrlk
+	 7W7AeU4utKkxg==
 From: SeongJae Park <sj@kernel.org>
-To: Guenter Roeck <linux@roeck-us.net>
+To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SeongJae Park <sj@kernel.org>,
 	damon@lists.linux.dev,
 	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [RFC PATCH] mm/damon/core: avoid overflow in damon_feed_loop_next_input()
-Date: Wed, 30 Oct 2024 22:21:13 -0700
-Message-Id: <20241031052113.66155-1-sj@kernel.org>
+	linux-kernel@vger.kernel.org,
+	Guenter Roeck <linux@roeck-us.net>,
+	stable@vger.kernel.org
+Subject: [PATCH] mm/damon/core: avoid overflow in damon_feed_loop_next_input()
+Date: Thu, 31 Oct 2024 09:12:03 -0700
+Message-Id: <20241031161203.47751-1-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <4dd8ba2c-e994-417d-baa9-47e40b50c1b4@roeck-us.net>
-References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -46,46 +45,75 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hi Guenter,
+damon_feed_loop_next_input() is inefficient and fragile to overflows.
+Specifically, 'score_goal_diff_bp' calculation can overflow when 'score'
+is high.  The calculation is actually unnecessary at all because 'goal'
+is a constant of value 10,000.  Calculation of 'compensation' is again
+fragile to overflow.  Final calculation of return value for
+under-achiving case is again fragile to overflow when the current score
+is under-achieving the target.
 
-On Wed, 30 Oct 2024 21:18:51 -0700 Guenter Roeck <linux@roeck-us.net> wrote:
+Add two corner cases handling at the beginning of the function to make
+the body easier to read, and rewrite the body of the function to avoid
+overflows and the unnecessary bp value calcuation.
 
-> On Thu, Sep 05, 2024 at 10:24:05AM -0700, SeongJae Park wrote:
-> > damon_feed_loop_next_input() is fragile to overflows.  Rewrite code to
-> > avoid overflows.  This is not yet well tested on 32bit archs.
-> > 
-> > Reported-by: Guenter Roeck <linux@roeck-us.net>
-> > Closes: https://lore.kernel.org/944f3d5b-9177-48e7-8ec9-7f1331a3fea3@roeck-us.net
-> > Fixes: 9294a037c015 ("mm/damon/core: implement goal-oriented feedback-driven quota auto-tuning")
-> > Signed-off-by: SeongJae Park <sj@kernel.org>
-> > ---
-> > As mentioned on the commit message, this is not yet sufficiently tested
-> > on 32bit machines.  That's why this is RFC.
-> 
-> Is that patch going anywhere ? I have been testing it on a lot of 32-bit architectures,
-> and I do not see any failures.
+Reported-by: Guenter Roeck <linux@roeck-us.net>
+Closes: https://lore.kernel.org/944f3d5b-9177-48e7-8ec9-7f1331a3fea3@roeck-us.net
+Fixes: 9294a037c015 ("mm/damon/core: implement goal-oriented feedback-driven quota auto-tuning")
+Cc: <stable@vger.kernel.org> # 6.8.x
+Signed-off-by: SeongJae Park <sj@kernel.org>
+Tested-by: Guenter Roeck <linux@roeck-us.net>
+---
+Changes from RFC
+(https://lore.kernel.org/20240905172405.46995-1-sj@kernel.org)
+- Rebase on latest mm-unstable and cleanup code
 
-Thank you for this nice reminder with the grateful test results, Guenter!
+ mm/damon/core.c | 28 +++++++++++++++++++++-------
+ 1 file changed, 21 insertions(+), 7 deletions(-)
 
-I was recently cleaning up the code and commit message, and testing on my own
-with test setup.  I should confess that it took more than I expected in the
-last RFC posting.  Sorry for the delay, and thank you for your patience.
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index a83f3b736d51..27745dcf855f 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -1456,17 +1456,31 @@ static unsigned long damon_feed_loop_next_input(unsigned long last_input,
+ 		unsigned long score)
+ {
+ 	const unsigned long goal = 10000;
+-	unsigned long score_goal_diff = max(goal, score) - min(goal, score);
+-	unsigned long score_goal_diff_bp = score_goal_diff * 10000 / goal;
+-	unsigned long compensation = last_input * score_goal_diff_bp / 10000;
+ 	/* Set minimum input as 10000 to avoid compensation be zero */
+ 	const unsigned long min_input = 10000;
++	unsigned long score_goal_diff, compensation;
++	bool over_achieving = score > goal;
+ 
+-	if (goal > score)
++	if (score == goal)
++		return last_input;
++	if (score >= goal * 2)
++		return min_input;
++
++	if (over_achieving)
++		score_goal_diff = score - goal;
++	else
++		score_goal_diff = goal - score;
++
++	if (last_input < ULONG_MAX / score_goal_diff)
++		compensation = last_input * score_goal_diff / goal;
++	else
++		compensation = last_input / goal * score_goal_diff;
++
++	if (over_achieving)
++		return max(last_input - compensation, min_input);
++	if (last_input < ULONG_MAX - compensation)
+ 		return last_input + compensation;
+-	if (last_input > compensation + min_input)
+-		return last_input - compensation;
+-	return min_input;
++	return ULONG_MAX;
+ }
+ 
+ #ifdef CONFIG_PSI
+-- 
+2.39.5
 
-I believe the patch is now in good form, but I was waiting just a couple of
-more days before posting it, for a case that I find any mistake on it.  So
-unless I find something wrong on the patch by Tomorrow morning (Pacific Time),
-I will post it after dropping the RFC tag.
-
-The current version of the patch to be posted is available at my patches
-queue[1].  Please let me know if you find anything suspicious on it.
-
-Thank you again for your patience and nice reminder!
-
-[1] https://git.kernel.org/pub/scm/linux/kernel/git/sj/damon-hack.git/tree/patches/next/mm-damon-core-avoid-overflow-in-damon_feed_loop_next.patch?id=fb13d053bfdd5249bebdd1c253417f97cd41471e
-
-
-Thanks,
-SJ
-
-> 
-> Guenter
