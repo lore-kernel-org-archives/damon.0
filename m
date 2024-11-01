@@ -1,45 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACD911C9ED2;
-	Thu, 31 Oct 2024 18:38:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C4DC10F4;
+	Fri,  1 Nov 2024 00:06:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730399883; cv=none; b=NH2ftcEXbuhvDsz+5UZIiIcpmep7qQNX5OHETctpm0i+R0InpoKVlIqONsDQlW+d8gN60Drge/B5OYSCi53oJDcxy5OPNtMl4FI8k2eetGUkqooSKrUQiq0xQOukNq1iJOn2yBo9k5tuq+P1sMqAXtJrouLYMHtjB79KO8tGOfY=
+	t=1730419618; cv=none; b=DJFGVi4bFK9VS3k2dkeT1mknK+mfuSiHoW8fPRWmypnNaN5g9wawPq6BqHtR4eYAyIqnWKeAMf1QoKVN78aeeBrEs/ek3vXRm/wRnqtQkdzhURXFkcT0CijDT6aTUF+nUgMrgw7ZVuAJ+AgrUoURqcvM9r+CrqQXB1Pfit+ulk4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730399883; c=relaxed/simple;
-	bh=L0OOFAcas3acRh+BRifsG3N6Sbsa4Qrr4fl+oy8M5uA=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=TiE+DMCkSNpZfD6WnAr2l0+E3GmgpT5aKxE9XlroBbT/d/U/TZOoAZ1FN40Konplg1zf270TSFrLmRyj+h9JtBnX4Ee2Ew1eWAjenAEzQ97/HDMmWmhBF3uaUYdQpEVEcCUwh7p2F3nT5PgseD5IL7sCHj/XeK/8m7uGaYwNS5U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=g0P16FYT; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1730419618; c=relaxed/simple;
+	bh=wpvGBmUGMH8GauYxH+rCYO2265hJO9DTbiWd6kguyvk=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=di12u1ZpcQ49GxtQ8sButLMFaeCiSB/FWOdRqCdJ+dkYy8Y/HDWI6IlmEubSQhTz5FkWqISfMR5AAUJGnwCMFOAWFeoebRFBPPyJWwo8StNuhV4maCUNSvWIJwAwlL7t3yZeu/A7OZJys/Zcgv6jqE6zzt5xIk1CMrsMDVEEj2c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=n27pFNrf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="g0P16FYT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F704C4CED1;
-	Thu, 31 Oct 2024 18:38:03 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="n27pFNrf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66FA9C4CECF;
+	Fri,  1 Nov 2024 00:06:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1730399883;
-	bh=L0OOFAcas3acRh+BRifsG3N6Sbsa4Qrr4fl+oy8M5uA=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g0P16FYTS9DnqQ14GhTEt6IbNDNM+8nRMCJYKMr4VnOSTv+27cQyXSIbjCefOL9KZ
-	 mDyvoyTBeBxmslifg0hATNkapdR1tV6Z+zWEvC75ed4xObZEwlahgRv4dadBxmuclo
-	 z1oj7KAkBMuqJplhnZ9rvzT22HwZyV9LxGiF4nUT6DGZwq8qNQYjXVLj9HNH7u76iL
-	 92Go4qFwtmoG9dJV02X4z8D6l0lMzPzjO5C8ptBvgUK0t60WBe85iP3UPEBImoHUuX
-	 PNwI1+0H2G3T6weBaN3q4A+1Ue7MsGmNTLSm5tKvoPkEDOV2nJFchrQkWsb5J3Ry17
-	 +BLbh7BR8+bCA==
+	s=k20201202; t=1730419617;
+	bh=wpvGBmUGMH8GauYxH+rCYO2265hJO9DTbiWd6kguyvk=;
+	h=From:To:Cc:Subject:Date:From;
+	b=n27pFNrfxM/xBmxXbEo8IzsjQ7hk1pNwvBcOdFRCRUuVo2DL2Ri3TDmJA96sk4S72
+	 x+lw/qbNmWTcjKGPduFz50om2Uf+2GIf94f3wpcpk5zFRBHPmp3kzMaTRq4ks5VvH+
+	 CP9Bdrl15WqJaZe4WVrkkVLBp+/d0fius5ZKz0aq5xdeLRuAL2Q1rfC30yzSdI5UuD
+	 ekDK0wEUcfYwJDgd8Z3ZDy6xuZqYAg6Wy+CE6jyQKdPmeE1Ksl0vUwD9koKNh4tO5B
+	 yJ6t1gb+HU+kkNVHTOHHrcwdY7JPlUF/46sex1MP6qtrsqSJOc/obbakkoLVHrGgDc
+	 zOWasF8NEvJQw==
 From: SeongJae Park <sj@kernel.org>
-To: Andrew Morton <akpm@linux-foundation.org>
+To: damon@lists.linux.dev
 Cc: SeongJae Park <sj@kernel.org>,
-	damon@lists.linux.dev,
 	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org,
-	kernel-team@meta.com,
-	stable@vger.kernel.org
-Subject: [PATCH 2/2] mm/damon/core: handle zero schemes apply interval
-Date: Thu, 31 Oct 2024 11:37:57 -0700
-Message-Id: <20241031183757.49610-3-sj@kernel.org>
+	linux-kernel@vger.kernel.org
+Subject: DAMON Beer/Coffee/Tea chat reminder for the week of 2024-11-04
+Date: Thu, 31 Oct 2024 17:06:41 -0700
+Message-Id: <20241101000641.52019-1-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20241031183757.49610-1-sj@kernel.org>
-References: <20241031183757.49610-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -48,66 +42,51 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-DAMON's logics to determine if this is the time to apply damos schemes
-assumes next_apply_sis is always set larger than current
-passed_sample_intervals.  And therefore assume continuously incrementing
-passed_sample_intervals will make it reaches to the next_apply_sis in
-future.  The logic hence does apply the scheme and update next_apply_sis
-only if passed_sample_intervals is same to next_apply_sis.
+Hello,
 
-If Schemes apply interval is set as zero, however, next_apply_sis is set
-same to current passed_sample_intervals, respectively.  And
-passed_sample_intervals is incremented before doing the next_apply_sis
-check.  Hence, next_apply_sis becomes larger than next_apply_sis, and
-the logic says it is not the time to apply schemes and update
-next_apply_sis.  In other words, DAMON stops applying schemes until
-passed_sample_intervals overflows.
 
-Based on the documents and the common sense, a reasonable behavior for
-such inputs would be applying the schemes for every sampling interval.
-Handle the case by removing the assumption.
+This is yet another reminder of upcoming DAMON Beer/Coffee/Tea chats
+(https://docs.google.com/document/d/1v43Kcj3ly4CYqmAkMaZzLiM2GEnWfgdGbZAH3mi2vpM/edit?usp=sharing)
+for the week of 2024-11-04.  Please note that US Daylight saving time will be
+finished on 2024-11-03.  The shared calendar mentioned at te bottom of this
+mail could be helpful to set your reminder regardless of the change.
 
-Fixes: 42f994b71404 ("mm/damon/core: implement scheme-specific apply interval")
-Cc: <stable@vger.kernel.org> # 6.7.x
-Signed-off-by: SeongJae Park <sj@kernel.org>
----
- mm/damon/core.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+Dedicated-topic discussions
+---------------------------
 
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index 931526fb2d2e..511c3f61ab44 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -1412,7 +1412,7 @@ static void damon_do_apply_schemes(struct damon_ctx *c,
- 	damon_for_each_scheme(s, c) {
- 		struct damos_quota *quota = &s->quota;
- 
--		if (c->passed_sample_intervals != s->next_apply_sis)
-+		if (c->passed_sample_intervals < s->next_apply_sis)
- 			continue;
- 
- 		if (!s->wmarks.activated)
-@@ -1636,7 +1636,7 @@ static void kdamond_apply_schemes(struct damon_ctx *c)
- 	bool has_schemes_to_apply = false;
- 
- 	damon_for_each_scheme(s, c) {
--		if (c->passed_sample_intervals != s->next_apply_sis)
-+		if (c->passed_sample_intervals < s->next_apply_sis)
- 			continue;
- 
- 		if (!s->wmarks.activated)
-@@ -1656,9 +1656,9 @@ static void kdamond_apply_schemes(struct damon_ctx *c)
- 	}
- 
- 	damon_for_each_scheme(s, c) {
--		if (c->passed_sample_intervals != s->next_apply_sis)
-+		if (c->passed_sample_intervals < s->next_apply_sis)
- 			continue;
--		s->next_apply_sis +=
-+		s->next_apply_sis = c->passed_sample_intervals +
- 			(s->apply_interval_us ? s->apply_interval_us :
- 			 c->attrs.aggr_interval) / sample_interval;
- 	}
--- 
-2.39.5
+Next three time slots that I reserved in advance for possible future dedicated
+topic discussions are as below.
 
+- 2024-11-04 (Mon) 18:00 PT (not yet reserved)
+- 2024-11-20 (Wed) 09:30 PT (not yet reserved)
+- 2024-12-02 (Mon) 18:00 PT (not yet reserved)
+
+Please reach out to me (sj@kernel.org or whatever) to reserve the
+not-yet-reserved time slots for your topics.  The reservation is made in a
+First-Come First-Served way, and I will send a Google Meet link to
+reservation-confirmed attendees.
+
+Please note that other time slots are also available based on the demands.
+
+Any-topic discussions
+---------------------
+
+Next three time slots for any topic (no reservation is required) are scheduled
+as below:
+
+- 2024-11-06 (Wed) 09:30 PT (https://meet.google.com/ndx-evoc-gbu)
+- 2024-11-18 (Mon) 18:00 PT (https://meet.google.com/ndx-evoc-gbu)
+- 2024-12-04 (Wed) 09:30 PT (https://meet.google.com/ndx-evoc-gbu)
+
+Shared Calendar
+---------------
+
+You can get the schedule via this shared Google Calendar:
+https://calendar.google.com/calendar/u/0?cid=ZDIwOTA4YTMxNjc2MDQ3NTIyMmUzYTM5ZmQyM2U4NDA0ZGIwZjBiYmJlZGQxNDM0MmY4ZTRjOTE0NjdhZDRiY0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t
+
+You can also get the past and upcoming schedules via
+https://docs.google.com/document/d/1v43Kcj3ly4CYqmAkMaZzLiM2GEnWfgdGbZAH3mi2vpM/edit?usp=sharing
+
+
+Thanks,
+SJ
