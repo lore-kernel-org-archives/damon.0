@@ -1,92 +1,59 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C4DC10F4;
-	Fri,  1 Nov 2024 00:06:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD2CE182BD;
+	Fri,  1 Nov 2024 00:27:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730419618; cv=none; b=DJFGVi4bFK9VS3k2dkeT1mknK+mfuSiHoW8fPRWmypnNaN5g9wawPq6BqHtR4eYAyIqnWKeAMf1QoKVN78aeeBrEs/ek3vXRm/wRnqtQkdzhURXFkcT0CijDT6aTUF+nUgMrgw7ZVuAJ+AgrUoURqcvM9r+CrqQXB1Pfit+ulk4=
+	t=1730420840; cv=none; b=EZv4HFC6pXOF2q4UUXUlsW8QZcWyLoo4/QPHzZP1VHpGc6Qn8qU2llqO676N29XofTxhO7k4q4SphvT/ySFdJ8ze+5tsQP7478436KrYpIY8eqZkrT4oKDN1lLyCkangiN+VLhqjvazKNVmshbch467BxeyLvhJdmE2DkJKRMGk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730419618; c=relaxed/simple;
-	bh=wpvGBmUGMH8GauYxH+rCYO2265hJO9DTbiWd6kguyvk=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=di12u1ZpcQ49GxtQ8sButLMFaeCiSB/FWOdRqCdJ+dkYy8Y/HDWI6IlmEubSQhTz5FkWqISfMR5AAUJGnwCMFOAWFeoebRFBPPyJWwo8StNuhV4maCUNSvWIJwAwlL7t3yZeu/A7OZJys/Zcgv6jqE6zzt5xIk1CMrsMDVEEj2c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=n27pFNrf; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1730420840; c=relaxed/simple;
+	bh=OlfHbnKYf3jceLglp+umq0NwX9Cc0rpQ2KwjAb7sLKQ=;
+	h=Date:From:To:Cc:Subject:Message-Id:In-Reply-To:References:
+	 Mime-Version:Content-Type; b=e1hEPy0cI1NqPoZJJykl4vDZEfR63H7dva1ANNUeNcOuPc36wtuUtKXEDOxVk0PpmlopOXo73Q9c+6M7AQI/xPgZ3pq4RQ2KX8VxEhOmND/InmI6lNARyptEztFZKGrtlYd8lOArPVSyd494NnvtOexeHl+ZBi73EVHdp66nW5o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linux-foundation.org header.i=@linux-foundation.org header.b=00g056k+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="n27pFNrf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66FA9C4CECF;
-	Fri,  1 Nov 2024 00:06:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1730419617;
-	bh=wpvGBmUGMH8GauYxH+rCYO2265hJO9DTbiWd6kguyvk=;
-	h=From:To:Cc:Subject:Date:From;
-	b=n27pFNrfxM/xBmxXbEo8IzsjQ7hk1pNwvBcOdFRCRUuVo2DL2Ri3TDmJA96sk4S72
-	 x+lw/qbNmWTcjKGPduFz50om2Uf+2GIf94f3wpcpk5zFRBHPmp3kzMaTRq4ks5VvH+
-	 CP9Bdrl15WqJaZe4WVrkkVLBp+/d0fius5ZKz0aq5xdeLRuAL2Q1rfC30yzSdI5UuD
-	 ekDK0wEUcfYwJDgd8Z3ZDy6xuZqYAg6Wy+CE6jyQKdPmeE1Ksl0vUwD9koKNh4tO5B
-	 yJ6t1gb+HU+kkNVHTOHHrcwdY7JPlUF/46sex1MP6qtrsqSJOc/obbakkoLVHrGgDc
-	 zOWasF8NEvJQw==
-From: SeongJae Park <sj@kernel.org>
-To: damon@lists.linux.dev
-Cc: SeongJae Park <sj@kernel.org>,
-	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org
-Subject: DAMON Beer/Coffee/Tea chat reminder for the week of 2024-11-04
-Date: Thu, 31 Oct 2024 17:06:41 -0700
-Message-Id: <20241101000641.52019-1-sj@kernel.org>
-X-Mailer: git-send-email 2.39.5
+	dkim=pass (1024-bit key) header.d=linux-foundation.org header.i=@linux-foundation.org header.b="00g056k+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1C0AC4CEC3;
+	Fri,  1 Nov 2024 00:27:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linux-foundation.org;
+	s=korg; t=1730420840;
+	bh=OlfHbnKYf3jceLglp+umq0NwX9Cc0rpQ2KwjAb7sLKQ=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=00g056k+tEkI32NIisZsCQvMYQp5ROzX9fOHTu1pAzX+o8FerDwSehyU7kto5XYpf
+	 inT4CgZVj+9JnnHV5gFHuwZyLJq7wkQDJqo9OtdQ3H1s7yKFt1ykqrHIRvdyCue9ZE
+	 lKxA/wiDhr7BiWZrCs7gxYaQo8og8Vd5Cud2qNMk=
+Date: Thu, 31 Oct 2024 17:27:19 -0700
+From: Andrew Morton <akpm@linux-foundation.org>
+To: SeongJae Park <sj@kernel.org>
+Cc: damon@lists.linux.dev, linux-mm@kvack.org, linux-kernel@vger.kernel.org,
+ kernel-team@meta.com
+Subject: Re: [PATCH 0/2] mm/damon/core: fix handling of zero non-sampling
+ intervals
+Message-Id: <20241031172719.8051cdd90e3c2187c609bb4e@linux-foundation.org>
+In-Reply-To: <20241031183757.49610-1-sj@kernel.org>
+References: <20241031183757.49610-1-sj@kernel.org>
+X-Mailer: Sylpheed 3.8.0beta1 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
-Hello,
+On Thu, 31 Oct 2024 11:37:55 -0700 SeongJae Park <sj@kernel.org> wrote:
 
+> DAMON's internal intervals accounting logic is not correctly handling
+> non-sampling intervals of zero values for a wrong assumption.  This
+> could cause unexpected monitoring behavior, and even result in infinite
+> hang of DAMON sysfs interface user threads in case of zero aggregation
+> interval.  Fix those by updating the intervals accounting logic.  For
+> details of the root case and solutions, please refer to commit messages
+> of fixes.
 
-This is yet another reminder of upcoming DAMON Beer/Coffee/Tea chats
-(https://docs.google.com/document/d/1v43Kcj3ly4CYqmAkMaZzLiM2GEnWfgdGbZAH3mi2vpM/edit?usp=sharing)
-for the week of 2024-11-04.  Please note that US Daylight saving time will be
-finished on 2024-11-03.  The shared calendar mentioned at te bottom of this
-mail could be helpful to set your reminder regardless of the change.
+Thanks.  fyi, there has been email lossage here.
 
-Dedicated-topic discussions
----------------------------
-
-Next three time slots that I reserved in advance for possible future dedicated
-topic discussions are as below.
-
-- 2024-11-04 (Mon) 18:00 PT (not yet reserved)
-- 2024-11-20 (Wed) 09:30 PT (not yet reserved)
-- 2024-12-02 (Mon) 18:00 PT (not yet reserved)
-
-Please reach out to me (sj@kernel.org or whatever) to reserve the
-not-yet-reserved time slots for your topics.  The reservation is made in a
-First-Come First-Served way, and I will send a Google Meet link to
-reservation-confirmed attendees.
-
-Please note that other time slots are also available based on the demands.
-
-Any-topic discussions
----------------------
-
-Next three time slots for any topic (no reservation is required) are scheduled
-as below:
-
-- 2024-11-06 (Wed) 09:30 PT (https://meet.google.com/ndx-evoc-gbu)
-- 2024-11-18 (Mon) 18:00 PT (https://meet.google.com/ndx-evoc-gbu)
-- 2024-12-04 (Wed) 09:30 PT (https://meet.google.com/ndx-evoc-gbu)
-
-Shared Calendar
----------------
-
-You can get the schedule via this shared Google Calendar:
-https://calendar.google.com/calendar/u/0?cid=ZDIwOTA4YTMxNjc2MDQ3NTIyMmUzYTM5ZmQyM2U4NDA0ZGIwZjBiYmJlZGQxNDM0MmY4ZTRjOTE0NjdhZDRiY0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t
-
-You can also get the past and upcoming schedules via
-https://docs.google.com/document/d/1v43Kcj3ly4CYqmAkMaZzLiM2GEnWfgdGbZAH3mi2vpM/edit?usp=sharing
-
-
-Thanks,
-SJ
+Only [2/2] hit my inbox.  Neither [1/2] not [2/2] are in my linux-mm
+folder.  I found the whole series in my linux-kernel folder.
