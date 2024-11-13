@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4859220ADFA
-	for <damon@lists.linux.dev>; Tue, 12 Nov 2024 20:19:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5702714D718;
+	Wed, 13 Nov 2024 16:26:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731442794; cv=none; b=apMzx97fbtzuoGglYjTdS4dYckOSOQUfUxNWuKLcZejLESoyYepqW2koynxpm4PbMkr/xBYz+MFoEIwkHYUeC3G6pwQ+FKGuR6uNw60Bb1B8nxojFvsLCcTNdnbsbVtol5q1TCT1kUL1/5bbby0gImeYSUI7/uKCHByR2rEsgp8=
+	t=1731515189; cv=none; b=ZG3eGxc4nMIj1tU1lD6PyXzRFD+679uflc0zQvlN1HLmnL250fPInf7bjTx4LwugG25bRRmrMinHv9YdmRzo8Ozc26MFLIM1RBYFslK/dErdhLOy0bHnHBB2/YDX8U8wieYWH85awnjRZNZcktCRXmhjj5WPd4rMUn/07uR2j5U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731442794; c=relaxed/simple;
-	bh=wmR2IvAe3Th4QbwhZONZ70cNFXbTc04aGIsxCfo6wHU=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=QuUAQZyAxsC8SLrHlYAFiepTT2wXlOElr3hDvT8QAlZm82VVd6Ggyb746I1veBmk3HfVBFwMBfaU9KhYi91qz1lJtXiIa6imI60Scb99k7xsX2p/ZD3tX08C8gv9grmEwZODsSbLzziSSPF8K03tqmnqSOE5qkHdg+zpBu7WD3Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZrL3BR2l; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1731515189; c=relaxed/simple;
+	bh=lu4afOeyA3gjn2+gU9Vq22h9ysqBc+RxwLwDEiwVRQI=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=FdVihimFsxS9142heMT5b9kpRmjoHTbRFrf1gQziDieQIVmbRDG4GNxN26HNtZL6WRptonp2cFyMVDZ3g2WqlVVmN5kVLO9GCYb+r3vu+0hp67PQT7sA/+x692pO0y5iG79XnQ3yjgKZENK/OROWMbv9XOsdBZp8Vk8tm94wRnE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KmP7y63B; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZrL3BR2l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B192FC4CECD;
-	Tue, 12 Nov 2024 20:19:53 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KmP7y63B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD42EC4CEC3;
+	Wed, 13 Nov 2024 16:26:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1731442793;
-	bh=wmR2IvAe3Th4QbwhZONZ70cNFXbTc04aGIsxCfo6wHU=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZrL3BR2l63cTKUPQwaHyxKiiCPYG0r4f2YwrSHLLkgHPCZXuMaZYuLinjxfDulsEO
-	 CEyCJX6wMXDdDYsbUp9OGaGJdDAMuCCQT/a0/hBK1FJqNmR6pgbEBuZBid5kPjHWUS
-	 jyrwRUVm+6GbYIz3iJYEAH0q3NCoIwn/o6UqY9OzeZcHvsPH8dNCkSBnVN5HI2Mrnl
-	 0uG7q6cy2qjzBCS1qPWVRWwx+17LzatFnYrUueF1y7TTZoKSfekHvC3ZwMOLAWgCc0
-	 Rd0JiRwRBB4C1EblwjG3YWHgXgPO50NYSBCsF1ZVNabjvTYGQGMtH4YKIbFHAvPZCS
-	 z8ZWlZZedZl2Q==
+	s=k20201202; t=1731515188;
+	bh=lu4afOeyA3gjn2+gU9Vq22h9ysqBc+RxwLwDEiwVRQI=;
+	h=From:To:Cc:Subject:Date:From;
+	b=KmP7y63BBznDTA920Sv39mej0SzXYo58nzeNuX5D91qXDVQMFMBxwGDutuRbgmirL
+	 h+8z5TLquoo7MP23Qzh+auw4PNdltxbTzITq1nG+i5rQ1WqxkKsnatuYTWCOyoFShj
+	 RUWvnfn7Sx7ggIgYgBtA9wQIpY3TGdWyUYJaI9lt+oQNIdxOVCRcOVrNXVti/JY1hn
+	 uBiPv3zl4VLHXe6dbExpECMKZXHuA+4v+fz/PTQKejc5gCa6agDRox4ZrACT2Jz6D+
+	 ER/FYyAzZkM4/W3WdDC4wykyrp5FDNIelTydM/efBMjfXZaYejVaNe7bRjTTV/u3js
+	 IP230N8fyu8Xw==
 From: SeongJae Park <sj@kernel.org>
-To: Akinobu Mita <akinobu.mita@gmail.com>
+To: 
 Cc: SeongJae Park <sj@kernel.org>,
 	damon@lists.linux.dev,
-	linux-mm@kvack.org
-Subject: Re: [PATCH] mm/damon: fix order of arguments in damos_before_apply tracepoint
-Date: Tue, 12 Nov 2024 12:19:50 -0800
-Message-Id: <20241112201950.42568-1-sj@kernel.org>
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org,
+	kernel-team@meta.com
+Subject: [RFC PATCH 0/5] mm/damon: add sample modules under samples/damon/
+Date: Wed, 13 Nov 2024 08:26:19 -0800
+Message-Id: <20241113162624.48973-1-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20241112154828.40307-1-akinobu.mita@gmail.com>
-References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -45,27 +44,43 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hi Akinobu,
+DAMON is a kernel framework that provides API for other subsystems or
+modules in the kernel space.  The API functions have their own
+kernel-doc comments, and DAMON modules including DAMON_SYSFS,
+DAMON_RECLAIM, and DAMON_LRU_SORT can be used as a refernce usages.
+However, kernel-doc is not very easy for beginner, and the existing
+DAMON modules for real usage are bit complicated.  Add sample DAMON
+modules showing basic usage of DAMON kernel API.
 
-On Wed, 13 Nov 2024 00:48:28 +0900 Akinobu Mita <akinobu.mita@gmail.com> wrote:
+Note that some of the code for similar purpose that I used at kernel
+summit 2021 DAMON live coding session[1] is reused here.
 
-> Since the order of the scheme_idx and target_idx arguments in TP_ARGS is
-> reversed, they are stored in the trace record in reverse.
+[1] https://linuxplumbersconf.org/event/11/contributions/984/
 
-Thank you for finding and fixing this!
+SeongJae Park (5):
+  samples: introduce a skeleton of a sample DAMON module for working set
+    size estimation
+  samples/damon/wsse: implement DAMON starting and stopping
+  samples/damon/wsse: implement working set size estimation and logging
+  samples/damon: introduce a skeleton of a smaple DAMON module for
+    proactive reclamation
+  samples/damon/prcl: implement schemes setup
 
-> 
-> Fixes: c603c630b509 ("mm/damon/core: add a tracepoint for damos apply target regions")
+ MAINTAINERS            |   1 +
+ samples/Kconfig        |   2 +
+ samples/Makefile       |   2 +
+ samples/damon/Kconfig  |  30 +++++++++
+ samples/damon/Makefile |   4 ++
+ samples/damon/prcl.c   | 138 +++++++++++++++++++++++++++++++++++++++++
+ samples/damon/wsse.c   | 120 +++++++++++++++++++++++++++++++++++
+ 7 files changed, 297 insertions(+)
+ create mode 100644 samples/damon/Kconfig
+ create mode 100644 samples/damon/Makefile
+ create mode 100644 samples/damon/prcl.c
+ create mode 100644 samples/damon/wsse.c
 
-Can we also add Cc: <stable@vger.kernel.org>?
 
-> Cc: SeongJae Park <sj@kernel.org>
-> Signed-off-by: Akinobu Mita <akinobu.mita@gmail.com>
+base-commit: 981cf179b2760af4215419c67a801ec5d028a546
+-- 
+2.39.5
 
-Reviewed-by: SeongJae Park <sj@kernel.org>
-
-
-Thanks,
-SJ
-
-[...]
