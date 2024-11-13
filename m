@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 813631DED49;
-	Wed, 13 Nov 2024 16:26:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC3411FF7C6;
+	Wed, 13 Nov 2024 16:26:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731515192; cv=none; b=rGPgd96uLQkXt9fQfFP4NMsxqXao2+8371UTUEvHQ1Pcu/76VC5rz4x3mo9Cu3CZfM7RL1XRfVJv7hvXpgR4ckRji9sMM2pAU6x2cskzNiBUM2JyejkxhZqbbaI+NZyVAkzdplMelm5U1c9wwXuDPkb9IUWXFq2XfSCHahFz0tQ=
+	t=1731515194; cv=none; b=d0aoQBHJncGN84AAM6WQKf2DRbiq0Cb6hfsVbxQGKgesn5MYNMchW8SWHG2KDZaPbVBOt63XpvG65+8Wv4t92Zp4aipvjc6aKtPXk0f57e3w/Qs/7SDwx52G6ouQlas2APOmv6MkJt9m89wF73FDAvTh2d345HS+K8wYCTnKpZg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731515192; c=relaxed/simple;
-	bh=6Kv8j6GXmb5OgoQ5xsiPf6fy1wOOGSi9iB0lHZRsXOs=;
+	s=arc-20240116; t=1731515194; c=relaxed/simple;
+	bh=nvp2mMbvRyEYpGGB8GVuStSGx5/+sBiAwPQ8jRBowzE=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=Q+svLScKa8qJHKpizUKbF+SMh3e0kKgQK/541qg4dShmpJdOsLssIUYqQ9TcvOtePj3ej77ISdUgYBiWaGk/uImXEX07gdvo7mEGi5k0uoNkL+KqlnuEqVmYWQbIJGTjz8Frqvt1TPLoNT+avBwX7hRMJ9PviowSQ+wq0SE+m48=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=o1/agY4m; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K+1uDVirKQlAOEBbBmJQ6z7ZaEzfJPL/FDOgL2ah0fVHGkiSPTLRDAeK8bAvM9csT2FlzhwlwNbNpi5WiSQhgwpC3jtF6W5AqRgp0HDA0zBoTvRrrAc47BkqXCyaE5/D/4zIpPC+ahNo8zwcEgJASl2wAJcSIbrNlKKN01EMXj8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tzYlZYVW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="o1/agY4m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D835AC4CECF;
-	Wed, 13 Nov 2024 16:26:30 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tzYlZYVW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F09AEC4CEDA;
+	Wed, 13 Nov 2024 16:26:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1731515191;
-	bh=6Kv8j6GXmb5OgoQ5xsiPf6fy1wOOGSi9iB0lHZRsXOs=;
+	s=k20201202; t=1731515193;
+	bh=nvp2mMbvRyEYpGGB8GVuStSGx5/+sBiAwPQ8jRBowzE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o1/agY4mtPOWPXWZBhVsqgjbwv8NMsbuCUP2I9qvZ5wF/90hlRy8DhVmtSg7OSDku
-	 pyz5low1w7vWU5yo3CU8zLSdJN1o8MSsS3I2p2hjntM+ji1MCf6jxv/FGD3c9WR45R
-	 nlkG1pMI5X2xqnwEOgSI4x4QVzEztAoLpK7iZ/PDyGTg4wx1D3TikN6WqGsS5c4IJm
-	 Hn9QIr+XYSv+fITSvjfkqh4pNORtFhSDmsXJ2zNlfaYhYlWX8EDv7UVUUKnCTkB6tK
-	 ghKzb432jDLcwBmImZJ48ywfO1qpdiQ6Q/rkxubKlBHBadv0EAxiruqVgFSCQzleZE
-	 Jrm7ClSIAvi4g==
+	b=tzYlZYVWfpmFdoSg5mqCA2/vMt8lNAryL/Qeyopf1laH1M7ZHFQ8p0ykW9VOdcJh8
+	 QERHe9jyUv6PPQWlcy+OZQmMaVZUKzvcTAtpSDf8U1phkVpOe2bzKcf+6Qiqk0Btm0
+	 ZjRmiMhGClDT1cBdOeFLeNqM0iHlUF2cs56Wu4r0rTvkZ1vZ+Q3FnemvCgZ7aiIIFK
+	 NFwiOxsY/h4+PN42u737de7plor3eb0vrolvMCpzzIuiubuDelDYWAUqvwUPy4V1pP
+	 FBL0v4F4mKXSEs1Sc94U7GsviRoyS7F/h8vtH3Js7xQrYCZSBNaaKRlUM/h/Arvj6V
+	 shacV75K8YH0Q==
 From: SeongJae Park <sj@kernel.org>
 To: 
 Cc: SeongJae Park <sj@kernel.org>,
@@ -33,9 +33,9 @@ Cc: SeongJae Park <sj@kernel.org>,
 	linux-mm@kvack.org,
 	linux-kernel@vger.kernel.org,
 	kernel-team@meta.com
-Subject: [RFC PATCH 2/5] samples/damon/wsse: implement DAMON starting and stopping
-Date: Wed, 13 Nov 2024 08:26:21 -0800
-Message-Id: <20241113162624.48973-3-sj@kernel.org>
+Subject: [RFC PATCH 4/5] samples/damon: introduce a skeleton of a smaple DAMON module for proactive reclamation
+Date: Wed, 13 Nov 2024 08:26:23 -0800
+Message-Id: <20241113162624.48973-5-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20241113162624.48973-1-sj@kernel.org>
 References: <20241113162624.48973-1-sj@kernel.org>
@@ -47,34 +47,119 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Start running DAMON for the process that user requested to estimate the
-process via 'pid' parameter, when 'y' is passed to 'enable' parameter.
-If 'n' is passed, stop running DAMON.  Iterating the DAMON monitoring
-results and estimating the working set side is not yet implemented.  It
-will be implemented by the following commit.
+Add a skeleton for a sample DAMON module that can be used for
+proactively reclaiming cold memory regions of a given process.  The
+skeleton is actually same to working set size estimation sample module,
+but only the names of the file and symbols are changed.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- samples/damon/wsse.c | 35 ++++++++++++++++++++++++++++++++++-
- 1 file changed, 34 insertions(+), 1 deletion(-)
+ samples/Makefile       |   1 +
+ samples/damon/Kconfig  |  13 +++++
+ samples/damon/Makefile |   1 +
+ samples/damon/prcl.c   | 120 +++++++++++++++++++++++++++++++++++++++++
+ 4 files changed, 135 insertions(+)
+ create mode 100644 samples/damon/prcl.c
 
-diff --git a/samples/damon/wsse.c b/samples/damon/wsse.c
-index 5912f15181c8..119ac8a2c901 100644
---- a/samples/damon/wsse.c
-+++ b/samples/damon/wsse.c
-@@ -27,15 +27,48 @@ static bool enable __read_mostly;
- module_param_cb(enable, &enable_param_ops, &enable, 0600);
- MODULE_PARM_DESC(enable, "Enable or disable DAMON_SAMPLE_WSSE");
+diff --git a/samples/Makefile b/samples/Makefile
+index 726bb5293486..5af6bb8afb07 100644
+--- a/samples/Makefile
++++ b/samples/Makefile
+@@ -40,3 +40,4 @@ obj-$(CONFIG_SAMPLE_CORESIGHT_SYSCFG)	+= coresight/
+ obj-$(CONFIG_SAMPLE_FPROBE)		+= fprobe/
+ obj-$(CONFIG_SAMPLES_RUST)		+= rust/
+ obj-$(CONFIG_SAMPLE_DAMON_WSSE)		+= damon/
++obj-$(CONFIG_SAMPLE_DAMON_PRCL)		+= damon/
+diff --git a/samples/damon/Kconfig b/samples/damon/Kconfig
+index b799e01345c8..63f6dcd71daa 100644
+--- a/samples/damon/Kconfig
++++ b/samples/damon/Kconfig
+@@ -14,4 +14,17 @@ config SAMPLE_DAMON_WSSE
  
+ 	  If unsure, say N.
+ 
++config SAMPLE_DAMON_PRCL
++	bool "DAMON sameple module for access-aware proactive reclamation"
++	depends on DAMON && DAMON_VADDR
++	help
++	  This builds DAMON sample module for access-aware proactive
++	  reclamation.
++
++	  The module receives a pid, monitor access to the virtual address
++	  space of the process, find memory regions that not accessed, and
++	  proactively reclaim the regions.
++
++	  If unsure, say N.
++
+ endmenu
+diff --git a/samples/damon/Makefile b/samples/damon/Makefile
+index ccbe93d40130..7f155143f237 100644
+--- a/samples/damon/Makefile
++++ b/samples/damon/Makefile
+@@ -1,3 +1,4 @@
+ # SPDX-License-Identifier: GPL-2.0
+ 
+ obj-$(CONFIG_SAMPLE_DAMON_WSSE) += wsse.o
++obj-$(CONFIG_SAMPLE_DAMON_PRCL) += prcl.o
+diff --git a/samples/damon/prcl.c b/samples/damon/prcl.c
+new file mode 100644
+index 000000000000..32ccdd91cf55
+--- /dev/null
++++ b/samples/damon/prcl.c
+@@ -0,0 +1,120 @@
++// SPDX-License-Identifier: GPL-2.0
++/*
++ * proactive reclamation: monitor access pattern of a given process, find
++ * regiosn that seems not accessed, and proactively page out the regions.
++ */
++
++#define pr_fmt(fmt) "damon_sample_prcl: " fmt
++
++#include <linux/damon.h>
++#include <linux/init.h>
++#include <linux/kernel.h>
++#include <linux/module.h>
++
++static int target_pid __read_mostly;
++module_param(target_pid, int, 0600);
++
++static int damon_sample_prcl_enable_store(
++		const char *val, const struct kernel_param *kp);
++
++static const struct kernel_param_ops enable_param_ops = {
++	.set = damon_sample_prcl_enable_store,
++	.get = param_get_bool,
++};
++
++static bool enable __read_mostly;
++module_param_cb(enable, &enable_param_ops, &enable, 0600);
++MODULE_PARM_DESC(enable, "Enable of disable DAMON_SAMPLE_WSSE");
++
 +static struct damon_ctx *ctx;
 +static struct pid *target_pidp;
 +
- static int damon_sample_wsse_start(void)
- {
++static int damon_sample_prcl_after_aggregate(struct damon_ctx *c)
++{
++	struct damon_target *t;
++
++	damon_for_each_target(t, c) {
++		struct damon_region *r;
++		unsigned long wss = 0;
++
++		damon_for_each_region(r, t) {
++			if (r->nr_accesses > 0)
++				wss += r->ar.end - r->ar.start;
++		}
++		pr_info("wss: %lu\n", wss);
++	}
++	return 0;
++}
++
++static int damon_sample_prcl_start(void)
++{
 +	struct damon_target *target;
 +
- 	pr_info("start\n");
--	return 0;
++	pr_info("start\n");
 +
 +	ctx = damon_new_ctx();
 +	if (!ctx)
@@ -97,21 +182,51 @@ index 5912f15181c8..119ac8a2c901 100644
 +	}
 +	target->pid = target_pidp;
 +
++	ctx->callback.after_aggregation = damon_sample_prcl_after_aggregate;
++
 +	return damon_start(&ctx, 1, true);
- }
- 
- static void damon_sample_wsse_stop(void)
- {
- 	pr_info("stop\n");
++}
++
++static void damon_sample_prcl_stop(void)
++{
++	pr_info("stop\n");
 +	if (ctx) {
 +		damon_stop(&ctx, 1);
 +		damon_destroy_ctx(ctx);
 +	}
 +	if (target_pidp)
 +		put_pid(target_pidp);
- }
- 
- static int damon_sample_wsse_enable_store(
++}
++
++static int damon_sample_prcl_enable_store(
++		const char *val, const struct kernel_param *kp)
++{
++	bool enabled = enable;
++	int err;
++
++	err = kstrtobool(val, &enable);
++	if (err)
++		return err;
++
++	if (enable == enabled)
++		return 0;
++
++	if (enable)
++		return damon_sample_prcl_start();
++	damon_sample_prcl_stop();
++	return 0;
++}
++
++static int __init damon_sample_prcl_init(void)
++{
++	return 0;
++}
++
++module_init(damon_sample_prcl_init);
++
++MODULE_LICENSE("GPL");
++MODULE_AUTHOR("SeongJae Park");
++MODULE_DESCRIPTION("DAMON sample module for proactive reclamation");
 -- 
 2.39.5
 
