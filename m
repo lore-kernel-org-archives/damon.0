@@ -1,44 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC3E8200123;
-	Wed, 13 Nov 2024 16:26:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E983CA5B;
+	Fri, 15 Nov 2024 01:25:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731515194; cv=none; b=sMHCe6MlHRpwCKmfXhajmQF6lCL7rbWhCnufxApQd+8VGbfEU+X55aMOVk/nXv2/R5QrL7ZXvsNQ4/VPjcT8qebkOSTPBoggt9FZk1/NiqHBsZj7QKr7ILobUDmlm3Zq5CE4seSLHRipXGKH7qKXqxjd6bl+9IJgZITgGXhS+f4=
+	t=1731633933; cv=none; b=Wc7qGE1Lt+/EKJv1Lq1cx1KV5VjRqyuUzFpzkPSGFUgAKEEJgXraFlESzHY0n1qeFt8OG71+WrFLXi8a8ZvIhdFyV5UQkeAhkFiA2xgWEyyQih9orcCbvCBt5ZMjTU0BfsTO498Api/ZVq3QgK0MoEUV0JpRntLLVoT478vjfmM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731515194; c=relaxed/simple;
-	bh=f5G64UqwzMEmnAbYFpT0izlILG/ACPrrbDzbSfum1w0=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=N4fZp3QG8XaosRHSR3RPqwWGXFviQdh5u6cksyDoQXvtZIjDKnLbPduRVmbuzlvFncTgLhxTri2FMXwMBn5+7IjDqGSiVAkRVLwautvgwvPQoK3Mh4yOqBsgQT4z/bGrODSS570ibgdCH+EPhTVNE+r36B0xpb7dgPDD+AEj1ng=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rk5i0Kre; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1731633933; c=relaxed/simple;
+	bh=x6UT6OVZn4jjNeukr+uzg+Hm6X47IC5kPd04Z4OXBFY=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=psZ3cnHOzTvCCbVERTD9XQsGgGXXv9zw9ESeeJWJ+u0MylcwNlPUPpeaY0tZZNCqD7o+hgsHvpuKqFG5cwsWxMdsdIgKrm/3dzrup+6Fivtqpw9uYVHXqSN15XW6SbKOY44H2330gqp1kVEPjdVcBvtRaYvrAasw2hUNkTwmc+E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ftELgl0E; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rk5i0Kre"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DB50C4CECD;
-	Wed, 13 Nov 2024 16:26:34 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ftELgl0E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F725C4CECD;
+	Fri, 15 Nov 2024 01:25:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1731515194;
-	bh=f5G64UqwzMEmnAbYFpT0izlILG/ACPrrbDzbSfum1w0=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rk5i0KreF7flYadabrj+EGCJCsLTTGhajaATGds4Av2dLFB0ET5NvC82TjBJvxycS
-	 3F8B3QAS6ZhPWnO9ZPIMKlxRAiDVZD43qKCgcswmHDjsxDUt7FdvPsdRgCCnNF5f0Q
-	 nGsxcUiUXI3EBRNq4mGalvtz3KFT4U2fWWmau6RdFhPU87dw0wVaz34G9equ3oi1Xr
-	 xEtAoBju34QRz8l6yzGQUtToGKT66VZWojsuE2QRXF0yMMgYeBNeuJX1Q7W44KrNca
-	 LKUAIEWOzRsLZxxDEX0rKCfNkJ5cXx8nZ/TRa+cLJTebBn0njV5enL1Bhugdqy8ZlJ
-	 wTsUAyssqsUIQ==
+	s=k20201202; t=1731633932;
+	bh=x6UT6OVZn4jjNeukr+uzg+Hm6X47IC5kPd04Z4OXBFY=;
+	h=From:To:Cc:Subject:Date:From;
+	b=ftELgl0EtFv3hDX82+8GMoJ8jBKkWo18eN7vfvFGOFK06oa/+a/mjMghLOUDCmVCz
+	 qO3F1EwAJ2TaLsZxxYh4RC23Lncnn/X+akoJ/MZNyI42rzTLcONYg/I/UJV56i8OIc
+	 B6B2umgWkC76XI8aMFyBQQM6xxex1VOm5bMUeC99Z+Ko/T7ZVe/qWfgSNprxOOfzjN
+	 2Vu39EMJFh5YK6tl7lgHcz9KzZQKB5GKqxeyFHNJiZvPCt/LVObkbDotqgTJzMGzso
+	 BSnNywbvI3b8Ang1Q7VEW76B2J0riyRkVRqJcVk+4PWllsoMa+iV2U9R5Y9bAVXL88
+	 otEWUdr67vIoA==
 From: SeongJae Park <sj@kernel.org>
-To: 
+To: damon@lists.linux.dev
 Cc: SeongJae Park <sj@kernel.org>,
-	damon@lists.linux.dev,
 	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org,
-	kernel-team@meta.com
-Subject: [RFC PATCH 5/5] samples/damon/prcl: implement schemes setup
-Date: Wed, 13 Nov 2024 08:26:24 -0800
-Message-Id: <20241113162624.48973-6-sj@kernel.org>
+	linux-kernel@vger.kernel.org
+Subject: DAMON Beer/Coffee/Tea chat reminder for the week of 2024-11-18
+Date: Thu, 14 Nov 2024 17:25:29 -0800
+Message-Id: <20241115012529.83546-1-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20241113162624.48973-1-sj@kernel.org>
-References: <20241113162624.48973-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -47,51 +42,57 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Implement the DAMOS-based cold memory regions proactive reclamation
-logic.  The logic treats memory regions that assumed to not be accessed
-at all for five or more seconds as cold, and reclaim as soon as found.
+Hello,
 
-Signed-off-by: SeongJae Park <sj@kernel.org>
----
- samples/damon/prcl.c | 18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
 
-diff --git a/samples/damon/prcl.c b/samples/damon/prcl.c
-index 32ccdd91cf55..cf8c6f29d8a3 100644
---- a/samples/damon/prcl.c
-+++ b/samples/damon/prcl.c
-@@ -49,6 +49,7 @@ static int damon_sample_prcl_after_aggregate(struct damon_ctx *c)
- static int damon_sample_prcl_start(void)
- {
- 	struct damon_target *target;
-+	struct damos *scheme;
- 
- 	pr_info("start\n");
- 
-@@ -75,6 +76,23 @@ static int damon_sample_prcl_start(void)
- 
- 	ctx->callback.after_aggregation = damon_sample_prcl_after_aggregate;
- 
-+	scheme = damon_new_scheme(
-+			&(struct damos_access_pattern) {
-+			.min_sz_region = PAGE_SIZE,
-+			.max_sz_region = ULONG_MAX,
-+			.min_nr_accesses = 0,
-+			.max_nr_accesses = 0},
-+			DAMOS_PAGEOUT,
-+			0,
-+			&(struct damos_quota){},
-+			&(struct damos_watermarks){},
-+			NUMA_NO_NODE);
-+	if (!scheme) {
-+		damon_destroy_ctx(ctx);
-+		return -ENOMEM;
-+	}
-+	damon_set_schemes(ctx, &scheme, 1);
-+
- 	return damon_start(&ctx, 1, true);
- }
- 
--- 
-2.39.5
+This is yet another reminder of upcoming DAMON Beer/Coffee/Tea chats
+(https://docs.google.com/document/d/1v43Kcj3ly4CYqmAkMaZzLiM2GEnWfgdGbZAH3mi2vpM/edit?usp=sharing)
+for the week of 2024-11-18.
 
+After the two instances for the week of 2024-11-18, the week of 2024-12-02 was
+originally the next meetings week.  But I have conflicts on the week, so moved
+those one week forward.  Please check the schedule.
+
+Please note that US Daylight saving time has finished recently.  The shared
+calendar mentioned at te bottom of this mail could be helpful to set your
+reminder regardless of the change.
+
+Dedicated-topic discussions
+---------------------------
+
+Next three time slots that I reserved in advance for possible future dedicated
+topic discussions are as below.
+
+- 2024-11-20 (Wed) 09:30 PT (not yet reserved)
+- 2024-12-09 (Mon) 18:00 PT (not yet reserved)
+- 2024-12-18 (Wed) 09:30 PT (not yet reserved)
+
+Please reach out to me (sj@kernel.org or whatever) to reserve the
+not-yet-reserved time slots for your topics.  The reservation is made in a
+First-Come First-Served way, and I will send a Google Meet link to
+reservation-confirmed attendees.
+
+Please note that other time slots are also available based on the demands.
+
+Any-topic discussions
+---------------------
+
+Next three time slots for any topic (no reservation is required) are scheduled
+as below:
+
+- 2024-11-18 (Mon) 18:00 PT (https://meet.google.com/ndx-evoc-gbu)
+- 2024-12-11 (Wed) 09:30 PT (https://meet.google.com/ndx-evoc-gbu)
+- 2024-12-16 (Mon) 18:00 PT (https://meet.google.com/ndx-evoc-gbu)
+
+Shared Calendar
+---------------
+
+You can get the schedule via this shared Google Calendar:
+https://calendar.google.com/calendar/u/0?cid=ZDIwOTA4YTMxNjc2MDQ3NTIyMmUzYTM5ZmQyM2U4NDA0ZGIwZjBiYmJlZGQxNDM0MmY4ZTRjOTE0NjdhZDRiY0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t
+
+You can also get the past and upcoming schedules via
+https://docs.google.com/document/d/1v43Kcj3ly4CYqmAkMaZzLiM2GEnWfgdGbZAH3mi2vpM/edit?usp=sharing
+
+
+Thanks,
+SJ
