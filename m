@@ -1,47 +1,59 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 989BF14A088;
-	Fri, 15 Nov 2024 18:20:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B5C71CF2B7;
+	Fri, 15 Nov 2024 18:26:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731694826; cv=none; b=DXHQnXZrPeOOcXTdUGAC0txw8gg4sZploO5BJxiykjJSHucmLG5kRzpsdEldtrmaqM0D1QXLVoGqPHnA3tQClFnswpGrqfAMGWpH/MtjpWXctf6+xmtk6AOvG1O9DHH6hlcTA3wI4A8GI61tDI2mFjK/9iauSXjN420YlIH/o7c=
+	t=1731695172; cv=none; b=Ou22IdjDwzMzbe18fVcXI6i0ev/6ebux9ud4KoNOvc+WGw6FdMNAsXYndMysYuAZwM8kN4lsRSkR/ZWR8pMmRqwMdmlvRlBwD74qG6iqYFZ7q7uVI9VMFLnWUwQMN7alDst+2orH20sNUUcDpyIR+iGDlmwsIuZ/B0X+vvZREFU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731694826; c=relaxed/simple;
-	bh=QLvF9Itl9shxQblgQCJX6lFfL008SE7kFJDmbFl2xFk=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=mYD91xgzBYR8Zc2cxEYYu/RM36Po0iAuyTUKC0Tr5LHtWQ1ehaHsSCEMXk6mbh5nwH1T24W8H4w6TXusH4rqF9jmOUyiSO2+r6O6/qdKK0YIvOf2y47zlsGTT03J/OwtEKV/2RI5u44iC7x9UtvAuYoDuJ8YWw5I1nCS0l26j78=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bH8mnw6/; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1731695172; c=relaxed/simple;
+	bh=EsqiAzcPAp86m5J+JWKrepSL4HJDwknSWzoJuw184LQ=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=EplYh+2lmA+yvWihV8+Jv4H2SXANuy/kzrwIyKJUwYswEW8z3i9tYQcepCRg77eDeJRagLB/kEjM6OSqwn9v9WWNjxW2RvPzjzU+Dppz3SkXliPiYAiSV56WaiDyYPgz53EWHg+5QXLjyH7lcLc3/zTQmxV7MxiP/H+TBoxr8vM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=D7UDkou9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bH8mnw6/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 028E0C4CECF;
-	Fri, 15 Nov 2024 18:20:26 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="D7UDkou9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80C2FC4CECF;
+	Fri, 15 Nov 2024 18:26:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1731694826;
-	bh=QLvF9Itl9shxQblgQCJX6lFfL008SE7kFJDmbFl2xFk=;
-	h=From:To:Cc:Subject:Date:From;
-	b=bH8mnw6/M5E0nJjuC15yc9XPrnq8Pf61PmV7FxetOjend/gusHFq9AyU7RG/UkHy9
-	 Xt3xottVcZbQaBxh8x0/WyEGhUtj7ACbbx3PlIO7Qj4p7sO7nEIQtN9AOkyzxNBGL4
-	 Qmntvk0T7IPneDFdOdT1rBU4Ce8FEEquUMAFlb5ABiOG2Jm1lQteci1NB5pBsyiD5T
-	 3UdvxSlzuRVaAvMeheaUJamQcjFE0N8Kze3xdXzwpk6DS4kCuiQnXqQZgYySf6sSm3
-	 +TAau+4tZpY1UrfRcYCUldvj4R9CTMqV/MiGc6QYZB55ZcXXQyyXIydRlwM5b7Dr/W
-	 fxbdjkeX76n3w==
+	s=k20201202; t=1731695171;
+	bh=EsqiAzcPAp86m5J+JWKrepSL4HJDwknSWzoJuw184LQ=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=D7UDkou9hHH7JwDFMrTk2fyGFTEWGV0hND8x2+CRuUccm5x1jmidLR+nszEZAQxxT
+	 sGlOPBRBYZcOuy075T/Jks0jg5uuitK/FMJcGDRW/jkhokQroflhkPlgDXdtrnEMM4
+	 kh9QhBXYerx/CJKcb8fl7Ad/qwDwAehFHfhz510c2wi6e7W4HmzVdQ3Sp6U5Mt6VEO
+	 e9NxI8RqRC5kxWKkSe1FvbEYJK8fzNaQSRF/TdYEo7YURo3dZ30j6ApKazV+qSmbyt
+	 06clhI5lT4VHgM+J4P1cWZiUfKPKbKTgtFIuv/s7Bb9YCpNTiqf10P1wJKuSQB3M63
+	 1rXT/6PEsE3LA==
 From: SeongJae Park <sj@kernel.org>
-To: Andrew Morton <akpm@linux-foundation.org>
-Cc: Akinobu Mita <akinobu.mita@gmail.com>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	linux-trace-kernel@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	kernel-team@meta.com,
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: SeongJae Park <sj@kernel.org>,
 	stable@vger.kernel.org,
-	SeongJae Park <sj@kernel.org>
-Subject: [PATCH RESEND] mm/damon: fix order of arguments in damos_before_apply tracepoint
-Date: Fri, 15 Nov 2024 10:20:23 -0800
-Message-Id: <20241115182023.43118-1-sj@kernel.org>
+	patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net,
+	rwarsow@gmx.de,
+	conor@kernel.org,
+	hargar@microsoft.com,
+	broonie@kernel.org,
+	damon@lists.linux.dev
+Subject: Re: [PATCH 6.1 00/39] 6.1.118-rc1 review
+Date: Fri, 15 Nov 2024 10:26:07 -0800
+Message-Id: <20241115182607.44021-1-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20241115063722.599985562@linuxfoundation.org>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -50,34 +62,55 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-From: Akinobu Mita <akinobu.mita@gmail.com>
+Hello,
 
-Since the order of the scheme_idx and target_idx arguments in TP_ARGS is
-reversed, they are stored in the trace record in reverse.
+On Fri, 15 Nov 2024 07:38:10 +0100 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
 
-Fixes: c603c630b509 ("mm/damon/core: add a tracepoint for damos apply target regions")
-Cc: <stable@vger.kernel.org>
-Cc: SeongJae Park <sj@kernel.org>
-Signed-off-by: Akinobu Mita <akinobu.mita@gmail.com>
-Signed-off-by: SeongJae Park <sj@kernel.org>
-Link: https://patch.msgid.link/20241112154828.40307-1-akinobu.mita@gmail.com
+> This is the start of the stable review cycle for the 6.1.118 release.
+> There are 39 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Sun, 17 Nov 2024 06:37:07 +0000.
+> Anything received after that time might be too late.
+
+This rc kernel passes DAMON functionality test[1] on my test machine.
+Attaching the test results summary below.  Please note that I retrieved the
+kernel from linux-stable-rc tree[2].
+
+Tested-by: SeongJae Park <sj@kernel.org>
+
+[1] https://github.com/damonitor/damon-tests/tree/next/corr
+[2] b9e54d0ed258 ("Linux 6.1.118-rc1")
+
+Thanks,
+SJ
+
+[...]
+
 ---
- include/trace/events/damon.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/trace/events/damon.h b/include/trace/events/damon.h
-index 23200aabccac..da4bd9fd1162 100644
---- a/include/trace/events/damon.h
-+++ b/include/trace/events/damon.h
-@@ -15,7 +15,7 @@ TRACE_EVENT_CONDITION(damos_before_apply,
- 		unsigned int target_idx, struct damon_region *r,
- 		unsigned int nr_regions, bool do_trace),
- 
--	TP_ARGS(context_idx, target_idx, scheme_idx, r, nr_regions, do_trace),
-+	TP_ARGS(context_idx, scheme_idx, target_idx, r, nr_regions, do_trace),
- 
- 	TP_CONDITION(do_trace),
- 
--- 
-2.39.5
-
+ok 1 selftests: damon: debugfs_attrs.sh
+ok 2 selftests: damon: debugfs_schemes.sh
+ok 3 selftests: damon: debugfs_target_ids.sh
+ok 4 selftests: damon: debugfs_empty_targets.sh
+ok 5 selftests: damon: debugfs_huge_count_read_write.sh
+ok 6 selftests: damon: debugfs_duplicate_context_creation.sh
+ok 7 selftests: damon: sysfs.sh
+ok 1 selftests: damon-tests: kunit.sh
+ok 2 selftests: damon-tests: huge_count_read_write.sh
+ok 3 selftests: damon-tests: buffer_overflow.sh
+ok 4 selftests: damon-tests: rm_contexts.sh
+ok 5 selftests: damon-tests: record_null_deref.sh
+ok 6 selftests: damon-tests: dbgfs_target_ids_read_before_terminate_race.sh
+ok 7 selftests: damon-tests: dbgfs_target_ids_pid_leak.sh
+ok 8 selftests: damon-tests: damo_tests.sh
+ok 9 selftests: damon-tests: masim-record.sh
+ok 10 selftests: damon-tests: build_i386.sh
+ok 11 selftests: damon-tests: build_arm64.sh # SKIP
+ok 12 selftests: damon-tests: build_m68k.sh # SKIP
+ok 13 selftests: damon-tests: build_i386_idle_flag.sh
+ok 14 selftests: damon-tests: build_i386_highpte.sh
+ok 15 selftests: damon-tests: build_nomemcg.sh
+ [33m
+ [92mPASS [39m
