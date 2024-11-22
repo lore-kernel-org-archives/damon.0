@@ -1,59 +1,26 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 388B11F931;
-	Wed, 20 Nov 2024 18:14:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+Received: from invmail4.hynix.com (exvmail4.hynix.com [166.125.252.92])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 46F5042A9F
+	for <damon@lists.linux.dev>; Fri, 22 Nov 2024 08:33:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=166.125.252.92
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732126451; cv=none; b=kBKm9zV5x/thlsEHxU+IIsZqqFmjaTcRX9EL2Uc5krPM8aW2hzeRdUUU6V+lq+XNOs0JVoSW4Tzr9j7z85YY5yrbV++gCw7i6lv7+N2XcuImEb7u8RWWNA216zAcn7sH2Hth8MYvn5DXcJHTcC0zrIoqaZ15CGfZwxy0E8dSuog=
+	t=1732264436; cv=none; b=akkIn0k+/8p6xovELcCLRbrcVxbBJxDhMaASgnIDtDg0dAwJcAJ37Dw9jK8iz0J3zFCCUd5OVOZ7gTMQYkoWB62igZEjyKPMYV5LDueXUbeIkB2SOXhWgr9HjJeEq5VCKAggj/uS4K+NwUCSfVQ5vv6h+suW8rkcs2vKC91pcDw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732126451; c=relaxed/simple;
-	bh=uwloS8aq1NCY5t6kL4Soj/ngvcEhOYV4IG3I/Xyh4Gk=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=Qyz4r8jKrdIarSrwTHLcRIiHnLZ2CbO7A8VYCM7BkMTmuY2yZ7pCE5aV2wm81Pa0bHAbdk1OwzNJC1lWG4QoDR/blxHtBDmAzvLu7OVln+IOSFt1BoRx9fRoj7SI4pOFb3ohbV+iCLVGGGeYtnp7nb6A1Ulhc31H2GhiZjRYMwQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TCZ8mq5E; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TCZ8mq5E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9448CC4CECD;
-	Wed, 20 Nov 2024 18:14:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1732126450;
-	bh=uwloS8aq1NCY5t6kL4Soj/ngvcEhOYV4IG3I/Xyh4Gk=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TCZ8mq5EVoCYmVRZjbZet8aNfT0cwzgeNSmkfylCs+EQ5rQCOpAJt0gDA3i111USb
-	 aK+6DPRGsxHSkZMoVdPzP5Yq5DgTbnaX1S4WNNaO96l/5vKLNp3vl9lfP0zfyyJkyx
-	 rVDdqDpcF1y68J1+ZertKjNEj+CSvVJMcNsljfCyziDC4NJq8aan79jplEhN5PjMj4
-	 aKCM/TrZpOCYABa5Ai7D/ZCjU3jDjIiBpl9i6UBNbdhGT4JtLPYL0jCdfvhzyHUUyW
-	 AnYvQyzFqQRYE0n7atrnRCRtAnmbsj97UbCn8byE6PZMq9amjvssnYrtdVvZm+IE52
-	 EO6/IolgKQY0g==
-From: SeongJae Park <sj@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+	s=arc-20240116; t=1732264436; c=relaxed/simple;
+	bh=aqIe7EMQ5jxgZsmhcnAb9OH2Q6M1zSL00UFgC1zNUAg=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Co6dsMVUM4Pnyic9LWVyHNThjkKNcrmV5qE9ulA7AYBG9b4B7PrMxwypWgdVowz6TcIBFDe2MxBZNstouliAVBb71tS01ILl6jr9reQvMhmNeKov9pUqx8RPe6SrBwz4OGAfdnk5RLAIBZt2BSF0vnP+eUhi2o5Ukkb2p2DcQrg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sk.com; spf=pass smtp.mailfrom=sk.com; arc=none smtp.client-ip=166.125.252.92
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sk.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sk.com
+X-AuditID: a67dfc5b-3e1ff7000001d7ae-74-67403e601b85
+From: Honggyu Kim <honggyu.kim@sk.com>
+To: damon@lists.linux.dev
 Cc: SeongJae Park <sj@kernel.org>,
-	stable@vger.kernel.org,
-	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net,
-	rwarsow@gmx.de,
-	conor@kernel.org,
-	hargar@microsoft.com,
-	broonie@kernel.org,
-	damon@lists.linux.dev
-Subject: Re: [PATCH 6.12 0/3] 6.12.1-rc1 review
-Date: Wed, 20 Nov 2024 10:14:05 -0800
-Message-Id: <20241120181405.70382-1-sj@kernel.org>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20241120124100.444648273@linuxfoundation.org>
-References: 
+	kernel_team@skhynix.com,
+	Honggyu Kim <honggyu.kim@sk.com>
+Subject: [PATCH] mm/damon/core: Refactor damos_set_effective_quota
+Date: Fri, 22 Nov 2024 17:18:34 +0900
+Message-ID: <20241122081834.1344-1-honggyu.kim@sk.com>
+X-Mailer: git-send-email 2.43.0.windows.1
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -61,61 +28,64 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFmpgluLIzCtJLcpLzFFi42LhesuzSDfBziHd4Nk1PYsn/3+zWhz++obJ
+	gclj06pONo8Xm2cyBjBFcdmkpOZklqUW6dslcGV83XWWsWA5Z0XL9mesDYwn2LsYOTkkBEwk
+	ulddgrNnnj3HAmKzCahJXHk5iQnEFhGQlPhzpxWshlkgQeLx3UWMILawgJPEzHsdQDYHB4uA
+	qsSP92ogYV4BM4nHN64wQYzUlHi8/Sc7RFxQ4uTMJywQY+QlmrfOZu5i5AKqOcsqcWzDeUaI
+	BkmJgytusExg5J2FpGcWkp4FjEyrGIUy88pyEzNzTPQyKvMyK/SS83M3MQLDZVntn+gdjJ8u
+	BB9iFOBgVOLhPaFuny7EmlhWXJl7iFGCg1lJhNdBCSjEm5JYWZValB9fVJqTWnyIUZqDRUmc
+	1+hbeYqQQHpiSWp2ampBahFMlomDU6qBcdnxKO2oFwJMfUmsP8s7WrYLSPrqsHz2rXvW6Dzn
+	NwOXwL5C7aVu/A6NM37nL6iROfPzAe8bh3uxktd1NjIacei2cl8LnL9eRPbqohTDgIKTC9bU
+	f1q5pWi252bNhvCTT5T/WO60iDi3hWVG8pqnTxliLnzfOXfp8uXlC6OuCGlV11Wa+B2qVWIp
+	zkg01GIuKk4EAIiG4KUTAgAA
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrAJMWRmVeSWpSXmKPExsXCNUNLTzfBziHd4N8vZYsn/3+zWnx+9prZ
+	4vDck6wWh7++YXJg8di0qpPN48XmmYwe3257eCx+8YEpgCWKyyYlNSezLLVI3y6BK+PrrrOM
+	Bcs5K1q2P2NtYDzB3sXIySEhYCIx8+w5FhCbTUBN4srLSUwgtoiApMSfO61gNcwCCRKP7y5i
+	BLGFBZwkZt7rALI5OFgEVCV+vFcDCfMKmEk8vnGFCWKkpsTj7T/ZIeKCEidnPmGBGCMv0bx1
+	NvMERq5ZSFKzkKQWMDKtYhTJzCvLTczMMdUrzs6ozMus0EvOz93ECAyHZbV/Ju5g/HLZ/RCj
+	AAejEg/vCXX7dCHWxLLiytxDjBIczEoivA5KQCHelMTKqtSi/Pii0pzU4kOM0hwsSuK8XuGp
+	CUIC6YklqdmpqQWpRTBZJg5OqQbG61dfT3d3O3lqY+Z90xbzR3/u5LKmvlEWSzn6tFb1WJDK
+	V/6z9ktiWVK4VCZLC0oJ3/Mr/FeZdvtx/9XJn/7Mb9f9vuTR/EsGfEeEXgakhjN8M1QvVkoV
+	vtAhcX/q7LtTeA+siF7y0dMhXttZuH7rlB1tPM/iH+4/Ounnp70CjMo155d6VP16ocRSnJFo
+	qMVcVJwIAHvsfmIDAgAA
+X-CFilter-Loop: Reflected
 
-Hello,
+The damos_set_effective_quota checks quota contidions but there are some
+duplicate checks for quota->goals inside.
 
-On Wed, 20 Nov 2024 13:55:54 +0100 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+This patch reduces one of if statement to simplify the esz calculation
+logic.
 
-> This is the start of the stable review cycle for the 6.12.1 release.
-> There are 3 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Fri, 22 Nov 2024 12:40:53 +0000.
-> Anything received after that time might be too late.
-
-This rc kernel passes DAMON functionality test[1] on my test machine.
-Attaching the test results summary below.  Please note that I retrieved the
-kernel from linux-stable-rc tree[2].
-
-Tested-by: SeongJae Park <sj@kernel.org>
-
-[1] https://github.com/damonitor/damon-tests/tree/next/corr
-[2] 11741096a22c ("Linux 6.12.1-rc1")
-
-Thanks,
-SJ
-
-[...]
-
+Signed-off-by: Honggyu Kim <honggyu.kim@sk.com>
 ---
+ mm/damon/core.c | 7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
-ok 9 selftests: damon: damos_tried_regions.py
-ok 10 selftests: damon: damon_nr_regions.py
-ok 11 selftests: damon: reclaim.sh
-ok 12 selftests: damon: lru_sort.sh
-ok 13 selftests: damon: debugfs_empty_targets.sh
-ok 14 selftests: damon: debugfs_huge_count_read_write.sh
-ok 15 selftests: damon: debugfs_duplicate_context_creation.sh
-ok 16 selftests: damon: debugfs_rm_non_contexts.sh
-ok 17 selftests: damon: debugfs_target_ids_read_before_terminate_race.sh
-ok 18 selftests: damon: debugfs_target_ids_pid_leak.sh
-ok 19 selftests: damon: sysfs_update_removed_scheme_dir.sh
-ok 20 selftests: damon: sysfs_update_schemes_tried_regions_hang.py
-ok 1 selftests: damon-tests: kunit.sh
-ok 2 selftests: damon-tests: huge_count_read_write.sh
-ok 3 selftests: damon-tests: buffer_overflow.sh
-ok 4 selftests: damon-tests: rm_contexts.sh
-ok 5 selftests: damon-tests: record_null_deref.sh
-ok 6 selftests: damon-tests: dbgfs_target_ids_read_before_terminate_race.sh
-ok 7 selftests: damon-tests: dbgfs_target_ids_pid_leak.sh
-ok 8 selftests: damon-tests: damo_tests.sh
-ok 9 selftests: damon-tests: masim-record.sh
-ok 10 selftests: damon-tests: build_i386.sh
-ok 11 selftests: damon-tests: build_arm64.sh # SKIP
-ok 12 selftests: damon-tests: build_m68k.sh # SKIP
-ok 13 selftests: damon-tests: build_i386_idle_flag.sh
-ok 14 selftests: damon-tests: build_i386_highpte.sh
-ok 15 selftests: damon-tests: build_nomemcg.sh
- [33m
- [92mPASS [39m
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index 511c3f61ab44..eb2761866dda 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -1542,7 +1542,7 @@ static unsigned long damos_quota_score(struct damos_quota *quota)
+ static void damos_set_effective_quota(struct damos_quota *quota)
+ {
+ 	unsigned long throughput;
+-	unsigned long esz;
++	unsigned long esz = UINT_MAX;
+ 
+ 	if (!quota->ms && list_empty(&quota->goals)) {
+ 		quota->esz = quota->sz;
+@@ -1564,10 +1564,7 @@ static void damos_set_effective_quota(struct damos_quota *quota)
+ 				quota->total_charged_ns;
+ 		else
+ 			throughput = PAGE_SIZE * 1024;
+-		if (!list_empty(&quota->goals))
+-			esz = min(throughput * quota->ms, esz);
+-		else
+-			esz = throughput * quota->ms;
++		esz = min(throughput * quota->ms, esz);
+ 	}
+ 
+ 	if (quota->sz && quota->sz < esz)
+-- 
+2.34.1
+
