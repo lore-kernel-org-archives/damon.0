@@ -1,31 +1,44 @@
-Received: from invmail4.hynix.com (exvmail4.hynix.com [166.125.252.92])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 816F245023
-	for <damon@lists.linux.dev>; Tue, 26 Nov 2024 08:24:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=166.125.252.92
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 066011DAC8A;
+	Tue, 26 Nov 2024 19:43:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732609496; cv=none; b=Mlcp9yDREvdwLpVxxyKCGqkxHzqBKjJISdf5UNeNWi9DRfxm6oT7+MKAbI4Bev+vYhMPxVGpIAKRUkdZ8kjkRhHFgOsattCpFKcOiGKqRRaIL60DHsDyywI27MmM533GCWHB7NLJlDiCrTaUw5hp95xOhGeJYUQkAB1JN2oT6IA=
+	t=1732650231; cv=none; b=iaDdX9bcvU905fbsT1nIjNOS1Kr732V10Ukcs91l29oVz0/uaUu8pHQilv/NjFQafimkRWF1fS2o120htv1Ru+vnDgmliuAyoHgVWnXYHqlV00sGYhghUySZfVDIDlPK4dX2EyH4+VToryzYrKZM4Vod9wI74kF21wyZzl10FxQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732609496; c=relaxed/simple;
-	bh=wfwOevp8Not+xqFXsHWDcBF+bs9RRHns3SGuKdPD4tk=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FmaP5tzSILmMhANv7Jr/zBQQIeuMYI0X/dc3GOeiKcnnSljbroEuFhG8S031mLgDBkoDYF1Vd/t/0ZXcE032X6nqTDRBkOtqWQiBeYlZW8VO0anHL2nA3rOW31wmGjc5VrmV5o9diXv80MUH1DQSg7UrMRjVB3zc/jZeQUrHflM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sk.com; spf=pass smtp.mailfrom=sk.com; arc=none smtp.client-ip=166.125.252.92
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sk.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sk.com
-X-AuditID: a67dfc5b-3e1ff7000001d7ae-8c-674585cb1f22
-From: Honggyu Kim <honggyu.kim@sk.com>
-To: SeongJae Park <sj@kernel.org>
-Cc: damon@lists.linux.dev,
+	s=arc-20240116; t=1732650231; c=relaxed/simple;
+	bh=hUEJ2mm62pyewmPyILbKuAM0dRAk+OMEv4YUZmgG9k0=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=Ho2mzbRN5ZP9Hdeifzp/uZmEtzfdFz70vtVLs/Iba3qVTadTg8N9K/pjHHO1arZXzcTwJ4R/9vLJonV66s7OFBMN8DqfvxHrHJDCUYB6mgZHioE+eWsZAdphD7X8M7zTAze/NeLoGTiS2qElyPT7T49xOyEF7IKtqKZcvmNdTTI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JXMb1yMj; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JXMb1yMj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A3ADC4CECF;
+	Tue, 26 Nov 2024 19:43:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1732650230;
+	bh=hUEJ2mm62pyewmPyILbKuAM0dRAk+OMEv4YUZmgG9k0=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=JXMb1yMjnE200+j2SCCTKsA8wAY3MsS9Rehl6V8oDpy9FmJ4WYUiYHc7O5IQreKef
+	 Ydsk9IHy6cBId+mF5kGmpzS1WhWkZcF2uYt+6/V8X4ksgPSoTEXTMFI976We6Bs5sz
+	 9I/OT09XyrCsjZ0Wjck0SHOoVt/n4AiBqX2VifVxg3Aeg+eFVdHFid5prsPlILmtKn
+	 9Hh48gxKa+2vyY6YTJNky65u4QAx2XkCfvqj2NO9gQIiuBzeyVmf9RKgCrWQ/cO456
+	 +7pVxPGs3zw2lDvwqJmFKiJsntbxBXP58PwJIhfTAqxn08pQnpYikraXW+fuXr+RX4
+	 cg/GA4nqjI/yA==
+From: SeongJae Park <sj@kernel.org>
+To: Honggyu Kim <honggyu.kim@sk.com>
+Cc: SeongJae Park <sj@kernel.org>,
+	damon@lists.linux.dev,
 	linux-mm@kvack.org,
 	linux-kernel@vger.kernel.org,
 	Yunjeong Mun <yunjeong.mun@sk.com>,
-	Honggyu Kim <honggyu.kim@sk.com>,
 	kernel_team@skhynix.com
 Subject: Re: [RFC PATCH] mm/damon: explain "effective quota" on kernel-doc comment
-Date: Tue, 26 Nov 2024 17:24:33 +0900
-Message-ID: <20241126082436.1491-1-honggyu.kim@sk.com>
-X-Mailer: git-send-email 2.43.0.windows.1
-In-Reply-To: <20241126002921.50035-1-sj@kernel.org>
+Date: Tue, 26 Nov 2024 11:43:47 -0800
+Message-Id: <20241126194347.58155-1-sj@kernel.org>
+X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20241126082436.1491-1-honggyu.kim@sk.com>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -34,85 +47,83 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrNLMWRmVeSWpSXmKPExsXC9ZZnke6ZVtd0g3WzWC2e/P/NanF51xw2
-	i3tr/rNaHP76hsmBxWPTqk42j02fJrF7vNg8k9Hj8ya5AJYoLpuU1JzMstQifbsErozbr6az
-	FnQIVbz/cZq5gXETXxcjJ4eEgInEuzfT2boYOcDsnn+qIGE2ATWJKy8nMYHYIgKKEuceX2Tt
-	YuTiYBbYwihx4elnZpCEsECQxIkbR1hAelkEVCXWnZMECfMKmEnMeDqfBWK8psTj7T/ZQWxO
-	AWOJeeeWM4LYQgI8Eq827GeEqBeUODnzCVg9s4C8RPPW2cwguyQEZrBJbP04lw1ikKTEwRU3
-	WCYw8s9C0jMLSc8CRqZVjEKZeWW5iZk5JnoZlXmZFXrJ+bmbGIFBuKz2T/QOxk8Xgg8xCnAw
-	KvHw3qh2SRdiTSwrrsw9xCjBwawkwssn7pwuxJuSWFmVWpQfX1Sak1p8iFGag0VJnNfoW3mK
-	kEB6YklqdmpqQWoRTJaJg1OqgbHrQsXf/I03458Yy0Xse1pZqq4R0P5Y4HDGfJdTrru1trcJ
-	LZ/p9viUc+PTSzdU3XoiFOqcPXmcGe7Pn9Y+b5U820KRCx9Xhm4qSstj8XtbE8cWve702dLr
-	k79KrtbVO10kIPIi30VXe80bs2unUoOLSmXWJWYv1X55tu6qMq+0LXfH2UO/k5VYijMSDbWY
-	i4oTAXF3Wiw+AgAA
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrALMWRmVeSWpSXmKPExsXCNUNLT/d0q2u6wa+XFhZP/v9mtfj87DWz
-	xeG5J1ktLu+aw2Zxb81/VovDX98wWfzetoLNgd1j06pONo9Nnyaxe7zYPJPR49ttD4/FLz4w
-	eXzeJBfAFsVlk5Kak1mWWqRvl8CVcfvVdNaCDqGK9z9OMzcwbuLrYuTgkBAwkej5p9rFyMnB
-	JqAmceXlJCYQW0RAUeLc44usXYxcHMwCWxglLjz9zAySEBYIkjhx4wgLSC+LgKrEunOSIGFe
-	ATOJGU/ns4DYEgKaEo+3/2QHsTkFjCXmnVvOCGILCfBIvNqwnxGiXlDi5MwnYPXMAvISzVtn
-	M09g5JmFJDULSWoBI9MqRpHMvLLcxMwcU73i7IzKvMwKveT83E2MwHBbVvtn4g7GL5fdDzEK
-	cDAq8fDeqHZJF2JNLCuuzD3EKMHBrCTCyyfunC7Em5JYWZValB9fVJqTWnyIUZqDRUmc1ys8
-	NUFIID2xJDU7NbUgtQgmy8TBKdXAyJD81G/TWbbYgwen5lXv3bC9W3lPfy1PjuFWW6e6o5OF
-	jNx+nWk8n8EvN8mZ88/PdU6doT1nVimcNA7693nx53IF93774/YTv8wrFN3tLTJt3s2Y6K2x
-	3y48PfR88oIcGSWTM3dsY8Rfzzwfuzy2NkNl8aXHoapdmsxHPfnMQ69suP0nyolPS4mlOCPR
-	UIu5qDgRANtq0EUzAgAA
-X-CFilter-Loop: Reflected
 
-Hi SeongJae,
+On Tue, 26 Nov 2024 17:24:33 +0900 Honggyu Kim <honggyu.kim@sk.com> wrote:
 
-Thanks very much for the quick response.  I think it looks great but I
-have some minor comments so please see my inline comments below.
+> Hi SeongJae,
+> 
+> Thanks very much for the quick response.
+
+No problem, all owing to your kind report!
+
+> I think it looks great but I
+> have some minor comments so please see my inline comments below.
+> 
+> Thanks,
+> Honggyu
+> 
+> On Mon, 25 Nov 2024 16:29:21 -0800 SeongJae Park <sj@kernel.org> wrote:
+> > The kernel-doc comment for 'struct damos_quota' describes how "effective
+> > quota" is calculated, but does not explain what it is.  Actually there
+> > was an input[1] about it.  Add the explanation on the comment.
+> > 
+> > [1] https://github.com/damonitor/damo/issues/17#issuecomment-2497525043
+> > 
+> > Cc: Yunjeong Mun <yunjeong.mun@sk.com>
+> > Cc: Honggyu Kim <honggyu.kim@sk.com>
+> > Signed-off-by: SeongJae Park <sj@kernel.org>
+> > ---
+> >  include/linux/damon.h | 10 +++++++---
+> >  1 file changed, 7 insertions(+), 3 deletions(-)
+> > 
+> > diff --git a/include/linux/damon.h b/include/linux/damon.h
+> > index a67f2c4940e9..a01bfe2ff616 100644
+> > --- a/include/linux/damon.h
+> > +++ b/include/linux/damon.h
+> > @@ -193,9 +193,13 @@ struct damos_quota_goal {
+> >   * size quota is set, DAMON tries to apply the action only up to &sz bytes
+> >   * within &reset_interval.
+> >   *
+> > - * Internally, the time quota is transformed to a size quota using estimated
+> > - * throughput of the scheme's action.  DAMON then compares it against &sz and
+> > - * uses smaller one as the effective quota.
+> > + * To convince the different types of quotas and goals, DAMON internally
+> > + * converts those into one single size quota called "effective quota".  DAMON
+> 
+> Could we use "effective size quota" instead of "effective quota"?
+> IMHO, it will better give an idea this is related to "esz" in the code,
+> which means effective size.
+
+The above sentence is saying it as one single "size" quota, so calling it
+"effective size quota" here feels like unnecessary duplicates of the word
+("size") to me.  I'd like to keep this sentence as is if you don't really mind.
+
+> 
+> > + * internally uses it as only one real quota.  The convert is made as follows.
+> 
+> (nit) "as only one" can be "as the only one".
+> (another nit) "The convert is made" can be "The conversion is made".
+
+Nice eyes!  I will fix those.
+
+> 
+> > + *
+> > + * The time quota is transformed to a size quota using estimated throughput of
+> > + * the scheme's action.  DAMON then compares it against &sz and uses smaller
+> > + * one as the effective quota.
+> >   *
+> >   * If @goals is not empt, DAMON calculates yet another size quota based on the
+> 
+> We better fix "empt" to "empty" together.
+
+Nice catch!  I will fix so.
+
+> 
+> >   * goals using its internal feedback loop algorithm, for every @reset_interval.
+> > -- 
+> > 2.39.5
+> >
+
 
 Thanks,
-Honggyu
-
-On Mon, 25 Nov 2024 16:29:21 -0800 SeongJae Park <sj@kernel.org> wrote:
-> The kernel-doc comment for 'struct damos_quota' describes how "effective
-> quota" is calculated, but does not explain what it is.  Actually there
-> was an input[1] about it.  Add the explanation on the comment.
-> 
-> [1] https://github.com/damonitor/damo/issues/17#issuecomment-2497525043
-> 
-> Cc: Yunjeong Mun <yunjeong.mun@sk.com>
-> Cc: Honggyu Kim <honggyu.kim@sk.com>
-> Signed-off-by: SeongJae Park <sj@kernel.org>
-> ---
->  include/linux/damon.h | 10 +++++++---
->  1 file changed, 7 insertions(+), 3 deletions(-)
-> 
-> diff --git a/include/linux/damon.h b/include/linux/damon.h
-> index a67f2c4940e9..a01bfe2ff616 100644
-> --- a/include/linux/damon.h
-> +++ b/include/linux/damon.h
-> @@ -193,9 +193,13 @@ struct damos_quota_goal {
->   * size quota is set, DAMON tries to apply the action only up to &sz bytes
->   * within &reset_interval.
->   *
-> - * Internally, the time quota is transformed to a size quota using estimated
-> - * throughput of the scheme's action.  DAMON then compares it against &sz and
-> - * uses smaller one as the effective quota.
-> + * To convince the different types of quotas and goals, DAMON internally
-> + * converts those into one single size quota called "effective quota".  DAMON
-
-Could we use "effective size quota" instead of "effective quota"?
-IMHO, it will better give an idea this is related to "esz" in the code,
-which means effective size.
-
-> + * internally uses it as only one real quota.  The convert is made as follows.
-
-(nit) "as only one" can be "as the only one".
-(another nit) "The convert is made" can be "The conversion is made".
-
-> + *
-> + * The time quota is transformed to a size quota using estimated throughput of
-> + * the scheme's action.  DAMON then compares it against &sz and uses smaller
-> + * one as the effective quota.
->   *
->   * If @goals is not empt, DAMON calculates yet another size quota based on the
-
-We better fix "empt" to "empty" together.
-
->   * goals using its internal feedback loop algorithm, for every @reset_interval.
-> -- 
-> 2.39.5
-> 
+SJ
