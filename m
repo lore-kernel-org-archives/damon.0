@@ -1,129 +1,115 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from smtp-fw-52002.amazon.com (smtp-fw-52002.amazon.com [52.119.213.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 066011DAC8A;
-	Tue, 26 Nov 2024 19:43:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B01C1FA272
+	for <damon@lists.linux.dev>; Wed, 27 Nov 2024 12:09:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=52.119.213.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732650231; cv=none; b=iaDdX9bcvU905fbsT1nIjNOS1Kr732V10Ukcs91l29oVz0/uaUu8pHQilv/NjFQafimkRWF1fS2o120htv1Ru+vnDgmliuAyoHgVWnXYHqlV00sGYhghUySZfVDIDlPK4dX2EyH4+VToryzYrKZM4Vod9wI74kF21wyZzl10FxQ=
+	t=1732709358; cv=none; b=MYnKWqHbvqRrzz2Wr7fzB+ftzf2lKBrlKamM2gX2uX/Jca5KeHpYehZ9wTWLxCQX6mN3oMHbN2dRiynR15dHA1a2AzFAY4yhqPDSL0BHxu3PJ4Mwn7JzHSnKlMQYYLI1wNa2ZnN15vD1o5ZqCkF1k9vf97pnbucty9PFbhsxr20=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732650231; c=relaxed/simple;
-	bh=hUEJ2mm62pyewmPyILbKuAM0dRAk+OMEv4YUZmgG9k0=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=Ho2mzbRN5ZP9Hdeifzp/uZmEtzfdFz70vtVLs/Iba3qVTadTg8N9K/pjHHO1arZXzcTwJ4R/9vLJonV66s7OFBMN8DqfvxHrHJDCUYB6mgZHioE+eWsZAdphD7X8M7zTAze/NeLoGTiS2qElyPT7T49xOyEF7IKtqKZcvmNdTTI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JXMb1yMj; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1732709358; c=relaxed/simple;
+	bh=Q/dXYurK0EJ5vp1EIci5u/hmGbtY2myVy1kxDXW9XI0=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=LJD0gPdj+BjpEbz9+CwHOm2ZOGXQXAlafrfolYSC3bPYAKjR9TNAxi6ggvyNBKZuBkNKW6Y/4BqaS0p+j4VFQsB3ppIl6jDqizHCPWaNXcOOxyV6Ju4kgq9mZ75wpQV0AtQoFUtf4+9SOVG8cKJ0oY2WkLizovOxAVi8uA7Xo4Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amazon.de; spf=pass smtp.mailfrom=amazon.de; dkim=pass (1024-bit key) header.d=amazon.de header.i=@amazon.de header.b=mNUZMkBd; arc=none smtp.client-ip=52.119.213.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amazon.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=amazon.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JXMb1yMj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A3ADC4CECF;
-	Tue, 26 Nov 2024 19:43:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1732650230;
-	bh=hUEJ2mm62pyewmPyILbKuAM0dRAk+OMEv4YUZmgG9k0=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JXMb1yMjnE200+j2SCCTKsA8wAY3MsS9Rehl6V8oDpy9FmJ4WYUiYHc7O5IQreKef
-	 Ydsk9IHy6cBId+mF5kGmpzS1WhWkZcF2uYt+6/V8X4ksgPSoTEXTMFI976We6Bs5sz
-	 9I/OT09XyrCsjZ0Wjck0SHOoVt/n4AiBqX2VifVxg3Aeg+eFVdHFid5prsPlILmtKn
-	 9Hh48gxKa+2vyY6YTJNky65u4QAx2XkCfvqj2NO9gQIiuBzeyVmf9RKgCrWQ/cO456
-	 +7pVxPGs3zw2lDvwqJmFKiJsntbxBXP58PwJIhfTAqxn08pQnpYikraXW+fuXr+RX4
-	 cg/GA4nqjI/yA==
-From: SeongJae Park <sj@kernel.org>
-To: Honggyu Kim <honggyu.kim@sk.com>
-Cc: SeongJae Park <sj@kernel.org>,
-	damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org,
-	Yunjeong Mun <yunjeong.mun@sk.com>,
-	kernel_team@skhynix.com
-Subject: Re: [RFC PATCH] mm/damon: explain "effective quota" on kernel-doc comment
-Date: Tue, 26 Nov 2024 11:43:47 -0800
-Message-Id: <20241126194347.58155-1-sj@kernel.org>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20241126082436.1491-1-honggyu.kim@sk.com>
-References: 
+	dkim=pass (1024-bit key) header.d=amazon.de header.i=@amazon.de header.b="mNUZMkBd"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=amazon.de; i=@amazon.de; q=dns/txt; s=amazon201209;
+  t=1732709356; x=1764245356;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=7U+yTr2d7RwRRaM5HvKRT7wsyxGZ2Fy6IJZvrr/C3zo=;
+  b=mNUZMkBd3BreptclaiHDKkjew+dK7d6a7uSHsbkHjHsdgIZ6uJ+xTSgG
+   1bBX0Gh5eOhWF/CiSj/kQaxlg8nFsepYyYk7czeckBgpDJ2tZJitqIvp8
+   +SvXEQelrZZlsQ1YPTwD2o5WM5j1Ng3o2OpUmRhUrid/cekIz1uy+ZML/
+   o=;
+X-IronPort-AV: E=Sophos;i="6.12,189,1728950400"; 
+   d="scan'208";a="677134088"
+Received: from iad6-co-svc-p1-lb1-vlan3.amazon.com (HELO smtpout.prod.us-west-2.prod.farcaster.email.amazon.dev) ([10.124.125.6])
+  by smtp-border-fw-52002.iad7.amazon.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Nov 2024 12:09:12 +0000
+Received: from EX19MTAEUB002.ant.amazon.com [10.0.10.100:28394]
+ by smtpin.naws.eu-west-1.prod.farcaster.email.amazon.dev [10.0.34.163:2525] with esmtp (Farcaster)
+ id 8af6d9b3-8276-40da-89f5-2af5a6b7ed7d; Wed, 27 Nov 2024 12:09:11 +0000 (UTC)
+X-Farcaster-Flow-ID: 8af6d9b3-8276-40da-89f5-2af5a6b7ed7d
+Received: from EX19D008EUA003.ant.amazon.com (10.252.50.155) by
+ EX19MTAEUB002.ant.amazon.com (10.252.51.79) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1258.34;
+ Wed, 27 Nov 2024 12:09:11 +0000
+Received: from EX19MTAUWA001.ant.amazon.com (10.250.64.204) by
+ EX19D008EUA003.ant.amazon.com (10.252.50.155) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1258.35;
+ Wed, 27 Nov 2024 12:09:10 +0000
+Received: from email-imr-corp-prod-pdx-1box-2b-ecca39fb.us-west-2.amazon.com
+ (10.25.36.214) by mail-relay.amazon.com (10.250.64.204) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id
+ 15.2.1258.34 via Frontend Transport; Wed, 27 Nov 2024 12:09:10 +0000
+Received: from dev-dsk-mheyne-1b-55676e6a.eu-west-1.amazon.com (dev-dsk-mheyne-1b-55676e6a.eu-west-1.amazon.com [10.253.68.42])
+	by email-imr-corp-prod-pdx-1box-2b-ecca39fb.us-west-2.amazon.com (Postfix) with ESMTP id 79DD880411;
+	Wed, 27 Nov 2024 12:09:10 +0000 (UTC)
+Received: by dev-dsk-mheyne-1b-55676e6a.eu-west-1.amazon.com (Postfix, from userid 5466572)
+	id 0E730B899; Wed, 27 Nov 2024 12:09:10 +0000 (UTC)
+From: Maximilian Heyne <mheyne@amazon.de>
+To: 
+CC: Maximilian Heyne <mheyne@amazon.de>, SeongJae Park <sj@kernel.org>, "Shuah
+ Khan" <shuah@kernel.org>, Andrew Morton <akpm@linux-foundation.org>,
+	<damon@lists.linux.dev>, <linux-mm@kvack.org>,
+	<linux-kselftest@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+Subject: [PATCH] selftests/damon: Add _damon_sysfs.py to TEST_FILES
+Date: Wed, 27 Nov 2024 12:08:53 +0000
+Message-ID: <20241127-picks-visitor-7416685b-mheyne@amazon.de>
+X-Mailer: git-send-email 2.40.1
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 
-On Tue, 26 Nov 2024 17:24:33 +0900 Honggyu Kim <honggyu.kim@sk.com> wrote:
+When running selftests I encountered the following error message with
+some damon tests:
 
-> Hi SeongJae,
-> 
-> Thanks very much for the quick response.
+ # Traceback (most recent call last):
+ #   File "[...]/damon/./damos_quota.py", line 7, in <module>
+ #     import _damon_sysfs
+ # ModuleNotFoundError: No module named '_damon_sysfs'
 
-No problem, all owing to your kind report!
+Fix this by adding the _damon_sysfs.py file to TEST_FILES so that it
+will be available when running the respective damon selftests.
 
-> I think it looks great but I
-> have some minor comments so please see my inline comments below.
-> 
-> Thanks,
-> Honggyu
-> 
-> On Mon, 25 Nov 2024 16:29:21 -0800 SeongJae Park <sj@kernel.org> wrote:
-> > The kernel-doc comment for 'struct damos_quota' describes how "effective
-> > quota" is calculated, but does not explain what it is.  Actually there
-> > was an input[1] about it.  Add the explanation on the comment.
-> > 
-> > [1] https://github.com/damonitor/damo/issues/17#issuecomment-2497525043
-> > 
-> > Cc: Yunjeong Mun <yunjeong.mun@sk.com>
-> > Cc: Honggyu Kim <honggyu.kim@sk.com>
-> > Signed-off-by: SeongJae Park <sj@kernel.org>
-> > ---
-> >  include/linux/damon.h | 10 +++++++---
-> >  1 file changed, 7 insertions(+), 3 deletions(-)
-> > 
-> > diff --git a/include/linux/damon.h b/include/linux/damon.h
-> > index a67f2c4940e9..a01bfe2ff616 100644
-> > --- a/include/linux/damon.h
-> > +++ b/include/linux/damon.h
-> > @@ -193,9 +193,13 @@ struct damos_quota_goal {
-> >   * size quota is set, DAMON tries to apply the action only up to &sz bytes
-> >   * within &reset_interval.
-> >   *
-> > - * Internally, the time quota is transformed to a size quota using estimated
-> > - * throughput of the scheme's action.  DAMON then compares it against &sz and
-> > - * uses smaller one as the effective quota.
-> > + * To convince the different types of quotas and goals, DAMON internally
-> > + * converts those into one single size quota called "effective quota".  DAMON
-> 
-> Could we use "effective size quota" instead of "effective quota"?
-> IMHO, it will better give an idea this is related to "esz" in the code,
-> which means effective size.
+Fixes: 306abb63a8ca ("selftests/damon: implement a python module for test-purpose DAMON sysfs controls")
+Signed-off-by: Maximilian Heyne <mheyne@amazon.de>
+---
+ tools/testing/selftests/damon/Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-The above sentence is saying it as one single "size" quota, so calling it
-"effective size quota" here feels like unnecessary duplicates of the word
-("size") to me.  I'd like to keep this sentence as is if you don't really mind.
-
-> 
-> > + * internally uses it as only one real quota.  The convert is made as follows.
-> 
-> (nit) "as only one" can be "as the only one".
-> (another nit) "The convert is made" can be "The conversion is made".
-
-Nice eyes!  I will fix those.
-
-> 
-> > + *
-> > + * The time quota is transformed to a size quota using estimated throughput of
-> > + * the scheme's action.  DAMON then compares it against &sz and uses smaller
-> > + * one as the effective quota.
-> >   *
-> >   * If @goals is not empt, DAMON calculates yet another size quota based on the
-> 
-> We better fix "empt" to "empty" together.
-
-Nice catch!  I will fix so.
-
-> 
-> >   * goals using its internal feedback loop algorithm, for every @reset_interval.
-> > -- 
-> > 2.39.5
-> >
+diff --git a/tools/testing/selftests/damon/Makefile b/tools/testing/selftests/damon/Makefile
+index 5b2a6a5dd1af7..812f656260fba 100644
+--- a/tools/testing/selftests/damon/Makefile
++++ b/tools/testing/selftests/damon/Makefile
+@@ -6,7 +6,7 @@ TEST_GEN_FILES += debugfs_target_ids_read_before_terminate_race
+ TEST_GEN_FILES += debugfs_target_ids_pid_leak
+ TEST_GEN_FILES += access_memory access_memory_even
+ 
+-TEST_FILES = _chk_dependency.sh _debugfs_common.sh
++TEST_FILES = _chk_dependency.sh _debugfs_common.sh _damon_sysfs.py
+ 
+ # functionality tests
+ TEST_PROGS = debugfs_attrs.sh debugfs_schemes.sh debugfs_target_ids.sh
+-- 
+2.40.1
 
 
-Thanks,
-SJ
+
+
+Amazon Web Services Development Center Germany GmbH
+Krausenstr. 38
+10117 Berlin
+Geschaeftsfuehrung: Christian Schlaeger, Jonathan Weiss
+Eingetragen am Amtsgericht Charlottenburg unter HRB 257764 B
+Sitz: Berlin
+Ust-ID: DE 365 538 597
+
