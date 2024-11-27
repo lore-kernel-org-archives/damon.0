@@ -1,115 +1,96 @@
-Received: from smtp-fw-52002.amazon.com (smtp-fw-52002.amazon.com [52.119.213.150])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B01C1FA272
-	for <damon@lists.linux.dev>; Wed, 27 Nov 2024 12:09:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=52.119.213.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1BEB1F8F1A;
+	Wed, 27 Nov 2024 17:04:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732709358; cv=none; b=MYnKWqHbvqRrzz2Wr7fzB+ftzf2lKBrlKamM2gX2uX/Jca5KeHpYehZ9wTWLxCQX6mN3oMHbN2dRiynR15dHA1a2AzFAY4yhqPDSL0BHxu3PJ4Mwn7JzHSnKlMQYYLI1wNa2ZnN15vD1o5ZqCkF1k9vf97pnbucty9PFbhsxr20=
+	t=1732727051; cv=none; b=NG/cGhxjh2IN71WUHGn6ep3lE5rSZ8MBGhMW35ww721/kkAjt5gxBopaVzFcS2cBgDvyhlyQRkV67qM5yPN3N9p/fOurUqxI4eW0NKK4ccHb2ohW6nfJzWOrilvecOreqPwM1qOb+nFzFnRlXkFuWvWF0IW9Kw1JR+Nr8o1jzvI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732709358; c=relaxed/simple;
-	bh=Q/dXYurK0EJ5vp1EIci5u/hmGbtY2myVy1kxDXW9XI0=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=LJD0gPdj+BjpEbz9+CwHOm2ZOGXQXAlafrfolYSC3bPYAKjR9TNAxi6ggvyNBKZuBkNKW6Y/4BqaS0p+j4VFQsB3ppIl6jDqizHCPWaNXcOOxyV6Ju4kgq9mZ75wpQV0AtQoFUtf4+9SOVG8cKJ0oY2WkLizovOxAVi8uA7Xo4Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amazon.de; spf=pass smtp.mailfrom=amazon.de; dkim=pass (1024-bit key) header.d=amazon.de header.i=@amazon.de header.b=mNUZMkBd; arc=none smtp.client-ip=52.119.213.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amazon.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=amazon.de
+	s=arc-20240116; t=1732727051; c=relaxed/simple;
+	bh=5HRBVytr5GUFSIGmJD7/dGSkmSv8GWKUHwmGpMyEXys=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=pdYJWniXTPsIvwFPrBsO8I+sMOomHTHFj1HzO3mmEq+EqVPsKRDi/rk3nZeqW2EauajakICxZx468PtE+eg3o5nPpmmbBLmYUlXOxvAp5BxnIJdLi1nbswJymai7uBgeOwNDKQyxL5GNtJW3JiB362Uv1iIlFm9LdqZqgg0w9Fo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YvaknC7e; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=amazon.de header.i=@amazon.de header.b="mNUZMkBd"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=amazon.de; i=@amazon.de; q=dns/txt; s=amazon201209;
-  t=1732709356; x=1764245356;
-  h=from:to:cc:subject:date:message-id:mime-version:
-   content-transfer-encoding;
-  bh=7U+yTr2d7RwRRaM5HvKRT7wsyxGZ2Fy6IJZvrr/C3zo=;
-  b=mNUZMkBd3BreptclaiHDKkjew+dK7d6a7uSHsbkHjHsdgIZ6uJ+xTSgG
-   1bBX0Gh5eOhWF/CiSj/kQaxlg8nFsepYyYk7czeckBgpDJ2tZJitqIvp8
-   +SvXEQelrZZlsQ1YPTwD2o5WM5j1Ng3o2OpUmRhUrid/cekIz1uy+ZML/
-   o=;
-X-IronPort-AV: E=Sophos;i="6.12,189,1728950400"; 
-   d="scan'208";a="677134088"
-Received: from iad6-co-svc-p1-lb1-vlan3.amazon.com (HELO smtpout.prod.us-west-2.prod.farcaster.email.amazon.dev) ([10.124.125.6])
-  by smtp-border-fw-52002.iad7.amazon.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Nov 2024 12:09:12 +0000
-Received: from EX19MTAEUB002.ant.amazon.com [10.0.10.100:28394]
- by smtpin.naws.eu-west-1.prod.farcaster.email.amazon.dev [10.0.34.163:2525] with esmtp (Farcaster)
- id 8af6d9b3-8276-40da-89f5-2af5a6b7ed7d; Wed, 27 Nov 2024 12:09:11 +0000 (UTC)
-X-Farcaster-Flow-ID: 8af6d9b3-8276-40da-89f5-2af5a6b7ed7d
-Received: from EX19D008EUA003.ant.amazon.com (10.252.50.155) by
- EX19MTAEUB002.ant.amazon.com (10.252.51.79) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1258.34;
- Wed, 27 Nov 2024 12:09:11 +0000
-Received: from EX19MTAUWA001.ant.amazon.com (10.250.64.204) by
- EX19D008EUA003.ant.amazon.com (10.252.50.155) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1258.35;
- Wed, 27 Nov 2024 12:09:10 +0000
-Received: from email-imr-corp-prod-pdx-1box-2b-ecca39fb.us-west-2.amazon.com
- (10.25.36.214) by mail-relay.amazon.com (10.250.64.204) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id
- 15.2.1258.34 via Frontend Transport; Wed, 27 Nov 2024 12:09:10 +0000
-Received: from dev-dsk-mheyne-1b-55676e6a.eu-west-1.amazon.com (dev-dsk-mheyne-1b-55676e6a.eu-west-1.amazon.com [10.253.68.42])
-	by email-imr-corp-prod-pdx-1box-2b-ecca39fb.us-west-2.amazon.com (Postfix) with ESMTP id 79DD880411;
-	Wed, 27 Nov 2024 12:09:10 +0000 (UTC)
-Received: by dev-dsk-mheyne-1b-55676e6a.eu-west-1.amazon.com (Postfix, from userid 5466572)
-	id 0E730B899; Wed, 27 Nov 2024 12:09:10 +0000 (UTC)
-From: Maximilian Heyne <mheyne@amazon.de>
-To: 
-CC: Maximilian Heyne <mheyne@amazon.de>, SeongJae Park <sj@kernel.org>, "Shuah
- Khan" <shuah@kernel.org>, Andrew Morton <akpm@linux-foundation.org>,
-	<damon@lists.linux.dev>, <linux-mm@kvack.org>,
-	<linux-kselftest@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-Subject: [PATCH] selftests/damon: Add _damon_sysfs.py to TEST_FILES
-Date: Wed, 27 Nov 2024 12:08:53 +0000
-Message-ID: <20241127-picks-visitor-7416685b-mheyne@amazon.de>
-X-Mailer: git-send-email 2.40.1
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YvaknC7e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22BFBC4CECC;
+	Wed, 27 Nov 2024 17:04:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1732727051;
+	bh=5HRBVytr5GUFSIGmJD7/dGSkmSv8GWKUHwmGpMyEXys=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=YvaknC7egerwU0wTAMT56+snNiguf+QPNUBbcMHW3PPtw20N60ss+DgBPNrYLv1MY
+	 Jn4xJL2ZWjCE1cO9yrH+LnKDqOc7cm/JNVET4NSyX9BFk7yQT9Xml4uP4fM/WPTzJb
+	 rd7hCpnRsAayL+3YQ+aQAneAGoTqng+trBp2eKxYsjwVyxoMbuWf+gmc9NatWUKtE4
+	 /9UAmPQaSl7FsrvpWzDTVhOz6iLsRidYhhBOAtpRl+kgS2GGRFa+vXf0cDiawcuqC+
+	 VbwSqQaLm7rhrGMdtxVysKqCdpgnnGqwKTyay6Vm+IcxKmfoG4b92ZBaoxNOgqZDIl
+	 LCghrdgcfDrFQ==
+From: SeongJae Park <sj@kernel.org>
+To: Maximilian Heyne <mheyne@amazon.de>
+Cc: SeongJae Park <sj@kernel.org>,
+	"Shuah Khan" <shuah@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	linux-kselftest@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] selftests/damon: Add _damon_sysfs.py to TEST_FILES
+Date: Wed, 27 Nov 2024 09:04:07 -0800
+Message-Id: <20241127170407.82602-1-sj@kernel.org>
+X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20241127-picks-visitor-7416685b-mheyne@amazon.de>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-When running selftests I encountered the following error message with
-some damon tests:
+On Wed, 27 Nov 2024 12:08:53 +0000 Maximilian Heyne <mheyne@amazon.de> wrote:
 
- # Traceback (most recent call last):
- #   File "[...]/damon/./damos_quota.py", line 7, in <module>
- #     import _damon_sysfs
- # ModuleNotFoundError: No module named '_damon_sysfs'
+> When running selftests I encountered the following error message with
+> some damon tests:
+> 
+>  # Traceback (most recent call last):
+>  #   File "[...]/damon/./damos_quota.py", line 7, in <module>
+>  #     import _damon_sysfs
+>  # ModuleNotFoundError: No module named '_damon_sysfs'
+> 
+> Fix this by adding the _damon_sysfs.py file to TEST_FILES so that it
+> will be available when running the respective damon selftests.
 
-Fix this by adding the _damon_sysfs.py file to TEST_FILES so that it
-will be available when running the respective damon selftests.
+Thank you for finding and fixing this issue, Max!
 
-Fixes: 306abb63a8ca ("selftests/damon: implement a python module for test-purpose DAMON sysfs controls")
-Signed-off-by: Maximilian Heyne <mheyne@amazon.de>
----
- tools/testing/selftests/damon/Makefile | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> Fixes: 306abb63a8ca ("selftests/damon: implement a python module for test-purpose DAMON sysfs controls")
+> Signed-off-by: Maximilian Heyne <mheyne@amazon.de>
 
-diff --git a/tools/testing/selftests/damon/Makefile b/tools/testing/selftests/damon/Makefile
-index 5b2a6a5dd1af7..812f656260fba 100644
---- a/tools/testing/selftests/damon/Makefile
-+++ b/tools/testing/selftests/damon/Makefile
-@@ -6,7 +6,7 @@ TEST_GEN_FILES += debugfs_target_ids_read_before_terminate_race
- TEST_GEN_FILES += debugfs_target_ids_pid_leak
- TEST_GEN_FILES += access_memory access_memory_even
- 
--TEST_FILES = _chk_dependency.sh _debugfs_common.sh
-+TEST_FILES = _chk_dependency.sh _debugfs_common.sh _damon_sysfs.py
- 
- # functionality tests
- TEST_PROGS = debugfs_attrs.sh debugfs_schemes.sh debugfs_target_ids.sh
--- 
-2.40.1
+Reviewed-by: SeongJae Park <sj@kernel.org>
 
 
+Thanks,
+SJ
 
-
-Amazon Web Services Development Center Germany GmbH
-Krausenstr. 38
-10117 Berlin
-Geschaeftsfuehrung: Christian Schlaeger, Jonathan Weiss
-Eingetragen am Amtsgericht Charlottenburg unter HRB 257764 B
-Sitz: Berlin
-Ust-ID: DE 365 538 597
-
+> ---
+>  tools/testing/selftests/damon/Makefile | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/tools/testing/selftests/damon/Makefile b/tools/testing/selftests/damon/Makefile
+> index 5b2a6a5dd1af7..812f656260fba 100644
+> --- a/tools/testing/selftests/damon/Makefile
+> +++ b/tools/testing/selftests/damon/Makefile
+> @@ -6,7 +6,7 @@ TEST_GEN_FILES += debugfs_target_ids_read_before_terminate_race
+>  TEST_GEN_FILES += debugfs_target_ids_pid_leak
+>  TEST_GEN_FILES += access_memory access_memory_even
+>  
+> -TEST_FILES = _chk_dependency.sh _debugfs_common.sh
+> +TEST_FILES = _chk_dependency.sh _debugfs_common.sh _damon_sysfs.py
+>  
+>  # functionality tests
+>  TEST_PROGS = debugfs_attrs.sh debugfs_schemes.sh debugfs_target_ids.sh
+> -- 
+> 2.40.1
+[...]
