@@ -1,76 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D32A8201029;
-	Wed, 27 Nov 2024 19:40:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B18B019885D;
+	Wed, 27 Nov 2024 20:56:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732736443; cv=none; b=Y+W1I2jSqCURNE2RhdUXC2MFb3Dm+dhjHv77mPeBz6DEV705br8qL2SV1+Tvqz8nQz6smi+Ec3tQaUT9qqiyIpxEy9y8/lnMmuBj0oPXeIuHuZYwPtNPnI4dplyR2tfzidfw34+uVBrU+n3HkPp65QyEmmtF5nsGpFDKc+Ub0MU=
+	t=1732740989; cv=none; b=tlbUPZwAdVRlubdYZawTuD4gjrSwrdxwAjWyNl3lSlGAWEqPv5EOP2UO/eDeR2lq0VagOYWKV8fzJKRRy9E9AbK4BeHXcLqVo/IQyyGMy4ZAKztd7hSNz0GsrSL9ttEM/uodZhA6u9rUubUbDlsiHpxDC2Nn8dBzKCms4yiRqcw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732736443; c=relaxed/simple;
-	bh=FNpsPBymSvEX1rHGNSh2J+QjHOLtO8xKZwskRMfxD8A=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=ml0rorp8PFSyXPj5pByRryRAlUke8xraZGozdhQs9tRMG1ITDaOCb3i2B8OTPYPiSnMqhPxxMrUzIhgiK8tH1/vMj1QvcGdhFqbkc6FAYxBF+RcbGwZXiJsKIKZZJLQPxSVRuAiE3yAohUeietKviaq4Czyi45idcQeegAUrPVU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Y4OdQFkp; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1732740989; c=relaxed/simple;
+	bh=IsY1p9peZtsuSZmN1lXqkSi2g3xTHsQCxshSsJgZG1w=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=XoKi91oLJA7J6g/N9R6W/5z6b9YTi1za+47tDHF68gRSNLJSm8TSm1obtkd0aXqx3oRvjhIeldVfXmYjJeWVV+oGQTSETHLyVYxzQZUQjYy+lJExMzuM/hyQ954kr3gpsAmp0lHj1BsnOQZ0TWIWryMEgo03j76f2znG4DN/8D4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Arx1PFHc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Y4OdQFkp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EF0AC4CECC;
-	Wed, 27 Nov 2024 19:40:41 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Arx1PFHc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2C93C4CECC;
+	Wed, 27 Nov 2024 20:56:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1732736441;
-	bh=FNpsPBymSvEX1rHGNSh2J+QjHOLtO8xKZwskRMfxD8A=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y4OdQFkp2nt/VvgqWAzMb+U036mIXv7j2LJHKF/dpUn954h4y4SzH9pfQm5Llm4xC
-	 Xn3EHI2RFYk+gF5oK9ediPguZG96lc468mGXVKDVabS6zPzl3wbCS/MnXPq9wNWUoD
-	 88QCHf1aG6/UUPTBoYdYVcG4036FWpAv+gaqp53RLXgsDDy3Z7Nu4AVunbRKleiL8c
-	 4+D8sjtuIsIxt+phU4/VoCafcBznr1o2zDnmKGhv34cusEtthtKdEUJGBXWRWILSOo
-	 OA57OHPSkfugMlhiW2Ny9LvwIpITFIFKLXiw77pynSGgenHRCGTb3GbcimZ9kP5jMT
-	 7BPLErjejFueQ==
+	s=k20201202; t=1732740989;
+	bh=IsY1p9peZtsuSZmN1lXqkSi2g3xTHsQCxshSsJgZG1w=;
+	h=From:To:Cc:Subject:Date:From;
+	b=Arx1PFHcSj+PqFbPWIkBHIkiHMkmNsiA+gH8W9NoTAtXL+V6o6tCrs43pca8YTKVc
+	 +66/1vUHZ1Dbvgj0UI+AhKnRrIWAtIse6PFMPQP1aDl9YMzgaTz2XKfkg+164BzAni
+	 1v+nnYBIWCMmVETcLBfMGUMYrwW0kr4MmUelngWRtWGthYwSpIBBMwpcmsp0fcDxUF
+	 nMbEIav25ZUiVxMoZXL3lzwJbzMLPKkC5AsynbEyQmcggMs5z8t/EveVV7IeKhEYb1
+	 yfh5RDiRXz8XszRjbf46JcNSA9QsCJFG1nOdNIQbZzzwUbr00MZM5skJvSJ5BEsGM0
+	 KYlB5qrlsma6A==
 From: SeongJae Park <sj@kernel.org>
-To: Johannes Weiner <hannes@cmpxchg.org>
+To: 
 Cc: SeongJae Park <sj@kernel.org>,
-	Yuanchu Xie <yuanchu@google.com>,
-	David Hildenbrand <david@redhat.com>,
-	"Aneesh Kumar K.V" <aneesh.kumar@linux.ibm.com>,
-	Khalid Aziz <khalid.aziz@oracle.com>,
-	Henry Huang <henry.hj@antgroup.com>,
-	Yu Zhao <yuzhao@google.com>,
-	Dan Williams <dan.j.williams@intel.com>,
-	Gregory Price <gregory.price@memverge.com>,
-	Huang Ying <ying.huang@intel.com>,
-	Lance Yang <ioworker0@gmail.com>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Muhammad Usama Anjum <usama.anjum@collabora.com>,
-	Tejun Heo <tj@kernel.org>,
-	Michal =?iso-8859-1?Q?Koutn=FD?= <mkoutny@suse.com>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Jason Wang <jasowang@redhat.com>,
-	Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
-	Eugenio =?iso-8859-1?Q?P=E9rez?= <eperezma@redhat.com>,
-	Michal Hocko <mhocko@kernel.org>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
-	Shakeel Butt <shakeel.butt@linux.dev>,
-	Muchun Song <muchun.song@linux.dev>,
-	Mike Rapoport <rppt@kernel.org>,
-	Shuah Khan <shuah@kernel.org>,
-	Christian Brauner <brauner@kernel.org>,
-	Daniel Watson <ozzloy@each.do>,
-	cgroups@vger.kernel.org,
-	linux-doc@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	virtualization@lists.linux.dev,
+	Gregory Price <gourry@gourry.net>,
+	damon@lists.linux.dev,
 	linux-mm@kvack.org,
-	linux-kselftest@vger.kernel.org,
-	damon@lists.linux.dev
-Subject: Re: [PATCH v4 0/9] mm: workingset reporting
-Date: Wed, 27 Nov 2024 11:40:38 -0800
-Message-Id: <20241127194038.84382-1-sj@kernel.org>
+	linux-kernel@vger.kernel.org
+Subject: [RFC PATCH] mm/damon: introduce DAMOS filter type UNMAPPED
+Date: Wed, 27 Nov 2024 12:56:24 -0800
+Message-Id: <20241127205624.86986-1-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20241127072604.GA2501036@cmpxchg.org>
-References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -79,79 +44,73 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-+ damon@lists.linux.dev
+Some DAMOS actions may better to be applied to only mapped, or unmapped
+pages.  For example, users might want to use NUMA hint fault based
+CXL-memory promotion for mapped pages, and DAMOS-based promotion for
+unmapped pages.  For another example, users might want to proactively
+reclaim only unmapped page cache, since some people do mmap() for only
+performance-important files, to reduce read()/write() system call
+overheads.  To support such use cases, introduce a new DAMOS filter type
+for unmapped pages.
 
-I haven't thoroughly read any version of this patch series due to my laziness,
-sorry.  So I may saying something completely wrong.  My apology in advance, and
-please correct me in the case.
+Signed-off-by: SeongJae Park <sj@kernel.org>
+---
+It is unclear if the example usages are realistic, and how much benefit
+this idea will provide for the example usages.  This is for showing only
+more specific shape of the idea, and hence RFC.  No test other than
+build on my machine has run.
 
-> On Tue, Nov 26, 2024 at 06:57:19PM -0800, Yuanchu Xie wrote:
-> > This patch series provides workingset reporting of user pages in
-> > lruvecs, of which coldness can be tracked by accessed bits and fd
-> > references.
+ include/linux/damon.h    | 2 ++
+ mm/damon/paddr.c         | 3 +++
+ mm/damon/sysfs-schemes.c | 1 +
+ 3 files changed, 6 insertions(+)
 
-DAMON provides data access patterns of user pages.  It is not exactly named as
-workingset but a superset of the information.  Users can therefore get the
-workingset from DAMON-provided raw data.  So I feel I have to ask if DAMON can
-be used for, or help at achieving the purpose of this patch series.
+diff --git a/include/linux/damon.h b/include/linux/damon.h
+index 9d8bb6116df4..10fc6df52111 100644
+--- a/include/linux/damon.h
++++ b/include/linux/damon.h
+@@ -315,6 +315,7 @@ struct damos_stat {
+  * @DAMOS_FILTER_TYPE_ANON:	Anonymous pages.
+  * @DAMOS_FILTER_TYPE_MEMCG:	Specific memcg's pages.
+  * @DAMOS_FILTER_TYPE_YOUNG:	Recently accessed pages.
++ * @DAMOS_FILTER_TYPE_UNMAPPED:	Unmapped pages.
+  * @DAMOS_FILTER_TYPE_ADDR:	Address range.
+  * @DAMOS_FILTER_TYPE_TARGET:	Data Access Monitoring target.
+  * @NR_DAMOS_FILTER_TYPES:	Number of filter types.
+@@ -334,6 +335,7 @@ enum damos_filter_type {
+ 	DAMOS_FILTER_TYPE_ANON,
+ 	DAMOS_FILTER_TYPE_MEMCG,
+ 	DAMOS_FILTER_TYPE_YOUNG,
++	DAMOS_FILTER_TYPE_UNMAPPED,
+ 	DAMOS_FILTER_TYPE_ADDR,
+ 	DAMOS_FILTER_TYPE_TARGET,
+ 	NR_DAMOS_FILTER_TYPES,
+diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
+index 4733aaddcae8..b3cb2578a201 100644
+--- a/mm/damon/paddr.c
++++ b/mm/damon/paddr.c
+@@ -222,6 +222,9 @@ static bool __damos_pa_filter_out(struct damos_filter *filter,
+ 		if (matched)
+ 			damon_folio_mkold(folio);
+ 		break;
++	case DAMOS_FILTER_TYPE_UNMAPPED:
++		matched = !folio_mapped(folio) || !folio_raw_mapping(folio);
++		break;
+ 	default:
+ 		break;
+ 	}
+diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
+index 6cc976b8e363..25356fe99273 100644
+--- a/mm/damon/sysfs-schemes.c
++++ b/mm/damon/sysfs-schemes.c
+@@ -345,6 +345,7 @@ static const char * const damon_sysfs_scheme_filter_type_strs[] = {
+ 	"anon",
+ 	"memcg",
+ 	"young",
++	"unmapped",
+ 	"addr",
+ 	"target",
+ };
+-- 
+2.39.5
 
-Depending on the detailed definition of workingset, of course, the workingset
-we can get from DAMON might not be technically same to what this patch series
-aim to provide, and the difference could be somewhat that makes DAMON unable to
-be used or help here.  But I cannot know if this is the case with only this
-cover letter.
-
-> > However, the concept of workingset applies generically to
-> > all types of memory, which could be kernel slab caches, discardable
-> > userspace caches (databases), or CXL.mem. Therefore, data sources might
-> > come from slab shrinkers, device drivers, or the userspace.
-> > Another interesting idea might be hugepage workingset, so that we can
-> > measure the proportion of hugepages backing cold memory. However, with
-> > architectures like arm, there may be too many hugepage sizes leading to
-> > a combinatorial explosion when exporting stats to the userspace.
-> > Nonetheless, the kernel should provide a set of workingset interfaces
-> > that is generic enough to accommodate the various use cases, and extensible
-> > to potential future use cases.
-
-This again sounds similar to what DAMON aims to provide, to me.  DAMON is
-designed to be easy to extend for vairous use cases and internal mechanisms.
-Specifically, it separates access check mechanisms and core logic into
-different layers, and provides an interface to use for implementing extending
-DAMON with new mechanisms.  DAMON's two access check mechanisms for virtual
-address spaces and the physical address space are made using the interface,
-indeed.  Also there were RFC patch series extending DAMON for NUMA-specific and
-write-only access monitoring using NUMA hinting fault and soft-dirty PTEs as
-the internal mechanisms.
-
-My humble understanding of the major difference between DAMON and workingset
-reporting is the internal mechanism.  Workingset reporting uses MGLRU as the
-access check mechanism, while current access check mechanisms for DAMON are
-using page table accessed bits checking as the major mechanism.  I think DAMON
-can be extended to use MGLRU as its another internal access check mechanism,
-but I understand that there could be many things that I overseeing.
-
-Yuanchu, I think it would help me and other reviewers better understand this
-patch series if you could share that.  And I will also be more than happy to
-help you and others better understanding what DAMON can do or not with the
-discussion.
-
-> 
-> Doesn't DAMON already provide this information?
-> 
-> CCing SJ.
-
-Thank you for adding me, Johannes :)
-
-[...]
-> It does provide more detailed insight into userspace memory behavior,
-> which could be helpful when trying to make sense of applications that
-> sit on a rich layer of libraries and complicated runtimes. But here a
-> comparison to DAMON would be helpful.
-
-100% agree.
-
-
-Thanks,
-SJ
-
-[...]
