@@ -1,32 +1,27 @@
-Received: from invmail4.hynix.com (exvmail4.skhynix.com [166.125.252.92])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 69E881386DA
-	for <damon@lists.linux.dev>; Fri, 29 Nov 2024 07:49:45 +0000 (UTC)
+Received: from invmail4.hynix.com (exvmail4.hynix.com [166.125.252.92])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BFC6B14B088
+	for <damon@lists.linux.dev>; Fri, 29 Nov 2024 08:31:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=166.125.252.92
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732866592; cv=none; b=qs9JDSH0OrMrJ6RKZpuA4MZOd7EerBEQcd7TB2BfCD5pXn1gejEz8+158WsADAI5iE0M3fsx41bl111gaXV/JxuFyVGeZhsYyVua3uzuNFy+/BZqU6wgL4fzGXTjwnjG9Mr7r9uBzgeJHlVu4AxuAEggi+i5Uiw9Z7aFoGknRCs=
+	t=1732869086; cv=none; b=JjOTqONOHOK10k8MzYpc8Xv6rXBJpeRDEw8m7rJHyKa9YYU77sOqjJah4IwDQKuODQ6tFk00Yg/9axUmMpwsKsqAlJeR1pLtQnlmmaHqbdtzsoBpmeEuQO4Wb+7ZIQZPWknOIjEjRBSCuSVJzU/OPftgYwp195q2OfLPh6Wuxww=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732866592; c=relaxed/simple;
-	bh=SFUAEswHQMHjoTcgFYPx12uu2xNQo+twVblRhMNJZP8=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OVmBvUk7FrappoB+WBB4jg2110pWmUvDXRrqA5dzXJIbIN8qI8uakZvQxO10GrVj9DrQVvxMrXNvUDJ65401dC1bfce9Bo+pI9w0JpFo4niBqCi554l9Z0eeBg9KwRZi4RTTmRGDJdU8vI1I3Rbpkn+UN5QaBlm2KEqYMF/wP5A=
+	s=arc-20240116; t=1732869086; c=relaxed/simple;
+	bh=IbDlefQaxLoyA4mm5kQJeJs1i5eTTP9E7YitVTR12eI=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=uqzroCp/ZGQf44FqFfghpbJ5/GWIqnuEEvr9M5/a7w/LlpHARLuPNXgcAdfbDhlaz80qIJx37Z/vnD3dshEcvOzh2EJNBB/vke+nWTV6W14Fg72TtYq4O23qxyp+j5s3fDnVCCsTTek8zh1veg5KAUSGUY7nV53H9M9FmTnMJr8=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sk.com; spf=pass smtp.mailfrom=sk.com; arc=none smtp.client-ip=166.125.252.92
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sk.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sk.com
-X-AuditID: a67dfc5b-3e1ff7000001d7ae-1d-67497218d5e9
+X-AuditID: a67dfc5b-3c9ff7000001d7ae-b1-67497bd61d45
 From: Honggyu Kim <honggyu.kim@sk.com>
-To: SeongJae Park <sj@kernel.org>
-Cc: damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org,
-	Yunjeong Mun <yunjeong.mun@sk.com>,
+To: damon@lists.linux.dev
+Cc: SeongJae Park <sj@kernel.org>,
 	kernel_team@skhynix.com,
-	Honggyu Kim <honggyu.kim@sk.com>
-Subject: Re: [RFC PATCH] mm/damon: explain "effective quota" on kernel-doc comment
-Date: Fri, 29 Nov 2024 16:49:40 +0900
-Message-ID: <20241129074942.1554-1-honggyu.kim@sk.com>
+	Honggyu Kim <honggyu.kim@sk.com>,
+	Yunjeong Mun <yunjeong.mun@sk.com>
+Subject: [PATCH] mm/damon/core: accumulate applied size to quota->charged_sz
+Date: Fri, 29 Nov 2024 17:31:01 +0900
+Message-ID: <20241129083102.1582-1-honggyu.kim@sk.com>
 X-Mailer: git-send-email 2.43.0.windows.1
-In-Reply-To: <20241128175046.87869-1-sj@kernel.org>
-References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -34,116 +29,61 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrLLMWRmVeSWpSXmKPExsXC9ZZnoa5EkWe6wfOXRhZP/v9mtbi8aw6b
-	xb01/1ktDn99w+TA4rFpVSebx6ZPk9g9XmyeyejxeZNcAEsUl01Kak5mWWqRvl0CV8bxLZ1s
-	Bc3yFV8+HmNrYHwv3sXIySEhYCLxpW8zI4x9d+s0VhCbTUBN4srLSUwgtoiAosS5xxeB4lwc
-	zAJbGCW6l2wCSwgLBEmcuHGEBcRmEVCVuHxjDTOIzStgJnH281YWiKGaEo+3/2QHsTkFjCWO
-	v14I1iskwCPxasN+Roh6QYmTM5+A1TMLyEs0b53NDLJMQmAKm8SrXbtYIQZJShxccYNlAiP/
-	LCQ9s5D0LGBkWsUolJlXlpuYmWOil1GZl1mhl5yfu4kRGIjLav9E72D8dCH4EKMAB6MSD6+A
-	kGe6EGtiWXFl7iFGCQ5mJRHeK4s90oV4UxIrq1KL8uOLSnNSiw8xSnOwKInzGn0rTxESSE8s
-	Sc1OTS1ILYLJMnFwSjUwak0quBvKNyd6f82Mv2lFl2u3W7fdvcrxTsJybYGdMp/BxUObfaZy
-	27idO3ov3VLh/NQXP1cwXd/PrjmX8WEHv5Llw9/cb3NnlPBOddjMEhtSW8fkEN/Z5nLZe6bF
-	mSpTUReDgOUd/eFBjTcE/fbzdbJeObTSrD501f8tK58frNm3d4/Xw/MmSizFGYmGWsxFxYkA
-	Nxwl5UACAAA=
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrELMWRmVeSWpSXmKPExsXCNUNLT1eiyDPd4M9pLYsn/3+zWnx+9prZ
-	4vDck6wWl3fNYbO4t+Y/q8Xhr2+YLH5vW8HmwO6xaVUnm8emT5PYPV5snsno8e22h8fiFx+Y
-	PD5vkgtgi+KySUnNySxLLdK3S+DKOL6lk62gWb7iy8djbA2M78W7GDk5JARMJO5uncYKYrMJ
-	qElceTmJCcQWEVCUOPf4IlCci4NZYAujRPeSTWAJYYEgiRM3jrCA2CwCqhKXb6xhBrF5Bcwk
-	zn7eygIxVFPi8faf7CA2p4CxxPHXC8F6hQR4JF5t2M8IUS8ocXLmE7B6ZgF5ieats5knMPLM
-	QpKahSS1gJFpFaNIZl5ZbmJmjqlecXZGZV5mhV5yfu4mRmDILav9M3EH45fL7ocYBTgYlXh4
-	BYQ804VYE8uKK3MPMUpwMCuJ8F5Z7JEuxJuSWFmVWpQfX1Sak1p8iFGag0VJnNcrPDVBSCA9
-	sSQ1OzW1ILUIJsvEwSnVwFiT+I9j3tuun5M7+Dvvupef3ui6IWe7v0LEF6Fr02f/PPaoebM5
-	8/99sgHtffm3pqvv2X35jsUux+O5f5eHPc/pe5R4fMHdvonNKVv5Xl5gvPrl/fX4csGvvRUF
-	xvyP7uyYv3XxHbNjxa2tfjMm9M7ZOqlyTfQdzuXqH2y7296VbmeeVpzDv+e8EktxRqKhFnNR
-	cSIAlN3IITUCAAA=
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFmpgluLIzCtJLcpLzFFi42LhesuzSPdatWe6wbn/3BZP/v9mtTj89Q2T
+	A5PHplWdbB4vNs9kDGCK4rJJSc3JLEst0rdL4Mq4eCiw4BxXxdLpqg2MHzi6GDk5JARMJM7M
+	usAEY/ceusQKYrMJqElceTkJLC4iICnx504rexcjFwezQBujxK4NP9hAEsICPhJHfk4GK2IR
+	UJXY0buZGcTmFTCTeL5lESvEUE2Jx9t/skPEBSVOznzCAmIzC8hLNG+dzQwyVELgJqvEzM/T
+	oa6QlDi44gbLBEbeWUh6ZiHpWcDItIpRKDOvLDcxM8dEL6MyL7NCLzk/dxMjMFyW1f6J3sH4
+	6ULwIUYBDkYlHl4BIc90IdbEsuLK3EOMEhzMSiK8VxZ7pAvxpiRWVqUW5ccXleakFh9ilOZg
+	URLnNfpWniIkkJ5YkpqdmlqQWgSTZeLglGpgbF/Rtd3WVv1HW+SUmg3aW+ZcFFeXNXb6+XHB
+	l3vTJ2lebzt96mtr8Tcf7eD+bVkfxff+iWISeCP6QmbD8TlFv74YhzQ1LV/WXmppJGD4/aC4
+	0QzOvXnyCgqx/OtndMRyzd+gnJK4819pkV3ZhyshH5OU7nk5FPlsP621P8/V9bXHglVfnmuW
+	K7EUZyQaajEXFScCAIP6xJ4TAgAA
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrKJMWRmVeSWpSXmKPExsXCNUNLT/datWe6wdMLrBZP/v9mtfj87DWz
+	xeG5J1ktDn99w2Txe9sKNgdWj02rOtk8Xmyeyejx7baHx+IXH5gCWKK4bFJSczLLUov07RK4
+	Mi4eCiw4x1WxdLpqA+MHji5GTg4JAROJ3kOXWEFsNgE1iSsvJzGB2CICkhJ/7rSydzFycTAL
+	tDFK7Nrwgw0kISzgI3Hk52SwIhYBVYkdvZuZQWxeATOJ51sWsUIM1ZR4vP0nO0RcUOLkzCcs
+	IDazgLxE89bZzBMYuWYhSc1CklrAyLSKUSQzryw3MTPHVK84O6MyL7NCLzk/dxMjMDCW1f6Z
+	uIPxy2X3Q4wCHIxKPLwCQp7pQqyJZcWVuYcYJTiYlUR4ryz2SBfiTUmsrEotyo8vKs1JLT7E
+	KM3BoiTO6xWemiAkkJ5YkpqdmlqQWgSTZeLglGpgFPOYKfu9eFVNkoL1lpbq1QdXutRMupAl
+	NDu/kv+ciXHrzry6Vq9dPVzXF3m76HoxbC48GdG39Nmu83HuPRVn7A4o7Klj+m+eu7Tyhtnx
+	vkyN11ONClMDSzf+Fpy/Ulb/r92ebBdlgy/qHC1ZuRcKHTtur96Vkt9T3ifncvhtqPNJ+e9Z
+	KyOUWIozEg21mIuKEwEmrAvmCAIAAA==
 X-CFilter-Loop: Reflected
 
-On Thu, 28 Nov 2024 09:50:46 -0800 SeongJae Park <sj@kernel.org> wrote:
-> On Thu, 28 Nov 2024 18:53:55 +0900 Honggyu Kim <honggyu.kim@sk.com> wrote:
-> 
-> > On Tue, 26 Nov 2024 11:43:47 -0800 SeongJae Park <sj@kernel.org> wrote:
-> > > On Tue, 26 Nov 2024 17:24:33 +0900 Honggyu Kim <honggyu.kim@sk.com> wrote:
-> > > 
-> > > > Hi SeongJae,
-> > > > 
-> > > > Thanks very much for the quick response.
-> > > 
-> > > No problem, all owing to your kind report!
-> > > 
-> > > > I think it looks great but I
-> > > > have some minor comments so please see my inline comments below.
-> > > > 
-> > > > Thanks,
-> > > > Honggyu
-> > > > 
-> > > > On Mon, 25 Nov 2024 16:29:21 -0800 SeongJae Park <sj@kernel.org> wrote:
-> > > > > The kernel-doc comment for 'struct damos_quota' describes how "effective
-> > > > > quota" is calculated, but does not explain what it is.  Actually there
-> > > > > was an input[1] about it.  Add the explanation on the comment.
-> > > > > 
-> > > > > [1] https://github.com/damonitor/damo/issues/17#issuecomment-2497525043
-> > > > > 
-> > > > > Cc: Yunjeong Mun <yunjeong.mun@sk.com>
-> > > > > Cc: Honggyu Kim <honggyu.kim@sk.com>
-> > > > > Signed-off-by: SeongJae Park <sj@kernel.org>
-> > > > > ---
-> > > > >  include/linux/damon.h | 10 +++++++---
-> > > > >  1 file changed, 7 insertions(+), 3 deletions(-)
-> > > > > 
-> > > > > diff --git a/include/linux/damon.h b/include/linux/damon.h
-> > > > > index a67f2c4940e9..a01bfe2ff616 100644
-> > > > > --- a/include/linux/damon.h
-> > > > > +++ b/include/linux/damon.h
-> > > > > @@ -193,9 +193,13 @@ struct damos_quota_goal {
-> > > > >   * size quota is set, DAMON tries to apply the action only up to &sz bytes
-> > > > >   * within &reset_interval.
-> > > > >   *
-> > > > > - * Internally, the time quota is transformed to a size quota using estimated
-> > > > > - * throughput of the scheme's action.  DAMON then compares it against &sz and
-> > > > > - * uses smaller one as the effective quota.
-> > > > > + * To convince the different types of quotas and goals, DAMON internally
-> > > > > + * converts those into one single size quota called "effective quota".  DAMON
-> > > > 
-> > > > Could we use "effective size quota" instead of "effective quota"?
-> > > > IMHO, it will better give an idea this is related to "esz" in the code,
-> > > > which means effective size.
-> > > 
-> > > The above sentence is saying it as one single "size" quota, so calling it
-> > > "effective size quota" here feels like unnecessary duplicates of the word
-> > > ("size") to me.  I'd like to keep this sentence as is if you don't really mind.
-> > 
-> > Since the time or other goals are eventually transformed into a size
-> > quota, I thought the "effective size quota" makes sense but I won't
-> > stick to my term here.
-> 
-> I understand your concern.  But I want to make it not very strictly fixed and
-> well-defined term, but just somewhat understandable with common sense and given
-> context, for flexibility and conciseness.  So unless this is really makes it
-> difficult to understand what it means even with common senses and the context
-> I'd like to keep current form.
-> 
-> I believe your answer to the above question is "no" since you mentioned you
-> won't stick to your term.  Please let me know if I'm misreading you.
+While testing DAMOS_MIGRATE_COLD action, Yunjeong found that the
+quota->charged_sz is way less than actually migrated size.
 
-OK. I'm fine with the changes with this patch.  I won't ask more changes.
+In damos_apply_scheme(), quota->charged_sz is used when checking whether
+the quota exceeds the effective size.  The current implementation
+accumulates the charged_sz with sz(region size), but many pages in the
+region might be discarded by DAMOS filters.
 
-> > 
-> > We originally asked this question about the term "effective" itself as
-> > we didn't find an explanation what "effective" means actually in the
-> > doc.  It'd be better to have more explicit explanation as well.
-> 
-> I think this patch makes the point pretty explicit, so my humble brain is bit
-> confused what "more explicit" really means.  Could you please clarify what
-> changes you want to be added?
+In order to make the quota calculation more accurate, charged_sz is
+better to be accumulated by the actually applied size, which is
+sz_applied in the code.
 
-Nevermind, your changes here with some grammar and typo fixes are enough
-for this patch.
+Reported-by: Yunjeong Mun <yunjeong.mun@sk.com>
+Signed-off-by: Honggyu Kim <honggyu.kim@sk.com>
+---
+ mm/damon/core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Thanks,
-Honggyu
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index 511c3f61ab44..dd1b56466650 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -1390,7 +1390,7 @@ static void damos_apply_scheme(struct damon_ctx *c, struct damon_target *t,
+ 		ktime_get_coarse_ts64(&end);
+ 		quota->total_charged_ns += timespec64_to_ns(&end) -
+ 			timespec64_to_ns(&begin);
+-		quota->charged_sz += sz;
++		quota->charged_sz += sz_applied;
+ 		if (quota->esz && quota->charged_sz >= quota->esz) {
+ 			quota->charge_target_from = t;
+ 			quota->charge_addr_from = r->ar.end + 1;
 
-> 
-> Thanks,
-> SJ
-> 
-> [...]
+base-commit: adc218676eef25575469234709c2d87185ca223a
+-- 
+2.34.1
+
