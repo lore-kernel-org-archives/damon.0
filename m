@@ -1,27 +1,43 @@
-Received: from invmail4.hynix.com (exvmail4.hynix.com [166.125.252.92])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BFC6B14B088
-	for <damon@lists.linux.dev>; Fri, 29 Nov 2024 08:31:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=166.125.252.92
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23F6D15AF6
+	for <damon@lists.linux.dev>; Fri, 29 Nov 2024 19:55:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732869086; cv=none; b=JjOTqONOHOK10k8MzYpc8Xv6rXBJpeRDEw8m7rJHyKa9YYU77sOqjJah4IwDQKuODQ6tFk00Yg/9axUmMpwsKsqAlJeR1pLtQnlmmaHqbdtzsoBpmeEuQO4Wb+7ZIQZPWknOIjEjRBSCuSVJzU/OPftgYwp195q2OfLPh6Wuxww=
+	t=1732910133; cv=none; b=tpPuKaJIPapjWPcMHIZ4Ah+IO2W5IlsJeTVN8nIbYxq+XicifRmDVtj/Df2p47hnLCGZGTldueepTF5fXIZJfbKCgU78t/hZ9rgendevvfwHktjP34u9DxvPRG/K0BDdPFrQQL7JnwyFB3i7XOReCLs/B8B0AtNbkOXif/Zb/sY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732869086; c=relaxed/simple;
-	bh=IbDlefQaxLoyA4mm5kQJeJs1i5eTTP9E7YitVTR12eI=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=uqzroCp/ZGQf44FqFfghpbJ5/GWIqnuEEvr9M5/a7w/LlpHARLuPNXgcAdfbDhlaz80qIJx37Z/vnD3dshEcvOzh2EJNBB/vke+nWTV6W14Fg72TtYq4O23qxyp+j5s3fDnVCCsTTek8zh1veg5KAUSGUY7nV53H9M9FmTnMJr8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sk.com; spf=pass smtp.mailfrom=sk.com; arc=none smtp.client-ip=166.125.252.92
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sk.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sk.com
-X-AuditID: a67dfc5b-3c9ff7000001d7ae-b1-67497bd61d45
-From: Honggyu Kim <honggyu.kim@sk.com>
-To: damon@lists.linux.dev
+	s=arc-20240116; t=1732910133; c=relaxed/simple;
+	bh=ufXauqxp2yXYrcVMXESE+xb+2yTJSbdZ+9uhjZ/cEBE=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=kNNwMYLVKZGr7C9rUKtt8n3yfInVRuroLyrfF40l3q2zNuS+OilBleUQhVbSSKrqZh1cBcvZ1hv22CFCj+4rERiTkhg4+VECXb0yzJrMO4EcokF8XU3RlCcVQrRZggVhXdC3v6358RFKY2z0aMmsQZsKgF1HgAawAZNnYBqWz34=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eyXvnfPr; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eyXvnfPr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57978C4CECF;
+	Fri, 29 Nov 2024 19:55:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1732910132;
+	bh=ufXauqxp2yXYrcVMXESE+xb+2yTJSbdZ+9uhjZ/cEBE=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=eyXvnfPrGKj8hyihbj6kW2nvhZIEbmKo7abYDoNQon9roeOhv4uYZyc0ce6so1w0f
+	 hUa+4sZJAgqN1mUn7Pby6CcBdGIimVc3GogAm9JZTkgIrnt7nzEv6+e/qoGY1zIN12
+	 qFsg2We4GxFrcWgKMyWXzeDHIWYQUySWt1RV0U0dcstBQ5zkcy4UwOP96zGTgaCh3m
+	 2C7CzhK+dg0whP2C79IVkep0IIXyvsVkslN4uunO1o9IlbsH0NX1eKHr9TXKnwq+FQ
+	 C2216lKOddL0Dr6TzziYoIMA+Nx9QNmc8Q7shKQM50HpcwxQOCuYF8o2jXjirVIxkn
+	 UtABjAHp0vObA==
+From: SeongJae Park <sj@kernel.org>
+To: Honggyu Kim <honggyu.kim@sk.com>
 Cc: SeongJae Park <sj@kernel.org>,
+	damon@lists.linux.dev,
 	kernel_team@skhynix.com,
-	Honggyu Kim <honggyu.kim@sk.com>,
 	Yunjeong Mun <yunjeong.mun@sk.com>
-Subject: [PATCH] mm/damon/core: accumulate applied size to quota->charged_sz
-Date: Fri, 29 Nov 2024 17:31:01 +0900
-Message-ID: <20241129083102.1582-1-honggyu.kim@sk.com>
-X-Mailer: git-send-email 2.43.0.windows.1
+Subject: Re: [PATCH] mm/damon/core: accumulate applied size to quota->charged_sz
+Date: Fri, 29 Nov 2024 11:55:29 -0800
+Message-Id: <20241129195529.98532-1-sj@kernel.org>
+X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20241129083102.1582-1-honggyu.kim@sk.com>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -29,61 +45,35 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFmpgluLIzCtJLcpLzFFi42LhesuzSPdatWe6wbn/3BZP/v9mtTj89Q2T
-	A5PHplWdbB4vNs9kDGCK4rJJSc3JLEst0rdL4Mq4eCiw4BxXxdLpqg2MHzi6GDk5JARMJM7M
-	usAEY/ceusQKYrMJqElceTkJLC4iICnx504rexcjFwezQBujxK4NP9hAEsICPhJHfk4GK2IR
-	UJXY0buZGcTmFTCTeL5lESvEUE2Jx9t/skPEBSVOznzCAmIzC8hLNG+dzQwyVELgJqvEzM/T
-	oa6QlDi44gbLBEbeWUh6ZiHpWcDItIpRKDOvLDcxM8dEL6MyL7NCLzk/dxMjMFyW1f6J3sH4
-	6ULwIUYBDkYlHl4BIc90IdbEsuLK3EOMEhzMSiK8VxZ7pAvxpiRWVqUW5ccXleakFh9ilOZg
-	URLnNfpWniIkkJ5YkpqdmlqQWgSTZeLglGpgbF/Rtd3WVv1HW+SUmg3aW+ZcFFeXNXb6+XHB
-	l3vTJ2lebzt96mtr8Tcf7eD+bVkfxff+iWISeCP6QmbD8TlFv74YhzQ1LV/WXmppJGD4/aC4
-	0QzOvXnyCgqx/OtndMRyzd+gnJK4819pkV3ZhyshH5OU7nk5FPlsP621P8/V9bXHglVfnmuW
-	K7EUZyQaajEXFScCAIP6xJ4TAgAA
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrKJMWRmVeSWpSXmKPExsXCNUNLT/datWe6wdMLrBZP/v9mtfj87DWz
-	xeG5J1ktDn99w2Txe9sKNgdWj02rOtk8Xmyeyejx7baHx+IXH5gCWKK4bFJSczLLUov07RK4
-	Mi4eCiw4x1WxdLpqA+MHji5GTg4JAROJ3kOXWEFsNgE1iSsvJzGB2CICkhJ/7rSydzFycTAL
-	tDFK7Nrwgw0kISzgI3Hk52SwIhYBVYkdvZuZQWxeATOJ51sWsUIM1ZR4vP0nO0RcUOLkzCcs
-	IDazgLxE89bZzBMYuWYhSc1CklrAyLSKUSQzryw3MTPHVK84O6MyL7NCLzk/dxMjMDCW1f6Z
-	uIPxy2X3Q4wCHIxKPLwCQp7pQqyJZcWVuYcYJTiYlUR4ryz2SBfiTUmsrEotyo8vKs1JLT7E
-	KM3BoiTO6xWemiAkkJ5YkpqdmlqQWgSTZeLglGpgFPOYKfu9eFVNkoL1lpbq1QdXutRMupAl
-	NDu/kv+ciXHrzry6Vq9dPVzXF3m76HoxbC48GdG39Nmu83HuPRVn7A4o7Klj+m+eu7Tyhtnx
-	vkyN11ONClMDSzf+Fpy/Ulb/r92ebBdlgy/qHC1ZuRcKHTtur96Vkt9T3ifncvhtqPNJ+e9Z
-	KyOUWIozEg21mIuKEwEmrAvmCAIAAA==
-X-CFilter-Loop: Reflected
 
-While testing DAMOS_MIGRATE_COLD action, Yunjeong found that the
-quota->charged_sz is way less than actually migrated size.
+On Fri, 29 Nov 2024 17:31:01 +0900 Honggyu Kim <honggyu.kim@sk.com> wrote:
 
-In damos_apply_scheme(), quota->charged_sz is used when checking whether
-the quota exceeds the effective size.  The current implementation
-accumulates the charged_sz with sz(region size), but many pages in the
-region might be discarded by DAMOS filters.
+> While testing DAMOS_MIGRATE_COLD action, Yunjeong found that the
+> quota->charged_sz is way less than actually migrated size.
 
-In order to make the quota calculation more accurate, charged_sz is
-better to be accumulated by the actually applied size, which is
-sz_applied in the code.
+You mean "more", not "less", right?
 
-Reported-by: Yunjeong Mun <yunjeong.mun@sk.com>
-Signed-off-by: Honggyu Kim <honggyu.kim@sk.com>
----
- mm/damon/core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+And, is it a problem for your use case?  Could you please share more details?
 
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index 511c3f61ab44..dd1b56466650 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -1390,7 +1390,7 @@ static void damos_apply_scheme(struct damon_ctx *c, struct damon_target *t,
- 		ktime_get_coarse_ts64(&end);
- 		quota->total_charged_ns += timespec64_to_ns(&end) -
- 			timespec64_to_ns(&begin);
--		quota->charged_sz += sz;
-+		quota->charged_sz += sz_applied;
- 		if (quota->esz && quota->charged_sz >= quota->esz) {
- 			quota->charge_target_from = t;
- 			quota->charge_addr_from = r->ar.end + 1;
+> 
+> In damos_apply_scheme(), quota->charged_sz is used when checking whether
+> the quota exceeds the effective size.  The current implementation
+> accumulates the charged_sz with sz(region size), but many pages in the
+> region might be discarded by DAMOS filters.
+> 
+> In order to make the quota calculation more accurate, charged_sz is
+> better to be accumulated by the actually applied size, which is
+> sz_applied in the code.
 
-base-commit: adc218676eef25575469234709c2d87185ca223a
--- 
-2.34.1
+This is an intended behavior.  Quota is for making a limit of resource
+consumption from DAMOS.  Trying a DAMOS action consumes some of the system
+resource even if it was eventually filtered out or failed, so we charge those.
 
+We can consider changes of the behaior depending on problems and use cases, but
+it is unclear to me.  Could you please elaborate, as I requested above?
+
+
+Thanks,
+SJ
+
+[...]
