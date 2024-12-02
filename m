@@ -1,29 +1,42 @@
-Received: from invmail4.hynix.com (exvmail4.hynix.com [166.125.252.92])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 48F831E521
-	for <damon@lists.linux.dev>; Mon,  2 Dec 2024 12:24:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=166.125.252.92
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EF5D19995B
+	for <damon@lists.linux.dev>; Mon,  2 Dec 2024 17:21:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733142279; cv=none; b=HjTGMT0JtC3RcwkPQCYXF3MrG7JNcb1H/eQoIuDSwePec6KqxW8Oa2ylUUogLls5fyhgbILAEBygd4QHUCw7o6BZVRpqsFAMix1gSPYLXxZgNQrZBpP5C8NFMekXU4ZM4MfLT2Sdi6h9PXGsnwun7LRTSscMheq0VUHfFAQkBEw=
+	t=1733160097; cv=none; b=pN2uLLjRgxNWof82G9axbJtGSu9lMcn3hkzoEI2LAJp6WoPbvf7fL8olO/JIQF0Uf5xjcfL2VigiKLgcptBGag+KaZa9+bRbqBjnji0jgzReRlZ5gxmnsBCNTj9cSstBMfEH6Hq2+0ZsxdsREkOnGxe5CtdD/eL9RmJOWMC/THI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733142279; c=relaxed/simple;
-	bh=Z6WjTiVcOOSNh974wEe/2un4vPcr1xNC+jEJUcqKLKs=;
+	s=arc-20240116; t=1733160097; c=relaxed/simple;
+	bh=sf0xa51zsqkhyyLzEDM2GQZEbF53/1q1kn0kNkE8rps=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ht3Vccm1x+Fy/cJIDUt67HC2vlSDVXSAx2DGB5O0RopBiLqiTb6AGNbxJlbcgMLiio+JJ7zXOUboEsyEQVVfWdRboSzd5a/zZsRLz7wgQ1f6NAlUxe5cuZ1E00P5kHL3froMkYSM7Qgs4PpQDucotQFUud5hqAQjH+6lYeRXVyI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sk.com; spf=pass smtp.mailfrom=sk.com; arc=none smtp.client-ip=166.125.252.92
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sk.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sk.com
-X-AuditID: a67dfc5b-3c9ff7000001d7ae-8c-674da6f9a571
-From: Honggyu Kim <honggyu.kim@sk.com>
-To: SeongJae Park <sj@kernel.org>
-Cc: damon@lists.linux.dev,
+	 MIME-Version; b=NXOb44LoPmjVVvlWcFFY1ghs6TAtZogKwODCr5rkyMWXSRv5AhoogCGcuYTqbor1cXYQR7PQTFnJ4dlThtHH4Quhi3aZCbSwPBL5+TGdXFX7YPhsxVYCFyBUvaU50gxl68nMnxw1eYDbWY8WWpF82AzYWSk2c9QkI8VUTRLIVn4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rlkiQ3by; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rlkiQ3by"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C159AC4CED1;
+	Mon,  2 Dec 2024 17:21:36 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1733160096;
+	bh=sf0xa51zsqkhyyLzEDM2GQZEbF53/1q1kn0kNkE8rps=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=rlkiQ3bybufYrzeYCIZX2CywSpI736tK1TmxBJihLASVwfjJJ3gYtg0AKOBZZEhrg
+	 Nb6BsPwDQIdUi6QmNA7KjJg7vap6tPD9CHiA0BfZCAYRY+svyKZTdm1cAFLM0ZYVPP
+	 dBZ6k2+bSGiBtb/f5osW1sHF298paShS7ssYFfU947gjsqTFmS9aaW+cYc92DswvJv
+	 zLhVtA6+pnVmlgfCoL00UxiEYvLEImGPSVQL/WFTy/YqP647PjP5+GoFvA89Ab2H2o
+	 L7Efui12NVbcl4rYGtXJm/XQiG368mfX4taznFkq9NZAMQxJuMNoiUFPz9F+TTxAgF
+	 J4Vb/7wa1aRrQ==
+From: SeongJae Park <sj@kernel.org>
+To: Honggyu Kim <honggyu.kim@sk.com>
+Cc: SeongJae Park <sj@kernel.org>,
+	damon@lists.linux.dev,
 	kernel_team@skhynix.com,
-	Yunjeong Mun <yunjeong.mun@sk.com>,
-	Honggyu Kim <honggyu.kim@sk.com>
+	Yunjeong Mun <yunjeong.mun@sk.com>
 Subject: Re: [PATCH] mm/damon/core: accumulate applied size to quota->charged_sz
-Date: Mon,  2 Dec 2024 21:24:05 +0900
-Message-ID: <20241202122409.82-1-honggyu.kim@sk.com>
-X-Mailer: git-send-email 2.43.0.windows.1
-In-Reply-To: <20241129195529.98532-1-sj@kernel.org>
+Date: Mon,  2 Dec 2024 09:21:34 -0800
+Message-ID: <20241202172135.1999157-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.0
+In-Reply-To: <20241202122409.82-1-honggyu.kim@sk.com>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -32,101 +45,117 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprJLMWRmVeSWpSXmKPExsXC9ZZnoe7PZb7pBtfXqlk8+f+b1eLw1zdM
-	Dkwem1Z1snm82DyTMYApissmJTUnsyy1SN8ugSvj0ZONjAU7xCuOPm5ibmA8KtTFyMkhIWAi
-	MfVONxOM/e3lOlYQm01ATeLKy0lgcREBRYlzjy+CxZkF6iTet/SBxYUFAiTaz98Fi7MIqErc
-	a53GDGLzAs1pfrCbGWKmpsTj7T/ZQWxOAWOJmd8+sYDYQgI8Eq827GeEqBeUODnzCQvEfHmJ
-	5q2zgXq5gHrfskqcfnyZEWKQpMTBFTdYJjDyz0LSMwtJzwJGplWMQpl5ZbmJmTkmehmVeZkV
-	esn5uZsYgQG2rPZP9A7GTxeCDzEKcDAq8fB+qPRJF2JNLCuuzD3EKMHBrCTCu3y9d7oQb0pi
-	ZVVqUX58UWlOavEhRmkOFiVxXqNv5SlCAumJJanZqakFqUUwWSYOTqkGxt7zsltmq0tOOFji
-	u6o23kiNP1JjbxFXhiHT0hDeyP9HX1yqqIsW6ozY3h91cf2XgsPO168ndh0PD/cIOn9g2xV9
-	dtWd159d3Pmh9bxtTUbTCfbtftluGlp3Pl7etYDhvanFvYU5UksUPc58EvVSjVy38eDER3Fa
-	6id73ths3vZ+1+zDRdn5WkosxRmJhlrMRcWJAMAbHPwsAgAA
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFupjluLIzCtJLcpLzFFi42LhmqGlp/tzmW+6wZttQhZP/v9mtfj87DWz
-	xeG5J1ktDn99w2Txe9sKNgdWj02rOtk8Xmyeyejx7baHx+IXH5gCWKK4bFJSczLLUov07RK4
-	Mh492chYsEO84ujjJuYGxqNCXYycHBICJhLfXq5jBbHZBNQkrrycxARiiwgoSpx7fBEszixQ
-	J/G+pQ8sLiwQINF+/i5YnEVAVeJe6zRmEJsXaE7zg93MEDM1JR5v/8kOYnMKGEvM/PaJBcQW
-	EuCReLVhPyNEvaDEyZlPWCDmy0s0b53NPIGRZxaS1CwkqQWMTKsYRTLzynITM3NM9YqzMyrz
-	Miv0kvNzNzECQ2lZ7Z+JOxi/XHY/xCjAwajEw/uh0iddiDWxrLgy9xCjBAezkgjv8vXe6UK8
-	KYmVValF+fFFpTmpxYcYpTlYlMR5vcJTE4QE0hNLUrNTUwtSi2CyTBycUg2MmTd5btbPSVqr
-	UtGguerVfKmVrStiDCTlSu7n/1wZlO1hy/Fz7Uw9q1TdWUs+vGx5m6/wRurLsabiStYTJpGT
-	e/1EY4JqH7/yLg8QlNu5eulRM+cHlaF3psn2clVqZfbdMY4x+Jb0YteRVyHeXOsOzCu5KzYv
-	Y8pVoxW/2rPVC5OdD6gWfzmuxFKckWioxVxUnAgAE0isFyECAAA=
-X-CFilter-Loop: Reflected
 
-Hi SeongJae,
+On Mon, 2 Dec 2024 21:24:05 +0900 Honggyu Kim <honggyu.kim@sk.com> wrote:
 
-Thanks for the feedback.  Please see my comments below.
-
-On Fri, 29 Nov 2024 11:55:29 -0800 SeongJae Park <sj@kernel.org> wrote:
-> On Fri, 29 Nov 2024 17:31:01 +0900 Honggyu Kim <honggyu.kim@sk.com> wrote:
+> Hi SeongJae,
 > 
-> > While testing DAMOS_MIGRATE_COLD action, Yunjeong found that the
-> > quota->charged_sz is way less than actually migrated size.
+> Thanks for the feedback.  Please see my comments below.
 > 
-> You mean "more", not "less", right?
-
-Correct.  I wrote it opposite.  quota->charged_sz is highly accumulated
-even if zero pages are affected by the migrate_cold action.
-
-> And, is it a problem for your use case?  Could you please share more details?
-
-I think this is for general use cases.  I thought this is logically
-quite straightforward but I will see if I can provide more details if
-you need.
-
+> On Fri, 29 Nov 2024 11:55:29 -0800 SeongJae Park <sj@kernel.org> wrote:
+> > On Fri, 29 Nov 2024 17:31:01 +0900 Honggyu Kim <honggyu.kim@sk.com> wrote:
 > > 
-> > In damos_apply_scheme(), quota->charged_sz is used when checking whether
-> > the quota exceeds the effective size.  The current implementation
-> > accumulates the charged_sz with sz(region size), but many pages in the
-> > region might be discarded by DAMOS filters.
+> > > While testing DAMOS_MIGRATE_COLD action, Yunjeong found that the
+> > > quota->charged_sz is way less than actually migrated size.
 > > 
-> > In order to make the quota calculation more accurate, charged_sz is
-> > better to be accumulated by the actually applied size, which is
-> > sz_applied in the code.
+> > You mean "more", not "less", right?
 > 
-> This is an intended behavior.  Quota is for making a limit of resource
-> consumption from DAMOS.
+> Correct.  I wrote it opposite.  quota->charged_sz is highly accumulated
+> even if zero pages are affected by the migrate_cold action.
+> 
+> > And, is it a problem for your use case?  Could you please share more details?
+> 
+> I think this is for general use cases.  I thought this is logically
+> quite straightforward but I will see if I can provide more details if
+> you need.
 
-Sure. We know about the purpose of quota.
+Even if this is for general use cases, providing a concrete example would be
+always nice.  Especially for this kind of behavioral changes, I'd like to have
+the details.
 
-> Trying a DAMOS action consumes some of the system
-> resource even if it was eventually filtered out or failed, so we charge those.
+> 
+> > > 
+> > > In damos_apply_scheme(), quota->charged_sz is used when checking whether
+> > > the quota exceeds the effective size.  The current implementation
+> > > accumulates the charged_sz with sz(region size), but many pages in the
+> > > region might be discarded by DAMOS filters.
+> > > 
+> > > In order to make the quota calculation more accurate, charged_sz is
+> > > better to be accumulated by the actually applied size, which is
+> > > sz_applied in the code.
+> > 
+> > This is an intended behavior.  Quota is for making a limit of resource
+> > consumption from DAMOS.
+> 
+> Sure. We know about the purpose of quota.
+> 
+> > Trying a DAMOS action consumes some of the system
+> > resource even if it was eventually filtered out or failed, so we charge those.
+> 
+> I would like to have more discussion on this.  Although trying a DAMOS
+> action consumes some resouce but it seems to be much smaller compared to
+> applying actions. (especially in migrate actions)
+> 
+> You might think it takes some resource, but it is more close to the concept
+> of time quota.  We just compare the size with esz when making decision
+> of quota usage so I'm not quite sure if we really have to accumulate
+> the size of discarded pages.
 
-I would like to have more discussion on this.  Although trying a DAMOS
-action consumes some resouce but it seems to be much smaller compared to
-applying actions. (especially in migrate actions)
+I agree failing a DAMOS action would be lighter.  But, it's still not zero.
+Depending on use case, I think that could be somewhat cannot be ignored.  For
+example, if a huge amount of memory is filtered-out by page-granular DAMOS
+filters (e.g., young), the overhead would be more than what we want to ignore.
 
-You might think it takes some resource, but it is more close to the concept
-of time quota.  We just compare the size with esz when making decision
-of quota usage so I'm not quite sure if we really have to accumulate
-the size of discarded pages.
+> 
+> > We can consider changes of the behaior depending on problems and use cases, but
+> > it is unclear to me.  Could you please elaborate, as I requested above?
+> 
+> It might take some time to prepare for the backup data but I just share
+> what I have thought about it.
 
-> We can consider changes of the behaior depending on problems and use cases, but
-> it is unclear to me.  Could you please elaborate, as I requested above?
+This is a behavioral change.  I'd like to make such change only if the theory
+is very clear, or there is a real problem.
 
-It might take some time to prepare for the backup data but I just share
-what I have thought about it.
+> 
+> Roughly speaking, we found that quota->charged_sz increases 90 MiB for
+> each interval in our test, but we saw no migration happened when
+> applying the migrate_cold action.
+> 
+> Let's say that there is a region of 90 MiB and that consists of 23040
+> pages.  If there are 10 MiB of pages at the end of the region, but the
+> initial pages are not candidates because of filter setup.  In this case,
+> the current implementation may consume the most of charged_sz at the
+> beginning so it discards the last 10 MiB of pages that we are
+> interested because quota->charged_sz + sz is already greater than
+> quota->esz although no actions applied.
 
-Roughly speaking, we found that quota->charged_sz increases 90 MiB for
-each interval in our test, but we saw no migration happened when
-applying the migrate_cold action.
+I'm not very sure if I'm understanding your concern well.  Are you saying DAMOS
+will _never_ apply the action to the 10 MiB region?
 
-Let's say that there is a region of 90 MiB and that consists of 23040
-pages.  If there are 10 MiB of pages at the end of the region, but the
-initial pages are not candidates because of filter setup.  In this case,
-the current implementation may consume the most of charged_sz at the
-beginning so it discards the last 10 MiB of pages that we are
-interested because quota->charged_sz + sz is already greater than
-quota->esz although no actions applied.
+DAMOS resets the age of a region after applying an action[1], regardless of the
+failure.  Hence in this example, yes, DAMOS may not apply the action to the 10
+MiB region immediately, due to the quota.  But in the next interval or aftr,
+DAMOS will eventually apply the action to the region.
 
-My explanation is not good enough, but hope this can be helpful.
+Or, are you saying DAMOS action will not _immediately_ be applied to the 10 MiB
+region, and the slow speed is your concern?
+
+On a level of time scales of real workloads, I think that's not a big problem.
+If that's causing a real problem, users could also adjust the quota online on
+their own.
+
+Of course I might underestimating something, and I will be happy to be
+enlightened.  Real data and use cases would be very helpful for that.
+
+> 
+> My explanation is not good enough, but hope this can be helpful.
+
+It is very helpful, thank you :)
+
+[1] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Documentation/mm/damon/design.rst?h=v6.13-rc1#n354
+
 
 Thanks,
-Honggyu
+SJ
 
-> 
-> Thanks,
-> SJ
-> 
-> [...]
+[...]
