@@ -1,41 +1,58 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 564CA1DDA3E;
-	Mon,  2 Dec 2024 19:01:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52BD81372;
+	Wed,  4 Dec 2024 00:23:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733166097; cv=none; b=Xj6SNj1pbXZuC0ueTvuw9DTlizavutSaYAIkN+3qsmlWOdifWY1yCUqcqwkMe7KAFqEyhT2UpC8urnDXPGH8fJPkiKm5cY1hY1PvSHm8m6WrfUoTCRbpDvaKGqV3M7mJeK2ZvFG3dw43L86PXTzYCycvHoHRn+DBACidInpXpFE=
+	t=1733271820; cv=none; b=NxePHYcCVLagpvodf6qShHq4JHKq37Q6U1emDXNVOC1OYzNBDYxaAs38IRuk0o/lmuXReLct2OR9UqSuBG+e1EaoQDtLpMKTtYjub07in1efUTvg1jmcLPRAVt/ZfElzmUmQHUVrCqX3HN63inBD4tPD2PEjDUighZxvsA30KzI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733166097; c=relaxed/simple;
-	bh=hlkKtQX70izKeupKKgD8g9nbfyFBVWQ6P+NaxJf2roc=;
+	s=arc-20240116; t=1733271820; c=relaxed/simple;
+	bh=mHyvXhKyZLMpFcnJTGgrfl8X1foUR+VJ2zARLjKgCCE=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=BE2G+G7t7R0H0CCu+jWSncwF3P3os1rMiMXejCSZiEu+tbv2mj4ngWsON72GmEn6669gTzniRQPE7OrlQ5WoU7YpcMBsGwMt8QAeW/ajk7u131mVuahsG7kxu2/cS5UXBQr+qqVhGuGVyIWemuM2/0EKqX9zGcbVHiUD7blvXko=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZQS2aGTW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=P3B11+NmLDgPA8bLiiTnNiTVwTW4a28GcHX+mzyDT58tJ0hyPNGQric3B23waT+fFW9fn4LBQTuiCsCcVWEJEFk+OpuYWzVRfgOD5DFPk6AU2ARBUIUUAzQsksjqladhpLb+4uRbrebEvt/y5CUj/S/3KBuGOFchtOS2OyfoAko=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sQfI+OWb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZQS2aGTW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1E5BC4CED1;
-	Mon,  2 Dec 2024 19:01:35 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sQfI+OWb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A64AC4CEDC;
+	Wed,  4 Dec 2024 00:23:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1733166095;
-	bh=hlkKtQX70izKeupKKgD8g9nbfyFBVWQ6P+NaxJf2roc=;
+	s=k20201202; t=1733271819;
+	bh=mHyvXhKyZLMpFcnJTGgrfl8X1foUR+VJ2zARLjKgCCE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZQS2aGTWhi7/7AqfDYsH7mJsin87fG7N9a1QuwKce4FciMwTLQjdo6ZFU6jyZeNj6
-	 SNB6RftlNdYuo49Oz3zokwyKFcaXnWLi7v/60FVSzqjT9LY1KPs8GkSRGwi68twg84
-	 ZaVPAQQIHHGXu8NIvJ3WxBIct6lYRzJ0msb9Xd4HgNg1ocKO35q2bGQEaREjDRSvU9
-	 7YMwaNrSkdrDnD/41hOGQwM3uNDw5uc4AqcXVFP7ScN3E744QSizJljxYF40BpRR/F
-	 BgRK8b7Bw6Uz5/Czop2QbaJ5y50Tjr/j9B+coas9cUMKCG9Pq4M6ofbvVYbfbSy6N9
-	 +DEXSbKVO4x0Q==
+	b=sQfI+OWbM5LibBB/dCMGRyqUWzriEf25PSRkcR5pIeh+6dsR9qgEXSrCpfyOQGy3a
+	 J6N5pK7z8VtyEVzddkC5TqCkUrosd6UXqNB7JUQeHQkp4YKDe3e8Z+htorZ5xB1Ug9
+	 8ZoKO/20JXkpqPqSvsAgQbuN8yU8cEpe6vMNOzQOJ02AZ7AIEbJgNko42Zni0TGKas
+	 rj1FF+ZlqVjErDbYeb/lsA4wkAHtCcLNqMBiISgnVQk+MGrqN2eRokOBnXosbIgQMp
+	 JPxodIZF+kTkwJiUt5Gk/+V/WvYC7vQoMADqQ5Ty6stKtm3qWPBcUGNXDj5rhoTQ/f
+	 lSWht1VZqPT9w==
 From: SeongJae Park <sj@kernel.org>
-To: kernel test robot <lkp@intel.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: SeongJae Park <sj@kernel.org>,
-	oe-kbuild-all@lists.linux.dev,
+	stable@vger.kernel.org,
+	patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net,
+	rwarsow@gmx.de,
+	conor@kernel.org,
+	hargar@microsoft.com,
+	broonie@kernel.org,
 	damon@lists.linux.dev
-Subject: Re: [sj:damon/next 62/72] mm/damon/sysfs-schemes.c:2199: warning: Function parameter or struct member 'sysfs_schemes' not described in 'damos_sysfs_populate_region_dir'
-Date: Mon,  2 Dec 2024 11:01:33 -0800
-Message-Id: <20241202190133.57122-1-sj@kernel.org>
+Subject: Re: [PATCH 6.11 000/817] 6.11.11-rc1 review
+Date: Tue,  3 Dec 2024 16:23:35 -0800
+Message-Id: <20241204002335.85653-1-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <202412020702.S7FyZSzV-lkp@intel.com>
+In-Reply-To: <20241203143955.605130076@linuxfoundation.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -45,48 +62,65 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Mon, 2 Dec 2024 07:55:43 +0800 kernel test robot <lkp@intel.com> wrote:
+Hello,
 
-> tree:   https://git.kernel.org/pub/scm/linux/kernel/git/sj/linux.git damon/next
-> head:   b75cfd5260e9e512e1075267a70283e53e661357
-> commit: 2385753a6db33141791a25d611e6e5b63a9ddc4d [62/72] mm/damon/sysfs: use damos_walk() for schemes tried regions update
-> config: x86_64-buildonly-randconfig-003-20241202 (https://download.01.org/0day-ci/archive/20241202/202412020702.S7FyZSzV-lkp@intel.com/config)
-> compiler: gcc-12 (Debian 12.2.0-14) 12.2.0
-> reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20241202/202412020702.S7FyZSzV-lkp@intel.com/reproduce)
-> 
-> If you fix the issue in a separate patch/commit (i.e. not just a new version of
-> the same patch/commit), kindly add following tags
-> | Reported-by: kernel test robot <lkp@intel.com>
-> | Closes: https://lore.kernel.org/oe-kbuild-all/202412020702.S7FyZSzV-lkp@intel.com/
-> 
-> All warnings (new ones prefixed by >>):
-> 
-> >> mm/damon/sysfs-schemes.c:2199: warning: Function parameter or struct member 'sysfs_schemes' not described in 'damos_sysfs_populate_region_dir'
-> >> mm/damon/sysfs-schemes.c:2199: warning: Function parameter or struct member 'ctx' not described in 'damos_sysfs_populate_region_dir'
-> >> mm/damon/sysfs-schemes.c:2199: warning: Function parameter or struct member 't' not described in 'damos_sysfs_populate_region_dir'
-> >> mm/damon/sysfs-schemes.c:2199: warning: Function parameter or struct member 'r' not described in 'damos_sysfs_populate_region_dir'
-> >> mm/damon/sysfs-schemes.c:2199: warning: Function parameter or struct member 's' not described in 'damos_sysfs_populate_region_dir'
-> >> mm/damon/sysfs-schemes.c:2199: warning: Function parameter or struct member 'total_bytes_only' not described in 'damos_sysfs_populate_region_dir'
-> 
-> 
-> vim +2199 mm/damon/sysfs-schemes.c
-> 
->   2190	
->   2191	/**
->   2192	 * damos_sysfs_populate_region_dir() - Populate a schemes tried region dir.
->   2193	 *
->   2194	 * Called from DAMOS walk callback while holding damon_sysfs_lock.
->   2195	 */
->   2196	void damos_sysfs_populate_region_dir(struct damon_sysfs_schemes *sysfs_schemes,
->   2197			struct damon_ctx *ctx, struct damon_target *t,
->   2198			struct damon_region *r, struct damos *s, bool total_bytes_only)
-> > 2199	{
+On Tue, 3 Dec 2024 15:32:52 +0100 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
 
-Thank you for reporting!  I just pushed the fix:
-https://git.kernel.org/pub/scm/linux/kernel/git/sj/linux.git/commit/?h=damon/next&id=04df30e0d8b2a8cd60873ebaf029414a6bcc4643
+> -----------
+> Note, this is will probably be the last 6.11.y kernel to be released.
+> Please move to the 6.12.y branch at this time.
+> -----------
+> 
+> This is the start of the stable review cycle for the 6.11.11 release.
+> There are 817 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Thu, 05 Dec 2024 14:36:47 +0000.
+> Anything received after that time might be too late.
 
+This rc kernel passes DAMON functionality test[1] on my test machine.
+Attaching the test results summary below.  Please note that I retrieved the
+kernel from linux-stable-rc tree[2].
+
+Tested-by: SeongJae Park <sj@kernel.org>
+
+[1] https://github.com/damonitor/damon-tests/tree/next/corr
+[2] 57f39ce086c9 ("Linux 6.11.11-rc1")
 
 Thanks,
 SJ
 
 [...]
+
+---
+
+ok 9 selftests: damon: damos_tried_regions.py
+ok 10 selftests: damon: damon_nr_regions.py
+ok 11 selftests: damon: reclaim.sh
+ok 12 selftests: damon: lru_sort.sh
+ok 13 selftests: damon: debugfs_empty_targets.sh
+ok 14 selftests: damon: debugfs_huge_count_read_write.sh
+ok 15 selftests: damon: debugfs_duplicate_context_creation.sh
+ok 16 selftests: damon: debugfs_rm_non_contexts.sh
+ok 17 selftests: damon: debugfs_target_ids_read_before_terminate_race.sh
+ok 18 selftests: damon: debugfs_target_ids_pid_leak.sh
+ok 19 selftests: damon: sysfs_update_removed_scheme_dir.sh
+ok 20 selftests: damon: sysfs_update_schemes_tried_regions_hang.py
+ok 1 selftests: damon-tests: kunit.sh
+ok 2 selftests: damon-tests: huge_count_read_write.sh
+ok 3 selftests: damon-tests: buffer_overflow.sh
+ok 4 selftests: damon-tests: rm_contexts.sh
+ok 5 selftests: damon-tests: record_null_deref.sh
+ok 6 selftests: damon-tests: dbgfs_target_ids_read_before_terminate_race.sh
+ok 7 selftests: damon-tests: dbgfs_target_ids_pid_leak.sh
+ok 8 selftests: damon-tests: damo_tests.sh
+ok 9 selftests: damon-tests: masim-record.sh
+ok 10 selftests: damon-tests: build_i386.sh
+ok 11 selftests: damon-tests: build_arm64.sh # SKIP
+ok 12 selftests: damon-tests: build_m68k.sh # SKIP
+ok 13 selftests: damon-tests: build_i386_idle_flag.sh
+ok 14 selftests: damon-tests: build_i386_highpte.sh
+ok 15 selftests: damon-tests: build_nomemcg.sh
+ [33m
+ [92mPASS [39m
