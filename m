@@ -1,59 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7D7D17D2;
-	Wed,  4 Dec 2024 00:24:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB5E5195FF0;
+	Fri,  6 Dec 2024 18:16:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733271872; cv=none; b=ESBDsZqmymrMX97R2W5r2HzJFxUjhsSP+9+5jwy/R0rbNFhABWJnM9Ce7HAp6ckISvLrTMr7hckoNxXBSYcoCoRCVEyYXU7WkqgPlXZyNOfLltO0lQEDhmuu6nu0P/1NPwQt9tOoM/dZVQ5LHc/ULf6ZZa1ZWDwrtQApgOhk1Zg=
+	t=1733508989; cv=none; b=hqXYLdFDzhxYibvsFq1CeDQ/q+nzUMuaQwyEvw4lUGnRlvmlSCtnkB5TSxKFcIG9UapnXKDKbim3BEwN+qPZsE03M3ImQfK4I55owvTsAPTqXiQveaEo+ksPxMTNCG2e3x006YIx36fJHtMW/jyOgzoWOwZg+/+whlG1/aZeI4Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733271872; c=relaxed/simple;
-	bh=3aLL3OQ0JjPgJJ3AA938LY53kK42EWSLbYjymQP4luY=;
+	s=arc-20240116; t=1733508989; c=relaxed/simple;
+	bh=TP8jtpInIa7f7Q2pH1WcPmb4nqDQ8pAGgA2nYlbrhOU=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=krFCtjg5wSoCCffpR5j8Nh3RD1v8DRlrlL1BBzgUDeRwargqUiscSixU5sCRf93fP7MLDpc9Xwnb2iMDJEt2AhEy5Bajsb8Tx12XabLBjJ+17y6R6uwY4PW0oZ3RuJfIA8FaLyZ1gNteDJFFantDsUz1WhfayuKWFNZIEprFojk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PaB/m/6u; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UHJtDNBMo2NG6mhcXKFYNKTxjD9aaRhLjoQsIjQxTZAW/PRZ1jqWy9yqARRrvlzbJPl2t+MUtrT6EAUoqUr6Z8cxZtQ52XbZfrPdkPd9KSusAKGwi03/rkJin/BnS/owFDDkMWav49ctTYY7Sn3knshxG/g0XAZlfP3sXoolI5U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=E+EKmxYX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PaB/m/6u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01882C4CEDC;
-	Wed,  4 Dec 2024 00:24:32 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="E+EKmxYX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B8DCC4CED1;
+	Fri,  6 Dec 2024 18:16:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1733271872;
-	bh=3aLL3OQ0JjPgJJ3AA938LY53kK42EWSLbYjymQP4luY=;
+	s=k20201202; t=1733508989;
+	bh=TP8jtpInIa7f7Q2pH1WcPmb4nqDQ8pAGgA2nYlbrhOU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PaB/m/6uERNd567YnOCKJUOPEsELei5qjtUUcBVeRrkmf1f7CWg9t6slPQsKD0QWM
-	 pNQZNHGP0MHFJRqMOY7M0+jMKr/beWuEcisTare79cSFNGcKp3sMgVDC1z/VvFf6gS
-	 x/vF2/c3sHutKk1UMiGYXOlo/OCgSR6iyktp1ZLiNl2go8Dfjenim1XTb+jTxcHI6V
-	 R3TjkGxmEGn+vqoEPY6Ej/FJKNyhItqyeo5vJduU/K0Z651n/2jRSy4YXhW1MVne4C
-	 Kc1uSUQI0mWPoB0YDjqDBpn/1KcxmTbCjms7EgI+PGGMktCx68xkvOVVdfyPHTH2PI
-	 bhWGq2eFDpzfQ==
+	b=E+EKmxYXcC2h2G75WEc8VQRt/aCpVRslNvdus5Zfet6kSW57a0I2kyIc6WERgjaN2
+	 9iNROoIWbnP4bFmdoGvVJjjQ5yAx9SHeKANFKKP2630mnQBkNuSnsl9xknkRY6oZe5
+	 Os//hF8lPvcJTUpBEnNwUCwzZw2XvJIdOkZ1y+48XCkYfuurKIA3a2nPDspcSG7He3
+	 9SAj8C6sGkrgnQp+LjIcKJyhAGcnmQdtO/pXYW3/Sw7JrZzkmKC/5gnFXxRf9NYrCo
+	 IHFAi0+1sUvXhKJ2XH/DK+AcjgWmpDjw368wxNdBxOFafQyrti2nBUOjxUOxpYP0vL
+	 8qDfnxIVQjFOQ==
 From: SeongJae Park <sj@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
 Cc: SeongJae Park <sj@kernel.org>,
-	stable@vger.kernel.org,
-	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net,
-	rwarsow@gmx.de,
-	conor@kernel.org,
-	hargar@microsoft.com,
-	broonie@kernel.org,
-	damon@lists.linux.dev
-Subject: Re: [PATCH 6.12 000/826] 6.12.2-rc1 review
-Date: Tue,  3 Dec 2024 16:24:29 -0800
-Message-Id: <20241204002429.85717-1-sj@kernel.org>
+	damon@lists.linux.dev,
+	linux-mm@kvack.org
+Subject: [PATCH 5.15.y 0/2] fix issue in damon_va_evenly_split_region()
+Date: Fri,  6 Dec 2024 10:16:18 -0800
+Message-Id: <20241206181620.91603-1-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20241203144743.428732212@linuxfoundation.org>
-References: 
+In-Reply-To: <2024120625-recycling-till-0cca@gregkh>
+References: <2024120625-recycling-till-0cca@gregkh>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -62,60 +45,27 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hello,
+The fix depends on 044cd9750fe0 ("mm/damon/vaddr-test: split a test
+function having >1024 bytes frame size"), which is not on 5.15.y tree.
+Even after applying it, the fix might not cleanly cherry-picked due to
+the file path change that seems not automatically detected on every
+setup[1].  Since my setup somehow automatically detects the file path
+change and do cherry-pick cleanly, posting both patches to avoid
+unnecessary delay.
 
-On Tue, 3 Dec 2024 15:35:27 +0100 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+[1] https://lore.kernel.org/20241206173426.75223-1-sj@kernel.org
 
-> This is the start of the stable review cycle for the 6.12.2 release.
-> There are 826 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Thu, 05 Dec 2024 14:45:11 +0000.
-> Anything received after that time might be too late.
+SeongJae Park (1):
+  mm/damon/vaddr-test: split a test function having >1024 bytes frame
+    size
 
-This rc kernel passes DAMON functionality test[1] on my test machine.
-Attaching the test results summary below.  Please note that I retrieved the
-kernel from linux-stable-rc tree[2].
+Zheng Yejian (1):
+  mm/damon/vaddr: fix issue in damon_va_evenly_split_region()
 
-Tested-by: SeongJae Park <sj@kernel.org>
+ mm/damon/vaddr-test.h | 78 +++++++++++++++++++++++--------------------
+ mm/damon/vaddr.c      |  4 +--
+ 2 files changed, 43 insertions(+), 39 deletions(-)
 
-[1] https://github.com/damonitor/damon-tests/tree/next/corr
-[2] 1b3321bcbfba ("Linux 6.12.2-rc1")
+-- 
+2.39.5
 
-Thanks,
-SJ
-
-[...]
-
----
-
-ok 9 selftests: damon: damos_tried_regions.py
-ok 10 selftests: damon: damon_nr_regions.py
-ok 11 selftests: damon: reclaim.sh
-ok 12 selftests: damon: lru_sort.sh
-ok 13 selftests: damon: debugfs_empty_targets.sh
-ok 14 selftests: damon: debugfs_huge_count_read_write.sh
-ok 15 selftests: damon: debugfs_duplicate_context_creation.sh
-ok 16 selftests: damon: debugfs_rm_non_contexts.sh
-ok 17 selftests: damon: debugfs_target_ids_read_before_terminate_race.sh
-ok 18 selftests: damon: debugfs_target_ids_pid_leak.sh
-ok 19 selftests: damon: sysfs_update_removed_scheme_dir.sh
-ok 20 selftests: damon: sysfs_update_schemes_tried_regions_hang.py
-ok 1 selftests: damon-tests: kunit.sh
-ok 2 selftests: damon-tests: huge_count_read_write.sh
-ok 3 selftests: damon-tests: buffer_overflow.sh
-ok 4 selftests: damon-tests: rm_contexts.sh
-ok 5 selftests: damon-tests: record_null_deref.sh
-ok 6 selftests: damon-tests: dbgfs_target_ids_read_before_terminate_race.sh
-ok 7 selftests: damon-tests: dbgfs_target_ids_pid_leak.sh
-ok 8 selftests: damon-tests: damo_tests.sh
-ok 9 selftests: damon-tests: masim-record.sh
-ok 10 selftests: damon-tests: build_i386.sh
-ok 11 selftests: damon-tests: build_arm64.sh # SKIP
-ok 12 selftests: damon-tests: build_m68k.sh # SKIP
-ok 13 selftests: damon-tests: build_i386_idle_flag.sh
-ok 14 selftests: damon-tests: build_i386_highpte.sh
-ok 15 selftests: damon-tests: build_nomemcg.sh
- [33m
- [92mPASS [39m
