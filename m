@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E86EB2397B9;
-	Tue, 10 Dec 2024 21:50:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDB3123A577;
+	Tue, 10 Dec 2024 21:50:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733867439; cv=none; b=IKMsY/XO6D0BEefrrjTyZKibHfSoDkTeD09Y2YJksrwCbI4vZsKXYsuICXYxTYiWODO3tS5AEw4qnMkERm53elchZlaHfy8Vfd0sM/jbkEj50zZyIeSf0J6lvPUFFsT/tWSEnxrsQNVpGhWTL2jYZua6UaS1mhmlEZ6FdmsHAKE=
+	t=1733867439; cv=none; b=Mbo2tZlcWP1U8K9rnOqDG/tsKQkEwG9BER9Sha7ixFr0w88KLSNpP7nLLAVUuxUx/g/sDlwWXHbUruEU+Stf9jPSh9K+Er/9Mbgdom2d7tNYyNB+5e9EyZ+tlvDgX/xl8wPXx4NO2iWER9r8mtmNL7CnN/rR+bB4QtUXwF1dCOY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1733867439; c=relaxed/simple;
-	bh=hoi3YSqqOR9ePv9N3p8sOerDMAcJ+RMcuGrppxt+mz8=;
+	bh=WhKbvDPjbuIBA/Td7/ebEpkfZLrMJgwOSAMpKKqqUME=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=beXibOIon9Xur3n6FVmMB2xZ/EznSaUSfFOJpSBmdhPRHI51M+Jwv0zC15ZTTVESyebaNCIpmD7Ov1BzSXz/HxsCba75gBbtkVXUUn3631HrTxJxYkczPbYEHD/GrLH1jEcRvb/EYVsScodi7X9nnFoe/Kju2wZwz+QrhGIJ07I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bl7caDxm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FQXyJUoctzUwLiAjZ6mlES225sAIDR4EjuJwaGV3AaGkOxWRWt1AoGZI6nOqkW4FSSS25fvUk8CfIoHu84lvoOtC3H/k4RBgjyRq+vF+ODxMHHTWrhXaKMwOaNsZ7kvjOwxUPCni+7cDaRQ/ak/w0r+RwN1dYH3YMiKObXaInAY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EmMRqjDE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bl7caDxm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55444C4CED6;
-	Tue, 10 Dec 2024 21:50:38 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EmMRqjDE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74FDFC4CEDF;
+	Tue, 10 Dec 2024 21:50:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1733867438;
-	bh=hoi3YSqqOR9ePv9N3p8sOerDMAcJ+RMcuGrppxt+mz8=;
+	s=k20201202; t=1733867439;
+	bh=WhKbvDPjbuIBA/Td7/ebEpkfZLrMJgwOSAMpKKqqUME=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bl7caDxmLeYr/o8tpYrjKbJRh6DULZtvH6VaBGKNqJ9E7gVsm/G00XYnAtxCqsxPn
-	 i8J260Ruy88dw6OYY3lGAg0E+gPFiX7P5FIql/AG4y/rdPuOCUkqofbaK0livJSP44
-	 lwYtDlRNDcM0D6j4hpOKd0DlDK8F98uiP5Iddddck8qscsnNbCo3RUVg++r9aEOsug
-	 THFGw1CoXBGjE/CMQNAwPlr8y0Hxqd2cNI+M2WQhks2hZ6VLsa6Tf2KY/qYE3+rQkO
-	 /5P71yilA08C4due9Nrh6c5J3NjAq2SAnay8Iq1do/5xn6/R9cKK0BPbzJcR/kDF2w
-	 0bx+PLksRF9iw==
+	b=EmMRqjDEmysTyaTfmY/VxeGmtYNZm7cToJf/5OuUA/BWeBb5Wcre05Ccqb5qdayLZ
+	 7F93iFBLS8q4pebZnd/TYpcySoLYarrtciHg4Hge3+ZALTkxtye8utueT89EXUmQed
+	 OjrhDQ4wm84CWa1Ew1Cx3L7FsYZ+QwTVgFGZlpHikj5RITpsTDj4fU0UJp+NEtTUJl
+	 N+mOlxI9BbGqSpB+c1dJJmuHPjcdhvfJfe8qcT0Ihx73vIc6wk//JUEaMt7K43Zahf
+	 ixcOYKt7CNRTpQwjuhbbl8+XHlgtOna/Kdv2pT36zEQgvfyMmvcBDycQaSbaPc2/ny
+	 uc/F7vl7pyvFg==
 From: SeongJae Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SeongJae Park <sj@kernel.org>,
@@ -33,9 +33,9 @@ Cc: SeongJae Park <sj@kernel.org>,
 	linux-mm@kvack.org,
 	linux-kernel@vger.kernel.org,
 	kernel-team@meta.com
-Subject: [PATCH 2/5] samples/damon/wsse: start and stop DAMON as the user requests
-Date: Tue, 10 Dec 2024 13:50:27 -0800
-Message-Id: <20241210215030.85675-3-sj@kernel.org>
+Subject: [PATCH 3/5] samples/damon/wsse: implement working set size estimation and logging
+Date: Tue, 10 Dec 2024 13:50:28 -0800
+Message-Id: <20241210215030.85675-4-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20241210215030.85675-1-sj@kernel.org>
 References: <20241210215030.85675-1-sj@kernel.org>
@@ -47,71 +47,55 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Start running DAMON to monitor accesses of a process that the user
-specified via 'target_pid' parameter, when 'y' is passed to 'enable'
-parameter.  Stop running DAMON when 'n' is passed to 'enable' parameter.
-Estimating the working set size from DAMON's monitoring results and
-reporting it to the user will be implemented by the following commit.
+Implement the DAMON-based working set size estimation logic.  The logic
+iterates memory regions in DAMON-generated access pattern snapshot for
+every aggregation interval and get the total sum of the size of any
+region having one or higher 'nr_accesses' count.  That is, it assumes
+any region having one or higher 'nr_accesses' to be a part of the
+working set.  The estimated value is reported to the user by printing it
+to the kernel log.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- samples/damon/wsse.c | 35 ++++++++++++++++++++++++++++++++++-
- 1 file changed, 34 insertions(+), 1 deletion(-)
+ samples/damon/wsse.c | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
 diff --git a/samples/damon/wsse.c b/samples/damon/wsse.c
-index 7f2cb76a1a70..2ba0c91baad9 100644
+index 2ba0c91baad9..11be25803274 100644
 --- a/samples/damon/wsse.c
 +++ b/samples/damon/wsse.c
-@@ -27,15 +27,48 @@ static bool enable __read_mostly;
- module_param_cb(enable, &enable_param_ops, &enable, 0600);
- MODULE_PARM_DESC(enable, "Enable or disable DAMON_SAMPLE_WSSE");
+@@ -30,6 +30,23 @@ MODULE_PARM_DESC(enable, "Enable or disable DAMON_SAMPLE_WSSE");
+ static struct damon_ctx *ctx;
+ static struct pid *target_pidp;
  
-+static struct damon_ctx *ctx;
-+static struct pid *target_pidp;
++static int damon_sample_wsse_after_aggregate(struct damon_ctx *c)
++{
++	struct damon_target *t;
++
++	damon_for_each_target(t, c) {
++		struct damon_region *r;
++		unsigned long wss = 0;
++
++		damon_for_each_region(r, t) {
++			if (r->nr_accesses > 0)
++				wss += r->ar.end - r->ar.start;
++		}
++		pr_info("wss: %lu\n", wss);
++	}
++	return 0;
++}
 +
  static int damon_sample_wsse_start(void)
  {
-+	struct damon_target *target;
-+
- 	pr_info("start\n");
--	return 0;
-+
-+	ctx = damon_new_ctx();
-+	if (!ctx)
-+		return -ENOMEM;
-+	if (damon_select_ops(ctx, DAMON_OPS_VADDR)) {
-+		damon_destroy_ctx(ctx);
-+		return -EINVAL;
-+	}
-+
-+	target = damon_new_target();
-+	if (!target) {
-+		damon_destroy_ctx(ctx);
-+		return -ENOMEM;
-+	}
-+	damon_add_target(ctx, target);
-+	target_pidp = find_get_pid(target_pid);
-+	if (!target_pidp) {
-+		damon_destroy_ctx(ctx);
-+		return -EINVAL;
-+	}
-+	target->pid = target_pidp;
-+
-+	return damon_start(&ctx, 1, true);
+ 	struct damon_target *target;
+@@ -57,6 +74,7 @@ static int damon_sample_wsse_start(void)
+ 	}
+ 	target->pid = target_pidp;
+ 
++	ctx->callback.after_aggregation = damon_sample_wsse_after_aggregate;
+ 	return damon_start(&ctx, 1, true);
  }
  
- static void damon_sample_wsse_stop(void)
- {
- 	pr_info("stop\n");
-+	if (ctx) {
-+		damon_stop(&ctx, 1);
-+		damon_destroy_ctx(ctx);
-+	}
-+	if (target_pidp)
-+		put_pid(target_pidp);
- }
- 
- static int damon_sample_wsse_enable_store(
 -- 
 2.39.5
 
