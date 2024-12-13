@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4F921E883E;
-	Fri, 13 Dec 2024 21:53:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9C0F1EE034;
+	Fri, 13 Dec 2024 21:53:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734126804; cv=none; b=FPRxabJg34/L0GffY52Q5h2NlcQT152ICdGsrxP5PKE/zhjtwFFnFoQXnQ74DOj+9vaoBgX2kuWi05kYoOHqKGn24Nkj8LECuQEQZm2rVMayCLG6n+wdViLqzaKHhiwKf6z0U3/jC94e/8fGdlwf7RMbsEJvZv3FWuAo7hQWkJE=
+	t=1734126807; cv=none; b=Q6UtcSp3MhM0vHbnNA7t6Q6DXhSlYjKWeUG2w6k0HUIGJWJtJxINaXdyotrZDAOYlwLeojWrLA1h+VdayaCLoE6mltrv5DuuPz5mHhO1QLkcrjyg0+rwB9wc3W8XK1cPycbRMGjPB8cB0XdRToe7T9BRVg03amcsnCZY+eRpcA8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734126804; c=relaxed/simple;
-	bh=iQ/qZJ1QHQV0+h/4WTEQK+3ncwWBGkQjrNEPl3UnO74=;
+	s=arc-20240116; t=1734126807; c=relaxed/simple;
+	bh=7p5Zd1Ss19X+LmH72iki7m+ul6ZR9lC5pFElBjMKsP4=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=r8rTDB/jX68ynPheNYOeDbKiZ8EXcCnp8PAlx6T8Na8nCPdadaLTeYBX1R2253fGw9vwcTQw79L4X0jElsT6gzFYBgT9PN0lJ6tFq5kE3/6Uk8UgFvxxitHM9UvWVpLqlMuioLxwHTzEF2XICb6OrcrMSLSxJgJCAoysSsHj4lU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=A1ciks1M; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=F16/2CE/hfVit1BIOF6dYVOEGnDQFyexoJkWTrlRIn2y/hC4x/601+ZlGfmAefk/Vyz/FhXlsxm/gFrRurxbVEkj0ody8l2RzGpb7f+Jt1ZoqimAViKnEWXqxNF9+FHhM9c64pny02lo8tRRcD4F/iP0LeqPhWw0vkrq72wNbH0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=m35yPDSV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="A1ciks1M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2357EC4CEDD;
-	Fri, 13 Dec 2024 21:53:24 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="m35yPDSV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33160C4CED6;
+	Fri, 13 Dec 2024 21:53:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1734126804;
-	bh=iQ/qZJ1QHQV0+h/4WTEQK+3ncwWBGkQjrNEPl3UnO74=;
+	s=k20201202; t=1734126805;
+	bh=7p5Zd1Ss19X+LmH72iki7m+ul6ZR9lC5pFElBjMKsP4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A1ciks1MAAQLTtKHJqC1uldwlJ6lT8vW43m5x64l0pW73cebSFC34x+nIOL9ptgDV
-	 GdMY7EW9phV13W3Fxdr5MWnfiVyZPE6gEsV2K1Qf/p9YDRXhm0eZIxsa5qGfconTMF
-	 OAT2o2klemlx3QxZHU7qN37fNj2yOm5rkUpDwx9BDxn00TItH1BF5ayvM8ZcuDc7xm
-	 O1va3eT27f0HyOwXNAnm1Lu7F+jPh2uwZOQ9gusC8vGkGleZnLjrBr9T9vdGR6eP4h
-	 6HxcrmKjgaf+rLpT4P9PD/7Of99n+M8ogmTeSi6PpwuwjMIBVO8yFLaxM+rSfgB7jN
-	 1Rd/TxZq3PUDA==
+	b=m35yPDSVC7fTsZNDdPl5J9+AKBe7MTTa/TNmqSlKnSyQeAsxwhux1PhTTRiRk6w+0
+	 Q8XR1pO0ock3xaR8FRjMuL5ncDhohSGrFDooq3d+oF+yDIhqv61a9ppziz8H5muoqx
+	 lGmFcYJF5hKAn+eQyLXMnJZrLPkxAc5uhjc1O2Z/YUJJS3QOoqSAuJ/n/5mWGpQ2XU
+	 ImXGhlvcZgIIK5Y/C47hEc3oc/ABwmLMUmKTTdaUyrLXX5r/5ihtD1o/TJxfUx7S5C
+	 YO93+u7xxESrtllExf5OCN1Fegww4Ydbymh6p6/hlgDwWLgGGKtricJ/F5e81nwhhL
+	 2C5/T7ICBB3Ow==
 From: SeongJae Park <sj@kernel.org>
 To: 
 Cc: SeongJae Park <sj@kernel.org>,
 	damon@lists.linux.dev,
 	linux-mm@kvack.org,
 	linux-kernel@vger.kernel.org
-Subject: [RFC PATCH 7/9] mm/damon/core: implement damos_walk()
-Date: Fri, 13 Dec 2024 13:53:04 -0800
-Message-Id: <20241213215306.54778-8-sj@kernel.org>
+Subject: [RFC PATCH 8/9] mm/damon/sysfs: use damos_walk() for update_schemes_tried_{bytes,regions}
+Date: Fri, 13 Dec 2024 13:53:05 -0800
+Message-Id: <20241213215306.54778-9-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20241213215306.54778-1-sj@kernel.org>
 References: <20241213215306.54778-1-sj@kernel.org>
@@ -46,291 +46,155 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Introduce a new core layer interface, damos_walk().  It aims to replace
-some damon_callback usages that access DAMOS schemes applied regions of
-ongoing kdamond with additional synchronizations.  It receives a
-function pointer and asks kdamond to invoke it for any region that it will
-apply any DAMOS action within one scheme apply interval for every scheme
-of it.  The function further waits until the kdamond finishes the
-invocations for every scheme, or cancels the request, and returns.
-
-The kdamond invokes the function as requested within the main loop.  If
-it is deactivated by DAMOS watermarks or going out of the main loop, it
-marks the request as canceled, so that damos_walk() can wakeup and
-return.
+DAMON sysfs interface uses damon_callback with its own complicated
+synchronization facility to handle update_schemes_tried_bytes and
+update_schemes_tried_regions commands.  But damos_walk() can support the
+use case without the additional synchronizations.  Convert the code to
+use damos_walk() instead.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- include/linux/damon.h |  33 ++++++++++-
- mm/damon/core.c       | 134 ++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 165 insertions(+), 2 deletions(-)
+ mm/damon/sysfs-common.h  |  5 +++++
+ mm/damon/sysfs-schemes.c | 48 ++++++++++++++++++++++++++++++++++++++++
+ mm/damon/sysfs.c         | 43 +++++++++++++++++++++++++++++++++++
+ 3 files changed, 96 insertions(+)
 
-diff --git a/include/linux/damon.h b/include/linux/damon.h
-index 529ea578f2d5..acedaab4dccf 100644
---- a/include/linux/damon.h
-+++ b/include/linux/damon.h
-@@ -368,6 +368,31 @@ struct damos_filter {
- 	struct list_head list;
- };
+diff --git a/mm/damon/sysfs-common.h b/mm/damon/sysfs-common.h
+index e79b4a65ff2d..81f1c845118f 100644
+--- a/mm/damon/sysfs-common.h
++++ b/mm/damon/sysfs-common.h
+@@ -55,6 +55,11 @@ bool damos_sysfs_regions_upd_done(void);
  
-+struct damon_ctx;
-+struct damos;
+ int damon_sysfs_schemes_update_regions_stop(struct damon_ctx *ctx);
+ 
++void damos_sysfs_populate_region_dir(struct damon_sysfs_schemes *sysfs_schemes,
++		struct damon_ctx *ctx, struct damon_target *t,
++		struct damon_region *r, struct damos *s,
++		bool total_bytes_only);
 +
-+/**
-+ * struct damos_walk_control - Control damos_walk().
-+ *
-+ * @walk_fn:	Function to be called back for each region.
-+ * @data:	Data that will be passed to walk functions.
-+ *
-+ * Control damos_walk(), which requests specific kdamond to invoke the given
-+ * function to each region that eligible to apply actions of the kdamond's
-+ * schemes.  Refer to damos_walk() for more details.
-+ */
-+struct damos_walk_control {
-+	void (*walk_fn)(void *data, struct damon_ctx *ctx,
-+			struct damon_target *t, struct damon_region *r,
-+			struct damos *s);
-+	void *data;
-+/* private: internal use only */
-+	/* informs if the kdamond finished handling of the walk request */
-+	struct completion completion;
-+	/* informs if the walk is canceled. */
-+	bool canceled;
-+};
-+
- /**
-  * struct damos_access_pattern - Target access pattern of the given scheme.
-  * @min_sz_region:	Minimum size of target regions.
-@@ -453,6 +478,8 @@ struct damos {
- 	 * @action
- 	 */
- 	unsigned long next_apply_sis;
-+	/* informs if ongoing DAMOS walk for this scheme is finished */
-+	bool walk_completed;
- /* public: */
- 	struct damos_quota quota;
- 	struct damos_watermarks wmarks;
-@@ -480,8 +507,6 @@ enum damon_ops_id {
- 	NR_DAMON_OPS,
- };
+ int damon_sysfs_schemes_clear_regions(
+ 		struct damon_sysfs_schemes *sysfs_schemes);
  
--struct damon_ctx;
--
- /**
-  * struct damon_operations - Monitoring operations for given use cases.
-  *
-@@ -694,6 +719,9 @@ struct damon_ctx {
- 	struct damon_call_control *call_control;
- 	struct mutex call_control_lock;
- 
-+	struct damos_walk_control *walk_control;
-+	struct mutex walk_control_lock;
-+
- /* public: */
- 	struct task_struct *kdamond;
- 	struct mutex kdamond_lock;
-@@ -842,6 +870,7 @@ int damon_start(struct damon_ctx **ctxs, int nr_ctxs, bool exclusive);
- int damon_stop(struct damon_ctx **ctxs, int nr_ctxs);
- 
- int damon_call(struct damon_ctx *ctx, struct damon_call_control *control);
-+int damos_walk(struct damon_ctx *ctx, struct damos_walk_control *control);
- 
- int damon_set_region_biggest_system_ram_default(struct damon_target *t,
- 				unsigned long *start, unsigned long *end);
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index 89a679c06e30..de923b3a1084 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -534,6 +534,7 @@ struct damon_ctx *damon_new_ctx(void)
- 
- 	mutex_init(&ctx->kdamond_lock);
- 	mutex_init(&ctx->call_control_lock);
-+	mutex_init(&ctx->walk_control_lock);
- 
- 	ctx->attrs.min_nr_regions = 10;
- 	ctx->attrs.max_nr_regions = 1000;
-@@ -1232,6 +1233,46 @@ int damon_call(struct damon_ctx *ctx, struct damon_call_control *control)
+diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
+index 6c8f9eae75af..404c21f45640 100644
+--- a/mm/damon/sysfs-schemes.c
++++ b/mm/damon/sysfs-schemes.c
+@@ -2188,6 +2188,54 @@ static int damon_sysfs_before_damos_apply(struct damon_ctx *ctx,
  	return 0;
  }
  
 +/**
-+ * damos_walk() - Invoke a given functions while DAMOS walk regions.
-+ * @ctx:	DAMON context to call the functions for.
-+ * @control:	Control variable of the walk request.
++ * damos_sysfs_populate_region_dir() - Populate a schemes tried region dir.
++ * @sysfs_schemes:	Schemes directory to populate regions directory.
++ * @ctx:		Corresponding DAMON context.
++ * @t:			DAMON target of @r.
++ * @r:			DAMON region to populate the directory for.
++ * @s:			Corresponding scheme.
++ * @total_bytes_only:	Whether the request is for bytes update only.
 + *
-+ * Ask DAMON worker thread (kdamond) of @ctx to call a function for each region
-+ * that the kdamond will apply DAMOS action to, and wait until the kdamond
-+ * finishes handling of the request.
-+ *
-+ * The kdamond executes the given function in the main loop, for each region
-+ * just before it applies any DAMOS actions of @ctx to it.  The invocation is
-+ * made only within one &damos->apply_interval_us since damos_walk()
-+ * invocation, for each scheme.  The given callback function can hence safely
-+ * access the internal data of &struct damon_ctx and &struct damon_region that
-+ * each of the scheme will apply the action for next interval, without
-+ * additional synchronizations against the kdamond.  If every scheme of @ctx
-+ * passed at least one &damos->apply_interval_us, kdamond marks the request as
-+ * completed so that damos_walk() can wakeup and return.
-+ *
-+ * Return: 0 on success, negative error code otherwise.
++ * Called from DAMOS walk callback while holding damon_sysfs_lock.
 + */
-+int damos_walk(struct damon_ctx *ctx, struct damos_walk_control *control)
++void damos_sysfs_populate_region_dir(struct damon_sysfs_schemes *sysfs_schemes,
++		struct damon_ctx *ctx, struct damon_target *t,
++		struct damon_region *r, struct damos *s, bool total_bytes_only)
 +{
-+	init_completion(&control->completion);
-+	control->canceled = false;
-+	mutex_lock(&ctx->walk_control_lock);
-+	if (ctx->walk_control) {
-+		mutex_unlock(&ctx->walk_control_lock);
-+		return -EBUSY;
++	struct damos *scheme;
++	struct damon_sysfs_scheme_regions *sysfs_regions;
++	struct damon_sysfs_scheme_region *region;
++	int schemes_idx = 0;
++
++	damon_for_each_scheme(scheme, ctx) {
++		if (scheme == s)
++			break;
++		schemes_idx++;
 +	}
-+	ctx->walk_control = control;
-+	mutex_unlock(&ctx->walk_control_lock);
-+	if (!damon_is_running(ctx))
-+		return -EINVAL;
-+	wait_for_completion(&control->completion);
-+	if (control->canceled)
-+		return -ECANCELED;
-+	return 0;
++
++	/* user could have removed the scheme sysfs dir */
++	if (schemes_idx >= sysfs_schemes->nr)
++		return;
++
++	sysfs_regions = sysfs_schemes->schemes_arr[schemes_idx]->tried_regions;
++	sysfs_regions->total_bytes += r->ar.end - r->ar.start;
++	if (total_bytes_only)
++		return;
++
++	region = damon_sysfs_scheme_region_alloc(r);
++	if (!region)
++		return;
++	list_add_tail(&region->list, &sysfs_regions->regions_list);
++	sysfs_regions->nr_regions++;
++	if (kobject_init_and_add(&region->kobj,
++				&damon_sysfs_scheme_region_ktype,
++				&sysfs_regions->kobj, "%d",
++				sysfs_regions->nr_regions++)) {
++		kobject_put(&region->kobj);
++	}
 +}
 +
  /*
-  * Reset the aggregated monitoring results ('nr_accesses' of each region).
-  */
-@@ -1411,6 +1452,93 @@ static bool damos_filter_out(struct damon_ctx *ctx, struct damon_target *t,
- 	return false;
+  * DAMON callback that called after each accesses sampling.  While this
+  * callback is registered, damon_sysfs_lock should be held to ensure the
+diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
+index 978de4305f2b..dafeec20ac53 100644
+--- a/mm/damon/sysfs.c
++++ b/mm/damon/sysfs.c
+@@ -1512,6 +1512,45 @@ static int damon_sysfs_damon_call(int (*fn)(void *data),
+ 	return damon_call(kdamond->damon_ctx, &call_control);
  }
  
-+/*
-+ * damos_walk_call_walk() - Call &damos_walk_control->walk_fn.
-+ * @ctx:	The context of &damon_ctx->walk_control.
-+ * @t:		The monitoring target of @r that @s will be applied.
-+ * @r:		The region of @t that @s will be applied.
-+ * @s:		The scheme of @ctx that will be applied to @r.
-+ *
-+ * This function is called from kdamond whenever it found a region that
-+ * eligible to apply a DAMOS scheme's action.  If a DAMOS walk request is
-+ * installed by damos_walk() and its &damos_walk_control->walk_fn has not
-+ * invoked for the region for the last &damos->apply_interval_us interval,
-+ * invoke it.
-+ */
-+static void damos_walk_call_walk(struct damon_ctx *ctx, struct damon_target *t,
-+		struct damon_region *r, struct damos *s)
-+{
-+	struct damos_walk_control *control;
++struct damon_sysfs_schemes_walk_data {
++	struct damon_sysfs_kdamond *sysfs_kdamond;
++	bool total_bytes_only;
++};
 +
-+	mutex_lock(&ctx->walk_control_lock);
-+	control = ctx->walk_control;
-+	mutex_unlock(&ctx->walk_control_lock);
-+	if (!control)
-+		return;
-+	control->walk_fn(control->data, ctx, t, r, s);
++/* populate the region directory */
++static void damon_sysfs_schemes_tried_regions_upd_one(void *data, struct damon_ctx *ctx,
++		struct damon_target *t, struct damon_region *r,
++		struct damos *s)
++{
++	struct damon_sysfs_schemes_walk_data *walk_data = data;
++	struct damon_sysfs_kdamond *sysfs_kdamond = walk_data->sysfs_kdamond;
++
++	damos_sysfs_populate_region_dir(
++			sysfs_kdamond->contexts->contexts_arr[0]->schemes,
++			ctx, t, r, s, walk_data->total_bytes_only);
 +}
 +
-+/*
-+ * damos_walk_complete() - Complete DAMOS walk request if all walks are done.
-+ * @ctx:	The context of &damon_ctx->walk_control.
-+ * @s:		A scheme of @ctx that all walks are now done.
-+ *
-+ * This function is called when kdamond finished applying the action of a DAMOS
-+ * scheme to regions that eligible for the given &damos->apply_interval_us.  If
-+ * every scheme of @ctx including @s now finished walking for at least one
-+ * &damos->apply_interval_us, this function makrs the handling of the given
-+ * DAMOS walk request is done, so that damos_walk() can wake up and return.
-+ */
-+static void damos_walk_complete(struct damon_ctx *ctx, struct damos *s)
++static int damon_sysfs_update_schemes_tried_regions(
++		struct damon_sysfs_kdamond *sysfs_kdamond, bool total_bytes_only)
 +{
-+	struct damos *siter;
-+	struct damos_walk_control *control;
++	struct damon_sysfs_schemes_walk_data walk_data = {
++		.sysfs_kdamond = sysfs_kdamond,
++		.total_bytes_only = total_bytes_only,
++	};
++	struct damos_walk_control control = {
++		.walk_fn = damon_sysfs_schemes_tried_regions_upd_one,
++		.data = &walk_data,
++	};
++	struct damon_ctx *ctx = sysfs_kdamond->damon_ctx;
 +
-+	mutex_lock(&ctx->walk_control_lock);
-+	control = ctx->walk_control;
-+	mutex_unlock(&ctx->walk_control_lock);
-+	if (!control)
-+		return;
++	if (!ctx)
++		return -EINVAL;
 +
-+	s->walk_completed = true;
-+	/* if all schemes completed, signal completion to walker */
-+	damon_for_each_scheme(siter, ctx) {
-+		if (!siter->walk_completed)
-+			return;
-+	}
-+	complete(&control->completion);
-+	mutex_lock(&ctx->walk_control_lock);
-+	ctx->walk_control = NULL;
-+	mutex_unlock(&ctx->walk_control_lock);
++	damon_sysfs_schemes_clear_regions(
++			sysfs_kdamond->contexts->contexts_arr[0]->schemes);
++	return damos_walk(ctx, &control);
 +}
 +
-+/*
-+ * damos_walk_cancel() - Cancel the current DAMOS walk request.
-+ * @ctx:	The context of &damon_ctx->walk_control.
-+ *
-+ * This function is called when @ctx is deactivated by DAMOS watermarks, DAMOS
-+ * walk is requested but there is no DAMOS scheme to walk for, or the kdamond
-+ * is already out of the main loop and therefore gonna be terminated, and hence
-+ * cannot continue the walks.  This function therefore marks the walk request
-+ * as canceled, so that damos_walk() can wake up and return.
-+ */
-+static void damos_walk_cancel(struct damon_ctx *ctx)
-+{
-+	struct damos_walk_control *control;
-+
-+	mutex_lock(&ctx->walk_control_lock);
-+	control = ctx->walk_control;
-+	mutex_unlock(&ctx->walk_control_lock);
-+
-+	if (!control)
-+		return;
-+	control->canceled = true;
-+	complete(&control->completion);
-+	mutex_lock(&ctx->walk_control_lock);
-+	ctx->walk_control = NULL;
-+	mutex_unlock(&ctx->walk_control_lock);
-+}
-+
- static void damos_apply_scheme(struct damon_ctx *c, struct damon_target *t,
- 		struct damon_region *r, struct damos *s)
- {
-@@ -1467,6 +1595,7 @@ static void damos_apply_scheme(struct damon_ctx *c, struct damon_target *t,
- 		if (damos_filter_out(c, t, r, s))
- 			return;
- 		ktime_get_coarse_ts64(&begin);
-+		damos_walk_call_walk(c, t, r, s);
- 		if (c->callback.before_damos_apply)
- 			err = c->callback.before_damos_apply(c, t, r, s);
- 		if (!err) {
-@@ -1745,6 +1874,7 @@ static void kdamond_apply_schemes(struct damon_ctx *c)
- 	damon_for_each_scheme(s, c) {
- 		if (c->passed_sample_intervals < s->next_apply_sis)
- 			continue;
-+		damos_walk_complete(c, s);
- 		s->next_apply_sis = c->passed_sample_intervals +
- 			(s->apply_interval_us ? s->apply_interval_us :
- 			 c->attrs.aggr_interval) / sample_interval;
-@@ -2077,6 +2207,7 @@ static int kdamond_wait_activation(struct damon_ctx *ctx)
- 				ctx->callback.after_wmarks_check(ctx))
- 			break;
- 		kdamond_call(ctx, true);
-+		damos_walk_cancel(ctx);
- 	}
- 	return -EBUSY;
- }
-@@ -2171,6 +2302,8 @@ static int kdamond_fn(void *data)
- 		 */
- 		if (!list_empty(&ctx->schemes))
- 			kdamond_apply_schemes(ctx);
-+		else
-+			damos_walk_cancel(ctx);
- 
- 		sample_interval = ctx->attrs.sample_interval ?
- 			ctx->attrs.sample_interval : 1;
-@@ -2211,6 +2344,7 @@ static int kdamond_fn(void *data)
- 	mutex_unlock(&ctx->kdamond_lock);
- 
- 	kdamond_call(ctx, true);
-+	damos_walk_cancel(ctx);
- 
- 	mutex_lock(&damon_lock);
- 	nr_running_ctxs--;
+ /*
+  * damon_sysfs_handle_cmd() - Handle a command for a specific kdamond.
+  * @cmd:	The command to handle.
+@@ -1542,6 +1581,10 @@ static int damon_sysfs_handle_cmd(enum damon_sysfs_cmd cmd,
+ 	case DAMON_SYSFS_CMD_UPDATE_SCHEMES_STATS:
+ 		return damon_sysfs_damon_call(
+ 				damon_sysfs_upd_schemes_stats, kdamond);
++	case DAMON_SYSFS_CMD_UPDATE_SCHEMES_TRIED_BYTES:
++		return damon_sysfs_update_schemes_tried_regions(kdamond, true);
++	case DAMON_SYSFS_CMD_UPDATE_SCHEMES_TRIED_REGIONS:
++		return damon_sysfs_update_schemes_tried_regions(kdamond, false);
+ 	case DAMON_SYSFS_CMD_CLEAR_SCHEMES_TRIED_REGIONS:
+ 		return damon_sysfs_schemes_clear_regions(
+ 			kdamond->contexts->contexts_arr[0]->schemes);
 -- 
 2.39.5
 
