@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3454C1A8F75;
-	Fri, 13 Dec 2024 21:53:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 942F11B140D;
+	Fri, 13 Dec 2024 21:53:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734126802; cv=none; b=j3DaDxFILgBfM/8EPnAJAiPuzqrIMe7VLOT2yfC8G2Om2453z55lu/oTeKR+gwDpdAt+0sQByb7iSz8AHwagTE4JsMSthgisBrcvwOY1fmjg1cO9054XO+qp2F9QkkU+lTogbXYecVg8yR0PQRI2i/c+c1CtX8DanZDRkagjV+w=
+	t=1734126803; cv=none; b=ro4QPdNzRdR078GRunCuCzUBAgcenH+syPPB+6TZjkUIRKT8by2F2oEVcsmxD10o3DRAnogpW2AZznQxbcMWb4lBDg4Hi5VpTjYqwejdLHw0KlVbZmZnG6KeHi/DQ1VnjiDHeZz4czHPjX7F4jrfOfxbSqmQKIU4CJVUVFI0MuU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734126802; c=relaxed/simple;
-	bh=FCh8a972zYqAWkurp7V4i9/Q5lpzQYSovyP9XVSlO7I=;
+	s=arc-20240116; t=1734126803; c=relaxed/simple;
+	bh=rp/tcYNceH/iVxFLl5+nJOs7qKY1obY5L2t2IlLP5LI=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=EbGDQcIe2HoC4O5k1UpVKwwDYLTVOTzhDS2+Ied5FZLM1edxfwi1tDn9jzrC9MWn5A2rw1agXssXExZWPPBHnnzXquYF0qiYeRLS3pKN8tHlywT7kMsqFq5b+ualqqXfX6MtCgOZLy+MwNeBM2gGnS6RbRv5qpBMrNWj1PKsFa0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mESrzqYb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=crSWSzC37YyBFMekzL6oS7NzAealNFEHpOA0b0tSRMEJZw/RD5V4e4IhwMmJVUyG+OjSCjqjBCM9NBa/Vf5XHAx0m7rpODYaMcCcviisxh9wUeGDBpVQ1/wA36P+Rm9+/ZE5B4UxXI0t2+9uP8bnXO8kJSwEuNPvwsC+nJPvgSo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=d2j387Kv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mESrzqYb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E025BC4CED4;
-	Fri, 13 Dec 2024 21:53:21 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="d2j387Kv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01F62C4CED4;
+	Fri, 13 Dec 2024 21:53:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1734126802;
-	bh=FCh8a972zYqAWkurp7V4i9/Q5lpzQYSovyP9XVSlO7I=;
+	s=k20201202; t=1734126803;
+	bh=rp/tcYNceH/iVxFLl5+nJOs7qKY1obY5L2t2IlLP5LI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mESrzqYbfUdBHy6ECESgpIB7ns1eso/niqE8lgDzC14iji3R2caZzJIdB121YcKSA
-	 8usUtKuIPKkO/x3wdfnm3dAQkxrswObf5qC8QijOuBtxK/T3uxAAQQ/8qreOYKuh6Z
-	 1NvECbd4WtD5wK8m4kksLRl8GuDTjNzZhMp/TYB2CNMq60Wi7Fg2oAWh18BO6pNiDO
-	 IV2UBs9Koal3A7QNNrWVbA3XdCYhxss0yiG5F0OyP8krUg1xLYWB7M92oTuKlJLrkM
-	 rer32ycbaMVQDw4eoOUAVBerPN2QKp5fCqaghHGGtPKKgFHAN89WUp2h7CICRGBCUC
-	 nCWH2nqhD4d5A==
+	b=d2j387KvOWKzzdbwcgD4HvlbKrHfywY4HSrfo8zIbYOUUR5p24WyVaSb+IKwsr7Nq
+	 YgVhXSg1ecg2rKGrjlSTmlyXSGSVqSfUIx8KTUW4mS4gKV0Wccm3ZHwpcGEkcKg0XM
+	 9LkPkiDyWf+XOAhZCX1a+TkX1n9fMr2Bl+V9tvvCUASUbUknjmeASY9uRp0IhMoOh6
+	 bU+F5FTaEaiiU/m+U5sNFzdWlJpWT+EeRB0lBNgs8HCBWT1aRNiNVzKy1Y2ac1fwyp
+	 1jrVs5j8fu8KID5KLBbiR6olcszj7m4UCkoLV5A/0+Rqx/jLYblQ469k8dhVSo54p4
+	 UId4w5K1SGvMA==
 From: SeongJae Park <sj@kernel.org>
 To: 
 Cc: SeongJae Park <sj@kernel.org>,
 	damon@lists.linux.dev,
 	linux-mm@kvack.org,
 	linux-kernel@vger.kernel.org
-Subject: [RFC PATCH 5/9] mm/damon/sysfs: use damon_call() for commit_schemes_quota_goals
-Date: Fri, 13 Dec 2024 13:53:02 -0800
-Message-Id: <20241213215306.54778-6-sj@kernel.org>
+Subject: [RFC PATCH 6/9] mm/damon/sysfs: use damon_call() for update_schemes_effective_quotas
+Date: Fri, 13 Dec 2024 13:53:03 -0800
+Message-Id: <20241213215306.54778-7-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20241213215306.54778-1-sj@kernel.org>
 References: <20241213215306.54778-1-sj@kernel.org>
@@ -47,52 +47,64 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
 DAMON sysfs interface uses damon_callback with its own synchronization
-facility to handle commit_schemes_quota_goals command.  But damon_call()
-can support the use case without the additional synchronizations.
-Convert the code to use damon_call() instead.
+facility to handle update_schemes_effective_quotas command.  But
+damon_call() can support the use case without the additional
+synchronizations.  Convert the code to use damon_call() instead.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- mm/damon/sysfs.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ mm/damon/sysfs.c | 15 +++++++--------
+ 1 file changed, 7 insertions(+), 8 deletions(-)
 
 diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
-index d30d659c794e..24070f36fa7c 100644
+index 24070f36fa7c..978de4305f2b 100644
 --- a/mm/damon/sysfs.c
 +++ b/mm/damon/sysfs.c
-@@ -1307,9 +1307,9 @@ static int damon_sysfs_commit_input(struct damon_sysfs_kdamond *kdamond)
- 	return err;
- }
- 
--static int damon_sysfs_commit_schemes_quota_goals(
--		struct damon_sysfs_kdamond *sysfs_kdamond)
-+static int damon_sysfs_commit_schemes_quota_goals(void *data)
+@@ -1327,20 +1327,18 @@ static int damon_sysfs_commit_schemes_quota_goals(void *data)
+ /*
+  * damon_sysfs_upd_schemes_effective_quotas() - Update schemes effective quotas
+  * sysfs files.
+- * @kdamond:	The kobject wrapper that associated to the kdamond thread.
++ * @data:	The kobject wrapper that associated to the kdamond thread.
+  *
+  * This function reads the schemes' effective quotas of specific kdamond and
+  * update the related values for sysfs files.  This function should be called
+  * from DAMON callbacks while holding ``damon_syfs_lock``, to safely access the
+  * DAMON contexts-internal data and DAMON sysfs variables.
+  */
+-static int damon_sysfs_upd_schemes_effective_quotas(
+-		struct damon_sysfs_kdamond *kdamond)
++static int damon_sysfs_upd_schemes_effective_quotas(void *data)
  {
-+	struct damon_sysfs_kdamond *sysfs_kdamond = data;
- 	struct damon_ctx *ctx;
- 	struct damon_sysfs_context *sysfs_ctx;
++	struct damon_sysfs_kdamond *kdamond = data;
+ 	struct damon_ctx *ctx = kdamond->damon_ctx;
  
-@@ -1376,9 +1376,6 @@ static int damon_sysfs_cmd_request_callback(struct damon_ctx *c, bool active,
- 			goto out;
- 		err = damon_sysfs_commit_input(kdamond);
+-	if (!ctx)
+-		return -EINVAL;
+ 	damos_sysfs_update_effective_quotas(
+ 			kdamond->contexts->contexts_arr[0]->schemes, ctx);
+ 	return 0;
+@@ -1400,9 +1398,6 @@ static int damon_sysfs_cmd_request_callback(struct damon_ctx *c, bool active,
+ 			damon_sysfs_schemes_regions_updating = false;
+ 		}
  		break;
--	case DAMON_SYSFS_CMD_COMMIT_SCHEMES_QUOTA_GOALS:
--		err = damon_sysfs_commit_schemes_quota_goals(kdamond);
+-	case DAMON_SYSFS_CMD_UPDATE_SCHEMES_EFFECTIVE_QUOTAS:
+-		err = damon_sysfs_upd_schemes_effective_quotas(kdamond);
 -		break;
- 	case DAMON_SYSFS_CMD_UPDATE_SCHEMES_TRIED_BYTES:
- 		total_bytes_only = true;
- 		fallthrough;
-@@ -1543,6 +1540,10 @@ static int damon_sysfs_handle_cmd(enum damon_sysfs_cmd cmd,
- 		return damon_sysfs_turn_damon_on(kdamond);
- 	case DAMON_SYSFS_CMD_OFF:
- 		return damon_sysfs_turn_damon_off(kdamond);
-+	case DAMON_SYSFS_CMD_COMMIT_SCHEMES_QUOTA_GOALS:
+ 	default:
+ 		break;
+ 	}
+@@ -1550,6 +1545,10 @@ static int damon_sysfs_handle_cmd(enum damon_sysfs_cmd cmd,
+ 	case DAMON_SYSFS_CMD_CLEAR_SCHEMES_TRIED_REGIONS:
+ 		return damon_sysfs_schemes_clear_regions(
+ 			kdamond->contexts->contexts_arr[0]->schemes);
++	case DAMON_SYSFS_CMD_UPDATE_SCHEMES_EFFECTIVE_QUOTAS:
 +		return damon_sysfs_damon_call(
-+				damon_sysfs_commit_schemes_quota_goals,
++				damon_sysfs_upd_schemes_effective_quotas,
 +				kdamond);
- 	case DAMON_SYSFS_CMD_UPDATE_SCHEMES_STATS:
- 		return damon_sysfs_damon_call(
- 				damon_sysfs_upd_schemes_stats, kdamond);
+ 	default:
+ 		break;
+ 	}
 -- 
 2.39.5
 
