@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D2981A9B5C;
-	Thu, 19 Dec 2024 04:03:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9775D1AA791;
+	Thu, 19 Dec 2024 04:03:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734581035; cv=none; b=UlolZEdufUtkVZYMD2ss9X7cWag3U1WRyYnfayDyeSVfyJppF/HnW4SP4CYdoWRzZn1r60VHf3+QHrVAH9CsnODNpcoF3CoOPuBljRzMsZB78iDu0AsIN8ToYHbchVJPkLbc/kuCmNXsPSQgYNn0igOujyNjEimbXlmlFCj9nuA=
+	t=1734581036; cv=none; b=C8seL6wQyX/o6y1wly/CCf6QRTtYtY2N2pRUixTC1firXPn7CX81jQNXV3nJenHHDX+reKHm+tyZEY6WUJHyXlVFm6qdRtHe63HNDHO2XwOUqbMzABXwLW4j9ASd7lyvwyPs/u1dyIPamOo1NVGkJfVSjzfEy8zDgq1RavrVS+s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734581035; c=relaxed/simple;
-	bh=B/+pkZ34Zt3Ov15iD+IrfcocGY4pQLzf/O+oQbY1lSY=;
+	s=arc-20240116; t=1734581036; c=relaxed/simple;
+	bh=xGeZNDXz9ovPiTqa907jHI/cUugPY9TuP39+tm2J3DI=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=R9iAIpDW69xelIvJqYyd39Zi+eprQxY9bJPQ9v2cWEdbQjICQxATFOjrINd7Bsjtugkhv2/VsbQ5jTxr3hYF5PvqBs0nYedC9fQQHnU/Q1ISRufVAQKVjBUoWu9VRqXqkFvlvSLL84IJxeJjOMMqQcx8w0eb/5A2TetIWya+bUY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rzq44vv7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JNkgR8X+h/yM/moGOhg1dJ9y1RlK/cYmwwABsQ7x54ydnkOvC2gsMk2CdvOkgj3mDw5fMdAqzTFM5an9s8g9qSqU2JR7dzAp7IkUBlQndKzQDROypD5ubrrLjekTNAxAEIyMG5JTQSDHK4hrDnvAM1JnIXuY+nZDCWp3psAUT1M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YaWwkoMs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rzq44vv7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF8A2C4CEDE;
-	Thu, 19 Dec 2024 04:03:54 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YaWwkoMs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E18E7C4CED4;
+	Thu, 19 Dec 2024 04:03:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1734581034;
-	bh=B/+pkZ34Zt3Ov15iD+IrfcocGY4pQLzf/O+oQbY1lSY=;
+	s=k20201202; t=1734581036;
+	bh=xGeZNDXz9ovPiTqa907jHI/cUugPY9TuP39+tm2J3DI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rzq44vv7oD0N2wj95XS2ZTJ1sSLOaqBIUq36nn7pmxoSw5ZpgQ3g9DCAnXg0Anw8n
-	 bFIpSdP7Yv1yOzha/Bw5/GTL0aH+9FuEQETPdZSKYcXkSx1h6kbPkkW7alb6gbJfSh
-	 lfXrUimMecgBRoGXL66pD0XsJ7rhIasRwOt9nREX/c1KWizBC/YE4+yeambCjMRrqi
-	 2ekvViNaTS5YuWgpQDNpxWjG0XZ0LiiNSELDOa1vjr5LiscPbC4DliiXVSmov/pX6q
-	 ou0yrGFJ+KLQ9Z9woz12s9t7dC0cCGxb2Pzh0a2YEXdJgzisKDiD2fEyjo0tM1gGOB
-	 jnrg4qfav135w==
+	b=YaWwkoMsUq3M/9y90r30+fdbMg5W+Jtn+IphmKPouGNrvQno6svhKYfNY3O1U7Ziq
+	 mNLcPEeBaJaRmMhQ7P0n3pYFyDzFAB73gPOufPWOX9UDzeyWcKaICVL7iUmEWSATe7
+	 u4uhvb0Xa28UgL/G5fN94kmI5VZiaUP5dwaljPbJA2IDw9maXLrBc9vYve1lraJTFe
+	 hXVB4X8EYz3EhThDwTJKR+DnvOfYdl9IRscCLTVQTEJp4AXzQ5bfEuYAZhu7TNbotZ
+	 BXfCCDArHgTD+uNgbG4FaASYkOCjh5j3mXe0ia+BNc8RxmM4OHlZ4jaEgLN5l2S3S0
+	 G9yqOBRNkt8Vw==
 From: SeongJae Park <sj@kernel.org>
 To: 
 Cc: kernel-team@meta.com,
@@ -33,9 +33,9 @@ Cc: kernel-team@meta.com,
 	damon@lists.linux.dev,
 	linux-mm@kvack.org,
 	linux-kernel@vger.kernel.org
-Subject: [RFC PATCH 14/18] mm/damon/core: pass per-region filter-passed bytes to damos_walk_control->walk_fn()
-Date: Wed, 18 Dec 2024 20:03:23 -0800
-Message-Id: <20241219040327.61902-15-sj@kernel.org>
+Subject: [RFC PATCH 15/18] mm/damon/sysfs-schemes: expose per-region filter-passed bytes
+Date: Wed, 18 Dec 2024 20:03:24 -0800
+Message-Id: <20241219040327.61902-16-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20241219040327.61902-1-sj@kernel.org>
 References: <20241219040327.61902-1-sj@kernel.org>
@@ -47,78 +47,107 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Total size of memory that passed DAMON operations set layer-handled
-DAMOS filters per scheme is provided to DAMON core API and ABI (sysfs
-interface) users.  It is useful, but that for each region can be more
-fine-grained information.  Provide it to users of DAMON core API,
-specifically damos_walk() users, by passing the data to
-damos_walk_control->walk_fn().
+Per-region operations set-handled DAMOS filters passed memory size
+information is provided to only DAMON core API users.  Further expose it
+to the user space by adding a new DAMON sysfs interface file under each
+scheme tried region directory.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- include/linux/damon.h | 2 +-
- mm/damon/core.c       | 7 ++++---
- mm/damon/sysfs.c      | 2 +-
- 3 files changed, 6 insertions(+), 5 deletions(-)
+ mm/damon/sysfs-common.h  |  2 +-
+ mm/damon/sysfs-schemes.c | 18 +++++++++++++++++-
+ mm/damon/sysfs.c         |  3 ++-
+ 3 files changed, 20 insertions(+), 3 deletions(-)
 
-diff --git a/include/linux/damon.h b/include/linux/damon.h
-index 4a68bb38aad5..b88f710297a9 100644
---- a/include/linux/damon.h
-+++ b/include/linux/damon.h
-@@ -393,7 +393,7 @@ struct damos;
- struct damos_walk_control {
- 	void (*walk_fn)(void *data, struct damon_ctx *ctx,
- 			struct damon_target *t, struct damon_region *r,
--			struct damos *s);
-+			struct damos *s, unsigned long sz_filter_passed);
- 	void *data;
- /* private: internal use only */
- 	/* informs if the kdamond finished handling of the walk request */
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index f7736df4f6c8..f566cdcbb434 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -1437,7 +1437,8 @@ static bool damos_filter_out(struct damon_ctx *ctx, struct damon_target *t,
-  * installed by damos_walk() and not yet uninstalled, invoke it.
-  */
- static void damos_walk_call_walk(struct damon_ctx *ctx, struct damon_target *t,
--		struct damon_region *r, struct damos *s)
-+		struct damon_region *r, struct damos *s,
-+		unsigned long sz_filter_passed)
- {
- 	struct damos_walk_control *control;
+diff --git a/mm/damon/sysfs-common.h b/mm/damon/sysfs-common.h
+index b3f63bc658b7..70d84bdc9f5f 100644
+--- a/mm/damon/sysfs-common.h
++++ b/mm/damon/sysfs-common.h
+@@ -48,7 +48,7 @@ void damon_sysfs_schemes_update_stats(
+ void damos_sysfs_populate_region_dir(struct damon_sysfs_schemes *sysfs_schemes,
+ 		struct damon_ctx *ctx, struct damon_target *t,
+ 		struct damon_region *r, struct damos *s,
+-		bool total_bytes_only);
++		bool total_bytes_only, unsigned long sz_filter_passed);
  
-@@ -1446,7 +1447,7 @@ static void damos_walk_call_walk(struct damon_ctx *ctx, struct damon_target *t,
- 	mutex_unlock(&ctx->walk_control_lock);
- 	if (!control)
- 		return;
--	control->walk_fn(control->data, ctx, t, r, s);
-+	control->walk_fn(control->data, ctx, t, r, s, sz_filter_passed);
+ int damon_sysfs_schemes_clear_regions(
+ 		struct damon_sysfs_schemes *sysfs_schemes);
+diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
+index b447c412b02c..1da0594dde55 100644
+--- a/mm/damon/sysfs-schemes.c
++++ b/mm/damon/sysfs-schemes.c
+@@ -19,6 +19,7 @@ struct damon_sysfs_scheme_region {
+ 	struct damon_addr_range ar;
+ 	unsigned int nr_accesses;
+ 	unsigned int age;
++	unsigned long sz_filter_passed;
+ 	struct list_head list;
+ };
+ 
+@@ -74,6 +75,15 @@ static ssize_t age_show(struct kobject *kobj, struct kobj_attribute *attr,
+ 	return sysfs_emit(buf, "%u\n", region->age);
  }
  
- /*
-@@ -1566,7 +1567,7 @@ static void damos_apply_scheme(struct damon_ctx *c, struct damon_target *t,
- 			sz_applied = c->ops.apply_scheme(c, t, r, s,
- 					&sz_ops_filter_passed);
- 		}
--		damos_walk_call_walk(c, t, r, s);
-+		damos_walk_call_walk(c, t, r, s, sz_ops_filter_passed);
- 		ktime_get_coarse_ts64(&end);
- 		quota->total_charged_ns += timespec64_to_ns(&end) -
- 			timespec64_to_ns(&begin);
++static ssize_t sz_filter_passed_show(struct kobject *kobj,
++		struct kobj_attribute *attr, char *buf)
++{
++	struct damon_sysfs_scheme_region *region = container_of(kobj,
++			struct damon_sysfs_scheme_region, kobj);
++
++	return sysfs_emit(buf, "%lu\n", region->sz_filter_passed);
++}
++
+ static void damon_sysfs_scheme_region_release(struct kobject *kobj)
+ {
+ 	struct damon_sysfs_scheme_region *region = container_of(kobj,
+@@ -95,11 +105,15 @@ static struct kobj_attribute damon_sysfs_scheme_region_nr_accesses_attr =
+ static struct kobj_attribute damon_sysfs_scheme_region_age_attr =
+ 		__ATTR_RO_MODE(age, 0400);
+ 
++static struct kobj_attribute damon_sysfs_scheme_region_sz_filter_passed_attr =
++		__ATTR_RO_MODE(sz_filter_passed, 0400);
++
+ static struct attribute *damon_sysfs_scheme_region_attrs[] = {
+ 	&damon_sysfs_scheme_region_start_attr.attr,
+ 	&damon_sysfs_scheme_region_end_attr.attr,
+ 	&damon_sysfs_scheme_region_nr_accesses_attr.attr,
+ 	&damon_sysfs_scheme_region_age_attr.attr,
++	&damon_sysfs_scheme_region_sz_filter_passed_attr.attr,
+ 	NULL,
+ };
+ ATTRIBUTE_GROUPS(damon_sysfs_scheme_region);
+@@ -2110,7 +2124,8 @@ void damon_sysfs_schemes_update_stats(
+  */
+ void damos_sysfs_populate_region_dir(struct damon_sysfs_schemes *sysfs_schemes,
+ 		struct damon_ctx *ctx, struct damon_target *t,
+-		struct damon_region *r, struct damos *s, bool total_bytes_only)
++		struct damon_region *r, struct damos *s, bool total_bytes_only,
++		unsigned long sz_filter_passed)
+ {
+ 	struct damos *scheme;
+ 	struct damon_sysfs_scheme_regions *sysfs_regions;
+@@ -2135,6 +2150,7 @@ void damos_sysfs_populate_region_dir(struct damon_sysfs_schemes *sysfs_schemes,
+ 	region = damon_sysfs_scheme_region_alloc(r);
+ 	if (!region)
+ 		return;
++	region->sz_filter_passed = sz_filter_passed;
+ 	list_add_tail(&region->list, &sysfs_regions->regions_list);
+ 	sysfs_regions->nr_regions++;
+ 	if (kobject_init_and_add(&region->kobj,
 diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
-index cf8fb5a963d6..224873ca8aa6 100644
+index 224873ca8aa6..deeab04d3b46 100644
 --- a/mm/damon/sysfs.c
 +++ b/mm/damon/sysfs.c
-@@ -1454,7 +1454,7 @@ struct damon_sysfs_schemes_walk_data {
- /* populate the region directory */
- static void damon_sysfs_schemes_tried_regions_upd_one(void *data, struct damon_ctx *ctx,
- 		struct damon_target *t, struct damon_region *r,
--		struct damos *s)
-+		struct damos *s, unsigned long sz_filter_passed)
- {
- 	struct damon_sysfs_schemes_walk_data *walk_data = data;
- 	struct damon_sysfs_kdamond *sysfs_kdamond = walk_data->sysfs_kdamond;
+@@ -1461,7 +1461,8 @@ static void damon_sysfs_schemes_tried_regions_upd_one(void *data, struct damon_c
+ 
+ 	damos_sysfs_populate_region_dir(
+ 			sysfs_kdamond->contexts->contexts_arr[0]->schemes,
+-			ctx, t, r, s, walk_data->total_bytes_only);
++			ctx, t, r, s, walk_data->total_bytes_only,
++			sz_filter_passed);
+ }
+ 
+ static int damon_sysfs_update_schemes_tried_regions(
 -- 
 2.39.5
 
