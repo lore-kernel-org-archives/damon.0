@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B00019F11B;
-	Thu, 19 Dec 2024 04:03:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 817B21A0728;
+	Thu, 19 Dec 2024 04:03:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734581027; cv=none; b=pQdechKKaqOm0Q4vzBEkLclrxXWSmYCHxEOAvdndpfsRT2trz/sxGA8LGarZo6hYBrQtZqo5UlMkO5M5xl2Y/Pn2QJuug+AyqCzT9xxNAiji/+HaRqEvN/wOjB6f2rS+A2ui63eFP78hj+ZGI6rPG66ZCgA76VcZeNBV3JWbzr8=
+	t=1734581028; cv=none; b=AZZtUe+DKYtVVL7UGQ1zALpqDTZnGkmqW76sSVA4LlQFaUuMIlZlJvXqKNcDIGhfJR9+QB1UYJ2RiVUPnGUPZ31xSn6DT1KLTl0CFnIp27YXO4UCBFk8p4l+MeEcgNk+3w1/gCxDsd7wcQ0jApKSiJxOGKrq+ATrX7nnteBLCtI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734581027; c=relaxed/simple;
-	bh=v/ZiBRKbfbEykvCZNndO3AyZ9fQawvkE+ZCwqKdxiC0=;
+	s=arc-20240116; t=1734581028; c=relaxed/simple;
+	bh=64D8a6jEKpsztUjzJW7u7/dJMtao+tMWa0luqj3yM0M=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=b9bG2A3NxYOJoqXPWjvw0hx/q8nRYTK8TsUAa9BjPok3d06TTTSprjvX9uFjZjeYhXlq/MUoB2hbF4vV8AzViwBGraTH+xR4yiknW+I2y50UsngxdKy4ZnltGMCQzk3iQnPFlqEFnibL2nI49MbyQUhnDRyfBVgJWbRcL251Oro=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LLwCY7XC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pOM+IGYrf6MyLakVMhwfxqexJGow/1EloEHo8JmrWmQvBEtKiyHLXG1RkGkk1AR6vVrJni8bQAQk3sT1k8Vhg0wzGAEowhMx4SUUIlWd2PHXGm3ArOZl7kityo6UEd0FalU225qh1TvIKMTDnIWlaxoNPjHVXTMYSgi2E/yIGj4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DBmQQXmZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LLwCY7XC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3310C4CED7;
-	Thu, 19 Dec 2024 04:03:46 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DBmQQXmZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D239BC4CED6;
+	Thu, 19 Dec 2024 04:03:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1734581026;
-	bh=v/ZiBRKbfbEykvCZNndO3AyZ9fQawvkE+ZCwqKdxiC0=;
+	s=k20201202; t=1734581028;
+	bh=64D8a6jEKpsztUjzJW7u7/dJMtao+tMWa0luqj3yM0M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LLwCY7XCrXKLl9hrAIUoT8AM3rD7urUs/LxhpOgzcOc44OGsZAqdYBpczJLDfhqQd
-	 Ugn8zdzXuyFUXipe/UpgChq1b7JY/NSSHKYsY68x4fZXAormDkhvVroMcIe/ddmgPk
-	 D5agXjvf1pgf4EYBd60zHJfO5mxdeXSSJmE5+Y8ed9riJ927yCogDgGJb799JENyTg
-	 3r74323OuSU6EHo5GhuZ/lCwdOUEnyVMddvXdn/N+WZKizVT590zkYNkgQURdZIeMk
-	 DD92sALUgMeLD5Zl1PeFhKkK30JIS8Ms3XQIYkLfaPg6jF/Hh3ZXtVFtLlWNZwSfTA
-	 r57yPAYktc80g==
+	b=DBmQQXmZIOIzv5rl3Sq/NBNabDLR6GahdM2WjV4Ilu0m0t00lMHKeClh3MFv8z2Qy
+	 +sIXM5KGE/KBmNlWN7szTk8ucFGmzSRWp8Wmewl0/Dhr1A1vLEL2bd4D3I0LyRreVV
+	 PrZIr/PctZNuWPZwMzNxn/zrpr3E1Zh0DCtst3435UjDHeWAQqXByNN3HBUYKEsGZe
+	 aB3TtSjRyZ0CQeu1cC2u9vDYqYqB1jwW+cvNUqlTFIfG5cLuUknjpkaodwSKbfDIF+
+	 FrQP77iHzd8QeOe7WMPUl0sHVFXFJjY3kPT+YAAcv5otXGHeHEE9jv1qgdrpJH3g/l
+	 wC8CNBbAKoWmw==
 From: SeongJae Park <sj@kernel.org>
 To: 
 Cc: kernel-team@meta.com,
@@ -33,9 +33,9 @@ Cc: kernel-team@meta.com,
 	damon@lists.linux.dev,
 	linux-mm@kvack.org,
 	linux-kernel@vger.kernel.org
-Subject: [RFC PATCH 07/18] mm/damon/paddr: report filter-passed bytes back for DAMOS_STAT action
-Date: Wed, 18 Dec 2024 20:03:16 -0800
-Message-Id: <20241219040327.61902-8-sj@kernel.org>
+Subject: [RFC PATCH 08/18] mm/damon/core: implement per-scheme filter-passed bytes stat
+Date: Wed, 18 Dec 2024 20:03:17 -0800
+Message-Id: <20241219040327.61902-9-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20241219040327.61902-1-sj@kernel.org>
 References: <20241219040327.61902-1-sj@kernel.org>
@@ -47,80 +47,70 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-DAMOS_STAT action handling of paddr DAMON operations set implementation
-is simply ignoring the filters, and therefore not reporting back the
-filter-passed bytes.  Apply the filtrs and report back the information.
-
-Before this change, DAMOS_STAT was doing nothing for DAMOS filters.
-Hence users might see some performance regressions.  Such regression for
-use cases where no filter is added to the scheme will be negligible,
-since this change implementation avoid unnecessary filtering works if no
-filter is installed.
-
-For old users who were using DAMOS_STAT with filters, the regression
-could be visible depending on the size of the region and the overhead of
-the installed DAMOS filters.  But, because the filters were completely
-ignored before in the use case, no real users would really depend on
-such use case that makes no point.
+Implement a new per-DAMOS scheme statistic field, namely
+sz_ops_filter_passed, using the changed damon_operations->apply_scheme()
+interface.  It counts total bytes of memory that given DAMOS action
+tried to be applied, and passed the filters of the scheme.  DAMON API
+users can access it using DAMON-internal safe access features such as
+damon_call() and/or damos_walk().
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- mm/damon/paddr.c | 35 ++++++++++++++++++++++++++++++++++-
- 1 file changed, 34 insertions(+), 1 deletion(-)
+ include/linux/damon.h | 3 +++
+ mm/damon/core.c       | 6 ++++--
+ 2 files changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
-index 5944316a0b4c..b0c283808ba6 100644
---- a/mm/damon/paddr.c
-+++ b/mm/damon/paddr.c
-@@ -485,6 +485,39 @@ static unsigned long damon_pa_migrate(struct damon_region *r, struct damos *s,
- 	return applied * PAGE_SIZE;
+diff --git a/include/linux/damon.h b/include/linux/damon.h
+index bff39c23f16e..4a68bb38aad5 100644
+--- a/include/linux/damon.h
++++ b/include/linux/damon.h
+@@ -291,6 +291,8 @@ struct damos_watermarks {
+  * @sz_tried:	Total size of regions that the scheme is tried to be applied.
+  * @nr_applied:	Total number of regions that the scheme is applied.
+  * @sz_applied:	Total size of regions that the scheme is applied.
++ * @sz_ops_filter_passed:
++ * 		Total bytes that passed ops layer-handled DAMOS filters.
+  * @qt_exceeds: Total number of times the quota of the scheme has exceeded.
+  *
+  * "Tried an action to a region" in this context means the DAMOS core logic
+@@ -315,6 +317,7 @@ struct damos_stat {
+ 	unsigned long sz_tried;
+ 	unsigned long nr_applied;
+ 	unsigned long sz_applied;
++	unsigned long sz_ops_filter_passed;
+ 	unsigned long qt_exceeds;
+ };
+ 
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index c7ae95d6b7ba..8540e8f91260 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -1354,13 +1354,15 @@ static bool damos_skip_charged_region(struct damon_target *t,
  }
  
-+static bool damon_pa_scheme_has_filter(struct damos *s)
-+{
-+	struct damos_filter *f;
-+
-+	damos_for_each_filter(f, s)
-+		return true;
-+	return false;
-+}
-+
-+static unsigned long damon_pa_stat(struct damon_region *r, struct damos *s,
-+		unsigned long *sz_filter_passed)
-+{
-+	unsigned long addr;
-+	LIST_HEAD(folio_list);
-+
-+	if (!damon_pa_scheme_has_filter(s))
-+		return 0;
-+
-+	for (addr = r->ar.start; addr < r->ar.end; addr += PAGE_SIZE) {
-+		struct folio *folio = damon_get_folio(PHYS_PFN(addr));
-+
-+		if (!folio)
-+			continue;
-+
-+		if (damos_pa_filter_out(s, folio))
-+			goto put_folio;
-+		else
-+			*sz_filter_passed += folio_size(folio);
-+put_folio:
-+		folio_put(folio);
-+	}
-+	return 0;
-+}
+ static void damos_update_stat(struct damos *s,
+-		unsigned long sz_tried, unsigned long sz_applied)
++		unsigned long sz_tried, unsigned long sz_applied,
++		unsigned long sz_ops_filter_passed)
+ {
+ 	s->stat.nr_tried++;
+ 	s->stat.sz_tried += sz_tried;
+ 	if (sz_applied)
+ 		s->stat.nr_applied++;
+ 	s->stat.sz_applied += sz_applied;
++	s->stat.sz_ops_filter_passed += sz_ops_filter_passed;
+ }
  
- static unsigned long damon_pa_apply_scheme(struct damon_ctx *ctx,
- 		struct damon_target *t, struct damon_region *r,
-@@ -501,7 +534,7 @@ static unsigned long damon_pa_apply_scheme(struct damon_ctx *ctx,
- 	case DAMOS_MIGRATE_COLD:
- 		return damon_pa_migrate(r, scheme, sz_filter_passed);
- 	case DAMOS_STAT:
--		break;
-+		return damon_pa_stat(r, scheme, sz_filter_passed);
- 	default:
- 		/* DAMOS actions that not yet supported by 'paddr'. */
- 		break;
+ static bool __damos_filter_out(struct damon_ctx *ctx, struct damon_target *t,
+@@ -1580,7 +1582,7 @@ static void damos_apply_scheme(struct damon_ctx *c, struct damon_target *t,
+ 		r->age = 0;
+ 
+ update_stat:
+-	damos_update_stat(s, sz, sz_applied);
++	damos_update_stat(s, sz, sz_applied, sz_ops_filter_passed);
+ }
+ 
+ static void damon_do_apply_schemes(struct damon_ctx *c,
 -- 
 2.39.5
 
