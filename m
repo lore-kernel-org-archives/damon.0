@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 828B878F55;
-	Thu, 19 Dec 2024 04:03:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A06AD155342;
+	Thu, 19 Dec 2024 04:03:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734581019; cv=none; b=fJ88puuCdj1mw/yQY8ssD0VxZAFJE3pfXAv63uYKXGAq+ytNC6SWp+4TaVAtbFTISlA1llwWIz9GNtKn0oJTqAx6iU5gXQ/fYGEUs+H6PMwdQgoCiL/0VcDHBUcktZvFuT4aOwKbS5cXOSUdrCgNdSANJ/NTdXn9m1QiRo93IOA=
+	t=1734581021; cv=none; b=uXzl68W8kra5O4u7Aec5Bm9LEcEd52KmAwCOCDX7TfwKn93spX4FjsejHKcf0ASvKKXDpRtZy972bH9tbqd4RWl/CubdrHQKl7KdN/+3btNWM8J0VM+SQ/beq2jcFXNz9dKyFp7YYy6CSAO6R9RRI1V94zu7qr3HBQRSB+XcemA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734581019; c=relaxed/simple;
-	bh=yTFAxcbPoCTrpJqmhdVdqAR+kuxXaJ5DPD927bcaAic=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=eIvng/VrHu9rIid2sV25IujjPFzKzo1Tqpna3sXkXdXi/oBuhm9PdXPBVaRq+5Sed6w/d26qkHQ2+h/olDrPRfY9WAQCzRmj6v5SpPTJUnFQ1ScDDC0+EuvkpeurDlAYAIOKVlGHqMqi2RFawjhgUAlLAib7EHuyVjU0XJkxM6I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oLOgUS5M; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1734581021; c=relaxed/simple;
+	bh=6yAcbnM6J2idHIjWcNsWaXW+gfpMIfb6CiDEsPN4WLc=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=aS7BuAZ6Ktpb+zeCM506MvmL5yMKpi6u97T7t3r5Y0EKe0Yv1AWyBhSb6I9fW5GxAOWZbxGN/LIHA2UkGZenAGSQcRyB7ujWgxBe+1ppINp1QgvAJ8XxwrwPSajOzFc6HuvN21JUazkNTeghRubtKd/sMLh0FGsqJ5S8RzSs4Tw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Z2Zz6jKF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oLOgUS5M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF55BC4CED4;
-	Thu, 19 Dec 2024 04:03:38 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Z2Zz6jKF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B80FC4CED4;
+	Thu, 19 Dec 2024 04:03:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1734581019;
-	bh=yTFAxcbPoCTrpJqmhdVdqAR+kuxXaJ5DPD927bcaAic=;
-	h=From:To:Cc:Subject:Date:From;
-	b=oLOgUS5MLJDjWezERfK3zz8SRJGJeVreDsOUGZIu8QcUqmHN1MZAH9XFVufoVBr6E
-	 adcIthkyM3Ie7eHWFvmjln9GE+lRS2UreOPCWllHFTbqzWhvBbM2M3ARYlIY91f/kw
-	 /51nGgOdFC7VE7Ll44co43jfji1A2zKiWWTkYjnJXNIZ2JNQ7WBWW+DPPq16tmRddr
-	 lDSFsNAKsC6T6OaiZJErlvK609Xrdb8mK8C6VtnNJ0DNa9EudQ6MGy8RLs6qeqp8bH
-	 YWfFMPy6q6d4Gon12yHDN9qNVaCb/zx9DXOMSytp3zdXI5guOv+M3ZV1FFPzPw14mG
-	 cF1CVmZ153Tmg==
+	s=k20201202; t=1734581020;
+	bh=6yAcbnM6J2idHIjWcNsWaXW+gfpMIfb6CiDEsPN4WLc=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=Z2Zz6jKFVEPW7u1pYxFRdlJrY348lqcmWUcfha2+coLLc1HpWoHnTIEUfYg2ziXlC
+	 51ibgYnkuv8dFEKmc1FBcw14hA74jR5dTKVqsb9V8e5E51G4T2ZylTxk9znabTMit9
+	 ohbI4MhC0Re8TXQRCyrAYXo89HrLTs88AjPe31a7yabDNYi/A29oO995ydVGxEvyFR
+	 6A7mzFy59DR/oDcHw19Bc6MRFkMZiE7h5d/MMwZ9PZ1vJmPuDLtvTjdaNcArav1vWf
+	 749M3/3bFJ+mh+1kpk9B/5HUGfV1HxjH6bXsEqPiAQ6M36FDqcrzKHQJUiQ7wMKdHZ
+	 P2VR8NWEGYptg==
 From: SeongJae Park <sj@kernel.org>
 To: 
 Cc: kernel-team@meta.com,
 	SeongJae Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Jonathan Corbet <corbet@lwn.net>,
 	damon@lists.linux.dev,
 	linux-mm@kvack.org,
-	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [RFC PATCH 00/18] mm/damon: enable page level properties based access pattern monitoring
-Date: Wed, 18 Dec 2024 20:03:09 -0800
-Message-Id: <20241219040327.61902-1-sj@kernel.org>
+Subject: [RFC PATCH 01/18] mm/damon: clarify trying vs applying on damos_stat kernel-doc comment
+Date: Wed, 18 Dec 2024 20:03:10 -0800
+Message-Id: <20241219040327.61902-2-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20241219040327.61902-1-sj@kernel.org>
+References: <20241219040327.61902-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -47,146 +47,43 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-TL; DR
-======
+DAMOS stat kernel-doc documentation is using somewhat implicit terms.
+Without reading the code, understanding it correctly is not that easy.
+Add the clarification on the kernel-doc comment.
 
-This patch series eanble access monitoring based on page level
-properties including their anonymousness, belonging cgroups and
-pg-young-ness, by extending DAMOS stats and regions walk features with
-region-internal DAMOS filters.
+Signed-off-by: SeongJae Park <sj@kernel.org>
+---
+ include/linux/damon.h | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
-Background
-==========
-
-DAMON fundametally provides only access pattern information in region
-granularity.  For some use cases, fixed and fine granularity information
-based on non access pattern properties can be useful, though.  For
-example, on systems having fast swap devices and slow storage devices,
-DAMOS-based proactive reclaim need to be applied differently for
-anonymous pages and file-backed pages.
-
-DAMOS makes it possible via DAMOS filters that work in page level
-properties including anonymousness, belonging cgroups, and
-pg-young-ness.  Having only the fine-grained inforamtion without making
-system operation behavior changes can be useful for tuning or monitoring
-purposes.  But currently DAMON provides no way for that.
-
-Idea
-====
-
-DAMOS has initially developed for only access-aware system operations.
-But, efficient acces monitoring results querying is yet another major
-usage of today's DAMOS.  DAMOS stats and regions walk, which exposes
-accumulated counts and per-region monitoring results that filtered by
-DAMOS parameters including target access pattern and quotas, are the key
-features for that usage.  Special DAMOS action, DAMOS_STAT, was also
-introduced to support doing only monitoring without making any system
-operation behavioral changes.
-
-Hence, the fine-grained information that already available for
-access-aware system operation can be passed to users by connecting the
-region-internal DAMOS filters with stats and regions walk features.
-
-Design
-======
-
-Update the interface of DAMON operations set layer, which contains
-region-internal DAMOS filters implementation, to report back the amount
-of memory that passed the region-internal DAMOS filters to the core
-layer.  On the core layer, account the operations set layer reported
-stat with a per-scheme accumulated stat.  Also, pass the stat to regions
-walk.  In this way, DAMON API users can efficiently get the fine-grained
-information.
-
-For the user-space, make DAMON sysfs interface collects the information
-using DAMON core API, and expose those to new per-scheme stats file and
-per-DAMOS-tried region properties file.
-
-Practical Usages
-================
-
-With this patch series, DAMON users can query how many bytes of regions
-of specific access temperature is backed by pages of specific type.  The
-type can be any of DAMOS filter-supporting one, including anonymousness,
-belonging cgroups, and pg-young-ness.  For example, users can visualize
-access hotness-based page granulairty histogram for different cgroups,
-backing content type, or youngness.  In future, it could be extended to
-more types such as whether it is THP, position on LRU lists, etc.  This
-can be useful for estimating benefits of a new or an existing
-access-aware system optimizations without really committing the changes.
-
-Patches Sequence
-================
-
-The patches are separated in four sequences.
-
-First four patches add adding documentation of background knowledge.
-
-Following three patches change the operations set layer interface to
-report back the region-internal filter passed memory size, and make the
-operations set implementations support the changed symantic.
-
-Following five patches implement per-scheme accumulated stat for
-region-internal filter-passed memory size on core API, DAMON sysfs
-interface.  First two patches of those are for code change, and
-following three patches are for documentation.
-
-Finally, six patches implementing per-region region-internal
-filter-passed memory size follows.  First three patches of these are for
-code change of preparation, API, and DAMON sysfs interface parts.  The
-final three patches are for documentation.
-
-Misc Notes
-==========
-
-This patch series depend on another RFC patch series[1] that introduced
-damos_call().  Some of patches here, particularly the one that adds
-Documentation for damos_call() and changing
-damos_call_control->walk_fn() invocation sequence, may be moved and
-folded into the patch series when it drops RFC tag.
-
-[1] https://lore.kernel.org/20241213215306.54778-1-sj@kernel.org
-
-
-SeongJae Park (18):
-  mm/damon: clarify trying vs applying on damos_stat kernel-doc comment
-  Docs/mm/damon/design: document DAMOS regions walking
-  Docs/mm/damon/design: add 'statistics' section
-  Docs/admin-guide/mm/damon/usage: link damos stat design doc
-  mm/damon: ask apply_scheme() to report filter-passed region-internal
-    bytes
-  mm/damon/paddr: report filter-passed bytes back for normal actions
-  mm/damon/paddr: report filter-passed bytes back for DAMOS_STAT action
-  mm/damon/core: implement per-scheme filter-passed bytes stat
-  mm/damon/syfs-schemes: implement per-scheme filter-passed bytes stat
-  Docs/mm/damon/design: document sz_ops_filter_passed
-  Docs/admin-guide/mm/damon/usage: document sz_ops_filter_passed
-  Docs/ABI/damon: document per-scheme filter-passed bytes stat file
-  mm/damon/core: invoke damos_walk_control->walk_fn() after applying
-    action
-  mm/damon/core: pass per-region filter-passed bytes to
-    damos_walk_control->walk_fn()
-  mm/damon/sysfs-schemes: expose per-region filter-passed bytes
-  Docs/mm/damon/design: document per-region sz_filter_passed stat
-  Docs/admin-guide/mm/damon/usage: document sz_filtered_out of scheme
-    tried region directories
-  Docs/ABI/damon: document per-region DAMOS filter-passed bytes stat
-    file
-
- .../ABI/testing/sysfs-kernel-mm-damon         | 13 ++++
- Documentation/admin-guide/mm/damon/usage.rst  | 29 ++++----
- Documentation/mm/damon/design.rst             | 53 ++++++++++++++
- include/linux/damon.h                         | 27 ++++++-
- mm/damon/core.c                               | 31 ++++----
- mm/damon/paddr.c                              | 70 +++++++++++++++----
- mm/damon/sysfs-common.h                       |  2 +-
- mm/damon/sysfs-schemes.c                      | 34 ++++++++-
- mm/damon/sysfs.c                              |  5 +-
- mm/damon/vaddr.c                              |  2 +-
- 10 files changed, 216 insertions(+), 50 deletions(-)
-
-
-base-commit: af113b0c56e321562fb85ef5da57f323c34b616b
+diff --git a/include/linux/damon.h b/include/linux/damon.h
+index b4165cc41d99..f66fa0ab9350 100644
+--- a/include/linux/damon.h
++++ b/include/linux/damon.h
+@@ -292,6 +292,23 @@ struct damos_watermarks {
+  * @nr_applied:	Total number of regions that the scheme is applied.
+  * @sz_applied:	Total size of regions that the scheme is applied.
+  * @qt_exceeds: Total number of times the quota of the scheme has exceeded.
++ *
++ * "Tried an action to a region" in this context means the DAMOS core logic
++ * determined the region as eligible to apply the action.  The access pattern
++ * (&struct damos_access_pattern), quotas (&struct damos_quota), watermarks
++ * (&struct damos_watermarks) and filters (&struct damos_filter) that handled
++ * on core logic can affect this.  The core logic asks the operation set
++ * (&struct damon_operations) to apply the action to the region.
++ *
++ * "Applied an action to a region" in this context means the operation set
++ * (&struct damon_operations) successfully applied the action to the region, at
++ * least to a part of the region.  The filters (&struct damos_filter) that
++ * handled on operation set layer and type of the action and pages of the
++ * region can affect this.  For example, if a filter is set to exclude
++ * anonymous pages and the region has only anonymous pages, the region will be
++ * failed at applying the action.  If the action is &DAMOS_PAGEOUT and all
++ * pages of the region are already paged out, the region will be failed at
++ * applying the action.
+  */
+ struct damos_stat {
+ 	unsigned long nr_tried;
 -- 
 2.39.5
 
