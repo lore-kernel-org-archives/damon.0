@@ -1,40 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46C8413A86C;
-	Sun, 22 Dec 2024 23:12:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F98C198A0E;
+	Sun, 22 Dec 2024 23:12:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734909145; cv=none; b=kYlGzlY5JwKGX/gxzDpNITvKwNSKj+vu0L3c6h7Gc++AAnlO0lpA4Rken938jEIhfnErzyRut8tcaQy4wPPVLLR217y1w/dwjuisnDWNCtdxOOx1uj8RhB/bJldnzlkHEfR4WyXN7xW+96XJc6GbH8zoq0z9aGEXrtVB8PEehzE=
+	t=1734909147; cv=none; b=jglHqV6CjbgcrK4PpyIhFCSf1+Uw2063OBqODVbbZ0fsi02S/1fftCeHoEFwaXtHlXd2/orZQAR7uTCkl+Wiaf4CWmEzsElj2A9BWlnRDhF8pU+YhJeXpbN7xJYUziRs+pgV/qbwyMO7uRwcnJIbcZM+4GAEkEroqXSwGfiNn5g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734909145; c=relaxed/simple;
-	bh=SSI7Tn6SikEE6Gd2Q2oJVusNNucHn6YZQJN4/lEumMw=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=HbmQND+9jzZOmuC94cuqPO/0/9AYdmktjie43oS5/fFaDpdYnD+dUbwpPQeLXGu8pMJGOhQfes3DMXMNLIpUdnEZLkibF0c5HkBI14qZRLmWq1Q6fZcUyJ9KlN2QUird4k7xqU2Yvz3ZAFwnuZRpoIolTPg3wHySSY1VjTQ007A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JsU6PInZ; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1734909147; c=relaxed/simple;
+	bh=VnA1Kpl6cnNCncV299IxvKMXy0LENGhUCK7E8iW560U=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=m48MI0vxcOB03i8t7iufdBs2NLlHaTycRxrF3Xf5zIzhr2v1VSh7R8nZV9Orumh7Ga5Mx9LLThFvSAIR85DDUH8crYVEtQMtbMJ63qb6cjnayqdaYoHzqWafq8tBYEcSW1iGLpN2H+gMwmDC6IsFtGHf3EfykVgXUY/ISfiyPD8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Jt08AH6I; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JsU6PInZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93CB1C4CECD;
-	Sun, 22 Dec 2024 23:12:24 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Jt08AH6I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD54AC4CEDE;
+	Sun, 22 Dec 2024 23:12:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1734909144;
-	bh=SSI7Tn6SikEE6Gd2Q2oJVusNNucHn6YZQJN4/lEumMw=;
-	h=From:To:Cc:Subject:Date:From;
-	b=JsU6PInZI4ZU+mTYWAy3mJrw4QpTpSHHTzuM8brMxVYeb6PV1y8aUjtxnEnq+dDiS
-	 rSUCWil/pTvVPz8ohac6pjlw9vQ/UC8khy5mRzGC5rfSRMh87RrZ+Pped3grcKQ5TZ
-	 drVYXiW1kaypnjOHgoBv1rBiN7uXO9dOgYq3h+nkVQxo1zHPuUaV+11I4o/EKviRUq
-	 H7UQNQ3sGzLayu0Z9VzFWd79U8F0fK4JLcRvvgxx8LcIosoMDLJOrdnCXlCEKfecTa
-	 LP5ZkqAEZNldmXFHVRICIJcUXuPJONxKjc+4x38OyaqlVgEV8SLKERPitXqSxWi8iR
-	 stmAAIxWDM9gg==
+	s=k20201202; t=1734909147;
+	bh=VnA1Kpl6cnNCncV299IxvKMXy0LENGhUCK7E8iW560U=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=Jt08AH6I6TbqJCHXd/acPRzbZyWx52z2MmhPoaQ2cyp9RK1qweXBp0RrtA4MOMIBf
+	 07kwOrXbJ9793M3E5h78GCOPP0O+dDF4m3oX0+rmbRpoRZv6PblExjqSOxhtjkhEtG
+	 HtPhow9N6iHFBadT8FT42tARcpFEL+zyCJtQi/6RslUp2TDnTx/c7N+LSbxrnYeiKw
+	 HqMtwjSUIY7TCZmIDYPGiDDaniR5sBgT3AyBNUkrh4m25SObQZEFuJngEE/DN3eyXy
+	 eROFrH+b04IqphTPehy3CDM3Pj7l8t6LQLvPHFQ11Gnv9BkZ2xIUh2Gqv/l75QtwCO
+	 +R4AOfkouo0CA==
 From: SeongJae Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SeongJae Park <sj@kernel.org>,
 	damon@lists.linux.dev,
 	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH 0/2] mm/damon/core: fix memory leaks and ignored inputs from damon_commit_ctx()
-Date: Sun, 22 Dec 2024 15:12:20 -0800
-Message-Id: <20241222231222.85060-1-sj@kernel.org>
+	linux-kernel@vger.kernel.org,
+	stable@vger.kernel.org
+Subject: [PATCH 2/2] mm/damon/core: fix ignored quota goals and filters of newly committed schemes
+Date: Sun, 22 Dec 2024 15:12:22 -0800
+Message-Id: <20241222231222.85060-3-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20241222231222.85060-1-sj@kernel.org>
+References: <20241222231222.85060-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -43,26 +47,33 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Due to two bugs in damon_commit_targets() and damon_commit_schemes(),
-which are called from damon_commit_ctx(), some user inputs can be
-ignored, and some mmeory objects can be leaked.  Fix those.
+damon_commit_schemes() ignores quota goals and filters of the newly
+committed schemes.  This makes users confused about the behaviors.
+Correctly handle those inputs.
 
-Note that only DAMON sysfs interface users are affected.  Other DAMON
-core API user modules that more focused more on simple and dedicated
-production usages, including DAMON_RECLAIM and DAMON_LRU_SORT are not
-using the buggy function in the way, so not affected.
+Fixes: 9cb3d0b9dfce ("mm/damon/core: implement DAMON context commit function")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: SeongJae Park <sj@kernel.org>
+---
+ mm/damon/core.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-SeongJae Park (2):
-  mm/damon/core: fix new damon_target objects leaks on
-    damon_commit_targets()
-  mm/damon/core: fix ignored quota goals and filters of newly committed
-    schemes
-
- mm/damon/core.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
-
-
-base-commit: a2b6c37664ce2d7ab39837dae4078fcb01078f13
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index 931e8e4b1333..5192ee29f6cf 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -868,6 +868,11 @@ static int damon_commit_schemes(struct damon_ctx *dst, struct damon_ctx *src)
+ 				NUMA_NO_NODE);
+ 		if (!new_scheme)
+ 			return -ENOMEM;
++		err = damos_commit(new_scheme, src_scheme);
++		if (err) {
++			damon_destroy_scheme(new_scheme);
++			return err;
++		}
+ 		damon_add_scheme(dst, new_scheme);
+ 	}
+ 	return 0;
 -- 
 2.39.5
 
