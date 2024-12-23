@@ -1,44 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F93A198A01;
-	Sun, 22 Dec 2024 23:12:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2246138F82;
+	Mon, 23 Dec 2024 20:24:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734909147; cv=none; b=Ezwc3K7dw/Vkz9/vhznF/zIhzfarBNu22h8uiQbGEbqUB2c7k3uAj9Cjui3/CCMBXvgFKkMlHLfbUBbmJQbBcWLN1q8j13DpTwOqdAq3LBZYg6YjyU6D6Wt0oJrNiVz7FmZavhZtGcHcPLh6YHgOay+7GSiGm4+muT+wFtI1ksY=
+	t=1734985468; cv=none; b=mQgtLYfeXfyZYCOCfgpuTCVa1RBu8Ul+es9wPNg62H7qNbVC1wkjV55TariUBWDwxOEV+sglxR4MSD0LkmA954PIJq44Pl4ZESi6LIGgm/2VuI/ASerzEETBtuhGJaVWbiJNR1zZIeBOmnknB/qmOdMOac1ECDNIG8rCAfeQwD8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734909147; c=relaxed/simple;
-	bh=zvpnzpnU6SEsn/lS2CcE/GaMIrv4lRmkiTD51TF9JK8=;
+	s=arc-20240116; t=1734985468; c=relaxed/simple;
+	bh=tINgmEfdqpxDJYkousUSj6B1mxODHUGQ462kG9us0Pk=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=VaruZHK655+v3/3srFebb+4VWgtd0BBn4gU/jEYDDaF/9/rgfqIk6YFrk2LRLfOQSGzqs1j5CuO3dgaf3rgHIDiHs2PVgQrrSERpBMFZ9nTnQDH7ZJYElxNQh0sgnNDuVnethI+cyKNZ28O1MmSRIM2VUcTESrA2ppcaXAVrjHs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=W0ggchTu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IWqzIwsNjl8yiK+gx+S+cXWWNExjZI5VGlEnOU8LFw8d2R52LM3kXdac3XaTkgYhn4kfdxW3DgZS4oqr9O1ANu8ERD7cNJqghmX3KZR+gVaCoZcsw/JzuwQBqe6ZGR0bhAKnd1R6ccEACkZFxV0zFLyV0/hN0dwtMIO8rYqgcLk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=vI4zMtpF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="W0ggchTu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE365C4CECD;
-	Sun, 22 Dec 2024 23:12:25 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="vI4zMtpF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 665AEC4CED3;
+	Mon, 23 Dec 2024 20:24:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1734909145;
-	bh=zvpnzpnU6SEsn/lS2CcE/GaMIrv4lRmkiTD51TF9JK8=;
+	s=k20201202; t=1734985466;
+	bh=tINgmEfdqpxDJYkousUSj6B1mxODHUGQ462kG9us0Pk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W0ggchTuurFk/4bVT7d6P1pbWuYieEKHqJaICN3aHGVUWNzUSjiNo4BsPlE/RH3XW
-	 SQ4lp2SVVQukk9ETBPKbEDXe0C/PCNAJtMKrWn/3/bmx0cKfb69pPjJFDn0XOeM8P+
-	 vfn9XMjpaxNpgVNE46SBYchgHg8Ew1XLDnm5/rsavJfY+rth5hrdKLEEdoZksys22V
-	 3h+SqDrUMFjwElMOKgkBdysVpScq3CiOe10FMBw1mSsNHtoAGIfgFFDeOexYUpGIhk
-	 XROXbwrjhj+apd1SrSGKONqcxQXNC6J+92mZ5lF7tu6Yspy0zUuE6lEppy1OI4pYvN
-	 zL/84F2RZR10A==
+	b=vI4zMtpF3PF+96hjQKBmgJuRBBbQE75EtCCNn1Uqb22FTOV9gfxs49LOqkzZ+E/bj
+	 E8kT5fOBYSRLK9oIR1MPvsz+GNsG0OjMBAHNGeXviZluhq4qCT1WsP9UQdG50BXXJw
+	 aEZoJKAfNpoLpWzfLuYkpDa25gtWvfmC7cxedS5GVgM+m0dev/VlYiNaSOpjMkbytb
+	 sEk6nC/PfP1Y0VB5icLueNOQavZ3AeMUfd8tNLkB5BARKkVUMKcfkE3rmBlHy4AKTE
+	 ZVS0Oj4rEs7UICP2aIEL4NiywZ96Fuj3vSzyB/2RIm6y+PMAb2j6FDLowiV2kQjUiK
+	 4unfWlFeWP3tg==
 From: SeongJae Park <sj@kernel.org>
-To: Andrew Morton <akpm@linux-foundation.org>
-Cc: SeongJae Park <sj@kernel.org>,
+To: SeongJae Park <sj@kernel.org>
+Cc: kernel-team@meta.com,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Jonathan Corbet <corbet@lwn.net>,
 	damon@lists.linux.dev,
 	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org,
-	stable@vger.kernel.org
-Subject: [PATCH 1/2] mm/damon/core: fix new damon_target objects leaks on damon_commit_targets()
-Date: Sun, 22 Dec 2024 15:12:21 -0800
-Message-Id: <20241222231222.85060-2-sj@kernel.org>
+	linux-doc@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [RFC PATCH 00/18] mm/damon: enable page level properties based access pattern monitoring
+Date: Mon, 23 Dec 2024 12:24:24 -0800
+Message-Id: <20241223202424.44704-1-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20241222231222.85060-1-sj@kernel.org>
-References: <20241222231222.85060-1-sj@kernel.org>
+In-Reply-To: <20241219040327.61902-1-sj@kernel.org>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -47,37 +49,25 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-When new DAMON targets are added via damon_commit_targets(), the newly
-created targets are not deallocated when updating the internal data
-(damon_commit_target()) is failed.  Worse yet, even if the setup is
-successfully done, the new target is not linked to the context.  Hence,
-the new targets are always leaked regardless of the internal data setup
-failure.  Fix the leaks.
+On Wed, 18 Dec 2024 20:03:09 -0800 SeongJae Park <sj@kernel.org> wrote:
 
-Fixes: 9cb3d0b9dfce ("mm/damon/core: implement DAMON context commit function")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: SeongJae Park <sj@kernel.org>
----
- mm/damon/core.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+> TL; DR
+> ======
+> 
+> This patch series eanble access monitoring based on page level
+> properties including their anonymousness, belonging cgroups and
+> pg-young-ness, by extending DAMOS stats and regions walk features with
+> region-internal DAMOS filters.
 
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index a71703e05300..931e8e4b1333 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -961,8 +961,11 @@ static int damon_commit_targets(
- 			return -ENOMEM;
- 		err = damon_commit_target(new_target, false,
- 				src_target, damon_target_has_pid(src));
--		if (err)
-+		if (err) {
-+			damon_destroy_target(new_target);
- 			return err;
-+		}
-+		damon_add_target(dst, new_target);
- 	}
- 	return 0;
- }
--- 
-2.39.5
+I just released DAMON user-space tool, damo, of v2.6.1.  It includes support of
+this feature.  Using the user-space tool, I took and shared a simple
+screenshot[1] that might help you better understand what users can do with
+this.
 
+[1] https://social.kernel.org/notice/ApLdd6IaUEHk3WhgTA
+
+
+Thanks,
+SJ
+
+[...]
