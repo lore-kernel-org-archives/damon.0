@@ -1,46 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7CE4160783;
-	Thu, 26 Dec 2024 22:27:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A2C814AD38;
+	Fri, 27 Dec 2024 21:08:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735252067; cv=none; b=lVJkS852C5QC5AWpytiKxkyR2eLPGi8gd9WKuIYJuDliAcnlpQ9nCBW6yczTcaxB2vusz+olgjnGVIijwqTw1S5CJYhf0ROJEW0jxD4Gok9NWGn0ESE5RaqgkesLco4xhYiz9SKdmod3+prelD0j8l3WGeSox+FfURDPb2Fq0cE=
+	t=1735333708; cv=none; b=FF6PdJogZvF6xnsDNd2qXK9hqjBHrGiJgwCzu0W1HdRX5Nh+1ScwLTUCF6lRN5+SgoTvrsnC18SwUt581nW7W4GKG//w4DOP4/Lb71txbB5u8GNpZB0x+aADQzGzJ9fqC4x2v+TrPiSlthlfzGw5Dgdf5pANPDUkvgowiq5+viU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735252067; c=relaxed/simple;
-	bh=69r0tPasPKa511yR14Pdy2wkmefE1ecTKdPrHQqw2o4=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=Y9xeYfpbgJ3aP+j6QPdaHRzDn48N9aOIzVN9O2KLI1yFVYmwoIWsFYqo1t3ze/oFL1PmSiYSIMRXJVgfpQfXAoPIcyZpJ3x2QEyN3WOgPcSZWiDjqSPFxbfTYhSNYQ/TSsUsdKUVTfc4yIAHxoBNYNSuLWMRkX3xw3KnWELFBLU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YyZyYWLz; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1735333708; c=relaxed/simple;
+	bh=Vt/oT9zECa50K2zX74ziPOY9ZJ8DMDBUW7KU9gy0O8s=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=ekcj6iYu43THGofZ1hnfzsJFBT4mD8m4YTq1hl7IMIBcy+dWdR0phvNWiuppJKi+fZh/6Ae/9Y9vplRaTBJhf79E1hcHdWJd65sxr8JDfHt3SBK2qy9IR28Xj4NB2dzxsxUvvqwZDTgkaDVYkteXFF9HkGwj5R78UCxm4faDGeQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tStbiETE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YyZyYWLz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A04BC4CED1;
-	Thu, 26 Dec 2024 22:27:46 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tStbiETE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D032AC4CED0;
+	Fri, 27 Dec 2024 21:08:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1735252066;
-	bh=69r0tPasPKa511yR14Pdy2wkmefE1ecTKdPrHQqw2o4=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YyZyYWLzstlrzay10t9oDCVOU8VtMyvItDUt5EfWW9lvAxSG+Rkeqt0GvatjEToMP
-	 R2WEf8m4z/MU8ujY9TBFX0cG4XTxaBT0S/t69MV4cio6L2nTHPYTsLC0WFfAn75EfX
-	 6FgVjtfWmTWPCP427a1dmHfUppJ/YVyqHj32wAsAMpYWaCCZoXAK2ByJftPueTD8ik
-	 uYw2/pNPKxXFIwYSCpUMHQ0un5Phg7BwHhjDW31cqCJT8hcwMHIER1+lvSEwj80HXS
-	 zSR9cRYjjhYd6cEVsqzd0odGE5zQbvY8pbcfu3CgOFJ3hIUWoo/XVJ0h1vY5WfLL+0
-	 9RtY/TDZCYw5A==
+	s=k20201202; t=1735333707;
+	bh=Vt/oT9zECa50K2zX74ziPOY9ZJ8DMDBUW7KU9gy0O8s=;
+	h=From:To:Cc:Subject:Date:From;
+	b=tStbiETEAit92CAj1kCceZ3RybSVAIiIjsVZOHPi5FKRfSXA62h0dgJKz4NiefJmj
+	 AP5nJ8ZVt7Vk8eJRHuq2o8cNtfteVH8OU+goK6oNo2jY9S+HtZopAZl13qw4bZIqOF
+	 dZv//CAR5qqv2U0wlD2ymFAufAOI/TffUArS8z2gYmgslmPJpA+80CqsDz4ZPWLjby
+	 Lo+Fn1tQezEqIkyNoO4uoPob87hM6SF3PXlbKwEQHQexzumk9JmAuqsb6xAuxwSgHt
+	 qxXsCoCUe6cfAur7GWM0DDZK1XndY92lLssTN/k1aH3B8aWQmZ1B1WerfaaDIytl8D
+	 hoGeanWHvNR2Q==
 From: SeongJae Park <sj@kernel.org>
-To: SeongJae Park <sj@kernel.org>
-Cc: Andrew Morton <akpm@linux-foundation.org>,
+To: 
+Cc: SeongJae Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Jonathan Corbet <corbet@lwn.net>,
 	damon@lists.linux.dev,
 	kernel-team@meta.com,
 	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: Re: [RFC PATCH 10/10] Docs/admin-guide/mm/damon/usage: document DAMOS filter 'pass' sysfs file
-Date: Thu, 26 Dec 2024 14:27:43 -0800
-Message-Id: <20241226222743.79661-1-sj@kernel.org>
+Subject: [RFC PATCH v2 00/10] mm/damon: extend DAMOS filters for inclusion of target memory
+Date: Fri, 27 Dec 2024 13:08:09 -0800
+Message-Id: <20241227210819.63776-1-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20241226221445.78433-11-sj@kernel.org>
-References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -49,35 +47,66 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Thu, 26 Dec 2024 14:14:45 -0800 SeongJae Park <sj@kernel.org> wrote:
+DAMOS fitlers are exclusive filters.  It only excludes memory of
+specific types from the DAMOS action targets.  This has below problems.
 
-> Update DAMON usage document for the newly added 'pass' sysfs file for
-> DAMOS filters.
-> 
-> Signed-off-by: SeongJae Park <sj@kernel.org>
-> ---
->  Documentation/admin-guide/mm/damon/usage.rst | 34 ++++++++++++--------
->  1 file changed, 20 insertions(+), 14 deletions(-)
-> 
-> diff --git a/Documentation/admin-guide/mm/damon/usage.rst b/Documentation/admin-guide/mm/damon/usage.rst
-> index fa8a5e4199b1..ab343d6ac771 100644
-> --- a/Documentation/admin-guide/mm/damon/usage.rst
-> +++ b/Documentation/admin-guide/mm/damon/usage.rst
-> @@ -89,7 +89,7 @@ comma (",").
->      \ufffd\ufffd\ufffd \ufffd\ufffd\ufffd \ufffd\ufffd\ufffd \ufffd\ufffd\ufffd \ufffd\ufffd\ufffd \ufffd\ufffd\ufffd \ufffd\ufffd\ufffd \ufffd\ufffd\ufffd \ufffd\ufffd\ufffd 0/target_metric,target_value,current_value
->      \ufffd\ufffd\ufffd \ufffd\ufffd\ufffd \ufffd\ufffd\ufffd \ufffd\ufffd\ufffd \ufffd\ufffd\ufffd \ufffd\ufffd\ufffd \ufffd\ufffd\ufffd :ref:`watermarks <sysfs_watermarks>`/metric,interval_us,high,mid,low
->      \ufffd\ufffd\ufffd \ufffd\ufffd\ufffd \ufffd\ufffd\ufffd \ufffd\ufffd\ufffd \ufffd\ufffd\ufffd \ufffd\ufffd\ufffd \ufffd\ufffd\ufffd :ref:`filters <sysfs_filters>`/nr_filters
-> -    \ufffd\ufffd\ufffd \ufffd\ufffd\ufffd \ufffd\ufffd\ufffd \ufffd\ufffd\ufffd \ufffd\ufffd\ufffd \ufffd\ufffd\ufffd \ufffd\ufffd\ufffd \ufffd\ufffd\ufffd 0/type,matching,memcg_id
-> +    \ufffd\ufffd\ufffd \ufffd\ufffd\ufffd \ufffd\ufffd\ufffd \ufffd\ufffd\ufffd \ufffd\ufffd\ufffd \ufffd\ufffd\ufffd \ufffd\ufffd\ufffd \ufffd\ufffd\ufffd 0/type,matching,memcg_id,pass
->      \ufffd\ufffd\ufffd \ufffd\ufffd\ufffd \ufffd\ufffd\ufffd \ufffd\ufffd\ufffd \ufffd\ufffd\ufffd \ufffd\ufffd\ufffd \ufffd\ufffd\ufffd :ref:`stats <sysfs_schemes_stats>`/nr_tried,sz_tried,nr_applied,sz_applied,sz_ops_filter_passed,qt_exceeds
->      \ufffd\ufffd\ufffd \ufffd\ufffd\ufffd \ufffd\ufffd\ufffd \ufffd\ufffd\ufffd \ufffd\ufffd\ufffd \ufffd\ufffd\ufffd \ufffd\ufffd\ufffd :ref:`tried_regions <sysfs_schemes_tried_regions>`/total_bytes
->      \ufffd\ufffd\ufffd \ufffd\ufffd\ufffd \ufffd\ufffd\ufffd \ufffd\ufffd\ufffd \ufffd\ufffd\ufffd \ufffd\ufffd\ufffd \ufffd\ufffd\ufffd \ufffd\ufffd\ufffd 0/start,end,nr_accesses,age,sz_filter_passed
+First, the name is not explicitly explaining the behavior.  This
+actually resulted in confusions[1] and works to improve the siaution[2],
+including wordsmithing documentations and adding features to DAMON
+user-space tool, damo.
 
-Oops, seems my new patch format script has an encoding handling bug.  I will
-fix this on next spin...
+Secondly, the functionality is restrictive.  This is especially
+problematic when multiple filters need to be used.  For example,
+building a DAMOS scheme that applies the action to memory that belongs
+to cgroup A "or" cgroup B is impossible.  A workaroudn is using two
+schemes, each filtering out memory that not belong to cgroup A and
+cgroup B, respectively.  It is cumbersome, and makes control of
+quota-like additional factors difficult.
 
+Extend DAMOS filters to support not only excluding (blocking), but also
+including (pass-through) behavior.  For the extension, add a new
+damos_filter struct field called 'pass' for DAMON kernel API users.
+Using the API, add a DAMON sysfs file of same name under DAMOS filter
+sysfs directory, for DAMON user-space ABI users.  To prevent breaking
+old users with a behavioral change, set the blocking as the default
+behavior.
 
-Thanks,
-SJ
+Note that DAMOS' default behavior without DAMOS filters is applying the
+action to any memory.  And DAMOS filters work for only memory that
+satisfies 'type' and 'matching'.  Hence installing pass filter without
+any block filter after them makes no filter-behavioral change.
 
-[...]
+[1] https://lore.kernel.org/20240320165619.71478-1-sj@kernel.org
+[2] https://git.kernel.org/sj/damo/c/b6a722c85ff91e5abe9dd47135e300df243da056
+
+Changes from RFC v1
+(https://lore.kernel.org/20241226221445.78433-1-sj@kernel.org)
+- Fix encoding issue on the last patch
+
+SeongJae Park (10):
+  mm/damon: fixup damos_filter kernel-doc
+  mm/damon/core: add damos_filter->pass field
+  mm/damon/core: support damos_filter->pass
+  mm/damon/paddr: support damos_filter->pass
+  mm/damon: add pass argument to damos_new_filter()
+  mm/damon/sysfs-schemes: add a file for setting damos_filter->pass
+  Docs/mm/damon/design: document pass/block filters behaviors
+  Docs/ABI/damon: document DAMOS filter pass sysfs file
+  Docs/admin-guide/mm/damon/usage: omit DAMOS filter details in favor of
+    design doc
+  Docs/admin-guide/mm/damon/usage: document DAMOS filter 'pass' sysfs
+    file
+
+ .../ABI/testing/sysfs-kernel-mm-damon         | 14 +++--
+ Documentation/admin-guide/mm/damon/usage.rst  | 55 ++++++++++---------
+ Documentation/mm/damon/design.rst             | 29 ++++++++--
+ include/linux/damon.h                         | 15 +++--
+ mm/damon/core.c                               | 12 ++--
+ mm/damon/paddr.c                              |  9 +--
+ mm/damon/reclaim.c                            |  2 +-
+ mm/damon/sysfs-schemes.c                      | 32 ++++++++++-
+ mm/damon/tests/core-kunit.h                   | 14 ++---
+ 9 files changed, 125 insertions(+), 57 deletions(-)
+
+-- 
+2.39.5
