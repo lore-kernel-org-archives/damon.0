@@ -1,44 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A953A1F9ABC;
-	Fri, 27 Dec 2024 21:08:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2537E1F9EAB;
+	Fri, 27 Dec 2024 21:08:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735333714; cv=none; b=maotbL0HuyYcIAuViJGsKQkrdBSp4BEFoSlCMLQ77ctNV7wfSP0atvNaTs52Esnma3cLxGZb0DfVD4Wfd5kkLwj6lZRVqkr1IlN73n/4fZ6JLcc6GLG6BNiW0atGYRECS9lY1mutSVfSusHmwIxM2FVsC/ZsZ79VPgD174bPzDA=
+	t=1735333715; cv=none; b=KLiX+183fSusoKL+zL8hdharrPmQ8yYMHpnZ0QrMbzahlc/iyY9Zy76O73QMNZSpgEVaArOxwc2HxhTjeSvS9fKq/jh/Jwuv/Cnm5W9Oc1Z2nzbqKjeP985FcpzVAKrcfmVnT8Qc3832M0yHubpWT0pdr8JCJmZZ/FpfTdO1KUk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735333714; c=relaxed/simple;
-	bh=//vhFtbVl0HM6He0HK/Z+ZVxsC9xYIvf1nEXj2Zge2g=;
+	s=arc-20240116; t=1735333715; c=relaxed/simple;
+	bh=ZERQXRIpbhEDVEpD6J6LgTdFsTQpbeeZuCqI48fC6sI=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=aet3xe+sr2NMCIM1zWx3rUqxx2QC6jB+8+IPu7J/lyEOslqwRIE7GpPEdWfg8JpyW2gTA4qWs31Gyo6hCfXGzAZcEa89AsxXkli7bRjVAalmI1hbvqms1YaBE7EGlYSi/3CbpbUbdYsV3Zt4rNQEBMzAqPuLErJaEme88xcVI0w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EQUefMj+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Rkl2JHtH2tbwxqlVEbCDxcHqpp+eox6gJQE4VYKeuxVgGXI7b9L4+dEjCxHUZ6IK1UTosai4gYkfESXYGdQ8mY6KcVRteUKbnOzUKT9f5CtydIwBvkRww3wQlm6qQKXrbWQKN9cE5oRxXqku8T5rUkfOd/lsVl7wBnxlNXOBR6A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DrLt89ic; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EQUefMj+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CD5EC4CED6;
-	Fri, 27 Dec 2024 21:08:34 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DrLt89ic"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 437FBC4CEE2;
+	Fri, 27 Dec 2024 21:08:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1735333714;
-	bh=//vhFtbVl0HM6He0HK/Z+ZVxsC9xYIvf1nEXj2Zge2g=;
+	s=k20201202; t=1735333713;
+	bh=ZERQXRIpbhEDVEpD6J6LgTdFsTQpbeeZuCqI48fC6sI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EQUefMj+FWzM4VXbZDc5roHqMXa+dd9KuutCjSQ56NMbUULomhMHqHipp3Wt8VRJ8
-	 SjtLPjHWtNuv0pMuFtHg6a2Jh7HSUXt96HVF+2RcySb2IC2QxdilgtLQYf7fqrKLy0
-	 oPykW2Z0eAKxfvmtDy2AuQpNB7zW+mxWx8Qo+z8lRvc5+lDBQ5vbQwwNAD1tjUp4VP
-	 W46QWVpxZU5cVDdi2xiSOEIA4Aou+m7YChX4uD4y5seECyH9q9zP8iOYgPAJfbWLRw
-	 caCg2KF8cu0umenRO1N2fY/uPRQqIqGjrWAaznZFfEKsoWAFa6LhCJVwna5Sp+FrNJ
-	 nRcl1uIXj0ESw==
+	b=DrLt89icA879gSM39Ub/e7HV147OGR4ZXrFChzBzd0p8ILo78pml8/I8T2/zDwh3h
+	 HwqflM4E+tOSgKiITbK/KpcoVrSaMURpRrKuUmmWrQYnL2tJ/UMRl21g8UZTJqEUMW
+	 u7/nRtrszEUkMjtWvMdxfLJNF96VeKKSqf7HLnDsmy79/C1QW6aGuOm19deAEEtY8r
+	 ZGSEt0Y0nqoSmj8QkS4XXzEUFf7ASUGCU9U0fp/5eSSd2JkMpfblFkMNE3Xa/SOU/C
+	 BVMNdxZus9nHeBjJpwZwK/p8HVVhNyPoUtgdRo0wOK6rChQGvh7k78/frABWDndXxx
+	 +ZHav/02/UuQA==
 From: SeongJae Park <sj@kernel.org>
 To: 
 Cc: SeongJae Park <sj@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Jonathan Corbet <corbet@lwn.net>,
 	damon@lists.linux.dev,
 	kernel-team@meta.com,
-	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH v2 07/10] Docs/mm/damon/design: document pass/block filters behaviors
-Date: Fri, 27 Dec 2024 13:08:16 -0800
-Message-Id: <20241227210819.63776-8-sj@kernel.org>
+Subject: [RFC PATCH v2 06/10] mm/damon/sysfs-schemes: add a file for setting damos_filter->pass
+Date: Fri, 27 Dec 2024 13:08:15 -0800
+Message-Id: <20241227210819.63776-7-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20241227210819.63776-1-sj@kernel.org>
 References: <20241227210819.63776-1-sj@kernel.org>
@@ -50,60 +48,85 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Update DAMOS filters design document to describe the pass/block
-behavior of filters.
+Only kernel-space DAMON API users can use inclusive DAMOS filters.  Add
+a sysfs file named 'pass' under DAMOS filter directory of DAMON sysfs
+interface, to let the user-space users use inclusive DAMOS filters.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- Documentation/mm/damon/design.rst | 29 +++++++++++++++++++++++++----
- 1 file changed, 25 insertions(+), 4 deletions(-)
+ mm/damon/sysfs-schemes.c | 32 +++++++++++++++++++++++++++++++-
+ 1 file changed, 31 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/mm/damon/design.rst b/Documentation/mm/damon/design.rst
-index 5ebb572d0999..0265aaef2544 100644
---- a/Documentation/mm/damon/design.rst
-+++ b/Documentation/mm/damon/design.rst
-@@ -504,9 +504,30 @@ have a list of latency-critical processes.
+diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
+index 9a883e8aea1c..9e171046ee94 100644
+--- a/mm/damon/sysfs-schemes.c
++++ b/mm/damon/sysfs-schemes.c
+@@ -313,6 +313,7 @@ struct damon_sysfs_scheme_filter {
+ 	struct kobject kobj;
+ 	enum damos_filter_type type;
+ 	bool matching;
++	bool pass;
+ 	char *memcg_path;
+ 	struct damon_addr_range addr_range;
+ 	int target_idx;
+@@ -385,6 +386,30 @@ static ssize_t matching_store(struct kobject *kobj,
+ 	return count;
+ }
  
- To let users optimize DAMOS schemes with such special knowledge, DAMOS provides
- a feature called DAMOS filters.  The feature allows users to set an arbitrary
--number of filters for each scheme.  Each filter specifies the type of target
--memory, and whether it should exclude the memory of the type (filter-out), or
--all except the memory of the type (filter-in).
-+number of filters for each scheme.  Each filter specifies
++static ssize_t pass_show(struct kobject *kobj,
++		struct kobj_attribute *attr, char *buf)
++{
++	struct damon_sysfs_scheme_filter *filter = container_of(kobj,
++			struct damon_sysfs_scheme_filter, kobj);
 +
-+- a type of memory (``type``),
-+- whether it is for the memory of the type or all except the type
-+  (``matching``), and
-+- whether it is to allow (pass through the filter) or reject (block) applying
-+  the scheme's action to the memory (``pass``).
++	return sysfs_emit(buf, "%c\n", filter->pass ? 'Y' : 'N');
++}
 +
-+When multiple filters are installed, each filter is applied in the installed
-+order.  If a memory is matched to one of the filter, followup filters are
-+ignored.  For example, let's assume a filter for passing anonymous pages and
-+another filter for blocking young pages are installed in the order.  If a page
-+of a region that eligible to apply the scheme's action is an anonymous page,
-+the scheme's action will be applied to the page regardless of whether it is
-+young, since it matches with the first filter.  On the other hand, if a page of
-+the region is a non-anonymous page, the scheme's action will be applied only if
-+the page is young, since the second filter is also applied.
++static ssize_t pass_store(struct kobject *kobj,
++		struct kobj_attribute *attr, const char *buf, size_t count)
++{
++	struct damon_sysfs_scheme_filter *filter = container_of(kobj,
++			struct damon_sysfs_scheme_filter, kobj);
++	bool pass;
++	int err = kstrtobool(buf, &pass);
 +
-+Note that DAMOS action is eligible to be applied to any memory that satisfies
-+other conditions if no filter is isntalled.  Meanwhile, DAMOS filters work for
-+only memory that satisfies ``type`` and ``matching``.  It means installing only
-+pass filters is same to installing no filter, because pass filters dont' block
-+memory of type that not specified to pass.  For any use case, at least one
-+block filter should be installed as the last one.
++	if (err)
++		return err;
++
++	filter->pass = pass;
++	return count;
++}
++
+ static ssize_t memcg_path_show(struct kobject *kobj,
+ 		struct kobj_attribute *attr, char *buf)
+ {
+@@ -482,6 +507,9 @@ static struct kobj_attribute damon_sysfs_scheme_filter_type_attr =
+ static struct kobj_attribute damon_sysfs_scheme_filter_matching_attr =
+ 		__ATTR_RW_MODE(matching, 0600);
  
- For efficient handling of filters, some types of filters are handled by the
- core layer, while others are handled by operations set.  In the latter case,
-@@ -516,7 +537,7 @@ filter are not counted as the scheme has tried to the region.  In contrast, if
- a memory regions is filtered by an operations set layer-handled filter, it is
- counted as the scheme has tried.  This difference affects the statistics.
++static struct kobj_attribute damon_sysfs_scheme_filter_pass_attr =
++		__ATTR_RW_MODE(pass, 0600);
++
+ static struct kobj_attribute damon_sysfs_scheme_filter_memcg_path_attr =
+ 		__ATTR_RW_MODE(memcg_path, 0600);
  
--Below types of filters are currently supported.
-+Below ``type`` of filters are currently supported.
+@@ -497,6 +525,7 @@ static struct kobj_attribute damon_sysfs_scheme_filter_damon_target_idx_attr =
+ static struct attribute *damon_sysfs_scheme_filter_attrs[] = {
+ 	&damon_sysfs_scheme_filter_type_attr.attr,
+ 	&damon_sysfs_scheme_filter_matching_attr.attr,
++	&damon_sysfs_scheme_filter_pass_attr.attr,
+ 	&damon_sysfs_scheme_filter_memcg_path_attr.attr,
+ 	&damon_sysfs_scheme_filter_addr_start_attr.attr,
+ 	&damon_sysfs_scheme_filter_addr_end_attr.attr,
+@@ -1901,7 +1930,8 @@ static int damon_sysfs_add_scheme_filters(struct damos *scheme,
+ 			sysfs_filters->filters_arr[i];
+ 		struct damos_filter *filter =
+ 			damos_new_filter(sysfs_filter->type,
+-					sysfs_filter->matching, false);
++					sysfs_filter->matching,
++					sysfs_filter->pass);
+ 		int err;
  
- - anonymous page
-     - Applied to pages that containing data that not stored in files.
+ 		if (!filter)
 -- 
 2.39.5
