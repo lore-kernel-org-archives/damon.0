@@ -1,42 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7E291F9A87;
-	Fri, 27 Dec 2024 21:08:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A953A1F9ABC;
+	Fri, 27 Dec 2024 21:08:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735333712; cv=none; b=fhZQ8oQUG1XTWSl3m9F8QoLS9M2XINzM1dT1TQrEjNSjYuLIKOE0AectlsZNjMpDLeJoBxdqT6Lplcdg1aldYubRzd+/+YzWmlRt76icNBiUoMWzKNZlsictQidZfMYEsKf3EP/yN77BV+XoZmkCQH3Jqiep38SLrPwyvYFYygk=
+	t=1735333714; cv=none; b=maotbL0HuyYcIAuViJGsKQkrdBSp4BEFoSlCMLQ77ctNV7wfSP0atvNaTs52Esnma3cLxGZb0DfVD4Wfd5kkLwj6lZRVqkr1IlN73n/4fZ6JLcc6GLG6BNiW0atGYRECS9lY1mutSVfSusHmwIxM2FVsC/ZsZ79VPgD174bPzDA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735333712; c=relaxed/simple;
-	bh=xPDKx+cgGKS4vL2pTXGyaq2E/e6yLYc/uyg/ecrFVG0=;
+	s=arc-20240116; t=1735333714; c=relaxed/simple;
+	bh=//vhFtbVl0HM6He0HK/Z+ZVxsC9xYIvf1nEXj2Zge2g=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=ZrymIiWbHwwLdpPR09rDGCQik+8nuhp/7wqYyK07/9uS3EaRNDZxE+zKoLU0MuagGpYFuDX7eJPHp5nrLT7WtlyTGdEaYO4lbMS1zWQT+fINzZH53cfGrR/pl8sDKZJjRIa0re50W931sLJ4Ouywa9Ab3VFElfWm3Y1QSjI/EYM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FULY2tdg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aet3xe+sr2NMCIM1zWx3rUqxx2QC6jB+8+IPu7J/lyEOslqwRIE7GpPEdWfg8JpyW2gTA4qWs31Gyo6hCfXGzAZcEa89AsxXkli7bRjVAalmI1hbvqms1YaBE7EGlYSi/3CbpbUbdYsV3Zt4rNQEBMzAqPuLErJaEme88xcVI0w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EQUefMj+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FULY2tdg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FFC0C4CED4;
-	Fri, 27 Dec 2024 21:08:32 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EQUefMj+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CD5EC4CED6;
+	Fri, 27 Dec 2024 21:08:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1735333712;
-	bh=xPDKx+cgGKS4vL2pTXGyaq2E/e6yLYc/uyg/ecrFVG0=;
+	s=k20201202; t=1735333714;
+	bh=//vhFtbVl0HM6He0HK/Z+ZVxsC9xYIvf1nEXj2Zge2g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FULY2tdgi1VaO4rrf16MKP58oixHQI2N2jJn/F/gnUlRh3zifCIZDSg+EO6KzQdaj
-	 3GGh53n0FQNy8mV2be3B1SdfQpVgCKLXkieHaUKXKwzKDfZTTK9S80krp4qqnSZjrU
-	 1ZyOge3igtQM/3kvplwrHdGCFPUNTcMv6cPUINRZHh+vd4Hf6bKp+wbRD26nIjC/uB
-	 Rz9DMNNmuvr3aArpTA+t56Ghi+9EasW8BIelI1Ti7Lu10SXXMmhj80Oq+YQqbfwOYM
-	 mEyo0DS+QQMz4ryu7p3XPrHF+lTLxIu3oGGwzDIP4i/1P/ag0YEw+/YOSCCVMp3hK7
-	 IOZIOD943H1Lg==
+	b=EQUefMj+FWzM4VXbZDc5roHqMXa+dd9KuutCjSQ56NMbUULomhMHqHipp3Wt8VRJ8
+	 SjtLPjHWtNuv0pMuFtHg6a2Jh7HSUXt96HVF+2RcySb2IC2QxdilgtLQYf7fqrKLy0
+	 oPykW2Z0eAKxfvmtDy2AuQpNB7zW+mxWx8Qo+z8lRvc5+lDBQ5vbQwwNAD1tjUp4VP
+	 W46QWVpxZU5cVDdi2xiSOEIA4Aou+m7YChX4uD4y5seECyH9q9zP8iOYgPAJfbWLRw
+	 caCg2KF8cu0umenRO1N2fY/uPRQqIqGjrWAaznZFfEKsoWAFa6LhCJVwna5Sp+FrNJ
+	 nRcl1uIXj0ESw==
 From: SeongJae Park <sj@kernel.org>
 To: 
 Cc: SeongJae Park <sj@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
+	Jonathan Corbet <corbet@lwn.net>,
 	damon@lists.linux.dev,
 	kernel-team@meta.com,
+	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH v2 05/10] mm/damon: add pass argument to damos_new_filter()
-Date: Fri, 27 Dec 2024 13:08:14 -0800
-Message-Id: <20241227210819.63776-6-sj@kernel.org>
+Subject: [RFC PATCH v2 07/10] Docs/mm/damon/design: document pass/block filters behaviors
+Date: Fri, 27 Dec 2024 13:08:16 -0800
+Message-Id: <20241227210819.63776-8-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20241227210819.63776-1-sj@kernel.org>
 References: <20241227210819.63776-1-sj@kernel.org>
@@ -48,127 +50,60 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-damos_new_filter() sets damos_filter->pass as false always.  The API
-users hence should manually set the field to use the filter as a pass
-filter.  It is cumbersome and easy to mistake.  Add an arugment for
-setting the field to damos_new_filter().
+Update DAMOS filters design document to describe the pass/block
+behavior of filters.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- include/linux/damon.h       | 2 +-
- mm/damon/core.c             | 7 ++++---
- mm/damon/paddr.c            | 3 ++-
- mm/damon/reclaim.c          | 2 +-
- mm/damon/sysfs-schemes.c    | 2 +-
- mm/damon/tests/core-kunit.h | 4 ++--
- 6 files changed, 11 insertions(+), 9 deletions(-)
+ Documentation/mm/damon/design.rst | 29 +++++++++++++++++++++++++----
+ 1 file changed, 25 insertions(+), 4 deletions(-)
 
-diff --git a/include/linux/damon.h b/include/linux/damon.h
-index 122c30e4ce19..ad0360711aca 100644
---- a/include/linux/damon.h
-+++ b/include/linux/damon.h
-@@ -801,7 +801,7 @@ void damon_update_region_access_rate(struct damon_region *r, bool accessed,
- 		struct damon_attrs *attrs);
+diff --git a/Documentation/mm/damon/design.rst b/Documentation/mm/damon/design.rst
+index 5ebb572d0999..0265aaef2544 100644
+--- a/Documentation/mm/damon/design.rst
++++ b/Documentation/mm/damon/design.rst
+@@ -504,9 +504,30 @@ have a list of latency-critical processes.
  
- struct damos_filter *damos_new_filter(enum damos_filter_type type,
--		bool matching);
-+		bool matching, bool pass);
- void damos_add_filter(struct damos *s, struct damos_filter *f);
- void damos_destroy_filter(struct damos_filter *f);
+ To let users optimize DAMOS schemes with such special knowledge, DAMOS provides
+ a feature called DAMOS filters.  The feature allows users to set an arbitrary
+-number of filters for each scheme.  Each filter specifies the type of target
+-memory, and whether it should exclude the memory of the type (filter-out), or
+-all except the memory of the type (filter-in).
++number of filters for each scheme.  Each filter specifies
++
++- a type of memory (``type``),
++- whether it is for the memory of the type or all except the type
++  (``matching``), and
++- whether it is to allow (pass through the filter) or reject (block) applying
++  the scheme's action to the memory (``pass``).
++
++When multiple filters are installed, each filter is applied in the installed
++order.  If a memory is matched to one of the filter, followup filters are
++ignored.  For example, let's assume a filter for passing anonymous pages and
++another filter for blocking young pages are installed in the order.  If a page
++of a region that eligible to apply the scheme's action is an anonymous page,
++the scheme's action will be applied to the page regardless of whether it is
++young, since it matches with the first filter.  On the other hand, if a page of
++the region is a non-anonymous page, the scheme's action will be applied only if
++the page is young, since the second filter is also applied.
++
++Note that DAMOS action is eligible to be applied to any memory that satisfies
++other conditions if no filter is isntalled.  Meanwhile, DAMOS filters work for
++only memory that satisfies ``type`` and ``matching``.  It means installing only
++pass filters is same to installing no filter, because pass filters dont' block
++memory of type that not specified to pass.  For any use case, at least one
++block filter should be installed as the last one.
  
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index 71db2c754e6d..13f12d82de5f 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -266,7 +266,7 @@ int damon_set_regions(struct damon_target *t, struct damon_addr_range *ranges,
- }
+ For efficient handling of filters, some types of filters are handled by the
+ core layer, while others are handled by operations set.  In the latter case,
+@@ -516,7 +537,7 @@ filter are not counted as the scheme has tried to the region.  In contrast, if
+ a memory regions is filtered by an operations set layer-handled filter, it is
+ counted as the scheme has tried.  This difference affects the statistics.
  
- struct damos_filter *damos_new_filter(enum damos_filter_type type,
--		bool matching)
-+		bool matching, bool pass)
- {
- 	struct damos_filter *filter;
+-Below types of filters are currently supported.
++Below ``type`` of filters are currently supported.
  
-@@ -275,7 +275,7 @@ struct damos_filter *damos_new_filter(enum damos_filter_type type,
- 		return NULL;
- 	filter->type = type;
- 	filter->matching = matching;
--	filter->pass = false;
-+	filter->pass = pass;
- 	INIT_LIST_HEAD(&filter->list);
- 	return filter;
- }
-@@ -806,7 +806,8 @@ static int damos_commit_filters(struct damos *dst, struct damos *src)
- 			continue;
- 
- 		new_filter = damos_new_filter(
--				src_filter->type, src_filter->matching);
-+				src_filter->type, src_filter->matching,
-+				src_filter->pass);
- 		if (!new_filter)
- 			return -ENOMEM;
- 		damos_commit_filter_arg(new_filter, src_filter);
-diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
-index 71cb02128b46..cd89500efc22 100644
---- a/mm/damon/paddr.c
-+++ b/mm/damon/paddr.c
-@@ -259,7 +259,8 @@ static unsigned long damon_pa_pageout(struct damon_region *r, struct damos *s,
- 		}
- 	}
- 	if (install_young_filter) {
--		filter = damos_new_filter(DAMOS_FILTER_TYPE_YOUNG, true);
-+		filter = damos_new_filter(
-+				DAMOS_FILTER_TYPE_YOUNG, true, false);
- 		if (!filter)
- 			return 0;
- 		damos_add_filter(s, filter);
-diff --git a/mm/damon/reclaim.c b/mm/damon/reclaim.c
-index 9e0077a9404e..a675150965e0 100644
---- a/mm/damon/reclaim.c
-+++ b/mm/damon/reclaim.c
-@@ -221,7 +221,7 @@ static int damon_reclaim_apply_parameters(void)
- 	}
- 
- 	if (skip_anon) {
--		filter = damos_new_filter(DAMOS_FILTER_TYPE_ANON, true);
-+		filter = damos_new_filter(DAMOS_FILTER_TYPE_ANON, true, false);
- 		if (!filter)
- 			goto out;
- 		damos_add_filter(scheme, filter);
-diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
-index deeaf23c1fcf..9a883e8aea1c 100644
---- a/mm/damon/sysfs-schemes.c
-+++ b/mm/damon/sysfs-schemes.c
-@@ -1901,7 +1901,7 @@ static int damon_sysfs_add_scheme_filters(struct damos *scheme,
- 			sysfs_filters->filters_arr[i];
- 		struct damos_filter *filter =
- 			damos_new_filter(sysfs_filter->type,
--					sysfs_filter->matching);
-+					sysfs_filter->matching, false);
- 		int err;
- 
- 		if (!filter)
-diff --git a/mm/damon/tests/core-kunit.h b/mm/damon/tests/core-kunit.h
-index 8f58d3424c21..532c6a6f21f9 100644
---- a/mm/damon/tests/core-kunit.h
-+++ b/mm/damon/tests/core-kunit.h
-@@ -411,7 +411,7 @@ static void damos_test_new_filter(struct kunit *test)
- {
- 	struct damos_filter *filter;
- 
--	filter = damos_new_filter(DAMOS_FILTER_TYPE_ANON, true);
-+	filter = damos_new_filter(DAMOS_FILTER_TYPE_ANON, true, false);
- 	KUNIT_EXPECT_EQ(test, filter->type, DAMOS_FILTER_TYPE_ANON);
- 	KUNIT_EXPECT_EQ(test, filter->matching, true);
- 	KUNIT_EXPECT_PTR_EQ(test, filter->list.prev, &filter->list);
-@@ -425,7 +425,7 @@ static void damos_test_filter_out(struct kunit *test)
- 	struct damon_region *r, *r2;
- 	struct damos_filter *f;
- 
--	f = damos_new_filter(DAMOS_FILTER_TYPE_ADDR, true);
-+	f = damos_new_filter(DAMOS_FILTER_TYPE_ADDR, true, false);
- 	f->addr_range = (struct damon_addr_range){
- 		.start = DAMON_MIN_REGION * 2, .end = DAMON_MIN_REGION * 6};
- 
+ - anonymous page
+     - Applied to pages that containing data that not stored in files.
 -- 
 2.39.5
