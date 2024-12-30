@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BE8FEAD0
-	for <damon@lists.linux.dev>; Mon, 30 Dec 2024 18:35:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C1DE183CA9
+	for <damon@lists.linux.dev>; Mon, 30 Dec 2024 18:39:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735583723; cv=none; b=SY/NEKInnknAQ3Tv/0ADAxlE4GVVrTgBxcp/cbSrOEnLMwZK4aQOBg2wtdfe9uopHtYw9JOjPIRti1le99MNFZXrvNkbPOTV03RBQuQvLX/KaePibBmfAIYGB9n+oZfFZTszETb7fdvhwPaM/NxwkVCmvizsqXjliRkuH1vSQxc=
+	t=1735583953; cv=none; b=SsYNfAq4mKQjXz83R7587mky6ThUDKw0gDpJnR2BJnMQJ8gf0CN4R37HUu9HBSL4f2YmAVID/6uQ5Wha6xCXfcWL5i9Ly4dta0rJAkCrqsce+meS3jAAZN6mT8zY86sRkLAldctBYxZm9WX/sy7yGVHkebt4WRrCJQZg6lDtVvw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735583723; c=relaxed/simple;
-	bh=V1GEgquyIaAqqLyj+VqQ5nz1ImeQLU+E1QFBK01R4Bo=;
+	s=arc-20240116; t=1735583953; c=relaxed/simple;
+	bh=TlTsZB4dqOfyM/JAiGXUcKKaeXGjD/fPaKZo2aWnyVU=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=uYRnbLpIuqlxPcV6Tkm6ZGmrzOOT/47t5k+5ZXdklTNBhKzYOSF8wsNLRt5xr58lT398GYQ5I3J3YK0LDk7su6FtIPNxawxewg52xuqGnLv39t+y2BeDJo2gJh5lq4bwMDh9X4+Ujz/5HKRevUoXmu7rhjmNTFOdIi2EL0J5RoY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=D+1l4sWV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bP+JpfK2BTV6NuAqwZ1czvk6G/uOQ2Y8Nd4rmSkyvLi4TpCIx/rjkbRnS9IMflwCh62ncu3oOIWvX3S330SIGxYPAkjgz6LsQdGGqCJFaWMlE2WJHZ0toZJgWZOJuc59DxKbslv1nx1TMcIDKo7Ds017fuCBEgu8wS2LmUjzwi0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KBhKdope; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="D+1l4sWV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E766C4CED0;
-	Mon, 30 Dec 2024 18:35:22 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KBhKdope"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E68FEC4CED0;
+	Mon, 30 Dec 2024 18:39:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1735583722;
-	bh=V1GEgquyIaAqqLyj+VqQ5nz1ImeQLU+E1QFBK01R4Bo=;
+	s=k20201202; t=1735583953;
+	bh=TlTsZB4dqOfyM/JAiGXUcKKaeXGjD/fPaKZo2aWnyVU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D+1l4sWVjYMC7WGzPsPaSf5NbvRmD5JX/ijWx0jYj89nSPtuql1pTB0uFCfZyRkbA
-	 +IXeH3ueoO1jUFo6zlv64pLIthpkj+zVA821OQ+TQSmHo4UwaAI+7dZwM0krRU+HxI
-	 mf3XkhErH1jortif4BbPDlZJvDb7iQeVYVJqtymUd/fk3rt4lbg6SK+grIgvOcw5ko
-	 54YpTBjA7c1XgmPJszZz26kzKtqGBzcWDO98UqGeYbSYFKP6ty/QKDos8CIdJjo0mb
-	 jwV+e5htPxhlix0TpEbFFa4ZEoXfpSAT/XZVwVP9gdOnZxzMRIiZ5iVkqizOZJPQ93
-	 IyEgBqCxYJSmQ==
+	b=KBhKdope/QzVMW+2kVPwZzfYAuu85UMhf/OOk18np9zD+BP4xD9n6X7CQ0U9HFpA1
+	 H+9/h+Uo134fOIcfrmGSzEjCZfeK6C/2JxluX4ToJLP1z3VW7jAfwsd0hi752A90GV
+	 gX5lC+AAGMzjbzA744cm0C8kRHHB/JyLfGv2oR5WN0lgvAjvRE54AsLwWwLrXsm+3M
+	 hCNrJYItIH1HMdggLTMWawR3l5eniEyW2Bev9XzxKXY19Hw3UhjH9pQoQUuY56vNeb
+	 /nRMrr8c6tlexQwg5Ew5N6uajrx0EahL9TbgDhOCakAMBMA3hWVSq2WEIWRuiZheIE
+	 MYdPOLcVtKX5A==
 From: SeongJae Park <sj@kernel.org>
-To: Akinobu Mita <akinobu.mita@gmail.com>
-Cc: SeongJae Park <sj@kernel.org>,
+To: SeongJae Park <sj@kernel.org>
+Cc: Akinobu Mita <akinobu.mita@gmail.com>,
 	damon@lists.linux.dev,
 	linux-mm@kvack.org
-Subject: Re: [PATCH damo] _damo_records: support address range in hex format
-Date: Mon, 30 Dec 2024 10:35:18 -0800
-Message-Id: <20241230183518.14452-1-sj@kernel.org>
+Subject: Re: [PATCH] mm/damon: trace: print address range in hex
+Date: Mon, 30 Dec 2024 10:39:09 -0800
+Message-Id: <20241230183909.14559-1-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20241230134221.166041-2-akinobu.mita@gmail.com>
+In-Reply-To: <20241230182813.14349-1-sj@kernel.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -45,15 +45,23 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Mon, 30 Dec 2024 22:42:21 +0900 Akinobu Mita <akinobu.mita@gmail.com> wrote:
+On Mon, 30 Dec 2024 10:28:13 -0800 SeongJae Park <sj@kernel.org> wrote:
 
-> In preparation for changing the display format of address ranges in
-> tracepoints for DAMON, if the start and end addresses of an address range
-> have a "0x" prefix, convert them as hexadecimal numbers.
+> Hello Akinobu,
+> 
+> On Mon, 30 Dec 2024 22:42:20 +0900 Akinobu Mita <akinobu.mita@gmail.com> wrote:
+> 
+> > Currently, the address ranges are displayed in decimal format in
+> > tracepoints for DAMON, but hexadecimal format is easier to compare with
+> > address ranges in /proc/<pid>/numa_maps.
+> 
+> I agree that it could be easier for the use case.  But, I think writing and
+> using a script converting formats for DAMON tracepoint output or numa_maps
+> could also be a way to resolve the issue.
 
-Thank you for this patch.  However, I'm not yet convinced to the DAMON side
-change.  Let's discuss this change after a discussion on the DAMON change is
-finished.
+For example, we can extend 'damo' to optionally do the conversion.  Depending
+on your use case (if you also use 'damo' for your use case), it might be a way
+to move forward?
 
 
 Thanks,
