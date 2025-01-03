@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 060971FDE33;
-	Fri,  3 Jan 2025 17:44:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58FDB1FE45D;
+	Fri,  3 Jan 2025 17:44:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735926261; cv=none; b=gpr7188JPWfWrHY3IQMQ5AaUYJ9y+DtuS0CjrOZCGonBE7aO3KEXS9TuFc7kR+kt5lJq70kPzbxkBdzPYCYM9lM6HjnWyKACGElP5lqQ2wU0DsLspYt5nd/7Sy3vdQXk1wI/SlFXCtg/Lf6cKnKJCHUi4CZ2T3nkUfuG66HsrS8=
+	t=1735926262; cv=none; b=aD/eFUTbHbZVZPnETJ6JgScZFnZ6BUsk5zIJ+ojoXrNySIhILc4cgWYpdtg2HcFRz5/fVJppzu1EpFzSDMZZT9dckyeqrDprdUPiDGTsBOu2Uxb78z3eABfDOswwkHhoHmkn5F1mY1jZs0Tb8tbja0uCQ8HTjcGOBYUSrEhaFeM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735926261; c=relaxed/simple;
-	bh=0AG/RC/M0bhm6WeM0GMTuPdy7IYbXvGsIfaoLaPfpCY=;
+	s=arc-20240116; t=1735926262; c=relaxed/simple;
+	bh=OfM4+ASQzquOI9PQ720oHjnGo91lYu+MMlnD/0TFf7o=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=rQJ4letZXXc8oU5KuXqTvKjj+XcJ0N+zjCN/ZOzeswPVesOnq97AqLFGGlDZNgm3V60c7Dde/By3mmFov7ekUxL6elrivmqLsexEs/l6ruxxvM8+kSuD3KqM1HOQ9cmvXjVu48KVpAsGQkUSLjxu5LCcGHM2KsI5a+xHi36wX7Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hJjyRE9+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tA5XonJqJI6EqrXxbIZFXezr9N7h15sZHV3Tqz52pe4mTF5s4bvmrzixM5a9SoA4mfwAbFjzx9pOGjmWXaY3ff3QUuGypKCa0TCndD1KY3Vs+fZSJyT6Gd5JVsflri7wa/sks/uuWKNL2kg3/3BKWSuXK4fzFxUfXX2HL0ZeJNo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gHVNUPVz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hJjyRE9+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF26CC4CECE;
-	Fri,  3 Jan 2025 17:44:20 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gHVNUPVz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3FD3C4CEDC;
+	Fri,  3 Jan 2025 17:44:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1735926260;
-	bh=0AG/RC/M0bhm6WeM0GMTuPdy7IYbXvGsIfaoLaPfpCY=;
+	s=k20201202; t=1735926262;
+	bh=OfM4+ASQzquOI9PQ720oHjnGo91lYu+MMlnD/0TFf7o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hJjyRE9+8H54mkpZ6BRFxdU14eB4Phkr6Ho40LTYktzdahdxWg1oftRRevZOtCu3f
-	 Qautu2v6d+NS6ozj/xOddO7xD9bEMTrAt8NOqv708mPGoOac9PiK/Ea/y65nPfx3N8
-	 pfeeQwuJ2H1hcdhXBTwc9Gk5Y9WhPnJG3kD6gWIS4at0P4vocjSA+cxHXSjux2L7QD
-	 GTueVv+Wtt+5A93Q9NV099U3xDMSsEjSG3AhE6u7Ls8T/ZfYClEjqRZwdQ+oxFjYFf
-	 1Hzu2poCoxe5n0guUXVGrEDKeZ2+Jf1BgsCFNb0hmRi3E43/QubKc5Fa6M9OgWrVd8
-	 mNQPMKt0hD9tw==
+	b=gHVNUPVzUGN38B0q75yQWFjNnyOmqoa/GJd9qHGqQYcBF78X8Cf8fSVaxmKX6KBqk
+	 8fX944GYefToDwQPcTmtgWR1bUG2J9ZUJ8LHX2w3qzit1SWrLyNlqN97plh/mChReB
+	 dyhT3jBPAvIPNIOjAQrAzv826X0+tDYkHTrQBSjMf89J6O5s6nBr6EXEEtDjeINQ6+
+	 HawS40sZ66R2Loi/gcGbvMHmganax0t/3+o+agJ1LONDjYjRpee+vvQuWZhA/G/uYM
+	 au3+FH5OYBMhfq4mW1D3/b4h2N6dE3k/Fs1I2xP4KzH/0SH6OhZwlQFHsLqU0W8qNk
+	 5UZhgsiU5nOSA==
 From: SeongJae Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SeongJae Park <sj@kernel.org>,
 	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [PATCH 09/10] mm/damon/sysfs: use damos_walk() for update_schemes_tried_{bytes,regions}
-Date: Fri,  3 Jan 2025 09:43:59 -0800
-Message-Id: <20250103174400.54890-10-sj@kernel.org>
+Subject: [PATCH 10/10] mm/damon/sysfs: remove unused code for schemes tried regions update
+Date: Fri,  3 Jan 2025 09:44:00 -0800
+Message-Id: <20250103174400.54890-11-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250103174400.54890-1-sj@kernel.org>
 References: <20250103174400.54890-1-sj@kernel.org>
@@ -46,154 +46,397 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-DAMON sysfs interface uses damon_callback with its own complicated
-synchronization facility to handle update_schemes_tried_bytes and
-update_schemes_tried_regions commands.  But damos_walk() can support the
-use case without the additional synchronizations.  Convert the code to
-use damos_walk() instead.
+DAMON sysfs interface was using damon_callback with its own complicated
+synchronization logics to update DAMOS scheme applied regions
+directories and files.  But it is replaced to use damos_walk(), and the
+additional synchronization logics are no more being used.  Remove those.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- mm/damon/sysfs-common.h  |  5 +++++
- mm/damon/sysfs-schemes.c | 48 ++++++++++++++++++++++++++++++++++++++++
- mm/damon/sysfs.c         | 43 +++++++++++++++++++++++++++++++++++
- 3 files changed, 96 insertions(+)
+ mm/damon/sysfs-common.h  |  10 --
+ mm/damon/sysfs-schemes.c | 204 ---------------------------------------
+ mm/damon/sysfs.c         |  70 +-------------
+ 3 files changed, 2 insertions(+), 282 deletions(-)
 
 diff --git a/mm/damon/sysfs-common.h b/mm/damon/sysfs-common.h
-index e79b4a65ff2d..81f1c845118f 100644
+index 81f1c845118f..b3f63bc658b7 100644
 --- a/mm/damon/sysfs-common.h
 +++ b/mm/damon/sysfs-common.h
-@@ -55,6 +55,11 @@ bool damos_sysfs_regions_upd_done(void);
+@@ -45,16 +45,6 @@ void damon_sysfs_schemes_update_stats(
+ 		struct damon_sysfs_schemes *sysfs_schemes,
+ 		struct damon_ctx *ctx);
  
- int damon_sysfs_schemes_update_regions_stop(struct damon_ctx *ctx);
- 
-+void damos_sysfs_populate_region_dir(struct damon_sysfs_schemes *sysfs_schemes,
-+		struct damon_ctx *ctx, struct damon_target *t,
-+		struct damon_region *r, struct damos *s,
-+		bool total_bytes_only);
-+
- int damon_sysfs_schemes_clear_regions(
- 		struct damon_sysfs_schemes *sysfs_schemes);
- 
+-int damon_sysfs_schemes_update_regions_start(
+-		struct damon_sysfs_schemes *sysfs_schemes,
+-		struct damon_ctx *ctx, bool total_bytes_only);
+-
+-void damos_sysfs_mark_finished_regions_updates(struct damon_ctx *ctx);
+-
+-bool damos_sysfs_regions_upd_done(void);
+-
+-int damon_sysfs_schemes_update_regions_stop(struct damon_ctx *ctx);
+-
+ void damos_sysfs_populate_region_dir(struct damon_sysfs_schemes *sysfs_schemes,
+ 		struct damon_ctx *ctx, struct damon_target *t,
+ 		struct damon_region *r, struct damos *s,
 diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
-index c57ab47686ff..1d8ad637051a 100644
+index 1d8ad637051a..5c4490b97258 100644
 --- a/mm/damon/sysfs-schemes.c
 +++ b/mm/damon/sysfs-schemes.c
-@@ -2183,6 +2183,54 @@ static int damon_sysfs_before_damos_apply(struct damon_ctx *ctx,
+@@ -114,55 +114,11 @@ static const struct kobj_type damon_sysfs_scheme_region_ktype = {
+  * scheme regions directory
+  */
+ 
+-/*
+- * enum damos_sysfs_regions_upd_status - Represent DAMOS tried regions update
+- *					 status
+- * @DAMOS_TRIED_REGIONS_UPD_IDLE:		Waiting for next request.
+- * @DAMOS_TRIED_REGIONS_UPD_STARTED:		Update started.
+- * @DAMOS_TRIED_REGIONS_UPD_FINISHED:	Update finished.
+- *
+- * Each DAMON-based operation scheme (&struct damos) has its own apply
+- * interval, and we need to expose the scheme tried regions based on only
+- * single snapshot.  For this, we keep the tried regions update status for each
+- * scheme.  The status becomes 'idle' at the beginning.
+- *
+- * Once the tried regions update request is received, the request handling
+- * start function (damon_sysfs_scheme_update_regions_start()) sets the status
+- * of all schemes as 'idle' again, and register ->before_damos_apply()
+- * callback.
+- *
+- * Then, the first followup ->before_damos_apply() callback
+- * (damon_sysfs_before_damos_apply()) sets the status 'started'.  The first
+- * ->after_sampling() or ->after_aggregation() callback
+- *  (damon_sysfs_cmd_request_callback()) after the call is called only after
+- *  the scheme is completely applied to the given snapshot.  Hence the callback
+- *  knows the situation by showing 'started' status, and sets the status as
+- *  'finished'.  Then, damon_sysfs_before_damos_apply() understands the
+- *  situation by showing the 'finished' status and do nothing.
+- *
+- * If DAMOS is not applied to any region due to any reasons including the
+- * access pattern, the watermarks, the quotas, and the filters,
+- * ->before_damos_apply() will not be called back.  Until the situation is
+- * changed, the update will not be finished.  To avoid this,
+- * damon_sysfs_after_sampling() set the status as 'finished' if more than two
+- * apply intervals of the scheme is passed while the state is 'idle'.
+- *
+- *  Finally, the tried regions request handling finisher function
+- *  (damon_sysfs_schemes_update_regions_stop()) unregisters the callbacks.
+- */
+-enum damos_sysfs_regions_upd_status {
+-	DAMOS_TRIED_REGIONS_UPD_IDLE,
+-	DAMOS_TRIED_REGIONS_UPD_STARTED,
+-	DAMOS_TRIED_REGIONS_UPD_FINISHED,
+-};
+-
+ struct damon_sysfs_scheme_regions {
+ 	struct kobject kobj;
+ 	struct list_head regions_list;
+ 	int nr_regions;
+ 	unsigned long total_bytes;
+-	enum damos_sysfs_regions_upd_status upd_status;
+-	unsigned long upd_timeout_jiffies;
+ };
+ 
+ static struct damon_sysfs_scheme_regions *
+@@ -178,7 +134,6 @@ damon_sysfs_scheme_regions_alloc(void)
+ 	INIT_LIST_HEAD(&regions->regions_list);
+ 	regions->nr_regions = 0;
+ 	regions->total_bytes = 0;
+-	regions->upd_status = DAMOS_TRIED_REGIONS_UPD_IDLE;
+ 	return regions;
+ }
+ 
+@@ -2126,63 +2081,6 @@ void damon_sysfs_schemes_update_stats(
+ 	}
+ }
+ 
+-/*
+- * damon_sysfs_schemes that need to update its schemes regions dir.  Protected
+- * by damon_sysfs_lock
+- */
+-static struct damon_sysfs_schemes *damon_sysfs_schemes_for_damos_callback;
+-static int damon_sysfs_schemes_region_idx;
+-static bool damos_regions_upd_total_bytes_only;
+-
+-/*
+- * DAMON callback that called before damos apply.  While this callback is
+- * registered, damon_sysfs_lock should be held to ensure the regions
+- * directories exist.
+- */
+-static int damon_sysfs_before_damos_apply(struct damon_ctx *ctx,
+-		struct damon_target *t, struct damon_region *r,
+-		struct damos *s)
+-{
+-	struct damos *scheme;
+-	struct damon_sysfs_scheme_regions *sysfs_regions;
+-	struct damon_sysfs_scheme_region *region;
+-	struct damon_sysfs_schemes *sysfs_schemes =
+-		damon_sysfs_schemes_for_damos_callback;
+-	int schemes_idx = 0;
+-
+-	damon_for_each_scheme(scheme, ctx) {
+-		if (scheme == s)
+-			break;
+-		schemes_idx++;
+-	}
+-
+-	/* user could have removed the scheme sysfs dir */
+-	if (schemes_idx >= sysfs_schemes->nr)
+-		return 0;
+-
+-	sysfs_regions = sysfs_schemes->schemes_arr[schemes_idx]->tried_regions;
+-	if (sysfs_regions->upd_status == DAMOS_TRIED_REGIONS_UPD_FINISHED)
+-		return 0;
+-	if (sysfs_regions->upd_status == DAMOS_TRIED_REGIONS_UPD_IDLE)
+-		sysfs_regions->upd_status = DAMOS_TRIED_REGIONS_UPD_STARTED;
+-	sysfs_regions->total_bytes += r->ar.end - r->ar.start;
+-	if (damos_regions_upd_total_bytes_only)
+-		return 0;
+-
+-	region = damon_sysfs_scheme_region_alloc(r);
+-	if (!region)
+-		return 0;
+-	list_add_tail(&region->list, &sysfs_regions->regions_list);
+-	sysfs_regions->nr_regions++;
+-	if (kobject_init_and_add(&region->kobj,
+-				&damon_sysfs_scheme_region_ktype,
+-				&sysfs_regions->kobj, "%d",
+-				damon_sysfs_schemes_region_idx++)) {
+-		kobject_put(&region->kobj);
+-	}
+-	return 0;
+-}
+-
+ /**
+  * damos_sysfs_populate_region_dir() - Populate a schemes tried region dir.
+  * @sysfs_schemes:	Schemes directory to populate regions directory.
+@@ -2231,29 +2129,6 @@ void damos_sysfs_populate_region_dir(struct damon_sysfs_schemes *sysfs_schemes,
+ 	}
+ }
+ 
+-/*
+- * DAMON callback that called after each accesses sampling.  While this
+- * callback is registered, damon_sysfs_lock should be held to ensure the
+- * regions directories exist.
+- */
+-void damos_sysfs_mark_finished_regions_updates(struct damon_ctx *ctx)
+-{
+-	struct damon_sysfs_schemes *sysfs_schemes =
+-		damon_sysfs_schemes_for_damos_callback;
+-	struct damon_sysfs_scheme_regions *sysfs_regions;
+-	int i;
+-
+-	for (i = 0; i < sysfs_schemes->nr; i++) {
+-		sysfs_regions = sysfs_schemes->schemes_arr[i]->tried_regions;
+-		if (sysfs_regions->upd_status ==
+-				DAMOS_TRIED_REGIONS_UPD_STARTED ||
+-				time_after(jiffies,
+-					sysfs_regions->upd_timeout_jiffies))
+-			sysfs_regions->upd_status =
+-				DAMOS_TRIED_REGIONS_UPD_FINISHED;
+-	}
+-}
+-
+ /* Called from damon_sysfs_cmd_request_callback under damon_sysfs_lock */
+ int damon_sysfs_schemes_clear_regions(
+ 		struct damon_sysfs_schemes *sysfs_schemes)
+@@ -2270,82 +2145,3 @@ int damon_sysfs_schemes_clear_regions(
+ 	}
+ 	return 0;
+ }
+-
+-static struct damos *damos_sysfs_nth_scheme(int n, struct damon_ctx *ctx)
+-{
+-	struct damos *scheme;
+-	int i = 0;
+-
+-	damon_for_each_scheme(scheme, ctx) {
+-		if (i == n)
+-			return scheme;
+-		i++;
+-	}
+-	return NULL;
+-}
+-
+-static void damos_tried_regions_init_upd_status(
+-		struct damon_sysfs_schemes *sysfs_schemes,
+-		struct damon_ctx *ctx)
+-{
+-	int i;
+-	struct damos *scheme;
+-	struct damon_sysfs_scheme_regions *sysfs_regions;
+-
+-	for (i = 0; i < sysfs_schemes->nr; i++) {
+-		sysfs_regions = sysfs_schemes->schemes_arr[i]->tried_regions;
+-		scheme = damos_sysfs_nth_scheme(i, ctx);
+-		if (!scheme) {
+-			sysfs_regions->upd_status =
+-				DAMOS_TRIED_REGIONS_UPD_FINISHED;
+-			continue;
+-		}
+-		sysfs_regions->upd_status = DAMOS_TRIED_REGIONS_UPD_IDLE;
+-		sysfs_regions->upd_timeout_jiffies = jiffies +
+-			2 * usecs_to_jiffies(scheme->apply_interval_us ?
+-					scheme->apply_interval_us :
+-					ctx->attrs.aggr_interval);
+-	}
+-}
+-
+-/* Called while damon_sysfs_lock is hold */
+-int damon_sysfs_schemes_update_regions_start(
+-		struct damon_sysfs_schemes *sysfs_schemes,
+-		struct damon_ctx *ctx, bool total_bytes_only)
+-{
+-	damon_sysfs_schemes_clear_regions(sysfs_schemes);
+-	damon_sysfs_schemes_for_damos_callback = sysfs_schemes;
+-	damos_tried_regions_init_upd_status(sysfs_schemes, ctx);
+-	damos_regions_upd_total_bytes_only = total_bytes_only;
+-	ctx->callback.before_damos_apply = damon_sysfs_before_damos_apply;
+-	return 0;
+-}
+-
+-bool damos_sysfs_regions_upd_done(void)
+-{
+-	struct damon_sysfs_schemes *sysfs_schemes =
+-		damon_sysfs_schemes_for_damos_callback;
+-	struct damon_sysfs_scheme_regions *sysfs_regions;
+-	int i;
+-
+-	for (i = 0; i < sysfs_schemes->nr; i++) {
+-		sysfs_regions = sysfs_schemes->schemes_arr[i]->tried_regions;
+-		if (sysfs_regions->upd_status !=
+-				DAMOS_TRIED_REGIONS_UPD_FINISHED)
+-			return false;
+-	}
+-	return true;
+-}
+-
+-/*
+- * Called from damon_sysfs_cmd_request_callback under damon_sysfs_lock.  Caller
+- * should unlock damon_sysfs_lock which held before
+- * damon_sysfs_schemes_update_regions_start()
+- */
+-int damon_sysfs_schemes_update_regions_stop(struct damon_ctx *ctx)
+-{
+-	damon_sysfs_schemes_for_damos_callback = NULL;
+-	ctx->callback.before_damos_apply = NULL;
+-	damon_sysfs_schemes_region_idx = 0;
+-	return 0;
+-}
+diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
+index 4ba44a314f2e..cf8fb5a963d6 100644
+--- a/mm/damon/sysfs.c
++++ b/mm/damon/sysfs.c
+@@ -1181,25 +1181,9 @@ static int damon_sysfs_add_targets(struct damon_ctx *ctx,
  	return 0;
  }
  
-+/**
-+ * damos_sysfs_populate_region_dir() - Populate a schemes tried region dir.
-+ * @sysfs_schemes:	Schemes directory to populate regions directory.
-+ * @ctx:		Corresponding DAMON context.
-+ * @t:			DAMON target of @r.
-+ * @r:			DAMON region to populate the directory for.
-+ * @s:			Corresponding scheme.
-+ * @total_bytes_only:	Whether the request is for bytes update only.
-+ *
-+ * Called from DAMOS walk callback while holding damon_sysfs_lock.
-+ */
-+void damos_sysfs_populate_region_dir(struct damon_sysfs_schemes *sysfs_schemes,
-+		struct damon_ctx *ctx, struct damon_target *t,
-+		struct damon_region *r, struct damos *s, bool total_bytes_only)
-+{
-+	struct damos *scheme;
-+	struct damon_sysfs_scheme_regions *sysfs_regions;
-+	struct damon_sysfs_scheme_region *region;
-+	int schemes_idx = 0;
-+
-+	damon_for_each_scheme(scheme, ctx) {
-+		if (scheme == s)
-+			break;
-+		schemes_idx++;
-+	}
-+
-+	/* user could have removed the scheme sysfs dir */
-+	if (schemes_idx >= sysfs_schemes->nr)
-+		return;
-+
-+	sysfs_regions = sysfs_schemes->schemes_arr[schemes_idx]->tried_regions;
-+	sysfs_regions->total_bytes += r->ar.end - r->ar.start;
-+	if (total_bytes_only)
-+		return;
-+
-+	region = damon_sysfs_scheme_region_alloc(r);
-+	if (!region)
-+		return;
-+	list_add_tail(&region->list, &sysfs_regions->regions_list);
-+	sysfs_regions->nr_regions++;
-+	if (kobject_init_and_add(&region->kobj,
-+				&damon_sysfs_scheme_region_ktype,
-+				&sysfs_regions->kobj, "%d",
-+				sysfs_regions->nr_regions++)) {
-+		kobject_put(&region->kobj);
-+	}
-+}
-+
- /*
-  * DAMON callback that called after each accesses sampling.  While this
-  * callback is registered, damon_sysfs_lock should be held to ensure the
-diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
-index 917e6aca3f58..4ba44a314f2e 100644
---- a/mm/damon/sysfs.c
-+++ b/mm/damon/sysfs.c
-@@ -1512,6 +1512,45 @@ static int damon_sysfs_damon_call(int (*fn)(void *data),
- 	return damon_call(kdamond->damon_ctx, &call_control);
+-static bool damon_sysfs_schemes_regions_updating;
+-
+ static void damon_sysfs_before_terminate(struct damon_ctx *ctx)
+ {
+ 	struct damon_target *t, *next;
+-	struct damon_sysfs_kdamond *kdamond;
+-	enum damon_sysfs_cmd cmd;
+-
+-	/* damon_sysfs_schemes_update_regions_stop() might not yet called */
+-	kdamond = damon_sysfs_cmd_request.kdamond;
+-	cmd = damon_sysfs_cmd_request.cmd;
+-	if (kdamond && ctx == kdamond->damon_ctx &&
+-			(cmd == DAMON_SYSFS_CMD_UPDATE_SCHEMES_TRIED_REGIONS ||
+-			 cmd == DAMON_SYSFS_CMD_UPDATE_SCHEMES_TRIED_BYTES) &&
+-			damon_sysfs_schemes_regions_updating) {
+-		damon_sysfs_schemes_update_regions_stop(ctx);
+-		damon_sysfs_schemes_regions_updating = false;
+-		mutex_unlock(&damon_sysfs_lock);
+-	}
+ 
+ 	if (!damon_target_has_pid(ctx))
+ 		return;
+@@ -1232,28 +1216,6 @@ static int damon_sysfs_upd_schemes_stats(void *data)
+ 	return 0;
  }
  
-+struct damon_sysfs_schemes_walk_data {
-+	struct damon_sysfs_kdamond *sysfs_kdamond;
-+	bool total_bytes_only;
-+};
-+
-+/* populate the region directory */
-+static void damon_sysfs_schemes_tried_regions_upd_one(void *data, struct damon_ctx *ctx,
-+		struct damon_target *t, struct damon_region *r,
-+		struct damos *s)
-+{
-+	struct damon_sysfs_schemes_walk_data *walk_data = data;
-+	struct damon_sysfs_kdamond *sysfs_kdamond = walk_data->sysfs_kdamond;
-+
-+	damos_sysfs_populate_region_dir(
-+			sysfs_kdamond->contexts->contexts_arr[0]->schemes,
-+			ctx, t, r, s, walk_data->total_bytes_only);
-+}
-+
-+static int damon_sysfs_update_schemes_tried_regions(
-+		struct damon_sysfs_kdamond *sysfs_kdamond, bool total_bytes_only)
-+{
-+	struct damon_sysfs_schemes_walk_data walk_data = {
-+		.sysfs_kdamond = sysfs_kdamond,
-+		.total_bytes_only = total_bytes_only,
-+	};
-+	struct damos_walk_control control = {
-+		.walk_fn = damon_sysfs_schemes_tried_regions_upd_one,
-+		.data = &walk_data,
-+	};
-+	struct damon_ctx *ctx = sysfs_kdamond->damon_ctx;
-+
-+	if (!ctx)
-+		return -EINVAL;
-+
-+	damon_sysfs_schemes_clear_regions(
-+			sysfs_kdamond->contexts->contexts_arr[0]->schemes);
-+	return damos_walk(ctx, &control);
-+}
-+
- /*
-  * damon_sysfs_handle_cmd() - Handle a command for a specific kdamond.
-  * @cmd:	The command to handle.
-@@ -1542,6 +1581,10 @@ static int damon_sysfs_handle_cmd(enum damon_sysfs_cmd cmd,
- 	case DAMON_SYSFS_CMD_UPDATE_SCHEMES_STATS:
- 		return damon_sysfs_damon_call(
- 				damon_sysfs_upd_schemes_stats, kdamond);
-+	case DAMON_SYSFS_CMD_UPDATE_SCHEMES_TRIED_BYTES:
-+		return damon_sysfs_update_schemes_tried_regions(kdamond, true);
-+	case DAMON_SYSFS_CMD_UPDATE_SCHEMES_TRIED_REGIONS:
-+		return damon_sysfs_update_schemes_tried_regions(kdamond, false);
- 	case DAMON_SYSFS_CMD_CLEAR_SCHEMES_TRIED_REGIONS:
- 		return damon_sysfs_schemes_clear_regions(
- 			kdamond->contexts->contexts_arr[0]->schemes);
+-static int damon_sysfs_upd_schemes_regions_start(
+-		struct damon_sysfs_kdamond *kdamond, bool total_bytes_only)
+-{
+-	struct damon_ctx *ctx = kdamond->damon_ctx;
+-
+-	if (!ctx)
+-		return -EINVAL;
+-	return damon_sysfs_schemes_update_regions_start(
+-			kdamond->contexts->contexts_arr[0]->schemes, ctx,
+-			total_bytes_only);
+-}
+-
+-static int damon_sysfs_upd_schemes_regions_stop(
+-		struct damon_sysfs_kdamond *kdamond)
+-{
+-	struct damon_ctx *ctx = kdamond->damon_ctx;
+-
+-	if (!ctx)
+-		return -EINVAL;
+-	return damon_sysfs_schemes_update_regions_stop(ctx);
+-}
+-
+ static inline bool damon_sysfs_kdamond_running(
+ 		struct damon_sysfs_kdamond *kdamond)
+ {
+@@ -1358,12 +1320,10 @@ static int damon_sysfs_cmd_request_callback(struct damon_ctx *c, bool active,
+ 		bool after_aggregation)
+ {
+ 	struct damon_sysfs_kdamond *kdamond;
+-	bool total_bytes_only = false;
+ 	int err = 0;
+ 
+ 	/* avoid deadlock due to concurrent state_store('off') */
+-	if (!damon_sysfs_schemes_regions_updating &&
+-			!mutex_trylock(&damon_sysfs_lock))
++	if (!mutex_trylock(&damon_sysfs_lock))
+ 		return 0;
+ 	kdamond = damon_sysfs_cmd_request.kdamond;
+ 	if (!kdamond || kdamond->damon_ctx != c)
+@@ -1374,39 +1334,13 @@ static int damon_sysfs_cmd_request_callback(struct damon_ctx *c, bool active,
+ 			goto out;
+ 		err = damon_sysfs_commit_input(kdamond);
+ 		break;
+-	case DAMON_SYSFS_CMD_UPDATE_SCHEMES_TRIED_BYTES:
+-		total_bytes_only = true;
+-		fallthrough;
+-	case DAMON_SYSFS_CMD_UPDATE_SCHEMES_TRIED_REGIONS:
+-		if (!damon_sysfs_schemes_regions_updating) {
+-			err = damon_sysfs_upd_schemes_regions_start(kdamond,
+-					total_bytes_only);
+-			if (!err) {
+-				damon_sysfs_schemes_regions_updating = true;
+-				goto keep_lock_out;
+-			}
+-		} else {
+-			damos_sysfs_mark_finished_regions_updates(c);
+-			/*
+-			 * Continue regions updating if DAMON is till
+-			 * active and the update for all schemes is not
+-			 * finished.
+-			 */
+-			if (active && !damos_sysfs_regions_upd_done())
+-				goto keep_lock_out;
+-			err = damon_sysfs_upd_schemes_regions_stop(kdamond);
+-			damon_sysfs_schemes_regions_updating = false;
+-		}
+-		break;
+ 	default:
+ 		break;
+ 	}
+ 	/* Mark the request as invalid now. */
+ 	damon_sysfs_cmd_request.kdamond = NULL;
+ out:
+-	if (!damon_sysfs_schemes_regions_updating)
+-		mutex_unlock(&damon_sysfs_lock);
+-keep_lock_out:
++	mutex_unlock(&damon_sysfs_lock);
+ 	return err;
+ }
+ 
 -- 
 2.39.5
