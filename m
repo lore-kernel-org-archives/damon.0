@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFFDF1FC7E8;
-	Fri,  3 Jan 2025 17:44:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1A3A1FBEAE;
+	Fri,  3 Jan 2025 17:44:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735926254; cv=none; b=MzDxr18nzwbFcHrVlnH1ZSsCYhlek2ONQp/hR/DO8rqt1WA6JAaUEukJbNd1YgkmOvASv37Oq16hYm/refnVP4L9OSh0jgcpy/mjiPdj3A7LWmsuwoj5yRdoDS9SYLqv6ly67ub3HTIUVs8d953YVE2XbyQs3VkXh0c+IouQM+0=
+	t=1735926255; cv=none; b=pFRmrLUYBXhEbqxHd74V3KaD9r8agNVPD0XMQaUidmOWI5gjstK8ptN++6R/ZsN1ddjnXocDZ4FW/CxMqQ2mYBm968RAlGUzoibDdfkiIanqxVmgQJ4PR3N6heled9vnRTb+tRDbpJQ/hV5TWdcaeJ2dSSip9nS85nrffctVBBs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735926254; c=relaxed/simple;
-	bh=JNkpoBSJiwe93XL962RE5R1ynJv2g3n6CCV3Kyol5/0=;
+	s=arc-20240116; t=1735926255; c=relaxed/simple;
+	bh=qk6ZdrhnjRXiXYePVN+xCb4IJkjveXFxA9K3vfVDUfI=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=t6dLzkDwAYsufpRnUERQlX3eQDsmYbLAD4sWkjbR8wig6Cqvy5PoFPfDOEwK3M2CmPVTJIGu00AhKpAR98VfgAoMT3pWd7Bj1XqfYj4DTgvO/8dwstfPH09OqBuzHW0oxxN6G4Moy4TREDZeLh14uQBcegSz+5atj8hh8kjC4Fs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qpu/k9+9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R4+91d2NX5mKG1Y2us2twzcg/VL4GAERhZHdcFUP9NWQOdxY17matrS+wkpLJSioRB5OFIE6jv+HyI5m+8AvpGQZUZ3vgYkTt9hN1nPvrzSXfm+hUexn96ymEvBeYNs3xZuwVRL8cMITy7r2gUGJ4OmXIsoXJWcJoWhdR/9vc2k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=meBCKp87; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qpu/k9+9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1274DC4CECE;
-	Fri,  3 Jan 2025 17:44:14 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="meBCKp87"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 398B4C4CECE;
+	Fri,  3 Jan 2025 17:44:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1735926254;
-	bh=JNkpoBSJiwe93XL962RE5R1ynJv2g3n6CCV3Kyol5/0=;
+	s=k20201202; t=1735926255;
+	bh=qk6ZdrhnjRXiXYePVN+xCb4IJkjveXFxA9K3vfVDUfI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qpu/k9+9YSU7eTA3ClaCp7f1fEbo8Y70eSTguSBhya0DXCc0VjaqGUxE1sa356iNY
-	 4btMs7/D2rf/yQsum03Nzf1vbAp7ZG2QdAApH6XDkNcK7gttcahF2zLBq+tRTfCxgi
-	 aLM8AWc/Rde2IKCQAkeCWL1KoedEMklGBEE4EZtzWh4lXHqPt94AtjoqsemaQXcriZ
-	 UgMfZgATz0uIPr+Knfg1C43PytEkgyYZkYdsf59EMqs+nN4MVFV5WK+v5h/c2GybEN
-	 8EgB9v4qbBlrVEKKPhBIVJhZAW0XHaQ1uVAJzFs9btRwRl1SU/MeMm4dkUbTTlOVZ2
-	 5eogb+SVumsOw==
+	b=meBCKp87S8/jHRYo5pQv+UDGhWfNwcohyxDM33g3BrH0kRpqtKeAQB6pwOZGWNi96
+	 PCGQJtL+kLXigtPuZPe/SmkC0tegfZAUxAZwsTPcqxLlgDB1EI45ZywZ6UH4y1PNLA
+	 brIbs5cNZHaTqccz77K++7sgaG6V8tSVZVuvo/7PFSiqjMRuTK1/QLeTzG0Qkkakch
+	 erXOL67rWcHV+OxAt5MIhi0Pvd1KUl153p6oA6SMwqrgffeD06+TglZXpSrV6iQD0T
+	 PZLyGcQUPBUJA8UWKfdb1WibxX3jO6mNCtHrXQ+mvUQf6+FnP66xfX8nsRO0UZfbNZ
+	 nVk9GaWjLWkFg==
 From: SeongJae Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SeongJae Park <sj@kernel.org>,
 	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [PATCH 03/10] mm/damon/core: introduce damon_call()
-Date: Fri,  3 Jan 2025 09:43:53 -0800
-Message-Id: <20250103174400.54890-4-sj@kernel.org>
+Subject: [PATCH 04/10] mm/damon/sysfs: use damon_call() for update_schemes_stats
+Date: Fri,  3 Jan 2025 09:43:54 -0800
+Message-Id: <20250103174400.54890-5-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250103174400.54890-1-sj@kernel.org>
 References: <20250103174400.54890-1-sj@kernel.org>
@@ -46,205 +46,90 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Introduce a new DAMON core API function, damon_call().  It aims to
-replace some damon_callback usages that access damon_ctx of ongoing
-kdamond with additional synchronizations.  It receives a function
-pointer, let the parallel kdamond invokes the function, and returns
-after the invocation is finished, or canceled due to some races.
-
-kdamond invokes the function inside the main loop after sampling is
-done.  If it is deactivated by DAMOS watermarks or already out of the
-main loop, mark the request as canceled so that damon_call() can wakeup
-and return.
+DAMON sysfs interface uses damon_callback with its own synchronization
+facility to handle update_schemes_stats kdamond command.  But
+damon_call() can support the use case without the additional
+synchronizations.  Convert the code to use damon_call() instead.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- include/linux/damon.h | 26 +++++++++++++
- mm/damon/core.c       | 86 +++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 112 insertions(+)
+ mm/damon/sysfs.c | 31 +++++++++++++++++++++----------
+ 1 file changed, 21 insertions(+), 10 deletions(-)
 
-diff --git a/include/linux/damon.h b/include/linux/damon.h
-index a67f2c4940e9..ac2d42a50751 100644
---- a/include/linux/damon.h
-+++ b/include/linux/damon.h
-@@ -552,6 +552,27 @@ struct damon_callback {
- 	void (*before_terminate)(struct damon_ctx *context);
- };
+diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
+index 4f6e4720b7ce..708c2ffdd620 100644
+--- a/mm/damon/sysfs.c
++++ b/mm/damon/sysfs.c
+@@ -1214,19 +1214,19 @@ static void damon_sysfs_before_terminate(struct damon_ctx *ctx)
  
-+/*
-+ * struct damon_call_control - Control damon_call().
-+ *
-+ * @fn:			Function to be called back.
-+ * @data:		Data that will be passed to @fn.
-+ * @return_code:	Return code from @fn invocation.
-+ *
-+ * Control damon_call(), which requests specific kdamond to invoke a given
-+ * function.  Refer to damon_call() for more details.
-+ */
-+struct damon_call_control {
-+	int (*fn)(void *data);
-+	void *data;
-+	int return_code;
-+/* private: internal use only */
-+	/* informs if the kdamond finished handling of the request */
-+	struct completion completion;
-+	/* informs if the kdamond canceled @fn infocation */
-+	bool canceled;
-+};
-+
- /**
-  * struct damon_attrs - Monitoring attributes for accuracy/overhead control.
+ /*
+  * damon_sysfs_upd_schemes_stats() - Update schemes stats sysfs files.
+- * @kdamond:	The kobject wrapper that associated to the kdamond thread.
++ * @data:	The kobject wrapper that associated to the kdamond thread.
   *
-@@ -632,6 +653,9 @@ struct damon_ctx {
- 	/* for scheme quotas prioritization */
- 	unsigned long *regions_score_histogram;
+  * This function reads the schemes stats of specific kdamond and update the
+  * related values for sysfs files.  This function should be called from DAMON
+- * callbacks while holding ``damon_syfs_lock``, to safely access the DAMON
+- * contexts-internal data and DAMON sysfs variables.
++ * worker thread,to safely access the DAMON contexts-internal data.  Caller
++ * should also ensure holding ``damon_syfs_lock``, and ->damon_ctx of @data is
++ * not NULL but a valid pointer, to safely access DAMON sysfs variables.
+  */
+-static int damon_sysfs_upd_schemes_stats(struct damon_sysfs_kdamond *kdamond)
++static int damon_sysfs_upd_schemes_stats(void *data)
+ {
++	struct damon_sysfs_kdamond *kdamond = data;
+ 	struct damon_ctx *ctx = kdamond->damon_ctx;
  
-+	struct damon_call_control *call_control;
-+	struct mutex call_control_lock;
-+
- /* public: */
- 	struct task_struct *kdamond;
- 	struct mutex kdamond_lock;
-@@ -779,6 +803,8 @@ static inline unsigned int damon_max_nr_accesses(const struct damon_attrs *attrs
- int damon_start(struct damon_ctx **ctxs, int nr_ctxs, bool exclusive);
- int damon_stop(struct damon_ctx **ctxs, int nr_ctxs);
- 
-+int damon_call(struct damon_ctx *ctx, struct damon_call_control *control);
-+
- int damon_set_region_biggest_system_ram_default(struct damon_target *t,
- 				unsigned long *start, unsigned long *end);
- 
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index 5192ee29f6cf..97f19ec4179c 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -504,6 +504,7 @@ struct damon_ctx *damon_new_ctx(void)
- 	ctx->next_ops_update_sis = 0;
- 
- 	mutex_init(&ctx->kdamond_lock);
-+	mutex_init(&ctx->call_control_lock);
- 
- 	ctx->attrs.min_nr_regions = 10;
- 	ctx->attrs.max_nr_regions = 1000;
-@@ -1162,6 +1163,54 @@ int damon_stop(struct damon_ctx **ctxs, int nr_ctxs)
- 	return err;
+-	if (!ctx)
+-		return -EINVAL;
+ 	damon_sysfs_schemes_update_stats(
+ 			kdamond->contexts->contexts_arr[0]->schemes, ctx);
+ 	return 0;
+@@ -1371,9 +1371,6 @@ static int damon_sysfs_cmd_request_callback(struct damon_ctx *c, bool active,
+ 	if (!kdamond || kdamond->damon_ctx != c)
+ 		goto out;
+ 	switch (damon_sysfs_cmd_request.cmd) {
+-	case DAMON_SYSFS_CMD_UPDATE_SCHEMES_STATS:
+-		err = damon_sysfs_upd_schemes_stats(kdamond);
+-		break;
+ 	case DAMON_SYSFS_CMD_COMMIT:
+ 		if (!after_aggregation)
+ 			goto out;
+@@ -1511,6 +1508,18 @@ static int damon_sysfs_turn_damon_off(struct damon_sysfs_kdamond *kdamond)
+ 	 */
  }
  
-+static bool damon_is_running(struct damon_ctx *ctx)
++static int damon_sysfs_damon_call(int (*fn)(void *data),
++		struct damon_sysfs_kdamond *kdamond)
 +{
-+	bool running;
++	struct damon_call_control call_control = {};
 +
-+	mutex_lock(&ctx->kdamond_lock);
-+	running = ctx->kdamond != NULL;
-+	mutex_unlock(&ctx->kdamond_lock);
-+	return running;
-+}
-+
-+/**
-+ * damon_call() - Invoke a given function on DAMON worker thread (kdamond).
-+ * @ctx:	DAMON context to call the function for.
-+ * @control:	Control variable of the call request.
-+ *
-+ * Ask DAMON worker thread (kdamond) of @ctx to call a function with an
-+ * argument data that respectively passed via &damon_call_control->fn and
-+ * &damon_call_control->data of @control, and wait until the kdamond finishes
-+ * handling of the request.
-+ *
-+ * The kdamond executes the function with the argument in the main loop, just
-+ * after a sampling of the iteration is finished.  The function can hence
-+ * safely access the internal data of the &struct damon_ctx without additional
-+ * synchronization.  The return value of the function will be saved in
-+ * &damon_call_control->return_code.
-+ *
-+ * Return: 0 on success, negative error code otherwise.
-+ */
-+int damon_call(struct damon_ctx *ctx, struct damon_call_control *control)
-+{
-+	init_completion(&control->completion);
-+	control->canceled = false;
-+
-+	mutex_lock(&ctx->call_control_lock);
-+	if (ctx->call_control) {
-+		mutex_unlock(&ctx->call_control_lock);
-+		return -EBUSY;
-+	}
-+	ctx->call_control = control;
-+	mutex_unlock(&ctx->call_control_lock);
-+	if (!damon_is_running(ctx))
++	if (!kdamond->damon_ctx)
 +		return -EINVAL;
-+	wait_for_completion(&control->completion);
-+	if (control->canceled)
-+		return -ECANCELED;
-+	return 0;
++	call_control.fn = fn;
++	call_control.data = kdamond;
++	return damon_call(kdamond->damon_ctx, &call_control);
 +}
 +
  /*
-  * Reset the aggregated monitoring results ('nr_accesses' of each region).
-  */
-@@ -1917,6 +1966,39 @@ static void kdamond_usleep(unsigned long usecs)
- 		usleep_range_idle(usecs, usecs + 1);
- }
- 
-+/*
-+ * kdamond_call() - handle damon_call_control.
-+ * @ctx:	The &struct damon_ctx of the kdamond.
-+ * @cancel:	Whether to cancel the invocation of the function.
-+ *
-+ * If there is a &struct damon_call_control request that registered via
-+ * &damon_call() on @ctx, do or cancel the invocation of the function depending
-+ * on @cancel.  @cancel is set when the kdamond is deactivated by DAMOS
-+ * watermarks, or the kdamond is already out of the main loop and therefore
-+ * will be terminated.
-+ */
-+static void kdamond_call(struct damon_ctx *ctx, bool cancel)
-+{
-+	struct damon_call_control *control;
-+	int ret = 0;
-+
-+	mutex_lock(&ctx->call_control_lock);
-+	control = ctx->call_control;
-+	mutex_unlock(&ctx->call_control_lock);
-+	if (!control)
-+		return;
-+	if (cancel) {
-+		control->canceled = true;
-+	} else {
-+		ret = control->fn(control->data);
-+		control->return_code = ret;
-+	}
-+	complete(&control->completion);
-+	mutex_lock(&ctx->call_control_lock);
-+	ctx->call_control = NULL;
-+	mutex_unlock(&ctx->call_control_lock);
-+}
-+
- /* Returns negative error code if it's not activated but should return */
- static int kdamond_wait_activation(struct damon_ctx *ctx)
+  * damon_sysfs_handle_cmd() - Handle a command for a specific kdamond.
+  * @cmd:	The command to handle.
+@@ -1529,12 +1538,14 @@ static int damon_sysfs_handle_cmd(enum damon_sysfs_cmd cmd,
  {
-@@ -1941,6 +2023,7 @@ static int kdamond_wait_activation(struct damon_ctx *ctx)
- 		if (ctx->callback.after_wmarks_check &&
- 				ctx->callback.after_wmarks_check(ctx))
- 			break;
-+		kdamond_call(ctx, true);
- 	}
- 	return -EBUSY;
- }
-@@ -2011,6 +2094,7 @@ static int kdamond_fn(void *data)
- 		if (ctx->callback.after_sampling &&
- 				ctx->callback.after_sampling(ctx))
- 			break;
-+		kdamond_call(ctx, false);
+ 	bool need_wait = true;
  
- 		kdamond_usleep(sample_interval);
- 		ctx->passed_sample_intervals++;
-@@ -2072,6 +2156,8 @@ static int kdamond_fn(void *data)
- 	ctx->kdamond = NULL;
- 	mutex_unlock(&ctx->kdamond_lock);
- 
-+	kdamond_call(ctx, true);
-+
- 	mutex_lock(&damon_lock);
- 	nr_running_ctxs--;
- 	if (!nr_running_ctxs && running_exclusive_ctxs)
+-	/* Handle commands that doesn't access DAMON context-internal data */
+ 	switch (cmd) {
+ 	case DAMON_SYSFS_CMD_ON:
+ 		return damon_sysfs_turn_damon_on(kdamond);
+ 	case DAMON_SYSFS_CMD_OFF:
+ 		return damon_sysfs_turn_damon_off(kdamond);
++	case DAMON_SYSFS_CMD_UPDATE_SCHEMES_STATS:
++		return damon_sysfs_damon_call(
++				damon_sysfs_upd_schemes_stats, kdamond);
+ 	case DAMON_SYSFS_CMD_CLEAR_SCHEMES_TRIED_REGIONS:
+ 		return damon_sysfs_schemes_clear_regions(
+ 			kdamond->contexts->contexts_arr[0]->schemes);
 -- 
 2.39.5
