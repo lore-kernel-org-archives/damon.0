@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81F241DFDAD;
-	Mon,  6 Jan 2025 19:19:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5E591DFE0E;
+	Mon,  6 Jan 2025 19:19:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736191191; cv=none; b=RSKMSWOAOuNR/IiaiNzRSJslX2jf+UPhLS85sY/Ab+oASGYoVRJ9OqWPa/GIxPz4MofLVArYrQlXzSs9TFAxoh1Nvv7py3vmvWDMMBfBcxCbmDnb6z9DuxApflfGYTNgZLJNoFSjij5gdecvDQbgfKTp9L13lmcXOyg2fyA9O3w=
+	t=1736191192; cv=none; b=rH2i7+JGiPYLEIbUOKc6V5A9IZ3z4phc9pQxYXuM3AJ2jSc2rs6yQ9Znw4Tu0kTYhNjhIiB5LyBCqvhpUMiJAdAYM6hhP89zDvEe7fWwr2grDIWXJp1WNHTxt2k8NM/F8Nm1XTCOaHwC6JeQvG5/cUpQYbtN9dJhuURwyGJ3LFI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736191191; c=relaxed/simple;
-	bh=5+ILY6AWLzSiGMYwsHx0+z4eLxwhpFGbZnepiwaDSm0=;
+	s=arc-20240116; t=1736191192; c=relaxed/simple;
+	bh=7oF79jn9lmm7ZWBErpi45JOkdTnxIklx6KgFpgZJtWk=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=F9ENy6z0sjDrhJJad3ZIMtx3wMPcNxfrfnT9ZrWVUDJ7vA5svrOZEvOW2baEcDsfJR8cFBk5Z/GxL8AzjlJAA2LffetdA74VhYxmSxcVXIOOdB4wYSoWC+93dsf/E1VnB741lZByUozzPdQ5hpgxc47VqlUqHRvO1LBMfMQGH2M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GmPu+efe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BhZURJiTHAav7sBMRRIhsIjaWMmfD+qvXMizBXF46LmdYRfeFRhuwKXu+EmlbW0KMKRRRnF4n8+2iFNwN2d/amF7YTcaeowYr6saTTk51n0HH/SfmVIr4pdqqXKh2M1ASpE61fDjQ/tmVX3pDuc9yJJCyenUw+gdQ1JX+KQM1r0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=c5gEYiRR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GmPu+efe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E968CC4CED2;
-	Mon,  6 Jan 2025 19:19:50 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="c5gEYiRR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1997DC4CEE1;
+	Mon,  6 Jan 2025 19:19:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1736191191;
-	bh=5+ILY6AWLzSiGMYwsHx0+z4eLxwhpFGbZnepiwaDSm0=;
+	s=k20201202; t=1736191192;
+	bh=7oF79jn9lmm7ZWBErpi45JOkdTnxIklx6KgFpgZJtWk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GmPu+efeoqikvP1zk66C6wepvQMNgRqweO36kmpptHzpBTfI5raPgt9l4iTKjih7v
-	 n0X/ErppPDIXQjurzFYWed2Ow60ezLNo0CdpzpddrBLf6hhw40hot7CZiR50n1TIYO
-	 TmtEjJU2w0nmCSse8TveeP+IdR2TMJd6+s9D/Na4eLaz9gwpZ6ATm4f2gGgUnvHdMZ
-	 MB64IAxu+7Uc+zOIBrvlJHuX6S5odNIyMgyYKGz2QjZnlYRazLHpw16lHezsDe5uQ9
-	 IGpMBllE1OhDc/NmLNCqTkMtqU3owKyS4YLGX1u8FuMMY6jQJu8/mPuzfhtPVRkVqJ
-	 i/IgEwykZFaMg==
+	b=c5gEYiRR50AapxrIyUe46ZHAkQwmmYmSvXhQYIo3JgUoANamQtzcHexk0FKRuXxqO
+	 s3m+yEkp/4NZTxFor+sBVmhkMedgt8tEqBOGAYoU6JYq+Gt6QA4QCqJoqZ07SmJTQm
+	 edPVvPSGaYIFFj7GqS1FNSE9Hl+icaicuI8d5T2gXeQ5hWnWSDvvw7X02wNIStOIyw
+	 TkPoGYTL5P+zKNU8IlKYiMJzr0unybHlcbDcgbSJGey2CrsIrzHhuMLCjqW9dCuc9C
+	 2g0nlyDwh9MwCMcBo1YAEeLjX7gISW4SwI4Wk8GcRUzba0GZgNV0FVsgzIvnWFiWX1
+	 RxHDY8KccKmEQ==
 From: SeongJae Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SeongJae Park <sj@kernel.org>,
-	Jonathan Corbet <corbet@lwn.net>,
+	Shuah Khan <shuah@kernel.org>,
 	damon@lists.linux.dev,
-	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
+	linux-kselftest@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [PATCH v2 3/8] Docs/mm/damon/design: update for removal of DAMON debugfs interface
-Date: Mon,  6 Jan 2025 11:19:36 -0800
-Message-Id: <20250106191941.107070-4-sj@kernel.org>
+Subject: [PATCH v2 4/8] selftests/damon/config: remove configs for DAMON debugfs interface selftests
+Date: Mon,  6 Jan 2025 11:19:37 -0800
+Message-Id: <20250106191941.107070-5-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250106191941.107070-1-sj@kernel.org>
 References: <20250106191941.107070-1-sj@kernel.org>
@@ -52,61 +52,26 @@ It's time to remove DAMON debugfs interface, which has deprecated long
 before in February 2023.  Read the cover letter of this patch series for
 more details.
 
-Update DAMON design documentation to stop mentioning about the
-interface, to avoid unnecessary confuses.
+Remove configs for selftests of it from DAMON selftests config file, to
+prevent unnecessary noises from the tests.
+
+[1] https://lore.kernel.org/20230209192009.7885-1-sj@kernel.org
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- Documentation/mm/damon/design.rst | 23 ++++++++++-------------
- 1 file changed, 10 insertions(+), 13 deletions(-)
+ tools/testing/selftests/damon/config | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/Documentation/mm/damon/design.rst b/Documentation/mm/damon/design.rst
-index a577ae40e71c..5385ea04c2fd 100644
---- a/Documentation/mm/damon/design.rst
-+++ b/Documentation/mm/damon/design.rst
-@@ -584,15 +584,11 @@ General Purpose User Interface Modules
- DAMON modules that provide user space ABIs for general purpose DAMON usage in
- runtime.
- 
--DAMON user interface modules, namely 'DAMON sysfs interface' and 'DAMON debugfs
--interface' are DAMON API user kernel modules that provide ABIs to the
--user-space.  Please note that DAMON debugfs interface is currently deprecated.
--
--Like many other ABIs, the modules create files on sysfs and debugfs, allow
--users to specify their requests to and get the answers from DAMON by writing to
--and reading from the files.  As a response to such I/O, DAMON user interface
--modules control DAMON and retrieve the results as user requested via the DAMON
--API, and return the results to the user-space.
-+Like many other ABIs, the modules create files on pseudo file systems like
-+'sysfs', allow users to specify their requests to and get the answers from
-+DAMON by writing to and reading from the files.  As a response to such I/O,
-+DAMON user interface modules control DAMON and retrieve the results as user
-+requested via the DAMON API, and return the results to the user-space.
- 
- The ABIs are designed to be used for user space applications development,
- rather than human beings' fingers.  Human users are recommended to use such
-@@ -601,8 +597,9 @@ Github (https://github.com/damonitor/damo), Pypi
- (https://pypistats.org/packages/damo), and Fedora
- (https://packages.fedoraproject.org/pkgs/python-damo/damo/).
- 
--Please refer to the ABI :doc:`document </admin-guide/mm/damon/usage>` for
--details of the interfaces.
-+Currently, one module for this type, namely 'DAMON sysfs interface' is
-+available.  Please refer to the ABI :ref:`doc <sysfs_interface>` for details of
-+the interfaces.
- 
- 
- Special-Purpose Access-aware Kernel Modules
-@@ -610,8 +607,8 @@ Special-Purpose Access-aware Kernel Modules
- 
- DAMON modules that provide user space ABI for specific purpose DAMON usage.
- 
--DAMON sysfs/debugfs user interfaces are for full control of all DAMON features
--in runtime.  For each special-purpose system-wide data access-aware system
-+DAMON user interface modules are for full control of all DAMON features in
-+runtime.  For each special-purpose system-wide data access-aware system
- operations such as proactive reclamation or LRU lists balancing, the interfaces
- could be simplified by removing unnecessary knobs for the specific purpose, and
- extended for boot-time and even compile time control.  Default values of DAMON
+diff --git a/tools/testing/selftests/damon/config b/tools/testing/selftests/damon/config
+index 0daf38974eb0..a68a9fead5dc 100644
+--- a/tools/testing/selftests/damon/config
++++ b/tools/testing/selftests/damon/config
+@@ -1,6 +1,5 @@
+ CONFIG_DAMON=y
+ CONFIG_DAMON_SYSFS=y
+-CONFIG_DAMON_DBGFS=y
+ CONFIG_DAMON_PADDR=y
+ CONFIG_DAMON_VADDR=y
+ CONFIG_DAMON_RECLAIM=y
 -- 
 2.39.5
