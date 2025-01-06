@@ -1,44 +1,51 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 694811DF740;
-	Mon,  6 Jan 2025 18:39:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED543BA34;
+	Mon,  6 Jan 2025 19:19:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736188788; cv=none; b=icnIel6WioOQBESzX5lWJ/FuMYtgdVDiFTAC2arHTAP96Wd68f9z13KDm6W1SK1n0AWxLqV/NV/n+bxsZhwaNwgNuLjHL7FgqX9HbyoVXw3lRjrRcZIIJ+fFOUw0ZdxyPK7ewdRgHcEsAO6FCPPTPWfbis5Wa8p/FZmu9ubtmCE=
+	t=1736191188; cv=none; b=A5IV7qbB1SneSHtPA+Ovk0/4Su0c5Cp3k69KTyVV8TMapWNPzUA+iRCoSXihMC7QIub3B+7uqSt8ERUfjuZHIUjOo0ZiwzqdyDoB03L+95D5RVGokDScheCg/Fyhiq1vH0cvnXbULEuPf4u4+d4Xi253y5J2RnUfqa/Eks7kD0k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736188788; c=relaxed/simple;
-	bh=pDwJYnWqtFxci1lUkgSkH+dSLY9gifSzbC/2yA43U/c=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=bWwB2AkiPswTRXrGCNdGH20YfKxPZfKUhUjX/EdP2T0joxR5LidWR5Qg2Orv0BJSepb9QxW0dx+G3QWWr4Bekhsigz/2FKiuijDemkMTr9H9uD6ltEAUGheDNfwIfdbjMCwXBiuQ+agie44/ubZuDYUly48IFjbOADlAZGGIq+4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aDW7p7b/; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1736191188; c=relaxed/simple;
+	bh=audGqB4/75vUXAunZqESaFOW2tw4o9rlfVrGxy/3FPA=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=MmRU7LkmXhNKe1mU1o0mV199Wm8XMHmE04LmovedGQgpAvvMQ3r05JpfaMCW/nVGlrm3jFWXi2sUCPO5uTbJ6yvVRhXZjrkD6gsmOthkIMABps3C/GalhS8uzRB4nBW+yZvn30VQLxf9RJlxpeYKhMPFR+S4qOo8/khk4W7mQDo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qr5KdAA6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aDW7p7b/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B89DEC4CED6;
-	Mon,  6 Jan 2025 18:39:47 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qr5KdAA6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 547AFC4CED2;
+	Mon,  6 Jan 2025 19:19:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1736188787;
-	bh=pDwJYnWqtFxci1lUkgSkH+dSLY9gifSzbC/2yA43U/c=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aDW7p7b/tAVDQC0G1J04V5Q8Z3IAoMeds9VQ9Dxm3ASAiBYTN+9iuLXDnXRqhFs/N
-	 AaFE+jQ2UXG8sHpuNMpTCAPmA56uobHkUU0CpTMW/rmpMCHW+uZJJKonhdzVi6hk8/
-	 +B3xlE83FWju0j6lYN4sreCTpS9ho3o9C/OhrGaesEDvHzFH0v+eHthuuK0RazD9Ex
-	 +0SDuegwWzhu6K9lsK+U8Y/8sDg0F531Hf1eZKyAObLe1s45Q+Rtzyfmg4SmrSzaI0
-	 3t72gAmg6NZIiiV98jiPFhz+fcCYPU4XaJy2LZphIXgAxXQi1ILkPA2sxnmhcfSo7K
-	 mAeDv6W1/w6cA==
+	s=k20201202; t=1736191187;
+	bh=audGqB4/75vUXAunZqESaFOW2tw4o9rlfVrGxy/3FPA=;
+	h=From:To:Cc:Subject:Date:From;
+	b=qr5KdAA6pMmrOy8OubqulhBtCmtGOwQ/P+V+ict8MbapJRuPjuDl4sMcaX+bELYid
+	 v3kP2Z9GWAPZBRz/UlVXaWKsMxos1kWwiFx9fWJqeJSNraVvRMYOJC/YMl8WC5KzjU
+	 oOgvz3magSYeKkoyStUGqb63Z6WJXXW/yOnOEsmdX36rcEj44sY2LW4H60aYy1xbwr
+	 BCnGC069k9v+FMZ8Urivr3zKS4ayT03F/8cuk90/G3RjHMTKjFrN7hvZk1nRQSuayZ
+	 ud42MkIMk6dMOLfZzvp5e6dCzkP375jU2Qd/BVK3PSS29ZLJzbhlz84Kcv/57JrMJy
+	 Stoc8v5VzlcTw==
 From: SeongJae Park <sj@kernel.org>
-To: Stephen Rothwell <sfr@canb.auug.org.au>
+To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SeongJae Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-	Linux Next Mailing List <linux-next@vger.kernel.org>,
-	damon@lists.linux.dev
-Subject: Re: linux-next: build warning after merge of the mm tree
-Date: Mon,  6 Jan 2025 10:39:44 -0800
-Message-Id: <20250106183944.103569-1-sj@kernel.org>
+	Alex Shi <alexs@kernel.org>,
+	Brendan Higgins <brendan.higgins@linux.dev>,
+	David Gow <davidgow@google.com>,
+	Hu Haowen <2023002089@link.tyut.edu.cn>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Rae Moar <rmoar@google.com>,
+	Shuah Khan <shuah@kernel.org>,
+	Yanteng Si <si.yanteng@linux.dev>,
+	damon@lists.linux.dev,
+	kunit-dev@googlegroups.com,
+	linux-doc@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-kselftest@vger.kernel.org,
+	linux-mm@kvack.org
+Subject: [PATCH v2 0/8] mm/damon: remove DAMON debugfs interface
+Date: Mon,  6 Jan 2025 11:19:33 -0800
+Message-Id: <20250106191941.107070-1-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250106173733.5da765ac@canb.auug.org.au>
-References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -47,37 +54,102 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Mon, 6 Jan 2025 17:37:33 +1100 Stephen Rothwell <sfr@canb.auug.org.au> wrote:
+DAMON debugfs interface was the only user interface of DAMON at the
+beginning[1].  However, it turned out the interface would be not good
+enough for long-term flexibility and stability.
 
-> Hi all,
-> 
-> After merging the mm tree, today's linux-next build (htmldocs) produced
-> this warning:
-> 
-> Documentation/admin-guide/mm/damon/usage.rst:440: WARNING: undefined label: 'damos_stats'
-> 
-> Introduced by commit
-> 
->   78d2a4747a44 ("Docs/admin-guide/mm/damon/usage: remove DAMON debugfs interface documentation")
+In Feb 2022[2], we therefore introduced DAMON sysfs interface as an
+alternative user interface that aims long-term flexibility and
+stability.  With its introduction, DAMON debugfs interface has announced
+to be deprecated in near future.
 
-Thank you for this nice report, Stephen!  The problem comes from the
-translation documents because those references the removed sections of debugfs
-interface documentation.  That is, I didn't take care of the translations for
-the change, sorry.
+In Feb 2023[3], we announced the official deprecation of DAMON debugfs
+interface.  In Jan 2024[4], we further made the deprecation difficult to
+be ignored.
 
-Simply removing the references could be a quick and small fix that can be
-melded into the document removal commit.  But I think the entire DAMON debugfs
-section from the translations should also be removed.  Since it is not a tiny
-change, I think it is better to be a separate patch that comes before the main
-debugfs section removal.  This might make Andrew's work unnecessarily
-complicated.  I will hence post the entire patch sereis as v2.
+In Oct 2024[5], we posted an RFC version of this patch series as the
+last notice.
 
+And as of this writing, no problem or concerns about the removal plan
+have reported.  Apparently users are already moved to the alternative,
+or made good plans for the change.
 
-Thanks,
-SJ
+Remove the DAMON debugfs interface code from the tree.  Given the past
+timeline and the absence of reported problems or concerns, it is safe
+enough to be done.
 
-> 
-> -- 
-> Cheers,
-> Stephen Rothwell
-> 
+[1] https://lore.kernel.org/20210716081449.22187-1-sj38.park@gmail.com
+[2] https://lore.kernel.org/20220228081314.5770-1-sj@kernel.org
+[3] https://lore.kernel.org/20230209192009.7885-1-sj@kernel.org
+[4] https://lore.kernel.org/20240130013549.89538-1-sj@kernel.org
+[5] https://lore.kernel.org/20241015175412.60563-1-sj@kernel.org
+
+Revision History
+----------------
+
+Changes from v1
+(https://lore.kernel.org/20250101213527.74203-1-sj@kernel.org)
+- Remove debugfs usage section and references from translations
+  (https://lore.kernel.org/20250106183944.103569-1-sj@kernel.org)
+
+Changes from RFC
+(https://lore.kernel.org/20241015175412.60563-1-sj@kernel.org)
+- Rebased on latest mm-unstable
+- Update and wordsmith commit messages
+
+SeongJae Park (8):
+  Docs/translations/*/admin-guide/mm/damon/usage: remove DAMON debugfs
+    interface documentation
+  Docs/admin-guide/mm/damon/usage: remove DAMON debugfs interface
+    documentation
+  Docs/mm/damon/design: update for removal of DAMON debugfs interface
+  selftests/damon/config: remove configs for DAMON debugfs interface
+    selftests
+  selftests/damon: remove tests for DAMON debugfs interface
+  kunit: configs: remove configs for DAMON debugfs interface tests
+  mm/damon: remove DAMON debugfs interface kunit tests
+  mm/damon: remove DAMON debugfs interface
+
+ Documentation/admin-guide/mm/damon/usage.rst  |  309 -----
+ Documentation/mm/damon/design.rst             |   23 +-
+ .../zh_CN/admin-guide/mm/damon/usage.rst      |  248 +---
+ .../zh_TW/admin-guide/mm/damon/usage.rst      |  248 +---
+ mm/damon/Kconfig                              |   30 -
+ mm/damon/Makefile                             |    1 -
+ mm/damon/dbgfs.c                              | 1148 -----------------
+ mm/damon/tests/.kunitconfig                   |    7 -
+ mm/damon/tests/dbgfs-kunit.h                  |  173 ---
+ tools/testing/kunit/configs/all_tests.config  |    3 -
+ tools/testing/selftests/damon/.gitignore      |    3 -
+ tools/testing/selftests/damon/Makefile        |   11 +-
+ tools/testing/selftests/damon/config          |    1 -
+ .../testing/selftests/damon/debugfs_attrs.sh  |   17 -
+ .../debugfs_duplicate_context_creation.sh     |   27 -
+ .../selftests/damon/debugfs_empty_targets.sh  |   21 -
+ .../damon/debugfs_huge_count_read_write.sh    |   22 -
+ .../damon/debugfs_rm_non_contexts.sh          |   19 -
+ .../selftests/damon/debugfs_schemes.sh        |   19 -
+ .../selftests/damon/debugfs_target_ids.sh     |   19 -
+ .../damon/debugfs_target_ids_pid_leak.c       |   68 -
+ .../damon/debugfs_target_ids_pid_leak.sh      |   22 -
+ ...fs_target_ids_read_before_terminate_race.c |   80 --
+ ...s_target_ids_read_before_terminate_race.sh |   14 -
+ .../selftests/damon/huge_count_read_write.c   |   46 -
+ 25 files changed, 13 insertions(+), 2566 deletions(-)
+ delete mode 100644 mm/damon/dbgfs.c
+ delete mode 100644 mm/damon/tests/dbgfs-kunit.h
+ delete mode 100755 tools/testing/selftests/damon/debugfs_attrs.sh
+ delete mode 100755 tools/testing/selftests/damon/debugfs_duplicate_context_creation.sh
+ delete mode 100755 tools/testing/selftests/damon/debugfs_empty_targets.sh
+ delete mode 100755 tools/testing/selftests/damon/debugfs_huge_count_read_write.sh
+ delete mode 100755 tools/testing/selftests/damon/debugfs_rm_non_contexts.sh
+ delete mode 100755 tools/testing/selftests/damon/debugfs_schemes.sh
+ delete mode 100755 tools/testing/selftests/damon/debugfs_target_ids.sh
+ delete mode 100644 tools/testing/selftests/damon/debugfs_target_ids_pid_leak.c
+ delete mode 100755 tools/testing/selftests/damon/debugfs_target_ids_pid_leak.sh
+ delete mode 100644 tools/testing/selftests/damon/debugfs_target_ids_read_before_terminate_race.c
+ delete mode 100755 tools/testing/selftests/damon/debugfs_target_ids_read_before_terminate_race.sh
+ delete mode 100644 tools/testing/selftests/damon/huge_count_read_write.c
+
+-- 
+2.39.5
