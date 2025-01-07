@@ -1,43 +1,59 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CCAD1E47C9;
-	Mon,  6 Jan 2025 19:34:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A19F51367;
+	Tue,  7 Jan 2025 00:20:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736192069; cv=none; b=ZN2Y45Od5rOeCwb3bzqgy+FLN2sN1ipXzSsbMPbwCtseEdWMEdrtM4yo9Dc7rdsoHMuGDQB+dZcGVAhUcafjEoWS2EhPcj4HZJZrvR6OCp3pBKMMWt1mLkpmnsImq1hSgQCzyUuEiyWkMzKIITydwbGLlUsUpN+ePgJvkug0VmM=
+	t=1736209258; cv=none; b=sGJKAsd1aPVwwGC00hiVIryzw8mkmWK+Cz8Vkk1DrXV6I5Qxk8nd5x5GtEJvo4tSAFIZ160LCJeWXCsHIv7XLeu8SoJD0HLmh/83EffwTFZP8GyuBXW+occl+QriX1GqjND/FCRe3x52WJZPy7QM4H+kNmFRu3S36X0WO3/rhxY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736192069; c=relaxed/simple;
-	bh=3O+7JbZj6xxSI8uZRXk/Ms1BG1Ir2OifGM6jxU273yY=;
+	s=arc-20240116; t=1736209258; c=relaxed/simple;
+	bh=lDrZVdZziMj5qQSzWv4xG4R6qqu4bxQoGSGdPERORvg=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=qikZIHX+FFJaxML5ehobPiWDuIRIw9pO1XniUQ1BWDnD152Qfn2rLDCqUDFfcBmnbYwbTyem+DYe4uNmwPaIe+liWlZDSFJQBpGt4C2ch5LEB/Rn39F98mKKlTgjiQEKdbCs//q9IrQWVumgOTWPu3vRi3vcbvAWREIiS8qGJzY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HZHzEXT0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=I82lMqbkKJkw0uZauwvJDM/+Q5Oo+bo0JHZBE7b0kvf3+6KH/Ma+ODaWjTIh1l2gQsRBPFSujaK/jzHjdkL8qEvcnx0tt7+cZp7geKHOpOrWTAdxuaE/QQXEuTWN39jEa5H07GoyFJrty08xKjolXBQValsLHIa3njpNxJUtM/4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dtiFvmxe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HZHzEXT0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F7EAC4CEDF;
-	Mon,  6 Jan 2025 19:34:28 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dtiFvmxe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F30E2C4CEDD;
+	Tue,  7 Jan 2025 00:20:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1736192068;
-	bh=3O+7JbZj6xxSI8uZRXk/Ms1BG1Ir2OifGM6jxU273yY=;
+	s=k20201202; t=1736209258;
+	bh=lDrZVdZziMj5qQSzWv4xG4R6qqu4bxQoGSGdPERORvg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HZHzEXT0/ZCiiBJtIoztxLXOeM5gJiISJG5r6HbQyZrpw/1mVfjWVBtuPg0ERW5kJ
-	 0h7DbOBlSt5hqBB4g5tr4gLDyKEftf9mZ9NXCo4Ca+oEwNHrgoiSDm/+DRLUb7tqA1
-	 lOgCmypgaOYcSvmrx4t/cyk0zXA3YiNYBUqijWImfhYnvGebhzu8LswTHl2DNPqsQx
-	 PVMU3LIIFBul1jXu7clmKpHV8dJ91/1b5MIP5Is8PLMkNovAdI3pmGGIz0Xf7W7CQw
-	 0RIHE6StYflDhilR+J4DNRyNW9jFMQD4eq9ZUYCr+Ls9o9bXqxrQYhMBcyDKcSPkUm
-	 tXB7fgnNMzRMw==
+	b=dtiFvmxebzqUaIlTVYx1vlCyHc7ItfFryNXCE6GbYW2gTJFxcsHhIxEd5Ao8CLNbu
+	 0FM7RsvkkyW+lJzqm/xBGNvNXcq5IC7oeqqiS9dKP43GBbxVmBCo5HZlwyECVGKVFj
+	 ObkMkE0Gxdp1vXH4WheN9CPoyw1ztOXGDvmnzRMmAmz5xSM6sup8WCJlqSS9Pk8hg4
+	 7BCRvO4NzHVm5ZAbzN+3ZXeNhnyvaoNSWy5gQOM85Rl4XOPDx2WMqXE8Px/ThhdN1D
+	 CB2PKY7tDQsQahwMVo8Fk4ZiJP2s/0k2cYJTsE6CAijiK9dxNzssl+pi47XQR4xMHC
+	 J7JPaH2NNR/Kg==
 From: SeongJae Park <sj@kernel.org>
-To: Andrew Morton <akpm@linux-foundation.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: SeongJae Park <sj@kernel.org>,
-	damon@lists.linux.dev,
+	stable@vger.kernel.org,
+	patches@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org
-Subject: [PATCH 16/16] Docs/ABI/damon: document per-region DAMOS filter-passed bytes stat file
-Date: Mon,  6 Jan 2025 11:34:01 -0800
-Message-Id: <20250106193401.109161-17-sj@kernel.org>
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net,
+	rwarsow@gmx.de,
+	conor@kernel.org,
+	hargar@microsoft.com,
+	broonie@kernel.org,
+	damon@lists.linux.dev
+Subject: Re: [PATCH 5.15 000/168] 5.15.176-rc1 review
+Date: Mon,  6 Jan 2025 16:20:54 -0800
+Message-Id: <20250107002054.3653-1-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250106193401.109161-1-sj@kernel.org>
-References: <20250106193401.109161-1-sj@kernel.org>
+In-Reply-To: <20250106151138.451846855@linuxfoundation.org>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -46,28 +62,49 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Document the new ABI for per-region operations set layer-handled DAMOS
-filters passed bytes statistic.
+Hello,
 
-Signed-off-by: SeongJae Park <sj@kernel.org>
+On Mon, 6 Jan 2025 16:15:08 +0100 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+
+> This is the start of the stable review cycle for the 5.15.176 release.
+> There are 168 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Wed, 08 Jan 2025 15:11:04 +0000.
+> Anything received after that time might be too late.
+
+This rc kernel passes DAMON functionality test[1] on my test machine.
+Attaching the test results summary below.  Please note that I retrieved the
+kernel from linux-stable-rc tree[2].
+
+Tested-by: SeongJae Park <sj@kernel.org>
+
+[1] https://github.com/damonitor/damon-tests/tree/next/corr
+[2] bcfd1339c90c ("Linux 5.15.176-rc1")
+
+Thanks,
+SJ
+
+[...]
+
 ---
- Documentation/ABI/testing/sysfs-kernel-mm-damon | 7 +++++++
- 1 file changed, 7 insertions(+)
 
-diff --git a/Documentation/ABI/testing/sysfs-kernel-mm-damon b/Documentation/ABI/testing/sysfs-kernel-mm-damon
-index 19cde386fd15..8c0acb31638b 100644
---- a/Documentation/ABI/testing/sysfs-kernel-mm-damon
-+++ b/Documentation/ABI/testing/sysfs-kernel-mm-damon
-@@ -430,3 +430,10 @@ Contact:	SeongJae Park <sj@kernel.org>
- Description:	Reading this file returns the 'age' of a memory region that
- 		corresponding DAMON-based Operation Scheme's action has tried
- 		to be applied.
-+
-+What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/schemes/<S>/tried_regions/<R>/sz_filter_passed
-+Date:		Dec 2024
-+Contact:	SeongJae Park <sj@kernel.org>
-+Description:	Reading this file returns the size of the memory in the region
-+		that passed DAMON operations layer-handled filters of the
-+		scheme in bytes.
--- 
-2.39.5
+ok 1 selftests: damon: debugfs_attrs.sh
+ok 1 selftests: damon-tests: kunit.sh
+ok 2 selftests: damon-tests: huge_count_read_write.sh
+ok 3 selftests: damon-tests: buffer_overflow.sh
+ok 4 selftests: damon-tests: rm_contexts.sh
+ok 5 selftests: damon-tests: record_null_deref.sh
+ok 6 selftests: damon-tests: dbgfs_target_ids_read_before_terminate_race.sh
+ok 7 selftests: damon-tests: dbgfs_target_ids_pid_leak.sh
+ok 8 selftests: damon-tests: damo_tests.sh
+ok 9 selftests: damon-tests: masim-record.sh
+ok 10 selftests: damon-tests: build_i386.sh
+ok 11 selftests: damon-tests: build_arm64.sh # SKIP
+ok 12 selftests: damon-tests: build_m68k.sh # SKIP
+ok 13 selftests: damon-tests: build_i386_idle_flag.sh
+ok 14 selftests: damon-tests: build_i386_highpte.sh
+ok 15 selftests: damon-tests: build_nomemcg.sh
+ [33m
+ [92mPASS [39m
