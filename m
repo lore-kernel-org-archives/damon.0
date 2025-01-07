@@ -1,59 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E82073BBC9;
-	Tue,  7 Jan 2025 01:08:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABE8812B93;
+	Tue,  7 Jan 2025 20:18:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736212120; cv=none; b=SbVgR4ktTNwL+SAHuQESgVxxkVof2ary4JWYsDWO13yZ7yPRd4z4xo8f7yAezUgW0LgOj7Mg1PjLwRIn/dj1z9gTt7bo4PkeUZSE+ieb2Am+Weir43Hw3qD2YHGkfekYBN6QaD5c6SEzmoXkrkWebJ/EYe8cEo23dp5lYrbqYGI=
+	t=1736281088; cv=none; b=A/QK6OVT8GDoe8wpNAA/X+69VFGmMT9AcjRsWQZUF5l4rIcH1niAPXWPYNxENMQ6hqtQrvhGQwBVYpNHmNprJDAOd+a4jPiyp4A2zTxXmXg3VgQtBvnNuzTFIll+PuUhes9331CwK5KkXVvDXYze6kiQroTe5RZ04fq/Ppc8fxw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736212120; c=relaxed/simple;
-	bh=varv3qT2IGTIm1/bh7iJu+QJ67gTFvg2BBSRTS4p0eQ=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=EuqAZy5Q4+RRoc4eGkywVzyc92xKxYmQ4p8vr4voDvHkL2rk35IJk1Djf4z4c9WxseVwMlFK84XQeIOginBEciIrcjBOTtOtkjU3ybeD6HgO8nnPOVHRM0RAzh7+rYyXXjp4lre42urOLxWTJ1GAMaCj9zy9vt8CufBhqftRciM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ufU5uM+Q; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1736281088; c=relaxed/simple;
+	bh=tFMvsVxldJqs/FhiBDYeI89MsENyQmeQg8HlKr0w7OU=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=jMJa2hulbseHkFBQn7IKmmW5uctL5cvtW0sbTRITZ+YzSQGHy7pmI8929qVbc8ZKTJxIrQyOkIKESM0SYdITYTpu+L9JwYeBmVHejKPmp61Wke0adITKUr52fNZIo6wvWsGIdQs8Omybmv3aY3862zAyF2u8/ZdhC3+WAyqmaOI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XlUvFqc5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ufU5uM+Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 371F4C4CEDD;
-	Tue,  7 Jan 2025 01:08:39 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XlUvFqc5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25536C4CED6;
+	Tue,  7 Jan 2025 20:18:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1736212119;
-	bh=varv3qT2IGTIm1/bh7iJu+QJ67gTFvg2BBSRTS4p0eQ=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ufU5uM+QMFkQNYtG0tLdL6bDmDpbJZWik3Op75vxFgUFS7oXQ8OntqC2rNwFJqv6a
-	 M2TF7k97TENOMi34X6gu1zx4DhMWF3O3swO+1ISnlZQMuKNSIHFkABFx0kWlpCpnVL
-	 YwN/+MoSrscWDjtrFT3ulcelK1zVIgMqCgy9PLG35h15O2HuSzggEyAlI00FAz7QEA
-	 YWn8tOntpiucOnLrO5rBOLUXiOOd87LrryU7WEtB86dfLQ1lnXptxdX2k/RZ+qbqTg
-	 QtPTqWt8JUJkY/OKZYF8dAskYFL8Kjfp+s8gNjKRq7SeliZSrjv51prvLILcGFUK2X
-	 fNFwnxcQ/PMdQ==
+	s=k20201202; t=1736281088;
+	bh=tFMvsVxldJqs/FhiBDYeI89MsENyQmeQg8HlKr0w7OU=;
+	h=From:To:Cc:Subject:Date:From;
+	b=XlUvFqc5pBW0+QEdTp4QRp+e9wwaKSpsKK3cj1agLG8vnBJyzfanmEebanVmAPU63
+	 Zb39hcdPVBcYIDOcOsYjD68MIdfrKG5KzblJzknBVQeCjHVdrbejzfwqIV1ETpym1o
+	 aHTPLLySkLoknQmYjY90REY24mpTUZhbdFgueDwHJHVnx7AhvPXNwKZFQIoi/S4xfr
+	 Rcs6piQCczInJlnlVbzLm83MQf/NzJOArd6PmUZKu8lDN9SrRDqWGaOr9wQnkl0Aao
+	 i2o5WK0cWo6fQU5fl7USY7LUutFOsNQeLFS9GNFSOci/92QCsAy232plARIVNlN8Tf
+	 Z5txm0NCDZQ3g==
 From: SeongJae Park <sj@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SeongJae Park <sj@kernel.org>,
-	stable@vger.kernel.org,
-	patches@lists.linux.dev,
+	Jonathan Corbet <corbet@lwn.net>,
+	damon@lists.linux.dev,
+	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net,
-	rwarsow@gmx.de,
-	conor@kernel.org,
-	hargar@microsoft.com,
-	broonie@kernel.org,
-	damon@lists.linux.dev
-Subject: Re: [PATCH 6.12 000/156] 6.12.9-rc1 review
-Date: Mon,  6 Jan 2025 17:08:31 -0800
-Message-Id: <20250107010831.82558-1-sj@kernel.org>
+	linux-mm@kvack.org
+Subject: [PATCH 00/10] mm/damon: extend DAMOS filters for inclusion
+Date: Tue,  7 Jan 2025 12:17:29 -0800
+Message-Id: <20250107201739.79484-1-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250106151141.738050441@linuxfoundation.org>
-References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -62,68 +45,71 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hello,
+DAMOS fitlers are exclusive filters.  It only excludes memory of given
+criterias from the DAMOS action targets.  This has below limitations.
 
-On Mon, 6 Jan 2025 16:14:46 +0100 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+First, the name is not explicitly explaining the behavior.  This
+actually resulted in users' confusions[1].  Secondly, combined uses of
+multiple filters provide restriced coverages.  For example, building a
+DAMOS scheme that applies the action to memory that belongs to cgroup A
+"or" cgroup B is impossible.  A workaround would be using two schemes
+that fitlers out memory that not belong to cgroup A and cgroup B,
+respectively.  It is cumbersome, and difficult to control quota-like
+per-scheme features in orchastration.  Monitoring of filter-passed
+memory statistic will also be complicated.
 
-> This is the start of the stable review cycle for the 6.12.9 release.
-> There are 156 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Wed, 08 Jan 2025 15:11:04 +0000.
-> Anything received after that time might be too late.
+Extend DAMOS filters to support not only exclusion (blocking), but also
+inclusion (pass-through) behavior.  For this, add a new damos_filter
+struct field called 'pass' for DAMON kernel API users.  The filter works
+as an inclusion filter or an exclusion filter when it is set or unset,
+respectively.  For DAMON user-space ABI users, add a DAMON sysfs file of
+same name under DAMOS filter sysfs directory.  To prevent exposing a
+behavioral change to old users, set the blocking as the default
+behavior.
 
-This rc kernel passes DAMON functionality test[1] on my test machine.
-Attaching the test results summary below.  Please note that I retrieved the
-kernel from linux-stable-rc tree[2].
+Note that pass filters work for only inclusion, not exclusion of memory
+that not satisfying the criteria.  And the default behavior of DAMOS for
+memory that no filter has involved is that the action can be applied to
+those.  This means that installing pass filters without block filters
+after them is not useful for some usecases.  Read the design document
+update part of this patch series for more details.
 
-Tested-by: SeongJae Park <sj@kernel.org>
+[1] https://lore.kernel.org/20240320165619.71478-1-sj@kernel.org
 
-[1] https://github.com/damonitor/damon-tests/tree/next/corr
-[2] cab9a964396d ("Linux 6.12.9-rc1")
+Changes from RFC v2
+(https://lore.kernel.org/20241227210819.63776-1-sj@kernel.org)
+- Wordsmith messages
+- Wordsmith design documentation about monitoring-purpose usage
+- Rebase on latest mm-unstable
 
-Thanks,
-SJ
+Changes from RFC v1
+(https://lore.kernel.org/20241226221445.78433-1-sj@kernel.org)
+- Fix encoding issue on the last patch
 
-[...]
+SeongJae Park (10):
+  mm/damon: fixup damos_filter kernel-doc
+  mm/damon/core: add damos_filter->pass field
+  mm/damon/core: support damos_filter->pass
+  mm/damon/paddr: support damos_filter->pass
+  mm/damon: add pass argument to damos_new_filter()
+  mm/damon/sysfs-schemes: add a file for setting damos_filter->pass
+  Docs/mm/damon/design: document pass/block filters behaviors
+  Docs/ABI/damon: document DAMOS filter pass sysfs file
+  Docs/admin-guide/mm/damon/usage: omit DAMOS filter details in favor of
+    design doc
+  Docs/admin-guide/mm/damon/usage: document DAMOS filter 'pass' sysfs
+    file
 
----
+ .../ABI/testing/sysfs-kernel-mm-damon         | 14 +++--
+ Documentation/admin-guide/mm/damon/usage.rst  | 55 ++++++++++---------
+ Documentation/mm/damon/design.rst             | 34 ++++++++++--
+ include/linux/damon.h                         | 15 +++--
+ mm/damon/core.c                               | 12 ++--
+ mm/damon/paddr.c                              |  9 +--
+ mm/damon/reclaim.c                            |  2 +-
+ mm/damon/sysfs-schemes.c                      | 32 ++++++++++-
+ mm/damon/tests/core-kunit.h                   | 14 ++---
+ 9 files changed, 130 insertions(+), 57 deletions(-)
 
-ok 1 selftests: damon: debugfs_attrs.sh # SKIP
-ok 2 selftests: damon: debugfs_schemes.sh # SKIP
-ok 3 selftests: damon: debugfs_target_ids.sh # SKIP
-ok 4 selftests: damon: sysfs.sh
-ok 5 selftests: damon: sysfs_update_schemes_tried_regions_wss_estimation.py
-ok 6 selftests: damon: damos_quota.py
-ok 7 selftests: damon: damos_quota_goal.py
-ok 8 selftests: damon: damos_apply_interval.py
-ok 9 selftests: damon: damos_tried_regions.py
-ok 10 selftests: damon: damon_nr_regions.py
-ok 11 selftests: damon: reclaim.sh
-ok 12 selftests: damon: lru_sort.sh
-ok 13 selftests: damon: debugfs_empty_targets.sh # SKIP
-ok 14 selftests: damon: debugfs_huge_count_read_write.sh # SKIP
-ok 15 selftests: damon: debugfs_duplicate_context_creation.sh # SKIP
-ok 16 selftests: damon: debugfs_rm_non_contexts.sh # SKIP
-ok 17 selftests: damon: debugfs_target_ids_read_before_terminate_race.sh
-ok 18 selftests: damon: debugfs_target_ids_pid_leak.sh
-ok 19 selftests: damon: sysfs_update_removed_scheme_dir.sh
-ok 20 selftests: damon: sysfs_update_schemes_tried_regions_hang.py
-ok 1 selftests: damon-tests: kunit.sh
-ok 2 selftests: damon-tests: huge_count_read_write.sh # SKIP
-ok 3 selftests: damon-tests: buffer_overflow.sh
-ok 4 selftests: damon-tests: rm_contexts.sh # SKIP
-ok 5 selftests: damon-tests: record_null_deref.sh
-ok 6 selftests: damon-tests: dbgfs_target_ids_read_before_terminate_race.sh
-ok 7 selftests: damon-tests: dbgfs_target_ids_pid_leak.sh
-ok 8 selftests: damon-tests: damo_tests.sh
-ok 9 selftests: damon-tests: masim-record.sh
-ok 10 selftests: damon-tests: build_i386.sh
-ok 11 selftests: damon-tests: build_arm64.sh # SKIP
-ok 12 selftests: damon-tests: build_m68k.sh # SKIP
-ok 13 selftests: damon-tests: build_i386_idle_flag.sh
-ok 14 selftests: damon-tests: build_i386_highpte.sh
-ok 15 selftests: damon-tests: build_nomemcg.sh
-
-PASS
+-- 
+2.39.5
