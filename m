@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 630641F869A;
-	Tue,  7 Jan 2025 20:18:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 248411F891F;
+	Tue,  7 Jan 2025 20:18:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736281095; cv=none; b=HA6YghPEtX9N16e8nm0mavjHrcSilMcfRz4sK51F7Yi0xq/r48Hqchr/edIDEbkoo+6fe3Ol1bxmIfx9TMG4aCsePbTzUt1Nm5IOtvUg6GaV6nJLhdEWfRYCYTLHovd5VSNEUAZCTbAddHRerg8XeWZ14lvEG2dFt5N4drgGSdM=
+	t=1736281096; cv=none; b=pBt34/b0YNSqIaIpP7wtw6EtCa9W0UTqsbcegENVXcowcmKUxN40X2AVSSB7MtUHQAIcFaiTjWfTJwTs/4OznOPQh7EZ5q76tmttX1E2otsaa+HxegvrPpaNOTT0TW8/3oefp2Q3W7X8h/XApgFrTJtjkPoqrk4ZANOrGfvwu9k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736281095; c=relaxed/simple;
-	bh=ZERQXRIpbhEDVEpD6J6LgTdFsTQpbeeZuCqI48fC6sI=;
+	s=arc-20240116; t=1736281096; c=relaxed/simple;
+	bh=HXA5UPYM/GgxhLgL56pBJuUIhF/kTZ/VCy8SKfZbnOs=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=nbHz+WHSQk8NF5FAylSnItntVlhDSzEPoZXO2nmeAFeC4t6dP+5KYP3I4DgF+RDlJ8wXXxEZQ9cacukie6jRXNTbsu8Z733WzYVRqELE6Djyxj3EoRkaOPn0C4L1e4jN9UnvNYUvXBgVypoItDjF34McL1OI3BI1vqodlHZE7Vw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=slJilpwI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bS5x/LGjJsMZC592GYw9kO+K0APjv59kCIfir1ol4oH+AuyFw3UOyIGIORxSn4YEgLSgIjit/Uq/sOsm+sKyAYiIgdqY7KY80kWKH/27GwpA5OdBVofmomUYXFofGqiNmpAXSeThjblnX6zxNyvFqqP3273KJ5hw5It1o97M/2w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AkcueAy9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="slJilpwI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE4C5C4CED6;
-	Tue,  7 Jan 2025 20:18:14 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AkcueAy9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF4E6C4AF0C;
+	Tue,  7 Jan 2025 20:18:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1736281094;
-	bh=ZERQXRIpbhEDVEpD6J6LgTdFsTQpbeeZuCqI48fC6sI=;
+	s=k20201202; t=1736281096;
+	bh=HXA5UPYM/GgxhLgL56pBJuUIhF/kTZ/VCy8SKfZbnOs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=slJilpwIOoWc2ruriXmweZYgn+/8so1cWoZ3VtcHYglEtfsQV3O5P/QcknYVWIl/6
-	 Uj0dxHDQ4mFZQtIY755fd7pfC0oFdHjkFMyPMYtjAbmXbFcUggxCRpTakGpP852ZIB
-	 7AgH7fKhj9cBedscF09kRtT7rEtw32LCiK+0HpAhqMMZ1JiQgmQivgjQMx/tI5jI3A
-	 Y+psKcsEi6caa/3wxr3kuMlvxtQf7UOsp50JIS4qNs8zIqExutcm3WC5DPjUbSxBgC
-	 6PaUBjyu6mJA6AOD3Cr8srUrjYMY890PaT0zEfQlMEtz77lbUXwCgu7u6xQOFnC1/O
-	 JQnwkn3DV+TLA==
+	b=AkcueAy99tJZzibzNuROIjVEKSp3HVa0hplQr2dlkw1Gb4ZhWDBNd/cLD/u/ExntH
+	 1S/U5SbspW4U4kLrmfEBFI6cn8HblH6UfAiESFY4H8iIbszBodE56UyX7SMBYU6WXz
+	 HVYY7E7ePgU6U6V+HYBMV5VdL1FLM/XgidFBv/I6K+8a6YcRCd/pjavVsIt5/57KGX
+	 MwyETpH0e2xqRJOjCZIdiskc7WpdNznQpjK9OKaF+Mhw9Uqry1eCro0XRRfVCB4ozr
+	 KIz6kJd4eaY1KZj4C97MNDy1IZwc1WP6gJErNxNCPX6D5NYyYCj7liTu3SrtGNfBKi
+	 z0G4cHcLCp99g==
 From: SeongJae Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SeongJae Park <sj@kernel.org>,
+	Jonathan Corbet <corbet@lwn.net>,
 	damon@lists.linux.dev,
+	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [PATCH 06/10] mm/damon/sysfs-schemes: add a file for setting damos_filter->pass
-Date: Tue,  7 Jan 2025 12:17:35 -0800
-Message-Id: <20250107201739.79484-7-sj@kernel.org>
+Subject: [PATCH 07/10] Docs/mm/damon/design: document pass/block filters behaviors
+Date: Tue,  7 Jan 2025 12:17:36 -0800
+Message-Id: <20250107201739.79484-8-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250107201739.79484-1-sj@kernel.org>
 References: <20250107201739.79484-1-sj@kernel.org>
@@ -46,85 +48,65 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Only kernel-space DAMON API users can use inclusive DAMOS filters.  Add
-a sysfs file named 'pass' under DAMOS filter directory of DAMON sysfs
-interface, to let the user-space users use inclusive DAMOS filters.
+Update DAMOS filters design document to describe the pass/block
+behavior of filters.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- mm/damon/sysfs-schemes.c | 32 +++++++++++++++++++++++++++++++-
- 1 file changed, 31 insertions(+), 1 deletion(-)
+ Documentation/mm/damon/design.rst | 34 +++++++++++++++++++++++++++----
+ 1 file changed, 30 insertions(+), 4 deletions(-)
 
-diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
-index 9a883e8aea1c..9e171046ee94 100644
---- a/mm/damon/sysfs-schemes.c
-+++ b/mm/damon/sysfs-schemes.c
-@@ -313,6 +313,7 @@ struct damon_sysfs_scheme_filter {
- 	struct kobject kobj;
- 	enum damos_filter_type type;
- 	bool matching;
-+	bool pass;
- 	char *memcg_path;
- 	struct damon_addr_range addr_range;
- 	int target_idx;
-@@ -385,6 +386,30 @@ static ssize_t matching_store(struct kobject *kobj,
- 	return count;
- }
+diff --git a/Documentation/mm/damon/design.rst b/Documentation/mm/damon/design.rst
+index 449eb33688c2..3682e719b8a6 100644
+--- a/Documentation/mm/damon/design.rst
++++ b/Documentation/mm/damon/design.rst
+@@ -504,9 +504,35 @@ have a list of latency-critical processes.
  
-+static ssize_t pass_show(struct kobject *kobj,
-+		struct kobj_attribute *attr, char *buf)
-+{
-+	struct damon_sysfs_scheme_filter *filter = container_of(kobj,
-+			struct damon_sysfs_scheme_filter, kobj);
+ To let users optimize DAMOS schemes with such special knowledge, DAMOS provides
+ a feature called DAMOS filters.  The feature allows users to set an arbitrary
+-number of filters for each scheme.  Each filter specifies the type of target
+-memory, and whether it should exclude the memory of the type (filter-out), or
+-all except the memory of the type (filter-in).
++number of filters for each scheme.  Each filter specifies
 +
-+	return sysfs_emit(buf, "%c\n", filter->pass ? 'Y' : 'N');
-+}
++- a type of memory (``type``),
++- whether it is for the memory of the type or all except the type
++  (``matching``), and
++- whether it is to allow (pass through the filter) or reject (block) applying
++  the scheme's action to the memory (``pass``).
 +
-+static ssize_t pass_store(struct kobject *kobj,
-+		struct kobj_attribute *attr, const char *buf, size_t count)
-+{
-+	struct damon_sysfs_scheme_filter *filter = container_of(kobj,
-+			struct damon_sysfs_scheme_filter, kobj);
-+	bool pass;
-+	int err = kstrtobool(buf, &pass);
++When multiple filters are installed, each filter is evaluated in the installed
++order.  If a part of memory is matched to one of the filter, next filters are
++ignored.  If a part of memory is not matched to any of the filters, the default
++behavior is applied.  That is, as long as it fulfills other conditions of the
++scheme including the access pattern and quotas, the action will be applied to
++the part of the memory.
 +
-+	if (err)
-+		return err;
++For example, let's assume 1) a filter for passing anonymous pages and 2)
++another filter for blocking young pages are installed in the order.  If a page
++of a region that eligible to apply the scheme's action is an anonymous page,
++the scheme's action will be applied to the page regardless of whether it is
++young or not, since it matches with the first filter.  If the page is not
++anonymous but young, the scheme's action will not be applied, since the second
++filter blocks it.  If the page is neither anonymous nor young, no filter is
++involved, so the action will be applied to the page.
 +
-+	filter->pass = pass;
-+	return count;
-+}
-+
- static ssize_t memcg_path_show(struct kobject *kobj,
- 		struct kobj_attribute *attr, char *buf)
- {
-@@ -482,6 +507,9 @@ static struct kobj_attribute damon_sysfs_scheme_filter_type_attr =
- static struct kobj_attribute damon_sysfs_scheme_filter_matching_attr =
- 		__ATTR_RW_MODE(matching, 0600);
++The fact that the action can be applied to any memory as long as no block
++filter explicitly excluded it means that installing pass filters without any
++block filter after those is same to not installing the pass filters, in terms
++of the ``action`` applying.  Statistics for DAMOS filters will still be
++accounted, though.  It is therefore still useful for monitoring purpose.
  
-+static struct kobj_attribute damon_sysfs_scheme_filter_pass_attr =
-+		__ATTR_RW_MODE(pass, 0600);
-+
- static struct kobj_attribute damon_sysfs_scheme_filter_memcg_path_attr =
- 		__ATTR_RW_MODE(memcg_path, 0600);
+ For efficient handling of filters, some types of filters are handled by the
+ core layer, while others are handled by operations set.  In the latter case,
+@@ -516,7 +542,7 @@ filter are not counted as the scheme has tried to the region.  In contrast, if
+ a memory regions is filtered by an operations set layer-handled filter, it is
+ counted as the scheme has tried.  This difference affects the statistics.
  
-@@ -497,6 +525,7 @@ static struct kobj_attribute damon_sysfs_scheme_filter_damon_target_idx_attr =
- static struct attribute *damon_sysfs_scheme_filter_attrs[] = {
- 	&damon_sysfs_scheme_filter_type_attr.attr,
- 	&damon_sysfs_scheme_filter_matching_attr.attr,
-+	&damon_sysfs_scheme_filter_pass_attr.attr,
- 	&damon_sysfs_scheme_filter_memcg_path_attr.attr,
- 	&damon_sysfs_scheme_filter_addr_start_attr.attr,
- 	&damon_sysfs_scheme_filter_addr_end_attr.attr,
-@@ -1901,7 +1930,8 @@ static int damon_sysfs_add_scheme_filters(struct damos *scheme,
- 			sysfs_filters->filters_arr[i];
- 		struct damos_filter *filter =
- 			damos_new_filter(sysfs_filter->type,
--					sysfs_filter->matching, false);
-+					sysfs_filter->matching,
-+					sysfs_filter->pass);
- 		int err;
+-Below types of filters are currently supported.
++Below ``type`` of filters are currently supported.
  
- 		if (!filter)
+ - anonymous page
+     - Applied to pages that containing data that not stored in files.
 -- 
 2.39.5
