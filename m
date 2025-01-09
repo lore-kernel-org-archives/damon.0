@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9C2019D880;
-	Thu,  9 Jan 2025 17:51:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0A391A2C0B;
+	Thu,  9 Jan 2025 17:51:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736445100; cv=none; b=buLOnrCYYyntYQtAKFvovSmtztDDBYjqK2clZRHTQ5wPGOVv2yWAbQV1715VwtNTzJo8NhVp/IP6LmcYEAc8vWo2bfG3LkolYvLwWvATyQ5j96/RiNUnxk18ztCMDAHzS9E7BlgHZse8jY6ldBKp1cJeHFRrTwDz/ZD1jg271o0=
+	t=1736445102; cv=none; b=RCA/90+wc+1AzPvNBeGfdFCNQLgOAWKr+fKRy3G6zNwSTA8lYkyHfcKR4tBBtmqdILVEdqns4GRh9mJAdt2m/41JIF3sknmfMNdPKMe/FP9f1btZPNcomVWFAr5X6A/QJniQBjJYz5CvlgVR8B+0OYYJ3GDm1yLPqBlFz7KcC1c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736445100; c=relaxed/simple;
-	bh=/TwzvHzsYhMLVRMAly61w18SuFtGS0e8DIve8swoAg8=;
+	s=arc-20240116; t=1736445102; c=relaxed/simple;
+	bh=xBH0b3NhxWYTGElmoBJalgG8ZkJmFacZfKWdD6zTD8o=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=K/S7m2Hd22b+ansYdLLPQNWZbP+m4PnEWVOCkKN/kjFbeaRCVO6ej4e7t+xlwwD17QUn4iECCFo7hUKD7yAAWdf6+EZ3VQSPZezgKUOE9uBBDSFDHny8mTIE2rde1XXyjyPf9ddnnk1QRLqehBTFbtKEM9/7AZUi/Uv6CctZBW8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iOiV8xN+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Sf1K7Xq0onfOwIDrt5BUutnfMfA4zrU6lrAFUbiHEswpp/NiIyNUsXFFPELyZuOH57ra2/w8XvStyR05kRFkB+2JvsIrg3n3D36J62QxCQwFXdjp6z+cL2M4SpgDQ7cX0XLXcxuvgVcvcfIa08CB3TgS9S55G3XGF3/Gx8aDB34=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=h2nx70CS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iOiV8xN+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36EFEC4CEE1;
-	Thu,  9 Jan 2025 17:51:40 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="h2nx70CS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 474E2C4CEE8;
+	Thu,  9 Jan 2025 17:51:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1736445100;
-	bh=/TwzvHzsYhMLVRMAly61w18SuFtGS0e8DIve8swoAg8=;
+	s=k20201202; t=1736445101;
+	bh=xBH0b3NhxWYTGElmoBJalgG8ZkJmFacZfKWdD6zTD8o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iOiV8xN+tOzd6OhWGwRDcbApXOwx2OoSQwcl1ajO5uMihuqIeFetDPj9kO1jvRZI3
-	 DCaVH7i0rTdMfXF9gctFxlGeo8ihHqNWZs0nADBR6YSrMd36r0n6p36YB1MuIFuRj1
-	 /BMQS++22T1gOsjeEneFIB8/06l2tUcaCx5/BajT7ICW4t09cZsy+uQeu0Qyvjz7dx
-	 f8LNV/bZ+JLSt8fXU5hvrmJCT+A44RSIA0A4g8SuUGaxAAUCZaDwk07W+nPkt1v+gB
-	 qK+y9hp3bWU2vsD48OucJ/zTxW2Lmn30O1QwshQ0saR9Kd3SnNh47BIjxCa+9Mev5e
-	 F095E2SrYdR5A==
+	b=h2nx70CSAa1D7NJ1Q+cniSmR/Cs12oa2tSDvv2hG1MrjskAGMUls70M8xr21kMENF
+	 4q4oBrSWzKZkaACyQRBmq70GxYNaZdA47qMw1vGxo9rt4Ku8cfzxiOPHsEeIv59ZDc
+	 qXLs7xqDVw10ku1W8NLXWOJFEuLyF8FurvEfdJQ2kqTKgcoAmTBMQu22kmd3nO+zGe
+	 YbRgznO0p4Z79IkRv+Kyf8TKpyp1Sk4G9VItMY+3WB36l/+AelHeX8q2MaiNKkSGZj
+	 WjQfKQVn8KHfHrpm2FrFCHte+if9KtE0kky8UjLhkiXN9kqr13ZOl5S4S4XU9jvfFa
+	 p889H/fWOEIlQ==
 From: SeongJae Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SeongJae Park <sj@kernel.org>,
 	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [PATCH v2 03/10] mm/damon/core: support damos_filter->allow
-Date: Thu,  9 Jan 2025 09:51:19 -0800
-Message-Id: <20250109175126.57878-4-sj@kernel.org>
+Subject: [PATCH v2 04/10] mm/damon/paddr: support damos_filter->allow
+Date: Thu,  9 Jan 2025 09:51:20 -0800
+Message-Id: <20250109175126.57878-5-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250109175126.57878-1-sj@kernel.org>
 References: <20250109175126.57878-1-sj@kernel.org>
@@ -46,84 +46,39 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-DAMOS filters supports allowing behavior, but the core layer's DAMOS
-filters handling logic still assumes only rejecting (filtering-out)
-behavior.  Update the logic to aware of and respect the behavioral
-decision by reading damos_filter->allow when making the decision to
-exclude a region or not.
+Respect damos_filter->allow from 'paddr', which is a DAMON operations
+set implementation for the physical address space and supports a few
+types of region-internal DAMOS filters (anon, memcg and young).  The
+change is similar to that of the previous commit for core layer update.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- mm/damon/core.c             |  6 +++---
- mm/damon/tests/core-kunit.h | 10 +++++-----
- 2 files changed, 8 insertions(+), 8 deletions(-)
+ mm/damon/paddr.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index bdde532ebbc8..76707b0635d6 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -1374,7 +1374,7 @@ static void damos_update_stat(struct damos *s,
- 	s->stat.sz_ops_filter_passed += sz_ops_filter_passed;
+diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
+index b0c283808ba6..817acfd4f8a2 100644
+--- a/mm/damon/paddr.c
++++ b/mm/damon/paddr.c
+@@ -198,7 +198,7 @@ static unsigned int damon_pa_check_accesses(struct damon_ctx *ctx)
+ 	return max_nr_accesses;
  }
  
--static bool __damos_filter_out(struct damon_ctx *ctx, struct damon_target *t,
-+static bool damos_filter_match(struct damon_ctx *ctx, struct damon_target *t,
- 		struct damon_region *r, struct damos_filter *filter)
+-static bool __damos_pa_filter_out(struct damos_filter *filter,
++static bool damos_pa_filter_match(struct damos_filter *filter,
+ 		struct folio *folio)
  {
  	bool matched = false;
-@@ -1428,8 +1428,8 @@ static bool damos_filter_out(struct damon_ctx *ctx, struct damon_target *t,
+@@ -237,8 +237,8 @@ static bool damos_pa_filter_out(struct damos *scheme, struct folio *folio)
  	struct damos_filter *filter;
  
- 	damos_for_each_filter(filter, s) {
--		if (__damos_filter_out(ctx, t, r, filter))
+ 	damos_for_each_filter(filter, scheme) {
+-		if (__damos_pa_filter_out(filter, folio))
 -			return true;
-+		if (damos_filter_match(ctx, t, r, filter))
++		if (damos_pa_filter_match(filter, folio))
 +			return !filter->allow;
  	}
  	return false;
  }
-diff --git a/mm/damon/tests/core-kunit.h b/mm/damon/tests/core-kunit.h
-index cf22e09a3507..8f58d3424c21 100644
---- a/mm/damon/tests/core-kunit.h
-+++ b/mm/damon/tests/core-kunit.h
-@@ -434,25 +434,25 @@ static void damos_test_filter_out(struct kunit *test)
- 	damon_add_region(r, t);
- 
- 	/* region in the range */
--	KUNIT_EXPECT_TRUE(test, __damos_filter_out(NULL, t, r, f));
-+	KUNIT_EXPECT_TRUE(test, damos_filter_match(NULL, t, r, f));
- 	KUNIT_EXPECT_EQ(test, damon_nr_regions(t), 1);
- 
- 	/* region before the range */
- 	r->ar.start = DAMON_MIN_REGION * 1;
- 	r->ar.end = DAMON_MIN_REGION * 2;
--	KUNIT_EXPECT_FALSE(test, __damos_filter_out(NULL, t, r, f));
-+	KUNIT_EXPECT_FALSE(test, damos_filter_match(NULL, t, r, f));
- 	KUNIT_EXPECT_EQ(test, damon_nr_regions(t), 1);
- 
- 	/* region after the range */
- 	r->ar.start = DAMON_MIN_REGION * 6;
- 	r->ar.end = DAMON_MIN_REGION * 8;
--	KUNIT_EXPECT_FALSE(test, __damos_filter_out(NULL, t, r, f));
-+	KUNIT_EXPECT_FALSE(test, damos_filter_match(NULL, t, r, f));
- 	KUNIT_EXPECT_EQ(test, damon_nr_regions(t), 1);
- 
- 	/* region started before the range */
- 	r->ar.start = DAMON_MIN_REGION * 1;
- 	r->ar.end = DAMON_MIN_REGION * 4;
--	KUNIT_EXPECT_FALSE(test, __damos_filter_out(NULL, t, r, f));
-+	KUNIT_EXPECT_FALSE(test, damos_filter_match(NULL, t, r, f));
- 	/* filter should have split the region */
- 	KUNIT_EXPECT_EQ(test, r->ar.start, DAMON_MIN_REGION * 1);
- 	KUNIT_EXPECT_EQ(test, r->ar.end, DAMON_MIN_REGION * 2);
-@@ -465,7 +465,7 @@ static void damos_test_filter_out(struct kunit *test)
- 	/* region started in the range */
- 	r->ar.start = DAMON_MIN_REGION * 2;
- 	r->ar.end = DAMON_MIN_REGION * 8;
--	KUNIT_EXPECT_TRUE(test, __damos_filter_out(NULL, t, r, f));
-+	KUNIT_EXPECT_TRUE(test, damos_filter_match(NULL, t, r, f));
- 	/* filter should have split the region */
- 	KUNIT_EXPECT_EQ(test, r->ar.start, DAMON_MIN_REGION * 2);
- 	KUNIT_EXPECT_EQ(test, r->ar.end, DAMON_MIN_REGION * 6);
 -- 
 2.39.5
