@@ -1,68 +1,43 @@
-Received: from mail-qk1-f177.google.com (mail-qk1-f177.google.com [209.85.222.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 920FE1C54BF
-	for <damon@lists.linux.dev>; Mon, 13 Jan 2025 19:07:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A10B91C1F0C
+	for <damon@lists.linux.dev>; Mon, 13 Jan 2025 19:27:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736795264; cv=none; b=GxpIRqSCJrSaaLELEUwkPnOpEEGgPUDdsctQWcBEtlK2up6+ETL8vxCFPGYB/nwvIRgjawHv1J8l/NZnkRnjs8QGbGTU7EPMsA04ohRAtxwGUA28Lq/9HWmfOgICfabUa+GoMS8x5U4/3+U4ZOjPJQEevmiW10EIEZNpFBTrslU=
+	t=1736796461; cv=none; b=CG5fyKqKazG58jcaymr13r9rcY1yFJiT428I4cHXuDKX7u8EQFLEzD6H3V+WuznWiqRiNrev/eYKUNN68xMWCDuJEtD6tdNTOFf3YCRcrBFFrUUrJcG5FFlC3UrudSdmNPk1/tSHdxXT+Qk1mMN8wKxvMMP7HyvTVLpO7VdfGzs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736795264; c=relaxed/simple;
-	bh=37UFwy3P+ZFns5IhPaA7QQkH9Gr30T4T5ZOe+WykLRI=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Bbjp+FSc/9G3Tt7nLfKaDozTVc6GQ2y+LqHOUFadDf5JI+FgkSOcOdkAvE+7h0xiUyQf7+vqZ3Xs7LmpEkusH2qtzRjUa/gAAmiUSiHNVwEw3seB6b91+8iLo8z6UqHj6v34H10D5X8xN63nPVTZzwBov+oermQV7Po9+MLJ2+U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hzKG+yJc; arc=none smtp.client-ip=209.85.222.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1736796461; c=relaxed/simple;
+	bh=d+DjD00BipS5sMWSFIdPnC57/pOPscGGe7GrymO7ksM=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=r5cGWqpTl7U4v4FfJfrZIQ8AMsZyz/a7KgRc3/pGy3GI81Shpsgdh4cGnMO5fi9VREK9JsAysqJfVJh9+vPt0TN0gaozK0rqNt8EXpi8tWf/Fn9U/5w1RuYOr3zOCdcOWt1CGF+/znDEzw4lw0gug7K96mbVVpGtLBbCa3/htgc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=k69pYvMO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hzKG+yJc"
-Received: by mail-qk1-f177.google.com with SMTP id af79cd13be357-7b6f0afda3fso481663085a.2
-        for <damon@lists.linux.dev>; Mon, 13 Jan 2025 11:07:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1736795261; x=1737400061; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=fN2r+oYRm8VKwOWlsegJ1ciPAZUowW4WF0J8VLzLcrc=;
-        b=hzKG+yJcUxFZtAJgN9ZKVdl5rXqFgNAYW8Lp5OqLdUaHXqrB93+e1015elp6K6KJ/H
-         MI2TwXaMDT7yhQMqK+EFGySK55ra/aK0T+aLzGRCC+Y1WlIdO2uMGE9thcr0O57F2Iy3
-         w9CTDCYMe1zWmZyko3B4n95G6tRg5eEqOzgyLz9Zse9lGr9a558KSfftM3Aimg6cIPRR
-         KXPQc1Dp4HEfJPOZKuVyjQ4Xn3K/PewRPqSG9w6jQ/saMG3Bm+XsUQKZukJD9h9YdmHY
-         daz3GY/miqVCMqxSSokVXLi7qB2SJpHTxFm1XnorGK3mS4iMtu8PDSlio7j/7mvg2/S4
-         rkmg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736795261; x=1737400061;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=fN2r+oYRm8VKwOWlsegJ1ciPAZUowW4WF0J8VLzLcrc=;
-        b=tC1I6XstjVnyTarC6pS9Y5ZuZbvdZxPtozk7jZP+FohKLnN7hEVra9BM0iMlNpJSic
-         um6LoPa5YH3YM5ITEohFuOWKuZoED5bhmzYtJYD2VqbwQ4bj96jHg0qbTnuiRJEo6SdV
-         1vt1LgapY6+XeV+G7YQF8HhKhaZgVsb9k3ta/hXKVy8DeSzrsE6t3Yr1oMBKu0H4//TH
-         biKYD8Op29S5o3Hxlu0AnDHtHGS5nh53C5xojneNybzBc0CVjVsOZvnTw6/cCNg3CfFK
-         NALpFc+N4wHWqrfrWN+waQWpmQzHGGUv+qTcFBrWU07+2j93STY6jYE5sbD90yIwoP58
-         Ekjg==
-X-Gm-Message-State: AOJu0YyR5cEviTuxND9JAEC0lL7hDQNxHmlVX2weSsYqhBSyD12VQC1r
-	hE/FRz9lZ31Gtrx7WJzDVROIAMmopfLRxKaN8KhGxgvAx5hx1rta
-X-Gm-Gg: ASbGncvfvtcAp29E8yHeio/lUKvpEwEwcgG/fLx+uXIoy4EnEkEs4/SxFNq+ZynFI6i
-	wpYQKKRFxmZP6gjrnlqW8yHrx3xZpLFnp9qWdT+3wPU1itmm5OVGYuYG9BeN8WpBnRb+1JYeqjM
-	/GetIwaNToPQQiIUsu223YASTiIRDWVapnC8VMjG7y36cIJnWUKtakDNO8CFVWDgS5ANsXX4YvF
-	Kglga7PrNCGEG4+BYlUbHsvsX8FbEs87kb/Fla9KY6e00N4nNJOqXc=
-X-Google-Smtp-Source: AGHT+IERpp9QriM2xmQpFOewoGObdi8kvSThCUOCEi6hwWeezVQIzsdAyC4Pmdq9xZ2RVFNymG+AVA==
-X-Received: by 2002:a05:6214:3289:b0:6d8:8f81:e2e3 with SMTP id 6a1803df08f44-6df9b1cf331mr369453146d6.8.1736795261383;
-        Mon, 13 Jan 2025 11:07:41 -0800 (PST)
-Received: from localhost ([2a03:2880:20ff:41::])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6dfade892cfsm44246616d6.106.2025.01.13.11.07.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 13 Jan 2025 11:07:41 -0800 (PST)
-From: Usama Arif <usamaarif642@gmail.com>
-To: sj@kernel.org,
-	akpm@linux-foundation.org
-Cc: damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	Usama Arif <usamaarif642@gmail.com>
-Subject: [v2] mm/damon/paddr: increment pa_stat damon address range by folio size
-Date: Mon, 13 Jan 2025 19:07:38 +0000
-Message-ID: <20250113190738.1156381-1-usamaarif642@gmail.com>
-X-Mailer: git-send-email 2.43.5
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="k69pYvMO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C4A2C4CED6;
+	Mon, 13 Jan 2025 19:27:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1736796461;
+	bh=d+DjD00BipS5sMWSFIdPnC57/pOPscGGe7GrymO7ksM=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=k69pYvMOzsrsmR4jLapNJ5v4CeoZX4SiXjMJhQEUH+Qd3SuDCphRWhCc8no7lf2wv
+	 MT0M62d9y8M1lVmy+wJAlCfVd7i2yx8d5JqjgxcNmErtfb/Hpk36DLqNBqMMeTqkwy
+	 xme/o4kzc5vvYchHn1tfJFWi3NKDxiIZxgayftQhQ3oK3xsXhpOBgAt6bgW5BvgUXH
+	 m9JQpZZcFT05fY9YIw04oHbAtp1RZ/zrBnF0hC+3S2jH3ilDFF1M99qXrMwcue2ihF
+	 RCpaTgzGgeqXeIqHb73ODX8161eCMsAADD/3l4zoHb/TeTW0mXOHzAKMjWH/BcMP/V
+	 IrTzrx85T9gvw==
+From: SeongJae Park <sj@kernel.org>
+To: Usama Arif <usamaarif642@gmail.com>
+Cc: SeongJae Park <sj@kernel.org>,
+	akpm@linux-foundation.org,
+	damon@lists.linux.dev,
+	linux-mm@kvack.org
+Subject: Re: [v2] mm/damon/paddr: increment pa_stat damon address range by folio size
+Date: Mon, 13 Jan 2025 11:27:38 -0800
+Message-Id: <20250113192738.23408-1-sj@kernel.org>
+X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20250113190738.1156381-1-usamaarif642@gmail.com>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -71,50 +46,23 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-This is to avoid going through all the pages in a folio.
-For folio_size > PAGE_SIZE, damon_get_folio will return NULL
-for tail pages, so the for loop in those instances will be a
-nop. Have a more efficient loop by just incrementing the
-address by folio_size.
+On Mon, 13 Jan 2025 19:07:38 +0000 Usama Arif <usamaarif642@gmail.com> wrote:
 
-Signed-off-by: Usama Arif <usamaarif642@gmail.com>
----
-v1 -> v2 (SJ Park):
-- Update commit message to change the description as an optimization
-  instead of a fix.
-- handle case when damon_get_folio returns NULL.
----
- mm/damon/paddr.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+> This is to avoid going through all the pages in a folio.
+> For folio_size > PAGE_SIZE, damon_get_folio will return NULL
+> for tail pages, so the for loop in those instances will be a
+> nop. Have a more efficient loop by just incrementing the
+> address by folio_size.
 
-diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
-index 6b4397de4199..bd8cfe10121b 100644
---- a/mm/damon/paddr.c
-+++ b/mm/damon/paddr.c
-@@ -504,17 +504,21 @@ static unsigned long damon_pa_stat(struct damon_region *r, struct damos *s,
- 	if (!damon_pa_scheme_has_filter(s))
- 		return 0;
- 
--	for (addr = r->ar.start; addr < r->ar.end; addr += PAGE_SIZE) {
-+	addr = r->ar.start;
-+	while (addr < r->ar.end) {
- 		struct folio *folio = damon_get_folio(PHYS_PFN(addr));
- 
--		if (!folio)
-+		if (!folio) {
-+			addr += PAGE_SIZE;
- 			continue;
-+		}
- 
- 		if (damos_pa_filter_out(s, folio))
- 			goto put_folio;
- 		else
- 			*sz_filter_passed += folio_size(folio);
- put_folio:
-+		addr += folio_size(folio);
- 		folio_put(folio);
- 	}
- 	return 0;
--- 
-2.43.5
+Thank you for this nice patch, Usama!
 
+> 
+> Signed-off-by: Usama Arif <usamaarif642@gmail.com>
+
+Reviewed-by: SeongJae Park <sj@kernel.org>
+
+
+Thanks,
+SJ
+
+[...]
