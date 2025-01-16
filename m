@@ -1,43 +1,40 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from out-188.mta0.migadu.com (out-188.mta0.migadu.com [91.218.175.188])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B4C81547E2
-	for <damon@lists.linux.dev>; Thu, 16 Jan 2025 19:07:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A413B2361E7
+	for <damon@lists.linux.dev>; Thu, 16 Jan 2025 20:42:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.188
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737054443; cv=none; b=oB/dNpXZeQ6JNfDRcXrr5mtRLqSlb3w6UQFqUM7mIORUSgB96STn9aoKlmKFmDT5UXaWkubulvw4JMVq6SJNn8a6O3zasi07uoj7bQ8W2y1G+Bi+QffSy2A0VtJ5EvfVc5aewJcAEz3fhGf1zMcu87W8S5N/glvpmUQdskrowgU=
+	t=1737060154; cv=none; b=FBXVzrKAL/L996pqAWOlnYObk3xEsc8lL6awtHnYj5gimn+WMu2yTVstoro6ZDZgoHvTKqOO6qOoRW28E/YDdvwuo2oAgx/ePAdNdm3STRBPyAj0YgYkOfbuTj/WwDHXaX4fNl0qO91AnSx8pmptyfcjkO1qYcNg/iPaNHq870o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737054443; c=relaxed/simple;
-	bh=G48xEGLo0N9B2iHCJwaMO2iArP7gBycxWmnsdp2VJkE=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=lFpq9KsTRgJP5CM76fJ4nkwttnst6sWGOMPZgZec2SnHHN3b2YRAccezQKsHX+Fhvwf50sWSlse1X6mSsfPBxRH2Kika1gHLQVv6s61PbKJH+7apkQgGSsvxWx1UhAi0HsHtUr3FL0O936c863yrS3szVximvleBkiJceES7aHY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iX6WcNlN; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1737060154; c=relaxed/simple;
+	bh=S7UaYQKM0rEIBgQePvVmyhrpIsytOaueszjx8dFTERw=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=mvxe6Llq3FUZDAXWu/INsjK7rsrtWuku3dG+JUW7aVrBbAYsbTJOIOufVy3u6IJ7Hmc5ETlGiuFj+5qvVSFzm2P8KZeRpp7WA0qiPTgLBfZm/k5qpONdLCIceXvYT0lEZwrXQORHWr8wI7AObzr5MF4rx0T3UuAuRww45AiuvFc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=JMGWI+uf; arc=none smtp.client-ip=91.218.175.188
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iX6WcNlN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 652CBC4CED6;
-	Thu, 16 Jan 2025 19:07:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1737054442;
-	bh=G48xEGLo0N9B2iHCJwaMO2iArP7gBycxWmnsdp2VJkE=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iX6WcNlNwgehIbp9M58MIhvGaAlnSIVrDCosAxCUhozOBGO04bpQhwgekrlm3Wog+
-	 TQnmRi3fPJMxhwuhOoXQnpMjdgNfdmPmyAWeFM1Hbejzhr4ELqYB9N2l5c+xGx+KCo
-	 djfECx6X1Ib3XYif7wzglO5VyhphtrH6rFI9B/d8XtPgwu/FYRxQ9a+19bH24Aznxl
-	 JPCPJUdgQ+o33Y5+ggWFZ6KE0WAY/Wp9IcHWKaKVN1OUX4uasYTnQ/2MS/1EWej7Ir
-	 Li7JbutnWoPUSab/5qesRHide8qp9VgUE2Hxh0YYi98EAdP4mN54x/PRNGeWioTdYF
-	 UOoSixHj3j5Zw==
-From: SeongJae Park <sj@kernel.org>
-To: Usama Arif <usamaarif642@gmail.com>
-Cc: SeongJae Park <sj@kernel.org>,
-	akpm@linux-foundation.org,
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="JMGWI+uf"
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1737060145;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=Ovyegd+SvQDVW3xzfKBYSdbeEeBaZAIftFZmgrwXI4k=;
+	b=JMGWI+ufxbq+srbVP08mzl0Qzpsoc26wVhXrxnI5jZItLF7IJ8PuYUijnezdFe6nqLfMEW
+	2c+6Nxu/0gUbJhsF8CvpwmHTUYBLqEAmaEbsHJS2A+jvGF7ZBFhyJjjCXXpcFAYnmtbjSl
+	c1UXgCfJIJTkgGQoLiI7+hneDN73WME=
+From: Thorsten Blum <thorsten.blum@linux.dev>
+To: SeongJae Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Cc: Thorsten Blum <thorsten.blum@linux.dev>,
 	damon@lists.linux.dev,
-	linux-mm@kvack.org
-Subject: Re: [v1 2/2] mm/damon: introduce DAMOS filter type hugepage
-Date: Thu, 16 Jan 2025 11:07:19 -0800
-Message-Id: <20250116190719.60415-1-sj@kernel.org>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <bae5af92-c050-47f3-919f-ed3bf1c485be@gmail.com>
-References: 
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH] mm/damon/core: Use str_high_low() helper in damos_wmark_wait_us()
+Date: Thu, 16 Jan 2025 21:42:16 +0100
+Message-ID: <20250116204216.106999-2-thorsten.blum@linux.dev>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -45,29 +42,39 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+X-Migadu-Flow: FLOW_OUT
 
-On Thu, 16 Jan 2025 15:15:21 +0000 Usama Arif <usamaarif642@gmail.com> wrote:
+Remove hard-coded strings by using the str_high_low() helper function.
 
-> 
-> 
-> On 16/01/2025 14:44, Usama Arif wrote:
-> > This is to gather statistics to check if hotest memory regions
-> > are backed by hugepages. This includes both THPs and hugetlbfs.
-> > This filter can help to observe and prove the effectivenes of
-> > different schemes for shrinking/collapsing hugepages.
-> > 
-> > Signed-off-by: Usama Arif <usamaarif642@gmail.com>
-> > ---
-> >  include/linux/damon.h    | 2 ++
-> >  mm/damon/paddr.c         | 3 +++
-> >  mm/damon/sysfs-schemes.c | 1 +
-> >  3 files changed, 6 insertions(+)
-> 
-> The corresponding DAMO PR is at https://github.com/damonitor/damo/pull/19
+Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
+---
+ mm/damon/core.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-Thank you for taking care of the user-space tool together!  I will do review on
-the PR.
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index 0776452a1abb..ae1715a338d4 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -14,6 +14,7 @@
+ #include <linux/psi.h>
+ #include <linux/slab.h>
+ #include <linux/string.h>
++#include <linux/string_choices.h>
+ 
+ #define CREATE_TRACE_POINTS
+ #include <trace/events/damon.h>
+@@ -1894,9 +1895,8 @@ static unsigned long damos_wmark_wait_us(struct damos *scheme)
+ 	if (metric > scheme->wmarks.high || scheme->wmarks.low > metric) {
+ 		if (scheme->wmarks.activated)
+ 			pr_debug("deactivate a scheme (%d) for %s wmark\n",
+-					scheme->action,
+-					metric > scheme->wmarks.high ?
+-					"high" : "low");
++				 scheme->action,
++				 str_high_low(metric > scheme->wmarks.high));
+ 		scheme->wmarks.activated = false;
+ 		return scheme->wmarks.interval;
+ 	}
+-- 
+2.48.0
 
-
-Thanks,
-SJ
