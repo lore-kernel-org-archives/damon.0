@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DE8113B59B
-	for <damon@lists.linux.dev>; Fri, 17 Jan 2025 17:08:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B39541078F
+	for <damon@lists.linux.dev>; Sat, 18 Jan 2025 01:47:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737133712; cv=none; b=A4VtY8773iNzWMGiFbr8lIEXkqRARWBWvBXTfw14aKYmu7VjXbfrl09YJYtHQeVLcnVOGwdDhDdkH6/329uprx+nTZxRLZkiNSZb5/0pMWaWTKMTpBHy8vtvUoAgw8z6he5brGN6AcnNi3H576F6oKeCx3Uw6aurv4SpeDVyjcc=
+	t=1737164830; cv=none; b=hIGdPQ41HnhzcF1UXjHUo+Hgo5L/6faytri2S+yj0JTV6KmAuZ9cYXKWIagMC6oRW6cRjuVEPgIxq7mnYIZp0PzF4F9kw5HMe3uyYodPntJ2v3JWFMp+JQaQWRgD8569cAoGm6xiOEk1Z+Ctj8eTqZReMsoYo4Sh5VzWT7pNc5Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737133712; c=relaxed/simple;
-	bh=sBLYq42nXCh1cJRuW3R19kQZcefoL+by29Bl3OgHDSs=;
+	s=arc-20240116; t=1737164830; c=relaxed/simple;
+	bh=BYg/j7bT2AKoVbpvaulMKm0Qwq9+2NyOYI76DiR5YT0=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=AKRlvX0u/+oUVH3XxAh55v04nizuK3huOAADwkEGmUx+bTfKfRvoEhpJmBXBOnEDVAa54GNrIxqwYxzLgLZiReutePC812A5U2lTsXgBB0FLUlt+Khcq22jt8fE9IDZTBJcOaz+pNKONuAkBBw/QGAP7sFaT13MepYsZB/86kok=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uFO6edxE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hPX+PB++DpfKsrdfD7G6kyoKruV5R9bpBUCVEqKoR2VWgWF9vUqWbqyV+4lhy0rpJskxptWSKD70n2ew8xgBEqNbBhQPNLg5iJNBTMPGb8K0eTqfuT1EL+K0u3MNpQ2FAhJ0Mzc3GZh3Hatz+nH28cBtENb35JLWsCzFAJKOzOg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Mod+4dgE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uFO6edxE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53148C4CEDD;
-	Fri, 17 Jan 2025 17:08:31 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Mod+4dgE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0E56C4CEDD;
+	Sat, 18 Jan 2025 01:47:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1737133711;
-	bh=sBLYq42nXCh1cJRuW3R19kQZcefoL+by29Bl3OgHDSs=;
+	s=k20201202; t=1737164830;
+	bh=BYg/j7bT2AKoVbpvaulMKm0Qwq9+2NyOYI76DiR5YT0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uFO6edxEsGeX9NG+lTyELxT+h+oyhTM7HELAuOUf+4ChMYyGkwafwDUa7xarfeQlq
-	 0b8g/6HcR7GC2XxhcO/k+OQ+8uNh2ztjKloCFsy0kOOXevumVav0jgTNhAH/Dx5Q7p
-	 24emku++eCH0/KeFKNgClH2EydKK5boo1aQwpdc3YF4WcQTLhDCB1EASKbrqvXritD
-	 buxuyMPUsQK8xDO6Cws+0z2VsGXB0zRQqrD2pE1I+ZwcCvQYN3geemReHFkf56Sabx
-	 QGGSLFVbnuw/E3fjc5ne4TBy4B7WOEUvvXvUkKhlJqdV1JqEpa8z78yqeEKJlcE64o
-	 Sox9IrkD0EcBg==
+	b=Mod+4dgEuJ6ug8Y9AnJhD5zA98P4aYPyNk2+Vj3X0b8ly5KSWZCIUDCKzadmVrM3J
+	 8zwZgy7/XjbUyiE5yX9zAdany0nAEFbOhilLAro5+HHbeMeKA2w3iIpuEWxuFlPw0F
+	 WOJmQQDQxiwrcfvnsVopDzpopawCNxJFEqNumXEJwzj77P9OpAvzVJEe6KwjRn9kEc
+	 /XNJuAI9bx5LtWbg8ZhXc1mnlE4yfVc0YwV4bQyNFDBF39GXnJD/7WatCYPZUqMorq
+	 hC0/oHp9FISbVHAJvmom1idcoZVNL7LwYKafwa+EWcrZBUxX39T+IQx02eP9+lhF8X
+	 hITK8to9QEUJw==
 From: SeongJae Park <sj@kernel.org>
-To: Usama Arif <usamaarif642@gmail.com>
-Cc: SeongJae Park <sj@kernel.org>,
-	akpm@linux-foundation.org,
-	damon@lists.linux.dev,
-	linux-mm@kvack.org
-Subject: Re: [v1 2/2] mm/damon: introduce DAMOS filter type hugepage
-Date: Fri, 17 Jan 2025 09:08:28 -0800
-Message-Id: <20250117170828.55772-1-sj@kernel.org>
+To: SeongJae Park <sj@kernel.org>
+Cc: damon@lists.linux.dev,
+	kernel-team@meta.com
+Subject: Re: Two simple ideas for DAMON accuracy improvement
+Date: Fri, 17 Jan 2025 17:47:06 -0800
+Message-Id: <20250118014706.76776-1-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <cc2aa18d-c494-4b50-b695-3cb84a1ee87c@gmail.com>
+In-Reply-To: <20241026215311.148363-1-sj@kernel.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -44,59 +42,85 @@ List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On Fri, 17 Jan 2025 11:02:05 +0000 Usama Arif <usamaarif642@gmail.com> wrote:
+On Sat, 26 Oct 2024 14:53:11 -0700 SeongJae Park <sj@kernel.org> wrote:
 
+> Hello DAMON community,
 > 
 > 
-> On 16/01/2025 19:05, SeongJae Park wrote:
-> > On Thu, 16 Jan 2025 14:44:36 +0000 Usama Arif <usamaarif642@gmail.com> wrote:
-> > 
-> >> diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
-> >> index c0ccf4fade24..a9e69179d45c 100644
-> >> --- a/mm/damon/paddr.c
-> >> +++ b/mm/damon/paddr.c
-> >> @@ -222,6 +222,9 @@ static bool damos_pa_filter_match(struct damos_filter *filter,
-> >>  		if (matched)
-> >>  			damon_folio_mkold(folio);
-> >>  		break;
-> >> +	case DAMOS_FILTER_TYPE_HUGEPAGE:
-> >> +		matched = folio_size(folio) == HPAGE_PMD_SIZE;
-> >> +		break;
-> > 
-> > This will make build fails when CONFIG_PGTABLE_HAS_HUGE_LEAVES is not set, like
-> > below:
-> > 
-> >  /include/linux/compiler_types.h:542:45: error: call to ‘__compiletime_assert_321’ declared with attribute error: BUILD_BUG failed
-> >    542 |         _compiletime_assert(condition, msg, __compiletime_assert_, __COUNTER__)
-> >        |                                             ^
-> > [...]
-> >  /include/linux/huge_mm.h:111:35: note: in expansion of macro ‘HPAGE_PMD_SHIFT’
-> >    111 | #define HPAGE_PMD_SIZE  ((1UL) << HPAGE_PMD_SHIFT)
-> >        |                                   ^~~~~~~~~~~~~~~
-> >  /mm/damon/paddr.c:321:48: note: in expansion of macro ‘HPAGE_PMD_SIZE’
-> >    321 |                 matched = folio_size(folio) == HPAGE_PMD_SIZE;
-> >        |                                                ^~~~~~~~~~~~~~
-> > 
-> > 
-> > This simple test might help you reproducing it:
-> > https://github.com/damonitor/damon-tests/blob/master/corr/tests/build_i386.sh
-> > 
-> > What about enclosing the entire case with
-> > 
-> >     #if defined(CONFIG_TRANSPARENT_HUGEPAGE) || defined(CONFIG_HUGETLB_PAGE) ?
-> > 
+> There were a number of grateful questions, concerns, and improvement ideas
+> around monitoring output accuracy of DAMON.  I always admitted the fact that
+> DAMON has many rooms for improvement, but was bit awary at changes for some
+> reasons.  Now I think it caused some unnecessarily long delay.  Sorry about
+> that.  Now I want to invest some time on the topic.  So starting by sharing
+> below two simple ideas first.
 > 
-> Ah Thanks for pointing this out! Would 
+> User-defined Regions Split Factor
+> ---------------------------------
 > 
-> #if defined(CONFIG_PGTABLE_HAS_HUGE_LEAVES)
+> DAMON's "Adasptive Regions Adjustment (ARA)" mechanism splits each region into
+> randomly sized sub regions, show their access temperature, and merge back
+> adjacent regions having similar temperature.  The split factor is hard-coded as
+> two.  Increasing the number make DAMON regions more quickly converges in right
+> shape.  However, it makes number of DAMON regions in usual situation higher,
+> and therefore induce more overhead.  It will still keep the user-defined upper
+> limit (max_nr_regions), though.
 > 
-> be better?
+> The optimum value of the split factor would depend on the use case.  We will
+> therefore add another knob to let users set the factor on runtime.  The default
+> value will be two, so this will not introduce any regression or behavioral
+> change to existing users.
+> 
+> Periodic Fine-grain Split of Aged Regions
+> -----------------------------------------
+> 
+> If a region is continuously changing its boundary and access temperature, it
+> means it is converging, or the access pattern of the workload is not
+> stabilized.  Either case, this is a healthy signal.
+> 
+> If a region is consistently showing same access pattern for long time, it may
+> because the access pattern is stabilized, and the region is correctly
+> converged.  However, it might be because the access pattern is changed, but the
+> converging is slow.
+> 
+> To avoid the too slow converging of aged regions, we will let users
+> periodically increase the split factor for regions that kept current access
+> pattern for long time (high 'age').  Users will be able to set the 'age'
+> offset, the split factor for the aged regions, and time interval between the
+> periodic fine-grain split of the regions.  For example, users can ask DAMON to
+> "split regions keeping current access pattern for ten minutes or higher to five
+> sub-regions every minute".
+> 
+> The feature will be ignored unless users explicitly set those, so that it does
+> not introduce any regression of behavioral change to existing users.
+> 
+> Discussions
+> -----------
+> 
+[...]
+> I believe implementing the features would be not difficult.  So unless someone
+> voluntarily steps up, I will start implementation of the features, targeting
+> v6.14 merge window.
 
-Yes, that also looks good to me :)
+TL; DR: The features will not be available by 6.14.  Please make a voice if you
+want the features get prioritized.
+
+I still think the above features can be useful.  But I was unable to make any
+progress for those due to other prioritized works.  Linux v6.14 may be released
+on upcoming Sunday, so I don't think we can make it on it.  Sorry if you were
+waiting for the features.
+
+It's also not clear if we will make it on the next major release.  I'm now
+trying to prioritize the monitoring intervals auto-tuning[1].  Please make your
+voice if you want me to prioritize the development of the features, or step up
+if you want to implement some of those on your own.  I think the first feature
+(user-defined regions split factor) could be a good DAMON-beginner's task.
+
+[1] https://lore.kernel.org/20241202175459.2005526-1-sj@kernel.org
 
 
 Thanks,
 SJ
+
+[...]
