@@ -1,126 +1,121 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B39541078F
-	for <damon@lists.linux.dev>; Sat, 18 Jan 2025 01:47:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7DD82CCC5;
+	Sat, 18 Jan 2025 08:09:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737164830; cv=none; b=hIGdPQ41HnhzcF1UXjHUo+Hgo5L/6faytri2S+yj0JTV6KmAuZ9cYXKWIagMC6oRW6cRjuVEPgIxq7mnYIZp0PzF4F9kw5HMe3uyYodPntJ2v3JWFMp+JQaQWRgD8569cAoGm6xiOEk1Z+Ctj8eTqZReMsoYo4Sh5VzWT7pNc5Q=
+	t=1737187785; cv=none; b=kEP78rpF9hfyBdoRMWhGWwY2FSrXm9rszRPwvuhl8Uh+DEO2ah03qWnR8fAuRXJwPBHvUWGcItln+TqPOJTIlHALMSkRzYe9i17E02Ow7JioOIamX2TxT+PoLFLWjF8XnS+ZYltOnEN0HsrrmXuIhKCzE8ul++NnmNEaWs+DvB8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737164830; c=relaxed/simple;
-	bh=BYg/j7bT2AKoVbpvaulMKm0Qwq9+2NyOYI76DiR5YT0=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=hPX+PB++DpfKsrdfD7G6kyoKruV5R9bpBUCVEqKoR2VWgWF9vUqWbqyV+4lhy0rpJskxptWSKD70n2ew8xgBEqNbBhQPNLg5iJNBTMPGb8K0eTqfuT1EL+K0u3MNpQ2FAhJ0Mzc3GZh3Hatz+nH28cBtENb35JLWsCzFAJKOzOg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Mod+4dgE; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1737187785; c=relaxed/simple;
+	bh=8Srevssim3A0yKFu3ju2d8b02eg9+nok+xtLRxDZ3QA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=D0VlSeKWHbrbFVbOcu+hAW/tWCK1IdZSJXwqps5IimNOy45jXr6nEVAdgh+7bEN3BSceZus8PB0t8XOVJM5xXCUxLnb1gO+PoqKB6IMQIpNEtHWuyOa8QRzZxr+2FA2IdoCzRZpH87ko+l/ZBBxSlD3BUWJe7CgE5pbOwkP7hUw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=LezrkkSr; arc=none smtp.client-ip=198.175.65.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Mod+4dgE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0E56C4CEDD;
-	Sat, 18 Jan 2025 01:47:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1737164830;
-	bh=BYg/j7bT2AKoVbpvaulMKm0Qwq9+2NyOYI76DiR5YT0=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Mod+4dgEuJ6ug8Y9AnJhD5zA98P4aYPyNk2+Vj3X0b8ly5KSWZCIUDCKzadmVrM3J
-	 8zwZgy7/XjbUyiE5yX9zAdany0nAEFbOhilLAro5+HHbeMeKA2w3iIpuEWxuFlPw0F
-	 WOJmQQDQxiwrcfvnsVopDzpopawCNxJFEqNumXEJwzj77P9OpAvzVJEe6KwjRn9kEc
-	 /XNJuAI9bx5LtWbg8ZhXc1mnlE4yfVc0YwV4bQyNFDBF39GXnJD/7WatCYPZUqMorq
-	 hC0/oHp9FISbVHAJvmom1idcoZVNL7LwYKafwa+EWcrZBUxX39T+IQx02eP9+lhF8X
-	 hITK8to9QEUJw==
-From: SeongJae Park <sj@kernel.org>
-To: SeongJae Park <sj@kernel.org>
-Cc: damon@lists.linux.dev,
-	kernel-team@meta.com
-Subject: Re: Two simple ideas for DAMON accuracy improvement
-Date: Fri, 17 Jan 2025 17:47:06 -0800
-Message-Id: <20250118014706.76776-1-sj@kernel.org>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20241026215311.148363-1-sj@kernel.org>
-References: 
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="LezrkkSr"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1737187784; x=1768723784;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=8Srevssim3A0yKFu3ju2d8b02eg9+nok+xtLRxDZ3QA=;
+  b=LezrkkSrfutErerzstRqrLjoNXW8eWt2EASiF4DuBoD0aY7AZbI9a70d
+   GQ7xNrwAUsH0HCTwKnwimt6oTwzoKAnSrofTU8s+s+SUzDG/D9XEqksMB
+   OisqPYzytV0MMCwBo6n8PR92eE+mCFTaQIIjo9cKEeHG3bKS5aVWez+oX
+   EErbjozRbymJ8ef/zPKJTYHqytQfBwNLWek1/EHsngwGxDEIuQPHi8ON1
+   J+9LsVahcOs0RDI7c2Wym1CRdZRKWl1O6mwMzdMljFa8PaNebk7s9mn2H
+   JiMFH7kMmehcwnMcQQ1cwNf+OKajAzaLPecA+a3xzqdKvQvuE3zYcTJDz
+   A==;
+X-CSE-ConnectionGUID: TxzhheC4QVinLgffP2Fl/A==
+X-CSE-MsgGUID: jDEHDWcESmqIYXOgxgPp2w==
+X-IronPort-AV: E=McAfee;i="6700,10204,11318"; a="49019339"
+X-IronPort-AV: E=Sophos;i="6.13,214,1732608000"; 
+   d="scan'208";a="49019339"
+Received: from orviesa006.jf.intel.com ([10.64.159.146])
+  by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Jan 2025 00:09:43 -0800
+X-CSE-ConnectionGUID: 7zm1jcFgTbefzQpYJ4aTeA==
+X-CSE-MsgGUID: LAAR585gRUSq017amnHiUg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.13,214,1732608000"; 
+   d="scan'208";a="106056365"
+Received: from lkp-server01.sh.intel.com (HELO d63d4d77d921) ([10.239.97.150])
+  by orviesa006.jf.intel.com with ESMTP; 18 Jan 2025 00:09:41 -0800
+Received: from kbuild by d63d4d77d921 with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1tZ3ti-000UE3-1v;
+	Sat, 18 Jan 2025 08:09:38 +0000
+Date: Sat, 18 Jan 2025 16:09:08 +0800
+From: kernel test robot <lkp@intel.com>
+To: Usama Arif <usamaarif642@gmail.com>, sj@kernel.org,
+	akpm@linux-foundation.org
+Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
+	damon@lists.linux.dev, linux-mm@kvack.org,
+	Usama Arif <usamaarif642@gmail.com>
+Subject: Re: [v1 2/2] mm/damon: introduce DAMOS filter type hugepage
+Message-ID: <202501181509.wyig2s2H-lkp@intel.com>
+References: <20250116144436.3947318-2-usamaarif642@gmail.com>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250116144436.3947318-2-usamaarif642@gmail.com>
 
-On Sat, 26 Oct 2024 14:53:11 -0700 SeongJae Park <sj@kernel.org> wrote:
+Hi Usama,
 
-> Hello DAMON community,
-> 
-> 
-> There were a number of grateful questions, concerns, and improvement ideas
-> around monitoring output accuracy of DAMON.  I always admitted the fact that
-> DAMON has many rooms for improvement, but was bit awary at changes for some
-> reasons.  Now I think it caused some unnecessarily long delay.  Sorry about
-> that.  Now I want to invest some time on the topic.  So starting by sharing
-> below two simple ideas first.
-> 
-> User-defined Regions Split Factor
-> ---------------------------------
-> 
-> DAMON's "Adasptive Regions Adjustment (ARA)" mechanism splits each region into
-> randomly sized sub regions, show their access temperature, and merge back
-> adjacent regions having similar temperature.  The split factor is hard-coded as
-> two.  Increasing the number make DAMON regions more quickly converges in right
-> shape.  However, it makes number of DAMON regions in usual situation higher,
-> and therefore induce more overhead.  It will still keep the user-defined upper
-> limit (max_nr_regions), though.
-> 
-> The optimum value of the split factor would depend on the use case.  We will
-> therefore add another knob to let users set the factor on runtime.  The default
-> value will be two, so this will not introduce any regression or behavioral
-> change to existing users.
-> 
-> Periodic Fine-grain Split of Aged Regions
-> -----------------------------------------
-> 
-> If a region is continuously changing its boundary and access temperature, it
-> means it is converging, or the access pattern of the workload is not
-> stabilized.  Either case, this is a healthy signal.
-> 
-> If a region is consistently showing same access pattern for long time, it may
-> because the access pattern is stabilized, and the region is correctly
-> converged.  However, it might be because the access pattern is changed, but the
-> converging is slow.
-> 
-> To avoid the too slow converging of aged regions, we will let users
-> periodically increase the split factor for regions that kept current access
-> pattern for long time (high 'age').  Users will be able to set the 'age'
-> offset, the split factor for the aged regions, and time interval between the
-> periodic fine-grain split of the regions.  For example, users can ask DAMON to
-> "split regions keeping current access pattern for ten minutes or higher to five
-> sub-regions every minute".
-> 
-> The feature will be ignored unless users explicitly set those, so that it does
-> not introduce any regression of behavioral change to existing users.
-> 
-> Discussions
-> -----------
-> 
-[...]
-> I believe implementing the features would be not difficult.  So unless someone
-> voluntarily steps up, I will start implementation of the features, targeting
-> v6.14 merge window.
+kernel test robot noticed the following build errors:
 
-TL; DR: The features will not be available by 6.14.  Please make a voice if you
-want the features get prioritized.
+[auto build test ERROR on akpm-mm/mm-everything]
 
-I still think the above features can be useful.  But I was unable to make any
-progress for those due to other prioritized works.  Linux v6.14 may be released
-on upcoming Sunday, so I don't think we can make it on it.  Sorry if you were
-waiting for the features.
+url:    https://github.com/intel-lab-lkp/linux/commits/Usama-Arif/mm-damon-introduce-DAMOS-filter-type-hugepage/20250116-224546
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/akpm/mm.git mm-everything
+patch link:    https://lore.kernel.org/r/20250116144436.3947318-2-usamaarif642%40gmail.com
+patch subject: [v1 2/2] mm/damon: introduce DAMOS filter type hugepage
+config: i386-randconfig-014-20250118 (https://download.01.org/0day-ci/archive/20250118/202501181509.wyig2s2H-lkp@intel.com/config)
+compiler: clang version 19.1.3 (https://github.com/llvm/llvm-project ab51eccf88f5321e7c60591c5546b254b6afab99)
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20250118/202501181509.wyig2s2H-lkp@intel.com/reproduce)
 
-It's also not clear if we will make it on the next major release.  I'm now
-trying to prioritize the monitoring intervals auto-tuning[1].  Please make your
-voice if you want me to prioritize the development of the features, or step up
-if you want to implement some of those on your own.  I think the first feature
-(user-defined regions split factor) could be a good DAMON-beginner's task.
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202501181509.wyig2s2H-lkp@intel.com/
 
-[1] https://lore.kernel.org/20241202175459.2005526-1-sj@kernel.org
+All errors (new ones prefixed by >>):
 
+   In file included from mm/damon/paddr.c:12:
+   In file included from include/linux/pagemap.h:8:
+   In file included from include/linux/mm.h:2224:
+   include/linux/vmstat.h:504:43: warning: arithmetic between different enumeration types ('enum zone_stat_item' and 'enum numa_stat_item') [-Wenum-enum-conversion]
+     504 |         return vmstat_text[NR_VM_ZONE_STAT_ITEMS +
+         |                            ~~~~~~~~~~~~~~~~~~~~~ ^
+     505 |                            item];
+         |                            ~~~~
+   include/linux/vmstat.h:511:43: warning: arithmetic between different enumeration types ('enum zone_stat_item' and 'enum numa_stat_item') [-Wenum-enum-conversion]
+     511 |         return vmstat_text[NR_VM_ZONE_STAT_ITEMS +
+         |                            ~~~~~~~~~~~~~~~~~~~~~ ^
+     512 |                            NR_VM_NUMA_EVENT_ITEMS +
+         |                            ~~~~~~~~~~~~~~~~~~~~~~
+   include/linux/vmstat.h:524:43: warning: arithmetic between different enumeration types ('enum zone_stat_item' and 'enum numa_stat_item') [-Wenum-enum-conversion]
+     524 |         return vmstat_text[NR_VM_ZONE_STAT_ITEMS +
+         |                            ~~~~~~~~~~~~~~~~~~~~~ ^
+     525 |                            NR_VM_NUMA_EVENT_ITEMS +
+         |                            ~~~~~~~~~~~~~~~~~~~~~~
+   In file included from mm/damon/paddr.c:17:
+   include/linux/mm_inline.h:47:41: warning: arithmetic between different enumeration types ('enum node_stat_item' and 'enum lru_list') [-Wenum-enum-conversion]
+      47 |         __mod_lruvec_state(lruvec, NR_LRU_BASE + lru, nr_pages);
+         |                                    ~~~~~~~~~~~ ^ ~~~
+   include/linux/mm_inline.h:49:22: warning: arithmetic between different enumeration types ('enum zone_stat_item' and 'enum lru_list') [-Wenum-enum-conversion]
+      49 |                                 NR_ZONE_LRU_BASE + lru, nr_pages);
+         |                                 ~~~~~~~~~~~~~~~~ ^ ~~~
+   5 warnings generated.
+>> ld.lld: error: call to __compiletime_assert_374 marked "dontcall-error": BUILD_BUG failed
 
-Thanks,
-SJ
-
-[...]
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
