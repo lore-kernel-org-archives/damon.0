@@ -1,73 +1,72 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 515C81EF0A3
-	for <damon@lists.linux.dev>; Mon, 20 Jan 2025 19:23:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 434D218E743
+	for <damon@lists.linux.dev>; Mon, 20 Jan 2025 19:25:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737401009; cv=none; b=TBB5VSX1pXOhVYu/3opzvY9ADY/LsPj4e/wbBZdifEpyKKcS58rjpNgbAA/SwAnB6325p9KVINOIJ0VE0ujk/F1LlDl0l1ZVcX73DQl60abEfNqcjx1snx61GQ/xHV98+dJqBVjJ6xqrFZK/4eI2omwe404iB5vO6WJUMo1UhEE=
+	t=1737401162; cv=none; b=WHg8u8xYtj8nU2kCgb/1jWpk2UY4g2ejjt96lpaD4JNX2PODPJtCGufvrtwqkZGVSqy69/dZiYekjnswmac3QSWxftrNI7Wc86A//3RiIpkHrn+M8R/4UARpW9wikSfI5gR6SfQ3klNRwu3gupV7p4baQF3d7dRjaHwUDLLxmSI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737401009; c=relaxed/simple;
-	bh=1p+GE1pbn1YVwmlQsB1BHK2T0IB3/JkW9xgCXMokIr4=;
+	s=arc-20240116; t=1737401162; c=relaxed/simple;
+	bh=nK9zHAxVGZnMkeSjoS8VWgVGRCHCv8xQ3g7oGI94M6U=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=dUExG/4TBDdgbdKYMe8JJHgfCPrQky7N72z1G9QKiAie+rCb/92iZWN+r5wck3pJKxEXXiCSg9dX2CsytUKpgahR34hH6VYLqr2puD/7Rv8Rjw+CeEXyJxaHcOJlLxAHxur6JwE6jbm49zsLp0J/4NLTMRzX4narmOsPa+IcwvU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=FjYepndu; arc=none smtp.client-ip=170.10.129.124
+	 In-Reply-To:Content-Type; b=NuyBPkRKdjiv6swhHPaVyc4KP7mdPtw5SEysTio+r9nYOSlrMHOcsTyJ2Zv4YT5Hjm9zY3Oogwl6bD/UZJbSgSAx99MWmg30m1RNbwXS4BeDnIDlhCVVG/A9rSKlS4ZcIv/FaD4wQoOXf7f2iM6F3gmAVTHDc3XF+sZJQ/+p2P4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=ayVM5RQ3; arc=none smtp.client-ip=170.10.133.124
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="FjYepndu"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="ayVM5RQ3"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1737401006;
+	s=mimecast20190719; t=1737401159;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=g/Kot/CGWXdBkOcgzfuSXppZ8O3rmTLRkGTl8V+8sPE=;
-	b=FjYepnduV16ArbTL5ic1KtaelSr5TPO6fSv+/K1YYDEAA1NxbmWdPnhNVtfX55elZWf+Pq
-	5TiJyHPs+OU1U/yqEFJx5r95+j1QnxyhoOCxZn3gWeiPOEKb7uEosskFJNcKOxIhNA9qo5
-	etR3Lp8UohNBqNLlVJnQqcE+adTyIV4=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+	bh=Xx95InjbhG+pZJG2egrRkTXKGZsVIpuvXDQLmykKmsc=;
+	b=ayVM5RQ3eF1uPBgJxZWmmjcnDfuS1lUzGMD8A9+8kYhF+gNp4OysBQWH/WFpazclzUZ7Ss
+	iqu+IIT5xQfkqyNXqmqjcxh4Xzuhb2mwa3AE9UKDiIfhSkQRWnFX0lS+b3VcM/fdCj7YLX
+	XhBLb9sWyma2xsSPssR83hWIb1MivL8=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-113-xLBHIEspNhO1njTgCDHtOA-1; Mon, 20 Jan 2025 14:23:24 -0500
-X-MC-Unique: xLBHIEspNhO1njTgCDHtOA-1
-X-Mimecast-MFC-AGG-ID: xLBHIEspNhO1njTgCDHtOA
-Received: by mail-wr1-f70.google.com with SMTP id ffacd0b85a97d-3860bc1d4f1so3066835f8f.2
-        for <damon@lists.linux.dev>; Mon, 20 Jan 2025 11:23:24 -0800 (PST)
+ us-mta-374-c7aN-3GbMrGEB-Pj-lIrhA-1; Mon, 20 Jan 2025 14:25:57 -0500
+X-MC-Unique: c7aN-3GbMrGEB-Pj-lIrhA-1
+X-Mimecast-MFC-AGG-ID: c7aN-3GbMrGEB-Pj-lIrhA
+Received: by mail-wm1-f70.google.com with SMTP id 5b1f17b1804b1-4362153dcd6so25213155e9.2
+        for <damon@lists.linux.dev>; Mon, 20 Jan 2025 11:25:57 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737401003; x=1738005803;
+        d=1e100.net; s=20230601; t=1737401156; x=1738005956;
         h=content-transfer-encoding:in-reply-to:organization:autocrypt
          :content-language:from:references:cc:to:subject:user-agent
          :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=g/Kot/CGWXdBkOcgzfuSXppZ8O3rmTLRkGTl8V+8sPE=;
-        b=dS+0YlzvoJx0BC5BEBwH2yF70BKE6NYcWilstmyWyRnpITFBR80/hRMemzQ1xIomqV
-         mNhdwIjlXCkjrLWYZn90pSCs4n/87Jbii1jMmsAC8/5Rb4rP5zasspaPLZnhL1+E1qbe
-         MvXT6KTwNlUw465wG7avLmBHGOjbjmHUJGdk/2puqtMknnONUQZmfZGKFiT5LCMLUyCc
-         pkx9hLLVr5KlqftHnUPfpJYqx7bGV9PiKStJ51O1gIexezggNywXIiUjUaA3SWRwymd3
-         v2Cjo6544S5J1cuXARcXPQwOPFj9YVWiRw31x9KoaQEYB5O1CM+rxCiqUGToEqL3FM1j
-         47iA==
-X-Forwarded-Encrypted: i=1; AJvYcCUyWZhtlRiRWEa1yc3AUQoUiHEM/UzSITazEID565725Mqxdwrr2uaX1jdlYonmV/M5RASZUQ==@lists.linux.dev
-X-Gm-Message-State: AOJu0YyBOflHfeLGVJLvBIH6RpaR5y+PP4kQQWIf9DX1xJAT1WpNn5js
-	TGZIk2QkQECzcDjqjbPKmNe/WQbds7kZSMj2B7v59hKu9eW1gh1QtL3mkTb++6y/kgUdKb8RpS1
-	goCDW0TseVKexcZXEBslaSzAVaNWLhpvobBtonGSLfMbNrJ3Y/Rssz9KgxMQk
-X-Gm-Gg: ASbGncu2c/4uCQkDM7EpSyfbW48nMUjduywY816Z4L8EQilc5FCuGmF2AnvMhzxGyvg
-	np7LFt34LAv2O6VeQkMgDeYVgN4RyWmt2N8Ck2rkxPGlNzrpuvVCo2b19Gki2LKvx0UVrlrjGno
-	LmxEuk7TwmZELJvUYdJCsO+XaOnvguO1eyDp8Urv1Llr3ih3DaeCypnwXFjmAHknkpOW0R2XdWp
-	3FAu1Wkkgt5aE39SpR1Iptogqn9Oj/nWa8I80ysBlk5X+zfxhLbZbfu/YakdeaqyJGvccuRQOQX
-	H6VYnEmeta9Z3JUm9fcuevXedL7QpcR/5hY1FhppfZRxg22PTlGsXI9FPrzhMuitheB0OZvTYO0
-	AAFcccLb6HITGqIeLkD12cg==
-X-Received: by 2002:a5d:5f8c:0:b0:38a:873f:e31f with SMTP id ffacd0b85a97d-38bf5677ca4mr11799276f8f.1.1737401003577;
-        Mon, 20 Jan 2025 11:23:23 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGQYuFKcdC9xIlhDBXl6f5gjSAKXxEvjwcJY1WwcbTeTdkTYQiMJYO8oYApnw9Z8X+IB29t7A==
-X-Received: by 2002:a5d:5f8c:0:b0:38a:873f:e31f with SMTP id ffacd0b85a97d-38bf5677ca4mr11799256f8f.1.1737401003014;
-        Mon, 20 Jan 2025 11:23:23 -0800 (PST)
+        bh=Xx95InjbhG+pZJG2egrRkTXKGZsVIpuvXDQLmykKmsc=;
+        b=JJLWpnTnROkBp2h4F8C7l9PLKaX8mxxhx6OmUTJttV3tE+CV2D8qiUQYnpjdJzkwby
+         uHfm9bLlktQRHQQqZENksOrbQ/8hclfjACJGoMZ/mpbMzAsYcsa8N1mbrCNIZfuX3IhZ
+         uhTagHpZ3DJc6fRGW2ifEwaB/qK6gJrSCdVo83+y5UXh1cKSTmnc8U9Ve2smdlqxQUcH
+         z5+dDguUvHgS8QDQCJ0yvtXKHWrh6WEMUFCibAn+mVswNKjvU6Uy2xdH4KJAbo/wTP0b
+         kj3ImmI8TM1MG+24Jjosn5BhJD/LT7YQBlfc5Y7vnRPsk8awWmw4mj37q6kmBQvMda2v
+         ElDg==
+X-Gm-Message-State: AOJu0YzLsFB1YFpomR7zLmNfVCyhjjXRKDOVMCXoN2JEgUQkkaqrnWmF
+	9PXV1QXceH2Kgp87PLbGdkftT8Aq5yxliZ30NmvMXFRkU3WT8Ft5O+M16zUQTvF7bbDMWbgDFnd
+	eaNjZadfAckdMg3H2gACR79Z427vQIShusvTpJtvkq8X9IVUKZ+KPE3veud/A
+X-Gm-Gg: ASbGncvbZYvPz9xZV1TJiMvOiWoWhky6k0q8CSqHmsSZ8um0240YV/QSPGELBhFfnah
+	n18i5PY56iOHKLSqCBlKrt3qShvK5jmYTs9xtnzBqbSBOlgmlVxf12tXHDhz6h29NhFjn2xmN/H
+	i3Rl2FmWrrQ9shXXxgrRMkosyoPYRYevR19UIUEjNoJdiAKziTXTEwbrxI5hW5PUBjEzFaF8paS
+	zFbwjEv1uI89fQCHcIUbX63znVyQ64YxkQmxWO2pY5l0I+dX8vlUK+XZYqZiN2/pz+2+w7cEcrY
+	klP5oZvPuH/YptOGO77GqxgD+C9euFPg2BchkclYv71T3GjF/yFeLFopcYeKjpTnoTN2+eqh98I
+	eYKB/HF2qa64eNp1bm8ORCA==
+X-Received: by 2002:a05:600c:3149:b0:434:f270:a513 with SMTP id 5b1f17b1804b1-4389144e70fmr140409645e9.29.1737401156649;
+        Mon, 20 Jan 2025 11:25:56 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHV9+jmqmaIoZ04Lg5OT1s6kFlmHP6sSBnuyNEoRWp1lWelnk3T6qiIXqvCAq0EfZhhFAGhIw==
+X-Received: by 2002:a05:600c:3149:b0:434:f270:a513 with SMTP id 5b1f17b1804b1-4389144e70fmr140409465e9.29.1737401156308;
+        Mon, 20 Jan 2025 11:25:56 -0800 (PST)
 Received: from ?IPV6:2003:cb:c72e:e400:431d:9c08:5611:693c? (p200300cbc72ee400431d9c085611693c.dip0.t-ipconnect.de. [2003:cb:c72e:e400:431d:9c08:5611:693c])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38bfeb391ffsm8963906f8f.63.2025.01.20.11.23.20
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43890468480sm151106005e9.33.2025.01.20.11.25.54
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 20 Jan 2025 11:23:21 -0800 (PST)
-Message-ID: <ac40d2ef-a4e8-4b0a-a213-90296eb92dd9@redhat.com>
-Date: Mon, 20 Jan 2025 20:23:20 +0100
+        Mon, 20 Jan 2025 11:25:55 -0800 (PST)
+Message-ID: <68262ad8-a417-4183-af56-a3691002c3d1@redhat.com>
+Date: Mon, 20 Jan 2025 20:25:54 +0100
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -76,10 +75,13 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v3 2/2] mm/damon: introduce DAMOS filter type hugepage
-To: SeongJae Park <sj@kernel.org>
-Cc: Usama Arif <usamaarif642@gmail.com>, akpm@linux-foundation.org,
- damon@lists.linux.dev, linux-mm@kvack.org
-References: <20250120191654.38420-1-sj@kernel.org>
+To: Usama Arif <usamaarif642@gmail.com>, sj@kernel.org,
+ akpm@linux-foundation.org
+Cc: damon@lists.linux.dev, linux-mm@kvack.org
+References: <20250120181959.2564362-1-usamaarif642@gmail.com>
+ <20250120181959.2564362-2-usamaarif642@gmail.com>
+ <9257fbb9-d26d-4028-896f-fb8cfad3ddad@redhat.com>
+ <f8e95ec8-f800-495d-a723-53edd0d487f5@gmail.com>
 From: David Hildenbrand <david@redhat.com>
 Autocrypt: addr=david@redhat.com; keydata=
  xsFNBFXLn5EBEAC+zYvAFJxCBY9Tr1xZgcESmxVNI/0ffzE/ZQOiHJl6mGkmA1R7/uUpiCjJ
@@ -126,17 +128,18 @@ Autocrypt: addr=david@redhat.com; keydata=
  jPrnvUsUUsjRoRNJjKKA/REq+sAnhkNPPZ/NNMjaZ5b8Tovi8C0tmxiCHaQYqj7G2rgnT0kt
  WNyWQQ==
 Organization: Red Hat
-In-Reply-To: <20250120191654.38420-1-sj@kernel.org>
+In-Reply-To: <f8e95ec8-f800-495d-a723-53edd0d487f5@gmail.com>
 X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: Ws9gb8jmIVOl5NjhaoM0GtCjZ3cH94V2j0UFDUwDWTU_1737401003
+X-Mimecast-MFC-PROC-ID: eMGkcAq7zYj_SwJrQl_wwO4GAa55PP4LfznlQzY93OQ_1737401157
 X-Mimecast-Originator: redhat.com
 Content-Language: en-US
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 20.01.25 20:16, SeongJae Park wrote:
-> On Mon, 20 Jan 2025 19:57:10 +0100 David Hildenbrand <david@redhat.com> wrote:
+On 20.01.25 20:18, Usama Arif wrote:
 > 
+> 
+> On 20/01/2025 18:57, David Hildenbrand wrote:
 >> On 20.01.25 19:19, Usama Arif wrote:
 >>> This is to gather statistics to check if memory regions of specific
 >>> access tempratures are backed by hugepages. This includes both THPs
@@ -148,64 +151,107 @@ On 20.01.25 20:16, SeongJae Park wrote:
 >>> ---
 >>> v2 -> v3:
 >>> - expose hugepage via sysfs even if the kernel is
->>>     built without hugepage support. DAMON will just
->>>     just return 0. (SJ Park)
+>>>     built without hugepage support. DAMON will just
+>>>     just return 0. (SJ Park)
 >>>
 >>> v1 -> v2:
 >>> - Wrap DAMOS_FILTER_TYPE_HUGEPAGE case with
->>>     CONFIG_PGTABLE_HAS_HUGE_LEAVES (SJ Park)
+>>>     CONFIG_PGTABLE_HAS_HUGE_LEAVES (SJ Park)
 >>> ---
->>>    include/linux/damon.h    | 2 ++
->>>    mm/damon/paddr.c         | 5 +++++
->>>    mm/damon/sysfs-schemes.c | 1 +
->>>    3 files changed, 8 insertions(+)
+>>>    include/linux/damon.h    | 2 ++
+>>>    mm/damon/paddr.c         | 5 +++++
+>>>    mm/damon/sysfs-schemes.c | 1 +
+>>>    3 files changed, 8 insertions(+)
 >>>
 >>> diff --git a/include/linux/damon.h b/include/linux/damon.h
 >>> index af525252b853..1d94d7d88b36 100644
 >>> --- a/include/linux/damon.h
 >>> +++ b/include/linux/damon.h
 >>> @@ -326,6 +326,7 @@ struct damos_stat {
->>>     * @DAMOS_FILTER_TYPE_ANON:	Anonymous pages.
->>>     * @DAMOS_FILTER_TYPE_MEMCG:	Specific memcg's pages.
->>>     * @DAMOS_FILTER_TYPE_YOUNG:	Recently accessed pages.
->>> + * @DAMOS_FILTER_TYPE_HUGEPAGE:	Page is part of a hugepage.
->>>     * @DAMOS_FILTER_TYPE_ADDR:	Address range.
->>>     * @DAMOS_FILTER_TYPE_TARGET:	Data Access Monitoring target.
->>>     * @NR_DAMOS_FILTER_TYPES:	Number of filter types.
+>>>     * @DAMOS_FILTER_TYPE_ANON:    Anonymous pages.
+>>>     * @DAMOS_FILTER_TYPE_MEMCG:    Specific memcg's pages.
+>>>     * @DAMOS_FILTER_TYPE_YOUNG:    Recently accessed pages.
+>>> + * @DAMOS_FILTER_TYPE_HUGEPAGE:    Page is part of a hugepage.
+>>>     * @DAMOS_FILTER_TYPE_ADDR:    Address range.
+>>>     * @DAMOS_FILTER_TYPE_TARGET:    Data Access Monitoring target.
+>>>     * @NR_DAMOS_FILTER_TYPES:    Number of filter types.
 >>> @@ -345,6 +346,7 @@ enum damos_filter_type {
->>>    	DAMOS_FILTER_TYPE_ANON,
->>>    	DAMOS_FILTER_TYPE_MEMCG,
->>>    	DAMOS_FILTER_TYPE_YOUNG,
->>> +	DAMOS_FILTER_TYPE_HUGEPAGE,
->>>    	DAMOS_FILTER_TYPE_ADDR,
->>>    	DAMOS_FILTER_TYPE_TARGET,
->>>    	NR_DAMOS_FILTER_TYPES,
+>>>        DAMOS_FILTER_TYPE_ANON,
+>>>        DAMOS_FILTER_TYPE_MEMCG,
+>>>        DAMOS_FILTER_TYPE_YOUNG,
+>>> +    DAMOS_FILTER_TYPE_HUGEPAGE,
+>>>        DAMOS_FILTER_TYPE_ADDR,
+>>>        DAMOS_FILTER_TYPE_TARGET,
+>>>        NR_DAMOS_FILTER_TYPES,
 >>> diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
 >>> index c0ccf4fade24..224308140441 100644
 >>> --- a/mm/damon/paddr.c
 >>> +++ b/mm/damon/paddr.c
 >>> @@ -222,6 +222,11 @@ static bool damos_pa_filter_match(struct damos_filter *filter,
->>>    		if (matched)
->>>    			damon_folio_mkold(folio);
->>>    		break;
+>>>            if (matched)
+>>>                damon_folio_mkold(folio);
+>>>            break;
 >>> +#if defined(CONFIG_PGTABLE_HAS_HUGE_LEAVES)
->>> +	case DAMOS_FILTER_TYPE_HUGEPAGE:
->>> +		matched = folio_size(folio) == HPAGE_PMD_SIZE;
+>>> +    case DAMOS_FILTER_TYPE_HUGEPAGE:
+>>> +        matched = folio_size(folio) == HPAGE_PMD_SIZE;
 >>
 >>
->> Can we directly embed in the name and the comments/docs that we are only
->> talking about PMD size (both, THP and hugetlb)?
+>> Can we directly embed in the name and the comments/docs that we are only talking about PMD size (both, THP and hugetlb)?
 >>
 >> DAMOS_FILTER_TYPE_PMD_HUGEPAGE or sth. like that.
+>>
+>>
 > 
-> Nice suggestion, thank you!  And we might later add more filter types for
-> different size huge pages.  What about extending this to handle more general
-> case, though?  That is, we can let the filter receives a range of the folio
-> size to match, like DAMOS_FILTER_TYPE_ADDR does.  Then, the filter could be
-> used for any size of interest.
+> I always think of gigantic page as PUD size, hugepage as PMD size (and not anything smaller), mTHP as smaller than PMD :)
 
-That would probably be future proof: either a range or explicitly 
-specified sizes (ranges?).
+And cont-PMD ... hugetlb, cont-PTE hugetlb ... are ? :)
+
+> But I don't think thats the official term or standardized across the kernel.
+> 
+
+We didn't know better when we designed some of the old interfaces, 
+that's why I am hoping that we can do better with new interfaces. Either 
+spell out the PMD size, or have filters for size lists / size ranges.
+
+> I can send a v4, or maybe Andrew could apply the diff below?
+> 
+> diff --git a/include/linux/damon.h b/include/linux/damon.h
+> index 1d94d7d88b36..261c0741dd0f 100644
+> --- a/include/linux/damon.h
+> +++ b/include/linux/damon.h
+> @@ -326,7 +326,7 @@ struct damos_stat {
+>    * @DAMOS_FILTER_TYPE_ANON:    Anonymous pages.
+>    * @DAMOS_FILTER_TYPE_MEMCG:   Specific memcg's pages.
+>    * @DAMOS_FILTER_TYPE_YOUNG:   Recently accessed pages.
+> - * @DAMOS_FILTER_TYPE_HUGEPAGE:        Page is part of a hugepage.
+> + * @DAMOS_FILTER_TYPE_PMD_HUGEPAGE:    Page is part of a hugepage (THP/hugetlb).
+>    * @DAMOS_FILTER_TYPE_ADDR:    Address range.
+>    * @DAMOS_FILTER_TYPE_TARGET:  Data Access Monitoring target.
+>    * @NR_DAMOS_FILTER_TYPES:     Number of filter types.
+> @@ -346,7 +346,7 @@ enum damos_filter_type {
+>          DAMOS_FILTER_TYPE_ANON,
+>          DAMOS_FILTER_TYPE_MEMCG,
+>          DAMOS_FILTER_TYPE_YOUNG,
+> -       DAMOS_FILTER_TYPE_HUGEPAGE,
+> +       DAMOS_FILTER_TYPE_PMD_HUGEPAGE,
+>          DAMOS_FILTER_TYPE_ADDR,
+>          DAMOS_FILTER_TYPE_TARGET,
+>          NR_DAMOS_FILTER_TYPES,
+> diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
+> index 224308140441..e374ea952308 100644
+> --- a/mm/damon/paddr.c
+> +++ b/mm/damon/paddr.c
+> @@ -223,7 +223,7 @@ static bool damos_pa_filter_match(struct damos_filter *filter,
+>                          damon_folio_mkold(folio);
+>                  break;
+>   #if defined(CONFIG_PGTABLE_HAS_HUGE_LEAVES)
+> -       case DAMOS_FILTER_TYPE_HUGEPAGE:
+> +       case DAMOS_FILTER_TYPE_PMD_HUGEPAGE:
+>                  matched = folio_size(folio) == HPAGE_PMD_SIZE;
+>                  break;
+>   #endif
+> 
+
 
 -- 
 Cheers,
