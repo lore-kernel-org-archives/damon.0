@@ -1,68 +1,72 @@
-Received: from mail-qk1-f170.google.com (mail-qk1-f170.google.com [209.85.222.170])
+Received: from mail-qv1-f53.google.com (mail-qv1-f53.google.com [209.85.219.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3E7E7DA82
-	for <damon@lists.linux.dev>; Mon, 20 Jan 2025 18:20:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 611A6192B75
+	for <damon@lists.linux.dev>; Mon, 20 Jan 2025 18:20:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737397207; cv=none; b=W1FEM9vnos467GAfGUe3KMi0o2Ir7xKeICTkB8j2Fq/HincbEbdlRA2syRFCAZGjYqKfp2NO9S+68btK8REW23rt0QXCyJKOUjsFDGBaUOGdGoDYndr3WAvkd4FEbExkmStZMd6AoluQmw7WQSOaFLI4ACAASMza1HuatuGRhuA=
+	t=1737397208; cv=none; b=hNKo01nqHSP39k05ACmQ0KunU9N86fr8W89MSarwQsk1bqQvxxnotAq2pFPWl530Fhz+KzhcB7rav7stDmKqWT79PLWGy05Dd6FS8emWQeGxrO2ThD3Hx5KvdbEmqMKtaOWNLJizoxPdNjnjkp1Z4B21tYYzbxU8fmxVe17ORD4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737397207; c=relaxed/simple;
-	bh=c2xTNHI8CovG75AGhKvkDolmM50AFA1OHJrsd+yTSiQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=o71J44qV1979/oYk7jTx1mAGjvKFgEgqjS5FNIKG4Zc07k2Nmy6ZnPTnIros5ympKdmE8X3ANvwrHsZ/ttMDgPHYSpKZ5E8udMV/Zk17i0JuOn55wZMYxKMybQ/sSWrZ7b2F8/pboUKM7Lhkw8jhTwnZ4chibN5DEOQelHeAmRc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hlxsxbyN; arc=none smtp.client-ip=209.85.222.170
+	s=arc-20240116; t=1737397208; c=relaxed/simple;
+	bh=d7TaFEGDnn8X7aIB23xz8k2GdsBtSwW7hHqYua6bdF0=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=HgISmMvIyz3XVY5dtyPOTRP3jJYrMhvo/syI7MinCBhtvvgwqam25/17eHAxzExTJ/vWpSfK4OU8XSqbMCxIoF11wGMWXoYTQEv0KgPUQmrBtPl1ImMbcMXlU1vl3zBJEtr6t7LaUP1s5t3Uaw2Qc5R0l4TyCjbuImY1V44zoog=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JIxfDhkv; arc=none smtp.client-ip=209.85.219.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hlxsxbyN"
-Received: by mail-qk1-f170.google.com with SMTP id af79cd13be357-7b6f7d7e128so557302785a.1
-        for <damon@lists.linux.dev>; Mon, 20 Jan 2025 10:20:05 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JIxfDhkv"
+Received: by mail-qv1-f53.google.com with SMTP id 6a1803df08f44-6d8edad9932so36391116d6.0
+        for <damon@lists.linux.dev>; Mon, 20 Jan 2025 10:20:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1737397205; x=1738002005; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=JVrThU83vZ5H73oLhTqtQwzItGk1gBFlj8uzbRxyZks=;
-        b=hlxsxbyNpttUhAkwHr9jiDpXWWRSAQf/NeBv+V/s3En85mz/4+8fPS5gvQE3TbAQTV
-         XARafGnpTZ2Co9xxi1er+KibFU2YXPHYgQPQlSBkwSDkApK0AvFyCh47G4sCZ4vamS2M
-         CSjw5cXZ5UEpyFAhiSLwjOAa8o36n83yium2BWHMsv4n/S2tsjVzfmSGQXEwDhoPG6Po
-         4ys9Y0qU8xsZxvkEAIPLfjB/l1ubcVk63Sv+d5QBpRpL0GNHWVwxAVbxvCHmUGS7q7BW
-         Cb39TD8U7E9daJFOF5h4LjUcBp2hPq9EbYWgDkkCofkLm6OWTlMBpZurY2iVYM8CuKGc
-         DIeQ==
+        d=gmail.com; s=20230601; t=1737397206; x=1738002006; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=1M4q3OzaFWK9ln4L3PJAAcFbjl3Cez+v0LDvBWtRTqI=;
+        b=JIxfDhkvZdb875Bgi63GZhnE6cXBnRMA2LRGouqh5b3QbAcEgcn8/LHa+Ya4wcy8Ii
+         dc0Lj7ARq975H0J0DE8Ex3WpDDOMf2jVEVYYII7eA+QvBu1EWzhK49zVrrmpAs6dmdon
+         O8Uqsh+vA2WU3tpnwX1cwZH2uNXhAwjYPA4X9xNDSrNzuOHyjuOcNxQTppPnUWVtHs9t
+         88jAfah6lLjOnPw4Uo9k37YABum9kqobytf+gu9sdCalpfFkliYjgW5iWxzgqZc2aNzu
+         4ykwsxdZhAvhgp5hLQQACTsuNp1AHo9+ZDjMpwUzBqCPR7YG3P1HyBGDtgqz4HRcPraJ
+         RqGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737397205; x=1738002005;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=JVrThU83vZ5H73oLhTqtQwzItGk1gBFlj8uzbRxyZks=;
-        b=jPNFKn1S34ZE4JAM6LukCOcDxbKHlGTFhHEKTkTSQYV2ThFRRE2F/OdSmc5j1/Z0QY
-         tdVlprWcNhRXs53QhJGOmHZn7bsRbvnoDDLy7bQtMA/kGE4xxUHXejqWpqzDXD2OdafA
-         jq20fUBErZdgE/nr6ZPCYhWrBB5dRHVjH967puVusTMobem0Yp1/eByAbp+ytX3r06b8
-         cUoG4Cb/LnDMg2UwfgjKhnop2MZmSpFmaKDRLLMDW2bxSyeLYvS/mkgAJPQbZDAvTw+W
-         8Yh7IzhPeRuhZtLmtMby6w1kMLiCCHnm4eb/Z7GzOaleaT6ufhoXBCKOqDfzLaDBIUjz
-         ngAQ==
-X-Gm-Message-State: AOJu0Ywux4DM+2ysTJa30sKz4qZjoweCIBUR9kj+Tym8mIJx4B53ZIaL
-	Ao4kM02x6nNaMwU9VJEgWcJYtn5569KvsD6p6z+RNpQtwUyH7uG2n0UC9vfn
-X-Gm-Gg: ASbGnctq0fcfncHMO9LbwLKTDacMhM6e37rU2xeQgERYs17DvSq008IfySKMx0+Lnft
-	HMGKPWpZJYGYJ9edj6bnC+uwbzHBN2HW8f77ZkuJOdVyoE2WF+kyPxtJL0PN30Trzjh47aEXe7i
-	BFK2ojMvP+Z/UZG7alUoQ6qrm8YLZhE1iX3fd2qN0C+dCZPJSzNtcNxpShCIuS1Ia1J/iOBW0L/
-	2nPpuaIy+aQNHIxd4Em7y3HJzBkfPU4Xm9YQEeXSA0B36xaygFivRh+E0ON3z0hS3s=
-X-Google-Smtp-Source: AGHT+IHWKPSR5z9JA6koDvNP81QlnTvc47HRNzCL+8YDLseL8aIfUAnt2oN7O0sCFq1Zh0xaT9RoHg==
-X-Received: by 2002:a05:6214:5c01:b0:6d8:b733:47c with SMTP id 6a1803df08f44-6e1b27a48fcmr243385356d6.22.1737397204636;
-        Mon, 20 Jan 2025 10:20:04 -0800 (PST)
-Received: from localhost ([2a03:2880:20ff:6::])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6e1afb1b293sm43501026d6.0.2025.01.20.10.20.04
+        d=1e100.net; s=20230601; t=1737397206; x=1738002006;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=1M4q3OzaFWK9ln4L3PJAAcFbjl3Cez+v0LDvBWtRTqI=;
+        b=fDCpgJubAuZqNSfPg4QOi7RjhSCkCpfgaQe/kl2gy0c6VS4CLTa1koFlCw1UKexLPR
+         HSrNBA+0x+lTG9yabEwYd7gUIsBjJyRL6jo1Rt9KnNGLO1zWpIXevjtnmN3XV+6/hgLS
+         8t5T++WgQOSkBdSzoJVVy4K5dBBtXFkehG4KQTEVtnlVlZ0JZQAlN5wgrOTZODfMN7Cd
+         6OoZoNmdEJAFjY9HKBkSYZG/eG06adak2Xy9UAUkfeSHAujn3aQFy8xl2lALd3mrtlJV
+         EpVDTjeqQCoZXlQ+wrgEquYdMxubvFiE1GXNb1xkF93G3prtg0ERxza+JVcXJI0qL2SG
+         qvng==
+X-Gm-Message-State: AOJu0YynSl7ZgHq1yuJIp9Ye5zPD0v32dMHnyKsTYQCKAUxgcbypoKZP
+	3XfNW6fFeSJvb82awtiB/IewtdrBZK8K6HKtKKxIpbRU4z1BVp/B
+X-Gm-Gg: ASbGncul0UC5rWM647ywcGljvQkEQEOeOdpUytNPGkKA7+ete2M3KKIrF3tjIeWl8Ey
+	yaZWVXOz5YcE3yX9XmUGwKimLfiNYSCmsVD/sWKRoeNRtP+mS8BitvgWz/NQgNF7kLjUWYPMp5Z
+	Z3HBLPB1dcpPYka4RzLFlg9hVX/rcyS//+K5RONhSzLnJRlXafaIImeClLKFu5ynFiXHBDd0n6t
+	WnQkmdkZE6MuK45BuvD1Ikx+yGF75mLp+Jeq62HQ1WISayfTPNueW2x7nmHYlR+DlZv
+X-Google-Smtp-Source: AGHT+IFQAsTito3CSh5J8vV/UKToUeMLlCwtyu125qfFxl1QXAB+MAWCHYWQfO74uxRe9qi8MQIimw==
+X-Received: by 2002:a05:6214:5296:b0:6d8:a0c8:e467 with SMTP id 6a1803df08f44-6e1b217a15emr222678776d6.13.1737397206176;
+        Mon, 20 Jan 2025 10:20:06 -0800 (PST)
+Received: from localhost ([2a03:2880:20ff:49::])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6e1afce473dsm43444246d6.106.2025.01.20.10.20.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 Jan 2025 10:20:04 -0800 (PST)
+        Mon, 20 Jan 2025 10:20:05 -0800 (PST)
 From: Usama Arif <usamaarif642@gmail.com>
 To: sj@kernel.org,
 	akpm@linux-foundation.org
 Cc: damon@lists.linux.dev,
 	linux-mm@kvack.org,
 	Usama Arif <usamaarif642@gmail.com>
-Subject: [PATCH v3 1/2] mm/damon: have damon_get_folio return folio even for tail pages
-Date: Mon, 20 Jan 2025 18:19:58 +0000
-Message-ID: <20250120181959.2564362-1-usamaarif642@gmail.com>
+Subject: [PATCH v3 2/2] mm/damon: introduce DAMOS filter type hugepage
+Date: Mon, 20 Jan 2025 18:19:59 +0000
+Message-ID: <20250120181959.2564362-2-usamaarif642@gmail.com>
 X-Mailer: git-send-email 2.43.5
+In-Reply-To: <20250120181959.2564362-1-usamaarif642@gmail.com>
+References: <20250120181959.2564362-1-usamaarif642@gmail.com>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -71,115 +75,76 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-This effectively adds support for large folios in damon for paddr,
-as damon_pa_mkold/young won't get a null folio from this function
-and won't ignore it, hence access will be checked and reported.
-This also means that larger folios will be considered for
-different DAMOS actions like pageout, prioritization and migration.
-As these DAMOS actions will consider larger folios, iterate through
-the region at folio_size and not PAGE_SIZE intervals.
-This should not have an affect on vaddr, as damon_young_pmd_entry
-considers pmd entries.
+This is to gather statistics to check if memory regions of specific
+access tempratures are backed by hugepages. This includes both THPs
+and hugetlbfs.
+This filter can help to observe and prove the effectivenes of
+different schemes for shrinking/collapsing hugepages.
 
 Signed-off-by: Usama Arif <usamaarif642@gmail.com>
-Reviewed-by: SeongJae Park <sj@kernel.org>
 ---
- mm/damon/ops-common.c |  2 +-
- mm/damon/paddr.c      | 24 ++++++++++++++++++------
- 2 files changed, 19 insertions(+), 7 deletions(-)
+v2 -> v3:
+- expose hugepage via sysfs even if the kernel is
+  built without hugepage support. DAMON will just
+  just return 0. (SJ Park)
 
-diff --git a/mm/damon/ops-common.c b/mm/damon/ops-common.c
-index d25d99cb5f2b..d511be201c4c 100644
---- a/mm/damon/ops-common.c
-+++ b/mm/damon/ops-common.c
-@@ -24,7 +24,7 @@ struct folio *damon_get_folio(unsigned long pfn)
- 	struct page *page = pfn_to_online_page(pfn);
- 	struct folio *folio;
- 
--	if (!page || PageTail(page))
-+	if (!page)
- 		return NULL;
- 
- 	folio = page_folio(page);
+v1 -> v2:
+- Wrap DAMOS_FILTER_TYPE_HUGEPAGE case with
+  CONFIG_PGTABLE_HAS_HUGE_LEAVES (SJ Park)
+---
+ include/linux/damon.h    | 2 ++
+ mm/damon/paddr.c         | 5 +++++
+ mm/damon/sysfs-schemes.c | 1 +
+ 3 files changed, 8 insertions(+)
+
+diff --git a/include/linux/damon.h b/include/linux/damon.h
+index af525252b853..1d94d7d88b36 100644
+--- a/include/linux/damon.h
++++ b/include/linux/damon.h
+@@ -326,6 +326,7 @@ struct damos_stat {
+  * @DAMOS_FILTER_TYPE_ANON:	Anonymous pages.
+  * @DAMOS_FILTER_TYPE_MEMCG:	Specific memcg's pages.
+  * @DAMOS_FILTER_TYPE_YOUNG:	Recently accessed pages.
++ * @DAMOS_FILTER_TYPE_HUGEPAGE:	Page is part of a hugepage.
+  * @DAMOS_FILTER_TYPE_ADDR:	Address range.
+  * @DAMOS_FILTER_TYPE_TARGET:	Data Access Monitoring target.
+  * @NR_DAMOS_FILTER_TYPES:	Number of filter types.
+@@ -345,6 +346,7 @@ enum damos_filter_type {
+ 	DAMOS_FILTER_TYPE_ANON,
+ 	DAMOS_FILTER_TYPE_MEMCG,
+ 	DAMOS_FILTER_TYPE_YOUNG,
++	DAMOS_FILTER_TYPE_HUGEPAGE,
+ 	DAMOS_FILTER_TYPE_ADDR,
+ 	DAMOS_FILTER_TYPE_TARGET,
+ 	NR_DAMOS_FILTER_TYPES,
 diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
-index bd8cfe10121b..c0ccf4fade24 100644
+index c0ccf4fade24..224308140441 100644
 --- a/mm/damon/paddr.c
 +++ b/mm/damon/paddr.c
-@@ -266,11 +266,14 @@ static unsigned long damon_pa_pageout(struct damon_region *r, struct damos *s,
- 		damos_add_filter(s, filter);
+@@ -222,6 +222,11 @@ static bool damos_pa_filter_match(struct damos_filter *filter,
+ 		if (matched)
+ 			damon_folio_mkold(folio);
+ 		break;
++#if defined(CONFIG_PGTABLE_HAS_HUGE_LEAVES)
++	case DAMOS_FILTER_TYPE_HUGEPAGE:
++		matched = folio_size(folio) == HPAGE_PMD_SIZE;
++		break;
++#endif
+ 	default:
+ 		break;
  	}
- 
--	for (addr = r->ar.start; addr < r->ar.end; addr += PAGE_SIZE) {
-+	addr = r->ar.start;
-+	while (addr < r->ar.end) {
- 		struct folio *folio = damon_get_folio(PHYS_PFN(addr));
- 
--		if (!folio)
-+		if (!folio) {
-+			addr += PAGE_SIZE;
- 			continue;
-+		}
- 
- 		if (damos_pa_filter_out(s, folio))
- 			goto put_folio;
-@@ -286,6 +289,7 @@ static unsigned long damon_pa_pageout(struct damon_region *r, struct damos *s,
- 		else
- 			list_add(&folio->lru, &folio_list);
- put_folio:
-+		addr += folio_size(folio);
- 		folio_put(folio);
- 	}
- 	if (install_young_filter)
-@@ -301,11 +305,14 @@ static inline unsigned long damon_pa_mark_accessed_or_deactivate(
- {
- 	unsigned long addr, applied = 0;
- 
--	for (addr = r->ar.start; addr < r->ar.end; addr += PAGE_SIZE) {
-+	addr = r->ar.start;
-+	while (addr < r->ar.end) {
- 		struct folio *folio = damon_get_folio(PHYS_PFN(addr));
- 
--		if (!folio)
-+		if (!folio) {
-+			addr += PAGE_SIZE;
- 			continue;
-+		}
- 
- 		if (damos_pa_filter_out(s, folio))
- 			goto put_folio;
-@@ -318,6 +325,7 @@ static inline unsigned long damon_pa_mark_accessed_or_deactivate(
- 			folio_deactivate(folio);
- 		applied += folio_nr_pages(folio);
- put_folio:
-+		addr += folio_size(folio);
- 		folio_put(folio);
- 	}
- 	return applied * PAGE_SIZE;
-@@ -464,11 +472,14 @@ static unsigned long damon_pa_migrate(struct damon_region *r, struct damos *s,
- 	unsigned long addr, applied;
- 	LIST_HEAD(folio_list);
- 
--	for (addr = r->ar.start; addr < r->ar.end; addr += PAGE_SIZE) {
-+	addr = r->ar.start;
-+	while (addr < r->ar.end) {
- 		struct folio *folio = damon_get_folio(PHYS_PFN(addr));
- 
--		if (!folio)
-+		if (!folio) {
-+			addr += PAGE_SIZE;
- 			continue;
-+		}
- 
- 		if (damos_pa_filter_out(s, folio))
- 			goto put_folio;
-@@ -479,6 +490,7 @@ static unsigned long damon_pa_migrate(struct damon_region *r, struct damos *s,
- 			goto put_folio;
- 		list_add(&folio->lru, &folio_list);
- put_folio:
-+		addr += folio_size(folio);
- 		folio_put(folio);
- 	}
- 	applied = damon_pa_migrate_pages(&folio_list, s->target_nid);
+diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
+index 98f93ae9f59e..de9265f7ccde 100644
+--- a/mm/damon/sysfs-schemes.c
++++ b/mm/damon/sysfs-schemes.c
+@@ -329,6 +329,7 @@ static const char * const damon_sysfs_scheme_filter_type_strs[] = {
+ 	"anon",
+ 	"memcg",
+ 	"young",
++	"hugepage",
+ 	"addr",
+ 	"target",
+ };
 -- 
 2.43.5
 
