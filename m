@@ -1,43 +1,58 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C3C01AF0CA
-	for <damon@lists.linux.dev>; Tue, 21 Jan 2025 20:05:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACC351B6CFD;
+	Tue, 21 Jan 2025 23:45:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737489915; cv=none; b=PzgIufE4fo9J5/ESCU5vhqW3va1WDv5N0ATWXNbfUg3SEArG3sUdWEYYcCOvPCDdB33pNH5xPF8NSzdgIbmxyD0hzNrFrf/wig/AiGHAx/ukYTRzyDpOlbgPE1thlpJO46aO6hEbe0LCw8YLwPyLYrva5dcrFdcuJ0ykNI8WxhY=
+	t=1737503122; cv=none; b=ehON1p1kyiJXIJNxBrXgSHQXPiBk8SZt8XSPlGMUrQhNsvHq6JsKxkINbk+FcxI6kyh07TBGQ2uAsKSSw6wCxESoPcK1RjZkNwOO1OFqAuMdeXr9gC9W5HtWNPinMxwQe/uMp/gQv5NmZB71LhO33F1PMMflLcy3IEL2modXrOw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737489915; c=relaxed/simple;
-	bh=4OwJPXofw0b0X9F6vhLLxhsdWEct6cZHoBaImZIMFtU=;
+	s=arc-20240116; t=1737503122; c=relaxed/simple;
+	bh=9Bdryr/LV0/aEmJ2jCfkeUZvK3m4huztlyg/6CT476s=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=QCGHBfKZUxMOeHmJhrY3bbKV/jpjteHoMrZwET4Dzf6Hi2a7+1kuhL6gAiZ6X/384xIaMAUCb+r1I8IrWecWXrXT/YXiIcXMfQRpg6IZfeDik/W8bbKZYBlZGuMG++AFbrxQRsNe2CVACsLyQoggz9srMyg95PSUj98x5mxVl3o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SccMQ2IK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sbyMzO5OuqQJ/L4xN+XWOeMj4uJkurPaYzfIHiIiltY+FYcRrCBu3a7wSi7SjdgF86mPBaBVfyY2GQKOYPTdMEwsLecrV8rR3Tt8y3JSvWWYpzOwNJwCcHaZ5UARb52S9xpW7m/aBwUceQU0d63ZC6gSGNxT7tf1JsomWdwiCc8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ENwLi2GS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SccMQ2IK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B13F5C4CEDF;
-	Tue, 21 Jan 2025 20:05:13 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ENwLi2GS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9A7EC4CEDF;
+	Tue, 21 Jan 2025 23:45:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1737489913;
-	bh=4OwJPXofw0b0X9F6vhLLxhsdWEct6cZHoBaImZIMFtU=;
+	s=k20201202; t=1737503122;
+	bh=9Bdryr/LV0/aEmJ2jCfkeUZvK3m4huztlyg/6CT476s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SccMQ2IKJdTXa/ezGZbhR2XYstUuMFqp3aQkb1KOxtP+EgWtEbqQtnMuNc2ix1sfO
-	 wCZkM9OPMY3pRoe6hnoETF0vb7TWEnBOgMpm8spyfsyXzCy1eiz/dmRID9r3xxQ6yZ
-	 8gVKkU5nleudWNgo6xoCCOWPcpVeaCAKO+YfbLKIJTw5D28O2AGLNpL+gAUh9wM+NP
-	 3ZSFovG/SL2DCQw9kDbR+P6muGSY/wYT7ESKPnl6MtMoXHRUx5f8i9EGjrbFk1oPN0
-	 Rqf+iQAcYH16QDFgnUsOFki5XEQ2HCPnOGYy25qHo4C5cFEMrer3+tJ8UWRg/FKR5Q
-	 VS/0+L/8B9IEw==
+	b=ENwLi2GSBgj7VjpX2YcIF4XhiUK0+3sO/v8pYaURUV7sOoBZqcZgcdctMt695x4di
+	 HvF8mufiFs4f9AxGRCRzLEpV9BdEMW6PaxAgKbHIzjYSTJ2zmFswX6cYI3qM7xkriB
+	 jIQ7ijgRO498yI31AE3f16+8haO2BvtSR3aUSZ56tOPBG5B+aM1BvXIVpQPPPulh49
+	 7TUIGsuwW2Ubo2pn5hMQ5SSqkBFDUYcdumvwXnl9/jUtrQ+/FM1dgowpbiiSt3S9Z0
+	 lfZdPuL3SXlH0kn+oxQrJcflRY6kA+1zJ1+QQE1PCKkEjSHmAfm1DBiHSD5CC78/qA
+	 nDd8xUkadAjsA==
 From: SeongJae Park <sj@kernel.org>
-To: David Hildenbrand <david@redhat.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: SeongJae Park <sj@kernel.org>,
-	Usama Arif <usamaarif642@gmail.com>,
+	stable@vger.kernel.org,
+	patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
 	akpm@linux-foundation.org,
-	damon@lists.linux.dev,
-	linux-mm@kvack.org
-Subject: Re: [PATCH v3 2/2] mm/damon: introduce DAMOS filter type hugepage
-Date: Tue, 21 Jan 2025 12:05:10 -0800
-Message-Id: <20250121200510.43645-1-sj@kernel.org>
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net,
+	rwarsow@gmx.de,
+	conor@kernel.org,
+	hargar@microsoft.com,
+	broonie@kernel.org,
+	damon@lists.linux.dev
+Subject: Re: [PATCH 5.15 000/127] 5.15.177-rc1 review
+Date: Tue, 21 Jan 2025 15:45:19 -0800
+Message-Id: <20250121234519.46087-1-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <c2fad5c2-8929-456d-a6f9-286478b93372@redhat.com>
+In-Reply-To: <20250121174529.674452028@linuxfoundation.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -47,98 +62,46 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Tue, 21 Jan 2025 19:39:01 +0100 David Hildenbrand <david@redhat.com> wrote:
+Hello,
 
-> On 21.01.25 18:52, SeongJae Park wrote:
-> > On Mon, 20 Jan 2025 21:03:05 +0100 David Hildenbrand <david@redhat.com> wrote:
-> > 
-> >> On 20.01.25 20:58, Usama Arif wrote:
-> >>>
-> >>>
-> >>> On 20/01/2025 19:30, SeongJae Park wrote:
-> >>>> On Mon, 20 Jan 2025 20:23:20 +0100 David Hildenbrand <david@redhat.com> wrote:
-> >>>>
-> >>>>> On 20.01.25 20:16, SeongJae Park wrote:
-> >>>>>> On Mon, 20 Jan 2025 19:57:10 +0100 David Hildenbrand <david@redhat.com> wrote:
-> >>>>>>
-> >>>>>>> On 20.01.25 19:19, Usama Arif wrote:
-> >>>> [...]
-> >>>>>>>> +#if defined(CONFIG_PGTABLE_HAS_HUGE_LEAVES)
-> >>>>>>>> +	case DAMOS_FILTER_TYPE_HUGEPAGE:
-> >>>>>>>> +		matched = folio_size(folio) == HPAGE_PMD_SIZE;
-> >>>>>>>
-> >>>>>>>
-> >>>>>>> Can we directly embed in the name and the comments/docs that we are only
-> >>>>>>> talking about PMD size (both, THP and hugetlb)?
-> >>>>>>>
-> >>>>>>> DAMOS_FILTER_TYPE_PMD_HUGEPAGE or sth. like that.
-> >>>>>>
-> >>>>>> Nice suggestion, thank you!  And we might later add more filter types for
-> >>>>>> different size huge pages.  What about extending this to handle more general
-> >>>>>> case, though?  That is, we can let the filter receives a range of the folio
-> >>>>>> size to match, like DAMOS_FILTER_TYPE_ADDR does.  Then, the filter could be
-> >>>>>> used for any size of interest.
-> >>>>>
-> >>>>> That would probably be future proof: either a range or explicitly
-> >>>>> specified sizes (ranges?).
-> >>>>
-> >>>> DAMON supports installing multiple DAMOS filters.  So multiple DAMOS filters
-> >>>> that each matching single range can be used for the multiple sizes or ranges
-> >>>> use case.
-> >>>>
-> >>>>
-> >>>
-> >>> Does creating something like schemes/<N>/access_pattern/page_size/{min,max}
-> >>> sound good? with the default value being pmd size?
-> >>
-> >> "page_size" might be misleading.
-> > 
-> > Good point.  I'm suggesting to add the files on another directory, and
-> > apparently Usama agrees[1].  So the term "page_size" will not be used.
-> > 
-> >> Not sure if we want to use the word
-> >> "folio_size" here, so far it's more an internal detail that evolved from
-> >> compound pages.
-> >>
-> >> "hugepage_size" would at least match /sys/kernel/mm/hugepages/ and
-> >> /sys/kernel/mm/transparent_hugepage/.
-> >>
-> >> But if you would also support "single page" == e.g., 4K, "hugepage"
-> >> would be wrong.
-> > 
-> > Again, nice points, thank you for letting us aware of this.  We could error
-> > users if they try to set <=PAGE_SIZE filter range.  FYI, DAMOS filters supports
-> > making the filtering in/out action for not only condition-matching memory, but
-> > also not-matching memory, so it will still be able to be used for filtering
-> > in/out base pages.
-> > 
-> > That said, I now think "folio_size" might be a better term that allows simple
-> > implementation and flexible usages.
-> 
-> The issue with "folio" is that it is mostly a kernel-internal name for 
-> how we currently manage metadata for all pages and compound pages. In 
-> the future, some of what we call folio today will no longer be called 
-> folios ... as soon as we dynamically allocate "struct folio".
+On Tue, 21 Jan 2025 18:51:12 +0100 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
 
-Agreed.  I'd suggest using "hugepage_size" or "hugepage" filter type name,
-then.  I have no strong preferrence between the two names.  Also, to have a
-flexible usage and a simple logic, let's not error users for wrong input, but
-just define the filter type as "match" if the folio is "huge AND the size is in
-the given range".  Then we can allow users set <=PAGE_SIZE range but make it
-just works as sanely expected, like below.
+> This is the start of the stable review cycle for the 5.15.177 release.
+> There are 127 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 
-    static bool damos_pa_filter_match(struct damos_filter *filter,
-    [...]
-            case DAMOS_FILTER_TYPE_HUGEPAGE_SIZE:
-                    size_t sz = folio_size(folio);
-    
-                    if (sz <= PAGE_SIZE)
-                            matched = false;
-                    else
-                            matched = filter->min <= sz && sz <= filter->max;
-                    break;
+This rc kernel passes DAMON functionality test[1] on my test machine.
+Attaching the test results summary below.  Please note that I retrieved the
+kernel from linux-stable-rc tree[2].
+
+Tested-by: SeongJae Park <sj@kernel.org>
+
+[1] https://github.com/damonitor/damon-tests/tree/next/corr
+[2] c77b3036a1a3 ("Linux 5.15.177-rc1")
 
 Thanks,
 SJ
 
 [...]
+
+---
+
+ok 1 selftests: damon: debugfs_attrs.sh
+ok 1 selftests: damon-tests: kunit.sh
+ok 2 selftests: damon-tests: huge_count_read_write.sh
+ok 3 selftests: damon-tests: buffer_overflow.sh
+ok 4 selftests: damon-tests: rm_contexts.sh
+ok 5 selftests: damon-tests: record_null_deref.sh
+ok 6 selftests: damon-tests: dbgfs_target_ids_read_before_terminate_race.sh
+ok 7 selftests: damon-tests: dbgfs_target_ids_pid_leak.sh
+ok 8 selftests: damon-tests: damo_tests.sh
+ok 9 selftests: damon-tests: masim-record.sh
+ok 10 selftests: damon-tests: build_i386.sh
+ok 11 selftests: damon-tests: build_arm64.sh # SKIP
+ok 12 selftests: damon-tests: build_m68k.sh # SKIP
+ok 13 selftests: damon-tests: build_i386_idle_flag.sh
+ok 14 selftests: damon-tests: build_i386_highpte.sh
+ok 15 selftests: damon-tests: build_nomemcg.sh
+ [33m
+ [92mPASS [39m
