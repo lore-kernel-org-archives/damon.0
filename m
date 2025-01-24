@@ -1,295 +1,226 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f171.google.com (mail-qk1-f171.google.com [209.85.222.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF81B188717;
-	Fri, 24 Jan 2025 02:12:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2955329A5
+	for <damon@lists.linux.dev>; Fri, 24 Jan 2025 17:21:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737684720; cv=none; b=IGsjWwZXZ9nKjPplok1h4z/vRJa4C5E1D+WRuMXKKjYmb9thoY+P6jN36ha2SxCiEZ3d4EqqptmLZL4hKsUSDhjXzGc7LZL3ClkfRalOWYc1fKL2b60NJKdZqdAnUZKgLt5yw5FQb4j6Xo2Huguf8uAjESJ8by744+lj8q7YI6w=
+	t=1737739297; cv=none; b=b6xpV3Ph30DftNGJucShdi/75diSvtgFV5LKH+6mJbIEjlzsNOVRpT+157dUE8X9a8hJyk5uG5O/UUHCVk1qCKj/x0kM4hh4DBmQeD53h6ABAOMRh71RTOIz2odgauwSscYfRxJVAhwnRIKv3WjD8TcOOA07SeE6z020yHVhlCE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737684720; c=relaxed/simple;
-	bh=UL21L0c+dIuur3OzbiNk8ygxxsYNbj8P41ADjWyOiLg=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=qMIOnMMWMMKkJofnMqDyhJlwKGvHgGVgJJh/aGNVimHq/XQ2xkl/hdx8OivKakA5Hprp/7UNODi+dNj3DbAkV2pewe5TcBX3o6Tcdco5kE0UHCCDfNzxy3KxvhsygOXbq36VDoIHqenxD5IGBR/cpVUYbQgEBe8JmKHVzRRv8JE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=D/vuYfXN; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1737739297; c=relaxed/simple;
+	bh=RCsXLbFbcjK2A6fcIC5BQ9KCXqNv0ytMI1iNPhTI6Yg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=DSM4kozVHdc3mh8fIj6k6NL99ZyAukWQwBZno8PpAAKu04aS1x/Zh0KzygH5RGs2eItRQJnJO+P/r/sHC4jyKu/LC+g7hhP4xzPF9D+V8SQ1HqxzMq/t+m/Gzh5qAaLHY0goZkEudd+++Pg6oxZHW7sd1ONBYKS88Z4m9dzIaD4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gourry.net; spf=pass smtp.mailfrom=gourry.net; dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.b=IkEMUyOD; arc=none smtp.client-ip=209.85.222.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gourry.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gourry.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="D/vuYfXN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE3FDC4CED3;
-	Fri, 24 Jan 2025 02:11:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1737684720;
-	bh=UL21L0c+dIuur3OzbiNk8ygxxsYNbj8P41ADjWyOiLg=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D/vuYfXNc6R1WxK5bahUwlMscY+j4WeScpFxT0hU6xSeqdEgzKpJtt8fPSwIxPITa
-	 wAcyEpAca/PuEaClVVs9Ld+l0/kBSGY4cg38bualfEO3fr9GAUkZCzJwHlCRYcSMH0
-	 bybepOZbECyH37A0UM4c8RfzQfaQ+ogEC9r9jAHrnzuf5HF3AbjpvrxW/ZEu63GzMg
-	 FwcYgbImpR4gJTJX0VyWJcNT/WkjY1p85mdgYMNTZ6JNbqnLl6t4sE8nQJTc8b2J15
-	 nBjunkxebZwbwW8whNtGKiJXY+4hsCwtjVWyzTpJRdhznksXZGzzP9fFW0Do4Aik01
-	 Rdd21114hlYoQ==
-From: SeongJae Park <sj@kernel.org>
-To: Gregory Price <gourry@gourry.net>
-Cc: SeongJae Park <sj@kernel.org>,
-	lsf-pc@lists.linux-foundation.org,
-	damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org,
-	kernel-team@meta.com,
-	Raghavendra K T <raghavendra.kt@amd.com>,
+	dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.b="IkEMUyOD"
+Received: by mail-qk1-f171.google.com with SMTP id af79cd13be357-7b6f75f61f9so326037885a.0
+        for <damon@lists.linux.dev>; Fri, 24 Jan 2025 09:21:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gourry.net; s=google; t=1737739294; x=1738344094; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=JpBMlffQq/AmVURDmJqZIAknLMu8Pltvl96VGpNVI6w=;
+        b=IkEMUyODKOUC5IGwVWf0rmT/wirPxBXr5GiK17MURqOtgtbVQ2EoAUPfGpP10j/MkD
+         qJjkrQnAX10OZCRiq12yXdzocTKdMiuRNoQH/zyqVafZqmvU0y+V/psL2YyRwonI3GUA
+         sslx7avBMk7lSKrhEuK9Osbl0bRmojwuli6zSEUpzamic7EufHVyzfk0QrdPBr5b+xAZ
+         PKJFabFRUsx+bJTo2AoxIe0Mlr6oqxhY2HmCuedS0E8XqwtXT5UugFw7YG7RRewPBWBQ
+         tSfh37YdixQRIaJxDeeNNq0PXUxng5jIPofiLI7Z9Gucp6JgSy3eqyURRWG0B2JD4sPi
+         mOpQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1737739294; x=1738344094;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=JpBMlffQq/AmVURDmJqZIAknLMu8Pltvl96VGpNVI6w=;
+        b=BiZDl5uN0nP6vD+IVXYGGvu+jwMnDOHPJR/hU3oRQsRP0Y6rq8ct0afCHAKsqiM9cU
+         B/nicE+z6kv962ctDsueSRo3F/i4iNkZCfVOmRwteUx4+Pq4oMt6nkcHUk1c8x+2I366
+         jJDCeEgcPiVK8RgKi6C3zdqE3OhTLS8EvTfS4JskaUpOhsatnSMQgfuIIZM2eOoH4hH7
+         n3xKWfGA+vXAGPqzNbbwdwZULG0U98zNmVJvtwA5ocnprJy6rLWSzaiz3NCRienpdtAI
+         QZsBqxcwyBTZ3eZpENHvpN/JX8ie2SfSgr+RilbDJbZ0bCa5T1aWICPhW3mMPJYhNLot
+         QSTQ==
+X-Forwarded-Encrypted: i=1; AJvYcCW/2RhpLoeKzYYQqTl0tZ4S+jdqfdyd9UJzc77k/YzLAzeSytEAw5e2IH3si9zXfb3WuWHBhw==@lists.linux.dev
+X-Gm-Message-State: AOJu0YwIjqW5q+0qp5vzuPV6XurLCnfhbYDc1MdtirTT4KR+ng7kYIvz
+	BKhDZYB0VqSyr/wfheZfI/xzLWYgdXuRi9BC3pW1NIT/rwIOe1KYtAfw5OnDp4w=
+X-Gm-Gg: ASbGncugpmTjtTO/v4ZI7OvraAJ8DEA36Ipmj39nNgxrwPLPYPPXfd0nqXkuIZ4ZX+Q
+	hijPctbj7wXwoTwDiB4r67ZaQRY7zKiy8v0TruhC966cxyVlJhWBLD/rtIHi/kunjudZaaFMyAv
+	kMj1ffFo6XgEkhFKqqfz3eYcGMbbNabf5r9jjdaslz7JSEhTIqoKQesIWjXtWbsmBUI01aQHyUj
+	PaWOcGaJhEPbDcSbnBku49ZonOc+/OdHMmKWBgMQAKV4VVjwzAdGOlXRLWWaDn10cmselOMikGn
+	WeqS7ZqqKf7Qf7PxAY8XM7yALsKtxrbDuC5P3x4OKdBghJgqAJP4VaHZwRl+cv0=
+X-Google-Smtp-Source: AGHT+IH3fhXb3bOkGIW4xZiUVxwtmeBpzr0Mn/GhdnkWq3CbqtmVe+oX1U58/Sxdrz8CjUkPr8Greg==
+X-Received: by 2002:a05:620a:24c8:b0:7b6:eab3:cdd1 with SMTP id af79cd13be357-7be6325dc77mr5522744185a.49.1737739293908;
+        Fri, 24 Jan 2025 09:21:33 -0800 (PST)
+Received: from gourry-fedora-PF4VCD3F (pool-173-79-56-208.washdc.fios.verizon.net. [173.79.56.208])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-7be9af0d1efsm112515585a.101.2025.01.24.09.21.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 24 Jan 2025 09:21:33 -0800 (PST)
+Date: Fri, 24 Jan 2025 12:21:31 -0500
+From: Gregory Price <gourry@gourry.net>
+To: SeongJae Park <sj@kernel.org>
+Cc: lsf-pc@lists.linux-foundation.org, damon@lists.linux.dev,
+	linux-mm@kvack.org, linux-kernel@vger.kernel.org,
+	kernel-team@meta.com, Raghavendra K T <raghavendra.kt@amd.com>,
 	Yuanchu Xie <yuanchu@google.com>,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Kaiyang Zhao <kaiyang2@cs.cmu.edu>,
-	Jiaming Yan <jiamingy@amazon.com>,
-	Honggyu Kim <honggyu.kim@sk.com>
-Subject: Re: [LSF/MM/BPF TOPIC] DAMON Requirements for Access-aware MM of Future
-Date: Thu, 23 Jan 2025 18:11:53 -0800
-Message-Id: <20250124021153.103622-1-sj@kernel.org>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <Z4XUoWlU-UgRik18@gourry-fedora-PF4VCD3F>
-References: 
+	Jiaming Yan <jiamingy@amazon.com>, Honggyu Kim <honggyu.kim@sk.com>
+Subject: Re: [LSF/MM/BPF TOPIC] DAMON Requirements for Access-aware MM of
+ Future
+Message-ID: <Z5PMG_F9wJXCb8ri@gourry-fedora-PF4VCD3F>
+References: <Z4XUoWlU-UgRik18@gourry-fedora-PF4VCD3F>
+ <20250124021153.103622-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250124021153.103622-1-sj@kernel.org>
 
-Hello Gregory,
-
-On Mon, 13 Jan 2025 22:06:09 -0500 Gregory Price <gourry@gourry.net> wrote:
-
-> On Wed, Jan 01, 2025 at 02:20:39PM -0800, SeongJae Park wrote:
-> > Hi all,
+On Thu, Jan 23, 2025 at 06:11:53PM -0800, SeongJae Park wrote:
+> Hello Gregory,
+> 
+> > 1) The cost of checking promotion candidacy can be problematic
 > > 
+> >    In my microbenchmark in the last RFC version, I showed that while
+> >    the performance upside (~22-25%) is substantial, there was a
+> >    non-trivial cost associated with injecting even a single global
+> >    boolean check in the file_read() path.  This was unexpected.
 > > 
-> > I find a few interesting and promising projects that aim to do efficient access
-> > pattern-aware memory management of near future, including below (alphabetically
-> > sorted).
+> >    I can probably optimize the disabled case with a likely() clause,
+> >    but I did not expect such sensitivity.  This tells me injecting
+> >    an unconditional call into DAMON may be too much overhead. 
+> 
+> I cannot agree more with you about the point that the mechanism for finding the
+> promotion/demotion (and any access-aware system operation) candidates should
+> induce only modest or at least controllable overhead.  Actually it was the one
+> of biggest motivations of DAMON design, and I haven't imagined adding
+> unconditional calls to DAMON here.
+> 
+> Nonetheless, injecting an unconditional call here should be avoided for not
+> only DAMON calls but any expensive calls?  I'm also not pretty sure what DAMON
+> call you are thinking about.
+> 
+
+Just any call, DAMON or otherwise.  The explicit check injecting ~2-3%
+overhead on my microbench was a simple
+
++       } else if (!folio_test_isolated(folio) &&
++                  (sysctl_numa_balancing_mode & NUMA_BALANCING_MEMORY_TIERING) &&
+
+If this is causing additional overhead, call me skeptical that trying
+anything more complicated will turn out better.
+
 > > 
-> > - Promotion of unmapped page cache folios
-> >   (https://lore.kernel.org/20241210213744.2968-1-gourry@gourry.net)
+> >    I would need to explore this further - including whether it is
+> >    feasible to inject such a large dependency into swap.c
 > 
+> I understand DAMON is not small in terms of the code size, and has many
+> limitations that makes it unusable in many use cases.  But, again, I'm not
+> pretty sure what kind of DAMON usage in swap.c you're thinking about, and
+> therefore not easy to understyand what part of DAMON is considered as a large
+> dependency that concerns you.  It would be great if we can make more concrete
+> example as a result of this topic session at LSFMMBPF.
 > 
-> I'll break down a few observations I made while hacking on unmapped
-> page cache promotion - and my concerns for a leveraging DAMON here.
 
-Thank you for sharing this!
+It's not a matter of code size - it's a matter of tightly coupling core
+components of the kernel to extraneous ones.  Adding additional
+dependencies between components increases overall system complexity and
+makes it hard to reason about the behavior of the system.
 
+For example, in the prior snippet:
+
++       } else if (!folio_test_isolated(folio) &&
++                  (sysctl_numa_balancing_mode & NUMA_BALANCING_MEMORY_TIERING) &&
++                  numa_pagecache_promotion_enabled) {
++               promotion_candidate(folio);
+
+This amounts to
+
+if (some condition && feature enabled)
+	mark a folio as a candidate for promotion
+
+The promotion_candidate() function is contained within migrate.c and
+uses (mostly) migrate.c mechanisms (from a task_work).
+
+All you need to understand the behavior is between swap.c and migrate.c.
+
+If instead you aggregate this to DAMON, understanding the behavior of
+swap can require you to understand what DAMON is actually doing with
+this information.
+
+Now you need to understand swap.c, migrate.c, AND DAMON.
+
+It makes it more difficult to reason about the system when something
+goes wrong. This increases the maintenance burden for maintainers (and
+onboarding complexity for anyone new to the kernel, for that matter).
+
+That doesn't mean we shouldn't consider doing this - it just means that
+benefit needs to outweight the complexity/maintenance cost.
+
+> FYI, I also not having specific idea for helping unmapped pages promotion for
+> now.  That's my assignment that I will do by LSFMMBPF.  But, a few things that
+> I naively thinking DAMON might be able to help unmapped promotions are,
 > 
-> Additionally some other concerns I've seen raised about duplicating
-> promotion logic across various kernel components.
+> 1. Using DAMON for profiling how much hot and cold unmapped pages are in which
+>    tier, and use the information for unmapped pages promotion optimization.
+> 2. Using DAMOS to target-promote hot unmapped pages while using page
+>    faults-based promotion for mapped pages.
+> 3. Using DAMOS to promote both mapped and unmapped hot pages.
+>
+
+This missing the scenario where DAMOS/DAMON is not suitible for
+deployment in someone's environment.  The kernel should still do
+*something*.
+
+And that is kind of the point - we can expose more complexity to the
+users with DAMON, but the kernel should be able to do some reasonable
+promotion action without this additional system.
+
+> >    but I
+> >    also see value is making tasks handle promotion as a form of fairness.
 > 
+> I agree that could be good in terms of fairness.  I want to learn more about
+> the significance of it, though.
+>
+
+Fairness in this scenario is simple.
+
+If one task is causing an outsizes number of promotions to occur, and it
+causes some ASYNC system to handle those promotions, it is effectively
+acquiring more CPU time via that ASYNC system than other residents.
+
+Trying to charge this time back to the noisey task is harder than just
+having the task incur the cost of migration.  But doing it inline can
+cause the task to slow down.
+
+So it's difficult to predict how it's going to pan out.  Need evidence.
+
+> I agree.  DAMON allows combining multiple different mechanisms with its core
+> logic, so I beleive it migt be a place that can aggregate the different
+> identification mechanisms.
 > 
-> Latest RFC:
-> https://lore.kernel.org/linux-mm/20250107000346.1338481-1-gourry@gourry.net/
+> DAMON's access monitoring results based system operations feature, namely
+> DAMOS, also has its own aggressiveness control logic, and resides in the core
+> layer, so could be used consistently with different promotion candidates
+> identification mechanisms.
 > 
-> Basic Premise:
->    Use folio_mark_accessed() as a measure of hotness for promotion.
->    Defer promotion to task_work due to locking complexities.
-> 
-> My major concerns / lessons learned from this exercise include:
-> 
-> 1) The cost of checking promotion candidacy can be problematic
-> 
->    In my microbenchmark in the last RFC version, I showed that while
->    the performance upside (~22-25%) is substantial, there was a
->    non-trivial cost associated with injecting even a single global
->    boolean check in the file_read() path.  This was unexpected.
-> 
->    I can probably optimize the disabled case with a likely() clause,
->    but I did not expect such sensitivity.  This tells me injecting
->    an unconditional call into DAMON may be too much overhead. 
 
-I cannot agree more with you about the point that the mechanism for finding the
-promotion/demotion (and any access-aware system operation) candidates should
-induce only modest or at least controllable overhead.  Actually it was the one
-of biggest motivations of DAMON design, and I haven't imagined adding
-unconditional calls to DAMON here.
+Without data this is a nice thought, but we have existing mechanisms
+that work and can be improved - lets not disrupt that.
 
-Nonetheless, injecting an unconditional call here should be avoided for not
-only DAMON calls but any expensive calls?  I'm also not pretty sure what DAMON
-call you are thinking about.
+Finding an aggregated promotion solution helps everyone move forward
+without disrupting development in these areas (and makes the different
+indentification mechanisms play nice with each other).
 
-> 
->    I would need to explore this further - including whether it is
->    feasible to inject such a large dependency into swap.c
+Trying to also create a voltron "one indentification system to rule them
+all" is a nice thought, but it's heavy-weight compared to adding a folio
+flag check and a call to mpol_migrate_misplaced().  We need to respect
+that reality and not regress the existing mechanisms by trying to
+over-engineer a generalized solution.
 
-I understand DAMON is not small in terms of the code size, and has many
-limitations that makes it unusable in many use cases.  But, again, I'm not
-pretty sure what kind of DAMON usage in swap.c you're thinking about, and
-therefore not easy to understyand what part of DAMON is considered as a large
-dependency that concerns you.  It would be great if we can make more concrete
-example as a result of this topic session at LSFMMBPF.
-
-FYI, I also not having specific idea for helping unmapped pages promotion for
-now.  That's my assignment that I will do by LSFMMBPF.  But, a few things that
-I naively thinking DAMON might be able to help unmapped promotions are,
-
-1. Using DAMON for profiling how much hot and cold unmapped pages are in which
-   tier, and use the information for unmapped pages promotion optimization.
-2. Using DAMOS to target-promote hot unmapped pages while using page
-   faults-based promotion for mapped pages.
-3. Using DAMOS to promote both mapped and unmapped hot pages.
-
-For the first and second ideas, DAMON need to target unmapped pages.  I think
-DAMOS filters can be extended for that, and I posted an RFC before:
-https://lore.kernel.org/20241127205624.86986-1-sj@kernel.org
-
-Using the RFC-applied kernel and a version of DAMON user-space tool that adds
-the support, idea one could be done like below.
-
-    $ sudo ./damo report access --snapshot_damos_filter reject none unmapped --style recency-sz-hist
-    # damos filters (df): reject none unmapped
-    <last accessed time (us)> <df-passed size>
-    [-36.300 s, -32.670 s)   10.297 MiB |*                   |
-    [-32.670 s, -29.040 s)   7.297 MiB  |*                   |
-    [-29.040 s, -25.410 s)   0 B        |                    |
-    [-25.410 s, -21.780 s)   0 B        |                    |
-    [-21.780 s, -18.150 s)   0 B        |                    |
-    [-18.150 s, -14.520 s)   0 B        |                    |
-    [-14.520 s, -10.890 s)   0 B        |                    |
-    [-10.890 s, -7.260 s)    0 B        |                    |
-    [-7.260 s, -3.630 s)     3.088 GiB  |********************|
-    [-3.630 s, -0 ns)        80.000 KiB |*                   |
-    [-0 ns, --3630000000 ns) 16.000 KiB |*                   |
-
-    <last accessed time (us)> <total size>
-    [-36.300 s, -32.670 s)   24.493 GiB  |********************|
-    [-32.670 s, -29.040 s)   5.869 GiB   |*****               |
-    [-29.040 s, -25.410 s)   5.568 GiB   |*****               |
-    [-25.410 s, -21.780 s)   0 B         |                    |
-    [-21.780 s, -18.150 s)   5.899 GiB   |*****               |
-    [-18.150 s, -14.520 s)   5.807 GiB   |*****               |
-    [-14.520 s, -10.890 s)   0 B         |                    |
-    [-10.890 s, -7.260 s)    0 B         |                    |
-    [-7.260 s, -3.630 s)     12.231 GiB  |**********          |
-    [-3.630 s, -0 ns)        356.000 KiB |*                   |
-    [-0 ns, --3630000000 ns) 396.000 KiB |*                   |
-    total size: 59.868 GiB
-
-The above output was retrieved while a kernel build is running in background,
-and says among 24.493 GiB cold memory that last accessed more than 32.67
-seconds before, 10.297 MiB are unmapped pages.
-
-For the third idea, whether and how to collaborate with page faults-based
-promotion of mapped pages could be something to discuss.  Some ideas off the my
-head is that we can simply make them exclusive, or use DAMOS for proactive
-promotion under peaceful situation, but uses page faults based promotion for
-more urgent situation, somewhat like kswapd and direct reclaims.
-
-For all three ideas, DAMON will do the monitoring and promotions on DAMON
-thread, so no change to swap.c or file io path would be required.
-
-Again, these are just not-yet-settled brainstorming level ideas, and I will try
-to make these more specific and settled by LSFMMBPF.  Please feel free to add
-comments on this thread rather than waiting for LSFMMBPF, though!
-
-> 
->    This may not affect all cases, but it does affect at least this one.
-> 
-> 2) The complexity of "when it is safe" to promote a folio is subtle
->    at best, and "actively hostile" at worst.
-> 
->    I learned in v1 of the RFC that promotion inline with fma() is not
->    feasible due to a few contexts (task dying in particular) in which
->    migration is not safe.  I deferred to task work because I noticed
->    prior attempts (in development notes) had seen similar issues.
-> 
->    Adding a folio reference and/or page flag to defer that migration to
->    another context (i.g. async kthread) solves this at the expensive of
->    implementation complexity. (leaked folios if done wrong)
-> 
->    I'd have to look at whether it's worth the increased complexity to
->    aggregate this (particular) identification mechanism - but I think
->    there is clear value to aggregating promotion.
-> 
->    I could see some value in pumping tracking bits into DAMON -
-
-I agree to all the points and willing to make DAMON well serve the purpose.
-
->    but I
->    also see value is making tasks handle promotion as a form of fairness.
-
-I agree that could be good in terms of fairness.  I want to learn more about
-the significance of it, though.
-
-> 
-> 3) There were expressed opinions on runtime fairness WRT to promotion.
-> 
->    There's two competing thoughts:
->    A) Making accessing tasks eat inline promotion cost captures that
->       cost in their runtime slice, promoting fairness in scheduling.
-> 
->    B) Aggregating promotion to an external thread can reduce inline
->       faults and tail latencies, but may hides per-task cost. This
->       is a concern if one task drives all the promotions, effectingly
->       stealing an entire core by nature of the async design.
-> 
->    I don't have a good answer to this, just an observation that charging
->    promotion time to the identifying task was a concern that was raised.
-
-I think we might be able to pursue two ways in parallel?  Using asynchronous
-external thread in more peaceful situation, and let tasks do inline promotion
-with fairness under more urgent situation, like kswapd and direct reclaims.
-
-DAMON may fit well for the proactive solutions under less urgent situation.
-DAMON_RECLAIM was made in the direction, and working without significant issues
-on products for years.
-
-> 
-> 
-> 4) TPP and Unmapped Page Promotion may affect each other.
-> 
->    There is a rate-limiting mechanism in the migration path that was
->    intended to prevent over-pressuring bandwidth with aggressive
->    migrations - prevent major memory stalls.
-> 
->    By adding more pressure on this limit from an additional source,
->    we're obviously increasing the time it takes to converge.
-> 
->    This is probably the greatest argument for creating a new, aggregated
->    promotion mechanism to serve all of these identification mechanism.
-> 
->    This would make it easier for us to determine whether/what
->    identification mechanisms can be aggregated while enabling forward
->    progress on each of them separately.
-
-I agree.  DAMON allows combining multiple different mechanisms with its core
-logic, so I beleive it migt be a place that can aggregate the different
-identification mechanisms.
-
-DAMON's access monitoring results based system operations feature, namely
-DAMOS, also has its own aggressiveness control logic, and resides in the core
-layer, so could be used consistently with different promotion candidates
-identification mechanisms.
-
-> 
-> 5) Scarce resources
-> 
->    We need to be careful not to consume excessive amounts of resources
->    in an attempt to track all these identifying mechanisms.  Even 1 byte
->    per folio is 256MB on a 1TB machine.  This gets out of hand quick.
-> 
->    With task-work, I was able to add no additional resource consumption,
->    but deferring to a fully async scenario and needing to track things
->    like last-accessing CPU, timestamps, and etc.
-> 
->    We'll need to examine this closely if we decide to aggregate either
->    of these mechanisms.
-
-Agreed again.  In case of DAMON, it tries to keep the resources in its own data
-structure.  The resource consumption with the own data structure can also be
-problematic, but it at least allows setting the upper-bound, regardless of the
-system size.  So it is controllable and scalable.
-
-I wish to continue more detailed discussions on LSFMMBPF and this thread!
-
-Thank you again sharing your experiences and thoughts on this topic.  I show
-those are making the discussion much more informative and helpful.
-
-
-Thanks,
-SJ
-
-> 
-> ~Gregory
+~Gregory
