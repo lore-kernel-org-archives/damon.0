@@ -1,61 +1,61 @@
-Received: from mail-qt1-f172.google.com (mail-qt1-f172.google.com [209.85.160.172])
+Received: from mail-qk1-f179.google.com (mail-qk1-f179.google.com [209.85.222.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 399BC1FFC71
-	for <damon@lists.linux.dev>; Mon,  3 Feb 2025 22:56:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86B561D5CD4
+	for <damon@lists.linux.dev>; Mon,  3 Feb 2025 22:56:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738623378; cv=none; b=fA34FpM9zaD9sdsyPfR+Hs+oI11CseXGfbej3R0dz0/wI5PKOLnMoI7y/kkgpwEyDP6CQspKy7/gpXi5fQjRqpVV5dY2sc7x5TcJfQ+ky/6E1pAP9b+S9b80pua0snf9e9Q9KKBSe65Zx0i1SEKnxKCWkJh4DGcpSl/K/FyVS/Q=
+	t=1738623380; cv=none; b=doViSxY3oT6O4UcRN+52Eu/Tn3A0AF5YFIiL3ATy+cMQnM/BGkVLfVLI3GoIInDub6LpzxW6WlTfzF9YyJ/k4WWiZNC0mKm+K2r3Eq8I9txxfnVzhKEVGmDGBg9INT6cti+YOiEDoW/TZj/mAkRZG/Tseehq2GM7aFTqkaQwYkQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738623378; c=relaxed/simple;
-	bh=+ukYk0751rxUsGiHvAsG+TDvJEyM1y3UT5ZuUFtqdQ8=;
+	s=arc-20240116; t=1738623380; c=relaxed/simple;
+	bh=B9fi34J8ZHgYj8UL865twWDYpooNUbMZWZ5vm5iqczc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U2M7TRmk+mX2jyfLFTeZ7Ed9JUxV7SQtjbksC1iKGnqx+mdls+/f9SbuEc33ruV5pMiN9jy8avElSguSUQPtxJr1JLyWGyMjv48FAeA5FSjuPn3kW5MFGFdqUmnDkdEJGA+LLZDCxLqFrmHAo9+Qa75JcZkpD6oyHIe06sXmfvI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HOlpj3tA; arc=none smtp.client-ip=209.85.160.172
+	 MIME-Version; b=oCk0xTYgkqH45xxJ34L8ZrgWq4VIUj8uw5uiNJF8JpGfiGzvzr1Z35YVZBKC7Js15lnf299CQuN/DTr5mGb66sasPmgmeSFfAiuE6nHLv3CzMMbv1/ddqByxeLOTIaZce+FEu0v5R7OaOM1+SQZKm2Clf8Zc5pOZWhtgTGdvc+s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SmbQogqv; arc=none smtp.client-ip=209.85.222.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HOlpj3tA"
-Received: by mail-qt1-f172.google.com with SMTP id d75a77b69052e-46785fbb949so57202121cf.3
-        for <damon@lists.linux.dev>; Mon, 03 Feb 2025 14:56:16 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SmbQogqv"
+Received: by mail-qk1-f179.google.com with SMTP id af79cd13be357-7b6f7d7e128so557840885a.1
+        for <damon@lists.linux.dev>; Mon, 03 Feb 2025 14:56:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1738623376; x=1739228176; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1738623377; x=1739228177; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=41tMxJUWugj4muQLNlfvYZtegLPJnS/0DzPLe1FwwWo=;
-        b=HOlpj3tAzzxY2RQsRcqe3U0XYYzvMFoUfi377+9jbSqlwePwIWXJ+K8qYrQYSR4rNd
-         FNQQ6bMKp5id/DNDS04/hdE56PTNC241FuacFR2jVK0FLvHwF5zNjm/71SObVAodX/X5
-         RYNBPFu5ZsmH/sdYMuym5Zovq6AlhbpPQDCnx+UIy5YJnl49Qh+1+vZhgyDernAnKqsp
-         3Ons2EfKICgtobhGbyHpIoG7nGG2B0h99puAFqTUnEXLGc5MJItj3etsd0KpbAyDePjG
-         +fCvafZkjHy+bb2TTCmWgoJUyhTj/CtBtyT4y45qs19VcrJ3ZQWeBZJ/tN8CFvTW/dzd
-         vUlQ==
+        bh=mvJt+fEruqngkpaxyGnr3ktUZyTGWut/bbCY8AbcNuM=;
+        b=SmbQogqvaAzynG+ob4xzLV1qaNYI1GpbVSImrl3Z5PZEt1rrs2Kaq6E6j/GEt4iN4b
+         OeuBNhp0B+n8O5KBGybAvGmfW4sdzoXbZe0t4YttlAt62Ww30UrfFe9KRKXmdulGUYLU
+         7CQTXKzHX2V3defng099Gd0LroYNQLUOlNQfQWe0nwT2lTWCPFsgThovmu7v1jRkO7sh
+         w5hFyMvzoO16xRRBq5vj/AtFFSDODwUsa7+V2seWXsCzGCXOklpVxTLwSOjlErjyICs6
+         42EeM3CLoLaO8UINe+ePA1qXjWz9D/SNPQSWQVTGg6cCWC/d5qOhCO1LKOlBj3gWkefq
+         EvvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738623376; x=1739228176;
+        d=1e100.net; s=20230601; t=1738623377; x=1739228177;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=41tMxJUWugj4muQLNlfvYZtegLPJnS/0DzPLe1FwwWo=;
-        b=dzkSvLhVCC9CiB6EmiwbnIi4fK7QZ1EEv0W8owuo1WhjP5sf3o900AqMx4KVda5s0A
-         UfbW4uqDOCA368OIXWYj+Y+m6pnWeE4qf21dIjtvlQ9Bnd3G+777uJ3iJa2OTAocgADU
-         wZiYKag8VdgYpUaMGkZL5tnFyRzFZXbKxPy5XC4ZnP02epk+e46l+uAyJrkGYOdIe/vn
-         kan1WW8EoX6u2/XBs5jAOxi63wqsyeEZ37ZmuApYWuDNJpd0+O5oZuBuSKcxscIZ3x4y
-         8CUtxCFBktZCPPc5dhP+l1UEXdg2FYW094FLf5HbhuLLdNrK8KZa9gMuGBiuNX0bR1hu
-         bQWA==
-X-Gm-Message-State: AOJu0YySktAT1e6FW93nWhMKQ550Agn5P1vhVC0grx/AkL2h1qxjw/cz
-	Cs24ylyc9HYPDJUzCiS5yLuQFP7km53V5p9zrhBqMxqVf9k7r36/
-X-Gm-Gg: ASbGncvRfkebFzqW4pPgRPExjC0cZdLkkAm/2pkXNxyk7v2/4ZEL8q7vXFqIcHV/N0L
-	JsERhNLJ9nFHlglGPK+gkdJNKHZWli4cRA8f9HjDBuk/kPCvpgcim6AYfMcXcuf2e00mkMTyspL
-	i60eGRN1ix+gBB8gWTPSGCUW8UM6hC2tOaNG7GQy/5cFULAV1w9DHXRnRP1g6E745a6h+/f+8jP
-	LNERIgfI/FS6aCaN9rMnWxfaXZWYoHgKKv8pwKzv3N7BdObSOlBb9uPflG7amHefZnFzmNavujF
-	qcbr7xPgfw==
-X-Google-Smtp-Source: AGHT+IHEyMAxtPn4mYYMqnCdQIZdRu7V7ahosAsbjAMTD4Ru1PKvmdma8lTgGBBBhUTzDhEWxaAU/A==
-X-Received: by 2002:a05:6214:3bca:b0:6d8:9ab7:adcc with SMTP id 6a1803df08f44-6e243c37f22mr385613186d6.22.1738623375949;
-        Mon, 03 Feb 2025 14:56:15 -0800 (PST)
-Received: from localhost ([2a03:2880:20ff::])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6e42370f364sm538906d6.106.2025.02.03.14.56.14
+        bh=mvJt+fEruqngkpaxyGnr3ktUZyTGWut/bbCY8AbcNuM=;
+        b=n2nF6CvI8a2U83x0OaYnA2uSqVgbCZ/v5Rc1hXGzoVHvLU0odDnCTCCtlq/xd/OyAk
+         MHpiNGbtrc0lHIN0UvVm6vHbpZBFuykDaRE5QvunwlQBklcgcYs3kHhRkiTokPyJF4Dy
+         CsxhO0PiPNloK8+FwqWgsmRcOWTH6jHAOWcK8eHinOse/VUzRC5DzDV8FtI8DL9KNTXh
+         uWNqB0eiwbkmeOBegSxDIa08P0QoKsBsqPhVVzSiZvKbMKoSWsxKV+xjvoeVOjk3p3Yr
+         qLfOoiRnuMXeS78WGNEg5nfT5l2Rd9KJXZ3EsqjOa+FCz+q891Hatw0+ULs2cCTUyFDV
+         pC5g==
+X-Gm-Message-State: AOJu0Yz6JaGqmATKNe/Lge/+ssXcWe04jTjtKncsdRlmc2j7eDZb2DwB
+	jkFKCWxmr9Ay4uDlX/zOF39PKZ8vMciYI6tFN24ku2xSDCkKm/xO
+X-Gm-Gg: ASbGncvlSFLvdjaCD0TIVXQytZvpGGmdP499oLqMrXJKfPQuiMGqpm7sBH87oBO0Xt5
+	MP6Qkxvm2D+VIfctc8rNBEiBVbE1gZqwPgvW+K3FaKALRiA3RgxBbXRd50zxsMEXPKpBjU3RGcT
+	GikgO5H9vBXwc/JMGwc2U+YCDXpftASJ5jynn7cHcGRccbfMv71DQvnW+Wklu7sUrBFzaMvxmXW
+	31MeqqgtFIRPqZFXc1CLPWqW+VHQo/YeUgLGuMWFiaxbolzNVdZlozLSF0aVh0QsaOfUF+pgo9X
+	vyyFdOguPyAtOA==
+X-Google-Smtp-Source: AGHT+IGZGiDWsAItpMx6EqpFdOI9RwZXbh1AnvXhNiaoicoO9ioWU9y5O0LcM7+GW7aqKjxfh7rJbQ==
+X-Received: by 2002:ad4:542b:0:b0:6e1:715f:cdf5 with SMTP id 6a1803df08f44-6e420f70692mr17900976d6.15.1738623377338;
+        Mon, 03 Feb 2025 14:56:17 -0800 (PST)
+Received: from localhost ([2a03:2880:20ff:73::])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6e254814d0csm55155536d6.43.2025.02.03.14.56.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 03 Feb 2025 14:56:15 -0800 (PST)
+        Mon, 03 Feb 2025 14:56:16 -0800 (PST)
 From: Usama Arif <usamaarif642@gmail.com>
 To: sj@kernel.org,
 	akpm@linux-foundation.org
@@ -65,9 +65,9 @@ Cc: damon@lists.linux.dev,
 	david@redhat.com,
 	kernel-team@meta.com,
 	Usama Arif <usamaarif642@gmail.com>
-Subject: [PATCH v4 1/6] mm/damon: have damon_get_folio return folio even for tail pages
-Date: Mon,  3 Feb 2025 22:55:28 +0000
-Message-ID: <20250203225604.44742-2-usamaarif642@gmail.com>
+Subject: [PATCH v4 2/6] mm/damon/paddr: use damon_get_folio_in_region to obtain folio
+Date: Mon,  3 Feb 2025 22:55:29 +0000
+Message-ID: <20250203225604.44742-3-usamaarif642@gmail.com>
 X-Mailer: git-send-email 2.43.5
 In-Reply-To: <20250203225604.44742-1-usamaarif642@gmail.com>
 References: <20250203225604.44742-1-usamaarif642@gmail.com>
@@ -79,115 +79,132 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-This effectively adds support for large folios in damon for paddr,
-as damon_pa_mkold/young won't get a null folio from this function
-and won't ignore it, hence access will be checked and reported.
-This also means that larger folios will be considered for
-different DAMOS actions like pageout, prioritization and migration.
-As these DAMOS actions will consider larger folios, iterate through
-the region at folio_size and not PAGE_SIZE intervals.
-This should not have an affect on vaddr, as damon_young_pmd_entry
-considers pmd entries.
+This is introduced for larger folios. If a large folio has subpages
+present in multiple regions, it will be considered multiple times.
+This can be when checking access or applying DAMOS schemes. For e.g.
+in pa_stat, folios split across N regions will be counted N times,
+giving inaccurate results. Hence, only consider a page for access
+check/DAMOS scheme only if the head page is part of that region as
+well.
 
 Signed-off-by: Usama Arif <usamaarif642@gmail.com>
-Reviewed-by: SeongJae Park <sj@kernel.org>
 ---
- mm/damon/ops-common.c |  2 +-
- mm/damon/paddr.c      | 24 ++++++++++++++++++------
- 2 files changed, 19 insertions(+), 7 deletions(-)
+ mm/damon/paddr.c | 44 ++++++++++++++++++++++++++++++++++----------
+ 1 file changed, 34 insertions(+), 10 deletions(-)
 
-diff --git a/mm/damon/ops-common.c b/mm/damon/ops-common.c
-index d25d99cb5f2b..d511be201c4c 100644
---- a/mm/damon/ops-common.c
-+++ b/mm/damon/ops-common.c
-@@ -24,7 +24,7 @@ struct folio *damon_get_folio(unsigned long pfn)
- 	struct page *page = pfn_to_online_page(pfn);
- 	struct folio *folio;
- 
--	if (!page || PageTail(page))
-+	if (!page)
- 		return NULL;
- 
- 	folio = page_folio(page);
 diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
-index 0f9ae14f884d..0fb61f6ddb8d 100644
+index 0fb61f6ddb8d..3f59a3fdc391 100644
 --- a/mm/damon/paddr.c
 +++ b/mm/damon/paddr.c
-@@ -266,11 +266,14 @@ static unsigned long damon_pa_pageout(struct damon_region *r, struct damos *s,
- 		damos_add_filter(s, filter);
- 	}
+@@ -19,6 +19,30 @@
+ #include "../internal.h"
+ #include "ops-common.h"
  
--	for (addr = r->ar.start; addr < r->ar.end; addr += PAGE_SIZE) {
-+	addr = r->ar.start;
-+	while (addr < r->ar.end) {
- 		struct folio *folio = damon_get_folio(PHYS_PFN(addr));
- 
--		if (!folio)
-+		if (!folio) {
-+			addr += PAGE_SIZE;
- 			continue;
-+		}
- 
- 		if (damos_pa_filter_out(s, folio))
- 			goto put_folio;
-@@ -286,6 +289,7 @@ static unsigned long damon_pa_pageout(struct damon_region *r, struct damos *s,
- 		else
- 			list_add(&folio->lru, &folio_list);
- put_folio:
-+		addr += folio_size(folio);
- 		folio_put(folio);
- 	}
- 	if (install_young_filter)
-@@ -301,11 +305,14 @@ static inline unsigned long damon_pa_mark_accessed_or_deactivate(
++/*
++ * Get an online page for a paddr if it's in the LRU list and if the head page is
++ * before region_start. Otherwise, returns NULL.
++ */
++static struct folio *damon_get_folio_in_region(unsigned long addr, unsigned long region_start)
++{
++	struct page *page = pfn_to_online_page(PHYS_PFN(addr));
++	struct folio *folio;
++
++	if (!page)
++		return NULL;
++
++	folio = page_folio(page);
++	if (addr - folio_page_idx(folio, page) * PAGE_SIZE < region_start)
++		return NULL;
++	if (!folio_test_lru(folio) || !folio_try_get(folio))
++		return NULL;
++	if (unlikely(page_folio(page) != folio || !folio_test_lru(folio))) {
++		folio_put(folio);
++		folio = NULL;
++	}
++	return folio;
++}
++
+ static bool damon_folio_mkold_one(struct folio *folio,
+ 		struct vm_area_struct *vma, unsigned long addr, void *arg)
  {
- 	unsigned long addr, applied = 0;
+@@ -58,9 +82,9 @@ static void damon_folio_mkold(struct folio *folio)
  
--	for (addr = r->ar.start; addr < r->ar.end; addr += PAGE_SIZE) {
-+	addr = r->ar.start;
-+	while (addr < r->ar.end) {
- 		struct folio *folio = damon_get_folio(PHYS_PFN(addr));
+ }
  
--		if (!folio)
-+		if (!folio) {
-+			addr += PAGE_SIZE;
- 			continue;
-+		}
+-static void damon_pa_mkold(unsigned long paddr)
++static void damon_pa_mkold(unsigned long paddr, unsigned long region_start)
+ {
+-	struct folio *folio = damon_get_folio(PHYS_PFN(paddr));
++	struct folio *folio = damon_get_folio_in_region(paddr, region_start);
  
- 		if (damos_pa_filter_out(s, folio))
- 			goto put_folio;
-@@ -318,6 +325,7 @@ static inline unsigned long damon_pa_mark_accessed_or_deactivate(
- 			folio_deactivate(folio);
- 		applied += folio_nr_pages(folio);
- put_folio:
-+		addr += folio_size(folio);
- 		folio_put(folio);
+ 	if (!folio)
+ 		return;
+@@ -73,7 +97,7 @@ static void __damon_pa_prepare_access_check(struct damon_region *r)
+ {
+ 	r->sampling_addr = damon_rand(r->ar.start, r->ar.end);
+ 
+-	damon_pa_mkold(r->sampling_addr);
++	damon_pa_mkold(r->sampling_addr, r->ar.start);
+ }
+ 
+ static void damon_pa_prepare_access_checks(struct damon_ctx *ctx)
+@@ -148,9 +172,9 @@ static bool damon_folio_young(struct folio *folio)
+ 	return accessed;
+ }
+ 
+-static bool damon_pa_young(unsigned long paddr, unsigned long *folio_sz)
++static bool damon_pa_young(unsigned long paddr, unsigned long *folio_sz, unsigned long region_start)
+ {
+-	struct folio *folio = damon_get_folio(PHYS_PFN(paddr));
++	struct folio *folio = damon_get_folio_in_region(paddr, region_start);
+ 	bool accessed;
+ 
+ 	if (!folio)
+@@ -176,7 +200,7 @@ static void __damon_pa_check_access(struct damon_region *r,
+ 		return;
  	}
- 	return applied * PAGE_SIZE;
-@@ -464,11 +472,14 @@ static unsigned long damon_pa_migrate(struct damon_region *r, struct damos *s,
- 	unsigned long addr, applied;
- 	LIST_HEAD(folio_list);
  
--	for (addr = r->ar.start; addr < r->ar.end; addr += PAGE_SIZE) {
-+	addr = r->ar.start;
-+	while (addr < r->ar.end) {
- 		struct folio *folio = damon_get_folio(PHYS_PFN(addr));
+-	last_accessed = damon_pa_young(r->sampling_addr, &last_folio_sz);
++	last_accessed = damon_pa_young(r->sampling_addr, &last_folio_sz, r->ar.start);
+ 	damon_update_region_access_rate(r, last_accessed, attrs);
  
--		if (!folio)
-+		if (!folio) {
-+			addr += PAGE_SIZE;
- 			continue;
-+		}
+ 	last_addr = r->sampling_addr;
+@@ -268,7 +292,7 @@ static unsigned long damon_pa_pageout(struct damon_region *r, struct damos *s,
  
- 		if (damos_pa_filter_out(s, folio))
- 			goto put_folio;
-@@ -479,6 +490,7 @@ static unsigned long damon_pa_migrate(struct damon_region *r, struct damos *s,
- 			goto put_folio;
- 		list_add(&folio->lru, &folio_list);
- put_folio:
-+		addr += folio_size(folio);
- 		folio_put(folio);
- 	}
- 	applied = damon_pa_migrate_pages(&folio_list, s->target_nid);
+ 	addr = r->ar.start;
+ 	while (addr < r->ar.end) {
+-		struct folio *folio = damon_get_folio(PHYS_PFN(addr));
++		struct folio *folio = damon_get_folio_in_region(addr, r->ar.start);
+ 
+ 		if (!folio) {
+ 			addr += PAGE_SIZE;
+@@ -307,7 +331,7 @@ static inline unsigned long damon_pa_mark_accessed_or_deactivate(
+ 
+ 	addr = r->ar.start;
+ 	while (addr < r->ar.end) {
+-		struct folio *folio = damon_get_folio(PHYS_PFN(addr));
++		struct folio *folio = damon_get_folio_in_region(addr, r->ar.start);
+ 
+ 		if (!folio) {
+ 			addr += PAGE_SIZE;
+@@ -474,7 +498,7 @@ static unsigned long damon_pa_migrate(struct damon_region *r, struct damos *s,
+ 
+ 	addr = r->ar.start;
+ 	while (addr < r->ar.end) {
+-		struct folio *folio = damon_get_folio(PHYS_PFN(addr));
++		struct folio *folio = damon_get_folio_in_region(addr, r->ar.start);
+ 
+ 		if (!folio) {
+ 			addr += PAGE_SIZE;
+@@ -518,7 +542,7 @@ static unsigned long damon_pa_stat(struct damon_region *r, struct damos *s,
+ 
+ 	addr = r->ar.start;
+ 	while (addr < r->ar.end) {
+-		struct folio *folio = damon_get_folio(PHYS_PFN(addr));
++		struct folio *folio = damon_get_folio_in_region(addr, r->ar.start);
+ 
+ 		if (!folio) {
+ 			addr += PAGE_SIZE;
 -- 
 2.43.5
 
