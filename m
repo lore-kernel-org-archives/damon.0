@@ -1,128 +1,110 @@
-Received: from mail-qk1-f173.google.com (mail-qk1-f173.google.com [209.85.222.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E85D12101B5
-	for <damon@lists.linux.dev>; Mon,  3 Feb 2025 22:56:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB0BB21B1B4
+	for <damon@lists.linux.dev>; Tue,  4 Feb 2025 23:06:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738623387; cv=none; b=kPaH82pbC9lSoKVZ8cowZaUyEa3WRduFU6zK2FnRQVO2B7D97D0Bjzgj81rl+nUCn6WONm9kBurREJRmt1yQs8oS4T7u+jNugkJTgpA3T3yT1NjWhaHz/bY2b0z87H1/ZNVdPaVbrjySWu0RuVfbAAGqS/G2myyHFp7qYjSAGJg=
+	t=1738710399; cv=none; b=Oipf4jMZmWc+F4kRb6N0/bAVxH0dSci/4lDMVJgJkXxKGGSPQOCoKgHKFpMiROr8FLJcproGrm8Fvw5O+jyDwRAk3Lmz5NcFrm8K7WGDpr/Uhfu/W1vDcqPih5QbTXhUOMA3GacWCXqwJCiYdGn2V1QOeNPhQ3l93GnKchJKAvc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738623387; c=relaxed/simple;
-	bh=spZdcNxsp0j3B1H5+OIF4muI/hQmUQfT6V6HHlAXbVc=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=CxM8U26CUSu4wk8X+Iny00REc/yoGH4pJRkfUQ78rzKIWofhU/+Hg8HerjHdQYoNWq9KuI+ob5wU+mLBF6whigbM2C/pH6345eIheQ5dQrf7KvCvKBpZq/kGV1QQ20TDLM5/ZYv4uISG8vYppVnvWvxhhba1W2V8/zj8PGNRFOo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YusreiqP; arc=none smtp.client-ip=209.85.222.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1738710399; c=relaxed/simple;
+	bh=5BkAsVQ0nPHirdPibg830SVNIrWkbzxA3OWt0ISmOCM=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=kQ3Agp+ByFMWQK9Xwfix0BSwmG1oxZyOmQkBQ0YAmFWf7GB0KuW4KgEWX0oVAvdtXzVimD94/KbR3LRoB/vmvNx0wrkcW6bw7Ne/WYSqXUgdqABKs54bi1emi3b7A+t/K/fVF1JcT2CHAiS3ewFRz5ujxvFp/m4Ba666emZEUt0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tu/Cossp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YusreiqP"
-Received: by mail-qk1-f173.google.com with SMTP id af79cd13be357-7be44a90468so595919585a.3
-        for <damon@lists.linux.dev>; Mon, 03 Feb 2025 14:56:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1738623385; x=1739228185; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=42HHIMqh2iJaWiyZ3I2a3Q2yrqc7Y9pAkTTacWWAGL8=;
-        b=YusreiqPXcAoilyK7KDGnwUcnvuZc1azCBPx86oc54WJr+HtIIZOznhcycX45tDsOV
-         x3ogBSGR73l4WR5diFBC/difAHZAz7eI0ObTYZ9QGia4EnqkQvys0+UWRa23KzvbEIM2
-         qCRPL7Is4mbMosTwiKcye1iyq4Y0LhLvP/H2I7XHZX2cWQ7TGSLglsw93aptLaYinf4j
-         zOvqvvMaJUSArHTReoJ7aHczQardV2UIwNd/qf3GqgD07Gdrc8QNY13ZOoL17myzBI/Y
-         vOmzwx3gw3wKzis7SQMxm1VuYQdXs2J9zOJTPgDyAO4Xzn+1hruxZzEt2nllBkyLstiY
-         sFoA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738623385; x=1739228185;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=42HHIMqh2iJaWiyZ3I2a3Q2yrqc7Y9pAkTTacWWAGL8=;
-        b=TKA55wsHIuHKQBD1JOr+T+gt7+K+dj6ToNe7mYT2UeKsT0NYcIgvHmgoY3JTcC6WXJ
-         4Q82dJRH8UiVMqro+FHOebfHtpGbzKRCX4ZqU3DvItRBed8113t8N16Nq+PvwznwM11q
-         vNRHoxlxuvjos2CPo3f+m6cd3iZNWkVHk3DZ3hMDSwvt2icnbS3z5nIO49EJYHmEAENh
-         5vWaSgvwYI3CSlD5ZT/MJOkxTj2X7gBVJyamQRNOM6U9W+50tCpykZyJPoV6bm4e1UPp
-         CgQ89dUO3spMhi0dwJcdkiSXr3J8N9ph5XeVxrrSi1ERC36EKnleiI6EF0v3IulitEmS
-         gqgA==
-X-Gm-Message-State: AOJu0Yyk6aEcALwkcl/mR+ezDtYFXfzMXp8OrRjtroH9++INH3hrdljj
-	tKv3XhICiJZuSm1NG8JmF8xwn/hjREfhwpFrDtRpT8zgG9YFVjTR
-X-Gm-Gg: ASbGncslYpxV6ZUtgBdn/bVzeAMLWAM0SxBeU3ylcO4m3wu2r1G22BpF68P5Ddq1EpR
-	jL+w1HpxuvlLRquyJtYTapJRKiZVEqj3Bo4F5OgjAHnZ0R4kBFKZzs/9VsOi3y+6TrqQKtCejxJ
-	mevQqmq3tAYN4gyS2yntkrjR7wMkUUuVhCw213F38NAoIFal4WnkayLb5Cv7NWSP2eqDk4/QlEj
-	W1dlyTvq5VWH84R8jnm2uaxTQApzYDaTzTBb2VRIN+dPx2nmMEKg+eAXP69TRcEJCx9y8LViyPo
-	gB8Md2uIaOELsQ==
-X-Google-Smtp-Source: AGHT+IFhlyc186tNNuJZi79PI3qlJsGmHC4/KUNG9CBtZP6SR5/AFRLR5sFR2OFiW12cBhbVQ+j77Q==
-X-Received: by 2002:a05:6214:2582:b0:6df:97ba:4f7a with SMTP id 6a1803df08f44-6e243c5eb6fmr359442226d6.33.1738623384681;
-        Mon, 03 Feb 2025 14:56:24 -0800 (PST)
-Received: from localhost ([2a03:2880:20ff:70::])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6e254814d01sm54971636d6.41.2025.02.03.14.56.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 03 Feb 2025 14:56:24 -0800 (PST)
-From: Usama Arif <usamaarif642@gmail.com>
-To: sj@kernel.org,
-	akpm@linux-foundation.org
-Cc: damon@lists.linux.dev,
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tu/Cossp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41756C4CEDF;
+	Tue,  4 Feb 2025 23:06:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1738710398;
+	bh=5BkAsVQ0nPHirdPibg830SVNIrWkbzxA3OWt0ISmOCM=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=tu/CosspCqzpdTu6dpjhSzl3bJoX1nDhsLiHrXBpC2HIpqdWacRi532OMeKCu8Xeq
+	 f3vZnpS5nNE7rf0d6fIkIK0QU2bwQ+Kcq0b6oy/vBQSYkLqT4QVRTGRuJJs1HOkAfx
+	 +ER246v+wz5iaxF0krVEnV8/tpmKmIcldz/liDwkgqWfiLPBH/ytYh8CQvFiWJPt4d
+	 Nz937/jkg3nHle6Eg/rvjLs+B8y5KE91Jr85NYNxgHUBW9fRHOpZ20MjRWAyWCQ4Tk
+	 M0Mjl/MCx8maA5ubb1VhnSTUKKmifGu57xUSbSn27SJjRpPhH8P9/dFVIVJFFptwtH
+	 6UYZlNaB57MrQ==
+From: SeongJae Park <sj@kernel.org>
+To: Usama Arif <usamaarif642@gmail.com>
+Cc: SeongJae Park <sj@kernel.org>,
+	akpm@linux-foundation.org,
+	damon@lists.linux.dev,
 	linux-mm@kvack.org,
 	hannes@cmpxchg.org,
 	david@redhat.com,
-	kernel-team@meta.com,
-	Usama Arif <usamaarif642@gmail.com>
-Subject: [PATCH v4 6/6] Docs/admin-guide/mm/damon/usage: Document hugepage filter type
-Date: Mon,  3 Feb 2025 22:55:33 +0000
-Message-ID: <20250203225604.44742-7-usamaarif642@gmail.com>
-X-Mailer: git-send-email 2.43.5
-In-Reply-To: <20250203225604.44742-1-usamaarif642@gmail.com>
-References: <20250203225604.44742-1-usamaarif642@gmail.com>
+	kernel-team@meta.com
+Subject: Re: [PATCH v4 2/6] mm/damon/paddr: use damon_get_folio_in_region to obtain folio
+Date: Tue,  4 Feb 2025 15:06:34 -0800
+Message-Id: <20250204230634.2577-1-sj@kernel.org>
+X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20250203225604.44742-3-usamaarif642@gmail.com>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-This includes both the 'hugepage' filter type and the min/max
-files used to decide range of sizes to filter on.
+On Mon,  3 Feb 2025 22:55:29 +0000 Usama Arif <usamaarif642@gmail.com> wrote:
 
-Signed-off-by: Usama Arif <usamaarif642@gmail.com>
----
- Documentation/admin-guide/mm/damon/usage.rst | 17 +++++++++--------
- 1 file changed, 9 insertions(+), 8 deletions(-)
+> This is introduced for larger folios. If a large folio has subpages
+> present in multiple regions, it will be considered multiple times.
+> This can be when checking access
 
-diff --git a/Documentation/admin-guide/mm/damon/usage.rst b/Documentation/admin-guide/mm/damon/usage.rst
-index 47a44bd348ab..5765896aaa7e 100644
---- a/Documentation/admin-guide/mm/damon/usage.rst
-+++ b/Documentation/admin-guide/mm/damon/usage.rst
-@@ -83,7 +83,7 @@ comma (",").
-     │ │ │ │ │ │ │ │ │ 0/target_metric,target_value,current_value
-     │ │ │ │ │ │ │ :ref:`watermarks <sysfs_watermarks>`/metric,interval_us,high,mid,low
-     │ │ │ │ │ │ │ :ref:`filters <sysfs_filters>`/nr_filters
--    │ │ │ │ │ │ │ │ 0/type,matching,allow,memcg_path,addr_start,addr_end,target_idx
-+    │ │ │ │ │ │ │ │ 0/type,matching,allow,memcg_path,addr_start,addr_end,target_idx,min,max
-     │ │ │ │ │ │ │ :ref:`stats <sysfs_schemes_stats>`/nr_tried,sz_tried,nr_applied,sz_applied,sz_ops_filter_passed,qt_exceeds
-     │ │ │ │ │ │ │ :ref:`tried_regions <sysfs_schemes_tried_regions>`/total_bytes
-     │ │ │ │ │ │ │ │ 0/start,end,nr_accesses,age,sz_filter_passed
-@@ -406,13 +406,14 @@ number (``N``) to the file creates the number of child directories named ``0``
- to ``N-1``.  Each directory represents each filter.  The filters are evaluated
- in the numeric order.
- 
--Each filter directory contains seven files, namely ``type``, ``matching``,
--``allow``, ``memcg_path``, ``addr_start``, ``addr_end``, and ``target_idx``.
--To ``type`` file, you can write one of five special keywords: ``anon`` for
--anonymous pages, ``memcg`` for specific memory cgroup, ``young`` for young
--pages, ``addr`` for specific address range (an open-ended interval), or
--``target`` for specific DAMON monitoring target filtering.  Meaning of the
--types are same to the description on the :ref:`design doc
-+Each filter directory contains nine files, namely ``type``, ``matching``,
-+``allow``, ``memcg_path``, ``addr_start``, ``addr_end``, ``min``, ``max``
-+and ``target_idx``. To ``type`` file, you can write one of six special
-+keywords: ``anon`` for anonymous pages, ``memcg`` for specific memory cgroup,
-+``young`` for young pages, ``addr`` for specific address range (an open-ended
-+interval), ``hugepage`` for large folios of a specific size range [``min``,
-+``max``] or ``target`` for specific DAMON monitoring target filtering. Meaning
-+of the types are same to the description on the :ref:`design doc
- <damon_design_damos_filters>`.
- 
- In case of the memory cgroup filtering, you can specify the memory cgroup of
--- 
-2.43.5
+I think this behavior makes sense.  If a 2 MiB address range is known to be
+accessed or not, treating DAMON regions in the address range as all accessed or
+not aligns with the DAMON's region definition and makes sense in general, to
+me.  Note that DAMON's adaptive regions adjustment mechanism will make the
+DAMON regions in a large folio to be merged in near future.
 
+> or applying DAMOS schemes. For e.g.
+> in pa_stat, folios split across N regions will be counted N times,
+> giving inaccurate results.
+
+Nice catch!  I agree this could be a problem.
+
+> Hence, only consider a page for access check/DAMOS scheme only if the head
+> page is part of that region as well.
+
+For access checking, this seems wrong to me.  This change will unnecessarily
+mark some DAMON regions as not accessed.
+
+Even for DAMOS, this seems not very optimum.
+
+1. DAMOS will unnecessarily repeat PAGE_SIZE skippings on second and later
+   DAMON regions of a same large folio.
+2. If only a small part of the large folio belongs to the first DAMON region,
+   and the DAMON region is not eligible to the scheme, while the second region
+   is, the scheme action will not applied to the second region.
+
+Also, I think this problem can happen on vaddr case.  Hence, making the change
+on core layer makes sense to me.
+
+That is, let damon_ops->apply_scheme() inform the caller (damos_apply_scheme())
+how much bytes of the next region should be ignored at applying the action.
+Due to the complicated implementation of DAMOS core logic, this might be not
+very simple.
+
+I think the additional complexity might outweigh the benefit for following
+reasons.  First, adaptive regions adjustment mechanism will make DAMON regions
+in same large folios to be merged soon.  So the problem will be not significant
+in common case.  Second, any threads could collapse any parts of memory into
+large folios while DAMOS is traversing DAMON regions.  So this problem cannot
+perfectly be solved unless we make DAMOS' DAMON regions traversal exclusive
+with any large folios collapsing.  Which would add more complexity.
+
+And given DAMON's best-effort nature, keeping the issue until we get a simple
+and effective solution is ok to me, unless a real significant issue from this
+is confirmed.
+
+Usama, what do you think?
+
+
+Thanks,
+SJ
+
+[...]
