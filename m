@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E811C21C165
-	for <damon@lists.linux.dev>; Tue,  4 Feb 2025 23:13:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CB342054E3
+	for <damon@lists.linux.dev>; Tue,  4 Feb 2025 23:20:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738710829; cv=none; b=ZvctlUhjpsCXTeycDcpGaxSRZMK51RqDZ5qDalZyOV34VOuR3DX67S6iG2vHfYNC9kr2KWJa11q6Of4Wv3w3XDL44gQDZ/rrFBUbekx4WxYezi6so+5wrmD4T73mr002VKMJGIMEqyKmHNIP3LBkRFsLscz+4fJieacf483clv4=
+	t=1738711207; cv=none; b=KBXZ3oWIRavUdVHpjb+dbXt/ji1SFMHv/Cs3ILPQaSI1+u/258dicZ5EBo3SOQPs7JCI+l62WNZG8VGbL5pjGEr0Zmpi3ZvKCxMaeIKO9WELKLUuwReU5rctTjJJhMDXq/IOMvQH2JhiBqhqEj7JlmZpf120g3RsQApc7pFaGLo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738710829; c=relaxed/simple;
-	bh=1UaofT+c4ejJ6dFBaUjZ019vYzhreeikfVp4M9SwpGg=;
+	s=arc-20240116; t=1738711207; c=relaxed/simple;
+	bh=qUJBcRU8IzR2g8eWA3vSTJFCSmJSY9exr/DxrolVxDI=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ObHr88GuGoporlAcOa8ouPMxuJjOlowhgrUZ0F4436D2Jtr5aEJlbMVfTr/7M+4felvhl3osytP7i1GRxuyWakT9GzJZMpj5Kq5MZFzUmDhDfPc8ydPIhAepJGAG//+CF7y23nkg/2tS9r4pYEiicg17kDFfAdjtBnoO0OAk1YU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iQsZwQiW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZSfBzpq6mO0Is9SRobXW2QW/TYpvRhb5EBT0CpACJUNXZjMdBH8GrjWe9QEUIhbscFCxtEzRDIR4XEcOXoFoBK8g5fVjAkkm/TcwrUU8FHFzPKCTytyra6iqFw8y6PcP8cHhthB7fj2n+VrS9ufcWfkOO8WQM7tPa+g/wyiX4V4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=s04Mrvza; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iQsZwQiW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 307A8C4CEDF;
-	Tue,  4 Feb 2025 23:13:48 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="s04Mrvza"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CCA1C4CEDF;
+	Tue,  4 Feb 2025 23:20:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1738710828;
-	bh=1UaofT+c4ejJ6dFBaUjZ019vYzhreeikfVp4M9SwpGg=;
+	s=k20201202; t=1738711205;
+	bh=qUJBcRU8IzR2g8eWA3vSTJFCSmJSY9exr/DxrolVxDI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iQsZwQiW/kiHbPHPINpAHffeMprVBRYqmU6hnFUCdNhc+8v80bV+W3D4+OWBN7oY+
-	 0bkDTP2ii7GFXsDlaB1RT6KgNTnWgsW8tE9661Vdmxz+jzA6NsSxY1moT7uxNqzKig
-	 4L7FMnl1tw7pIyIG7QTnW/fCPQUaGYfKprJqljgWagtiTGyS/CNmV37tpqccLLM3lG
-	 vTkwoB1apIwUpQ+dCnS70zHA1EmhoOlMp+8/rW5zhJ5PSqwkTARgUBoFW6YAE8hwKH
-	 RJ7ZUy4Dsv4AI1w2Hm2bbN+/WjZiRl+TM/hcFH6NRXIz/EhqbVJZlcAdyEn7CNcbtx
-	 aPqtbi6qtHQtg==
+	b=s04MrvzaBkgZ4Q4djHNy2uT4ydLPVjUHpv9OBsBiiPkS9psd4EJ7WrIjI+9Qh05rR
+	 jbeBCbpT0Xmn6e8qghS5oywOQTy8RBvBYmIJk/kvclYRFlDg+ILlNJdcI/o5Na+iWd
+	 RFqYh0z8b4aN9kLIEEitPLp19eWjatoTe343G5aVo+RwYGmyenKc/gSxA908Edmwsd
+	 qXjzNOqGz7+t7cqx1cmljFwi2n+6kbsAB7S0UQ/+sfaeN5F/tvpu7nuIrWK+7Sew1k
+	 G9yQtbBmW/4kjK4k42fWtIuPb1nqLo5q4h1Lrxi/Ls9H70QsgFto9U7za019C0AUs1
+	 36dowCzpGanAA==
 From: SeongJae Park <sj@kernel.org>
 To: Usama Arif <usamaarif642@gmail.com>
 Cc: SeongJae Park <sj@kernel.org>,
@@ -35,11 +35,11 @@ Cc: SeongJae Park <sj@kernel.org>,
 	hannes@cmpxchg.org,
 	david@redhat.com,
 	kernel-team@meta.com
-Subject: Re: [PATCH v4 6/6] Docs/admin-guide/mm/damon/usage: Document hugepage filter type
-Date: Tue,  4 Feb 2025 15:13:45 -0800
-Message-Id: <20250204231345.2857-1-sj@kernel.org>
+Subject: Re: [PATCH v4 0/6] mm/damon: add support for hugepages
+Date: Tue,  4 Feb 2025 15:20:02 -0800
+Message-Id: <20250204232002.2951-1-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250203225604.44742-7-usamaarif642@gmail.com>
+In-Reply-To: <20250203225604.44742-1-usamaarif642@gmail.com>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -47,59 +47,92 @@ List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On Mon,  3 Feb 2025 22:55:33 +0000 Usama Arif <usamaarif642@gmail.com> wrote:
+Hi Usama,
 
-> This includes both the 'hugepage' filter type and the min/max
-> files used to decide range of sizes to filter on.
+
+Thank you for continuing this great work!
+
+On Mon,  3 Feb 2025 22:55:27 +0000 Usama Arif <usamaarif642@gmail.com> wrote:
+
+> This includes adding support for larger folios in damon for paddr,
+
+nit.  s/larger/large/
+
+> which means largers folios will have their access checked and will
+> be considered for different DAMOS actions like pageout, prioritization
+> and migration.
+
+Technically speaking, 'paddr' was supporting large folios, but the support was
+implemented in a very poor or broken way.  And you're not adding a support that
+didn't exist before, but improving or fixing the existing support, right?  Can
+we make the sentence more accurate in the way?
+
 > 
-> Signed-off-by: Usama Arif <usamaarif642@gmail.com>
-> ---
->  Documentation/admin-guide/mm/damon/usage.rst | 17 +++++++++--------
->  1 file changed, 9 insertions(+), 8 deletions(-)
+> Patches 3-6 add support for DAMOS hugepage filter type. This is to
+> gather statistics to check if memory regions of specific access
+> tempratures are backed by hugepages of a size in a specific
+> range. This filter can help to observe and prove the effectivenes of
+> different schemes for shrinking/collapsing hugepages.
 > 
-> diff --git a/Documentation/admin-guide/mm/damon/usage.rst b/Documentation/admin-guide/mm/damon/usage.rst
-> index 47a44bd348ab..5765896aaa7e 100644
-> --- a/Documentation/admin-guide/mm/damon/usage.rst
-> +++ b/Documentation/admin-guide/mm/damon/usage.rst
-> @@ -83,7 +83,7 @@ comma (",").
->      │ │ │ │ │ │ │ │ │ 0/target_metric,target_value,current_value
->      │ │ │ │ │ │ │ :ref:`watermarks <sysfs_watermarks>`/metric,interval_us,high,mid,low
->      │ │ │ │ │ │ │ :ref:`filters <sysfs_filters>`/nr_filters
-> -    │ │ │ │ │ │ │ │ 0/type,matching,allow,memcg_path,addr_start,addr_end,target_idx
-> +    │ │ │ │ │ │ │ │ 0/type,matching,allow,memcg_path,addr_start,addr_end,target_idx,min,max
->      │ │ │ │ │ │ │ :ref:`stats <sysfs_schemes_stats>`/nr_tried,sz_tried,nr_applied,sz_applied,sz_ops_filter_passed,qt_exceeds
->      │ │ │ │ │ │ │ :ref:`tried_regions <sysfs_schemes_tried_regions>`/total_bytes
->      │ │ │ │ │ │ │ │ 0/start,end,nr_accesses,age,sz_filter_passed
-> @@ -406,13 +406,14 @@ number (``N``) to the file creates the number of child directories named ``0``
->  to ``N-1``.  Each directory represents each filter.  The filters are evaluated
->  in the numeric order.
->  
-> -Each filter directory contains seven files, namely ``type``, ``matching``,
-> -``allow``, ``memcg_path``, ``addr_start``, ``addr_end``, and ``target_idx``.
-> -To ``type`` file, you can write one of five special keywords: ``anon`` for
-> -anonymous pages, ``memcg`` for specific memory cgroup, ``young`` for young
-> -pages, ``addr`` for specific address range (an open-ended interval), or
-> -``target`` for specific DAMON monitoring target filtering.  Meaning of the
-> -types are same to the description on the :ref:`design doc
-> +Each filter directory contains nine files, namely ``type``, ``matching``,
-> +``allow``, ``memcg_path``, ``addr_start``, ``addr_end``, ``min``, ``max``
-> +and ``target_idx``. To ``type`` file, you can write one of six special
-> +keywords: ``anon`` for anonymous pages, ``memcg`` for specific memory cgroup,
-> +``young`` for young pages, ``addr`` for specific address range (an open-ended
-> +interval), ``hugepage`` for large folios of a specific size range [``min``,
+> I have kept patches 1-2 as part of these series as the later patches
+> are dependent on them.
 
-I'd prefer naming it ``hugepage_size``.
+I understand the two patches will make patches 3-6 more completely work, but
+not necessarily a blocker of those.  So please feel free to split those out to
+another series if you want.
 
-> +``max``] or ``target`` for specific DAMON monitoring target filtering. Meaning
-> +of the types are same to the description on the :ref:`design doc
->  <damon_design_damos_filters>`.
->  
->  In case of the memory cgroup filtering, you can specify the memory cgroup of
+Also I think the second patch need to be revised, but even in the case, it
+might introduce unnecessarily huge complexity for small problem.  Please refer
+to the comments on the patch and let me know if I'm missing something.
+
+I'd also ask you to put logic and API implementation before sysfs
+implementation.
+
+Added more comments in detail to each patch files except the first one, which
+already got my Reviewed-by: and not changed in this version.
+
+> 
+> The corresponding damo PR is at https://github.com/damonitor/damo/pull/20.
+> 
+> v3 -> v4:
+> - Add support for large folios of all sizes, and not just
+>   PMD mapped hugepages (David and SJ).
+> - only get folio while checking access/ applying DAMOS
+>   scheme if the head page is also part of that region.
+> 
+> v2 -> v3:
+> - expose hugepage via sysfs even if the kernel is
+>   built without hugepage support. DAMON will just
+>   just return 0. (SJ Park)
+> 
+> v1 -> v2:
+> - Wrap DAMOS_FILTER_TYPE_HUGEPAGE case with
+>   CONFIG_PGTABLE_HAS_HUGE_LEAVES (SJ Park)
+> 
+> Usama Arif (6):
+>   mm/damon: have damon_get_folio return folio even for tail pages
+>   mm/damon/paddr: use damon_get_folio_in_region to obtain folio
+>   mm/damon/sysfs-schemes: add files for setting damos_filter->folio_size
+>   mm/damon: introduce DAMOS filter type hugepage
+>   Docs/ABI/damon: document DAMOS sysfs files to set the min/max
+>     folio_size
+>   Docs/admin-guide/mm/damon/usage: Document hugepage filter type
+> 
+>  .../ABI/testing/sysfs-kernel-mm-damon         | 12 +++
+>  Documentation/admin-guide/mm/damon/usage.rst  | 17 +++--
+>  include/linux/damon.h                         | 13 ++++
+>  mm/damon/core.c                               |  3 +
+>  mm/damon/ops-common.c                         |  2 +-
+>  mm/damon/paddr.c                              | 75 +++++++++++++++----
+>  mm/damon/sysfs-schemes.c                      | 54 +++++++++++++
+>  7 files changed, 151 insertions(+), 25 deletions(-)
+> 
 > -- 
 > 2.43.5
+
+Again, thank you for continuing this great work!
 
 
 Thanks,
