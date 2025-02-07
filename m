@@ -1,242 +1,103 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDACC2417DB;
-	Thu,  6 Feb 2025 23:11:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCB741BC07B
+	for <damon@lists.linux.dev>; Fri,  7 Feb 2025 18:22:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738883478; cv=none; b=gQsEj6vk9bKUpaaNroLCh5ooH8qiGI2825/wENIA5W3r6r3qlBdfOvYpz2qAgKQ09gwuLQtt7Sff6MzVs8HClyD/BYYvr+u7/2l+7eDzBIzASUZjxiDZrWqYIg9TOi5D0hUtIDy9KaRqvdOhEIJyOkmIOE0PlrTlF7bybG7aQxA=
+	t=1738952532; cv=none; b=YEjG4hR2ya9bnG/6ktZ9k5ct6tYYO1OdJWPZL/oNCwe7x6sOKG8MlF+YLI1/d4vyNuPVrQlnTgky/69hJ5iYpAjjxofhrP9M1xjP4qviwTZEhstMCHOotU8C48qHTsjahxeeqZRxjO8izntX7q+/EQXf1wHPh4wZmMp01OiOGAw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738883478; c=relaxed/simple;
-	bh=1l9ScDXKqIkJS8f8Hq8dlrjRQ1aDQXSzobIfw4wm6Og=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=nyj9hKz8gw6mJsVr+X8k/XtkyqkkNDKws+WJgxim510yiHrhTTFnQToaVfx8GtdlrzdbNczs1/UIBrkSihxCNCFFZaqDQj3bOZQGkX/uGW/D3jUSascwot/h+3THcgdpS1ok5Yl2Bjw+KFqjF7gkjNdOwJuyPlzmiPzra8RaZZ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cPa3J4Xv; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1738952532; c=relaxed/simple;
+	bh=UjIreNLQrW+cKC+ebyLFUis2qa7u5DdWOYELP238HmU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=HaZg31U/v1ancfvTLjOJPfV8H4ftGZQoq3FTSlRikOimXtZu08XstbjFH5gVa8mSwZ/7cCvm579zDBbGgl+wQwivsz58BNjBkwAHJ55JAlqA7gdW/BZXk+JpFglNYjFXZmnqOZfePMF3OoFHXna5lapbG5cAzWzaRc02Hxm6lhA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=C2ENyV+F; arc=none smtp.client-ip=209.85.221.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cPa3J4Xv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBD7CC4CEDD;
-	Thu,  6 Feb 2025 23:11:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1738883478;
-	bh=1l9ScDXKqIkJS8f8Hq8dlrjRQ1aDQXSzobIfw4wm6Og=;
-	h=From:To:Cc:Subject:Date:From;
-	b=cPa3J4Xv775+ISWQBF7AiaN42OhdjeFkz3e0JvwuRs0mkmiRcKN7ZZvavAyh1cx6J
-	 vHzcGtlGYMRfx4M2uJDcutFTKQ09iEYA8iyEg/RykWTeaEb9EjOcehM2D0wlcsDLOz
-	 DFTQ1/SNfTtxRRAyssdXKp5Oefw4U6S1yXoXysMuqtSECSy3HLV3vtYiTjSMiCwrgN
-	 SPqYKriZckG9EfDpz2UqEPSU10chbQDCHCdoaujbDA92EE/gPPGNbb+uDEW08Vtrv9
-	 4YsC+K95mj+UAVf7gm2WMV1wyuqy+IURH2xwCvESV0bECHhjDPoMo9oHaJGPtc1qQf
-	 5ev469ctkmQyg==
-From: SeongJae Park <sj@kernel.org>
-To: 
-Cc: SeongJae Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	damon@lists.linux.dev,
-	kernel-team@meta.com,
-	linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org,
-	Usama Arif <usamaarif642@gmail.com>
-Subject: [RFC PATCH] mm/damon: avoid applying DAMOS action to same entity multiple times
-Date: Thu,  6 Feb 2025 15:11:03 -0800
-Message-Id: <20250206231103.38298-1-sj@kernel.org>
-X-Mailer: git-send-email 2.39.5
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="C2ENyV+F"
+Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-38dc1dfd9f2so1286619f8f.3
+        for <damon@lists.linux.dev>; Fri, 07 Feb 2025 10:22:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1738952525; x=1739557325; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=3+YGX1DTK4BSkbmjULQJUOSzdL9bhIcw7veskFtned4=;
+        b=C2ENyV+Fj0LX35WT9As5hoXV5K4WM8v+6kkrhGWylUZKanNnxUBCc+PP1dREesMV7n
+         3iqgWKphTLBIJMBH+oflHhCJym62IDsCIVX8SkPRQSewkVJIwdwwqireBRqxioZzdSeO
+         lfW9qQIN30siiYIPEmyaTu/nEvAc2p8/njmIGfRqwpGewEdUKYQbKseO9Tasb/WG34yv
+         NUceBJ/H7L9EUzqWk+LnMCoG+yHwfsD8vWDM+KU51sx5CWsIH+Uwyx33aorYfJ4XMebu
+         Kqf+HnmyZ6Th4e2eJC8/WcELbDiEbI50BUw+Kb2tSqyg6laKzXQW65Hq3sLjT46WlvW/
+         De0Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1738952525; x=1739557325;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=3+YGX1DTK4BSkbmjULQJUOSzdL9bhIcw7veskFtned4=;
+        b=haGlGv9U35Dyt/7fddPQmZQa+Hn6k6j7UYYHBsUKMwbUpkyG5aQLwFeF9gvXIXeTl1
+         AJKNbV9H6marIxxP7a8DFf3UjDzRhPn4auIMf2/sr/kmkfdxXRcUeYWg6YXnK+6z0drQ
+         4WJnSiNLUL9Npy0VcsUNI9oldIY2WmTV6Milvi7KoyaWZjl4aqR2gaczhoTMtUqyLc9k
+         73hFEJ8HJAGTaaThMoYiIRx1JXB6FyCXZ5EZr+Fd1d6gJv8DGM3+zO5sAKhhywxrzeOx
+         6eFqoXUMMAPeG4xv9tcZZ5qwtDkGoL+d9vGKa/ywEpVPVuzaKjk/EcIYIc0CPBXGj0Eb
+         F6fw==
+X-Forwarded-Encrypted: i=1; AJvYcCUXy41friNgCGCgD3pYy2S/cK8kZ/FAqcCTzgEU8c0EHyorJJRdGSN0dp6VAUTq7t2uhw6x/A==@lists.linux.dev
+X-Gm-Message-State: AOJu0YzzVZshMn1GmVu+zRbe/KK/43hdEuSfSEHGfFoZz/tzY7+LrAp3
+	hR0Lm0AKShBYVQtKhlEeSlPtwnlD0MFfFtLQszzywExyDbcjYzxsh+A4QQ==
+X-Gm-Gg: ASbGncuOty/A3i2W5OE8wR6NwfbKawgTRjYmKRC+k6kLY+8DSGbch0nfCAZ79ZbL01R
+	R5SPh1t8gGCem+WV6oHsXALypDmSB2eMI03VpRWWzfRfvEOHk512TIqqkjaleGFubv+CWCq3qAn
+	CkEm1izVfyTeQIPW4SnBELSu/3AldKikAedcoOcUYAhJYW+WVXzShnL+qSKhSUqUykGZYu/c7Pb
+	xtobPkTndsNCJSndOrLZpEXdfNZSa0dQF7cpeHbulaRFvV4pw2Z7Zie3YDSzatGrU9DtWjrnexG
+	XmIFGzjl0N7pIa6vGonzYiTgdh8tDEgQbPHfe0aj25zIT/5hWa8Nbq36Ot4y2zHHYTxdOiJNNUZ
+	8ATbYu7aqTrgUNg==
+X-Google-Smtp-Source: AGHT+IHX6rf5djK8JZZYNxsUJ2jiy0jGXj+xlR6Spwo29YcCOu4YWtI8TcXWQg2JmgngQcGzngpIew==
+X-Received: by 2002:a5d:64a3:0:b0:38d:cf33:31c6 with SMTP id ffacd0b85a97d-38dcf3336e9mr1574931f8f.50.1738952525138;
+        Fri, 07 Feb 2025 10:22:05 -0800 (PST)
+Received: from ?IPV6:2a02:6b67:d752:5f00:c46:86ac:45ea:7590? ([2a02:6b67:d752:5f00:c46:86ac:45ea:7590])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38dc4458d71sm4072564f8f.63.2025.02.07.10.22.04
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 07 Feb 2025 10:22:04 -0800 (PST)
+Message-ID: <cea1e84c-70da-4bb1-a35c-f7d0fc8d0ee6@gmail.com>
+Date: Fri, 7 Feb 2025 18:22:04 +0000
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 4/6] mm/damon: introduce DAMOS filter type hugepage
+To: SeongJae Park <sj@kernel.org>
+Cc: akpm@linux-foundation.org, damon@lists.linux.dev, linux-mm@kvack.org,
+ hannes@cmpxchg.org, david@redhat.com, kernel-team@meta.com
+References: <20250204231248.2729-1-sj@kernel.org>
+Content-Language: en-US
+From: Usama Arif <usamaarif642@gmail.com>
+In-Reply-To: <20250204231248.2729-1-sj@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-'paddr' DAMON operations set can apply a DAMOS scheme's action to a
-large folio multiple times in single DAMOS-regions-walk if the folio is
-laid on multiple DAMON regions.  Add a field for DAMOS scheme object
-that can be used by the underlying ops to know what was the last entity
-that the scheme's action has applied.  The core layer unsets the field
-when each DAMOS-regions-walk is done for the given scheme.  And update
-'paddr' ops to use the infrastructure to avoid the problem.
 
-Reported-by: Usama Arif <usamaarif642@gmail.com>
-Closes: https://lore.kernel.org/20250203225604.44742-3-usamaarif642@gmail.com
-Signed-off-by: SeongJae Park <sj@kernel.org>
----
- include/linux/damon.h | 11 +++++++++++
- mm/damon/core.c       |  1 +
- mm/damon/paddr.c      | 39 +++++++++++++++++++++++++++------------
- 3 files changed, 39 insertions(+), 12 deletions(-)
 
-diff --git a/include/linux/damon.h b/include/linux/damon.h
-index af525252b853..a390af84cf0f 100644
---- a/include/linux/damon.h
-+++ b/include/linux/damon.h
-@@ -432,6 +432,7 @@ struct damos_access_pattern {
-  * @wmarks:		Watermarks for automated (in)activation of this scheme.
-  * @target_nid:		Destination node if @action is "migrate_{hot,cold}".
-  * @filters:		Additional set of &struct damos_filter for &action.
-+ * @last_applied:	Last @action applied ops-managing entity.
-  * @stat:		Statistics of this scheme.
-  * @list:		List head for siblings.
-  *
-@@ -454,6 +455,15 @@ struct damos_access_pattern {
-  * implementation could check pages of the region and skip &action to respect
-  * &filters
-  *
-+ * The minimum entity that @action can be applied depends on the underlying
-+ * &struct damon_operations.  Since it may not be aligned with the core layer
-+ * abstract, namely &struct damon_region, &struct damon_operations could apply
-+ * @action to same entity multiple times.  Large folios that underlying on
-+ * multiple &struct damon region objects could be such examples.  The &struct
-+ * damon_operations can use @last_applied to avoid that.  DAMOS core logic
-+ * unsets @last_applied when each regions walking for applying the scheme is
-+ * finished.
-+ *
-  * After applying the &action to each region, &stat_count and &stat_sz is
-  * updated to reflect the number of regions and total size of regions that the
-  * &action is applied.
-@@ -477,6 +487,7 @@ struct damos {
- 		int target_nid;
- 	};
- 	struct list_head filters;
-+	void *last_applied;
- 	struct damos_stat stat;
- 	struct list_head list;
- };
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index c7b981308862..1a4dd644949b 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -1851,6 +1851,7 @@ static void kdamond_apply_schemes(struct damon_ctx *c)
- 		s->next_apply_sis = c->passed_sample_intervals +
- 			(s->apply_interval_us ? s->apply_interval_us :
- 			 c->attrs.aggr_interval) / sample_interval;
-+		s->last_applied = NULL;
- 	}
- }
- 
-diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
-index 0fb61f6ddb8d..d64c6fe28667 100644
---- a/mm/damon/paddr.c
-+++ b/mm/damon/paddr.c
-@@ -243,6 +243,17 @@ static bool damos_pa_filter_out(struct damos *scheme, struct folio *folio)
- 	return false;
- }
- 
-+static bool damon_pa_invalid_damos_folio(struct folio *folio, struct damos *s)
-+{
-+	if (!folio)
-+		return true;
-+	if (folio == s->last_applied) {
-+		folio_put(folio);
-+		return true;
-+	}
-+	return false;
-+}
-+
- static unsigned long damon_pa_pageout(struct damon_region *r, struct damos *s,
- 		unsigned long *sz_filter_passed)
- {
-@@ -250,6 +261,7 @@ static unsigned long damon_pa_pageout(struct damon_region *r, struct damos *s,
- 	LIST_HEAD(folio_list);
- 	bool install_young_filter = true;
- 	struct damos_filter *filter;
-+	struct folio *folio;
- 
- 	/* check access in page level again by default */
- 	damos_for_each_filter(filter, s) {
-@@ -268,9 +280,8 @@ static unsigned long damon_pa_pageout(struct damon_region *r, struct damos *s,
- 
- 	addr = r->ar.start;
- 	while (addr < r->ar.end) {
--		struct folio *folio = damon_get_folio(PHYS_PFN(addr));
--
--		if (!folio) {
-+		folio = damon_get_folio(PHYS_PFN(addr));
-+		if (damon_pa_invalid_damos_folio(folio, s)) {
- 			addr += PAGE_SIZE;
- 			continue;
- 		}
-@@ -296,6 +307,7 @@ static unsigned long damon_pa_pageout(struct damon_region *r, struct damos *s,
- 		damos_destroy_filter(filter);
- 	applied = reclaim_pages(&folio_list);
- 	cond_resched();
-+	s->last_applied = folio;
- 	return applied * PAGE_SIZE;
- }
- 
-@@ -304,12 +316,12 @@ static inline unsigned long damon_pa_mark_accessed_or_deactivate(
- 		unsigned long *sz_filter_passed)
- {
- 	unsigned long addr, applied = 0;
-+	struct folio *folio;
- 
- 	addr = r->ar.start;
- 	while (addr < r->ar.end) {
--		struct folio *folio = damon_get_folio(PHYS_PFN(addr));
--
--		if (!folio) {
-+		folio = damon_get_folio(PHYS_PFN(addr));
-+		if (damon_pa_invalid_damos_folio(folio, s)) {
- 			addr += PAGE_SIZE;
- 			continue;
- 		}
-@@ -328,6 +340,7 @@ static inline unsigned long damon_pa_mark_accessed_or_deactivate(
- 		addr += folio_size(folio);
- 		folio_put(folio);
- 	}
-+	s->last_applied = folio;
- 	return applied * PAGE_SIZE;
- }
- 
-@@ -471,12 +484,12 @@ static unsigned long damon_pa_migrate(struct damon_region *r, struct damos *s,
- {
- 	unsigned long addr, applied;
- 	LIST_HEAD(folio_list);
-+	struct folio *folio;
- 
- 	addr = r->ar.start;
- 	while (addr < r->ar.end) {
--		struct folio *folio = damon_get_folio(PHYS_PFN(addr));
--
--		if (!folio) {
-+		folio = damon_get_folio(PHYS_PFN(addr));
-+		if (damon_pa_invalid_damos_folio(folio, s)) {
- 			addr += PAGE_SIZE;
- 			continue;
- 		}
-@@ -495,6 +508,7 @@ static unsigned long damon_pa_migrate(struct damon_region *r, struct damos *s,
- 	}
- 	applied = damon_pa_migrate_pages(&folio_list, s->target_nid);
- 	cond_resched();
-+	s->last_applied = folio;
- 	return applied * PAGE_SIZE;
- }
- 
-@@ -512,15 +526,15 @@ static unsigned long damon_pa_stat(struct damon_region *r, struct damos *s,
- {
- 	unsigned long addr;
- 	LIST_HEAD(folio_list);
-+	struct folio *folio;
- 
- 	if (!damon_pa_scheme_has_filter(s))
- 		return 0;
- 
- 	addr = r->ar.start;
- 	while (addr < r->ar.end) {
--		struct folio *folio = damon_get_folio(PHYS_PFN(addr));
--
--		if (!folio) {
-+		folio = damon_get_folio(PHYS_PFN(addr));
-+		if (damon_pa_invalid_damos_folio(folio, s)) {
- 			addr += PAGE_SIZE;
- 			continue;
- 		}
-@@ -530,6 +544,7 @@ static unsigned long damon_pa_stat(struct damon_region *r, struct damos *s,
- 		addr += folio_size(folio);
- 		folio_put(folio);
- 	}
-+	s->last_applied = folio;
- 	return 0;
- }
- 
+On 04/02/2025 23:12, SeongJae Park wrote:
+> On Mon,  3 Feb 2025 22:55:31 +0000 Usama Arif <usamaarif642@gmail.com> wrote:
+> 
+> 
+>> +	case DAMOS_FILTER_TYPE_HUGEPAGE:
+>> +		folio_sz = folio_size(folio);
+>> +		matched = filter->folio_size.min <= folio_sz && folio_sz <= filter->folio_size.max;
+> 
+> We should also return 'false' if the folio is not a large folio (folio_sz ==
+> PAGE_SIZE), if we agreed to my suggestion on the previous version of this patch
+> series?
+> 
 
-base-commit: a0aaf0b2cacaf69162a3d20685ff8c7c84b15a41
--- 
-2.39.5
+Thanks SJ for the reviews.
+
+I will address all of the changes in the next revision. The only thing over here is, I would
+like the filter to work for folios of all sizes, even PAGE_SIZE. It would give us a more convenient
+way of knowing if hot regions are mainly being backed by 4K pages, and improve observability.
+Let me know if thats ok?
+
+
