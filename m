@@ -1,46 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BDC61A3151
-	for <damon@lists.linux.dev>; Fri,  7 Feb 2025 18:52:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 360B5194C6A;
+	Fri,  7 Feb 2025 21:20:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738954336; cv=none; b=gHif5be4dnXjBmM/XGAxC9U7f3DErSeIyHnNsQXw2F/FG8ZITULh01TuVBGah1q1n6WgKMUWdhHEanZMfw2Othot38TOospYS+2MVzrMZ0I9VrNS9GfYaK8j+mA+4n6RwhnSn++FOHWY6wUxFvcJ5yqMhtMu2pgSr3O/kuHoJZQ=
+	t=1738963239; cv=none; b=pmfLo8Va0z6Fi62KtgrMvIIMYWtwtV8qzSSImj1dhTsgTWk5wumSZtUp2fFemEQ6V3rySQaBzdbVU2dM3BIS4ffZu3tXc96W9LobyINbrNdoowQbrw9VurcSveyQ7+O8iM8zUR+msRiD/ujNhGLqBTINf+YIKRJtU65T5td/Mdk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738954336; c=relaxed/simple;
-	bh=BFWvHtCqI4zHx0zSd21fwnlKrln4GSc/JnQ/Pky/4EM=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=WZ8MP2dy/yuL151vT7pISW5w5xaAmUlTSeCvcFXmje1jQ+am++TlwnsCsBA3ZSCmYiikVpUmG7DD0ZYRkAm+QCjGQU1rZm0vwu+SSMAf3tvxjC02pSzt7w0LKA8ntGhcjUdN9/ougvrraNAF7nLXFsgsZxmjRitGBTAhxxqbUmc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RQpF3WUq; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1738963239; c=relaxed/simple;
+	bh=xKqNvsnx3tuKSu7o9r1b3TR/eqwZBPe1SkMZAx07Gso=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=YTJdEVQDqTrfwO9t95r26a6SDbY1mT9gC2elDZCksIxYZvIKHqmH1WTDpPHO9fNyFKVjDodH6aosWFymP14q+Gg7kabgRU8V6tK2KNOz42CTLEtINVk/XbmQd2G2V3Dy9HOmn7L6YigLS/iNgXqdUN9Fj1g+a33JXSONNcVEgU0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GUEu1kUk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RQpF3WUq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2431C4CEF7;
-	Fri,  7 Feb 2025 18:52:15 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GUEu1kUk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B321C4CED1;
+	Fri,  7 Feb 2025 21:20:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1738954335;
-	bh=BFWvHtCqI4zHx0zSd21fwnlKrln4GSc/JnQ/Pky/4EM=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RQpF3WUqxEgU+XzXEz5sFp7DqVylKk1Bi0ADaBuUG6nV3iZmlG7y7Q20/yr+lHnMW
-	 N20d0uDA+BLXHRqq7SlSUYNiOQhJGxqydRTHVB0YATT6WKdqTpNTocXHQTLPrszZ+N
-	 moFNkQcnif3chxG99RQkJbSBaWxrl4UpwN0pB3aNBY3xXazcs9EyZNf2N3cz9nuIhn
-	 wDdsV+Nbx+T7B5QnZUHZYNhQil95R7eoGoPBRJH+iOLabnKeOMnzXXJE8nIszbsTco
-	 QbkXNkcv/fa21fZ2Y1nUXa7vZTbfNgCbB9YvWvTM0VhXXcIZ8gqNRfqVY/UOR7N5Qf
-	 OWr4X+KkX8oOQ==
+	s=k20201202; t=1738963238;
+	bh=xKqNvsnx3tuKSu7o9r1b3TR/eqwZBPe1SkMZAx07Gso=;
+	h=From:To:Cc:Subject:Date:From;
+	b=GUEu1kUkr5xmAjgVAlNhRuAwZ6If0KD3Oy3aOwXO1Jy8ocoo7tvIQnsg+eh1gLbFI
+	 N7wYc/mHNt+Jzhi1cRokMFYF5844ngrmsFMtxHFxl+wcNVj+no1VfhzsZHOnEBYaAd
+	 eYQ3zAdCv2gzN7HU/Ca0jCazu6RI5hSJlUBguag4b+CL5ATwN4ms1tCcMAaZQMWWEH
+	 JLf0tdv6aHAIzVO+4P17jH2pYmQsHBtB0NTD78GOo758+pcJdH7iWc2i/8nBHyrCie
+	 4/Et/N2w/6JmkrXbvZjp9ufS2tuqmCODM8K3im9PpnXIkT71Ih28y32wvZo5PtQoZo
+	 EmnzAgNpmSl9Q==
 From: SeongJae Park <sj@kernel.org>
-To: Usama Arif <usamaarif642@gmail.com>
+To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SeongJae Park <sj@kernel.org>,
-	akpm@linux-foundation.org,
+	Usama Arif <usamaarif642@gmail.com>,
 	damon@lists.linux.dev,
+	kernel-team@meta.com,
+	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org,
-	hannes@cmpxchg.org,
-	david@redhat.com,
-	kernel-team@meta.com
-Subject: Re: [PATCH v4 4/6] mm/damon: introduce DAMOS filter type hugepage
-Date: Fri,  7 Feb 2025 10:52:13 -0800
-Message-Id: <20250207185213.43553-1-sj@kernel.org>
+	stable@vger.kernel.org
+Subject: [PATCH 0/2] mm/damon/paddr: fix large folios access and schemes handling
+Date: Fri,  7 Feb 2025 13:20:31 -0800
+Message-Id: <20250207212033.45269-1-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <cea1e84c-70da-4bb1-a35c-f7d0fc8d0ee6@gmail.com>
-References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -49,40 +46,34 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Fri, 7 Feb 2025 18:22:04 +0000 Usama Arif <usamaarif642@gmail.com> wrote:
+DAMON operations set for physical address space, namely 'paddr', treats
+tail pages as unaccessed always.  It can also apply DAMOS action to
+a large folio multiple times within single DAMOS' regions walking.  As a
+result, the monitoring output has poor quality and DAMOS works in
+unexpected ways when large folios are being used.  Fix those.
 
-> 
-> 
-> On 04/02/2025 23:12, SeongJae Park wrote:
-> > On Mon,  3 Feb 2025 22:55:31 +0000 Usama Arif <usamaarif642@gmail.com> wrote:
-> > 
-> > 
-> >> +	case DAMOS_FILTER_TYPE_HUGEPAGE:
-> >> +		folio_sz = folio_size(folio);
-> >> +		matched = filter->folio_size.min <= folio_sz && folio_sz <= filter->folio_size.max;
-> > 
-> > We should also return 'false' if the folio is not a large folio (folio_sz ==
-> > PAGE_SIZE), if we agreed to my suggestion on the previous version of this patch
-> > series?
-> > 
-> 
-> Thanks SJ for the reviews.
+The patches were parts of Usama's hugepage_size DAMOS filter patch
+series[1].  The first fix has collected from there with a slight commit
+message change for the subject prefix.  The second fix is re-written by
+SJ and posted as an RFC before this series.  The second one also got a
+slight commit message change for the subject prefix.
 
-The pleasure is mine!
+[1] https://lore.kernel.org/20250203225604.44742-1-usamaarif642@gmail.com
+[2] https://lore.kernel.org/20250206231103.38298-1-sj@kernel.org
 
-> 
-> I will address all of the changes in the next revision.
+SeongJae Park (1):
+  mm/damon: avoid applying DAMOS action to same entity multiple times
 
-Looking forward to :)
+Usama Arif (1):
+  mm/damon/ops: have damon_get_folio return folio even for tail pages
 
-> The only thing over here is, I would
-> like the filter to work for folios of all sizes, even PAGE_SIZE. It would give us a more convenient
-> way of knowing if hot regions are mainly being backed by 4K pages, and improve observability.
-> Let me know if thats ok?
-
-I have no strong opinion here.  Unless others have concerns, I'm ok with your
-approach.
+ include/linux/damon.h | 11 +++++++++
+ mm/damon/core.c       |  1 +
+ mm/damon/ops-common.c |  2 +-
+ mm/damon/paddr.c      | 57 +++++++++++++++++++++++++++++++------------
+ 4 files changed, 55 insertions(+), 16 deletions(-)
 
 
-Thanks,
-SJ
+base-commit: 9c9a75a50e600803a157f4fc76cb856326406ce4
+-- 
+2.39.5
