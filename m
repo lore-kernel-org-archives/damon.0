@@ -1,186 +1,116 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 111182512DD
-	for <damon@lists.linux.dev>; Mon, 10 Feb 2025 19:39:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BF741B85FD;
+	Mon, 10 Feb 2025 23:05:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739216355; cv=none; b=jEajkO+Ue6vaxg+dANCE0Osg+tKoDzvBf8S5pT3mfujC9J+HW06cKBK/TZgWBATVVN56wnRcKmwdEo54bA1tIUMcFE6zynLVKeXkop/l/WyEGk8rZ+ZZNQKGA5JP/xQBU8NNRgOcE4SUsl2MaxOJT4R+UmobC628BwXcV6yzTIU=
+	t=1739228717; cv=none; b=Z8N14KrOWFR0T1QV/INF9E35PLn/vBCMMmxGsFKWu1iR1PE7FLHAQW+8m4fDSExI8ESPteBXLAoaZckbxCBRvP+J5s5Tqo1zaoQkYfe3KeG8l+2wskrR7lelis46AgFKgXwa5d+WGVsM+/OYm4C30fudNyd3Pnqja7a4GngUNoA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739216355; c=relaxed/simple;
-	bh=PA01cEf2/9mIQZ9O32CRa6PGoRajWbPJGABkde9iNzs=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:content-type; b=HqFJTv3Ydn0lWay1Y7yIvyCk274NiQTIPzy7ku4AwsgRNHkvEa3WTbVgMjzhQE9rlYzhqR1QTQcI3t9L8qVxkgiAZHR/7UVi652/q+w8G9OrH/1j6+ea6P2v5ILf2MRi8dmbgh9h3YVW3qWBwZhj13KgGPKRw1i6X7Xz97UVZlI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=Z6dfVIIg; arc=none smtp.client-ip=170.10.129.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	s=arc-20240116; t=1739228717; c=relaxed/simple;
+	bh=a+20u3F0olFhn2ger6QyJLQ5lx1Ke3LUoxDGzvt6t8E=;
+	h=Date:From:To:Cc:Subject:Message-Id:In-Reply-To:References:
+	 Mime-Version:Content-Type; b=KNBF2m3rNNwE5ZBevcyGjFlL9VAH+ltP7JR1xV/CqvcXcZDr8Tvc/lL6pX2tNAjRSy4ComHIRoa2btUlmBVT4wpeAj+s4iGctsQYIFe7xso59wOwLfUCRfow33ih9Q8MkGJxluCMZeMIXfDrIGHEVl0OqIT8NUB0WybZJfArKTk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linux-foundation.org header.i=@linux-foundation.org header.b=ywk5yFm7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="Z6dfVIIg"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1739216353;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=gxIo4/a9ZeK4nnisZvQU6AU2gxtpzJDN86Rrv62j7Tk=;
-	b=Z6dfVIIg0Pmh4k7/CwmRy+IQv79x+a/Im1qbjwqoeqE2K0IgoXINTXivyJyOHKX3s95T3R
-	1nSexZXrnck3WnrNFirbPdV8KpfgEfPndDQdnBrJyeuldZdOydBx7ZAKo2BerxaWf+wfuG
-	QNxqLA40p0ci270ajGjMB5TnjXpG3fE=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-231-684hSU-qOqqq_wrguGQMfA-1; Mon, 10 Feb 2025 14:39:10 -0500
-X-MC-Unique: 684hSU-qOqqq_wrguGQMfA-1
-X-Mimecast-MFC-AGG-ID: 684hSU-qOqqq_wrguGQMfA
-Received: by mail-wr1-f71.google.com with SMTP id ffacd0b85a97d-38dcc9653a7so1362121f8f.0
-        for <damon@lists.linux.dev>; Mon, 10 Feb 2025 11:39:10 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739216349; x=1739821149;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=gxIo4/a9ZeK4nnisZvQU6AU2gxtpzJDN86Rrv62j7Tk=;
-        b=NQLKXycV+XXC2c67g06BVlfBfrYml8OeWpP0fSQnPG5Zj73auBvHuGi88rAruM+WKe
-         FTNx4F6cwAfv/V2eGwIwPp9BjR6/VLzYCcG+he+2L+Had0YI02lHvU9UybyjrDGGRvQ2
-         +ANXiJOCTsw7lL/ua8cNUgH0qZ+Vikxyi2i4lCSq28ynljEslE9JoAImEMlxHHNcQvwg
-         vTXzSFL2q0xxjIj3+WvNennkVqcIZYtWnLpIbVNyDJgTFGooMN+cMixAn5UV6Y48t465
-         23IUOdwuNv6GKfGI3M8IteHkpB/Rh/wMLv/eBnR9RUcy7OK+RYVxODF2JWLprCgaeovV
-         pcEA==
-X-Forwarded-Encrypted: i=1; AJvYcCWMqXH+ocdXuh+wjNMffSPmwEoQY9B64omuDKLXuPpGFznZbZutmDN7ll1H4TI/SprvnX8JDA==@lists.linux.dev
-X-Gm-Message-State: AOJu0Yyiozy6sOEyQuqD7254DZN9qeHV2eKobCQSD7KLi7rdqhZNlr9M
-	U4sg9pU80DvfiaadMYD0BP/Y/S1PDbQdyq2l6XP0vOx4wgKi1tYnV+ATCHxyKdMtYH6NyxZEEQJ
-	fYw9m5TaPBixv+WQHj3X4r/lbXXhOLtvsix32EAjTVsbLkrt2MrrH
-X-Gm-Gg: ASbGncsatEjkbadYg4nFAD8ibUI0IJkmWDdGynm8zeMcOpop8AA1Mrp7n6hVhyK+7co
-	VCPBGjkkl7Wn/6iXEy1ixseeZg38np10DmkBy3TJ//qOcjUpsQJi8CaB+otkO6gBJBLnglMH5z9
-	KC+Q9ywhLkF0sA0zdg2ccmqsLkA0L7xd+glvTSS7rrrJqoL3GN37xUMQ1lPNntdeZrVFVdXPFFJ
-	DybDQbsxAksZGWRHW+/vQRc3ysIzkuoLWrG4aBzr1ykvuhJdtpRU6HOBTi90jXus+cnyOY/tpUs
-	hwfN9YXm3r69RRCZadAJLPxds3Isk4i474OsE791PiVnyTPQsvcIxeaIvIiUPOsmeg==
-X-Received: by 2002:a05:6000:1448:b0:38d:a879:4778 with SMTP id ffacd0b85a97d-38dc9343f89mr13325612f8f.33.1739216349526;
-        Mon, 10 Feb 2025 11:39:09 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFOm3YA+KmUhyhlND1SLmjpOJWvwKHSp1MsMH3YdrdBRb69cVHv165Q1M/eFn8bTRexW9yPlw==
-X-Received: by 2002:a05:6000:1448:b0:38d:a879:4778 with SMTP id ffacd0b85a97d-38dc9343f89mr13325571f8f.33.1739216349113;
-        Mon, 10 Feb 2025 11:39:09 -0800 (PST)
-Received: from localhost (p200300cbc734b80012c465cd348aaee6.dip0.t-ipconnect.de. [2003:cb:c734:b800:12c4:65cd:348a:aee6])
-        by smtp.gmail.com with UTF8SMTPSA id ffacd0b85a97d-38dca0b4237sm10326047f8f.85.2025.02.10.11.39.06
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 10 Feb 2025 11:39:07 -0800 (PST)
-From: David Hildenbrand <david@redhat.com>
-To: linux-kernel@vger.kernel.org
-Cc: linux-doc@vger.kernel.org,
-	dri-devel@lists.freedesktop.org,
-	linux-mm@kvack.org,
-	nouveau@lists.freedesktop.org,
-	linux-trace-kernel@vger.kernel.org,
-	linux-perf-users@vger.kernel.org,
-	damon@lists.linux.dev,
-	David Hildenbrand <david@redhat.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	=?UTF-8?q?J=C3=A9r=C3=B4me=20Glisse?= <jglisse@redhat.com>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Alex Shi <alexs@kernel.org>,
-	Yanteng Si <si.yanteng@linux.dev>,
-	Karol Herbst <kherbst@redhat.com>,
-	Lyude Paul <lyude@redhat.com>,
-	Danilo Krummrich <dakr@kernel.org>,
-	David Airlie <airlied@gmail.com>,
-	Simona Vetter <simona@ffwll.ch>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Oleg Nesterov <oleg@redhat.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	SeongJae Park <sj@kernel.org>,
-	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
-	Vlastimil Babka <vbabka@suse.cz>,
-	Jann Horn <jannh@google.com>,
-	Pasha Tatashin <pasha.tatashin@soleen.com>,
-	Peter Xu <peterx@redhat.com>,
-	Alistair Popple <apopple@nvidia.com>,
-	Jason Gunthorpe <jgg@nvidia.com>
-Subject: [PATCH v2 17/17] mm/rmap: avoid -EBUSY from make_device_exclusive()
-Date: Mon, 10 Feb 2025 20:37:59 +0100
-Message-ID: <20250210193801.781278-18-david@redhat.com>
-X-Mailer: git-send-email 2.48.1
+	dkim=pass (1024-bit key) header.d=linux-foundation.org header.i=@linux-foundation.org header.b="ywk5yFm7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDB13C4CED1;
+	Mon, 10 Feb 2025 23:05:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linux-foundation.org;
+	s=korg; t=1739228717;
+	bh=a+20u3F0olFhn2ger6QyJLQ5lx1Ke3LUoxDGzvt6t8E=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=ywk5yFm7ctuCPKJQ9+BCPXUz/RzUhWb19Ww4mTtphZcClJDthieFzci4pzmtFsB2I
+	 Yp0xaownlpeRYsr5jbwGmNoxuPqSzXm8ItDVb71qJ3LuODj6XFApcFUVl6eL6hlFDA
+	 RkQ1jhvczfJ6AIkjUhJS3bVUC+B1AyLXWs+uA/LA=
+Date: Mon, 10 Feb 2025 15:05:15 -0800
+From: Andrew Morton <akpm@linux-foundation.org>
+To: David Hildenbrand <david@redhat.com>
+Cc: linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
+ dri-devel@lists.freedesktop.org, linux-mm@kvack.org,
+ nouveau@lists.freedesktop.org, linux-trace-kernel@vger.kernel.org,
+ linux-perf-users@vger.kernel.org, damon@lists.linux.dev, =?ISO-8859-1?Q?J?=
+ =?ISO-8859-1?Q?=E9r=F4me?= Glisse <jglisse@redhat.com>, Jonathan Corbet
+ <corbet@lwn.net>, Alex Shi <alexs@kernel.org>, Yanteng Si
+ <si.yanteng@linux.dev>, Karol Herbst <kherbst@redhat.com>, Lyude Paul
+ <lyude@redhat.com>, Danilo Krummrich <dakr@kernel.org>, David Airlie
+ <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, Masami Hiramatsu
+ <mhiramat@kernel.org>, Oleg Nesterov <oleg@redhat.com>, Peter Zijlstra
+ <peterz@infradead.org>, SeongJae Park <sj@kernel.org>, "Liam R. Howlett"
+ <Liam.Howlett@oracle.com>, Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+ Vlastimil Babka <vbabka@suse.cz>, Jann Horn <jannh@google.com>, Pasha
+ Tatashin <pasha.tatashin@soleen.com>, Peter Xu <peterx@redhat.com>,
+ Alistair Popple <apopple@nvidia.com>, Jason Gunthorpe <jgg@nvidia.com>,
+ Barry Song <v-songbaohua@oppo.com>
+Subject: Re: [PATCH v2 00/17] mm: fixes for device-exclusive entries (hmm)
+Message-Id: <20250210150515.c71078f212ff4661eafc15bf@linux-foundation.org>
 In-Reply-To: <20250210193801.781278-1-david@redhat.com>
 References: <20250210193801.781278-1-david@redhat.com>
+X-Mailer: Sylpheed 3.8.0beta1 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: 7mCApNAMc0BKf0AQ1YXAO3XQg6P80kBQ-eDfUxYZ5N4_1739216349
-X-Mimecast-Originator: redhat.com
-Content-Transfer-Encoding: 8bit
-content-type: text/plain; charset="US-ASCII"; x-default=true
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
-Failing to obtain the folio lock, for example because the folio is
-concurrently getting migrated or swapped out, can easily make the callers
-fail: for example, the hmm selftest can sometimes be observed to fail
-because of this. Instead of forcing the caller to retry, let's simply
-retry in this to-be-expected case.
+On Mon, 10 Feb 2025 20:37:42 +0100 David Hildenbrand <david@redhat.com> wrote:
 
-Similarly, avoid spurious failures simply because we raced with someone
-(e.g., swapout) modifying the page table such that our folio_walk fails.
+> Against mm-hotfixes-stable for now.
+> 
+> Discussing the PageTail() call in make_device_exclusive_range() with
+> Willy, I recently discovered [1] that device-exclusive handling does
+> not properly work with THP, making the hmm-tests selftests fail if THPs
+> are enabled on the system.
+> 
+> Looking into more details, I found that hugetlb is not properly fenced,
+> and I realized that something that was bugging me for longer -- how
+> device-exclusive entries interact with mapcounts -- completely breaks
+> migration/swapout/split/hwpoison handling of these folios while they have
+> device-exclusive PTEs.
+> 
+> The program below can be used to allocate 1 GiB worth of pages and
+> making them device-exclusive on a kernel with CONFIG_TEST_HMM.
+> 
+> Once they are device-exclusive, these folios cannot get swapped out
+> (proc$pid/smaps_rollup will always indicate 1 GiB RSS no matter how
+> much one forces memory reclaim), and when having a memory block onlined
+> to ZONE_MOVABLE, trying to offline it will loop forever and complain about
+> failed migration of a page that should be movable.
+> 
+> # echo offline > /sys/devices/system/memory/memory136/state
+> # echo online_movable > /sys/devices/system/memory/memory136/state
+> # ./hmm-swap &
+> ... wait until everything is device-exclusive
+> # echo offline > /sys/devices/system/memory/memory136/state
+> [  285.193431][T14882] page: refcount:2 mapcount:0 mapping:0000000000000000
+>   index:0x7f20671f7 pfn:0x442b6a
+> [  285.196618][T14882] memcg:ffff888179298000
+> [  285.198085][T14882] anon flags: 0x5fff0000002091c(referenced|uptodate|
+>   dirty|active|owner_2|swapbacked|node=1|zone=3|lastcpupid=0x7ff)
+> [  285.201734][T14882] raw: ...
+> [  285.204464][T14882] raw: ...
+> [  285.207196][T14882] page dumped because: migration failure
+> [  285.209072][T14882] page_owner tracks the page as allocated
+> [  285.210915][T14882] page last allocated via order 0, migratetype
+>   Movable, gfp_mask 0x140dca(GFP_HIGHUSER_MOVABLE|__GFP_COMP|__GFP_ZERO),
+>   id 14926, tgid 14926 (hmm-swap), ts 254506295376, free_ts 227402023774
+> [  285.216765][T14882]  post_alloc_hook+0x197/0x1b0
+> [  285.218874][T14882]  get_page_from_freelist+0x76e/0x3280
+> [  285.220864][T14882]  __alloc_frozen_pages_noprof+0x38e/0x2740
+> [  285.223302][T14882]  alloc_pages_mpol+0x1fc/0x540
+> [  285.225130][T14882]  folio_alloc_mpol_noprof+0x36/0x340
+> [  285.227222][T14882]  vma_alloc_folio_noprof+0xee/0x1a0
+> [  285.229074][T14882]  __handle_mm_fault+0x2b38/0x56a0
+> [  285.230822][T14882]  handle_mm_fault+0x368/0x9f0
+> ...
+> 
+> This series fixes all issues I found so far.
 
-Simply unconditionally lock the folio, and retry GUP if our folio_walk
-fails. Note that the folio_walk repeatedly failing is not something we
-expect.
+Cool.
 
-Note that we might want to avoid grabbing the folio lock at some point;
-for now, keep that as is and only unconditionally lock the folio.
-
-With this change, the hmm selftests don't fail simply because the folio
-is already locked. While this fixes the selftests in some cases, it's
-likely not something that deserves a "Fixes:".
-
-Signed-off-by: David Hildenbrand <david@redhat.com>
----
- mm/rmap.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
-
-diff --git a/mm/rmap.c b/mm/rmap.c
-index e2a543f639ce3..0f760b93fc0a2 100644
---- a/mm/rmap.c
-+++ b/mm/rmap.c
-@@ -2435,6 +2435,7 @@ struct page *make_device_exclusive(struct mm_struct *mm, unsigned long addr,
- 	struct page *page;
- 	swp_entry_t entry;
- 	pte_t swp_pte;
-+	int ret;
- 
- 	mmap_assert_locked(mm);
- 	addr = PAGE_ALIGN_DOWN(addr);
-@@ -2448,6 +2449,7 @@ struct page *make_device_exclusive(struct mm_struct *mm, unsigned long addr,
- 	 * fault will trigger a conversion to an ordinary
- 	 * (non-device-exclusive) PTE and issue a MMU_NOTIFY_EXCLUSIVE.
- 	 */
-+retry:
- 	page = get_user_page_vma_remote(mm, addr,
- 					FOLL_GET | FOLL_WRITE | FOLL_SPLIT_PMD,
- 					&vma);
-@@ -2460,9 +2462,10 @@ struct page *make_device_exclusive(struct mm_struct *mm, unsigned long addr,
- 		return ERR_PTR(-EOPNOTSUPP);
- 	}
- 
--	if (!folio_trylock(folio)) {
-+	ret = folio_lock_killable(folio);
-+	if (ret) {
- 		folio_put(folio);
--		return ERR_PTR(-EBUSY);
-+		return ERR_PTR(ret);
- 	}
- 
- 	/*
-@@ -2488,7 +2491,7 @@ struct page *make_device_exclusive(struct mm_struct *mm, unsigned long addr,
- 		mmu_notifier_invalidate_range_end(&range);
- 		folio_unlock(folio);
- 		folio_put(folio);
--		return ERR_PTR(-EBUSY);
-+		goto retry;
- 	}
- 
- 	/* Nuke the page table entry so we get the uptodate dirty bit. */
--- 
-2.48.1
-
+Barry, could you please redo your series "mm: batched unmap lazyfree
+large folios during reclamation" on top of this (on top of mm-unstable,
+ideally).
