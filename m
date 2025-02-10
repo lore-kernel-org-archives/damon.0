@@ -1,69 +1,69 @@
 Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DCB124C687
-	for <damon@lists.linux.dev>; Mon, 10 Feb 2025 19:38:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F86F2586CF
+	for <damon@lists.linux.dev>; Mon, 10 Feb 2025 19:38:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739216328; cv=none; b=WOH8/5ubZ8zNBu1MC6mCUa58rlv3sF8WAznh8TVj9uPPSjuipi7K7NmOan5cDzeg2xk/w4AowGDCd8Rfs25IoH40bsHhcY/W24n7fP0zI/CE1NLXR/x2COH6RoYSZcbshd1q+QoUQJHLjYj4CAL1mjqJkGSX4/Wv24fh1uhrQN4=
+	t=1739216332; cv=none; b=DSCn+SK7VcmkwG0ThjiDpg+A/4Wclc/wJnEX9LTgQ0Pu8km2UVJ9xfePheM28lDXqeRIMS7RQveJ0vlqeNtcXSQ89KshGmb0iW6UrWjeaGPCBOLaZudgFIkWFeRQ2Bwkqo/rLzIfTJCX/j3DjzAiJK+XxD7DbWTLZSMErdlGaWM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739216328; c=relaxed/simple;
-	bh=76d5pEBVKf4Yijczbwj7KuBibjsq0aAlESoqsTf2wbw=;
+	s=arc-20240116; t=1739216332; c=relaxed/simple;
+	bh=up872fM6yJvkziP+4dI1MrGG1wgvrmLWB2nPuwT2cw8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:content-type; b=V0PWfybowd0dyXEiP/mSpjlc4J/aKRQEU/TPimU4M7u1VI9gEBb6cYUQclFaJo4KyJATmHKP2ih7wSNik2VnHWpBCm8vt1fPT6eASA90OS3qNXxKkFuyAYQPwT/cTNEV4wIrbos2maosbKRG0WLFo8dd9be4ijbunwQfREoeM/Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=dkoRYmqQ; arc=none smtp.client-ip=170.10.133.124
+	 MIME-Version:content-type; b=MLmJUzcKBB2IOWZSexikbS8iTE1FxFQMnS1ezHuECKtt8aScs47/k45gBTrGuUlXh0W28yacDLIsTTd1y5EP/x/qoV8ojXpVWEbSmQnMuo2DiohzWiH9eDf1xB0gGmhBQmkzNNx0Kd8wi6PaxU+LWlKMQKB13aRXwZBKXGGEexA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=IBJ/YDzP; arc=none smtp.client-ip=170.10.133.124
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="dkoRYmqQ"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="IBJ/YDzP"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1739216326;
+	s=mimecast20190719; t=1739216329;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=8sC+CKPivo9nJ2nwAVN+E4SAgEKJPEiCVQrD/mzwcqM=;
-	b=dkoRYmqQIaCeuPU5KI/T3cOu7MBo0jNYaVvYCC/kER4W+pYIikQ9EPTkcwTmzux0Bi7zK1
-	bAyiz7zFL/HEJNwkcl4e4yo2cisf2ysywMN76TY6si/fOqM5vnL/ARKjg8hkFxt5i1GbUW
-	rS/2X1Z6ejRJhE1Zm2OB0dQHbpvjgxE=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+	bh=QxHe6mgzr5LViG+7+kvBnycnKkPt1kZTw9hZ/c9dl+o=;
+	b=IBJ/YDzP4rUI1ViiwEsjlFx4AbuQb0836YL0KXvrcYtvpOKmxP/SJKKmt2Lp8MIyO9oIZL
+	246q9hIounO+YYfbzebyv4lkjyaeuxonbFw0QeLk91FGAuVOncbZptlGOaP1uqT+Uc97nJ
+	yh7NExGqRS5wfIF8rT/EksR9zVoG7Hc=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-214-ENZYDNQWPU2-aB-VWY6NNg-1; Mon, 10 Feb 2025 14:38:37 -0500
-X-MC-Unique: ENZYDNQWPU2-aB-VWY6NNg-1
-X-Mimecast-MFC-AGG-ID: ENZYDNQWPU2-aB-VWY6NNg
-Received: by mail-wm1-f72.google.com with SMTP id 5b1f17b1804b1-4394c489babso2566095e9.1
-        for <damon@lists.linux.dev>; Mon, 10 Feb 2025 11:38:36 -0800 (PST)
+ us-mta-114-EDCUHblNP4-cG60w3gvHzQ-1; Mon, 10 Feb 2025 14:38:47 -0500
+X-MC-Unique: EDCUHblNP4-cG60w3gvHzQ-1
+X-Mimecast-MFC-AGG-ID: EDCUHblNP4-cG60w3gvHzQ
+Received: by mail-wm1-f70.google.com with SMTP id 5b1f17b1804b1-43626224274so28059415e9.0
+        for <damon@lists.linux.dev>; Mon, 10 Feb 2025 11:38:47 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739216315; x=1739821115;
+        d=1e100.net; s=20230601; t=1739216326; x=1739821126;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=8sC+CKPivo9nJ2nwAVN+E4SAgEKJPEiCVQrD/mzwcqM=;
-        b=iKGCkQpk57dMAGR+BWxL78KbeX/lkYL7NQWhah79JNYzVLH4BK4X5MNKHoHReVYQ12
-         0URZzZ6hr+UIu8uj85SctjJzzVOn5ItRPThlQawm38BJ+r0O/ipiCc5lkn5Aj5MmMCZk
-         CFwDXkQ3jS7a2zLwnfyBRvCqyLukcR+XqlOH78tPfNMcTtSRjdTQOXzwoBEQ2LBqaUAO
-         POehJdDLW8AIWR9+Ha4L+jhWESe5MQwCoSFasKpUmCll3ngpksL7NlLQLm1RcwSofOlY
-         5t6TfV2DiqDrYullXbzxqX4UIWHObGxZmqdSQQBjHoqKOpE2WSFRWo8mXPR/tPNxspzP
-         kRNw==
-X-Forwarded-Encrypted: i=1; AJvYcCUn0PQDelZtywQRl+s2rjfWw7Q1ciTHgLZRV0rVksVOZA9TPRLOL2vnK5mO0eCmsmL3UfleQg==@lists.linux.dev
-X-Gm-Message-State: AOJu0YxLsb2Y2hlaTWHq/J9IDhIErcEhYJpxeEIWWvdd4Xl9zz25GDaL
-	YzewypVl0/ZZ9Q9eaE6+TPreL18K5HaGr7COkzKj6F6giIrtb96z3WPu7ijP6SfsqDFai1Um4T5
-	ArHy+usrVc63w+qXTClCI3uUch1WWKNA/XEFv021geL+5eZ7KYiAv
-X-Gm-Gg: ASbGncv/2uGWR0Ng7EoC8Zyie7vo3DaMwH1TivDguaQfJx8DpTvwZDXnLBaVZIaTHOG
-	tWrnLvCE3/3+f9HuQ41+BQlSLMPXIryS720BgNxVbyiSIQKrMYwy8YQT6fyRTbvs/sMeElwstzo
-	P3DaxQFs6mV4NnFE6btvc0ZSDQ71OVXbTmDl485IlXdf2QHAcFC2To8MdN3+3ruXtRryCYXlkpO
-	yRcgLBGSrnSiR6l/ziCwCLOOhRmDOrJGZNsd9kdsM9jMwD95IQqZ/OFtQ+4BBj6TonEVN5RwkR0
-	6adPWq1zji5Qzm8YXAQV+7M70rRvhKk0xgB16UCQriLMg2jjwVe7qte/hxSEJUKKPA==
-X-Received: by 2002:a05:600c:4e91:b0:439:4637:9d9 with SMTP id 5b1f17b1804b1-43946370d97mr43287615e9.12.1739216315630;
-        Mon, 10 Feb 2025 11:38:35 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IF6B7q2dhfsb9dj8LY+8M1CJU6DFUQTZK7m2VERaPDmly8AB+qIiZRItOcPeyw5uy4LKosd2g==
-X-Received: by 2002:a05:600c:4e91:b0:439:4637:9d9 with SMTP id 5b1f17b1804b1-43946370d97mr43287075e9.12.1739216315147;
-        Mon, 10 Feb 2025 11:38:35 -0800 (PST)
+        bh=QxHe6mgzr5LViG+7+kvBnycnKkPt1kZTw9hZ/c9dl+o=;
+        b=W8PBcwRoNJzmyNcA6rkzYSDc7BAOYY930F5K08M4JhgIUCPHFO3ZknR2A4BfWSvqY+
+         9UqESAswBulO/1dhMzrH3wtCrEMSnyMbcqPDCfCZKReXMDw9liJhE3+bKvyG1lwFd6KW
+         5rCV5NPZULhJHZmNoDst5RU1r4kkQHpGjSBYu6YABj/YTERLH8R1ge2Sx2qu/wAexprN
+         63SJ7q9REmiRbCi0LRJvDK26KZxq3rm6YSKleRYgxDQv7voW66Xt5KeL+ODtyv5eOGMD
+         1NB5gl32mlDIt7lN7546whbf4CPeBw60DIga/VN89FwIw7PGUHD9ym5HqTcoYZSsJJZ1
+         ZQMg==
+X-Forwarded-Encrypted: i=1; AJvYcCWdrp8cKX47UU9MHthnVPP4mK4Yi6J1FDrrhNzjCd6Fie3Upsa/fh+v3IGi8hdZMkCmLkMaBw==@lists.linux.dev
+X-Gm-Message-State: AOJu0YzuAPJ5PHRiTRj+xQ17nYgrmYpXeqPT/PVFGtrLFgYJgaQeGmZG
+	yRcsYJLlEd6UJXWdph8uJXUQXalCzBdNJQf8e0DaOkdAtCx9qTgZPq0VdAjj5xkYt4pjzgUVOxs
+	s3j0dq+86uWRSM2D9ibitp5R8UlGIQRzsZ0DEUR8int2H+nkgqBRz
+X-Gm-Gg: ASbGncvrgyqP8/xIJczU7zWd8XEszc5ZktltyRXigYbVEeRH+KP/RpJUWcBpGPt1GhD
+	Y+K7sLTcjwsSGEd5Sh+Bx64gxVHz+NAk6QqZVnTBIBSsOdgdCc2tfjYBmVxVojxQ7H33vyfc7No
+	yugVVUtkvUtAYNphVqtnluGkD1FVqiQUbQEJKbsbl+UQSlLEufZR5vza6CFlnRUze8DwOP3QlV5
+	ITrk9R47ezP7gFmXBuoPp8LhiaU1axVz2QHLThtpUdmfPsf2MC5x1LJ1lpVdPjJQjp0uDuNnvl4
+	5F1QhI29jDCFX3tg1hX3p88QuSPjysvronZBQDScWDXulpf5vEEWuwOQlgtPZoK74g==
+X-Received: by 2002:a05:6000:2a6:b0:38d:dc4d:3473 with SMTP id ffacd0b85a97d-38ddc4d34b0mr6018873f8f.51.1739216326365;
+        Mon, 10 Feb 2025 11:38:46 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEI9wcsziW5nBYTCF/f9iYx8hWmPInDi/J4NMO1Qty0GFsip5PSFKOaGK1UrWp2GzbjhG1/jA==
+X-Received: by 2002:a05:6000:2a6:b0:38d:dc4d:3473 with SMTP id ffacd0b85a97d-38ddc4d34b0mr6018834f8f.51.1739216325915;
+        Mon, 10 Feb 2025 11:38:45 -0800 (PST)
 Received: from localhost (p200300cbc734b80012c465cd348aaee6.dip0.t-ipconnect.de. [2003:cb:c734:b800:12c4:65cd:348a:aee6])
-        by smtp.gmail.com with UTF8SMTPSA id 5b1f17b1804b1-4390d94d802sm195260345e9.12.2025.02.10.11.38.31
+        by smtp.gmail.com with UTF8SMTPSA id ffacd0b85a97d-38dd295200asm7894656f8f.44.2025.02.10.11.38.42
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 10 Feb 2025 11:38:33 -0800 (PST)
+        Mon, 10 Feb 2025 11:38:44 -0800 (PST)
 From: David Hildenbrand <david@redhat.com>
 To: linux-kernel@vger.kernel.org
 Cc: linux-doc@vger.kernel.org,
@@ -96,9 +96,9 @@ Cc: linux-doc@vger.kernel.org,
 	Peter Xu <peterx@redhat.com>,
 	Alistair Popple <apopple@nvidia.com>,
 	Jason Gunthorpe <jgg@nvidia.com>
-Subject: [PATCH v2 08/17] kernel/events/uprobes: handle device-exclusive entries correctly in __replace_page()
-Date: Mon, 10 Feb 2025 20:37:50 +0100
-Message-ID: <20250210193801.781278-9-david@redhat.com>
+Subject: [PATCH v2 11/17] mm/rmap: handle device-exclusive entries correctly in try_to_migrate_one()
+Date: Mon, 10 Feb 2025 20:37:53 +0100
+Message-ID: <20250210193801.781278-12-david@redhat.com>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250210193801.781278-1-david@redhat.com>
 References: <20250210193801.781278-1-david@redhat.com>
@@ -109,7 +109,7 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: DT3sIiEQvgCxipVMXffYVumnhvrE0Tsu0kWB9SGHZHE_1739216316
+X-Mimecast-MFC-PROC-ID: ZZmuLEEuNBZZx9s5Ryykcr2erRXKTF8JTaWYnDRzNUQ_1739216326
 X-Mimecast-Originator: redhat.com
 Content-Transfer-Encoding: 8bit
 content-type: text/plain; charset="US-ASCII"; x-default=true
@@ -117,63 +117,236 @@ content-type: text/plain; charset="US-ASCII"; x-default=true
 Ever since commit b756a3b5e7ea ("mm: device exclusive memory access")
 we can return with a device-exclusive entry from page_vma_mapped_walk().
 
-__replace_page() is not prepared for that, so teach it about these
-PFN swap PTEs. Note that device-private entries are so far not
-applicable on that path, because GUP would never have returned such
-folios (conversion to device-private happens by page migration, not
-in-place conversion of the PTE).
+try_to_migrate_one() is not prepared for that, so teach it about these
+PFN swap PTEs. We already handle device-private entries by specializing
+on the folio, so we can reshuffle that code to make it work on the
+PFN swap PTEs instead.
 
-There is a race between GUP and us locking the folio to look it up
-using page_vma_mapped_walk(), so this is likely a fix (unless something
-else could prevent that race, but it doesn't look like). pte_pfn() on
-something that is not a present pte could give use garbage, and we'd
-wrongly mess up the mapcount because it was already adjusted by calling
-folio_remove_rmap_pte() when making the entry device-exclusive.
+Get rid of the folio_is_device_private() handling. Note that we never
+currently expect device-private folios with HWPoison flag set at that
+point, so add a warning in case that ever changes and we can figure out
+what the right thing to do is.
+
+Note that we could currently only run into this case with
+device-exclusive entries on THPs. We still adjust the mapcount on
+conversion to device-exclusive; this makes the rmap walk
+abort early for small folios, because we'll always have
+!folio_mapped() with a single device-exclusive entry. We'll adjust the
+mapcount logic once all page_vma_mapped_walk() users can properly
+handle device-exclusive entries.
+
+Further note that try_to_migrate() calls MMU notifiers and holds the
+folio lock, so any device-exclusive users should be properly prepared
+for a device-exclusive PTE to "vanish".
 
 Fixes: b756a3b5e7ea ("mm: device exclusive memory access")
 Signed-off-by: David Hildenbrand <david@redhat.com>
 ---
- kernel/events/uprobes.c | 13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ mm/rmap.c | 124 ++++++++++++++++++++++--------------------------------
+ 1 file changed, 51 insertions(+), 73 deletions(-)
 
-diff --git a/kernel/events/uprobes.c b/kernel/events/uprobes.c
-index 2ca797cbe465f..cd6105b100325 100644
---- a/kernel/events/uprobes.c
-+++ b/kernel/events/uprobes.c
-@@ -173,6 +173,7 @@ static int __replace_page(struct vm_area_struct *vma, unsigned long addr,
- 	DEFINE_FOLIO_VMA_WALK(pvmw, old_folio, vma, addr, 0);
- 	int err;
+diff --git a/mm/rmap.c b/mm/rmap.c
+index 47142a656ae51..7c471c3ea64c4 100644
+--- a/mm/rmap.c
++++ b/mm/rmap.c
+@@ -2039,9 +2039,9 @@ static bool try_to_migrate_one(struct folio *folio, struct vm_area_struct *vma,
+ {
+ 	struct mm_struct *mm = vma->vm_mm;
+ 	DEFINE_FOLIO_VMA_WALK(pvmw, folio, vma, address, 0);
++	bool anon_exclusive, writable, ret = true;
+ 	pte_t pteval;
+ 	struct page *subpage;
+-	bool anon_exclusive, ret = true;
  	struct mmu_notifier_range range;
-+	pte_t pte;
+ 	enum ttu_flags flags = (enum ttu_flags)(long)arg;
+ 	unsigned long pfn;
+@@ -2108,24 +2108,19 @@ static bool try_to_migrate_one(struct folio *folio, struct vm_area_struct *vma,
+ 		/* Unexpected PMD-mapped THP? */
+ 		VM_BUG_ON_FOLIO(!pvmw.pte, folio);
  
- 	mmu_notifier_range_init(&range, MMU_NOTIFY_CLEAR, 0, mm, addr,
- 				addr + PAGE_SIZE);
-@@ -192,6 +193,16 @@ static int __replace_page(struct vm_area_struct *vma, unsigned long addr,
- 	if (!page_vma_mapped_walk(&pvmw))
- 		goto unlock;
- 	VM_BUG_ON_PAGE(addr != pvmw.address, old_page);
-+	pte = ptep_get(pvmw.pte);
+-		pfn = pte_pfn(ptep_get(pvmw.pte));
+-
+-		if (folio_is_zone_device(folio)) {
+-			/*
+-			 * Our PTE is a non-present device exclusive entry and
+-			 * calculating the subpage as for the common case would
+-			 * result in an invalid pointer.
+-			 *
+-			 * Since only PAGE_SIZE pages can currently be
+-			 * migrated, just set it to page. This will need to be
+-			 * changed when hugepage migrations to device private
+-			 * memory are supported.
+-			 */
+-			VM_BUG_ON_FOLIO(folio_nr_pages(folio) > 1, folio);
+-			subpage = &folio->page;
++		/*
++		 * Handle PFN swap PTEs, such as device-exclusive ones, that
++		 * actually map pages.
++		 */
++		pteval = ptep_get(pvmw.pte);
++		if (likely(pte_present(pteval))) {
++			pfn = pte_pfn(pteval);
+ 		} else {
+-			subpage = folio_page(folio, pfn - folio_pfn(folio));
++			pfn = swp_offset_pfn(pte_to_swp_entry(pteval));
++			VM_WARN_ON_FOLIO(folio_test_hugetlb(folio), folio);
+ 		}
 +
-+	/*
-+	 * Handle PFN swap PTES, such as device-exclusive ones, that actually
-+	 * map pages: simply trigger GUP again to fix it up.
-+	 */
-+	if (unlikely(!pte_present(pte))) {
-+		page_vma_mapped_walk_done(&pvmw);
-+		goto unlock;
-+	}
++		subpage = folio_page(folio, pfn - folio_pfn(folio));
+ 		address = pvmw.address;
+ 		anon_exclusive = folio_test_anon(folio) &&
+ 				 PageAnonExclusive(subpage);
+@@ -2181,7 +2176,10 @@ static bool try_to_migrate_one(struct folio *folio, struct vm_area_struct *vma,
+ 			}
+ 			/* Nuke the hugetlb page table entry */
+ 			pteval = huge_ptep_clear_flush(vma, address, pvmw.pte);
+-		} else {
++			if (pte_dirty(pteval))
++				folio_mark_dirty(folio);
++			writable = pte_write(pteval);
++		} else if (likely(pte_present(pteval))) {
+ 			flush_cache_page(vma, address, pfn);
+ 			/* Nuke the page table entry. */
+ 			if (should_defer_flush(mm, flags)) {
+@@ -2199,54 +2197,23 @@ static bool try_to_migrate_one(struct folio *folio, struct vm_area_struct *vma,
+ 			} else {
+ 				pteval = ptep_clear_flush(vma, address, pvmw.pte);
+ 			}
++			if (pte_dirty(pteval))
++				folio_mark_dirty(folio);
++			writable = pte_write(pteval);
++		} else {
++			pte_clear(mm, address, pvmw.pte);
++			writable = is_writable_device_private_entry(pte_to_swp_entry(pteval));
+ 		}
  
- 	if (new_page) {
- 		folio_get(new_folio);
-@@ -206,7 +217,7 @@ static int __replace_page(struct vm_area_struct *vma, unsigned long addr,
- 		inc_mm_counter(mm, MM_ANONPAGES);
- 	}
+-		/* Set the dirty flag on the folio now the pte is gone. */
+-		if (pte_dirty(pteval))
+-			folio_mark_dirty(folio);
++		VM_WARN_ON_FOLIO(writable && folio_test_anon(folio) &&
++				!anon_exclusive, folio);
  
--	flush_cache_page(vma, addr, pte_pfn(ptep_get(pvmw.pte)));
-+	flush_cache_page(vma, addr, pte_pfn(pte));
- 	ptep_clear_flush(vma, addr, pvmw.pte);
- 	if (new_page)
- 		set_pte_at(mm, addr, pvmw.pte,
+ 		/* Update high watermark before we lower rss */
+ 		update_hiwater_rss(mm);
+ 
+-		if (folio_is_device_private(folio)) {
+-			unsigned long pfn = folio_pfn(folio);
+-			swp_entry_t entry;
+-			pte_t swp_pte;
+-
+-			if (anon_exclusive)
+-				WARN_ON_ONCE(folio_try_share_anon_rmap_pte(folio,
+-									   subpage));
++		if (PageHWPoison(subpage)) {
++			VM_WARN_ON_FOLIO(folio_is_device_private(folio), folio);
+ 
+-			/*
+-			 * Store the pfn of the page in a special migration
+-			 * pte. do_swap_page() will wait until the migration
+-			 * pte is removed and then restart fault handling.
+-			 */
+-			entry = pte_to_swp_entry(pteval);
+-			if (is_writable_device_private_entry(entry))
+-				entry = make_writable_migration_entry(pfn);
+-			else if (anon_exclusive)
+-				entry = make_readable_exclusive_migration_entry(pfn);
+-			else
+-				entry = make_readable_migration_entry(pfn);
+-			swp_pte = swp_entry_to_pte(entry);
+-
+-			/*
+-			 * pteval maps a zone device page and is therefore
+-			 * a swap pte.
+-			 */
+-			if (pte_swp_soft_dirty(pteval))
+-				swp_pte = pte_swp_mksoft_dirty(swp_pte);
+-			if (pte_swp_uffd_wp(pteval))
+-				swp_pte = pte_swp_mkuffd_wp(swp_pte);
+-			set_pte_at(mm, pvmw.address, pvmw.pte, swp_pte);
+-			trace_set_migration_pte(pvmw.address, pte_val(swp_pte),
+-						folio_order(folio));
+-			/*
+-			 * No need to invalidate here it will synchronize on
+-			 * against the special swap migration pte.
+-			 */
+-		} else if (PageHWPoison(subpage)) {
+ 			pteval = swp_entry_to_pte(make_hwpoison_entry(subpage));
+ 			if (folio_test_hugetlb(folio)) {
+ 				hugetlb_count_sub(folio_nr_pages(folio), mm);
+@@ -2256,8 +2223,8 @@ static bool try_to_migrate_one(struct folio *folio, struct vm_area_struct *vma,
+ 				dec_mm_counter(mm, mm_counter(folio));
+ 				set_pte_at(mm, address, pvmw.pte, pteval);
+ 			}
+-
+-		} else if (pte_unused(pteval) && !userfaultfd_armed(vma)) {
++		} else if (likely(pte_present(pteval)) && pte_unused(pteval) &&
++			   !userfaultfd_armed(vma)) {
+ 			/*
+ 			 * The guest indicated that the page content is of no
+ 			 * interest anymore. Simply discard the pte, vmscan
+@@ -2273,6 +2240,11 @@ static bool try_to_migrate_one(struct folio *folio, struct vm_area_struct *vma,
+ 			swp_entry_t entry;
+ 			pte_t swp_pte;
+ 
++			/*
++			 * arch_unmap_one() is expected to be a NOP on
++			 * architectures where we could have PFN swap PTEs,
++			 * so we'll not check/care.
++			 */
+ 			if (arch_unmap_one(mm, vma, address, pteval) < 0) {
+ 				if (folio_test_hugetlb(folio))
+ 					set_huge_pte_at(mm, address, pvmw.pte,
+@@ -2283,8 +2255,6 @@ static bool try_to_migrate_one(struct folio *folio, struct vm_area_struct *vma,
+ 				page_vma_mapped_walk_done(&pvmw);
+ 				break;
+ 			}
+-			VM_BUG_ON_PAGE(pte_write(pteval) && folio_test_anon(folio) &&
+-				       !anon_exclusive, subpage);
+ 
+ 			/* See folio_try_share_anon_rmap_pte(): clear PTE first. */
+ 			if (folio_test_hugetlb(folio)) {
+@@ -2309,7 +2279,7 @@ static bool try_to_migrate_one(struct folio *folio, struct vm_area_struct *vma,
+ 			 * pte. do_swap_page() will wait until the migration
+ 			 * pte is removed and then restart fault handling.
+ 			 */
+-			if (pte_write(pteval))
++			if (writable)
+ 				entry = make_writable_migration_entry(
+ 							page_to_pfn(subpage));
+ 			else if (anon_exclusive)
+@@ -2318,15 +2288,23 @@ static bool try_to_migrate_one(struct folio *folio, struct vm_area_struct *vma,
+ 			else
+ 				entry = make_readable_migration_entry(
+ 							page_to_pfn(subpage));
+-			if (pte_young(pteval))
+-				entry = make_migration_entry_young(entry);
+-			if (pte_dirty(pteval))
+-				entry = make_migration_entry_dirty(entry);
+-			swp_pte = swp_entry_to_pte(entry);
+-			if (pte_soft_dirty(pteval))
+-				swp_pte = pte_swp_mksoft_dirty(swp_pte);
+-			if (pte_uffd_wp(pteval))
+-				swp_pte = pte_swp_mkuffd_wp(swp_pte);
++			if (likely(pte_present(pteval))) {
++				if (pte_young(pteval))
++					entry = make_migration_entry_young(entry);
++				if (pte_dirty(pteval))
++					entry = make_migration_entry_dirty(entry);
++				swp_pte = swp_entry_to_pte(entry);
++				if (pte_soft_dirty(pteval))
++					swp_pte = pte_swp_mksoft_dirty(swp_pte);
++				if (pte_uffd_wp(pteval))
++					swp_pte = pte_swp_mkuffd_wp(swp_pte);
++			} else {
++				swp_pte = swp_entry_to_pte(entry);
++				if (pte_swp_soft_dirty(pteval))
++					swp_pte = pte_swp_mksoft_dirty(swp_pte);
++				if (pte_swp_uffd_wp(pteval))
++					swp_pte = pte_swp_mkuffd_wp(swp_pte);
++			}
+ 			if (folio_test_hugetlb(folio))
+ 				set_huge_pte_at(mm, address, pvmw.pte, swp_pte,
+ 						hsz);
 -- 
 2.48.1
 
