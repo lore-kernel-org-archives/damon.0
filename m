@@ -1,61 +1,61 @@
-Received: from mail-qk1-f170.google.com (mail-qk1-f170.google.com [209.85.222.170])
+Received: from mail-qk1-f181.google.com (mail-qk1-f181.google.com [209.85.222.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 025D51FF7B7
-	for <damon@lists.linux.dev>; Tue, 11 Feb 2025 12:44:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B822B204873
+	for <damon@lists.linux.dev>; Tue, 11 Feb 2025 12:44:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739277890; cv=none; b=Jjor6TOz3tkPHYW0xsSDIEzwlqlS695PMa+sHLXGP5Ji0jyAQe3QhMkUSBszKL6y7aeRU9kjurDV9+Lo0n5DaDl8QJj5JzNOWZEUz3rC28ZhDQnop6PZiYqPcuFGc5acPmk7xO6AHRYtvZpm/RQwWTZojd5l76VBzYIl/tLzZws=
+	t=1739277892; cv=none; b=P4TbqccMvO9NBZSOY7vmx3bt0SzftAKMbNvguKBXEn0ULnNkW43xlKt+awgSldTwJu/VV66AtWV9t1MTlD2LJwHK9zaSt6YXAZavTMxN3bBo3kl9r2jyEwGGGk2cR2bDbRrWXAPuIdhFpdDcVBHgPXzP11T36Tu3cU2erNQ1V84=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739277890; c=relaxed/simple;
-	bh=0wgnFJ+RP/D8mG23DVksIEa2fkouc20UXU64BLpdzyc=;
+	s=arc-20240116; t=1739277892; c=relaxed/simple;
+	bh=O7W8fpfea3D3BXvUVE0b/Wxaz51U4CeToGhLdxqG7X0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N8eBkqMYVpVMo+R5VskLSXQO2FBdM3dvm9nXnRx1zH3+H4emGo/wLXGTrJDPd37D8BufMQpxJ2P+KXNE4xwbtlf5QfKQf+hMrk7I8v0UWs/g3IvsI2HZm/rhHvJdqkpj/Wrcry1wxfqrF45ts2xeZxRDZ/PYtD+aQjCUaUAofjU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YmcsJLrP; arc=none smtp.client-ip=209.85.222.170
+	 MIME-Version; b=E3UsI7tQ7sbg8ySk5EyG8XEZsr7EqU9zERp+nZpn3FHbgn5dEyBHEepIe57OrmB74SqJvyGsPiANGSNN/A0bAAy/RNxiBo26Eii5X+UiNHxAaR1N5XtLCGw7s+a0YKJAIOhWJJHaIvQXCYxNNuBzJmH5bXeekphqaIaAoPMyWYg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FHwsaA4+; arc=none smtp.client-ip=209.85.222.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YmcsJLrP"
-Received: by mail-qk1-f170.google.com with SMTP id af79cd13be357-7c053a107b8so297458785a.3
-        for <damon@lists.linux.dev>; Tue, 11 Feb 2025 04:44:48 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FHwsaA4+"
+Received: by mail-qk1-f181.google.com with SMTP id af79cd13be357-7c0545a1449so252525185a.1
+        for <damon@lists.linux.dev>; Tue, 11 Feb 2025 04:44:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1739277888; x=1739882688; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1739277890; x=1739882690; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=7zyxp4qKor0yB6Upvj/J6rwR1h/DvEyqLUMvE/8sgvM=;
-        b=YmcsJLrP7gOA9vyiFO6PosP4xL789gAa6hoFXffdv4H+lkr2POAaFDYTcJ9YEpJQ+W
-         Jxi6GmMVeNuB8VedzBFkMUb1aeDXizopkZyo337ntKnFlZyWiNHFLGucW/ZNq//PWCg+
-         Y/uW9e7vkKd7rB6p008asCDWR4rnypSvImvHlZjEkNA0cUQ4MENTiD1ib2AuUGhdzhQa
-         B+1xy+Y+hFmV5nhtjrhnHjhjijaVFQVymvV8jn7mSyEtRlgEGpdI8J1zVao63GtQI8l8
-         IYgV4SdzstXIYWYBDt+TkTzV0mhpVaYj4Db2R7qU98+mI9oCigOs7oEIgYBUF24Bi/qe
-         kP6g==
+        bh=aszcwZX/dL1jJJGnQ9D6oqqNkl8IH1IE/D7YPgpaGec=;
+        b=FHwsaA4+JmvHzcn5e1PXVUhCeBpWXbbtore5Z8AQHsNmynRg8ixbOMJgXOhyn3eMgH
+         KkDOnzCIOIm5FOw20vE8hYM8hU+WObx8NHYYUhTm4DcKF2r5eYwRmhSYU0RMmZMiaDQG
+         M+NIyYQy7QFxxmLSe3NoIs/CqcivGvxnln/dPfYfAoFWRnbpcaqw1MtIv+4zoZHdSoq8
+         H844DXz12gdPnw3q1oqykNSpTNTK5c0uB6TMMu8HdLxws5PxE03+NT4tH02oWcsultz3
+         9IVcWSZ9R31Y6aLq8V2sVvz0NcP5AjMP39M+A1rtAdWIQUs1VkX4o2+EDh9cITlgKBvL
+         3HSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739277888; x=1739882688;
+        d=1e100.net; s=20230601; t=1739277890; x=1739882690;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=7zyxp4qKor0yB6Upvj/J6rwR1h/DvEyqLUMvE/8sgvM=;
-        b=OeOzcE0ByeSne4EdujUCinkiclptWkEWtDriE5R4wF5AOwXhw54UB0Nt7cPvZumaYy
-         DNsTznRt+QtI0SPkR89te5Z+cLah08+JuyRu2dLUsuso+/II66c1wGXxtXC8yy41RQpt
-         rZoZdh9cIv4SYbbTdRAPLLfo5SEXTShr6XcURVgP1l0PDO6YEpx4/ufypHmZHVO1to45
-         FwMhIiTk4XR2nx/oQNA8A2/dSaASTjXc6ZcU1GcJ0bP1DbxiCeEncR+MznJf6AcdmB/n
-         tMfe/xU2Ia08MV9XirUWBVcrPI582FePqRMLFree45hBxfQX+zT1H1sTmw/WPDbKSDjf
-         swkQ==
-X-Gm-Message-State: AOJu0Yw8IbVjvSMxJUqND/KSnx2yvJGOCSmfKwC2ZGUdCluT976V3jXo
-	0i+d6RUqVXiGIPkTqWtGMPhGtrM2Sg8Kitml/JCJAaDKGoR7Licn
-X-Gm-Gg: ASbGncvXLOhWmVpaz77ChxZTeOFzUE+FJ8xt0KNxFIP6+0U5x1cvskFZyxOgfjd9O8A
-	LDg4TvLA/3IL44qzfNKylwQQS+JrRprYA2/JMga4ePTeSMtPbka1DSgL1qdIiDSLcFA3hJvaIx9
-	62Y/+xXhH902f1vp4+OHrljp1l+ILsqEo66jXYPg2aiid0TxNBtBmhCjk3hoTrPxme9G5FieXKn
-	AAqgYXumm9JY9Rnj/QM5OvemCl+40+2SPYwYjSwFknFDh0is36DJMQBaFXM40sILoVgcUJUWOKL
-	RCpfy59syEGwTg==
-X-Google-Smtp-Source: AGHT+IEJTN8x+UN6cPapypXGlWsjEzOvc6OtH8mxzRq/xr3rROZkgpXaGMFGqSd9HYs7jToaBiYx2Q==
-X-Received: by 2002:a05:620a:2795:b0:7c0:602c:e689 with SMTP id af79cd13be357-7c0602cebd1mr970692185a.16.1739277887826;
-        Tue, 11 Feb 2025 04:44:47 -0800 (PST)
-Received: from localhost ([2a03:2880:20ff:46::])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-7c041dec2e9sm663299485a.20.2025.02.11.04.44.47
+        bh=aszcwZX/dL1jJJGnQ9D6oqqNkl8IH1IE/D7YPgpaGec=;
+        b=fVNVY3MveTcm/t9srzyWQZSQXbLXDSpsGWEN+TzpDlRaVFARATt9e1eMz0eBjy5UnE
+         i0p8u2r2B8OQbjRak8Xgq52+07fE/Uo3hymJZwYxUmta3PW72Q6MxPMI1QOS6mFwpZJA
+         gHfzSlMl9NfjKO42KSzjQYs+sMm++GXl6kcNEFlEGVA8vhw3LSL4oSHQeikzelOyxwll
+         9OL45nbwhtVXFE7T+ZNH91bXD+ynxdwiU0d99RARw3+ITDRgPS5fhdsXGteto3aJ1kX4
+         Z4deBwo3LgXqQtvU3P/b/lcT9uH7VJ+lRfB20ppig89x7CvYfxKZkv26eBT2AqQVsuPe
+         63MQ==
+X-Gm-Message-State: AOJu0Yw+ZVnUqAyZWiKJWd+RY2zmjxzxl/Kgj4BwB0j//gCJxF4VHpcO
+	maEgOOu0Y2dfu4FRx1TSACRKScdBgOcZPOEOfyMHUSTBSL08uEh0
+X-Gm-Gg: ASbGncv0vMD0OQRVVecTDjsT3LvOyiOct0yCktDhv9FvbW/Y1lvodgIpByPuLGziBcc
+	L2SfqbAGgQ5+oWjsHHBZIMC+gGQOxZb+ZVBc6ogjJKG0+w2nvJUmKEfqg0KCjZClhzIyaGR50C4
+	whmU1mcnhfVUxo9NWL14k3hWT9ugwW7ybyxJIR6YuRlwkXGZT5USk/foP7ZhGQurH6SiSxsjCip
+	OIrwyQ0qTgpL0fXRiYhoyXgELDtX3/c//vD2+xhd+DTVYtCqZHnrtMJVr0UKdABkHPFBQNFsVCB
+	CzRx20N7hMFxBA==
+X-Google-Smtp-Source: AGHT+IGHKdbhye6mWgXhoGfhTRR5ceGO4PfzUuR2tFrr/uG9wzr33+3V3hfqq0H4w3OojPxi/Fy6lg==
+X-Received: by 2002:a05:620a:3908:b0:7b6:eba3:2dfa with SMTP id af79cd13be357-7c0690e39b7mr289317785a.22.1739277889625;
+        Tue, 11 Feb 2025 04:44:49 -0800 (PST)
+Received: from localhost ([2a03:2880:20ff:73::])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-7c065424c9esm173266585a.43.2025.02.11.04.44.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 11 Feb 2025 04:44:47 -0800 (PST)
+        Tue, 11 Feb 2025 04:44:49 -0800 (PST)
 From: Usama Arif <usamaarif642@gmail.com>
 To: sj@kernel.org,
 	akpm@linux-foundation.org
@@ -65,9 +65,9 @@ Cc: damon@lists.linux.dev,
 	david@redhat.com,
 	kernel-team@meta.com,
 	Usama Arif <usamaarif642@gmail.com>
-Subject: [PATCH v5 2/4] mm/damon/sysfs-schemes: add files for setting damos_filter->sz_range
-Date: Tue, 11 Feb 2025 12:43:41 +0000
-Message-ID: <20250211124437.278873-3-usamaarif642@gmail.com>
+Subject: [PATCH v5 3/4] Docs/ABI/damon: document DAMOS sysfs files to set the min/max folio_size
+Date: Tue, 11 Feb 2025 12:43:42 +0000
+Message-ID: <20250211124437.278873-4-usamaarif642@gmail.com>
 X-Mailer: git-send-email 2.43.5
 In-Reply-To: <20250211124437.278873-1-usamaarif642@gmail.com>
 References: <20250211124437.278873-1-usamaarif642@gmail.com>
@@ -79,108 +79,40 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Add min and max files for damon filters to let the userspace decide
-the min/max folio size to operate on. This will be needed to decide
-what folio sizes to give pa_stat for.
+This will be used to decide the min and max folio size to operate on
+for pa_stat.
 
 Signed-off-by: Usama Arif <usamaarif642@gmail.com>
+Reviewed-by: SeongJae Park <sj@kernel.org>
 ---
- mm/damon/sysfs-schemes.c | 54 ++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 54 insertions(+)
+ Documentation/ABI/testing/sysfs-kernel-mm-damon | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
-index 9020bc9befac..881d00bb3a34 100644
---- a/mm/damon/sysfs-schemes.c
-+++ b/mm/damon/sysfs-schemes.c
-@@ -316,6 +316,7 @@ struct damon_sysfs_scheme_filter {
- 	bool allow;
- 	char *memcg_path;
- 	struct damon_addr_range addr_range;
-+	struct damon_size_range sz_range;
- 	int target_idx;
- };
+diff --git a/Documentation/ABI/testing/sysfs-kernel-mm-damon b/Documentation/ABI/testing/sysfs-kernel-mm-damon
+index b057eddefbfc..ccd13ca668c8 100644
+--- a/Documentation/ABI/testing/sysfs-kernel-mm-damon
++++ b/Documentation/ABI/testing/sysfs-kernel-mm-damon
+@@ -345,6 +345,20 @@ Description:	If 'addr' is written to the 'type' file, writing to or reading
+ 		from this file sets or gets the end address of the address
+ 		range for the filter.
  
-@@ -474,6 +475,44 @@ static ssize_t addr_end_store(struct kobject *kobj,
- 	return err ? err : count;
- }
- 
-+static ssize_t min_show(struct kobject *kobj,
-+		struct kobj_attribute *attr, char *buf)
-+{
-+	struct damon_sysfs_scheme_filter *filter = container_of(kobj,
-+			struct damon_sysfs_scheme_filter, kobj);
++What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/schemes/<S>/filters/<F>/min
++Date:		Feb 2025
++Contact:	SeongJae Park <sj@kernel.org>
++Description:	If 'hugepage_size' is written to the 'type' file, writing to
++		or reading from this file sets or gets the minimum size of the
++		hugepage for the filter.
 +
-+	return sysfs_emit(buf, "%lu\n", filter->sz_range.min);
-+}
++What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/schemes/<S>/filters/<F>/max
++Date:		Feb 2025
++Contact:	SeongJae Park <sj@kernel.org>
++Description:	If 'hugepage_size' is written to the 'type' file, writing to
++		or reading from this file sets or gets the maximum size of the
++		hugepage for the filter.
 +
-+static ssize_t min_store(struct kobject *kobj,
-+		struct kobj_attribute *attr, const char *buf, size_t count)
-+{
-+	struct damon_sysfs_scheme_filter *filter = container_of(kobj,
-+			struct damon_sysfs_scheme_filter, kobj);
-+	int err = kstrtoul(buf, 0, &filter->sz_range.min);
-+
-+	return err ? err : count;
-+}
-+
-+static ssize_t max_show(struct kobject *kobj,
-+		struct kobj_attribute *attr, char *buf)
-+{
-+	struct damon_sysfs_scheme_filter *filter = container_of(kobj,
-+			struct damon_sysfs_scheme_filter, kobj);
-+
-+	return sysfs_emit(buf, "%lu\n", filter->sz_range.max);
-+}
-+
-+static ssize_t max_store(struct kobject *kobj,
-+		struct kobj_attribute *attr, const char *buf, size_t count)
-+{
-+	struct damon_sysfs_scheme_filter *filter = container_of(kobj,
-+			struct damon_sysfs_scheme_filter, kobj);
-+	int err = kstrtoul(buf, 0, &filter->sz_range.max);
-+
-+	return err ? err : count;
-+}
-+
- static ssize_t damon_target_idx_show(struct kobject *kobj,
- 		struct kobj_attribute *attr, char *buf)
- {
-@@ -520,6 +559,12 @@ static struct kobj_attribute damon_sysfs_scheme_filter_addr_start_attr =
- static struct kobj_attribute damon_sysfs_scheme_filter_addr_end_attr =
- 		__ATTR_RW_MODE(addr_end, 0600);
- 
-+static struct kobj_attribute damon_sysfs_scheme_filter_min_attr =
-+		__ATTR_RW_MODE(min, 0600);
-+
-+static struct kobj_attribute damon_sysfs_scheme_filter_max_attr =
-+		__ATTR_RW_MODE(max, 0600);
-+
- static struct kobj_attribute damon_sysfs_scheme_filter_damon_target_idx_attr =
- 		__ATTR_RW_MODE(damon_target_idx, 0600);
- 
-@@ -530,6 +575,8 @@ static struct attribute *damon_sysfs_scheme_filter_attrs[] = {
- 	&damon_sysfs_scheme_filter_memcg_path_attr.attr,
- 	&damon_sysfs_scheme_filter_addr_start_attr.attr,
- 	&damon_sysfs_scheme_filter_addr_end_attr.attr,
-+	&damon_sysfs_scheme_filter_min_attr.attr,
-+	&damon_sysfs_scheme_filter_max_attr.attr,
- 	&damon_sysfs_scheme_filter_damon_target_idx_attr.attr,
- 	NULL,
- };
-@@ -1954,6 +2001,13 @@ static int damon_sysfs_add_scheme_filters(struct damos *scheme,
- 			filter->addr_range = sysfs_filter->addr_range;
- 		} else if (filter->type == DAMOS_FILTER_TYPE_TARGET) {
- 			filter->target_idx = sysfs_filter->target_idx;
-+		} else if (filter->type == DAMOS_FILTER_TYPE_HUGEPAGE_SIZE) {
-+			if (sysfs_filter->sz_range.min >
-+					sysfs_filter->sz_range.max) {
-+				damos_destroy_filter(filter);
-+				return -EINVAL;
-+			}
-+			filter->sz_range = sysfs_filter->sz_range;
- 		}
- 
- 		damos_add_filter(scheme, filter);
+ What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/schemes/<S>/filters/<F>/target_idx
+ Date:		Dec 2022
+ Contact:	SeongJae Park <sj@kernel.org>
 -- 
 2.43.5
 
