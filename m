@@ -1,42 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81BC6156653;
-	Thu, 13 Feb 2025 01:44:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03E351632DD;
+	Thu, 13 Feb 2025 01:44:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739411098; cv=none; b=DivZKz2tWwmiD9N13LnMWIVuUUTFvNr8qNFipzyeq9XbURKWsPY1NSGdKuYmsW4vX1lrn0JzD2ssnCC29ssHj9lbmP2C6Yj4l7rrT1I1LTUpvOHd/6kEDg/UIzjx6ObtvF6t8SeGyNP6PqcKGHKmImbi4xfSInTUltwNqvSJwoU=
+	t=1739411100; cv=none; b=krCm4oG5mIbFAgd1kmZhxd0Zq+9bikbLh4xHrR23lPe5oh5mYcXsNQG7NLuVXOxd9ExuObV53Qi/x8plEd+w8a0sQky3JG2oqUaz39so4RJcT6LDoRUNZXJS1+WficBuv5+zKJ78RQ4QwHwsVocj/9a7/VMcCctQ/8EOp/bMj/w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739411098; c=relaxed/simple;
-	bh=5mT7etGAhFimYWHp8UnnlxRdq2vvO4qVjTFtFfnATX0=;
+	s=arc-20240116; t=1739411100; c=relaxed/simple;
+	bh=0wEx+LJOEK19dZIr4jkJc7A6zYxo+0xSxmNO8FVmzUM=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=Zb3RL5PjzsCaIi/NwRG3dvZnlOI74yoaoJ6Zdl0g3JfILy0CWBmwAJ3Aimi2lcy7GIQsW+DFDOSebzegwmMbTdL+/XIj8aZVFXlTeI/jzJMty8tQ3SppVEGWgoLcEDKcZoZh+xq9m1EGjLrGKPN1JEat2nOFYzxmApVEOJGDtUw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=crw6qJnY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pff3c8kqGu74junJ2qjHJTfWr72m7ohGCD9bfePNh4HYyg61agBNAP7W6Jgayd/+tyJtffR2LdjWTe0VNETXmPsglsqQryGse6AgfwTm39Y2+jfwp0wSrbDjWpU3IDzGsrvBic/eWU+MRnpeBksaldmGY63tDQYNlt9OqdFXf5c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kyEbhvxt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="crw6qJnY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C108C4CEE8;
-	Thu, 13 Feb 2025 01:44:58 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kyEbhvxt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C2F6C4CEE4;
+	Thu, 13 Feb 2025 01:44:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1739411098;
-	bh=5mT7etGAhFimYWHp8UnnlxRdq2vvO4qVjTFtFfnATX0=;
+	s=k20201202; t=1739411099;
+	bh=0wEx+LJOEK19dZIr4jkJc7A6zYxo+0xSxmNO8FVmzUM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=crw6qJnYGnrLWb24ECzEINhxpjP3mM72df9H+zpoOtoR8AB6uExB0pLzuuQWNOUsS
-	 NrOGmSwrw369SR/lm6+IxcpVnKf8XZw2fN6E0Z0rvPKzHtKFGZuo+ewP8MNMr4DWoI
-	 NrDAf3zXl1wdUmj5PsQ8qfuvf56wTTsTUFOHCflsiHGRGGhQp04K5KUnj2owNS/B6h
-	 XqU2ZiDM/5WnPZoFfuRJ8i5EYB7JzSRwDIcokE3FMcQ3SRE4HlY/4HewfnQmxNutoj
-	 b52EfXn+0jWiBYaPPL+1i2rH/+0FqqoDlrVIa1hpZZjgUBE6FTgN0fw24sOhrgZITn
-	 1cAF3/y9x/LPQ==
+	b=kyEbhvxtr1t+x2oavCe+QyKXEw8qJ00hlkxy6X/ohrCqozW7BMOb6O6UGLvp98fVO
+	 2VFoA+iIdl40G45gDTTQ0UQ5Z5wOv4hdFTDs4NFUDWOutPm9kdLMBlIQm0pwl5vEhC
+	 q0kXajprvSiVDOWE+vf1X/bREANPA3suqYUY3Ao1cUnfYVnqonxt/Rl2ETD+T6PB1s
+	 QEt5WwqlGh395DHe0Mo1DsyjwfQestlBl42wPeBgQ0jeWuQZHr9iMiNLPD+HzahW8Q
+	 D8immH3lmtEs+0GWWaG9R5Uc+URycBeV8ozvk1LanA8AGH+HTV/sFpXFFfZ66Ecrxb
+	 K66CQWoMjq1rA==
 From: SeongJae Park <sj@kernel.org>
 To: 
 Cc: SeongJae Park <sj@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
+	Jonathan Corbet <corbet@lwn.net>,
 	damon@lists.linux.dev,
 	kernel-team@meta.com,
+	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH 5/8] mm/damon/sysfs: implement a command to update auto-tuned monitoring intervals
-Date: Wed, 12 Feb 2025 17:44:35 -0800
-Message-Id: <20250213014438.145611-6-sj@kernel.org>
+Subject: [RFC PATCH 6/8] Docs/mm/damon/design: document for intervals auto-tuning
+Date: Wed, 12 Feb 2025 17:44:36 -0800
+Message-Id: <20250213014438.145611-7-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250213014438.145611-1-sj@kernel.org>
 References: <20250213014438.145611-1-sj@kernel.org>
@@ -48,71 +50,64 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-DAMON kernel API callers can show auto-tuned sampling and aggregation
-intervals from the monmitoring attributes data structure.  That can be
-useful for debugging or tuning of the feature.  DAMON user-space ABI
-users has no way to see that, though.  Implement a new DAMON sysfs
-interface kdamond state command, namely 'update_tuned_intervals', for
-the purpose.  Once the command is written to the kdamond state file, the
-tuned sampling and aggregation intervals will be updated to the
-corresponding sysfs interface.
+Document DAMON sampling and aggregation intervals auto-tuning design.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- mm/damon/sysfs.c | 20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
+ Documentation/mm/damon/design.rst | 34 +++++++++++++++++++++++++++++++
+ 1 file changed, 34 insertions(+)
 
-diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
-index f9bfe9ea0ae6..b1829ee67762 100644
---- a/mm/damon/sysfs.c
-+++ b/mm/damon/sysfs.c
-@@ -1213,6 +1213,11 @@ enum damon_sysfs_cmd {
- 	 * effective size quota of the scheme in bytes.
- 	 */
- 	DAMON_SYSFS_CMD_UPDATE_SCHEMES_EFFECTIVE_QUOTAS,
-+	/*
-+	 * @DAMON_SYSFS_CMD_UPDATE_TUNED_INTERVALS: Update the tuned monitoring
-+	 * intevals.
-+	 */
-+	DAMON_SYSFS_CMD_UPDATE_TUNED_INTERVALS,
- 	/*
- 	 * @NR_DAMON_SYSFS_CMDS: Total number of DAMON sysfs commands.
- 	 */
-@@ -1230,6 +1235,7 @@ static const char * const damon_sysfs_cmd_strs[] = {
- 	"update_schemes_tried_regions",
- 	"clear_schemes_tried_regions",
- 	"update_schemes_effective_quotas",
-+	"update_tuned_intervals",
- };
+diff --git a/Documentation/mm/damon/design.rst b/Documentation/mm/damon/design.rst
+index e28c6a1b40ae..c8e906ac3965 100644
+--- a/Documentation/mm/damon/design.rst
++++ b/Documentation/mm/damon/design.rst
+@@ -313,6 +313,10 @@ sufficient for the given purpose, it shouldn't be unnecessarily further
+ lowered.  It is recommended to be set proportional to ``aggregation interval``.
+ By default, the ratio is set as ``1/20``, and it is still recommended.
  
- /*
-@@ -1502,6 +1508,17 @@ static int damon_sysfs_upd_schemes_effective_quotas(void *data)
- 	return 0;
- }
- 
-+static int damon_sysfs_upd_tuned_intervals(void *data)
-+{
-+	struct damon_sysfs_kdamond *kdamond = data;
-+	struct damon_ctx *ctx = kdamond->damon_ctx;
++Based on the manual tuning guide, DAMON provides more intuitive knob-based
++intervals auto tuning mechanism.  Please refer to :ref:`the design document of
++the feature <damon_design_monitoring_intervals_autotuning>` for detail.
 +
-+	kdamond->contexts->contexts_arr[0]->attrs->intervals->sample_us =
-+		ctx->attrs.sample_interval;
-+	kdamond->contexts->contexts_arr[0]->attrs->intervals->aggr_us =
-+		ctx->attrs.aggr_interval;
-+	return 0;
-+}
+ Refer to below documents for an example tuning based on the above guide.
  
- /*
-  * damon_sysfs_cmd_request_callback() - DAMON callback for handling requests.
-@@ -1723,6 +1740,9 @@ static int damon_sysfs_handle_cmd(enum damon_sysfs_cmd cmd,
- 		return damon_sysfs_damon_call(
- 				damon_sysfs_upd_schemes_effective_quotas,
- 				kdamond);
-+	case DAMON_SYSFS_CMD_UPDATE_TUNED_INTERVALS:
-+		return damon_sysfs_damon_call(
-+				damon_sysfs_upd_tuned_intervals, kdamond);
- 	default:
- 		break;
- 	}
+ .. toctree::
+@@ -321,6 +325,36 @@ Refer to below documents for an example tuning based on the above guide.
+    monitoring_intervals_tuning_example
+ 
+ 
++.. _damon_design_monitoring_intervals_autotuning:
++
++Monitoring Intervals Auto-tuning
++~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
++
++DAMON provides automatic tuning of the ``sampling interval`` and ``aggregation
++interval`` based on the :ref:`the tuning guide idea
++<damon_design_monitoring_params_tuning_guide>`.  The tuning mechanism allows
++users to set the aimed amount of heats to observe with DAMON within given time
++interval.  The target can be specified by the user as a ratio of access check
++samples that gave positive result to the total samples (``samples_bp``) that
++measured within a given number of aggregations (``aggrs``).  The mechanism
++calculates the ratio of access check samples for ``aggrs`` aggregations, and
++increases or decrease the ``sampleing interval`` and ``aggregation interval``
++in same ratio, if the samples ratio is lower or higher than the target,
++respectively.  The ratio of the intervals change is decided in proportion to
++the distance between current samples ratio and the target ratio.
++
++The user can further set the minimum and maximum ``sampling interval`` that can
++be set by the tuning mechanism using two parameters (``min_sample_us`` and
++``max_sample_us``).  Because the tuning mechanism changes ``sampling interval``
++and ``aggregation interval`` in same ratio always, the minimum and maximum
++``aggregation interval`` after each of the tuning changes can automatically set
++together.
++
++The tuning is turned off by default, and need to be set explicitly by the user.
++As a rule of thumbs and the Parreto principle, 20% access samples ratio target
++is recommended.
++
++
+ .. _damon_design_damos:
+ 
+ Operation Schemes
 -- 
 2.39.5
