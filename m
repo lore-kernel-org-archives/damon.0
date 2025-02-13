@@ -1,44 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CBA214037F;
-	Thu, 13 Feb 2025 01:44:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39E3414831C;
+	Thu, 13 Feb 2025 01:44:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739411091; cv=none; b=qEZMIo7MbFnmSe66xYDBRcclt2sir/TY/oxuF/nEZd4QWV36vIBrVLEOS79voTkpb+O0pzToLdsTth1emrcfymNR9UEwUyRmfXB7VoxXa0kE1w0w4CVBYHG0jH0+hMWyVqdHWLgHxKKVRmbgOn3oy782Z+GgyrZlu1cFG+lKiCc=
+	t=1739411094; cv=none; b=J4e8vThXFzR9HkGra4XVo7laMRSV34Ayqv1V/SjbYUOvoAWlx2zIgBtNnvxJY4Sv5W6+d26s/0ofojzaEUhviqAa3/gooA4dxT8rFsp8McQaStaYEKQz/lAyxjJJaiFh9ACHKcJidy9kPQaMpvU+TgMo3aVDW9xA2VE0N/BPWb0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739411091; c=relaxed/simple;
-	bh=olXBav6CKqcfpxooRDtGfAnr1eu6Xdsee3Taqi4Maco=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=I/Jkbsz3Yo2e76Sm2iKwHVD4NFVhCTDkAZgzPywBTHK6OVyIY6qlH8/lAc6HRz3f6NehsytzCCWdlfLF1+EpYIT8tZG3PBL9gz/85UAnBmFP2Jyb+JYyCAuVp5olk+PsaTL2NqTBJUSZYaKYksvVmuWDkTeReLjnuF0htGzAGvg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hAEZ/IWO; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1739411094; c=relaxed/simple;
+	bh=arXNwNIDEYcgGA/brmhPPjep2BFLaCq5xAx61jsI2xQ=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=I8ZKlCMHZiiI2sz8NVGJMYD64gb9gBpIbjMwSMDi8wexZOlllEqbH/L+REWIKDj04UXGmBL1vkb6cMIdk5j/oTfYbbfiIe2K++qWdAgPImzrdNA/lojXvFQQ9Ij+FZL3ZZRUNIEuiwfU+kWBRpVOz9VZfTm/DMO7WavwiQfuOtE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XuYKw5jJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hAEZ/IWO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABAD6C4CEDF;
-	Thu, 13 Feb 2025 01:44:50 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XuYKw5jJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4ADF7C4CEDF;
+	Thu, 13 Feb 2025 01:44:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1739411090;
-	bh=olXBav6CKqcfpxooRDtGfAnr1eu6Xdsee3Taqi4Maco=;
-	h=From:To:Cc:Subject:Date:From;
-	b=hAEZ/IWOPGugUt6Zhsm3o8ZFAJp25JzElRJuJSVCvjg/0eoIiC9ErDI890Xs2DnCL
-	 CW7CpDfTqV+S9o3gmRibBFpd63WKYqS+Sag3eMjfH3qRQzAiG/y4CHoCvVqLHRiMm2
-	 dnhZjHzCUVd0wLoAGwJ/ea/g60qfHFJJUpN2suLvWggsR0o2nFKTcYpD2IlE6hI/FP
-	 l15Gk0fILVMPv6biQSYSdZeYvxN2pT42eHo+Zh1MYSTzgyk1dInkDGg8cVJwxi7VIy
-	 AZ02vOkW0+mx3BA0/yVa2Il95eXzxbYO+2C/V2lWtORT6xCGLydlk7Vr83V4Oy+FtE
-	 K0mzGVPDvTT5Q==
+	s=k20201202; t=1739411093;
+	bh=arXNwNIDEYcgGA/brmhPPjep2BFLaCq5xAx61jsI2xQ=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=XuYKw5jJlR25muh8wVK2pry1wN4l/DWJ0jtawj7gFkgmiL+9dbg3kS4tD/lHB1rel
+	 7kq7C6/8kMhiA2OW/vK+4lROGpGPBv4kJ0lVnV1bt/CASC7pqe3V8yjG6FevH9lbRX
+	 K+pluuuu9jAhKIXzxdrOb2t5vgUO6BEwOm05c3TTyg7Q7wezO9eK3utE/YJTuLNsKh
+	 +LPYAzkfy6FJXvkr5JiTQIJDC3hD+9YHzWFkPAucTJjcZ+LJWCcdyQHqsysw1q4p2c
+	 bkZ2DbeNjpxcWj1zbsJmWshpOLEqeXX8e8hnxZOFw81uFpbrpy8DweK1URE57qInHV
+	 ou8me2kx3aAwg==
 From: SeongJae Park <sj@kernel.org>
 To: 
 Cc: SeongJae Park <sj@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Jonathan Corbet <corbet@lwn.net>,
 	damon@lists.linux.dev,
 	kernel-team@meta.com,
-	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH 0/8] mm/damon: auto-tune aggregation interval
-Date: Wed, 12 Feb 2025 17:44:30 -0800
-Message-Id: <20250213014438.145611-1-sj@kernel.org>
+Subject: [RFC PATCH 1/8] mm/damon: add data structure for monitoring intervals auto-tuning
+Date: Wed, 12 Feb 2025 17:44:31 -0800
+Message-Id: <20250213014438.145611-2-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20250213014438.145611-1-sj@kernel.org>
+References: <20250213014438.145611-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -47,135 +48,110 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-DAMON requires time-consuming and repetitive aggregation interval
-tuning.  Introduce a feature for automating it using a feedback loop
-that aims an amount of observed access events, like auto-exposing
-cameras.
+Add data structures for using DAMON sampling and aggregation intervals
+automatic tuning aiming specific amount of access events per snapshot.
+Specificaslly, define a data structure to define the tuning goal, namely
+target ratio of positive access check samples, link it to monitoring
+attributes data structure so that DAMON kernel API users can make the
+request, and update parameters setup DAMON function to respect the new
+data.
 
-Background: Access Frequency Monitoring and Aggregation Interval
-================================================================
+Signed-off-by: SeongJae Park <sj@kernel.org>
+---
+ include/linux/damon.h | 27 +++++++++++++++++++++++++++
+ mm/damon/core.c       | 22 ++++++++++++++++++++++
+ 2 files changed, 49 insertions(+)
 
-DAMON checks if each memory element (damon_region) is accessed or not
-for every user-specified time interval called 'sampling interval'.  It
-aggregates the check intervals on per-element counter called
-'nr_accesses'.  DAMON users can read the counters to get the access
-temperature of a given element.  The counters are reset for every
-another user-specified time interval called 'aggregation interval'.
-
-This can be illustrated as DAMON continuously capturing a snapshot of
-access events that happen and captured within the last aggregation
-interval.  This implies the aggregation interval plays a key role for
-the quality of the snapshots, like the camera exposure time.  If it is
-too short, the amount of access events that happened and captured for
-each snapshot is small, so each snapshot will show no many interesting
-things but just a cold and dark world with hopefuly one pale blue dot or
-two.  If it is too long, too many events are aggregated in a single
-shot, so each snapshot will look like world of flames, or Muspellheim.
-It will be difficult to find practical insights in both cases.
-
-Problem: Time Consuming and Repetitive Tuning
-=============================================
-
-The appropriate length of the aggregation interval depends on how
-frequently the system and workloads are making access events that DAMON
-can observe.  Hence, users have to tune the interval with excessive
-amount of tests with the target system and workloads.  If the system and
-workloads are changed, the tuning should be done again.  If the
-characteristic of the workloads is dynamic, it becomes more challenging.
-It is therefore time-consuming and repetitive.
-
-The tuning challenge mainly stems from the wrong question.  It is not
-asking users what quality of monitoring results they want, but how DAMON
-should operate for their hidden goal.  To make the right answer, users
-need to fully understand DAMON's mechanisms and the characteristics of
-their workloads.  Users shouldn't be asked to understand the underlying
-mechanism.  Understanding the characteristics of the workloads shouldn't
-be the role of users but DAMON.
-
-Aim-oriented Feedback-driven Auto-Tuning
-=========================================
-
-Fortunately, the appropriate length of the aggregation interval can be
-inferred using a feedback loop.  If the current snapshots are showing no
-much intresting information, in other words, if it shows only rare
-access events, increasing the aggregation interval helps, and vice
-versa.  We tested this theory on a few real-world workloads, and
-documented one of the experience with an official DAMON monitoring
-intervals tuning guideline.  Since it is a simple theory that requires
-repeatable tries, it can be a good job for machines.
-
-Based on the guideline's theory, we design an automation of aggregation
-interval tuning, in a way similar to that of camera auto-exposure
-feature.  It defines the amount of interesting information as the ratio
-of captured access events to total capturing attempts of single snapshot,
-or more technically speaking, the ratio of positive access check samples
-to total samples within the aggregation interval.  It allows the users
-to set the target value of the ratio.  Once the target is set, the
-automation periodically measures the current value of the ratio and
-increase or decrease the aggregation interval if the ratio value is
-lower or higher than the target.  The amount of the change is proportion
-to the distance between current value and the target value.
-
-To avoid auto-tuning goes too long way, let users set minimum and
-maximum aggregation interval time.  Changing only aggregation interval
-while sampling interval is kept make the maximum level of access
-frequency in each snapshot, or discernment of regions inconsistent.
-Also, unnecessarily short sampling interval causes meaningless
-monitoring overhed.  The automation therefore adjusts the sampling
-interval together with aggregation interval, while keeping the ratio
-between the two intervals.  Users can set the ratio, or the discernment.
-
-Discussion
-==========
-
-The modified question (aimed amount of heats in each snapshot) is easy
-to answer by both the users and the kernel.  If users are interested in
-finding more cold regions, the value should be lower, and vice versa.
-If users have no idea, kernel can suggest about 20% positive access
-samples ratio as a fair default value based on the Pareto principle.
-
-Sampling to aggregation intervals ratio and min/max aggregation
-intervals are also arguably easy to answer.  What users want is
-discernment of regions for efficient system operation, for examples, X
-amount of colder regions or Y amount of warmer regions, not exactly how
-many times each cache line is accessed in nanoseconds degree.  The
-appropriate min/max aggregation interval can relatively naively set, and
-may better to set for aimed monitoring overhead.  Since sampling
-interval is directly related with the overhead, setting it based on the
-sampling interval can be easy.  With my experiences, I'd argue the
-intervals ratio 0.05, and 5 milliseconds to 20 seconds sampling interval
-range (100 milliseconds to 400 seconds aggregation interval) can be a
-good default suggestions.
-
-Evaluation
-==========
-
-We confirmed the tuning works as expected with only a few simple
-workloads including kernel builds, and that's why this is an RFC.  We
-will conduct more evaluations with more massive and realistic workloads
-and share the results by the time that we drop the RFC tag.
-
-SeongJae Park (8):
-  mm/damon: add data structure for monitoring intervals auto-tuning
-  mm/damon/core: implement intervals auto-tuning
-  mm/damon/sysfs: implement intervals tuning goal directory
-  mm/damon/sysfs: commit intervals tuning goal
-  mm/damon/sysfs: implement a command to update auto-tuned monitoring
-    intervals
-  Docs/mm/damon/design: document for intervals auto-tuning
-  Docs/ABI/damon: document intervals auto-tuning ABI
-  Docs/admin-guide/mm/damon/usage: add intervals_goal directory on the
-    hierarchy
-
- .../ABI/testing/sysfs-kernel-mm-damon         |  30 +++
- Documentation/admin-guide/mm/damon/usage.rst  |  25 ++
- Documentation/mm/damon/design.rst             |  38 +++
- include/linux/damon.h                         |  43 ++++
- mm/damon/core.c                               |  90 ++++++++
- mm/damon/sysfs.c                              | 216 ++++++++++++++++++
- 6 files changed, 442 insertions(+)
-
-
-base-commit: d5c35650f4945e1406871f9d9d51ab8c54ec0d03
+diff --git a/include/linux/damon.h b/include/linux/damon.h
+index 0adfc2f4ca75..4368ba1a942f 100644
+--- a/include/linux/damon.h
++++ b/include/linux/damon.h
+@@ -651,12 +651,38 @@ struct damon_call_control {
+ 	bool canceled;
+ };
+ 
++/**
++ * struct damon_intervals_goal - Monitoring intervals auto-tuning goal.
++ *
++ * @samples_bp:		Positive access check samples ratio to achieve.
++ * @aggrs:		Number of aggregations to acheive @samples_bp within.
++ * @min_sample_us:	Minimum resulting sampling interval in microseconds.
++ * @max_sample_us:	Maximum resulting sampling interval in microseconds.
++ *
++ * DAMON automatically tunes &damon_attrs->sample_interval and
++ * &damon_attrs->aggr_interval aiming the ratio in bp (1/10,000) of access
++ * check samples that shown positive result (was accessed) to total samples
++ * within @aggrs aggregations be same to @samples_bp.  The logic increases
++ * &damon_attrs->aggr_interval and &damon_attrs->sampling_interval in same
++ * ratio if the current positive access samples ratio is lower than the target
++ * for each @aggrs aggregations, and vice versa.
++ *
++ * If @aggrs is zero, the tuning is disabled and hence this struct is ignored.
++ */
++struct damon_intervals_goal {
++	unsigned long samples_bp;
++	unsigned long aggrs;
++	unsigned long min_sample_us;
++	unsigned long max_sample_us;
++};
++
+ /**
+  * struct damon_attrs - Monitoring attributes for accuracy/overhead control.
+  *
+  * @sample_interval:		The time between access samplings.
+  * @aggr_interval:		The time between monitor results aggregations.
+  * @ops_update_interval:	The time between monitoring operations updates.
++ * @intervals_goal:		Intervals auto-tuning goal.
+  * @min_nr_regions:		The minimum number of adaptive monitoring
+  *				regions.
+  * @max_nr_regions:		The maximum number of adaptive monitoring
+@@ -676,6 +702,7 @@ struct damon_attrs {
+ 	unsigned long sample_interval;
+ 	unsigned long aggr_interval;
+ 	unsigned long ops_update_interval;
++	struct damon_intervals_goal intervals_goal;
+ 	unsigned long min_nr_regions;
+ 	unsigned long max_nr_regions;
+ };
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index 38f545fea585..2fad800271a4 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -614,6 +614,25 @@ static void damon_update_monitoring_results(struct damon_ctx *ctx,
+ 					r, old_attrs, new_attrs);
+ }
+ 
++/*
++ * damon_valid_intervals_goal() - return if the intervals goal of @attrs is
++ * valid.
++ */
++static bool damon_valid_intervals_goal(struct damon_attrs *attrs)
++{
++	struct damon_intervals_goal *goal = &attrs->intervals_goal;
++
++	/* tuning is disabled */
++	if (!goal->aggrs)
++		return true;
++	if (goal->min_sample_us > goal->max_sample_us)
++		return false;
++	if (attrs->sample_interval < goal->min_sample_us ||
++			goal->max_sample_us < attrs->sample_interval)
++		return false;
++	return true;
++}
++
+ /**
+  * damon_set_attrs() - Set attributes for the monitoring.
+  * @ctx:		monitoring context
+@@ -634,6 +653,9 @@ int damon_set_attrs(struct damon_ctx *ctx, struct damon_attrs *attrs)
+ 		attrs->sample_interval : 1;
+ 	struct damos *s;
+ 
++	if (!damon_valid_intervals_goal(attrs))
++		return -EINVAL;
++
+ 	if (attrs->min_nr_regions < 3)
+ 		return -EINVAL;
+ 	if (attrs->min_nr_regions > attrs->max_nr_regions)
 -- 
 2.39.5
