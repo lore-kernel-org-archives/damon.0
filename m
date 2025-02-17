@@ -1,289 +1,229 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+Received: from NAM04-DM6-obe.outbound.protection.outlook.com (mail-dm6nam04on2086.outbound.protection.outlook.com [40.107.102.86])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62C202153ED
-	for <damon@lists.linux.dev>; Fri, 14 Feb 2025 10:37:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739529474; cv=none; b=CTF9QXSntVmiozmbWxz7fG6EFC9zLUifY78jvU02m26KMDqzczrHF5C40vWEmgEiy71MM3Sb16iYdAsiK9zN6ymu4OK/sDSetpllaaX5KF3FvhT3KxKwpg0ODMuyPhqm/GMDTXnJ5C577zR7c5+0CULa6+2vQ17WakZV+FBVsgk=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739529474; c=relaxed/simple;
-	bh=ZsyjMzGdyJqkrDeCLAABwQTLH7CfEZ7/s8ypCPoBKuA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=IkoWSCrFlyYBi0HbndmrvTmovlV+Na7X8aBPN2sA7GVzS2VW8CW/xfn7WXxwUH/DSVyUyxpBW2bD/bz2+mBVFusrUVYbq3/uL9h4hNzh7m2VXJPtKMEaT+EUPd51zwfT43ko3qtF/VKcyQIcimMiB+QbJyeqhBp+TRpk+bJCZgk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=eykAJ98o; arc=none smtp.client-ip=170.10.129.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAE897DA66
+	for <damon@lists.linux.dev>; Mon, 17 Feb 2025 00:01:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.102.86
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1739750518; cv=fail; b=BdDlvncDUiKLiVJhcNsBw434UYwYI3ok1ShYLkd7P5kNpTPf/lUJIqecYByjvjHGYlSytzdMFMAwDV+m7AnxpdTok2V6AcnZk/x9wyLDyzaS4bURyFqQj8Nn3mIElYK24APj8zN5XStfXPZrIvXa4ZGz+aOMWKkWGxiXfciY1gU=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1739750518; c=relaxed/simple;
+	bh=tRa9X6VgsegyXn4BpzBBSSLRkhyZzM+kruUmOjbeh3w=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=QRx10GqOW1w/II/csDWQpCmWhCJu7YoLXYWaCr86D7HwUXtnIY0IIN4gqmSki06f4UtAm5zqnJIpX1+9CHS+AuU/dW57CZyFgXz8tbE81zJTgHl9XQ5RrA3taVm1c96XnpqRJTtFPIXlpotwCv+++eecTJvDIJX/t4YqtHjEwJ8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=Zo8JhxXz; arc=fail smtp.client-ip=40.107.102.86
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="eykAJ98o"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1739529471;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=v1ELqJmSBEXwSdcynoIWjIw5bhWZWQeX4Q07dCSIZyk=;
-	b=eykAJ98oF3Vxl2aXTAb55Zn8yPpPK4W0YOee/UuXo4qkb/tiIA82DvKSNkxBap37heW5HQ
-	qehXDEdX/2LPu/rOp9UkCRcroEe5RB5D7uW7XGhsLurLKIWlK2VI6VZLlfYSj30dxGMM/9
-	vUsE3CjqbrkW/l/PDyexcOiAPdGilws=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-653-knp4NfVpOdq3UH0DpQsTiw-1; Fri, 14 Feb 2025 05:37:48 -0500
-X-MC-Unique: knp4NfVpOdq3UH0DpQsTiw-1
-X-Mimecast-MFC-AGG-ID: knp4NfVpOdq3UH0DpQsTiw_1739529467
-Received: by mail-wr1-f70.google.com with SMTP id ffacd0b85a97d-38f31e96292so19273f8f.3
-        for <damon@lists.linux.dev>; Fri, 14 Feb 2025 02:37:48 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739529467; x=1740134267;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:from:references:cc:to:subject:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=v1ELqJmSBEXwSdcynoIWjIw5bhWZWQeX4Q07dCSIZyk=;
-        b=h22Nug+2kNMoofAfdIL6uVipJV8xkExF1N5/xdP2kll8sKSdgQmO1tDC/Z5bvLO7hw
-         3YBuIzfYOFTI2qWKfy7/CuoTVt8micNyN9if6iStX2HCnkE7tabOC4Auxic719QQ8okI
-         /rzqYwrKTRxSp/5jQCeyZD7peJlHD3Ty0P7lOMS5i850/nvsnZwKpwNQtD0C4WEqghoZ
-         x7AlrS/PWMc2te6Q8IQUBQnQBw7Vcj6TN7D0bzwYxo1/ZlJC4eTCr8EsBSw1ZIt1gMsm
-         BLcPX9oOs/zquZYuYLj/PxLESLuXEuxfj5+dkFDmwLN7Q1E2ueP0eFlEipzVSb4/ebZo
-         6uVQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVLwa2zKuTqDt9IIw9hfwyNp1P5Dzg7+Xt9js6zVzkOnTOBPhPXR7ufZZ/CKqjIwBD1m2Nngg==@lists.linux.dev
-X-Gm-Message-State: AOJu0Yzs/hCx2c0lXoc55jVL6I35zC4p4y1M/ZC+jSeycI7SW8vZi5TX
-	Skx3/GNANIZEs0mKXYTpM+oqwEkk0IQc7EuMKSzl+XcCC4seh6hITbp0YDByQFkL7ipBWAQRnon
-	hzs8NZLwFNM1Zek3zIKy40ciz7vdLynF3RNIWD0aP156FYYeHZDhf
-X-Gm-Gg: ASbGncuawkZ5GUetUSVlE2jTACfFSIqJxn0/rs13Mlem0ecbtErmnxxqgl7Pi+JMUHb
-	W+jeWluirBryXwMUWqN3v/WhXWLvt9TWOyXSrFLayk/v+WwTRIEC6GprZCSHoZJzZdBluQjGmpc
-	nGYPOvZyy6mL9fweu9Fk4WIEM61R7u3JNmBdcqFqCXnRqcJwqZAeQpusSWsG4rQKBF8TKui6XZN
-	zWrrXlPzN1du6509UGGFolczwaoGWmuWC8UWr/epy43vhSMDefqcNMDeh4DJwJfh22o7RqawqmO
-	EAr2RlOkADOyn6pVdwyzz5uFtRYKJykz8bVMBu5V83HM3mfuqw0PwtC+XQS+vi24UfWzeaJj80q
-	1XPLQsBHKX5AEukGXM9ayCWlqAD5x0g==
-X-Received: by 2002:a05:6000:18a8:b0:38f:2413:2622 with SMTP id ffacd0b85a97d-38f24132bb7mr9218042f8f.47.1739529466890;
-        Fri, 14 Feb 2025 02:37:46 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IH4ObsXSu+uaHBcCGCpcGtfSdrcoS3HhFa3rCOolNFcAYKhUug8deHKDOqr2tqK+ZhCEHYNXw==
-X-Received: by 2002:a05:6000:18a8:b0:38f:2413:2622 with SMTP id ffacd0b85a97d-38f24132bb7mr9218011f8f.47.1739529466461;
-        Fri, 14 Feb 2025 02:37:46 -0800 (PST)
-Received: from ?IPV6:2003:cb:c709:a00:7d7d:3665:5fe4:7127? (p200300cbc7090a007d7d36655fe47127.dip0.t-ipconnect.de. [2003:cb:c709:a00:7d7d:3665:5fe4:7127])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43961e07252sm39337615e9.14.2025.02.14.02.37.43
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 14 Feb 2025 02:37:45 -0800 (PST)
-Message-ID: <1404d6a3-c27d-4d51-8e3a-e10dc040dc6e@redhat.com>
-Date: Fri, 14 Feb 2025 11:37:42 +0100
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="Zo8JhxXz"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=JCFDQj2PoqHbuq7gYFQiW2xBopsbz5VuoBZYGL4K5bSam2DWXYub0Kbyjp6gOQWHzj7da1nHPAZVneCsxozah9SwoEOtGO+ezUZCY6Ph5c4ADwNJX4JyfgxxRRVSS2XPTDN+k9KI17xbqztHWFauRpsoKXY1O1cUpqmo5IsOG5eODQsH0BKtBZu5Xj3H/4sJ6or60TxcJaMA/ouo3p4nGFx7fLO5BEhTx0nxrcPoQ9fXjfeP2ArhLykxFGKTmkRUZ1RttnJdCTsGcpZE7ukxK71cXWZX4FwvyQARZBAaoA3A8DyEtMLHk0mEKIwdA3K4sIUdvz50kcjPfPDDUYqsxQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=eDK0+wxFsGa0EJGThWLTJe9YyKta5PufmyN0g9Qklfw=;
+ b=YLgyJYlQKNcA2SuVmumhqz6h2l0br4gtjxR7Fnt7VCjZTZePRS7PQOwKP4eSfXV3zlyOvIgKoZmuzUu/QwsttL1u/1NUyph1KgB2Y+SLO3i1T4R5xyhH1A1wM3Ruy/QLcrds+8gFeO52jl+1rbfOVmMBWyiMdTcm0D/kypy/WOpFlK8Jmla0qw4FxbIUN9ZVqHscWqBtOSgm/jmeAPUOaiRaHuPvu1ERFSjSqGFKQIlJfTrgwcaNolhQs79yZSIrbiHJPJlCMw3Dyw8O1kqzuXErAhXlJKG25tA+UW1rRjj9FXwGqYaA8+k4R1aPrhYfJN+WftfB0cqA8I/Nah48Bw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=eDK0+wxFsGa0EJGThWLTJe9YyKta5PufmyN0g9Qklfw=;
+ b=Zo8JhxXzR5HqCrQG2oTZT0KuGU59iidfsHFzLDowr26PV6hUaoPUqjAI6iuNU4hsfbson8fWwKTq1tnIfUCgkz3dw8xMjP6ZFchNHsM6XPFb8M/py9cdVr1UwAQYjWICgJ53ZN9mOcFJj/edH55C5VzpzXpkF/iL+IIUSWGZ3wE+9vaKi42ecKFM8Dsz2wnocXQw8DLJaOWa+YfBYMcjdm+NrDIixPfJ/A+t2vdtps/qDUqSXUbQhkG3LaNUdLsTzGMGN0ofLfqRl91bQe52QxwIonDMp0uFigNH3MIX0PaUIfcW6W5n1063JGdD6I9uPtUP5gf1zJ9+VEYVq7UGXQ==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from DS0PR12MB7726.namprd12.prod.outlook.com (2603:10b6:8:130::6) by
+ MW4PR12MB5604.namprd12.prod.outlook.com (2603:10b6:303:18d::17) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8445.16; Mon, 17 Feb
+ 2025 00:01:52 +0000
+Received: from DS0PR12MB7726.namprd12.prod.outlook.com
+ ([fe80::953f:2f80:90c5:67fe]) by DS0PR12MB7726.namprd12.prod.outlook.com
+ ([fe80::953f:2f80:90c5:67fe%7]) with mapi id 15.20.8445.017; Mon, 17 Feb 2025
+ 00:01:52 +0000
+Date: Mon, 17 Feb 2025 11:01:47 +1100
+From: Alistair Popple <apopple@nvidia.com>
+To: David Hildenbrand <david@redhat.com>
+Cc: Andrew Morton <akpm@linux-foundation.org>, 
+	linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+	linux-mm@kvack.org, nouveau@lists.freedesktop.org, 
+	linux-trace-kernel@vger.kernel.org, linux-perf-users@vger.kernel.org, damon@lists.linux.dev, 
+	=?utf-8?B?SsOpcsO0bWU=?= Glisse <jglisse@redhat.com>, Jonathan Corbet <corbet@lwn.net>, Alex Shi <alexs@kernel.org>, 
+	Yanteng Si <si.yanteng@linux.dev>, Karol Herbst <kherbst@redhat.com>, Lyude Paul <lyude@redhat.com>, 
+	Danilo Krummrich <dakr@kernel.org>, David Airlie <airlied@gmail.com>, 
+	Simona Vetter <simona@ffwll.ch>, Masami Hiramatsu <mhiramat@kernel.org>, 
+	Oleg Nesterov <oleg@redhat.com>, Peter Zijlstra <peterz@infradead.org>, 
+	SeongJae Park <sj@kernel.org>, "Liam R. Howlett" <Liam.Howlett@oracle.com>, 
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>, Vlastimil Babka <vbabka@suse.cz>, Jann Horn <jannh@google.com>, 
+	Pasha Tatashin <pasha.tatashin@soleen.com>, Peter Xu <peterx@redhat.com>, Jason Gunthorpe <jgg@nvidia.com>, 
+	Simona Vetter <simona.vetter@ffwll.ch>
+Subject: Re: [PATCH v2 03/17] mm/rmap: convert make_device_exclusive_range()
+ to make_device_exclusive()
+Message-ID: <vclmxoorivzhamd4smaaeyamdeangj3aqlbl27muzxuljasdrg@t4jj77rmiozu>
+References: <20250210193801.781278-1-david@redhat.com>
+ <20250210193801.781278-4-david@redhat.com>
+ <20250210210001.5dc68b38eb1bfa44d0fd78f6@linux-foundation.org>
+ <48fd75b9-696e-402c-95bd-55f2f0e24dfc@redhat.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <48fd75b9-696e-402c-95bd-55f2f0e24dfc@redhat.com>
+X-ClientProxiedBy: SY0PR01CA0009.ausprd01.prod.outlook.com
+ (2603:10c6:10:1bb::10) To DS0PR12MB7726.namprd12.prod.outlook.com
+ (2603:10b6:8:130::6)
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 00/17] mm: fixes for device-exclusive entries (hmm)
-To: Alistair Popple <apopple@nvidia.com>
-Cc: linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
- dri-devel@lists.freedesktop.org, linux-mm@kvack.org,
- nouveau@lists.freedesktop.org, linux-trace-kernel@vger.kernel.org,
- linux-perf-users@vger.kernel.org, damon@lists.linux.dev,
- Andrew Morton <akpm@linux-foundation.org>, =?UTF-8?B?SsOpcsO0bWUgR2xpc3Nl?=
- <jglisse@redhat.com>, Jonathan Corbet <corbet@lwn.net>,
- Alex Shi <alexs@kernel.org>, Yanteng Si <si.yanteng@linux.dev>,
- Karol Herbst <kherbst@redhat.com>, Lyude Paul <lyude@redhat.com>,
- Danilo Krummrich <dakr@kernel.org>, David Airlie <airlied@gmail.com>,
- Simona Vetter <simona@ffwll.ch>, Masami Hiramatsu <mhiramat@kernel.org>,
- Oleg Nesterov <oleg@redhat.com>, Peter Zijlstra <peterz@infradead.org>,
- SeongJae Park <sj@kernel.org>, "Liam R. Howlett" <Liam.Howlett@oracle.com>,
- Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
- Vlastimil Babka <vbabka@suse.cz>, Jann Horn <jannh@google.com>,
- Pasha Tatashin <pasha.tatashin@soleen.com>, Peter Xu <peterx@redhat.com>,
- Jason Gunthorpe <jgg@nvidia.com>
-References: <20250210193801.781278-1-david@redhat.com>
- <6sejv2hauce3il5lq6sw53xmjjjglxkhz5copm62oryga6jioi@u66wl2nc3hoy>
- <039b2e48-1d7c-48dc-b832-24db12af216a@redhat.com>
- <pqxzfmb2ydjgplkiswb5oxtbvpxyzmfroh2fbeqeuywklmrw6i@jbj73xssektr>
-From: David Hildenbrand <david@redhat.com>
-Autocrypt: addr=david@redhat.com; keydata=
- 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
- WNyWQQ==
-Organization: Red Hat
-In-Reply-To: <pqxzfmb2ydjgplkiswb5oxtbvpxyzmfroh2fbeqeuywklmrw6i@jbj73xssektr>
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: vuYdD2UyjYCa8uXf_PvaLgjgs7WpqZzg1JZ_GrzeVag_1739529467
-X-Mimecast-Originator: redhat.com
-Content-Language: en-US
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DS0PR12MB7726:EE_|MW4PR12MB5604:EE_
+X-MS-Office365-Filtering-Correlation-Id: 4e876eab-77e5-47b4-6f89-08dd4ee64863
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|1800799024|376014|7416014|366016|7053199007;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?Z61QbeB29V4CFrLt5RxkgBOFYdgujTqOdtLAmTxbDmxQUOqDvnx7wj8yPISQ?=
+ =?us-ascii?Q?zcz/bE4XjP8fZSFKi/+6wFY9DXTviz/q/qRKhQicXRlhEXB8CZKK66/eclJX?=
+ =?us-ascii?Q?LkwAyWNbwHIWLpf37I8gd9IvDBwbf7kir6ljIZhGWuz4PrG7xoehE+X2QTPu?=
+ =?us-ascii?Q?2CfB8UDcBzTVh3TRzGfLSUzx8TuGNT8WMEtgt1j19+04wOQawuQOm+BAmxpn?=
+ =?us-ascii?Q?Yr31loZ8Stwfz8T1gsExx8BvUrp5bRszsQQF1ANkb0+UFZzeF655aR5i97Q/?=
+ =?us-ascii?Q?UsZauI4wUTze39WM6RkVX7sAYdfY2s1BbDXwOBPERCEe+qk70CqgzPutVpMp?=
+ =?us-ascii?Q?QHaeSzrrAf6c+OYfnQ452BMSbv6wLH4MxamdETFFutYtOQNnMQ8oNfOU5QGh?=
+ =?us-ascii?Q?POM2o3MeUe5NglGprrlZ+P3+adfV8jnFYTiaVqCHkIlO/aevlh2zSqFXJfcr?=
+ =?us-ascii?Q?2P8ghYDTARAGrRaSTZShes5vv6twJ33QcKPLBjqlIwFllIkkT28FOBjug4H8?=
+ =?us-ascii?Q?N46d1BimcsxwU/b/0/nT0kz6kCc/k9ImIHxN2/gc+1H2bI9/GCTa3UxaF03E?=
+ =?us-ascii?Q?cYdVFgNgZ2KA7F2k6f8K4VfU44kLWsTIMaj3/oQznMi57atl4RRMoYOk5W+r?=
+ =?us-ascii?Q?LkH4T+2IDQkas4Dw1QChaXdPFnWWJPE2vStPmejKmtAwgGuT7oRrukbes6je?=
+ =?us-ascii?Q?Wux6Ep0gahyS3K7RWNl6jmlkLcKokbQ07GpRlPnpeeIHupz7vGHTTv2bDA1b?=
+ =?us-ascii?Q?oQgtHQx7eD09aKhDupHxvMP8sDJP7VMkIknkT4Hhx77GU4UfsRrOvvjPQc0E?=
+ =?us-ascii?Q?fdsFR/B2lUUOOaxya3ueLEfAObmq9Z+uuME8xWz0j3fXWVbqFKtwWtJgR2Cy?=
+ =?us-ascii?Q?9RgN6qh3mYUaztlBbFZCZKUqd7FEEIZEunJG3lFtsMSaIEwCKSQ+V1B0NaZc?=
+ =?us-ascii?Q?2j0dsmzomW+I12r3DJ3xDdYdSEtxf3MedZUyet3uY/xnAACkXTFZcSYh0/IK?=
+ =?us-ascii?Q?M2dXuGiX31eQXP7tI5EvCWz9aSp7VyZlDvqPUyx5f1CZ8VvLSPVsuFJoN7oU?=
+ =?us-ascii?Q?NL7lC4q1z7k5AJ4d8EQi+9EC8AQQPL9y9Vdj2ywYtmQZT2CuKWTjlOSetHFC?=
+ =?us-ascii?Q?sWBfzHG6jhQ7X+G0BqTj7yT+U5YiMDGesfZaX+Uh0JMtn0VWBQO1Oy5XdfWs?=
+ =?us-ascii?Q?PUHpFb8V+lifodHiUiHbM6Oej2bw7r/P8qsJNj84ABCuO+uXLOCRigyhgL2W?=
+ =?us-ascii?Q?OYh4ubVkBLwAO6BCiZeMeuKaOM8XyCEB9iNPOekK3mJFquMD2WTsBECInsv+?=
+ =?us-ascii?Q?llCVVYgBfxkxX1C+zCcKGREJpW6jnBEAf1wLG1zaZ95Ug28eOSOGD3kPmZTR?=
+ =?us-ascii?Q?FPA/Fzm0tMqSa+ZdMhlDYayjYN1Y?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DS0PR12MB7726.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(7416014)(366016)(7053199007);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?ezYWmCw6oJO78Vnd42KLeFwf8g+ju3tSFJOOsXmU5xuZXYxdf8DvMD2pA3vf?=
+ =?us-ascii?Q?bP+fM8KypRK19jO2IkWnfRYaZzUIXKGyw6MpFCdCSxXxBW0ymfuZouQf27B4?=
+ =?us-ascii?Q?2a1EXJHksSlvVlqHBPzq6uKRyRMaV9GAj9+an/PlC63gRfoTUqljquVD/DHL?=
+ =?us-ascii?Q?GqX9U5szGUw9RA3htwxcb+UmngT1bmHPYUJTAb4JmPhIPxw1VONLNv/SnVmZ?=
+ =?us-ascii?Q?2mbgs5Ll8o5RYriPALxHIRA0WLryyRK2uv/ruv09tSdVLUXx05HgYpeoTrv2?=
+ =?us-ascii?Q?GIAoVyRRI5p5dGgm46lbOz8usD7tj8SuHVFyMtjldnTNkeILHNZfI7Xs9oK2?=
+ =?us-ascii?Q?5V8OogBuni95M+XQc+jUGEHmcEoSTd6ndC31mYTgwdWfQSFV5rmIDhErua0q?=
+ =?us-ascii?Q?wSTE2VAQSsX/LcpIQ6aw2T0Y+xLJxDw1cjzOR+pauFwNvYR8CKYbY2bZ/pUM?=
+ =?us-ascii?Q?xdD6FDg/LVLvfXMm7xgTOyHANVOvIpSloKenD2Q8WbPh3S6Gow0xVa99k0Eo?=
+ =?us-ascii?Q?gm4ryx6ESjIKzR4ZmVKiR17L8Tuqwo5qJz1n6RjWSUtS6JGZxvMHXIMuxeED?=
+ =?us-ascii?Q?ha2ni6SPUMCq7WMTI+rkwgpIWmZdgOEXWgKB9L+T66NrLXg2yAm8nWKamRRP?=
+ =?us-ascii?Q?4fSKUN9mGXB0h3gubFcYfVqjB6+vigtzwrhc8s98r5Mlsu/EqIrt//CJ/Ftl?=
+ =?us-ascii?Q?iyRGx8AqPcqXCu9rvNdjtSbhomGwT7KbIv3Hym2HftsKdocuixLb+SOiGCQK?=
+ =?us-ascii?Q?0WegO8cYy9Z+5aAag3aiBjvFo3vLJPr1heXfGAr6BtVEkn8DGh7JA3asszbI?=
+ =?us-ascii?Q?JtoHZlv+TgI75mv3Bk28dZzdBqdNuzYaipbO/bNQZvqC5qTWLxtHh0edQ6Kk?=
+ =?us-ascii?Q?SU63/XNYYrKsFEEdwJbEwNDE32/ob797lLLfpb9C/9wybmIcp7Czg2AQrH4+?=
+ =?us-ascii?Q?1JQV/WcgVcK6QbKQWpAF7mwGtY3c3JsvJ1w6DDCL0Bfxcfi5UlYmgnELI/kx?=
+ =?us-ascii?Q?88z6PtOWfAkKRv9BiMLWNBGzworAxwrfwaBSnsR5Wr8c+AjJMGffgz78yG8l?=
+ =?us-ascii?Q?NTQwCfjJuBFXFNgiP/adm6HYgpe8rq9scZuExs9I1xShgD0mbuTf43d06nMF?=
+ =?us-ascii?Q?fabwwDg1tbuIC99xzLH60tHI8D0Zp6pbQH1ZtRZN8a8lU83XH6cRC9Cjp4Ol?=
+ =?us-ascii?Q?uolHwyO1pe+r1QTka4Ko8UcKYpnK4hbtMAcO1cmqwdNEyleQFDFq/sUh8vKz?=
+ =?us-ascii?Q?zspOFPHlzIoN8S3rI7gjVRr1Fu++0BOsV55R3XiQLA+q+3VEFmdkBH4q/CMq?=
+ =?us-ascii?Q?3ia/okC2Q+zaPr67ooX8Nih0xzO8j9IWk5H2fWviIuHzulsNSS4dCCJpI1u8?=
+ =?us-ascii?Q?QukG+0NgSCsbNKt0KFGn1KaLq2o7aztOQGm6MrPDGSAZ4Lk8m8/KiX58oFZ/?=
+ =?us-ascii?Q?aH/KSEWeSmmzttl08Omb/s3Izxa1kBZC3+7JKJRvnOCw4viYlRBMbPr8tKaQ?=
+ =?us-ascii?Q?h27Gl0KcBxknMLH4TnsLrRZYJXmTyKsTivG9BKoKD6gPtQJinXK1O4zGyPKA?=
+ =?us-ascii?Q?Gm/A0OVM+i4gErkHQpEyuIxsrgy9+GswvQg1cppq?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 4e876eab-77e5-47b4-6f89-08dd4ee64863
+X-MS-Exchange-CrossTenant-AuthSource: DS0PR12MB7726.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Feb 2025 00:01:52.3731
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: ET7Vdfw3oHU4t19ek+CEXdMKA8blov1w6MzvNuXuCGyAKTzqaOcFP95y7cnYRBgjyt/Jaa09QoTb2ZVWW57keA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW4PR12MB5604
 
-On 14.02.25 02:25, Alistair Popple wrote:
-> On Thu, Feb 13, 2025 at 12:15:58PM +0100, David Hildenbrand wrote:
->> On 13.02.25 12:03, Alistair Popple wrote:
->>> On Mon, Feb 10, 2025 at 08:37:42PM +0100, David Hildenbrand wrote:
->>>> Against mm-hotfixes-stable for now.
->>>>
->>>> Discussing the PageTail() call in make_device_exclusive_range() with
->>>> Willy, I recently discovered [1] that device-exclusive handling does
->>>> not properly work with THP, making the hmm-tests selftests fail if THPs
->>>> are enabled on the system.
->>>>
->>>> Looking into more details, I found that hugetlb is not properly fenced,
->>>> and I realized that something that was bugging me for longer -- how
->>>> device-exclusive entries interact with mapcounts -- completely breaks
->>>> migration/swapout/split/hwpoison handling of these folios while they have
->>>> device-exclusive PTEs.
->>>>
->>>> The program below can be used to allocate 1 GiB worth of pages and
->>>> making them device-exclusive on a kernel with CONFIG_TEST_HMM.
->>>>
->>>> Once they are device-exclusive, these folios cannot get swapped out
->>>> (proc$pid/smaps_rollup will always indicate 1 GiB RSS no matter how
->>>> much one forces memory reclaim), and when having a memory block onlined
->>>> to ZONE_MOVABLE, trying to offline it will loop forever and complain about
->>>> failed migration of a page that should be movable.
->>>>
->>>> # echo offline > /sys/devices/system/memory/memory136/state
->>>> # echo online_movable > /sys/devices/system/memory/memory136/state
->>>> # ./hmm-swap &
->>>> ... wait until everything is device-exclusive
->>>> # echo offline > /sys/devices/system/memory/memory136/state
->>>> [  285.193431][T14882] page: refcount:2 mapcount:0 mapping:0000000000000000
->>>>     index:0x7f20671f7 pfn:0x442b6a
->>>> [  285.196618][T14882] memcg:ffff888179298000
->>>> [  285.198085][T14882] anon flags: 0x5fff0000002091c(referenced|uptodate|
->>>>     dirty|active|owner_2|swapbacked|node=1|zone=3|lastcpupid=0x7ff)
->>>> [  285.201734][T14882] raw: ...
->>>> [  285.204464][T14882] raw: ...
->>>> [  285.207196][T14882] page dumped because: migration failure
->>>> [  285.209072][T14882] page_owner tracks the page as allocated
->>>> [  285.210915][T14882] page last allocated via order 0, migratetype
->>>>     Movable, gfp_mask 0x140dca(GFP_HIGHUSER_MOVABLE|__GFP_COMP|__GFP_ZERO),
->>>>     id 14926, tgid 14926 (hmm-swap), ts 254506295376, free_ts 227402023774
->>>> [  285.216765][T14882]  post_alloc_hook+0x197/0x1b0
->>>> [  285.218874][T14882]  get_page_from_freelist+0x76e/0x3280
->>>> [  285.220864][T14882]  __alloc_frozen_pages_noprof+0x38e/0x2740
->>>> [  285.223302][T14882]  alloc_pages_mpol+0x1fc/0x540
->>>> [  285.225130][T14882]  folio_alloc_mpol_noprof+0x36/0x340
->>>> [  285.227222][T14882]  vma_alloc_folio_noprof+0xee/0x1a0
->>>> [  285.229074][T14882]  __handle_mm_fault+0x2b38/0x56a0
->>>> [  285.230822][T14882]  handle_mm_fault+0x368/0x9f0
->>>> ...
->>>>
->>>> This series fixes all issues I found so far. There is no easy way to fix
->>>> without a bigger rework/cleanup. I have a bunch of cleanups on top (some
->>>> previous sent, some the result of the discussion in v1) that I will send
->>>> out separately once this landed and I get to it.
->>>> I wish we could just use some special present PROT_NONE PTEs instead of
+On Tue, Feb 11, 2025 at 09:33:54AM +0100, David Hildenbrand wrote:
+> On 11.02.25 06:00, Andrew Morton wrote:
+> > On Mon, 10 Feb 2025 20:37:45 +0100 David Hildenbrand <david@redhat.com> wrote:
+> > 
+> > > The single "real" user in the tree of make_device_exclusive_range() always
+> > > requests making only a single address exclusive. The current implementation
+> > > is hard to fix for properly supporting anonymous THP / large folios and
+> > > for avoiding messing with rmap walks in weird ways.
+> > > 
+> > > So let's always process a single address/page and return folio + page to
+> > > minimize page -> folio lookups. This is a preparation for further
+> > > changes.
+> > > 
+> > > Reject any non-anonymous or hugetlb folios early, directly after GUP.
+> > > 
+> > > While at it, extend the documentation of make_device_exclusive() to
+> > > clarify some things.
+> > 
+> > x86_64 allmodconfig:
+> > 
+> > drivers/gpu/drm/nouveau/nouveau_svm.c: In function 'nouveau_atomic_range_fault':
+> > drivers/gpu/drm/nouveau/nouveau_svm.c:612:68: error: 'folio' undeclared (first use in this function)
+> >    612 |                 page = make_device_exclusive(mm, start, drm->dev, &folio);
+> >        |                                                                    ^~~~~
+> > drivers/gpu/drm/nouveau/nouveau_svm.c:612:68: note: each undeclared identifier is reported only once for each function it appears in
 > 
-> Yeah, that was my initial instinct when I first investigated this. As you point
-> out a lack of spare PTE bits made it hard/impossible. Of course I'm about to
-> give you all one back, maybe I should keep it :) I'm only kidding though - I'm
-> sure there's more interesting things to spend it on.
+> Ah! Because I was carrying on the same branch SVM fixes [1] that are
+> getting surprisingly little attention so far.
 
-Yes. And I think it could actually be valuable to have the option for 
-more fake-prot-none things.
+I believe this has been picked up in drm-misc-fixes now:
 
-For example, right now we cannot really distinguish NUMA-hinting 
-prot-none from ordinary prot-none without guessing based on some VMA flags.
-
-One could implement NUMA-hinting using a PFN swap entry in an 
-arch-independent way I guess.
-
-So there are pros and cons to it. The biggest con is, that while RMAP 
-can now handle it, other page table walkers mostly skip these entries.
+https://lore.kernel.org/dri-devel/Z69eloo_7LM6NneO@cassiopeiae/
 
 > 
->>>
->>> First off David thanks for finding and fixing these issues. If you have further
->>> clean-ups in mind that you need help with please let me know as I'd be happy
->>> to help.
->>
->> Sure! I have some cleanups TBD as result of the previous discussion, but
->> nothing bigger so far.
->>
->> (removing the folio lock could be considered bigger, if we want to go down
->> that path)
->>
->>>
->>>> these (non-present, non-none) fake-swap entries; but that just results in
->>>> the same problem we keep having (lack of spare PTE bits), and staring at
->>>> other similar fake-swap entries, that ship has sailed.
->>>>
->>>> With this series, make_device_exclusive() doesn't actually belong into
->>>> mm/rmap.c anymore, but I'll leave moving that for another day.
->>>>
->>>> I only tested this series with the hmm-tests selftests due to lack of HW,
->>>> so I'd appreciate some testing, especially if the interaction between
->>>> two GPUs wanting a device-exclusive entry works as expected.
->>>
->>> I'm still reviewing the series but so far testing on my single GPU system
->>> appears to be working as expected. I will try and fire up a dual GPU system
->>> tomorrow and test it there as well.
->>
->> Great, thanks a bunch for testing!
->>
->> Out of interest: does the nvidia driver make use of this interface as well,
->> and are you testing with that or with the nouveau driver? I saw some reports
->> that nvidia at least checks for it [1] when building the module:
 > 
-> Both. I have tested Nouveau with the Mesa OpenCL stack and a simple stress test
-> that just thrashes atomic accesses between CPU and GPU and a similar test for
-> the nvidia driver.
+> The following sorts it out for now:
 > 
-> In practice the nvidia driver probably doesn't use this that often as it
-> more aggressively migrates data but it does use this as a fallback. Also it's
-> possible for users to force residency on the CPU in which case this is used,
-> which is what the test does.
-
-Cool, thanks! (so even though nouveau is not enabled in RHEL, we'd 
-effectively be using that functionality in RHEL kernels using the nvidia 
-driver)
-
+> From 337c68bf24af59f36477be11ea6ef7c7ce9aa8ae Mon Sep 17 00:00:00 2001
+> From: David Hildenbrand <david@redhat.com>
+> Date: Tue, 11 Feb 2025 09:33:04 +0100
+> Subject: [PATCH] merge
 > 
-> Anyway I have just finished testing on a multi-GPU setup so please feel free to
-> add for the series:
+> Signed-off-by: David Hildenbrand <david@redhat.com>
+> ---
+>  drivers/gpu/drm/nouveau/nouveau_svm.c | 1 +
+>  1 file changed, 1 insertion(+)
 > 
-> Tested-by: Alistair Popple <apopple@nvidia.com>
-
-Thanks a bunch!
-
--- 
-Cheers,
-
-David / dhildenb
-
+> diff --git a/drivers/gpu/drm/nouveau/nouveau_svm.c b/drivers/gpu/drm/nouveau/nouveau_svm.c
+> index 39e3740980bb7..1fed638b9eba8 100644
+> --- a/drivers/gpu/drm/nouveau/nouveau_svm.c
+> +++ b/drivers/gpu/drm/nouveau/nouveau_svm.c
+> @@ -590,6 +590,7 @@ static int nouveau_atomic_range_fault(struct nouveau_svmm *svmm,
+>  	unsigned long timeout =
+>  		jiffies + msecs_to_jiffies(HMM_RANGE_DEFAULT_TIMEOUT);
+>  	struct mm_struct *mm = svmm->notifier.mm;
+> +	struct folio *folio;
+>  	struct page *page;
+>  	unsigned long start = args->p.addr;
+>  	unsigned long notifier_seq;
+> -- 
+> 2.48.1
+> 
+> 
+> I'll resend [1] once this stuff here landed.
+> 
+> Let me know if you want a full resend of this series, thanks.
+> 
+> 
+> [1] https://lkml.kernel.org/r/20250124181524.3584236-1-david@redhat.com
+> 
+> -- 
+> Cheers,
+> 
+> David / dhildenb
+> 
