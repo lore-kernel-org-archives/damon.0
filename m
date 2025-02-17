@@ -1,198 +1,86 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66B59215F50
-	for <damon@lists.linux.dev>; Mon, 17 Feb 2025 09:32:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 122D822F3BA;
+	Mon, 17 Feb 2025 18:23:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739784770; cv=none; b=DyxFII2zXGvYFtA5Besai91bVUwdi6xdeLVApa6KEvyt3/0uml3Ioaz/UP/5Yi5tHWPsf5NkFQ97WjV5wudOaeJ19l4j9fB7UudJMrEsUuUiUP1FqOead8Rc2QCo3ZND9a6Sy4a2QeANn4eT7O+avFGhXK29FA7wPss0fUHtn1Y=
+	t=1739816589; cv=none; b=uHA6keqx+S2zD7O8j7OdbwFV3pIAA3+g/8SVbGgKcz4Bk0WWyGuDRAtXECQfR+zIiCX5Eovlz754V1Tfdc/22slXSj64dO4QK8sZ9WbABUFB1AIGb+F9+0ANf27J52BGEtiXoFd5joXxp8l6RNsyLzJUBRemRCYPoUGATh81Vkw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739784770; c=relaxed/simple;
-	bh=C18oNuSiRM+TIpqOyHblP4q4/wiZKl1/Sm7Ge/iJ9oU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=B4n8Q3fR6vt6oKdfHUsmMic9MEVqsvjkh12Y9cgW8p7oebxlPSI0ny1HONbPEs/Ovf7C6BST8mdgdftUJtCPUmAETad8pulRJikt1FtjXnfRJaS+evLJJhsQ9CzDD6gzhduoaTsCnKkQ6A/5juZU6Xxn1SKP5l3VrDBOEMrQSGI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=TiRRxlR/; arc=none smtp.client-ip=170.10.133.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	s=arc-20240116; t=1739816589; c=relaxed/simple;
+	bh=n7g0gJyMQcouAhbIJm6xczE9AEtKmUwr5Noo4sba+Eo=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=p8u1YIhE4dny7vEYP7lw9kXBxkJtmzkhKqihKtBRgs6/+vhoa7SvZTWym9vnSOmoXe5JOanR502iZVgZykwqBvvCx7i4bsuD6u6sOTWMEFHokjFaCuh617G3iu27F8sAtHI3ipBaN+gjyxok94R4eWCfxE2TdGErTfWgPWKSgZQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LLu68NYN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="TiRRxlR/"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1739784767;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=Eeb7nv1cNhGbfxr+l0PpfHS4x7aSgl8Mgbc1lpE/bK0=;
-	b=TiRRxlR/6a/m9YJepzkTVOSgQ0gjqB3NkDKx+nKAnyGlubIM8RCBSNc8uMJC0TgoM+Bgjz
-	gPe8mBNhLX50JhHA2mq8ClIlIXV8jhzhlu4LrU0IBsyg1fePkCDw1cjfcvR6pKS3HDFCgz
-	/Ey8UB7oIQS7gI09r74LXGVm3niTzrw=
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-630-gsfpoBHyN0StC0XwYDD0jw-1; Mon, 17 Feb 2025 04:32:46 -0500
-X-MC-Unique: gsfpoBHyN0StC0XwYDD0jw-1
-X-Mimecast-MFC-AGG-ID: gsfpoBHyN0StC0XwYDD0jw_1739784765
-Received: by mail-ej1-f72.google.com with SMTP id a640c23a62f3a-ab7d2d60e88so412224266b.1
-        for <damon@lists.linux.dev>; Mon, 17 Feb 2025 01:32:46 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739784765; x=1740389565;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:from:references:cc:to:subject:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=Eeb7nv1cNhGbfxr+l0PpfHS4x7aSgl8Mgbc1lpE/bK0=;
-        b=Lw2N93g/nIX2wTvwaShcwmIosXuPxgIjAbVDMrpQShAFz9fXoefYzx/SfsYjUOAzq9
-         XoiNYeqryMV+cqwdMSvmjl/0zuTkf0JzUqbfLxxfq/n92IlRyCNuGRievmEOgahXlLJM
-         4Ra2RGr8F07MOKUY1OYzVA2UJZZrI1I1oEb0TA9wWlirlO8UEd5pCPc08OfolsiLVVJO
-         0BpGMhzq3YMVLQvOhV6R9JI2gnBLyK1B5ADm092lzkfkPpAYVlD/S1igQHUUR6uWBI4d
-         X0b2JoMLyExTPu1iyVb4e2W7WnKttqZMXPwNP/8NRnWzKVJSZhzWJHsqmX1CDfGE/T7D
-         EEVA==
-X-Forwarded-Encrypted: i=1; AJvYcCV7Rsr5CB0CzsMYVQTXLykbQO5ULpX5g4oqM1QKBPzWBvXB/GprO5AekZhyqDR7BbJBjC22qA==@lists.linux.dev
-X-Gm-Message-State: AOJu0YygjSnq8H404ad0EwNe9I6m7RZRiQuO/aPAt7KXQKmBkUxcmk9Q
-	GFTbEenufcYkxgGUFPPcWA0oIV65YbOGp5IZsxJG5EI8H0jj/g8quW2/FGesTr2T4mHNT0xnM6j
-	2e0jaiMygU/8WGmHBKb1ZgmqyNvw9guYsCG9Qh4bBhc3XlxvSXjJf
-X-Gm-Gg: ASbGnctp8/x59SFE/HPxPFI9dmWIeaVUJXv/VlFjEJbvl8VKeG7d7WMSiQTFZYahr9L
-	/iHt5+DX8vfT6g/5Sy3Ppa1lg1XIrNpC/yH0xKsgZSmOGRv0aTdt3Hdvt06nWo+g5S5Bkyb+E6v
-	ucdIOEZQledJ+P/QOj4Z/t/Q31tjH7ONiMfC2KiGIE/TD+Y2gV/uNMZRHDTDHnbTN0EO46XMi1t
-	08ZPkhrLBhroGNLh4YFjtXLZUEaWeM3emYVqTO0fuC92R+kkH+CzbsYY/z3MreRkQ7QWuPIrLHZ
-	Q4nxsJlMaxqJYnOnkmRPV9o5soGHLl10mKlDgxuc/+eMwOSLXrG7vkNsrvPy4Dar2xRjS0OalC+
-	z8NTxtiZd7gD7iDjdAcL8HlzOGnWWmw==
-X-Received: by 2002:a17:906:31d6:b0:ab7:e943:4c1 with SMTP id a640c23a62f3a-abb7091ab36mr780763866b.11.1739784763487;
-        Mon, 17 Feb 2025 01:32:43 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IH3Wgg/IfmYVp/LsQNMw7j+PPvq4aGzaMQEi/BT3iuWyQBhHI1flKgzEnpyKaqJ/zoXhyrMhQ==
-X-Received: by 2002:a17:906:31d6:b0:ab7:e943:4c1 with SMTP id a640c23a62f3a-abb7091ab36mr780753066b.11.1739784761522;
-        Mon, 17 Feb 2025 01:32:41 -0800 (PST)
-Received: from ?IPV6:2003:cb:c739:900:900f:3c9e:2f7b:5d0a? (p200300cbc7390900900f3c9e2f7b5d0a.dip0.t-ipconnect.de. [2003:cb:c739:900:900f:3c9e:2f7b:5d0a])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aba53376bb3sm864425066b.109.2025.02.17.01.32.39
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 17 Feb 2025 01:32:40 -0800 (PST)
-Message-ID: <76a9a0dc-4d2f-430c-a2be-a2371f3108d7@redhat.com>
-Date: Mon, 17 Feb 2025 10:32:38 +0100
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LLu68NYN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6391CC4CED1;
+	Mon, 17 Feb 2025 18:23:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1739816588;
+	bh=n7g0gJyMQcouAhbIJm6xczE9AEtKmUwr5Noo4sba+Eo=;
+	h=From:To:Cc:Subject:Date:From;
+	b=LLu68NYN496qBbaqRSyGErO6IEO6gRJ4Q926sHunH4ZdV3Mt5L3UM/pSsGOW62oEk
+	 ehACslGrGgnIN1+lWVzjugfZiitQXZre+zEbe6GLY4pbSz5uydItbdAasum2JcQiDf
+	 5efrfPmdyUGzR8gMp/MysHuEVxmi11El5HTY+el8BLYPQI/f1Y2cjZzskSaM3oWgso
+	 g2Q1mCNRVh3SzmO+SXXarxxynkjblP+4o33D2CZDwVkHNWtRd3VNKpcUcjXmLwsP7u
+	 +nK/jO+Hh9Gtq6FeW1iXKTdIhegGjZTrOLCFowunMr+p6QB86RP/JuPe885gYI9DNw
+	 FP+mbNJQtbpnQ==
+From: SeongJae Park <sj@kernel.org>
+To: Andrew Morton <akpm@linux-foundation.org>
+Cc: SeongJae Park <sj@kernel.org>,
+	Shuah Khan <shuah@kernel.org>,
+	damon@lists.linux.dev,
+	kernel-team@meta.com,
+	linux-kernel@vger.kernel.org,
+	linux-kselftest@vger.kernel.org,
+	linux-mm@kvack.org,
+	stable@vger.kernel.org,
+	kernel test robot <oliver.sang@intel.com>
+Subject: [PATCH] selftests/damon/damos_quota_goal: handle minimum quota that cannot be further reduced
+Date: Mon, 17 Feb 2025 10:23:04 -0800
+Message-Id: <20250217182304.45215-1-sj@kernel.org>
+X-Mailer: git-send-email 2.39.5
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 03/17] mm/rmap: convert make_device_exclusive_range()
- to make_device_exclusive()
-To: Alistair Popple <apopple@nvidia.com>
-Cc: Andrew Morton <akpm@linux-foundation.org>, linux-kernel@vger.kernel.org,
- linux-doc@vger.kernel.org, dri-devel@lists.freedesktop.org,
- linux-mm@kvack.org, nouveau@lists.freedesktop.org,
- linux-trace-kernel@vger.kernel.org, linux-perf-users@vger.kernel.org,
- damon@lists.linux.dev, =?UTF-8?B?SsOpcsO0bWUgR2xpc3Nl?=
- <jglisse@redhat.com>, Jonathan Corbet <corbet@lwn.net>,
- Alex Shi <alexs@kernel.org>, Yanteng Si <si.yanteng@linux.dev>,
- Karol Herbst <kherbst@redhat.com>, Lyude Paul <lyude@redhat.com>,
- Danilo Krummrich <dakr@kernel.org>, David Airlie <airlied@gmail.com>,
- Simona Vetter <simona@ffwll.ch>, Masami Hiramatsu <mhiramat@kernel.org>,
- Oleg Nesterov <oleg@redhat.com>, Peter Zijlstra <peterz@infradead.org>,
- SeongJae Park <sj@kernel.org>, "Liam R. Howlett" <Liam.Howlett@oracle.com>,
- Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
- Vlastimil Babka <vbabka@suse.cz>, Jann Horn <jannh@google.com>,
- Pasha Tatashin <pasha.tatashin@soleen.com>, Peter Xu <peterx@redhat.com>,
- Jason Gunthorpe <jgg@nvidia.com>, Simona Vetter <simona.vetter@ffwll.ch>
-References: <20250210193801.781278-1-david@redhat.com>
- <20250210193801.781278-4-david@redhat.com>
- <20250210210001.5dc68b38eb1bfa44d0fd78f6@linux-foundation.org>
- <48fd75b9-696e-402c-95bd-55f2f0e24dfc@redhat.com>
- <vclmxoorivzhamd4smaaeyamdeangj3aqlbl27muzxuljasdrg@t4jj77rmiozu>
-From: David Hildenbrand <david@redhat.com>
-Autocrypt: addr=david@redhat.com; keydata=
- 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
- WNyWQQ==
-Organization: Red Hat
-In-Reply-To: <vclmxoorivzhamd4smaaeyamdeangj3aqlbl27muzxuljasdrg@t4jj77rmiozu>
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: hc4hTYRH7NzPIZAJ5R3uTmE7HhQFpdW8Ro6Jarr4mX8_1739784765
-X-Mimecast-Originator: redhat.com
-Content-Language: en-US
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 17.02.25 01:01, Alistair Popple wrote:
-> On Tue, Feb 11, 2025 at 09:33:54AM +0100, David Hildenbrand wrote:
->> On 11.02.25 06:00, Andrew Morton wrote:
->>> On Mon, 10 Feb 2025 20:37:45 +0100 David Hildenbrand <david@redhat.com> wrote:
->>>
->>>> The single "real" user in the tree of make_device_exclusive_range() always
->>>> requests making only a single address exclusive. The current implementation
->>>> is hard to fix for properly supporting anonymous THP / large folios and
->>>> for avoiding messing with rmap walks in weird ways.
->>>>
->>>> So let's always process a single address/page and return folio + page to
->>>> minimize page -> folio lookups. This is a preparation for further
->>>> changes.
->>>>
->>>> Reject any non-anonymous or hugetlb folios early, directly after GUP.
->>>>
->>>> While at it, extend the documentation of make_device_exclusive() to
->>>> clarify some things.
->>>
->>> x86_64 allmodconfig:
->>>
->>> drivers/gpu/drm/nouveau/nouveau_svm.c: In function 'nouveau_atomic_range_fault':
->>> drivers/gpu/drm/nouveau/nouveau_svm.c:612:68: error: 'folio' undeclared (first use in this function)
->>>     612 |                 page = make_device_exclusive(mm, start, drm->dev, &folio);
->>>         |                                                                    ^~~~~
->>> drivers/gpu/drm/nouveau/nouveau_svm.c:612:68: note: each undeclared identifier is reported only once for each function it appears in
->>
->> Ah! Because I was carrying on the same branch SVM fixes [1] that are
->> getting surprisingly little attention so far.
-> 
-> I believe this has been picked up in drm-misc-fixes now:
-> 
-> https://lore.kernel.org/dri-devel/Z69eloo_7LM6NneO@cassiopeiae/
+damos_quota_goal.py selftest see if DAMOS quota goals tuning feature
+increases or reduces the effective size quota for given score as
+expected.  The tuning feature sets the minimum quota size as one byte,
+so if the effective size quota is already one, we cannot expect it
+further be reduced.  However the test is not aware of the edge case, and
+fails since it shown no expected change of the effective quota.  Handle
+the case by updating the failure logic for no change to see if it was
+the case, and simply skips to next test input.
 
-Yes. Both trees should merge without conflicts. However, we can later 
-get rid of the now-superfluous page_folio() that was required in the drm 
-fix.
+Fixes: f1c07c0a1662b ("selftests/damon: add a test for DAMOS quota goal")
+Cc: <stable@vger.kernel.org> # 6.10.x
+Reported-by: kernel test robot <oliver.sang@intel.com>
+Closes: https://lore.kernel.org/oe-lkp/202502171423.b28a918d-lkp@intel.com
+Signed-off-by: SeongJae Park <sj@kernel.org>
+---
+ tools/testing/selftests/damon/damos_quota_goal.py | 3 +++
+ 1 file changed, 3 insertions(+)
 
+diff --git a/tools/testing/selftests/damon/damos_quota_goal.py b/tools/testing/selftests/damon/damos_quota_goal.py
+index 18246f3b62f7..f76e0412b564 100755
+--- a/tools/testing/selftests/damon/damos_quota_goal.py
++++ b/tools/testing/selftests/damon/damos_quota_goal.py
+@@ -63,6 +63,9 @@ def main():
+             if last_effective_bytes != 0 else -1.0))
+ 
+         if last_effective_bytes == goal.effective_bytes:
++            # effective quota was already minimum that cannot be more reduced
++            if expect_increase is False and last_effective_bytes == 1:
++                continue
+             print('efective bytes not changed: %d' % goal.effective_bytes)
+             exit(1)
+ 
+
+base-commit: 20017459916819f8ae15ca3840e71fbf0ea8354e
 -- 
-Cheers,
-
-David / dhildenb
-
+2.39.5
