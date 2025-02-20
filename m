@@ -1,104 +1,113 @@
-Received: from invmail4.hynix.com (exvmail4.skhynix.com [166.125.252.92])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 22D491E9B2C
-	for <damon@lists.linux.dev>; Thu, 20 Feb 2025 07:45:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=166.125.252.92
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD76F1E2848;
+	Thu, 20 Feb 2025 17:24:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740037566; cv=none; b=kHyKQBxzbOfbDTLCS9Q4uTvtMaR+gT3YXEVjeUiIm3NLDK/RtvOtIpptXnQpAVNdS2e6jO299J4MjnCie7hElbQ2dK5dMBYL+mXxTtYGjLWphXJxpJKMAubyuLz0+3+LGqlNHPnpis+9AkRVzxyruNywJRvN/BDqmYrDXPle9cE=
+	t=1740072257; cv=none; b=dhEVpfDkQ3q3qqleO+/Q5hY/ZbYzFypNh2kvCbekJDR1Al9K67pcoZMUHNbim3FGjjalUxs7SQn6y37cgov7IxT2pRDNismoLairDrwobUbT2pNuV/s76HUu1nl4K2EOOEzIRw7726pcuXSrTE0O4tV5gv4KxNRnODoKbUR7/b4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740037566; c=relaxed/simple;
-	bh=24E38aGTaxxEzPyzWRerQJnY8HDDXmt8Rkt7nsVgV3w=;
-	h=Message-ID:Date:MIME-Version:Cc:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=bBsLEZMNMzoIwb5nUscxxO4NadRBRZnJUzQ2wcJyOqr9SOaO/HtZmw+nKdXG6QoxYe71L+c/qAEBHdBB/OF1JVPeGGert9P/CHlgSVEsFB7ylNE6WPWgc3gb955hLFmEnTLyBJbK0VOQshJtUzGO9b1drg5tSBmVSBgnZo3vcn4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sk.com; spf=pass smtp.mailfrom=sk.com; arc=none smtp.client-ip=166.125.252.92
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sk.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sk.com
-X-AuditID: a67dfc5b-3c9ff7000001d7ae-49-67b6ddb64ed6
-Message-ID: <93792bf7-9507-474f-a8b0-ccd4d59742dc@sk.com>
-Date: Thu, 20 Feb 2025 16:45:56 +0900
+	s=arc-20240116; t=1740072257; c=relaxed/simple;
+	bh=0vTN9kKsGessHSXK1lGUwEF13I3IstE4YbEVN7z6DeA=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=MS+l5GNFXsLdf0nPQIxIPGNORvt/zk4a/I7pf/IxwJqe6mIcL9hG1kLP2cp6tq9J8uDWTceBaB/v2IzTPzwA37BiUl06u/R8s3+93WDo2PGf4ixZmD5Ca2f5zPe7r5DQypWcbSCpuCnDlITiIuQKLtacw9CanNI39WM96QnIGM0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=F9lrXfLo; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="F9lrXfLo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 343D3C4CED1;
+	Thu, 20 Feb 2025 17:24:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1740072256;
+	bh=0vTN9kKsGessHSXK1lGUwEF13I3IstE4YbEVN7z6DeA=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=F9lrXfLoGKdONQDtLR43hvtGmLom/4cETRb9HKRvYXfvtFGfPuB16JSU+eQDALYlt
+	 D4CkkHb1drhep3lxmYtX80KPSknuY2OlDgVJXUN5cOHSTwYBUsoJNOA8dz3Y0T9HRi
+	 nxfEqVhfKxuJLeNDR1p+nwJ8VxR21jKCDY5p4n12JUT5HnvGyYuDnCVV4d0dSjOz9j
+	 G8KFmasxukad5p+neYT67aQ1OiZ7LEi255kov736QD/de0+sW9+lno55E4djrkX4iV
+	 OmFJCaZEX2cp3y6l5gLt1gJ7LV3pl5jfg6NpIl4IGmvrc3GCS9YF/IRFJbxLWEV/9g
+	 t8LcST/cB8zOw==
+From: SeongJae Park <sj@kernel.org>
+To: Honggyu Kim <honggyu.kim@sk.com>
+Cc: SeongJae Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	kernel_team@skhynix.com,
+	Jonathan Corbet <corbet@lwn.net>,
+	damon@lists.linux.dev,
+	kernel-team@meta.com,
+	linux-doc@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-mm@kvack.org
+Subject: Re: [PATCH 0/2] mm/damon: introduce DAMOS filter type for unmapped pages
+Date: Thu, 20 Feb 2025 09:24:10 -0800
+Message-Id: <20250220172411.41010-1-sj@kernel.org>
+X-Mailer: git-send-email 2.39.5
+In-Reply-To: <93792bf7-9507-474f-a8b0-ccd4d59742dc@sk.com>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Cc: kernel_team@skhynix.com, Jonathan Corbet <corbet@lwn.net>,
- damon@lists.linux.dev, kernel-team@meta.com, linux-doc@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-mm@kvack.org
-Subject: Re: [PATCH 0/2] mm/damon: introduce DAMOS filter type for unmapped
- pages
-To: SeongJae Park <sj@kernel.org>, Andrew Morton <akpm@linux-foundation.org>
-References: <20250219220146.133650-1-sj@kernel.org>
-Content-Language: ko
-From: Honggyu Kim <honggyu.kim@sk.com>
-In-Reply-To: <20250219220146.133650-1-sj@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrLLMWRmVeSWpSXmKPExsXC9ZZnke62u9vSDVZ+17GYs34Nm8WTA+2M
-	Fk/+/2a12HcRyF3YtoTF4vKuOWwW99b8Z7U4/PUNkwOHx6ZVnWwemz5NYvc4MeM3i8eLzTMZ
-	PRb3TWb1OHexwuPzJrkA9igum5TUnMyy1CJ9uwSujG/vN7AUvOWumHW8jbGBcS1nFyMnh4SA
-	icS398uYYey2h/dZQWxeAUuJ/X9fsoDYLAKqEvvPbGOEiAtKnJz5BCwuKiAvcf/WDHYQm1lg
-	N6PExFZdEFtYIFjiwYRWpi5GDg4RAR+JluWJIGEhAWOJm5d3MkKUi0jM7mwDW8smoCZx5eUk
-	JhCbE+iEHycXMEHUmEl0be2CqpeX2P52DlA9F9CZJ9gk3i3+ywZxs6TEwRU3WCYwCs5Cct4s
-	JDtmIZk1C8msBYwsqxiFMvPKchMzc0z0MirzMiv0kvNzNzECI2VZ7Z/oHYyfLgQfYhTgYFTi
-	4Z3Rui1diDWxrLgy9xCjBAezkghvW/2WdCHelMTKqtSi/Pii0pzU4kOM0hwsSuK8Rt/KU4QE
-	0hNLUrNTUwtSi2CyTBycUg2MrLlbSjQ0Ljjo7nFomXGYcyXPEeY5XvpHT37h3fTF1+P4jNDq
-	MxdWJRQydl5tuMt2/fVaua8Jj9+WNxX8TszPOL6tPkJd4NryXPm469qC2n9crFxmrldeaxK1
-	4MriT/0vzVjE5e585K8y2LN1BsPysjc1X1ZpJNrU/7uefvvBaxbThFL/PflOSizFGYmGWsxF
-	xYkAJwXW+pACAAA=
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrCLMWRmVeSWpSXmKPExsXCNUNLT3fb3W3pBi97ZSzmrF/DZvHkQDuj
-	xZP/v1kt9l0Ecg/PPclqsbBtCYvF5V1z2CzurfnPanH46xsmB06PTas62Tw2fZrE7nFixm8W
-	jxebZzJ6LO6bzOpx7mKFx+IXH5g8Pm+SC+CI4rJJSc3JLEst0rdL4Mr49n4DS8Fb7opZx9sY
-	GxjXcnYxcnJICJhItD28zwpi8wpYSuz/+5IFxGYRUJXYf2YbI0RcUOLkzCdgcVEBeYn7t2aw
-	g9jMArsZJSa26oLYwgLBEg8mtDJ1MXJwiAj4SLQsTwQJCwkYS9y8vJMRolxEYnZnGzOIzSag
-	JnHl5SQmEJsT6IQfJxcwQdSYSXRt7YKql5fY/nYO8wRGvllIrpiFZNQsJC2zkLQsYGRZxSiS
-	mVeWm5iZY6pXnJ1RmZdZoZecn7uJERj2y2r/TNzB+OWy+yFGAQ5GJR7eB4+3pguxJpYVV+Ye
-	YpTgYFYS4W2r35IuxJuSWFmVWpQfX1Sak1p8iFGag0VJnNcrPDVBSCA9sSQ1OzW1ILUIJsvE
-	wSnVwCh5knHnPTeHmQcX7jmkIy72c5WO3MH9vvFaF/a2dzT+m/H/1JRM5kpHY403+b6/Mj5+
-	sLiTWCJgWFk1xe5q6qdUf5n3PWat8y5eOvH10vZt2WniB+bl+G1U4/8izx3XfP97Utfus+H8
-	aSVS3griWqybHYMuvXxYvUGJnWcT1620rWaxkqoS1UosxRmJhlrMRcWJAEgNI9N3AgAA
-X-CFilter-Loop: Reflected
+Content-Transfer-Encoding: 8bit
 
-Hi SeongJae,
+Hello Honggyu,
 
-On 2/20/2025 7:01 AM, SeongJae Park wrote:
-> User decides whether their memory will be mapped or unmapped.  It
-> implies that the two types of memory can have different characteristics
-> and management requirements.  Provide the DAMON-observaibility
-> DAMOS-operation capability for the different types by introducing a new
-> DAMOS filter type for unmapped pages.
+On Thu, 20 Feb 2025 16:45:56 +0900 Honggyu Kim <honggyu.kim@sk.com> wrote:
 
-I asked it before at https://github.com/damonitor/damo/issues/13 about
-monitoring unused paddr area but I see this patch series is related to
-applying DAMOS action.
+> Hi SeongJae,
+> 
+> On 2/20/2025 7:01 AM, SeongJae Park wrote:
+> > User decides whether their memory will be mapped or unmapped.  It
+> > implies that the two types of memory can have different characteristics
+> > and management requirements.  Provide the DAMON-observaibility
+> > DAMOS-operation capability for the different types by introducing a new
+> > DAMOS filter type for unmapped pages.
+> 
+> I asked it before at https://github.com/damonitor/damo/issues/13 about
+> monitoring unused paddr area but I see this patch series is related to
+> applying DAMOS action.
 
-Regarding that, do you think we can skip those unused memory area using
-this filter before applying DAMOS action?
+My understanding of "unused" memory that you mentioned is memory that not
+allocated for user data.  This memory cannot get accessed by user, so DAMON
+treats this memory as always not accessed.
 
-I'm not sure if the current DAMOS tries pageout/migrate action for those
-unused area because they are detected as cold area although those will
-be imediately skiped inside action scheme.
+"unmapped" memory I'm saying about here is memory that not mapped to userspace.
+For example, unmapped pages in pge cache.  This memory can be accessed, for
+eaxmple through page cache using read()/write() like system calls.
+
+So I think this is not really related with the GitHub discussion.  Please let
+me know if I'm missing something.
+
+> 
+> Regarding that, do you think we can skip those unused memory area using
+> this filter before applying DAMOS action?
+
+So, no.
+
+> 
+> I'm not sure if the current DAMOS tries pageout/migrate action for those
+> unused area because they are detected as cold area although those will
+> be imediately skiped inside action scheme.
+
+This is the current behavior.  DAMOS will try to do whatever action to whatever
+region if requested, see the action is not applicable to the page, and move on
+to the next page.  Please note that filter-based page level skipping is not
+that different from the page level action applicability checking.
+
+If you know where "unused" memory located, and you want to make DAMON/S
+entirely ignore it, you could use DAMON target address range, or address range
+type DAMOS filter.  I'm not sure if this is what you're looking for, though.
+
+My understanding of your concern about "unused" memory on the GitHub discussion
+was more about adaptive reions adjustment efficiency.  I recently posted[1] some
+ideas to improve the mechanism.  Any feedback about the idea will be welcomed
+and help prioritizing it.
+
+[1] https://lore.kernel.org/20250213222303.244724-1-sj@kernel.org
+
 
 Thanks,
-Honggyu
+SJ
 
-> 
-> Changes from RFC
-> (https://lore.kernel.org/20241127205624.86986-1-sj@kernel.org)
-> - Rebase on latest mm-unstable
-> - Wordsmith commit message
-> - Add documentation
-> 
-> SeongJae Park (2):
->    mm/damon: implement a new DAMOS filter type for unmapped pages
->    Docs/mm/damon/design: document unmapped DAMOS filter type
-> 
->   Documentation/mm/damon/design.rst | 2 ++
->   include/linux/damon.h             | 2 ++
->   mm/damon/paddr.c                  | 3 +++
->   mm/damon/sysfs-schemes.c          | 1 +
->   4 files changed, 8 insertions(+)
-> 
-> 
-> base-commit: a2130e89cbd08ddb6f023b0b10eb87ebbc67add1
-
+[...]
