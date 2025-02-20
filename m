@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3802C264614;
-	Thu, 20 Feb 2025 19:35:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CCA5264638;
+	Thu, 20 Feb 2025 19:35:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740080118; cv=none; b=WZ06MDzNfNprQOOaarF/4PLPpUJDwcrTJ3WJNwXLdiuPTpnw5yqS7HAFkxkM2S790tNiPlhbUcnn+q29bI+qi93bXVin8ZXkDmnpdpGgLPyS0SZVh4nNOJUqyrZ3Akzh8AnV6y1HE+6VyjS51DRseNfsvnM4e40e0p//iJ7D04w=
+	t=1740080119; cv=none; b=XUdL/Vh86PlAa4GdKxlPid7vlpK1DHwSx/7Zq4SL17ZXcqpdIXwunxS3bK1a7Fb+/UZG41OjX+bCUn7ZRlb66AuBto4vhQMT4siSL2WKj1HKcC/IPI1z2k7znM1133Gn0X+2YvuPSGFPH7Vz5PkjF+RKWK5B3zziN4JLggggtAk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740080118; c=relaxed/simple;
-	bh=2GbFALk/c9BNCc25jRYoGVkk+3jSEEjMYTr49dqSrPM=;
+	s=arc-20240116; t=1740080119; c=relaxed/simple;
+	bh=GU12uco2vMf4JAexsBOLi5pNACf7z+JWPqGOUvIGCS0=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=SdjqDwJgTP9Kri93nqDLSRXvsIVRS28RwJ7ptRltTp6L/Eij3Q7SS3c3pYD2soa60e6CyVRFvHgwH4gzv50SjUqEvQxqG2NNwLrhOIl2n0FOy5NmrYGmHU0jgVrS6UG26AWqvrhjgChQ/5bclUV1Mf7qntWXur8xxRkK62lj1GU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=G9946da1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FgDIgcMwWtpnvDS5REJ4icHkzKYH36eDL/jRrjApQ0zcXBCAAVGNM8iiDbqn4kNPdWiT642HRGoAN6lmKZvYqkGWAtZCxgRCBS7NiACGXT4H7bNqaRpROYwoDd617dMdX37DUy/rL46HoniULmhi+q3CqYU27RrlWUU5fnfouzc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BeyIYp78; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="G9946da1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B1BEC4CEE4;
-	Thu, 20 Feb 2025 19:35:17 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BeyIYp78"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99E3BC4CED1;
+	Thu, 20 Feb 2025 19:35:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1740080117;
-	bh=2GbFALk/c9BNCc25jRYoGVkk+3jSEEjMYTr49dqSrPM=;
+	s=k20201202; t=1740080118;
+	bh=GU12uco2vMf4JAexsBOLi5pNACf7z+JWPqGOUvIGCS0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G9946da1cnNgfEsUSUknhKQ7sBC0WcrZgLi2EGaWpPPeZQl7zaAsOY7m9rrzO9r3R
-	 2rL/pyrK9jJc/Vrw8TBPEBETY5IPECmuJ6TIZ3KyyAp1qMx7Z4IBoMR2tXmv6hhsOV
-	 2UEsVohJNOsUYe03IrDOBI7o0Y0qGAyewwoZCNlru/RobSC8bDnJTcZNZWSiEoeUUQ
-	 hkmGRAfGNh/Mjkh2g1+GGRPJn7cN7vZ8m7uRXvL+BjX1p1abgtAnknhAyY37zHJuvv
-	 REImn0dECTmcI7Y7TIoUQaV67vTnq8ZO6VSQKpVb7Di5mdZuVjx7zjuWgAF50PdHqm
-	 m+BMGnnF7R6BQ==
+	b=BeyIYp78GztU1YYwb+ca3cS2Yi8BGrJD3+R7gQXyZWNhNe6K1eIWckOwHrUEGeFQj
+	 21vcAgPEer4wqEwTJLzAzZ3riFyBOSPwGEt4Myr9BRaQG5/cnNuye38TmkNjBK3T0L
+	 EDHfmBOcvRtjIrtkwONumdBuwS5XWBFhwDMEZLvgpexhs+UrvRZ7m9Sj0Dekp/IekM
+	 odpTa6ritv1555zu1SF1eUNwc0Xk57Z9VZi4+rHWc2Or0na3danBy6cEnuMVP1j8tu
+	 7grOWDow9U938cuH6/agBg+ZWIAn4fNkD58ZTAdFfsvfBbEDmDWHYog0XIXIHSaGAs
+	 CVxgLV9EilVtQ==
 From: SeongJae Park <sj@kernel.org>
 To: 
 Cc: SeongJae Park <sj@kernel.org>,
@@ -34,9 +34,9 @@ Cc: SeongJae Park <sj@kernel.org>,
 	kernel-team@meta.com,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH 3/9] mm/damon/core: support committing ops_filters
-Date: Thu, 20 Feb 2025 11:35:03 -0800
-Message-Id: <20250220193509.36379-4-sj@kernel.org>
+Subject: [RFC PATCH 4/9] mm/damon/core: put ops-handled filters to damos->ops_filters
+Date: Thu, 20 Feb 2025 11:35:04 -0800
+Message-Id: <20250220193509.36379-5-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250220193509.36379-1-sj@kernel.org>
 References: <20250220193509.36379-1-sj@kernel.org>
@@ -48,74 +48,49 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-DAMON kernel API callers should use damon_commit_ctx() to install DAMON
-parameters including DAMOS filters.  But damos_commit_ops_filters(),
-which is called by damon_commit_ctx() for filters installing, is not
-supporting committing damos->ops_filters.  Do the parameters committing
-so that DAMON kernel API callers can use damos->ops_filters.
+damos->ops_filters has introduced to be used for operations layer
+handled filters.  But DAMON kernel API callers can put any type of DAMOS
+filters to any of damos->filters and damos->ops_filters.  DAMON ABI
+users have no way other than still using only damos->filters.  Update
+damos_add_filter(), which should be used by API callers to install DAMOS
+filters, to add core layers and operation layer handled filters to
+->filters and ->ops_filters, respectively.  The change is applied to
+both API callers and ABI users since ABI users use the API internally.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- mm/damon/core.c | 40 +++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 39 insertions(+), 1 deletion(-)
+ mm/damon/core.c | 17 ++++++++++++++++-
+ 1 file changed, 16 insertions(+), 1 deletion(-)
 
 diff --git a/mm/damon/core.c b/mm/damon/core.c
-index bcb7e42098dc..ffdd84ff6fa5 100644
+index ffdd84ff6fa5..78126a5145fd 100644
 --- a/mm/damon/core.c
 +++ b/mm/damon/core.c
-@@ -793,7 +793,7 @@ static void damos_commit_filter(
- 	damos_commit_filter_arg(dst, src);
+@@ -281,9 +281,24 @@ struct damos_filter *damos_new_filter(enum damos_filter_type type,
+ 	return filter;
  }
  
--static int damos_commit_filters(struct damos *dst, struct damos *src)
-+static int damos_commit_core_filters(struct damos *dst, struct damos *src)
++static bool damos_filter_for_ops(enum damos_filter_type type)
++{
++	switch (type) {
++	case DAMOS_FILTER_TYPE_ADDR:
++	case DAMOS_FILTER_TYPE_TARGET:
++		return false;
++	default:
++		break;
++	}
++	return true;
++}
++
+ void damos_add_filter(struct damos *s, struct damos_filter *f)
  {
- 	struct damos_filter *dst_filter, *next, *src_filter, *new_filter;
- 	int i = 0, j = 0;
-@@ -821,6 +821,44 @@ static int damos_commit_filters(struct damos *dst, struct damos *src)
- 	return 0;
+-	list_add_tail(&f->list, &s->filters);
++	if (damos_filter_for_ops(f->type))
++		list_add_tail(&f->list, &s->ops_filters);
++	else
++		list_add_tail(&f->list, &s->filters);
  }
  
-+static int damos_commit_ops_filters(struct damos *dst, struct damos *src)
-+{
-+	struct damos_filter *dst_filter, *next, *src_filter, *new_filter;
-+	int i = 0, j = 0;
-+
-+	damos_for_each_ops_filter_safe(dst_filter, next, dst) {
-+		src_filter = damos_nth_filter(i++, src);
-+		if (src_filter)
-+			damos_commit_filter(dst_filter, src_filter);
-+		else
-+			damos_destroy_filter(dst_filter);
-+	}
-+
-+	damos_for_each_ops_filter_safe(src_filter, next, src) {
-+		if (j++ < i)
-+			continue;
-+
-+		new_filter = damos_new_filter(
-+				src_filter->type, src_filter->matching,
-+				src_filter->allow);
-+		if (!new_filter)
-+			return -ENOMEM;
-+		damos_commit_filter_arg(new_filter, src_filter);
-+		damos_add_filter(dst, new_filter);
-+	}
-+	return 0;
-+}
-+
-+static int damos_commit_filters(struct damos *dst, struct damos *src)
-+{
-+	int err;
-+
-+	err = damos_commit_core_filters(dst, src);
-+	if (err)
-+		return err;
-+	return damos_commit_ops_filters(dst, src);
-+}
-+
- static struct damos *damon_nth_scheme(int n, struct damon_ctx *ctx)
- {
- 	struct damos *s;
+ static void damos_del_filter(struct damos_filter *f)
 -- 
 2.39.5
