@@ -1,45 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8295C271816;
-	Wed, 26 Feb 2025 06:37:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15B6B2222CF;
+	Wed, 26 Feb 2025 18:42:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740551829; cv=none; b=oOokVmsrldH42XI1vZYfy3j3x9MFBWFbRkWnJtqEm9FwW48GOugCzessHFQX705tagpS0kT9fjHaaYiv/wLBJ4VpXdDbCDNfpu44ln+W8eVImKsIR2ShNfjqa8Z1C31d6BG3/u+ljeGfTwzFDFufEHoYaF7hIEnu5B/3qkqXnTI=
+	t=1740595329; cv=none; b=DljvcdxBHfAaX81d97ivdEqcFyz+zkPW5amvVEDHzpjMxIFYLu8KnaGc98GewI7AmE4Ch8HtLgE/qNYWudADq7odg/XECq9R0HOiLl3IgYuHlNK8U0jSoTG3gbyxEBvbVSkovUdoIK2bE2SQmU3SA3kgWmc5tqu/Xvt9iXb3NwA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740551829; c=relaxed/simple;
-	bh=tR7XrAvAqL9tgp0wezUMza5484QErgFfXZf5Rw+Zt88=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=XMqtNqsMSoXcSFOaLPK5hIeOWNH1dd7ZGIb4AwUsHG4KseVzn0usiDIGVunHNWnDOt1vGUh+P+0eWtQW726wGgn7H4WlSxIZUPc9ELG4aJROxTpYtKNfQJtRsleuRCh6s/vrdbxaYk4kqXUmi6Hz/fBRh5iXMsV2S3VyYq78uMc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NkC3trE4; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1740595329; c=relaxed/simple;
+	bh=3/4RYj3Peq9LAIKfSrxEMRx2d7CU/6V42ttG2XzmwuU=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=mWs6y4bODPWjy3Ppmg3EIRn4dDwLMEmrdVFaX5IYYYVP3F6lrTZ7lKOw18kpzriuMzjq0lB7C+t1xAUUl5PyKJuYI+VZmfekieOVfeC3WFxQJHjzR0n3r8yvfbd+6LLXAXR71ZJQpBa405Z6EHgCysOOua2WYaAOIbmwcJdvSt4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=s7tyEHQ0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NkC3trE4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C407C4CEE2;
-	Wed, 26 Feb 2025 06:37:09 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="s7tyEHQ0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC630C4CED6;
+	Wed, 26 Feb 2025 18:42:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1740551829;
-	bh=tR7XrAvAqL9tgp0wezUMza5484QErgFfXZf5Rw+Zt88=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NkC3trE48rYxCFFDy66tykiWPjoMbZBsb/HBH52ZAkninFLJ0O7MByribphGwbMXz
-	 KLyVk3wtX2t/4Y0G1+C3lCFJJtVUbu69r17GBdwwItO1VXWf3YcRODWw7dXkn0AuAE
-	 phXZP9tRtyKsqQZ0MbG+9Qfyf7IP+CPFby3/BLT18JYgoBHCuZks1Cw+zk79o+PzpW
-	 uSl6vMNooIM3pr8B6TzmOWAUwvxvYIavDbJQouMkMxLaR7GHAXpqTFmi/H1u6KuAFm
-	 zTkjponpdS4dehkyARKICzrcYji2/gmUJN+SIFQgkB1I12AaeUXdMzH/18G3MFPeHx
-	 9yDRcptpIKLMg==
+	s=k20201202; t=1740595328;
+	bh=3/4RYj3Peq9LAIKfSrxEMRx2d7CU/6V42ttG2XzmwuU=;
+	h=From:To:Cc:Subject:Date:From;
+	b=s7tyEHQ00rVHzmlYEqJ9Le5PmkCHox4ccXkJRN7uH7uGX+8sQjezExCasvhV7eFM1
+	 +mcAZgO0xwJJUKkRW53H0zM1x2qeCEM001ilq+cXt4nfwrWX0Z8EoLkYW8PWxK6EL5
+	 jtDfHSBnSuT5RyqwLNTwcYNFbJpIknzexuWXZ5xk8AXiUYImkCxGXYFORPM08ZTztS
+	 mF7DMZnoj3aemVDENiwETLZNKNmpDtsorc5QydGeCaQRFqd4Tu1OefwXz0gf/Hj0Vv
+	 JVBAvPt01v1ZYVuDXtW70unW2gLekOX8d1Pk/TOX5riCUlFwuZPMV3sVOuAeYk0ysS
+	 HBFGlpI0jmDlw==
 From: SeongJae Park <sj@kernel.org>
-To: 
-Cc: SeongJae Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
+To: Andrew Morton <akpm@linux-foundation.org>
+Cc: bus710 <bus710@gmail.com>,
+	SeongJae Park <sj@kernel.org>,
 	damon@lists.linux.dev,
 	kernel-team@meta.com,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH 13/13] mm/damon: remove damon_operations->reset_aggregated
-Date: Tue, 25 Feb 2025 22:36:51 -0800
-Message-Id: <20250226063651.513178-14-sj@kernel.org>
+Subject: [PATCH] samples/damon: a typo in the kconfig - sameple
+Date: Wed, 26 Feb 2025 10:42:04 -0800
+Message-Id: <20250226184204.29370-1-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250226063651.513178-1-sj@kernel.org>
-References: <20250226063651.513178-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -48,93 +45,46 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The operations layer hook was introduced to let operations set do any
-aggregation data reset if needed.  But it is not really be used now.
-Remove it.
+From: bus710 <bus710@gmail.com>
 
+There is a typo in the Kconfig file of the damon sample module.
+Correct it: s/sample/sample/
+
+Signed-off-by: bus710 <bus710@gmail.com>
+Reviewed-by: SeongJae Park <sj@kernel.org>
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- include/linux/damon.h | 7 +------
- mm/damon/core.c       | 2 --
- mm/damon/paddr.c      | 1 -
- mm/damon/vaddr.c      | 1 -
- 4 files changed, 1 insertion(+), 10 deletions(-)
 
-diff --git a/include/linux/damon.h b/include/linux/damon.h
-index 2808ea07e1cc..957c7f3af80f 100644
---- a/include/linux/damon.h
-+++ b/include/linux/damon.h
-@@ -537,7 +537,6 @@ enum damon_ops_id {
-  * @update:			Update operations-related data structures.
-  * @prepare_access_checks:	Prepare next access check of target regions.
-  * @check_accesses:		Check the accesses to target regions.
-- * @reset_aggregated:		Reset aggregated accesses monitoring results.
-  * @get_scheme_score:		Get the score of a region for a scheme.
-  * @apply_scheme:		Apply a DAMON-based operation scheme.
-  * @target_valid:		Determine if the target is valid.
-@@ -549,8 +548,7 @@ enum damon_ops_id {
-  * (&damon_ctx.kdamond) calls @init and @prepare_access_checks before starting
-  * the monitoring, @update after each &damon_attrs.ops_update_interval, and
-  * @check_accesses, @target_valid and @prepare_access_checks after each
-- * &damon_attrs.sample_interval.  Finally, @reset_aggregated is called after
-- * each &damon_attrs.aggr_interval.
-+ * &damon_attrs.sample_interval.
-  *
-  * Each &struct damon_operations instance having valid @id can be registered
-  * via damon_register_ops() and selected by damon_select_ops() later.
-@@ -565,8 +563,6 @@ enum damon_ops_id {
-  * last preparation and update the number of observed accesses of each region.
-  * It should also return max number of observed accesses that made as a result
-  * of its update.  The value will be used for regions adjustment threshold.
-- * @reset_aggregated should reset the access monitoring results that aggregated
-- * by @check_accesses.
-  * @get_scheme_score should return the priority score of a region for a scheme
-  * as an integer in [0, &DAMOS_MAX_SCORE].
-  * @apply_scheme is called from @kdamond when a region for user provided
-@@ -584,7 +580,6 @@ struct damon_operations {
- 	void (*update)(struct damon_ctx *context);
- 	void (*prepare_access_checks)(struct damon_ctx *context);
- 	unsigned int (*check_accesses)(struct damon_ctx *context);
--	void (*reset_aggregated)(struct damon_ctx *context);
- 	int (*get_scheme_score)(struct damon_ctx *context,
- 			struct damon_target *t, struct damon_region *r,
- 			struct damos *scheme);
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index 22f90666fe16..6f821a579257 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -2463,8 +2463,6 @@ static int kdamond_fn(void *data)
+Chagens from v1
+(https://patch.msgid.link/20250224180709.2167187-1-bus710@gmail.com)
+- Wordsmith the message
+
+ samples/damon/Kconfig | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/samples/damon/Kconfig b/samples/damon/Kconfig
+index 63f6dcd71daa..564c49ed69a2 100644
+--- a/samples/damon/Kconfig
++++ b/samples/damon/Kconfig
+@@ -3,7 +3,7 @@
+ menu "DAMON Samples"
  
- 			kdamond_reset_aggregated(ctx);
- 			kdamond_split_regions(ctx);
--			if (ctx->ops.reset_aggregated)
--				ctx->ops.reset_aggregated(ctx);
- 		}
+ config SAMPLE_DAMON_WSSE
+-	bool "DAMON sameple module for working set size estimation"
++	bool "DAMON sample module for working set size estimation"
+ 	depends on DAMON && DAMON_VADDR
+ 	help
+ 	  This builds DAMON sample module for working set size estimation.
+@@ -15,7 +15,7 @@ config SAMPLE_DAMON_WSSE
+ 	  If unsure, say N.
  
- 		if (ctx->passed_sample_intervals >= next_ops_update_sis) {
-diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
-index fee66a3cc82b..e5b532340102 100644
---- a/mm/damon/paddr.c
-+++ b/mm/damon/paddr.c
-@@ -618,7 +618,6 @@ static int __init damon_pa_initcall(void)
- 		.update = NULL,
- 		.prepare_access_checks = damon_pa_prepare_access_checks,
- 		.check_accesses = damon_pa_check_accesses,
--		.reset_aggregated = NULL,
- 		.target_valid = NULL,
- 		.cleanup = NULL,
- 		.apply_scheme = damon_pa_apply_scheme,
-diff --git a/mm/damon/vaddr.c b/mm/damon/vaddr.c
-index a6174f725bd7..e6d99106a7f9 100644
---- a/mm/damon/vaddr.c
-+++ b/mm/damon/vaddr.c
-@@ -710,7 +710,6 @@ static int __init damon_va_initcall(void)
- 		.update = damon_va_update,
- 		.prepare_access_checks = damon_va_prepare_access_checks,
- 		.check_accesses = damon_va_check_accesses,
--		.reset_aggregated = NULL,
- 		.target_valid = damon_va_target_valid,
- 		.cleanup = NULL,
- 		.apply_scheme = damon_va_apply_scheme,
+ config SAMPLE_DAMON_PRCL
+-	bool "DAMON sameple module for access-aware proactive reclamation"
++	bool "DAMON sample module for access-aware proactive reclamation"
+ 	depends on DAMON && DAMON_VADDR
+ 	help
+ 	  This builds DAMON sample module for access-aware proactive
+
+base-commit: 489e7430013060843b4f7f1ad3935ff58fbd5bfb
 -- 
 2.39.5
