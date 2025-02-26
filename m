@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52F0426E62F;
-	Wed, 26 Feb 2025 06:37:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67B5F26F462;
+	Wed, 26 Feb 2025 06:37:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740551823; cv=none; b=NfSljTLGzQR1G+F/UZDx8SXFe5yGSURC4G6tDUPDcDS4xxtq3Nc2IxUYpgNb7iNnbM1cyn/S0PvaKgxcOQVqLobEBr+QHuK3+C3cNDyxPLc/Nj81uHO+1l3ZCEUxnoGioz/n/UF+G+5cuU967kmxrla7Bo6GIFPaB/oAB3X2V08=
+	t=1740551824; cv=none; b=HcEbITuIeDoWPwt9bJYISnhmnC0wbhdV6rFkQIvPHQJsYKBEkoBymjFsOzIlr8hPiVa3WY5nOK/ZqXL+QlnJdPBDLKycOinCZQuCiGRfbvWBhZoOQgzlohUDmfAgbiwFFj6+S3PTlckEcqdCrYaeRoxhIytpiU5FGjjgt2A9/Gk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740551823; c=relaxed/simple;
-	bh=4J5vWHiHbtHqjwMC+hRbiipl4h9liEs0+TfNTGi8OuM=;
+	s=arc-20240116; t=1740551824; c=relaxed/simple;
+	bh=CtrMG3b7XVPdT3oTv/pTE3ihT4fR44kaP9KWdR8X7yY=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=WUh9AMjqt9hnVtNuW8/ajGbKpZr7lyyrfOqUzovzFK5OncCYdrzUaxe7i8oinJK5FXh+132fH4irp/RtCOs51pShlCJWgpNouWhOIS//QXc7xadwN4YW+mGf4/azcZPWB92r+ZhfZTQWEC7992JD8+XjzobrQj1k+sxqXm6VjmY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IY35+2jS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fv6QFyrN/yFmbJUdcbGoJlRkz2jvoauVJqSdZ1G1XOGuAONosRsZa2IziQGorHM2+BFwAeSdmHG+2tzFvsZ7YJIKeeTCzXcahwAvT5BVdOxB1hXZwyB3+vTsmhH04zgxAInUeQliCSQ+F5eOVS8BtBFG7mlQk0LB+pQo2qigsXk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Rgk7xIYf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IY35+2jS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A40BBC4CEEA;
-	Wed, 26 Feb 2025 06:37:02 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Rgk7xIYf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6576C4CEEC;
+	Wed, 26 Feb 2025 06:37:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1740551822;
-	bh=4J5vWHiHbtHqjwMC+hRbiipl4h9liEs0+TfNTGi8OuM=;
+	s=k20201202; t=1740551823;
+	bh=CtrMG3b7XVPdT3oTv/pTE3ihT4fR44kaP9KWdR8X7yY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IY35+2jSTR0fwPWqE0pDaF10P37LWFVbjA8i0aglA/xKkrkdRBuW0AFLyuSa9KeHM
-	 pL7QeBCioMTspDME/Oi5tgLtMj3Ww5A1LPrqqmL+8dn/I3P/H+2ATvr7HkujdVpKi+
-	 kHsu0DgCV4rIYvS/nH7GWwA5/FyIk/sNfWnIPacPHqL0MUoFtHZ4yCGO0syynawauK
-	 o6NDT1eHtNQSJhVYcRQ8EP8uA+lKkSVaQWO6RUtD4CnGHJnBTN6fPLTNtOzqrfcU3k
-	 V9DFeIAiANVX3zwg0kvelgpgrf764O4s+SgKVbqY4L3lCILw+abR5640X7UDPvdUnp
-	 MicgMxBby5e1g==
+	b=Rgk7xIYf3uct/Bru8Ihtd41lN4L529TO1m3KX1Dc8PXuXuthMn4rHZrRsk/mmkrnK
+	 Apxx/MqDzsD8GMC1087yex2BQnHxNoWJ+CyVuVR24lv2CO89Xusu2gCF3x+XsQdBRt
+	 5XRq7mSJ3gZHpjRAJDgs71Frh6f0C4UH+rEgIebK4gEzfYdsiujh8LgrbGSayJm14v
+	 8XKrOppXa45/2KvwpVC3rjn6marRIl5Di23tF9Kcp3hEZaeMP+Q+AH9YHZCJxgF9uR
+	 SHm6TU42cy3/Do4NvwpVF3b4YZF2Ugvsty/3yxwagOLGXHKQBPOQByXTGSyx4RN8Js
+	 wH2Vb89PCJhwQ==
 From: SeongJae Park <sj@kernel.org>
 To: 
 Cc: SeongJae Park <sj@kernel.org>,
@@ -34,9 +34,9 @@ Cc: SeongJae Park <sj@kernel.org>,
 	kernel-team@meta.com,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH 07/13] mm/damon/sysfs: remove damon_sysfs_cmd_request and its readers
-Date: Tue, 25 Feb 2025 22:36:45 -0800
-Message-Id: <20250226063651.513178-8-sj@kernel.org>
+Subject: [RFC PATCH 08/13] mm/damon/sysfs-schemes: remove obsolete comment for damon_sysfs_schemes_clear_regions()
+Date: Tue, 25 Feb 2025 22:36:46 -0800
+Message-Id: <20250226063651.513178-9-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250226063651.513178-1-sj@kernel.org>
 References: <20250226063651.513178-1-sj@kernel.org>
@@ -48,66 +48,26 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-damon_sysfs_cmd_request is DAMON sysfs interface's own synchronization
-mechanism for accessing DAMON internal data via damon_callback hooks.
-All the users are now migrated to damon_call() and damos_walk(), so
-nobody really uses it.  No one writes to the data structure but reading
-code is remained.  Remove the reading code and the entire data
-structure.
+The comment on damon_sysfs_schemes_clear_regions() function is obsolete,
+since it has updated to directly called from DAMON sysfs interface code.
+Remove the outdated comment.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- mm/damon/sysfs.c | 24 +-----------------------
- 1 file changed, 1 insertion(+), 23 deletions(-)
+ mm/damon/sysfs-schemes.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
-index e5bcf019086f..1af6aff35d84 100644
---- a/mm/damon/sysfs.c
-+++ b/mm/damon/sysfs.c
-@@ -1238,25 +1238,6 @@ static const char * const damon_sysfs_cmd_strs[] = {
- 	"update_tuned_intervals",
- };
- 
--/*
-- * struct damon_sysfs_cmd_request - A request to the DAMON callback.
-- * @cmd:	The command that needs to be handled by the callback.
-- * @kdamond:	The kobject wrapper that associated to the kdamond thread.
-- *
-- * This structure represents a sysfs command request that need to access some
-- * DAMON context-internal data.  Because DAMON context-internal data can be
-- * safely accessed from DAMON callbacks without additional synchronization, the
-- * request will be handled by the DAMON callback.  None-``NULL`` @kdamond means
-- * the request is valid.
-- */
--struct damon_sysfs_cmd_request {
--	enum damon_sysfs_cmd cmd;
--	struct damon_sysfs_kdamond *kdamond;
--};
--
--/* Current DAMON callback request.  Protected by damon_sysfs_lock. */
--static struct damon_sysfs_cmd_request damon_sysfs_cmd_request;
--
- static ssize_t state_show(struct kobject *kobj, struct kobj_attribute *attr,
- 		char *buf)
- {
-@@ -1555,8 +1536,6 @@ static int damon_sysfs_turn_damon_on(struct damon_sysfs_kdamond *kdamond)
- 
- 	if (damon_sysfs_kdamond_running(kdamond))
- 		return -EBUSY;
--	if (damon_sysfs_cmd_request.kdamond == kdamond)
--		return -EBUSY;
- 	/* TODO: support multiple contexts per kdamond */
- 	if (kdamond->contexts->nr != 1)
- 		return -EINVAL;
-@@ -1796,8 +1775,7 @@ static bool damon_sysfs_kdamonds_busy(struct damon_sysfs_kdamond **kdamonds,
- 	int i;
- 
- 	for (i = 0; i < nr_kdamonds; i++) {
--		if (damon_sysfs_kdamond_running(kdamonds[i]) ||
--		    damon_sysfs_cmd_request.kdamond == kdamonds[i])
-+		if (damon_sysfs_kdamond_running(kdamonds[i]))
- 			return true;
+diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
+index ed834622df2a..d50f37ef4eb8 100644
+--- a/mm/damon/sysfs-schemes.c
++++ b/mm/damon/sysfs-schemes.c
+@@ -2341,7 +2341,6 @@ void damos_sysfs_populate_region_dir(struct damon_sysfs_schemes *sysfs_schemes,
  	}
+ }
  
+-/* Called from damon_sysfs_cmd_request_callback under damon_sysfs_lock */
+ int damon_sysfs_schemes_clear_regions(
+ 		struct damon_sysfs_schemes *sysfs_schemes)
+ {
 -- 
 2.39.5
