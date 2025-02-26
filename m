@@ -1,47 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8451B219A93;
-	Tue, 25 Feb 2025 22:23:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EFA32690CB;
+	Wed, 26 Feb 2025 06:36:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740522221; cv=none; b=mAOuzEwPl19M8vFynhhJ8RCHFjoB0CpElvV1fgfYPu+CinG3jkTSLqgak9dzWpHzs8Rfzg4vlEu0B6SXfA4DFjVk0qHPGjynqjtpfTritODZwIE0WK6Tw3a6hOuU6NKRaD+EfW/y3ICFgqqUxK4foQ0fPkBBkVkTqgxqqUO8gY8=
+	t=1740551816; cv=none; b=UCduijGWK53ktQzYoO1pJsw8lwioTxpeKoj2KcNnsCY31XGp/2s8RuWYQNMZy564l+FuV+ckyBhI7h8yUEqs9Q0FcrMgpdD0Im2E4bAwv02L45vsD7T/1NBddZKxWRJH5tluJ9f7WG9RiPkBQS8dtnktX42VNSEK2vB+eVyJNYA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740522221; c=relaxed/simple;
-	bh=JZwrDWNwK0HGwgbbnUAETnfdZFPS3H25nSzCsf8e/C4=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=dssNFQsn7nEb3lK6cocTmBcs24XHeDk3p757q4ymNNHtC6dLMb1AoPEbuxRQvfKaqNQnC+52Jy8ntYN17yxmOazhiZj325PCJI+DAaB5FkAVJBogM31+dFwGNOTN9ttoR6Ru3b0oeEhbxn/YpXTo6cPfPEn6RKy/URjXpMeAmyM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=S66W9kHZ; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1740551816; c=relaxed/simple;
+	bh=o9SH1fYNEiXRwA3ASfhCRrr0awf72UpFI9T0tEvO0B4=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=e0EOnsKWwLTCVjjDPr8Z3BwMtRRYH7nIGqyWW/UbER9xUuTq4u9tglE3nMVyBUvr/k9nF6O3EdjpR1G7YGnw9xlSDw5ce223aYkALINj5bpHVRsmQXXtEkESPrleyHsfD0wu3I25WNp7dVrkPSL1FIhEDEx+Xuw6dQ3mYjUBmrI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=McqekDSH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="S66W9kHZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C15F3C4CEE7;
-	Tue, 25 Feb 2025 22:23:40 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="McqekDSH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D626AC4CEE9;
+	Wed, 26 Feb 2025 06:36:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1740522220;
-	bh=JZwrDWNwK0HGwgbbnUAETnfdZFPS3H25nSzCsf8e/C4=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S66W9kHZZShg8xZlcQ533Ohn8T+1do/8o72DrPZ2fNwWyRvPGR7e3p1nLBNM6lOYD
-	 3toGrsMjMc//M4hGKTPTB3s78O9hrdbCHlo+AD0EqnU2zAVSwfqqZfv4BakSmdyJCV
-	 m7lNZ48We5IKAq3puevP6JLpbJcdJEtMRLYQX+eOPhaEPR1iaYhMtErRQvmhWuMpGl
-	 zNsMZF3FvtkOuAyxphChsIcljZbXj7ErHf1l3iQjzAcS3zFNj2a1uL0MnZgQyi6Y0a
-	 KnFR2rqlwbq4oYUlj4hleJXVioXQkHhOisYWyziPULl1L2jll3EAtWzB1nq/SK9edi
-	 gsbniAPsLXUFQ==
+	s=k20201202; t=1740551815;
+	bh=o9SH1fYNEiXRwA3ASfhCRrr0awf72UpFI9T0tEvO0B4=;
+	h=From:To:Cc:Subject:Date:From;
+	b=McqekDSHQBLBG01+fsprPuEEjq5qcyvwqIxnqm8czWE9y1eRC+56tQ+ZOPd3ro14x
+	 fhS6lN0RQ82pKDDV81GBRQID9MsXupHmpNldEoSobHPI4mB9evfLy6h4sLoBsqMgoi
+	 iR2O7TnWH6Xj6QZMSmKFEcoLlEpOo+J5hBbrbYXufGhfGhF04AXhPV2gYgxBaWv7pV
+	 pjpy3gd0705F0mva2I8E//lajwf9aa222i0xsBd4qWEZKxo1M6arybVOP/Ji5GyfbW
+	 iL2sb1kvQJZ5/evYC7KRfassxmiLrO1qrgB6e8yLQaZdJkmiB/7PSn4sY3ovSLg5Lc
+	 Q1slVzU7cAt4Q==
 From: SeongJae Park <sj@kernel.org>
-To: Andrew Morton <akpm@linux-foundation.org>
+To: 
 Cc: SeongJae Park <sj@kernel.org>,
-	Shuah Khan <shuah@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	damon@lists.linux.dev,
 	kernel-team@meta.com,
 	linux-kernel@vger.kernel.org,
-	linux-kselftest@vger.kernel.org,
-	linux-mm@kvack.org,
-	stable@vger.kernel.org
-Subject: [PATCH 3/3] selftests/damon/damon_nr_regions: sort collected regiosn before checking with min/max boundaries
-Date: Tue, 25 Feb 2025 14:23:33 -0800
-Message-Id: <20250225222333.505646-4-sj@kernel.org>
+	linux-mm@kvack.org
+Subject: [RFC PATCH 00/13] mm/damon/sysfs: commit parameters online via damon_call()
+Date: Tue, 25 Feb 2025 22:36:38 -0800
+Message-Id: <20250226063651.513178-1-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250225222333.505646-1-sj@kernel.org>
-References: <20250225222333.505646-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -50,30 +45,62 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-damon_nr_regions.py starts DAMON, periodically collect number of regions
-in snapshots, and see if it is in the requested range.  The check code
-assumes the numbers are sorted on the collection list, but there is no
-such guarantee.  Hence this can result in false positive test success.
-Sort the list before doing the check.
+Due to the lack of ways to synchronously access DAMON internal data,
+DAMON sysfs interface is using damon_callback hooks with its own
+synchronization mechanism.  The mechanism is built on top of
+damon_callback hooks in an ineifficient and complicated way.
 
-Fixes: 781497347d1b ("selftests/damon: implement test for min/max_nr_regions")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: SeongJae Park <sj@kernel.org>
----
- tools/testing/selftests/damon/damon_nr_regions.py | 1 +
- 1 file changed, 1 insertion(+)
+Patch series "mm/damon: replace most damon_callback usages in sysfs with
+new core functions", which starts with commit e035320fd38e
+("mm/damon/sysfs-schemes: remove unnecessary schemes existence check in
+damon_sysfs_schemes_clear_regions()") introduced two new DAMON kernel
+API functions that providing the synchronous access, replaced most
+damon_callback hooks usage in DAMON sysfs interface, and cleaned up
+unnecessary code.
 
-diff --git a/tools/testing/selftests/damon/damon_nr_regions.py b/tools/testing/selftests/damon/damon_nr_regions.py
-index 6f1c1d88e309..58f3291fed12 100755
---- a/tools/testing/selftests/damon/damon_nr_regions.py
-+++ b/tools/testing/selftests/damon/damon_nr_regions.py
-@@ -65,6 +65,7 @@ def test_nr_regions(real_nr_regions, min_nr_regions, max_nr_regions):
- 
-     test_name = 'nr_regions test with %d/%d/%d real/min/max nr_regions' % (
-             real_nr_regions, min_nr_regions, max_nr_regions)
-+    collected_nr_regions.sort()
-     if (collected_nr_regions[0] < min_nr_regions or
-         collected_nr_regions[-1] > max_nr_regions):
-         print('fail %s' % test_name)
+Continue the replacement and cleanup works.  Update the last DAMON
+sysfs's usage of its own synchronization mechanism, namely online DAMON
+parameters commit, to use damon_call() instead of the damon_callback
+hooks and the hard-to-maintain own synchronization mechanism.  Then
+remove the no more be used code due to the change, and more unused code
+that just not yet cleaned up.
+
+The first four patches of this series do the replacement.  Then,
+following three patches (patches 5-7) remove the DAMON sysfs interface'
+own synchronization mechanism and its usages, which is no more be used
+by anyone due to the first four patches.  Finally, six patches (8-13)
+doing more cleanup of no more valid comment and no more used code
+follow.
+
+SeongJae Park (13):
+  mm/damon/sysfs: validate user inputs from damon_sysfs_commit_input()
+  mm/damon/core: invoke kdamond_call() after merging is done if possible
+  mm/damon/core: make damon_set_attrs() be safe to be called from
+    damon_call()
+  mm/damon/sysfs: handle commit command using damon_call()
+  mm/damon/sysfs: remove damon_sysfs_cmd_request code from
+    damon_sysfs_handle_cmd()
+  mm/damon/sysfs: remove damon_sysfs_cmd_request_callback() and its
+    callers
+  mm/damon/sysfs: remove damon_sysfs_cmd_request and its readers
+  mm/damon/sysfs-schemes: remove obsolete comment for
+    damon_sysfs_schemes_clear_regions()
+  mm/damon: remove damon_callback->private
+  mm/damon: remove ->before_start of damon_callback
+  mm/damon: remove damon_callback->after_sampling
+  mm/damon: remove damon_callback->before_damos_apply
+  mm/damon: remove damon_operations->reset_aggregated
+
+ include/linux/damon.h       |  34 ++-------
+ mm/damon/core.c             |  64 ++++++++--------
+ mm/damon/paddr.c            |   1 -
+ mm/damon/sysfs-schemes.c    |   1 -
+ mm/damon/sysfs.c            | 147 +++++-------------------------------
+ mm/damon/tests/core-kunit.h |   6 +-
+ mm/damon/vaddr.c            |   1 -
+ 7 files changed, 61 insertions(+), 193 deletions(-)
+
+
+base-commit: 58f3b385bf3ed67fa989e13620dae8331df515d7
 -- 
 2.39.5
