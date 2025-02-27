@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C6C817A305;
-	Thu, 27 Feb 2025 01:58:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22E9B187FEC;
+	Thu, 27 Feb 2025 01:58:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740621488; cv=none; b=Y+4xNoTrNEDRS+Ky3x1KKY1Ae7iHbbtPYhEVzg0vD0QU/HVdxDzLaBmoXW2G+L82lTBYWqxbhHk3I3LZG1WztUd6xjppiFvn0jKevQUWfzZx3hdryYDveXjRWr/W5utvRm0Ontw/b9FfouG5t2kQNRxbzVfR55yB3FJb8cZFt84=
+	t=1740621490; cv=none; b=FQ6mCaIJ/DuKwcjSaqEa3OPUhXMpYPWgXiXEcqc+Dd5xrRJp2vMOjzn6Xdc2uN3wJkPqJjulkilCDO0cIa+gbVyIbGcYeqlfpOd1VKMOQgONbPUZeKbSKwXxFuo4WFADctKDdyTLgRtZFlIRM6/WBV4TI/cYh2drxwUj7/Y7rE0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740621488; c=relaxed/simple;
-	bh=S9XFinRzq8Qckj8OZ3J96suStAifVelwVdFkfT6lwsE=;
+	s=arc-20240116; t=1740621490; c=relaxed/simple;
+	bh=5EkDSCqQcPc4o5HB4towhIerpdJDJgqyUQWBno/4/Pc=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=pl8De+r34pl66l0sKkenOuLAIlVDkLzFUQ7NK6sxC1gAv/dvhLC6gu10TsfBZQU7nYMlNlUR3ucmgGXnebeAAz5Kre/jb6rtihRYF0S7SJR9bfUjui4Vt1Fp8ft1R52Ah/mw/ap3XjuM0r85fZh0d1RLmMMVQjQgMFyo+Har0aM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WFg4aUZp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VY7mfMfz+nuerfKgE/XQnXXjnp8udOXul4x6yyW2XsdPWBMnAVP3e14GOSZ9rx2cYIovEGzxI5BpBAuA5D9lbz/U8fdXv7Wlc5/0Sa5BqlslALi0g1u2qW85DqiPSl1LaO51gC6fGFNxnpzf3MW2gwxDw7pL5jk6eRvDoHwJBHc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TDxU2T+f; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WFg4aUZp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B480AC4CEE9;
-	Thu, 27 Feb 2025 01:58:07 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TDxU2T+f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1DEDC4CEE8;
+	Thu, 27 Feb 2025 01:58:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1740621487;
-	bh=S9XFinRzq8Qckj8OZ3J96suStAifVelwVdFkfT6lwsE=;
+	s=k20201202; t=1740621490;
+	bh=5EkDSCqQcPc4o5HB4towhIerpdJDJgqyUQWBno/4/Pc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WFg4aUZpcvDAJt0FMFBylM4KTG431Bd2TRJeJRv7JGBWoHnrsuUQdQLRTT84gi0aN
-	 jSZn4AmmhGfesBe8je+1OKX9QewD8rGm8sTkaO/ueid/QTNyvwT/+bt/E4+QTn49tA
-	 F/24IP1GLwnSIyFU6EZq9BzGAlFDJbaacDr4NPETqZ/0IKg9mthPql3jFwtf3NJiJh
-	 6cIwyyXOylr8SoA/vObsNNTb/TsoqtEETIzcj6b/6SQmhJnzD3xykHaiIbr7HlfThh
-	 SOyhSqCFz3q+HZKSfR1FkujwGAGN5Pf5yOTLzdgRXwDkOP7mmrJh0MBaBrIl3aOTiK
-	 PcaKpNlf9SmUQ==
+	b=TDxU2T+fb1Lu8ku+Akhya8vo641/KoP0MnyQgPo0COrZXXJxSODx8ZPMPT/8/JWiY
+	 Qw5nEETyG1lvk2ANCOBqu0EPYsqsxFVnrL1JefU78M75Jtdkb5ySvMkEJxQzs2xAEl
+	 erL9Cnz1H+8q9AAe14/LG5wJDr7YqcVIctO4HIUD1rq0wl4fNrHocT41y9XIHnYnrL
+	 LsO/TA49RXhUn+jCEMyE5iE7B6JM4VDwmODLUy9xF9vqoKJl+qztmcgo9Hywnq5auD
+	 6W4m0xhWcIZ0G5zYqHY61r9bC1FBzJBtnln8ZRdvDGUd16d1yCuP9/nMdpY6RU8i/6
+	 VDt8wh5DSc79w==
 From: SeongJae Park <sj@kernel.org>
 To: 
 Cc: SeongJae Park <sj@kernel.org>,
@@ -34,9 +34,9 @@ Cc: SeongJae Park <sj@kernel.org>,
 	kernel-team@meta.com,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH v2 6/9] mm/damon: add default allow/reject behavior fields to struct damos
-Date: Wed, 26 Feb 2025 17:57:51 -0800
-Message-Id: <20250227015754.38789-7-sj@kernel.org>
+Subject: [RFC PATCH v2 8/9] mm/damon/paddr: respect ops_filters_default_reject
+Date: Wed, 26 Feb 2025 17:57:53 -0800
+Message-Id: <20250227015754.38789-9-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250227015754.38789-1-sj@kernel.org>
 References: <20250227015754.38789-1-sj@kernel.org>
@@ -48,37 +48,27 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Current default allow/reject behavior of filters handling stage has made
-before introduction of the allow behavior.  For allow-filters usage, it
-is confusing and inefficient.
-
-It is more intuitive to decide the default filtering stage allow/reject
-behavior as opposite to the last filter's behavior.  The decision should
-be made separately for core and operations layers' filtering stages,
-since last core layer-handled filter is not really a last filter if
-there are operations layer handling filters.
-
-Keeping separate decisions for the two categories can make the logic
-simpler.  Add fields for storing the two decisions.
+Use damos->ops_filters_default_reject, which is set based on the
+installed filters' behaviors, from physical address space DAMON
+operations set.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- include/linux/damon.h | 3 +++
- 1 file changed, 3 insertions(+)
+ mm/damon/paddr.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/linux/damon.h b/include/linux/damon.h
-index add82fdc1117..1d8479f57f85 100644
---- a/include/linux/damon.h
-+++ b/include/linux/damon.h
-@@ -497,6 +497,9 @@ struct damos {
- 	unsigned long next_apply_sis;
- 	/* informs if ongoing DAMOS walk for this scheme is finished */
- 	bool walk_completed;
-+	/* whether to reject core/ops filters umatched regions */
-+	bool core_filters_default_reject;
-+	bool ops_filters_default_reject;
- /* public: */
- 	struct damos_quota quota;
- 	struct damos_watermarks wmarks;
+diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
+index 432ea4efdc4b..fee66a3cc82b 100644
+--- a/mm/damon/paddr.c
++++ b/mm/damon/paddr.c
+@@ -257,7 +257,7 @@ static bool damos_pa_filter_out(struct damos *scheme, struct folio *folio)
+ 		if (damos_pa_filter_match(filter, folio))
+ 			return !filter->allow;
+ 	}
+-	return false;
++	return scheme->ops_filters_default_reject;
+ }
+ 
+ static bool damon_pa_invalid_damos_folio(struct folio *folio, struct damos *s)
 -- 
 2.39.5
