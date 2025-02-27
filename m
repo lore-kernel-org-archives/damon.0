@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93CF7137750;
-	Thu, 27 Feb 2025 01:58:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6D3014831E;
+	Thu, 27 Feb 2025 01:58:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740621482; cv=none; b=GN6k9zT99EwBe1Ke6SFK5dI2KnIgEprKW1pqruZzNRVv1ZkcSJmWkSld4tty0OMpiiQUnZCYmHL1Kg5wtEwT4rdqqEYDkfCzxAzv+OJ7TouX8ebQlNkSQtq+cqSEqFNiTSfRgXiR4VX+hbuOF8EJyw5Djklxv89p/62a/cda8+0=
+	t=1740621483; cv=none; b=qBzbSOKDKGPXACMxPfT2iViDzddkwL1uhCNOXNsCwXZ/fEpZefbo+sOTF+NB2gX6KW/UbEvHHtGWqjdtJFQukxn9qtZNpsUDQiXnlYQep/jFU8G6VYleKsOAt1LOXA/Nxs/JWK1jJNRGxdSIpezm8P3Q/aedGkLSzXrUAGEPA9E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740621482; c=relaxed/simple;
-	bh=rhFsNhRUaSQHgawNxfN1Ke4vP/OFw5KgXJOej1ppOTE=;
+	s=arc-20240116; t=1740621483; c=relaxed/simple;
+	bh=N/YtlGcWQ2PX0NMUIcuI8F7U0I6DV10Xf2TomWII3qk=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=fx2WY0qQ5EY8GNgr5qcjM2nRz2hQk7Auh+E9TpBYA01mHH7cF7Azk5lt7OUiVvaH8ENBclm0jNnitisGyUxG4HE2dNyB6lp1I/35QhHTQIVCg6KGD0sEcS4pczknTpmgB1SZEop4Q7ka6JYf7eMgRBxZbzShqkEWV/93jt2Q3h8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=js2t26O2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eSc8pwBMJBV5bTzlF+sldvUa4114xUsspHxxmF2OPCfm7UlJlQInLmUHkFN3nDZkpx65DLL9M+aJ2xXc5x2hqb0EcEBGN84OAWwyJ97Lxq34EbMPjqDUA4ahogZpJcEaafjIFHFPm2FlrnPA0dTyt5ux/PsOTzHe2RkbpKsc7oI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=t1dUbAnf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="js2t26O2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6F20C4CED6;
-	Thu, 27 Feb 2025 01:58:01 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="t1dUbAnf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 079F0C4CEE2;
+	Thu, 27 Feb 2025 01:58:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1740621482;
-	bh=rhFsNhRUaSQHgawNxfN1Ke4vP/OFw5KgXJOej1ppOTE=;
+	s=k20201202; t=1740621483;
+	bh=N/YtlGcWQ2PX0NMUIcuI8F7U0I6DV10Xf2TomWII3qk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=js2t26O2XKtZGE3Dz4T21JiIIrbyHgstsd9l+raa3zsams1DBAgkQLkYwPi0NyhRI
-	 q4ldhoGPKcn51cyoqXBfa241uVi4FuI0GkLDtQTqv6fOeOKZ9we1erdUXNZQDoJTgS
-	 dxsQ8tRhCKepDOSGM+pbDpHllMX4mXc4BllITmwitSgviys/u6csxyHxEdALwpIpZR
-	 i4X82CfixbZv4fpJALo0oUbF0LwikzrkVKhQIwo2KodrClxrSO/lyZ8IbGDHnBmFGk
-	 GjrHenlFCJrjUDy9GHEPykIBZ/GF/NuiVphMdYE1Eth3aYmkkPr/6LzCVfYcjfpOFo
-	 AJ+zQgiMnBp9g==
+	b=t1dUbAnfFVOaSAla8yVUEws7sBVMN8BWmcjrpG4/6zKUr56c2+Hgd9MoRMyC7DcE+
+	 6eGzAOyhCaUMviM/3vJ6pFMlhbeVEg0jemrvzo/Edm7SrN+agFMW3fwmoaD8xrBMCb
+	 y7myLvuuU+3pID+CqtewZT+vjo/3aVeHbqEfBFYBwPOtkvlOU4QRFJTIjadPYKnENr
+	 6ApnqsgnyiFci4rNtMiRv3JMog+qrrRbMV97PHlfoj47WicQ5NnM7xlL0uLEcC4gdy
+	 mlnjVmdd05ZDzVmcEC4jVaF/tjnP4RwkquBCakk3frYFaDAsRPoLacw0Zizdu3dQl8
+	 /J+2uSXbBzwDg==
 From: SeongJae Park <sj@kernel.org>
 To: 
 Cc: SeongJae Park <sj@kernel.org>,
@@ -34,9 +34,9 @@ Cc: SeongJae Park <sj@kernel.org>,
 	kernel-team@meta.com,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH v2 1/9] mm/damon/core: introduce damos->ops_filters
-Date: Wed, 26 Feb 2025 17:57:46 -0800
-Message-Id: <20250227015754.38789-2-sj@kernel.org>
+Subject: [RFC PATCH v2 2/9] mm/damon/paddr: support ops_filters
+Date: Wed, 26 Feb 2025 17:57:47 -0800
+Message-Id: <20250227015754.38789-3-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250227015754.38789-1-sj@kernel.org>
 References: <20250227015754.38789-1-sj@kernel.org>
@@ -48,72 +48,56 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-DAMOS filters can be categorized into two groups depending on which
-layer they are handled, namely core layer and ops layer.  The groups are
-important because the evaluation sequence of filters decides the overall
-behavior, and core layer-handled filters are evaluated before operations
-layer-handled ones.
-
-Currently, all filters are maintained in a single list (damos->filters)
-in mix.  Filters evaluation logics in core layer and operations layer
-iterates all the filters on the list, while skipping filters that should
-be not handled by the layer of the logic.  It is inefficient.  Making
-future extensions having differentiations for filters of different
-handling layers will also be complicated.  Add a new list that will be
-used for having all operations layer-handled DAMOS filters to DAMOS
-scheme data structure, with support of its initialization and basic
-traversals.
+DAMON keeps all DAMOS filters in damos->filters.  No filter is saved in
+damos->ops_filters, but upcoming changes will make it to use
+damos->ops_filters to have all operations layer handled DAMOS filters.
+DAMON physical address space operations set implementation (paddr) is
+not ready for the changes, since it handles only damos->filters.  To
+avoid any breakage during the upcoming changes, make paddr to handle
+both lists.  After the change is made, ->filters support on paddr can be
+safely removed.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- include/linux/damon.h | 8 ++++++++
- mm/damon/core.c       | 1 +
- 2 files changed, 9 insertions(+)
+ mm/damon/paddr.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/include/linux/damon.h b/include/linux/damon.h
-index 795ca09b1107..add82fdc1117 100644
---- a/include/linux/damon.h
-+++ b/include/linux/damon.h
-@@ -448,6 +448,7 @@ struct damos_access_pattern {
-  * @wmarks:		Watermarks for automated (in)activation of this scheme.
-  * @target_nid:		Destination node if @action is "migrate_{hot,cold}".
-  * @filters:		Additional set of &struct damos_filter for &action.
-+ * @ops_filters:	ops layer handling &struct damos_filter objects list.
-  * @last_applied:	Last @action applied ops-managing entity.
-  * @stat:		Statistics of this scheme.
-  * @list:		List head for siblings.
-@@ -503,6 +504,7 @@ struct damos {
- 		int target_nid;
- 	};
- 	struct list_head filters;
-+	struct list_head ops_filters;
- 	void *last_applied;
- 	struct damos_stat stat;
- 	struct list_head list;
-@@ -810,6 +812,12 @@ static inline unsigned long damon_sz_region(struct damon_region *r)
- #define damos_for_each_filter_safe(f, next, scheme) \
- 	list_for_each_entry_safe(f, next, &(scheme)->filters, list)
+diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
+index 25090230da17..3e651308ba5d 100644
+--- a/mm/damon/paddr.c
++++ b/mm/damon/paddr.c
+@@ -257,6 +257,10 @@ static bool damos_pa_filter_out(struct damos *scheme, struct folio *folio)
+ 		if (damos_pa_filter_match(filter, folio))
+ 			return !filter->allow;
+ 	}
++	damos_for_each_ops_filter(filter, scheme) {
++		if (damos_pa_filter_match(filter, folio))
++			return !filter->allow;
++	}
+ 	return false;
+ }
  
-+#define damos_for_each_ops_filter(f, scheme) \
-+	list_for_each_entry(f, &(scheme)->ops_filters, list)
-+
-+#define damos_for_each_ops_filter_safe(f, next, scheme) \
-+	list_for_each_entry_safe(f, next, &(scheme)->ops_filters, list)
-+
- #ifdef CONFIG_DAMON
+@@ -287,6 +291,12 @@ static unsigned long damon_pa_pageout(struct damon_region *r, struct damos *s,
+ 			break;
+ 		}
+ 	}
++	damos_for_each_ops_filter(filter, s) {
++		if (filter->type == DAMOS_FILTER_TYPE_YOUNG) {
++			install_young_filter = false;
++			break;
++		}
++	}
+ 	if (install_young_filter) {
+ 		filter = damos_new_filter(
+ 				DAMOS_FILTER_TYPE_YOUNG, true, false);
+@@ -535,6 +545,8 @@ static bool damon_pa_scheme_has_filter(struct damos *s)
  
- struct damon_region *damon_new_region(unsigned long start, unsigned long end);
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index 38f545fea585..bcb7e42098dc 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -374,6 +374,7 @@ struct damos *damon_new_scheme(struct damos_access_pattern *pattern,
- 	 */
- 	scheme->next_apply_sis = 0;
- 	INIT_LIST_HEAD(&scheme->filters);
-+	INIT_LIST_HEAD(&scheme->ops_filters);
- 	scheme->stat = (struct damos_stat){};
- 	INIT_LIST_HEAD(&scheme->list);
+ 	damos_for_each_filter(f, s)
+ 		return true;
++	damos_for_each_ops_filter(f, s)
++		return true;
+ 	return false;
+ }
  
 -- 
 2.39.5
