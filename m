@@ -1,134 +1,162 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f175.google.com (mail-lj1-f175.google.com [209.85.208.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDCD71EB5C7;
-	Thu, 27 Feb 2025 05:50:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A632721D5BA
+	for <damon@lists.linux.dev>; Thu, 27 Feb 2025 07:04:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740635458; cv=none; b=rQNfjQcu02rYNoZetz4g+6wnNWT6p3R/lHIW56AGVE7748svdpEs3vf6WKI0DH3urKMiBDOhpNsLh6K3j9R5fDDBf5VKXazQmSaQymkxTvtDP4/VAa/+VH7mUSi9uRJx2zTT29KyoJ5sJ3sxouTF4PCEdP0UBi5QxshbJVcf/Wk=
+	t=1740639853; cv=none; b=fMKyv6ESnwa8DSxXFTQ12fBboe3WQa/cu4G5UUXboCDjVIEi2RsSpGVYVVTOq0TB9ZOITTuuoh7ECz7nZ3KVovQse8ZkY2z7VQFzd3OKalw7bjmJ8t2G/d4a/HBm4HY20jtBBStGoTTkzuLSSvgjotVLm0XTYGVAvTEM/jhv7wY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740635458; c=relaxed/simple;
-	bh=JkCJgg3pXcFKl7jwQLtss0Q7N/vh0YlTKOc0U3CUB54=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=ZHJAnhnlpYmMd0+kaGgbxpi7q1Ix9Zoft+aGCuup3KqkxaexQuhpf+cM8IPZ0xN8MbfCj0NHWcdC/ECF5gzLiEss/eCqqWB8CF3+sE9Gl2rHwKnd4fI0AdYEw7spfJEJ2cRRM1h+BaIzz6Wd5lliOlu+rPSdomOshX8epxyBGQ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Z3iAqjPy; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1740639853; c=relaxed/simple;
+	bh=wGhmY4K+cfsz+Ts0JI7fTq+0yQhI6j1x0t4HpKbP2FI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=JvG2N6wdJdXanQhJUndzhlT8AsehxhdqOc3I7Y+gGS2CZciYOAyL91B6TAdFk9abpeEdpVf873NpyPONr8h98XBAp4KTs6adbgZHOnEAZ1GPTwpxVofQ3b1syu6Glne01RujWCZdAW2ZjF7Uz33QEDylZX37tCuvknc41MJZH4U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JliqGplo; arc=none smtp.client-ip=209.85.208.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Z3iAqjPy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04DDAC4CEDD;
-	Thu, 27 Feb 2025 05:50:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1740635458;
-	bh=JkCJgg3pXcFKl7jwQLtss0Q7N/vh0YlTKOc0U3CUB54=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z3iAqjPyhw+BgraAZGgf7zQsZiPtqrwhFBzAVPN2s/aWADqK8fJwGd9a95ZBjyyPX
-	 fgQitOJ+wPHuUiZTMlbMa9h3F/T7r5QnMZrdtcJ9VqwFDElo7XywCiAp2VMMZS/Qjo
-	 01syAXuMiQnGuEvUS08DeN5M85grmC01TgIiYKeb03Re+mySGYPpEg389ZsaSgHaTj
-	 4xWjcCv9MUayu/NOj7ZCa6qmNFMhR5mdd46dXRO9EUBhsmR274X1G2rm07obWxVmVB
-	 C90HerYeOI/+AoqGCv+9+iaW//lDSQFEpM9Ic2ga1PAT8cgtqu+cNVLNZsGszMDbyh
-	 Snps/d3ZPtQEg==
-From: SeongJae Park <sj@kernel.org>
-To: SeongJae Park <sj@kernel.org>
-Cc: Andrew Morton <akpm@linux-foundation.org>,
-	damon@lists.linux.dev,
-	kernel-team@meta.com,
-	linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org
-Subject: Re: [RFC PATCH v2 7/9] mm/damon/core: set damos_filter default allowance behavior based on installed filters
-Date: Wed, 26 Feb 2025 21:50:54 -0800
-Message-Id: <20250227055054.22813-1-sj@kernel.org>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250227015754.38789-8-sj@kernel.org>
-References: 
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JliqGplo"
+Received: by mail-lj1-f175.google.com with SMTP id 38308e7fff4ca-30a69c1a8d3so7330651fa.3
+        for <damon@lists.linux.dev>; Wed, 26 Feb 2025 23:04:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1740639850; x=1741244650; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=5pSnAlORQX9yo5NqS9jLGuSkbz6XSEuBHk2B9Ea63/k=;
+        b=JliqGplolKY93SbSz87TbSKuC8yJ/8GiYM3Gbx1iRxTw1dnk7luCmZjEFBxALPUkiZ
+         3qj9wlwlGSRVaEwS2KA4TAZiygMEvYUYEyryh03t6obsSU6eptNZXitNRyd7JpAK/pMA
+         AxgfqW7qHmhUnF8z6BJ+/DbMoufvxUoY9v+IXbuOWC61Wx4HY/bMlYi5iOhsWJoFjXvf
+         hoieLbc+o4V4RoAhl8rPFNHR3ICqhUUE1IZeLs8s4px2PkxXBwFDvwqCO/kJktYni6gp
+         nhINfF4ycdttRUrRqTyP7x9Y3c9LWai6lZoVBgQSu1XoXO5cZG0uNJOAt5+Nla5KN6+t
+         eXSg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1740639850; x=1741244650;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=5pSnAlORQX9yo5NqS9jLGuSkbz6XSEuBHk2B9Ea63/k=;
+        b=w1r9V1fmx0/D2EzESX2d4YFbMTw30TrO7ovpFqySjK5r5EfPpgaYOmXocpQ/8FchP1
+         Pjb7IAus4+faQZNxBlr34E5qJUA8wDfk8e0Lae/03j7klsmFA83ZYEb5YX9htvt1afqV
+         K7K5D8b0Jpy4G1lWbw9uq7PYh+MWbCIlYI7dsus77M0ZErj7GMgdSJgB3Q7xlx4UhFVD
+         QJ9y6//wDK6V3tB6Yxgjz7gWLRiEM/1+xxEYmaXM0HL72mbZ76Sz21dwg4GdhK9hNYe/
+         bEA5p2LNS53OmiN+woVDMw7zSi2F/9ril4BRMhGyt4c/iVmgZsN+8Zbc2sNxZ9hX8r0c
+         lh0g==
+X-Forwarded-Encrypted: i=1; AJvYcCVQnANxRjT43HLC8+AhYpvyhM1z3P/usAqoWWLwMXMIi+kxKLa/Onmc4WKud+US5XEx79dp6w==@lists.linux.dev
+X-Gm-Message-State: AOJu0YyZH0Inz/nlpwxxnooSxuvFtlQEgVbUVhV++dwgWFByDl4pkwXy
+	5q3l3LSITldWdhSLeyJhYkbFwoBe1g6UhmS46FxE6WIfTiaqGieLJd1haTsmDIyeRCRQ7wfgHui
+	pBPkKQYhucoGm68T9h+Cq71AifYk=
+X-Gm-Gg: ASbGncsuGWWLOp0wiTtASz8EsDRUC01LEhxGYLYQAI3aLN8bIM+yLIqTvh6k8SdakmU
+	cyYv+Z/oGVsmIK84ZpgEdgixHODhSuZ4rsAnATT1cLnsvvU2TesiUkS00YRYg5v9REaXKyA/c21
+	09wTG1yz0=
+X-Google-Smtp-Source: AGHT+IEJB9xY5jdV4yA0qX96NmnQQAhEOgjMykCaPQFjWaqdpoNDmqQyMdSO8o9a1TpCdng2oPuHncXDTZDKMC+urTU=
+X-Received: by 2002:a05:651c:220a:b0:2ff:d0c4:5ffe with SMTP id
+ 38308e7fff4ca-30a5989ec23mr108942871fa.16.1740639849425; Wed, 26 Feb 2025
+ 23:04:09 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20250226133703.3c9775c9e50e198abc9b9f6e@linux-foundation.org>
+ <20250226225605.2000-1-sj@kernel.org> <CAJGd785Eu7iuVwYnewaUm38NJcKzB-xkZwdRiYR9Yo9Qwaoffg@mail.gmail.com>
+In-Reply-To: <CAJGd785Eu7iuVwYnewaUm38NJcKzB-xkZwdRiYR9Yo9Qwaoffg@mail.gmail.com>
+From: bus710 <bus710@gmail.com>
+Date: Wed, 26 Feb 2025 23:03:57 -0800
+X-Gm-Features: AQ5f1JpVLtjZYY8z8VdY3q00BIa0I40J0PTII1FHJ04t63xdJqRQe8KrnJyuBBs
+Message-ID: <CAJGd784+kQ8NXSp1=9tZW+4wYvTh6SkW7ySaB0TVGcinjjcEdQ@mail.gmail.com>
+Subject: Re: [PATCH] samples/damon: a typo in the kconfig - sameple
+To: SeongJae Park <sj@kernel.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>, damon@lists.linux.dev, kernel-team@meta.com, 
+	linux-kernel@vger.kernel.org, linux-mm@kvack.org
+Content-Type: multipart/mixed; boundary="000000000000e855b8062f1a4bde"
 
-On Wed, 26 Feb 2025 17:57:52 -0800 SeongJae Park <sj@kernel.org> wrote:
+--000000000000e855b8062f1a4bde
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-> Decide whether to allow or reject by default on core and opertions layer
-> handled filters evaluation stages.  It is decided as the opposite of the
-> last installed filter's behavior.  If there is no filter at all, allow
-> by default.  If there is any operations layer handled filters, core
-> layer's filtering stage sets allowing as the default behavior regardless
-> of the last filter of core layer-handling ones, since the last filter of
-> core layer handled filters in the case is not really the last filter of
-> the entire filtering stage.
+On Wed, Feb 26, 2025 at 3:07=E2=80=AFPM bus710 <bus710@gmail.com> wrote:
+>
+> On Wed, Feb 26, 2025 at 2:56=E2=80=AFPM SeongJae Park <sj@kernel.org> wro=
+te:
+> >
+> > On Wed, 26 Feb 2025 13:37:03 -0800 Andrew Morton <akpm@linux-foundation=
+.org> wrote:
+> >
+> > > On Wed, 26 Feb 2025 10:42:04 -0800 SeongJae Park <sj@kernel.org> wrot=
+e:
+> > >
+> > > > From: bus710 <bus710@gmail.com>
+> > >
+> > > Full names are preferred, please.  Actually I think it's "required".
+> >
+> > Thank you for letting me clearly know this.  I'll request full names to=
+ DAMON
+> > patch authors from next time.
+> >
+> > bus710, we could still update the patch before it is merged into the ma=
+inline.
+> > If you could, please let us know your full name and if we can update th=
+e patch
+> > with that.
+> >
+> > >
+> > > I'll apply it anyway due to the patch's minor nature, thanks.
+> >
+> > I agree this is a simple enough patch that the name doesn't really matt=
+er.
+> > Thank you Andrew :)
+> >
+> >
+> > Thanks,
+> > SJ
+>
+> Oh, yes. I was a little worried if I added too much noise for such a
+> small work, but I shouldn't miss this opportunity to leave my name in
+> Linux history.
+> Let me prepare a new patch as soon as possible.
 
-This is not sufficient enough.  Even with this change, core-handled allow
-filters after core-handled reject filters are still meaningless.
+Hi all,
 
-If a region is matched to a core layer handled filter, the allow/reject
-decision should be respected while ignoring all remaining filters, regardless
-of on what layer those are handled.  It works in the way for reect filters,
-since core layer-rejected regions are not passed to the ops layer at all.  In
-case of allow filter, however, the region is passed to ops layer without the
-information about whether it has passed to the ops layer because it was
-allowed, or just not matched to any filter.  Hence, all ops filters can be
-applied to the region.
+Please find the attached patch.
+Based on the latest one, from @Andrew Morton I just replaced my ID
+with my real name as well as updated the subject.
 
-We can implement this missing part by storing the core layer filtering stage
-decision somewhere and let ops filter filtering stage repsect it.  Changes like
-attached diff at the end of this mail may work.  I will add such changes to
-next version of this patch series.
+Thank you,
+Seongjun Kim
 
-Thanks,
-SJ
+--000000000000e855b8062f1a4bde
+Content-Type: text/x-patch; charset="US-ASCII"; 
+	name="0002-samples-damon-a-typo-in-the-kconfig-sameple.patch"
+Content-Disposition: attachment; 
+	filename="0002-samples-damon-a-typo-in-the-kconfig-sameple.patch"
+Content-Transfer-Encoding: base64
+Content-ID: <f_m7n00g7d0>
+X-Attachment-Id: f_m7n00g7d0
 
-[...]
-
-=================================== >8 ========================================
-diff --git a/include/linux/damon.h b/include/linux/damon.h
-index b7a4d12ce532..8d8621d8b58d 100644
---- a/include/linux/damon.h
-+++ b/include/linux/damon.h
-@@ -528,6 +528,7 @@ struct damos {
-        unsigned long next_apply_sis;
-        /* informs if ongoing DAMOS walk for this scheme is finished */
-        bool walk_completed;
-+       bool skip_ops_filters;
-        /* whether to reject core/ops filters umatched regions */
-        bool core_filters_default_reject;
-        bool ops_filters_default_reject;
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index 783cc05a9fcc..a2e4bdbb6b19 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -1662,9 +1662,19 @@ static bool damos_filter_out(struct damon_ctx *ctx, struct damon_target *t,
- {
-        struct damos_filter *filter;
-
-+       s->skip_ops_filters = false;
-        damos_for_each_filter(filter, s) {
--               if (damos_filter_match(ctx, t, r, filter))
-+               if (damos_filter_match(ctx, t, r, filter)) {
-+                       /*
-+                        * ops layer filters should also respect the decision.
-+                        * Store the information in s->skip_ops_filters.
-+                        * If the decision is reject, the region will not be
-+                        * passed to ops layer, so no need to set the flag.
-+                        */
-+                       if (filter->allow)
-+                               s->skip_ops_filters = true;
-                        return !filter->allow;
-+               }
-        }
-        return s->core_filters_default_reject;
- }
-diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
-index 4a170086852a..8568b5a34888 100644
---- a/mm/damon/paddr.c
-+++ b/mm/damon/paddr.c
-@@ -393,6 +393,9 @@ static bool damos_pa_filter_out(struct damos *scheme, struct folio *folio)
- {
-        struct damos_filter *filter;
-
-+       if (scheme->skip_ops_filters)
-+               return false;
-+
-        damos_for_each_ops_filter(filter, scheme) {
-                if (damos_pa_filter_match(filter, folio))
-                        return !filter->allow;
+RnJvbTogU2VvbmdqdW4gS2ltIDxidXM3MTBAZ21haWwuY29tPgpTdWJqZWN0OiBbUEFUQ0ggdjJd
+IHNhbXBsZXMvZGFtb246IGEgdHlwbyBpbiB0aGUga2NvbmZpZyAtIHNhbWVwbGUKRGF0ZTogV2Vk
+LCAyNiBGZWIgMjAyNSAxMDo0MjowNCAtMDgwMAoKVGhlcmUgaXMgYSB0eXBvIGluIHRoZSBLY29u
+ZmlnIGZpbGUgb2YgdGhlIGRhbW9uIHNhbXBsZSBtb2R1bGUuICBDb3JyZWN0Cml0OiBzL3NhbWVw
+bGUvc2FtcGxlLwoKTGluazogaHR0cHM6Ly9sa21sLmtlcm5lbC5vcmcvci8yMDI1MDIyNjE4NDIw
+NC4yOTM3MC0xLXNqQGtlcm5lbC5vcmcKU2lnbmVkLW9mZi1ieTogU2VvbmdqdW4gS2ltIDxidXM3
+MTBAZ21haWwuY29tPgpTaWduZWQtb2ZmLWJ5OiBTZW9uZ0phZSBQYXJrIDxzakBrZXJuZWwub3Jn
+PgpSZXZpZXdlZC1ieTogU2VvbmdKYWUgUGFyayA8c2pAa2VybmVsLm9yZz4KU2lnbmVkLW9mZi1i
+eTogQW5kcmV3IE1vcnRvbiA8YWtwbUBsaW51eC1mb3VuZGF0aW9uLm9yZz4KLS0tCgogc2FtcGxl
+cy9kYW1vbi9LY29uZmlnIHwgICAgNCArKy0tCiAxIGZpbGUgY2hhbmdlZCwgMiBpbnNlcnRpb25z
+KCspLCAyIGRlbGV0aW9ucygtKQoKLS0tIGEvc2FtcGxlcy9kYW1vbi9LY29uZmlnfnNhbXBsZXMt
+ZGFtb24tYS10eXBvLWluLXRoZS1rY29uZmlnLXNhbWVwbGUKKysrIGEvc2FtcGxlcy9kYW1vbi9L
+Y29uZmlnCkBAIC0zLDcgKzMsNyBAQAogbWVudSAiREFNT04gU2FtcGxlcyIKCiBjb25maWcgU0FN
+UExFX0RBTU9OX1dTU0UKLSAgICAgICBib29sICJEQU1PTiBzYW1lcGxlIG1vZHVsZSBmb3Igd29y
+a2luZyBzZXQgc2l6ZSBlc3RpbWF0aW9uIgorICAgICAgIGJvb2wgIkRBTU9OIHNhbXBsZSBtb2R1
+bGUgZm9yIHdvcmtpbmcgc2V0IHNpemUgZXN0aW1hdGlvbiIKICAgICAgICBkZXBlbmRzIG9uIERB
+TU9OICYmIERBTU9OX1ZBRERSCiAgICAgICAgaGVscAogICAgICAgICAgVGhpcyBidWlsZHMgREFN
+T04gc2FtcGxlIG1vZHVsZSBmb3Igd29ya2luZyBzZXQgc2l6ZSBlc3RpbWF0aW9uLgpAQCAtMTUs
+NyArMTUsNyBAQCBjb25maWcgU0FNUExFX0RBTU9OX1dTU0UKICAgICAgICAgIElmIHVuc3VyZSwg
+c2F5IE4uCgogY29uZmlnIFNBTVBMRV9EQU1PTl9QUkNMCi0gICAgICAgYm9vbCAiREFNT04gc2Ft
+ZXBsZSBtb2R1bGUgZm9yIGFjY2Vzcy1hd2FyZSBwcm9hY3RpdmUgcmVjbGFtYXRpb24iCisgICAg
+ICAgYm9vbCAiREFNT04gc2FtcGxlIG1vZHVsZSBmb3IgYWNjZXNzLWF3YXJlIHByb2FjdGl2ZSBy
+ZWNsYW1hdGlvbiIKICAgICAgICBkZXBlbmRzIG9uIERBTU9OICYmIERBTU9OX1ZBRERSCiAgICAg
+ICAgaGVscAogICAgICAgICAgVGhpcyBidWlsZHMgREFNT04gc2FtcGxlIG1vZHVsZSBmb3IgYWNj
+ZXNzLWF3YXJlIHByb2FjdGl2ZQpfCg==
+--000000000000e855b8062f1a4bde--
