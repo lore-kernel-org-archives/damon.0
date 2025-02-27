@@ -1,42 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7162A18B495;
-	Thu, 27 Feb 2025 01:58:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B899139E;
+	Thu, 27 Feb 2025 01:58:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740621490; cv=none; b=J7QcLfMZconKtGgaZzJhmCQritHbdqST5ZIaQTE3JPE289G9ZzJR1tbyEmYOS8NoB9qsHL0cqa//EeS2pD1KMacP+mzMXObTle7q+bRKIeQsExlRDBWgC1FuWV1RQeMoZALdDP8HwFdTpYMipozv0UIMWN067vAwq4gjMk2+tAQ=
+	t=1740621491; cv=none; b=OBWew91s938tykafDuvh8dkYPRsMDa3s786GsviV7bMH4y0f6y/5fgu7kPf03ABi6gc7IDfjsMHpS7eMk6HCCcB4hSsG2HCiBYtVeSgzJ/fQaX8ycVEjq1DhIcdOtOPTLxciuEFmor0jvu7E27lFXBW/vB6JqPkjL6IF3IejPP8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740621490; c=relaxed/simple;
-	bh=o7Tb1fqSTBTcTFBCmPVioCKVuRP26jC84n9gdZN/Nso=;
+	s=arc-20240116; t=1740621491; c=relaxed/simple;
+	bh=tQqSkhuPbb1T5x6cMu4V0N9ePh3tWbcGixS02DkoMHk=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=Rmq/SEGtJHccUMnwFOqAJgDAmIp8RrjYb4iCJ1bqDVRdNfwoBj17iV/eJVYsIhXrrDgZJJ36zGwSr0yRv+pb9od3mMMpjr+AoqEecpW5a/sFVF0rHvq3+S6E7xMPLTz7Tnk682Xg7LUPw0j8nZx/kcmNECIcx1bJPgqns4kuguw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RjWj45f8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PCTV4A8N+lctoB5ruKDNlbfBgmPUBweZiTrRc/cOS9rTVAK9cy8TDlEhMtmW7OyqV3avPbBxU1ZbCkdN0686s9iANkjSgYBj/DEKxdnD2qzTqsf662u2Lx7oMVytQ924kqFqBLmRqHyurCMuC/f7sa9xIozzpMMklOYCXZ6nk9k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YFoEwWOQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RjWj45f8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C248FC4CED6;
-	Thu, 27 Feb 2025 01:58:08 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YFoEwWOQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E04EEC4CEE8;
+	Thu, 27 Feb 2025 01:58:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1740621489;
-	bh=o7Tb1fqSTBTcTFBCmPVioCKVuRP26jC84n9gdZN/Nso=;
+	s=k20201202; t=1740621491;
+	bh=tQqSkhuPbb1T5x6cMu4V0N9ePh3tWbcGixS02DkoMHk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RjWj45f8qr9qybW6WhIY7KWi/G9KlZfLpHRUkMdyTAbkuEei4cWOQ3htE9tfpt9yM
-	 La6TSblyuWFzAtcsqfzTo//ggqbrT3jquB0NjWz35ZhFhKRT+fcmhqDlWyO44XmENh
-	 1c20ENmIjra3EJ2LCQ7QJheQo8AylmISq4gXx95fJ4NrieksEzbjyuVUQBRp2zClyZ
-	 NN/uFghaiRogYtUyrVFzf2AtQKC6tI3kqCXvTa7aNoUKF0pmVRiWz/kzD3wmIj2igS
-	 yJvd3XrlexS0UxTYRE2f/3aI4wfT16zwn3fCurB10mcV4wYOpSHMMLFoUkHTaknxgc
-	 5B7O5uX1B4r9Q==
+	b=YFoEwWOQMtYL3tiHZY1Klb9D+0FI6oiHIg3qJP9gQ78IuyJzv7mC4Z5XiRo+eS7nE
+	 +X9R8bAUwlgr0l6XZKdzqTkFzZMhmbd/P/Eha3YGAjfIylzddDwrO7+ZyoLTLWifu5
+	 Tu2FKElANpXcF/pdBlIchfNiSWjeMm3yJ1J+d1+450u2LbP2A3i/gN+uwdA4m690lK
+	 fMyX5xpGp9iB9GtaAZHtik2A0zQ/Jck7wC2VdhVNvpV4Q2movxtcZQMD9ZdPLGG+TZ
+	 rshdBICJI0Y7/Iu2K60V4q/eKP4SucGbQPACyRyshuj2ZwIBdhYJT7S5rtRc7HD2oa
+	 4SoI53OREUdiw==
 From: SeongJae Park <sj@kernel.org>
 To: 
 Cc: SeongJae Park <sj@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
+	Jonathan Corbet <corbet@lwn.net>,
 	damon@lists.linux.dev,
 	kernel-team@meta.com,
+	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH v2 7/9] mm/damon/core: set damos_filter default allowance behavior based on installed filters
-Date: Wed, 26 Feb 2025 17:57:52 -0800
-Message-Id: <20250227015754.38789-8-sj@kernel.org>
+Subject: [RFC PATCH v2 9/9] Docs/mm/damon/design: update for changed filter-default behavior
+Date: Wed, 26 Feb 2025 17:57:54 -0800
+Message-Id: <20250227015754.38789-10-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250227015754.38789-1-sj@kernel.org>
 References: <20250227015754.38789-1-sj@kernel.org>
@@ -48,81 +50,42 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Decide whether to allow or reject by default on core and opertions layer
-handled filters evaluation stages.  It is decided as the opposite of the
-last installed filter's behavior.  If there is no filter at all, allow
-by default.  If there is any operations layer handled filters, core
-layer's filtering stage sets allowing as the default behavior regardless
-of the last filter of core layer-handling ones, since the last filter of
-core layer handled filters in the case is not really the last filter of
-the entire filtering stage.
-
-Also, make the core layer's DAMOS filters handling stage uses the newly
-set behavior field.
+Update the design documentation for changed DAMOS filters default
+allowance behaviors.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- mm/damon/core.c | 34 ++++++++++++++++++++++++++++++++--
- 1 file changed, 32 insertions(+), 2 deletions(-)
+ Documentation/mm/damon/design.rst | 10 +++-------
+ 1 file changed, 3 insertions(+), 7 deletions(-)
 
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index 78126a5145fd..8661f64ab1b4 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -864,6 +864,32 @@ static int damos_commit_ops_filters(struct damos *dst, struct damos *src)
- 	return 0;
- }
+diff --git a/Documentation/mm/damon/design.rst b/Documentation/mm/damon/design.rst
+index 5af991551a86..ffea744e4889 100644
+--- a/Documentation/mm/damon/design.rst
++++ b/Documentation/mm/damon/design.rst
+@@ -581,9 +581,10 @@ When multiple filters are installed, the group of filters that handled by the
+ core layer are evaluated first.  After that, the group of filters that handled
+ by the operations layer are evaluated.  Filters in each of the groups are
+ evaluated in the installed order.  If a part of memory is matched to one of the
+-filter, next filters are ignored.  If the memory passes through the filters
++filter, next filters are ignored.  If the part passes through the filters
+ evaluation stage because it is not matched to any of the filters, applying the
+-scheme's action to it is allowed, same to the behavior when no filter exists.
++scheme's action to it depends on the last filter's allowance type.  If the last
++filter was for allowing, the part of memory will be rejected, and vice versa.
  
-+/**
-+ * damos_filters_default_reject() - decide whether to reject memory that didn't
-+ *				    match with any given filter.
-+ * @filters:	Given DAMOS filters of a group.
-+ */
-+static bool damos_filters_default_reject(struct list_head *filters)
-+{
-+	struct damos_filter *last_filter;
-+
-+	if (list_empty(filters))
-+		return false;
-+	last_filter = list_last_entry(filters, struct damos_filter, list);
-+	return last_filter->allow;
-+}
-+
-+static void damos_set_filters_default_reject(struct damos *s)
-+{
-+	if (!list_empty(&s->ops_filters))
-+		s->core_filters_default_reject = false;
-+	else
-+		s->core_filters_default_reject =
-+			damos_filters_default_reject(&s->filters);
-+	s->ops_filters_default_reject =
-+		damos_filters_default_reject(&s->ops_filters);
-+}
-+
- static int damos_commit_filters(struct damos *dst, struct damos *src)
- {
- 	int err;
-@@ -871,7 +897,11 @@ static int damos_commit_filters(struct damos *dst, struct damos *src)
- 	err = damos_commit_core_filters(dst, src);
- 	if (err)
- 		return err;
--	return damos_commit_ops_filters(dst, src);
-+	err = damos_commit_ops_filters(dst, src);
-+	if (err)
-+		return err;
-+	damos_set_filters_default_reject(dst);
-+	return 0;
- }
+ For example, let's assume 1) a filter for allowing anonymous pages and 2)
+ another filter for rejecting young pages are installed in the order.  If a page
+@@ -595,11 +596,6 @@ second reject-filter blocks it.  If the page is neither anonymous nor young,
+ the page will pass through the filters evaluation stage since there is no
+ matching filter, and the action will be applied to the page.
  
- static struct damos *damon_nth_scheme(int n, struct damon_ctx *ctx)
-@@ -1490,7 +1520,7 @@ static bool damos_filter_out(struct damon_ctx *ctx, struct damon_target *t,
- 		if (damos_filter_match(ctx, t, r, filter))
- 			return !filter->allow;
- 	}
--	return false;
-+	return s->core_filters_default_reject;
- }
+-Note that the action can equally be applied to memory that either explicitly
+-filter-allowed or filters evaluation stage passed.  It means that installing
+-allow-filters at the end of the list makes no practical change but only
+-filters-checking overhead.
+-
+ Below ``type`` of filters are currently supported.
  
- /*
+ - Core layer handled
 -- 
 2.39.5
