@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6D3014831E;
-	Thu, 27 Feb 2025 01:58:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D47E414F9EB;
+	Thu, 27 Feb 2025 01:58:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740621483; cv=none; b=qBzbSOKDKGPXACMxPfT2iViDzddkwL1uhCNOXNsCwXZ/fEpZefbo+sOTF+NB2gX6KW/UbEvHHtGWqjdtJFQukxn9qtZNpsUDQiXnlYQep/jFU8G6VYleKsOAt1LOXA/Nxs/JWK1jJNRGxdSIpezm8P3Q/aedGkLSzXrUAGEPA9E=
+	t=1740621484; cv=none; b=Ubv+SqkzJspYDFRKgCs+fEdHW6gFKBZNqzlxQnrdm/YqC3JKK+xjUyujUfg17Eg7bggypr46+KGzYZED+BcX44amReQ6UdtEFjnMQO3YrbMH7mqFXsgRQoMA6IdyveYuydSGX8LViAm43zhAiSoiSQ0NxXYQMkJ2BGvhB6DWyiw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740621483; c=relaxed/simple;
-	bh=N/YtlGcWQ2PX0NMUIcuI8F7U0I6DV10Xf2TomWII3qk=;
+	s=arc-20240116; t=1740621484; c=relaxed/simple;
+	bh=QU2B5OyjwKcbSYOittkRG8TZWYJnF6pYkD/57XDdhdI=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=eSc8pwBMJBV5bTzlF+sldvUa4114xUsspHxxmF2OPCfm7UlJlQInLmUHkFN3nDZkpx65DLL9M+aJ2xXc5x2hqb0EcEBGN84OAWwyJ97Lxq34EbMPjqDUA4ahogZpJcEaafjIFHFPm2FlrnPA0dTyt5ux/PsOTzHe2RkbpKsc7oI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=t1dUbAnf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FYXv5dIv22EshQfeHESddEctnUQoUY5NGcP2Jg+ZM3Q07AtFzThNOtFFnbUxmVR1VXC3hiVASG+jT9EjqTWWmfbYS8pYiSV/fHhvB5P7nPEZ5L/85pv7qEPNWV/Q3m8M+0QDf0CsWqc/95EhsCbpP/3N1/+m+5yRgG4WYaRShpE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VwgPPSnP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="t1dUbAnf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 079F0C4CEE2;
-	Thu, 27 Feb 2025 01:58:03 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VwgPPSnP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29670C4CEE9;
+	Thu, 27 Feb 2025 01:58:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1740621483;
-	bh=N/YtlGcWQ2PX0NMUIcuI8F7U0I6DV10Xf2TomWII3qk=;
+	s=k20201202; t=1740621484;
+	bh=QU2B5OyjwKcbSYOittkRG8TZWYJnF6pYkD/57XDdhdI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t1dUbAnfFVOaSAla8yVUEws7sBVMN8BWmcjrpG4/6zKUr56c2+Hgd9MoRMyC7DcE+
-	 6eGzAOyhCaUMviM/3vJ6pFMlhbeVEg0jemrvzo/Edm7SrN+agFMW3fwmoaD8xrBMCb
-	 y7myLvuuU+3pID+CqtewZT+vjo/3aVeHbqEfBFYBwPOtkvlOU4QRFJTIjadPYKnENr
-	 6ApnqsgnyiFci4rNtMiRv3JMog+qrrRbMV97PHlfoj47WicQ5NnM7xlL0uLEcC4gdy
-	 mlnjVmdd05ZDzVmcEC4jVaF/tjnP4RwkquBCakk3frYFaDAsRPoLacw0Zizdu3dQl8
-	 /J+2uSXbBzwDg==
+	b=VwgPPSnPJQDwc1rIVc7Xx2E+0web9XOgqArVd0SNog172cRGHzVZOVlDqmVdLin2W
+	 LLsafYJZIObPHyBR6FtPy4GXobvAx8bDPgoGmKOGbheMalJLOqEE918Ys1Im19RAJr
+	 JevxJ/CifsvJqnzMdjGmHnLGcLPhbCTTf16UlCnfOYY0W38Xd/1/LRfTVgvb5ayGz2
+	 56Jeu70HfrlQE6odKGESqBShUS90gYBpYtNoZ2RggUBGgjr6YixIBqOrs3/vDKLQqh
+	 I/aIY0swcGT3PSWadD7IY26Rdf/eM8lGHeiaw/YXahxPhvcfCf8KJZkNC3VlkHdkhg
+	 XQJUfC8DLYF5Q==
 From: SeongJae Park <sj@kernel.org>
 To: 
 Cc: SeongJae Park <sj@kernel.org>,
@@ -34,9 +34,9 @@ Cc: SeongJae Park <sj@kernel.org>,
 	kernel-team@meta.com,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH v2 2/9] mm/damon/paddr: support ops_filters
-Date: Wed, 26 Feb 2025 17:57:47 -0800
-Message-Id: <20250227015754.38789-3-sj@kernel.org>
+Subject: [RFC PATCH v2 3/9] mm/damon/core: support committing ops_filters
+Date: Wed, 26 Feb 2025 17:57:48 -0800
+Message-Id: <20250227015754.38789-4-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250227015754.38789-1-sj@kernel.org>
 References: <20250227015754.38789-1-sj@kernel.org>
@@ -48,56 +48,75 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-DAMON keeps all DAMOS filters in damos->filters.  No filter is saved in
-damos->ops_filters, but upcoming changes will make it to use
-damos->ops_filters to have all operations layer handled DAMOS filters.
-DAMON physical address space operations set implementation (paddr) is
-not ready for the changes, since it handles only damos->filters.  To
-avoid any breakage during the upcoming changes, make paddr to handle
-both lists.  After the change is made, ->filters support on paddr can be
-safely removed.
+DAMON kernel API callers should use damon_commit_ctx() to install DAMON
+parameters including DAMOS filters.  But damos_commit_ops_filters(),
+which is called by damon_commit_ctx() for filters installing, is not
+handling damos->ops_filters.  Hence, no DAMON kernel API caller can use
+damos->ops_filters.  Do the committing of the ops_filters to make it
+usable.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- mm/damon/paddr.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ mm/damon/core.c | 40 +++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 39 insertions(+), 1 deletion(-)
 
-diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
-index 25090230da17..3e651308ba5d 100644
---- a/mm/damon/paddr.c
-+++ b/mm/damon/paddr.c
-@@ -257,6 +257,10 @@ static bool damos_pa_filter_out(struct damos *scheme, struct folio *folio)
- 		if (damos_pa_filter_match(filter, folio))
- 			return !filter->allow;
- 	}
-+	damos_for_each_ops_filter(filter, scheme) {
-+		if (damos_pa_filter_match(filter, folio))
-+			return !filter->allow;
-+	}
- 	return false;
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index bcb7e42098dc..ffdd84ff6fa5 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -793,7 +793,7 @@ static void damos_commit_filter(
+ 	damos_commit_filter_arg(dst, src);
  }
  
-@@ -287,6 +291,12 @@ static unsigned long damon_pa_pageout(struct damon_region *r, struct damos *s,
- 			break;
- 		}
- 	}
-+	damos_for_each_ops_filter(filter, s) {
-+		if (filter->type == DAMOS_FILTER_TYPE_YOUNG) {
-+			install_young_filter = false;
-+			break;
-+		}
-+	}
- 	if (install_young_filter) {
- 		filter = damos_new_filter(
- 				DAMOS_FILTER_TYPE_YOUNG, true, false);
-@@ -535,6 +545,8 @@ static bool damon_pa_scheme_has_filter(struct damos *s)
- 
- 	damos_for_each_filter(f, s)
- 		return true;
-+	damos_for_each_ops_filter(f, s)
-+		return true;
- 	return false;
+-static int damos_commit_filters(struct damos *dst, struct damos *src)
++static int damos_commit_core_filters(struct damos *dst, struct damos *src)
+ {
+ 	struct damos_filter *dst_filter, *next, *src_filter, *new_filter;
+ 	int i = 0, j = 0;
+@@ -821,6 +821,44 @@ static int damos_commit_filters(struct damos *dst, struct damos *src)
+ 	return 0;
  }
  
++static int damos_commit_ops_filters(struct damos *dst, struct damos *src)
++{
++	struct damos_filter *dst_filter, *next, *src_filter, *new_filter;
++	int i = 0, j = 0;
++
++	damos_for_each_ops_filter_safe(dst_filter, next, dst) {
++		src_filter = damos_nth_filter(i++, src);
++		if (src_filter)
++			damos_commit_filter(dst_filter, src_filter);
++		else
++			damos_destroy_filter(dst_filter);
++	}
++
++	damos_for_each_ops_filter_safe(src_filter, next, src) {
++		if (j++ < i)
++			continue;
++
++		new_filter = damos_new_filter(
++				src_filter->type, src_filter->matching,
++				src_filter->allow);
++		if (!new_filter)
++			return -ENOMEM;
++		damos_commit_filter_arg(new_filter, src_filter);
++		damos_add_filter(dst, new_filter);
++	}
++	return 0;
++}
++
++static int damos_commit_filters(struct damos *dst, struct damos *src)
++{
++	int err;
++
++	err = damos_commit_core_filters(dst, src);
++	if (err)
++		return err;
++	return damos_commit_ops_filters(dst, src);
++}
++
+ static struct damos *damon_nth_scheme(int n, struct damon_ctx *ctx)
+ {
+ 	struct damos *s;
 -- 
 2.39.5
