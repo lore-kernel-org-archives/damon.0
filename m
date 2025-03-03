@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E75523C8C5;
-	Mon,  3 Mar 2025 22:17:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77ED723DE85;
+	Mon,  3 Mar 2025 22:17:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741040259; cv=none; b=qh1pMiXpaReONrSPb03eAwq8G6Pg6K+s+an1yVuK1eHvnbmVM4Hgbs/gVztXDgnFNVCY8f8S1rKk/2XR5p0pK81QNumwavTYJV9rI9/dIoNPvkafgBjZZn5uUftQWOffcbLZXmtjAO2acgochVzTfDi3+x9bFOqqdWfsU83qU2k=
+	t=1741040260; cv=none; b=VOqO7doJsMhT+o02jp2zYj+1FM9qDzwF/z57syDQLwhaaXqjj0o01UJwWPl7xlxF+IWXcmOINCMejR3qb1SKfxexgEwTmRKmhEREXD6ogyUCraKYuGWP9AUlzVToMAPztk0FhrNMvoifT7hy6hUGPcnCqoIQRyYau1b6YDVVuu8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741040259; c=relaxed/simple;
-	bh=LMPGQQlkmlc7oVmDROz8XiqF7P/8GVFp76QyeCU2ENk=;
+	s=arc-20240116; t=1741040260; c=relaxed/simple;
+	bh=XpcVMfDACd++qb3Pq98x+XaZ3PfwwLWSEoYntOcOzFw=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=HauJ3tstWFpdt9VwBuY2c5iwPBdsv9yjNpDu/UHwXhwlLCSig9eYSzqqCWKgk56N7u4sfvQVFLg+ds0SbkFezE4NJMlGSP8iDrCI5h5uumnMX8FmSgefGzrGk0r5sc++OW8tSIW/eI8qM/aPDD0/QP/XexmdBROflXPlwpe06Dg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ew3153Bk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ePI1/118g9vAxcb2f9G7svb27f2dPRjdMY8t7Eo5wtP3zWUW41/AdAYMrKJxsrUA4w6gUgEwLXHZwckBSxF7UMeSlYFcFUYKFjVMzvajyCvV3QNWeeUiPe1P18mTXS74lMLPaGpdPsFE2JoAuK8xunFq801oi7nYuhW+MmTglC8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XfdZWy97; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ew3153Bk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9184C4CEE9;
-	Mon,  3 Mar 2025 22:17:38 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XfdZWy97"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 092DCC4CEF3;
+	Mon,  3 Mar 2025 22:17:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1741040258;
-	bh=LMPGQQlkmlc7oVmDROz8XiqF7P/8GVFp76QyeCU2ENk=;
+	s=k20201202; t=1741040260;
+	bh=XpcVMfDACd++qb3Pq98x+XaZ3PfwwLWSEoYntOcOzFw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ew3153Bkz/qxViCicAwx/SFps15sAAj5PmKnsoDtHn315GlNdykMREPudSZZ6nR31
-	 jJN/cH18UFfaV2Va1eipv8RD9qWjVteCcoNWZG5M/1X3WuTiSi6KEr8DBcQd65Qbhf
-	 XntXeBf/VKlAeHyWEGdP+DpTwTRoIhxBdGvQ03vo5P9YR9ic/6WcQVU8Da6jhTKEJU
-	 kbd1YWhn4+pkfgJdzDeDcbIG5Gbxs1cZ4mvIbgNThflnMbnrpEFXLoFk4PrlPXhV2A
-	 dAmYkbVWCrA2mpP/jVmQ0WLjWfYWbTkJzVZQwAUtlH8OyDHtwxEwhmO0TK8aelxnQL
-	 DH1jB4tIGO+nA==
+	b=XfdZWy97nH/eiYY8CQK2C3uoDHTugsPUgNxPosNITPG8ev16imKFJzsHQJ+RnLrm3
+	 uhctjWkLWWpklHpE42SSz1cs1QJhNssM7NnzRx2i7MElFJ3dvRHC7PMSAfJj7ji08X
+	 DUOQ6RJnH7/JBEqrmpk2eOqQF9fRck0Jt11ZuVxAs7Eo4d7IVuhn5h+m/qJcKEmEC3
+	 x91GNxG8Rw7F38NSca/3dIR2jfU6Sr8vMxXc0p4WAFuMpIxhVNJOma4+7kTsTmtZX8
+	 TfQ3nt5nW+pmx5q2+TSNfjadw5XsHXvaSBd1NcYZ/K5oxiFYjuEIpDHJOAv5VLqBK8
+	 AvLHkF0doBvHw==
 From: SeongJae Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SeongJae Park <sj@kernel.org>,
-	Jonathan Corbet <corbet@lwn.net>,
 	damon@lists.linux.dev,
 	kernel-team@meta.com,
-	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [PATCH 6/8] Docs/mm/damon/design: document for intervals auto-tuning
-Date: Mon,  3 Mar 2025 14:17:24 -0800
-Message-Id: <20250303221726.484227-7-sj@kernel.org>
+Subject: [PATCH 7/8] Docs/ABI/damon: document intervals auto-tuning ABI
+Date: Mon,  3 Mar 2025 14:17:25 -0800
+Message-Id: <20250303221726.484227-8-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250303221726.484227-1-sj@kernel.org>
 References: <20250303221726.484227-1-sj@kernel.org>
@@ -49,77 +47,54 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Document the design of DAMON sampling and aggregation intervals
-auto-tuning.
+Document the DAMON user-space ABI for DAMON sampling and aggregation
+intervals auto-tuning.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- Documentation/mm/damon/design.rst | 46 +++++++++++++++++++++++++++++++
- 1 file changed, 46 insertions(+)
+ .../ABI/testing/sysfs-kernel-mm-damon         | 30 +++++++++++++++++++
+ 1 file changed, 30 insertions(+)
 
-diff --git a/Documentation/mm/damon/design.rst b/Documentation/mm/damon/design.rst
-index 5af991551a86..cb388d791ff7 100644
---- a/Documentation/mm/damon/design.rst
-+++ b/Documentation/mm/damon/design.rst
-@@ -313,6 +313,10 @@ sufficient for the given purpose, it shouldn't be unnecessarily further
- lowered.  It is recommended to be set proportional to ``aggregation interval``.
- By default, the ratio is set as ``1/20``, and it is still recommended.
+diff --git a/Documentation/ABI/testing/sysfs-kernel-mm-damon b/Documentation/ABI/testing/sysfs-kernel-mm-damon
+index ccd13ca668c8..76da77d7f7b6 100644
+--- a/Documentation/ABI/testing/sysfs-kernel-mm-damon
++++ b/Documentation/ABI/testing/sysfs-kernel-mm-damon
+@@ -91,6 +91,36 @@ Description:	Writing a value to this file sets the update interval of the
+ 		DAMON context in microseconds as the value.  Reading this file
+ 		returns the value.
  
-+Based on the manual tuning guide, DAMON provides more intuitive knob-based
-+intervals auto tuning mechanism.  Please refer to :ref:`the design document of
-+the feature <damon_design_monitoring_intervals_autotuning>` for detail.
++What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/monitoring_attrs/intervals/intrvals_goal/access_bp
++Date:		Feb 2025
++Contact:	SeongJae Park <sj@kernel.org>
++Description:	Writing a value to this file sets the monitoring intervals
++		auto-tuning target DAMON-observed access events ratio within
++		the given time interval (aggrs in same directory), in bp
++		(1/10,000).  Reading this file returns the value.
 +
- Refer to below documents for an example tuning based on the above guide.
++What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/monitoring_attrs/intervals/intrvals_goal/aggrs
++Date:		Feb 2025
++Contact:	SeongJae Park <sj@kernel.org>
++Description:	Writing a value to this file sets the time interval to achieve
++		the monitoring intervals auto-tuning target DAMON-observed
++		access events ratio (access_bp in same directory) within.
++		Reading this file returns the value.
++
++What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/monitoring_attrs/intervals/intrvals_goal/min_sample_us
++Date:		Feb 2025
++Contact:	SeongJae Park <sj@kernel.org>
++Description:	Writing a value to this file sets the minimum value of
++		auto-tuned sampling interval in microseconds.  Reading this
++		file returns the value.
++
++What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/monitoring_attrs/intervals/intrvals_goal/max_sample_us
++Date:		Feb 2025
++Contact:	SeongJae Park <sj@kernel.org>
++Description:	Writing a value to this file sets the maximum value of
++		auto-tuned sampling interval in microseconds.  Reading this
++		file returns the value.
++
+ What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/monitoring_attrs/nr_regions/min
  
- .. toctree::
-@@ -321,6 +325,48 @@ Refer to below documents for an example tuning based on the above guide.
-    monitoring_intervals_tuning_example
- 
- 
-+.. _damon_design_monitoring_intervals_autotuning:
-+
-+Monitoring Intervals Auto-tuning
-+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-+
-+DAMON provides automatic tuning of the ``sampling interval`` and ``aggregation
-+interval`` based on the :ref:`the tuning guide idea
-+<damon_design_monitoring_params_tuning_guide>`.  The tuning mechanism allows
-+users to set the aimed amount of access events to observe via DAMON within
-+given time interval.  The target can be specified by the user as a ratio of
-+DAMON-observed access events to the theoretical maximum amount of the events
-+(``access_bp``) that measured within a given number of aggregations
-+(``aggrs``).
-+
-+The DAMON-observed access events are calculated in byte granularity based on
-+DAMON :ref:`region assumption <damon_design_region_based_sample>`.  For
-+example, if a region of size ``X`` bytes of ``Y`` ``nr_accesses`` is found, it
-+means ``X * Y`` access events are observed by DAMON.  Theoretical maximum
-+access events for the region is calculated in same way, but replacing ``Y``
-+with theoretical maximum ``nr_accesses``, which can be calculated as
-+``aggregation interval / sampling interval``.
-+
-+The mechanism calculates the ratio of access events for ``aggrs`` aggregations,
-+and increases or decrease the ``sampleing interval`` and ``aggregation
-+interval`` in same ratio, if the observed access ratio is lower or higher than
-+the target, respectively.  The ratio of the intervals change is decided in
-+proportion to the distance between current samples ratio and the target ratio.
-+
-+The user can further set the minimum and maximum ``sampling interval`` that can
-+be set by the tuning mechanism using two parameters (``min_sample_us`` and
-+``max_sample_us``).  Because the tuning mechanism changes ``sampling interval``
-+and ``aggregation interval`` in same ratio always, the minimum and maximum
-+``aggregation interval`` after each of the tuning changes can automatically set
-+together.
-+
-+The tuning is turned off by default, and need to be set explicitly by the user.
-+As a rule of thumbs and the Parreto principle, 4% access samples ratio target
-+is recommended.  Note that Parreto principle (80/20 rule) has applied twice.
-+That is, assumes 4% (20% of 20%) DAMON-observed access events ratio (source)
-+to capture 64% (80% multipled by 80%) real access events (outcomes).
-+
-+
- .. _damon_design_damos:
- 
- Operation Schemes
+ WDate:		Mar 2022
 -- 
 2.39.5
