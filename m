@@ -1,43 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D48EE1DA53;
-	Wed,  5 Mar 2025 22:27:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF10B266B42;
+	Wed,  5 Mar 2025 22:27:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741213658; cv=none; b=OXa10P+TwaD2JOnf6SKycusjWrA8zu1WvxvTI5x+qwcrx5i+KHC0AC1or6vDVf/JkaYRzqsENfNJIcM2+ajNCrBTQ3IrnkQryEKNR3QpHdqpZlfMRjqMbr2tXA7gS+3ki4tfmyRV9TAF2Cjr+yzfhYVQWwoYvDgaMqefAef8Gcg=
+	t=1741213659; cv=none; b=k/YkBj9o/oTQyPHKgJxT3+DIkBBYyANg1skm3HSNOEOn7n6hPFx1hiLxu42ywGvVxM/M0yOhc7zBCNknyfqiTt0cu3NGcjtju7ja0uOQCvRmeXkmDOnX1LXhw1wGhGWGqlvULYs+5uU0AvjJ0bqn6nRECUfOwnP7GZt4UcHCk1Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741213658; c=relaxed/simple;
-	bh=OCW6zeu41eNyvtNz1UUuqO+JafK0NgyekccSUEYRBr8=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=n/YkgJ3VWQM5Vq8hDrYp4Lr/F/ggjR5PhEEu5DtbiWxMmaMG27RCZtlJq/zHt8MeGeLJHmDuPA3Q/uYXUfI8rXqT9Wb1iZVbG4X9+GYbFLTGwStn/OMQILyaou43xZkzPFohppydTSIdssakijlU4jNjKmmCtiNABmrr5opwphE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dXk7GY8f; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1741213659; c=relaxed/simple;
+	bh=OpjcLDxsccLyhNm0FxG5QdoWmIkJ0HjMaFtLsbzpWMo=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=ltPCoMKlustYxNv/dKgrb8xwOSkTKT3/OD4hKNKeUADy39MT7XQ0TjIP0pq44Z7tfnaAeKgMV0oytKE84ldYZ+YkU3Z+1STVZbWs40JOAGnYvq/yRUpscB3jAS4cGfw0+oMTkT5Vecwa+hw3/flNwNNNv8L/b0qhvuPt76n7yJQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=I6/FBMSg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dXk7GY8f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AECEC4CED1;
-	Wed,  5 Mar 2025 22:27:38 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="I6/FBMSg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85EA9C4CED1;
+	Wed,  5 Mar 2025 22:27:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1741213658;
-	bh=OCW6zeu41eNyvtNz1UUuqO+JafK0NgyekccSUEYRBr8=;
-	h=From:To:Cc:Subject:Date:From;
-	b=dXk7GY8f35AQFsdUOOncj/EtIa0cMnodbiNkrOBAM9O0zf31DmDo6J5ycrrvjkwC4
-	 VtsKu851qkrDfrRzeRVic69d8rEEfXlhoaxm36OtJ+zkSWod4fzT4CgHmXDGfYpI9L
-	 /mHf8NVSm9PlL+z/krOZXDqwXpTJzqsTS6BPtd5j83NuVI4urViYod1WU0FWE5YNk+
-	 IuTcLhaZoKhywILdU1Opa2yCCMQT63rk9kP8TIpHs3vpWKdh71TbdDLcTYUxhCzH3M
-	 D1HRCxpFd3wUnK0dv1hmUkfzOHV9C8x+ePjzbiqF5X7RRtGq7ZCrIE/p/3xlsZ5BLc
-	 lPR/wpI27GQ4Q==
+	s=k20201202; t=1741213659;
+	bh=OpjcLDxsccLyhNm0FxG5QdoWmIkJ0HjMaFtLsbzpWMo=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=I6/FBMSgQVrOici0mbqK5Zz2q121hKQ90mpoRt1jvWNL4rdHuUukYMSqZHjwWeIYn
+	 ZSu7YU66rHiK91B7IA/lmZWNK9aRZigfjjnSaIDQfAx4Eqyr6Nz/1LVI6nofqL7Wir
+	 01RdrzhjTteerB8sEERse1+cmDZOVqmYZ2zvxKzN56dG8/+hwYLJIwsb8oRkc6L42T
+	 3sNodszdWMb4IW5T/zyltjJW6WU4TUIic5Rt92fyxpA3GLCywpMUlxb+7ZXdbwLdI/
+	 qImf3tpp8hKjm9RyGIooK5FDtpOuMkn+UymvRcINrAwX3yv5OwzkX9JI1gHC3WmiRD
+	 xECHKJ83hwFGA==
 From: SeongJae Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SeongJae Park <sj@kernel.org>,
-	Jonathan Corbet <corbet@lwn.net>,
 	damon@lists.linux.dev,
 	kernel-team@meta.com,
-	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [PATCH 0/8] mm/damon: add sysfs dirs for managing DAMOS filters based on handling layers
-Date: Wed,  5 Mar 2025 14:27:25 -0800
-Message-Id: <20250305222733.59089-1-sj@kernel.org>
+Subject: [PATCH 1/8] mm/damon/sysfs-schemes: let damon_sysfs_scheme_set_filters() be used for different named directories
+Date: Wed,  5 Mar 2025 14:27:26 -0800
+Message-Id: <20250305222733.59089-2-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20250305222733.59089-1-sj@kernel.org>
+References: <20250305222733.59089-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -46,66 +47,55 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-DAMOS filters are categorized into two groups based on their handling
-layers, namely core and operations layers.  The categorization affects
-when each filter is evaluated.  Core layer handled filters are evaluated
-first.  The order meant nothing before, but introduction of allow
-filters changed that.
+damon_sysfs_scheme_set_filters() is using a hard-coded directory name,
+"filters".  Refactor for general named directories of same files
+hierarchy, to use from upcoming changes for adding sibling directories
+having files same to those of "filters", and named as "core_filters" and
+"ops_filters".
 
-DAMOS sysfs interface provides single directory for filters, namely
-'filters'.  Users can install any filters in any order there.  DAMON
-will internally categorize those into core and operations layer handled
-ones, and apply the evaluation order rule.  The ordering rule is clearly
-documented.  But the interface could still confuse users since it is
-allowed to install filters on the directory in mixed ways.
+Signed-off-by: SeongJae Park <sj@kernel.org>
+---
+ mm/damon/sysfs-schemes.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-Add two sysfs directories for managing filters by handling layers,
-namely 'core_filters' and 'ops_filters' for filters that handled by core
-and operations layer, respectively.  Those are avoided to be used for
-installing filters that not handled by the assumed layers.
-
-For backward compatibility, keep 'filters' directory with its curernt
-behavior.  Filters installed in the directory will be added to DAMON
-after those of 'core_filters' and 'ops_filters' directories, with the
-automatic categorizations.  Also recommend users to use the new
-directories while noticing 'filters' directory could be deprecated in
-future on the usage documents.
-
-Note that new directories provide all features that were provided with
-'filters', but just in a more clear way.  Deprecating 'filters' in
-future will hence not make an irreversal feature loss.
-
-Changes from RFC
-(https://lore.kernel.org/20250220194646.37726-1-sj@kernel.org)
-- Fix sphinx error on usage doc change
-- Wrodsmith commit messages
-- Rebase on latest mm-unstable
-
-SeongJae Park (8):
-  mm/damon/sysfs-schemes: let damon_sysfs_scheme_set_filters() be used
-    for different named directories
-  mm/damon/sysfs-schemes: implement core_filters and ops_filters
-    directories
-  mm/damon/sysfs-schemes: commit filters in {core,ops}_filters
-    directories
-  mm/damon/core: expose damos_filter_for_ops() to DAMON kernel API
-    callers
-  mm/damon/sysfs-schemes: record filters of which layer should be added
-    to the given filters directory
-  mm/damon/sysfs-schemes: return error when for attempts to install
-    filters on wrong sysfs directory
-  Docs/ABI/damon: document {core,ops}_filters directories
-  Docs/admin-guide/mm/damon/usage: update for {core,ops}_filters
-    directories
-
- .../ABI/testing/sysfs-kernel-mm-damon         |  16 +++
- Documentation/admin-guide/mm/damon/usage.rst  |  31 +++--
- include/linux/damon.h                         |   1 +
- mm/damon/core.c                               |   9 +-
- mm/damon/sysfs-schemes.c                      | 119 ++++++++++++++++--
- 5 files changed, 153 insertions(+), 23 deletions(-)
-
-
-base-commit: d5ce0f2fd108557fb138adccb203441d0d70f1c4
+diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
+index 66a1c46cee84..541ca5887b24 100644
+--- a/mm/damon/sysfs-schemes.c
++++ b/mm/damon/sysfs-schemes.c
+@@ -1604,7 +1604,9 @@ static int damon_sysfs_scheme_set_watermarks(struct damon_sysfs_scheme *scheme)
+ 	return err;
+ }
+ 
+-static int damon_sysfs_scheme_set_filters(struct damon_sysfs_scheme *scheme)
++static int damon_sysfs_scheme_set_filters(struct damon_sysfs_scheme *scheme,
++		const char *name,
++		struct damon_sysfs_scheme_filters **filters_ptr)
+ {
+ 	struct damon_sysfs_scheme_filters *filters =
+ 		damon_sysfs_scheme_filters_alloc();
+@@ -1614,11 +1616,11 @@ static int damon_sysfs_scheme_set_filters(struct damon_sysfs_scheme *scheme)
+ 		return -ENOMEM;
+ 	err = kobject_init_and_add(&filters->kobj,
+ 			&damon_sysfs_scheme_filters_ktype, &scheme->kobj,
+-			"filters");
++			name);
+ 	if (err)
+ 		kobject_put(&filters->kobj);
+ 	else
+-		scheme->filters = filters;
++		*filters_ptr = filters;
+ 	return err;
+ }
+ 
+@@ -1670,7 +1672,8 @@ static int damon_sysfs_scheme_add_dirs(struct damon_sysfs_scheme *scheme)
+ 	err = damon_sysfs_scheme_set_watermarks(scheme);
+ 	if (err)
+ 		goto put_quotas_access_pattern_out;
+-	err = damon_sysfs_scheme_set_filters(scheme);
++	err = damon_sysfs_scheme_set_filters(scheme, "filters",
++			&scheme->filters);
+ 	if (err)
+ 		goto put_watermarks_quotas_access_pattern_out;
+ 	err = damon_sysfs_scheme_set_stats(scheme);
 -- 
 2.39.5
