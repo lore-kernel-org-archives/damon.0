@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC5C12673A9;
-	Wed,  5 Mar 2025 22:27:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4F752676DC;
+	Wed,  5 Mar 2025 22:27:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741213663; cv=none; b=Emb7ptuHPFstmK4He2bewejjI35M5P9aJR4kf35KkV5n97MZnsWfImfdTZTsGsguxBD3/2a3OkCMKrshEXdw/iKbAY0ttdKRqZ8RAJOZujcJUmR3NbhCE7aPWCkY4fPAsWDu/Z7n5OGeW8vKrTYrz0tDJ9B03EM+WX6DQ2bUmQk=
+	t=1741213664; cv=none; b=JjrjapNO4i7tDAmecXtVw/IOM9tYkkyHUsb/iZANkmAy/To4dEsZQgsdKFnVZcclDoICDD4795Rzt1YM8WX+e+Q4umWGvufBs+3Qj2gXhPZw+jU5wAT77pH4CZdai0YWE0YBG61xBGE+3lNNooO3rK9plH0HVJTOlZML/yrEj0A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741213663; c=relaxed/simple;
-	bh=eJ79aIy+KAG+2fVOvrVZnQksHxdlrGRDAyQqbJ9uXyQ=;
+	s=arc-20240116; t=1741213664; c=relaxed/simple;
+	bh=omzDcLQxOt4b1eAtHmmakixx0La83wEbeQMY0qApQrU=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=iDpBiao/ytTSSP3iZRbq4Vm6HmswguJxYfePD7IfxcISRxYfkvd5p1mCQmLAR6B8yQHQHrIli65B3q8RD57xobe162Iylqs2dgmNWpAd5va0h5JqN74YqJs+4L2KylCL+kFTYd9x/5Api3RUZMrxostVIUnuU9H9mPD+kIbwsQE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PaY2kj8A; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DkWpBa1OCE6FBQV7ORP5XuWQKL+bJ18pFjKU5mo3nA0LzqWrGppVgk6NlvHqUGApfup1sujzjuate9vJ0HefspT/BMqpnDiwcfnOMIiWyIg6FuM075J3m+TFkBScVarR/39mt1gH10L6FyFOr+TpFOphUfj80gEhGzPGTTlbjTc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nPCf65V6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PaY2kj8A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 029F5C4CED1;
-	Wed,  5 Mar 2025 22:27:43 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nPCf65V6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A9FEC4CEE9;
+	Wed,  5 Mar 2025 22:27:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1741213663;
-	bh=eJ79aIy+KAG+2fVOvrVZnQksHxdlrGRDAyQqbJ9uXyQ=;
+	s=k20201202; t=1741213664;
+	bh=omzDcLQxOt4b1eAtHmmakixx0La83wEbeQMY0qApQrU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PaY2kj8AmWawguEdmCNUQobuUZHVxSQUPY3b5C4KFMLUv4x4MgClffxV2X2SoEDmo
-	 2QqZPI7a1ppdOMf9pS+qOLU1TMtgeEQJsM4WZ6N3HhzfLqqTJ8FdIA0B9CAiN1V/7E
-	 KNsqIPUen/oTYyX9liEVgJgtF6VVcFjV9WrWRXw9lxO8Qe5Ke5DPx3kYmPwgeB1R01
-	 psCz6Phx6uBOfw8mwIsAo71+l7gOhjw6+Kf/Es1y0xUj8EAVNqWH8dIWWzasDICDBv
-	 Cg2QmH7h/JLcjLYCzUNoOwpoO78b3VhFMQlld6X+6sh13kChAf11m85kcfwc+480UU
-	 Qa0iKKbwEl5Cg==
+	b=nPCf65V6a35HkE8QBy7nmsiyOHOU4SuTigF0B8sRNGJ4wLWSSKyjjfhQ/STTBPP0A
+	 gXEwAFSr+JuwMNcFuEzucZLQipdOf4Lcuhw5EtFtOAjwHCDJYMQv1iN/38o484Kvrr
+	 U9e+rdqtUJ02+Qq1s4OSqNENlq++fM6niYZrcCNij7yecPp0P3ZLAmAzkBODE1zhLy
+	 5+QQNfYKWLEmji0XggkpOLCnF2aGMu4jjDknAeenNHsfXpqD+0uukb7d3CIwEZ2s3M
+	 AV8WGF0r2XHOvDfw5U9NSQZI7EAR5ojT6hwLpqi6fNdQlf8oykeH+VPXxCa7uD6ev9
+	 zOZ0T9WB7DCgw==
 From: SeongJae Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SeongJae Park <sj@kernel.org>,
@@ -33,9 +33,9 @@ Cc: SeongJae Park <sj@kernel.org>,
 	kernel-team@meta.com,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [PATCH 4/8] mm/damon/core: expose damos_filter_for_ops() to DAMON kernel API callers
-Date: Wed,  5 Mar 2025 14:27:29 -0800
-Message-Id: <20250305222733.59089-5-sj@kernel.org>
+Subject: [PATCH 5/8] mm/damon/sysfs-schemes: record filters of which layer should be added to the given filters directory
+Date: Wed,  5 Mar 2025 14:27:30 -0800
+Message-Id: <20250305222733.59089-6-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250305222733.59089-1-sj@kernel.org>
 References: <20250305222733.59089-1-sj@kernel.org>
@@ -47,46 +47,126 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-damos_filter_for_ops() can be useful to avoid putting wrong type of
-filters in wrong place.  Make it be exposed to DAMON kernel API callers.
+Unlike their name and assumed purposes, {core,ops}_filters DAMOS sysfs
+directories are allowing installing any type of filters.  As a first
+step for preventing such wrong installments, add information about
+filters that handled by what layer should the installed to the given
+filters directory in the DAMOS sysfs internal data structures.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- include/linux/damon.h | 1 +
- mm/damon/core.c       | 9 ++++++++-
- 2 files changed, 9 insertions(+), 1 deletion(-)
+ mm/damon/sysfs-schemes.c | 46 +++++++++++++++++++++++++++++++---------
+ 1 file changed, 36 insertions(+), 10 deletions(-)
 
-diff --git a/include/linux/damon.h b/include/linux/damon.h
-index 52559475dbe7..eed008b64a23 100644
---- a/include/linux/damon.h
-+++ b/include/linux/damon.h
-@@ -894,6 +894,7 @@ void damon_update_region_access_rate(struct damon_region *r, bool accessed,
- struct damos_filter *damos_new_filter(enum damos_filter_type type,
- 		bool matching, bool allow);
- void damos_add_filter(struct damos *s, struct damos_filter *f);
-+bool damos_filter_for_ops(enum damos_filter_type type);
- void damos_destroy_filter(struct damos_filter *f);
+diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
+index e85feb329bd6..b9f035f4b00f 100644
+--- a/mm/damon/sysfs-schemes.c
++++ b/mm/damon/sysfs-schemes.c
+@@ -309,8 +309,18 @@ static const struct kobj_type damon_sysfs_stats_ktype = {
+  * filter directory
+  */
  
- struct damos_quota_goal *damos_new_quota_goal(
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index 194550e033b1..d4fc2c907cfc 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -281,7 +281,14 @@ struct damos_filter *damos_new_filter(enum damos_filter_type type,
- 	return filter;
++/*
++ * enum damos_sysfs_filter_handle_layer - Layers handling filters of a dir.
++ */
++enum damos_sysfs_filter_handle_layer {
++	DAMOS_SYSFS_FILTER_HANDLE_LAYER_CORE,
++	DAMOS_SYSFS_FILTER_HANDLE_LAYER_OPS,
++	DAMOS_SYSFS_FILTER_HANDLE_LAYER_BOTH,
++};
++
+ struct damon_sysfs_scheme_filter {
+ 	struct kobject kobj;
++	enum damos_sysfs_filter_handle_layer handle_layer;
+ 	enum damos_filter_type type;
+ 	bool matching;
+ 	bool allow;
+@@ -320,9 +330,15 @@ struct damon_sysfs_scheme_filter {
+ 	int target_idx;
+ };
+ 
+-static struct damon_sysfs_scheme_filter *damon_sysfs_scheme_filter_alloc(void)
++static struct damon_sysfs_scheme_filter *damon_sysfs_scheme_filter_alloc(
++		enum damos_sysfs_filter_handle_layer layer)
+ {
+-	return kzalloc(sizeof(struct damon_sysfs_scheme_filter), GFP_KERNEL);
++	struct damon_sysfs_scheme_filter *filter;
++
++	filter = kzalloc(sizeof(struct damon_sysfs_scheme_filter), GFP_KERNEL);
++	if (filter)
++		filter->handle_layer = layer;
++	return filter;
  }
  
--static bool damos_filter_for_ops(enum damos_filter_type type)
-+/**
-+ * damos_filter_for_ops() - Return if the filter is ops-hndled one.
-+ * @type:	type of the filter.
-+ *
-+ * Return: true if the filter of @type needs to be handled by ops layer, false
-+ * otherwise.
-+ */
-+bool damos_filter_for_ops(enum damos_filter_type type)
+ /* Should match with enum damos_filter_type */
+@@ -595,14 +611,20 @@ static const struct kobj_type damon_sysfs_scheme_filter_ktype = {
+ 
+ struct damon_sysfs_scheme_filters {
+ 	struct kobject kobj;
++	enum damos_sysfs_filter_handle_layer handle_layer;
+ 	struct damon_sysfs_scheme_filter **filters_arr;
+ 	int nr;
+ };
+ 
+ static struct damon_sysfs_scheme_filters *
+-damon_sysfs_scheme_filters_alloc(void)
++damon_sysfs_scheme_filters_alloc(enum damos_sysfs_filter_handle_layer layer)
  {
- 	switch (type) {
- 	case DAMOS_FILTER_TYPE_ADDR:
+-	return kzalloc(sizeof(struct damon_sysfs_scheme_filters), GFP_KERNEL);
++	struct damon_sysfs_scheme_filters *filters;
++
++	filters = kzalloc(sizeof(struct damon_sysfs_scheme_filters), GFP_KERNEL);
++	if (filters)
++		filters->handle_layer = layer;
++	return filters;
+ }
+ 
+ static void damon_sysfs_scheme_filters_rm_dirs(
+@@ -635,7 +657,8 @@ static int damon_sysfs_scheme_filters_add_dirs(
+ 	filters->filters_arr = filters_arr;
+ 
+ 	for (i = 0; i < nr_filters; i++) {
+-		filter = damon_sysfs_scheme_filter_alloc();
++		filter = damon_sysfs_scheme_filter_alloc(
++				filters->handle_layer);
+ 		if (!filter) {
+ 			damon_sysfs_scheme_filters_rm_dirs(filters);
+ 			return -ENOMEM;
+@@ -1607,11 +1630,11 @@ static int damon_sysfs_scheme_set_watermarks(struct damon_sysfs_scheme *scheme)
+ }
+ 
+ static int damon_sysfs_scheme_set_filters(struct damon_sysfs_scheme *scheme,
+-		const char *name,
++		enum damos_sysfs_filter_handle_layer layer, const char *name,
+ 		struct damon_sysfs_scheme_filters **filters_ptr)
+ {
+ 	struct damon_sysfs_scheme_filters *filters =
+-		damon_sysfs_scheme_filters_alloc();
++		damon_sysfs_scheme_filters_alloc(layer);
+ 	int err;
+ 
+ 	if (!filters)
+@@ -1630,15 +1653,18 @@ static int damos_sysfs_set_filter_dirs(struct damon_sysfs_scheme *scheme)
+ {
+ 	int err;
+ 
+-	err = damon_sysfs_scheme_set_filters(scheme, "filters",
++	err = damon_sysfs_scheme_set_filters(scheme,
++			DAMOS_SYSFS_FILTER_HANDLE_LAYER_BOTH, "filters",
+ 			&scheme->filters);
+ 	if (err)
+ 		return err;
+-	err = damon_sysfs_scheme_set_filters(scheme, "core_filters",
++	err = damon_sysfs_scheme_set_filters(scheme,
++			DAMOS_SYSFS_FILTER_HANDLE_LAYER_CORE, "core_filters",
+ 			&scheme->core_filters);
+ 	if (err)
+ 		goto put_filters_out;
+-	err = damon_sysfs_scheme_set_filters(scheme, "ops_filters",
++	err = damon_sysfs_scheme_set_filters(scheme,
++			DAMOS_SYSFS_FILTER_HANDLE_LAYER_OPS, "ops_filters",
+ 			&scheme->ops_filters);
+ 	if (err)
+ 		goto put_core_filters_out;
 -- 
 2.39.5
