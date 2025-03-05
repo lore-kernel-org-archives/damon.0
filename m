@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7694C267B96;
-	Wed,  5 Mar 2025 22:27:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32259268698;
+	Wed,  5 Mar 2025 22:27:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741213669; cv=none; b=GwoFBpmB/hHNW1ZmmhHO4vk/6z+HzefaWq+QTQutgz7Jo1E4FD/g4yg80E3jb4lIo7h1/Clsa0bjb6cd735/JjfPuOWg3nsD/Fvj+LL5syrPWDIRsF0aBbGT0zNQf26c0r4PznyePiaIorUmKXuMrhMQOEDV08bqB0t0EsiEV1Q=
+	t=1741213670; cv=none; b=V78IMzTkG1f4xu/Su8woP8YkQThlt+7h73WQCjtI5ywVE8e510vdkAc23tPudGHN7Uw9V+2+bQpBjsNvtPl8AL2MYG6wGOASgyTpmp2ngHrgQaclrWjkYdn92twk6uOfCl17iHRwVBhjiHCNsTIa/OLB4zYML0II2jidySczZ9U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741213669; c=relaxed/simple;
-	bh=OAEdxxcc77GPmmDMbh1z2HLH683wgymD1nDX7vY4PmA=;
+	s=arc-20240116; t=1741213670; c=relaxed/simple;
+	bh=47X+eEoNM4cXPe501kkxrph0V2B2kHrGH6GZrrO40z0=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=OHV2E+OdqRiu3t4JH+QU0Pvcb/v9yonCxop1NoHeugTSYrKB+++d4l02+d6Z66BtAVXYlSJrpyV6AByUQbrtuwx89PcRJWTkS4lfFzzeN5BRi81mootu5Gtl4GbD9JbLr1zN13HnjmZCYsVYu1HT25O+vy+BCCyjLah/hSSKYVs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=COhYSUvA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=q4uzysONpOq36TvqMrjiCISqrFRVA1OPtGbTbYOfYW82IY9zoVFoAN7i5VlRdN3V+HvvDi7DNlaHmw93ek3Usap/m/fCGiohsaLS08kgc3OyAHnzuX6rUEGPpBt8aT2vBIxpA2tzqaOMNMA/10tIT/S6lJSfyrnB0rbj+NVq47Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=A/8GAGHV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="COhYSUvA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B88FDC4CED1;
-	Wed,  5 Mar 2025 22:27:48 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="A/8GAGHV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAAA9C4AF09;
+	Wed,  5 Mar 2025 22:27:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1741213668;
-	bh=OAEdxxcc77GPmmDMbh1z2HLH683wgymD1nDX7vY4PmA=;
+	s=k20201202; t=1741213670;
+	bh=47X+eEoNM4cXPe501kkxrph0V2B2kHrGH6GZrrO40z0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=COhYSUvAzM/kIrKA3AIr4Du9Hvlu5Te9LUGuEq19YnsUYn+PHUT0LxZhrJmHssQsI
-	 et8zSnnECgIb7CdD5fvIWqT3R5MCm/24gFhlfqXJ6+O0McSyoQ/zQ+JX/7+K5gdDXc
-	 QwQhf5D79gWHRKx5mVtzCCihKUd7L9O6MI8G9Ui6MTwscIV8FyIOhPOD8ZuUW0Z3sm
-	 +cnwGnXSdSxrpWRAM7UoDPJiIRxNWMQW7CgSW1pa51z/5kKecxY2D13ySCj4WWYzgv
-	 T7raOiUiRed2NbTygrroHjrA3EX035XF/A6iJyrxlBZX5Q9wZmmyAqHKaRLVRkjaBa
-	 06oAFx4nWGOww==
+	b=A/8GAGHVWwEyJKU9fX+3btSUYqcbCJkD5n70OIIlgDwm2SUWpPrPDbgxWw2cz96Es
+	 +WQAAgzNt4rpfKnvi2yeWDbQQc4vdZwg4Lr+Vuyi2vdRaSeakhTMsAIsJVw4iGjauD
+	 sRwiK15hqLuulWufZxCON720EA5i0DGS51il9e1f7VKcKWK5nYGkjos/8WRuZLonUg
+	 l2berudzd46p8iz7wleIwOxOdVYSNf2dVbJlSkUSs87VPX9Jj1bHydurGROmUaA5VU
+	 LF8KlS867WeivAEb9gS1mQbal5hzEOwS4i0X9B2bSr2ukZnVtnljz3Wh+iPGoTT9V0
+	 unPes/owhWHpg==
 From: SeongJae Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SeongJae Park <sj@kernel.org>,
+	Jonathan Corbet <corbet@lwn.net>,
 	damon@lists.linux.dev,
 	kernel-team@meta.com,
+	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [PATCH 7/8] Docs/ABI/damon: document {core,ops}_filters directories
-Date: Wed,  5 Mar 2025 14:27:32 -0800
-Message-Id: <20250305222733.59089-8-sj@kernel.org>
+Subject: [PATCH 8/8] Docs/admin-guide/mm/damon/usage: update for {core,ops}_filters directories
+Date: Wed,  5 Mar 2025 14:27:33 -0800
+Message-Id: <20250305222733.59089-9-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250305222733.59089-1-sj@kernel.org>
 References: <20250305222733.59089-1-sj@kernel.org>
@@ -45,41 +47,88 @@ List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Document the new DAMOS filters sysfs directories on ABI doc.
+Document {core,ops}_filters directories on usage document.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- Documentation/ABI/testing/sysfs-kernel-mm-damon | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ Documentation/admin-guide/mm/damon/usage.rst | 31 ++++++++++++++------
+ 1 file changed, 22 insertions(+), 9 deletions(-)
 
-diff --git a/Documentation/ABI/testing/sysfs-kernel-mm-damon b/Documentation/ABI/testing/sysfs-kernel-mm-damon
-index 76da77d7f7b6..293197f180ad 100644
---- a/Documentation/ABI/testing/sysfs-kernel-mm-damon
-+++ b/Documentation/ABI/testing/sysfs-kernel-mm-damon
-@@ -409,6 +409,22 @@ Description:	Writing 'Y' or 'N' to this file sets whether to allow or reject
- 		applying the scheme's action to the memory that satisfies the
- 		'type' and the 'matching' of the directory.
+diff --git a/Documentation/admin-guide/mm/damon/usage.rst b/Documentation/admin-guide/mm/damon/usage.rst
+index de549dd18107..ced2013db3df 100644
+--- a/Documentation/admin-guide/mm/damon/usage.rst
++++ b/Documentation/admin-guide/mm/damon/usage.rst
+@@ -83,7 +83,7 @@ comma (",").
+     │ │ │ │ │ │ │ │ :ref:`goals <sysfs_schemes_quota_goals>`/nr_goals
+     │ │ │ │ │ │ │ │ │ 0/target_metric,target_value,current_value
+     │ │ │ │ │ │ │ :ref:`watermarks <sysfs_watermarks>`/metric,interval_us,high,mid,low
+-    │ │ │ │ │ │ │ :ref:`filters <sysfs_filters>`/nr_filters
++    │ │ │ │ │ │ │ :ref:`{core_,ops_,}filters <sysfs_filters>`/nr_filters
+     │ │ │ │ │ │ │ │ 0/type,matching,allow,memcg_path,addr_start,addr_end,target_idx,min,max
+     │ │ │ │ │ │ │ :ref:`stats <sysfs_schemes_stats>`/nr_tried,sz_tried,nr_applied,sz_applied,sz_ops_filter_passed,qt_exceeds
+     │ │ │ │ │ │ │ :ref:`tried_regions <sysfs_schemes_tried_regions>`/total_bytes
+@@ -307,9 +307,10 @@ to ``N-1``.  Each directory represents each DAMON-based operation scheme.
+ schemes/<N>/
+ ------------
  
-+What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/schemes/<S>/core_filters
-+Date:		Feb 2025
-+Contact:	SeongJae Park <sj@kernel.org>
-+Description:	Directory for DAMON core layer-handled DAMOS filters.  Files
-+		under this directory works same to those of
-+		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/schemes/<S>/filters
-+		directory.
+-In each scheme directory, five directories (``access_pattern``, ``quotas``,
+-``watermarks``, ``filters``, ``stats``, and ``tried_regions``) and three files
+-(``action``, ``target_nid`` and ``apply_interval``) exist.
++In each scheme directory, seven directories (``access_pattern``, ``quotas``,
++``watermarks``, ``core_filters``, ``ops_filters``, ``filters``, ``stats``, and
++``tried_regions``) and three files (``action``, ``target_nid`` and
++``apply_interval``) exist.
+ 
+ The ``action`` file is for setting and getting the scheme's :ref:`action
+ <damon_design_damos_action>`.  The keywords that can be written to and read
+@@ -420,13 +421,24 @@ The ``interval`` should written in microseconds unit.
+ 
+ .. _sysfs_filters:
+ 
+-schemes/<N>/filters/
+---------------------
++schemes/<N>/{core\_,ops\_,}filters/
++-----------------------------------
+ 
+-The directory for the :ref:`filters <damon_design_damos_filters>` of the given
++Directories for :ref:`filters <damon_design_damos_filters>` of the given
+ DAMON-based operation scheme.
+ 
+-In the beginning, this directory has only one file, ``nr_filters``.  Writing a
++``core_filters`` and ``ops_filters`` directories are for the filters handled by
++the DAMON core layer and operations set layer, respectively.  ``filters``
++directory can be used for installing filters regardless of their handled
++layers.  Filters that requested by ``core_filters`` and ``ops_filters`` will be
++installed before those of ``filters``.  All three directories have same files.
 +
-+What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/schemes/<S>/ops_filters
-+Date:		Feb 2025
-+Contact:	SeongJae Park <sj@kernel.org>
-+Description:	Directory for DAMON operations set layer-handled DAMOS filters.
-+		Files under this directory works same to those of
-+		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/schemes/<S>/filters
-+		directory.
++Use of ``filters`` directory can make expecting evaluation orders of given
++filters with the files under directory bit confusing.  Users are hence
++recommended to use ``core_filters`` and ``ops_filters`` directories.  The
++``filters`` directory could be deprecated in future.
 +
- What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/schemes/<S>/stats/nr_tried
- Date:		Mar 2022
- Contact:	SeongJae Park <sj@kernel.org>
++In the beginning, the directory has only one file, ``nr_filters``.  Writing a
+ number (``N``) to the file creates the number of child directories named ``0``
+ to ``N-1``.  Each directory represents each filter.  The filters are evaluated
+ in the numeric order.
+@@ -435,7 +447,7 @@ Each filter directory contains nine files, namely ``type``, ``matching``,
+ ``allow``, ``memcg_path``, ``addr_start``, ``addr_end``, ``min``, ``max``
+ and ``target_idx``.  To ``type`` file, you can write the type of the filter.
+ Refer to :ref:`the design doc <damon_design_damos_filters>` for available type
+-names and their meanings.
++names, their meaning and on what layer those are handled.
+ 
+ For ``memcg`` type, you can specify the memory cgroup of the interest by
+ writing the path of the memory cgroup from the cgroups mount point to
+@@ -455,6 +467,7 @@ the ``type`` and ``matching`` should be allowed or not.
+ For example, below restricts a DAMOS action to be applied to only non-anonymous
+ pages of all memory cgroups except ``/having_care_already``.::
+ 
++    # cd ops_filters/0/
+     # echo 2 > nr_filters
+     # # disallow anonymous pages
+     echo anon > 0/type
 -- 
 2.39.5
