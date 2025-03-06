@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BA4C270EC9;
-	Thu,  6 Mar 2025 17:59:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A387927426C;
+	Thu,  6 Mar 2025 17:59:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741283964; cv=none; b=BVWRtzL1SfBxdP9p+/n4WLOknk3S1LkD1PTPHOgHeL1Dn7ocY3+dHoR/yKHU19NPL+HZG5VlU/W2O3vQKAiiJ8tONEeW+r8cS2iQDhQOM/A8vxoEuZol15ovXp6+uVywdLiFDKqiySvGX5bTPuKQ356hGIkd6G55YIfVtD1c3n0=
+	t=1741283965; cv=none; b=jPChwwLpbBmaNeyF/W1XfPNNW13dRroKnIhZ/SLYtN4kpmvn3Ij/p2S5dwudQSgl9E2hCIDr029zPfyqkiUpcX1N4XKEBPf+b6zzd2OL34sL1E91m+S88IL3vDIyrm/C75nHaqelyq1coCEIgdHs9Z3hn1W4+d5/vl6fZzipDqA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741283964; c=relaxed/simple;
-	bh=S+TNIBRN6YsZ8tOcYDy9gAmvy6YsqhXhgFNOQBl/SdM=;
+	s=arc-20240116; t=1741283965; c=relaxed/simple;
+	bh=I/JHvzw57UoJPSQTgW4gksymyJzz98SL8NUvb1KKOF0=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=aN0RyuaZGbRh/jilwUQA4gmpIwnYEuPrlZ1dPWhpZMUmTmrfZzwS/UQtys0eN89co1+3sQbSXWyoARNRET7guVHq9JDRhN8PGxKqmsYzIBwrhrxqXGeEPjVUANfRetekIEXbm14W0ncV8BQ0AulTC7TsQcRnGqaT/rw+qVqVNEQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=S14s7Ljy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hHDjZGkfK2+GdJ/Zip86Sk5nXB/oHPyt3L3SD5scxGLoJ3r/l2JCKDIfiDANM0ooht76J39OrvWbZR2QtWoAmvMaqY88UF8QT4Bg882J/lb7cqMtSFx5OKoNf5l9R0JjMgZ3BK7N2LDFD4ZkJJ1i6rRBrsYNmudeDFSY6qLmBTk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=t43p2Qrd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="S14s7Ljy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3196FC4CEEB;
-	Thu,  6 Mar 2025 17:59:24 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="t43p2Qrd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56B46C4CEE9;
+	Thu,  6 Mar 2025 17:59:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1741283964;
-	bh=S+TNIBRN6YsZ8tOcYDy9gAmvy6YsqhXhgFNOQBl/SdM=;
+	s=k20201202; t=1741283965;
+	bh=I/JHvzw57UoJPSQTgW4gksymyJzz98SL8NUvb1KKOF0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S14s7LjyIEJw6vYOzHXcs45rJA5HM0smXIDKTwtGIGtVg5j4Sxt57Tb2BNY0Wgjwn
-	 xdgaz6Fw4jpwFIPd5XPf6KLq/W/hF9v2XhGQIy3gCw0x3sdRU4rGi4SwT91xRrwwOH
-	 KX3cZ0lWMRUJhp+OpdXdF4cviM/flmortjg5iANDvX4Ia+0gNzA/yQqhLzEY8LBBDp
-	 TY27V/oidghlrJ2674LYT4BZqSH+9+a2LBo+rApY0WnHbBOcSemaaayM0B11vDngc9
-	 z0arz79RE8XCm17cIDz6LQwfsUJD3k6SJEWsh4QHFeKFBgHxYxBZQlfaPzrPXSg7IK
-	 V1xIHhSvP40rw==
+	b=t43p2Qrd5Bb7hd33jVdLTrPc3yYngQWh01UWIUXiyNaUQsIeXBmLhrndvro9mNHv2
+	 zfYl/VNQsqQJu0YBC9jinTCv46wgeHwLPdii9KyhU2jcPmfRG6y2LcrX2uvE4TEbA5
+	 /oN5lHeLwafXy7EMGqRii5igXdClJvOyse25zjqBjKief9JXj9/AszDV4bcSHwSs34
+	 RYnmA0VahnP38wsXOymiSLn9KTZvrou8KkPEIqHOIi3gfAQJQBMyX9cod5fMyeIedR
+	 vdLmClx/gxJoJLGVb0B2OpPlU2i88kWJzEG5BgOglyKaE8EmtibgkEq+DG67WP2bAW
+	 rMfnSYuiw1a3w==
 From: SeongJae Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SeongJae Park <sj@kernel.org>,
@@ -33,9 +33,9 @@ Cc: SeongJae Park <sj@kernel.org>,
 	kernel-team@meta.com,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [PATCH 10/13] mm/damon: remove ->before_start of damon_callback
-Date: Thu,  6 Mar 2025 09:59:05 -0800
-Message-Id: <20250306175908.66300-11-sj@kernel.org>
+Subject: [PATCH 11/13] mm/damon: remove damon_callback->after_sampling
+Date: Thu,  6 Mar 2025 09:59:06 -0800
+Message-Id: <20250306175908.66300-12-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250306175908.66300-1-sj@kernel.org>
 References: <20250306175908.66300-1-sj@kernel.org>
@@ -47,59 +47,63 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The function pointer field was added to be used as a place to do some
-initialization works just before DAMON starts working.  However, nobody
-is using it now.  Remove it.
+The callback was used by DAMON sysfs interface for reading DAMON
+internal data.  But it is no more being used, and damon_call() can do
+similar works in a better way.  Remove it.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- include/linux/damon.h | 7 ++-----
- mm/damon/core.c       | 2 --
- 2 files changed, 2 insertions(+), 7 deletions(-)
+ include/linux/damon.h | 11 ++++-------
+ mm/damon/core.c       |  3 ---
+ 2 files changed, 4 insertions(+), 10 deletions(-)
 
 diff --git a/include/linux/damon.h b/include/linux/damon.h
-index dab4bb0fe39d..043de2408c65 100644
+index 043de2408c65..5aa277f4c948 100644
 --- a/include/linux/damon.h
 +++ b/include/linux/damon.h
-@@ -603,16 +603,14 @@ struct damon_operations {
- /**
+@@ -604,7 +604,6 @@ struct damon_operations {
   * struct damon_callback - Monitoring events notification callbacks.
   *
-- * @before_start:	Called before starting the monitoring.
   * @after_wmarks_check:	Called after each schemes' watermarks check.
-  * @after_sampling:	Called after each sampling.
+- * @after_sampling:	Called after each sampling.
   * @after_aggregation:	Called after each aggregation.
   * @before_damos_apply:	Called before applying DAMOS action.
   * @before_terminate:	Called before terminating the monitoring.
+@@ -617,17 +616,15 @@ struct damon_operations {
+  * attributes of the monitoring context while it's deactivated due to the
+  * watermarks, this is the good place to do.
   *
-- * The monitoring thread (&damon_ctx.kdamond) calls @before_start and
-- * @before_terminate just before starting and finishing the monitoring,
-- * respectively.
-+ * The monitoring thread (&damon_ctx.kdamond) calls @before_terminate just
-+ * before finishing the monitoring.
+- * The monitoring thread calls @after_sampling and @after_aggregation for each
+- * of the sampling intervals and aggregation intervals, respectively.
+- * Therefore, users can safely access the monitoring results without additional
+- * protection.  For the reason, users are recommended to use these callback for
+- * the accesses to the results.
++ * The monitoring thread calls @after_aggregation for each of the aggregation
++ * intervals.  Therefore, users can safely access the monitoring results
++ * without additional protection.  For the reason, users are recommended to use
++ * these callback for the accesses to the results.
   *
-  * The monitoring thread calls @after_wmarks_check after each DAMON-based
-  * operation schemes' watermarks check.  If users need to make changes to the
-@@ -628,7 +626,6 @@ struct damon_operations {
   * If any callback returns non-zero, monitoring stops.
   */
  struct damon_callback {
--	int (*before_start)(struct damon_ctx *context);
  	int (*after_wmarks_check)(struct damon_ctx *context);
- 	int (*after_sampling)(struct damon_ctx *context);
+-	int (*after_sampling)(struct damon_ctx *context);
  	int (*after_aggregation)(struct damon_ctx *context);
+ 	int (*before_damos_apply)(struct damon_ctx *context,
+ 			struct damon_target *target,
 diff --git a/mm/damon/core.c b/mm/damon/core.c
-index de30b788e13a..8904b3c079e6 100644
+index 8904b3c079e6..726e581904e5 100644
 --- a/mm/damon/core.c
 +++ b/mm/damon/core.c
-@@ -2407,8 +2407,6 @@ static int kdamond_fn(void *data)
+@@ -2431,9 +2431,6 @@ static int kdamond_fn(void *data)
  
- 	if (ctx->ops.init)
- 		ctx->ops.init(ctx);
--	if (ctx->callback.before_start && ctx->callback.before_start(ctx))
--		goto done;
- 	ctx->regions_score_histogram = kmalloc_array(DAMOS_MAX_SCORE + 1,
- 			sizeof(*ctx->regions_score_histogram), GFP_KERNEL);
- 	if (!ctx->regions_score_histogram)
+ 		if (ctx->ops.prepare_access_checks)
+ 			ctx->ops.prepare_access_checks(ctx);
+-		if (ctx->callback.after_sampling &&
+-				ctx->callback.after_sampling(ctx))
+-			break;
+ 
+ 		kdamond_usleep(sample_interval);
+ 		ctx->passed_sample_intervals++;
 -- 
 2.39.5
