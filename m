@@ -1,38 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A64924113D;
-	Fri,  7 Mar 2025 21:53:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3D2E22A804;
+	Mon, 10 Mar 2025 13:51:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741384381; cv=none; b=Lf6RB/BPGhBxiqbcTC88I4NwvTa0cUOlwAi2vNZyni36WPkCrHN8yncDi3iWqWxq3sUEpfKlz9D2hK7UdoMr/wiX/X3EZv0P/laI9i/Vv4FLvGnXW0wQDiiY0+MQa8euokS3Zu6mMSm5BcIU+eokYGdQxSq3+yZsun5j0+C0ud4=
+	t=1741614707; cv=none; b=qQXf5dRklX7e/c4R95SFchwhqWCrqsx7PBMpZfl0xfHZhu85hQ8G/tnoygaONcv/p+sgdk30W5DNd/L/Hd7qnXRyMDT31kFpYBohMLQdN+8XmC6IGSYEpjYzpzcEYtPjuxpZ4p5LT/WW5CPJX9vENcIcybbJO4nk/7nzQAJ53So=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741384381; c=relaxed/simple;
-	bh=7dSg+utetCMtnZA9XVH4esLJehzZUUrlDj3DsF4lJLY=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=sQrtE1+mRUGk4Ez6/tDk3jBrTvzVzGjaSNjlofd7fDnUc10OIg8OBUOuNplqIo/iUaa2OjCXLw4y+HM5gIUKBsaqQ7hrTB1/lAj+57LyX5AIphPn/PrgKt/dktoT5KtJZHcBepOEipK3U/kZfu4n4YTEYkrQhVxMMuXeADdmi6Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rFmzQJiq; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1741614707; c=relaxed/simple;
+	bh=a+lFZ0YwCbTM+uSgXmIyMxhwWDrnxR3g5GHAb9Vg+38=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=hKKIod9W3aMy28AkiGn47VukVECQvtPOr5WKRxbuvXXydWbuO3H2sjhPGGN3qaHhRBfCQ6nOHH9qKh/8R2dzoMxVi/RxMkzlEVhGMgES6T1s+kmm9r4Zk+dnYWFcsK+C+Ux3eD8ZBAHycMqZhor5/0w9g6zkAR8eQkyzSQZkkVM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=n4P6hSR1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rFmzQJiq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7333C4CED1;
-	Fri,  7 Mar 2025 21:53:00 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="n4P6hSR1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 642E4C4CEE5;
+	Mon, 10 Mar 2025 13:51:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1741384380;
-	bh=7dSg+utetCMtnZA9XVH4esLJehzZUUrlDj3DsF4lJLY=;
+	s=k20201202; t=1741614707;
+	bh=a+lFZ0YwCbTM+uSgXmIyMxhwWDrnxR3g5GHAb9Vg+38=;
 	h=From:To:Cc:Subject:Date:From;
-	b=rFmzQJiqWhLogcu6MOGxgwABpUShFhNgvs57GuqnnkxlnKE8xgrawbDrEXvWM4vqM
-	 xOBB+/24OmgJNKpVPPaF4KpOoS9v5oMN+q2A8X42CGJkLl9XZyqitNPz6X+F1R+rry
-	 +oYJiJMQSG8Q/r7TyBOXWenNTpiirivPG6PmV2vgE6akhncgHNoTutpjTVyYMXff8n
-	 WSK6vQQgBVbPBLkd8pQ/khMil4Lgfd5sRaP1FLO3Nsb4wHL7jABGSH3/QYKNSJRff9
-	 oo+66tdUexEwlGPmvVtRbMxgJ9f81Nq74MYf9L9NIfX5vkR73owCm4J12eGjLyNCvT
-	 azkzm/c/VK1fA==
-From: SeongJae Park <sj@kernel.org>
-To: damon@lists.linux.dev
-Cc: SeongJae Park <sj@kernel.org>,
+	b=n4P6hSR1A5/XvBEponlCkImC7nEEJ7usnFTBuvewSUI+xmkLJkU53hL7wgBMm1W1B
+	 5mXea52sCjuhcTqioS093M5fJncP1nxJG75VlUzEtYuXmcbbS2F1EMeIE7u85DZu0R
+	 /PsV1vw5zr5o7D2Vg3DB7dcWopjjWRbuhlx1GiuBBSO177txLR/d0Sfv4iXaCz7N1x
+	 0QqxXlzHKochi7eGvqsfUEUqyeLllastqzxlGfu+WUETaJPtx31RtWHpI4PT50aAwK
+	 kRmGg/b8GPsNhTae9aTbJU84sMC1GBtDlxatdnQ6yC57A58ZI/2yfA1CzGSJiD7BML
+	 8X/lYArwEyymQ==
+From: Arnd Bergmann <arnd@kernel.org>
+To: SeongJae Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Cc: Arnd Bergmann <arnd@arndb.de>,
+	Hyeongtak Ji <hyeongtak.ji@sk.com>,
+	Honggyu Kim <honggyu.kim@sk.com>,
+	Usama Arif <usamaarif642@gmail.com>,
+	damon@lists.linux.dev,
 	linux-mm@kvack.org,
 	linux-kernel@vger.kernel.org
-Subject: DAMON Beer/Coffee/Tea chat reminder for the week of 2025-03-10
-Date: Fri,  7 Mar 2025 13:52:58 -0800
-Message-Id: <20250307215258.1900-1-sj@kernel.org>
+Subject: [PATCH] mm/damon/sysfs-schemes: avoid Wformat-security warning
+Date: Mon, 10 Mar 2025 14:51:37 +0100
+Message-Id: <20250310135142.4176976-1-arnd@kernel.org>
 X-Mailer: git-send-email 2.39.5
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -42,53 +47,34 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hello,
+From: Arnd Bergmann <arnd@arndb.de>
 
+This warning is for potentially user-defined format strings:
 
-This is yet another reminder of upcoming DAMON Beer/Coffee/Tea chats
-(https://docs.google.com/document/d/1v43Kcj3ly4CYqmAkMaZzLiM2GEnWfgdGbZAH3mi2vpM/edit?usp=sharing)
-for the week of 2025-03-10.
+mm/damon/sysfs-schemes.c:1664:4: error: format string is not a string literal (potentially insecure) [-Werror,-Wformat-security]
+ 1664 |                         name);
 
-We will have the two meetings in the week as usual.  As previously noted,
-future meetings for the week of 2025-03-24 is moved one week due to the
-conflicts with LSFMM.
+Change this to use "%s" as the format and the name as the argument.
 
-Any-topic discussions
----------------------
+Fixes: 92bc039dd72e ("mm/damon/sysfs-schemes: let damon_sysfs_scheme_set_filters() be used for different named directories")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+---
+ mm/damon/sysfs-schemes.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Next three time slots for any topic (no reservation is required) are scheduled
-as below:
+diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
+index 50e6907515e6..23ac98dd6451 100644
+--- a/mm/damon/sysfs-schemes.c
++++ b/mm/damon/sysfs-schemes.c
+@@ -1661,7 +1661,7 @@ static int damon_sysfs_scheme_set_filters(struct damon_sysfs_scheme *scheme,
+ 		return -ENOMEM;
+ 	err = kobject_init_and_add(&filters->kobj,
+ 			&damon_sysfs_scheme_filters_ktype, &scheme->kobj,
+-			name);
++			"%s", name);
+ 	if (err)
+ 		kobject_put(&filters->kobj);
+ 	else
+-- 
+2.39.5
 
-- 2025-03-10 (Mon) 18:00 PT (https://meet.google.com/ndx-evoc-gbu)
-- 2025-04-02 (Wed) 09:30 PT (https://meet.google.com/ndx-evoc-gbu)
-- 2025-04-14 (Mon) 18:00 PT (https://meet.google.com/ndx-evoc-gbu)
-
-Dedicated-topic discussions
----------------------------
-
-Next three time slots that I reserved in advance for possible future dedicated
-topic discussions are as below.
-
-- 2025-03-12 (Wed) 09:30 PT (not yet reserved)
-- 2025-03-31 (Mon) 18:00 PT (not yet reserved)
-- 2025-04-15 (Wed) 09:30 PT (not yet reserved)
-
-Please reach out to me (sj@kernel.org or whatever) to reserve the
-not-yet-reserved time slots for your topics.  The reservation is made in a
-First-Come First-Served way, and I will send a Google Meet link to
-reservation-confirmed attendees.
-
-Please note that other time slots are also available on demands.
-
-Shared Calendar
----------------
-
-You can get the schedule via this shared Google Calendar:
-https://calendar.google.com/calendar/u/0?cid=ZDIwOTA4YTMxNjc2MDQ3NTIyMmUzYTM5ZmQyM2U4NDA0ZGIwZjBiYmJlZGQxNDM0MmY4ZTRjOTE0NjdhZDRiY0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t
-
-You can also get the past and upcoming schedules via
-https://docs.google.com/document/d/1v43Kcj3ly4CYqmAkMaZzLiM2GEnWfgdGbZAH3mi2vpM/edit?usp=sharing
-
-
-Thanks,
-SJ
