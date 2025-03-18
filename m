@@ -1,41 +1,73 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f169.google.com (mail-yw1-f169.google.com [209.85.128.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFA574A06;
-	Sat, 15 Mar 2025 22:26:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 349E0151990
+	for <damon@lists.linux.dev>; Tue, 18 Mar 2025 18:30:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742077574; cv=none; b=BNPMuKmLf7fNrDLZTO351LHVDvBR0EnaTZNoKy297JA1fHnWBssB9l4p/MQmr7BXmgFgUsyg4+IB8ARK87recSvLE1bwZPAGiRo7DyUG1Xd2WV3yvGSiu7llr5fkTpbqyehjTQ5TyMbyxDHGZdYeppqASLfoeqqLcCj2MJ8kQoo=
+	t=1742322632; cv=none; b=rkOWjj5KypWw6r5qcsVHahN/fvea1RZIqTYgUdTmjTvJuyyoiE66tCP/1e/cB9pcTlxx6GIgOVQXxtklw9/kkE/QcnDACRaibmWJull17n5Ok8GVfMaNFT6upUeyJO8fzY8gWa0IL6UuZssYE0qkssa/4jm5rNGZozSfH0Fxzzw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742077574; c=relaxed/simple;
-	bh=IZ7hQqeuHwLTEWeBLXMbvbomiMzODFwSXk5X/rK2CMA=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=ltIMr7oWxc1Yuxiwm9nUff/mSTzh2drCAGnXaIyZLyOnNwkue7OnWzxvc118uO9/6Y8h9akCQ9i4jeiTwcF7G8Zr2syaNxSpNFthhzT5xEO6KY/MKpCIptDeSFeu/MixDydiPUY2tL09+qTi0kVpZdfUHAfxckX6UFKPgCBmKtc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IVsETmf8; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1742322632; c=relaxed/simple;
+	bh=i5OfEoSljC+HbbhTACIKKpTdq1guqyC/ApD6p8ex79s=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=bMT695iO37rDfvc1SYcu6S/h+yqNC6kSJ+1FDafD3O1qaHasoOsM9g3oEL2ifCml6H1fS5XGHeB4QznvdTYuYr487vyFZqvttV55dJEIkDTvsUe4AhZIjPPKEJtJQPl1uF1uRRZWEnxuogdgkIqlfscYHqKZ7V4flyNAOGDKZvM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kWHsApk0; arc=none smtp.client-ip=209.85.128.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IVsETmf8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DB96C4CEE5;
-	Sat, 15 Mar 2025 22:26:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1742077573;
-	bh=IZ7hQqeuHwLTEWeBLXMbvbomiMzODFwSXk5X/rK2CMA=;
-	h=From:To:Cc:Subject:Date:From;
-	b=IVsETmf8VXTNv10R1QyakcVyZ0QyqiDn17KQ7av61sPG/+ZuURXTIB4VP+wGFEBQ9
-	 YMOy84MrD/eRJqKiY29TY2AklMco5VtKGqPwpAn14mHq8LhtozaIcai5r7Uj+sNlU9
-	 ITut/M5SaQwmxHenFNit57E84kDeChrjkQNDz1q2/XHS4gbB/Wb9vKGqXvf9vDATs8
-	 g0dz+r3U52XVWmuIUxcaA4AjlBYF4PsyqBQee1Oh+T14MduW3rUY78E4fCkRaSUDaB
-	 4HgbproOICNJz/GdzNzON83XzBKavX2rWa/9qZ85q6vYvXZnlm1B8rfu9c07Zvi4r7
-	 gDGmJj3I7FRbA==
-From: SeongJae Park <sj@kernel.org>
-To: Andrew Morton <akpm@linux-foundation.org>
-Cc: SeongJae Park <sj@kernel.org>,
-	damon@lists.linux.dev,
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kWHsApk0"
+Received: by mail-yw1-f169.google.com with SMTP id 00721157ae682-6f7031ea11cso64717347b3.2
+        for <damon@lists.linux.dev>; Tue, 18 Mar 2025 11:30:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1742322630; x=1742927430; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=aNwhYyHLUku5wWb6XEn1vDwJORz/NTg7eokwpgJAoks=;
+        b=kWHsApk0UOyKq+deHAw8wJpGCITXjzg+1Zf2OXfN9EfmNr9cjh1wHrHmfBuE/67X3q
+         Ck8sPCyJ8BGyY3knE1XoArAct/HHooVUtYQSPxLRnvBfNI3IBjC3YEY5ZWDx1tEKzcd2
+         Jp/ZmTrAQzOsztwh81sy58swlVmum9KEcE05AXeXD7hRwBp/RrRF6zi3i+dnH1LOGI4O
+         iJtWYuCeeCw19tTfn6OF39r0WnS5xtfuaGtmRaHCaU6xI69lIGCVV/Al7cP5kfSVq9rv
+         9PhMDJML5OSvMja3RhbCJoNzZl2pBmnjNUPfdFloMmK6w1ediC6xh6bySg949wnlC/Bs
+         Bz4A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1742322630; x=1742927430;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=aNwhYyHLUku5wWb6XEn1vDwJORz/NTg7eokwpgJAoks=;
+        b=JXHrnJ6NO2q8+FVP4c1WmNpQyo14sCSO+mz+8R6faycHTwTm+kL0bqh63hyW+YUm1/
+         geCtzh8QqH4VmaYGAAlHLUKotol4xZFplieZZ/G/0Nn/3D3CqJHtBaID6LTV1V1F85ma
+         FeOGJ7TUeU4pVKGN2qG9QHVEgK15e4h+yLUjAlSLQXGCTDlazZV4Cvd6nJ7Ww5KwbxiR
+         DV3YBcavdFAKJd7wRIdaAduWbhO8dQA+lsnLK9uGFr963k+GVxpSjfnhN3Pd7mgceYAB
+         dCnReuW1isyR0JckW1nAfKZFEdNjcyE7MvqmKFOzuyjEcg+3a5mvWp2KOSbSvb+sTfwM
+         7/Gg==
+X-Forwarded-Encrypted: i=1; AJvYcCW7FsFNVsXGwLNvOE+2iHY0idB6fLGxdnP9pJn3tTL0XTFAa+on0lgLpI/zzj8bDtqYucTrIg==@lists.linux.dev
+X-Gm-Message-State: AOJu0YygeNgtXS/jkVdfIfCIRS7DjcJMj9sxmgCY6aT3hTWNDtwa3W3t
+	kfMWSQK4pnQiSddqJWelTb7gsUaV7v5wzsdTWhO+JSD2zaH+Al4u
+X-Gm-Gg: ASbGnctw1sdGxeF+/wLzvMqKl7QZZRMvnc7vAK3fo56PFaH5cRdxD/IqvCHMuahAvYJ
+	vYXmUHv59od+qKn3mpI8kCdvIue9PD7pvib6S/SU5VJJnGzEmNPisQCRpxsPCfZNgI1W3Nz8/Rl
+	Y/dLGUNW5cGuAbOEE/f205ueXSG79NNpU2Mpgu2ZLeq0o1au8nkgiFBcriONqtWKr0iCA39q9ez
+	2asH3DBivu0AQSQHeksvBykEwllPNh2TkJN0HaSvTyvseP3lrKNqeOrqAiQr3EGpE3Vi8aIVCK+
+	YLYYdXgoAllwY+eysJgvMx5zffA7CdZuzPyV
+X-Google-Smtp-Source: AGHT+IE4IZmkYAr1CYhWXfFj7jyE8tpcUyeBW1sCfCwj6z7X4tNm2KMPObQ5RHcAkj4MPiAxgpoWHA==
+X-Received: by 2002:a05:690c:9985:b0:6ff:1fac:c4fc with SMTP id 00721157ae682-6ff460f42ccmr234534797b3.37.1742322630047;
+        Tue, 18 Mar 2025 11:30:30 -0700 (PDT)
+Received: from localhost ([2a03:2880:25ff:72::])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-6ff32cb598asm27095807b3.111.2025.03.18.11.30.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 18 Mar 2025 11:30:29 -0700 (PDT)
+From: Nhat Pham <nphamcs@gmail.com>
+To: akpm@linux-foundation.org
+Cc: sj@kernel.org,
+	corbet@lwn.net,
+	linux-mm@kvack.org,
 	kernel-team@meta.com,
 	linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org
-Subject: [PATCH mm-unstable] mm/damon/core: setup damos->{core,ops}_filters_default_reject for initial start
-Date: Sat, 15 Mar 2025 15:26:10 -0700
-Message-Id: <20250315222610.35245-1-sj@kernel.org>
-X-Mailer: git-send-email 2.39.5
+	linux-doc@vger.kernel.org,
+	damon@lists.linux.dev
+Subject: [PATCH 0/2] mm/damon: introduce DAMOS filter type for active pages
+Date: Tue, 18 Mar 2025 11:30:27 -0700
+Message-ID: <20250318183029.2062917-1-nphamcs@gmail.com>
+X-Mailer: git-send-email 2.47.1
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -44,61 +76,32 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Commit 6a0f07289bc7 ("mm/damon/core: set damos_filter default allowance
-behavior based on installed filters") on mm-unstable sets
-damos->{core,ops}_filters_default_reject fields on only
-damon_commit_ctx() code path, which is called for only online parameters
-update.  Hence, users who set filters from the beginning could set it
-not properly initialized.  As a result, unnnecessarily DAMOS target
-regions can be rejected.  Set the fields at the beginning of DAMON
-worker thread execution, too.
+The memory reclaim algorithm categorizes pages into active and inactive
+lists, separately for file and anon pages. The system's performance
+relies heavily on the (relative and absolute) accuracy of this
+categorization.
 
-Fixes: 6a0f07289bc7 ("mm/damon/core: set damos_filter default allowance behavior based on installed filters") # mm-unstable
-Signed-off-by: SeongJae Park <sj@kernel.org>
----
- mm/damon/core.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+This patch series add a new DAMOS filter for pages' activeness, giving
+us visibility into the access frequency of the pages on each list. This
+insight can help us diagnose issues with the active-inactive balancing
+dynamics, and make decisions to optimize reclaim efficiency and memory
+utilization.
 
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index db357892da74..fc1eba3da419 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -525,7 +525,7 @@ struct damon_ctx *damon_new_ctx(void)
- 	ctx->attrs.ops_update_interval = 60 * 1000 * 1000;
- 
- 	ctx->passed_sample_intervals = 0;
--	/* These will be set from kdamond_init_intervals_sis() */
-+	/* These will be set from kdamond_init_ctx() */
- 	ctx->next_aggregation_sis = 0;
- 	ctx->next_ops_update_sis = 0;
- 
-@@ -2363,7 +2363,7 @@ static int kdamond_wait_activation(struct damon_ctx *ctx)
- 	return -EBUSY;
- }
- 
--static void kdamond_init_intervals_sis(struct damon_ctx *ctx)
-+static void kdamond_init_ctx(struct damon_ctx *ctx)
- {
- 	unsigned long sample_interval = ctx->attrs.sample_interval ?
- 		ctx->attrs.sample_interval : 1;
-@@ -2381,6 +2381,7 @@ static void kdamond_init_intervals_sis(struct damon_ctx *ctx)
- 		apply_interval = scheme->apply_interval_us ?
- 			scheme->apply_interval_us : ctx->attrs.aggr_interval;
- 		scheme->next_apply_sis = apply_interval / sample_interval;
-+		damos_set_filters_default_reject(scheme);
- 	}
- }
- 
-@@ -2398,7 +2399,7 @@ static int kdamond_fn(void *data)
- 	pr_debug("kdamond (%d) starts\n", current->pid);
- 
- 	complete(&ctx->kdamond_started);
--	kdamond_init_intervals_sis(ctx);
-+	kdamond_init_ctx(ctx);
- 
- 	if (ctx->ops.init)
- 		ctx->ops.init(ctx);
+For instance, we might decide to enable DAMON_LRU_SORT, if we find that
+there are pages on the active list that are infrequently accessed, or
+less frequently accessed than pages on the inactive list.
 
-base-commit: dba212acaa779ea422b1c0653951af5fdf837314
+Nhat Pham (2):
+  mm/damon: implement a new DAMOS filter type for active pages
+  Docs/mm/damon/design: document active DAMOS filter type
+
+ Documentation/mm/damon/design.rst | 2 ++
+ include/linux/damon.h             | 2 ++
+ mm/damon/paddr.c                  | 3 +++
+ mm/damon/sysfs-schemes.c          | 1 +
+ 4 files changed, 8 insertions(+)
+
+
+base-commit: 40caf747267c18b6206e26a37d6ea6b695236c11
 -- 
-2.39.5
+2.47.1
