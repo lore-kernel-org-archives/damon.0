@@ -1,269 +1,144 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f42.google.com (mail-pj1-f42.google.com [209.85.216.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4D581EE00C;
-	Thu, 20 Mar 2025 05:39:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E2731DED5E;
+	Thu, 20 Mar 2025 12:43:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742449188; cv=none; b=HG/Bw05Ncwpg0tua6yr8ms6hPiw7Nsv612MiNzdZpJhx5j1wc0+a1Xn32iM1rjQF5/jIjb7nvVPXdKPIhbNnMIaBp+QQ+0rkga+8cUykTxflpzQ1PybDciWvmg/UcHPifLAeZsxPMC+x8bX0IKzab9xFE+zrY5uz+sEnmn0EzPM=
+	t=1742474583; cv=none; b=HvcX+jrTTVNE6d1YVr0Y/H1oEUStzwbXZE0co5ZGSiVXZx2kDX18jnMmEyK5LdFx/Se0CW8pHfpwC2ZLbkrEui92mc1yKXHOl3kSsdlrfuJbxnbtL6gRCWTAJmeTUxrRxm/SH9AgOkWPrXZeRVSeorWJm6rlmGV4R4f0ba1bM9M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742449188; c=relaxed/simple;
-	bh=Y3dAxBX8HTBcmXTfevqW10FoZFkNzFdE4brVy2x1Zu4=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=j9fOVrZ79PbhhaokcaB+iramJClYvMTJnkb/ITjP/uiqWhsFeGsQXO+sxQ+jyRPavi+N6qXV7epwTHuPJFXrF4xfcMrBSg1x2CNUpPpIxUYP2u+0gttckBbTkF79Dplx8Yy0LKqXacpeY8jJnz8hkXECShEcJCyYr45UZigYEng=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LilgjRVh; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1742474583; c=relaxed/simple;
+	bh=wTdaPTDa0jCwylQO/d7LcQaRxibO4+U7IE3VzJvXwMA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ZCZ78/gXRKax6xjUlvJ4UaebsSOFs6xhlku4hxW4R1wHlH5ok314isZSOKp9R8mwS+yU3vq8tu/ChOY/F6osv2b4F4XRlgQIQh2uwNPIKOJrGmA5okRlOmZgEbi8uutoU+S2qT6Kgkkeqhl06HtvVKg8mrjPxuaowknUeO5J60Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FJUVoMUN; arc=none smtp.client-ip=209.85.216.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LilgjRVh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58F54C4CEEC;
-	Thu, 20 Mar 2025 05:39:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1742449188;
-	bh=Y3dAxBX8HTBcmXTfevqW10FoZFkNzFdE4brVy2x1Zu4=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LilgjRVhZdDVtaHBAl9itceBOPwxnAvSmvhS6PZXVbHgxEzIcjHc4vFP7D0GiZrVO
-	 +LZ9eFcFZ/zRtvsBixms6OOo2kwhSGNd3TehNj5kvsNyHby1iHdHPgGg9FU6d7i43b
-	 wVYX8eTWHtL/vQNl9spze8dsiAbz34eISctHWv+eCE2IWCtymRxUtGDkO4kHLlVM9J
-	 WgOSsB9D4oCG+4RtWDoHMPL4a5lqG7BlCMullmYhfZQpZtudLBT9BR02Ld76zjGoRw
-	 yjRsO2Ua0C8AelEeCJvdgcl8A2h5PAbM1sxtAxDrYrS5yLSiutkfqa4XnchIY+Fp3d
-	 KqvZC0/4zxFSQ==
-From: SeongJae Park <sj@kernel.org>
-To: 
-Cc: SeongJae Park <sj@kernel.org>,
-	damon@lists.linux.dev,
-	kernel-team@meta.com,
-	linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org
-Subject: [RFC PATCH 4/4] samples/damon: implement a DAMON module for memory tiering
-Date: Wed, 19 Mar 2025 22:39:37 -0700
-Message-Id: <20250320053937.57734-5-sj@kernel.org>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250320053937.57734-1-sj@kernel.org>
-References: <20250320053937.57734-1-sj@kernel.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FJUVoMUN"
+Received: by mail-pj1-f42.google.com with SMTP id 98e67ed59e1d1-301493f45aeso1160749a91.1;
+        Thu, 20 Mar 2025 05:43:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1742474581; x=1743079381; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=+uL3IGjTjiuqrVnOz2Ww5dOwcBX+a3DDkjY6XFGUpLc=;
+        b=FJUVoMUNX/HdTsSRXgOGMk3ooGfm7bWCZw8M141pcwlFQy73PApEbikYyJ9cf0zoR+
+         FII/ZNUb8OIQGYzVMJhaa/ZKm99KRt/rET0gCgQlGAQUi/+8KGDdl0/w2d5dRWzxHfsE
+         K4qDt2gDPwobemqI8e608SlE6rhnP1Ur+BdLtMcGz4Xzo4XCjjeCMuzKgXYYYZjH5OS+
+         nMKfQqShmL8wYjiKWKLad++Ds5thJKn/VVOuo9WQqBKbBLsOnPPC8Jr7NdfQor3Mj55f
+         VxcUXX7laV745ChygBc7ku8HSNR/eFE6oWkW4GDNoC5nnA/KancS/GoacSQH2aUZukdh
+         qPqg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1742474581; x=1743079381;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=+uL3IGjTjiuqrVnOz2Ww5dOwcBX+a3DDkjY6XFGUpLc=;
+        b=HlZmtTDWNiB72yjRsZRnxmE4wYpLtLiG1fGXGoS3LcFxMaK2Q9AkkEaa7qlNqE8/+6
+         HDdLS5EpVd3h3kChTApDaRVIvSq5FP3oCt6EOQ5FOnSVlI6mZm5tcF697x1ThGjKIG5X
+         rCSEUE+klnj+i8DUr68meyMO5X0RT7+o4rhiOROn6st6hSFpkG48sA4WzVaZzk6eUvv+
+         RbVa1Yz47i78/PmfbIlio0bHo/an1AN90f9VkeHF82hPIBsV+lS11TS0ACotFVPdAUoI
+         vNKxz8crXAcAs3R/eFi4EFeSZ2soJfokfgrPOv8/JS3wfbHZZLnWVAY5HmBHRJCXEdpF
+         8/EQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVc5zDuf4Xa8LH1jx0swUO9ZULh0aAQHcamT6E7OA4g1LPYIxMPYyVvilW8iQprVD4dJU0ZXA==@lists.linux.dev, AJvYcCWqq5Xesnkgavlul6kFPxj8xIin+QNa9sBWD9g36S8/IuEGpn/VGYtt0+cvIaJRjhpXgXw9r86WhA==@lists.linux.dev
+X-Gm-Message-State: AOJu0Ywm59QucdeewdIM+mQo+6+amPXYIgsV6GMWmCqkkexiMgAaestB
+	nOLW3Ooj/TCOSJB7feQadc187BqA/aAdkoc+eybol4pepkq4GWmH0Wp+2/0myJ1LJYKpKC+VuJa
+	OxaaXKzGTW7t0usJlChy8BP4Q68I=
+X-Gm-Gg: ASbGnctel9QDWyS8TeaVP0UUkOnwdg3sD7tXhignFlFNtw8R5elN5jH0aoP2aMMIfj5
+	DI+m7y1BsMLaiR5CIY6jPI2pNsUvs7cuzRB9McOCHXL/sNXWOZXWf3GKMxwhSvKfNIbZpN53e84
+	vmtGGDzAT/B0MLGOOAA4oMZPrZ5KQ=
+X-Google-Smtp-Source: AGHT+IG3IAgXvK8pSWNiHSoRiODV5fRdTOwPg8f+TG2YtMLkTzQixdJdL1YxVKheImSCU2oRd0FUdqQX1TmgTyEHAIg=
+X-Received: by 2002:a17:90b:4a92:b0:2ee:74a1:fba2 with SMTP id
+ 98e67ed59e1d1-301bdf93ed2mr10044571a91.20.1742474580671; Thu, 20 Mar 2025
+ 05:43:00 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20250319143027.685727358@linuxfoundation.org> <20250319165703.51651-1-sj@kernel.org>
+In-Reply-To: <20250319165703.51651-1-sj@kernel.org>
+From: Luna Jernberg <droidbittin@gmail.com>
+Date: Thu, 20 Mar 2025 12:42:48 +0000
+X-Gm-Features: AQ5f1JpMvwcK-1U-hbVAN0-qz9U6SBJvwStCRYbt1diHejdo2BJVf9HMKmOCCEk
+Message-ID: <CADo9pHg+iuBtM_cz1jJKS82Cw1oP4G7KoJiaRwFzed1Af1uWCw@mail.gmail.com>
+Subject: Re: [PATCH 6.13 000/241] 6.13.8-rc1 review
+To: SeongJae Park <sj@kernel.org>, Luna Jernberg <droidbittin@gmail.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org, 
+	patches@lists.linux.dev, linux-kernel@vger.kernel.org, 
+	torvalds@linux-foundation.org, akpm@linux-foundation.org, linux@roeck-us.net, 
+	shuah@kernel.org, patches@kernelci.org, lkft-triage@lists.linaro.org, 
+	pavel@denx.de, jonathanh@nvidia.com, f.fainelli@gmail.com, 
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de, 
+	conor@kernel.org, hargar@microsoft.com, broonie@kernel.org, 
+	damon@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
 
-Implement a sample DAMON module that shows how self-tuned DAMON-based
-memory tiering can be written.  It is a sample since the purpose is to
-gives an idea about how it can be implemented, rather than be used as
-is.  Especially, the production purpose module would need to find memory
-tiers and set the scheme target address ranges automatically.
+Works fine on my Dell Latitude 7390 laptop with model name    :
+Intel(R) Core(TM) i5-8350U CPU @ 1.70GHz
+and Arch Linux with testing repos enabled
 
-Signed-off-by: SeongJae Park <sj@kernel.org>
----
- samples/damon/Kconfig  |  13 ++++
- samples/damon/Makefile |   1 +
- samples/damon/mtier.c  | 167 +++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 181 insertions(+)
- create mode 100644 samples/damon/mtier.c
+Tested-by: Luna Jernberg <droidbittin@gmail.com>
 
-diff --git a/samples/damon/Kconfig b/samples/damon/Kconfig
-index 564c49ed69a2..cbf96fd8a8bf 100644
---- a/samples/damon/Kconfig
-+++ b/samples/damon/Kconfig
-@@ -27,4 +27,17 @@ config SAMPLE_DAMON_PRCL
- 
- 	  If unsure, say N.
- 
-+config SAMPLE_DAMON_MTIER
-+	bool "DAMON sample module for memory tiering"
-+	depends on DAMON && DAMON_PADDR
-+	help
-+	  Thps builds DAMON sample module for memory tierign.
-+
-+	  The module assumes the system is constructed with two NUMA nodes,
-+	  which seems as local and remote nodes to all CPUs.  For example,
-+	  node0 is for DDR5 DRAMs connected via DIMM, while node1 is for DDR4
-+	  DRAMs connected via CXL.
-+
-+	  If unsure, say N.
-+
- endmenu
-diff --git a/samples/damon/Makefile b/samples/damon/Makefile
-index 7f155143f237..72f68cbf422a 100644
---- a/samples/damon/Makefile
-+++ b/samples/damon/Makefile
-@@ -2,3 +2,4 @@
- 
- obj-$(CONFIG_SAMPLE_DAMON_WSSE) += wsse.o
- obj-$(CONFIG_SAMPLE_DAMON_PRCL) += prcl.o
-+obj-$(CONFIG_SAMPLE_DAMON_MTIER) += mtier.o
-diff --git a/samples/damon/mtier.c b/samples/damon/mtier.c
-new file mode 100644
-index 000000000000..3390b7d30c26
---- /dev/null
-+++ b/samples/damon/mtier.c
-@@ -0,0 +1,167 @@
-+// SPDX-License-Identifier: GPL-2.0
-+/*
-+ * memory tiering: migrate cold pages in node 0 and hot pages in node 1 to node
-+ * 1 and node 0, respectively.  Adjust the hotness/coldness threshold aiming
-+ * resulting 99.6 % node 0 utilization ratio.
-+ */
-+
-+#define pr_fmt(fmt) "damon_sample_mtier: " fmt
-+
-+#include <linux/damon.h>
-+#include <linux/init.h>
-+#include <linux/kernel.h>
-+#include <linux/module.h>
-+
-+static unsigned long node0_start_addr __read_mostly;
-+module_param(node0_start_addr, ulong, 0600);
-+
-+static unsigned long node0_end_addr __read_mostly;
-+module_param(node0_end_addr, ulong, 0600);
-+
-+static unsigned long node1_start_addr __read_mostly;
-+module_param(node1_start_addr, ulong, 0600);
-+
-+static unsigned long node1_end_addr __read_mostly;
-+module_param(node1_end_addr, ulong, 0600);
-+
-+static int damon_sample_mtier_enable_store(
-+		const char *val, const struct kernel_param *kp);
-+
-+static const struct kernel_param_ops enable_param_ops = {
-+	.set = damon_sample_mtier_enable_store,
-+	.get = param_get_bool,
-+};
-+
-+static bool enable __read_mostly;
-+module_param_cb(enable, &enable_param_ops, &enable, 0600);
-+MODULE_PARM_DESC(enable, "Enable of disable DAMON_SAMPLE_MTIER");
-+
-+static struct damon_ctx *ctxs[2];
-+
-+static struct damon_ctx *damon_sample_mtier_build_ctx(bool promote)
-+{
-+	struct damon_ctx *ctx;
-+	struct damon_target *target;
-+	struct damon_region *region;
-+	struct damos *scheme;
-+	struct damos_quota_goal *quota_goal;
-+	struct damos_filter *filter;
-+
-+	ctx = damon_new_ctx();
-+	if (!ctx)
-+		return NULL;
-+	/*
-+	 * auto-tune sampling and aggregation interval aiming 4% DAMON-observed
-+	 * accesses ratio, keeping sampling interval in [5ms, 10s] range.
-+	 */
-+	ctx->attrs.intervals_goal = (struct damon_intervals_goal) {
-+		.access_bp = 400, .aggrs = 3,
-+		.min_sample_us = 5000, .max_sample_us = 10000000,
-+	};
-+	if (damon_select_ops(ctx, DAMON_OPS_PADDR))
-+		goto free_out;
-+
-+	target = damon_new_target();
-+	if (!target)
-+		goto free_out;
-+	damon_add_target(ctx, target);
-+	region = damon_new_region(
-+			promote ? node1_start_addr : node0_start_addr,
-+			promote ? node1_end_addr : node0_end_addr);
-+	if (!region)
-+		goto free_out;
-+	damon_add_region(region, target);
-+
-+	scheme = damon_new_scheme(
-+			/* access pattern */
-+			&(struct damos_access_pattern) {
-+				.min_sz_region = PAGE_SIZE,
-+				.max_sz_region = ULONG_MAX,
-+				.min_nr_accesses = promote ? 1 : 0,
-+				.max_nr_accesses = promote ? UINT_MAX : 0,
-+				.min_age_region = 0,
-+				.max_age_region = UINT_MAX},
-+			/* action */
-+			promote ? DAMOS_MIGRATE_HOT : DAMOS_MIGRATE_COLD,
-+			1000000,	/* apply interval (1s) */
-+			&(struct damos_quota){
-+				/* 200 MiB per sec by most */
-+				.reset_interval = 1000,
-+				.sz = 200 * 1024 * 1024,
-+				/* ignore size of region when prioritizing */
-+				.weight_sz = 0,
-+				.weight_nr_accesses = 100,
-+				.weight_age = 100,
-+			},
-+			&(struct damos_watermarks){},
-+			promote ? 0 : 1);	/* migrate target node id */
-+	if (!scheme)
-+		goto free_out;
-+	damon_set_schemes(ctx, &scheme, 1);
-+	quota_goal = damos_new_quota_goal(
-+			promote ? DAMOS_QUOTA_NODE_MEM_USED_BP :
-+			DAMOS_QUOTA_NODE_MEM_FREE_BP,
-+			promote ? 9970 : 50);
-+	if (!quota_goal)
-+		goto free_out;
-+	quota_goal->nid = 0;
-+	damos_add_quota_goal(&scheme->quota, quota_goal);
-+	filter = damos_new_filter(DAMOS_FILTER_TYPE_YOUNG, true, promote);
-+	if (!filter)
-+		goto free_out;
-+	damos_add_filter(scheme, filter);
-+	return ctx;
-+free_out:
-+	damon_destroy_ctx(ctx);
-+	return NULL;
-+}
-+
-+static int damon_sample_mtier_start(void)
-+{
-+	struct damon_ctx *ctx;
-+
-+	ctx = damon_sample_mtier_build_ctx(true);
-+	if (!ctx)
-+		return -ENOMEM;
-+	ctxs[0] = ctx;
-+	ctx = damon_sample_mtier_build_ctx(false);
-+	if (!ctx) {
-+		damon_destroy_ctx(ctxs[0]);
-+		return -ENOMEM;
-+	}
-+	ctxs[1] = ctx;
-+	return damon_start(ctxs, 2, true);
-+}
-+
-+static void damon_sample_mtier_stop(void)
-+{
-+	damon_stop(ctxs, 2);
-+	damon_destroy_ctx(ctxs[0]);
-+	damon_destroy_ctx(ctxs[1]);
-+}
-+
-+static int damon_sample_mtier_enable_store(
-+		const char *val, const struct kernel_param *kp)
-+{
-+	bool enabled = enable;
-+	int err;
-+
-+	err = kstrtobool(val, &enable);
-+	if (err)
-+		return err;
-+
-+	if (enable == enabled)
-+		return 0;
-+
-+	if (enable)
-+		return damon_sample_mtier_start();
-+	damon_sample_mtier_stop();
-+	return 0;
-+}
-+
-+static int __init damon_sample_mtier_init(void)
-+{
-+	return 0;
-+}
-+
-+module_init(damon_sample_mtier_init);
--- 
-2.39.5
+Den tors 20 mars 2025 kl 02:40 skrev SeongJae Park <sj@kernel.org>:
+>
+> Hello,
+>
+> On Wed, 19 Mar 2025 07:27:50 -0700 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+>
+> > This is the start of the stable review cycle for the 6.13.8 release.
+> > There are 241 patches in this series, all will be posted as a response
+> > to this one.  If anyone has any issues with these being applied, please
+> > let me know.
+> >
+> > Responses should be made by Fri, 21 Mar 2025 14:29:55 +0000.
+> > Anything received after that time might be too late.
+>
+> This rc kernel passes DAMON functionality test[1] on my test machine.
+> Attaching the test results summary below.  Please note that I retrieved the
+> kernel from linux-stable-rc tree[2].
+>
+> Tested-by: SeongJae Park <sj@kernel.org>
+>
+> [1] https://github.com/damonitor/damon-tests/tree/next/corr
+> [2] 14de9a7d510f ("Linux 6.13.8-rc1")
+>
+> Thanks,
+> SJ
+>
+> [...]
+>
+> ---
+>
+> ok 9 selftests: damon: damos_tried_regions.py
+> ok 10 selftests: damon: damon_nr_regions.py
+> ok 11 selftests: damon: reclaim.sh
+> ok 12 selftests: damon: lru_sort.sh
+> ok 13 selftests: damon: debugfs_empty_targets.sh
+> ok 14 selftests: damon: debugfs_huge_count_read_write.sh
+> ok 15 selftests: damon: debugfs_duplicate_context_creation.sh
+> ok 16 selftests: damon: debugfs_rm_non_contexts.sh
+> ok 17 selftests: damon: debugfs_target_ids_read_before_terminate_race.sh
+> ok 18 selftests: damon: debugfs_target_ids_pid_leak.sh
+> ok 19 selftests: damon: sysfs_update_removed_scheme_dir.sh
+> ok 20 selftests: damon: sysfs_update_schemes_tried_regions_hang.py
+> ok 1 selftests: damon-tests: kunit.sh
+> ok 2 selftests: damon-tests: huge_count_read_write.sh
+> ok 3 selftests: damon-tests: buffer_overflow.sh
+> ok 4 selftests: damon-tests: rm_contexts.sh
+> ok 5 selftests: damon-tests: record_null_deref.sh
+> ok 6 selftests: damon-tests: dbgfs_target_ids_read_before_terminate_race.sh
+> ok 7 selftests: damon-tests: dbgfs_target_ids_pid_leak.sh
+> ok 8 selftests: damon-tests: damo_tests.sh
+> ok 9 selftests: damon-tests: masim-record.sh
+> ok 10 selftests: damon-tests: build_i386.sh
+> ok 11 selftests: damon-tests: build_arm64.sh # SKIP
+> ok 12 selftests: damon-tests: build_m68k.sh # SKIP
+> ok 13 selftests: damon-tests: build_i386_idle_flag.sh
+> ok 14 selftests: damon-tests: build_i386_highpte.sh
+> ok 15 selftests: damon-tests: build_nomemcg.sh
+>  [33m
+>  [92mPASS [39m
+>
