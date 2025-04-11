@@ -1,184 +1,89 @@
-Received: from szxga08-in.huawei.com (szxga08-in.huawei.com [45.249.212.255])
+Received: from mailgw.kylinos.cn (mailgw.kylinos.cn [124.126.103.232])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B1AA1F0996
-	for <damon@lists.linux.dev>; Fri, 11 Apr 2025 06:30:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.255
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A831A293472
+	for <damon@lists.linux.dev>; Fri, 11 Apr 2025 07:38:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=124.126.103.232
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744353047; cv=none; b=ciZWWBY6I0Gmm56DFSXbAauU0seJu86H7hgHnhry2ApBiILvLdFvXzXswk0fSfzT2jq5K2hNpTxUh1f0XQ0x9BLoVSz0bDWNBnDpyGrDsBkBoViNKoD0h+F95Dw2Ra1IL0V9590Rlh6eWLJgwzIzfglMPiWLDGpA87LKHPtm084=
+	t=1744357117; cv=none; b=aOo7pIvjhojlUZsoCBNfwaYYBuaKgnCcoR8WRU8a1YNSeN5/BbRblG4u/R0tV2VkeKVvsEQ29WqOfiHFCZ0e8/QTXjz9agpWZ5ydda/BynQIaN9EdxFNVEkvTusFITCdgTD1DeF5E3vbMvQoXydIEf/KEoFXEyLa6fRSNwmtysA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744353047; c=relaxed/simple;
-	bh=br543M2/Kkr8Q0pkNJEFCwZRRP621m11fua0HpagYuM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=WbM62GHjreESvSsB6fu6JktU3v0vHsBObMcy8tpO84XUFlS7noWTLDCZiUMwUjLmyQC3ow91ukgPoZnTGt9D2IGP3yBPO7QsyqwXiPRrIbJTJVWjbnvEjNxhLQnl0L50kDNm6yDONHMtJBjzUv8d2olPakglK5mOVaDcC15SXJ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; arc=none smtp.client-ip=45.249.212.255
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
-Received: from mail.maildlp.com (unknown [172.19.162.254])
-	by szxga08-in.huawei.com (SkyGuard) with ESMTP id 4ZYmxy3Q8yz1d0sk;
-	Fri, 11 Apr 2025 14:29:58 +0800 (CST)
-Received: from kwepemg500008.china.huawei.com (unknown [7.202.181.45])
-	by mail.maildlp.com (Postfix) with ESMTPS id 97D291800FE;
-	Fri, 11 Apr 2025 14:30:41 +0800 (CST)
-Received: from [10.174.177.186] (10.174.177.186) by
- kwepemg500008.china.huawei.com (7.202.181.45) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.11; Fri, 11 Apr 2025 14:30:40 +0800
-Message-ID: <b937014a-66ef-4648-a61d-87c61dcdb836@huawei.com>
-Date: Fri, 11 Apr 2025 14:30:40 +0800
+	s=arc-20240116; t=1744357117; c=relaxed/simple;
+	bh=lK+0YZblLQ54UMavFB3Xnnd+DgnfZjDVbvyppTON+og=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=UM2eKhEmB3oKaYxLENLhjX9eAelLLGerwL8TlRCJKu0mwPzAOfbMUOyPvaSIxYwPFSuaEda8eLkDOCa/pNZ3SCYezFTjU30XUI7vELQNpee9UuKP3JWarW25Hp8++/T3l3hUDhe+98V2n/x3fWzl2R6a6mGxchkZU2hZ2bzK6TM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn; spf=pass smtp.mailfrom=kylinos.cn; arc=none smtp.client-ip=124.126.103.232
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kylinos.cn
+X-UUID: f38858d016a711f0a216b1d71e6e1362-20250411
+X-CTIC-Tags:
+	HR_CC_COUNT, HR_CC_DOMAIN_COUNT, HR_CC_NO_NAME, HR_CTE_8B, HR_CTT_MISS
+	HR_DATE_H, HR_DATE_WKD, HR_DATE_ZONE, HR_FROM_NAME, HR_SJ_LANG
+	HR_SJ_LEN, HR_SJ_LETTER, HR_SJ_NOR_SYM, HR_SJ_PHRASE, HR_SJ_PHRASE_LEN
+	HR_SJ_WS, HR_TO_COUNT, HR_TO_DOMAIN_COUNT, HR_TO_NO_NAME, IP_TRUSTED
+	SRC_TRUSTED, DN_TRUSTED, SA_EXISTED, SN_EXISTED, SPF_NOPASS
+	DKIM_NOPASS, DMARC_NOPASS, CIE_BAD, CIE_GOOD, CIE_GOOD_SPF
+	GTI_FG_BS, GTI_RG_INFO, GTI_C_BU, AMN_T1, AMN_GOOD
+	AMN_C_TI, AMN_C_BU, ABX_MISS_RDNS
+X-CID-P-RULE: Release_Ham
+X-CID-O-INFO: VERSION:1.1.45,REQID:2936d489-82c3-4fb2-b1c2-c23e1406acf2,IP:10,
+	URL:0,TC:0,Content:0,EDM:0,RT:0,SF:-5,FILE:0,BULK:0,RULE:Release_Ham,ACTIO
+	N:release,TS:5
+X-CID-INFO: VERSION:1.1.45,REQID:2936d489-82c3-4fb2-b1c2-c23e1406acf2,IP:10,UR
+	L:0,TC:0,Content:0,EDM:0,RT:0,SF:-5,FILE:0,BULK:0,RULE:Release_Ham,ACTION:
+	release,TS:5
+X-CID-META: VersionHash:6493067,CLOUDID:9eb89e8829d66a8d056319cec9abff9b,BulkI
+	D:250411153535IWC77CU0,BulkQuantity:1,Recheck:0,SF:19|24|44|66|72|78|102,T
+	C:nil,Content:0|50,EDM:-3,IP:-2,URL:0,File:nil,RT:nil,Bulk:40,QS:nil,BEC:n
+	il,COL:0,OSI:0,OSA:0,AV:0,LES:1,SPR:NO,DKR:0,DKP:0,BRR:0,BRE:0,ARC:0
+X-CID-BVR: 0
+X-CID-BAS: 0,_,0,_
+X-CID-FACTOR: TF_CID_SPAM_SNR,TF_CID_SPAM_FSD,TF_CID_SPAM_FSI
+X-UUID: f38858d016a711f0a216b1d71e6e1362-20250411
+X-User: lienze@kylinos.cn
+Received: from kylin.. [(223.70.159.239)] by mailgw.kylinos.cn
+	(envelope-from <lienze@kylinos.cn>)
+	(Generic MTA with TLSv1.3 TLS_AES_256_GCM_SHA384 256/256)
+	with ESMTP id 1563693554; Fri, 11 Apr 2025 15:38:24 +0800
+From: Enze Li <lienze@kylinos.cn>
+To: sj@kernel.org
+Cc: damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	lienze@kylinos.cn
+Subject: [PATCH] samples/damon/prcl: Fix a comment typo
+Date: Fri, 11 Apr 2025 15:38:00 +0800
+Message-ID: <20250411073800.1444481-1-lienze@kylinos.cn>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH] mm/damon: add full LPAE support for memory monitoring
- above 4GB
-To: SeongJae Park <sj@kernel.org>
-CC: <akpm@linux-foundation.org>, <damon@lists.linux.dev>,
-	<linux-kernel@vger.kernel.org>, <linux-mm@kvack.org>,
-	<wangkefeng.wang@huawei.com>
-References: <20250410222507.56911-1-sj@kernel.org>
-From: zuoze <zuoze1@huawei.com>
-In-Reply-To: <20250410222507.56911-1-sj@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: dggems702-chm.china.huawei.com (10.3.19.179) To
- kwepemg500008.china.huawei.com (7.202.181.45)
 
+This patch just fixes a typo in the comment.
 
+s/regiosn/regions
 
-在 2025/4/11 6:25, SeongJae Park 写道:
-> On Thu, 10 Apr 2025 14:28:23 +0800 zuoze <zuoze1@huawei.com> wrote:
-> 
->>
->>
->> 在 2025/4/10 1:36, SeongJae Park 写道:
->>> On Wed, 9 Apr 2025 15:01:39 +0800 zuoze <zuoze1@huawei.com> wrote:
->>>
->>>>
->>>>
->>>> 在 2025/4/9 10:50, SeongJae Park 写道:
->>>>> Hi Ze,
->>>>>
->>>>> On Tue, 8 Apr 2025 15:55:53 +0800 Ze Zuo <zuoze1@huawei.com> wrote:
->>>>>
->>>>>> Previously, DAMON's physical address space monitoring only supported
->>>>>> memory ranges below 4GB on LPAE-enabled systems. This was due to
->>>>>> the use of 'unsigned long' in 'struct damon_addr_range', which is
->>>>>> 32-bit on ARM32 even with LPAE enabled.
-> [...]
->>> I think another approach for this issue is adding a DAMON parameter, say,
->>> address_unit.  It will represent the factor value that need to be multiplied to
->>> DAMON-address to get real address on the given address space.  For example, if
->>> address_unit is 10 and the user sets DAMON monitoring target address range as
->>> 200-300, it means user wants DAMON to monitor address range 2000-3000 of the
->>> given address space.  The default value of the parameter would be 1, so that
->>> old users show no change.  32bit ARM with LPAE users would need to explicitly
->>> set the parameter but I believe that shouldn't be a big issue?
->>
->> Regarding the address_unit approach, I have some concerns after checking
->> the code:
->>
->> 1. Scaling Factor Limitations - While the scaling factor resolves the
->> damon_addr_range storage issue, actual physical addresses (PAs) would
->> still require unsigned long long temporaries in many cases.
-> 
-> The current behavior, which is using 'unsigned long' as the type of the real
-> address on DAMON operations set for physical address space (paddr), was just a
-> wrong approach.  'paddr' operations set should use proper type for physical
-> address, namely phys_addr_t.
->
+Signed-off-by: Enze Li <lienze@kylinos.cn>
+---
+ samples/damon/prcl.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Agreed. Using phys_addr_t for paddr is the right approach—unsigned long
-was incorrect for physical addresses.
+diff --git a/samples/damon/prcl.c b/samples/damon/prcl.c
+index c3acbdab7a62..056b1b21a0fe 100644
+--- a/samples/damon/prcl.c
++++ b/samples/damon/prcl.c
+@@ -1,7 +1,7 @@
+ // SPDX-License-Identifier: GPL-2.0
+ /*
+  * proactive reclamation: monitor access pattern of a given process, find
+- * regiosn that seems not accessed, and proactively page out the regions.
++ * regions that seems not accessed, and proactively page out the regions.
+  */
+ 
+ #define pr_fmt(fmt) "damon_sample_prcl: " fmt
 
->> Different
->> system with varying iomem regions may require different scaling
->> factors, making deployment harder than a fixed maximum range.
-> 
-> I was thinking the user space could set the proper scaling factor.  Would it be
-> challenging?
-> 
+base-commit: 900241a5cc15e6e0709a012051cc72d224cd6a6e
+-- 
+2.43.0
 
-Since memory ranges vary across systems, different scaling factors would
-be needed. This could increase maintenance complexity.
-
-
->>
->> 2. Significant Code Impact & Overhead - Implementing this would require
->> significant changes with every PA traversal needing rescaling, which
->> introduces computational overhead.
-> 
-> Right, no small amount of code change will be required.  But those will be
-> mostly isolated in operations set layer.
-> 
-> For the computational overhead, I don't expect it woudl be significant, given
-> region-based controlled and minimum overhead design.
-> 
-> But, obviously doing some prototyping and testing first woudl give us a better
-> picture >
-
-Agreed. Some prototype testing would be helpful to evaluate overhead,
-especially in extreme cases with large numbers of regions.
-
->> That said, there remains a necessity
->> to use unsigned long long to store certain variables in structures, such
->> as sampling_addr in the damon_region structure and sz_tried in the
->> damos_stat structure.
-> 
-> I want the core layer to continue using its own concpetual address type
-> (unsigned long).  sampling_addr and sz_tried are core layer's concepts, so
-> should continu using 'unsigned long', while operations set should convert those
-> appropriately.
->  >>
->> If I'm misunderstanding any points, please correct me, and feel free to
->> add any additional concerns.
->>
->> As an alternative, we could adopt a pattern similar to other subsystems
->> (e.g., memblock, CMA, resource), which define their own address types.
-> 
-> The example cases directly deal with the specific address space, so their
-> approaches make sense to me.  Also DAMON's operations set layer implmentation
-> should also learn from them.
-> 
-
-Glad you found them helpful!
-
->> For example:
->>
->>    #ifdef CONFIG_PHYS_ADDR_T_64BIT
->> 	typedef unsigned long long damon_addr_t;
->>    #else
->> 	typedef unsigned long damon_addr_t;
->>    #endif
-> 
-> But in case of DAMON's core layer, it should deal with arbitrary address
-> spaces, so I feel that might not necessarily be the only approach that we
-> should use.
->
-
-You're right, this method is not the only option.
-
->>
->> This approach would avoid scaling complexity while maintaining
->> consistency with existing mm code.
->>
->> What do you think? SJ, I'm happy to help test any approach or discuss
->> further.
-> 
-> So I still don't anticipate big problems with my proposed approach.  But only
-> prototyping and testing would let us know more truth.  If you don't mind, I
-> will quickly write and share a prototype of my idea so that you could test.
-> 
-
-Sounds good! Please share the prototype when ready - happy to test and
-help improve it.
-
-> 
-> Thanks,
-> SJ
-> 
-> [...]
-> 
