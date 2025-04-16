@@ -1,77 +1,70 @@
-Received: from szxga07-in.huawei.com (szxga07-in.huawei.com [45.249.212.35])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E685914B965
-	for <damon@lists.linux.dev>; Mon, 14 Apr 2025 01:22:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.35
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EB5114B08E
+	for <damon@lists.linux.dev>; Wed, 16 Apr 2025 03:04:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744593728; cv=none; b=eWLQdkmpq/zCQyJd/GzXk4N2aGNLImkI8gcbh/BDxQW4t1zXGA4qRiny25u88h7Ety8ZVcGB1COhxHu7YmqhbPKXsNKh19HQAcuBnqg33UElQs1Adt6aVBCimvzRo5Jgh0FfwFvq9UsAPVE9yMMQ2rXADafG8IYIN/RgNRK8j5k=
+	t=1744772687; cv=none; b=WGgcKfPStiadtHyUamx3bI2A019Bb06d2d9cieio9wNJq7C3OIIMo6jMS3iAWB9cw0ATK08W2DCyRZQIGpFT8KTPiln7bO6OvBMv30AUi43WePV9CDoZv/Yay1iaawPQ+ExlcKDXrPDpo+OWy7UGzHKooyTyEFgiVJmYNh24L6c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744593728; c=relaxed/simple;
-	bh=vKCoLxhw8hz2kZDcrhNgcUBgHdIRnC+1rwOo8Ro2vUA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=YDViN1qaNR344ZOXviwtxxpBs4T466EeSUq3Iap62A9DQC5bbLX0fUzztkURGVPta8jxFwJPiltu99on5tai9xDgpga8z3yXlP4Oi7wHB18rB6T/ArcdqZiwiHXTZYI4TnceYiRrR4tkBYKEcN7amw8X3iot+tg8xV90Gg1WGjM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; arc=none smtp.client-ip=45.249.212.35
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
-Received: from mail.maildlp.com (unknown [172.19.163.17])
-	by szxga07-in.huawei.com (SkyGuard) with ESMTP id 4ZbTz40y0DzsSgn;
-	Mon, 14 Apr 2025 09:21:52 +0800 (CST)
-Received: from kwepemg500008.china.huawei.com (unknown [7.202.181.45])
-	by mail.maildlp.com (Postfix) with ESMTPS id 5C66A1A0188;
-	Mon, 14 Apr 2025 09:21:57 +0800 (CST)
-Received: from [10.174.177.186] (10.174.177.186) by
- kwepemg500008.china.huawei.com (7.202.181.45) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.11; Mon, 14 Apr 2025 09:21:56 +0800
-Message-ID: <5801dee7-0c22-4424-acb1-fe5f63645bc8@huawei.com>
-Date: Mon, 14 Apr 2025 09:21:55 +0800
+	s=arc-20240116; t=1744772687; c=relaxed/simple;
+	bh=kfNs5cmFD3ftCaFPLLvrLZvR0Tp1cetdS/+GkWRIQhQ=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=NclV85UvhsJAl4ruoypUseEa9p+++CXhZk5in8mtszEBI9XWUQajlVZnm4VV2vHk0SYFiUFpdMaCg79/zxd1OrNC9ivm4pW8F/j0/3EU2/Ogu/fJuYDXxCCYSbPfkb0Ycd3dXOkO56GN9J+EaTdgnSQ1/0hWHHKyb5S00nWnHqU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AzpVxvtd; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AzpVxvtd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AD08C4CEE7;
+	Wed, 16 Apr 2025 03:04:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1744772686;
+	bh=kfNs5cmFD3ftCaFPLLvrLZvR0Tp1cetdS/+GkWRIQhQ=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=AzpVxvtd4sCtHzDRf3Awv389c8V9rIF1hNOVKrjw8vGQd/kwNCi5Pli68yhu3im4z
+	 YDJs8k0kLFR1ChPs0zJlh7OeNZEkHvPhHj8uBsBZ8ndcpGfa0PT1pwkKZ8qxAnbAIp
+	 E74CSvr1DtchiIabYxsgD3zRacUzzQ/qqUrXWHgvVGARY1cNaFePbB25WRaOZjKwq3
+	 nflVuS62nQH+JqTOldwSrubj0Zb/cwZ1bwaVsLxQz8w3dawdwit5zDIaaSTxV5iRlS
+	 zgKD9F7DR7KNIHgKYdBEXwuWNab2ipa2qfr9UVtWoxBFKs+Lrp13AZYY2jXtfOMNlG
+	 o1ilCauEDRfzw==
+From: SeongJae Park <sj@kernel.org>
+To: SeongJae Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Cc: Enze Li <lienze@kylinos.cn>,
+	damon@lists.linux.dev,
+	linux-mm@kvack.org
+Subject: Re: [PATCH] samples/damon/prcl: Fix a comment typo
+Date: Tue, 15 Apr 2025 20:04:44 -0700
+Message-Id: <20250416030444.156316-1-sj@kernel.org>
+X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20250411163650.65152-1-sj@kernel.org>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH] mm/damon: add full LPAE support for memory monitoring
- above 4GB
-To: SeongJae Park <sj@kernel.org>
-CC: <akpm@linux-foundation.org>, <damon@lists.linux.dev>,
-	<linux-kernel@vger.kernel.org>, <linux-mm@kvack.org>,
-	<wangkefeng.wang@huawei.com>
-References: <20250411163528.65021-1-sj@kernel.org>
-From: zuoze <zuoze1@huawei.com>
-In-Reply-To: <20250411163528.65021-1-sj@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: dggems705-chm.china.huawei.com (10.3.19.182) To
- kwepemg500008.china.huawei.com (7.202.181.45)
+
++ Andrew
+
+On Fri, 11 Apr 2025 09:36:50 -0700 SeongJae Park <sj@kernel.org> wrote:
+
+> On Fri, 11 Apr 2025 15:38:00 +0800 Enze Li <lienze@kylinos.cn> wrote:
+> 
+> > This patch just fixes a typo in the comment.
+> > 
+> > s/regiosn/regions
+> 
+> Nice finding, thank you for fixing this!
+> 
+> > 
+> > Signed-off-by: Enze Li <lienze@kylinos.cn>
+> 
+> Reviewed-by: SeongJae Park <sj@kernel.org>
 
 
+Thanks,
+SJ
 
-在 2025/4/12 0:35, SeongJae Park 写道:
-> On Fri, 11 Apr 2025 14:30:40 +0800 zuoze <zuoze1@huawei.com> wrote:
-> 
->> 在 2025/4/11 6:25, SeongJae Park 写道:
-> [...]
->>> So I still don't anticipate big problems with my proposed approach.  But only
->>> prototyping and testing would let us know more truth.  If you don't mind, I
->>> will quickly write and share a prototype of my idea so that you could test.
->>>
->>
->> Sounds good! Please share the prototype when ready - happy to test and
->> help improve it.
-> 
-> Thanks, I will share the prototype as soon as be ready. I expect up to a few
-> weeks.
-> 
-
-Got it! Excited to see the prototype. Let me know if you need anything
-in the meantime.
-
-> 
-> Thanks,
-> SJ
-> 
-> [...]
-> 
+[...]
