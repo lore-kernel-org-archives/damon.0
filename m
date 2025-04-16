@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E2F522B8A4;
-	Wed, 16 Apr 2025 04:26:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3676D22C34A;
+	Wed, 16 Apr 2025 04:26:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744777563; cv=none; b=jBmYk2Ktit+h9/SNoIxy+oEGLi5oXQu1q9fIdkEW2jv6yEcF9NzJoA/W4tsHjAErIy171D8/UodskJUGVofKVottFZhyPZi9cqtd8M5wTZ4OHGEs6bUt8zxIhYHqy3K2WzuP+U1fSZYozmRZ3l+Biz4fjAm6Q9TVk0Q3jM9C/bE=
+	t=1744777564; cv=none; b=Z+Kz0iv2LStldLO0rqLhlZlinE/OUH/BdLwP7XQjqDKtmYIwlhSgVqGt78vrD03nruRfT/LyqfrDbNF7DxCEGMRHuHflMIsorm08m4p/wdC/GzehYKLvjKe4mIXIYth1Z5UX6paM1FU+PvbwJOewPrklMOhbS2jSGReF1FTA+VM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744777563; c=relaxed/simple;
-	bh=NF1Fz3bDL9B8+3kS7pFSCGv/wFAjiHx4+Ev+Qri+nRI=;
+	s=arc-20240116; t=1744777564; c=relaxed/simple;
+	bh=VVcSdVBTKKi06qwTl9rWSnXUumWlw7dYXO3OAlE/vPw=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=rj/CooClmAxuv3qkSAAag2oqUM61fq9hTYSLYzXLM7pZs7jXySIsguZ2Ws0rL2SUpKsb9kTTt7StMZJKmRO5TnBGFKuzYNmG3d4rCKftFeL2K+HypqyFQk/PCZIFu/VyQo7Mc0p+eLh2Dx/uGd5tXkiqiJQ21fC24P5tMvVHUeI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=S2f4NLft; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iZaIzd/hLZ9h8VLDyKgJkmzGNKujiCitzAcwaGxE0/vGx2YCWhe5EAwntgcCuqhxoj//lllNb+Ag0HsGRAUMpVdXbhNREEMuFnV+dQd5qRQcB8KcuyqXPvbuxIfEZ6x/+QMlmAqmqvYyvDPasEOs10sANm3LHvn7Rso32sRu3cA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=s0ZGTJC5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="S2f4NLft"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE81DC4CEEA;
-	Wed, 16 Apr 2025 04:26:02 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="s0ZGTJC5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4794C4CEEA;
+	Wed, 16 Apr 2025 04:26:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1744777563;
-	bh=NF1Fz3bDL9B8+3kS7pFSCGv/wFAjiHx4+Ev+Qri+nRI=;
+	s=k20201202; t=1744777564;
+	bh=VVcSdVBTKKi06qwTl9rWSnXUumWlw7dYXO3OAlE/vPw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S2f4NLftPAY2dyH5uJ9BBSOkQIXPLI+NMI9wIuqb7TxG/RSNHu+LqtgDjjEBIDVNn
-	 7NtByuthkgHRjmg5XBSlhPisAWE9Ln77uuth9cLZlM3EZpUXYGlPhAnGPZBvtitINP
-	 63X4bG0SB48Nzt1kUGflNNpg1zEruzc+c9gYKuKP1A7fvNc3egUsHhpKKVwxUIf/6t
-	 v799YleAqN9wag0aUJil73BmheVT3RjtnY4//DpGbSNUTqJiaORH0WZRLLb27b6rdQ
-	 rgiLsnYIFC+tWi/MvINGZXCb+eE6hDegvyOT5C0oxrwmese+t3rxR2MVEQXe2R0NcZ
-	 tiBbouF8I9YNg==
+	b=s0ZGTJC5AzEa0qRAeIbadf2/M4vCz6O0N4ey7KSAHYfBZUJzSAb6ty7X0H6b124i/
+	 xc0gdbjgNzDVrwtg7TmFQiw4/5Cb/owsg+o8qW8MXn8uyLV1jpJCXDwX0yV0S7ld6O
+	 amiIlfqX702lSDXcUqUX7w3w1p//t/TKcLwKOVfB88sRuOi6eZpnRYH56HDkC2JS5P
+	 K6GTVV6rL1oqUcMjywOB/l3GDiMkjn5hxIQASwozEdIeHc1CIaAe+UJDxKSZnnbaUz
+	 yurHm4e4rAeklyUz1zqDoEDbxCkoOyFlaU1d8PlP42eaopCzr33uowyaEW0kD/gQgw
+	 HrAnmbR6MBwgQ==
 From: SeongJae Park <sj@kernel.org>
 To: 
 Cc: SeongJae Park <sj@kernel.org>,
@@ -35,9 +35,9 @@ Cc: SeongJae Park <sj@kernel.org>,
 	kernel-team@meta.com,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH 06/10] mm/damon/paddr: support addr_unit for DAMOS_STAT
-Date: Tue, 15 Apr 2025 21:25:47 -0700
-Message-Id: <20250416042551.158131-7-sj@kernel.org>
+Subject: [RFC PATCH 07/10] mm/damon/sysfs: implement addr_unit file under context dir
+Date: Tue, 15 Apr 2025 21:25:48 -0700
+Message-Id: <20250416042551.158131-8-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250416042551.158131-1-sj@kernel.org>
 References: <20250416042551.158131-1-sj@kernel.org>
@@ -49,50 +49,81 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Add support of addr_unit for DAMOS_STAT action handling from the DAMOS
-operation implementation for the physical address space.
+Only DAMON kernel API callers can use addr_unit parameter.  Implement a
+sysfs file to let DAMON sysfs ABI users use it.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- mm/damon/paddr.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ mm/damon/sysfs.c | 26 ++++++++++++++++++++++++++
+ 1 file changed, 26 insertions(+)
 
-diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
-index 20955eefcdbf..0d6491159a04 100644
---- a/mm/damon/paddr.c
-+++ b/mm/damon/paddr.c
-@@ -562,18 +562,19 @@ static bool damon_pa_scheme_has_filter(struct damos *s)
- 	return false;
+diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
+index 1af6aff35d84..ebd7cfa235b0 100644
+--- a/mm/damon/sysfs.c
++++ b/mm/damon/sysfs.c
+@@ -821,6 +821,7 @@ static const char * const damon_sysfs_ops_strs[] = {
+ struct damon_sysfs_context {
+ 	struct kobject kobj;
+ 	enum damon_ops_id ops_id;
++	unsigned long addr_unit;
+ 	struct damon_sysfs_attrs *attrs;
+ 	struct damon_sysfs_targets *targets;
+ 	struct damon_sysfs_schemes *schemes;
+@@ -836,6 +837,7 @@ static struct damon_sysfs_context *damon_sysfs_context_alloc(
+ 		return NULL;
+ 	context->kobj = (struct kobject){};
+ 	context->ops_id = ops_id;
++	context->addr_unit = 1;
+ 	return context;
  }
  
--static unsigned long damon_pa_stat(struct damon_region *r, struct damos *s,
-+static unsigned long damon_pa_stat(struct damon_region *r,
-+		unsigned long addr_unit, struct damos *s,
- 		unsigned long *sz_filter_passed)
+@@ -971,6 +973,25 @@ static ssize_t operations_store(struct kobject *kobj,
+ 	return -EINVAL;
+ }
+ 
++static ssize_t addr_unit_show(struct kobject *kobj,
++		struct kobj_attribute *attr, char *buf)
++{
++	struct damon_sysfs_context *context = container_of(kobj,
++			struct damon_sysfs_context, kobj);
++
++	return sysfs_emit(buf, "%lu\n", context->addr_unit);
++}
++
++static ssize_t addr_unit_store(struct kobject *kobj,
++		struct kobj_attribute *attr, const char *buf, size_t count)
++{
++	struct damon_sysfs_context *context = container_of(kobj,
++			struct damon_sysfs_context, kobj);
++	int err = kstrtoul(buf, 0, &context->addr_unit);
++
++	return err ? err : count;
++}
++
+ static void damon_sysfs_context_release(struct kobject *kobj)
  {
--	unsigned long addr;
-+	phys_addr_t addr;
- 	LIST_HEAD(folio_list);
- 	struct folio *folio;
+ 	kfree(container_of(kobj, struct damon_sysfs_context, kobj));
+@@ -982,9 +1003,13 @@ static struct kobj_attribute damon_sysfs_context_avail_operations_attr =
+ static struct kobj_attribute damon_sysfs_context_operations_attr =
+ 		__ATTR_RW_MODE(operations, 0600);
  
- 	if (!damon_pa_scheme_has_filter(s))
- 		return 0;
- 
--	addr = r->ar.start;
--	while (addr < r->ar.end) {
-+	addr = damon_pa_phys_addr(r->ar.start, addr_unit);
-+	while (addr < damon_pa_phys_addr(r->ar.end, addr_unit)) {
- 		folio = damon_get_folio(PHYS_PFN(addr));
- 		if (damon_pa_invalid_damos_folio(folio, s)) {
- 			addr += PAGE_SIZE;
-@@ -701,7 +702,7 @@ static unsigned long damon_pa_apply_scheme(struct damon_ctx *ctx,
- 		return damon_pa_alloc_or_free(r, scheme, false);
- #endif
- 	case DAMOS_STAT:
--		return damon_pa_stat(r, scheme, sz_filter_passed);
-+		return damon_pa_stat(r, aunit, scheme, sz_filter_passed);
- 	default:
- 		/* DAMOS actions that not yet supported by 'paddr'. */
- 		break;
++static struct kobj_attribute damon_sysfs_context_addr_unit_attr =
++		__ATTR_RW_MODE(addr_unit, 0600);
++
+ static struct attribute *damon_sysfs_context_attrs[] = {
+ 	&damon_sysfs_context_avail_operations_attr.attr,
+ 	&damon_sysfs_context_operations_attr.attr,
++	&damon_sysfs_context_addr_unit_attr.attr,
+ 	NULL,
+ };
+ ATTRIBUTE_GROUPS(damon_sysfs_context);
+@@ -1414,6 +1439,7 @@ static int damon_sysfs_apply_inputs(struct damon_ctx *ctx,
+ 	err = damon_select_ops(ctx, sys_ctx->ops_id);
+ 	if (err)
+ 		return err;
++	ctx->addr_unit = sys_ctx->addr_unit;
+ 	err = damon_sysfs_set_attrs(ctx, sys_ctx->attrs);
+ 	if (err)
+ 		return err;
 -- 
 2.39.5
