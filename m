@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6170F1C84BC;
-	Sun, 20 Apr 2025 19:40:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67AA91D5ABF;
+	Sun, 20 Apr 2025 19:40:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745178039; cv=none; b=tmuncb9StfYYKKxZQC2zfMbvsxoeQkoSH9lY8DDEcXSE5C+EHgSYBdCRtNoHbKrI1ReVAcc5q7yJFOVbQfHP2jHOnXK7pasyqOy0FCuOvqMlQs1SWKc0BPfZyDq6LwuIM7Rc7S27/NGJZAVXqs/584uVgaZgaziFKuZarDJHh8s=
+	t=1745178041; cv=none; b=pXAIZN4oD3HG8BcaByLLgbW+oT2k603XYvlMrQ2fOt9XCCN0ZFaK0SRG82I7XKvt4Wdqf89tMALWDPsKdSa7e4nL8ebkR5bAn4Ig7Ohf++x2npBVgSsFfCJ5CCdMoTi0zBKTPkUzPPb+NWqlMv9yszvUSEty2uYQ3Yh7ncV863E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745178039; c=relaxed/simple;
-	bh=YrnSVlsWWaNU8yWNre3Ssi6/DIgFSJQgBiB+f6Xdzok=;
+	s=arc-20240116; t=1745178041; c=relaxed/simple;
+	bh=3TYJVSgc9rMx2w0Ytz6/FAhhzHJ5CZhkTze93ru2E9w=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=udkkX56NpAbDfczJOO1H4g8DBk+yX2gqIb1SlPPhsYF6awaBk2zYWwx16s/awLGsgA/sF/Nwn2OGy9lMxfFUfmS9grjLfCbChOpjJzEZuAZ80fs7AzwFuKF8OuOUfoY1k/5JMZnZ7mXeoemQNJTNxpBfB823jfnonIy1tLXPasE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UXMItcxk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aXHG9CfwYMgIiAEeoYJ1Mos3GWU7eGDjA3GUk2wVVjJe3Vh/PJV1tZBnrCiLlV742Q3qK7TOlG09wDd12r0kn1bdCJOxyzxk9kBIZSd17gdMgnLRvbe1+S8vuuZxWAWiUsO7pGC8dXaHwF6Cr7TrvHXNKzDMYUUblu9WvNwz3i0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dB/+9hkd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UXMItcxk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C0EBC4CEE2;
-	Sun, 20 Apr 2025 19:40:38 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dB/+9hkd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B69E1C4CEE2;
+	Sun, 20 Apr 2025 19:40:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1745178038;
-	bh=YrnSVlsWWaNU8yWNre3Ssi6/DIgFSJQgBiB+f6Xdzok=;
+	s=k20201202; t=1745178039;
+	bh=3TYJVSgc9rMx2w0Ytz6/FAhhzHJ5CZhkTze93ru2E9w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UXMItcxkOIFjk5OK458tYbEGtY1gX/42/4ZGXGr/wA5pulJ+2NH3vzZ8fdB7AM6Yp
-	 MAHbz3qV6kUE2tUn6ArpWR5aWvRmINKHWe6pVRa3GIutCrLlVdH4Prymjqq7+zK4Pl
-	 R/bk/60BHJ1AWa51BCXtw/CTSAQeKE4YXR3jGCbYIK+omzf2OVUs5a0s8zqwhnT5YX
-	 ApVrrplK1q9jHQi5xP/MYdNK/zq5XNDf9BjzBJkhd2alTGghoWJCylsbn7WJI/GH0O
-	 d6D8UBT6rrd1005l+BquSXGxpwq5/OHN0dS+HJmmetRPvM6YnsP34Ym4NnNr2uHPXQ
-	 teATEL+h9kItA==
+	b=dB/+9hkdeS/+vtFexHDFckLptSB20GvfwhNr1k6nuTTS1RPNyQA4Y6KkmNEGRZPrA
+	 YAV+H9DxanIbrPOiYBlR9UqNMONiI+l2494Ut7MMJ9Hpdy/ILtDAncUIdyENvV5Z0w
+	 Jz5bKfYKGfm9TLH2SG7oUDyedGxBTP7zILupwXU5yk0CQADf/oq8xLltjoCx0t//Mm
+	 bj82gWSmKoUuapR2lp8vlkr3K/10mABvRZ3V7L2+8MM5OQm4ALCdyepMOH1X0ABpcc
+	 +OiXELPZIYgR+y8NFlmWOIVagM4WO3QX5R+IHTvm/VdOQ9S01gR711CQj7Pj76Fduf
+	 jFmAWfDGrloxg==
 From: SeongJae Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SeongJae Park <sj@kernel.org>,
@@ -33,9 +33,9 @@ Cc: SeongJae Park <sj@kernel.org>,
 	kernel-team@meta.com,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [PATCH 2/7] mm/damon/sysfs-schemes: implement file for quota goal nid parameter
-Date: Sun, 20 Apr 2025 12:40:25 -0700
-Message-Id: <20250420194030.75838-3-sj@kernel.org>
+Subject: [PATCH 3/7] mm/damon/sysfs-schemes: connect damos_quota_goal nid with core layer
+Date: Sun, 20 Apr 2025 12:40:26 -0700
+Message-Id: <20250420194030.75838-4-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250420194030.75838-1-sj@kernel.org>
 References: <20250420194030.75838-1-sj@kernel.org>
@@ -47,71 +47,36 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-DAMOS_QUOTA_NODE_MEM_{USED,FREE}_BP DAMOS quota goal metrics require the
-node id parameter.  However, there is no DAMON user ABI for setting it.
-Implement a DAMON sysfs file for that with name 'nid', under the quota
-goal directory.
+DAMON sysfs interface file for DAMOS quota goal's node id argument is
+not passed to core layer.  Implement the link.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- mm/damon/sysfs-schemes.c | 27 +++++++++++++++++++++++++++
- 1 file changed, 27 insertions(+)
+ mm/damon/sysfs-schemes.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
 diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
-index 98108f082178..7681ed293b62 100644
+index 7681ed293b62..729fe5f1ef30 100644
 --- a/mm/damon/sysfs-schemes.c
 +++ b/mm/damon/sysfs-schemes.c
-@@ -936,6 +936,7 @@ struct damos_sysfs_quota_goal {
- 	enum damos_quota_goal_metric metric;
- 	unsigned long target_value;
- 	unsigned long current_value;
-+	int nid;
- };
- 
- /* This should match with enum damos_action */
-@@ -1016,6 +1017,28 @@ static ssize_t current_value_store(struct kobject *kobj,
- 	return err ? err : count;
- }
- 
-+static ssize_t nid_show(struct kobject *kobj,
-+		struct kobj_attribute *attr, char *buf)
-+{
-+	struct damos_sysfs_quota_goal *goal = container_of(kobj, struct
-+			damos_sysfs_quota_goal, kobj);
-+
-+	/* todo: return error if the goal is not using nid */
-+
-+	return sysfs_emit(buf, "%d\n", goal->nid);
-+}
-+
-+static ssize_t nid_store(struct kobject *kobj,
-+		struct kobj_attribute *attr, const char *buf, size_t count)
-+{
-+	struct damos_sysfs_quota_goal *goal = container_of(kobj, struct
-+			damos_sysfs_quota_goal, kobj);
-+	int err = kstrtoint(buf, 0, &goal->nid);
-+
-+	/* feed callback should check existence of this file and read value */
-+	return err ? err : count;
-+}
-+
- static void damos_sysfs_quota_goal_release(struct kobject *kobj)
- {
- 	/* or, notify this release to the feed callback */
-@@ -1031,10 +1054,14 @@ static struct kobj_attribute damos_sysfs_quota_goal_target_value_attr =
- static struct kobj_attribute damos_sysfs_quota_goal_current_value_attr =
- 		__ATTR_RW_MODE(current_value, 0600);
- 
-+static struct kobj_attribute damos_sysfs_quota_goal_nid_attr =
-+		__ATTR_RW_MODE(nid, 0600);
-+
- static struct attribute *damos_sysfs_quota_goal_attrs[] = {
- 	&damos_sysfs_quota_goal_target_metric_attr.attr,
- 	&damos_sysfs_quota_goal_target_value_attr.attr,
- 	&damos_sysfs_quota_goal_current_value_attr.attr,
-+	&damos_sysfs_quota_goal_nid_attr.attr,
- 	NULL,
- };
- ATTRIBUTE_GROUPS(damos_sysfs_quota_goal);
+@@ -2149,8 +2149,17 @@ static int damos_sysfs_add_quota_score(
+ 				sysfs_goal->target_value);
+ 		if (!goal)
+ 			return -ENOMEM;
+-		if (sysfs_goal->metric == DAMOS_QUOTA_USER_INPUT)
++		switch (sysfs_goal->metric) {
++		case DAMOS_QUOTA_USER_INPUT:
+ 			goal->current_value = sysfs_goal->current_value;
++			break;
++		case DAMOS_QUOTA_NODE_MEM_USED_BP:
++		case DAMOS_QUOTA_NODE_MEM_FREE_BP:
++			goal->nid = sysfs_goal->nid;
++			break;
++		default:
++			break;
++		}
+ 		damos_add_quota_goal(quota, goal);
+ 	}
+ 	return 0;
 -- 
 2.39.5
