@@ -1,58 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C65A023537B;
-	Fri, 18 Apr 2025 20:18:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 006C4FC1D;
+	Sun, 20 Apr 2025 16:27:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745007521; cv=none; b=rmoZKHsIQcltQXhSOxCpnpJybNdYz0NvnpCSP0A9UuORJ+Hm4LYt9DwO7eNXP+nfpcjQ7I3ESRF7LSj7e+X2zSbXDndAoD9DUJFfQjIsurOrfsYMxe6tpmvjKo6IGUijw4nwLvcA8E2kUbGbFfs1OIajE5RCHCNO1RzsFeM06sA=
+	t=1745166431; cv=none; b=YuXbYO1VOps8q7VoSVGma8pBo9N0XerX8tF4qYfYkSi0PNMPTErDdEYGqd57qj1CONXnxtQxvz6WjloRib6CEGy9TWeUvdbENAcV5670ufYMAzbX6sOf/N1A7A/FjsnE8961pkiZwapdo0ll9Uc9KUtpai28TyMxSaR25mMr040=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745007521; c=relaxed/simple;
-	bh=rxntnv7lHwgv2GqchMX8dNKK+O/aKvl05mNSqeL6/zY=;
+	s=arc-20240116; t=1745166431; c=relaxed/simple;
+	bh=l4DpvoZ2s+5NheW/iw+WP+lM6nk2Cg0No3jGiCAkkDk=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=G6rwVr0haUCZstCxlcqzeiH2bASQXIluU71hXBywmRwVWGPZSdtdBjFZUcUQBVzXk45otsrQ0uTTJCMHbdwb1DIyJHc28rYNc4HezT2nrkX7ZeSx9BfN9c7U98pHy67QsFSz4W9kq7i63s0U6i1z84rlMQD4OVbad2pIDgW5LJc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=poBR87CH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=fzrSt+/dGHEgbU5Yka4qF2/TFR4urysQnowVnrCbOlq7uUP4I/RBeXW394CfUHMRa0Py+v9Jjnml5M3A4Ed2UjRXBNVqQalW4X8Pbz6bsWtrkYtMchZPyCS+mEEiVZ1McDZ/FU5PBJ+S+2dKyN5SJ8DFGr40agrCNhRDYAQppcc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LIN0MxU0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="poBR87CH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A330C4CEE2;
-	Fri, 18 Apr 2025 20:18:40 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LIN0MxU0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40C66C4CEE2;
+	Sun, 20 Apr 2025 16:27:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1745007520;
-	bh=rxntnv7lHwgv2GqchMX8dNKK+O/aKvl05mNSqeL6/zY=;
+	s=k20201202; t=1745166430;
+	bh=l4DpvoZ2s+5NheW/iw+WP+lM6nk2Cg0No3jGiCAkkDk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=poBR87CHkAjkgL3D8LThtMdByTrTRF3QKMEntMJPrCbL4wLijzAYrJOHRF6mqtv2J
-	 C7oiNXesKPuNj1rfmKwYDFmmVkjqawYgyO3zDPNuPde2PkY1fAvguHahqNoYE4R0mk
-	 vmHQ8R1g+gDeUBlmoelzs0fMJ5B/HbFK9fenLpaz5tydYFFjZfzDQkhrGhmx69fosJ
-	 KnYsXS1JCm1LXDsjmtDImOtRZRgPSHyDb4YL/0v2XTHHr83PPeN+QWbUb/ux+WTqXI
-	 AYqccEegvBpnfWyY97RNNxEcylLg4OV7f8NZPLNt42ryhzR7sihHxV8WA7Xm/Ary7D
-	 pv7LnHlwbglhA==
+	b=LIN0MxU0MD6AGPjVyLyQJ4ASQeJaJREXdpOrdRw8DSfdWqpQVVkgbeWjtuhpLsLvo
+	 CvbfAmbWkMHrKNbPRxUYkg8ooA32vNj0E8BAeT7W4u4IhfjWwPmzx9X/pZWdkCOEt+
+	 y5fIrPDNHFtmwGLYSiim5LSoMIvuDV1PGAlTxgjrDfOYGgWs2XKYAx6xa/GCMKcZK3
+	 MInfGQM8tyqDqNiabI+5zSAcg0gxbA2eJcMwiaQU0oHwhmQcHdcsJY8kXz45iqahlA
+	 nPWZpnFBf3E3YGtjqHoE6vi8eAC3A7edVkVmva1hlGecf2DVN2OblNJZKDtzlyVrgT
+	 ZIybJXV5Wk6yA==
 From: SeongJae Park <sj@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: zuoze <zuoze1@huawei.com>
 Cc: SeongJae Park <sj@kernel.org>,
-	stable@vger.kernel.org,
-	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
 	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net,
-	rwarsow@gmx.de,
-	conor@kernel.org,
-	hargar@microsoft.com,
-	broonie@kernel.org,
-	damon@lists.linux.dev
-Subject: Re: [PATCH 6.12 000/392] 6.12.24-rc2 review
-Date: Fri, 18 Apr 2025 13:18:37 -0700
-Message-Id: <20250418201838.69125-1-sj@kernel.org>
+	damon@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	linux-mm@kvack.org,
+	wangkefeng.wang@huawei.com
+Subject: Re: [RFC PATCH] mm/damon: add full LPAE support for memory monitoring above 4GB
+Date: Sun, 20 Apr 2025 09:27:06 -0700
+Message-Id: <20250420162706.2844-1-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250418110359.237869758@linuxfoundation.org>
+In-Reply-To: <5801dee7-0c22-4424-acb1-fe5f63645bc8@huawei.com>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -60,62 +46,44 @@ List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Hello,
+Hello Ze,
 
-On Fri, 18 Apr 2025 13:05:08 +0200 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+On Mon, 14 Apr 2025 09:21:55 +0800 zuoze <zuoze1@huawei.com> wrote:
 
-> This is the start of the stable review cycle for the 6.12.24 release.
-> There are 392 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
 > 
-> Responses should be made by Sun, 20 Apr 2025 11:02:42 +0000.
-> Anything received after that time might be too late.
+> 
+> 在 2025/4/12 0:35, SeongJae Park 写道:
+> > On Fri, 11 Apr 2025 14:30:40 +0800 zuoze <zuoze1@huawei.com> wrote:
+> > 
+> >> 在 2025/4/11 6:25, SeongJae Park 写道:
+> > [...]
+> >>> So I still don't anticipate big problems with my proposed approach.  But only
+> >>> prototyping and testing would let us know more truth.  If you don't mind, I
+> >>> will quickly write and share a prototype of my idea so that you could test.
+> >>>
+> >>
+> >> Sounds good! Please share the prototype when ready - happy to test and
+> >> help improve it.
+> > 
+> > Thanks, I will share the prototype as soon as be ready. I expect up to a few
+> > weeks.
+> > 
+> 
+> Got it! Excited to see the prototype. Let me know if you need anything
+> in the meantime.
 
-This rc kernel passes DAMON functionality test[1] on my test machine.
-Attaching the test results summary below.  Please note that I retrieved the
-kernel from linux-stable-rc tree[2].
+I posted the RFC patch series[1] a few days ago.  I also just implemented[2]
+and pushed the support of it on DAMON user-space tool.  Please let me know if
+you find any concern on those.
 
-Tested-by: SeongJae Park <sj@kernel.org>
+[1] https://lore.kernel.org/20250416042551.158131-1-sj@kernel.org
+[2] https://github.com/damonitor/damo/commit/5848e3a516e3b10e62c4ad7ebf0e444d7be09f6b
 
-[1] https://github.com/damonitor/damon-tests/tree/next/corr
-[2] 7b7562936f80 ("Linux 6.12.24-rc2")
 
 Thanks,
 SJ
 
 [...]
-
----
-
-ok 9 selftests: damon: damos_tried_regions.py
-ok 10 selftests: damon: damon_nr_regions.py
-ok 11 selftests: damon: reclaim.sh
-ok 12 selftests: damon: lru_sort.sh
-ok 13 selftests: damon: debugfs_empty_targets.sh
-ok 14 selftests: damon: debugfs_huge_count_read_write.sh
-ok 15 selftests: damon: debugfs_duplicate_context_creation.sh
-ok 16 selftests: damon: debugfs_rm_non_contexts.sh
-ok 17 selftests: damon: debugfs_target_ids_read_before_terminate_race.sh
-ok 18 selftests: damon: debugfs_target_ids_pid_leak.sh
-ok 19 selftests: damon: sysfs_update_removed_scheme_dir.sh
-ok 20 selftests: damon: sysfs_update_schemes_tried_regions_hang.py
-ok 1 selftests: damon-tests: kunit.sh
-ok 2 selftests: damon-tests: huge_count_read_write.sh
-ok 3 selftests: damon-tests: buffer_overflow.sh
-ok 4 selftests: damon-tests: rm_contexts.sh
-ok 5 selftests: damon-tests: record_null_deref.sh
-ok 6 selftests: damon-tests: dbgfs_target_ids_read_before_terminate_race.sh
-ok 7 selftests: damon-tests: dbgfs_target_ids_pid_leak.sh
-ok 8 selftests: damon-tests: damo_tests.sh
-ok 9 selftests: damon-tests: masim-record.sh
-ok 10 selftests: damon-tests: build_i386.sh
-ok 11 selftests: damon-tests: build_arm64.sh # SKIP
-ok 12 selftests: damon-tests: build_m68k.sh # SKIP
-ok 13 selftests: damon-tests: build_i386_idle_flag.sh
-ok 14 selftests: damon-tests: build_i386_highpte.sh
-ok 15 selftests: damon-tests: build_nomemcg.sh
- [33m
- [92mPASS [39m
