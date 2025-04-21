@@ -1,34 +1,43 @@
-Received: from mail.nfschina.com (unknown [42.101.60.213])
-	by smtp.subspace.kernel.org (Postfix) with SMTP id B813F2571D0
-	for <damon@lists.linux.dev>; Mon, 21 Apr 2025 06:24:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=42.101.60.213
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49C947D3F4
+	for <damon@lists.linux.dev>; Mon, 21 Apr 2025 16:55:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745216698; cv=none; b=rgMRrn1zuMP4l9Xzn/l3EmUzDew5OWTlv5ckfcUTGCGOodUynGlG3twSfMFCoM3EBoM+gX6/dwte/Kwn9Mmh5bt/tfjZfp/iDh/mpQn0McM0Z1ey2tp+fKpWX1eEeOZfFH2Hzi1AM1V0amm5aKjGd/TyQmgeXUJCnYEsHBtmZbc=
+	t=1745254529; cv=none; b=AVNvPNKTOSd9rolB8Ei44KP9vriYDx48fk1gFYmuSFZkvPQxURF0AN4Bwj7zSNe0I/L5HMOOJZ3Cz2Ae1QugkfQg5oG0M7opheT/Z9TbyNaHLWrrvJ73D6/yIJbGvvkeiDYPRD7r7S3iZnbaHhGaVzMcxVWQnPEXO8ipBkdm4i8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745216698; c=relaxed/simple;
-	bh=Xz2sYyCnNEl5/tPFd4aknG/vUR4x+vy6S0MLkgKEH2A=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=Nx5lgjxpnCXogyM32H8NHez2ELyilC+ZMMplxSTtuJGNtITNir/OpeN2OibT3M/Jso5LBvCX97SpY8AJiLE8fPcV7HIkojkDR3uJCBeFXBE1PCgrOGCzh7TtFSTOuYcRKMl+VfLqFfosEXvg1gzUKmCnkbonmy6b7dXByamxFbk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nfschina.com; spf=pass smtp.mailfrom=nfschina.com; arc=none smtp.client-ip=42.101.60.213
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nfschina.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nfschina.com
-Received: from longsh.shanghai.nfschina.local (unknown [180.167.10.98])
-	by mail.nfschina.com (MailData Gateway V2.8.8) with ESMTPSA id 548ED602549D3;
-	Mon, 21 Apr 2025 14:24:49 +0800 (CST)
-X-MD-Sfrom: suhui@nfschina.com
-X-MD-SrcIP: 180.167.10.98
-From: Su Hui <suhui@nfschina.com>
-To: sj@kernel.org,
-	akpm@linux-foundation.org
-Cc: Su Hui <suhui@nfschina.com>,
+	s=arc-20240116; t=1745254529; c=relaxed/simple;
+	bh=vCD0XJPVvTQ7ClTvp5r9Reuax/fl3ozWdPhgvSVXChU=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=UL31D2wYsXzT14rWDBDE3+QRM6NhGFMG1wPAoVztQVyydZfUqqiJN1Tr84+kutOmr6Nju+T4Ou9ED37KtBaCeGSJqt1rIwSMWitnSdcX86XBxBCEmiqWalkPWmBBqqEq1Kd4/lUuClmNilDZO+GEtEQAXVR5pMAqRB3xaiXJiRs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sjOSRuou; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sjOSRuou"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FB46C4CEE4;
+	Mon, 21 Apr 2025 16:55:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1745254528;
+	bh=vCD0XJPVvTQ7ClTvp5r9Reuax/fl3ozWdPhgvSVXChU=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=sjOSRuouuzmwWgiGU8sqfl/PplfBlOdCRkzBjjNh0eOPnkuzELNP+l5eHcpDc7aEF
+	 3sHrzCQ00Xhc4ycI/E9jkjYmGvmd72NbV9elTjzVFQxDOT60NU93ZXk2farHeElDwk
+	 ZACcCY19ZhALgsHYzwbushwbCoyOAwtX3p+VbgI7gQy5RcOlTw6Xlc8+/juf8SZOAN
+	 gShmK2pfq0Rm0DTof3b1N1xwiPvrKu6yrxx9RaKB7sJ/nXzoPwjFTNQklwWndG8qLX
+	 LqwRAgOeLH387gkg843zETlDgyVUyO0xeATgLoCW4NqS354XH2fGYiPQmbNcCDtV0x
+	 mk6HWJjqCbqsQ==
+From: SeongJae Park <sj@kernel.org>
+To: Enze Li <lienze@kylinos.cn>
+Cc: SeongJae Park <sj@kernel.org>,
+	akpm@linux-foundation.org,
 	damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org,
-	kernel-janitors@vger.kernel.org,
-	linux-hardening@vger.kernel.org
-Subject: [PATCH] mm/damon/sysfs-schemes: using kmalloc_array() and size_add()
-Date: Mon, 21 Apr 2025 14:24:24 +0800
-Message-Id: <20250421062423.740605-1-suhui@nfschina.com>
-X-Mailer: git-send-email 2.30.2
+	linux-mm@kvack.org
+Subject: Re: [PATCH] mm/damon/core: Initialize sampling_addr in damon_new_region()
+Date: Mon, 21 Apr 2025 09:55:25 -0700
+Message-Id: <20250421165526.8517-1-sj@kernel.org>
+X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20250421033919.404013-1-lienze@kylinos.cn>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -37,37 +46,42 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-It's safer to using kmalloc_array() and size_add() because it can
-prevent possible overflow problem.
+On Mon, 21 Apr 2025 11:39:19 +0800 Enze Li <lienze@kylinos.cn> wrote:
 
-Signed-off-by: Su Hui <suhui@nfschina.com>
----
- mm/damon/sysfs-schemes.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+> Since sampling_addr is used across vaddr and paddr modules, initialize
+> it in damon_new_region().
+> 
+> Signed-off-by: Enze Li <lienze@kylinos.cn>
+> ---
+>  mm/damon/core.c | 1 +
+>  1 file changed, 1 insertion(+)
+> 
+> diff --git a/mm/damon/core.c b/mm/damon/core.c
+> index f0c1676f0599..d197a5e3901c 100644
+> --- a/mm/damon/core.c
+> +++ b/mm/damon/core.c
+> @@ -128,6 +128,7 @@ struct damon_region *damon_new_region(unsigned long start, unsigned long end)
+>  
+>  	region->ar.start = start;
+>  	region->ar.end = end;
+> +	region->sampling_addr = 0;
+>  	region->nr_accesses = 0;
+>  	region->nr_accesses_bp = 0;
+>  	INIT_LIST_HEAD(&region->list);
 
-diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
-index 23b562df0839..79220aba436f 100644
---- a/mm/damon/sysfs-schemes.c
-+++ b/mm/damon/sysfs-schemes.c
-@@ -465,7 +465,8 @@ static ssize_t memcg_path_store(struct kobject *kobj,
- {
- 	struct damon_sysfs_scheme_filter *filter = container_of(kobj,
- 			struct damon_sysfs_scheme_filter, kobj);
--	char *path = kmalloc(sizeof(*path) * (count + 1), GFP_KERNEL);
-+	char *path = kmalloc_array(size_add(count, 1), sizeof(*path),
-+				   GFP_KERNEL);
- 
- 	if (!path)
- 		return -ENOMEM;
-@@ -2035,7 +2036,7 @@ static int damon_sysfs_memcg_path_to_id(char *memcg_path, unsigned short *id)
- 	if (!memcg_path)
- 		return -EINVAL;
- 
--	path = kmalloc(sizeof(*path) * PATH_MAX, GFP_KERNEL);
-+	path = kmalloc_array(PATH_MAX, sizeof(*path), GFP_KERNEL);
- 	if (!path)
- 		return -ENOMEM;
- 
--- 
-2.30.2
+I unfortunately cannot find why this is required.  Is there a use case that
+reads uninitialized sampling_addr or any problem that comes from the fact that
+damon_new_regions() is not initializing the field?
 
+Only operations set implementations write and read damon_region->sampling_addr,
+so I was thinking not initializing the field on the core layer is no problem.
+I will be happy to be corrected if I'm missing something.
+
+
+Thanks,
+SJ
+
+> 
+> base-commit: 9d7a0577c9db35c4cc52db90bc415ea248446472
+> -- 
+> 2.43.0
