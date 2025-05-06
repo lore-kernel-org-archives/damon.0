@@ -1,72 +1,75 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from ms.lwn.net (ms.lwn.net [45.79.88.28])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16B4B191;
-	Mon,  5 May 2025 19:14:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF1CB27FB36
+	for <damon@lists.linux.dev>; Tue,  6 May 2025 12:52:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.79.88.28
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746472496; cv=none; b=Z8GjzIveCrhJPo+6Xtoa+0XhR8XmF1uVNoWuS0j7maRiJHXW8zFgggJmFOfMIIpMPLqH6GpYVEEGCPRH0dSTKqRR+5m7junDwhmZYSt9UDeFSoTj1J+tgcBOKN53QG92rqaGR3HXip8BC9m+ERIbGgHgKU9iQFUHxeQvgw1OWb4=
+	t=1746535929; cv=none; b=j6xcvgh+/KDPuphuHlCcWXAm/iJUy0Ksc1keY8JXmRz9izxsZZDCr+c2VV+s9I4ognskX45D2XSaeSa/wJCAoEHyBdJH9SXj2/7qkUnw8zsdtQNXMGYHsIjha6d7Bk3xlIuIbUrriGBwBnbjmQFs9r/QYkbljt6Wp4ggIYA0oHg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746472496; c=relaxed/simple;
-	bh=NlzBPCyS5J3dHYLB1l1HdmoHF04R/z7n6K/atBhdzC0=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=tQDJh5v/rIq46W5lJBpVAug+xdjCM1pwIRpOnRmKy5k4nc4LBIRBdGRuA1/ZqRbb9Ms81hXEqpMvexM5219paUSMPA9EFzFxtwewUbmBensNtX3AsNhskK+BJuQeV7hGRO5wa/oevNU1s5JGXxF5iJiXn9xmz0/wKAH3/KSzdwY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=U0t7b+s7; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1746535929; c=relaxed/simple;
+	bh=LTmL5l1/O/8SNcIW+Ggf1eHlEo3C0g8QGNiXUA9s8Xs=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=sLWWnj3RophEIYp1FGQrweXEEjwZmoDJ4D6dYik7I7ieddH+OFlMMtN4BXrJ2wv8O/6JD62+YO7hnLvPPZTK5HzcaMA647jvcPiqgrU1GQ8Q6WAvNbwx5JWaXe4ZbcaTIJmKfpMiWs7zv50602lIrQ1uxx8C1WEH/ohYRflQF0Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lwn.net; spf=pass smtp.mailfrom=lwn.net; dkim=pass (2048-bit key) header.d=lwn.net header.i=@lwn.net header.b=IuM8Ogbf; arc=none smtp.client-ip=45.79.88.28
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lwn.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lwn.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="U0t7b+s7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EAB1C4CEE4;
-	Mon,  5 May 2025 19:14:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1746472495;
-	bh=NlzBPCyS5J3dHYLB1l1HdmoHF04R/z7n6K/atBhdzC0=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U0t7b+s7oWn0Wem2Z5CRYnbu57fDpjh25hKSar4Pk97r4ofbYcf8xGkcWcoi2DQO2
-	 zJUZjAt1rfJ4Ou4Cr2EmFaom7oGuC3ZHibzIBeGhFTgdsjPwbn9zQyHHbvU35+gd6g
-	 uPU5Y77GPfRVaLKSvxsfY4tVJ3ome6ZrC1QyZJcEzRuizwP6Mojvru9vFqKP8sd+8i
-	 DcyS/DuUhL0QMjLXLmseYTn8iCYgZf4WRIAy13QJWoNaPp551tKjGBNbwTZJZ78d2h
-	 jHgvu7z3AcjyuJ2tdzeWTWJ0cnw4zNDR2TQLHx4zlBVb0QJnJWlPGg1GIBHRQ6JyOa
-	 FWuXrxC5BYOow==
-From: SeongJae Park <sj@kernel.org>
-To: "Thushara.M.S" <thusharms@gmail.com>
-Cc: SeongJae Park <sj@kernel.org>,
-	corbet@lwn.net,
-	linux-doc@vger.kernel.org,
-	damon@lists.linux.dev,
-	skhan@linuxfoundation.org,
-	linux-mm@kvack.org,
-	Andrew Morton <akpm@linux-foundation.org>
+	dkim=pass (2048-bit key) header.d=lwn.net header.i=@lwn.net header.b="IuM8Ogbf"
+DKIM-Filter: OpenDKIM Filter v2.11.0 ms.lwn.net 92B57403A7
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=lwn.net; s=20201203;
+	t=1746535920; bh=WbuvgCrt95UklJ8yYZyIro9wtfbWBve4JKZ5dUw4Lkg=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
+	b=IuM8OgbftiGfgKwWAf8i69XwSQwd+ZCxS1BzmU0fw7I+XhXIjJoNJZsjGxSeKrith
+	 tjq8DQlU1+4KS3b8dc62w7+Sre25f8nUaDmbAGDaU7HxJmgvrmES0/rEAsoNdacig/
+	 chQCKgavU20HnKHbUwi3M3naAgsb/eMPaZAIbbwdqVGf4BpU6ENl2wXhTqI1ifAixR
+	 f06s1ErsBydLLSMCg+cj6ebrIRykJCkufhyvjytTXc6vfo+J8taQHVzIi0Jp7BrW1u
+	 KLXDfiGtMuPK/u9E804MgTJS67rs91BX7XU/H9rCgupOJPostLkWfNVq1uDz7hnvfo
+	 Gd7KyCecY6Kfg==
+Received: from localhost (mdns.lwn.net [45.79.72.68])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by ms.lwn.net (Postfix) with ESMTPSA id 92B57403A7;
+	Tue,  6 May 2025 12:51:59 +0000 (UTC)
+From: Jonathan Corbet <corbet@lwn.net>
+To: "Thushara.M.S" <thusharms@gmail.com>, sj@kernel.org
+Cc: "Thushara.M.S" <thusharms@gmail.com>, linux-doc@vger.kernel.org,
+ damon@lists.linux.dev, skhan@linuxfoundation.org
 Subject: Re: [PATCH] docs/mm/damon/design: Fix spelling mistake
-Date: Mon,  5 May 2025 12:14:35 -0700
-Message-Id: <20250505191435.61036-1-sj@kernel.org>
-X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250505185350.10171-1-thusharms@gmail.com>
-References: 
+References: <20250505185350.10171-1-thusharms@gmail.com>
+Date: Tue, 06 May 2025 06:51:56 -0600
+Message-ID: <87zffpx5oz.fsf@trenco.lwn.net>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-+ Andrew and linux-mm@
-
-I think this patch is better to go via mm tree rather than doc tree, like usual
-DAMON documentation patches.  I will be happy to be corrected.
-
-On Mon,  5 May 2025 18:53:46 +0000 "Thushara.M.S" <thusharms@gmail.com> wrote:
+"Thushara.M.S" <thusharms@gmail.com> writes:
 
 > The word accuracy was misspelled as "accruracy".
-
-Thank you for finding and fixing this!
-
-> 
+>
 > Signed-off-by: Thushara.M.S <thusharms@gmail.com>
+> ---
+>  Documentation/mm/damon/design.rst | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/Documentation/mm/damon/design.rst b/Documentation/mm/damon/design.rst
+> index f12d33749329..700847a7ac9e 100644
+> --- a/Documentation/mm/damon/design.rst
+> +++ b/Documentation/mm/damon/design.rst
+> @@ -54,7 +54,7 @@ monitoring are address-space dependent.
+>  DAMON consolidates these implementations in a layer called DAMON Operations
+>  Set, and defines the interface between it and the upper layer.  The upper layer
+>  is dedicated for DAMON's core logics including the mechanism for control of the
+> -monitoring accruracy and the overhead.
+> +monitoring accuracy and the overhead.
+>  
 
-Reviewed-by: SeongJae Park <sj@kernel.org>
+Applied, thanks.
 
-
-Thanks,
-SJ
-
-[...]
+jon
