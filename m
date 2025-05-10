@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E03192594;
-	Sat, 10 May 2025 00:27:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31A881C6FE8;
+	Sat, 10 May 2025 22:09:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746836871; cv=none; b=ZPvK389GmQM5Av46YaRD9GNNhLTa/AltNgqapQaKucGxXikWHdSjkmRFGGXo4L2u3/Z4ZAFi9Z4/MUHRx7q5+AYCyqCZwMNWkswmvnaUOy+PBfufv/TqVhHXbWDArd/9E/b8WdDRXamD1HXkCUvpuaQHns6MwdjUkEkkD1E1rdM=
+	t=1746914977; cv=none; b=g7PfYpopmG0jmTIKVT0PLMm+GJMoUE9EEh3TeGsn2fIeXiEazAHMZINAQREHfEltO6L8Z0P7dhN2qs58WdhyzOF0oN27aOogyYc63Jc78Jp4iKw4DfzsN/pEU3lO3DdPYqhubPY8+8OWkZWiB3p+WjSllDx2xOWvRtFS4fwtgXc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746836871; c=relaxed/simple;
-	bh=HqMC/PvO3hI0omYHl1kiX7py/howh1t3h7nulYsHeA4=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=n+KdCVVQlJbuugJxrvuHUn7aAQ5awCwvoK0DzNvr/CNYFU+PV+XATqvgeKU1+C3Acs2gT1ucJlgk6HLOxSd4OZoXXWQYW/05CLh9e2BNx1KiYOE7Ez7mc3w68zcAAxobTY9D7NYZ3y3IgtFTfAxtKOWgI1NOoVM7/dwnOq7ZM9w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Zc8yK7lP; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1746914977; c=relaxed/simple;
+	bh=7gYbVVjK8IjX8p7c442nyW8K8z/i+LC7CKRyd44LJos=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=scnlZgZTVLfZBihcP13BNYB4dahyKACWTH7lmxlIr9u5yB4029ZtBCLkqdq7HpTnkgNH40oxW762wk9SHBTwa5QjArCMb/x9vtGMqJBEYOEZJ7/1L2iximnrNxnRYMt+MhvKKqlqjZFigyylZrFGh1jA+V32NWACUqZLwvTMDyc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=n92L39YW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Zc8yK7lP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 118AAC4CEE4;
-	Sat, 10 May 2025 00:27:50 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="n92L39YW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C00BC4CEE2;
+	Sat, 10 May 2025 22:09:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1746836870;
-	bh=HqMC/PvO3hI0omYHl1kiX7py/howh1t3h7nulYsHeA4=;
+	s=k20201202; t=1746914976;
+	bh=7gYbVVjK8IjX8p7c442nyW8K8z/i+LC7CKRyd44LJos=;
 	h=From:To:Cc:Subject:Date:From;
-	b=Zc8yK7lPMH4Wvj+nKpwVYUsupUfWveByPXcHbw7wwSK4aCzBQMv3aX2n9p65JHPLQ
-	 gHAlAGPFjgUZT1pXT6+1MDq/sTraeEh/RrzFRYdYnezk2i+oOoDGX6DIpDKmQ6VRDS
-	 9RM07OsaYtJXh6uCQ5c9oZLvHSMyqilkzbay0aLq81P1atJZc6RtJ5OLtehvMteiv9
-	 6PpHf5EXKAx5RuW17Iw6Bf6Cvi5oSOSxFyNPoKoZUAYfK7aPREyaQyDDD/8NxBOAxs
-	 hPIo9JqPAScHY/FzWBwVyxV5Tx0qNkGvO0N/UQW8BpVnEhUflnM5EdVs4yKT1kuX9k
-	 DGRdelXk5YaWA==
+	b=n92L39YWDsdvMe2LmPSZQozwBrF+CjJUdXD9W8iguwWjO+PKiLKAmwV2TpilKZ9sa
+	 UdTvxva01sQzpKePlCcyUuLTG5GxzW2tkIVJadSXdIeyeD+7RFsS7uSKsZ2eQJsfrR
+	 mVeS1lr9QM7ZFr3rb2jf9GwppeUMv25WbBubrhbuTdT+StM4VKceXvk3oSgp93mv5l
+	 L/T3jtFRUtGirRpHl8szmV/RfpByw8FYel06m48SI7btc7BCAO+A9ROZhINWdSjoAh
+	 INrxFzTKU3BmmDKu3r48z36by3HNWpDaYJdtOH9SZxV+jtoUH8/4BG9trmAQxoydAz
+	 tXeZW/SwZXc7A==
 From: SeongJae Park <sj@kernel.org>
-To: damon@lists.linux.dev
+To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SeongJae Park <sj@kernel.org>,
-	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org
-Subject: DAMON Beer/Coffee/Tea chat reminder for the week of 2025-05-12
-Date: Fri,  9 May 2025 17:27:46 -0700
-Message-Id: <20250510002746.58427-1-sj@kernel.org>
+	damon@lists.linux.dev,
+	kernel-team@meta.com,
+	linux-kernel@vger.kernel.org,
+	linux-mm@kvack.org
+Subject: [PATCH mm-unstable] samples/damon/mtier: fix wrong DAMON attrs setting
+Date: Sat, 10 May 2025 15:09:32 -0700
+Message-Id: <20250510220932.47722-1-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -42,57 +44,60 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hello,
+When intervals auto-tuning is enabled, DAMON monitoring attributes
+should be set with damon_set_attrs().  Because damon_set_attrs() is the
+only place that sets attrs->aggr_samples, not calling damon_set_attrs()
+can result in divide-by-zero from damon_get_intervals_score().
 
+mtier, which is a DAMON's sample module that merged in mm-unstable as of
+this writing, is not calling the function while enabling the
+auto-tuning.  Fix the problem by properly calling damon_set_attrs().
 
-This is yet another reminder of upcoming DAMON Beer/Coffee/Tea chats
-(https://docs.google.com/document/d/1v43Kcj3ly4CYqmAkMaZzLiM2GEnWfgdGbZAH3mi2vpM/edit?usp=sharing)
-for the week of 2025-05-12.
+Fixes: 3a1fff3fe05b ("samples/damon: implement a DAMON module for memory tiering") # mm-unstable
+Signed-off-by: SeongJae Park <sj@kernel.org>
+---
+ samples/damon/mtier.c | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
-We will have the two meetings in the week as usual.
+diff --git a/samples/damon/mtier.c b/samples/damon/mtier.c
+index 3390b7d30c26..36d2cd933f5a 100644
+--- a/samples/damon/mtier.c
++++ b/samples/damon/mtier.c
+@@ -41,6 +41,7 @@ static struct damon_ctx *ctxs[2];
+ static struct damon_ctx *damon_sample_mtier_build_ctx(bool promote)
+ {
+ 	struct damon_ctx *ctx;
++	struct damon_attrs attrs;
+ 	struct damon_target *target;
+ 	struct damon_region *region;
+ 	struct damos *scheme;
+@@ -50,14 +51,24 @@ static struct damon_ctx *damon_sample_mtier_build_ctx(bool promote)
+ 	ctx = damon_new_ctx();
+ 	if (!ctx)
+ 		return NULL;
++	attrs = (struct damon_attrs) {
++		.sample_interval = 5 * USEC_PER_MSEC,
++		.aggr_interval = 100 * USEC_PER_MSEC,
++		.ops_update_interval = 60 * USEC_PER_MSEC * MSEC_PER_SEC,
++		.min_nr_regions = 10,
++		.max_nr_regions = 1000,
++	};
++
+ 	/*
+ 	 * auto-tune sampling and aggregation interval aiming 4% DAMON-observed
+ 	 * accesses ratio, keeping sampling interval in [5ms, 10s] range.
+ 	 */
+-	ctx->attrs.intervals_goal = (struct damon_intervals_goal) {
++	attrs.intervals_goal = (struct damon_intervals_goal) {
+ 		.access_bp = 400, .aggrs = 3,
+ 		.min_sample_us = 5000, .max_sample_us = 10000000,
+ 	};
++	if (damon_set_attrs(ctx, &attrs))
++		goto free_out;
+ 	if (damon_select_ops(ctx, DAMON_OPS_PADDR))
+ 		goto free_out;
+ 
 
-I'm also considering merging any-topic and dedicated-topic discussions since
-apparently people prefer dedicated topic discussions.  For any-topic, I'm
-thinking about creating a Slack-like casual messaging systems.  Nothing has
-decided so far.  I'm just thinking about options.  Please let me know if you
-have any concerns or suggestions for that.
-
-Any-topic discussions
----------------------
-
-Next three time slots for any topic (no reservation is required) are scheduled
-as below:
-
-- 2025-05-12 (Mon) 18:00 PT (https://meet.google.com/ndx-evoc-gbu)
-- 2025-05-28 (Wed) 09:30 PT (https://meet.google.com/ndx-evoc-gbu)
-- 2025-06-09 (Mon) 18:00 PT (https://meet.google.com/ndx-evoc-gbu)
-
-Dedicated-topic discussions
----------------------------
-
-Next three time slots that I reserved in advance for possible future dedicated
-topic discussions are as below.
-
-- 2025-05-14 (Wed) 09:30 PT (not yet reserved)
-- 2025-05-26 (Mon) 18:00 PT (not yet reserved)
-- 2025-06-11 (Wed) 09:30 PT (not yet reserved)
-
-Please reach out to me (sj@kernel.org or whatever) to reserve the
-not-yet-reserved time slots for your topics.  The reservation is made in a
-First-Come First-Served way, and I will send a Google Meet link to
-reservation-confirmed attendees.
-
-Please note that other time slots are also available on demands.
-
-Shared Calendar
----------------
-
-You can get the schedule via this shared Google Calendar:
-https://calendar.google.com/calendar/u/0?cid=ZDIwOTA4YTMxNjc2MDQ3NTIyMmUzYTM5ZmQyM2U4NDA0ZGIwZjBiYmJlZGQxNDM0MmY4ZTRjOTE0NjdhZDRiY0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t
-
-You can also get the past and upcoming schedules via
-https://docs.google.com/document/d/1v43Kcj3ly4CYqmAkMaZzLiM2GEnWfgdGbZAH3mi2vpM/edit?usp=sharing
-
-
-Thanks,
-SJ
+base-commit: 882bfccd259e3961b81219834715a70a23f9ea71
+-- 
+2.39.5
