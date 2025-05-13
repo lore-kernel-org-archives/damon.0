@@ -1,41 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79D4E145A03;
-	Tue, 13 May 2025 00:27:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13D98155A59;
+	Tue, 13 May 2025 00:27:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747096044; cv=none; b=imUWRoQvMGMXiRmAf7AV2/P1MMYO0saeWD3wfIRyr+O4i+XpUQbqJtWs9F2jQE3J/PxRF69ntHVfLnOqzl8w9KeEjAexNfokb+C3Y/NFOig3ubkQN2/xdFIl91F/7Py48N39KqdtAbxJb+OUat7XgEOcjMcPshybpvCfjvuBcDE=
+	t=1747096046; cv=none; b=Z6ZG84lsCGxrMIF/LuLqWi+EHxxWaMWlaIr0aUjXHsBqE68FyqmkWxEwVHm1iu1dMGr+PsEi+w33jTD+0azVUv+ZYdSuQJ/W8+ndQ7FJePc0qcro79A77FVxx34vdIrQGeYVGMn8BLRQeNNCLu9mESQ8mOZGwhEk1oMC7TBYnGQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747096044; c=relaxed/simple;
-	bh=Iasq73PJLgx1anHaIVswYQx4Nq1K0KmoGxN00BPcit8=;
+	s=arc-20240116; t=1747096046; c=relaxed/simple;
+	bh=M92/gov+YRjIS6VM2BRObVBgAlR9lw1xuX3y69/FgHQ=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=ruE5+uOVUnrTnyw/7lCUXGWm0orDdc0g2tAMi9jy44/B7cLyC9VSpfxuiRV43QVKSULKWIDbzCHfVBVvNED5qvezRoYjgSm0gmvEK/fT6FBYbuninZs06emor9cr42pGzwikz95dE+yKCuOwpnPBGwPn+FhS7dcamb6eLYZExvw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZvYMViSA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XR/r5f/1Rw359lEUk54ecS5kJ7ssvlC3WeYarL760NE20eKiBT4frx9Qr3ug1UAkl4SJsA5jd+hRJPAkFjQr3VxvNCtaYAQReu4pU5gSPH1Bgw3Co/ccnsq7K8vUqaQE7/BKtTr8O2UymdVdsoSWnF/DStDbhoJLsyGWXMMxUYw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TFUI/QYe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZvYMViSA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D1F2C4CEEE;
-	Tue, 13 May 2025 00:27:24 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TFUI/QYe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EA7EC4CEEE;
+	Tue, 13 May 2025 00:27:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1747096044;
-	bh=Iasq73PJLgx1anHaIVswYQx4Nq1K0KmoGxN00BPcit8=;
+	s=k20201202; t=1747096045;
+	bh=M92/gov+YRjIS6VM2BRObVBgAlR9lw1xuX3y69/FgHQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZvYMViSAXi08PUHWi4jcDJf/7X0MBPFQGW/A4Ig4/HR6YMPJr07N9lWgtAh6s7Gg9
-	 nvgicrumVe8Nrb4bnTykQ192t/+P1gO8v/0FH9+hRplERoKO3ZP9OrW0pE2y0OBo+i
-	 FR902Odp0Q60NBqEwSutLMpMBXOXJsf+ClpFQ4CuVGtAOF4oHki8pEfvQatu5yTIqF
-	 T7rqx9UPESuPEIX0UOtZpUvP8aVgmR1DmvM+Ge2W+lxLme29+5kvpKlXrUMQOy0cDd
-	 5h6T97Kofa5Fx2gnRgmIjgB9ZzIKU+Vc6xRrDj9+HzMlOFyOJK8S19csAMV4zYSsBf
-	 sSYE1LERyy/9w==
+	b=TFUI/QYeXvnLV1j1ziIYgAjnNmTfT37e+HvuxaYLy3iKGlkp70GFZglavMkpdwr7N
+	 ofWw+Sze4MkTYLXAzI+i955ustgk2/vvqCE7OIlrcP7rfJu790BgE/YgrlFjpExHG4
+	 vhEkXlWt0Fr4rx09/Segf6ZE2FdQE+/6rBsDKwRyNWjcCt+j7XAQXMDiQmzbK0Pf+q
+	 CtHHoSNXqE77P+jTRI3/BMzxYJkHjow7HAsyXjnH0jWVMwZTzTvg/GSl3Cu73Ej5O0
+	 gX7kSvQwG5aLugFO7NTc/o4631ilxefS9Y/qJKqBzURm9DQmF5XInOzraGRB4HeCfA
+	 ux1tAg94iO1rQ==
 From: SeongJae Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SeongJae Park <sj@kernel.org>,
+	Brendan Higgins <brendan.higgins@linux.dev>,
+	David Gow <davidgow@google.com>,
 	damon@lists.linux.dev,
 	kernel-team@meta.com,
+	kunit-dev@googlegroups.com,
 	linux-kernel@vger.kernel.org,
+	linux-kselftest@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [PATCH 3/6] mm/damon/paddr: remove unused variable, folio_list, in damon_pa_stat()
-Date: Mon, 12 May 2025 17:27:12 -0700
-Message-Id: <20250513002715.40126-4-sj@kernel.org>
+Subject: [PATCH 4/6] mm/damon/tests/core-kunit: add a test for damos_set_filters_default_reject()
+Date: Mon, 12 May 2025 17:27:13 -0700
+Message-Id: <20250513002715.40126-5-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250513002715.40126-1-sj@kernel.org>
 References: <20250513002715.40126-1-sj@kernel.org>
@@ -47,28 +51,105 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Commit c0cb9d91bf297 ("mm/damon/paddr: report filter-passed bytes back
-for DAMOS_STAT action") added unused variable in damon_pa_stat(), due to
-a copy-and-paste error.  Remove it.
+DAMOS filters' default reject behavior is not very simple.  Actually
+there was a mistake[1] during the development.  Add a kunit test for
+validating the behavior.
 
-Fixes: c0cb9d91bf297 ("mm/damon/paddr: report filter-passed bytes back for DAMOS_STAT action")
+[1] https://lore.kernel.org/20250227002913.19359-1-sj@kernel.org
+
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- mm/damon/paddr.c | 1 -
- 1 file changed, 1 deletion(-)
+ mm/damon/tests/core-kunit.h | 70 +++++++++++++++++++++++++++++++++++++
+ 1 file changed, 70 insertions(+)
 
-diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
-index 1b70d3f36046..e8464f7e0014 100644
---- a/mm/damon/paddr.c
-+++ b/mm/damon/paddr.c
-@@ -548,7 +548,6 @@ static unsigned long damon_pa_stat(struct damon_region *r, struct damos *s,
- 		unsigned long *sz_filter_passed)
- {
- 	unsigned long addr;
--	LIST_HEAD(folio_list);
- 	struct folio *folio;
+diff --git a/mm/damon/tests/core-kunit.h b/mm/damon/tests/core-kunit.h
+index be0fea9ee5fc..298c67557fae 100644
+--- a/mm/damon/tests/core-kunit.h
++++ b/mm/damon/tests/core-kunit.h
+@@ -510,6 +510,75 @@ static void damon_test_feed_loop_next_input(struct kunit *test)
+ 			damon_feed_loop_next_input(last_input, 2000));
+ }
  
- 	if (!damon_pa_scheme_has_filter(s))
++static void damon_test_set_filters_default_reject(struct kunit *test)
++{
++	struct damos scheme;
++	struct damos_filter *target_filter, *anon_filter;
++
++	INIT_LIST_HEAD(&scheme.filters);
++	INIT_LIST_HEAD(&scheme.ops_filters);
++
++	damos_set_filters_default_reject(&scheme);
++	/*
++	 * No filter is installed.  Allow by default on both core and ops layer
++	 * filtering stages, since there are no filters at all.
++	 */
++	KUNIT_EXPECT_EQ(test, scheme.core_filters_default_reject, false);
++	KUNIT_EXPECT_EQ(test, scheme.ops_filters_default_reject, false);
++
++	target_filter = damos_new_filter(DAMOS_FILTER_TYPE_TARGET, true, true);
++	damos_add_filter(&scheme, target_filter);
++	damos_set_filters_default_reject(&scheme);
++	/*
++	 * A core-handled allow-filter is installed.
++	 * Rejct by default on core layer filtering stage due to the last
++	 * core-layer-filter's behavior.
++	 * Allow by default on ops layer filtering stage due to the absence of
++	 * ops layer filters.
++	 */
++	KUNIT_EXPECT_EQ(test, scheme.core_filters_default_reject, true);
++	KUNIT_EXPECT_EQ(test, scheme.ops_filters_default_reject, false);
++
++	target_filter->allow = false;
++	damos_set_filters_default_reject(&scheme);
++	/*
++	 * A core-handled reject-filter is installed.
++	 * Allow by default on core layer filtering stage due to the last
++	 * core-layer-filter's behavior.
++	 * Allow by default on ops layer filtering stage due to the absence of
++	 * ops layer filters.
++	 */
++	KUNIT_EXPECT_EQ(test, scheme.core_filters_default_reject, false);
++	KUNIT_EXPECT_EQ(test, scheme.ops_filters_default_reject, false);
++
++	anon_filter = damos_new_filter(DAMOS_FILTER_TYPE_ANON, true, true);
++	damos_add_filter(&scheme, anon_filter);
++
++	damos_set_filters_default_reject(&scheme);
++	/*
++	 * A core-handled reject-filter and ops-handled allow-filter are installed.
++	 * Allow by default on core layer filtering stage due to the existence
++	 * of the ops-handled filter.
++	 * Reject by default on ops layer filtering stage due to the last
++	 * ops-layer-filter's behavior.
++	 */
++	KUNIT_EXPECT_EQ(test, scheme.core_filters_default_reject, false);
++	KUNIT_EXPECT_EQ(test, scheme.ops_filters_default_reject, true);
++
++	target_filter->allow = true;
++	damos_set_filters_default_reject(&scheme);
++	/*
++	 * A core-handled allow-filter and ops-handled allow-filter are
++	 * installed.
++	 * Allow by default on core layer filtering stage due to the existence
++	 * of the ops-handled filter.
++	 * Reject by default on ops layer filtering stage due to the last
++	 * ops-layer-filter's behavior.
++	 */
++	KUNIT_EXPECT_EQ(test, scheme.core_filters_default_reject, false);
++	KUNIT_EXPECT_EQ(test, scheme.ops_filters_default_reject, true);
++}
++
+ static struct kunit_case damon_test_cases[] = {
+ 	KUNIT_CASE(damon_test_target),
+ 	KUNIT_CASE(damon_test_regions),
+@@ -527,6 +596,7 @@ static struct kunit_case damon_test_cases[] = {
+ 	KUNIT_CASE(damos_test_new_filter),
+ 	KUNIT_CASE(damos_test_filter_out),
+ 	KUNIT_CASE(damon_test_feed_loop_next_input),
++	KUNIT_CASE(damon_test_set_filters_default_reject),
+ 	{},
+ };
+ 
 -- 
 2.39.5
 
