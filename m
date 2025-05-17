@@ -1,69 +1,43 @@
-Received: from mail-pl1-f179.google.com (mail-pl1-f179.google.com [209.85.214.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E416B4B1E6E
-	for <damon@lists.linux.dev>; Sat, 17 May 2025 14:19:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9801D6F073
+	for <damon@lists.linux.dev>; Sat, 17 May 2025 15:56:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747491551; cv=none; b=J3a6tCf1nm2L7VkG8MrWOw/CwH3NI57ZFD9UkTQXJ6ydK507SgyBF+iR/ASIRW57uvQYBmQHQJan10rLl4Pd1N7mBGdCl85F9d8CGIhrJgbRwVQtJnipfP2N937cxCUhnafTLRuU0cQwNiLJ8sjS8dLsS9FlCGXWnEESwJLI3ds=
+	t=1747497397; cv=none; b=UjKzLCk4/G9/Veyz48uCCuTLbVsUZoKtacRzo3dF/S0ycHGv/Vde+V2s0ucJGQENfFnszN+4JaVYJkOjNnjuCTrLWPL9KA+XMdIKrSQHdVprnWI9Qy/6w9PlQT61Wp/oXAeGkkKJycz5g0DHnJwHVnKBeRpImaBk4IdtxnFjxyQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747491551; c=relaxed/simple;
-	bh=QQG0qCtWrnzG0Vht23/X6/0uca2F38/QutFvM7LLCJs=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=OF6csvG4jX4+a4Xk4ObP4wfveun+3Sswg3W5DMSEDNDZnBmzgEHnhNYgRHlCEpQ/ZHFm5/tyayVosAjeLR/IPgDgTZeC6mBS5dgKgv1opskwFE1eZKVleUPraVajtR8UsgT0pUq6MdOe3s9AUNvNAeUHhtPEtMve/rXK74ZvvAs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KiEhDFKu; arc=none smtp.client-ip=209.85.214.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1747497397; c=relaxed/simple;
+	bh=M8+rZ3NXX2ZFZh1RN832EGibDnoiZDEzaZLFMB2NZuY=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=sqxW/wKJ3SkllhaZ+8c/4K7fbjxYFA75OZ9QJtnwsei5Fuubpv00Gf5+8ROXrlpd9GR7+WRO+Jg3fphlKJm5thqH86kH49PQjO8Pn/LKu+KRzbQSuZUpgxVFWdak6QiiYhPD9CanUV8sKxYJtnJHpSVE9HN4aIKGQS8MBDqjsmc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Csa8MwEF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KiEhDFKu"
-Received: by mail-pl1-f179.google.com with SMTP id d9443c01a7336-23198fcdeb0so28183305ad.2
-        for <damon@lists.linux.dev>; Sat, 17 May 2025 07:19:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747491549; x=1748096349; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=eyjp7NdbiAJJ20Sr1sjlTYaI/Pi2yVUfPSdZpWP5cT8=;
-        b=KiEhDFKuFA8EqQnHVq4fzqGrqM53hTveCr+/UKtbatYV9pqDGsbmk9dBt/m8snWSt9
-         Yv85ymvSm4AcXgZXps/mTH/F5eDB9vulT79Ic+5ybEnI06fbe5cUG6nXLPFINpc1Nz5H
-         EXW7wW7JyiXrDJ5oR35a8Y9xvE0tBkLylcNTxL1CjZ3r8l+Q68xZKn1xGvRMy5mftbxs
-         QpzVYslHjXG7e+wHiXy4d+nIhH1l4JBw6likY12Kgt/RtY84Iks1+qSs2AyV6fzfiRd6
-         HiNCme78YCWvKZiDoU9VwB1qhR50AWWc5gIQW6TboGBhaUCXu8v5ZbYnz+k75njKFhWF
-         dv4Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747491549; x=1748096349;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=eyjp7NdbiAJJ20Sr1sjlTYaI/Pi2yVUfPSdZpWP5cT8=;
-        b=oKzG9RVGslBLlf//XDwqZC5z99ouRXwPd7J0vwS2gnPCU5LSRWLat07tnYbB4tbTIv
-         93wSap18LvX9qA0g5LXbg+9vLtYsjMy5jG0BAYXjh0ut2u1vy4hnJpyhHfGxFqw2zy+T
-         zmgdPeikcTT+3H//+ViGQqHmdQdsoBHR+SdF0ouob+CSCGIH0JOx3j3ms9SGByIr9QJ1
-         t3XcxxEgGw1/QFxDqJOL5X+RXUHc3iCWWhyPJuGP53hbdZsWAZSYP21eNZXYrIH+Hejs
-         AX11zmLnqBQA/nFq5RCuQ7JbPkjKB/9ZOU3igSfLL1rr0VoBcumogMfgcr4hf0ufA2YY
-         tGJg==
-X-Gm-Message-State: AOJu0YwkQYc1SaDiX9ZC2KOLKPbikApWFx7I0fKOQdEbYea9h12mUA2Q
-	VVNjhMYBFSMxUALc7Xf6TAZaAfDlw6S+ibkcN9yOr1/oEYxV3opwji4cUr6GoHw2
-X-Gm-Gg: ASbGncsgly5vboznU4fZTcsLgoYwF4ClK6lYrLP8dvl8I56mCNhBCYx+hNKgg7oxZsu
-	Zm9DpeIe0JIImQ5f9izSfFV6HYBst1y0g0KIH+5BA0htafJMbmnQJolPO+P5F9fi/0ftvfIbTZQ
-	p7KFpH1UOg6iHksq+Rrk/FyGq9ebFslOUE6STuNBvhkpnL1l8+Yo3NWas9wSvSI+7SvZAkDyyZn
-	iyzfkCiHCXYhYTqYovIIl6wv5IgLQSVZbdeKIBJvB2S7P+9BR8nPkL8ivGQQT1hvXoxqzUcgWUZ
-	j/+ChyzYv5KId7k3nV9OBIVpWR98Ba3OnjZj/hN193tlrf/zoL0x4SzsFmwr07u16lE=
-X-Google-Smtp-Source: AGHT+IGp7rGJAxlftJ7jCRQB6tQ+u7a3ZaPCrFyMxY5PH4b8st6dDXCpC2sRaJEgATwvugGgV+fiWw==
-X-Received: by 2002:a17:903:1b6d:b0:223:f9a4:3f99 with SMTP id d9443c01a7336-231d4541fbamr102307875ad.29.1747491548573;
-        Sat, 17 May 2025 07:19:08 -0700 (PDT)
-Received: from localhost.localdomain ([240f:34:212d:1:6ada:5ff4:a301:c919])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-231d4b1020dsm31209265ad.104.2025.05.17.07.19.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 17 May 2025 07:19:07 -0700 (PDT)
-From: Akinobu Mita <akinobu.mita@gmail.com>
-To: damon@lists.linux.dev
-Cc: linux-mm@kvack.org,
-	akpm@linux-foundation.org,
-	akinobu.mita@gmail.com,
-	SeongJae Park <sj@kernel.org>
-Subject: [PATCH] mm/damon/core: avoid destroyed target reference from DAMOS quota
-Date: Sat, 17 May 2025 23:18:52 +0900
-Message-Id: <20250517141852.142802-1-akinobu.mita@gmail.com>
-X-Mailer: git-send-email 2.34.1
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Csa8MwEF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD747C4CEE3;
+	Sat, 17 May 2025 15:56:36 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1747497397;
+	bh=M8+rZ3NXX2ZFZh1RN832EGibDnoiZDEzaZLFMB2NZuY=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=Csa8MwEFaic9IVgL0owHD2cYFCYaWnmdqWiH8kqDGQNXjsdcKfc5hQIc4tjc6oCaW
+	 kcfCt96pW2vhxCrNJLh5pv0E55wI5wOvgh04u85WPYUPx4VvcfiXZlBFp/vx5l8Rt2
+	 HeGhMaFnEnbdCgaq9U0bvRgnT2w6F7fw7nxYYTEx8HNq9yBINXCX52wukNlyrS90Zy
+	 5Gv+XUAzOFlcKdE3Ye0MwEa+pSwlHT0ZD0TrQqMCUoddkq1guzcTx3wE/JldWRodQV
+	 iW4RhJ/robHJQbnlR2huvN5JE3jo3QDB2ZgczmMHiAg5POaurTj/tlVXwl+WwcmmTx
+	 L+Zju82o9ZA7g==
+From: SeongJae Park <sj@kernel.org>
+To: Akinobu Mita <akinobu.mita@gmail.com>
+Cc: SeongJae Park <sj@kernel.org>,
+	damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	akpm@linux-foundation.org
+Subject: Re: [PATCH] mm/damon/core: avoid destroyed target reference from DAMOS quota
+Date: Sat, 17 May 2025 08:56:33 -0700
+Message-Id: <20250517155633.35139-1-sj@kernel.org>
+X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20250517141852.142802-1-akinobu.mita@gmail.com>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -72,44 +46,41 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-When the number of the monitoring targets in running contexts is reduced,
-there may be DAMOS quotas referencing the targets that will be destroyed.
+On Sat, 17 May 2025 23:18:52 +0900 Akinobu Mita <akinobu.mita@gmail.com> wrote:
 
-Applying the scheme action for such DAMOS scheme will be skipped forever
-looking for the starting part of the region for the destroyed monitoring
-target.
+> When the number of the monitoring targets in running contexts is reduced,
+> there may be DAMOS quotas referencing the targets that will be destroyed.
+> 
+> Applying the scheme action for such DAMOS scheme will be skipped forever
+> looking for the starting part of the region for the destroyed monitoring
+> target.
 
-To fix this issue, when the monitoring target is destroyed, reset the
-starting part for all DAMOS quotas that reference the target.
+Nice catch!
 
-Signed-off-by: Akinobu Mita <akinobu.mita@gmail.com>
-Cc: SeongJae Park <sj@kernel.org>
----
- mm/damon/core.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+> 
+> To fix this issue, when the monitoring target is destroyed, reset the
+> starting part for all DAMOS quotas that reference the target.
+> 
 
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index 587fb9a4fef8..6df13586155b 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -1093,9 +1093,17 @@ static int damon_commit_targets(
- 			if (err)
- 				return err;
- 		} else {
-+			struct damos *s;
-+
- 			if (damon_target_has_pid(dst))
- 				put_pid(dst_target->pid);
- 			damon_destroy_target(dst_target);
-+			damon_for_each_scheme(s, dst) {
-+				if (s->quota.charge_target_from == dst_target) {
-+					s->quota.charge_target_from = NULL;
-+					s->quota.charge_addr_from = 0;
-+				}
-+			}
- 		}
- 	}
- 
--- 
-2.34.1
+I think this deserves below Fixes: tag?
 
+Fixes: da87878010e5 ("mm/damon/sysfs: support online inputs update")
+
+For a clarification.  The worst scenario consequence of this issue is DAMOS
+unexpectedly doing less or zero works under certain setups.  No horrible
+problems such as a use after free will happen, though, since quota handling
+code references quota.charge_target_from, but does not de-reference it.
+
+So I don't think this deserves Cc-ing stable@, but I'll let stable@ maintainers
+decide, as usual.
+
+> Signed-off-by: Akinobu Mita <akinobu.mita@gmail.com>
+> Cc: SeongJae Park <sj@kernel.org>
+
+Reviewed-by: SeongJae Park <sj@kernel.org>
+
+
+Thanks,
+SJ
+
+[...]
