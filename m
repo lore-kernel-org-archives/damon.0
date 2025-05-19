@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9801D6F073
-	for <damon@lists.linux.dev>; Sat, 17 May 2025 15:56:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 483BB1E32C3;
+	Mon, 19 May 2025 16:44:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747497397; cv=none; b=UjKzLCk4/G9/Veyz48uCCuTLbVsUZoKtacRzo3dF/S0ycHGv/Vde+V2s0ucJGQENfFnszN+4JaVYJkOjNnjuCTrLWPL9KA+XMdIKrSQHdVprnWI9Qy/6w9PlQT61Wp/oXAeGkkKJycz5g0DHnJwHVnKBeRpImaBk4IdtxnFjxyQ=
+	t=1747673060; cv=none; b=tEQQqFjO417ZrxcIsV1/neHeMkGLCdPIcnSyupv4rgo94/BWph8anhamgBu9O8ZLrQA/M8l4c+L7wm2A/8HipAusAPCboKZXQGWqfmz8B7/xcnrDLW3/o3PKOHaQLDVZFMPGcxG4fpvD9sEmAmuXAPs9Yd/MPqoI4PKcT5IBQ5E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747497397; c=relaxed/simple;
-	bh=M8+rZ3NXX2ZFZh1RN832EGibDnoiZDEzaZLFMB2NZuY=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=sqxW/wKJ3SkllhaZ+8c/4K7fbjxYFA75OZ9QJtnwsei5Fuubpv00Gf5+8ROXrlpd9GR7+WRO+Jg3fphlKJm5thqH86kH49PQjO8Pn/LKu+KRzbQSuZUpgxVFWdak6QiiYhPD9CanUV8sKxYJtnJHpSVE9HN4aIKGQS8MBDqjsmc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Csa8MwEF; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1747673060; c=relaxed/simple;
+	bh=tNwc3KlCa+UsKLQNf/TF+YhpZdTxy9+n5nN6fjl4mIs=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=YNqK4HvaCh0yqoHyFuHbC9ZO/q6pPVp0xgzlW/3iylN2etzj7AF9kbLUgBpX4U/mnVk7ZW0l5rkYhwA7m7nCxTMz5ikwiOca4qII/xc4Prq7wE3eT+w+1gR+1/wzSQClj1c+V5gRgWMu2BuayttpprfZgsY04q/9qMNXgcEJLAI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tu/PZ/R7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Csa8MwEF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD747C4CEE3;
-	Sat, 17 May 2025 15:56:36 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tu/PZ/R7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BA7AC4CEE4;
+	Mon, 19 May 2025 16:44:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1747497397;
-	bh=M8+rZ3NXX2ZFZh1RN832EGibDnoiZDEzaZLFMB2NZuY=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Csa8MwEFaic9IVgL0owHD2cYFCYaWnmdqWiH8kqDGQNXjsdcKfc5hQIc4tjc6oCaW
-	 kcfCt96pW2vhxCrNJLh5pv0E55wI5wOvgh04u85WPYUPx4VvcfiXZlBFp/vx5l8Rt2
-	 HeGhMaFnEnbdCgaq9U0bvRgnT2w6F7fw7nxYYTEx8HNq9yBINXCX52wukNlyrS90Zy
-	 5Gv+XUAzOFlcKdE3Ye0MwEa+pSwlHT0ZD0TrQqMCUoddkq1guzcTx3wE/JldWRodQV
-	 iW4RhJ/robHJQbnlR2huvN5JE3jo3QDB2ZgczmMHiAg5POaurTj/tlVXwl+WwcmmTx
-	 L+Zju82o9ZA7g==
+	s=k20201202; t=1747673059;
+	bh=tNwc3KlCa+UsKLQNf/TF+YhpZdTxy9+n5nN6fjl4mIs=;
+	h=From:To:Cc:Subject:Date:From;
+	b=tu/PZ/R7xjoRbosdEr05GmX51LuS5dRnQIBbAZGIX21QL8XPHXCUIAr7RPvHIIehu
+	 QWkAwHxCRdTCYNrmZtFte8S1zhfJTt4BDmMliyhWX7wQ/RGIao89Mbobx1dmk6wPV8
+	 Jcjj/l50sygfZyS40m3V3NGtRbOi1A9VnyhBGYRGeDkBzgvoOkot4I4rkpAf/4t4YH
+	 4JKw9SJ6s5ZX2ZWL3HRJDu5b6qJbWou7YEepiIsJPTLz6EKZODlafgIHjNAAtJuRSx
+	 OQ7zWgrD8xofPA6uiFF3YAr1D9fAHjVntHhcXO8pLucpMpikG8XeJX3ivAs5fCjNwv
+	 yeLIY1AuwFOgA==
 From: SeongJae Park <sj@kernel.org>
-To: Akinobu Mita <akinobu.mita@gmail.com>
+To: 
 Cc: SeongJae Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	akpm@linux-foundation.org
-Subject: Re: [PATCH] mm/damon/core: avoid destroyed target reference from DAMOS quota
-Date: Sat, 17 May 2025 08:56:33 -0700
-Message-Id: <20250517155633.35139-1-sj@kernel.org>
+	kernel-team@meta.com,
+	linux-kernel@vger.kernel.org,
+	linux-mm@kvack.org
+Subject: [RFC PATCH 0/3] mm/damon: introduce DAMON_STAT for access monitoring that just works
+Date: Mon, 19 May 2025 09:44:12 -0700
+Message-Id: <20250519164415.43935-1-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250517141852.142802-1-akinobu.mita@gmail.com>
-References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -46,41 +45,82 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Sat, 17 May 2025 23:18:52 +0900 Akinobu Mita <akinobu.mita@gmail.com> wrote:
+DAMON-based access monitoring requires manual DAMON control and results
+parsing.  Introduce a static kernel module for making it simple and
+intuitive.  The module can be enabled without manual setup and provides
+simple but practical access pattern metrics, namely memory idle time
+percentiles and estimatd memory bandwidth.
 
-> When the number of the monitoring targets in running contexts is reduced,
-> there may be DAMOS quotas referencing the targets that will be destroyed.
-> 
-> Applying the scheme action for such DAMOS scheme will be skipped forever
-> looking for the starting part of the region for the destroyed monitoring
-> target.
+Background and Problems
+=======================
 
-Nice catch!
+DAMON can be used for monitoring data access pattern of the system and
+workloads.  For that, users can start DAMON to monitor access events on
+specific address space with fine controls including address ranges to do
+monitor and time intervals between samplings and aggregations.  The
+resulting access information snapshot contains access frequency
+(nr_accesses) and how long the frequency was maintained (age) for each
+byte.
 
-> 
-> To fix this issue, when the monitoring target is destroyed, reset the
-> starting part for all DAMOS quotas that reference the target.
-> 
+The monitoring usage is not simple and practical enough for production
+usage.  Users should first start DAMON with a number of parameters, and
+wait until DAMON's monitoring results capture reasonable amount of the
+time data (age).  In production, such manual start and wait is
+impractical to capture useful information from a high number of machines
+in a timely manner.
 
-I think this deserves below Fixes: tag?
+The monitoring result is also too detailed to be used on production
+environments.  The raw results are hard to be aggregated and/or compared
+for production environments having large scale of time, space and
+machines fleet.
 
-Fixes: da87878010e5 ("mm/damon/sysfs: support online inputs update")
+Users have to implement and use their own automation of DAMON control
+and results processing.  It is repetitive and challenging since there is
+no good reference or guideline for such automation.
 
-For a clarification.  The worst scenario consequence of this issue is DAMOS
-unexpectedly doing less or zero works under certain setups.  No horrible
-problems such as a use after free will happen, though, since quota handling
-code references quota.charge_target_from, but does not de-reference it.
+Solution: DAMON_STAT
+====================
 
-So I don't think this deserves Cc-ing stable@, but I'll let stable@ maintainers
-decide, as usual.
+Implement a such automation in kernel space as a static kernel module,
+namely DAMON_STAT.  It can be enabled at build, boot, or run time via
+its build configuration or module parameter.  It monitors entire
+physical address space with monitoring intervals that auto-tuned for
+reasonable amount of access observations and minimum overhead.  It
+converts the raw monitoring results into simpler metrics that can easily
+aggregated and compared, namely idle time percentiles and memory
+bandwidth.
 
-> Signed-off-by: Akinobu Mita <akinobu.mita@gmail.com>
-> Cc: SeongJae Park <sj@kernel.org>
+Discussions
+===========
 
-Reviewed-by: SeongJae Park <sj@kernel.org>
+The module aims to be useful on production environments constructed with
+large number of machines that runs ling time.  The auto-tuned monitoring
+intervals ensures a reasonable quality of the outputs.  The auto-tuning
+also ensures its overhead be reasonable and low enough to be enabled
+always on the production.  The simplified monitoring results metrics can
+be useful for showing both coldness (idle time percentiles) and hotness
+(memory bandwidth) of the system's access pattern.  We expect the
+information can be useful for assessing system memory utilization and
+inspiring optimizations or investigations on both kernel and user space
+memory management logics for large scale fleets.
+
+We hence expect the module is good enough to be just used in most
+environments.  For special cases that require a custom access monitoring
+automation, users will still get benefit by using DAMON_STAT as a
+reference or a guideline for their automation.
+
+SeongJae Park (3):
+  mm/damon: introduce DAMON_STAT module
+  mm/damon/stat: calculate and expose estimated memory bandwidth
+  mm/damon/stat: calculate and expose idle time percentiles
+
+ mm/damon/Kconfig  |  16 +++
+ mm/damon/Makefile |   1 +
+ mm/damon/stat.c   | 245 ++++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 262 insertions(+)
+ create mode 100644 mm/damon/stat.c
 
 
-Thanks,
-SJ
-
-[...]
+base-commit: 251509f2949105d3d0e3cdcd3921670a6aee3a0e
+-- 
+2.39.5
