@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 483BB1E32C3;
-	Mon, 19 May 2025 16:44:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C20E0287519;
+	Mon, 19 May 2025 16:44:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747673060; cv=none; b=tEQQqFjO417ZrxcIsV1/neHeMkGLCdPIcnSyupv4rgo94/BWph8anhamgBu9O8ZLrQA/M8l4c+L7wm2A/8HipAusAPCboKZXQGWqfmz8B7/xcnrDLW3/o3PKOHaQLDVZFMPGcxG4fpvD9sEmAmuXAPs9Yd/MPqoI4PKcT5IBQ5E=
+	t=1747673061; cv=none; b=giVXgRdYWPorwIABzjcTPtYniAkfOoy9i/kSS4v+DGcjGQqkYBzb1+VlTbYbZp/tblODUXL3GTdRxhVUqVSbUF/jXD0U8pd/OuGglT7PFjE0Z1awCTbKSXZny/JyS3nsvjqlx4nAJdjxZGcQaCGyAZ1amZ9ljACbOiEe9XHY+nI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747673060; c=relaxed/simple;
-	bh=tNwc3KlCa+UsKLQNf/TF+YhpZdTxy9+n5nN6fjl4mIs=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=YNqK4HvaCh0yqoHyFuHbC9ZO/q6pPVp0xgzlW/3iylN2etzj7AF9kbLUgBpX4U/mnVk7ZW0l5rkYhwA7m7nCxTMz5ikwiOca4qII/xc4Prq7wE3eT+w+1gR+1/wzSQClj1c+V5gRgWMu2BuayttpprfZgsY04q/9qMNXgcEJLAI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tu/PZ/R7; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1747673061; c=relaxed/simple;
+	bh=z0JjO0m2glY+dWvePC6PxEeqvFGxsuXbQo7p4xrgJ7o=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=HHnFfXSRHjUHqPEg864huY/m14PZNMcOVIHyXJxB0ir6zl9Z0R8x5y4hQw+QWApnRr2fvauggWDN5p4BqLsXExIVAKMxJITpESuGKTtEaKtBiv+1GX6P3GMhEXpj5LSRFAxZ7Bgh0FGN4fkFwNOu/g4xQjOY1gb+WOMSsaAgMWg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=A4096UE/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tu/PZ/R7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BA7AC4CEE4;
-	Mon, 19 May 2025 16:44:19 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="A4096UE/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E78CAC4CEE4;
+	Mon, 19 May 2025 16:44:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1747673059;
-	bh=tNwc3KlCa+UsKLQNf/TF+YhpZdTxy9+n5nN6fjl4mIs=;
-	h=From:To:Cc:Subject:Date:From;
-	b=tu/PZ/R7xjoRbosdEr05GmX51LuS5dRnQIBbAZGIX21QL8XPHXCUIAr7RPvHIIehu
-	 QWkAwHxCRdTCYNrmZtFte8S1zhfJTt4BDmMliyhWX7wQ/RGIao89Mbobx1dmk6wPV8
-	 Jcjj/l50sygfZyS40m3V3NGtRbOi1A9VnyhBGYRGeDkBzgvoOkot4I4rkpAf/4t4YH
-	 4JKw9SJ6s5ZX2ZWL3HRJDu5b6qJbWou7YEepiIsJPTLz6EKZODlafgIHjNAAtJuRSx
-	 OQ7zWgrD8xofPA6uiFF3YAr1D9fAHjVntHhcXO8pLucpMpikG8XeJX3ivAs5fCjNwv
-	 yeLIY1AuwFOgA==
+	s=k20201202; t=1747673061;
+	bh=z0JjO0m2glY+dWvePC6PxEeqvFGxsuXbQo7p4xrgJ7o=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=A4096UE/qe57WsG567bTv86VBECxPRLhGkVvxhfmJYwVtD6749du/aRo8RlV6MNUj
+	 ZUdwzVY6+7NqUFkcDXCHDH4bsJQq1p1EeBqV1/6j+g3q0eknIgPtm5X5muz7Su3C5t
+	 c+ULcSB+XACMT//o4AhxXYxgfXf9jaEzdRqrLljVATMS1KUaGJXo+8jF0m9NvXPpAP
+	 8wMZfUROpkQSU0/hsJmBStb3sAetXd5fqXWD9V4E+UQh1lSsGBncboCUmA/2SZrFQf
+	 aVKqpcy6iJQI0q8/jonwMli41sWtQgI2E3DtFruY2X1h4DP7bfw2SY5gCFzwktw8/3
+	 dv8loBkXhB2QQ==
 From: SeongJae Park <sj@kernel.org>
 To: 
 Cc: SeongJae Park <sj@kernel.org>,
@@ -33,10 +34,12 @@ Cc: SeongJae Park <sj@kernel.org>,
 	kernel-team@meta.com,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH 0/3] mm/damon: introduce DAMON_STAT for access monitoring that just works
-Date: Mon, 19 May 2025 09:44:12 -0700
-Message-Id: <20250519164415.43935-1-sj@kernel.org>
+Subject: [RFC PATCH 1/3] mm/damon: introduce DAMON_STAT module
+Date: Mon, 19 May 2025 09:44:13 -0700
+Message-Id: <20250519164415.43935-2-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20250519164415.43935-1-sj@kernel.org>
+References: <20250519164415.43935-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -45,82 +48,220 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-DAMON-based access monitoring requires manual DAMON control and results
-parsing.  Introduce a static kernel module for making it simple and
-intuitive.  The module can be enabled without manual setup and provides
-simple but practical access pattern metrics, namely memory idle time
-percentiles and estimatd memory bandwidth.
+To use DAMON for monitoring access pattern of the system, users should
+manually start DAMON via DAMON sysfs ABI with a number of parameters for
+specifying the monitoring target address space, address ranges, and
+monitoring intervals.  After that, users should also wait until desired
+amount of time data is captured into DAMON's monitoring results.  It is
+bothersome and take a long time to be practical for access monitoring on
+large fleet level production environments.
 
-Background and Problems
-=======================
+For access-aware system operations use cases like proactive cold memory
+reclamation, similar problem existed and we solved those by introducing
+dedicated static kernel modules such as DAMON_RECLAIM.
 
-DAMON can be used for monitoring data access pattern of the system and
-workloads.  For that, users can start DAMON to monitor access events on
-specific address space with fine controls including address ranges to do
-monitor and time intervals between samplings and aggregations.  The
-resulting access information snapshot contains access frequency
-(nr_accesses) and how long the frequency was maintained (age) for each
-byte.
+Implement such static kernel module for access monitoring, namely
+DAMON_STAT.  It monitors the entire physical address space with
+auto-tuned monitoring intervals.  The auto-tuning is set to capture 4 %
+of observable access events in each snapshot while keeping the sampling
+intervals in a range of 5 milliseconds and 10 seconds.  From production
+environemnts, we confirmed this setup provides high quality monitoring
+results with minimum overheads.  The module therefore receives only one
+user input, whether to enable or disable it.  It can be set on build or
+boot time via build configuration or kernel boot command line.  It can
+also be overridden at runtime.
 
-The monitoring usage is not simple and practical enough for production
-usage.  Users should first start DAMON with a number of parameters, and
-wait until DAMON's monitoring results capture reasonable amount of the
-time data (age).  In production, such manual start and wait is
-impractical to capture useful information from a high number of machines
-in a timely manner.
+Note that this commit only implements the DAMON control part of the
+module.  Users could to get the monitoring results via
+damon:damon_aggregated tracepoints, but that's of course not the
+recommended way.  Following commits will implement convenient and
+optimized ways for serving the monitoring results to users.
 
-The monitoring result is also too detailed to be used on production
-environments.  The raw results are hard to be aggregated and/or compared
-for production environments having large scale of time, space and
-machines fleet.
-
-Users have to implement and use their own automation of DAMON control
-and results processing.  It is repetitive and challenging since there is
-no good reference or guideline for such automation.
-
-Solution: DAMON_STAT
-====================
-
-Implement a such automation in kernel space as a static kernel module,
-namely DAMON_STAT.  It can be enabled at build, boot, or run time via
-its build configuration or module parameter.  It monitors entire
-physical address space with monitoring intervals that auto-tuned for
-reasonable amount of access observations and minimum overhead.  It
-converts the raw monitoring results into simpler metrics that can easily
-aggregated and compared, namely idle time percentiles and memory
-bandwidth.
-
-Discussions
-===========
-
-The module aims to be useful on production environments constructed with
-large number of machines that runs ling time.  The auto-tuned monitoring
-intervals ensures a reasonable quality of the outputs.  The auto-tuning
-also ensures its overhead be reasonable and low enough to be enabled
-always on the production.  The simplified monitoring results metrics can
-be useful for showing both coldness (idle time percentiles) and hotness
-(memory bandwidth) of the system's access pattern.  We expect the
-information can be useful for assessing system memory utilization and
-inspiring optimizations or investigations on both kernel and user space
-memory management logics for large scale fleets.
-
-We hence expect the module is good enough to be just used in most
-environments.  For special cases that require a custom access monitoring
-automation, users will still get benefit by using DAMON_STAT as a
-reference or a guideline for their automation.
-
-SeongJae Park (3):
-  mm/damon: introduce DAMON_STAT module
-  mm/damon/stat: calculate and expose estimated memory bandwidth
-  mm/damon/stat: calculate and expose idle time percentiles
-
- mm/damon/Kconfig  |  16 +++
+Signed-off-by: SeongJae Park <sj@kernel.org>
+---
+ mm/damon/Kconfig  |  16 ++++++
  mm/damon/Makefile |   1 +
- mm/damon/stat.c   | 245 ++++++++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 262 insertions(+)
+ mm/damon/stat.c   | 138 ++++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 155 insertions(+)
  create mode 100644 mm/damon/stat.c
 
-
-base-commit: 251509f2949105d3d0e3cdcd3921670a6aee3a0e
+diff --git a/mm/damon/Kconfig b/mm/damon/Kconfig
+index 551745df011b..9f482e3adc67 100644
+--- a/mm/damon/Kconfig
++++ b/mm/damon/Kconfig
+@@ -95,4 +95,20 @@ config DAMON_LRU_SORT
+ 	  protect frequently accessed (hot) pages while rarely accessed (cold)
+ 	  pages reclaimed first under memory pressure.
+ 
++config DAMON_STAT
++	bool "Build data access monitoring stat (DAMON_STAT)"
++	depends on DAMON_PADDR
++	help
++	  This builds the DAMON-based access monitoring statistics subsystem.
++	  It runs DAMON and expose access monitoring results in simple stat
++	  metrics.
++
++config DAMON_STAT_ENABLED_DEFAULT
++	bool "Enable DAMON_STAT by default"
++	depends on DAMON_PADDR
++	default DAMON_STAT
++	help
++	  Whether to enable DAMON_STAT by default.  Users can disable it in
++	  boot or runtime using its 'enabled' parameter.
++
+ endmenu
+diff --git a/mm/damon/Makefile b/mm/damon/Makefile
+index 8b49012ba8c3..d8d6bf5f8bff 100644
+--- a/mm/damon/Makefile
++++ b/mm/damon/Makefile
+@@ -6,3 +6,4 @@ obj-$(CONFIG_DAMON_PADDR)	+= ops-common.o paddr.o
+ obj-$(CONFIG_DAMON_SYSFS)	+= sysfs-common.o sysfs-schemes.o sysfs.o
+ obj-$(CONFIG_DAMON_RECLAIM)	+= modules-common.o reclaim.o
+ obj-$(CONFIG_DAMON_LRU_SORT)	+= modules-common.o lru_sort.o
++obj-$(CONFIG_DAMON_STAT)	+= modules-common.o stat.o
+diff --git a/mm/damon/stat.c b/mm/damon/stat.c
+new file mode 100644
+index 000000000000..852848ce844e
+--- /dev/null
++++ b/mm/damon/stat.c
+@@ -0,0 +1,138 @@
++// SPDX-License-Identifier: GPL-2.0
++/*
++ * Shows data access monitoring resutls in simple metrics.
++ */
++
++#define pr_fmt(fmt) "damon-stat: " fmt
++
++#include <linux/damon.h>
++#include <linux/init.h>
++#include <linux/kernel.h>
++#include <linux/module.h>
++#include <linux/sort.h>
++
++#ifdef MODULE_PARAM_PREFIX
++#undef MODULE_PARAM_PREFIX
++#endif
++#define MODULE_PARAM_PREFIX "damon_stat."
++
++static int damon_stat_enabled_store(
++		const char *val, const struct kernel_param *kp);
++
++static const struct kernel_param_ops enabled_param_ops = {
++	.set = damon_stat_enabled_store,
++	.get = param_get_bool,
++};
++
++static bool enabled __read_mostly = CONFIG_DAMON_STAT_ENABLED_DEFAULT;
++module_param_cb(enabled, &enabled_param_ops, &enabled, 0600);
++MODULE_PARM_DESC(enabled, "Enable of disable DAMON_STAT");
++
++static struct damon_ctx *damon_stat_context;
++
++static struct damon_ctx *damon_stat_build_ctx(void)
++{
++	struct damon_ctx *ctx;
++	struct damon_attrs attrs;
++	struct damon_target *target;
++	unsigned long start = 0, end = 0;
++
++	ctx = damon_new_ctx();
++	if (!ctx)
++		return NULL;
++	attrs = (struct damon_attrs) {
++		.sample_interval = 5 * USEC_PER_MSEC,
++		.aggr_interval = 100 * USEC_PER_MSEC,
++		.ops_update_interval = 60 * USEC_PER_MSEC * MSEC_PER_SEC,
++		.min_nr_regions = 10,
++		.max_nr_regions = 1000,
++	};
++	/*
++	 * auto-tune sampling and aggregation interval aiming 4% DAMON-observed
++	 * accesses ratio, keeping sampling interval in [5ms, 10s] range.
++	 */
++	attrs.intervals_goal = (struct damon_intervals_goal) {
++		.access_bp = 400, .aggrs = 3,
++		.min_sample_us = 5000, .max_sample_us = 10000000,
++	};
++	if (damon_set_attrs(ctx, &attrs))
++		goto free_out;
++
++	/*
++	 * auto-tune sampling and aggregation interval aiming 4% DAMON-observed
++	 * accesses ratio, keeping sampling interval in [5ms, 10s] range.
++	 */
++	ctx->attrs.intervals_goal = (struct damon_intervals_goal) {
++		.access_bp = 400, .aggrs = 3,
++		.min_sample_us = 5000, .max_sample_us = 10000000,
++	};
++	if (damon_select_ops(ctx, DAMON_OPS_PADDR))
++		goto free_out;
++
++	target = damon_new_target();
++	if (!target)
++		goto free_out;
++	damon_add_target(ctx, target);
++	if (damon_set_region_biggest_system_ram_default(target, &start, &end))
++		goto free_out;
++	return ctx;
++free_out:
++	damon_destroy_ctx(ctx);
++	return NULL;
++}
++
++static int damon_stat_start(void)
++{
++	damon_stat_context = damon_stat_build_ctx();
++	if (!damon_stat_context)
++		return -ENOMEM;
++	return damon_start(&damon_stat_context, 1, true);
++}
++
++static void damon_stat_stop(void)
++{
++	damon_stop(&damon_stat_context, 1);
++	damon_destroy_ctx(damon_stat_context);
++}
++
++static bool damon_stat_init_called;
++
++static int damon_stat_enabled_store(
++		const char *val, const struct kernel_param *kp)
++{
++	bool is_enabled = enabled;
++	int err;
++
++	err = kstrtobool(val, &enabled);
++	if (err)
++		return err;
++
++	if (is_enabled == enabled)
++		return 0;
++
++	if (!damon_stat_init_called)
++		/*
++		 * probably called from command line parsing (parse_args()).
++		 * Cannot call damon_new_ctx().  Let damon_stat_init() handle.
++		 */
++		return 0;
++
++	if (enabled)
++		return damon_stat_start();
++	damon_stat_stop();
++	return 0;
++}
++
++static int __init damon_stat_init(void)
++{
++	int err = 0;
++
++	damon_stat_init_called = true;
++
++	/* probably set via command line */
++	if (enabled)
++		err = damon_stat_start();
++	return err;
++}
++
++module_init(damon_stat_init);
 -- 
 2.39.5
