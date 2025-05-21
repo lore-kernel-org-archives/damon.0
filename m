@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCCDB22F384;
-	Wed, 21 May 2025 04:28:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E69D522F763;
+	Wed, 21 May 2025 04:28:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747801681; cv=none; b=lDQdgPrk6CKQaY8s0FF474R72ixPzA3BU3+FaSkg36Wy7DMy1nZUwdl7J5R19i06ihf2bUp0fmf+ae9acYfe7idsBIZYKvTMjXMGjp6UEi+MZBpQSFQIAqdobguXJPtUS5qUwJBblvWFVp0G4gDt/pz/C6yzogVBxQQgw1WPmLo=
+	t=1747801683; cv=none; b=sOoRxna0JS7yRzjmT2dR5MTheY7IpbF2rt7F62uDEu3Z12rPLwsxD7ZoggvESpQsJuODtneo/d5UPve9Jxq2NChWkyOi72jbmCW5G76/cnLK3V7faoEwGIgnFIUHX3Lk7qryOx83eQeRxCAOIY9fYPguj7ZJxGZJ4jR431WxMhI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747801681; c=relaxed/simple;
-	bh=gikuULGjj+izdU6OlPzJGvNFZzPyv7Zh2oaHSFLM5Dk=;
+	s=arc-20240116; t=1747801683; c=relaxed/simple;
+	bh=sJuZmUEpnnj0eEyv5BwTCfrMZ311x7yMVtk9He0E/2I=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=dD1XxtzlgGuO+XpzFEYE6fBIXsFJ+BDEUkwYSB59bwKTNaOs2yC8IAEpl7zu1YDBVEPe6C9DfoqAnF6HP76s8GSgC8XfCi5YpCpsCqscGWci59/E2QPZazwGBXlXpljWzSzPlUpWP5npqFfjQVyvGFUQU4jLlQ4Mzq9cxdGIDhI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Z2tDeaTB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RIgC6POf6TDv8ou3u2EAMeArNUUvPwE08KBXkz7JN7fNCXr0YmIKa8f/9WhGRTH4Q9px0FOq0slm6DT80nqx/02tykzKURpB0b6Zteaw7tkkTF8gSGuSayBXbbqhubwdveTDPY2pnafDObY0d/kzRf1nTIV8KtnEWRVrQcbT4iE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UoOyK7uJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Z2tDeaTB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03F15C4CEE4;
-	Wed, 21 May 2025 04:28:01 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UoOyK7uJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 380D9C4CEF4;
+	Wed, 21 May 2025 04:28:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1747801681;
-	bh=gikuULGjj+izdU6OlPzJGvNFZzPyv7Zh2oaHSFLM5Dk=;
+	s=k20201202; t=1747801682;
+	bh=sJuZmUEpnnj0eEyv5BwTCfrMZ311x7yMVtk9He0E/2I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z2tDeaTBbl38PIGsebz0kMD8QPEiIRkaB6k96jtom5hn7INbomV2/VNJ+8LPD+4rc
-	 QAK1ZRBphS2Lb7rrNZ0mEc+kRotXy/fVqOR0dbL6yaTrMjYCrAg9TrJ6YPXbjLHr6t
-	 iYrDIbg7zNg3kXYO8zBcahVw+OoxqFabpNATRiKsGN0IIqjNh0DwweQ6zYxO9oQerM
-	 osMrEK2w6Limcgw0EAY2VMyS/5FFcKLyFLSL1/WfCbRXTxPMVMSyhvF4BO8LLXwDuN
-	 v7kCPr1R37dQeID7fzjcnNPEgdzTo7IQ5BOuKxWkMGEawmnO0ArvzGdV+STNIpOcrU
-	 mUTEDWH58G69A==
+	b=UoOyK7uJdoSQSaL7/U/4K7p6qbEJPMlXXQKz1oV7p7qr1JYL1RWsYKBNsC8CF4HtY
+	 JuY9ndNtBdyQ8zzfe42vDhWZrWo89kapuryYwKJI084FYa6k4DWQ++0vdrSNstI7Ev
+	 iHRDPwNF4FyaAe4+lDAb0TR3/vTBSY2NJWT1WxxMN7DIjeHAJzfqZRHOvILlfvB879
+	 jv5rwDrJtmZ94jwkc1Hx8afdd+lrq1jaubs8mulhahvML08K1o2ud9tjwud+y5gjjT
+	 62HK6sBghb2qzeqd9l34F3Fi1P/rlLhzSBPJE4Aw2GslAPfPM4+RcWfC79riaWhYra
+	 23csE1EWvK22w==
 From: SeongJae Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SeongJae Park <sj@kernel.org>,
@@ -33,9 +33,9 @@ Cc: SeongJae Park <sj@kernel.org>,
 	kernel-team@meta.com,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [PATCH 1/2] mm/damon/Kconfig: set DAMON_{VADDR,PADDR,SYSFS} default to DAMON
-Date: Tue, 20 May 2025 21:27:54 -0700
-Message-Id: <20250521042755.39653-2-sj@kernel.org>
+Subject: [PATCH 2/2] mm/damon/Kconfig: enable CONFIG_DAMON by default
+Date: Tue, 20 May 2025 21:27:55 -0700
+Message-Id: <20250521042755.39653-3-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250521042755.39653-1-sj@kernel.org>
 References: <20250521042755.39653-1-sj@kernel.org>
@@ -47,45 +47,39 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-DAMON_{VADDR,PADDR,SYSFS} are de-facto essential parts of DAMON for
-normal usages.  Because those need to be enabled one by one, however,
-and there are other test-purpose or non-essential configurations, it is
-easy to be confused and make mistakes at setup.  Make the essential
-configurations default to CONFIG_DAMON, so that those can be enabled by
-default with a single change.
+As of this writing, multiple major distros including Alma, Amazon,
+Android, CentOS, Debian, Fedora, and Oracle are build-enabling DAMON
+(set CONFIG_DAMON[1]).  Enabling it by default will save configuration
+setup time for the current and future DAMON users.
+
+Build-enabling DAMON does not introduce a real risk since it makes no
+behavioral change by default.  It requires explicit user requests to do
+anything.  Only one potential risk is making the size of the kernel a
+little bit larger.  On a production-purpose configuration, it increases
+the resulting kernel package size by about 0.1 % of the final package
+file.  I believe that's too small to be a real problem in common setups.
+
+Hence, the benefit of enabling CONFIG_DAMON outweighs the potential
+risk.  Set CONFIG_DAMON by default.
+
+[1] https://oracle.github.io/kconfigs/?config=UTS_RELEASE&config=DAMON
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- mm/damon/Kconfig | 3 +++
- 1 file changed, 3 insertions(+)
+ mm/damon/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/mm/damon/Kconfig b/mm/damon/Kconfig
-index c213cf8b5638..c93d0c56b963 100644
+index c93d0c56b963..551745df011b 100644
 --- a/mm/damon/Kconfig
 +++ b/mm/damon/Kconfig
-@@ -28,6 +28,7 @@ config DAMON_VADDR
- 	bool "Data access monitoring operations for virtual address spaces"
- 	depends on DAMON && MMU
- 	select PAGE_IDLE_FLAG
-+	default DAMON
+@@ -4,6 +4,7 @@ menu "Data Access Monitoring"
+ 
+ config DAMON
+ 	bool "DAMON: Data Access Monitoring Framework"
++	default y
  	help
- 	  This builds the default data access monitoring operations for DAMON
- 	  that work for virtual address spaces.
-@@ -36,6 +37,7 @@ config DAMON_PADDR
- 	bool "Data access monitoring operations for the physical address space"
- 	depends on DAMON && MMU
- 	select PAGE_IDLE_FLAG
-+	default DAMON
- 	help
- 	  This builds the default data access monitoring operations for DAMON
- 	  that works for the physical address space.
-@@ -55,6 +57,7 @@ config DAMON_VADDR_KUNIT_TEST
- config DAMON_SYSFS
- 	bool "DAMON sysfs interface"
- 	depends on DAMON && SYSFS
-+	default DAMON
- 	help
- 	  This builds the sysfs interface for DAMON.  The user space can use
- 	  the interface for arbitrary data access monitoring.
+ 	  This builds a framework that allows kernel subsystems to monitor
+ 	  access frequency of each memory region. The information can be useful
 -- 
 2.39.5
