@@ -1,151 +1,114 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.11])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0592A1C84B2;
-	Wed, 28 May 2025 21:33:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B9C721FF32;
+	Wed, 28 May 2025 22:09:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748468038; cv=none; b=k3Acvy0H9eINU6920p3JzkVX7uOLpp4n++gTlFcIjXG9cYOCTQ89xw6vm5sHK4QbuOIw39ao6WWzqlnurXZuKkP8UzOhLB8ot4EeVbVvJ8Hnwbe5DFN1F33KOycEa1ojCop/Wp0PPKd22xfVtj5kRiMRbPlv3OUhJAUzWPlZbHY=
+	t=1748470186; cv=none; b=TT4uQYerMVmTrjFQIAIHaORxKbDSk26g/j4CFJbYyt7gL7v9S3YkBNtFyu4vj2r7Krlj0azS69YmvQbcJzYdD/GdTrS+6ZuNg7t5VN7ivt5r+aElg8WW4ptAX65yi69bxvgibG5op2gF4AwXUHGifF3MhKQGIzQy3CHw5fPJriU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748468038; c=relaxed/simple;
-	bh=4x/CfwI3oZ4LOtKzLsZo44K26JZIvbERBXUZGkl6Ovk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bow8+T4g5xV7PMyVsV3VJmQHy2+l74NKOPTaHkbjda+tQJAAH7uATHP6FHpXNvEeYwBsgkjPS7Q8vGymCgQNLWkLRnJ7W7bhU6b3Wj3txDZE2oZMvJgcclfkgNRF0DIxWRw8Udg+mZFX3XA2cPRaDVOvDZJxUcM85k0LXr/tOoo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=E7TwRbPP; arc=none smtp.client-ip=192.198.163.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	s=arc-20240116; t=1748470186; c=relaxed/simple;
+	bh=n46FXXFYxUar6By9Qp5cWormoFxrDOYWHPfPPSfPcHI=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=KGjBJm4lMhqB/Cd0+vTfsi2JgdPG0sZQtk7V4RJ/h/9r5AYLRC+euC2iaQqfxTHhMXkIfwk6gXuaEPohhXFQ1aHcCB7wbZE9/q9llPINdiSDrmMAwoAsuI3sSVrOKXeo/GvhzJIzBcMduA8Xu+v9ldIg79qnmVmVT1U/ZxgMeUY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FqzlQIMI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="E7TwRbPP"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1748468037; x=1780004037;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=4x/CfwI3oZ4LOtKzLsZo44K26JZIvbERBXUZGkl6Ovk=;
-  b=E7TwRbPPTmqwj7Ks2MkyGEVerglMoARX4o3pjderQ6mH77Wt5zdmrgnq
-   lnw4DTbjcMXHV1BGzug+pMERLx4vcgYcFisihRtoAqYk12qKKs7UwUytp
-   HPS+yXcp7jjmoNQRMxnEbEt7nMEKSfoAaQe1/Ox+dIh/HO8n9ePs+cV5Z
-   ALW0jSZTFTF1oXvB6YH/vgUpuJZVJxMcoeENUd/1X72xEr9eEnju3xwCu
-   5ModXbhBsonefay0vZ6/PiGkUJ4qEJlkIrM5Pu+fY+JpuQ47SDSXf8ghU
-   gZ3LYYF051JolAudOy+VK46j+zK2UtJbcymq+GlbYeAcRIt9uMv913WAE
-   g==;
-X-CSE-ConnectionGUID: +hh3dg63RY+j4hniE4Txiw==
-X-CSE-MsgGUID: 8IULqhENQ7utLaGAiQ+f7g==
-X-IronPort-AV: E=McAfee;i="6700,10204,11447"; a="61147131"
-X-IronPort-AV: E=Sophos;i="6.15,322,1739865600"; 
-   d="scan'208";a="61147131"
-Received: from fmviesa003.fm.intel.com ([10.60.135.143])
-  by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 May 2025 14:33:56 -0700
-X-CSE-ConnectionGUID: L8akFu5qRvm3z9WJkhoxNA==
-X-CSE-MsgGUID: CiahDGc0TCGgtl9cMSvwiQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,322,1739865600"; 
-   d="scan'208";a="147245154"
-Received: from lkp-server01.sh.intel.com (HELO 1992f890471c) ([10.239.97.150])
-  by fmviesa003.fm.intel.com with ESMTP; 28 May 2025 14:33:53 -0700
-Received: from kbuild by 1992f890471c with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1uKOPG-000W5A-2v;
-	Wed, 28 May 2025 21:33:50 +0000
-Date: Thu, 29 May 2025 05:33:18 +0800
-From: kernel test robot <lkp@intel.com>
-To: wangchuanguo <wangchuanguo@inspur.com>, akpm@linux-foundation.org,
-	hannes@cmpxchg.org, sj@kernel.org
-Cc: oe-kbuild-all@lists.linux.dev, david@redhat.com, mhocko@kernel.org,
-	zhengqi.arch@bytedance.com, shakeel.butt@linux.dev,
-	lorenzo.stoakes@oracle.com, linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org, damon@lists.linux.dev,
-	wangchuanguo <wangchuanguo@inspur.com>
-Subject: Re: [PATCH 2/2] mm/damon/sysfs-schemes: add use_nodes_of_tier on
- sysfs-schemes
-Message-ID: <202505290538.2zlscryI-lkp@intel.com>
-References: <20250528111038.18378-3-wangchuanguo@inspur.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FqzlQIMI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EC9DC4CEE3;
+	Wed, 28 May 2025 22:09:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1748470185;
+	bh=n46FXXFYxUar6By9Qp5cWormoFxrDOYWHPfPPSfPcHI=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=FqzlQIMIU5uJ6vkK3AJRW3tNLUxxwp34FMFZaZUVyD19bE09e4OAPqxqwgGhoYRuQ
+	 HZYPmQEAWVfo63FgqJ+Bro1Jdj1onIt5Nvalp40bMq84vIWL0FOdvvlGpBNMvvz7Ov
+	 GLVQNdi7NDY+deDfKiq6siu1smYYCALPUZACuQo07DxOX5zZyr1xvRnnkgnIQxNoz5
+	 kHyrlIwR3wC96LVrFxTZ8usSCpTQnPqiVh7jN2fYeTtB+KuMGKZfObkzwlUT6Z9ifD
+	 lsWD+kaybyFFzXdfdWeVylx0B7i78JDm6GaPDywMqs1Db4Z6CWKnAu0Bby4gs0HS76
+	 xOpw0o9Di+SaQ==
+From: SeongJae Park <sj@kernel.org>
+To: wangchuanguo <wangchuanguo@inspur.com>
+Cc: SeongJae Park <sj@kernel.org>,
+	akpm@linux-foundation.org,
+	hannes@cmpxchg.org,
+	david@redhat.com,
+	mhocko@kernel.org,
+	zhengqi.arch@bytedance.com,
+	shakeel.butt@linux.dev,
+	lorenzo.stoakes@oracle.com,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org,
+	damon@lists.linux.dev,
+	Jagdish Gediya <jvgediya.oss@gmail.com>
+Subject: Re: [PATCH 1/2] mm: migrate: restore the nmask after successfully allocating on the  target node
+Date: Wed, 28 May 2025 15:09:42 -0700
+Message-Id: <20250528220942.55350-1-sj@kernel.org>
+X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20250528111038.18378-2-wangchuanguo@inspur.com>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250528111038.18378-3-wangchuanguo@inspur.com>
+Content-Transfer-Encoding: 8bit
 
-Hi wangchuanguo,
++ Jagdish, since seems the behavior that this patch tries to change is
+apparently made by Jagdish's commit 320080272892 ("mm/demotion: demote pages
+according to allocation fallback order").
 
-kernel test robot noticed the following build errors:
+On Wed, 28 May 2025 19:10:37 +0800 wangchuanguo <wangchuanguo@inspur.com> wrote:
 
-[auto build test ERROR on akpm-mm/mm-everything]
-[also build test ERROR on sj/damon/next next-20250528]
-[cannot apply to linus/master v6.15]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+> If memory is successfully allocated on the target node and the
+> function directly returns without value restore for nmask,
+> non-first migration operations in migrate_pages() by again label
+> may ignore the nmask settings,
 
-url:    https://github.com/intel-lab-lkp/linux/commits/wangchuanguo/mm-migrate-restore-the-nmask-after-successfully-allocating-on-the-target-node/20250528-191141
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/akpm/mm.git mm-everything
-patch link:    https://lore.kernel.org/r/20250528111038.18378-3-wangchuanguo%40inspur.com
-patch subject: [PATCH 2/2] mm/damon/sysfs-schemes: add use_nodes_of_tier on sysfs-schemes
-config: arc-randconfig-002-20250529 (https://download.01.org/0day-ci/archive/20250529/202505290538.2zlscryI-lkp@intel.com/config)
-compiler: arc-linux-gcc (GCC) 8.5.0
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20250529/202505290538.2zlscryI-lkp@intel.com/reproduce)
+Nice finding!
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202505290538.2zlscryI-lkp@intel.com/
+> thereby allowing new memory
+> allocations for migration on any node.
 
-All errors (new ones prefixed by >>):
+But, isn't the consequence of this behavior is the opposite?  That is, I think
+this behavior restricts to use only the specified node (mtc->nid) in the case,
+ignoring more allowed fallback nodes (mtc->nmask)?
 
-   mm/damon/paddr.c: In function '__damon_pa_migrate_folio_list':
->> mm/damon/paddr.c:409:18: error: implicit declaration of function 'get_tier_nodemask'; did you mean 'set_user_sigmask'? [-Werror=implicit-function-declaration]
-      allowed_mask = get_tier_nodemask(target_nid);
-                     ^~~~~~~~~~~~~~~~~
-                     set_user_sigmask
->> mm/damon/paddr.c:409:16: error: incompatible types when assigning to type 'nodemask_t' {aka 'struct <anonymous>'} from type 'int'
-      allowed_mask = get_tier_nodemask(target_nid);
-                   ^
-   cc1: some warnings being treated as errors
+Anyway, to me, this seems not an intended behavior but a bug.  Cc-ing Jagdish,
+who authored the commit 320080272892 ("mm/demotion: demote pages according to
+allocation fallback order"), which apparently made this behavior initially,
+though, since I may misreading the original author's intention.
+
+> 
+> Signed-off-by: wangchuanguo <wangchuanguo@inspur.com>
+> ---
+>  mm/vmscan.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/mm/vmscan.c b/mm/vmscan.c
+> index f8dfd2864bbf..e13f17244279 100644
+> --- a/mm/vmscan.c
+> +++ b/mm/vmscan.c
+> @@ -1035,11 +1035,11 @@ struct folio *alloc_migrate_folio(struct folio *src, unsigned long private)
+>  	mtc->nmask = NULL;
+>  	mtc->gfp_mask |= __GFP_THISNODE;
+>  	dst = alloc_migration_target(src, (unsigned long)mtc);
+> +	mtc->nmask = allowed_mask;
+>  	if (dst)
+>  		return dst;
+
+Restoring ->nmask looks right behavior to me.  But, if so, shouldn't we also
+restore ->gfp_mask?
+
+>  
+>  	mtc->gfp_mask &= ~__GFP_THISNODE;
+> -	mtc->nmask = allowed_mask;
+>  
+>  	return alloc_migration_target(src, (unsigned long)mtc);
+>  }
+> -- 
+> 2.39.3
 
 
-vim +409 mm/damon/paddr.c
-
-   383	
-   384	static unsigned int __damon_pa_migrate_folio_list(
-   385			struct list_head *migrate_folios, struct pglist_data *pgdat,
-   386			int target_nid, bool use_nodes_of_tier)
-   387	{
-   388		unsigned int nr_succeeded = 0;
-   389		nodemask_t allowed_mask = NODE_MASK_NONE;
-   390		struct migration_target_control mtc = {
-   391			/*
-   392			 * Allocate from 'node', or fail quickly and quietly.
-   393			 * When this happens, 'page' will likely just be discarded
-   394			 * instead of migrated.
-   395			 */
-   396			.gfp_mask = (GFP_HIGHUSER_MOVABLE & ~__GFP_RECLAIM) |
-   397				__GFP_NOWARN | __GFP_NOMEMALLOC | GFP_NOWAIT,
-   398			.nid = target_nid,
-   399			.nmask = &allowed_mask
-   400		};
-   401	
-   402		if (pgdat->node_id == target_nid || target_nid == NUMA_NO_NODE)
-   403			return 0;
-   404	
-   405		if (list_empty(migrate_folios))
-   406			return 0;
-   407	
-   408		if (use_nodes_of_tier)
- > 409			allowed_mask = get_tier_nodemask(target_nid);
-   410	
-   411		/* Migration ignores all cpuset and mempolicy settings */
-   412		migrate_pages(migrate_folios, alloc_migrate_folio, NULL,
-   413			      (unsigned long)&mtc, MIGRATE_ASYNC, MR_DAMON,
-   414			      &nr_succeeded);
-   415	
-   416		return nr_succeeded;
-   417	}
-   418	
-
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+Thanks,
+SJ
