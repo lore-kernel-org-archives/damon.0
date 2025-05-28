@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B9C721FF32;
-	Wed, 28 May 2025 22:09:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 734AFA55;
+	Wed, 28 May 2025 22:31:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748470186; cv=none; b=TT4uQYerMVmTrjFQIAIHaORxKbDSk26g/j4CFJbYyt7gL7v9S3YkBNtFyu4vj2r7Krlj0azS69YmvQbcJzYdD/GdTrS+6ZuNg7t5VN7ivt5r+aElg8WW4ptAX65yi69bxvgibG5op2gF4AwXUHGifF3MhKQGIzQy3CHw5fPJriU=
+	t=1748471505; cv=none; b=ehAKj+3BZ3ewxQF8i3fbS+VQQf2Yo83IdHtGy9fromkrgDKQBkES2QGQ3hU9AQUW6q7yEwtB6vAGbUkbseNpVQMfQGirt2E85euLgXOJCqxB5A5xPfuHG3HlktLhj9fHh3M1OV2cQOeITKz6CExWaabtzpscCEjFi2Ra63S5HoI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748470186; c=relaxed/simple;
-	bh=n46FXXFYxUar6By9Qp5cWormoFxrDOYWHPfPPSfPcHI=;
+	s=arc-20240116; t=1748471505; c=relaxed/simple;
+	bh=u9Xa/zfU1fFl2g0M8v5nS3bKTcpyA4POdBWP6Um/jAw=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=KGjBJm4lMhqB/Cd0+vTfsi2JgdPG0sZQtk7V4RJ/h/9r5AYLRC+euC2iaQqfxTHhMXkIfwk6gXuaEPohhXFQ1aHcCB7wbZE9/q9llPINdiSDrmMAwoAsuI3sSVrOKXeo/GvhzJIzBcMduA8Xu+v9ldIg79qnmVmVT1U/ZxgMeUY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FqzlQIMI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rc2AcGHeMC1Et1DYHh1RRsVkXgMxxkCCElqQHIqbx8Pn3e/BNQBQchuM7ki479FljuxiC4oaxJ99MIfKrItwtDQRFgcmYCB3FBKKPdpndQ9VP6MfR0YiOi02hr3UkHU8Lcsp+Dx3r2+FfsHIHHLxxr++FR+ggkQkKuMMZKg+5Xw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LocCYfUK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FqzlQIMI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EC9DC4CEE3;
-	Wed, 28 May 2025 22:09:45 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LocCYfUK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A871AC4CEE3;
+	Wed, 28 May 2025 22:31:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748470185;
-	bh=n46FXXFYxUar6By9Qp5cWormoFxrDOYWHPfPPSfPcHI=;
+	s=k20201202; t=1748471504;
+	bh=u9Xa/zfU1fFl2g0M8v5nS3bKTcpyA4POdBWP6Um/jAw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FqzlQIMIU5uJ6vkK3AJRW3tNLUxxwp34FMFZaZUVyD19bE09e4OAPqxqwgGhoYRuQ
-	 HZYPmQEAWVfo63FgqJ+Bro1Jdj1onIt5Nvalp40bMq84vIWL0FOdvvlGpBNMvvz7Ov
-	 GLVQNdi7NDY+deDfKiq6siu1smYYCALPUZACuQo07DxOX5zZyr1xvRnnkgnIQxNoz5
-	 kHyrlIwR3wC96LVrFxTZ8usSCpTQnPqiVh7jN2fYeTtB+KuMGKZfObkzwlUT6Z9ifD
-	 lsWD+kaybyFFzXdfdWeVylx0B7i78JDm6GaPDywMqs1Db4Z6CWKnAu0Bby4gs0HS76
-	 xOpw0o9Di+SaQ==
+	b=LocCYfUKlhRDVZxUHf5yelBF32WP42iwT1/6sULUTpmHCbt3bCmZtMmhh2tlCUgID
+	 22r6lC2L7oSUQqYOHrO17uxiO9LoROMM6YIhIFYtQK8nvpOeYirhhGvAracx98xBPw
+	 REQO6fXYIHy2AbuHewsapfDDLs/v1a3apdgFhvljcWGDvTlL+kvHuMsIuWHruU0wKM
+	 vgZXONEbBqgNrACADGcrYW7lNMtHf5bRBkdF3EjwmTGniNLiwnmD+hHOnJzbOW0Nlk
+	 diTgeMIJxnFZTilQWRmjjjSoDYDJTE3XSh9+15+RwdAAhVnGj/S7RsusjoZmAJ/9Sl
+	 udLk7eFx/GiSQ==
 From: SeongJae Park <sj@kernel.org>
 To: wangchuanguo <wangchuanguo@inspur.com>
 Cc: SeongJae Park <sj@kernel.org>,
@@ -38,13 +38,12 @@ Cc: SeongJae Park <sj@kernel.org>,
 	lorenzo.stoakes@oracle.com,
 	linux-mm@kvack.org,
 	linux-kernel@vger.kernel.org,
-	damon@lists.linux.dev,
-	Jagdish Gediya <jvgediya.oss@gmail.com>
-Subject: Re: [PATCH 1/2] mm: migrate: restore the nmask after successfully allocating on the  target node
-Date: Wed, 28 May 2025 15:09:42 -0700
-Message-Id: <20250528220942.55350-1-sj@kernel.org>
+	damon@lists.linux.dev
+Subject: Re: [PATCH 2/2] mm/damon/sysfs-schemes: add use_nodes_of_tier on sysfs-schemes
+Date: Wed, 28 May 2025 15:31:42 -0700
+Message-Id: <20250528223142.55568-1-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250528111038.18378-2-wangchuanguo@inspur.com>
+In-Reply-To: <20250528111038.18378-3-wangchuanguo@inspur.com>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -54,61 +53,55 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-+ Jagdish, since seems the behavior that this patch tries to change is
-apparently made by Jagdish's commit 320080272892 ("mm/demotion: demote pages
-according to allocation fallback order").
+Hi wangchuanguo,
 
-On Wed, 28 May 2025 19:10:37 +0800 wangchuanguo <wangchuanguo@inspur.com> wrote:
+On Wed, 28 May 2025 19:10:38 +0800 wangchuanguo <wangchuanguo@inspur.com> wrote:
 
-> If memory is successfully allocated on the target node and the
-> function directly returns without value restore for nmask,
-> non-first migration operations in migrate_pages() by again label
-> may ignore the nmask settings,
+> This patch adds use_nodes_of_tier under
+>   /sys/kernel/mm/damon/admin/kdamonds/<N>/contexts/<N>/schemes/<N>/
+> 
+> The 'use_nodes_of_tier' can be used to select nodes within the same memory
+> tier of target_nid for DAMOS actions such as DAMOS_MIGRATE_{HOT,COLD}.
 
-Nice finding!
+Could you please elaborate in what setup you think this option is useful, and
+measurement of the usefulness if you have?
 
-> thereby allowing new memory
-> allocations for migration on any node.
+I'm asking the above question because of below reasons.  My anticiapted usage
+of DAMOS_MIGRATE_{HOT,COLD} is for not only memory tiering but generic NUMA
+node management.  And my proposed usage of these for memory tiering is making
+per-node promotion/demotion for gradually promoting and demoting pages step by
+step between node.  It could be slow but I anticipate such slow but continued
+promotion/demotion is more important for reliable performance on production
+systems of large time scale.  And I believe the approach can be applied to
+general NUMA nodes management, once DAMON is extended for per-CPU access
+monitoring.
 
-But, isn't the consequence of this behavior is the opposite?  That is, I think
-this behavior restricts to use only the specified node (mtc->nid) in the case,
-ignoring more allowed fallback nodes (mtc->nmask)?
-
-Anyway, to me, this seems not an intended behavior but a bug.  Cc-ing Jagdish,
-who authored the commit 320080272892 ("mm/demotion: demote pages according to
-allocation fallback order"), which apparently made this behavior initially,
-though, since I may misreading the original author's intention.
+I'm not saying this change is not useful, but asking you to give me a chance to
+learn your changes, better.
 
 > 
 > Signed-off-by: wangchuanguo <wangchuanguo@inspur.com>
 > ---
->  mm/vmscan.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/mm/vmscan.c b/mm/vmscan.c
-> index f8dfd2864bbf..e13f17244279 100644
-> --- a/mm/vmscan.c
-> +++ b/mm/vmscan.c
-> @@ -1035,11 +1035,11 @@ struct folio *alloc_migrate_folio(struct folio *src, unsigned long private)
->  	mtc->nmask = NULL;
->  	mtc->gfp_mask |= __GFP_THISNODE;
->  	dst = alloc_migration_target(src, (unsigned long)mtc);
-> +	mtc->nmask = allowed_mask;
->  	if (dst)
->  		return dst;
+>  include/linux/damon.h        |  9 ++++++++-
+>  include/linux/memory-tiers.h |  5 +++++
+>  mm/damon/core.c              |  6 ++++--
+>  mm/damon/lru_sort.c          |  3 ++-
+>  mm/damon/paddr.c             | 19 ++++++++++++-------
+>  mm/damon/reclaim.c           |  3 ++-
+>  mm/damon/sysfs-schemes.c     | 31 ++++++++++++++++++++++++++++++-
+>  mm/memory-tiers.c            | 13 +++++++++++++
+>  samples/damon/mtier.c        |  3 ++-
+>  samples/damon/prcl.c         |  3 ++-
+>  10 files changed, 80 insertions(+), 15 deletions(-)
 
-Restoring ->nmask looks right behavior to me.  But, if so, shouldn't we also
-restore ->gfp_mask?
+Can we please make this change more separated?  Maybe we can split the change
+for memory-tiers.c, DAMON core layer, and DAMON sysfs interface.  That will
+make review much easier.
 
->  
->  	mtc->gfp_mask &= ~__GFP_THISNODE;
-> -	mtc->nmask = allowed_mask;
->  
->  	return alloc_migration_target(src, (unsigned long)mtc);
->  }
-> -- 
-> 2.39.3
+I'll add more comments for details after above high level discussion is done.
 
 
 Thanks,
 SJ
+
+[...]
