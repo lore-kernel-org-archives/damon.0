@@ -1,147 +1,76 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from unicom145.biz-email.net (unicom145.biz-email.net [210.51.26.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 256FA243968;
-	Mon, 26 May 2025 21:09:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25F1018DB03
+	for <damon@lists.linux.dev>; Wed, 28 May 2025 11:10:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=210.51.26.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748293787; cv=none; b=RCRA0xgURJwIWkJESsiKNnTl4ZzgKRYu5C/StMMxNgkQvq4N4feo7CATXb9djkqN66PeqhykUGMfi6X7QbvrLoc5258zvptd5vjJUhBxHAlVy5bn95iLlKhsNpy94TXKoIdjTVoZAtTDCXM8+ZmvivrcwJAJLzM7GgX0uXe+7HM=
+	t=1748430657; cv=none; b=gfscAW1tTfo+1egFyXWItp9kINo06/GcRYpoFbu38M2/m1bF2IOsuLG/eiffKnvJQ1ylfp46/KKw0Z1vWtey2nzpWT9bZd2NAYfAicG6ah5W70YUMonLMHQTcH1flgemWfv4TFDwkZHGwayr/9MVejO741NlmK+j1NyAMv6fjkA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748293787; c=relaxed/simple;
-	bh=gYQU/YXDeNgT1BMcNObhy08nWBlr86fWpjeWwTbkqzA=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=K6wIhFGxOxeO2b+/Sau8CUy/22IWCci6kviEBsnNAwt/yh80NUv2IlE2+JqWFPZzblF55bcOBSjjKF67ZlBrP7s7xefCMvFam4OD37FN9ThqSVmTsFpaKaEg49PWneRf+u/M3rMvr7dYt1HgxgnIM0BMDMcTCp4kWPW5xUDE3vg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dpCfB67s; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dpCfB67s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66F4FC4CEE7;
-	Mon, 26 May 2025 21:09:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748293785;
-	bh=gYQU/YXDeNgT1BMcNObhy08nWBlr86fWpjeWwTbkqzA=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dpCfB67sFVtj6tSQK8gZ8Aehs7F/HI3g5XG60XKlTbv5T3TPIglcuhMt88s/CgFzK
-	 rkO+iZxgtRgEHYpweQqMcSJtg0ovk7eoI+r7ssVXIa9HsmboXMIfqPxeHBWO/ZSH30
-	 lx8p/RXSHVW1ILjdbjsjR84gyeg61J5t/9tK4YEgayYw5Nhu3nm6QJv0yfxZSY/7W5
-	 7UxjOTJ2+fVJNFbuvvei1hr4DQT165rZkB3HhmZM0v640wCu/cZZbxfFpHkKo6Lnqn
-	 WealLXRjgDZboUkA+sdvr63MwjSqsLgs1iuqT6CUNRJR5NFYdMnWZG0xbrtLqfbKRZ
-	 rr8IhXr/U62FQ==
-From: SeongJae Park <sj@kernel.org>
-To: Andrew Morton <akpm@linux-foundation.org>
-Cc: SeongJae Park <sj@kernel.org>,
-	Jonathan Corbet <corbet@lwn.net>,
-	damon@lists.linux.dev,
-	kernel-team@meta.com,
-	linux-doc@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org
-Subject: [PATCH 4/4] Docs/admin-guide/mm/damon: add DAMON_STAT usage document
-Date: Mon, 26 May 2025 14:09:36 -0700
-Message-Id: <20250526210936.2744-5-sj@kernel.org>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250526210936.2744-1-sj@kernel.org>
-References: <20250526210936.2744-1-sj@kernel.org>
+	s=arc-20240116; t=1748430657; c=relaxed/simple;
+	bh=5VNQNJstimj/ysbI3W1CYC1Bg0MkbRJ3HgtLUNEwnOw=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=gmKsk0lTKDfJ4dJNfWle0vy//WcAFfLygYbBjpbji9lsLcKMviwUEuPg3/lm7+Q7jmD+aRicO+n0U9Ch+00xATKMswpsZUwRIx7adGy9EpKnP4zgSQPTXrT975Fm8hBjbRnsfcwdYIKCgCMEPOgHhvHN6YyFxtOprJfmp21URrc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=inspur.com; spf=pass smtp.mailfrom=inspur.com; arc=none smtp.client-ip=210.51.26.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=inspur.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=inspur.com
+Received: from jtjnmail201612.home.langchao.com
+        by unicom145.biz-email.net ((D)) with ASMTP (SSL) id 202505281910420840;
+        Wed, 28 May 2025 19:10:42 +0800
+Received: from vbox.home.langchao.com (10.94.6.79) by
+ jtjnmail201612.home.langchao.com (10.100.2.12) with Microsoft SMTP Server id
+ 15.1.2507.39; Wed, 28 May 2025 19:10:41 +0800
+From: wangchuanguo <wangchuanguo@inspur.com>
+To: <akpm@linux-foundation.org>, <hannes@cmpxchg.org>, <sj@kernel.org>
+CC: <david@redhat.com>, <mhocko@kernel.org>, <zhengqi.arch@bytedance.com>,
+	<shakeel.butt@linux.dev>, <lorenzo.stoakes@oracle.com>, <linux-mm@kvack.org>,
+	<linux-kernel@vger.kernel.org>, <damon@lists.linux.dev>, wangchuanguo
+	<wangchuanguo@inspur.com>
+Subject: [PATCH 0/2] add a knob to control whether to use other nodes at the same tier of the target node in DAMON
+Date: Wed, 28 May 2025 19:10:36 +0800
+Message-ID: <20250528111038.18378-1-wangchuanguo@inspur.com>
+X-Mailer: git-send-email 2.39.3
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
+tUid: 20255281910424c625d6493f53ede3c45385c75923c87
+X-Abuse-Reports-To: service@corp-email.com
+Abuse-Reports-To: service@corp-email.com
+X-Complaints-To: service@corp-email.com
+X-Report-Abuse-To: service@corp-email.com
 
-Document DAMON_STAT usage and add a link to it on DAMON admin-guide
-page.
+In DAMON's migrate_hot and migrate_cold features, the code was
+intended to migrate pages ​​only to the node specified by target_nid​​.
+However, during testing, it was observed that memory allocation
+and migration could occur on ​​any nodes​​, which is a BUG.
+The first patch in this PR fix this issue.
 
-Signed-off-by: SeongJae Park <sj@kernel.org>
----
- Documentation/admin-guide/mm/damon/index.rst |  1 +
- Documentation/admin-guide/mm/damon/stat.rst  | 69 ++++++++++++++++++++
- 2 files changed, 70 insertions(+)
- create mode 100644 Documentation/admin-guide/mm/damon/stat.rst
+A use_nodes_of_tier file has been added under the directory /sys/kernel/mm/damon/admin/kdamonds/<N>/contexts/<N>/schemes/<N>/
+to control whether to ​​use other nodes in the same tier as
+the target node​​ for migration.
 
-diff --git a/Documentation/admin-guide/mm/damon/index.rst b/Documentation/admin-guide/mm/damon/index.rst
-index bc7e976120e0..3ce3164480c7 100644
---- a/Documentation/admin-guide/mm/damon/index.rst
-+++ b/Documentation/admin-guide/mm/damon/index.rst
-@@ -14,3 +14,4 @@ access monitoring and access-aware system operations.
-    usage
-    reclaim
-    lru_sort
-+   stat
-diff --git a/Documentation/admin-guide/mm/damon/stat.rst b/Documentation/admin-guide/mm/damon/stat.rst
-new file mode 100644
-index 000000000000..4c517c2c219a
---- /dev/null
-+++ b/Documentation/admin-guide/mm/damon/stat.rst
-@@ -0,0 +1,69 @@
-+.. SPDX-License-Identifier: GPL-2.0
-+
-+===================================
-+Data Access Monitoring Results Stat
-+===================================
-+
-+Data Access Monitoring Results Stat (DAMON_STAT) is a static kernel module that
-+is aimed to be used for simple access pattern monitoring.  It monitors accesses
-+on the system's entire physical memory using DAMON, and provides simplified
-+access monitoring results statistics, namely idle time percentiles and
-+estimated memory bandwidth.
-+
-+Monitoring Accuracy and Overhead
-+================================
-+
-+DAMON_STAT uses monitoring intervals :ref:`auto-tuning
-+<damon_design_monitoring_intervals_autotuning>` to make its accuracy high and
-+overhead minimum.  It auto-tunes the intervals aiming 4 % of observable access
-+events to be captured in each snapshot, while limiting the resulting sampling
-+events to be 5 milliseconds in minimum and 10 seconds in maximum.  On a few
-+production server systems, it resulted in consuming only 0.x % single CPU time,
-+while capturing reasonable quality of access patterns.
-+
-+Interface: Module Parameters
-+============================
-+
-+To use this feature, you should first ensure your system is running on a kernel
-+that is built with ``CONFIG_DAMON_STAT=y``.  The feature can be enabled by
-+default at build time, by setting ``CONFIG_DAMON_STAT_ENABLED_DEFAULT`` true.
-+
-+To let sysadmins enable or disable it at boot and/or runtime, and read the
-+monitoring results, DAMON_STAT provides module parameters.  Following
-+sections are descriptions of the parameters.
-+
-+enabled
-+-------
-+
-+Enable or disable DAMON_STAT.
-+
-+You can enable DAMON_STAT by setting the value of this parameter as ``Y``.
-+Setting it as ``N`` disables DAMON_STAT.  The default value is set by
-+``CONFIG_DAMON_STAT_ENABLED_DEFAULT`` build config option.
-+
-+estimated_memory_bandwidth
-+--------------------------
-+
-+Estimated memory bandwidth consumption (bytes per second) of the system.
-+
-+DAMON_STAT reads observed access events on the current DAMON results snapshot
-+and converts it to memory bandwidth consumption estimation in bytes per second.
-+The resulting metric is exposed to user via this read-only parameter.  Because
-+DAMON uses sampling, this is only an estimation of the access intensity rather
-+than accurate memory bandwidth.
-+
-+memory_idle_ms_percentiles
-+--------------------------
-+
-+Per-byte idle time (milliseconds) percentiles of the system.
-+
-+DAMON_STAT calculates how long each byte of the memory was not accessed until
-+now (idle time), based on the current DAMON results snapshot.  If DAMON found a
-+region of access frequency (nr_accesses) larger than zero, every byte of the
-+region gets zero idle time.  If a region has zero access frequency
-+(nr_accesses), how long the region was keeping the zero access frequency (age)
-+becomes the idle time of every byte of the region.  Then, DAMON_STAT exposes
-+the percentiles of the idle time values via this read-only parameter.  Reading
-+the parameter returns 101 idle time values in milliseconds, separated by comma.
-+Each value represents 0-th, 1st, 2nd, 3rd, ..., 99th and 100th percentile idle
-+times.
+wangchuanguo (2):
+  mm: migrate: restore the nmask after successfully allocating on the 
+    target node
+  mm/damon/sysfs-schemes: add use_nodes_of_tier on sysfs-schemes
+
+ include/linux/damon.h        |  9 ++++++++-
+ include/linux/memory-tiers.h |  5 +++++
+ mm/damon/core.c              |  6 ++++--
+ mm/damon/lru_sort.c          |  3 ++-
+ mm/damon/paddr.c             | 19 ++++++++++++-------
+ mm/damon/reclaim.c           |  3 ++-
+ mm/damon/sysfs-schemes.c     | 31 ++++++++++++++++++++++++++++++-
+ mm/memory-tiers.c            | 13 +++++++++++++
+ mm/vmscan.c                  |  2 +-
+ samples/damon/mtier.c        |  3 ++-
+ samples/damon/prcl.c         |  3 ++-
+ 11 files changed, 81 insertions(+), 16 deletions(-)
+
 -- 
-2.39.5
+2.39.3
+
