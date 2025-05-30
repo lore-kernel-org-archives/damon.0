@@ -1,150 +1,154 @@
-Received: from ssh248.corpemail.net (ssh248.corpemail.net [210.51.61.248])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A48E1E1C1A
-	for <damon@lists.linux.dev>; Fri, 30 May 2025 08:05:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=210.51.61.248
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A3E223D29C;
+	Fri, 30 May 2025 19:40:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748592363; cv=none; b=dRtZOOxuqn1nGUDOg3YZAXZ12rm5Vr/8IAV57ChGQ9YeB7MMGkNmLztO+YfEcy8LFieU6pofDoBxB50h+XNpjCJ/ZPXOGr8/hIokD8O/a4haQTXt7UETQEA/nTuwJ0hZUBoaY5Dwe9FS3KQJhmP67myaopRji6Uuo3l/PJqOr1E=
+	t=1748634020; cv=none; b=CG8uuCqfzoagAquArHi9ntM4fNfSBt5yyb4FZmPxF7Q6jc8f4oahjSzdHbpY6Syl9ysuT0Mkjs0lz1CVOtCCNqpHZI26p2b37l3JYheWj0W+b66RGWECDQNtbkWuiXpR3ADQKnh/H1ynSrhTAXqcBUmRkw3ZG7yRBuzVxAQ6wlI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748592363; c=relaxed/simple;
-	bh=wRPtvgAFvrNkQSxGuy5+SQwve3uu0xS+y0fxFvzjIzA=;
-	h=From:To:CC:Subject:Date:Message-ID:Content-Type:MIME-Version; b=kpRce7Ox1H7K5NIKE5A0V6XXdIVdA25/Im2hX+Q9hmfvGYu7C9VzYnM6yLsnu4Ub5VZM1BuHmOHIOIBdHvN9SQpOKw/OqzkqxoJL8vH34V66hWxDbf9BXkvVN9cvXFj69I1ofnNjqtJDo9TcYg3gwwpTLRTcvh/zi1q4MvOucaE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=inspur.com; spf=pass smtp.mailfrom=inspur.com; arc=none smtp.client-ip=210.51.61.248
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=inspur.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=inspur.com
-Received: from jtjnmail201603.home.langchao.com
-        by ssh248.corpemail.net ((D)) with ASMTP (SSL) id 202505301604430790;
-        Fri, 30 May 2025 16:04:43 +0800
-Received: from jtjnmail201604.home.langchao.com (10.100.2.4) by
- jtjnmail201603.home.langchao.com (10.100.2.3) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.39; Fri, 30 May 2025 16:04:42 +0800
-Received: from jtjnmail201604.home.langchao.com ([fe80::2830:53ee:1228:5322])
- by jtjnmail201604.home.langchao.com ([fe80::2830:53ee:1228:5322%5]) with mapi
- id 15.01.2507.039; Fri, 30 May 2025 16:04:42 +0800
-From: =?utf-8?B?U2ltb24gV2FuZyAo546L5Lyg5Zu9KQ==?= <wangchuanguo@inspur.com>
-To: SeongJae Park <sj@kernel.org>
-CC: "akpm@linux-foundation.org" <akpm@linux-foundation.org>,
-	"hannes@cmpxchg.org" <hannes@cmpxchg.org>, "david@redhat.com"
-	<david@redhat.com>, "mhocko@kernel.org" <mhocko@kernel.org>,
+	s=arc-20240116; t=1748634020; c=relaxed/simple;
+	bh=itUA8ff8aTmvXv85lYwlzfad/BJsQ7E+Twj2YKbMDQs=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=Yktto8+md2bYlxD15P54uJcJevMYQ11RCmAlG0fIg7BH3dliZsVj0usp17J5MgxHOlA8t83nohOUv0OmsH/Gkdm2hI0ZASmds81nDex/d9XGo1N00kGHW9UTARgWCicjv2XD1yu9ezBGLElFAFdsxbMQyX1jgCZlh0pRMODyqIs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=o+AM3trI; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="o+AM3trI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AF82C4CEE9;
+	Fri, 30 May 2025 19:40:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1748634019;
+	bh=itUA8ff8aTmvXv85lYwlzfad/BJsQ7E+Twj2YKbMDQs=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=o+AM3trI1qH0ill10tQoKzosuizcbVRdiHm9o0M805oDppMqBYjOnkxWaefmSU5V4
+	 XWJHP+fHXambmXZ9odTbZF+qQJU0SH3f+xNd3UKD+d+lwgVRpzY5BrJiEAt7jMu3l+
+	 1RdvpqOkhTp4pQh10pPbL6Fh8dxVuYa3/1tSVqX4nNiZrr/Bt134TTWnT9/Du6EiRF
+	 2KWdzkQS1nFx6Hvc8pwCWrnk/Q6fdP64R/n7E/yXemb7jgyRt6H9rPIip1ZlHAHJXz
+	 1p1etjkGIs2ue5mR13QVDRnzd7DMZPJzHYgokCudEfnuEtyFQaxjkDGv4Nc33NR2Br
+	 80Lo6UYsQ6ytw==
+From: SeongJae Park <sj@kernel.org>
+To: Simon Wang <wangchuanguo@inspur.com>
+Cc: SeongJae Park <sj@kernel.org>,
+	"akpm@linux-foundation.org" <akpm@linux-foundation.org>,
+	"hannes@cmpxchg.org" <hannes@cmpxchg.org>,
+	"david@redhat.com" <david@redhat.com>,
+	"mhocko@kernel.org" <mhocko@kernel.org>,
 	"zhengqi.arch@bytedance.com" <zhengqi.arch@bytedance.com>,
 	"shakeel.butt@linux.dev" <shakeel.butt@linux.dev>,
 	"lorenzo.stoakes@oracle.com" <lorenzo.stoakes@oracle.com>,
-	"linux-mm@kvack.org" <linux-mm@kvack.org>, "linux-kernel@vger.kernel.org"
-	<linux-kernel@vger.kernel.org>, "damon@lists.linux.dev"
-	<damon@lists.linux.dev>
-Subject: Re: [PATCH 2/2] mm/damon/sysfs-schemes: add use_nodes_of_tier on
- sysfs-schemes
-Thread-Topic: [PATCH 2/2] mm/damon/sysfs-schemes: add use_nodes_of_tier on
- sysfs-schemes
-Thread-Index: AdvRN0I/Pe3LT5XZQBaj9QtYPLbiIg==
-Date: Fri, 30 May 2025 08:04:42 +0000
-Message-ID: <d8e3000cfadb443681fabad65093b462@inspur.com>
-Accept-Language: zh-CN, en-US
-Content-Language: zh-CN
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+	"linux-mm@kvack.org" <linux-mm@kvack.org>,
+	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+	"damon@lists.linux.dev" <damon@lists.linux.dev>,
+	Honggyu Kim <honggyu.kim@sk.com>
+Subject: Re: [PATCH 2/2] mm/damon/sysfs-schemes: add use_nodes_of_tier on sysfs-schemes
+Date: Fri, 30 May 2025 12:40:16 -0700
+Message-Id: <20250530194016.51798-1-sj@kernel.org>
+X-Mailer: git-send-email 2.39.5
+In-Reply-To: <d8e3000cfadb443681fabad65093b462@inspur.com>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-tUid: 20255301604432de45734cce98a160adada192bf9edc5
-X-Abuse-Reports-To: service@corp-email.com
-Abuse-Reports-To: service@corp-email.com
-X-Complaints-To: service@corp-email.com
-X-Report-Abuse-To: service@corp-email.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-DQo+ID4gPiA+IFRoaXMgcGF0Y2ggYWRkcyB1c2Vfbm9kZXNfb2ZfdGllciB1bmRlcg0KPiA+ID4g
-Pg0KPiA+ID4NCj4gL3N5cy9rZXJuZWwvbW0vZGFtb24vYWRtaW4va2RhbW9uZHMvPE4+L2NvbnRl
-eHRzLzxOPi9zY2hlbWVzLzxOPi8NCj4gPiA+ID4NCj4gPiA+ID4gVGhlICd1c2Vfbm9kZXNfb2Zf
-dGllcicgY2FuIGJlIHVzZWQgdG8gc2VsZWN0IG5vZGVzIHdpdGhpbiB0aGUNCj4gPiA+ID4gc2Ft
-ZSBtZW1vcnkgdGllciBvZiB0YXJnZXRfbmlkIGZvciBEQU1PUyBhY3Rpb25zIHN1Y2ggYXMNCj4g
-PiA+IERBTU9TX01JR1JBVEVfe0hPVCxDT0xEfS4NCj4gPiA+DQo+ID4gPiBDb3VsZCB5b3UgcGxl
-YXNlIGVsYWJvcmF0ZSBpbiB3aGF0IHNldHVwIHlvdSB0aGluayB0aGlzIG9wdGlvbiBpcw0KPiA+
-ID4gdXNlZnVsLCBhbmQgbWVhc3VyZW1lbnQgb2YgdGhlIHVzZWZ1bG5lc3MgaWYgeW91IGhhdmU/
-DQo+ID4gPg0KPiA+ID4gSSdtIGFza2luZyB0aGUgYWJvdmUgcXVlc3Rpb24gYmVjYXVzZSBvZiBi
-ZWxvdyByZWFzb25zLiAgTXkNCj4gPiA+IGFudGljaWFwdGVkIHVzYWdlIG9mIERBTU9TX01JR1JB
-VEVfe0hPVCxDT0xEfSBpcyBmb3Igbm90IG9ubHkgbWVtb3J5DQo+ID4gPiB0aWVyaW5nIGJ1dCBn
-ZW5lcmljIE5VTUEgbm9kZSBtYW5hZ2VtZW50LiAgQW5kIG15IHByb3Bvc2VkIHVzYWdlIG9mDQo+
-ID4gPiB0aGVzZSBmb3IgbWVtb3J5IHRpZXJpbmcgaXMgbWFraW5nIHBlci1ub2RlIHByb21vdGlv
-bi9kZW1vdGlvbiBmb3INCj4gPiA+IGdyYWR1YWxseSBwcm9tb3RpbmcgYW5kIGRlbW90aW5nIHBh
-Z2VzIHN0ZXAgYnkgc3RlcCBiZXR3ZWVuIG5vZGUuDQo+ID4gPiBJdCBjb3VsZCBiZSBzbG93IGJ1
-dCBJIGFudGljaXBhdGUgc3VjaCBzbG93IGJ1dCBjb250aW51ZWQNCj4gPiA+IHByb21vdGlvbi9k
-ZW1vdGlvbiBpcyBtb3JlIGltcG9ydGFudCBmb3IgcmVsaWFibGUgcGVyZm9ybWFuY2Ugb24NCj4g
-cHJvZHVjdGlvbiBzeXN0ZW1zIG9mIGxhcmdlIHRpbWUgc2NhbGUuDQo+ID4gPiBBbmQgSSBiZWxp
-ZXZlIHRoZSBhcHByb2FjaCBjYW4gYmUgYXBwbGllZCB0byBnZW5lcmFsIE5VTUEgbm9kZXMNCj4g
-PiA+IG1hbmFnZW1lbnQsIG9uY2UgREFNT04gaXMgZXh0ZW5kZWQgZm9yIHBlci1DUFUgYWNjZXNz
-IG1vbml0b3JpbmcuDQo+ID4gPg0KPiA+ID4gSSdtIG5vdCBzYXlpbmcgdGhpcyBjaGFuZ2UgaXMg
-bm90IHVzZWZ1bCwgYnV0IGFza2luZyB5b3UgdG8gZ2l2ZSBtZQ0KPiA+ID4gYSBjaGFuY2UgdG8g
-bGVhcm4geW91ciBjaGFuZ2VzLCBiZXR0ZXIuDQo+ID4NCj4gPiBJIGJlbGlldmUgc29tZSB1c2Vy
-cyBtYXkgd2FudCB0byDigIvigIt1c2Ugb25seSB0aGUgdGFyZ2V0IG5vZGUncyBtZW1vcnnigIvi
-gIsNCj4gPiBhbmQgcmVzZXJ2ZSBvdGhlciBub2RlcyBpbiB0aGUgc2FtZSB0aWVyIGZvciBzcGVj
-aWZpYyBhcHBsaWNhdGlvbnMuDQo+ID4gVGhlcmVmb3JlLCBJIGFkZGVkIGEgc3dpdGNoIGZpbGUg
-dXNlX25vZGVzX29mX3RpZXIuDQo+IA0KPiBUaGFuayB5b3UgZm9yIGNsYXJpZnlpbmcsIFNpbW9u
-Lg0KPiANCj4gQmVjYXVzZSB0aGlzIGlzIGFuIEFCSSBjaGFuZ2UgdGhhdCBkaWZmaWN1bHQgdG8g
-cmV2ZXJ0IGFuZCB0aGVyZWZvcmUgd2UgbWF5DQo+IG5lZWQgdG8gc3VwcG9ydCBmb3IgbG9uZyB0
-ZXJtLCBJJ2QgbGlrZSB0byBoYXZlIG1vcmUgY2xlYXIgdGhlb3J5IGFuZC9vciBkYXRhIGlmDQo+
-IHBvc3NpYmxlLiAgSW4gbXkgaHVtYmxlIG9waW5pb24sIGFib3ZlIGNsYXJpZmljYXRpb24gZG9l
-c24ndCBzb3VuZCBsaWtlIGENCj4gc3Ryb25nIGVub3VnaCBqdXN0aWZpY2F0aW9uIGZvciBBQkkg
-Y2hhbmdlLg0KPiANCj4gTW9yZSBzcGVjaWZpY2FsbHksIGl0IHdvdWxkIGJlIGJldHRlciBpZiB5
-b3UgY291bGQgYW5zd2VyIGJlbG93IHF1ZXN0aW9ucy4NCj4gV2hvIHdvdWxkIGJlIHN1Y2ggdXNl
-cnMsIGhvdyBjb21tb24gdGhlIHVzZSBjYXNlIHdvdWxkIGJlLCBhbmQgd2hhdCBhcmUNCj4gdGhl
-IGJlbmVmaXQgb2YgZG9pbmcgc28/ICBJcyB0aGF0IG9ubHkgdGhlb3J5PyAgT3IsIGEgcmVhbCBl
-eGlzdGluZyB1c2UgY2FzZT8NCj4gQ2FuIHlvdSBzaGFyZSBtZWFzdXJlbWVudCBvZiB0aGUgYmVu
-ZWZpdCBmcm9tIHRoaXMgY2hhbmdlIHRoYXQgbWVhc3VyZWQNCj4gZnJvbSByZWFsIHdvcmtsb2Fk
-cyBvciBiZW5jaG1hcmtzPyAgSXMgdGhlcmUgYW4gYWx0ZXJuYXRpdmUgd2F5IHRvIGRvIHRoaXMN
-Cj4gd2l0aG91dCBBQkkgY2hhbmdlPw0KDQoNCllvdXIgY29uY2VybiBpcyB0aGF0IGFkZGluZyB0
-aGUgYm9vbCB1c2Vfbm9kZXNfb2ZfdGllciB2YXJpYWJsZSBhbmQgaW50cm9kdWNpbmcgDQphbiBh
-ZGRpdGlvbmFsIHBhcmFtZXRlciB0byBtdWx0aXBsZSBmdW5jdGlvbnMgd291bGQgY2F1c2UgQUJJ
-IGNoYW5nZXMsIGNvcnJlY3Q/4oCL4oCLDQoNCuKAi+KAi0kgcHJvcG9zZSBhdm9pZGluZyB0aGUg
-Y3JlYXRpb24gb2YgdGhlICd1c2Vfbm9kZXNfb2ZfdGllcicgc3lzZnMgZmlsZS4gSW5zdGVhZCwg
-DQp3ZSBjYW4gbW9kaWZ5IHRoZSBfX2RhbW9uX3BhX21pZ3JhdGVfZm9saW9fbGlzdCgpIGZ1bmN0
-aW9uIHRvIGNoYW5nZSB0aGUgYWxsb3dlZF9tYXNrIA0KZnJvbSBOT0RFX01BU0tfTk9ORSB0byB0
-aGUgZnVsbCBub2RlIG1hc2sgb2YgdGhlIGVudGlyZSB0aWVyIHdoZXJlIHRoZSB0YXJnZXRfbmlk
-IHJlc2lkZXMuIA0KVGhpcyBhcHByb2FjaCB3b3VsZCBiZSBzaW1pbGFyIHRvIHRoZSBpbXBsZW1l
-bnRhdGlvbiBpbiBjb21taXQgMzIwMDgwMjcyODkyDQogKCdtbS9kZW1vdGlvbjogZGVtb3RlIHBh
-Z2VzIGFjY29yZGluZyB0byBhbGxvY2F0aW9uIGZhbGxiYWNrIG9yZGVyJykuDQoNCkknZCBsaWtl
-IHRvIGNvbmZpcm0gdHdvIG1vZGlmaWNhdGlvbiBwb2ludHMgd2l0aCB5b3U6DQrigIvigIsxLlJl
-Z2FyZGluZyBhbGxvY19taWdyYXRlX2ZvbGlvKCnigIvigIs6DQpSZXN0b3JpbmcgdGhlIG9yaWdp
-bmFsIG5vZGVtYXNrIGFuZCBnZnBfbWFzayBpbiB0aGlzIGZ1bmN0aW9uIGlzIHRoZSBjb3JyZWN0
-IGFwcHJvYWNoLCBjb3JyZWN0Pw0K4oCL4oCLMi5SZWdhcmRpbmcgREFNT04ncyBtaWdyYXRpb24g
-bG9naWPigIvigIs6DQpUaGUgdGFyZ2V0IHNjb3BlIHNob3VsZCBiZSBleHBhbmRlZCBmcm9tIGEg
-c2luZ2xlIHNwZWNpZmllZCBub2RlIHRvIHRoZSBlbnRpcmUgbWVtb3J5IHRpZXINCiAod2hlcmUg
-dGhlIHRhcmdldCBub2RlIHJlc2lkZXMpLCBjb3JyZWN0Pw0K4oCL4oCLQ2FuIHdlIGNvbmZpcm0g
-dGhlc2UgdHdvIHBvaW50cyBhcmUgYWdyZWVkIHVwb24/4oCLDQogDQo+ID4gSSB0aGluayBpdCBt
-aWdodCBiZSBiZXR0ZXIgdG8gc2V0IHRoZSBkZWZhdWx0IHZhbHVlIG9mDQo+ID4gdXNlX25vZGVz
-X29mX3RpZXIgdG8gdHJ1ZSAoaS5lLiwgYWxsb3cgdXNpbmcgZmFsbGJhY2sgbm9kZXMpLiBXaGF0
-IGRvDQo+ID4geW91IHRoaW5rDQo+IA0KPiBJbiBteSBodW1ibGUgb3Bpbmlvbiwgd2UgY2FuIGNv
-bnNpZGVyIHNldHRpbmcgaXQgdHJ1ZSBieSBkZWZhdWx0LCBpZiB3ZSBhZ3JlZQ0KPiB0aGUgYmVu
-ZWZpdCBvZiB0aGUgY2hhbmdlIGlzIHNpZ25pZmljYW50LiAgV2l0aCBvbmx5IGN1cnJlbnRseSBn
-aXZlbiBpbmZvcm1hdGlvbiwNCj4gSSBjYW5ub3QgZWFzaWx5IHNheSBpZiBJIHRoaW5rIHRoaXMg
-Y2FuIHJlYWxseSBiZSB1c2VmdWwuICBBcyBhc2tlZCBhYm92ZWx5LCBtb3JlDQo+IGNsZWFyIHRo
-b2VyeSBhbmQvb3IgcmVhbCBkYXRhIHdvdWxkIGJlIGhlbHBmdWwuDQo+IA0KPiA+DQo+ID4gPiA+
-DQo+ID4gPiA+IFNpZ25lZC1vZmYtYnk6IHdhbmdjaHVhbmd1byA8d2FuZ2NodWFuZ3VvQGluc3B1
-ci5jb20+DQo+ID4gPiA+IC0tLQ0KPiA+ID4gPiAgaW5jbHVkZS9saW51eC9kYW1vbi5oICAgICAg
-ICB8ICA5ICsrKysrKysrLQ0KPiA+ID4gPiAgaW5jbHVkZS9saW51eC9tZW1vcnktdGllcnMuaCB8
-ICA1ICsrKysrDQo+ID4gPiA+ICBtbS9kYW1vbi9jb3JlLmMgICAgICAgICAgICAgIHwgIDYgKysr
-Ky0tDQo+ID4gPiA+ICBtbS9kYW1vbi9scnVfc29ydC5jICAgICAgICAgIHwgIDMgKystDQo+ID4g
-PiA+ICBtbS9kYW1vbi9wYWRkci5jICAgICAgICAgICAgIHwgMTkgKysrKysrKysrKysrLS0tLS0t
-LQ0KPiA+ID4gPiAgbW0vZGFtb24vcmVjbGFpbS5jICAgICAgICAgICB8ICAzICsrLQ0KPiA+ID4g
-PiAgbW0vZGFtb24vc3lzZnMtc2NoZW1lcy5jICAgICB8IDMxDQo+ID4gPiArKysrKysrKysrKysr
-KysrKysrKysrKysrKysrKystDQo+ID4gPiA+ICBtbS9tZW1vcnktdGllcnMuYyAgICAgICAgICAg
-IHwgMTMgKysrKysrKysrKysrKw0KPiA+ID4gPiAgc2FtcGxlcy9kYW1vbi9tdGllci5jICAgICAg
-ICB8ICAzICsrLQ0KPiA+ID4gPiAgc2FtcGxlcy9kYW1vbi9wcmNsLmMgICAgICAgICB8ICAzICsr
-LQ0KPiA+ID4gPiAgMTAgZmlsZXMgY2hhbmdlZCwgODAgaW5zZXJ0aW9ucygrKSwgMTUgZGVsZXRp
-b25zKC0pDQo+ID4gPg0KPiA+ID4gQ2FuIHdlIHBsZWFzZSBtYWtlIHRoaXMgY2hhbmdlIG1vcmUg
-c2VwYXJhdGVkPyAgTWF5YmUgd2UgY2FuIHNwbGl0DQo+ID4gPiB0aGUgY2hhbmdlIGZvciBtZW1v
-cnktdGllcnMuYywgREFNT04gY29yZSBsYXllciwgYW5kIERBTU9OIHN5c2ZzDQo+IGludGVyZmFj
-ZS4NCj4gPiA+IFRoYXQgd2lsbCBtYWtlIHJldmlldyBtdWNoIGVhc2llci4NCj4gPg0KPiA+IFll
-cyxJJ2xsIHNwbGl0IHRoaXMgcGF0Y2ggdG8gYmUgMiBwYXRjaGVzLg0KPiANCj4gVGhhbmsgeW91
-IGZvciBhY2NlcHRpbmcgbXkgc3VnZ2VzdGlvbi4gIEJ1dCBJIHRoaW5rIGl0IGRlc2VydmVzIDMg
-cGF0Y2hlcywNCj4gZWFjaCBmb3INCj4gDQo+IC0gbWVtb3J5LXRpZXJzLmMsDQo+IC0gREFNT04g
-Y29yZSBsYXllciwgYW5kDQo+IC0gYW5kIERBTU9OIHN5c2ZzIGludGVyZmFjZS4NCj4gDQo+IEJ1
-dCwgbGV0J3MgZnVydGhlciBkaXNjdXNzIG9uIHRoZSBoaWdoIGxldmVsIHRvcGljIChpZiB0aGlz
-IGNoYW5nZSBpcyByZWFsbHkNCj4gYmVuZWZpY2lhbCBlbm91Z2ggdG8gbWFrZSBBQkkgY2hhbmdl
-KS4NCj4gDQo+IA0KPiBUaGFua3MsDQo+IFNKDQo+IA0KPiBbLi4uXQ0K
+Hi Simon,
+
+
+Thank you for continuing this important discussion.
+
+Before starting, though, seems your mail client is not setting 'In-Reply-To'
+field of your mails.  For people who uses 'In-Reply-To' field based threads
+displaying tools, ths thread could be difficult to read the whole contents.
+Please consider using tools that set the field correctly if possible.
+
+You could get more information about available mailing tools from
+https://docs.kernel.org/process/email-clients.html
+
+Btw, I use hkml
+(https://docs.kernel.org/process/email-clients.html#hackermail-tui) ;)
+
+On Fri, 30 May 2025 08:04:42 +0000 Simon Wang (王传国) <wangchuanguo@inspur.com> wrote:
+
+[...]
+> Your concern is that adding the bool use_nodes_of_tier variable and introducing 
+> an additional parameter to multiple functions would cause ABI changes, correct?​​
+
+You are correct.
+
+> 
+> ​​I propose avoiding the creation of the 'use_nodes_of_tier' sysfs
+> file. Instead, we can modify the __damon_pa_migrate_folio_list() function to
+> change the allowed_mask from NODE_MASK_NONE to the full node mask of the
+> entire tier where the target_nid resides.  This approach would be similar to
+> the implementation in commit 320080272892 ('mm/demotion: demote pages
+> according to allocation fallback order').
+
+Then, this causes a behavior change, which we should not allow if it can be
+considered a regression.  In other words, we could do this if it is a clear
+improvement.
+
+So, let's think about if your proposed change is an improvement.  As the commit
+320080272892 is nicely explaining, I think that it is an improved behavior for
+demotion.  Actually it seems good behavior for promotion, too.  But, the
+behavior we are discussing here is not for the demotion but general migration
+(specifically, DAMOS_MIGRATE_{HOT,COLD}).
+
+In my opinion, DAMOS_MIGRATE_{HOT,COLD} behavior should be somewhat similar to
+that of move_pages() syscall, to make its behavior easy to expect.  So I think
+having commit 320080272892's behavior improvement to DAMOS_MIGRATE_{HOT,COLD}
+is not a right thing to do.
+
+And this asks me a question.  Is current DAMOS_MIGRATE_{HOT,COLD} behavior
+similar to move_pages() syscall?  Not really, since do_move_pages_to_node(),
+which is called from move_pages() syscall and calls migrate_pages() is setting
+mtc->nmask as NULL, while DAMOS_MIGRATE_{HOT,COLD} set it as NODE_MASK_NONE.
+Also, do_move_pages_to_node() uses alloc_migration_target() while
+DAMOS_MIGRATE_{HOT,COLD} uses alloc_migrate_folio().
+
+I overlooked this different behavior while reviewing this code, sorry.  And I
+don't think this difference is what we need to keep, unless there are good
+rasons that well documented.  Thank you for let us find this, Simon.
+
+So I suggest to set mtc->nmask as NULL, and use alloc_migration_target() from
+__damon_pa_migrate_folio_list(), same to move_pages() system call.  To use
+alloc_migrate_folio() from __damon_pa_migrate_folio_list(), we renamed it from
+alloc_demote_folio(), and made it none-static.  If we use
+alloc_migration_target() from __damon_pa_migrate_folio_list(), there is no
+reason to keep the changes.  Let's revert those too.
+
+Cc-ing Honggyu, who originally implemented the current behavior of
+__damon_pa_migrate().  Honggyu, could you please let us know if the above
+suggested changes are not ok for you?
+
+If Honggyu has no problem at the suggested change, Simon, would you mind doing
+that?  I can also make the patches.  I don't really care who do that.  I just
+think someone should do that.  This shouldn't be urgent real issue, in my
+opinion, though.
+
+> 
+> I'd like to confirm two modification points with you:
+> ​​1.Regarding alloc_migrate_folio()​​:
+> Restoring the original nodemask and gfp_mask in this function is the correct approach, correct?
+
+I think that's correct, but let's discuss about the patch on the patch's
+thread.
+
+> ​​2.Regarding DAMON's migration logic​​:
+> The target scope should be expanded from a single specified node to the entire memory tier
+>  (where the target node resides), correct?
+
+I don't think so, as abovely explained.
+
+> ​​Can we confirm these two points are agreed upon?​
+
+I believe hope this is answered above.
+
+
+Thanks,
+SJ
+
+[...]
