@@ -1,67 +1,79 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mailgw.kylinos.cn (mailgw.kylinos.cn [124.126.103.232])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 944751632C8
-	for <damon@lists.linux.dev>; Thu, 29 May 2025 17:26:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DF6BD27E
+	for <damon@lists.linux.dev>; Fri, 30 May 2025 01:57:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=124.126.103.232
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748539610; cv=none; b=Me3r1udGBwhrXUKxS3HeIgHTyrTydNIwDJ2Dg1g2s16LVBlYFffP3rrvaHlY2YG+0hhUPj6pMJ5Phe8M2Et0qaZILjb/7kR5wK8um1B1/1FqY4/dzhVAyVq/wJxEFZKXoshQuqL5nBs2qTnrPdWjk0pERXkyvgqaXchG0mTmLvo=
+	t=1748570269; cv=none; b=ZkZyhSKXYp/aakPcLHj4t+Qx1jmBCycx/scQEzJaCujIiPHG0GxSsd0xlsu7LNakZTA5pxZ3Zb7I1G2BPiF05xQIpDbvdBCZdN+SunF4gwG3OnBkKAHRRtVP2sIZXduFUN99fpnboryPN9lG8X4P6Mucdtf8FA1iG/eUUR1vI+8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748539610; c=relaxed/simple;
-	bh=7yLKz/b4meB879RSKiPtWuCmuVOR7B78qaTLus9vMVE=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=estchEzrA8f02KFik4agncjWvLcVDoaXs8qNCXUD1iygNfD8xCtXYWk4LuWlNrecCGbDFpktjE7TuaA0pj1zYNHthtm9xGqLNigeLt/bW+HCJCA1QfckNck0H7EAHuLg1t4J3g1oF87bo1tpWmtBrV+YDRWKLPZ96vtPtGb2oE8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oM+tmPEM; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oM+tmPEM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E338FC4CEE7;
-	Thu, 29 May 2025 17:26:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748539610;
-	bh=7yLKz/b4meB879RSKiPtWuCmuVOR7B78qaTLus9vMVE=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oM+tmPEMretWTdt2ryz08GuOAraz5FBxoDYZtwHva8DFHXHO0aIRbKZ1V2vuH+LtH
-	 XNb4CBMNLnI4WoxMjYmOLHdnC2AWc9E/nXli2FJGbxbs+O38gHuH9SCIkqtfAbVVJV
-	 6aSfwhDSFL9eVVeP7cOt79hzXECzXFFnyuqIiq2k3s0Jb42A22MwviUteq+Vqyfuyt
-	 A697HbSUobdPWuWutLdJK/UYq6j698+nnpoQSaYp19ddjxC/A9U5GSM0eBtthBdtCU
-	 JaR7S3DWRkkf4vSBAm6MOoadFxfQK5AmtAbgUqHMLRyOXf/PQx82+8Cmpxz8A/jnqM
-	 /dy+3N7Sjp4ug==
-From: SeongJae Park <sj@kernel.org>
+	s=arc-20240116; t=1748570269; c=relaxed/simple;
+	bh=pu/OcY81RBtAl3n/R0OjB5D2YC6MUuixLSY70+as4QA=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=YjwYFcLqyUC+ZWLWjArXGbH1qXZcCCP+fsiLtPKcSw1dRsllq+uNuUMM/LjwT8ZcFSpRrrq1unsiSXtNfzetQkp8vNRM+BPBgsdTg/ExGVELcrS+9lawMnxZIxijvGGlsFD+BWf7q1HsrMB84bmTvY/TdwK5oxDx9AHrdOcyu5U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn; spf=pass smtp.mailfrom=kylinos.cn; arc=none smtp.client-ip=124.126.103.232
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kylinos.cn
+X-UUID: 74e38d103cf911f0b29709d653e92f7d-20250530
+X-CID-P-RULE: Release_Ham
+X-CID-O-INFO: VERSION:1.1.45,REQID:a51e0a33-8f11-44e6-83e6-685fd3ab070f,IP:10,
+	URL:0,TC:0,Content:0,EDM:0,RT:0,SF:-15,FILE:0,BULK:0,RULE:Release_Ham,ACTI
+	ON:release,TS:-5
+X-CID-INFO: VERSION:1.1.45,REQID:a51e0a33-8f11-44e6-83e6-685fd3ab070f,IP:10,UR
+	L:0,TC:0,Content:0,EDM:0,RT:0,SF:-15,FILE:0,BULK:0,RULE:Release_Ham,ACTION
+	:release,TS:-5
+X-CID-META: VersionHash:6493067,CLOUDID:150ad003dd3e19c2581831ffb30615a7,BulkI
+	D:250525002921A3G68U33,BulkQuantity:4,Recheck:0,SF:17|19|24|44|64|66|78|80
+	|81|82|83|102|841,TC:nil,Content:0|50,EDM:-3,IP:-2,URL:0,File:nil,RT:nil,B
+	ulk:40,QS:nil,BEC:nil,COL:0,OSI:0,OSA:0,AV:0,LES:1,SPR:NO,DKR:0,DKP:0,BRR:
+	0,BRE:0,ARC:0
+X-CID-BVR: 0,NGT
+X-CID-BAS: 0,NGT,0,_
+X-CID-FACTOR: TF_CID_SPAM_SNR,TF_CID_SPAM_FAS,TF_CID_SPAM_FSD,TF_CID_SPAM_FSI
+X-UUID: 74e38d103cf911f0b29709d653e92f7d-20250530
+X-User: lienze@kylinos.cn
+Received: from kylin [(223.70.159.239)] by mailgw.kylinos.cn
+	(envelope-from <lienze@kylinos.cn>)
+	(Generic MTA with TLSv1.3 TLS_AES_256_GCM_SHA384 256/256)
+	with ESMTP id 42566546; Fri, 30 May 2025 09:57:35 +0800
+From: Enze Li <lienze@kylinos.cn>
 To: SeongJae Park <sj@kernel.org>
-Cc: David Hildenbrand <david@redhat.com>,
-	Enze Li <lienze@kylinos.cn>,
-	akpm@linux-foundation.org,
-	damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	enze.li@gmx.com
+Cc: akpm@linux-foundation.org,  damon@lists.linux.dev,  linux-mm@kvack.org,
+  enze.li@gmx.com
 Subject: Re: [PATCH] mm/damon: rename primitives to operations
-Date: Thu, 29 May 2025 10:26:47 -0700
-Message-Id: <20250529172647.38178-1-sj@kernel.org>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250526175524.2651-1-sj@kernel.org>
-References: 
+In-Reply-To: <20250526180921.2932-1-sj@kernel.org> (SeongJae Park's message of
+	"Mon, 26 May 2025 11:09:21 -0700")
+References: <20250526180921.2932-1-sj@kernel.org>
+Date: Fri, 30 May 2025 09:57:31 +0800
+Message-ID: <87h612yi5w.fsf@kylinos.cn>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-On Mon, 26 May 2025 10:55:24 -0700 SeongJae Park <sj@kernel.org> wrote:
+On Mon, May 26 2025 at 11:09:21 AM -0700, SeongJae Park wrote:
 
-[...]
-> Maybe "mm/damon: s/primitives/code/ on comments" could also be a simple and not
-> that bad title?
+> On Mon, 26 May 2025 14:25:40 +0800 Enze Li <lienze@kylinos.cn> wrote:
+>
+>> Hi SeongJae,
+>> 
+>> On Sat, May 24 2025 at 09:29:10 AM -0700, SeongJae Park wrote:
+> [...]
+>> >
+>> > Could you please revise as abovely suggested and resend?
+>> 
+>> I've sent a v2 to the current thread,
+>
+> I think it is more common to send new versions of a patch as a new thread,
+> rather than as a reply to an old version.  Please do so from next time, for a
+> consistency.
 
-I understand we found no real concern on this. :)  Thanks to all discussion
-participants and their patience.  Of course, just add more comments if you just
-forgot posting it and I'm rushing.
+Noted -- I'll keep that in mind.
 
-Enze, could you please post v3 with the updated title?
-
-
-Thanks,
-SJ
+BR,
+Enze
 
 [...]
