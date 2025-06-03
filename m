@@ -1,102 +1,154 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from ssh247.corpemail.net (ssh247.corpemail.net [210.51.61.247])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1A0E1714C0;
-	Sat, 31 May 2025 16:49:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 717BB27468
+	for <damon@lists.linux.dev>; Tue,  3 Jun 2025 03:05:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=210.51.61.247
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748710141; cv=none; b=dHzgCHd5PCHkeyCJI7uNFmwTLpIFhcLuRmqZRXRrC7XsFYWWyXpQPQ6bgLnpGoL9MGDjSI8PlxXhT4gPjBvNxNlaq2fb3Vv2hrZkbscyu6oaIWRziUI4LQ45Hz7GpVuuIeVBGpGoYg7eCYb/MLvYIO1xRfaLPRaaoq9TgDzrNUw=
+	t=1748919958; cv=none; b=OCNLCPnXwRIyINGtejMYPVGLBKfneJ65RIADbFdwsZjUXL3JDUFKiert7ns0s5R9iXIKj5PFYnZ1qmFh9LACFoQgth/Og9xsXG9Vannv130M88QvGewBS4I5Mh28U1q6EAlBcHBIjkFKyOnhD4s5LVO9dYyeMCpTbyb8JiUNFqo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748710141; c=relaxed/simple;
-	bh=EImyog8mJ2d1KSn2d/5M4MrBuuXlY9j+Aeou6GlnT00=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=ubxS6rbMbntG4CLcYu+6z0YGNF2g3uLIMUvfSUrZerrvFIxjJtZQ79ifQVLT0xNiszYednWYZ1DrpyDL1Vvr21mbmKqMXso8t1sZtqECEp0I0KqqkmZNaNedqFvBWctY49VSbMiRpFIhkbB5i6fHVPwfmI1ADwxkuymszVB9z9M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nv+xXj5J; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nv+xXj5J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10A65C4CEE3;
-	Sat, 31 May 2025 16:49:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748710141;
-	bh=EImyog8mJ2d1KSn2d/5M4MrBuuXlY9j+Aeou6GlnT00=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nv+xXj5J8KG2TlcMwQGBuGyhk9nm/OSHlZ9z2opOK3e8fosTVpW3qO9UaZSELc0rO
-	 +RDF3xkAVIV1rDOA6yHwtCgtG2IA0bj2qtClKebAktbej1aEaE3M7LxrCItZ4y1Hso
-	 BScG7pvqMmMcsuzY+ELc9TSbSzrk41lo9NlAzzMvD+KRbFhr52vEKtTHPmzAEgcglD
-	 knnPYj5lvhf2P0kWrpLjWUiXSmnuCBoSQH+HGCCZsCVLO2B3/8Wx99h1W4c+KUGZKF
-	 xdidb/ALcs6tD5AXWfOZy0NS7w/7CY97p8ZwUPBvXc4yGHx92pA630emoXCeqSAZKm
-	 VcwS8T0QIf5yQ==
-From: SeongJae Park <sj@kernel.org>
-To: Enze Li <lienze@kylinos.cn>
-Cc: SeongJae Park <sj@kernel.org>,
-	shuah@kernel.org,
-	damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	linux-kselftest@vger.kernel.org,
-	enze.li@gmx.com,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: Re: [PATCH] selftests/damon/_damon_sysfs: skip testcases if CONFIG_DAMON_SYSFS is disabled
-Date: Sat, 31 May 2025 09:48:58 -0700
-Message-Id: <20250531164858.37308-1-sj@kernel.org>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250531093937.1555159-1-lienze@kylinos.cn>
-References: 
+	s=arc-20240116; t=1748919958; c=relaxed/simple;
+	bh=yeFtExa5Fm4q1yI48fnH0xtAV9xyBoXlCKwVAfvwmFw=;
+	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=tOC0uWu9nDyMnm0cC0vSC8zQYcU5sP79p293Yjj0bzRj0x7bxtVee1lOCQQaKtpnMZimghAS3BU1fw3UbBSntI7EHezraKQmK0/QsMkh7iE8yCrNVAZPKCAXBm9u8qelgEJ4crJepIo46L+6+K901PSFxGbfZNGbI9dZK8nomy0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=inspur.com; spf=pass smtp.mailfrom=inspur.com; arc=none smtp.client-ip=210.51.61.247
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=inspur.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=inspur.com
+Received: from jtjnmail201611.home.langchao.com
+        by ssh247.corpemail.net ((D)) with ASMTP (SSL) id 202506031105436355;
+        Tue, 03 Jun 2025 11:05:43 +0800
+Received: from localhost.localdomain (120.224.42.190) by
+ jtjnmail201611.home.langchao.com (10.100.2.11) with Microsoft SMTP Server id
+ 15.1.2507.39; Tue, 3 Jun 2025 11:05:41 +0800
+From: wangchuanguo <wangchuanguo@inspur.com>
+To: <wangchuanguo@inspur.com>, SeongJae Park <sj@kernel.org>
+CC: "akpm@linux-foundation.org" <akpm@linux-foundation.org>,
+	"hannes@cmpxchg.org" <hannes@cmpxchg.org>, "david@redhat.com"
+	<david@redhat.com>, "mhocko@kernel.org" <mhocko@kernel.org>,
+	"zhengqi.arch@bytedance.com" <zhengqi.arch@bytedance.com>,
+	"shakeel.butt@linux.dev" <shakeel.butt@linux.dev>,
+	"lorenzo.stoakes@oracle.com" <lorenzo.stoakes@oracle.com>,
+	"linux-mm@kvack.org" <linux-mm@kvack.org>, "linux-kernel@vger.kernel.org"
+	<linux-kernel@vger.kernel.org>, "damon@lists.linux.dev"
+	<damon@lists.linux.dev>, Honggyu Kim <honggyu.kim@sk.com>
+Subject: Re: [PATCH 2/2] mm/damon/sysfs-schemes: add use_nodes_of_tier on sysfs-schemes
+Date: Tue, 3 Jun 2025 11:05:30 +0800
+Message-ID: <20250603030530.365142-1-wangchuanguo@inspur.com>
+X-Mailer: git-send-email 2.39.3
+In-Reply-To: <20250530194016.51798-1-sj@kernel.org>
+References:
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
+tUid: 202560311054333279b5fbf90c656ed691958386266a2
+X-Abuse-Reports-To: service@corp-email.com
+Abuse-Reports-To: service@corp-email.com
+X-Complaints-To: service@corp-email.com
+X-Report-Abuse-To: service@corp-email.com
 
-On Sat, 31 May 2025 17:39:37 +0800 Enze Li <lienze@kylinos.cn> wrote:
+On Fri, 30 May 2025 12:40:16 -0700 SeongJae Park <sj@kernel.org> wrote:
 
-> When CONFIG_DAMON_SYSFS is disabled, the selftests fail with the
-> following outputs,
+> Hi Simon,
 > 
-> not ok 2 selftests: damon: sysfs_update_schemes_tried_regions_wss_estimation.py # exit=1
-> not ok 3 selftests: damon: damos_quota.py # exit=1
-> not ok 4 selftests: damon: damos_quota_goal.py # exit=1
-> not ok 5 selftests: damon: damos_apply_interval.py # exit=1
-> not ok 6 selftests: damon: damos_tried_regions.py # exit=1
-> not ok 7 selftests: damon: damon_nr_regions.py # exit=1
-> not ok 11 selftests: damon: sysfs_update_schemes_tried_regions_hang.py # exit=1
 > 
-> The root cause of this issue is that all the testcases above do not
-> check the sysfs interface of DAMON whether it exists or not.  With this
-> patch applied, all the testcases above now pass successfully.
-
-Thank you for finding and fixing this!
-
+> Thank you for continuing this important discussion.
 > 
-> Signed-off-by: Enze Li <lienze@kylinos.cn>
-
-Reviewed-by: SeongJae Park <sj@kernel.org>
-
-> ---
->  tools/testing/selftests/damon/_damon_sysfs.py | 4 ++++
->  1 file changed, 4 insertions(+)
+> Before starting, though, seems your mail client is not setting 'In-Reply-To'
+> field of your mails.  For people who uses 'In-Reply-To' field based threads
+> displaying tools, ths thread could be difficult to read the whole contents.
+> Please consider using tools that set the field correctly if possible.
 > 
-> diff --git a/tools/testing/selftests/damon/_damon_sysfs.py b/tools/testing/selftests/damon/_damon_sysfs.py
-> index 6e136dc3df19..cab67addfb00 100644
-> --- a/tools/testing/selftests/damon/_damon_sysfs.py
-> +++ b/tools/testing/selftests/damon/_damon_sysfs.py
-> @@ -15,6 +15,10 @@ if sysfs_root is None:
->      print('Seems sysfs not mounted?')
->      exit(ksft_skip)
->  
-> +if not os.path.exists(sysfs_root):
-> +    print('Seems DAMON disabled?')
-> +    exit(ksft_skip)
-> +
->  def write_file(path, string):
->      "Returns error string if failed, or None otherwise"
->      string = '%s' % string
+> You could get more information about available mailing tools from
+> https://docs.kernel.org/process/email-clients.html
 > 
-> base-commit: 0f70f5b08a47a3bc1a252e5f451a137cde7c98ce
-> -- 
-> 2.43.0
+> Btw, I use hkml
+> (https://docs.kernel.org/process/email-clients.html#hackermail-tui) ;)
+> 
+> On Fri, 30 May 2025 08:04:42 +0000 Simon Wang (王传国) <wangchuanguo@inspur.com> wrote:
+> 
+> [...]
+> > Your concern is that adding the bool use_nodes_of_tier variable and introducing 
+> > an additional parameter to multiple functions would cause ABI changes, correct?​​
+> 
+> You are correct.
+> 
+> > 
+> > ​​I propose avoiding the creation of the 'use_nodes_of_tier' sysfs
+> > file. Instead, we can modify the __damon_pa_migrate_folio_list() function to
+> > change the allowed_mask from NODE_MASK_NONE to the full node mask of the
+> > entire tier where the target_nid resides.  This approach would be similar to
+> > the implementation in commit 320080272892 ('mm/demotion: demote pages
+> > according to allocation fallback order').
+> 
+> Then, this causes a behavior change, which we should not allow if it can be
+> considered a regression.  In other words, we could do this if it is a clear
+> improvement.
+> 
+> So, let's think about if your proposed change is an improvement.  As the commit
+> 320080272892 is nicely explaining, I think that it is an improved behavior for
+> demotion.  Actually it seems good behavior for promotion, too.  But, the
+> behavior we are discussing here is not for the demotion but general migration
+> (specifically, DAMOS_MIGRATE_{HOT,COLD}).
+> 
+> In my opinion, DAMOS_MIGRATE_{HOT,COLD} behavior should be somewhat similar to
+> that of move_pages() syscall, to make its behavior easy to expect.  So I think
+> having commit 320080272892's behavior improvement to DAMOS_MIGRATE_{HOT,COLD}
+> is not a right thing to do.
+> 
+> And this asks me a question.  Is current DAMOS_MIGRATE_{HOT,COLD} behavior
+> similar to move_pages() syscall?  Not really, since do_move_pages_to_node(),
+> which is called from move_pages() syscall and calls migrate_pages() is setting
+> mtc->nmask as NULL, while DAMOS_MIGRATE_{HOT,COLD} set it as NODE_MASK_NONE.
+> Also, do_move_pages_to_node() uses alloc_migration_target() while
+> DAMOS_MIGRATE_{HOT,COLD} uses alloc_migrate_folio().
+> 
+> I overlooked this different behavior while reviewing this code, sorry.  And I
+> don't think this difference is what we need to keep, unless there are good
+> rasons that well documented.  Thank you for let us find this, Simon.
+> 
+> So I suggest to set mtc->nmask as NULL, and use alloc_migration_target() from
+> __damon_pa_migrate_folio_list(), same to move_pages() system call.  To use
+> alloc_migrate_folio() from __damon_pa_migrate_folio_list(), we renamed it from
+> alloc_demote_folio(), and made it none-static.  If we use
+> alloc_migration_target() from __damon_pa_migrate_folio_list(), there is no
+> reason to keep the changes.  Let's revert those too.
+> 
+> Cc-ing Honggyu, who originally implemented the current behavior of
+> __damon_pa_migrate().  Honggyu, could you please let us know if the above
+> suggested changes are not ok for you?
+> 
+> If Honggyu has no problem at the suggested change, Simon, would you mind doing
+> that?  I can also make the patches.  I don't really care who do that.  I just
+> think someone should do that.  This shouldn't be urgent real issue, in my
+> opinion, though.
+> 
+> > 
+> > I'd like to confirm two modification points with you:
+> > ​​1.Regarding alloc_migrate_folio()​​:
+> > Restoring the original nodemask and gfp_mask in this function is the correct approach, correct?
+> 
+> I think that's correct, but let's discuss about the patch on the patch's
+> thread.
+> 
+> > ​​2.Regarding DAMON's migration logic​​:
+> > The target scope should be expanded from a single specified node to the entire memory tier
+> >  (where the target node resides), correct?
+> 
+> I don't think so, as abovely explained.
+> 
+> > ​​Can we confirm these two points are agreed upon?​
+> 
+> I believe hope this is answered above.
+> 
+> 
+> Thanks,
+> SJ
+> 
+> [...]
 
-
-Thanks,
-SJ
+Sent using hkml (https://github.com/sjp38/hackermail)
