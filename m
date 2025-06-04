@@ -1,154 +1,152 @@
-Received: from ssh247.corpemail.net (ssh247.corpemail.net [210.51.61.247])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 717BB27468
-	for <damon@lists.linux.dev>; Tue,  3 Jun 2025 03:05:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=210.51.61.247
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBECA1F4625;
+	Wed,  4 Jun 2025 18:31:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748919958; cv=none; b=OCNLCPnXwRIyINGtejMYPVGLBKfneJ65RIADbFdwsZjUXL3JDUFKiert7ns0s5R9iXIKj5PFYnZ1qmFh9LACFoQgth/Og9xsXG9Vannv130M88QvGewBS4I5Mh28U1q6EAlBcHBIjkFKyOnhD4s5LVO9dYyeMCpTbyb8JiUNFqo=
+	t=1749061892; cv=none; b=b1e5qI7038UgI3SzT1fYImwgV+XwWUVlBQsWpc+x2mxRZbmrWKfErmeZqqRhVOZrIOt0uwcnsQaPxQQdkGrQkyIcTDh03iNhn7hAJpU3yleka1P2uYcFnxGb7NTbamRPJeAjt4dP5TOMchk84W3ueulbSlJZmZqbnqZVEX4b71k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748919958; c=relaxed/simple;
-	bh=yeFtExa5Fm4q1yI48fnH0xtAV9xyBoXlCKwVAfvwmFw=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=tOC0uWu9nDyMnm0cC0vSC8zQYcU5sP79p293Yjj0bzRj0x7bxtVee1lOCQQaKtpnMZimghAS3BU1fw3UbBSntI7EHezraKQmK0/QsMkh7iE8yCrNVAZPKCAXBm9u8qelgEJ4crJepIo46L+6+K901PSFxGbfZNGbI9dZK8nomy0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=inspur.com; spf=pass smtp.mailfrom=inspur.com; arc=none smtp.client-ip=210.51.61.247
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=inspur.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=inspur.com
-Received: from jtjnmail201611.home.langchao.com
-        by ssh247.corpemail.net ((D)) with ASMTP (SSL) id 202506031105436355;
-        Tue, 03 Jun 2025 11:05:43 +0800
-Received: from localhost.localdomain (120.224.42.190) by
- jtjnmail201611.home.langchao.com (10.100.2.11) with Microsoft SMTP Server id
- 15.1.2507.39; Tue, 3 Jun 2025 11:05:41 +0800
-From: wangchuanguo <wangchuanguo@inspur.com>
-To: <wangchuanguo@inspur.com>, SeongJae Park <sj@kernel.org>
-CC: "akpm@linux-foundation.org" <akpm@linux-foundation.org>,
-	"hannes@cmpxchg.org" <hannes@cmpxchg.org>, "david@redhat.com"
-	<david@redhat.com>, "mhocko@kernel.org" <mhocko@kernel.org>,
-	"zhengqi.arch@bytedance.com" <zhengqi.arch@bytedance.com>,
-	"shakeel.butt@linux.dev" <shakeel.butt@linux.dev>,
-	"lorenzo.stoakes@oracle.com" <lorenzo.stoakes@oracle.com>,
-	"linux-mm@kvack.org" <linux-mm@kvack.org>, "linux-kernel@vger.kernel.org"
-	<linux-kernel@vger.kernel.org>, "damon@lists.linux.dev"
-	<damon@lists.linux.dev>, Honggyu Kim <honggyu.kim@sk.com>
-Subject: Re: [PATCH 2/2] mm/damon/sysfs-schemes: add use_nodes_of_tier on sysfs-schemes
-Date: Tue, 3 Jun 2025 11:05:30 +0800
-Message-ID: <20250603030530.365142-1-wangchuanguo@inspur.com>
-X-Mailer: git-send-email 2.39.3
-In-Reply-To: <20250530194016.51798-1-sj@kernel.org>
-References:
+	s=arc-20240116; t=1749061892; c=relaxed/simple;
+	bh=TTccoSC8u0U8JAyudIFqRLqdhcUIXwmp4ws5Q3WnaBM=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=c2dsi7TVDOHJFBt//kzpZT0YlBDSE+wbKY1PbIAMhKjZed7Kyi97vo44dlaCsLPZ4CIceU/jXSv/GZ30IJ7ce7fCJkFx1cOBj5XhcKX4iuXuGHiDWuX3ltq9NUx3F7jBpUFx1ow4BlvuwDDwoYEotlHKldAN7ghnXnAfeeaPoIA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=d3bhN1iP; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="d3bhN1iP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25E4CC4CEE4;
+	Wed,  4 Jun 2025 18:31:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1749061891;
+	bh=TTccoSC8u0U8JAyudIFqRLqdhcUIXwmp4ws5Q3WnaBM=;
+	h=From:To:Cc:Subject:Date:From;
+	b=d3bhN1iPy3ThjZWVrgAwb3qTfEDDILFdEoQEAem2WbVuLwufaUG5pQsbck2GuH8yZ
+	 RPR9lepicdrnPN1ucrSbfEciCHIc9cRwndS0tJO1a0nWiqzGt3XYpHT9z55FZJYu5K
+	 U2ca/1bNy1K94/OdQ3SRchpMz27OrmWBGHZ/Nkb2eVsBK0MiEAAlM907ZdZhErAQ+0
+	 rNjgXb9y2Kmh3UU5g0MiP2wZkWkit7/nuWcNMpwrpMuLRSi9OaObaACQvYFzrOzCY+
+	 mHHKBcM/4ynaHfJG/OhSDhhUGg+tYIoKgZnyVEAja/vjG7f7zYIQCx52E60c4Hzh6C
+	 ppSloIVZ1twig==
+From: SeongJae Park <sj@kernel.org>
+To: Andrew Morton <akpm@linux-foundation.org>
+Cc: SeongJae Park <sj@kernel.org>,
+	Jonathan Corbet <corbet@lwn.net>,
+	damon@lists.linux.dev,
+	kernel-team@meta.com,
+	linux-doc@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-mm@kvack.org
+Subject: [PATCH v2 0/4] mm/damon: introduce DAMON_STAT for simple and practical access monitoring
+Date: Wed,  4 Jun 2025 11:31:23 -0700
+Message-Id: <20250604183127.13968-1-sj@kernel.org>
+X-Mailer: git-send-email 2.39.5
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
-tUid: 202560311054333279b5fbf90c656ed691958386266a2
-X-Abuse-Reports-To: service@corp-email.com
-Abuse-Reports-To: service@corp-email.com
-X-Complaints-To: service@corp-email.com
-X-Report-Abuse-To: service@corp-email.com
 
-On Fri, 30 May 2025 12:40:16 -0700 SeongJae Park <sj@kernel.org> wrote:
+DAMON-based access monitoring is not simple due to required DAMON
+control and results visualizations.  Introduce a static kernel module
+for making it simple.  The module can be enabled without manual setup
+and provides access pattern metrics that easy to fetch and understand
+the practical access pattern information, namely estimated memory
+bandwidth and memory idle time percentiles.
 
-> Hi Simon,
-> 
-> 
-> Thank you for continuing this important discussion.
-> 
-> Before starting, though, seems your mail client is not setting 'In-Reply-To'
-> field of your mails.  For people who uses 'In-Reply-To' field based threads
-> displaying tools, ths thread could be difficult to read the whole contents.
-> Please consider using tools that set the field correctly if possible.
-> 
-> You could get more information about available mailing tools from
-> https://docs.kernel.org/process/email-clients.html
-> 
-> Btw, I use hkml
-> (https://docs.kernel.org/process/email-clients.html#hackermail-tui) ;)
-> 
-> On Fri, 30 May 2025 08:04:42 +0000 Simon Wang (王传国) <wangchuanguo@inspur.com> wrote:
-> 
-> [...]
-> > Your concern is that adding the bool use_nodes_of_tier variable and introducing 
-> > an additional parameter to multiple functions would cause ABI changes, correct?​​
-> 
-> You are correct.
-> 
-> > 
-> > ​​I propose avoiding the creation of the 'use_nodes_of_tier' sysfs
-> > file. Instead, we can modify the __damon_pa_migrate_folio_list() function to
-> > change the allowed_mask from NODE_MASK_NONE to the full node mask of the
-> > entire tier where the target_nid resides.  This approach would be similar to
-> > the implementation in commit 320080272892 ('mm/demotion: demote pages
-> > according to allocation fallback order').
-> 
-> Then, this causes a behavior change, which we should not allow if it can be
-> considered a regression.  In other words, we could do this if it is a clear
-> improvement.
-> 
-> So, let's think about if your proposed change is an improvement.  As the commit
-> 320080272892 is nicely explaining, I think that it is an improved behavior for
-> demotion.  Actually it seems good behavior for promotion, too.  But, the
-> behavior we are discussing here is not for the demotion but general migration
-> (specifically, DAMOS_MIGRATE_{HOT,COLD}).
-> 
-> In my opinion, DAMOS_MIGRATE_{HOT,COLD} behavior should be somewhat similar to
-> that of move_pages() syscall, to make its behavior easy to expect.  So I think
-> having commit 320080272892's behavior improvement to DAMOS_MIGRATE_{HOT,COLD}
-> is not a right thing to do.
-> 
-> And this asks me a question.  Is current DAMOS_MIGRATE_{HOT,COLD} behavior
-> similar to move_pages() syscall?  Not really, since do_move_pages_to_node(),
-> which is called from move_pages() syscall and calls migrate_pages() is setting
-> mtc->nmask as NULL, while DAMOS_MIGRATE_{HOT,COLD} set it as NODE_MASK_NONE.
-> Also, do_move_pages_to_node() uses alloc_migration_target() while
-> DAMOS_MIGRATE_{HOT,COLD} uses alloc_migrate_folio().
-> 
-> I overlooked this different behavior while reviewing this code, sorry.  And I
-> don't think this difference is what we need to keep, unless there are good
-> rasons that well documented.  Thank you for let us find this, Simon.
-> 
-> So I suggest to set mtc->nmask as NULL, and use alloc_migration_target() from
-> __damon_pa_migrate_folio_list(), same to move_pages() system call.  To use
-> alloc_migrate_folio() from __damon_pa_migrate_folio_list(), we renamed it from
-> alloc_demote_folio(), and made it none-static.  If we use
-> alloc_migration_target() from __damon_pa_migrate_folio_list(), there is no
-> reason to keep the changes.  Let's revert those too.
-> 
-> Cc-ing Honggyu, who originally implemented the current behavior of
-> __damon_pa_migrate().  Honggyu, could you please let us know if the above
-> suggested changes are not ok for you?
-> 
-> If Honggyu has no problem at the suggested change, Simon, would you mind doing
-> that?  I can also make the patches.  I don't really care who do that.  I just
-> think someone should do that.  This shouldn't be urgent real issue, in my
-> opinion, though.
-> 
-> > 
-> > I'd like to confirm two modification points with you:
-> > ​​1.Regarding alloc_migrate_folio()​​:
-> > Restoring the original nodemask and gfp_mask in this function is the correct approach, correct?
-> 
-> I think that's correct, but let's discuss about the patch on the patch's
-> thread.
-> 
-> > ​​2.Regarding DAMON's migration logic​​:
-> > The target scope should be expanded from a single specified node to the entire memory tier
-> >  (where the target node resides), correct?
-> 
-> I don't think so, as abovely explained.
-> 
-> > ​​Can we confirm these two points are agreed upon?​
-> 
-> I believe hope this is answered above.
-> 
-> 
-> Thanks,
-> SJ
-> 
-> [...]
+Background and Problems
+=======================
 
-Sent using hkml (https://github.com/sjp38/hackermail)
+DAMON can be used for monitoring data access patterns of the system and
+workloads.  Specifically, users can start DAMON to monitor access events
+on specific address space with fine controls including address ranges to
+monitor and time intervals between samplings and aggregations.  The
+resulting access information snapshot contains access frequency
+(nr_accesses) and how long the frequency was kept (age) for each byte.
+
+The monitoring usage is not simple and practical enough for production
+usage.  Users should first start DAMON with a number of parameters, and
+wait until DAMON's monitoring results capture a reasonable amount of the
+time data (age).  In production, such manual start and wait is
+impractical to capture useful information from a high number of machines
+in a timely manner.
+
+The monitoring result is also too detailed to be used on production
+environments.  The raw results are hard to be aggregated and/or compared
+for production environments having a large scale of time, space and
+machines fleet.
+
+Users have to implement and use their own automation of DAMON control
+and results processing.  It is repetitive and challenging since there is
+no good reference or guideline for such automation.
+
+Solution: DAMON_STAT
+====================
+
+Implement such automation in kernel space as a static kernel module,
+namely DAMON_STAT.  It can be enabled at build, boot, or run time via
+its build configuration or module parameter.  It monitors the entire
+physical address space with monitoring intervals that auto-tuned for a
+reasonable amount of access observations and minimum overhead.  It
+converts the raw monitoring results into simpler metrics that can easily
+be aggregated and compared, namely estimated memory bandwidth and idle
+time percentiles.
+
+Understanding of the metrics and the user interface of DAMON_STAT is
+essential.  Refer to the commit messages of the second and the third
+patches of this patch series for more details about the metrics.  For
+the user interface, the standard module parameters system is used.
+Refer to the fourth patch of this patch series for details of the user
+interface.
+
+Discussions
+===========
+
+The module aims to be useful on production environments constructed with
+a large number of machines that run a long time.  The auto-tuned
+monitoring intervals ensure a reasonable quality of the outputs.  The
+auto-tuning also ensures its overhead be reasonable and low enough to be
+enabled always on the production.  The simplified monitoring results
+metrics can be useful for showing both coldness (idle time percentiles)
+and hotness (memory bandwidth) of the system's access pattern.  We
+expect the information can be useful for assessing system memory
+utilization and inspiring optimizations or investigations on both kernel
+and user space memory management logics for large scale fleets.
+
+We hence expect the module is good enough to be just used in most
+environments.  For special cases that require a custom access monitoring
+automation, users will still benefit by using DAMON_STAT as a reference
+or a guideline for their specialized automation.
+
+Revision History
+================
+
+Changes from v1
+(https://lore.kernel.org/20250526210936.2744-1-sj@kernel.org)
+- Wordsmith cover letter for usage document reference
+- Rebase to latest mm-new
+
+Changes from RFC
+(https://lore.kernel.org/20250519164415.43935-1-sj@kernel.org)
+- Add an admin-guide documentation
+- Wordsmith commit messages
+- Rebase to latest mm-new
+
+SeongJae Park (4):
+  mm/damon: introduce DAMON_STAT module
+  mm/damon/stat: calculate and expose estimated memory bandwidth
+  mm/damon/stat: calculate and expose idle time percentiles
+  Docs/admin-guide/mm/damon: add DAMON_STAT usage document
+
+ Documentation/admin-guide/mm/damon/index.rst |   1 +
+ Documentation/admin-guide/mm/damon/stat.rst  |  69 ++++++
+ mm/damon/Kconfig                             |  16 ++
+ mm/damon/Makefile                            |   1 +
+ mm/damon/stat.c                              | 245 +++++++++++++++++++
+ 5 files changed, 332 insertions(+)
+ create mode 100644 Documentation/admin-guide/mm/damon/stat.rst
+ create mode 100644 mm/damon/stat.c
+
+
+base-commit: c28c2c0b515650b906025a5c41dc0989155720dd
+-- 
+2.39.5
