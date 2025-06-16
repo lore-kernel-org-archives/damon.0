@@ -1,126 +1,136 @@
-Received: from mail-yb1-f174.google.com (mail-yb1-f174.google.com [209.85.219.174])
+Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BFEB11CBA
-	for <damon@lists.linux.dev>; Mon, 16 Jun 2025 21:32:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B870582C60
+	for <damon@lists.linux.dev>; Mon, 16 Jun 2025 22:16:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750109524; cv=none; b=OXYpShtm5q5FTXGk7UuzJJKhV5eb91kmolxoTz+3yrh3kQr9CyvHaXim16wUZZmsss61FcF8hEF+gNc1lEhlSTUcqX/B56vt5b4Yf0sLjo78RLkstD0lUu5SDriLY9+Qfq61MYIkAfYZBuxC5JRklealhPVbdrLHiraR5/IZdns=
+	t=1750112191; cv=none; b=JBV+mjp7AoFyDUSLYYeFbxDIOCklZr1nJRiKwjWx4WH1QxUtwpfXkrS4/UeU+8VOhSIYDLMkGQPyslsnqwpNOzFWzpfdWx20GpuR1Sqqg+cgvKIhZb05TZFF/Q3QwQs3iE1ASN737RH9aCOFuP8486xTCm7Gm45lhPLl4zXobTM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750109524; c=relaxed/simple;
-	bh=iRkFuMxTZ0h0x2pZI1jYUc7gSmQrpxuVxvVwRlks80U=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AXZTpqvUKQ1jb/deNlA4BZ96srTRu/+Y5RB1Fv2eqpa/pFadUrpfBoLa16nx26gJ4/+hZS9ySI+wfdoxxxcbZj1rjTA+aQc7q2gMjiAsVYFzCFI2VoVpU3R+HEjqefg9Z0U1WvHbuTiVoJeTyWBN0ANxF0dxdjFDIPxxMtR8FLI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RIwaXODt; arc=none smtp.client-ip=209.85.219.174
+	s=arc-20240116; t=1750112191; c=relaxed/simple;
+	bh=ziUc4Cazu8rPOj/A9CHLv5pVaJlPgsivV34HGY6F5Z8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=WK0fbT723XGw9mubr6UmbuM3C4HUCJ2u7Wzi//+5PrGbDAzKsqLySmpNlmvY97Op+xQoxJxgUwTmLItni+HgA6W3LRT0B8vVT7koMTyZrbY63U+tzuyfkBcxfwHFpJGm7+m5QloouPI89x7FMpDmXtKmJjKXYKCr33lzutFAZ+U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Zxc+ZmJP; arc=none smtp.client-ip=209.85.218.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RIwaXODt"
-Received: by mail-yb1-f174.google.com with SMTP id 3f1490d57ef6-e733cd55f9eso4603319276.1
-        for <damon@lists.linux.dev>; Mon, 16 Jun 2025 14:32:02 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Zxc+ZmJP"
+Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-addda47ebeaso1012230966b.1
+        for <damon@lists.linux.dev>; Mon, 16 Jun 2025 15:16:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1750109521; x=1750714321; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1750112188; x=1750716988; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=nFlrTdSbiYtSZxGPXOVLI+cEBoyC+FpjHzAjZc+xdGM=;
-        b=RIwaXODt5ma/fq664Mt/HEPBajeGxOjtOdfZ1h1PN2KLFxz/4AwfCW43LDcs/5j0TP
-         B2pfyzfb91hAWWfKkdxvhaeJNpRH6t6D+QYBGVQO5DMOxtD8rC7WXT098kztbAvDXm45
-         NnVWHImDzRDsScqYazhf0fBSLORIYQMvlXMDgOttcLcHZuTKHvwZ8k0AOq0bkPMDs9Hb
-         4pduSxywdhYixh7FVKci6NR8H3f3SehpxKUohnTLugt4BTerm8AitTm+gI6gHbPv3683
-         JFpCgNDhLvxQd08tGM3k5IlDBjcnVUbp1MVM2flOztP26VNUGnCh0IHtmcxXPFYuYHIQ
-         lvVg==
+        bh=L4x/p8NEu399tKFp+L82OEsMeF0ul8epvOoGorBxox8=;
+        b=Zxc+ZmJP+Fj5a0sK3bbsRjT4OE5YXg675prN/+CwwPoDCY440QOecblqzc4DMcIFQE
+         VcMMCZoQDsaH0xPhvqpYrYTEcAmMchEvvel3N0N2dupoyQl5u1PK/5LFFRtK6rzfKEqN
+         knEQn/D9H+9OgvTqRL2k89nAWAattNMJXwer4DH8KCNA3BkIyppD6XHtfJdD47/tFNP6
+         Pe4pIrzLdXXa+L2D4nYjPVooqZsyQF2lJVQNl5a0EEkOm5JIg55/K6BVDVr1+C6mm/4a
+         0khU9c9xPDjL9N5iMlQIBlqfwE+dKDQI2urfOPOR6YyUJiLK6my1BbrwdXIUqCnewSDg
+         PIOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750109521; x=1750714321;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1750112188; x=1750716988;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=nFlrTdSbiYtSZxGPXOVLI+cEBoyC+FpjHzAjZc+xdGM=;
-        b=cm7nE0EBxZ5nbKtkPQnmOU82tiUdFi72waPKUpe6o2i5gUazMX+u3o3akP7FSKRKJU
-         oHih2RKL0FDvxjBBTVa6GHzfk1SJG/cGpwEWFV1h1A8skZNeQTyThBxpYi5lsYksdUjr
-         4kLieXg1k3a6Cz9V8w/8ty4zsPsR5hcMaxFY/q4jziXuPB6rTgiYBdLUcijV4e7hM6dZ
-         wQhZ21h3se+tLFmm4wZrmiZSiCkOVjcRU17eJ4tsRK0bLnUy/wuFJvwQQBit8AOIyJ/B
-         phBj5SSvXQO22coxruzXwhxSAlCMde4yLDL28k3iKj5lTYL3SpU6Ad7TJPacKJeCQFpg
-         o2Hg==
-X-Forwarded-Encrypted: i=1; AJvYcCXUogg/ejIrOh+tvXyyzadwOFdJu2wtvr7+5ruzILJQMz73uewAW1AA0nmHdUYAEPIcyxjNeA==@lists.linux.dev
-X-Gm-Message-State: AOJu0YzaZrYl25Vz/BSckpwTLq2e7ufrxttIZlSwL9i9MQZfECHBzBYk
-	IxdQNvua0txFj5oSQrD46N0YUrugWi0le//nuujCTkQEGIsw3nlJYAf4
-X-Gm-Gg: ASbGnctvX2uHAuotMymr2QEgaoOwKV3mtiAklTvg4r0TU1CnQPPCY1Li62Q7JqqRwqh
-	bRg7yCfB3sCgYsxrmxuwJrsqkBj2vjpBBlblLrmKUEjkokn59SAlFK9/OWB5JvmklpBDzpPihfC
-	tqCSpzUvBbn62KAvsS46Cl95lo/MerooJdayDU6mYsYGFSauX32LWO9RbkkCMuI+PghLuc6ihiv
-	UNNT16BdyqjKP5lqyxxpeJx2TzI/4DgpfK7CVZZouOhpD0J7TMlDJ7ev1OMODYHz0fBPKbQ1dB/
-	aQ1f2DVilL21too9iaS9unRscDs2glufCm46izwMBh3++OEo7RgAydEX+3FApw==
-X-Google-Smtp-Source: AGHT+IFTVBWlw9cflhlERZQFd/71VwgIhWWdB/OgezLH02B6Q4VgQCV4eFMJ0bcb9Z0GUl/V8MHJJw==
-X-Received: by 2002:a05:6902:2410:b0:e7b:607b:54b7 with SMTP id 3f1490d57ef6-e822acd0934mr14652384276.24.1750109521470;
-        Mon, 16 Jun 2025 14:32:01 -0700 (PDT)
-Received: from localhost ([2a03:2880:25ff:13::])
-        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e820e09fa44sm3183192276.24.2025.06.16.14.32.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 16 Jun 2025 14:32:01 -0700 (PDT)
-From: Joshua Hahn <joshua.hahnjy@gmail.com>
-To: SeongJae Park <sj@kernel.org>
-Cc: Andrew Morton <akpm@linux-foundation.org>,
-	David Hildenbrand <david@redhat.com>,
-	Honggyu Kim <honggyu.kim@sk.com>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
-	Michal Hocko <mhocko@kernel.org>,
-	Qi Zheng <zhengqi.arch@bytedance.com>,
-	Shakeel Butt <shakeel.butt@linux.dev>,
-	damon@lists.linux.dev,
-	kernel-team@meta.com,
-	linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org
-Subject: Re: [PATCH 0/3] mm/damon: use alloc_migrate_target() for DAMOS_MIGRATE_{HOT,COLD}
-Date: Mon, 16 Jun 2025 14:31:58 -0700
-Message-ID: <20250616213159.2839382-1-joshua.hahnjy@gmail.com>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250616172346.67659-1-sj@kernel.org>
-References: 
+        bh=L4x/p8NEu399tKFp+L82OEsMeF0ul8epvOoGorBxox8=;
+        b=Rn8uZuCJENFS5ylp1MWhrUfBIc87SEBxr1CdqFyFC7EFMHjv+IwQd5jZj7kYTbTDrS
+         8KnQIGMNO+oGeKb1IleedNqLxADQu/Gq2gioFAHlnFnYCpdk8zjewHR8ATJeqyYYb++Y
+         v1ITno7YStM2MEQRQjAwSey3IQvrz8dsZmmoVciTYZCDpoiqjB+3h//m0fuff+VX692l
+         hBAr5H3jzJnNv+WlzrqvCT8sd6/84FAwPkanuujZBPsbDrKFBp3UJ9QdV7zKrfA8z3xb
+         Tvr7hyeifQr0EcLmcTCF5Pd0uaZglUX4DCOfhu5vvRDKffwr+Zn8BRF7HrzuUkS7YW6n
+         OvxQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUgmZ2dD9j54MlKpC1F6cOYVwbo0OXubZ0JK9/NOZZfkzuxzxmY+NlzrN93PcMiDvemlNCGAw==@lists.linux.dev
+X-Gm-Message-State: AOJu0Yzofj3bj4xRHQeaoKgNVKdI+c75T7NuBOSXbl8UBdpV/iQQOHzo
+	VbNtJCgM9eUjcLu4ti/MO9Jkd6pcchyMAcCUVcDq3KdEWARus9K3wUALB5JjIlHFKulFOCRE9mW
+	bCQUTe2SlgI9nT1wFY4X79ZQr/QlZFi0=
+X-Gm-Gg: ASbGncuqQPm4GL2wXgTUn2wZAkD8aBgGa/aM2DC93xIUlzQfK3eTJkil55tpjsBPk7O
+	RQ3pLqlOaNfS7SUOBnRwMsyR3HvWgPARNhQWGW3CRNLSLtRNkJwHjspMp9RP8O/EXFwPsTns6Mj
+	/OJU4S264cDOsFPfbzA1isNq6OMc5yjTMYRFgp6umsTGwIcF+ANnDFFc/gHwl1R8USvQFNpKQcW
+	nWWow==
+X-Google-Smtp-Source: AGHT+IHWhKGzFlw/YafR+gXhZspwtYe6gkGuL7wwEgT/ACXbIUqtoGIZWUoj26D8y8Znb1z69yrl5bOG+d7vxjTvsJ4=
+X-Received: by 2002:a17:907:608b:b0:ade:3bec:ea29 with SMTP id
+ a640c23a62f3a-adfad397276mr976447066b.25.1750112187830; Mon, 16 Jun 2025
+ 15:16:27 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20250612181330.31236-1-bijan311@gmail.com> <20250612181330.31236-2-bijan311@gmail.com>
+ <5a50eeba-b26d-4913-8016-45278608a1ee@redhat.com> <CAMvvPS5U8exSvy0fknfhv8ym_dKgMVa7cfMOqn0fGyd+NSjSuQ@mail.gmail.com>
+ <e40aa590-f0a2-4666-84b0-c33c8f4fef87@redhat.com> <CAMvvPS5bTUfAXy4g79tAq+1DWKX79b33Jt=UNBg-xR9BDa7FdA@mail.gmail.com>
+ <aFBXuTtwhAV7BHeY@gourry-fedora-PF4VCD3F>
+In-Reply-To: <aFBXuTtwhAV7BHeY@gourry-fedora-PF4VCD3F>
+From: Bijan Tabatabai <bijan311@gmail.com>
+Date: Mon, 16 Jun 2025 17:16:16 -0500
+X-Gm-Features: AX0GCFtwj_QtqJXZ5jL7Wr8rfNEzrgEzB0jYXSU_0HLJ7kNaT0LSOgSWCHGca98
+Message-ID: <CAMvvPS4aiyA7nXTN=QkMz4ikvf77ZaZ05ys-4N09AFLrgeS_Pw@mail.gmail.com>
+Subject: Re: [RFC PATCH 1/4] mm/mempolicy: Expose policy_nodemask() in include/linux/mempolicy.h
+To: Gregory Price <gourry@gourry.net>
+Cc: David Hildenbrand <david@redhat.com>, linux-mm@kvack.org, linux-doc@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, sj@kernel.org, akpm@linux-foundation.org, 
+	corbet@lwn.net, ziy@nvidia.com, matthew.brost@intel.com, 
+	joshua.hahnjy@gmail.com, rakie.kim@sk.com, byungchul@sk.com, 
+	ying.huang@linux.alibaba.com, apopple@nvidia.com, bijantabatab@micron.com, 
+	venkataravis@micron.com, emirakhur@micron.com, ajayjoshi@micron.com, 
+	vtavarespetr@micron.com, damon@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, 16 Jun 2025 10:23:43 -0700 SeongJae Park <sj@kernel.org> wrote:
+Hi Gregory,
 
-> DAMOS_MIGRATE_{HOT,COLD} implementation resembles that for demotion, and
-> hence the behavior is also similar to that.  But, since those are not
-> only for demotion but general migrations, it would be better to match
-> with that for move_pages() system call.  Make the implementation and the
-> behavior more similar to move_pages() by not setting migration fallback
-> nodes, and using alloc_migration_target() instead of
-> alloc_migrate_folio().
-> 
-> alloc_migrate_folio() was renamed from alloc_demote_folio() and been
-> non-static function, to let DAMOS_MIGRATE_{HOT,COLD} call it.  As
-> alloc_migration_target() is called instead, the renaming and de-static
-> changes are no more required but could only make future code readers be
-> confused.  Revert the changes, too.
+On Mon, Jun 16, 2025 at 12:43=E2=80=AFPM Gregory Price <gourry@gourry.net> =
+wrote:
+>
+> On Mon, Jun 16, 2025 at 09:16:55AM -0500, Bijan Tabatabai wrote:
+> > >
+> > > Which, you also have during the rmap walk.
+> >
+> > There is another subtle dependency in get_vma_policy.
+> > It first checks if a VMA policy exists, and if it doesn't, it uses the
+> > task policy of the current task, which doesn't make sense when called
+> > by a kdamond thread.
+> >
+> > However, I don't think this will change what seems to be our consensus
+> > of adding a new helper function.
+> >
+>
+> Hate to interject here, but this gets worse the further you dig in.  The
+> mempolicy interface as a whole has many, many, many hidden references to
+> current->mempolicy and current->mems_allowed.  External interface
+> references to a task or vma mempolicy is a problem i explored somewhat
+> extensively when I prototyped `set_mempolicy2()`. It did not go well.
+>
+> Generally, mempolicy is not well structured to allow external actors on
+> a task's mempolicy.  Accessing a task's mempolicy requires operating in
+> a task's context or at least taking a reference on that task's mempolicy
+> (which requires taking the task_struct lock).
 
-Hi SJ,
-I hope you are doing well!
+Good point, I didn't take the lock in the second patch. Also, this
+made me realize I need to make sure there isn't a race condition where
+a task exits after getting a pointer to its task_struct from
+mm->owner.
 
-These changes all look good to me. And I agree that changing the behavior
-to mimic migration as opposed to demotion might be helpful in making
-opportunities for others to use DAMOS as a means to perform other related
-works (like [1]), without having to use a "demotion" mechanism for simply
-moving pages around.
+> I will just say that mempolicy is *extremely* current-task centric - and
+> very much allocation-time centric (i.e. the internal workings don't
+> really want to consider migration all that much).  You'll probably find
+> that this project requires rethinking mempolicy's external interfaces in
+> general (which is sorely needed anyway).
+>
+> I think this path to modifying mempolicy to support DAMON is a bit
+> ambitious for where mempolicy is at the moment. You may be better off
+> duplicating the interleave-weight logic and making some helper functions
+> to get the weight data, and then coming back around to generalize it
+> later.
 
-I do have one question: I'm curious what kinds of changes callers can expect.
-Would I be correct in understanding that this is mostly a semantic change
-(aside from no longer having a fallback nodemask)? Just want to make sure I
-have a correct understanding of your intent was.
+This may be true, but I think I will be able to avoid a lot of this
+nastiness with what I need. I am going to try with the mempolicy
+approach for the next revision, but if I get too much resistance, I
+will probably switch to this approach.
 
-In the meantime, feel free to add the following to the series:
-Reviewed-by: Joshua Hahn <joshua.hahnjy@gmail.com>
-
-Have a great day!
-Joshua
-
-[1] https://lore.kernel.org/all/20250612181330.31236-1-bijan311@gmail.com/
-
-Sent using hkml (https://github.com/sjp38/hackermail)
+Thanks,
+Bijan
