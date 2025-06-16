@@ -1,99 +1,125 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f175.google.com (mail-qk1-f175.google.com [209.85.222.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC54928936B;
-	Mon, 16 Jun 2025 17:23:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A83E9BA53
+	for <damon@lists.linux.dev>; Mon, 16 Jun 2025 17:43:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750094634; cv=none; b=ozV/cGJ5nfI2LjPTKRiw8tx/7XoeUwuFw5nkUimW3+c7PDSNVpO/5IqOBRSBubXxLdFDdFq2vgMuK6YwAkMI3L9/J47mg2UHX34RoqPi31IQ59kI8+FgxnWiDBGlOXDD4LxfklF7ulUHb9IdsjpbVSn2g8q5oMB1DpC9XlLlsdo=
+	t=1750095807; cv=none; b=tGNJmMrUqTfS6cx26PLzcQSeA9PjEFwuiRFls99K8MY4CMDUzyL6nja9XkEKvwSVWmhF4ddue4qeML8xQNn7izoSq5Fl1s+Q0mXNjYYoCTidVh2akWtGoezZ6ftdcrEerwVW4yPDA+Ex+q9CqEpjY4oab2ihdXOIx2vRQ+CjpuA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750094634; c=relaxed/simple;
-	bh=/jZrQ9S1/qKDrhEa24isAWnQHzj9GQjAjLTNE9pKE2E=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=BFvmisgn7s9TNpCm7X8l5Ecxv+PCw0MjgG83wlreB38vl0PNy60YL6SkR0ullYIIvRy6EiwMgV0IQeHmgYkxCpV37fVn0UUFlmKmblkWP3tvtLq61reWwBeWM5gme8rv2UHH25zTvSwZS/f0tqQ0wXQDFFTRphy6jvZh3eKKIbY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jWTjQjS9; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1750095807; c=relaxed/simple;
+	bh=4gWRKYjPld+Y1uH823VRVyouLBLTGOzXlpdHtiU3vMM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=QJKAPuEscXSNVFzMNXSduh/GUmT+PRZNK4munZ3F8HDDl3RYicUoIvwEGITemUVrUPN7b3V3quZZW9KrKcMiJZu+ymq24G7XTzRRZlTaDSk4RTotCfLuGHAqoOt5JgbphKg7oJGgUyM0pHb2P5hrI/+M2jr50eyh6Cwb7LKH+ns=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gourry.net; spf=pass smtp.mailfrom=gourry.net; dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.b=PYuLGaX5; arc=none smtp.client-ip=209.85.222.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gourry.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gourry.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jWTjQjS9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FBC8C4CEF4;
-	Mon, 16 Jun 2025 17:23:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1750094633;
-	bh=/jZrQ9S1/qKDrhEa24isAWnQHzj9GQjAjLTNE9pKE2E=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jWTjQjS9OREK8EWUzjoQa7VWHP+QHa8ZXxQ/EMPS1ieWcV0CxI0SlDnsuojqQqgGN
-	 zY6dSApgSD08wg5HPYrDIV4TNwSyI929S7qSj+filcsX+r8s5PlKtErBM4nRmSH2gL
-	 ZQwzCiDwzLJSdAErNStpbvvejPBySymv9zO72+e/vUcCzgyFrEqgZJlRZGjeBH69dU
-	 /gZFvr8xNPwzO6+Yxup0D3x41hFxITQer7aT0rPZ7bIuruVJJSklKoi9WV71Z3wBq6
-	 +fBbE7g5EHtTjh4scICSo0jew4Of8R7ItRWW6o2GJPiwlkL1/6jF7wnbp21HKESpCl
-	 XRmNxXpYC16DA==
-From: SeongJae Park <sj@kernel.org>
-To: Andrew Morton <akpm@linux-foundation.org>
-Cc: SeongJae Park <sj@kernel.org>,
-	David Hildenbrand <david@redhat.com>,
-	Honggyu Kim <honggyu.kim@sk.com>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
-	Michal Hocko <mhocko@kernel.org>,
-	Qi Zheng <zhengqi.arch@bytedance.com>,
-	Shakeel Butt <shakeel.butt@linux.dev>,
-	damon@lists.linux.dev,
-	kernel-team@meta.com,
-	linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org
-Subject: [PATCH 3/3] Revert "mm: make alloc_demote_folio externally invokable for migration"
-Date: Mon, 16 Jun 2025 10:23:46 -0700
-Message-Id: <20250616172346.67659-4-sj@kernel.org>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250616172346.67659-1-sj@kernel.org>
-References: <20250616172346.67659-1-sj@kernel.org>
+	dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.b="PYuLGaX5"
+Received: by mail-qk1-f175.google.com with SMTP id af79cd13be357-7d09f11657cso497195785a.0
+        for <damon@lists.linux.dev>; Mon, 16 Jun 2025 10:43:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gourry.net; s=google; t=1750095804; x=1750700604; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=5/4yKvTkyWVd/1WyBWdEpHbqHXZjmiKnTF2OwJ8AWbI=;
+        b=PYuLGaX5pxYINbww7fNnIu4hWIxMdiRP9VkM+4gL+pPA254ZJiyu2geYgwZ2lq6pNu
+         ezEnPm4Vt4jZfKAd9Rbcaw5axbKgHoVO17PE2HGXYoFRoJi6ZZasV71Es5WK9SYW0T9f
+         1uXfnbEL5sQEBZ1eaSldFzq5hvJ4liChf5lUfhn5IQsM5T+4VVItAwDE7JUZ1FPSPOe8
+         VfNwyrJevaZRBXBWR8Qwv4Iigo/UVH+6yaMrf2DMEpmoOCOlYBIjLDXHooY7eEJQGLrL
+         PrIc4etxAMxZk5oH6H6xeLiVlICxlDPgVZDNaax41UWw5hlNwi75AbASXFZcQgvtrSIr
+         T8pQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1750095804; x=1750700604;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=5/4yKvTkyWVd/1WyBWdEpHbqHXZjmiKnTF2OwJ8AWbI=;
+        b=bGCpz6gbmpWh52etAMZO1usNUhB5jI9O/9ARBqQ1y84jCBmYv+yrL9pAJllmOtGwKE
+         p/QptvC0dmdaDjG9MyTwafpYpJxyhB//UfzttLQnWBJHoNjOKA4Bwb+UXmMdoxPc58V/
+         wTfH7NSo9hlvFn2iE+R/c1aRqbftUmTiTAA50VNMirZRH8iw2R+7Xk7wnNsCwkvxal5X
+         c7k//7M6kovB573BYwe7B6nQcg8TIcfg0hzNaiNGY820mAnTKfvLTVJMzTBmkglWJgTB
+         +bUk0F2qKnqzrb1U0II6nPI1vEzSSiud2cd6DVxlYqzj3uOLBcY6Q+u370ppgiythl+d
+         XSWw==
+X-Forwarded-Encrypted: i=1; AJvYcCVTM2C8w4YBqJZqnXXvij6Fr5USR336UUf0mZmsQwshUir31yfUNC4+cW1dVOUlSuZ+678DSg==@lists.linux.dev
+X-Gm-Message-State: AOJu0YwbLDyn/IF5ducnpyYrlcSg2q9dLysPosfydFsTgSXsj/pMjoq4
+	JyRPLAi/nT3RejK4eYhCpyVfehhUby35I9KBmeJ1nL59PY4RZECk80KCfdFbarXMrv8=
+X-Gm-Gg: ASbGncv6Hnvc0w4Nn6HZkTcOCWnyUO0+j5Wi3vVc7TZcq9Kz2tLEF2BmC6G1+gWbPVm
+	N81JixSY1BzigVoxuO3IDa4w8Y+Yq92xEuS7OBf97Y2vxR2n2uFpzdyuztobcSxqp6RlhF/NoTV
+	Qs3pOJvXVYMM1gmCD6a8p3LBMpoQgr0F9l0IzRj87xp/nkFe3VUGJaNMXdHjeOqfg9OZFT1Dpsz
+	0lezOKUfU5EjE4jLft/BM/9wG7YP5vd335X8vUfoYPXsn9PWQIrSs2KuL7otvYgUEDSLG+Jr3XY
+	JEGfiLFTYZcNkyFeQuOV0F2Yh2ykjwbX6iWGNN53bhBRisZuIWNljoDLkw==
+X-Google-Smtp-Source: AGHT+IHUYY/n0yispU7eDUw6kgUep9wTEjSSBo8Jf7TL4kZ2IW3kTqXn60pb1DKcSyyGtFKJ/3beCA==
+X-Received: by 2002:a05:620a:3728:b0:7d3:8c44:b7b1 with SMTP id af79cd13be357-7d3c6c0962emr1601991885a.3.1750095804599;
+        Mon, 16 Jun 2025 10:43:24 -0700 (PDT)
+Received: from gourry-fedora-PF4VCD3F ([2620:10d:c091:400::5:cf64])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-4a72a0fcd34sm51514371cf.0.2025.06.16.10.43.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 16 Jun 2025 10:43:23 -0700 (PDT)
+Date: Mon, 16 Jun 2025 12:43:21 -0500
+From: Gregory Price <gourry@gourry.net>
+To: Bijan Tabatabai <bijan311@gmail.com>
+Cc: David Hildenbrand <david@redhat.com>, linux-mm@kvack.org,
+	linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org,
+	sj@kernel.org, akpm@linux-foundation.org, corbet@lwn.net,
+	ziy@nvidia.com, matthew.brost@intel.com, joshua.hahnjy@gmail.com,
+	rakie.kim@sk.com, byungchul@sk.com, ying.huang@linux.alibaba.com,
+	apopple@nvidia.com, bijantabatab@micron.com,
+	venkataravis@micron.com, emirakhur@micron.com, ajayjoshi@micron.com,
+	vtavarespetr@micron.com, damon@lists.linux.dev
+Subject: Re: [RFC PATCH 1/4] mm/mempolicy: Expose policy_nodemask() in
+ include/linux/mempolicy.h
+Message-ID: <aFBXuTtwhAV7BHeY@gourry-fedora-PF4VCD3F>
+References: <20250612181330.31236-1-bijan311@gmail.com>
+ <20250612181330.31236-2-bijan311@gmail.com>
+ <5a50eeba-b26d-4913-8016-45278608a1ee@redhat.com>
+ <CAMvvPS5U8exSvy0fknfhv8ym_dKgMVa7cfMOqn0fGyd+NSjSuQ@mail.gmail.com>
+ <e40aa590-f0a2-4666-84b0-c33c8f4fef87@redhat.com>
+ <CAMvvPS5bTUfAXy4g79tAq+1DWKX79b33Jt=UNBg-xR9BDa7FdA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAMvvPS5bTUfAXy4g79tAq+1DWKX79b33Jt=UNBg-xR9BDa7FdA@mail.gmail.com>
 
-This reverts commit a00ce85af2a1be494d3b0c9457e8e81cdcce2a89.
+On Mon, Jun 16, 2025 at 09:16:55AM -0500, Bijan Tabatabai wrote:
+> >
+> > Which, you also have during the rmap walk.
+> 
+> There is another subtle dependency in get_vma_policy.
+> It first checks if a VMA policy exists, and if it doesn't, it uses the
+> task policy of the current task, which doesn't make sense when called
+> by a kdamond thread.
+> 
+> However, I don't think this will change what seems to be our consensus
+> of adding a new helper function.
+> 
 
-Commit a00ce85af2a1 ("mm: make alloc_demote_folio externally invokable
-for migration") was made to let DAMOS_MIGRATE_{HOT,COLD} call the
-function.  But a previous commit made DAMOS_MIGRATE_{HOT,COLD} call
-alloc_migration_target() instead.  Hence there are no more callers of
-the function outside of vmscan.c.  Revert the commit to make the
-function static again.
+Hate to interject here, but this gets worse the further you dig in.  The
+mempolicy interface as a whole has many, many, many hidden references to
+current->mempolicy and current->mems_allowed.  External interface
+references to a task or vma mempolicy is a problem i explored somewhat
+extensively when I prototyped `set_mempolicy2()`. It did not go well.
 
-Signed-off-by: SeongJae Park <sj@kernel.org>
----
- mm/internal.h | 1 -
- mm/vmscan.c   | 3 ++-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+Generally, mempolicy is not well structured to allow external actors on
+a task's mempolicy.  Accessing a task's mempolicy requires operating in
+a task's context or at least taking a reference on that task's mempolicy
+(which requires taking the task_struct lock).
 
-diff --git a/mm/internal.h b/mm/internal.h
-index aedcf95737ed..746fa4187e9e 100644
---- a/mm/internal.h
-+++ b/mm/internal.h
-@@ -1227,7 +1227,6 @@ extern unsigned long  __must_check vm_mmap_pgoff(struct file *, unsigned long,
-         unsigned long, unsigned long);
- 
- extern void set_pageblock_order(void);
--struct folio *alloc_demote_folio(struct folio *src, unsigned long private);
- unsigned long reclaim_pages(struct list_head *folio_list);
- unsigned int reclaim_clean_pages_from_list(struct zone *zone,
- 					    struct list_head *folio_list);
-diff --git a/mm/vmscan.c b/mm/vmscan.c
-index 6bebc91cbf2f..620dce753b64 100644
---- a/mm/vmscan.c
-+++ b/mm/vmscan.c
-@@ -1006,7 +1006,8 @@ static void folio_check_dirty_writeback(struct folio *folio,
- 		mapping->a_ops->is_dirty_writeback(folio, dirty, writeback);
- }
- 
--struct folio *alloc_demote_folio(struct folio *src, unsigned long private)
-+static struct folio *alloc_demote_folio(struct folio *src,
-+		unsigned long private)
- {
- 	struct folio *dst;
- 	nodemask_t *allowed_mask;
--- 
-2.39.5
+I will just say that mempolicy is *extremely* current-task centric - and
+very much allocation-time centric (i.e. the internal workings don't
+really want to consider migration all that much).  You'll probably find
+that this project requires rethinking mempolicy's external interfaces in
+general (which is sorely needed anyway).
+
+I think this path to modifying mempolicy to support DAMON is a bit
+ambitious for where mempolicy is at the moment. You may be better off
+duplicating the interleave-weight logic and making some helper functions
+to get the weight data, and then coming back around to generalize it
+later.
+
+~Gregory
