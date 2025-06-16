@@ -1,325 +1,296 @@
-Received: from invmail4.hynix.com (exvmail4.hynix.com [166.125.252.92])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 142EB202C44
-	for <damon@lists.linux.dev>; Mon, 16 Jun 2025 07:42:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=166.125.252.92
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 580B627510E
+	for <damon@lists.linux.dev>; Mon, 16 Jun 2025 09:46:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750059771; cv=none; b=FKPxt5RkhHjl7sIIvu3vDM5rBlyGOJ6Tt8wWARu+iYq2oZ3mjm4Sx0nAPZEMCjHglxRWTzYJWMX66SQGiBByDjWhzWtWl/WJpjYQX9PpPr8K2mck4e2vidw5sm5iBRbTPbybcrlt+tnBJA37JxmEMuTx/ZvWV6WfXATZND4Wbf8=
+	t=1750067168; cv=none; b=SL3RguhIxWqqP9UJbfMOTLCF0xm8ahM7FBrHmcFajACh+l3ORXQhmPq1lFrlRnXb5dAsxTD+JQrBXf95LVOjEmqDZy10OPJozjFvSlDDOEk2pVlO1Vo/P731EsliIbotr7MAwAcdcEVVb7/BKV5tG0uyFPznHZdMRg4tqQB3qCs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750059771; c=relaxed/simple;
-	bh=uhpJklVbBbRMO7R0wFYgpRhw8DZy55F6QA/PMvAN/z8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GFB0XbP7Mejjcb7cxTP1cca9dy5YeTphdu/ivcxd0SGtkdLsrWt9dfkE7cEuMr1gkF/6F4yhzgkHR5JodxpDFavDn+SB3vt/oGnQm81P4F+axcqNB9Yqxgx3Dft4CAs6H8u0A19PoE07q60Viyqm+3LPFicPYLl9i5en4ll72MU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sk.com; spf=pass smtp.mailfrom=sk.com; arc=none smtp.client-ip=166.125.252.92
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sk.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sk.com
-X-AuditID: a67dfc5b-681ff7000002311f-e0-684fcaeedd57
-Date: Mon, 16 Jun 2025 16:42:33 +0900
-From: Byungchul Park <byungchul@sk.com>
-To: Bijan Tabatabai <bijan311@gmail.com>
-Cc: SeongJae Park <sj@kernel.org>, linux-mm@kvack.org,
-	linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org,
-	akpm@linux-foundation.org, corbet@lwn.net, david@redhat.com,
-	ziy@nvidia.com, matthew.brost@intel.com, joshua.hahnjy@gmail.com,
-	rakie.kim@sk.com, gourry@gourry.net, ying.huang@linux.alibaba.com,
-	apopple@nvidia.com, bijantabatab@micron.com,
-	venkataravis@micron.com, emirakhur@micron.com, ajayjoshi@micron.com,
-	vtavarespetr@micron.com, damon@lists.linux.dev,
-	kernel_team@skhynix.com
-Subject: Re: [RFC PATCH 0/4] mm/damon: Add DAMOS action to interleave data
- across nodes
-Message-ID: <20250616074233.GA74466@system.software.com>
-References: <20250612181330.31236-1-bijan311@gmail.com>
- <20250612234942.3612-1-sj@kernel.org>
- <CAMvvPS4WsGkfukNscnLWW40Agg6_wmkm_QF96m+HZrEZrstR4A@mail.gmail.com>
+	s=arc-20240116; t=1750067168; c=relaxed/simple;
+	bh=BI8LIOoaWxZ9ZU4rqgk8yOCwSaiMDSfmMVuZY888waE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=iWOdVApA9QfsPKjuI2RUfSm6XUqIMQwYAEBHyNziGZN9nU8aHRzwt2jTUmhb2wFYwz+anQmgG0Mkvbk2r7r2wZh3vCeMW1Zi9ObbsRUsB2K3MEBuErNv1UuKybBxcCkLwkxBvl5HTBGDleYL+Qy7jkRAkWYB1kMsRHa1PiVcT4w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=bqAvg7zT; arc=none smtp.client-ip=170.10.129.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="bqAvg7zT"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1750067165;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=9LpBwQhNiE5GmshdXCIa53CrveoAMtvXDG7n1Vt+nVY=;
+	b=bqAvg7zTQPcyhWMTL9qyvkFeocH7Eh1XFRuXS14Xylb64WEbItTIuYITCwyC89aKsFwxI5
+	McyineyJohyqidjzAqEixw4jrBpZfgrM5BbEG29Ronp4bz7ZLGSHmEkHsKUqAtmkCJFRI8
+	vecy1YQentoGXLCuf9W+iLBThdVbMB8=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-303-sPWlKfo7Pr-Dgn3D4qRA1w-1; Mon, 16 Jun 2025 05:46:01 -0400
+X-MC-Unique: sPWlKfo7Pr-Dgn3D4qRA1w-1
+X-Mimecast-MFC-AGG-ID: sPWlKfo7Pr-Dgn3D4qRA1w_1750067160
+Received: by mail-wm1-f70.google.com with SMTP id 5b1f17b1804b1-451dda846a0so32608525e9.2
+        for <damon@lists.linux.dev>; Mon, 16 Jun 2025 02:46:01 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1750067160; x=1750671960;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:from:references:cc:to:subject:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=9LpBwQhNiE5GmshdXCIa53CrveoAMtvXDG7n1Vt+nVY=;
+        b=EYttCnAlPFJBFR0GRAew3VSJCFkc/QXc0EzPa8E5PTdJb9x2VBRSvX+LF9SgWUbxH5
+         MMYXr5Vr05FnJZBohMhJEp36/5nptE8eP/9rGvG1Q2nLLm8YAIzLRIm26FAOrqTDtogX
+         xwm38Bt/lf4Y2Dwliv7DokPh+tKQBjhWGNF/DymMCB5cDOMTg383/+NVTYWITdc7txJw
+         CD/VmqKNXSPMtvdCddujmG97xXp9nOa0uyS89rcaEIIFYEN3D2woOhAlOSFaxr0VZ9gM
+         lR0L9dHzz8rRIghv2p2XwturOvDje75ndKZeh0MZYx1AGKMLlsuSzr24DAQ6cDPCXXMn
+         /tjA==
+X-Forwarded-Encrypted: i=1; AJvYcCXf0mrGwkRpQLIawzo6A8ZQif6Pvwc1B1KjudpYsyu5+SBVtaleh3ftgcAIM8wg/J4nIObWXA==@lists.linux.dev
+X-Gm-Message-State: AOJu0Yyf0hjQCUkWBQNwUGMmr08hNyjvj1wYjD5MUkvzCau+T6ZSBOcb
+	aOKslVaC7PylxJxlkXBQBz60UzYP2G7LHFe512ln1BDkeYu3B5UJPGrDhAYKAXCSLHi8J3VbM4U
+	NxSQCio5jaTWeiAc4q78cMRsc9C4wsVcytrvun+QczHL9kE4HgnfHXd6x
+X-Gm-Gg: ASbGncubKXIm7F7j3kWYDRZ1/2e5jfW4kkUvzr2BgP7+fadwp+GlFVfTAovbtdmoNFG
+	DbnO8vt30YcTKd/2lMi3Sk/2deCxRqckcxqkJTga5cATrtsJ6gJM2aEkKuNEFuqO/JOIi3EaNda
+	nfKtgJzhJlJAvdwxCeEcXRid7CrQwaZzAjTu34HVD78AiPu/J7wBDeeyYQ1KRX5FWUG1779SnNv
+	9Yfsq8TRofuDozHkIn/MKXzTUDZNVVxlvD20VvldJefqLr9slpYPaCuJLO3It3MGvj2yR3gAZO7
+	z4ww8fKkhXBoA8hj2qCWBlM/QiNb6VhUL42IntkFaPinQqUcmLrEbMHEPfw2tH7CfoEh9bN/3mx
+	gefZ1ji+XVpGyjH8QwY82qMc6jUr6Z9AgaBW6aQiZs/ZpHPk=
+X-Received: by 2002:a05:600c:a016:b0:450:d3b9:4ba2 with SMTP id 5b1f17b1804b1-4533cac06acmr74755425e9.24.1750067160424;
+        Mon, 16 Jun 2025 02:46:00 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGBSBsqoa72A42RcmXkBG9lG51qenCWppKc7zo8qZQnQmQOSEpYDrQSdVz/aVJQr08DxTPJ8g==
+X-Received: by 2002:a05:600c:a016:b0:450:d3b9:4ba2 with SMTP id 5b1f17b1804b1-4533cac06acmr74755055e9.24.1750067159963;
+        Mon, 16 Jun 2025 02:45:59 -0700 (PDT)
+Received: from ?IPV6:2003:d8:2f25:bd00:949:b5a9:e02a:f265? (p200300d82f25bd000949b5a9e02af265.dip0.t-ipconnect.de. [2003:d8:2f25:bd00:949:b5a9:e02a:f265])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a568b087f8sm10750271f8f.53.2025.06.16.02.45.58
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 16 Jun 2025 02:45:59 -0700 (PDT)
+Message-ID: <e40aa590-f0a2-4666-84b0-c33c8f4fef87@redhat.com>
+Date: Mon, 16 Jun 2025 11:45:58 +0200
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH 1/4] mm/mempolicy: Expose policy_nodemask() in
+ include/linux/mempolicy.h
+To: Bijan Tabatabai <bijan311@gmail.com>
+Cc: linux-mm@kvack.org, linux-doc@vger.kernel.org,
+ linux-kernel@vger.kernel.org, sj@kernel.org, akpm@linux-foundation.org,
+ corbet@lwn.net, ziy@nvidia.com, matthew.brost@intel.com,
+ joshua.hahnjy@gmail.com, rakie.kim@sk.com, byungchul@sk.com,
+ gourry@gourry.net, ying.huang@linux.alibaba.com, apopple@nvidia.com,
+ bijantabatab@micron.com, venkataravis@micron.com, emirakhur@micron.com,
+ ajayjoshi@micron.com, vtavarespetr@micron.com, damon@lists.linux.dev
+References: <20250612181330.31236-1-bijan311@gmail.com>
+ <20250612181330.31236-2-bijan311@gmail.com>
+ <5a50eeba-b26d-4913-8016-45278608a1ee@redhat.com>
+ <CAMvvPS5U8exSvy0fknfhv8ym_dKgMVa7cfMOqn0fGyd+NSjSuQ@mail.gmail.com>
+From: David Hildenbrand <david@redhat.com>
+Autocrypt: addr=david@redhat.com; keydata=
+ xsFNBFXLn5EBEAC+zYvAFJxCBY9Tr1xZgcESmxVNI/0ffzE/ZQOiHJl6mGkmA1R7/uUpiCjJ
+ dBrn+lhhOYjjNefFQou6478faXE6o2AhmebqT4KiQoUQFV4R7y1KMEKoSyy8hQaK1umALTdL
+ QZLQMzNE74ap+GDK0wnacPQFpcG1AE9RMq3aeErY5tujekBS32jfC/7AnH7I0v1v1TbbK3Gp
+ XNeiN4QroO+5qaSr0ID2sz5jtBLRb15RMre27E1ImpaIv2Jw8NJgW0k/D1RyKCwaTsgRdwuK
+ Kx/Y91XuSBdz0uOyU/S8kM1+ag0wvsGlpBVxRR/xw/E8M7TEwuCZQArqqTCmkG6HGcXFT0V9
+ PXFNNgV5jXMQRwU0O/ztJIQqsE5LsUomE//bLwzj9IVsaQpKDqW6TAPjcdBDPLHvriq7kGjt
+ WhVhdl0qEYB8lkBEU7V2Yb+SYhmhpDrti9Fq1EsmhiHSkxJcGREoMK/63r9WLZYI3+4W2rAc
+ UucZa4OT27U5ZISjNg3Ev0rxU5UH2/pT4wJCfxwocmqaRr6UYmrtZmND89X0KigoFD/XSeVv
+ jwBRNjPAubK9/k5NoRrYqztM9W6sJqrH8+UWZ1Idd/DdmogJh0gNC0+N42Za9yBRURfIdKSb
+ B3JfpUqcWwE7vUaYrHG1nw54pLUoPG6sAA7Mehl3nd4pZUALHwARAQABzSREYXZpZCBIaWxk
+ ZW5icmFuZCA8ZGF2aWRAcmVkaGF0LmNvbT7CwZgEEwEIAEICGwMGCwkIBwMCBhUIAgkKCwQW
+ AgMBAh4BAheAAhkBFiEEG9nKrXNcTDpGDfzKTd4Q9wD/g1oFAl8Ox4kFCRKpKXgACgkQTd4Q
+ 9wD/g1oHcA//a6Tj7SBNjFNM1iNhWUo1lxAja0lpSodSnB2g4FCZ4R61SBR4l/psBL73xktp
+ rDHrx4aSpwkRP6Epu6mLvhlfjmkRG4OynJ5HG1gfv7RJJfnUdUM1z5kdS8JBrOhMJS2c/gPf
+ wv1TGRq2XdMPnfY2o0CxRqpcLkx4vBODvJGl2mQyJF/gPepdDfcT8/PY9BJ7FL6Hrq1gnAo4
+ 3Iv9qV0JiT2wmZciNyYQhmA1V6dyTRiQ4YAc31zOo2IM+xisPzeSHgw3ONY/XhYvfZ9r7W1l
+ pNQdc2G+o4Di9NPFHQQhDw3YTRR1opJaTlRDzxYxzU6ZnUUBghxt9cwUWTpfCktkMZiPSDGd
+ KgQBjnweV2jw9UOTxjb4LXqDjmSNkjDdQUOU69jGMUXgihvo4zhYcMX8F5gWdRtMR7DzW/YE
+ BgVcyxNkMIXoY1aYj6npHYiNQesQlqjU6azjbH70/SXKM5tNRplgW8TNprMDuntdvV9wNkFs
+ 9TyM02V5aWxFfI42+aivc4KEw69SE9KXwC7FSf5wXzuTot97N9Phj/Z3+jx443jo2NR34XgF
+ 89cct7wJMjOF7bBefo0fPPZQuIma0Zym71cP61OP/i11ahNye6HGKfxGCOcs5wW9kRQEk8P9
+ M/k2wt3mt/fCQnuP/mWutNPt95w9wSsUyATLmtNrwccz63XOwU0EVcufkQEQAOfX3n0g0fZz
+ Bgm/S2zF/kxQKCEKP8ID+Vz8sy2GpDvveBq4H2Y34XWsT1zLJdvqPI4af4ZSMxuerWjXbVWb
+ T6d4odQIG0fKx4F8NccDqbgHeZRNajXeeJ3R7gAzvWvQNLz4piHrO/B4tf8svmRBL0ZB5P5A
+ 2uhdwLU3NZuK22zpNn4is87BPWF8HhY0L5fafgDMOqnf4guJVJPYNPhUFzXUbPqOKOkL8ojk
+ CXxkOFHAbjstSK5Ca3fKquY3rdX3DNo+EL7FvAiw1mUtS+5GeYE+RMnDCsVFm/C7kY8c2d0G
+ NWkB9pJM5+mnIoFNxy7YBcldYATVeOHoY4LyaUWNnAvFYWp08dHWfZo9WCiJMuTfgtH9tc75
+ 7QanMVdPt6fDK8UUXIBLQ2TWr/sQKE9xtFuEmoQGlE1l6bGaDnnMLcYu+Asp3kDT0w4zYGsx
+ 5r6XQVRH4+5N6eHZiaeYtFOujp5n+pjBaQK7wUUjDilPQ5QMzIuCL4YjVoylWiBNknvQWBXS
+ lQCWmavOT9sttGQXdPCC5ynI+1ymZC1ORZKANLnRAb0NH/UCzcsstw2TAkFnMEbo9Zu9w7Kv
+ AxBQXWeXhJI9XQssfrf4Gusdqx8nPEpfOqCtbbwJMATbHyqLt7/oz/5deGuwxgb65pWIzufa
+ N7eop7uh+6bezi+rugUI+w6DABEBAAHCwXwEGAEIACYCGwwWIQQb2cqtc1xMOkYN/MpN3hD3
+ AP+DWgUCXw7HsgUJEqkpoQAKCRBN3hD3AP+DWrrpD/4qS3dyVRxDcDHIlmguXjC1Q5tZTwNB
+ boaBTPHSy/Nksu0eY7x6HfQJ3xajVH32Ms6t1trDQmPx2iP5+7iDsb7OKAb5eOS8h+BEBDeq
+ 3ecsQDv0fFJOA9ag5O3LLNk+3x3q7e0uo06XMaY7UHS341ozXUUI7wC7iKfoUTv03iO9El5f
+ XpNMx/YrIMduZ2+nd9Di7o5+KIwlb2mAB9sTNHdMrXesX8eBL6T9b+MZJk+mZuPxKNVfEQMQ
+ a5SxUEADIPQTPNvBewdeI80yeOCrN+Zzwy/Mrx9EPeu59Y5vSJOx/z6OUImD/GhX7Xvkt3kq
+ Er5KTrJz3++B6SH9pum9PuoE/k+nntJkNMmQpR4MCBaV/J9gIOPGodDKnjdng+mXliF3Ptu6
+ 3oxc2RCyGzTlxyMwuc2U5Q7KtUNTdDe8T0uE+9b8BLMVQDDfJjqY0VVqSUwImzTDLX9S4g/8
+ kC4HRcclk8hpyhY2jKGluZO0awwTIMgVEzmTyBphDg/Gx7dZU1Xf8HFuE+UZ5UDHDTnwgv7E
+ th6RC9+WrhDNspZ9fJjKWRbveQgUFCpe1sa77LAw+XFrKmBHXp9ZVIe90RMe2tRL06BGiRZr
+ jPrnvUsUUsjRoRNJjKKA/REq+sAnhkNPPZ/NNMjaZ5b8Tovi8C0tmxiCHaQYqj7G2rgnT0kt
+ WNyWQQ==
+Organization: Red Hat
+In-Reply-To: <CAMvvPS5U8exSvy0fknfhv8ym_dKgMVa7cfMOqn0fGyd+NSjSuQ@mail.gmail.com>
+X-Mimecast-Spam-Score: 0
+X-Mimecast-MFC-PROC-ID: x577mL8Nj9nTIVgCthQ-YKey4vbf0Y7r2qTBseu-tP8_1750067160
+X-Mimecast-Originator: redhat.com
+Content-Language: en-US
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAMvvPS4WsGkfukNscnLWW40Agg6_wmkm_QF96m+HZrEZrstR4A@mail.gmail.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrKIsWRmVeSWpSXmKPExsXC9ZZnke67U/4ZBu2PTS1W7G1lt5izfg2b
-	xa4bIRYNPz6zWSy4d57R4smBdiDx/zerxdf1v5gtZny4xG7x8+5xdovjW+exWyxsW8JicXnX
-	HDaLe2v+s1p865O2OPz1DZPFzuY7TBbH701it1i9JsNi9tF77A4iHjtn3WX36G67zO6xeM9L
-	Jo9NqzrZPDZ9msTucWLGbxaPnQ8tPV5snsnosbhvMqvH9/UdbB69ze/YPN7vu8rm8XmTXABv
-	FJdNSmpOZllqkb5dAlfGu4/vmAomx1U0Pp3M3sC42ruLkZNDQsBEYuvrH8ww9rK7rewgNouA
-	qsTS62tZQGw2AXWJGzd+gtWICGhI7Ph+B6iGi4NZ4DezxLTDDWAJYYFIiX0Hr4DZvAIWEkcv
-	LgMrEhJYxijROuk9VEJQ4uTMJ2BTmYGm/pl3CSjOAWRLSyz/xwERlpdo3jobrJxTIFDi5JRl
-	bCC2qICyxIFtx5lAZkoI3GKX2DCthRXiakmJgytusExgFJyFZMUsJCtmIayYhWTFAkaWVYxC
-	mXlluYmZOSZ6GZV5mRV6yfm5mxiBkb2s9k/0DsZPF4IPMQpwMCrx8B7Y6pchxJpYVlyZe4hR
-	goNZSYR38QmgEG9KYmVValF+fFFpTmrxIUZpDhYlcV6jb+UpQgLpiSWp2ampBalFMFkmDk6p
-	BsagV9k1Oi9N5K/pX2ErO/R3EWf+cpFn0ZE+l4/7ti6dkDBr02YWh9SY4tLNN4S3hf258jYi
-	9qSG1LctLk6T7QtZZ155azzddaf+XrsUfaeHrZd5Z2s+6/M/rXupyFYxsGtWzf5Kp3UMZtbb
-	8leke800u/JsfoNFgeGcr5qb7B9oyG65End5vZoSS3FGoqEWc1FxIgDzJjDy6AIAAA==
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrKIsWRmVeSWpSXmKPExsXC5WfdrPvulH+GwYxLihYr9rayW8xZv4bN
-	YteNEIuGH5/ZLBbcO89o8eRAO5D4/5vV4uv6X8wWMz5cYrf4efc4u8XxrfPYLQ7PPclqsbBt
-	CYvF5V1z2CzurfnPavGtT9ri0LXnrBaHv75hstjZfIfJ4vi9SewWq9dkWMw+eo/dQcxj56y7
-	7B7dbZfZPRbvecnksWlVJ5vHpk+T2D1OzPjN4rHzoaXHi80zGT0W901m9fi+voPNo7f5HZvH
-	+31X2Ty+3fbwWPziA5PH501yAfxRXDYpqTmZZalF+nYJXBnvPr5jKpgcV9H4dDJ7A+Nq7y5G
-	Tg4JAROJZXdb2UFsFgFViaXX17KA2GwC6hI3bvxkBrFFBDQkdny/A1TDxcEs8JtZYtrhBrCE
-	sECkxL6DV8BsXgELiaMXl4EVCQksY5RonfQeKiEocXLmE7CpzEBT/8y7BBTnALKlJZb/44AI
-	y0s0b50NVs4pEChxcsoyNhBbVEBZ4sC240wTGPlmIZk0C8mkWQiTZiGZtICRZRWjSGZeWW5i
-	Zo6pXnF2RmVeZoVecn7uJkZg5C6r/TNxB+OXy+6HGAU4GJV4eB9s8s8QYk0sK67MPcQowcGs
-	JMK7+IRfhhBvSmJlVWpRfnxRaU5q8SFGaQ4WJXFer/DUBCGB9MSS1OzU1ILUIpgsEwenVAPj
-	3Jc3f/92TmY79Lyk+svvxpbbWZtfZC2YKboz//Tqe8d2r9504F7x/5SV4nfVy22eLNOPW6hz
-	6PD0PRa1Idv/NPuJt8xrK1hz2Dqj5N+vS7Lt0WJvbq4oyfl7q9ZYO5Yt5HHIg2+VLisLPTY4
-	haxe+ktQJOgQt+TUW2luekEvs6+Zri0xyVR+pMRSnJFoqMVcVJwIAKOKiFDYAgAA
-X-CFilter-Loop: Reflected
 
-On Fri, Jun 13, 2025 at 10:44:17AM -0500, Bijan Tabatabai wrote:
-> Hi SeongJae,
+On 13.06.25 18:33, Bijan Tabatabai wrote:
+> On Fri, Jun 13, 2025 at 8:45 AM David Hildenbrand <david@redhat.com> wrote:
+>>
+>> On 12.06.25 20:13, Bijan Tabatabai wrote:
+>>> From: Bijan Tabatabai <bijantabatab@micron.com>
+>>>
+>>> This patch is to allow DAMON to call policy_nodemask() so it can
+>>> determine where to place a page for interleaving.
+>>>
+>>> Signed-off-by: Bijan Tabatabai <bijantabatab@micron.com>
+>>> ---
+>>>    include/linux/mempolicy.h | 9 +++++++++
+>>>    mm/mempolicy.c            | 4 +---
+>>>    2 files changed, 10 insertions(+), 3 deletions(-)
+>>>
+>>> diff --git a/include/linux/mempolicy.h b/include/linux/mempolicy.h
+>>> index 0fe96f3ab3ef..e96bf493ff7a 100644
+>>> --- a/include/linux/mempolicy.h
+>>> +++ b/include/linux/mempolicy.h
+>>> @@ -133,6 +133,8 @@ struct mempolicy *__get_vma_policy(struct vm_area_struct *vma,
+>>>    struct mempolicy *get_vma_policy(struct vm_area_struct *vma,
+>>>                unsigned long addr, int order, pgoff_t *ilx);
+>>>    bool vma_policy_mof(struct vm_area_struct *vma);
+>>> +nodemask_t *policy_nodemask(gfp_t gfp, struct mempolicy *pol,
+>>> +             pgoff_t ilx, int *nid);
+>>>
+>>>    extern void numa_default_policy(void);
+>>>    extern void numa_policy_init(void);
+>>> @@ -232,6 +234,13 @@ static inline struct mempolicy *get_vma_policy(struct vm_area_struct *vma,
+>>>        return NULL;
+>>>    }
+>>>
+>>> +static inline nodemask_t *policy_nodemask(gfp_t gfp, struct mempolicy *pol,
+>>> +                             pgoff_t ilx, int *nid)
+>>> +{
+>>> +     *nid = NUMA_NO_NODE;
+>>> +     return NULL;
+>>> +}
+>>> +
+>>>    static inline int
+>>>    vma_dup_policy(struct vm_area_struct *src, struct vm_area_struct *dst)
+>>>    {
+>>> diff --git a/mm/mempolicy.c b/mm/mempolicy.c
+>>> index 3b1dfd08338b..54f539497e20 100644
+>>> --- a/mm/mempolicy.c
+>>> +++ b/mm/mempolicy.c
+>>> @@ -596,8 +596,6 @@ static const struct mempolicy_operations mpol_ops[MPOL_MAX] = {
+>>>
+>>>    static bool migrate_folio_add(struct folio *folio, struct list_head *foliolist,
+>>>                                unsigned long flags);
+>>> -static nodemask_t *policy_nodemask(gfp_t gfp, struct mempolicy *pol,
+>>> -                             pgoff_t ilx, int *nid);
+>>>
+>>>    static bool strictly_unmovable(unsigned long flags)
+>>>    {
+>>> @@ -2195,7 +2193,7 @@ static unsigned int interleave_nid(struct mempolicy *pol, pgoff_t ilx)
+>>>     * Return a nodemask representing a mempolicy for filtering nodes for
+>>>     * page allocation, together with preferred node id (or the input node id).
+>>>     */
+>>> -static nodemask_t *policy_nodemask(gfp_t gfp, struct mempolicy *pol,
+>>> +nodemask_t *policy_nodemask(gfp_t gfp, struct mempolicy *pol,
+>>>                                   pgoff_t ilx, int *nid)
+>>>    {
+>>>        nodemask_t *nodemask = NULL;
+>>
+>> You actually only care about the nid for your use case.
+>>
+>> Maybe we should add
+>>
+>> get_vma_policy_node() that internally does a get_vma_policy() to then
+>> give you only the node back.
+>>
+>> If get_vma_policy() is not the right thing (see my reply to patch #2),
+>> of course a get_task_policy_node() could be added.
+>>
+>> --
+>> Cheers,
+>>
+>> David / dhildenb
 > 
-> Thank you for your comments.
-> 
-> On Thu, Jun 12, 2025 at 6:49 PM SeongJae Park <sj@kernel.org> wrote:
-> >
-> > Hi Bijan,
-> >
-> > On Thu, 12 Jun 2025 13:13:26 -0500 Bijan Tabatabai <bijan311@gmail.com> wrote:
-> >
-> > > From: Bijan Tabatabai <bijantabatab@micron.com>
-> > >
-> > > A recent patch set automatically set the interleave weight for each node
-> > > according to the node's maximum bandwidth [1]. In another thread, the patch
-> > > set's author, Joshua Hahn, wondered if/how these weights should be changed
-> > > if the bandwidth utilization of the system changes [2].
-> >
-> > Thank you for sharing the background.  I do agree it is an important question.
-> >
-> > >
-> > > This patch set adds the mechanism for dynamically changing how application
-> > > data is interleaved across nodes while leaving the policy of what the
-> > > interleave weights should be to userspace. It does this by adding a new
-> > > DAMOS action: DAMOS_INTERLEAVE. We implement DAMOS_INTERLEAVE with both
-> > > paddr and vaddr operations sets. Using the paddr version is useful for
-> > > managing page placement globally. Using the vaddr version limits tracking
-> > > to one process per kdamond instance, but the va based tracking better
-> > > captures spacial locality.
-> > >
-> > > DAMOS_INTERLEAVE interleaves pages within a region across nodes using the
-> > > interleave weights at /sys/kernel/mm/mempolicy/weighted_interleave/node<N>
-> > > and the page placement algorithm in weighted_interleave_nid via
-> > > policy_nodemask.
-> >
-> > So, what DAMOS_INTERLEAVE will do is, migrating pages of a given DAMON region
-> > into multiple nodes, following interleaving weights, right?
-> 
-> That's correct.
+> Hi David,
 
-Your approach sounds interesting.
+Hi,
 
-IIUC, the approach can be intergrated with the existing numa hinting
-mechanism as well, so as to perform weighted interleaving migration for
-promotion, which may result in suppressing the migration anyway tho, in
-MPOL_WEIGHTED_INTERLEAVE set.
+> 
+> I did not use get_vma_policy or mpol_misplaced, which I believe is the
+> closest function that exists for what I want in this patch, because
+> those functions
 
-Do you have plan for the that too?
+I think what you mean is, that you are performing an rmap walk. But 
+there, you do have a VMA + MM available (stable).
 
-Plus, it'd be the best if you share the improvement result rather than
-the placement data.
+> seem to assume they are called inside of the task that the folio/vma
+> is mapped to.
 
-	Byungchul
+But, we do have a VMA at hand, so why would we want to ignore any set 
+policy? (I think VMA policies so far only apply to shmem, but still).
 
-> > We already have
-> > DAMOS actions for migrating pages of a given DAMON region, namely
-> > DAMOS_MIGRATE_{HOT,COLD}.  The actions support only single migration target
-> > node, though.  To my perspective, hence, DAMOS_INTERLEAVE looks like an
-> > extended version of DAMOS_MIGRATE_{HOT,COLD} for flexible target node
-> > selections.  In a way, DAMOS_INTERLEAVE is rather a restricted version of
-> > DAMOS_MIGRATE_{HOT,COLD}, since it prioritizes only hotter regions, if I read
-> > the second patch correctly.
-> >
-> > What about extending DAMOS_MIGRATE_{HOT,COLD} to support your use case?  For
-> > example, letting users enter special keyword, say, 'weighted_interleave' to
-> > 'target_nid' DAMON sysfs file.  In the case, DAMOS_MIGRATE_{HOT,COLD} would
-> > work in the way you are implementing DAMOS_INTERLEAVE.
+I really think you want to use get_vma_policy() instead of the task policy.
+
+
+> More specifically, mpol_misplaced assumes it is being called within a
+> page fault.
+> This doesn't work for us, because we call it inside of a kdamond process.
+
+Right.
+
+But it uses the vmf only for ...
+
+1) Obtaining the VMA
+2) Sanity-checking that the ptlock is held.
+
+Which, you also have during the rmap walk.
+
+
+So what about factoring out that handling from mpol_misplaced(), having 
+another function where you pass the VMA instead of the vmf?
+
 > 
-> I like this idea. I will do this in the next version of the patch. I
-> have a couple of questions
-> about how to go about this if you don't mind.
+> I would be open to adding a new function that takes in a folio, vma,
+> address, and
+> task_struct and returns the nid the folio should be placed on. It could possibly
+> be implemented as a function internal to mpol_misplaced because the two would
+> be very similar.
+
+Good, you had the same thought :)
+
 > 
-> First, should I drop the vaddr implementation or implement
-> DAMOS_MIGRATE_{HOT,COLD}
-> in vaddr as well? I am leaning towards the former because I believe
-> the paddr version is
-> more important, though the vaddr version is useful if the user only
-> cares about one
-> application.
-> 
-> Second, do you have a preference for how we indicate that we are using
-> the mempolicy
-> rather than target_nid in struct damos? I was thinking of either
-> setting target_nid to
-> NUMA_NO_NODE or adding a boolean to struct damos for this.
-> 
-> Maybe it would also be a good idea to generalize it some more. I
-> implemented this using
-> just weighted interleave because I was targeting the use case where
-> the best interleave
-> weights for a workload changes as the bandwidth utilization of the
-> system changes, which
-> I will go describe in more detail further down. However, we could
-> apply the same logic for
-> any mempolicy instead of just filtering for MPOL_WEIGHTED_INTERLEAVE. This might
-> clean up the code a little bit because the logic dependent on
-> CONFIG_NUMA would be
-> contained in the mempolicy code.
-> 
-> > > We chose to reuse the mempolicy weighted interleave
-> > > infrastructure to avoid reimplementing code. However, this has the awkward
-> > > side effect that only pages that are mapped to processes using
-> > > MPOL_WEIGHTED_INTERLEAVE will be migrated according to new interleave
-> > > weights. This might be fine because workloads that want their data to be
-> > > dynamically interleaved will want their newly allocated data to be
-> > > interleaved at the same ratio.
-> >
-> > Makes sense to me.  I'm not very familiar with interleaving and memory policy,
-> > though.
-> >
-> > >
-> > > If exposing policy_nodemask is undesirable,
-> >
-> > I see you are exposing it on include/linux/mempolicy.h on the first patch of
-> > this series, and I agree it is not desirable to unnecessarily expose functions.
-> > But you could reduce the exposure by exporting it on mm/internal.h instead.
-> > mempolicy maitnainers and reviewers who you kindly Cc-ed to this mail could
-> > give us good opinions.
-> >
-> > > we have two alternative methods
-> > > for having DAMON access the interleave weights it should use. We would
-> > > appreciate feedback on which method is preferred.
-> > > 1. Use mpol_misplaced instead
-> > >   pros: mpol_misplaced is already exposed publically
-> > >   cons: Would require refactoring mpol_misplaced to take a struct vm_area
-> > >   instead of a struct vm_fault, and require refactoring mpol_misplaced and
-> > >   get_vma_policy to take in a struct task_struct rather than just using
-> > >   current. Also requires processes to use MPOL_WEIGHTED_INTERLEAVE.
-> >
-> > I feel cons is larger than pros.  mpolicy people's opinion would matter more,
-> > though.
-> >
-> > > 2. Add a new field to struct damos, similar to target_nid for the
-> > > MIGRATE_HOT/COLD schemes.
-> > >   pros: Keeps changes contained inside DAMON. Would not require processes
-> > >   to use MPOL_WEIGHTED_INTERLEAVE.
-> > >   cons: Duplicates page placement code. Requires discussion on the sysfs
-> > >   interface to use for users to pass in the interleave weights.
-> >
-> > I agree this is also somewhat doable.  In future, we might want to implement
-> > this anyway, for non-global and flexible memory interleaving.  But if memory
-> > policy people are ok with reusing policy_nodemask(), I don't think we need to
-> > do this now.
-> >
-> > >
-> > > This patchset was tested on an AMD machine with a NUMA node with CPUs
-> > > attached to DDR memory and a cpu-less NUMA node attached to CXL memory.
-> > > However, this patch set should generalize to other architectures and number
-> > > of NUMA nodes.
-> >
-> > I show the test results on the commit messages of the second and the fourth
-> > patches.  In the next version, letting readers know that here would be nice.
-> > Also adding a short description of what you confirmed with the tests here
-> > (e.g., with the test we confirmed this patch functions as expected [and
-> > achieves X % Y metric wins]) would be nice.
-> >
-> 
-> Noted. I'll include this in the cover letter of the next patch set.
-> 
-> > >
-> > > Patches Sequence
-> > > ________________
-> > > The first patch exposes policy_nodemask() in include/linux/mempolicy.h to
-> > > let DAMON determine where a page should be placed for interleaving.
-> > > The second patch implements DAMOS_INTERLEAVE as a paddr action.
-> > > The third patch moves the DAMON page migration code to ops-common, allowing
-> > > vaddr actions to use it.
-> > > Finally, the fourth patch implements a vaddr version of DAMOS_INTERLEAVE.
-> >
-> > I'll try to take look on code and add comments if something stands out, but
-> > let's focus on the high level discussion first, especially whether to implement
-> > this as a new DAMOS action, or extend DAMOS_MIGRATE_{HOT,COLD} actions.
-> 
-> Makes sense. Based on your reply, I will probably change the code significantly.
-> 
-> > I think it would also be nice if you could add more explanation about why you
-> > picked DAMON as a way to implement this feature.  I assume that's because you
-> > found opportunities to utilize this feature in some access-aware way or
-> > utilizing DAMOS features.  I was actually able to imagine some such usages.
-> > For example, we could do the re-interleaving for hot or cold pages of specific
-> > NUMA nodes or specific virtual address ranges first to make interleaving
-> > effective faster.
-> 
-> Yeah, I'll give more detail on the use case I was targeting, which I
-> will also include
-> in the cover letter of the next patch set.
-> 
-> Basically, we have seen that the best interleave weights for a workload can
-> change depending on the bandwidth utilization of the system. This was touched
-> upon in the discussion in [1]. As a toy example, imagine some
-> application that uses
-> 75% of the local bandwidth. Assuming sufficient capacity, when running alone, we
-> probably want to keep all of that application's data in local memory.
-> However, if a
-> second instance of that application begins, using the same amount of bandwidth,
-> it would be best to interleave the data of both processes to alleviate
-> the bandwidth
-> pressure from the local node. Likewise, when one of the processes ends, the data
-> should be moved back to local memory.
-> 
-> We imagine there would be a userspace application that would monitor system
-> performance characteristics, such as bandwidth utilization or memory
-> access latency,
-> and uses that information to tune the interleave weights. Others seemed to have
-> come to a similar conclusion in previous discussions [2]. We are
-> currently working
-> on a userspace program that does this, but it's not quite ready to be
-> published yet.
-> 
-> After the userspace application adjusts the interleave weights, we need some
-> mechanism to migrate the application pages that have already been allocated.
-> We think DAMON is the correct venue for this mechanism because we noticed
-> that we don't have to migrate all of the application's pages to
-> improve performance,
-> we just need to migrate the frequently accessed pages. DAMON's existing hotness
-> tracking is very useful for this. Additionally, as Ying pointed out
-> [3], a complete
-> solution must also handle when a memory node is at capacity. The existing
-> DAMOS_MIGRATE_COLD action can be used in conjunction with the functionality
-> in this patch set to provide that complete solution.
-> 
-> [1] https://lore.kernel.org/linux-mm/20250313155705.1943522-1-joshua.hahnjy@gmail.com/
-> [2] https://lore.kernel.org/linux-mm/20250314151137.892379-1-joshua.hahnjy@gmail.com/
-> [3] https://lore.kernel.org/linux-mm/87frjfx6u4.fsf@DESKTOP-5N7EMDA/
-> 
-> > Also we could apply a sort of speed limit for the interleaving-migration to
-> > ensure it doesn't consume memory bandwidth too much.  The limit could be
-> > arbitrarily user-defined or auto-tuned for specific system metrics value (e.g.,
-> > memory bandwidth balance?).
-> 
-> I agree this is a concern, but I figured DAMOS's existing quota mechanism would
-> handle it. If you could elaborate on why quotas aren't enough here,
-> that would help
-> me come up with a solution.
-> 
-> 
-> > If you have such use case in your mind or your test setups, sharing those here
-> > or on the next versions of this would be very helpful for reviewers.
-> 
-> Answered above. I will include them in the next version.
-> 
-> Thanks,
-> Bijan
-> 
-> > >
-> > > [1] https://lore.kernel.org/linux-mm/20250520141236.2987309-1-joshua.hahnjy@gmail.com/
-> > > [2] https://lore.kernel.org/linux-mm/20250313155705.1943522-1-joshua.hahnjy@gmail.com/
-> >
-> >
-> > Thanks,
-> > SJ
-> >
-> > [...]
+> How would you propose we handle MPOL_BIND and MPOL_PREFFERED_MANY
+> in this function? mpol_misplaced chooses a nid based on the node and
+> cpu the fault
+> occurred on, which we wouldn't have in a kdamond context. The two options I see
+> are either:
+> 1. return the nid of the first node in the policy's nodemask
+> 2. return NUMA_NO_NODE
+> I think I would lean towards the first.
+
+I guess we'd need a way for your new helper to deal with both cases 
+(is_fault vs. !is_fault), and make a decision based on that.
+
+
+For your use case, you can then decide what would be appropriate. It's a 
+good question what the appropriate action would be: 1) sounds better, 
+but I do wonder if we would rather want to distribute the folios in a 
+different way across applicable nodes, not sure ...
+
+-- 
+Cheers,
+
+David / dhildenb
+
