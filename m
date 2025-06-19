@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A858261591;
-	Thu, 19 Jun 2025 22:00:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A86BE28DF3F;
+	Thu, 19 Jun 2025 22:00:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750370431; cv=none; b=pFR+aQe+91tbUCnYMoL7NfR4ByYmKaMKOosYipzEPKtqwRFsJyrYJ7MBHJcbSXEXhy8BhLwZPhUtnQgXixcW4JCovQuuG7KcbJbZEuMuLXAIYN+N+EjDFKfuO1kGpC4SXzwOyY6Odift5hR6+tO3OhnNisdstNEFa2V7y3mc9T0=
+	t=1750370432; cv=none; b=UlzrAtxZRMPN0TTDiOJcz0t/wSio3MpsTO7ougLQ3TfuveV6KCPx/O5R+ONh9CoQAOK/LHAYR/1PK2ef+An0Xv+Hq+AinyBIR6gxljbPqw74BU5rOgAAnhTKPhBHcvfcSue4jJSymin3l1J61r/HGjdEPfE4tDbMOoUZsvE7ucY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750370431; c=relaxed/simple;
-	bh=Sd7W7p0Z+HVtPzictunii3Ma4j0vmmcBWE6o+ftHaDg=;
+	s=arc-20240116; t=1750370432; c=relaxed/simple;
+	bh=ruhTjHTMSB8Frh5X86EoKCSKXfbBH40pNj+dni3HQq4=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=jz8F6W6AfbRx0vA/bfMtBdbojpmJCW1iTJC8vDKxzsfm/iWgiLYxHNdWNuFAmdpt7Gahb+fSNViJpS6+p/OXShX3GE6a6Sqg0ujz4PBPyNoEzKfqqrmjrcBm6FmwtSPP++Y1ZMiOvwg+Otcpofhu1EQlRJkIG9wXiiSzJL8M4Y0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=M3Wlabva; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KROiDWR/2pwO91/pyCP4bYxP1UqjH68Gvs4bkGDzcsvy+aUP7LEypXgUyZxJO1fUSgUSKI+PeNBWTixyP9qmY1YaU+IzdDZ4ofUzCvazEB5c8NYFgiubxNxL7WZ+LXGfmWYAtpXqIZurFbTpJ/bIo8y4wniSdbRs4hSeB3obR80=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YfG/klgG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="M3Wlabva"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D34ADC4CEEE;
-	Thu, 19 Jun 2025 22:00:30 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YfG/klgG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0497AC4CEEE;
+	Thu, 19 Jun 2025 22:00:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1750370431;
-	bh=Sd7W7p0Z+HVtPzictunii3Ma4j0vmmcBWE6o+ftHaDg=;
+	s=k20201202; t=1750370432;
+	bh=ruhTjHTMSB8Frh5X86EoKCSKXfbBH40pNj+dni3HQq4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M3Wlabva7fAPBjEGLuMNQ/vz15Fk+3x9EUkjlHBmWHgr2zK4gj09L5hNDPPFyQHvk
-	 J7g1SmiAaB4nMCr/cCXJBvsj8KiROywzeioOQzLjW0KaYApGD+IoJo07eVzbkaVp91
-	 k1SzEEb9o22+akiOCGUNxXs8/SHQOk8PpD04btxTp1p1x8Og7QlhlVwK7FQOSZvaCD
-	 w+z+nVv5ggR2InyUb4GF6xf3VjLHdwWvPxNkegzogPLn3Pgyvh+u3/wEwIPDf6P8F2
-	 qqS/yfzmNguoOOSuwBWr89lkgu5lsvI8PGy0CN04sHp8B9XD8Tx0Z81gpG1q/IjWD8
-	 ApmV4xtHuCBqg==
+	b=YfG/klgGxqXrLNWew9LBj2e/nPIoTPalafzZNhcp5HHVKp3iKRRBIKkCWni+DGv0N
+	 0Qi4/5YUWVavIluMjGGfBilOoxFMa/oxaniOd/mFbpKwZL+xPcyDyr3S4JIwT8QUtG
+	 CWVpyijK7Kf71gE10l5V9dHg5zh8cD6WW5gY7bwsUA0WtxLspMBnFc7Oi7zxMyfldk
+	 4ZsdXXNAxy5US69ahqQEwBf2dK47GeLKlOOkkaRHawCaUysqJaMfMtO34yVs/8jKML
+	 fSh8drtWw48On8wB2lHgXhOt74KwLRi3xEqtChhkszltN5kV1fRVJ/IAz3Sd5hkw1t
+	 ScbDALkDkkNSQ==
 From: SeongJae Park <sj@kernel.org>
 To: 
 Cc: SeongJae Park <sj@kernel.org>,
@@ -34,9 +34,9 @@ Cc: SeongJae Park <sj@kernel.org>,
 	kernel-team@meta.com,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH 02/11] mm/damon: add a new DAMOS quota goal metric for cgroup on node memory usage
-Date: Thu, 19 Jun 2025 15:00:14 -0700
-Message-Id: <20250619220023.24023-3-sj@kernel.org>
+Subject: [RFC PATCH 03/11] mm/damon/core: implement DAMOS_QUOTA_NODE_MEMCG_USED_BP
+Date: Thu, 19 Jun 2025 15:00:15 -0700
+Message-Id: <20250619220023.24023-4-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250619220023.24023-1-sj@kernel.org>
 References: <20250619220023.24023-1-sj@kernel.org>
@@ -48,67 +48,77 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Define a new DAMOS quota auto-tuning target metrics for per-cgroup
-per-node memory usage.  Also extend damos_quota_goal struct to have a
-field for specifying the cgroup of the interest.
-
-Note that this commit is only for DAMON kernel API extension.  Real
-behavior of the new metric will be implemented by a following commit.
+Implement the behavior of DAMOS_QUOTA_NODE_MEMCG_USED_BP.  It uses sum
+of active/inactive anon/file pages of a given cgroup on a given NUMA
+node as the value of the metric.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- include/linux/damon.h | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ mm/damon/core.c | 32 ++++++++++++++++++++++++++++++++
+ 1 file changed, 32 insertions(+)
 
-diff --git a/include/linux/damon.h b/include/linux/damon.h
-index 39b835dd3c4d..43aef959d357 100644
---- a/include/linux/damon.h
-+++ b/include/linux/damon.h
-@@ -175,6 +175,7 @@ enum damos_action {
-  * @DAMOS_QUOTA_SOME_MEM_PSI_US:	System level some memory PSI in us.
-  * @DAMOS_QUOTA_NODE_MEM_USED_BP:	MemUsed ratio of a node.
-  * @DAMOS_QUOTA_NODE_MEM_FREE_BP:	MemFree ratio of a node.
-+ * @DAMOS_QUOTA_NODE_MEMCG_USED_BP:	MemUsed ratio of a node for a cgroup.
-  * @DAMOS_QUOTA_ACTIVE_MEM_BP:		Active to inactive memory ratio.
-  * @NR_DAMOS_QUOTA_GOAL_METRICS:	Number of DAMOS quota goal metrics.
-  *
-@@ -185,6 +186,7 @@ enum damos_quota_goal_metric {
- 	DAMOS_QUOTA_SOME_MEM_PSI_US,
- 	DAMOS_QUOTA_NODE_MEM_USED_BP,
- 	DAMOS_QUOTA_NODE_MEM_FREE_BP,
-+	DAMOS_QUOTA_NODE_MEMCG_USED_BP,
- 	DAMOS_QUOTA_ACTIVE_MEM_BP,
- 	NR_DAMOS_QUOTA_GOAL_METRICS,
- };
-@@ -196,6 +198,7 @@ enum damos_quota_goal_metric {
-  * @current_value:	Current value of @metric.
-  * @last_psi_total:	Last measured total PSI
-  * @nid:		Node id.
-+ * @memcg:		Memcg id.
-  * @list:		List head for siblings.
-  *
-  * Data structure for getting the current score of the quota tuning goal.  The
-@@ -209,6 +212,9 @@ enum damos_quota_goal_metric {
-  *
-  * If @metric is DAMOS_QUOTA_NODE_MEM_{USED,FREE}_BP, @nid represents the node
-  * id of the target node to account the used/free memory.
-+ *
-+ * If @metric is DAMOS_QUOTA_NODE_MEMCG_USED_BP, @nid and @memcg_id represents
-+ * the node id and the cgroup to account the used memory for.
-  */
- struct damos_quota_goal {
- 	enum damos_quota_goal_metric metric;
-@@ -217,7 +223,10 @@ struct damos_quota_goal {
- 	/* metric-dependent fields */
- 	union {
- 		u64 last_psi_total;
--		int nid;
-+		struct {
-+			int nid;
-+			unsigned short memcg_id;
-+		};
- 	};
- 	struct list_head list;
- };
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index d675dd932a23..1481b43f2710 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -10,6 +10,7 @@
+ #include <linux/damon.h>
+ #include <linux/delay.h>
+ #include <linux/kthread.h>
++#include <linux/memcontrol.h>
+ #include <linux/mm.h>
+ #include <linux/psi.h>
+ #include <linux/slab.h>
+@@ -2021,12 +2022,40 @@ static __kernel_ulong_t damos_get_node_mem_bp(
+ 		numerator = i.freeram;
+ 	return numerator * 10000 / i.totalram;
+ }
++
++static unsigned long damos_get_node_memcg_used_bp(
++		struct damos_quota_goal *goal)
++{
++	struct mem_cgroup *memcg;
++	struct lruvec *lruvec;
++	unsigned long used_pages;
++	struct sysinfo i;
++
++	rcu_read_lock();
++	memcg = mem_cgroup_from_id(goal->memcg_id);
++	mem_cgroup_flush_stats(memcg);
++	lruvec = mem_cgroup_lruvec(memcg, NODE_DATA(goal->nid));
++	used_pages = lruvec_page_state(lruvec, NR_ACTIVE_ANON);
++	used_pages += lruvec_page_state(lruvec, NR_INACTIVE_ANON);
++	used_pages += lruvec_page_state(lruvec, NR_ACTIVE_FILE);
++	used_pages += lruvec_page_state(lruvec, NR_INACTIVE_FILE);
++	rcu_read_unlock();
++
++	si_meminfo_node(&i, goal->nid);
++	return used_pages * PAGE_SIZE * 10000 / i.totalram;
++}
+ #else
+ static __kernel_ulong_t damos_get_node_mem_bp(
+ 		struct damos_quota_goal *goal)
+ {
+ 	return 0;
+ }
++
++static unsigned long damos_get_node_memcg_used_bp(
++		struct damos_quota_goal *goal)
++{
++	return 0;
++}
+ #endif
+ 
+ /*
+@@ -2062,6 +2091,9 @@ static void damos_set_quota_goal_current_value(struct damos_quota_goal *goal)
+ 	case DAMOS_QUOTA_NODE_MEM_FREE_BP:
+ 		goal->current_value = damos_get_node_mem_bp(goal);
+ 		break;
++	case DAMOS_QUOTA_NODE_MEMCG_USED_BP:
++		goal->current_value = damos_get_node_memcg_used_bp(goal);
++		break;
+ 	case DAMOS_QUOTA_ACTIVE_MEM_BP:
+ 		goal->current_value = damos_get_active_inactive_mem_bp();
+ 		break;
 -- 
 2.39.5
