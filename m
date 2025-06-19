@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A86BE28DF3F;
-	Thu, 19 Jun 2025 22:00:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7697228EA5A;
+	Thu, 19 Jun 2025 22:00:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750370432; cv=none; b=UlzrAtxZRMPN0TTDiOJcz0t/wSio3MpsTO7ougLQ3TfuveV6KCPx/O5R+ONh9CoQAOK/LHAYR/1PK2ef+An0Xv+Hq+AinyBIR6gxljbPqw74BU5rOgAAnhTKPhBHcvfcSue4jJSymin3l1J61r/HGjdEPfE4tDbMOoUZsvE7ucY=
+	t=1750370433; cv=none; b=kY7aGxchp+hdhxdU1O2jGYiqpIvH15tBUwc0OTs7UTwWM0ga3TKqVkR0QNUalZnaU+n14rambdYLMkbY65D7CIMNB8vWg8orzF+eKx9ghVA06zeWKGAtsvIo0nsf1yhQw1aEYIV+2er82lOz+7bWbmmvCEk9AEqtP543NS/S0dI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750370432; c=relaxed/simple;
-	bh=ruhTjHTMSB8Frh5X86EoKCSKXfbBH40pNj+dni3HQq4=;
+	s=arc-20240116; t=1750370433; c=relaxed/simple;
+	bh=Dun+8Vi/DMwdzvUNXFdqjk12wLALbq7Ec1njVivI7r4=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=KROiDWR/2pwO91/pyCP4bYxP1UqjH68Gvs4bkGDzcsvy+aUP7LEypXgUyZxJO1fUSgUSKI+PeNBWTixyP9qmY1YaU+IzdDZ4ofUzCvazEB5c8NYFgiubxNxL7WZ+LXGfmWYAtpXqIZurFbTpJ/bIo8y4wniSdbRs4hSeB3obR80=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YfG/klgG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HMtU/++21x/qrMnI2QlEY297+XsR6/TcLQX3TyuJOvfy6B04rlLccr7RQB4MdrjUISy++tlqfpaJSFL4AkLnxfxKhCWb5wX/Z1pe/b4eF3QXVHnw9uhpltiHmiSlKwcIUdvBs/rPB2nIGkCFim415Il7d+7kF5qqNIcYiwSAYxs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HIoivf4C; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YfG/klgG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0497AC4CEEE;
-	Thu, 19 Jun 2025 22:00:32 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HIoivf4C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 324B1C4CEEA;
+	Thu, 19 Jun 2025 22:00:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1750370432;
-	bh=ruhTjHTMSB8Frh5X86EoKCSKXfbBH40pNj+dni3HQq4=;
+	s=k20201202; t=1750370433;
+	bh=Dun+8Vi/DMwdzvUNXFdqjk12wLALbq7Ec1njVivI7r4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YfG/klgGxqXrLNWew9LBj2e/nPIoTPalafzZNhcp5HHVKp3iKRRBIKkCWni+DGv0N
-	 0Qi4/5YUWVavIluMjGGfBilOoxFMa/oxaniOd/mFbpKwZL+xPcyDyr3S4JIwT8QUtG
-	 CWVpyijK7Kf71gE10l5V9dHg5zh8cD6WW5gY7bwsUA0WtxLspMBnFc7Oi7zxMyfldk
-	 4ZsdXXNAxy5US69ahqQEwBf2dK47GeLKlOOkkaRHawCaUysqJaMfMtO34yVs/8jKML
-	 fSh8drtWw48On8wB2lHgXhOt74KwLRi3xEqtChhkszltN5kV1fRVJ/IAz3Sd5hkw1t
-	 ScbDALkDkkNSQ==
+	b=HIoivf4CwD93oxJWrX+WLG0p+JKxKkSR3kRkADy1Vt2JJFx/ckAkAVhXpV3Ck7etV
+	 RNni5Ecb6a8u4kHzhNk3jCAAXdejXbJsBOgahClUzoydn0YhcqISFfDmL6EvUTap59
+	 iQ0VCK8/Hbb8bOvvrSOb3pvwiTESRpBWTPYFon1ZM9o6kBTM/hiX9SEswXA3rNm5L7
+	 n46tFb1fZcf8zposGXhAkZ3BALNJ3EhaqiACOdTduPB76TSPz2ndPjMJ/xpiYc0YT8
+	 hNPw9wRoiQpOvigJ2LKdzPwafUKjCCjQvr/wuFOPiK6SM56Pw2ozcV/eELuyQ5fM3y
+	 LEahb4wirpCYg==
 From: SeongJae Park <sj@kernel.org>
 To: 
 Cc: SeongJae Park <sj@kernel.org>,
@@ -34,9 +34,9 @@ Cc: SeongJae Park <sj@kernel.org>,
 	kernel-team@meta.com,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH 03/11] mm/damon/core: implement DAMOS_QUOTA_NODE_MEMCG_USED_BP
-Date: Thu, 19 Jun 2025 15:00:15 -0700
-Message-Id: <20250619220023.24023-4-sj@kernel.org>
+Subject: [RFC PATCH 04/11] mm/damon/sysfs-schemes: implement path file under quota goal directory
+Date: Thu, 19 Jun 2025 15:00:16 -0700
+Message-Id: <20250619220023.24023-5-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250619220023.24023-1-sj@kernel.org>
 References: <20250619220023.24023-1-sj@kernel.org>
@@ -48,77 +48,83 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Implement the behavior of DAMOS_QUOTA_NODE_MEMCG_USED_BP.  It uses sum
-of active/inactive anon/file pages of a given cgroup on a given NUMA
-node as the value of the metric.
+Add a DAMOS sysfs file for specifying the cgroup of the interest for
+DAMOS_QUOTA_NODE_MEMCG_USED_BP.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- mm/damon/core.c | 32 ++++++++++++++++++++++++++++++++
- 1 file changed, 32 insertions(+)
+ mm/damon/sysfs-schemes.c | 38 ++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 36 insertions(+), 2 deletions(-)
 
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index d675dd932a23..1481b43f2710 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -10,6 +10,7 @@
- #include <linux/damon.h>
- #include <linux/delay.h>
- #include <linux/kthread.h>
-+#include <linux/memcontrol.h>
- #include <linux/mm.h>
- #include <linux/psi.h>
- #include <linux/slab.h>
-@@ -2021,12 +2022,40 @@ static __kernel_ulong_t damos_get_node_mem_bp(
- 		numerator = i.freeram;
- 	return numerator * 10000 / i.totalram;
- }
-+
-+static unsigned long damos_get_node_memcg_used_bp(
-+		struct damos_quota_goal *goal)
-+{
-+	struct mem_cgroup *memcg;
-+	struct lruvec *lruvec;
-+	unsigned long used_pages;
-+	struct sysinfo i;
-+
-+	rcu_read_lock();
-+	memcg = mem_cgroup_from_id(goal->memcg_id);
-+	mem_cgroup_flush_stats(memcg);
-+	lruvec = mem_cgroup_lruvec(memcg, NODE_DATA(goal->nid));
-+	used_pages = lruvec_page_state(lruvec, NR_ACTIVE_ANON);
-+	used_pages += lruvec_page_state(lruvec, NR_INACTIVE_ANON);
-+	used_pages += lruvec_page_state(lruvec, NR_ACTIVE_FILE);
-+	used_pages += lruvec_page_state(lruvec, NR_INACTIVE_FILE);
-+	rcu_read_unlock();
-+
-+	si_meminfo_node(&i, goal->nid);
-+	return used_pages * PAGE_SIZE * 10000 / i.totalram;
-+}
- #else
- static __kernel_ulong_t damos_get_node_mem_bp(
- 		struct damos_quota_goal *goal)
- {
- 	return 0;
- }
-+
-+static unsigned long damos_get_node_memcg_used_bp(
-+		struct damos_quota_goal *goal)
-+{
-+	return 0;
-+}
- #endif
+diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
+index 4805761d9127..4a340baa72a4 100644
+--- a/mm/damon/sysfs-schemes.c
++++ b/mm/damon/sysfs-schemes.c
+@@ -999,6 +999,7 @@ struct damos_sysfs_quota_goal {
+ 	unsigned long target_value;
+ 	unsigned long current_value;
+ 	int nid;
++	char *path;
+ };
  
- /*
-@@ -2062,6 +2091,9 @@ static void damos_set_quota_goal_current_value(struct damos_quota_goal *goal)
- 	case DAMOS_QUOTA_NODE_MEM_FREE_BP:
- 		goal->current_value = damos_get_node_mem_bp(goal);
- 		break;
-+	case DAMOS_QUOTA_NODE_MEMCG_USED_BP:
-+		goal->current_value = damos_get_node_memcg_used_bp(goal);
-+		break;
- 	case DAMOS_QUOTA_ACTIVE_MEM_BP:
- 		goal->current_value = damos_get_active_inactive_mem_bp();
- 		break;
+ static struct damos_sysfs_quota_goal *damos_sysfs_quota_goal_alloc(void)
+@@ -1132,10 +1133,39 @@ static ssize_t nid_store(struct kobject *kobj,
+ 	return err ? err : count;
+ }
+ 
++static ssize_t path_show(struct kobject *kobj,
++		struct kobj_attribute *attr, char *buf)
++{
++	struct damos_sysfs_quota_goal *goal = container_of(kobj,
++			struct damos_sysfs_quota_goal, kobj);
++
++	return sysfs_emit(buf, "%s\n", goal->path ? goal->path : "");
++}
++
++static ssize_t path_store(struct kobject *kobj,
++		struct kobj_attribute *attr, const char *buf, size_t count)
++{
++	struct damos_sysfs_quota_goal *goal = container_of(kobj,
++			struct damos_sysfs_quota_goal, kobj);
++	char *path = kmalloc_array(size_add(count, 1), sizeof(*path),
++				   GFP_KERNEL);
++
++	if (!path)
++		return -ENOMEM;
++
++	strscpy(path, buf, count + 1);
++	kfree(goal->path);
++	goal->path = path;
++	return count;
++}
++
+ static void damos_sysfs_quota_goal_release(struct kobject *kobj)
+ {
+-	/* or, notify this release to the feed callback */
+-	kfree(container_of(kobj, struct damos_sysfs_quota_goal, kobj));
++	struct damos_sysfs_quota_goal *goal = container_of(kobj,
++			struct damos_sysfs_quota_goal, kobj);
++
++	kfree(goal->path);
++	kfree(goal);
+ }
+ 
+ static struct kobj_attribute damos_sysfs_quota_goal_target_metric_attr =
+@@ -1150,11 +1180,15 @@ static struct kobj_attribute damos_sysfs_quota_goal_current_value_attr =
+ static struct kobj_attribute damos_sysfs_quota_goal_nid_attr =
+ 		__ATTR_RW_MODE(nid, 0600);
+ 
++static struct kobj_attribute damos_sysfs_quota_goal_path_attr =
++		__ATTR_RW_MODE(path, 0600);
++
+ static struct attribute *damos_sysfs_quota_goal_attrs[] = {
+ 	&damos_sysfs_quota_goal_target_metric_attr.attr,
+ 	&damos_sysfs_quota_goal_target_value_attr.attr,
+ 	&damos_sysfs_quota_goal_current_value_attr.attr,
+ 	&damos_sysfs_quota_goal_nid_attr.attr,
++	&damos_sysfs_quota_goal_path_attr.attr,
+ 	NULL,
+ };
+ ATTRIBUTE_GROUPS(damos_sysfs_quota_goal);
 -- 
 2.39.5
