@@ -1,44 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD15E2673A9;
-	Thu, 19 Jun 2025 18:36:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86DF628C86C;
+	Thu, 19 Jun 2025 18:36:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750358173; cv=none; b=Tu7Z4/z5KaVgTxS5rvAa23P0i/wcBXeRMKaLgIrUBZAsbKUzAzO32A56mvaqx3vHiVwFr3zEXAskpCU2SJaFB8+r/OQMj8H3Hvh9ukUEXVNfXiYOjr3KqfM7x8221QvSpWauhD+/LdNXXKHVzSHT3Mb/mvZDT/shhnH2kttDB1U=
+	t=1750358174; cv=none; b=K+bpaAHgbOzenSjRWY0zhQwL+vqlKih5kLe/IphwHiPBhYuiMI5okSMXHm7k+ESAyYD6GLVf4v7GGHalW5KDY0i9WfrVl5rslS9SKOYSY6RSN/Nt3RykaESOBeMoCCTXTo5BhHKrO6/5rVsl/e5naJGaRETk8Q37lXveQipZ+3E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750358173; c=relaxed/simple;
-	bh=840kYlQBtIBzTuRYCK9lIr3LHivR6lw5teUqKnxye1U=;
+	s=arc-20240116; t=1750358174; c=relaxed/simple;
+	bh=h78HL1yhuRvAVMpXPcUMwO2YijRYqZLpPbhvfJ9cjQc=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=V9Iupt0oSk1oaqafrOUhkYDavgPh7g7Q+KdpZF3JmGgHPxD4gVDo9myEBdwHiEgTXRb+pZjoa7ZJw5mQ0sArm43BPmZ6YBBIrH1IDbIJMAFYLyIRE/NSOjPsR+K48XBVG76eKjltoQUjmb6DTeDf3eTzCN8ss2QNENFbIN4yILg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rQwpdIDK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QZN5VvB8Qu/peWivlBKNOu5XFr2P4Jsf3JyWM3G1hYkcyytfdfUqV6mD4waNfjMkniTYaru0DYn6d82cL+m8Lv5ZrIAu8SOzcRBWCIt4EEtBY+mYOW5MLAByT/W0X9UpH/3R6A5dr5IdvdPM+e/7BWrICtNbD7J7KBHUEay9+hc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GQfzEKei; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rQwpdIDK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21FA8C4CEF0;
-	Thu, 19 Jun 2025 18:36:13 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GQfzEKei"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 342A7C4AF09;
+	Thu, 19 Jun 2025 18:36:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1750358173;
-	bh=840kYlQBtIBzTuRYCK9lIr3LHivR6lw5teUqKnxye1U=;
+	s=k20201202; t=1750358174;
+	bh=h78HL1yhuRvAVMpXPcUMwO2YijRYqZLpPbhvfJ9cjQc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rQwpdIDKorXZCCEmcC9gDf34jdNZfCzbWg3Sa2AD2DnScGZOuQTikh0cNLCrKiO69
-	 Zg1YBPEW5repRKJBEH5seo7ppGRb2OMIYAw2m0u7sJfpiDaDsqU+YHRvwD5Nmw1F1F
-	 1CNZNdLS9AF7pl8nChA6rR/MEDJC3CHHeLu91Ajo+spw0rZJlC1hSN183gDuV5wkwi
-	 O1/eiorO0eL1WNxQdAaJJjsZZ8cCnw4flmMwpYGvXP5tL7/fyqEkjlICmlv3+QlioJ
-	 MyVdRAOz7w1wIDp44/johcURMVlHyruhHApN3gI4TxTHMxCgDQFIfHdxC9G2y9x651
-	 bwm09RvzfyjEg==
+	b=GQfzEKei/1zZvyDY1Tb8HPf3vF0y7sqyzYcDjV7tdUQzqJqKIiyuhNH2RL8fj3Zes
+	 DCEJOEJGdipAMa/jEHbzOxx5hhpLLlv/H9dPUpBcX+9s5uBCq7IUUr7CwPe7LIBlQN
+	 pHF+f7Di90RTr/5Yv74webbgxBPoOZ5aui4Q2hKn9b8kl0EGEC/Hym/MzFsa0ZiUZZ
+	 S1uklJjU4bDvLsRK1qt/HHGq3KSQ1cb41oJJp/f/ontLZVZ6yBUgAecGtMyM9/WOVf
+	 uo2brww9xsSdNIX04UFXEeAzBF+HTD89CR1vvwdkzwQE9D8sx/Vu3A0eiqdCBnRm2U
+	 2alJ/tI7VSwCw==
 From: SeongJae Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SeongJae Park <sj@kernel.org>,
+	Shuah Khan <shuah@kernel.org>,
 	damon@lists.linux.dev,
 	kernel-team@meta.com,
 	linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org,
-	stable@vger.kernel.org,
-	#,
-	6.3.x
-Subject: [PATCH 1/2] mm/damon/sysfs-schemes: free old damon_sysfs_scheme_filter->memcg_path on write
-Date: Thu, 19 Jun 2025 11:36:07 -0700
-Message-Id: <20250619183608.6647-2-sj@kernel.org>
+	linux-kselftest@vger.kernel.org,
+	linux-mm@kvack.org
+Subject: [PATCH 2/2] selftets/damon: add a test for memcg_path leak
+Date: Thu, 19 Jun 2025 11:36:08 -0700
+Message-Id: <20250619183608.6647-3-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250619183608.6647-1-sj@kernel.org>
 References: <20250619183608.6647-1-sj@kernel.org>
@@ -50,30 +49,76 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-memcg_path_store() assigns a newly allocated memory buffer to
-filter->memcg_path, without deallocating the previously allocated and
-assigned memory buffer.  As a result, users can leak kernel memory by
-continuously writing a data to memcg_path DAMOS sysfs file.  Fix the
-leak by deallocating the previously set memory buffer.
+There was a memory leak bug in DAMOS sysfs memcg_path file.  Add a
+selftest to ensure the bug never comes back.
 
-Fixes: 7ee161f18b5d ("mm/damon/sysfs-schemes: implement filter directory")
-Cc: stable@vger.kernel.org	# 6.3.x
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- mm/damon/sysfs-schemes.c | 1 +
- 1 file changed, 1 insertion(+)
+ tools/testing/selftests/damon/Makefile        |  1 +
+ .../selftests/damon/sysfs_memcg_path_leak.sh  | 43 +++++++++++++++++++
+ 2 files changed, 44 insertions(+)
+ create mode 100755 tools/testing/selftests/damon/sysfs_memcg_path_leak.sh
 
-diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
-index 0f6c9e1fec0b..30ae7518ffbf 100644
---- a/mm/damon/sysfs-schemes.c
-+++ b/mm/damon/sysfs-schemes.c
-@@ -472,6 +472,7 @@ static ssize_t memcg_path_store(struct kobject *kobj,
- 		return -ENOMEM;
+diff --git a/tools/testing/selftests/damon/Makefile b/tools/testing/selftests/damon/Makefile
+index ff21524be458..e888455e3cf8 100644
+--- a/tools/testing/selftests/damon/Makefile
++++ b/tools/testing/selftests/damon/Makefile
+@@ -15,6 +15,7 @@ TEST_PROGS += reclaim.sh lru_sort.sh
+ # regression tests (reproducers of previously found bugs)
+ TEST_PROGS += sysfs_update_removed_scheme_dir.sh
+ TEST_PROGS += sysfs_update_schemes_tried_regions_hang.py
++TEST_PROGS += sysfs_memcg_path_leak.sh
  
- 	strscpy(path, buf, count + 1);
-+	kfree(filter->memcg_path);
- 	filter->memcg_path = path;
- 	return count;
- }
+ EXTRA_CLEAN = __pycache__
+ 
+diff --git a/tools/testing/selftests/damon/sysfs_memcg_path_leak.sh b/tools/testing/selftests/damon/sysfs_memcg_path_leak.sh
+new file mode 100755
+index 000000000000..64c5d8c518a4
+--- /dev/null
++++ b/tools/testing/selftests/damon/sysfs_memcg_path_leak.sh
+@@ -0,0 +1,43 @@
++#!/bin/bash
++# SPDX-License-Identifier: GPL-2.0
++
++if [ $EUID -ne 0 ]
++then
++	echo "Run as root"
++	exit $ksft_skip
++fi
++
++damon_sysfs="/sys/kernel/mm/damon/admin"
++if [ ! -d "$damon_sysfs" ]
++then
++	echo "damon sysfs not found"
++	exit $ksft_skip
++fi
++
++# ensure filter directory
++echo 1 > "$damon_sysfs/kdamonds/nr_kdamonds"
++echo 1 > "$damon_sysfs/kdamonds/0/contexts/nr_contexts"
++echo 1 > "$damon_sysfs/kdamonds/0/contexts/0/schemes/nr_schemes"
++echo 1 > "$damon_sysfs/kdamonds/0/contexts/0/schemes/0/filters/nr_filters"
++
++filter_dir="$damon_sysfs/kdamonds/0/contexts/0/schemes/0/filters/0"
++
++before_kb=$(grep Slab /proc/meminfo | awk '{print $2}')
++
++# try to leak 3000 KiB
++for i in {1..102400};
++do
++	echo "012345678901234567890123456789" > "$filter_dir/memcg_path"
++done
++
++after_kb=$(grep Slab /proc/meminfo | awk '{print $2}')
++# expect up to 1500 KiB free from other tasks memory
++expected_after_kb_max=$((before_kb + 1500))
++
++if [ "$after_kb" -gt "$expected_after_kb_max" ]
++then
++	echo "maybe memcg_path are leaking: $before_kb -> $after_kb"
++	exit 1
++else
++	exit 0
++fi
 -- 
 2.39.5
