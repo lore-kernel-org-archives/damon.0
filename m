@@ -1,47 +1,32 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDC2929A326;
-	Thu, 19 Jun 2025 22:00:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+Received: from invmail4.hynix.com (exvmail4.hynix.com [166.125.252.92])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 08F1022128F
+	for <damon@lists.linux.dev>; Fri, 20 Jun 2025 06:29:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=166.125.252.92
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750370441; cv=none; b=ctYRe+w3gC8pZ5nhmD/FRv8B3X3Odxkxqe4kownjhHrjsPYkTSFf8oIuQ3Qq3ciq3zfVBoreCHsfZnIeVbg3NaLT6fQEqNVLyHIAa+oy8I4S4C/NLm3JdekJj26XvT1aZOg68LztJg6Igmewd+LskNQ710sA0g0Jnkcu3l7Q/kU=
+	t=1750401005; cv=none; b=oSddXycv+85k6JW1YoSmADFQ+SiMgMvPYBKPG6PO2NZ9I5Mzs975XnmeFJmoGTyFyyGzh9W3LMIyIfBDyDcSHi927lmyUXLcns1bm86AVgj9QMDOgNr6POcSj/VuL4e801qvUK2z5IWGvXsCu+3LmiT1QT3mkCkXMNonaNCOCak=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750370441; c=relaxed/simple;
-	bh=t+FYzdxss4O8PIT6azsMosL7ZC/90ZpCpkaRaenf1iQ=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=QESoRdkM9HE1BFqd7YyIDGPeQwxj4AeJ5aJdYaE34WNS4U5hA33rsX43jdBkdve2J7PmwbgVKuVUYxaFjOz3ftoHqedgWCVlOS/qK50qHXrknzT0EgNfe7/b919ogJokSSKUpIAT6smj7WiZi6n9lRQu+wRiro4wTSH6G6QvKS0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mmJIg977; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mmJIg977"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93623C4CEEA;
-	Thu, 19 Jun 2025 22:00:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1750370440;
-	bh=t+FYzdxss4O8PIT6azsMosL7ZC/90ZpCpkaRaenf1iQ=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mmJIg977cWmX1e009jjzG7TfAtvLm92a6f3IH03B27nsJjTQzym3L95Wa+J8Dtzcg
-	 ukOa8Nw8tPivP/YCknfL5bK3kkcAbvRm/B+qLYtM0FRMBsp1bp2bzwOvShPcl9g9Lz
-	 xhgfVcWfTpTLgeQyhAnSK7lmTw/gygK5vqWBewyKRfQoGho0atHo+o0NgiNOKiqPi/
-	 M3eQCCmxlgfDmVb8kXMKezKg0kFCeSPM8pb6UWFbp7m5Sk/adZ7PDpkguFZsaDyd2h
-	 02jtx00LHCJYdJqljYakY46PZHOrfM/YPJ4hNp/k7Prq4VF3ZxSRHzur1SLXAub1jG
-	 jPe3OJFnFNz+g==
-From: SeongJae Park <sj@kernel.org>
-To: 
-Cc: SeongJae Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Jonathan Corbet <corbet@lwn.net>,
+	s=arc-20240116; t=1750401005; c=relaxed/simple;
+	bh=ndDVKrpY8hPr55MamAh+uliDP+m6d/vRSWkwjOVyyJw=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=mcggu9wyGcrk5euMEJq04KUguIWbXxbSS9yiUdMnp4Ms5FY8ZhPE4NrQlfy82xvewGiElta+Bc3Ag4+xl9AZRM8nj33jrSvKhnXSDXeugMYmemfaAtLohK5nSGzWH0TXDwsgy0k/pmWghfGAvbV9qXl5xQw+7tVeC6xIDg4k9Pg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sk.com; spf=pass smtp.mailfrom=sk.com; arc=none smtp.client-ip=166.125.252.92
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sk.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sk.com
+X-AuditID: a67dfc5b-669ff7000002311f-cc-6854ffe17f4d
+From: Yunjeong Mun <yunjeong.mun@sk.com>
+To: SeongJae Park <sj@kernel.org>
+Cc: akpm@linux-foundation.org,
 	damon@lists.linux.dev,
-	kernel-team@meta.com,
-	linux-doc@vger.kernel.org,
+	linux-mm@kvack.org,
 	linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org
-Subject: [RFC PATCH 11/11] Docs/mm/damon/design: document DAMOS_QUOTA_NODE_MEMCG_FREE_BP
-Date: Thu, 19 Jun 2025 15:00:23 -0700
-Message-Id: <20250619220023.24023-12-sj@kernel.org>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250619220023.24023-1-sj@kernel.org>
-References: <20250619220023.24023-1-sj@kernel.org>
+	kernel_team@skhynix.com,
+	Honggyu Kim <honggyu.kim@sk.com>
+Subject: Re: [PATCH] samples/damon: add parameters for node0 memory usage
+Date: Fri, 20 Jun 2025 15:29:46 +0900
+Message-ID: <20250620062951.1572-1-yunjeong.mun@sk.com>
+X-Mailer: git-send-email 2.48.1.windows.1
+In-Reply-To: <20250619164636.58743-1-sj@kernel.org>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -49,37 +34,61 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrOLMWRmVeSWpSXmKPExsXC9ZZnke7D/yEZBv+ncVvMWb+GzeLJ/9+s
+	Fpd3zWGzuLfmP6vF4a9vmBxYPTat6mTz2PRpErvHiRm/WTxebJ7J6PF5k1wAaxSXTUpqTmZZ
+	apG+XQJXxvrdbxkLpnFVLJvVzdTAOJ2ji5GTQ0LARGLqvwcsMPb1rmvMIDabgIbEwUMnwWwR
+	AUWJc48vsnYxcnEwC6xmlNg8uZ0NJCEs4Clx68VERhCbRUBV4kjzBrA4r4C5xN6u5UwQQzUl
+	Gi7dA7M5BYwlnrU0g9lCAjwSrzbsZ4SoF5Q4OfMJ2BHMAvISzVtnM4MskxCYwSZx9OE+qOsk
+	JQ6uuMEygZF/FpKeWUh6FjAyrWIUyswry03MzDHRy6jMy6zQS87P3cQIDM5ltX+idzB+uhB8
+	iFGAg1GJh3fHl+AMIdbEsuLK3EOMEhzMSiK8i0/4ZQjxpiRWVqUW5ccXleakFh9ilOZgURLn
+	NfpWniIkkJ5YkpqdmlqQWgSTZeLglGpgVF9+/OSp3CvHF0sydq/bG1K9I5eTve7mHcHqk3tz
+	vA8cuVpzW5zTi33exGbFtydevIjfWvVKh1ufO64otqZmzp2Q27ue+e1lya1jFHINffvtacix
+	2GU2d6/9OXJR8tF9pjUaW9bX13GrGUX7Bcx7yRz1bsHOircPb2/KKO8U3/3kgNaVp5eTNyux
+	FGckGmoxFxUnAgC+LTaISgIAAA==
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrOLMWRmVeSWpSXmKPExsXCNUNWR/fB/5AMg//LrS3mrF/DZvHk/29W
+	i8/PXjNbHJ57ktXi8q45bBb31vxntTj89Q2TA7vHplWdbB6bPk1i9zgx4zeLx4vNMxk9vt32
+	8Fj84gOTx+dNcgHsUVw2Kak5mWWpRfp2CVwZ63e/ZSyYxlWxbFY3UwPjdI4uRk4OCQETietd
+	15hBbDYBDYmDh06C2SICihLnHl9k7WLk4mAWWM0osXlyOxtIQljAU+LWi4mMIDaLgKrEkeYN
+	YHFeAXOJvV3LmSCGako0XLoHZnMKGEs8a2kGs4UEeCRebdjPCFEvKHFy5hMWEJtZQF6ieets
+	5gmMPLOQpGYhSS1gZFrFKJKZV5abmJljqlecnVGZl1mhl5yfu4kRGHzLav9M3MH45bL7IUYB
+	DkYlHt4dX4IzhFgTy4orcw8xSnAwK4nwLj7hlyHEm5JYWZValB9fVJqTWnyIUZqDRUmc1ys8
+	NUFIID2xJDU7NbUgtQgmy8TBKdXAeL9Csst5XbyQztygMz33ryv/P6rOefOqgF/WpxWN/Z++
+	n6p1kHN5Lias8ZWX0yq1/80rg8c37EzYTt79tv2V3nS1IwuStfxmXtec97zyyev10VrlF1IF
+	M0y43k5+u1zont8CJ6mubaKlhTG+955dmuBQwn1kj8nacp656o8fbCg9o+vCfPPNJiWW4oxE
+	Qy3mouJEACWiEao6AgAA
+X-CFilter-Loop: Reflected
 
-Signed-off-by: SeongJae Park <sj@kernel.org>
----
- Documentation/mm/damon/design.rst | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+Hi Andrew, please check the patch below. I missed CC'ing you on the previous
+email.
 
-diff --git a/Documentation/mm/damon/design.rst b/Documentation/mm/damon/design.rst
-index eb6d3b7d0643..6e1f772006d9 100644
---- a/Documentation/mm/damon/design.rst
-+++ b/Documentation/mm/damon/design.rst
-@@ -571,15 +571,16 @@ mechanism tries to make ``current_value`` of ``target_metric`` be same to
- - ``node_mem_used_bp``: Specific NUMA node's used memory ratio in bp (1/10,000).
- - ``node_mem_free_bp``: Specific NUMA node's free memory ratio in bp (1/10,000).
- - ``node_memcg_used_bp``: Specific cgroup's node used memory ratio for a
-+- ``node_memcg_free_bp``: Specific cgroup's node unused memory ratio for a
-   specific NUMA node, in bp (1/10,000).
- 
- ``nid`` is optionally required for only ``node_mem_used_bp``,
--``node_mem_free_bp`` and ``node_memcg_used_bp`` to point the specific NUMA
--node.
-+``node_mem_free_bp``, ``node_memcg_used_bp`` and ``node_memcg_free_bp`` to
-+point the specific NUMA node.
- 
--``path`` is optionally required for only ``node_memcg_used_bp`` to point the
--path to the cgroup.  The value should be the path of the memory cgroup from the
--cgroups mount point.
-+``path`` is optionally required for only ``node_memcg_used_bp`` and
-+``node_memcg_free_bp`` to point the path to the cgroup.  The value should be
-+the path of the memory cgroup from the cgroups mount point.
- 
- To know how user-space can set the tuning goal metric, the target value, and/or
- the current value via :ref:`DAMON sysfs interface <sysfs_interface>`, refer to
--- 
-2.39.5
+On Thu, 19 Jun 2025 09:46:36 -0700 SeongJae Park <sj@kernel.org> wrote:
+> On Thu, 19 Jun 2025 14:03:12 +0900 Yunjeong Mun <yunjeong.mun@sk.com> wrote:
+> 
+> > This patch changes the hard-coded quota goal metric values into sysfs
+> > knobs: `node0_mem_used_bp` and `node0_mem_free_bp`. These knobs
+> > represent the used and free memory ratio of node0 in basis points
+> > (bp, where 1 bp = 0.01%). As mentioned in [1], this patch is developed
+> > under the assumption that node0 is always the fast-tier in a two-tiers
+> > memory setup.
+> > 
+> > [1] https://lore.kernel.org/linux-mm/20250420194030.75838-8-sj@kernel.org/
+> 
+> Thank you for this patch.  Please note that this is just a sample code, and
+> hence there will be no strict user space compatibility support.
+> 
+
+Thanks for reviewing. As you said, this mtier sample module needs further 
+development for final version, like automatically detecting memory tiers and
+adding some useful knobs. May I continue working on the mtier module? 
+
+> > 
+> > Suggested-by: Honggyu Kim <honggyu.kim@sk.com>
+> > Signed-off-by: Yunjeong Mun <yunjeong.mun@sk.com>
+> 
+> Reviewed-by: SeongJae Park <sj@kernel.org>
+> 
+> 
+> Thanks,
+> SJ
+> 
+> [...]
