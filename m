@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFFC1267B07;
-	Sat, 21 Jun 2025 17:31:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24CE7267F58;
+	Sat, 21 Jun 2025 17:31:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750527098; cv=none; b=jkwuVjZGNEE+G3AmDHxCyQEa8GM2Yr4dtLglrLNHl2G9myiAdRKLGcShsOaagtdeDjqEyCxzKBHdC3ITWbFxIhJftUKKyeLX5sVIfC/+R7CXor7oAapqhvNQtn0ZrinZV519stVCAW04+zavZE/75Q0qmeYrWpA7ve9XUBsQPhM=
+	t=1750527099; cv=none; b=J4GCBuOcifXrr2n1ahF/VwccQzZRYNCBi0fl0/MxQpfTnoQldcLRM0lOPTBVofOMARg8KuwVn/Y19NpLIk9a+Iv0T6Hp4DUUxP6QbgrKtPgFsgkk0+TQBSLhb0xuleQjHXH2HQlSXyf6KASgXyGOI4RqXCRScv4j+pT2AXqPkU8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750527098; c=relaxed/simple;
-	bh=XwUe6eyej2+X6VVhw6Bc1wVY5GDm97pjooComOJUL4k=;
+	s=arc-20240116; t=1750527099; c=relaxed/simple;
+	bh=Yysf3LajEIuwtoLoQcbL1zEZegxsuk3/GotP4vddbz4=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=nfg2CgFf1J33RVhR9C51URJF3eTZcnnnlxvKb0g/u6lnf3HmAYTV/F49M8Zz8MoVF97rc9alOhn8FuTXnNCsDgJv2cuW3TS0W9hfbpQLRPBJ4Wbx/sIQcP1VypVi4Bak/nT0UElZjnlhYlc7d7brm5Edvw9WD8lOG5TGaZ3TbnU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kqlH/ax+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=H+3837xsGIC8q9QzXzDlBzuHHQBRWhrzFwxe4uXY+NB6exBDXytGNKb1De69SU1dN3S56DeJTA/J3t+m2rsctsyNCw3ypMH44XZrMe93BFNlqI4O9aPjU1FcvTE2JkDQofiE0ZkiT6ymcm8dQ8QHsIHl16qGBz7OFyrByHg4U14=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EP52vihA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kqlH/ax+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D20EC4CEF3;
-	Sat, 21 Jun 2025 17:31:36 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EP52vihA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7794BC4CEEF;
+	Sat, 21 Jun 2025 17:31:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1750527096;
-	bh=XwUe6eyej2+X6VVhw6Bc1wVY5GDm97pjooComOJUL4k=;
+	s=k20201202; t=1750527098;
+	bh=Yysf3LajEIuwtoLoQcbL1zEZegxsuk3/GotP4vddbz4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kqlH/ax+l7Hdk7k4TXe6XwMHpEvU9xY2JmbGFidhk6efSzgCgu+HESiUXyFHodoEd
-	 uw9H1+y2J5vm/qIuE8jUXm/RXr1BqG1pQ8lccaBqU/exfZOGlm7OB0IenzCcUMKjhK
-	 CDuNStCShNel4RS4XJpgbCvM9me6VQoXyDKCLBNESAT7YPR6YKZ0MTowNxvyRMlKUi
-	 9yl3l/kCD6z9kw0Oqyo3QnzhSNxthi7Pz7eXiPZJZt9+JVi823rqANZpLArRd6/aWX
-	 f/IhcfJAFJiRPuAazufHnKp0XdBL5Dbp8X3geyQm6wRZhhVHebZPCsUyVKB1TXlbL6
-	 2aKYH1TuUb3EA==
+	b=EP52vihAGOvoB7EdJ3ZYt5Celh2McBShfE+llp9YSQdwmeUWFrcCxPF6DOSvCKaEp
+	 t1kS/NLjjHzjZjMnR/Dbf1PBwXe0VJskyhjpuOCFKb+nWpPl4X0R1mdV33O2GVCJ18
+	 o2B/ECLOWLQpzlfvwFEswh7W0HBeKeuBynvQ79uRdJU2lZg6G500FAfncdtWSY3Wge
+	 D1vtDrY+VjjaPjfLM64jPc9Chc5ik6jyQ7fD5Kto6nUbMQ8cU61NRxKnC+/LGNFVjz
+	 O8JHNK/6MDtavuJrSG3V1B34Y7568FUDxpuWKPOMT3HqkOklx6eQnB04qREJGtLM7g
+	 ESnMkHIOTf+bw==
 From: SeongJae Park <sj@kernel.org>
 To: 
 Cc: SeongJae Park <sj@kernel.org>,
@@ -35,9 +35,9 @@ Cc: SeongJae Park <sj@kernel.org>,
 	kernel-team@meta.com,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH 2/4] mm/damon/core: add damos->migrate_dest field
-Date: Sat, 21 Jun 2025 10:31:29 -0700
-Message-Id: <20250621173131.23917-3-sj@kernel.org>
+Subject: [RFC PATCH 4/4] mm/damon/sysfs-schemes: set damos->migrate_dest
+Date: Sat, 21 Jun 2025 10:31:31 -0700
+Message-Id: <20250621173131.23917-5-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250621173131.23917-1-sj@kernel.org>
 References: <20250621173131.23917-1-sj@kernel.org>
@@ -49,78 +49,59 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Add a new field to 'struct damos', namely migrate_dest, to allow DAMON
-API callers specify multiple migration destination nodes and their
-weights.  Also update 'struct damos' creation and destruction functions
-accordingly to initialize the new field and free up the API
-caller-allocated buffers on those, respectively.
+Pass user-specified multiple DAMOS action destinations and their weights
+to DAMON core API, so that user requests can really work.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- include/linux/damon.h | 13 ++++++++++---
- mm/damon/core.c       |  4 ++++
- 2 files changed, 14 insertions(+), 3 deletions(-)
+ mm/damon/sysfs-schemes.c | 28 ++++++++++++++++++++++++++++
+ 1 file changed, 28 insertions(+)
 
-diff --git a/include/linux/damon.h b/include/linux/damon.h
-index d60addd0b7c8..6370cf44486f 100644
---- a/include/linux/damon.h
-+++ b/include/linux/damon.h
-@@ -470,6 +470,7 @@ struct damos_migrate_dest {
-  * @apply_interval_us:	The time between applying the @action.
-  * @quota:		Control the aggressiveness of this scheme.
-  * @wmarks:		Watermarks for automated (in)activation of this scheme.
-+ * @migrate_dest:	Destination nodes if @action is "migrate_{hot,cold}".
-  * @target_nid:		Destination node if @action is "migrate_{hot,cold}".
-  * @filters:		Additional set of &struct damos_filter for &action.
-  * @ops_filters:	ops layer handling &struct damos_filter objects list.
-@@ -488,9 +489,12 @@ struct damos_migrate_dest {
-  * monitoring context are inactive, DAMON stops monitoring either, and just
-  * repeatedly checks the watermarks.
-  *
-+ * @migrate_dest specifies multiple migration target nodes with different
-+ * weights for migrate_hot or migrate_cold actions.  @target_nid is ignored if
-+ * this is set.
-+ *
-  * @target_nid is used to set the migration target node for migrate_hot or
-- * migrate_cold actions, which means it's only meaningful when @action is either
-- * "migrate_hot" or "migrate_cold".
-+ * migrate_cold actions, and @migrate_dest is unset.
-  *
-  * Before applying the &action to a memory region, &struct damon_operations
-  * implementation could check pages of the region and skip &action to respect
-@@ -533,7 +537,10 @@ struct damos {
- 	struct damos_quota quota;
- 	struct damos_watermarks wmarks;
- 	union {
--		int target_nid;
-+		struct {
-+			int target_nid;
-+			struct damos_migrate_dest migrate_dest;
-+		};
- 	};
- 	struct list_head filters;
- 	struct list_head ops_filters;
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index b217e0120e09..ea2a17b2dee7 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -407,6 +407,7 @@ struct damos *damon_new_scheme(struct damos_access_pattern *pattern,
- 	scheme->wmarks = *wmarks;
- 	scheme->wmarks.activated = true;
- 
-+	scheme->migrate_dest = (struct damos_migrate_dest){};
- 	scheme->target_nid = target_nid;
- 
- 	return scheme;
-@@ -449,6 +450,9 @@ void damon_destroy_scheme(struct damos *s)
- 
- 	damos_for_each_filter_safe(f, next, s)
- 		damos_destroy_filter(f);
-+
-+	kfree(s->migrate_dest.node_id_arr);
-+	kfree(s->migrate_dest.weight_arr);
- 	damon_del_scheme(s);
- 	damon_free_scheme(s);
+diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
+index e04cd8d592b8..158a2be3fd45 100644
+--- a/mm/damon/sysfs-schemes.c
++++ b/mm/damon/sysfs-schemes.c
+@@ -2445,6 +2445,29 @@ void damos_sysfs_update_effective_quotas(
+ 	}
  }
+ 
++static int damos_sysfs_add_migrate_dest(struct damos *scheme,
++		struct damos_sysfs_dests *sysfs_dests)
++{
++	struct damos_migrate_dest *dest = &scheme->migrate_dest;
++	int i;
++
++	dest->node_id_arr = kmalloc_array(sysfs_dests->nr,
++			sizeof(*dest->node_id_arr), GFP_KERNEL);
++	if (!dest->node_id_arr)
++		return -ENOMEM;
++	dest->weight_arr = kmalloc_array(sysfs_dests->nr,
++			sizeof(*dest->weight_arr), GFP_KERNEL);
++	if (!dest->weight_arr)
++		/* ->node_id_arr will be freed by scheme destruction */
++		return -ENOMEM;
++	for (i = 0; i < sysfs_dests->nr; i++) {
++		dest->node_id_arr[i] = sysfs_dests->dests_arr[i]->id;
++		dest->weight_arr[i] = sysfs_dests->dests_arr[i]->weight;
++	}
++	dest->nr_dests = sysfs_dests->nr;
++	return 0;
++}
++
+ static struct damos *damon_sysfs_mk_scheme(
+ 		struct damon_sysfs_scheme *sysfs_scheme)
+ {
+@@ -2507,6 +2530,11 @@ static struct damos *damon_sysfs_mk_scheme(
+ 		damon_destroy_scheme(scheme);
+ 		return NULL;
+ 	}
++	err = damos_sysfs_add_migrate_dest(scheme, sysfs_scheme->dests);
++	if (err) {
++		damon_destroy_scheme(scheme);
++		return NULL;
++	}
+ 	return scheme;
+ }
+ 
 -- 
 2.39.5
