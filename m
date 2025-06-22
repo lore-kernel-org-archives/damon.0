@@ -1,45 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32713C2E0
-	for <damon@lists.linux.dev>; Sun, 22 Jun 2025 16:29:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1345230E84D;
+	Sun, 22 Jun 2025 21:03:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750609778; cv=none; b=khGzZQ8eTBcNQb9kfiC76ZKLXAAbpMLME6K9M9mfjpmwzWK8aPtVBent1LsSNjs+a8zNMjwa8IILB0DyEapuvi46WFInwlVlZMFy78UIpORz9hvRfLhQpZ6+mKRxr3i4b0vvmKw6dKb4W1nWyPRwZlBJMAeV+foAFF5ubP+cIWA=
+	t=1750626215; cv=none; b=F8047g8DyIDg0jpHtsogG6GX1Q6uQJ6ZJUzW2op8DYL7z3/GmQMKbuKzQXW2zaMnVRm1lH8f2a7+o2Wfpflrq0tKintE6MV+dpUgrog6toMzdHrovDTOPkzlhEP9zLJoCFadeOM/l1CZUU9cx0xvEGSJYytoL9VUVd37czpfmyQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750609778; c=relaxed/simple;
-	bh=40EOyVGkVtpE0s+4GSuMyDUQSQjt0fLGLNr1OX6s4V8=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=isQqKCN2FMdb/PmoHxKv/QOiE6DtTpQMpTI/4Tv1ba29mLXWmXKrQiRxkscIEoasCbMiV05XVfqf28t63qi+oKYx5au++PVo8Rs3BU6wnwffE6gzQfhQiHDwbe7Ydmi/3Y7wxZYawRbaL1OSNVLYKHqKujzd3kGAb4WZWIQ9gso=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SLaCjEvt; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1750626215; c=relaxed/simple;
+	bh=WdFiKIlovYuycCCc8P2+ZFAGDP/REZTo9X6Ln85VIKk=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=X4DLgzYFXMQPrBkAWzF6A50QgirNiPmVBkPDqrgedIMU/P1dLrbchHR9qha3F5ecJJMMH2C6FvU5tvsK9ZFbEIRnATnei7rjXPOhKfW0wkja1EK/z4XD8WnxwtatJPbdIeondfvjyrDotKTs6doGuzxwz7rmMAA+Z3qD3Rmvpy0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=h6atRP8S; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SLaCjEvt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D93BC4CEE3;
-	Sun, 22 Jun 2025 16:29:37 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="h6atRP8S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70371C4CEE3;
+	Sun, 22 Jun 2025 21:03:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1750609777;
-	bh=40EOyVGkVtpE0s+4GSuMyDUQSQjt0fLGLNr1OX6s4V8=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SLaCjEvt5ZyJf84FPApT4NAEmP69CWXxZjd02KCiEdwMQC/5/EUsteK/MI9J5fDev
-	 4nW/gMv6hSVhhPYjSJu2oP1aGdWj3CWYq5p1Qdy0rjudzVXYHrR0PgHZHB83uxEwXm
-	 aUhZ1k1D651Nhs6pS0/FJB/zqYNlSdOlGKXZSrIlD+srEGZwLir/7dq3JeFolZP6HH
-	 gywQ44GPtK2DrhaDQsQkfTcJph6VktRSww7TL219w2QE70obnPUc7DbVlreBk+UWj8
-	 M6JTA4+/FpjWcMft1NftkH2QVWoR7HPQN8zT6BAEh9hpFrc1IKlwQDMRGjU1WFbVLK
-	 TizqNTJNLrEYw==
+	s=k20201202; t=1750626214;
+	bh=WdFiKIlovYuycCCc8P2+ZFAGDP/REZTo9X6Ln85VIKk=;
+	h=From:To:Cc:Subject:Date:From;
+	b=h6atRP8S6uD82GYvhupFBtVEwUunuKnqTp8t1ZyekZ/622X+cUFap/fVcbteHR2t8
+	 4p6M39RzsDsO4V+fpXqlgUeHXpEskW7PsjDx1rr1LPiIzi1JFAA/YFgJeVXzLBVoC1
+	 G+7HHjTXignSoIUtNBN7xSg0nMpYljh4LrzUnJANqwCWQ07BO0O6eHRGeAPJj68FU5
+	 35AUA5QiQhWBYqktkbn27OY/4NFWdnwMvs1VSAO1e4pEYSG/3/Lki1pZziLU8IdnQ5
+	 Vh4EsoQFDtvzil0pAKjbeyqWHyg3RRhkrLzh6DJN111hzXMUKFKZ0a6z4l6lbX9VIy
+	 ZM8eRm7vjeEWQ==
 From: SeongJae Park <sj@kernel.org>
-To: Honggyu Kim <honggyu.kim@sk.com>
+To: 
 Cc: SeongJae Park <sj@kernel.org>,
-	damon@lists.linux.dev,
 	Andrew Morton <akpm@linux-foundation.org>,
-	linux-mm@kvack.org,
-	kernel_team@skhynix.com,
-	Yunjeong Mun <yunjeong.mun@sk.com>
-Subject: Re: [PATCH 3/3] samples/damon: fix bugs for damon sample for start failures
-Date: Sun, 22 Jun 2025 09:29:34 -0700
-Message-Id: <20250622162935.51108-1-sj@kernel.org>
+	Shuah Khan <shuah@kernel.org>,
+	damon@lists.linux.dev,
+	kernel-team@meta.com,
+	linux-kernel@vger.kernel.org,
+	linux-kselftest@vger.kernel.org,
+	linux-mm@kvack.org
+Subject: [RFC PATCH 0/6] selftests/damon: add python and drgn based DAMON sysfs functionality tests
+Date: Sun, 22 Jun 2025 14:03:24 -0700
+Message-Id: <20250622210330.40490-1-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250622120926.1712-4-honggyu.kim@sk.com>
-References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -48,81 +47,41 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hi Honggyu,
+DAMON sysfs interface is the bridge between the user space and the
+kernel space for DAMON parameters.  There is no good and simple test to
+see if the parameters are set as expected.  Existing DAMON selftests
+therefore test end-to-end features.  For example, damos_quota_goal.py
+runs a DAMOS scheme with quota goal set against a test program running
+an artificial access pattern, and see if the result is as expected.
+Such tests cover only a few part of DAMON.  Adding more tests is also
+complicated.  Finally, the reliability of the test itself on different
+systems is bad.
 
-On Sun, 22 Jun 2025 21:09:25 +0900 Honggyu Kim <honggyu.kim@sk.com> wrote:
+'drgn' is a tool that can extract kernel internal data structures like
+DAMON parameters.  Add a test that passes specific DAMON parameters via
+DAMON sysfs reusing _damon_sysfs.py, extract resulting DAMON parameters
+via 'drgn', and compare those.  Note that this test is not adding
+exhaustive tests of all DAMON parameters and input combinations but very
+basic things.  Advancing the test infrastructure and adding more tests
+are future works.
 
-> The damon_sample_{wsse,prcl,mtier}_start() can fail so we must reset the
-> "enabled" parameter to "false" again for proper rollback.
-> 
-> In such cases, setting Y to "enabled" then N triggers the following
-> crash because damon sample start failed but the "enabled" stays as Y.
-> 
->   [ 2441.419649] damon_sample_prcl: start
->   [ 2454.146817] damon_sample_prcl: stop
->   [ 2454.146862] ------------[ cut here ]------------
->   [ 2454.146865] kernel BUG at mm/slub.c:546!
->   [ 2454.148183] Oops: invalid opcode: 0000 [#1] SMP NOPTI
->   	...
->   [ 2454.167555] Call Trace:
->   [ 2454.167822]  <TASK>
->   [ 2454.168061]  damon_destroy_ctx+0x78/0x140
->   [ 2454.168454]  damon_sample_prcl_enable_store+0x8d/0xd0
->   [ 2454.168932]  param_attr_store+0xa1/0x120
->   [ 2454.169315]  module_attr_store+0x20/0x50
->   [ 2454.169695]  sysfs_kf_write+0x72/0x90
->   [ 2454.170065]  kernfs_fop_write_iter+0x150/0x1e0
->   [ 2454.170491]  vfs_write+0x315/0x440
->   [ 2454.170833]  ksys_write+0x69/0xf0
->   [ 2454.171162]  __x64_sys_write+0x19/0x30
->   [ 2454.171525]  x64_sys_call+0x18b2/0x2700
->   [ 2454.171900]  do_syscall_64+0x7f/0x680
->   [ 2454.172258]  ? exit_to_user_mode_loop+0xf6/0x180
->   [ 2454.172694]  ? clear_bhb_loop+0x30/0x80
->   [ 2454.173067]  ? clear_bhb_loop+0x30/0x80
->   [ 2454.173439]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+SeongJae Park (6):
+  selftests/damon: add drgn script for extracting damon status
+  selftests/damon/_damon_sysfs: set Kdamond.pid in start()
+  selftests/damon: add python and drgn-based DAMON sysfs test
+  selftests/damon/sysfs.py: test monitoring attribute parameters
+  selftests/damon/sysfs.py: test adaptive targets parameter
+  selftests/damon/sysfs.py: test DAMOS schemes parameters setup
 
-Thank you for finding and fixing this!
-
-> 
-> Since it's just a sample module, no need to add it to stable tree.
-
-I agree this is not a real bug.  But, even a bug in DAMON unit test was
-deserved to get a CVE id.  Hence I'd suggest adding at least Fixes: tag here,
-and let stable kernels maintainers to decide whether to pick this up to stable
-kernels or not.  I can help backporting if needed.
-
-If you agree, I think we could add
-
-Fixes: b757c6cfc696d ("samples/damon/wsse: start and stop DAMON as the user requests")
-
-If we want to make stable kernel maintainers' life easier, we would better to
-split this into three patches, for each module, and add appropriate Fixes, as
-below.
-
-For wsse,
-Fixes: b757c6cfc696d ("samples/damon/wsse: start and stop DAMON as the user requests")
-
-For prcl,
-
-Fixes: 2aca254620a8 ("samples/damon: introduce a skeleton of a smaple DAMON module for proactive reclamation")
-
-For mtier,
-
-Fixes: 82a08bde3cf7 ("samples/damon: implement a DAMON module for memory tiering")
-
-Could you please do so?
-
-> 
-> Signed-off-by: Honggyu Kim <honggyu.kim@sk.com>
-> Cc: Yunjeong Mun <yunjeong.mun@sk.com>
-
-Regardless of your agreement on adding Fixes:
-
-Reviewed-by: SeongJae Park <sj@kernel.org>
+ tools/testing/selftests/damon/Makefile        |   1 +
+ tools/testing/selftests/damon/_damon_sysfs.py |   3 +
+ .../selftests/damon/drgn_dump_damon_status.py | 161 ++++++++++++++++++
+ tools/testing/selftests/damon/sysfs.py        | 115 +++++++++++++
+ 4 files changed, 280 insertions(+)
+ create mode 100755 tools/testing/selftests/damon/drgn_dump_damon_status.py
+ create mode 100755 tools/testing/selftests/damon/sysfs.py
 
 
-Thanks,
-SJ
-
-[...]
+base-commit: 59f618c718d036132b59bcf997943d4f5520149f
+-- 
+2.39.5
