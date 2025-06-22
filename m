@@ -1,58 +1,28 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED3FA22DF8B;
-	Sat, 21 Jun 2025 18:11:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+Received: from invmail4.hynix.com (exvmail4.skhynix.com [166.125.252.92])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4C0EA1DED42
+	for <damon@lists.linux.dev>; Sun, 22 Jun 2025 12:10:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=166.125.252.92
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750529490; cv=none; b=lnwwXZY9VnUvNEtMnYHD9oZJW6rvLHAroE8SEfxKIzIlzNH3E/p6hEZJVuUxfrhj4bzTLWrH1tgb6xqozAGuz4ng4g9MYAKW+z68mgotf72FfceIIXPFEWbqMoZHaJhJjuj1DdWYZosdO5gMorjWzClahj4hKfrz5IC23b3v6ao=
+	t=1750594220; cv=none; b=gog/lWOxh+R/Jf8wUR2Mrl5hMMdugElqJX2ylwbVncWkzzpj5fc3Vu2JuTmq7Vt6FCCnv/9pyR+sSws4hZLGv5psfZeaOp9ynCuxSCcrgKeKf5M7o5kwojqrNSQRffyX2mv5YYU8MKb9qBrkSv67CDuvc1eY82IwPwa6NesCcYk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750529490; c=relaxed/simple;
-	bh=GyZin8tK1VU+mB4hRLpjVwYev+eqiENeiPNpM1Tl1nI=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=sBxyjxDBXpxRPVI40O3oeqI7gS/UaA/tT/jOvxziJ1KpCYHahC2zd/a5iYA1em9u/nZy5AAA8AizK6oVBqIVu32+pNPnFpMBuPqIGx2YS3XEgzKk5wsSYQOLsSnL10vUwTC0alo2y4vt+aB6/2oDXauNcGZnQ6u1ZGLIWVqR0pQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=g+TXSuBm; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="g+TXSuBm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5587CC4CEE7;
-	Sat, 21 Jun 2025 18:11:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1750529489;
-	bh=GyZin8tK1VU+mB4hRLpjVwYev+eqiENeiPNpM1Tl1nI=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g+TXSuBmZls7c39WpvaP8YgHY0BKdiHXIbiP+7ETgSOG5mXJAPJtwoCbUM4f3aI7Y
-	 Mn+/v34lDAHLlStZsIRHtKds6i6VxnCtDXrjEYQNO/cZHoRv33UzM1OkbwCGZDa6pB
-	 y0rHCJeUp5v/jN2JpLmTY6qj/D6rzJi1knoja59xm6IIitFWZhpT1X+F3Tpo4SmyLe
-	 lkLjoKfM0y35EUsGNQRmwCpwtlnF+D2ugvLo+hhmInc78INPf5AvV8kdARZge5CO0Z
-	 2H1TFVpcsmqkg8RZZrh2MdQSigO7rv1BhAfhLQqXMnYeUigCd9AGTAyjmoZz2I2EMi
-	 U+K1b64YjaqlA==
-From: SeongJae Park <sj@kernel.org>
-To: SeongJae Park <sj@kernel.org>
-Cc: Bijan Tabatabai <bijan311@gmail.com>,
-	damon@lists.linux.dev,
+	s=arc-20240116; t=1750594220; c=relaxed/simple;
+	bh=FduXMafm8hv6jLzjCbONKOplVWWvzRNBLsdAvsT1uog=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=KCnRPupnY2AAl3sz+megxmtrBJ1W2zGy0ZU0S/wH2OXEChTqoC6ubgl3VbKMAVE6A9zh+5fdDe0apJgAhhD6oU1d0oy5a6Xcxzf3rDV+YUvM1McfoH8n0ear1Fku/PhRKmpNswKvoDgNnNJukjPtzGN+GfvAZdRqAj/B7p09594=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sk.com; spf=pass smtp.mailfrom=sk.com; arc=none smtp.client-ip=166.125.252.92
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sk.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sk.com
+X-AuditID: a67dfc5b-669ff7000002311f-26-6857f29e00bd
+From: Honggyu Kim <honggyu.kim@sk.com>
+To: SeongJae Park <sj@kernel.org>,
+	damon@lists.linux.dev
+Cc: Andrew Morton <akpm@linux-foundation.org>,
 	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org,
-	akpm@linux-foundation.org,
-	david@redhat.com,
-	ziy@nvidia.com,
-	matthew.brost@intel.com,
-	joshua.hahnjy@gmail.com,
-	rakie.kim@sk.com,
-	byungchul@sk.com,
-	gourry@gourry.net,
-	ying.huang@linux.alibaba.com,
-	apopple@nvidia.com,
-	bijantabatab@micron.com,
-	venkataravis@micron.com,
-	emirakhur@micron.com,
-	ajayjoshi@micron.com,
-	vtavarespetr@micron.com
-Subject: Re: [RFC PATCH v2 2/2] mm/damon/paddr: Allow multiple migrate targets
-Date: Sat, 21 Jun 2025 11:11:27 -0700
-Message-Id: <20250621181127.36394-1-sj@kernel.org>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250621180215.36243-1-sj@kernel.org>
-References: 
+	kernel_team@skhynix.com,
+	Honggyu Kim <honggyu.kim@sk.com>
+Subject: [PATCH 0/3] mm/damon: Enhance damon and its samples
+Date: Sun, 22 Jun 2025 21:09:22 +0900
+Message-ID: <20250622120926.1712-1-honggyu.kim@sk.com>
+X-Mailer: git-send-email 2.43.0.windows.1
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -60,48 +30,49 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprMLMWRmVeSWpSXmKPExsXC9ZZnke68T+EZBvdW2ljMWb+GzeLJ/9+s
+	FvfW/Ge1OPz1DZMDi8emVZ1sHps+TWL3ODHjN4vHi80zGQNYorhsUlJzMstSi/TtErgyvtxa
+	w15wia3iTPtH1gbGjaxdjJwcEgImEm3futi7GDnA7BNnJEDCbAJqEldeTmICCYsIWElM2xHb
+	xcjFwSzQxCix8VcnG0iNsICNxK1li8BsFgFVifXtq5hBbF4BM4k5hxZDjdeUeLz9JztEXFDi
+	5MwnLCA2s4C8RPPW2cwQNR9ZJfr/xEDYkhIHV9xgmcDIOwtJyywkLQsYmVYxCmXmleUmZuaY
+	6GVU5mVW6CXn525iBAbVsto/0TsYP10IPsQowMGoxMP74mBYhhBrYllxZe4hRgkOZiUR3kNO
+	QCHelMTKqtSi/Pii0pzU4kOM0hwsSuK8Rt/KU4QE0hNLUrNTUwtSi2CyTBycUg2MAmsVt65K
+	9xGL3HyV5wXX8nOzDV7cbPL8Xq1hbarPKu/LFcpfYynB7RLO5CyfsP9GevWEBRUax+07fR6d
+	tdj31bat4Ft4vvXTer/JH77725U91pq4YFf3tfwts36dCfmRNunE7km7TS+t3Of7xnJJ2K2O
+	Ke+UOOZJTIxzFfwefD+v0eTWja69SizFGYmGWsxFxYkARcbRyCYCAAA=
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFmphluLIzCtJLcpLzFFi42LhmqGlpzvvU3iGwft/ehZz1q9hs3jy/zer
+	xednr5ktDs89yWpxb81/VovDX98wObB5bFrVCSQ+TWL3ODHjN4vHi80zGT2+3fbwWPziA1MA
+	WxSXTUpqTmZZapG+XQJXxpdba9gLLrFVnGn/yNrAuJG1i5GDQ0LAROLEGYkuRk4ONgE1iSsv
+	JzGBhEUErCSm7YjtYuTiYBZoYpTY+KuTDaRGWMBG4tayRWA2i4CqxPr2VcwgNq+AmcScQ4tZ
+	QWwJAU2Jx9t/skPEBSVOznzCAmIzC8hLNG+dzTyBkWsWktQsJKkFjEyrGEUy88pyEzNzTPWK
+	szMq8zIr9JLzczcxAsNmWe2fiTsYv1x2P8QowMGoxMP78mBYhhBrYllxZe4hRgkOZiUR3kNO
+	QCHelMTKqtSi/Pii0pzU4kOM0hwsSuK8XuGpCUIC6YklqdmpqQWpRTBZJg5OqQbGvK9GjyJ2
+	31Gbea9jeVhb8EHpPaZrnSYHhzaUn3x0+2wB467dnZt0wpuvSHRsKDlyM9pUXH0eu/HB25KT
+	P6ndMml7fG7thJzchOCg1R6HOG6ZT7CSPOI18WtjSrtZxHGvqyq9H4KX2RxR+bAuQvDKpLOP
+	dim071gud55nh6SjaPzeQOvJN3/nKbEUZyQaajEXFScCABXN/UIXAgAA
+X-CFilter-Loop: Reflected
 
-On Sat, 21 Jun 2025 11:02:15 -0700 SeongJae Park <sj@kernel.org> wrote:
+This includes random fixes of damon and its samples to make it safer and
+consistent with other damon modules.
 
-[...]
-> I'd hence suggest to implement and use a simple weights handling mechanism
-> here.  It could be roud-robin way, like weighted interleaving, or probabilistic
-> way, using damon_rand().
-> 
-> The round-robin way may be simpler in my opinion.  For example,
-> 
-> unsigned int damos_pa_nid_to_migrate(struct damos_migrate_dest *dest)
-> {
-> 	static unsigned int nr_migrated = 0;
-> 	unsigned int total_weight = 0;
-> 	unsigned int weights_to_ignore;
-> 	size_t i;
-> 
-> 	for (i = 0; i < dest->nr_dests; i++)
-> 		total_weight += dest->weight_arr[i];
-> 	weights_to_ignore = nr_migrate++ % total_weight;
+It includes the following changes.
+- Fix unexpected divide by zero crash not allowing zero size region
+- Keep "enabled" parameter in damon samples consistent with others
+- Fix bugs for damon samples in case of start failures
 
-Actually, probabilistic way may be not that complicated.  Maybe we could to
-below here.
+Honggyu Kim (3):
+  mm/damon: do not allow creating zero size region
+  samples/damon: change enable parameters to enabled
+  samples/damon: fix bugs for damon sample for start failures
 
-	return damon_rand(0, total_weight) >= weight_to_ignore;
-
-> 	total_weight = 0;
-> 	for (i = 0; i < dest->nr_dests; i++) {
-> 		total_weight += dest->weight_arr[i];
-> 		if (total_weight >= weights_to_ignore)
-> 			return dest->node_id_arr[i];
-> 	}
-> 	WARN_ON_ONCE(1, "I don't know what I did wrong");
-> 	return 0;
-> }
-
-But damon_rand() might be more expensive than the roud-robin way, and arguably
-roud-robin way is what usrs who familiar with weighted interleaving may easily
-expect and even prefer?  I have no preferrence here.
+ mm/damon/core.c       |  3 +++
+ samples/damon/mtier.c | 22 +++++++++++++---------
+ samples/damon/prcl.c  | 22 +++++++++++++---------
+ samples/damon/wsse.c  | 22 +++++++++++++---------
+ 4 files changed, 42 insertions(+), 27 deletions(-)
 
 
-Thanks,
-SJ
+base-commit: e04c78d86a9699d136910cfc0bdcf01087e3267e
+-- 
+2.34.1
 
-[...]
