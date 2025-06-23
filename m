@@ -1,71 +1,72 @@
-Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
+Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91439132122
-	for <damon@lists.linux.dev>; Mon, 23 Jun 2025 14:27:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6754267733
+	for <damon@lists.linux.dev>; Mon, 23 Jun 2025 14:40:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750688851; cv=none; b=N0e06QB+5zQ0tn5C6KreJuHKrdhFaWGYQBjs6TNoLdjDK6Vq8X57sqXjPonzyrGdClGhvpxT+xTibsq24j1MUEWDHJjG82bu2bbwfvleXwIzc1coYL3LTgGO/zcep9dtGXoejVR3sYN56sE4s0F69VQdABG2RlSMeL/2rp5bGfo=
+	t=1750689603; cv=none; b=iujLbT0Cowl37H6KAooG5y23PlvhVVS8pK7zmJHmyww7hEeuU6QHU6DMFAbofwK+XjjlfLXEbHe+NR1RcbTZa2ebDlgjc51M1GF+tf1jy9dFk3td6GOuh1CZ0n17XfvLNhU+IuFhotNcXPJti9xbjyZLYDUVL4mKu8gf/GoGoSQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750688851; c=relaxed/simple;
-	bh=mnIK+W5KngtwZhVktOKMz0FyAthSv5HiBjAvWwmaW9k=;
+	s=arc-20240116; t=1750689603; c=relaxed/simple;
+	bh=lHsHchyWhA35ZLt97FqmbFUE1/lGuLeWn/i1lL1eJ44=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=feUyPb55yg/B5TDEvGnjfiM2yjEzVzqo0/EMLdKo4rmwicy8oVBGInf30umusc5HFAJWgex6yUrb6AGjmCB/uCgxlL+TofS8reKdCKU+r5AY/RjBSeF80pguE0x6YgXxY8s05T31jRx39H2Y0DjAPp0dpjHs6e3e6lo1f4GSRLU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=W/irKkY8; arc=none smtp.client-ip=209.85.218.41
+	 To:Cc:Content-Type; b=C6kEHzHOeGQSQz3JnGSLh6bUznWSKUu1mdC7IVOLAN528Dl9AAg8c6tgvWLZt66HKW6FRhCAKVrv7FJClrnsHL/EKAHVIroPaeg+DkbrEN2389mmvAqCQKHa1LGDVrvp3iJtv9Y0W5neQMwwLAWAXrM9wWzUpRy5ls36Z9Tuk1s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YceoSzp0; arc=none smtp.client-ip=209.85.218.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="W/irKkY8"
-Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-ade326e366dso783610666b.3
-        for <damon@lists.linux.dev>; Mon, 23 Jun 2025 07:27:29 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YceoSzp0"
+Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-acb5ec407b1so708221866b.1
+        for <damon@lists.linux.dev>; Mon, 23 Jun 2025 07:40:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1750688848; x=1751293648; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1750689600; x=1751294400; darn=lists.linux.dev;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=0mxmuO90Mgrv1homANIMZ/x/S7lf2iuPtj/uEFpEqR0=;
-        b=W/irKkY8+9wvwMU/6Xo1oe4lt2MymgtWYHgET4D8VxpBN3tFOe41xqz/xMf0rgzUCp
-         AXlXMN6OcKPQ4dTd9BqCvCxWVmsTxjp61SmL+7995518YkVK9as5xtTKHfTGbktmm1b8
-         hqWlDK3P4y9pnjF8IJqC9eYbNN5jR40rREj1cvB7gVnnndQTsbaVJwWedb5wOPuH3uFM
-         3iuEThhM9J1U/nMNUL5iVrDfYHLIMnEerSxi/aPrN5a2PfT+SRYKfFzURuYfZW5AtMr/
-         7Yvl+JCnIymzCqP7UJ+/uhzVY6N+r/1rjlH4cWjmAuljVfi7wCgIaW/H2/pRyjfslfr7
-         Lfow==
+        bh=U9+0NuJ2HzS3oX9trIsYNygO2Vo4g11wSfp7uWlAzH4=;
+        b=YceoSzp0uPP24ZC6/Sop29LAo3CtSz0sS+m2DQ7PQT4ipBFTWH+axCGh+GKvRd8BwT
+         WjTB3o0NYHoogR+QYWYE9+grbw5VFZl7IPYHmSSD11SG39kpaPBCq2F8qvdBc/BPmMbU
+         eYdpnuN5e6+FWYmop2zoXu2Nq4n1+irAbAVXTMkSQILLtwDLVNYj2nhmqafv5tGEli3Q
+         R1MDFjKh9OgMI7dvfWJua72vT33ddZWtnjv2HxpJHckdkbIXRTf30BbQMcYtsXNhHthR
+         99muyP48hnkDIWwY1n+rfx3VwOPZPAHxkhLaaD2fAKJiK+NkiqLVqITnEVdFWT1mXSPl
+         wp1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750688848; x=1751293648;
+        d=1e100.net; s=20230601; t=1750689600; x=1751294400;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=0mxmuO90Mgrv1homANIMZ/x/S7lf2iuPtj/uEFpEqR0=;
-        b=n6HSg9nA6tkiy96EomK+VEaJdNpDYcK8LjVKrnRqBKQI03mJyH2mDJ7AXnQL8XB0Y6
-         JddJZb9VwT97HXjvS9BoqC7ci7B5vtuGlcPWN+AV3qubeMqefTcpObQi4RzPLQFlag2L
-         nq4kWiRcxXcceeSsO8FNdIdcvap/WbQOCSSc6/wQElaArrYTAVoY0wdbXtlqm1K5WBr4
-         SsDjtByGPSMcPGaI3xMCqzb4lh2sFba0bkzq6BkaKwALEW/SyD4oH0T+4Y3SdKwX2gVR
-         57bqa3lyQRqsPppHF7FVvGILNifc//7fpTr3QwfOHkL3XtIzBv7w8nxCyIONvZJGAvlt
-         Cn5A==
-X-Gm-Message-State: AOJu0Yw33St5ABTsA2+y3UFQkJJE/k45RuNtC1ueu04V3juQloucAEeL
-	MtxcCYeUxMB1itgv9bZm0lNtwa3puRqYGzfVzMk2JAS6nNONLK9CopKQSRQCl3hsaFzWht9xUBs
-	PTBzofb3Mem2HPh9WpXi0rZ6krF9M5fg=
-X-Gm-Gg: ASbGnctn+1V69JzxPch1UVA3lC4BRpjnkXzzKE5aiHMAncdQ/OIWvYxMDRBXdYAdKD+
-	HIPs6CkhSOIJEOjCIBBmp94s6XMyRft2mQGW2x9OxtNIdfDXvDFwGWQnTciJscqnnmvHdInFxJh
-	RLrOjxAweEzERnu7oS7878cGA87nZ/47aLlANi2eC15qmWT2+XaO96SA9/HuDamoTtGpgn5cOgT
-	C3dzQ==
-X-Google-Smtp-Source: AGHT+IFg5WdPq/qtv4lksfp6KScFWAG840JHC2XOEBUW7uElx1+hH2peDn+CU3J7X0rKpYK4v7bpx2FOMkfNnjWA/wI=
-X-Received: by 2002:a17:907:60c8:b0:add:ed0d:a56c with SMTP id
- a640c23a62f3a-ae0578d9c7amr1099129266b.0.1750688847762; Mon, 23 Jun 2025
- 07:27:27 -0700 (PDT)
+        bh=U9+0NuJ2HzS3oX9trIsYNygO2Vo4g11wSfp7uWlAzH4=;
+        b=EYxNfM/PXnef6y0VC6Et9EorR5zbLEQc8f410psVfeAgU24x14s/1Ztc8FADsOkcKY
+         rguoE/PjpicZkTRpzVjiOgqDpg8yvtK5IZzLNml/8S2pV1A3tUqUYWjd9+9XTCB0zWZQ
+         0scS7APaWrtei4AIVUrtcf7vfNmjINwNV3iS7n+5WqY+tclffjCZ46Bqo35dA9uJN8G8
+         uUA2yWvV5fAYsH5gQY2s9ZMhRyMm3LcptS/+VTx1nYFoWFRBngqGSST5UyYoTwtpSZnh
+         Xayg8nhDxi4YeSikYM+WvefdBUxSYpxk9gBhESORJr1kU8KKglNmYGK0aG6RvAMUZb39
+         2OOg==
+X-Gm-Message-State: AOJu0YzuoftBDZeSwKenmdxSrVXSoruKED1zBdAX+ams2K8aE1fdkSz7
+	73zOzFAtSk2q75TnNsKT0LBtYOU6rUjYQOURkmGb9n2kYdSjp8ymLXkQLoUG5R+yym2m+Seb8Ee
+	AvgRVPJB9D98hL0yRgZaS8lCBOWChYtU=
+X-Gm-Gg: ASbGnctHqNq6b6Zd1tD+nFAVvdKPsbDRx11Qn9Dj3PX9IjLV/+2xzQrvSFfZ8STy3HH
+	e/dHcBNRlCNR2pl823iiUFNdyRRcikAYt7wRzGJEm8uJICmjzl2nIjODF1iKWNOxR/aa1/3fe7Q
+	ZBdMLZUWrSMXGMHnl01DUcZSnzLUg2aERuWuDVqVmHEB1iype0AYelknFrfB9theCMidLegbSz7
+	Zje6YHPGD4dWna0
+X-Google-Smtp-Source: AGHT+IGUfp3/ururE5cq94v6XTOMAtl8+WlC/gPk79G9+PbfymbTdmHbzNmhQMSy0z48u3KWdnPgfyPlB02Iw4aF8ms=
+X-Received: by 2002:a17:907:94cc:b0:adf:7740:9284 with SMTP id
+ a640c23a62f3a-ae057c709c6mr1353653766b.57.1750689599796; Mon, 23 Jun 2025
+ 07:39:59 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20250621180215.36243-1-sj@kernel.org> <20250621181127.36394-1-sj@kernel.org>
-In-Reply-To: <20250621181127.36394-1-sj@kernel.org>
+References: <20250620231324.99607-1-sj@kernel.org> <20250621173639.35906-1-sj@kernel.org>
+In-Reply-To: <20250621173639.35906-1-sj@kernel.org>
 From: Bijan Tabatabai <bijan311@gmail.com>
-Date: Mon, 23 Jun 2025 09:27:16 -0500
-X-Gm-Features: AX0GCFu6T2Sb_KHAJnfSsDjk8-dMwbeEOaowGMMnJk16KremJtvAzwu_az7M350
-Message-ID: <CAMvvPS7ozBjY-YWHrkkGVQA8ug=0=xT=BeyZxi0YrHp6PNQmHg@mail.gmail.com>
-Subject: Re: [RFC PATCH v2 2/2] mm/damon/paddr: Allow multiple migrate targets
+Date: Mon, 23 Jun 2025 09:39:48 -0500
+X-Gm-Features: AX0GCFt6CknS4SwAMKaZry7XGCRzawldZjC64c_mubZJ1QNsGdLh9DYniVyb5kA
+Message-ID: <CAMvvPS6yuosvLxUn8+GnGJdqE2LnfGgur0x0hTM6nqmBpU-q9Q@mail.gmail.com>
+Subject: Re: [RFC PATCH v2 0/2] mm/damon/paddr: Allow interleaving in
+ migrate_{hot,cold} actions
 To: SeongJae Park <sj@kernel.org>
 Cc: damon@lists.linux.dev, linux-mm@kvack.org, linux-kernel@vger.kernel.org, 
 	akpm@linux-foundation.org, david@redhat.com, ziy@nvidia.com, 
@@ -76,57 +77,41 @@ Cc: damon@lists.linux.dev, linux-mm@kvack.org, linux-kernel@vger.kernel.org,
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Sat, Jun 21, 2025 at 1:11=E2=80=AFPM SeongJae Park <sj@kernel.org> wrote=
-:
+On Sat, Jun 21, 2025 at 12:36=E2=80=AFPM SeongJae Park <sj@kernel.org> wrot=
+e:
 >
-> On Sat, 21 Jun 2025 11:02:15 -0700 SeongJae Park <sj@kernel.org> wrote:
+> On Fri, 20 Jun 2025 16:13:24 -0700 SeongJae Park <sj@kernel.org> wrote:
 >
+> > On Fri, 20 Jun 2025 16:47:26 -0500 Bijan Tabatabai <bijan311@gmail.com>=
+ wrote:
 > [...]
-> > I'd hence suggest to implement and use a simple weights handling mechan=
-ism
-> > here.  It could be roud-robin way, like weighted interleaving, or proba=
-bilistic
-> > way, using damon_rand().
+> > > That sounds good to me! Having a prototype from you for the sysfs
+> > > interface would certainly be helpful, but if you're busy, I can take =
+a
+> > > pass at it as well.
 > >
-> > The round-robin way may be simpler in my opinion.  For example,
-> >
-> > unsigned int damos_pa_nid_to_migrate(struct damos_migrate_dest *dest)
-> > {
-> >       static unsigned int nr_migrated =3D 0;
-> >       unsigned int total_weight =3D 0;
-> >       unsigned int weights_to_ignore;
-> >       size_t i;
-> >
-> >       for (i =3D 0; i < dest->nr_dests; i++)
-> >               total_weight +=3D dest->weight_arr[i];
-> >       weights_to_ignore =3D nr_migrate++ % total_weight;
+> > Great.  I will try to do this by this weekend.
 >
-> Actually, probabilistic way may be not that complicated.  Maybe we could =
-to
-> below here.
+> I just posted an RFC for this:
+> https://lore.kernel.org/20250621173131.23917-1-sj@kernel.org
 >
->         return damon_rand(0, total_weight) >=3D weight_to_ignore;
->
-> >       total_weight =3D 0;
-> >       for (i =3D 0; i < dest->nr_dests; i++) {
-> >               total_weight +=3D dest->weight_arr[i];
-> >               if (total_weight >=3D weights_to_ignore)
-> >                       return dest->node_id_arr[i];
-> >       }
-> >       WARN_ON_ONCE(1, "I don't know what I did wrong");
-> >       return 0;
-> > }
->
-> But damon_rand() might be more expensive than the roud-robin way, and arg=
-uably
-> roud-robin way is what usrs who familiar with weighted interleaving may e=
-asily
-> expect and even prefer?  I have no preferrence here.
+> Note that I didn't run exhaustive tests with it, so it may have silly bug=
+s.  I
+> believe it could let you knwo what I'm thinking better than my cheap talk=
+s,
+> though ;)
 
-I think my comments about the round-robin approach also apply here,
-but all things equal, I generally prefer being deterministic over
-being probabilistic when possible.
+I only skimmed through it, but this looks good to me, thanks for
+throwing this together! I'll probe more when I use these patches for
+the next revision.
 
+I'll try to reply in that thread as well, but it was only sent to my
+work email. I'll try to set up my work Outlook client to work with the
+mailing list format, but in the future, could you also CC my personal
+email (bijan311@gmail.com)? Gmail just makes formatting for the
+mailing list easier for me.
+
+Thanks,
 Bijan
 
 [...]
