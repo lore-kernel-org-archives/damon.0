@@ -1,161 +1,226 @@
-Received: from invmail4.hynix.com (exvmail4.skhynix.com [166.125.252.92])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A79E5BA2E
-	for <damon@lists.linux.dev>; Mon, 23 Jun 2025 03:16:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=166.125.252.92
+Received: from mail-yw1-f176.google.com (mail-yw1-f176.google.com [209.85.128.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0E6D2581
+	for <damon@lists.linux.dev>; Mon, 23 Jun 2025 13:45:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750648600; cv=none; b=BQZW5xBwN76BirKdTMwVKfGvUGCnlxJ26dv56Sy5/xj7nyaea0BOR/nPZG21M3ChCG/L7m+v0u5NQ+S9dseH3PM4Yq31HrFx0SF/2hsrEqiTI+UwwlUkNrxYKzBzJe7qWQMIFbP6wdLwll9AYh/H5BVb54G7f9HF/zD60WAasig=
+	t=1750686355; cv=none; b=uT/Di469X0Qi4ImvLjwxTAkSa2gvvv9/k84nVTT3z10xpTCs6tlGmQdW62E53YqdmfwOb/Tlrpzz3Q7ErcC9WtmxN73aGMtk/AfQxyjpXLiA4i1w9HMjYFkgCpg4uLELM3TVG9sIusqdbVmFD0hI8A0uc8r1eP/G/CpIEYNQ6gw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750648600; c=relaxed/simple;
-	bh=KmF5tiOONkkcQoUwxxjWSXuK9OuVaPphSQ95ha2unyA=;
-	h=Message-ID:Date:MIME-Version:Cc:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=Vrxn/PlHNzbQV324elU/7Pg9GpzMQHBw7Tiw59l27sfRLiBaKCIk2lIUkqjolJK7kjSHZjkaoqVwoa6/yfB0SAtkKLRX8Vsl3j3izjM4J65TB0UtSPNDWeImTIbHfSYzphfCSrS2emZM0pbchYCxvNXJZdb5YUwA8gLd9/yEbhU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sk.com; spf=pass smtp.mailfrom=sk.com; arc=none smtp.client-ip=166.125.252.92
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sk.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sk.com
-X-AuditID: a67dfc5b-681ff7000002311f-55-6858c7100f23
-Message-ID: <f6739a52-eb5e-4a88-9796-b53f18869059@sk.com>
-Date: Mon, 23 Jun 2025 12:16:32 +0900
+	s=arc-20240116; t=1750686355; c=relaxed/simple;
+	bh=GbjuxIKt7GEonaHrp5LL1AmZ9clyp72RW5FyRoGRkbg=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=AjtIgx3hqr9H1H4uGFaWimdjryxTOAWTpsUSIatK3u9VWhUTd3Huvs0sK/IXVavYXqo7eenuduTqX0iWZphzjVgXuGI11o37rkBe/nWMEKgR1MZfDgFmwkxhXVxC+3L6ipNZcqxV57g8a7wnLisNNeLQqmVPwz8rHLhvCUJZu5M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=W0g6CS6r; arc=none smtp.client-ip=209.85.128.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="W0g6CS6r"
+Received: by mail-yw1-f176.google.com with SMTP id 00721157ae682-70e447507a0so31122407b3.0
+        for <damon@lists.linux.dev>; Mon, 23 Jun 2025 06:45:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1750686353; x=1751291153; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=zSfF7un8LIQsGUb2HSbfU97hICuhPSaYsldpijdfOsQ=;
+        b=W0g6CS6rorlB3yDnBfMmPYko9IYrGzRxdVrTj0BSFRja4mXFHE4EpIrJTf44oRXNcT
+         MRqQc26vMOWPlwp0Gr374zKWRz3hejaR8XNSKvUXN5Nuw/6GariWoJGChVQWBbOCsIwS
+         13sjRIWEEbjc1RjYDvWTjU2wQmOd4833yetXKB25yYyEZj5sEtDMCuU85FTz6mgHiek7
+         zKbzaaZ1YaEELYLEj9FiCmZoaI4bDrFSPHp324T9Ys9DCIWOV0azwUMRFgDONh1NZyjy
+         t5Q9C39OaytEf5s9ov8K/8+XeNzYnzGs86SrhrHnAskMIaWFDQoLhSmG9Ut+Yiozo790
+         8Z9A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1750686353; x=1751291153;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=zSfF7un8LIQsGUb2HSbfU97hICuhPSaYsldpijdfOsQ=;
+        b=BsIMOjaBDs1/FnRP1ueyKLjm6JZ4XXMDTueN7wNCXLQIv4eODLWNXw2Axw7MGR8+az
+         63XM3zFVweuUe7It7T6utnUI2bmQEy/BB4uUkdh46IUc6MLpbGMI6Pdmgg/a7YnSyS55
+         EpR2RmTLd3p+n+sqAK0zmdRs40aN4KxLtmVlJdMkvKS6DSPF+iqJx1SCdLRJLZZcHphX
+         hd0vWRMeVckkDJgjyUj4XvV8WShnyJ6xUmZ+Z5ldeeIC+nXDO3ccS/Px/ZHz8XFQcAPf
+         Z0O7122QC4WAUIX/JxdwkuBQPbDhfSwoudQIM+MaROF1N0kdRQTVgmy/yi6tLGX4TTVH
+         v1Ng==
+X-Gm-Message-State: AOJu0YxviSCccyQbEm+t4Um7+RsCuKIzOs7fiAw685PuFjL3UtyA7X+p
+	il08UaXAtVa/w2ClI/3PACxAm4FYRVuut40enlqGkkAbSagEuCOVIrSG
+X-Gm-Gg: ASbGncvj1lJUeoNhlDzSCvShY5Mmb5uPxpHFqDwns0tvDjEgT/ZLfLQ7UKaLN1UZuG7
+	6a+kGMd2pz1shc8eNucmOrN5WRgSqhyEQ5HHdgxh+Kst5wFur11u4xiCbXSJfceJgnprHMDnffz
+	YSF0e8LYCrk3OMSvdhqjPYKZXbo0KQ9Z2PDPrfWzcdLFbtDVNL/95N9BRrD6DdUs3f107mZLW7D
+	Uw8YLOyty9DGjkFdQKYFAzb8equ85J+4yBiH2xb+s73CMcq1e2H7gqkMfDgD5hFJW+ReiAwmlFd
+	VswI5oruZP5QijaBcLtXIlSE/l+Zzu8xxS/rCcQiOOd7OSRXnfxuNpj/FHjz/w==
+X-Google-Smtp-Source: AGHT+IG38eDF3uDJCo+9jSrUa+GIdCMuLehbCwzqrSlA2tsKSYXh5jQni+GVNFRrtzz7ofvR3E00YA==
+X-Received: by 2002:a05:690c:7345:b0:70c:a5c2:ceed with SMTP id 00721157ae682-712c65128a7mr173679777b3.25.1750686352703;
+        Mon, 23 Jun 2025 06:45:52 -0700 (PDT)
+Received: from localhost ([2a03:2880:25ff:50::])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-712c4b96502sm15855337b3.79.2025.06.23.06.45.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 23 Jun 2025 06:45:52 -0700 (PDT)
+From: Joshua Hahn <joshua.hahnjy@gmail.com>
+To: Bijan Tabatabai <bijan311@gmail.com>
+Cc: damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org,
+	sj@kernel.org,
+	akpm@linux-foundation.org,
+	david@redhat.com,
+	ziy@nvidia.com,
+	matthew.brost@intel.com,
+	joshua.hahnjy@gmail.com,
+	rakie.kim@sk.com,
+	byungchul@sk.com,
+	gourry@gourry.net,
+	ying.huang@linux.alibaba.com,
+	apopple@nvidia.com,
+	bijantabatab@micron.com,
+	venkataravis@micron.com,
+	emirakhur@micron.com,
+	ajayjoshi@micron.com,
+	vtavarespetr@micron.com
+Subject: Re: [RFC PATCH v2 0/2] mm/damon/paddr: Allow interleaving in migrate_{hot,cold} actions
+Date: Mon, 23 Jun 2025 06:45:49 -0700
+Message-ID: <20250623134550.2367733-1-joshua.hahnjy@gmail.com>
+X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20250620180458.5041-1-bijan311@gmail.com>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Cc: kernel_team@skhynix.com, damon@lists.linux.dev,
- Andrew Morton <akpm@linux-foundation.org>, linux-mm@kvack.org,
- Yunjeong Mun <yunjeong.mun@sk.com>
-Subject: Re: [PATCH 3/3] samples/damon: fix bugs for damon sample for start
- failures
-Content-Language: ko
-To: SeongJae Park <sj@kernel.org>
-References: <20250622162935.51108-1-sj@kernel.org>
-From: Honggyu Kim <honggyu.kim@sk.com>
-In-Reply-To: <20250622162935.51108-1-sj@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrLLMWRmVeSWpSXmKPExsXC9ZZnoa7A8YgMgylNUhZz1q9hs3jy/zer
-	xb01/1ktDn99w+TA4rFpVSebx6ZPk9g9Tsz4zeLxYvNMxgCWKC6blNSczLLUIn27BK6M3mWL
-	mAr2S1d8mfqLqYHxjmgXIyeHhICJRM/7/Uww9vGG7cwgNq+ApcSsLXPAbBYBVYn2o5NZIOKC
-	EidnPgGzRQXkJe7fmsEOYjMLzGSUeHOKB8QWFgiTmLhiOxtEXERidmcb2BwRAUWJc48vsoLY
-	QgJGEgfnbADrZRNQk7jychLYDZwCxhL9H64yQfSaSXRt7WKEsOUltr8FuYcL6M4FbBL9Jxew
-	QBwtKXFwxQ2WCYyCs5DcNwvJ7llIZs1CMmsBI8sqRqHMvLLcxMwcE72MyrzMCr3k/NxNjMBA
-	X1b7J3oH46cLwYcYBTgYlXh4E3giMoRYE8uKK3MPMUpwMCuJ8B5yCssQ4k1JrKxKLcqPLyrN
-	SS0+xCjNwaIkzmv0rTxFSCA9sSQ1OzW1ILUIJsvEwSnVwOjF42Tm4Pl70uKUDck2xh+nVOi9
-	+M5zQv1m/69vJw5VszeuerPgwaToiI/TtnBMe/t9/cyGvi7nLV+nSWyymyB184H0kd7qqYYL
-	d7dEMfo4WX+r3ria7S57Nkv52ne5c+Y13F7Ptf/fTtvMjed7Uvwt5y7P2BPJ1BNi+uaE6m6G
-	GRMCnnzUvLpSiaU4I9FQi7moOBEArtq7pXACAAA=
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrLLMWRmVeSWpSXmKPExsXCNUNLT1fgeESGwe99vBZz1q9hs3jy/zer
-	xeG5J1kt7q35D2R9fcNk8XvbCjYHNo9NqzqBxKdJ7B4nZvxm8XixeSajx7fbHh6LX3xgCmCL
-	4rJJSc3JLEst0rdL4MroXbaIqWC/dMWXqb+YGhjviHYxcnJICJhIHG/Yzgxi8wpYSszaMgfM
-	ZhFQlWg/OpkFIi4ocXLmEzBbVEBe4v6tGewgNrPATEaJN6d4QGxhgTCJiSu2s0HERSRmd7aB
-	zRERUJQ49/giK4gtJGAkcXDOBrBeNgE1iSsvJzGB2JwCxhL9H64yQfSaSXRt7WKEsOUltr+d
-	wzyBkW8WkjNmIVkxC0nLLCQtCxhZVjGKZOaV5SZm5pjqFWdnVOZlVugl5+duYgQG8rLaPxN3
-	MH657H6IUYCDUYmHd4V3RIYQa2JZcWXuIUYJDmYlEd5DTmEZQrwpiZVVqUX58UWlOanFhxil
-	OViUxHm9wlMThATSE0tSs1NTC1KLYLJMHJxSDYxXklwneVmuM43yX7Axy1tuT6yPK/elW/cX
-	T06Lelyt5lZjm65eNuvuQm3fB2EX2iVPaZpXvGnc6PiPtU69MFzSlS24aWLc9xAbn5Vffta4
-	zbEr/iTE/uVU6k6b1ZZZ7PprfQTUuBy43q7bUvVkZhnL9qerBPKvHtXlv7rIxFW4d4697h1G
-	FSWW4oxEQy3mouJEAAjiNFNgAgAA
-X-CFilter-Loop: Reflected
+Content-Transfer-Encoding: 8bit
 
-Hi SeongJae,
+On Fri, 20 Jun 2025 13:04:56 -0500 Bijan Tabatabai <bijan311@gmail.com> wrote:
 
-On 6/23/2025 1:29 AM, SeongJae Park wrote:
-> Hi Honggyu,
-> 
-> On Sun, 22 Jun 2025 21:09:25 +0900 Honggyu Kim <honggyu.kim@sk.com> wrote:
-> 
->> The damon_sample_{wsse,prcl,mtier}_start() can fail so we must reset the
->> "enabled" parameter to "false" again for proper rollback.
->>
->> In such cases, setting Y to "enabled" then N triggers the following
->> crash because damon sample start failed but the "enabled" stays as Y.
->>
->>    [ 2441.419649] damon_sample_prcl: start
->>    [ 2454.146817] damon_sample_prcl: stop
->>    [ 2454.146862] ------------[ cut here ]------------
->>    [ 2454.146865] kernel BUG at mm/slub.c:546!
->>    [ 2454.148183] Oops: invalid opcode: 0000 [#1] SMP NOPTI
->>        ...
->>    [ 2454.167555] Call Trace:
->>    [ 2454.167822]  <TASK>
->>    [ 2454.168061]  damon_destroy_ctx+0x78/0x140
->>    [ 2454.168454]  damon_sample_prcl_enable_store+0x8d/0xd0
->>    [ 2454.168932]  param_attr_store+0xa1/0x120
->>    [ 2454.169315]  module_attr_store+0x20/0x50
->>    [ 2454.169695]  sysfs_kf_write+0x72/0x90
->>    [ 2454.170065]  kernfs_fop_write_iter+0x150/0x1e0
->>    [ 2454.170491]  vfs_write+0x315/0x440
->>    [ 2454.170833]  ksys_write+0x69/0xf0
->>    [ 2454.171162]  __x64_sys_write+0x19/0x30
->>    [ 2454.171525]  x64_sys_call+0x18b2/0x2700
->>    [ 2454.171900]  do_syscall_64+0x7f/0x680
->>    [ 2454.172258]  ? exit_to_user_mode_loop+0xf6/0x180
->>    [ 2454.172694]  ? clear_bhb_loop+0x30/0x80
->>    [ 2454.173067]  ? clear_bhb_loop+0x30/0x80
->>    [ 2454.173439]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
-> 
-> Thank you for finding and fixing this!
-> 
->>
->> Since it's just a sample module, no need to add it to stable tree.
-> 
-> I agree this is not a real bug.  But, even a bug in DAMON unit test was
-> deserved to get a CVE id.  Hence I'd suggest adding at least Fixes: tag here,
-> and let stable kernels maintainers to decide whether to pick this up to stable
-> kernels or not.  I can help backporting if needed.
-> 
-> If you agree, I think we could add
-> 
-> Fixes: b757c6cfc696d ("samples/damon/wsse: start and stop DAMON as the user requests")
-> 
-> If we want to make stable kernel maintainers' life easier, we would better to
-> split this into three patches, for each module, and add appropriate Fixes, as
-> below.
+Hi Bijan,
 
-Spliting this into three patches is okay.
+I hope you are doing well! Sorry for the late response. It seems like SJ
+already gave some great feedback already though, so I will just chime in
+with my 2c.
 
-> 
-> For wsse,
-> Fixes: b757c6cfc696d ("samples/damon/wsse: start and stop DAMON as the user requests")
-> 
-> For prcl,
-> 
-> Fixes: 2aca254620a8 ("samples/damon: introduce a skeleton of a smaple DAMON module for proactive reclamation")
-> 
-> For mtier,
-> 
-> Fixes: 82a08bde3cf7 ("samples/damon: implement a DAMON module for memory tiering")
-> 
-> Could you please do so?
+[...snip...]
 
-If we do, then this patchset has to come before "enabled" renaming patch.
-
-In addition, I remember mixing stable and non-stable patches together in the
-same patchset isn't welcomed by Andrew or other stable tree maintainers.  So I
-might be better to split those three fix patches into a separate patchset.
-
-The only thing that bothers me in that case is writing cover letter for simple 2
-or 3 patches as they are relatively simple.
-
-But it isn't that hard so can manage those in the next spin.
-
+> However, currently the interleave weights only are applied when data is
+> allocated. Migrating already allocated pages according to the dynamically
+> changing weights will better help balance the bandwidth utilization across
+> nodes.
 > 
->>
->> Signed-off-by: Honggyu Kim <honggyu.kim@sk.com>
->> Cc: Yunjeong Mun <yunjeong.mun@sk.com>
-> 
-> Regardless of your agreement on adding Fixes:
-> 
-> Reviewed-by: SeongJae Park <sj@kernel.org>
-> 
-> 
-> Thanks,
-> SJ
+> As a toy example, imagine some application that uses 75% of the local
+> bandwidth. Assuming sufficient capacity, when running alone, we want to
+> keep that application's data in local memory. However, if a second
+> instance of that application begins, using the same amount of bandwidth,
+> it would be best to interleave the data of both processes to alleviate the
+> bandwidth pressure from the local node. Likewise, when one of the processes
+> ends, the data should be moves back to local memory.
 
-Thanks,
-Honggyu
+I think the addition of this example helps illustrate the neccesity for
+interleaving, thank you for adding it in!
 
+> We imagine there would be a userspace application that would monitor system
+> performance characteristics, such as bandwidth utilization or memory access
+> latency, and uses that information to tune the interleave weights. Others
+> seem to have come to a similar conclusion in previous discussions [3].
+>
+> Functionality Test
+> ==================
+
+[...snip...]
+
+> Performance Test
+> ================
+> Below is a simple example showing that interleaving application data using
+> these patches can improve application performance.
+> To do this, we run a bandwidth intensive embedding reduction application
+> [5]. This workload is useful for this test because it reports the time it
+> takes each iteration to run and reuses its buffers between allocation,
+> allowing us to clearly see the benefits of the migration.
 > 
-> [...]
+> We evaluate this a 128 core/256 thread AMD CPU, with 72 GB/s of local DDR
+> bandwidth and 26 GB/s of CXL memory.
+> 
+> Before we start the workload, the system bandwidth utilization is low, so
+> we start with interleave weights biased as much as possible to the local
+> node. When the workload begins, it saturates the local bandwidth, making
+> the page placement suboptimal. To alleviate this, we modify the interleave
+> weights, triggering DAMON to migrate the workload's data.
+> 
+>   $ cd /sys/kernel/mm/damon/admin/kdamonds/0/
+>   $ sudo cat ./contexts/0/schemes/0/action
+>   migrate_hot
+>   $ sudo cat ./contexts/0/schemes/0/target_nid
+>   0-1
+>   $ echo 255 | sudo tee /sys/kernel/mm/mempolicy/weighted_interleave/node0
+>   $ echo 1 | sudo tee /sys/kernel/mm/mempolicy/weighted_interleave/node1
+>   $ <path>/eval_baseline -d amazon_All -c 255 -r 100
+>   <clip startup output>
+>   Eval Phase 3: Running Baseline...
+> 
+>   REPEAT # 0 Baseline Total time : 9043.24 ms
+>   REPEAT # 1 Baseline Total time : 7307.71 ms
+>   REPEAT # 2 Baseline Total time : 7301.4 ms
+>   REPEAT # 3 Baseline Total time : 7312.44 ms
+>   REPEAT # 4 Baseline Total time : 7282.43 ms
+>   # Interleave weights changed to 3:1
+>   REPEAT # 5 Baseline Total time : 6754.78 ms
+>   REPEAT # 6 Baseline Total time : 5322.38 ms
+>   REPEAT # 7 Baseline Total time : 5359.89 ms
+>   REPEAT # 8 Baseline Total time : 5346.14 ms
+>   REPEAT # 9 Baseline Total time : 5321.98 ms
+> 
+> Updating the interleave weights, and having DAMON migrate the workload
+> data according to the weights resulted in an approximately 25% speedup.
 
+Thank you for sharing these very impressive results! So if I can understand
+correctly, this workload allocates once (mostly), and each iteration just
+re-uses the same allocation, meaning the effects of the weighted interleave
+change are isolated mostly to the migration portion.
+
+Based on that understanding, I'm wondering if a longer benchmark would help
+demonstrate the effects of this patch a bit better. That is, IIRC short-lived
+workloads should see most of its benefits come from correct allocation,
+while longer-lived workloads should see most of its benefits come from
+correct migration policies. I don't have a good idea of what the threshold
+is for characterizing short vs. long workloads, but I think this could be
+another prospective test you can use to demonstrate the gains of your patch.
+
+One last thing that I wanted to note is that it seems like iteration 5, where
+I imagine there is some additional work needed to balance the page placement
+from 255:0 to 3:1 *still* outperforms the normal case in the original
+benchmark. Really awesome!!!
+ 
+> Questions for Reviewers
+> =======================
+> 1. Are you happy with the changes to the DAMON sysfs interface?
+> 2. Setting an interleave weight to 0 is currently not allowed. This makes
+>    sense when the weights are only used for allocation. Does it make sense
+>    to allow 0 weights now?
+
+If the goal of 0 weights is to prevent migration to that node, I think that
+we should try to re-use existing mechanisms. There was actually quite a bit
+of discussion on whether 0 weights should be allowed (the entire converstaion
+was split across multiple versions, but I think this is the first instance [1]).
+
+How about using nodemasks instead? I think that they serve a more explicit
+purpose of preventing certain nodes from being used. Please let me know if
+I'm missing something as to why we cannot use nodemasks here : -) 
+
+[...snip...]
+
+One last thing that I wanted to note -- given that these weights now serve
+a dual purpose of setting allocation & migration weights, does it make sense
+to update the weighted interleave documentation with this information as well?
+Or, since it really only affects DAMON users, should we be ok with leaving it
+out?
+
+My preference is that we include it in weighted interleave documentation
+(Documentation/ABI/testing/sysfs-kernel-mm-mempolikcy-weighted-interleave)
+so that anyone who edits weighted interleave code in the future will at least
+be aware that the changes they make will have effects in other subsystems.
+
+Thank you for sharing these results! I hope you have a great day :):)
+Joshua
+
+[1] https://lore.kernel.org/all/87msfkh1ls.fsf@DESKTOP-5N7EMDA/
+
+Sent using hkml (https://github.com/sjp38/hackermail)
