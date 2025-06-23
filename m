@@ -1,154 +1,153 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C32652222A0;
-	Sun, 22 Jun 2025 21:38:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+Received: from invmail4.hynix.com (exvmail4.hynix.com [166.125.252.92])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9D932566A
+	for <damon@lists.linux.dev>; Mon, 23 Jun 2025 02:58:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=166.125.252.92
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750628288; cv=none; b=LXmZ0duc1WHv0Jy3wJl6BQpF2M7UrhSs2b/BiphKEgjf8DBFlLyRhAg6zYLUUvgkNSQV4bLiNrxXy8qqGOHV40mWDFeiGs/8NtuUnomLM0e8luhOx1KhzcjsdFSmwB3eUbuJ3bf08ec1ssZFgdjQ3glB2Xmfv6GXIH+vpeIkJcU=
+	t=1750647541; cv=none; b=aWDiSZ5F3ExcIF636QhK/hGpEz4Y6bbZqIv9QqHkHRJM5t2Xg9zWQLqJr2BhpbAkdu6jQKZQh93//iv1d6P0olqzPlbY3l8DA+ygffY+/hMoWNjkVE7rLCEISQ1Jm648ja87WdXnp3NKTy4MyIz+Vyf8pNTNYexFtNGhCCFm1qU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750628288; c=relaxed/simple;
-	bh=ymfyB5LlwDbRaP7p17J2Z3u41y4+obtRgutiM/OpQ2k=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=Se2HuzRNJMWCG0mibqaWwWu7wvHhZ0E6fZaePEWUEEwcxVoRyGoTQ/K3SufKr+e7tYKUTR1QadCb4b8E1FhUHGmm+BH84cFaW68fGtYQSvp7prGEYfGtKNqyunTb1fxTSCT2j8UkhEGSeTodFhbUO7GCrxvGHcLVE7wrsgXUbE4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hCeBDslP; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hCeBDslP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 440C3C4CEED;
-	Sun, 22 Jun 2025 21:38:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1750628288;
-	bh=ymfyB5LlwDbRaP7p17J2Z3u41y4+obtRgutiM/OpQ2k=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hCeBDslPZK3Y0nq+wMvdaiYBEHpwK0wkveZwzRxTNHBgSHv4DcgQ4oANd/DmmNuQ9
-	 Bc0qJxz/gbmIGvwWfGN6VuyoNdH4xA9rbagaNXPtiS3o7CdaimZkZEwXNYXH/oZhfH
-	 vwYps+1bjg5qKjf5bKcjoOPnMSUIthU9fs7yJnFyC++/ybsLxMzcQFcoC4A5zp4BFr
-	 tVPvz36P1rvsV3hc2jj2Vc21a1AGGF89lGG+ntV7TltlERogmBxUF54XN8FyG1ih1h
-	 P/owAe8s+bD5QRw2FyyPyqjCOrZpSBaQOUwbnb+y/4UjTtJPmVtNDFSjXmqPJVBrVb
-	 9K5Bppypg8+tg==
-From: SeongJae Park <sj@kernel.org>
-To: Andrew Morton <akpm@linux-foundation.org>
-Cc: SeongJae Park <sj@kernel.org>,
-	damon@lists.linux.dev,
-	kernel-team@meta.com,
-	linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org
-Subject: [PATCH 5/5] mm/damon/sysfs: decouple from damon_ops_id
-Date: Sun, 22 Jun 2025 14:37:59 -0700
-Message-Id: <20250622213759.50930-6-sj@kernel.org>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250622213759.50930-1-sj@kernel.org>
-References: <20250622213759.50930-1-sj@kernel.org>
+	s=arc-20240116; t=1750647541; c=relaxed/simple;
+	bh=f90SNUYG077U5zkXpY15fIC7d8dqy6J6zniGxIHwNPg=;
+	h=Message-ID:Date:MIME-Version:Cc:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=gJd6cHfacS+poT1bCmtW44ygPSuuvfu3+Zc7Dgk+cwH9Qs1s/1dPoQ+xriJp0bfjVQN38sW71P1Ia2sMHtcZz1M64+MhH47YGaHHMHa0ucYqL6Oj+dKMIkD/UDBxjTHO28YPXRlOA8p4ET0pDwz8UdipJChCASc0faZ9uUJSIW8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sk.com; spf=pass smtp.mailfrom=sk.com; arc=none smtp.client-ip=166.125.252.92
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sk.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sk.com
+X-AuditID: a67dfc5b-681ff7000002311f-1e-6858c2eea3e4
+Message-ID: <86e91607-f008-4fc1-8660-021b8e257a10@sk.com>
+Date: Mon, 23 Jun 2025 11:58:53 +0900
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Cc: kernel_team@skhynix.com, damon@lists.linux.dev,
+ Andrew Morton <akpm@linux-foundation.org>, linux-mm@kvack.org,
+ Yunjeong Mun <yunjeong.mun@sk.com>
+Subject: Re: [PATCH 1/3] mm/damon: do not allow creating zero size region
+To: SeongJae Park <sj@kernel.org>
+References: <20250622160453.47161-1-sj@kernel.org>
+Content-Language: ko
+From: Honggyu Kim <honggyu.kim@sk.com>
+In-Reply-To: <20250622160453.47161-1-sj@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrLLMWRmVeSWpSXmKPExsXC9ZZnoe67QxEZBtcXC1jMWb+GzeLJ/9+s
+	FvfW/Ge1OPz1DZMDi8emVZ1sHps+TWL3ODHjN4vHi80zGQNYorhsUlJzMstSi/TtErgyHjdf
+	YSmYLV6x5tchxgbGJYJdjJwcEgImEk+evmCDsd9O62MEsXkFLCW2Hf7DBGKzCKhKzP03kwki
+	LihxcuYTFhBbVEBe4v6tGewgNrPATEaJN6d4QGxhAU+JV0/XgM0UEVCUOPf4IiuILSRgJHHp
+	7wYmiHoRidmdbcwgNpuAmsSVl5PA4pwCxhINnV9ZIGrMJLq2djFC2PIS29/OAarnArpzBZvE
+	1ZmXoY6WlDi44gbLBEbBWUjum4Vkxywks2YhmbWAkWUVo1BmXlluYmaOiV5GZV5mhV5yfu4m
+	RmCgL6v9E72D8dOF4EOMAhyMSjy8CTwRGUKsiWXFlbmHGCU4mJVEeA85hWUI8aYkVlalFuXH
+	F5XmpBYfYpTmYFES5zX6Vp4iJJCeWJKanZpakFoEk2Xi4JRqYKwM2n1ir5VXgsCZqnn1X8W/
+	RR6OnP1HMO3KWYGbn1kCXr5h3WGpr5B/S4Jdc8VHP2PdaMW3N/+Vmyk1MrmLnX2QemZSrwPb
+	5ufb17C/jCyV2/LCs/AT77utq377+C+TrjGy29N8+nLVrJ7/17UUQjX5+PcYTU2PTFylukPj
+	0sJH5hbC3gzXApRYijMSDbWYi4oTAVAJ46pwAgAA
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrLLMWRmVeSWpSXmKPExsXCNUNLT/fdoYgMg4czOS3mrF/DZvHk/29W
+	i8NzT7Ja3FvzH8j6+obJ4ve2FWwObB6bVnUCiU+T2D1OzPjN4vFi80xGj2+3PTwWv/jAFMAW
+	xWWTkpqTWZZapG+XwJXxuPkKS8Fs8Yo1vw4xNjAuEexi5OSQEDCReDutjxHE5hWwlNh2+A8T
+	iM0ioCox999MJoi4oMTJmU9YQGxRAXmJ+7dmsIPYzAIzGSXenOIBsYUFPCVePV3DBmKLCChK
+	nHt8kRXEFhIwkrj0dwMTRL2IxOzONmYQm01ATeLKy0lgcU4BY4mGzq8sEDVmEl1buxghbHmJ
+	7W/nME9g5JuF5IxZSEbNQtIyC0nLAkaWVYwimXlluYmZOaZ6xdkZlXmZFXrJ+bmbGIGBvKz2
+	z8QdjF8uux9iFOBgVOLhXeEdkSHEmlhWXJl7iFGCg1lJhPeQU1iGEG9KYmVValF+fFFpTmrx
+	IUZpDhYlcV6v8NQEIYH0xJLU7NTUgtQimCwTB6dUA+Ot44yfl3rK785IdshRS3A715p5NL9i
+	q87D9wd7lzxSOL727p0He3Sijn+UMj0sdtziist952cGkuVXj+dV/j7yt0ZZY+KGG+X6/bdO
+	fHJ2k3qs7l3lP/XIv1/vf9xftcs0rtzwpv/nZrVANQfNa5y7vKZVm9Ra1+w73mnV9S/++O0d
+	9lpy2xyUWIozEg21mIuKEwFAGD8ZYAIAAA==
+X-CFilter-Loop: Reflected
 
-Decouple DAMON sysfs interface from damon_ops_id.  For this, define and
-use new mm/damon/sysfs.c internal data structure that maps the
-user-space keywords and damon_ops_id, instead of having the implicit and
-unflexible array index rule.
+Hi SeongJae,
 
-Signed-off-by: SeongJae Park <sj@kernel.org>
----
- mm/damon/sysfs.c | 56 +++++++++++++++++++++++++++++++++++-------------
- 1 file changed, 41 insertions(+), 15 deletions(-)
+Thanks for the kind review as always!
 
-diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
-index 1af6aff35d84..1b1476b79cdb 100644
---- a/mm/damon/sysfs.c
-+++ b/mm/damon/sysfs.c
-@@ -811,11 +811,24 @@ static const struct kobj_type damon_sysfs_attrs_ktype = {
-  * context directory
-  */
- 
--/* This should match with enum damon_ops_id */
--static const char * const damon_sysfs_ops_strs[] = {
--	"vaddr",
--	"fvaddr",
--	"paddr",
-+struct damon_sysfs_ops_name {
-+	enum damon_ops_id ops_id;
-+	char *name;
-+};
-+
-+static const struct damon_sysfs_ops_name damon_sysfs_ops_names[] = {
-+	{
-+		.ops_id = DAMON_OPS_VADDR,
-+		.name = "vaddr",
-+	},
-+	{
-+		.ops_id = DAMON_OPS_FVADDR,
-+		.name = "fvaddr",
-+	},
-+	{
-+		.ops_id = DAMON_OPS_PADDR,
-+		.name = "paddr",
-+	},
- };
- 
- struct damon_sysfs_context {
-@@ -934,14 +947,16 @@ static void damon_sysfs_context_rm_dirs(struct damon_sysfs_context *context)
- static ssize_t avail_operations_show(struct kobject *kobj,
- 		struct kobj_attribute *attr, char *buf)
- {
--	enum damon_ops_id id;
- 	int len = 0;
-+	int i;
-+
-+	for (i = 0; i < ARRAY_SIZE(damon_sysfs_ops_names); i++) {
-+		const struct damon_sysfs_ops_name *ops_name;
- 
--	for (id = 0; id < NR_DAMON_OPS; id++) {
--		if (!damon_is_registered_ops(id))
-+		ops_name = &damon_sysfs_ops_names[i];
-+		if (!damon_is_registered_ops(ops_name->ops_id))
- 			continue;
--		len += sysfs_emit_at(buf, len, "%s\n",
--				damon_sysfs_ops_strs[id]);
-+		len += sysfs_emit_at(buf, len, "%s\n", ops_name->name);
- 	}
- 	return len;
- }
-@@ -951,8 +966,16 @@ static ssize_t operations_show(struct kobject *kobj,
- {
- 	struct damon_sysfs_context *context = container_of(kobj,
- 			struct damon_sysfs_context, kobj);
-+	int i;
- 
--	return sysfs_emit(buf, "%s\n", damon_sysfs_ops_strs[context->ops_id]);
-+	for (i = 0; i < ARRAY_SIZE(damon_sysfs_ops_names); i++) {
-+		const struct damon_sysfs_ops_name *ops_name;
-+
-+		ops_name = &damon_sysfs_ops_names[i];
-+		if (ops_name->ops_id == context->ops_id)
-+			return sysfs_emit(buf, "%s\n", ops_name->name);
-+	}
-+	return -EINVAL;
- }
- 
- static ssize_t operations_store(struct kobject *kobj,
-@@ -960,11 +983,14 @@ static ssize_t operations_store(struct kobject *kobj,
- {
- 	struct damon_sysfs_context *context = container_of(kobj,
- 			struct damon_sysfs_context, kobj);
--	enum damon_ops_id id;
-+	int i;
-+
-+	for (i = 0; i < ARRAY_SIZE(damon_sysfs_ops_names); i++) {
-+		const struct damon_sysfs_ops_name *ops_name;
- 
--	for (id = 0; id < NR_DAMON_OPS; id++) {
--		if (sysfs_streq(buf, damon_sysfs_ops_strs[id])) {
--			context->ops_id = id;
-+		ops_name = &damon_sysfs_ops_names[i];
-+		if (sysfs_streq(buf, ops_name->name)) {
-+			context->ops_id = ops_name->ops_id;
- 			return count;
- 		}
- 	}
--- 
-2.39.5
+On 6/23/2025 1:04 AM, SeongJae Park wrote:
+> On Sun, 22 Jun 2025 21:09:23 +0900 Honggyu Kim <honggyu.kim@sk.com> wrote:
+> 
+>> Creating zero size region leads a divide by zero error inside
+>> damon_get_intervals_score() as follows.
+>>
+>>    static unsigned long damon_get_intervals_score(struct damon_ctx *c)
+>>    {
+>>        struct damon_target *t;
+>>        struct damon_region *r;
+>>        unsigned long sz_region, max_access_events = 0, access_events = 0;
+>>        unsigned long target_access_events;
+>>        unsigned long goal_bp = c->attrs.intervals_goal.access_bp;
+>>
+>>        damon_for_each_target(t, c) {
+>>            damon_for_each_region(r, t) {
+>>                sz_region = damon_sz_region(r);
+>>                max_access_events += sz_region * c->attrs.aggr_samples;
+>>                access_events += sz_region * r->nr_accesses;
+>>            }
+>>        }
+>>        target_access_events = max_access_events * goal_bp / 10000;
+>>        return access_events * 10000 / target_access_events;  /* divide by zero! */
+>>    }
+> 
+> Thank you for finding this issue!  Coudl you please further share how zero size
+> region can be made, and if user-space can make the situation?
+
+The initial values of node*_start_addr and node*_end_addr inside
+/sys/module/mtier/parameters/ are all zeros so I saw this problem easily by
+setting Y to "enabled".
+
+>>
+>> This patch makes a NULL return for such cases when creating a region
+>> inside damon_new_region().
+> 
+> I agree zero size region could look silly.  But I don't really think it should
+> be prohibited.  What about modifying damon_get_intervals_score() instead?
+> Maybe we can set target_access_events as 1 in this case.
+
+Hmm... I don't get what you mean by setting "target_access_events" to 1 for such
+cases.  Could you please explain more?
+
+> 
+>>
+>> Signed-off-by: Honggyu Kim <honggyu.kim@sk.com>
+>> Cc: Yunjeong Mun <yunjeong.mun@sk.com>
+>> ---
+>>   mm/damon/core.c | 3 +++
+>>   1 file changed, 3 insertions(+)
+>>
+>> diff --git a/mm/damon/core.c b/mm/damon/core.c
+>> index b217e0120e09..44740da337fd 100644
+>> --- a/mm/damon/core.c
+>> +++ b/mm/damon/core.c
+>> @@ -126,8 +126,11 @@ struct damon_region *damon_new_region(unsigned long start, unsigned long end)
+>>        if (!region)
+>>                return NULL;
+>>
+>> +     if (start == end)
+>> +             return NULL;
+If you're okay, then I'd like to modify this as follows again.
+
++     if (start >= end)
++             return NULL;
+
+What do you think about this?
+
+>>        region->ar.start = start;
+>>        region->ar.end = end;
+>> +
+> 
+> Above new line is unnecessary in my opinion.
+
+Sure. will remove it in the next version.
+
+Thanks,
+Honggyu
+
+> 
+>>        region->nr_accesses = 0;
+>>        region->nr_accesses_bp = 0;
+>>        INIT_LIST_HEAD(&region->list);
+>> --
+>> 2.34.1
+> 
+> 
+> Thanks,
+> SJ
+
