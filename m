@@ -1,138 +1,187 @@
-Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7077C227EB9
-	for <damon@lists.linux.dev>; Mon, 23 Jun 2025 23:21:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21A142AEED;
+	Tue, 24 Jun 2025 00:34:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750720895; cv=none; b=euIAFkO2LIc3fL4ljWYdwL++pwW5BhJqbvuNbI2dF5qpkj0VnQCokbDWcWQX8OZ0+BInbn52uzT7QmpP43QRt8JEVDQRxLWASidCLVVa72ycuFUIms3Gq8LCXiY6uzV8bR5oGHSMwQxu5N8khDK3Wkfa4uF8gSwEyW/XBMPVEvk=
+	t=1750725251; cv=none; b=bCZti5Bsz5/X5NBJaGsZSUDpUathceQteHG/w/3Ory+9AgW862sVCdCdiT2PAE/Rcx63bufUdZit+zwub9avhkhoJfZjpWH3nw4rxU6iEc6a0AogvODFVgrWvYxtQZb21Z5apxEc/3F+TZNMZrIJCYX4uSCzZCdIk0QuuBAhJFU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750720895; c=relaxed/simple;
-	bh=WH4MWsMMlzGlz4gM9gjAzqFE+1ORw8N7aa2D7XBLdRY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=C/uYxGsXuTXUXA2t0j9f41tM6bLEUbKZzJHCSFxc6KE1jme3mkd7Dvkc/fJEOvcxFxeivMJfhQsVQk4wWcx0M8hOnW/limA99PTNW0W6jzQXDz2KM2XRylihK36nW6xWF0NjUIaBUb02nfuFczqAcWJGnbViAMCRAR5PVo4i8Rs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YWS7eOGR; arc=none smtp.client-ip=209.85.218.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1750725251; c=relaxed/simple;
+	bh=lXIMUIqca9amr01wZvSN4kfNBTEuykhwJx5cSkrzAJA=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=ZQk50OD++NLzoAiGnRDpDkO0MQKq2ZXdpn0Yho6vblvTFAwt2K7wMuhEID2izMdjJK16VQCE9IivQHApQ0rLXgvDwgLsq1mVfyW3BGNBeggwzwGUsnOR5S4CEiczRUbxBdSVXWVKlLiZpUAIKXINvywoTLoU5tfHVdO5OwqeH0c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pJU6m1UC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YWS7eOGR"
-Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-acbb85ce788so910057266b.3
-        for <damon@lists.linux.dev>; Mon, 23 Jun 2025 16:21:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1750720892; x=1751325692; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=3ZVkY48T502JcAD7NzXzzdEZjZODovk6qGSGgvVTsNo=;
-        b=YWS7eOGR2PcjAlBpWIZpWFIE1c5EpLy+LRU82EnvyR0/YPSU0e6A87lSLcc8j+YkMo
-         0WvQrTyFOX0sQz8Ab/ws96TfP0BMSNs2z/41zY39qvuYKE1iph05nwh+Mhb5oJjw5lO2
-         /NZoqc6S/deIFY5tiF+9dvhKDnrcZUz/zD2XDi0JyB3MD6U3AWTQO3qvw6tWIRTgvwx+
-         lXg16oAOqacLixzT51JkWWgCYgG8ALgZsKVqhm+E5/Qi22Z3TGIWEs7kWbv+JJi4EPG6
-         Oso9DM5nOZCts7+Xwvxc71adH+rrwD7j2cmJ/0lhIzwoUbWhiHlaqP0Kd1V7QE4aSkyA
-         9bOQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750720892; x=1751325692;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=3ZVkY48T502JcAD7NzXzzdEZjZODovk6qGSGgvVTsNo=;
-        b=Q3kqlqd4L7gOXVRavAZpGKKnsInnYFXvxzH++/PUvBmLWgR6rjS+aM79HNC5GTfizk
-         f84Pftal022qCEma5aoFcUUGjtwd9Uh3Em0nXLUfj+H0bdzsm3TAAuRG4LpZZoAh+kGa
-         Snz2qyfABSkQ1seaQpR1n1Tp3vEqwy4j6XZnwffL6H+h6LceCCqbhzHYaTtpbNpxoHjC
-         PtNjxtoK63s4mOiG4gqxKEZCVTrHJFwNHndEQJM3TrkeFICk2OhYDRWQv57svhMG264y
-         09DPG6mhvVo/74VAQwRGf/eYL2kg2oXchhNTU2Bi3kzA3Du+i6GsmkBOGvhIU8y7rkEw
-         NjJA==
-X-Forwarded-Encrypted: i=1; AJvYcCW8N5FNY5GxpaQnA0L6EBgj/1tlivwqoEML1ppS00aZUm6Oa/ZZy3q+njmerMF4g+9pUMjVRg==@lists.linux.dev
-X-Gm-Message-State: AOJu0YwHfnn+xMW657Z6k0+TDrCjZ5hZwE6W2h8vJEDUBoGr0b5oe/ix
-	o06USjO9o5yytP0Knxr3Q+8T4FyGfTgnOM0aN79RbT0X2Qz9IwdsbH8TAcQPNk4XfpbJWmMU9GC
-	ebNwJpGp4YDJ4LODFDB0XXkiAoklfIv4=
-X-Gm-Gg: ASbGncs14x423uOrVrm0OFnNYelnJRXlwNvRZLmq8uDu07LYxvmZccsZqQFRM0TJDD2
-	5UTEii+ookIB61T0w/H02HWILdXEBke8G9UEG7MvE1JO2Xg1NFo74QIqYl1AYU4O7VjHq+6hHvP
-	Ci/SdM4W3p7hl+mf9uKRgxm3GFnh4qRrmGkXzdKFg+yJ64mpqmj7ahdwWpxnS96/Lf0MF25Xf0X
-	k042A==
-X-Google-Smtp-Source: AGHT+IF53yd5TzJjggB8GCsgXjHW3XfBe88y6aXb2DUIoaNxkcU59GbTifghsdJkMCaNQP84ylFD8Fm+lkPnJG8ON1s=
-X-Received: by 2002:a17:907:1ca6:b0:ae0:9fce:c578 with SMTP id
- a640c23a62f3a-ae09fcedefcmr284922166b.18.1750720891641; Mon, 23 Jun 2025
- 16:21:31 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pJU6m1UC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C12EC4CEEA;
+	Tue, 24 Jun 2025 00:34:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1750725250;
+	bh=lXIMUIqca9amr01wZvSN4kfNBTEuykhwJx5cSkrzAJA=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=pJU6m1UCxcYko2rIclBtf62bO/+78UquCelaCQcsoCnem7Vqnup2QMpw2P2SfJmgF
+	 GiInmVd6XBORQp0WUx+9Q+HNbCV6vF8k6BaYUP1Smx83Phb6MP4nnQZpjTuUPSPpbu
+	 q2fOnP1yNnOqDzesR+ft8r01N5IBLroDQSS9IfPD69ffR7KsJfp8M+oil8PpcyHVmk
+	 6HW4dfKnuLUQrvYrbUS8R9yB5y7PmPwVVapvTsVTpXdPPTnmM2C2N+ZC5q9GX4kT5o
+	 LZPKD2pQ6/mdjBHDs0nWS5LucSNskCm0Jd96j/aIyvHOvxBsz/ROmvRfxSRSuo7URt
+	 /aJ01viuxo7gg==
+From: SeongJae Park <sj@kernel.org>
+To: Bijan Tabatabai <bijan311@gmail.com>
+Cc: SeongJae Park <sj@kernel.org>,
+	damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org,
+	akpm@linux-foundation.org,
+	david@redhat.com,
+	ziy@nvidia.com,
+	matthew.brost@intel.com,
+	joshua.hahnjy@gmail.com,
+	rakie.kim@sk.com,
+	byungchul@sk.com,
+	gourry@gourry.net,
+	ying.huang@linux.alibaba.com,
+	apopple@nvidia.com,
+	bijantabatab@micron.com,
+	venkataravis@micron.com,
+	emirakhur@micron.com,
+	ajayjoshi@micron.com,
+	vtavarespetr@micron.com
+Subject: Re: [RFC PATCH v2 2/2] mm/damon/paddr: Allow multiple migrate targets
+Date: Mon, 23 Jun 2025 17:34:08 -0700
+Message-Id: <20250624003408.47807-1-sj@kernel.org>
+X-Mailer: git-send-email 2.39.5
+In-Reply-To: <CAMvvPS4CNzc7gSF8Z+6ogB212V+GDJyW9PXrrrP+wMyDNfXKqg@mail.gmail.com>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20250620180458.5041-1-bijan311@gmail.com> <20250620202155.98021-1-sj@kernel.org>
- <aFmq5Y1zKov9__zh@gourry-fedora-PF4VCD3F>
-In-Reply-To: <aFmq5Y1zKov9__zh@gourry-fedora-PF4VCD3F>
-From: Bijan Tabatabai <bijan311@gmail.com>
-Date: Mon, 23 Jun 2025 18:21:20 -0500
-X-Gm-Features: AX0GCFvhM9bDmIKNz3hzb_T7Ftkp2AGOE2ZRMfDXHquDjGFrrsP8UEg9t-r2yYQ
-Message-ID: <CAMvvPS5ievG9Q2w1GEA5BH2mAX-XUR_=oo3AWMnDeUvyRF8jyg@mail.gmail.com>
-Subject: Re: [RFC PATCH v2 0/2] mm/damon/paddr: Allow interleaving in
- migrate_{hot,cold} actions
-To: Gregory Price <gourry@gourry.net>
-Cc: SeongJae Park <sj@kernel.org>, damon@lists.linux.dev, linux-mm@kvack.org, 
-	linux-kernel@vger.kernel.org, akpm@linux-foundation.org, david@redhat.com, 
-	ziy@nvidia.com, matthew.brost@intel.com, joshua.hahnjy@gmail.com, 
-	rakie.kim@sk.com, byungchul@sk.com, ying.huang@linux.alibaba.com, 
-	apopple@nvidia.com, bijantabatab@micron.com, venkataravis@micron.com, 
-	emirakhur@micron.com, ajayjoshi@micron.com, vtavarespetr@micron.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-Hi Gregory,
+On Mon, 23 Jun 2025 18:15:00 -0500 Bijan Tabatabai <bijan311@gmail.com> wrote:
 
-On Mon, Jun 23, 2025 at 2:28=E2=80=AFPM Gregory Price <gourry@gourry.net> w=
-rote:
->
-> On Fri, Jun 20, 2025 at 01:21:55PM -0700, SeongJae Park wrote:
-> > Hi Bijan,
+[...]
+> Hi SeongJae,
+> 
+> I really appreciate your detailed response.
+> The quota auto-tuning helps, but I feel like it's still not exactly
+> what I want. For example, I think a quota goal that stops migration
+> based on the memory usage balance gets quite a bit more complicated
+> when instead of interleaving all data, we are just interleaving *hot*
+> data. I haven't looked at it extensively, but I imagine it wouldn't be
+> easy to identify how much data is hot in the paddr setting,
+
+I don't think so, and I don't see why you think so.  Could you please
+elaborate?
+
+> especially
+> because the regions can contain a significant amount of unallocated
+> data.
+
+In the case, unallocated data shouldn't be accessed at all, so the region will
+just look cold to DAMON.
+
+> Also, if the interleave weights changed, for example, from 11:9
+> to 10:10, it would be preferable if only 5% of data is migrated;
+> however, with the round robin approach, 50% would be. Finally, and I
+> forgot to mention this in my last message, the round-robin approach
+> does away with any notion of spatial locality, which does help the
+> effectiveness of interleaving [1].
+
+We could use the probabilistic interleaving, if this is the problem?
+
+> I don't think anything done with
+> quotas can get around that.
+
+I think I'm not getting your points well, sorry.  More elaboration of your
+concern would be helpful.
+
+> I wonder if there's an elegant way to
+> specify whether to use rmap or not, but my initial feeling is that
+> might just add complication to the code and interface for not enough
+> benefit.
+
+Agreed.  Please note that I'm open to add an interface for this behavior if the
+benefit is clear.  I'm also thinking adding none-rmap migration first (if it
+shows some benefit), and adding rmap support later with additional benefit
+confirmation could also be an option.
+
+> 
+> Maybe, as you suggest later on, this is an indication that my use case
+> is a better fit for a vaddr scheme. I'll get into that more below.
+> 
+> > > Using the VMA offset to determine where a page
+> > > should be placed avoids this problem because it gives a folio a single
+> > > node it can be in for a given set of interleave weights. This means
+> > > that in steady state, no folios will be migrated.
 > >
-> > On Fri, 20 Jun 2025 13:04:56 -0500 Bijan Tabatabai <bijan311@gmail.com>=
- wrote:
-> >
-> > [...]
-> > > This patch set adds the mechanism for dynamically changing how applic=
-ation
-> > > data is interleaved across nodes while leaving the policy of what the
-> > > interleave weights should be to userspace. It does this by modifying =
-the
-> > > migrate_{hot,cold} DAMOS actions to allow passing in a list of migrat=
-ion
-> > > targets to their target_nid parameter. When this is done, the
-> > > migrate_{hot,cold} actions will migrate pages between the specified n=
-odes
-> > > using the global interleave weights found at
-> > > /sys/kernel/mm/mempolicy/weighted_interleave/node<N>. This functional=
-ity
-> > > can be used to dynamically adjust how pages are interleaved by changi=
-ng the
-> > > global weights. When only a single migration target is passed to
-> > > target_nid, the migrate_{hot,cold} actions will act the same as befor=
-e.
-> >
-> > This means users are required to manipulate two interfaces.  DAMON sysf=
-s for
-> > target nodes, and weighted_interleave sysfs for weights.  I don't think=
- this
-> > coupling is very ideal.
-> >
->
-> Just tossing this out there - weighted interleave sysfs entries *should*
-> be automatic, and the preferred weights shouldn't really ever change
-> over time.  Even if they did, if it's the result of devices coming and
-> going - the updates should also be automatic.
+> > This makes sense for this use case.  But I don't think this makes same sense
+> > for possible other use cases, like memory tiering on systems having multiple
+> > NUMA nodes of same tier.
+> 
+> I see where you're coming from. I think the crux of this difference is
+> that in my use case, the set of nodes we are monitoring is the same as
+> the set of nodes we are migrating to, while in the use case you
+> describe, the set of nodes being monitored is disjoint from the set of
+> migration target nodes.
 
-I'm not convinced this is true. If you have a workload that can
-saturate the local bandwidth but not the remote bandwidth, wouldn't
-you want the interleave weights to be more biased towards local memory
-than you would for a workload that can saturate both the local and
-remote bandwidth?
+I understand and agree this difference.
 
-> So, in practice, a usually probably only has to twiddle DAMON.
+> I think this in particular makes ping ponging
+> more of a problem for my use case, compared to promotion/demotion
+> schemes.
 
-That being said, I don't mind the idea of the mempolicy weights being
-left untouched as a reasonable starting point for bandwidth intensive
-applications and leaving the fine tuning to DAMON.
+But again I'm failing at understanding this, sorry.  Could I ask more
+elaborations?
+
+> 
+> > If you really need this virtual address space based
+> > deterministic behavior, it would make more sense to use virtual address spaces
+> > monitoring (damon-vaddr).
+> 
+> Maybe it does make sense for me to implement vaddr versions of the
+> migrate actions for my use case.
+
+Yes, that could also be an option.
+
+> One thing that gives me pause about
+> this, is that, from what I understand, it would be harder to have
+> vaddr schemes apply to processes that start after damon begins. I
+> think to do that, one would have to detect when a process starts, and
+> then do a damon tune to upgrade the targets list? It would be nice if,
+> say, you could specify a cgroup as a vaddr target and track all
+> processes in that cgroup, but that would be a different patchset for
+> another day.
+
+I agree that could be a future thing to do.  Note that DAMON user-space tool
+implements[1] a similar feature.
+
+> 
+> But, using vaddr has other benefits, like the sampling would take into
+> account the locality of the accesses. There are also ways to make
+> vaddr sampling more efficient by using higher levels of the page
+> tables, that I don't think apply to paddr schemes [2]. I believe the
+> authors of [2] said they submitted their patches to the kernel, but I
+> don't know if it has been upstreamed (sorry about derailing the
+> conversation slightly).
+
+Thank you for reminding it.  It was nice finding and approach[2], but
+unfortunately it didn't be upstreamed.  I now realize the monitoring intervals
+auto-tuning[3] idea was partly motivated by the nice discussion, though.
+
+[1] https://github.com/damonitor/damo/blob/next/release_note#L33
+[2] https://lore.kernel.org/damon/20240318132848.82686-1-aravinda.prasad@intel.com/
+[3] https://lkml.kernel.org/r/20250303221726.484227-1-sj@kernel.org
+
 
 Thanks,
-Bijan
+SJ
+
+[...]
+
+> 
+> [1] https://elixir.bootlin.com/linux/v6.16-rc3/source/mm/mempolicy.c#L213
+> [2] https://www.usenix.org/conference/atc24/presentation/nair
