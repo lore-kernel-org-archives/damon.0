@@ -1,20 +1,20 @@
 Received: from invmail4.hynix.com (exvmail4.skhynix.com [166.125.252.92])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 31D0A35280
-	for <damon@lists.linux.dev>; Wed, 25 Jun 2025 22:24:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 752452F365E
+	for <damon@lists.linux.dev>; Wed, 25 Jun 2025 22:27:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=166.125.252.92
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750890264; cv=none; b=Ub3mkApqvQlK3+MBHNIVb3WKR9MPvTyCspB23/3zS5xbAKn0iPjz4Uvm4BXUA3btgvx8yHHliF3jMA5Mg9Td+r/kea1XtUU1/gT6s2XfNQjF5jDfYmsVB9/VEV73iycJvjfoBVhjZzT3A5Ci0osyitLjhCLpKs5lzJ+AICVaOWY=
+	t=1750890443; cv=none; b=m01XizC1VHcYDR5qnxhPwaf9035do4MR5YWEhF8T3CLyKKoelthdJUkwFX6+4d/G4/bK7nCwmw244oUr8o3D+QxY07FoSHsgxOuVYW7TwahHtOZNSzK35fsj5Wrvn9o3KAqzUYmR56tsvAIHL6efoJSnztOn1PV/9B7AbTECxYQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750890264; c=relaxed/simple;
-	bh=J24So0xVDU73haA03vtUiFsD+fNwlmPaMv6mY7NEs/g=;
+	s=arc-20240116; t=1750890443; c=relaxed/simple;
+	bh=FGJxPUS0n/OzPxPwZhLw2UTMDjcVqtYFbqunl99CARI=;
 	h=Message-ID:Date:MIME-Version:Cc:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=DiY9oiIzk72RVRI8602H0PqXd2pf8S4uwQu+Pu2JNuaVbjTymVnm5u0/amCnXkuIMS08EkmvTp5s6yD9eXE7Tcb+PfvL6oADyq7XSsZbUPKIoPJpMfnQIjkjWwECL6ZK/zI/pl+kSyYJ4aoloX7KuVY2Y+1HsFX21Vw6+kn1cQ0=
+	 In-Reply-To:Content-Type; b=VjynUqEwFjczLm47sGzg/5mXtFfcnuZ12ZdtKDIXYq8Sul1pTDfYr4f7DTCqVbtaLRPJ4G+/j/rQSsAa3BNkO6u7BR1Grdk9mdEvXSeKpdip3g8YBhgJNdev8gG7SJnZhanWb4pMkoEqCkRpEDCWwAf/m3G+EZYOHtBGm+QQ9io=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sk.com; spf=pass smtp.mailfrom=sk.com; arc=none smtp.client-ip=166.125.252.92
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sk.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sk.com
-X-AuditID: a67dfc5b-669ff7000002311f-24-685c770e56cc
-Message-ID: <697aed09-80ff-41d4-b1cb-321c9fd9ff23@sk.com>
-Date: Thu, 26 Jun 2025 07:24:14 +0900
+X-AuditID: a67dfc5b-669ff7000002311f-e6-685c77c6f285
+Message-ID: <08a1f2b7-15ac-4677-88d8-7112f0f9d5da@sk.com>
+Date: Thu, 26 Jun 2025 07:27:18 +0900
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -25,151 +25,87 @@ User-Agent: Mozilla Thunderbird
 Cc: kernel_team@skhynix.com, damon@lists.linux.dev,
  Andrew Morton <akpm@linux-foundation.org>, linux-mm@kvack.org,
  Yunjeong Mun <yunjeong.mun@sk.com>
-Subject: Re: [PATCH 1/3] mm/damon: do not allow creating zero size region
-To: SeongJae Park <sj@kernel.org>
-References: <20250623180305.44277-1-sj@kernel.org>
+Subject: Re: [PATCH 3/3] samples/damon: fix bugs for damon sample for start
+ failures
 Content-Language: ko
+To: SeongJae Park <sj@kernel.org>
+References: <20250623181142.44434-1-sj@kernel.org>
 From: Honggyu Kim <honggyu.kim@sk.com>
-In-Reply-To: <20250623180305.44277-1-sj@kernel.org>
+In-Reply-To: <20250623181142.44434-1-sj@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrNLMWRmVeSWpSXmKPExsXC9ZZnkS5/eUyGwf9+Zos569ewWTz5/5vV
-	4t6a/6wWh7++YXJg8di0qpPNY9OnSeweJ2b8ZvF4sXkmYwBLFJdNSmpOZllqkb5dAldG7w32
-	ghWKFc2zHrA1MM6Q7GLk4JAQMJGYM9mpi5ETwuzewgRi8wpYSlw5eYINxGYRUJU4NWUbC0Rc
-	UOLkzCdgtqiAvMT9WzPYQWxmgZmMEm9O8YDYwgKeEq+ergHrFRFQlDj3+CIriC0kYCSxf+0l
-	Foh6EYnZnW3MIDabgJrElZeTwPZyChhL7Hz4lgmixkyia2sXI4QtL7H97Rygei6gOxewSTze
-	dIYN4mhJiYMrbrBMYBScheS+WUh2zEIyaxaSWQsYWVYxCmXmleUmZuaY6GVU5mVW6CXn525i
-	BAb5sto/0TsYP10IPsQowMGoxMO74Vp0hhBrYllxZe4hRgkOZiUR3mnmURlCvCmJlVWpRfnx
-	RaU5qcWHGKU5WJTEeY2+lacICaQnlqRmp6YWpBbBZJk4OKUaGIPWxH5+fJ47Z2ZzEevSZU9m
-	XpzMsLTuZGaEryZX/qGqYPPYt0tXtnt7ZBuEJ7+7NLeuruPM5bvWM4t8jqz74usylW+b7gOt
-	893GPZf3G3Z+Ny1dYLk/OWvGYvcHDeeOffZYMdPbedpClrtxu+YHF6m4JS+UYEh96qjKVrku
-	SW+KVXPRvBBrTyWW4oxEQy3mouJEAE65hpJuAgAA
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrDLMWRmVeSWpSXmKPExsXCNUNLT5evPCbD4PUvc4s569ewWTz5/5vV
-	4vDck6wW99b8B7K+vmGy+L1tBZsDm8emVZ1A4tMkdo8TM36zeLzYPJPR49ttD4/FLz4wBbBF
-	cdmkpOZklqUW6dslcGX03mAvWKFY0TzrAVsD4wzJLkZODgkBE4k53VuYQGxeAUuJKydPsIHY
-	LAKqEqembGOBiAtKnJz5BMwWFZCXuH9rBjuIzSwwk1HizSkeEFtYwFPi1dM1YL0iAooS5x5f
-	ZAWxhQSMJPavvcQCUS8iMbuzjRnEZhNQk7jychLYXk4BY4mdD98yQdSYSXRt7WKEsOUltr+d
-	wzyBkW8WkjNmIRk1C0nLLCQtCxhZVjGKZOaV5SZm5pjqFWdnVOZlVugl5+duYgSG8bLaPxN3
-	MH657H6IUYCDUYmHd8O16Awh1sSy4srcQ4wSHMxKIrzTzKMyhHhTEiurUovy44tKc1KLDzFK
-	c7AoifN6hacmCAmkJ5akZqemFqQWwWSZODilGhjXWWou6FJueOKdsdV8hqDOTc/1016ddtTV
-	EMwwkXvU8ZfrnH3a+Xspf73+66pUxIVUnK1OLvkwV4lXJOkYz6Qy8R+b3T8fDNY33a/24iCn
-	TJXPpgLRaWlsBq+M5Dtswh8Wv2QrEz9fEC9z23t9/KfyyEWVKjWhQq/uWzgldXctjfzTHnRt
-	uxJLcUaioRZzUXEiAMDpu6FfAgAA
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrLLMWRmVeSWpSXmKPExsXC9ZZnke6x8pgMg/WrJCzmrF/DZvHk/29W
+	i3tr/rNaHP76hsmBxWPTqk42j02fJrF7nJjxm8XjxeaZjAEsUVw2Kak5mWWpRfp2CVwZd1ft
+	Yi04yFNxpfEJWwPjZc4uRk4OCQETidb/r1lh7OZ/X1lAbF4BS4mpt86D2SwCqhIN61ayQcQF
+	JU7OfAIWFxWQl7h/awY7iM0sMJNR4s0pHhBbWCBMYuKK7WwQcRGJ2Z1tzCC2iICixLnHF8F2
+	CQkYSfz8txcsziagJnHl5SQmEJtTwFji5/pFTBC9ZhJdW7sYIWx5ie1v5wDVcwHduYRNou/2
+	ZHaIoyUlDq64wTKBUXAWkvtmIdk9C8msWUhmLWBkWcUolJlXlpuYmWOil1GZl1mhl5yfu4kR
+	GOjLav9E72D8dCH4EKMAB6MSD++Ga9EZQqyJZcWVuYcYJTiYlUR4p5lHZQjxpiRWVqUW5ccX
+	leakFh9ilOZgURLnNfpWniIkkJ5YkpqdmlqQWgSTZeLglGpgjEhJ6D30TXGW161j79yf2040
+	XmSqV7FYzPlMYrDpMxW5JVYTdmdMuW152nTDfMmnqqUrohi6jmW47Bb+MWvOznvPO8/OU8i2
+	ZmHfvlHZ8fcMFSm9+b1t8/7vrFfondsf1qP/T2669p+KHSo1Xq/3z0suOR/A/DNeMoRNZMn7
+	ItcTT7Ublt0vUGIpzkg01GIuKk4EAPSzfF5wAgAA
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrLLMWRmVeSWpSXmKPExsXCNUNLT/dYeUyGwYd5/BZz1q9hs3jy/zer
+	xeG5J1kt7q35D2R9fcNk8XvbCjYHNo9NqzqBxKdJ7B4nZvxm8XixeSajx7fbHh6LX3xgCmCL
+	4rJJSc3JLEst0rdL4Mq4u2oXa8FBnoorjU/YGhgvc3YxcnJICJhINP/7ygJi8wpYSky9dR7M
+	ZhFQlWhYt5INIi4ocXLmE7C4qIC8xP1bM9hBbGaBmYwSb07xgNjCAmESE1dsZ4OIi0jM7mxj
+	BrFFBBQlzj2+yApiCwkYSfz8txcsziagJnHl5SQmEJtTwFji5/pFTBC9ZhJdW7sYIWx5ie1v
+	5zBPYOSbheSMWUhWzELSMgtJywJGllWMIpl5ZbmJmTmmesXZGZV5mRV6yfm5mxiBgbys9s/E
+	HYxfLrsfYhTgYFTi4d1wLTpDiDWxrLgy9xCjBAezkgjvNPOoDCHelMTKqtSi/Pii0pzU4kOM
+	0hwsSuK8XuGpCUIC6YklqdmpqQWpRTBZJg5OqQbGnEk7DJNT1s02vd3/7ol4gZX8dGd7ZQHz
+	d07vL0ZPVt9xhUW0K49hgfB+77q3jQ4nLJcHvb8RIxw+f/2UQPXyN0nR2Y1dJ/wnbPx3qu66
+	lmXPdulvHj1/JhacZndc4DRzwjepf285DjLNKk3+O3+2z+9WtTU1cZMmzvsa/PxindQmh1x+
+	9X25SizFGYmGWsxFxYkARfmPfWACAAA=
 X-CFilter-Loop: Reflected
 
 Hi SeongJae,
 
-Sorry for the late response.
-
-On 6/24/2025 3:03 AM, SeongJae Park wrote:
-> On Mon, 23 Jun 2025 11:58:53 +0900 Honggyu Kim <honggyu.kim@sk.com> wrote:
+On 6/24/2025 3:11 AM, SeongJae Park wrote:
+> On Mon, 23 Jun 2025 12:16:32 +0900 Honggyu Kim <honggyu.kim@sk.com> wrote:
 > 
 >> Hi SeongJae,
 >>
->> Thanks for the kind review as always!
-> 
-> My pleasure :)
-> 
->>
->> On 6/23/2025 1:04 AM, SeongJae Park wrote:
->>> On Sun, 22 Jun 2025 21:09:23 +0900 Honggyu Kim <honggyu.kim@sk.com> wrote:
+>> On 6/23/2025 1:29 AM, SeongJae Park wrote:
+>>> Hi Honggyu,
 >>>
->>>> Creating zero size region leads a divide by zero error inside
->>>> damon_get_intervals_score() as follows.
->>>>
->>>>     static unsigned long damon_get_intervals_score(struct damon_ctx *c)
->>>>     {
->>>>         struct damon_target *t;
->>>>         struct damon_region *r;
->>>>         unsigned long sz_region, max_access_events = 0, access_events = 0;
->>>>         unsigned long target_access_events;
->>>>         unsigned long goal_bp = c->attrs.intervals_goal.access_bp;
->>>>
->>>>         damon_for_each_target(t, c) {
->>>>             damon_for_each_region(r, t) {
->>>>                 sz_region = damon_sz_region(r);
->>>>                 max_access_events += sz_region * c->attrs.aggr_samples;
->>>>                 access_events += sz_region * r->nr_accesses;
->>>>             }
->>>>         }
->>>>         target_access_events = max_access_events * goal_bp / 10000;
->>>>         return access_events * 10000 / target_access_events;  /* divide by zero! */
->>>>     }
->>>
->>> Thank you for finding this issue!  Coudl you please further share how zero size
->>> region can be made, and if user-space can make the situation?
+>>> On Sun, 22 Jun 2025 21:09:25 +0900 Honggyu Kim <honggyu.kim@sk.com> wrote:
+> [...]
+>>> If we want to make stable kernel maintainers' life easier, we would better to
+>>> split this into three patches, for each module, and add appropriate Fixes, as
+>>> below.
 >>
->> The initial values of node*_start_addr and node*_end_addr inside
->> /sys/module/mtier/parameters/ are all zeros so I saw this problem easily by
->> setting Y to "enabled".
-> 
-> Thank you for clarifying!  Please add this description on the commit message if
-> you send a next version of this patch, with Fixes: tag.
-
-OK. I will add "Fixes: tag.
-
->>>>
->>>> This patch makes a NULL return for such cases when creating a region
->>>> inside damon_new_region().
->>>
->>> I agree zero size region could look silly.  But I don't really think it should
->>> be prohibited.  What about modifying damon_get_intervals_score() instead?
->>> Maybe we can set target_access_events as 1 in this case.
+>> Spliting this into three patches is okay.
+> [...]
+>>> Could you please do so?
 >>
->> Hmm... I don't get what you mean by setting "target_access_events" to 1 for such
->> cases.  Could you please explain more?
-> 
-> I mean, something like below.
-> 
-> @@ -1449,6 +1449,7 @@ static unsigned long damon_get_intervals_score(struct damon_ctx *c)
->                  }
->          }
->          target_access_events = max_access_events * goal_bp / 10000;
-> +       target_access_events = target_access_events ? : 1;
->          return access_events * 10000 / target_access_events;
->   }
-
-I actually didn't mean the code, but just wondered if setting 
-"target_access_events" to 1 makes sense in this context.
-
-I now think that it doesn't make any difference because applying DAMOS actions
-to zero size regions as it's just no-ops.  So I can take your change.
-
->>>
->>>>
->>>> Signed-off-by: Honggyu Kim <honggyu.kim@sk.com>
->>>> Cc: Yunjeong Mun <yunjeong.mun@sk.com>
->>>> ---
->>>>    mm/damon/core.c | 3 +++
->>>>    1 file changed, 3 insertions(+)
->>>>
->>>> diff --git a/mm/damon/core.c b/mm/damon/core.c
->>>> index b217e0120e09..44740da337fd 100644
->>>> --- a/mm/damon/core.c
->>>> +++ b/mm/damon/core.c
->>>> @@ -126,8 +126,11 @@ struct damon_region *damon_new_region(unsigned long start, unsigned long end)
->>>>         if (!region)
->>>>                 return NULL;
->>>>
->>>> +     if (start == end)
->>>> +             return NULL;
->> If you're okay, then I'd like to modify this as follows again.
+>> If we do, then this patchset has to come before "enabled" renaming patch.
 >>
->> +     if (start >= end)
->> +             return NULL;
->>
->> What do you think about this?
+>> In addition, I remember mixing stable and non-stable patches together in the
+>> same patchset isn't welcomed by Andrew or other stable tree maintainers.  So I
+>> might be better to split those three fix patches into a separate patchset.
 > 
-> I still prefer fixing the found bug on the spot.  I don't think having zero or
-> negative size regions is really somewhat we always prohibit.
+> I didn't think they would really bother such mixed patch series, but, yes,
+> please do so.  Being nice to others is cool :)
 
-I can split "target_access_events" change patch from this regardless of this
-with "Fixes" tag.
+Sure.  I will split "Fixes" changes in a separate patchset.
 
-But I don't get why you think zero size region is acceptable.  Do you see any 
-benefits or have special reasons allowing zero size regions?
+> 
+>>
+>> The only thing that bothers me in that case is writing cover letter for simple 2
+>> or 3 patches as they are relatively simple.
+> 
+> I think you could also add the divide-by-zero fix (first patch of this series)
+> to the series.
 
-Thanks,
+Sure.
+
+>>
+>> But it isn't that hard so can manage those in the next spin.
+> 
+> Thank you, looking forward to the next revisions!
+
+Thank you too.  I will send it within a few days.
+
 Honggyu
 
 > 
@@ -178,5 +114,4 @@ Honggyu
 > SJ
 > 
 > [...]
-> 
 
