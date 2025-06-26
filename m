@@ -1,117 +1,113 @@
-Received: from invmail4.hynix.com (exvmail4.skhynix.com [166.125.252.92])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 752452F365E
-	for <damon@lists.linux.dev>; Wed, 25 Jun 2025 22:27:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=166.125.252.92
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93A0635975
+	for <damon@lists.linux.dev>; Thu, 26 Jun 2025 15:27:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750890443; cv=none; b=m01XizC1VHcYDR5qnxhPwaf9035do4MR5YWEhF8T3CLyKKoelthdJUkwFX6+4d/G4/bK7nCwmw244oUr8o3D+QxY07FoSHsgxOuVYW7TwahHtOZNSzK35fsj5Wrvn9o3KAqzUYmR56tsvAIHL6efoJSnztOn1PV/9B7AbTECxYQ=
+	t=1750951636; cv=none; b=u2FDaX4EVWqNwt1HRpRdWXL0Wrmm7VbWbqlQ9AvhRNfRYppiy3aO9sRpHkaCXKw/j1+MY5qVW0A4Gr414F9uUwk83XVmh0hMzowdy5DLATHnN09R721/1NYpB0yTl0nMF8LApz3I+JcEPAHhfHvsia1xo7+SSGNkgHOIjIZ0y4Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750890443; c=relaxed/simple;
-	bh=FGJxPUS0n/OzPxPwZhLw2UTMDjcVqtYFbqunl99CARI=;
-	h=Message-ID:Date:MIME-Version:Cc:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=VjynUqEwFjczLm47sGzg/5mXtFfcnuZ12ZdtKDIXYq8Sul1pTDfYr4f7DTCqVbtaLRPJ4G+/j/rQSsAa3BNkO6u7BR1Grdk9mdEvXSeKpdip3g8YBhgJNdev8gG7SJnZhanWb4pMkoEqCkRpEDCWwAf/m3G+EZYOHtBGm+QQ9io=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sk.com; spf=pass smtp.mailfrom=sk.com; arc=none smtp.client-ip=166.125.252.92
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sk.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sk.com
-X-AuditID: a67dfc5b-669ff7000002311f-e6-685c77c6f285
-Message-ID: <08a1f2b7-15ac-4677-88d8-7112f0f9d5da@sk.com>
-Date: Thu, 26 Jun 2025 07:27:18 +0900
+	s=arc-20240116; t=1750951636; c=relaxed/simple;
+	bh=7bEQjpoE3Zx5yVy9HF7Vo3sOAzETOsPIYEhDfTzYJ2o=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=d0aMqF6Tc7schC6DtsWTxzinbVm0nAuqP5+p9aDSAQecaPmWYOSub7ArWcMb9pzS8Nz4tOD8BSE+VflEJXTTYpJks6UIed+9Ub/mBzeDlSlO6Hq4FVpt/ytVYAbOqIhsdFS7PmxU9HqP/JzJzp/8nAK+0gUDojKrCzD4Q0vxdiY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cai0sXOs; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cai0sXOs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5EDEC4CEED;
+	Thu, 26 Jun 2025 15:27:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1750951636;
+	bh=7bEQjpoE3Zx5yVy9HF7Vo3sOAzETOsPIYEhDfTzYJ2o=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=cai0sXOsyySQh7hrHfTuGgoPeGqZlpttfsnYMIceh1HIDWKllKXbTUtd4pXziSGQb
+	 gWJebCySEEZmqpqR2CUMT4Wr409JCC94uFtinUe1YBS3/qIQglg1VyYaX8mWhJrBjv
+	 8S6t9OrD1QiJLWOXls0kJj/9th4MP20Azr6LiD3tE9tiuBFkyCoQ20dEKj8NMhmbkS
+	 y/FMZBi//jyZd4jZ3ad0DUzFtkhoWJDR1EOuuUNef2IG0GUB+bgfCZYXsyy2oPC701
+	 rd2aD15mBPg2jGeF4Q3rdBGu6EJIwLQy7M/QXkD0ItuzvYYaDVpkB7/WQdzDgq4Qud
+	 mM4LhdHQZq9+w==
+From: SeongJae Park <sj@kernel.org>
+To: Honggyu Kim <honggyu.kim@sk.com>
+Cc: SeongJae Park <sj@kernel.org>,
+	kernel_team@skhynix.com,
+	damon@lists.linux.dev,
+	Andrew Morton <akpm@linux-foundation.org>,
+	linux-mm@kvack.org,
+	Yunjeong Mun <yunjeong.mun@sk.com>
+Subject: Re: [PATCH 1/3] mm/damon: do not allow creating zero size region
+Date: Thu, 26 Jun 2025 08:27:13 -0700
+Message-ID: <20250626152713.333339-1-sj@kernel.org>
+X-Mailer: git-send-email 2.49.0
+In-Reply-To: <697aed09-80ff-41d4-b1cb-321c9fd9ff23@sk.com>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Cc: kernel_team@skhynix.com, damon@lists.linux.dev,
- Andrew Morton <akpm@linux-foundation.org>, linux-mm@kvack.org,
- Yunjeong Mun <yunjeong.mun@sk.com>
-Subject: Re: [PATCH 3/3] samples/damon: fix bugs for damon sample for start
- failures
-Content-Language: ko
-To: SeongJae Park <sj@kernel.org>
-References: <20250623181142.44434-1-sj@kernel.org>
-From: Honggyu Kim <honggyu.kim@sk.com>
-In-Reply-To: <20250623181142.44434-1-sj@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrLLMWRmVeSWpSXmKPExsXC9ZZnke6x8pgMg/WrJCzmrF/DZvHk/29W
-	i3tr/rNaHP76hsmBxWPTqk42j02fJrF7nJjxm8XjxeaZjAEsUVw2Kak5mWWpRfp2CVwZd1ft
-	Yi04yFNxpfEJWwPjZc4uRk4OCQETidb/r1lh7OZ/X1lAbF4BS4mpt86D2SwCqhIN61ayQcQF
-	JU7OfAIWFxWQl7h/awY7iM0sMJNR4s0pHhBbWCBMYuKK7WwQcRGJ2Z1tzCC2iICixLnHF8F2
-	CQkYSfz8txcsziagJnHl5SQmEJtTwFji5/pFTBC9ZhJdW7sYIWx5ie1v5wDVcwHduYRNou/2
-	ZHaIoyUlDq64wTKBUXAWkvtmIdk9C8msWUhmLWBkWcUolJlXlpuYmWOil1GZl1mhl5yfu4kR
-	GOjLav9E72D8dCH4EKMAB6MSD++Ga9EZQqyJZcWVuYcYJTiYlUR4p5lHZQjxpiRWVqUW5ccX
-	leakFh9ilOZgURLnNfpWniIkkJ5YkpqdmlqQWgSTZeLglGpgjEhJ6D30TXGW161j79yf2040
-	XmSqV7FYzPlMYrDpMxW5JVYTdmdMuW152nTDfMmnqqUrohi6jmW47Bb+MWvOznvPO8/OU8i2
-	ZmHfvlHZ8fcMFSm9+b1t8/7vrFfondsf1qP/T2669p+KHSo1Xq/3z0suOR/A/DNeMoRNZMn7
-	ItcTT7Ublt0vUGIpzkg01GIuKk4EAPSzfF5wAgAA
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrLLMWRmVeSWpSXmKPExsXCNUNLT/dYeUyGwYd5/BZz1q9hs3jy/zer
-	xeG5J1kt7q35D2R9fcNk8XvbCjYHNo9NqzqBxKdJ7B4nZvxm8XixeSajx7fbHh6LX3xgCmCL
-	4rJJSc3JLEst0rdL4Mq4u2oXa8FBnoorjU/YGhgvc3YxcnJICJhINP/7ygJi8wpYSky9dR7M
-	ZhFQlWhYt5INIi4ocXLmE7C4qIC8xP1bM9hBbGaBmYwSb07xgNjCAmESE1dsZ4OIi0jM7mxj
-	BrFFBBQlzj2+yApiCwkYSfz8txcsziagJnHl5SQmEJtTwFji5/pFTBC9ZhJdW7sYIWx5ie1v
-	5zBPYOSbheSMWUhWzELSMgtJywJGllWMIpl5ZbmJmTmmesXZGZV5mRV6yfm5mxiBgbys9s/E
-	HYxfLrsfYhTgYFTi4d1wLTpDiDWxrLgy9xCjBAezkgjvNPOoDCHelMTKqtSi/Pii0pzU4kOM
-	0hwsSuK8XuGpCUIC6YklqdmpqQWpRTBZJg5OqQbGnEk7DJNT1s02vd3/7ol4gZX8dGd7ZQHz
-	d07vL0ZPVt9xhUW0K49hgfB+77q3jQ4nLJcHvb8RIxw+f/2UQPXyN0nR2Y1dJ/wnbPx3qu66
-	lmXPdulvHj1/JhacZndc4DRzwjepf285DjLNKk3+O3+2z+9WtTU1cZMmzvsa/PxindQmh1x+
-	9X25SizFGYmGWsxFxYkARfmPfWACAAA=
-X-CFilter-Loop: Reflected
+Content-Transfer-Encoding: 8bit
 
-Hi SeongJae,
+On Thu, 26 Jun 2025 07:24:14 +0900 Honggyu Kim <honggyu.kim@sk.com> wrote:
 
-On 6/24/2025 3:11 AM, SeongJae Park wrote:
-> On Mon, 23 Jun 2025 12:16:32 +0900 Honggyu Kim <honggyu.kim@sk.com> wrote:
+> Hi SeongJae,
 > 
->> Hi SeongJae,
->>
->> On 6/23/2025 1:29 AM, SeongJae Park wrote:
->>> Hi Honggyu,
->>>
->>> On Sun, 22 Jun 2025 21:09:25 +0900 Honggyu Kim <honggyu.kim@sk.com> wrote:
-> [...]
->>> If we want to make stable kernel maintainers' life easier, we would better to
->>> split this into three patches, for each module, and add appropriate Fixes, as
->>> below.
->>
->> Spliting this into three patches is okay.
-> [...]
->>> Could you please do so?
->>
->> If we do, then this patchset has to come before "enabled" renaming patch.
->>
->> In addition, I remember mixing stable and non-stable patches together in the
->> same patchset isn't welcomed by Andrew or other stable tree maintainers.  So I
->> might be better to split those three fix patches into a separate patchset.
+> Sorry for the late response.
+
+No worry!
+
+> On 6/24/2025 3:03 AM, SeongJae Park wrote:
+> > On Mon, 23 Jun 2025 11:58:53 +0900 Honggyu Kim <honggyu.kim@sk.com> wrote:
+[...]
+> > I mean, something like below.
+> > 
+> > @@ -1449,6 +1449,7 @@ static unsigned long damon_get_intervals_score(struct damon_ctx *c)
+> >                  }
+> >          }
+> >          target_access_events = max_access_events * goal_bp / 10000;
+> > +       target_access_events = target_access_events ? : 1;
+> >          return access_events * 10000 / target_access_events;
+> >   }
 > 
-> I didn't think they would really bother such mixed patch series, but, yes,
-> please do so.  Being nice to others is cool :)
-
-Sure.  I will split "Fixes" changes in a separate patchset.
-
+> I actually didn't mean the code, but just wondered if setting 
+> "target_access_events" to 1 makes sense in this context.
 > 
->>
->> The only thing that bothers me in that case is writing cover letter for simple 2
->> or 3 patches as they are relatively simple.
+> I now think that it doesn't make any difference because applying DAMOS actions
+> to zero size regions as it's just no-ops.  So I can take your change.
+
+Thank you for clarifying, looking forward to your fix! :)
+
+[...]
+> > I still prefer fixing the found bug on the spot.  I don't think having zero or
+> > negative size regions is really somewhat we always prohibit.
 > 
-> I think you could also add the divide-by-zero fix (first patch of this series)
-> to the series.
-
-Sure.
-
->>
->> But it isn't that hard so can manage those in the next spin.
+> I can split "target_access_events" change patch from this regardless of this
+> with "Fixes" tag.
 > 
-> Thank you, looking forward to the next revisions!
+> But I don't get why you think zero size region is acceptable.  Do you see any 
+> benefits or have special reasons allowing zero size regions?
 
-Thank you too.  I will send it within a few days.
+In short, I don't anticipate special benefits of allowing zero size region.
+But that's smae to this change.
 
-Honggyu
+I even have small concern about this change.
 
-> 
-> 
-> Thanks,
-> SJ
-> 
-> [...]
+This change might make people assume any damon_region would have non-zero
+positive size.  I think that's wrong assumption.  Any DAMON core and API caller
+code can set the start and the end addresses with arbitrary values.
 
+I think making the assumption true could be beneficial since it will help
+writing code with less corner cases.  But to make the assumption true, we
+should first check if any existing code is violating it, and if any existing
+code that written with current assumption (region size can be zero) can be
+broken.  After that, we should also prevent future code violating it.
+
+And if the assumption becomes truth, we get one more rule.  I, at least, prefer
+having as less rules as possible.  My taste may be weird, but this is my humble
+feeling and opinion.
+
+
+Thanks,
+SJ
+
+[...]
