@@ -1,45 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 411FC20B80B;
-	Fri, 27 Jun 2025 20:13:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8542220A5EC;
+	Sat, 28 Jun 2025 16:04:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751055231; cv=none; b=aeULsdKDNfJ8j1XEtCT5ZszvImxtmIrk8ml83iOoN/3/UKdXpQwLuYK97S4UuTizWmIAIIVLx8WUKt3DAoJPRCAvViaDTZX0geakvRcOCO4NgLX7rffUzcm3j5+M1ZjGFNXB5xqUR2xCavAjsEhpJTDndKwH8Et/r12FLibBZC8=
+	t=1751126672; cv=none; b=MgG4AYfqDMzxhZWCMl/IzpuNh916JfdLMHUBGDbg+qX9/owbazMM8lcBhMsRRyknyP4oAm/CI+CO/C2mihC2z3IqFMDvNuHnF/VWS1yyxp1aJb2l66f+Zs13d7QBqjWAQIcKP6UeOck6zzJh8baWRibpH6pClJhws+J8zAA1Xpc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751055231; c=relaxed/simple;
-	bh=cLh51Nsh/EO5zqZiVH5NCtO8ZnknKTFyQdCvxFnusyA=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=NnSEDEd6fdvlAqwsfdT4xk5/uSPAHgIaE2Z86YNuRyDY2D+yf2jgmhc1FKZObyopckRCzRsgs4fGD4NbjvXbJfyLMoKdoP1vpjf2i/3U3T6be23vEHDIbg1cTVw4HMiNUog/RsPmVQ0ABKjCikVLtmf+tM4BQhCA1L0PANcOokA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mTEDtLx4; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1751126672; c=relaxed/simple;
+	bh=ZcBXrTQE/EcC9dDxaVoPJkijonw43CRMpiHHbkq1lhE=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=b4jfsGYiPlfcDyCwGjZzM81/aElY+bx9CEOLFagZzI4pm0Eei7I0ba5qYn4PvSaBuaaHrW3e6lJ005vbMvk0j8cubGGWSHshkQkRD5ao4o4GolcmIEhpdC/9sGz7559PP/6Zhwyxwsv2vEgxhgVCVTaFYFsAt3abCC/SW95suEA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XThsJ7hA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mTEDtLx4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 874FBC4CEE3;
-	Fri, 27 Jun 2025 20:13:49 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XThsJ7hA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE853C4CEEA;
+	Sat, 28 Jun 2025 16:04:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1751055230;
-	bh=cLh51Nsh/EO5zqZiVH5NCtO8ZnknKTFyQdCvxFnusyA=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mTEDtLx4bYqToY4UpwyOY84uaqD98k05ByRTYs8Lv5c6hMWxj9bFU8KzMbIhOl3YT
-	 Lmd9mcp3RbT1svEC3sIkrjHeSPVXENjLk07t/zN7aaMCVGH9HO8c8qZD7K984ZfbP6
-	 COWarnWsPU5Qa6DINvxgrUJ66V92TGmqfJIf8c7o9FMCT5nSHQTZ615o/UVlZuPpP1
-	 ZPpjbVC+jrCuPV0W3meOiikoVKJ58Pf+yyPo2CT5h+U8czASSC7dnXYVDVAmoeNOps
-	 AnUj4GQpOyFAZWnGOKCkTpj9Jnn1SLt941ZIdkygOLSrnLc2US2uzMLGdh9P5/jo8X
-	 VB2DXBwWWwAhw==
+	s=k20201202; t=1751126672;
+	bh=ZcBXrTQE/EcC9dDxaVoPJkijonw43CRMpiHHbkq1lhE=;
+	h=From:To:Cc:Subject:Date:From;
+	b=XThsJ7hAgV6a8xSt6c55FYLJn0tcO+6YwzPCau0ZeM05nHNa/XXRbQEnVE7//i18N
+	 gXp8xh1FMfVPjYIzjcRc3eOeLoKB1mMHTT6XVbQnRdeKKsLyHVtgJY/OVWA6RupmEh
+	 1dmRFYY71+URBRbg5Ocw3EQxypv+MUBPLQpO5/p4YEQzJMWyJGnP1216CrC0N/hfJo
+	 UCk+Avr2zCOzZUNDBjz+DIfaNMUGHTkTiuW8jtOrZTZrWkTmfF1i01azhdaU+xujIT
+	 oUp0lH0nW8/4nnpfd2BYi6rH6BDSseGIN7nPwnVuhS4WwPxeKTsjckNNbBhwiHAlES
+	 2R7AU9ISqp++A==
 From: SeongJae Park <sj@kernel.org>
-To: SeongJae Park <sj@kernel.org>
-Cc: Andrew Morton <akpm@linux-foundation.org>,
+To: Andrew Morton <akpm@linux-foundation.org>
+Cc: SeongJae Park <sj@kernel.org>,
+	Shuah Khan <shuah@kernel.org>,
 	damon@lists.linux.dev,
 	kernel-team@meta.com,
 	linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org,
-	kernel test robot <lkp@intel.com>
-Subject: Re: [PATCH mm-unstable] mm/damon/sysfs-schemes: make damos_sysfs_action_names static
-Date: Fri, 27 Jun 2025 13:13:46 -0700
-Message-Id: <20250627201346.53536-1-sj@kernel.org>
+	linux-kselftest@vger.kernel.org,
+	linux-mm@kvack.org
+Subject: [PATCH 0/6] selftests/damon: add python and drgn based DAMON sysfs functionality tests
+Date: Sat, 28 Jun 2025 09:04:22 -0700
+Message-Id: <20250628160428.53115-1-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250627162806.50589-1-sj@kernel.org>
-References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -48,28 +46,45 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Fri, 27 Jun 2025 09:28:06 -0700 SeongJae Park <sj@kernel.org> wrote:
+DAMON sysfs interface is the bridge between the user space and the
+kernel space for DAMON parameters.  There is no good and simple test to
+see if the parameters are set as expected.  Existing DAMON selftests
+therefore test end-to-end features.  For example, damos_quota_goal.py
+runs a DAMOS scheme with quota goal set against a test program running
+an artificial access pattern, and see if the result is as expected.
+Such tests cover only a few part of DAMON.  Adding more tests is also
+complicated.  Finally, the reliability of the test itself on different
+systems is bad.
 
-> Commit 6812c66db976 ("mm/damon/sysfs-schemes: decouple from
-> damos_action") in mm-unstable is defining damos_sysfs_action_names as
-> non-static, though it is being used only inside sysfs-schemes.c file.
-> Make it static.
-> 
-> Fixes: 6812c66db976 ("mm/damon/sysfs-schemes: decouple from damos_action") # mm-unstable
-> Reported-by: kernel test robot <lkp@intel.com>
-> Closes: https://lore.kernel.org/oe-kbuild-all/202506271655.b8yfEZIT-lkp@intel.com/
-> 
-> Signed-off-by: SeongJae Park <sj@kernel.org>
+'drgn' is a tool that can extract kernel internal data structures like
+DAMON parameters.  Add a test that passes specific DAMON parameters via
+DAMON sysfs reusing _damon_sysfs.py, extract resulting DAMON parameters
+via 'drgn', and compare those.  Note that this test is not adding
+exhaustive tests of all DAMON parameters and input combinations but very
+basic things.  Advancing the test infrastructure and adding more tests
+are future works.
 
-I forgot noting this patch to the report, and Andrew thankfully made and merged
-a fix[1] that is same to this one.  So this patch may be just ignored in favor
-of the already merged same fix.  Noting it here just for a case of future
-readers.
+Changes from RFC
+(https://lore.kernel.org/20250622210330.40490-1-sj@kernel.org)
+- Rebase on latest mm-new
 
-[1] https://lore.kernel.org/20250627125731.19f70c310cb4f315177e41e6@linux-foundation.org
+SeongJae Park (6):
+  selftests/damon: add drgn script for extracting damon status
+  selftests/damon/_damon_sysfs: set Kdamond.pid in start()
+  selftests/damon: add python and drgn-based DAMON sysfs test
+  selftests/damon/sysfs.py: test monitoring attribute parameters
+  selftests/damon/sysfs.py: test adaptive targets parameter
+  selftests/damon/sysfs.py: test DAMOS schemes parameters setup
+
+ tools/testing/selftests/damon/Makefile        |   1 +
+ tools/testing/selftests/damon/_damon_sysfs.py |   3 +
+ .../selftests/damon/drgn_dump_damon_status.py | 161 ++++++++++++++++++
+ tools/testing/selftests/damon/sysfs.py        | 115 +++++++++++++
+ 4 files changed, 280 insertions(+)
+ create mode 100755 tools/testing/selftests/damon/drgn_dump_damon_status.py
+ create mode 100755 tools/testing/selftests/damon/sysfs.py
 
 
-Thanks,
-SJ
-
-[...]
+base-commit: 5ab6feac2d83ebbf0d0d2eedf0505878ba677dcb
+-- 
+2.39.5
