@@ -1,44 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB54325CC64;
-	Sat, 28 Jun 2025 16:51:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89D9625D549;
+	Sat, 28 Jun 2025 16:51:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751129517; cv=none; b=SrP/4lQzspo7JC3BFhjR7uc6bV7tibryKxH94haIdUdaYqfWBG30fWtTigw7f2hZmtMrWS0VejFQgB4kvSTzUZpXPW4IP20ziNl7NuK0KPr2iNapuTjGaW5pgiU+nTXr1rpr4haTlRwuc963/fc46wbEEnpAO7gJcuztQVTSM/I=
+	t=1751129518; cv=none; b=k4GwMQ8VLC2nhpbZQqgyoWOKtbJaDVAdRBJ/tEUXWFmBNVPN/wMo2W7lrKBEHZQZcAUnnBiaANT8R2BkpGwTCFSCru1jgTe/DMrN0IbK0lNKicb/wamCh6OyGpBm0XkN8sa6zmJj2i3h1WKY354zbB3yjOJyUCMv49ST3p5BTJ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751129517; c=relaxed/simple;
-	bh=9B9axhBqem3qxGrM1GaInOJd4kKcsPOJN3cOuqPuzOs=;
+	s=arc-20240116; t=1751129518; c=relaxed/simple;
+	bh=tlvqxxIUDAypcpXix4DDUce9Gvf8SrIMBmaTGFZI30U=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=QXgOs9Yg7GcDWRjy1dHjZammIwLsaZe2uUJcmnLxRP5OpCftdSEh1RWMfRp3u4lx60RqCBCm5yzseIXBmXp1xyVIROVsxAGyqyZZHOKXsaNhv4WEITYobOADNLStZNWdLW3M8Z7yQt1rqiDUrILX2k2VKqxayGG4VxYTTbXb6zQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oEpZf6YG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XQiQyIX1g8f4iwHxJpNwodAYPjel3Xki7EwNLJppsfV18Kcqlls15iXJYX6/Okh2cwFB8tOn94scxm+fSY675uWhJg3JrCX3J5ny4+is1Ip8jb8DNm4Aqifi9xVDnu72XYJMPOYWJbiunCYyWH03EpiuXNLK1dsHULSs3699rMM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lgLtLZ6q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oEpZf6YG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AE6FC4CEF3;
-	Sat, 28 Jun 2025 16:51:57 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lgLtLZ6q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 405D1C4CEED;
+	Sat, 28 Jun 2025 16:51:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1751129517;
-	bh=9B9axhBqem3qxGrM1GaInOJd4kKcsPOJN3cOuqPuzOs=;
+	s=k20201202; t=1751129518;
+	bh=tlvqxxIUDAypcpXix4DDUce9Gvf8SrIMBmaTGFZI30U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oEpZf6YGC00awkpS9HBD5IJQLRQP7aS9Hr28VHy5mhMEUfdegKRanwpS9kdyQGPwL
-	 lk5gWtPSE2VEJkuIXe+Nd5SLn6Pg2Y1Urol3zP/Xo6CtXp11pFeW9Pg8Ts7FvNcOXO
-	 48o0wPg3dfrK8Ml8IRIweokfBtF/llzafeItOr6sy58iITHdNqJRWWGhvCFlFgFytQ
-	 qVsxj4svQGM577RRWUnKh4doCt95QklXiEVRB1hgG8HzmeIMMherYnglnYo2qVDMvi
-	 PWXwNsnNJdLUe6CpEYNRbvuIiwX0giHc2YtNeeKss9iqaGB8x1huzQf50s0fNaX1G2
-	 9D9C/LqmUicrw==
+	b=lgLtLZ6q9JHyXcZE7E3djoYPOZN6LsoO2UhZ5uv5R40j+Kt/aTRhT71X+TgkdBMWc
+	 epy51+h6/a+DXlMCvZwjFGaoVr7BNrO9FmPkC95JSnXO5SxX1FE3V7vH7IwNHCUTvy
+	 CU1DpW+/553Is8RvXDBb82W4sPBn39AuMfLcZjVD/SQtayqs6319uJuCl+erCXEqpz
+	 7l8usr6qm4bB3L0l2/V6L8WiP/t8ZiRRWuNwy8lKA2HB88I0Omf4IEEt06p7CD/tEj
+	 tflx4ALke51tN6w42QYzk5kVHblMRp8csfEYwWLcX/rQavPWGKArTWqJ9Q/4g15EDm
+	 X+5qNzFqaRMDQ==
 From: SeongJae Park <sj@kernel.org>
 To: 
 Cc: SeongJae Park <sj@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Jonathan Corbet <corbet@lwn.net>,
 	damon@lists.linux.dev,
 	kernel-team@meta.com,
-	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH 09/11] Docs/admin-guide/mm/damon/lru_sort: document active_mem_bp parameter
-Date: Sat, 28 Jun 2025 09:51:42 -0700
-Message-Id: <20250628165144.55528-10-sj@kernel.org>
+Subject: [RFC PATCH 10/11] mm/damon/lru_sort: add monitoring intervals auto-tuning parameter
+Date: Sat, 28 Jun 2025 09:51:43 -0700
+Message-Id: <20250628165144.55528-11-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250628165144.55528-1-sj@kernel.org>
 References: <20250628165144.55528-1-sj@kernel.org>
@@ -50,36 +48,80 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Document a newly added DAMON_LRU_SORT parameter for doing auto-tuning
-aiming an active to inactive memory size ratio.
+DAMON monitoring intervals tuning was crucial for every DAMON use case.
+Now there are a tuning guideline and an automated intervals tuning
+feature.  DAMON_LRU_SORT is still using manual control of intervals.
+Add a module parameter for utilizing the auto-tuning feature with a
+suggested auto-tuning parameters.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- Documentation/admin-guide/mm/damon/lru_sort.rst | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ mm/damon/lru_sort.c | 30 +++++++++++++++++++++++++++---
+ 1 file changed, 27 insertions(+), 3 deletions(-)
 
-diff --git a/Documentation/admin-guide/mm/damon/lru_sort.rst b/Documentation/admin-guide/mm/damon/lru_sort.rst
-index 18fa73a59f62..ca4e071b3159 100644
---- a/Documentation/admin-guide/mm/damon/lru_sort.rst
-+++ b/Documentation/admin-guide/mm/damon/lru_sort.rst
-@@ -79,6 +79,18 @@ of parametrs except ``enabled`` again.  Once the re-reading is done, this
- parameter is set as ``N``.  If invalid parameters are found while the
- re-reading, DAMON_LRU_SORT will be disabled.
+diff --git a/mm/damon/lru_sort.c b/mm/damon/lru_sort.c
+index 99c5a22cf3f2..1e9e19f15b33 100644
+--- a/mm/damon/lru_sort.c
++++ b/mm/damon/lru_sort.c
+@@ -55,6 +55,20 @@ module_param(commit_inputs, bool, 0600);
+ static unsigned long active_mem_bp __read_mostly;
+ module_param(active_mem_bp, ulong, 0600);
  
-+active_mem_bp
-+-------------
++/*
++ * Auto-tune monitoring intervals.
++ *
++ * If this parameter is set as ``Y``, DAMON_LRU_SORT automatically tune
++ * DAMON's sampling and aggregation intervals.  The auto-tuning aims to capture
++ * meaningful amount of access events in each DAMON-snapshot, while keeping the
++ * sampling interval 5 milliseconds in minimu, and 10 seconds in maximum.
++ * Setting this as ``Y`` disables the auto-tuning.
++ *
++ * Disabled by default.
++ */
++static bool autotune_monitoring_intervals __read_mostly;
++module_param(autotune_monitoring_intervals, bool, 0600);
 +
-+Desired active to [in]active memory ratio in bp (1/10,000).
-+
-+While keeping the caps that set by other quotas, DAMON_LRU_SORT automatically
-+increases and decreases the effective level of the quota aiming the LRU
-+[de]prioritizations of the hot and cold memory resulting in this active to
-+[in]active memory ratio.  Value zero means disabling this auto-tuning feature.
-+
-+Disabled by default.
-+
- filter_young_pages
- ------------------
+ /*
+  * Filter [none-]young pages accordingly for LRU [de]prioritizations.
+  *
+@@ -261,6 +275,7 @@ static int damon_lru_sort_apply_parameters(void)
+ {
+ 	struct damon_ctx *param_ctx;
+ 	struct damon_target *param_target;
++	struct damon_attrs attrs;
+ 	struct damos *hot_scheme, *cold_scheme;
+ 	unsigned int hot_thres, cold_thres;
+ 	int err;
+@@ -269,18 +284,27 @@ static int damon_lru_sort_apply_parameters(void)
+ 	if (err)
+ 		return err;
  
+-	err = damon_set_attrs(ctx, &damon_lru_sort_mon_attrs);
++	attrs = damon_lru_sort_mon_attrs;
++	if (autotune_monitoring_intervals) {
++		attrs.sample_interval = 5000;
++		attrs.aggr_interval = 100000;
++		attrs.intervals_goal.access_bp = 40;
++		attrs.intervals_goal.aggrs = 3;
++		attrs.intervals_goal.min_sample_us = 5000;
++		attrs.intervals_goal.max_sample_us = 10 * 1000 * 1000;
++	}
++	err = damon_set_attrs(ctx, &attrs);
+ 	if (err)
+ 		goto out;
+ 
+ 	err = -ENOMEM;
+-	hot_thres = damon_max_nr_accesses(&damon_lru_sort_mon_attrs) *
++	hot_thres = damon_max_nr_accesses(&attrs) *
+ 		hot_thres_access_freq / 1000;
+ 	hot_scheme = damon_lru_sort_new_hot_scheme(hot_thres);
+ 	if (!hot_scheme)
+ 		goto out;
+ 
+-	cold_thres = cold_min_age / damon_lru_sort_mon_attrs.aggr_interval;
++	cold_thres = cold_min_age / attrs.aggr_interval;
+ 	cold_scheme = damon_lru_sort_new_cold_scheme(cold_thres);
+ 	if (!cold_scheme) {
+ 		damon_destroy_scheme(hot_scheme);
 -- 
 2.39.5
