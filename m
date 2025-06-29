@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA26E230BC3;
-	Sun, 29 Jun 2025 20:14:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2E3623958D;
+	Sun, 29 Jun 2025 20:14:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751228087; cv=none; b=VWPlcN9IQBp063JHgtEQTNyeQGrbAy3l39HaRLVRLuYuDOfgS3UT6HAz6hE3pj/kyRnUkFr9AnWk6ftURFUqW+/mCyui5QEVlapfrx0vKBCQfrkbShVmUAEwcmtljQPw9s9AcurKyaCoJDNQpGgRugVNq8hYz1W/pgEyf2wmyhQ=
+	t=1751228088; cv=none; b=U0Rvjq8kXsT0kuLcUGCLQ4e/QBB8aw/l/+b2Di8ADTmsWCdXg5Zi4c0uGnn/qwOJvbnmOLnvpuiPt3C+ebyfSmUAQpAkFaaAz1wyzwJfGOBO4EiO9hRWrbnm+XD8A8lzXz0tMId/13vho0cZ5gnpkzJM0RN1u+6oHCAox7DKxbI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751228087; c=relaxed/simple;
-	bh=YmhJzLmrTV4n3mJcdv9jvwEmM2fyyH58/UncPVtVPeQ=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=rE9spatzx/ZMFkidklwS5k3kfm+lLBbB5Yn2nf0k89ExPYC1pmA9GkNLSlQKlqpGXVNAgEFmjbwjd3t1QpWojL8FEEHqYpU74gtuQuLy4ipc6EPUeQFMiSft2sFJhQxLtU80e/hp+YDSO9RUon/8H+ELWQ0BColXRpwfV+GAEP8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KGMJ9S+W; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1751228088; c=relaxed/simple;
+	bh=MU2ihuhRbcRf1fDg3XPwZVg/5ZSe+hiAlUpj1S6bhJ8=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=WrrGV03a1RuXaq/UZLMT54I5RPYTz/d2apP7MW+L47sOAHMzMYgq4nYqe8gcx/0FYcN1l96vRzgcPBxlYNwx4YDJtlL9pUbRCQA1hcWizxN42sYP4JsuLOd0OyVYhvg0Ec4cra1Wa1idLJqN07JWQljnLMpHLNSH/S3KrEFDE70=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lXMIQhz8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KGMJ9S+W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51BF3C4CEEB;
-	Sun, 29 Jun 2025 20:14:46 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lXMIQhz8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64CF6C4CEEB;
+	Sun, 29 Jun 2025 20:14:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1751228086;
-	bh=YmhJzLmrTV4n3mJcdv9jvwEmM2fyyH58/UncPVtVPeQ=;
-	h=From:To:Cc:Subject:Date:From;
-	b=KGMJ9S+WvCwARjvH/iV27nmgwV09I7E3caQcfwtrvVU2+xaXIstlxI6sJWLdKScwz
-	 TPt2TYz3WDjXLTo4RujNo21MOfFSL8aGnzPYvkS0Sww2QcVTesBNWOcvmy/V20BdOU
-	 FQOh/7iUgNYRq9h7t98QG+P8t/bsiHTHnYV80g6ywdqPe8PTIaPph+CcWls9S2MEfu
-	 ALy785hdz+aDLlD9tsF5l2DUK2tXebSgMbpOvjGUKnHrZzapBj5S3U1yV5JflQMqlc
-	 LkD/2zUmX+aarkRA+MBlEaf6gnWhK6Fg5CVkKWlzPnmt5VVwOySMTTwvhvXO0QjAFv
-	 pUl4Ip1IQQmhg==
+	s=k20201202; t=1751228087;
+	bh=MU2ihuhRbcRf1fDg3XPwZVg/5ZSe+hiAlUpj1S6bhJ8=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=lXMIQhz8xwv2iKYzuyO6NqQHPvp3tlMkOsUXw5R/QGyqAl2iAlN4JIEMU8GMeQMJY
+	 ukicEefMFlMqdhHowBFKTGzsRhv6b9txOfBsp77unrsIcLL61fr/kqVpumaHJtqoty
+	 eMJdXnWCWlU+zQzgFZv2p+F0ysPLTtkTvLprxaUFP/oILF0yh1kpHnISwpQAYL/1xw
+	 GBj0GDJBc3fGIwDLtin/lM6WY1pHk+Dpa+6CvqRWc0ERxRTbPYUItmy6YwBllqvIcy
+	 Q/9jRrVCdODH6O4+2AVo0WZSMKuDWsmCPAYGzntR4o5SrG/caK/0QYt4eGY9uMHIRl
+	 cZYKJmA7wSRFw==
 From: SeongJae Park <sj@kernel.org>
 To: 
 Cc: SeongJae Park <sj@kernel.org>,
@@ -33,10 +34,12 @@ Cc: SeongJae Park <sj@kernel.org>,
 	kernel-team@meta.com,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH 0/6] mm/damon/core: support multi-source reports-based access monitoring
-Date: Sun, 29 Jun 2025 13:14:37 -0700
-Message-Id: <20250629201443.52569-1-sj@kernel.org>
+Subject: [RFC PATCH 1/6] mm/damon/core: introduce damon_report_access()
+Date: Sun, 29 Jun 2025 13:14:38 -0700
+Message-Id: <20250629201443.52569-2-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20250629201443.52569-1-sj@kernel.org>
+References: <20250629201443.52569-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -45,130 +48,122 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-TL; DR: Extend DAMON core-operations set layers interface for operations
-set driven report-based monitoring such as per-CPU and write-only access
-monitoring.
+DAMON core layer asks operations set layer about past access
+information, on core layer's schedule.  In other words, core layer
+"pulls" the information from the operations set layer.  This is
+problematic for a case that the operations set layer have no time and
+space to save the information until the core layer queries.
 
-Background
-----------
+Add a new DAMON API function for reporting identified data accesses to
+DAMON, on the identifiers' schedule.  In other words, it lets the
+operations set layer to "push" the information to the core layer.  The
+function internally uses mutex, so reporting kernel code should be safe
+to sleep.
 
-Existing DAMON operations set implementations, namely paddr, vaddr, and
-fvaddr, use Accessed bits of page tables as the main source of the
-access information.  Accessed bits has some restrictions, though.  For
-example, it cannot tell which CPU or CPU made the access, whether the
-access was read or write, and which part of the mapped entity was really
-accessed.  Also, it cannot capture accesses done without page table
-walks, e.g.,  TLB hit case, or unmapped pages.  Exisiting DAMON
-operations set can capture the accesses to unmapped pages utilizing
-PG_Idle, though.
+Signed-off-by: SeongJae Park <sj@kernel.org>
+---
+ include/linux/damon.h | 21 +++++++++++++++++++++
+ mm/damon/core.c       | 35 +++++++++++++++++++++++++++++++++++
+ 2 files changed, 56 insertions(+)
 
-Depending on the use case, the limitations can be problematic.  Because
-the issue stems from the nature of page table Accessed bit, utilizing
-access information from different sources can mitigate the issue.  Page
-faults, memory access instructions sampling interrupts, system calls, or
-any information from other kernel space friends such as subsystems or
-device drivers of CXL or GPUs could be examples of the different
-sources.
-
-DAMON separates its core and operations set layer.  Operations set layer
-handles the low level access information handling, and the core layer
-handles more high level works such as the region-based overhead/accuracy
-control and access-aware system operations.  Hence we can extend DAMON
-to use the different sources by implementing and using another DAMON
-operations set.  The core layer features will still be available with
-the new sources, without additional changes.
-
-Nevertheless, the current interface between the core and the operations
-set layers is optimized for the Accessed bits case.  Specifically, the
-interface asks the operations set if a give part of memory has accessed
-or not in a given time period (last sampling interval).  It is easy for
-Accessed bit use case, since operations set can simply read the current
-value of the Accessed bit, which is already well manageed for each
-mapping entities by the memory management subsystems.  For some sources
-other than Accessed bits, the operations set may need to keep the access
-information on its own, and answer to the core layer's question by
-reading its own access information collection.  Similar implementations
-of such operations set internal access information may required for
-multiple operations set implementations.
-
-Core Layer Changes for Reporting-based Monitoring
--------------------------------------------------
-
-Optimize such possible duplicated efforts, by updating DAMON core layer
-to support real time access reporting.  The updated interface allows
-operations set implementations to report (or, push) their information to
-the core layer, on their preferred schedule.  DAMON core layer will
-handle the reports by managing meta data and updating the final
-monitoring results (DAMON regions) accordingly.
-
-Also add another operations set callback to determine if a given access
-report is eligible to be used for given operations set.  For example, if
-the operations set implementation is for monitoring only specific CPU or
-writes, the operations set could ask core layer to ignore reported
-accesses that made by other CPUs, or was for reads.
-
-How Per-CPU or Write-only Monitoring Can Be Implemented
--------------------------------------------------------
-
-With these core layer changes, we can implement new DAMON operations set
-that utilizes different information source for page table Accessed bits
-restricted use cases.  For example, to utilize page faults information,
-we could implement an operations set that installs the fake page fault
-protections to access sampling pages per DAMON region for every sampling
-interval.  For that, damon_operations->preapre_access_checks() callback
-coudl be a good place to implement.  Then the developer would need to
-further update PROT_NONE page fault handlers to report the access events
-using the new report API, namely damon_report_access().  The report
-could contain information about which CPU, process, or thread made the
-access, and whether the access is for read or write.  And finally
-implementing the report-ignore logic to ignore accesses made by CPUs of
-no interest or reads, we can do per-CPU or write-only access monitoring.
-
-Patches Sequence
-----------------
-
-The first patch introduces damon_report_access() that any kernel code
-that can sleep can use, to report their access information on their
-schedule.  The second patch adds DAMON core-operations set interface for
-ignoring specific types of data access reports for the given operations
-set configuration.  The third patch further update core layer to really
-use the reported access information for making the monitoring results
-(DAMON regions) for API callers and ABI users.  The fourth patch updates
-virtual address operations set to ignore access reports for none-target
-virtual spaces.
-
-The fifth and sixth patches are for only showing possible future
-extensions of the report struct for per-CPU and write-only monitoring.
-
-Plan for Dropping RFC
----------------------
-
-This patch series is an RFC for early sharing of the idea that also
-shared on the last LSFMMBPF[1], as 'damon_report_access()' API plan.
-I actually wanted to post this later, but recently I received a few
-questiosn about this, so sharing this very early version.  The
-implementation is pretty simple and unoptimized.  No real use case of
-the changed interface (new operations set implementation) exists.  We
-will further optimize the core layer implementation and add one or more
-real operations set implementations that utilizing the report-based
-interface, by the final version of this patch series.
-
-[1] https://lwn.net/Articles/1016525/
-
-SeongJae Park (6):
-  mm/damon/core: introduce damon_report_access()
-  mm/damon/core: add eliglble_report() ops callback
-  mm/damon/core: check received access reports
-  mm/damon/vaddr: impleement eligible_report() callback
-  mm/damon: add node_id to damon_access_report
-  mm/damon: add write field to damon_access_report
-
- include/linux/damon.h | 30 +++++++++++++++++
- mm/damon/core.c       | 76 +++++++++++++++++++++++++++++++++++++++++++
- mm/damon/vaddr.c      |  7 ++++
- 3 files changed, 113 insertions(+)
-
-
-base-commit: 78af14fb3cf19eea2f204650a0090aa2c7022257
+diff --git a/include/linux/damon.h b/include/linux/damon.h
+index 6370cf44486f..a2198909c903 100644
+--- a/include/linux/damon.h
++++ b/include/linux/damon.h
+@@ -104,6 +104,25 @@ struct damon_target {
+ 	struct list_head list;
+ };
+ 
++/**
++ * struct damon_access_report - Represent single acces report information.
++ * @pid:		The PID of the virtual address space of the address.
++ *			NULL if it is of the physical address.
++ * @addr:		The start address of the reporting region.
++ * @size:		The size of the reporting region.
++ * @nr_accesses:	Number of detected accesses to the region.
++ *
++ * @pid could be stale, and hence shouldn't be de-referenced.
++ */
++struct damon_access_report {
++	struct pid *pid;
++	unsigned long addr;
++	unsigned long size;
++	int nr_accesses;
++/* private: */
++	unsigned long report_jiffies;	/* when this report is made */
++};
++
+ /**
+  * enum damos_action - Represents an action of a Data Access Monitoring-based
+  * Operation Scheme.
+@@ -961,6 +980,8 @@ int damon_stop(struct damon_ctx **ctxs, int nr_ctxs);
+ int damon_call(struct damon_ctx *ctx, struct damon_call_control *control);
+ int damos_walk(struct damon_ctx *ctx, struct damos_walk_control *control);
+ 
++void damon_report_access(struct damon_access_report *report);
++
+ int damon_set_region_biggest_system_ram_default(struct damon_target *t,
+ 				unsigned long *start, unsigned long *end);
+ 
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index ea2a17b2dee7..b54ed91f2dce 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -24,6 +24,8 @@
+ #define DAMON_MIN_REGION 1
+ #endif
+ 
++#define DAMON_ACCESS_REPORTS_CAP 1000
++
+ static DEFINE_MUTEX(damon_lock);
+ static int nr_running_ctxs;
+ static bool running_exclusive_ctxs;
+@@ -33,6 +35,11 @@ static struct damon_operations damon_registered_ops[NR_DAMON_OPS];
+ 
+ static struct kmem_cache *damon_region_cache __ro_after_init;
+ 
++static DEFINE_MUTEX(damon_access_reports_lock);
++static struct damon_access_report damon_access_reports[
++	DAMON_ACCESS_REPORTS_CAP];
++static int damon_access_reports_len;
++
+ /* Should be called under damon_ops_lock with id smaller than NR_DAMON_OPS */
+ static bool __damon_is_registered_ops(enum damon_ops_id id)
+ {
+@@ -1403,6 +1410,34 @@ int damos_walk(struct damon_ctx *ctx, struct damos_walk_control *control)
+ 	return 0;
+ }
+ 
++/**
++ * damon_report_access() - Report identified access events to DAMON.
++ * @report:	The reporting access information.
++ *
++ * Report access events to DAMON.
++ *
++ * Context: May sleep.
++ *
++ * NOTE: we may be able to implement this as a lockless queue, and allow any
++ * context.  As the overhead is unknown, and region-based DAMON logics would
++ * guarantee the reports would be not made that frequently, let's start with
++ * this simple implementation, though.
++ */
++void damon_report_access(struct damon_access_report *report)
++{
++	struct damon_access_report *dst;
++
++	/* silently fail for races */
++	if (!mutex_trylock(&damon_access_reports_lock))
++		return;
++	dst = &damon_access_reports[damon_access_reports_len++];
++	if (damon_access_reports_len == DAMON_ACCESS_REPORTS_CAP)
++		damon_access_reports_len = 0;
++	*dst = *report;
++	dst->report_jiffies = jiffies;
++	mutex_unlock(&damon_access_reports_lock);
++}
++
+ /*
+  * Warn and fix corrupted ->nr_accesses[_bp] for investigations and preventing
+  * the problem being propagated.
 -- 
 2.39.5
