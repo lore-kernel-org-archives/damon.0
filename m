@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3894923C51B;
-	Sun, 29 Jun 2025 20:14:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 246B023D2BB;
+	Sun, 29 Jun 2025 20:14:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751228090; cv=none; b=lIybYEUa5UyZhXdNC85L8fKrxTVI3NrkslBiETNIh7MyJAyzFW5k8M2kDGDAu3w4f4g901EZ6gQlq9wzQRFgRMPYU5PH1wfPrXgguEf6f3Df0TrnDsJto6lvKp9bL6vgsIg7Rs1Ia5eHmq1C2MzPxdWTI40MSPxW9ZM0cnwvf74=
+	t=1751228091; cv=none; b=hzxQq6GVSP/UxszuIz3vz5vhkstEvIo5XPWnHNaumJEodLowWhhWAwQf86HXzeJhgVrBLtgKheNS9ai59vgY73IptLy+u4XG/rwgAeYw98NL3pHjjzdv2r5Zeucw00WSfGb5CXhrgCS9JJJfqesCTD8J2vRYYHidc9FaIANiX2w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751228090; c=relaxed/simple;
-	bh=mDWuVxXJ4aMqmgAerywNkRA8beEUvDecOP2ZcDOEVbE=;
+	s=arc-20240116; t=1751228091; c=relaxed/simple;
+	bh=ChHDm1fhhH9qTucGJ/qQGn2czoRDZDNS8D5pXkMCn7M=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=f3pVSgLRTleav7BLbeFB+YpWw2rKlS0P2cVANAA6MAhfgBdolVYhKaQp6DHUtFX+CehNzm8LViLd2Ha1kD571TlqBcG+rrjMHrzfMlLFDvCSPw04X9uOEuaikqt7JBsiarlgcqdxTuFuQPeJ0OkiMwUmpy/RsA168FEdDGKuOy8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YgwmRQ4o; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oFpgAQYtctzcGLMcLzq3LeXl4b6TxFpy0oJLBziO1DOlHGvu4J5cmgunTEa74eNefZ9z3Ym32lqgL4ybMQsKcsaUqHDiiR1uPrH/6q1rS9z8ZgJk9XcJ4tr3Ais7E/NtBFt4g8cIy+q0ySs0U0PS6SMGK8AAnS5Hto9+nTuKicI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZqjPXFTW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YgwmRQ4o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89743C4CEEB;
-	Sun, 29 Jun 2025 20:14:49 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZqjPXFTW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98A9DC4CEEB;
+	Sun, 29 Jun 2025 20:14:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1751228089;
-	bh=mDWuVxXJ4aMqmgAerywNkRA8beEUvDecOP2ZcDOEVbE=;
+	s=k20201202; t=1751228090;
+	bh=ChHDm1fhhH9qTucGJ/qQGn2czoRDZDNS8D5pXkMCn7M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YgwmRQ4oNhfzfFDiJHFGVTzyKosuM3x0W/IzFPslQOBcdymUZyOKMnETQXHZBBMOv
-	 MWIsy882JWriU8dYfMmmkTnHKS2dakwp85zzx8NzngbzFhLPsKFZbw9jmX+ZuXAi4Y
-	 eUAO1KRXBdxyIHO00lYNrH2QHe6GORMPDO/E/6Lv5gZmlxwQzrUcB1PmtZAs3OWXle
-	 K+7GFOsnsmD3dPz6ceT51X/PXt1F/qVAFvDu/ZOdEsVxdE/jBSnuxaVLfGB7WajabW
-	 USrDR6tV6+B46HLFblzgwFrZVjLBKhOQyLKs+EsSzoPmTt6gjToN7gTpjyGj43cagt
-	 4oSdTIbRSTo8w==
+	b=ZqjPXFTWPDbcblMOIE6Sgw4srJbWNmKY2Il9NivI2Tb8cpHUU4kevV6PPYG2gZXZj
+	 iKnY3I38jvznAq/K6WkB1KEKsGwiSFiSe3afTclE7IUa6Xz/YZhgs/U/kRCY5zSKYw
+	 3xz7vbdJFcrJNJaGLo/Y9/KmUP/ScbI5gmqcwGWjSiaXvBG3N7vjnFSXiR8HYoyu9I
+	 f4ar1rWG5ov/UaTQCKlFQyjXXN6z5ND98qheqQZdJ9WlCpVqkt+gyRpB38RWWEPq01
+	 Zj0FDQfsAaohsspYSZBq7cH5BCZQgwHChxCihwRLqVJr1yCUCDQc6+UGN42Nq7tI6x
+	 mm/0Ys99QncmQ==
 From: SeongJae Park <sj@kernel.org>
 To: 
 Cc: SeongJae Park <sj@kernel.org>,
@@ -34,9 +34,9 @@ Cc: SeongJae Park <sj@kernel.org>,
 	kernel-team@meta.com,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH 3/6] mm/damon/core: check received access reports
-Date: Sun, 29 Jun 2025 13:14:40 -0700
-Message-Id: <20250629201443.52569-4-sj@kernel.org>
+Subject: [RFC PATCH 4/6] mm/damon/vaddr: impleement eligible_report() callback
+Date: Sun, 29 Jun 2025 13:14:41 -0700
+Message-Id: <20250629201443.52569-5-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250629201443.52569-1-sj@kernel.org>
 References: <20250629201443.52569-1-sj@kernel.org>
@@ -48,74 +48,40 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Reported access information is only saved in the core layer's internal
-data structure.  Those are not really being used for final monitoring
-results.  Update core layer access information (DAMON regions) using the
-reported access information.
+For [f]vaddr DAMON ops, access reports for virtual address space of a
+process that different from that for a given DAMON target shouldn't be
+used.  Implement an eligible_report() callback for [f]vaddr that does
+the check.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- mm/damon/core.c | 41 +++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 41 insertions(+)
+ mm/damon/vaddr.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index b54ed91f2dce..59567d79af99 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -2472,6 +2472,46 @@ static void kdamond_init_ctx(struct damon_ctx *ctx)
- 	}
+diff --git a/mm/damon/vaddr.c b/mm/damon/vaddr.c
+index 46554e49a478..9970f95585ed 100644
+--- a/mm/damon/vaddr.c
++++ b/mm/damon/vaddr.c
+@@ -610,6 +610,12 @@ static unsigned int damon_va_check_accesses(struct damon_ctx *ctx)
+ 	return max_nr_accesses;
  }
  
-+static void kdamond_apply_access_report(struct damon_access_report *report,
-+		struct damon_target *t, struct damon_ctx *ctx)
++static bool damon_va_eligible_report(struct damon_access_report *report,
++		struct damon_target *t)
 +{
-+	struct damon_region *r;
-+
-+	if (ctx->ops.eligible_report && !ctx->ops.eligible_report(report, t))
-+		return;
-+
-+	/* todo: make search faster, e.g., binary search? */
-+	damon_for_each_region(r, t) {
-+		if (report->addr < r->ar.start)
-+			continue;
-+		if (r->ar.end < report->addr + report->size)
-+			continue;
-+		r->nr_accesses += report->nr_accesses;
-+	}
-+}
-+
-+static void kdamond_check_reported_accesses(struct damon_ctx *ctx)
-+{
-+	int i;
-+	struct damon_access_report *report;
-+	struct damon_target *t;
-+
-+	mutex_lock(&damon_access_reports_lock);
-+	for (i = 0; i < damon_access_reports_len; i++) {
-+		report = &damon_access_reports[i];
-+		if (time_before(report->report_jiffies,
-+					jiffies -
-+					usecs_to_jiffies(
-+						ctx->attrs.sample_interval)))
-+			continue;
-+		if (report->pid && !damon_target_has_pid(ctx))
-+			continue;
-+		damon_for_each_target(t, ctx)
-+			kdamond_apply_access_report(report, t, ctx);
-+	}
-+	mutex_unlock(&damon_access_reports_lock);
++	return report->pid == t->pid;
 +}
 +
  /*
-  * The monitoring daemon that runs as a kernel thread
+  * Functions for the target validity check and cleanup
   */
-@@ -2518,6 +2558,7 @@ static int kdamond_fn(void *data)
- 		kdamond_usleep(sample_interval);
- 		ctx->passed_sample_intervals++;
- 
-+		kdamond_check_reported_accesses(ctx);
- 		if (ctx->ops.check_accesses)
- 			max_nr_accesses = ctx->ops.check_accesses(ctx);
- 
+@@ -710,6 +716,7 @@ static int __init damon_va_initcall(void)
+ 		.update = damon_va_update,
+ 		.prepare_access_checks = damon_va_prepare_access_checks,
+ 		.check_accesses = damon_va_check_accesses,
++		.eligible_report = damon_va_eligible_report,
+ 		.target_valid = damon_va_target_valid,
+ 		.cleanup = NULL,
+ 		.apply_scheme = damon_va_apply_scheme,
 -- 
 2.39.5
