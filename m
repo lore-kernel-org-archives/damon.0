@@ -1,47 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D890825DD09;
-	Sat, 28 Jun 2025 16:51:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA26E230BC3;
+	Sun, 29 Jun 2025 20:14:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751129519; cv=none; b=AF1RmfnrAbFISkS13prnqdDbPuQj/ccNOKn/kcyVouaM35kxwOmg/eJeOFfABjFUFLWivPBfaw1F1AXGvDzp1ktbQ4PLGxrBnm0PM06TLZmuxydNi7qKpmII/0J/K7V9F7nb6a17wQlhrvgxfspa6gYDBTm8OSbaNOOEMT2sRMc=
+	t=1751228087; cv=none; b=VWPlcN9IQBp063JHgtEQTNyeQGrbAy3l39HaRLVRLuYuDOfgS3UT6HAz6hE3pj/kyRnUkFr9AnWk6ftURFUqW+/mCyui5QEVlapfrx0vKBCQfrkbShVmUAEwcmtljQPw9s9AcurKyaCoJDNQpGgRugVNq8hYz1W/pgEyf2wmyhQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751129519; c=relaxed/simple;
-	bh=fbG+KWln8sAPRrugQfWweISG0dHsqG1V9oMoVBcHL/c=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=ZR+9iUgletjAF5cihr8Ank4RiS/5qK6U09k8Kuhkbv98MQABJxgpGZS3uEFnldAI1R2oteEUgXKLv1UksqCtl1A5xBTwgxCnNXCVBhJeDfEnvhKABw980EIZFEgAdRjzhSp9rmtODNbcrRHF7uuFSefM4BoiPFFgnFzqwH3je3Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DS5QeNIM; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1751228087; c=relaxed/simple;
+	bh=YmhJzLmrTV4n3mJcdv9jvwEmM2fyyH58/UncPVtVPeQ=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=rE9spatzx/ZMFkidklwS5k3kfm+lLBbB5Yn2nf0k89ExPYC1pmA9GkNLSlQKlqpGXVNAgEFmjbwjd3t1QpWojL8FEEHqYpU74gtuQuLy4ipc6EPUeQFMiSft2sFJhQxLtU80e/hp+YDSO9RUon/8H+ELWQ0BColXRpwfV+GAEP8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KGMJ9S+W; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DS5QeNIM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46876C4CEEA;
-	Sat, 28 Jun 2025 16:51:59 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KGMJ9S+W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51BF3C4CEEB;
+	Sun, 29 Jun 2025 20:14:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1751129519;
-	bh=fbG+KWln8sAPRrugQfWweISG0dHsqG1V9oMoVBcHL/c=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DS5QeNIM5rDCiErt/eCcWwMgF688xD5WMGg+fgZXgr0iH8Vc2BlIJI2Xo8MJoi/pi
-	 SQmYij/3HDK/RMJex+bjiE/yfsXdHLWXMGCq5+BnPqizg1/tu0ZhuuyWrZq50bjQan
-	 tvt3PBUq5oXPSXmyB97t17rlKvbiFa2rYhkV0LVoQjBdy4OkMOe88R7SfuyLYLye84
-	 L4gzSp4fdatQmqdN32QeLpODeynJiU4N8Q178q8DfVMO2K4iWh13aMF/DG08xWmcF/
-	 Kj35aPZ1VxuuypVPDslwt12oFLwWHX58mKerXkaA4fgoVePzk6D9hjtYb+WFFjpxlP
-	 HPG9Dxbs2UpPg==
+	s=k20201202; t=1751228086;
+	bh=YmhJzLmrTV4n3mJcdv9jvwEmM2fyyH58/UncPVtVPeQ=;
+	h=From:To:Cc:Subject:Date:From;
+	b=KGMJ9S+WvCwARjvH/iV27nmgwV09I7E3caQcfwtrvVU2+xaXIstlxI6sJWLdKScwz
+	 TPt2TYz3WDjXLTo4RujNo21MOfFSL8aGnzPYvkS0Sww2QcVTesBNWOcvmy/V20BdOU
+	 FQOh/7iUgNYRq9h7t98QG+P8t/bsiHTHnYV80g6ywdqPe8PTIaPph+CcWls9S2MEfu
+	 ALy785hdz+aDLlD9tsF5l2DUK2tXebSgMbpOvjGUKnHrZzapBj5S3U1yV5JflQMqlc
+	 LkD/2zUmX+aarkRA+MBlEaf6gnWhK6Fg5CVkKWlzPnmt5VVwOySMTTwvhvXO0QjAFv
+	 pUl4Ip1IQQmhg==
 From: SeongJae Park <sj@kernel.org>
 To: 
 Cc: SeongJae Park <sj@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Jonathan Corbet <corbet@lwn.net>,
 	damon@lists.linux.dev,
 	kernel-team@meta.com,
-	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH 11/11] Docs/admin-guide/mm/damon/lru_sort: document intervals autotuning
-Date: Sat, 28 Jun 2025 09:51:44 -0700
-Message-Id: <20250628165144.55528-12-sj@kernel.org>
+Subject: [RFC PATCH 0/6] mm/damon/core: support multi-source reports-based access monitoring
+Date: Sun, 29 Jun 2025 13:14:37 -0700
+Message-Id: <20250629201443.52569-1-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250628165144.55528-1-sj@kernel.org>
-References: <20250628165144.55528-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -50,35 +45,130 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Document a newly added DAMON_LRU_SORT module parameter for using
-monitoring intervals auto-tuning feature of DAMON.
+TL; DR: Extend DAMON core-operations set layers interface for operations
+set driven report-based monitoring such as per-CPU and write-only access
+monitoring.
 
-Signed-off-by: SeongJae Park <sj@kernel.org>
----
- Documentation/admin-guide/mm/damon/lru_sort.rst | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+Background
+----------
 
-diff --git a/Documentation/admin-guide/mm/damon/lru_sort.rst b/Documentation/admin-guide/mm/damon/lru_sort.rst
-index ca4e071b3159..f9dfa8255dda 100644
---- a/Documentation/admin-guide/mm/damon/lru_sort.rst
-+++ b/Documentation/admin-guide/mm/damon/lru_sort.rst
-@@ -91,6 +91,17 @@ increases and decreases the effective level of the quota aiming the LRU
- 
- Disabled by default.
- 
-+Auto-tune monitoring intervals
-+------------------------------
-+
-+If this parameter is set as ``Y``, DAMON_LRU_SORT automatically tune DAMON's
-+sampling and aggregation intervals.  The auto-tuning aims to capture meaningful
-+amount of access events in each DAMON-snapshot, while keeping the sampling
-+interval 5 milliseconds in minimu, and 10 seconds in maximum.  Setting this as
-+``Y`` disables the auto-tuning.
-+
-+Disabled by default.
-+
- filter_young_pages
- ------------------
- 
+Existing DAMON operations set implementations, namely paddr, vaddr, and
+fvaddr, use Accessed bits of page tables as the main source of the
+access information.  Accessed bits has some restrictions, though.  For
+example, it cannot tell which CPU or CPU made the access, whether the
+access was read or write, and which part of the mapped entity was really
+accessed.  Also, it cannot capture accesses done without page table
+walks, e.g.,  TLB hit case, or unmapped pages.  Exisiting DAMON
+operations set can capture the accesses to unmapped pages utilizing
+PG_Idle, though.
+
+Depending on the use case, the limitations can be problematic.  Because
+the issue stems from the nature of page table Accessed bit, utilizing
+access information from different sources can mitigate the issue.  Page
+faults, memory access instructions sampling interrupts, system calls, or
+any information from other kernel space friends such as subsystems or
+device drivers of CXL or GPUs could be examples of the different
+sources.
+
+DAMON separates its core and operations set layer.  Operations set layer
+handles the low level access information handling, and the core layer
+handles more high level works such as the region-based overhead/accuracy
+control and access-aware system operations.  Hence we can extend DAMON
+to use the different sources by implementing and using another DAMON
+operations set.  The core layer features will still be available with
+the new sources, without additional changes.
+
+Nevertheless, the current interface between the core and the operations
+set layers is optimized for the Accessed bits case.  Specifically, the
+interface asks the operations set if a give part of memory has accessed
+or not in a given time period (last sampling interval).  It is easy for
+Accessed bit use case, since operations set can simply read the current
+value of the Accessed bit, which is already well manageed for each
+mapping entities by the memory management subsystems.  For some sources
+other than Accessed bits, the operations set may need to keep the access
+information on its own, and answer to the core layer's question by
+reading its own access information collection.  Similar implementations
+of such operations set internal access information may required for
+multiple operations set implementations.
+
+Core Layer Changes for Reporting-based Monitoring
+-------------------------------------------------
+
+Optimize such possible duplicated efforts, by updating DAMON core layer
+to support real time access reporting.  The updated interface allows
+operations set implementations to report (or, push) their information to
+the core layer, on their preferred schedule.  DAMON core layer will
+handle the reports by managing meta data and updating the final
+monitoring results (DAMON regions) accordingly.
+
+Also add another operations set callback to determine if a given access
+report is eligible to be used for given operations set.  For example, if
+the operations set implementation is for monitoring only specific CPU or
+writes, the operations set could ask core layer to ignore reported
+accesses that made by other CPUs, or was for reads.
+
+How Per-CPU or Write-only Monitoring Can Be Implemented
+-------------------------------------------------------
+
+With these core layer changes, we can implement new DAMON operations set
+that utilizes different information source for page table Accessed bits
+restricted use cases.  For example, to utilize page faults information,
+we could implement an operations set that installs the fake page fault
+protections to access sampling pages per DAMON region for every sampling
+interval.  For that, damon_operations->preapre_access_checks() callback
+coudl be a good place to implement.  Then the developer would need to
+further update PROT_NONE page fault handlers to report the access events
+using the new report API, namely damon_report_access().  The report
+could contain information about which CPU, process, or thread made the
+access, and whether the access is for read or write.  And finally
+implementing the report-ignore logic to ignore accesses made by CPUs of
+no interest or reads, we can do per-CPU or write-only access monitoring.
+
+Patches Sequence
+----------------
+
+The first patch introduces damon_report_access() that any kernel code
+that can sleep can use, to report their access information on their
+schedule.  The second patch adds DAMON core-operations set interface for
+ignoring specific types of data access reports for the given operations
+set configuration.  The third patch further update core layer to really
+use the reported access information for making the monitoring results
+(DAMON regions) for API callers and ABI users.  The fourth patch updates
+virtual address operations set to ignore access reports for none-target
+virtual spaces.
+
+The fifth and sixth patches are for only showing possible future
+extensions of the report struct for per-CPU and write-only monitoring.
+
+Plan for Dropping RFC
+---------------------
+
+This patch series is an RFC for early sharing of the idea that also
+shared on the last LSFMMBPF[1], as 'damon_report_access()' API plan.
+I actually wanted to post this later, but recently I received a few
+questiosn about this, so sharing this very early version.  The
+implementation is pretty simple and unoptimized.  No real use case of
+the changed interface (new operations set implementation) exists.  We
+will further optimize the core layer implementation and add one or more
+real operations set implementations that utilizing the report-based
+interface, by the final version of this patch series.
+
+[1] https://lwn.net/Articles/1016525/
+
+SeongJae Park (6):
+  mm/damon/core: introduce damon_report_access()
+  mm/damon/core: add eliglble_report() ops callback
+  mm/damon/core: check received access reports
+  mm/damon/vaddr: impleement eligible_report() callback
+  mm/damon: add node_id to damon_access_report
+  mm/damon: add write field to damon_access_report
+
+ include/linux/damon.h | 30 +++++++++++++++++
+ mm/damon/core.c       | 76 +++++++++++++++++++++++++++++++++++++++++++
+ mm/damon/vaddr.c      |  7 ++++
+ 3 files changed, 113 insertions(+)
+
+
+base-commit: 78af14fb3cf19eea2f204650a0090aa2c7022257
 -- 
 2.39.5
