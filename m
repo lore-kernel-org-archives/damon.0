@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB60123B627;
-	Sun, 29 Jun 2025 20:14:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3894923C51B;
+	Sun, 29 Jun 2025 20:14:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751228088; cv=none; b=cLFZsIOLP2iS8MMTlvEZon3NRVbalJ4XWyqamOGSX66nNkOnqoIAB9H5nlCEyrxziXWs9F5P3bRyoGpfaHxZoCmXiGRAbMAj7sPtYWnmtqAYpBYsZdDB2KcY1vX+aaT7OZsFgd+2BcSPEwa4PCGvkfWDZOTbB3J+0alul4bRsUc=
+	t=1751228090; cv=none; b=lIybYEUa5UyZhXdNC85L8fKrxTVI3NrkslBiETNIh7MyJAyzFW5k8M2kDGDAu3w4f4g901EZ6gQlq9wzQRFgRMPYU5PH1wfPrXgguEf6f3Df0TrnDsJto6lvKp9bL6vgsIg7Rs1Ia5eHmq1C2MzPxdWTI40MSPxW9ZM0cnwvf74=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751228088; c=relaxed/simple;
-	bh=WPdxO+e8ILol8xOVqVupBv8sHR3wPOu1sMz1xt3HWIM=;
+	s=arc-20240116; t=1751228090; c=relaxed/simple;
+	bh=mDWuVxXJ4aMqmgAerywNkRA8beEUvDecOP2ZcDOEVbE=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=l+pLdS3pEwRKs2FJ5cwBwX5IZqODKqDLR1eglFCgmoS/MW3NgQ+6BEAxNoTxAcEXAJBBoGCzrldITa+PJ6TTMCx7xis4dIhD7dIaGbYWLUUx4BV3Cs5nRu7grnOqLIlwl0NFxbeI85K9hfXVJaoJDgwZtMm/BemsyGmfpKXeeVI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=th3ve3rG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=f3pVSgLRTleav7BLbeFB+YpWw2rKlS0P2cVANAA6MAhfgBdolVYhKaQp6DHUtFX+CehNzm8LViLd2Ha1kD571TlqBcG+rrjMHrzfMlLFDvCSPw04X9uOEuaikqt7JBsiarlgcqdxTuFuQPeJ0OkiMwUmpy/RsA168FEdDGKuOy8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YgwmRQ4o; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="th3ve3rG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71BF5C4CEEB;
-	Sun, 29 Jun 2025 20:14:48 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YgwmRQ4o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89743C4CEEB;
+	Sun, 29 Jun 2025 20:14:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1751228088;
-	bh=WPdxO+e8ILol8xOVqVupBv8sHR3wPOu1sMz1xt3HWIM=;
+	s=k20201202; t=1751228089;
+	bh=mDWuVxXJ4aMqmgAerywNkRA8beEUvDecOP2ZcDOEVbE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=th3ve3rGsg71OhvNGnagGF2Jf6YZzJOTamWxjviSTICoVOZ0I31Z02ityymlMSnbc
-	 IqVYAHRn1PeWkuYx2S+WgZ6bwNfv9VAPcpLcWDgqu/lYGS5FYAtpPk9VtzDY80xEZX
-	 USoM89llEEnEG4DcJtZVV03901ObkOcaAlg/tuMLrmJhmTyA5VI4H4f8WyPcn3P0ef
-	 7F6pvuzotOUHqyLC8Q9GnbegMBSz0cmKlcuJ8WsLxKy6AgiM3wkR4vqTErDoea6Td6
-	 OAMmgDQIr+fsg0hvykFrtvdr8TpP95lZSuBfc2VUyR9h2tl/u22aEY5r7SR2uIAcmt
-	 alNXieidk3mgg==
+	b=YgwmRQ4oNhfzfFDiJHFGVTzyKosuM3x0W/IzFPslQOBcdymUZyOKMnETQXHZBBMOv
+	 MWIsy882JWriU8dYfMmmkTnHKS2dakwp85zzx8NzngbzFhLPsKFZbw9jmX+ZuXAi4Y
+	 eUAO1KRXBdxyIHO00lYNrH2QHe6GORMPDO/E/6Lv5gZmlxwQzrUcB1PmtZAs3OWXle
+	 K+7GFOsnsmD3dPz6ceT51X/PXt1F/qVAFvDu/ZOdEsVxdE/jBSnuxaVLfGB7WajabW
+	 USrDR6tV6+B46HLFblzgwFrZVjLBKhOQyLKs+EsSzoPmTt6gjToN7gTpjyGj43cagt
+	 4oSdTIbRSTo8w==
 From: SeongJae Park <sj@kernel.org>
 To: 
 Cc: SeongJae Park <sj@kernel.org>,
@@ -34,9 +34,9 @@ Cc: SeongJae Park <sj@kernel.org>,
 	kernel-team@meta.com,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH 2/6] mm/damon/core: add eliglble_report() ops callback
-Date: Sun, 29 Jun 2025 13:14:39 -0700
-Message-Id: <20250629201443.52569-3-sj@kernel.org>
+Subject: [RFC PATCH 3/6] mm/damon/core: check received access reports
+Date: Sun, 29 Jun 2025 13:14:40 -0700
+Message-Id: <20250629201443.52569-4-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250629201443.52569-1-sj@kernel.org>
 References: <20250629201443.52569-1-sj@kernel.org>
@@ -48,48 +48,74 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Not every reported access information will be eligible for all DAMON ops
-and target.  For example, virtual address access report will be not
-eligible for 'padr' ops, or monitoring targets for a process that
-different from the process for the repor.  If it is for monitoring
-accesses from specific CPU or write, reports from other CPUs or reads
-should be ignored.  Add operations set callback for this report
-eligibility checking.
+Reported access information is only saved in the core layer's internal
+data structure.  Those are not really being used for final monitoring
+results.  Update core layer access information (DAMON regions) using the
+reported access information.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- include/linux/damon.h | 5 +++++
- 1 file changed, 5 insertions(+)
+ mm/damon/core.c | 41 +++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 41 insertions(+)
 
-diff --git a/include/linux/damon.h b/include/linux/damon.h
-index a2198909c903..9ec40ce7dde0 100644
---- a/include/linux/damon.h
-+++ b/include/linux/damon.h
-@@ -592,6 +592,7 @@ enum damon_ops_id {
-  * @update:			Update operations-related data structures.
-  * @prepare_access_checks:	Prepare next access check of target regions.
-  * @check_accesses:		Check the accesses to target regions.
-+ * @eligible_report:		Verify an access report for a target.
-  * @get_scheme_score:		Get the score of a region for a scheme.
-  * @apply_scheme:		Apply a DAMON-based operation scheme.
-  * @target_valid:		Determine if the target is valid.
-@@ -618,6 +619,8 @@ enum damon_ops_id {
-  * last preparation and update the number of observed accesses of each region.
-  * It should also return max number of observed accesses that made as a result
-  * of its update.  The value will be used for regions adjustment threshold.
-+ * @eligible_report should check if the given access report is eligible to be
-+ * used by this operations set for the given target.
-  * @get_scheme_score should return the priority score of a region for a scheme
-  * as an integer in [0, &DAMOS_MAX_SCORE].
-  * @apply_scheme is called from @kdamond when a region for user provided
-@@ -635,6 +638,8 @@ struct damon_operations {
- 	void (*update)(struct damon_ctx *context);
- 	void (*prepare_access_checks)(struct damon_ctx *context);
- 	unsigned int (*check_accesses)(struct damon_ctx *context);
-+	bool (*eligible_report)(struct damon_access_report *report,
-+			struct damon_target *t);
- 	int (*get_scheme_score)(struct damon_ctx *context,
- 			struct damon_target *t, struct damon_region *r,
- 			struct damos *scheme);
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index b54ed91f2dce..59567d79af99 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -2472,6 +2472,46 @@ static void kdamond_init_ctx(struct damon_ctx *ctx)
+ 	}
+ }
+ 
++static void kdamond_apply_access_report(struct damon_access_report *report,
++		struct damon_target *t, struct damon_ctx *ctx)
++{
++	struct damon_region *r;
++
++	if (ctx->ops.eligible_report && !ctx->ops.eligible_report(report, t))
++		return;
++
++	/* todo: make search faster, e.g., binary search? */
++	damon_for_each_region(r, t) {
++		if (report->addr < r->ar.start)
++			continue;
++		if (r->ar.end < report->addr + report->size)
++			continue;
++		r->nr_accesses += report->nr_accesses;
++	}
++}
++
++static void kdamond_check_reported_accesses(struct damon_ctx *ctx)
++{
++	int i;
++	struct damon_access_report *report;
++	struct damon_target *t;
++
++	mutex_lock(&damon_access_reports_lock);
++	for (i = 0; i < damon_access_reports_len; i++) {
++		report = &damon_access_reports[i];
++		if (time_before(report->report_jiffies,
++					jiffies -
++					usecs_to_jiffies(
++						ctx->attrs.sample_interval)))
++			continue;
++		if (report->pid && !damon_target_has_pid(ctx))
++			continue;
++		damon_for_each_target(t, ctx)
++			kdamond_apply_access_report(report, t, ctx);
++	}
++	mutex_unlock(&damon_access_reports_lock);
++}
++
+ /*
+  * The monitoring daemon that runs as a kernel thread
+  */
+@@ -2518,6 +2558,7 @@ static int kdamond_fn(void *data)
+ 		kdamond_usleep(sample_interval);
+ 		ctx->passed_sample_intervals++;
+ 
++		kdamond_check_reported_accesses(ctx);
+ 		if (ctx->ops.check_accesses)
+ 			max_nr_accesses = ctx->ops.check_accesses(ctx);
+ 
 -- 
 2.39.5
