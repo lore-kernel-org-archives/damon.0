@@ -1,18 +1,18 @@
 Received: from invmail4.hynix.com (exvmail4.hynix.com [166.125.252.92])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 63882257449
-	for <damon@lists.linux.dev>; Tue,  1 Jul 2025 08:19:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5050D202995
+	for <damon@lists.linux.dev>; Tue,  1 Jul 2025 08:19:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=166.125.252.92
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751357984; cv=none; b=FiCYwfWhLqIEF/sbULTY9qHouWWE/smLeynEBDvASMyzV9kMuM1OyMkON/j9/d7sKEaVYAvbcMBc9nfOHQCWIn+xNzcl1TsCapHSrUd2kT2/OqArvF69LNvYXPBZlWs4BhOfuyiK2HsmOgqGzNfVJoT47H6rPHZteub74Wye4Lc=
+	t=1751357986; cv=none; b=RNzgK0P384zNwdm56fhZ85ANfqTn53z6nmsjRU3hOhCxl9N5d4/P+JyWfdJF7pLqqHwY0DobrD+q/TdfRvfRBCXGGPVcbc5kBQ3pt268dau5L+TBNVIqHMn2AOYQWBumH7p0xaPu5RTceBKe72ON8V7DxCZSxcqLU611PqpFqBw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751357984; c=relaxed/simple;
-	bh=IxrfPd2GVOx9majyC4eQ4na+7mB3lDsc0oVVOgH8nfM=;
+	s=arc-20240116; t=1751357986; c=relaxed/simple;
+	bh=lEwnSDFcrwBDT3J0G+lACOJmzjSX5u/DfM1CD4eFVyM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pzCfNYtxnRwj8CZZUF43Z/QmJMsdLb7gGbJHmQa+zVezPXr7CAXPEjSvS0PXis1xkvnlSk9iJtXStRGXsCJkPlrOTgEf2nm81cqBUkjQQeK8cW6Ol93WZdeiiIPdiZvqVagIAq+tu2AA7q2PZq5SlNPCVVPwn0ntQQEYF0GNIJo=
+	 MIME-Version; b=Eqg1UWJg3Tij9EckZibHIwtnmrk9KJkzq2nkXY4oO7Xd+1CGCdpEmuP6z9BjBqXQWB2kp+d3KXB5/GinppyqTsWYLzo6uCrd2uNR2pfSaidZeEV+79A9+b3SvPMZmCVPyqtcA2QXxf0HuTM4vKagg0cJAs2HRF438L0xCoGqr68=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sk.com; spf=pass smtp.mailfrom=sk.com; arc=none smtp.client-ip=166.125.252.92
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sk.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sk.com
-X-AuditID: a67dfc5b-669ff7000002311f-c9-68639a132d92
+X-AuditID: a67dfc5b-669ff7000002311f-cb-68639a144534
 From: Honggyu Kim <honggyu.kim@sk.com>
 To: SeongJae Park <sj@kernel.org>,
 	damon@lists.linux.dev
@@ -20,9 +20,9 @@ Cc: Andrew Morton <akpm@linux-foundation.org>,
 	linux-mm@kvack.org,
 	kernel_team@skhynix.com,
 	Honggyu Kim <honggyu.kim@sk.com>
-Subject: [PATCH v2 1/4] samples/damon: fix damon sample prcl for start failure
-Date: Tue,  1 Jul 2025 17:19:23 +0900
-Message-ID: <20250701081927.1873-2-honggyu.kim@sk.com>
+Subject: [PATCH v2 2/4] samples/damon: fix damon sample wsse for start failure
+Date: Tue,  1 Jul 2025 17:19:24 +0900
+Message-ID: <20250701081927.1873-3-honggyu.kim@sk.com>
 X-Mailer: git-send-email 2.43.0.windows.1
 In-Reply-To: <20250701081927.1873-1-honggyu.kim@sk.com>
 References: <20250701081927.1873-1-honggyu.kim@sk.com>
@@ -33,84 +33,60 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrNLMWRmVeSWpSXmKPExsXC9ZZnoa7wrOQMgxPbdSzmrF/DZvHk/29W
-	i3tr/rNaHP76hsmBxWPTqk42j02fJrF7nJjxm8XjxeaZjAEsUVw2Kak5mWWpRfp2CVwZq++s
-	YypYIFBx+f951gbGLbxdjJwcEgImEhv/TWWGsb/+aWADsdkE1CSuvJzE1MXIwSEiYCUxbUds
-	FyMXB7NAE6PExl+dbCBxYQE/iW2z4kHKWQRUJSZeO8YOYvMKmElcf/uTBWKkpsTj7T/ZQco5
-	BcwlVt0BKxECKpn34AYLRLmgxMmZT8BsZgF5ieats5lBVkkI9LBJvNvzEGqOpMTBFTdYJjDy
-	z0LSMwtJzwJGplWMQpl5ZbmJmTkmehmVeZkVesn5uZsYgUG4rPZP9A7GTxeCDzEKcDAq8fDO
-	OJmUIcSaWFZcmXuIUYKDWUmEl082OUOINyWxsiq1KD++qDQntfgQozQHi5I4r9G38hQhgfTE
-	ktTs1NSC1CKYLBMHp1QDo5ugwW3dEzebbMq+XWphS4qMPOe54enm7meFm0+6JS9InVVv+Vao
-	98TLh77Hu+Tn8nJOv+c4q/v1D6OP/9Se8K5x/cL6PfdL3IyI0NP90U1VMxfsE7sdkZclvuNk
-	5zLV6N8iThudP9llfZ576E+TuE2B84abMsv8nE+utDjhGN74aNkkVclLy5VYijMSDbWYi4oT
-	AQibBLQ+AgAA
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprNLMWRmVeSWpSXmKPExsXCNUNLT1d4VnKGQed6dYs569ewWTz5/5vV
-	4vOz18wWh+eeZLW4t+Y/q8Xhr2+YHNg8Nq3qBBKfJrF7nJjxm8XjxeaZjB7fbnt4LH7xgSmA
-	LYrLJiU1J7MstUjfLoErY/WddUwFCwQqLv8/z9rAuIW3i5GTQ0LAROLrnwY2EJtNQE3iystJ
-	TF2MHBwiAlYS03bEdjFycTALNDFKbPzVyQYSFxbwk9g2Kx6knEVAVWLitWPsIDavgJnE9bc/
-	WSBGako83v6THaScU8BcYtUdsBIhoJJ5D26wQJQLSpyc+QTMZhaQl2jeOpt5AiPPLCSpWUhS
-	CxiZVjGKZOaV5SZm5pjqFWdnVOZlVugl5+duYgQG2bLaPxN3MH657H6IUYCDUYmH1yAvKUOI
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrDLMWRmVeSWpSXmKPExsXC9ZZnoa7IrOQMgzUPhCzmrF/DZvHk/29W
+	i3tr/rNaHP76hsmBxWPTqk42j02fJrF7nJjxm8XjxeaZjAEsUVw2Kak5mWWpRfp2CVwZu+9f
+	Zipo4aiYuOoUWwPjMbYuRk4OCQETiV/n1zDD2B+ubmYHsdkE1CSuvJzE1MXIwSEiYCUxbUds
+	FyMXB7NAE6PExl+dYL3CAn4Sfx72sILYLAKqEks3/gabwytgJjF9zhx2iJmaEo+3/2QHmcMp
+	YC6x6g5YWAioZN6DGywQ5YISJ2c+AbOZBeQlmrfOZgbZJSHQwyaxdsJrqDmSEgdX3GCZwMg/
+	C0nPLCQ9CxiZVjEKZeaV5SZm5pjoZVTmZVboJefnbmIEhuGy2j/ROxg/XQg+xCjAwajEwzvj
+	ZFKGEGtiWXFl7iFGCQ5mJRFePtnkDCHelMTKqtSi/Pii0pzU4kOM0hwsSuK8Rt/KU4QE0hNL
+	UrNTUwtSi2CyTBycUg2MDdE64hPFq71ChC/s4xd8ac1+wmJTI3vxgaVnA675Mjcfv3LF1b7j
+	+4dZ25MlLgQayR/4eyhng+T5fRJvzp91Ytz3/9LsKKPkxeuVerwKOTVEF6cd+WE4y3A2i4Cu
+	iNbye0wn7Q1Tu5U+tbdMfLNNjG9q6BrX2z6dGvvSE3xCPxtuudsY9+muEktxRqKhFnNRcSIA
+	IZpz3j8CAAA=
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprDLMWRmVeSWpSXmKPExsXCNUNLT1dkVnKGwcWprBZz1q9hs3jy/zer
+	xednr5ktDs89yWpxb81/VovDX98wObB5bFrVCSQ+TWL3ODHjN4vHi80zGT2+3fbwWPziA1MA
+	WxSXTUpqTmZZapG+XQJXxu77l5kKWjgqJq46xdbAeIyti5GTQ0LAROLD1c3sIDabgJrElZeT
+	mLoYOThEBKwkpu2I7WLk4mAWaGKU2PirE6xeWMBP4s/DHlYQm0VAVWLpxt/MIDavgJnE9Dlz
+	2CFmako83v6THWQOp4C5xKo7YGEhoJJ5D26wQJQLSpyc+QTMZhaQl2jeOpt5AiPPLCSpWUhS
+	CxiZVjGKZOaV5SZm5pjqFWdnVOZlVugl5+duYgSG2bLaPxN3MH657H6IUYCDUYmH1yAvKUOI
 	NbGsuDL3EKMEB7OSCC+fbHKGEG9KYmVValF+fFFpTmrxIUZpDhYlcV6v8NQEIYH0xJLU7NTU
-	gtQimCwTB6dUA6P2usuP1k3wk3gjo7vLJsm+xLvzGyfTi/P2a32XXDcqv+0Qnrmg/NwEfR95
-	t+Ld1zXXvNrM/OfI23b+zXEB1/YmOfHqeSy+Un/WzTT2gYvjl9DrrZvYVzh0fA//toXVPfXe
-	jqW75yaa5N09oVL83DNg3oGm9l+cbdGfTh1+qjFbKcha+GDzo8VKLMUZiYZazEXFiQBX7YBA
-	LgIAAA==
+	gtQimCwTB6dUA2N33+3jlywEa/9J15R7GG22kFuwiKvje+6Ru133mXK1n9qtzK3Um+9wMfzb
+	eadZU44nb/0ef7FnbsiBBw/+Cp60+uy9/9i/K/kS960FdvhdKnY8PPFARnEvQ9Zi8bDr8Z+e
+	y4b9DWrhuX7hdvGfh0stTc6ov4740TubV8ou/0XeJqe9J/vmhX1WYinOSDTUYi4qTgQAtb8G
+	oi8CAAA=
 X-CFilter-Loop: Reflected
 
-The damon_sample_prcl_start() can fail so we must reset the "enable"
+The damon_sample_wsse_start() can fail so we must reset the "enable"
 parameter to "false" again for proper rollback.
 
-In such cases, setting Y to "enable" then N triggers the following
-crash because damon sample start failed but the "enable" stays as Y.
+In such cases, setting Y to "enable" then N triggers the similar crash
+with wsse because damon sample start failed but the "enable" stays as Y.
 
-  [ 2441.419649] damon_sample_prcl: start
-  [ 2454.146817] damon_sample_prcl: stop
-  [ 2454.146862] ------------[ cut here ]------------
-  [ 2454.146865] kernel BUG at mm/slub.c:546!
-  [ 2454.148183] Oops: invalid opcode: 0000 [#1] SMP NOPTI
-  	...
-  [ 2454.167555] Call Trace:
-  [ 2454.167822]  <TASK>
-  [ 2454.168061]  damon_destroy_ctx+0x78/0x140
-  [ 2454.168454]  damon_sample_prcl_enable_store+0x8d/0xd0
-  [ 2454.168932]  param_attr_store+0xa1/0x120
-  [ 2454.169315]  module_attr_store+0x20/0x50
-  [ 2454.169695]  sysfs_kf_write+0x72/0x90
-  [ 2454.170065]  kernfs_fop_write_iter+0x150/0x1e0
-  [ 2454.170491]  vfs_write+0x315/0x440
-  [ 2454.170833]  ksys_write+0x69/0xf0
-  [ 2454.171162]  __x64_sys_write+0x19/0x30
-  [ 2454.171525]  x64_sys_call+0x18b2/0x2700
-  [ 2454.171900]  do_syscall_64+0x7f/0x680
-  [ 2454.172258]  ? exit_to_user_mode_loop+0xf6/0x180
-  [ 2454.172694]  ? clear_bhb_loop+0x30/0x80
-  [ 2454.173067]  ? clear_bhb_loop+0x30/0x80
-  [ 2454.173439]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
-
-Fixes: 2aca254620a8 ("samples/damon: introduce a skeleton of a smaple DAMON module for proactive reclamation")
+Fixes: b757c6cfc696 ("samples/damon/wsse: start and stop DAMON as the user requests")
 Signed-off-by: Honggyu Kim <honggyu.kim@sk.com>
 Reviewed-by: SeongJae Park <sj@kernel.org>
 ---
- samples/damon/prcl.c | 8 ++++++--
+ samples/damon/wsse.c | 8 ++++++--
  1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/samples/damon/prcl.c b/samples/damon/prcl.c
-index 056b1b21a0fe..5597e6a08ab2 100644
---- a/samples/damon/prcl.c
-+++ b/samples/damon/prcl.c
-@@ -122,8 +122,12 @@ static int damon_sample_prcl_enable_store(
+diff --git a/samples/damon/wsse.c b/samples/damon/wsse.c
+index 11be25803274..e20238a249e7 100644
+--- a/samples/damon/wsse.c
++++ b/samples/damon/wsse.c
+@@ -102,8 +102,12 @@ static int damon_sample_wsse_enable_store(
  	if (enable == enabled)
  		return 0;
  
 -	if (enable)
--		return damon_sample_prcl_start();
+-		return damon_sample_wsse_start();
 +	if (enable) {
-+		err = damon_sample_prcl_start();
++		err = damon_sample_wsse_start();
 +		if (err)
 +			enable = false;
 +		return err;
 +	}
- 	damon_sample_prcl_stop();
+ 	damon_sample_wsse_stop();
  	return 0;
  }
 -- 
