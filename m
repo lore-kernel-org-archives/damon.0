@@ -1,78 +1,78 @@
-Received: from mail-yb1-f181.google.com (mail-yb1-f181.google.com [209.85.219.181])
+Received: from mail-yb1-f177.google.com (mail-yb1-f177.google.com [209.85.219.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC32119995E
-	for <damon@lists.linux.dev>; Tue,  1 Jul 2025 22:40:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8C5226F453
+	for <damon@lists.linux.dev>; Tue,  1 Jul 2025 22:44:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751409628; cv=none; b=Xp2B9uSI2zdCKto4CmEJdXyAPWzTm0a9K3Lic4UxQkyJzdSIV96dDHS3Z5jm+Vg/ei/Z/9eBFC65ga15Ad23jlTJrQDrFA8ErSK7YBVHWpIuR7pYfreWqZC6A5ypYpyF5WNcEQKs3PYoZYypN2LrWI9NH15dsYzCpCrtdoYhSyU=
+	t=1751409844; cv=none; b=DqRVpddFfUrjBZ1zijhF+ywWyvoBkemifsRcGxU+VSDvRNqbES+3W8+KKWPrpXOGZMyOOY6eduBfcpKHa8ezz0vPeBEB0UMXOagpZakIlWgKbdfpHhBQaV6kwF8+jEMEEzqkD83hfCpIk0SRO8ZjJAoueorGGNfADOCcjjMaO0I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751409628; c=relaxed/simple;
-	bh=Jt42u0vTC8jOj2Y3FlPEZCAhDhKdqZfpl7n/CCGzjhM=;
+	s=arc-20240116; t=1751409844; c=relaxed/simple;
+	bh=7sr/j6pKRahXta2Ds3J7bgr68QpT8C6nQo/PyJxSPSE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HjLIMepk/sa5QEtjtF+N9A254+qoO1v60XBgMHSTnyscSJFXfniDsEvBJXkkVF+GezYp5kf9P6n+x1UEl3dXl9NnGhea66kOMrNcqxa/2GT/LJVlarCwafpzoWXMCIshYQHrh5tprMkJz5nrdgqwAJYuKpQnhlX5NYxOamUKrD0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SRCsk9du; arc=none smtp.client-ip=209.85.219.181
+	 MIME-Version; b=tDwO1HzPbxbNGkLIjsaxcJsEEOlkkbseirwXOYnXEIqMPkwpfY3YSOUHM1lt3r+YKq1IWtdJqIx+1aOcubhPbAn7Tmhv5TJcoeBHYkqX08Wi+uuh75OKwc/yt+JY795RyXil0inTaBTPQFxlu0PTWyUtcs2JWY7zbLDxdfvIqK0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Fpe86/pV; arc=none smtp.client-ip=209.85.219.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SRCsk9du"
-Received: by mail-yb1-f181.google.com with SMTP id 3f1490d57ef6-e87c86845d9so2284214276.1
-        for <damon@lists.linux.dev>; Tue, 01 Jul 2025 15:40:26 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Fpe86/pV"
+Received: by mail-yb1-f177.google.com with SMTP id 3f1490d57ef6-e81f311a86fso4904515276.3
+        for <damon@lists.linux.dev>; Tue, 01 Jul 2025 15:44:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751409626; x=1752014426; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1751409842; x=1752014642; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=8ppPEYZhg4B0ycuUdBcvBC5LZYOf/2HD/LRvna5W+34=;
-        b=SRCsk9dupmSHzGgY7DE5E0KWoytPrY9mJb7BUheEmYZJ8ZckpFzuIfM1dmCGBqpomS
-         6ulGVDAZx6rhQmpL1MILeUWFQ4M/WwTmoJFZ5ESq+jEDEqKdTyL4akT9zM8Sve4ZMd5f
-         Og6fU+IJZWbAtOlaKAunzt4cIDcgQm2VlKy2QJnDghGx+A1DgS7T6XAMNW6KWfR6MClL
-         /3Pl7RyiQ2t6S8YYZUGd/DnRc5iZwvGJU67v08LHyW9vGRvuI/Y8SCWVgwZ4GYEq6OWG
-         m343o7rj5/VGIBmogdtSjewq7Ci3xO7IXk9FKxi1zhWwGctlsEblOIl6CF+kN1X4Z9Bq
-         tUQg==
+        bh=u4FeRd9wXeQwX3S1+5R3UHzHnQcV70Su/Q1eyBq9q7c=;
+        b=Fpe86/pV86oiTivYLV7tov+vtHuVVk6YnogqXSO+ekdDXZRFbMVICuZfECHix888XV
+         YLMBfEgcs0UmMjFFU9ekhiBQoiAGEGhL+puUkiD7Xrb63+cS7VTpcYv+OB2PtMaaFEUl
+         cJf9NhlUHlk2usKXcfAaFbwhEUeXmlX8mKJW8nziWXIqi3lKg5FRpdGThq5zJyW0X52c
+         +OMsCsfyy2klvxlhThqGMFudB6HS4oDktEv0ykbnIpsCX/NP5xMhsp48CA/x29kUsrbk
+         rqvbSJZFFLMDAKHhXSGHQYZPXdgEaZsPX2+jnG9f6PZIV2akOwVCZLWVZNBRkMnZG3Ae
+         9ltQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751409626; x=1752014426;
+        d=1e100.net; s=20230601; t=1751409842; x=1752014642;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=8ppPEYZhg4B0ycuUdBcvBC5LZYOf/2HD/LRvna5W+34=;
-        b=kDZ4yYpJnk+Ee2ufB+uJtWT+oIdcS331D2YXg4iRrWM9qyL56uJviUr/baBKZCZRur
-         1fPBCJf2AuRtYRtCHxMA+l7y/geBP2IiLr357Gt3qB5OvMgaSqjnfLIWZUUh2wkiiBeu
-         ZDs2sIJsHR5s4Vd3IaFSnOiw+td0C/BSBJtKODdImbG2vC7Dy1gtmBZHTnlRyvehP0D3
-         FrDuzO5o3GlaUuGv0S3PZoIXQwdX6wWFbkJK6cjvYLyBr5bQ/Y5cX9UtAHQPqqhWJtcX
-         EiIGWA/yDQ0PZUgvjOuFbrJEX5N5IDvnb7jl30PTYoNpmuQ+5rIWSHHEQaf4NXsShXMp
-         IyoA==
-X-Forwarded-Encrypted: i=1; AJvYcCVgpXEkoWZnPlSrOtIlEH7evL2JEXsfSH7kZnTGQZiLRTJODNfK9Um6pDOfp1CPWcCX3KF4Mw==@lists.linux.dev
-X-Gm-Message-State: AOJu0YzyeO0sDZ1lAjiU2KTcC/1/cQp4fWtcR+Tl5EgDRgSL7Tq0QLOh
-	oNFxCdLGakYJOG13d+zAEf4O3l4/cWtdg2MG/SJ+HnGW1oqSkK6rcbpO
-X-Gm-Gg: ASbGncvFzF3/giKKEAr2YuTvLH/sR/dN2epzSQDz35bYcnv8GPanrqp95fx0LrpP0HR
-	yAQRUQ2GEB1dLuZBb8peINnmcoapTJWtLgAM6OZfNqJJN92bBStlkmfu0bPU8pi2v8ERk2aqrIY
-	xNcK6n0994B9CCC07kRxeVQoJrBwP40IeHtoyZpYB7wAtsUdW1z1N1eSihdxV/tmdM1SVdYlKHt
-	qDZ/Dt1miZYIC76p+5tLkRJO5YkgoSJ/Qtl2HAvWxurpYXs7CGzqB77cO23/wg6oxpPJyfvS7Ec
-	7VPnz+v1PcQesgnel3p9KaTn9BVEFNwM9nXan5ZstmSDUBFazTmWKxkdkGKgPQarZmx8ChYfZ9h
-	p4z16k44=
-X-Google-Smtp-Source: AGHT+IEfSExKlYBLEF5iYY85elbMldfM05dmX2YVT1MmFhly9PsAe+w+JK2QOyqbX2jckL9O0qwTbg==
-X-Received: by 2002:a05:6902:f85:b0:e81:28d6:ed5 with SMTP id 3f1490d57ef6-e897e1a1c3fmr915143276.8.1751409625609;
-        Tue, 01 Jul 2025 15:40:25 -0700 (PDT)
+        bh=u4FeRd9wXeQwX3S1+5R3UHzHnQcV70Su/Q1eyBq9q7c=;
+        b=Dc4XBjmKcfedWCL6UOHvYLoQXM2DaIO+OElrqZMFi5VmJQTUbiph+0Wtr4lH408Dcu
+         8qWSj74WsREim6yKovEsE6zwGLMa2qR0ELT0z1UoA2imVzl321FWF6XAq4ZZ8Bl5mMN7
+         KEa5o4K/HmvzW1sYg5nZr6MbyDngypy/BIOHy/eD/dlX8QnZWolve/tO7DXpEP2jTqzQ
+         xiqCI2f+vApceUPiYmE5IR36Tgj6Seyg/PbSWbBr5XX6G78dbK4amqYYAZfwxTd3+Fdd
+         j6qMUTpSVMVRY4vvWqdg1PMyGqI0wFlPIqQ6vdbfCWFSWE5+xTaOWFQEXBDBrPTGy0bm
+         8yOw==
+X-Forwarded-Encrypted: i=1; AJvYcCWQ/QgCfOmvjcCS67YyL2fCnCDyjuFY9Mk1gn/Kmu2M9lD38bNrl02v+ICxT87Nj/0L6uA/OQ==@lists.linux.dev
+X-Gm-Message-State: AOJu0Yw0boujmp1hZB/qRWq7zdLdk+ZU2kZi5yScuAR3NwSboFmgG5sl
+	+q6fWUZYe0i85hkT4JeJxYn8fOk4ocqUieeiB9mnabbZngZVsRzgP88E
+X-Gm-Gg: ASbGncv2LAnisPp4fZ8iHi3QQCUqJRebefeHrCHBYqPUWU6GqLKK1gQ6xX9EO3ntepl
+	iZR8iXULAsKI+92GovQhvUxKIPg+lQ+RWUDhiUpZGMVOuQ02cXoVSFLf4alwNHuQUuOOFR9CPYV
+	g+GdBXtTig7k+jLUGq0jcvRn8trjVSibr3GiX5ZOrneSOWrUJgaiczBAv49HhvhUwWYC9WCVeDS
+	0C/x0fsroWy7okX8kMSmcgjnad7tHDdCN08TtbGkpxn1zWETAITHlfzdg+oTVjD0Fsq+eTO9T9/
+	3uYmJHy+BjDe9tYeNbe+abgPhk+89WzSfbFX5AcIIb/ddQ/tnp1lo0m1FK2NTiZR7x1VLeweY61
+	0BduKiWazc2FBXNT/gg==
+X-Google-Smtp-Source: AGHT+IHBPTQW25dLkI4nDbmWAJnJmoVAk9KwGoxI3zHd26yMzfgQe/ATjFFJf6m4R4d7cp8PptyOOQ==
+X-Received: by 2002:a05:690c:6f83:b0:714:256:7917 with SMTP id 00721157ae682-7164d527940mr7001437b3.26.1751409841578;
+        Tue, 01 Jul 2025 15:44:01 -0700 (PDT)
 Received: from bijan-laptop.attlocal.net ([2600:1700:680e:c000:bdbc:6e11:c9be:13a3])
-        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e87a6bf2290sm3249392276.53.2025.07.01.15.40.22
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-71515c0464asm22189517b3.42.2025.07.01.15.43.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 01 Jul 2025 15:40:25 -0700 (PDT)
+        Tue, 01 Jul 2025 15:44:01 -0700 (PDT)
 From: Bijan Tabatabai <bijan311@gmail.com>
-To: bijan311@gmail.com,
-	SeongJae Park <sj@kernel.org>
-Cc: Andrew Morton <akpm@linux-foundation.org>,
+To: SeongJae Park <sj@kernel.org>
+Cc: Bijan Tabatabai <bijan311@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Bijan Tabatabai <bijantabatab@micron.com>,
 	damon@lists.linux.dev,
 	kernel-team@meta.com,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: Re: [RFC PATCH 0/4] mm/damon: add DAMOS_MIGRATE_{HOT,COLD} destination nodes and weights
-Date: Tue,  1 Jul 2025 17:39:37 -0500
-Message-ID: <20250701224014.9008-1-bijan311@gmail.com>
+Subject: Re: [RFC PATCH 1/4] mm/damon: add struct damos_migrate_dest
+Date: Tue,  1 Jul 2025 17:43:30 -0500
+Message-ID: <20250701224353.9062-1-bijan311@gmail.com>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250621173131.23917-1-sj@kernel.org>
-References: <20250621173131.23917-1-sj@kernel.org>
+In-Reply-To: <20250621173131.23917-2-sj@kernel.org>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -81,52 +81,49 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Sat, 21 Jun 2025 10:31:27 -0700 SeongJae Park <sj@kernel.org> wrote:
+On Sat, 21 Jun 2025 10:31:28 -0700 SeongJae Park <sj@kernel.org> wrote:
 
-> DAMOS_MIGRATE_{HOT,COLD} action can migrate pages to only single node.
-> It could be useful to allow it migrates pages to multiple nodes with
-> different weights.  A work for dynamic interleaving[1] is in progress.
-> We also discussed this could be useful for memory tiering, e.g., when we
-> want to move pages to multiple noes of same tier.
+> Introduce a new struct, namely damos_migrate_dest, for specifying
+> multiple DAMOS' migration destination nodes and their weights.
 > 
-> Extend the API and ABI interface for specifying the multiple destination
-> nodes and their weights.
+> Signed-off-by: SeongJae Park <sj@kernel.org>
+> ---
+>  include/linux/damon.h | 16 ++++++++++++++++
+>  1 file changed, 16 insertions(+)
 > 
-> Note that this RFC is a prototype of the interface change for Bijan's
-> interleaving work[1].  Hence this patch series is only implementing the
-> interface part, not the real implementation of the migration behavior.
-> 
-> [1] https://lore.kernel.org/20250620180458.5041-1-bijan311@gmail.com
-> [2] https://lore.kernel.org/20240408175228.91414-1-sj@kernel.org
-> 
-> SeongJae Park (4):
->   mm/damon: add struct damos_migrate_dest
->   mm/damon/core: add damos->migrate_dest field
->   mm/damon/sysfs-schemes: implement DAMOS action destinations directory
->   mm/damon/sysfs-schemes: set damos->migrate_dest
-> 
->  include/linux/damon.h    |  29 ++++-
->  mm/damon/core.c          |   4 +
->  mm/damon/sysfs-schemes.c | 253 ++++++++++++++++++++++++++++++++++++++-
->  3 files changed, 282 insertions(+), 4 deletions(-)
-> 
-> 
-> base-commit: 78745efafbb93197e476717385616ed57ea2df22
-> -- 
-> 2.39.5
+> diff --git a/include/linux/damon.h b/include/linux/damon.h
+> index bb58e36f019e..d60addd0b7c8 100644
+> --- a/include/linux/damon.h
+> +++ b/include/linux/damon.h
+> @@ -447,6 +447,22 @@ struct damos_access_pattern {
+>  	unsigned int max_age_region;
+>  };
+>  
+> +/**
+> + * struct damos_migrate_dest - Migration destination nodes and their weights.
 
-Hi SeongJae,
-
-Thanks for putting this patch together. Sorry for taking a while to
-respond to it.
-
-I am finishing up V3 of the interleave patchset using these patches. It
-has mostly worked great, but I noticed that damos->migrate_dest was not
-being updated in damos_commit(), so new weights would not be applied. This
-meant that you could not update the interleave weights by committing the
-damon state. I also saw that damos->target_nid was also not being updated
-here. I will will have a patch fixing this with the V3 of the interleave
-patchset that I will hopefully send out tomorrow.
+Nit: Can this be renamed to damos_migrate_dests?
+I think plural fits better because it stores a list of destinations.
 
 Thanks,
 Bijan
+
+> + * @node_id_arr:	Array of migration destination node ids.
+> + * @weight_arr:		Array of migration weights for @node_id_arr.
+> + * @nr_dests:		Length of the @node_id_arr and @weight_arr arrays.
+> + *
+> + * @node_id_arr is an array of the ids of migration destination nodes.
+> + * @weight_arr is an array of the weights for those.  The weights in
+> + * @weight_arr are for nodes in @node_id_arr of same array index.
+> + */
+> +struct damos_migrate_dest {
+> +	unsigned int *node_id_arr;
+> +	unsigned int *weight_arr;
+> +	size_t nr_dests;
+> +};
+> +
+>  /**
+>   * struct damos - Represents a Data Access Monitoring-based Operation Scheme.
+>   * @pattern:		Access pattern of target regions.
+> -- 
+> 2.39.5
