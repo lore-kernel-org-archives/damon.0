@@ -1,43 +1,28 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9392823370A;
-	Sun, 29 Jun 2025 20:49:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+Received: from invmail4.hynix.com (exvmail4.hynix.com [166.125.252.92])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 52BAB202995
+	for <damon@lists.linux.dev>; Tue,  1 Jul 2025 08:19:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=166.125.252.92
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751230158; cv=none; b=bqilxHi78R2olBRBOO5AHXuhCBcSRz6AudPWif+svMT97umnlv4Yjus5Q2cm4yAUIjyw7qLoUb4+mYRx4GeXYA9+FkeYMEZ27FiWLEAPpLYVhsugVt+BFG7+wfGIhYs19RnTpDQs5wKujoM3t70Z1DKWx8hri7ddriBf7EPnavA=
+	t=1751357984; cv=none; b=ZXgGlRkjDr7qnplNi+d0IJJybIQE9lV8FehMT8Srd8dmGtf2WqkiRhhBbfZb28WtI1xlARj22OJjMyMwG1+khKg0CejVlOakRxst3gunWAtcQJx5Q270A/ADkxuhOdLVNVG1ZJfC0Xvr4j2HB7NwuyvHVGy3qqqorHUUc6nIgeY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751230158; c=relaxed/simple;
-	bh=XUP8lKIddKhAygDomeQIMUIjsYMoEKXPeWmno3HafKE=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=b4HG9m3pEpQQ9iia1eiY3Jy6RmdaAnRMtGxyGQpCFxkkLNFG+AqZbrFPvGxzUTXtf0pbJYkpwnPYYn9P7Y8zk3D3RCORX88Dsf5vdX8MjQmHNMEdpjrYL+0VMT5qhyt0xbTIODbphDJTaIA139k1/IrbHLEDiLzpHBTrpU8xEPc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bcizsm76; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bcizsm76"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01386C4CEEB;
-	Sun, 29 Jun 2025 20:49:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1751230157;
-	bh=XUP8lKIddKhAygDomeQIMUIjsYMoEKXPeWmno3HafKE=;
-	h=From:To:Cc:Subject:Date:From;
-	b=bcizsm76+XFW+2WXfnx4wgPXGwPvmvZRg0HKUj/aIbI6oh2PYfuRoZiWdBR0temqu
-	 Ll51Lw7VzehYKidIL19nhQVMwY0Py66m+6TQ0HpdXOnOiUegArrdTn/Z2DY5UVHe7Q
-	 wYjCn0eKQWvy9uM/pyukXLANGuTvwZuMKDlP57o1GE5T0s/5cHGfQ3qAi+MKnsszLS
-	 5AlKfBHriydEIsRnH5czP52qqg1VBMxzdE9sQ7m2NFZg9yK2fKiGcUFhAL1nfE4F84
-	 iZHzPK37hob/Pjnn6EUz6rSYcASW5S7ymn+gNHaLz3geOt6YFlUmdj0eXTGX9Wy6mI
-	 ZWu6jznJ8kYeg==
-From: SeongJae Park <sj@kernel.org>
-To: Andrew Morton <akpm@linux-foundation.org>
-Cc: SeongJae Park <sj@kernel.org>,
-	damon@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
+	s=arc-20240116; t=1751357984; c=relaxed/simple;
+	bh=CB5vp1JKIlTQiDO5g48eAGXYnl8EODYSvxG3DV9+UD8=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=uEUMd6KN6zhTg2NPc2XLnk88o3ZktbEx3UwQT7ULu8a7NQSNDwynS9CoRYBWZj7klYhizrLtRgUFJsoOk3jJG6rqrw8a6y2OfC+RmcKOcGpGjMtrK1mieGOLKqtbW0rwbNdBt+NKcJX7WgOhJMSCJa0d6HLk4Bjx5ZuaV4Y+c/U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sk.com; spf=pass smtp.mailfrom=sk.com; arc=none smtp.client-ip=166.125.252.92
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sk.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sk.com
+X-AuditID: a67dfc5b-669ff7000002311f-c7-68639a138d1f
+From: Honggyu Kim <honggyu.kim@sk.com>
+To: SeongJae Park <sj@kernel.org>,
+	damon@lists.linux.dev
+Cc: Andrew Morton <akpm@linux-foundation.org>,
 	linux-mm@kvack.org,
-	stable@vger.kernel.org,
-	#,
-	6.14.x
-Subject: [PATCH] mm/damon/core: handle damon_call_control as normal under kdmond deactivation
-Date: Sun, 29 Jun 2025 13:49:14 -0700
-Message-Id: <20250629204914.54114-1-sj@kernel.org>
-X-Mailer: git-send-email 2.39.5
+	kernel_team@skhynix.com,
+	Honggyu Kim <honggyu.kim@sk.com>
+Subject: [PATCH v2 0/4] mm/damon: fix divide by zero and its samples
+Date: Tue,  1 Jul 2025 17:19:22 +0900
+Message-ID: <20250701081927.1873-1-honggyu.kim@sk.com>
+X-Mailer: git-send-email 2.43.0.windows.1
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -45,54 +30,49 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprKLMWRmVeSWpSXmKPExsXC9ZZnoa7wrOQMg4m3RSzmrF/DZvHk/29W
+	i3tr/rNaHP76hsmBxWPTqk42j02fJrF7nJjxm8XjxeaZjAEsUVw2Kak5mWWpRfp2CVwZs+48
+	YiroYqt4d6+FuYHxHUsXIyeHhICJxKaLC5lh7Fuv1zCC2GwCahJXXk5i6mLk4BARsJKYtiO2
+	i5GLg1mgiVFi469ONpAaYQEXiWdtF9lBbBYBVYm355eAzeQVMJOYubWBHWKmpsTj7T/ZIeKC
+	EidnPgGrYRaQl2jeOpsZZKiEwEdWiXMPdrJBNEhKHFxxg2UCI+8sJD2zkPQsYGRaxSiUmVeW
+	m5iZY6KXUZmXWaGXnJ+7iREYWMtq/0TvYPx0IfgQowAHoxIP74yTSRlCrIllxZW5hxglOJiV
+	RHj5ZJMzhHhTEiurUovy44tKc1KLDzFKc7AoifMafStPERJITyxJzU5NLUgtgskycXBKNTA6
+	LLo67crEsLOJE/nWd0wO2Kmod2q3qu2qIoMYTdsTV1Ztfz/vgc3yS41Zk+ImTrjjaJrz4+n2
+	exf7+mavtGJ8XeOpxXlIL3qatmKuwvdj3B5hRmeFJNRelzi80ZujFMPTva3vT/XnQ/1l4pY8
+	aU5Z1qt4r3847pNz5V7WFB/zo5Y/Km2UsiqVWIozEg21mIuKEwGm61RQKAIAAA==
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFmplluLIzCtJLcpLzFFi42LhmqGlpys8KznDYO4LXos569ewWTz5/5vV
+	4vOz18wWh+eeZLW4t+Y/q8Xhr2+YHNg8Nq3qBBKfJrF7nJjxm8XjxeaZjB7fbnt4LH7xgSmA
+	LYrLJiU1J7MstUjfLoErY9adR0wFXWwV7+61MDcwvmPpYuTkkBAwkbj1eg0jiM0moCZx5eUk
+	pi5GDg4RASuJaTtiuxi5OJgFmhglNv7qZAOpERZwkXjWdpEdxGYRUJV4e34J2BxeATOJmVsb
+	2CFmako83v6THSIuKHFy5hOwGmYBeYnmrbOZJzByzUKSmoUktYCRaRWjSGZeWW5iZo6pXnF2
+	RmVeZoVecn7uJkZg4Cyr/TNxB+OXy+6HGAU4GJV4eA3ykjKEWBPLiitzDzFKcDArifDyySZn
+	CPGmJFZWpRblxxeV5qQWH2KU5mBREuf1Ck9NEBJITyxJzU5NLUgtgskycXBKNTAqb9+gWFyX
+	e2DdyqQNb/rtL338UVFgevha5UkfzzaOGp1vlzhX9egusQhu1ylh2vPMrHTPNg6j71qahv73
+	VFbWLV4iast51WN77sa9/xQWpDPrqj6XCH/udjrt5dt3uedMCppFP6mGTcyfEq+/6I5+qou4
+	7EbTujzzZtPnktxWAUtn+sq941JiKc5INNRiLipOBACF0oJuGAIAAA==
+X-CFilter-Loop: Reflected
 
-DAMON sysfs interface internally uses damon_call() to update DAMON
-parameters as users requested, online.  However, DAMON core cancels any
-damon_call() requests when it is deactivated by DAMOS watermarks.
+This includes damon fixes and its samples to make it safer when damon
+sample start fails.
 
-As a result, users cannot change DAMON parameters online while DAMON is
-deactivated.  Note that users can turn DAMON off and on with different
-watermarks to work around.  Since deactivated DAMON is nearly same to
-stopped DAMON, the work around should have no big problem.  Anyway, a
-bug is a bug.
+It includes the following changes.
+- fix unexpected divide by zero crash for zero size regions
+- fix bugs for damon samples in case of start failures
 
-There is no real good reason to cancel the damon_call() request under
-DAMOS deactivation.  Fix it by simply handling the request as normal,
-rather than cancelling under the situation.
+Honggyu Kim (4):
+  samples/damon: fix damon sample prcl for start failure
+  samples/damon: fix damon sample wsse for start failure
+  samples/damon: fix damon sample mtier for start failure
+  mm/damon: fix divide by zero in damon_get_intervals_score()
 
-Fixes: 42b7491af14c ("mm/damon/core: introduce damon_call()")
-Cc: stable@vger.kernel.org	# 6.14.x
-Signed-off-by: SeongJae Park <sj@kernel.org>
----
- mm/damon/core.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ mm/damon/core.c       | 5 ++++-
+ samples/damon/mtier.c | 8 ++++++--
+ samples/damon/prcl.c  | 8 ++++++--
+ samples/damon/wsse.c  | 8 ++++++--
+ 4 files changed, 22 insertions(+), 7 deletions(-)
 
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index b217e0120e09..bc2e58c1222d 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -2355,9 +2355,8 @@ static void kdamond_usleep(unsigned long usecs)
-  *
-  * If there is a &struct damon_call_control request that registered via
-  * &damon_call() on @ctx, do or cancel the invocation of the function depending
-- * on @cancel.  @cancel is set when the kdamond is deactivated by DAMOS
-- * watermarks, or the kdamond is already out of the main loop and therefore
-- * will be terminated.
-+ * on @cancel.  @cancel is set when the kdamond is already out of the main loop
-+ * and therefore will be terminated.
-  */
- static void kdamond_call(struct damon_ctx *ctx, bool cancel)
- {
-@@ -2405,7 +2404,7 @@ static int kdamond_wait_activation(struct damon_ctx *ctx)
- 		if (ctx->callback.after_wmarks_check &&
- 				ctx->callback.after_wmarks_check(ctx))
- 			break;
--		kdamond_call(ctx, true);
-+		kdamond_call(ctx, false);
- 		damos_walk_cancel(ctx);
- 	}
- 	return -EBUSY;
 
-base-commit: 8f6082b6e60e05f9bcd5c39b19ede995a8975283
+base-commit: d0b3b7b22dfa1f4b515fd3a295b3fd958f9e81af
 -- 
-2.39.5
+2.34.1
+
