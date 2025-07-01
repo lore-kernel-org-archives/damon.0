@@ -1,18 +1,18 @@
 Received: from invmail4.hynix.com (exvmail4.hynix.com [166.125.252.92])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D9B761F09B6
-	for <damon@lists.linux.dev>; Tue,  1 Jul 2025 08:54:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F03B81F09B6
+	for <damon@lists.linux.dev>; Tue,  1 Jul 2025 08:54:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=166.125.252.92
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751360069; cv=none; b=dC9H5FSr/6CR2OYYdpKyVQVwWlxb0weUXPIq5i75dH9EbEPkN1WTLLcicgn1D8xXlenvOwaTyIkUJt+rlH686gtTA1KYt72UZ45KrwMKpJleiYDZPChJ34F5gCLDl0cvQ5aPwm5pd2O4KBbsP+R+iv8N+s1C8NOQfXvkOWuIF0E=
+	t=1751360072; cv=none; b=qIDAOQMxlaVcoX2oktKs28nMnjtQpT78oI3UYm1uWfkIbVtFCeSKiAESeMghijNkEEg1gAMOyfZ7Wo7DVJQzjhUJxM/Mcz+xTqu1CqERALENAs4LYlrfiiulnHym9pgPXiTlQZflilw9MFPbhm6PcL5MUsgzG3Y2kPhyem5YZJA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751360069; c=relaxed/simple;
-	bh=xjsDLviCMZ90RGdFmxb8JDPchjfBIj2HcS+DC4HKAvg=;
+	s=arc-20240116; t=1751360072; c=relaxed/simple;
+	bh=TcJDRCy2YRDnqox1Wxw7tyraONe0LQN9BSKHDNITpCQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZaLvLKPL3/L5EZs1Vce7gpqoujuzy1w6iOwusFFd65I8EBCYDA9tzK9aE4d5GU3YHQjBmkFYvneD10jCQ1NrTq7o4I+Zu9VaOEFs6461kHji5F5XjYUDiml/iSYN+DrILRINdOajGRFKBlQzn1SUpHxPiGWkxCZr4gxF+y9ee+A=
+	 MIME-Version; b=qBaXSkjSQcNVbiBtYu82ALcUPWat992n9AITWl4RM24nPcexqE5q4pCsoM7g5KVgJUSAXRvkvgOCaAIwnHV3kYLKBx7yRCwx34FjFdxPeSfM50CBVer1iwDwWmy0EjGDAm3o+RhnuRTVjUkDfuhJCpjYhtpcAmWv4rjA3NWTUmo=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sk.com; spf=pass smtp.mailfrom=sk.com; arc=none smtp.client-ip=166.125.252.92
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sk.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sk.com
-X-AuditID: a67dfc5b-681ff7000002311f-77-6863a23d4bd5
+X-AuditID: a67dfc5b-681ff7000002311f-79-6863a23dd9db
 From: Yunjeong Mun <yunjeong.mun@sk.com>
 To: sj@kernel.org
 Cc: akpm@linux-foundation.org,
@@ -21,9 +21,9 @@ Cc: akpm@linux-foundation.org,
 	linux-kernel@vger.kernel.org,
 	kernel_team@skhynix.com,
 	honggyu.kim@sk.com
-Subject: [RFC PATCH 1/2] samples/damon: convert node id to physical address
-Date: Tue,  1 Jul 2025 17:54:16 +0900
-Message-ID: <20250701085417.1734-2-yunjeong.mun@sk.com>
+Subject: [RFC PATCH 2/2] samples/damon: add `migrate_hot` and `migrate_cold` knobs
+Date: Tue,  1 Jul 2025 17:54:17 +0900
+Message-ID: <20250701085417.1734-3-yunjeong.mun@sk.com>
 X-Mailer: git-send-email 2.48.1.windows.1
 In-Reply-To: <20250701085417.1734-1-yunjeong.mun@sk.com>
 References: <20250701085417.1734-1-yunjeong.mun@sk.com>
@@ -34,124 +34,159 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrKLMWRmVeSWpSXmKPExsXC9ZZnka7touQMgzWd0hZz1q9hs3jy/zer
-	xeVdc9gs7q35z2px+OsbJgdWj02rOtk8Nn2axO5xYsZvFo8Xm2cyenzeJBfAGsVlk5Kak1mW
-	WqRvl8CVcWn/JcaCKxIVe48uYWlgvCvSxcjBISFgIjF9g3QXIyeYuXzNHUYQm01AQ+LgoZPM
-	ILaIgKBE/+MZrF2MXBzMAnMZJY6ceQ9WJCzgLXHm8j0mEJtFQFViQ9NPZpCZvALmEjOuSkHM
-	1JRouARRwilgIXFi5jOwViGgkvt/57OD2LxA80/OfMICYjMLyEs0b53NDLJLQmAGm8SlPXvZ
-	IQZJShxccYNlAiP/LCQ9s5D0LGBkWsUolJlXlpuYmWOil1GZl1mhl5yfu4kRGJjLav9E72D8
-	dCH4EKMAB6MSD++Mk0kZQqyJZcWVuYcYJTiYlUR4+WSTM4R4UxIrq1KL8uOLSnNSiw8xSnOw
-	KInzGn0rTxESSE8sSc1OTS1ILYLJMnFwSjUw5mxrd3mjeZ17gmUMS/q2Cxu2OvjvViyY5fCZ
-	+90eZw3ju/wbPK8K1YqsY6xr5Pdpumy8TOEfe0hMXyC3yPLQfxwnnuf+mK/8Qrzzkthtr+9F
-	/t0Lbv0R339+kXT2ZPYllSVpfxsfBD0+8VZUxuKE2PJ3HIx9p6bqtqa6dPzeI9/Fm/PYcmOe
-	EktxRqKhFnNRcSIAeg4lF0gCAAA=
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrGLMWRmVeSWpSXmKPExsXCNUNWR9dmUXKGwZIOC4s569ewWTz5/5vV
-	4vOz18wWh+eeZLW4vGsOm8W9Nf9ZLQ5/fcPkwO6xaVUnm8emT5PYPU7M+M3i8WLzTEaPb7c9
-	PBa/+MDk8XmTXAB7FJdNSmpOZllqkb5dAlfGpf2XGAuuSFTsPbqEpYHxrkgXIyeHhICJxPI1
-	dxhBbDYBDYmDh04yg9giAoIS/Y9nsHYxcnEwC8xllDhy5j1YkbCAt8SZy/eYQGwWAVWJDU0/
-	gRo4OHgFzCVmXJWCmKkp0XAJooRTwELixMxnYK1CQCX3/85nB7F5geafnPmEBcRmFpCXaN46
-	m3kCI88sJKlZSFILGJlWMYpk5pXlJmbmmOoVZ2dU5mVW6CXn525iBIbesto/E3cwfrnsfohR
-	gINRiYfXIC8pQ4g1say4MvcQowQHs5IIL59scoYQb0piZVVqUX58UWlOavEhRmkOFiVxXq/w
-	1AQhgfTEktTs1NSC1CKYLBMHp1QDo/LsG0uFvXTzv5a3Kt67enHD547zS2aVJM1PmNCdrhgw
-	69qqyHB+C4EHeR7bNSZ1xnlfd7k6+eXnktMOhX5y7oynvkQc+y2SdH03x1ThWRp7nquG8Vvw
-	P/40u+zatL5bMmq2b7Mnxa049LHDQIPbirlFd5YQp+pjs4RqhnavsGWftXJclA6oKbEUZyQa
-	ajEXFScCAFC0k705AgAA
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrKLMWRmVeSWpSXmKPExsXC9ZZnka7touQMg5dTLS3mrF/DZvHk/29W
+	i8u75rBZ3Fvzn9Xi8Nc3TA6sHptWdbJ5bPo0id3jxIzfLB4vNs9k9Pi8SS6ANYrLJiU1J7Ms
+	tUjfLoEr49Ovv+wFHfIVa1afYmxgPC/ZxcjJISFgIjFx33omGPvzl4usIDabgIbEwUMnmUFs
+	EQFBif7HM4DiXBzMAnMZJY6cec8IkhAWCJKYeP08UBEHB4uAqsTsx1EgYV4Bc4nrf6cwQszU
+	lGi4dA9sPqeAhcSJmc/A4kJANff/zmeHqBeUODnzCQuIzSwgL9G8dTYzRO8cNokvTeIQtqTE
+	wRU3WCYw8s9C0jILScsCRqZVjEKZeWW5iZk5JnoZlXmZFXrJ+bmbGIGBuaz2T/QOxk8Xgg8x
+	CnAwKvHwzjiZlCHEmlhWXJl7iFGCg1lJhJdPNjlDiDclsbIqtSg/vqg0J7X4EKM0B4uSOK/R
+	t/IUIYH0xJLU7NTUgtQimCwTB6dUA6PMDHeHUGWdnaIhyleW/9hrP2GOH/Pzi99+3uG6nHyP
+	fe++nbMrZ8lufn6q/MK1FMnZh1fa9Udcvf5uqdi5AJtOJ5n9ehprLqb+uOvQqW3kc2PfjEeS
+	9za8L8lX2/rpv+XaO9371gqeqUwyyjK4cK/5yWkNh3X6FX4N+1S6j1VfjAgoOlHzanaTEktx
+	RqKhFnNRcSIAZ+lwLkgCAAA=
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrGLMWRmVeSWpSXmKPExsXCNUNWR9d2UXKGwaIPGhZz1q9hs3jy/zer
+	xednr5ktDs89yWpxedccNot7a/6zWhz++obJgd1j06pONo9Nnyaxe5yY8ZvF48XmmYwe3257
+	eCx+8YHJ4/MmuQD2KC6blNSczLLUIn27BK6MT7/+shd0yFesWX2KsYHxvGQXIyeHhICJxOcv
+	F1lBbDYBDYmDh04yg9giAoIS/Y9nAMW5OJgF5jJKHDnznhEkISwQJDHx+nmgIg4OFgFVidmP
+	o0DCvALmEtf/TmGEmKkp0XDpHhOIzSlgIXFi5jOwuBBQzf2/89kh6gUlTs58wgJiMwvISzRv
+	nc08gZFnFpLULCSpBYxMqxhFMvPKchMzc0z1irMzKvMyK/SS83M3MQJDb1ntn4k7GL9cdj/E
+	KMDBqMTDa5CXlCHEmlhWXJl7iFGCg1lJhJdPNjlDiDclsbIqtSg/vqg0J7X4EKM0B4uSOK9X
+	eGqCkEB6YklqdmpqQWoRTJaJg1OqgfERu657xuXi72cVH97I+d6lsIJp+7X91zzVbVL5nx65
+	wdL7p2qS1t3ylFlTzj3Y/P/nErPTBdvedxdsLV7Ct5uXS+WS/N5PZ7wXNHO+7Vi+hpnP5bOT
+	659VfUr9jP4Hf+x1nffJTnyi4nKxCd7pJuxVK5at33cjKTPiDtP7Jsn5YUL1Lvu3dj1WYinO
+	SDTUYi4qTgQAgu2CGDkCAAA=
 X-CFilter-Loop: Reflected
 
-This patch removes the `node#_start_addr` and `node#_end_addr` knobs,
-and introduces logic for converting numa node id to physical address.
-It only checks whether a numa node is online and calculates the
-start and end addresses of the node. It does not verify whether each
-memory block within the numa node is `usable` or part of `System RAM`,
-as performed by `damo` [1],[2].
+This patch introduces two new konbs for promotion/demotion:
+`migrate_hot` and `migrate_cold`. It receives node ids for migration in
+a comma-separated format as `<src,dst>`. The usage is as follows:
 
-[1]
-https://github.com/damonitor/damo/blob/v2.8.5/src/damo_pa_layout.py#L72-L90
-[2]
-https://github.com/damonitor/damo/blob/v2.8.5/src/damo_pa_layout.py#L92-L10
+    # demote pages from nid 0 to nid 1
+    $ echo 0,1 > /sys/module/mtier/parameters/migrate_cold
+    # promote pages from nid 1 to nid 0
+    $ echo 1,0 > /sys/module/mtier/parameters/migrate_hot
 
-Suggested-by: Honggyu Kim <honggyu.kim@sk.com>
+Susggested-by: Honggyu Kim <honggyu.kim@sk.com>
 Signed-off-by: Yunjeong Mun <yunjeong.mun@sk.com>
 ---
- samples/damon/mtier.c | 44 ++++++++++++++++++++++++++++---------------
- 1 file changed, 29 insertions(+), 15 deletions(-)
+ samples/damon/mtier.c | 68 +++++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 66 insertions(+), 2 deletions(-)
 
 diff --git a/samples/damon/mtier.c b/samples/damon/mtier.c
-index f3220d6e6739..ba6938a89c21 100644
+index ba6938a89c21..55d2edb84d7e 100644
 --- a/samples/damon/mtier.c
 +++ b/samples/damon/mtier.c
-@@ -12,18 +12,6 @@
+@@ -11,6 +11,7 @@
+ #include <linux/init.h>
  #include <linux/kernel.h>
  #include <linux/module.h>
++#include <linux/string.h>
  
--static unsigned long node0_start_addr __read_mostly;
--module_param(node0_start_addr, ulong, 0600);
--
--static unsigned long node0_end_addr __read_mostly;
--module_param(node0_end_addr, ulong, 0600);
--
--static unsigned long node1_start_addr __read_mostly;
--module_param(node1_start_addr, ulong, 0600);
--
--static unsigned long node1_end_addr __read_mostly;
--module_param(node1_end_addr, ulong, 0600);
--
  static unsigned long node0_mem_used_bp __read_mostly = 9970;
  module_param(node0_mem_used_bp, ulong, 0600);
+@@ -18,6 +19,32 @@ module_param(node0_mem_used_bp, ulong, 0600);
+ static unsigned long node0_mem_free_bp __read_mostly = 50;
+ module_param(node0_mem_free_bp, ulong, 0600);
  
-@@ -44,6 +32,28 @@ MODULE_PARM_DESC(enable, "Enable of disable DAMON_SAMPLE_MTIER");
- 
- static struct damon_ctx *ctxs[2];
- 
-+struct region_range {
-+	phys_addr_t start;
-+	phys_addr_t end;
++static int get_migrate_hot(
++		char *val, const struct kernel_param *kp);
++
++static const struct kernel_param_ops migrate_hot_ops = {
++	.set = param_set_charp,
++	.get = get_migrate_hot,
 +};
 +
-+static int numa_info_init(int target_node, struct region_range *range) {
++static char *migrate_hot __read_mostly = "";
++module_param_cb(migrate_hot, &migrate_hot_ops, &migrate_hot, 0600);
++MODULE_PARM_DESC(migrate_hot,
++	"Specify source and destination node id as a comma-seperated pair");
 +
-+	if (!node_online(target_node)) {
-+		pr_err("NUMA node %d is not online\n", target_node);
++static int get_migrate_cold(
++		char *val, const struct kernel_param *kp);
++
++static const struct kernel_param_ops migrate_cold_ops = {
++	.set = param_set_charp,
++	.get = get_migrate_cold,
++};
++
++static char *migrate_cold __read_mostly = "";
++module_param_cb(migrate_cold, &migrate_cold_ops, &migrate_cold, 0600);
++MODULE_PARM_DESC(migrate_cold,
++	"Specify source and destination node id as a comma-seperated pair");
++
+ static int damon_sample_mtier_enable_store(
+ 		const char *val, const struct kernel_param *kp);
+ 
+@@ -37,6 +64,30 @@ struct region_range {
+ 	phys_addr_t end;
+ };
+ 
++static int parse_migrate_node(int *src, int *dst, bool promote) {
++	char *comma;
++	char buf[32];
++
++	if (promote)
++		strscpy(buf, migrate_hot, sizeof(buf));
++	else
++		strscpy(buf, migrate_cold, sizeof(buf));
++
++	comma = strchr(buf, ',');
++	if (!comma)
 +		return -EINVAL;
-+	}
 +
-+	/* TODO: Do we need to support more accurate region range?  */
-+	unsigned long start_pfn = node_start_pfn(target_node);
-+	unsigned long end_pfn   = node_end_pfn(target_node);
++	*comma = '\0';
++	comma++;
 +
-+	range->start = (phys_addr_t)start_pfn << PAGE_SHIFT;
-+	range->end  = (phys_addr_t)end_pfn << PAGE_SHIFT;
++	if (kstrtoint(buf, 0, src))
++		return -EINVAL;
++	if (kstrtoint(comma, 0, dst))
++		return -EINVAL;
 +
 +	return 0;
 +}
 +
- static struct damon_ctx *damon_sample_mtier_build_ctx(bool promote)
- {
- 	struct damon_ctx *ctx;
-@@ -53,6 +63,7 @@ static struct damon_ctx *damon_sample_mtier_build_ctx(bool promote)
- 	struct damos *scheme;
+ static int numa_info_init(int target_node, struct region_range *range) {
+ 
+ 	if (!node_online(target_node)) {
+@@ -64,6 +115,7 @@ static struct damon_ctx *damon_sample_mtier_build_ctx(bool promote)
  	struct damos_quota_goal *quota_goal;
  	struct damos_filter *filter;
-+	struct region_range addr;
+ 	struct region_range addr;
++	int src, dst;
  
  	ctx = damon_new_ctx();
  	if (!ctx)
-@@ -82,9 +93,12 @@ static struct damon_ctx *damon_sample_mtier_build_ctx(bool promote)
- 	if (!target)
+@@ -94,8 +146,10 @@ static struct damon_ctx *damon_sample_mtier_build_ctx(bool promote)
  		goto free_out;
  	damon_add_target(ctx, target);
--	region = damon_new_region(
--			promote ? node1_start_addr : node0_start_addr,
--			promote ? node1_end_addr : node0_end_addr);
-+
-+	int ret = promote ? numa_info_init(1, &addr) : numa_info_init(0, &addr);
-+	if (ret)
+ 
+-	int ret = promote ? numa_info_init(1, &addr) : numa_info_init(0, &addr);
+-	if (ret)
++	if (parse_migrate_node(&src, &dst, promote))
 +		goto free_out;
 +
-+	region = damon_new_region(addr.start, addr.end);
- 	if (!region)
++	if (numa_info_init(src, &addr))
  		goto free_out;
- 	damon_add_region(region, target);
+ 
+ 	region = damon_new_region(addr.start, addr.end);
+@@ -171,6 +225,16 @@ static void damon_sample_mtier_stop(void)
+ 	damon_destroy_ctx(ctxs[1]);
+ }
+ 
++static int get_migrate_hot(char *buf, const struct kernel_param *kp)
++{
++       return scnprintf(buf, PAGE_SIZE, "%s", migrate_hot);
++}
++
++static int get_migrate_cold(char *buf, const struct kernel_param *kp)
++{
++       return scnprintf(buf, PAGE_SIZE, "%s", migrate_cold);
++}
++
+ static int damon_sample_mtier_enable_store(
+ 		const char *val, const struct kernel_param *kp)
+ {
 -- 
 2.34.1
 
