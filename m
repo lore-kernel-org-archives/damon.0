@@ -1,77 +1,45 @@
-Received: from mail-yb1-f177.google.com (mail-yb1-f177.google.com [209.85.219.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8C5226F453
-	for <damon@lists.linux.dev>; Tue,  1 Jul 2025 22:44:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04FD924677B;
+	Tue,  1 Jul 2025 23:45:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751409844; cv=none; b=DqRVpddFfUrjBZ1zijhF+ywWyvoBkemifsRcGxU+VSDvRNqbES+3W8+KKWPrpXOGZMyOOY6eduBfcpKHa8ezz0vPeBEB0UMXOagpZakIlWgKbdfpHhBQaV6kwF8+jEMEEzqkD83hfCpIk0SRO8ZjJAoueorGGNfADOCcjjMaO0I=
+	t=1751413540; cv=none; b=gamFBloZbm6VVwfesBc9qULmAXBmcvv7PibaD5yEH+Us4FIsazy/smXhngT+q0Woz+JlEpPQ0iq9bojFuJn5M/x9a5ZFe9wmvVpCifGvF+XNFY5ctaHJfadDhro2/yEQxmTmyDDya8z7g5zM5Q5FQTpA3wnXtjjC4IPt5kmNFDM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751409844; c=relaxed/simple;
-	bh=7sr/j6pKRahXta2Ds3J7bgr68QpT8C6nQo/PyJxSPSE=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tDwO1HzPbxbNGkLIjsaxcJsEEOlkkbseirwXOYnXEIqMPkwpfY3YSOUHM1lt3r+YKq1IWtdJqIx+1aOcubhPbAn7Tmhv5TJcoeBHYkqX08Wi+uuh75OKwc/yt+JY795RyXil0inTaBTPQFxlu0PTWyUtcs2JWY7zbLDxdfvIqK0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Fpe86/pV; arc=none smtp.client-ip=209.85.219.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1751413540; c=relaxed/simple;
+	bh=XYlsidoRUwVusXwpZreYOH7Z/kPmvluYj/9OEz9LeeQ=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=qXkK5ZM4anBkOS2rFsVJDVc/9D3h/aaJGXLBJpXD4eCqEBkk9Da05k0NGKyItXT+PL+0fStSsEAP/zFPwYsh6IYRKF24jequ1NzVdcX0trUGYD4iPJGUvfkNllV9YPL4uRDX7hM+t2/+i236/hKWNIG5xhNIkoBm2QipfPjSaYQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uSp5UT5g; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Fpe86/pV"
-Received: by mail-yb1-f177.google.com with SMTP id 3f1490d57ef6-e81f311a86fso4904515276.3
-        for <damon@lists.linux.dev>; Tue, 01 Jul 2025 15:44:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751409842; x=1752014642; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=u4FeRd9wXeQwX3S1+5R3UHzHnQcV70Su/Q1eyBq9q7c=;
-        b=Fpe86/pV86oiTivYLV7tov+vtHuVVk6YnogqXSO+ekdDXZRFbMVICuZfECHix888XV
-         YLMBfEgcs0UmMjFFU9ekhiBQoiAGEGhL+puUkiD7Xrb63+cS7VTpcYv+OB2PtMaaFEUl
-         cJf9NhlUHlk2usKXcfAaFbwhEUeXmlX8mKJW8nziWXIqi3lKg5FRpdGThq5zJyW0X52c
-         +OMsCsfyy2klvxlhThqGMFudB6HS4oDktEv0ykbnIpsCX/NP5xMhsp48CA/x29kUsrbk
-         rqvbSJZFFLMDAKHhXSGHQYZPXdgEaZsPX2+jnG9f6PZIV2akOwVCZLWVZNBRkMnZG3Ae
-         9ltQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751409842; x=1752014642;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=u4FeRd9wXeQwX3S1+5R3UHzHnQcV70Su/Q1eyBq9q7c=;
-        b=Dc4XBjmKcfedWCL6UOHvYLoQXM2DaIO+OElrqZMFi5VmJQTUbiph+0Wtr4lH408Dcu
-         8qWSj74WsREim6yKovEsE6zwGLMa2qR0ELT0z1UoA2imVzl321FWF6XAq4ZZ8Bl5mMN7
-         KEa5o4K/HmvzW1sYg5nZr6MbyDngypy/BIOHy/eD/dlX8QnZWolve/tO7DXpEP2jTqzQ
-         xiqCI2f+vApceUPiYmE5IR36Tgj6Seyg/PbSWbBr5XX6G78dbK4amqYYAZfwxTd3+Fdd
-         j6qMUTpSVMVRY4vvWqdg1PMyGqI0wFlPIqQ6vdbfCWFSWE5+xTaOWFQEXBDBrPTGy0bm
-         8yOw==
-X-Forwarded-Encrypted: i=1; AJvYcCWQ/QgCfOmvjcCS67YyL2fCnCDyjuFY9Mk1gn/Kmu2M9lD38bNrl02v+ICxT87Nj/0L6uA/OQ==@lists.linux.dev
-X-Gm-Message-State: AOJu0Yw0boujmp1hZB/qRWq7zdLdk+ZU2kZi5yScuAR3NwSboFmgG5sl
-	+q6fWUZYe0i85hkT4JeJxYn8fOk4ocqUieeiB9mnabbZngZVsRzgP88E
-X-Gm-Gg: ASbGncv2LAnisPp4fZ8iHi3QQCUqJRebefeHrCHBYqPUWU6GqLKK1gQ6xX9EO3ntepl
-	iZR8iXULAsKI+92GovQhvUxKIPg+lQ+RWUDhiUpZGMVOuQ02cXoVSFLf4alwNHuQUuOOFR9CPYV
-	g+GdBXtTig7k+jLUGq0jcvRn8trjVSibr3GiX5ZOrneSOWrUJgaiczBAv49HhvhUwWYC9WCVeDS
-	0C/x0fsroWy7okX8kMSmcgjnad7tHDdCN08TtbGkpxn1zWETAITHlfzdg+oTVjD0Fsq+eTO9T9/
-	3uYmJHy+BjDe9tYeNbe+abgPhk+89WzSfbFX5AcIIb/ddQ/tnp1lo0m1FK2NTiZR7x1VLeweY61
-	0BduKiWazc2FBXNT/gg==
-X-Google-Smtp-Source: AGHT+IHBPTQW25dLkI4nDbmWAJnJmoVAk9KwGoxI3zHd26yMzfgQe/ATjFFJf6m4R4d7cp8PptyOOQ==
-X-Received: by 2002:a05:690c:6f83:b0:714:256:7917 with SMTP id 00721157ae682-7164d527940mr7001437b3.26.1751409841578;
-        Tue, 01 Jul 2025 15:44:01 -0700 (PDT)
-Received: from bijan-laptop.attlocal.net ([2600:1700:680e:c000:bdbc:6e11:c9be:13a3])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-71515c0464asm22189517b3.42.2025.07.01.15.43.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 01 Jul 2025 15:44:01 -0700 (PDT)
-From: Bijan Tabatabai <bijan311@gmail.com>
-To: SeongJae Park <sj@kernel.org>
-Cc: Bijan Tabatabai <bijan311@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Bijan Tabatabai <bijantabatab@micron.com>,
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uSp5UT5g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D5FDC4CEEB;
+	Tue,  1 Jul 2025 23:45:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1751413539;
+	bh=XYlsidoRUwVusXwpZreYOH7Z/kPmvluYj/9OEz9LeeQ=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=uSp5UT5gL9TnmeHH1+LrZoqazZ9rGVw9BHXs3TdgoLyPujPSsh/bPyBYqqXjZ5oCI
+	 saTqGr6v4WUF5Q+6STCehZBSltcKYW92W73iupdtW3rCPaMU4Ghkn6iIrXxZ74LH/A
+	 /Wg81Oh2KCcsGcq1BQWTdxouHsiJSyJu/wHvGId0gczvEsZOttahMYvVhhqkot7tmR
+	 R2UglDoPFtZ8HVgCG1p8FazKt2i7ic//dN211lBilTU0r+DfXuRa9z2Xgg+PQd5Kpe
+	 inHO+aFxX5ww+T7//dkOciWESTGgnpLjY+NS/0GtRPZq7M7oxPjm/VeySoas8SvjPK
+	 lX9fFnCoLeetg==
+From: SeongJae Park <sj@kernel.org>
+To: Yunjeong Mun <yunjeong.mun@sk.com>
+Cc: SeongJae Park <sj@kernel.org>,
+	akpm@linux-foundation.org,
 	damon@lists.linux.dev,
-	kernel-team@meta.com,
+	linux-mm@kvack.org,
 	linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org
-Subject: Re: [RFC PATCH 1/4] mm/damon: add struct damos_migrate_dest
-Date: Tue,  1 Jul 2025 17:43:30 -0500
-Message-ID: <20250701224353.9062-1-bijan311@gmail.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250621173131.23917-2-sj@kernel.org>
+	kernel_team@skhynix.com,
+	honggyu.kim@sk.com
+Subject: Re: [RFC PATCH 0/2] samples/damon: improve expression of target region in mtier
+Date: Tue,  1 Jul 2025 16:45:37 -0700
+Message-Id: <20250701234537.57216-1-sj@kernel.org>
+X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20250701085417.1734-1-yunjeong.mun@sk.com>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -81,49 +49,73 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Sat, 21 Jun 2025 10:31:28 -0700 SeongJae Park <sj@kernel.org> wrote:
+Hello Yunjeong,
 
-> Introduce a new struct, namely damos_migrate_dest, for specifying
-> multiple DAMOS' migration destination nodes and their weights.
-> 
-> Signed-off-by: SeongJae Park <sj@kernel.org>
-> ---
->  include/linux/damon.h | 16 ++++++++++++++++
->  1 file changed, 16 insertions(+)
-> 
-> diff --git a/include/linux/damon.h b/include/linux/damon.h
-> index bb58e36f019e..d60addd0b7c8 100644
-> --- a/include/linux/damon.h
-> +++ b/include/linux/damon.h
-> @@ -447,6 +447,22 @@ struct damos_access_pattern {
->  	unsigned int max_age_region;
->  };
->  
-> +/**
-> + * struct damos_migrate_dest - Migration destination nodes and their weights.
 
-Nit: Can this be renamed to damos_migrate_dests?
-I think plural fits better because it stores a list of destinations.
+On Tue,  1 Jul 2025 17:54:15 +0900 Yunjeong Mun <yunjeong.mun@sk.com> wrote:
+
+> `mtier` module is a static module for migrating pages using
+> damos_action: DAMOS_MIGRATE_HOT and DAMOS_MIGRATE_COLD. Currently,
+> this module is built on the assumption that the system has two NUMA
+> nodes, where node0 is the fast-tier and node1 is slow-tier. This
+> patchset aims to make the expression of the migration target region
+> more user-friendly by :
+
+Thank you for your continued patches!  Let me clarify my humble opinions about
+what is the goal of mtier, and what improvements it needs first, though.
+
+mtier is not intended to be used as a solution for real world usages but a
+sample module for helping developers understand how they can utilize DAMON by
+calling its API functions.  If someone is looking for a real world DAMON-based
+memory tiering solution, I think it should be under mm/damon/ directory like
+DAMON_RECLAIM, not under samples/damon/ directory.
+
+I hence think we should more focus on making mtier provides good example usages
+of DAMON API functions, more than its user-space usages.  We could of course
+improve its user-space interface if it helps experimental run of it for better
+understanding of the code and DAMON API usages.  But in my opinion, it should
+avoid a case that it result in adding more complicated code that makes reading
+of the example difficult.
+
+Please let me know if you have different opinions and I'm missing something.
+
+From that perspective, I think the assumption of the fast node0 and the slow
+node1 is not a particular problem but helps keeping the sample code easier to
+read.  Of course it has rooms to improve, like having more documentation or
+better names and cleaner code.
+
+> 1) allowing users to specify just the node id,
+> instead of physical address, and 2) adding two new knobs.
+> 
+> Patch 1 removes four knobs, `node#_start_addr` and `node#_end_addr`, which
+> previously required users to input the physical address of the region.
+> It introduces logic to conver NUMA node ids to physical address.
+
+I think this is good change.  But even though mtier is a sample module, I'd
+like to keep the old usages not broken if possible.  I'll leave more comments
+on it as a reply to the patch.
+
+> 
+> Patch 2 introduces two new knobs `migrate_hot` and `migrate_cold`, which
+> specify the source and destination node ids in a comma-separated format.
+
+As mentioned abovely, I think the assumption of the fast node0 and the slow
+node1 is particularly bad, so I'm sorry but I'm not really exciting with this
+change.  I'll leave more comments as a reply to the patch.
+
+> 
+> Yunjeong Mun (2):
+>   samples/damon: convert node id to physical address
+>   samples/damon: add `migrate_hot` and `migrate_cold` knobs
+> 
+>  samples/damon/mtier.c | 108 ++++++++++++++++++++++++++++++++++++------
+>  1 file changed, 93 insertions(+), 15 deletions(-)
+> 
+> 
+> base-commit: db16fe88cdf83a1e7fdf75de282025b6ad61d08f
+> -- 
+> 2.34.1
+
 
 Thanks,
-Bijan
-
-> + * @node_id_arr:	Array of migration destination node ids.
-> + * @weight_arr:		Array of migration weights for @node_id_arr.
-> + * @nr_dests:		Length of the @node_id_arr and @weight_arr arrays.
-> + *
-> + * @node_id_arr is an array of the ids of migration destination nodes.
-> + * @weight_arr is an array of the weights for those.  The weights in
-> + * @weight_arr are for nodes in @node_id_arr of same array index.
-> + */
-> +struct damos_migrate_dest {
-> +	unsigned int *node_id_arr;
-> +	unsigned int *weight_arr;
-> +	size_t nr_dests;
-> +};
-> +
->  /**
->   * struct damos - Represents a Data Access Monitoring-based Operation Scheme.
->   * @pattern:		Access pattern of target regions.
-> -- 
-> 2.39.5
+SJ
