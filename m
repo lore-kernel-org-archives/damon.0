@@ -1,46 +1,28 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E16A6142E73;
-	Tue,  1 Jul 2025 23:54:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+Received: from invmail4.hynix.com (exvmail4.hynix.com [166.125.252.92])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 620BD8F5C
+	for <damon@lists.linux.dev>; Wed,  2 Jul 2025 00:02:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=166.125.252.92
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751414051; cv=none; b=JNrqeZzfBBDEIsNwPufnwzDMXv5A8Fyj6rOaBCBlrFOEWcuEyVngdXPTALbXC/p+lcKxZCRi7+ES8U7d712BoQbzdt8HE46BO5kaO6eKzcHk9gUfSDO+BjF5Nx9Y5fk5i5vRFRg+igbq7D2hhILAYf8bsiBSURk8JTWd/2aBa3U=
+	t=1751414535; cv=none; b=HXpSSUU7j/G0RAv+eYh8a3v+1K3E5vNjQPpqHrScpR6lcGfHZ3wNOetTvgtML/ACbn2Uaef3dkWJRSg9EyCmcH/vfmEFLt80/fCD6V11RPtTh2xT30GeAl3cUVBr4yPUE1ITNR/Phvealbu38VlUFiAdPYDaKglmcn0Ys/IswQM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751414051; c=relaxed/simple;
-	bh=mbFhslX3DVOk0S3Kn1dLLJTRL/+V1bf1gxONJ/aQqy4=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=Yf0BTnkdo9QJRJ3q3Qh3ZWZovUC/DaAgvGG0rmpIQFQHcQJLiXs4e5ApZssJnUmdaLFHiHEpGOD4ITVvI40OTF2X3WQpaGlzSytLfEKh8337/vTjFXHziQfMIz91hPYyxp79vTAD7SlBMEKkN4QaFXmIzbKXa9Z8fXcKYSTiV2k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AMeXLc9C; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AMeXLc9C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 559B6C4CEEB;
-	Tue,  1 Jul 2025 23:54:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1751414050;
-	bh=mbFhslX3DVOk0S3Kn1dLLJTRL/+V1bf1gxONJ/aQqy4=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AMeXLc9CCOO8jp0Dy15eQaB5zHy3dytlFXsMVCQ9uwlEwJKJ9Q6NMuvC+mOgXLzA6
-	 gRr964c4PlkIFgsfL+K3Bx2OQGKkqduaVSEEs1nui7PXJ57mAIHsBnQio4WP3UA5UW
-	 mKZ9950aMjT8UZKJ4HhB0oxQQxyoylLedYDkIwaOflDNnKvXE/GkAEm2OR6HnBnZxb
-	 Bq3qQ+o53sJ1cKQJBO6YDeOIZxc0VTvyYHTJvySLZAMvdb7aPmnMw5l2uS9VjOIdHq
-	 uI9mYKtU4N/f13lQoj1DF+530c1nAJBiNKL1HBtiRLBrlIY3E2DbFc7dAkA3TInfQK
-	 BAI6oMzRMwUIQ==
-From: SeongJae Park <sj@kernel.org>
-To: Yunjeong Mun <yunjeong.mun@sk.com>
-Cc: SeongJae Park <sj@kernel.org>,
-	akpm@linux-foundation.org,
-	damon@lists.linux.dev,
+	s=arc-20240116; t=1751414535; c=relaxed/simple;
+	bh=0oqF02reaGTtCF3C6hZEKkRUyeG+j0FLn75jiMQ58gU=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=BblXOPwsEwtH9ypvDdmQxX++TMy6xrcq1/Q49+4WxWgXiYQg10q3ZZkjzOUTUwr8C1E7KgKipHyaUOfEEV6B9NKHyUWosIS0eLHRlywjoKyOpg/id+pCyX4U3XrDP0o/2n0ojHMzec3Hd2mfVLmckLYAkZGyuzr0uPR+2gB4fEo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sk.com; spf=pass smtp.mailfrom=sk.com; arc=none smtp.client-ip=166.125.252.92
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sk.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sk.com
+X-AuditID: a67dfc5b-681ff7000002311f-9c-68647700caf5
+From: Honggyu Kim <honggyu.kim@sk.com>
+To: SeongJae Park <sj@kernel.org>,
+	damon@lists.linux.dev
+Cc: Andrew Morton <akpm@linux-foundation.org>,
 	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org,
 	kernel_team@skhynix.com,
-	honggyu.kim@sk.com
-Subject: Re: [RFC PATCH 1/2] samples/damon: convert node id to physical address
-Date: Tue,  1 Jul 2025 16:54:07 -0700
-Message-Id: <20250701235407.57420-1-sj@kernel.org>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250701085417.1734-2-yunjeong.mun@sk.com>
-References: 
+	Honggyu Kim <honggyu.kim@sk.com>
+Subject: [PATCH v3 0/4] mm/damon: fix divide by zero and its samples
+Date: Wed,  2 Jul 2025 09:02:00 +0900
+Message-ID: <20250702000205.1921-1-honggyu.kim@sk.com>
+X-Mailer: git-send-email 2.43.0.windows.1
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -48,131 +30,49 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprMLMWRmVeSWpSXmKPExsXC9ZZnoS5DeUqGwcenEhZz1q9hs3jy/zer
+	xb01/1ktDn99w+TA4rFpVSebx6ZPk9g9Tsz4zeLxYvNMxgCWKC6blNSczLLUIn27BK6M3qOn
+	mAva2Cp+felgaWB8xdLFyMkhIWAicXbhc3YYe9nBO0wgNpuAmsSVl5OAbA4OEQEriWk7YrsY
+	uTiYBZoYJTb+6mQDqREWcJF41nmLEaSGRUBVYs0lBZAwr4CZxPGH/xkhRmpKPN7+kx0iLihx
+	cuYTsLXMAvISzVtnM0PUvGWVWHpEB8KWlDi44gbLBEbeWUhaZiFpWcDItIpRKDOvLDcxM8dE
+	L6MyL7NCLzk/dxMjMKiW1f6J3sH46ULwIUYBDkYlHt4TV5IzhFgTy4orcw8xSnAwK4nw8skC
+	hXhTEiurUovy44tKc1KLDzFKc7AoifMafStPERJITyxJzU5NLUgtgskycXBKNTDOnrp7hnNV
+	K1+5XLHbBufIS8f+3d5snr3I7+Is/xYmhqf7Xp/c+OjCQqYLBVsWbqpon7jm5Z0/j65/77/Z
+	PVd/8tnaO2E69c7VAnHrQ5b9XjXH4UH8BZ6tNxSVJFbnLd1/WvqT6GpuxX3/ZEw+iP7bej1v
+	GS8Th6w9S5GaiXbNiZ+qPPvn50Q4KbEUZyQaajEXFScCAG5/2cImAgAA
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFmphluLIzCtJLcpLzFFi42LhmqGlp8tQnpJhsKhV2GLO+jVsFk/+/2a1
+	+PzsNbPF4bknWS3urfnPanH46xsmBzaPTas6gcSnSeweJ2b8ZvF4sXkmo8e32x4ei198YApg
+	i+KySUnNySxLLdK3S+DK6D16irmgja3i15cOlgbGVyxdjJwcEgImEssO3mECsdkE1CSuvJwE
+	ZHNwiAhYSUzbEdvFyMXBLNDEKLHxVycbSI2wgIvEs85bjCA1LAKqEmsuKYCEeQXMJI4//M8I
+	MVJT4vH2n+wQcUGJkzOfgK1iFpCXaN46m3kCI9csJKlZSFILGJlWMYpk5pXlJmbmmOoVZ2dU
+	5mVW6CXn525iBIbNsto/E3cwfrnsfohRgINRiYf3wNnkDCHWxLLiytxDjBIczEoivHyyQCHe
+	lMTKqtSi/Pii0pzU4kOM0hwsSuK8XuGpCUIC6YklqdmpqQWpRTBZJg5OqQbGBRlW9nwcjUl5
+	CQqtuzYvED/ZXLZDLO5GhlXWJvH/H486LdrQ+H9Zx97oPrFlGyYKPpj8YY3bkWV2FT3P5aaf
+	N8zsure8e3vtnRc6MR+WmnnwXHDjnaH2IO6kp1HLmz6L/DfrZrSeuqH4uVV8bf65fZ91wuYz
+	Mr3YmVRxsN5kQb3EPv+NysbJSizFGYmGWsxFxYkA0wOLJhcCAAA=
+X-CFilter-Loop: Reflected
 
-Hi Yunjeong,
+This includes damon fixes and its samples to make it safer when damon
+sample start fails.
 
-On Tue,  1 Jul 2025 17:54:16 +0900 Yunjeong Mun <yunjeong.mun@sk.com> wrote:
+It includes the following changes.
+- fix unexpected divide by zero crash for zero size regions
+- fix bugs for damon samples in case of start failures
 
-> This patch removes the `node#_start_addr` and `node#_end_addr` knobs,
-> and introduces logic for converting numa node id to physical address.
-> It only checks whether a numa node is online and calculates the
-> start and end addresses of the node. It does not verify whether each
-> memory block within the numa node is `usable` or part of `System RAM`,
-> as performed by `damo` [1],[2].
+Honggyu Kim (4):
+  samples/damon: fix damon sample prcl for start failure
+  samples/damon: fix damon sample wsse for start failure
+  samples/damon: fix damon sample mtier for start failure
+  mm/damon: fix divide by zero in damon_get_intervals_score()
 
-This is just a sample module, but I'd like to avoid making unnecessary
-user-breaking changes.  How about keeping the existing knobs but adding yet
-another knob for the automatic detection, say, 'detect_node_addresses'?
-
-> 
-> [1]
-> https://github.com/damonitor/damo/blob/v2.8.5/src/damo_pa_layout.py#L72-L90
-> [2]
-> https://github.com/damonitor/damo/blob/v2.8.5/src/damo_pa_layout.py#L92-L10
-> 
-> Suggested-by: Honggyu Kim <honggyu.kim@sk.com>
-> Signed-off-by: Yunjeong Mun <yunjeong.mun@sk.com>
-> ---
->  samples/damon/mtier.c | 44 ++++++++++++++++++++++++++++---------------
->  1 file changed, 29 insertions(+), 15 deletions(-)
-> 
-> diff --git a/samples/damon/mtier.c b/samples/damon/mtier.c
-> index f3220d6e6739..ba6938a89c21 100644
-> --- a/samples/damon/mtier.c
-> +++ b/samples/damon/mtier.c
-> @@ -12,18 +12,6 @@
->  #include <linux/kernel.h>
->  #include <linux/module.h>
->  
-> -static unsigned long node0_start_addr __read_mostly;
-> -module_param(node0_start_addr, ulong, 0600);
-> -
-> -static unsigned long node0_end_addr __read_mostly;
-> -module_param(node0_end_addr, ulong, 0600);
-> -
-> -static unsigned long node1_start_addr __read_mostly;
-> -module_param(node1_start_addr, ulong, 0600);
-> -
-> -static unsigned long node1_end_addr __read_mostly;
-> -module_param(node1_end_addr, ulong, 0600);
-> -
->  static unsigned long node0_mem_used_bp __read_mostly = 9970;
->  module_param(node0_mem_used_bp, ulong, 0600);
->  
-> @@ -44,6 +32,28 @@ MODULE_PARM_DESC(enable, "Enable of disable DAMON_SAMPLE_MTIER");
->  
->  static struct damon_ctx *ctxs[2];
->  
-> +struct region_range {
-> +	phys_addr_t start;
-> +	phys_addr_t end;
-> +};
-> +
-> +static int numa_info_init(int target_node, struct region_range *range) {
-> +
-
-checkpatch.pl complaints as below.
-
-ERROR: open brace '{' following function definitions go on the next line
-#82: FILE: samples/damon/mtier.c:40:
-+static int numa_info_init(int target_node, struct region_range *range) {
-
-> +	if (!node_online(target_node)) {
-> +		pr_err("NUMA node %d is not online\n", target_node);
-> +		return -EINVAL;
-> +	}
-> +
-> +	/* TODO: Do we need to support more accurate region range?  */
-> +	unsigned long start_pfn = node_start_pfn(target_node);
-> +	unsigned long end_pfn   = node_end_pfn(target_node);
-> +
-> +	range->start = (phys_addr_t)start_pfn << PAGE_SHIFT;
-> +	range->end  = (phys_addr_t)end_pfn << PAGE_SHIFT;
-
-Let's use PHYS_PFN() instead.
-
-> +
-> +	return 0;
-> +}
-> +
->  static struct damon_ctx *damon_sample_mtier_build_ctx(bool promote)
->  {
->  	struct damon_ctx *ctx;
-> @@ -53,6 +63,7 @@ static struct damon_ctx *damon_sample_mtier_build_ctx(bool promote)
->  	struct damos *scheme;
->  	struct damos_quota_goal *quota_goal;
->  	struct damos_filter *filter;
-> +	struct region_range addr;
->  
->  	ctx = damon_new_ctx();
->  	if (!ctx)
-> @@ -82,9 +93,12 @@ static struct damon_ctx *damon_sample_mtier_build_ctx(bool promote)
->  	if (!target)
->  		goto free_out;
->  	damon_add_target(ctx, target);
-> -	region = damon_new_region(
-> -			promote ? node1_start_addr : node0_start_addr,
-> -			promote ? node1_end_addr : node0_end_addr);
-> +
-> +	int ret = promote ? numa_info_init(1, &addr) : numa_info_init(0, &addr);
-> +	if (ret)
-> +		goto free_out;
-
-Yet another checkpatch.pl complain.
-
-WARNING: Missing a blank line after declarations
-#119: FILE: samples/damon/mtier.c:98:
-+       int ret = promote ? numa_info_init(1, &addr) : numa_info_init(0, &addr);
-+       if (ret)
-
-> +
-> +	region = damon_new_region(addr.start, addr.end);
->  	if (!region)
->  		goto free_out;
->  	damon_add_region(region, target);
-> -- 
-> 2.34.1
+ mm/damon/core.c       | 1 +
+ samples/damon/mtier.c | 8 ++++++--
+ samples/damon/prcl.c  | 8 ++++++--
+ samples/damon/wsse.c  | 8 ++++++--
+ 4 files changed, 19 insertions(+), 6 deletions(-)
 
 
-Thanks,
-SJ
+base-commit: d0b3b7b22dfa1f4b515fd3a295b3fd958f9e81af
+-- 
+2.34.1
+
