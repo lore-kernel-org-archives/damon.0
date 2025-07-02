@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B7FB230BDB;
-	Wed,  2 Jul 2025 05:16:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66626232369;
+	Wed,  2 Jul 2025 05:16:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751433370; cv=none; b=JS+KBCrj6Qppm19ubAhNplYyM9XyADCLma7FJtiTlROVrS9zrKpiurSLCwxbRVDQypUZrRDUnpct5Kzx/rOV7MDQKJ/rqqyo2hpVA20ehixIzntauB79YzBSZyV012hblqKJ6MrLtx4K4hssaGNWZaNUEdhYAtYvBqqCLUVx4bU=
+	t=1751433371; cv=none; b=i1T0PbbC9rQMf1r1TD05fL7U/jY/DQgI5s5LvictNXoBGQKQ6jBhvq1XJsNFRi/azACN5U7u9H7GoMseQgtOCLqPQ46JDL+OKBl92uAEsYH/wR/jrs88TJQtVu/23Fl4JgxH04F07qO92B+OK0keHFniNXdWSIm7s/NpfwDkjSg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751433370; c=relaxed/simple;
-	bh=kjOKLngDzUss3QPXY3L0jEKHeiRx/Y/BDT/FqW73VxA=;
+	s=arc-20240116; t=1751433371; c=relaxed/simple;
+	bh=eAY5XLYA4mfpfPr9vGq4U3HvZbAGIjijytVFdcL31aI=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=pRaSrtfGvuQXnyDjiOkeXHsGOeSID9C3SmlUSo1nqvX+bUBGyDV4umpJrXX2PNpdpDzHfyfmJNZJdYaWGYsLTYZTRYd5NeaDgERRr941f5MM1VeEIQ/dJN1ZPN8PtxpvxAL3snCkEh18s6DXkR7DF7roWb5ZBG2K3DkuRVfJH10=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hB/aWu0P; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bw6toOiDa8WnEPQOnCwIIJEtnGw94yeqZuqZqsPwSXuGa5aJl9R1IQncrptVZqU90vCMMe0KEHwLBP3TrudnwxFD9vzBwM3txcB2OWQbny+rqkOO/t/k79pDS+FGpnOnFZEIppm3ZTfjZGwajwftSyyE676pDKdNvR5CLirGOEk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MjUBoxZk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hB/aWu0P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 619ECC4CEEF;
-	Wed,  2 Jul 2025 05:16:09 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MjUBoxZk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B860FC4CEEE;
+	Wed,  2 Jul 2025 05:16:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1751433369;
-	bh=kjOKLngDzUss3QPXY3L0jEKHeiRx/Y/BDT/FqW73VxA=;
+	s=k20201202; t=1751433370;
+	bh=eAY5XLYA4mfpfPr9vGq4U3HvZbAGIjijytVFdcL31aI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hB/aWu0PDtilZ2yyBwYjUwd8F6AcCItRGZx79SiTF12/UpeiXhimy2oNRR2TPl3lH
-	 qP62xHGhPKmjEN1oIP2COfX3wQ1hi/cS3x9P31iTY67V05+3XDNBSAozEas5tNEdAA
-	 eCbeIBe5PvbuWKit7MvY8AqpQdk1e3BPJqeeawAbV08uuTY2YJVMRLETQn1I+yy8Qf
-	 qd5SetjmmacHUL1vAqDqkSZJMzp0Ug4k7Gv1F9iXJi2hXaVEYbgCTVDh6dxV07laCB
-	 zyQnP85hfLSfGkIGCuRv+WhzKPdjfbc7Xai00r6TZjLQdXMxC3Kr9t8T/vMmB8wtp6
-	 9/BIgu4DWjG3A==
+	b=MjUBoxZk6Rms4kw/kYxkdd6eKSFU9bLTPMv0wpNzsiwC/Bp14SfV1NKKdPJ8WpLrh
+	 4BioumljZFgdc9qTxz+VREa6wLgZg1hfllVZhSD6s2Dzz0c2F1qS1qmlqffijyHfnZ
+	 /ZgaNkP3Xr03ssK20ZdNBo3kkhnyVXRGX+khYYJgCvW9WnHGcHlRJOPvAzvEurJyRN
+	 b1bYq7oQqJebeWIjMTyZKWuPvxwBpFGhF5LtbB9JOkNC56fnWVL1486wmfw6R2WWTI
+	 Qm1EHmh73ovoF+e5LxiWW2dqmO1zwoWYtScnpscxZi3hcfK3+9fp0MSPcjlCKy8JLo
+	 zyXD64JeNAJGg==
 From: SeongJae Park <sj@kernel.org>
 To: 
 Cc: SeongJae Park <sj@kernel.org>,
@@ -35,9 +35,9 @@ Cc: SeongJae Park <sj@kernel.org>,
 	kernel-team@meta.com,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH v2 3/6] mm/damon/sysfs-schemes: implement DAMOS action destinations directory
-Date: Tue,  1 Jul 2025 22:15:55 -0700
-Message-Id: <20250702051558.54138-4-sj@kernel.org>
+Subject: [RFC PATCH v2 4/6] mm/damon/sysfs-schemes: set damos->migrate_dest
+Date: Tue,  1 Jul 2025 22:15:56 -0700
+Message-Id: <20250702051558.54138-5-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250702051558.54138-1-sj@kernel.org>
 References: <20250702051558.54138-1-sj@kernel.org>
@@ -49,293 +49,59 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-DAMOS_MIGRATE_{HOT,COLD} can have multiple action destinations and their
-weights.  Implement sysfs directory named 'dests' under each scheme
-directory to let DAMON sysfs ABI users utilize the feature.  The
-interface is similar to other multiple parameters directory like
-kdamonds or filters.  The directory contains only nr_dests file
-initially.  Writing a number of desired destinations to nr_dests creates
-directories of the number.  Each of the created directories has two
-files named id and weight.  Users can then write the destination's
-identifier (node id in case of DAMOS_MIGRATE_*) and weight to the files.
+Pass user-specified multiple DAMOS action destinations and their weights
+to DAMON core API, so that user requests can really work.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- mm/damon/sysfs-schemes.c | 225 ++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 224 insertions(+), 1 deletion(-)
+ mm/damon/sysfs-schemes.c | 28 ++++++++++++++++++++++++++++
+ 1 file changed, 28 insertions(+)
 
 diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
-index 601360e9b521..b9434cdaacdc 100644
+index b9434cdaacdc..507ca7708078 100644
 --- a/mm/damon/sysfs-schemes.c
 +++ b/mm/damon/sysfs-schemes.c
-@@ -1655,6 +1655,204 @@ static const struct kobj_type damon_sysfs_access_pattern_ktype = {
- 	.default_groups = damon_sysfs_access_pattern_groups,
- };
+@@ -2576,6 +2576,29 @@ void damos_sysfs_update_effective_quotas(
+ 	}
+ }
  
-+/*
-+ * dest (action destination) directory
-+ */
-+
-+struct damos_sysfs_dest {
-+	struct kobject kobj;
-+	unsigned int id;
-+	unsigned int weight;
-+};
-+
-+static struct damos_sysfs_dest *damos_sysfs_dest_alloc(void)
++static int damos_sysfs_add_migrate_dest(struct damos *scheme,
++		struct damos_sysfs_dests *sysfs_dests)
 +{
-+	return kzalloc(sizeof(struct damos_sysfs_dest), GFP_KERNEL);
-+}
-+
-+static ssize_t id_show(
-+		struct kobject *kobj, struct kobj_attribute *attr, char *buf)
-+{
-+	struct damos_sysfs_dest *dest = container_of(kobj,
-+			struct damos_sysfs_dest, kobj);
-+
-+	return sysfs_emit(buf, "%u\n", dest->id);
-+}
-+
-+static ssize_t id_store(struct kobject *kobj,
-+		struct kobj_attribute *attr, const char *buf, size_t count)
-+{
-+	struct damos_sysfs_dest *dest = container_of(kobj,
-+			struct damos_sysfs_dest, kobj);
-+	int err = kstrtouint(buf, 0, &dest->id);
-+
-+	return err ? err : count;
-+}
-+
-+static ssize_t weight_show(
-+		struct kobject *kobj, struct kobj_attribute *attr, char *buf)
-+{
-+	struct damos_sysfs_dest *dest = container_of(kobj,
-+			struct damos_sysfs_dest, kobj);
-+
-+	return sysfs_emit(buf, "%u\n", dest->weight);
-+}
-+
-+static ssize_t weight_store(struct kobject *kobj,
-+		struct kobj_attribute *attr, const char *buf, size_t count)
-+{
-+	struct damos_sysfs_dest *dest = container_of(kobj,
-+			struct damos_sysfs_dest, kobj);
-+	int err = kstrtouint(buf, 0, &dest->weight);
-+
-+	return err ? err : count;
-+}
-+
-+static void damos_sysfs_dest_release(struct kobject *kobj)
-+{
-+	struct damos_sysfs_dest *dest = container_of(kobj,
-+			struct damos_sysfs_dest, kobj);
-+	kfree(dest);
-+}
-+
-+static struct kobj_attribute damos_sysfs_dest_id_attr =
-+		__ATTR_RW_MODE(id, 0600);
-+
-+static struct kobj_attribute damos_sysfs_dest_weight_attr =
-+		__ATTR_RW_MODE(weight, 0600);
-+
-+static struct attribute *damos_sysfs_dest_attrs[] = {
-+	&damos_sysfs_dest_id_attr.attr,
-+	&damos_sysfs_dest_weight_attr.attr,
-+	NULL,
-+};
-+ATTRIBUTE_GROUPS(damos_sysfs_dest);
-+
-+static const struct kobj_type damos_sysfs_dest_ktype = {
-+	.release = damos_sysfs_dest_release,
-+	.sysfs_ops = &kobj_sysfs_ops,
-+	.default_groups = damos_sysfs_dest_groups,
-+};
-+
-+/*
-+ * dests (action destinations) directory
-+ */
-+
-+struct damos_sysfs_dests {
-+	struct kobject kobj;
-+	struct damos_sysfs_dest **dests_arr;
-+	int nr;
-+};
-+
-+static struct damos_sysfs_dests *
-+damos_sysfs_dests_alloc(void)
-+{
-+	return kzalloc(sizeof(struct damos_sysfs_dests), GFP_KERNEL);
-+}
-+
-+static void damos_sysfs_dests_rm_dirs(
-+		struct damos_sysfs_dests *dests)
-+{
-+	struct damos_sysfs_dest **dests_arr = dests->dests_arr;
++	struct damos_migrate_dest *dest = &scheme->migrate_dest;
 +	int i;
 +
-+	for (i = 0; i < dests->nr; i++)
-+		kobject_put(&dests_arr[i]->kobj);
-+	dests->nr = 0;
-+	kfree(dests_arr);
-+	dests->dests_arr = NULL;
-+}
-+
-+static int damos_sysfs_dests_add_dirs(
-+		struct damos_sysfs_dests *dests, int nr_dests)
-+{
-+	struct damos_sysfs_dest **dests_arr, *dest;
-+	int err, i;
-+
-+	damos_sysfs_dests_rm_dirs(dests);
-+	if (!nr_dests)
-+		return 0;
-+
-+	dests_arr = kmalloc_array(nr_dests, sizeof(*dests_arr),
-+			GFP_KERNEL | __GFP_NOWARN);
-+	if (!dests_arr)
++	dest->node_id_arr = kmalloc_array(sysfs_dests->nr,
++			sizeof(*dest->node_id_arr), GFP_KERNEL);
++	if (!dest->node_id_arr)
 +		return -ENOMEM;
-+	dests->dests_arr = dests_arr;
-+
-+	for (i = 0; i < nr_dests; i++) {
-+		dest = damos_sysfs_dest_alloc();
-+		if (!dest) {
-+			damos_sysfs_dests_rm_dirs(dests);
-+			return -ENOMEM;
-+		}
-+
-+		err = kobject_init_and_add(&dest->kobj,
-+				&damos_sysfs_dest_ktype,
-+				&dests->kobj, "%d", i);
-+		if (err) {
-+			kobject_put(&dest->kobj);
-+			damos_sysfs_dests_rm_dirs(dests);
-+			return err;
-+		}
-+
-+		dests_arr[i] = dest;
-+		dests->nr++;
++	dest->weight_arr = kmalloc_array(sysfs_dests->nr,
++			sizeof(*dest->weight_arr), GFP_KERNEL);
++	if (!dest->weight_arr)
++		/* ->node_id_arr will be freed by scheme destruction */
++		return -ENOMEM;
++	for (i = 0; i < sysfs_dests->nr; i++) {
++		dest->node_id_arr[i] = sysfs_dests->dests_arr[i]->id;
++		dest->weight_arr[i] = sysfs_dests->dests_arr[i]->weight;
 +	}
++	dest->nr_dests = sysfs_dests->nr;
 +	return 0;
 +}
 +
-+static ssize_t nr_dests_show(struct kobject *kobj,
-+		struct kobj_attribute *attr, char *buf)
-+{
-+	struct damos_sysfs_dests *dests = container_of(kobj,
-+			struct damos_sysfs_dests, kobj);
-+
-+	return sysfs_emit(buf, "%d\n", dests->nr);
-+}
-+
-+static ssize_t nr_dests_store(struct kobject *kobj,
-+		struct kobj_attribute *attr, const char *buf, size_t count)
-+{
-+	struct damos_sysfs_dests *dests;
-+	int nr, err = kstrtoint(buf, 0, &nr);
-+
-+	if (err)
-+		return err;
-+	if (nr < 0)
-+		return -EINVAL;
-+
-+	dests = container_of(kobj, struct damos_sysfs_dests, kobj);
-+
-+	if (!mutex_trylock(&damon_sysfs_lock))
-+		return -EBUSY;
-+	err = damos_sysfs_dests_add_dirs(dests, nr);
-+	mutex_unlock(&damon_sysfs_lock);
-+	if (err)
-+		return err;
-+
-+	return count;
-+}
-+
-+static void damos_sysfs_dests_release(struct kobject *kobj)
-+{
-+	kfree(container_of(kobj, struct damos_sysfs_dests, kobj));
-+}
-+
-+static struct kobj_attribute damos_sysfs_dests_nr_attr =
-+		__ATTR_RW_MODE(nr_dests, 0600);
-+
-+static struct attribute *damos_sysfs_dests_attrs[] = {
-+	&damos_sysfs_dests_nr_attr.attr,
-+	NULL,
-+};
-+ATTRIBUTE_GROUPS(damos_sysfs_dests);
-+
-+static const struct kobj_type damos_sysfs_dests_ktype = {
-+	.release = damos_sysfs_dests_release,
-+	.sysfs_ops = &kobj_sysfs_ops,
-+	.default_groups = damos_sysfs_dests_groups,
-+};
-+
- /*
-  * scheme directory
-  */
-@@ -1672,6 +1870,7 @@ struct damon_sysfs_scheme {
- 	struct damon_sysfs_stats *stats;
- 	struct damon_sysfs_scheme_regions *tried_regions;
- 	int target_nid;
-+	struct damos_sysfs_dests *dests;
- };
- 
- struct damos_sysfs_action_name {
-@@ -1762,6 +1961,22 @@ static int damon_sysfs_scheme_set_access_pattern(
- 	return err;
+ static struct damos *damon_sysfs_mk_scheme(
+ 		struct damon_sysfs_scheme *sysfs_scheme)
+ {
+@@ -2638,6 +2661,11 @@ static struct damos *damon_sysfs_mk_scheme(
+ 		damon_destroy_scheme(scheme);
+ 		return NULL;
+ 	}
++	err = damos_sysfs_add_migrate_dest(scheme, sysfs_scheme->dests);
++	if (err) {
++		damon_destroy_scheme(scheme);
++		return NULL;
++	}
+ 	return scheme;
  }
  
-+static int damos_sysfs_set_dests(struct damon_sysfs_scheme *scheme)
-+{
-+	struct damos_sysfs_dests *dests = damos_sysfs_dests_alloc();
-+	int err;
-+
-+	if (!dests)
-+		return -ENOMEM;
-+	err = kobject_init_and_add(&dests->kobj, &damos_sysfs_dests_ktype,
-+			&scheme->kobj, "dests");
-+	if (err)
-+		kobject_put(&dests->kobj);
-+	else
-+		scheme->dests = dests;
-+	return err;
-+}
-+
- static int damon_sysfs_scheme_set_quotas(struct damon_sysfs_scheme *scheme)
- {
- 	struct damon_sysfs_quotas *quotas = damon_sysfs_quotas_alloc();
-@@ -1894,9 +2109,12 @@ static int damon_sysfs_scheme_add_dirs(struct damon_sysfs_scheme *scheme)
- 	err = damon_sysfs_scheme_set_access_pattern(scheme);
- 	if (err)
- 		return err;
--	err = damon_sysfs_scheme_set_quotas(scheme);
-+	err = damos_sysfs_set_dests(scheme);
- 	if (err)
- 		goto put_access_pattern_out;
-+	err = damon_sysfs_scheme_set_quotas(scheme);
-+	if (err)
-+		goto put_dests_out;
- 	err = damon_sysfs_scheme_set_watermarks(scheme);
- 	if (err)
- 		goto put_quotas_access_pattern_out;
-@@ -1927,6 +2145,9 @@ static int damon_sysfs_scheme_add_dirs(struct damon_sysfs_scheme *scheme)
- put_quotas_access_pattern_out:
- 	kobject_put(&scheme->quotas->kobj);
- 	scheme->quotas = NULL;
-+put_dests_out:
-+	kobject_put(&scheme->dests->kobj);
-+	scheme->dests = NULL;
- put_access_pattern_out:
- 	kobject_put(&scheme->access_pattern->kobj);
- 	scheme->access_pattern = NULL;
-@@ -1937,6 +2158,8 @@ static void damon_sysfs_scheme_rm_dirs(struct damon_sysfs_scheme *scheme)
- {
- 	damon_sysfs_access_pattern_rm_dirs(scheme->access_pattern);
- 	kobject_put(&scheme->access_pattern->kobj);
-+	kobject_put(&scheme->dests->kobj);
-+	damos_sysfs_dests_rm_dirs(scheme->dests);
- 	damon_sysfs_quotas_rm_dirs(scheme->quotas);
- 	kobject_put(&scheme->quotas->kobj);
- 	kobject_put(&scheme->watermarks->kobj);
 -- 
 2.39.5
