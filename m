@@ -1,46 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8343261399;
-	Fri,  4 Jul 2025 18:24:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C307B2E370B;
+	Fri,  4 Jul 2025 21:19:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751653448; cv=none; b=GWjXTCX8Sh84vec6d8maWKuXNnWukLY+VUCpeDoSP5/SF33V5iX9EzQoxB7PXEjKByhWS4WgF06E3JykxGxWIsFRK2ttUPtqo4K6OPfoGXzvwCcchGlb10cP5VIGJska8H9FaLdNiupUt/SmMGU9NAdSH0EGEBxYNL4m1a5RQvs=
+	t=1751663973; cv=none; b=bdUnyj3XKHeVaVRLaWU3lODwIpD2nGToIu/55AIhPyr6qyGD8GIp2h6Q1twGEFaQfrtRSLZlwR5hTlnIz9zPx4JGh9XFMRMFfggugPaDcn+ZJAJgrNhcyT0AlWFqQlnoXgw4zXQbVe/mYFPu1gCfAHPud1FcRjKEkFlFgxBbF6A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751653448; c=relaxed/simple;
-	bh=x/a97G6tGt7l3YWx8tm//SOtg12sNF3g8piy675aVjc=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=Hy5wrzGlqKeL1cpkG8tXxzfqa2NQvrsIt1hAc5NE2tYXgn83x1yVu75TNulkkQdGYzSICmmuM8sDrPy5QMPOmxVIqh1/Abi4Y2w2p/KkYM1PaZjjpYzqzCx7A2lUQA+4RGKH7xkcZAqeQ7uFx+PtV9zhuzNcS2O3Zz8W4/0keVY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Irx2uYzK; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1751663973; c=relaxed/simple;
+	bh=LrtlwVu5XvZ/Gc8C8JMOv634lMY9wMduJ/sXkeUfLt0=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=UXG+oxHt2dkeOTMuSqGf0qcEnP4Hs49CFt2RLFMwI3famc/LTgVi5punN4aCaGLA1rnzz1spGgU8rRcvHdxId8Umjgd+bu/8/lKW96aYvU6B7cGQF8wmOQsGgU7BLCslZWOWMzJ/NCM70SE13CEu3S+4/XgYCIXorT42Io/OfX8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QO8YJyMv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Irx2uYzK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E84BC4CEE3;
-	Fri,  4 Jul 2025 18:24:08 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QO8YJyMv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 171C8C4CEEE;
+	Fri,  4 Jul 2025 21:19:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1751653448;
-	bh=x/a97G6tGt7l3YWx8tm//SOtg12sNF3g8piy675aVjc=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Irx2uYzKkDetJQaPWejxHZb3Kx6pybEHKZpto6Bp6Wtk2rZxqF6ZwYJgcs6XPicVF
-	 UEHo6vbLVAuOZ3UlvKlupEn3DAPIwGnjqRzZIsIxKYIyagS/LP61nUUk5/1xRJtQzf
-	 atlFouHudW1TdueywtaePPfpp2TmtNUNnDd/eidQBzn6zPdK8MfiyqhdGtpvtfZqSI
-	 BevBXYn9Oi40Lh78rnkP8IZbyNnXduKDK6ycbUp208EKi1bBoYSV5FSJNbXlajkvoa
-	 6NgTiHrQJFBTXtqMqVlP7gmF4vV3eHB6uimyaBWoQrlN3ZoF5VUSc3NR3wD+E5O0l2
-	 qhgsKIqRG2eSA==
+	s=k20201202; t=1751663973;
+	bh=LrtlwVu5XvZ/Gc8C8JMOv634lMY9wMduJ/sXkeUfLt0=;
+	h=From:To:Cc:Subject:Date:From;
+	b=QO8YJyMvuZy1REYqQrznSSPDJKThfG/4xrYir+Ku4pRjt386YAYAF+ElRk9f7VSJG
+	 yxvG9ORQt7KO4HwNA8ABHu/onEg19JfkcFHjVcMI3bNWDUNhy/JcLeWZG/+q6E9EFW
+	 4bvRLSmFT5D3SY60dibxyPjQONrA912kxGoABovQ+kARqmxngOYBhRu07FxsIpi6pM
+	 xfMVWwet8kYUIN29TApkiajgBBdTQVkSLpsXt9/O4OgRdpDhFLFylUyjTzYjYaGqvS
+	 HXz5N7FWzi7d5xuW0/xUDBPlLOFIebSQ8olLCEV1bN6i5FGPH18sTEsTj6FSDVUpOz
+	 bAkFugU/M6QXg==
 From: SeongJae Park <sj@kernel.org>
-To: Yunjeong Mun <yunjeong.mun@sk.com>
+To: damon@lists.linux.dev
 Cc: SeongJae Park <sj@kernel.org>,
-	akpm@linux-foundation.org,
-	damon@lists.linux.dev,
 	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org,
-	kernel_team@skhynix.com,
-	honggyu.kim@sk.com
-Subject: Re: [RFC PATCH v2] samples/damon: support automatic node address detection
-Date: Fri,  4 Jul 2025 11:24:05 -0700
-Message-Id: <20250704182405.51346-1-sj@kernel.org>
+	linux-kernel@vger.kernel.org
+Subject: DAMON Beer/Coffee/Tea chat reminder for the week of 2025-06-23
+Date: Fri,  4 Jul 2025 14:19:30 -0700
+Message-Id: <20250704211930.23109-1-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250704070600.1786-1-yunjeong.mun@sk.com>
-References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -49,60 +42,40 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Fri,  4 Jul 2025 16:05:59 +0900 Yunjeong Mun <yunjeong.mun@sk.com> wrote:
+Hello,
 
-> Hello Seongjae,
-> 
-> On Thu,  3 Jul 2025 09:52:37 -0700 SeongJae Park <sj@kernel.org> wrote:
-> > Hello Yunjeong,
-> > 
-> > On Thu,  3 Jul 2025 16:44:22 +0900 Yunjeong Mun <yunjeong.mun@sk.com> wrote:
-> > 
-> > > This patch adds a new knob `detect_node_addresses`, which determines
-> > > whether the physical address range is set manually using the existing
-> > > knobs or automatically by the mtier module. When `detect_node_addresses`
-> > > set to 'Y', mtier automatically converts node0 and node1 to their
-> > > physical addresses. If set to 'N', it uses the existing
-> > > 'node#_start_addr' and 'node#_end_addr' to define regions as before.
-> > 
-> > Thank you for this patch!
-> > 
-> > > 
-> > > Suggested-by: Honggyu Kim <honggyu.kim@sk.com>
-> > > Signed-off-by: Yunjeong Mun <yunjeong.mun@sk.com>
-> > 
-> > Reviewed-by: SeongJae Park <sj@kernel.org>
-> > 
-> > > ---
-> > 
-> > From next time, please consider adding a summary of what changes have made from
-> > the previous version here, like suggested[1] on the documentation.
-> 
-> Ok, I'll add it next time, thanks:)
-> One concern I have about this patch is the requirement to set
-> 'detect_node_addresses=Y' before setting 'enable=Y'. Not following
-> this order causes an error, which makes it difficult for users to use
-> the module.
 
-That's same to existing address parameters, and similar to existing DAMON user
-interfaces.  Parameters are applied when starting DAMON.  Parameters can be
-updated while DAMON is running, but it requires explicit "commit" action for
-updating those at once.
+This is yet another reminder of upcoming DAMON Beer/Coffee/Tea chats
+(https://docs.google.com/document/d/1v43Kcj3ly4CYqmAkMaZzLiM2GEnWfgdGbZAH3mi2vpM/edit?usp=sharing)
+for the week of 2025-07-05.
 
-DAMON sample modules don't support the runtime commit feature, though.  I think
-it is not a bad tradeoff for simplicity of the code, given the purpose of
-sample modules.
+We have two reserved time slots for meetings in the week, as usual.
 
-> So, how about removing 'detect_node_address'? Instead, we
-> could convert node0,1 to physical address automatically by default, and use
-> existing 'node#_*_addr' values only when those files are explicitly set.
+Next six time slots that I reserved in advance are as below.
 
-This would make old usage broken.  Since this is a sample module, I think that
-could be justified if there is a very good reason.  But I don't think we have a
-very good reason here.  So I suggest not to do that.
+2025-07-07 (Mon) 18:00 PT (not yet reserved)
+2025-07-09 (Wed) 09:30 PT (not yet reserved)
+2025-07-21 (Mon) 18:00 PT (not yet reserved)
+2025-07-23 (Wed) 09:30 PT (not yet reserved)
+2025-08-04 (Mon) 18:00 PT (not yet reserved)
+2025-08-06 (Wed) 09:30 PT (not yet reserved)
+
+Please reach out to me (sj@kernel.org or whatever) to reserve the
+not-yet-reserved time slots for your topics.  The reservation is made in a
+First-Come First-Served way, and I will send a Google Meet link to
+reservation-confirmed attendees.
+
+Please note that other time slots are also available on demands.
+
+Shared Calendar
+---------------
+
+You can get the schedule via this shared Google Calendar:
+https://calendar.google.com/calendar/u/0?cid=ZDIwOTA4YTMxNjc2MDQ3NTIyMmUzYTM5ZmQyM2U4NDA0ZGIwZjBiYmJlZGQxNDM0MmY4ZTRjOTE0NjdhZDRiY0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t
+
+You can also get the past and upcoming schedules via
+https://docs.google.com/document/d/1v43Kcj3ly4CYqmAkMaZzLiM2GEnWfgdGbZAH3mi2vpM/edit?usp=sharing
 
 
 Thanks,
 SJ
-
-[...]
