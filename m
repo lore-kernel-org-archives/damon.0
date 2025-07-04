@@ -1,38 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C307B2E370B;
-	Fri,  4 Jul 2025 21:19:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9087B1D7E5C;
+	Fri,  4 Jul 2025 22:14:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751663973; cv=none; b=bdUnyj3XKHeVaVRLaWU3lODwIpD2nGToIu/55AIhPyr6qyGD8GIp2h6Q1twGEFaQfrtRSLZlwR5hTlnIz9zPx4JGh9XFMRMFfggugPaDcn+ZJAJgrNhcyT0AlWFqQlnoXgw4zXQbVe/mYFPu1gCfAHPud1FcRjKEkFlFgxBbF6A=
+	t=1751667253; cv=none; b=RYk4H8tcgY/D/3fdwM+mF0nVVXiGJhAfwqQBSb35c1jlV7/NAvSWd+X/qsyiIg3DAZ+vSeGhsgaKUKlnNyNatldbsaCr6nso/gYhqVXGCXCfwUV0P9c+4i1wosL3FK1KEjB9q4oXVbONi0STw3hhZCjD5lU0OYEUvqydCBd/Z/Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751663973; c=relaxed/simple;
-	bh=LrtlwVu5XvZ/Gc8C8JMOv634lMY9wMduJ/sXkeUfLt0=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=UXG+oxHt2dkeOTMuSqGf0qcEnP4Hs49CFt2RLFMwI3famc/LTgVi5punN4aCaGLA1rnzz1spGgU8rRcvHdxId8Umjgd+bu/8/lKW96aYvU6B7cGQF8wmOQsGgU7BLCslZWOWMzJ/NCM70SE13CEu3S+4/XgYCIXorT42Io/OfX8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QO8YJyMv; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1751667253; c=relaxed/simple;
+	bh=iweyl4UADi/qIPmNnASst+ROilTN90Y7YfVHKjKx0MQ=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=Q/yJ/vNqEqtC970sG6Q7k9Ff955wzJN7REIK2X6npWa5lTq52w5rbbD0QY24rbo2y08sn9a1NDYC+mg7Q8J3TG+Q2+So71bW1cDU8qtWjocPuwEn7dPuZuSj6FxzqRajtrVZ3n0vgWPtyv+EDp92ork7ILaxcO9ukyw8TJbd5LA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=F6EFnAVS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QO8YJyMv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 171C8C4CEEE;
-	Fri,  4 Jul 2025 21:19:33 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="F6EFnAVS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E95C4C4CEEE;
+	Fri,  4 Jul 2025 22:14:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1751663973;
-	bh=LrtlwVu5XvZ/Gc8C8JMOv634lMY9wMduJ/sXkeUfLt0=;
+	s=k20201202; t=1751667253;
+	bh=iweyl4UADi/qIPmNnASst+ROilTN90Y7YfVHKjKx0MQ=;
 	h=From:To:Cc:Subject:Date:From;
-	b=QO8YJyMvuZy1REYqQrznSSPDJKThfG/4xrYir+Ku4pRjt386YAYAF+ElRk9f7VSJG
-	 yxvG9ORQt7KO4HwNA8ABHu/onEg19JfkcFHjVcMI3bNWDUNhy/JcLeWZG/+q6E9EFW
-	 4bvRLSmFT5D3SY60dibxyPjQONrA912kxGoABovQ+kARqmxngOYBhRu07FxsIpi6pM
-	 xfMVWwet8kYUIN29TApkiajgBBdTQVkSLpsXt9/O4OgRdpDhFLFylUyjTzYjYaGqvS
-	 HXz5N7FWzi7d5xuW0/xUDBPlLOFIebSQ8olLCEV1bN6i5FGPH18sTEsTj6FSDVUpOz
-	 bAkFugU/M6QXg==
+	b=F6EFnAVSOGwjnVn1IFEFhW244EfvLZUgICVSoHKXRDnl6WiyvM0TPPtnUa1KIv0mE
+	 44GwDzaryp6XwtD1dk4xLZwYDNf14e7g/1/Mc79Y+inkAG22PCUpGgP4v1TY0xV7/M
+	 yH+9QGc1YeeCChJV8mpo14uG76LRl44uMpB9zblZ4F2TsrvNHxOlcluxjMnZ5xoidZ
+	 0z6DtfDfDpNn281yqx8m7loEvrANAc/4fbaNOo3848C630fh1k1o9cGI3Musbta1mA
+	 1ZD8xg6JgCoC/Dr6Mc8e00edeiOZx1WrUezmIK3/O1EUmX+vS8YWMS8EWvNTGl0J9M
+	 mzZ4hYMiuXeAQ==
 From: SeongJae Park <sj@kernel.org>
-To: damon@lists.linux.dev
+To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SeongJae Park <sj@kernel.org>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	damon@lists.linux.dev,
+	kernel-team@meta.com,
+	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org
-Subject: DAMON Beer/Coffee/Tea chat reminder for the week of 2025-06-23
-Date: Fri,  4 Jul 2025 14:19:30 -0700
-Message-Id: <20250704211930.23109-1-sj@kernel.org>
+	linux-trace-kernel@vger.kernel.org
+Subject: [PATCH 0/2] mm/damon: add trace events for auto-tuned monitoring intervals and DAMOS quota
+Date: Fri,  4 Jul 2025 15:14:06 -0700
+Message-Id: <20250704221408.38510-1-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -42,40 +48,19 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hello,
+The aim-oriented auto-tuning features for monitoring intervals and DAMOS
+quota are important and recommended.  Add tracepoints for observabilities
+of those tuned values and the tuning itself.
+
+SeongJae Park (2):
+  mm/damon: add trace event for auto-tuned monitoring intervals
+  mm/damon: add trace event for effective size quota
+
+ include/trace/events/damon.h | 43 ++++++++++++++++++++++++++++++++++++
+ mm/damon/core.c              | 21 +++++++++++++++++-
+ 2 files changed, 63 insertions(+), 1 deletion(-)
 
 
-This is yet another reminder of upcoming DAMON Beer/Coffee/Tea chats
-(https://docs.google.com/document/d/1v43Kcj3ly4CYqmAkMaZzLiM2GEnWfgdGbZAH3mi2vpM/edit?usp=sharing)
-for the week of 2025-07-05.
-
-We have two reserved time slots for meetings in the week, as usual.
-
-Next six time slots that I reserved in advance are as below.
-
-2025-07-07 (Mon) 18:00 PT (not yet reserved)
-2025-07-09 (Wed) 09:30 PT (not yet reserved)
-2025-07-21 (Mon) 18:00 PT (not yet reserved)
-2025-07-23 (Wed) 09:30 PT (not yet reserved)
-2025-08-04 (Mon) 18:00 PT (not yet reserved)
-2025-08-06 (Wed) 09:30 PT (not yet reserved)
-
-Please reach out to me (sj@kernel.org or whatever) to reserve the
-not-yet-reserved time slots for your topics.  The reservation is made in a
-First-Come First-Served way, and I will send a Google Meet link to
-reservation-confirmed attendees.
-
-Please note that other time slots are also available on demands.
-
-Shared Calendar
----------------
-
-You can get the schedule via this shared Google Calendar:
-https://calendar.google.com/calendar/u/0?cid=ZDIwOTA4YTMxNjc2MDQ3NTIyMmUzYTM5ZmQyM2U4NDA0ZGIwZjBiYmJlZGQxNDM0MmY4ZTRjOTE0NjdhZDRiY0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t
-
-You can also get the past and upcoming schedules via
-https://docs.google.com/document/d/1v43Kcj3ly4CYqmAkMaZzLiM2GEnWfgdGbZAH3mi2vpM/edit?usp=sharing
-
-
-Thanks,
-SJ
+base-commit: 09cf52aa7503a7126edc3af797e116a7ec49e572
+-- 
+2.39.5
