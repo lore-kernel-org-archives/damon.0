@@ -1,43 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A472E1A9B24;
-	Sat,  5 Jul 2025 17:50:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B95EF215175;
+	Sat,  5 Jul 2025 17:50:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751737803; cv=none; b=Uchw+s/PSbGE4piSLnlinPZ7UsU+TcaQxaQX6EKb3CGKoTmkZ1omFOAwbb+dJJJH0nJxnaO31v3igOXtYE59s53mxoNqtOb8MwOnj4ivnkzwdXtzNmiOJwFF34rSGOeiTBICBc/u5PxLiTb2YCtwrbqr7OGqbunKTJxjkR14xts=
+	t=1751737804; cv=none; b=Ola3pbEgaFva6P8SKs/MfqBJP0LYKeu1lfgf9PlyJtZB9UAMUAua3qg4eBXgSatp3Qz1xdhqWfsnkWBVgjrXEYIpIJIO+EalB2rMuejKkjLNqjmU975W9hkgneRoOxsoFVkBF+X2D18NnuCH7a6+IroZEceYZjdr2Arp/Y4vtNY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751737803; c=relaxed/simple;
-	bh=FFavEtXmOct+593n3zYGlbUqFvgbe6ItOU+9OH3bi3k=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=OkF4gj2o6RMUheRVX8BZW7pAebHgcf/0s3NH32PkNteCKJHVhwzWt0pq1sIYsRqYrscDoOrCwLWeuDZlje5GKTR0T3ZOzkMxAqu4AhrKG2GAj3Gm7AIxIoRRsWG0oqn2kwoBS0QSQIW0yA0DykCL44riaGTKW/9fYupT7LjYit4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AyvFut/d; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1751737804; c=relaxed/simple;
+	bh=oSMtWErfIBi3GCTzH1g2nB4nfGeEaP/5IAI//7YlQF4=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=Xtgb8wXHLjt7TT9zr2xagTUp5+xib6VmONyxswJBYoVnS5QEkKjAeN5lobBOGMS5RkOwqmXYprGBBYnXy/vBpi18J9fUXrvwVWp0+9oQCpiA5eJTKHyJiSGFPnUZKjPh4m/idtgw4iQIkOtYIgEijSvjIQbWSN55nbQX0dYYisY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ozWJMjEh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AyvFut/d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DA3AC4CEE7;
-	Sat,  5 Jul 2025 17:50:03 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ozWJMjEh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F955C4CEE7;
+	Sat,  5 Jul 2025 17:50:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1751737803;
-	bh=FFavEtXmOct+593n3zYGlbUqFvgbe6ItOU+9OH3bi3k=;
-	h=From:To:Cc:Subject:Date:From;
-	b=AyvFut/dQHWKRRzrt8eb7Iu2xGp+HFntV6Cwzd1H0OcGZvY0t1A5HGV+5ztDjNhsR
-	 9PYRVV0hvjpye810dNL3T+ooeLQwEk5fk3ToCKvio4WT0/aWoWKij6JiwGz/EwMrCi
-	 Mn6v2tej+/gELwe4+MYotkGITfdjNujFHx5UN7K5fEnosBI7VY4q3w6S5IvmQxB5BS
-	 bbyi5HOzIa6sUC9RJKfnsDKcjFdK10E46nm7z1mx2uue62QaCXkHJTY9YQC6z5raCX
-	 K//fKkCcQ4Xm49pPVp3Ls3f6iE5wQiyVnNtXtdESnq2bf9Jf25Hb+rGUtIsdddOXH8
-	 F/vKJVQKmODlA==
+	s=k20201202; t=1751737804;
+	bh=oSMtWErfIBi3GCTzH1g2nB4nfGeEaP/5IAI//7YlQF4=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=ozWJMjEhmXzKMXrMGj9bprytQjdSO5GhuM2/HF+/O/EVLS3lcMvCUKDxdw16/jrcA
+	 h35ew3vAOfMme4JwwoNoTi7rssbqqKgJTE7D+eUYZ+HR4ygw6fv9n40IgSQESlFzz7
+	 GYLx/zjrTfXa3vjjoAg7Cva7Dkb61LTAkLi5tjebYOowQHLi/0D7SPHvkMcgVgvidZ
+	 Rgs9br3Rt1odqOO9qci6gg02XlPguJQi3utX45bY9f+gyRjLkkv39l7Y3JIAUZRH9Q
+	 NWk1juSDa4fvZkAw0sszoNQETVyupNZPTTxJXrenzrmVbP1SmJjV2hbevQwicCjWPl
+	 +m6raNZNW2TAw==
 From: SeongJae Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SeongJae Park <sj@kernel.org>,
-	Jonathan Corbet <corbet@lwn.net>,
 	damon@lists.linux.dev,
 	kernel-team@meta.com,
-	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [PATCH 0/6] mm/damon: misc cleanups
-Date: Sat,  5 Jul 2025 10:49:54 -0700
-Message-Id: <20250705175000.56259-1-sj@kernel.org>
+Subject: [PATCH 1/6] samples/damon/wsse: rename to have damon_sample_ prefix
+Date: Sat,  5 Jul 2025 10:49:55 -0700
+Message-Id: <20250705175000.56259-2-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20250705175000.56259-1-sj@kernel.org>
+References: <20250705175000.56259-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -46,26 +47,34 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Yet another round of miscellaneous DAMON cleanups.
+DAMON sample module, wsse has its name 'wsse'.  It could conflict with
+future modules, and not very easy to identify it by name.  Use a prefix,
+"damon_sample_" for the name.
 
-SeongJae Park (6):
-  samples/damon/wsse: rename to have damon_sample_ prefix
-  samples/damon/prcl: rename to have damon_sample_ prefix
-  samples/damon/mtier: rename to have damon_sample_ prefix
-  mm/damon/sysfs: use DAMON core API damon_is_running()
-  mm/damon/sysfs: don't hold kdamond_lock in before_terminate()
-  Docs/mm/damon/maintainer-profile: update for mm-new tree
+Note that this could break users if they depend on the old name.  But it
+is just a sample, so no such usage is expected, or known.  Even if such
+usage exists, updating it for the new name should be straightforward.
 
- Documentation/mm/damon/maintainer-profile.rst | 35 ++++++++++---------
- include/linux/damon.h                         |  1 +
- mm/damon/core.c                               |  8 ++++-
- mm/damon/sysfs.c                              | 16 ++-------
- samples/damon/mtier.c                         |  5 +++
- samples/damon/prcl.c                          |  5 +++
- samples/damon/wsse.c                          |  5 +++
- 7 files changed, 44 insertions(+), 31 deletions(-)
+Signed-off-by: SeongJae Park <sj@kernel.org>
+---
+ samples/damon/wsse.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-
-base-commit: 486593f91f44f469c920e73a4ef451d9bbbf400e
+diff --git a/samples/damon/wsse.c b/samples/damon/wsse.c
+index e20238a249e7..1e8969a0a626 100644
+--- a/samples/damon/wsse.c
++++ b/samples/damon/wsse.c
+@@ -12,6 +12,11 @@
+ #include <linux/kernel.h>
+ #include <linux/module.h>
+ 
++#ifdef MODULE_PARAM_PREFIX
++#undef MODULE_PARAM_PREFIX
++#endif
++#define MODULE_PARAM_PREFIX "damon_sample_wsse."
++
+ static int target_pid __read_mostly;
+ module_param(target_pid, int, 0600);
+ 
 -- 
 2.39.5
