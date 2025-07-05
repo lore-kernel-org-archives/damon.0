@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B95EF215175;
-	Sat,  5 Jul 2025 17:50:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92A54215798;
+	Sat,  5 Jul 2025 17:50:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751737804; cv=none; b=Ola3pbEgaFva6P8SKs/MfqBJP0LYKeu1lfgf9PlyJtZB9UAMUAua3qg4eBXgSatp3Qz1xdhqWfsnkWBVgjrXEYIpIJIO+EalB2rMuejKkjLNqjmU975W9hkgneRoOxsoFVkBF+X2D18NnuCH7a6+IroZEceYZjdr2Arp/Y4vtNY=
+	t=1751737805; cv=none; b=FFfcT5a1HouYSkdCRY7biiiEpyydIzYsgJb6r1R6ehnPaP2KXT15LFp93hmr+T90hdo868n5KFLx8r5eiPL6iRKeIt3T7dVOzz7VVNdQWq2xVkX04hC6jT4KeX5mN9yo9FCFtwNfd8KjRExXxVw46YuS4SY55asZLrdTjKEVRWA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751737804; c=relaxed/simple;
-	bh=oSMtWErfIBi3GCTzH1g2nB4nfGeEaP/5IAI//7YlQF4=;
+	s=arc-20240116; t=1751737805; c=relaxed/simple;
+	bh=x1UOtr++wfnnN2w2/rHB31NtHodnV1W7q4cMr5UyQ+w=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=Xtgb8wXHLjt7TT9zr2xagTUp5+xib6VmONyxswJBYoVnS5QEkKjAeN5lobBOGMS5RkOwqmXYprGBBYnXy/vBpi18J9fUXrvwVWp0+9oQCpiA5eJTKHyJiSGFPnUZKjPh4m/idtgw4iQIkOtYIgEijSvjIQbWSN55nbQX0dYYisY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ozWJMjEh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lw5vNccLlOciUaDEHwBlSjK+LG4GtWJFls2hdYS/8kSw+nIGZsSgcgCl0tc8GdZMwH09tRhlBqNR4m2+jqS0lxs3ahtwclofENm9NOesSkEcbvjH/x8OV+QaipDK9LURNkLz5BRpjNX41gI2XEJR/lN1l5QA9UHvTg2bZ/R0sjc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HaJpRuFQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ozWJMjEh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F955C4CEE7;
-	Sat,  5 Jul 2025 17:50:04 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HaJpRuFQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42C59C4CEF0;
+	Sat,  5 Jul 2025 17:50:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1751737804;
-	bh=oSMtWErfIBi3GCTzH1g2nB4nfGeEaP/5IAI//7YlQF4=;
+	s=k20201202; t=1751737805;
+	bh=x1UOtr++wfnnN2w2/rHB31NtHodnV1W7q4cMr5UyQ+w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ozWJMjEhmXzKMXrMGj9bprytQjdSO5GhuM2/HF+/O/EVLS3lcMvCUKDxdw16/jrcA
-	 h35ew3vAOfMme4JwwoNoTi7rssbqqKgJTE7D+eUYZ+HR4ygw6fv9n40IgSQESlFzz7
-	 GYLx/zjrTfXa3vjjoAg7Cva7Dkb61LTAkLi5tjebYOowQHLi/0D7SPHvkMcgVgvidZ
-	 Rgs9br3Rt1odqOO9qci6gg02XlPguJQi3utX45bY9f+gyRjLkkv39l7Y3JIAUZRH9Q
-	 NWk1juSDa4fvZkAw0sszoNQETVyupNZPTTxJXrenzrmVbP1SmJjV2hbevQwicCjWPl
-	 +m6raNZNW2TAw==
+	b=HaJpRuFQgiIS/Wy3YSZ6W52FL3zmNA7C8hvfCVKmE+Mof46roplzZl0hmHUTdIPDh
+	 fPdnDsS0mcg29H06Nk8drmmD3/d51Dn8JqpM08nxkrDn0af/7+vLtjpLzliQhI1E1S
+	 +0esrwdNSIB37HKMiQNPsk2t6ClgjO3JH7ROK7PKiHIwb07GMA/JSX9AP423Ws1ywd
+	 4w2/Y3LmTIsRsUAAaXxlpyGAkRbUmfoOSgZGhaBJ+1Z9TcytzJenKeQjQzRGywLi3F
+	 6aCSgYcdM0Z6XUg358gDvBlQlbt+zkI3MzwGJcg9ixuFz3bwYzo5tDjpeqKJNthvcx
+	 c4d+sKEi9oOXA==
 From: SeongJae Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SeongJae Park <sj@kernel.org>,
@@ -33,9 +33,9 @@ Cc: SeongJae Park <sj@kernel.org>,
 	kernel-team@meta.com,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [PATCH 1/6] samples/damon/wsse: rename to have damon_sample_ prefix
-Date: Sat,  5 Jul 2025 10:49:55 -0700
-Message-Id: <20250705175000.56259-2-sj@kernel.org>
+Subject: [PATCH 2/6] samples/damon/prcl: rename to have damon_sample_ prefix
+Date: Sat,  5 Jul 2025 10:49:56 -0700
+Message-Id: <20250705175000.56259-3-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250705175000.56259-1-sj@kernel.org>
 References: <20250705175000.56259-1-sj@kernel.org>
@@ -47,7 +47,7 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-DAMON sample module, wsse has its name 'wsse'.  It could conflict with
+DAMON sample module, prcl has its name 'prcl'.  It could conflict with
 future modules, and not very easy to identify it by name.  Use a prefix,
 "damon_sample_" for the name.
 
@@ -57,21 +57,21 @@ usage exists, updating it for the new name should be straightforward.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- samples/damon/wsse.c | 5 +++++
+ samples/damon/prcl.c | 5 +++++
  1 file changed, 5 insertions(+)
 
-diff --git a/samples/damon/wsse.c b/samples/damon/wsse.c
-index e20238a249e7..1e8969a0a626 100644
---- a/samples/damon/wsse.c
-+++ b/samples/damon/wsse.c
-@@ -12,6 +12,11 @@
+diff --git a/samples/damon/prcl.c b/samples/damon/prcl.c
+index 5597e6a08ab2..447ccba09e8a 100644
+--- a/samples/damon/prcl.c
++++ b/samples/damon/prcl.c
+@@ -11,6 +11,11 @@
  #include <linux/kernel.h>
  #include <linux/module.h>
  
 +#ifdef MODULE_PARAM_PREFIX
 +#undef MODULE_PARAM_PREFIX
 +#endif
-+#define MODULE_PARAM_PREFIX "damon_sample_wsse."
++#define MODULE_PARAM_PREFIX "damon_sample_prcl."
 +
  static int target_pid __read_mostly;
  module_param(target_pid, int, 0600);
