@@ -1,41 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF3B3288C9D;
-	Sun,  6 Jul 2025 18:47:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EF74186A;
+	Sun,  6 Jul 2025 19:32:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751827676; cv=none; b=awwEszYIeOCFyMCbVY2FFrUKdglHh5tpS5TIFX4Z8eEDYQF3zV8Gn6xrQi+6A52ZcOhPb1unAqRpt+HDdE1rwgTMWzO9m3ksu4h4DyAPXBFGqVbFAFr5/MkBSeAHvU9tFjhbngGjq36XfrvXwV8yr9wDPosr+qjc9mPD/DbH7xU=
+	t=1751830332; cv=none; b=rlGI4CHABZlSGVJfkdwT2mmbsTHvm+eSeIOA/6LYY9Ag4PjU9VVvQ9vCWMI6Gxl39q1T4E9O74y5blMWyV9UkKvTq2QZ06MVLoQdvGn9jKDInxK6wTmrBpfSYVadi+MR4LKLRuJ/wJohBuMin0GJ16Muz0VhQJuqvB0aso/FnbE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751827676; c=relaxed/simple;
-	bh=cLVy1mKDbWXN4aNjEWgP3z3+agHOP3HLGlEBVSPzMo0=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=YyOBkCPnF37PZqQituL0qPbCIYoDQyQwRWih9FCEXTfnRztZyPdWZsQI4EeRBPguPgXmIEMoQ6f2VqMOr3xnCYTK7tacQl7PpvQ4HnXncD5taYqUBI7vDWI2bthuoYjSUxYfO1Uk6jcJkijoOw3M9OSfJeDczSRkokLFyON3Jjc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Gi5aF+Bk; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1751830332; c=relaxed/simple;
+	bh=sJNUfzwZJvQuoC1F66bEVuJ3ctg7lAi4+PjtYCktIEk=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=oOLFMY6xeaDtzJL79NBw8CMyArsZY03mcYtwvhSwLg4CUr1jteOTU4ggHqElv61kM8SsMm58J3+v8wyQXjsHHxsQ0QFh1AW3Ns41wuieJ+UvS/md3XSRc1d3LgZfoiYZHtWrYL8sY6aWbeVdGvvaj+VrmgsHrQNYSQ8Fe7QWYJE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kNms0LMn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Gi5aF+Bk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 380C5C4CEED;
-	Sun,  6 Jul 2025 18:47:53 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kNms0LMn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CEF0C4CEEE;
+	Sun,  6 Jul 2025 19:32:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1751827673;
-	bh=cLVy1mKDbWXN4aNjEWgP3z3+agHOP3HLGlEBVSPzMo0=;
-	h=From:To:Cc:Subject:Date:From;
-	b=Gi5aF+BkOP3T/VA9JQHYB6C/56PWFLJUd7wtGFlkFdhxYtiem2dv0IfpbK6tJ9AlN
-	 HcO8pguoHXH+bsEumkufysd1LM5Uq4WG+9uEYAVyElcohocskWgmym3zAgAR4cV39U
-	 60V3lW6edNbBz5lljCvfgbMVseQt8/EkJZVI6mN9vhVuK7CduwBi5PkMvKW06h5eKQ
-	 mglxOOqt9mPhZnUSQWppILgD1eBShf/dOq2p+OswraXym/990tDJu7wV6/M3Lq5r19
-	 LrzAdCV0fdgXZSuoJj8aQCkKcL8wdn7D41d6rlfWg6RQaAzSQZS0wSiwqE2/zdFhIp
-	 QqjFsXn+c8Zcw==
+	s=k20201202; t=1751830332;
+	bh=sJNUfzwZJvQuoC1F66bEVuJ3ctg7lAi4+PjtYCktIEk=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=kNms0LMnuLq5XZ6TxvfkzWtuOenMfZRROw0kJ5+cQl9xWB24W3LzEwyWWmlGR9HtY
+	 AMbsxj2gYKPhGgIRcd8xoe+yu8OPTCVxt9YrgG7jeTdJFJtnT9LfxlNRC7ZFzFeYIy
+	 WABZK2AKedpb1JSrnCYxEroLPUUf7i2QNUqs/+qpYZOOKlnYZDWmuvyNp9sw7A9reF
+	 31E7p9yReXo4OpbxkMIneMiAvdB25ljXfRRLQN4O/hDtKxk6y95A6PCOCvLXhO+5hh
+	 EaIomREwbJifZTOkCbNYZAqMRJGBRCwfXysRHcRs63XNU02Jc9YeQsaw2P/laz4E/v
+	 pM1zJ7JBVa+Xg==
 From: SeongJae Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SeongJae Park <sj@kernel.org>,
 	damon@lists.linux.dev,
 	kernel-team@meta.com,
 	linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org
-Subject: [PATCH mm-unstable] mm/damon/stat: reset enabled when DAMON start failed
-Date: Sun,  6 Jul 2025 11:47:50 -0700
-Message-Id: <20250706184750.36588-1-sj@kernel.org>
+	linux-mm@kvack.org,
+	stable@vger.kernel.org
+Subject: [PATCH 1/6] samples/damon/wsse: fix boot time enable handling
+Date: Sun,  6 Jul 2025 12:32:02 -0700
+Message-Id: <20250706193207.39810-2-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20250706193207.39810-1-sj@kernel.org>
+References: <20250706193207.39810-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -44,46 +48,57 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-When damon_stat_start() fails, 'enabled' parameter is not reset.  As a
-result, users show the parameter 'Y' while it is not really working.
-Fix it by resetting 'enabled' to 'false' when damon_stat_start() failed.
+If 'enable' parameter of the 'wsse' DAMON sample module is set at boot
+time via the kernel command line, memory allocation is tried before the
+slab is initialized.  As a result kernel NULL pointer dereference BUG
+can happen.  Fix it by checking the initialization status.
 
-Fixes: 00e74895aba3 ("mm/damon: introduce DAMON_STAT module") # mm-unstable
+Fixes: b757c6cfc696 ("samples/damon/wsse: start and stop DAMON as the user requests")
+Cc: stable@vger.kernel.org
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- mm/damon/stat.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ samples/damon/wsse.c | 15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
 
-diff --git a/mm/damon/stat.c b/mm/damon/stat.c
-index c35bd1852f0b..b75af871627e 100644
---- a/mm/damon/stat.c
-+++ b/mm/damon/stat.c
-@@ -225,8 +225,12 @@ static int damon_stat_enabled_store(
- 		 */
+diff --git a/samples/damon/wsse.c b/samples/damon/wsse.c
+index e20238a249e7..15e2683fe5f3 100644
+--- a/samples/damon/wsse.c
++++ b/samples/damon/wsse.c
+@@ -89,6 +89,8 @@ static void damon_sample_wsse_stop(void)
+ 		put_pid(target_pidp);
+ }
+ 
++static bool init_called;
++
+ static int damon_sample_wsse_enable_store(
+ 		const char *val, const struct kernel_param *kp)
+ {
+@@ -103,6 +105,9 @@ static int damon_sample_wsse_enable_store(
  		return 0;
  
--	if (enabled)
--		return damon_stat_start();
-+	if (enabled) {
-+		err = damon_stat_start();
-+		if (err)
-+			enabled = false;
-+		return err;
-+	}
- 	damon_stat_stop();
- 	return 0;
- }
-@@ -240,6 +244,9 @@ static int __init damon_stat_init(void)
- 	/* probably set via command line */
- 	if (enabled)
- 		err = damon_stat_start();
+ 	if (enable) {
++		if (!init_called)
++			return 0;
 +
-+	if (err && enabled)
-+		enabled = false;
- 	return err;
+ 		err = damon_sample_wsse_start();
+ 		if (err)
+ 			enable = false;
+@@ -114,7 +119,15 @@ static int damon_sample_wsse_enable_store(
+ 
+ static int __init damon_sample_wsse_init(void)
+ {
+-	return 0;
++	int err = 0;
++
++	init_called = true;
++	if (enable) {
++		err = damon_sample_wsse_start();
++		if (err)
++			enable = false;
++	}
++	return err;
  }
  
-
-base-commit: 93a51997eb1dda993197a9f82602b96d56056ce4
+ module_init(damon_sample_wsse_init);
 -- 
 2.39.5
