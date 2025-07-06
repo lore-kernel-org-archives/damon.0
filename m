@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6BE72BD03D;
-	Sun,  6 Jul 2025 19:32:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2E4B226D18;
+	Sun,  6 Jul 2025 19:32:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751830334; cv=none; b=ALEw+xErHnFTwy3WPmo8PRkGcBDzvK6FTd9o57+MmfdFtiFU1EMznVsy7I7+xJnc2SoT7BZj6o4iLgklH+sMy8pJDM4KwgzNWNwdXU7MTluQwFKre504sgaqL3/nMrAyks56nalzqchF8u3aoT9O7PqGnWpH7uPSPTjOX4qLJTc=
+	t=1751830335; cv=none; b=hB1OgN3zhoqrdJZXRcihaU+9x7sE1ZcXb9iZg+nl9s9ggGCz13igzzqEVRroM/BI0+eiJdOhuxZ3nyrqDck2Vn9yTHd2V5V0Jopu1R8Atp/J87Yo/Z0HJrKIFEFonH2oe2eKZbz9bG3LHW8qKiCGjleLjrecJ0GGhDQNDnb/BQw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751830334; c=relaxed/simple;
-	bh=6YD9fy08Fo/Z6UH4MbMMm+CPYSdgQozsFgabwgS4zT4=;
+	s=arc-20240116; t=1751830335; c=relaxed/simple;
+	bh=iRbDRRBdy920t5w60L/6dOK5zIzjusH9p6xCWRALcoE=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=A+QkU1OPBzEc/AL2slHfQ6xVc25O1Qet0sIF1170r2aL1af/kq86xFyi3iXIQyCEO0GNF8KXYBca2oPRvFWMGJIhm7LzTtGUgwXrXm62DLMSSGp4qZ/WRfPNNVlOmyffxClJquFLKnDydjYlRgNFizxHF0NA8MiqtdJANjSLj80=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OMJRlayK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ODlwQ7+UXHlXbFcdb7X6EiWwDdHGuyTS49lKqPiPhZUBrfz6JFiHWVYiZjIwWU47yyX1uYu0FETJ+t9DrN0uF4aUn3JQT93stSLpf+xvYklmtf81dI69ZSzvzbCntDr2bCxKBUegTCk1bMsZySwd6QyrArGrESr7ULX4xPJsbZk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Pp4Dm5E/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OMJRlayK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C56AC4CEED;
-	Sun,  6 Jul 2025 19:32:14 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Pp4Dm5E/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30C82C4CEEE;
+	Sun,  6 Jul 2025 19:32:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1751830334;
-	bh=6YD9fy08Fo/Z6UH4MbMMm+CPYSdgQozsFgabwgS4zT4=;
+	s=k20201202; t=1751830335;
+	bh=iRbDRRBdy920t5w60L/6dOK5zIzjusH9p6xCWRALcoE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OMJRlayKVif4YbZF9qfw9t+/LZpmyuFR/neasYaN30x+/Uro4/h7gm0L4P9lyLCHp
-	 qqxu1PF7g1OZphsraYVBTe2h2BzlfGS9roOjjp0CGJVAz9gaxzXFBSvrI1g6PGu/TA
-	 AG53phwplyMHUlFnqmZOzK7SV3q3xudIwDMzm1RJ050OONWzteQf4LsAlt+9Z19pkl
-	 KB5knvrBsMnWnHJS7SGYgES1uUDKo/3KrfPU3XKcmPtXVRijp7rwxeJum//6Ef3Mpp
-	 xxglyjXdpy51HeLQXm2x28Tt9kDyP5N1YGVcdz03k9pwJEJHXShIqN4J7la3dSu0Jk
-	 4NDIVjwrZmpEA==
+	b=Pp4Dm5E/nbhA75Wq1v/zugIkgMxTI08nllee9NR2IzqA406U4JCM86QvyqD/RgDiH
+	 NTAlxK+UoF9DyvUo+6TJzktytbzYmZZIOVHcTrIXXpDh0zX2uoFXj0X2mQf7IaTclK
+	 8P5qqdBkMJh1qgYphtDK3s8KMLCq39hrAcxHXmthkKumR/2mjCYDD7Fxj/cTi1oXiR
+	 jc2Skv/goone3434aiDwZdi19hsdhn8lIn4IcRDmQpYvLdiA+1oGaSUTbNJLzCfZxH
+	 q6CzS3d0691f9VzTKI62okfv4qDNNADJZTh8Va+h5I2AihqRmuKVZG0ldf4cNsT8NF
+	 fU2g9zh3zIaGA==
 From: SeongJae Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SeongJae Park <sj@kernel.org>,
 	damon@lists.linux.dev,
 	kernel-team@meta.com,
 	linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org,
-	stable@vger.kernel.org
-Subject: [PATCH 3/6] samples/damon/mtier: support boot time enable setup
-Date: Sun,  6 Jul 2025 12:32:04 -0700
-Message-Id: <20250706193207.39810-4-sj@kernel.org>
+	linux-mm@kvack.org
+Subject: [PATCH 4/6] mm/damon/reclaim: reset enabled when DAMON start failed
+Date: Sun,  6 Jul 2025 12:32:05 -0700
+Message-Id: <20250706193207.39810-5-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250706193207.39810-1-sj@kernel.org>
 References: <20250706193207.39810-1-sj@kernel.org>
@@ -48,54 +47,37 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-If 'enable' parameter of the 'mtier' DAMON sample module is set at boot
-time via the kernel command line, memory allocation is tried before the
-slab is initialized.  As a result kernel NULL pointer dereference BUG
-can happen.  Fix it by checking the initialization status.
+When the startup fails, 'enabled' parameter is not reset.  As a result,
+users show the parameter 'Y' while it is not really working.  Fix it by
+resetting 'enabled' to 'false' when the work is failed.
 
-Fixes: 82a08bde3cf7 ("samples/damon: implement a DAMON module for memory tiering")
-Cc: stable@vger.kernel.org
+Fixes: 04e98764befa ("mm/damon/reclaim: enable and disable synchronously")
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- samples/damon/mtier.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ mm/damon/reclaim.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/samples/damon/mtier.c b/samples/damon/mtier.c
-index 97892ade7f31..20c3102242ec 100644
---- a/samples/damon/mtier.c
-+++ b/samples/damon/mtier.c
-@@ -157,6 +157,8 @@ static void damon_sample_mtier_stop(void)
- 	damon_destroy_ctx(ctxs[1]);
- }
+diff --git a/mm/damon/reclaim.c b/mm/damon/reclaim.c
+index a675150965e0..c91098d8aa51 100644
+--- a/mm/damon/reclaim.c
++++ b/mm/damon/reclaim.c
+@@ -329,7 +329,7 @@ static int __init damon_reclaim_init(void)
+ 	int err = damon_modules_new_paddr_ctx_target(&ctx, &target);
  
-+static bool init_called;
-+
- static int damon_sample_mtier_enable_store(
- 		const char *val, const struct kernel_param *kp)
- {
-@@ -170,6 +172,9 @@ static int damon_sample_mtier_enable_store(
- 	if (enable == enabled)
- 		return 0;
+ 	if (err)
+-		return err;
++		goto out;
  
-+	if (!init_called)
-+		return 0;
-+
- 	if (enable) {
- 		err = damon_sample_mtier_start();
- 		if (err)
-@@ -182,6 +187,14 @@ static int damon_sample_mtier_enable_store(
+ 	ctx->callback.after_wmarks_check = damon_reclaim_after_wmarks_check;
+ 	ctx->callback.after_aggregation = damon_reclaim_after_aggregation;
+@@ -338,6 +338,9 @@ static int __init damon_reclaim_init(void)
+ 	if (enabled)
+ 		err = damon_reclaim_turn(true);
  
- static int __init damon_sample_mtier_init(void)
- {
-+	int err = 0;
-+
-+	init_called = true;
-+	if (enable) {
-+		err = damon_sample_mtier_start();
-+		if (err)
-+			enable = false;
-+	}
- 	return 0;
++out:
++	if (err && enabled)
++		enabled = false;
+ 	return err;
  }
  
 -- 
