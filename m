@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E3E82BDC32;
-	Sun,  6 Jul 2025 19:32:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3B242BE044;
+	Sun,  6 Jul 2025 19:32:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751830336; cv=none; b=KSLfNWRyM7PTdbw6Yn3+wa5QeK16JS92w4SkpgNO95ZnjIJTbxPhFsxJmRyEhmeO8SD0bo0PTKzoI15w0D2nfczOPP0s/aNTub5RskqWLVWUH6MpxRY2mq9+5s4qas2yze/wEuexk6SZFKvLgmNgmWCaz/GyUSgJBW+gjoyZZz4=
+	t=1751830339; cv=none; b=cloKxzHCuk3TzIS3B1ULnAt3M8jwIgltsao+Okq5fbGn7F+VQA2d++SEh+ZonnTcDKVJSsdowAggKzQSVJXyMXqIrg/miskPs6Z8/s+9L+AfLEOSdxItPl1SbdPyBzpHNDvL/M2cs74XeiTvrr40b0zrO4yTr+MKxuDGcltJBsA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751830336; c=relaxed/simple;
-	bh=BX6VH3nU4cicI6oNo09G9KGanoMTvjCG3WQxbqMleEE=;
+	s=arc-20240116; t=1751830339; c=relaxed/simple;
+	bh=WC8o13MdyLXSnn3QYHivVgrcO/OQGT6f7JW9k71JMmU=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=tmkcgOLBya5M4G+I0gjsHImQzuLz1bROmJbahuo51PWO0qG8yeTEQIOXSPG6FBkM32k2gOTiq0DNmdZ/00evRVzyCqtLx8mtqbnAUOaOaJyh9U4SeaIbrGEuGjx8wMPmc8ZSDZLVRgQKMvfjym8paVtQH3ZKeu9QdZpl5sm9oCo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=A6xH6Ldd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Sav4oOm65B2XeHBldx6n2y0ZYrCY5XaS90bRD6u/SbfXSE0dkl+I4sGWIhkVMwJGtpRrzq8qA4y7e5E5O53hBpNlS40ylWhFTT+nmmqLI8woGZoWqQkuCCE5efoVc8ICMA33jwkmiFPNGN7RlEQYFnD1Jm6h2QkcgJaBlXkwoIw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XTcsFcHe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="A6xH6Ldd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A1CCC4CEED;
-	Sun,  6 Jul 2025 19:32:16 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XTcsFcHe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E2E3C4CEED;
+	Sun,  6 Jul 2025 19:32:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1751830336;
-	bh=BX6VH3nU4cicI6oNo09G9KGanoMTvjCG3WQxbqMleEE=;
+	s=k20201202; t=1751830337;
+	bh=WC8o13MdyLXSnn3QYHivVgrcO/OQGT6f7JW9k71JMmU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A6xH6LddAHfbhNHvwE1DttcsqSYZdbyBn1mryhXPADkEC8ig/ZF+axPAA2AXwhrg7
-	 g0OpHpG5Ekz82QauJzzA1ucDI7H31lcjXxxanhyZ1L7E0FUs0R5IFZqdSLTTxWrtwZ
-	 97x+YOiZHThAP/9fxJ/Buq2KXJ3eoC5a6gLbDBqdU+kiPeJBOVLrFSSotnNo4K1SEr
-	 WQUmT8TpfrS+w4XQvkHzjqRCcMrPXKkKzi83j9edkjMYrbrLcQiCWC8XY3V8mFP+eu
-	 kF19WeZDtg72x+ZZJBT+CwWUQtL7tstsD1zlSqiKSRPZasBvtvtNnV3V81VN+wKHCX
-	 oM7tzV/f1hPVQ==
+	b=XTcsFcHeGBuTCVMgzEV9IqQPrvIQNoUIc1770mFyAGnibmeRz3G0wR7UntkY9x2Rq
+	 nwSSP2k5J6zU14YCzE2GNp0ayirLuKwHy+/4bwPdxlh6gIA8QvnyEnThFJZXERj8JX
+	 /V/AzzM0jIsNwj7VKMX8s8AMUpG5+SbhepCeD7yO9vtE4D8QaC/G0p/pmkq0rzeet0
+	 a+9Gi7Dl+dKKBCxQ1THkmtzs7Hn4yI7kMipkJWNXRKF8iEbFJRDkgwlhijWK+xww1v
+	 NfOqrtNlvNPRcFcgm2G7QFW9G7FaQt90kms3kictnzG0V1eKkxyrogDDRJJHFoYE1D
+	 m6qFX/phjWiQg==
 From: SeongJae Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SeongJae Park <sj@kernel.org>,
@@ -33,9 +33,9 @@ Cc: SeongJae Park <sj@kernel.org>,
 	kernel-team@meta.com,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [PATCH 5/6] mm/damon/lru_sort: reset enabled when DAMON start failed
-Date: Sun,  6 Jul 2025 12:32:06 -0700
-Message-Id: <20250706193207.39810-6-sj@kernel.org>
+Subject: [PATCH 6/6] mm/damon/reclaim: use parameter context correctly
+Date: Sun,  6 Jul 2025 12:32:07 -0700
+Message-Id: <20250706193207.39810-7-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250706193207.39810-1-sj@kernel.org>
 References: <20250706193207.39810-1-sj@kernel.org>
@@ -47,38 +47,42 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-When the startup fails, 'enabled' parameter is not reset.  As a result,
-users show the parameter 'Y' while it is not really working.  Fix it by
-resetting 'enabled' to 'false' when the work is failed.
+damon_reclaim_apply_parameters() allocates a new DAMON context, stages
+user-specified DAMON parameters on it, and commits to running DAMON
+context at once, using damon_commit_ctx().  The code is mistakenly
+over-writing the monitoring attributes and the reclaim scheme on the
+running context.  It is not causing a real problem for monitoring
+attributes, but the scheme overwriting can remove scheme's internal
+status such as charged quota.  Fix the wrong use of the parameter
+context.
 
-Fixes: 7a034fbba336 ("mm/damon/lru_sort: enable and disable synchronously")
+Fixes: 11ddcfc257a3 ("mm/damon/reclaim: use damon_commit_ctx()")
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- mm/damon/lru_sort.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ mm/damon/reclaim.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/mm/damon/lru_sort.c b/mm/damon/lru_sort.c
-index 4af8fd4a390b..9bd8a1a115e0 100644
---- a/mm/damon/lru_sort.c
-+++ b/mm/damon/lru_sort.c
-@@ -325,7 +325,7 @@ static int __init damon_lru_sort_init(void)
- 	int err = damon_modules_new_paddr_ctx_target(&ctx, &target);
- 
+diff --git a/mm/damon/reclaim.c b/mm/damon/reclaim.c
+index c91098d8aa51..0fe8996328b8 100644
+--- a/mm/damon/reclaim.c
++++ b/mm/damon/reclaim.c
+@@ -194,7 +194,7 @@ static int damon_reclaim_apply_parameters(void)
  	if (err)
--		return err;
-+		goto out;
+ 		return err;
  
- 	ctx->callback.after_wmarks_check = damon_lru_sort_after_wmarks_check;
- 	ctx->callback.after_aggregation = damon_lru_sort_after_aggregation;
-@@ -334,6 +334,9 @@ static int __init damon_lru_sort_init(void)
- 	if (enabled)
- 		err = damon_lru_sort_turn(true);
+-	err = damon_set_attrs(ctx, &damon_reclaim_mon_attrs);
++	err = damon_set_attrs(param_ctx, &damon_reclaim_mon_attrs);
+ 	if (err)
+ 		goto out;
  
-+out:
-+	if (err && enabled)
-+		enabled = false;
- 	return err;
- }
+@@ -202,7 +202,7 @@ static int damon_reclaim_apply_parameters(void)
+ 	scheme = damon_reclaim_new_scheme();
+ 	if (!scheme)
+ 		goto out;
+-	damon_set_schemes(ctx, &scheme, 1);
++	damon_set_schemes(param_ctx, &scheme, 1);
  
+ 	if (quota_mem_pressure_us) {
+ 		goal = damos_new_quota_goal(DAMOS_QUOTA_SOME_MEM_PSI_US,
 -- 
 2.39.5
