@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D2202BE056;
-	Sun,  6 Jul 2025 20:00:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB92D2BE7AC;
+	Sun,  6 Jul 2025 20:00:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751832032; cv=none; b=pO2otmobVfO8mdl29Sga55cx+t8S5EEtXSxCGJmdIApOFdo71N99szsrHgBKiTAocQnwH/xIh3c9AXKbVPU+Hsc1PEQgaK9BGANWC4g6fa+HsfkY0A+Rgw5HBkXpMJqYeHkNhwjUJxrv6Sb0+rL6qj4yed1lUnv7JMd0L3CZGH4=
+	t=1751832033; cv=none; b=jD12lFw0rXSDuAv0PpBzaPBCaEdXtF7LV4XiNG89V1ebYdglGJGbCo83eM751QyW6qC9Qvl5xySuX8SfE9DMbC3c6eWwSbmyYyaTK+F0N5D0giNeql+CLgGTQygfVoGimdYFk12Fa1iJ5WUktJ5VEyHVAkkYLZyXrg/7TT6D/Rw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751832032; c=relaxed/simple;
-	bh=qgCCHgMjBSqd296NRY6BPJU6GpcbgCIFTrT62DjsH+o=;
+	s=arc-20240116; t=1751832033; c=relaxed/simple;
+	bh=kPaBWHAVnTpt3IhJpZpvKlwnOD5/goIRLdoHL+X/dnc=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=MxYG50+8UU65p2C/bel/G+Nc4Lj8rpqd5DBRmpWbUbkHumSF0PDJDSbwa1z5VJUl9rEfGfHaWL0sltVsZDbUtahoZPUnorNzC1nrLv6bzHLuE7Qesqwb+aCL/TGPIcfdtuDsWLxDbkDISwYqpbMsTPqyio/cN8SSdsMlP7+lGik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=H8WmWqp5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Is9OU4ztptk5cJEd3qGTJ5NQs+mPAb2R2fKeravN65bjbuswNUNNqGXA6OdH45rRuXwxMkJZV+LT5N/gGbNZlP3ekqsBT0sSXnPa6TBz11ENIMwoc7NgqI2CWumVOmKiRgaRVTiKtrH0u4PIUrKvRx2RiMRbEqVJ1sLd/qn2TaA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hTQV/EBd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="H8WmWqp5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A50DC4CEF2;
-	Sun,  6 Jul 2025 20:00:32 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hTQV/EBd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6602BC4CEF4;
+	Sun,  6 Jul 2025 20:00:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1751832032;
-	bh=qgCCHgMjBSqd296NRY6BPJU6GpcbgCIFTrT62DjsH+o=;
+	s=k20201202; t=1751832033;
+	bh=kPaBWHAVnTpt3IhJpZpvKlwnOD5/goIRLdoHL+X/dnc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H8WmWqp5pOIN39aMPaQGFH+p5aZKw8AS/c6J3FPzO732FLWrX8np8QOplYlf99KmU
-	 iEHgPMCPLCFVQU5dkRKVNXmX5pVqGuQDgJQWE+9HNSfjA5K/5crGndLV4wspg2YJoU
-	 tVWAg5+0sCauY+ilkIvLzlVtDeKQLQLB0n48QpCVmJ8HqHGo/HNIZrPzDiwmm1EbWa
-	 LUYDAECjiJEoz5wW0N+N3DIx+Qcy4hSiLLjHjKgSUxvbdCmbMVdi4j75KITa2tIobL
-	 fJt1nuTboznH6bRjz9UYPMG4qyG84DSi/uZXkeKX9Hdv6WnTywHmOFsnYySygOJF+U
-	 ceUktNuq9G4rA==
+	b=hTQV/EBdZ+FEb4l50CWDcbREHDhLh/y+oEWykVciIUzsu1JlCNLnsCdRI42AKrSaB
+	 5AoQVzIj+ynaCVhdzqLkYtX+rllRieKnOtspV5kiuv3b0xyic544cjrjDDnSlh9ccu
+	 yBDGKU6s8nvy4J84g1sMnFKa8hyA9cuLp7zDdceDIlcZJiRGRNlJFyIgEyNa28Te8D
+	 aVEWLmBL9VTGimWrb4n3OSPxsTLf1nwdz86LKFZKttgKQlwGGzvOLcALKQpt/WT1Ez
+	 iV+5zPllFVf3HIuMpm+9Sqb4RMTrZ1RhAvi31afjOnq9zDudzblqruWEMALbd/dy58
+	 vHmTGvQ/ZMP2g==
 From: SeongJae Park <sj@kernel.org>
 To: 
 Cc: SeongJae Park <sj@kernel.org>,
@@ -34,9 +34,9 @@ Cc: SeongJae Park <sj@kernel.org>,
 	kernel-team@meta.com,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH 07/14] samples/damon/wsse: use damon_call() repeat mode instead of damon_callback
-Date: Sun,  6 Jul 2025 13:00:11 -0700
-Message-Id: <20250706200018.42704-8-sj@kernel.org>
+Subject: [RFC PATCH 08/14] mm/damon/core: do not call ops.cleanup() when destroying targets
+Date: Sun,  6 Jul 2025 13:00:12 -0700
+Message-Id: <20250706200018.42704-9-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250706200018.42704-1-sj@kernel.org>
 References: <20250706200018.42704-1-sj@kernel.org>
@@ -48,58 +48,31 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-wsse uses damon_callback for periodically reading DAMON internal data.
-Use its alternative, damon_call() repeat mode.
+damon_operations.cleanup() is documented to be called for kdamond
+termination, but also being called for targets destruction, which is
+done for any damon_ctx destruction.  Nobody is using the callback for
+now, though.  Remove the cleanup() call under the destruction.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- samples/damon/wsse.c | 16 +++++++++++++---
- 1 file changed, 13 insertions(+), 3 deletions(-)
+ mm/damon/core.c | 5 -----
+ 1 file changed, 5 deletions(-)
 
-diff --git a/samples/damon/wsse.c b/samples/damon/wsse.c
-index 6037e5f8adf2..fb24190d2fc0 100644
---- a/samples/damon/wsse.c
-+++ b/samples/damon/wsse.c
-@@ -35,8 +35,9 @@ MODULE_PARM_DESC(enable, "Enable or disable DAMON_SAMPLE_WSSE");
- static struct damon_ctx *ctx;
- static struct pid *target_pidp;
- 
--static int damon_sample_wsse_after_aggregate(struct damon_ctx *c)
-+static int damon_sample_wsse_repeat_call_fn(void *data)
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index 7a4dc76dd023..eaa2306ff324 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -550,11 +550,6 @@ static void damon_destroy_targets(struct damon_ctx *ctx)
  {
-+	struct damon_ctx *c = data;
- 	struct damon_target *t;
+ 	struct damon_target *t, *next_t;
  
- 	damon_for_each_target(t, c) {
-@@ -52,9 +53,15 @@ static int damon_sample_wsse_after_aggregate(struct damon_ctx *c)
- 	return 0;
+-	if (ctx->ops.cleanup) {
+-		ctx->ops.cleanup(ctx);
+-		return;
+-	}
+-
+ 	damon_for_each_target_safe(t, next_t, ctx)
+ 		damon_destroy_target(t);
  }
- 
-+static struct damon_call_control repeat_call_control = {
-+	.fn = damon_sample_wsse_repeat_call_fn,
-+	.repeat = true,
-+};
-+
- static int damon_sample_wsse_start(void)
- {
- 	struct damon_target *target;
-+	int err;
- 
- 	pr_info("start\n");
- 
-@@ -79,8 +86,11 @@ static int damon_sample_wsse_start(void)
- 	}
- 	target->pid = target_pidp;
- 
--	ctx->callback.after_aggregation = damon_sample_wsse_after_aggregate;
--	return damon_start(&ctx, 1, true);
-+	err = damon_start(&ctx, 1, true);
-+	if (err)
-+		return err;
-+	repeat_call_control.data = ctx;
-+	return damon_call(ctx, &repeat_call_control);
- }
- 
- static void damon_sample_wsse_stop(void)
 -- 
 2.39.5
