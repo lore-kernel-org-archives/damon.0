@@ -1,62 +1,62 @@
-Received: from mail-yb1-f172.google.com (mail-yb1-f172.google.com [209.85.219.172])
+Received: from mail-yb1-f182.google.com (mail-yb1-f182.google.com [209.85.219.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15DDF1A23B9
-	for <damon@lists.linux.dev>; Wed,  9 Jul 2025 01:00:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CBE61A5B8B
+	for <damon@lists.linux.dev>; Wed,  9 Jul 2025 01:00:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752022845; cv=none; b=IcsdFWch/vt6TzQi5GR35BRVF/qDFEHI5z05dyo/8onbGiyKqp1lV1bIi8zhbCKINvZkonh5JJYqz1CjbQiQX7tQ6yKLuKb7LOS8XE10303Z1AANWa+rhnUc4jbS6mM31/hvD1UuKTfWc5Ozrk3cVkWkRYjlp4iU1lxSpJaGXes=
+	t=1752022851; cv=none; b=FeBAWmaNIsu1bNmwGSyC9eU4htp/c+UtxEcNPR7YbKeaFNWhLm8oMv7yrtsVn8NILUVSx9KbkcnSz0lJIw3nD44DkjsSG2RRcztgVXMWiGNcHJOkDtyWA1xMYeMzhEHm7OXttKaomME7YsREeOY3HmazIMELWaNaMEHBmma71Lo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752022845; c=relaxed/simple;
-	bh=IsxDvUOlPC/SNQd1/+tcnpC3Es95w6IQg+qyLyewcNM=;
+	s=arc-20240116; t=1752022851; c=relaxed/simple;
+	bh=0MULHU7ToE1y24HCVFh8DYPWr9UIZ8/yXBxYBDmNcrw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=lh/z4sxMy4RPxxygq1zuR1TURuvXaSgeHs81IZfV+/lMUxtb9b7ciUJcX5rbjvgCC9n8YEP3wv45pQWcmnsU1kFmlDZOAZeOutCzcj4iRKedChchN/tG2ig8XePOlZg3KmG8LUjAwqn7Rsz0jgD+1vYDJ2ryrnE2yyGy3oAuhwQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dSTqIq7X; arc=none smtp.client-ip=209.85.219.172
+	 MIME-Version; b=NRUDPGqJdy18oer7pjYozGMEUf1md7pzyIohpcpi98gs24KI0mi1HPSgFed867IOyeafy0JUWTMxDxa9TIitT/aHRqLtweszvSMz+hHl0COgfbYr840UsqQhscc0TCUt+255f0+yRFRAi5ltJvFADsE5Q78B85iWZaQsVO/4f4U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fOH+SH8T; arc=none smtp.client-ip=209.85.219.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dSTqIq7X"
-Received: by mail-yb1-f172.google.com with SMTP id 3f1490d57ef6-e8600a33792so3465695276.0
-        for <damon@lists.linux.dev>; Tue, 08 Jul 2025 18:00:43 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fOH+SH8T"
+Received: by mail-yb1-f182.google.com with SMTP id 3f1490d57ef6-e8275f110c6so3525718276.2
+        for <damon@lists.linux.dev>; Tue, 08 Jul 2025 18:00:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1752022843; x=1752627643; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1752022848; x=1752627648; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=H2jsjg4EouOhcgExOsiiXXDMU3g5WamEv1plw5aSp2k=;
-        b=dSTqIq7XQqAo3O7CcCF5WOKRNT3Ul7CHThqlTELCR1/anEZKHDCi2z5+NitZUEtbtN
-         dNpt6xihaFjaeSXgGn8lRtXi/Blk/yp08uSbLco/oXSOoPW11UhBYwYku/pTJSk897EV
-         kJXnPULYbXA6nwFhpk7nUI+5qNpNfSyKVrPIFzHsgBSY/pa+pYAhhncuiS+l6ErCqUjh
-         YsK2QtKpxTfIe5ZXyvQ1sSFDx5V67nj8ic+xsuBzu9GYd8DH/28p70Kc5KVBHx7A5yhD
-         Q4x6AYsBI+M9l0Li1kNtJfQor/PR95ygfksK/2aHftaqVmUzQxQG8Jrn/ZpqrzX1ojk/
-         SIkg==
+        bh=J1rQEZ3P3BWEkub0MmK+N1X97w+uXKLbRycfS2a+MLc=;
+        b=fOH+SH8TPlY8Ws7t6L5tNqEw+W8vSlvnjv3xsY2cv209NzcWwmEtLbO4I12cNspqen
+         Q0kVa9QZwrx+YrMp5sgdtBwPf9PZFtpqUxJsMXtQoBxRRRdRGCITlj81LkJ5N5Xzvau5
+         Rw+sbFQ5vBgVNCeynZIEbnyRBrYhbp8VQKdz9eByocDwZO/i8mbgbdwV9dI0//2TeMPH
+         NKfjpwwLboAV+TeNF+28ePzwvneiLauub7AoRjJzLoOXnJzcp+AEE6W+WiMpSV6h0Yu3
+         EDSpRDs2l4mPVKZDjZqNfZCWm1AK86gKBiOGISmz7MTyVGkt48nuveuEonp2LkYxixoJ
+         snfQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752022843; x=1752627643;
+        d=1e100.net; s=20230601; t=1752022848; x=1752627648;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=H2jsjg4EouOhcgExOsiiXXDMU3g5WamEv1plw5aSp2k=;
-        b=s16tRY0bght8De6+qasun7iqHtlQ08KPe6Ymx48OHTXQP9hiKBjy/93QrTRFSNpJ+I
-         MBwNptV3fZYNPZcIVADJNBRlx9Tn3DJqEDWf4etz1cklvyGrtensNsvXWDzgHO9nSePM
-         2SZUBqcF6RJtA32eikqgZSVmDq3ACi4iYxxIoKT8Je0j2JTkzdoQ+MY2gqJeuAGfMURU
-         dyawDpu35DNNSeAhrjJvLyWzGBJgu4DBXWirdy/9Nkrd1idojWqscgc3zRB72b3b5o1H
-         ipBWNXct0Jj2I73N1OX8qkMNk1ow3qxfmx/DaBqgWnWxdUucuESEeFAsuktS9f/u/LEv
-         yrtQ==
-X-Gm-Message-State: AOJu0YzBbC70W3viJ3AmiW2DFNasZa+iGZ4TAJ3Dzu+3j+YGOaE0SA27
-	/ESksVijESahcJHK+aGwHia/0iBFAB6hPUjjxyrazvRDx/q6W59sqZOU+1J5G4lEJFU=
-X-Gm-Gg: ASbGnctoUWZ9j+/MQCvoSuOYbY6DoacgIsxYNu6igdGvgktX5MkLgrnWanja5eYok/P
-	VpEdwaqaKAhQXI0RuqIJcyzqqf6Qej2MgY2tLHKmU4kobjbg8c/JwJyz5n9A5xdG/VeQk96f4AF
-	AUIIRCo7InjRFOy1Ko1blBlihbfE5d4WvtG2feU9kWjotEsOYVWRKQqYCus/5PmzlAdDc87qP4i
-	ihbcpvw/lc7ZDUCButVtQHk+HxYK1jGu60qpC0eNQQWPSxpobmJXBFhv+4bnnJICJwCAQukZ5m6
-	TePEe4mDLeVYyqaolQjt5vOZ336bVV95dklaKcYa2vCeYOIdTsLlimvlMY9dtTOWZC4mCL31/uI
-	gpH1M+UQ=
-X-Google-Smtp-Source: AGHT+IG9eIe5dClap9KCxt/8jsEpzJHg4xsuwYOTV9E8tYS1KG14U14qxbM4oZ2qYkqz80lDz0BJew==
-X-Received: by 2002:a05:6902:2c05:b0:e87:982c:5528 with SMTP id 3f1490d57ef6-e8b6e151739mr662630276.40.1752022842295;
-        Tue, 08 Jul 2025 18:00:42 -0700 (PDT)
+        bh=J1rQEZ3P3BWEkub0MmK+N1X97w+uXKLbRycfS2a+MLc=;
+        b=Pyzqh0O5/fgQxGnYQLI9rBpIFTQv3N+XY1uJMa6QAgc7ZXZCSFUvSwpWZfPUow8REm
+         EyMKmpSYurNZh/i7CeG5fz2JNeTp8S7pQyXzdenfk6LZZ57DOQH8SE7QoF2r7mgWkO5Q
+         mz7/mCoW1Pc+eVM6n43OzvOIwT9kvFUbwOaPy7/cew0gEOJZDsTk8EEY1b6A8ldtxNM5
+         9s34AiUNiyTU66MFLFTh47sKmDZ2zFwU+g+82oOR8yLkvUgM7twBPlszyCRmA207QR/I
+         lLgAqChUqKlP5N09PwOKvnLdKWTyTe9BNJzP4Eutw+yVNxJXYrC4zfNZadXxCFx1tJu1
+         gA9w==
+X-Gm-Message-State: AOJu0YydIYAvHZde9ffhxqnClkP815Y4psw6HwOs2VUJfyzwqYPLwyIH
+	21C4VMzBdPwA2I+OCoeQugFR3VzIM65CCQJt1D6CyQ9A7h5S7c71TzO2CHLRR5ttB90=
+X-Gm-Gg: ASbGncvIOUPs8U8sbwUTEDT1AhqOCANx9zIQp0pUHWqUZ36rGA1+MNbrKIIg4cS+lUm
+	ebae0AZ1maIiP8nf7MJH0zmQi0V3/S2pv9LNTrJgR52ZZe0wOWU0D/cpUzASOlZ3h/RhWNRBVHx
+	GseC+PVVC9hSwzy/n+iLvmhCiY1F62ySqDnlyHN+ob02gL+n9LQ+1PeBdQndlh/FtwddlNLQGrI
+	TkYbSVTYdkRdIWFcQozVytE1spWeWRvOn9Oqntq6SyYpQv/OUqQvdOtvzndmyLeW+2x0AKA8WOE
+	P9mo1zN462nFuPpMBC2CLDo3m49IqYxQCDxZu4RmbmMa4/A4AWuEZlv/jIpd6PNOvtR0kymmbDt
+	S3/LjN0U=
+X-Google-Smtp-Source: AGHT+IH2cQxk/EywgLp+UgmsKikCG6qPU3Rfx8V0pFOQ6x3T288Qg0dLaeI6mBOGtVGc7IHSd5hNEA==
+X-Received: by 2002:a05:690c:680f:b0:70e:15e7:59e2 with SMTP id 00721157ae682-717b1c36f17mr11095217b3.24.1752022847915;
+        Tue, 08 Jul 2025 18:00:47 -0700 (PDT)
 Received: from bijan-laptop.attlocal.net ([2600:1700:680e:c000:235f:99bb:f36e:a060])
-        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e899c43ed8asm3656043276.26.2025.07.08.18.00.37
+        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e899c43ed8asm3656043276.26.2025.07.08.18.00.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Jul 2025 18:00:41 -0700 (PDT)
+        Tue, 08 Jul 2025 18:00:47 -0700 (PDT)
 From: Bijan Tabatabai <bijan311@gmail.com>
 To: damon@lists.linux.dev,
 	linux-mm@kvack.org,
@@ -70,9 +70,9 @@ Cc: sj@kernel.org,
 	emirakhur@micron.com,
 	vtavarespetr@micron.com,
 	ajayjoshi@micron.com
-Subject: [PATCH v4 06/13] Docs/admin-guide/mm/damon/usage: document dests directory
-Date: Tue,  8 Jul 2025 19:59:36 -0500
-Message-ID: <20250709005952.17776-7-bijan311@gmail.com>
+Subject: [PATCH v4 07/13] mm/damon/core: Commit damos->migrate_dests
+Date: Tue,  8 Jul 2025 19:59:37 -0500
+Message-ID: <20250709005952.17776-8-bijan311@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250709005952.17776-1-bijan311@gmail.com>
 References: <20250709005952.17776-1-bijan311@gmail.com>
@@ -82,77 +82,76 @@ List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: SeongJae Park <sj@kernel.org>
+From: Bijan Tabatabai <bijantabatab@micron.com>
 
-Document the newly added DAMOS action destination directory of the DAMON
-sysfs interface on the usage document.
+When committing new scheme parameters from the sysfs, copy the
+migrate_dests struct of the source schemes into the destination schemes.
 
-Signed-off-by: SeongJae Park <sj@kernel.org>
+Signed-off-by: Bijan Tabatabai <bijantabatab@micron.com>
+Reviewed-by: SeongJae Park <sj@kernel.org>
 ---
- Documentation/admin-guide/mm/damon/usage.rst | 33 +++++++++++++++++---
- 1 file changed, 29 insertions(+), 4 deletions(-)
+ mm/damon/core.c | 39 +++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 39 insertions(+)
 
-diff --git a/Documentation/admin-guide/mm/damon/usage.rst b/Documentation/admin-guide/mm/damon/usage.rst
-index d960aba72b82..fc5c962353ed 100644
---- a/Documentation/admin-guide/mm/damon/usage.rst
-+++ b/Documentation/admin-guide/mm/damon/usage.rst
-@@ -85,6 +85,8 @@ comma (",").
-     │ │ │ │ │ │ │ :ref:`watermarks <sysfs_watermarks>`/metric,interval_us,high,mid,low
-     │ │ │ │ │ │ │ :ref:`{core_,ops_,}filters <sysfs_filters>`/nr_filters
-     │ │ │ │ │ │ │ │ 0/type,matching,allow,memcg_path,addr_start,addr_end,target_idx,min,max
-+    │ │ │ │ │ │ │ :ref:`dests <damon_sysfs_dests>`/nr_dests
-+    │ │ │ │ │ │ │ │ 0/id,weight
-     │ │ │ │ │ │ │ :ref:`stats <sysfs_schemes_stats>`/nr_tried,sz_tried,nr_applied,sz_applied,sz_ops_filter_passed,qt_exceeds
-     │ │ │ │ │ │ │ :ref:`tried_regions <sysfs_schemes_tried_regions>`/total_bytes
-     │ │ │ │ │ │ │ │ 0/start,end,nr_accesses,age,sz_filter_passed
-@@ -307,10 +309,10 @@ to ``N-1``.  Each directory represents each DAMON-based operation scheme.
- schemes/<N>/
- ------------
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index 62acfd5cf4ea..8d54bfc3ce0e 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -943,6 +943,41 @@ static void damos_set_filters_default_reject(struct damos *s)
+ 		damos_filters_default_reject(&s->ops_filters);
+ }
  
--In each scheme directory, seven directories (``access_pattern``, ``quotas``,
--``watermarks``, ``core_filters``, ``ops_filters``, ``filters``, ``stats``, and
--``tried_regions``) and three files (``action``, ``target_nid`` and
--``apply_interval``) exist.
-+In each scheme directory, eight directories (``access_pattern``, ``quotas``,
-+``watermarks``, ``core_filters``, ``ops_filters``, ``filters``, ``dests``,
-+``stats``, and ``tried_regions``) and three files (``action``, ``target_nid``
-+and ``apply_interval``) exist.
++static int damos_commit_dests(struct damos *dst, struct damos *src)
++{
++	struct damos_migrate_dests *dst_dests, *src_dests;
++
++	dst_dests = &dst->migrate_dests;
++	src_dests = &src->migrate_dests;
++
++	if (dst_dests->nr_dests != src_dests->nr_dests) {
++		kfree(dst_dests->node_id_arr);
++		kfree(dst_dests->weight_arr);
++
++		dst_dests->node_id_arr = kmalloc_array(src_dests->nr_dests,
++			sizeof(*dst_dests->node_id_arr), GFP_KERNEL);
++		if (!dst_dests->node_id_arr) {
++			dst_dests->weight_arr = NULL;
++			return -ENOMEM;
++		}
++
++		dst_dests->weight_arr = kmalloc_array(src_dests->nr_dests,
++			sizeof(*dst_dests->weight_arr), GFP_KERNEL);
++		if (!dst_dests->weight_arr) {
++			/* ->node_id_arr will be freed by scheme destruction */
++			return -ENOMEM;
++		}
++	}
++
++	dst_dests->nr_dests = src_dests->nr_dests;
++	for (int i = 0; i < src_dests->nr_dests; i++) {
++		dst_dests->node_id_arr[i] = src_dests->node_id_arr[i];
++		dst_dests->weight_arr[i] = src_dests->weight_arr[i];
++	}
++
++	return 0;
++}
++
+ static int damos_commit_filters(struct damos *dst, struct damos *src)
+ {
+ 	int err;
+@@ -984,6 +1019,10 @@ static int damos_commit(struct damos *dst, struct damos *src)
+ 	dst->wmarks = src->wmarks;
+ 	dst->target_nid = src->target_nid;
  
- The ``action`` file is for setting and getting the scheme's :ref:`action
- <damon_design_damos_action>`.  The keywords that can be written to and read
-@@ -484,6 +486,29 @@ Refer to the :ref:`DAMOS filters design documentation
- of different ``allow`` works, when each of the filters are supported, and
- differences on stats.
- 
-+.. _damon_sysfs_dests:
++	err = damos_commit_dests(dst, src);
++	if (err)
++		return err;
 +
-+schemes/<N>/dests/
-+------------------
-+
-+Directory for specifying the destinations of given DAMON-based operation
-+scheme's action.  This directory is ignored if the action of the given scheme
-+is not supporting multiple destinations.  Only ``DAMOS_MIGRATE_{HOT,COLD}``
-+actions are supporting multiple destinations.
-+
-+In the beginning, the directory has only one file, ``nr_dests``.  Writing a
-+number (``N``) to the file creates the number of child directories named ``0``
-+to ``N-1``.  Each directory represents each action destination.
-+
-+Each destination directory contains two files, namely ``id`` and ``weight``.
-+Users can write and read the identifier of the destination to ``id`` file.
-+For ``DAMOS_MIGRATE_{HOT,COLD}`` actions, the migrate destination node's node
-+id should be written to ``id`` file.  Users can write and read the weight of
-+the destination among the given destinations to the ``weight`` file.  The
-+weight can be an arbitrary integer.  When DAMOS apply the action to each entity
-+of the memory region, it will select the destination of the action based on the
-+relative weights of the destinations.
-+
- .. _sysfs_schemes_stats:
- 
- schemes/<N>/stats/
+ 	err = damos_commit_filters(dst, src);
+ 	return err;
+ }
 -- 
 2.43.0
 
