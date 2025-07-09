@@ -1,126 +1,155 @@
-Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from relay.hostedemail.com (smtprelay0017.hostedemail.com [216.40.44.17])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E65E62E8DFA
-	for <damon@lists.linux.dev>; Wed,  9 Jul 2025 14:07:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 142531F8EFF
+	for <damon@lists.linux.dev>; Wed,  9 Jul 2025 16:21:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=216.40.44.17
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752070051; cv=none; b=aK67Qm43V0z73YIit2TAOY29JQ41XUfDfvxGsSir9Iahmu7H8xDphdkdMTlWga5I1zZ4hTME3hfb5WO+15kDwiFb6ti3xS9KKOrOLORBOO/wZGEXz4iM9ED3cUHJw/TikVOIhzxUdBiaMozxV8r7I1cMUDuUcFIGeitFPnE5eYQ=
+	t=1752078091; cv=none; b=uT7QEf02iCv5ngzPck7MOJT9mDt3sD8yKaTM6/k+FNzSSkK7CxhNqJ6Mfx81hJIw6UkWx2zIktRJM+Y+8MA0zic84SzO0JTcmVOQIuhEkE9BCoi32cyrnnYHSO5Jj7WJ9Ch3gFcDJ/jppkBc6xOqZECSnXEOAWcYKOjxjw49GoE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752070051; c=relaxed/simple;
-	bh=0vIhpx+0YQQm1MaG38coKriz3Hl7RX4m9tfVDq7x9mw=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Zt9WtKiyDtkq6CGBC5DDkwIr05n9xRuYvuszp+4PTc3/FkfRH0+oXTCKvUpWh/h7TDWAtSeqqdJw/KTwz8JT9rbli9lodunOvZn2qJA8vMYWYskwUPd0pbiSiKna9RW5gsVrmHSVHWFsj+HtPWApCPLYrzRfSQNGErzDyvOeUbc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=S2vwEWsN; arc=none smtp.client-ip=209.85.218.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="S2vwEWsN"
-Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-ae0c571f137so1085177266b.0
-        for <damon@lists.linux.dev>; Wed, 09 Jul 2025 07:07:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1752070048; x=1752674848; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=VkAhtJII7qepeyVa2+QSjE/0dSe9MXuvFykrrDGX/LE=;
-        b=S2vwEWsNUkio1DWmNvhfusKChcFpV9n7cx2CBZVt0lN452n9guRspoob6wBxHORDu6
-         XfEZ9Tx4GeRp20B3W84dvPmDkIpUaahGJn3AYBsaVL0C0OAKrVRVOYvkXRVNlC3lbClT
-         gp8ejFpvkuCBg0uOtYWX+W8y71/2zqWrFr7qO4E1pKvEwUzaVetBhj7BpdtWJy0VV9/v
-         7V35IckfSli0sf26GM553HM9w3uX0Dqvckk/etjGvhuXmn/QeFg1BFDfRero6z5gd8cK
-         F8BpGUaxubGSZMn6vU9HeXQXGpvJUPBEn9UqlP8TctljKSD/9pr4BO/F/anBgz8PfKMV
-         SYBA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752070048; x=1752674848;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=VkAhtJII7qepeyVa2+QSjE/0dSe9MXuvFykrrDGX/LE=;
-        b=hm57TdXP3oeGUl2Za0M6QP7I70nb0ofnPo851JUqJ+fRokLTaLEJTUccNqNEthLu/h
-         p8Dmnmoth+ks9ZP/MfWIqEymegVOM/me/zuXzRvc0RKSlKdzb7H21Ui3TF3naCAuCH17
-         aKdnpM+/M+cal4g5wczrn8icwPJI0GEf5R9eZlAJ94U3BDH5JwQzQmoMLDYPnJj9OsUc
-         M55Yr79LBMtE2klCsXqB9bibVQBdkXYMZxVXBTs+u0Wqfir5QcxMNl1zS/Be3O8RSPix
-         wmW7P2JhYFEJXQySIe34JAd7Ujn4ia4a2f0d4Xkw5UufieSv3XqM5tjJ/cWNXAl1jP+h
-         88+Q==
-X-Gm-Message-State: AOJu0YzwzmB2k5EBK3582fo6QCzK1wp8hU++KkFfHaMWDqZXntv0HRVA
-	O1Zfh3zycLpu+x/FdlW6SYAIfjYUhtetM4GhAGbvJtYv2wzM2jg6f64ETUnjYGGDyiaN50+2QVg
-	dYH46XC6m7hO3pvYLf8ikV3sjy20Vrsc=
-X-Gm-Gg: ASbGncu/t2c8HZBbHzhsfCtClRHIYkX335EXyTIDy1DL5RqrvK2KgCGh2PUrxAn7VcU
-	r4qRThQA6SOGjfE5w687rWBSrqfbuBEGaL3HxAXUFuAYNwJKfy4uFr+gM5FHAmAp0N931tcLrnb
-	nOo6VZJh7mGfuxeopSyxS9ECfgKhon64vTskgp12LcTJKh5kEcTimSYNVgR+c01pGhg1y8V60VJ
-	z2yokL4rfwUODap
-X-Google-Smtp-Source: AGHT+IGIfSNs28NtfUwdB7/Q+GAf+1HaldJgehEtx6rpKFjG5kyBclCrpaomz4JmoRY5EzJIVVBaqimr1SPayzymfUk=
-X-Received: by 2002:a17:907:7f8f:b0:ae1:5db8:b78f with SMTP id
- a640c23a62f3a-ae6cf7354a1mr263493666b.34.1752070047664; Wed, 09 Jul 2025
- 07:07:27 -0700 (PDT)
+	s=arc-20240116; t=1752078091; c=relaxed/simple;
+	bh=vNFKpWvUgiRSxy59r6jbFTJESnlfgfLQit6HrriuWvY=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=BcSUYSVHrhekqFDvbAMcnYmoFjF2wH9zX3epOJr4UQ4Axay5qaFE+92yFYbTdwws9CWjM0x8b9zYB8R/6MwtUy+kSEyQYcu9BEPK7RO8gJScv0ywsmPTY2UBPsGsHKhA1dfhZsd7Sr7UOoVqL/P36Mj8kW1EQ3y9R+U0OZWmrCI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=goodmis.org; spf=pass smtp.mailfrom=goodmis.org; arc=none smtp.client-ip=216.40.44.17
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=goodmis.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=goodmis.org
+Received: from omf11.hostedemail.com (a10.router.float.18 [10.200.18.1])
+	by unirelay05.hostedemail.com (Postfix) with ESMTP id 04B2858876;
+	Wed,  9 Jul 2025 16:21:26 +0000 (UTC)
+Received: from [HIDDEN] (Authenticated sender: rostedt@goodmis.org) by omf11.hostedemail.com (Postfix) with ESMTPA id D78A020029;
+	Wed,  9 Jul 2025 16:21:24 +0000 (UTC)
+Date: Wed, 9 Jul 2025 12:21:23 -0400
+From: Steven Rostedt <rostedt@goodmis.org>
+To: SeongJae Park <sj@kernel.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>, Masami Hiramatsu
+ <mhiramat@kernel.org>, Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+ damon@lists.linux.dev, kernel-team@meta.com, linux-kernel@vger.kernel.org,
+ linux-mm@kvack.org, linux-trace-kernel@vger.kernel.org
+Subject: Re: [PATCH 2/2] mm/damon: add trace event for effective size quota
+Message-ID: <20250709122123.779c874f@batman.local.home>
+In-Reply-To: <20250704221408.38510-3-sj@kernel.org>
+References: <20250704221408.38510-1-sj@kernel.org>
+	<20250704221408.38510-3-sj@kernel.org>
+X-Mailer: Claws Mail 3.17.8 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20250709005952.17776-1-bijan311@gmail.com> <20250709110648.52688-1-sj@kernel.org>
-In-Reply-To: <20250709110648.52688-1-sj@kernel.org>
-From: Bijan Tabatabai <bijan311@gmail.com>
-Date: Wed, 9 Jul 2025 09:07:14 -0500
-X-Gm-Features: Ac12FXyKir0QkPAHnX3REi635GLE0DBv9wAGdZTw6dhXQX_ellDr1zjsx8QPpQI
-Message-ID: <CAMvvPS7avR+xEk7e+n5X-rwDFnFCf3e7ubJPHAQfRQVmyZJMjg@mail.gmail.com>
-Subject: Re: [PATCH v4 00/13] mm/damon/vaddr: Allow interleaving in
- migrate_{hot,cold} actions
-To: SeongJae Park <sj@kernel.org>
-Cc: damon@lists.linux.dev, linux-mm@kvack.org, linux-kernel@vger.kernel.org, 
-	linux-doc@vger.kernel.org, akpm@linux-foundation.org, corbet@lwn.net, 
-	bijantabatab@micron.com, venkataravis@micron.com, emirakhur@micron.com, 
-	vtavarespetr@micron.com, ajayjoshi@micron.com, 
-	bijan <bijan@node0.bijan-262664.superpages-pg0.wisc.cloudlab.us>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+X-Rspamd-Queue-Id: D78A020029
+X-Rspamd-Server: rspamout02
+X-Stat-Signature: fkg984hkoqjmczbxduzqcafqtg6cfuhe
+X-Session-Marker: 726F737465647440676F6F646D69732E6F7267
+X-Session-ID: U2FsdGVkX1+J83NPMP8Sb/jo8DzLq42jn+04tnd7tQs=
+X-HE-Tag: 1752078084-665881
+X-HE-Meta: U2FsdGVkX19yh07IWGJTt82fNF/ks4rwm7Vd04a3pMjNbEa9Iu2kCulF+w3I8TKkzOcC4LrKMfExorhkuneJ5aivcdQPGfaB6Gv4+YvVKYa2/plhI4vNpcQzOpfwvfwhDrczQIa6wsJd4+jOewKhbRkkpXCfLfONXlESW3UW1+31AQReitUvox9NrhHOAuaUTOQvYIIqS59/hfasvc0RbYsmz/pUa8MbHpoO4PXVx+Cjbbh2yrudjrxhbM532YhV5U8srTsOI8YRlh2VE6kzlDbTskCtxjbP0bl16FzcfvePsjdD6eMLnNMxZ4OHxl1BfdJMcHDeqkN0iaWxWdXTOI1aLdkYiVdr
 
-On Wed, Jul 9, 2025 at 6:06=E2=80=AFAM SeongJae Park <sj@kernel.org> wrote:
->
-> On Tue,  8 Jul 2025 19:59:30 -0500 Bijan Tabatabai <bijan311@gmail.com> w=
-rote:
->
-> > From: bijan <bijan@node0.bijan-262664.superpages-pg0.wisc.cloudlab.us>
->
-> Maybe this is not an intended part but something from misconfiguration?  =
-I show
-> Andrew merged this series into mm-new after removing this, but headsup fo=
-r a
-> case that we might do rebase.
+On Fri,  4 Jul 2025 15:14:08 -0700
+SeongJae Park <sj@kernel.org> wrote:
 
-Sorry about that. I had to switch the machine I was generating patches
-on and forgot to setup the git config. I'll make sure it doesn't
-happen if I need to resend.
+> Aim-oriented DAMOS quota auto-tuning is an important and recommended
+> feature for DAMOS users.  Add a trace event for the observability of the
+> tuned quota and tuning itself.
+> 
+> Signed-off-by: SeongJae Park <sj@kernel.org>
+> ---
+>  include/trace/events/damon.h | 26 ++++++++++++++++++++++++++
+>  mm/damon/core.c              | 20 +++++++++++++++++++-
+>  2 files changed, 45 insertions(+), 1 deletion(-)
+> 
+> diff --git a/include/trace/events/damon.h b/include/trace/events/damon.h
+> index 32c611076023..36b2cdf47dce 100644
+> --- a/include/trace/events/damon.h
+> +++ b/include/trace/events/damon.h
+> @@ -9,6 +9,32 @@
+>  #include <linux/types.h>
+>  #include <linux/tracepoint.h>
+>  
+> +TRACE_EVENT_CONDITION(damos_esz,
+> +
+> +	TP_PROTO(unsigned int context_idx, unsigned int scheme_idx,
+> +		unsigned long esz, bool do_trace),
+> +
+> +	TP_ARGS(context_idx, scheme_idx, esz, do_trace),
+> +
+> +	TP_CONDITION(do_trace),
 
-[...]
-> > Revision History
-> > =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> > Changes from v3 [10]:
-> > - Fix bug where huge pages would be split
->
-> Maybe "walk->action =3D ACTION_CONTINUE;" of ninth patch?  Nice finding!
+Please explain to me why you are using a conditional here?
 
-Yes, that was the change.
+> +
+> +	TP_STRUCT__entry(
+> +		__field(unsigned int, context_idx)
+> +		__field(unsigned int, scheme_idx)
+> +		__field(unsigned long, esz)
+> +	),
+> +
+> +	TP_fast_assign(
+> +		__entry->context_idx = context_idx;
+> +		__entry->scheme_idx = scheme_idx;
+> +		__entry->esz = esz;
+> +	),
+> +
+> +	TP_printk("ctx_idx=%u scheme_idx=%u esz=%lu",
+> +			__entry->context_idx, __entry->scheme_idx,
+> +			__entry->esz)
+> +);
+> +
+>  TRACE_EVENT_CONDITION(damos_before_apply,
+>  
+>  	TP_PROTO(unsigned int context_idx, unsigned int scheme_idx,
+> diff --git a/mm/damon/core.c b/mm/damon/core.c
+> index 57a1ace4d10d..6019b8ec4bba 100644
+> --- a/mm/damon/core.c
+> +++ b/mm/damon/core.c
+> @@ -2011,12 +2011,26 @@ static void damos_set_effective_quota(struct damos_quota *quota)
+>  	quota->esz = esz;
+>  }
+>  
+> +static void damos_trace_esz(struct damon_ctx *c, struct damos *s,
+> +		struct damos_quota *quota)
+> +{
+> +	unsigned int cidx = 0, sidx;
+> +	struct damos *siter;
+> +
+> +	damon_for_each_scheme(siter, c) {
+> +		if (siter == s)
+> +			break;
+> +		sidx++;
+> +	}
+> +	trace_damos_esz(cidx, sidx, quota->esz, true);
 
-> Nontheless, since this was found by you and didn't discussed in public be=
-fore,
-> it would be nice to add a short additional clarifications like above, if =
-we
-> (unlikely) do rebase.
+It's set to true, so it's not even a conditional anymore. The compiler
+will likely optimize it out!
 
-I will do this if a rebase if necessary.
+-- Steve
 
-[...]
->
-> For the entire series,
->
-> Reviewed-by: SeongJae Park <sj@kernel.org>
->
->
-> Thanks,
-> SJ
 
-Thank you for all of your feedback and time spent on reviews!
+> +}
+> +
+>  static void damos_adjust_quota(struct damon_ctx *c, struct damos *s)
+>  {
+>  	struct damos_quota *quota = &s->quota;
+>  	struct damon_target *t;
+>  	struct damon_region *r;
+> -	unsigned long cumulated_sz;
+> +	unsigned long cumulated_sz, cached_esz;
+>  	unsigned int score, max_score = 0;
+>  
+>  	if (!quota->ms && !quota->sz && list_empty(&quota->goals))
+> @@ -2030,7 +2044,11 @@ static void damos_adjust_quota(struct damon_ctx *c, struct damos *s)
+>  		quota->total_charged_sz += quota->charged_sz;
+>  		quota->charged_from = jiffies;
+>  		quota->charged_sz = 0;
+> +		if (trace_damos_esz_enabled())
+> +			cached_esz = quota->esz;
+>  		damos_set_effective_quota(quota);
+> +		if (trace_damos_esz_enabled() && quota->esz != cached_esz)
+> +			damos_trace_esz(c, s, quota);
+>  	}
+>  
+>  	if (!c->ops.get_scheme_score)
 
-Bijan
