@@ -1,48 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EDD4239085;
-	Wed,  9 Jul 2025 18:28:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C82DC86348;
+	Sat, 12 Jul 2025 19:50:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752085727; cv=none; b=V6xzRt5ygVtOgURnQJim7w4UMzn8hkCYkrzIueWc4a6xXYnEXZBj95GaGgH6jtlLGE+ZaM7NGIja/6FQz8U40ilwXxhxfIN5rnKENSn7nFcxLmUS1TvlUIXQH7rJTCWM14R1EDcBy92o5cmS+YB6NX9mHIBEY3hRtoQ53OtegYE=
+	t=1752349821; cv=none; b=nX1yeMjuPfoSV2z+GrfFvy3REyHngeTxkIpo6lhphHspwNoQXaM+lVKdM24dbJSunC/YE4cwVQH5mWd4AR3BF+0ng3HZtLXgV38oAjp4dBqmz3aNfJvR/LAfumedOIaACBEmBggpsdVqDceFmb1BpxYwnK5QEX7OH7NB1+Cbs2o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752085727; c=relaxed/simple;
-	bh=9fdOdgXFqFowyzNU5tXxjS4uhBhKB/MS4gO9Omh2uak=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=RPxzGhz5z0lMi33B+A9mKgCHFGF0XCP2jMgu9lspOeY4y7GVH7Maf8l2c2xq4I0iSTktRTJveiWgJqkEliCN9rz0i6asST58I86FILLz7LsFQMLuQilEoDwYYfNWgWXoVxqzEf3TR8rgI6u/K+bp23BFSgt4ltoTnN0P99UHGII=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rQe5hD/X; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1752349821; c=relaxed/simple;
+	bh=iMXyEafbKbZx5VH4yI00DVv/yYVsMaNu/+JwZ+hQPjI=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=CvJR4peN9q3PiRkls4P3jAWXoKBhPns64Jn9oVMZ7Dhf8h6a93gnPS41B5pV48jCMc/6rYJZ/ZLoS+gQXXdNPeEKmyrvFlDhjg4RXrcCI1kmk2jVicm4+jPebAo2fBBdKonSS3sWVHgA+0iTsixj6IFvkro61WnttC2KrQ2buhA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AXF+bFBM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rQe5hD/X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CBBFC4CEEF;
-	Wed,  9 Jul 2025 18:28:46 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AXF+bFBM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2104DC4CEEF;
+	Sat, 12 Jul 2025 19:50:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1752085726;
-	bh=9fdOdgXFqFowyzNU5tXxjS4uhBhKB/MS4gO9Omh2uak=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rQe5hD/Xy2KnOs/bQB0lEgW4j3mQDC4PfqWXL07vLm2IdbrLSoh1i8OS5yTv9I69G
-	 HentD9Mbh4/GyVFaO/5UGpCitKYz2zIWnFvM4LdA2j0hnbCKTiN5vn78vF3oEtn57r
-	 WUOC+ZjrXr6CgsbnSUxBMl80DM28klUBJYS8bcz6Q5/pHvC6BQS8DMMR3vFUOcyMA1
-	 wnZZ3O2mR8i+1phLiwuqaOMhZ8rYXW5zDvcys/+O7fuyqaE7jdbOmN1bZE/9Nf5CTW
-	 y/7u14FN1rLcV4/BNFXA1892o6y4j2x+hXZt9/4zChKhrW90fV5Z2a8ikf8XlO9a8g
-	 NW4bbjPKdSiiA==
+	s=k20201202; t=1752349820;
+	bh=iMXyEafbKbZx5VH4yI00DVv/yYVsMaNu/+JwZ+hQPjI=;
+	h=From:To:Cc:Subject:Date:From;
+	b=AXF+bFBMDO53rD9LUEJT9cz4+J8lvGOcHXqXShZ/C9YuLQmuh51nLTppgJQN2UKxL
+	 3pg88rCuqRup+v2i8Y8Fdr8pVmCL2/Sd0Nk/qfURyMmalERi8BFpJlM8HPnv38hZ1E
+	 qyThFAiZ0KO548cJy53a+VPlaJ0VsZwMs3cKfWKtPyfsVzwN7mJEWlQmFwxoiQQVS4
+	 Svzz3bIRN/vNlo+fx6voEhYELRcX04D1WxJ1xhnL+Y3eO1Ce8yUVfLCbxixhN8h1R1
+	 0KPDtycLqsiq62XpwIfBekWYu7md4KhWqyHJeJWIE/SM34zGQrVWMi2u+KhqrtA6rU
+	 RwcIr/ECEu2YQ==
 From: SeongJae Park <sj@kernel.org>
-To: Steven Rostedt <rostedt@goodmis.org>
+To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SeongJae Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
 	damon@lists.linux.dev,
 	kernel-team@meta.com,
 	linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org,
-	linux-trace-kernel@vger.kernel.org
-Subject: Re: [PATCH 2/2] mm/damon: add trace event for effective size quota
-Date: Wed,  9 Jul 2025 11:28:43 -0700
-Message-Id: <20250709182843.35812-1-sj@kernel.org>
+	linux-mm@kvack.org
+Subject: [PATCH 00/14] mm/damon: remove damon_callback
+Date: Sat, 12 Jul 2025 12:50:02 -0700
+Message-Id: <20250712195016.151108-1-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250709122123.779c874f@batman.local.home>
-References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -51,127 +44,66 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hi Steven,
+damon_callback was the only way for communicating with DAMON for
+contexts running on its worker thread.  The interface is flexible
+and simple.  But as DAMON evolves with more features, damon_callback
+has become somewhat too old.  With runtime parameters update, for example,
+its lack of synchronization support was found to be inconvenient.
+Arguably it is also not easy to use correctly since the callers should
+understand when each callback is called, and implication of the return
+values from the callbacks.
 
-On Wed, 9 Jul 2025 12:21:23 -0400 Steven Rostedt <rostedt@goodmis.org> wrote:
+To replace it, damon_call() and damos_walk() are introduced.  And those
+replaced a few damon_callback use cases.  Some use cases of
+damon_callback such as parallel or repetitive DAMON internal data
+reading and additional cleanups cannot simply be replaced by
+damon_call() and damos_walk(), though.
 
-> On Fri,  4 Jul 2025 15:14:08 -0700
-> SeongJae Park <sj@kernel.org> wrote:
-> 
-> > Aim-oriented DAMOS quota auto-tuning is an important and recommended
-> > feature for DAMOS users.  Add a trace event for the observability of the
-> > tuned quota and tuning itself.
-> > 
-> > Signed-off-by: SeongJae Park <sj@kernel.org>
-> > ---
-> >  include/trace/events/damon.h | 26 ++++++++++++++++++++++++++
-> >  mm/damon/core.c              | 20 +++++++++++++++++++-
-> >  2 files changed, 45 insertions(+), 1 deletion(-)
-> > 
-> > diff --git a/include/trace/events/damon.h b/include/trace/events/damon.h
-> > index 32c611076023..36b2cdf47dce 100644
-> > --- a/include/trace/events/damon.h
-> > +++ b/include/trace/events/damon.h
-> > @@ -9,6 +9,32 @@
-> >  #include <linux/types.h>
-> >  #include <linux/tracepoint.h>
-> >  
-> > +TRACE_EVENT_CONDITION(damos_esz,
-> > +
-> > +	TP_PROTO(unsigned int context_idx, unsigned int scheme_idx,
-> > +		unsigned long esz, bool do_trace),
-> > +
-> > +	TP_ARGS(context_idx, scheme_idx, esz, do_trace),
-> > +
-> > +	TP_CONDITION(do_trace),
-> 
-> Please explain to me why you are using a conditional here?
+To allow those replaceable, extend damon_call() for parallel and/or
+repeated callbacks and modify the core/ops layers for additional
+resources cleanup.  With the updates, replace the remaining
+damon_callback usages and finally say goodbye to damon_callback.
 
-There is no reason to make this conditional.  Maybe I was out of my mind.
+Changes from RFC
+(https://lore.kernel.org/20250706200018.42704-1-sj@kernel.org)
+- Fix wrong return from loop that prevents repeat mode damon_call().
+- Remove unnecessary put_pid() from DAMON sample modules.
+- Rebase to latest mm-new
 
-[...]
-> > --- a/mm/damon/core.c
-> > +++ b/mm/damon/core.c
-> > @@ -2011,12 +2011,26 @@ static void damos_set_effective_quota(struct damos_quota *quota)
-> >  	quota->esz = esz;
-> >  }
-> >  
-> > +static void damos_trace_esz(struct damon_ctx *c, struct damos *s,
-> > +		struct damos_quota *quota)
-> > +{
-> > +	unsigned int cidx = 0, sidx;
-> > +	struct damos *siter;
-> > +
-> > +	damon_for_each_scheme(siter, c) {
-> > +		if (siter == s)
-> > +			break;
-> > +		sidx++;
-> > +	}
-> > +	trace_damos_esz(cidx, sidx, quota->esz, true);
-> 
-> It's set to true, so it's not even a conditional anymore. The compiler
-> will likely optimize it out!
+SeongJae Park (14):
+  mm/damon: accept parallel damon_call() requests
+  mm/damon/core: introduce repeat mode damon_call()
+  mm/damon/stat: use damon_call() repeat mode instead of damon_callback
+  mm/damon/reclaim: use damon_call() repeat mode instead of
+    damon_callback
+  mm/damon/lru_sort: use damon_call() repeat mode instead of
+    damon_callback
+  samples/damon/prcl: use damon_call() repeat mode instead of
+    damon_callback
+  samples/damon/wsse: use damon_call() repeat mode instead of
+    damon_callback
+  mm/damon/core: do not call ops.cleanup() when destroying targets
+  mm/damon/core: add cleanup_target() ops callback
+  mm/damon/vaddr: put pid in cleanup_target()
+  mm/damon/sysfs: remove damon_sysfs_destroy_targets()
+  mm/damon/core: destroy targets when kdamond_fn() finish
+  mm/damon/sysfs: remove damon_sysfs_before_terminate()
+  mm/damon/core: remove damon_callback
 
-You're right.
-
-Andrew, could you please add below fixup patch?
+ include/linux/damon.h        |  44 ++++---------
+ mm/damon/core.c              | 116 ++++++++++++++++++-----------------
+ mm/damon/lru_sort.c          |  70 ++++++++++-----------
+ mm/damon/reclaim.c           |  62 +++++++++----------
+ mm/damon/stat.c              |  17 ++++-
+ mm/damon/sysfs.c             |  41 +------------
+ mm/damon/tests/core-kunit.h  |   4 +-
+ mm/damon/tests/vaddr-kunit.h |   2 +-
+ mm/damon/vaddr.c             |   6 ++
+ samples/damon/prcl.c         |  20 ++++--
+ samples/damon/wsse.c         |  18 ++++--
+ 11 files changed, 189 insertions(+), 211 deletions(-)
 
 
-Thanks,
-SJ
-
-=================== >8 ======================
-From 13975534cad603410837c5eca299f0a24ad802a1 Mon Sep 17 00:00:00 2001
-From: SeongJae Park <sj@kernel.org>
-Date: Wed, 9 Jul 2025 11:22:39 -0700
-Subject: [PATCH] mm/damon: make damos_esz unconditional trace event
-
-It has no reason to be conditional.  Make it unconditional trace event.
-
-Fixes: 9a365a71b830 ("mm/damon: add trace event for effective size quota") # mm-unstable
-Closes: https://lore.kernel.org/20250709122123.779c874f@batman.local.home
-Reported-by: Steven Rostedt <rostedt@goodmis.org>
-Signed-off-by: SeongJae Park <sj@kernel.org>
----
- include/trace/events/damon.h | 8 +++-----
- mm/damon/core.c              | 2 +-
- 2 files changed, 4 insertions(+), 6 deletions(-)
-
-diff --git a/include/trace/events/damon.h b/include/trace/events/damon.h
-index 2e4d7d281fa7..fc2c61ccc887 100644
---- a/include/trace/events/damon.h
-+++ b/include/trace/events/damon.h
-@@ -9,14 +9,12 @@
- #include <linux/types.h>
- #include <linux/tracepoint.h>
- 
--TRACE_EVENT_CONDITION(damos_esz,
-+TRACE_EVENT(damos_esz,
- 
- 	TP_PROTO(unsigned int context_idx, unsigned int scheme_idx,
--		unsigned long esz, bool do_trace),
-+		unsigned long esz),
- 
--	TP_ARGS(context_idx, scheme_idx, esz, do_trace),
--
--	TP_CONDITION(do_trace),
-+	TP_ARGS(context_idx, scheme_idx, esz),
- 
- 	TP_STRUCT__entry(
- 		__field(unsigned int, context_idx)
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index 0f7d8b37c91d..775e097b6538 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -2223,7 +2223,7 @@ static void damos_trace_esz(struct damon_ctx *c, struct damos *s,
- 			break;
- 		sidx++;
- 	}
--	trace_damos_esz(cidx, sidx, quota->esz, true);
-+	trace_damos_esz(cidx, sidx, quota->esz);
- }
- 
- static void damos_adjust_quota(struct damon_ctx *c, struct damos *s)
+base-commit: 2c92772b92095b79ca713f215b192b555e41f72e
 -- 
 2.39.5
-
