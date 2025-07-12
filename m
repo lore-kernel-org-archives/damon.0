@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46C6A29AAF5;
-	Sat, 12 Jul 2025 19:50:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C1B029B8C3;
+	Sat, 12 Jul 2025 19:50:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752349834; cv=none; b=l8/UBCBybkInXMSO7B8btHhufXAgK97FJ3m7Vp3+7Fas2THphBSvZbgJjnS/FLTVsPGbZ2rKCdZuivYNx78LKIYDLnZJOtwH24g1qCN8bBNWVPY0OHYuBbVs9RU54iemDaUc6burmeTI5RnZfBp+7dn5TttqdQ8ebwmmqNjr5dc=
+	t=1752349835; cv=none; b=RVm4pDoPBru/mDujx5ig5xVRLXHS1p9jvQA5z9UxTggoU3kwmo2zH2UjJdJlOkoJyaWxmwqU6KN4GOubqSyM9xup1UyQGf1GoRSgCzmrEjciLoMIIZx1vn1PefAdeLnbZt2Xu9w3d+nWE7KeBsQzO2ocmP2rYK34YSvBr3ziybg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752349834; c=relaxed/simple;
-	bh=oQhsnF1/u67JFZnBKsT/L2sSUWnwWM0joMv6k3f9o4Q=;
+	s=arc-20240116; t=1752349835; c=relaxed/simple;
+	bh=WTjz/K1GFNo9usAZWWENvLqqlSxu80QiYvWGup6Il+g=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=q6pC3gMXjKdmJUB27B3vamLR7FNeR2giIbaOBAoIYMWgdMQy6BXZm3+jSZGRJ96pNLQUUo25YaNcgZzzcLMjkPcHLE0Goti6eokd2y5yf3OJCsaUSk0kTBO8JIaaaJAhy7ZnrBYmUpTZtd+ekJdvMj/cOs/BY4BAwnTrnlXa39s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tXZ9YU2D; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ey9no4Bgfzt5OORDuwBH6ln2r2t8Yx5oENxNYJyzhmDskTLqi2O6NbRrBio5mUoZVVjPmMsxoKBOzLKQ7g7kmHxJhIVsY9e6UuibWBIlJbOUqQEaUKLMvmlWWLVwMxvMnA9IZ8SE2xr8qT0WPdFARniivQa1KOXW+fJHEqAXt7A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HWkGXT/Y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tXZ9YU2D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBFD0C4CEEF;
-	Sat, 12 Jul 2025 19:50:33 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HWkGXT/Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0301FC4CEEF;
+	Sat, 12 Jul 2025 19:50:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1752349834;
-	bh=oQhsnF1/u67JFZnBKsT/L2sSUWnwWM0joMv6k3f9o4Q=;
+	s=k20201202; t=1752349835;
+	bh=WTjz/K1GFNo9usAZWWENvLqqlSxu80QiYvWGup6Il+g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tXZ9YU2DWWzvtng2+sg7GFjLnmbS3mxfQjEl4vscmm05pc3l7IP27dr9sMFGayXBd
-	 TUqTgeHrJdji1bQn9Q2WuwgFVWYzn5opGRJ872u9Id35NgjjUV+gONygjKnKYQV9Tu
-	 GQDq+bbWbTP95qVDYCnqSE09LSbNtzGFPjLXBfSDyCnCS6U3D3YGdH8sM5mRnXIppU
-	 ipzUtLCJJi/f+mdobrr5PQOpXwfi31SpM0tNgmhJw2ww8CZnUVdqszQ7sb1hOC/TA1
-	 8BR8rNh8JK+K+SnKNebCrfBSFOwTmW06Wpom401omBXN/ciP/FbuAg0LHNtXuPxKyj
-	 kehZm5p4/8LEQ==
+	b=HWkGXT/YIsfyj9wuHfO1zUCsFKK6RTYxF4bWGCR9fEN/SuCmIoCK8vk1DTnWz9EQt
+	 Iv5ZftO212rgxYD9gKmFXC332PjovWtSume4z5zwzI7vcYIBs+9upIGAh5fmFEUZ9C
+	 HbjgaFCQZxNTfwyT6lFlsDhvjcbDfqVhvMfsYD2CWGvCCUdbQKyFJHSC2DAypx/Br5
+	 MZcgRpkBnTt4ZIuqI2oGFArJv/UTohteUsB4dJfZumkkyHzH8wBEfctUdMZhfKB3fi
+	 WZ8InS7s1bsZDwO/uSKfAYWSd3q/QkhqS9ondBRKk/YZTv7Z+S6CsrD2HZUjywyf5S
+	 59Kpe/mRt/LTw==
 From: SeongJae Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SeongJae Park <sj@kernel.org>,
@@ -33,9 +33,9 @@ Cc: SeongJae Park <sj@kernel.org>,
 	kernel-team@meta.com,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [PATCH 12/14] mm/damon/core: destroy targets when kdamond_fn() finish
-Date: Sat, 12 Jul 2025 12:50:14 -0700
-Message-Id: <20250712195016.151108-13-sj@kernel.org>
+Subject: [PATCH 13/14] mm/damon/sysfs: remove damon_sysfs_before_terminate()
+Date: Sat, 12 Jul 2025 12:50:15 -0700
+Message-Id: <20250712195016.151108-14-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250712195016.151108-1-sj@kernel.org>
 References: <20250712195016.151108-1-sj@kernel.org>
@@ -47,28 +47,42 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-When kdamond_fn() completes, the targets are kept.  Those are kept to
-let callers do additional cleanups if they need.  There are no such
-additional cleanups though.  DAMON sysfs interface deallocates those in
-before_terminate() callback, to reduce unnecessary memory usage, for
-[f]vaddr use case.  Just destroy the targets for every case in the core
-layer.  This saves more memory and simplifies the logic.
+DAMON core layer does target cleanup on its own.  Remove duplicated and
+unnecessarily selective cleanup attempts in DAMON sysfs interface.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- mm/damon/core.c | 1 +
- 1 file changed, 1 insertion(+)
+ mm/damon/sysfs.c | 12 ------------
+ 1 file changed, 12 deletions(-)
 
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index 9554743dc992..ffd1a061c2cb 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -2657,6 +2657,7 @@ static int kdamond_fn(void *data)
- 		running_exclusive_ctxs = false;
- 	mutex_unlock(&damon_lock);
- 
-+	damon_destroy_targets(ctx);
+diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
+index b0f7c60d655a..cce2c8a296e2 100644
+--- a/mm/damon/sysfs.c
++++ b/mm/damon/sysfs.c
+@@ -1361,17 +1361,6 @@ static int damon_sysfs_add_targets(struct damon_ctx *ctx,
  	return 0;
+ }
+ 
+-static void damon_sysfs_before_terminate(struct damon_ctx *ctx)
+-{
+-	struct damon_target *t, *next;
+-
+-	if (!damon_target_has_pid(ctx))
+-		return;
+-
+-	damon_for_each_target_safe(t, next, ctx)
+-		damon_destroy_target(t, ctx);
+-}
+-
+ /*
+  * damon_sysfs_upd_schemes_stats() - Update schemes stats sysfs files.
+  * @data:	The kobject wrapper that associated to the kdamond thread.
+@@ -1516,7 +1505,6 @@ static struct damon_ctx *damon_sysfs_build_ctx(
+ 		return ERR_PTR(err);
+ 	}
+ 
+-	ctx->callback.before_terminate = damon_sysfs_before_terminate;
+ 	return ctx;
  }
  
 -- 
