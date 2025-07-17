@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FE231F8AC5;
-	Thu, 17 Jul 2025 05:54:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33B431FCFEE;
+	Thu, 17 Jul 2025 05:54:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752731697; cv=none; b=P1H6AySCUAKz8Yi2p1BzEah1VY0M83sZkJVWfWTfhhvi4lLdXZdLgzT209A04cnEP+fhr+c02m9ml/BCUYRwfNl2UsviaRelinregnZTZ5fYqsdgeUIvZ+yk/mQ0ZS7UoRVkJlXF45mzZkXKc1sULgSX1erY9nTinOL9Oriht9Y=
+	t=1752731697; cv=none; b=WwmcNjNj/IEiK1Q0YWbAOnAUKjL5+8IYvxF7wnzdw81b/xdi+L7ogErp7NQAzjweND6wg5HpLZ81Dq5js7qxd4uNvXTdJTGA5/Ae8sPar64SXMP0E1T4wgLA2UZChSc4A6TEq4GGzAUHKR99X9+sn2lBOcLhJgB2fNQQlvK0kOY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1752731697; c=relaxed/simple;
-	bh=UtykI35djlz4/u32hylRxjPmwdljWWbpzC+3yqmXBmg=;
+	bh=SptuOd03XywpvQiMEZUPNF5dCaw77lP6zwsmYKtYbTs=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=Tv6ZcGhK9xdv8DJkRtQv/cxb4daYSQ5oD33rSgKfgl2t00yBQiox8+s0VkHImXNKNF8KC0QB4M519WkpegP4ncN/AAXseaAi3CZ8Fmk2KG5tFFu+H4eD007uCmUVp0FigTd4ysz7KOPKkscay+77AZsKTiE1CuGfk843fHenwkU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=No+y/kRh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=faczYdlI+wH7NU2BQ/xBy++MapWaVtU4aOcgaBZcMU5xhNQqF0lDDfdB3pQPQ8ynFDjGEXnZ7z+VWDmNwFH07feq+LjGCdJmO/u8Gt3bEwAN48i/Kx1+l5RYntmQ0PFFz4DIH1ynNSIR0mjLWYsT995uU7xsSdOiO4efEVmNa6Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=epeUbFmQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="No+y/kRh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77003C4CEED;
-	Thu, 17 Jul 2025 05:54:55 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="epeUbFmQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 927DCC4CEF4;
+	Thu, 17 Jul 2025 05:54:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1752731695;
-	bh=UtykI35djlz4/u32hylRxjPmwdljWWbpzC+3yqmXBmg=;
+	s=k20201202; t=1752731696;
+	bh=SptuOd03XywpvQiMEZUPNF5dCaw77lP6zwsmYKtYbTs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=No+y/kRh+ouxJUHLNZzi6B/wN5RKDkCa/e8cn6fr6+kyErKqAJ8wQbJm9E4bRTJOD
-	 5FD6eBqE+UviTyLGBHE8jOJLpB+hOcuUzYycysRtn8WnQSZVGt211OuoNFW+Z68iS3
-	 An1o+1t/XknkKZyFm6hZVoRVAKkXSFHSlERA00prjZxE5/Mva4OQz2UkQVeOdtomu6
-	 EIgiHO3BaZZvANKWr2PmE+sI9AQyYh3vRfAwV08yWem0VkblYUIKrjJ30VHuM6cEom
-	 GZSjUUdAZ1LO4K5CajFQWHjxsfNVBw4MQ+w/Jp709ga2ZufpIdS3hgVweIMLaIJMN0
-	 Zp5aemLP2eyrA==
+	b=epeUbFmQ/7+SSVln4QiwhyN1jZn33rPK4DSg8dSVxBGz87hk/upvmFtYLkVyj5vBq
+	 R+l7NeFDJvd5GJLAkTa+BlXOSoO28WutL8vQtQNYJGACPAqhIUN/cMFFSIFb/Z5c+5
+	 /uKomWllkvdnojOjc4RZyXY7wKlS5X/lFUiLY3DiPmQg4Tk4X/bwbpiiByP+tl2Gnh
+	 RgSwXBQ1we83v60SEVAfBAOAgY9zTJiZT13CZMjDZcayFK7RRU7Po4hywBnheuQ8z6
+	 23bzkUToskFOZ+kYVtQd8eVGK/94u/vPTOzYccbA0GWznnPF+SyLpQtROGq1sY2qh6
+	 UyF9c7QnpBdfw==
 From: SeongJae Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SeongJae Park <sj@kernel.org>,
@@ -33,9 +33,9 @@ Cc: SeongJae Park <sj@kernel.org>,
 	kernel-team@meta.com,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [PATCH 1/4] mm/damon/sysfs: implement refresh_ms file under kdamond directory
-Date: Wed, 16 Jul 2025 22:54:45 -0700
-Message-Id: <20250717055448.56976-2-sj@kernel.org>
+Subject: [PATCH 2/4] mm/damon/sysfs: implement refresh_ms file internal work
+Date: Wed, 16 Jul 2025 22:54:46 -0700
+Message-Id: <20250717055448.56976-3-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250717055448.56976-1-sj@kernel.org>
 References: <20250717055448.56976-1-sj@kernel.org>
@@ -47,11 +47,16 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Implement a new DAMON sysfs file named 'refresh_ms' under each kdamond
-directory.  The file will be used as a control knob of automatic refresh
-of a few DAMON internal status files.  This commit implements only
-minimum file operations, though.  The automatic refresh feature will be
-implemented by the following commit.
+Only minimum file operations for refresh_ms file is implemented.
+Further implement its designed behavior, the periodic essential files
+content update,  using repeat mode damon_call().
+
+If non-zero value is written to the file, update DAMON sysfs files for
+auto-tuned monitoring intervals, DAMOS stats, and auto-tuned DAMOS quota
+values, which are essential to be monitored in most DAMON use cases.
+The user-written non-zero value becomes the time delay between the
+update.  If zero is written to the file, the periodic refresh is
+disabled.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
@@ -59,61 +64,51 @@ Signed-off-by: SeongJae Park <sj@kernel.org>
  1 file changed, 29 insertions(+)
 
 diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
-index cce2c8a296e2..4296dc201f4d 100644
+index 4296dc201f4d..6d2b0dab50cb 100644
 --- a/mm/damon/sysfs.c
 +++ b/mm/damon/sysfs.c
-@@ -1155,6 +1155,7 @@ struct damon_sysfs_kdamond {
- 	struct kobject kobj;
- 	struct damon_sysfs_contexts *contexts;
- 	struct damon_ctx *damon_ctx;
-+	unsigned int refresh_ms;
- };
- 
- static struct damon_sysfs_kdamond *damon_sysfs_kdamond_alloc(void)
-@@ -1690,6 +1691,30 @@ static ssize_t pid_show(struct kobject *kobj,
- 	return sysfs_emit(buf, "%d\n", pid);
+@@ -1509,6 +1509,32 @@ static struct damon_ctx *damon_sysfs_build_ctx(
+ 	return ctx;
  }
  
-+static ssize_t refresh_ms_show(struct kobject *kobj,
-+		struct kobj_attribute *attr, char *buf)
++static int damon_sysfs_repeat_call_fn(void *data)
 +{
-+	struct damon_sysfs_kdamond *kdamond = container_of(kobj,
-+			struct damon_sysfs_kdamond, kobj);
++	struct damon_sysfs_kdamond *sysfs_kdamond = data;
++	static unsigned long next_update_jiffies;
 +
-+	return sysfs_emit(buf, "%u\n", kdamond->refresh_ms);
++	if (!sysfs_kdamond->refresh_ms)
++		return 0;
++	if (time_before(jiffies, next_update_jiffies))
++		return 0;
++	next_update_jiffies = jiffies +
++		msecs_to_jiffies(sysfs_kdamond->refresh_ms);
++
++	if (!mutex_trylock(&damon_sysfs_lock))
++		return 0;
++	damon_sysfs_upd_tuned_intervals(sysfs_kdamond);
++	damon_sysfs_upd_schemes_stats(sysfs_kdamond);
++	damon_sysfs_upd_schemes_effective_quotas(sysfs_kdamond);
++	mutex_unlock(&damon_sysfs_lock);
++	return 0;
 +}
 +
-+static ssize_t refresh_ms_store(struct kobject *kobj,
-+		struct kobj_attribute *attr, const char *buf, size_t count)
-+{
-+	struct damon_sysfs_kdamond *kdamond = container_of(kobj,
-+			struct damon_sysfs_kdamond, kobj);
-+	unsigned int nr;
-+	int err = kstrtouint(buf, 0, &nr);
++static struct damon_call_control damon_sysfs_repeat_call_control = {
++	.fn = damon_sysfs_repeat_call_fn,
++	.repeat = true,
++};
 +
-+	if (err)
-+		return err;
-+
-+	kdamond->refresh_ms = nr;
-+	return count;
-+}
-+
- static void damon_sysfs_kdamond_release(struct kobject *kobj)
+ static int damon_sysfs_turn_damon_on(struct damon_sysfs_kdamond *kdamond)
  {
- 	struct damon_sysfs_kdamond *kdamond = container_of(kobj,
-@@ -1706,9 +1731,13 @@ static struct kobj_attribute damon_sysfs_kdamond_state_attr =
- static struct kobj_attribute damon_sysfs_kdamond_pid_attr =
- 		__ATTR_RO_MODE(pid, 0400);
- 
-+static struct kobj_attribute damon_sysfs_kdamond_refresh_ms_attr =
-+		__ATTR_RW_MODE(refresh_ms, 0600);
+ 	struct damon_ctx *ctx;
+@@ -1533,6 +1559,9 @@ static int damon_sysfs_turn_damon_on(struct damon_sysfs_kdamond *kdamond)
+ 		return err;
+ 	}
+ 	kdamond->damon_ctx = ctx;
 +
- static struct attribute *damon_sysfs_kdamond_attrs[] = {
- 	&damon_sysfs_kdamond_state_attr.attr,
- 	&damon_sysfs_kdamond_pid_attr.attr,
-+	&damon_sysfs_kdamond_refresh_ms_attr.attr,
- 	NULL,
- };
- ATTRIBUTE_GROUPS(damon_sysfs_kdamond);
++	damon_sysfs_repeat_call_control.data = kdamond;
++	damon_call(ctx, &damon_sysfs_repeat_call_control);
+ 	return err;
+ }
+ 
 -- 
 2.39.5
