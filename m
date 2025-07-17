@@ -1,175 +1,107 @@
-Received: from invmail4.hynix.com (exvmail4.hynix.com [166.125.252.92])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 577B7BA3D
-	for <damon@lists.linux.dev>; Wed, 16 Jul 2025 05:18:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=166.125.252.92
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F450282EB;
+	Thu, 17 Jul 2025 05:54:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752643135; cv=none; b=f6n+sHVLDOoR4JkpBcmdmesbXnjRu0BvIBNNwx6YQKyoqwi4CRSwQom9fIFunaTUMME8b1bcSXu51QkaZyRr1seaEdTAlcqn5d9IXL17MIsZemWXIZ5RojKFF1soLYF+IZIgcd/R+6WXnoYurXzAsNJmMiLIqssDUhC6ErOyf+Y=
+	t=1752731696; cv=none; b=pyDWcZ7tlssDBbAid2Ku58tM1kmgXUm4zYBNSjpsGqCSr1/iS9jt6/Uo7TGUiz+6IoVW5xneHOaLzKE2E80l+hjV1RY56Jg02/xQk5RoUy3Etbx78x3JQJ9NHVHSCeN9ae3s9OJCmMIMf+afLAInKN3YZBjv2+pXxj3V3+1FAxQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752643135; c=relaxed/simple;
-	bh=KVPq5YZ7ao2kg8HQya16vo7K/y5khjCB2vV5QjcuKGs=;
-	h=Message-ID:Date:MIME-Version:Cc:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=eDEKXihQHlRmMdg3M4mfEJK854DLcu5LdSl3eHjij0lCXKVbxossAjC25wSqXx/N/rAcBwSMmRObLSKVYyFbDr7VobkuJ2BphjEsZNfeUB+T87cmcU6kyRv8KjzaLPP1K+3A3TNsGPL0d2ZHRExC5zkdS6W3QB/QRZJTj28dyzg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sk.com; spf=pass smtp.mailfrom=sk.com; arc=none smtp.client-ip=166.125.252.92
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sk.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sk.com
-X-AuditID: a67dfc5b-681ff7000002311f-78-68773639fce4
-Message-ID: <4c83fac5-0990-4280-9a21-969d83582112@sk.com>
-Date: Wed, 16 Jul 2025 14:18:48 +0900
+	s=arc-20240116; t=1752731696; c=relaxed/simple;
+	bh=/JfI1qVyIG/Mf+m3KGSDeCWLM3l3Dw85BRzvvsCFvP8=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=XOCZ8azfOnwVIRGWSXxOvq0T/zFdVTdWgLcJTQvb6kCPNkrudKSsaSk9e6Z5vx1p7hGQzxX87PDn0fvz5T/uA/DqqTVAKLPgaXik5ouLL+1YFLoPMgbuz8hHlEPkk8jJjS5cp9j2v2N8aIBUet4v9GlJ9CdjNzCFLpNRPNif4zA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WRjxqP06; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WRjxqP06"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65E73C4CEE3;
+	Thu, 17 Jul 2025 05:54:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1752731694;
+	bh=/JfI1qVyIG/Mf+m3KGSDeCWLM3l3Dw85BRzvvsCFvP8=;
+	h=From:To:Cc:Subject:Date:From;
+	b=WRjxqP069KuC7kgVsSGZ2dR9YlzrDggLZKgv+4P0nIYETy0tiMqvYVIOxCBi340ln
+	 GhqJ5NjcVFILzKwIpObtuER+Y42TH6pDruYRp402JWY84RZYeBvd2FEQymCyTLHiwy
+	 AhHiQe0sz44zXq+BOesQAznSXek3vPDSZ16lJJ23l6N/D76D1F7bq+cD3YRH5baFgQ
+	 2zu49xzI3Yj3bazhZrNLzqvIaiSzfO2Bbgn0TRtDIxJCvSM+pgAHguhcHL8O+BBvNw
+	 U1rgEt4rSjJQjsE6Yg1iucrozQtPqPVQbMMWsvZOuhrfkcNSClI9JokzuN42R1jkGT
+	 vBc7A/4GtadEQ==
+From: SeongJae Park <sj@kernel.org>
+To: Andrew Morton <akpm@linux-foundation.org>
+Cc: SeongJae Park <sj@kernel.org>,
+	Jonathan Corbet <corbet@lwn.net>,
+	damon@lists.linux.dev,
+	kernel-team@meta.com,
+	linux-doc@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-mm@kvack.org
+Subject: [PATCH 0/4] mm/damon/sysfs: support periodic and automated stats update
+Date: Wed, 16 Jul 2025 22:54:44 -0700
+Message-Id: <20250717055448.56976-1-sj@kernel.org>
+X-Mailer: git-send-email 2.39.5
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Cc: kernel_team@skhynix.com, Andrew Morton <akpm@linux-foundation.org>,
- Jonathan Corbet <corbet@lwn.net>, damon@lists.linux.dev,
- kernel-team@meta.com, linux-doc@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-mm@kvack.org
-Subject: Re: [RFC PATCH 0/4] mm/damon/sysfs: support periodic and automated
- stats update
-Content-Language: ko
-To: SeongJae Park <sj@kernel.org>
-References: <20250716025118.92544-1-sj@kernel.org>
-From: Honggyu Kim <honggyu.kim@sk.com>
-In-Reply-To: <20250716025118.92544-1-sj@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrHLMWRmVeSWpSXmKPExsXC9ZZnka6lWXmGQcdsUYs569ewWTw50M5o
-	8eT/b1aLfReB3IVtS1gsLu+aw2Zxb81/VovDX98wOXB4bFrVyeax6dMkdo8TM36zeLzYPJPR
-	Y3HfZFaPcxcrPD5vkgtgj+KySUnNySxLLdK3S+DKWHljH1tBv0LFpKuXWRoYP0t2MXJySAiY
-	SEzof8UGY78/dJcFxOYVsJRYvmYSkM3BwSKgKnF8vgxEWFDi5MwnYCWiAvIS92/NYO9i5OJg
-	FnjBKHF+72+wOcICURI7f/ezg9jMAiISszvbmEFsEQFFiXOPL7KC2EICRhK/385gArHZBNQk
-	rrycBGZzChhL3G88wQzRaybRtbWLEcKWl9j+dg4zyDIJgctsEpvu72SFOFpS4uCKGywTGAVn
-	ITlwFpLds5DMmoVk1gJGllWMQpl5ZbmJmTkmehmVeZkVesn5uZsYgbGyrPZP9A7GTxeCDzEK
-	cDAq8fDusC7LEGJNLCuuzD3EKMHBrCTCO/kSUIg3JbGyKrUoP76oNCe1+BCjNAeLkjiv0bfy
-	FCGB9MSS1OzU1ILUIpgsEwenVANjwvK9j+bMOxJ3ffG8Mu+dkrbXPOTj5x78d/3vwYm7k+P6
-	rzScOL94MQNPk3zXmTVL/xV/F3Vc5+OxR7Vz3eSy0wxtPxY9+KC98Xd13oImru+/D729qJDy
-	dF7m/y+NKdL8FrwVdyrvRkou4lO6vCUj63QCV1zZrZit5b8WVBXtu9addvnhIpsprEosxRmJ
-	hlrMRcWJADDWs1uRAgAA
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrKLMWRmVeSWpSXmKPExsXCNUNLT9fSrDzDYPI+Tos569ewWTw50M5o
-	8eT/b1aLfReB3MNzT7JaLGxbwmJxedccNot7a/6zWhz++obJgdNj06pONo9Nnyaxe5yY8ZvF
-	48XmmYwei/sms3qcu1jhsfjFByaPz5vkAjiiuGxSUnMyy1KL9O0SuDJW3tjHVtCvUDHp6mWW
-	BsbPkl2MnBwSAiYS7w/dZQGxeQUsJZavmQRkc3CwCKhKHJ8vAxEWlDg58wlYiaiAvMT9WzPY
-	uxi5OJgFXjBKnN/7mw0kISwQJbHzdz87iM0sICIxu7ONGcQWEVCUOPf4IiuILSRgJPH77Qwm
-	EJtNQE3iystJYDangLHE/cYTzBC9ZhJdW7sYIWx5ie1v5zBPYOSbheSOWUhWzELSMgtJywJG
-	llWMIpl5ZbmJmTmmesXZGZV5mRV6yfm5mxiBgb+s9s/EHYxfLrsfYhTgYFTi4d1hXZYhxJpY
-	VlyZe4hRgoNZSYR38iWgEG9KYmVValF+fFFpTmrxIUZpDhYlcV6v8NQEIYH0xJLU7NTUgtQi
-	mCwTB6dUA+PyZ/ODKi9+87vWwWZvkMa/llGxJ1XO0qnw6svwq/1n2RhUix48b5VrjUzYddS2
-	6GL5Jke7Bct/rPgQ1+s7e+31ORsZz9ifPV+5J8r36/fbE2Yo/Exj9t0ZrKwcdeDPTMOdNU9P
-	ZFr2zJslOF+kmzWsv8Pz+oo5wU1eM24zPmKqFehc/1otx02JpTgj0VCLuag4EQBGPn4EeAIA
-	AA==
-X-CFilter-Loop: Reflected
+Content-Transfer-Encoding: 8bit
+
+DAMON sysfs interface provides files for reading DAMON internal status
+including auto-tuned monitoring intervals, DAMOS stats, DAMOS action
+applied regions, and auto-tuned DAMOS effective quota.  Among those,
+auto-tuned monitoring intervals, DAMOS stats and auto-tuned DAMOS
+effective quota are essential for common DAMON/S use cases.
+
+The content of the files are not automatically updated, though.  Users
+should manually request updates of the contents by writing a special
+command to 'state' file of each kdamond directory.  This interface is
+good for minimizing overhead, but causes the below problems.
+
+First, the usage is cumbersome.  This is arguably not a big problem,
+since the user-space tool (damo) can do this instead of the user.
+
+Second, it can be too slow.  The update request is not directly handled
+by the sysfs interface but kdamond thread.  And kdamond threads wake up
+only once per the sampling interval.  Hence if sampling interval is not
+short, each update request could take too long time.  The recommended
+sampling interval setup is asking DAMON to automatically tune it, within
+a range between 5 milliseconds and 10 seconds.  On production systems it
+is not very rare to have a few seconds sampling interval as a result of
+the auto-tuning, so this can disturb observing DAMON internal status.
+
+Finally, parallel update requests can conflict with each other.  When
+parallel update requests are received, DAMON sysfs interface simply
+returns -EBUSY to one of the requests.  DAMON user-space tool is hence
+implementing its own backoff mechanism, but this can make the operation
+even slower.
+
+Introduce a new sysfs file, namely refresh_ms, for asking DAMON sysfs
+interface to repeat the update of the above mentioned essential contents
+with a user-specified time delay.  If non-zero value is written to the
+file, DAMON sysfs interface does the updates for essential DAMON
+internal status including auto-tuned monitoring intervals, DAMOS stats,
+and auto-tuned DAMOS quotas using the user-written value as the time
+delay.  In other words, it is similar to periodically writing
+'update_schemes_stats', 'update_schemes_effective_quotas', and
+'update_tuned_intervals' keywords to the 'state' file.  If zero is
+written to the file, the automatic refresh is disabled.
+
+Changes from RFC
+(https://lore.kernel.or/20250712204650.155988-1-sj@kernel.org)
+- Wordsmith cover letter to clarify what are updated
+
+SeongJae Park (4):
+  mm/damon/sysfs: implement refresh_ms file under kdamond directory
+  mm/damon/sysfs: implement refresh_ms file internal work
+  Docs/admin-guide/mm/damon/usage: document refresh_ms file
+  Docs/ABI/damon: update for refresh_ms
+
+ .../ABI/testing/sysfs-kernel-mm-damon         |  7 +++
+ Documentation/admin-guide/mm/damon/usage.rst  | 13 ++++-
+ mm/damon/sysfs.c                              | 58 +++++++++++++++++++
+ 3 files changed, 75 insertions(+), 3 deletions(-)
 
 
-
-On 7/16/2025 11:51 AM, SeongJae Park wrote:
-> On Wed, 16 Jul 2025 10:58:06 +0900 Honggyu Kim <honggyu.kim@sk.com> wrote:
-> 
->> Hi SeongJae,
->>
->> On 7/16/2025 8:43 AM, SeongJae Park wrote:
->>> On Wed, 16 Jul 2025 07:20:57 +0900 Honggyu Kim <honggyu.kim@sk.com> wrote:
->>>
->>>> Hi SeongJae,
->>>>
->>>> On 7/13/2025 5:46 AM, SeongJae Park wrote:
->>>>> DAMON sysfs interface provides files for reading DAMON internal status
->>>>> including DAMOS stats.  The content of the files are not automatically
->>>>> updated, though.  Users should manually request updates of the contents
->>>>> by writing a special command to 'state' file of each kdamond directory.
->>>>> This interface is good for minimizing overhead, but causes the below
->>>>> problems.
-
-[...snip...]
-
->>>>> Introduce a new sysfs file, namely refresh_ms, for asking DAMON sysfs
->>>>> interface to repeat the essential contents update with a user-specified
->>>>> time delay.
->>>>
->>>> Thanks for working on this, but I have a few questions.
->>>> 1. Could you please list up what are the "essential contents"?
->>>
->>> Thank you for asking this.  The contents are auto-tuned monitoring intervals,
->>> DAMOS stats, and auto-tuned effective size quota.
->>
->> Thanks, but I meant the specific list of damon knobs refreshed.  If there are
->> too many knobs, then don't have to list them all.
-> 
-> I guess you are saying about sysfs files?  Yes, I think listing those all is
-> unnecessary.
-
-OK. No problem then.
-
->>> I will add these on the next version cover letter.
->>
->> Thanks.
->>
->>>> 2. Does it mean that it is different from writing "commit" to "state"?
->>>> 3. If not, then is there equivalent action to writing something to "state"?
->>>
->>> "refresh_ms" works same to other DAMON parameter files.  You can set it before
->>> starting DAMON, or "commit" new values (including 0 for turning this refresh
->>> off) in runtime.
->>>
->>> I'm not that confident if I understood your point very well, especially what
->>> "it"s mean.  Let me know if I'm misunderstanding something.
->>
->> I mean writing "commit" to "state" refresh all knobs,
-> 
-> Assuming "knobs" mean sysfs files, this is incorrect.  Writing "commit" to
-> "state" passes the parameters written on appropriate files to running kdamond.
-> It doesn't update any sysfs files until a "update_*" keyword is written to the
-> "state" file.
-
-I thought writing "commit" to "state" applies config changes and updates all the
-readable sysfs files together, but it doesn't.  Thanks for the correction.
-
-> 
->> but it seems "refresh_ms"
->> internally refresh paritial knobs so I was wondering what are refreshed and what
->> aren't.
->>
->> Regarding the "equivalent action", I was also wondering if there is a command
->> that works same as "refresh_ms" internally does among the command below.
->>
->>     update_tuned_intervals
->>     commit_schemes_quota_goals
->>     update_schemes_stats
->>     update_schemes_tried_regions
->>     update_schemes_tried_bytes
->>     clear_schemes_tried_regions
->>     update_schemes_effective_quotas
->>
->> https://docs.kernel.org/admin-guide/mm/damon/usage.html#kdamonds-n
->>
->> In other words, if there is the same command listed above, then users might be
->> able to run a script that regularaly write the command to the current "state"
->> even without this "refresh_ms".  I know having "refresh_ms" is much better
->> though.
-> 
-> Thank you for this nice question.  Yes.  Enabling "refresh_ms" is roughly same
-> to periodically writing
-> "update_{tuned_intervals,schemes_stats,schemes_effective_quotas" to "state"
-> file.
-
-OK. I get that "refresh_ms" does periodic write the combination of them to
-"state" without "update_{schemes_tried_regions,schemes_tried_bytes}.
-
-In other words, it is same as periodic execution of the follows.
-
-   echo update_tuned_intervals > state
-   echo update_schemes_stats > state
-   echo update_schemes_effective_quotas > state
-
-That makes my question clear.  Thanks for the explanation!
-
-Thanks,
-Honggyu
-
-> 
-> 
-> Thanks,
-> SJ
-> 
-> [...]
+base-commit: 2951e548fd2e489bdaecf326e1c3d17d4b5663fe
+-- 
+2.39.5
