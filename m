@@ -1,45 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 795EC2E62C0;
-	Fri, 18 Jul 2025 16:30:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D26451799F;
+	Fri, 18 Jul 2025 22:59:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752856213; cv=none; b=jpv2AILrBeAETGEoRFcXNaWv+gyrSG9Wtb7y1ZaEy3FlwQAX2r69eMCaKHctGYMwr9GBbyLm67Q01GQEp/zoC22ssaQg55MogkrJ+1t3xtx3gB+B4pyIAMR1ATDlgf4LYtccd6Zi52gY5d8KlX1y2Bp5O682q04uUGd6CzQ1748=
+	t=1752879552; cv=none; b=Fag0Lzcb3tjeQISiaRmCeR0FcVeYgMjpT3IBQfwfrJagrPTNg8gaqmYZCxAxajsJ5qKB5oE1SgTpgKjaN9cD9Gl/RUDRo4fkJhwmvKtqdWXc4Bm8qEjj5mMXbjWtuN3pNUNlxO7E4oYMF80vtF4KBXdE5bys+8w3B8bkXSh3t/M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752856213; c=relaxed/simple;
-	bh=YGC91E1l1DSQcb9kcxNTx91MB8JFQkKUz2qanJ8u79c=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=CLhKPbMxpVXdQvASsiXZCoDT3poLIqnr3if1qsx6tGREfinKAZwS3aPb3zyXRfzDCoAb5XGw0vMnyXvKC0qaD2L3WUjRPBoepBR0qDAbuJIKlzChrqezk02+nMLLhSbiZajyaDkjigbbye8HLBJcIk7qixW5oVu/fPVYQweTSQs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=d4ORMrF1; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1752879552; c=relaxed/simple;
+	bh=EDbN0WfkGIaoc4lHbkm30KyYBssG6L4rI2PtB4WQ4BY=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=QRigvDJggITDEQq6qznWm07h05D8vPd/d2erIw4BZCFR/yy+W3QXexlja8qXdX5xKSziIooBCdKUxyHo/WNrfLv8pqN/OtCcmd1F4x30w8NCbm09PeWA0Bmtf4S44gRbx6+mcAV+N73PInzBFt9JULXFKN6v3cjKA4a3w5y+trU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PLspo3z7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="d4ORMrF1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA69FC4CEEB;
-	Fri, 18 Jul 2025 16:30:12 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PLspo3z7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BED9C4CEEB;
+	Fri, 18 Jul 2025 22:59:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1752856212;
-	bh=YGC91E1l1DSQcb9kcxNTx91MB8JFQkKUz2qanJ8u79c=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d4ORMrF1dm2Kj9GfCsCY4Pjw+XXRYh03Lk4T9A9sF+jOcad3bi7kDxJVxnDWGECAZ
-	 rcmk/hYLqR3sSyypnqME8m7/2BO6cjoUfvQ9NEUnpBoNM9/3sbfc8FUoinzhg6IgAe
-	 SMJp3oEThQbGklSWPdygYV6bNDoOzBYNo+58xfdQh6nUp1QEnI94rntxbLdgFmTORP
-	 Q2JR3WjeGDpWgxEqHuStqa//25zdaOfr09bsQr+s16sfAGThEzE9JAjwfSxQOzd+Xu
-	 jYheXvVnpNDfcJ4mheNbBK8f2HobUpNiXKSenkp4iLRQQvGEUKHA201W630Lg6vtNG
-	 +NO7gSz3wMCBw==
+	s=k20201202; t=1752879552;
+	bh=EDbN0WfkGIaoc4lHbkm30KyYBssG6L4rI2PtB4WQ4BY=;
+	h=From:To:Cc:Subject:Date:From;
+	b=PLspo3z7n4Db4hpe53mkuTlVpXgw6SSJ0fLbjv1uTaE7ctAPuh1dOD5lrHHUtuVG1
+	 bkEXH7xFXyazhHoXTlbdeq4sAWaVMrUNTT55/AW7TjKQaYsFUvW8t8RuuA3EP81/cX
+	 Rb9TatRfVu9HcvKWORmS+CnS09Pt1gItQdnq310kxdKc1Qfyp48hKJekmU7rVJqXbk
+	 9fOvQbqvFLUiVphKumH3b8iS5u8zDPbyHubcE7oHZC/4Za73QgXnh1MweVJbf1Np/u
+	 z18SdG9AbYraar5N9wqosxO0/nwisRcn8uZfBLATtqpdgcwEl2ANLffxtVtTZEBydY
+	 RqF80I8QPrTnQ==
 From: SeongJae Park <sj@kernel.org>
-To: Enze Li <lienze@kylinos.cn>
+To: damon@lists.linux.dev
 Cc: SeongJae Park <sj@kernel.org>,
-	shuah@kernel.org,
-	damon@lists.linux.dev,
 	linux-mm@kvack.org,
-	linux-kselftest@vger.kernel.org,
-	enze.li@gmx.com
-Subject: Re: [PATCH v2] selftests/damon: introduce _common.sh to host shared function
-Date: Fri, 18 Jul 2025 09:30:10 -0700
-Message-Id: <20250718163010.59681-1-sj@kernel.org>
+	linux-kernel@vger.kernel.org
+Subject: DAMON Beer/Coffee/Tea chat reminder for the week of 2025-07-21
+Date: Fri, 18 Jul 2025 15:59:10 -0700
+Message-Id: <20250718225910.64167-1-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250718064217.299300-1-lienze@kylinos.cn>
-References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -48,22 +42,40 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Fri, 18 Jul 2025 14:42:17 +0800 Enze Li <lienze@kylinos.cn> wrote:
+Hello,
 
-> The current test scripts contain duplicated root permission checks
-> in multiple locations.  This patch consolidates these checks into
-> _common.sh to eliminate code redundancy.
 
-Selftests are very important parts of DAMON project.  Thank you for making it
-better, Enze!
+This is yet another reminder of upcoming DAMON Beer/Coffee/Tea chats
+(https://docs.google.com/document/d/1v43Kcj3ly4CYqmAkMaZzLiM2GEnWfgdGbZAH3mi2vpM/edit?usp=sharing)
+for the week of 2025-07-21.
 
-> 
-> Signed-off-by: Enze Li <lienze@kylinos.cn>
+We have two reserved time slots for meetings in the week, as usual.
 
-Reviewed-by: SeongJae Park <sj@kernel.org>
+Next six time slots that I reserved in advance are as below.
+
+2025-07-21 (Mon) 18:00 PT (not yet reserved)
+2025-07-23 (Wed) 09:30 PT (not yet reserved)
+2025-08-04 (Mon) 18:00 PT (not yet reserved)
+2025-08-06 (Wed) 09:30 PT (not yet reserved)
+2025-08-18 (Mon) 18:00 PT (not yet reserved)
+2025-08-20 (Wed) 09:30 PT (not yet reserved)
+
+Please reach out to me (sj@kernel.org or whatever) to reserve the
+not-yet-reserved time slots for your topics.  The reservation is made in a
+First-Come First-Served way, and I will send a Google Meet link to
+reservation-confirmed attendees.
+
+Please note that other time slots are also available on demands.
+
+Shared Calendar
+---------------
+
+You can get the schedule via this shared Google Calendar:
+https://calendar.google.com/calendar/u/0?cid=ZDIwOTA4YTMxNjc2MDQ3NTIyMmUzYTM5ZmQyM2U4NDA0ZGIwZjBiYmJlZGQxNDM0MmY4ZTRjOTE0NjdhZDRiY0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t
+
+You can also get the past and upcoming schedules via
+https://docs.google.com/document/d/1v43Kcj3ly4CYqmAkMaZzLiM2GEnWfgdGbZAH3mi2vpM/edit?usp=sharing
 
 
 Thanks,
 SJ
-
-[...]
