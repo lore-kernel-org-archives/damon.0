@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 731C221CA14;
-	Sun, 20 Jul 2025 17:17:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7133D23E25B;
+	Sun, 20 Jul 2025 17:17:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753031838; cv=none; b=Hbomb6jx2mBYib81pki2PyP/U4QuRk290KbKTcBEGjTdk60aVwEtDX5UQSf5+pGz1j/jHeoENs+RCQDJbNwABOuup/wuOx7cr4f4NwaVZPyE4LiiYx43NBZMRjIg59lgqxURkl3Jepb1VjA3nSt/fE099J7pM/g2bcNa9iZwa34=
+	t=1753031839; cv=none; b=CMx3d/wOM8kb7aRH3ajbu3cK03mz/a69R3tUtRhkFjnTuqs2j0WrxQXqL10yKJB/OKbeSrWDK2kH+hgvFJ4JSB9J+UQlMTX1+NGYFnYAxr9/i8CLtawuMXzPLnOKf2b8NsDxFb2KqOydGdgJZ0Qi2A8wvkh+COTF7T2Y/2PJ838=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753031838; c=relaxed/simple;
-	bh=XaEwHmsTCEj3MYPTKjfzApW/gRohngxzmhlfcQnc+6k=;
+	s=arc-20240116; t=1753031839; c=relaxed/simple;
+	bh=YYPpAhV0Q2sUhsH9Nl2X69H/hWtTyYi5oXTnfRZyejg=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=TqIWdDK3rbg8QdRWoDkTLpUgk61tv4oU0sj8Derr+6wAQvdJVU5rzGa7inIvls8C6yGt07DmovEwzEbMFrrGH/PE7GBsO4Ua5vn9o8a8PJrN4H2/p9I7Ja+jfk14mwc1rsARNC9IzDJV4zFFkfXJGWYXV9kWiXrH5MCdySN46B4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=O6FYk7+F; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JWmsEFmTz4j1Jvk2nh71CO4v8l/9Bl5q2hT+NC0Pp/YgslpP/fDSIKh6uk9bmJ5nYosFA8nxAlnlt2ROSL+iWb59amkR7HoWh3xBusfuMOAFznsg0sTE+GEx7I3UffdhlhMt+7KLGE7fX4lCzo6wyqxIHswCzAJ6LrKPBrErK0E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=T32J1KG3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="O6FYk7+F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2FF0C4CEE7;
-	Sun, 20 Jul 2025 17:17:16 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="T32J1KG3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03BE9C4CEF6;
+	Sun, 20 Jul 2025 17:17:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1753031837;
-	bh=XaEwHmsTCEj3MYPTKjfzApW/gRohngxzmhlfcQnc+6k=;
+	s=k20201202; t=1753031839;
+	bh=YYPpAhV0Q2sUhsH9Nl2X69H/hWtTyYi5oXTnfRZyejg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O6FYk7+FjY2JFzMMV/RSnEMvOGF6gOf+bdziruxGPA3qqqOs33FyJmu+nWZrQQkqj
-	 Wjs+G4n5fXv03zT9S3DSxG/bXjRV37UmpJGZS1WhLe5gFaZjK2dF27r0JcY39Fg6g+
-	 96Wc5nVV1mgyYieftkotK9xmG0JgtTuRDc8lHB3gZEDoQXzPm5a9baklAObWMyoDw5
-	 gptlsEF78FxELQHH25WNL65NWs8iaI+15piasMmEvJrdxsZF2llhDoo4dPm0DYYd/D
-	 s8dae4vLtcEsyJsnhl9cwNrVcCYV7Lz1wTLZZaNYeklx70AL2oNvzKvhagYwrV8k1y
-	 fJeIFmccr3MCg==
+	b=T32J1KG3uKsQ7UQl9LfjeFQlf85s4pehoO+UGWx4bBQY5nRlmlN7qO7KZMvfRS7b4
+	 4dyMO2jM4w5lpwytCR171X8m6M3iBllFkbxljGFr94yNppi4LwPw6nBrPm1SCl401c
+	 oXko3CDFXijQidbmNpWM9DHGgp6U7q6LlAMY2B1/7Trb0VSVKZFfhY/6yGUKSsVMVI
+	 Z46Yra/A0pLVf690EfSxbr1GEnv4SnQY7bwgwemQM1MOlReu/8Xc+t4iXxEyG2TCuJ
+	 SvCShf6pZyk4pbje9MQdawVE3M4ZM5D6SuJSyal8mvVhx8x3Ct8msgKY8Ogv5qxGWx
+	 Jk/7MeoDM5kZg==
 From: SeongJae Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SeongJae Park <sj@kernel.org>,
@@ -35,9 +35,9 @@ Cc: SeongJae Park <sj@kernel.org>,
 	linux-kernel@vger.kernel.org,
 	linux-kselftest@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [PATCH 19/22] selftests/damon/sysfs.py: generalize monitoring attributes commit assertion
-Date: Sun, 20 Jul 2025 10:16:49 -0700
-Message-Id: <20250720171652.92309-20-sj@kernel.org>
+Subject: [PATCH 21/22] selftests/damon/sysfs.py: test non-default parameters runtime commit
+Date: Sun, 20 Jul 2025 10:16:51 -0700
+Message-Id: <20250720171652.92309-22-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250720171652.92309-1-sj@kernel.org>
 References: <20250720171652.92309-1-sj@kernel.org>
@@ -49,74 +49,78 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-DAMON monitoring attributes commitment assertion is hard-coded for a
-specific test case.  Split it out into a general version that can be
-reused for different test cases.
+sysfs.py is testing only the default and minimum DAMON parameters.  Add
+another test case for more non-default additional DAMON parameters
+commitment on runtime.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- tools/testing/selftests/damon/sysfs.py | 42 +++++++++++++++-----------
- 1 file changed, 25 insertions(+), 17 deletions(-)
+ tools/testing/selftests/damon/sysfs.py | 53 ++++++++++++++++++++++++++
+ 1 file changed, 53 insertions(+)
 
 diff --git a/tools/testing/selftests/damon/sysfs.py b/tools/testing/selftests/damon/sysfs.py
-index 9e5c72804edf..ed4c3e9fc972 100755
+index 429865e5ac9c..b2cb178dda15 100755
 --- a/tools/testing/selftests/damon/sysfs.py
 +++ b/tools/testing/selftests/damon/sysfs.py
-@@ -137,6 +137,29 @@ def assert_schemes_committed(schemes, dump):
-     for idx, scheme in enumerate(schemes):
-         assert_scheme_committed(scheme, dump[idx])
+@@ -194,6 +194,59 @@ def main():
  
-+def assert_monitoring_attrs_committed(attrs, dump):
-+    assert_true(dump['sample_interval'] == attrs.sample_us, 'sample_interval',
-+                dump)
-+    assert_true(dump['aggr_interval'] == attrs.aggr_us, 'aggr_interval', dump)
-+    assert_true(dump['intervals_goal']['access_bp'] ==
-+                attrs.intervals_goal.access_bp, 'access_bp',
-+                dump['intervals_goal'])
-+    assert_true(dump['intervals_goal']['aggrs'] == attrs.intervals_goal.aggrs,
-+                'aggrs', dump['intervals_goal'])
-+    assert_true(dump['intervals_goal']['min_sample_us'] ==
-+                attrs.intervals_goal.min_sample_us, 'min_sample_us',
-+                dump['intervals_goal'])
-+    assert_true(dump['intervals_goal']['max_sample_us'] ==
-+                attrs.intervals_goal.max_sample_us, 'max_sample_us',
-+                dump['intervals_goal'])
-+
-+    assert_true(dump['ops_update_interval'] == attrs.update_us,
-+                'ops_update_interval', dump)
-+    assert_true(dump['min_nr_regions'] == attrs.min_nr_regions,
-+                'min_nr_regions', dump)
-+    assert_true(dump['max_nr_regions'] == attrs.max_nr_regions,
-+                'max_nr_regions', dump)
-+
- def main():
-     kdamonds = _damon_sysfs.Kdamonds(
-             [_damon_sysfs.Kdamond(
-@@ -158,23 +181,8 @@ def main():
-         fail('number of contexts', status)
+     assert_ctxs_committed(kdamonds.kdamonds[0].contexts, status['contexts'])
  
-     ctx = status['contexts'][0]
--    attrs = ctx['attrs']
--    if attrs['sample_interval'] != 5000:
--        fail('sample interval', status)
--    if attrs['aggr_interval'] != 100000:
--        fail('aggr interval', status)
--    if attrs['ops_update_interval'] != 1000000:
--        fail('ops updte interval', status)
--
--    if attrs['intervals_goal'] != {
--            'access_bp': 0, 'aggrs': 0,
--            'min_sample_us': 0, 'max_sample_us': 0}:
--        fail('intervals goal')
--
--    if attrs['min_nr_regions'] != 10:
--        fail('min_nr_regions')
--    if attrs['max_nr_regions'] != 1000:
--        fail('max_nr_regions')
++    context = _damon_sysfs.DamonCtx(
++            monitoring_attrs=_damon_sysfs.DamonAttrs(
++                sample_us=100000, aggr_us=2000000,
++                intervals_goal=_damon_sysfs.IntervalsGoal(
++                    access_bp=400, aggrs=3, min_sample_us=5000,
++                    max_sample_us=10000000),
++                update_us=2000000),
++            schemes=[_damon_sysfs.Damos(
++                action='pageout',
++                access_pattern=_damon_sysfs.DamosAccessPattern(
++                    size=[4096, 2**10],
++                    nr_accesses=[3, 317],
++                    age=[5,71]),
++                quota=_damon_sysfs.DamosQuota(
++                    sz=100*1024*1024, ms=100,
++                    goals=[_damon_sysfs.DamosQuotaGoal(
++                        metric='node_mem_used_bp',
++                        target_value=9950,
++                        nid=1)],
++                    reset_interval_ms=1500,
++                    weight_sz_permil=20,
++                    weight_nr_accesses_permil=200,
++                    weight_age_permil=1000),
++                watermarks=_damon_sysfs.DamosWatermarks(
++                    metric = 'free_mem_rate', interval = 500000, # 500 ms
++                    high = 500, mid = 400, low = 50),
++                target_nid=1,
++                apply_interval_us=1000000,
++                dests=_damon_sysfs.DamosDests(
++                    dests=[_damon_sysfs.DamosDest(id=1, weight=30),
++                           _damon_sysfs.DamosDest(id=0, weight=70)]),
++                core_filters=[
++                    _damon_sysfs.DamosFilter(type_='addr', matching=True,
++                                             allow=False, addr_start=42,
++                                             addr_end=4242),
++                    ],
++                ops_filters=[
++                    _damon_sysfs.DamosFilter(type_='anon', matching=True,
++                                             allow=True),
++                    ],
++                )])
++    context.idx = 0
++    context.kdamond = kdamonds.kdamonds[0]
++    kdamonds.kdamonds[0].contexts = [context]
++    kdamonds.kdamonds[0].commit()
 +
-+    assert_monitoring_attrs_committed(_damon_sysfs.DamonAttrs(), ctx['attrs'])
++    status, err = dump_damon_status_dict(kdamonds.kdamonds[0].pid)
++    if err is not None:
++        print(err)
++        exit(1)
++
++    assert_ctxs_committed(kdamonds.kdamonds[0].contexts, status['contexts'])
++
+     kdamonds.stop()
  
-     if ctx['adaptive_targets'] != [
-             { 'pid': 0, 'nr_regions': 0, 'regions_list': []}]:
+ if __name__ == '__main__':
 -- 
 2.39.5
