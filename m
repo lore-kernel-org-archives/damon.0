@@ -1,46 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90AE823FC7D;
-	Sun, 20 Jul 2025 17:17:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E043382;
+	Sun, 20 Jul 2025 18:58:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753031841; cv=none; b=o8TiU0CdAe29BdFlRePS/F1inyhbxTMFN40ZI3BKtEWXTiZPt7W7AxqUXDrfIoQ/f/VLBt2cg42aYAtGX4pMSMYQ+6Qx1wTVz/UhTCT0IknW02xOBGnrEmagpCrhdG2nvGMzkVkdc2j6XhHozguYN5PY75PsVu1u9nC+JJnUEo4=
+	t=1753037907; cv=none; b=IrenaqEHHZ8FO56GrtOOqaOMzOEJuDVvl8VQcqbfywP1aI9dIsxKribFwtNE7y4+a14qR2Vj0D4vioePRy0ljZORdYfFJJHcHAwY28Rej5Lslw83PdWSg5rf2w87ytiVBkC1Y1c1HgVGHblGW6TFwp4FpgL9vxv+HhfdWNi7XeU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753031841; c=relaxed/simple;
-	bh=ec6Z15ZJoYXT0bezGsQ3tUZMxWIpt+Ad5P0Bbazn0/o=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=SsA6BYuwISjwSNlyrz9bULwUYxuZRDxxbjmTiYM899sWc+Br219o5TLj1GpDYYMSZxzCjbnYVj7tBt7Ak51g0gx5MNV5D+MUcs+APuPe0rQhoZ9E0Z/EoxJwzy2AWv+g8xYTcj+PzDdlt1uZoeBCfm1+zFCeR4pn77IkKkUtrYQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rTO9IfKG; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1753037907; c=relaxed/simple;
+	bh=Z4K/L8iVI8412mIfKRLloP1W+n/XlOZFFt9DKKoURFg=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=BNmpT9CxMEf69sXiW8KwNeonTVLoiIRvV4Ew7xqyL1rqdklI0tFWWKR/Ei5Ag7a6MKCi2szbIFbSMUPQjeK76njTuzau9UFZnwWy9gsg/8nT76oIPfvhyf1p6m31PdYzZ70FtkWukVi/2cGT9+e5lD5G5pYPChD14rOcAxN1+hE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UWJyWLpy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rTO9IfKG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 099ECC4CEEB;
-	Sun, 20 Jul 2025 17:17:20 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UWJyWLpy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0169AC4CEE7;
+	Sun, 20 Jul 2025 18:58:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1753031840;
-	bh=ec6Z15ZJoYXT0bezGsQ3tUZMxWIpt+Ad5P0Bbazn0/o=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rTO9IfKGbWqX5x3rw1bUdwOQnp45m56Gq8/NECKWuvTUZA/ojaG5UqFeflSGCly3R
-	 l+62B3I4F3R5Ru27piljAXpbGMy9jBPxGRitDVbhhXuXapmIlA5/LTpfwNkOC8IgiS
-	 Fwcg6+TPP92EJLUJIANcRVyC/lliAh/oVM9wWehm3ldTwc8Bw/H/xUVAbzAnWtzhCN
-	 WOjPgw3Rv3f5z/TlAjQAqOZYTfUHDTix2dHslShtIdsn+UnJHLZ9X93IhiLp0IMKBQ
-	 cZdNq9imtCR/tS2SQXdc/YU6VUtSMkQRKzCkLC2EysIBQHmDaj0KcycNN3PD7kmAFK
-	 vV1uMsgaj1e6g==
+	s=k20201202; t=1753037907;
+	bh=Z4K/L8iVI8412mIfKRLloP1W+n/XlOZFFt9DKKoURFg=;
+	h=From:To:Cc:Subject:Date:From;
+	b=UWJyWLpyXtMe4KYH3Ztyry35J19Ro8R2rER8oyZh6JGgNMnlVXYl+OE2S7ggDWLg2
+	 z6ZmJjf2j4FW2J2mv83Lgll2m8yB4EcoxaQLyDclqT8HZtboSXYoLbTCd6tz6w/Ioa
+	 1qTLh0Fw9iRuYgVUlvCIEhW/U9IZy0cfWHgWCLCaXNLZa1gqS1nHd4qp0F2G9/2QJJ
+	 wm7xmqpzIkKQsxfCczGpGdcYYiMdfuRD+nt+3ND8bAbzwNjE61tj6PUkZ0U6Z1YWND
+	 4C7UYd5U5CE5qk1Jl0N/UkOA/bQnxhs+Tf7zr+R1Kst8YTKxP9QmACHFRER4PqR5cX
+	 zy9aRfDiA+7+Q==
 From: SeongJae Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SeongJae Park <sj@kernel.org>,
-	Shuah Khan <shuah@kernel.org>,
+	Honggyu Kim <honggyu.kim@sk.com>,
+	Hyeongtak Ji <hyeongtak.ji@sk.com>,
 	damon@lists.linux.dev,
-	kernel-team@meta.com,
 	linux-kernel@vger.kernel.org,
-	linux-kselftest@vger.kernel.org,
-	linux-mm@kvack.org
-Subject: [PATCH 22/22] selftests/damon/sysfs.py: test runtime reduction of DAMON parameters
-Date: Sun, 20 Jul 2025 10:16:52 -0700
-Message-Id: <20250720171652.92309-23-sj@kernel.org>
+	linux-mm@kvack.org,
+	stable@vger.kernel.org
+Subject: [PATCH] mm/damon/ops-common: ignore migration request to invalid nodes
+Date: Sun, 20 Jul 2025 11:58:22 -0700
+Message-Id: <20250720185822.1451-1-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250720171652.92309-1-sj@kernel.org>
-References: <20250720171652.92309-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -49,39 +46,58 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-sysfs.py is testing if non-default additional parameters can be
-committed.  Add a test case for further reducing the parameters to the
-default set.
+damon_migrate_pages() try migration even if the target node is invalid.
+If users mistakenly make such invalid requests via
+DAMOS_MIGRATE_{HOT,COLD} action, below kernel BUG can happen.
 
+    [ 7831.883495] BUG: unable to handle page fault for address: 0000000000001f48
+    [ 7831.884160] #PF: supervisor read access in kernel mode
+    [ 7831.884681] #PF: error_code(0x0000) - not-present page
+    [ 7831.885203] PGD 0 P4D 0
+    [ 7831.885468] Oops: Oops: 0000 [#1] SMP PTI
+    [ 7831.885852] CPU: 31 UID: 0 PID: 94202 Comm: kdamond.0 Not tainted 6.16.0-rc5-mm-new-damon+ #93 PREEMPT(voluntary)
+    [ 7831.886913] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.3-4.el9 04/01/2014
+    [ 7831.887777] RIP: 0010:__alloc_frozen_pages_noprof (include/linux/mmzone.h:1724 include/linux/mmzone.h:1750 mm/page_alloc.c:4936 mm/page_alloc.c:5137)
+    [...]
+    [ 7831.895953] Call Trace:
+    [ 7831.896195]  <TASK>
+    [ 7831.896397] __folio_alloc_noprof (mm/page_alloc.c:5183 mm/page_alloc.c:5192)
+    [ 7831.896787] migrate_pages_batch (mm/migrate.c:1189 mm/migrate.c:1851)
+    [ 7831.897228] ? __pfx_alloc_migration_target (mm/migrate.c:2137)
+    [ 7831.897735] migrate_pages (mm/migrate.c:2078)
+    [ 7831.898141] ? __pfx_alloc_migration_target (mm/migrate.c:2137)
+    [ 7831.898664] damon_migrate_folio_list (mm/damon/ops-common.c:321 mm/damon/ops-common.c:354)
+    [ 7831.899140] damon_migrate_pages (mm/damon/ops-common.c:405)
+    [...]
+
+Add a target node validity check in damon_migrate_pages().  The validity
+check is stolen from that of do_pages_move(), which is being used for
+move_pages() system call.
+
+Fixes: b51820ebea65 ("mm/damon/paddr: introduce DAMOS_MIGRATE_COLD action for demotion") # 6.11.x
+Cc: stable@vger.kernel.org
+Cc: Honggyu Kim <honggyu.kim@sk.com>
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- tools/testing/selftests/damon/sysfs.py | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ mm/damon/ops-common.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/tools/testing/selftests/damon/sysfs.py b/tools/testing/selftests/damon/sysfs.py
-index b2cb178dda15..e0753ed92a98 100755
---- a/tools/testing/selftests/damon/sysfs.py
-+++ b/tools/testing/selftests/damon/sysfs.py
-@@ -247,6 +247,20 @@ def main():
+diff --git a/mm/damon/ops-common.c b/mm/damon/ops-common.c
+index 6a9797d1d7ff..99321ff5cb92 100644
+--- a/mm/damon/ops-common.c
++++ b/mm/damon/ops-common.c
+@@ -383,6 +383,10 @@ unsigned long damon_migrate_pages(struct list_head *folio_list, int target_nid)
+ 	if (list_empty(folio_list))
+ 		return nr_migrated;
  
-     assert_ctxs_committed(kdamonds.kdamonds[0].contexts, status['contexts'])
++	if (target_nid < 0 || target_nid >= MAX_NUMNODES ||
++			!node_state(target_nid, N_MEMORY))
++		return nr_migrated;
++
+ 	noreclaim_flag = memalloc_noreclaim_save();
  
-+    # test online commitment of minimum context.
-+    context = _damon_sysfs.DamonCtx()
-+    context.idx = 0
-+    context.kdamond = kdamonds.kdamonds[0]
-+    kdamonds.kdamonds[0].contexts = [context]
-+    kdamonds.kdamonds[0].commit()
-+
-+    status, err = dump_damon_status_dict(kdamonds.kdamonds[0].pid)
-+    if err is not None:
-+        print(err)
-+        exit(1)
-+
-+    assert_ctxs_committed(kdamonds.kdamonds[0].contexts, status['contexts'])
-+
-     kdamonds.stop()
- 
- if __name__ == '__main__':
+ 	nid = folio_nid(lru_to_folio(folio_list));
+
+base-commit: e2c90d41402c324ea81fa3d9c2c1d0f61906c161
 -- 
 2.39.5
