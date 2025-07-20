@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEEEB2AE7F;
-	Sat, 19 Jul 2025 18:19:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FF301CFBC;
+	Sun, 20 Jul 2025 17:16:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752949178; cv=none; b=u+6KbCaCbdVFbfiRGpk5pVXfd1wNQpI8gyeGkTbHbW5EMcp92dFECJTeEL/u3PVvTWi28FUZ3i3F4RNkmY7jIJPwEDAMZWm32tj4OYjgQ0ZXiS+JDm7jdzdQU+Nsh/bAtBXTWLeTb3jn2NrI+IFVjBu36xe1dOEi4B4pt8GdTx0=
+	t=1753031817; cv=none; b=MhSMKLv9WE/oSH7lcUaJrpeHP+OGRhuQkiQxASCkKi0sQAJPAHM0XPy2cMA7LSiBLsr8bvxKXelpKOJDt/iM5kCiAheC2lFYptiCTGmGZPMGlJS8ad6QrQRLVxPHbYZ8lGSLzRuqbj4xkJmlEsUpUlW4ETSUmNyVDB+7TrFYU08=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752949178; c=relaxed/simple;
-	bh=UT44bjgcgNEzmE3niHBCySJwkb/IEGsOxx/0/fOEM0A=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=NUW6hTpu0oodpXjIzlmC6f052burbLx8wFLJm0zVuMFLJ0Vp9nTzBwV41EvQQR6kqf8S72WXnr+DWQwG2v2hE2NMfQnwmylPhYx4pfUY4KdBItJV7ZjKoNb7fPSn2e6DohNckvg6SFBy55ShdAov2kORV6+8o/f4FxD+qWGI3jI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sgsiqDsA; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1753031817; c=relaxed/simple;
+	bh=CcG3DB5w4RBV9H55Eghl8rFNG8gQYXS7ULzywhnSNGg=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=s/yhlUJNl4wRpwuFxfK+R+/K//+7PnbLkjpZZjstq8VLq8ro60txD4j2iOYwuFegdjn5MO56+R5uFZtt5LXeZThu6mHPOHnhOWz1o83+rYi8OChsYs72AbjJ3t+JuFGzMh7+MwnaPiySmDTvOMhjSeDKgypOAJKsQ5owSKp3s30=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=vBoPJ0m9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sgsiqDsA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1743CC4CEE3;
-	Sat, 19 Jul 2025 18:19:35 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="vBoPJ0m9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A71C6C4CEE7;
+	Sun, 20 Jul 2025 17:16:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1752949175;
-	bh=UT44bjgcgNEzmE3niHBCySJwkb/IEGsOxx/0/fOEM0A=;
+	s=k20201202; t=1753031816;
+	bh=CcG3DB5w4RBV9H55Eghl8rFNG8gQYXS7ULzywhnSNGg=;
 	h=From:To:Cc:Subject:Date:From;
-	b=sgsiqDsAWgDB2f/86RmWgWg/MfpsuzSilW3zHhfN3YS7aCJUpJXp9fciRHErMQfqH
-	 kDg4b+jA/y9TaVKbVEG8MJW66qlsw4/8cjvBoahgF1TGKypL4XfEHQ3T883CH0j4Lc
-	 Cf2l6EFuqYSVl+MJAMSnE+jBgn/w3bu1e5F1k9Sgy+OJ66AJ2txKDzKDeblcjMkXJX
-	 ESPvp5Km5l971cSnykqQZw/3L0HpP5kP4IgFS+ka3Ss62HgUprZW0bK7xXTRNZSNgt
-	 bWx2HiWrqmJzQk81C21oePRNbxlMJQTcX470meUI1prI4fbLRAmDifgB2JK1SDi67c
-	 xoQ4iCSYbSp7g==
+	b=vBoPJ0m9l4O6ITYbJQknF5WDIYk/HVLZvJT2c33e+MYIWfyz4mZCaw8uUZR/wZcSC
+	 EEqJ6+FQjSNgCu/LIb6T9VkE6xoPunTdpYh10yH8QJeu2RJx2DbCUz77i+9/C6kEWd
+	 fas32jb7wH0Q0Lr1gzNil1mMf6cdBrR/ojnAnUw4ceOIj/7kWNI6ik6rvBoKTu3pgO
+	 tOXs2A8EAq7xGdzlvnafwCjxUfco4jzpec2Jnc3+G/bW46ykmIbe9HDMBa++RFM3Dt
+	 2ATHC000gEXyHduR3GA1SaWh0IZVWzalXA8rPk2cW3RXKAFu2cWxVsZtxrA8KU2Z8l
+	 AVsJaWHaUJK8w==
 From: SeongJae Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SeongJae Park <sj@kernel.org>,
+	Shuah Khan <shuah@kernel.org>,
 	damon@lists.linux.dev,
 	kernel-team@meta.com,
 	linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org,
-	stable@vger.kernel.org
-Subject: [PATCH] mm/damon/core: commit damos_quota_goal->nid
-Date: Sat, 19 Jul 2025 11:19:32 -0700
-Message-Id: <20250719181932.72944-1-sj@kernel.org>
+	linux-kselftest@vger.kernel.org,
+	linux-mm@kvack.org
+Subject: [PATCH 00/22] selftests/damon/sysfs.py: test all parameters
+Date: Sun, 20 Jul 2025 10:16:30 -0700
+Message-Id: <20250720171652.92309-1-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -45,58 +46,59 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-DAMOS quota goal uses 'nid' field when the metric is
-DAMOS_QUOTA_NODE_MEM_{USED,FREE}_BP.  But the goal commit function is
-not updating the goal's nid field.  Fix it.
+sysfs.py tests if DAMON sysfs interface is passing the user-requested
+parameters to DAMON as expected.  But only the default (minimum)
+parameters are being tested.  This is partially because _damon_sysfs.py,
+which is the library for making the parameter requests, is not
+supporting the entire parameters.  The internal DAMON status dump script
+(drgn_dump_damon_status.py) is also not dumping entire parameters.
+Extend the test coverage by updating parameters input and status dumping
+scripts to support all parameters, and writing additional tests using
+those.
 
-Fixes: 0e1c773b501f ("mm/damon/core: introduce damos quota goal metrics for memory node utilization") # 6.16.x
-Cc: stable@vger.kernel.org
-Signed-off-by: SeongJae Park <sj@kernel.org>
----
- mm/damon/core.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+This increased test coverage actually found one real bug
+(https://lore.kernel.org/20250719181932.72944-1-sj@kernel.org).
 
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index f3ec3bd736ec..52a48c9316bc 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -756,6 +756,19 @@ static struct damos_quota_goal *damos_nth_quota_goal(
- 	return NULL;
- }
- 
-+static void damos_commit_quota_goal_union(
-+		struct damos_quota_goal *dst, struct damos_quota_goal *src)
-+{
-+	switch (dst->metric) {
-+	case DAMOS_QUOTA_NODE_MEM_USED_BP:
-+	case DAMOS_QUOTA_NODE_MEM_FREE_BP:
-+		dst->nid = src->nid;
-+		break;
-+	default:
-+		break;
-+	}
-+}
-+
- static void damos_commit_quota_goal(
- 		struct damos_quota_goal *dst, struct damos_quota_goal *src)
- {
-@@ -764,6 +777,7 @@ static void damos_commit_quota_goal(
- 	if (dst->metric == DAMOS_QUOTA_USER_INPUT)
- 		dst->current_value = src->current_value;
- 	/* keep last_psi_total as is, since it will be updated in next cycle */
-+	damos_commit_quota_goal_union(dst, src);
- }
- 
- /**
-@@ -797,6 +811,7 @@ int damos_commit_quota_goals(struct damos_quota *dst, struct damos_quota *src)
- 				src_goal->metric, src_goal->target_value);
- 		if (!new_goal)
- 			return -ENOMEM;
-+		damos_commit_quota_goal_union(new_goal, src_goal);
- 		damos_add_quota_goal(dst, new_goal);
- 	}
- 	return 0;
+First seven patches (1-7) extend _damon_sysfs.py for all parameters
+setup.  The eight patch (8) fixes _damon_sysfs.py to use correct max
+nr_acceses and age values for their type.  Following three patches
+(9-11) extend drgn_dump_damon_status.py to dump full DAMON parameters.
+Following nine patches (12-20) refactor sysfs.py for general testing
+code reuse, and extend it for full parameters check.  Finally, two
+patches (21 and 22) add test cases in sysfs.py for full parameters
+testing.
 
-base-commit: 5d6176edfeb848b1039a1a2c9c1c36dd7f83150f
+SeongJae Park (22):
+  selftests/damon/_damon_sysfs: support DAMOS watermarks setup
+  selftests/damon/_damon_sysfs: support DAMOS filters setup
+  selftests/damon/_damon_sysfs: support monitoring intervals goal setup
+  selftests/damon/_damon_sysfs: support DAMOS quota weights setup
+  selftests/damon/_damon_sysfs: support DAMOS quota goal nid setup
+  selftests/damon/_damon_sysfs: support DAMOS action dests setup
+  selftests/damon/_damon_sysfs: support DAMOS target_nid setup
+  selftests/damon/_damon_sysfs: use 2**32 - 1 as max nr_accesses and age
+  selftests/damon/drgn_dump_damon_status: dump damos->migrate_dests
+  selftests/damon/drgn_dump_damon_status: dump ctx->ops.id
+  selftests/damon/drgn_dump_damon_status: dump DAMOS filters
+  selftests/damon/sysfs.py: generalize DAMOS Watermarks commit assertion
+  selftests/damon/sysfs.py: generalize DamosQuota commit assertion
+  selftests/damon/sysfs.py: test quota goal commitment
+  selftests/damon/sysfs.py: test DAMOS destinations commitment
+  selftests/damon/sysfs.py: generalize DAMOS schemes commit assertion
+  selftests/damon/sysfs.py: test DAMOS filters commitment
+  selftests/damon/sysfs.py: generalize DAMOS schemes commit assertion
+  selftests/damon/sysfs.py: generalize monitoring attributes commit
+    assertion
+  selftests/damon/sysfs.py: generalize DAMON context commit assertion
+  selftests/damon/sysfs.py: test non-default parameters runtime commit
+  selftests/damon/sysfs.py: test runtime reduction of DAMON parameters
+
+ tools/testing/selftests/damon/_damon_sysfs.py | 301 +++++++++++++++++-
+ .../selftests/damon/drgn_dump_damon_status.py |  63 +++-
+ tools/testing/selftests/damon/sysfs.py        | 284 +++++++++++++----
+ 3 files changed, 568 insertions(+), 80 deletions(-)
+
+
+base-commit: fc8066077f44a4fd43f8fdb12bc238f8fbeaa3c5
 -- 
 2.39.5
