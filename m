@@ -1,44 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE20923183B;
-	Fri, 25 Jul 2025 19:39:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F4D44501A;
+	Fri, 25 Jul 2025 20:22:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753472394; cv=none; b=IHFbYwFrmdoziZk/4x3XcG+PVKHlZWXrVy+q64q5AZjHm3DbmH/je0DiQr0TBK2AaFhlnGwUgHI0AJj5V6nT1bZooWz/xTL+o6JFFo2hTJQwSwUhc/5ZQ35l1lpCpG3D48Z1xhivUnQInsRWOyPdc0Ffv53BfClqiH4yo34gAVU=
+	t=1753474953; cv=none; b=QpZRoRRSgy7+QL+LHYc//UQU0bgUlQcaVE40aC9tm8Fa/khMzUjhHCTWx7JtK3IykuKxX32a9P8qPw45eqE7GiI//TjjtCzxwcb0bWSt+xYg70XQsYarADHhxvLJvn2mabcfGTPhZ3Km2yUsERVAP5ppTD7OJ/IQ8EUiguXgabc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753472394; c=relaxed/simple;
-	bh=uj/N/bSRAAtErIC/6xB/eoKkqvtlQGzcmsA0lQ53fm0=;
+	s=arc-20240116; t=1753474953; c=relaxed/simple;
+	bh=VQH99R6mUOjHSDPCGQ/ViR+7iWAEIcbC1txnGPFZ6/Y=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=h8RIf+qog1cS7WiwSnd48X3ds9eNGhmbsTTLJMuSiXUqEPJnRpaWMuRSM9usESiw/p0Sawhx8KibfHqixybl6JXdHSa+jnCpq2A4Rm/CcUdTTE9feXWkZtq6+YyHbbU7AwJ+UHe+lnDaGApVbTXfjRKtgm0oHICty/jYDuQAEi8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Z3Nop6OW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=CiM7P67WCGHJcxYraoorhnbkhAW9WLWzOssRJ6QZeEUKlgiWDPaZbFfnjG3XRdckd8+7w/qtwUK6l0eDVNSPF7Mru6b1OOb1aCp3sVlqOo/JFDwLG4DKNRf6dRaq6AoQ9kMhCC0DQnUoZnqSZLQf8b+otxVROU4DhYL/aSj7leA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Xn3xpQKN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Z3Nop6OW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E2A4C4CEE7;
-	Fri, 25 Jul 2025 19:39:54 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Xn3xpQKN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7431BC4CEE7;
+	Fri, 25 Jul 2025 20:22:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1753472394;
-	bh=uj/N/bSRAAtErIC/6xB/eoKkqvtlQGzcmsA0lQ53fm0=;
+	s=k20201202; t=1753474952;
+	bh=VQH99R6mUOjHSDPCGQ/ViR+7iWAEIcbC1txnGPFZ6/Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z3Nop6OWuWhO694lwWd7a6lOzCzOaXZBZWF6ohngBLzTTTTkL7HzywkhlVG5290+P
-	 W82DK9Whc4fPHjcoG5v1Di2DkwS3SQWoIwgnhjwcRc8tvtzvDU1ecUbfXcNN67pgOk
-	 EmsQvz4ZzHFor/lk3yHY8sdmt9sQt22AScs5B/i7aPXjNfcJ1eUFD3EjeRsneuZAZJ
-	 uSUvApM1ESn6ccy767IQyN3h7RRmMpAeP+mrfmaTuMSnMkdDr8+T8p5MtuMK2TDWsb
-	 hlrxdAUiEKz18a9rgl+1srekdNNm/WKjnTRHFib7MEnrRTVhmy7+YnSqZFQg6wY7xv
-	 IMvK74uGofcfg==
+	b=Xn3xpQKNtMQWwdNsTNuwnldzsyk6Cg6Io1WAhFbdDLx4l3vevNAC1PJEqz7sIPdEK
+	 MJJah0xBI0a6LTP/LXoGzCId2Tba/QeRa8mmHTioJCAOKesx93dWnmoWfT930omNhc
+	 nde22gF9Pga5Qs2XTl4FFcCXQNp5BHlrCeRGzYbCGspeVF+Kr8sguo5PJMsQxT1fWY
+	 8QdIcR+Xt1BsWoLLo1Vo7nbRJ3giTcb8GAIuZXnbQ7XtosUVIAfVEIewEf81/u1xLu
+	 ailRyi0u9QJWp6HFxcOmUYj6qEH3PS/vPEg9wGq6Px94H6wSaLBCbfWri9anFGvdTR
+	 V0guoV8IlfdYA==
 From: SeongJae Park <sj@kernel.org>
-To: Andrew Morton <akpm@linux-foundation.org>
+To: zuoze <zuoze1@huawei.com>
 Cc: SeongJae Park <sj@kernel.org>,
-	Bijan Tabatabai <bijan311@gmail.com>,
-	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org,
+	akpm@linux-foundation.org,
 	damon@lists.linux.dev,
-	Bijan Tabatabai <bijantabatab@micron.com>
-Subject: Re: [PATCH] mm/damon/vaddr: Skip isolating folios already in destination nid
-Date: Fri, 25 Jul 2025 12:39:52 -0700
-Message-Id: <20250725193952.49563-1-sj@kernel.org>
+	linux-kernel@vger.kernel.org,
+	linux-mm@kvack.org,
+	wangkefeng.wang@huawei.com,
+	yanquanmin1@huawei.com
+Subject: Re: [RFC PATCH] mm/damon: add full LPAE support for memory monitoring above 4GB
+Date: Fri, 25 Jul 2025 13:22:30 -0700
+Message-Id: <20250725202230.49995-1-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250725193637.49389-1-sj@kernel.org>
+In-Reply-To: <a5c871c8-dc52-4245-8513-94ccc2b46c94@huawei.com>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -46,66 +47,77 @@ List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-+ Andrew
+On Fri, 25 Jul 2025 11:15:22 +0800 zuoze <zuoze1@huawei.com> wrote:
 
-On Fri, 25 Jul 2025 12:36:37 -0700 SeongJae Park <sj@kernel.org> wrote:
+> 
+> 
+> 在 2025/4/23 1:43, SeongJae Park 写道:
+> > On Tue, 22 Apr 2025 19:50:11 +0800 zuoze <zuoze1@huawei.com> wrote:
+> > 
+> > [...]
+> >> Thanks for the patches - I’ve noted the RFC series and user-space
+> >> updates. Apologies for the delay; I’ll prioritize reviewing these soon
+> >> to verify they meet the intended tracking goals. Appreciate your
+> >> patience.
+> > 
+> > No worry.  Please take your time and let me know if there is anything I can
+> > help.
+> > 
+> > I think we can improve the user-space tool support better for usability.  For
+> > example, it could find LPAE case, set addr_unit parameter, and convert
+> > user-input and output address ranges on its own.  But hopefully the current
+> > support allows simple tests of the kernel side change, and we could do such
+> > improvement after the kernel side change is made.
+> > 
+> > 
+> 
+> Hi SJ,
+> 
+> Apologies for the delayed response. We've verified your patch in our
+> environment and confirmed it supports LPAE address monitoring.
 
-> On Fri, 25 Jul 2025 11:33:00 -0500 Bijan Tabatabai <bijan311@gmail.com> wrote:
+No worry, thank you for testing that :)
+
+> However,
+> we observed some anomalies in the reclaim functionality. During code
+> review, we identified a few issues:
 > 
-> > From: Bijan Tabatabai <bijantabatab@micron.com>
-> > 
-> > damos_va_migrate_dests_add() determines the node a folio should be in
-> > based on the struct damos_migrate_dests associated with the migration
-> > scheme and adds the folio to the linked list corresponding to that node
-> > so it can be migrated later. Currently, folios are isolated and added to
-> > the list even if they are already in the node they should be in.
-> > 
-> > In using damon weighted interleave more, I've found that the overhead of
-> > needlessly adding these folios to the migration lists can be quite
-> > high. The overhead comes from isolating folios and placing them in the
-> > migration lists inside of damos_va_migrate_dests_add(), as well as the
-> > cost of handling those folios in damon_migrate_pages(). This patch
-> > eliminates that overhead by simply avoiding the addition of folios that
-> > are already in their intended location to the migration list.
-> [...]
-> > Signed-off-by: Bijan Tabatabai <bijantabatab@micron.com>
+> The semantic meaning of damon_region changed after addr_unit was
+> introduced. The units in damon_addr_range may no longer represent bytes
+> directly.
+
+You're right, and this is an intended change.
+
 > 
-> Reviewed-by: SeongJae Park <sj@kernel.org>
+> The size returned by damon_sz_region() now requires multiplication by
+> addr_unit to get the actual byte count.
+
+Again, this is an intended change.  damon_sz_region() callers should aware this
+semantic and updated accordingly, if it could make a real problem otherwise.
+If you found such changes required cases that this patch series is missing,
+could you please list up?
+
 > 
-> > ---
-> > Sorry I missed this in the original patchset!
-> 
-> No worry!
-> 
-> Andrew, could we squash this into commit 19c1dc15c859 ("mm/damon/vaddr: use
-> damos->migrate_dests in migrate_{hot,cold}") on mm-stable?  I think this is
-> just a simple fixup.
-> 
-> > 
-> >  mm/damon/vaddr.c | 4 ++++
-> >  1 file changed, 4 insertions(+)
-> > 
-> > diff --git a/mm/damon/vaddr.c b/mm/damon/vaddr.c
-> > index 7f5dc9c221a0..4404c2ab0583 100644
-> > --- a/mm/damon/vaddr.c
-> > +++ b/mm/damon/vaddr.c
-> > @@ -711,6 +711,10 @@ static void damos_va_migrate_dests_add(struct folio *folio,
-> >  		target -= dests->weight_arr[i];
-> >  	}
-> >  
-> > +	/* If the folio is already in the right node, don't do anything */
-> > +	if (folio_nid(folio) == dests->node_id_arr[i])
-> > +		return;
-> > +
-> >  isolate:
-> >  	if (!folio_isolate_lru(folio))
-> >  		return;
-> > -- 
-> > 2.43.5
-> 
-> 
-> Thanks,
-> SJ
-> 
+> Heavy usage of damon_sz_region() and DAMON_MIN_REGION likely requires
+> addr_unit-aware adjustments throughout the codebase. While this approach
+> works, it would involve considerable changes.
+
+It has been a while since I wrote this patch series, but at least while writing
+it, I didn't find such required changes.  Of course I should missed something,
+though.  As I mentioned above, could you please list such changes required
+parts that makes problem?  That would be helpful at finding the path forward.
+
+> What's your perspective on
+> how we should proceed?
+
+Let's see the list of required additional changes with why those are required
+(what problems can happen if such chadnges are not made), and discuss.
+
+
+Thanks,
+SJ
+
+[...]
