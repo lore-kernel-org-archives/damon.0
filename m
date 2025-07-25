@@ -1,128 +1,104 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from szxga02-in.huawei.com (szxga02-in.huawei.com [45.249.212.188])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5AF64502F;
-	Tue, 22 Jul 2025 06:05:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2070C2836F
+	for <damon@lists.linux.dev>; Fri, 25 Jul 2025 03:15:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.188
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753164310; cv=none; b=Q1OQhnbut/0iEnXjcQ4gTq2+GkimzIc/CbrSmoKGb0dH2XmgbtcSFyaihZsuv34N55WlP88rc+/sUhCGlwQXpHrVhPUyNN0v+xpnWAETIJBYVWGA/vf6dlDnzYVF1dcY0LQEC9SJSuj9WUzJoLONNMjRUzJpjP6OZ2cjg+Jzkro=
+	t=1753413329; cv=none; b=CyJfo2hcE+nrcxBIpsLcYnhac75f8mkACqGzutPx3NTf8QTREUPCk8SFcQXqHXrB4tQI3W4BFsC/7XoIbqcPplQZMJNVrXrzqNZy0lz/b2/BM0CkrPwz4/aUXA/LU1HKvEYeYcP7wAx7BGx29ryx0hdHCkgTcZ0kIrl4nV1RP3k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753164310; c=relaxed/simple;
-	bh=F134i57yThMGkReks3hjElxUss2HLVKAnAIFuY7jQ0c=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=o7v5yvtLgt+R9gvAJWIBeHI2cJJQ75mOYslezs7Q+OJCNYF+TuYP3dwQXIDbMm/OD1qOD82DAUVbCb8A26Jgczv+d24X10xKBJycm/tO6GCq+wX5jL9NNkLCNvw9RFb9hCJbRoeQ87la6hDYKN3I0bepZC4SxXh7D56ECJApn50=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZYfk9ddf; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZYfk9ddf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 432BBC4CEEB;
-	Tue, 22 Jul 2025 06:05:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1753164309;
-	bh=F134i57yThMGkReks3hjElxUss2HLVKAnAIFuY7jQ0c=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZYfk9ddfFwsuAZUSdq0PnLLV9IqxxB3vO44fsKlyRJ3eK5koOvZ5xVgpsHhmBIMI5
-	 yMoKPCcjyyyRAdDelkmmPF2gpBoAmIeH9Rf+Vaw1KozDPOkUDbFeCTUE2iZXRwPE0i
-	 NVB+aZ5WyeEK7QO1dDEcRLbCEbl9iZRXpxZuKagZcjzPbNG3XphQPCQb9dkttTsSvp
-	 MpInKMkZ3Rut53qZAVHQxpqAWZyKfimTVZdtXDkwom23jSg9eTsgJDtn8Kj4UqiHg4
-	 0YO+b93RQuwYPThTPwdkH8pz2bq9bkdmYHkm2nkErTJ1G9lmqTAZgG4MNH0a8trm/3
-	 0mR7uQAu2Jknw==
-From: SeongJae Park <sj@kernel.org>
-To: kernel test robot <oliver.sang@intel.com>
-Cc: SeongJae Park <sj@kernel.org>,
-	oe-lkp@lists.linux.dev,
-	lkp@intel.com,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Shuah Khan <shuah@kernel.org>,
-	damon@lists.linux.dev,
-	linux-mm@kvack.org
-Subject: Re: [linux-next:master] [selftests/damon]  4ece018976: kernel-selftests.damon.sysfs.py.fail
-Date: Mon, 21 Jul 2025 23:05:06 -0700
-Message-Id: <20250722060506.56112-1-sj@kernel.org>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <202507220707.9c5d6247-lkp@intel.com>
-References: 
+	s=arc-20240116; t=1753413329; c=relaxed/simple;
+	bh=Id76nfCvrP58gVNn51aNy52/FZfBLf1rPi3lVtNNo7k=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=Sa5rNE/UkApx2EhtbiljzMu12N0el7rsZO3I/D69ZSD+B7EdmQ//znTAWHuNk4lRwVyJdVTSJvclRv6AsC06twQIuXoVLrYCIqmli7LtVWR2auDFJ0R9QsEgvwlB1cwUn+RJ4Zizk+uEl+FPEUWRPR/p1mmjURIMHSsrNwO17R8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; arc=none smtp.client-ip=45.249.212.188
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
+Received: from mail.maildlp.com (unknown [172.19.163.174])
+	by szxga02-in.huawei.com (SkyGuard) with ESMTP id 4bpCYl3PMkzYdNB;
+	Fri, 25 Jul 2025 11:10:51 +0800 (CST)
+Received: from dggemv705-chm.china.huawei.com (unknown [10.3.19.32])
+	by mail.maildlp.com (Postfix) with ESMTPS id 591D81402CB;
+	Fri, 25 Jul 2025 11:15:24 +0800 (CST)
+Received: from kwepemq100012.china.huawei.com (7.202.195.195) by
+ dggemv705-chm.china.huawei.com (10.3.19.32) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.11; Fri, 25 Jul 2025 11:15:24 +0800
+Received: from [10.174.177.186] (10.174.177.186) by
+ kwepemq100012.china.huawei.com (7.202.195.195) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.11; Fri, 25 Jul 2025 11:15:23 +0800
+Message-ID: <a5c871c8-dc52-4245-8513-94ccc2b46c94@huawei.com>
+Date: Fri, 25 Jul 2025 11:15:22 +0800
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH] mm/damon: add full LPAE support for memory monitoring
+ above 4GB
+To: SeongJae Park <sj@kernel.org>
+CC: <akpm@linux-foundation.org>, <damon@lists.linux.dev>,
+	<linux-kernel@vger.kernel.org>, <linux-mm@kvack.org>,
+	<wangkefeng.wang@huawei.com>, <yanquanmin1@huawei.com>
+References: <20250422174301.58953-1-sj@kernel.org>
+From: zuoze <zuoze1@huawei.com>
+In-Reply-To: <20250422174301.58953-1-sj@kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-
-On Tue, 22 Jul 2025 13:36:02 +0800 kernel test robot <oliver.sang@intel.com> wrote:
-
-> 
-> 
-> Hello,
-> 
-> kernel test robot noticed "kernel-selftests.damon.sysfs.py.fail" on:
-> 
-> commit: 4ece01897627ddeefcede4ac709cd99763994dc4 ("selftests/damon: add python and drgn-based DAMON sysfs test")
-> https://git.kernel.org/cgit/linux/kernel/git/next/linux-next.git master
-> 
-> [test failed on linux-next/master d086c886ceb9f59dea6c3a9dae7eb89e780a20c9]
-> 
-> in testcase: kernel-selftests
-> version: kernel-selftests-x86_64-7ff71e6d9239-1_20250215
-> with following parameters:
-> 
-> 	group: damon
-> 
-> 
-> config: x86_64-rhel-9.4-kselftests
-> compiler: gcc-12
-> test machine: 36 threads 1 sockets Intel(R) Core(TM) i9-9980XE CPU @ 3.00GHz (Skylake) with 32G memory
-> 
-> (please refer to attached dmesg/kmsg for entire log/backtrace)
-> 
-> 
-> besides the failure of this new added test, we also noticed below tests failed
-> while passing on parent.
-> 
-> e227472ebf00b6b5 4ece01897627ddeefcede4ac709
-> ---------------- ---------------------------
->        fail:runs  %reproduction    fail:runs
->            |             |             |
->            :6          100%           6:6     kernel-selftests.damon.damon_nr_regions.py.fail
->            :6          100%           6:6     kernel-selftests.damon.damos_quota.py.fail
->            :6          100%           6:6     kernel-selftests.damon.damos_quota_goal.py.fail
->            :6          100%           6:6     kernel-selftests.damon.damos_tried_regions.py.fail
-> 
-> 
-> 
-> If you fix the issue in a separate patch/commit (i.e. not just a new version of
-> the same patch/commit), kindly add following tags
-> | Reported-by: kernel test robot <oliver.sang@intel.com>
-> | Closes: https://lore.kernel.org/oe-lkp/202507220707.9c5d6247-lkp@intel.com
-> 
-> 
-> 
-> # timeout set to 300
-> # selftests: damon: sysfs.py
-> # Traceback (most recent call last):
-> #   File "/usr/src/perf_selftests-x86_64-rhel-9.4-kselftests-4ece01897627ddeefcede4ac709cd99763994dc4/tools/testing/selftests/damon/./sysfs.py", line 42, in <module>
-> #     main()
-> #   File "/usr/src/perf_selftests-x86_64-rhel-9.4-kselftests-4ece01897627ddeefcede4ac709cd99763994dc4/tools/testing/selftests/damon/./sysfs.py", line 31, in main
-> #     status, err = dump_damon_status_dict(kdamonds.kdamonds[0].pid)
-> #                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-> #   File "/usr/src/perf_selftests-x86_64-rhel-9.4-kselftests-4ece01897627ddeefcede4ac709cd99763994dc4/tools/testing/selftests/damon/./sysfs.py", line 13, in dump_damon_status_dict
-> #     rc = subprocess.call(['drgn', dump_script, pid, 'damon_dump_output'],
-> #          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-> #   File "/usr/lib/python3.11/subprocess.py", line 389, in call
-> #     with Popen(*popenargs, **kwargs) as p:
-> #          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-> #   File "/usr/lib/python3.11/subprocess.py", line 1024, in __init__
-> #     self._execute_child(args, executable, preexec_fn, close_fds,
-> #   File "/usr/lib/python3.11/subprocess.py", line 1901, in _execute_child
-> #     raise child_exception_type(errno_num, err_msg, err_filename)
-> # FileNotFoundError: [Errno 2] No such file or directory: 'drgn'
-> not ok 2 selftests: damon: sysfs.py # exit=1
-
-Thank you for this report!  I just posted a fix:
-https://lore.kernel.org/20250722060330.56068-1-sj@kernel.org
+X-ClientProxiedBy: kwepems500001.china.huawei.com (7.221.188.70) To
+ kwepemq100012.china.huawei.com (7.202.195.195)
 
 
-Thanks,
-SJ
 
-[...]
+在 2025/4/23 1:43, SeongJae Park 写道:
+> On Tue, 22 Apr 2025 19:50:11 +0800 zuoze <zuoze1@huawei.com> wrote:
+> 
+> [...]
+>> Thanks for the patches - I’ve noted the RFC series and user-space
+>> updates. Apologies for the delay; I’ll prioritize reviewing these soon
+>> to verify they meet the intended tracking goals. Appreciate your
+>> patience.
+> 
+> No worry.  Please take your time and let me know if there is anything I can
+> help.
+> 
+> I think we can improve the user-space tool support better for usability.  For
+> example, it could find LPAE case, set addr_unit parameter, and convert
+> user-input and output address ranges on its own.  But hopefully the current
+> support allows simple tests of the kernel side change, and we could do such
+> improvement after the kernel side change is made.
+> 
+> 
+
+Hi SJ,
+
+Apologies for the delayed response. We've verified your patch in our
+environment and confirmed it supports LPAE address monitoring. However,
+we observed some anomalies in the reclaim functionality. During code
+review, we identified a few issues:
+
+The semantic meaning of damon_region changed after addr_unit was
+introduced. The units in damon_addr_range may no longer represent bytes
+directly.
+
+The size returned by damon_sz_region() now requires multiplication by
+addr_unit to get the actual byte count.
+
+Heavy usage of damon_sz_region() and DAMON_MIN_REGION likely requires
+addr_unit-aware adjustments throughout the codebase. While this approach
+works, it would involve considerable changes. What's your perspective on
+how we should proceed?
+
+Best regards,
+Ze Zuo
+
+> Thanks,
+> SJ
+> 
+> [...]
+> 
+
+
