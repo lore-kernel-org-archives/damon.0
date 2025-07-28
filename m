@@ -1,90 +1,64 @@
-Received: from mx0a-00069f02.pphosted.com (mx0a-00069f02.pphosted.com [205.220.165.32])
+Received: from NAM10-DM6-obe.outbound.protection.outlook.com (mail-dm6nam10on2055.outbound.protection.outlook.com [40.107.93.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A702229405
-	for <damon@lists.linux.dev>; Mon, 28 Jul 2025 05:19:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=205.220.165.32
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 900F5157A55
+	for <damon@lists.linux.dev>; Mon, 28 Jul 2025 06:16:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.93.55
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753679997; cv=fail; b=clRN+rCPzSfhtnAkkXXlAlDePFzREdop0qV5wveYGyYgaHNNCrZuAp0krXlDVlK8k+ksS9ni9sFqXF6iC3qoxOr7vklj1/0uVw/AcF/u0a+dxfSlmQw1Uzxtu8/kskukuuqtKSOhZOX7Ul1lJCwF8A1kiNscIrdj602O0lSmm9s=
+	t=1753683418; cv=fail; b=P1LjhJ/LIDcGvOrWpzj2ZTowrCLa6lLv7eRGqKuTd6SPQ5Zj4HYAsZekL7kdThC6LRChlVupm9rRi4rIJJomR1VtengKOIIg2u2T2oPKft+NYSbDhjrMnar7OHtO2H68mG5Re92AMN1w87G6TF1DjhTPofHqfzYW+uD0Mg5D+Jc=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753679997; c=relaxed/simple;
-	bh=omiCzCEa1sEuLqBXUegRfA+bsrDHqtQ2KTckWzIpF1M=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=sTaM9vZzuoXsd8WiIANrMpr9IdMw/EOBWg+COjUwRqXECH14UZFTWtFI4Y8LXa/o6hjMBCQuTLuv6BEU1lb7BRsbS6tSxgB3t1SROjam8oSUOxk2W+ol1tecRHLS8OIZwddoT0IFrMBbI5Yj8zFUltc5m7DoOV3+d3Phkoo40Cw=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oracle.com; spf=pass smtp.mailfrom=oracle.com; dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b=nKy1w83m; dkim=pass (1024-bit key) header.d=oracle.onmicrosoft.com header.i=@oracle.onmicrosoft.com header.b=ch9F9O38; arc=fail smtp.client-ip=205.220.165.32
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oracle.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oracle.com
+	s=arc-20240116; t=1753683418; c=relaxed/simple;
+	bh=yN5H7Q6iTKr4P8ftFwNKOlHr1uD7Xwu20E3AnctFRq0=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=Vhj/D1IfWRpCcUbEcg+hdamGZUlgcLIgGSF/INBgsc45GFqBJYrzj0MhY4UqqXNjTMTN9t2vaF99tB2fw3qwX6V2zQcwdqwFG580SRJudpF5jWzDPzokFGzdH3fsulm5Ls4MfXtiCMRSDaSukTILj0x7kdN7vg5P3GaDZ8TKbvk=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=hL4hsHa/; arc=fail smtp.client-ip=40.107.93.55
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b="nKy1w83m";
-	dkim=pass (1024-bit key) header.d=oracle.onmicrosoft.com header.i=@oracle.onmicrosoft.com header.b="ch9F9O38"
-Received: from pps.filterd (m0246617.ppops.net [127.0.0.1])
-	by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56RJhUE4006017;
-	Mon, 28 Jul 2025 05:19:44 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
-	:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=corp-2025-04-25; bh=j9/IklV/tDntwa4S1m
-	LAJ84bbT3q+Pbz25/KxlbUuLY=; b=nKy1w83m/ldSnwd4I+5TFeM3CxeS+8qSrJ
-	Wo9ZpFkQjfb/Pg7wdyMADw3IWNeiUFOiMQ56R7A+Gu+uhPDigjdrjZSUc5QW+6h+
-	zVoezN26Gy5RUph9I2zagzxwf5+pVSTdfzlBK15+O0R+5NiJyDiUrA9sUf5qT+KT
-	T0BuCcxZxHvlcW91InkdPoU1cpgUcTYuSLcbBTJYrA/fq9Q0rT4Jg46CU6qQmPNY
-	vBl03FEeSsbIp2LfATBV47Ur3LaeBlxVlexHB+iW5AJVv8AUTRgy/1Tr0zZuGr64
-	Z008o3pcwi4Ncv5sFKBnGXrOX2Y2qhZsNyLXSM90hOujjUgbCuyw==
-Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (iadpaimrmta01.appoci.oracle.com [130.35.100.223])
-	by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 484qjwjc49-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Mon, 28 Jul 2025 05:19:44 +0000 (GMT)
-Received: from pps.filterd (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
-	by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2) with ESMTP id 56S3YLh4016708;
-	Mon, 28 Jul 2025 05:19:43 GMT
-Received: from nam11-dm6-obe.outbound.protection.outlook.com (mail-dm6nam11on2070.outbound.protection.outlook.com [40.107.223.70])
-	by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id 484nfeaeas-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Mon, 28 Jul 2025 05:19:43 +0000
+	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="hL4hsHa/"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=pP6n5Zh3rL6H6FFbWs9IUG3gh4PNxJkf9gfw1VUdvtvIrs+x6jOBq0nL9iyXzoJZPg7SUM6lg/fcFCKpNxB7XBcMSGbo8q8n/oW1ndLlkyH/1QM8S2BMp2Bcpy2npVZuyxuAkiMpyrbshS3PjowbJYY/2KNOQ3GMCzO08HQPtpYWYNb2Gd9k2fF3/JBSxe/grZX+u5O65c4OcsKeOJgBCnv6l4Uxihce9He5LNqhaGHrsYzkfPk2urdi7HgQAnTf/P9bGm1jmjswC2QKyVvDzkuVCT+c6+DeLLFaZ78DDlKiyCJcsx299lFfaqBdKyEaSgKCKUmvrfUTz3PGA5CApg==
+ b=hZta8VEBVFHZr7eLmMTMkYUjfgJCsl9nifj93e4IrKd+YyOTDkxXK/GmanVgy/krKSlBBDhr5n9hYFU9Q+Q68shzhdtdyQl7Ca4cEnWiwg9wkZWrZ3F8R8/+2HuZ3U//hfHmwwaHPstf8Oj7TD5hrYIoz1yr8JQo5b0lbQ3B4dUfEjP6Wcy94flq7Y2s9pwhDiKLaQsRZq15VyYZMZ2rS77tQjVyB4igMkX4lURmcQQaSPMxWVe9DxU3lYzwP6Zv2HYzRSnqxR4WTmTymEgTkNc+1500KrEPfkv70neRafVFlo/7kvCqHXYndyGMqCxsEYnntgIG/jsxwNqsqbg0SA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=j9/IklV/tDntwa4S1mLAJ84bbT3q+Pbz25/KxlbUuLY=;
- b=YT9LGUkBvTxwAyEmaOK3i/aaurxv0TbohJrPJsVRICvOqeYfK827MGu41FddtmdDq8NZEHwCNEMd5IsH9Z6VzPD/+aQJa6ICMt9AHiB0rHNTFBUrmHBExiyWcCUxo/k4HB42cfEdSeAepnk+YlmY6BuMNwf6ZeAOQIXYUuLsT+z5qSNnx5JmWVPxgXOmgFgZX5lRLiClPyhg/j/yi2f3Xz0/my/I/jmEd1gBXuHLuipQlqXJg+pBiB/rjUpdsIF49LPKr7Q3LrJ1mlwQDakIX26/nekKVgyUU6196p39x+HiolV9rgEag203+ZaYe5SBuEIt/H0SCrA3q74cBdHe/Q==
+ bh=1PQTY8q4QfDnqBqQMyFugVtrUvoIsz0BxRY7MIknYCo=;
+ b=K74BY7OKAPKJi2yqozDbSZzQM0EOIcClOhV3vamdgduOPkvSXebVBS0WkyIgRKnvOjI4NGs0U54uXA/FuQT7xaQnTupTdgEOuxoDSId+DBIUzHuPSHi8uTcD+3/At9NxxvB3/q+qfLivFzyOs0pvRg0z8+zwJTg7j1eU3zH+kKqY7Qfa/czifogIcBrYyzLARdZR3D+Ca5vSDN+7PGVTUw+AyPEWZY80pPlXzu8zoDd+OVCXjMnSjo8ZDaM1k3Fbhe8aame1iHq2MBnCZcrnGcmCFywYnm8p9lbvVI4F2z+7QWdgrIpI4GVwPisj1DDAdU8D7+5MrF2pgwmp0N0rSA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
- dkim=pass header.d=oracle.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=j9/IklV/tDntwa4S1mLAJ84bbT3q+Pbz25/KxlbUuLY=;
- b=ch9F9O38FCJtWyBFu+NlqSkpjOgZHIdz9jzpng0ouSjr8N96aAhgpVhSwU+1sTlsr+lQeMp7uT7+Oa399bgLU2zeGWYMKMToFGREdWKfHw7qpzK7dCz3n93NIb5Iv1oLhveqNG+6zN68vYgm2DnsNTkavVjsuiBh1D/OKh4hsL8=
-Received: from DM4PR10MB8218.namprd10.prod.outlook.com (2603:10b6:8:1cc::16)
- by CH0PR10MB4908.namprd10.prod.outlook.com (2603:10b6:610:cb::18) with
+ bh=1PQTY8q4QfDnqBqQMyFugVtrUvoIsz0BxRY7MIknYCo=;
+ b=hL4hsHa/UCVuhTiTnW5d9iFvdQp2OUHhvYZEAZlnrd2cB4QTYMMBm5QpYT7P79U+bC69aWn3BtGGukv3alTOn0ChRpbtXw9j8hj1ZPo3zIKY+Suy8KAWGiylbLdB9sCSR3BZFnrSnuqg5Ht2J5PCwKSQDhZ2E7FtP233TbKg7dE=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from PH7PR12MB5805.namprd12.prod.outlook.com (2603:10b6:510:1d1::13)
+ by MN2PR12MB4254.namprd12.prod.outlook.com (2603:10b6:208:1d0::17) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8964.26; Mon, 28 Jul
- 2025 05:19:37 +0000
-Received: from DM4PR10MB8218.namprd10.prod.outlook.com
- ([fe80::2650:55cf:2816:5f2]) by DM4PR10MB8218.namprd10.prod.outlook.com
- ([fe80::2650:55cf:2816:5f2%5]) with mapi id 15.20.8964.025; Mon, 28 Jul 2025
- 05:19:37 +0000
-Date: Mon, 28 Jul 2025 06:19:35 +0100
-From: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-To: SeongJae Park <sj@kernel.org>
-Cc: "Liam R. Howlett" <Liam.Howlett@oracle.com>,
-        Andrew Morton <akpm@linux-foundation.org>,
-        David Hildenbrand <david@redhat.com>, Jann Horn <jannh@google.com>,
-        Michal Hocko <mhocko@suse.com>, Mike Rapoport <rppt@kernel.org>,
-        Pedro Falcato <pfalcato@suse.de>,
-        Suren Baghdasaryan <surenb@google.com>,
-        Vlastimil Babka <vbabka@suse.cz>, damon@lists.linux.dev,
-        kernel-team@meta.com, linux-kernel@vger.kernel.org, linux-mm@kvack.org
-Subject: Re: [RFC v2 5/7] mm/memory: implement MM_CP_DAMON
-Message-ID: <804015e3-78f7-47d8-b887-434f0f7edf8a@lucifer.local>
-References: <20250727201813.53858-1-sj@kernel.org>
- <20250727201813.53858-6-sj@kernel.org>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250727201813.53858-6-sj@kernel.org>
-X-ClientProxiedBy: MM0P280CA0012.SWEP280.PROD.OUTLOOK.COM
- (2603:10a6:190:a::31) To DM4PR10MB8218.namprd10.prod.outlook.com
- (2603:10b6:8:1cc::16)
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8964.21; Mon, 28 Jul
+ 2025 06:16:54 +0000
+Received: from PH7PR12MB5805.namprd12.prod.outlook.com
+ ([fe80::11c7:4914:62f4:f4a3]) by PH7PR12MB5805.namprd12.prod.outlook.com
+ ([fe80::11c7:4914:62f4:f4a3%5]) with mapi id 15.20.8964.025; Mon, 28 Jul 2025
+ 06:16:54 +0000
+Message-ID: <cb9945fc-6f8e-4054-8116-d3f78e10dcb6@amd.com>
+Date: Mon, 28 Jul 2025 11:46:25 +0530
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] mm/damon/vaddr: Skip isolating folios already in
+ destination nid
+To: Bijan Tabatabai <bijan311@gmail.com>, linux-mm@kvack.org,
+ linux-kernel@vger.kernel.org, damon@lists.linux.dev
+Cc: sj@kernel.org, akpm@linux-foundation.org,
+ Bijan Tabatabai <bijantabatab@micron.com>
+References: <20250725163300.4602-1-bijan311@gmail.com>
+Content-Language: en-US
+From: Raghavendra K T <raghavendra.kt@amd.com>
+In-Reply-To: <20250725163300.4602-1-bijan311@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: PN4PR01CA0096.INDPRD01.PROD.OUTLOOK.COM
+ (2603:1096:c01:2af::8) To PH7PR12MB5805.namprd12.prod.outlook.com
+ (2603:10b6:510:1d1::13)
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -92,354 +66,174 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DM4PR10MB8218:EE_|CH0PR10MB4908:EE_
-X-MS-Office365-Filtering-Correlation-Id: c79b61fb-1608-4ea6-be66-08ddcd9658c3
+X-MS-TrafficTypeDiagnostic: PH7PR12MB5805:EE_|MN2PR12MB4254:EE_
+X-MS-Office365-Filtering-Correlation-Id: 740be125-57e5-4780-1e46-08ddcd9e5897
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|366016|7416014|376014|1800799024|7053199007;
+X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|1800799024|376014;
 X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?AWC+HuJxr3qQuZNZEu0QU1ljTiQWe8/m6FaJ7wdzfosgNNRuFb52nhapp711?=
- =?us-ascii?Q?CUKKNMCOxg1qm2uuF+kq+Kau4oJwhvanSuSRgiUZWvsCqmATrih8djgrDKGP?=
- =?us-ascii?Q?Mory11dssVdGp4bQBdkPDVbLAEFcZawQUPcTd5yabEJe2DOnm1CwHRA5MIv6?=
- =?us-ascii?Q?Kl7LU6asUH3bQtetu8OQN3xFHCCbdBEBDB3e1S/nE8die7UBmtDLSL4XsxLM?=
- =?us-ascii?Q?xXoWpSQuyLSa4+oCcsHYv0wEwvrjXNvsDirFKljR9Bs/6sVOq08Od3khBYEH?=
- =?us-ascii?Q?2nxfCIygA2n2c5nCBHD9FXOnQT7s7m2LF6+wC7qDbGEx1Mr3u5FDEFqkNLyv?=
- =?us-ascii?Q?1tYo5/iQAwlzink4zGPLrobcSJPGVGTVpsVzEo+p9pJ7CKoBl/1yrBrYSqxn?=
- =?us-ascii?Q?etVUC2wVG+FkXs4BI8Os99XygKEl2C6Q0uIpTYvp8KljRyZfFdpNfJnxqxOn?=
- =?us-ascii?Q?3OWZY9J1VNh7xrMKFZwWxI49VdhwRF7g2r5aAiXsUA4g/bj1o3uBO3V8e/S4?=
- =?us-ascii?Q?PgZbXyCuPF8EywK8S2QEE9gCYF02c/nlyyi8LxUM6AjH3UKCz+QmgNgaibec?=
- =?us-ascii?Q?ILt4mms6jCej/pJc1LGbB9rGlXpKhWp1myMjuRT3sfwa9Xls1vZW0pq6f1a3?=
- =?us-ascii?Q?KkO+i25ePPAxs7RB5e4+x15X54i22F77krBZYxTkazvbVqqx5KDUoG4MmeVu?=
- =?us-ascii?Q?JUsALCfIdbSeCKZPldFR79eXidDJLzR3WFzBg5vGQ5/zqf8npOb92rbmdhwu?=
- =?us-ascii?Q?lZs6RC9fNGRNxaGDJqiQx0ZzhMPlk3pye99WS3uBWUQT9XGiC2FEsZlz/YLy?=
- =?us-ascii?Q?GkA3MKgO1sayr9/n15GJYDigzBY6tzEEilvgsVqw+5L150AZOixEUUbM4AcJ?=
- =?us-ascii?Q?BtSMwszDIhP7T4rp6b28kXOVRFo5ieAqm/yznTTuns0Rj6sVrB95pRvqFTjE?=
- =?us-ascii?Q?bPFiPmXQzRJT9jvCgBXSBHo8qd2AstZoJaawOq4PD4UkFuJJwximTI7C3ZiJ?=
- =?us-ascii?Q?IgJhH/srmfuCuzlDTTCqkJrud/7ggIdhylPINk9TEhLgZSDG4RaVhfN/Mjkx?=
- =?us-ascii?Q?ivGhTilQLk6LgSRVnQQnI8w3NS8W4ebWnwrCOAuYT+pTXPLqgoNymnk7Jgtu?=
- =?us-ascii?Q?GD0i2W/E7up7T2GieUJtscc/gIsmpvCPfEO2w7USF7fGnLStcndtwCnQNZrt?=
- =?us-ascii?Q?jJhtsNjpnHBLSqYP/gORHPFc4IwHn3crzZIp/RJUAmU0eBsPkzAJZpaKl9D8?=
- =?us-ascii?Q?k/7X0MjYalXzDglEXhNFSAseBNCJGDY2XQZKhB3LczvwLAvu5mUlGNaR+X7+?=
- =?us-ascii?Q?c7UaF5H5okKzGGkH17GrBKN79j/O8LHcaZASqJIWA3Z9dwX7PrMk+b6PRk4k?=
- =?us-ascii?Q?o3ta23a4joT/oxtsfVe6ShecGydUiJjoQHQHaVFWYeqYKAIZFk23ciAlNIIy?=
- =?us-ascii?Q?YNI/CryHuVM=3D?=
+	=?utf-8?B?Qmg5bHY1c0QxMTBuall5WnMvbW1HaDV4djZMdm9CSCs1eHhOVVE1ZWdJWW5o?=
+ =?utf-8?B?dENYMGJERU1BNFE5NFdQYWV3TzhwYURUc29rMzN4eGtrZXNRQ0cwL3p2U241?=
+ =?utf-8?B?ckV4VDhteHdLTHE0ZHVRSkpUT1hCNDhISFZQR01mb3BzRnJRYWVCdEE4eTls?=
+ =?utf-8?B?aUFrbmdvRWxta1h6enVEVmpST21iaW1zWWhERmFEQmp0S3A4M0pkV0tUMnY5?=
+ =?utf-8?B?RUorQmhjSlRzQ1c4SzM2RFJlbWh3bk00VGY2c01lZG5wTEZpdE1mMWYwMzZJ?=
+ =?utf-8?B?aHFyR2RYbCt5ckRkK1VWWVVFNTVncDR6MFdXYUFmZnorS0dQRmtqQTVvYW1w?=
+ =?utf-8?B?b0pUSFNtQUV3YmpBUXBYWjlMdkpOL1c1ODl5RkxRQUpzNDJVbXlsTFhOOEZK?=
+ =?utf-8?B?NE1IMVdFY0RrdEQ3cUxTZ3hJemJvaGtHU0VCdExwZkZhQU94UnE3STNGeE9T?=
+ =?utf-8?B?WGpTYlZhdTVNdXhLbWZrVFNHSkoyQmdueTJ2aHZWTzJLUTdIci9wWkJyUnEr?=
+ =?utf-8?B?NHptNmdWRldCbHU1WklkQ3FQcnMxTnhkMVpla2tSWnZjWCtCaTA0TTY2SGVw?=
+ =?utf-8?B?RWIwMGM5TXJCUnpCTHlHZ0J3YWlDdXpjRFB1MWl6b3NuUVNaN25tb1orOVZG?=
+ =?utf-8?B?ZFlaNzZrdldQeG9qTDVpNGYwM2FZR2JnQ3Bhb210NVhIN2xkNjBIVW92L2hQ?=
+ =?utf-8?B?eW0wL25pUnY0TThFcndxbk9YQU0zcktMbzE0aVIvRUtoU2ZBVEZRM25HMjc1?=
+ =?utf-8?B?YVRSV1hBYzk1Y0VQMkN6ZktGWmFZMUlyQjVnMWhLdHdIaFBha2Y4VStFRGtw?=
+ =?utf-8?B?eVJMVDhrTGh1Y0tFU2lBOGxTdjhSaE9xK0FsKy9aYkVYRFFHRHZXVHpOZUdy?=
+ =?utf-8?B?Q253amUxdzJqU2RDSXloczhUMHJUUVZ3RTlrallxMXVucEZrZ21yUXhVNFZT?=
+ =?utf-8?B?bG12VXVOcHl2dGUyOU12MU9BbnpvTmJDNWFEd3k1SFFvNFpKVXFJSzFTUHFS?=
+ =?utf-8?B?VG5iZ0JYYWFZbEhQbndRbjRoVWtiYlVVcmJwZ1dQdTdVcklta3oyZk1BS1Av?=
+ =?utf-8?B?anA2bmo2WlNQRFYxaFNZQVM3RjFmNVgwQjc4TUx6dldLT3A2Z2NQNWxYbk5B?=
+ =?utf-8?B?WG5HODgwZHpHRlovbmI4VEJSMERZT3E1V1J5SWkvT3FqOHBMVUpvWVNXR0dD?=
+ =?utf-8?B?eTEwWWpXRTVPa29VMlRpb08wczRnYUpTbTRSTjlaRjBZRjk3Ty81MmRYSmhM?=
+ =?utf-8?B?eFJKTFdQT1U4dHd5b05hdFJOamx4TGsyakdHOTFXLzFRVE0rb1NnVW5GcktG?=
+ =?utf-8?B?Z21LMjBocUM3aldtVi8vMlc4ZjJBb1YwKzJ2TmFMK2Y1dmUyWVhTWnFpdXFH?=
+ =?utf-8?B?TllKb0ZIUkNLSU1GNmsyVW91T2prRHJGbjcxWFVrSkl5N2JMQXROelE3K08z?=
+ =?utf-8?B?bWdGaFNuUFZwMzRkNzdpaDNkSU5TWFh2c3RrdlpmZ2lWWml2dFZSWTJyaG5n?=
+ =?utf-8?B?OXBYTE16dnZQZFlmUWU2LzQ0blJXZDFEc1RYN2lCcGIxTy9GYnBEMVpuRE91?=
+ =?utf-8?B?L1FMWGt5cnFPUmZMdytwWThoNHNlWmRUV0drSWV3VWx5Q2pOSThqNjlZN0w1?=
+ =?utf-8?B?NnRrQXJrbkR1Z3BjcDdFSUtDd1VwN2Jndk8zQTVnai9lWEo1aXBhWEZDYnNU?=
+ =?utf-8?B?dkljQWxEbFhVZjVRUkFPanh1em9jTWZKeUFXeUc5NXArVU1vT1dVUDhLOVZ3?=
+ =?utf-8?B?bm5nSlZMTGVFMjcyRXdhVUR6U0JjTzVpd3E1c1BRV3MyWE1lNTJFei9wSFdK?=
+ =?utf-8?B?MFRWMDdyYmdsam9mMWw3N0syb1Q5VDEzR0NOaEJBOFFRYXM4RFRUOXNTb0Nl?=
+ =?utf-8?B?MEgxUnpXQ2tTaTN5OGdRYWMxVjhBelVFWTI3eDZuSy9XMGlkWWxVRHFqamU3?=
+ =?utf-8?Q?TCJKEOzXOY4=3D?=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM4PR10MB8218.namprd10.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(7416014)(376014)(1800799024)(7053199007);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PH7PR12MB5805.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(376014);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?ME2CLbl6iPtYHl6AEfkB2ejBltiok2chrwUzolTM5HxEM8pJskUnlybxtICN?=
- =?us-ascii?Q?BZy9fkLd3m9Y47ruAVeprlLCfoDyLvvKfmxXJTMKeGmi1TqbCgnFGsY9XYa2?=
- =?us-ascii?Q?K1E4DflpPnDd2h85bOy9tsVN8538XWJfjOQKztMCLuw8gIZtB/sdr+PGHlze?=
- =?us-ascii?Q?X2lTIVQP8Jfa065oXa4Qm+Q1wM9qAuKDS7Ifkdw80Ht4eOelv3yFd9zWDWmc?=
- =?us-ascii?Q?SYMGwqLVtjowDZKREq2vxa758x0qPVirHchCezNz09Fql/s5SJVRZjoLYdH6?=
- =?us-ascii?Q?Bd6V7k1O5XYmY5gw7QNOzFD4RTTg2h5+GFtL1uYNsmk/uRwSoQ1Y/DC+byMg?=
- =?us-ascii?Q?Z2Ta8/Ukg+QbAMLozM6dzTx3oB9mEzyMnyssrK2cVorjnLsIZ58IuXeosrPe?=
- =?us-ascii?Q?KIg+LKRvPaf4YI24CSWVxODXrrAY2f+CFLiL62kMF50JVxDwBKlVe+J4S9is?=
- =?us-ascii?Q?CMmwc7Gtye4Z78eGi5CTPr/3VeQqycmeSYb9YnPW22pVVKqBAodpMYQk3mcA?=
- =?us-ascii?Q?2k5DAVmLqtH3Mkrk5A4yfbBc5O1koN50W/W+qJCxtQ+zfrDz73XL71Ccq/Ky?=
- =?us-ascii?Q?ztcNSZGds/73RFcFRPzAsTAVPDSWsMovKOK1DYbbe1OYyAdOeY2fvgCUAgFQ?=
- =?us-ascii?Q?DmCdylswIz0BIM9BXkl7YhkiOIg3bwn8J3Dwhg5HzP9jRNAqqbO95bKlW3Dl?=
- =?us-ascii?Q?SvkHirgYq8ME1Tokm0pjE5BV73IJ4k1AibjqiC34KzxY2IfMoUMYRGxezQsN?=
- =?us-ascii?Q?PTi2vUoRQwxwo416RSBYhtSkthxPnnE13qlsFXLe6bEVEVSuYAYfx0zda+k6?=
- =?us-ascii?Q?//c0AlZWY3A3/Zoo50pis74DJlv4z5uok+hbhQKy8bsFp0Bx9c/uCkRDTrt1?=
- =?us-ascii?Q?b3eZpsUMX2nhiYRHzOlNW+sXmFgNwy63ykQW7ve/Ix0yeTLAdnCTwzW/IZtW?=
- =?us-ascii?Q?Dd/VlzS7v18EOEWzT3XX+LS0ISGcDQKIJC4VkxFQQiJRs48TqM1Y1spOrg5T?=
- =?us-ascii?Q?K/AkhnpI1/K/hPyBoXRi94xhK0k+o8t1hk4CZZrN6Mb89pHXgs9ZCI5yYeko?=
- =?us-ascii?Q?G6Pm3gaxs+ww/aF6sFqJKilCLIqWwAHr9w9d4lw065FZkeOXNDvti5hQcfg5?=
- =?us-ascii?Q?wpKNB1NSJyLjrkKuFAWQagxdrTI66L/GTEpCW6DRtVHo/1kX25shDeUIYP5X?=
- =?us-ascii?Q?IVMkSOvWefAyyFL1WnvmsbxMkwc+fO0bYD10Px7g8002mlR4CmDmHyF9WAMI?=
- =?us-ascii?Q?dHTbOJE0GJUFWdcPIdsIJV6EvBBO4XyuRSlgJvnaWRgxyw5rExW9scaVVosy?=
- =?us-ascii?Q?lTTLtvlOjj64QU/q1LmlMMKi1cCWxHbQd6MTU63H9MkrR3DqAsEcV8mDxJk2?=
- =?us-ascii?Q?TckgYIFxYNkeb7MkyqY71doPeH8bEufPl+kKzUpIn67FtHupjI/Mp8XCjD3z?=
- =?us-ascii?Q?YO60xDRbZiJ0urFWZCOdp06+zyOZFvuBnKbCTp52sstvRs/Pag8DY0In2dy0?=
- =?us-ascii?Q?ABnOz39m/mk95UOzF8AbQSydFOFAKwDYptOA1gK9YxE39d2o0cvVSIXQoMc4?=
- =?us-ascii?Q?N9BkNqKx4AzGs/6y8sgohqpvjnXkKb2HCouhSUQYiCnoqFbaGbbR0j0J1KWy?=
- =?us-ascii?Q?8w=3D=3D?=
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0:
-	0noamwHFM/MuWb3Rhf+g+pkVzc38Fyrqn0uXQLOuKSow4R6ULh+3O0VcOLYwaPa//J6Xl5mMmmpSu0rCCUmaH9nOtFoxEjoSbRywilIYoD1dnOmzqSkl1groSezhQaPK3cym8JoG/JP4PCU7SyzGC4xYSRtLWhjb92H8zhSJ/jcNO5WfiaFdAGJ2kNoH5Y2NeONaqiOtdZMKjmp0r78HrIJPLcU7Kizy60J5/MzmdK8lKFi2UEsZ4YPSlYitap3xDPL6sYoobu/mqKpgaT/cRBRKtZ7vrcbqZ3k04oRI2iegSC9/hvwCgxyG855Z+AO2oLI9cBBS/i2ul8p2UvOqrBN3DTiqPZm+tzvohNQ5ccVp3bYLtdSNxET6yqHg/oAuS0Yt+66dnEeA4palkfl/ZDedmfnMAx72aYnyAHYKDWbZ+wz9bEWCrY/bSonGbpC/B+FP18jkQST8sce3+cEqcMMR8FCeBBPWMt68ra8RFZheRuIIp0qAxcmajQOh/JqXxXqV2eP3Ad+6OtgsQEDLgKJUIyjkC8JelDLYLL1O6TYgXd0v0zRQ98agN3BZpGGwtYV9BYRG0tAdaCkZF/Kw0oKktNCkVdheNNneuKl/lp4=
-X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: c79b61fb-1608-4ea6-be66-08ddcd9658c3
-X-MS-Exchange-CrossTenant-AuthSource: DM4PR10MB8218.namprd10.prod.outlook.com
+	=?utf-8?B?SVNhNnJydkE4RVRiM0R1VjJqTWFCRnFQMitGOTVrUjNoZ3Z4SkdNVmF0a2tH?=
+ =?utf-8?B?clhnc0d1cFhaWGp2UEZja2N0UnhWNUFmRjlqZDNtMUtpWnl6RGFTNkZubVJJ?=
+ =?utf-8?B?enY2UFRhWkNXTUh6T0krcnJmWDIrTERBcUlTUFRCZUJ0RTNPMjU4K1pUa2FX?=
+ =?utf-8?B?enpUYTRHZlBMeTRlaHh4RnJoOTlHODhualJCWjIyNGg4OCs5a2Qwa3d5YjN6?=
+ =?utf-8?B?akIwOEdXc1pLWUhxMFo4YkF5VHM5YU1uaFlpYlljckNhUVRGNUlsY1UvbFNT?=
+ =?utf-8?B?ZDhuWmczL1d1UGZzR3dHcm11V2tvRHB4UWhLVWRWSlBiUUhkNUJMc1lERFg1?=
+ =?utf-8?B?U3NuNG9ZR1VsMjdSVUhQTGtHTlZSYnE5a2E2QzhaelplQzByaEl4bTQzVWZt?=
+ =?utf-8?B?cnM2WkVKVDhhUzhEYVFtb3dMdkF6ZFJ3NDdPT1RXSHFpS0RweHpRMnA0Mjky?=
+ =?utf-8?B?MTkxaEpBOUR6ZmZVZjYyVWNPYndXdTdCMVRGaW03a29UYTkrOGFjTkhWYW5G?=
+ =?utf-8?B?NDZBOGhEOEZSTkd2a0VnNWd6UlpOMWRhL1NtY1FFSngwL3RXb25pOEJwZEZF?=
+ =?utf-8?B?YmNWYmN0K0RTM3o1L1FINC9KS0M5RlM1bk9vSzd0eVhOWDk0VzNwRUF5QTVD?=
+ =?utf-8?B?WTJQb3NuWmRVYjRTV2RXRGRzVGJXM3ljWEJrdUNVWW0xUnRQSDJJcEx3VnpD?=
+ =?utf-8?B?UXo0UDNjc3pKWmVRbVF3ZEpHcU92S1dDWTJLb0IxajloUHJ5dnNNMUF0MDdF?=
+ =?utf-8?B?M0FmNGF6RlQvK3ZCV0RwVEpuUVJjTGlXbXlZOThTUkcvd0RNd0NzalFYaTl5?=
+ =?utf-8?B?empidmhmN0VHRUQ3N1NtaUJCbFpxajc1blp0d0kydVlndFpmSHZLbWRGVi90?=
+ =?utf-8?B?L1FkMEsvTEZkVGdTeHgrRDAvRk83Ymh6UzZjME5BaUY4N3FTdWJlalQvU2d5?=
+ =?utf-8?B?U28rQmJYbTVDUmNuU3dDV25jZEdGaG9NaVhVbk5hcEJtdlJOSFJqcmE2NlR3?=
+ =?utf-8?B?Z3FWTy9vV2dPL09yUDdTc3F6b1ppbjc4YVVTQ1E2Wldkb1lMQnhqUU44Ny9D?=
+ =?utf-8?B?cDdSZ2xjMGlqQXFsY0J4aVd6L2QxcDI3eWo2VFlGc29mM3BZQ2M4b1hXRXlP?=
+ =?utf-8?B?NlZPMlFzRU5tSGMxSDk2NlNaMVNGWnltaDF6MHFZSTNldjNmb21GeFoyL2pz?=
+ =?utf-8?B?R0t1SXdnUmg5bGF6QjVqdHZnNWlpWWhLR01GUFQ1OFk3QUhKazlHTXl1cUhB?=
+ =?utf-8?B?WVFSeEhkcFhMT0xTcXF2QTNnTGxsUmJLYmpXR21XaG4xR2JWTXNxY05XWGEr?=
+ =?utf-8?B?ZGNuQ0tlSHgyblY1K1ZTd0J1d09pOUdlU1F4ZjIzWHFqVVIyempkdllZODUw?=
+ =?utf-8?B?RlBCWjdRNHJwVzBSZW10OURzYTlIaGFsQlNMeStXQnh4YVR6blptTm9QUUhu?=
+ =?utf-8?B?MGdhYkI2ajlWVkRGVjB5Ync3bWtHbEU3ai9KaFdyV2ErdXYzTmtES0wzWXYz?=
+ =?utf-8?B?Z0M3ODAxZXF3cWVSaGVLZ2Y3ZktmT0FTakdpQTNPWFVsWHpYa0tZcEJYcjRN?=
+ =?utf-8?B?L25ERXdsRTk3MkdXc2V3Vis0aHJyTmxFOWFpalRKRTRUc3BhVXV4UEZLeVZp?=
+ =?utf-8?B?V1Fsb05CN2FIWVZHbUFmTUVmNTVJVnM4b0RkMmcxbU9OaE5NV1N5S0UyQ2FB?=
+ =?utf-8?B?VjZKSm5kR1V3Qlp3RUZJallsOU8wM01PbU8vL0RPU0FZa0E1ZkxKVUQwcUpw?=
+ =?utf-8?B?MjdZaVByU2EvSUlYVE5HV3ROQW13RkRHWHpzQzNlL0NFbitQMFN4TDYrRVph?=
+ =?utf-8?B?Zm9WVThXRG9adEVpeG1iT0FVWHMwbEtGYWVIL29uVEVNZ0RNRHFyTzhxY2tp?=
+ =?utf-8?B?UE8vMnRQZkNrUjlQV1NZN1NiTG1lNDFkeGlRT20xanNvcGpxNzlGY0x5OEJX?=
+ =?utf-8?B?STBUb1VSYmgvVnNtRWVoWHRzUFp5bDhQUHgyaEtkTEtWR3JFY0R4K2JOYTRS?=
+ =?utf-8?B?QUlqcXQ3T2lzWDhJaFhjODRxZEhhMmVHQ0tNbE9IOFo1ZHZLdERHL1hPa01N?=
+ =?utf-8?B?Znp2czErT1dyQzhPM3E0KyswN21aUStYQWJXTGozODZFenJBTXp4UXhTZlZh?=
+ =?utf-8?Q?dD4XJiegjkPlOvgm/S/VhLXry?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 740be125-57e5-4780-1e46-08ddcd9e5897
+X-MS-Exchange-CrossTenant-AuthSource: PH7PR12MB5805.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Jul 2025 05:19:37.6627
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Jul 2025 06:16:53.9687
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: tkQk14AoAm+9UJoC33EjM+FvnNvyINxkWbSOHg0xSb3fbns4OOE7QOG+w7i+KedsCJRqY8xLL5h+JQbbImxlu9U8VKFn55gj36ZCyQoygl0=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH0PR10MB4908
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-07-28_02,2025-07-24_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0 spamscore=0 mlxscore=0
- phishscore=0 suspectscore=0 mlxlogscore=999 adultscore=0 malwarescore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2505160000
- definitions=main-2507280038
-X-Authority-Analysis: v=2.4 cv=OvdPyz/t c=1 sm=1 tr=0 ts=68870870 b=1 cx=c_pps
- a=zPCbziy225d3KhSqZt3L1A==:117 a=zPCbziy225d3KhSqZt3L1A==:17
- a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
- a=wKuvFiaSGQ0qltdbU6+NXLB8nM8=:19 a=Ol13hO9ccFRV9qXi2t6ftBPywas=:19
- a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10 a=Wb1JkmetP80A:10 a=GoEa3M9JfhUA:10
- a=VwQbUJbxAAAA:8 a=lnP3P7fCHPjDMHUImOsA:9 a=CjuIK1q_8ugA:10 cc=ntf
- awl=host:12061
-X-Proofpoint-GUID: lXqyVRwmu9sH_RYXU_mPfkP5XCt2zqwc
-X-Proofpoint-ORIG-GUID: lXqyVRwmu9sH_RYXU_mPfkP5XCt2zqwc
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzI4MDAzOCBTYWx0ZWRfX1Vb41tRujI11
- FHhKxQwKUut3JmyT+8l36yLgW3exLQyqyP+tPOEtLpGzyhAitsTOVq69NC0yslAoG5VAXSt1zfy
- zRSwExbRVurgN9FiD+j5XLw82fMa8gnj9Mlphlig3Qs8OQGBlq6jW1Imrpqf1kxfRd8+3aWQJcd
- U97nHvsnOLjuvRUifZY233J49eberZoK2g80fRCu05YidhG6GCtn7Ly+jkRcpvnnKSfUFWD6T4o
- LFNeoSfzFNDcsgyaemE1AyKpmH8eZ+ynxAXv+bDngHwDl9lNpqcVsDuhT3eeE3JpryB/LsVNEqp
- wIvjY9KvdwZRJTeP1DDUbt2h6qjgvn2YHRQ/XEDWG+wCxJTQIYqpWZ0P3WuB8Yux1uklDYtLlc8
- Ii6yRmCevYZs9clLTzwKapmd5j8Xgjn3BShvGfpSAxNTy39cuv3IASp6UTBYCoPqPM5RucAV
+X-MS-Exchange-CrossTenant-UserPrincipalName: LKsJQ8mcGVk50tUqQXx1y2M0Y+4wLV0RUp+VTGD36e1deHnwPMIbwh/izSUCq8+Youw3v7EQcLFcOPM+xZq7dw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN2PR12MB4254
 
-On Sun, Jul 27, 2025 at 01:18:11PM -0700, SeongJae Park wrote:
-> DAMON is using Accessed bits of page table entries as the major source
-> of the access information.  It lacks some additional information such as
-> which CPU was making the access.  Page faults could be another source of
-> information for such additional information.
->
-> Implement another change_protection() flag for such use case, namely
-> MM_CP_DAMON.  DAMON will install PAGE_NONE protections using the flag.
-> To avoid interfering with NUMA_BALANCING, which is also using PAGE_NON
-> protection, pass the faults to DAMON only when NUMA_BALANCING is
-> disabled.
->
-> Signed-off-by: SeongJae Park <sj@kernel.org>
-
-This seems to not be an upstreamable series right now unless I'm missing
-something.
-
-Firstly, you're making a change in behaviour even when CONFIG_DAMON is not
-specified, and Linus already told you we can't have that default-on.
-
-I'm very very much not happy with us doing something for 'damon'
-unconditionaly when !CONFIG_DAMON on the assumption that an acessible
-mapping has PROT_NONE set.
-
-This change makes me nervous in general ANYWAY as you are now changing core
-mm and introducing a new faulting mechanism specifically for DAMON.
-
-And we are assuming that NUMA balancing being disabled is not racey in a
-way that will cause things to break.
-
-I really also dislike the idea of an _implicit_ assumption that we are good
-to use the NUMA balancing faulting mechanism to 'tack on' DAMON stuff.
-
-Is it really all that useful to provide a method that requires NUMA
-balancing to be diabled?
-
-Finally, you're making it so DAMON can mprotect() something to use the
-DAMON/NUMA balancing fault handler, which doesn't appaer to check to see if
-NUMA balacing is disabled, but anyway it could be re-enabled?
-
-And then now DAMON is making stuff fault as NUMA balancing faults
-incorrectly?
-
-This just seems broken.
-
-Unless there's really good justification I'm really not inclined for us to
-merge this as-is right now unfortunately.
-
+On 7/25/2025 10:03 PM, Bijan Tabatabai wrote:
+> From: Bijan Tabatabai <bijantabatab@micron.com>
+> 
+> damos_va_migrate_dests_add() determines the node a folio should be in
+> based on the struct damos_migrate_dests associated with the migration
+> scheme and adds the folio to the linked list corresponding to that node
+> so it can be migrated later. Currently, folios are isolated and added to
+> the list even if they are already in the node they should be in.
+> 
+> In using damon weighted interleave more, I've found that the overhead of
+> needlessly adding these folios to the migration lists can be quite
+> high. The overhead comes from isolating folios and placing them in the
+> migration lists inside of damos_va_migrate_dests_add(), as well as the
+> cost of handling those folios in damon_migrate_pages(). This patch
+> eliminates that overhead by simply avoiding the addition of folios that
+> are already in their intended location to the migration list.
+> 
+> To show the benefit of this patch, we start the test workload and start
+> a DAMON instance attached to that workload with a migrate_hot scheme
+> that has one dest field sending data to the local node. This way, we are
+> only measuring the overheads of the scheme, and not the cost of migrating
+> pages, since data will be allocated to the local node by default.
+> I tested with two workloads: the embedding reduction workload used in [1]
+> and a microbenchmark that allocates 20GB of data then sleeps, which is
+> similar to the memory usage of the embedding reduction workload.
+> 
+> The time taken in damos_va_migrate_dests_add() and damon_migrate_pages()
+> each aggregation interval is shown below.
+> 
+> Before this patch:
+>                         damos_va_migrate_dests_add damon_migrate_pages
+> microbenchmark                   ~2ms                      ~3ms
+> embedding reduction              ~1s                       ~3s
+> 
+> After this patch:
+>                         damos_va_migrate_dests_add damon_migrate_pages
+> microbenchmark                    0us                      ~40us
+> embedding reduction               0us                      ~100us
+> 
+> I did not do an in depth analysis for why things are much slower in the
+> embedding reduction workload than the microbenchmark. However, I assume
+> it's because the embedding reduction workload oversaturates the
+> bandwidth of the local memory node, increasing the memory access
+> latency, and in turn making the pointer chasing involved in iterating
+> through a linked list much slower.
+> Regardless of that, this patch results in a significant speedup.
+> 
+> [1] https://lore.kernel.org/damon/20250709005952.17776-1-bijan311@gmail.com/
+> 
+> Signed-off-by: Bijan Tabatabai <bijantabatab@micron.com>
 > ---
->  include/linux/mm.h |  1 +
->  mm/memory.c        | 53 ++++++++++++++++++++++++++++++++++++++++++++--
->  mm/mprotect.c      |  5 +++++
->  3 files changed, 57 insertions(+), 2 deletions(-)
->
-> diff --git a/include/linux/mm.h b/include/linux/mm.h
-> index 21270f1664a4..ad92b77bf782 100644
-> --- a/include/linux/mm.h
-> +++ b/include/linux/mm.h
-> @@ -2567,6 +2567,7 @@ int get_cmdline(struct task_struct *task, char *buffer, int buflen);
->  #define  MM_CP_UFFD_WP_RESOLVE             (1UL << 3) /* Resolve wp */
->  #define  MM_CP_UFFD_WP_ALL                 (MM_CP_UFFD_WP | \
->  					    MM_CP_UFFD_WP_RESOLVE)
-
-/* Comment here :) */
-
-> +#define MM_CP_DAMON                        (1UL << 4)
-
-Shouldn't this be something more specific like MM_CP_DAMON_REPORT_FAULT ?
-
->
->  bool can_change_pte_writable(struct vm_area_struct *vma, unsigned long addr,
->  			     pte_t pte);
-> diff --git a/mm/memory.c b/mm/memory.c
-> index 92fd18a5d8d1..656e610867b0 100644
-> --- a/mm/memory.c
-> +++ b/mm/memory.c
-> @@ -75,6 +75,7 @@
->  #include <linux/ptrace.h>
->  #include <linux/vmalloc.h>
->  #include <linux/sched/sysctl.h>
-> +#include <linux/damon.h>
->
->  #include <trace/events/kmem.h>
->
-> @@ -5972,6 +5973,47 @@ static vm_fault_t wp_huge_pud(struct vm_fault *vmf, pud_t orig_pud)
->  	return VM_FAULT_FALLBACK;
->  }
->
-> +static vm_fault_t do_damon_page(struct vm_fault *vmf, bool huge_pmd)
-
-You need to explain what this function is doing at least.
-
-> +{
-> +	struct damon_access_report access_report = {
-> +		.addr = vmf->address,
-> +		.size = 1,
-> +	};
-> +	struct vm_area_struct *vma = vmf->vma;
-> +	struct folio *folio;
-> +	pte_t pte, old_pte;
-> +	bool writable = false, ignore_writable = false;
-> +	bool pte_write_upgrade = vma_wants_manual_pte_write_upgrade(vma);
-> +
-> +	if (huge_pmd)
-> +		access_report.addr = PFN_PHYS(pmd_pfn(vmf->orig_pmd));
-> +	else
-> +		access_report.addr = PFN_PHYS(pte_pfn(vmf->orig_pte));
-> +
-> +	spin_lock(vmf->ptl);
-> +	old_pte = ptep_get(vmf->pte);
-> +	if (unlikely(!pte_same(old_pte, vmf->orig_pte))) {
-> +		pte_unmap_unlock(vmf->pte, vmf->ptl);
-> +		return 0;
-> +	}
-> +	pte = pte_modify(old_pte, vma->vm_page_prot);
-
-This is little weird, you're applying VMA protection bits to the PTE then
-later asking about protection bits? Can't you just tell from the VMA flags?
-
-Seems like do_numa_page() copy/pasta.
-
-> +	writable = pte_write(pte);
-> +	if (!writable && pte_write_upgrade &&
-> +			can_change_pte_writable(vma, vmf->address, pte))
-> +		writable = true;
-> +	folio = vm_normal_folio(vma, vmf->address, pte);
-> +	if (folio && folio_test_large(folio))
-> +		numa_rebuild_large_mapping(vmf, vma, folio, pte,
-> +				ignore_writable, pte_write_upgrade);
-> +	else
-> +		numa_rebuild_single_mapping(vmf, vma, vmf->address, vmf->pte,
-> +				writable);
-> +	pte_unmap_unlock(vmf->pte, vmf->ptl);
+> Sorry I missed this in the original patchset!
+> 
+>   mm/damon/vaddr.c | 4 ++++
+>   1 file changed, 4 insertions(+)
+> 
+> diff --git a/mm/damon/vaddr.c b/mm/damon/vaddr.c
+> index 7f5dc9c221a0..4404c2ab0583 100644
+> --- a/mm/damon/vaddr.c
+> +++ b/mm/damon/vaddr.c
+> @@ -711,6 +711,10 @@ static void damos_va_migrate_dests_add(struct folio *folio,
+>   		target -= dests->weight_arr[i];
+>   	}
+>   
+> +	/* If the folio is already in the right node, don't do anything */
+> +	if (folio_nid(folio) == dests->node_id_arr[i])
+> +		return;
 > +
 
-All of this seems to be duplicating aspects of do_numa_page().
+I have seen good improvements with similar changes in PTE A bit scan
+based patches.
 
-Seems more sensible, if it makes sense to accept this change (I'm still a
-bit dubious about changing the faulting mechanism here), we should probably
-implement a 'do_non_present_acessible()' function that avoids duplication +
-bit-rot, with #ifdef CONFIG_DAMON's in place, or even better, just a hook
-into damon code that's static inline void {} if not enabled.
+Feel free to add
 
-Note that the numa fault handling logic is called _even if numa balancing
-is disabled_. So we'd avoid all the other changes too.
+Reviewed-by: Raghavendra K T <raghavendra.kt@amd.com>
 
-> +	damon_report_access(&access_report);
-> +	return 0;
-> +}
-> +
->  /*
->   * These routines also need to handle stuff like marking pages dirty
->   * and/or accessed for architectures that don't do it in hardware (most
-> @@ -6036,8 +6078,11 @@ static vm_fault_t handle_pte_fault(struct vm_fault *vmf)
->  	if (!pte_present(vmf->orig_pte))
->  		return do_swap_page(vmf);
->
-> -	if (pte_protnone(vmf->orig_pte) && vma_is_accessible(vmf->vma))
-> +	if (pte_protnone(vmf->orig_pte) && vma_is_accessible(vmf->vma)) {
-> +		if (sysctl_numa_balancing_mode == NUMA_BALANCING_DISABLED)
-> +			return do_damon_page(vmf, false);
+>   isolate:
+>   	if (!folio_isolate_lru(folio))
+>   		return;
 
-Making an assumption here that, even if damon is disabled, we should handle
-a 'damon' fault is just icky, sorry.
-
-Also are we 100% sure that there's no races here? When we disable numa
-balancing do we correctly ensure that absolutely no racing NUMA balancing
-faults can happen whatsever at this juncture?
-
-Have you checked that and ensured that to be the case?
-
-You really have to be 100% certain you're not going to wrongly handle NUMA
-page faults this way, on a potentially non-CONFIG_DAMON kernel to boot.
-
-Keep in mind fault handling is verrrry racey (purposefully) and can be done
-under VMA read lock alone (and that's only very loosely a lock!).
-
-This is just, yeah, concerning.
-
->  		return do_numa_page(vmf);
-> +	}
->
->  	spin_lock(vmf->ptl);
->  	entry = vmf->orig_pte;
-> @@ -6159,8 +6204,12 @@ static vm_fault_t __handle_mm_fault(struct vm_area_struct *vma,
->  			return 0;
->  		}
->  		if (pmd_trans_huge(vmf.orig_pmd)) {
-> -			if (pmd_protnone(vmf.orig_pmd) && vma_is_accessible(vma))
-> +			if (pmd_protnone(vmf.orig_pmd) && vma_is_accessible(vma)) {
-> +				if (sysctl_numa_balancing_mode ==
-> +						NUMA_BALANCING_DISABLED)
-> +					return do_damon_page(&vmf, true);
-
-Now we have _more_ weirdness around what CONFIG_TRANSPARENT_HUGEPAGE
-enables/disables.
-
->  				return do_huge_pmd_numa_page(&vmf);
-
-This function will be called only if THP is enabled, but now damon
-overrides that...
-
-Let's try and make this consistent.
-
-> +			}
->
->  			if ((flags & (FAULT_FLAG_WRITE|FAULT_FLAG_UNSHARE)) &&
->  			    !pmd_write(vmf.orig_pmd)) {
-> diff --git a/mm/mprotect.c b/mm/mprotect.c
-> index 78bded7acf79..e8a76114e4f9 100644
-> --- a/mm/mprotect.c
-> +++ b/mm/mprotect.c
-> @@ -714,6 +714,11 @@ long change_protection(struct mmu_gather *tlb,
->  	WARN_ON_ONCE(cp_flags & MM_CP_PROT_NUMA);
->  #endif
->
-> +#ifdef CONFIG_ARCH_SUPPORTS_NUMA_BALANCING
-> +	if (cp_flags & MM_CP_DAMON)
-> +		newprot = PAGE_NONE;
-> +#endif
-
-OK this just seems broken.
-
-Firstly, again you're introducing behaviour that applies even if DAMON is
-disabled. Let's please not.
-
-And predicating on -the architecture even supporting NUMA balancing- seems
-rather bizarre?
-
-Secondly, somebody can disable/enable NUMA balancing, and thus you are now
-allowing this function to, when somebody specifies 'DAMON', get NUMA
-balancing fault handling??
-
-If you don't bother checking whether NUMA balancing is disabled when you
-set it, then boom - you've broken the faulting mechanism, but even if you
-_do_, somebody can just switch it on again...
-
-Sorry but unless I'm wildly missing something here we're going to need a
-new faulting mechanism (if we even want to allow DAMON to have its own
-fault handling that is!)
-
-> +
->  	if (is_vm_hugetlb_page(vma))
->  		pages = hugetlb_change_protection(vma, start, end, newprot,
->  						  cp_flags);
-> --
-> 2.39.5
-
-Cheers, Lorenzo
