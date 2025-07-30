@@ -1,98 +1,278 @@
-Received: from invmail4.hynix.com (exvmail4.hynix.com [166.125.252.92])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9DC89EEBD
-	for <damon@lists.linux.dev>; Tue, 29 Jul 2025 22:41:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=166.125.252.92
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3080D18B0F;
+	Wed, 30 Jul 2025 04:21:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753828888; cv=none; b=ZE1v3m0BwIRIk7hJIQlclnToQyWXme4IruMNVZupT/pmA4m0VvyPo91JghRWWrkP6C/IQp1MAndICAAkafBXRj3V+r1raKTVd6K1oLkAMLEQzRUpGnNrtmH0A2enFo0/RFITWazPHpTIvh4987+dtgR+OPvNGSDuwTVjlE4WkCY=
+	t=1753849270; cv=none; b=bxOwRmsP9HAUhpsQnP70LwmjmjWiSf4g/5RtEcjzFNKJaCcxt8XIBWW62zDskBt8gf52/OLRlUoamMPSDD9hXO9oia5M01HzSXJpe1z8r909OGZ37zdk5NsIM7tUdpUHLLV13iYsR6dVJhdEibYHhPbO9DbnU/I7WmmmxrkwZVw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753828888; c=relaxed/simple;
-	bh=aY21JWEcSkOfoBtYAp4LMcNGPtZNsu/TLG9p1LytSRY=;
-	h=Message-ID:Date:MIME-Version:Cc:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=dYYOk/bPZ4T7a1P0BJsMy53CIJw8ARfPPXI6+mwCin19mRSIYo3I3mm1QSgCZamFJ2W/z5j2uKogKEPG0QJaY+MBbjlDtQOPAlK5wJsxAUE4tfSgta+HVSOu+6BIqZ286oiRheRMXZa2H2WXqReh4xG9euIe41OauBLNMhT21UA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sk.com; spf=pass smtp.mailfrom=sk.com; arc=none smtp.client-ip=166.125.252.92
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sk.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sk.com
-X-AuditID: a67dfc5b-681ff7000002311f-79-68894e0d6978
-Message-ID: <dcbc29a1-fbaf-4e34-a5a5-64a7882c0013@sk.com>
-Date: Wed, 30 Jul 2025 07:41:17 +0900
+	s=arc-20240116; t=1753849270; c=relaxed/simple;
+	bh=k/8G8hyODNHd1MnxESyODVAtIvqlJqbAiUqU3GNVU9k=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=hEnnJ8LLb1J4KTUw9osTBej8pLgk2jwLJYKbQ9urNg8/NB8t2HgN0IPS9155/+dywAHXM9lj5cpiOQ28W60npL/X2z17Eu/4BdV21pn1+9mbyG8VtEkMJHwS+sXNwIsvCn1ylJT9eILTy9rhY4b6WyQPtHIOkhN6uE2boCcxxsM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aMfnaGa+; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aMfnaGa+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E5ACC4CEE7;
+	Wed, 30 Jul 2025 04:21:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1753849269;
+	bh=k/8G8hyODNHd1MnxESyODVAtIvqlJqbAiUqU3GNVU9k=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=aMfnaGa+CQK2SCh2aG8cBF1BxlKL67zP5Bb0V7EECsve3ZlcwQGiBjtw++2of2VCU
+	 1f6pgkcCr97tmBUag60Cov86CkuhLnLzFgFRTn50SF99uZ225eKvUUh9BbM/bNPapg
+	 Xu81K3LsGq7D6zNG599XqcbHJbnhvqjedYrGv1RseNFCCkxBJNXNehUmTiC0xPw1e/
+	 vPjOOc+m4Nsh/P9r05aB6h1P4mvnv3jauAzxmBoL9r0A92OdVqj+EfO+relPCB4lRq
+	 F3KuikQ9d6xEFLp2QnCKtT+lrP4jaW8yTwEK8FOCXZqb2Uat7iq4V8kCfIQMhY7oLu
+	 vPrrDF3DYTuEw==
+From: SeongJae Park <sj@kernel.org>
+To: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Cc: SeongJae Park <sj@kernel.org>,
+	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	David Hildenbrand <david@redhat.com>,
+	Jann Horn <jannh@google.com>,
+	Michal Hocko <mhocko@suse.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Pedro Falcato <pfalcato@suse.de>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	damon@lists.linux.dev,
+	kernel-team@meta.com,
+	linux-kernel@vger.kernel.org,
+	linux-mm@kvack.org
+Subject: Re: [RFC v2 5/7] mm/memory: implement MM_CP_DAMON
+Date: Tue, 29 Jul 2025 21:21:06 -0700
+Message-Id: <20250730042106.54750-1-sj@kernel.org>
+X-Mailer: git-send-email 2.39.5
+In-Reply-To: <5acc6af3-91da-4dd3-834c-e8923e5d3320@lucifer.local>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Cc: kernel_team@skhynix.com, damon@lists.linux.dev, linux-mm@kvack.org
-Subject: Re: [PATCH] docs/mm/damon/design: fix typo
-To: Sang-Heon Jeon <ekffu200098@gmail.com>, sj@kernel.org
-References: <20250729144414.31958-1-ekffu200098@gmail.com>
-Content-Language: ko
-From: Honggyu Kim <honggyu.kim@sk.com>
-In-Reply-To: <20250729144414.31958-1-ekffu200098@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrBLMWRmVeSWpSXmKPExsXC9ZZnkS6fX2eGweHfjBZP/v9mtTjxIsHi
-	3pr/rBaHv75hcmDx2DnrLrvHplWdbB6bPk1i93ixeSZjAEsUl01Kak5mWWqRvl0CV8arhQkF
-	W7grjs+awdbAOI2zi5GTQ0LARGLT7H4mGPvcsbuMXYwcHLwClhI/ZtWAhFkEVCWO/3jKDmLz
-	CghKnJz5hAXEFhWQl7h/awZYnFnATeLq9XvsIK3CAsYS1xbGgpgiQFNu7zIGqRASsJJo/Led
-	CaJaRGJ2ZxsziM0moCZx5eUksDingLXE0fO9UDVmEl1buxghbHmJ7W/nANVzAR05g03i8aEz
-	jBAXS0ocXHGDZQKj4Cwk181CsmMWklmzkMxawMiyilEoM68sNzEzx0QvozIvs0IvOT93EyMw
-	vJfV/onewfjpQvAhRgEORiUe3h0bOjKEWBPLiitzDzFKcDArifAWLG3LEOJNSaysSi3Kjy8q
-	zUktPsQozcGiJM5r9K08RUggPbEkNTs1tSC1CCbLxMEp1cBozVfIvkq2Va42gZWpaGmM61W/
-	2KVmrxXf1xf/+3SvPfGN6MvsJwtZduRfvyfBcb/v1twDKiWBgfNlWdN7PtV6JizO25N669eB
-	fc8tzsc41rzn+/pOcf3ErPs9r+Qu7L9V4+DhUbruxfcdKcWV86qvn9QXfCf4nltr4vbCTYJX
-	j3HV1uS35i5TYinOSDTUYi4qTgQAWTZcq2sCAAA=
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrPLMWRmVeSWpSXmKPExsXCNUNLT5fXrzPD4HKLicWT/79ZLU68SLA4
-	PPckq8W9Nf9ZLQ5/fcPkwOqxc9Zddo9NqzrZPDZ9msTu8WLzTEaPxS8+MAWwRnHZpKTmZJal
-	FunbJXBlvFqYULCFu+L4rBlsDYzTOLsYOTkkBEwkzh27y9jFyMHBK2Ap8WNWDUiYRUBV4viP
-	p+wgNq+AoMTJmU9YQGxRAXmJ+7dmgMWZBdwkrl6/xw7SKixgLHFtYSyIKQI05fYuY5AKIQEr
-	icZ/25kgqkUkZne2MYPYbAJqEldeTgKLcwpYSxw93wtVYybRtbWLEcKWl9j+dg7zBEa+WUiO
-	mIVk1CwkLbOQtCxgZFnFKJKZV5abmJljqlecnVGZl1mhl5yfu4kRGKzLav9M3MH45bL7IUYB
-	DkYlHt4dGzoyhFgTy4orcw8xSnAwK4nwFixtyxDiTUmsrEotyo8vKs1JLT7EKM3BoiTO6xWe
-	miAkkJ5YkpqdmlqQWgSTZeLglGpgrGVh802Ya3/kE7/AGaZVScn2y+JFfI40ailJ2SdY+9st
-	nXJEnVH2wlJnPeP4u98DgyJWtmmccmA876ewfY2Vo43y5kWlPB6sO19+r+RhKlttIyV5Wk90
-	F5uGq/w+fSErvs3u3U5MjQv9Hqy+2btvUn/xomPOJfOcr4Xz/vz+/WXpurI3M+uVWIozEg21
-	mIuKEwE9yXaZUgIAAA==
-X-CFilter-Loop: Reflected
+Content-Transfer-Encoding: 8bit
 
-Hi Sang-Heon,
+On Tue, 29 Jul 2025 10:40:11 +0100 Lorenzo Stoakes <lorenzo.stoakes@oracle.com> wrote:
 
-On 7/29/2025 11:44 PM, Sang-Heon Jeon wrote:
-> There are some typo in statistics section of DAMON design docs
-> - sz_trtied -> sz_tried
+> On Mon, Jul 28, 2025 at 08:06:32PM -0700, SeongJae Park wrote:
+> > On Mon, 28 Jul 2025 06:19:35 +0100 Lorenzo Stoakes <lorenzo.stoakes@oracle.com> wrote:
+> >
+> > > On Sun, Jul 27, 2025 at 01:18:11PM -0700, SeongJae Park wrote:
+> > > > DAMON is using Accessed bits of page table entries as the major source
+> > > > of the access information.  It lacks some additional information such as
+> > > > which CPU was making the access.  Page faults could be another source of
+> > > > information for such additional information.
+> > > >
+> > > > Implement another change_protection() flag for such use case, namely
+> > > > MM_CP_DAMON.  DAMON will install PAGE_NONE protections using the flag.
+> > > > To avoid interfering with NUMA_BALANCING, which is also using PAGE_NON
+> > > > protection, pass the faults to DAMON only when NUMA_BALANCING is
+> > > > disabled.
+> > > >
+> > > > Signed-off-by: SeongJae Park <sj@kernel.org>
+> > >
+> > > This seems to not be an upstreamable series right now unless I'm missing
+> > > something.
+> > >
+> > > Firstly, you're making a change in behaviour even when CONFIG_DAMON is not
+> > > specified, and Linus already told you we can't have that default-on.
+> > >
+> > > I'm very very much not happy with us doing something for 'damon'
+> > > unconditionaly when !CONFIG_DAMON on the assumption that an acessible
+> > > mapping has PROT_NONE set.
+> > >
+> > > This change makes me nervous in general ANYWAY as you are now changing core
+> > > mm and introducing a new faulting mechanism specifically for DAMON.
+> > >
+> > > And we are assuming that NUMA balancing being disabled is not racey in a
+> > > way that will cause things to break.
+> > >
+> > > I really also dislike the idea of an _implicit_ assumption that we are good
+> > > to use the NUMA balancing faulting mechanism to 'tack on' DAMON stuff.
+> > >
+> > > Is it really all that useful to provide a method that requires NUMA
+> > > balancing to be diabled?
+> > >
+> > > Finally, you're making it so DAMON can mprotect() something to use the
+> > > DAMON/NUMA balancing fault handler, which doesn't appaer to check to see if
+> > > NUMA balacing is disabled, but anyway it could be re-enabled?
+> > >
+> > > And then now DAMON is making stuff fault as NUMA balancing faults
+> > > incorrectly?
+> > >
+> > > This just seems broken.
+> > >
+> > > Unless there's really good justification I'm really not inclined for us to
+> > > merge this as-is right now unfortunately.
+> >
+> > Thank you for review and comments, Lorenzo.  I fundamentally agree all your
+> > points.  I don't aim to merge this as-is.  Actually this patch series is more
+> > like POC, but apparently I was rushing.  I will try to adjust your concerns in
+> > the next version.
 > 
-> Signed-off-by: Sang-Heon Jeon <ekffu200098@gmail.com>
-> ---
-> While studying about DAMON subsystem, I found some typos in docs.
-> This is my first kernel patch. So if there are any mistakes, please let
-> me know. I'll try to fix as soon as possible. Thanks for reviewing.
+> Thanks.
+> 
+> I do wonder whether we really can have a whole new faulting mechanism just for
+> DAMON. Because if in future, we wanted to change how this worked, we'd be
+> constrained, and it is a very specific user.
+> 
+> The issue is you need the PTE to be restored to its previous state, just like
+> NUMA balancing.
+> 
+> And I really really do not like this 'oh if you turn it off you can use it for
+> DAMON' thing, it's just really odd and asking for trouble.
+> 
+> I think the only _workable_ version of this would be to convert the numa
+> handling to a generic 'fault then restore' type mechanism that could be hooked
+> in to by either NUMA or DAMON.
 
-It's great to see you here again :)
+I agree, and this is my current plan for the next version of this patch.
 
 > 
-> ---
->   Documentation/mm/damon/design.rst | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/Documentation/mm/damon/design.rst b/Documentation/mm/damon/design.rst
-> index 03f8137256f5..2f6ba5c7f4c7 100644
-> --- a/Documentation/mm/damon/design.rst
-> +++ b/Documentation/mm/damon/design.rst
-> @@ -689,7 +689,7 @@ DAMOS accounts below statistics for each scheme, from the beginning of the
->   scheme's execution.
-> 
->   - ``nr_tried``: Total number of regions that the scheme is tried to be applied.
-> -- ``sz_trtied``: Total size of regions that the scheme is tried to be applied.
-> +- ``sz_tried``: Total size of regions that the scheme is tried to be applied.
->   - ``sz_ops_filter_passed``: Total bytes that passed operations set
->     layer-handled DAMOS filters.
->   - ``nr_applied``: Total number of regions that the scheme is applied.
-> --
-> 2.43.0
-> 
-> 
+> But really I think you'd _need_ to not have significantly different behaviour
+> between the two and _not_ constrain this to being only when NUMA balancing is
+> disabled.
 
-Reviewed-by: Honggyu Kim <honggyu.kim@sk.com>
+I agree all the points.  Especially the current interface is ambiguous and easy
+to mistake.
+
+> 
+> But then you'd need to know _this_ PTE is for NUMA balancing vs. another is for
+> this stuff.
+
+Yes, this would be the ideal.  But, memorizing something in page level is ...
+always an interesting challenge in my opinion, and I have no good idea to do
+this for now :)
+
+> 
+> I'm not really sure there is an upstreamable version of this, but it'd need to
+> be made generic like that if there were.
+> 
+> I think it might be worth taking some time to examine whether a version of this
+> that can be sensibly generic (which could have hooks for things) is _possible_
+> before sending a v2.
+
+Agreed, I don't need to rush.  Let's take time and discuss sufficiently. :)
+
+Nonetheless, I may post a followup version of this patch series that contains
+this one, even before we get a conclusion about this specific one.  I think I
+may have to do that, for sharing the future idea in a way easy to understand
+and test.  I think it might also help us at understanding the real ROI of this
+patch, and if there is another option to move forward.  In the case, I will of
+course keep RFC tag and clearly note that this patch is still under the
+discussion and not willing to be merged as is before the discussion is done.
+
+> 
+> > >
+> > > Also are we 100% sure that there's no races here? When we disable numa
+> > > balancing do we correctly ensure that absolutely no racing NUMA balancing
+> > > faults can happen whatsever at this juncture?
+> >
+> > Enabling CONFIG_DAMON will not automatically invoke change_protection() with
+> > MM_CP_DAMON.  Such invocations will be made only if the user disables NUMA
+> > balancing and run DAMON in the reporting mode.
+> >
+> > So there can be two racy cases.
+> >
+> > If the user enables NUMA balancing and then disables it after a while, page
+> > faults for MM_CP_PROT_NUMA can be handled by DAMON.  That could look odd, but
+> > there should be no real problem in practice.  DAMON's fault handling will
+> > cleanup the PAGE_NONE protection like NUMA balancing, and DAMON has no problem
+> > at receiving such additional reports from MM_CP_PROT_NUMA-caused faults.  DAMON
+> > may show a few more than expected accesses, but that's no problem for DAMON.
+> >
+> > Similarly, if the user starts DAMON in the report mode, stops DAMON, and then
+> > enables NUMA balancing, faults for MM_CP_DAMON that installed while DAMON was
+> > running in the report mode can be handled by NUMA balancing.  This should also
+> > not make real problems in practice in my opinion.  NUMA balancing could see
+> > more accesses and migrate pages little bit more than expected, but that should
+> > be just for a moment.
+> 
+> I'm really concerned about these.
+> 
+> We're now introducing unexpected behaviour based on a race and allowing faults
+> to be mis-handled.
+> 
+> I'm maybe not as confident as you are that everything will 'just work' and it
+> seems like we're asking for obscure bugs in the future.
+> 
+> > > You really have to be 100% certain you're not going to wrongly handle NUMA
+> > > page faults this way, on a potentially non-CONFIG_DAMON kernel to boot.
+> >
+> > I will ensure that never happens on CONFIG_DAMON disabled kernels, in the next
+> > version.
+> 
+> Well, in the above you say that you can't help but do that when a race occurs?
+
+I mean, I can't help when CONFIG_DAMON is enabled.
+
+The race (or, handling faults that caused by other entity) can hppen if and
+only if all below things happen.
+
+1. CONFIG_DAMON is enbled.
+2. CONFIG_NUMA_BALANCING is enabled.
+3. The user repeatedly turns on and off NUMA balancing and fault-based mode
+   DAMON in runtime.
+
+If any of these are not true, the race can completely avoided.  I was saying
+about the case that the first condition is not met.
+
+> 
+> >
+> > >
+> > > Keep in mind fault handling is verrrry racey (purposefully) and can be done
+> > > under VMA read lock alone (and that's only very loosely a lock!).
+> > >
+> > > This is just, yeah, concerning.
+> >
+> > Thank you for the caution.  DAMON's fault handling code only saves the
+> > information in its internal ring buffer.  It doesn't touch vmas.  So I think
+> > there should be no such problems.  I will add the clarification on the next
+> > version.
+> 
+> Right, I'm just saying that this all being super racey between NUMA
+> enabled/disabled seems pretty unavoidable, but we covered above.
+> 
+> > >
+> > > Secondly, somebody can disable/enable NUMA balancing, and thus you are now
+> > > allowing this function to, when somebody specifies 'DAMON', get NUMA
+> > > balancing fault handling??
+> > >
+> > > If you don't bother checking whether NUMA balancing is disabled when you
+> > > set it, then boom - you've broken the faulting mechanism, but even if you
+> > > _do_, somebody can just switch it on again...
+> >
+> > As I explained on the two racy cases aboe, faults that caused by DAMON or NUMA
+> > balancing can be handled by the other's handling code, but only for a limited
+> > time under the user's controls.  But to my understanding that should not cause
+> > real problems in the practice, and users wouldn't be suggested to operate the
+> > system in such a way.  I will add more documents and cautions about that in the
+> > next version.
+> 
+> I really don't think a version of the code that results in the wrong handler
+> being used is upstreamable, sorry.
+> 
+> I've not dug into the nitty gritty details on what would happen in both cases,
+> but even if it were 100% fine _now_, this is _exactly_ the kind of thing that
+> results in horrible hard-to-debug issues later, should something change.
+> 
+> Implicitly 'just having to know' that we might be in the wrong fault handler
+> seems like asking for trouble, and the RoI on an optional profiling tool (this
+> is not to take away from DAMON which is a _great_ utility, I'm saying it's
+> simply not part of the _core_) isn't there.
+
+I completely understand your concerns, thank you for nicely and patiently
+keeping this discussion.  I don't need to upstream this in short term, and open
+to every option.  So let's take sufficient time and discussions.
+
+I will take more time to think about a few potential options to move forward,
+and share those with a level of details that can help us easily further
+discuss, hopefully in a few days.
+
 
 Thanks,
-Honggyu
+SJ
