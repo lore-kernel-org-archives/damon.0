@@ -1,53 +1,71 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3080D18B0F;
-	Wed, 30 Jul 2025 04:21:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 291462DC34F
+	for <damon@lists.linux.dev>; Wed, 30 Jul 2025 17:20:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753849270; cv=none; b=bxOwRmsP9HAUhpsQnP70LwmjmjWiSf4g/5RtEcjzFNKJaCcxt8XIBWW62zDskBt8gf52/OLRlUoamMPSDD9hXO9oia5M01HzSXJpe1z8r909OGZ37zdk5NsIM7tUdpUHLLV13iYsR6dVJhdEibYHhPbO9DbnU/I7WmmmxrkwZVw=
+	t=1753896003; cv=none; b=dFNHck0WUo6Ay8+fIz6icus+LwDCZbD1Ua0qYairpfeTOPWXjktMq0V3qtdCgEI3a9pJ+IfT2K9CK8uEuxHrT4giVeZHc84+AMRq9NG6gNjTWAI0xqsQkeyoo1FPWQI4jhqEu63X5c4GuxrnnN7TuAPwkB8W4wzJWMXbOeoKdiM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753849270; c=relaxed/simple;
-	bh=k/8G8hyODNHd1MnxESyODVAtIvqlJqbAiUqU3GNVU9k=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=hEnnJ8LLb1J4KTUw9osTBej8pLgk2jwLJYKbQ9urNg8/NB8t2HgN0IPS9155/+dywAHXM9lj5cpiOQ28W60npL/X2z17Eu/4BdV21pn1+9mbyG8VtEkMJHwS+sXNwIsvCn1ylJT9eILTy9rhY4b6WyQPtHIOkhN6uE2boCcxxsM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aMfnaGa+; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1753896003; c=relaxed/simple;
+	bh=AcAhv9q5vTu1g4k0gz+3jIhEurYESvb07bGDGjZaNeY=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=bW0coas6iar6PjAiYLyBJ+UpQYYHiDmQ5nB+UY4Nw0XzOm41gDLInVXTegv7aqWSBx0L1SJG42PoKPKrjZ2LFtZxcnFDDZFxOOxJBD14J37r8seZO+/OVMKXrT2OrUrymUbGThDmm/EOp/fWrWtM4nTjeXa8ZLgTcTaGEMHqdWU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SX2i/iue; arc=none smtp.client-ip=209.85.221.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aMfnaGa+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E5ACC4CEE7;
-	Wed, 30 Jul 2025 04:21:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1753849269;
-	bh=k/8G8hyODNHd1MnxESyODVAtIvqlJqbAiUqU3GNVU9k=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aMfnaGa+CQK2SCh2aG8cBF1BxlKL67zP5Bb0V7EECsve3ZlcwQGiBjtw++2of2VCU
-	 1f6pgkcCr97tmBUag60Cov86CkuhLnLzFgFRTn50SF99uZ225eKvUUh9BbM/bNPapg
-	 Xu81K3LsGq7D6zNG599XqcbHJbnhvqjedYrGv1RseNFCCkxBJNXNehUmTiC0xPw1e/
-	 vPjOOc+m4Nsh/P9r05aB6h1P4mvnv3jauAzxmBoL9r0A92OdVqj+EfO+relPCB4lRq
-	 F3KuikQ9d6xEFLp2QnCKtT+lrP4jaW8yTwEK8FOCXZqb2Uat7iq4V8kCfIQMhY7oLu
-	 vPrrDF3DYTuEw==
-From: SeongJae Park <sj@kernel.org>
-To: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Cc: SeongJae Park <sj@kernel.org>,
-	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SX2i/iue"
+Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-3b794a013bcso59806f8f.2
+        for <damon@lists.linux.dev>; Wed, 30 Jul 2025 10:20:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1753895999; x=1754500799; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=6LSHcQ0idAwPKDvX8EE25U8/JSS0uYFnXe2HDNHqMNY=;
+        b=SX2i/iueOOjwroqoddivMYI5KH/Ru+Ca6sCquJ1hf9dTWGMvmsjutleY96zpuxVxYB
+         IeffvN3JemjzhfUkq0S1Oc2nB58woToM/6yYU6H/6fRmjCl4Jg76UhAZ2gMLBPK7o1qw
+         DdJdfnf37vbBg4KRM2vd9K0cRDUwVUaTwuJbkR4OAuzCY0ZFmKnwrnVgwGQnIZd6bfUx
+         1JPa4zUgDuPrf9bQ0Xms+wIhPRyVPJs7q4gxdZ8Mw+DK7/zMwhqlmYwgMDJwU7upQ4Mt
+         snmw+K5LKGzDhVjFPsazLucljtLkEB2tf82KU5Z88fzKmF8Aq+ZQneAP+bvJckgDpGqq
+         11/A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1753895999; x=1754500799;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=6LSHcQ0idAwPKDvX8EE25U8/JSS0uYFnXe2HDNHqMNY=;
+        b=H2jzLXr0Mgtc6Q8lIROPyASygrbjtC4myiPRXSTfbO/7xEbYQu+ypgZNlLg5EUHu3A
+         tXDGUJwOvDbb0MuaHhmIgjnWc5B+KkRsjlIOz39LafZd5R82nXR6FtbsL64rUYDofu0n
+         K4fFWfAj8D3/ctYE4XbVn4WzElmOLct6ii1bV8sFCw29lhn2h6443ELqixPLMr0MFoKC
+         35tVWuuto+IVI5a723r3RFyX0/HZBI7VY4nCd3IDhOL5deut4+HSh2eju9f5L05tNncn
+         1TJ8RII2hSoR1WxcDAvBCc2TzA/fstBzAFbaxEgb+/5Y2J8w7GlpHBNVMqK9olOOzzpi
+         J5XA==
+X-Gm-Message-State: AOJu0YwhlB4NzLbPDpu2aBDVg4lADAfu2SU08J4x/p6TKvDnXIaIdwXo
+	tUQTgyS2WszQm5qUgLeZMHzTYtitAXbvfE5ChaO8Dlma7Ukha1V01fNThRVZq6fsYJDq6Q==
+X-Gm-Gg: ASbGncun9jP33MMDBickACTq87wgK2nQGPaoQ3mMLGHhzI2tBvgwv4VTZDvwcMs+lRQ
+	bnBuvn7GnZpIE+wx3b900nFEhrSqDs+F6D0vVAmO475yyG9p6rjjqGZqhGvOPX/lLlO/qIjIiwv
+	sdFlt0kwuzvz21uZ1F93YpUpK5Ns+xJis+YqyDeGObXldiFaOyO0yLC5fN+93g8RXs4fi9os/yc
+	42A3DLa4Rp8fQ1sU9KkB0h3orsM+TtlbVJ3w3qnGNqCzSmDupyRa5Rx8NglEw3GWSZB21r0y6mI
+	MQ6UQ0Tf1bryNXVPHnkarRwxSbuygwHJWlskQBX25nLMTutKGwb+T549rySlYdr79dqYHN7IIbf
+	YQzZdVD/45xMMGAk=
+X-Google-Smtp-Source: AGHT+IHHpOLorxoYWXm9QIh1oiahYntiaztlH+OhrVoWzA0q4E4cWgVlDniRm+8G6MBU9hzMPBToCQ==
+X-Received: by 2002:a05:6000:3107:b0:3b7:8af8:b922 with SMTP id ffacd0b85a97d-3b794ffd8d8mr3068673f8f.34.1753895999181;
+        Wed, 30 Jul 2025 10:19:59 -0700 (PDT)
+Received: from localhost ([2a03:2880:31ff:74::])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4589aefaa44sm26603385e9.20.2025.07.30.10.19.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 30 Jul 2025 10:19:58 -0700 (PDT)
+From: Yueyang Pan <pyyjason@gmail.com>
+To: SeongJae Park <sj@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	David Hildenbrand <david@redhat.com>,
-	Jann Horn <jannh@google.com>,
-	Michal Hocko <mhocko@suse.com>,
-	Mike Rapoport <rppt@kernel.org>,
-	Pedro Falcato <pfalcato@suse.de>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Vlastimil Babka <vbabka@suse.cz>,
-	damon@lists.linux.dev,
-	kernel-team@meta.com,
-	linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org
-Subject: Re: [RFC v2 5/7] mm/memory: implement MM_CP_DAMON
-Date: Tue, 29 Jul 2025 21:21:06 -0700
-Message-Id: <20250730042106.54750-1-sj@kernel.org>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <5acc6af3-91da-4dd3-834c-e8923e5d3320@lucifer.local>
-References: 
+	Usama Arif <usamaarif642@gmail.com>
+Cc: damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH v2 0/2] mm/damon: Add damos_stat support for vaddr
+Date: Wed, 30 Jul 2025 10:19:54 -0700
+Message-ID: <cover.1753895066.git.pyyjason@gmail.com>
+X-Mailer: git-send-email 2.47.3
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -56,223 +74,134 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Tue, 29 Jul 2025 10:40:11 +0100 Lorenzo Stoakes <lorenzo.stoakes@oracle.com> wrote:
+Previously damos_stat only supoort paddr. This patch set adds support 
+for damos_stat for vaddr. Also all different types of filters are 
+supported. 
 
-> On Mon, Jul 28, 2025 at 08:06:32PM -0700, SeongJae Park wrote:
-> > On Mon, 28 Jul 2025 06:19:35 +0100 Lorenzo Stoakes <lorenzo.stoakes@oracle.com> wrote:
-> >
-> > > On Sun, Jul 27, 2025 at 01:18:11PM -0700, SeongJae Park wrote:
-> > > > DAMON is using Accessed bits of page table entries as the major source
-> > > > of the access information.  It lacks some additional information such as
-> > > > which CPU was making the access.  Page faults could be another source of
-> > > > information for such additional information.
-> > > >
-> > > > Implement another change_protection() flag for such use case, namely
-> > > > MM_CP_DAMON.  DAMON will install PAGE_NONE protections using the flag.
-> > > > To avoid interfering with NUMA_BALANCING, which is also using PAGE_NON
-> > > > protection, pass the faults to DAMON only when NUMA_BALANCING is
-> > > > disabled.
-> > > >
-> > > > Signed-off-by: SeongJae Park <sj@kernel.org>
-> > >
-> > > This seems to not be an upstreamable series right now unless I'm missing
-> > > something.
-> > >
-> > > Firstly, you're making a change in behaviour even when CONFIG_DAMON is not
-> > > specified, and Linus already told you we can't have that default-on.
-> > >
-> > > I'm very very much not happy with us doing something for 'damon'
-> > > unconditionaly when !CONFIG_DAMON on the assumption that an acessible
-> > > mapping has PROT_NONE set.
-> > >
-> > > This change makes me nervous in general ANYWAY as you are now changing core
-> > > mm and introducing a new faulting mechanism specifically for DAMON.
-> > >
-> > > And we are assuming that NUMA balancing being disabled is not racey in a
-> > > way that will cause things to break.
-> > >
-> > > I really also dislike the idea of an _implicit_ assumption that we are good
-> > > to use the NUMA balancing faulting mechanism to 'tack on' DAMON stuff.
-> > >
-> > > Is it really all that useful to provide a method that requires NUMA
-> > > balancing to be diabled?
-> > >
-> > > Finally, you're making it so DAMON can mprotect() something to use the
-> > > DAMON/NUMA balancing fault handler, which doesn't appaer to check to see if
-> > > NUMA balacing is disabled, but anyway it could be re-enabled?
-> > >
-> > > And then now DAMON is making stuff fault as NUMA balancing faults
-> > > incorrectly?
-> > >
-> > > This just seems broken.
-> > >
-> > > Unless there's really good justification I'm really not inclined for us to
-> > > merge this as-is right now unfortunately.
-> >
-> > Thank you for review and comments, Lorenzo.  I fundamentally agree all your
-> > points.  I don't aim to merge this as-is.  Actually this patch series is more
-> > like POC, but apparently I was rushing.  I will try to adjust your concerns in
-> > the next version.
-> 
-> Thanks.
-> 
-> I do wonder whether we really can have a whole new faulting mechanism just for
-> DAMON. Because if in future, we wanted to change how this worked, we'd be
-> constrained, and it is a very specific user.
-> 
-> The issue is you need the PTE to be restored to its previous state, just like
-> NUMA balancing.
-> 
-> And I really really do not like this 'oh if you turn it off you can use it for
-> DAMON' thing, it's just really odd and asking for trouble.
-> 
-> I think the only _workable_ version of this would be to convert the numa
-> handling to a generic 'fault then restore' type mechanism that could be hooked
-> in to by either NUMA or DAMON.
+Functionality Test
+==================
+I wrote a small test program which allocates 10GB of DRAM, use 
+madvise(MADV_HUGEPAGE) to convert the base pages to 2MB huge pages
+Then my program does the following things in order:
+1. Write sequentially to the whole 10GB region
+2. Read the first 5GB region sequentially for 10 times
+3. Sleep 5s
+4. Read the second 5GB region sequentially for 10 times
 
-I agree, and this is my current plan for the next version of this patch.
+With a proper damon setting, we are expected to see df-passed to be 10GB
+and hot region move around with the read
 
-> 
-> But really I think you'd _need_ to not have significantly different behaviour
-> between the two and _not_ constrain this to being only when NUMA balancing is
-> disabled.
+$ # Start damon record
+$sudo ./damo/damo start "./my_test/test" --monitoring_intervals 100ms\
+1s 2s
 
-I agree all the points.  Especially the current interface is ambiguous and easy
-to mistake.
-
-> 
-> But then you'd need to know _this_ PTE is for NUMA balancing vs. another is for
-> this stuff.
-
-Yes, this would be the ideal.  But, memorizing something in page level is ...
-always an interesting challenge in my opinion, and I have no good idea to do
-this for now :)
-
-> 
-> I'm not really sure there is an upstreamable version of this, but it'd need to
-> be made generic like that if there were.
-> 
-> I think it might be worth taking some time to examine whether a version of this
-> that can be sensibly generic (which could have hooks for things) is _possible_
-> before sending a v2.
-
-Agreed, I don't need to rush.  Let's take time and discuss sufficiently. :)
-
-Nonetheless, I may post a followup version of this patch series that contains
-this one, even before we get a conclusion about this specific one.  I think I
-may have to do that, for sharing the future idea in a way easy to understand
-and test.  I think it might also help us at understanding the real ROI of this
-patch, and if there is another option to move forward.  In the case, I will of
-course keep RFC tag and clearly note that this patch is still under the
-discussion and not willing to be merged as is before the discussion is done.
-
-> 
-> > >
-> > > Also are we 100% sure that there's no races here? When we disable numa
-> > > balancing do we correctly ensure that absolutely no racing NUMA balancing
-> > > faults can happen whatsever at this juncture?
-> >
-> > Enabling CONFIG_DAMON will not automatically invoke change_protection() with
-> > MM_CP_DAMON.  Such invocations will be made only if the user disables NUMA
-> > balancing and run DAMON in the reporting mode.
-> >
-> > So there can be two racy cases.
-> >
-> > If the user enables NUMA balancing and then disables it after a while, page
-> > faults for MM_CP_PROT_NUMA can be handled by DAMON.  That could look odd, but
-> > there should be no real problem in practice.  DAMON's fault handling will
-> > cleanup the PAGE_NONE protection like NUMA balancing, and DAMON has no problem
-> > at receiving such additional reports from MM_CP_PROT_NUMA-caused faults.  DAMON
-> > may show a few more than expected accesses, but that's no problem for DAMON.
-> >
-> > Similarly, if the user starts DAMON in the report mode, stops DAMON, and then
-> > enables NUMA balancing, faults for MM_CP_DAMON that installed while DAMON was
-> > running in the report mode can be handled by NUMA balancing.  This should also
-> > not make real problems in practice in my opinion.  NUMA balancing could see
-> > more accesses and migrate pages little bit more than expected, but that should
-> > be just for a moment.
-> 
-> I'm really concerned about these.
-> 
-> We're now introducing unexpected behaviour based on a race and allowing faults
-> to be mis-handled.
-> 
-> I'm maybe not as confident as you are that everything will 'just work' and it
-> seems like we're asking for obscure bugs in the future.
-> 
-> > > You really have to be 100% certain you're not going to wrongly handle NUMA
-> > > page faults this way, on a potentially non-CONFIG_DAMON kernel to boot.
-> >
-> > I will ensure that never happens on CONFIG_DAMON disabled kernels, in the next
-> > version.
-> 
-> Well, in the above you say that you can't help but do that when a race occurs?
-
-I mean, I can't help when CONFIG_DAMON is enabled.
-
-The race (or, handling faults that caused by other entity) can hppen if and
-only if all below things happen.
-
-1. CONFIG_DAMON is enbled.
-2. CONFIG_NUMA_BALANCING is enabled.
-3. The user repeatedly turns on and off NUMA balancing and fault-based mode
-   DAMON in runtime.
-
-If any of these are not true, the race can completely avoided.  I was saying
-about the case that the first condition is not met.
-
-> 
-> >
-> > >
-> > > Keep in mind fault handling is verrrry racey (purposefully) and can be done
-> > > under VMA read lock alone (and that's only very loosely a lock!).
-> > >
-> > > This is just, yeah, concerning.
-> >
-> > Thank you for the caution.  DAMON's fault handling code only saves the
-> > information in its internal ring buffer.  It doesn't touch vmas.  So I think
-> > there should be no such problems.  I will add the clarification on the next
-> > version.
-> 
-> Right, I'm just saying that this all being super racey between NUMA
-> enabled/disabled seems pretty unavoidable, but we covered above.
-> 
-> > >
-> > > Secondly, somebody can disable/enable NUMA balancing, and thus you are now
-> > > allowing this function to, when somebody specifies 'DAMON', get NUMA
-> > > balancing fault handling??
-> > >
-> > > If you don't bother checking whether NUMA balancing is disabled when you
-> > > set it, then boom - you've broken the faulting mechanism, but even if you
-> > > _do_, somebody can just switch it on again...
-> >
-> > As I explained on the two racy cases aboe, faults that caused by DAMON or NUMA
-> > balancing can be handled by the other's handling code, but only for a limited
-> > time under the user's controls.  But to my understanding that should not cause
-> > real problems in the practice, and users wouldn't be suggested to operate the
-> > system in such a way.  I will add more documents and cautions about that in the
-> > next version.
-> 
-> I really don't think a version of the code that results in the wrong handler
-> being used is upstreamable, sorry.
-> 
-> I've not dug into the nitty gritty details on what would happen in both cases,
-> but even if it were 100% fine _now_, this is _exactly_ the kind of thing that
-> results in horrible hard-to-debug issues later, should something change.
-> 
-> Implicitly 'just having to know' that we might be in the wrong fault handler
-> seems like asking for trouble, and the RoI on an optional profiling tool (this
-> is not to take away from DAMON which is a _great_ utility, I'm saying it's
-> simply not part of the _core_) isn't there.
-
-I completely understand your concerns, thank you for nicely and patiently
-keeping this discussion.  I don't need to upstream this in short term, and open
-to every option.  So let's take sufficient time and discussions.
-
-I will take more time to think about a few potential options to move forward,
-and share those with a level of details that can help us easily further
-discuss, hopefully in a few days.
+$ # damon report
+$sudo ./damo/damo report access --snapshot_damos_filter allow \
+hugepage_size 2MiB 2MiB
+    heatmap:
+    # min/max temperatures: -600,000,000, 100,001,000, column size: 137.352 MiB
+    intervals: sample 100 ms aggr 1 s (max access hz 10)
+    # damos filters (df): reject none hugepage_size [2.000 MiB, 2.000 MiB]
+    df-pass:
+    # min/max temperatures: -400,000,000, 100,001,000, column size: 128.031 MiB
+    0   addr 85.373 TiB   size 745.555 MiB access 0 hz   age 6 s           df-passed 0 B
+    1   addr 127.608 TiB  size 877.664 MiB access 3.000 hz age 0 ns          df-passed 878.000 MiB
+    2   addr 127.609 TiB  size 219.418 MiB access 2.000 hz age 0 ns          df-passed 220.000 MiB
+    3   addr 127.609 TiB  size 316.613 MiB access 1.000 hz age 1 s           df-passed 316.000 MiB
+    4   addr 127.609 TiB  size 474.922 MiB access 1.000 hz age 1 s           df-passed 476.000 MiB
+    5   addr 127.610 TiB  size 407.188 MiB access 1.000 hz age 0 ns          df-passed 406.000 MiB
+    6   addr 127.610 TiB  size 610.781 MiB access 1.000 hz age 0 ns          df-passed 612.000 MiB
+    7   addr 127.611 TiB  size 697.309 MiB access 0 hz   age 0 ns          df-passed 696.000 MiB
+    8   addr 127.611 TiB  size 77.480 MiB  access 1.000 hz age 0 ns          df-passed 78.000 MiB
+    9   addr 127.611 TiB  size 573.102 MiB access 1.000 hz age 0 ns          df-passed 574.000 MiB
+    10  addr 127.612 TiB  size 245.617 MiB access 2.000 hz age 0 ns          df-passed 246.000 MiB
+    11  addr 127.612 TiB  size 295.102 MiB access 1.000 hz age 1 s           df-passed 294.000 MiB
+    12  addr 127.612 TiB  size 295.105 MiB access 1.000 hz age 1 s           df-passed 296.000 MiB
+    13  addr 127.613 TiB  size 67.172 MiB  access 1.000 hz age 1 s           df-passed 66.000 MiB
+    14  addr 127.613 TiB  size 604.570 MiB access 0 hz   age 1 s           df-passed 606.000 MiB
+    15  addr 127.613 TiB  size 389.578 MiB access 0 hz   age 4 s           df-passed 388.000 MiB
+    16  addr 127.614 TiB  size 259.719 MiB access 0 hz   age 4 s           df-passed 260.000 MiB
+    17  addr 127.614 TiB  size 817.941 MiB access 0 hz   age 4 s           df-passed 818.000 MiB
+    18  addr 127.615 TiB  size 204.488 MiB access 0 hz   age 4 s           df-passed 204.000 MiB
+    19  addr 127.615 TiB  size 730.902 MiB access 0 hz   age 4 s           df-passed 732.000 MiB
+    20  addr 127.616 TiB  size 182.727 MiB access 0 hz   age 4 s           df-passed 182.000 MiB
+    21  addr 127.616 TiB  size 926.824 MiB access 0 hz   age 2 s           df-passed 928.000 MiB
+    22  addr 127.617 TiB  size 102.984 MiB access 0 hz   age 2 s           df-passed 102.000 MiB
+    23  addr 127.617 TiB  size 86.527 MiB  access 0 hz   age 2 s           df-passed 86.000 MiB
+    24  addr 127.617 TiB  size 778.777 MiB access 0 hz   age 2 s           df-passed 776.000 MiB
+    25  addr 127.999 TiB  size 132.000 KiB access 0 hz   age 6 s           df-passed 0 B
+    memory bw estimate: 6.524 GiB per second  df-passed: 6.527 GiB per second
+    total size: 10.731 GiB  df-passed 10.000 GiB
+    record DAMON intervals: sample 100 ms, aggr 1 s
 
 
-Thanks,
-SJ
+$ # damon report again
+$sudo ./damo/damo report access --snapshot_damos_filter allow \
+hugepage_size 2MiB 2MiB
+    heatmap:
+    # min/max temperatures: -1,100,000,000, 2,000, column size: 137.352 MiB
+    intervals: sample 100 ms aggr 1 s (max access hz 10)
+    # damos filters (df): reject none hugepage_size [2.000 MiB, 2.000 MiB]
+    df-pass:
+    # min/max temperatures: -900,000,000, 2,000, column size: 128.031 MiB
+    0   addr 85.373 TiB   size 745.555 MiB access 0 hz   age 11 s          df-passed 0 B
+    1   addr 127.608 TiB  size 579.715 MiB access 2.000 hz age 0 ns          df-passed 580.000 MiB
+    2   addr 127.608 TiB  size 144.930 MiB access 2.000 hz age 0 ns          df-passed 146.000 MiB
+    3   addr 127.608 TiB  size 452.453 MiB access 2.000 hz age 0 ns          df-passed 452.000 MiB
+    4   addr 127.609 TiB  size 113.117 MiB access 1.000 hz age 0 ns          df-passed 114.000 MiB
+    5   addr 127.609 TiB  size 182.367 MiB access 2.000 hz age 0 ns          df-passed 182.000 MiB
+    6   addr 127.609 TiB  size 182.371 MiB access 2.000 hz age 0 ns          df-passed 182.000 MiB
+    7   addr 127.609 TiB  size 350.488 MiB access 1.000 hz age 0 ns          df-passed 350.000 MiB
+    8   addr 127.610 TiB  size 525.738 MiB access 1.000 hz age 0 ns          df-passed 526.000 MiB
+    9   addr 127.610 TiB  size 401.352 MiB access 1.000 hz age 0 ns          df-passed 402.000 MiB
+    10  addr 127.611 TiB  size 100.340 MiB access 1.000 hz age 0 ns          df-passed 100.000 MiB
+    11  addr 127.611 TiB  size 19.523 MiB  access 0 hz   age 0 ns          df-passed 20.000 MiB
+    12  addr 127.611 TiB  size 175.727 MiB access 0 hz   age 0 ns          df-passed 176.000 MiB
+    13  addr 127.611 TiB  size 106.629 MiB access 0 hz   age 0 ns          df-passed 106.000 MiB
+    14  addr 127.611 TiB  size 959.676 MiB access 0 hz   age 0 ns          df-passed 960.000 MiB
+    15  addr 127.612 TiB  size 424.469 MiB access 1.000 hz age 0 ns          df-passed 424.000 MiB
+    16  addr 127.612 TiB  size 424.469 MiB access 1.000 hz age 0 ns          df-passed 424.000 MiB
+    17  addr 127.613 TiB  size 201.648 MiB access 0 hz   age 6 s           df-passed 202.000 MiB
+    18  addr 127.613 TiB  size 806.609 MiB access 0 hz   age 6 s           df-passed 806.000 MiB
+    19  addr 127.614 TiB  size 862.125 MiB access 0 hz   age 9 s           df-passed 862.000 MiB
+    20  addr 127.614 TiB  size 215.535 MiB access 0 hz   age 9 s           df-passed 216.000 MiB
+    21  addr 127.615 TiB  size 104.500 MiB access 0 hz   age 9 s           df-passed 104.000 MiB
+    22  addr 127.615 TiB  size 940.523 MiB access 0 hz   age 9 s           df-passed 942.000 MiB
+    23  addr 127.616 TiB  size 640.281 MiB access 0 hz   age 7 s           df-passed 640.000 MiB
+    24  addr 127.616 TiB  size 426.855 MiB access 0 hz   age 7 s           df-passed 426.000 MiB
+    25  addr 127.617 TiB  size 90.105 MiB  access 0 hz   age 7 s           df-passed 90.000 MiB
+    26  addr 127.617 TiB  size 810.965 MiB access 0 hz   age 7 s           df-passed 808.000 MiB
+    27  addr 127.999 TiB  size 132.000 KiB access 0 hz   age 11 s          df-passed 0 B
+    memory bw estimate: 5.297 GiB per second  df-passed: 5.297 GiB per second
+    total size: 10.731 GiB  df-passed 10.000 GiB
+    record DAMON intervals: sample 100 ms, aggr 1 s
+
+As you can see the total df-passed region is 10GiB and the hot region
+moves as the seq read keeps going
+
+Revision History
+================
+Changes from v1 [1]:
+- Follow David's advise to combine *pmd_entry() and *pte_entry() into
+  one. Also remove manually setting walk->action
+- Use vma_normal_page and vma_normal_page_pmd instead of damon_get_folio
+  to remove redundant folio_get and folio_put
+- Follow SJ's advise to only move damon_pa_scheme_has_filter to
+  ops-common
+- Change the command used in cover-letter for more natural illustration
+
+[1] https://lore.kernel.org/all/cover.1753794408.git.pyyjason@gmail.com/
+
+Yueyang Pan (2):
+  mm/damon: Move has filter to ops-common
+  mm/damon: Add damos_stat support for vaddr
+
+ mm/damon/ops-common.c |   9 ++++
+ mm/damon/ops-common.h |   2 +
+ mm/damon/paddr.c      |  11 +----
+ mm/damon/vaddr.c      | 105 +++++++++++++++++++++++++++++++++++++++++-
+ 4 files changed, 116 insertions(+), 11 deletions(-)
+
+-- 
+2.47.3
+
