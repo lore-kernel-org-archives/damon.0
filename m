@@ -1,115 +1,84 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6663D19C556
-	for <damon@lists.linux.dev>; Fri,  1 Aug 2025 17:02:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 307632147F9;
+	Fri,  1 Aug 2025 21:01:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754067754; cv=none; b=RZy3v2Bv5WezpcY+2BYd1eqc6aVsVcVlwfI3OZCCAN+Tw2VSt81wv+M4sPaGBwrZBYp7FDeR3Kvk0XPVjozTrIjZfjYlYPxuzE43azgkSTbYF+AL/Yre+/ZRj6fwazN1YaTqKWydK2jZcHv9o4ezsIv3bZOpRYJMab50Gm0Bp2E=
+	t=1754082106; cv=none; b=JwBF5LRl3OJc/C9MmmOacH5hUeW/odGkdBigpEcwqicMFhuXQDhzghudmqLgaOEfgq6wlAki+I4mfCOn6xMlykOnS9jY1HqSMSVCfkVEwMDnltAv7wUu4HmC2ObyT+tn4pt8W7j5bN35GZPjjxwI8rrU3347vNURaUYDmnl2V8M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754067754; c=relaxed/simple;
-	bh=UcW2O+y87SzU13pq/hmDWWAZ/pxri1/7132KbeXpyMw=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=CRRwpu250QElG8B+g7OX4zP2AC1qd6XJy9MQst4D1MX8osRcoY95IgAh6gj4jAopQbN+4echHIOu48/Jqcq+LvdzEeBLemaiN40i0UfycO/LG8slPkGWfKUPnk4Vh4b2E2GWX7kg8EDdegZ6yaGuHG0RQ3cHI05og1ftt2zk3iA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=X/UTCOQc; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1754082106; c=relaxed/simple;
+	bh=eYn24Df2DPfktFg3q3iAncFfxzsR6pbSbJtejQ6BcTA=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=RBP57a0FCx5/4pD2TtS/aaaHvVyf5ZgGmEJOJOxqtvMm9kZu/Niu5YXWCH+KV4VfthISkiuPFXaZGL7/tKYwCXz7NwDMiRNLRvMJ4C4D6qygqGKEUx3jCaycEYQhDBMIb3QlQvVY/qCFSpQaz/rBMQbIzv9ZROKbllNUkWPg7+4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ntW0V/Mk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="X/UTCOQc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE1ECC4CEE7;
-	Fri,  1 Aug 2025 17:02:33 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ntW0V/Mk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D950C4CEE7;
+	Fri,  1 Aug 2025 21:01:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754067754;
-	bh=UcW2O+y87SzU13pq/hmDWWAZ/pxri1/7132KbeXpyMw=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X/UTCOQcXcyIQd1cFZ95Gx8uHlZCZT1BawtuiTbHHW9WrS0EyoVSe3HUUymBPEuIA
-	 2XazgA7JBNBm4FktMi8wDjMTJXFo+MDyjqCMocOVgmptxPRQ3NM1hIMQHZerOML004
-	 X66XVgljocps091k6fR/y2fgsnCbWPjTo+2SFwNuhq4h8bmY/vWK9KHgdcSuhHfDY3
-	 wY5sBUJF764SpcFD9ySMNRcu76OcxsnrWXt/OHBGAQHZYJmyNHpnLUnf02Y7keuZxF
-	 eirQXyUJ+FP7b2faz5aa0LMFhOAbnmRs7S5jN9WkO2kgXyJQPaD99dmDqraV33+9fh
-	 QI7yu1HChdNdA==
+	s=k20201202; t=1754082105;
+	bh=eYn24Df2DPfktFg3q3iAncFfxzsR6pbSbJtejQ6BcTA=;
+	h=From:To:Cc:Subject:Date:From;
+	b=ntW0V/Mke++hBis9S+ymDYqKcsySZKDRLd8xnQmQkmZhZjdpADMWV2hutrQmSN0OC
+	 UKEGoz2lRSOLo74exG2gSDM9SSeDcF5vt7iu/FUbnKfWMmvhfOOUclUzgw0UjM6oUr
+	 en5SzkaEt2FPUlhTZQZFK1VpP2Dl4QNc0mJTOcZruiR55ACtyf3WP8ttlxJZntmQL+
+	 HlZpoo2/ZLk4DKeTKfd1TCVMjFpdwLkgW9KS1OKtIL9gpeRooV66B8ZWRo93RcoQv3
+	 gKOhYWNYPP3qY8036i+yrxyIjggotyzu50Kl2lgFXIW6VXny+2+U3RWBxiYx/qm3jh
+	 xXaZA9w1DXa8A==
 From: SeongJae Park <sj@kernel.org>
-To: Sang-Heon Jeon <ekffu200098@gmail.com>
+To: damon@lists.linux.dev
 Cc: SeongJae Park <sj@kernel.org>,
-	honggyu.kim@sk.com,
-	damon@lists.linux.dev,
-	linux-mm@kvack.org
-Subject: Re: [PATCH] mm/damon: update expired description of damos_action
-Date: Fri,  1 Aug 2025 10:02:31 -0700
-Message-Id: <20250801170231.8532-1-sj@kernel.org>
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org
+Subject: DAMON Beer/Coffee/Tea chat reminder for the week of 2025-08-04
+Date: Fri,  1 Aug 2025 14:01:42 -0700
+Message-Id: <20250801210142.1858-1-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <CABFDxMGh7-vDgNzepJKtrhdOF40_U7=NT6Jvm85qtdwGpBZawg@mail.gmail.com>
-References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On Sat, 2 Aug 2025 00:34:30 +0900 Sang-Heon Jeon <ekffu200098@gmail.com> wrote:
+Hello,
 
-> Hi, SeongJae
-> 
-> On Fri, Aug 1, 2025 at 2:58 AM SeongJae Park <sj@kernel.org> wrote:
-> >
-> > Hello Sang-Heon,
-> >
-> > On Thu, 31 Jul 2025 22:22:30 +0900 Sang-Heon Jeon <ekffu200098@gmail.com> wrote:
-> >
-> > > Nowadays, damos operation actions support more various operation set.
-> > > But comments(also, generated documentation) doesn't updated.
-> > > So, fix the comments with current support status.
-> >
-> > Thank you for catching this and fixing!
-> 
-> :)
-> 
-> > >
-> > > Signed-off-by: Sang-Heon Jeon <ekffu200098@gmail.com>
-> > > ---
-> > > I also found below patch(https://lore.kernel.org/damon/20250730200239.60984-1-sj@kernel.org/T/#t)
-> > > So, Is it means that DAMOS_STAT is only supported by paddr now?
-> >
-> > No.  'vaddr' supports DAMOS_STAT.  The patch is not adding DAMOS_STAT support
-> > on vaddr, but extending the support for DAMOS filters.
-> >
-> > Thank you for checking the thread and asking this question, though.  I see this
-> > as an important signal of another rooms to improve on the documentation.
-> 
-> Thanks for your kind review. I really don't want to bother you
-> anymore. But I would like to check my understanding.
 
-No worry, questions about DAMON never bother me.
+This is yet another reminder of upcoming DAMON Beer/Coffee/Tea chats
+(https://docs.google.com/document/d/1v43Kcj3ly4CYqmAkMaZzLiM2GEnWfgdGbZAH3mi2vpM/edit?usp=sharing)
+for the week of 2025-08-04.
 
-> 
-> So the basic operation of stat is covered by outside of
-> `damon_pa_apply_scheme` and `damon_va_apply_scheme`.
-> If it's not too much trouble, could you point me to where they are?
+We have two reserved time slots for meetings in the week, as usual.
 
-It is covered by damos_update_stat() in core.c file.
+I will skip those for weeks of 2025-09-01 and 2025-09-15 since I will have a
+travel during the time.  Feel free to reach out in any way as usual, though!
 
-> 
-> And some extension stat (maybe it only renewed that filter exists) is
-> covered inside of upper functions. Is it also right point?
+Next six time slots that I reserved in advance are as below.
 
-Depending on what you mean with "upper functions".
+2025-08-04 (Mon) 18:00 PT (not yet reserved)
+2025-08-06 (Wed) 09:30 PT (not yet reserved)
+2025-08-18 (Mon) 18:00 PT (not yet reserved)
+2025-08-20 (Wed) 09:30 PT (not yet reserved)
+2025-09-29 (Mon) 18:00 PT (not yet reserved)
+2025-10-01 (Wed) 09:30 PT (not yet reserved)
 
-damos_apply_scheme() in DAMON core layer calls
-damon_operationss->apply_scheme() callback of the current operations set.  The
-callback may handle DAMOS filters or not.  The callback of paddr.c handles the
-filters for DAMOS_STAT.  The callback of vaddr.c does not, and Pan is extending
-it to handle filters.
+Please reach out to me (sj@kernel.org or whatever) to reserve the
+not-yet-reserved time slots for your topics.  The reservation is made in a
+First-Come First-Served way, and I will send a Google Meet link to
+reservation-confirmed attendees.
 
-[...]
-> So, I think that I need to send v2 patch, If that's right, which way
-> would you prefer?
-> reply to this thread or make a new thread?
+Please note that other time slots are also available on demands.
 
-I prefer making a new thread :)
+Shared Calendar
+---------------
+
+You can get the schedule via this shared Google Calendar:
+https://calendar.google.com/calendar/u/0?cid=ZDIwOTA4YTMxNjc2MDQ3NTIyMmUzYTM5ZmQyM2U4NDA0ZGIwZjBiYmJlZGQxNDM0MmY4ZTRjOTE0NjdhZDRiY0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t
+
+You can also get the past and upcoming schedules via
+https://docs.google.com/document/d/1v43Kcj3ly4CYqmAkMaZzLiM2GEnWfgdGbZAH3mi2vpM/edit?usp=sharing
 
 
 Thanks,
 SJ
-
-[...]
