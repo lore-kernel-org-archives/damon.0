@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A83919D8AC;
-	Fri,  1 Aug 2025 23:39:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2977219D8AC;
+	Fri,  1 Aug 2025 23:39:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754091558; cv=none; b=YOANnnhZ7I2DcpF1fe2ZNAQnOzXUBjiZGhha0dl+83VEWqOVib4T6/WQFGPtuyG5BmfHs5+N2pf7Nf2tlbQ98Xn/s6IfrU7VJpVgXkwv7HJ66WseD/BVbP4s6MU1GUAj62XnyRGoe6xjMYrEOQZ+DGp7CrjK9sXYFTqTwlwm19A=
+	t=1754091585; cv=none; b=XWxSo79HrOsNQcAnfpXHt1JEbBLMX4S9OfEA8MB9EOMSCZei4obEwN4H/EElKU4gnjShbgiMw2uIcSPtdhEIe0/5EK7PSjuo6RK+rX3dBuJU6TyJRuIhL6DZajPbDDOMkG0vfBLiGKBjdvwGQuvuhyWRmyT0RBO7oDdedj0epcI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754091558; c=relaxed/simple;
-	bh=MnEEczPpbP4/NoVuZ+RGReSlbA6n00lVLaBy9fFX2Ok=;
+	s=arc-20240116; t=1754091585; c=relaxed/simple;
+	bh=5tJRCSbuSBYIOjiD+lXubjl8LyV9TAUxnOkonO+FxG8=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=QP2d04Pj0EnxxB/IhpbPCuM99CYhSHFypcHvMDQy7qHC9h2S5hsnG2sNCkh6I4UauGpU0wBcMSvQ4zEgdOA30ECTqwktNLSN5WntJkcXvOsZU+gbx7v1+SD+5zUAywXFc5bBkEhDDAmdKAgkgjMRg8oD69jIA6GyZdvq8nV14Ks=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Yit97oU8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=quwsfBFZ60kefgiFo6o7Ugbm7EGPqggo1TftygdMM3Cjx5tBe06LTBoX07Vn5ntZ6l8W2rqOweqrLt+Rw+Uzjn24jdQVZ52W0J2m0K4ho1ZV1j69ZYDqMCwkuGFMmfYvwPy1p8SUlkRvviwE0QQCZ3YK1Dy4DLkAYoIvzDTtmyA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SR+dMqyy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Yit97oU8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2DEDC4CEE7;
-	Fri,  1 Aug 2025 23:39:16 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SR+dMqyy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E02EC4CEE7;
+	Fri,  1 Aug 2025 23:39:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754091558;
-	bh=MnEEczPpbP4/NoVuZ+RGReSlbA6n00lVLaBy9fFX2Ok=;
+	s=k20201202; t=1754091584;
+	bh=5tJRCSbuSBYIOjiD+lXubjl8LyV9TAUxnOkonO+FxG8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Yit97oU8o/aPbODWMoTlA86Rdvr8PwSZ/vBkVD7JqI8gSje7SsoPMqqkYLmuo1FUI
-	 7foTlQDXiXeCrz/5rGgbtSB5aYQaYOOkuNDSK5glcDLPiSU11I9p0ik5nvmNenP63c
-	 XqjJwfgdKUS9WTI2P80oq9NrUvO1A0JfFk4DK+gprYZsevZiiirhgo5CUwsMWclgth
-	 +oExuvyJaIo3eejodBZFnDuRw7mbGQs5yxTEdy1C/KAsp4dUrLaqIWIdadwenQexTq
-	 0BTE0KzWZYuJifphC85L4+6OwRA4ulX8pJhNkCB3pWrsJsWVHF3kzcR8L7bD3JrzoH
-	 FDRTzW8f8X9fw==
+	b=SR+dMqyynB4Kf1Du44mgvAR58fTQ1TD0vFD/4VlOME/qAgvk0Aj9aYqefvY4VA4DV
+	 IAY1zgJnoEOcMzoKWmDyMsTOyaou6ItJXJG7xP/3iobGCfmJqjFrhIiaGvxfqqYe5+
+	 aAJ0UnM4TzQ/Jd3Th3KTXVRXY2nLNfBADBkf1KKwJSvotGYv9mWn0Pgy9ZpFXXF/D4
+	 oXWgsMVC4AokCvAhItulYq+ThaOrZvH3mqgL9Ys46OeaqowPGDVwn9BCyIHfWLVtlX
+	 noLxXHWVkqyBXsbfgOMdHNYfwcJvJEO9kM0ZXUNICESFGV6+2n+AkQIrDgs4X1J05u
+	 KH2p05N4aNojg==
 From: SeongJae Park <sj@kernel.org>
 To: pyyjason@gmail.com
 Cc: SeongJae Park <sj@kernel.org>,
@@ -35,11 +35,11 @@ Cc: SeongJae Park <sj@kernel.org>,
 	linux-mm@kvack.org,
 	linux-kernel@vger.kernel.org,
 	kernel-team@meta.com
-Subject: Re: [PATCH v3 2/2] mm/damon: Add damos_stat support for vaddr
-Date: Fri,  1 Aug 2025 16:39:14 -0700
-Message-Id: <20250801233914.1530-1-sj@kernel.org>
+Subject: Re: [PATCH v3 0/2] mm/damon: Add damos_stat support for vaddr
+Date: Fri,  1 Aug 2025 16:39:42 -0700
+Message-Id: <20250801233942.1614-1-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <88cc271642476fa6025f3789781dfc8c2f576eab.1754088635.git.pyyjason@gmail.com>
+In-Reply-To: <cover.1754088635.git.pyyjason@gmail.com>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -49,153 +49,83 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Fri,  1 Aug 2025 22:59:51 +0000 pyyjason@gmail.com wrote:
+On Fri,  1 Aug 2025 22:59:49 +0000 pyyjason@gmail.com wrote:
 
 > From: Yueyang Pan <pyyjason@gmail.com>
 > 
-> This patch adds support for damos_stat in virtual address space.
+> Previously damos_stat only supoort paddr. This patch set adds support 
+> for damos_stat for vaddr. Also all different types of filters are 
+> supported. 
 
-As mentioned on the cover letter, this is not very technically correct.  Could
-you please change the subject and above changelog, as suggested on the cover
-letter?
+This confused[1] a person.  Technically speaking, DAMOS_STAT action is already
+supported on vaddr.  The lack of support is ops level DAMOS filters combined
+with DAMOS_STAT action, and this patchset is adding the support.  Could you
+please rephrase the subject and the above paragraph?  For example,
 
-> It leverages the walk_page_range to walk the page table and gets
-> the folio from page table. The last folio scanned is stored in
-> damos->last_applied to prevent double counting.
+    mm/damon/vaddr: support stat-purpose DAMOS filters
+
+    Extend DAMOS_STAT handling of the DAMON operations sets for virtual address
+    spaces for ops-level DAMOS filters.
+
 > 
-> Signed-off-by: Yueyang Pan <pyyjason@gmail.com>
-> ---
->  mm/damon/vaddr.c | 103 ++++++++++++++++++++++++++++++++++++++++++++++-
->  1 file changed, 102 insertions(+), 1 deletion(-)
+> Functionality Test
+> ==================
+> I wrote a small test program which allocates 10GB of DRAM, use 
+> madvise(MADV_HUGEPAGE) to convert the base pages to 2MB huge pages
+> Then my program does the following things in order:
+> 1. Write sequentially to the whole 10GB region
+> 2. Read the first 5GB region sequentially for 10 times
+> 3. Sleep 5s
+> 4. Read the second 5GB region sequentially for 10 times
 > 
-> diff --git a/mm/damon/vaddr.c b/mm/damon/vaddr.c
-> index 87e825349bdf..5960d5d36123 100644
-> --- a/mm/damon/vaddr.c
-> +++ b/mm/damon/vaddr.c
-> @@ -890,6 +890,107 @@ static unsigned long damos_va_migrate(struct damon_target *target,
->  	return applied * PAGE_SIZE;
->  }
->  
-> +struct damos_va_stat_private {
-> +	struct damos *scheme;
-> +	unsigned long *sz_filter_passed;
-> +};
-> +
-> +static inline bool damos_va_invalid_folio(struct folio *folio,
-> +		struct damos *s)
-> +{
-> +	return !folio || folio == s->last_applied;
-> +}
-> +
-> +static int damos_va_stat_pmd_entry(pmd_t *pmd, unsigned long addr,
-> +		unsigned long next, struct mm_walk *walk)
-> +{
-> +	struct damos_va_stat_private *priv = walk->private;
-> +	struct damos *s = priv->scheme;
-> +	unsigned long *sz_filter_passed = priv->sz_filter_passed;
-> +	struct vm_area_struct *vma = walk->vma;
-> +	struct folio *folio;
-> +	spinlock_t *ptl;
-> +	pte_t *start_pte, *pte, ptent;
-> +	int nr;
-> +
-> +#ifdef CONFIG_TRANSPARENT_HUGEPAGE
-> +	if (pmd_trans_huge(*pmd)) {
-> +		pmd_t pmde;
-> +
-> +		ptl = pmd_trans_huge_lock(pmd, vma);
-> +		if (!ptl)
-> +			return 0;
-> +		pmde = pmdp_get(pmd);
-> +		if (!pmd_present(pmde))
-> +			goto huge_unlock;
-> +
-> +		folio = vm_normal_folio_pmd(vma, addr, pmde);
-> +
-> +		if (damos_va_invalid_folio(folio, s))
-> +			goto huge_unlock;
-> +
-> +		if (!damos_va_filter_out(s, folio, vma, addr, NULL, pmd))
-> +			*sz_filter_passed += folio_size(folio);
-> +		s->last_applied = folio;
-> +
-> +huge_unlock:
-> +		spin_unlock(ptl);
-> +		return 0;
-> +	}
-> +#endif
-> +	start_pte = pte = pte_offset_map_lock(vma->vm_mm, pmd, addr, &ptl);
-> +	if (!start_pte)
-> +		return 0;
-> +
-> +	for (; addr < next; pte += nr, addr += nr * PAGE_SIZE) {
-> +		nr = 1;
-> +		ptent = ptep_get(pte);
-> +
-> +		if (pte_none(ptent) || !pte_present(ptent))
-> +			continue;
-> +
-> +		folio = vm_normal_folio(vma, addr, ptent);
-> +
-> +		if (damos_va_invalid_folio(folio, s))
-> +			continue;
-> +
-> +		if (!damos_va_filter_out(s, folio, vma, addr, pte, NULL))
-> +			*sz_filter_passed += folio_size(folio);
-> +		nr = folio_nr_pages(folio);
-> +		s->last_applied = folio;
-> +	}
-> +	pte_unmap_unlock(start_pte, ptl);
-> +	return 0;
-> +}
-> +
-> +static unsigned long damos_va_stat(struct damon_target *target,
-> +		struct damon_region *r, struct damos *s,
-> +		unsigned long *sz_filter_passed)
-> +{
-> +	struct damos_va_stat_private priv;
-> +	struct mm_struct *mm;
-> +	struct mm_walk_ops walk_ops = {
-> +		.pmd_entry = damos_va_stat_pmd_entry,
-> +		.walk_lock = PGWALK_RDLOCK,
-> +	};
-> +
-> +	priv.scheme = s;
-> +	priv.sz_filter_passed = sz_filter_passed;
-> +
-> +	if (!damon_ops_has_filter(s))
+> With a proper damon setting, we are expected to see df-passed to be 10GB
+> and hot region move around with the read
+> 
+> $ # Start damon record
+> $sudo ./damo/damo start "./my_test/test" --monitoring_intervals 100ms\
+> 1s 2s
 
-I suggested to change this function's name to damos_ops_has_filter() on the
-previous patch of this series.  If it is accepted, this should also be updated.
+Seems you missed my comments[2] on your v2 cover letter.  Could you please take
+a look?
 
-> +		return 0;
-> +
-> +	mm = damon_get_mm(target);
-> +	if (!mm)
-> +		return 0;
-> +
-> +	mmap_read_lock(mm);
-> +	walk_page_range(mm, r->ar.start, r->ar.end, &walk_ops, &priv);
-> +	mmap_read_unlock(mm);
-> +	mmput(mm);
-> +	return 0;
-> +}
-> +
->  static unsigned long damon_va_apply_scheme(struct damon_ctx *ctx,
->  		struct damon_target *t, struct damon_region *r,
->  		struct damos *scheme, unsigned long *sz_filter_passed)
-> @@ -916,7 +1017,7 @@ static unsigned long damon_va_apply_scheme(struct damon_ctx *ctx,
->  	case DAMOS_MIGRATE_COLD:
->  		return damos_va_migrate(t, r, scheme, sz_filter_passed);
->  	case DAMOS_STAT:
-> -		return 0;
-> +		return damos_va_stat(t, r, scheme, sz_filter_passed);
->  	default:
->  		/*
->  		 * DAMOS actions that are not yet supported by 'vaddr'.
-> -- 
-> 2.43.0
+> 
+> $ # damon report
+> $sudo ./damo/damo report access --snapshot_damos_filter allow \
+> hugepage_size 2MiB 2MiB
 
+Ditto.  Please check my comments[2] on your v2 cover letter.
+
+[...]
+> $ # damon report again
+> $sudo ./damo/damo report access --snapshot_damos_filter allow \
+
+Again, please check my comments[2] on your v2 cover letter.
+
+[...]
+> 
+> Revision History
+> ================
+> Changes from v2 [2]:
+> - Fix some naming and format issues raised by SJ.
+
+Thank you for continuing this great work!
+
+> 
+> Changes from v1 [1]:
+> - Follow David's advise to combine *pmd_entry() and *pte_entry() into
+>   one. Also remove manually setting walk->action
+> - Use vma_normal_page and vma_normal_page_pmd instead of damon_get_folio
+>   to remove redundant folio_get and folio_put
+> - Follow SJ's advise to only move damon_pa_scheme_has_filter to
+>   ops-common
+> - Change the command used in cover-letter for more natural illustration
+> 
+> [1] https://lore.kernel.org/all/cover.1753794408.git.pyyjason@gmail.com/
+> [2] https://lore.kernel.org/all/cover.1753895066.git.pyyjason@gmail.com/
+[...]
 
 Thanks,
 SJ
+
+[1] https://lore.kernel.org/20250731175827.16060-1-sj@kernel.org
+[2] https://lore.kernel.org/20250730200239.60984-1-sj@kernel.org
