@@ -1,164 +1,167 @@
-Received: from invmail4.hynix.com (exvmail4.hynix.com [166.125.252.92])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 59D6C1A23A0
-	for <damon@lists.linux.dev>; Sun,  3 Aug 2025 05:42:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=166.125.252.92
+Received: from mail-oo1-f50.google.com (mail-oo1-f50.google.com [209.85.161.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB0FF143748
+	for <damon@lists.linux.dev>; Sun,  3 Aug 2025 12:44:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754199728; cv=none; b=FxooY22RN4EXo3Trk+nogiE5kskaqmk9KEaYf4yjsO6NGaVAnuiegW1D9O9xF7NDv5tQv3R/6edv9toQTPOfvXmmu849Mbqqbght79RYHPTDauy4lyi9xoGjQBZUnsc9oe26BrraJXoknckVSjn6F8TAvqMwY1Qhlm4yn7C5jVM=
+	t=1754225064; cv=none; b=s8aDzChDRhn9gZevbgSi+yCsFO7NxYg62dEmtkle1p8Q/WrIUVZS/4FJWFjv+bOYmfXe+sI1+vTql/aeWLC7POp6mF+BkmL3azAcazTmY0SM9jkFX7/L7pjGxELGsQkt+8dWiVf4Wddaw2eaoraZ3R7725BCvzu/K+igO4CQ/vw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754199728; c=relaxed/simple;
-	bh=nWvWoSjh7x/5CkFQfyDQNQORnceueExtfiNH7IyyFFU=;
-	h=Message-ID:Date:MIME-Version:Cc:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=DMRYRHA2v9nGPoINVpX5RDb/c8DkoklpuSbXzgtdVVtv7EnaZZAMfjxfy0BMYzEMUEE4l6vkfvud9VzBZQrmyM/7hf6lsr0iwYx04Yy8Tmk+3Aelum7ibLGfjAq+llg1cIAkVDH/ytQZYT7yPfSSWno1lIFubJWd9UIDxNsdnlc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sk.com; spf=pass smtp.mailfrom=sk.com; arc=none smtp.client-ip=166.125.252.92
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sk.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sk.com
-X-AuditID: a67dfc5b-681ff7000002311f-8c-688ef6a62620
-Message-ID: <356d8739-d47a-4d62-bec2-38ce8f4a91a1@sk.com>
-Date: Sun, 3 Aug 2025 14:41:58 +0900
+	s=arc-20240116; t=1754225064; c=relaxed/simple;
+	bh=HuvKvFKeJC2q8Od7pCax3MWla1mvYNkLzbu1AscGnKE=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Kqp2d/K29vLTNAB0QClbjHHvl+LR/L2IuDNXdYIiYbYiys2Yp470x5pFs2H61NameKstf7oIMk0uRYsAF9fsI00L3kZV2/3T8I8jBzk3Uni0ojBu/I/Q0E/q9JS1bTwnN4UJRlupTqlLKi9lFaal+CMFPLzdH2IHhDBot7Sw8NI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QOucqI3v; arc=none smtp.client-ip=209.85.161.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QOucqI3v"
+Received: by mail-oo1-f50.google.com with SMTP id 006d021491bc7-6197e13b6b8so1196485eaf.3
+        for <damon@lists.linux.dev>; Sun, 03 Aug 2025 05:44:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1754225062; x=1754829862; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=GyXXliHYkRsANTFZ/BhTtFGJcz7TAeDhl3fkIu9ScTo=;
+        b=QOucqI3vB2IzG8BSDEsNUaC5w3lxBfW8xqsd9CjI7C9MgCdt1ujaxEspfb9cK+Erm7
+         Wh5V1Rc/nz32buZjIpnpiiE8znGhlfxKpMoxyZGUdBGvoelwjt3SkQZVPJ+sHtQNhiDy
+         rwVQa6cGciD+9XeV/zflte2mP0KUn6ISVwiHwrTdX8fxCBuA0wXYoNIHUH/LvaEclrvo
+         G6lTj8Cbw+p/JF0ch0YYXKvq6mRucsAGxAjcOGOuOxzPaBxpEMrqGo3kUPAQsBJmlo6X
+         DQVhZLgIGMmP5nlPqEsVueWNHERw1OSOaPV8tKt4Zudop4TiZ2l02Yaodiy31d2Tp2V9
+         9T/Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1754225062; x=1754829862;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=GyXXliHYkRsANTFZ/BhTtFGJcz7TAeDhl3fkIu9ScTo=;
+        b=ARSQP+qB01vh/fBYO5BOrA2JS80dx9Moxf4qsh9U75DDEHHHPLujeAZBgFBU6ENxGf
+         Orvj0/wrs7YJDvC+uzjvXksGTWsBvFrG5Q0ldbfZIbScoXu7qCePch2tccQ8v4i49/MO
+         gAwp5wtMKRH9SR/GHTrb57jBlOosroEkwK48v+qA8aAxb/Tg58B+uY9B4xFytv9dkj4o
+         znfzzQ0Oh5ycpZ/skacO0AE5dzkDSmyiSZ2jK2UHUXkolqKpd/4KDz+QLWVhtw57G23a
+         Ld2Vl1Mp/QioZ0rdSREGiQikm80Ee1Map4UzPldqFCD/iOYWV2TjnZpGqyT6XPx/xXT9
+         sq7A==
+X-Forwarded-Encrypted: i=1; AJvYcCWRZhq+s6ZScF+SWLdLMsnO4hU+YBlOkRxp0WycY2BPoGyyoyF7OooAwPmQm88idtyrei7rDw==@lists.linux.dev
+X-Gm-Message-State: AOJu0YyG3Mw5avqpkO9/EGvz5LrVlCxX6Nz6W9LF9+ZxjE4tvRoQL2+r
+	IZMRUCiaYoGtAZKicj3qICrp4Y7inbGVO8B3LeDHO04bkDY0NElq8D6GbwhvyDHKbiWNirBcpbE
+	v7C1VkZRjfi3T2wyClQ+eiGGAtX4onnM=
+X-Gm-Gg: ASbGncsnxc8ECj0yIw8eZ0R3hvPx3elOrhaosMePOCOUxgfF2yGgPE6CO8sNN+G3pOh
+	Jj1pmvyYGnLOT+k3E+ta8tGBBq7jCE38zsjwK+OmA01qBy35/N6HMFYpJC/0C0+WHrbPpRG9oAW
+	77xufI9GmgUGCk99AypA4jhRgx3CD36IvIXd9bD5N7DuMzMiPmLumicQxNfPexKXixYI1JRHJab
+	7bj
+X-Google-Smtp-Source: AGHT+IFjKUOh+KeyE08rDNkVXHT8x/gmFVbAcXE87p3aPPCD4UC1L4QICQk/l9A/N3vMB3az3LC3RFYnYoAhZ5NtAX0=
+X-Received: by 2002:a4a:edc5:0:b0:619:844f:2d0e with SMTP id
+ 006d021491bc7-6198f2a39c6mr2981579eaf.8.1754225062000; Sun, 03 Aug 2025
+ 05:44:22 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Cc: kernel_team@skhynix.com, Sang-Heon Jeon <ekffu200098@gmail.com>,
- damon@lists.linux.dev, linux-mm@kvack.org
+References: <CABFDxMGh7-vDgNzepJKtrhdOF40_U7=NT6Jvm85qtdwGpBZawg@mail.gmail.com>
+ <20250801170231.8532-1-sj@kernel.org>
+In-Reply-To: <20250801170231.8532-1-sj@kernel.org>
+From: Sang-Heon Jeon <ekffu200098@gmail.com>
+Date: Sun, 3 Aug 2025 21:44:10 +0900
+X-Gm-Features: Ac12FXwNKGXN07u7GF6ggxSzpPebZHeA4eQy-Z85lrBCXYiqs3Nq__NxBhynJ7I
+Message-ID: <CABFDxMGUO88-CkHa8E79TTkoEm_j5FX3ZBVjChXJ5w0eL3mNSA@mail.gmail.com>
 Subject: Re: [PATCH] mm/damon: update expired description of damos_action
-Content-Language: ko
 To: SeongJae Park <sj@kernel.org>
-References: <20250803053028.51309-1-sj@kernel.org>
-From: Honggyu Kim <honggyu.kim@sk.com>
-In-Reply-To: <20250803053028.51309-1-sj@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrFLMWRmVeSWpSXmKPExsXC9ZZnke6yb30ZBj3z5S2e/P/NanHiRYLF
-	vTX/WS0Of33D5MDisXPWXXaPTas62Tw2fZrE7vFi80zGAJYoLpuU1JzMstQifbsEroyZfz0L
-	9ipWLPnwlK2Bcbt0FyMnh4SAiUT/p2vsMHbn5V+sIDavgKXEpUMP2EBsFgEViQd71zNCxAUl
-	Ts58wgJiiwrIS9y/NQOsl1mgQOLxuTdgvcICnhK7H31igoiLSMzubGMGsUUEFCXOPb4IVMPB
-	ISRgJLF+WyRImE1ATeLKy0lg5ZwCxhJb9kOUMwuYSXRt7WKEsOUlmrfOBopzAZ05g01i5vn3
-	rBA3S0ocXHGDZQKj4Cwk581CsnoWklmzkMxawMiyilEoM68sNzEzx0QvozIvs0IvOT93EyMw
-	xJfV/onewfjpQvAhRgEORiUe3h3fejOEWBPLiitzDzFKcDArifCe6+rOEOJNSaysSi3Kjy8q
-	zUktPsQozcGiJM5r9K08RUggPbEkNTs1tSC1CCbLxMEp1cBYVXr2sOM6tkhZeY9tr/J+lcgc
-	uPxqew3T/derkxrd/NoW88tPNpv6lynxv8KdMFMp4Z3XJ/ZkXvvAfk1j97abWpPqFvD2J0to
-	JZhHCL+bMPGhR5Hv/Yif3WUXP3Q557OsqLIQMazX/28s/t9mq/put6KJj99v054w934i57WT
-	evvOLpt3fbWDEktxRqKhFnNRcSIAFzshh20CAAA=
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrILMWRmVeSWpSXmKPExsXCNUNLT3fZt74Mg4PLJC2e/P/NanHiRYLF
-	4bknWS3urfnPanH46xsmB1aPnbPusntsWtXJ5rHp0yR2jxebZzJ6LH7xgSmANYrLJiU1J7Ms
-	tUjfLoErY+Zfz4K9ihVLPjxla2DcLt3FyMkhIWAi0Xn5FyuIzStgKXHp0AM2EJtFQEXiwd71
-	jBBxQYmTM5+wgNiiAvIS92/NYAexmQUKJB6fewPWKyzgKbH70ScmiLiIxOzONmYQW0RAUeLc
-	44tANRwcQgJGEuu3RYKE2QTUJK68nARWzilgLLFlP0Q5s4CZRNfWLkYIW16ieets5gmMfLOQ
-	XDELyYZZSFpmIWlZwMiyilEkM68sNzEzx1SvODujMi+zQi85P3cTIzBgl9X+mbiD8ctl90OM
-	AhyMSjy8O771ZgixJpYVV+YeYpTgYFYS4T3X1Z0hxJuSWFmVWpQfX1Sak1p8iFGag0VJnNcr
-	PDVBSCA9sSQ1OzW1ILUIJsvEwSnVwBg7RWgN053jD/c+q+QQP8DlEd97y5Z/9Y0YBf0psn8T
-	gxuUZ6inx6/PU0suXbFo5ak6zmPl7ixlu5LjcvVlio8edC3wOvMyQfTvHJ4dN4+nX5/clHhz
-	peOdddzaNZNTzAKl+etNXzctK+zPFHVR19yyJEyx4+X7M1snVBzw37bVYoLhpsXyDkosxRmJ
-	hlrMRcWJAIspxaFUAgAA
-X-CFilter-Loop: Reflected
+Cc: honggyu.kim@sk.com, damon@lists.linux.dev, linux-mm@kvack.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+On Sat, Aug 2, 2025 at 2:02=E2=80=AFAM SeongJae Park <sj@kernel.org> wrote:
+>
+> On Sat, 2 Aug 2025 00:34:30 +0900 Sang-Heon Jeon <ekffu200098@gmail.com> =
+wrote:
+>
+> > Hi, SeongJae
+> >
+> > On Fri, Aug 1, 2025 at 2:58=E2=80=AFAM SeongJae Park <sj@kernel.org> wr=
+ote:
+> > >
+> > > Hello Sang-Heon,
+> > >
+> > > On Thu, 31 Jul 2025 22:22:30 +0900 Sang-Heon Jeon <ekffu200098@gmail.=
+com> wrote:
+> > >
+> > > > Nowadays, damos operation actions support more various operation se=
+t.
+> > > > But comments(also, generated documentation) doesn't updated.
+> > > > So, fix the comments with current support status.
+> > >
+> > > Thank you for catching this and fixing!
+> >
+> > :)
+> >
+> > > >
+> > > > Signed-off-by: Sang-Heon Jeon <ekffu200098@gmail.com>
+> > > > ---
+> > > > I also found below patch(https://lore.kernel.org/damon/202507302002=
+39.60984-1-sj@kernel.org/T/#t)
+> > > > So, Is it means that DAMOS_STAT is only supported by paddr now?
+> > >
+> > > No.  'vaddr' supports DAMOS_STAT.  The patch is not adding DAMOS_STAT=
+ support
+> > > on vaddr, but extending the support for DAMOS filters.
+> > >
+> > > Thank you for checking the thread and asking this question, though.  =
+I see this
+> > > as an important signal of another rooms to improve on the documentati=
+on.
+> >
+> > Thanks for your kind review. I really don't want to bother you
+> > anymore. But I would like to check my understanding.
+>
+> No worry, questions about DAMON never bother me.
+>
+> >
+> > So the basic operation of stat is covered by outside of
+> > `damon_pa_apply_scheme` and `damon_va_apply_scheme`.
+> > If it's not too much trouble, could you point me to where they are?
+>
+> It is covered by damos_update_stat() in core.c file.
 
+Oh, I see, Now I can understand the flow more deeply :)
 
-On 8/3/2025 2:30 PM, SeongJae Park wrote:
-> On Sun, 3 Aug 2025 13:43:03 +0900 Honggyu Kim <honggyu.kim@sk.com> wrote:
-> 
->> Hi SeongJae,
->>
->> On 8/3/2025 1:22 PM, SeongJae Park wrote:
->>> On Sun, 3 Aug 2025 11:03:12 +0900 Honggyu Kim <honggyu.kim@sk.com> wrote:
->>>
->>>> Hi SeongJae and Sang-Heon,
->>>>
->>>> On 8/2/2025 1:50 AM, SeongJae Park wrote:
->>>>> On Sat, 2 Aug 2025 01:11:09 +0900 Sang-Heon Jeon <ekffu200098@gmail.com> wrote:
->>>>>
->>>>>> Hi, Honggyu
->>>>>>
->>>>>> On Fri, Aug 1, 2025 at 8:35 PM Honggyu Kim <honggyu.kim@sk.com> wrote:
->>>>>>>
->>>>>>> Hi Sang-Heon and SeongJae,
->>>>>>>
->>>>>>> On 8/1/2025 2:58 AM, SeongJae Park wrote:
->>>>>>>> Hello Sang-Heon,
->>>>>>>>
->>>>>>>> On Thu, 31 Jul 2025 22:22:30 +0900 Sang-Heon Jeon <ekffu200098@gmail.com> wrote:
->>>>>>>>
->>>>>>>>> Nowadays, damos operation actions support more various operation set.
->>>>>>>>> But comments(also, generated documentation) doesn't updated.
->>>>>>>>> So, fix the comments with current support status.
->>>>> [...]
->>>>>>>>> diff --git a/include/linux/damon.h b/include/linux/damon.h
->>>>> [...]
->>>>>>>>>       * @DAMOS_WILLNEED:  Call ``madvise()`` for the region with MADV_WILLNEED.
->>>>>>>>>       * @DAMOS_COLD:              Call ``madvise()`` for the region with MADV_COLD.
->>>>>>>>> - * @DAMOS_PAGEOUT:   Call ``madvise()`` for the region with MADV_PAGEOUT.
->>>>>>>>> + * @DAMOS_PAGEOUT:   Reclaim the region.
->>>>>>>>
->>>>>>>> Nice!
->>>>>>>
->>>>>>> But doesn't it make confusion about whether this pages out to disk or does
->>>>>>> demotion to the lower tier memory?  It's because PAGEOUT action doesn't do
->>>>>>> demotion, but it looks "reclaim" includes pageout and demotion together in my
->>>>>>> understanding since /sys/kernel/mm/numa/demotion_enabled was introduced.
->>>>>
->>>>> To my understanding, DAMOS_PAGEOUT can also do demotion when demotion_enabled
->>>>> is set.  Am I missing something?
->>>>
->>>> Actually no, please see below.
->>>
->>> I'm unsure to what point you are saying "no".  Are you saying DAMOS_PAGEOUT can
->>> also do demotion when demotion_enabled is set?  Or not?  Could you please
->>> clarify, and add more explanations about why you think so?
->>
->> I checked it again and found I pointed out in the wrong place. Please see below.
->>
->>>
->>>>
->>>> do_demote_pass in shrink_folio_list()
->>>> https://github.com/torvalds/linux/blob/v6.16/mm/vmscan.c#L1122
->>>>
->>>> The do_demote_pass is used here.
->>>> https://github.com/torvalds/linux/blob/v6.16/mm/vmscan.c#L1293-L1302
->>>>
->>>> can_demote() implementation returns false when demotion_enabled is on.
->>>> https://github.com/torvalds/linux/blob/v6.16/mm/vmscan.c#L350-L351
->>>
->>> I'm again get confused.  Isn't it opposite?
->>
->> The thing is that DAMOS_PAGEOUT call sequence is as follows.
->>
->>     DAMOS_PAGEOUT
->>     -> damon_pa_pageout
->>     -> reclaim_pages
->>     -> reclaim_folio_list
->>
->> In reclaim_folio_list(), it sets "no_demotion = 1" in scan_control, then invokes
->> shrink_folio_list().
-> 
-> Thank you, this clarifies.  DAMOS_PAGEOUT doesn't demote pages even if
-> demotion_enabled is set.  Thank you for enlightening me.
+> >
+> > And some extension stat (maybe it only renewed that filter exists) is
+> > covered inside of upper functions. Is it also right point?
+>
+> Depending on what you mean with "upper functions".
+>
+> damos_apply_scheme() in DAMON core layer calls
+> damon_operationss->apply_scheme() callback of the current operations set.=
+  The
+> callback may handle DAMOS filters or not.  The callback of paddr.c handle=
+s the
+> filters for DAMOS_STAT.  The callback of vaddr.c does not, and Pan is ext=
+ending
+> it to handle filters.
 
-Thank you too. Glad to hear that.
+Oh, I see. Thanks to your help, Now i figure out the flow from
+sysfs(or directly set) to damon_select_ops().
 
-> 
-> So, "reclaim" means "reclaim".  shrink_folio_list() can do demotions when
-> demotion_enabled is set.  I hence still don't think this patch is saying
-> something very wrong, and how it could be improved.  Do you have more specific
-> change suggestions for this patch for an improvment?
+> [...]
+> > So, I think that I need to send v2 patch, If that's right, which way
+> > would you prefer?
+> > reply to this thread or make a new thread?
+>
+> I prefer making a new thread :)
+>
 
-I would just like to make the term "reclaim" clearer and we may be able to 
-define what "reclaim" is.  I think we can choose between the following two
-different definitions.
+When the discussion of "reclaim" finishes, I'll make v2 patch as soon
+as possible.
 
-Definition 1. "reclaim" includes "pageout" and "demotion".
-In this case, we better clarify all the other documents that mentions about
-those terms.
+> Thanks,
+> SJ
+>
+> [...]
 
-Definition 2. "reclaim" only includes "pageout", but "demotion" is out of scope.
-In this case, shrink_folio_list just do pageout, but "demotion" is only
-exceptional case so we can say the "demotion" escapes from "reclaim" logic.
+Thanks for your kindness.
 
-We might have to clarify the term "reclaim" for those cases whether it includes 
-"demotion" or not.  We might have to discuss with other mm developers together.
-
-Thanks,
-Honggyu
+Best Regards.
+Sang-Heon Jeon
