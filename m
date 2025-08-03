@@ -1,167 +1,133 @@
-Received: from mail-oo1-f50.google.com (mail-oo1-f50.google.com [209.85.161.50])
+Received: from mail-pf1-f177.google.com (mail-pf1-f177.google.com [209.85.210.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB0FF143748
-	for <damon@lists.linux.dev>; Sun,  3 Aug 2025 12:44:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E972EB661
+	for <damon@lists.linux.dev>; Sun,  3 Aug 2025 13:01:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754225064; cv=none; b=s8aDzChDRhn9gZevbgSi+yCsFO7NxYg62dEmtkle1p8Q/WrIUVZS/4FJWFjv+bOYmfXe+sI1+vTql/aeWLC7POp6mF+BkmL3azAcazTmY0SM9jkFX7/L7pjGxELGsQkt+8dWiVf4Wddaw2eaoraZ3R7725BCvzu/K+igO4CQ/vw=
+	t=1754226071; cv=none; b=Na5ZNAK2BXJ/rKovt6TCAN32HyVM5UbdMDuzEZ5fA30c5NnXtHngwpb5Y+jMejdvGDqCn6Fpi3nnx22XWVhME58wbpgMLX4nqf+7alslJZsM7yTBVGrBq9JwmQKRLERoingf+8PyqJ8pqMMndCVQDlGQlMPliARThwbK/8cbtCM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754225064; c=relaxed/simple;
-	bh=HuvKvFKeJC2q8Od7pCax3MWla1mvYNkLzbu1AscGnKE=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Kqp2d/K29vLTNAB0QClbjHHvl+LR/L2IuDNXdYIiYbYiys2Yp470x5pFs2H61NameKstf7oIMk0uRYsAF9fsI00L3kZV2/3T8I8jBzk3Uni0ojBu/I/Q0E/q9JS1bTwnN4UJRlupTqlLKi9lFaal+CMFPLzdH2IHhDBot7Sw8NI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QOucqI3v; arc=none smtp.client-ip=209.85.161.50
+	s=arc-20240116; t=1754226071; c=relaxed/simple;
+	bh=VpPSBWXAR6JbA7YILVj/+0K0OZeWPu0+C87HDnj+10Q=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=Jxms0fc9CgTk1NGfCw9T3XL96aIMAyhwiAhq73/hxu3B9jtpS5bwsR/GVe4Ge4BRus6wUR/D9DrXsdWutwne7v1nH3gxA/TzpKVl3jHJ67DeejuvCSQrqd3C+5mLIvOZAHqzluoZgz7pBUZZV/S5ql+uxruYWHX1LixD0P5JsL8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bqReQXZV; arc=none smtp.client-ip=209.85.210.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QOucqI3v"
-Received: by mail-oo1-f50.google.com with SMTP id 006d021491bc7-6197e13b6b8so1196485eaf.3
-        for <damon@lists.linux.dev>; Sun, 03 Aug 2025 05:44:22 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bqReQXZV"
+Received: by mail-pf1-f177.google.com with SMTP id d2e1a72fcca58-76bd041c431so2861902b3a.2
+        for <damon@lists.linux.dev>; Sun, 03 Aug 2025 06:01:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1754225062; x=1754829862; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=GyXXliHYkRsANTFZ/BhTtFGJcz7TAeDhl3fkIu9ScTo=;
-        b=QOucqI3vB2IzG8BSDEsNUaC5w3lxBfW8xqsd9CjI7C9MgCdt1ujaxEspfb9cK+Erm7
-         Wh5V1Rc/nz32buZjIpnpiiE8znGhlfxKpMoxyZGUdBGvoelwjt3SkQZVPJ+sHtQNhiDy
-         rwVQa6cGciD+9XeV/zflte2mP0KUn6ISVwiHwrTdX8fxCBuA0wXYoNIHUH/LvaEclrvo
-         G6lTj8Cbw+p/JF0ch0YYXKvq6mRucsAGxAjcOGOuOxzPaBxpEMrqGo3kUPAQsBJmlo6X
-         DQVhZLgIGMmP5nlPqEsVueWNHERw1OSOaPV8tKt4Zudop4TiZ2l02Yaodiy31d2Tp2V9
-         9T/Q==
+        d=gmail.com; s=20230601; t=1754226069; x=1754830869; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=t4BPNVqFZfC6kbftm/OhzO8uiYlQiZCB4SdUhBKV4x4=;
+        b=bqReQXZVrBzUtnrqIoPQsZsAMw1ofHIN7VLCaf8+q3/RZRSI+u9UJUy8ZXu+FTfrcu
+         Hfj6rNPEMpq/ki5AlUYJAKXS/0K7vKIl1ImaihCrVYkYXLRTSVksayfH+0rmiyOjF1DI
+         z8LW9xrqrgyu21pqTHGadprxcFz/Bfg/iSJ/izKIVO8nMei2FLkK3ybJe7anCQKEXR8Q
+         yvrbVi9Ccy37kFEDTmyN4mUrkhCB2jKCurzWzBXiprksBW7JsycsFgIcxiCBuYAClUIg
+         3Gro7ypLnNGWOJkLg1a8mP2Zf9QmLONGf144e7f4zZesg51AOcayq3CXpEyLK3wkUkUH
+         mvjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754225062; x=1754829862;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=GyXXliHYkRsANTFZ/BhTtFGJcz7TAeDhl3fkIu9ScTo=;
-        b=ARSQP+qB01vh/fBYO5BOrA2JS80dx9Moxf4qsh9U75DDEHHHPLujeAZBgFBU6ENxGf
-         Orvj0/wrs7YJDvC+uzjvXksGTWsBvFrG5Q0ldbfZIbScoXu7qCePch2tccQ8v4i49/MO
-         gAwp5wtMKRH9SR/GHTrb57jBlOosroEkwK48v+qA8aAxb/Tg58B+uY9B4xFytv9dkj4o
-         znfzzQ0Oh5ycpZ/skacO0AE5dzkDSmyiSZ2jK2UHUXkolqKpd/4KDz+QLWVhtw57G23a
-         Ld2Vl1Mp/QioZ0rdSREGiQikm80Ee1Map4UzPldqFCD/iOYWV2TjnZpGqyT6XPx/xXT9
-         sq7A==
-X-Forwarded-Encrypted: i=1; AJvYcCWRZhq+s6ZScF+SWLdLMsnO4hU+YBlOkRxp0WycY2BPoGyyoyF7OooAwPmQm88idtyrei7rDw==@lists.linux.dev
-X-Gm-Message-State: AOJu0YyG3Mw5avqpkO9/EGvz5LrVlCxX6Nz6W9LF9+ZxjE4tvRoQL2+r
-	IZMRUCiaYoGtAZKicj3qICrp4Y7inbGVO8B3LeDHO04bkDY0NElq8D6GbwhvyDHKbiWNirBcpbE
-	v7C1VkZRjfi3T2wyClQ+eiGGAtX4onnM=
-X-Gm-Gg: ASbGncsnxc8ECj0yIw8eZ0R3hvPx3elOrhaosMePOCOUxgfF2yGgPE6CO8sNN+G3pOh
-	Jj1pmvyYGnLOT+k3E+ta8tGBBq7jCE38zsjwK+OmA01qBy35/N6HMFYpJC/0C0+WHrbPpRG9oAW
-	77xufI9GmgUGCk99AypA4jhRgx3CD36IvIXd9bD5N7DuMzMiPmLumicQxNfPexKXixYI1JRHJab
-	7bj
-X-Google-Smtp-Source: AGHT+IFjKUOh+KeyE08rDNkVXHT8x/gmFVbAcXE87p3aPPCD4UC1L4QICQk/l9A/N3vMB3az3LC3RFYnYoAhZ5NtAX0=
-X-Received: by 2002:a4a:edc5:0:b0:619:844f:2d0e with SMTP id
- 006d021491bc7-6198f2a39c6mr2981579eaf.8.1754225062000; Sun, 03 Aug 2025
- 05:44:22 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1754226069; x=1754830869;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=t4BPNVqFZfC6kbftm/OhzO8uiYlQiZCB4SdUhBKV4x4=;
+        b=XKGVvyDjvzOjmswcxayjB2rj2fvCvzPGCYiRyRwQYVzWD0/SEM1wx9VzdC/KhwIuJ2
+         bmCT4CRGoeCzvgccoOI/7mvBrWUTY6XZ9G8mABlzP0xE7sd6j3LKPUJtgiJJR3BIcu2R
+         rQIVlMQusxL7i2p3dkuOotGqQ2/NIeji4Wh1MgnB60LuDMJLY3R3M7lOLaHF5Hvlj5Ix
+         WtuhcAhBL3hmiWdy8Gv8KvJBBFwI6PlsDiRvWUoTgULAOkTSUjxB2/xsOd/46Fmc9F6P
+         B+oq8j/P2IW4L4lMAWkDErsxkdN8yK/w/uYhpyvvytXooZSsPHNmOYxGHOF3XvpeKjG7
+         Vyjw==
+X-Gm-Message-State: AOJu0YynF8HAhfBVGdytF+INW0HOZi/JCATH7HS8zR7nc6WVHGQCVLUk
+	Xz6m3HJqrQjQtRE8tYBFoPZVilIJz/rewvcKJ2iyVo9wpLf1jyNkFujuJhtwEQ==
+X-Gm-Gg: ASbGnctL8xz56MNDEg2kORIf0zOwp4/BMG+2Kf6M5XkfNuD17+s4IlM6y0TKf3PCE69
+	pPaC7MCINs7VAruT+JtaNgukxofrfRaQwiayDRnyQg8ajlKoNwQrGTpfVqB5gtd8AWxJRjB4RLt
+	q5U2VoAOo+PPNt5FhpomcY4y28k5H49Y7eNjFzkDIyq6F+PfJYyv+9esfmRbj+u9p7IL5YZZbeS
+	iTK5RLKGSQwZ+WYC01dx/DJuBCu/seovHu0bR0HlIgl1U2DH9a8Y8xIxgIbzBx3678+RPqDDXQE
+	peOkdyvcvHX+LLD72ifkR5bmHzDSGNu2arjDvGsVVJV4gnIuAXO/X/zIrlq55wWq7Irg9M5ahUO
+	bCVaTC9tJuHbynYdGdHsD3/TeU885wVQX9lG5Ag==
+X-Google-Smtp-Source: AGHT+IFLppEtHRB2Jd0UXLE7DxZwnpuwQ65IQqAT0LT8ZzQzjkkqX0BRx28f+M1C7o7YBQMHk+PyVw==
+X-Received: by 2002:a05:6a20:728f:b0:23d:e9e2:6c0f with SMTP id adf61e73a8af0-23df90fab06mr11323762637.31.1754226067133;
+        Sun, 03 Aug 2025 06:01:07 -0700 (PDT)
+Received: from localhost.localdomain ([240f:34:212d:1:4c17:452e:3df8:7bde])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b422babfbbdsm7286906a12.35.2025.08.03.06.01.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 03 Aug 2025 06:01:06 -0700 (PDT)
+From: Akinobu Mita <akinobu.mita@gmail.com>
+To: damon@lists.linux.dev
+Cc: akinobu.mita@gmail.com,
+	SeongJae Park <sj@kernel.org>,
+	Bijan Tabatabai <bijantabatab@micron.com>
+Subject: [PATCH] mm/damon/vaddr: avoid unnecessary migration between target nodes
+Date: Sun,  3 Aug 2025 22:00:28 +0900
+Message-Id: <20250803130028.162537-1-akinobu.mita@gmail.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <CABFDxMGh7-vDgNzepJKtrhdOF40_U7=NT6Jvm85qtdwGpBZawg@mail.gmail.com>
- <20250801170231.8532-1-sj@kernel.org>
-In-Reply-To: <20250801170231.8532-1-sj@kernel.org>
-From: Sang-Heon Jeon <ekffu200098@gmail.com>
-Date: Sun, 3 Aug 2025 21:44:10 +0900
-X-Gm-Features: Ac12FXwNKGXN07u7GF6ggxSzpPebZHeA4eQy-Z85lrBCXYiqs3Nq__NxBhynJ7I
-Message-ID: <CABFDxMGUO88-CkHa8E79TTkoEm_j5FX3ZBVjChXJ5w0eL3mNSA@mail.gmail.com>
-Subject: Re: [PATCH] mm/damon: update expired description of damos_action
-To: SeongJae Park <sj@kernel.org>
-Cc: honggyu.kim@sk.com, damon@lists.linux.dev, linux-mm@kvack.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Sat, Aug 2, 2025 at 2:02=E2=80=AFAM SeongJae Park <sj@kernel.org> wrote:
->
-> On Sat, 2 Aug 2025 00:34:30 +0900 Sang-Heon Jeon <ekffu200098@gmail.com> =
-wrote:
->
-> > Hi, SeongJae
-> >
-> > On Fri, Aug 1, 2025 at 2:58=E2=80=AFAM SeongJae Park <sj@kernel.org> wr=
-ote:
-> > >
-> > > Hello Sang-Heon,
-> > >
-> > > On Thu, 31 Jul 2025 22:22:30 +0900 Sang-Heon Jeon <ekffu200098@gmail.=
-com> wrote:
-> > >
-> > > > Nowadays, damos operation actions support more various operation se=
-t.
-> > > > But comments(also, generated documentation) doesn't updated.
-> > > > So, fix the comments with current support status.
-> > >
-> > > Thank you for catching this and fixing!
-> >
-> > :)
-> >
-> > > >
-> > > > Signed-off-by: Sang-Heon Jeon <ekffu200098@gmail.com>
-> > > > ---
-> > > > I also found below patch(https://lore.kernel.org/damon/202507302002=
-39.60984-1-sj@kernel.org/T/#t)
-> > > > So, Is it means that DAMOS_STAT is only supported by paddr now?
-> > >
-> > > No.  'vaddr' supports DAMOS_STAT.  The patch is not adding DAMOS_STAT=
- support
-> > > on vaddr, but extending the support for DAMOS filters.
-> > >
-> > > Thank you for checking the thread and asking this question, though.  =
-I see this
-> > > as an important signal of another rooms to improve on the documentati=
-on.
-> >
-> > Thanks for your kind review. I really don't want to bother you
-> > anymore. But I would like to check my understanding.
->
-> No worry, questions about DAMON never bother me.
->
-> >
-> > So the basic operation of stat is covered by outside of
-> > `damon_pa_apply_scheme` and `damon_va_apply_scheme`.
-> > If it's not too much trouble, could you point me to where they are?
->
-> It is covered by damos_update_stat() in core.c file.
+This change avoids unnecessary migration by checking if the folio to which
+the migration is applied is already located in one of the target nodes.
 
-Oh, I see, Now I can understand the flow more deeply :)
+Cc: SeongJae Park <sj@kernel.org>
+Cc: Bijan Tabatabai <bijantabatab@micron.com>
+Signed-off-by: Akinobu Mita <akinobu.mita@gmail.com>
+---
+ mm/damon/vaddr.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-> >
-> > And some extension stat (maybe it only renewed that filter exists) is
-> > covered inside of upper functions. Is it also right point?
->
-> Depending on what you mean with "upper functions".
->
-> damos_apply_scheme() in DAMON core layer calls
-> damon_operationss->apply_scheme() callback of the current operations set.=
-  The
-> callback may handle DAMOS filters or not.  The callback of paddr.c handle=
-s the
-> filters for DAMOS_STAT.  The callback of vaddr.c does not, and Pan is ext=
-ending
-> it to handle filters.
+diff --git a/mm/damon/vaddr.c b/mm/damon/vaddr.c
+index 87e825349bdf..d531763a3b2b 100644
+--- a/mm/damon/vaddr.c
++++ b/mm/damon/vaddr.c
+@@ -665,6 +665,7 @@ static bool damos_va_filter_out(struct damos *scheme, struct folio *folio,
+ struct damos_va_migrate_private {
+ 	struct list_head *migration_lists;
+ 	struct damos *scheme;
++	nodemask_t dest_nodes;
+ };
+ 
+ /*
+@@ -747,6 +748,8 @@ static int damos_va_migrate_pmd_entry(pmd_t *pmd, unsigned long addr,
+ 	if (!folio)
+ 		goto unlock;
+ 
++	if (node_isset(folio_nid(folio), priv->dest_nodes))
++		goto put_folio;
+ 	if (damos_va_filter_out(s, folio, walk->vma, addr, NULL, pmd))
+ 		goto put_folio;
+ 
+@@ -781,6 +784,8 @@ static int damos_va_migrate_pte_entry(pte_t *pte, unsigned long addr,
+ 	if (!folio)
+ 		return 0;
+ 
++	if (node_isset(folio_nid(folio), priv->dest_nodes))
++		goto put_folio;
+ 	if (damos_va_filter_out(s, folio, walk->vma, addr, pte, NULL))
+ 		goto put_folio;
+ 
+@@ -865,10 +870,13 @@ static unsigned long damos_va_migrate(struct damon_target *target,
+ 		sizeof(*priv.migration_lists), GFP_KERNEL);
+ 	if (!priv.migration_lists)
+ 		return 0;
++	priv.dest_nodes = NODE_MASK_NONE;
+ 
+-	for (int i = 0; i < nr_dests; i++)
++	for (int i = 0; i < nr_dests; i++) {
+ 		INIT_LIST_HEAD(&priv.migration_lists[i]);
+-
++		node_set(use_target_nid ? s->target_nid : dests->node_id_arr[i],
++				priv.dest_nodes);
++	}
+ 
+ 	mm = damon_get_mm(target);
+ 	if (!mm)
+-- 
+2.34.1
 
-Oh, I see. Thanks to your help, Now i figure out the flow from
-sysfs(or directly set) to damon_select_ops().
-
-> [...]
-> > So, I think that I need to send v2 patch, If that's right, which way
-> > would you prefer?
-> > reply to this thread or make a new thread?
->
-> I prefer making a new thread :)
->
-
-When the discussion of "reclaim" finishes, I'll make v2 patch as soon
-as possible.
-
-> Thanks,
-> SJ
->
-> [...]
-
-Thanks for your kindness.
-
-Best Regards.
-Sang-Heon Jeon
