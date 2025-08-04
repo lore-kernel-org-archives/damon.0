@@ -1,42 +1,54 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 210D71BEF7E
-	for <damon@lists.linux.dev>; Mon,  4 Aug 2025 16:50:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 415E928852C;
+	Mon,  4 Aug 2025 16:57:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754326209; cv=none; b=DGi62zqwnTEbXF2bqgQdwXU08kF5ojjMO2/RmUewPbvyvN8fZnWEUOw5Tbu3jujLVa8JSZ2Uv1+cAZ0nJKv1V/WayFsER0R5wMNh7ywuYytYMIfEhPNEhA4Gpi+3bAsID+j73CkTrbF6nbfNaLn8NEJ7T1tR6dLsUlDLpBanqH0=
+	t=1754326624; cv=none; b=iiJMOZZN07qFFoNttzTkq+CZNet8GRjowecmKHiwFrDgrNAmvbkX2gVIANd7J5EcyeMZBqcE7hTR2tvhNII9KKNDV5xKbcIIYD5Psr1bvgln0AGXamDoRrslTUCZyHKqfRx2PEs64aO2ZCFps8S1Ifcpz1/RlHWr+BDVWdBWnwM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754326209; c=relaxed/simple;
-	bh=sg0wfArUiS/J2z/NCTuR83ouoFn/ZziZYXoh92TMywU=;
+	s=arc-20240116; t=1754326624; c=relaxed/simple;
+	bh=KgrilMzrEhJRh14HSH0aWw+CjVXehntvFtCz3/m8aWg=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=Z1vB3+MWwKJnEXsHN1pxCMOTyJfpT154Lxkgjrht8jU9xGYhV3prcN3mAoBWdbppqeXrNmXP2iGJ+iC3hrZlWe9IHOreCa2zRO1I2rchbeJc+msEIx2jU75z+wI4gltmadGQL8jO40B8PwqMuutYGeSrhJm0o4T/EOAfjAPu3MY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=M+ghLUCQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Frq8aoUDl5uIFCD16mQauyA6xkE7/GRbjyXatUfKBzV6McJPREm5Vn1zvTmGSFMD4MroT7XsnNulZvmvRLbSqMsBEYz/nd0+5rvou01ujFflGSczkHpQA5cMD27/PZ9ioN9nbQJ1xNX3uzgW416D81hM+RYOP4h98wnrS7MFS+w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RIkqJcqC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="M+ghLUCQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EC2EC4CEF0;
-	Mon,  4 Aug 2025 16:50:08 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RIkqJcqC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6D6DC4CEE7;
+	Mon,  4 Aug 2025 16:57:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754326208;
-	bh=sg0wfArUiS/J2z/NCTuR83ouoFn/ZziZYXoh92TMywU=;
+	s=k20201202; t=1754326624;
+	bh=KgrilMzrEhJRh14HSH0aWw+CjVXehntvFtCz3/m8aWg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M+ghLUCQ+qJwZ4D5IndILpYS01N4bUrHZzAjpzxyZE2JN2iF50lUI2vCvgbzu0M5y
-	 tA6dQ/3h34P0BzgjGG4v+bM0zUnBXI/XRFyN4qpD9Ul3ofu9NwiIGIeInbJVOt6ay9
-	 W7cmqWOqiIn0aos99FWXRCkrmeJUUq1ZxsW+xgJtTmT0vINFOD04QJc+UD7QWB3Czx
-	 eBg9a/gWT7PoI0wC0/ayoNkTU1PvKfo/4QjCte5Pcz1GFGHaHjoBdYcZ6EaneruqEH
-	 FnRcql5Gl8VQ0BdNr5lACOkvZwg0RDHdRmP8Eo9hj2m/sEvRSVSS1I5tF7K/uYJtcU
-	 KKm7VE3nlUC4g==
+	b=RIkqJcqCoAt2/gW+CTzEp3bXhnHd7afe0dwZSB26D476vDZiWuRK7m5g2/ucoggUH
+	 G31C9l9D63v+UAge+qfOZzllcrneFutLtwI/NVCqvdklXLZfw61dBryhna9eWzJohz
+	 hQGsbVWKk98Mu4xgBg67zrKr9KZ+yV+wPv+e9IgyI4TN/jbnty0Gx/1vOuTbepQmzG
+	 ZeiSciyGBQUnI1WcZq6tMBWFGCelGiTBWSusCeVaWfrlkjjjmr9olYOqAorTDo7pv5
+	 DqK3zU5gVX2Zd1mgKdL25QWfnPImSx+XYi2398jYkS61PHfhXep4a6gAZJMMP5rgGN
+	 qu0vUCNNB1c7w==
 From: SeongJae Park <sj@kernel.org>
-To: Sang-Heon Jeon <ekffu200098@gmail.com>
+To: Andrew Paniakin <apanyaki@amazon.com>
 Cc: SeongJae Park <sj@kernel.org>,
-	honggyu.kim@sk.com,
+	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	David Hildenbrand <david@redhat.com>,
+	Jann Horn <jannh@google.com>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	"Michal Hocko" <mhocko@suse.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Pedro Falcato <pfalcato@suse.de>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
 	damon@lists.linux.dev,
-	linux-mm@kvack.org
-Subject: Re: [PATCH v2] mm/damon: update expired description of damos_action
-Date: Mon,  4 Aug 2025 09:50:05 -0700
-Message-Id: <20250804165005.55515-1-sj@kernel.org>
+	kernel-team@meta.com,
+	linux-kernel@vger.kernel.org,
+	linux-mm@kvack.org,
+	amazon-linux-kernel@amazon.com
+Subject: Re: [RFC v2 0/7] mm/damon: extend for page faults reporting based access monitoring
+Date: Mon,  4 Aug 2025 09:57:01 -0700
+Message-Id: <20250804165701.55642-1-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250804143816.29654-1-ekffu200098@gmail.com>
+In-Reply-To: <aJAfTUh-49pYuhbg@3c06303d853a>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -46,68 +58,30 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hello Sang-Heon,
+On Sun, 3 Aug 2025 19:47:41 -0700 Andrew Paniakin <apanyaki@amazon.com> wrote:
 
-On Mon,  4 Aug 2025 23:38:16 +0900 Sang-Heon Jeon <ekffu200098@gmail.com> wrote:
-
-> Nowadays, damos operation actions support more various operation set.
-> But comments(also, generated documentation) doesn't updated.
-> So, fix the comments with current support status.
+> On 27/07/2025, SeongJae Park wrote:
+> > TL; DR: Extend DAMON interface between core and operation sets for
+> > operation set driven report-based monitoring such as per-CPU and
+> > write-only access monitoring.  Further introduce an example physical
+> > address space monitoring operation set that uses page faults as the
+> > source of the information.
 > 
-> Signed-off-by: Sang-Heon Jeon <ekffu200098@gmail.com>
-> ---
-> Changes from v1 [1]:
-> 1. change baseline from damon/next to mm/mm-new
-> 2. Add note about DAMOS_PAGEOUT and demotion.
+> Thank you very much for starting this update. RFC mentions write-only
+> monitoring, this feature particularly would be really helpful in some of
+> our use cases such as lightweight live migration target selection, so we
+> are looking forward to collaborate in development and testing activity!
 
-Thank you for making this revision!
+Thank you for letting us know your interest, Andrew.  This should be helpful at
+better prioritizations.
 
-> 
-> [1] https://lore.kernel.org/all/20250731132230.80046-1-ekffu200098@gmail.com/
-> 
-> ---
-> I also watch your comment from [1]. Thank you for not forgetting :)
-> 
-> [1] https://lore.kernel.org/damon/20250801233942.1614-1-sj@kernel.org/
-> 
-> ---
->  include/linux/damon.h | 8 +++++---
->  1 file changed, 5 insertions(+), 3 deletions(-)
-> 
-> diff --git a/include/linux/damon.h b/include/linux/damon.h
-> index f13664c62ddd..d4b3ffd6144d 100644
-> --- a/include/linux/damon.h
-> +++ b/include/linux/damon.h
-> @@ -110,7 +110,7 @@ struct damon_target {
->   *
->   * @DAMOS_WILLNEED:	Call ``madvise()`` for the region with MADV_WILLNEED.
->   * @DAMOS_COLD:		Call ``madvise()`` for the region with MADV_COLD.
-> - * @DAMOS_PAGEOUT:	Call ``madvise()`` for the region with MADV_PAGEOUT.
-> + * @DAMOS_PAGEOUT:	Reclaim the region.
->   * @DAMOS_HUGEPAGE:	Call ``madvise()`` for the region with MADV_HUGEPAGE.
->   * @DAMOS_NOHUGEPAGE:	Call ``madvise()`` for the region with MADV_NOHUGEPAGE.
->   * @DAMOS_LRU_PRIO:	Prioritize the region on its LRU lists.
-> @@ -123,8 +123,10 @@ struct damon_target {
->   * The support of each action is up to running &struct damon_operations.
->   * &enum DAMON_OPS_VADDR and &enum DAMON_OPS_FVADDR supports all actions except
->   * &enum DAMOS_LRU_PRIO and &enum DAMOS_LRU_DEPRIO.  &enum DAMON_OPS_PADDR
-> - * supports only &enum DAMOS_PAGEOUT, &enum DAMOS_LRU_PRIO, &enum
-> - * DAMOS_LRU_DEPRIO, and &DAMOS_STAT.
-> + * supports all actions except &enum DAMOS_WILLNEED, &enum DAMOS_COLD,
-> + * &enum DAMOS_HUGEPAGE, &enum DAMOS_NOHUGEPAGE.
+Now development trees of DAMON and DAMON user-space tool support[1] write-only
+monitoring.  The implementation is dirty and not upstreamable for now, but
+please feel free to test and let me know what you see if you don't mind.
 
-I think we agreed[1] to add a reference to the design doc, instead of keeping
-this duplicated.  Am I missing something?
+I will continue working on more testing and making it upstreamable.
 
-> + *
-> + * Note that DAMOS_PAGEOUT doesn't trigger demotions.
->   */
->  enum damos_action {
->  	DAMOS_WILLNEED,
-> -- 
-> 2.43.0
-
-[1] https://lore.kernel.org/CABFDxMGh7-vDgNzepJKtrhdOF40_U7=NT6Jvm85qtdwGpBZawg@mail.gmail.com
+[1] https://damonitor.github.io/posts/write_only_cpus_only_monitoring/
 
 
 Thanks,
