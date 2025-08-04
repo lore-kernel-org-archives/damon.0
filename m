@@ -1,71 +1,87 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from fra-out-010.esa.eu-central-1.outbound.mail-perimeter.amazon.com (fra-out-010.esa.eu-central-1.outbound.mail-perimeter.amazon.com [63.178.143.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38E659475
-	for <damon@lists.linux.dev>; Sun,  3 Aug 2025 18:01:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9EF970838
+	for <damon@lists.linux.dev>; Mon,  4 Aug 2025 02:48:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=63.178.143.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754244071; cv=none; b=KzFrTyFi8ExF9oklmV8v494bBOVCQgOc/OzEfZ882TOVYeNntrxF74iAv/csaNyKXFg/9pyXCScRQ4GwqZe7EnmWtjrpKuf0a2U/GVNFjvJgnoHhMSbb4WqmSeS0iCbKBbZScU3hWPenzvb13KToQQ7SXE7ufP3K0zedEmZ2ezI=
+	t=1754275685; cv=none; b=PFtUAriV0tR5OhIV2lICa/jRRtW1PY5Es3/qcEVhSj7KbVtRmlMM9wTVMZ7voKkXF79I8pFe6BMi7PA2yk/5wg/HMUz9I6TSmi5W/K0FhKZRiPWMa3SI5NvbIH8PV5erl821TlMjpf9hJUlNaSGePoQCGTHZVOtvtrUqjinTHr8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754244071; c=relaxed/simple;
-	bh=1+srFKL5LqQUBE4GwEXD1v1Xs+lZWuUYAffO+amh/XM=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=QCj/lijJRg12WY/fdM4CuBVLuntDb5EYLI2hgG33EQMDziHEn1lDUmzexjnFSLnh49i8wqjE3Palmr/oTMRnM2j5FEGp5ineYRz9jn+0wP5If9OzBIU83GiH0RQAY6e5SVBFemUVLGcykDKig6xxAG66ietxo3rxAVTjgtwfBTw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TXUhQcT+; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1754275685; c=relaxed/simple;
+	bh=a9zfeW2WB7bbrMuij4TAEwvYwmIdapst4CP9CUDMag8=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=VFml55iObDbxZZ3w2h8DM9OE3WWipHosU/qxgvZJYomNvknM7tDEFrm664AgfifSZzDWWq8fbkx4Pqu+sn4OOLS3OiZn8GyAUt/5m8oAnS2kIV2QH9nJgRbbnxc7MHa8l04LR3n0f99IasLbBnMW1M7bg/sw13yo3V84Dk3xTZs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amazon.com; spf=pass smtp.mailfrom=amazon.com; dkim=pass (2048-bit key) header.d=amazon.com header.i=@amazon.com header.b=OJ1SV3F+; arc=none smtp.client-ip=63.178.143.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amazon.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=amazon.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TXUhQcT+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AC25C4CEEB;
-	Sun,  3 Aug 2025 18:01:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754244070;
-	bh=1+srFKL5LqQUBE4GwEXD1v1Xs+lZWuUYAffO+amh/XM=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TXUhQcT+ugcm5eT1xOc9y5+zk9JC/OFlH4LG6kssruOF4S/UiB6QcmQSbH/bAfimq
-	 QcLBkrzzDmQXE3o73LC4M0AG2r9gL+2CTY/Xylgf50MCoZm1s6z5cfxB7bfGrkRsH7
-	 ScsiNM/oKRN4YIsWDbV08YQUw7z3py4EVvQ+unh5rYxeRkHcQeZvMhofRhB5iAm+M6
-	 FPycvMxT2hz0SA/UFj+G2V3oy4DoJk7S+J3Wbuki/8ah0pAbcgWktVoZ7u4sKDCmYH
-	 7rjtTOJKDbMQJx7PHujyg2OoAzQsCQwIJttYTJd5s11Rk+9/93CbmRkAVe3n4EPygU
-	 fAKv4qNwE3O8Q==
-From: SeongJae Park <sj@kernel.org>
-To: Akinobu Mita <akinobu.mita@gmail.com>
-Cc: SeongJae Park <sj@kernel.org>,
-	damon@lists.linux.dev,
-	Bijan Tabatabai <bijantabatab@micron.com>
-Subject: Re: [PATCH] mm/damon/vaddr: avoid unnecessary migration between target nodes
-Date: Sun,  3 Aug 2025 11:01:07 -0700
-Message-Id: <20250803180107.56197-1-sj@kernel.org>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250803130028.162537-1-akinobu.mita@gmail.com>
-References: 
+	dkim=pass (2048-bit key) header.d=amazon.com header.i=@amazon.com header.b="OJ1SV3F+"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazoncorp2;
+  t=1754275683; x=1785811683;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=RKicLz6qk2kkguAEni1vOqzECVIHBfHvbbyhd4kVsDM=;
+  b=OJ1SV3F+dMH7aOHcep0SDiyRGzONOi4VuOc5TjCA6uBC4DCsvBTVZ9kK
+   zt863fiSDKdl7FaRcp7wGoMer9QrhIzaqOzGNheS+ug/o5lxuIeqXc1Yx
+   uQyZQ3guORQIWZsFn2F5g6w0wtTx/pmBXv+ble6kQH8Sg9OqlokfIuBNn
+   SA9QloCx2a3X/eg965mVoGbFnVqoTovldrKSHkquzJSTnvbBQT/ZOw/3K
+   g5zM8pF3BAcnDD8QL+Sk+B9Os9vUUJj7Bkrq9iKNiz3CBBLqGg3CMNaYv
+   wEfPv3fgnbP/ar4Z5u3N0MMBvoZrCEhCVgMPoivnSYgAaF5BSmAv64Qaa
+   A==;
+X-CSE-ConnectionGUID: cCd3RQGgQoqlNkLrBO2LSg==
+X-CSE-MsgGUID: VlhjKe74QCGXeEHunRLy/A==
+X-IronPort-AV: E=Sophos;i="6.17,258,1747699200"; 
+   d="scan'208";a="414218"
+Received: from ip-10-6-6-97.eu-central-1.compute.internal (HELO smtpout.naws.eu-west-1.prod.farcaster.email.amazon.dev) ([10.6.6.97])
+  by internal-fra-out-010.esa.eu-central-1.outbound.mail-perimeter.amazon.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Aug 2025 02:47:53 +0000
+Received: from EX19MTAEUC002.ant.amazon.com [10.0.10.100:10198]
+ by smtpin.naws.eu-west-1.prod.farcaster.email.amazon.dev [10.0.27.198:2525] with esmtp (Farcaster)
+ id df118047-9890-4fac-bbc9-48f9ecc15387; Mon, 4 Aug 2025 02:47:53 +0000 (UTC)
+X-Farcaster-Flow-ID: df118047-9890-4fac-bbc9-48f9ecc15387
+Received: from EX19D026EUB004.ant.amazon.com (10.252.61.64) by
+ EX19MTAEUC002.ant.amazon.com (10.252.51.181) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1544.14;
+ Mon, 4 Aug 2025 02:47:52 +0000
+Received: from 3c06303d853a (10.187.171.18) by EX19D026EUB004.ant.amazon.com
+ (10.252.61.64) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1544.14; Mon, 4 Aug 2025
+ 02:47:49 +0000
+Date: Sun, 3 Aug 2025 19:47:41 -0700
+From: Andrew Paniakin <apanyaki@amazon.com>
+To: SeongJae Park <sj@kernel.org>
+CC: "Liam R. Howlett" <Liam.Howlett@oracle.com>, Andrew Morton
+	<akpm@linux-foundation.org>, David Hildenbrand <david@redhat.com>, Jann Horn
+	<jannh@google.com>, Lorenzo Stoakes <lorenzo.stoakes@oracle.com>, "Michal
+ Hocko" <mhocko@suse.com>, Mike Rapoport <rppt@kernel.org>, Pedro Falcato
+	<pfalcato@suse.de>, Suren Baghdasaryan <surenb@google.com>, Vlastimil Babka
+	<vbabka@suse.cz>, <damon@lists.linux.dev>, <kernel-team@meta.com>,
+	<linux-kernel@vger.kernel.org>, <linux-mm@kvack.org>,
+	<amazon-linux-kernel@amazon.com>
+Subject: Re: [RFC v2 0/7] mm/damon: extend for page faults reporting based
+ access monitoring
+Message-ID: <aJAfTUh-49pYuhbg@3c06303d853a>
+References: <20250727201813.53858-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <20250727201813.53858-1-sj@kernel.org>
+X-ClientProxiedBy: EX19D039UWA003.ant.amazon.com (10.13.139.49) To
+ EX19D026EUB004.ant.amazon.com (10.252.61.64)
 
-Hello Akinobu,
+On 27/07/2025, SeongJae Park wrote:
+> TL; DR: Extend DAMON interface between core and operation sets for
+> operation set driven report-based monitoring such as per-CPU and
+> write-only access monitoring.  Further introduce an example physical
+> address space monitoring operation set that uses page faults as the
+> source of the information.
 
-On Sun,  3 Aug 2025 22:00:28 +0900 Akinobu Mita <akinobu.mita@gmail.com> wrote:
-
-> This change avoids unnecessary migration by checking if the folio to which
-> the migration is applied is already located in one of the target nodes.
-
-Each folio will get a single target node among the target nodes, based on the
-weights of targets and the virtual address of the folio.  So skipping the
-migration because the folio is on one of target nodes can result in wrong
-behavior (not doing required migrations)?
-
-Also, a similar purpose optimization was already made by Bijan.  I guess you
-aware of that and therefore Cc-ed Bijan.  Could you further share differences
-between this and Bijan's one, and measured additional performance gain from
-this patch, if you have?
-
-[1] https://lkml.kernel.org/r/20250725163300.4602-1-bijan311@gmail.com
-
-
-Thanks,
-SJ
-
-[...]
+Thank you very much for starting this update. RFC mentions write-only
+monitoring, this feature particularly would be really helpful in some of
+our use cases such as lightweight live migration target selection, so we
+are looking forward to collaborate in development and testing activity!
