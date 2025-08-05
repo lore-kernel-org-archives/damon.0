@@ -1,62 +1,62 @@
-Received: from mail-yw1-f169.google.com (mail-yw1-f169.google.com [209.85.128.169])
+Received: from mail-yw1-f171.google.com (mail-yw1-f171.google.com [209.85.128.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E03B294A10
-	for <damon@lists.linux.dev>; Tue,  5 Aug 2025 16:20:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAB4C295510
+	for <damon@lists.linux.dev>; Tue,  5 Aug 2025 16:21:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754410859; cv=none; b=ObQP4AAksWabXYKo3+9Z3mjCJPaNcDL8s49PKbnD1J5ZOZzfi9u3SqGyfu5j7vQ7c8a9AR62N8Au2SGfTWxQM+Cu8PRQKMuAa3vAzsWcZ8RI71tCp4Nq4v0hdPjOTnFuqCGJx2ikpb7h0+c79ooWvM336MrYGHg5NzlU3IwCoPc=
+	t=1754410863; cv=none; b=dzOCshfJFPi8grwVN/sHOmQUeRSpUPZkBRxq7FwAgdSbFU1XdcGqXzEry5r7XCbUN10o/G3+jO8iXCkC09CgRSlYF8I8yUz7hX9DmRw4E3jAlJN7/l+1nk9RFxAuqeluvRdDL/HWkez09wU3z1ETLmyUhh7CrfkXeDtX1/o3Ik8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754410859; c=relaxed/simple;
-	bh=a2md+4vsTqK11YqhnkKXK2lQnHwV8IUnDfnplUt2rhs=;
+	s=arc-20240116; t=1754410863; c=relaxed/simple;
+	bh=UK5iJbYNS2bkATUR/j8SSeeGik5UMeQlVxFcKrIdg3M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Jm7Y5L0NwvRg5fbVsm0S7LfSnPxNEMDrYqnxfYv4Ci9zMWq9JeY3/lY37lBRgkLiPL20TZ7BhveJkeEgs33rdhRUlUES1HtEg/flMx9YDSaZ+Em/hOkxLEIcYhSOeZOr2URnfJUEYB8N6manizuFsrmTgtSpU+bDszXMen/IrPE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CekcRmkA; arc=none smtp.client-ip=209.85.128.169
+	 MIME-Version; b=ghm9VklX/5cSDNaU/KLTbyIE3FispLbo57993rd7urSKSGYPf6qXZcHj5iOliklrW4GhiPzEM2kmN+p4CIZqF5+anGB5KXfwLN11NhOpNI54/I+9iBl0j8M8CzsqxY2uLI8cEFeWe3vufD8BiN25gyjSfTvYSWhRLT7BpnGjKWc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Vg+KqT92; arc=none smtp.client-ip=209.85.128.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CekcRmkA"
-Received: by mail-yw1-f169.google.com with SMTP id 00721157ae682-71b49a8adb2so52757347b3.1
-        for <damon@lists.linux.dev>; Tue, 05 Aug 2025 09:20:57 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Vg+KqT92"
+Received: by mail-yw1-f171.google.com with SMTP id 00721157ae682-71b49a8adb2so52758977b3.1
+        for <damon@lists.linux.dev>; Tue, 05 Aug 2025 09:21:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1754410856; x=1755015656; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1754410860; x=1755015660; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=bx5UQH2AP53zKZgFMv/Gb2uS3eFAcrg1hCo7F6RktNc=;
-        b=CekcRmkA2lVosZax4UBj0NT2sp6hBkHae2b7ppws0c2HaQ2QdB7iU4cp0C33m/rBzn
-         hnwjrKMqj/PTVgBjvOeh+lMXChHYmaWPN/lM1moWV4BgWrANpIYSws11LXWxN0AKHkWh
-         rkzgMbJiMRxkkS1CsLzmK8qxGId35uCH1epnio3Id6/pZwb6lUvojeHIIzqy7uM7Junv
-         erJRP7NpQ4dRXpMBfjd9froZRwLLwd/phCKPbWy5y63HyttgWkxcpg3aNxEh7urDHvqS
-         L1Ag9WGe4yNaQnbPz7tRvEmAVMUxgyf/HZgB+TKlqJ4F1hB969G1TCqz02MAqKBbTQ/N
-         IWZQ==
+        bh=FTHZI7K9+4GxRlV7Vt7J0J39jlZPj/iqR6Wo5lhHevk=;
+        b=Vg+KqT92iwVPjWrCOKJyc4EFblAEryMABA916nF5bcsVqU9xq8QtpG/iZRf0co8Kjg
+         59U62hv2C/m015031sPtJ0BmCXOo55Q+ksHiBzucD0QMPLHwwfLvo3X36pnOekRgZG6J
+         UF2sTPHSuXGo9L0Nua7Tul3mFFVTYuH/sBIrAoDozGjCM9fQVhh/uypAeH7THZipBitN
+         CHdwe7r1CtthfSyokougBb0IGjH38rh3xPoiuMGIEqv3Do8LEsEsjHTQSHGwNqOrKZh7
+         l6dnv5sId3XLfBi8uxVtYsdNErARh+OPafaNpKdkb24knCnqWQUFJFElUCRaVui0giiQ
+         g+Hw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754410856; x=1755015656;
+        d=1e100.net; s=20230601; t=1754410860; x=1755015660;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=bx5UQH2AP53zKZgFMv/Gb2uS3eFAcrg1hCo7F6RktNc=;
-        b=w/JxUq+685T6+CQbpcj/A9tF2OecEz6omGEtjWQ6zjf5QXmz/qIygrpF4YlyUuG4UW
-         fndsXcn5onQ8Vqy8zbOE+omwschbTRoX6Qp1UzUu+hqki4yo8cxp3VhWEOuueN2OXKUT
-         XzIgpXDuISDj6brQgXXWNYS92+ICN9cDsaymGw/2ctzeUy/2/CmDCD0G5kvpo4anOlzS
-         sK9NOC0+If6peA1GPmfHqojFYQEAUqzGeMQ6LEltw4atoY8lvY0vl7fCFwiph3vZxNid
-         axdZnzb3LvdYrj+ua777bxexSTC/HdwDq3MKT4w24PR8DW/ygLId7L+5twvIwi8Rixm6
-         whsg==
-X-Gm-Message-State: AOJu0YyvNAg2eWVdM7DHVFqadMQaHQ+PscHL5P/Bz1wWCc3rtUuxuF9w
-	gqm7jkEeal996dg8mtchU9oqHtKT/UG1REh7f4CN+ZH/9vdXRXrvq+jNGlhkBw==
-X-Gm-Gg: ASbGncuRVEBdYkzaSIoOOpV16T5oQr/mXaS9tMBoiLwsLCdX7sT1/zzjdGg78P76oZM
-	BUNlL0nrnw99DX1PSTfLVRhGtuWQeLdorN0CFrg+5UEmpJVywhGa8Dz8FuWsNxPTrKC3K/4jF2e
-	APEYEzzV0C7S3rem0u2rOs4FcZ7Ak6wol3HpCMW+xpps94fK20DMExy4rhKK6uTL8TonA08lKsZ
-	8AUuegLwOmx3KWm9kxMRb64kg3nnEYBfliLxmMv0/pcBk7uDr95ngFsWglM8+Ro+eUfy0C+Vg6Y
-	8KXAayvUnFRKQAwan1pycbOQlCc5XXv8VFc5bOQPLi9nsE/2UvoliFsUJj3H9OUR3QVIy1+pTut
-	iPV0bz+LW7YM4/wzF2akCSVf5P4NDyA/FF4/qoJZSmJM=
-X-Google-Smtp-Source: AGHT+IFlo58+shaatwrcSK3z92CxM5zcfRVC7mFQfOpwfhIPPC64bmge/xE/VJyP1a2lBc5ROadoGg==
-X-Received: by 2002:a05:690c:102:b0:719:4c68:a70f with SMTP id 00721157ae682-71b7f7f5e71mr172583967b3.20.1754410855971;
-        Tue, 05 Aug 2025 09:20:55 -0700 (PDT)
+        bh=FTHZI7K9+4GxRlV7Vt7J0J39jlZPj/iqR6Wo5lhHevk=;
+        b=crwaYtWHKzwxcoEtV8bXXP+YzQ0K0edICUpfzpyNUBHP4fCVO0/qJTNApnjeuXvHVD
+         ap5EI+/SiAYFXAWVMVvZYrvFdRoAyauBMgOvUmHNylvFRsNqCnHKE6mKGIZkxvP4jl2q
+         yvr5ApVYvnk4VKkf8Hq2kxVZUCOhYgOHF4DQQbMbHm6EjgY9DG0+dYly3rqq3RXW4lBY
+         gd/Mc+YAGGQTKvtzcI15lGh9Qtu+C+JP9OtxhPHHCE/xq+tZpAPFvmv3gubr+oTVLF4V
+         xXm82x4+6i1f1vJqfrGEysxgZg0fQffSZqmHTkTJUSvB/PvJMLHmTuNSXTSfm5WM4Opi
+         4+tw==
+X-Gm-Message-State: AOJu0YxSelsiqMG3RB2AEZnzeyuN0p4tTxylKZPQhIsTEtixrMxxQaKq
+	xLdZcgVKMMZHu3YMHq4dna3DWj8x7S1cE6UfICNCKLqKSzWPNb7cuic0FoYf9Q==
+X-Gm-Gg: ASbGncvEk+fgiD8q9qCVxlSOo89VuFfo4gA1gifdKLXT2KaCmsOgfBP7vwSzOHw2lZd
+	Xowc/CcI+bU0fqL3kH/11aqdduH4ElLbcfZGiIDOOANNHoS537472CgAHO1sylU16I1wC66Wrvm
+	Vgm4Fp3FWE5LEyRj43DG7nzrWtyI5BeA9uglNeSa9Tft6lGLaRYQrAr1Hm//fZBUxXolcDhCH/O
+	EAz0R0FaQy0ZE8VJ2IjIebwtlN3PIeuyl1Vu3Uvrz80klnwFAqyZyzVKbvzz1yItFJa6yMh1OhE
+	U04fO9UDOpNv5BN+y7kDa0YWkFCDUhxjokhi/otOzzhSIJCe78VOQU3DtaghhBw8aZQ5qEYbzh6
+	ZsLoapdL4fnv2ZldVtjXVNY5qVH1riENcb+Ht029RX/w=
+X-Google-Smtp-Source: AGHT+IEvW39T/sWp90HWrVkoCtc3N9MROV6TVWwJCqhkh0uDVhaEZjbOJNyDmjL1eVTf6OAsvjkH2A==
+X-Received: by 2002:a05:690c:6085:b0:712:d54e:2209 with SMTP id 00721157ae682-71b7f5f743fmr175406147b3.14.1754410859891;
+        Tue, 05 Aug 2025 09:20:59 -0700 (PDT)
 Received: from bijan-laptop.attlocal.net ([2600:1700:680e:c000:2c65:e45a:e7d5:5f0e])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-71b5a5cdfc5sm33098757b3.77.2025.08.05.09.20.53
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-71b5a5cdfc5sm33098757b3.77.2025.08.05.09.20.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 05 Aug 2025 09:20:55 -0700 (PDT)
+        Tue, 05 Aug 2025 09:20:59 -0700 (PDT)
 From: Bijan Tabatabai <bijan311@gmail.com>
 To: damon@lists.linux.dev,
 	linux-mm@kvack.org,
@@ -66,9 +66,9 @@ Cc: sj@kernel.org,
 	Andrew Morton <akpm@linux-foundation.org>,
 	corbet@lwn.net,
 	Bijan Tabatabai <bijantabatab@micron.com>
-Subject: [PATCH 2/5] mm/damon/sysfs: Implement a command to only commit scheme dests
-Date: Tue,  5 Aug 2025 11:20:19 -0500
-Message-ID: <20250805162022.4920-3-bijan311@gmail.com>
+Subject: [PATCH 3/5] mm/damon/sysfs: Implement a command to wait until schemes are applied
+Date: Tue,  5 Aug 2025 11:20:20 -0500
+Message-ID: <20250805162022.4920-4-bijan311@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250805162022.4920-1-bijan311@gmail.com>
 References: <20250805162022.4920-1-bijan311@gmail.com>
@@ -82,159 +82,100 @@ Content-Transfer-Encoding: 8bit
 
 From: Bijan Tabatabai <bijantabatab@micron.com>
 
-To update DAMOS migration dests, users need to write "commit" to the
-"state" file of kdamond, which will recommit all of the damon parameters.
-This patch implements another state file input command,
-"commit_scheme_dests," that only commits the DAMOS migration dests.
+Any DAMON command that uses damos_walk() internally, such as
+update_schemes_tried_bytes and update_schemes_tried_regions, waits until
+each scheme in the DAMON context have finished. This can be useful, for
+example, if a user wants to know when new scheme parameters they've
+committed have been applied. Another use case could be if a user wants
+to record the system state every time a scheme is applied for debug
+purposes.
 
-This provides two benefits:
-1) It is slightly more efficient
-2) When the "commit" command is sent to the state file,
-   ctx->next_{aggregation/ops_update}_sis are reset. If a user sends the
-   "commit" command frequently (relative to the aggregation and
-   ops_update periods) to update the migration dests, the aggregation and
-   ops_update events will be prevented from triggering. Having a
-   separate command side steps this problem.
+This patch adds a new command, wait_for_schemes_apply, which calls
+damos_walk() without a walk function so that all it does is wait until
+all schemes have been applied. The same functionality can be achieved
+by using update_schemes_tried_bytes, for example, but having a separate
+command for this avoid unnecessary work. It also makes user intent
+clearer when used in scripts.
 
 Signed-off-by: Bijan Tabatabai <bijantabatab@micron.com>
 ---
- mm/damon/sysfs-common.h  |  3 +++
- mm/damon/sysfs-schemes.c | 35 ++++++++++++++++++++++++++++++++---
- mm/damon/sysfs.c         | 27 +++++++++++++++++++++++++++
- 3 files changed, 62 insertions(+), 3 deletions(-)
+ mm/damon/core.c  |  3 ++-
+ mm/damon/sysfs.c | 27 +++++++++++++++++++++++++++
+ 2 files changed, 29 insertions(+), 1 deletion(-)
 
-diff --git a/mm/damon/sysfs-common.h b/mm/damon/sysfs-common.h
-index 2099adee11d0..3189b2bda079 100644
---- a/mm/damon/sysfs-common.h
-+++ b/mm/damon/sysfs-common.h
-@@ -59,3 +59,6 @@ int damos_sysfs_set_quota_scores(struct damon_sysfs_schemes *sysfs_schemes,
- void damos_sysfs_update_effective_quotas(
- 		struct damon_sysfs_schemes *sysfs_schemes,
- 		struct damon_ctx *ctx);
-+
-+int damos_sysfs_set_schemes_dests(struct damon_sysfs_schemes *sysfs_schemes,
-+		struct damon_ctx *ctx);
-diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
-index d355f6c42a98..d30c8b6575c2 100644
---- a/mm/damon/sysfs-schemes.c
-+++ b/mm/damon/sysfs-schemes.c
-@@ -2445,10 +2445,9 @@ void damos_sysfs_update_effective_quotas(
- 	}
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index 07b4fc5a9790..56a13d16e4d1 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -1731,7 +1731,8 @@ static void damos_walk_call_walk(struct damon_ctx *ctx, struct damon_target *t,
+ 	if (!control)
+ 		return;
+ 
+-	control->walk_fn(control->data, ctx, t, r, s, sz_filter_passed);
++	if (control->walk_fn)
++		control->walk_fn(control->data, ctx, t, r, s, sz_filter_passed);
  }
  
--static int damos_sysfs_add_migrate_dest(struct damos *scheme,
-+static int damos_sysfs_add_migrate_dest(struct damos_migrate_dests *dests,
- 		struct damos_sysfs_dests *sysfs_dests)
- {
--	struct damos_migrate_dests *dests = &scheme->migrate_dests;
- 	int i;
- 
- 	dests->node_id_arr = kmalloc_array(sysfs_dests->nr,
-@@ -2468,6 +2467,35 @@ static int damos_sysfs_add_migrate_dest(struct damos *scheme,
- 	return 0;
- }
- 
-+int damos_sysfs_set_schemes_dests(struct damon_sysfs_schemes *sysfs_schemes,
-+		struct damon_ctx *ctx)
-+{
-+	struct damos *scheme;
-+	int i = 0;
-+
-+	damon_for_each_scheme(scheme, ctx) {
-+		struct damos_sysfs_dests *sysfs_dests;
-+		struct damos_migrate_dests dests = {};
-+		int err;
-+
-+		/* user could have removed the scheme sysfs dir */
-+		if (i >= sysfs_schemes->nr)
-+			break;
-+
-+		sysfs_dests = sysfs_schemes->schemes_arr[i]->dests;
-+		err = damos_sysfs_add_migrate_dest(&dests, sysfs_dests);
-+		if (err) {
-+			damos_destroy_dests(&dests);
-+			return err;
-+		}
-+
-+		damos_destroy_dests(&scheme->migrate_dests);
-+		scheme->migrate_dests = dests;
-+	}
-+
-+	return 0;
-+}
-+
- static struct damos *damon_sysfs_mk_scheme(
- 		struct damon_sysfs_scheme *sysfs_scheme)
- {
-@@ -2530,7 +2558,8 @@ static struct damos *damon_sysfs_mk_scheme(
- 		damon_destroy_scheme(scheme);
- 		return NULL;
- 	}
--	err = damos_sysfs_add_migrate_dest(scheme, sysfs_scheme->dests);
-+	err = damos_sysfs_add_migrate_dest(&scheme->migrate_dests,
-+		sysfs_scheme->dests);
- 	if (err) {
- 		damon_destroy_scheme(scheme);
- 		return NULL;
+ /*
 diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
-index 1af6aff35d84..c2b036abb25b 100644
+index c2b036abb25b..ded3f60e4e22 100644
 --- a/mm/damon/sysfs.c
 +++ b/mm/damon/sysfs.c
-@@ -1188,6 +1188,11 @@ enum damon_sysfs_cmd {
- 	 * to DAMON.
+@@ -1223,6 +1223,11 @@ enum damon_sysfs_cmd {
+ 	 * intevals.
  	 */
- 	DAMON_SYSFS_CMD_COMMIT_SCHEMES_QUOTA_GOALS,
+ 	DAMON_SYSFS_CMD_UPDATE_TUNED_INTERVALS,
 +	/*
-+	 * @DAMON_SYSFS_CMD_COMMIT_SCHEMES_DESTS: Commit the scheme dests to
-+	 * DAMON.
++	 * @DAMON_SYSFS_CMD_WAIT_FOR_SCHEMES_APPLY: Wait for all schemes to be
++	 * applied.
 +	 */
-+	DAMON_SYSFS_CMD_COMMIT_SCHEMES_DESTS,
++	DAMON_SYSFS_CMD_WAIT_FOR_SCHEMES_APPLY,
  	/*
- 	 * @DAMON_SYSFS_CMD_UPDATE_SCHEMES_STATS: Update scheme stats sysfs
- 	 * files.
-@@ -1230,6 +1235,7 @@ static const char * const damon_sysfs_cmd_strs[] = {
- 	"off",
- 	"commit",
- 	"commit_schemes_quota_goals",
-+	"commit_schemes_dests",
- 	"update_schemes_stats",
- 	"update_schemes_tried_bytes",
- 	"update_schemes_tried_regions",
-@@ -1478,6 +1484,23 @@ static int damon_sysfs_commit_schemes_quota_goals(void *data)
- 	return damos_sysfs_set_quota_scores(sysfs_ctx->schemes, ctx);
+ 	 * @NR_DAMON_SYSFS_CMDS: Total number of DAMON sysfs commands.
+ 	 */
+@@ -1242,6 +1247,7 @@ static const char * const damon_sysfs_cmd_strs[] = {
+ 	"clear_schemes_tried_regions",
+ 	"update_schemes_effective_quotas",
+ 	"update_tuned_intervals",
++	"wait_for_schemes_apply",
+ };
+ 
+ static ssize_t state_show(struct kobject *kobj, struct kobj_attribute *attr,
+@@ -1643,6 +1649,25 @@ static int damon_sysfs_update_schemes_tried_regions(
+ 	return damos_walk(ctx, &control);
  }
  
-+static int damon_sysfs_commit_schemes_dests(void *data)
++static int damon_sysfs_wait_for_schemes_apply(
++		struct damon_sysfs_kdamond *sysfs_kdamond)
 +{
-+	struct damon_sysfs_kdamond *sysfs_kdamond = data;
-+	struct damon_ctx *ctx;
-+	struct damon_sysfs_context *sysfs_ctx;
++	/*
++	 * damos_walk returns after the next time all of the schemes have been
++	 * applied. We don't need to do any actual work, so walk_fn is NULL.
++	 */
++	struct damos_walk_control control = {
++		.walk_fn = NULL,
++		.data = NULL,
++	};
++	struct damon_ctx *ctx = sysfs_kdamond->damon_ctx;
 +
-+	if (!damon_sysfs_kdamond_running(sysfs_kdamond))
-+		return -EINVAL;
-+	/* TODO: Support multiple contexts per kdamond */
-+	if (sysfs_kdamond->contexts->nr != 1)
++	if (!ctx)
 +		return -EINVAL;
 +
-+	ctx = sysfs_kdamond->damon_ctx;
-+	sysfs_ctx = sysfs_kdamond->contexts->contexts_arr[0];
-+	return damos_sysfs_set_schemes_dests(sysfs_ctx->schemes, ctx);
++	return damos_walk(ctx, &control);
 +}
 +
  /*
-  * damon_sysfs_upd_schemes_effective_quotas() - Update schemes effective quotas
-  * sysfs files.
-@@ -1644,6 +1667,10 @@ static int damon_sysfs_handle_cmd(enum damon_sysfs_cmd cmd,
+  * damon_sysfs_handle_cmd() - Handle a command for a specific kdamond.
+  * @cmd:	The command to handle.
+@@ -1688,6 +1713,8 @@ static int damon_sysfs_handle_cmd(enum damon_sysfs_cmd cmd,
+ 	case DAMON_SYSFS_CMD_UPDATE_TUNED_INTERVALS:
  		return damon_sysfs_damon_call(
- 				damon_sysfs_commit_schemes_quota_goals,
- 				kdamond);
-+	case DAMON_SYSFS_CMD_COMMIT_SCHEMES_DESTS:
-+		return damon_sysfs_damon_call(
-+				damon_sysfs_commit_schemes_dests,
-+				kdamond);
- 	case DAMON_SYSFS_CMD_UPDATE_SCHEMES_STATS:
- 		return damon_sysfs_damon_call(
- 				damon_sysfs_upd_schemes_stats, kdamond);
+ 				damon_sysfs_upd_tuned_intervals, kdamond);
++	case DAMON_SYSFS_CMD_WAIT_FOR_SCHEMES_APPLY:
++		return damon_sysfs_wait_for_schemes_apply(kdamond);
+ 	default:
+ 		return -EINVAL;
+ 	}
 -- 
 2.43.5
 
