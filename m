@@ -1,207 +1,128 @@
-Received: from mail-lf1-f52.google.com (mail-lf1-f52.google.com [209.85.167.52])
+Received: from mail-yw1-f169.google.com (mail-yw1-f169.google.com [209.85.128.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31511291C00
-	for <damon@lists.linux.dev>; Tue,  5 Aug 2025 16:05:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A3EA292B2B
+	for <damon@lists.linux.dev>; Tue,  5 Aug 2025 16:20:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754409903; cv=none; b=Ai5lrPWTv7n+lDJtP8gLUcYWWOn07wdxr5PuFJeYunDqUb4j95sfEz+QnUUvV+Auc0ZxJsN3+NPmJ9/D0EoTGNq44B57wm1A7ThKijO1V9rxNvfd9N08ffhtiqZcc83MlAvUN4Q1nHUpCFQq0kigULMKew6aBNDa95M0sxYkjJY=
+	t=1754410849; cv=none; b=sp3h43OWa8JWNsuHcOphwYhe0C/FrnfxP0UeRgptNuD7NJ+WW5QnwUdBBWrPj5sdf4I9eKobiejgHp7Jsoa+NmlRWxdT5bUE8Q0HsfRBAc0/uo+4kTax6i1fKcvwADOnQcSX+oq0Od9jIICMCmafeRp6inpDXN+V0sCrC2Jvn2g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754409903; c=relaxed/simple;
-	bh=WuLM+P87VVTSZ3k8GOvsJHCApWTDHF6DnatJBUi5Vdc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Ez1nJrrpnvxtw3J0m/bXsd04zjpYX5+j6sBtQ8gMG5iDwMw8+8t6H2H3jnoUE274dUbHPO/rc+/itXSeyWXz1G3fAxopGFJ5mvJt7UlbwtuxQAnlSSD/eMdG8ua3qitVfQYqX4+61NGcvEjnPTaSHXfausrtqrVm3hrqyHuKeM4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PmaoxLMu; arc=none smtp.client-ip=209.85.167.52
+	s=arc-20240116; t=1754410849; c=relaxed/simple;
+	bh=kGu6ateMi7sVTdbqTnQdM6yz9XUdSnjZndgL63CO8s8=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=fVPWzKD9OKdoEFOlfp1N5Mz5GH3CyHSFaNZ+8pNiDArDV11CubLzt5OJPhi0HRmwoYC0hhb3R2wOJCm/kPiK+jepTeqLW+bK+eTYYKze0IrfmuyOCqgAKr+o3MPtu0uXUG5i49gGMKNukPMg5/5hjoCC158mn0FCBzbA6l8l760=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=S+xE56Sw; arc=none smtp.client-ip=209.85.128.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PmaoxLMu"
-Received: by mail-lf1-f52.google.com with SMTP id 2adb3069b0e04-55b975b459aso4319929e87.3
-        for <damon@lists.linux.dev>; Tue, 05 Aug 2025 09:05:00 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="S+xE56Sw"
+Received: by mail-yw1-f169.google.com with SMTP id 00721157ae682-71b4b36d0bdso45324037b3.1
+        for <damon@lists.linux.dev>; Tue, 05 Aug 2025 09:20:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1754409899; x=1755014699; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=mT77AFoRCXiefdPf44N0XGcSQAI6gJsbqbSWQ6+ZBn4=;
-        b=PmaoxLMuQ/uKgVyc3j1bqyRP0nrnAdAx3XlFZPXbsifN7/zwefJSPipE/+Wqf9bRYT
-         XUVuHqPlzZY4TdlbP+D2pfJXbTO9kmPrJo088ao+U3izxBs90oGLgWrAgnZGodrBDAk8
-         Uw7ZjPsfMwrcZ6cSUDqCtWj02QTrkuSEBDB459KK7MWHY4PXcf9wxinMk4nI0RMpOPkD
-         Ldj6s5wo0/XlbccZmoYnLHDMfLk1UwGQ7Npmm5fDroI2j6ya5MFPQ53jwNF1N28rkekC
-         eqPjl9k/rlxqhY3z1kI4NJQ4WS0SOJWiHorvpCwKpTyhvQB2m8Rkdx1xWP/vdESxZM1L
-         OqfQ==
+        d=gmail.com; s=20230601; t=1754410846; x=1755015646; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=KPqctxuj25XobMQhW4L+Lm26tm0IYdYeYBgTx2rSnRk=;
+        b=S+xE56SwKt21l0BPGGTbcTL1o2LXiZcjOV0cDysG78iDBgBdEr2EHVW033dLjEYdzX
+         H5qpOQscydNedRegzDkygg97RMLVNE2gUxgzGm6coWBmuXWYnaUCikATZswaDsKq+1Zh
+         2A/OSaAAS20v02vviJHtHqxwc/p1yH6JivbcyCxR33S8FBCw+f8bgxxXU8aS6/JPIHGG
+         mZbI6VxVpsPMhW3czKARHOsXMAPEaCArTyj2LWLmMpW4VNYwUDwSn0ZoH8cq+I2/4sLg
+         7yb5kTiJgAYB2BCmDmRDkCd8kRN7BnMNQPobgKz+K+iUX4l68Au853Atl0N3M85wn2gs
+         6KcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754409899; x=1755014699;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=mT77AFoRCXiefdPf44N0XGcSQAI6gJsbqbSWQ6+ZBn4=;
-        b=m1NM/sl1rOedMXvzDd/HrvEwg3sbjykSNxReqdsKkuudwt1/oXQPcynvKLimmDxKuF
-         QxkAbiMWvaLTJtqO6WxgsYFj6qRcFELdeqPHLgFTOVJm7Cyn1QkMW4WH9DHv3BCF1whp
-         zJpZWz8puwyjtO5guf7RS4Fbcd0ODIAo2/uV5YI3PwUqh1rHu5sEbVYxKmmbUM6DDCbI
-         A6k01VO3L1b2/lI8KYz8KdVCTBbOqwDNFI+eLO+3CCcPoV6DU/6ppGse5xr1LG0o49UI
-         7lIt+1dsN2Z+rBbR82ALrIeQsaA7U1wZp8Yt3yVw4SozJFVY+yPQ4VuTg5ofWVnclIJ8
-         jczg==
-X-Forwarded-Encrypted: i=1; AJvYcCVCSpqhzOCTAH83VFqK2BuH3U/rcmuc9CiXxBhNZ42w3VNXtvcmQ7PGSGoV1iJJj0oYhj5wsA==@lists.linux.dev
-X-Gm-Message-State: AOJu0YyCA8zFr6A9QVt7OgFb1T8A3HyaVB0/fOKIh8Qo1OK5FBNQQk/7
-	ZCQDnY5eIe5vGBeNgp4ETf+AfZQ70D7pJP/0G060tqvcDaWDY3YX9YZY47IHNLFUx/w//Eltw5M
-	Eoiu3Chms1xhIpsBxKhoXQtQqNME8CE8=
-X-Gm-Gg: ASbGnctmXGEWMoHX4mJFP5RyIhD1ZoiKrxqlooo3Z5b80+vUGrnhQR53TPCk1l8q/LX
-	QFze/R/SaQ8vFtHQ31vyFRohm2cnBC2MCnX3/nsKf63L0/SZZumgwyUynd5bQBixB8LvhYX/QSv
-	K7eYLnL3ATxM57UqheuCu2jqv6ty+JqcZUkkd5MG4nGc8iMLae5EExnnGwyXkHtn5eOedfnE/1n
-	8TRluZ3k1N6JSbv9sS/cPRCfwQI0wbZWnY3g+QG5GhmhA==
-X-Google-Smtp-Source: AGHT+IFjax6pie9jgnCgNgfHFz2sXo8Dk/SpZPEL3z3/dh+/3xNXkVz6YdtqSg0MX/SSGuzKrzz8UvwsVpEApVdkHts=
-X-Received: by 2002:a05:6512:3d04:b0:55b:8a6f:c2a7 with SMTP id
- 2adb3069b0e04-55b97ac3da4mr3914505e87.23.1754409898855; Tue, 05 Aug 2025
- 09:04:58 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1754410846; x=1755015646;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=KPqctxuj25XobMQhW4L+Lm26tm0IYdYeYBgTx2rSnRk=;
+        b=g2sPnLeOJUs39mnRMAGvUqqMPQ6xBf/DaZkbOPCBqGhkg7qQdw7LHfIy2sqQFlxlY0
+         rRRtG2r1wveycy9jddJiIJrnWDTJr2Kxbkwm137Kf1iN/kSoBcazCm2sxoRYfiQembXv
+         J6fs84KcEpnUYEBCT2bSR37d2nLih/o14N84myJlBZakNlszxEad4gyAoEbj+wNi5fDG
+         QZKxLGzq5BQB2LVARoYTQPSAMHBTSfZrSCb4BiFp+hLfpGD8d9XviVsOftK+O18rIsWp
+         C9jxfYy9CDg+Ov3iE50udwuu4g6167gDLY2FwKs506/zfVimQpbxh7Pq7/nfpcD16b8m
+         f5hA==
+X-Gm-Message-State: AOJu0YwZyLoILrXdDC5u25ExMi38IX1dXUkgkE9dUz1udtbhf1LkjtvN
+	bt0qiIKhu6SVaCzF5//DD7KbdWXm78BwIn4AZPqYLOFmgz4LHggLFxYks1UtYQ==
+X-Gm-Gg: ASbGncuYxsRxJhpBXASn6yYGXNl0CgNFp6hclSqXPkRLvDoDulwfccRZzP8jQiuL8SH
+	IeARGDaX5nf9fo4eIQ1+2sJ/+xKPc9IgarrLEAYVQDMJAKsdjt9EVArdwSkY/kNxpbqKiDAJSvw
+	tD+AQ4IfCSATL6FaPG6+uhnrJ346dhBlRddHufFDfgEM88IpYUwIOkXRn0WkndiQTsJyuAXx9dK
+	TvUfoIfJF5wND5dkssWeOoyhFSY+pXIPFSAZn+lL4jobUde1FKlHAXoSR/kvfua6h8h7Cg7ngWm
+	eB4y2Qw4m2xF4RhZi+skB1jRh6s0zPVTQGhyObrzejNxSI45KI51CQODYFEEGaeErx88okmSIFB
+	8b0PdHB09ZMCr1iec3ogf1EfSpxcdwYxDaNj2ERAsT5vIuRhMzm0EZw==
+X-Google-Smtp-Source: AGHT+IE88seSdzpVdkIzCqTZrsRMzATgLnxXnAhDA3siqgjEUV7PlZGlyUYJyltEuCGK7VDVUQpqGg==
+X-Received: by 2002:a05:690c:a0ad:10b0:718:96c2:b426 with SMTP id 00721157ae682-71b7ed887c8mr121416667b3.15.1754410846171;
+        Tue, 05 Aug 2025 09:20:46 -0700 (PDT)
+Received: from bijan-laptop.attlocal.net ([2600:1700:680e:c000:2c65:e45a:e7d5:5f0e])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-71b5a5cdfc5sm33098757b3.77.2025.08.05.09.20.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 05 Aug 2025 09:20:45 -0700 (PDT)
+From: Bijan Tabatabai <bijan311@gmail.com>
+To: damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org,
+	linux-doc@vger.kernel.org
+Cc: sj@kernel.org,
+	Andrew Morton <akpm@linux-foundation.org>,
+	corbet@lwn.net,
+	Bijan Tabatabai <bijantabatab@micron.com>
+Subject: [PATCH 0/5] mm/damon/sysfs: Add commands useful for using migration dests
+Date: Tue,  5 Aug 2025 11:20:17 -0500
+Message-ID: <20250805162022.4920-1-bijan311@gmail.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20250804151929.4613-1-bijan311@gmail.com> <20250804164341.55371-1-sj@kernel.org>
-In-Reply-To: <20250804164341.55371-1-sj@kernel.org>
-From: Akinobu Mita <akinobu.mita@gmail.com>
-Date: Wed, 6 Aug 2025 01:04:47 +0900
-X-Gm-Features: Ac12FXxWesOkMwCOWHF92lfLTOnOe3AMaFMtIU8-8-3DISWjHGn4B8ucLtrl9Q8
-Message-ID: <CAC5umyjp_tbcJ3=UdSv0WCiOWytW3arBYp3nwv9i2V24ENmmPw@mail.gmail.com>
-Subject: Re: [PATCH] mm/damon/vaddr: avoid unnecessary migration between
- target nodes
-To: SeongJae Park <sj@kernel.org>
-Cc: Bijan Tabatabai <bijan311@gmail.com>, damon@lists.linux.dev, 
-	Bijan Tabatabai <bijantabatab@micron.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-2025=E5=B9=B48=E6=9C=885=E6=97=A5(=E7=81=AB) 1:43 SeongJae Park <sj@kernel.=
-org>:
->
-> On Mon,  4 Aug 2025 10:19:20 -0500 Bijan Tabatabai <bijan311@gmail.com> w=
-rote:
->
-> > On Mon, 4 Aug 2025 21:46:49 +0900 Akinobu Mita <akinobu.mita@gmail.com>=
- wrote:
-> >
-> > > Hi,
-> > >
-> > > 2025=E5=B9=B48=E6=9C=884=E6=97=A5(=E6=9C=88) 3:01 SeongJae Park <sj@k=
-ernel.org>:
-> > > >
-> > > > Hello Akinobu,
-> > > >
-> > > > On Sun,  3 Aug 2025 22:00:28 +0900 Akinobu Mita <akinobu.mita@gmail=
-.com> wrote:
-> > > >
-> > > > > This change avoids unnecessary migration by checking if the folio=
- to which
-> > > > > the migration is applied is already located in one of the target =
-nodes.
-> > > >
-> > > > Each folio will get a single target node among the target nodes, ba=
-sed on the
-> > > > weights of targets and the virtual address of the folio.  So skippi=
-ng the
-> > > > migration because the folio is on one of target nodes can result in=
- wrong
-> > > > behavior (not doing required migrations)?
-> > > >
-> > > > Also, a similar purpose optimization was already made by Bijan.  I =
-guess you
-> > > > aware of that and therefore Cc-ed Bijan.  Could you further share d=
-ifferences
-> > > > between this and Bijan's one, and measured additional performance g=
-ain from
-> > > > this patch, if you have?
-> > > >
-> > > > [1] https://lkml.kernel.org/r/20250725163300.4602-1-bijan311@gmail.=
-com
-> > >
-> > > In my current DAMON setup, the target nodes for migrate_hot action
-> > > are 0-3, and for migrate_cold action, they are 4 and 5.
-> > >
-> > > I'm looking for a way to prevent unnecessary movement between target
-> > > nodes for each action, making interleaving an optional choice. For
-> > > instance, I'd like to avoid migrations from node 4 to node 5 during a
-> > > migrate_cold action.
-> >
-> > Where a folio is placed is based on the virtual address of the folio an=
-d
-> > the folio's offset from the start of the VMA it is in. So, as long as t=
-he
-> > interleave weights and the folio's offset in the VMA are the same, foli=
-os
-> > should not be migrated after being placed. This placement algorithm is =
-the
-> > same as the one used for mempolicy weighted interleaving.
-> >
-> > It sounds like you are keeping the interleave weights constant, and I w=
-ould
-> > imagine that the virtual addresses the folios are mapped to are constan=
-t,
-> > so I'm guessing the start address of some VMAs are changing. I don't th=
-ink
-> > I've seen the bahvior your describing in the workloads I've run, but I
-> > guess it's possible if VMAs are being merged or broken up a lot, such a=
-s
-> > through frequent mmaps/munmaps. Do you think something like this is
-> > happening in your workload?
-> >
-> > How often are the undesired migrations happening? Every time the scheme=
- is
-> > applied?
-> > Also, would you be willing to share how you are configuring DAMON?
->
-> I also want to learn more about your setup, use cases, and measured amoun=
-t of
-> problem and benefit if you have.
->
-> >
-> > > I've observed a difference in behavior compared to Bijan's patch, and
-> > > it seems there's a need for both approaches. Would it be possible to
-> > > introduce a new option that allows us to specify whether interleaving
-> > > is forced or optional, and then adjust the behavior based on that
-> > > setting?
->
-> We can add options if it is promising.  I have no good idea about if this=
- is
-> promising or not for now.  It would be helpful if you could share more de=
-tails
-> about your use cases and measurements.
->
-> >
-> > I wonder if this would be better handled as a paddr scheme. That way
-> > you can configure the schemes such that only physical addresses in node=
-s
-> > 4-5 will migrate pages to nodes 0-3, and only physical address in nodes=
- 0-3
-> > will migrate to nodes 4-5.
->
-> Agreed.  If Akinobu's use case is not depend on virtual address space, I =
-think
-> paddr is a feasible direction to go.  Note that 'paddr' doesn't support
-> multiple destination nodes for now, so development of that would be neede=
-d if
-> we decide to go in this way.  But, again, I'd love to learn more about
-> Akinobu's use case and the problem first.
+From: Bijan Tabatabai <bijantabatab@micron.com>
 
-In my use case, a script periodically checks the processes in a cgroup and =
-adds
-new processes to the monitor targets, so the target processes change over t=
-ime.
-(Processes known to be short-lived or have low memory usage are excluded)
+This patchset adds two DAMON commands, commit_schemes_dests and
+wait_for_schemes_apply, that I have found useful for using a migrate_hot
+scheme with migration dests.
 
-As you point out, even without the patch I suggested, it seems unlikely tha=
-t
-continuous migration between target nodes would occur.  The reason I propos=
-ed
-this patch is that I didn't want to move any pages that were already locate=
-d in
-one of the target nodes.
+The commit_schemes_dests command, similar to the existing
+commit_schemes_quota_goals, is used to commit only the dests fields of
+schemes. This has a couple of benefits:
+1) It is more efficient than recommitting all the DAMON data.
+2) Doing a full commit resets the aggregation and ops_update intervals. If
+a user sends the full commit command frequently (relatively to those
+intervals) the aggregation and ops_update events will be prevented from
+triggering. Having a separate commit command side steps this problem.
 
-It's true that paddr is more suitable, so I'd like to evaluate it using pad=
-dr
-and compare which one is better.  However, these processes have different
-performance requirements, so vaddr may be a better choice as it may be poss=
-ible
-to extend special handling depending on the target process.
+The wait_for_schemes_apply command causes the calling thread to wait until
+all schemes have been applied. It does this by calling damos_walk() with a
+NULL walk_fn. This can be useful, for example, if a user wants to know when
+new scheme parameters they've committed have been applied. Another use case
+could be if a user wants to record the system state every time a scheme is
+applied for debuging purposes.
+
+The functionality of wait_for_schemes_apply can be achieved with the
+existing update_schemes_tried_bytes and update_schemes_tried_regions
+commands. However, having a separate command avoids extra work and makes
+user intent clearer when used in scripts.
+
+The first two patches implement the commit_schemes_dests command.
+The third patch implements the wait_for_schemes_apply command.
+The fourth and fifth patches add documentation for these new commands.
+
+Bijan Tabatabai (5):
+  mm/damon/core: Add damos_destroy_dests()
+  mm/damon/sysfs: Implement a command to only commit scheme dests
+  mm/damon/sysfs: Implement a command to wait until schemes are applied
+  Docs/ABI/damon: Document new DAMON commands
+  Docs/admin-guide/mm/damon/usage: Document new DAMON commands
+
+ .../ABI/testing/sysfs-kernel-mm-damon         | 21 ++++----
+ Documentation/admin-guide/mm/damon/usage.rst  |  4 ++
+ include/linux/damon.h                         |  2 +
+ mm/damon/core.c                               | 12 +++--
+ mm/damon/sysfs-common.h                       |  3 ++
+ mm/damon/sysfs-schemes.c                      | 35 ++++++++++--
+ mm/damon/sysfs.c                              | 54 +++++++++++++++++++
+ 7 files changed, 116 insertions(+), 15 deletions(-)
+
+-- 
+2.43.5
+
