@@ -1,42 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A617C21A928
-	for <damon@lists.linux.dev>; Tue,  5 Aug 2025 17:51:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94D871E4AE;
+	Wed,  6 Aug 2025 00:40:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754416272; cv=none; b=h8M0SmkuoPRDGs9Xd5eHxCLGEEp2CRdUn/44HUdeXVQGJEMI23ngKqbcMEppEOcIim05AYkWv4rlm1KCP4c9HoLCKCqBlVxQK3xpyWHrUeqaaA+rNjmVxGSlPpNAs4H/3HdD6o+VKRwR3HdYdjf/sIPAf0PgWRBOR6y5VQvm6fg=
+	t=1754440808; cv=none; b=h+4vVAXzKTU2p1lvcPQybjx6CR5GXjNcWyzptLLBgc9poNd+51d/HigkJykq4qH8ruS/v/CMU3sE20oFaSjMLwXox2/wGKxszqvTnTZKkok7Qnc5Ky9fY3Eb7F7h28AX4cobQJWCVDxLTcru/9tawgrLnKX7gcQSMXxigCWTR20=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754416272; c=relaxed/simple;
-	bh=8g0UjY8KpgVw7yEBK5CekyrLQKSEymkYbsSM62Ge2DI=;
+	s=arc-20240116; t=1754440808; c=relaxed/simple;
+	bh=fPjD5D3HDLu3NtemT8rWbSgbD6qYNtA8uvatr0PW7QA=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=j3LDQCwAoddN2teKvXyQzSpsccCf6XbuU/AiEE4bs32He7JKeHHO+41wD2/gm6ilS1GFu8JnewBN/TLt2YIfwv9A972+U9+1BBlOWAjP2Tihw284me6AQl2RYIfAhDwSWyLSW2/eTJpnzphUbP/MaPP/Kw8XuCsv9WlpDoWalkE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Bwvefw2Z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RHxbwmMuAF7deWr11TjsY7Jmm+u3QKSzM5mylt/O2XjzmyJYI6QkGhdLSW4Xq6TBXu31m98C6SdUoHN8ITQZOercXYupPDCF0njUxVizP4T89e7nKdfA7j2+NN+H4qfFThxV8WU5gY3MwpxdAhYDU8OTOu7LjkkNWdoWjSkP6yM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=L2U9Zsxo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Bwvefw2Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2126DC4CEF0;
-	Tue,  5 Aug 2025 17:51:12 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="L2U9Zsxo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8D55C4CEF0;
+	Wed,  6 Aug 2025 00:40:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754416272;
-	bh=8g0UjY8KpgVw7yEBK5CekyrLQKSEymkYbsSM62Ge2DI=;
+	s=k20201202; t=1754440808;
+	bh=fPjD5D3HDLu3NtemT8rWbSgbD6qYNtA8uvatr0PW7QA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Bwvefw2Z7hFwqdVFbx4Q5p+CVqM8sPtQx+3IaD4zueVhRV+Uffjz7GGo8w6id4N64
-	 T6v+DumjaMB+jwxeq9fYfGtFWF+Hc3YnZX492TwuqPuHLp3NyUDUY6DLcEam/eg4wW
-	 8EClIytdqzE0urb9Kdv7QprtQOwmaOhVXNhUCg4hLTJxDDzFlU98eCu6xBB5mUmk4k
-	 ngzVSCgYyMzqT/7bad9+wEW7hI0j0r7i+PBZzJEeDdC7+nufDnqNzM8mqgAvRjC+Nw
-	 ZLcosdh+Gv0/v4BexMMOIDuaWgDFWV7FSJfmJ6K03P3eDiUuMAF3r01wVAlhDhUf3J
-	 NTF/qN7pCgc5w==
+	b=L2U9Zsxong5pC1ZCBOpeRRRkjZSlaDbpCpf36zSl0CRMtDzkH3JiV1H7RrMQP+W0y
+	 dzXlMKgr71kVEzpOb0H+dYBsRzNT9MCliE8CVG3YLQbV9E5xbQteffDqRG5aW4Su+O
+	 FXvwY/28e0XnP4znopWCug89r5I+cmj7Jfulh+ecw7AMp6eTSy/sKE5/Km96j6crT0
+	 qAYpHUTeAK5cHjX5K3hd2hNEZsr/tp/3Uh1qKMOlJem5xYbFs7IMfDjc4Hi1hdkEPa
+	 /HgzoMuKAbRn0Z78STDLuptxuBQGfZsGhaQZqHXZXyKM9Z0Se/n3lkMiQQN/Q61tea
+	 X68lGEcLgl2hw==
 From: SeongJae Park <sj@kernel.org>
-To: Akinobu Mita <akinobu.mita@gmail.com>
+To: Bijan Tabatabai <bijan311@gmail.com>
 Cc: SeongJae Park <sj@kernel.org>,
-	Bijan Tabatabai <bijan311@gmail.com>,
 	damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org,
+	linux-doc@vger.kernel.org,
+	Andrew Morton <akpm@linux-foundation.org>,
+	corbet@lwn.net,
 	Bijan Tabatabai <bijantabatab@micron.com>
-Subject: Re: [PATCH] mm/damon/vaddr: avoid unnecessary migration between target nodes
-Date: Tue,  5 Aug 2025 10:51:10 -0700
-Message-Id: <20250805175110.7589-1-sj@kernel.org>
+Subject: Re: [PATCH 0/5] mm/damon/sysfs: Add commands useful for using migration dests
+Date: Tue,  5 Aug 2025 17:40:03 -0700
+Message-Id: <20250806004003.52864-1-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <CAC5umyjp_tbcJ3=UdSv0WCiOWytW3arBYp3nwv9i2V24ENmmPw@mail.gmail.com>
+In-Reply-To: <20250805162022.4920-1-bijan311@gmail.com>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -44,75 +48,85 @@ List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On Wed, 6 Aug 2025 01:04:47 +0900 Akinobu Mita <akinobu.mita@gmail.com> wrote:
+Hi Bijan,
 
-> 2025年8月5日(火) 1:43 SeongJae Park <sj@kernel.org>:
-> >
-> > On Mon,  4 Aug 2025 10:19:20 -0500 Bijan Tabatabai <bijan311@gmail.com> wrote:
-> >
-> > > On Mon, 4 Aug 2025 21:46:49 +0900 Akinobu Mita <akinobu.mita@gmail.com> wrote:
-> > >
-> > > > Hi,
-> > > >
-> > > > 2025年8月4日(月) 3:01 SeongJae Park <sj@kernel.org>:
-> > > > >
-> > > > > Hello Akinobu,
-> > > > >
-> > > > > On Sun,  3 Aug 2025 22:00:28 +0900 Akinobu Mita <akinobu.mita@gmail.com> wrote:
-> > > > >
-> > > > > > This change avoids unnecessary migration by checking if the folio to which
-> > > > > > the migration is applied is already located in one of the target nodes.
-[...]
-> > Agreed.  If Akinobu's use case is not depend on virtual address space, I think
-> > paddr is a feasible direction to go.  Note that 'paddr' doesn't support
-> > multiple destination nodes for now, so development of that would be needed if
-> > we decide to go in this way.  But, again, I'd love to learn more about
-> > Akinobu's use case and the problem first.
+Subjects of patches usually be converted into lowercase when be merged into mm
+tree.  I'd suggest using lowercase even in patches stage, if those aim to be
+merged into mm tree.
+
+On Tue,  5 Aug 2025 11:20:17 -0500 Bijan Tabatabai <bijan311@gmail.com> wrote:
+
+> From: Bijan Tabatabai <bijantabatab@micron.com>
 > 
-> In my use case, a script periodically checks the processes in a cgroup and adds
-> new processes to the monitor targets, so the target processes change over time.
-> (Processes known to be short-lived or have low memory usage are excluded)
+> This patchset adds two DAMON commands, commit_schemes_dests and
+> wait_for_schemes_apply, that I have found useful for using a migrate_hot
+> scheme with migration dests.
 
-Thank you for sharing this!
-
-I'm curious in more details, though.  Could you share what you want to achieve
-with it, what DAMON parameters you are using for that, and how well or bad the
-results match with your expectation?
+Thank you for this patchset!  I believe we shouldn't be afraid at adding
+features, but should also be carefult at making good solutions for real
+problems.  So, my main response to this patchset is, hopefully unsurprisingly,
+I'd like to better understand the requirements and the problem you are
+encountering.
 
 > 
-> As you point out, even without the patch I suggested, it seems unlikely that
-> continuous migration between target nodes would occur.  The reason I proposed
-> this patch is that I didn't want to move any pages that were already located in
-> one of the target nodes.
+> The commit_schemes_dests command, similar to the existing
+> commit_schemes_quota_goals, is used to commit only the dests fields of
+> schemes. This has a couple of benefits:
+> 1) It is more efficient than recommitting all the DAMON data.
+> 2) Doing a full commit resets the aggregation and ops_update intervals. If
+> a user sends the full commit command frequently (relatively to those
+> intervals) the aggregation and ops_update events will be prevented from
+> triggering. Having a separate commit command side steps this problem.
+
+I agree the commit command of DAMON sysfs interface is inefficient, and could
+make the infinite intervals delay problem.  But, I didn't expect there could be
+use cases that use commit feature frequently enough to make the inefficiency
+and the intervals delay be real problems.  Could you please let me know more
+details about your use case and how severe problem DAMON is causing?
+
+Depending on the real problem, I'm wondering if optimizing commit command can
+be a solution.  For example, skipping the update of next_aggregation_sis and
+next_ops_update_sis when the intervals are not changed might be able to solve
+the intervals delay problem.
+
 > 
-> It's true that paddr is more suitable, so I'd like to evaluate it using paddr
-> and compare which one is better.
+> The wait_for_schemes_apply command causes the calling thread to wait until
+> all schemes have been applied. It does this by calling damos_walk() with a
+> NULL walk_fn. This can be useful, for example, if a user wants to know when
+> new scheme parameters they've committed have been applied. Another use case
+> could be if a user wants to record the system state every time a scheme is
+> applied for debuging purposes.
+> 
+> The functionality of wait_for_schemes_apply can be achieved with the
+> existing update_schemes_tried_bytes and update_schemes_tried_regions
+> commands. However, having a separate command avoids extra work and makes
+> user intent clearer when used in scripts.
 
-Soudns good, I'm looking forward to the evaluation results!  Let me know if any
-help is needed.
+I agree extra works are always better to be avoided.  But is the overhead large
+enough to be a real problem for your use case?  I also agree it could make the
+user script cleaner, but adding a kernel feature only for user scripts
+readabilities sounds like too much, since the user script could have its own
+abstract layers for its readability.
 
-> However, these processes have different
-> performance requirements, so vaddr may be a better choice as it may be possible
-> to extend special handling depending on the target process.
+Also, even if the new command is implemented, since the DAMOS schemes continue
+running, the system status will keep changing.  If you cannot do the recording
+of the system state in a restricted time, the recorded information might not be
+that reliable.  So I'm not sure if you really need this strict waiting in this
+way.
 
-We have implemented memcg type DAMOS filter[1] for such a case.  You can use
-the filter to make a given DAMOS scheme's action be applied to only pages that
-owned by specific cgroups or not.
+Could you please share more details about what you want to do with the new
+command, and how much problem you are seeing?  I'm particularly curious what
+system state you want to record, and why you need to wait the exact time
+interval.
 
-We also recently posted an RFC patch series[2] for memcg-aware auto-tuned
-memory tiering.  The RFC patch series is not yet upstreamed since I found no
-time to further test it.  It would be helpful if you could test and share the
-results.
-
-Again, I'm looking forward to more details of your use case and evaluation
-results.  Let me know if there is anything I can help.
-
-[1] https://docs.kernel.org/mm/damon/design.html#filters
-[2] https://lore.kernel.org/20250619220023.24023-1-sj@kernel.org
+Depending on the real use case and the problem, I think we might be able to
+reuse the DAMOS scheme stats, or implement more strict and reliable time
+control features, say, making kdamond or schemes pause and resume as users ask?
 
 
 Thanks,
 SJ
+
+[...]
