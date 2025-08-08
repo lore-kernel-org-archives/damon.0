@@ -1,70 +1,74 @@
-Received: from mail-pf1-f178.google.com (mail-pf1-f178.google.com [209.85.210.178])
+Received: from mail-pf1-f182.google.com (mail-pf1-f182.google.com [209.85.210.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AB5E1A2872
-	for <damon@lists.linux.dev>; Fri,  8 Aug 2025 19:55:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDAB2285CA1
+	for <damon@lists.linux.dev>; Fri,  8 Aug 2025 19:55:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754682941; cv=none; b=J2fg/++JpqAmxLZuzES2Jiy9J8sGUWXIC+GhHgbhUnNItvrPHkI0ARePfFrSbpPJJvtLc6rFGKnU/qy7aPVx5gZCnRGGw3wounAu+TpLy4C5mUIalzxmmS+3lDH0pNJDpsrJXA/AT4zzRSE7ZQ916LuXvepXReq3dI2urcHZPGQ=
+	t=1754682955; cv=none; b=oWI0FAtjaO06OiUSJUnx4liyamyPUqNDZcYm2M+TbP05s0gwRY6ulUkbU6/YfV19jx4cXc2i8Olavzfx1Mevn8eebbmcqTMZLA2yEGZf9loCgxWasOw2P/Sj95GOqvVV8QXxJlpMkqSRIt1rRbpnbFwGSjXY6TyvzpRfXvxsDmA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754682941; c=relaxed/simple;
-	bh=cMJY1yIHnE+SEO2yqUpcIpn54Y8+Fs7A44vrMelnAU4=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=uYMCgxkBZMjjFvy1ep84p9xL2fJ51fBJT+8FLqvlPtb0KrSYaNW8R/LynMB1DK6xI3S5nZbZF6KaarOGWIy2LmQEJOp8YOw7KgLq9N2y1gdLZXVvvVXIW5OEXf7W8SdIv+1XxfSAPkkXo3CvQIh5qjDh3BzRTRQRi4xNwdsVkr4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=a/FCpHuj; arc=none smtp.client-ip=209.85.210.178
+	s=arc-20240116; t=1754682955; c=relaxed/simple;
+	bh=q2HxuRnziCS/KCAne4WTFZGZzWx1yh6nzn7+29FXJJM=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=CA6TDiAntQNPywswMXQPGTxgcLIP3qXrhfXbJV/2ItOe3vN9Nb9SrZgxPHWjRoTuBYptJ+oJ4km4n5ibf+TibNe7LXQvGjBAoNWnKTre/ZbixCZZK4wNrgjn7YmvRX7ZCov7nVpDy3CQYfI5Qm3VVWOBzie+c21Mnpr8/Nd9ZOs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Sf3HdauU; arc=none smtp.client-ip=209.85.210.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="a/FCpHuj"
-Received: by mail-pf1-f178.google.com with SMTP id d2e1a72fcca58-747e41d5469so2912174b3a.3
-        for <damon@lists.linux.dev>; Fri, 08 Aug 2025 12:55:39 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Sf3HdauU"
+Received: by mail-pf1-f182.google.com with SMTP id d2e1a72fcca58-76bf3dafaa5so3598139b3a.0
+        for <damon@lists.linux.dev>; Fri, 08 Aug 2025 12:55:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1754682938; x=1755287738; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=eqB/Sho7SGdwhbbruKl9GuatUpYpgD51wl6c/nteI8g=;
-        b=a/FCpHuj3ICDpTZYuwLkn/DZHme+wc4wCaqRE/Q7aYPOnJbl+DZAhPNihuUL4/pVDi
-         Uk7Cgkf15ObJDO+SAGz15NFBUq+Hfxrf7xmKrKvqIkxWr+ZpjOFM5aCUunCRiliOY1fh
-         03ViLOH4VOF63EpX9Mf9Ojznjw7VFJrUQZAEU9Kra4edavAXpF+Jdy3catB+xLQJsv/H
-         3ICydnmBprzos0aRFfhEKQ0fiOfFiE/IK955NhcLaYU4hD81ph4OMiX65ifpaEgqgHzZ
-         yoIM1cGhfwSat2Zy1Q4UxDS2AYcCeTNkr0WuukfFI9MkVqG03kTrcFAxGkIXJfJljZMg
-         Ma5A==
+        d=gmail.com; s=20230601; t=1754682953; x=1755287753; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=a7vLxCVUxl0MmGqdQtyLA8BfN4dqum9VMza52NtDYMw=;
+        b=Sf3HdauU9Hpzn6NoTfPCNMxk/U3O8Hbya4aXt87hqlu0JMsl3CkBmtrXhxFNVunyM/
+         jOLSjJfePLH4ELp9wL4DafpYg0s0e5D0go5zFG9XQ04ml0qMAOo7JXF239hJhq8WJZyW
+         h3e9X4OL9gI4RjvUFZfQZ2kwOaHNsFbPiNeLJv5o6MgYz+NpAA2nqLUGMs1bSGTXLLRC
+         CeMJH8X8kZyRdHqEMd8hOzgPR7g4KsgCxRTL73xAW/YrDGGg2/7mqxfUlMkviynLCZyA
+         o+k5rBFoOBwown7QWPsAze+QfI7NwK9kP1v8cO4OQFpIWkOHPHqdbY+puyy/S/BEwDfA
+         P2+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754682938; x=1755287738;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=eqB/Sho7SGdwhbbruKl9GuatUpYpgD51wl6c/nteI8g=;
-        b=uG8Iiw1z282nEXNnAnuCbaYerpXfhusjA6PB4q8L84DbW870KbVwIlvMmncaM0V7DU
-         uBEfx3GVSfn18Vfw+Xx9toSH3odSTlCn+ASiKOTbAlWGkxcK633gn7V3kSOBkhZXIgvB
-         hrX+7M4FP7auw/9doCTOvtB1LiLznGo8ZbFw6m3/Si8GZalg92TL562skPRxycY3OWkZ
-         0FR3spRqkeCAIep4Wj2lA4V2Nq3cUsSkVXhJl3mye3ITy+DNd8/g1Fe9v7ot5s5H2ReV
-         WyiwTWiqW31vsT3iyKaYdeslKaIWsV6CbYj5wM5OZn1YpzfY2IAxxxdIivl8kiEJ1od3
-         CyGQ==
-X-Gm-Message-State: AOJu0Yy+T7flb2GEGjtxp6PR+E4ZaQz+6wlgwaAKIAm5kYSuu8SlF6pz
-	a9v/J5dLDYP2C3f6uynQUvZbb14CD8Tt3Ic1v2HavNl8TyrEN0T15E8q
-X-Gm-Gg: ASbGncvFazDUnmmatn/9tLW8BhkSYwdE3g6N5wc6SxFq6EARaHednsZyBYhNc2EUqbU
-	vr7ll5DDUzE1szSt7YWz/I43jrgkwuJEPwxqIAgnoB0pwAnL+NPV3wXBOVmryfdRxExVAetk2cE
-	HNbxDNw4M0K/quSHjURhhSAMadhxNXy2S6J7csOrppnZfvN1BXDSoBDat2VMUIBrRcKAzWOGLAP
-	z4YnOsx47XXoHtwTPXB9/zKrlRQ8b0EPd1k6nii5BZafJWZbUQE0A/5kI/UCDz/f41QOArBxX6J
-	XLe83JtZVibgNqI4MCdMw92RlQLee/EadeTVwPNJrs7Uqlj2zTFoB3j29ORdr9RpwEJ7Z1A7HlX
-	caTgc+CWQXFarZ8zW
-X-Google-Smtp-Source: AGHT+IHFozLerEyc686dk4nlDttJZ9Mww+TdFXINgSUY+cCWvU2o5P3PXK+Bi5fvRxn39KKF33gsuw==
-X-Received: by 2002:a05:6a00:2e25:b0:76b:f73a:4463 with SMTP id d2e1a72fcca58-76c46193613mr6289492b3a.19.1754682938456;
-        Fri, 08 Aug 2025 12:55:38 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1754682953; x=1755287753;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=a7vLxCVUxl0MmGqdQtyLA8BfN4dqum9VMza52NtDYMw=;
+        b=TR9i9KAz4zu6uCgNIe5mAJgqJYlJAs5UEedxkbpHdpBtI2Cg0/LFu8gFhodXS7YDgc
+         Ilu0O2yDQdzquj/faVYSxBJGsZPblns44tG8tfwA1diLBDjH+pjsEC57czck4XVw5rMc
+         jvC18Ut91P71PLUocaR4mSyaq2w61aXdPx8suPVOUgOwakxPpoSVV0fBWkefycVF3BVc
+         4ThcsFgChyL4MkVMmIvT2ARTT941GqIFGuVLffBK8faEwpM69xzZE8XWQcLqVPdcOOWZ
+         u/qRTJfGTXUCGVvdoaSwUocmqFzDBGfFBY4eNvdietO246uC03HgKq4fsji4f8qpjk8o
+         tXdw==
+X-Gm-Message-State: AOJu0YydGT/+YUCygRiewjzPCDq9MDl4syVZ2DkAt9FInWYjFJNXY3zx
+	Bv7I4NLhSCkaqQb7U40oslnZmX8meGLklpyc8dkxFKHC0LlyCiW/bkLL
+X-Gm-Gg: ASbGncv8tkgChe/EsTW1EUkFDNkyMa9Yz+nLNI02HEbO6L1vkGJVUCOlkdh6shseKA+
+	FgAVpmsfc1/ruV300h2ye3guZx34qUcqLebLKXLeliR4fAQozEaTf0BRfB7TxzkqEJvVStzUzxH
+	YOjqOcUyIra61pgekfdnnWg1P0drnMLJY17RU+GyQOYpi+lyKM3qjzwbr5irEFgnCPCFuiVY7QD
+	e6saOVqbgRXxDc8u3DnBUQnIqJkKLleUtpco0Lnnzjbv707uJ1zF/PNtXFMQCs3uYjcW5oxJQhm
+	GHFWgj6UJQGYwILTINnXOOXqCst1lmRpi4Pq0OJY+P9U/JN+Q75gRsIccjqABgYKh7tLMyMHqlI
+	/gEhNQrg4VtCi1YRQ
+X-Google-Smtp-Source: AGHT+IFvgJAy77kGnbT3cdwDVClhvfLI833n7irAibiQmz4OyK+ScQ5l1PmRRVtI6B/sOkH/p7c6MA==
+X-Received: by 2002:a05:6a20:5491:b0:222:ca3f:199 with SMTP id adf61e73a8af0-240556ba06dmr7025722637.18.1754682953116;
+        Fri, 08 Aug 2025 12:55:53 -0700 (PDT)
 Received: from ubuntu.. ([110.9.142.4])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-76bcce8f911sm21201103b3a.47.2025.08.08.12.55.35
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-76bcce8f911sm21201103b3a.47.2025.08.08.12.55.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 08 Aug 2025 12:55:38 -0700 (PDT)
+        Fri, 08 Aug 2025 12:55:52 -0700 (PDT)
 From: Sang-Heon Jeon <ekffu200098@gmail.com>
 To: sj@kernel.org,
 	honggyu.kim@sk.com
 Cc: damon@lists.linux.dev,
 	linux-mm@kvack.org,
 	Sang-Heon Jeon <ekffu200098@gmail.com>
-Subject: [PATCH 0/2] fix damos_commit_ops_filters iteration problem with
-Date: Sat,  9 Aug 2025 04:55:16 +0900
-Message-ID: <20250808195518.563053-1-ekffu200098@gmail.com>
+Subject: [PATCH 1/2] selftests/damon: test no-op commit broke DAMON status
+Date: Sat,  9 Aug 2025 04:55:17 +0900
+Message-ID: <20250808195518.563053-2-ekffu200098@gmail.com>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250808195518.563053-1-ekffu200098@gmail.com>
+References: <20250808195518.563053-1-ekffu200098@gmail.com>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -73,23 +77,113 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-While studying, I found a section in damos_commit_ops_filters() that
-looks like a bug. I first verified this issue through testing, and then
-modified the code to fix problem. After applying these patch set, the
-test which was added this time no longer fail.
+Add test to verify that DAMON status is not changed after a no-op
+commit. Currently, it is failing. but after fix the bug it should be
+success.
 
+Signed-off-by: Sang-Heon Jeon <ekffu200098@gmail.com>
 ---
-
-Sang-Heon Jeon (2):
-  selftests/damon: test no-op commit broke DAMON status
-  mm/damon/core : fix commit_ops_filters by using correct nth function
-
- mm/damon/core.c                               | 14 +++-
  tools/testing/selftests/damon/Makefile        |  1 +
  .../damon/sysfs_no_op_commit_break.py         | 78 +++++++++++++++++++
- 3 files changed, 92 insertions(+), 1 deletion(-)
+ 2 files changed, 79 insertions(+)
  create mode 100755 tools/testing/selftests/damon/sysfs_no_op_commit_break.py
 
+diff --git a/tools/testing/selftests/damon/Makefile b/tools/testing/selftests/damon/Makefile
+index 5b230deb19e8..44a4a819df55 100644
+--- a/tools/testing/selftests/damon/Makefile
++++ b/tools/testing/selftests/damon/Makefile
+@@ -17,6 +17,7 @@ TEST_PROGS += reclaim.sh lru_sort.sh
+ TEST_PROGS += sysfs_update_removed_scheme_dir.sh
+ TEST_PROGS += sysfs_update_schemes_tried_regions_hang.py
+ TEST_PROGS += sysfs_memcg_path_leak.sh
++TEST_PROGS += sysfs_no_op_commit_break.py
+ 
+ EXTRA_CLEAN = __pycache__
+ 
+diff --git a/tools/testing/selftests/damon/sysfs_no_op_commit_break.py b/tools/testing/selftests/damon/sysfs_no_op_commit_break.py
+new file mode 100755
+index 000000000000..300cdbaa7eda
+--- /dev/null
++++ b/tools/testing/selftests/damon/sysfs_no_op_commit_break.py
+@@ -0,0 +1,78 @@
++#!/usr/bin/env python3
++# SPDX-License-Identifier: GPL-2.0
++
++import json
++import os
++import subprocess
++import sys
++
++import _damon_sysfs
++
++def dump_damon_status_dict(pid):
++    try:
++        subprocess.check_output(['which', 'drgn'], stderr=subprocess.DEVNULL)
++    except:
++        return None, 'drgn not found'
++    file_dir = os.path.dirname(os.path.abspath(__file__))
++    dump_script = os.path.join(file_dir, 'drgn_dump_damon_status.py')
++    rc = subprocess.call(['drgn', dump_script, pid, 'damon_dump_output'],
++        stderr=subprocess.DEVNULL)
++
++    if rc != 0:
++        return None, f'drgn fail : return code({rc})'
++    try:
++        with open('damon_dump_output', 'r') as f:
++            return json.load(f), None
++    except Exception as e:
++        return None, 'json.load fail (%s)' % e
++
++def main():
++    # We can extend this test to change only the Given and reuse the When/Then.
++
++    # Given : setup filter with allow = True
++    proc = subprocess.Popen(['sleep', '10'])
++    kdamonds = _damon_sysfs.Kdamonds(
++        [_damon_sysfs.Kdamond(
++            contexts=[_damon_sysfs.DamonCtx(
++                targets=[_damon_sysfs.DamonTarget(pid=proc.pid)],
++                schemes=[_damon_sysfs.Damos(
++                    ops_filters=[
++                        _damon_sysfs.DamosFilter(type_='anon', matching=True, allow=True)
++                    ]
++                )],
++            )])]
++    )
++
++    err = kdamonds.start()
++    if err is not None:
++        print('kdamond start failed: %s' % err)
++        exit(1)
++
++    before_commit_status, err = dump_damon_status_dict(kdamonds.kdamonds[0].pid)
++    if err is not None:
++        print(err)
++        exit(1)
++
++    # When : No-op commit, it should not break anything
++    kdamonds.kdamonds[0].commit()
++
++    # Then : Check value with drgn
++    after_commit_status, err = dump_damon_status_dict(kdamonds.kdamonds[0].pid)
++    if err is not None:
++        print(err)
++        exit(1)
++
++    before_commit_dump = json.dumps(before_commit_status, sort_keys=True, indent=2)
++    after_commit_dump = json.dumps(after_commit_status, sort_keys=True, indent=2)
++    if before_commit_dump != after_commit_dump:
++        print("[TEST FAILED] : no-op commit break damon status")
++        print("===== before_commit =====")
++        print(before_commit_dump)
++        print("===== after_commit =====")
++        print(after_commit_dump)
++        exit(1)
++
++    kdamonds.stop()
++
++if __name__ == '__main__':
++    main()
 -- 
 2.43.0
 
