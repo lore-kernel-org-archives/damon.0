@@ -1,119 +1,95 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f178.google.com (mail-pf1-f178.google.com [209.85.210.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 994161A0BFD;
-	Thu,  7 Aug 2025 16:25:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AB5E1A2872
+	for <damon@lists.linux.dev>; Fri,  8 Aug 2025 19:55:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754583902; cv=none; b=TinydU51y1EmChFIyu013W3sapSQfrBebo2irpbkwEigkJVBBmM1kfPG7I2uOKUfyKhga4rlcPAlr9+RSin+uRRQmPQN4e8TK0vA22CW/gXGc6faFSBLKzAXXfXU3HMmXVpPWUmUyBWo+Erza79j5VALFOV2CXUXbKiTPcVuGno=
+	t=1754682941; cv=none; b=J2fg/++JpqAmxLZuzES2Jiy9J8sGUWXIC+GhHgbhUnNItvrPHkI0ARePfFrSbpPJJvtLc6rFGKnU/qy7aPVx5gZCnRGGw3wounAu+TpLy4C5mUIalzxmmS+3lDH0pNJDpsrJXA/AT4zzRSE7ZQ916LuXvepXReq3dI2urcHZPGQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754583902; c=relaxed/simple;
-	bh=gZuBfBfos6lnetLDGbxB+b0JOP5wvWRXNZu2oo5TIAc=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=BpLGrqqP3l5ERa4x+263ZopdNXYBAWKxdnZB5s+hgfb8syt8J/vxYEvFyiT21QH8kjuT7B/4MbBeWp84BcORCIzqnF3RLSFMCqWbMhIT88a+YYr5uraY//BtHmfu0DU+5DRnVLhViX3zd7P0aiQiDddJs0AHtyvELo5YbnooA2I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cNGB1fF+; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1754682941; c=relaxed/simple;
+	bh=cMJY1yIHnE+SEO2yqUpcIpn54Y8+Fs7A44vrMelnAU4=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=uYMCgxkBZMjjFvy1ep84p9xL2fJ51fBJT+8FLqvlPtb0KrSYaNW8R/LynMB1DK6xI3S5nZbZF6KaarOGWIy2LmQEJOp8YOw7KgLq9N2y1gdLZXVvvVXIW5OEXf7W8SdIv+1XxfSAPkkXo3CvQIh5qjDh3BzRTRQRi4xNwdsVkr4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=a/FCpHuj; arc=none smtp.client-ip=209.85.210.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cNGB1fF+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E65E7C4CEEB;
-	Thu,  7 Aug 2025 16:25:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754583902;
-	bh=gZuBfBfos6lnetLDGbxB+b0JOP5wvWRXNZu2oo5TIAc=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cNGB1fF+zSer4RrcHRNtDc4XjWOFIpr9Akj8vMOxKglY64CcCS+atMiPTTfgAy1FC
-	 J48secBhJX/fCDNEvnaclth1xE3MIgng0MEdsnSgKvECkDYpOufr1FlGc8HL8+IiXz
-	 lA3Xl2msKWXsXMLiP3JCeXIBBu8JZsQSxEKyE7H9AYh/oHjDF6viWvutOImxa+2tHL
-	 7oN3DDYzZjVYWBSq1V5c//1tRGa/qGfm4bH0o2K/YgnfVhzFxjFGmNtqDmZNiLPVcj
-	 0JtJRMVklulGL0ZqzgaTK7ApGaWicj8qZyUSBOCaODq/21fOPzmLksZ4dGYyMFfgXJ
-	 lUTeagY+M8Rbg==
-From: SeongJae Park <sj@kernel.org>
-To: Bijan Tabatabai <bijan311@gmail.com>
-Cc: SeongJae Park <sj@kernel.org>,
-	damon@lists.linux.dev,
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="a/FCpHuj"
+Received: by mail-pf1-f178.google.com with SMTP id d2e1a72fcca58-747e41d5469so2912174b3a.3
+        for <damon@lists.linux.dev>; Fri, 08 Aug 2025 12:55:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1754682938; x=1755287738; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=eqB/Sho7SGdwhbbruKl9GuatUpYpgD51wl6c/nteI8g=;
+        b=a/FCpHuj3ICDpTZYuwLkn/DZHme+wc4wCaqRE/Q7aYPOnJbl+DZAhPNihuUL4/pVDi
+         Uk7Cgkf15ObJDO+SAGz15NFBUq+Hfxrf7xmKrKvqIkxWr+ZpjOFM5aCUunCRiliOY1fh
+         03ViLOH4VOF63EpX9Mf9Ojznjw7VFJrUQZAEU9Kra4edavAXpF+Jdy3catB+xLQJsv/H
+         3ICydnmBprzos0aRFfhEKQ0fiOfFiE/IK955NhcLaYU4hD81ph4OMiX65ifpaEgqgHzZ
+         yoIM1cGhfwSat2Zy1Q4UxDS2AYcCeTNkr0WuukfFI9MkVqG03kTrcFAxGkIXJfJljZMg
+         Ma5A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1754682938; x=1755287738;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=eqB/Sho7SGdwhbbruKl9GuatUpYpgD51wl6c/nteI8g=;
+        b=uG8Iiw1z282nEXNnAnuCbaYerpXfhusjA6PB4q8L84DbW870KbVwIlvMmncaM0V7DU
+         uBEfx3GVSfn18Vfw+Xx9toSH3odSTlCn+ASiKOTbAlWGkxcK633gn7V3kSOBkhZXIgvB
+         hrX+7M4FP7auw/9doCTOvtB1LiLznGo8ZbFw6m3/Si8GZalg92TL562skPRxycY3OWkZ
+         0FR3spRqkeCAIep4Wj2lA4V2Nq3cUsSkVXhJl3mye3ITy+DNd8/g1Fe9v7ot5s5H2ReV
+         WyiwTWiqW31vsT3iyKaYdeslKaIWsV6CbYj5wM5OZn1YpzfY2IAxxxdIivl8kiEJ1od3
+         CyGQ==
+X-Gm-Message-State: AOJu0Yy+T7flb2GEGjtxp6PR+E4ZaQz+6wlgwaAKIAm5kYSuu8SlF6pz
+	a9v/J5dLDYP2C3f6uynQUvZbb14CD8Tt3Ic1v2HavNl8TyrEN0T15E8q
+X-Gm-Gg: ASbGncvFazDUnmmatn/9tLW8BhkSYwdE3g6N5wc6SxFq6EARaHednsZyBYhNc2EUqbU
+	vr7ll5DDUzE1szSt7YWz/I43jrgkwuJEPwxqIAgnoB0pwAnL+NPV3wXBOVmryfdRxExVAetk2cE
+	HNbxDNw4M0K/quSHjURhhSAMadhxNXy2S6J7csOrppnZfvN1BXDSoBDat2VMUIBrRcKAzWOGLAP
+	z4YnOsx47XXoHtwTPXB9/zKrlRQ8b0EPd1k6nii5BZafJWZbUQE0A/5kI/UCDz/f41QOArBxX6J
+	XLe83JtZVibgNqI4MCdMw92RlQLee/EadeTVwPNJrs7Uqlj2zTFoB3j29ORdr9RpwEJ7Z1A7HlX
+	caTgc+CWQXFarZ8zW
+X-Google-Smtp-Source: AGHT+IHFozLerEyc686dk4nlDttJZ9Mww+TdFXINgSUY+cCWvU2o5P3PXK+Bi5fvRxn39KKF33gsuw==
+X-Received: by 2002:a05:6a00:2e25:b0:76b:f73a:4463 with SMTP id d2e1a72fcca58-76c46193613mr6289492b3a.19.1754682938456;
+        Fri, 08 Aug 2025 12:55:38 -0700 (PDT)
+Received: from ubuntu.. ([110.9.142.4])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-76bcce8f911sm21201103b3a.47.2025.08.08.12.55.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 08 Aug 2025 12:55:38 -0700 (PDT)
+From: Sang-Heon Jeon <ekffu200098@gmail.com>
+To: sj@kernel.org,
+	honggyu.kim@sk.com
+Cc: damon@lists.linux.dev,
 	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Bijan Tabatabai <bijantabatab@micron.com>
-Subject: Re: [PATCH v2] mm/damon/core: skip needless update of damon_attrs in damon_commit_ctx()
-Date: Thu,  7 Aug 2025 09:24:59 -0700
-Message-Id: <20250807162459.52683-1-sj@kernel.org>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <CAMvvPS7mcevjD-b2vz1P+grQfffVA0bx-x5WcUQ8=JApD+UkHw@mail.gmail.com>
-References: 
+	Sang-Heon Jeon <ekffu200098@gmail.com>
+Subject: [PATCH 0/2] fix damos_commit_ops_filters iteration problem with
+Date: Sat,  9 Aug 2025 04:55:16 +0900
+Message-ID: <20250808195518.563053-1-ekffu200098@gmail.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On Wed, 6 Aug 2025 19:48:44 -0500 Bijan Tabatabai <bijan311@gmail.com> wrote:
+While studying, I found a section in damos_commit_ops_filters() that
+looks like a bug. I first verified this issue through testing, and then
+modified the code to fix problem. After applying these patch set, the
+test which was added this time no longer fail.
 
-> On Wed, Aug 6, 2025 at 7:19 PM SeongJae Park <sj@kernel.org> wrote:
-> >
-> > On Wed,  6 Aug 2025 18:42:54 -0500 Bijan Tabatabai <bijan311@gmail.com> wrote:
-> >
-> > > From: Bijan Tabatabai <bijantabatab@micron.com>
-> > >
-> > > Currently, damon_commit_ctx() always calls damon_set_attrs() even if the
-> > > attributes have not been changed. This can be problematic when the DAMON
-> > > state is committed relatively frequently because damon_set_attrs() resets
-> > > ctx->next_{aggregation,ops_update}_sis, causing aggregation and ops
-> > > update operations to be needlessly delayed.
-> > >
-> > > This patch avoids this by only calling damon_set_attrs() in
-> > > damon_commit_ctx when the attributes have been changed.
-> > >
-> > > Cc: Bijan Tabatabai <bijan311@gmail.com>
-> >
-> > Maybe above line is added by a mistake?
-> 
-> Sorry about that. I added it because my internship ends this week and
-> wanted to make sure I get notifications on the status of this patch
-> (e.g. email notifications when the patch is merged in Andrew's tree).
-> If it's inappropriate I will remove it in the next version (unless
-> Andrew does it himself).
+---
 
-I was just thinking you might not added this for a purpose.  I don't mind
-adding this Cc tag.  As you may already noticed, Andrew merged this patch as is
-with this Cc line, so seems Andrew also doesn't really mind, so all is good.
+Sang-Heon Jeon (2):
+  selftests/damon: test no-op commit broke DAMON status
+  mm/damon/core : fix commit_ops_filters by using correct nth function
 
-I hope you had a nice internship and continue seeing on the mailing lists :)
+ mm/damon/core.c                               | 14 +++-
+ tools/testing/selftests/damon/Makefile        |  1 +
+ .../damon/sysfs_no_op_commit_break.py         | 78 +++++++++++++++++++
+ 3 files changed, 92 insertions(+), 1 deletion(-)
+ create mode 100755 tools/testing/selftests/damon/sysfs_no_op_commit_break.py
 
-[...]
-> > > +static bool damon_attrs_equals(const struct damon_attrs *attrs1,
-> > > +             const struct damon_attrs *attrs2)
-> > > +{
-> > > +     const struct damon_intervals_goal *ig1 = &attrs1->intervals_goal;
-> > > +     const struct damon_intervals_goal *ig2 = &attrs2->intervals_goal;
-> > > +
-> > > +     return attrs1->sample_interval == attrs2->sample_interval &&
-> > > +             attrs1->aggr_interval == attrs2->aggr_interval &&
-> > > +             attrs1->ops_update_interval == attrs2->ops_update_interval &&
-> > > +             attrs1->min_nr_regions == attrs2->min_nr_regions &&
-> > > +             attrs1->max_nr_regions == attrs2->max_nr_regions &&
-> > > +             ig1->access_bp == ig2->access_bp &&
-> > > +             ig1->aggrs == ig2->aggrs &&
-> > > +             ig1->min_sample_us == ig2->min_sample_us &&
-> > > +             ig1->max_sample_us == ig2->max_sample_us;
-> > > +
-> >
-> > Unnecessary blank line?
-> 
-> Sorry for missing this!
-
-No worry, as you may already noticed, Andrew thankfully fixed this, with a
-followup fix patch[1].
-
-So all is well :)
-
-[...]
-
-[1] https://lore.kernel.org/20250807033443.BD30FC4CEEB@smtp.kernel.org
-
-
-Thanks,
-SJ
+-- 
+2.43.0
 
