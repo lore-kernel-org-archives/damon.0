@@ -1,226 +1,191 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi1-f177.google.com (mail-oi1-f177.google.com [209.85.167.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C81741D618C;
-	Sat,  9 Aug 2025 17:48:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1CFA28DB3
+	for <damon@lists.linux.dev>; Sun, 10 Aug 2025 05:43:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754761721; cv=none; b=mXN89AK+SJyuHqSfywBL/FUqBrUEAFhpVJg29uCWgVsAiYRj7bSqQWYs14FGXJHpoT/E6UQL4DPkFPvvsiVkBF1fCeWphpb566+h3Tnn7fwfbGki0nLNd48UzPdpfxGz6ebZGUERbEWjAVC65VJXHukJhgBLsN5JQu0U2eDzySc=
+	t=1754804611; cv=none; b=tP0udE3kUgB2oj/uUmEB+C/Pjfb9AiJvs19K4W9yiPYEeqAB1N9kkTXb+SraoceEtQWiKOgAmBSaf+6Ts5+iQaR9kF6FewgNsK1ngeXiON8xasjbCjyIpd7AUH3gyz4FXCee7xgkd4HXqbxLGc8E/k0ZUCUM2pJqbuWOleNnRpo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754761721; c=relaxed/simple;
-	bh=aKDkF5RSgXGbhrjBrkjvDv3sHb1LUhd6gxPgYdPrLoY=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=drqQ2JdFnOVdyTb+K8U4W1tkBJDYavfNRFb5LA1kX4NB0oq8cISmytMmfZfXO1B6p2XSKIYn9oHBrPMxRwTEAWXmYPfXnv+MspHaybemUCiolLlUcAz8f3mhG+Hmn/lHprJP62wyRjm75YfoYOYXOqicRJUvPFbx2vUntKArTqE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Y8nbYeg1; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1754804611; c=relaxed/simple;
+	bh=BKJfgSqIOY6Umz3NcP2Y6p7nrdejTMVfkick2WK/RQ0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=HBWWYARQz9dn3U9sqeP78hYn0wxtf5P99RiLIYtTSSPOwnDq6iqxQEikf/DCdEm9uOGcaQHQkxaNBp6J6av0BeItIVgaLmh7hjqlYKqDJPi/DXBxLuqNCnod2yFWdmajnHywztBCp/waxiX1Hd64qh4QB18QKvBXjfH+LRBK0ds=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Q7H+qC1p; arc=none smtp.client-ip=209.85.167.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Y8nbYeg1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B059C4CEE7;
-	Sat,  9 Aug 2025 17:48:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754761721;
-	bh=aKDkF5RSgXGbhrjBrkjvDv3sHb1LUhd6gxPgYdPrLoY=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y8nbYeg1V3Bj9tiIH2hWtnSPho7Srv+KMTxfn8pnWyK6hdtiMxPK++yQ1KeQzD8eQ
-	 a5piVkWP0R/tTqmdZvX1FRART50cKQqY+k4aaFndhzGuiooUZ5AEC0/UPqG1aBQhy3
-	 IrizXo+tBDtE50v3H01dpCeW5NDq8x9ZYYk+GF3QsId5hMsTSjA9Lj9qt8M/ebSm9H
-	 tvkKqiLd3e60qwo0HfrYiXBEHt/6q5vc776usWnQx3iSbKMLQSqq2KttmIOrQ1X/0z
-	 ufPH6tli8Nb4LqKCQ4aWzu69tqHVpFozRoDsnbiaGFgZ8ZX/e+ZMvnZJQoJEHFoofl
-	 eRucwiUvXLBoA==
-From: SeongJae Park <sj@kernel.org>
-To: Sang-Heon Jeon <ekffu200098@gmail.com>
-Cc: SeongJae Park <sj@kernel.org>,
-	honggyu.kim@sk.com,
-	damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	stable@vger.kernel.org
-Subject: Re: [PATCH v2] mm/damon/core: fix commit_ops_filters by using correct nth function
-Date: Sat,  9 Aug 2025 10:48:38 -0700
-Message-Id: <20250809174838.71485-1-sj@kernel.org>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250809130756.637304-1-ekffu200098@gmail.com>
-References: 
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Q7H+qC1p"
+Received: by mail-oi1-f177.google.com with SMTP id 5614622812f47-433f63d7803so1120820b6e.1
+        for <damon@lists.linux.dev>; Sat, 09 Aug 2025 22:43:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1754804609; x=1755409409; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=1VF7q0WLeklegOu3HyhvX8CcabjELygMV30fjl5+vF4=;
+        b=Q7H+qC1pO88T8U1HI1fXsI4xUwx9Xr7dkig5x7TMPXbzI3F0+c4qyHNTktFnNka16a
+         V+fOvNP6PU5PHD6dVZR8SEbCoB+fKPpEd+3Nmv3mXeb2RaM9ghx/B/GBgOQnHYGOpL/d
+         XV3D8C+ZuFidRVCZeAazyxNVOoF5I/bk0VMI5QVQt+mdmKVfxVHip8xzbp6jVuxWWf/z
+         +xrQA+fA253cVYeI7TqbG52R8e8DgLH/8HcBULegUdWULphRiBatEt9cIqRY9DG+PZXx
+         JluZa6NqXKS7cwC/wQiNydX7Zky48aJklQSqyBkB2N9zdlCafrRfJkxJaa9w+6U3vWV+
+         SgHA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1754804609; x=1755409409;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=1VF7q0WLeklegOu3HyhvX8CcabjELygMV30fjl5+vF4=;
+        b=jcAtLT3fzEOgX1gGEZi1ZJLCrs5rpwrr2kByUZi1x7oiykdX4fSu7e3R950yQqGTc6
+         fvoiPM+AkyIY33aTi4KRxGO2eXtz6HbYOPhK297gmtA+qjl+HP35LHbnqbXmRQXlSTpg
+         1F8R/KsG6zOXI+yZv/X4XFXxt+Oo82OkdMBuIU/bkuTi7AnJ0mx4AzyHMfRELWdw/p6L
+         gs8Wu9qC7H2RX9K0UcGZc7Zz9J10iFDxfhrg7EdjGzyyIcAzN+e0GZcIAVAXCNXrcX79
+         V6aNliYw7GQTAPT/iEMRlISWXPhnuduk2o17X72K+fGTg2MaOToKHMXpZCVtFBwU+rFs
+         ucpg==
+X-Forwarded-Encrypted: i=1; AJvYcCVc/FdtjISoh84FEgDoudoJzxfRHc36NSBVx1ZuNvXql16BdU2NrGAJfBbwGJRMjZH1CNe2nQ==@lists.linux.dev
+X-Gm-Message-State: AOJu0Yzzh1NtmshXCaalhLfwvLZitelnVCIEpDMTqHxHByS6rvKhMLWk
+	agrvbxnYOAkoclVdSZTCfAWjAJbf1ze6oVhfWMP+ibc1XDiCNqbQbbnrv2g+G//fMluhkPPsnbX
+	XlwOXHJ1MGXymoqNmzFIxBcupDcKpfY0=
+X-Gm-Gg: ASbGncshnk/ioxJf8DEcySWpwp/brYVkbMYER+bmtOGEHb3XyzaLeiJr1qVHSKHsAkL
+	qYdXk2ZjAIWn5q7mCf14Ez3T4DBlLYJF2UhGRszA/EYLCM15LzO4PagtITbxLJ6Qe/96s+yYcrI
+	G5wo3gSBqnthFKkwNvs/3GMVURYszmMAaJ6mEHMgGZjjCW+WJ+pBdhZiq1V6Y2w+dzw5/YtR8f5
+	OnZdkg=
+X-Google-Smtp-Source: AGHT+IHJxGMU/wk8QP5vJyCNj2dWjhPvgi4dMUxGNQQj6i6HmeNlJ8gTWRRCGf/0ap7DyAgfXV1rAyxSCplBWIqXv2A=
+X-Received: by 2002:a05:6871:5b21:b0:30b:9750:3085 with SMTP id
+ 586e51a60fabf-30c20f8d5f8mr6278198fac.10.1754804608515; Sat, 09 Aug 2025
+ 22:43:28 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <CABFDxMH0LDLLdJf-t2DEHCD40EJDfcq35cJM-HS5GkLX7KqsHA@mail.gmail.com>
+ <20250809173559.71327-1-sj@kernel.org>
+In-Reply-To: <20250809173559.71327-1-sj@kernel.org>
+From: Sang-Heon Jeon <ekffu200098@gmail.com>
+Date: Sun, 10 Aug 2025 14:43:17 +0900
+X-Gm-Features: Ac12FXwPPpoJ3Atc3Fc0faMpuO09tCnt-cxUYqEXvY3Fy45GYsSbzi1FInUggjA
+Message-ID: <CABFDxMG-2+VQvWNHqCLKy4jZXBJzsWPS9DOkV-gfYovF5Xo-Jg@mail.gmail.com>
+Subject: Re: [PATCH 1/2] selftests/damon: test no-op commit broke DAMON status
+To: SeongJae Park <sj@kernel.org>
+Cc: honggyu.kim@sk.com, damon@lists.linux.dev, linux-mm@kvack.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Sat,  9 Aug 2025 22:07:56 +0900 Sang-Heon Jeon <ekffu200098@gmail.com> wrote:
+Hi SeongJae
 
-> damos_commit_ops_filters() incorrectly uses damos_nth_filter() which
-> iterates core_filters. As a result, performing a commit unintentionally
-> corrupts ops_filters.
-> 
-> Add damos_nth_ops_filter() which iterates ops_filters. Use this function
-> to fix issues caused by wrong iteration.
-> 
-> Also, add test to verify that modification is right way.
+On Sun, Aug 10, 2025 at 2:36=E2=80=AFAM SeongJae Park <sj@kernel.org> wrote=
+:
+>
+> On Sat, 9 Aug 2025 15:39:41 +0900 Sang-Heon Jeon <ekffu200098@gmail.com> =
+wrote:
+>
+> > Hi SeongJae
+> >
+> > On Sat, Aug 9, 2025 at 7:05=E2=80=AFAM SeongJae Park <sj@kernel.org> wr=
+ote:
+> > >
+> > > Hello Sang-Heon,
+> > >
+> > > On Sat,  9 Aug 2025 04:55:17 +0900 Sang-Heon Jeon <ekffu200098@gmail.=
+com> wrote:
+> > >
+> > > > Add test to verify that DAMON status is not changed after a no-op
+> > > > commit.
+> > >
+> > > Thank you for this patch!  I have some comments below, though.
+> > >
+> > > > Currently, it is failing. but after fix the bug it should be
+> > > > success.
+> > >
+> > > To keep bisecting goes smoothly, let's introduce failing tests _after=
+_ their
+> > > fixes are landed.
+> >
+> > I see. As mentioned in another comment, I'll merge this patch set into
+> > one patch. I think this comment will be resolved then.
+>
+> That could make the patch be unnecessarily difficult to apply on older ke=
+rnels
+> due to the test part.  Please keep those separated.
 
-As I mentioned on v1 thread, please drop the test part, for ease of
-backporting.
+Oh, I misunderstand your previous comment. Now, I understand your
+point. I'll separate them back and make two v3 patch(one for fix bug,
+one for test) not a patch set.
+Thanks for the explanation, I feel like I'm learning more and more.
 
-> 
-> Fixes: 3607cc590f18 ("mm/damon/core: support committing ops_filters") # 6.15.x
-> Cc: stable@vger.kernel.org
-> Signed-off-by: Sang-Heon Jeon <ekffu200098@gmail.com>
-> ---
-> Changes from v1 [1]:
-> 1. Fix code and commit message style.
-> 2. Merge patch set into one patch.
-> 3. Add fixes and cc section for backporting.
-> 
-> [1] https://lore.kernel.org/damon/20250808195518.563053-1-ekffu200098@gmail.com/
-> 
-> ---
-> I tried to fix your all comments, but maybe i miss something. Then
-> please let me know; I'll fix it as soon as possible.
-> 
-> ---
->  mm/damon/core.c                               | 14 +++-
->  tools/testing/selftests/damon/Makefile        |  1 +
->  .../damon/sysfs_no_op_commit_break.py         | 72 +++++++++++++++++++
->  3 files changed, 86 insertions(+), 1 deletion(-)
->  create mode 100755 tools/testing/selftests/damon/sysfs_no_op_commit_break.py
-> 
-> diff --git a/mm/damon/core.c b/mm/damon/core.c
-> index 883d791a10e5..19c8f01fc81a 100644
-> --- a/mm/damon/core.c
-> +++ b/mm/damon/core.c
-> @@ -862,6 +862,18 @@ static struct damos_filter *damos_nth_filter(int n, struct damos *s)
->  	return NULL;
->  }
->  
-> +static struct damos_filter *damos_nth_ops_filter(int n, struct damos *s)
-> +{
-> +	struct damos_filter *filter;
-> +	int i = 0;
-> +
-> +	damos_for_each_ops_filter(filter, s) {
-> +		if (i++ == n)
-> +			return filter;
-> +	}
-> +	return NULL;
-> +}
-> +
->  static void damos_commit_filter_arg(
->  		struct damos_filter *dst, struct damos_filter *src)
->  {
-> @@ -925,7 +937,7 @@ static int damos_commit_ops_filters(struct damos *dst, struct damos *src)
->  	int i = 0, j = 0;
->  
->  	damos_for_each_ops_filter_safe(dst_filter, next, dst) {
-> -		src_filter = damos_nth_filter(i++, src);
-> +		src_filter = damos_nth_ops_filter(i++, src);
->  		if (src_filter)
->  			damos_commit_filter(dst_filter, src_filter);
->  		else
-> diff --git a/tools/testing/selftests/damon/Makefile b/tools/testing/selftests/damon/Makefile
-> index 5b230deb19e8..44a4a819df55 100644
-> --- a/tools/testing/selftests/damon/Makefile
-> +++ b/tools/testing/selftests/damon/Makefile
-> @@ -17,6 +17,7 @@ TEST_PROGS += reclaim.sh lru_sort.sh
->  TEST_PROGS += sysfs_update_removed_scheme_dir.sh
->  TEST_PROGS += sysfs_update_schemes_tried_regions_hang.py
->  TEST_PROGS += sysfs_memcg_path_leak.sh
-> +TEST_PROGS += sysfs_no_op_commit_break.py
->  
->  EXTRA_CLEAN = __pycache__
->  
-> diff --git a/tools/testing/selftests/damon/sysfs_no_op_commit_break.py b/tools/testing/selftests/damon/sysfs_no_op_commit_break.py
-> new file mode 100755
-> index 000000000000..fbefb1c83045
-> --- /dev/null
-> +++ b/tools/testing/selftests/damon/sysfs_no_op_commit_break.py
-> @@ -0,0 +1,72 @@
-> +#!/usr/bin/env python3
-> +# SPDX-License-Identifier: GPL-2.0
-> +
-> +import json
-> +import os
-> +import subprocess
-> +import sys
-> +
-> +import _damon_sysfs
-> +
-> +def dump_damon_status_dict(pid):
-> +    try:
-> +        subprocess.check_output(['which', 'drgn'], stderr=subprocess.DEVNULL)
-> +    except:
-> +        return None, 'drgn not found'
-> +    file_dir = os.path.dirname(os.path.abspath(__file__))
-> +    dump_script = os.path.join(file_dir, 'drgn_dump_damon_status.py')
-> +    rc = subprocess.call(['drgn', dump_script, pid, 'damon_dump_output'],
-> +        stderr=subprocess.DEVNULL)
-> +
-> +    if rc != 0:
-> +        return None, f'drgn fail: return code({rc})'
-> +    try:
-> +        with open('damon_dump_output', 'r') as f:
-> +            return json.load(f), None
-> +    except Exception as e:
-> +        return None, 'json.load fail (%s)' % e
-> +
-> +def main():
-> +    kdamonds = _damon_sysfs.Kdamonds(
-> +        [_damon_sysfs.Kdamond(
-> +            contexts=[_damon_sysfs.DamonCtx(
-> +                schemes=[_damon_sysfs.Damos(
-> +                    ops_filters=[
-> +                        _damon_sysfs.DamosFilter(
-> +                            type_='anon',
-> +                            matching=True,
-> +                            allow=True,
-> +                        )
-> +                    ]
-> +                )],
-> +            )])]
-> +    )
-> +
-> +    err = kdamonds.start()
-> +    if err is not None:
-> +        print('kdamond start failed: %s' % err)
-> +        exit(1)
-> +
-> +    before_commit_status, err = \
-> +        dump_damon_status_dict(kdamonds.kdamonds[0].pid)
-> +    if err is not None:
-> +        print(err)
+> [...]
+> > > > +    if rc !=3D 0:
+> > > > +        return None, f'drgn fail : return code({rc})'
+> > >
+> > > Let's not add a space before ':', for the consistency.
+> >
+> > I see. I made so many mistakes like these; (I worked this very late
+> > night...) I will fix them all. Thank you for checking this moment.
+>
+> I'm sorry to hear that you had to work on late night :'(  I hope you to h=
+ave
+> sufficient rests.
 
-Adding more context would be nice, e.g.,
+Never mind. just I went with that :) Thanks as always.
 
-    print('before-commit status dump failed: %s' % err)
+> [...]
+> > To be honest, I didn't use kselftest framework while making these
+> > patch set because I don't know how kernel developers use it.
+> >
+> > If you are okay, could you share how you use it?
+>
+> Sure.  I do below for running DAMON selftests.
+>
+>     $ sudo make -C tools/testing/selftests/damon run_tsets
+>
+> You could also run DAMON kunit tests like below.
+>
+>     $ ./tools/testing/kunit/kunit.py run --kunitconfig mm/damon/tests/
 
-> +        exit(1)
-> +
-> +    kdamonds.kdamonds[0].commit()
-> +
-> +    after_commit_status, err = \
-> +        dump_damon_status_dict(kdamonds.kdamonds[0].pid)
-> +    if err is not None:
-> +        print(err)
+Thanks for sharing. I'll try it with my vm environment.
 
-Adding more context would be nice, e.g.,
+> I usually run all those together with additional tests, using DAMON tests
+> suite[2].
+>
+> > I just build kernel
+> > with custom patch, and execute output images by vm, and setup env,
+> > then just execute tests(it's so raw.. i know)
+>
+> It's ok.  No one fits all, so different tests are needed for different ha=
+cks.
+> Please keep using whatever works best for you :)
 
-    print('after-commit status dump failed: %s' % err)
+You're so right. Maybe I just want to learn some tips from the experts. hah=
+a
 
-> +        exit(1)
-> +
-> +    if before_commit_status != after_commit_status:
-> +        print(f'before: {json.dump(before_commit_status, indent=2)}')
-> +        print(f'after: {json.dump(after_commit_status, indent=2)}')
-> +        exit(1)
-> +
-> +    kdamonds.stop()
-> +
-> +if __name__ == '__main__':
-> +    main()
-> -- 
-> 2.43.0
+> >
+> > Maybe is there a kernel build option that automatically includes tests
+> > to output image? Or just a general or smarter way to execute the whole
+> > test?
+>
+> To be honest I'm also not an expert of kselftest and kunit :)  You coule =
+refer
+> to the kselftest documentation[1] for more details.
 
-Other than above two trivial comments, nothing stands out to me.
+Thanks for sharing!
 
+> [...]
+> > Thanks for reviewing! Have a nice weekend. I'll do this job after my
+> > personal schedule finishes.
+>
+> No worry, take your time and fun! :)
+> [...]
 
-Thanks,
-SJ
+:)
+
+> [1] https://docs.kernel.org/dev-tools/kselftest.html
+> [2] https://github.com/damonitor/damon-tests/blob/master/corr/run.sh
+>
+>
+> Thanks,
+> SJ
+
+Best Regards.
+Sang-Heon Jeon
