@@ -1,111 +1,104 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f170.google.com (mail-pf1-f170.google.com [209.85.210.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EED6221C160;
-	Tue, 12 Aug 2025 17:20:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E75B2D9EF3
+	for <damon@lists.linux.dev>; Tue, 12 Aug 2025 17:35:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755019204; cv=none; b=J1jnOVIER83hiZXzvojiW39pgRGl4T76+E9OIXjQloASqK8sRJFejFZPjbvmDn6BgdIsq2r7Y6GPx6Tploc9lMQPiRYLzMeXa+1Y8iinpj+P5uA33Di6rcGzwGZ7BCq1Lb2HDe42Sv0zb48uzFNx7ltYN6e2GyClKCZlaDTGH9Y=
+	t=1755020147; cv=none; b=Y2VQotTaTemazdzIKBL+6rUZ7vcq4HY3gNoWqFS/xveL7YqycdaF3oW0KOe6oH/QSwHaN7NmxkxXaa43AAQrCfRkEq1LlJaVdlqak59c6bN7vAUH8faoUK7zeb9uAHoEePv55JFiTzjKnsttGeekCfQAKmZbQKU4lFU2GmlPuLg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755019204; c=relaxed/simple;
-	bh=mAC0HElfoi9Vm0ysz8JFlbF2hmtehTuzsx2QwPcA3lw=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ofDhWb1iBBUb7xNkFmtTH84w7SMqUfeVA2qcL5A+mnSjNM2sAOJhkERo5h1LC469bmtPOD7Lfgly/g1ol25Vdm4eme/b7je9rrA3BwpFYSUAzEXyXVc+Np2zZ3dY2Y90WKnZzELddWM88CcrzBwibRj5DcDUzzr/ZwPg3UnVceY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gM6qhym/; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1755020147; c=relaxed/simple;
+	bh=/fk0SInUI+7YMulFy98YQ3QInCIqTEu3ouODgJVlNh0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=XiXB1bUd+92r75N+PBR9vwRIrYUc6HjKo7C+0rn4Fwtko2W2e560C0Ih46Wjkk77TlV1oONH7e8j7tNqsl0IeFw1cY2TSkXed+36L2gGB0aE0chtoeQcvFdJ03aOKLIx1M4XSmcLrZF5xmidUKJy4PeD0EFg1T/PXlw3l8SRKTY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=htPusJID; arc=none smtp.client-ip=209.85.210.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gM6qhym/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EFC5C4CEF0;
-	Tue, 12 Aug 2025 17:20:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1755019203;
-	bh=mAC0HElfoi9Vm0ysz8JFlbF2hmtehTuzsx2QwPcA3lw=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gM6qhym/4a3Wazw/nb45u6yf19ToNI2AupnrQWSMRSud2rXFjWscjBM03GnmGuaLC
-	 EsSxGSxYbn6bxLR4A2ABjxDsa+pL4ZQhGqWV2JTXluMQdvNFq8NiSxxMtND5gTwRzu
-	 /DCJj7O5o5G9jFdLQ4APf0J10q1OuZDvhbtv2qaNCwxZni62qKDkKYUKeAtL4Ntygo
-	 2GE778oQcigzTGsrra/5sdbfnFvQWrDutwQCehovhpDQS2bzt+lr/jH/3RezA9e+eI
-	 SRpDHftSUOViKMiuPwCw9CW9uD00n3W1C88LhfSiOfeftXXkcznJQN+SXh6ZICgtQT
-	 cT+O7nxy008Ag==
-From: SeongJae Park <sj@kernel.org>
-To: Sang-Heon Jeon <ekffu200098@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="htPusJID"
+Received: by mail-pf1-f170.google.com with SMTP id d2e1a72fcca58-76bee58e01cso6819624b3a.1
+        for <damon@lists.linux.dev>; Tue, 12 Aug 2025 10:35:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1755020146; x=1755624946; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=3QqRiRc8S5UuRZr109N2LH3VeQOZ0mfRe2blg1ehQPc=;
+        b=htPusJIDCcqusfrcbFxIBNSP8GQ7l/d/OpVsFoGHgQdz1yKLlg/0Sfqe1X2Us3zzRi
+         qngiJuJEEd43hougKWDhUqGrBVDVf5sz8JvAp6F/t6bCMBV8TG+FqfR+NgeEyaLMCMxX
+         s2+9Xdux0k67aHRwzYWpUHw4UhcF68GGJT3ZRtP/w/KMe+BiCvirBrdHfW0aFMCyBsbY
+         t7SeJr+FUfNccJgkJgQ5AzzJW2CYZy4gdUoBIHqFWchbgI+WcPkY3xnwxGorhL0df9U2
+         XdPTZQ3tkR5xPnRzzaReyf+1X9Uke1RS4xM6Wie/1xWB5oQTbkxpRpk8cQ5ixc5odJrP
+         Tkcw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1755020146; x=1755624946;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=3QqRiRc8S5UuRZr109N2LH3VeQOZ0mfRe2blg1ehQPc=;
+        b=Hch4oPh5c+H9kf+sfawTa2gD0v1V9q70ERdi29SInWXSUrrKUTigxv6Y88jC9Zpr7N
+         L59oj0RwLyuH7V7BWtAekEzyJ4nx64z8IfeR4s+xAFdhEv+xOXWJDEq5At5tlUlV7jB9
+         nUClXm6DR42tF56lkNwjFdQmG7o5ptUMNFUi1+R6hZzQpDZNMJser2d5+sqJANvXGa42
+         C+qOVaMZJOu/PrSU9x4ectQ3fvaTwbIHy0sVe//Ef279DFjtE+7oSpiYMJpGAPHhh+3A
+         gYirk7Pkb1Gd9v3CHwaT/mC3p7lZQRl9St42LKZsNc+a5XVYHI2B7ljPJGJqzvX50UN5
+         ZQrw==
+X-Forwarded-Encrypted: i=1; AJvYcCVyEbt0vFg+wDH5YP1xKnaBEwEQIrnSKcT0evdQ53hMCI6DbJCp5Z5BNr6mQKATLBAtC6S8rA==@lists.linux.dev
+X-Gm-Message-State: AOJu0YzcN1UlLZsciceb3l6jj7GBT/d5EyA9EQZczx6KKTdzla6jeLOc
+	SpMYyIyPYf4BU3G1yC01YbUzVdbrB8WbqIVfEwK3mjVdkdiDI6EsHq7v
+X-Gm-Gg: ASbGncsk4ZLv3NxMjmiPnFWJpQlLloFVk4gQrnIWbk4FTkVlyUkqMkp0wlWkyOzGPuU
+	avpOH2Ulsr3q4oqnA+BKlr6SfdteKpL8MZ30oPyBt+xVlRISF5CYRGx/KUQEC30cwc9VaLPq/qV
+	JVUEtJtXCs4I8rTuvS1YQFKrYRTAX6ar1gPeAuRsGh1/UImNzktstHa7UgWu+KkVoYa+x75THyl
+	9Fmx1gKf1/b7IPgnwh6GJC75ZHLgu6r1/m1eUitZ8OZobGucL3nBc6JOjsmK82AbvgtzShgSSyC
+	2R0AvIAxXfxWMy179VlNu80h8ekJ++4YTmvX2gSaEYeOCeKfCeA/gjIKCoww2d/BldaynJUX5ib
+	cnB55nl/ONfk5HbN6K/9smWY0T5UhqL2w8GVr5GKAGxnf7EAykUmObw==
+X-Google-Smtp-Source: AGHT+IEOQGwikHmdxCwnSLSNmqiAKdWaAmIlOvX98dKTEa3j/V/1mLnNx7izZ8MziWVIRtrOO5jPPA==
+X-Received: by 2002:a05:6a00:a17:b0:740:b5f9:287b with SMTP id d2e1a72fcca58-76e20c9a0f3mr83634b3a.1.1755020145514;
+        Tue, 12 Aug 2025 10:35:45 -0700 (PDT)
+Received: from fedora (c-67-164-59-41.hsd1.ca.comcast.net. [67.164.59.41])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-76bd9795200sm28297220b3a.114.2025.08.12.10.35.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 12 Aug 2025 10:35:45 -0700 (PDT)
+Date: Tue, 12 Aug 2025 10:35:41 -0700
+From: "Vishal Moola (Oracle)" <vishal.moola@gmail.com>
+To: Qianfeng Rong <rongqianfeng@vivo.com>
 Cc: SeongJae Park <sj@kernel.org>,
-	Alexandre Ghiti <alexghiti@rivosinc.com>,
-	Shuah Khan <shuah@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Enze Li <lienze@kylinos.cn>,
-	damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	linux-kselftest@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] selftests/damon: fix damon selftests by installing _common.sh
-Date: Tue, 12 Aug 2025 10:20:01 -0700
-Message-Id: <20250812172001.57104-1-sj@kernel.org>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <CABFDxMEQYx7fdx4T7meUb01FoqJaHcW_2RoYnBwJ8GzmJTexzQ@mail.gmail.com>
-References: 
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Will Deacon <will@kernel.org>,
+	"Aneesh Kumar K.V" <aneesh.kumar@kernel.org>,
+	Nick Piggin <npiggin@gmail.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	David Hildenbrand <david@redhat.com>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	Rik van Riel <riel@surriel.com>,
+	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
+	Vlastimil Babka <vbabka@suse.cz>, Harry Yoo <harry.yoo@oracle.com>,
+	Uladzislau Rezki <urezki@gmail.com>, damon@lists.linux.dev,
+	linux-mm@kvack.org, linux-kernel@vger.kernel.org,
+	linux-fsdevel@vger.kernel.org, linux-arch@vger.kernel.org
+Subject: Re: [PATCH v2] mm: remove redundant __GFP_NOWARN
+Message-ID: <aJt7bYkhuRBrIO_S@fedora>
+References: <20250812135225.274316-1-rongqianfeng@vivo.com>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250812135225.274316-1-rongqianfeng@vivo.com>
 
-On Tue, 12 Aug 2025 22:27:00 +0900 Sang-Heon Jeon <ekffu200098@gmail.com> wrote:
-
-> Hello, Alexandre
+On Tue, Aug 12, 2025 at 09:52:25PM +0800, Qianfeng Rong wrote:
+> Commit 16f5dfbc851b ("gfp: include __GFP_NOWARN in GFP_NOWAIT") made
+> GFP_NOWAIT implicitly include __GFP_NOWARN.
 > 
-> On Tue, Aug 12, 2025 at 9:32 PM Sang-Heon Jeon <ekffu200098@gmail.com> wrote:
-> >
-> > Hello, Alexandre
-> >
-> > On Tue, Aug 12, 2025 at 5:13 PM Alexandre Ghiti <alexghiti@rivosinc.com> wrote:
-> > >
-> > > _common.sh was recently introduced but is not installed and then
-> > > triggers an error when trying to run the damon selftests:
-> > >
-> > > selftests: damon: sysfs.sh
-> > > ./sysfs.sh: line 4: _common.sh: No such file or directory
-> > >
-> > > Install this file to avoid this error.
-> >
-> > I tried to reproduce those error with my vm environment but I failed;
-> > with my workaround test method, it doesn't exist.
-> > If you're okay, could you please tell me line by line how you execute
-> > tests in what environment?
-> > I'm also struggling with the test environment, as well.
+> Therefore, explicit __GFP_NOWARN combined with GFP_NOWAIT (e.g.,
+> `GFP_NOWAIT | __GFP_NOWARN`) is now redundant.  Let's clean up these
+> redundant flags across subsystems.
 > 
-> I succeeded to reproduce and also check that this patch removes those errors.
+> No functional changes.
 > 
-> > > Fixes: 511914506d19 ("selftests/damon: introduce _common.sh to host shared function")
-> > > Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
-> > > ---
-> 
-> Tested-by: Sang-Heon Jeon <ekffu200098@gmail.com>
+> Reviewed-by: Harry Yoo <harry.yoo@oracle.com>
+> Signed-off-by: Qianfeng Rong <rongqianfeng@vivo.com>
 
-Thank you, Sang-Heon :)
-
-[...]
-> > > ---
-> > > base-commit: 2754d549af31f8f029f02d02cd8e574676229b3d
-> >
-> > Does this commit exist in `mm-new` or `damon-next`?  I failed to setup
-> > the same base-commit environment.
-> 
-> However, I'm still not sure that this patch is in the correct
-> baseline. maybe it will not cause any problems with the merge
-> though... but I'm not sure. So I didn't add a reviewed-by tag.
-
-I think unclear baseline of a patch shouldn't be a blocker of Reviewed-by tags.
-Since most DAMON patches are recommended to use mm-new[1], as long as the patch
-can cleanly applied on latest mm-new and you don't see anything wrong, I think
-you can assume it is based on mm-new.
-
-[1] https://origin.kernel.org/doc/html/latest/mm/damon/maintainer-profile.html#scm-trees
-
-
-Thanks,
-SJ
-
-[...]
+Reviewed-by: Vishal Moola (Oracle) <vishal.moola@gmail.com>
