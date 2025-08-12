@@ -1,154 +1,254 @@
-Received: from mail-oa1-f45.google.com (mail-oa1-f45.google.com [209.85.160.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from SEYPR02CU001.outbound.protection.outlook.com (mail-koreacentralazon11013059.outbound.protection.outlook.com [40.107.44.59])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2188374420
-	for <damon@lists.linux.dev>; Tue, 12 Aug 2025 13:27:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.45
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755005233; cv=none; b=Ri1AOLzMWXH2QBiyD+RDhiK5v6Wr0VK6ERBvR/tpTJjZw3GB5QEsowmu0hmEj5lpYPlxcdAeW6eRQpc/AWq8nAUCGbubO1duUJX6DyubLdoPhBi4SDjd7oct2GW93/tiEpktubZ6EMiLgUdIZ3WAOn0qhxk5zrI7ILxfivZmSXU=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755005233; c=relaxed/simple;
-	bh=ie/kJJDkTzro9jVYrFcfQsbZ3JqTIJO1trf4qDlhrdc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=j3N3csjOChhEv/IHHLGG8uh4T/wPn56qj7YKSSuTBg/HCbZl1wT2LOv6zI7u71A3mgF5Q/I8i9i95VNWa7QgfazSh8HwPnuhkeSuQ6c6evGWCrSJXz9QcWUebTpMkVXk+PmZlERmIJCt+tgqWWJ4OMvYK/k3W1ZCbtwq/JHP3pg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JytO1ZKc; arc=none smtp.client-ip=209.85.160.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73E8E45C0B
+	for <damon@lists.linux.dev>; Tue, 12 Aug 2025 13:52:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.44.59
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1755006763; cv=fail; b=h4FGRQ3FqjXFN5la6H5LtbpGLqj+xt+mATjV3HmPPQY9HXr2wrYAQ13uQWQnMf6fTb3Xb0zrNR4tOnRYn/bvfFEiasdfvsxFfbjVpRlt3YzW1J1fKNruRNQd4XeMj739oO+CdewYBVYGriQqQEXN+4HgIezRl2/XvHvPyfPNaIQ=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1755006763; c=relaxed/simple;
+	bh=Xv9HTY3hcVs/7gsIozLRvrrjNJrOr7aH5YYwgCvYz54=;
+	h=From:To:Cc:Subject:Date:Message-Id:Content-Type:MIME-Version; b=Sa3S6aRx/cqmO1b0ugCi2Xxw9ugZaqJc4jAvTIT2D0HkP3U17fhtfUD5xZhboR8z5DYvuS9vGiJrDb8U+ixVPAzUJNmrOKPtIBn41nhWJaMftX2rBPzZpjm1PDACyA0Fx9rWnLyylPFkUYKq+2l1+3qpc2zK2TtJyv2m6Sf5oEw=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=vivo.com; spf=pass smtp.mailfrom=vivo.com; dkim=pass (2048-bit key) header.d=vivo.com header.i=@vivo.com header.b=e/yThS/D; arc=fail smtp.client-ip=40.107.44.59
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=vivo.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=vivo.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JytO1ZKc"
-Received: by mail-oa1-f45.google.com with SMTP id 586e51a60fabf-2eb6c422828so4397518fac.1
-        for <damon@lists.linux.dev>; Tue, 12 Aug 2025 06:27:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1755005231; x=1755610031; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=RREPB+k7a/mceQdaxCB2njGP8WW7v6Nzrb7ci/2EA8A=;
-        b=JytO1ZKcLtZMMVDKc/BZb0e8IcwZjYGALjIA9Dz6mrFDPmtYQ05MmeObEDc4Vl3D2G
-         g1PB4gxYhAD3xoc3/f2c/SG4QpL1towQQBT/8zJT3eNPEWItHS0eUuF6hGoQpbqIH5tM
-         HoIlB3PI52AwVeWC88hOkURzaN5nSJXQpMVbdTzdl/ozX/hkzZW9bnhIV3d+REmXEPNr
-         HqMwQnmF8f3JYLpaoTKdFXUdvvIWkEXl6iyUpfOJdKMCcmh0y1grdLN0BjTcq+6P827I
-         caQKqzDaLO5Na/p1uWbhInpOaxrbc6s0eMuFkntVHyvnUJMCwBDzrYwu5LKsY2jLYgFi
-         wL+w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755005231; x=1755610031;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=RREPB+k7a/mceQdaxCB2njGP8WW7v6Nzrb7ci/2EA8A=;
-        b=MZnDI/B0+9SQe2+kgcLsEfGxYP7MWgXCyojdp2cxaNCbFi3nUi7+viXTkb/AB8XeSc
-         riY38iFYQOKOJ+5fNdOmaRlpVnrsoXOuFMb9o13j7UMC94nHbouUN2z+kjFiee9I78Gs
-         ejJRYdeLG9GwMIDCtWRL4LBfFEQ4E+WjApz/gWAYqXnt9cG22yCBR/1eM4/tYr7y0KQ/
-         oicEe1GXIMyTH5Hu4HImYeeuX1CfzXbri1qAIHew9YTDMWVAe9NX6j9ZdXHouCIBUccq
-         nWBIMBaz+f0PcRXTPbpkDHe8jT434LycFM4jgTkjtvn9O8wXqjFDqN0WRMYhMeFLG7cS
-         hFxw==
-X-Forwarded-Encrypted: i=1; AJvYcCVFyWOv9FsG1ha8kvBmojruPIjo40dxbfCt4/Sr2x5OchaaQkNWPF06tBlFQ33X40z8MUDZwQ==@lists.linux.dev
-X-Gm-Message-State: AOJu0YyhvCcP2MxBkvNbNGR3Uy6B2dikASg/OzuUaH0bcGFNAlAxyT2u
-	bcSBb2M0pg37qgv1MGMN0mOQENea5r1n0ZRbykiCpdbL87/cIvjVJM0O3ewR2Z1JQ+R/foscmWq
-	ws+m1NPDn2xnapQyb8dt8UiR/klhc568DCthhfwg=
-X-Gm-Gg: ASbGncshXG4CGZTYR66t2ai8PhO4K3Ays8bK+Mlcw1AovpcOFu+sMl+x/5OqDjUmOdu
-	JU0ITtAcigk+lL5VCdcaSARJMrXLNhDsf82DraaX108V3w8114jw5rku1srR4nNKW77zGpFtRUc
-	rDcWFKPSxHtVLUX7MXDrOoVBvfqh5T3k7+oSKI7/AKIMbTzvX05qjDv4e6Pk1S+ZQfSIrb/RZeG
-	VRR
-X-Google-Smtp-Source: AGHT+IGpbMz1DdsWZ1z4GCKL7utzJO8TIQxtkA8SafJyjmZ6lfFuwcFQBFZL2gHHQv89lc/KdDVrhAdvffGsU9WPpY8=
-X-Received: by 2002:a05:6871:6718:b0:2e9:925b:206f with SMTP id
- 586e51a60fabf-30c94f3cf74mr1607259fac.17.1755005231005; Tue, 12 Aug 2025
- 06:27:11 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=vivo.com header.i=@vivo.com header.b="e/yThS/D"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=ssSv4yfWzqk6giy5jEK7sDHL8TIv1BpDBuRUf7XEcy88ZJzlekcLYN1P6EfxvcwwspfZE6S6NYb82BXsEqEIoNr7DjMJCxYBJFLmE9W2qYYm0f1CXiXcj2KJuCOZs9HnvOZmO/Uyqm1fBn/+F8fEbaoMGyilPokD6+sN4i70K2SkhSms0OwNRKPBbZ6jKtgj4VhukDV5K8LDFjgDenZXaOkJyBoxJPO4PC79hXkzTl/FROEMpwa0Lhj8fh5VrOO3OaMUFwDr9/RZIqQ1QRwhqwxmVOmWz3cxJ2gWGjZbcmViRG+KXHXgLzwI+eSbLWQVTuvMHivFEJFTVt8nmbSzwA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=HgCQjcT2Yqv39FyKq1iW76KodWhfCvAwxafNxQkjG+4=;
+ b=hLKI87OBA1EmiNKtRwys27oBBU2fmrO2GWHFAX4kiboqKZIKzGqWDJEEx2RwvS+PQUWxvLcm8Q1rDwQt4g8Wyt5+dxxoNcguZqQsZdFjG8IfxevTE2sadVFahvYBc63A5ExXKI/f87OFPWsqzk4ppupgr47METbOGKU4wKW9IpRRbGrgRm+PMv4FW8sCrVFOs8/4aIRgQ9vd8AovzHcYFxmoYpJwK1EpNxjK7yn1ybIVxt4lrKKXMjlVDzV/f1CtjN94Ujppj3EbpB34BLMOr9k7ygi/SOf86oWffqmaxwR80dSIDT0Igq7I3Ky9xmWleLjwEUU6swJ3n0uIjbPkoQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=vivo.com; dmarc=pass action=none header.from=vivo.com;
+ dkim=pass header.d=vivo.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vivo.com; s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=HgCQjcT2Yqv39FyKq1iW76KodWhfCvAwxafNxQkjG+4=;
+ b=e/yThS/D/P7lhM92suSJF+cEWYN1f+m3uYAet3JLyIHSl47FkOw31UbpoEYSrE6JGW4UFs5qrS02rGPWOkRk+4VKiKfD2XyRSGN0+lsgTbfZnkr5ReBF9sBeiWOE21rziIvc9kCF+4Oj8s5j8UTAZhG/h1ufuBCEiVNFZNkAdF5Ifqq1XyYHE8/Xbr6m1I1NwQRK0VJe+cfKn7WjLjV9Nuk6I+BFgwN1+BY8YobvwVI8WwIavnT/7Ny3cr57keWCRgFjmEjt90vOa0XaCon8OU5GiC5qTgpHPvmTE1veuRQf0tDA0Q72pHqrjeHPuH3fHZFisq0WRBdtxotF8okJdg==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=vivo.com;
+Received: from SI2PR06MB5140.apcprd06.prod.outlook.com (2603:1096:4:1af::9) by
+ JH0PR06MB6680.apcprd06.prod.outlook.com (2603:1096:990:2f::5) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9009.22; Tue, 12 Aug 2025 13:52:36 +0000
+Received: from SI2PR06MB5140.apcprd06.prod.outlook.com
+ ([fe80::468a:88be:bec:666]) by SI2PR06MB5140.apcprd06.prod.outlook.com
+ ([fe80::468a:88be:bec:666%4]) with mapi id 15.20.9009.018; Tue, 12 Aug 2025
+ 13:52:36 +0000
+From: Qianfeng Rong <rongqianfeng@vivo.com>
+To: SeongJae Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Will Deacon <will@kernel.org>,
+	"Aneesh Kumar K.V" <aneesh.kumar@kernel.org>,
+	Nick Piggin <npiggin@gmail.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	David Hildenbrand <david@redhat.com>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	Rik van Riel <riel@surriel.com>,
+	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Harry Yoo <harry.yoo@oracle.com>,
+	Uladzislau Rezki <urezki@gmail.com>,
+	damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org,
+	linux-fsdevel@vger.kernel.org,
+	linux-arch@vger.kernel.org
+Cc: Qianfeng Rong <rongqianfeng@vivo.com>
+Subject: [PATCH v2] mm: remove redundant __GFP_NOWARN
+Date: Tue, 12 Aug 2025 21:52:25 +0800
+Message-Id: <20250812135225.274316-1-rongqianfeng@vivo.com>
+X-Mailer: git-send-email 2.34.1
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: SI2PR01CA0018.apcprd01.prod.exchangelabs.com
+ (2603:1096:4:191::7) To SI2PR06MB5140.apcprd06.prod.outlook.com
+ (2603:1096:4:1af::9)
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20250812-alex-fixes_manual-v1-1-c4e99b1f80e4@rivosinc.com> <CABFDxMGPS6LE=A25VjXEpfKuzVfgxfgu=_uhkWXc3D+xuq-B6w@mail.gmail.com>
-In-Reply-To: <CABFDxMGPS6LE=A25VjXEpfKuzVfgxfgu=_uhkWXc3D+xuq-B6w@mail.gmail.com>
-From: Sang-Heon Jeon <ekffu200098@gmail.com>
-Date: Tue, 12 Aug 2025 22:27:00 +0900
-X-Gm-Features: Ac12FXxoAocnTTpz6traLMo0gPyYiDuR8cKin4JSoMSWQ6SUh-o9iDKVTOiC780
-Message-ID: <CABFDxMEQYx7fdx4T7meUb01FoqJaHcW_2RoYnBwJ8GzmJTexzQ@mail.gmail.com>
-Subject: Re: [PATCH] selftests/damon: fix damon selftests by installing _common.sh
-To: Alexandre Ghiti <alexghiti@rivosinc.com>
-Cc: SeongJae Park <sj@kernel.org>, Shuah Khan <shuah@kernel.org>, 
-	Andrew Morton <akpm@linux-foundation.org>, Enze Li <lienze@kylinos.cn>, damon@lists.linux.dev, 
-	linux-mm@kvack.org, linux-kselftest@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SI2PR06MB5140:EE_|JH0PR06MB6680:EE_
+X-MS-Office365-Filtering-Correlation-Id: 96ee5162-bd4c-4551-7503-08ddd9a77ea3
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|366016|1800799024|376014|7416014|52116014|38350700014|921020;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?Evz80ZuX0iBjmC6GGv+wUrEfijVLp+gUUrRraV5kHy2ufOxqzdI10n3qBKHd?=
+ =?us-ascii?Q?hMUQkLDQzld5jO70vl4gFHwB/Vwg/rKxaQUXyDba0Dud5QGz+kY0wr9oQYxk?=
+ =?us-ascii?Q?vmf7iFGJUyirtbuVd0P6SwIG2dkRDBgkQhGwhvE+e8JeK9ptJkRL0bitxKkH?=
+ =?us-ascii?Q?QgyRItcCm77KdKbdidv/RclzLXy88x0dDqghMsYPHfdNNpSk4Wk8UhfUXXUj?=
+ =?us-ascii?Q?N32ZG1rtl7FC6WWt8EbLObO/gDDEYiDIueotTv2XYS8aANpovOZvSMNfuxHC?=
+ =?us-ascii?Q?7rxXDIYqNHic0c5S0tLi0gR9t6Y/OZ1x5bxzudWVvxIMweY7joKZ585sOMFq?=
+ =?us-ascii?Q?VVFxr2QwzCDlcL7Bs2XyUKUbQKl5EONqCq3kK7+9MUJahyR3wkQLW3E5AJ/I?=
+ =?us-ascii?Q?MT1fp1gSnXeTUMKhlISgWWebP8uUpN0oHlxNr+cg8SirT1KmcGs+YwRhEXSR?=
+ =?us-ascii?Q?QTDaDhOmRYDbP/LI/DqpDvCpS+izx1YPiU4h42hQr90s40jbX8ddmfGvgBW+?=
+ =?us-ascii?Q?N4tbHfpS5peHk3Or/zDnRDQUHSV8FTsxWWW9OA5xUgiYXJFegutYOUWWpf0C?=
+ =?us-ascii?Q?Sl4SbgspGj89pTmWh8fH+KC6QBth0CJ57bNyRU0k6R1WBc90yrwRhTe0FIid?=
+ =?us-ascii?Q?DsUZE3AFR+AM3VowNTYuDXAHR6hJvF2YN53VAzOl7gvY3xBmvAgeHUdqck5+?=
+ =?us-ascii?Q?tQflg9sYfc4f2JaaN2OTDPSBxgWL5i2R+yhvFCe1q+rUz9TDdUzqnxTdbHIw?=
+ =?us-ascii?Q?EQOCtIt9ZiTZ++MNquhpo9gL9XG+KurrkK541jM9IDyI35d534AWsk5YRfeJ?=
+ =?us-ascii?Q?zkpl657B7fTFmm0s4YC7st3Xff79Bz0nkDZxYfg4q/GxJyk5/MchskekcamJ?=
+ =?us-ascii?Q?xGQKNWkxxLcZ29z65S2D5pj9GGxgUuyEG6aGbKRT3TVnGG/NIG42FM6Z52dP?=
+ =?us-ascii?Q?q2ViyuaiXWpMqcaE/rHeeepob0J1FNNMt4yFMF3Ue4RPz48XqfiHgzNxkuYX?=
+ =?us-ascii?Q?r9KZ+lVvs4xFkWv+9cT/+riTZgmM7hVAcftPHxtUKxK/lFNxeTaVZaEx9e8Y?=
+ =?us-ascii?Q?uNdewxyvl0mxEmnTjSyuMUxbKumB9rQAlD7O7YqfvoUHtnlogW7pw/bqOv0V?=
+ =?us-ascii?Q?i250T3DxQ1sUFgaIyEZZD/oCX7DguLyPfniMzOdlh/RmM7EGXQwLU5l1JheL?=
+ =?us-ascii?Q?o1n3VhtgzudYIzOyFnCfOb3zgEHsGRNn/4atSLHo5Oz61Sk+S+5kn1iCJqpK?=
+ =?us-ascii?Q?yD2LgpcoWjtBxK6WkZmvRhgPObZ4Po+dDyaNt4rRO5Sij7NbbRrLzVsU0hck?=
+ =?us-ascii?Q?Nwe69y0VvpLVqlALKOLscewx5R4An5+RU/1TbZwPrsIOyRfTztfHnUQ92vO6?=
+ =?us-ascii?Q?zQX9tkpgk60uBwEfw9G2RYB4D9xuSXtq8qw0lYZPV8q2qY3tLpvV63wa5UKi?=
+ =?us-ascii?Q?nnNVRFClA36zfUe1B7t8PfGotv24ceX8dhWwipF6c5v/vf4jqru8e6nOAYyC?=
+ =?us-ascii?Q?SKTQuL5WdkpBJ9g=3D?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SI2PR06MB5140.apcprd06.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(376014)(7416014)(52116014)(38350700014)(921020);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?jVs0Lw0US2vAQmrseEwXMOj3wa64jM9YktL4/80o6jwmg+tZaS4tfVM7rmEs?=
+ =?us-ascii?Q?/SAXa8Y5HH4jvMFpju/7z8Cf3+s8wAF/enA5VNJ+SYJw7WILvv2EoVNV1X+X?=
+ =?us-ascii?Q?Lv9h5Bsi0w9FiYA/dM1qPNvmDpmGJThDPBpG3e0JUeJUpagBHW+zdUUeedYu?=
+ =?us-ascii?Q?J4OTayQT6/Xq8UpDxa5Ak/mUP2hqhPEW27xu2LKIPUWI2eu6xJvJoxrsIJEf?=
+ =?us-ascii?Q?oalTBlnK0ZLM4tkde+dMyCWI55tUcbbujGx9PCtdsbyiQjm8iLHqf/6z98h9?=
+ =?us-ascii?Q?um9fRBI2B0ct2rlrzlXk0Rizbz3Ca2ldAbmDBq+EnToyHzlGpMm/3VfC8Y3G?=
+ =?us-ascii?Q?uEAY2mR9KVnveOi2NnlR0dXOnhu3EVXu9cB14PVXASruKAsXTfvS2TVxErGu?=
+ =?us-ascii?Q?yxzdtMIZB9S+xi/glcXfYKQj4hB4dVSXtr6J03jOsVMyJxn2yLcXT3BL7/jN?=
+ =?us-ascii?Q?kdMInBPRMKyoigGR1PboyYu0BkHzEtB7vaPL9H4qBfCHZC5OSCpQIsLG7pFY?=
+ =?us-ascii?Q?mxiwaHxBPpte2UW+hoRq0nVfM4Vw+8KO0Mx21Y09d2WF9FwJJNqw/LqfzjOY?=
+ =?us-ascii?Q?+mCiE+l4KZSfziBp5m4aakatKs3jO8mRRm4923MSc/QqCp/FITsQRcRL5aVP?=
+ =?us-ascii?Q?ych934oHt5Zd6FBvsQLn864aB6TW2J4k6DzCUW43SAFsKJZEL12dmh0fn/et?=
+ =?us-ascii?Q?WVWB6gK/5kKeFBN46is0hAthrhWVFVMzUkd9WvG/D9vSRgy4rsQdb1PJ4eMd?=
+ =?us-ascii?Q?hVlZPemoSthMrlbLH+136oT9ICHo3iNQkzkd/JFTSykPWo6j6WSgNwbD4+aA?=
+ =?us-ascii?Q?jNbzsJeSAr7r/FDzW54PdDhqIv/NKIujXQlzE2ne702dTBgnHh4UMxmHfYER?=
+ =?us-ascii?Q?NDyYjk3Cpd2jpBiMVClOj7mUYGONvEb6trEGmEjJtwcNAEqh61GepfWTHer1?=
+ =?us-ascii?Q?4hRX5HvZ8x5nhquNITsAuHHpCRqgYVY0LfFwM5jvi2IBN3vHP75Fcpskz0gT?=
+ =?us-ascii?Q?2eSg7Tg65NgKP0iEOdprRI9IYQTb8ktAvJA6g5inIyLgHhbd02CE6rLXR645?=
+ =?us-ascii?Q?ivXs+SDV257tsvk/5FoHDULbdLolRwdA8iU3shkDbe+ysz4WyLLce6tkw861?=
+ =?us-ascii?Q?asbeU8NaXGS6eRqqUyDh6phqeaNndV++Jr9A+ur/LuVT6EI856dpVVLYV3lq?=
+ =?us-ascii?Q?nMHvP6D0G91glj0jl1pDC4QvTXDMrcp2sTqlzM9zFjjBTSgCd8sr4lnqrctt?=
+ =?us-ascii?Q?KWSgioAV/8hOXm6QACPuJeif2uMdrx+q4wQeY3v3Ssz2xCM41fOX05gUoOo+?=
+ =?us-ascii?Q?Xvvxys6BuCcroBGm7LbJ0WbD6KLWlz+8iGYCHjj+4EyKKKB8jE9cB9Ys1XOL?=
+ =?us-ascii?Q?Wui1Qq8IAsK4vqhsGmijUfgvnR6elcaNpyuVOtQS2klqh50mjveRg0/87CQE?=
+ =?us-ascii?Q?aHViUqup5e2VXpIYvQclMkNRCi1OezT8MhlxvCZkpZp04cPhkNfpwD65b7p2?=
+ =?us-ascii?Q?VO9A+mQzK99/K2cBuvCTY4OVbRkh7m+UsyasWttNRKOJRB/VhD/hc5RzWTqy?=
+ =?us-ascii?Q?NBtIy3jBCW6TbFhrdeEx8c54oLk5OhS49W7Wf4XW?=
+X-OriginatorOrg: vivo.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 96ee5162-bd4c-4551-7503-08ddd9a77ea3
+X-MS-Exchange-CrossTenant-AuthSource: SI2PR06MB5140.apcprd06.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Aug 2025 13:52:36.5982
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 923e42dc-48d5-4cbe-b582-1a797a6412ed
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: H7hSz26uR6Cc4HEoCgthj1UbK225+N5MOVpRPNgGUpPjL3LwNAbj+ZRQ0RksRfIHzS9PHD4quBLGJRFAwBgx6g==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: JH0PR06MB6680
 
-Hello, Alexandre
+Commit 16f5dfbc851b ("gfp: include __GFP_NOWARN in GFP_NOWAIT") made
+GFP_NOWAIT implicitly include __GFP_NOWARN.
 
-On Tue, Aug 12, 2025 at 9:32=E2=80=AFPM Sang-Heon Jeon <ekffu200098@gmail.c=
-om> wrote:
->
-> Hello, Alexandre
->
-> On Tue, Aug 12, 2025 at 5:13=E2=80=AFPM Alexandre Ghiti <alexghiti@rivosi=
-nc.com> wrote:
-> >
-> > _common.sh was recently introduced but is not installed and then
-> > triggers an error when trying to run the damon selftests:
-> >
-> > selftests: damon: sysfs.sh
-> > ./sysfs.sh: line 4: _common.sh: No such file or directory
-> >
-> > Install this file to avoid this error.
->
-> I tried to reproduce those error with my vm environment but I failed;
-> with my workaround test method, it doesn't exist.
-> If you're okay, could you please tell me line by line how you execute
-> tests in what environment?
-> I'm also struggling with the test environment, as well.
+Therefore, explicit __GFP_NOWARN combined with GFP_NOWAIT (e.g.,
+`GFP_NOWAIT | __GFP_NOWARN`) is now redundant.  Let's clean up these
+redundant flags across subsystems.
 
-I succeeded to reproduce and also check that this patch removes those error=
-s.
+No functional changes.
 
-> > Fixes: 511914506d19 ("selftests/damon: introduce _common.sh to host sha=
-red function")
-> > Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
-> > ---
+Reviewed-by: Harry Yoo <harry.yoo@oracle.com>
+Signed-off-by: Qianfeng Rong <rongqianfeng@vivo.com>
+---
+v1->v2:
+- Added a modification to remove redundant __GFP_NOWARN in
+  mm/damon/ops-common.c
+---
+ mm/damon/ops-common.c | 2 +-
+ mm/filemap.c          | 2 +-
+ mm/mmu_gather.c       | 4 ++--
+ mm/rmap.c             | 2 +-
+ mm/vmalloc.c          | 2 +-
+ 5 files changed, 6 insertions(+), 6 deletions(-)
 
-Tested-by: Sang-Heon Jeon <ekffu200098@gmail.com>
+diff --git a/mm/damon/ops-common.c b/mm/damon/ops-common.c
+index 99321ff5cb92..b43595730f08 100644
+--- a/mm/damon/ops-common.c
++++ b/mm/damon/ops-common.c
+@@ -303,7 +303,7 @@ static unsigned int __damon_migrate_folio_list(
+ 		 * instead of migrated.
+ 		 */
+ 		.gfp_mask = (GFP_HIGHUSER_MOVABLE & ~__GFP_RECLAIM) |
+-			__GFP_NOWARN | __GFP_NOMEMALLOC | GFP_NOWAIT,
++			__GFP_NOMEMALLOC | GFP_NOWAIT,
+ 		.nid = target_nid,
+ 	};
+ 
+diff --git a/mm/filemap.c b/mm/filemap.c
+index 4e5c9544fee4..c21e98657e0b 100644
+--- a/mm/filemap.c
++++ b/mm/filemap.c
+@@ -1961,7 +1961,7 @@ struct folio *__filemap_get_folio(struct address_space *mapping, pgoff_t index,
+ 			gfp &= ~__GFP_FS;
+ 		if (fgp_flags & FGP_NOWAIT) {
+ 			gfp &= ~GFP_KERNEL;
+-			gfp |= GFP_NOWAIT | __GFP_NOWARN;
++			gfp |= GFP_NOWAIT;
+ 		}
+ 		if (WARN_ON_ONCE(!(fgp_flags & (FGP_LOCK | FGP_FOR_MMAP))))
+ 			fgp_flags |= FGP_LOCK;
+diff --git a/mm/mmu_gather.c b/mm/mmu_gather.c
+index b49cc6385f1f..374aa6f021c6 100644
+--- a/mm/mmu_gather.c
++++ b/mm/mmu_gather.c
+@@ -32,7 +32,7 @@ static bool tlb_next_batch(struct mmu_gather *tlb)
+ 	if (tlb->batch_count == MAX_GATHER_BATCH_COUNT)
+ 		return false;
+ 
+-	batch = (void *)__get_free_page(GFP_NOWAIT | __GFP_NOWARN);
++	batch = (void *)__get_free_page(GFP_NOWAIT);
+ 	if (!batch)
+ 		return false;
+ 
+@@ -364,7 +364,7 @@ void tlb_remove_table(struct mmu_gather *tlb, void *table)
+ 	struct mmu_table_batch **batch = &tlb->batch;
+ 
+ 	if (*batch == NULL) {
+-		*batch = (struct mmu_table_batch *)__get_free_page(GFP_NOWAIT | __GFP_NOWARN);
++		*batch = (struct mmu_table_batch *)__get_free_page(GFP_NOWAIT);
+ 		if (*batch == NULL) {
+ 			tlb_table_invalidate(tlb);
+ 			tlb_remove_table_one(table);
+diff --git a/mm/rmap.c b/mm/rmap.c
+index 568198e9efc2..7baa7385e1ce 100644
+--- a/mm/rmap.c
++++ b/mm/rmap.c
+@@ -285,7 +285,7 @@ int anon_vma_clone(struct vm_area_struct *dst, struct vm_area_struct *src)
+ 	list_for_each_entry_reverse(pavc, &src->anon_vma_chain, same_vma) {
+ 		struct anon_vma *anon_vma;
+ 
+-		avc = anon_vma_chain_alloc(GFP_NOWAIT | __GFP_NOWARN);
++		avc = anon_vma_chain_alloc(GFP_NOWAIT);
+ 		if (unlikely(!avc)) {
+ 			unlock_anon_vma_root(root);
+ 			root = NULL;
+diff --git a/mm/vmalloc.c b/mm/vmalloc.c
+index 6dbcdceecae1..90c3de1a0417 100644
+--- a/mm/vmalloc.c
++++ b/mm/vmalloc.c
+@@ -5177,7 +5177,7 @@ static void vmap_init_nodes(void)
+ 	int n = clamp_t(unsigned int, num_possible_cpus(), 1, 128);
+ 
+ 	if (n > 1) {
+-		vn = kmalloc_array(n, sizeof(*vn), GFP_NOWAIT | __GFP_NOWARN);
++		vn = kmalloc_array(n, sizeof(*vn), GFP_NOWAIT);
+ 		if (vn) {
+ 			/* Node partition is 16 pages. */
+ 			vmap_zone_size = (1 << 4) * PAGE_SIZE;
+-- 
+2.34.1
 
-> >  tools/testing/selftests/damon/Makefile | 1 +
-> >  1 file changed, 1 insertion(+)
-> >
-> > diff --git a/tools/testing/selftests/damon/Makefile b/tools/testing/sel=
-ftests/damon/Makefile
-> > index 5b230deb19e8ee6cee56eb8f18c35e12f331e8b7..ddc69e8bde2905ff1c461a0=
-8f2ad008e6b28ac87 100644
-> > --- a/tools/testing/selftests/damon/Makefile
-> > +++ b/tools/testing/selftests/damon/Makefile
-> > @@ -4,6 +4,7 @@
-> >  TEST_GEN_FILES +=3D access_memory access_memory_even
-> >
-> >  TEST_FILES =3D _damon_sysfs.py
-> > +TEST_FILES +=3D _common.sh
-> >
-> >  # functionality tests
-> >  TEST_PROGS +=3D sysfs.sh
-> >
-> > ---
-> > base-commit: 2754d549af31f8f029f02d02cd8e574676229b3d
->
-> Does this commit exist in `mm-new` or `damon-next`?  I failed to setup
-> the same base-commit environment.
-
-However, I'm still not sure that this patch is in the correct
-baseline. maybe it will not cause any problems with the merge
-though... but I'm not sure. So I didn't add a reviewed-by tag.
-
-> > change-id: 20250812-alex-fixes_manual-aed3ef75dd83
-> >
-> > Best regards,
-> > --
-> > Alexandre Ghiti <alexghiti@rivosinc.com>
-> >
-> >
->
-> Thank you for great work!
->
-> Best Regards.
-> Sang-Heon Jeon
-
-Best Regards.
-Sang-Heon Jeon
