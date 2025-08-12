@@ -1,158 +1,125 @@
-Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
+Received: from mail-pf1-f176.google.com (mail-pf1-f176.google.com [209.85.210.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17BF74CB5B
-	for <damon@lists.linux.dev>; Tue, 12 Aug 2025 04:44:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE1792D6635
+	for <damon@lists.linux.dev>; Tue, 12 Aug 2025 08:12:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754973854; cv=none; b=igzxUeBTHhfb70YMxkgtJitd2DgrBxaK4ENtNMMk3mZ4Qw5x7hZvj1R7RwHFabtaEDVi9yJZ5zqv8vxa6QHTWq0MW+KS4u/XvxBW1sAcPd3Dd6/kFdUUBpjzcmbX0aTKKmoOXsA/6KB7jtxgd1JFQhykIgyt6nPiZpmliGFG6aI=
+	t=1754986371; cv=none; b=a3cLkJwLAqB8u5Ct+OTag0UIn+ZY0BfTtS3TNphF6jJNXzFYSnNaOLFQ0BeM7xnUmbPVQXbdDP1hWH4nQ0VDglfXhvQcUUXBlXPP82j6KBAxS0TRaPkesC4CTAcPihICviVSGPfhINKZt2mwvW4lKEX+hGINZw7UUQHuPWaJODY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754973854; c=relaxed/simple;
-	bh=awo8lDw1fnmBb45ZduqoYW3+rtQ3tGOeO6/nw1KuEyw=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=MrjmQ4AR+VuFPeUu0MYKjLkaOqGG+WUSV7DgcNW23C386JCNTluzj4rOVzUgtdHzQz7vSl3sB6cVjTrnXgeBHIL/K28JMd6zXSa6ZQuuc05CxbwhPJwcX5mT6OuG2b4H7aSN73AokKnmVAWkSuhrjcAm2HG4LAO1h84rVwIS2RU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LRXu3rrx; arc=none smtp.client-ip=209.85.167.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1754986371; c=relaxed/simple;
+	bh=CygRsQzHeViey1sMjJDwpFXY4aVKiZK+tOw7A+FX4l8=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=MIZ1QZ/3c5ZDN3gYVUxswubZra0YzrQWISejaNo+zK5jH9BCVnqWi/Z+TvzmHOHD4+jr5ilrhCWuS+LhfrUCxRZ9x/jgwMFLnxzBtW59oKUl/7sIM6jdzxp+qXLqtFHvrdtbISJmPTwHZo3+qSJqQVo3dzpTQ5zrQk7egT6GovU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=rivosinc.com; spf=pass smtp.mailfrom=rivosinc.com; dkim=pass (2048-bit key) header.d=rivosinc.com header.i=@rivosinc.com header.b=Qci+in5+; arc=none smtp.client-ip=209.85.210.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=rivosinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rivosinc.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LRXu3rrx"
-Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-55b9a23d633so5439603e87.1
-        for <damon@lists.linux.dev>; Mon, 11 Aug 2025 21:44:12 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=rivosinc.com header.i=@rivosinc.com header.b="Qci+in5+"
+Received: by mail-pf1-f176.google.com with SMTP id d2e1a72fcca58-76bd7676e60so4417126b3a.0
+        for <damon@lists.linux.dev>; Tue, 12 Aug 2025 01:12:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1754973851; x=1755578651; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Ah6pFV3KC04LTZ4T43T6D2w4fm1xnobn+WfujA61Y/4=;
-        b=LRXu3rrxmURbZJ53k2O0a26SoA0O0OWT50jvYrCfY4ZeN6blbDU6nRx3JRG2kvm01Z
-         LSdU6IpF1O5m7DNCuAqr7r1PRLiplie4rVGtrmx924SP+dmJYQpxq9MC++XCVGdCI0e7
-         YaMSzm0NR7uG0khj2dHeC6mfIrQsetKrGofIejl/OHESzKntJw10f1ugg5E4A1CMeEyW
-         POYqoju8gx7W003bR2RrR632L7R+iAZHIVus39eQ+3vKQ/RCCzqs1gokzdxLuAk+XYIv
-         icCgM/bJ9oMxAL4J0qIC5Vudv1vJuv0i4QobXRGDlwIn18a+iibI5cnPzGbyBxvuEH3P
-         AY+A==
+        d=rivosinc.com; s=google; t=1754986368; x=1755591168; darn=lists.linux.dev;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=yw0gy+knuGeGzY6jivnMfN7pV1rj29Xt61Zw/czzFhY=;
+        b=Qci+in5+b3tYuUHUESkw9q2Rk1xUcGSef19pu2QzH0YvvXRvvIR7VoqAdiMULElkE6
+         Eb8DwseFRzhQ5eKSxVRWeSoXsMo7IO32Yked419aE1zPpI7yO3YCiOb5nffsPvzkn5Nz
+         67PquCl1qvfMJXHHzxr6DUSMDYw1GA2XXE6KZCefKoAFLQ3mN6J3O0QdS8Y1MC2/AYtF
+         Y/anCrLe5fkhUZJQ5yM175SJLHAEQnoUuEnLC0jBx+eicNTBbQUSpaEWnWISziX4AlSX
+         XT6q6i7oNWVoGbSjVVf1tQ7IgusJFU64GFVa7e8LKBdydTgCyPEWD5xerzd1rscB8UCG
+         w05g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754973851; x=1755578651;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Ah6pFV3KC04LTZ4T43T6D2w4fm1xnobn+WfujA61Y/4=;
-        b=XoJXgPylcfz/8IGy2f8qYa0CoC1aTlXvwPW3DE91OoMOlM4FKBYzlTNkUNNwodfiYx
-         J+z2mAkz+0cna/R4fp5wfZPuYwpgCt6j1BsfG8LViwnrd3mnHtNiEVLKt1eFDQN64YZY
-         2/u/ssOV3neUJpVLAVBbq4g9AVfHtmUDK88mCFJmN298S6oBIvbHlJGDVYSuVrXUj0RR
-         z0VrDsTlEZ7BOjoKwenD2gAGvprT72AJA1JRWHRGWE1kVBSFd2PHsFTcCr7yE55WGcgQ
-         Cg3bBud7zcN1cm3vk0mb/OHYCvXN4qCsZiY6q6hoComGIYngQnCiOqRxhlOTcc2qGc1I
-         xmXw==
-X-Gm-Message-State: AOJu0YzdeG+RYjqmLDvWA3BmsVZF9MXBmQiGYnn4RLvPMfg+1K9wqbB8
-	4AEQyAhNJsg0+TlJqKV7uc6+Br86/9tZFBULSN1XLR+dRUNaLSkY5ihtbNXnWmOGkCjvCuz/gDf
-	u6kXYeblUhXaaqokuoPo/IdUSJDq2LsM=
-X-Gm-Gg: ASbGncsgID0hrDOfJfKL5M7roVNuCg/BlWLVWcL6DkuJk0PsUEA48UXxhCYrog6xHB2
-	MnBhjPsSaKeb0CHAROcDS5Jlfz/U2w94952pXjxo8j85Fim68LltfAQBFU2c8xpffCgwkBU77fm
-	OYu7K8V10mYA8BkKuzYabkqXt2WM/3TBNAlsX2XrIMFvhGOaV8uzCl6eB6THine9o5EY8RQGyBw
-	29H1vmhXYsKwHT+k4aIE1FjzTbU4WQt6/E=
-X-Google-Smtp-Source: AGHT+IGyezuLKKKaS1DzvctFW61PSiUphakDLBMHcwt/5TEY46Ao7u3aFQL3C3PTwransaeOtV4TjQKJpQPKkI8oWA0=
-X-Received: by 2002:a05:6512:3402:b0:553:2912:cfdc with SMTP id
- 2adb3069b0e04-55cd8c09df7mr505888e87.9.1754973850826; Mon, 11 Aug 2025
- 21:44:10 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1754986368; x=1755591168;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=yw0gy+knuGeGzY6jivnMfN7pV1rj29Xt61Zw/czzFhY=;
+        b=vQTSus84iBe+oCo7jC0iBGDtX1NJqSvJlpCg07rbs/i8QMW/itfnNmF2LbWDCcqT72
+         AnGvvaxC0CkxdEhzmCf9mrW4VC9oYLThWdpjkW8r6vE000sFgB6i6ZtJgwZvDLf9yzVs
+         fIQ0IZ0gRSlTOFCRCcW2KX0Bwwk6WLZaJR9tQ1fH5/455l4dWsAf5sFmaaoYcl0TfwCz
+         Eb9l8icElFnO28se5oq2v4MsjV3DKE6GoEW8rATdOmCVz8SwKxvTg7XnR1+P2EpwEjk4
+         jdiMzHb4G+VcUfDLllm3paAFmxEY/XUzdDjeTxmVUkHFMayUj0j/HQQpC8ZsmtoqJriw
+         8flQ==
+X-Gm-Message-State: AOJu0YxjDmTWTCaX1Ze5FZFlz65SY0q4t9RvueBa8CpsPhAdlKlWkkry
+	XUbGXQS32Bj0xxf+RxuRV0AhjxEr41i5G9KvdPCo0qbnM/o6kvwPxoJdmMDUX4ySm3M=
+X-Gm-Gg: ASbGnctsC3q23vP/+MRUTwVb/Zkoe20+oylqFxD4jGJEkMTbYkJmtKHXHiKALA0KkM5
+	x/MEwTsFbhFA5Vau35/JI4vrNLFYaVPtL1WWhAK8E0o2mQ3eI1CK0afxKRgUz6/G+Oyh9FT7JX9
+	nhhFdMjzNMiQGemaHfE/rpYrTXpXPn8Q0q/K1K3JMHu7/I+WCkr434uqMsWZh4v0Q60QLDHsho2
+	i1B5BXWXB8DGPFyJ30GjAN641dx/PzQTBD8230MeopcIkAkr+b13XFuQF2f8A5zFevt5aeDb9WL
+	lTvl/vwMd3wrYjDykMc7yD6RBJNnsFrDJVz2plvQrYQF0J8rzUz0R7hB8LzX6uHX477hYERg0qS
+	N7aqxHXtj/XSB0bBrYbKuhT3ynNGY9QCse4OPcCdpviotI2rTGhPAJkR293CKjymJMx5Kdg==
+X-Google-Smtp-Source: AGHT+IGv0knKdRcpuo+yhVFvI7xkp6TkQ4XGBRBCTHxnRsgbNXwPcNcWPjfrvDLzGLuhSytlCrPZuQ==
+X-Received: by 2002:a17:903:247:b0:240:3c0e:e8c3 with SMTP id d9443c01a7336-242c228e6femr208574645ad.51.1754986368009;
+        Tue, 12 Aug 2025 01:12:48 -0700 (PDT)
+Received: from alexghiti.eu.rivosinc.com (alexghiti.eu.rivosinc.com. [141.95.202.232])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-241d1f0e83esm291171955ad.49.2025.08.12.01.12.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 12 Aug 2025 01:12:47 -0700 (PDT)
+From: Alexandre Ghiti <alexghiti@rivosinc.com>
+Date: Tue, 12 Aug 2025 08:12:11 +0000
+Subject: [PATCH] selftests/damon: fix damon selftests by installing
+ _common.sh
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20250811074612.89804-1-akinobu.mita@gmail.com> <20250811192652.63780-1-sj@kernel.org>
-In-Reply-To: <20250811192652.63780-1-sj@kernel.org>
-From: Akinobu Mita <akinobu.mita@gmail.com>
-Date: Tue, 12 Aug 2025 13:43:59 +0900
-X-Gm-Features: Ac12FXwjFJLIohQ0Y-OoujCPkNVPmjThpPd_yFYU06c7DvSsoYY0x_AgLgWBXgU
-Message-ID: <CAC5umyi4On=9cnaw+A29YyNHSkvKy+kMLN2890shTZz4aVWc4w@mail.gmail.com>
-Subject: Re: [PATCH] mm/damon/core: do not merge regions when the number of
- regions is small
-To: SeongJae Park <sj@kernel.org>
-Cc: damon@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250812-alex-fixes_manual-v1-1-c4e99b1f80e4@rivosinc.com>
+X-B4-Tracking: v=1; b=H4sIAFr3mmgC/x3L4QpAMBSG4VvR+W3FlsitSDrZN04x2iK13Lvl5
+ 9PbmygiCCL1RaKAW6IcPqMuC5pX9guU2GzSlW6qrtaKNzzKyYM47ewv3hTDGri2sbYzlL8z4O9
+ 5G8b3/QDygZf4YwAAAA==
+X-Change-ID: 20250812-alex-fixes_manual-aed3ef75dd83
+To: SeongJae Park <sj@kernel.org>, Shuah Khan <shuah@kernel.org>, 
+ Andrew Morton <akpm@linux-foundation.org>, Enze Li <lienze@kylinos.cn>
+Cc: damon@lists.linux.dev, linux-mm@kvack.org, 
+ linux-kselftest@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Alexandre Ghiti <alexghiti@rivosinc.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1133;
+ i=alexghiti@rivosinc.com; h=from:subject:message-id;
+ bh=CygRsQzHeViey1sMjJDwpFXY4aVKiZK+tOw7A+FX4l8=;
+ b=owGbwMvMwCGWYr9pz6TW912Mp9WSGDJmfS9tPHdv2e/gSPnDbX98/P6y8smEhomFZkvN8NSNf
+ JzmepKxo5SFQYyDQVZMkUXBPKGrxf5s/ew/l97DzGFlAhnCwMUpABMx2c7IcKJKMfDZyu7SW6eu
+ i6sb2R6bxmCePlXJaktytu0G9uKKlYwM129NC3i4x4knS9vwc62dnPXFhi07dT7cYTz3Q6epca8
+ aIwA=
+X-Developer-Key: i=alexghiti@rivosinc.com; a=openpgp;
+ fpr=DC049C97114ED82152FE79A783E4BA75438E93E3
 
-2025=E5=B9=B48=E6=9C=8812=E6=97=A5(=E7=81=AB) 4:26 SeongJae Park <sj@kernel=
-.org>:
->
-> On Mon, 11 Aug 2025 16:46:12 +0900 Akinobu Mita <akinobu.mita@gmail.com> =
-wrote:
->
-> > This change prevents adaptive region merging when the total number of
-> > regions is less than the minimum number of regions setting.
->
-> I agree having the number of regions lower than min_nr_regions is not a g=
-ood
-> user experience.  We actually made a fix of a case where the number be hi=
-gher
-> than the max_nr_regions, namely commit 310d6c15e910 ("mm/damon/core: merg=
-e
-> regions aggressively when max_nr_regions is unmet").
->
-> But, could you please elaborate when the situation can happen, why it is =
-bad,
-> and if you see this from a real world?
->
-> I can expect this situation can happen when the user increases min_nr_reg=
-ions
-> to somewhat higher than current number of regions while DAMON is running,=
- using
-> runtime commit feature.  And it is bad because anyway it is confusing and=
- could
-> take time to real expected minimum accuracy until DAMON splits regions to=
- keep
-> the min_nr_regions?  I have no idea for the last question, though.
->
-> Anyway, I think this kind of details would be good to be added to the
-> changelog of this patch, in the next version.
->
-> >
-> > Even in such cases, the kdamond_merge_regions() function must proceed b=
-y
-> > setting the upper limit of the region size to zero to prevent any actua=
-l
-> > region merging, since it is responsible for updating the region ages ra=
-ther
-> > than just merging regions.
-> >
-> > Signed-off-by: Akinobu Mita <akinobu.mita@gmail.com>
-> > ---
-> >  mm/damon/core.c | 8 +++++++-
-> >  1 file changed, 7 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/mm/damon/core.c b/mm/damon/core.c
-> > index 52a48c9316bc..34f1844094cf 100644
-> > --- a/mm/damon/core.c
-> > +++ b/mm/damon/core.c
-> > @@ -2247,9 +2247,15 @@ static void kdamond_merge_regions(struct damon_c=
-tx *c, unsigned int threshold,
-> >                                 unsigned long sz_limit)
-> >  {
-> >       struct damon_target *t;
-> > -     unsigned int nr_regions;
-> > +     unsigned int nr_regions =3D 0;
-> >       unsigned int max_thres;
-> >
-> > +     damon_for_each_target(t, c)
-> > +             nr_regions +=3D damon_nr_regions(t);
-> > +
-> > +     if (nr_regions < c->attrs.min_nr_regions)
-> > +             sz_limit =3D 0;
-> > +
->
-> sz_limit is already set based on the current min_nr_regions.  Setting thi=
-s
-> smaller may help avoiding a few corner case merges, but ain't really avoi=
-d
-> having number of regions lower than min_nr_regions?
+_common.sh was recently introduced but is not installed and then
+triggers an error when trying to run the damon selftests:
 
-As I've already replied to Sang-Heon, this patch did not fix anything.
-I was trying to work around a behavior that was probably caused by an
-unintended setting.
+selftests: damon: sysfs.sh
+./sysfs.sh: line 4: _common.sh: No such file or directory
 
-> Instead, what about making kdamond_split_regions() repeat splitting in th=
-e case
-> until min_nr_regions is met, like kdamond_merge_regions() does for
-> max_nr_regions?
+Install this file to avoid this error.
 
-I think that's a good idea.
+Fixes: 511914506d19 ("selftests/damon: introduce _common.sh to host shared function")
+Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
+---
+ tools/testing/selftests/damon/Makefile | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/tools/testing/selftests/damon/Makefile b/tools/testing/selftests/damon/Makefile
+index 5b230deb19e8ee6cee56eb8f18c35e12f331e8b7..ddc69e8bde2905ff1c461a08f2ad008e6b28ac87 100644
+--- a/tools/testing/selftests/damon/Makefile
++++ b/tools/testing/selftests/damon/Makefile
+@@ -4,6 +4,7 @@
+ TEST_GEN_FILES += access_memory access_memory_even
+ 
+ TEST_FILES = _damon_sysfs.py
++TEST_FILES += _common.sh
+ 
+ # functionality tests
+ TEST_PROGS += sysfs.sh
+
+---
+base-commit: 2754d549af31f8f029f02d02cd8e574676229b3d
+change-id: 20250812-alex-fixes_manual-aed3ef75dd83
+
+Best regards,
+-- 
+Alexandre Ghiti <alexghiti@rivosinc.com>
+
