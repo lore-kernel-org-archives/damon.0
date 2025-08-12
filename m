@@ -1,208 +1,154 @@
-Received: from TYDPR03CU002.outbound.protection.outlook.com (mail-japaneastazon11013055.outbound.protection.outlook.com [52.101.127.55])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oa1-f45.google.com (mail-oa1-f45.google.com [209.85.160.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C678280327
-	for <damon@lists.linux.dev>; Tue, 12 Aug 2025 13:23:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.127.55
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755004982; cv=fail; b=rJb9QiFPcXRc+SE64Nn1tqMn7BMoRfq3ZsGJQduL7iU3s3ExIbtkPZbogScZRp7gbkmMQ3zYCG0hFyFnzhXxJ/jws+rddO6VPSFxkljXr3kEZDfGsfkMv38G2BbagCQokBFlvbtjAMHOeP5avfHa/8ydrkNLm+k2+jPwgsfZpk4=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755004982; c=relaxed/simple;
-	bh=1EB8b1NdfTk13Czvi0M3O562lNrOo7z+d3ktUOLanSA=;
-	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=QzdhjZJ1MIfBYAntGNVcLHWod73Vj2AzkmZXmv10c7E+Xn1/XrSLyRe/aruVFYFpMW2ymgnsySopjEhysbeQ0vk6a3vyo1WPp1xVzexdZ1i37hKMsx/13i3gh5phPaMX39yomRwkXmKhtwpfNLCxLj2zT6Og/kCAFAWw5nqC4rU=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=vivo.com; spf=pass smtp.mailfrom=vivo.com; dkim=pass (2048-bit key) header.d=vivo.com header.i=@vivo.com header.b=Xq5vXzOT; arc=fail smtp.client-ip=52.101.127.55
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=vivo.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=vivo.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2188374420
+	for <damon@lists.linux.dev>; Tue, 12 Aug 2025 13:27:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.45
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1755005233; cv=none; b=Ri1AOLzMWXH2QBiyD+RDhiK5v6Wr0VK6ERBvR/tpTJjZw3GB5QEsowmu0hmEj5lpYPlxcdAeW6eRQpc/AWq8nAUCGbubO1duUJX6DyubLdoPhBi4SDjd7oct2GW93/tiEpktubZ6EMiLgUdIZ3WAOn0qhxk5zrI7ILxfivZmSXU=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1755005233; c=relaxed/simple;
+	bh=ie/kJJDkTzro9jVYrFcfQsbZ3JqTIJO1trf4qDlhrdc=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=j3N3csjOChhEv/IHHLGG8uh4T/wPn56qj7YKSSuTBg/HCbZl1wT2LOv6zI7u71A3mgF5Q/I8i9i95VNWa7QgfazSh8HwPnuhkeSuQ6c6evGWCrSJXz9QcWUebTpMkVXk+PmZlERmIJCt+tgqWWJ4OMvYK/k3W1ZCbtwq/JHP3pg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JytO1ZKc; arc=none smtp.client-ip=209.85.160.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=vivo.com header.i=@vivo.com header.b="Xq5vXzOT"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=utcIynnM4c563z7poikWu58ZRDVRl+2wZpmz3dKBLx9evAotly706C6acb1hg7YOP/4mAnELXHBew5zSB4QyJYAPPTYDGTq3oJkAyJWagSy37po59xN5wyYYnb+sOiZ+rJsSWuRlct/N3T7RtEfnHK1zqBheao5N+NMSukMoBoDCfCbUhOfgQMbpTaQx+Du/0e/wZ0tYATvattFkvQDE1m7l8OxM/80LKbLnOHJtXHN+o0lcy8zmxDU5Yrdto9CG//Md8tGdH68Wh/utF+8B7YuafyA9svdjWAXDDKY5wWIG7KM3KUm/anTV7C12Juekj5Qcyk2GIkJHmLpuDJBAyg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=vqmHXe9pVein9z7nd/rEZ8jJ+KJnZwt+Y9ZPbcBERFE=;
- b=tmATwDqcg4N53zlcbF1XUA2yrI6dDWl2cHdK1nmv1QzgGhL5KZIoU3WUQTMqSaFN86N+qM5ulJ5l/c53wF4v8wskhcZ7VmuCuduVvbQH49M9hOlpnqLp8oZmNSOA5E99Ov11A3+69YUqae738xPIvxMvmu1E9KpYZD2BUq6YKDoALqrvcuT1FWtHHOEmy8LLWwsWRCAFknG9QpMqgpH9wHzNuX5VbHkyOT/+N4ZzIxjdNwzpjNglkowvOzpUdknxPwU8GLYy2LbXYvItx9Xf3G5/Fp6oyLHUpv8nzMzc6xnQgWKn6LmF2f/TOCErsSGTpdKKK8zAo4hAz0fMBLv2gA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=vivo.com; dmarc=pass action=none header.from=vivo.com;
- dkim=pass header.d=vivo.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vivo.com; s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=vqmHXe9pVein9z7nd/rEZ8jJ+KJnZwt+Y9ZPbcBERFE=;
- b=Xq5vXzOTIR1ZGTQ9eMkC8o44MEx5562pEzwpxRViPEDvaQVqByopUQMp2BwHRBu/lwgiRpr/oDLEcR7aILQzoFailNe5/kl+/BMfbtLUrPtDM7sceKIalHmei2UFLo7gargnLdbVankopEe1GI95RqMXGz+icZlORS/WPVZmh1iFUF/E6IPsMAqwvPmb+JIXHUOvyEHLgNEgSbuZR2A3UKHGOygCcek5/wByIXkjWBlxfF4egbeC5MdVS5cUaHNqUprMvQMzfaDidu1neGiZ7Zien/uJxkiJqj4EshCSE7tNpZF2hG6d+NpuONiYVsyWb2uTB8Td9PZ0vyouy5xrLw==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=vivo.com;
-Received: from SI2PR06MB5140.apcprd06.prod.outlook.com (2603:1096:4:1af::9) by
- KUZPR06MB8073.apcprd06.prod.outlook.com (2603:1096:d10:43::6) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9009.22; Tue, 12 Aug 2025 13:22:58 +0000
-Received: from SI2PR06MB5140.apcprd06.prod.outlook.com
- ([fe80::468a:88be:bec:666]) by SI2PR06MB5140.apcprd06.prod.outlook.com
- ([fe80::468a:88be:bec:666%4]) with mapi id 15.20.9009.018; Tue, 12 Aug 2025
- 13:22:58 +0000
-Message-ID: <0e01b83c-17f7-40b7-a9ba-3118b281a72d@vivo.com>
-Date: Tue, 12 Aug 2025 21:22:51 +0800
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] mm: remove redundant __GFP_NOWARN
-Content-Language: en-US
-To: Harry Yoo <harry.yoo@oracle.com>
-Cc: "Matthew Wilcox (Oracle)" <willy@infradead.org>,
- Andrew Morton <akpm@linux-foundation.org>, Will Deacon <will@kernel.org>,
- "Aneesh Kumar K.V" <aneesh.kumar@kernel.org>, Nick Piggin
- <npiggin@gmail.com>, Peter Zijlstra <peterz@infradead.org>,
- David Hildenbrand <david@redhat.com>,
- Lorenzo Stoakes <lorenzo.stoakes@oracle.com>, Rik van Riel
- <riel@surriel.com>, "Liam R. Howlett" <Liam.Howlett@oracle.com>,
- Vlastimil Babka <vbabka@suse.cz>, Uladzislau Rezki <urezki@gmail.com>,
- linux-fsdevel@vger.kernel.org, sj@kernel.org, damon@lists.linux.dev,
- linux-mm@kvack.org, linux-kernel@vger.kernel.org, linux-arch@vger.kernel.org
-References: <20250812095747.121135-1-rongqianfeng@vivo.com>
- <aJs9dPMdY_W5uZdc@hyeyoo>
-From: Qianfeng Rong <rongqianfeng@vivo.com>
-In-Reply-To: <aJs9dPMdY_W5uZdc@hyeyoo>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: TY2PR01CA0021.jpnprd01.prod.outlook.com
- (2603:1096:404:a::33) To SI2PR06MB5140.apcprd06.prod.outlook.com
- (2603:1096:4:1af::9)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JytO1ZKc"
+Received: by mail-oa1-f45.google.com with SMTP id 586e51a60fabf-2eb6c422828so4397518fac.1
+        for <damon@lists.linux.dev>; Tue, 12 Aug 2025 06:27:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1755005231; x=1755610031; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=RREPB+k7a/mceQdaxCB2njGP8WW7v6Nzrb7ci/2EA8A=;
+        b=JytO1ZKcLtZMMVDKc/BZb0e8IcwZjYGALjIA9Dz6mrFDPmtYQ05MmeObEDc4Vl3D2G
+         g1PB4gxYhAD3xoc3/f2c/SG4QpL1towQQBT/8zJT3eNPEWItHS0eUuF6hGoQpbqIH5tM
+         HoIlB3PI52AwVeWC88hOkURzaN5nSJXQpMVbdTzdl/ozX/hkzZW9bnhIV3d+REmXEPNr
+         HqMwQnmF8f3JYLpaoTKdFXUdvvIWkEXl6iyUpfOJdKMCcmh0y1grdLN0BjTcq+6P827I
+         caQKqzDaLO5Na/p1uWbhInpOaxrbc6s0eMuFkntVHyvnUJMCwBDzrYwu5LKsY2jLYgFi
+         wL+w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1755005231; x=1755610031;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=RREPB+k7a/mceQdaxCB2njGP8WW7v6Nzrb7ci/2EA8A=;
+        b=MZnDI/B0+9SQe2+kgcLsEfGxYP7MWgXCyojdp2cxaNCbFi3nUi7+viXTkb/AB8XeSc
+         riY38iFYQOKOJ+5fNdOmaRlpVnrsoXOuFMb9o13j7UMC94nHbouUN2z+kjFiee9I78Gs
+         ejJRYdeLG9GwMIDCtWRL4LBfFEQ4E+WjApz/gWAYqXnt9cG22yCBR/1eM4/tYr7y0KQ/
+         oicEe1GXIMyTH5Hu4HImYeeuX1CfzXbri1qAIHew9YTDMWVAe9NX6j9ZdXHouCIBUccq
+         nWBIMBaz+f0PcRXTPbpkDHe8jT434LycFM4jgTkjtvn9O8wXqjFDqN0WRMYhMeFLG7cS
+         hFxw==
+X-Forwarded-Encrypted: i=1; AJvYcCVFyWOv9FsG1ha8kvBmojruPIjo40dxbfCt4/Sr2x5OchaaQkNWPF06tBlFQ33X40z8MUDZwQ==@lists.linux.dev
+X-Gm-Message-State: AOJu0YyhvCcP2MxBkvNbNGR3Uy6B2dikASg/OzuUaH0bcGFNAlAxyT2u
+	bcSBb2M0pg37qgv1MGMN0mOQENea5r1n0ZRbykiCpdbL87/cIvjVJM0O3ewR2Z1JQ+R/foscmWq
+	ws+m1NPDn2xnapQyb8dt8UiR/klhc568DCthhfwg=
+X-Gm-Gg: ASbGncshXG4CGZTYR66t2ai8PhO4K3Ays8bK+Mlcw1AovpcOFu+sMl+x/5OqDjUmOdu
+	JU0ITtAcigk+lL5VCdcaSARJMrXLNhDsf82DraaX108V3w8114jw5rku1srR4nNKW77zGpFtRUc
+	rDcWFKPSxHtVLUX7MXDrOoVBvfqh5T3k7+oSKI7/AKIMbTzvX05qjDv4e6Pk1S+ZQfSIrb/RZeG
+	VRR
+X-Google-Smtp-Source: AGHT+IGpbMz1DdsWZ1z4GCKL7utzJO8TIQxtkA8SafJyjmZ6lfFuwcFQBFZL2gHHQv89lc/KdDVrhAdvffGsU9WPpY8=
+X-Received: by 2002:a05:6871:6718:b0:2e9:925b:206f with SMTP id
+ 586e51a60fabf-30c94f3cf74mr1607259fac.17.1755005231005; Tue, 12 Aug 2025
+ 06:27:11 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SI2PR06MB5140:EE_|KUZPR06MB8073:EE_
-X-MS-Office365-Filtering-Correlation-Id: 7ad5eb5b-0dc4-4690-f3dc-08ddd9a35a88
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|366016|7416014|376014|1800799024|7053199007;
-X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?M0JiTEtvMldnM0N2enlIemEzUjRPaVc3eWRiSkM0Qk0xdW5NZXU5SHVkbUZw?=
- =?utf-8?B?d25RQmVOQ1FNQVhRSXF0V0VCamdqczlkUnN6bk5EczZsZXJyTG03RklmN2lF?=
- =?utf-8?B?L3R6R1ZxaGZyWU5jcFJsdzFRSGV5T21vbVY1RkhXWkZCREJRdjdxYjZOV21J?=
- =?utf-8?B?bE9kTDNpcDFPWmFpN1BROExyOTcybFFJNnNmOHRRM0FGT0x5S3VpZDU1TTBJ?=
- =?utf-8?B?TzBGZ2M3aytIR2hWNzkvRWVVbjdXUXhnMm04bjVUNXVRUzJ2bm9CdTMyT2Vo?=
- =?utf-8?B?SVlOeTVGZUxEUmgyaDc1ME9USXhQL1g3VFh0ZE5Sa01GZlg5eCtuaDh5K1pT?=
- =?utf-8?B?NW5UNkFLTjNpQ2Q1ZVRWMm4xb3pwZUIvY2hHWDE3TWVLNGE2ajdRZ1pPR3Ft?=
- =?utf-8?B?OGFKNnJlQi9LalNIWTJnNUhFcStUS3RvcjlhQ0NDTzhidFJZRE5JcXhqWjZz?=
- =?utf-8?B?dElRS284NUpEVkN1V1NoWC9zL0pNSkkxTU83TmNxWkRBRmRIQmFXU2RXUm84?=
- =?utf-8?B?RW1mcDhhYXhTSHh2YnlSS090UktYSHdvS0k2d1NFNkpMWnhxMEczWHpRbXBC?=
- =?utf-8?B?eTZ3elRaSUhlUSt2SG9wS2VTUEQ5SC84cTJyWW9hL0NTY0hLeFZ1Mk82ZVdY?=
- =?utf-8?B?aDRGaXFoVm5SUVF4cEJ6dVM0QmdhSVZQalNKczRnYnYyVkZGSlNPR0h0amx1?=
- =?utf-8?B?NUU2NnFWL1J6WmptaHhEKzloY3FUTkxNVlpkejhLTzdydmFvRTJXR2lrMExR?=
- =?utf-8?B?UWU4aE5qeGFrTnM2cS9ZYjArR3pZTTFRV0czYmhNVEdDMVYwOVZCcmh5MnZq?=
- =?utf-8?B?cEprRkN6RjR2UmluUm9SNEREcGI5cE1lTWpiQ01IS2R4WFFnOVF0L2tTUlRG?=
- =?utf-8?B?MVhYSkY4WG5Td1JnSEtWYzVPTll0UW9kVWRscnFJR2Q3bUhZcVZjNytSSzVq?=
- =?utf-8?B?clNaK1JJaUZ5SGMvN2QydkQvL0xVTkpaWUIwQXJ0OTFYazdrb0duMHBBY3FJ?=
- =?utf-8?B?R2luWlJnMzdrRVRyNCtlTjlja0IxRUd1YkZvSTBmQVFDd1JpY2FNVzIxbG0v?=
- =?utf-8?B?OWwwMkhSNjFURHVzVWE0aXRVVlc5cDJmOVdnMXR2U2loN2JrWUkvVUxwVjlR?=
- =?utf-8?B?MFNXQ3drQjZoWUpuQkg4ODBsNUs3eGxaTjMzRGhPaWFXdloxZHhIcHFHVGlZ?=
- =?utf-8?B?ZlFkWExHOTk4b1NWY3ZZcHVOWVgyVEFudDNGNGZHb084UzIxNzBYSUM0QTZa?=
- =?utf-8?B?N3l1SWRjZXlSQVl3aXVvSHBCS3NCeVhya0FOZ0tFYVo3d2ZOcDRyNEZYQXZw?=
- =?utf-8?B?b3RXL1ZiMjluMTJFNDNaOEhwOXFEQUJxU3Rid3ZIdTZvY0NNZk9TU2RyVTJj?=
- =?utf-8?B?Y2I0SGFVV3ZmNXFmU0FROEdQY3I3ZWtxKy9SN0E4dnVORklpVHdtcmh0L0U3?=
- =?utf-8?B?Zk1WWjg3dGs5UlRoNlJGbCtma2s5eWR4anp0dWRQZnJ2NUJ1cXlvdHdISkht?=
- =?utf-8?B?bk1jK0ZMaysxcnBoVnpnTzZOZVQ3VUFMWnB2Um5ESGd0NDB5N3p6OGJVMUNj?=
- =?utf-8?B?Q05LUHRtK3RQZ2JJTmxOSkxpcjJCVFpxdm5NRm9Qd0VUMk9UMDM2cmlBYWtT?=
- =?utf-8?B?dWxMOFdMUm4rYlJ6MGZ6ZUFSY1gwcnFKOVVSWnVMSndCOEhyUUZhRXJkWE9q?=
- =?utf-8?B?d3BPYVZpZ0ZSRDFBUitJRUpSRlZPT2s2bE01dXZxTFVDSlBXMHIxM1ZLdDF3?=
- =?utf-8?B?N3IwR2ZpL2g2eUJka2tETndiUWF5OGVZaU9LUDdJcndFVEF4QXRFYXZqWDBs?=
- =?utf-8?B?R0Rib05ZRVFSUkVvK0ltOEJFaThTRU10eGpoVGFoNmg5em1rM2s1a3B5aUU3?=
- =?utf-8?B?TS9IS3pwcEdZUHFiNUFGVnRJclZyRWNlQkJQY0ZrbU1JdWEza215Q0VyVTB3?=
- =?utf-8?Q?JrR/JvmurG0=3D?=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SI2PR06MB5140.apcprd06.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(7416014)(376014)(1800799024)(7053199007);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?b054UnI5Qm9YYmIwOVl2emhtY3BUNHkrR2w5eU5yWldUV3lSS0hyeWdqa2dt?=
- =?utf-8?B?czFjY1BsUnc1RGVvcm1Od2pjKzlPUkJidzF5a3dMZmZxc29ic3hldnpCeEd2?=
- =?utf-8?B?VXRwT0kvczhaS3h5V2RlU1pDOTkyQnlPUnVDejFLOTd4Q1M2cUNGZWN4L2tP?=
- =?utf-8?B?bGwrRTMxK3BkWG0wNE9JOXFjdGRCNUo5V200b2lEcVd3b1lWWG8reTBVRzBi?=
- =?utf-8?B?Z0VReTdta0hYdjliazhYRFVhMk4wUWZERzdmbDN4a0ZtOXl2OGc1N0lGVDA4?=
- =?utf-8?B?TWpVK0pjNisrQVRnNEhMNEc5V25vM1ZSOHpQNDQ5cEg5RDA4aFlpN3huckI3?=
- =?utf-8?B?MEdmME1ESVRHTERxR3Z6Sys1VTk4MXluRnFVZXh2ZEx4enIwcm5MR2ZCdWNQ?=
- =?utf-8?B?dkFqVGdBcTMreUIxN1NCVWtBR0YxbjRHc1FMN1ZZb1ZteVJoVjYxRHRDWi9z?=
- =?utf-8?B?VGQzRGxTemJwUTlIdkdjSXM3Zk9FQ3VMU2hlT2RjTFpGbC9OclpxQ09wN2x6?=
- =?utf-8?B?S2ZSWjIwWVczbzZJaG4waFJESWY0Ty9xYjFjeDhMbUZuMCtaNGFZZFpTZUlT?=
- =?utf-8?B?OGcxK3J6VlBPQU1KSHI1cG1QZ0kvaGgySEdhbVh6Q1RlY01CRDFaWjZURzkx?=
- =?utf-8?B?VE5LZCtlVEYwQ3pBVytzQURKck9IRnBrT2lYeTBDZ2RHRXF1dWU4SjFUSW84?=
- =?utf-8?B?dGd3REZ4NXlYQ1VVQ1FKdW5rN0FwakVEYmFQUDVibXhOUldNNzFSd1BBL0h5?=
- =?utf-8?B?UUw1SE1QeUMrZ2NTbnFKNStEOUllMkdSZmFrNHlNQk55NGUyMnp2a2EyZ2h2?=
- =?utf-8?B?UlF0NVZLVmxFa1prbjArcEFKTFU2czN6NkRwTW5GdWM0NFZDQncrVzlNWi8r?=
- =?utf-8?B?SEJGWEtMbGdrWFBhbzdDRm5DT3RjWk5NOXpmZjlpb0JpVytPamRpL28vYnRZ?=
- =?utf-8?B?dTAvaVVYMEZSUlpRdnhLWW5yQ3lUdXhPYTE5NkFXUzVQTlVPU2RKeDFCVTN3?=
- =?utf-8?B?UmkzcFJnVUQ4QkhZNHJnSUNLTWQwQVRiS3BLcWpodDRkQ2YwUmRPaTRZTDdU?=
- =?utf-8?B?M0hDb0dVbU96RC9vY08reUZydlBMUzd5Z3oyelpkMGdrNVkwdDRPZ2N2dHFx?=
- =?utf-8?B?M0tYRkUvSm9FaU5GTE40WU5aVWRSaVhTQ1A4cEZoZXVxUXVDbTBTUzY3Z1hW?=
- =?utf-8?B?OGl2VHpGUVpLMHlEajlCazV5dlhieFoxV0QrRmM1SFVadUVnZ0d0dzJ6eHh1?=
- =?utf-8?B?YitaM0p1d1ZCYzVyUHVpNHBCNXJXZ3VEdHk2RTRQRXZoY01qVGlielI1bVpH?=
- =?utf-8?B?ZkRxWnNxZS9yR2dKczJON05XSCtJRkVja1Y4R25vdTl3bjBUODR5bXRQeXRP?=
- =?utf-8?B?dWhZMk9VaEhCcTNjUWRhSXp0SUd3Z2FNU0kwVzlDcUh5b1d3STRGOW1MU0dJ?=
- =?utf-8?B?L0c1ckxjYWE0bTZMZSt5YUluQVZaMHBFOXpUV000OXk4bjBuT1h0K2xyYlJr?=
- =?utf-8?B?azNHcVo3MmowL3V5OW1LL0pzbktqUGNMb3dFWEZmMktQdGp5b29FTFpQeVRK?=
- =?utf-8?B?WlNqL0ZsMzlZaGdVRWw2SHJoZFBQbklRQ3A3TStqOXJlV1ljRDhJZTdOcFF5?=
- =?utf-8?B?K2o2dzlMQVYwa1pIb3JKbDlkdk1WYktyRFArbWtzemlkV2JjNDEvclhVU2dp?=
- =?utf-8?B?elRXcjNkd0xRRjlkMDczbGxiZjB5Z3ZxTWNhS1Y3Vjk3cXN5YTFKNnVLL2Jq?=
- =?utf-8?B?Sk5ZY1NZWjdzMDliMjRiQnk4N2JRUzE4dTJ1ekdTR1Znc2laWEpsUlF3YjJj?=
- =?utf-8?B?UytvbWNVUWRseTEycDEwamxZMzFsY2lsdTlTT0oyS3RFcHN6Q0JsNXVTbjEy?=
- =?utf-8?B?d0x0M1h6dWZkbTdranpvekJSc0J5bU9IZ0NVdWV4N0VzOWlVMU41THY2eGRO?=
- =?utf-8?B?d2dHeFNyaHp2ei8wYWlxa0t1TS9kK0xUdFpUN2tNaWtNOFNRTmhWbDFFcGEv?=
- =?utf-8?B?Ri9sM2FqVVp6dGdmdTZON2dVTDBjMjVhZVdnK2szWnMwNytGQkVWYkE2ZmU2?=
- =?utf-8?B?cE94Q01iU1pWWkJiWWFxTzI2SGJnMTVMVFQ2TEIyNmlEUHNQQ1hubmdsVEt6?=
- =?utf-8?Q?+FyYSwgBXVoiLU2la6QKIVcNs?=
-X-OriginatorOrg: vivo.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 7ad5eb5b-0dc4-4690-f3dc-08ddd9a35a88
-X-MS-Exchange-CrossTenant-AuthSource: SI2PR06MB5140.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Aug 2025 13:22:57.9925
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 923e42dc-48d5-4cbe-b582-1a797a6412ed
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: p1zG1HZyl4fnc+tShvulmvUXhg7VR4gV7Q9xxvueazmEWbZkGnsdFL3Sbrogm0zMpPqi9iudihWdCrp/20R5yw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: KUZPR06MB8073
+References: <20250812-alex-fixes_manual-v1-1-c4e99b1f80e4@rivosinc.com> <CABFDxMGPS6LE=A25VjXEpfKuzVfgxfgu=_uhkWXc3D+xuq-B6w@mail.gmail.com>
+In-Reply-To: <CABFDxMGPS6LE=A25VjXEpfKuzVfgxfgu=_uhkWXc3D+xuq-B6w@mail.gmail.com>
+From: Sang-Heon Jeon <ekffu200098@gmail.com>
+Date: Tue, 12 Aug 2025 22:27:00 +0900
+X-Gm-Features: Ac12FXxoAocnTTpz6traLMo0gPyYiDuR8cKin4JSoMSWQ6SUh-o9iDKVTOiC780
+Message-ID: <CABFDxMEQYx7fdx4T7meUb01FoqJaHcW_2RoYnBwJ8GzmJTexzQ@mail.gmail.com>
+Subject: Re: [PATCH] selftests/damon: fix damon selftests by installing _common.sh
+To: Alexandre Ghiti <alexghiti@rivosinc.com>
+Cc: SeongJae Park <sj@kernel.org>, Shuah Khan <shuah@kernel.org>, 
+	Andrew Morton <akpm@linux-foundation.org>, Enze Li <lienze@kylinos.cn>, damon@lists.linux.dev, 
+	linux-mm@kvack.org, linux-kselftest@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+Hello, Alexandre
 
-在 2025/8/12 21:11, Harry Yoo 写道:
-> [You don't often get email from harry.yoo@oracle.com. Learn why this is important at https://aka.ms/LearnAboutSenderIdentification ]
+On Tue, Aug 12, 2025 at 9:32=E2=80=AFPM Sang-Heon Jeon <ekffu200098@gmail.c=
+om> wrote:
 >
-> On Tue, Aug 12, 2025 at 05:57:46PM +0800, Qianfeng Rong wrote:
->> Commit 16f5dfbc851b ("gfp: include __GFP_NOWARN in GFP_NOWAIT") made
->> GFP_NOWAIT implicitly include __GFP_NOWARN.
->>
->> Therefore, explicit __GFP_NOWARN combined with GFP_NOWAIT (e.g.,
->> `GFP_NOWAIT | __GFP_NOWARN`) is now redundant.  Let's clean up these
->> redundant flags across subsystems.
->>
->> No functional changes.
->>
->> Signed-off-by: Qianfeng Rong <rongqianfeng@vivo.com>
->> ---
-> Maybe
+> Hello, Alexandre
 >
-> .gfp_mask = (GFP_HIGHUSER_MOVABLE & ~__GFP_RECLAIM) |
->                          __GFP_NOWARN | __GFP_NOMEMALLOC | GFP_NOWAIT,
+> On Tue, Aug 12, 2025 at 5:13=E2=80=AFPM Alexandre Ghiti <alexghiti@rivosi=
+nc.com> wrote:
+> >
+> > _common.sh was recently introduced but is not installed and then
+> > triggers an error when trying to run the damon selftests:
+> >
+> > selftests: damon: sysfs.sh
+> > ./sysfs.sh: line 4: _common.sh: No such file or directory
+> >
+> > Install this file to avoid this error.
 >
-> in mm/damon/paddr.c also can be cleaned up to
->
-> .gfp_mask = (GFP_HIGHUSER_MOVABLE & ~__GFP_RECLAIM) |
->                          | __GFP_NOMEMALLOC | GFP_NOWAIT,
->
-> ?
-Thanks for the reminder.  I did miss one modification spot.  After checking,
-I found this code section was moved to mm/damon/ops-common.c.  I'll submit
-v2 immediately.
+> I tried to reproduce those error with my vm environment but I failed;
+> with my workaround test method, it doesn't exist.
+> If you're okay, could you please tell me line by line how you execute
+> tests in what environment?
+> I'm also struggling with the test environment, as well.
 
-Best regards,
-Qianfeng
+I succeeded to reproduce and also check that this patch removes those error=
+s.
+
+> > Fixes: 511914506d19 ("selftests/damon: introduce _common.sh to host sha=
+red function")
+> > Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
+> > ---
+
+Tested-by: Sang-Heon Jeon <ekffu200098@gmail.com>
+
+> >  tools/testing/selftests/damon/Makefile | 1 +
+> >  1 file changed, 1 insertion(+)
+> >
+> > diff --git a/tools/testing/selftests/damon/Makefile b/tools/testing/sel=
+ftests/damon/Makefile
+> > index 5b230deb19e8ee6cee56eb8f18c35e12f331e8b7..ddc69e8bde2905ff1c461a0=
+8f2ad008e6b28ac87 100644
+> > --- a/tools/testing/selftests/damon/Makefile
+> > +++ b/tools/testing/selftests/damon/Makefile
+> > @@ -4,6 +4,7 @@
+> >  TEST_GEN_FILES +=3D access_memory access_memory_even
+> >
+> >  TEST_FILES =3D _damon_sysfs.py
+> > +TEST_FILES +=3D _common.sh
+> >
+> >  # functionality tests
+> >  TEST_PROGS +=3D sysfs.sh
+> >
+> > ---
+> > base-commit: 2754d549af31f8f029f02d02cd8e574676229b3d
 >
-> With or without that:
+> Does this commit exist in `mm-new` or `damon-next`?  I failed to setup
+> the same base-commit environment.
+
+However, I'm still not sure that this patch is in the correct
+baseline. maybe it will not cause any problems with the merge
+though... but I'm not sure. So I didn't add a reviewed-by tag.
+
+> > change-id: 20250812-alex-fixes_manual-aed3ef75dd83
+> >
+> > Best regards,
+> > --
+> > Alexandre Ghiti <alexghiti@rivosinc.com>
+> >
+> >
 >
-> Reviewed-by: Harry Yoo <harry.yoo@oracle.com>
+> Thank you for great work!
 >
-> --
-> Cheers,
-> Harry / Hyeonggon
->
+> Best Regards.
+> Sang-Heon Jeon
+
+Best Regards.
+Sang-Heon Jeon
