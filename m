@@ -1,57 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E873C242D74;
-	Tue, 12 Aug 2025 17:09:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B0F92FD1BD;
+	Tue, 12 Aug 2025 17:13:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755018580; cv=none; b=h+nI8Tpqa4qtMBqcx6f55VlmHZOnTqQAVk0ugz2Nwq3L7kqAwjKtOsSJRja5asllqqgnci/gGBvkEIEUcDf+oiyhMmhKW7zAp0FmA7g2Feu7ZY5DDDhtyXqYd0By7BOGgc4tR7kOh4Dw/4xKBV0YhYavMiLIjlfGHwIUxs/4q8Y=
+	t=1755018804; cv=none; b=luJAhwF66aTtntup8I1CSLYKUxtqE7DqIN7QYFPm4STYBaPfL2L6DIkmw/i5QcBK8NnFTDQPpnmz+gnFyRCdYf2apw8/GDXlDiINTKIY87uTwGiUGd+fdtdZjNfeSVF7Zaupjg0pmD3oj4VytjRvALGBjtr4He5fdOUX6Bz7UeY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755018580; c=relaxed/simple;
-	bh=WllhlpeuM1QYj3ynp+yRWpiZPyuig56MrMJq6geJbq0=;
+	s=arc-20240116; t=1755018804; c=relaxed/simple;
+	bh=DDL2bVmixo4qjz0buf9nt8YEqAI27C4kZ9s1B7RDXaM=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=Y1R0TIYcsGbnY+GuDvxx5A9Di8gJr2BcPjiW0HZHoiOEEnGiJJH/b8JLRwPJs8SAAJpWKeRmM8sM8sL0a8WcenKIuxYYmxFSu4C/Ci1MpyaGSWqAcmJHE762y1b71llMk5D/l/MxfCA68dVSKsvmCTSlPy1QgsApAXzjTBYJyA0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oL4Sw+hk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TiLzqqeT2iOIisJOQbrnD06AGw1K4ouJvUEAuXBbdihRDpRLx3Vu+hXMBkkwvitSsfPe5hihpS/HWc7Gnr3BGrXTywgB2CXR/oqjwYWGY91/kIVs/HNMJwYj6s2s6KAvw+5j+kiaNMc92/xbycG3s2ug586ix7sHYEGZPgf+4eg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OJEUzrGT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oL4Sw+hk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 315F7C4CEF6;
-	Tue, 12 Aug 2025 17:09:36 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OJEUzrGT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7793C4CEF0;
+	Tue, 12 Aug 2025 17:13:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1755018576;
-	bh=WllhlpeuM1QYj3ynp+yRWpiZPyuig56MrMJq6geJbq0=;
+	s=k20201202; t=1755018803;
+	bh=DDL2bVmixo4qjz0buf9nt8YEqAI27C4kZ9s1B7RDXaM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oL4Sw+hk8pHYaYySOCd+3ByAPToVrqxHD3EhBtFQtquiy/gNpJhiIPi7WbacIdYq+
-	 JvtT9wxou7H8//kEP7MDOPvjQd4VmV1IYtx+Q/IG6W7pR23Rde8bNJVBEpyN3Q48go
-	 wA4XGXVUYZrDwV7DQ3VDcHGRJ/iMWWdqSMG9yafwpj49LkbHWRh15PW0xw9d6pqlkd
-	 IAdLzvxQ137cGLL35VCrUz47GH7iJNQYbtJ4KNK0AUoP52esjXltISKF3O/YNUU8ob
-	 WX9UxN5jHoZUnM/0UgRfb0OvEIWIn4+byx88nT14VS4T5qmwmL20Aq0dkjIy4XLHU6
-	 RrdPlWcKcaEZA==
+	b=OJEUzrGT8Q8Oh2evCaX+1T6cWfuLAh9FOBdhc8w07mZxOzdNxo1oTkevmWUDr9NVE
+	 ee+TsJCI1KznM+XK6CcNEQRSjuBlr3H/WwyN+htOlPeU1zJxfGqsayu7cbQvsM1w5s
+	 zAmVArfjMl7wl8fZEK6x46X54FImdWpETPXFzhPEzMIdrNEdxUuU9Wq6nrjV5bI0KU
+	 P+ISMBm7Q2iAbJnHDXSB47/SC2hnDQikyXvTxwAjTeJFC3I0nERpgt+5YBatl/aOHL
+	 FZOtaArV6oiOdeMkvkyzeIkdXnX7Iu/Y7b+Z/IUrYPGCNp2J8OaIJvVAuczk6uRkgP
+	 SV4//JL7FbqCw==
 From: SeongJae Park <sj@kernel.org>
-To: Harry Yoo <harry.yoo@oracle.com>
+To: Alexandre Ghiti <alexghiti@rivosinc.com>
 Cc: SeongJae Park <sj@kernel.org>,
-	Qianfeng Rong <rongqianfeng@vivo.com>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Shuah Khan <shuah@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Will Deacon <will@kernel.org>,
-	"Aneesh Kumar K.V" <aneesh.kumar@kernel.org>,
-	Nick Piggin <npiggin@gmail.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	David Hildenbrand <david@redhat.com>,
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
-	Rik van Riel <riel@surriel.com>,
-	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
-	Vlastimil Babka <vbabka@suse.cz>,
-	Uladzislau Rezki <urezki@gmail.com>,
-	linux-fsdevel@vger.kernel.org,
+	Enze Li <lienze@kylinos.cn>,
 	damon@lists.linux.dev,
 	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org,
-	linux-arch@vger.kernel.org
-Subject: Re: [PATCH] mm: remove redundant __GFP_NOWARN
-Date: Tue, 12 Aug 2025 10:09:33 -0700
-Message-Id: <20250812170933.56674-1-sj@kernel.org>
+	linux-kselftest@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] selftests/damon: fix damon selftests by installing _common.sh
+Date: Tue, 12 Aug 2025 10:13:21 -0700
+Message-Id: <20250812171321.56978-1-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <aJs9dPMdY_W5uZdc@hyeyoo>
+In-Reply-To: <20250812-alex-fixes_manual-v1-1-c4e99b1f80e4@rivosinc.com>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -61,38 +50,23 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Tue, 12 Aug 2025 22:11:16 +0900 Harry Yoo <harry.yoo@oracle.com> wrote:
+On Tue, 12 Aug 2025 08:12:11 +0000 Alexandre Ghiti <alexghiti@rivosinc.com> wrote:
 
-> On Tue, Aug 12, 2025 at 05:57:46PM +0800, Qianfeng Rong wrote:
-> > Commit 16f5dfbc851b ("gfp: include __GFP_NOWARN in GFP_NOWAIT") made
-> > GFP_NOWAIT implicitly include __GFP_NOWARN.
-> > 
-> > Therefore, explicit __GFP_NOWARN combined with GFP_NOWAIT (e.g.,
-> > `GFP_NOWAIT | __GFP_NOWARN`) is now redundant.  Let's clean up these
-> > redundant flags across subsystems.
-> > 
-> > No functional changes.
-> > 
-> > Signed-off-by: Qianfeng Rong <rongqianfeng@vivo.com>
-> > ---
+> _common.sh was recently introduced but is not installed and then
+> triggers an error when trying to run the damon selftests:
 > 
-> Maybe
+> selftests: damon: sysfs.sh
+> ./sysfs.sh: line 4: _common.sh: No such file or directory
 > 
-> .gfp_mask = (GFP_HIGHUSER_MOVABLE & ~__GFP_RECLAIM) |
->                         __GFP_NOWARN | __GFP_NOMEMALLOC | GFP_NOWAIT,
+> Install this file to avoid this error.
 > 
-> in mm/damon/paddr.c also can be cleaned up to
-> 
-> .gfp_mask = (GFP_HIGHUSER_MOVABLE & ~__GFP_RECLAIM) |
->                         | __GFP_NOMEMALLOC | GFP_NOWAIT, 
-> 
-> ?
+> Fixes: 511914506d19 ("selftests/damon: introduce _common.sh to host shared function")
 
-Thank you for catching this, Harry!
+Thank you for catching and fixing this!
 
-FYI, the code has moved into mm/damon/ops-common.c by commit 13dde31db71f
-("mm/damon: move migration helpers from paddr to ops-common").  Please feel
-free to make the cleanup if anyone willing to.
+> Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
+
+Reviewed-by: SeongJae Park <sj@kernel.org>
 
 
 Thanks,
