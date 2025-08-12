@@ -1,83 +1,69 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C9FE274B29;
-	Tue, 12 Aug 2025 21:12:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF026208CA
+	for <damon@lists.linux.dev>; Tue, 12 Aug 2025 22:17:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755033146; cv=none; b=oOqk8Jbnq+bMSNeE8Dcqw9x7YNJTIM3WbZcoGnsIQuidQXypI0nAZDf8L7/7ZAfQ/6wwyEXrVL/b3+Of/HpyMxIJ112U3fMs+Yr1KPhD2tz9CKhux4rHFv0R8dy3Ut3uOidgLw2PGmhZ1gfml8GW/nRp4iUnH7n1vb3jqcrYOBs=
+	t=1755037065; cv=none; b=NuK2bg+QbpFjR+mjABMJG2RqAae5VVG4iaDXJ7+Gzc1mVD4P7wTAjF2OomwJimlQy95uAPkjZfGqXWb4TTG1z17QSJWegOZxgshQqHysvlXX3u5aVO0hGc9buKLF9+isVO8xsWTRTR1JD3vhXx53pCdt6n7aGJDSVN6AIhVmgA8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755033146; c=relaxed/simple;
-	bh=C2zsIVIRo1pylk2kBdWKqydnPuw2DK2XE1QOzi+K2Y8=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=XCOYUFRzwHEnPOKpGuVoJgNZiqWlDaQfmK02CXI70RCJkjQPlCs+Mfxc8EITNRXYEBYkWdCNbXBJV9IxF4OCurizs8Cxrs1w1rIKg/9MI2Sv6cYpmhF5Bnmlgj3CagSMhDkFL8Rfiw6K1lWGiY8fWEhZj8yor9bfWoVqHXbdRoo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ph4Apufw; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1755037065; c=relaxed/simple;
+	bh=miipKiTqF7JpECaUEluYI41x3HMUaCIGaCjb5/2xIkk=;
+	h=Date:From:To:Cc:Subject:Message-Id:In-Reply-To:References:
+	 Mime-Version:Content-Type; b=FLFF7W0PYzR6oBjr5/BoWijox7WJpGpeqPTf1wSuZKKWXcWdY09wP6oj1I6LHcyEkg66otEIjRddDcWyY9dDj2R32tIpLv527gNRWKWZx3GN7dIut8gXRzXOpEPFOnnKcVke7DDvxxevBzXbF+yzo7JvZs+aeo4ZleF/VpfmJss=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linux-foundation.org header.i=@linux-foundation.org header.b=VZPhh9am; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ph4Apufw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85C08C4CEF0;
-	Tue, 12 Aug 2025 21:12:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1755033145;
-	bh=C2zsIVIRo1pylk2kBdWKqydnPuw2DK2XE1QOzi+K2Y8=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ph4ApufwntcndTJnGDVGmB0Wmr1yJ8HPZDZgc7e5LAc7dboHafZfcWc9KW593YWoO
-	 9GByk+s0/ICmwjvz8q/WO3AsiHH04F6hnS6BMUsKtbnexpJ8Ei4WLCny+HC2Z+6A56
-	 Qae4cwPeTluct8Jnx0iGNN8tzkhHAD/ieTWjLwo0wiY8adxv/M7F13Tqv759TuxYbW
-	 oqz9rw3kKM5pmpepb/FIZmerJaiofXh7ofYXL5N2xCJ6C2cQ8U5Rb//5ofmsfLNRk6
-	 Iu/kVmlnv9uj2yft9SsFzycpvZk9ROAsq8JeZc4EtkhIrS5lIqieSKEfdCuOtrsc8E
-	 MP4rVMHRhqSMw==
-From: SeongJae Park <sj@kernel.org>
-To: Soham Metha <sohammetha01@gmail.com>
-Cc: SeongJae Park <sj@kernel.org>,
-	linux-doc@vger.kernel.org,
-	linux-kernel-mentees@lists.linuxfoundation.org,
-	skhan@linuxfoundation.org,
-	Andrew Morton <akpm@linux-foundation.org>,
-	David Hildenbrand <david@redhat.com>,
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
-	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
-	Vlastimil Babka <vbabka@suse.cz>,
-	Mike Rapoport <rppt@kernel.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Michal Hocko <mhocko@suse.com>,
-	Jonathan Corbet <corbet@lwn.net>,
-	damon@lists.linux.dev
-Subject: Re: [PATCH v2 6/9] docs: damon: fixed spelling mistakes in documentation
-Date: Tue, 12 Aug 2025 14:12:23 -0700
-Message-Id: <20250812211223.61339-1-sj@kernel.org>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250812204952.73136-4-sohammetha01@gmail.com>
-References: 
+	dkim=pass (1024-bit key) header.d=linux-foundation.org header.i=@linux-foundation.org header.b="VZPhh9am"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38371C4CEF0;
+	Tue, 12 Aug 2025 22:17:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linux-foundation.org;
+	s=korg; t=1755037064;
+	bh=miipKiTqF7JpECaUEluYI41x3HMUaCIGaCjb5/2xIkk=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=VZPhh9amNgD6bU+DfrwnuclBnrQ/9RE3gflGp5IJCrnEth70N5IVPntS17Hhn6Kj9
+	 j2fTn1iK+41SHXmIYhXgI9vs985Cl3cOMjSk3n+z8wk/nYjDNifiGJLC+H2OnL9lmc
+	 nNW5TFGEtCbnJtyRn4QjdVzPyT0y1+wvZadAEzRA=
+Date: Tue, 12 Aug 2025 15:17:43 -0700
+From: Andrew Morton <akpm@linux-foundation.org>
+To: SeongJae Park <sj@kernel.org>
+Cc: Sang-Heon Jeon <ekffu200098@gmail.com>, honggyu.kim@sk.com,
+ damon@lists.linux.dev, linux-mm@kvack.org, Alexandre Ghiti
+ <alexghiti@rivosinc.com>
+Subject: Re: [PATCH] selftests/damon: fix selftests by installing drgn
+ related script
+Message-Id: <20250812151743.570bde54f31007cf986a2f52@linux-foundation.org>
+In-Reply-To: <20250812175939.57506-1-sj@kernel.org>
+References: <20250812140046.660486-1-ekffu200098@gmail.com>
+	<20250812175939.57506-1-sj@kernel.org>
+X-Mailer: Sylpheed 3.8.0beta1 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
-+ damon@lists.linux.dev
+On Tue, 12 Aug 2025 10:59:39 -0700 SeongJae Park <sj@kernel.org> wrote:
 
-On Wed, 13 Aug 2025 02:19:49 +0530 Soham Metha <sohammetha01@gmail.com> wrote:
-
-> found/fixed the following typos
+> On Tue, 12 Aug 2025 23:00:46 +0900 Sang-Heon Jeon <ekffu200098@gmail.com> wrote:
 > 
-> - directores -> directories
+> > drgn_dump_damon_status is not installed while kselftest setup.
+> > It can breaks other tests which depend on drgn_dump_damon_status.
+> > Install drgn_dump_damon_status files to fix broken test.
 > 
-> in `Documentation/admin-guide/mm/damon/usage.rst`, and
+> This patch conflicts with the similar one from Alexandre Ghiti.  Could you
+> please rebase yours on top of Alexandre's one (and mention the dependency on
+> the comment section under '---' line), unless Andrew resolves the conflict on
+> his own?
 > 
-> - multipled -> multiplied
+> > 
+> > Signed-off-by: Sang-Heon Jeon <ekffu200098@gmail.com>
+> > Cc: Alexandre Ghiti <alexghiti@rivosinc.com>
 > 
-> in `Documentation/mm/damon/design.rst`.
-> 
-> Signed-off-by: Soham Metha <sohammetha01@gmail.com>
+> Reviewed-by: SeongJae Park <sj@kernel.org>
 
-Thank you for finding and fixing this!
+I'll add
 
-Reviewed-by: SeongJae Park <sj@kernel.org>
-
-
-Thanks,
-SJ
-
-[...]
+Fixes: f3e8e1e51362 ("selftests/damon: add drgn script for extracting damon status")
