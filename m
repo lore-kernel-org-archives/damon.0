@@ -1,93 +1,186 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mailgw.kylinos.cn (mailgw.kylinos.cn [124.126.103.232])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9254115855E
-	for <damon@lists.linux.dev>; Wed, 13 Aug 2025 02:45:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FC6A2853E0
+	for <damon@lists.linux.dev>; Wed, 13 Aug 2025 03:04:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=124.126.103.232
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755053159; cv=none; b=mey+Ztf74pgESSv2dPcOXe+Ho/ueRoVm299NgTL2gTIC8Q+pHy22Q3jjp1zbGbJ1XW2F+e1GX+k48x2Nn8j6+ive8BMJEJW+oJ399/VyXz3XuFykTfrKK8nLFJ9+xTvI2SebTYgo4Fq5E4sjRTFp1mAPz+25cIIpOTT3SCTKTuk=
+	t=1755054286; cv=none; b=W22Yohzlkt83s3vWsa3ItAfF/ShPdHPZ5ShP9+b65j8hyCJwimgMgRPSZ/pqUOCBzS7AKxpjNSxEa2BC35JwNaFIZv41neXKU1jDyZlbcvPZXVSbFt+D6hK0e3GFTjYU1WNKMfXgo4s1un2M2cmriGUnS/MNUxq0mADy0B1a4C0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755053159; c=relaxed/simple;
-	bh=p6dvtiP+ZDxCLTpTe4srs33mURr8kn+OBoMUmqddGrA=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=OTOAnV4VhpyKx5k5x7J/YFgfkGlHyrWcmCrd1HTtShi8b6KxqaG8QJc/9bgRUpGyQbuenRROK2fljJM9KribabDhrW4N35vEaVTYDAwQRCMX1s7NWEhEqsPOfo6v2Pu/sCWbJWdC2nlB/CEHo4Ss6bv6WGnEnohUJ8fRj51keW0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HfXzH+Oj; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HfXzH+Oj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F12FCC4CEF0;
-	Wed, 13 Aug 2025 02:45:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1755053159;
-	bh=p6dvtiP+ZDxCLTpTe4srs33mURr8kn+OBoMUmqddGrA=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HfXzH+OjXKR2lFjnlWkQIBEwb3Kzig2Ax64rdsR7Cav5CppOwUSvmYHf3qs6OC4Dr
-	 778Tn26yLQbgj/pPVCxJHpUCI6hxvIcXMiQ9YeWPzQeZUaW6lPe9DfqhN3P7HzDYko
-	 L86i+ee5RrJzNWiA6dwgk2c5tR8SNxWILk9OjLT29H82JksxjP5unhDKywOIgFaTQT
-	 wsAave6mckLLIuarTFXCNhxMx3Z2gW0ud0YbuIbZNcUY7N5k4gU/uKjBwPt8ff4Vx9
-	 4g5+tfne+9OnEMbMbKyi585ZbSJhhzcV/1tIOBbUm259SBJm+YrS6Wph7djuXQ3R/q
-	 ybSJNJQ+jla7g==
-From: SeongJae Park <sj@kernel.org>
+	s=arc-20240116; t=1755054286; c=relaxed/simple;
+	bh=ja1ztIR1AE+ObunlAW/yVyeiKfecAzX/FytL5Q5r05c=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=nvX+c26y0XVdKT14NHv0C7SFvx4Xa+eccMvgDMIHT21kN90g02iX4R/seAtMFO6t6jd7Ee3sB9m/DEqyL6hJ7tpR0pfS3hA6tdFl9D1DDXOBJgyKCqOrU1lmXWje+KLyuHWSusr+VmMRAmj7Vw1Tk5dIpDRjX0nFr2U2gnXs5h8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn; spf=pass smtp.mailfrom=kylinos.cn; arc=none smtp.client-ip=124.126.103.232
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kylinos.cn
+X-UUID: 3f547fcc77f211f0b29709d653e92f7d-20250813
+X-CID-P-RULE: Release_Ham
+X-CID-O-INFO: VERSION:1.1.45,REQID:61a2bf84-6726-42ca-bdc4-8c887ae87ba7,IP:10,
+	URL:0,TC:0,Content:0,EDM:0,RT:0,SF:-9,FILE:0,BULK:0,RULE:Release_Ham,ACTIO
+	N:release,TS:1
+X-CID-INFO: VERSION:1.1.45,REQID:61a2bf84-6726-42ca-bdc4-8c887ae87ba7,IP:10,UR
+	L:0,TC:0,Content:0,EDM:0,RT:0,SF:-9,FILE:0,BULK:0,RULE:Release_Ham,ACTION:
+	release,TS:1
+X-CID-META: VersionHash:6493067,CLOUDID:354314cd71732fa740b5e7583b0f8b67,BulkI
+	D:250813110438OSDH4HH7,BulkQuantity:0,Recheck:0,SF:17|19|24|45|64|66|78|80
+	|81|82|83|102|841,TC:nil,Content:0|50,EDM:-3,IP:-2,URL:0,File:nil,RT:nil,B
+	ulk:nil,QS:nil,BEC:nil,COL:0,OSI:0,OSA:0,AV:0,LES:1,SPR:NO,DKR:0,DKP:0,BRR
+	:0,BRE:0,ARC:0
+X-CID-BVR: 0
+X-CID-BAS: 0,_,0,_
+X-CID-FACTOR: TF_CID_SPAM_SNR,TF_CID_SPAM_FAS,TF_CID_SPAM_FSD,TF_CID_SPAM_FSI
+X-UUID: 3f547fcc77f211f0b29709d653e92f7d-20250813
+X-User: lienze@kylinos.cn
+Received: from kylin [(223.70.159.239)] by mailgw.kylinos.cn
+	(envelope-from <lienze@kylinos.cn>)
+	(Generic MTA with TLSv1.3 TLS_AES_256_GCM_SHA384 256/256)
+	with ESMTP id 1277418137; Wed, 13 Aug 2025 11:04:37 +0800
+From: Enze Li <lienze@kylinos.cn>
 To: Sang-Heon Jeon <ekffu200098@gmail.com>
-Cc: SeongJae Park <sj@kernel.org>,
-	honggyu.kim@sk.com,
-	damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	Alexandre Ghiti <alexghiti@rivosinc.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: Re: [PATCH] selftests/damon: fix selftests by installing drgn related script
-Date: Tue, 12 Aug 2025 19:45:56 -0700
-Message-Id: <20250813024556.52376-1-sj@kernel.org>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <CABFDxMF=-Fb56zSnGVvqXRrDXh-3vFzQmhuLNDYEzFv4z-bsuQ@mail.gmail.com>
-References: 
+Cc: Alexandre Ghiti <alexghiti@rivosinc.com>,  SeongJae Park
+ <sj@kernel.org>,  Shuah Khan <shuah@kernel.org>,  Andrew Morton
+ <akpm@linux-foundation.org>,  damon@lists.linux.dev,  linux-mm@kvack.org,
+  linux-kselftest@vger.kernel.org,  linux-kernel@vger.kernel.org
+Subject: Re: q[PATCH] selftests/damon: fix damon selftests by installing
+ _common.sh
+In-Reply-To: <CABFDxMEQYx7fdx4T7meUb01FoqJaHcW_2RoYnBwJ8GzmJTexzQ@mail.gmail.com>
+	(Sang-Heon Jeon's message of "Tue, 12 Aug 2025 22:27:00 +0900")
+References: <20250812-alex-fixes_manual-v1-1-c4e99b1f80e4@rivosinc.com>
+	<CABFDxMGPS6LE=A25VjXEpfKuzVfgxfgu=_uhkWXc3D+xuq-B6w@mail.gmail.com>
+	<CABFDxMEQYx7fdx4T7meUb01FoqJaHcW_2RoYnBwJ8GzmJTexzQ@mail.gmail.com>
+Date: Wed, 13 Aug 2025 11:04:33 +0800
+Message-ID: <87v7mrvs5a.fsf_-_@kylinos.cn>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, 13 Aug 2025 11:24:27 +0900 Sang-Heon Jeon <ekffu200098@gmail.com> wrote:
+Hello Alexandre, Sang-Heon
 
-> Hi SeongJae
-> 
-> On Wed, Aug 13, 2025 at 2:59 AM SeongJae Park <sj@kernel.org> wrote:
-> >
-> > On Tue, 12 Aug 2025 23:00:46 +0900 Sang-Heon Jeon <ekffu200098@gmail.com> wrote:
-[...]
-> > > While setup kselftest executable environment and test this patch [1],
-> > > I found similiar issue. Honestly, I don't know exact solution for this
-> > > situation. So I just make a new patch. Sorry if it is wrong direction,
-> > > then please let me know how to do next.
-> > >
-> > > [1] https://lore.kernel.org/damon/20250812-alex-fixes_manual-v1-1-c4e99b1f80e4@rivosinc.com/
-> >
-> > For patches that you are not really confident about and hence not insisting to
-> > merge as-is, but wanna ask other's opinions first, you can ask questions via
-> > plain text mails, or post patches with RFC tag on the subject.
-> 
-> My meaning of "don't know exact solution" was about conflict patch
-> (Now I read again, I think other people might be confused.
+On Tue, Aug 12 2025 at 10:27:00 PM +0900, Sang-Heon Jeon wrote:
 
-Thank you for clarifying!
+> Hello, Alexandre
+>
+> On Tue, Aug 12, 2025 at 9:32=E2=80=AFPM Sang-Heon Jeon <ekffu200098@gmail=
+.com> wrote:
+>>
+>> Hello, Alexandre
+>>
+>> On Tue, Aug 12, 2025 at 5:13=E2=80=AFPM Alexandre Ghiti <alexghiti@rivos=
+inc.com> wrote:
+>> >
+>> > _common.sh was recently introduced but is not installed and then
+>> > triggers an error when trying to run the damon selftests:
+>> >
+>> > selftests: damon: sysfs.sh
+>> > ./sysfs.sh: line 4: _common.sh: No such file or directory
+>> >
+>> > Install this file to avoid this error.
 
-> That's you,
-> sob) I will use the method mentioned above from now on.
+Excellent catch!  This patch unlocks a testing method that was
+completely off my radar. :)
 
-In the case, another (and probably more common) approach would be sharing your
-finding of remaining bugs with the original patch author.  Probably sharing
-that as a reply-to-all to the patch would be good.  Then, the original author
-could revise and post the next version of the patch in a more complete form.
+>>
+>> I tried to reproduce those error with my vm environment but I failed;
+>> with my workaround test method, it doesn't exist.
+>> If you're okay, could you please tell me line by line how you execute
+>> tests in what environment?
+>> I'm also struggling with the test environment, as well.
+>
+> I succeeded to reproduce and also check that this patch removes those err=
+ors.
+>
 
-[...]
-> Thank you for this comment too, and for your always kindness.
+Thanks to Sang-Heon for helping reproduce this issue.  I reproduce this
+issue locally as well and I can confirm that this patch will fix it
+successfully.
 
-The pleasure is mine :)
+Here's my reproduction procedure:
 
+  # cd /root/linux/
+  # make -C tools/testing/selftests/ install INSTALL_PATH=3D/root/test-dir/
+  # cd /root/test-dir/
+  # ./run_kselftest.sh -c damon
 
-Thanks,
-SJ
+and I got the following error,
 
-[...]
+  TAP version 13
+  1..13
+  # timeout set to 45
+  # selftests: damon: sysfs.sh
+  # ./sysfs.sh: line 4: _common.sh: No such file or directory
+  # ./sysfs.sh: line 369: check_dependencies: command not found=20=20=20=20=
+=20
+  ok 1 selftests: damon: sysfs.sh
+
+with Alexandre's patch applied, I got this,
+
+  TAP version 13=20=20
+  1..13
+  # timeout set to 45
+  # selftests: damon: sysfs.sh
+  ok 1 selftests: damon: sysfs.sh
+
+The root cause was my misunderstanding of the TEST_FILES macro.  I've now
+refined the testing methodology - thanks all for the guidance.
+
+Tested-by: Enze Li <lienze@kylinos.cn>
+
+Best Regards,
+Enze
+
+>> > Fixes: 511914506d19 ("selftests/damon: introduce _common.sh to host sh=
+ared function")
+>> > Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
+>> > ---
+>
+> Tested-by: Sang-Heon Jeon <ekffu200098@gmail.com>
+>
+>> >  tools/testing/selftests/damon/Makefile | 1 +
+>> >  1 file changed, 1 insertion(+)
+>> >
+>> > diff --git a/tools/testing/selftests/damon/Makefile b/tools/testing/se=
+lftests/damon/Makefile
+>> > index 5b230deb19e8ee6cee56eb8f18c35e12f331e8b7..ddc69e8bde2905ff1c461a=
+08f2ad008e6b28ac87 100644
+>> > --- a/tools/testing/selftests/damon/Makefile
+>> > +++ b/tools/testing/selftests/damon/Makefile
+>> > @@ -4,6 +4,7 @@
+>> >  TEST_GEN_FILES +=3D access_memory access_memory_even
+>> >
+>> >  TEST_FILES =3D _damon_sysfs.py
+>> > +TEST_FILES +=3D _common.sh
+>> >
+>> >  # functionality tests
+>> >  TEST_PROGS +=3D sysfs.sh
+>> >
+>> > ---
+>> > base-commit: 2754d549af31f8f029f02d02cd8e574676229b3d
+>>
+>> Does this commit exist in `mm-new` or `damon-next`?  I failed to setup
+>> the same base-commit environment.
+>
+> However, I'm still not sure that this patch is in the correct
+> baseline. maybe it will not cause any problems with the merge
+> though... but I'm not sure. So I didn't add a reviewed-by tag.
+>
+>> > change-id: 20250812-alex-fixes_manual-aed3ef75dd83
+>> >
+>> > Best regards,
+>> > --
+>> > Alexandre Ghiti <alexghiti@rivosinc.com>
+>> >
+>> >
+>>
+>> Thank you for great work!
+>>
+>> Best Regards.
+>> Sang-Heon Jeon
+>
+> Best Regards.
+> Sang-Heon Jeon
