@@ -1,60 +1,69 @@
-Received: from mailgw.kylinos.cn (mailgw.kylinos.cn [124.126.103.232])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f169.google.com (mail-pf1-f169.google.com [209.85.210.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB485263F4A
-	for <damon@lists.linux.dev>; Fri, 15 Aug 2025 09:21:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=124.126.103.232
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E11FE2F83BF
+	for <damon@lists.linux.dev>; Fri, 15 Aug 2025 09:40:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755249702; cv=none; b=qmkXmfj7/R7CE/h2KTfEDw2Vkm4QEdy5fk4h4r8nQfkujrA/nL4nHFFixfubzy4esZh/Mdsgg2+svbPkmClO3VhJIan9tMa8qVLdAskWzCdsyx/mS8G1Sqd7eXwZr8C76YypGHLxld954OKdxWp8Dto01TmUk/Hg8M0LvlwDPKc=
+	t=1755250847; cv=none; b=uLLJLlrKDYs/dpTUuJinBcI2EFiNeYMpWwSfpaDMKfUsRZu7F6+KRDao99ODOaVyXbJ2KHVuFgxq0/hNGqFvyWDyCaS5yCrFVfEO5vVQC0y2z4T6JXvOL7ru5xGROouyCnzP3MlQS83TPDy0GzlSiZtZuwmpV0gOpCAQ8d2Aw/s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755249702; c=relaxed/simple;
-	bh=nZajyxZdU61vS1fo8zyPWV5JPqL9CVStilHDm2FkQ0o=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=sR7giq9QhCZtS/sHGqnjVZLptEwtkiLxK3jyvUtseGUGaGqbHA5Wqp+M8x6d0FyA7ydm0WD75tfneYzXTlBYsst7abp/jMM68tuGxw9yL7smLImYj9vVNM+yHZA9uq/luh5XWbjikFO+joEIExGx424rdAOlJ7WfsIREbKtQUac=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn; spf=pass smtp.mailfrom=kylinos.cn; arc=none smtp.client-ip=124.126.103.232
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kylinos.cn
-X-UUID: 391f8c8279b911f0b29709d653e92f7d-20250815
-X-CTIC-Tags:
-	HR_CC_COUNT, HR_CC_DOMAIN_COUNT, HR_CC_NAME, HR_CC_NO_NAME, HR_CTE_8B
-	HR_CTT_MISS, HR_DATE_H, HR_DATE_WKD, HR_DATE_ZONE, HR_FROM_NAME
-	HR_SJ_DIGIT_LEN, HR_SJ_LANG, HR_SJ_LEN, HR_SJ_LETTER, HR_SJ_NOR_SYM
-	HR_SJ_PHRASE, HR_SJ_PHRASE_LEN, HR_SJ_WS, HR_TO_COUNT, HR_TO_DOMAIN_COUNT
-	HR_TO_NO_NAME, IP_TRUSTED, SRC_TRUSTED, DN_TRUSTED, SA_TRUSTED
-	SA_EXISTED, SN_TRUSTED, SN_EXISTED, SPF_NOPASS, DKIM_NOPASS
-	DMARC_NOPASS, CIE_BAD, CIE_GOOD, CIE_GOOD_SPF, GTI_FG_BS
-	GTI_RG_INFO, GTI_C_BU, AMN_T1, AMN_GOOD, AMN_C_TI
-	AMN_C_BU, ABX_MISS_RDNS
-X-CID-CACHE: Type:Local,Time:202508151717+08,HitQuantity:1
-X-CID-P-RULE: Release_Ham
-X-CID-O-INFO: VERSION:1.1.45,REQID:972d1f86-3388-4f2c-9a28-ef1168239777,IP:10,
-	URL:0,TC:0,Content:0,EDM:-30,RT:0,SF:-15,FILE:0,BULK:0,RULE:Release_Ham,AC
-	TION:release,TS:-35
-X-CID-INFO: VERSION:1.1.45,REQID:972d1f86-3388-4f2c-9a28-ef1168239777,IP:10,UR
-	L:0,TC:0,Content:0,EDM:-30,RT:0,SF:-15,FILE:0,BULK:0,RULE:EDM_GN8D19FE,ACT
-	ION:release,TS:-35
-X-CID-META: VersionHash:6493067,CLOUDID:ab7f1c49c2a63aa729cbabf1c15971fc,BulkI
-	D:2508151717102HAXJBFB,BulkQuantity:0,Recheck:0,SF:17|19|24|44|66|78|102,T
-	C:nil,Content:0|50,EDM:2,IP:-2,URL:0,File:nil,RT:nil,Bulk:nil,QS:nil,BEC:n
-	il,COL:0,OSI:0,OSA:0,AV:0,LES:1,SPR:NO,DKR:0,DKP:0,BRR:0,BRE:0,ARC:0
-X-CID-BVR: 0
-X-CID-BAS: 0,_,0,_
-X-CID-FACTOR: TF_CID_SPAM_SNR,TF_CID_SPAM_FAS,TF_CID_SPAM_FSD,TF_CID_SPAM_FSI
-X-UUID: 391f8c8279b911f0b29709d653e92f7d-20250815
-X-User: lienze@kylinos.cn
-Received: from kylin.. [(223.70.159.239)] by mailgw.kylinos.cn
-	(envelope-from <lienze@kylinos.cn>)
-	(Generic MTA with TLSv1.3 TLS_AES_256_GCM_SHA384 256/256)
-	with ESMTP id 2106063409; Fri, 15 Aug 2025 17:21:28 +0800
-From: Enze Li <lienze@kylinos.cn>
+	s=arc-20240116; t=1755250847; c=relaxed/simple;
+	bh=5V55VRwGcflQoCr8J+YXNCCvooL/TNcr3ShpDJVogV0=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=S6sP9ONAEvvVgrRC/EDAFwL0+p1xe9t71QyVbZ9dwBw1MHy9QDVTNLDJ+zyrnoLYPwHbfBRVxat8QxApxkDZk8Xi8wfKRUUSwl7k6S5z+kwArRqc2W6l+g54Y75GNwK/PYXL3RiXjAVdfud7NSE2oTj24YtnxFUINaZORfQF+O0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=h20Kv4Ej; arc=none smtp.client-ip=209.85.210.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="h20Kv4Ej"
+Received: by mail-pf1-f169.google.com with SMTP id d2e1a72fcca58-76e2e8bb2e5so2040689b3a.1
+        for <damon@lists.linux.dev>; Fri, 15 Aug 2025 02:40:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1755250845; x=1755855645; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=0EaYU3byF1ibThR0UBznWnxi/raQE1VP/oaQB9ZX8A0=;
+        b=h20Kv4Ej0zrZmBjURfwLpuB2rTl46bFaqOhJ8rctOXfoM5Oy05Wa9N4+oWqUCkML3t
+         clRtyOVGYa5OKKH7KdSrfnS1R0Dn3frtcuU+cwPDhzdTaMZBnZfWUutopUCnUgicdqGD
+         t7NT4Mnkdc6VgsXGoAuvfd92b5ZdQSIsV9U15j4YeTFmBnQ7LBrM3OJ2Tcq1ydyqIqtj
+         ru59i98PBuWd0i25Js9nYIAoETB9t1rHdbf9dZ8rRBuik9CO0Jmg6+iuIt6NCFw/XGpt
+         DgV7ZN2hqKBJyjES3dDOF+N2HVrkY8UXTFE8yDTiVGu799ApM6Gle3kehBZz/GdU4Usc
+         T9zQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1755250845; x=1755855645;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=0EaYU3byF1ibThR0UBznWnxi/raQE1VP/oaQB9ZX8A0=;
+        b=TlFvosJf7+cCSpo7jw31/9vIdP4KzizxdxSLdewuKYtezozevpVkEOZM+DXZ5mts7M
+         94Xd0b2tNFfhSdynQCqTh/hOsfnC1SilLuPRgdLB73ozwqODqXeKzn4PvTONX48yzbEY
+         i7gKg/5XialUxxr6HlT0UZ/qBUO+7OeUNg3Cm0I0172s3eq9nRK6s9sYu82HoH4Hr9z0
+         Ymi5ay28s00EbngPCFBGUGMFSAIoCD2ZE6qSxDICls5Cqpxc6lAu3FZYHA+ET9F+gKFY
+         6zYk8QJY9th/2wQuc8agNLWcugqZ3ZRJkbBTDBkcbQh3ijbMpX2QcWkiiptVN/mNG/zz
+         RgMw==
+X-Gm-Message-State: AOJu0YxzWfQNuCTQJSWMQcPhNsWaAw2JjWp50sSmHc3Ic+JwSpMKJPlR
+	B4GJmdnP2xSQBdykg7eQNjyzaXbiI4OwRslAatm5GE+Mqn/NdSiRssbv
+X-Gm-Gg: ASbGnct9CtLZyd5rgZUqVqd6TYBczntTV2AYH5YHHduhSa6kSH4WSYm/yQSoQniEmL1
+	VbS7x7mb3hLy9sepSdCTz81abEFD1fDvMMAruyrP5ALU3lQjwyHrtNMDDKmnNcRxuIKje4tcYmL
+	WuNAFu1JuZqkzIPFZOjwdvm3fUud/i34jM+uQza7/YakZW5agYh1FKMtc8UwwXx+qsK5sHOBKNA
+	/ZqbXYhsmPdrzhxL2RxtuCWgnO5ha3/KD6PJT6lveB7DlXjsBT9gOuUXejThyzilK9x6sK3Icrz
+	zj1ztFCveJanSlLiNss24A+EYvoZ+vjcM+t8hN3ezL/Px5J+r7bUDJv4WtEUh69SkfSN++RAi87
+	Y166Js/v3Pdii6Zy2
+X-Google-Smtp-Source: AGHT+IEY6R3cStHuOBLGITafHPzeFrieZ36L/mlZDKfN6ZZxS9bt/cltVMPRkdogNSr7syQ3ssz5fg==
+X-Received: by 2002:a05:6a00:3c94:b0:76b:e868:eedd with SMTP id d2e1a72fcca58-76e4481df98mr2161303b3a.24.1755250844960;
+        Fri, 15 Aug 2025 02:40:44 -0700 (PDT)
+Received: from ubuntu.. ([110.9.142.4])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-76e4528c807sm767087b3a.41.2025.08.15.02.40.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 15 Aug 2025 02:40:44 -0700 (PDT)
+From: Sang-Heon Jeon <ekffu200098@gmail.com>
 To: sj@kernel.org,
-	akpm@linux-foundation.org
+	honggyu.kim@sk.com
 Cc: damon@lists.linux.dev,
 	linux-mm@kvack.org,
-	enze.li@gmx.com,
-	Enze Li <lienze@kylinos.cn>
-Subject: [PATCH v2] mm/damon/Kconfig: make DAMON_STAT_ENABLED_DEFAULT depend on DAMON_STAT
-Date: Fri, 15 Aug 2025 17:21:10 +0800
-Message-ID: <20250815092110.811757-1-lienze@kylinos.cn>
+	Sang-Heon Jeon <ekffu200098@gmail.com>
+Subject: [PATCH] selftests/damon: change wrong json.dump usage to json.dumps
+Date: Fri, 15 Aug 2025 18:40:29 +0900
+Message-ID: <20250815094029.133063-1-ekffu200098@gmail.com>
 X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -64,35 +73,36 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The DAMON_STAT_ENABLED_DEFAULT option is strongly tied to DAMON_STAT
-option -- enabling it alone is meaningless.  This patch makes
-DAMON_STAT_ENABLED_DEFAULT depend on DAMON_STAT, ensuring functional
-consistency.
+To print drgn status to stdout json.dumps should be used without
+json.dump. Change incorrect function call by typo.
 
-Signed-off-by: Enze Li <lienze@kylinos.cn>
+Fixes: 441f487d6ebf ("selftests/damon: test no-op commit broke DAMON status")
+Signed-off-by: Sang-Heon Jeon <ekffu200098@gmail.com>
 ---
-v2:
-  - Change the subject as suggested by SJ.
-  - Keep 'default DAMON_STAT' as before.
----
- mm/damon/Kconfig | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+First I'm sorry that make you guys work twice. This is fix of my last
+patch [1]. I'll be more careful next time.
 
-diff --git a/mm/damon/Kconfig b/mm/damon/Kconfig
-index b3171f9406c1..8c868f7035fc 100644
---- a/mm/damon/Kconfig
-+++ b/mm/damon/Kconfig
-@@ -104,7 +104,7 @@ config DAMON_STAT
+[1] https://lore.kernel.org/damon/20250810124354.16456-1-ekffu200098@gmail.com/
+
+---
+ tools/testing/selftests/damon/sysfs_no_op_commit_break.py | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/tools/testing/selftests/damon/sysfs_no_op_commit_break.py b/tools/testing/selftests/damon/sysfs_no_op_commit_break.py
+index f557587ebc81..2c65cffe6b54 100755
+--- a/tools/testing/selftests/damon/sysfs_no_op_commit_break.py
++++ b/tools/testing/selftests/damon/sysfs_no_op_commit_break.py
+@@ -62,8 +62,8 @@ def main():
+         exit(1)
  
- config DAMON_STAT_ENABLED_DEFAULT
- 	bool "Enable DAMON_STAT by default"
--	depends on DAMON_PADDR
-+	depends on DAMON_STAT
- 	default DAMON_STAT
- 	help
- 	  Whether to enable DAMON_STAT by default.  Users can disable it in
-
-base-commit: d7ee5bdce7892643409dea7266c34977e651b479
+     if before_commit_status != after_commit_status:
+-        print(f'before: {json.dump(before_commit_status, indent=2)}')
+-        print(f'after: {json.dump(after_commit_status, indent=2)}')
++        print(f'before: {json.dumps(before_commit_status, indent=2)}')
++        print(f'after: {json.dumps(after_commit_status, indent=2)}')
+         exit(1)
+ 
+     kdamonds.stop()
 -- 
 2.43.0
 
