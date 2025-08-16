@@ -1,139 +1,135 @@
-Received: from mail-oa1-f47.google.com (mail-oa1-f47.google.com [209.85.160.47])
+Received: from mail-oa1-f42.google.com (mail-oa1-f42.google.com [209.85.160.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03D331E487
-	for <damon@lists.linux.dev>; Sat, 16 Aug 2025 01:18:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D96AA2A1BF
+	for <damon@lists.linux.dev>; Sat, 16 Aug 2025 01:30:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755307107; cv=none; b=jwzvZwhyYKjXLzsktO9TRS0tZAjY19TXWH1m2S+GaCexEcMgFPt3SMYRMJX39JNjCHVHwBALhWWEmYIMTkwk1wTpdQbls/wXobQwk2GAhlqRDvgeDyKj7snlGLc7gpGSoYrqUyeSaDI+pWfznk7DYo8OCXS8SWY1xir8Ko/xDcU=
+	t=1755307855; cv=none; b=gYA8EWqZ6zMWScEOeb95xb2893ZMSepFmUZ1uPyIbsNXiOOsVFdUVrZnKXAiSXZTnwiXi3ucqCxW9jPc0w3cGK+GjtrZa+cZf3f2NV6ifV+LiseA8X6s8IrNcqhul0/Gn4PqBsvlqSkXy26mT4ZgJl1ps8LZhvf4IIpZFWJ8SrI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755307107; c=relaxed/simple;
-	bh=webZLS8x9LTuKsVD+p4et5yOLXcg/n54voslo2kJl60=;
+	s=arc-20240116; t=1755307855; c=relaxed/simple;
+	bh=pQWtgI8U7BAMILhy6LTh4M+Q6fGS0HdlrLeznBw1Xfw=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=RZ3MVJyWLdqEEIQ3at75pr/I6t8FxZsbzzMQntTKCt7D40rlbz/1/hwZ+Glg2h2Wx4nWX2Jog5AxB/olnzCDgwqxFijIWFLTNXiTEdbkCgR4bPb5nAjcg3hLZvVz/m9ohIM/WvipWoXsGbls6tyj4wnWU1PJqOksfOj8qTOVC/s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WRDLTIjG; arc=none smtp.client-ip=209.85.160.47
+	 To:Cc:Content-Type; b=WO5N75fPU2PjUYyP1BTQdTeS/7GdKoKQCYpVkPQ5nFeDXaggGVkQZxhxufb+6sXcoygHl+Z9JRPW3ghV5pEgq/rQr3ILEJtcL45IoT24x1jZqfm7OqJQ8zr5WblkIlCSgarQGLRPOorcdbAVVPM18ftLstMgCx2aGkoe+mupk64=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OuUd7loQ; arc=none smtp.client-ip=209.85.160.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WRDLTIjG"
-Received: by mail-oa1-f47.google.com with SMTP id 586e51a60fabf-30cce923bc2so1245847fac.1
-        for <damon@lists.linux.dev>; Fri, 15 Aug 2025 18:18:25 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OuUd7loQ"
+Received: by mail-oa1-f42.google.com with SMTP id 586e51a60fabf-30ccea8f43cso1898817fac.1
+        for <damon@lists.linux.dev>; Fri, 15 Aug 2025 18:30:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1755307105; x=1755911905; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1755307853; x=1755912653; darn=lists.linux.dev;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=i85A295astkrnsG0olPQxO94kGINVJjCYBUtAM86un0=;
-        b=WRDLTIjGlOX/A12B6GO8zflXUFgra14YoZEIr0m6EW/QRQytj5aksls1DzZlyyX1Vb
-         /mV+UcF4ff1pj478beWflFgcg+4/iyq1nElBCj6OL2s3MkQnGyZW4P4PjjixL1AslCQ8
-         SCKk25wPSddtnpt05n1KMBXD+TD5kM90/Jqkx6ytAPZYNujgVruIKoEHtM/geDocn+Gw
-         mvkszFmWW+kXR4N1dOLXyU0wlLcgEwmoWFfH0jzw8suMmqOmdVYgEQzdB+wEwjxdW8rA
-         hXt7pLOYCJo/1HqXYEGGG+/hSOwVfHnqBWuibwwfoDstVyurKSNUi9m9X8dWoj7cCec8
-         6POw==
+        bh=t/CwBn+YcCO6JV4jisWik5fIvA0H3kWFj1sB20Yoeko=;
+        b=OuUd7loQLx7O6cPkOFsrUX1gthq64yGaMC20YwObasXghh/vlYHYT4ixHj/2XbHmy9
+         mt/TCydfBWEwkdv2KF+z9SeiC5f7d7XZHTQj0qFpQUIOBh83K0SF0Xfb+a7PnG0Bcm10
+         DbmcogKjdrMRtDuOnr/X4Z9YbSPAmZXfGxmk2yGOdom2F2N6DRe73ULVN8Y78RWP2k3q
+         i4oP8jhb+dgP+6HAqcBlWULk5y0qxXdb5qBa0OXKlmXnvUkR6IoiZ/l1JNOn2HAdVshP
+         mHma1VMYwPfMRZjktgyiDJ8qmqoLnYXgLcDWEAY/bASFkPC6jBnuLchEelhiaSKklCpS
+         MIFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755307105; x=1755911905;
+        d=1e100.net; s=20230601; t=1755307853; x=1755912653;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=i85A295astkrnsG0olPQxO94kGINVJjCYBUtAM86un0=;
-        b=OCPMfEe1nVogvYmMSktMD/nR6ehA41oErK5tOPdKPElxH7P/VgRuBfw7ygUQDfyerM
-         /bI4/QDPPZSjkEzqnVWsLKVZ7ZFfy2n8mSClI+n6baP3L9DgGPuKZnpKi8HDAHHdDhtC
-         4gskGMZWVbG3EcCWQuPI9v3FbnoFeNjqs+W3nfD3DVyYeGfYHYpAridNEeVMR2F1Ntlc
-         LQGmCICM+f7Q/jZMIL/NPXaETi9NsDhDnnY7OPEttS8beKgKmeHJch5yffZMSNBG4I0A
-         C2pKB0cWj2gA8RinAfbjJzDkLUtKO7m0uzvsXJqitjYMOZSjo67TPk2sQy/VduoySb/L
-         MLcQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWv4qie4kCc8PW9F/8oYD9CU9nc3CBulaks6uiwOror1yZXAQVcPCKagfLAs2pCYi34AWGI6g==@lists.linux.dev
-X-Gm-Message-State: AOJu0YwMoKaEP4zRNk2sBMLXl118YhSiMTALFKG59qFkFcHtabUAwSjz
-	U9k/yn1FzuVrD5GPpFUWeonL7U+phpgf8qv8UoOpM/aeRWZ4aMLYcu74p2YUUqR+I1cT7iEe2dt
-	p0IstfuaY1AZFN7qQCExyu+5JibjTJkE=
-X-Gm-Gg: ASbGncsTDy2rQCaf4oEQh47p+25vnc7B0EoSi6QXabgRYb0w3YsgpF0k49W6dXfffg7
-	mfcCAo/gXpZHrCPUEfwRui8LTk3nmncQnL22f52M+C/Dq8k/C6KP4Ej0jcKuAiNsj20k5ikRaAE
-	ZkCtZqPyYE6kPzIRvlFojU1DowsBIbBBiug95vIf+1+7wvmKT3obf6b11rJgaG5ZpJrhqlAJpJK
-	CO4i8HA+/QQNig=
-X-Google-Smtp-Source: AGHT+IFqT2oSNVenN+f4QBQCYTnTPaAAwiOulHgCDn55IB+cL8UJfXfdAdPuWYb6zvlfD5igRmVjFo5PjCQutnnxHLU=
-X-Received: by 2002:a05:6870:bb12:b0:301:1218:60a0 with SMTP id
- 586e51a60fabf-310aaffb0bbmr2472700fac.34.1755307104988; Fri, 15 Aug 2025
- 18:18:24 -0700 (PDT)
+        bh=t/CwBn+YcCO6JV4jisWik5fIvA0H3kWFj1sB20Yoeko=;
+        b=Qxn+1l3a/5AQVStsmsfn2hXNMLOyTb6De55SsP8EDXLaWv6McEPLZ0riZCaQzLCnxB
+         EYXUZRRAJji12iEvmTt6io+bgyZgbieyHufhKmAPkZfWHsPFyzAdZ+CV5aiB3ulTb7F2
+         rUG6IqJH+k7dniTuOsqF4PS50BwiYqDWPQS3MwY3DpNcDd4o0Hu5qlD79DUJok739sFE
+         rcgiseTdn/ImdcMvlnXU6c3isLI6KQ6uFk22dhVCJQj8yK1ku7G+bpLy0IZJ5jYuWYeh
+         g/qF8IgKrk0T9/Ubgz5fwOfGZ6+3tk7R3mskzXn29itgz9pDtQ0YnKlr5GBO7zejWyyn
+         UgnQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXpBt0/t1ShhwYeey9FpBtSytUqOZni9nquvUvrEUZKvbgJ4+nKekITVSS4pESZVVh+1jE0LA==@lists.linux.dev
+X-Gm-Message-State: AOJu0YwWmTpn1rRAmSZjlnkxg0uzgqOtZN98MDzcBi+e00bwRAqNJLEJ
+	raz+d1nxbveZlU5V03DCYHO61FYW2Cjia8/DOKUdH3FxynLCLQ5vpw8sEoXNqiicMSq0lQQvTeb
+	Jq3AJeEdfb/zUhUJnxLq6Bl7YGzbJ7V8=
+X-Gm-Gg: ASbGncsPF/6aGViR4uTQc+wzEqu35M7y5hUJqggDgPSEEmN7JE1UCWfJhTlLvFOfcND
+	st4///0p1lZTGgflCtFmvF4dbZJq+GXKIQit/Juu7LZw7MPXkNxDQZNgAUuxytXHmEGUbiEy88x
+	uAKvqaR6komeXyVzGY6qH2NeMkC48MmvIYkkRErFFD0fRsHS9VdvzUkKp6TapIxBg0Hrq/RIwkZ
+	MVS
+X-Google-Smtp-Source: AGHT+IFTL4O6BM7sru0nNSKWfEL5peva6qbLK5rXN51+T2LoeUfhLq7TftPFhhVyDrpMjVJ/Rgpuz3PQzRnrnzVW6EM=
+X-Received: by 2002:a05:6870:4207:b0:30b:9a9c:72 with SMTP id
+ 586e51a60fabf-310a8fdfde0mr2870218fac.0.1755307852845; Fri, 15 Aug 2025
+ 18:30:52 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20250815094059.133769-1-ekffu200098@gmail.com> <20250815172545.16704-1-sj@kernel.org>
-In-Reply-To: <20250815172545.16704-1-sj@kernel.org>
+References: <20250815094029.133063-1-ekffu200098@gmail.com> <20250815170948.16297-1-sj@kernel.org>
+In-Reply-To: <20250815170948.16297-1-sj@kernel.org>
 From: Sang-Heon Jeon <ekffu200098@gmail.com>
-Date: Sat, 16 Aug 2025 10:18:13 +0900
-X-Gm-Features: Ac12FXzKzp0T7fzOIpiV_MJ8ZJ6of-v-S2DlMbu45VJeqoAZcVxgwHGqVvqyj3c
-Message-ID: <CABFDxMG2Mr+zO6i7a2_J5S5j7+4etiQYFur=0a+U3oNOS8TMMA@mail.gmail.com>
-Subject: Re: [PATCH] mm/damon/core: fix damos_commit_filter not changing allow
+Date: Sat, 16 Aug 2025 10:30:40 +0900
+X-Gm-Features: Ac12FXyE1zepZtOUbqgmIaJ_8ZeEVtEiL0AQlMufTTlh0_lT6WJNYTC5ksCGeLI
+Message-ID: <CABFDxMG+3trM45T_1L0_dv0ibQC2j_XXCeGEwY5RR8a8HZmoYQ@mail.gmail.com>
+Subject: Re: [PATCH] selftests/damon: change wrong json.dump usage to json.dumps
 To: SeongJae Park <sj@kernel.org>
-Cc: honggyu.kim@sk.com, damon@lists.linux.dev, linux-mm@kvack.org, 
-	stablee@vger.kernel.org
+Cc: honggyu.kim@sk.com, damon@lists.linux.dev, linux-mm@kvack.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Hi SeongJae
-
-On Sat, Aug 16, 2025 at 2:25=E2=80=AFAM SeongJae Park <sj@kernel.org> wrote=
+On Sat, Aug 16, 2025 at 2:09=E2=80=AFAM SeongJae Park <sj@kernel.org> wrote=
 :
 >
-> On Fri, 15 Aug 2025 18:40:59 +0900 Sang-Heon Jeon <ekffu200098@gmail.com>=
+> On Fri, 15 Aug 2025 18:40:29 +0900 Sang-Heon Jeon <ekffu200098@gmail.com>=
  wrote:
 >
-> > Current damos_commit_filter() not persist allow value of filter. As a
-> > result, changing allow value of filter and commit doesn't change
-> > allow value.
+> > To print drgn status to stdout json.dumps should be used without
+> > json.dump. Change incorrect function call by typo.
 > >
-> > Add the missing allow value update, so commit filter now persist changi=
-ng
-> > allow value well.
+> > Fixes: 441f487d6ebf ("selftests/damon: test no-op commit broke DAMON st=
+atus")
 >
-> Thank you for finding and fixing this!
+> Seems the fixee commit is on mm-unstable now.  Since this commit ids on t=
+he
+> tree is unreliable, I usually add a comment, like below.
 >
-> >
-> > Fixes: 9cb3d0b9dfce ("mm/damon/core: implement DAMON context commit fun=
-ction")
->
-> At the time of the commit, damos_filter->allow didn't exist.  I think bel=
-ow is
-> more correct.
->
-> Fixes: fe6d7fdd6249 ("mm/damon/core: add damos_filter->allow field")
+>     Fixes: 441f487d6ebf ("selftests/damon: test no-op commit broke DAMON =
+status") # mm-unstable
 
-I found a wrong commit, I'll fix them.
+I'll keep it my mind.
 
-> Also,
+> Also, add the destination branch on patch subject prefix, like,
 >
-> Cc: stablee@vger.kernel.org # 6.14.x
+>     [PATCH mm-unstable] selftests/damon: change wrong json.dump usage to =
+json.dumps
+>
+> These are only my personal and undocumented conventions.  I'm not sure if=
+ this
+> helps others, but it would help me.  Please consider using these conventi=
+ons
+> for DAMON patches in future.  I'll document this on DAMON maintainer-prof=
+ile
+> document.
 
-I'll also add them.
+Sure, I'll follow your convention. Maybe If I don't follow, it just
+means that I couldn't understand your comment and future document
+well, haha.
 
 > > Signed-off-by: Sang-Heon Jeon <ekffu200098@gmail.com>
+>
+> Reviewed-by: SeongJae Park <sj@kernel.org>
+>
 > > ---
-> > While fixing kselftest, I found another bug and succeeded in
-> > reproducing. I think this patch is similar with previeous patch [1].
-> > Also instead of sending patch with test, should we check which is bette=
-r:
-> > a seperate patch or patchset?
+> > First I'm sorry that make you guys work twice. This is fix of my last
+> > patch [1]. I'll be more careful next time.
+> >
+> > [1] https://lore.kernel.org/damon/20250810124354.16456-1-ekffu200098@gm=
+ail.com/
 >
-> Separate patches are better for me.
+> Thank you for clarifying the context.
 >
-> I'm not sure how you will make the test, but I'd usggest making the test =
-as a
-> kunit test.
-> Please refer to mm/damon/tets/core-kunit.h file.
 
-I made kselftest with drgn, but I think that kunit could be a solution as w=
-ell.
-Honestly, I haven't used kunit test before, so i need to look into of
-that. Please just wait a little bit.
+The pleasure is mine.
 
->
 > Thanks,
 > SJ
 >
 > [...]
 
-Best Regards
+Best Regards.
 Sang-Heon Jeon
