@@ -1,43 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E84D244665
-	for <damon@lists.linux.dev>; Sat, 16 Aug 2025 16:08:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78D7D23AE9A;
+	Sat, 16 Aug 2025 16:10:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755360528; cv=none; b=fYw2ak+csvyBk8A5rgbroJmFCnkg0xBMz3ZIn4pHzgMvgnUN8u1Caq7YYxPeWsByA63FOx4i1LQc2+RVQEr7flZpnaI+808X/NO6f2pFCb+sgJGVzDIQ/7XnCblPr3Je4FMFeO98HhIOrlW3khJm0jwCtI/YwH2DPXLKQYoRpls=
+	t=1755360620; cv=none; b=O2ATxAnLXx163PTd7nVPQs7u1riwpCXpxBz5ob7RLQplu/3rU70WunF8j3Jp6aplWft2sbF23ufpCvYq5zflc7IZEea2KGWcnnVzhca/YI1qQCovUuhrS5NKXSKxuvS6yV1GGiDJOVewciDC92xj2BqmdbDeYGlU6B2xw4Bqsi8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755360528; c=relaxed/simple;
-	bh=p6ysJ3B9QPz1TZGVAPiJzt8niKULf9on/9PRLjBIiD0=;
+	s=arc-20240116; t=1755360620; c=relaxed/simple;
+	bh=dvV7dkSDKHOe3uTIJaHJRjvzm9dgErExd276G6LKKEg=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=Ki/B2oWOrwiT0tjncmrDqvbbxUWzE/nrSSG/Ep00gmPLKlbn7uUK6IlPa8YuMsqBaohWEPllqYIzp3yHocSr3YuWm0CZQI2Edmw7s6yhDflssOCxPZxOxgjYamoiiA5NzPoH0OYF4A9LKnkTtXzrzzE2BIJinW9HgynljDLpSEk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=vGCzhrsU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GNLtkGGS+fFNDueL8TK61hgZjvGMwu+UxLE8md4v0zk5Ozyjwoq9L/XdHMY8ntdGW6YZa2AAvyOJTGiPAV+S7vz8JQC/Gj3G3Qbijn7txuq8PuMdPMV8usHG+bZJp1g9sFVIQm+qWW37LIUHIeyzBiNQR6wiCh8Y6fPVe9QFDFw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gX9I0BMF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="vGCzhrsU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAB06C4CEEF;
-	Sat, 16 Aug 2025 16:08:47 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gX9I0BMF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C60A1C4CEEF;
+	Sat, 16 Aug 2025 16:10:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1755360527;
-	bh=p6ysJ3B9QPz1TZGVAPiJzt8niKULf9on/9PRLjBIiD0=;
+	s=k20201202; t=1755360620;
+	bh=dvV7dkSDKHOe3uTIJaHJRjvzm9dgErExd276G6LKKEg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vGCzhrsUyBntZYjf1IBSt9I/9mCUpvDKzOydkPEW/sB1Vq2Go29F1JUkfs+aKJpo6
-	 C7JUXhzN02Wk/dkPiZmNx9E2We74CNokxfTvhj8b9ZtY9fW5m+Umz5khTdS3kTAG67
-	 WrOsA+kqHsHeRt4/WRF93tcfQ+mwWitwx8ZILFIGd4Oo3fS70cEgN4EvqaREgWofww
-	 O8PGxxBB3HSQkyel+s9oNZEYFJm9+TZm9NN+MX6G4Cv4JrGyVlBQ73Kobps0wWjFDW
-	 GWYrtZ33aqJVgKutXK7NGvx0F15wUds3HIMcIOMRqUcIhPiyzUd+pkkEt++pPXRAVa
-	 It6fWlWlDQQ0Q==
+	b=gX9I0BMFfx847u0g9Qcvr0PdLMcjCdGZGNF3ef3Oh225nzkdRmmSTVoBVpORDEx4s
+	 Vbt0HW2IdbwcRQ3XJl9I/9OfAP9bsATqnAEHKKTr9iNU3Ga2BB4AanixDYSXvYo6ax
+	 qBuedFW/UVm4yMqIUVZy17SCg09iM+yLo/7bfb8efllSCbTPC6nMqE6ItjEY7sbECJ
+	 50lIuAVwbMy9wddoBLOid0prubrnqb+gXz3hNPC8n5PyEhFerVndjbK++WyAfcL6U2
+	 S72uG1VUmVJ1Y9ac6ISI47bbM0o4GghpRaqRK7oiN9P9v+i3xw3EqiW9pqqlataqs7
+	 5io568DjxjABA==
 From: SeongJae Park <sj@kernel.org>
 To: Sang-Heon Jeon <ekffu200098@gmail.com>
 Cc: SeongJae Park <sj@kernel.org>,
 	honggyu.kim@sk.com,
 	damon@lists.linux.dev,
 	linux-mm@kvack.org,
+	stable@vger.kernel.org,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: Re: [PATCH v2 mm-unstable] selftests/damon: change wrong json.dump usage to json.dumps
-Date: Sat, 16 Aug 2025 09:08:45 -0700
-Message-Id: <20250816160845.63600-1-sj@kernel.org>
+Subject: Re: [PATCH v2] mm/damon/core: fix damos_commit_filter not changing allow
+Date: Sat, 16 Aug 2025 09:10:17 -0700
+Message-Id: <20250816161017.63692-1-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250816014033.190451-1-ekffu200098@gmail.com>
+In-Reply-To: <20250816015116.194589-1-ekffu200098@gmail.com>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -49,22 +50,21 @@ Content-Transfer-Encoding: 8bit
 
 + Andrew
 
-On Sat, 16 Aug 2025 10:40:33 +0900 Sang-Heon Jeon <ekffu200098@gmail.com> wrote:
+On Sat, 16 Aug 2025 10:51:16 +0900 Sang-Heon Jeon <ekffu200098@gmail.com> wrote:
 
-> To print drgn status to stdout json.dumps should be used without
-> json.dump. Change incorrect function call by typo.
+> Current damos_commit_filter() not persist allow value of filter. As a
+> result, changing allow value of filter and commit doesn't change
+> allow value.
 > 
-> Fixes: 441f487d6ebf ("selftests/damon: test no-op commit broke DAMON status") # mm-unstable
+> Add the missing allow value update, so commit filter now persist changing
+> allow value well.
+> 
+> Fixes: fe6d7fdd6249 ("mm/damon/core: add damos_filter->allow field")
+> Cc: stable@vger.kernel.org # 6.14.x
 > Signed-off-by: Sang-Heon Jeon <ekffu200098@gmail.com>
 
 Reviewed-by: SeongJae Park <sj@kernel.org>
 
-> ---
-> Changes from v1 [1]:
-> - Change patch subject with DAMON convention 
-> - Add branch hint to fixes section
-> 
-> [1] https://lore.kernel.org/damon/20250815094029.133063-1-ekffu200098@gmail.com/
 
 Thanks,
 SJ
