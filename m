@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E2263469ED;
-	Mon, 18 Aug 2025 17:28:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88AAA32C33A;
+	Mon, 18 Aug 2025 17:31:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755538094; cv=none; b=bgrqVOc2eK33B241WQ8GqdRnsP6lww5lv2kAqdVB0rHz5+nHH3Nx8JXlt9xZ65LxXu7s69+ojMPln7Ou4bMPpFdlAYlfBlTUZwufhiQQ6WHN7EBE7beYHBZUu/24veBrO719SfGjPaaVv7jfaqTb2RWMJOYgPB2ZK6xK97b+ns0=
+	t=1755538262; cv=none; b=DxqhXf3z7ySQyhO3vJ1Dg2Ir5vYarEc6doEyFCURuynZudZnoRW6yY4uyCqajkHt3imQ/hDSvEznrkuTUJy/3sPYhS+xl/wm05MlpvTkb7ZvYCFM40qh72CTL3ICIklMk+jhj7dy2P7EuHl/Ki3tE7+h/qnMKbkdp45E6QHnfA4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755538094; c=relaxed/simple;
-	bh=HWzA4+Gih2cDfc63knODOHQaSPBHO6bpOvS3OtgIgYw=;
+	s=arc-20240116; t=1755538262; c=relaxed/simple;
+	bh=4Pjd9TNGOPRxXeRTGonj96aAUJIdna38eyaQvAHKeAM=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=V1ETglXUoJjmbbafEznIeTv9qOJRVyRAbd795lBfPuQwvSLeTseBgAqdUiYjcg280RSELPMJg1SDHUZ+9L62241kO7yVunBpt57ip9GEINbD6R7jpKNUswiMDwiYmqrDkslRv1BtyUdwpcEz1Kp2TPZhZKLOj2SxoIayRwOi5KE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kINGL4l0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YA3/HLyxwU3ATojByqRMYsVQkdRrStkBVOBx9PqR7YFnKA8/rwoLtCJATKR0Y28Q2iH4cfaoCOVdpc/WN7h1uyW9r1N0mHp7+jJ1Jhwm0u0+eaWeSuvE09A+18gCUXJEnv82CUmg1CYk8EG/qrawBYhxM24SxmQRnlMQIR1gOjg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rFHKJyBj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kINGL4l0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09FBEC4CEEB;
-	Mon, 18 Aug 2025 17:28:14 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rFHKJyBj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB986C116C6;
+	Mon, 18 Aug 2025 17:31:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1755538094;
-	bh=HWzA4+Gih2cDfc63knODOHQaSPBHO6bpOvS3OtgIgYw=;
+	s=k20201202; t=1755538262;
+	bh=4Pjd9TNGOPRxXeRTGonj96aAUJIdna38eyaQvAHKeAM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kINGL4l04xoFYnb/j3hSFXN0AjBJwUWc2u4Dlw5FVyV6FSurXmIlNBZh05KXgAFwo
-	 ynXdsDxg2Z/MB6wDTZH5I8fdLC3xXTTgvUhoWavYf0n7kMzf5B8g2qXQ1O9X+1MWIS
-	 dmAlijGio0uuEsySysBP5DgV19iUE79AEQrqhD5FAF5UWsnLIzs0woeimRpkApLBGr
-	 BjubKINXn4V8rl9/6HnQItyIgxA+NCs4yXREaaAltz5k3dTNku3wFrx6o+4pF8vl7U
-	 uIZ3TdkAj5BCxjifG8p/yLQIxLS+oP6zmdzz7f4nnoJ+rWJUxtmGHMkXXYdwm34RmA
-	 wikfr1mEBDd9Q==
+	b=rFHKJyBjzeGrFzoLouOQOIgQCDBLjhjv844s3Vhx1jnWsPMTBNqqyoGzu+F6CUzBk
+	 htBQ3ZDDJ7BwU4PTDNEuVAfzkBtcdqkxoL0Z/t0kEAlMK+O1gMGxzpcFbIQy91ODKs
+	 NtcwZ+LDG0qGwPrA5u8/3vTF7EIvQ3aXWEYwFvDoJLy0+AVNGFU8dk10TIJlhgSgqf
+	 fsoKAS+0Qu4yuT4BRFHt2Uf1grsROGgYAbiuWuDAshzZCMnBYHerRNnGhaSJbLpSWt
+	 Bv4KpVvfMvQipqBVn89oU/0e4WlFgjq2bDMwvAbETUY56yjrZc0XDUAweTvGiqiS1z
+	 cgZQHVv4PQB2Q==
 From: SeongJae Park <sj@kernel.org>
 To: stable@vger.kernel.org
 Cc: damon@lists.linux.dev,
@@ -34,12 +34,12 @@ Cc: damon@lists.linux.dev,
 	Honggyu Kim <honggyu.kim@sk.com>,
 	Hyeongtak Ji <hyeongtak.ji@sk.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.16.y] mm/damon/ops-common: ignore migration request to invalid nodes
-Date: Mon, 18 Aug 2025 10:28:07 -0700
-Message-Id: <20250818172807.54991-1-sj@kernel.org>
+Subject: [PATCH 6.15.y] mm/damon/ops-common: ignore migration request to invalid nodes
+Date: Mon, 18 Aug 2025 10:30:58 -0700
+Message-Id: <20250818173058.56921-1-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <2025081831-singular-geologist-93a6@gregkh>
-References: <2025081831-singular-geologist-93a6@gregkh>
+In-Reply-To: <2025081832-splendor-carve-f25b@gregkh>
+References: <2025081832-splendor-carve-f25b@gregkh>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -91,7 +91,7 @@ Signed-off-by: SeongJae Park <sj@kernel.org>
  1 file changed, 4 insertions(+)
 
 diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
-index 4102a8c5f992..578546ef74a0 100644
+index 1b70d3f36046..32ee3739f1d2 100644
 --- a/mm/damon/paddr.c
 +++ b/mm/damon/paddr.c
 @@ -476,6 +476,10 @@ static unsigned long damon_pa_migrate_pages(struct list_head *folio_list,
