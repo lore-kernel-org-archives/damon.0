@@ -1,45 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D52A1798F;
-	Tue, 19 Aug 2025 15:56:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB2C72522B1;
+	Tue, 19 Aug 2025 17:27:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755618967; cv=none; b=YScrIpvXm/OXJCW8q8BzDngK4OqEsrOGbXy3jS/sgDuSRfqw0+W41yJmT0z37+q6Y9mXlZVvRAyYTHFbLn/1FOJHsX1RRgvsWw4jmstamV7IdnFi59IpSqByZw5G41XRk3hULSkhmQmO7c1ukI2rNK6oNzpHo0s18t8OFnQac54=
+	t=1755624440; cv=none; b=uNbzKkJoc1tJ9JmnWWrA3CBHtbSrD+2cRvmfQAX2lM0VDeEsgZMEAQCH5aFcndMBAyaMF2CZPWxZjX1vV30+CROKbYdXVBl4scUvH2zKq5KNZ5JUG08s42WVIcHRMRe5rRqKHTSzKxXBrYuNeDcpefWt29jMWsgRkeRrTdZDMuc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755618967; c=relaxed/simple;
-	bh=398xSgeKockn+VZiMVa3lgHKcNI7Vuh9qOLHZCyHk1o=;
+	s=arc-20240116; t=1755624440; c=relaxed/simple;
+	bh=DjIQbLXoKGxiqstdZOoWp4F16Bie/DPqbH9msKl3kas=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=L7YdLytbknMFXnICzbWFLNPE+b61P2js0ADicSOTMKOeBsaHPPWIP1JpjN2RzQo5oeXq3YOOxIL7Gx8i5KFJVZotI6hf3DwpUDaVSut8fF3sMfZicPiGJ2HpLt8vgJRT+aI6OiUlPQjpoMyg9sMLODyMoLuOrvdrNzzlEBEhWPU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=d+FnP8Ll; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JBEA77+3Gi7EQJt5VSCYLnzX6l2UzKnq15oS1N04fNTzYlHFHCstl0BoA0PoobkANgUV1+E7iERsueLDN3gZ1w4unbrSXXeRAfI0qASc1S+0c1NxJUdFjeHaVxd/g1Y9xErFiwUyZtcruKdLNGRppcHHLVndVqXa4uYIc0tnsyM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AuLLVTwu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="d+FnP8Ll"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1F00C4CEF1;
-	Tue, 19 Aug 2025 15:56:06 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AuLLVTwu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CB5CC4CEF4;
+	Tue, 19 Aug 2025 17:27:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1755618967;
-	bh=398xSgeKockn+VZiMVa3lgHKcNI7Vuh9qOLHZCyHk1o=;
+	s=k20201202; t=1755624440;
+	bh=DjIQbLXoKGxiqstdZOoWp4F16Bie/DPqbH9msKl3kas=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d+FnP8LlLp7ASlisgI3sVzfWvuMXSm1BvTxfqwLdTIgy2ARBLytzAJvpb64jBtfuR
-	 9Ge304LXAJSyB6Mr7oR3sRZ9rALxVUjvR666lFoIguqGUix6I3CM10NWFmnpGBlc2r
-	 dZcmObCMzld1Q73JWSWk06PSlGsEPamlo6HfcMBVuw/mf7W/Fa3MsYlNjLMywDu4L3
-	 wEm/199F/QMOyGf253LuAjQs7akb4UFnkpQGt9vuaDZ5case9fZ2qq5touwUrV7Vbt
-	 d3TnrtEgzzeB7kWmgItQ2FL0tE7twzGlwCj2BwakafuLtFVouPERms35kFkltVA1ZM
-	 8Ljs5MgQqUtwg==
+	b=AuLLVTwu117bVswIvtLMVifZHzBGRg0dfVcOzvrAveGB5/wDCpk37VGrRXrkEb3rg
+	 0i7vaLugi+fBalb/L8f8dP84O19OqP0YCJzaFgeFdPy+nyJIiouJo21g+GMG2AJqH1
+	 pevxjkcoRc6f2/mI38dnwjSVocie9jTpSTyxbIoiw4CwrjPF2fetNchMfK0yHBCwXL
+	 fSs/pakl0RgT9SCaYDxBTSRXCin2dqa3kEluL9RbhWQOUebDykmIy8rE86AmJuFA2e
+	 chA1gb0nkg+nGGwLz0MCLK79/ZPMDB3/NS2S+VbRxScgDI6wFgDdtZVNvo20yuyUCC
+	 817i5C1zTSzdA==
 From: SeongJae Park <sj@kernel.org>
-To: Quanmin Yan <yanquanmin1@huawei.com>
+To: Sang-Heon Jeon <ekffu200098@gmail.com>
 Cc: SeongJae Park <sj@kernel.org>,
-	akpm@linux-foundation.org,
+	honggyu.kim@sk.com,
 	damon@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org,
-	wangkefeng.wang@huawei.com,
-	zuoze1@huawei.com
-Subject: Re: [RFC PATCH -next 07/16] mm/damon/sysfs: implement addr_unit file under context dir
-Date: Tue, 19 Aug 2025 08:56:04 -0700
-Message-Id: <20250819155604.43810-1-sj@kernel.org>
+	stable@vger.kernel.org
+Subject: Re: [PATCH v2] mm/damon/core: set quota->charged_from to jiffies at first charge window
+Date: Tue, 19 Aug 2025 10:27:18 -0700
+Message-Id: <20250819172718.44530-1-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <c3050ee1-a3f6-4f3f-8cd3-a5d67dcdcacc@huawei.com>
+In-Reply-To: <20250819150123.1532458-1-ekffu200098@gmail.com>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -47,64 +45,98 @@ List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On Tue, 19 Aug 2025 22:45:58 +0800 Quanmin Yan <yanquanmin1@huawei.com> wrote:
+On Wed, 20 Aug 2025 00:01:23 +0900 Sang-Heon Jeon <ekffu200098@gmail.com> wrote:
 
-> Hi SJ,
+> Kernel initialize "jiffies" timer as 5 minutes below zero, as shown in
+> include/linux/jiffies.h
 > 
-> 在 2025/8/19 14:24, SeongJae Park 写道:
-> > Hi Quanmin,
-> >
-> > As I suggested on another reply[1], please squash attaching patch to this one
-> > when you post next version of this series.
-> >
-> > [1] https://lore.kernel.org/20250813170224.6128-1-sj@kernel.org
-> >
-> > [...]
-> >
-> >
-> > Thanks,
-> > SJ
-> >
-> > ==== Attachment 0 (0001-mm-damon-sysfs-return-EINVAL-for-zero-addr_unit.patch) ====
-> >  From e0a5aa5e571ecd0f58b0914f8fc8562a60014ae8 Mon Sep 17 00:00:00 2001
-> > From: SeongJae Park <sj@kernel.org>
-> > Date: Wed, 13 Aug 2025 21:17:03 -0700
-> > Subject: [PATCH] mm/damon/sysfs: return -EINVAL for zero addr_unit
-> >
-> > Signed-off-by: SeongJae Park <sj@kernel.org>
-> > ---
-> >   mm/damon/sysfs.c | 2 ++
-> >   1 file changed, 2 insertions(+)
-> >
-> > diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
-> > index bea782b0a711..eb4269383bae 100644
-> > --- a/mm/damon/sysfs.c
-> > +++ b/mm/damon/sysfs.c
-> > @@ -1422,6 +1422,8 @@ static int damon_sysfs_apply_inputs(struct damon_ctx *ctx,
-> >   	err = damon_select_ops(ctx, sys_ctx->ops_id);
-> >   	if (err)
-> >   		return err;
-> > +	if (!sys_ctx->addr_unit)
-> > +		return -EINVAL;
-> >   	ctx->addr_unit = sys_ctx->addr_unit;
-> >   	err = damon_sysfs_set_attrs(ctx, sys_ctx->attrs);
-> >   	if (err)
+> /*
+>  * Have the 32 bit jiffies value wrap 5 minutes after boot
+>  * so jiffies wrap bugs show up earlier.
+>  */
+>  #define INITIAL_JIFFIES ((unsigned long)(unsigned int) (-300*HZ))
 > 
-> Aha, returning -EINVAL when sys_ctx->addr_unit is 0 makes sense, but I wonder if it
-> might be better to prevent users from inputting 0 at the source instead? I've attempted
-> to modify patch 7 by adding a check in addr_unit_store.
+> And they cast unsigned value to signed to cover wraparound
 
-I agree that is better.  Please don't forget adding your Signed-off-by: to the
-patch.
+"they" sounds bit vague.  I think "jiffies comparison helper functions" would
+be better.
 
-> I'll send out the v2 version
-> of patch 7 later (PS: I am performing a comprehensive validation of the v2 patch series),
-> and we can discuss it then.
+> 
+>  #define time_after_eq(a,b) \
+>   (typecheck(unsigned long, a) && \
+>   typecheck(unsigned long, b) && \
+>   ((long)((a) - (b)) >= 0))
+> 
+> In 64bit system, these might not be a problem because wrapround occurs
+> 300 million years after the boot, assuming HZ value is 1000.
+> 
+> With same assuming, In 32bit system, wraparound occurs 5 minutues after
+> the initial boot and every 49 days after the first wraparound. And about
+> 25 days after first wraparound, it continues quota charging window up to
+> next 25 days.
 
-Looking forwrd to the patch! :)
+It would be nice if you can further explain what real user impacts that could
+make.  To my understanding the impact is that, when the unexpected extension of
+the charging window is happened, the scheme will work until the quota is full,
+but then stops working until the unexpectedly extended window is over.
+
+The after-boot issue is really bad since there is no way to work around other
+than reboot the machine.
+
+> 
+> Example 1: initial boot
+> jiffies=0xFFFB6C20, charged_from+interval=0x000003E8
+> time_after_eq(jiffies, charged_from+interval)=(long)0xFFFB6838; In
+> signed values, it is considered negative so it is false.
+
+The above part is using hex numbers and look like psuedo-code.  This is
+unnecessarily difficult to read.  To me, this feels like your personal note
+rather than a nice commit message that written for others.  I think you could
+write this in a much better way.
+
+> 
+> Example 2: after about 25 days first wraparound
+> jiffies=0x800004E8, charged_from+interval=0x000003E8
+> time_after_eq(jiffies, charged_from+interval)=(long)0x80000100; In
+> signed values, it is considered negative so it is false
+
+Ditto.
+
+> 
+> So, change quota->charged_from to jiffies at damos_adjust_quota() when
+> it is consider first charge window.
+> 
+> In theory; but almost impossible; quota->total_charged_sz and
+> qutoa->charged_from should be both zero even if it is not in first
+
+s/should/could/ ?
+
+Also, explaining when that "could" happen will be nice.
+
+> charge window. But It will only delay one reset_interval, So it is not
+> big problem.
+> 
+> Fixes: 2b8a248d5873 ("mm/damon/schemes: implement size quota for schemes application speed control") # 5.16
+> Cc: stable@vger.kernel.org
+> Signed-off-by: Sang-Heon Jeon <ekffu200098@gmail.com>
+
+I think the commit message could be much be improved, but the code change seems
+right.
+
+Reviewed-by: SeongJae Park <sj@kernel.org>
+
+> ---
+> Changes from v1 [1]
+> - not change current default value of quota->charged_from
+> - set quota->charged_from when it is consider first charge below
+> - add more description of jiffies and wraparound example to commit
+>   messages
+> 
+> SeongJae, please re-check Fixes commit is valid. Thank you.
+
+I think it is valid.  Thank you for addressing my comments!
 
 
 Thanks,
