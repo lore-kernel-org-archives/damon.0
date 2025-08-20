@@ -1,45 +1,40 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from szxga02-in.huawei.com (szxga02-in.huawei.com [45.249.212.188])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8BBD30EF86;
-	Tue, 19 Aug 2025 18:03:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 872AC1E9B08
+	for <damon@lists.linux.dev>; Wed, 20 Aug 2025 08:20:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.188
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755626629; cv=none; b=gJBr4TKUIgZdpjYFnNkoLtrVWBwoYngzOncdHVDCNCbcsjhZxLzr63VKkUt5W4CDS5wFT1bbQEBAx7mdtT318alcFvZvdqpXPInhkvwBvxOODE5l9COziPLvvjCOGZhiRgTespxnrBHELXQTiTBSs61J1WegrI04aC7k2DzFqUE=
+	t=1755678010; cv=none; b=bpX56rpiA3cqP9bgp4ui7bWycVSaLtSOyrBAbUigHawzVyOTYluwZJqjOqQf278Y+UMfFhw95GAPXejujncm3UDby4a14vhEah6AwYIjzYKNlikv4TmtL2FL/LxTjv6wHHJOVCngSA7p8se0SzhpPTekwVdSq/mLvVZhLyM1yBQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755626629; c=relaxed/simple;
-	bh=F62FyC88y55IwNEaGhr59itkIJTjmWaqtjD2Xo8S9lI=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=q/gV9j3yVo+nXr6Nhc0F8x4gY96bAYhrobrICWcBUTHVDRRhqgTE10v8oCR1If8Ao/mdn060CTGRPDGVG+Qti+rnSRHsPdL48qxm+6K+D/VAqiLnN1FMHs42qdMGJUhWQ4pT2bANs5Qqz/8QXPlmHjI1a+EmTbcdZ6kiyOFL2UE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Rdp41m9x; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Rdp41m9x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E74BC113D0;
-	Tue, 19 Aug 2025 18:03:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1755626629;
-	bh=F62FyC88y55IwNEaGhr59itkIJTjmWaqtjD2Xo8S9lI=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Rdp41m9xY68OPmiEA18fXO3+3gQXycbZPO3QBmePtHJd7L58Ni8M61MHwsNsqYJAE
-	 lib0wPl5tF8kqZg1KPIf3fxorIBfxQife5TwhP7iYapUteD2gvZ2sDRRPNSIzg9LBW
-	 J8Y59flPHO/IpqQI5+0KBtoMwumtp4UsviYXEAHNSx8Czscwa9hkw9sWxkbVzwerTx
-	 gybQY4WiaxS7E1izEveajYzoh0vbGvkkXzTUYij0NUKxC6K3do2rdlv7AWUbvEU579
-	 mFWof+W1KmeXYPIhPndXexMSynRAFnOZyOy/08g6iOnQCuMMHe2WRDS1f4OETqw+uA
-	 AR9hlhJ2Ffyfw==
-From: SeongJae Park <sj@kernel.org>
-To: SeongJae Park <sj@kernel.org>
-Cc: Sang-Heon Jeon <ekffu200098@gmail.com>,
-	honggyu.kim@sk.com,
-	damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	stable@vger.kernel.org,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: Re: [PATCH v2] mm/damon/core: set quota->charged_from to jiffies at first charge window
-Date: Tue, 19 Aug 2025 11:03:47 -0700
-Message-Id: <20250819180347.45187-1-sj@kernel.org>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250819172718.44530-1-sj@kernel.org>
-References: 
+	s=arc-20240116; t=1755678010; c=relaxed/simple;
+	bh=79JhY6zpFGgcnn4/fHDjc6TTztS7wdWcXsEDzoo8+uw=;
+	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=WHtwp1E06Bhdu3GVhZGByw+aWKqyRI+aSMEjManstZUIWtuaxcv2yPRgs1Ly7gUXn3dkaRrgniBNrtL2Z7WiJzkJfJh71p1MdzQNBLiC6GdTHd5c3YZlCYeKAWvhAKlb79ADwVCP3TktYRJ/ErxLOpFi4rUWiip+fmNB6kfrVjA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; arc=none smtp.client-ip=45.249.212.188
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
+Received: from mail.maildlp.com (unknown [172.19.162.254])
+	by szxga02-in.huawei.com (SkyGuard) with ESMTP id 4c6K9R1gXHztTL2;
+	Wed, 20 Aug 2025 16:19:07 +0800 (CST)
+Received: from dggpemf200018.china.huawei.com (unknown [7.185.36.31])
+	by mail.maildlp.com (Postfix) with ESMTPS id 2FBDE18048F;
+	Wed, 20 Aug 2025 16:20:06 +0800 (CST)
+Received: from huawei.com (10.50.85.135) by dggpemf200018.china.huawei.com
+ (7.185.36.31) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.11; Wed, 20 Aug
+ 2025 16:20:05 +0800
+From: Quanmin Yan <yanquanmin1@huawei.com>
+To: <sj@kernel.org>
+CC: <akpm@linux-foundation.org>, <damon@lists.linux.dev>,
+	<linux-kernel@vger.kernel.org>, <linux-mm@kvack.org>,
+	<yanquanmin1@huawei.com>, <wangkefeng.wang@huawei.com>, <zuoze1@huawei.com>
+Subject: [RFC PATCH mm-next v2 05/12] mm/damon/paddr: support addr_unit for MIGRATE_{HOT,COLD}
+Date: Wed, 20 Aug 2025 16:06:15 +0800
+Message-ID: <20250820080623.3799131-6-yanquanmin1@huawei.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250820080623.3799131-1-yanquanmin1@huawei.com>
+References: <20250820080623.3799131-1-yanquanmin1@huawei.com>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -47,104 +42,74 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: kwepems200002.china.huawei.com (7.221.188.68) To
+ dggpemf200018.china.huawei.com (7.185.36.31)
 
-+ Andrew
+From: SeongJae Park <sj@kernel.org>
 
-On Tue, 19 Aug 2025 10:27:18 -0700 SeongJae Park <sj@kernel.org> wrote:
+Add support of addr_unit for DAMOS_MIGRATE_HOT and DAMOS_MIGRATE_COLD
+action handling from the DAMOS operation implementation for the physical
+address space.
 
-> On Wed, 20 Aug 2025 00:01:23 +0900 Sang-Heon Jeon <ekffu200098@gmail.com> wrote:
-> 
-> > Kernel initialize "jiffies" timer as 5 minutes below zero, as shown in
-> > include/linux/jiffies.h
-> > 
-> > /*
-> >  * Have the 32 bit jiffies value wrap 5 minutes after boot
-> >  * so jiffies wrap bugs show up earlier.
-> >  */
-> >  #define INITIAL_JIFFIES ((unsigned long)(unsigned int) (-300*HZ))
-> > 
-> > And they cast unsigned value to signed to cover wraparound
-> 
-> "they" sounds bit vague.  I think "jiffies comparison helper functions" would
-> be better.
-> 
-> > 
-> >  #define time_after_eq(a,b) \
-> >   (typecheck(unsigned long, a) && \
-> >   typecheck(unsigned long, b) && \
-> >   ((long)((a) - (b)) >= 0))
-> > 
-> > In 64bit system, these might not be a problem because wrapround occurs
-> > 300 million years after the boot, assuming HZ value is 1000.
-> > 
-> > With same assuming, In 32bit system, wraparound occurs 5 minutues after
-> > the initial boot and every 49 days after the first wraparound. And about
-> > 25 days after first wraparound, it continues quota charging window up to
-> > next 25 days.
-> 
-> It would be nice if you can further explain what real user impacts that could
-> make.  To my understanding the impact is that, when the unexpected extension of
-> the charging window is happened, the scheme will work until the quota is full,
-> but then stops working until the unexpectedly extended window is over.
-> 
-> The after-boot issue is really bad since there is no way to work around other
-> than reboot the machine.
-> 
-> > 
-> > Example 1: initial boot
-> > jiffies=0xFFFB6C20, charged_from+interval=0x000003E8
-> > time_after_eq(jiffies, charged_from+interval)=(long)0xFFFB6838; In
-> > signed values, it is considered negative so it is false.
-> 
-> The above part is using hex numbers and look like psuedo-code.  This is
-> unnecessarily difficult to read.  To me, this feels like your personal note
-> rather than a nice commit message that written for others.  I think you could
-> write this in a much better way.
-> 
-> > 
-> > Example 2: after about 25 days first wraparound
-> > jiffies=0x800004E8, charged_from+interval=0x000003E8
-> > time_after_eq(jiffies, charged_from+interval)=(long)0x80000100; In
-> > signed values, it is considered negative so it is false
-> 
-> Ditto.
-> 
-> > 
-> > So, change quota->charged_from to jiffies at damos_adjust_quota() when
-> > it is consider first charge window.
-> > 
-> > In theory; but almost impossible; quota->total_charged_sz and
-> > qutoa->charged_from should be both zero even if it is not in first
-> 
-> s/should/could/ ?
-> 
-> Also, explaining when that "could" happen will be nice.
-> 
-> > charge window. But It will only delay one reset_interval, So it is not
-> > big problem.
-> > 
-> > Fixes: 2b8a248d5873 ("mm/damon/schemes: implement size quota for schemes application speed control") # 5.16
-> > Cc: stable@vger.kernel.org
-> > Signed-off-by: Sang-Heon Jeon <ekffu200098@gmail.com>
-> 
-> I think the commit message could be much be improved, but the code change seems
-> right.
-> 
-> Reviewed-by: SeongJae Park <sj@kernel.org>
-> 
-> > ---
-> > Changes from v1 [1]
-> > - not change current default value of quota->charged_from
-> > - set quota->charged_from when it is consider first charge below
-> > - add more description of jiffies and wraparound example to commit
-> >   messages
-> > 
-> > SeongJae, please re-check Fixes commit is valid. Thank you.
-> 
-> I think it is valid.  Thank you for addressing my comments!
-> 
-> 
-> Thanks,
-> SJ
-> 
-> [...]
+Signed-off-by: SeongJae Park <sj@kernel.org>
+Signed-off-by: Quanmin Yan <yanquanmin1@huawei.com>
+---
+ mm/damon/paddr.c | 15 ++++++++-------
+ 1 file changed, 8 insertions(+), 7 deletions(-)
+
+diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
+index ed71dd0bf80e..0305e59818da 100644
+--- a/mm/damon/paddr.c
++++ b/mm/damon/paddr.c
+@@ -243,15 +243,16 @@ static unsigned long damon_pa_deactivate_pages(struct damon_region *r,
+ 			sz_filter_passed);
+ }
+ 
+-static unsigned long damon_pa_migrate(struct damon_region *r, struct damos *s,
++static unsigned long damon_pa_migrate(struct damon_region *r,
++		unsigned long addr_unit, struct damos *s,
+ 		unsigned long *sz_filter_passed)
+ {
+-	unsigned long addr, applied;
++	phys_addr_t addr, applied;
+ 	LIST_HEAD(folio_list);
+ 	struct folio *folio;
+ 
+-	addr = r->ar.start;
+-	while (addr < r->ar.end) {
++	addr = damon_pa_phys_addr(r->ar.start, addr_unit);
++	while (addr < damon_pa_phys_addr(r->ar.end, addr_unit)) {
+ 		folio = damon_get_folio(PHYS_PFN(addr));
+ 		if (damon_pa_invalid_damos_folio(folio, s)) {
+ 			addr += PAGE_SIZE;
+@@ -261,7 +262,7 @@ static unsigned long damon_pa_migrate(struct damon_region *r, struct damos *s,
+ 		if (damos_pa_filter_out(s, folio))
+ 			goto put_folio;
+ 		else
+-			*sz_filter_passed += folio_size(folio);
++			*sz_filter_passed += folio_size(folio) / addr_unit;
+ 
+ 		if (!folio_isolate_lru(folio))
+ 			goto put_folio;
+@@ -273,7 +274,7 @@ static unsigned long damon_pa_migrate(struct damon_region *r, struct damos *s,
+ 	applied = damon_migrate_pages(&folio_list, s->target_nid);
+ 	cond_resched();
+ 	s->last_applied = folio;
+-	return applied * PAGE_SIZE;
++	return applied * PAGE_SIZE / addr_unit;
+ }
+ 
+ static unsigned long damon_pa_stat(struct damon_region *r, struct damos *s,
+@@ -319,7 +320,7 @@ static unsigned long damon_pa_apply_scheme(struct damon_ctx *ctx,
+ 				sz_filter_passed);
+ 	case DAMOS_MIGRATE_HOT:
+ 	case DAMOS_MIGRATE_COLD:
+-		return damon_pa_migrate(r, scheme, sz_filter_passed);
++		return damon_pa_migrate(r, aunit, scheme, sz_filter_passed);
+ 	case DAMOS_STAT:
+ 		return damon_pa_stat(r, scheme, sz_filter_passed);
+ 	default:
+-- 
+2.43.0
+
