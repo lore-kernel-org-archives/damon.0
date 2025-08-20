@@ -1,75 +1,104 @@
-Received: from szxga04-in.huawei.com (szxga04-in.huawei.com [45.249.212.190])
+Received: from szxga02-in.huawei.com (szxga02-in.huawei.com [45.249.212.188])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DF632DCF6A
-	for <damon@lists.linux.dev>; Wed, 20 Aug 2025 08:20:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.190
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D0012848AA
+	for <damon@lists.linux.dev>; Wed, 20 Aug 2025 08:45:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.188
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755678019; cv=none; b=UUGAfFwzDhtn3SmZHRT//ZDpNsJm6S6l0JY3UiXrqKADzBAFZSUC3+twin810DqjMiuwbHdl4n/nSUCYCcbc1Bx8pdVatYFNu1xZH+aO0iJlBdVLbfL24MNrLt3R+SeJDS+WzT+87XK67nYD6d467L+w3GODM1GbHHglfCUjJTA=
+	t=1755679560; cv=none; b=qw+emr/D3dsjpbLVQcHp28p0qT+vDJHIctfGUK1OkNXwg+IvVmg9wE5DkSckt+iVWV+yS9CjMGfey4EIz1GaKIeYcRAOXoy6EuNb9H234C0HcjBjy7M5Fz2l9YhGS+SISwv+MCm8GHqa7Uw7ClqNIvMsVRvK2a8/BfbC2HYH3KA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755678019; c=relaxed/simple;
-	bh=Skjk9d2Jo+2kTcV2TufJV9hpbv12yHx3U9ijuNo4n/A=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=gq25JhiJIy1qXumCJFKOnVjPfEMmsKfYwhr+AZ9vJwoWAWwyhiyHVcesDmAy0KZX1GgJ+ybS7GV2B6vAZa1ippHVDzwSpEvWMeWNeCS+RnDsYln3p2Xtg4SYyagakag2LtaeERxejDB/AslwLqz9PJrMz8upQxbh8Ijf37qJ4/g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; arc=none smtp.client-ip=45.249.212.190
+	s=arc-20240116; t=1755679560; c=relaxed/simple;
+	bh=MXuw4esMj67WhiLUcyRR/JYk+Ij3H1a9//JPdAF8nkI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=e7UoKhBZzRY+LZkG69qc7i1sKX3gPbIew0zQLuwpwnqfX4/Bo4ktyW6MGjAfyrFoVbfGWF5vKUzW9DRuEBWekeyG2ocCQzZ3c+fwFD1mONzHFU7AKz3BNc2Ajasrh0gu2hGbf+JedRqvaWVR1bP7CMhxON13ORvjCkdrTxm5cGY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; arc=none smtp.client-ip=45.249.212.188
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
-Received: from mail.maildlp.com (unknown [172.19.88.234])
-	by szxga04-in.huawei.com (SkyGuard) with ESMTP id 4c6K7P2Lnyz2TTFP;
-	Wed, 20 Aug 2025 16:17:21 +0800 (CST)
+Received: from mail.maildlp.com (unknown [172.19.163.174])
+	by szxga02-in.huawei.com (SkyGuard) with ESMTP id 4c6Kg41xqNzPqZQ;
+	Wed, 20 Aug 2025 16:41:20 +0800 (CST)
 Received: from dggpemf200018.china.huawei.com (unknown [7.185.36.31])
-	by mail.maildlp.com (Postfix) with ESMTPS id 63597140277;
-	Wed, 20 Aug 2025 16:20:10 +0800 (CST)
-Received: from huawei.com (10.50.85.135) by dggpemf200018.china.huawei.com
- (7.185.36.31) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.11; Wed, 20 Aug
- 2025 16:20:09 +0800
-From: Quanmin Yan <yanquanmin1@huawei.com>
-To: <sj@kernel.org>
-CC: <akpm@linux-foundation.org>, <damon@lists.linux.dev>,
-	<linux-kernel@vger.kernel.org>, <linux-mm@kvack.org>,
-	<yanquanmin1@huawei.com>, <wangkefeng.wang@huawei.com>, <zuoze1@huawei.com>
-Subject: [RFC PATCH mm-next v2 12/12] mm/damon/core: prevent unnecessary overflow in damos_set_effective_quota()
-Date: Wed, 20 Aug 2025 16:06:22 +0800
-Message-ID: <20250820080623.3799131-13-yanquanmin1@huawei.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250820080623.3799131-1-yanquanmin1@huawei.com>
-References: <20250820080623.3799131-1-yanquanmin1@huawei.com>
+	by mail.maildlp.com (Postfix) with ESMTPS id 2AD2F14011A;
+	Wed, 20 Aug 2025 16:45:56 +0800 (CST)
+Received: from [10.174.176.250] (10.174.176.250) by
+ dggpemf200018.china.huawei.com (7.185.36.31) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.11; Wed, 20 Aug 2025 16:45:55 +0800
+Message-ID: <6d054831-054f-446a-a82f-239913a9deaa@huawei.com>
+Date: Wed, 20 Aug 2025 16:45:54 +0800
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH -next 13/16] mm/damon/sysfs: ensure valid addr_unit
+ setting in damon_sysfs_apply_inputs()
+To: SeongJae Park <sj@kernel.org>
+CC: <akpm@linux-foundation.org>, <damon@lists.linux.dev>,
+	<linux-kernel@vger.kernel.org>, <linux-mm@kvack.org>,
+	<wangkefeng.wang@huawei.com>, <zuoze1@huawei.com>
+References: <20250813170224.6128-1-sj@kernel.org>
+From: Quanmin Yan <yanquanmin1@huawei.com>
+In-Reply-To: <20250813170224.6128-1-sj@kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
 X-ClientProxiedBy: kwepems200002.china.huawei.com (7.221.188.68) To
  dggpemf200018.china.huawei.com (7.185.36.31)
 
-On 32-bit systems, the throughput calculation in function
-damos_set_effective_quota() is prone to unnecessary
-multiplication overflow. Using mult_frac() to fix it.
+Hi SJ,
 
-Signed-off-by: Quanmin Yan <yanquanmin1@huawei.com>
----
- mm/damon/core.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+在 2025/8/14 1:02, SeongJae Park 写道:
+> On Wed, 13 Aug 2025 13:07:03 +0800 Quanmin Yan <yanquanmin1@huawei.com> wrote:
+>
+>> By calling damon_sysfs_turn_damon_on(), the execution of damon_commit_ctx()
+>> can be bypassed. Therefore, it is necessary to prevent ctx->addr_unit from
+>> being set to 0 in damon_sysfs_apply_inputs() and update min_region to avoid
+>> potential issues.
+> Nice catch!
+>
+>> Signed-off-by: Quanmin Yan <yanquanmin1@huawei.com>
+>> ---
+>>   mm/damon/sysfs.c | 3 ++-
+>>   1 file changed, 2 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
+>> index bea782b0a711..122824776c1d 100644
+>> --- a/mm/damon/sysfs.c
+>> +++ b/mm/damon/sysfs.c
+>> @@ -1422,7 +1422,8 @@ static int damon_sysfs_apply_inputs(struct damon_ctx *ctx,
+>>   	err = damon_select_ops(ctx, sys_ctx->ops_id);
+>>   	if (err)
+>>   		return err;
+>> -	ctx->addr_unit = sys_ctx->addr_unit;
+>> +	ctx->addr_unit = sys_ctx->addr_unit ? : 1;
+> So this is fixing a bug of the seventh patch ("mm/damon/sysfs: implement
+> addr_unit file under context dir") of this series, right?  It is better to not
+> add a broken patch, and then fixing it in the same series.  Let's squash the
+> fix of the problem into the patch.  Don't forget adding your Signed-off-by on
+> the patch.
+>
+> Also, since sys_ctx->addr_unit is initialized as 1, the value being zero is
+> user's wrong input.  Let's return -EINVAL instead of making it silently
+> success.
 
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index 980e271e42e9..38b5f842ef30 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -2102,8 +2102,8 @@ static void damos_set_effective_quota(struct damos_quota *quota)
- 
- 	if (quota->ms) {
- 		if (quota->total_charged_ns)
--			throughput = quota->total_charged_sz * 1000000 /
--				quota->total_charged_ns;
-+			throughput = mult_frac(quota->total_charged_sz, 1000000,
-+							quota->total_charged_ns);
- 		else
- 			throughput = PAGE_SIZE * 1024;
- 		esz = min(throughput * quota->ms, esz);
--- 
-2.43.0
+Thank you for the kind reminder! The relevant changes have been integrated into
+patch #7 of the v2 series[1]. It's worth noting that we've already prevented users
+from inputting 0 at the source, therefore "ctx->addr_unit = sys_ctx->addr_unit;"
+has been retained in the v2 version.
+
+[1] https://lore.kernel.org/all/20250820080623.3799131-8-yanquanmin1@huawei.com/
+
+>> +	ctx->min_region = max(DAMON_MIN_REGION / ctx->addr_unit, 1);
+> Seems this is a fix of an issue in the 12th patch ("mm/damon: add
+> damon_ctx->min_region and damon_target->min_region") of this series?  Let's fix
+> it on the patch.
+
+This set of changes has been integrated into patch #11 of the v2 series[2].
+
+[2] https://lore.kernel.org/all/20250820080623.3799131-12-yanquanmin1@huawei.com/
+
+Thanks,
+Quanmin Yan
 
