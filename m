@@ -1,37 +1,37 @@
 Received: from szxga02-in.huawei.com (szxga02-in.huawei.com [45.249.212.188])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 872AC1E9B08
-	for <damon@lists.linux.dev>; Wed, 20 Aug 2025 08:20:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC7662C11ED
+	for <damon@lists.linux.dev>; Wed, 20 Aug 2025 08:20:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.188
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755678010; cv=none; b=bpX56rpiA3cqP9bgp4ui7bWycVSaLtSOyrBAbUigHawzVyOTYluwZJqjOqQf278Y+UMfFhw95GAPXejujncm3UDby4a14vhEah6AwYIjzYKNlikv4TmtL2FL/LxTjv6wHHJOVCngSA7p8se0SzhpPTekwVdSq/mLvVZhLyM1yBQ=
+	t=1755678011; cv=none; b=qhCojLFn3LR5EELNie592GZ6qU1++sRHQTCg0US9S+XDTBdtcc9IQPB4YK0lS5ANElQUtt4Yvj4jflKCCpq+F5jIbPUeDytqilHB4Fy86fzGMUoV+ryLOy3EZ8GONNWM8s7PX1XsmiEQrbyIEUgKy0GjpQzuKqhIZpDAas4lu6g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755678010; c=relaxed/simple;
-	bh=79JhY6zpFGgcnn4/fHDjc6TTztS7wdWcXsEDzoo8+uw=;
+	s=arc-20240116; t=1755678011; c=relaxed/simple;
+	bh=VtyxFVhjCUXoa7MsvAz8KO41s4FSFFYDqqIo8RxjPPw=;
 	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=WHtwp1E06Bhdu3GVhZGByw+aWKqyRI+aSMEjManstZUIWtuaxcv2yPRgs1Ly7gUXn3dkaRrgniBNrtL2Z7WiJzkJfJh71p1MdzQNBLiC6GdTHd5c3YZlCYeKAWvhAKlb79ADwVCP3TktYRJ/ErxLOpFi4rUWiip+fmNB6kfrVjA=
+	 MIME-Version:Content-Type; b=q1mjPLmn2vu2/ToCyPcwz4wkJuxuFdYjTOMxU8E15nG2EIFzyApnM5OcJ0i3QerJ3Frq6cmb/KxgsICQo0+k67zju3bLF4X7SY2Snn7zPK8B+sCkYJxwej4Givj9YOt+2eU0qhkX7Y6b8X8U3PFt0biXcEGS9j6kOUGGGDPax9U=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; arc=none smtp.client-ip=45.249.212.188
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
-Received: from mail.maildlp.com (unknown [172.19.162.254])
-	by szxga02-in.huawei.com (SkyGuard) with ESMTP id 4c6K9R1gXHztTL2;
-	Wed, 20 Aug 2025 16:19:07 +0800 (CST)
+Received: from mail.maildlp.com (unknown [172.19.88.194])
+	by szxga02-in.huawei.com (SkyGuard) with ESMTP id 4c6K5J0YcCzPqYd;
+	Wed, 20 Aug 2025 16:15:32 +0800 (CST)
 Received: from dggpemf200018.china.huawei.com (unknown [7.185.36.31])
-	by mail.maildlp.com (Postfix) with ESMTPS id 2FBDE18048F;
-	Wed, 20 Aug 2025 16:20:06 +0800 (CST)
+	by mail.maildlp.com (Postfix) with ESMTPS id EE2B4140123;
+	Wed, 20 Aug 2025 16:20:07 +0800 (CST)
 Received: from huawei.com (10.50.85.135) by dggpemf200018.china.huawei.com
  (7.185.36.31) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.11; Wed, 20 Aug
- 2025 16:20:05 +0800
+ 2025 16:20:07 +0800
 From: Quanmin Yan <yanquanmin1@huawei.com>
 To: <sj@kernel.org>
 CC: <akpm@linux-foundation.org>, <damon@lists.linux.dev>,
 	<linux-kernel@vger.kernel.org>, <linux-mm@kvack.org>,
 	<yanquanmin1@huawei.com>, <wangkefeng.wang@huawei.com>, <zuoze1@huawei.com>
-Subject: [RFC PATCH mm-next v2 05/12] mm/damon/paddr: support addr_unit for MIGRATE_{HOT,COLD}
-Date: Wed, 20 Aug 2025 16:06:15 +0800
-Message-ID: <20250820080623.3799131-6-yanquanmin1@huawei.com>
+Subject: [RFC PATCH mm-next v2 08/12] Docs/mm/damon/design: document 'address unit' parameter
+Date: Wed, 20 Aug 2025 16:06:18 +0800
+Message-ID: <20250820080623.3799131-9-yanquanmin1@huawei.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250820080623.3799131-1-yanquanmin1@huawei.com>
 References: <20250820080623.3799131-1-yanquanmin1@huawei.com>
@@ -48,68 +48,46 @@ X-ClientProxiedBy: kwepems200002.china.huawei.com (7.221.188.68) To
 
 From: SeongJae Park <sj@kernel.org>
 
-Add support of addr_unit for DAMOS_MIGRATE_HOT and DAMOS_MIGRATE_COLD
-action handling from the DAMOS operation implementation for the physical
-address space.
+Add 'addr_unit' parameter description on DAMON design document.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 Signed-off-by: Quanmin Yan <yanquanmin1@huawei.com>
 ---
- mm/damon/paddr.c | 15 ++++++++-------
- 1 file changed, 8 insertions(+), 7 deletions(-)
+ Documentation/mm/damon/design.rst | 14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
 
-diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
-index ed71dd0bf80e..0305e59818da 100644
---- a/mm/damon/paddr.c
-+++ b/mm/damon/paddr.c
-@@ -243,15 +243,16 @@ static unsigned long damon_pa_deactivate_pages(struct damon_region *r,
- 			sz_filter_passed);
- }
+diff --git a/Documentation/mm/damon/design.rst b/Documentation/mm/damon/design.rst
+index 2f6ba5c7f4c7..d9d5baa1ec87 100644
+--- a/Documentation/mm/damon/design.rst
++++ b/Documentation/mm/damon/design.rst
+@@ -67,7 +67,7 @@ processes, NUMA nodes, files, and backing memory devices would be supportable.
+ Also, if some architectures or devices support special optimized access check
+ features, those will be easily configurable.
  
--static unsigned long damon_pa_migrate(struct damon_region *r, struct damos *s,
-+static unsigned long damon_pa_migrate(struct damon_region *r,
-+		unsigned long addr_unit, struct damos *s,
- 		unsigned long *sz_filter_passed)
- {
--	unsigned long addr, applied;
-+	phys_addr_t addr, applied;
- 	LIST_HEAD(folio_list);
- 	struct folio *folio;
+-DAMON currently provides below three operation sets.  Below two subsections
++DAMON currently provides below three operation sets.  Below three subsections
+ describe how those work.
  
--	addr = r->ar.start;
--	while (addr < r->ar.end) {
-+	addr = damon_pa_phys_addr(r->ar.start, addr_unit);
-+	while (addr < damon_pa_phys_addr(r->ar.end, addr_unit)) {
- 		folio = damon_get_folio(PHYS_PFN(addr));
- 		if (damon_pa_invalid_damos_folio(folio, s)) {
- 			addr += PAGE_SIZE;
-@@ -261,7 +262,7 @@ static unsigned long damon_pa_migrate(struct damon_region *r, struct damos *s,
- 		if (damos_pa_filter_out(s, folio))
- 			goto put_folio;
- 		else
--			*sz_filter_passed += folio_size(folio);
-+			*sz_filter_passed += folio_size(folio) / addr_unit;
+  - vaddr: Monitor virtual address spaces of specific processes
+@@ -135,6 +135,18 @@ the interference is the responsibility of sysadmins.  However, it solves the
+ conflict with the reclaim logic using ``PG_idle`` and ``PG_young`` page flags,
+ as Idle page tracking does.
  
- 		if (!folio_isolate_lru(folio))
- 			goto put_folio;
-@@ -273,7 +274,7 @@ static unsigned long damon_pa_migrate(struct damon_region *r, struct damos *s,
- 	applied = damon_migrate_pages(&folio_list, s->target_nid);
- 	cond_resched();
- 	s->last_applied = folio;
--	return applied * PAGE_SIZE;
-+	return applied * PAGE_SIZE / addr_unit;
- }
++Address Unit
++------------
++
++DAMON core layer uses ``unsinged long`` type for monitoring target address
++ranges.  In some cases, the address space for a given operations set could be
++too large to be handled with the type.  ARM (32-bit) with large physical
++address extension is an example.  For such cases, a per-operations set
++parameter called ``address unit`` is provided.  It represents the scale factor
++that need to be multiplied to the core layer's address for calculating real
++address on the given address space.  Support of ``address unit`` parameter is
++up to each operations set implementation.  ``paddr`` is the only operations set
++implementation that supports the parameter.
  
- static unsigned long damon_pa_stat(struct damon_region *r, struct damos *s,
-@@ -319,7 +320,7 @@ static unsigned long damon_pa_apply_scheme(struct damon_ctx *ctx,
- 				sz_filter_passed);
- 	case DAMOS_MIGRATE_HOT:
- 	case DAMOS_MIGRATE_COLD:
--		return damon_pa_migrate(r, scheme, sz_filter_passed);
-+		return damon_pa_migrate(r, aunit, scheme, sz_filter_passed);
- 	case DAMOS_STAT:
- 		return damon_pa_stat(r, scheme, sz_filter_passed);
- 	default:
+ .. _damon_core_logic:
+ 
 -- 
 2.43.0
 
