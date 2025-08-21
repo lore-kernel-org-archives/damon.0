@@ -1,104 +1,68 @@
-Received: from mail-ot1-f45.google.com (mail-ot1-f45.google.com [209.85.210.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 198571C4A10
-	for <damon@lists.linux.dev>; Thu, 21 Aug 2025 04:43:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C143156F45;
+	Thu, 21 Aug 2025 05:41:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755751423; cv=none; b=NN/SliXUYT6tBGRaij3jzz0GV127IOr7PV38YdNloWm8z2QekLfanoe9OHa16E8Ux6roQEs0V5HreBgwxzFMu53bAoYl0Mwe6GWr9xkHnzuqcKxGCfw51D3zkA0kFT96LYBrgl7nNdaFZkYF0HHjB+gD7WQ+Eo+HIU91m5rQqrg=
+	t=1755754911; cv=none; b=Vk/912t2T8odmpHulhAnSMycnbbX0rW65g4YN91+1m3axXkWVoLOLSb9+CNKzOz7EKtDQyR6WQ+NTfpoZjcoRYXODt2lWus/kuYJGa5/tQCmY4yCq2QqVTx5SlW32iPfJeRoEoVnVBVdA34oA3lehYRRducvDh5L0ondLdEgay8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755751423; c=relaxed/simple;
-	bh=xTIj6V7ezcR4MueDpk20MMc3TrV9FrQYrRp10XWNvZ0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=i4obGCx6pVCUaw8IsDs09xumItNwZsVlmRfICGH8/s5xJ4O0yzlahIoNFpntJYLi1dBvES/yK82RiP74jZtB5FBpR7OVOSIpTBPM2/u3gxAygYEAkSIM0zh3Qt5mGOUvch9jNt/iFTlGzKrBIkiQFHZ4PrPwzXjR5G5LykSE7Ss=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GLjO7bin; arc=none smtp.client-ip=209.85.210.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1755754911; c=relaxed/simple;
+	bh=JMtuIIvFo7J8JQhB3++74nBLvQexz96KHhNj/me0ewA=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=K24Qduijbid+qhJVIKBpow1yVc64fBjmmv4NcSjC5bp2sF9upgCoDNpTTrgwWMR4qoAEKfUIK/v5K0IcUqFRejcAiKxoWl11Z48ck1OcZpPr4ffyvYRdrXUx3d2wAwiLsWemkx+uj+kObZHnchD/yKZ+nYMhPxgLYQ1mwStFrC4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZG63smvN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GLjO7bin"
-Received: by mail-ot1-f45.google.com with SMTP id 46e09a7af769-74381df387fso172340a34.0
-        for <damon@lists.linux.dev>; Wed, 20 Aug 2025 21:43:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1755751421; x=1756356221; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=BWvhKp65AxyP1xwVvIS8MuCmDuU/KsXcWzjgpycsbII=;
-        b=GLjO7binc+WD8TH14IIBp07yBJdVWgwxxicjPDo86G3MEmi9nsPS1dMbbpE/HGAE7f
-         BJpvXZDu/XFIaJnTPy400smxRZaVIjsi/lYwpcy99zXXFMN+/wWzPm0vzGRCnc+3u9ys
-         2DAlypUbwdXjSIc6oXVBTlhNHQU+vFKs1Ys/tVF+m+IsW2Ye0KdMpzWKTEAWSq5yAOOk
-         YWpKHvIs/OIUur1B3jGeEFgHjChbdi1sXv5JeLPs/+XQU2fzOYIRAcWMicJ9S2PNLOi+
-         ixosSt7Y5N/a9RtWWp8dWivlbjuAGqKiNZwqh/OudyjX9viSJM6tysL7g3KUs1/Pw6+A
-         PfiA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755751421; x=1756356221;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=BWvhKp65AxyP1xwVvIS8MuCmDuU/KsXcWzjgpycsbII=;
-        b=YCjqPjpc1kj45eeFi8cvB7ZUV4OS/wK4dewGlow/7vPlHpQZfuQNy+I7Vwu5B4uqcD
-         8UUkDT4X4xD8LZeyGDz5izwgctgckNcbmqRqfSOpUZ4u/c7vW3TUSpZ93kgoPrDp1H7b
-         3bXfG5MYSnWSqnEqMVoTCF+Ji51gE/A6EPHutRXLevYdFkSOZDDI0kP+TQCZC0DhN5z3
-         9ayd8x9Pfxc/8ukjeXmQOasVurG4mGKe+N2fmdvhWncDGESaE3vKSodzTq7mjmZVzndR
-         L1VKYXiPxj0gT24XwU/srjbIfDSrLOFaPKIyBaWLx56CleJzYMq3tyxGbFe/bAEq0Jf+
-         Wn2A==
-X-Forwarded-Encrypted: i=1; AJvYcCW6fNe8Ci3inVTgDXO1fM8MELWzdDN4OxooOB+OO3mHObQHDsgB4Bs8qwr404rdr+2UnTcf8g==@lists.linux.dev
-X-Gm-Message-State: AOJu0YxEX+vQfpZz9MlubD6dqPhOajOuGlTu+bYfAC9Ns94wLbX12/FE
-	h4KWglj5YToCCByNISayx7G9DZbZrifbDmHo4KQtVlQpjUshla4tZ2Xz2sacSpJoV6LJ5wRRwWv
-	FF3u+vVxKg6UJdqKgOam4dbwFny3Ttxk=
-X-Gm-Gg: ASbGncvWbqIR0Phv/bPIyQOVh0NMoH2XBhimPVZji8kEenmzF4c1REUhMFmAWOAlULU
-	pmRNzsH5IANn/H2V17z4ZEtX16H1cqIwTT7TzP9VLXkYVfMmtKc9tiCqAz7jOMnfQ9HNns5Am7s
-	juam0cB7AOXcC5KLfqX/UgfdEuUAFq1t3eH2HJDHbKazrA3fKhmvB8w4vqxb0oO7cHhNF/jvNwM
-	7Ow
-X-Google-Smtp-Source: AGHT+IGjprBbj/E2Wm4laG+alOgDHLSfMegvi1WsGOjDb1e3hjmUvLF5JnP1I0EZQkV5dEYbsLY1up+jOJ8PGChnNH4=
-X-Received: by 2002:a05:6820:1b87:b0:61d:9adf:eecc with SMTP id
- 006d021491bc7-61dab25dee0mr434089eaf.2.1755751420981; Wed, 20 Aug 2025
- 21:43:40 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZG63smvN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44144C4CEED;
+	Thu, 21 Aug 2025 05:41:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1755754910;
+	bh=JMtuIIvFo7J8JQhB3++74nBLvQexz96KHhNj/me0ewA=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=ZG63smvNblF919/9nV8D4Hi36RuJURGwi6Upoz20ZjFw5cvdW/YdH/FiYZ+m3faF/
+	 3s8oi/b6esDoLbM0iB2VseDM9dkx8e2abm/Xqsd8ViptL1yw6bkyMZ/EhRAFoOJNur
+	 GO9ZEYXrxeCk+/e2HRl9G8i5dTWNaCTSdUvZvADIrB0hhBIh3YkbY5nQjFiGdzegDy
+	 lIxBLnZyYeKMxCyCnZPRjuRsyiqJ9uo6czKSGihvd4k8/QPeO48wGPZjGjUoU+o7GN
+	 HxcdOXeyj548+5xlUyh4kHwqaKHtRk+QJlxbChbludtkb9iCLLf+PZQdTeDjNXuL4m
+	 Ui6wIYhSvDHsA==
+From: SeongJae Park <sj@kernel.org>
+To: Sang-Heon Jeon <ekffu200098@gmail.com>
+Cc: SeongJae Park <sj@kernel.org>,
+	honggyu.kim@sk.com,
+	damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	stable@vger.kernel.org
+Subject: Re: [PATCH v2] mm/damon/core: set quota->charged_from to jiffies at first charge window
+Date: Wed, 20 Aug 2025 22:41:48 -0700
+Message-Id: <20250821054148.53746-1-sj@kernel.org>
+X-Mailer: git-send-email 2.39.5
+In-Reply-To: <CABFDxME5ZEAn+6=0GRWybTi-xBzbhhz7U38pMni3SdKjA+Aj-A@mail.gmail.com>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <CABFDxMGmVgswVoZFgBz=7xqA59M7fMt0jw2QHqWjm-W9tZktWg@mail.gmail.com>
- <20250821025423.90825-1-sj@kernel.org> <CABFDxME5ZEAn+6=0GRWybTi-xBzbhhz7U38pMni3SdKjA+Aj-A@mail.gmail.com>
-In-Reply-To: <CABFDxME5ZEAn+6=0GRWybTi-xBzbhhz7U38pMni3SdKjA+Aj-A@mail.gmail.com>
-From: Sang-Heon Jeon <ekffu200098@gmail.com>
-Date: Thu, 21 Aug 2025 13:43:29 +0900
-X-Gm-Features: Ac12FXxIn6O74TtxGWb4mmUw96J7yYYLAjMBUSDDJprJWR81IQ6dIXiEhH5f3OA
-Message-ID: <CABFDxMEYXpQRS0fMdE-qoVMHym2Cp+2Uh+pXwB5h0MdvWGdiew@mail.gmail.com>
-Subject: Re: [PATCH v2] mm/damon/core: set quota->charged_from to jiffies at
- first charge window
-To: SeongJae Park <sj@kernel.org>
-Cc: honggyu.kim@sk.com, damon@lists.linux.dev, linux-mm@kvack.org, 
-	stable@vger.kernel.org, Andrew Morton <akpm@linux-foundation.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-(Restore missing CC) + Andrew
+On Thu, 21 Aug 2025 13:29:04 +0900 Sang-Heon Jeon <ekffu200098@gmail.com> wrote:
 
-On Thu, Aug 21, 2025 at 1:29=E2=80=AFPM Sang-Heon Jeon <ekffu200098@gmail.c=
-om> wrote:
->
-> On Thu, Aug 21, 2025 at 11:54=E2=80=AFAM SeongJae Park <sj@kernel.org> wr=
-ote:
+> On Thu, Aug 21, 2025 at 11:54 AM SeongJae Park <sj@kernel.org> wrote:
 > >
-> > On Thu, 21 Aug 2025 10:08:03 +0900 Sang-Heon Jeon <ekffu200098@gmail.co=
-m> wrote:
+> > On Thu, 21 Aug 2025 10:08:03 +0900 Sang-Heon Jeon <ekffu200098@gmail.com> wrote:
 > >
-> > > On Thu, Aug 21, 2025 at 3:27=E2=80=AFAM SeongJae Park <sj@kernel.org>=
- wrote:
+> > > On Thu, Aug 21, 2025 at 3:27 AM SeongJae Park <sj@kernel.org> wrote:
 > > > >
-> > > > On Wed, 20 Aug 2025 22:18:53 +0900 Sang-Heon Jeon <ekffu200098@gmai=
-l.com> wrote:
+> > > > On Wed, 20 Aug 2025 22:18:53 +0900 Sang-Heon Jeon <ekffu200098@gmail.com> wrote:
 > > > >
 > > > > > Hello, SeongJae
 > > > > >
-> > > > > On Wed, Aug 20, 2025 at 2:27=E2=80=AFAM SeongJae Park <sj@kernel.=
-org> wrote:
+> > > > > On Wed, Aug 20, 2025 at 2:27 AM SeongJae Park <sj@kernel.org> wrote:
 > > > > > >
-> > > > > > On Wed, 20 Aug 2025 00:01:23 +0900 Sang-Heon Jeon <ekffu200098@=
-gmail.com> wrote:
+> > > > > > On Wed, 20 Aug 2025 00:01:23 +0900 Sang-Heon Jeon <ekffu200098@gmail.com> wrote:
 > > [...]
 > > > I think that I checked about user impact already but it should be
 > > > insufficient. As you said, I should discuss it first. Anyway, the
@@ -112,118 +76,37 @@ gmail.com> wrote:
 > > > it's not question of v3 direction and just about remained question on
 > > > this email thread)
 > >
-> > If you unsure something and there is no reason to send a patch without =
-a
+> > If you unsure something and there is no reason to send a patch without a
 > > discussion for the point, please discuss first.  To be honest I don't
 > > understand the above question at all.
->
+> 
 > Ah, I just mean that I need to make a new RFC patch instead of
-> replying to this email thread. I'll just keep asking about previous
+> replying to this email thread.
+
+Why?
+
+> I'll just keep asking about previous
 > comments on this email thread.
->
-> > >
-> > > > >
-> > > > > In the logic before this patch is applied, I think
-> > > > > time_after_eq(jiffies, ...) should only evaluate to false when th=
-e MSB
-> > > > > of jiffies is 1 and charged_from is 0. because if charging has
-> > > > > occurred, it changes charge_from to jiffies at that time.
-> > > >
-> > > > It is not the only case that time_after_eq() can be evaluated to fa=
-lse.  Maybe
-> > > > you're saying only about the just-after-boot running case?  If so, =
-please
-> > > > clarify.  You and I know the context, but others may not.  I hope t=
-he commit
-> > > > message be nicer for them.
-> > >
-> > > I think it is not just-after-boot running case also whole and only
-> > > case, because charging changes charged_from to jiffies. if it is not
-> > > the only case, could you please describe the specific case?
-> >
-> > I don't understand the first sentence.  But...
-> >
-> > I mean, time_after_eq() can return false for many cases including just =
-when the
-> > time is before.  Suppose a case that the first and the second arguments=
- are,
-> > say, 5000 and 7000.
->
-> I think my previous explanation is not enough. I just want to say,
-> time_after_eq return false, but user expected true case; And I think
-> that's the point we want to fix.
->
-> Maybe I can change my previous question like this, "Is there any
-> situation, that charged_from has been updated before and even though
-> reset_interval has passed but time_after_equal() returns false".
->
-> I asked this question because I think that kind of situation can't
-> exist and minimum version of Fixes patch(5.16) uses esz in the same
-> way as it is now. So I think that we shouldn't use "stop working" in
-> the commit message.
->
-> As I was writing this, I thought about your comments deeply again.
-> Since you describe the current state of esz as a bug, I think you
-> might want to write "stop working" to comments, because I think you're
-> thinking that some fixes patch could change esz initialized value
-> (also reasonable, I agree)
->
-> I think adding an explanation of the above knowledge is good to help
-> newcomers to understand DAMON well. Also, Could you please check the
-> above question for a more detailed commit message?
->
-> > >
-> > > > > Therefore,
-> > > > > esz should also be zero because it is initialized with charged_fr=
-om.
-> > > > > So I think the real user impact is that "quota is not applied", r=
-ather
-> > > > > than "stops working". If my understanding is wrong, please let me=
- know
-> > > > > what point is wrong.
-> > > >
-> > > > Thank you for clarifying your view.  The code is behaving in the wa=
-y you
-> > > > described above.  It is because damon_set_effective_quota(), which =
-sets the
-> > > > esz, is called only when the time_after_eq() call returns true.
-> > > >
-> > > > However, this is a bug rather than an intended behavior.  The curre=
-nt behavior
-> > > > is making the first charging window just be wasted without doing no=
-thing.
-> > > >
-> > > > Probably the bug was introduced by the commit that introduced esz.
-> > >
-> > > Thanks for your explanation. I'll try to cover this point in the next
-> > > patch as well.
-> >
-> > If you gonna send a patch for fixing this bug, make it as a separate on=
-e,
-> > please.
->
-> I didn't mean newer code changes, just commit messge. As you said code
-> change should be created with another patch, if it has another
-> intension; Also, i didn't have any plan yet. I'm trying to resolve
-> this patch first
->
-> > [...]
-> > > > So what I'm saying is that I tink this patch's commit message can b=
-e more nice
-> > > > to readers.
-> > >
-> > > You're right. I'll try to make the commit message more clear. I'm
-> > > really sorry for bothering you.
-> >
-> > Again, you don't need to apologize.
->
-> Maybe, I just want to express my gratitude :)
->
-> >
-> > Thanks,
-> > SJ
-> >
-> > [...]
->
-> Best Regards
-> Sang-Heon Jeon
+
+You said you will send a new patch instead of replying here, and then now you
+are saying you will keep aking to this thread.
+
+I'm confused.
+
+[...]
+
+Ok, I think this discussion is going unnecessarily deep and only wasting our
+time at clarifying intention of past sentence.  Meanwhile apparently you
+understood my major points.  To repeat, please clarify what is the problem and
+user impacts, when and how it happens, and why the solution solves it.
+
+Let's restart.  Could you please rewrite the commit log for this patch and send
+the draft as a reply to this?
+
+We can further discuss on the new draft if it has more things to improve.  And
+once the discussion is finalized, you can post v4 of this patch with the
+updated commit message.
+
+
+Thanks,
+SJ
