@@ -1,103 +1,316 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oo1-f44.google.com (mail-oo1-f44.google.com [209.85.161.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC59C22579E;
-	Wed, 20 Aug 2025 22:23:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C06A45FEE6
+	for <damon@lists.linux.dev>; Thu, 21 Aug 2025 01:08:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755728585; cv=none; b=GBo8oNAlCSVhKRKZNDJwZLHsJUSZuIkjmSOIBrjvfkUYLTZZU1fqbQTOUMsgfgPw+fd4OtCOrdPNxQvd7xR34hREvbvYsrMVfa/6Em3fdy3edBQFGsyw1XwC3IvjF1BrQ8ZjSV94u5/epANGN9AlZKfoxE4P4gCEbw5N+BfwmPo=
+	t=1755738497; cv=none; b=kKTo/PpNfvZbRPdTnK+FaT+dDNqeIvxrcabjOyWiPm7d9UWhfBYtdeB55eqlQoKSm9MSkiyLsU9nCCgx9INmLNsMVWP/TIP/yrjEYCtPWISGvuVIVDUD54EvfFvTrxwGdEa1KlUNMr3R2MQjSU6wjftfP99L++TQH72c7IVdLQU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755728585; c=relaxed/simple;
-	bh=0Hc+hko8FrAVekC8D7wSPp0TYD0KKnzwUrEEEtQlhss=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=ZDOyyeYWDNzV2qtCtOpJzSqI5Ve6d0s11KEXN3sHx5IYoUQzEeSczSEl8dBIk/ckPosOou+JFzO/02hwxdCpI1sN0XHDo7QwPn73OjuIqRiP1lVlUpF5uRHeoWJNCXxQjwp5ZIk+30JXrMQrgIqCT8PMUhDpDGNAANttM/5jKW0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=udK2mbzA; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1755738497; c=relaxed/simple;
+	bh=8kTU1n+xaCdto/irG3ILeQHG8Yy2ik7dXsDiYP3zOhM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=W5ZRxK/hv9P6StDGu87auldJG0WcBxM02RgP74Ium2TELiGxcXc7jnLECbZ6UVQXHZbAxAGiWbLrRZk87YKsA4mc0BbK3/yV+K+Ydl47RWqJ9xkLvGPyPUc4oBZ99mikSUcDwhx1Rp5/LLzF0GIOAu1DTZrdkgOLX7BtZGF7USE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Xmn8op6+; arc=none smtp.client-ip=209.85.161.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="udK2mbzA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C15DC4CEED;
-	Wed, 20 Aug 2025 22:23:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1755728585;
-	bh=0Hc+hko8FrAVekC8D7wSPp0TYD0KKnzwUrEEEtQlhss=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=udK2mbzAU+s690sSPA6XyE6lYsAdDFYHRihpYv1DVf0JRR9xVx5w8fsm0tuMskO/E
-	 HKA1KLmxnYLKX1h3fLRGekAuL3qGChKObdbmBv3+tGXf3BSwC0grnEuyWVPdEz+6CW
-	 YcleCkwqNssHpsbJpyfDKX3E9p/tEtFflJQlkj7mcY6GGVF3D7E5wRHV9f1FBJPVEF
-	 /n4/iXFInEnYS8weecgEFBSruLLmYTkCavSgdUcj3pXHbeCSGm5IqZ6BQF+qbcc2Ky
-	 XgvgiieJ01HlBslka2sY/OCzDoA3PNE16qxbEM4gQcnG0ntz4q23O8uR5DbgKXw+GF
-	 c5zGm1wTdxgpw==
-From: SeongJae Park <sj@kernel.org>
-To: Quanmin Yan <yanquanmin1@huawei.com>
-Cc: SeongJae Park <sj@kernel.org>,
-	akpm@linux-foundation.org,
-	damon@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org,
-	wangkefeng.wang@huawei.com,
-	zuoze1@huawei.com
-Subject: Re: [RFC PATCH mm-next v2 00/12] mm/damon: support ARM32 with LPAE
-Date: Wed, 20 Aug 2025 15:23:02 -0700
-Message-Id: <20250820222302.88000-1-sj@kernel.org>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250820080623.3799131-1-yanquanmin1@huawei.com>
-References: 
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Xmn8op6+"
+Received: by mail-oo1-f44.google.com with SMTP id 006d021491bc7-61da7b78978so248211eaf.1
+        for <damon@lists.linux.dev>; Wed, 20 Aug 2025 18:08:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1755738494; x=1756343294; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=GokggVHwsWgtzvgyN/qEZFMv+f52a+8zLwqs+NYYW14=;
+        b=Xmn8op6+GArQtZ5BwwLnmtClPFhZLWiptk4uozTKtOFoWN5AN003Wqxpcmklbwsl2H
+         1fq5478ZWH0JT1Dv0OXbA2ZyJTD6ZC0nw6s19ux2rSDTHYMm4xiqh7M2vxZ4VhRxx57r
+         ko69ea3m9/Yb0KJ9pS6VGtzFWOb3AFuII43fJQzKRq9B/NbK3hl9mMnkhy+VljEI7Xfs
+         jS2dsF4rvSIcnjnmPZNxd3J2HGtCew+N6A6c9JrlC8isCtvhz6SpEMlEt4cGropGZJtG
+         N0yoLT8K1zXmoIUFqYWnb45LmngRLKTKdarQi5Rm2x4T6jorC/e7BAv76AC+SV5iO5CL
+         CFkQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1755738494; x=1756343294;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=GokggVHwsWgtzvgyN/qEZFMv+f52a+8zLwqs+NYYW14=;
+        b=C9RH/JusKdiQ6Xogf4SA8qL5jNkEVs6oSMFrj8PjN3VReutn7Gu60yQTNukV1z2Kk6
+         bJao37imSg9vdiKF3Vnj626+zDV5VSX/uAZYPtfo4SwwPDBOO91tJTwKlWi8ojCtdfce
+         1h095N82Mo4H2C2cJJzj0BeAV6FKvA7C8FGn/K2CYtzF1OcLUR/h4sdI7f1XnVj8z7oC
+         ULg5SQUogRrPca7+FhtqKUj64WZc91kGOJPphsrDtu7tz+IgqvCmsh6c2kgjxhcDMFLJ
+         h7/O2EGg1uWmXF+VouI0mf60WMWJ1P8r7CgnLi2I7/2tixJbL0S9kmRaDa6Q6rje+duh
+         HyEw==
+X-Forwarded-Encrypted: i=1; AJvYcCWj9pS97HswAdzKLTgS2smQ4EFiHTQ4XDhoVTbBjO2YRWsXpS0ei5uQlWDub6ZaqUwHON1/rw==@lists.linux.dev
+X-Gm-Message-State: AOJu0YwW7hhkm5BR/CAmpEIBwpiQ3XfkoiEdH6gDFTMOso7qhgBG8QqT
+	hyYkLg8taXd7mWSgrYSlqS4m9/ju27LW6RSvCR2ZqwehcEK11p4n02VCe77JBCc8d5dIisNhQfz
+	yGMnF19tIZNzm9yMDIqtEH7ilHJsqjj4=
+X-Gm-Gg: ASbGncuzFqSFnF/pS2i02LUbin32DIyzeckZ0FkYwxN7C0KgfNbpS2SgKSkfrljONIN
+	7hHL9uEWx9gfrdjCQM3KuKNw0SBfQpGuodHifqcGKDjYMwvZt7JFQ3SH+ffqknVl8Hju0wgBA+u
+	3RQyY3bQXL0kVye76AAtXH4r4fFzw159NU7Q9vE30sRofh4+BB81tUws62tVVUkbndR0aoy5Jz2
+	looVPhUCcz4TQE=
+X-Google-Smtp-Source: AGHT+IGMEq9pUyB7v0+w/oAnTu045iauyj+xCtdjs1ZA7QXJ8rtw+r/qDQiXoul2PqnBQyc4BEn2rmtyCs5i345g5Ao=
+X-Received: by 2002:a05:6820:80a:b0:61d:a32d:610f with SMTP id
+ 006d021491bc7-61dab37e23dmr228323eaf.3.1755738494510; Wed, 20 Aug 2025
+ 18:08:14 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <CABFDxMHpodpNQM_a=T0vf48k486mYqukCVnQPbanLh+G_HH+9g@mail.gmail.com>
+ <20250820182736.84941-1-sj@kernel.org>
+In-Reply-To: <20250820182736.84941-1-sj@kernel.org>
+From: Sang-Heon Jeon <ekffu200098@gmail.com>
+Date: Thu, 21 Aug 2025 10:08:03 +0900
+X-Gm-Features: Ac12FXwY0QvAKJXu1Lstb6SiLaFsDLAKOkZbXUCeMOgo9sq_Zc-hrouZIUfRh_0
+Message-ID: <CABFDxMGmVgswVoZFgBz=7xqA59M7fMt0jw2QHqWjm-W9tZktWg@mail.gmail.com>
+Subject: Re: [PATCH v2] mm/damon/core: set quota->charged_from to jiffies at
+ first charge window
+To: SeongJae Park <sj@kernel.org>
+Cc: honggyu.kim@sk.com, damon@lists.linux.dev, linux-mm@kvack.org, 
+	stable@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, 20 Aug 2025 16:06:10 +0800 Quanmin Yan <yanquanmin1@huawei.com> wrote:
+On Thu, Aug 21, 2025 at 3:27=E2=80=AFAM SeongJae Park <sj@kernel.org> wrote=
+:
+>
+> On Wed, 20 Aug 2025 22:18:53 +0900 Sang-Heon Jeon <ekffu200098@gmail.com>=
+ wrote:
+>
+> > Hello, SeongJae
+> >
+> > On Wed, Aug 20, 2025 at 2:27=E2=80=AFAM SeongJae Park <sj@kernel.org> w=
+rote:
+> > >
+> > > On Wed, 20 Aug 2025 00:01:23 +0900 Sang-Heon Jeon <ekffu200098@gmail.=
+com> wrote:
+> > >
+> > > > Kernel initialize "jiffies" timer as 5 minutes below zero, as shown=
+ in
+> > > > include/linux/jiffies.h
+> > > >
+> > > > /*
+> > > >  * Have the 32 bit jiffies value wrap 5 minutes after boot
+> > > >  * so jiffies wrap bugs show up earlier.
+> > > >  */
+> > > >  #define INITIAL_JIFFIES ((unsigned long)(unsigned int) (-300*HZ))
+> > > >
+> > > > And they cast unsigned value to signed to cover wraparound
+> > >
+> > > "they" sounds bit vague.  I think "jiffies comparison helper function=
+s" would
+> > > be better.
+> >
+> > I agree, I will change it.
+> >
+> > > >
+> > > >  #define time_after_eq(a,b) \
+> > > >   (typecheck(unsigned long, a) && \
+> > > >   typecheck(unsigned long, b) && \
+> > > >   ((long)((a) - (b)) >=3D 0))
+> > > >
+> > > > In 64bit system, these might not be a problem because wrapround occ=
+urs
+> > > > 300 million years after the boot, assuming HZ value is 1000.
+> > > >
+> > > > With same assuming, In 32bit system, wraparound occurs 5 minutues a=
+fter
+> > > > the initial boot and every 49 days after the first wraparound. And =
+about
+> > > > 25 days after first wraparound, it continues quota charging window =
+up to
+> > > > next 25 days.
+> > >
+> > > It would be nice if you can further explain what real user impacts th=
+at could
+> > > make.  To my understanding the impact is that, when the unexpected ex=
+tension of
+> > > the charging window is happened, the scheme will work until the quota=
+ is full,
+> > > but then stops working until the unexpectedly extended window is over=
+.
+> > >
+> > > The after-boot issue is really bad since there is no way to work arou=
+nd other
+> > > than reboot the machine.
+> >
+> > I agree with your point that user impact should be added to commit
+> > messages. Before modifying the commit message, I want to check that my
+> > understanding of "user impact" is correct.
+>
+> I think you should make clear at least you believe you understand the
+> consequences of your patches including user impacts before sending your p=
+atches
+> without RFC tag.  I'd suggest you to take more time on making such
+> preparational confidences and/or discussions _before_ sending non-RFC pat=
+ches.
+> You're nver lagging.  Take your time.
 
-> Previously, DAMON's physical address space monitoring only supported
-> memory ranges below 4GB on LPAE-enabled systems. This was due to
-> the use of 'unsigned long' in 'struct damon_addr_range', which is
-> 32-bit on ARM32 even with LPAE enabled[1].
-> 
-> To add DAMON support for ARM32 with LPAE enabled, a new core layer
-> parameter called 'addr_unit' was introduced[2]. Operations set layer
-> can translate a core layer address to the real address by multiplying
-> the parameter value to the core layer address. Support of the parameter
-> is up to each operations layer implementation, though. For example,
-> operations set implementations for virtual address space can simply
-> ignore the parameter. Add the support on paddr, which is the DAMON
-> operations set implementation for the physical address space, as we have
-> a clear use case for that.
-> 
-> [1]https://lore.kernel.org/all/20250408075553.959388-1-zuoze1@huawei.com/
-> [2]https://lore.kernel.org/all/20250416042551.158131-1-sj@kernel.org/
-> 
-> Changes in v2:
+I think that I checked about user impact already but it should be
+insufficient. As you said, I should discuss it first. Anyway, the
+whole thing is my mistake. I'm really so sorry.
 
-It would be nice if you can also add the link to the previous version, e.g.,
-like the revisions history of
-https://lore.kernel.org/20250819193404.46680-1-sj@kernel.org
+So, Would it be better to send an RFC patch even now, instead of
+asking on this email thread? (I'll make next v3 patch with RFC tag,
+it's not question of v3 direction and just about remained question on
+this email thread)
 
-> - set DAMOS_PAGEOUT, DAMOS_LRU_[DE]PRIO, DAMOS_MIGRATE_{HOT,COLD} and
->   DAMOS_STAT stat in core address unit.
-> - pass ctx->min_region value to replace the original synchronization.
-> - drop the DAMOS stats type changes, keep them as 'unsigned long' type.
-> - separate add addr_unit support for DAMON_RECLAIM and LRU_SORT from
->   this patch series.
+> >
+> > In the logic before this patch is applied, I think
+> > time_after_eq(jiffies, ...) should only evaluate to false when the MSB
+> > of jiffies is 1 and charged_from is 0. because if charging has
+> > occurred, it changes charge_from to jiffies at that time.
+>
+> It is not the only case that time_after_eq() can be evaluated to false.  =
+Maybe
+> you're saying only about the just-after-boot running case?  If so, please
+> clarify.  You and I know the context, but others may not.  I hope the com=
+mit
+> message be nicer for them.
 
-Thank you for continuing this work!
+I think it is not just-after-boot running case also whole and only
+case, because charging changes charged_from to jiffies. if it is not
+the only case, could you please describe the specific case?
 
-> 
-> Quanmin Yan (2):
->   mm/damon: add damon_ctx->min_region
->   mm/damon/core: prevent unnecessary overflow in
->     damos_set_effective_quota()
+> > Therefore,
+> > esz should also be zero because it is initialized with charged_from.
+> > So I think the real user impact is that "quota is not applied", rather
+> > than "stops working". If my understanding is wrong, please let me know
+> > what point is wrong.
+>
+> Thank you for clarifying your view.  The code is behaving in the way you
+> described above.  It is because damon_set_effective_quota(), which sets t=
+he
+> esz, is called only when the time_after_eq() call returns true.
+>
+> However, this is a bug rather than an intended behavior.  The current beh=
+avior
+> is making the first charging window just be wasted without doing nothing.
+>
+> Probably the bug was introduced by the commit that introduced esz.
 
-I left a few comments.  In essense, let's rename min_region to min_sz_region,
-and separate the last fix from this series.
+Thanks for your explanation. I'll try to cover this point in the next
+patch as well.
 
-Other than above, looks good overall.  I think you can drop RFC tag from the
-next version.
+> >
+> > > >
+> > > > Example 1: initial boot
+> > > > jiffies=3D0xFFFB6C20, charged_from+interval=3D0x000003E8
+> > > > time_after_eq(jiffies, charged_from+interval)=3D(long)0xFFFB6838; I=
+n
+> > > > signed values, it is considered negative so it is false.
+> > >
+> > > The above part is using hex numbers and look like psuedo-code.  This =
+is
+> > > unnecessarily difficult to read.  To me, this feels like your persona=
+l note
+> > > rather than a nice commit message that written for others.  I think y=
+ou could
+> > > write this in a much better way.
+> > >
+> > > >
+> > > > Example 2: after about 25 days first wraparound
+> > > > jiffies=3D0x800004E8, charged_from+interval=3D0x000003E8
+> > > > time_after_eq(jiffies, charged_from+interval)=3D(long)0x80000100; I=
+n
+> > > > signed values, it is considered negative so it is false
+> > >
+> > > Ditto.
+> >
+> > Okay, I think I can fix these sections with explanation using MSB.
+>
+> Also please make it easier to read for more human people.
 
+I see.
 
-Thanks,
-SJ
+> >
+> > > >
+> > > > So, change quota->charged_from to jiffies at damos_adjust_quota() w=
+hen
+> > > > it is consider first charge window.
+> > > >
+> > > > In theory; but almost impossible; quota->total_charged_sz and
+> > > > qutoa->charged_from should be both zero even if it is not in first
+> > >
+> > > s/should/could/ ?
+> >
+> > Sorry for my poor english.
+> >
+> > > Also, explaining when that "could" happen will be nice.
+> >
+> > I want to confirm this situation as well. I think the situation below
+> > is the only case.
+>
+> Again, if there is anything unclear, let's do discussions before sending
+> non-RFC patches.
+>
+> >
+> > 1. jiffies overflows to exactly 0
+> > 2. And quota is configured but never actually applied, so total_charged=
+_sz is 0
+>
+> Or, total_charged_sz is also overflows and bcome 0.
 
-[...]
+Thanks for clarifying me.
+
+> > 3. And charging occurs at that exact moment.
+>
+> It's not necessarily when charging occurs but when damon_adjust_quota() i=
+s
+> called.  More technically speaking once per the scheme's apply interval.
+
+Ditto.
+
+> >
+> > Is that right? If right, I think this situation is almost impossible
+> > and uncommon. I feel like It's unnecessary to describe it. I'm not
+> > trying to ignore your valuable opinion, but do you still think it's
+> > better to add a description?
+>
+> I'm ok to completely drop the explanation.  But if you are gonna mention =
+it
+> partially, please clarify.
+
+I see, your opinion is reasonable. I'll keep that in my mind.
+
+> >
+> > > > charge window. But It will only delay one reset_interval, So it is =
+not
+> > > > big problem.
+> > > >
+> > > > Fixes: 2b8a248d5873 ("mm/damon/schemes: implement size quota for sc=
+hemes application speed control") # 5.16
+> > > > Cc: stable@vger.kernel.org
+> > > > Signed-off-by: Sang-Heon Jeon <ekffu200098@gmail.com>
+> > >
+> > > I think the commit message could be much be improved, but the code ch=
+ange seems
+> > > right.
+> >
+> > Once again, Sorry for my poor english. I'm doing my best on my own.
+>
+> This is not about English skill but the commit "message".  Your English s=
+kill
+> is good and probably betetr than mine.  But I ad a difficult time at revi=
+ewing
+> your patch, and feeling it could been easier if the message was nicer.
+>
+> So what I'm saying is that I tink this patch's commit message can be more=
+ nice
+> to readers.
+
+You're right. I'll try to make the commit message more clear. I'm
+really sorry for bothering you.
+
+>
+> Thanks,
+> SJ
+>
+> [...]
+
+Best Regards
+Sang-Heon Jeon
