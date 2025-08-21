@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 799901DFCE;
-	Thu, 21 Aug 2025 17:24:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93DBB3090D4;
+	Thu, 21 Aug 2025 17:24:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755797040; cv=none; b=fcnwyKQYVgQzO2nmPLsJgX4hW6uw9Uqx9iUp0qf9S8fQ9K4yjQ3J2x344e2obUiqHNFfHE+pjcg1MH6JRntIln6Ffu22bhcyiICuTfhJjpuc8GycvPS8T38x4JegQOzWsMg8AdbwaHHz0Cq49gJqLjgN04cvjMulcOmEq/vDBT0=
+	t=1755797087; cv=none; b=Rwku63dGEUNoeG4vUcf40QGK27QACiFrwLjZpyffgIS6S/JEdk4ybau2GQuZyxM01zmVftfPX3HCJbF82dIg2q7SFn1A0XDtrkenf7+BMDjQUmwT43x0Myz7tD2vjRgfh211qApo4vDk5Ba8ZHo+xpnhhM+FyGtzwe0FZqa9eQQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755797040; c=relaxed/simple;
-	bh=N3/u8FVbXeMN+Ztt1yO2E2iROrvfabqVIFGfFt13g5k=;
+	s=arc-20240116; t=1755797087; c=relaxed/simple;
+	bh=zvag0ItsqVk++H/ShYx94vCt9ir2zllvDThN1dD+mBg=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=eR5dfgYwHRxvpArkCkVxYUD6y3CIOlMzqcTSYw3bcCcZ05gOHYR7Iml7LRvfvXpTaFXn6uB8xLrkgleL4W5bVjRrxs24UHTVJoX3hcnojpr1S254tiEXIgfrxqZ5IhBcx8nHOf+s8BlVo2fsj5/Z0DUkQ2v+LZIVr2pQvJ4Wip0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ufdCprLZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gwmEm203NgEyEZlP0Sovg1flFKmzgYuMxZL4C1ITvTkPX5ZXyydCBRLstY6MMcjcwAdg8pcS41mwtMKj9T6NUfdZosEOLcjWVUtF7VMvcbIQNJ5J370LN4eoOV10G3Ojyi84HrIRGCH+jbXpAf9AV92N8oK900ludVVL0WSNfPA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OaXP/rtT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ufdCprLZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB20FC4CEEB;
-	Thu, 21 Aug 2025 17:23:59 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OaXP/rtT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D50A4C4CEEB;
+	Thu, 21 Aug 2025 17:24:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1755797040;
-	bh=N3/u8FVbXeMN+Ztt1yO2E2iROrvfabqVIFGfFt13g5k=;
+	s=k20201202; t=1755797087;
+	bh=zvag0ItsqVk++H/ShYx94vCt9ir2zllvDThN1dD+mBg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ufdCprLZOANSimLEJibjKHExpwhTdbfMQbiiAhkAbxW2wycu8FEba6N/aRbqZlEEj
-	 8fSZhFLUGpSOk+jU6NP2VCSGeH9qnRx2+lFdSi4eSnJl0pUyY8SXVCDlkIQhUXnPdX
-	 tQ03H+eShqW/Ix4LzVZt7iTHWTdIrbSvmB1pej6b+5FMaGEPPxSD6GPGoner5BQRJU
-	 z9orWOvkwuBxFeA4+BNSwDcM8LhBieBHLlcBcSF7j/CE/BwcUmIVOkuDuxNqwbToru
-	 n4nIpZU9i/BK4qDZpA2pbT1KXMymrmpVRpM/HbKwrOZbDwIqy1y3P9GhXM6LPR/Uzy
-	 iWWXDk7VpUonQ==
+	b=OaXP/rtTLlvEoaQqa1Dn+8YDGCh29zSrfDZeUKHufdVMfC3FOWf2+DJ7xGtOaTJt1
+	 PqgBJZLfae67EW8bEpGXCVCPIYR/s5wowwRc7W0KFusJ6U0C27fAyV5J0dnqxplY/L
+	 7d2Wu0yUfw+tN+YtxgVRKUJqxB8uRIKgQD3FWzsc5mIrli5QnFFY9LlO6Wnr9i0BLp
+	 yvsRtkbP0aj0NHNkpvIM4XVRd9JwDqHkNs1aURCbwNzyiC5ABeTPvlwhjaTTLZvr6g
+	 qPo2Yt7sP9dqSJ6bCs02Q0nel9gzQh42RX7i0vhHaMh02pCWsBJmxGXd2LrODeDj28
+	 443+eEjWdScQQ==
 From: SeongJae Park <sj@kernel.org>
 To: Quanmin Yan <yanquanmin1@huawei.com>
 Cc: SeongJae Park <sj@kernel.org>,
@@ -35,11 +35,11 @@ Cc: SeongJae Park <sj@kernel.org>,
 	linux-mm@kvack.org,
 	wangkefeng.wang@huawei.com,
 	zuoze1@huawei.com
-Subject: Re: [PATCH 09/11] Docs/admin-guide/mm/damon/usage: document addr_unit file
-Date: Thu, 21 Aug 2025 10:23:58 -0700
-Message-Id: <20250821172358.82360-1-sj@kernel.org>
+Subject: Re: [PATCH 10/11] Docs/ABI/damon: document addr_unit file
+Date: Thu, 21 Aug 2025 10:24:44 -0700
+Message-Id: <20250821172444.82455-1-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250821105159.2503894-10-yanquanmin1@huawei.com>
+In-Reply-To: <20250821105159.2503894-11-yanquanmin1@huawei.com>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -49,11 +49,11 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Thu, 21 Aug 2025 18:51:57 +0800 Quanmin Yan <yanquanmin1@huawei.com> wrote:
+On Thu, 21 Aug 2025 18:51:58 +0800 Quanmin Yan <yanquanmin1@huawei.com> wrote:
 
 > From: SeongJae Park <sj@kernel.org>
 > 
-> Document addr_unit DAMON sysfs file on DAMON usage document.
+> Document addr_unit DAMON sysfs file on DAMON ABI document.
 > 
 > Signed-off-by: SeongJae Park <sj@kernel.org>
 > Signed-off-by: Quanmin Yan <yanquanmin1@huawei.com>
