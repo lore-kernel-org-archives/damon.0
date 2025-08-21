@@ -1,120 +1,109 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from szxga02-in.huawei.com (szxga02-in.huawei.com [45.249.212.188])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C5AA26A0A7;
-	Thu, 21 Aug 2025 05:43:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E03E130BF7D
+	for <damon@lists.linux.dev>; Thu, 21 Aug 2025 11:05:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.188
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755755032; cv=none; b=LThSR7y5dLch9284U0hgGC/+FzPasE4/Bmd9WRmY0IU+XbbSm3mMrMb1yP+F4CLk65ZE0OdyQNun8q3JDTjhZO0EsrKv0mz83SYikRBoxxTDPUP+/a3yK2afjTK6napx7+rQpUpnuQKZdE1wjWDIbxpKB70w4dYsNdOfzwZ/5Io=
+	t=1755774357; cv=none; b=ZjyP1KcAM+8Ln9GvY8XeF1epZp0tZFqzlyeoKWPls80n8/zZbdaUauLHHjrv0e2/mtS85L5FHTHQRPKKaOvKwPxIy1ieIFHhj2LH7+Vj9qFdYuHdenPqpF14/6eroULKmHD5sdHlUnLScKZB4yVS0Os1f8ktUR+R6s48+Kba4NE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755755032; c=relaxed/simple;
-	bh=wslDGFckcPcpSuCYM0gIHtwPLeSyL94Zl1WSFhikYZQ=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=jmyGr/09ec1XJ2OxWsjuFk1VX4uAZTH/VlCQeeE1vQubYHHFYmRn5LQwRZZrH4XgAO2LMGgbIcq8yGWYcCHI7xZmwJA3qVxiSfC7phVHFfw54lf5IDQTDQ0xBE5yEmrhrA0A93FTYYdt6yt6AOb+aJhfbD1p32iXYhAG8LELuT4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MKOLoolX; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MKOLoolX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95591C4CEED;
-	Thu, 21 Aug 2025 05:43:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1755755031;
-	bh=wslDGFckcPcpSuCYM0gIHtwPLeSyL94Zl1WSFhikYZQ=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MKOLoolXYQgU4+4/ayOBQeg1NhhN6jqhwTGUyHdOP5KYTBJEoUR2DHP8JdwoR6Iax
-	 NdPTTkxgSgUpVVrgtDLfUTcC3V/v/hk40V9cUE9A4hUT8u+rNxC0X+DZQwb4EWji9J
-	 4eAeiL+vrgMnaY49yxWDn2dYRAZXz3q44PAEPbuYcOapOsFpyBfp9NsRAIVtyLiJ8z
-	 217tSLRuV0G3S01ystBbpw+fJXf4BLTX/wNEJJtyeOYZB6hqcHMlPmllkW49HuHWf4
-	 IlZYyjypoz91OyMSs+vXrQ5iIXrn815UBENGVewk9kxwMlBzIQPDJSyaTNzemYBuAT
-	 QxzXYs/D8bLXA==
-From: SeongJae Park <sj@kernel.org>
-To: SeongJae Park <sj@kernel.org>
-Cc: Sang-Heon Jeon <ekffu200098@gmail.com>,
-	honggyu.kim@sk.com,
-	damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	stable@vger.kernel.org
-Subject: Re: [PATCH v2] mm/damon/core: set quota->charged_from to jiffies at first charge window
-Date: Wed, 20 Aug 2025 22:43:49 -0700
-Message-Id: <20250821054350.53849-1-sj@kernel.org>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250821054148.53746-1-sj@kernel.org>
-References: 
+	s=arc-20240116; t=1755774357; c=relaxed/simple;
+	bh=H3HyWzySqBHaj3jlqjxqV10G9MW92blq+OHDFIdnqxU=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=c545CEt/KfNtRKZdLSboGtitg04PA8k63zZ6Gi/DzR/nvv8N3GRG16OCiapG/6KgF1Pr2QXtm98A9My44BZYblRa/BPOGGwQv+04TyY6bK9Cie5TYdYMuGwKe9vxd5L/gzBYe3T3boQqL8pxgqzznC7jMatknd1p/ZRDd/FGVeg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; arc=none smtp.client-ip=45.249.212.188
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
+Received: from mail.maildlp.com (unknown [172.19.162.254])
+	by szxga02-in.huawei.com (SkyGuard) with ESMTP id 4c70jt6QFJzPqd8;
+	Thu, 21 Aug 2025 19:01:06 +0800 (CST)
+Received: from dggpemf200018.china.huawei.com (unknown [7.185.36.31])
+	by mail.maildlp.com (Postfix) with ESMTPS id D13E218048D;
+	Thu, 21 Aug 2025 19:05:42 +0800 (CST)
+Received: from huawei.com (10.50.85.135) by dggpemf200018.china.huawei.com
+ (7.185.36.31) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.11; Thu, 21 Aug
+ 2025 19:05:42 +0800
+From: Quanmin Yan <yanquanmin1@huawei.com>
+To: <sj@kernel.org>
+CC: <akpm@linux-foundation.org>, <damon@lists.linux.dev>,
+	<linux-kernel@vger.kernel.org>, <linux-mm@kvack.org>,
+	<yanquanmin1@huawei.com>, <wangkefeng.wang@huawei.com>, <zuoze1@huawei.com>
+Subject: [PATCH 00/11] mm/damon: support ARM32 with LPAE
+Date: Thu, 21 Aug 2025 18:51:48 +0800
+Message-ID: <20250821105159.2503894-1-yanquanmin1@huawei.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: kwepems200002.china.huawei.com (7.221.188.68) To
+ dggpemf200018.china.huawei.com (7.185.36.31)
 
-On Wed, 20 Aug 2025 22:41:48 -0700 SeongJae Park <sj@kernel.org> wrote:
+Previously, DAMON's physical address space monitoring only supported
+memory ranges below 4GB on LPAE-enabled systems. This was due to
+the use of 'unsigned long' in 'struct damon_addr_range', which is
+32-bit on ARM32 even with LPAE enabled[1].
 
-> On Thu, 21 Aug 2025 13:29:04 +0900 Sang-Heon Jeon <ekffu200098@gmail.com> wrote:
-> 
-> > On Thu, Aug 21, 2025 at 11:54 AM SeongJae Park <sj@kernel.org> wrote:
-> > >
-> > > On Thu, 21 Aug 2025 10:08:03 +0900 Sang-Heon Jeon <ekffu200098@gmail.com> wrote:
-> > >
-> > > > On Thu, Aug 21, 2025 at 3:27 AM SeongJae Park <sj@kernel.org> wrote:
-> > > > >
-> > > > > On Wed, 20 Aug 2025 22:18:53 +0900 Sang-Heon Jeon <ekffu200098@gmail.com> wrote:
-> > > > >
-> > > > > > Hello, SeongJae
-> > > > > >
-> > > > > > On Wed, Aug 20, 2025 at 2:27 AM SeongJae Park <sj@kernel.org> wrote:
-> > > > > > >
-> > > > > > > On Wed, 20 Aug 2025 00:01:23 +0900 Sang-Heon Jeon <ekffu200098@gmail.com> wrote:
-> > > [...]
-> > > > I think that I checked about user impact already but it should be
-> > > > insufficient. As you said, I should discuss it first. Anyway, the
-> > > > whole thing is my mistake. I'm really so sorry.
-> > >
-> > > Everyone makes mistakes.  You don't need to apologize.
-> > >
-> > > >
-> > > > So, Would it be better to send an RFC patch even now, instead of
-> > > > asking on this email thread? (I'll make next v3 patch with RFC tag,
-> > > > it's not question of v3 direction and just about remained question on
-> > > > this email thread)
-> > >
-> > > If you unsure something and there is no reason to send a patch without a
-> > > discussion for the point, please discuss first.  To be honest I don't
-> > > understand the above question at all.
-> > 
-> > Ah, I just mean that I need to make a new RFC patch instead of
-> > replying to this email thread.
-> 
-> Why?
-> 
-> > I'll just keep asking about previous
-> > comments on this email thread.
-> 
-> You said you will send a new patch instead of replying here, and then now you
-> are saying you will keep aking to this thread.
-> 
-> I'm confused.
-> 
-> [...]
-> 
-> Ok, I think this discussion is going unnecessarily deep and only wasting our
-> time at clarifying intention of past sentence.  Meanwhile apparently you
-> understood my major points.  To repeat, please clarify what is the problem and
-> user impacts, when and how it happens, and why the solution solves it.
-> 
-> Let's restart.  Could you please rewrite the commit log for this patch and send
-> the draft as a reply to this?
-> 
-> We can further discuss on the new draft if it has more things to improve.  And
-> once the discussion is finalized, you can post v4 of this patch with the
-> updated commit message.
+To add DAMON support for ARM32 with LPAE enabled, a new core layer
+parameter called 'addr_unit' was introduced[2]. Operations set layer
+can translate a core layer address to the real address by multiplying
+the parameter value to the core layer address. Support of the parameter
+is up to each operations layer implementation, though. For example,
+operations set implementations for virtual address space can simply
+ignore the parameter. Add the support on paddr, which is the DAMON
+operations set implementation for the physical address space, as we have
+a clear use case for that.
 
-s/v4/v3/
+[1]https://lore.kernel.org/all/20250408075553.959388-1-zuoze1@huawei.com/
+[2]https://lore.kernel.org/all/20250416042551.158131-1-sj@kernel.org/
 
-Sorry for the typo.
+Changes from RFC v2
+(https://lore.kernel.org/all/20250820080623.3799131-1-yanquanmin1@huawei.com/)
+- Rename 'min_region' to 'min_sz_region'.
+- Separate the overflow prevention in damos_set_effective_quota() from
+  this series.
+- Drop RFC tag.
 
+Changes from RFC v1
+(https://lore.kernel.org/all/20250813050706.1564229-1-yanquanmin1@huawei.com/)
+- Set DAMOS_PAGEOUT, DAMOS_LRU_[DE]PRIO, DAMOS_MIGRATE_{HOT,COLD} and
+  DAMOS_STAT stat in core address unit.
+- Pass ctx->min_region value to replace the original synchronization.
+- Drop the DAMOS stats type changes, keep them as 'unsigned long' type.
+- Separate add addr_unit support for DAMON_RECLAIM and LRU_SORT from
+  this patch series.
 
-Thanks,
-SJ
+Quanmin Yan (1):
+  mm/damon: add damon_ctx->min_region
 
-[...]
+SeongJae Park (10):
+  mm/damon/core: add damon_ctx->addr_unit
+  mm/damon/paddr: support addr_unit for access monitoring
+  mm/damon/paddr: support addr_unit for DAMOS_PAGEOUT
+  mm/damon/paddr: support addr_unit for DAMOS_LRU_[DE]PRIO
+  mm/damon/paddr: support addr_unit for MIGRATE_{HOT,COLD}
+  mm/damon/paddr: support addr_unit for DAMOS_STAT
+  mm/damon/sysfs: implement addr_unit file under context dir
+  Docs/mm/damon/design: document 'address unit' parameter
+  Docs/admin-guide/mm/damon/usage: document addr_unit file
+  Docs/ABI/damon: document addr_unit file
+
+ .../ABI/testing/sysfs-kernel-mm-damon         |   7 ++
+ Documentation/admin-guide/mm/damon/usage.rst  |  11 +-
+ Documentation/mm/damon/design.rst             |  16 ++-
+ include/linux/damon.h                         |   7 +-
+ mm/damon/core.c                               |  70 +++++++-----
+ mm/damon/paddr.c                              | 106 +++++++++++-------
+ mm/damon/sysfs.c                              |  41 ++++++-
+ mm/damon/tests/core-kunit.h                   |  21 ++--
+ mm/damon/tests/vaddr-kunit.h                  |   2 +-
+ mm/damon/vaddr.c                              |   2 +-
+ 10 files changed, 191 insertions(+), 92 deletions(-)
+
+-- 
+2.43.0
+
