@@ -1,86 +1,120 @@
-Received: from szxga04-in.huawei.com (szxga04-in.huawei.com [45.249.212.190])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 601174430
-	for <damon@lists.linux.dev>; Thu, 21 Aug 2025 13:09:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.190
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 376862E1F1B;
+	Thu, 21 Aug 2025 15:58:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755781785; cv=none; b=stnOXmGnZ7AY3iav6RhmZXKDIgQODImU8yyUJzdjjZryj8SpFlx+Uz2K9jD9huf19mJ0vj1TOeWDf0+iaRXfKwhoOIFVPpS2J3qGOqrsIs7b9vG55m/gOAVeY5cpjUL5N9j7XWnkpYmAIrbLh4kScHIKZijWz7GWEAs4G/7vXQA=
+	t=1755791916; cv=none; b=hDkgNlUff9b41D4Qvd7Nfd/QUs8mS5OC2n8CasowVgAMXl239q9WxXzULvs03byQc5js21g3e8kRBRXXpzBjgorYonebOHG6ejrKXvM/cK6lNMXOcmRs/BMadYtpVLrAX9Nl3kR0+5O1U/NgwMyoQXDCEl8KNEDwTs6/9EtV3OI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755781785; c=relaxed/simple;
-	bh=eRKJxjY+hu42snqIEcrqCtyGtXKpWtzJWTzuArrTnPE=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=BG+hbK84RNOdwnBV8ZibXXmUe/yBm1fxQ0phNZXAzguxcD6f9Bb8NsHciWV+oKrBzrAbUtcqeDuDeICxGNs0du58HXZyNkObvER4V+6/6hrnmLh17Oqi++CVZeEpWPMC/kKRBfyoR26LjgqJQsirxwQdpwBGuPvZq0+kHt2/rMY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; arc=none smtp.client-ip=45.249.212.190
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
-Received: from mail.maildlp.com (unknown [172.19.163.17])
-	by szxga04-in.huawei.com (SkyGuard) with ESMTP id 4c73T74K8Yz2CgDF;
-	Thu, 21 Aug 2025 21:05:15 +0800 (CST)
-Received: from dggpemf200018.china.huawei.com (unknown [7.185.36.31])
-	by mail.maildlp.com (Postfix) with ESMTPS id DCE4C1A0188;
-	Thu, 21 Aug 2025 21:09:38 +0800 (CST)
-Received: from huawei.com (10.50.85.135) by dggpemf200018.china.huawei.com
- (7.185.36.31) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.11; Thu, 21 Aug
- 2025 21:09:38 +0800
-From: Quanmin Yan <yanquanmin1@huawei.com>
-To: <sj@kernel.org>
-CC: <akpm@linux-foundation.org>, <damon@lists.linux.dev>,
-	<linux-kernel@vger.kernel.org>, <linux-mm@kvack.org>,
-	<yanquanmin1@huawei.com>, <wangkefeng.wang@huawei.com>, <zuoze1@huawei.com>,
-	<apanyaki@amazon.com>
-Subject: [PATCH] mm/damon/core: prevent unnecessary overflow in damos_set_effective_quota()
-Date: Thu, 21 Aug 2025 20:55:55 +0800
-Message-ID: <20250821125555.3020951-1-yanquanmin1@huawei.com>
-X-Mailer: git-send-email 2.43.0
+	s=arc-20240116; t=1755791916; c=relaxed/simple;
+	bh=bP/JIPfZE0+HTDUGADbV9HkxcIqfv0r/PjlTY88pRt4=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=m+jktPfXk9ji8vUTi7jD1EEzm94ViSTJiGHAbfECkFFEvu6HqgI/BvA7mOxu1+1BbnqpD14YQdOmu3+OHyYCewfjd5fFWlOOUKkCQanJRr2S25wW6/nsmbzpu6S2JO5spWcxg7umvEm5tv+teAlO8J72qQIgs1azCj8QzUW3u5c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CA9HLcNd; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CA9HLcNd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B0C3C4CEEB;
+	Thu, 21 Aug 2025 15:58:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1755791915;
+	bh=bP/JIPfZE0+HTDUGADbV9HkxcIqfv0r/PjlTY88pRt4=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=CA9HLcNdWGreQdR/bOKT3h4J4RPEjFT6PqTpNQ6bviQdIcRNWjWLo/eM/I6Wbzt+W
+	 I4iQoqeqT/fgPPvvVT83BIJQrD4Jd71Gjcsam6nIYIi2ilknP2dzeft4n2M25gCV6D
+	 kNTtDeFKxvNUMG7PJbtDNWIiFEU1jjkD94Ekwh1CYrbpW0f1RxAeblY3Cgj7utlatV
+	 85lQuSJcenxUUCH0IjE0HPaTMC5/atOlWMe348626sZ5mrCtyw/iTV84KVhmHBpK3y
+	 DCHeamXOEuXVodv0UUUzZTCspCSVHOZTD6qF4hemf4zWNyz8/oqUikz/Wezlml1s0K
+	 GRXyIzLNRnw4w==
+From: SeongJae Park <sj@kernel.org>
+To: Sang-Heon Jeon <ekffu200098@gmail.com>
+Cc: SeongJae Park <sj@kernel.org>,
+	honggyu.kim@sk.com,
+	damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	stable@vger.kernel.org,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: Re: [PATCH v2] mm/damon/core: set quota->charged_from to jiffies at first charge window
+Date: Thu, 21 Aug 2025 08:58:33 -0700
+Message-Id: <20250821155833.57597-1-sj@kernel.org>
+X-Mailer: git-send-email 2.39.5
+In-Reply-To: <CABFDxMHgOPt5zx3q=KRxGGfp86R4V0AgO+FrHDftqLYoG20BWw@mail.gmail.com>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: kwepems100002.china.huawei.com (7.221.188.206) To
- dggpemf200018.china.huawei.com (7.185.36.31)
 
-On 32-bit systems, the throughput calculation in function
-damos_set_effective_quota() is prone to unnecessary multiplication
-overflow. Using mult_frac() to fix it.
+On Thu, 21 Aug 2025 20:06:58 +0900 Sang-Heon Jeon <ekffu200098@gmail.com> wrote:
 
-Andrew Paniakin also recently found and privately reported this
-issue, on 64 bit systems. This can also happen on 64-bit systems,
-once the charged size exceeds ~17 TiB. On systems running for long
-time in production, this issue can actually happen.
+> On Thu, Aug 21, 2025 at 2:41 PM SeongJae Park <sj@kernel.org> wrote:
+[...]
+> > Let's restart.  Could you please rewrite the commit log for this patch and send
+> > the draft as a reply to this?
+> >
+> > We can further discuss on the new draft if it has more things to improve.  And
+> > once the discussion is finalized, you can post v4 of this patch with the
+> > updated commit message.
+> 
+> Good Idea. This is the draft for commit message. Also, Thank you for
+> your patience and understanding.
 
-More specifically, when a DAMOS scheme having the time quota run
-for longtime, throughput calculation can overflow and set esz too
-small. As a result, speed of the scheme get unexpectedly slow.
+Thank you for accepting my humble suggestion.
 
-Fixes: 1cd243030059 ("mm/damon/schemes: implement time quota")
-Cc: <stable@vger.kernel.org> # 5.16.x
-Signed-off-by: Quanmin Yan <yanquanmin1@huawei.com>
-Reported-by: Andrew Paniakin <apanyaki@amazon.com>
-Closes: N/A # privately reported
----
- mm/damon/core.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> Kernel initialize "jiffies" timer as 5 minutes below zero, as shown in
+> include/linux/jiffies.h
+> 
+> /*
+>  * Have the 32 bit jiffies value wrap 5 minutes after boot
+>  * so jiffies wrap bugs show up earlier.
+>  */
+>  #define INITIAL_JIFFIES ((unsigned long)(unsigned int) (-300*HZ))
+> 
+> And jiffies comparison help functions cast unsigned value to signed to
+> cover wraparound
+> 
+>  #define time_after_eq(a,b) \
+>   (typecheck(unsigned long, a) && \
+>   typecheck(unsigned long, b) && \
+>   ((long)((a) - (b)) >= 0))
+> 
+> When quota->charged_from is initialized to 0, time_after_eq() can incorrectly
+> return FALSE even after reset_interval has elapsed. This occurs when
+> (jiffies - reset_interval) produces a value with MSB=1, which is interpreted
+> as negative in signed arithmetic.
+> 
+> This issue primarily affects 32-bit systems because:
+> On 64-bit systems: MSB=1 values occur after ~292 million years from boot
+> (assuming HZ=1000), almost impossible.
+> 
+> On 32-bit systems: MSB=1 values occur during the first 5 minutes after boot,
+> and the second half of every jiffies wraparound cycle, starting from day 25
+> (assuming HZ=1000)
+> 
+> When above unexpected FALSE return from time_after_eq() occurs, the
+> charging window will not reset. The user impact depends on esz value
+> at that time.
+> 
+> If esz is 0, scheme ignores configured quotas and runs without any
+> limits.
+> 
+> If esz is not 0, scheme stops working once the quota is exhausted. It
+> remains until the charging window finally resets.
+> 
+> So, change quota->charged_from to jiffies at damos_adjust_quota() when
+> it is considered as the first charge window. By this change, we can avoid
+> unexpected FALSE return from time_after_eq()
 
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index 831a9afc6cf6..fe1c19307ddd 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -2103,8 +2103,8 @@ static void damos_set_effective_quota(struct damos_quota *quota)
- 
- 	if (quota->ms) {
- 		if (quota->total_charged_ns)
--			throughput = quota->total_charged_sz * 1000000 /
--				quota->total_charged_ns;
-+			throughput = mult_frac(quota->total_charged_sz, 1000000,
-+							quota->total_charged_ns);
- 		else
- 			throughput = PAGE_SIZE * 1024;
- 		esz = min(throughput * quota->ms, esz);
--- 
-2.43.0
+This new draft looks good to me.  I find nothing to further modify.  Could you
+please send v3 of this patch with the above commit log?
 
+
+Thanks,
+SJ
+
+[...]
