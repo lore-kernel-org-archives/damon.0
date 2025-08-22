@@ -1,45 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32E36248F48;
-	Fri, 22 Aug 2025 17:21:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67459299AA9;
+	Fri, 22 Aug 2025 18:00:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755883270; cv=none; b=SAz/V30h/Pz7aqYcY+5e616WvBYEjDegkV/F/TAO61V6UCO2cdz5vfSKpiJY7C1b75ZbXlbLbDwBwcU8kA9QTzP5S3cDjkIeRNtg7yseHffe7oMtD4ctEphqpQvtdfZ11JIdy11D71ynUvDMXJwtJThbYZRFT/r0QO5zCqtyWHo=
+	t=1755885628; cv=none; b=W7ez/Vl+RaLMO+g2WCWnad2lbEcVDHhI6/QOVflplKzPdnzoHECA5VdibcEeL3dgtaFJNQxH7gFt9OURvYpS37opwEQ6E/gFkZWnCex0+PYmcTJDNL0b1vpLU6R5a49sQSe9pTRWhyjPbV/cO24mdWxV3LcTp1JDo28T5ZNWRAs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755883270; c=relaxed/simple;
-	bh=ZImj3pjcYuC2ihJZo92yeY0fuEGYuXc7qZ1H0GE4D34=;
+	s=arc-20240116; t=1755885628; c=relaxed/simple;
+	bh=+5NIoRI3gqVex+BUi5UZsNV1yheEo0BfWMcN1z3yUSI=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=PAnGm5x7+YYaO3JjImLWb0STVUtQRp5qJyMSeTkKyLpYp/+7SkAGyVIHP1OH5opErURSZExADAHnBGYhvB6bcfJ4OR8M6LYy/GNdARs5SNCJWtIWr0kw6wyx8Ow40A7cvmnCNoFQvNTi2f5qBlednDJQjIws84EwT2bm+6uB/cA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=U88LAdsT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q41Se3qv5bX1iJROmmzAGsETwYDdFk+PfS/t1UHobUq4nDQkjIvOvgbKB9pTy0OJlyF/OmoEvOvH5TSVmCs9K4DOW5CIF1lXEYOQTvxG1joUTMG5N+BYElNDyUj/LOKEJ1xI0RK8YauPtqh2f++pT2uFEzR6xN7CueYcRz1MA9M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DM39cQLp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="U88LAdsT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90BA7C4CEED;
-	Fri, 22 Aug 2025 17:21:09 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DM39cQLp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D31DCC4CEED;
+	Fri, 22 Aug 2025 18:00:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1755883269;
-	bh=ZImj3pjcYuC2ihJZo92yeY0fuEGYuXc7qZ1H0GE4D34=;
+	s=k20201202; t=1755885628;
+	bh=+5NIoRI3gqVex+BUi5UZsNV1yheEo0BfWMcN1z3yUSI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U88LAdsTJUm1l/MTizSKP6oUQ3Htzz0sjYBWkSHEKk3dYvNK+5a4X++WJUqfFLOpR
-	 a/0qT8uuJcJYFZmDuwKoU+HngpPEm4rABiiWLp0NwjnycF3JTrjHjl8wzAQ4GENfPt
-	 T8DRqTpfCso4pA0qrwiEllba4qK+ZTFF/MsHHyQO6ifMrLmAdQdxJ01G88VnowxySo
-	 kdgXDuDbxry+dk14E9/kOQ6Eb8lcNCQv/Z+GAccUdv6kYSndGlyRpSRaQWlKrN+Nxu
-	 iz6E+4qTobnX4H5Gx/KD0kTJ244st+C2gWSSGk0Vr6lZQ4NeirIM8iPjsHqTw7swyI
-	 s47KU38XvZKjQ==
+	b=DM39cQLpXocbfHciUQyB13E5+LoZ9yMqZwjosYd3WryN1bSmWKHUovDu9cWyHfmrZ
+	 F1Vnabz9BnTGW1hhUyaEdKJGAEH/JHNDFVO/2xJ6bHe7k7JNMGtQU/HdqC/8tc2NIh
+	 TfjsQPWZoKxnfk3PMB8skY6hApMiAut6WFn6x4ijyIv+GdwSLCGW1bS/Nwa2Yb5XI/
+	 1f4F/uZyMLRpLbNT5QiYN14yRp5AaDFyRUGLJKozPOR6lgZ/KcRNK17zDkdZm5gqp/
+	 WnRIpZnwGgmhKL0yXwRIV5dfJtRp/ScJ9ukg84R5/kWwSWhZfE3EMmlgOby7Cm9W94
+	 kU8J+J+BAxlGA==
 From: SeongJae Park <sj@kernel.org>
-To: Quanmin Yan <yanquanmin1@huawei.com>
+To: Sang-Heon Jeon <ekffu200098@gmail.com>
 Cc: SeongJae Park <sj@kernel.org>,
-	akpm@linux-foundation.org,
+	honggyu.kim@sk.com,
 	damon@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org,
-	wangkefeng.wang@huawei.com,
-	zuoze1@huawei.com
-Subject: Re: [PATCH v2 00/11] mm/damon: support ARM32 with LPAE
-Date: Fri, 22 Aug 2025 10:21:07 -0700
-Message-Id: <20250822172107.53905-1-sj@kernel.org>
+	akpm@linux-foundation.org,
+	stable@vger.kernel.org
+Subject: Re: [PATCH v4] mm/damon/core: set quota->charged_from to jiffies at first charge window
+Date: Fri, 22 Aug 2025 11:00:12 -0700
+Message-Id: <20250822180012.47379-1-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250822093420.2103803-1-yanquanmin1@huawei.com>
+In-Reply-To: <20250822025057.1740854-1-ekffu200098@gmail.com>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -49,33 +48,63 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Fri, 22 Aug 2025 17:34:08 +0800 Quanmin Yan <yanquanmin1@huawei.com> wrote:
+On Fri, 22 Aug 2025 11:50:57 +0900 Sang-Heon Jeon <ekffu200098@gmail.com> wrote:
 
-> Previously, DAMON's physical address space monitoring only supported
-> memory ranges below 4GB on LPAE-enabled systems. This was due to
-> the use of 'unsigned long' in 'struct damon_addr_range', which is
-> 32-bit on ARM32 even with LPAE enabled[1].
+> Kernel initialize "jiffies" timer as 5 minutes below zero, as shown in
+> include/linux/jiffies.h
 > 
-> To add DAMON support for ARM32 with LPAE enabled, a new core layer
-> parameter called 'addr_unit' was introduced[2]. Operations set layer
-> can translate a core layer address to the real address by multiplying
-> the parameter value to the core layer address. Support of the parameter
-> is up to each operations layer implementation, though. For example,
-> operations set implementations for virtual address space can simply
-> ignore the parameter. Add the support on paddr, which is the DAMON
-> operations set implementation for the physical address space, as we have
-> a clear use case for that.
+>  /*
+>  * Have the 32 bit jiffies value wrap 5 minutes after boot
+>  * so jiffies wrap bugs show up earlier.
+>  */
+>  #define INITIAL_JIFFIES ((unsigned long)(unsigned int) (-300*HZ))
 > 
-> [1]https://lore.kernel.org/all/20250408075553.959388-1-zuoze1@huawei.com/
-> [2]https://lore.kernel.org/all/20250416042551.158131-1-sj@kernel.org/
+> And jiffies comparison help functions cast unsigned value to signed to
+> cover wraparound
 > 
-> Changes from v1
-> (https://lore.kernel.org/all/20250821105159.2503894-1-yanquanmin1@huawei.com/)
-> - Set dst->min_sz_region as src->min_sz_region in damon_commit_ctx().
-> - Fixed the incorrect 'min_region' in the commit message.
+>  #define time_after_eq(a,b) \
+>   (typecheck(unsigned long, a) && \
+>   typecheck(unsigned long, b) && \
+>   ((long)((a) - (b)) >= 0))
+> 
+> When quota->charged_from is initialized to 0, time_after_eq() can 
+> incorrectly return FALSE even after reset_interval has elapsed.
+> This occurs when (jiffies - reset_interval) produces a value with MSB=1, 
+> which is interpreted as negative in signed arithmetic.
+> 
+> This issue primarily affects 32-bit systems because:
+> On 64-bit systems: MSB=1 values occur after ~292 million years from boot
+> (assuming HZ=1000), almost impossible.
+> 
+> On 32-bit systems: MSB=1 values occur during the first 5 minutes after 
+> boot, and the second half of every jiffies wraparound cycle, starting
+> from day 25 (assuming HZ=1000)
+> 
+> When above unexpected FALSE return from time_after_eq() occurs, the
+> charging window will not reset. The user impact depends on esz value
+> at that time.
+> 
+> If esz is 0, scheme ignores configured quotas and runs without any
+> limits.
+> 
+> If esz is not 0, scheme stops working once the quota is exhausted. It
+> remains until the charging window finally resets.
+> 
+> So, change quota->charged_from to jiffies at damos_adjust_quota() when
+> it is considered as the first charge window. By this change, we can avoid
+> unexpected FALSE return from time_after_eq()
+> 
+> Fixes: 2b8a248d5873 ("mm/damon/schemes: implement size quota for schemes application speed control") # 5.16
+> Cc: stable@vger.kernel.org
+> Signed-off-by: Sang-Heon Jeon <ekffu200098@gmail.com>
 
-Thank you for continuing this work, Quanmin!  Now the entire series looks good
-to me :)
+Reviewed-by: SeongJae Park <sj@kernel.org>
+
+> ---
+> Changes from v3 [3]
+> - fix checkpatch script errors
+
+Thank you for doing this, Sang-Heon!
 
 
 Thanks,
