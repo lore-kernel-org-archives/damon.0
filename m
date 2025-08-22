@@ -1,37 +1,37 @@
-Received: from szxga05-in.huawei.com (szxga05-in.huawei.com [45.249.212.191])
+Received: from szxga06-in.huawei.com (szxga06-in.huawei.com [45.249.212.32])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE9F42F6189
-	for <damon@lists.linux.dev>; Fri, 22 Aug 2025 09:48:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.191
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F56E2F6191
+	for <damon@lists.linux.dev>; Fri, 22 Aug 2025 09:48:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.32
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755856095; cv=none; b=haZoPJHDuCcl5OI5JoAPnUZ6BWY48or6MG/AWOpFjy3KFPchHr7GVxlSNf3eaZi3Rxu4k3Km9bpCFXbsN4vSHBJqdGynHDPrDmTBwAIBDFMBuHrA+En+Z6kSWesUk/28IfGz6QKKbCSWG4WrMvEK7nyXoVVYVbqUT6uLn5tISos=
+	t=1755856096; cv=none; b=SW3zLz/V3CDmfwcxNIE9M4R35l1UJnAsC//eEaGHJ5nv0hlp/Pe1ZeMOQNEFkXMN01gt0MA9hworVXqlsx2+0dnOdgRsQUH7C9c9FAFnMc8zbyfG3wIEu8XCEEm7mW8tcPXTjwfBq9nFFcqamFfIQfTln7C0ZAqZbLbFzGBTm08=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755856095; c=relaxed/simple;
-	bh=ke/Ra6JvD61g62N7erN+vywbrquxQTLnIWafETq6+AE=;
+	s=arc-20240116; t=1755856096; c=relaxed/simple;
+	bh=H1sl/RRi+p5LzK40S3KU9YwqXYMPBq98JUgmJ7rTEdc=;
 	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=VCaeCnaC22AO90584km1iWHDCBk6Wmd3GBTSvAGJNe7NtwfptzUHvRHe5tN10GxZKELvD2C42X2DCRXSH+MfLC4vdee0KBHE5Dvid/7iTlM9ON/DrFMndpgf5rURQ2mCrSFJS5s2f7MTnB+v5zkhAVQSo69bcMnbdRbmCJizJ04=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; arc=none smtp.client-ip=45.249.212.191
+	 MIME-Version:Content-Type; b=DiUZSV+ugPOb0/sR7qLpAg25aTum0ALkrGztiKoS+qr5HbG4TynarIktlk1xuxFKQL4gYVDbR7/0rfFjMfOrnXvT3o5SZ/YGPBEEf9jLi02oLXzD+OhZTNmy8iMcHdrI/kAqRl5+s1WdtTJ8v1gb5120xtCBFhYxqQpHk9JHKUw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; arc=none smtp.client-ip=45.249.212.32
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
-Received: from mail.maildlp.com (unknown [172.19.88.234])
-	by szxga05-in.huawei.com (SkyGuard) with ESMTP id 4c7Zzv022Qz1R91N;
-	Fri, 22 Aug 2025 17:45:15 +0800 (CST)
+Received: from mail.maildlp.com (unknown [172.19.163.44])
+	by szxga06-in.huawei.com (SkyGuard) with ESMTP id 4c7b4W6ts5z27jJ3;
+	Fri, 22 Aug 2025 17:49:15 +0800 (CST)
 Received: from dggpemf200018.china.huawei.com (unknown [7.185.36.31])
-	by mail.maildlp.com (Postfix) with ESMTPS id 01A81140109;
-	Fri, 22 Aug 2025 17:48:09 +0800 (CST)
+	by mail.maildlp.com (Postfix) with ESMTPS id 40FED1401F1;
+	Fri, 22 Aug 2025 17:48:10 +0800 (CST)
 Received: from huawei.com (10.50.85.135) by dggpemf200018.china.huawei.com
  (7.185.36.31) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.11; Fri, 22 Aug
- 2025 17:48:08 +0800
+ 2025 17:48:09 +0800
 From: Quanmin Yan <yanquanmin1@huawei.com>
 To: <sj@kernel.org>
 CC: <akpm@linux-foundation.org>, <damon@lists.linux.dev>,
 	<linux-kernel@vger.kernel.org>, <linux-mm@kvack.org>,
 	<yanquanmin1@huawei.com>, <wangkefeng.wang@huawei.com>, <zuoze1@huawei.com>
-Subject: [PATCH v2 05/11] mm/damon/paddr: support addr_unit for MIGRATE_{HOT,COLD}
-Date: Fri, 22 Aug 2025 17:34:13 +0800
-Message-ID: <20250822093420.2103803-6-yanquanmin1@huawei.com>
+Subject: [PATCH v2 07/11] mm/damon/sysfs: implement addr_unit file under context dir
+Date: Fri, 22 Aug 2025 17:34:15 +0800
+Message-ID: <20250822093420.2103803-8-yanquanmin1@huawei.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250822093420.2103803-1-yanquanmin1@huawei.com>
 References: <20250822093420.2103803-1-yanquanmin1@huawei.com>
@@ -48,69 +48,93 @@ X-ClientProxiedBy: kwepems500002.china.huawei.com (7.221.188.17) To
 
 From: SeongJae Park <sj@kernel.org>
 
-Add support of addr_unit for DAMOS_MIGRATE_HOT and DAMOS_MIGRATE_COLD
-action handling from the DAMOS operation implementation for the physical
-address space.
+Only DAMON kernel API callers can use addr_unit parameter.  Implement a
+sysfs file to let DAMON sysfs ABI users use it.
+
+Additionally, addr_unit must be set to a non-zero value.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 Signed-off-by: Quanmin Yan <yanquanmin1@huawei.com>
 Reviewed-by: SeongJae Park <sj@kernel.org>
 ---
- mm/damon/paddr.c | 15 ++++++++-------
- 1 file changed, 8 insertions(+), 7 deletions(-)
+ mm/damon/sysfs.c | 33 +++++++++++++++++++++++++++++++++
+ 1 file changed, 33 insertions(+)
 
-diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
-index ed71dd0bf80e..0305e59818da 100644
---- a/mm/damon/paddr.c
-+++ b/mm/damon/paddr.c
-@@ -243,15 +243,16 @@ static unsigned long damon_pa_deactivate_pages(struct damon_region *r,
- 			sz_filter_passed);
+diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
+index 6d2b0dab50cb..98bf15d403b2 100644
+--- a/mm/damon/sysfs.c
++++ b/mm/damon/sysfs.c
+@@ -834,6 +834,7 @@ static const struct damon_sysfs_ops_name damon_sysfs_ops_names[] = {
+ struct damon_sysfs_context {
+ 	struct kobject kobj;
+ 	enum damon_ops_id ops_id;
++	unsigned long addr_unit;
+ 	struct damon_sysfs_attrs *attrs;
+ 	struct damon_sysfs_targets *targets;
+ 	struct damon_sysfs_schemes *schemes;
+@@ -849,6 +850,7 @@ static struct damon_sysfs_context *damon_sysfs_context_alloc(
+ 		return NULL;
+ 	context->kobj = (struct kobject){};
+ 	context->ops_id = ops_id;
++	context->addr_unit = 1;
+ 	return context;
  }
  
--static unsigned long damon_pa_migrate(struct damon_region *r, struct damos *s,
-+static unsigned long damon_pa_migrate(struct damon_region *r,
-+		unsigned long addr_unit, struct damos *s,
- 		unsigned long *sz_filter_passed)
+@@ -997,6 +999,32 @@ static ssize_t operations_store(struct kobject *kobj,
+ 	return -EINVAL;
+ }
+ 
++static ssize_t addr_unit_show(struct kobject *kobj,
++		struct kobj_attribute *attr, char *buf)
++{
++	struct damon_sysfs_context *context = container_of(kobj,
++			struct damon_sysfs_context, kobj);
++
++	return sysfs_emit(buf, "%lu\n", context->addr_unit);
++}
++
++static ssize_t addr_unit_store(struct kobject *kobj,
++		struct kobj_attribute *attr, const char *buf, size_t count)
++{
++	struct damon_sysfs_context *context = container_of(kobj,
++			struct damon_sysfs_context, kobj);
++	unsigned long input_addr_unit;
++	int err = kstrtoul(buf, 0, &input_addr_unit);
++
++	if (err)
++		return err;
++	if (!input_addr_unit)
++		return -EINVAL;
++
++	context->addr_unit = input_addr_unit;
++	return count;
++}
++
+ static void damon_sysfs_context_release(struct kobject *kobj)
  {
--	unsigned long addr, applied;
-+	phys_addr_t addr, applied;
- 	LIST_HEAD(folio_list);
- 	struct folio *folio;
+ 	kfree(container_of(kobj, struct damon_sysfs_context, kobj));
+@@ -1008,9 +1036,13 @@ static struct kobj_attribute damon_sysfs_context_avail_operations_attr =
+ static struct kobj_attribute damon_sysfs_context_operations_attr =
+ 		__ATTR_RW_MODE(operations, 0600);
  
--	addr = r->ar.start;
--	while (addr < r->ar.end) {
-+	addr = damon_pa_phys_addr(r->ar.start, addr_unit);
-+	while (addr < damon_pa_phys_addr(r->ar.end, addr_unit)) {
- 		folio = damon_get_folio(PHYS_PFN(addr));
- 		if (damon_pa_invalid_damos_folio(folio, s)) {
- 			addr += PAGE_SIZE;
-@@ -261,7 +262,7 @@ static unsigned long damon_pa_migrate(struct damon_region *r, struct damos *s,
- 		if (damos_pa_filter_out(s, folio))
- 			goto put_folio;
- 		else
--			*sz_filter_passed += folio_size(folio);
-+			*sz_filter_passed += folio_size(folio) / addr_unit;
- 
- 		if (!folio_isolate_lru(folio))
- 			goto put_folio;
-@@ -273,7 +274,7 @@ static unsigned long damon_pa_migrate(struct damon_region *r, struct damos *s,
- 	applied = damon_migrate_pages(&folio_list, s->target_nid);
- 	cond_resched();
- 	s->last_applied = folio;
--	return applied * PAGE_SIZE;
-+	return applied * PAGE_SIZE / addr_unit;
- }
- 
- static unsigned long damon_pa_stat(struct damon_region *r, struct damos *s,
-@@ -319,7 +320,7 @@ static unsigned long damon_pa_apply_scheme(struct damon_ctx *ctx,
- 				sz_filter_passed);
- 	case DAMOS_MIGRATE_HOT:
- 	case DAMOS_MIGRATE_COLD:
--		return damon_pa_migrate(r, scheme, sz_filter_passed);
-+		return damon_pa_migrate(r, aunit, scheme, sz_filter_passed);
- 	case DAMOS_STAT:
- 		return damon_pa_stat(r, scheme, sz_filter_passed);
- 	default:
++static struct kobj_attribute damon_sysfs_context_addr_unit_attr =
++		__ATTR_RW_MODE(addr_unit, 0600);
++
+ static struct attribute *damon_sysfs_context_attrs[] = {
+ 	&damon_sysfs_context_avail_operations_attr.attr,
+ 	&damon_sysfs_context_operations_attr.attr,
++	&damon_sysfs_context_addr_unit_attr.attr,
+ 	NULL,
+ };
+ ATTRIBUTE_GROUPS(damon_sysfs_context);
+@@ -1397,6 +1429,7 @@ static int damon_sysfs_apply_inputs(struct damon_ctx *ctx,
+ 	err = damon_select_ops(ctx, sys_ctx->ops_id);
+ 	if (err)
+ 		return err;
++	ctx->addr_unit = sys_ctx->addr_unit;
+ 	err = damon_sysfs_set_attrs(ctx, sys_ctx->attrs);
+ 	if (err)
+ 		return err;
 -- 
 2.43.0
 
