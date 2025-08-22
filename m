@@ -1,37 +1,40 @@
-Received: from szxga03-in.huawei.com (szxga03-in.huawei.com [45.249.212.189])
+Received: from szxga01-in.huawei.com (szxga01-in.huawei.com [45.249.212.187])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97BB92F3C37
-	for <damon@lists.linux.dev>; Fri, 22 Aug 2025 09:48:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.189
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5FD42F60A4
+	for <damon@lists.linux.dev>; Fri, 22 Aug 2025 09:48:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.187
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755856092; cv=none; b=V4CiTJm0NYC5trQaS87Qa7xU2YVZnKYDo9F6jFcMA+bvp/HXM/elCswvMokFNOI5imEsKBYA+j6pEJX1sq4VqR4D/wA2EBt2WLBqsyJ46ruMW1vBpy6xUaprqpnT4uwnnRsWFqosOJ7I7sVORuPaJpmg9/vHnJJt18Ba25VrPlg=
+	t=1755856095; cv=none; b=S4fp+MKLqtHndrD/To2Vi2f2slssQ6ucd57J/vYdAXxnIcL03TOc4/95h5nkJdyKLJO/aFRcd4u3sF43DrDn8CF0dwima3/EwlRHyL49MWL4sfRKaqDLPNANBbL74/MYjkYGd4S5taNVVHtspIUYVqrNY9s4atIYKKY/X/aAwgw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755856092; c=relaxed/simple;
-	bh=nHKqwlGT6zAbmYyo88tFT/84/vMlx+N7OikR/tlVpus=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=cuDvEC7UTgZNFDtCMepZ2BkPSsfdLH7kDg9pFaYcJhyeEIgqLipSH4RG/C83k63gvbVWQD9Zb32U7g3BzLspqBPvuQ5v+kxrV25Ot92N7XpcU11K96tJmRUI9CMQgHqhMhqlfSXJCpKLFmymUbzob9kqAo2FyVdI3/YTFD8VvqM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; arc=none smtp.client-ip=45.249.212.189
+	s=arc-20240116; t=1755856095; c=relaxed/simple;
+	bh=EGiAcJ2uOIxk3qhNXlY6rL1YgjYX5YeT4zqc2Shw8D4=;
+	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=qgwQWSGfKvB8MqsWkDKhtSdRBx3HpiiGb+UkvFKiPOeVAlvBjICpKbMWfxetJMMCmPVxTJbFNUvDQkHg2BdfR44ERjyHe/K9dBOu+yJGEvUVk72z4UAgxLz8rG98Bu9itohJBrMX1bdvA1G8PmbOhf8q1PLeGvFLRtamRvr2z08=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; arc=none smtp.client-ip=45.249.212.187
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
-Received: from mail.maildlp.com (unknown [172.19.88.105])
-	by szxga03-in.huawei.com (SkyGuard) with ESMTP id 4c7Zy60S4nzdcSB;
-	Fri, 22 Aug 2025 17:43:42 +0800 (CST)
+Received: from mail.maildlp.com (unknown [172.19.162.254])
+	by szxga01-in.huawei.com (SkyGuard) with ESMTP id 4c7Zz36z9kz13NH4;
+	Fri, 22 Aug 2025 17:44:31 +0800 (CST)
 Received: from dggpemf200018.china.huawei.com (unknown [7.185.36.31])
-	by mail.maildlp.com (Postfix) with ESMTPS id EB2C31401E9;
-	Fri, 22 Aug 2025 17:48:05 +0800 (CST)
+	by mail.maildlp.com (Postfix) with ESMTPS id CB43A180495;
+	Fri, 22 Aug 2025 17:48:07 +0800 (CST)
 Received: from huawei.com (10.50.85.135) by dggpemf200018.china.huawei.com
  (7.185.36.31) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.11; Fri, 22 Aug
- 2025 17:48:05 +0800
+ 2025 17:48:07 +0800
 From: Quanmin Yan <yanquanmin1@huawei.com>
 To: <sj@kernel.org>
 CC: <akpm@linux-foundation.org>, <damon@lists.linux.dev>,
 	<linux-kernel@vger.kernel.org>, <linux-mm@kvack.org>,
 	<yanquanmin1@huawei.com>, <wangkefeng.wang@huawei.com>, <zuoze1@huawei.com>
-Subject: [PATCH v2 00/11] mm/damon: support ARM32 with LPAE
-Date: Fri, 22 Aug 2025 17:34:08 +0800
-Message-ID: <20250822093420.2103803-1-yanquanmin1@huawei.com>
+Subject: [PATCH v2 03/11] mm/damon/paddr: support addr_unit for DAMOS_PAGEOUT
+Date: Fri, 22 Aug 2025 17:34:11 +0800
+Message-ID: <20250822093420.2103803-4-yanquanmin1@huawei.com>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250822093420.2103803-1-yanquanmin1@huawei.com>
+References: <20250822093420.2103803-1-yanquanmin1@huawei.com>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -43,72 +46,78 @@ Content-Type: text/plain
 X-ClientProxiedBy: kwepems500002.china.huawei.com (7.221.188.17) To
  dggpemf200018.china.huawei.com (7.185.36.31)
 
-Previously, DAMON's physical address space monitoring only supported
-memory ranges below 4GB on LPAE-enabled systems. This was due to
-the use of 'unsigned long' in 'struct damon_addr_range', which is
-32-bit on ARM32 even with LPAE enabled[1].
+From: SeongJae Park <sj@kernel.org>
 
-To add DAMON support for ARM32 with LPAE enabled, a new core layer
-parameter called 'addr_unit' was introduced[2]. Operations set layer
-can translate a core layer address to the real address by multiplying
-the parameter value to the core layer address. Support of the parameter
-is up to each operations layer implementation, though. For example,
-operations set implementations for virtual address space can simply
-ignore the parameter. Add the support on paddr, which is the DAMON
-operations set implementation for the physical address space, as we have
-a clear use case for that.
+Add support of addr_unit for DAMOS_PAGEOUT action handling from the
+DAMOS operation implementation for the physical address space.
 
-[1]https://lore.kernel.org/all/20250408075553.959388-1-zuoze1@huawei.com/
-[2]https://lore.kernel.org/all/20250416042551.158131-1-sj@kernel.org/
+Signed-off-by: SeongJae Park <sj@kernel.org>
+Signed-off-by: Quanmin Yan <yanquanmin1@huawei.com>
+Reviewed-by: SeongJae Park <sj@kernel.org>
+---
+ mm/damon/paddr.c | 17 ++++++++++-------
+ 1 file changed, 10 insertions(+), 7 deletions(-)
 
-Changes from v1
-(https://lore.kernel.org/all/20250821105159.2503894-1-yanquanmin1@huawei.com/)
-- Set dst->min_sz_region as src->min_sz_region in damon_commit_ctx().
-- Fixed the incorrect 'min_region' in the commit message.
-
-Changes from RFC v2
-(https://lore.kernel.org/all/20250820080623.3799131-1-yanquanmin1@huawei.com/)
-- Rename 'min_region' to 'min_sz_region'.
-- Separate the overflow prevention in damos_set_effective_quota() from
-  this series.
-- Drop RFC tag.
-
-Changes from RFC v1
-(https://lore.kernel.org/all/20250813050706.1564229-1-yanquanmin1@huawei.com/)
-- Set DAMOS_PAGEOUT, DAMOS_LRU_[DE]PRIO, DAMOS_MIGRATE_{HOT,COLD} and
-  DAMOS_STAT stat in core address unit.
-- Pass ctx->min_region value to replace the original synchronization.
-- Drop the DAMOS stats type changes, keep them as 'unsigned long' type.
-- Separate add addr_unit support for DAMON_RECLAIM and LRU_SORT from
-  this patch series.
-
-Quanmin Yan (1):
-  mm/damon: add damon_ctx->min_sz_region
-
-SeongJae Park (10):
-  mm/damon/core: add damon_ctx->addr_unit
-  mm/damon/paddr: support addr_unit for access monitoring
-  mm/damon/paddr: support addr_unit for DAMOS_PAGEOUT
-  mm/damon/paddr: support addr_unit for DAMOS_LRU_[DE]PRIO
-  mm/damon/paddr: support addr_unit for MIGRATE_{HOT,COLD}
-  mm/damon/paddr: support addr_unit for DAMOS_STAT
-  mm/damon/sysfs: implement addr_unit file under context dir
-  Docs/mm/damon/design: document 'address unit' parameter
-  Docs/admin-guide/mm/damon/usage: document addr_unit file
-  Docs/ABI/damon: document addr_unit file
-
- .../ABI/testing/sysfs-kernel-mm-damon         |   7 ++
- Documentation/admin-guide/mm/damon/usage.rst  |  11 +-
- Documentation/mm/damon/design.rst             |  16 ++-
- include/linux/damon.h                         |   7 +-
- mm/damon/core.c                               |  70 +++++++-----
- mm/damon/paddr.c                              | 106 +++++++++++-------
- mm/damon/sysfs.c                              |  41 ++++++-
- mm/damon/tests/core-kunit.h                   |  21 ++--
- mm/damon/tests/vaddr-kunit.h                  |   2 +-
- mm/damon/vaddr.c                              |   2 +-
- 10 files changed, 191 insertions(+), 92 deletions(-)
-
+diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
+index d497373c2bd2..826c2064dbfd 100644
+--- a/mm/damon/paddr.c
++++ b/mm/damon/paddr.c
+@@ -135,10 +135,11 @@ static bool damon_pa_invalid_damos_folio(struct folio *folio, struct damos *s)
+ 	return false;
+ }
+ 
+-static unsigned long damon_pa_pageout(struct damon_region *r, struct damos *s,
++static unsigned long damon_pa_pageout(struct damon_region *r,
++		unsigned long addr_unit, struct damos *s,
+ 		unsigned long *sz_filter_passed)
+ {
+-	unsigned long addr, applied;
++	phys_addr_t addr, applied;
+ 	LIST_HEAD(folio_list);
+ 	bool install_young_filter = true;
+ 	struct damos_filter *filter;
+@@ -159,8 +160,8 @@ static unsigned long damon_pa_pageout(struct damon_region *r, struct damos *s,
+ 		damos_add_filter(s, filter);
+ 	}
+ 
+-	addr = r->ar.start;
+-	while (addr < r->ar.end) {
++	addr = damon_pa_phys_addr(r->ar.start, addr_unit);
++	while (addr < damon_pa_phys_addr(r->ar.end, addr_unit)) {
+ 		folio = damon_get_folio(PHYS_PFN(addr));
+ 		if (damon_pa_invalid_damos_folio(folio, s)) {
+ 			addr += PAGE_SIZE;
+@@ -170,7 +171,7 @@ static unsigned long damon_pa_pageout(struct damon_region *r, struct damos *s,
+ 		if (damos_pa_filter_out(s, folio))
+ 			goto put_folio;
+ 		else
+-			*sz_filter_passed += folio_size(folio);
++			*sz_filter_passed += folio_size(folio) / addr_unit;
+ 
+ 		folio_clear_referenced(folio);
+ 		folio_test_clear_young(folio);
+@@ -189,7 +190,7 @@ static unsigned long damon_pa_pageout(struct damon_region *r, struct damos *s,
+ 	applied = reclaim_pages(&folio_list);
+ 	cond_resched();
+ 	s->last_applied = folio;
+-	return applied * PAGE_SIZE;
++	return applied * PAGE_SIZE / addr_unit;
+ }
+ 
+ static inline unsigned long damon_pa_mark_accessed_or_deactivate(
+@@ -302,9 +303,11 @@ static unsigned long damon_pa_apply_scheme(struct damon_ctx *ctx,
+ 		struct damon_target *t, struct damon_region *r,
+ 		struct damos *scheme, unsigned long *sz_filter_passed)
+ {
++	unsigned long aunit = ctx->addr_unit;
++
+ 	switch (scheme->action) {
+ 	case DAMOS_PAGEOUT:
+-		return damon_pa_pageout(r, scheme, sz_filter_passed);
++		return damon_pa_pageout(r, aunit, scheme, sz_filter_passed);
+ 	case DAMOS_LRU_PRIO:
+ 		return damon_pa_mark_accessed(r, scheme, sz_filter_passed);
+ 	case DAMOS_LRU_DEPRIO:
 -- 
 2.43.0
 
