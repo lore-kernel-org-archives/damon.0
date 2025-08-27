@@ -1,68 +1,129 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from szxga02-in.huawei.com (szxga02-in.huawei.com [45.249.212.188])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 230D8352077;
-	Tue, 26 Aug 2025 14:36:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E48AF272E4E
+	for <damon@lists.linux.dev>; Wed, 27 Aug 2025 02:21:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.188
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756218984; cv=none; b=dY9GtLIVlM+Ndn+Gg8d29FwmGyOWICZu6oHTuAT8gtRGGa8F8qfi7Ri4lOKROSTqAeUhN9u7vB+L9tnmeQmhO5sWT2pytRmINBqa6VnyWFPTcHFXkq20g3Hq5IfEc/f4YAP6VKMH1/yickEWKRVl+gKd27RvdbVa7pVxXEjJKTM=
+	t=1756261308; cv=none; b=NOuBSs9KmwexekQ3nYqdUwLlCxO5913G8k/H6Fr2CFW3JnkUsC87tO7cjaLmKNoF/2l9PlHmv+6Fw8orzVgKp2b6fZmVyhBuIMyuB0PzKlFx4PKfojXwTPBZIIP9GSfCNIZiI6K7ObWICJFi/AAMNAG4gziHj1nq/Pfky9tag9w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756218984; c=relaxed/simple;
-	bh=cm3c4GhML4E6RLlw/VFFFI6QieoD1VhZ+qpko2GXjyQ=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=rCwsHpdSWmW7H2yH5BNshr8KSi9CjoQBwSTSxb5HPNto31+IoM5TAxROG8Ry3rv/2f9eCDffW4wfo5hymyF2uOdNeev9pEyORHybACvwExa0cLG4eA+HX6oryLDVXYgqyKUsdfrHh1cG1J+77uKwvz2gYhMHAEOUhSK5tOAMNys=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ayhHbx5X; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ayhHbx5X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C286FC4CEF1;
-	Tue, 26 Aug 2025 14:36:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1756218983;
-	bh=cm3c4GhML4E6RLlw/VFFFI6QieoD1VhZ+qpko2GXjyQ=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ayhHbx5XdlTVbBQ83nz6wO1nSS9vqlStNZOOG4jTgJgJDS3VtRKhdkP7ZLrRpWPaT
-	 JB5ee9SGB2pMIarQFFwO7fifRY1djZycI6TrkVkSDCwqxbkH0Q7NuBBLYnWdnWCT0a
-	 fW8fMzjMky/bJjZLQM9Ov/3pXgAlzNv6Q/9NmqTKgdY0dk+8RFJx6s1KVfEXqATzd+
-	 QJgN6H7qIlZmqy2y5YspLoUP6ZQiJFR9DMjyA7hlZfUS83FUbZWCsYKIfY767lQfzT
-	 RmjLh2JzIjKVAfaGeZbzRaW8s7y5iagKdA7GkXnZm7Kq6rpWS2VOBUTwIeAIlmHtUN
-	 q9O3WJBQauSgA==
-From: SeongJae Park <sj@kernel.org>
-To: Quanmin Yan <yanquanmin1@huawei.com>
-Cc: SeongJae Park <sj@kernel.org>,
-	akpm@linux-foundation.org,
-	damon@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org,
-	wangkefeng.wang@huawei.com,
-	zuoze1@huawei.com
-Subject: Re: [RFC PATCH 0/2] mm/damon: void divide-by-zero in DAMON module's parameters application
-Date: Tue, 26 Aug 2025 07:36:22 -0700
-Message-Id: <20250826143622.54331-1-sj@kernel.org>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250826033653.1208227-1-yanquanmin1@huawei.com>
-References: 
+	s=arc-20240116; t=1756261308; c=relaxed/simple;
+	bh=ktnruOQJp0fW0crf6QDh/6+fpHsg16g3FKNiZsNX5xU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=pwUvnIFurGgC6zEiIodWm48yzKQo75rm+jxlpzs8ApreFRQOFJVwbIaQZSqfu7UX05XLDR3CSgimbP+F+yYGSBMBRb/QpnQR854Pw96u3k+c4WH8QsMZtWxL9OwOZ/3ZkwWCi7GaJyzRuObqQhFzPVmwoHMiImyYB4fi1kf/XF0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; arc=none smtp.client-ip=45.249.212.188
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
+Received: from mail.maildlp.com (unknown [172.19.163.48])
+	by szxga02-in.huawei.com (SkyGuard) with ESMTP id 4cBStj6npGztTWx;
+	Wed, 27 Aug 2025 10:20:45 +0800 (CST)
+Received: from dggpemf200018.china.huawei.com (unknown [7.185.36.31])
+	by mail.maildlp.com (Postfix) with ESMTPS id A172F1800B1;
+	Wed, 27 Aug 2025 10:21:43 +0800 (CST)
+Received: from [10.174.176.250] (10.174.176.250) by
+ dggpemf200018.china.huawei.com (7.185.36.31) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.11; Wed, 27 Aug 2025 10:21:42 +0800
+Message-ID: <c8c3d0d5-e9e1-44de-8722-1e7d09786b51@huawei.com>
+Date: Wed, 27 Aug 2025 10:21:41 +0800
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 03/11] mm/damon/paddr: support addr_unit for
+ DAMOS_PAGEOUT
+To: SeongJae Park <sj@kernel.org>
+CC: <akpm@linux-foundation.org>, <damon@lists.linux.dev>,
+	<linux-kernel@vger.kernel.org>, <linux-mm@kvack.org>,
+	<wangkefeng.wang@huawei.com>, <zuoze1@huawei.com>, <kernel-team@meta.com>,
+	kernel test robot <lkp@intel.com>
+References: <20250826142155.53632-1-sj@kernel.org>
+From: Quanmin Yan <yanquanmin1@huawei.com>
+In-Reply-To: <20250826142155.53632-1-sj@kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-
-On Tue, 26 Aug 2025 11:36:51 +0800 Quanmin Yan <yanquanmin1@huawei.com> wrote:
-
-> DAMON's RECLAIM or LRU_SORT modules perform no validation on
-> user-configured parameters during application, which may lead
-> to division-by-zero errors.
-> 
-> Avoid the divide-by-zero by adding validation checks when DAMON
-> modules attempt to apply the parameters.
-
-Thank you for finding and fixing these problems, Quanmin!  All looks good,
-though I think it would be better to add 'Cc: stable@' tags to each patch.
+X-ClientProxiedBy: kwepems200002.china.huawei.com (7.221.188.68) To
+ dggpemf200018.china.huawei.com (7.185.36.31)
 
 
-Thanks,
-SJ
+在 2025/8/26 22:21, SeongJae Park 写道:
+> On Tue, 26 Aug 2025 12:51:17 +0800 Quanmin Yan <yanquanmin1@huawei.com> wrote:
+>
+>> Hi SJ,
+>>
+>> 在 2025/8/26 11:21, SeongJae Park 写道:
+>>> [...]
+>>>
+>>>>> ==== Attachment 0 (0001-mm-damon-paddr-use-do_div-on-i386-for-damon_pa_pageo.patch) ====
+>>>>>    From hackermail Thu Jan  1 00:00:00 1970
+>>>>> From: SeongJae Park <sj@kernel.org>
+>>>>> To: Andrew Morton <akpm@linux-foundation.org>
+>>>>> Cc: SeongJae Park <sj@kernel.org>
+>>>>> Cc: damon@lists.linux.dev
+>>>>> Cc: kernel-team@meta.com
+>>>>> Cc: linux-kernel@vger.kernel.org
+>>>>> Cc: linux-mm@kvack.org
+>>>>> Date: Mon, 25 Aug 2025 07:41:33 -0700
+>>>>> Subject: [PATCH 1/3] mm/damon/paddr: use do_div() on i386 for damon_pa_pageout()
+>>>>>             return value
+>>>>>
+>>>>> Otherwise, __udidi3 linking problem happens on certain configs.
+>>>>>
+>>>>> Reported-by: kernel test robot <lkp@intel.com>
+>>>>> Closes: https://lore.kernel.org/oe-kbuild-all/202508241831.EKwdwXZL-lkp@intel.com/
+>>>>> Signed-off-by: SeongJae Park <sj@kernel.org>
+>>>>> ---
+>>>>>     mm/damon/paddr.c | 14 +++++++++++++-
+>>>>>     1 file changed, 13 insertions(+), 1 deletion(-)
+>>>>>
+>>>>> diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
+>>>>> index 5fad2f9a99a0..09c87583af6c 100644
+>>>>> --- a/mm/damon/paddr.c
+>>>>> +++ b/mm/damon/paddr.c
+>>>>> @@ -135,6 +135,18 @@ static bool damon_pa_invalid_damos_folio(struct folio *folio, struct damos *s)
+>>>>>     	return false;
+>>>>>     }
+>>>>>     
+>>>>> +/* convert physical address to core-layer address */
+>>>>> +static unsigned long damon_pa_core_addr(phys_addr_t pa,
+>>>>> +		unsigned long addr_unit)
+>>>>> +{
+>>>>> +#ifdef __i386__
+>>>> Can we use the following condition instead?
+>>>>
+>>>> #if !defined(CONFIG_64BIT) && defined(CONFIG_PHYS_ADDR_T_64BIT)
+>>> To my understanding, this issue happens only on i386, not every 32bit
+>>> architectures.  So I think i386 specific condition is better.
+>> I understand. However, the aforementioned general condition is essential,
+>> and we should propose a new patch to address this. After introducing addr_unit,
+>> any 32-bit architecture should support monitoring of 64-bit phys_addr_t.
+> The issue is that we cannot divide 64bit values with plain '/' operator on
+> "i386", and hence this patch makes it to use do_div() instead of '/' on "i386".
+> No such or other problems at supporting 64-bit phys_addr_t is found on other
+> 32bit architectures, to my understanding.  My understanding is that at least
+> you confirmed that on your arm-based test environment.  So we don't need a new
+> patch to my understanding.
+>
+> Am I missing somthing?
+
+This is because I seem to have made a mistake earlier: I adjusted the local
+compilation toolchain. When the __udivdi3 issue mentioned above occurred, it
+reminded me of a potential problem. After switching to a completely new environment
+for testing, I discovered the __aeabi_uldivmod linking error in arm, which is similar
+to the __udivdi3 issue.🙁 To prevent similar environment-related problems in the
+future, I suggest adjusting the condition to the following:
+
+#if !defined(CONFIG_64BIT) && defined(CONFIG_PHYS_ADDR_T_64BIT)
+
+Please consider approving this fix.
+
+
+Best regards,
+Quanmin Yan
+
 
 [...]
+
