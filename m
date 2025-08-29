@@ -1,65 +1,65 @@
-Received: from mail-pj1-f52.google.com (mail-pj1-f52.google.com [209.85.216.52])
+Received: from mail-pf1-f176.google.com (mail-pf1-f176.google.com [209.85.210.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0970D28507E;
-	Fri, 29 Aug 2025 08:02:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 072A52C11EF;
+	Fri, 29 Aug 2025 08:02:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756454578; cv=none; b=Q2bNWry5F8XqrBFcFLmwYvqfObKb9Ue34U+mGzFooc0DChiZuvwdIfH1u3x3p5NJHKYpaleeCFhS3UDoLuhyOtbM0iufOh3+ZQaiu7afo8S1NXCF4DRSupMYYC6uOahOSb2TEnib/C2b9IE6ii7rJU5urpSeptuHsYy2PV/Lcvc=
+	t=1756454581; cv=none; b=JUeR5QPzuoJRRtyf7ZYGX2hQvFMgOxWGnkEd/rTI0vl1J+fliveuhXcyFpFtkRg8iRZXGmXK7j2yviYC55xTJxx4VNACH6/eh0AwItGSPpibYFL3M5V8miHrl4X0kHT10hWHYog/Cogs3Bm5j/yK8yK8gDT5q/jiFQnzRuM/KmQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756454578; c=relaxed/simple;
-	bh=tVZea1ikNA4Sssls4g09ZchJ08JhUaFOY8Mmt8T2Tzg=;
+	s=arc-20240116; t=1756454581; c=relaxed/simple;
+	bh=QIAPxg2EoM7XBiBH/OfCd9SfIrsCdhbBl57WJdF7gOo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pmX4sT8XfC2MuYioqeeOGyHHT4g6MTD+/ebpveH8zeuyHURa22/Eg+PL5qihVfrh7ziW0eb0dv0bjdGkLvphXYsSbYoKOhTNyEfbi4zqGg73y2krf25lhMaNHhD0Z9q4FOaftOT/QoLtUjsCViTZKtT/AxSXjTjKND/FLAS2cEc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=h+5zI6Cu; arc=none smtp.client-ip=209.85.216.52
+	 MIME-Version; b=Nkb5bOEXPsX79UPWThE29Iv/nZKUEpncDfZaA7Dn2GCnur756RqYvmvv2HCdSWejjMHhJxNR68jbXT3SQAmpBLJ4rMT89veFCwUR/gXLvtern2FpVbl990TplOBcwdNhGI/21EeF6Z9Xk5ooAi/Qn7glyQYAf+zoBTgU+IyJXEQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UOrMYFqG; arc=none smtp.client-ip=209.85.210.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="h+5zI6Cu"
-Received: by mail-pj1-f52.google.com with SMTP id 98e67ed59e1d1-32326793a85so1511338a91.1;
-        Fri, 29 Aug 2025 01:02:56 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UOrMYFqG"
+Received: by mail-pf1-f176.google.com with SMTP id d2e1a72fcca58-7722c88fc5fso393223b3a.2;
+        Fri, 29 Aug 2025 01:02:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1756454576; x=1757059376; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1756454579; x=1757059379; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=jdhbTSK6p9ht0YngyCDiyyRtcLCfpgxS9tGDrcGiJGs=;
-        b=h+5zI6CuujaU47iFuO6UdOjdohfGHAKaTFM8N/EWqHz2iddRxQH/RQ1/0jN4DopOj+
-         m69/qcU4Er2eKjhVL+sg/vfvs/+qd/CSgg4TIXYo7J3uFvhn1QlThJRK20nSztKiBR7l
-         LbvDvf2aCWW0hY7dfBabcZL1udtIM8IVEb96wFN9qzSSG6Q+Bf+Ls22f/T85kpWj+uBy
-         Cmgv2ULy04lOcKf9EMhhT5I0l8QXYwkyjEt9t0Kz07RO07wIT/YIKb3gZSpTmssYTch/
-         r5tu/VR921a6oWnLkADtwvHT+iWwyVDLK1MPsG+SHZHiVsdNm6MFKyzPu6VV0yqFp44F
-         RShw==
+        bh=Ji3KkW3qUsiM430Q8CaZBzXxSVywrfxa2oAywWyFSjA=;
+        b=UOrMYFqG0QgB9nZ20NgvCTVI8hLWK1Y+TYRvg4fk7tQRmLA0ToKcp1L21zANwues0A
+         boqjtvL+cjk/IgbiYEFFAsW57NBMIcf3u5jXD9V6iPxE2/HyvJcmJci6QLEXtLDOoLwL
+         i6cowKAmevPBE6CVRur4IIFyQBKl6eHfD+vWVhEsk75UexpasD6D6bJ5tarnLBzd9AvX
+         /Jf/RzoOj5PapPtgwG39HngiuL9sG3kUBbP9BR0imtPeG2JOYNuSYJ3tIXkfNZTuCVIf
+         ZoQJmUlGgz/roJmDiaqGt6JzK9k7wgNjxwtVBc2jveqJvukYNciDWnc/SWSWL0wyTu4r
+         G3BA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756454576; x=1757059376;
+        d=1e100.net; s=20230601; t=1756454579; x=1757059379;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=jdhbTSK6p9ht0YngyCDiyyRtcLCfpgxS9tGDrcGiJGs=;
-        b=n6vA0fy2Vc9ko6MW/9uaHImmyU/NfXwQ3QcoguiBNHA2GFq8hPj2Hf1i0zZGxN9Q0X
-         xlgxYBXyCK1s3K5AxTQYXGZaNBAKHboz0EoFEEFIWM/Dr6AP5S+v4GkXLNFV6mADVNv+
-         aLs3WRiAcXyOUWNo60pBku7m5263xWxix9YPrUmjSIIGDGNBFzomqPYJ0QjDjjiIF16A
-         f3JMpYAGWCUJUhgjGyoEL621L57CWhkMcUHRAzFpqabO0nVsiO7LuqoBM1lfEQEh+H0k
-         FG1lD3wpoF3xJy0vYZ2ENgQryD8xhgFZ08bItXE5ss6MlVtYzgJjeILkTsL5O7G/+OvE
-         66cA==
-X-Forwarded-Encrypted: i=1; AJvYcCXIh+T+TYvWmuOx299JEft9wcwMn5HlkwXzhH2moU0P0RM0Z2npSHCkqg1WTs8VZ9yJOOT5OuzoILI=@lists.linux.dev, AJvYcCXc/KPQx4gVCsoT9pEnTsiyGZTAR6q3kUaWqKi0axqFxNKc/qvvNleKY/91YCQLrxf0LFBsrg==@lists.linux.dev
-X-Gm-Message-State: AOJu0Yxb9INbdvSFjaXjk+KglFuRDqI4xyWwz64+oDUbistVa/TKgDU/
-	MF6MJcLkEinSnIStUlU2zhAwnBWeNxaVt0f2RsMjQk+cEHiCK0hba64Y
-X-Gm-Gg: ASbGncvCXYtqaZKJnmIipeR+tI0TZ0iuust0q1Bp3Lt8eq0KDewivuJyybEj6jUm8w0
-	m0B4fxAE5fA0z3LOz7II9iczKSKsGBcIvGG0KjxIvqnjYONEWPML9OEOtvWt96NvILo8prRc1JH
-	e9qE89XUcgWaSosxZUbaQR7rUOFkE/+AcJhv0pCXfgaJx6HWHR7oq/Wfavz9c7ZMCep+0DD5r5O
-	ugW+lPe+nsx5KesAuoauAvK4d6QGA8fPIFidtrTUawQAq4EETS2TQDclRDJF5vUTSVYIQGp6wg5
-	OADU2V+Yq5ZifMFmt0gnEw9A7py6uALnj51giqIOKa1JgQHidysVBtEoe0TKJLWlJvYbWSKbQJz
-	2f3Ua+Wh//KU7g0OnF6/hrtORGmERLSgfFuX/
-X-Google-Smtp-Source: AGHT+IE+D5SeDqchp/24MDHXx5CQWTZci+ASgYtlboM+vs82gW00FOC1mk2B4v9sodvZwpxdBzPuFw==
-X-Received: by 2002:a17:90b:3a87:b0:327:c9c1:4f2a with SMTP id 98e67ed59e1d1-327c9c1642bmr4975594a91.27.1756454576161;
-        Fri, 29 Aug 2025 01:02:56 -0700 (PDT)
+        bh=Ji3KkW3qUsiM430Q8CaZBzXxSVywrfxa2oAywWyFSjA=;
+        b=dXKaV2rJ96VZJrQF4tJfpsn1s8YSV1Pt83lKunyMPGWEqjnRkN0XccAp9aoqQDim40
+         cSIgaa+S3BHb6Lgy+wA+XhNRPYLuozfHoV0/iRfSuGVP2gUGEeRilhrl11/L+n3Q3ajL
+         2eZ1JOGujFMZ21MRuZextw5rWmFu+McBKKP2AzhuoQuec8OZ7zn3UpG03pNeygptsnH6
+         A+y3/U7Yz9SemfRgj2xK9BA4XLD14Wm1daYzE9G7EznkGQrmqNoS4ZrVB8EAt2PGk2Wd
+         aWyGcuyj0yY3pXov3Z8Xd3q9dXLoHXVIGwDnXOI5hfDDj3lETQIpLeV/X77Vegz/wL7m
+         Hxow==
+X-Forwarded-Encrypted: i=1; AJvYcCV0EjL1qDupl8Q9+UK/FzYfCvE8QJqRnGiWb/Ceq4ZaKND876v3YdvhgXoEhb6YYVSzJ1RafLSBvxs=@lists.linux.dev, AJvYcCVDOOj3dkGJVlTwf+j54Vjt3+hagv5/9Ut6lCzSLYKkxxOlVTrT8OV4WH4iRyEHH+PKHKoiEQ==@lists.linux.dev
+X-Gm-Message-State: AOJu0YxfIsxe3bXlsGVdFppca7ZRYi0js0sJtIdmMvbC7vEIRXOfOe0/
+	lLllTkKPDLfwKomAggsU9g6+ts3KaU6LU73imPFpreUckPuX5NLTz1k8
+X-Gm-Gg: ASbGnct7w5HGqdhT33ZGGPZy6VIUg7jU0uvy/lQMTOBb/dLqfeORQEF0uKXDo9mqzJD
+	Vn4TOtISEcmhWGvpNMQxzsdV9NIX+rzy8wbFPRj8qInWjEorhYBJkk3YxQG6SaTjHCN0zIn5M6+
+	UONMKRFHkxfQZ6ZEqCR+Syn3Os3i2NT9L1KiGzpxyB4i7XWuwk89TrQV3fwOwEVi5kn5zuB1h3s
+	wm/YL9AgwlCJE1Smfais7any8wwOGNZEnQGJJOspOfGGYiXfeRZuGOJBCyb+6CcJtjhuaLAEEel
+	sfZHVNS/ncvK/z8x5A4aMfSNFMxk5DssKfhjtmMzaZWCGHQFbJaz9Inccd8nZwIxsbhuDEADWpI
+	GzfAGv7r6JGxWsXWKxkAN7SBcmDs21Ob4C7em+cjhtz5pnWo=
+X-Google-Smtp-Source: AGHT+IG4XzsUhVmrn4fJ8v1PNDsbGNCghgUfxDPbkeqpUjvEg9N6RxHWj66Wbdw1AdmD0ATs4dsvZw==
+X-Received: by 2002:a05:6a20:3ca8:b0:240:750:58f with SMTP id adf61e73a8af0-24340d91edcmr35447322637.30.1756454578938;
+        Fri, 29 Aug 2025 01:02:58 -0700 (PDT)
 Received: from archie.me ([103.124.138.155])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-327b01e90e5sm2191228a91.1.2025.08.29.01.02.54
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b4cd0e1c0besm1461992a12.24.2025.08.29.01.02.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 29 Aug 2025 01:02:55 -0700 (PDT)
+        Fri, 29 Aug 2025 01:02:58 -0700 (PDT)
 Received: by archie.me (Postfix, from userid 1000)
-	id E8F6644809A5; Fri, 29 Aug 2025 14:55:28 +0700 (WIB)
+	id 1E9654489F51; Fri, 29 Aug 2025 14:55:28 +0700 (WIB)
 From: Bagas Sanjaya <bagasdotme@gmail.com>
 To: Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
 	Linux Documentation <linux-doc@vger.kernel.org>,
@@ -161,9 +161,9 @@ Cc: Thomas Gleixner <tglx@linutronix.de>,
 	Bart Van Assche <bvanassche@acm.org>,
 	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
 	Masahiro Yamada <masahiroy@kernel.org>
-Subject: [PATCH 10/14] Documentation: smb: smbdirect: Convert KSMBD docs link
-Date: Fri, 29 Aug 2025 14:55:20 +0700
-Message-ID: <20250829075524.45635-11-bagasdotme@gmail.com>
+Subject: [PATCH 12/14] ASoC: doc: Internally link to Writing an ALSA Driver docs
+Date: Fri, 29 Aug 2025 14:55:22 +0700
+Message-ID: <20250829075524.45635-13-bagasdotme@gmail.com>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250829075524.45635-1-bagasdotme@gmail.com>
 References: <20250829075524.45635-1-bagasdotme@gmail.com>
@@ -173,32 +173,50 @@ List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1002; i=bagasdotme@gmail.com; h=from:subject; bh=tVZea1ikNA4Sssls4g09ZchJ08JhUaFOY8Mmt8T2Tzg=; b=owGbwMvMwCX2bWenZ2ig32LG02pJDBkbY15VZXUEfpV/XXVSre/C87lNIRyCV5IjnItu7ShZU PiphvtYRykLgxgXg6yYIsukRL6m07uMRC60r3WEmcPKBDKEgYtTACbSt4OR4WixGWdF367Ci0f0 5/VHVx3YxHrvMF/c3LtfDf1enBJSvMrwV9hALHj9kQNbWF8l9WcGsahNXW7scuzOjYlmr0LWbpu 3gQUA
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1684; i=bagasdotme@gmail.com; h=from:subject; bh=QIAPxg2EoM7XBiBH/OfCd9SfIrsCdhbBl57WJdF7gOo=; b=owGbwMvMwCX2bWenZ2ig32LG02pJDBkbY14FftK8Ic/EqPdDdzlDXfSrtOCCiCo1tq0af6f2T rxS2nS/o5SFQYyLQVZMkWVSIl/T6V1GIhfa1zrCzGFlAhnCwMUpABP5M42RYQe/RHjLfYX8tv8L 9vQt6eKUm/OnRm/3gUlFq/44pi2Xf8HI0BjxjsH0R+yFD+urVrRxaVu1SiT8M9vxwkWu7L/ecZP DfAA=
 X-Developer-Key: i=bagasdotme@gmail.com; a=openpgp; fpr=701B806FDCA5D3A58FFB8F7D7C276C64A5E44A1D
 Content-Transfer-Encoding: 8bit
 
-Convert KSMBD docs link to internal link.
+ASoC codec and platform driver docs contain reference to writing ALSA
+driver docs, as an external link. Use :doc: directive for the job
+instead.
 
 Signed-off-by: Bagas Sanjaya <bagasdotme@gmail.com>
 ---
- Documentation/filesystems/smb/smbdirect.rst | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ Documentation/sound/soc/codec.rst    | 4 ++--
+ Documentation/sound/soc/platform.rst | 4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/Documentation/filesystems/smb/smbdirect.rst b/Documentation/filesystems/smb/smbdirect.rst
-index ca6927c0b2c084..6258de919511fa 100644
---- a/Documentation/filesystems/smb/smbdirect.rst
-+++ b/Documentation/filesystems/smb/smbdirect.rst
-@@ -76,8 +76,8 @@ Installation
- Setup and Usage
- ================
+diff --git a/Documentation/sound/soc/codec.rst b/Documentation/sound/soc/codec.rst
+index af973c4cac9309..b9d87a4f929b5d 100644
+--- a/Documentation/sound/soc/codec.rst
++++ b/Documentation/sound/soc/codec.rst
+@@ -131,8 +131,8 @@ The codec driver also supports the following ALSA PCM operations:-
+ 	int (*prepare)(struct snd_pcm_substream *);
+   };
  
--- Set up and start a KSMBD server as described in the `KSMBD documentation
--  <https://www.kernel.org/doc/Documentation/filesystems/smb/ksmbd.rst>`_.
-+- Set up and start a KSMBD server as described in the :doc:`KSMBD documentation
-+  <ksmbd>`.
-   Also add the "server multi channel support = yes" parameter to ksmbd.conf.
+-Please refer to the ALSA driver PCM documentation for details.
+-https://www.kernel.org/doc/html/latest/sound/kernel-api/writing-an-alsa-driver.html
++Please refer to the :doc:`ALSA driver PCM documentation
++<../kernel-api/writing-an-alsa-driver>` for details.
  
- - On the client, mount the share with `rdma` mount option to use SMB Direct
+ 
+ DAPM description
+diff --git a/Documentation/sound/soc/platform.rst b/Documentation/sound/soc/platform.rst
+index 7036630eaf016c..bd21d0a4dd9b0b 100644
+--- a/Documentation/sound/soc/platform.rst
++++ b/Documentation/sound/soc/platform.rst
+@@ -45,8 +45,8 @@ snd_soc_component_driver:-
+ 	...
+   };
+ 
+-Please refer to the ALSA driver documentation for details of audio DMA.
+-https://www.kernel.org/doc/html/latest/sound/kernel-api/writing-an-alsa-driver.html
++Please refer to the :doc:`ALSA driver documentation
++<../kernel-api/writing-an-alsa-driver>` for details of audio DMA.
+ 
+ An example DMA driver is soc/pxa/pxa2xx-pcm.c
+ 
 -- 
 An old man doll... just what I always wanted! - Clara
 
