@@ -1,65 +1,65 @@
-Received: from mail-pg1-f171.google.com (mail-pg1-f171.google.com [209.85.215.171])
+Received: from mail-pj1-f53.google.com (mail-pj1-f53.google.com [209.85.216.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD7612D661B;
-	Fri, 29 Aug 2025 07:55:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81EEE2D8384;
+	Fri, 29 Aug 2025 07:55:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756454148; cv=none; b=aq/hcSRdxQ+ZCG3P0SWA5Te0ay2fnihVxvLoEx0UntstzvGW3Jt+Ybtu4ICtluc0X0JtJ1Fb3Lm0vciK8LmaLg/NHfdX8Ju4WNBfx1dozrzne1aDC6dskyixz+Frm6BrNdI66iPx24zgVzlqTFX/BrdfGyB74pf2mauBAVDgRxU=
+	t=1756454151; cv=none; b=u3rGblRrP4eOdyl+PEtc1kAIimI5CPO3MrZB5Okm8Pah8r3K59Q+sZlga21lgeqi7hm/G229/j3A813NRx4qvHnSeKQCo2Az+aqxJ+T+Z1AeX7YLk7UsQTD6XTBkDVMCNRhneWLSv6Ic0Wg4C9z5m3/WCWISbz41FbsUGI0ZRkk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756454148; c=relaxed/simple;
-	bh=Ip9RCWVx3N2eFboDnh1dVntKjUKs5RT6sbpEBdmz23c=;
+	s=arc-20240116; t=1756454151; c=relaxed/simple;
+	bh=evrdLEAoXKuQzTljW81Kh3KyWLApG8gUObVzJ2YlNgE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EO/vXPsfBeNckvYt8Cg59a5FM715J72sEDIuFp4yxp9SvUK/dowjeeszLwVlK8h3rq7cYlRRZWvcsy2icFnApXMboyC88odsCKWari7hWXCfEPatr6dY5lNJZzEc3PXd0ps+rYJvfttD4uhIwHW5x2FpEzWcGPzSEKeq/V9ahDE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jJq7KT5C; arc=none smtp.client-ip=209.85.215.171
+	 MIME-Version; b=pThoW70Ipe6UdxQvJmqLNJQxDtvQ6pl3eyRgF+TlWsYrIx0Vhm3BmsLLkKoTIs5kncGqw5BvRx+yEvTj+LBNqz5hbfyW+W6PRe1OnFH2IriuU2POUDrCzryA7BPpfTXmVNDug/QKt/g3wK5frMCALNTtDdO1aT9sMg1Ufy9ljxU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UAS1Npx0; arc=none smtp.client-ip=209.85.216.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jJq7KT5C"
-Received: by mail-pg1-f171.google.com with SMTP id 41be03b00d2f7-b474d0f1d5eso1353904a12.2;
-        Fri, 29 Aug 2025 00:55:46 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UAS1Npx0"
+Received: by mail-pj1-f53.google.com with SMTP id 98e67ed59e1d1-32326e20aadso1978536a91.2;
+        Fri, 29 Aug 2025 00:55:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1756454146; x=1757058946; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1756454149; x=1757058949; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=fK0hEDM5Yyao3a7xqBzpr49p9H5HB+om5vfXDIKLdeg=;
-        b=jJq7KT5Cb6+mTwOfcNEKroczW+Q+EM3pxFSDmsK5tlENEwc3cLpa5XZFRvH/ZLZ0+T
-         PEU1N2PjXCriPkE3Ck03bb+YiMNnyBsl4nXTddSncNjaXTberXJf3YgCA4geVs7z7yKV
-         cCC0pCf/wku6CF9rZ/HKxcmjiGUDJi1G98FH/OUfpRVRpBv1jR0/HXQQbNqqaMDDbcRd
-         fNuYIPAXxl9u1HFpeGprb9TWL6a+3uhiV1koc/aqqcawxIiIs0aF5sPTtSirhfiZ4z/e
-         sFsYqvc++RTb968nlGEl6z/3h4wQ4Ulp8naBzopKHKyTV7WPXdfu7XPiAw+JsDxVXrN4
-         49yQ==
+        bh=mQcUO3MMNiHKjyp0GXG4A4uvsTQgAsYSLBA8ucpISkE=;
+        b=UAS1Npx0tA+zZsJWOtMg14MQWCNT43FnLe/TKNLzfb/hxBDOc7r7m3ZHxM/UCSr0pq
+         C+BfLBGzMI1z3fn7vuemiPBHzJeRwTUv86kmE2bcqv1vn5uNhvqY0dWgtZsqmqrUpyAM
+         h7kmwjzpv/DSgBxcxAxNB6n+5SFeOancpuUIhtJshMWfsykyOeuVO4VDbvdkQk5h2IIK
+         CGdgR7wXSHRuLwsqBqTAbaeLkUZT13yqyPLsZ3Cm5G2BbdOk5gN1ygDYvXU7wh8f33gL
+         n3FcncYzSJ9esTbicakvwoneQiMiQSnTfQEnTL5ydGVvtP4xyqN2TYF569j7szlGBYye
+         shWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756454146; x=1757058946;
+        d=1e100.net; s=20230601; t=1756454149; x=1757058949;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=fK0hEDM5Yyao3a7xqBzpr49p9H5HB+om5vfXDIKLdeg=;
-        b=j5UvGC6Fe6cawx8S5S0YlDvP9xOM+KlAFXERdtzcl+d5kaYDQZ+Ghchg2cqXbrz8+h
-         sHaWowWd95s0589qX1WJOJnqNqeIOxEtGwX4KlEgvnalTFfLD6DzuqA/mdekUvH6fEX3
-         iFJfQuHp7gR9RcJ4jXiszW3Q0Z7lce5ZmpGlCgotFAI3PfgK6MfIALS9QEakHwzq42ID
-         TiGWUaoMFKq0BhdhwD8mJeniVZFawB5tmE9YWcu36e1JFyoCsztwdZr5OvtXcM/H3I0N
-         aR5kNlAHtTXn1XTUPdTcPdjndovJDtWXWhCbLD5DFv87ufNgVGLmHQma1wbMj6v3XVOK
-         SavQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUu2MWFzkKsAM4IkJGbRafAziXFZKTXB6MtfKefUqwqzK41yLm18fxqI/J65Mm3VuLhwsDLt3HbHH0=@lists.linux.dev, AJvYcCVVv78lmGA1hhIlOq2o9h7MRyapP+C6BnsvRt/a32Oq4QEPHGFPaG4VyjoHukBnGoE/hdx5pw==@lists.linux.dev
-X-Gm-Message-State: AOJu0Yw6H03Eky470xl3CCSXUQS4NJZ5k7yZ4vZcrY5kfV5NffPGvked
-	zhlqiPNLJaHMMpLx3xLQ2ROQBFRPfGUKezyQjprbTHPji4c+5mfWz75j
-X-Gm-Gg: ASbGncuuIi9EIPzlsL2hakWxdTjT5n6abLDmT/3cl7ag0mFFv5IKCyEHR4zhIt24X06
-	AVpDYRofab63sJbMXbbGJ012OI4YA/u9ikkPdiUteeqlOVbPtJwu83mdX/oIBXMYIDY7O+0sSJy
-	Jx1IOkiuCIsy5cl4PHpS1394thlnwHKCiFhqMTZt7t9t6R5pA8VqR17O16wCQ07mUYEBJLFdFm+
-	j9amVjzi4WBa1k6+WMujzZzKHDV4RtdbQoMDCldxDLMfEeOuS+mYij//Q/izDG0oDE7inhROxW/
-	AvIZLygAeunqb/fD8SvhEXeiyaNEW5ulzK15q6LGv75QZLAyi31GKI56fIsJjjy3gwBS0/G72W3
-	3NK/MtItzE9eHCANXrnfQ0lRO4roS3ZLSaHgm
-X-Google-Smtp-Source: AGHT+IHJbtOvLK7smFZ5Taldvs91dQKYlT3bJQAsV4fZ4iEcDvRKpIMHMCPIqq2aQ2G3ehFn7aA64Q==
-X-Received: by 2002:a17:902:cf08:b0:248:a4e2:e6d6 with SMTP id d9443c01a7336-248a4f2333bmr133286365ad.39.1756454145980;
-        Fri, 29 Aug 2025 00:55:45 -0700 (PDT)
+        bh=mQcUO3MMNiHKjyp0GXG4A4uvsTQgAsYSLBA8ucpISkE=;
+        b=OJYaVibYoQXq+b0rMadmy2kh186MgAR1WGC70I0Xq+BKo8oNDvr/xPcgkR+EuGumm0
+         ySFlmHgdnTvgsgmwmfw9ThdY1UoZ9Xn1be58OtmMbNGK/1n4UM/+m26wkRCGBT1Vj2A8
+         lsTdGTakxTvKoEGMBnwlb6H5YjagpdPzadkA36YlGNnkAj99U4eFfMiZ7GIg4qPaSxDD
+         waPq3sXRs0OSk2FS26zlVdcUeI02weUndDrySNghgd2DsndlvVrjN+MCqvvDJXZKto7z
+         s0MsVbSTGStt/ypMGJjG2+0a/skH5RCsfPYnzd56uc0aSlxmtQRG8nNsX69OpHukthbt
+         U8sQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVYzOMnuO7cTL7P2I/Siw+/OjujpO38wbpmQ8iW4Tts/OTu8f2/Des1OQWdUM/ZmN5is+WKcezn1CM=@lists.linux.dev, AJvYcCXS2j0KetrveuXby7vT+1ysKydO8339BOIySBx/LKDboff70HjP4eF/B3fGN0ygqjQcPCEMAQ==@lists.linux.dev
+X-Gm-Message-State: AOJu0Ywd2NuCi4EjqAQq2KsqY1RNb+lMvhCNm77LxR2Jo7vHAHJHYSnZ
+	yyEWHQDIPAJrp7XTXu+d8la12qRxejGR4E7WzjkW76lCxeWKdPnvgJXm
+X-Gm-Gg: ASbGncuBKcDwv6rK8H8YJ7yrWNmB/rv+6Y2jTGNV/e+kegWnpR4mnGQOhIpaUML17S+
+	+L71DcFWxBrN+DxpLfKmVK56Dtzppw6KP/znsU0iKFVUK0jKlmX94ezRuJnOhcmg+0XJMZD71a0
+	W0vniZH+SIqtuV/czjPfsh2Ldv3UQIt99no/BIeBk7hA3sdN2Q/81/t56Qj5nwYjI67S/NEbHY5
+	kqnM8bmYXagSvjT3U8dcI1CwGAKCdEmz4IFpkrnub9c11BWArbygnUbEyiKOAU+0mgR6G39NnYt
+	EN2FErwYu2yz+h7G+qsK8JLfCD++QSewOFqqbpabX6tgNYnGOglPIi89F6AKQ8YAdDdyAe0Qtng
+	5CPuRy5Y7vcfJiJA3Ejytddjd/gjJDbjev6KI
+X-Google-Smtp-Source: AGHT+IHLqM32trOVVzh172ftn7E15FM6Ea2Jk4ybBnzNmcbOCkm5faJ3oUsml9NRpuaa5OiBwPVbig==
+X-Received: by 2002:a17:90b:4ccc:b0:327:7c5a:fe77 with SMTP id 98e67ed59e1d1-3277c5aff68mr10961209a91.30.1756454148623;
+        Fri, 29 Aug 2025 00:55:48 -0700 (PDT)
 Received: from archie.me ([103.124.138.155])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-24905da4784sm16792615ad.90.2025.08.29.00.55.38
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-327a22ec24dsm2591905a91.3.2025.08.29.00.55.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Fri, 29 Aug 2025 00:55:43 -0700 (PDT)
 Received: by archie.me (Postfix, from userid 1000)
-	id C98394480991; Fri, 29 Aug 2025 14:55:28 +0700 (WIB)
+	id 3924545A3F85; Fri, 29 Aug 2025 14:55:29 +0700 (WIB)
 From: Bagas Sanjaya <bagasdotme@gmail.com>
 To: Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
 	Linux Documentation <linux-doc@vger.kernel.org>,
@@ -161,9 +161,9 @@ Cc: Thomas Gleixner <tglx@linutronix.de>,
 	Bart Van Assche <bvanassche@acm.org>,
 	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
 	Masahiro Yamada <masahiroy@kernel.org>
-Subject: [PATCH 09/14] Documentation: filesystems: Fix stale reference to device-mapper docs
-Date: Fri, 29 Aug 2025 14:55:19 +0700
-Message-ID: <20250829075524.45635-10-bagasdotme@gmail.com>
+Subject: [PATCH 13/14] nitro_enclaves: Use internal cross-reference for kernel docs links
+Date: Fri, 29 Aug 2025 14:55:23 +0700
+Message-ID: <20250829075524.45635-14-bagasdotme@gmail.com>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250829075524.45635-1-bagasdotme@gmail.com>
 References: <20250829075524.45635-1-bagasdotme@gmail.com>
@@ -173,61 +173,38 @@ List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2828; i=bagasdotme@gmail.com; h=from:subject; bh=Ip9RCWVx3N2eFboDnh1dVntKjUKs5RT6sbpEBdmz23c=; b=owGbwMvMwCX2bWenZ2ig32LG02pJDBkbY16ybj++M2M+e9AK28XZP75VaZfxL/rvM//ttckLa 3oE7/o/6yhlYRDjYpAVU2SZlMjXdHqXkciF9rWOMHNYmUCGMHBxCsBEPq1l+Ke0Kqr32Tmn3/wy 503l2Fb8+Tb1i0vpkb/b//3YUvkmUo6bkeGv6MSGx38SK429ymz0txt6/t/hdS/prR+npRZPk6W qGg8A
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1391; i=bagasdotme@gmail.com; h=from:subject; bh=evrdLEAoXKuQzTljW81Kh3KyWLApG8gUObVzJ2YlNgE=; b=owGbwMvMwCX2bWenZ2ig32LG02pJDBkbY16J9usWFB1WvT+NSavLIanh+698vZJvp5Iqyn5cF Oeb1Xiho5SFQYyLQVZMkWVSIl/T6V1GIhfa1zrCzGFlAhnCwMUpABPJ/8zI8C+tSSfleGvDlW33 Ss5v/Xrog5zFrjCmKzem/Vr2Ka6JL4WRod0y2uaV0GJBfuHrJzY9vTqdTVAvLqhtcdO5S89liyP teAA=
 X-Developer-Key: i=bagasdotme@gmail.com; a=openpgp; fpr=701B806FDCA5D3A58FFB8F7D7C276C64A5E44A1D
 Content-Transfer-Encoding: 8bit
 
-Commit 6cf2a73cb2bc42 ("docs: device-mapper: move it to the admin-guide")
-moves device mapper docs to Documentation/admin-guide, but left
-references (which happen to be external ones) behind, hence 404 when
-clicking them.
-
-Fix the references while also converting them to internal ones.
+Convert links to kernel docs pages from external link to internal
+cross-references.
 
 Signed-off-by: Bagas Sanjaya <bagasdotme@gmail.com>
 ---
- Documentation/filesystems/fsverity.rst             | 11 +++++------
- Documentation/filesystems/ubifs-authentication.rst |  4 ++--
- 2 files changed, 7 insertions(+), 8 deletions(-)
+ Documentation/virt/ne_overview.rst | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/Documentation/filesystems/fsverity.rst b/Documentation/filesystems/fsverity.rst
-index 412cf11e329852..54378a3926de7b 100644
---- a/Documentation/filesystems/fsverity.rst
-+++ b/Documentation/filesystems/fsverity.rst
-@@ -15,12 +15,11 @@ of read-only files.  Currently, it is supported by the ext4, f2fs, and
- btrfs filesystems.  Like fscrypt, not too much filesystem-specific
- code is needed to support fs-verity.
+diff --git a/Documentation/virt/ne_overview.rst b/Documentation/virt/ne_overview.rst
+index 74c2f5919c886e..572105eab452b2 100644
+--- a/Documentation/virt/ne_overview.rst
++++ b/Documentation/virt/ne_overview.rst
+@@ -91,10 +91,10 @@ running in the primary VM via a poll notification mechanism. Then the user space
+ enclave process can exit.
  
--fs-verity is similar to `dm-verity
--<https://www.kernel.org/doc/Documentation/admin-guide/device-mapper/verity.rst>`_
--but works on files rather than block devices.  On regular files on
--filesystems supporting fs-verity, userspace can execute an ioctl that
--causes the filesystem to build a Merkle tree for the file and persist
--it to a filesystem-specific location associated with the file.
-+fs-verity is similar to :doc:`dm-verity
-+</admin-guide/device-mapper/verity>` but works on files rather than block
-+devices.  On regular files on filesystems supporting fs-verity, userspace can
-+execute an ioctl that causes the filesystem to build a Merkle tree for the file
-+and persist it to a filesystem-specific location associated with the file.
- 
- After this, the file is made readonly, and all reads from the file are
- automatically verified against the file's Merkle tree.  Reads of any
-diff --git a/Documentation/filesystems/ubifs-authentication.rst b/Documentation/filesystems/ubifs-authentication.rst
-index 106bb9c056f611..9fcad59820915d 100644
---- a/Documentation/filesystems/ubifs-authentication.rst
-+++ b/Documentation/filesystems/ubifs-authentication.rst
-@@ -439,9 +439,9 @@ References
- 
- [DMC-CBC-ATTACK]     https://www.jakoblell.com/blog/2013/12/22/practical-malleability-attack-against-cbc-encrypted-luks-partitions/
- 
--[DM-INTEGRITY]       https://www.kernel.org/doc/Documentation/device-mapper/dm-integrity.rst
-+[DM-INTEGRITY]       Documentation/admin-guide/device-mapper/dm-integrity.rst
- 
--[DM-VERITY]          https://www.kernel.org/doc/Documentation/device-mapper/verity.rst
-+[DM-VERITY]          Documentation/admin-guide/device-mapper/verity.rst
- 
- [FSCRYPT-POLICY2]    https://lore.kernel.org/r/20171023214058.128121-1-ebiggers3@gmail.com/
- 
+ [1] https://aws.amazon.com/ec2/nitro/nitro-enclaves/
+-[2] https://www.kernel.org/doc/html/latest/admin-guide/mm/hugetlbpage.html
++[2] Documentation/admin-guide/mm/hugetlbpage.rst
+ [3] https://lwn.net/Articles/807108/
+-[4] https://www.kernel.org/doc/html/latest/admin-guide/kernel-parameters.html
++[4] Documentation/admin-guide/kernel-parameters.rst
+ [5] https://man7.org/linux/man-pages/man7/vsock.7.html
+-[6] https://www.kernel.org/doc/html/latest/x86/boot.html
+-[7] https://www.kernel.org/doc/html/latest/arm64/hugetlbpage.html
+-[8] https://www.kernel.org/doc/html/latest/arm64/booting.html
++[6] Documentation/arch/x86/boot.rst
++[7] Documentation/arch/arm64/hugetlbpage.rst
++[8] Documentation/arch/arm64/booting.rst
 -- 
 An old man doll... just what I always wanted! - Clara
 
