@@ -1,65 +1,65 @@
-Received: from mail-pf1-f175.google.com (mail-pf1-f175.google.com [209.85.210.175])
+Received: from mail-pg1-f175.google.com (mail-pg1-f175.google.com [209.85.215.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1300F285412;
-	Fri, 29 Aug 2025 07:55:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9967F2857DE;
+	Fri, 29 Aug 2025 07:55:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756454136; cv=none; b=EbhxRGc+VRqm2Xl1tjptR9sYXfq0pbFkbPD5tVQpvX+SfUoFetakgLiTZuBqVESbpetvH8aQZxSRLbLuHc3zFUMB3i4AcruG+h59bgm7Hh+enhxB3nPzp5X78bZj+Sac/tAJlJ9qgGkPjQA8QiyeWe+Mhnnx/LkZeTptE0oC4RY=
+	t=1756454137; cv=none; b=aZopTrEJCjWDeVDAslNizBX2R/kY4PxgiqwKC0KNyAbBacdkbohdffQr4QDZs/HRmkj3s8+iW1kjKjiO+GvE2uD+H86DOwipLSsovxP/Q5Y5hJuyq0u/bG/jveYD2w8wtc0hz70paoAgdAj4eQXnUEBLGtVI1engYdHoICM6urY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756454136; c=relaxed/simple;
-	bh=oQ/U51BIIgNGsRun+kwInz/tmig5xTqHruGeEvNRxQQ=;
+	s=arc-20240116; t=1756454137; c=relaxed/simple;
+	bh=br/gH56HVzhrfYYqrTP3c/xceN5BBvTsvI3pBYQ/yVo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z3y8+ewm+716inBxYqThUiibZ6wAk6v6HCJT7/C8uHZmqoeg51th9CpRMCAZ8sHSG3dYGurUtgXwPE8P6NitSrL8LCo9QG6di5uNpO4WJ8mSjdjIjaLl/Tck4B4K9Flrf2NXIiBsTn3UkBXqRyPcyf7DZ9wjUQZCALUSF7/c9NM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OQXdZLEr; arc=none smtp.client-ip=209.85.210.175
+	 MIME-Version; b=glQC/bNwrQUcFSDftVSQ0ibxHTZkFJ8UcDFmwtlA5nUhI5V7dYWrcL2+1Dr6MZxCnjA+njYiMFw90KD9RiHYs77hiVxy6Zm4QiACezYpvzRWGQEjFX0DEpDkzlxpVGHl/rgaIyW6m9oiJThXhRbwvV9wTLwdKTVWd/4Dj+ezNM4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JaR6m9RM; arc=none smtp.client-ip=209.85.215.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OQXdZLEr"
-Received: by mail-pf1-f175.google.com with SMTP id d2e1a72fcca58-7722f8cf9adso301668b3a.0;
-        Fri, 29 Aug 2025 00:55:34 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JaR6m9RM"
+Received: by mail-pg1-f175.google.com with SMTP id 41be03b00d2f7-b4d1e7d5036so157022a12.1;
+        Fri, 29 Aug 2025 00:55:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1756454134; x=1757058934; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1756454135; x=1757058935; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=PKHUedwTpnE+6902OLKWJUrKeeyE0icmaP4M6h8VeIM=;
-        b=OQXdZLErIiPYDuWiF3cTGDcSZWmWWHeTF0ngm99iaDejmnYlYzuw1R4Or8fde6w1wz
-         pD37OL74izDGNFm5YqAH0sLGZQ569LV/Dc2d1hiYxMc1HO3oTu0de96Vw1efLw5nJPLk
-         Y7OPdBzpphKqRwhzrUbreH2zllonifvbLp2DsHD3/L+PJ30MC8g9LAW1IKBri9GWatV7
-         W4iXXuu5J6SCdBRv+pMXZ3+6oBJLvZ0o+mLRJMcmdYPleYkAMc3RmOrIstk1Wg71DK4H
-         xMYpQkDGAEq6+M1n4/+wwgyqEP0aY09zFQoTc839R7aG9GR+7Djpf9aaR3AvU+4ektf7
-         x7Hw==
+        bh=GkZ2LL+fO6oH27E7YsqUKpWK9h0JvMFOl/W1FWHyGxk=;
+        b=JaR6m9RM7NI4c7qzXAEZwApALWZ5NW8ShpN0TLWYyRFzoWMynSs8DqFDNg3qaZ4qky
+         1Y9ef3Zd3bmfEQEU1mN2F8Sz56XOE4zzAQw7hzg0DDJrLZ0k9BOqJmRnZoqAcLr4pNgE
+         HoqsAWnhuTlG+28Yipkn0u0N9VQ4UEezgz3mSYnNlFucVJVOcdVocNbl6OI01PdfBKHc
+         7cHJDwazsZqXsm9EWOSXUpb3+2YizNQ9Qk0pRIJB9ALKFnWeIh5DcMz8hjhpJQfW3hwB
+         FOax7oc3wGL64rCqrW+MaqKE9mL2IyMdRtdWvM9NvoVpnAlRU4P2CV00S6r5E5yanWlK
+         Yyng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756454134; x=1757058934;
+        d=1e100.net; s=20230601; t=1756454135; x=1757058935;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=PKHUedwTpnE+6902OLKWJUrKeeyE0icmaP4M6h8VeIM=;
-        b=lIuCT2U0EiwppjeQFt3VsgQ6RRhES8f+KShnQoa9ucRgfC/r+lCBHlygF3kCmzVPJu
-         W7s1G+Uk0diHOiau70bx5PAlX+Bd8Iaxm0Bmb0TcCoUh5gj43B2nUCzGjNx9y3AF7tZL
-         +KMeoAgU6z3WbdSC9DjDL2noFktqXntPpXKt0S+7yLnr36kA86c2FcypjqSpIZJF6Sxq
-         QDsVpQMsmJD7esdMcjURwss8rqZVBMHgatR3GJFIU/1Tw1wQ7rkyGE1n4Pt4A0xXkukh
-         2FbYg2+rGaBiq/M+nX87W+evF/cjbDgNjpJTZidSngN5qDYBHOgag3nEwfOAXfurKeeS
-         //Xg==
-X-Forwarded-Encrypted: i=1; AJvYcCUtYMk0wqjerdEw8dT89lkBJdncD1qmpIm+K+86ZOKS071Kpaer9JYHwrQQVA5MeilaWIjZCw==@lists.linux.dev, AJvYcCWbLHcZJYPFqFPlbpk8bF2rDvMJsRqqPAkOJ8QPFsZGdf/AgY/oMAI6t83zLMX0RF8ucCSMXWXwxqw=@lists.linux.dev
-X-Gm-Message-State: AOJu0YyCE7U/bnDlWrLLuTIE+YehE13degO/mhYfpnu5Mmflhlgk+/GY
-	az9AezC0H/BrHdrLajj5NYCbOrJrN1W7zMCa5i0lVfo2DNjaloGsg2Ky
-X-Gm-Gg: ASbGncsjNs1RbB64KPwGxGCQOryva4rfsvOqc2e3SItL7esmu3JqcM+V7Avg1V4Q6KU
-	SUAvSazUUOqy8mZDBPk9744UxU0F/HP1OYLccWJYS5UQVK3BEUzfHf8XpT5QwyB38EJ1wb67MAs
-	1cCf1AUVNvSPLhu0+xLr2fXM34Z+qndKDbyDrdJud8bl26aaE/L4ln2p4XE0pXkmAjgsbHtuCCr
-	YB97gmMOqEKPlPI6viGPVzvZovkgG6dcb6omzLnxzfAlRoh4zdCedY95Rs0aeL1/+THc6Ih3w2k
-	+0qQUFIxXqTwS6xjWMpd0ChS3f73lHH+4rQo80HpxInB/9+w4GhjIQhtImX0bRl2K4Or+40o8Ac
-	MzuzZFDaJywC1XLH3RjmbH9rz0A==
-X-Google-Smtp-Source: AGHT+IGAIwvY26FUOsw+74AGPHA13vcCLFsNdM4e5R6RQVZDqKcVncdSUEtOIO22R3FiVyKLzy1QwA==
-X-Received: by 2002:a05:6a21:6d95:b0:243:9824:26f0 with SMTP id adf61e73a8af0-2439824377dmr17475585637.46.1756454134181;
+        bh=GkZ2LL+fO6oH27E7YsqUKpWK9h0JvMFOl/W1FWHyGxk=;
+        b=t/8NyJtZm+3oqtLOyX1BrAmFWQBZ2EAQVWoD8/flECSpXT7VvULAnwS2Nw7QlySp02
+         SMWp7mURmj69yw1ExzlcndCkC727I3mX9wIaPmUiIqHA82wLX0xHQzKCfTp7qJ2+WAea
+         1Olg7z9fcrnqdM2E/ITN7ci1eH4NS0FurS/3OfeUdbc8A3v6bCp/U6Etl8/IKfZueQqm
+         1o6JHOGUxEclWomBnVAPixWqqZFoAcWzMV7T//02Pf1sH3J7//IAgaaifPkQK99twLtl
+         SnI7S2ABI2UTv4JqwfqdbL4hgXE2Q6JFoF4q6Kq1f+76iKn0zYRlHuFK8/Zj+qarNIzS
+         l5MQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUTL8iXzgLV5Ttxx4Pf21t1h+qSKZk5aX3AGDDOBf6Anx6ULgsRfrmdlrdibyI+5RWVluCFhQ==@lists.linux.dev, AJvYcCV49YqyI+j9OhziPTqiz6TNPNQG78dd23+9V8k6X2Fv/5gMnk2b/9QnsUnr7ZFJv6aM56xl4e07uSs=@lists.linux.dev
+X-Gm-Message-State: AOJu0YzCbAkRIcEmrw/qGt+VP8RlHvz+nHqbUNpWHfAqkZgQoJ0m8s0B
+	aF5ZWFtZZrBdww/R812K1K1Lb+dCQPGD7A9ZX6zJp9QrZARATgvzEN+p
+X-Gm-Gg: ASbGncu/ieRY/h9B4jJr2Iv5JGdhGI99z6uRC/ZhELPx7MrSPEpHOgYfpCDlVdcYv4M
+	M/AhYVSLc9ZNJH3BzTsLaPfHtZyk4TKgN9lky12GAZ9ui1mOGPaGkiI6lOJ7LE1lEKFGFLHmg7b
+	JoNmhZ/5CLtUrUaIuRd+iKmoZIjovhzh4RXK7EnVGBTl16Ud3j8YkKy2j23YfTWX8qEQINl9UM2
+	SaIzZx6Pz41YWZO/OWSK67CBPZ8YkV8BLRTKuDev0+JIWo0mns07uqGDVKtoyKxM4kxKYsh0lHs
+	KptiDuFRE6zJna842zMN2cpUCeVJDCFKk6xoA+/9svcDVttFC+Nt3GXpChaYpms8p0+CS/rgnOW
+	Vu3QXrEGHwiqGoIoeFhBfhgHnNiLJ8wyceCpQ
+X-Google-Smtp-Source: AGHT+IHJ0etjvptegteXgkUWoFIILA9nIajrzCKr99WRD5OzNxzSggv2jyDezns1lof2dGSUjRUcTQ==
+X-Received: by 2002:a17:903:4b07:b0:249:2297:c424 with SMTP id d9443c01a7336-2492297c777mr3315565ad.15.1756454134776;
         Fri, 29 Aug 2025 00:55:34 -0700 (PDT)
 Received: from archie.me ([103.124.138.155])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3276fcd336dsm7401665a91.18.2025.08.29.00.55.31
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-24903724ec8sm16944365ad.41.2025.08.29.00.55.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 29 Aug 2025 00:55:32 -0700 (PDT)
+        Fri, 29 Aug 2025 00:55:34 -0700 (PDT)
 Received: by archie.me (Postfix, from userid 1000)
-	id CE9134016442; Fri, 29 Aug 2025 14:55:27 +0700 (WIB)
+	id EF6DE4444CA3; Fri, 29 Aug 2025 14:55:27 +0700 (WIB)
 From: Bagas Sanjaya <bagasdotme@gmail.com>
 To: Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
 	Linux Documentation <linux-doc@vger.kernel.org>,
@@ -161,9 +161,9 @@ Cc: Thomas Gleixner <tglx@linutronix.de>,
 	Bart Van Assche <bvanassche@acm.org>,
 	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
 	Masahiro Yamada <masahiroy@kernel.org>
-Subject: [PATCH 01/14] Documentation: hw-vuln: l1tf: Convert kernel docs external links
-Date: Fri, 29 Aug 2025 14:55:11 +0700
-Message-ID: <20250829075524.45635-2-bagasdotme@gmail.com>
+Subject: [PATCH 02/14] Documentation: damon: reclaim: Convert "Free Page Reporting" citation link
+Date: Fri, 29 Aug 2025 14:55:12 +0700
+Message-ID: <20250829075524.45635-3-bagasdotme@gmail.com>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250829075524.45635-1-bagasdotme@gmail.com>
 References: <20250829075524.45635-1-bagasdotme@gmail.com>
@@ -173,44 +173,28 @@ List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1333; i=bagasdotme@gmail.com; h=from:subject; bh=oQ/U51BIIgNGsRun+kwInz/tmig5xTqHruGeEvNRxQQ=; b=owGbwMvMwCX2bWenZ2ig32LG02pJDBkbY144a/JZLY81M41OfrJ5W/1jtyyro8lZM99fCflwN Zg5yrW3o5SFQYyLQVZMkWVSIl/T6V1GIhfa1zrCzGFlAhnCwMUpABMpCGH4p3zu88Pdlu95fhsv /CZ2ieHwual5ab7C13i5XivpL/Ip/M7IMI9vYUN6A5f856j5POvK+r6kxCYoXlPd7vthl2/zPqb NrAA=
+X-Developer-Signature: v=1; a=openpgp-sha256; l=839; i=bagasdotme@gmail.com; h=from:subject; bh=br/gH56HVzhrfYYqrTP3c/xceN5BBvTsvI3pBYQ/yVo=; b=owGbwMvMwCX2bWenZ2ig32LG02pJDBkbY14UOzeckV2lWTlnxluBwiWvpt1jF+xvT61/ejpwa tSzw60XO0pZGMS4GGTFFFkmJfI1nd5lJHKhfa0jzBxWJpAhDFycAjAR0x5GhlnvrvsFdd3e6TjZ g2FTa8uK3U48C+++2yu+oPH13XO8khKMDP0RbvPq2Hk2WQbMuFkV7P77fsRatst+E/e4qhe89eI LYAcA
 X-Developer-Key: i=bagasdotme@gmail.com; a=openpgp; fpr=701B806FDCA5D3A58FFB8F7D7C276C64A5E44A1D
 Content-Transfer-Encoding: 8bit
 
-Convert external links to kernel docs to use internal cross-references.
+Use internal cross-reference for the citation link to Free Page
+Reporting docs.
 
 Signed-off-by: Bagas Sanjaya <bagasdotme@gmail.com>
 ---
- Documentation/admin-guide/hw-vuln/l1tf.rst | 9 +++------
- 1 file changed, 3 insertions(+), 6 deletions(-)
+ Documentation/admin-guide/mm/damon/reclaim.rst | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/Documentation/admin-guide/hw-vuln/l1tf.rst b/Documentation/admin-guide/hw-vuln/l1tf.rst
-index 3eeeb488d95527..60bfabbf0b6e2d 100644
---- a/Documentation/admin-guide/hw-vuln/l1tf.rst
-+++ b/Documentation/admin-guide/hw-vuln/l1tf.rst
-@@ -239,9 +239,8 @@ Guest mitigation mechanisms
-    scenarios.
+diff --git a/Documentation/admin-guide/mm/damon/reclaim.rst b/Documentation/admin-guide/mm/damon/reclaim.rst
+index af05ae6170184f..92bb7cf1b5587a 100644
+--- a/Documentation/admin-guide/mm/damon/reclaim.rst
++++ b/Documentation/admin-guide/mm/damon/reclaim.rst
+@@ -298,4 +298,4 @@ granularity reclamation. ::
  
-    For further information about confining guests to a single or to a group
--   of cores consult the cpusets documentation:
--
--   https://www.kernel.org/doc/Documentation/admin-guide/cgroup-v1/cpusets.rst
-+   of cores consult the :doc:`cgroup cpusets documentation
-+   <../cgroup-v1/cpusets>`.
- 
- .. _interrupt_isolation:
- 
-@@ -266,9 +265,7 @@ Guest mitigation mechanisms
- 
-    Interrupt affinity can be controlled by the administrator via the
-    /proc/irq/$NR/smp_affinity[_list] files. Limited documentation is
--   available at:
--
--   https://www.kernel.org/doc/Documentation/core-api/irq/irq-affinity.rst
-+   available at Documentation/core-api/irq/irq-affinity.rst.
- 
- .. _smt_control:
- 
+ .. [1] https://research.google/pubs/pub48551/
+ .. [2] https://lwn.net/Articles/787611/
+-.. [3] https://www.kernel.org/doc/html/latest/mm/free_page_reporting.html
++.. [3] Documentation/mm/free_page_reporting.rst
 -- 
 An old man doll... just what I always wanted! - Clara
 
