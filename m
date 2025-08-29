@@ -1,260 +1,268 @@
-Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AF652C17B2;
-	Fri, 29 Aug 2025 08:03:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38872314A6C
+	for <damon@lists.linux.dev>; Fri, 29 Aug 2025 12:00:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.130
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756454582; cv=none; b=bONekgnU4Cq4UkEgkHTinY3GGp+tcEQjOdkWox0HQlSJqDfoFpkktDvOcroqewddCBBpAYwDb+Z27UHj2aJPF7qvY5XNoQgLlgtGpS6vVLeSwY5hhUzzV1umLzOX8QVYfo9cOkxVVLfO/X5nDad7/xzLo/PQqMtW820vwT9fsaA=
+	t=1756468859; cv=none; b=R2PJT/GqRmgQplY0xDL6CrSHQkW9XJ1y8XDjIBSgmltYVwnT6wd5pjUTkSMhc7Sul3Trhfboi1zBD+kd41zdYjf7fUAqYrg/SCWBZI0t6YCULnmw7QQvkM8LmU7BKT+c+u9Vxz4jrP9DUjjqj/D5FdVPMm3IgeF1q1y4LR4L99c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756454582; c=relaxed/simple;
-	bh=eMX/Qh24hdl/D8upWlphNzasCNRD/YCgXxsSIbz5MxY=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hfWJ3QmlNabph2hpImO2wabaFvpuC1epNPykoJGKSStza1eU4u/ULyKfqko5JapK/W9Bd5C9l+jFDmr5xBKyv+kgWCbkl+J3iQoz1cqquf7aOtArOhQHmsYgFKmXWK+tFKPwya2t7kPX0z/DoNQvw/SarrC3krPjhkMem/v1nLc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XoCI6IPv; arc=none smtp.client-ip=209.85.214.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1756468859; c=relaxed/simple;
+	bh=O9hhzTPoLNrhsM4crWvZ3QFR5dbDYeIRHd+/7WFD/Lo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=SHheI2vjVHQvbc72s00rlRlB6I0GJoTDb16PA3b6lvHhSUYYzdhsuHII9x8+5LR8E4Y1TD5ROSzYir+QGRPA9uWUAcJCdyLBTM4JvKBSQTBh1wr0B+RjoobXr9AlKPwEmhazaId+0tXrwAA3wT9kGND+eYqTsm6hiL59AzNWGug=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=EZXX5o4h; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=0MSpGSb+; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=OPBU/lqB; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=8HmyejID; arc=none smtp.client-ip=195.135.223.130
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XoCI6IPv"
-Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-24457fe9704so19526275ad.0;
-        Fri, 29 Aug 2025 01:03:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1756454579; x=1757059379; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=0AfZlK+2PpvnkbeUUWLESRnsPEd9fz1tduXIyE8HjWg=;
-        b=XoCI6IPv47vbs09jjDQuPXr5vE6VzRiSfWPoNQM5jVOdY8W/COmWPqSiEc0zEk9jFI
-         g4p+11yZ0YWDtfSx/W+scytV4+FJlm+qG4NuxzXpJ57WHRAFii4YsEENoASx3KylgxwV
-         58Ky4aEX4dGmBFqTSHQP/THTMG2hC9Y06avcPaBm1a7E/TmlWHu0Ds8lE/0oJjjQ4sk/
-         rI2q1JzwZU0k47LreTGGfWjdJnDplWFUcg81Tuj0QXMBl0fJxt8GPQ0gLQNjWaWcoJym
-         y816xnq8dy8iJddJX+cvtl2ceds5UA24X7FIckzzv4WmU6793PHNMw+Chlq9jMWTIRQt
-         4E6w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756454579; x=1757059379;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=0AfZlK+2PpvnkbeUUWLESRnsPEd9fz1tduXIyE8HjWg=;
-        b=TvJW6FCNurOoFsudXqKmyJ9Vle9HxX9AJcJ+Z+p/SdLHDw87cYCjbLGrlicJFN4luY
-         avyi3qzNsYj7CMYbM0FDus62U5Y970iZTlq4oHjamtk5g3U/hlfgLSs8WtqTp7fnSzT9
-         FBv2rV1EYH5lRA88s2ww7D3R9SEqRGF33IAcrGy6l5tbPMKJw7RPNWfi2hIYL2XXp8m9
-         xJVxU+rYVuoPGZCv9OddRNEdhmAH6dM8srIZl16mOvKFpUQuJxIsfieJTqhUxkOMxGl4
-         NdLfS6tlowjHcDbuL/u7K00bmHxStQFiHIz051Bwocr9zEeFJlG+FtAWK0YoBcB2lQWv
-         /RSA==
-X-Forwarded-Encrypted: i=1; AJvYcCWUXz1Nrw2VJNb/r+JIyJjnL26uvzh0XrK/7pkl0OOj+sdrYomq4lDmwpiSUsxX4KdosWCdDrabOfg=@lists.linux.dev, AJvYcCWw6EjruEg8pTT1hFh2k6Dt856y+8Ag2G6Ijyl/5nw37NwD7aC/BCx1iDvYy7Xl8aeEgxqSew==@lists.linux.dev
-X-Gm-Message-State: AOJu0YzGMWUm62gtF2v4YEwMZy+BhA3JGrbcKEuT/ZW6kTZrK01XZyRm
-	pHNwBgO0ecgZU531WmQ6H1DbUkstd1wH9xOfnrxLrbf8TB6ehSh+ZkM6
-X-Gm-Gg: ASbGncuzQ7Hk661ljYdRtXrNdzVcIOkb/zxWD3HytJuidZJhZkk6PEf05yIPeAelktJ
-	L3rhcXa6qBv5AT5Y4RsJOAU09tdPA5fw5TxYVMsxyqY16opZJXWdzcMI76Z11PvqiZWmyDZnVjX
-	fr2kUY5l3i98YdUpsSAOaSR0SDEMhZTXyky3yE48kAATdY5LRG1FAg0alI809E69D6mJdMqjh/j
-	ekceLn0dYdGM8mXuxgEsdhhF+XS/96QHSqG5aW2B9TJ40/wUhxYoRc+eMghxW5dCM/d091653qV
-	QOJYTNuUTah9u2xj1sJVIZQJM2oIeNZ1jExLVc51pav9SaLyRIZGToSoy3MkhoL7Jty5SL2o4D/
-	I7oNRro0XOvKl9anaaq3W1UgZQIaGzt/k4Rjh0djRo1vuME4=
-X-Google-Smtp-Source: AGHT+IEwoXGIzV8akza9wuHnzpdMDJjRSJFuE8pmXkEOlv9nwKY6YvijMOuiPPSYq1k0su7e61Abrw==
-X-Received: by 2002:a17:903:acd:b0:248:cd0b:344d with SMTP id d9443c01a7336-248cd0b381emr78909285ad.9.1756454579374;
-        Fri, 29 Aug 2025 01:02:59 -0700 (PDT)
-Received: from archie.me ([103.124.138.155])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-24903702999sm17213525ad.3.2025.08.29.01.02.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 29 Aug 2025 01:02:59 -0700 (PDT)
-Received: by archie.me (Postfix, from userid 1000)
-	id 08D794489F50; Fri, 29 Aug 2025 14:55:28 +0700 (WIB)
-From: Bagas Sanjaya <bagasdotme@gmail.com>
-To: Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-	Linux Documentation <linux-doc@vger.kernel.org>,
-	Linux DAMON <damon@lists.linux.dev>,
-	Linux Memory Management List <linux-mm@kvack.org>,
-	Linux Power Management <linux-pm@vger.kernel.org>,
-	Linux Block Devices <linux-block@vger.kernel.org>,
-	Linux BPF <bpf@vger.kernel.org>,
-	Linux Kernel Workflows <workflows@vger.kernel.org>,
-	Linux KASAN <kasan-dev@googlegroups.com>,
-	Linux Devicetree <devicetree@vger.kernel.org>,
-	Linux fsverity <fsverity@lists.linux.dev>,
-	Linux MTD <linux-mtd@lists.infradead.org>,
-	Linux DRI Development <dri-devel@lists.freedesktop.org>,
-	Linux Kernel Build System <linux-lbuild@vger.kernel.org>,
-	Linux Networking <netdev@vger.kernel.org>,
-	Linux Sound <linux-sound@vger.kernel.org>
-Cc: Thomas Gleixner <tglx@linutronix.de>,
-	Borislav Petkov <bp@alien8.de>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
-	Pawan Gupta <pawan.kumar.gupta@linux.intel.com>,
-	Jonathan Corbet <corbet@lwn.net>,
-	SeongJae Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	David Hildenbrand <david@redhat.com>,
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
-	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
-	Vlastimil Babka <vbabka@suse.cz>,
-	Mike Rapoport <rppt@kernel.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Michal Hocko <mhocko@suse.com>,
-	Huang Rui <ray.huang@amd.com>,
-	"Gautham R. Shenoy" <gautham.shenoy@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Perry Yuan <perry.yuan@amd.com>,
-	Jens Axboe <axboe@kernel.dk>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Martin KaFai Lau <martin.lau@linux.dev>,
-	Eduard Zingerman <eddyz87@gmail.com>,
-	Song Liu <song@kernel.org>,
-	Yonghong Song <yonghong.song@linux.dev>,
-	John Fastabend <john.fastabend@gmail.com>,
-	KP Singh <kpsingh@kernel.org>,
-	Stanislav Fomichev <sdf@fomichev.me>,
-	Hao Luo <haoluo@google.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Dwaipayan Ray <dwaipayanray1@gmail.com>,
-	Lukas Bulwahn <lukas.bulwahn@gmail.com>,
-	Joe Perches <joe@perches.com>,
-	Andrey Ryabinin <ryabinin.a.a@gmail.com>,
-	Alexander Potapenko <glider@google.com>,
-	Andrey Konovalov <andreyknvl@gmail.com>,
-	Dmitry Vyukov <dvyukov@google.com>,
-	Vincenzo Frascino <vincenzo.frascino@arm.com>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Eric Biggers <ebiggers@kernel.org>,
-	tytso@mit.edu,
-	Richard Weinberger <richard@nod.at>,
-	Zhihao Cheng <chengzhihao1@huawei.com>,
-	David Airlie <airlied@gmail.com>,
-	Simona Vetter <simona@ffwll.ch>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Nicolas Schier <nicolas.schier@linux.dev>,
-	Ingo Molnar <mingo@redhat.com>,
-	Will Deacon <will@kernel.org>,
-	Boqun Feng <boqun.feng@gmail.com>,
-	Waiman Long <longman@redhat.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Simon Horman <horms@kernel.org>,
-	Shay Agroskin <shayagr@amazon.com>,
-	Arthur Kiyanovski <akiyano@amazon.com>,
-	David Arinzon <darinzon@amazon.com>,
-	Saeed Bishara <saeedb@amazon.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Liam Girdwood <lgirdwood@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
-	Jaroslav Kysela <perex@perex.cz>,
-	Takashi Iwai <tiwai@suse.com>,
-	Alexandru Ciobotaru <alcioa@amazon.com>,
-	The AWS Nitro Enclaves Team <aws-nitro-enclaves-devel@amazon.com>,
-	Jesper Dangaard Brouer <hawk@kernel.org>,
-	Bagas Sanjaya <bagasdotme@gmail.com>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Steve French <stfrench@microsoft.com>,
-	Meetakshi Setiya <msetiya@microsoft.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
-	Masahiro Yamada <masahiroy@kernel.org>
-Subject: [PATCH 11/14] Documentation: net: Convert external kernel networking docs
-Date: Fri, 29 Aug 2025 14:55:21 +0700
-Message-ID: <20250829075524.45635-12-bagasdotme@gmail.com>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20250829075524.45635-1-bagasdotme@gmail.com>
-References: <20250829075524.45635-1-bagasdotme@gmail.com>
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="EZXX5o4h";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="0MSpGSb+";
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="OPBU/lqB";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="8HmyejID"
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out1.suse.de (Postfix) with ESMTPS id E240333DB6;
+	Fri, 29 Aug 2025 12:00:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1756468854; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=iaUzxmwBsmTBCo2WBOyDflFvUI/88ipptA2vlawnwBU=;
+	b=EZXX5o4hQ2Oh7plQuT98v6ah+GhxmYAgzg1F3DN+VoOuk1+I60IqOg+wim4HVwfvZSqk5f
+	VXhIIfKRC6+rFIM6IT4VfU7O/rhiTSdo68En/5dfo/OrDfx5ZZaGA58OL+/ZOcRTIyPN6d
+	fz6jO2qzGW350Q0Z5O4Dg9aDj5vGPg0=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1756468854;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=iaUzxmwBsmTBCo2WBOyDflFvUI/88ipptA2vlawnwBU=;
+	b=0MSpGSb+up5ugfLC8+w6PJ5di9IfOZ04Xx+/9bdOmpxI5u8p68jh9c2UpOBzM3HrOSt/uV
+	+5Y/F/pI2PXZwTDg==
+Authentication-Results: smtp-out1.suse.de;
+	dkim=pass header.d=suse.de header.s=susede2_rsa header.b="OPBU/lqB";
+	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=8HmyejID
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1756468853; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=iaUzxmwBsmTBCo2WBOyDflFvUI/88ipptA2vlawnwBU=;
+	b=OPBU/lqBuATLoeCcBKBuuQItTtcidsKi3kFoZdqDZ0Nl+eK/z0By3HAYaUQ02mzaBeaA3n
+	AxJWmJoWqSxQnOwqThQTyxhYEXHtRdMThJ3gi3fNxVUxFZHqSIPSSoAYM7B5Uonj0JldUt
+	pgzVsobFIRWaxfBiWpLS/8FdPrQ6liE=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1756468853;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=iaUzxmwBsmTBCo2WBOyDflFvUI/88ipptA2vlawnwBU=;
+	b=8HmyejIDx04CqR36zeLP1yk+JJaYK1w8XikVj/s27iMRpTGBB5nX44hU8iQRmaYyaeDrU8
+	9JTMYu3gqgAvlVDQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 9D2EC13A72;
+	Fri, 29 Aug 2025 12:00:51 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+	by imap1.dmz-prg2.suse.org with ESMTPSA
+	id l3olJXOWsWgSYwAAD6G6ig
+	(envelope-from <tzimmermann@suse.de>); Fri, 29 Aug 2025 12:00:51 +0000
+Message-ID: <871b2113-5482-4f3c-b58b-573d6cbeebe0@suse.de>
+Date: Fri, 29 Aug 2025 14:00:50 +0200
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4099; i=bagasdotme@gmail.com; h=from:subject; bh=eMX/Qh24hdl/D8upWlphNzasCNRD/YCgXxsSIbz5MxY=; b=owGbwMvMwCX2bWenZ2ig32LG02pJDBkbY16d1mKOz99m1qX25ldgn5beybqta3f6vFwaVK3P9 qU9Ts6io5SFQYyLQVZMkWVSIl/T6V1GIhfa1zrCzGFlAhnCwMUpABP5Y8vIsLj5nquL3YaGH+H5 K1M/GSvVfagoWJf+Wf//FmmeVbsWnGJk2HnZqfzd057r3t1TvvSsKTBp/5q8NJD5d+PrUJ8N/JZ PmQE=
-X-Developer-Key: i=bagasdotme@gmail.com; a=openpgp; fpr=701B806FDCA5D3A58FFB8F7D7C276C64A5E44A1D
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 08/14] Documentation: gpu: Use internal link to kunit
+To: Bagas Sanjaya <bagasdotme@gmail.com>,
+ Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+ Linux Documentation <linux-doc@vger.kernel.org>,
+ Linux DAMON <damon@lists.linux.dev>,
+ Linux Memory Management List <linux-mm@kvack.org>,
+ Linux Power Management <linux-pm@vger.kernel.org>,
+ Linux Block Devices <linux-block@vger.kernel.org>,
+ Linux BPF <bpf@vger.kernel.org>,
+ Linux Kernel Workflows <workflows@vger.kernel.org>,
+ Linux KASAN <kasan-dev@googlegroups.com>,
+ Linux Devicetree <devicetree@vger.kernel.org>,
+ Linux fsverity <fsverity@lists.linux.dev>,
+ Linux MTD <linux-mtd@lists.infradead.org>,
+ Linux DRI Development <dri-devel@lists.freedesktop.org>,
+ Linux Kernel Build System <linux-lbuild@vger.kernel.org>,
+ Linux Networking <netdev@vger.kernel.org>,
+ Linux Sound <linux-sound@vger.kernel.org>
+Cc: Thomas Gleixner <tglx@linutronix.de>, Borislav Petkov <bp@alien8.de>,
+ Peter Zijlstra <peterz@infradead.org>, Josh Poimboeuf <jpoimboe@kernel.org>,
+ Pawan Gupta <pawan.kumar.gupta@linux.intel.com>,
+ Jonathan Corbet <corbet@lwn.net>, SeongJae Park <sj@kernel.org>,
+ Andrew Morton <akpm@linux-foundation.org>,
+ David Hildenbrand <david@redhat.com>,
+ Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+ "Liam R. Howlett" <Liam.Howlett@oracle.com>, Vlastimil Babka
+ <vbabka@suse.cz>, Mike Rapoport <rppt@kernel.org>,
+ Suren Baghdasaryan <surenb@google.com>, Michal Hocko <mhocko@suse.com>,
+ Huang Rui <ray.huang@amd.com>, "Gautham R. Shenoy" <gautham.shenoy@amd.com>,
+ Mario Limonciello <mario.limonciello@amd.com>,
+ Perry Yuan <perry.yuan@amd.com>, Jens Axboe <axboe@kernel.dk>,
+ Alexei Starovoitov <ast@kernel.org>, Daniel Borkmann <daniel@iogearbox.net>,
+ Andrii Nakryiko <andrii@kernel.org>, Martin KaFai Lau
+ <martin.lau@linux.dev>, Eduard Zingerman <eddyz87@gmail.com>,
+ Song Liu <song@kernel.org>, Yonghong Song <yonghong.song@linux.dev>,
+ John Fastabend <john.fastabend@gmail.com>, KP Singh <kpsingh@kernel.org>,
+ Stanislav Fomichev <sdf@fomichev.me>, Hao Luo <haoluo@google.com>,
+ Jiri Olsa <jolsa@kernel.org>, Dwaipayan Ray <dwaipayanray1@gmail.com>,
+ Lukas Bulwahn <lukas.bulwahn@gmail.com>, Joe Perches <joe@perches.com>,
+ Andrey Ryabinin <ryabinin.a.a@gmail.com>,
+ Alexander Potapenko <glider@google.com>,
+ Andrey Konovalov <andreyknvl@gmail.com>, Dmitry Vyukov <dvyukov@google.com>,
+ Vincenzo Frascino <vincenzo.frascino@arm.com>, Rob Herring
+ <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Eric Biggers <ebiggers@kernel.org>,
+ tytso@mit.edu, Richard Weinberger <richard@nod.at>,
+ Zhihao Cheng <chengzhihao1@huawei.com>, David Airlie <airlied@gmail.com>,
+ Simona Vetter <simona@ffwll.ch>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Maxime Ripard <mripard@kernel.org>, Nathan Chancellor <nathan@kernel.org>,
+ Nicolas Schier <nicolas.schier@linux.dev>, Ingo Molnar <mingo@redhat.com>,
+ Will Deacon <will@kernel.org>, Boqun Feng <boqun.feng@gmail.com>,
+ Waiman Long <longman@redhat.com>, "David S. Miller" <davem@davemloft.net>,
+ Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
+ Paolo Abeni <pabeni@redhat.com>, Simon Horman <horms@kernel.org>,
+ Shay Agroskin <shayagr@amazon.com>, Arthur Kiyanovski <akiyano@amazon.com>,
+ David Arinzon <darinzon@amazon.com>, Saeed Bishara <saeedb@amazon.com>,
+ Andrew Lunn <andrew@lunn.ch>, Liam Girdwood <lgirdwood@gmail.com>,
+ Mark Brown <broonie@kernel.org>, Jaroslav Kysela <perex@perex.cz>,
+ Takashi Iwai <tiwai@suse.com>, Alexandru Ciobotaru <alcioa@amazon.com>,
+ The AWS Nitro Enclaves Team <aws-nitro-enclaves-devel@amazon.com>,
+ Jesper Dangaard Brouer <hawk@kernel.org>,
+ Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+ Steve French <stfrench@microsoft.com>,
+ Meetakshi Setiya <msetiya@microsoft.com>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ "Martin K. Petersen" <martin.petersen@oracle.com>,
+ Bart Van Assche <bvanassche@acm.org>, =?UTF-8?Q?Thomas_Wei=C3=9Fschuh?=
+ <linux@weissschuh.net>, Masahiro Yamada <masahiroy@kernel.org>
+References: <20250829075524.45635-1-bagasdotme@gmail.com>
+ <20250829075524.45635-9-bagasdotme@gmail.com>
+Content-Language: en-US
+From: Thomas Zimmermann <tzimmermann@suse.de>
+Autocrypt: addr=tzimmermann@suse.de; keydata=
+ xsBNBFs50uABCADEHPidWt974CaxBVbrIBwqcq/WURinJ3+2WlIrKWspiP83vfZKaXhFYsdg
+ XH47fDVbPPj+d6tQrw5lPQCyqjwrCPYnq3WlIBnGPJ4/jreTL6V+qfKRDlGLWFjZcsrPJGE0
+ BeB5BbqP5erN1qylK9i3gPoQjXGhpBpQYwRrEyQyjuvk+Ev0K1Jc5tVDeJAuau3TGNgah4Yc
+ hdHm3bkPjz9EErV85RwvImQ1dptvx6s7xzwXTgGAsaYZsL8WCwDaTuqFa1d1jjlaxg6+tZsB
+ 9GluwvIhSezPgnEmimZDkGnZRRSFiGP8yjqTjjWuf0bSj5rUnTGiyLyRZRNGcXmu6hjlABEB
+ AAHNJ1Rob21hcyBaaW1tZXJtYW5uIDx0emltbWVybWFubkBzdXNlLmRlPsLAjgQTAQgAOAIb
+ AwULCQgHAgYVCgkICwIEFgIDAQIeAQIXgBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftODH
+ AAoJEGgNwR1TC3ojx1wH/0hKGWugiqDgLNXLRD/4TfHBEKmxIrmfu9Z5t7vwUKfwhFL6hqvo
+ lXPJJKQpQ2z8+X2vZm/slsLn7J1yjrOsoJhKABDi+3QWWSGkaGwRJAdPVVyJMfJRNNNIKwVb
+ U6B1BkX2XDKDGffF4TxlOpSQzdtNI/9gleOoUA8+jy8knnDYzjBNOZqLG2FuTdicBXblz0Mf
+ vg41gd9kCwYXDnD91rJU8tzylXv03E75NCaTxTM+FBXPmsAVYQ4GYhhgFt8S2UWMoaaABLDe
+ 7l5FdnLdDEcbmd8uLU2CaG4W2cLrUaI4jz2XbkcPQkqTQ3EB67hYkjiEE6Zy3ggOitiQGcqp
+ j//OwE0EWznS4AEIAMYmP4M/V+T5RY5at/g7rUdNsLhWv1APYrh9RQefODYHrNRHUE9eosYb
+ T6XMryR9hT8XlGOYRwKWwiQBoWSDiTMo/Xi29jUnn4BXfI2px2DTXwc22LKtLAgTRjP+qbU6
+ 3Y0xnQN29UGDbYgyyK51DW3H0If2a3JNsheAAK+Xc9baj0LGIc8T9uiEWHBnCH+RdhgATnWW
+ GKdDegUR5BkDfDg5O/FISymJBHx2Dyoklv5g4BzkgqTqwmaYzsl8UxZKvbaxq0zbehDda8lv
+ hFXodNFMAgTLJlLuDYOGLK2AwbrS3Sp0AEbkpdJBb44qVlGm5bApZouHeJ/+n+7r12+lqdsA
+ EQEAAcLAdgQYAQgAIAIbDBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftOH6AAoJEGgNwR1T
+ C3ojVSkIALpAPkIJPQoURPb1VWjh34l0HlglmYHvZszJWTXYwavHR8+k6Baa6H7ufXNQtThR
+ yIxJrQLW6rV5lm7TjhffEhxVCn37+cg0zZ3j7zIsSS0rx/aMwi6VhFJA5hfn3T0TtrijKP4A
+ SAQO9xD1Zk9/61JWk8OysuIh7MXkl0fxbRKWE93XeQBhIJHQfnc+YBLprdnxR446Sh8Wn/2D
+ Ya8cavuWf2zrB6cZurs048xe0UbSW5AOSo4V9M0jzYI4nZqTmPxYyXbm30Kvmz0rYVRaitYJ
+ 4kyYYMhuULvrJDMjZRvaNe52tkKAvMevcGdt38H4KSVXAylqyQOW5zvPc4/sq9c=
+In-Reply-To: <20250829075524.45635-9-bagasdotme@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Level: 
+X-Spam-Flag: NO
+X-Rspamd-Queue-Id: E240333DB6
+X-Rspamd-Action: no action
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+X-Spamd-Result: default: False [-3.01 / 50.00];
+	BAYES_HAM(-3.00)[100.00%];
+	SUSPICIOUS_RECIPS(1.50)[];
+	NEURAL_HAM_LONG(-1.00)[-1.000];
+	R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	NEURAL_HAM_SHORT(-0.20)[-1.000];
+	MIME_GOOD(-0.10)[text/plain];
+	MX_GOOD(-0.01)[];
+	FROM_HAS_DN(0.00)[];
+	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	FUZZY_RATELIMITED(0.00)[rspamd.com];
+	RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+	TO_DN_SOME(0.00)[];
+	FREEMAIL_TO(0.00)[gmail.com,vger.kernel.org,lists.linux.dev,kvack.org,googlegroups.com,lists.infradead.org,lists.freedesktop.org];
+	MIME_TRACE(0.00)[0:+];
+	ARC_NA(0.00)[];
+	FREEMAIL_CC(0.00)[linutronix.de,alien8.de,infradead.org,kernel.org,linux.intel.com,lwn.net,linux-foundation.org,redhat.com,oracle.com,suse.cz,google.com,suse.com,amd.com,kernel.dk,iogearbox.net,linux.dev,gmail.com,fomichev.me,perches.com,arm.com,mit.edu,nod.at,huawei.com,ffwll.ch,davemloft.net,amazon.com,lunn.ch,perex.cz,ideasonboard.com,microsoft.com,linuxfoundation.org,acm.org,weissschuh.net];
+	RCVD_TLS_ALL(0.00)[];
+	DKIM_TRACE(0.00)[suse.de:+];
+	TO_MATCH_ENVRCPT_SOME(0.00)[];
+	RCPT_COUNT_GT_50(0.00)[99];
+	RCVD_COUNT_TWO(0.00)[2];
+	FROM_EQ_ENVFROM(0.00)[];
+	SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+	MID_RHS_MATCH_FROM(0.00)[];
+	TAGGED_RCPT(0.00)[dt];
+	RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+	R_RATELIMIT(0.00)[to_ip_from(RL8kdret51y9bzcpk5wqse1m3g)];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo]
+X-Spam-Score: -3.01
 
-Convert cross-references to kernel networking docs that use external
-links into internal ones.
 
-Signed-off-by: Bagas Sanjaya <bagasdotme@gmail.com>
----
- .../device_drivers/can/ctu/ctucanfd-driver.rst       |  3 +--
- .../device_drivers/ethernet/amazon/ena.rst           |  4 ++--
- Documentation/networking/ethtool-netlink.rst         |  3 +--
- Documentation/networking/snmp_counter.rst            | 12 +++++-------
- 4 files changed, 9 insertions(+), 13 deletions(-)
 
-diff --git a/Documentation/networking/device_drivers/can/ctu/ctucanfd-driver.rst b/Documentation/networking/device_drivers/can/ctu/ctucanfd-driver.rst
-index 1661d13174d5b8..4f9f36414333fd 100644
---- a/Documentation/networking/device_drivers/can/ctu/ctucanfd-driver.rst
-+++ b/Documentation/networking/device_drivers/can/ctu/ctucanfd-driver.rst
-@@ -40,8 +40,7 @@ About SocketCAN
- SocketCAN is a standard common interface for CAN devices in the Linux
- kernel. As the name suggests, the bus is accessed via sockets, similarly
- to common network devices. The reasoning behind this is in depth
--described in `Linux SocketCAN <https://www.kernel.org/doc/html/latest/networking/can.html>`_.
--In short, it offers a
-+described in Documentation/networking/can.rst. In short, it offers a
- natural way to implement and work with higher layer protocols over CAN,
- in the same way as, e.g., UDP/IP over Ethernet.
- 
-diff --git a/Documentation/networking/device_drivers/ethernet/amazon/ena.rst b/Documentation/networking/device_drivers/ethernet/amazon/ena.rst
-index 14784a0a6a8a10..b7b314de857b01 100644
---- a/Documentation/networking/device_drivers/ethernet/amazon/ena.rst
-+++ b/Documentation/networking/device_drivers/ethernet/amazon/ena.rst
-@@ -366,9 +366,9 @@ RSS
- 
- DEVLINK SUPPORT
- ===============
--.. _`devlink`: https://www.kernel.org/doc/html/latest/networking/devlink/index.html
- 
--`devlink`_ supports reloading the driver and initiating re-negotiation with the ENA device
-+:doc:`devlink </networking/devlink/index>` supports reloading the driver and
-+initiating re-negotiation with the ENA device
- 
- .. code-block:: shell
- 
-diff --git a/Documentation/networking/ethtool-netlink.rst b/Documentation/networking/ethtool-netlink.rst
-index ab20c644af2485..3445b575cb5d39 100644
---- a/Documentation/networking/ethtool-netlink.rst
-+++ b/Documentation/networking/ethtool-netlink.rst
-@@ -1100,8 +1100,7 @@ This feature is mainly of interest for specific USB devices which does not cope
- well with frequent small-sized URBs transmissions.
- 
- ``ETHTOOL_A_COALESCE_RX_PROFILE`` and ``ETHTOOL_A_COALESCE_TX_PROFILE`` refer
--to DIM parameters, see `Generic Network Dynamic Interrupt Moderation (Net DIM)
--<https://www.kernel.org/doc/Documentation/networking/net_dim.rst>`_.
-+to DIM parameters, see Documentation/networking/net_dim.rst.
- 
- COALESCE_SET
- ============
-diff --git a/Documentation/networking/snmp_counter.rst b/Documentation/networking/snmp_counter.rst
-index ff1e6a8ffe2164..c51d6ca9eff2c7 100644
---- a/Documentation/networking/snmp_counter.rst
-+++ b/Documentation/networking/snmp_counter.rst
-@@ -782,13 +782,11 @@ TCP ACK skip
- ============
- In some scenarios, kernel would avoid sending duplicate ACKs too
- frequently. Please find more details in the tcp_invalid_ratelimit
--section of the `sysctl document`_. When kernel decides to skip an ACK
--due to tcp_invalid_ratelimit, kernel would update one of below
--counters to indicate the ACK is skipped in which scenario. The ACK
--would only be skipped if the received packet is either a SYN packet or
--it has no data.
--
--.. _sysctl document: https://www.kernel.org/doc/Documentation/networking/ip-sysctl.rst
-+section of the Documentation/networking/ip-sysctl.rst. When kernel
-+decides to skip an ACK due to tcp_invalid_ratelimit, kernel would
-+update one of below counters to indicate the ACK is skipped in
-+which scenario. The ACK would only be skipped if the received
-+packet is either a SYN packet or it has no data.
- 
- * TcpExtTCPACKSkippedSynRecv
- 
+Am 29.08.25 um 09:55 schrieb Bagas Sanjaya:
+> Use internal linking to kunit documentation.
+>
+> Signed-off-by: Bagas Sanjaya <bagasdotme@gmail.com>
+
+Acked-by: Thomas Zimmermann <tzimmermann@suse.de>
+
+Fell free to merge it through a tree of your choice.
+
+Best regards
+Thomas
+
+> ---
+>   Documentation/gpu/todo.rst | 6 +++---
+>   1 file changed, 3 insertions(+), 3 deletions(-)
+>
+> diff --git a/Documentation/gpu/todo.rst b/Documentation/gpu/todo.rst
+> index be8637da3fe950..efe9393f260ae2 100644
+> --- a/Documentation/gpu/todo.rst
+> +++ b/Documentation/gpu/todo.rst
+> @@ -655,9 +655,9 @@ Better Testing
+>   Add unit tests using the Kernel Unit Testing (KUnit) framework
+>   --------------------------------------------------------------
+>   
+> -The `KUnit <https://www.kernel.org/doc/html/latest/dev-tools/kunit/index.html>`_
+> -provides a common framework for unit tests within the Linux kernel. Having a
+> -test suite would allow to identify regressions earlier.
+> +The :doc:`KUnit </dev-tools/kunit/index>` provides a common framework for unit
+> +tests within the Linux kernel. Having a test suite would allow to identify
+> +regressions earlier.
+>   
+>   A good candidate for the first unit tests are the format-conversion helpers in
+>   ``drm_format_helper.c``.
+
 -- 
-An old man doll... just what I always wanted! - Clara
+--
+Thomas Zimmermann
+Graphics Driver Developer
+SUSE Software Solutions Germany GmbH
+Frankenstrasse 146, 90461 Nuernberg, Germany
+GF: Ivo Totev, Andrew Myers, Andrew McDonald, Boudien Moerman
+HRB 36809 (AG Nuernberg)
+
 
