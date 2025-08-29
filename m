@@ -1,65 +1,65 @@
-Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
+Received: from mail-pj1-f52.google.com (mail-pj1-f52.google.com [209.85.216.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E1D326B0BE;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0970D28507E;
 	Fri, 29 Aug 2025 08:02:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756454578; cv=none; b=cSUOWSisO+75mcL3KOHTHC0LkIZ+18sb33i1ORpP0pB4WBbJ74V4h3eqHJ3XowUUKWsobvn5Ge8M2xMXFU0xcG4Z1VFAZtjEXG9QvM5iGC+FovRsmjR5Z+RBAKI63mypCdDtY9Et9Qie3Y04FZpmIkWVDwlWbFk9A9PRfNqaSIw=
+	t=1756454578; cv=none; b=Q2bNWry5F8XqrBFcFLmwYvqfObKb9Ue34U+mGzFooc0DChiZuvwdIfH1u3x3p5NJHKYpaleeCFhS3UDoLuhyOtbM0iufOh3+ZQaiu7afo8S1NXCF4DRSupMYYC6uOahOSb2TEnib/C2b9IE6ii7rJU5urpSeptuHsYy2PV/Lcvc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1756454578; c=relaxed/simple;
-	bh=lGvjj6RPPbr58GqrWqgYvJfKnQd0kE/Khje7rmfw55Q=;
+	bh=tVZea1ikNA4Sssls4g09ZchJ08JhUaFOY8Mmt8T2Tzg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IfclUnR8Vi2Ycci4B1+IOAB+iWf2TsUFCHV8fdjacbJAUDXA9nSTyaL4Yt5+VreiW5rqy3yjEM1q/1fIpoJHk7RiQPp9hBuejuyD5/bx5z0sJogtjFZSlqJRrIGpPGNfqjQUzng9lT/UVGx+keeaYsDIvcvv1OqsHwLvW6Mpw4g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CLUlVQw9; arc=none smtp.client-ip=209.85.214.181
+	 MIME-Version; b=pmX4sT8XfC2MuYioqeeOGyHHT4g6MTD+/ebpveH8zeuyHURa22/Eg+PL5qihVfrh7ziW0eb0dv0bjdGkLvphXYsSbYoKOhTNyEfbi4zqGg73y2krf25lhMaNHhD0Z9q4FOaftOT/QoLtUjsCViTZKtT/AxSXjTjKND/FLAS2cEc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=h+5zI6Cu; arc=none smtp.client-ip=209.85.216.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CLUlVQw9"
-Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-2489acda3bbso14190215ad.1;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="h+5zI6Cu"
+Received: by mail-pj1-f52.google.com with SMTP id 98e67ed59e1d1-32326793a85so1511338a91.1;
         Fri, 29 Aug 2025 01:02:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20230601; t=1756454576; x=1757059376; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=GUuceR9E3vzJz5a/JHCoOJAb1uIOOWcnyWbxLYGhp7M=;
-        b=CLUlVQw9+ft+Z2/Y6nLsZTTvSgEgLWAcd1heKhz51ubZH7uq9ec8nj/I2boYDlUmL5
-         UsX1n0+5goLo8ubzDkhPqEfcvvJZbAA1blbDkNGNDYOmV2hOppBBBh0qUIhCMJgfyYnc
-         0bpXK/Om3o/ILpmCX8oI+Y6YNFTzhKHvwHBxwr4v3CVWICza9CPdPGsE1hmCkDIiXSX5
-         bto+MFV1XuqSZfzfXVj9C3rkofm8ZnRLjZQiPe85hriACEZcozPP2ngDdklZAERZwxGZ
-         cAjCGpGVRGbY0r77zQLG0343XTZKNrzhN6Gd8fZ+Z//fjJHitaPMx0Ad8yFf17V1qLxg
-         XRKQ==
+        bh=jdhbTSK6p9ht0YngyCDiyyRtcLCfpgxS9tGDrcGiJGs=;
+        b=h+5zI6CuujaU47iFuO6UdOjdohfGHAKaTFM8N/EWqHz2iddRxQH/RQ1/0jN4DopOj+
+         m69/qcU4Er2eKjhVL+sg/vfvs/+qd/CSgg4TIXYo7J3uFvhn1QlThJRK20nSztKiBR7l
+         LbvDvf2aCWW0hY7dfBabcZL1udtIM8IVEb96wFN9qzSSG6Q+Bf+Ls22f/T85kpWj+uBy
+         Cmgv2ULy04lOcKf9EMhhT5I0l8QXYwkyjEt9t0Kz07RO07wIT/YIKb3gZSpTmssYTch/
+         r5tu/VR921a6oWnLkADtwvHT+iWwyVDLK1MPsG+SHZHiVsdNm6MFKyzPu6VV0yqFp44F
+         RShw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20230601; t=1756454576; x=1757059376;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=GUuceR9E3vzJz5a/JHCoOJAb1uIOOWcnyWbxLYGhp7M=;
-        b=WtOcXy4e7XIUjeoA6Do/+zquktX32l/RyOYPzHCXfAnmrfxBxO3AQ1wY2Areblln/x
-         hkZya0+GfK6xCLtCC4pv1oNNZ7+4W0z889Ve18shSnY1QQczNwWpR3bJfPfZjlSxxNGm
-         0OpqKhl/if8e2L8EHEvZGEdp8jO/Cz1gIDvGpsbjov6BdH4QtMn/6cZFuCXegZGu1fP7
-         w5Zf+m/7J66/dkcg2UQkClYoC8BMEk4llCkZZl/LfD4huhsG/z4iqS0x1UmElmA2s4ir
-         9PtgAhffITO/eAmRbwzAgq722UH4Q2rpRXJ3EYBvjP/Iun2iqN55Oj1cW2mMPE4yIc/3
-         yFmg==
-X-Forwarded-Encrypted: i=1; AJvYcCVLzAh764SOwIHHGPPn/4scud225San8zFQufRwnGVxUeZT5SM1ivFLT+dPmG4xB9EKpRDCGkjJdFQ=@lists.linux.dev, AJvYcCWLHFsO+bVZO8UVVctGghMoL5BcyhRn7vvkpIiZRMk2WgYzueoDc74MGgKzDHprjKZ3Lu+JgQ==@lists.linux.dev
-X-Gm-Message-State: AOJu0YwyvY0FZJ/FeHn5XPUWwZimj+7Ga6rX58e9svmaWFbOxzbYkHwu
-	Sb4D/v1NtOH17eyRxgdBomcJEAZaENnrpdjZBG1g5IQ4CDfhbYQ03TX3
-X-Gm-Gg: ASbGnctf4DuRZF8xWt5lC9GSdtD2mr89cmrsXrIUzsfZbsbxZpGpxQWPAtMh4IYeicm
-	M+a2YRudmx+y97+1jtMTvkJEITq7W8EqlZnptbyX2HYEi5qfEtCVbFsmM03G6rIpBlOxBlEsB2H
-	E3shtQexi26LEqHOpx5OeFQ3LK4qYd0DvSIxrysL95JiHqAGE/EZFzUplOdCbUavL7rGp2g0T5C
-	MKjqXn6m9sMyaaiLFfOcFEXwPkZHOD1FyJdDiF5D+Fw2/AiFnP+F8PMVZ6U6I3ln4JF0xvRF6/V
-	Sr8FI+xeEwYdJmyhT8pLXSaIXpwTuyXS3N4FdmOiuP1jNXMJzfY2RXYi1GGcS+1GnuoYYlNExmG
-	PjISoT2ALJ3jYou6gLFNo8tYhGi5v24ZxZdrd
-X-Google-Smtp-Source: AGHT+IFt0CgZnKjzhJ5g4aj0Cm28ZWwwe3q9IBbh2aQ/4X9BQsH63Txhma9tsRWuYD6j70bLTYHjgg==
-X-Received: by 2002:a17:902:e890:b0:246:bcf4:c82d with SMTP id d9443c01a7336-246bcf4cc37mr269048275ad.52.1756454575739;
-        Fri, 29 Aug 2025 01:02:55 -0700 (PDT)
+        bh=jdhbTSK6p9ht0YngyCDiyyRtcLCfpgxS9tGDrcGiJGs=;
+        b=n6vA0fy2Vc9ko6MW/9uaHImmyU/NfXwQ3QcoguiBNHA2GFq8hPj2Hf1i0zZGxN9Q0X
+         xlgxYBXyCK1s3K5AxTQYXGZaNBAKHboz0EoFEEFIWM/Dr6AP5S+v4GkXLNFV6mADVNv+
+         aLs3WRiAcXyOUWNo60pBku7m5263xWxix9YPrUmjSIIGDGNBFzomqPYJ0QjDjjiIF16A
+         f3JMpYAGWCUJUhgjGyoEL621L57CWhkMcUHRAzFpqabO0nVsiO7LuqoBM1lfEQEh+H0k
+         FG1lD3wpoF3xJy0vYZ2ENgQryD8xhgFZ08bItXE5ss6MlVtYzgJjeILkTsL5O7G/+OvE
+         66cA==
+X-Forwarded-Encrypted: i=1; AJvYcCXIh+T+TYvWmuOx299JEft9wcwMn5HlkwXzhH2moU0P0RM0Z2npSHCkqg1WTs8VZ9yJOOT5OuzoILI=@lists.linux.dev, AJvYcCXc/KPQx4gVCsoT9pEnTsiyGZTAR6q3kUaWqKi0axqFxNKc/qvvNleKY/91YCQLrxf0LFBsrg==@lists.linux.dev
+X-Gm-Message-State: AOJu0Yxb9INbdvSFjaXjk+KglFuRDqI4xyWwz64+oDUbistVa/TKgDU/
+	MF6MJcLkEinSnIStUlU2zhAwnBWeNxaVt0f2RsMjQk+cEHiCK0hba64Y
+X-Gm-Gg: ASbGncvCXYtqaZKJnmIipeR+tI0TZ0iuust0q1Bp3Lt8eq0KDewivuJyybEj6jUm8w0
+	m0B4fxAE5fA0z3LOz7II9iczKSKsGBcIvGG0KjxIvqnjYONEWPML9OEOtvWt96NvILo8prRc1JH
+	e9qE89XUcgWaSosxZUbaQR7rUOFkE/+AcJhv0pCXfgaJx6HWHR7oq/Wfavz9c7ZMCep+0DD5r5O
+	ugW+lPe+nsx5KesAuoauAvK4d6QGA8fPIFidtrTUawQAq4EETS2TQDclRDJF5vUTSVYIQGp6wg5
+	OADU2V+Yq5ZifMFmt0gnEw9A7py6uALnj51giqIOKa1JgQHidysVBtEoe0TKJLWlJvYbWSKbQJz
+	2f3Ua+Wh//KU7g0OnF6/hrtORGmERLSgfFuX/
+X-Google-Smtp-Source: AGHT+IE+D5SeDqchp/24MDHXx5CQWTZci+ASgYtlboM+vs82gW00FOC1mk2B4v9sodvZwpxdBzPuFw==
+X-Received: by 2002:a17:90b:3a87:b0:327:c9c1:4f2a with SMTP id 98e67ed59e1d1-327c9c1642bmr4975594a91.27.1756454576161;
+        Fri, 29 Aug 2025 01:02:56 -0700 (PDT)
 Received: from archie.me ([103.124.138.155])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-249067de9f1sm16493345ad.151.2025.08.29.01.02.54
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-327b01e90e5sm2191228a91.1.2025.08.29.01.02.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 29 Aug 2025 01:02:54 -0700 (PDT)
+        Fri, 29 Aug 2025 01:02:55 -0700 (PDT)
 Received: by archie.me (Postfix, from userid 1000)
-	id B95C34480990; Fri, 29 Aug 2025 14:55:28 +0700 (WIB)
+	id E8F6644809A5; Fri, 29 Aug 2025 14:55:28 +0700 (WIB)
 From: Bagas Sanjaya <bagasdotme@gmail.com>
 To: Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
 	Linux Documentation <linux-doc@vger.kernel.org>,
@@ -161,9 +161,9 @@ Cc: Thomas Gleixner <tglx@linutronix.de>,
 	Bart Van Assche <bvanassche@acm.org>,
 	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
 	Masahiro Yamada <masahiroy@kernel.org>
-Subject: [PATCH 08/14] Documentation: gpu: Use internal link to kunit
-Date: Fri, 29 Aug 2025 14:55:18 +0700
-Message-ID: <20250829075524.45635-9-bagasdotme@gmail.com>
+Subject: [PATCH 10/14] Documentation: smb: smbdirect: Convert KSMBD docs link
+Date: Fri, 29 Aug 2025 14:55:20 +0700
+Message-ID: <20250829075524.45635-11-bagasdotme@gmail.com>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250829075524.45635-1-bagasdotme@gmail.com>
 References: <20250829075524.45635-1-bagasdotme@gmail.com>
@@ -173,34 +173,32 @@ List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1122; i=bagasdotme@gmail.com; h=from:subject; bh=lGvjj6RPPbr58GqrWqgYvJfKnQd0kE/Khje7rmfw55Q=; b=kA0DAAoW9rmJSVVRTqMByyZiAGixXOmjSTNEt/JFR6AhPDWfGCcGj/Np82/Az7wMJic3oIar2 Ih1BAAWCgAdFiEEkmEOgsu6MhTQh61B9rmJSVVRTqMFAmixXOkACgkQ9rmJSVVRTqNRJAD+IU+J KWDSPb94prUVj+FntqxPO7boU221XL2jEkITc6cBAKhpWT1CuLYVAMm4rv4hGzdOOa9sljkO4cB hdLolzx8O
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1002; i=bagasdotme@gmail.com; h=from:subject; bh=tVZea1ikNA4Sssls4g09ZchJ08JhUaFOY8Mmt8T2Tzg=; b=owGbwMvMwCX2bWenZ2ig32LG02pJDBkbY15VZXUEfpV/XXVSre/C87lNIRyCV5IjnItu7ShZU PiphvtYRykLgxgXg6yYIsukRL6m07uMRC60r3WEmcPKBDKEgYtTACbSt4OR4WixGWdF367Ci0f0 5/VHVx3YxHrvMF/c3LtfDf1enBJSvMrwV9hALHj9kQNbWF8l9WcGsahNXW7scuzOjYlmr0LWbpu 3gQUA
 X-Developer-Key: i=bagasdotme@gmail.com; a=openpgp; fpr=701B806FDCA5D3A58FFB8F7D7C276C64A5E44A1D
 Content-Transfer-Encoding: 8bit
 
-Use internal linking to kunit documentation.
+Convert KSMBD docs link to internal link.
 
 Signed-off-by: Bagas Sanjaya <bagasdotme@gmail.com>
 ---
- Documentation/gpu/todo.rst | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ Documentation/filesystems/smb/smbdirect.rst | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/gpu/todo.rst b/Documentation/gpu/todo.rst
-index be8637da3fe950..efe9393f260ae2 100644
---- a/Documentation/gpu/todo.rst
-+++ b/Documentation/gpu/todo.rst
-@@ -655,9 +655,9 @@ Better Testing
- Add unit tests using the Kernel Unit Testing (KUnit) framework
- --------------------------------------------------------------
+diff --git a/Documentation/filesystems/smb/smbdirect.rst b/Documentation/filesystems/smb/smbdirect.rst
+index ca6927c0b2c084..6258de919511fa 100644
+--- a/Documentation/filesystems/smb/smbdirect.rst
++++ b/Documentation/filesystems/smb/smbdirect.rst
+@@ -76,8 +76,8 @@ Installation
+ Setup and Usage
+ ================
  
--The `KUnit <https://www.kernel.org/doc/html/latest/dev-tools/kunit/index.html>`_
--provides a common framework for unit tests within the Linux kernel. Having a
--test suite would allow to identify regressions earlier.
-+The :doc:`KUnit </dev-tools/kunit/index>` provides a common framework for unit
-+tests within the Linux kernel. Having a test suite would allow to identify
-+regressions earlier.
+-- Set up and start a KSMBD server as described in the `KSMBD documentation
+-  <https://www.kernel.org/doc/Documentation/filesystems/smb/ksmbd.rst>`_.
++- Set up and start a KSMBD server as described in the :doc:`KSMBD documentation
++  <ksmbd>`.
+   Also add the "server multi channel support = yes" parameter to ksmbd.conf.
  
- A good candidate for the first unit tests are the format-conversion helpers in
- ``drm_format_helper.c``.
+ - On the client, mount the share with `rdma` mount option to use SMB Direct
 -- 
 An old man doll... just what I always wanted! - Clara
 
