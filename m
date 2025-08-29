@@ -1,65 +1,65 @@
-Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
+Received: from mail-pf1-f179.google.com (mail-pf1-f179.google.com [209.85.210.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 825462C11C4;
-	Fri, 29 Aug 2025 07:55:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54D032D0C67;
+	Fri, 29 Aug 2025 07:55:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756454142; cv=none; b=X57cZmQiBTCj+LeQA0iZD9/075wTHg7AUzbFv3xf9+b4kRAPx/PMFcie4221whgWW5RQKI360EVxCNFYMZJ+LQ1Vi9oU0My3rE0urJKnVAuG2w9XqBWxMJ8Os1+mulSzgU8docYuZiT/oOmBHrx57NoG7jUuvNss9Keutny9xzk=
+	t=1756454145; cv=none; b=U2CoysuRItQl7Lql3tf9P7lj18rB02poP6LG1d/Y8RM57rMBmXpi91pk8e7Nt2+/YB6NXBqaJ+SCdIGVuY/PvV9sXaPWgWK7mEUYm4x7SiXBm9P1fqTOk7z/ikF7nHqY0DbDdNtj8AXwVvrEVLfcu0VFyq5IZLHTj+OfeY+nVsU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756454142; c=relaxed/simple;
-	bh=YCjSy3OR+PtbNsOx3d7dblyTwJjnDEtFBwBCle5X25g=;
+	s=arc-20240116; t=1756454145; c=relaxed/simple;
+	bh=7QXrNRuCbHeHgCYdGUN3dSXlo+bJ6ZwXyeTt5Kf+8Ys=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ntb4/KPzgMBpSX6YYbhb8lAnyjy/U28G3ipc9FsOLVRlXXlQFvqW0H7SqudvqXZEHfzzZgEIleAN86NMJSUK62NagFnJ90Zc55d43sWDSDcZ/1nzlYozg07R4uCKTas/JYzJySJHBf8qJIoFONMUsQ7lY2Idfun+bVED70ZlRSc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WIuutvJF; arc=none smtp.client-ip=209.85.214.172
+	 MIME-Version; b=uG8OmFFJPDmzJDg/qLK2p6JtBZiMX8gnZ6qLFaEYeSoAQH9kd/6oML/Hb1VJ1cqa7QIhvUs7QwBoj/HpNeLZr2591/nvbW4mRkM2pGsj23bYwTDEXl04wi6Y/DvMYtITaZnHQm/cCqnN6WIvwnvuFQlkFAb6ImSo7PIkQxgRJSA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jVofYoDi; arc=none smtp.client-ip=209.85.210.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WIuutvJF"
-Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-248ff68356aso5927835ad.1;
-        Fri, 29 Aug 2025 00:55:40 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jVofYoDi"
+Received: by mail-pf1-f179.google.com with SMTP id d2e1a72fcca58-7720f23123dso1815638b3a.2;
+        Fri, 29 Aug 2025 00:55:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1756454140; x=1757058940; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1756454142; x=1757058942; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=4+SUGCH8uEjWgwJ6PdsO74F0lOA4arnp0TuRWyoM63o=;
-        b=WIuutvJFYxBJiRz4Tj3eMhVjrj92nM974Ew0UGICvabbk7q4DG0QWOHpG8NU6RCKqL
-         Eos8+OGmF5JFOhH5IzuEBABV+HYTQWcyT1HoLm0sr8mIBIqvHZnYmS8mlT4nRyHcoRVg
-         pkO8ks5PUukZp88MDkQ5DTWhM/yedq2Bu+S8uKYSgVHGt4pxZrqjqzzj6W7iKtmRHLcy
-         yyRzXfGs+xKLaMo86dmXVbrkq7zcoQhLbQpJA9+cTUaM7cj7/UGMPI4PireiJJgOcYg9
-         UBVmAESIgqV68DYtJcG4qd64wsMcvESDSvTO5zWRbXJN/AxZaqjhSwpLBYIkp1mXKABS
-         nZew==
+        bh=exY9byyl4etH+4IQEKnm6qXO5lYPceGxvCuurSN7fh0=;
+        b=jVofYoDis3tIjVFm4DkgLrJ3RJn43OCiyO9pHroFLEyURmLpJwCcD4XNJ+B9LX6sCx
+         Hd46rYLFxlU2k9t7rmcSndrIi2WeIeY/2zMXc6rtZPJkM1hCBRVcBH/NxAYSsVIORgnx
+         5D10/RpyaXaXLNQU5OK39al/2XFTEwJJ9dV3ihrPd0GB2ywv6DF1n419Obb85BvVOQs1
+         AoPxHv1lDTk9tgKMuNvsqK+BWlnVD0cbM66IlNHj9AbZLWsEjaJY4lUei6DuNz/NZDd9
+         BcZVyGgRibkmOgwX/aUbWx+1LqgCT2OTkDCLPDdDoh7yIukalBtrhtws5EnVyoq7uYLo
+         3/Ew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756454140; x=1757058940;
+        d=1e100.net; s=20230601; t=1756454142; x=1757058942;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=4+SUGCH8uEjWgwJ6PdsO74F0lOA4arnp0TuRWyoM63o=;
-        b=QC+1D/zzIBzh4YVtRNhb3zIQa4SYaROTYiCjGm/GJivV55tQoPniKy6bQh8hoDN46H
-         Kmc8Rx6oilTZ+lnmRclWOSC1bsO/3AF7cEZAfowRicE8OSaXU15xZ1ElxBJkBjP2vJ1O
-         AyDtHSJyzfHGpdUvjFq+PVcqA4p71O9wXojkjBRUWBvRojOEhPoopgjlGoWam0sQw4Qw
-         ERWTklKoa+td6rWc/fni45Mz8kR4t68Vx0L8M2UqgnLOPqzxmz63S0LPa5RxW8L44eoI
-         +G1D8XsyxSEhH5DJuLcif5ot1F7jGvTdM02y9QBPb1IbZFepkr905dhAqcQEshvSGFvb
-         NCWg==
-X-Forwarded-Encrypted: i=1; AJvYcCUGUgQIpo3EsqsZY++S/13c40VYSZBsynXj/aLWPAuIyNSIspxZ8+iIskfh9TabEVcCqJPUtw==@lists.linux.dev, AJvYcCWPCZOtu42HHdO66jB9eTPWI+vP+I2wsbZ/a4z9fd/tyeFt72Pzp7Ky1sRTGn09TfP9TxL1OzlyhDs=@lists.linux.dev
-X-Gm-Message-State: AOJu0YydX7VxFueey3H4OX7KKsNYHZBWkVQC/2Hd5Nl9J8c2iTzMWzLG
-	bo3U/o5lOlQSvDUVavMQkizA2M98RZRXDxY2Zd7CDs0Xy0nokhiSdonQ
-X-Gm-Gg: ASbGncsexQxCl6WKNxFwUJrfV6RCyWxI9qYZX2iF5H8ZaF76Egufi41CzL/L+AieR6P
-	t/15adL50mzXdeDxFuUrRPGrA+/yrOP7Bvjg72GT1EwAf/f+Gh+ye65GjBp20IJcj9qSi1uhXnc
-	ElTzCrsndzPZraY7JjtkepJdPjVJc1LGsT+UOtGHg96muamcM4QExMLp3ZRxoB5eNT6vlYOKMKs
-	T4uTOkfCTAIKHQDStCYvBRjZ5LYov6Ogy0fPiQJEFDxTYq/0Q2dWlLejGUbpR2rV4Buo6VhQbEn
-	0Cn9HXIL3hWj/gTw1AEal3uNhN6td92jBqM78x2pE7dyiWqODv0WOv7Th5zKyhbumb8ex7x3JRK
-	S7hQlI+bauImULSv6nK2RJ1S9PvKQYhzoFevu
-X-Google-Smtp-Source: AGHT+IEUIbmp5KZdMZPn0c0CGQYstQ2DxLDepEvVflAGtJJLsQl7+Hp4DCT56TGBU1NzXfP4o4RcNw==
-X-Received: by 2002:a17:902:d510:b0:249:11cc:2afc with SMTP id d9443c01a7336-24911cc303bmr18192475ad.7.1756454139741;
-        Fri, 29 Aug 2025 00:55:39 -0700 (PDT)
+        bh=exY9byyl4etH+4IQEKnm6qXO5lYPceGxvCuurSN7fh0=;
+        b=w3/F3tFqgklYV6UlmRZyp6C1gPkx6Ak3iN2cICuxXQ50jWQREonPSo4CEg+FgcQCaV
+         gz6qFnGoA2mlQpmKi5JpbwVZhG3rU+vqEEUCmmNlL3L3QoJd8xOLIvnEzFvOntPF9eOo
+         caSjMOxzOqNBYNX4vKG+G+kaSKx1L2VtktkROaJC6P3p+GD+hTclOWw+KVoyrhnCjmnC
+         FDNziDg2UDZUqlPJeJQ04STC8mcCAZC19rSuhc5dCQN+FmKLWooEPQmMF0dgPTwde9RM
+         bGCBgcQd1dhqPH8Synuh2M6geamfCm35SB3zYVWI0k3gpIDSYYrai1sUsplk8NnYMwye
+         OWRA==
+X-Forwarded-Encrypted: i=1; AJvYcCUmppqU9lElCsllRXxEilK0ii2Mrv5DuwGPufxN5JNHhuAcSCBIQPWnoqpI7WsXMHOIHDT5XG6KKnQ=@lists.linux.dev, AJvYcCWNf35ywzE4CPjOKfvuUzGB2oyXbhplyCSgCUSDkOtdpuXxJRT5ItY5oPfQUvxXtwwVxdIXpQ==@lists.linux.dev
+X-Gm-Message-State: AOJu0YyC7L1K2kt9HIlOBBuoEWws5Ag0JQNC8XjMDE0Gyb3qpENFNIDw
+	Pb+u7G8iNdLjlqb6B57PWZY8gDXQKe4WzUhuKjeUsmt78+ZF3RQNVQ4z
+X-Gm-Gg: ASbGncvqHQVSHvHfp8x+PmYZFruTOScD8PnK0uM1P0WZiZsZVypF2+9FBzwxCEUkElA
+	k8ZGC0FZVN9j0fFLwMFUgc7x31b33l9PEdohsdK/u00TFwEsZcKJGwI6PW/cRWkolCyb7ofxRKh
+	JzAbLgq2ulSNU/ktazF7lJcITKSdn1wVq1UX3QO1B9/Cy0Zr/tRztKu4U6QgwKCI+9ewyiCKfHZ
+	8SndWu1urcQBUDl4Cp18B1poK0qRBMN+bfvqDU/7cKwoNFaQC3+oPAEWok6MZQG66gdanIesZA6
+	XsX3UgT6MSrM1P+Up8pcIonRl5SX/lC003bLKelg7yK+gedOUzScu16ubJtRbMLYPA633nJKF8W
+	dvNY7mKAWbehovcfBTKfxOfgIM/PUt3MaTfxbhB/oEnQqVpc=
+X-Google-Smtp-Source: AGHT+IGl2H1cpKBrzVIc01ALD2l+GqNGGEJdm0M1vP0Ajl0ap9rVA4eE5ntn2ncpRPD9DtXSzK3gDA==
+X-Received: by 2002:a05:6a20:1585:b0:232:7c7b:1c7b with SMTP id adf61e73a8af0-24340c429e2mr42540329637.14.1756454142509;
+        Fri, 29 Aug 2025 00:55:42 -0700 (PDT)
 Received: from archie.me ([103.124.138.155])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-24903704379sm17029615ad.29.2025.08.29.00.55.35
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7722a2aaa70sm1550930b3a.24.2025.08.29.00.55.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Fri, 29 Aug 2025 00:55:37 -0700 (PDT)
 Received: by archie.me (Postfix, from userid 1000)
-	id 5F71C44808E5; Fri, 29 Aug 2025 14:55:27 +0700 (WIB)
+	id 7A9CF44808EB; Fri, 29 Aug 2025 14:55:27 +0700 (WIB)
 From: Bagas Sanjaya <bagasdotme@gmail.com>
 To: Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
 	Linux Documentation <linux-doc@vger.kernel.org>,
@@ -161,9 +161,9 @@ Cc: Thomas Gleixner <tglx@linutronix.de>,
 	Bart Van Assche <bvanassche@acm.org>,
 	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
 	Masahiro Yamada <masahiroy@kernel.org>
-Subject: [PATCH 04/14] Documentation: amd-pstate: Use internal link to kselftest
-Date: Fri, 29 Aug 2025 14:55:14 +0700
-Message-ID: <20250829075524.45635-5-bagasdotme@gmail.com>
+Subject: [PATCH 05/14] Documentation: blk-mq: Convert block layer docs external links
+Date: Fri, 29 Aug 2025 14:55:15 +0700
+Message-ID: <20250829075524.45635-6-bagasdotme@gmail.com>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250829075524.45635-1-bagasdotme@gmail.com>
 References: <20250829075524.45635-1-bagasdotme@gmail.com>
@@ -173,28 +173,58 @@ List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=889; i=bagasdotme@gmail.com; h=from:subject; bh=YCjSy3OR+PtbNsOx3d7dblyTwJjnDEtFBwBCle5X25g=; b=owGbwMvMwCX2bWenZ2ig32LG02pJDBkbY14qPYlapHXxetwsqb0JS9jb7/0/73aj6M+zsn/7f 7uJBK+t7ihlYRDjYpAVU2SZlMjXdHqXkciF9rWOMHNYmUCGMHBxCsBEJPkZ/hloBmcs7pqXLvRo 3uW3yzpsL08refrBOejE1FfXjopF7nZk+B9pJzZFXlK9u2zWB3XR7Keu63hWz99heLTAzXSF0Y1 5YmwA
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2751; i=bagasdotme@gmail.com; h=from:subject; bh=7QXrNRuCbHeHgCYdGUN3dSXlo+bJ6ZwXyeTt5Kf+8Ys=; b=owGbwMvMwCX2bWenZ2ig32LG02pJDBkbY17q3TFftH6q+kyOiIzsCLYVR/ZOd/GUnnS+Yu6/k 6t6/fl6OkpZGMS4GGTFFFkmJfI1nd5lJHKhfa0jzBxWJpAhDFycAjARpWqGfwYJyctD8hT/NwY/ sO81mNZXoe/tpx8864flkqYm66Aruxn+V81fprfBrut+sv/0I1K75vi+e3t4WtGyeRzBVy1DeSv K+QE=
 X-Developer-Key: i=bagasdotme@gmail.com; a=openpgp; fpr=701B806FDCA5D3A58FFB8F7D7C276C64A5E44A1D
 Content-Transfer-Encoding: 8bit
 
-Convert kselftest docs link to internal cross-reference.
+Convert external links to block layer docs to use internal linking.
 
 Signed-off-by: Bagas Sanjaya <bagasdotme@gmail.com>
 ---
- Documentation/admin-guide/pm/amd-pstate.rst | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ Documentation/block/blk-mq.rst | 23 +++++++++++------------
+ 1 file changed, 11 insertions(+), 12 deletions(-)
 
-diff --git a/Documentation/admin-guide/pm/amd-pstate.rst b/Documentation/admin-guide/pm/amd-pstate.rst
-index e1771f2225d5f0..37082f2493a7c1 100644
---- a/Documentation/admin-guide/pm/amd-pstate.rst
-+++ b/Documentation/admin-guide/pm/amd-pstate.rst
-@@ -798,5 +798,4 @@ Reference
- .. [3] Processor Programming Reference (PPR) for AMD Family 19h Model 51h, Revision A1 Processors
-        https://www.amd.com/system/files/TechDocs/56569-A1-PUB.zip
+diff --git a/Documentation/block/blk-mq.rst b/Documentation/block/blk-mq.rst
+index fc06761b6ea906..4d511feda39cfd 100644
+--- a/Documentation/block/blk-mq.rst
++++ b/Documentation/block/blk-mq.rst
+@@ -87,17 +87,16 @@ IO Schedulers
+ There are several schedulers implemented by the block layer, each one following
+ a heuristic to improve the IO performance. They are "pluggable" (as in plug
+ and play), in the sense of they can be selected at run time using sysfs. You
+-can read more about Linux's IO schedulers `here
+-<https://www.kernel.org/doc/html/latest/block/index.html>`_. The scheduling
+-happens only between requests in the same queue, so it is not possible to merge
+-requests from different queues, otherwise there would be cache trashing and a
+-need to have a lock for each queue. After the scheduling, the requests are
+-eligible to be sent to the hardware. One of the possible schedulers to be
+-selected is the NONE scheduler, the most straightforward one. It will just
+-place requests on whatever software queue the process is running on, without
+-any reordering. When the device starts processing requests in the hardware
+-queue (a.k.a. run the hardware queue), the software queues mapped to that
+-hardware queue will be drained in sequence according to their mapping.
++can read more about Linux's IO schedulers at Documentation/block/index.rst.
++The scheduling happens only between requests in the same queue, so it is not
++possible to merge requests from different queues, otherwise there would be
++cache trashing and a need to have a lock for each queue. After the scheduling,
++the requests are eligible to be sent to the hardware. One of the possible
++schedulers to be selected is the NONE scheduler, the most straightforward one.
++It will just place requests on whatever software queue the process is running
++on, without any reordering. When the device starts processing requests in the
++hardware queue (a.k.a. run the hardware queue), the software queues mapped to
++that hardware queue will be drained in sequence according to their mapping.
  
--.. [4] Linux Kernel Selftests,
--       https://www.kernel.org/doc/html/latest/dev-tools/kselftest.html
-+.. [4] Documentation/dev-tools/kselftest.rst
+ Hardware dispatch queues
+ ~~~~~~~~~~~~~~~~~~~~~~~~
+@@ -143,7 +142,7 @@ Further reading
+ 
+ - `NOOP scheduler <https://en.wikipedia.org/wiki/Noop_scheduler>`_
+ 
+-- `Null block device driver <https://www.kernel.org/doc/html/latest/block/null_blk.html>`_
++- Documentation/block/null_blk.rst
+ 
+ Source code documentation
+ =========================
 -- 
 An old man doll... just what I always wanted! - Clara
 
