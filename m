@@ -1,33 +1,70 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95D2932F740;
-	Wed,  3 Sep 2025 03:32:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 269C92D3A97
+	for <damon@lists.linux.dev>; Wed,  3 Sep 2025 04:40:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756870341; cv=none; b=UKNfRQPDhSb7p+4/Wfv3XTdfIs51PaiHxO7AlU7Uco5oz+sqOxjHF438ibH4JKa8AP2YMf+khgEPDyedmjsftH24qI+mIFRJnPUHcYo8z5Qlx+IYXF72k7g1MAh2uhXjB1ImChypZP2VO0mj/WCiIinulK1zPAzhlEwEgx3o4L0=
+	t=1756874450; cv=none; b=JdZbcSYvo/ss6ODO3NYUbBn+r2jTZQTeBgU03CJEfB5fzkvpktl1srCr54EQLP8Rs+9COHPy/RhnfIgTFqKKXiVPJ0+ftResTzix2g3Ef0yC9mg/wMzgstzoZ+MrNzaDFH+xGgwzHOMFXlqH0eYovZmoc/TZTWSK37kpVl8DCrA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756870341; c=relaxed/simple;
-	bh=1armfrQSPhghEXbEgCR40kMT3Mz1KUNVgAlY6GjrTLM=;
+	s=arc-20240116; t=1756874450; c=relaxed/simple;
+	bh=KWFa2fQ25xYb+puOyfr3wLeuHY8yOvTpbdOg+JLQUIo=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=J5t5VZXgL/5Iof6OoWLFo3U1JfXrDUBu3hVZfePtCs16N4B/zwrcpCdWF5EmmR9bz4kftQTc+tOyppvPyFtKM+m5+YtnovbWV3uiDJ8FjlShx5IrpkZg3QttQElhH/1khn+snkJjD9WDehyCIr2qMeogk0BceX0EmBfunuymcOk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=c6/aA16+; arc=none smtp.client-ip=10.30.226.201
+	 In-Reply-To:Content-Type; b=PiPzD99s8QZXmu3VvlZbqxlwRsUuZnY7V36hLbQqPI099DtXhwPmVYhnn33SnryWsT0huK1QYgyRuS3nGHBDQp4tgmgWcL/Sj4IAzc/TnIkfouucu0Ssf+EZquAXJcKEn7L04gJjT9mW+juAtIQnL1N9wET3pEL+P5PeWXsNrGs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=WJYSwJxp; arc=none smtp.client-ip=170.10.129.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="c6/aA16+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C22F8C4CEF0;
-	Wed,  3 Sep 2025 03:32:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1756870340;
-	bh=1armfrQSPhghEXbEgCR40kMT3Mz1KUNVgAlY6GjrTLM=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=c6/aA16+bBkQH51tR2bcv5SM6tXtTwJMULf4022Tate2FmzdfUbzGvPiP2fkcVpWI
-	 RriSmrsN2ZlJj0IloB/qX3FQ3Nx9cN4lqbucrjYT4KLxt2DgUbVBqvIKo2olMXLgfB
-	 9N5kKv4v3IBmC1YJev3/3rxoXwXwhR46dCAt8jPxByNLb/XkehQ3Po6KdKfM7VpmMm
-	 1Q1BM8WVxFsEMqVtGOxGMqeKmeEKRty2lb7WMxAWqJ6tmtHvJWE+KovB1IE7Kw9o50
-	 ge8OGusvBxfm+9So2e0mbnLX+HsjFa6ZxAt4PFAo/YR4SAEcoNc0h0IuibbyWbTQJn
-	 FVh2NdAaEjS2A==
-Message-ID: <3242f4a2-9a5f-4165-8d24-5c2387967277@kernel.org>
-Date: Tue, 2 Sep 2025 22:32:05 -0500
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="WJYSwJxp"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1756874448;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=nFKFd7BRRcC6ayNrWC4OEZv5/Y2ehiWbsueptb8aZyE=;
+	b=WJYSwJxp4hetQStFna75bR3onRF+C7FIVrBI6AlIAk7RAv9KtaQzrBLMLwlkD/i3NrnMTt
+	GqSAEoesVJykNHqOM/TdmZ9FLiFktqOXNgabXxzTCHhVK3GK80y4zWrwYSvnhB1Zc9FJ5F
+	oMTYjxDS7B0xKHG6ReAxNze01M8tVZQ=
+Received: from mail-lj1-f197.google.com (mail-lj1-f197.google.com
+ [209.85.208.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-679-Aprej6ACO5WlmsLLlfS9Bw-1; Wed, 03 Sep 2025 00:40:45 -0400
+X-MC-Unique: Aprej6ACO5WlmsLLlfS9Bw-1
+X-Mimecast-MFC-AGG-ID: Aprej6ACO5WlmsLLlfS9Bw_1756874444
+Received: by mail-lj1-f197.google.com with SMTP id 38308e7fff4ca-337f3ee628eso7600661fa.2
+        for <damon@lists.linux.dev>; Tue, 02 Sep 2025 21:40:45 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1756874444; x=1757479244;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=nFKFd7BRRcC6ayNrWC4OEZv5/Y2ehiWbsueptb8aZyE=;
+        b=XlRktBOKufnOl3aAM94+OVvy4dz+v/r8BbQcUEAloxpYZgPwOm6/DWoXIVeLKGsrms
+         G8ba2nN7Ml0NSabsCmurxHIiju90RexUOcjShRCEX2fUofp2gvE1pL4miI7eR/ASD3Uh
+         wMzozYYWrdDiDPdxeTkmacyccRlFymAFVtYt+n7hHkZPa2uwl65esXNXVY3lDrzYYXaA
+         UR9jtb4IB9NdKj1Rxt1WUjBwjoHU6IBZQ05F6qKQqfmj5HieWHMD0iwWGpzV0o2EXCvt
+         Oa39ltntw5XiS99bjsEofkjwfq/QnbmyzWwT1MC58iajEY6skxwzx/pmhGd71DqFcSPV
+         KVCg==
+X-Gm-Message-State: AOJu0YyR2C4parv8R8RphKn2ysGPvgujGvA6hM0OLOV8LT4xLJa3gQo0
+	KruJSw7x0XTLmABlQhTAENFEfku94JJoM4J7OcMi1Nub9DiojpUQxEsLaulLaFnS5J6myHrOLXI
+	Hc82jgHrM5PIPT7Kw1tYXQ8DXbzKMdH+xFA5naa9bms5JgLSIF6g54AE=
+X-Gm-Gg: ASbGncva+5m9Q6Ha9rPIuyGZcUp821URftPZS+VYj6t9v67lBBXPbXBOPBSt+YdZwgU
+	T6iOf3WO5LBGbZtAz3IgLIofKbhtzYTDtxXM6XsN1Nn92Cij5tWSU1NabK+3RRjpvLgom0L9/FL
+	XcnMEpBNRNhvZBtaQlBFlmFUnWgoQAf+ROAITC+l5mXnj+TEgsZ9zEaGGuJqKWE0TPZ9C/7wJXJ
+	veelJw1Dd8Nplvw3G0VvJeJfUZG3J1UcRJPYWxE5qRCyc4i1DB0xXaRqZW1oNTTfIAX51aBNPQ+
+	rJUWzkh4L9IVGJGGDilMKWeYOU2hZhMkdrqv0NyyHaaWRTcD5htYlP1fMeqt5Rx2tQ==
+X-Received: by 2002:a2e:a990:0:b0:336:e1d6:8920 with SMTP id 38308e7fff4ca-336e1d6917cmr23417271fa.31.1756874444342;
+        Tue, 02 Sep 2025 21:40:44 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEB9QYuRkeTjERXflES7M4qiiN/3BjWaFP3YSaUZpEcyOTHs10oLde5VZHbPVXv9pkoXi4/XQ==
+X-Received: by 2002:a2e:a990:0:b0:336:e1d6:8920 with SMTP id 38308e7fff4ca-336e1d6917cmr23417061fa.31.1756874443807;
+        Tue, 02 Sep 2025 21:40:43 -0700 (PDT)
+Received: from [192.168.1.86] (85-23-48-6.bb.dnainternet.fi. [85.23.48.6])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-337f4c50f79sm7951591fa.1.2025.09.02.21.40.42
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 02 Sep 2025 21:40:43 -0700 (PDT)
+Message-ID: <ea6caec5-fd20-444c-b937-6cab61198c46@redhat.com>
+Date: Wed, 3 Sep 2025 07:40:42 +0300
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -35,103 +72,207 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 04/14] Documentation: amd-pstate: Use internal link to
- kselftest
-To: Bagas Sanjaya <bagasdotme@gmail.com>,
- Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
- Linux Documentation <linux-doc@vger.kernel.org>,
- Linux DAMON <damon@lists.linux.dev>,
- Linux Memory Management List <linux-mm@kvack.org>,
- Linux Power Management <linux-pm@vger.kernel.org>,
- Linux Block Devices <linux-block@vger.kernel.org>,
- Linux BPF <bpf@vger.kernel.org>,
- Linux Kernel Workflows <workflows@vger.kernel.org>,
- Linux KASAN <kasan-dev@googlegroups.com>,
- Linux Devicetree <devicetree@vger.kernel.org>,
- Linux fsverity <fsverity@lists.linux.dev>,
- Linux MTD <linux-mtd@lists.infradead.org>,
- Linux DRI Development <dri-devel@lists.freedesktop.org>,
- Linux Kernel Build System <linux-lbuild@vger.kernel.org>,
- Linux Networking <netdev@vger.kernel.org>,
- Linux Sound <linux-sound@vger.kernel.org>
-Cc: Thomas Gleixner <tglx@linutronix.de>, Borislav Petkov <bp@alien8.de>,
- Peter Zijlstra <peterz@infradead.org>, Josh Poimboeuf <jpoimboe@kernel.org>,
- Pawan Gupta <pawan.kumar.gupta@linux.intel.com>,
- Jonathan Corbet <corbet@lwn.net>, SeongJae Park <sj@kernel.org>,
+Subject: Re: [v4 05/15] mm/migrate_device: handle partially mapped folios
+ during collection
+To: Balbir Singh <balbirs@nvidia.com>, linux-kernel@vger.kernel.org,
+ linux-mm@kvack.org
+Cc: damon@lists.linux.dev, dri-devel@lists.freedesktop.org,
  Andrew Morton <akpm@linux-foundation.org>,
- David Hildenbrand <david@redhat.com>,
+ David Hildenbrand <david@redhat.com>, Zi Yan <ziy@nvidia.com>,
+ Joshua Hahn <joshua.hahnjy@gmail.com>, Rakie Kim <rakie.kim@sk.com>,
+ Byungchul Park <byungchul@sk.com>, Gregory Price <gourry@gourry.net>,
+ Ying Huang <ying.huang@linux.alibaba.com>,
+ Alistair Popple <apopple@nvidia.com>, Oscar Salvador <osalvador@suse.de>,
  Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
- "Liam R. Howlett" <Liam.Howlett@oracle.com>, Vlastimil Babka
- <vbabka@suse.cz>, Mike Rapoport <rppt@kernel.org>,
- Suren Baghdasaryan <surenb@google.com>, Michal Hocko <mhocko@suse.com>,
- Huang Rui <ray.huang@amd.com>, "Gautham R. Shenoy" <gautham.shenoy@amd.com>,
- Perry Yuan <perry.yuan@amd.com>, Jens Axboe <axboe@kernel.dk>,
- Alexei Starovoitov <ast@kernel.org>, Daniel Borkmann <daniel@iogearbox.net>,
- Andrii Nakryiko <andrii@kernel.org>, Martin KaFai Lau
- <martin.lau@linux.dev>, Eduard Zingerman <eddyz87@gmail.com>,
- Song Liu <song@kernel.org>, Yonghong Song <yonghong.song@linux.dev>,
- John Fastabend <john.fastabend@gmail.com>, KP Singh <kpsingh@kernel.org>,
- Stanislav Fomichev <sdf@fomichev.me>, Hao Luo <haoluo@google.com>,
- Jiri Olsa <jolsa@kernel.org>, Dwaipayan Ray <dwaipayanray1@gmail.com>,
- Lukas Bulwahn <lukas.bulwahn@gmail.com>, Joe Perches <joe@perches.com>,
- Andrey Ryabinin <ryabinin.a.a@gmail.com>,
- Alexander Potapenko <glider@google.com>,
- Andrey Konovalov <andreyknvl@gmail.com>, Dmitry Vyukov <dvyukov@google.com>,
- Vincenzo Frascino <vincenzo.frascino@arm.com>, Rob Herring
- <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Eric Biggers <ebiggers@kernel.org>,
- tytso@mit.edu, Richard Weinberger <richard@nod.at>,
- Zhihao Cheng <chengzhihao1@huawei.com>, David Airlie <airlied@gmail.com>,
- Simona Vetter <simona@ffwll.ch>,
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
- Nathan Chancellor <nathan@kernel.org>,
- Nicolas Schier <nicolas.schier@linux.dev>, Ingo Molnar <mingo@redhat.com>,
- Will Deacon <will@kernel.org>, Boqun Feng <boqun.feng@gmail.com>,
- Waiman Long <longman@redhat.com>, "David S. Miller" <davem@davemloft.net>,
- Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
- Paolo Abeni <pabeni@redhat.com>, Simon Horman <horms@kernel.org>,
- Shay Agroskin <shayagr@amazon.com>, Arthur Kiyanovski <akiyano@amazon.com>,
- David Arinzon <darinzon@amazon.com>, Saeed Bishara <saeedb@amazon.com>,
- Andrew Lunn <andrew@lunn.ch>, Liam Girdwood <lgirdwood@gmail.com>,
- Mark Brown <broonie@kernel.org>, Jaroslav Kysela <perex@perex.cz>,
- Takashi Iwai <tiwai@suse.com>, Alexandru Ciobotaru <alcioa@amazon.com>,
- The AWS Nitro Enclaves Team <aws-nitro-enclaves-devel@amazon.com>,
- Jesper Dangaard Brouer <hawk@kernel.org>,
- Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
- Steve French <stfrench@microsoft.com>,
- Meetakshi Setiya <msetiya@microsoft.com>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- "Martin K. Petersen" <martin.petersen@oracle.com>,
- Bart Van Assche <bvanassche@acm.org>, =?UTF-8?Q?Thomas_Wei=C3=9Fschuh?=
- <linux@weissschuh.net>, Masahiro Yamada <masahiroy@kernel.org>
-References: <20250829075524.45635-1-bagasdotme@gmail.com>
- <20250829075524.45635-5-bagasdotme@gmail.com>
+ Baolin Wang <baolin.wang@linux.alibaba.com>,
+ "Liam R. Howlett" <Liam.Howlett@oracle.com>, Nico Pache <npache@redhat.com>,
+ Ryan Roberts <ryan.roberts@arm.com>, Dev Jain <dev.jain@arm.com>,
+ Barry Song <baohua@kernel.org>, Lyude Paul <lyude@redhat.com>,
+ Danilo Krummrich <dakr@kernel.org>, David Airlie <airlied@gmail.com>,
+ Simona Vetter <simona@ffwll.ch>, Ralph Campbell <rcampbell@nvidia.com>,
+ Matthew Brost <matthew.brost@intel.com>,
+ Francois Dugast <francois.dugast@intel.com>
+References: <20250903011900.3657435-1-balbirs@nvidia.com>
+ <20250903011900.3657435-6-balbirs@nvidia.com>
+From: =?UTF-8?Q?Mika_Penttil=C3=A4?= <mpenttil@redhat.com>
+In-Reply-To: <20250903011900.3657435-6-balbirs@nvidia.com>
+X-Mimecast-Spam-Score: 0
+X-Mimecast-MFC-PROC-ID: p1VXHjuvzpZblifHb-j5yfAwcPKYJb3sFXB6I-LdtxA_1756874444
+X-Mimecast-Originator: redhat.com
 Content-Language: en-US
-From: Mario Limonciello <superm1@kernel.org>
-In-Reply-To: <20250829075524.45635-5-bagasdotme@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On 8/29/2025 2:55 AM, Bagas Sanjaya wrote:
-> Convert kselftest docs link to internal cross-reference.
-> 
-> Signed-off-by: Bagas Sanjaya <bagasdotme@gmail.com>
+Hi,
+
+On 9/3/25 04:18, Balbir Singh wrote:
+
+> Extend migrate_vma_collect_pmd() to handle partially mapped large
+> folios that require splitting before migration can proceed.
+>
+> During PTE walk in the collection phase, if a large folio is only
+> partially mapped in the migration range, it must be split to ensure
+> the folio is correctly migrated.
+>
+> Cc: Andrew Morton <akpm@linux-foundation.org>
+> Cc: David Hildenbrand <david@redhat.com>
+> Cc: Zi Yan <ziy@nvidia.com>
+> Cc: Joshua Hahn <joshua.hahnjy@gmail.com>
+> Cc: Rakie Kim <rakie.kim@sk.com>
+> Cc: Byungchul Park <byungchul@sk.com>
+> Cc: Gregory Price <gourry@gourry.net>
+> Cc: Ying Huang <ying.huang@linux.alibaba.com>
+> Cc: Alistair Popple <apopple@nvidia.com>
+> Cc: Oscar Salvador <osalvador@suse.de>
+> Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+> Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
+> Cc: "Liam R. Howlett" <Liam.Howlett@oracle.com>
+> Cc: Nico Pache <npache@redhat.com>
+> Cc: Ryan Roberts <ryan.roberts@arm.com>
+> Cc: Dev Jain <dev.jain@arm.com>
+> Cc: Barry Song <baohua@kernel.org>
+> Cc: Lyude Paul <lyude@redhat.com>
+> Cc: Danilo Krummrich <dakr@kernel.org>
+> Cc: David Airlie <airlied@gmail.com>
+> Cc: Simona Vetter <simona@ffwll.ch>
+> Cc: Ralph Campbell <rcampbell@nvidia.com>
+> Cc: Mika Penttilä <mpenttil@redhat.com>
+> Cc: Matthew Brost <matthew.brost@intel.com>
+> Cc: Francois Dugast <francois.dugast@intel.com>
+>
+> Signed-off-by: Balbir Singh <balbirs@nvidia.com>
 > ---
->   Documentation/admin-guide/pm/amd-pstate.rst | 3 +--
->   1 file changed, 1 insertion(+), 2 deletions(-)
-> 
-> diff --git a/Documentation/admin-guide/pm/amd-pstate.rst b/Documentation/admin-guide/pm/amd-pstate.rst
-> index e1771f2225d5f0..37082f2493a7c1 100644
-> --- a/Documentation/admin-guide/pm/amd-pstate.rst
-> +++ b/Documentation/admin-guide/pm/amd-pstate.rst
-> @@ -798,5 +798,4 @@ Reference
->   .. [3] Processor Programming Reference (PPR) for AMD Family 19h Model 51h, Revision A1 Processors
->          https://www.amd.com/system/files/TechDocs/56569-A1-PUB.zip
->   
-> -.. [4] Linux Kernel Selftests,
-> -       https://www.kernel.org/doc/html/latest/dev-tools/kselftest.html
-> +.. [4] Documentation/dev-tools/kselftest.rst
+>  mm/migrate_device.c | 95 +++++++++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 95 insertions(+)
+>
+> diff --git a/mm/migrate_device.c b/mm/migrate_device.c
+> index e05e14d6eacd..e58c3f9d01c8 100644
+> --- a/mm/migrate_device.c
+> +++ b/mm/migrate_device.c
+> @@ -54,6 +54,54 @@ static int migrate_vma_collect_hole(unsigned long start,
+>  	return 0;
+>  }
+>  
+> +/**
+> + * migrate_vma_split_folio - Helper function to split a(n) (m)THP folio
+> + *
+> + * @folio - the folio to split
+> + * @fault_page - struct page associated with the fault if any
+> + *
+> + * Returns 0 on success
+> + */
+> +static int migrate_vma_split_folio(struct folio *folio,
+> +				   struct page *fault_page)
+> +{
+> +	int ret;
+> +	struct folio *fault_folio = fault_page ? page_folio(fault_page) : NULL;
+> +	struct folio *new_fault_folio = NULL;
+> +
+> +	if (folio != fault_folio) {
+> +		folio_get(folio);
+> +		folio_lock(folio);
+> +	}
+> +
+> +	ret = split_folio(folio);
+> +	if (ret) {
+> +		if (folio != fault_folio) {
+> +			folio_unlock(folio);
+> +			folio_put(folio);
+> +		}
+> +		return ret;
+> +	}
+> +
+> +	new_fault_folio = fault_page ? page_folio(fault_page) : NULL;
+> +
+> +	/*
+> +	 * Ensure the lock is held on the correct
+> +	 * folio after the split
+> +	 */
+> +	if (!new_fault_folio) {
+> +		folio_unlock(folio);
+> +		folio_put(folio);
+> +	} else if (folio != new_fault_folio) {
+> +		folio_get(new_fault_folio);
+> +		folio_lock(new_fault_folio);
+> +		folio_unlock(folio);
+> +		folio_put(folio);
+> +	}
+> +
+> +	return 0;
+> +}
+> +
+>  static int migrate_vma_collect_pmd(pmd_t *pmdp,
+>  				   unsigned long start,
+>  				   unsigned long end,
+> @@ -136,6 +184,8 @@ static int migrate_vma_collect_pmd(pmd_t *pmdp,
+>  			 * page table entry. Other special swap entries are not
+>  			 * migratable, and we ignore regular swapped page.
+>  			 */
+> +			struct folio *folio;
+> +
+>  			entry = pte_to_swp_entry(pte);
+>  			if (!is_device_private_entry(entry))
+>  				goto next;
+> @@ -147,6 +197,29 @@ static int migrate_vma_collect_pmd(pmd_t *pmdp,
+>  			    pgmap->owner != migrate->pgmap_owner)
+>  				goto next;
+>  
+> +			folio = page_folio(page);
+> +			if (folio_test_large(folio)) {
+> +				int ret;
+> +
+> +				/*
+> +				 * The reason for finding pmd present with a
+> +				 * large folio for the pte is partial unmaps.
+> +				 * Split the folio now for the migration to be
+> +				 * handled correctly
+> +				 */
+> +				pte_unmap_unlock(ptep, ptl);
+> +				ret = migrate_vma_split_folio(folio,
+> +							  migrate->fault_page);
+> +
+> +				if (ret) {
+> +					ptep = pte_offset_map_lock(mm, pmdp, addr, &ptl);
+> +					goto next;
+> +				}
+> +
+> +				addr = start;
+> +				goto again;
+> +			}
+> +
+>  			mpfn = migrate_pfn(page_to_pfn(page)) |
+>  					MIGRATE_PFN_MIGRATE;
+>  			if (is_writable_device_private_entry(entry))
+> @@ -171,6 +244,28 @@ static int migrate_vma_collect_pmd(pmd_t *pmdp,
+>  					pgmap->owner != migrate->pgmap_owner)
+>  					goto next;
+>  			}
+> +			folio = page_folio(page);
+> +			if (folio_test_large(folio)) {
+> +				int ret;
+> +
+> +				/*
+> +				 * The reason for finding pmd present with a
+> +				 * large folio for the pte is partial unmaps.
+> +				 * Split the folio now for the migration to be
+> +				 * handled correctly
+> +				 */
 
-Acked-by: Mario Limonciello (AMD) <superm1@kernel.org>
+There are other reasons like vma splits for various reasons.
+
+> +				pte_unmap_unlock(ptep, ptl);
+> +				ret = migrate_vma_split_folio(folio,
+> +							  migrate->fault_page);
+> +
+> +				if (ret) {
+> +					ptep = pte_offset_map_lock(mm, pmdp, addr, &ptl);
+> +					goto next;
+> +				}
+> +
+> +				addr = start;
+> +				goto again;
+> +			}
+>  			mpfn = migrate_pfn(pfn) | MIGRATE_PFN_MIGRATE;
+>  			mpfn |= pte_write(pte) ? MIGRATE_PFN_WRITE : 0;
+>  		}
 
