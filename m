@@ -1,120 +1,143 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.11])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EC4A26B2CE;
-	Thu,  4 Sep 2025 09:38:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C40E53148C9
+	for <damon@lists.linux.dev>; Thu,  4 Sep 2025 17:55:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756978690; cv=none; b=SiKt/MtPKgu14fan/5hO1vPWzv49jfzng9AxCw7RPtROjJEVMOeEm2IcX9k+Nj06Rz+PxK+Kvo0ClNow43I88SlNqJzafFkyOyQPOAZlcn4hC+I85I+XIRXliRRm58XbcI/cpB7n/q4UlI6/0BNWikt/ldXoCF50e80PLVHXlpQ=
+	t=1757008554; cv=none; b=oVXYh+NQv2KeFs9cEYrHbIXCXW4p1VyMHotrf7iDZD8V7lLLe+rZHMtfpzpJvXsXdS+PUbsWRq7A3E3FTs4WWBGsVkE0Lg1ZEVn8sjx/tBtE9LmaRFwGnNtv0RqoT0V/SYeK9h53X4T+A5MQ1sMNMgoVa3qPk/TLsl6qq361iYc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756978690; c=relaxed/simple;
-	bh=K2roMTDLYdK6snjjQKgov43nRYmQIvretg5aO99t3Kk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=R6NefP/ExBIAWJIt8PXY79UT6f8kSoGYgMUBZkpd1bim+T1CtuSqNmSZgD4YZy18NrDRHGcLd9mHJBfE6UHetr+gbrYCiNI4ZMMiE22niHvJJY/yd/CWLtzJFm9IoAU8jwZE2nys24uf4kFcspyWwjSwbsyMzs5Fg6RUw1fcZQ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=WGUb4h7V; arc=none smtp.client-ip=192.198.163.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	s=arc-20240116; t=1757008554; c=relaxed/simple;
+	bh=mW2jw4Gqq8kIhfnnpqfGdlZeipHpcksc78sKRIZawQk=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=BxMmWlU8d6dcyTxNok4GuFKbtocp7+jXA+wvRIu8/Io6c/A3qt/ugiAqz8bMFO22UM9FBOIYEwJpRhJBDodb4m+DF2GiMduA8+UmQEpeEbkJGLlGQsoyOf1bupD+RJgCGFFNETr2RiHwZ1FX4DsvFMJ4jJm54N2fydK/njQDvTE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=aisle.com; spf=pass smtp.mailfrom=aisle.com; dkim=pass (2048-bit key) header.d=aisle.com header.i=@aisle.com header.b=Njh+1LPZ; arc=none smtp.client-ip=209.85.218.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=aisle.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=aisle.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="WGUb4h7V"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1756978689; x=1788514689;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=K2roMTDLYdK6snjjQKgov43nRYmQIvretg5aO99t3Kk=;
-  b=WGUb4h7VUL1C/hjEP+PWe4rjNAy8F3dFZ8alE/6nJ2NNFMhUYoVmb3JC
-   Vc0rSP4ji8jGoOWjmmq4myFqKifw8B2+HoEeYdrxEB81syVnpdE2sZiWM
-   5RkNDb24Mo5nMVU1Ld4NAPLRlFaDK6ZpvXSnVjHhm2kjP6hbOsYxIsl2D
-   +zO1FJRQnZlKgGVSpnAqsIuNy/Tzz8d1VUh0AMxZnYqZVN7nbZec50Z0D
-   Yy2NJYO8l840dV0ElBL9UznDNCbvSzKLbGDMszWHOEAult4xpxcTbMwZa
-   pYJcriGw4c5O6+QlYMqGSGOvlSonHAGjfJ8QwcTtt2vIPJT97Gn/2SvFO
-   Q==;
-X-CSE-ConnectionGUID: 17ujGA8eSvWiZaxV8VC/UA==
-X-CSE-MsgGUID: geWCUaqDSs+r2Wjug4FmQQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11542"; a="69926152"
-X-IronPort-AV: E=Sophos;i="6.18,238,1751266800"; 
-   d="scan'208";a="69926152"
-Received: from orviesa001.jf.intel.com ([10.64.159.141])
-  by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Sep 2025 02:38:08 -0700
-X-CSE-ConnectionGUID: xspA0gIYSpSDftwk10r1cA==
-X-CSE-MsgGUID: hrUIlaOmSLmIcge8I0Ymgw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.18,238,1751266800"; 
-   d="scan'208";a="209028838"
-Received: from lkp-server02.sh.intel.com (HELO 06ba48ef64e9) ([10.239.97.151])
-  by orviesa001.jf.intel.com with ESMTP; 04 Sep 2025 02:38:00 -0700
-Received: from kbuild by 06ba48ef64e9 with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1uu6PE-00054F-11;
-	Thu, 04 Sep 2025 09:37:32 +0000
-Date: Thu, 4 Sep 2025 17:37:09 +0800
-From: kernel test robot <lkp@intel.com>
-To: Balbir Singh <balbirs@nvidia.com>, linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org
-Cc: oe-kbuild-all@lists.linux.dev, damon@lists.linux.dev,
-	dri-devel@lists.freedesktop.org, Balbir Singh <balbirs@nvidia.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Linux Memory Management List <linux-mm@kvack.org>,
-	David Hildenbrand <david@redhat.com>, Zi Yan <ziy@nvidia.com>,
-	Joshua Hahn <joshua.hahnjy@gmail.com>, Rakie Kim <rakie.kim@sk.com>,
-	Byungchul Park <byungchul@sk.com>,
-	Gregory Price <gourry@gourry.net>,
-	Ying Huang <ying.huang@linux.alibaba.com>,
-	Alistair Popple <apopple@nvidia.com>,
-	Oscar Salvador <osalvador@suse.de>,
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
-	Nico Pache <npache@redhat.com>, Ryan Roberts <ryan.roberts@arm.com>,
-	Dev Jain <dev.jain@arm.com>, Barry Song <baohua@kernel.org>,
-	Lyude Paul <lyude@redhat.com>, Danilo Krummrich <dakr@kernel.org>,
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-	Ralph Campbell <rcampbell@nvidia.com>,
-	Mika =?iso-8859-1?Q?Penttil=E4?= <mpenttil@redhat.com>,
-	Matthew Brost <matthew.brost@intel.com>
-Subject: Re: [v4 05/15] mm/migrate_device: handle partially mapped folios
- during collection
-Message-ID: <202509041732.UTJsw3LB-lkp@intel.com>
-References: <20250903011900.3657435-6-balbirs@nvidia.com>
+	dkim=pass (2048-bit key) header.d=aisle.com header.i=@aisle.com header.b="Njh+1LPZ"
+Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-afec5651966so261196566b.2
+        for <damon@lists.linux.dev>; Thu, 04 Sep 2025 10:55:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=aisle.com; s=google; t=1757008551; x=1757613351; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=zMtbznq3tl66msCReaOp/sA5Z6pLqOTnltPjz7M8pLk=;
+        b=Njh+1LPZ2/ZrK0PJUXXhuWW7S0d10QK6/ucXV/Fkrgg6hYWj6ROHwGa7XkJg8NYk1d
+         C5bEnT876fJAzsnkZR8Gvuu3JQ12S97Hs9txFWOl5Wyy/TLLvyeDMh9dfOFLcQWq+9oY
+         1YtjGlVIHbRFs4oJ61OUPFbw78msXQbOA5wTGA+t4OYDg5t/z2pSPbAjN1kFxM7NnWs0
+         q6hd3/wUDCsUhX1EWNszDlyQ6g/jrXo2LK0XSRoUWjnnnWt9lgjYTODtzwr1PzruF2eN
+         7wtCclX8+rtli0fiYil8LVngwTGRcpRltay0A+s77gfxutIOAhuIqUEg6YYcm3m9L8Og
+         HXIA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1757008551; x=1757613351;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=zMtbznq3tl66msCReaOp/sA5Z6pLqOTnltPjz7M8pLk=;
+        b=mZDcJs+QBjfWjwKrjMrI6P/5lOjly87gpinO7HXJv7S9h3tewpkAanqI5xqVW5LsOy
+         oW12Q8ccyxNbd+SAnivf9/ka9H/a/xcqGPyFtjOnIqM3QkIslMPsjQPFoaoRijwgUvqU
+         PJsufNknQtViMKw7CbOEN/I9lzZejdSTxuZw8r9s/RxIriz2rh0PzOnW0DR73KvNHcdn
+         4uA7bWlQqGDOUXVhpRky+Wz238AIG4wvLutSMRaS/KUH6x5GnmYyVQhKqWzQVAqP9on7
+         4oKfVGkGuUSg2REjlu25j2pJb+HThICtlTy8o88v1Bbm6Abb8/hbzAkHxJeotF9QV69j
+         PW6w==
+X-Gm-Message-State: AOJu0Yw2fdEwz8cXoqctE5DPqP0AtVOrfBBBG2xmnlcvjJt9TOKllfDX
+	DTlYf2fHY2uN3vRK3wkkXWzSEeJUA2lfyguiBWhLKRfJO9Wt+XP5UYEpNSO5lAaK86/ozrKxs07
+	T066J2qQiEXAE
+X-Gm-Gg: ASbGncvvclxFi8m1AZrCc6oxcS7nmoEfCV+RRwEFsDBeooGpwU/NZWZ+OWHdTOsC/07
+	iCppIaqRGT3jlm+8teEczw2VwK5wyoXMiJNNwFJbAixSDKNBJnvKNPXJLlCRzSyARA+D9qoCdAs
+	DpMXGdSasjAIQ/q2HPbnb6rhcECyKet2lHCFC+lH9SulCjIdyZ38OyYLQ2kRUDEYBu9DHdLmj4Z
+	5+c+OBExzg+U19QrJo90wpk6aYpMm54GMeFaxaCHYhWGBV/H7SXDuqFpQMMYDR10WdMIUUEJ9i6
+	n64/iPKyggCzxCwaFaMPVr4wKui3UoJMG6JjHb6G4cPiIvi6DKpPNIlb9Y/+sE2YA/OylQGWfi6
+	0rHrXUdcOn9oW/wvN7VkcyMuEG1+5Uhwqqi8epJy++Rknvs6/GaOEq/u4VA==
+X-Google-Smtp-Source: AGHT+IHHwye8S38M+daTlQY3u4C4GqM9qagbcu55Qj4nHECI21MQC05GMM41j4Ip7X73DFZQRvUF2A==
+X-Received: by 2002:a17:906:d54a:b0:b04:2049:4c5 with SMTP id a640c23a62f3a-b0420490836mr1656559866b.6.1757008551138;
+        Thu, 04 Sep 2025 10:55:51 -0700 (PDT)
+Received: from localhost ([149.102.246.23])
+        by smtp.gmail.com with UTF8SMTPSA id a640c23a62f3a-b043d6c2f6asm883392266b.62.2025.09.04.10.55.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 04 Sep 2025 10:55:50 -0700 (PDT)
+From: Stanislav Fort <stanislav.fort@aisle.com>
+X-Google-Original-From: Stanislav Fort <disclosure@aisle.com>
+To: SeongJae Park <sj@kernel.org>
+Cc: damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org,
+	Stanislav Fort <disclosure@aisle.com>
+Subject: [PATCH] mm/damon/sysfs: fix use-after-free in state_show()
+Date: Thu,  4 Sep 2025 20:55:49 +0300
+Message-Id: <20250904175549.88928-1-disclosure@aisle.com>
+X-Mailer: git-send-email 2.39.3 (Apple Git-146)
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250903011900.3657435-6-balbirs@nvidia.com>
+Content-Transfer-Encoding: 8bit
 
-Hi Balbir,
+state_show() currently reads kdamond->damon_ctx without holding
+damon_sysfs_lock. This creates a use-after-free race condition:
 
-kernel test robot noticed the following build warnings:
+CPU 0                           CPU 1
+-----                           -----
+state_show()                    damon_sysfs_turn_damon_on()
+  ctx = kdamond->damon_ctx;
+                                mutex_lock(&damon_sysfs_lock);
+                                damon_destroy_ctx(kdamond->damon_ctx);
+                                kdamond->damon_ctx = NULL;
+                                mutex_unlock(&damon_sysfs_lock);
+  damon_is_running(ctx);        /* ctx is freed */
+    mutex_lock(&ctx->kdamond_lock);  /* UAF */
 
-[auto build test WARNING on akpm-mm/mm-nonmm-unstable]
-[also build test WARNING on sj/damon/next linus/master v6.17-rc4 next-20250904]
-[cannot apply to akpm-mm/mm-everything]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+The race can occur with other functions that free or replace the context
+while holding damon_sysfs_lock, such as damon_sysfs_kdamonds_rm_dirs()
+and damon_sysfs_kdamond_release().
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Balbir-Singh/mm-zone_device-support-large-zone-device-private-folios/20250903-092241
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/akpm/mm.git mm-nonmm-unstable
-patch link:    https://lore.kernel.org/r/20250903011900.3657435-6-balbirs%40nvidia.com
-patch subject: [v4 05/15] mm/migrate_device: handle partially mapped folios during collection
-config: arm64-randconfig-001-20250904 (https://download.01.org/0day-ci/archive/20250904/202509041732.UTJsw3LB-lkp@intel.com/config)
-compiler: aarch64-linux-gcc (GCC) 8.5.0
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20250904/202509041732.UTJsw3LB-lkp@intel.com/reproduce)
+Fix this by acquiring damon_sysfs_lock before accessing the context,
+mirroring the locking pattern used in pid_show().
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202509041732.UTJsw3LB-lkp@intel.com/
+This vulnerability was present when state_show() was first introduced to
+access kdamond->damon_ctx.
 
-All warnings (new ones prefixed by >>):
+Fixes: a61ea561c871 ("mm/damon/sysfs: link DAMON for virtual address spaces monitoring")
+Reported-by: Stanislav Fort <disclosure@aisle.com>
+Signed-off-by: Stanislav Fort <disclosure@aisle.com>
+---
+ mm/damon/sysfs.c | 17 ++++++++++++-----
+ 1 file changed, 12 insertions(+), 5 deletions(-)
 
->> Warning: mm/migrate_device.c:66 function parameter 'folio' not described in 'migrate_vma_split_folio'
->> Warning: mm/migrate_device.c:66 function parameter 'fault_page' not described in 'migrate_vma_split_folio'
-
+diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
+index 1234567..abcdef0 100644
+--- a/mm/damon/sysfs.c
++++ b/mm/damon/sysfs.c
+@@ -1258,17 +1258,24 @@ static ssize_t state_show(struct kobject *kobj, struct kobj_attribute *attr,
+ 		char *buf)
+ {
+ 	struct damon_sysfs_kdamond *kdamond = container_of(kobj,
+ 			struct damon_sysfs_kdamond, kobj);
+-	struct damon_ctx *ctx = kdamond->damon_ctx;
+-	bool running;
++	struct damon_ctx *ctx;
++	bool running = false;
++
++	if (!mutex_trylock(&damon_sysfs_lock))
++		return -EBUSY;
++
++	ctx = kdamond->damon_ctx;
++	if (ctx)
++		running = damon_is_running(ctx);
+ 
+-	if (!ctx)
+-		running = false;
+-	else
+-		running = damon_is_running(ctx);
++	mutex_unlock(&damon_sysfs_lock);
+ 
+ 	return sysfs_emit(buf, "%s\n", running ?
+ 			damon_sysfs_cmd_strs[DAMON_SYSFS_CMD_ON] :
+ 			damon_sysfs_cmd_strs[DAMON_SYSFS_CMD_OFF]);
+ }
+ 
+ static int damon_sysfs_set_attrs(struct damon_ctx *ctx,
 -- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+2.34.1
