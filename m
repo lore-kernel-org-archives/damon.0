@@ -1,281 +1,98 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A018021B19D
-	for <damon@lists.linux.dev>; Mon,  8 Sep 2025 04:14:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
+Received: from invmail4.hynix.com (exvmail4.skhynix.com [166.125.252.92])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1EA4D21578F
+	for <damon@lists.linux.dev>; Mon,  8 Sep 2025 04:36:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=166.125.252.92
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757304851; cv=none; b=Hy5p+Cyiw4oZSsvS2BAxIu2Tg932MmexFJdszIVT03oEWoaUgg96oghECDs80/7+RptyxPvsBngbioWyE6TYoK1sFsZdcC4suc2zyICz08vMINRUbDnYr1dBJR5DqvEDew3c9LDIve+2tHjw5gahMmH6N6yUMubrq8eji7Sb14U=
+	t=1757306195; cv=none; b=gAO9QtuAScnC3jcfqgU09BwCtBvRIY2xVP/ZN1AsS2iiTvoS69Oky9uvkDtMA6kFsDhY87Qe/Mkmwbq/cxJ6MLexPQn/KZmS1erl0jr0W0nvfdLAj8HzQPj4i7iOHlAn21Tk+ne630A3mPHzSFMUG7eSttil3q6TuNtTnwSN5M0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757304851; c=relaxed/simple;
-	bh=pl18FtxmRQkEuk8/U2WKz5seSMT0xb0I2q75aWzNVjo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=bN+m3rhNCj7FaxT4M0D2pgjiSRe5K/TM0Hwxc/gTsFPUhxKp1mRmCXnFvb57Zq82PgD/INQ8CZLP8kYtHirJQBy1moDeRyR1tkELerZK8uIOVj/7nIdvCjZdLVYwtghKwr25ovv14V6KCvRxfnzoM8iTUlgUZtmN/uqgF90cS08=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=HMWSqTjs; arc=none smtp.client-ip=170.10.129.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="HMWSqTjs"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1757304848;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=xJsCe6eTTTGDK/V3oOGv4fFA8SBbBbHuaXgk/m4NaJ0=;
-	b=HMWSqTjsiZM0MnGz6HyrdAWFmkzjc7WJpEbmRLkJZDvRtN+vSHWH6yTYE5wzIC5Ii92wTI
-	d8Sz47QhE1M6Xv0VBfu+YN4EkiALuez8vRT4/HoC6OCakDxJW6hwuGh3FBwqqcMghNq3+9
-	Tx8PipirggEZ5DKL171Oate6YvOnSds=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-465-sqVxjJD8PbybWQ2WfrtgcA-1; Mon, 08 Sep 2025 00:14:07 -0400
-X-MC-Unique: sqVxjJD8PbybWQ2WfrtgcA-1
-X-Mimecast-MFC-AGG-ID: sqVxjJD8PbybWQ2WfrtgcA_1757304846
-Received: by mail-wm1-f69.google.com with SMTP id 5b1f17b1804b1-45ddbfd44aaso15766745e9.2
-        for <damon@lists.linux.dev>; Sun, 07 Sep 2025 21:14:07 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757304846; x=1757909646;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=xJsCe6eTTTGDK/V3oOGv4fFA8SBbBbHuaXgk/m4NaJ0=;
-        b=or/wU0riqg9zNlcCYfE3cVQUm42nC1MZfYyOYJ3IyykfwaP7lCKsRKGHtmkoi89RsB
-         3HDSBKrS6GcfHPC+jidCp6Y6QAdEqh6ZMzpxTJhN3/VkoA+GzKw0nQpVEm/k4OyTih3M
-         bAlbKEK5jBmgLUzAIigPyliYdSq50reIedQjIe0ZwjAzyRgWfFluPIkANi4T3uc8Zlae
-         MVLDPSspEztIY+3RoXEqZBeYYu4G8PNJ1doZB80anW25y1X1LxDN4KhKn05n5lDauKsj
-         zmaIQi3CdptF7Qwijxh47aRmnNwCWXViRjo58mtePxTQjZHMn9bCk0Y/KLduodLEvR3s
-         uUwg==
-X-Gm-Message-State: AOJu0YwIrqTyq7hUrRYSbVSL643b0NSHrKKa2kMt/hDp0xPKhaTUQ63p
-	uNho/4p/b4cbY54qnhEQLvp3g2vRfPILfp7gs1jRkiLVwaobuGdeR+PGkgVkf9jc/zDNbbH2wvZ
-	j298FAwvQP7HMiuKzkMlZClCyDK1VHYRGhUTWajybhK0cBUY6w3gGBcc=
-X-Gm-Gg: ASbGncvhC0/RfGzFCkwQTJV1uyjeiz19F6dCnYraVhs9R7gBtsA62ytUN6uqKKsdG6J
-	/fcJObeX8st4NPH3UvPjhTCcnhQRQgJq1vlPzJ7Vu/rdzeETCWEkdZtTTIJhrju1nKqWRl0/+4N
-	slAOq/Fq+p2u9oGfbMQRZRMUEq1zACOs0qmenNFxZTr3y3wdq4gNVKAPFuRurTppJK0nLWJRXGF
-	nvw8z70AWG+ZM1Y9Z9pZqCGA3mH7F/gAxfkmHSBobMBK+5mRAlUPWRNSbM2VGw8TxKSTraL0XTp
-	dmVNklifEODXhzxxo2Zkt0OgbTexAK5KHurfB7UO4dLJUHGsBqHMQj7n7HfeDE1HMw==
-X-Received: by 2002:a05:600c:458d:b0:45d:d50d:c0db with SMTP id 5b1f17b1804b1-45dddea5102mr52603665e9.15.1757304845802;
-        Sun, 07 Sep 2025 21:14:05 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFutUyjnY3i7VNpdhUwrQ7pqW1CmodIEYjJPgtpuIcj6TCRCx7EUrnPJPxT8ek+IEd6gcbzjw==
-X-Received: by 2002:a05:600c:458d:b0:45d:d50d:c0db with SMTP id 5b1f17b1804b1-45dddea5102mr52603475e9.15.1757304845375;
-        Sun, 07 Sep 2025 21:14:05 -0700 (PDT)
-Received: from [192.168.1.86] (85-23-48-6.bb.dnainternet.fi. [85.23.48.6])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45dd4affb6bsm142588705e9.1.2025.09.07.21.14.03
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 07 Sep 2025 21:14:04 -0700 (PDT)
-Message-ID: <e6b795de-f522-4952-9ec3-00a2359c43a9@redhat.com>
-Date: Mon, 8 Sep 2025 07:14:02 +0300
+	s=arc-20240116; t=1757306195; c=relaxed/simple;
+	bh=+7vRA6aL3xmkwb8NX4YSuBqgZtBqwL4jdovVxNxRKiM=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=b2dvxkTQiu43ez36Qaa26K+CHGz5tH6Fs0YSJrmtOf7yDh6DcsLCaKw7lRyXg2G7t2ipY2krCkNOVXOuT5LmgYIVUQ9wijEKYdgV723BfuY8uEOhfvJkDiatsKZfMF6sP3Is0t0zXT3wP9Yt/o550b0YNPel3lnmiA6Mc8x2ovY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sk.com; spf=pass smtp.mailfrom=sk.com; arc=none smtp.client-ip=166.125.252.92
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sk.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sk.com
+X-AuditID: a67dfc5b-c2dff70000001609-19-68be5d455b63
+From: Yunjeong Mun <yunjeong.mun@sk.com>
+To: sj@kernel.org
+Cc: damon@lists.linux.dev,
+	honggyu.kim@sk.com,
+	kernel_team@skhynix.com
+Subject: Re: [BUG] 'damo stop' causes kernel crash in v6.17-rc3
+Date: Mon,  8 Sep 2025 13:36:18 +0900
+Message-ID: <20250908043619.1085-1-yunjeong.mun@sk.com>
+X-Mailer: git-send-email 2.48.1.windows.1
+In-Reply-To: <20250905200741.23489-1-sj@kernel.org>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [v5 05/15] mm/migrate_device: handle partially mapped folios
- during collection
-To: Balbir Singh <balbirs@nvidia.com>, linux-kernel@vger.kernel.org,
- linux-mm@kvack.org
-Cc: damon@lists.linux.dev, dri-devel@lists.freedesktop.org,
- Andrew Morton <akpm@linux-foundation.org>,
- David Hildenbrand <david@redhat.com>, Zi Yan <ziy@nvidia.com>,
- Joshua Hahn <joshua.hahnjy@gmail.com>, Rakie Kim <rakie.kim@sk.com>,
- Byungchul Park <byungchul@sk.com>, Gregory Price <gourry@gourry.net>,
- Ying Huang <ying.huang@linux.alibaba.com>,
- Alistair Popple <apopple@nvidia.com>, Oscar Salvador <osalvador@suse.de>,
- Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
- Baolin Wang <baolin.wang@linux.alibaba.com>,
- "Liam R. Howlett" <Liam.Howlett@oracle.com>, Nico Pache <npache@redhat.com>,
- Ryan Roberts <ryan.roberts@arm.com>, Dev Jain <dev.jain@arm.com>,
- Barry Song <baohua@kernel.org>, Lyude Paul <lyude@redhat.com>,
- Danilo Krummrich <dakr@kernel.org>, David Airlie <airlied@gmail.com>,
- Simona Vetter <simona@ffwll.ch>, Ralph Campbell <rcampbell@nvidia.com>,
- Matthew Brost <matthew.brost@intel.com>,
- Francois Dugast <francois.dugast@intel.com>
-References: <20250908000448.180088-1-balbirs@nvidia.com>
- <20250908000448.180088-6-balbirs@nvidia.com>
-From: =?UTF-8?Q?Mika_Penttil=C3=A4?= <mpenttil@redhat.com>
-In-Reply-To: <20250908000448.180088-6-balbirs@nvidia.com>
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: EPEJcMam20HVdr0Dgz-Bfq38Cn3WFsGuaPQjcsKN02c_1757304846
-X-Mimecast-Originator: redhat.com
-Content-Language: en-US
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprOLMWRmVeSWpSXmKPExsXC9ZZnoa5r7L4Mg2+PhS2e/P/NanH46xsm
+	ByaPTas62TxebJ7JGMAUxWWTkpqTWZZapG+XwJXxqeUuW8Fy7orrh8waGPdxdDFyckgImEis
+	bG5khLH3rl4NZrMJaEgcPHSSGcQWERCU6H88gxXEZhbwkji/fy5YXFjAXmLDp3lMXYwcHCwC
+	qhJH53GBhHkFzCWuvdnEDjFSU6Lh0j0mEJtTwFhiSuN2sDFCAjwSrzbsZ4SoF5Q4OfMJC8R4
+	eYnmrbOBxnMB9T5lldg+8wcbxCBJiYMrbrBMYOSfhaRnFpKeBYxMqxiFMvPKchMzc0z0Mirz
+	Miv0kvNzNzECg2tZ7Z/oHYyfLgQfYhTgYFTi4X3QvzdDiDWxrLgy9xCjBAezkghvERNQiDcl
+	sbIqtSg/vqg0J7X4EKM0B4uSOK/Rt/IUIYH0xJLU7NTUgtQimCwTB6dUAyPftninHkvHEI3n
+	krd8fSXXpoatKK24/L/k1HZWW924V6lu36eZvOm9+PtAklts/J57mn8ezjU0eHu6RnWxuOTP
+	Y60frCpOHewSYeLw2trX8Lngdnvw07sPxdfFh37POedwuENjevYa+fKb6+ME9z6ePLH50sls
+	QUaDdM2X+y15dM7N2tdqskWJpTgj0VCLuag4EQAi9UTpKgIAAA==
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFmpnluLIzCtJLcpLzFFi42LhmiGro+sauy/DoPkAp8WT/79ZLT4/e81s
+	cXjuSVaLw1/fMDmweGxa1cnm8WLzTEaPb7c9PBa/+MAUwBLFZZOSmpNZllqkb5fAlfGp5S5b
+	wXLuiuuHzBoY93F0MXJySAiYSOxdvZoRxGYT0JA4eOgkM4gtIiAo0f94BiuIzSzgJXF+/1yw
+	uLCAvcSGT/OYuhg5OFgEVCWOzuMCCfMKmEtce7OJHWKkpkTDpXtMIDangLHElMbtYGOEBHgk
+	Xm3YzwhRLyhxcuYTFojx8hLNW2czT2DkmYUkNQtJagEj0ypGkcy8stzEzBxTveLsjMq8zAq9
+	5PzcTYzA4FlW+2fiDsYvl90PMQpwMCrx8D7o35shxJpYVlyZe4hRgoNZSYS3iAkoxJuSWFmV
+	WpQfX1Sak1p8iFGag0VJnNcrPDVBSCA9sSQ1OzW1ILUIJsvEwSnVwCheWn0ijcVhhs7XhaHr
+	lJYVz7zh+KMv3bfy7OqvKxbufX5YnKHCLfbKieX1Qob6HKKq8g+8Y2c/ZTl32tLhh9R78Rwp
+	Zg1Dmexdzx2fSn329dl94SdP2my1x4cjDY7vaeK6MaN6aZi4GIM5Z8vV4l0L//mcsm69Ldhb
+	fynr0J3y6jP++TmsrUosxRmJhlrMRcWJAA5hM/gaAgAA
+X-CFilter-Loop: Reflected
 
-Hi,
+Hi SeongJae,
 
-On 9/8/25 03:04, Balbir Singh wrote:
+On Fri,  5 Sep 2025 13:07:41 -0700 SeongJae Park <sj@kernel.org> wrote:
+> On Fri,  5 Sep 2025 18:08:26 +0900 Yunjeong Mun <yunjeong.mun@sk.com> wrote:
+> 
+> > On Thu,  4 Sep 2025 20:54:11 -0700 SeongJae Park <sj@kernel.org> wrote:
+> > > On Thu,  4 Sep 2025 17:29:45 +0900 Yunjeong Mun <yunjeong.mun@sk.com> wrote:
+> > > 
+> > > > On Wed,  3 Sep 2025 21:02:03 -0700 SeongJae Park <sj@kernel.org> wrote:
+> > > > > Hi Yunjeong,
+> > > > > 
+> > > > > On Thu,  4 Sep 2025 10:17:38 +0900 Yunjeong Mun <yunjeong.mun@sk.com> wrote:
+> > > > > 
+> > > > > > Hi!
+> > > > > > 
+> > > > > > I encountered a kernel crash when running 'damo stop' in kernel v6.17-rc3, 
+> > > > > > I tested and confirmed that this issue also occurs in v6.17-rc1.
+> [...]
+> > > Thank you for confirming.  I confirmed attaching patch fixes the problem with
+> > > your repro on my setup.  Could you please also test that on your machines and
+> > > confirm if it fixes the issues on your setups, too?  If you confirm, I will
+> > > post it soon.
+> > 
+> > Thank you for the patch. I have confirmed that it fixes the problem on QEMU.
+> 
+> Thank you for confirming.
+> 
+> > I will test it on my physical machine early next week and share the result
+> > with you.
+> 
+> Looking forward to!
 
-> Extend migrate_vma_collect_pmd() to handle partially mapped large
-> folios that require splitting before migration can proceed.
->
-> During PTE walk in the collection phase, if a large folio is only
-> partially mapped in the migration range, it must be split to ensure
-> the folio is correctly migrated.
->
-> Cc: Andrew Morton <akpm@linux-foundation.org>
-> Cc: David Hildenbrand <david@redhat.com>
-> Cc: Zi Yan <ziy@nvidia.com>
-> Cc: Joshua Hahn <joshua.hahnjy@gmail.com>
-> Cc: Rakie Kim <rakie.kim@sk.com>
-> Cc: Byungchul Park <byungchul@sk.com>
-> Cc: Gregory Price <gourry@gourry.net>
-> Cc: Ying Huang <ying.huang@linux.alibaba.com>
-> Cc: Alistair Popple <apopple@nvidia.com>
-> Cc: Oscar Salvador <osalvador@suse.de>
-> Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-> Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
-> Cc: "Liam R. Howlett" <Liam.Howlett@oracle.com>
-> Cc: Nico Pache <npache@redhat.com>
-> Cc: Ryan Roberts <ryan.roberts@arm.com>
-> Cc: Dev Jain <dev.jain@arm.com>
-> Cc: Barry Song <baohua@kernel.org>
-> Cc: Lyude Paul <lyude@redhat.com>
-> Cc: Danilo Krummrich <dakr@kernel.org>
-> Cc: David Airlie <airlied@gmail.com>
-> Cc: Simona Vetter <simona@ffwll.ch>
-> Cc: Ralph Campbell <rcampbell@nvidia.com>
-> Cc: Mika Penttilä <mpenttil@redhat.com>
-> Cc: Matthew Brost <matthew.brost@intel.com>
-> Cc: Francois Dugast <francois.dugast@intel.com>
->
-> Signed-off-by: Balbir Singh <balbirs@nvidia.com>
-> ---
->  mm/migrate_device.c | 94 +++++++++++++++++++++++++++++++++++++++++++++
->  1 file changed, 94 insertions(+)
->
-> diff --git a/mm/migrate_device.c b/mm/migrate_device.c
-> index abd9f6850db6..f45ef182287d 100644
-> --- a/mm/migrate_device.c
-> +++ b/mm/migrate_device.c
-> @@ -54,6 +54,53 @@ static int migrate_vma_collect_hole(unsigned long start,
->  	return 0;
->  }
->  
-> +/**
-> + * migrate_vma_split_folio() - Helper function to split a THP folio
-> + * @folio: the folio to split
-> + * @fault_page: struct page associated with the fault if any
-> + *
-> + * Returns 0 on success
-> + */
-> +static int migrate_vma_split_folio(struct folio *folio,
-> +				   struct page *fault_page)
-> +{
-> +	int ret;
-> +	struct folio *fault_folio = fault_page ? page_folio(fault_page) : NULL;
-> +	struct folio *new_fault_folio = NULL;
-> +
-> +	if (folio != fault_folio) {
-> +		folio_get(folio);
-> +		folio_lock(folio);
-> +	}
-> +
-> +	ret = split_folio(folio);
-> +	if (ret) {
-> +		if (folio != fault_folio) {
-> +			folio_unlock(folio);
-> +			folio_put(folio);
-> +		}
-> +		return ret;
-> +	}
-> +
-> +	new_fault_folio = fault_page ? page_folio(fault_page) : NULL;
-> +
-> +	/*
-> +	 * Ensure the lock is held on the correct
-> +	 * folio after the split
-> +	 */
-> +	if (!new_fault_folio) {
-> +		folio_unlock(folio);
-> +		folio_put(folio);
-> +	} else if (folio != new_fault_folio) {
-> +		folio_get(new_fault_folio);
-> +		folio_lock(new_fault_folio);
-> +		folio_unlock(folio);
-> +		folio_put(folio);
-> +	}
-> +
-> +	return 0;
-> +}
-> +
->  static int migrate_vma_collect_pmd(pmd_t *pmdp,
->  				   unsigned long start,
->  				   unsigned long end,
-> @@ -136,6 +183,8 @@ static int migrate_vma_collect_pmd(pmd_t *pmdp,
->  			 * page table entry. Other special swap entries are not
->  			 * migratable, and we ignore regular swapped page.
->  			 */
-> +			struct folio *folio;
-> +
->  			entry = pte_to_swp_entry(pte);
->  			if (!is_device_private_entry(entry))
->  				goto next;
-> @@ -147,6 +196,29 @@ static int migrate_vma_collect_pmd(pmd_t *pmdp,
->  			    pgmap->owner != migrate->pgmap_owner)
->  				goto next;
->  
-> +			folio = page_folio(page);
-> +			if (folio_test_large(folio)) {
-> +				int ret;
-> +
-> +				/*
-> +				 * The reason for finding pmd present with a
-> +				 * large folio for the pte is partial unmaps.
-> +				 * Split the folio now for the migration to be
-> +				 * handled correctly
-> +				 */
-> +				pte_unmap_unlock(ptep, ptl);
-> +				ret = migrate_vma_split_folio(folio,
-> +							  migrate->fault_page);
-> +
-> +				if (ret) {
-> +					ptep = pte_offset_map_lock(mm, pmdp, addr, &ptl);
-> +					goto next;
-> +				}
-> +
-> +				addr = start;
-> +				goto again;
-> +			}
-> +
->  			mpfn = migrate_pfn(page_to_pfn(page)) |
->  					MIGRATE_PFN_MIGRATE;
->  			if (is_writable_device_private_entry(entry))
-> @@ -171,6 +243,28 @@ static int migrate_vma_collect_pmd(pmd_t *pmdp,
->  					pgmap->owner != migrate->pgmap_owner)
->  					goto next;
->  			}
-> +			folio = page_folio(page);
-> +			if (folio_test_large(folio)) {
-> +				int ret;
-> +
-> +				/*
-> +				 * The reason for finding pmd present with a
-> +				 * large folio for the pte is partial unmaps.
-> +				 * Split the folio now for the migration to be
-> +				 * handled correctly
-> +				 */
+I've confirmed that this patch also fixes the issue on my physical machine. :)
+Thank you very much.
 
-This comment is still not changed, there are other reasons for pte mapped large pages. 
-Also now all the mTHPs are splitted, which is change of behavior (currently ignored)
-for order < PMD_ORDER.
+Yunjeong Mun
 
-> +				pte_unmap_unlock(ptep, ptl);
-> +				ret = migrate_vma_split_folio(folio,
-> +							  migrate->fault_page);
-> +
-> +				if (ret) {
-> +					ptep = pte_offset_map_lock(mm, pmdp, addr, &ptl);
-> +					goto next;
-> +				}
-> +
-> +				addr = start;
-> +				goto again;
-> +			}
->  			mpfn = migrate_pfn(pfn) | MIGRATE_PFN_MIGRATE;
->  			mpfn |= pte_write(pte) ? MIGRATE_PFN_WRITE : 0;
->  		}
-
---Mika
-
+> 
+> 
+> Thanks,
+> SJ
+> 
+> [...]
