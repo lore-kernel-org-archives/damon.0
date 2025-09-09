@@ -1,89 +1,62 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 774AD255F27;
-	Tue,  9 Sep 2025 03:51:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1001F1DA4E;
+	Tue,  9 Sep 2025 04:18:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757389905; cv=none; b=Cz/S9K2NbyEWBs976eTj8nF3hy+FSMOo9ynw3OVsD7wZzbD4eEAEKhWozeUKEIPZHuwAFLkqfRHH+F4fAGnCZjOX7t6tZjAxwH0rcTk0hQIFL3iBfL99+35RJRXVjrRTA4pLAd3+xvHWwESJzm5898h4XTVaMJ7FEbnhzBRUusQ=
+	t=1757391527; cv=none; b=jZrCb2sU2G+0+Y5RsHKtDdvK1zmCAxCVX0qfJ5nFqQ8K4OHP0yV3Szlykh2hCAgXv6jIfOnTyyLvaBM0oVXQAm1D974tJxxwBUOKushAPd338MFBZ18ir/Zfr/Ddh2ISh/nhxX2fDi5lJBLT2YbBnC0tCTQVeOkqSo2B+1tb3Ls=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757389905; c=relaxed/simple;
-	bh=hDFSqIoDGm+oeOAZ9q443ZWBkCIE3hQkRhHMZyq47fQ=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=Q3sIqudagcJbYvIO2Sco37fHqiZ5Nrdc1GgRrxpzTdOu2myJP2R5GPEfKoagffIggrWkpLZKqFKMWCBZz8IgOAufkKznu5YS496H4H2TDnIRaXZVjzRMc09uyS3aF/Mk+D1Unv47qTDeflxw07yvv8VJIoyzWgzeeeLayTZuc1A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eBxgxzOE; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1757391527; c=relaxed/simple;
+	bh=oirQprCJ1ESduAaLG341IAD0wVCBpr+7HmBynU9vLKE=;
+	h=Date:From:To:Cc:Subject:Message-Id:In-Reply-To:References:
+	 Mime-Version:Content-Type; b=nvhe7Lr2LYuShOROyoVPh46//k7bA+uwE2syneMxqaT81FnuOLt9pbWE3h39qAPqlk/Onqdm+C4wGoXl33krpnkkC2jrLb6CgUkrac8Im3Z3GN9EZhwAdh5jyjDnvJYrGSsZQUXBOGnjXMYV5yEgwKcOwqhSud/LFLUFws87kxY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linux-foundation.org header.i=@linux-foundation.org header.b=yClCobl9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eBxgxzOE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6069C4CEF4;
-	Tue,  9 Sep 2025 03:51:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1757389905;
-	bh=hDFSqIoDGm+oeOAZ9q443ZWBkCIE3hQkRhHMZyq47fQ=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eBxgxzOEa8Ac6u4NfIJZg7uvYs9srT6Cy6snFEvxalwi+d2+6suPkVf9VfqXgfDcc
-	 JlcT0Q2YpAFnYky/zbHUDTmhp4KPF5M/taeWvmOUGamiJuPnnxVp7A7ydYwx6Ze8Z3
-	 BFTHiDwU/RdL3NfWk9uT3DMra1l/NgC50To6cwWVdqfyEO+jEwKlSEIsZvz7qvo7PR
-	 +P+WMi8LelFiKdOv04IW/kXl50UZsCYPBmiTg+jaKTruDc4//pRE6p6OZ0aoTz1eky
-	 K+xL55w8cQw6Pvkk95z9e69KgSjNLDJEWHMcRI1opEaT5utpHCwFqL/biZlW8AeBlz
-	 HCctCpmAXk01Q==
-From: SeongJae Park <sj@kernel.org>
-To: Andrew Morton <akpm@linux-foundation.org>
-Cc: SeongJae Park <sj@kernel.org>,
-	"# 6 . 17-rc1" <stable@vger.kernel.org>,
-	damon@lists.linux.dev,
-	kernel-team@meta.com,
-	linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org
-Subject: Re: [PATCH 0/3] samples/damon: fix boot time enable handling fixup merge mistakes
-Date: Mon,  8 Sep 2025 20:51:41 -0700
-Message-Id: <20250909035141.7545-1-sj@kernel.org>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250908193548.a153ef39d85cc54816950f71@linux-foundation.org>
-References: 
+	dkim=pass (1024-bit key) header.d=linux-foundation.org header.i=@linux-foundation.org header.b="yClCobl9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 560B2C4CEF4;
+	Tue,  9 Sep 2025 04:18:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linux-foundation.org;
+	s=korg; t=1757391526;
+	bh=oirQprCJ1ESduAaLG341IAD0wVCBpr+7HmBynU9vLKE=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=yClCobl9sVnh1i5/FMXkKY1Bbi4M1x49V6PSeAguv7zIeJyc9op/jeClHjNhHueWv
+	 6yi6GaDy/xDdg/iuAzfBQaFoh+Uw2p2Li3gi+MXpAAercb9l3Ahozq3Vk9pHKZbrkk
+	 dPvO8cUmCXBhsdp9qtYoI+8CxcH0YqpeGtd9vhic=
+Date: Mon, 8 Sep 2025 21:18:45 -0700
+From: Andrew Morton <akpm@linux-foundation.org>
+To: SeongJae Park <sj@kernel.org>
+Cc: "# 6 . 17-rc1" <stable@vger.kernel.org>, damon@lists.linux.dev,
+ kernel-team@meta.com, linux-kernel@vger.kernel.org, linux-mm@kvack.org
+Subject: Re: [PATCH 0/3] samples/damon: fix boot time enable handling fixup
+ merge mistakes
+Message-Id: <20250908211845.bfc7299d783c361b10ae810b@linux-foundation.org>
+In-Reply-To: <20250909035141.7545-1-sj@kernel.org>
+References: <20250908193548.a153ef39d85cc54816950f71@linux-foundation.org>
+	<20250909035141.7545-1-sj@kernel.org>
+X-Mailer: Sylpheed 3.8.0beta1 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
-On Mon, 8 Sep 2025 19:35:48 -0700 Andrew Morton <akpm@linux-foundation.org> wrote:
+On Mon,  8 Sep 2025 20:51:41 -0700 SeongJae Park <sj@kernel.org> wrote:
 
-> On Mon,  8 Sep 2025 19:22:35 -0700 SeongJae Park <sj@kernel.org> wrote:
-> 
-> > First three patches of the patch series "mm/damon: fix misc bugs in
-> > DAMON modules" [1] was trying to fix boot time DAMON sample modules
-> > enabling issues by avoiding starting DAMON before the module
-> > initialization phase.  However, probably by a mistake during a merge,
-> > only half of the change is merged, and the part for avoiding the
-> > starting of DAMON before the module initialized is missed.  So the
-> > problem is not solved.  Fix those.
+> > > Note that the broken commits are merged into 6.17-rc1, but also
+> > > backported to relevant stable kernels.  So this series also need to be
+> > > merged into the stable kernels.  Hence Cc-ing stable@.
 > > 
-> > Note that the broken commits are merged into 6.17-rc1, but also
-> > backported to relevant stable kernels.  So this series also need to be
-> > merged into the stable kernels.  Hence Cc-ing stable@.
+> > That's unfortunate, but the about doesn't actually tell us what this
+> > series does.  
 > 
-> That's unfortunate, but the about doesn't actually tell us what this
-> series does.  
-
-Good point.  The issue is that the sample modules can crash if those are
-enabled at boot time before DAMON is initialized, via kernel command line.
-
-Would you prefer me sending another version of this patch series with an
-elaborated cover letter?
-
+> Good point.  The issue is that the sample modules can crash if those are
+> enabled at boot time before DAMON is initialized, via kernel command line.
 > 
-> > [1] https://lore.kernel.org/20250706193207.39810-1-sj@kernel.org
-> 
-> Presumably it's in there somewhere?
+> Would you prefer me sending another version of this patch series with an
+> elaborated cover letter?
 
-You're right.  Both the cover letter and the individual fix patches (first
-three of the series) describes the issue and origin broken commit.
-
-Please let me know if there is anything I can help for this patch series from
-my side :)
-
-
-Thanks,
-SJ
+Please just send out the appropriate words and I'll paste it in.
