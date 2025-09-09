@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6DA621B9C8;
-	Tue,  9 Sep 2025 01:23:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71D852236F0;
+	Tue,  9 Sep 2025 02:22:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757381012; cv=none; b=fjcZl2x+p2cgu4IJlhhp+T9QUs5jc5jh1zKkISKrMjFLFM/0gA1IN0zNKC2udaH9C4SI8nrxoZrrnmsTi9wV6THslpoWBTQSkoYoMdMCR5lJ4VeeEhbf6rjFsG6Dk4wfWdNmkixaJmfQJPy0Uyv0sJcT8FksJLAqSCRZ3ZAIOI0=
+	t=1757384562; cv=none; b=QwTfOWE6Ny2vxAgBA394SSNwoTLrH2mPWq5udAT4bSts3/ry+myQcojOk5dE3czYuIpr7kcJbPYbVAeWTv6grvBQCnazZ7+7xmNvcjEP9nYttUXLLCVPJcFyYA6LscT9V5ZwF0VjoIvm2CqagHj3kKlXH7FPXAnnyN4T1sPRabA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757381012; c=relaxed/simple;
-	bh=RZi5ocmJPJF9G1DcWXVwXv/MggPhU7VqkehKrP9eEQM=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=NXpy+E2aMCZewSPWUmgxcamFjbov4owhHykuawJG5iwpLA4OAcfCoJPD/1CZT72uA9VrCzpmGzmGATd4JsNAKhl3K5KYwu2IbtG5bTN0pC9Wx5ZZYuFu4uEZv3MD0gbZ9prAAe1H79LgY6UE5fKZti5R+3VYz5ae4DaLDFGJTqw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sWB+Zq9D; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1757384562; c=relaxed/simple;
+	bh=5FcWvlgWyOInwHI579PO6gvjZ+U3iPu1CVD7USdbcBw=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=CqmdO+d/yHoDj+pNLDK1fo1e0kPPNVxzYt1V4JDKseu4jDS77Tb3iKYsRpvqfKIW0G2abHKnUM/3KpqRgSDz6c36Li9P8OwFGmpk4w7GJlEyFQaQWfpzlLjxQjdRJcGuVTxNSMBd7DxwY7dscbypdge1g+HlZxUMY6ANLauLX5I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KGoYLtFY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sWB+Zq9D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 394A3C4CEF1;
-	Tue,  9 Sep 2025 01:23:32 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KGoYLtFY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBA16C4CEF1;
+	Tue,  9 Sep 2025 02:22:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1757381012;
-	bh=RZi5ocmJPJF9G1DcWXVwXv/MggPhU7VqkehKrP9eEQM=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sWB+Zq9D+EPxcmEuSUN/CZ/QMxQCsbx/pQTaA2ypiYosTDjzW9x99+wFGlGLc6phF
-	 riySFglLMfZCk0vfKmop6U8SFUqAmEr2HVOVFkD8cCBgN8umZQjII7ncEI6s+Wmbaf
-	 mYbmXUXaBbsz1BN6P8Xxgn8BAuvh8+RyJpZKNeYj30oK9jNKYUO8dpD2D1/cek7pcl
-	 KXTDF4pfhv2Ggt5qEnU8ACLb+xpSWuEbQ6SIOV8BnklqZ950eEvFRKG/A3O4esXZbJ
-	 Srd+Sxe683V5+dqlRj4tTad7F6gnpwtDhFUpymiS+HJlIow3iE3MUSGcOUDAsNpM3e
-	 r67Y6iLAli75w==
+	s=k20201202; t=1757384562;
+	bh=5FcWvlgWyOInwHI579PO6gvjZ+U3iPu1CVD7USdbcBw=;
+	h=From:To:Cc:Subject:Date:From;
+	b=KGoYLtFYjHjbWDmLJGQO81FoqOdz/d15SfaS+VVI1GviATuBnf92TxqZjYlAriCH2
+	 z8XI+OOZx2YEXZuh+D92EnvR9Wt/wvjo+xzMh+zVeoIch44J3tRVGhYcUnvspuy5WG
+	 i9PfFTIFk/DIJXhy3MJgq/HIR9v6nhuFfxQ8cQJs59vxfcpnIQuOHHWixNQHnaypL0
+	 YN5aNXRnGlMSZNBnPBEyW4kVpPD/mQRJyGuu5tXUo0ELl4mmyBaumg0U0gcmR1vwbF
+	 +voUh6OOueya2hBF+VdCY1ikYozmElJKr7A+aozzURM5xLm8SidmGV6l6LKlV+OnOB
+	 kBc9WMbhDfqqw==
 From: SeongJae Park <sj@kernel.org>
-To: kernel test robot <lkp@intel.com>
+To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SeongJae Park <sj@kernel.org>,
-	llvm@lists.linux.dev,
-	oe-kbuild-all@lists.linux.dev,
-	damon@lists.linux.dev
-Subject: Re: [sj:damon/next 118/128] mm/damon/tests/core-kunit.h:453:2: warning: unannotated fall-through between switch labels
-Date: Mon,  8 Sep 2025 18:23:29 -0700
-Message-Id: <20250909012329.66924-1-sj@kernel.org>
+	"# 6 . 17-rc1" <stable@vger.kernel.org>,
+	damon@lists.linux.dev,
+	kernel-team@meta.com,
+	linux-kernel@vger.kernel.org,
+	linux-mm@kvack.org
+Subject: [PATCH 0/3] samples/damon: fix boot time enable handling fixup merge mistakes
+Date: Mon,  8 Sep 2025 19:22:35 -0700
+Message-Id: <20250909022238.2989-1-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <202509082042.24Nb5PCp-lkp@intel.com>
-References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -46,37 +45,31 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Mon, 8 Sep 2025 20:35:07 +0800 kernel test robot <lkp@intel.com> wrote:
+First three patches of the patch series "mm/damon: fix misc bugs in
+DAMON modules" [1] was trying to fix boot time DAMON sample modules
+enabling issues by avoiding starting DAMON before the module
+initialization phase.  However, probably by a mistake during a merge,
+only half of the change is merged, and the part for avoiding the
+starting of DAMON before the module initialized is missed.  So the
+problem is not solved.  Fix those.
 
-> tree:   https://git.kernel.org/pub/scm/linux/kernel/git/sj/linux.git damon/next
-> head:   387bf1dec467127e728b28dc7624723d7df2813c
-> commit: d53726dd7bd14e94f2c46a842c8c45c2231090b7 [118/128] mm/damon/tests/core-kunit: split out damos_test_commit_quota_goal()
-> config: i386-buildonly-randconfig-006-20250908 (https://download.01.org/0day-ci/archive/20250908/202509082042.24Nb5PCp-lkp@intel.com/config)
-> compiler: clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
-> reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20250908/202509082042.24Nb5PCp-lkp@intel.com/reproduce)
-> 
-> If you fix the issue in a separate patch/commit (i.e. not just a new version of
-> the same patch/commit), kindly add following tags
-> | Reported-by: kernel test robot <lkp@intel.com>
-> | Closes: https://lore.kernel.org/oe-kbuild-all/202509082042.24Nb5PCp-lkp@intel.com/
-> 
-> All warnings (new ones prefixed by >>):
-> 
->    In file included from mm/damon/core.c:3156:
-> >> mm/damon/tests/core-kunit.h:453:2: warning: unannotated fall-through between switch labels [-Wimplicit-fallthrough]
->      453 |         default:
->          |         ^
->    mm/damon/tests/core-kunit.h:453:2: note: insert 'break;' to avoid fall-through
->      453 |         default:
->          |         ^
->          |         break; 
->    1 warning generated.
+Note that the broken commits are merged into 6.17-rc1, but also
+backported to relevant stable kernels.  So this series also need to be
+merged into the stable kernels.  Hence Cc-ing stable@.
 
-Thank you for reporting this!  I just pushed a fix to my tree:
-http://git.kernel.org/sj/c/922891e5eea9872058e013249d9aeab0eb6471d5
+[1] https://lore.kernel.org/20250706193207.39810-1-sj@kernel.org
+
+SeongJae Park (3):
+  samples/damon/wsse: avoid starting DAMON before initialization
+  samples/damon/prcl: avoid starting DAMON before initialization
+  samples/damon/mtier: avoid starting DAMON before initialization
+
+ samples/damon/mtier.c | 3 +++
+ samples/damon/prcl.c  | 3 +++
+ samples/damon/wsse.c  | 3 +++
+ 3 files changed, 9 insertions(+)
 
 
-Thanks,
-SJ
-
-[...]
+base-commit: 186951910f4e44e20738d85c0421032634ddb298
+-- 
+2.39.5
