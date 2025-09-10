@@ -1,65 +1,65 @@
-Received: from mail-pf1-f177.google.com (mail-pf1-f177.google.com [209.85.210.177])
+Received: from mail-pf1-f178.google.com (mail-pf1-f178.google.com [209.85.210.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3BDE275870;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC582275B13;
 	Wed, 10 Sep 2025 02:44:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.177
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757472250; cv=none; b=kkTR7Qww7+25IVbJpmg0w5nLZPQBY6R4svolXdPlJahrqtLcoSoD9IMNy2J2dRYbFbx9gQErc1ivX8oy5WgK5tK9ZIbsHGRUopNEFdfFpK8Q7DZGy41/W4K0AL0gdHDJx3tthltn27QgbdlEWl8ZN9lyu3YBK3eEdPz/rne3knI=
+	t=1757472250; cv=none; b=MtmA43CcPZv9GaNM0hj0m0tvRaH4vg3z37huTzy7ImGikkTe0cJYPcZP7+7zRdu3KLWT2pjXKRqsM5WSpgMjK/l6ofO7YFwKjksmhO1ZgRU0LI+dKhlcpz0Oz8n6wkD/lucfDBvnvXoh5lhrtoa/NSH+YW/zJlTVetrgCuhFwFY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1757472250; c=relaxed/simple;
-	bh=yEY9P3BA6E4kqaGTHyjuJlgmOOGj2m2ZOET4fPd8xcs=;
+	bh=Ip9RCWVx3N2eFboDnh1dVntKjUKs5RT6sbpEBdmz23c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uV9gUjmFLquFHh9Y8seSNiPh8GFChmpuTYy+KSmmHGRVdo+5mbjVzAXQaz3Bo/eCeKUX7u0IntSpVQXyDRLtXfsbFIRy9hA0W+AUCVFZqpP7nMLAHRF2Jqtsw2WA8Pff3qiUUxqp9Dw9RxjhEiq6DZcI3/keelMyivOleerljYI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RKlykJAF; arc=none smtp.client-ip=209.85.210.177
+	 MIME-Version; b=QDeJwJmNOJcEQAK90FIwD0Vaf6dcPUW53IMpOzukazU4R1dQPiET5gg1GA8lzeuzilp3gvZP67o9vtnNB+1TM1g+8m3XnWedtEwSLNHQ+M14l+uer0UIOgTuiy2Zlqz+hJvdY26u0ubm8OkMfCqv5TAooG9zdHYhgHSakJlk9II=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LB+w5N5c; arc=none smtp.client-ip=209.85.210.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RKlykJAF"
-Received: by mail-pf1-f177.google.com with SMTP id d2e1a72fcca58-772488c78bcso6176088b3a.1;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LB+w5N5c"
+Received: by mail-pf1-f178.google.com with SMTP id d2e1a72fcca58-772301f8a4cso8828961b3a.3;
         Tue, 09 Sep 2025 19:44:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20230601; t=1757472248; x=1758077048; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=2kNx/lgQaweLHCKpOd5HxLBg5NtnJ9f3nOi2hx/97zs=;
-        b=RKlykJAFLOsTBC9WvBl/nrYISwMW6Xn665AnT6u734Y+Gm1h+sn3qcS6MUGCrXwYkA
-         uj2fM9crCeneIMgD6iyIKLCD7juzMve90SeBY3rsRVFH1FfBTNns9xcgi1u1qQuqWlSy
-         A4rO0Cd4Frs4udBQWhxb03h+4hqRQTmZ2dzlL4lCYXwXTRWTKAIf+ohHRLCfE5ilqX/P
-         qiUPJDQIf+FgiQ8o3xspWOizvnJ8RmecKs/NAUzuq0c+iTelcEyM+yj+peT7R6ac0a/W
-         Z/XjbL/V4BGlTPoEUUubiyMhOlPTAvPxSgP6FeLhmryq+qhmeZ7X9guFjjwimBrCKh2i
-         hZwg==
+        bh=fK0hEDM5Yyao3a7xqBzpr49p9H5HB+om5vfXDIKLdeg=;
+        b=LB+w5N5cXbqgr0zLKyyLA9vxTD7p39Et26ejHeTSZrPymW/wv0bZcl1ihY3CcdXiEw
+         7ymaEIJ6iBw2SN6ocUI8VJiHlMubGfMHJD5/oZMjWwytsrt/wrpQAhCTwPdEUctL+gl0
+         uxSBpPu8o0YsJgJcBQ3/Md0GNRY3uRUXQqOUEva4adRYcC88sPkgeFYjZjQagYQlrNeu
+         N++FQxKH71I+y5ESYaKbEu07xhghQydNJ029J1rpOLihxSfP+cQOm8oSpBoXnOWlsVLZ
+         QxD6SvbjQlRZFQgfa+JDqKdzw05zOhy2FYdZ7ZVQwmLfZB0hWeW6N7LYxMPJyPn6OERD
+         1RJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20230601; t=1757472248; x=1758077048;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=2kNx/lgQaweLHCKpOd5HxLBg5NtnJ9f3nOi2hx/97zs=;
-        b=mgQLfzRSif6tcq2H1w2HUHhzcwOXcHi3BGapix9prJ9GAhie0vyRLAF3DGZYM5filx
-         B/ZqyrkjIVVk3ujTqOocd6hHlpW3Oi43CL7vsip1iIKZ2Xv8B1M92jGpMbFS27r4SzJd
-         UmKxsWs7oT6+K75RHmoZwCRciaUPp3MkSvKtzgOl2xPl9V1zxob1kYYySyYTiJRjegDe
-         rPasnS7VYJ8xddZwrow4nKwcHVOOWhbKqx0RltU15u4+NGW5iakpLBh2rZ8kCpbmHn7K
-         /w37CtNqBMOyQC4/T2Y2j+VYl6c+3rcjAjIZmDkWW4etIZJuw2TxV7CdaV1KeHw355IL
-         C1Xw==
-X-Forwarded-Encrypted: i=1; AJvYcCW0j1UtqFbzFrSSvZLFIhRxxgOfQ447BAc29YIgo+69WsMNtyB2zi7qwg5uTLcg52UoLiI8lIzmP8g=@lists.linux.dev, AJvYcCWD0EYI+KAXylvU4oGlG3f/M1ULGfXtvZwhznD/Q0OeE9XJJrozkEdzhm7ZqQjt7898bFhJYw==@lists.linux.dev
-X-Gm-Message-State: AOJu0YwA+zzJIR+Ha2IZbLxHzYQNNhSDEA1P9tSCHF6oE/yhskKums2f
-	TEiN+K3/qgJd1oip1eabT88AlaTSGZE0JkmU++kzaDVTZntcMSD+WKJY
-X-Gm-Gg: ASbGncvaPsUiVrPHKLH3mLS/5TRjxlM0TucUrax35o6+4lbW4IZQNRpov5kKTRj+N41
-	WG0O29N2j5mEDMUzhHsrlnZIpVxNK5xF0BZLWK9BLDfug+GN4+L6lfCj/WiwVhLICw08YZMpdqO
-	Qpkjc5S1nKS2miwxiSoPtnvYvz4I0Ge36DBM8Xiceh+XOhMJ9v2orOMzsbPjPMb0dvpeDJF8Cmf
-	XFpWhJWR8R2rGWrCQDevTJ2yaMubtjeH6DzXOxigPisEnqq3rzsdt+k3nzjPrah3IHWvExR1Gi/
-	+FQPyU9LubnGJpvOQMG0hcrdcg/22f5lTy/CBTU6Gn0anRaD4A9oE1hnsx0D4nY/73Sos4IHwV0
-	FX8HvOgQoDvF5tTwCTROIRdO5vg==
-X-Google-Smtp-Source: AGHT+IEyED1mSm10/nBWu/PDugDe2kHeGr2B1Dlm/0Mxg3VMmmsn8EtrKKBRn8Kt1DMp+jVk5SErrA==
-X-Received: by 2002:a05:6a21:998d:b0:24e:e270:2f5d with SMTP id adf61e73a8af0-2534547a6fbmr21436774637.43.1757472247740;
+        bh=fK0hEDM5Yyao3a7xqBzpr49p9H5HB+om5vfXDIKLdeg=;
+        b=PG1/mX7Q7YHtFQ/gbfukgM+C1NAusp+AIQ/B1ordELRBO8MwtT1kwgrSKyPNKh0YWl
+         vzJH7U/tM0xIc2Hvpi+XyIAfzRBFZMwJFQIxjnFVI6jIJduuk1deLBwBkLHovW61ec0w
+         XkXkcf7/3dhb9FqfzYQci7GqtGS7CdEbbImjhpuy1K1AJblBziutWyLZGPsxtXsAVdn/
+         JljaiTJRkVS22QbWqd3FWK+sSiVyDf3gcn0Nunw1N3PTkliYVYI6/4e20kOMvSPhAX0c
+         KQobcWmGlDZgkTb1m9Xuq/YysqSdXcAW9JTxRPSIrZHjgnw5Io0i56P9cGw7uWLCZ7Xk
+         MAkw==
+X-Forwarded-Encrypted: i=1; AJvYcCWNKNhjpTBc/Z3QtME9lNV1w4IOJPyt1v3ap1ZAL46tkRPFEgEdfpbl8y6d7cOY3p3uWpioCQ==@lists.linux.dev, AJvYcCWqiVr9S6XQy3XM9QWV7nwsLk1z6CxkN7AQHRQ5ECH+vhQX6npCgUOOgQ+L0RCL42DR0PFxwxS+N2E=@lists.linux.dev
+X-Gm-Message-State: AOJu0YyiVYIYl8WZwqAgxWAZAK3CQZdbgowRGsJxDiVXHyqRNZDf3Zvw
+	+paQ9cFjhAcqQjrdO1Igey7bzOMJgoZaQnlEZAcfakecxhmOiNfYNS1/
+X-Gm-Gg: ASbGncsK3Sa2UVYTJd0zqnaD3EftYZnFJQnln/oDENoFCCFOaTh7Hf7a7HFX8sBOyOs
+	KTblMFFpRfaYukKkWpGfZoUcGKZOCTu1LdW7tUWmYUxe+ajut0oJ5rfypb1fQF/ZSA2SGcK76KK
+	PFfDHaXiPHyyWT81qgx+QlN2YbfojWJ7lYyKnQjPWlz4/IyyEgDlsrJ9trM8ZcPf2TjD1KuKyKc
+	KVkBcpzrS4afMtk43ka2iTXQqBhJ2vmzL2TgLKZ5D2wIksfEM7McqXyZIw34Y7c5o2L1ji3ihPX
+	RYXnh6xdVQh0RRoEUKlkimB2igsbUHd4E+Ht+gGuxJdTMNgfZhM/JKF7Vq9MikXrhrKDM+JMiQl
+	d6LxHCI2TzVN6RzI0noK/Y1sKfQ==
+X-Google-Smtp-Source: AGHT+IHubWrsefo+d87orOab1DSwsve/ArB2W06/xMLWCSAZ2PZ8eNr96v1SI6ir/qnxEBjX+/LG4w==
+X-Received: by 2002:a05:6a00:2d16:b0:76b:f0ac:e7b2 with SMTP id d2e1a72fcca58-7742ddadd68mr16640975b3a.13.1757472247852;
         Tue, 09 Sep 2025 19:44:07 -0700 (PDT)
 Received: from archie.me ([103.124.138.155])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b548a6bbc9fsm1061117a12.43.2025.09.09.19.44.00
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-77466290d84sm3499051b3a.65.2025.09.09.19.44.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Tue, 09 Sep 2025 19:44:03 -0700 (PDT)
 Received: by archie.me (Postfix, from userid 1000)
-	id 999D241BEA9D; Wed, 10 Sep 2025 09:43:52 +0700 (WIB)
+	id C367141BEA9F; Wed, 10 Sep 2025 09:43:52 +0700 (WIB)
 From: Bagas Sanjaya <bagasdotme@gmail.com>
 To: Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
 	Linux Documentation <linux-doc@vger.kernel.org>,
@@ -160,9 +160,9 @@ Cc: Thomas Gleixner <tglx@linutronix.de>,
 	Masahiro Yamada <masahiroy@kernel.org>,
 	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
 	Jani Nikula <jani.nikula@intel.com>
-Subject: [PATCH v2 07/13] Documentation: kasan: Use internal link to kunit
-Date: Wed, 10 Sep 2025 09:43:22 +0700
-Message-ID: <20250910024328.17911-8-bagasdotme@gmail.com>
+Subject: [PATCH v2 09/13] Documentation: filesystems: Fix stale reference to device-mapper docs
+Date: Wed, 10 Sep 2025 09:43:24 +0700
+Message-ID: <20250910024328.17911-10-bagasdotme@gmail.com>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250910024328.17911-1-bagasdotme@gmail.com>
 References: <20250910024328.17911-1-bagasdotme@gmail.com>
@@ -172,31 +172,61 @@ List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1129; i=bagasdotme@gmail.com; h=from:subject; bh=yEY9P3BA6E4kqaGTHyjuJlgmOOGj2m2ZOET4fPd8xcs=; b=owGbwMvMwCX2bWenZ2ig32LG02pJDBkHnihdUeC/XH99x9zD0/p/z/9z+OvEiwfuXjriUbHJw 5Al4fDvwo5SFgYxLgZZMUWWSYl8Tad3GYlcaF/rCDOHlQlkCAMXpwBMpGYSI8Phu5uLfVhjJryT C+XOkO/82KnH+HRZtlehgA+3hxWLXwPDX5ny7U3LZzLMPNBzWixMoIP59nkt/0fGhV4ZjM5rXH1 d+AA=
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2828; i=bagasdotme@gmail.com; h=from:subject; bh=Ip9RCWVx3N2eFboDnh1dVntKjUKs5RT6sbpEBdmz23c=; b=owGbwMvMwCX2bWenZ2ig32LG02pJDBkHniixbj++M2M+e9AK28XZP75VaZfxL/rvM//ttckLa 3oE7/o/6yhlYRDjYpAVU2SZlMjXdHqXkciF9rWOMHNYmUCGMHBxCsBNZmb4p1i8uPKB8ZP13wum BPvKxR5SWdltK/h88a0CIW7J/3IPcxkZtk3KCLwZnfbq4QUbicP9bC8vlyYEbns3a5pPVM71i2f ecgIA
 X-Developer-Key: i=bagasdotme@gmail.com; a=openpgp; fpr=701B806FDCA5D3A58FFB8F7D7C276C64A5E44A1D
 Content-Transfer-Encoding: 8bit
 
-Use internal linking to KUnit documentation.
+Commit 6cf2a73cb2bc42 ("docs: device-mapper: move it to the admin-guide")
+moves device mapper docs to Documentation/admin-guide, but left
+references (which happen to be external ones) behind, hence 404 when
+clicking them.
+
+Fix the references while also converting them to internal ones.
 
 Signed-off-by: Bagas Sanjaya <bagasdotme@gmail.com>
 ---
- Documentation/dev-tools/kasan.rst | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ Documentation/filesystems/fsverity.rst             | 11 +++++------
+ Documentation/filesystems/ubifs-authentication.rst |  4 ++--
+ 2 files changed, 7 insertions(+), 8 deletions(-)
 
-diff --git a/Documentation/dev-tools/kasan.rst b/Documentation/dev-tools/kasan.rst
-index 0a1418ab72fdfc..c0896d55c97af8 100644
---- a/Documentation/dev-tools/kasan.rst
-+++ b/Documentation/dev-tools/kasan.rst
-@@ -562,7 +562,5 @@ There are a few ways to run the KASAN tests.
-    With ``CONFIG_KUNIT`` and ``CONFIG_KASAN_KUNIT_TEST`` built-in, it is also
-    possible to use ``kunit_tool`` to see the results of KUnit tests in a more
-    readable way. This will not print the KASAN reports of the tests that passed.
--   See `KUnit documentation <https://www.kernel.org/doc/html/latest/dev-tools/kunit/index.html>`_
--   for more up-to-date information on ``kunit_tool``.
--
--.. _KUnit: https://www.kernel.org/doc/html/latest/dev-tools/kunit/index.html
-+   See :doc:`KUnit documentation <kunit/index>` for more up-to-date information
-+   on ``kunit_tool``.
+diff --git a/Documentation/filesystems/fsverity.rst b/Documentation/filesystems/fsverity.rst
+index 412cf11e329852..54378a3926de7b 100644
+--- a/Documentation/filesystems/fsverity.rst
++++ b/Documentation/filesystems/fsverity.rst
+@@ -15,12 +15,11 @@ of read-only files.  Currently, it is supported by the ext4, f2fs, and
+ btrfs filesystems.  Like fscrypt, not too much filesystem-specific
+ code is needed to support fs-verity.
+ 
+-fs-verity is similar to `dm-verity
+-<https://www.kernel.org/doc/Documentation/admin-guide/device-mapper/verity.rst>`_
+-but works on files rather than block devices.  On regular files on
+-filesystems supporting fs-verity, userspace can execute an ioctl that
+-causes the filesystem to build a Merkle tree for the file and persist
+-it to a filesystem-specific location associated with the file.
++fs-verity is similar to :doc:`dm-verity
++</admin-guide/device-mapper/verity>` but works on files rather than block
++devices.  On regular files on filesystems supporting fs-verity, userspace can
++execute an ioctl that causes the filesystem to build a Merkle tree for the file
++and persist it to a filesystem-specific location associated with the file.
+ 
+ After this, the file is made readonly, and all reads from the file are
+ automatically verified against the file's Merkle tree.  Reads of any
+diff --git a/Documentation/filesystems/ubifs-authentication.rst b/Documentation/filesystems/ubifs-authentication.rst
+index 106bb9c056f611..9fcad59820915d 100644
+--- a/Documentation/filesystems/ubifs-authentication.rst
++++ b/Documentation/filesystems/ubifs-authentication.rst
+@@ -439,9 +439,9 @@ References
+ 
+ [DMC-CBC-ATTACK]     https://www.jakoblell.com/blog/2013/12/22/practical-malleability-attack-against-cbc-encrypted-luks-partitions/
+ 
+-[DM-INTEGRITY]       https://www.kernel.org/doc/Documentation/device-mapper/dm-integrity.rst
++[DM-INTEGRITY]       Documentation/admin-guide/device-mapper/dm-integrity.rst
+ 
+-[DM-VERITY]          https://www.kernel.org/doc/Documentation/device-mapper/verity.rst
++[DM-VERITY]          Documentation/admin-guide/device-mapper/verity.rst
+ 
+ [FSCRYPT-POLICY2]    https://lore.kernel.org/r/20171023214058.128121-1-ebiggers3@gmail.com/
+ 
 -- 
 An old man doll... just what I always wanted! - Clara
 
