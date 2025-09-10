@@ -1,65 +1,65 @@
-Received: from mail-pg1-f176.google.com (mail-pg1-f176.google.com [209.85.215.176])
+Received: from mail-pj1-f42.google.com (mail-pj1-f42.google.com [209.85.216.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ABBB257435
-	for <damon@lists.linux.dev>; Wed, 10 Sep 2025 02:44:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 191512609D0;
+	Wed, 10 Sep 2025 02:44:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757472244; cv=none; b=PuwUAlMXw6qUeP9Ph0GVeoKegKcbmBt9nm1dEXWcDBMMPqoi9+9WDB6p0F/9IX5f+AUX7w68KFEZeSyXJPHxpzS3JB/jyDnHL2c8PwvkG+TN34/pffOfuHpyal0CnTU8xwXhXVqnWtLQ/AzyiRTkPcfqVxjfaazZMFPLCUf81M8=
+	t=1757472245; cv=none; b=bFodUS+tN3SWzmp9KUh2DgG1lenxBd0nNN9kDxF4Y9Mu6tfHUOzhIj9CmLZdDj5Ptd53vuHJKc5zgboNit1U886XYlQoTj00U6OosXQkiPOjhJrSbMaX3+EWnOluWy0Z0Hhj2vaip0Qk+DyPpFsc6/pHlJbPIiifn1wZXU1jhWY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757472244; c=relaxed/simple;
-	bh=Rg8Js/mQ+ji0aVDnd3uUR+wPkIV7f8cZoyAXSG+WzrA=;
+	s=arc-20240116; t=1757472245; c=relaxed/simple;
+	bh=OYt2QegR/+u0q3CRKm7Zg38q7SY9D/3L6tdzv43Jflg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NDVz2OY60vfHS/Jj63AUIlNO2Xp1WnlEl+RhZUkvoPPwtcm3fNgL+6CZOsSIp2ZdIc5jkjPc3GNd2cWWlr6STVbs824OahLYC3i0I3FRzLY2XVYcn+BsI3ZK5W2BTKdkswYstwBG0nch0A0vvChYCNoNU8ONbuevcJhvD9TGpdE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gM6xtA4Q; arc=none smtp.client-ip=209.85.215.176
+	 MIME-Version; b=lqXfOpC+NbihOSh0z6PHsRfx1F+Ej/WHxMjy2UMGy1Cob7RxDfUODATof6hB0My7IkEVT04sqshZRsYQXhQXz6NzkprP19+MddnmWvwjVJszFAp5mgHi0SwXIQowuWNhb6Pv3tq2iGMrBFrH6Vms7iFhS8UfDWaWbSMDY+FoyxE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=frIT3D6K; arc=none smtp.client-ip=209.85.216.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gM6xtA4Q"
-Received: by mail-pg1-f176.google.com with SMTP id 41be03b00d2f7-b47173749dbso4360491a12.1
-        for <damon@lists.linux.dev>; Tue, 09 Sep 2025 19:44:01 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="frIT3D6K"
+Received: by mail-pj1-f42.google.com with SMTP id 98e67ed59e1d1-32da4f36572so1102311a91.3;
+        Tue, 09 Sep 2025 19:44:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1757472240; x=1758077040; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1757472243; x=1758077043; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=isRfEajvq74JD8Gx5JZkbk62qSgMtw6IJwcPrIolSGc=;
-        b=gM6xtA4QcM5zG6r8eIe5+gdURdu7AqXkeHyliXptd+wsc9HsMISiMGKjwFdOrZeAvR
-         wjpB/XpeoaKrmXJjwO6U9Zixwds25GnF7l8VZGTl+YFQ35OpW2elZBfyhlj5C3uSbDwh
-         C3omfBmSEzwZRrO+xFtOrv0iIUed1uPCg9QDR0+SW7MEAjymYNaSeZA0HOwlmHFU/ecN
-         HYXJdA0EeklC3r263QijsUkVfkU43t2MJExrW7szLwUqE++ktAquJhFsl7f0CSgmbGz7
-         4yO+EK+3x+FjEAF4gyP6CQh7Qefah/3R4ADLPazZfoHeC8opUVdlzRqR3DpHzhtRqGfx
-         rKCQ==
+        bh=0koFSnJrv2UowuMhMeqtiJIslvN7BbZv6mHXQ/mKo7A=;
+        b=frIT3D6KNXaSuAUHg9pq3zZY2/Y4jzVBPUps82CYLYdwjnt009OJ0zHdOqQtNAfioS
+         PKT+ZarJYVR0d8yQ78rfGv7n9ERE6JPoYvnDnYo6U3TYj2nvej7UmE6hE0YFk/fUXS93
+         KAcsFdQxjpJFjjWsA59wyDMoNG1wkXERimti9LyuFcEsCplsLNS47v8vMmY+9tlcaedI
+         qyn5l6f6RgKAaVdN0FJb14WCIHVlNpJ+y+sm19mrAOOampbQeXOSOiVVuNpsxPbrFFzY
+         U36CeL1E1iV0D1RfzyOs2+DQhQ180nhIA3cmsU6iew4xD6vLBPl54ZnnTIj4tMhxAvwj
+         K+Fg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757472240; x=1758077040;
+        d=1e100.net; s=20230601; t=1757472243; x=1758077043;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=isRfEajvq74JD8Gx5JZkbk62qSgMtw6IJwcPrIolSGc=;
-        b=DamYsaCETAkeGfNpwJtrEOv+3OezNIwCS7XTIZ/d/Xy705+LGbHgQH5BvJj9MibPGX
-         4WTl+QrSu4O99CH2I750vVA0rmshn9H0C41VYLfsQ5sDMmoqGidriLWOl6YvG5LozVZ7
-         F+xsO3YfZoZ8YhbvK/XXis94ITj15A9uw3cfm9GvIwLiAXMxGx03WXvSb3FFP7QBrsvP
-         8IMNeAojobVUVsEbJ/OmpLWdjmne7aB2gUbUm6evoD8e+U43RkP0vEnVlLtGzfdQKby+
-         yxRitZcwtdoZDOiQSjULutlrocvdYkLkKpZkqIdgIUeiAurC7nZDLFH8DyxlKXW3c6vv
-         7SAA==
-X-Forwarded-Encrypted: i=1; AJvYcCUdFA8GdXhFz0FsoT+VMBEeAIjxjRZt42gKVjN7ELZKcW/CNx2mEGg6CWn59UlrqKp4hT5KlQ==@lists.linux.dev
-X-Gm-Message-State: AOJu0YwqYNfBtp+HQW/QSsPMjB+1eS5UR/y5QvEExco3Uc2JuR6bEYRV
-	C8x2Ef71pGuHQtTkvvqDjGdInRttzNpLrMvC7eFNdWFCvSwtq71KTIqD
-X-Gm-Gg: ASbGnctdR2ggGX9m2Z6M4eWeG4HHCOoFVivExXAIRjKmk7HvC8VyRUz0c9N1SdYdw4b
-	FaqLf/MlOQtScnnHmxTPVoUiLQJ9NjzzGZCtK7v9MWEtG2NjgQS1or/xmvnFHYPJdp9bg3Hd27C
-	gal/mpmKXxfG4uts83wOwLyER4aVjxDKEmPU9q+d3ehoyufF/1gYm9XfXnboY+vfnvhlPDdzDnT
-	poSXZfrC7hNgywKVhRVQGRwxtRBw7IqLKyAgycpmh+Ee34/+6ypXtnKkTCoRFTvlMamGRV8r3x8
-	GiiMhDqb1QRZOSpsPJzf5WCOmMPi/dM5XvKZJH6VGmOCrnBDbn6dlLoR7ObkmuJJkOlpRK8wbEx
-	aCytbjm3lIWbADJ15y1PMAKzNSQ==
-X-Google-Smtp-Source: AGHT+IFrrGtrsp5QApHqrAEsH4Lf99kNe3GTHl7qChWDynb5tQqdU4zGL9zb4NWW/Nh5w4cYNQSmBA==
-X-Received: by 2002:a17:902:c943:b0:24e:8118:cc2f with SMTP id d9443c01a7336-251734f2edcmr195946635ad.59.1757472240373;
-        Tue, 09 Sep 2025 19:44:00 -0700 (PDT)
+        bh=0koFSnJrv2UowuMhMeqtiJIslvN7BbZv6mHXQ/mKo7A=;
+        b=aFqTgXYa+2TxHfF1tXilJh+Wj4uFNRnmhd9ZiYu9EbJupqu9B8EOKixI5es7CY45Vj
+         4r3XlqUz85emRlOVQvpLqHaPTiAYUjadr4wNd/OUpbR7hTZFAOgnYCJuGzuWUMT9exIJ
+         pg23n7wSI41TGeO9doAjEWqQpbPTlRPQcwKsEjA8nDhpN9yZYj/1jWVT2Zt9AN/GPzzf
+         poVlo1mJaOELYBcqyWoemhYVOFwBZXBcgaAEUMl67CdQHUaCNO5XtHcklG/hX7XGdhY+
+         c7fx10wdgan+ynLKu0dmY0SiJ8LtJ51NzMuC67Q0Rk3C/CmItzw3dgoWh6uRS3ZNi7c6
+         Iixg==
+X-Forwarded-Encrypted: i=1; AJvYcCUFLAJz8Yg2oOEQ3SXtJCXNzdepiqWsmyLFb/Wzq1YaqFaYULvYkLEyLFfQ5JSF5rN0B1xbYg==@lists.linux.dev, AJvYcCVjI1pq0sv150nRJmTrX1lrmoEHS8wLAmjCrR+s69b1DU5as8q/lxKHShjZVUloWo4s0GI0KGVGDdw=@lists.linux.dev
+X-Gm-Message-State: AOJu0YyOq68+x3vTfHTUU7hVmjeDm3b6lPVbmgkberRy/Xrj6htyjkB9
+	P4c0+e/6eCsgJUHxZEPC9Ia6DKhLO/H76HqQn8BbT0HT1aUIpD+Hy9JP
+X-Gm-Gg: ASbGncvYuKm9NuGCXvjTqglWFwiO2gZRxVsSHMsPj0N3Ts2oONX7Z1FxRCjyJPaukDS
+	MGSjtE6DLQuMrlR+wQYZFD2IpqPxPTNPLIlMsNmnEiXjSvj24TFcy90qX98QZq2LGDU2hTz8P4Q
+	N6M0Z6G1/4Obyfz4Dc2MfAj3pFlQ912EQqTA96JtJkrIN+kpXeVXF7vVT3zqKD6u7X0RZ2nZs1X
+	H9wkTXgIZNzmdBX+y9vToRFXKrAaieQxVGce7FvdUladcyiwVeCE3FqBKCVNoXT8s+p7Ml2SyXV
+	NK7YS3iPLHP5Y4foegpuAnCYICgzDPii82rI+KWFKqjIUVMBwfc0N+D2a02t2CKp43uogzePqMz
+	hp3X+7sYxA3N4EVvv/8vf5ZuTE+4bcq81XuYS
+X-Google-Smtp-Source: AGHT+IHze3NqUFgqDMM+sZM9Wi/Xmfyi7sD03WA5eGHes94PFV7I4KKOuKIIQBvLXj+TekGgIh8lMA==
+X-Received: by 2002:a17:90b:1e51:b0:32b:d089:5c14 with SMTP id 98e67ed59e1d1-32d440c5edfmr18323077a91.35.1757472243321;
+        Tue, 09 Sep 2025 19:44:03 -0700 (PDT)
 Received: from archie.me ([103.124.138.155])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-25a2ac085d8sm10840225ad.118.2025.09.09.19.43.56
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-32dbc1c467csm201563a91.7.2025.09.09.19.43.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Tue, 09 Sep 2025 19:43:58 -0700 (PDT)
 Received: by archie.me (Postfix, from userid 1000)
-	id 4B76441F3D85; Wed, 10 Sep 2025 09:43:52 +0700 (WIB)
+	id 3876D41FA3A5; Wed, 10 Sep 2025 09:43:52 +0700 (WIB)
 From: Bagas Sanjaya <bagasdotme@gmail.com>
 To: Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
 	Linux Documentation <linux-doc@vger.kernel.org>,
@@ -159,11 +159,10 @@ Cc: Thomas Gleixner <tglx@linutronix.de>,
 	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
 	Masahiro Yamada <masahiroy@kernel.org>,
 	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
-	Jani Nikula <jani.nikula@intel.com>,
-	"Mario Limonciello (AMD)" <superm1@kernel.org>
-Subject: [PATCH v2 04/13] Documentation: amd-pstate: Use internal link to kselftest
-Date: Wed, 10 Sep 2025 09:43:19 +0700
-Message-ID: <20250910024328.17911-5-bagasdotme@gmail.com>
+	Jani Nikula <jani.nikula@intel.com>
+Subject: [PATCH v2 03/13] Documentation: perf-security: Convert security credentials bibliography link
+Date: Wed, 10 Sep 2025 09:43:18 +0700
+Message-ID: <20250910024328.17911-4-bagasdotme@gmail.com>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250910024328.17911-1-bagasdotme@gmail.com>
 References: <20250910024328.17911-1-bagasdotme@gmail.com>
@@ -173,29 +172,31 @@ List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=945; i=bagasdotme@gmail.com; h=from:subject; bh=Rg8Js/mQ+ji0aVDnd3uUR+wPkIV7f8cZoyAXSG+WzrA=; b=owGbwMvMwCX2bWenZ2ig32LG02pJDBkHnihuCjbtUDpafXJnbOHtXRdvzJjhG/D0b9KEh6svl Jx1Ocjf0VHKwiDGxSArpsgyKZGv6fQuI5EL7WsdYeawMoEMYeDiFICJSHcx/FNfPsFU6huDt7vJ kh1V1uZRLxRT1SOqp3E8VV6+6XDdK15GhiW/r34XtloUdOCT982MLd7bz2VGXmhWZatxbn38c0u qDSMA
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1135; i=bagasdotme@gmail.com; h=from:subject; bh=OYt2QegR/+u0q3CRKm7Zg38q7SY9D/3L6tdzv43Jflg=; b=owGbwMvMwCX2bWenZ2ig32LG02pJDBkHnijWLH+uxHuD5TvzhcJo65MVRz8evf+ht/Kg8H3eu d3xR8redZSyMIhxMciKKbJMSuRrOr3LSORC+1pHmDmsTCBDGLg4BWAiXd8Y/pkdXvTh5u5HL7eU z3No81zweEv6gxSt+G/HWyxWsM1N7zjH8E/xHeNT5tNsutFpemIVy+M+5pasa5QSXynjZOFf2v3 OnBkA
 X-Developer-Key: i=bagasdotme@gmail.com; a=openpgp; fpr=701B806FDCA5D3A58FFB8F7D7C276C64A5E44A1D
 Content-Transfer-Encoding: 8bit
 
-Convert kselftest docs link to internal cross-reference.
+Use internal cross-reference for bibliography link to security
+credentials docs.
 
-Acked-by: Mario Limonciello (AMD) <superm1@kernel.org>
 Signed-off-by: Bagas Sanjaya <bagasdotme@gmail.com>
 ---
- Documentation/admin-guide/pm/amd-pstate.rst | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ Documentation/admin-guide/perf-security.rst | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/Documentation/admin-guide/pm/amd-pstate.rst b/Documentation/admin-guide/pm/amd-pstate.rst
-index e1771f2225d5f0..37082f2493a7c1 100644
---- a/Documentation/admin-guide/pm/amd-pstate.rst
-+++ b/Documentation/admin-guide/pm/amd-pstate.rst
-@@ -798,5 +798,4 @@ Reference
- .. [3] Processor Programming Reference (PPR) for AMD Family 19h Model 51h, Revision A1 Processors
-        https://www.amd.com/system/files/TechDocs/56569-A1-PUB.zip
- 
--.. [4] Linux Kernel Selftests,
--       https://www.kernel.org/doc/html/latest/dev-tools/kselftest.html
-+.. [4] Documentation/dev-tools/kselftest.rst
+diff --git a/Documentation/admin-guide/perf-security.rst b/Documentation/admin-guide/perf-security.rst
+index 34aa334320cad3..ec308e00771427 100644
+--- a/Documentation/admin-guide/perf-security.rst
++++ b/Documentation/admin-guide/perf-security.rst
+@@ -311,7 +311,7 @@ Bibliography
+ .. [2] `<http://man7.org/linux/man-pages/man2/perf_event_open.2.html>`_
+ .. [3] `<http://web.eece.maine.edu/~vweaver/projects/perf_events/>`_
+ .. [4] `<https://perf.wiki.kernel.org/index.php/Main_Page>`_
+-.. [5] `<https://www.kernel.org/doc/html/latest/security/credentials.html>`_
++.. [5] Documentation/security/credentials.rst
+ .. [6] `<http://man7.org/linux/man-pages/man7/capabilities.7.html>`_
+ .. [7] `<http://man7.org/linux/man-pages/man2/ptrace.2.html>`_
+ .. [8] `<https://en.wikipedia.org/wiki/Hardware_performance_counter>`_
 -- 
 An old man doll... just what I always wanted! - Clara
 
