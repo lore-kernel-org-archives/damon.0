@@ -1,65 +1,65 @@
-Received: from mail-pg1-f173.google.com (mail-pg1-f173.google.com [209.85.215.173])
+Received: from mail-pj1-f41.google.com (mail-pj1-f41.google.com [209.85.216.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 154622033A;
-	Wed, 10 Sep 2025 02:51:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D930224AFA;
+	Wed, 10 Sep 2025 02:51:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757472716; cv=none; b=eeeJdp8TcppP/pZ8ESjLanZTp46wy8miVjObcmbd1hjuTg8EHG6UuGpENTilG3Zeitjm7gEkLuewVtsZQeQVS7/JCnzXlK0c6dUXjC7J9d8dhGLiFYuhXxpNEjtcNd3A4jcwGYm2OIcl+7m1DDxOtTIWhyvs3SEY3HSP6ollixE=
+	t=1757472717; cv=none; b=RO+olvr3xdVL8Sv88SGQy2r0PnIVb5z3EoRFOYfw7JRjX8STqCnN0UGYS5HOEeS9ey+zma8iYAhn7scD772L9YQ+0mxjE8hqzIZ7sO0monopDLnvcOKAoVApgPkwX+EidNyY4aC3KNDhqwbR0REsW5vnMHSPN/HhdiJ8vhOy2fs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757472716; c=relaxed/simple;
-	bh=tVZea1ikNA4Sssls4g09ZchJ08JhUaFOY8Mmt8T2Tzg=;
+	s=arc-20240116; t=1757472717; c=relaxed/simple;
+	bh=evrdLEAoXKuQzTljW81Kh3KyWLApG8gUObVzJ2YlNgE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XqFo+3vq33886BF8G+1q/bhCohFKDgRs8vQqOdp7M0NwBFztrjI9dgffRgicgg8xYQZyR0wAnqtrXAMo0spGAKcw2MmOiyW70VclhXHRdaOptL649oZHeI1xru25b5mAYZK90ThvCXHXrniKAbzHbna8uE/Fg+qP+9C7cFZxx7A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gPYouzCU; arc=none smtp.client-ip=209.85.215.173
+	 MIME-Version; b=lQ+6pmBfdmvQ+kBJEIu7MNAtWfjwBYucoYGIsoUZmfye1yCax1et32KYWyqXLm1Xbfj6sm3NWtFAlJXHvVryxiJc9br6dydjNe0ffTMwnGfl2rmHavXR3OOhUZD7MOiykb+HWjLhwEVzy7IriDwPoHxOXBlrvPT3l51+6bHXoT4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dlqF/Dkq; arc=none smtp.client-ip=209.85.216.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gPYouzCU"
-Received: by mail-pg1-f173.google.com with SMTP id 41be03b00d2f7-b4755f37c3eso5343575a12.3;
-        Tue, 09 Sep 2025 19:51:54 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dlqF/Dkq"
+Received: by mail-pj1-f41.google.com with SMTP id 98e67ed59e1d1-32b70820360so5047374a91.2;
+        Tue, 09 Sep 2025 19:51:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1757472714; x=1758077514; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1757472715; x=1758077515; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=jdhbTSK6p9ht0YngyCDiyyRtcLCfpgxS9tGDrcGiJGs=;
-        b=gPYouzCUhgHVhmcn38V9jkK3hlJnM4S34ZsealU+qgQaHw8W1ggWF8XfraNqPRsJVb
-         4O2+wmp+jfIPv2koLWgLEJoozJo9PaNJD5rZRZ8orGCz3V3e11yBeNFD28+sEyLCWoMN
-         sQMHq+9bHwgD0qvCLTorxG2C30kFzAXock13lG3H9RSibI7eOT2fl1Zi2fJvYHZNSzj/
-         lASx8qgG+js5W195rpU6ZDKyazjQBaIiH/WzejXSKzQWWRRHVkjGbfd6lM7I7dnVwCWj
-         SMTMdxmK0VYShtJlkvbN1OyFwKjWyslCfY9Et0DvEvt/yOETBz1oAmhLAxQz8seWbT/3
-         pkiA==
+        bh=mQcUO3MMNiHKjyp0GXG4A4uvsTQgAsYSLBA8ucpISkE=;
+        b=dlqF/DkqCzfYXnX10hHtBWJgTUbIgewWn6dccOOFtv8SZNOwwd7FGSyqJiO2R4IrK9
+         HmnvkHFMHqQgckL/BA4eLZtAFsfci5nq3WpnTJ/LgDQUDO6hYuonatfGfTqNfzb3eHkd
+         JmGq6JACpARWAcZqmSgcIZprob9T8U+gPOIii5QiCHP+owQRF0PJBg8CLIfYbrWNTQPo
+         +MYCPPHVhL0Ndja6pNQyDOKqbjCXSZWO7XbxKLYFxMSrmTIP4KvPuQ6KA7z0JDuYjSSr
+         zZVq4IWN18sSME6CeIfV77gxk3koWQW/prJMvbz5zfHP3V3+r6r9AEuj1VGN4A+lt5m/
+         kSfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757472714; x=1758077514;
+        d=1e100.net; s=20230601; t=1757472715; x=1758077515;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=jdhbTSK6p9ht0YngyCDiyyRtcLCfpgxS9tGDrcGiJGs=;
-        b=Gl5X9lNcp9/NH1eALaH7+RWhvsD7ejU1qdBtQKyxt6eHBXA6r+b+LdgWZsberHWs/W
-         Onwq53tJzlDkEPEha+Sep+XKSA1Jmu8cHRCN8DKUOzCk6oU8H4eG0Nz7kf+7XUy0ZoP+
-         R0XemzCJpNHqaWoxQ9x7zEDPUNvofOLCnNplBfaa9A1hWe/wFgj9ztW/j0WgnuqCH9ls
-         1jOY4NxEKUvjgoEAg6rbZphrGGpaFI4jSd9qr9s926TOjgMVXJiPKj47u/J5rCEpEM2B
-         ITau1j53W3ykR5m/Om4I3rLv+X0xBIA4JrHX8JhXwNB2SLFA6twQJtfoqBQsydcA+h33
-         dh9Q==
-X-Forwarded-Encrypted: i=1; AJvYcCU3lrz4ylYpwyV4Y4nGbyLlvfmaATjRva7GIBqvOIRIFXFa64d7zcdTwlpdH+nsWkwsbbdyggeDukg=@lists.linux.dev, AJvYcCUcwbuhIppnaZEk55T5ogwAKr4nYg4P9KsW1H+6/Oc+I1g5+/Azk3XAAqBunUmQVwqx4iROJw==@lists.linux.dev
-X-Gm-Message-State: AOJu0YyDOcxiPoWnRdLEDggo8WbXqT29BF8F5KKUo43U3Lz3ML/pDdZv
-	It+vj5Xfj5W0wGamHnA5U/Y2+JOUHRIUxLPfyMymr4iH2uSAnMIyqKeg
-X-Gm-Gg: ASbGncvUpCq/E0LTQFe4yJJpJDJu9syLb3ILJvsSM18iLP9Xf7k1FI4DnQK0ms/M622
-	ysOY6M77QUhHcRXolOAsswUQY/8/Ju/M/jS9ChycAicfa8B/1TwW6GqixeaEjHZP21xB+MN06vw
-	YPec7PQc7WNwuOvV1vPCrZsIU3cCFbqoEbcfYTpvzEiDRcCe3hmOXP1TCwMlUGkN0amLdgoMs0b
-	BpbY0OkAj4u9j8L1MQLdj1/WW4Q4ODPV7rDeYKR0Oka0QQPHRjD5vRXOBjrfCoyI42/Al5dW2Yl
-	M2U9tkMiQQ0vDz+mYf4Rx8n9IAF6Y2/2WppYPYcKfp4C8Fg5RTu+xViNPPylG9Svy9PM/0q2oF+
-	RycUHOjEcVhY726di+w/fTzDGOA==
-X-Google-Smtp-Source: AGHT+IEB/m099LrAl5yQVt4L0Nzl0jupOns8XwrHabjqcwIBBCUNyigNNYELdZPt4mBJxRKyTxzUaA==
-X-Received: by 2002:a17:902:da82:b0:24b:2b07:5f6d with SMTP id d9443c01a7336-2516d818031mr154485025ad.9.1757472714167;
+        bh=mQcUO3MMNiHKjyp0GXG4A4uvsTQgAsYSLBA8ucpISkE=;
+        b=djkCaMeqFzVV2ywR/YaW5ZHzIdkjGV8y/u0WANNvtvfNpg260PfYWJnrmAgz2KRpgd
+         wmFZ2Tlu71QYCIOrtv86wX4pppWKPLdX8xDi3C6Qm9cIC+rqf89s5yxY5Zpsu27Il03A
+         FBGMUta+soyLj9HOxiaLs01p0t+UdxqXYgQHndPrSktp7rN21aYAxCp8dhUfNIP4Mul7
+         NroUZzn6GTUWaMOrCLP4l9Ut/HnfKGwSDrIltTmhzbJ/qi9MjqUTeQlq8UWEAjJc9NmW
+         j30eLEPD81oTu98JL75EMnjikB6QS/N+DOq7pOmNlmQgSuRED8CBzg+BYVPF+mk/YU7z
+         uxWw==
+X-Forwarded-Encrypted: i=1; AJvYcCXAlg38Wv0OwKf9IFwvSJJBNWr9jbPt69jhPhlhxshvDSLUOW2I5TIiTRutbBZ/8xBBe/CbNA==@lists.linux.dev, AJvYcCXfvK5tgdcE86wgxDT8JFcqAPGhUBBtx+GOQRUp6p+Wp/88yU/QRY8ypfxw7uqFItw3K9wWIqz4baQ=@lists.linux.dev
+X-Gm-Message-State: AOJu0YyS6/5BCN+IvwC9Yv0yVsGT+ntjk+tbbYEvwboDHulSLn/eAwGI
+	B+evAWwsgwHmLCQ/cqB97blSn3DE9znyw9S3sL2Zx7iJMrlw0VjIOOq2
+X-Gm-Gg: ASbGncteX8RYfm1YCe1sMCPidO1sGqxoINfn1+91MXl2LrEEA3x1lx2ksSwBFzMl7jF
+	3bwvM679sMI0JtAWZ+WrJ3RozXZiJwM4LOF7oaxM8tdlnqpdS5xbtFJabEkwp9+qcXPXd9GZc8h
+	LXXL7MfTsLHTVmKQBcsk6zoNrSqKWJLGi/9yK9FfDyoPo9LMpvDf0FaHHZ5ULIV6sQxQ2cQJ8nd
+	1xVGWLlCJu+2Ql4L0IW+PHq5MGk8h57JdGYFnw2RlzUh0bIC2d5w81Ftj9TpQSDUUGFQO0IhePy
+	RdRemoDp1td4py64euen8X6g2QTEcJLczmaxwkUEJAi2okniprABnTKTJONpUGLVS9R55ZJScIM
+	WuZ/FEler1nuBBpwNPd8Kz/DGNhl9NFDQDvoI
+X-Google-Smtp-Source: AGHT+IHumoKCl0BwECrl0jFgQDm+a5TPs08x2B/wSLqiGEG+ifiNXW+7jwodpJ99kFpH7Ms7vygGwQ==
+X-Received: by 2002:a17:90b:2b43:b0:32b:5195:d119 with SMTP id 98e67ed59e1d1-32d43f04fc5mr19535835a91.12.1757472714800;
         Tue, 09 Sep 2025 19:51:54 -0700 (PDT)
 Received: from archie.me ([103.124.138.155])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-32dbb032dc6sm679647a91.0.2025.09.09.19.51.53
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-32dbb313dbasm659049a91.5.2025.09.09.19.51.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Tue, 09 Sep 2025 19:51:53 -0700 (PDT)
 Received: by archie.me (Postfix, from userid 1000)
-	id DC0B441BEAA1; Wed, 10 Sep 2025 09:43:52 +0700 (WIB)
+	id 158E941BDD48; Wed, 10 Sep 2025 09:43:53 +0700 (WIB)
 From: Bagas Sanjaya <bagasdotme@gmail.com>
 To: Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
 	Linux Documentation <linux-doc@vger.kernel.org>,
@@ -160,9 +160,9 @@ Cc: Thomas Gleixner <tglx@linutronix.de>,
 	Masahiro Yamada <masahiroy@kernel.org>,
 	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
 	Jani Nikula <jani.nikula@intel.com>
-Subject: [PATCH v2 10/13] Documentation: smb: smbdirect: Convert KSMBD docs link
-Date: Wed, 10 Sep 2025 09:43:25 +0700
-Message-ID: <20250910024328.17911-11-bagasdotme@gmail.com>
+Subject: [PATCH v2 12/13] nitro_enclaves: Use internal cross-reference for kernel docs links
+Date: Wed, 10 Sep 2025 09:43:27 +0700
+Message-ID: <20250910024328.17911-13-bagasdotme@gmail.com>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250910024328.17911-1-bagasdotme@gmail.com>
 References: <20250910024328.17911-1-bagasdotme@gmail.com>
@@ -172,32 +172,38 @@ List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1002; i=bagasdotme@gmail.com; h=from:subject; bh=tVZea1ikNA4Sssls4g09ZchJ08JhUaFOY8Mmt8T2Tzg=; b=owGbwMvMwCX2bWenZ2ig32LG02pJDBkHnihVZXUEfpV/XXVSre/C87lNIRyCV5IjnItu7ShZU PiphvtYRykLgxgXg6yYIsukRL6m07uMRC60r3WEmcPKBDKEgYtTACZych0jw9MiYfOuPx0mkkFP UiIWTa/TFphmY/DisofsPrHQd/6Zwgx/paxTd1xaG72+5ivH8bnS+nm3e6W3try5uGL6W3UVsUu 32QA=
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1391; i=bagasdotme@gmail.com; h=from:subject; bh=evrdLEAoXKuQzTljW81Kh3KyWLApG8gUObVzJ2YlNgE=; b=owGbwMvMwCX2bWenZ2ig32LG02pJDBkHniiL9usWFB1WvT+NSavLIanh+698vZJvp5Iqyn5cF Oeb1Xiho5SFQYyLQVZMkWVSIl/T6V1GIhfa1zrCzGFlAhnCwMUpABN50cHwvzL4D8eTgyE89fse HlBVStE02WjOOvl23fZ49/PHUnNONTP8FYh3YzzAeWbK5vj6FqvtSXp3M3+Vxhz3fMrXXv7oQq4 HPwA=
 X-Developer-Key: i=bagasdotme@gmail.com; a=openpgp; fpr=701B806FDCA5D3A58FFB8F7D7C276C64A5E44A1D
 Content-Transfer-Encoding: 8bit
 
-Convert KSMBD docs link to internal link.
+Convert links to kernel docs pages from external link to internal
+cross-references.
 
 Signed-off-by: Bagas Sanjaya <bagasdotme@gmail.com>
 ---
- Documentation/filesystems/smb/smbdirect.rst | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ Documentation/virt/ne_overview.rst | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/Documentation/filesystems/smb/smbdirect.rst b/Documentation/filesystems/smb/smbdirect.rst
-index ca6927c0b2c084..6258de919511fa 100644
---- a/Documentation/filesystems/smb/smbdirect.rst
-+++ b/Documentation/filesystems/smb/smbdirect.rst
-@@ -76,8 +76,8 @@ Installation
- Setup and Usage
- ================
+diff --git a/Documentation/virt/ne_overview.rst b/Documentation/virt/ne_overview.rst
+index 74c2f5919c886e..572105eab452b2 100644
+--- a/Documentation/virt/ne_overview.rst
++++ b/Documentation/virt/ne_overview.rst
+@@ -91,10 +91,10 @@ running in the primary VM via a poll notification mechanism. Then the user space
+ enclave process can exit.
  
--- Set up and start a KSMBD server as described in the `KSMBD documentation
--  <https://www.kernel.org/doc/Documentation/filesystems/smb/ksmbd.rst>`_.
-+- Set up and start a KSMBD server as described in the :doc:`KSMBD documentation
-+  <ksmbd>`.
-   Also add the "server multi channel support = yes" parameter to ksmbd.conf.
- 
- - On the client, mount the share with `rdma` mount option to use SMB Direct
+ [1] https://aws.amazon.com/ec2/nitro/nitro-enclaves/
+-[2] https://www.kernel.org/doc/html/latest/admin-guide/mm/hugetlbpage.html
++[2] Documentation/admin-guide/mm/hugetlbpage.rst
+ [3] https://lwn.net/Articles/807108/
+-[4] https://www.kernel.org/doc/html/latest/admin-guide/kernel-parameters.html
++[4] Documentation/admin-guide/kernel-parameters.rst
+ [5] https://man7.org/linux/man-pages/man7/vsock.7.html
+-[6] https://www.kernel.org/doc/html/latest/x86/boot.html
+-[7] https://www.kernel.org/doc/html/latest/arm64/hugetlbpage.html
+-[8] https://www.kernel.org/doc/html/latest/arm64/booting.html
++[6] Documentation/arch/x86/boot.rst
++[7] Documentation/arch/arm64/hugetlbpage.rst
++[8] Documentation/arch/arm64/booting.rst
 -- 
 An old man doll... just what I always wanted! - Clara
 
