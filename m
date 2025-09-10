@@ -1,65 +1,65 @@
-Received: from mail-pj1-f54.google.com (mail-pj1-f54.google.com [209.85.216.54])
+Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3481E2571C7;
-	Wed, 10 Sep 2025 02:44:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A9A6274B2F;
+	Wed, 10 Sep 2025 02:44:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757472246; cv=none; b=NgmuoznyO4j2AYDaixXJ6+Zv/GlzNu+YGQmGSWIMJAz36AC2ebq5FxF16aC2eogBQcNVyVi4JkGvAHVMiNTyKZ6+z7al8xe8WUDC+kjBLRlUMe3tsF0h0OdXvQCf8Pygg90Vb7vQqYPRrBDXRIagp1Bzznwz2/SnCEgsp7tYMxk=
+	t=1757472249; cv=none; b=o7KYJ/VtGSCuaNGMMlsYE/WfDTfMuIkSAPRE8Lwpwp9ZxuL727dS+RVm2AnZarCMElOTdU569YY2fyMOCNVpPdK+sDJ0W2AI+kGRHfCLHg9eQd2rW6nrKcjzILsbqPXCu2h+tNmMqlJKOQ6uaFa11AburWoe4JQhuD65RB2mU9k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757472246; c=relaxed/simple;
-	bh=IiAjp2UiG4E4i0m+2wynqH3PCAcCcaK0of1KdBtx1KU=;
+	s=arc-20240116; t=1757472249; c=relaxed/simple;
+	bh=WOOeaeuC9/RH4phIV+H+QiLxF/prahARBSHjeoa181M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tfC55fKA5DAsoe+nbmjUuExbYkKJTdy/71XQ9LFk2Ubzw82NePzw3zI6mL0N3GyVT8SJl8L+L0XtSIomMnMrS/Sk8DFv5vuNSNnG+5YkNekpCP92RDI3TfVjW1uRAxdiGEc6z/MpRmyoJwNYFPTwgr3mUCsAHLRorhqIoVk66GQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IPy0INfK; arc=none smtp.client-ip=209.85.216.54
+	 MIME-Version; b=LRKe8UGdvynwHFnYg67Tm4lCrDvlYDKbWw03oJ5b4Cvjj129fcP5mYrqtq1kSMm7JyodJr53i33KjU5VQXjz/2wZgkoL9CccIcWvFpmkA/iruBkYMXsp02gZoXrVBFxcUrFbxrp1gCBiRcti28+gw+YL5FNFLhJ31Vy9Lv1xI4w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EnistJ0K; arc=none smtp.client-ip=209.85.214.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IPy0INfK"
-Received: by mail-pj1-f54.google.com with SMTP id 98e67ed59e1d1-323266cdf64so5473250a91.0;
-        Tue, 09 Sep 2025 19:44:03 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EnistJ0K"
+Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-244580523a0so68087295ad.1;
+        Tue, 09 Sep 2025 19:44:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1757472243; x=1758077043; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1757472248; x=1758077048; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=rNDvUkQSM5YXWXIzm38SWG/hRRo/bsx6SYKE7k7lSmY=;
-        b=IPy0INfK/WBGs9DE0cEcHndoKi8Dqkh07Q3FpVj2ds+kvNhtSXEwcsUyFnlDjRufaX
-         83hh0PUfVtwkEKe4DIgLOKUK7huPzcxi4HQB1F/AW9xpUn47CGTWR419K+hpanMiQ+Io
-         MpyHFldOWPAl4ushJcAWyI8xtAVhMtwS5yAS/LR+Ja0qVNhorSuRSSu3vYy+uZox5Xin
-         aerkrI70Q0SFYkhEJ1XOMg4KgYadApM26GHHDh4aDR41T2UskP4v5mVK/t5zoAhXCtim
-         SVphPIvvcVkO8iNZugnM8PUdOMZ9aVD+p2Pxkvfx4AD9u0IMI7PC6QnqX0KVPVIf34w0
-         QmSw==
+        bh=BATnrPttTGOeKRCCT0K3V4HzIU9KTE8stAVBRczt2LY=;
+        b=EnistJ0K6tiuMGdOGl8FLU0WW15qCPZ+NVx7cA8WaQBsmlJpqhmaLnlVvdmoK/T5WT
+         FFs6vrfoldsrd+NA7VU6VncLEPY4U+Sj5G6ba6Jm/lNiGKcsIHHwO92Zm5QvoOpuwI6Z
+         Ybpyy6HjkwYuud0EYnhL4v5O9pP8lmiTZ/HHEsRMqZdA3Wb+XagBmWOguZkKoWDVlx41
+         aN3YBQGUQz56L07/FFz5avdA/0PaDczWKeN88OB84QIIOyBs38Ox+gyAetHQ9zJyWvJi
+         AIhQwNi1M+IIHwXiADALEZ7jivnf9QAGVcTpOUTCkaXr8hhbWh+CCR5xqVUTnV+AGLZa
+         d3xg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757472243; x=1758077043;
+        d=1e100.net; s=20230601; t=1757472248; x=1758077048;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=rNDvUkQSM5YXWXIzm38SWG/hRRo/bsx6SYKE7k7lSmY=;
-        b=nm8FLbX9rFB6W4HsscRqTic08pRCV5fjfl+1rvM9qX5pu2Ts0CAtDNnuKKPSjjKUpx
-         Qy+v2fWSS0zm0jZGxnaeZIkFK1Mcc38R0WUAsDQQU7tKuzRrMluhX3/YP9NCf2uUwUgO
-         1JsPT+BfC11U656ufTfFBgwQG4LQVWT57B8E9T/ks7ZGU3rgNoWqotCejEFgXhsRsuF5
-         /Ky8ZgT7s/YUGaqopybEVWJSLWQ/nRyYIuL3oBBgfrRmboIHcKdwDXGAVZd9RTn8hcWL
-         tt+gwpKgeKO1hDYRHziALQ2ekuilc7vLv8XLWEUmNL4JtXJERmIL2JVJA9I0Bt4P2Qci
-         lr/g==
-X-Forwarded-Encrypted: i=1; AJvYcCUBUb0LIN3FdNJHEtvsyEiEMtzD32eiMGqkVB7OBH7s/ah4wL+mX+aqouCsQXCVu7DSJK4z6w==@lists.linux.dev, AJvYcCUa/jOr9Gs+0ew/67qk7Rr3wrmX1COJxOi23r32YmxreyaOwL3j5wFftgH5oZWYnws4k7FXI/oBrnI=@lists.linux.dev
-X-Gm-Message-State: AOJu0YyTqxxUaZfox7VkYWpIZBx9V9bRYD9fCT+iAAdrBeh19J9lnx/e
-	XZZwr27plAZcLWe8jF3o1Z4zwDtn59I0DOkQqhybtQEfgRtjbySvtG2u5XvFdsgiDvQ=
-X-Gm-Gg: ASbGnctK5hdeHupJfUaS8C0LGJ3Ln92Uc7VJP+MqwR8SnBBDOeXkewchoWyJaxHI2xJ
-	1yT63JO//FE4MULfeA8VdvcleReQ8UddnxFEK9uTvzzwwP7iqs+iXlthqKg51vueo+tvWCtb80B
-	YC5Lr1E0+ohyIKHwLQlFqE3lZSiHj6dVC9PrAvTQF4EW4J6G/YLG8oGZoas7g/3YNQe0aKfB9yu
-	lXT9SDSpA37Ahu0IFcUjzrQfbgygN5woq+Gz4fF1lNogs2iRzzRdclDU7+F4DTbMo+n/GmO+645
-	fjFejnK77t8x2mMrsaRTaR2BegJz3quxn9phgyydGF7JRCONH6bS3QNc3bnS2OoNS5Nmwj5ECLN
-	7LCW3AeNueqbwod5CgnrXOoL+vjke3Lb+lPrnalpEJCjALs0=
-X-Google-Smtp-Source: AGHT+IHufov4+itUSgW37fW7I5+vYPKYGEYLT2O7M4oMOCb3e767p9iSPZEDIcWxDU07PyMVD30Hjg==
-X-Received: by 2002:a17:90b:48cc:b0:32b:5ea2:a4f6 with SMTP id 98e67ed59e1d1-32d43ef0806mr17274237a91.6.1757472243216;
-        Tue, 09 Sep 2025 19:44:03 -0700 (PDT)
+        bh=BATnrPttTGOeKRCCT0K3V4HzIU9KTE8stAVBRczt2LY=;
+        b=RwZ9nsbEH5OmiWiOdfzO1M/xe3OmAzZloHGmF/2L5TrqLmupQH4nZ0w4HbkLUWdOg9
+         x/4AoV0sA+mlZ3iJYGp9f01OE88fbfKMd33Hl3US66kc8zU0m7tP+7wOlhjztaIYo4HW
+         FaeJcD4iEFMBXs+lNO73EsAUhK734fWAuHVq5ooylfj4z78ZJw+zY+JXAHX6aknZgW86
+         D46GkfoSOuKLZTClABySJWiH7Q18Xn221xHgXyztS7Kc8TEkKBlQJFtaUTMJ7DddSl9j
+         bWYUxV3Jjh6ggkXZqEtv4G6uIfU8lElrMXQG8vGONMMWL1VM/8oRUza+f4jhC+8YQT9c
+         kiDg==
+X-Forwarded-Encrypted: i=1; AJvYcCU+4fZ7DHbE2JlwftJmSSS9PA00VcfR4NQcV+FVbLERn5wPq7Krn4WJ3CWq0tIKXblDXf6xXcUPenA=@lists.linux.dev, AJvYcCXrARXmkkhBV22gIXRPw5pr/XK9qXidz6fs24uOBecceMqPmQEGW4IVN65/xWItVJ2b0+0enA==@lists.linux.dev
+X-Gm-Message-State: AOJu0YwnnAZr/DQJ5pSYWW0xTsUx0wHkHSlHeaWa/F6EzwsCCvNcChgj
+	nHzP9j40gtYeJvuPwQQBQtWdxE04yfPPXiZWiMnNBQ6VMLSX3mxKIqrr
+X-Gm-Gg: ASbGncthIJJjkphnE/2aPyVw+XUH5ZMdpO5B6g4FyYDINsvGpJ4ZnS1KMdfA3GMCuLr
+	8QQr46bi3LSfNQQL7QoJ6oZINLyCc3TSo5ExOl/MygQJrdfxZYU8V35u1ICVovo/sfEgdLDhsHo
+	rCB6RRj9Ob+0pznBL5xrTLMs7j8Ok5PiJFJxXBJ1mT89sT+jF6fx602+auwF1GPLLjCtsBKsD0+
+	nIXeav0qpaSv3a5ZQyCYoQ3mxgKrxfbSWjk/pMsq9jb0jf+NxPnxsu9AvZT2lBvUhiH56yxL2N2
+	1r0DMXuo/UvVfJIIGtwfP1bDEhgGRFYBxexXXaAYgcpyWhkDSMPykoPIktL1iAn38K/IrGWPX+O
+	cFQnjuD3KQg5maKk+haueqS4uHUViZsTZMDDQ
+X-Google-Smtp-Source: AGHT+IFT6YbUc/m0qKUsx2gIlS1cyHwFE/YTWi5ShK7yx8zu8toS/bxgvdpLpOBm2BAA4mGAvmnSyA==
+X-Received: by 2002:a17:902:d501:b0:24e:3cf2:2457 with SMTP id d9443c01a7336-2516e69aee6mr211563725ad.24.1757472247632;
+        Tue, 09 Sep 2025 19:44:07 -0700 (PDT)
 Received: from archie.me ([103.124.138.155])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-32daac59f19sm1672020a91.1.2025.09.09.19.43.58
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-774662ef781sm3491871b3a.90.2025.09.09.19.44.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 09 Sep 2025 19:43:58 -0700 (PDT)
+        Tue, 09 Sep 2025 19:44:03 -0700 (PDT)
 Received: by archie.me (Postfix, from userid 1000)
-	id 7D27041BEA9C; Wed, 10 Sep 2025 09:43:52 +0700 (WIB)
+	id AD39841BEA9E; Wed, 10 Sep 2025 09:43:52 +0700 (WIB)
 From: Bagas Sanjaya <bagasdotme@gmail.com>
 To: Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
 	Linux Documentation <linux-doc@vger.kernel.org>,
@@ -160,9 +160,9 @@ Cc: Thomas Gleixner <tglx@linutronix.de>,
 	Masahiro Yamada <masahiroy@kernel.org>,
 	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
 	Jani Nikula <jani.nikula@intel.com>
-Subject: [PATCH v2 06/13] Documentation: bpf: Convert external kernel docs link
-Date: Wed, 10 Sep 2025 09:43:21 +0700
-Message-ID: <20250910024328.17911-7-bagasdotme@gmail.com>
+Subject: [PATCH v2 08/13] Documentation: gpu: Use internal link to kunit
+Date: Wed, 10 Sep 2025 09:43:23 +0700
+Message-ID: <20250910024328.17911-9-bagasdotme@gmail.com>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250910024328.17911-1-bagasdotme@gmail.com>
 References: <20250910024328.17911-1-bagasdotme@gmail.com>
@@ -172,60 +172,35 @@ List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2744; i=bagasdotme@gmail.com; h=from:subject; bh=IiAjp2UiG4E4i0m+2wynqH3PCAcCcaK0of1KdBtx1KU=; b=owGbwMvMwCX2bWenZ2ig32LG02pJDBkHnii1Whs7TnrT1LggM0BOd5LEqfAiXtc37zS3e5gl8 vnwGP7sKGVhEONikBVTZJmUyNd0epeRyIX2tY4wc1iZQIYwcHEKwERe5TH8D8jY+cG0Uf3udDP5 nmfVwtmWi5mup+fF7AiUlLjK8OXNJ4Z/BmfN3s08dUKM70wua9O148mfqhVc3wuvO6WtdrV4s/k pLgA=
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1173; i=bagasdotme@gmail.com; h=from:subject; bh=WOOeaeuC9/RH4phIV+H+QiLxF/prahARBSHjeoa181M=; b=owGbwMvMwCX2bWenZ2ig32LG02pJDBkHnijZrvnhN9eJ1+LvAp2zslcUft9O2uC6e1HKcd4J/ rFLDLiudJSyMIhxMciKKbJMSuRrOr3LSORC+1pHmDmsTCBDGLg4BWAiyg8Y/lmtiNJu8EtVbugK fub0kTH31Gy3pLdrgoTZz7qUXricksHI8GebzZaeM9lhFZ8KFVTdJ9stibqczP1vypfAmIZda2d 1MwIA
 X-Developer-Key: i=bagasdotme@gmail.com; a=openpgp; fpr=701B806FDCA5D3A58FFB8F7D7C276C64A5E44A1D
 Content-Transfer-Encoding: 8bit
 
-Convert links to other docs pages that use external links into
-internal cross-references.
+Use internal linking to kunit documentation.
 
+Acked-by: Thomas Zimmermann <tzimmermann@suse.de>
 Signed-off-by: Bagas Sanjaya <bagasdotme@gmail.com>
 ---
- Documentation/bpf/bpf_iterators.rst | 3 +--
- Documentation/bpf/map_xskmap.rst    | 5 ++---
- 2 files changed, 3 insertions(+), 5 deletions(-)
+ Documentation/gpu/todo.rst | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/Documentation/bpf/bpf_iterators.rst b/Documentation/bpf/bpf_iterators.rst
-index 189e3ec1c6c8e0..c8e68268fb3e76 100644
---- a/Documentation/bpf/bpf_iterators.rst
-+++ b/Documentation/bpf/bpf_iterators.rst
-@@ -123,8 +123,7 @@ which often takes time to publish upstream and release. The same is true for pop
- tools like `ss <https://man7.org/linux/man-pages/man8/ss.8.html>`_ where any
- additional information needs a kernel patch.
+diff --git a/Documentation/gpu/todo.rst b/Documentation/gpu/todo.rst
+index be8637da3fe950..efe9393f260ae2 100644
+--- a/Documentation/gpu/todo.rst
++++ b/Documentation/gpu/todo.rst
+@@ -655,9 +655,9 @@ Better Testing
+ Add unit tests using the Kernel Unit Testing (KUnit) framework
+ --------------------------------------------------------------
  
--To solve this problem, the `drgn
--<https://www.kernel.org/doc/html/latest/bpf/drgn.html>`_ tool is often used to
-+To solve this problem, the :doc:`drgn <drgn>` tool is often used to
- dig out the kernel data with no kernel change. However, the main drawback for
- drgn is performance, as it cannot do pointer tracing inside the kernel. In
- addition, drgn cannot validate a pointer value and may read invalid data if the
-diff --git a/Documentation/bpf/map_xskmap.rst b/Documentation/bpf/map_xskmap.rst
-index dc143edd923393..58562e37c16a01 100644
---- a/Documentation/bpf/map_xskmap.rst
-+++ b/Documentation/bpf/map_xskmap.rst
-@@ -10,7 +10,7 @@ BPF_MAP_TYPE_XSKMAP
+-The `KUnit <https://www.kernel.org/doc/html/latest/dev-tools/kunit/index.html>`_
+-provides a common framework for unit tests within the Linux kernel. Having a
+-test suite would allow to identify regressions earlier.
++The :doc:`KUnit </dev-tools/kunit/index>` provides a common framework for unit
++tests within the Linux kernel. Having a test suite would allow to identify
++regressions earlier.
  
- The ``BPF_MAP_TYPE_XSKMAP`` is used as a backend map for XDP BPF helper
- call ``bpf_redirect_map()`` and ``XDP_REDIRECT`` action, like 'devmap' and 'cpumap'.
--This map type redirects raw XDP frames to `AF_XDP`_ sockets (XSKs), a new type of
-+This map type redirects raw XDP frames to AF_XDP sockets (XSKs), a new type of
- address family in the kernel that allows redirection of frames from a driver to
- user space without having to traverse the full network stack. An AF_XDP socket
- binds to a single netdev queue. A mapping of XSKs to queues is shown below:
-@@ -181,12 +181,11 @@ AF_XDP-forwarding programs in the `bpf-examples`_ directory in the `libxdp`_ rep
- For a detailed explanation of the AF_XDP interface please see:
- 
- - `libxdp-readme`_.
--- `AF_XDP`_ kernel documentation.
-+- Documentation/networking/af_xdp.rst.
- 
- .. note::
-     The most comprehensive resource for using XSKMAPs and AF_XDP is `libxdp`_.
- 
- .. _libxdp: https://github.com/xdp-project/xdp-tools/tree/master/lib/libxdp
--.. _AF_XDP: https://www.kernel.org/doc/html/latest/networking/af_xdp.html
- .. _bpf-examples: https://github.com/xdp-project/bpf-examples
- .. _libxdp-readme: https://github.com/xdp-project/xdp-tools/tree/master/lib/libxdp#using-af_xdp-sockets
+ A good candidate for the first unit tests are the format-conversion helpers in
+ ``drm_format_helper.c``.
 -- 
 An old man doll... just what I always wanted! - Clara
 
