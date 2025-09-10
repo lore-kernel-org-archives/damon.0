@@ -1,92 +1,215 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83796482F2;
-	Tue,  9 Sep 2025 04:30:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BBC6242D9E;
+	Wed, 10 Sep 2025 02:43:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757392213; cv=none; b=fPP1Ea5nvPKO1ydar189gMOmyqTjRtU3EGH85moGVZfBefqjOTFpBlUjpPBg3b0ADTaGJrm3HEeQzOmblEeAYa1VpYmSPvx9au+N++l5I6/FkGTXw3mmaZWxJvOsClIKeMXqyhfUWIFW4NyolJHbUNf7Yb3ziJhBLxCh2r3+/ss=
+	t=1757472237; cv=none; b=RTdJYKViv0Ehq3z7mkAII/6au3SR1I3wCcXLbOAq5sfMXuvxPX1wyjZqy4fSupXyGD2xIpVn0AyMqZZqHaLQ8ddvDecTD7ccL7+hhMOhBebfkNi1JN28TSI71/jbjLFNPimPwzFEdomHpJ4fjc21ewLEdllGPi0NAlLYz0L398g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757392213; c=relaxed/simple;
-	bh=XaDrtfjywtQdCC1M0mnTwMYse4SqpKCgiK0eeh290h8=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=eoMCQ9MQTkHnVHW7lMWByRVuUHRqNPlsaUeNfOrAvzgs8KGa1jcLgRhORTU4Is+xoeBYN4mfKdMIBtY8JmHIedoo/O3ay5e9rj9fOgrZRDeCwShS7c2JDZzPgx8NMr2dJPknYFqeJuO+Vl3vaeLo8osWgHdl80GTAAsMK9FSZHg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ncqk3Z4A; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1757472237; c=relaxed/simple;
+	bh=oQ/U51BIIgNGsRun+kwInz/tmig5xTqHruGeEvNRxQQ=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=Bb6IxsHVVut96lWBeobQSowCpRqQJASXeUhxZjT0xs1ik5SFLijCQtv71WXCJUITXWgZuCqjYGovRFITuDeK49N6qkSHLqFQYo1cyboGZeHa515m6URpl7v1hhTqhm2gtn3xz44r+EXeY6hNk09Y3QHsYbY7fUhm1ufj3x2pi98=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UqGLTpO6; arc=none smtp.client-ip=209.85.214.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ncqk3Z4A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1C88C4CEF4;
-	Tue,  9 Sep 2025 04:30:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1757392212;
-	bh=XaDrtfjywtQdCC1M0mnTwMYse4SqpKCgiK0eeh290h8=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ncqk3Z4AmlmqjSVH+RnWKfjmcxOmt0Il6EeReuZ2UkrQhoNG95On7Le+Rvyp7HqyU
-	 nnPcmGgsRpnP/b/eej6hbxJ0dq7f0CVBWAgdX+fPc88fYU1MvcIVU84kjLyvYld84I
-	 FZSk1hn4OiSX+gk4AwzjgpMyugqhyTcWEW5wy5uGY08iYZ9xLFNxsX3VgO0qaxGXWX
-	 wMk354AtbW8VjkYR7Zgy2Xw3r2GuYOysRAFs9TXUxLHZtRMye1/QssczFR7YiRD+/A
-	 1hoNBcDWHQTiwzJ+SY9BjtpuhXKago+0rV8pjqjMfY4OcgaEyRUgsDesiegTWLBmAZ
-	 XRVkozjIbD21g==
-From: SeongJae Park <sj@kernel.org>
-To: Andrew Morton <akpm@linux-foundation.org>
-Cc: SeongJae Park <sj@kernel.org>,
-	"# 6 . 17-rc1" <stable@vger.kernel.org>,
-	damon@lists.linux.dev,
-	kernel-team@meta.com,
-	linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org
-Subject: Re: [PATCH 0/3] samples/damon: fix boot time enable handling fixup merge mistakes
-Date: Mon,  8 Sep 2025 21:30:08 -0700
-Message-Id: <20250909043008.8651-1-sj@kernel.org>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250908211845.bfc7299d783c361b10ae810b@linux-foundation.org>
-References: 
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UqGLTpO6"
+Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-24c89867a17so63300165ad.1;
+        Tue, 09 Sep 2025 19:43:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1757472235; x=1758077035; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=PKHUedwTpnE+6902OLKWJUrKeeyE0icmaP4M6h8VeIM=;
+        b=UqGLTpO6SPxluFRMPmdmKII1pHAIGUIaU+po60Wcoq6RPQuxl1gqTlreZVlwoXXPt7
+         cD0s94ubbHzXVCfQts2PmS+G29dnW8Oqc9vkeeuXqydOjrDnrGi+2OuFJhKsjByiyYx9
+         EwyqtHOj1k/nlESWHvafH1gTKb+hnnF11disYhlFGcSnJ8HJpLeT43HnWaTLrJumsYMk
+         7eFgIqZq0H1g666n83dBF7ZvMVNZYK7nc4EMIyAX50zbQPkeOaPKHRZRMHArT45nu/bt
+         T9pGrrK65wKqI+plb82svaGiHhH4Wli4+NOd3UG0ASfuoMT4T7uzbvDrA6uPmjxphZDW
+         3aCw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1757472235; x=1758077035;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=PKHUedwTpnE+6902OLKWJUrKeeyE0icmaP4M6h8VeIM=;
+        b=RmBj5WxP0sVljJAzkayA19k6rnz1EzkvmcKxyBbPObr7neKr8vIYLSSPxzYwI6FDS1
+         U1g7rrR7JI9H90c2WQb95yCzqb5EtCnXnTZQc2b+RqxzsnnKfSfXgxhNVhJm4MHd/Frw
+         60iOh2vgCrgqCOo8zfvyEy2zEn574WL2gGPLUQYKJEujbu0jIFwuZ/CFV172SyFfmP6a
+         ifZCZ0vDgHeiOaNqblSqHHVwvTTBU5cLlzug6dwehoaKlevUKnrYtqIPWLrzFXx0LkvM
+         jq1EztExQt+R4T4Vxs6S6O6OZjtjl7XsH+AvYkdPmWy91ccshD3W1u0Be32STLUGzru7
+         J+Iw==
+X-Forwarded-Encrypted: i=1; AJvYcCU//h2a3tHYPP5slb6uG52zEJdH1PoGtIknkGrwRYfz6gUPuKiSZXKXhDLNxYPhBwSL71AAMw==@lists.linux.dev, AJvYcCUc4lZAKDieYltqL/diF69wP05PwDcwMqUe5bjxBdSxGucHRB3Cyq/souIdS3a+5DBzJkHdBdciPHU=@lists.linux.dev
+X-Gm-Message-State: AOJu0Yx0ZftUluTJOaJ6xRK6wk83bCZe43P2LWObusj2cf6uRMhrPU4G
+	nO+yGW85okgTpTqz/5rEIyOsG20UO1oi7vSuMsNVkGicC2AtlPejsqk8kkQM/1gZZVI=
+X-Gm-Gg: ASbGncu8N70P0L1AvbIzs8xKMKuz9x19eeTCcR2O8gIdqS5uWPszjiX6wngq1wLqYzt
+	eRCc5b0yDkX4DOks+G74l88U9p7fKqm0CLnzRE0GNEe2o5QJ23ZC0dP60ygVUZqesyVqQjl0OOI
+	1y/PhwrhVhQ5AcgOe9viaNRBqQBP63pISrjUPsHIzBBkMKjSfsqVF+AS0uZ+8QRMG9xKZg34NOX
+	o3C/APzMmMioDdxwXDtJ4zg5tLC7wf8HfCy3+NbPiAKhcVArd9LrkGfxNeICvCdJ+wIdG6l2NNT
+	ePBR+SNPZZ3CHpcuKVzjmz+tMyPp2B4o5gWXwali7aWaNKqG2J0KJ/nqKArB1Az8VjW9s8h3ltt
+	OEvDM9T7cKJ6mCfhFdTjoRFnhWWceFiPlIh/L
+X-Google-Smtp-Source: AGHT+IHbDjWZY3VztYJWV/FENnSrT7+pUTw9iPKJIW8vQLIXrlNVN5ahZX5GB9eL2BwlCwOB0bsRtA==
+X-Received: by 2002:a17:902:fc50:b0:24b:640:ab6d with SMTP id d9443c01a7336-25172b4b335mr233139385ad.49.1757472234639;
+        Tue, 09 Sep 2025 19:43:54 -0700 (PDT)
+Received: from archie.me ([103.124.138.155])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-25a27422ffdsm11441735ad.17.2025.09.09.19.43.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 09 Sep 2025 19:43:53 -0700 (PDT)
+Received: by archie.me (Postfix, from userid 1000)
+	id E4226420A809; Wed, 10 Sep 2025 09:43:51 +0700 (WIB)
+From: Bagas Sanjaya <bagasdotme@gmail.com>
+To: Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+	Linux Documentation <linux-doc@vger.kernel.org>,
+	Linux DAMON <damon@lists.linux.dev>,
+	Linux Memory Management List <linux-mm@kvack.org>,
+	Linux Power Management <linux-pm@vger.kernel.org>,
+	Linux Block Devices <linux-block@vger.kernel.org>,
+	Linux BPF <bpf@vger.kernel.org>,
+	Linux Kernel Workflows <workflows@vger.kernel.org>,
+	Linux KASAN <kasan-dev@googlegroups.com>,
+	Linux Devicetree <devicetree@vger.kernel.org>,
+	Linux fsverity <fsverity@lists.linux.dev>,
+	Linux MTD <linux-mtd@lists.infradead.org>,
+	Linux DRI Development <dri-devel@lists.freedesktop.org>,
+	Linux Kernel Build System <linux-kbuild@vger.kernel.org>,
+	Linux Networking <netdev@vger.kernel.org>,
+	Linux Sound <linux-sound@vger.kernel.org>
+Cc: Thomas Gleixner <tglx@linutronix.de>,
+	Borislav Petkov <bp@alien8.de>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
+	Pawan Gupta <pawan.kumar.gupta@linux.intel.com>,
+	Jonathan Corbet <corbet@lwn.net>,
+	SeongJae Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	David Hildenbrand <david@redhat.com>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Mike Rapoport <rppt@kernel.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Michal Hocko <mhocko@suse.com>,
+	Huang Rui <ray.huang@amd.com>,
+	"Gautham R. Shenoy" <gautham.shenoy@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Perry Yuan <perry.yuan@amd.com>,
+	Jens Axboe <axboe@kernel.dk>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Martin KaFai Lau <martin.lau@linux.dev>,
+	Eduard Zingerman <eddyz87@gmail.com>,
+	Song Liu <song@kernel.org>,
+	Yonghong Song <yonghong.song@linux.dev>,
+	John Fastabend <john.fastabend@gmail.com>,
+	KP Singh <kpsingh@kernel.org>,
+	Stanislav Fomichev <sdf@fomichev.me>,
+	Hao Luo <haoluo@google.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Dwaipayan Ray <dwaipayanray1@gmail.com>,
+	Lukas Bulwahn <lukas.bulwahn@gmail.com>,
+	Joe Perches <joe@perches.com>,
+	Andrey Ryabinin <ryabinin.a.a@gmail.com>,
+	Alexander Potapenko <glider@google.com>,
+	Andrey Konovalov <andreyknvl@gmail.com>,
+	Dmitry Vyukov <dvyukov@google.com>,
+	Vincenzo Frascino <vincenzo.frascino@arm.com>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Eric Biggers <ebiggers@kernel.org>,
+	tytso@mit.edu,
+	Richard Weinberger <richard@nod.at>,
+	Zhihao Cheng <chengzhihao1@huawei.com>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	David Airlie <airlied@gmail.com>,
+	Simona Vetter <simona@ffwll.ch>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Nicolas Schier <nicolas.schier@linux.dev>,
+	Ingo Molnar <mingo@redhat.com>,
+	Will Deacon <will@kernel.org>,
+	Boqun Feng <boqun.feng@gmail.com>,
+	Waiman Long <longman@redhat.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Simon Horman <horms@kernel.org>,
+	Shay Agroskin <shayagr@amazon.com>,
+	Arthur Kiyanovski <akiyano@amazon.com>,
+	David Arinzon <darinzon@amazon.com>,
+	Saeed Bishara <saeedb@amazon.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Alexandru Ciobotaru <alcioa@amazon.com>,
+	The AWS Nitro Enclaves Team <aws-nitro-enclaves-devel@amazon.com>,
+	Jesper Dangaard Brouer <hawk@kernel.org>,
+	Bagas Sanjaya <bagasdotme@gmail.com>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Ranganath V N <vnranganath.20@gmail.com>,
+	Steve French <stfrench@microsoft.com>,
+	Meetakshi Setiya <msetiya@microsoft.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+	Jani Nikula <jani.nikula@intel.com>
+Subject: [PATCH v2 01/13] Documentation: hw-vuln: l1tf: Convert kernel docs external links
+Date: Wed, 10 Sep 2025 09:43:16 +0700
+Message-ID: <20250910024328.17911-2-bagasdotme@gmail.com>
+X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20250910024328.17911-1-bagasdotme@gmail.com>
+References: <20250910024328.17911-1-bagasdotme@gmail.com>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1333; i=bagasdotme@gmail.com; h=from:subject; bh=oQ/U51BIIgNGsRun+kwInz/tmig5xTqHruGeEvNRxQQ=; b=owGbwMvMwCX2bWenZ2ig32LG02pJDBkHnig6a/JZLY81M41OfrJ5W/1jtyyro8lZM99fCflwN Zg5yrW3o5SFQYyLQVZMkWVSIl/T6V1GIhfa1zrCzGFlAhnCwMUpABOplmZkWLE7pDLv7RVG0Wlf H5ewasZymzr2NV7tNPkiErzi6eK/vxgZzoS7uJzLvPvRJPIa/z7RCs5jTcdeb3Q8EmZgt2n66RO ZTAA=
+X-Developer-Key: i=bagasdotme@gmail.com; a=openpgp; fpr=701B806FDCA5D3A58FFB8F7D7C276C64A5E44A1D
 Content-Transfer-Encoding: 8bit
 
-On Mon, 8 Sep 2025 21:18:45 -0700 Andrew Morton <akpm@linux-foundation.org> wrote:
+Convert external links to kernel docs to use internal cross-references.
 
-> On Mon,  8 Sep 2025 20:51:41 -0700 SeongJae Park <sj@kernel.org> wrote:
-> 
-> > > > Note that the broken commits are merged into 6.17-rc1, but also
-> > > > backported to relevant stable kernels.  So this series also need to be
-> > > > merged into the stable kernels.  Hence Cc-ing stable@.
-> > > 
-> > > That's unfortunate, but the about doesn't actually tell us what this
-> > > series does.  
-> > 
-> > Good point.  The issue is that the sample modules can crash if those are
-> > enabled at boot time before DAMON is initialized, via kernel command line.
-> > 
-> > Would you prefer me sending another version of this patch series with an
-> > elaborated cover letter?
-> 
-> Please just send out the appropriate words and I'll paste it in.
+Signed-off-by: Bagas Sanjaya <bagasdotme@gmail.com>
+---
+ Documentation/admin-guide/hw-vuln/l1tf.rst | 9 +++------
+ 1 file changed, 3 insertions(+), 6 deletions(-)
 
-Thank you for the guidance, Andrew.  How about below?
+diff --git a/Documentation/admin-guide/hw-vuln/l1tf.rst b/Documentation/admin-guide/hw-vuln/l1tf.rst
+index 3eeeb488d95527..60bfabbf0b6e2d 100644
+--- a/Documentation/admin-guide/hw-vuln/l1tf.rst
++++ b/Documentation/admin-guide/hw-vuln/l1tf.rst
+@@ -239,9 +239,8 @@ Guest mitigation mechanisms
+    scenarios.
+ 
+    For further information about confining guests to a single or to a group
+-   of cores consult the cpusets documentation:
+-
+-   https://www.kernel.org/doc/Documentation/admin-guide/cgroup-v1/cpusets.rst
++   of cores consult the :doc:`cgroup cpusets documentation
++   <../cgroup-v1/cpusets>`.
+ 
+ .. _interrupt_isolation:
+ 
+@@ -266,9 +265,7 @@ Guest mitigation mechanisms
+ 
+    Interrupt affinity can be controlled by the administrator via the
+    /proc/irq/$NR/smp_affinity[_list] files. Limited documentation is
+-   available at:
+-
+-   https://www.kernel.org/doc/Documentation/core-api/irq/irq-affinity.rst
++   available at Documentation/core-api/irq/irq-affinity.rst.
+ 
+ .. _smt_control:
+ 
+-- 
+An old man doll... just what I always wanted! - Clara
 
-"""
-First three patches of the patch series "mm/damon: fix misc bugs in DAMON
-modules" [1] was trying to fix boot time DAMON sample modules enabling issues.
-The issues are the modules can crash if those are enabled before DAMON is
-enabled, like using boot time parameter options. The three patches were fixing
-the issues by avoiding starting DAMON before the module initialization phase.
-
-However, probably by a mistake during a merge, only half of the change is
-merged, and the part for avoiding the starting of DAMON before the module
-initialized is missed.  So the problem is not solved and thus the modules can
-still crash if enabled before DAMON is initialized.  Fix those by applying the
-unmerged parts again.
-
-Note that the broken commits are merged into 6.17-rc1, but also backported to
-relevant stable kernels.  So this series also needs to be merged into the
-stable kernels.  Hence Cc-ing stable@.
-"""
-
-
-Thanks,
-SJ
