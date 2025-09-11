@@ -1,72 +1,72 @@
 Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AFC5320CC5
-	for <damon@lists.linux.dev>; Thu, 11 Sep 2025 11:43:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4F0F269CE8
+	for <damon@lists.linux.dev>; Thu, 11 Sep 2025 11:45:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757591010; cv=none; b=KWji3XlIywByouYkbu7q8BbSszCMNIb8w1fvYf/xH2woyZqnOKxWitoaOiVNVvJzYOPXF5jV5Szzj9P/5ft1m0vDvHlwHNT9yX/MIIcsriXp6yneXAw2UDXXXiZn+xlzTL02zggo6qMouGMAVag7PwNGznluQBAX/7F1Y3X9eA0=
+	t=1757591133; cv=none; b=GsCBi+NBGJLyky6tRjCQPYxazgdETUOGdJTjI+vRfCu4GWYVKc0CTiCcnK7Y4VwZEY3isfgxOHn+LqqLIFkDnfvURZsVZNy0UCMTF4RM4ayCh6BvBAMvvwGhzsWzq6bg+gMMETeBgqJXI8Yn2XZVC/17DgFPOmLaG078GLsjRSM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757591010; c=relaxed/simple;
-	bh=XmUzzonXmEm0eecfufoic+VvW1FoZpMkdByJQJXmXlU=;
+	s=arc-20240116; t=1757591133; c=relaxed/simple;
+	bh=WAHBZmAzcbwbpoj6I1z3N+MG0iGUicjnj3zrZ3LK3OE=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=HHxHDyo9DsW18HN4j02cOvYoiAP67skWmfV6+Q4p6cibtU+k2/R0kEEiwRkOwSJ+qYBPfU1Q3MbtcoPfk9tKK0NUVOiu8CSx7yYYyqQ95ihYoLPC1uFZHKQemTS0UXTeonyLnLsfnGzPh6VBtCWcbRdW5xz6SdVo1UW8XwAniXc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=Bx/LB7P7; arc=none smtp.client-ip=170.10.129.124
+	 In-Reply-To:Content-Type; b=HCmP7MgJYsCk7768fW2wmxnADimBtuRfYW3PAbmGVXietvw1cLK7pJInj6ePms6PH4MrKDOzB3xqfCRjr3Y8m7wPzCrgqChPs/njfmln5scfTXl7v39Y+szV93aSObVSqz+yRXlabtAR5nXUcYY5rj8kG5TBWK6rXEhd5MzxdMA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=J825L5w8; arc=none smtp.client-ip=170.10.129.124
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="Bx/LB7P7"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="J825L5w8"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1757591007;
+	s=mimecast20190719; t=1757591130;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=YqK4r7gHJdP3vIjVD+TUIRV7/mQ6/Q899i9w/Vg00eA=;
-	b=Bx/LB7P73i6NKw36PrI8ZyLA/YzX4TJDQGur2C86WtjQewbqZtBG7znYqkeIkotfxqYzkY
-	KtbdMqk8uf1Lh6051sufjm0cJ9d0X0C9rycX7QDr4JzoFqazcmCz6+tTIaqy6ijlI/Yv4L
-	PKZc1eZWCbKsWeWopZEAxqvNpN8fcgs=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+	bh=o9x2oRFTlaYelJ4HJOq9E/+ntiY6YQznCq+0jBgMBus=;
+	b=J825L5w8r6iyD1979AaveyOLikKnFT7wjgIlfYuowBsK1W3a3C6b7v32nK9ognI9D+KsHL
+	8meK3fdESZ3xV/J2uQStQuWtPswe2KPrPKr75gajsnedwsgtmmSJcEj825OLqFz+kFnCSe
+	vG8fQN4l5Un7nuBqfVtXFg0oxgszV50=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-277-A2ychr5QOnmsGqiQnkjBKA-1; Thu, 11 Sep 2025 07:43:23 -0400
-X-MC-Unique: A2ychr5QOnmsGqiQnkjBKA-1
-X-Mimecast-MFC-AGG-ID: A2ychr5QOnmsGqiQnkjBKA_1757591002
-Received: by mail-wm1-f69.google.com with SMTP id 5b1f17b1804b1-45de27bf706so3210545e9.0
-        for <damon@lists.linux.dev>; Thu, 11 Sep 2025 04:43:23 -0700 (PDT)
+ us-mta-103-qzyoo_-iNweRuGpp-0hBPg-1; Thu, 11 Sep 2025 07:45:29 -0400
+X-MC-Unique: qzyoo_-iNweRuGpp-0hBPg-1
+X-Mimecast-MFC-AGG-ID: qzyoo_-iNweRuGpp-0hBPg_1757591128
+Received: by mail-wr1-f69.google.com with SMTP id ffacd0b85a97d-3dbf3054ac4so364837f8f.3
+        for <damon@lists.linux.dev>; Thu, 11 Sep 2025 04:45:29 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757591002; x=1758195802;
+        d=1e100.net; s=20230601; t=1757591128; x=1758195928;
         h=content-transfer-encoding:in-reply-to:autocrypt:content-language
          :from:references:cc:to:subject:user-agent:mime-version:date
          :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=YqK4r7gHJdP3vIjVD+TUIRV7/mQ6/Q899i9w/Vg00eA=;
-        b=X5LKYng4oTHN3aWGY8PJhLGBQHv02O8qRHCFQhxIRGuGo+562sRGiy8mCHrQuAIe2k
-         7lwRUtp3RYMeOQr7LLKvikwEB/Cr3SPkqwGKde8Yy4CM+jBGTChF/xTA1oGTurSWWYq9
-         rNBDlUy6VmIuw+/ckua9Ytsnk4iv3Fdklo50Rao7v88AENUJShUZBIA6EQEyuy06FoCh
-         jPNjSTzeZj5NfnzKvTphYIputneu7F8ZTTB1m5Rqq55c3kCSUZcVfOIjM8/DcLbUjokj
-         eMIJuQo349+SrnmF5bQNfXYU3SgoNfIWrlbWQiTMlFoCy0x7fvq7fbUv/TeZ5ixzH2jr
-         JSUw==
-X-Gm-Message-State: AOJu0YzeLXhkk67mKrUL5TIrq++ndFWHpNfwDqaYX2EQsGFj2xSBUJKt
-	5xC1cyMFFg/8sMJc7n2k/t5C2/l1VP49rdIdsSJmY20omsBAlt7IkXPus0y4bbOlexgQUkNYveC
-	/dXbHzEU3MQqtZvJu439fnPusMNWCHeQAhzuhGLV/y+aztt2eoFX/nCuL
-X-Gm-Gg: ASbGncvIQjczoZO1StsnIIbaIJtQMVBatZ1c8xtLna8OUSlzy88+B2S/9mQ/H96KsVC
-	KJcAfKvI44QjuFJFz8OHaxH0lHU7InXFdJ7S/mKauSEewBec7bgN3yrZA2S/Oxs/BkRprmqmysi
-	XSOeQvhRWN7A4bPLMBNb3sn9IcnRW7sjNeOfCMMwsIG4MZpFXo17TdkbZ7NIF7icQcRJyOecHtN
-	qb44F2Yfkn9xtRm+0F1/X7W8N7euIVQUyBYSapTeRQU5pBBY0FdFEfGg1yodUdClnAifp0+x4ub
-	wvVjuV1M4dOmn/mgJyCWulpENAzG43qawuoaVDXqnh8iBDNAXg9Fp1zyqFl9jDXaQOTEtYpyqth
-	jIYLfF3Zh7MELa5yY1ZgCWqmGOC1Nu4CiDH1C3Furj6ZKzxRP5EpaEbuxFV/beDP+CKQ=
-X-Received: by 2002:a05:600c:1993:b0:45b:7bba:c7a6 with SMTP id 5b1f17b1804b1-45dddef9cc0mr166604655e9.32.1757591002340;
-        Thu, 11 Sep 2025 04:43:22 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE8zfkESvPnwJLCN3cVn/BPh0cdw9cW0cigZqMLDMU0If2Z8bKvXz8EdYHTLAcu9AecaC2sFg==
-X-Received: by 2002:a05:600c:1993:b0:45b:7bba:c7a6 with SMTP id 5b1f17b1804b1-45dddef9cc0mr166604395e9.32.1757591001854;
-        Thu, 11 Sep 2025 04:43:21 -0700 (PDT)
+        bh=o9x2oRFTlaYelJ4HJOq9E/+ntiY6YQznCq+0jBgMBus=;
+        b=lXY9vR/M4dJKqzRupBpUq32FVJ5LeEtjmnvW6EoVVCdbZ9q2oOdGUwh87FuIqNOTHS
+         3ThkffvumK3obEBqp7g2jRae7O8kerZc55LXcqrSobeNXLSkFL8GkM2awGs672hTaOCO
+         MYKtMx7d/GAbE8S7OIzVmqu7GuME098j91q3DJATokp5b59SEsdI4h1kbMe5Mc3l7Y82
+         ONUnCV84Yg+4gqeZULA1+oREizKT52HwNsvebdm8XBm/C/GrUkWdRE7wlbtwSA1uHGXh
+         y+hWIr81xb4wWZY+tjZ/OT4WfpDIlqybQ76QHXpY6R3xilFpzvXgeEAU+OJD/oYbDdlQ
+         WkCg==
+X-Gm-Message-State: AOJu0YwijpiFaZkAtrTTvMxt5iA91Fae6sRrATR5UwEStzoQbf4HUD1J
+	bPh+f2ZYSdlLnewTeEb289k0uEan9LRqFsafx3hqKypw/KLFj5fOarcOy4za3c7iI1RG/ztJc73
+	zm50+JxdmEFW/Qmtj50wvU8OGsIzH0OwYxaOsS1DnhjCoOrphrbRfagV1
+X-Gm-Gg: ASbGncsgF1L1Cm7pobMGCbWS5eT6OOLr6KjCWyoyLiYzr6yZmdzgnDq7BefYN+4/dO+
+	74lxCP4WMQjonwI8eIDcsblarnHYhuHR0LSL98LnMWEgZuYptuX4vGcib1P0S90DOVp7SOXJDI8
+	xlHFYjgdl4zsmhU6Px/Q/BeJqJFHgqehLhq3FjShFjIUNqqFzoN/ut1kXk7iU3INGPEOMzADdRO
+	06/uTYL/du868u5my0e0IdG8trIbruOzU6VVckUv3EzqHVfV2f7qmeZKbp0j+hIJC2Pn7AJMYH6
+	BpSa2H08D3PfMej2WhqjynXdVFNVQ2HZZrh9euACxzNPD95oeIFn6SyTcDf2p6ucewpmIvs7/b3
+	/er0wJpghLzboA8rAdzh7F7Rp273e1qR8+vVB7oKDFFhwqfRD2i2soD9mg2qipFwcigI=
+X-Received: by 2002:a05:6000:4023:b0:3e7:5fca:2177 with SMTP id ffacd0b85a97d-3e75fca25admr1970133f8f.11.1757591128084;
+        Thu, 11 Sep 2025 04:45:28 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEa0HyuoBMgXbrgW1aKPyOqqhh/6si3sYzr8/7yDCFvLAtQpjNsjahBvQsXtj6+uXFhjaDQfg==
+X-Received: by 2002:a05:6000:4023:b0:3e7:5fca:2177 with SMTP id ffacd0b85a97d-3e75fca25admr1970100f8f.11.1757591127572;
+        Thu, 11 Sep 2025 04:45:27 -0700 (PDT)
 Received: from ?IPV6:2003:d8:2f42:b000:db8b:7655:f60f:812b? (p200300d82f42b000db8b7655f60f812b.dip0.t-ipconnect.de. [2003:d8:2f42:b000:db8b:7655:f60f:812b])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3e760776bb8sm2201804f8f.3.2025.09.11.04.43.20
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45e0152ffc1sm12562165e9.3.2025.09.11.04.45.25
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 11 Sep 2025 04:43:21 -0700 (PDT)
-Message-ID: <5144764e-1168-4d95-a4ff-76a51bc7932c@redhat.com>
-Date: Thu, 11 Sep 2025 13:43:19 +0200
+        Thu, 11 Sep 2025 04:45:27 -0700 (PDT)
+Message-ID: <8c5267ec-cc85-4eff-b890-eb705472e2b2@redhat.com>
+Date: Thu, 11 Sep 2025 13:45:25 +0200
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -74,7 +74,7 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [v4 01/15] mm/zone_device: support large zone device private
+Subject: Re: [v5 01/15] mm/zone_device: support large zone device private
  folios
 To: Balbir Singh <balbirs@nvidia.com>, linux-kernel@vger.kernel.org,
  linux-mm@kvack.org
@@ -94,8 +94,8 @@ Cc: damon@lists.linux.dev, dri-devel@lists.freedesktop.org,
  =?UTF-8?Q?Mika_Penttil=C3=A4?= <mpenttil@redhat.com>,
  Matthew Brost <matthew.brost@intel.com>,
  Francois Dugast <francois.dugast@intel.com>
-References: <20250903011900.3657435-1-balbirs@nvidia.com>
- <20250903011900.3657435-2-balbirs@nvidia.com>
+References: <20250908000448.180088-1-balbirs@nvidia.com>
+ <20250908000448.180088-2-balbirs@nvidia.com>
 From: David Hildenbrand <david@redhat.com>
 Autocrypt: addr=david@redhat.com; keydata=
  xsFNBFXLn5EBEAC+zYvAFJxCBY9Tr1xZgcESmxVNI/0ffzE/ZQOiHJl6mGkmA1R7/uUpiCjJ
@@ -141,15 +141,15 @@ Autocrypt: addr=david@redhat.com; keydata=
  3iyY2Nsd7JxfKu1PRhCGwXzRw5TlfEsoRI7V9A8isUCoqE2Dzh3FvYHVeX4Us+bRL/oqareJ
  CIFqgYMyvHj7Q06kTKmauOe4Nf0l0qEkIuIzfoLJ3qr5UyXc2hLtWyT9Ir+lYlX9efqh7mOY
  qIws/H2t
-In-Reply-To: <20250903011900.3657435-2-balbirs@nvidia.com>
+In-Reply-To: <20250908000448.180088-2-balbirs@nvidia.com>
 X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: pts2uU9eTgD9hGIRL1rBP-LXPlH-qBKPOJFsgNnbO1I_1757591002
+X-Mimecast-MFC-PROC-ID: aXBXOjDzoH88BWDEMvgRnzncWFh-pHNSDFEhrc8kMzk_1757591128
 X-Mimecast-Originator: redhat.com
 Content-Language: en-US
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
-On 03.09.25 03:18, Balbir Singh wrote:
+On 08.09.25 02:04, Balbir Singh wrote:
 > Add routines to support allocation of large order zone device folios
 > and helper functions for zone device folios, to check if a folio is
 > device private and helpers for setting zone device data.
@@ -190,7 +190,7 @@ On 03.09.25 03:18, Balbir Singh wrote:
 > Signed-off-by: Balbir Singh <balbirs@nvidia.com>
 > ---
 
-I think you missed my review of this patch in the last revision.
+You missed my comments of this patch in v3.
 
 -- 
 Cheers
