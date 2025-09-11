@@ -1,72 +1,72 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A113C1A2387
-	for <damon@lists.linux.dev>; Thu, 11 Sep 2025 12:04:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C93C131E0E2
+	for <damon@lists.linux.dev>; Thu, 11 Sep 2025 12:15:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757592273; cv=none; b=OVjrZ9ZPxgg0Hzt+0vhMb/6eGs9gQmuOmk6qEjulTn6kLyBrzl4Raha1a2RIBUzbhJzm5g5ncsR2G4fvyL6SPDFgpo1kuNXGZX2qv8GSu9DW3drpcTkurYI7hHSNB7jrF7Q7VNQDnrpi/3vufpZwcDrdCideAAiu77ymCHlRhNc=
+	t=1757592961; cv=none; b=Bgc7VOQuS86q8n60zYhtQaT7AHvVy4JP6eyn/ZJXof0p8XHIveRJRVgcmQ5CvD3tJYIAj7+ZXoneVimbhYg5xZjhDUdjMyWZwpOmk/pGhs0cvl7DCoszD6LpVkqsgTV3EIzjGx8Y1plk8N3KQm6mA2FZCxnXFSkFlDnp//Lx498=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757592273; c=relaxed/simple;
-	bh=Wt0bC5mvDF/uHEWIdzjdJu0LeGAa2X3RPBVPJei0lk8=;
+	s=arc-20240116; t=1757592961; c=relaxed/simple;
+	bh=uqu+bqMze3xKiYJqFhWgDeHGVxU0loNIuIxFvJo8H48=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=AuLSROuwCoddnt1Myw3a1/NJnkuCj0gIZUrpQQQVZU3PH4FVCGP5+iwyfjPdfgHebK4ti6Gz07F0EvCGg0el8HzR0aFVvFNbapVWAyDPw/joHU8YTew1P1v2E0Xfcg035NCDYXphjDe8DKQgHWJdYBTn7rm8sOcVrceJiFrPGz8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=BEICEPI+; arc=none smtp.client-ip=170.10.129.124
+	 In-Reply-To:Content-Type; b=OsAwJn0zx1Y47KcwFeBzPeaMDrAjNxcNH0Wwfq672EmDlfqiVojlv44/36o8Ty75ekfVNr6KU27ikQClT2OktmvNQ1/9xTO7tK1dEsD1n3ySoCYYMQTQ6cIq4PTtjwdHE9e+LDRmE+58PPfX0ruoX1oSnomPV4/Oni58pEReFr8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=JNAl9yJR; arc=none smtp.client-ip=170.10.133.124
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="BEICEPI+"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="JNAl9yJR"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1757592270;
+	s=mimecast20190719; t=1757592957;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=EuZPErlVPfP4Zi7OehwAoScM8rfscgPVz8IjeFSlZfc=;
-	b=BEICEPI+XKEA1tgJ61XnCtifDdNA0RJaEhVHg29X8Jyr5qs1Wv+sDcCzgWLKCp9JhVzO90
-	6Uz977rR0LxC9CTD5IjrmA+4B1llAZnpQIn5Zv5ueAoNUru6FC0UW6DFTBMaYRNDOGc4Ld
-	t2IB/ET8P35zeVNZ1a8Q+rqgEgNNLdA=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+	bh=LZSC160BNjuUUAGLkXphv06qqbR9jmakoLUoFELbVgo=;
+	b=JNAl9yJRIkC9pIQd65H3xLzXZ1EIl7BpT0Ync6JhBfW1hxwSRvgeUz6+xBrMMbMI7f4U1v
+	JVVgOGQmaVBYRBTV0rMxrfW6sONuQyWjDnywlp9lyAcfp7I/SWrqURSo3jJUCLUL9P67DH
+	hSASFVrpBtIhQ7E/ly9264Bnaug0eZE=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-411-E-fzqaw2MOG2Uqe3f_CzDA-1; Thu, 11 Sep 2025 08:04:29 -0400
-X-MC-Unique: E-fzqaw2MOG2Uqe3f_CzDA-1
-X-Mimecast-MFC-AGG-ID: E-fzqaw2MOG2Uqe3f_CzDA_1757592268
-Received: by mail-wm1-f72.google.com with SMTP id 5b1f17b1804b1-45ceeae0513so3783655e9.0
-        for <damon@lists.linux.dev>; Thu, 11 Sep 2025 05:04:29 -0700 (PDT)
+ us-mta-304-JW85mwntM9qc4N7c1iXg4w-1; Thu, 11 Sep 2025 08:15:56 -0400
+X-MC-Unique: JW85mwntM9qc4N7c1iXg4w-1
+X-Mimecast-MFC-AGG-ID: JW85mwntM9qc4N7c1iXg4w_1757592955
+Received: by mail-wr1-f71.google.com with SMTP id ffacd0b85a97d-3e014bf8ebfso526607f8f.0
+        for <damon@lists.linux.dev>; Thu, 11 Sep 2025 05:15:56 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757592268; x=1758197068;
+        d=1e100.net; s=20230601; t=1757592955; x=1758197755;
         h=content-transfer-encoding:in-reply-to:autocrypt:content-language
          :from:references:cc:to:subject:user-agent:mime-version:date
          :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=EuZPErlVPfP4Zi7OehwAoScM8rfscgPVz8IjeFSlZfc=;
-        b=fk4fMPYJ9lII/YWbhHorAUU0+K3SaRUV7kqmNUfQTCRAr+C99W31LDug5DdluxGTrg
-         9i3UR9O3IaIheWXqDS3tE5njqEd6T6WmBUUS50WYhX1FK5wqu05WiJyy4/pRg4vA7R5i
-         57FCJ6kqZRWyxcICA4gBc8BWJw1/rW7/RwLdV8+wdrlQzC5TGQlvCcm7vffFBv9pgKdI
-         OdXXbvSDTTquBUvXKf1d/yWeOsPOCJOh4gLZLJXbvcFMKdbdqfNPx53O3LtzMIQFnVfa
-         bA00hwkAhJc0+0ZMYJfqQ6Rj2de9hGCZb7ihvw2AMhc5a/KC/O6+p2AifSWkmNwtxHKe
-         l7kg==
-X-Gm-Message-State: AOJu0YzSCIv8AAxGL8fiMzt2VSShC5tAluYOssnvtS5Jr5L2HkRbAqEx
-	J+igFNFRAxzkwNlmlKmLnZLUqFEwC9jPxq77oZlX/7LXF+wf59zkljGqKlINc4bbuTwkIm9M8lL
-	u1UAEzil8YQq0ADUu68dKt+It23yZrQr2ZsqFcblABCULlFaIMjgKCob1
-X-Gm-Gg: ASbGnctuSoOY1UWAcLvupZ5iURtNLiMpEQhr1t6JoGbgNhoZq7n0asbSNAMPZXFcqfx
-	CObyrLkVqpSj843nKVBLuGwf7i9X6tZh4+0eaPNRiZdxdJ5l5koFQ0ebXeDfBEmw/JgzLQrA3GG
-	7ToGTcylOHq936Pzj7LoRmOE5CKR/oqmBHF9NgscSO0Mv+d3jwo24kqRPb9d6KXbPmY9b9CKHXI
-	7rHjMYn+02Ylq4IofsE8dkoyufCbKFrziAKfc8hhuZAAupklF57xKq1SfQUUYHFo5eH0LbT0LRG
-	hqI8yd/lcfzJz8/+fwPKWSkD4baqD2sa+JyyoymAvvSzReXuGYznbA8/KC/VyjIpw6K9nyKV75Z
-	dA4UiPGAMpCTf+ymAD3XTCAF/ZVI0Jq+PCZaj/zok5xAbX2XkzQBzfc1CkIwNm/NuPqc=
-X-Received: by 2002:a05:600c:17d8:b0:45e:598:90b0 with SMTP id 5b1f17b1804b1-45e05989245mr12298595e9.9.1757592268216;
-        Thu, 11 Sep 2025 05:04:28 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE8gojWv48o7hPnSlLmGoQLH2lzL/OCbhuDjeyev+XCC7h++EYG0R0k7MthrD+iGwxnZwbgRA==
-X-Received: by 2002:a05:600c:17d8:b0:45e:598:90b0 with SMTP id 5b1f17b1804b1-45e05989245mr12298135e9.9.1757592267679;
-        Thu, 11 Sep 2025 05:04:27 -0700 (PDT)
+        bh=LZSC160BNjuUUAGLkXphv06qqbR9jmakoLUoFELbVgo=;
+        b=rqci98Pw9YlrlM4CeMppv5mzyrkiKi3E6DQAAUspWWuEPF0so1X/CX0jmWN97e3hr8
+         TjHKz6mGyy43L4F3ro7jxmwfntnZDD9C1ytP4WyXox+B1cuAq3678eW3rJrlzq19MHMa
+         l8QVf7tLUKrI8rZcRDCmfcWeJnoECqQcv+3ZXTotjAlcq13lqnQjld21/smYlbdiVqMn
+         wRthmicJLK8zn/OsqOc/I9XtsqcKHP4fkAa0EtC7c9LBE8GPjdpL4UrItf8XRtftJrbd
+         nc3OS1ksZEsuigBZh42IkSqomwac9GnFaQZqrLmGt/SU+fTQ379Rr+bVtfs+a5/EBKDu
+         h3SQ==
+X-Gm-Message-State: AOJu0YxBOy/zbkYUV4EHMonB4kDlviMuXI5kOa+gTApr3hUE2K/4bCWD
+	440Q7EfVZxrXOy5sgiGGu+YxW3jVzrEsx+ES8+TyBP7naVwhtAMyQaQ17zHVSiixmuDBtDN0nyk
+	hpMySsH0TaZ9pea7p/Mt68M21n3ncJNefvWZ4nDH8tqvcTzJCvvSPnzxz
+X-Gm-Gg: ASbGncvgXd8ZRoKMPmUTSTleyI6SYT1u0w6+cG/o3xI79OOzSckwN9JU4So/WazLMHf
+	CkprjUFtet6oQcOgeZ799fo1xsGJNjAnHlnd4itTIQUKbTLvAmG3kUVusjtoSgmpCArJVVC0zkB
+	86+tKFEuwIgMenaTB1nsYK4qh9U2bMdfuVsBhmB3BDliS1zJ7LOut/XS8XiH7Y/WQUqPpgtCdF9
+	nHUj0DfMal1ydutKEpDfnFCD4r7C7AQSE3LL4BiPwIv9stQNp/BcLmTd1DuwP+Vky16ozzXzbBg
+	f60AnfjiXpZDQZojg4jpea9QTYIx1rdxKud1gKCXLlntemLmzx3rdwA/pG9G2sj0I27OBrpAHQ8
+	jwZeHr3S/JQL18Kxzc2chFUPKFOQ0PtDRUjwEDGCOcGFDqgbKvhcSdeUSa4E8jD4F6go=
+X-Received: by 2002:a05:6000:26c4:b0:3ce:7673:bb30 with SMTP id ffacd0b85a97d-3e75e13cae4mr2820248f8f.14.1757592955151;
+        Thu, 11 Sep 2025 05:15:55 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFguV4xqw7F+/FuyOrWlJOAk5WiiJK6C2irThfGhJhUviXccwRkqmzT0qljmwNeg5bEqGRHFw==
+X-Received: by 2002:a05:6000:26c4:b0:3ce:7673:bb30 with SMTP id ffacd0b85a97d-3e75e13cae4mr2820217f8f.14.1757592954536;
+        Thu, 11 Sep 2025 05:15:54 -0700 (PDT)
 Received: from ?IPV6:2003:d8:2f42:b000:db8b:7655:f60f:812b? (p200300d82f42b000db8b7655f60f812b.dip0.t-ipconnect.de. [2003:d8:2f42:b000:db8b:7655:f60f:812b])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45e0187f0a7sm13295915e9.3.2025.09.11.05.04.25
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45e0157d68esm12986065e9.6.2025.09.11.05.15.52
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 11 Sep 2025 05:04:27 -0700 (PDT)
-Message-ID: <6f1857b8-45db-4017-b6e8-02ecfa2104a3@redhat.com>
-Date: Thu, 11 Sep 2025 14:04:24 +0200
+        Thu, 11 Sep 2025 05:15:53 -0700 (PDT)
+Message-ID: <17e3c19e-0719-4643-8db8-cf8c5b5aa022@redhat.com>
+Date: Thu, 11 Sep 2025 14:15:51 +0200
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -74,8 +74,8 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [v5 03/15] mm/rmap: extend rmap and migration support
- device-private entries
+Subject: Re: [v5 02/15] mm/huge_memory: add device-private THP support to PMD
+ operations
 To: Balbir Singh <balbirs@nvidia.com>, linux-kernel@vger.kernel.org,
  linux-mm@kvack.org
 Cc: damon@lists.linux.dev, dri-devel@lists.freedesktop.org,
@@ -95,7 +95,7 @@ Cc: damon@lists.linux.dev, dri-devel@lists.freedesktop.org,
  Matthew Brost <matthew.brost@intel.com>,
  Francois Dugast <francois.dugast@intel.com>
 References: <20250908000448.180088-1-balbirs@nvidia.com>
- <20250908000448.180088-4-balbirs@nvidia.com>
+ <20250908000448.180088-3-balbirs@nvidia.com>
 From: David Hildenbrand <david@redhat.com>
 Autocrypt: addr=david@redhat.com; keydata=
  xsFNBFXLn5EBEAC+zYvAFJxCBY9Tr1xZgcESmxVNI/0ffzE/ZQOiHJl6mGkmA1R7/uUpiCjJ
@@ -141,32 +141,25 @@ Autocrypt: addr=david@redhat.com; keydata=
  3iyY2Nsd7JxfKu1PRhCGwXzRw5TlfEsoRI7V9A8isUCoqE2Dzh3FvYHVeX4Us+bRL/oqareJ
  CIFqgYMyvHj7Q06kTKmauOe4Nf0l0qEkIuIzfoLJ3qr5UyXc2hLtWyT9Ir+lYlX9efqh7mOY
  qIws/H2t
-In-Reply-To: <20250908000448.180088-4-balbirs@nvidia.com>
+In-Reply-To: <20250908000448.180088-3-balbirs@nvidia.com>
 X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: 3OSR8XnP9xAUNJQv_2mjpQ8pFKTT6h1nwyscv-oqf_o_1757592268
+X-Mimecast-MFC-PROC-ID: g7Nd6YQbTMivBs6-lXdZg3EwWK0PEW-1J_2BYqXqI_Q_1757592955
 X-Mimecast-Originator: redhat.com
 Content-Language: en-US
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
 On 08.09.25 02:04, Balbir Singh wrote:
-
-subject:
-
-"mm/rmap: rmap and migration support for device-private PMD entries"
-
-
-> Add device-private THP support to reverse mapping infrastructure,
-> enabling proper handling during migration and walk operations.
+> Extend core huge page management functions to handle device-private THP
+> entries. This enables proper handling of large device-private folios in
+> fundamental MM operations.
 > 
-> The key changes are:
-> - add_migration_pmd()/remove_migration_pmd(): Handle device-private
->    entries during folio migration and splitting
-> - page_vma_mapped_walk(): Recognize device-private THP entries during
->    VMA traversal operations
+> The following functions have been updated:
 > 
-> This change supports folio splitting and migration operations on
-> device-private entries.
+> - copy_huge_pmd(): Handle device-private entries during fork/clone
+> - zap_huge_pmd(): Properly free device-private THP during munmap
+> - change_huge_pmd(): Support protection changes on device-private THP
+> - __pte_offset_map(): Add device-private entry awareness
 > 
 > Cc: Andrew Morton <akpm@linux-foundation.org>
 > Cc: David Hildenbrand <david@redhat.com>
@@ -194,75 +187,209 @@ subject:
 > Cc: Matthew Brost <matthew.brost@intel.com>
 > Cc: Francois Dugast <francois.dugast@intel.com>
 > 
+> Signed-off-by: Matthew Brost <matthew.brost@intel.com>
 > Signed-off-by: Balbir Singh <balbirs@nvidia.com>
 > ---
-
-[...]
-
-
-> +++ b/mm/page_vma_mapped.c
-> @@ -250,12 +250,11 @@ bool page_vma_mapped_walk(struct page_vma_mapped_walk *pvmw)
->   			pvmw->ptl = pmd_lock(mm, pvmw->pmd);
->   			pmde = *pvmw->pmd;
->   			if (!pmd_present(pmde)) {
-> -				swp_entry_t entry;
-> +				swp_entry_t entry = pmd_to_swp_entry(pmde);
+>   include/linux/swapops.h | 27 +++++++++++++++++++
+>   mm/huge_memory.c        | 60 ++++++++++++++++++++++++++++++++++++-----
+>   mm/pgtable-generic.c    |  6 +++++
+>   3 files changed, 86 insertions(+), 7 deletions(-)
+> 
+> diff --git a/include/linux/swapops.h b/include/linux/swapops.h
+> index 64ea151a7ae3..59c5889a4d54 100644
+> --- a/include/linux/swapops.h
+> +++ b/include/linux/swapops.h
+> @@ -594,6 +594,33 @@ static inline int is_pmd_migration_entry(pmd_t pmd)
+>   }
+>   #endif  /* CONFIG_ARCH_ENABLE_THP_MIGRATION */
 >   
->   				if (!thp_migration_supported() ||
->   				    !(pvmw->flags & PVMW_MIGRATION))
->   					return not_found(pvmw);
-> -				entry = pmd_to_swp_entry(pmde);
->   				if (!is_migration_entry(entry) ||
->   				    !check_pmd(swp_offset_pfn(entry), pvmw))
->   					return not_found(pvmw);
-
-Why this change? Looks unrelated.
-
-> @@ -277,6 +276,15 @@ bool page_vma_mapped_walk(struct page_vma_mapped_walk *pvmw)
->   			 * cannot return prematurely, while zap_huge_pmd() has
->   			 * cleared *pmd but not decremented compound_mapcount().
-
-Reminder to self: cleanup compound_mapcount() leftovers
-
->   			 */
-> +			swp_entry_t entry;
+> +#if defined(CONFIG_ZONE_DEVICE) && defined(CONFIG_ARCH_ENABLE_THP_MIGRATION)
 > +
-> +			entry = pmd_to_swp_entry(pmde);
-
-swp_entry_t entry = pmd_to_swp_entry(pmde);
-
+> +/**
+> + * is_pmd_device_private_entry() - Check if PMD contains a device private swap entry
+> + * @pmd: The PMD to check
+> + *
+> + * Returns true if the PMD contains a swap entry that represents a device private
+> + * page mapping. This is used for zone device private pages that have been
+> + * swapped out but still need special handling during various memory management
+> + * operations.
+> + *
+> + * Return: 1 if PMD contains device private entry, 0 otherwise
+> + */
+> +static inline int is_pmd_device_private_entry(pmd_t pmd)
+> +{
+> +	return is_swap_pmd(pmd) && is_device_private_entry(pmd_to_swp_entry(pmd));
+> +}
 > +
-> +			if (is_device_private_entry(entry)) {
-> +				pvmw->ptl = pmd_lock(mm, pvmw->pmd);
-> +				return true;
+> +#else /* CONFIG_ZONE_DEVICE && CONFIG_ARCH_ENABLE_THP_MIGRATION */
+> +
+> +static inline int is_pmd_device_private_entry(pmd_t pmd)
+> +{
+> +	return 0;
+> +}
+> +
+> +#endif /* CONFIG_ZONE_DEVICE && CONFIG_ARCH_ENABLE_THP_MIGRATION */
+> +
+>   static inline int non_swap_entry(swp_entry_t entry)
+>   {
+>   	return swp_type(entry) >= MAX_SWAPFILES;
+> diff --git a/mm/huge_memory.c b/mm/huge_memory.c
+> index 26cedfcd7418..2af74e09b279 100644
+> --- a/mm/huge_memory.c
+> +++ b/mm/huge_memory.c
+> @@ -1703,8 +1703,11 @@ int copy_huge_pmd(struct mm_struct *dst_mm, struct mm_struct *src_mm,
+>   	if (unlikely(is_swap_pmd(pmd))) {
+>   		swp_entry_t entry = pmd_to_swp_entry(pmd);
+>   
+> -		VM_BUG_ON(!is_pmd_migration_entry(pmd));
+> -		if (!is_readable_migration_entry(entry)) {
+> +		VM_WARN_ON(!is_pmd_migration_entry(pmd) &&
+> +				!is_pmd_device_private_entry(pmd));
+> +
+
+Wrong indentation.
+
+> +		if (is_migration_entry(entry) &&
+> +			!is_readable_migration_entry(entry)) {
+
+Dito.
+
+Wonder if we want to be more explicit.
+
+if (is_readable_migration_entry(enrty) ||
+     is_readable_exclusive_migration_entry)) {
+
+
+>   			entry = make_readable_migration_entry(
+>   							swp_offset(entry));
+>   			pmd = swp_entry_to_pmd(entry);
+> @@ -1713,7 +1716,37 @@ int copy_huge_pmd(struct mm_struct *dst_mm, struct mm_struct *src_mm,
+>   			if (pmd_swp_uffd_wp(*src_pmd))
+>   				pmd = pmd_swp_mkuffd_wp(pmd);
+>   			set_pmd_at(src_mm, addr, src_pmd, pmd);
+> +		} else if (is_device_private_entry(entry)) {
+> +			/*
+> +			 * For device private entries, since there are no
+> +			 * read exclusive entries, writable = !readable
+> +			 */
+> +			if (is_writable_device_private_entry(entry)) {
+> +				entry = make_readable_device_private_entry(
+> +					swp_offset(entry));
+
+Put this on a single line.
+
+> +				pmd = swp_entry_to_pmd(entry);
+> +
+> +				if (pmd_swp_soft_dirty(*src_pmd))
+> +					pmd = pmd_swp_mksoft_dirty(pmd);
+> +				if (pmd_swp_uffd_wp(*src_pmd))
+> +					pmd = pmd_swp_mkuffd_wp(pmd);
+> +				set_pmd_at(src_mm, addr, src_pmd, pmd);
 > +			}
 > +
->   			if ((pvmw->flags & PVMW_SYNC) &&
->   			    thp_vma_suitable_order(vma, pvmw->address,
->   						   PMD_ORDER) &&
-> diff --git a/mm/rmap.c b/mm/rmap.c
-> index 236ceff5b276..6de1baf7a4f1 100644
-> --- a/mm/rmap.c
-> +++ b/mm/rmap.c
-> @@ -1063,8 +1063,10 @@ static int page_vma_mkclean_one(struct page_vma_mapped_walk *pvmw)
+> +			src_folio = pfn_swap_entry_folio(entry);
+> +			VM_WARN_ON(!folio_test_large(src_folio));
+> +
+> +			folio_get(src_folio);
+> +			/*
+> +			 * folio_try_dup_anon_rmap_pmd does not fail for
+> +			 * device private entries.
+> +			 */
+> +			ret = folio_try_dup_anon_rmap_pmd(src_folio,
+> +							  &src_folio->page,
+> +							  dst_vma, src_vma);
+> +			VM_WARN_ON(ret);
+
+Please just drop the ret + VM_WARN_ON here, like we did in the PTE case.
+
+>   		}
+> +
+>   		add_mm_counter(dst_mm, MM_ANONPAGES, HPAGE_PMD_NR);
+>   		mm_inc_nr_ptes(dst_mm);
+>   		pgtable_trans_huge_deposit(dst_mm, dst_pmd, pgtable);
+> @@ -2211,15 +2244,17 @@ int zap_huge_pmd(struct mmu_gather *tlb, struct vm_area_struct *vma,
+>   			folio_remove_rmap_pmd(folio, page, vma);
+>   			WARN_ON_ONCE(folio_mapcount(folio) < 0);
+>   			VM_BUG_ON_PAGE(!PageHead(page), page);
+> -		} else if (thp_migration_supported()) {
+> +		} else if (is_pmd_migration_entry(orig_pmd) ||
+> +				is_pmd_device_private_entry(orig_pmd)) {
+
+
+Indentation ...
+
+>   			swp_entry_t entry;
+>   
+> -			VM_BUG_ON(!is_pmd_migration_entry(orig_pmd));
+>   			entry = pmd_to_swp_entry(orig_pmd);
+>   			folio = pfn_swap_entry_folio(entry);
+>   			flush_needed = 0;
+> -		} else
+> -			WARN_ONCE(1, "Non present huge pmd without pmd migration enabled!");
+> +
+> +			if (!thp_migration_supported())
+> +				WARN_ONCE(1, "Non present huge pmd without pmd migration enabled!");
+> +		}
+>   
+>   		if (folio_test_anon(folio)) {
+>   			zap_deposited_table(tlb->mm, pmd);
+> @@ -2239,6 +2274,12 @@ int zap_huge_pmd(struct mmu_gather *tlb, struct vm_area_struct *vma,
+>   				folio_mark_accessed(folio);
+>   		}
+>   
+> +		if (folio_is_device_private(folio)) {
+> +			folio_remove_rmap_pmd(folio, &folio->page, vma);
+> +			WARN_ON_ONCE(folio_mapcount(folio) < 0);
+> +			folio_put(folio);
+> +		}
+> +
+>   		spin_unlock(ptl);
+>   		if (flush_needed)
+>   			tlb_remove_page_size(tlb, &folio->page, HPAGE_PMD_SIZE);
+> @@ -2367,7 +2408,8 @@ int change_huge_pmd(struct mmu_gather *tlb, struct vm_area_struct *vma,
+>   		struct folio *folio = pfn_swap_entry_folio(entry);
+>   		pmd_t newpmd;
+>   
+> -		VM_BUG_ON(!is_pmd_migration_entry(*pmd));
+> +		VM_WARN_ON(!is_pmd_migration_entry(*pmd) &&
+> +			   !folio_is_device_private(folio));
+>   		if (is_writable_migration_entry(entry)) {
+>   			/*
+>   			 * A protection check is difficult so
+> @@ -2380,6 +2422,10 @@ int change_huge_pmd(struct mmu_gather *tlb, struct vm_area_struct *vma,
+>   			newpmd = swp_entry_to_pmd(entry);
+>   			if (pmd_swp_soft_dirty(*pmd))
+>   				newpmd = pmd_swp_mksoft_dirty(newpmd);
+> +		} else if (is_writable_device_private_entry(entry)) {
+> +			entry = make_readable_device_private_entry(
+> +							swp_offset(entry));
+> +			newpmd = swp_entry_to_pmd(entry);
 >   		} else {
->   #ifdef CONFIG_TRANSPARENT_HUGEPAGE
->   			pmd_t *pmd = pvmw->pmd;
-> -			pmd_t entry;
-> +			pmd_t entry = pmdp_get(pmd);
->   
-> +			if (!pmd_present(entry))
-> +				continue;
->   			if (!pmd_dirty(*pmd) && !pmd_write(*pmd))
->   				continue;
->   
+>   			newpmd = *pmd;
+>   		}
+> diff --git a/mm/pgtable-generic.c b/mm/pgtable-generic.c
+> index 567e2d084071..604e8206a2ec 100644
+> --- a/mm/pgtable-generic.c
+> +++ b/mm/pgtable-generic.c
+> @@ -292,6 +292,12 @@ pte_t *___pte_offset_map(pmd_t *pmd, unsigned long addr, pmd_t *pmdvalp)
+>   		*pmdvalp = pmdval;
+>   	if (unlikely(pmd_none(pmdval) || is_pmd_migration_entry(pmdval)))
+>   		goto nomap;
+> +	if (is_swap_pmd(pmdval)) {
+> +		swp_entry_t entry = pmd_to_swp_entry(pmdval);
+> +
+> +		if (is_device_private_entry(entry))
+> +			goto nomap;
+> +	}
 
-If you just did a pmdp_get() you should use it in these functions as 
-well. If not (cleanup later), do a straight *pmd like the others.
+Couldn't we do here
 
+if (!pmd_present(pmdval))
+	goto nomap;
 
+To replace the original pmd_none() .. check.
 
-Apart from that nothing jumped at me.
+A page table must always be present IIRC.
 
 -- 
 Cheers
