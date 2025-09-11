@@ -1,300 +1,236 @@
-Received: from SEYPR02CU001.outbound.protection.outlook.com (mail-koreacentralazon11023101.outbound.protection.outlook.com [40.107.44.101])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBBDD2264C7;
-	Thu, 11 Sep 2025 09:26:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.44.101
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757582799; cv=fail; b=CMaSssf8bP3WXA72tMqC0UedRO4+JG91Hm1jgBqiJfMIHHmzmQ62BNVOkIPhpTnMYKa+hgI/0JB4xgDHCJFBV0//HTVBNw25U+vqeI2EybW1jFIlqPqktRGoaBi3EE/NOy0z4gF+aSicU2K7pV+AYOnwBm5L+Llo4OMAv41kAOc=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757582799; c=relaxed/simple;
-	bh=F1mojV1QRje5qK4gtwMlZK6B4ewfsktQR4HhPq0xMLk=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=ulCgpMhpZ4GSUBUD1FWke+GS0sxgYwI2JvUfNIOJ43teNXoaeSL2pmtl47pEg+O90Px0dyfCztbsrrDemGA/R0FlGjAmgwhe6i6sey3Z9d69eWE2/soiCzRnLO9ENyJFdOD0EmYkjFrXvHfL5s+M4vM45E0yXMP3VThcAoZMRhw=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=microsoft.com; spf=pass smtp.mailfrom=microsoft.com; dkim=pass (1024-bit key) header.d=microsoft.com header.i=@microsoft.com header.b=THHGlCXu; arc=fail smtp.client-ip=40.107.44.101
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=microsoft.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=microsoft.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 665A3311594
+	for <damon@lists.linux.dev>; Thu, 11 Sep 2025 11:11:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1757589109; cv=none; b=RiHC0HSXiyAbrH7gl4C74yaCQXWilmYR5kFJTVBCiabsKeRVAtY+XobBQ3URRXQWbX0MTsLmOPZkrcyPVHu5TiP2sdB6mbO1vVvM9+2r5NFIbXM0l+tu2Lk1jV1Y4WtGO71Pur1UZfZZxoKUZB6g2GKrsVCltoX8cNibs4Z8uz8=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1757589109; c=relaxed/simple;
+	bh=ZUH+tMoTUJYwd65jUEfLy0Lppo/4pU83bUnbcy+fV1o=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=lY00tHoOE+vEOHF5MBJ1t+OMK8VOSKQi87zz7fVL62rCIUHG6a4bx6Zwn5TuFW8teeQVJV84spI/wIRNIeyPayopras5fnxdrfz+ovrMMECRxCLqmm1I3K8KoC+JCcdkro97HhWQBchxd09Zfk1EUaKNg5do34p7n6PGLfzIrF8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=O9eEUmXW; arc=none smtp.client-ip=170.10.133.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=microsoft.com header.i=@microsoft.com header.b="THHGlCXu"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=zVqiE8qodyznrED14QiOexcCgbUz90kslW4vxybxF0H0OCY4A4mRV68tnUDmAcipUiOHVEwOYc82WMnrXRW4kDXkg89hyzq4BdCC/dkGeuxmyIk06Di+/Qh8+Or9cx09FABAYU4b1C01g5EEluz+mqxVoXHqNiWXM6Ujf0Ddj6abBb1SncEOzgRHEFJmvITJVOsboCz+g1FYZIaG44Sc0kOj8b+YyR+/Bd5OyNBJJz5Rd7DcrAUCxZqrjqu2qIGn1wefArYcbU4rozzfHRA2nxcQJXaw5zddH2FTY4UfRgWIJ9EWJnbYTrFvtNs43Hi9vahZ2atUirsbiV7ONeWSng==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=TBK23OXsywbgw4hVPUHA5LcDKuySojQzSE8m3JGbyWo=;
- b=MdcQzeTSVW9lz095en1Z1eLFHBfeNDRqyEJW/hZ+MaqfCWTSEU+TQH/We2v7DYo/JJFUWIY5nvE+k33CgOOqG3EMw5KUTkeIf19z+Bl7eSanROHhAp7VQKPYRxkQnDyPLoxM8lP+tgcEBl2p689n5IADwnMR28yNuvPBkMb7jX0hwzchk1HQvoiABPVtxZ8ZdnLyRuh5wZnQlfU9zwHqXnZOPtL5eiDhBWvW6EdLbg0IUfkIC+06GvYRUt9ByD03cHb5jw9A/t9m5cdwA0sonVWieHOLhfdZdyQfDU4YxBPUhMfQ2iOA3yQnrxA5ybcIuFexRWIDsCElmFSgY8HuFw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=microsoft.com; dmarc=pass action=none
- header.from=microsoft.com; dkim=pass header.d=microsoft.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=TBK23OXsywbgw4hVPUHA5LcDKuySojQzSE8m3JGbyWo=;
- b=THHGlCXuSMHLnGrxypQ6yWrgIzlZPIYT7B6SXRlDMomSS6ZF58as7JLQLmnDts7Di7IaXx+kWQSziD/WIMIHCEU0dG4qe9dwhrbOqT1ch7wwbD8eS/C840p6aP6053o7zzH1pbKq8R8joQa3+oY30EY3iGSHKdFmRxjp6qkRdpc=
-Received: from OSQP153MB1330.APCP153.PROD.OUTLOOK.COM (2603:1096:604:372::16)
- by TYZP153MB0692.APCP153.PROD.OUTLOOK.COM (2603:1096:400:25e::11) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9115.15; Thu, 11 Sep
- 2025 09:26:31 +0000
-Received: from OSQP153MB1330.APCP153.PROD.OUTLOOK.COM
- ([fe80::2b00:49bb:7d41:c2dc]) by OSQP153MB1330.APCP153.PROD.OUTLOOK.COM
- ([fe80::2b00:49bb:7d41:c2dc%6]) with mapi id 15.20.9115.010; Thu, 11 Sep 2025
- 09:26:30 +0000
-From: Meetakshi Setiya <msetiya@microsoft.com>
-To: Bagas Sanjaya <bagasdotme@gmail.com>, Linux Kernel Mailing List
-	<linux-kernel@vger.kernel.org>, Linux Documentation
-	<linux-doc@vger.kernel.org>, Linux DAMON <damon@lists.linux.dev>, Linux
- Memory Management List <linux-mm@kvack.org>, Linux Power Management
-	<linux-pm@vger.kernel.org>, Linux Block Devices
-	<linux-block@vger.kernel.org>, Linux BPF <bpf@vger.kernel.org>, Linux Kernel
- Workflows <workflows@vger.kernel.org>, Linux KASAN
-	<kasan-dev@googlegroups.com>, Linux Devicetree <devicetree@vger.kernel.org>,
-	Linux fsverity <fsverity@lists.linux.dev>, Linux MTD
-	<linux-mtd@lists.infradead.org>, Linux DRI Development
-	<dri-devel@lists.freedesktop.org>, Linux Kernel Build System
-	<linux-kbuild@vger.kernel.org>, Linux Networking <netdev@vger.kernel.org>,
-	Linux Sound <linux-sound@vger.kernel.org>
-CC: Thomas Gleixner <tglx@linutronix.de>, Borislav Petkov <bp@alien8.de>,
-	Peter Zijlstra <peterz@infradead.org>, Josh Poimboeuf <jpoimboe@kernel.org>,
-	Pawan Gupta <pawan.kumar.gupta@linux.intel.com>, Jonathan Corbet
-	<corbet@lwn.net>, SeongJae Park <sj@kernel.org>, Andrew Morton
-	<akpm@linux-foundation.org>, David Hildenbrand <david@redhat.com>, Lorenzo
- Stoakes <lorenzo.stoakes@oracle.com>, "Liam R. Howlett"
-	<Liam.Howlett@oracle.com>, Vlastimil Babka <vbabka@suse.cz>, Mike Rapoport
-	<rppt@kernel.org>, Suren Baghdasaryan <surenb@google.com>, Michal Hocko
-	<mhocko@suse.com>, Huang Rui <ray.huang@amd.com>, "Gautham R. Shenoy"
-	<gautham.shenoy@amd.com>, Mario Limonciello <mario.limonciello@amd.com>,
-	Perry Yuan <perry.yuan@amd.com>, Jens Axboe <axboe@kernel.dk>, Alexei
- Starovoitov <ast@kernel.org>, Daniel Borkmann <daniel@iogearbox.net>, Andrii
- Nakryiko <andrii@kernel.org>, Martin KaFai Lau <martin.lau@linux.dev>, Eduard
- Zingerman <eddyz87@gmail.com>, Song Liu <song@kernel.org>, Yonghong Song
-	<yonghong.song@linux.dev>, John Fastabend <john.fastabend@gmail.com>, KP
- Singh <kpsingh@kernel.org>, Stanislav Fomichev <sdf@fomichev.me>, Hao Luo
-	<haoluo@google.com>, Jiri Olsa <jolsa@kernel.org>, Dwaipayan Ray
-	<dwaipayanray1@gmail.com>, Lukas Bulwahn <lukas.bulwahn@gmail.com>, Joe
- Perches <joe@perches.com>, Andrey Ryabinin <ryabinin.a.a@gmail.com>,
-	Alexander Potapenko <glider@google.com>, Andrey Konovalov
-	<andreyknvl@gmail.com>, Dmitry Vyukov <dvyukov@google.com>, Vincenzo Frascino
-	<vincenzo.frascino@arm.com>, Rob Herring <robh@kernel.org>, Krzysztof
- Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Eric
- Biggers <ebiggers@kernel.org>, "tytso@mit.edu" <tytso@mit.edu>, Richard
- Weinberger <richard@nod.at>, Zhihao Cheng <chengzhihao1@huawei.com>, Maarten
- Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard
-	<mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, David Airlie
-	<airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, Nathan Chancellor
-	<nathan@kernel.org>, Nicolas Schier <nicolas.schier@linux.dev>, Ingo Molnar
-	<mingo@redhat.com>, Will Deacon <will@kernel.org>, Boqun Feng
-	<boqun.feng@gmail.com>, Waiman Long <longman@redhat.com>, "David S. Miller"
-	<davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, Jakub Kicinski
-	<kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, Simon Horman
-	<horms@kernel.org>, Shay Agroskin <shayagr@amazon.com>, Arthur Kiyanovski
-	<akiyano@amazon.com>, David Arinzon <darinzon@amazon.com>, Saeed Bishara
-	<saeedb@amazon.com>, Andrew Lunn <andrew@lunn.ch>, Alexandru Ciobotaru
-	<alcioa@amazon.com>, The AWS Nitro Enclaves Team
-	<aws-nitro-enclaves-devel@amazon.com>, Jesper Dangaard Brouer
-	<hawk@kernel.org>, Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Ranganath V N <vnranganath.20@gmail.com>, Steven French
-	<Steven.French@microsoft.com>, Greg Kroah-Hartman
-	<gregkh@linuxfoundation.org>, "Martin K. Petersen"
-	<martin.petersen@oracle.com>, Bart Van Assche <bvanassche@acm.org>,
-	=?iso-8859-1?Q?Thomas_Wei=DFschuh?= <linux@weissschuh.net>, Masahiro Yamada
-	<masahiroy@kernel.org>, Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
-	Jani Nikula <jani.nikula@intel.com>
-Subject: Re: [EXTERNAL] [PATCH v2 10/13] Documentation: smb: smbdirect:
- Convert KSMBD docs link
-Thread-Topic: [EXTERNAL] [PATCH v2 10/13] Documentation: smb: smbdirect:
- Convert KSMBD docs link
-Thread-Index: AQHcIf3l00Mre1nk0UWLjBtxz9dfZLSNt5un
-Date: Thu, 11 Sep 2025 09:26:30 +0000
-Message-ID:
- <OSQP153MB133044C12B6FFB86DF108725BF09A@OSQP153MB1330.APCP153.PROD.OUTLOOK.COM>
-References: <20250910024328.17911-1-bagasdotme@gmail.com>
- <20250910024328.17911-11-bagasdotme@gmail.com>
-In-Reply-To: <20250910024328.17911-11-bagasdotme@gmail.com>
-Accept-Language: en-GB, en-US
-Content-Language: en-GB
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-msip_labels:
- MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Enabled=True;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SiteId=72f988bf-86f1-41af-91ab-2d7cd011db47;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SetDate=2025-09-11T09:26:29.396Z;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Name=General;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_ContentBits=1;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Method=Standard;
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=microsoft.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: OSQP153MB1330:EE_|TYZP153MB0692:EE_
-x-ms-office365-filtering-correlation-id: 3ed9e36f-e82c-4f44-c11d-08ddf1154a8b
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam:
- BCL:0;ARA:13230040|1800799024|10070799003|366016|376014|7416014|921020|38070700021;
-x-microsoft-antispam-message-info:
- =?iso-8859-1?Q?mBGWFTSdoxNR/lbkIR4Da4kAYHa7ahZ6YLFDpVQrpGkWnct1CUpv6frV9F?=
- =?iso-8859-1?Q?YefFV1I20zaV7aTiNolrmYyUTiO7QB0TC/yBs9DHs+PG/LUsjYw9ip83i7?=
- =?iso-8859-1?Q?EEqcpIEWT8MM2coNRzuzYEcqMgeNgJoADT1kuG5OMOxI1c7zLJpJnrUsGz?=
- =?iso-8859-1?Q?ORPLPnPmdKwKdhy9QVkf30jDeVaM5ZQXOA5BJ+PXHeu7cYLC7i6Sdpijx1?=
- =?iso-8859-1?Q?qVK8Q5A3K4k2vEaxdkwws1wYnBkSjJ8m7SNdkPMhXlPAAu2HZa3QSZx67z?=
- =?iso-8859-1?Q?3Bq0As8R1ropE86mEAoA0+iUBLxxSaNCnChCTWP7H24WPUIlAMkH6KLGZ7?=
- =?iso-8859-1?Q?bDIyNqFJ6oMD/MzMDCt8IW/Qlshf9HBqgszA6vvVUsA5ujLnYmfXiA7RxS?=
- =?iso-8859-1?Q?tpSgc38qmp8Yf797+C2yfkuermU8H+ThlDEXnJ5EckFLGnB/ZHpqz+e7Aa?=
- =?iso-8859-1?Q?A8vM20s0yMgcqf9CbsNYpvVcsY5qqp7+EsUK6ea3xcxRYOhmqgXD3M5yvS?=
- =?iso-8859-1?Q?CZl2hQrRnzybM8dTMwxZyhqf8ScNC3r8fbC4PvXqFIRcsbsDeA+dM3uufo?=
- =?iso-8859-1?Q?xG6IclfbR/wcptNl55AFOtqWFy/rpETPm7Kg0Ndf9klt1KUGSDnE1Ukp2b?=
- =?iso-8859-1?Q?0mIMFRD1+wjIS+quDiqG/nAe2vQQFDV7DVWRxi3FG60leUAujbLIZ5mmzl?=
- =?iso-8859-1?Q?Mo3hdvWsHOKdytIkmPhD6JK/4Z65aQmmqVoyVONcMRLQ/kOZ2ng4fPc3un?=
- =?iso-8859-1?Q?MfmimQ3WorMOHs5FYbdPLCpTT5oVILsdd/XVorFdjPgZYUSFwJE/IyC0ZZ?=
- =?iso-8859-1?Q?LwkPMJPAoOt5edepJxpsrnjW/wLkuo+63/yBwvpeE3u6ajkuGrNOMkaNpn?=
- =?iso-8859-1?Q?p47gG/91oxU13IiyAwKhMEziA0NYKLShdRM1BmJ3Mnt9HRW2uxztU1+dAb?=
- =?iso-8859-1?Q?z3JkHj2xNZitl16GYp3MWkET0pgqg6GDDjwrisTyBWPdU3xqov5NDxrkkE?=
- =?iso-8859-1?Q?9DxiZPXKNxrFpCv92Kgw3A0UVjjVxEV+ztwilOQyUeSYXYeHLJkH13hlpE?=
- =?iso-8859-1?Q?yvsDjHz4lIFTPiDWqDLkZLAz5VMZ/h06zRS7p+cDaY08K/8bm5Vudz7rYo?=
- =?iso-8859-1?Q?pC5SABvJqX8GTzUNq5pNN9cYbtCCOkvZsunoyPiFfmj7c2eyHr+Q+NV44j?=
- =?iso-8859-1?Q?kBkw7jh0whjzxzLrbUmI4CD2Kp9CEFZ2xIJ4kQoI0riWZ74GyvB11Yy3bd?=
- =?iso-8859-1?Q?VKiJD+9c/J8eGG1T/s4LjlO1kYpW2sEjQhtgd/UFkS0UOo5qPa6Gj1Xz0C?=
- =?iso-8859-1?Q?4wQ9/GvQN3ru8ws+yc1TUZsuRKX2byIiYTkfG9lZ+9f/KDYyEjtO8C1nY6?=
- =?iso-8859-1?Q?TtD3A5GBQhIEAxGjdsy4Yr8aO3d6jd/RqYr3X8iDZzknixGduJaHyndJvj?=
- =?iso-8859-1?Q?a+WRo4EiikWBXt2IkSQVLWkGiT32phDB0AlaOJdH02UPcZDr9xTDZU1WKh?=
- =?iso-8859-1?Q?Y2mozr2vdoxTb/li2MnmOG?=
-x-forefront-antispam-report:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:OSQP153MB1330.APCP153.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(10070799003)(366016)(376014)(7416014)(921020)(38070700021);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?iso-8859-1?Q?j4kHAkDUeD6Kepjp54gD2pRReXc3fZLHne+imB/QQoWmrH60eLudcMJ2+1?=
- =?iso-8859-1?Q?hEi4BUaLwtassZEuzaizG6Zr1att6tPtPudpYVWYrMe9OvjevKC1MPmS/d?=
- =?iso-8859-1?Q?dKyhPvAYh5NIHgoVCVBuNK5ffRCD61c+u86quLp63raBxmrfk7/zWjzAn7?=
- =?iso-8859-1?Q?1/JAE5NiCV4YOt8Bh/IE0oSfVeD4GJrKY9AGvW7zsoeWPEaA+PUzTzcFWP?=
- =?iso-8859-1?Q?GIZURXawycmjsXaXLipx1NWz5yL9zlmjh17egPbviAg1nHFLuPt75xaos3?=
- =?iso-8859-1?Q?Kx7eXhA5cOzV60Xl3KJvEenbxFQe6VhB9lo6frZv52S0qFQqF7zZypfREq?=
- =?iso-8859-1?Q?yyONhdDxAphIasOqe4hd4xtgqYDWs25+0fSQHqlYqFXeUvZD69IDJhgCsj?=
- =?iso-8859-1?Q?LCyZfiyyqZofo94QPVDJHKkHcB0H+IBLzEN55qCmT1sKThaaxWnK49A8lW?=
- =?iso-8859-1?Q?FgiQad8xVs13fAIGiF4HMOV46AjkjHwZ5DuznCzR99yUs4Uj51YbwwDx+5?=
- =?iso-8859-1?Q?SyVcwYoEzBu6aIfSpICH32C2dQI1DMZtzz1sTi3A0XMilUKm96ACIajnLN?=
- =?iso-8859-1?Q?OmAmJNSRdufr2LK8gJEIRRtlyJHU0ljSs2IwBSGeSplmJZAv2qCixFm78L?=
- =?iso-8859-1?Q?k7DDRh8myW8cCSRRwpmFkmfiQG6o1e8NlFOljR5S2dQaXaQtNTGyNm1EWa?=
- =?iso-8859-1?Q?V+2oy4M1QSAdKdyAG6A4scQCOPJA7tAdQzmPmZOTgtnOBn0cU+PFRwSIBY?=
- =?iso-8859-1?Q?WtZOTUO7WbX2r8Iy0XbJ/sBMQnmCm9iu40EOQrDGTPBRJCWRWVKk1hhpqE?=
- =?iso-8859-1?Q?0cULcOpjftDD8Gdx5Bc7OdDxQgKG8SZmIev+rU4q83Hv6rsELEtUupEEW0?=
- =?iso-8859-1?Q?IP66mjE2MFiTU4Ux9VyFUEg9msyiI1WG9JJxRNJJ9OZuox6ejVurSJBL/k?=
- =?iso-8859-1?Q?4CxWn44FMqdHHMGsZPw8pQQCQL7scobgIISBjImAvp1CyWHvSPE1nQWtGO?=
- =?iso-8859-1?Q?kG4RrCl8TO9VItEOhdAG0GbJTJuiw7xu/DA220cXhKHz7lzkZCgkWbuEeR?=
- =?iso-8859-1?Q?2wbS9JHNdthL1RjVa6Pd1jQ/Pkv1QIvcTXhq5HzK9QhiKe8MfVp0+TauJb?=
- =?iso-8859-1?Q?aXr/f2FncE8Zndf0bPTB8qqhKpW0ow/o5Ln7MQdLWrlybVx2UJcN6U7doM?=
- =?iso-8859-1?Q?z9ShcgL+KCt6U5Qgnqklw6AOiwwTJoXSiirIP/w8AfH+XTWTOx1+CivlI1?=
- =?iso-8859-1?Q?gQyfvDtb0BLZ8B8zEw0+XWqtrl9EjStuULlLYgnTCjUVFIKTYTQ1M1vyhl?=
- =?iso-8859-1?Q?Ufi9RHy6c0QTPKAB4B75qCsdNNTHY0p+xtpiDt6jRxeYupf7boep0jvrb7?=
- =?iso-8859-1?Q?xQLhSVa8OLV0TQzzmDQdO4+sAHvEFZ4cpiw6egt5Wpt94JWroS8pNQJVvg?=
- =?iso-8859-1?Q?ISfbBgmOTFUbvz6ydDY3WqjgL1DIG8oP45KWiVyww+hOZcOQ4+u0s49Roo?=
- =?iso-8859-1?Q?bLU6EzLRJeSkCOvNLtuRbt25B4f5SPXgZgFZsCML2q3cuXDpx31FFlEgqn?=
- =?iso-8859-1?Q?CjafVAwQM/cPx18NRnGmSrcIFHY//TeBh4NGMesYHG3FOc96sUW0ILj8qK?=
- =?iso-8859-1?Q?1CBMihiV0Xoxw=3D?=
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="O9eEUmXW"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1757589105;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=EnoZL9IlsM4I8snaZrLtF+NT0iFbOyLl7iwd0dyctVo=;
+	b=O9eEUmXWoqQ41fyUaO5ts3c2SZEu5wwGB6m+JyGIWOoWTYWP4r7nelGdk/7yM/SVJoN6JH
+	hyJiPRyP9Ljl9zb7z+E9ktZ2iqlgBLhoXU11sR6yQhJiJ5RnTXtSausPZlAauXz3QaJlAu
+	OGcS8CYUGfWLvIegC39SXr+Zw6FXdtc=
+Received: from mail-lf1-f71.google.com (mail-lf1-f71.google.com
+ [209.85.167.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-350-qe69BrxCMreha_i-h3yJHg-1; Thu, 11 Sep 2025 07:11:44 -0400
+X-MC-Unique: qe69BrxCMreha_i-h3yJHg-1
+X-Mimecast-MFC-AGG-ID: qe69BrxCMreha_i-h3yJHg_1757589103
+Received: by mail-lf1-f71.google.com with SMTP id 2adb3069b0e04-56c497dcf0aso472129e87.2
+        for <damon@lists.linux.dev>; Thu, 11 Sep 2025 04:11:44 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1757589103; x=1758193903;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=EnoZL9IlsM4I8snaZrLtF+NT0iFbOyLl7iwd0dyctVo=;
+        b=ZHDEYFG8do77lm4dbL433eBaNL2m4W7q0JHZpZyuj+4k+hJf14mSj7kwT6mvjCIvCN
+         88T9YzrU5nMdfzV0SHlGWeiL6yaNm2Ki7Q20HNg4Em2Bujrri52MsERKO2Br/I59Llg3
+         W2BKmDMKZSUQf590HoDPelbg3ikN+sdbjnVwm9XeOVuxFeX9e9OIJWqZwqaP1/VqClKj
+         bO7jrCj29MS7c/zaHinlQZXMfSJtX8tNzt1mghNS2f1riPJk0JLF3DZzTQxnf7uZ2o1P
+         QJj0N6pMz4Xe1K19SJf2tv3eGR57Kcm0N3xoakaCpDF/rwOTUbaFjSpIUt9OEt93ZmjM
+         87TQ==
+X-Gm-Message-State: AOJu0Yx8KsmRMdeivw9w/blU1DPTkSDJ6tJb5VOMB//vrdBw8p+ugOnR
+	NFP8+ZBtLWT6Ny36Gjk2asNE61l/YgAdwCe+zM9VNmalH2dpmTnM/n/nVowN1tAVj2eM4plEgkP
+	86UWluDbikLrXKW6sb76Q9TmH5DyW4rbEJO2YjQN05bBylh42TgJqEWU=
+X-Gm-Gg: ASbGncsOWelJe3X10rqzAMDKPCO9RHLWtncJgtqkWHye5P5EPQ2uN5giZgN/15Zr23Q
+	Z5nqV7YlLvuihOZGwzP5B312+mdEvW8tahrY6dupSTki/jz3BwmAkxfCYM8rZOfKIscTR8mTxMC
+	PR+xUwhg/TZZV5VX9VMQ4NYZVvIGGs4nnasu8iW+C1xqLm7cQcsObWgu2YGFrSKo2kemDeg6ejx
+	2yvHUIMq9s7RYgNia6qIJYqax1qzAo7wskXDN7aoPSW3pmXr8rrg6SaL9V9MPiiM6p9cFRBzE1R
+	47WqGKdypxutZB9Lcu/BE3Dd6KoOrezIYRH6IqiSk+aKrudZeMwm1ldy5jCMosmWGCvqzx+/BFQ
+	E8P9dDidwZPxrPWiFkwc3pq783rV6YzsqG66seL0hI2kb+1RKSA==
+X-Received: by 2002:a05:6512:1593:b0:55f:3faa:7c2e with SMTP id 2adb3069b0e04-5625f535a77mr5703533e87.22.1757589102508;
+        Thu, 11 Sep 2025 04:11:42 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEHndKi4ZUjcu5xTRlvMfXjlXFcDZdujE+IlsZ0U4neE95H5mnTNxQ6YofItgf/sP/wsePXmQ==
+X-Received: by 2002:a05:6512:1593:b0:55f:3faa:7c2e with SMTP id 2adb3069b0e04-5625f535a77mr5703497e87.22.1757589101977;
+        Thu, 11 Sep 2025 04:11:41 -0700 (PDT)
+Received: from ?IPV6:2001:999:704:9310:43e6:e14c:406:e339? (n7kwfhcd2z0e9u7cxfd-1.v6.elisa-mobile.fi. [2001:999:704:9310:43e6:e14c:406:e339])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-56e5c3b6002sm364013e87.28.2025.09.11.04.11.40
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 11 Sep 2025 04:11:41 -0700 (PDT)
+Message-ID: <9047198d-7b35-435b-a933-ff7b1357919b@redhat.com>
+Date: Thu, 11 Sep 2025 14:11:40 +0300
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-OriginatorOrg: microsoft.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: OSQP153MB1330.APCP153.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-Network-Message-Id: 3ed9e36f-e82c-4f44-c11d-08ddf1154a8b
-X-MS-Exchange-CrossTenant-originalarrivaltime: 11 Sep 2025 09:26:30.3194
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: U/Q8DJoatsv2sSbzzxhnTu+diP/JdGZvQa8EpnmBnmF4xCP5rfCXyVfhnTj1QLr+6Ma0IZQMVGeQWUBCJlsc0g==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYZP153MB0692
+User-Agent: Mozilla Thunderbird
+Subject: Re: [v4 06/15] mm/migrate_device: implement THP migration of zone
+ device pages
+To: Balbir Singh <balbirs@nvidia.com>, linux-kernel@vger.kernel.org,
+ linux-mm@kvack.org
+Cc: damon@lists.linux.dev, dri-devel@lists.freedesktop.org,
+ Andrew Morton <akpm@linux-foundation.org>,
+ David Hildenbrand <david@redhat.com>, Zi Yan <ziy@nvidia.com>,
+ Joshua Hahn <joshua.hahnjy@gmail.com>, Rakie Kim <rakie.kim@sk.com>,
+ Byungchul Park <byungchul@sk.com>, Gregory Price <gourry@gourry.net>,
+ Ying Huang <ying.huang@linux.alibaba.com>,
+ Alistair Popple <apopple@nvidia.com>, Oscar Salvador <osalvador@suse.de>,
+ Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+ Baolin Wang <baolin.wang@linux.alibaba.com>,
+ "Liam R. Howlett" <Liam.Howlett@oracle.com>, Nico Pache <npache@redhat.com>,
+ Ryan Roberts <ryan.roberts@arm.com>, Dev Jain <dev.jain@arm.com>,
+ Barry Song <baohua@kernel.org>, Lyude Paul <lyude@redhat.com>,
+ Danilo Krummrich <dakr@kernel.org>, David Airlie <airlied@gmail.com>,
+ Simona Vetter <simona@ffwll.ch>, Ralph Campbell <rcampbell@nvidia.com>,
+ Matthew Brost <matthew.brost@intel.com>,
+ Francois Dugast <francois.dugast@intel.com>
+References: <20250903011900.3657435-1-balbirs@nvidia.com>
+ <20250903011900.3657435-7-balbirs@nvidia.com>
+From: =?UTF-8?Q?Mika_Penttil=C3=A4?= <mpenttil@redhat.com>
+In-Reply-To: <20250903011900.3657435-7-balbirs@nvidia.com>
+X-Mimecast-Spam-Score: 0
+X-Mimecast-MFC-PROC-ID: TPsS9M06SonRJkLTaabi1Vmp7lKmP9WbXXd4ZvT2WSw_1757589103
+X-Mimecast-Originator: redhat.com
+Content-Language: en-US
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Reviewed-by: Meetakshi Setiya <msetiya@microsoft.com>
+Hi,
 
-Thanks
-Meetakshi
+On 9/3/25 04:18, Balbir Singh wrote:
 
-________________________________________
-From: Bagas Sanjaya <bagasdotme@gmail.com>
-Sent: 10 September 2025 08:13
-To: Linux Kernel Mailing List <linux-kernel@vger.kernel.org>; Linux Documen=
-tation <linux-doc@vger.kernel.org>; Linux DAMON <damon@lists.linux.dev>; Li=
-nux Memory Management List <linux-mm@kvack.org>; Linux Power Management <li=
-nux-pm@vger.kernel.org>; Linux Block Devices <linux-block@vger.kernel.org>;=
- Linux BPF <bpf@vger.kernel.org>; Linux Kernel Workflows <workflows@vger.ke=
-rnel.org>; Linux KASAN <kasan-dev@googlegroups.com>; Linux Devicetree <devi=
-cetree@vger.kernel.org>; Linux fsverity <fsverity@lists.linux.dev>; Linux M=
-TD <linux-mtd@lists.infradead.org>; Linux DRI Development <dri-devel@lists.=
-freedesktop.org>; Linux Kernel Build System <linux-kbuild@vger.kernel.org>;=
- Linux Networking <netdev@vger.kernel.org>; Linux Sound <linux-sound@vger.k=
-ernel.org>
-Cc: Thomas Gleixner <tglx@linutronix.de>; Borislav Petkov <bp@alien8.de>; P=
-eter Zijlstra <peterz@infradead.org>; Josh Poimboeuf <jpoimboe@kernel.org>;=
- Pawan Gupta <pawan.kumar.gupta@linux.intel.com>; Jonathan Corbet <corbet@l=
-wn.net>; SeongJae Park <sj@kernel.org>; Andrew Morton <akpm@linux-foundatio=
-n.org>; David Hildenbrand <david@redhat.com>; Lorenzo Stoakes <lorenzo.stoa=
-kes@oracle.com>; Liam R. Howlett <Liam.Howlett@oracle.com>; Vlastimil Babka=
- <vbabka@suse.cz>; Mike Rapoport <rppt@kernel.org>; Suren Baghdasaryan <sur=
-enb@google.com>; Michal Hocko <mhocko@suse.com>; Huang Rui <ray.huang@amd.c=
-om>; Gautham R. Shenoy <gautham.shenoy@amd.com>; Mario Limonciello <mario.l=
-imonciello@amd.com>; Perry Yuan <perry.yuan@amd.com>; Jens Axboe <axboe@ker=
-nel.dk>; Alexei Starovoitov <ast@kernel.org>; Daniel Borkmann <daniel@iogea=
-rbox.net>; Andrii Nakryiko <andrii@kernel.org>; Martin KaFai Lau <martin.la=
-u@linux.dev>; Eduard Zingerman <eddyz87@gmail.com>; Song Liu <song@kernel.o=
-rg>; Yonghong Song <yonghong.song@linux.dev>; John Fastabend <john.fastaben=
-d@gmail.com>; KP Singh <kpsingh@kernel.org>; Stanislav Fomichev <sdf@fomich=
-ev.me>; Hao Luo <haoluo@google.com>; Jiri Olsa <jolsa@kernel.org>; Dwaipaya=
-n Ray <dwaipayanray1@gmail.com>; Lukas Bulwahn <lukas.bulwahn@gmail.com>; J=
-oe Perches <joe@perches.com>; Andrey Ryabinin <ryabinin.a.a@gmail.com>; Ale=
-xander Potapenko <glider@google.com>; Andrey Konovalov <andreyknvl@gmail.co=
-m>; Dmitry Vyukov <dvyukov@google.com>; Vincenzo Frascino <vincenzo.frascin=
-o@arm.com>; Rob Herring <robh@kernel.org>; Krzysztof Kozlowski <krzk+dt@ker=
-nel.org>; Conor Dooley <conor+dt@kernel.org>; Eric Biggers <ebiggers@kernel=
-.org>; tytso@mit.edu <tytso@mit.edu>; Richard Weinberger <richard@nod.at>; =
-Zhihao Cheng <chengzhihao1@huawei.com>; Maarten Lankhorst <maarten.lankhors=
-t@linux.intel.com>; Maxime Ripard <mripard@kernel.org>; Thomas Zimmermann <=
-tzimmermann@suse.de>; David Airlie <airlied@gmail.com>; Simona Vetter <simo=
-na@ffwll.ch>; Nathan Chancellor <nathan@kernel.org>; Nicolas Schier <nicola=
-s.schier@linux.dev>; Ingo Molnar <mingo@redhat.com>; Will Deacon <will@kern=
-el.org>; Boqun Feng <boqun.feng@gmail.com>; Waiman Long <longman@redhat.com=
->; David S. Miller <davem@davemloft.net>; Eric Dumazet <edumazet@google.com=
->; Jakub Kicinski <kuba@kernel.org>; Paolo Abeni <pabeni@redhat.com>; Simon=
- Horman <horms@kernel.org>; Shay Agroskin <shayagr@amazon.com>; Arthur Kiya=
-novski <akiyano@amazon.com>; David Arinzon <darinzon@amazon.com>; Saeed Bis=
-hara <saeedb@amazon.com>; Andrew Lunn <andrew@lunn.ch>; Alexandru Ciobotaru=
- <alcioa@amazon.com>; The AWS Nitro Enclaves Team <aws-nitro-enclaves-devel=
-@amazon.com>; Jesper Dangaard Brouer <hawk@kernel.org>; Bagas Sanjaya <baga=
-sdotme@gmail.com>; Laurent Pinchart <laurent.pinchart@ideasonboard.com>; Ra=
-nganath V N <vnranganath.20@gmail.com>; Steven French <Steven.French@micros=
-oft.com>; Meetakshi Setiya <msetiya@microsoft.com>; Greg Kroah-Hartman <gre=
-gkh@linuxfoundation.org>; Martin K. Petersen <martin.petersen@oracle.com>; =
-Bart Van Assche <bvanassche@acm.org>; Thomas Wei=DFschuh <linux@weissschuh.=
-net>; Masahiro Yamada <masahiroy@kernel.org>; Mauro Carvalho Chehab <mcheha=
-b+huawei@kernel.org>; Jani Nikula <jani.nikula@intel.com>
-Subject: [EXTERNAL] [PATCH v2 10/13] Documentation: smb: smbdirect: Convert=
- KSMBD docs link
+> MIGRATE_VMA_SELECT_COMPOUND will be used to select THP pages during
+> migrate_vma_setup() and MIGRATE_PFN_COMPOUND will make migrating
+> device pages as compound pages during device pfn migration.
+>
+> migrate_device code paths go through the collect, setup
+> and finalize phases of migration.
+>
+> The entries in src and dst arrays passed to these functions still
+> remain at a PAGE_SIZE granularity. When a compound page is passed,
+> the first entry has the PFN along with MIGRATE_PFN_COMPOUND
+> and other flags set (MIGRATE_PFN_MIGRATE, MIGRATE_PFN_VALID), the
+> remaining entries (HPAGE_PMD_NR - 1) are filled with 0's. This
+> representation allows for the compound page to be split into smaller
+> page sizes.
+>
+> migrate_vma_collect_hole(), migrate_vma_collect_pmd() are now THP
+> page aware. Two new helper functions migrate_vma_collect_huge_pmd()
+> and migrate_vma_insert_huge_pmd_page() have been added.
+>
+> migrate_vma_collect_huge_pmd() can collect THP pages, but if for
+> some reason this fails, there is fallback support to split the folio
+> and migrate it.
+>
+> migrate_vma_insert_huge_pmd_page() closely follows the logic of
+> migrate_vma_insert_page()
+>
+> Support for splitting pages as needed for migration will follow in
+> later patches in this series.
+>
+> Cc: Andrew Morton <akpm@linux-foundation.org>
+> Cc: David Hildenbrand <david@redhat.com>
+> Cc: Zi Yan <ziy@nvidia.com>
+> Cc: Joshua Hahn <joshua.hahnjy@gmail.com>
+> Cc: Rakie Kim <rakie.kim@sk.com>
+> Cc: Byungchul Park <byungchul@sk.com>
+> Cc: Gregory Price <gourry@gourry.net>
+> Cc: Ying Huang <ying.huang@linux.alibaba.com>
+> Cc: Alistair Popple <apopple@nvidia.com>
+> Cc: Oscar Salvador <osalvador@suse.de>
+> Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+> Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
+> Cc: "Liam R. Howlett" <Liam.Howlett@oracle.com>
+> Cc: Nico Pache <npache@redhat.com>
+> Cc: Ryan Roberts <ryan.roberts@arm.com>
+> Cc: Dev Jain <dev.jain@arm.com>
+> Cc: Barry Song <baohua@kernel.org>
+> Cc: Lyude Paul <lyude@redhat.com>
+> Cc: Danilo Krummrich <dakr@kernel.org>
+> Cc: David Airlie <airlied@gmail.com>
+> Cc: Simona Vetter <simona@ffwll.ch>
+> Cc: Ralph Campbell <rcampbell@nvidia.com>
+> Cc: Mika Penttilä <mpenttil@redhat.com>
+> Cc: Matthew Brost <matthew.brost@intel.com>
+> Cc: Francois Dugast <francois.dugast@intel.com>
+>
+> Signed-off-by: Balbir Singh <balbirs@nvidia.com>
+> ---
+>  include/linux/migrate.h |   2 +
+>  mm/migrate_device.c     | 456 ++++++++++++++++++++++++++++++++++------
+>  2 files changed, 395 insertions(+), 63 deletions(-)
+>
+> diff --git a/include/linux/migrate.h b/include/linux/migrate.h
+> index 9009e27b5f44..40e1c792eb54 100644
+> --- a/include/linux/migrate.h
+> +++ b/include/linux/migrate.h
+> @@ -134,6 +134,7 @@ static inline int migrate_misplaced_folio(struct folio *folio, int node)
+>  #define MIGRATE_PFN_VALID	(1UL << 0)
+>  #define MIGRATE_PFN_MIGRATE	(1UL << 1)
+>  #define MIGRATE_PFN_WRITE	(1UL << 3)
+> +#define MIGRATE_PFN_COMPOUND	(1UL << 4)
+>  #define MIGRATE_PFN_SHIFT	6
+>  
+>  static inline struct page *migrate_pfn_to_page(unsigned long mpfn)
+> @@ -152,6 +153,7 @@ enum migrate_vma_direction {
+>  	MIGRATE_VMA_SELECT_SYSTEM = 1 << 0,
+>  	MIGRATE_VMA_SELECT_DEVICE_PRIVATE = 1 << 1,
+>  	MIGRATE_VMA_SELECT_DEVICE_COHERENT = 1 << 2,
+> +	MIGRATE_VMA_SELECT_COMPOUND = 1 << 3,
+>  };
+>  
+>  struct migrate_vma {
+> diff --git a/mm/migrate_device.c b/mm/migrate_device.c
+> index e58c3f9d01c8..aba0cd7856da 100644
+> --- a/mm/migrate_device.c
+> +++ b/mm/migrate_device.c
+> @@ -14,6 +14,7 @@
+>  #include <linux/pagewalk.h>
+>  #include <linux/rmap.h>
+>  #include <linux/swapops.h>
+> +#include <asm/pgalloc.h>
+>  #include <asm/tlbflush.h>
+>  #include "internal.h"
+>  
+> @@ -44,6 +45,23 @@ static int migrate_vma_collect_hole(unsigned long start,
+>  	if (!vma_is_anonymous(walk->vma))
+>  		return migrate_vma_collect_skip(start, end, walk);
+>  
+> +	if (thp_migration_supported() &&
+> +		(migrate->flags & MIGRATE_VMA_SELECT_COMPOUND) &&
+> +		(IS_ALIGNED(start, HPAGE_PMD_SIZE) &&
+> +		 IS_ALIGNED(end, HPAGE_PMD_SIZE))) {
+> +		migrate->src[migrate->npages] = MIGRATE_PFN_MIGRATE |
+> +						MIGRATE_PFN_COMPOUND;
+> +		migrate->dst[migrate->npages] = 0;
+> +		migrate->npages++;
+> +		migrate->cpages++;
+> +
+> +		/*
+> +		 * Collect the remaining entries as holes, in case we
+> +		 * need to split later
+> +		 */
+> +		return migrate_vma_collect_skip(start + PAGE_SIZE, end, walk);
+> +	}
+> +
 
-Convert KSMBD docs link to internal link.
+seems you have to split_huge_pmd() for the huge zero page here in case of !thp_migration_supported() afaics
 
-Signed-off-by: Bagas Sanjaya <bagasdotme@gmail.com>
----
- Documentation/filesystems/smb/smbdirect.rst | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+>  	for (addr = start; addr < end; addr += PAGE_SIZE) {
+>  		migrate->src[migrate->npages] = MIGRATE_PFN_MIGRATE;
+>  		migrate->dst[migrate->npages] = 0;
+> @@ -102,57 +120,150 @@ static int migrate_vma_split_folio(struct folio *folio,
+>  	return 0;
+>  }
 
-diff --git a/Documentation/filesystems/smb/smbdirect.rst b/Documentation/fi=
-lesystems/smb/smbdirect.rst
-index ca6927c0b2c084..6258de919511fa 100644
---- a/Documentation/filesystems/smb/smbdirect.rst
-+++ b/Documentation/filesystems/smb/smbdirect.rst
-@@ -76,8 +76,8 @@ Installation
- Setup and Usage
- =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+--Mika
 
--- Set up and start a KSMBD server as described in the `KSMBD documentation
--  <https://www.kernel.org/doc/Documentation/filesystems/smb/ksmbd.rst>`_.
-+- Set up and start a KSMBD server as described in the :doc:`KSMBD document=
-ation
-+  <ksmbd>`.
-   Also add the "server multi channel support =3D yes" parameter to ksmbd.c=
-onf.
-
- - On the client, mount the share with `rdma` mount option to use SMB Direc=
-t
---
-An old man doll... just what I always wanted! - Clara
