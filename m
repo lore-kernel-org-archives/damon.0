@@ -1,44 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3E1B54758;
-	Fri, 12 Sep 2025 02:06:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35F0C74420;
+	Fri, 12 Sep 2025 02:39:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757642783; cv=none; b=N4XxahAdtpMLHn3gxQf9P6ZItIZnsxwuldad/XVAAamAm8GAzlhtYNCUWx3WfvtAkzK2C9prpYi948VGPj+76Jbxoclx/TDUC0N7A9yfI+NG4GZukx3XYM86iqRHNANMvtW/tJRz6sPWbRcyRnf8gBOjCUouBb4gO0fuVEFkOJY=
+	t=1757644791; cv=none; b=Vcko/MllzsGQkRVQPceJVlTed4L0ic/AqU6QKBJcp8AsRy3ka07dq6PUooH9Muu3h/jaFdaxS9sdwrpxcHD+JNdPKQb/SsRfvEjdumYKNB3FLm3zXq8RINwGkBsMUYkeZZfFZSkQjIPvPKec/mG/hg42S7xjCwwkUTVDgVJ4nzo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757642783; c=relaxed/simple;
-	bh=wEWmhx5I48s/7JlI41mY1TFXvMlPvtQErgtyGu0ct2E=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=mZOxl9oqm1mc2ffi4MSJuypP8iHVz6kEvzbVbVy9QYEyGsKibnwLkBN8mdYqQjcz5T+OaoM1WZLPGNLfGJLmjB0wTkesCo7Kb2Cq3k98pr/FYHvCpPQOyzoc3cXR0KyoSCmPaMD7DsiF/iSVLVFAaJ986lcp2fKji24jEVCs6Vg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YCPcERYv; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1757644791; c=relaxed/simple;
+	bh=yE3VMp+2UTdfVTTFqOV7Z0nyOpwlVrjxuafiWpvqlwE=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=PaOtyOfNb6c/MFnBSJFFLsRLzKUhEzxSTct1AjxDLijA5H5QUbNxA1Qn1qOV0KAsi9ihoPQjE2qUc8YxzsERSp5Zj3raRq8Bf2q0X4fwR4NUqDTQn8QC7mM7Jv8Oxv2qQ7bF3+lxAAnSmq6xUY4HEn35Qoerh8TrWqXc1GUJiZ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Gjp2JOSR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YCPcERYv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59FBAC4CEF0;
-	Fri, 12 Sep 2025 02:06:23 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Gjp2JOSR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5ED9C4CEF0;
+	Fri, 12 Sep 2025 02:39:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1757642783;
-	bh=wEWmhx5I48s/7JlI41mY1TFXvMlPvtQErgtyGu0ct2E=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YCPcERYvQkcQ7m6OKqSUY5DTahcgVHnZj5Wu21LbySTpf/HGgKguvEpe+UxexaNV6
-	 huMHYEAVWTdAaGBJ8gXRO3VfSA3IsTGdwE22SpJCNYrdqt0TQsgJiSdLjvuJUvfqmw
-	 q2E11V6jLVEemLPo64N1sEE+K0L3W842PgS8TIqDMP7gssBIuQVAzXqhFtkB2LgSuA
-	 pF0lemEq/lUbBL4b2J2XQxr3jlmoA5SdliEzyeToqlzttdSUYFOK7AEVWh5d8KrV8V
-	 Sr7RJv+2dGPFLHFH0zPi+LHsL06Y4+R193x+APbk9avb7ZRdLN33wLyjCNNpfkQtR5
-	 nfvxtPFskPMyg==
+	s=k20201202; t=1757644790;
+	bh=yE3VMp+2UTdfVTTFqOV7Z0nyOpwlVrjxuafiWpvqlwE=;
+	h=From:To:Cc:Subject:Date:From;
+	b=Gjp2JOSRRHGG1CZXw+/9INztzNXz/8KDImRW0yh5Zhks9Rn2VEaug46cf/LgKim+t
+	 IdkB9zeKcEuZu98IyCGoJwkNKDDVjQz0k/QZO0yt33T0SuXthd2Bqli/G7TvvSLK+Z
+	 5fzwzmLEpRDpuT2MpxUpsdBQ60oL9L9oJn3nYxft0PU1T19DaIfaaFBCWSWJoTmMuN
+	 YUkkraVh3TH9aG+g0WpI7SuHmtMLDZFgSkUojfd4D7GG6rjrrU2wSnxH5M9tKJEdfL
+	 hheXBau+mIXeqrSVhSb3eI0tw5cy2I/qyqgvBglqy6LOH8ewK4PoD29OC4FMk/BTqd
+	 uVQEADXIseP7g==
 From: SeongJae Park <sj@kernel.org>
-To: SeongJae Park <sj@kernel.org>
-Cc: Andrew Morton <akpm@linux-foundation.org>,
+To: 
+Cc: SeongJae Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	damon@lists.linux.dev,
 	kernel-team@meta.com,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: Re: [RFC PATCH 0/2] mm/damon/stat: expose auto-tuned intervals and non-idle ages
-Date: Thu, 11 Sep 2025 19:06:19 -0700
-Message-Id: <20250912020619.59642-1-sj@kernel.org>
+Subject: [RFC PATCH 0/7] mm/damon: define and use DAMON initialization check function
+Date: Thu, 11 Sep 2025 19:39:39 -0700
+Message-Id: <20250912023946.62337-1-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250910040022.168223-1-sj@kernel.org>
-References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -47,30 +45,42 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Tue,  9 Sep 2025 21:00:20 -0700 SeongJae Park <sj@kernel.org> wrote:
+If DAMON is tried to be used by its API callers when it is not yet
+successfully initialized, the callers could be crashed.  Such issues
+actually happened and were fixed [1].  DAMON API callers are therefore
+having their own hacks for seeing if it is safe to use DAMON or not.
+Those built on an untreliable assumption that DAMON should be ready to
+be used on module init time.  DAMON initialization could fail if
+KMEM_CACHE() fails, though.  Also those are basically duplications that
+make their maintenance difficult.
 
-> DAMON_STAT is intentionally providing limited information for easy
-> consumption.  From production fleet level usages, below limitations are
-> found, though.
-> 
-> The aggregation interval of DAMON_STAT represents the granularity of the
-> memory_idle_ms_percentiles.  But it is auto-tuned and not exposed to
-> users, so users cannot know the granularity.
-> 
-> All memory regions of non-zero (positive) nr_accesses are treated as
-> having zero idle time.  A significant portion of production systems have
-> such zero idle time.  Hence breakdown of warm and hot data is
-> impossible.
-> 
-> To overcome the limitations, expose the auto-tuned aggregation interval
-> with a new parameter named xxx and the age of non-zero nr_accesses
+Make it reliable and easy to maintain, by implementing a new DAMON core
+layer API function for seeing if DAMON is ready to be used or not, and
+replacing the hacks of DAMON API callers with the new core layer
+function.
 
-s/xx/aggr_interval_us/
+[1] https://lore.kernel.org/20250909022238.2989-1-sj@kernel.org
 
-Forgot updating that before posting, sorry.  The next version should fix it.
+SeongJae Park (7):
+  mm/damon/core: implement damon_initialized() function
+  mm/damon/stat: use damon_initialized()
+  mm/damon/reclaim: use damon_initialized()
+  mm/damon/lru_sort: use damon_initialized()
+  samples/damon/wsse: use damon_initialized()
+  samples/damon/prcl: use damon_initialized()
+  samples/damon/mtier: use damon_initialized()
+
+ include/linux/damon.h |  1 +
+ mm/damon/core.c       | 10 ++++++++++
+ mm/damon/lru_sort.c   |  9 +++++++--
+ mm/damon/reclaim.c    |  9 +++++++--
+ mm/damon/stat.c       | 10 ++++++----
+ samples/damon/mtier.c | 11 +++++++----
+ samples/damon/prcl.c  | 11 +++++++----
+ samples/damon/wsse.c  | 15 +++++++++------
+ 8 files changed, 54 insertions(+), 22 deletions(-)
 
 
-Thanks,
-SJ
-
-[...]
+base-commit: f115189b48629e7a8aa707112190b7ccf9928d6b
+-- 
+2.39.5
