@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 152971D54E3;
-	Fri, 12 Sep 2025 02:39:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 352522264CC;
+	Fri, 12 Sep 2025 02:39:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757644797; cv=none; b=gOVr0N3Pz/Oz/cK/CDTY+tZgIX1L4wrmFxLvJ35uqYRXSlRaAZwM7Vbji+sDIf2A2rNZ8HSHvgYSnZjdl3htQB9aEYG6X3tOyxooEz2DiPlekKPrvvfcR/IUGv1okk7MOJ0olT22m/UaOr91FUyDOdgoTzsdUl6hH1EPGQBHCTc=
+	t=1757644798; cv=none; b=DHBPgItbNrjRQquwMwI+6OiHjLBsOfmd19xdS2Ni9SR+/hNbIPYBDz1kHv2hSxWhYpfAYq/tLToiFfVhtOrXU8MXjJN2eDahcFZV3g7krpJZNlXMUAcEfC3dlNwLTRjJrJyrCzx/YM5xkJJEb6Rc2vKYBqgSswc6NaRHGK28wOs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757644797; c=relaxed/simple;
-	bh=jSyChxhp2q57cPUh41M0fEVHkYfztaaT3v+fVBcDkyE=;
+	s=arc-20240116; t=1757644798; c=relaxed/simple;
+	bh=2demp7SZfocNtJOdY3h9yRpOtgZXlewJOxyAe06bXV0=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=DNmJSbCJrta81Ci6WOXYp4TYhsMMzI3xweAX+uspMWdf9HQa6gzcDDkkVuaum6P8v1QeLMMCH5IjqUtdFs1RAJSmv54qPdvdcoLbCAxVQu3ePogiCDodLVQm54vr6bOp4PUaBuy3r2e+jVSgCZdGEF6Bm0B1QEv8orf3cJxrrHc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pIZejVwd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SA76tR0PBMOfpYqCDwoNlpeG2rL9WGzEak0COE0kLSYcQVHJh2himvjrQbtV+M3rvwsyXqMR+TLSqAv5PuwZakse7vxJp0apy8wp/fW/b5yy5zNpVc2kvxIBLkCWEEBAjjfVANzhdhbrENUDe7Z6f3p6wrkYh0Ij+kqSgT/H7mI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gOIbux2e; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pIZejVwd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C407EC4CEF5;
-	Fri, 12 Sep 2025 02:39:56 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gOIbux2e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D87F9C4CEF5;
+	Fri, 12 Sep 2025 02:39:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1757644796;
-	bh=jSyChxhp2q57cPUh41M0fEVHkYfztaaT3v+fVBcDkyE=;
+	s=k20201202; t=1757644798;
+	bh=2demp7SZfocNtJOdY3h9yRpOtgZXlewJOxyAe06bXV0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pIZejVwd7XS4Ox9Am4KGnyKBX3HhSNWV+MeIMCEHwd+JisNA8vBa+ZoK/xxPCS566
-	 NtoaYCUPFFoYgYs7gkzrx4XBtTfEjQYdXf+O5Zj85rWQBJk2nnEmQAIV0qvmMS1NhW
-	 YhYLy1w4PGuqxbyn1HyR2OA6DoKZdie75UduINMCXVwfpKZ6jh3vVBHWQkPcLFXJoS
-	 exO532i/QkVnkBu/8B1xOeYqKqZFUiHlvfVzHQevIw5WSuFdinlIjwDDQsuclhYPgT
-	 otf7PQvW9yeN4NGD6cCozpavPfP7/QLxd9OmlMIbPdq20xiMfsvoK14UxlfPRAysex
-	 2PyMn7solWsag==
+	b=gOIbux2e0xlvP/53qMivwnlzSiSL0JxQL4XPTJ4+nyltrcm+59hn/qclLbE38UyAW
+	 M8LgW3jzBIZzUHayt/fyxX28Imlt5+C1IwEzf5Nm1RLLCPYUdxlebddkLPkM5vrWz3
+	 88pdwTGRsQJpFW2P8Y6WCZ78ygE3mfEtfi6sQmRvboSCcTFNraK8887PPkiDk/lZzh
+	 W0UZ/fvLYHfpbDadSfsJUAUCxUCwe5kYdr7qIICUkkpQnfF1Tt79jC0OA6OWvt4Bgm
+	 7t2YWtwEkf0Gmpq4hb+TaQUPltp7fSaUz5XFHu5q/DPWtx+qBSPfagidJWW/vTfLPJ
+	 MnWtxgppmk1SA==
 From: SeongJae Park <sj@kernel.org>
 To: 
 Cc: SeongJae Park <sj@kernel.org>,
@@ -34,9 +34,9 @@ Cc: SeongJae Park <sj@kernel.org>,
 	kernel-team@meta.com,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH 4/7] mm/damon/lru_sort: use damon_initialized()
-Date: Thu, 11 Sep 2025 19:39:43 -0700
-Message-Id: <20250912023946.62337-5-sj@kernel.org>
+Subject: [RFC PATCH 5/7] samples/damon/wsse: use damon_initialized()
+Date: Thu, 11 Sep 2025 19:39:44 -0700
+Message-Id: <20250912023946.62337-6-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250912023946.62337-1-sj@kernel.org>
 References: <20250912023946.62337-1-sj@kernel.org>
@@ -48,43 +48,56 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-DAMON_LRU_SORT is assuming DAMON is ready to use in module_init time,
+damon_sample_wsse is assuming DAMON is ready to use in module_init time,
 and uses its own hack to see if it is the time.  Use
 damon_initialized(), which is a way for seeing if DAMON is ready to be
 used that is more reliable and better to maintain instead of the hack.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- mm/damon/lru_sort.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ samples/damon/wsse.c | 15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
 
-diff --git a/mm/damon/lru_sort.c b/mm/damon/lru_sort.c
-index ab6173a646bd..42b9a656f9de 100644
---- a/mm/damon/lru_sort.c
-+++ b/mm/damon/lru_sort.c
-@@ -345,7 +345,7 @@ static int damon_lru_sort_enabled_store(const char *val,
+diff --git a/samples/damon/wsse.c b/samples/damon/wsse.c
+index 21eaf15f987d..799ad4443943 100644
+--- a/samples/damon/wsse.c
++++ b/samples/damon/wsse.c
+@@ -102,8 +102,6 @@ static void damon_sample_wsse_stop(void)
+ 	}
+ }
+ 
+-static bool init_called;
+-
+ static int damon_sample_wsse_enable_store(
+ 		const char *val, const struct kernel_param *kp)
+ {
+@@ -117,10 +115,10 @@ static int damon_sample_wsse_enable_store(
+ 	if (enabled == is_enabled)
  		return 0;
  
- 	/* Called before init function.  The function will handle this. */
--	if (!ctx)
+-	if (enabled) {
+-		if (!init_called)
+-			return 0;
 +	if (!damon_initialized())
- 		goto set_param_out;
++		return 0;
  
- 	err = damon_lru_sort_turn(enable);
-@@ -368,8 +368,13 @@ MODULE_PARM_DESC(enabled,
- 
- static int __init damon_lru_sort_init(void)
++	if (enabled) {
+ 		err = damon_sample_wsse_start();
+ 		if (err)
+ 			enabled = false;
+@@ -134,7 +132,12 @@ static int __init damon_sample_wsse_init(void)
  {
--	int err = damon_modules_new_paddr_ctx_target(&ctx, &target);
-+	int err;
+ 	int err = 0;
  
+-	init_called = true;
 +	if (!damon_initialized()) {
 +		err = -ENOMEM;
-+		goto out;
++		if (enabled)
++			enabled = false;
 +	}
-+	err = damon_modules_new_paddr_ctx_target(&ctx, &target);
- 	if (err)
- 		goto out;
- 
++
+ 	if (enabled) {
+ 		err = damon_sample_wsse_start();
+ 		if (err)
 -- 
 2.39.5
