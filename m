@@ -1,71 +1,72 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2A844207A
-	for <damon@lists.linux.dev>; Fri, 12 Sep 2025 05:38:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E7D5277CA5
+	for <damon@lists.linux.dev>; Fri, 12 Sep 2025 09:20:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757655524; cv=none; b=gGWYqCE9Z5i1J27XhzPU7LnB48ULMkeFPDyslSXCD6aXzVhV5cnvgZBdMmhahJR/WjxMurwCeJeIRsMILubA3M6h5gAXNW1lMFtS3cpELgBQJWiX+L87yRjLOzJDGCa43M2OtjAgi6VtTIQVlp932fRnTZDlAueZlm6A8L7GCW0=
+	t=1757668815; cv=none; b=qjEoXa7gK3bavlWkmQdLa3NPYRQp1HRkLZ9SUJt0OmEllwP6wEpXf/Z17fplWCplgZiGLdhbUcnO0B7KCJ9EA8RuRat68PZbJN78DG9OmpP09K7ekzOa0iONXIPPsK3I9tE3xgX4BRQgjFYVfouqcywrR4+qnwzZ9QKGb9O3Go8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757655524; c=relaxed/simple;
-	bh=vCvPfv84bnne7DwNnPKxiZjFOR9mFsWn3OXhKxx1V8Y=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=axo4QjbVuAuatMV13QYID6iSE1q+iHRvsJ3hrDevfBSUnM4aB6MmuXPElZBoX2ZDOkrkzSrpVENfJdPo4vkiEyuXPFZC66ewvUPGwnvquDEwH/58Pn2X3TfGpXqZ3CrujVUrgnt84joUsQhEljCRX5TFHgI0RAzvOG4RNxOLSA0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=E/zlw6hl; arc=none smtp.client-ip=170.10.133.124
+	s=arc-20240116; t=1757668815; c=relaxed/simple;
+	bh=xjTvdo/L0AxTEDZhqxkuhpa1VCc2uJtoIGiiUhrWrT0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=tqQ5CB4NfffiC/CDfk7QtN3thAPOLBhW5+PDUQsr5DuXMt5GnoOA+llkUikPWHAlnZ7HAe04csySO/X2nnni7CRy4N1VPZSMhaSscoomYqWH5ZMrzunX2ZfSrA4vR0bBqdPxGRWAoCc3EuwhZKJEEZTSk0eKE0cc1RJ+8x/5gpA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=JIgFH+24; arc=none smtp.client-ip=170.10.129.124
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="E/zlw6hl"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="JIgFH+24"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1757655521;
+	s=mimecast20190719; t=1757668811;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=+/fMTw17wcHtqFRGn0LVfXt45GBXrdFjvwip8q4HpKI=;
-	b=E/zlw6hlB2dP8QeBk2QRA35rP3j1wAOYNCd+1OHzaL231p+kkRi8PpxMSHCqi9fJ7W3Ix9
-	txGFKFP+28knnoZ6gR6W3b0gsrVih7uA3i3BVANSp4Y86vMuZqSKqepz/xg2vFzEPbNd17
-	OMyZDXB43AyvtSOQZVBTh+UztFwbOk8=
-Received: from mail-lf1-f71.google.com (mail-lf1-f71.google.com
- [209.85.167.71]) by relay.mimecast.com with ESMTP with STARTTLS
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=+MzP8ZtzjuFzx7no/Z95bzESB3nOqylto37d5k77ugs=;
+	b=JIgFH+24Jj9eHdrh2r65d4whFVGZufAQ+j/FAkutV92PVhRkzAHJ/yOY9JZlTRpjm/wZP+
+	iI0RcanYPQB1SnWjvfJyidjhtEzVKNdvgvttpHrxhp2+8sgwGefP2R0jmvx5SAgyJ8SQpi
+	bp6NwxNeonrlymbSvAQc+16C0KSL26Q=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-68-ZaXMBQvmNRCLXzSk_brOVw-1; Fri, 12 Sep 2025 01:38:40 -0400
-X-MC-Unique: ZaXMBQvmNRCLXzSk_brOVw-1
-X-Mimecast-MFC-AGG-ID: ZaXMBQvmNRCLXzSk_brOVw_1757655519
-Received: by mail-lf1-f71.google.com with SMTP id 2adb3069b0e04-56089d79c97so1034589e87.1
-        for <damon@lists.linux.dev>; Thu, 11 Sep 2025 22:38:39 -0700 (PDT)
+ us-mta-81-J_i0PbTvMrGOeiH0U1gqzg-1; Fri, 12 Sep 2025 05:20:09 -0400
+X-MC-Unique: J_i0PbTvMrGOeiH0U1gqzg-1
+X-Mimecast-MFC-AGG-ID: J_i0PbTvMrGOeiH0U1gqzg_1757668808
+Received: by mail-wm1-f71.google.com with SMTP id 5b1f17b1804b1-45b990eb77cso10308445e9.0
+        for <damon@lists.linux.dev>; Fri, 12 Sep 2025 02:20:09 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757655518; x=1758260318;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:from:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=+/fMTw17wcHtqFRGn0LVfXt45GBXrdFjvwip8q4HpKI=;
-        b=HkdNWj0jTQGlNslB/LGN3vShI/2QLxepPma5Ci4L3K2cNCkxgJQdb1nFfBivadA2Sc
-         M+sRwXrhlyS3D/IOUfRyJbGegdmeXYSsRvLOz5QqUO5jHbupiuWF+LTU00ew3CsaC19w
-         IYvM16vafGGRbg+muEaYPQ2DaH+OWXcQF1ncbx1K4nCpfoNQOBIoIDrWDXafuAn/giFN
-         8C+Mtbe6dLCCIaWz1XGnDfaLQdNIX9WYpxUJC5FrlOC+Tqze9E4pqhCvWCBGmYYmBNVC
-         SUyAEkk77dL6JgTJZhQROX0qdXFALQRldGPkvEPF0jaWfC2zZWH+myEWmdDX8oG+wrqK
-         iZYA==
-X-Gm-Message-State: AOJu0Ywgc7YuaU1j/LuqNKAL/cCnTG9HyXYCfdmjUx6JaXeH0+SPqb1y
-	aKkJrkWizB0ZOApN0BoRlWqNC7JS6bKGaSJg+krTbn7tVf19nUMaumpgvCXcZQlTLMa8rDD6ANI
-	WgIbmt9smk55hoo4kUCD/tEMvwEIV2vVe5q6gbVx6elcvrbhj7T5Cimc=
-X-Gm-Gg: ASbGncuVX3nwVLLMNEoHhmEHhBgZVkLmWwMSr04eaJol5mLvK9aFsUNqGx3taRWQXIZ
-	mExeUG+EjsSaxcMeSLYr02xdDeGvUldrhMt9UZ6DQwM6n6qMeOpnDisZdVzHMH1SXqbUz8F1WAY
-	efSlhc5/bNub8J8d17M52gO/cN1weT4n0fbXydmpaC4ZYXWMFAMGEc5MUdzGxOPmeSG+OCeqDCX
-	GSigwq92TPNNm4cYyI+q/9QEbhZgSxhPuySjLIVQjwfMYxxNqVoZW7tjpsfRV5BNVAhHTRmEjwT
-	O/jebko7UziOfOOdw5ySJletk9OwY8o06rzT+cQ8fTc/bGWvPjZuXoSCHNQqX/PFpcSpvqTxg7n
-	q1hsagaicLg7CDRpOpt1BDyJwLrDLPVxyz0s3GQTcgvoInhPZyYLr
-X-Received: by 2002:ac2:51d4:0:b0:571:75c8:43a5 with SMTP id 2adb3069b0e04-57175c845b8mr65108e87.1.1757655518531;
-        Thu, 11 Sep 2025 22:38:38 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFe3otVU1/RsO3+BWrCGouA69nfgwLCHLM+77KekXiYcNhrEbv3mMPoDIbeIVC1KQsturvUHg==
-X-Received: by 2002:ac2:51d4:0:b0:571:75c8:43a5 with SMTP id 2adb3069b0e04-57175c845b8mr65076e87.1.1757655518018;
-        Thu, 11 Sep 2025 22:38:38 -0700 (PDT)
-Received: from ?IPV6:2001:999:408:6576:1142:7350:b6c5:671e? (n4ctkw60s7hbahed3xa-1.v6.elisa-mobile.fi. [2001:999:408:6576:1142:7350:b6c5:671e])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-56e63c63cc6sm914214e87.66.2025.09.11.22.38.35
+        d=1e100.net; s=20230601; t=1757668808; x=1758273608;
+        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=+MzP8ZtzjuFzx7no/Z95bzESB3nOqylto37d5k77ugs=;
+        b=kG170WXgrKHpcu3GdhCbOQTirCvA6TI92po4mxql554hTt6lA7nxsdh73XR/V0WLON
+         TMdWogds4iHOOX6UVIYaEcYb/JU+qzwQJxNhr0bPXB93xLxzevcY60daS+O7w1Snulrc
+         rnLStPPJvLMdQ4gxsQ6WWXmw+KOCmamtO1AN1sVb7tYIlmLmfGHeJ1lHfmaWZIe2bRuH
+         9oEasCOdd0DfjlzkaDk7v5YurHj49mGWMZKGRd75e5vQdiVCSVLsYo60GQSRdzlrVQih
+         6JH07WxnTAwMKHsYSbXBvSGnj/WrlxWi7d7Ft0cbrhvms9K8/5opq0fddy9idBkf+m7H
+         t2yw==
+X-Gm-Message-State: AOJu0YxYWPaG0x5Qu9wciPgVolvGVNUi3pqKV/oWqeA4yMewhr6fkeYs
+	u2272nrb6T0nJIHmNRb1fiOlHJ+78LbeEduRDtL5NNnmcNvHBWzCLdK2w4dwEj0synUyrp6+Luc
+	y16OOlkvyhNQbhuLLYdaI1Z8Y2T6p5B9YZSsZwJzs9sorcHc89kH4v3dn
+X-Gm-Gg: ASbGnctJOVD0+k1WMPdu7z8uSuXkcq5ta04up6fMZNmz/bjKhiTO8r7/m8CnRcn96Tm
+	nAtlSs17I6lrm8BIKHkkyof/626lLcP9FXcfvBQRz9ZQStdXTYcXZjTLl4SyDmtZJff8+N2B8K1
+	1sjzlx30Bc4PCqWFfEWNby6b4Zv86PBvQwcK7Cq5M5p08RCNCatv6ImvgDEIJjM4Ojcob0zFqu/
+	w+oBRYOtGdtgfXwTvJsdTILGQniGHh8034OmpdkGxLcrV58NlfeniT8fD5ZVu61avd4E7199f5A
+	efSE4ikeqV56c2QKDqSFX/HhgweyvZ5+DEJrGUdhbFdxJuJn/P9BAIuZinhXk2iC5wi73R6baK6
+	5CQMJfIC8langnliBpn0ZhgAalQnv+/X0vPXJtUD2PVByr15BGuydbUFCYYh0cdQ7D08=
+X-Received: by 2002:a05:600c:c112:b0:45b:9b9f:88cb with SMTP id 5b1f17b1804b1-45dfd5fa22amr49780015e9.16.1757668808487;
+        Fri, 12 Sep 2025 02:20:08 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGXkEspv+20MlFbesTl37GXWHbZfquxB4ih7Dl0E1NZ+jD5GQeintUf727ez0VnQ0g0eWxksw==
+X-Received: by 2002:a05:600c:c112:b0:45b:9b9f:88cb with SMTP id 5b1f17b1804b1-45dfd5fa22amr49779515e9.16.1757668808019;
+        Fri, 12 Sep 2025 02:20:08 -0700 (PDT)
+Received: from ?IPV6:2003:d8:2f20:da00:b70a:d502:3b51:1f2d? (p200300d82f20da00b70ad5023b511f2d.dip0.t-ipconnect.de. [2003:d8:2f20:da00:b70a:d502:3b51:1f2d])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45e0156c64bsm58222385e9.2.2025.09.12.02.20.04
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 11 Sep 2025 22:38:37 -0700 (PDT)
-Message-ID: <06a0e258-2c68-43ee-ab53-313a13ed0d68@redhat.com>
-Date: Fri, 12 Sep 2025 08:38:35 +0300
+        Fri, 12 Sep 2025 02:20:06 -0700 (PDT)
+Message-ID: <3674bdb2-0e59-4f0d-8adf-4794a6db546c@redhat.com>
+Date: Fri, 12 Sep 2025 11:20:03 +0200
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -73,14 +74,12 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [v5 06/15] mm/migrate_device: implement THP migration of zone
- device pages
-From: =?UTF-8?Q?Mika_Penttil=C3=A4?= <mpenttil@redhat.com>
+Subject: Re: [v5 01/15] mm/zone_device: support large zone device private
+ folios
 To: Balbir Singh <balbirs@nvidia.com>, linux-kernel@vger.kernel.org,
  linux-mm@kvack.org
 Cc: damon@lists.linux.dev, dri-devel@lists.freedesktop.org,
- Andrew Morton <akpm@linux-foundation.org>,
- David Hildenbrand <david@redhat.com>, Zi Yan <ziy@nvidia.com>,
+ Andrew Morton <akpm@linux-foundation.org>, Zi Yan <ziy@nvidia.com>,
  Joshua Hahn <joshua.hahnjy@gmail.com>, Rakie Kim <rakie.kim@sk.com>,
  Byungchul Park <byungchul@sk.com>, Gregory Price <gourry@gourry.net>,
  Ying Huang <ying.huang@linux.alibaba.com>,
@@ -92,168 +91,134 @@ Cc: damon@lists.linux.dev, dri-devel@lists.freedesktop.org,
  Barry Song <baohua@kernel.org>, Lyude Paul <lyude@redhat.com>,
  Danilo Krummrich <dakr@kernel.org>, David Airlie <airlied@gmail.com>,
  Simona Vetter <simona@ffwll.ch>, Ralph Campbell <rcampbell@nvidia.com>,
+ =?UTF-8?Q?Mika_Penttil=C3=A4?= <mpenttil@redhat.com>,
  Matthew Brost <matthew.brost@intel.com>,
  Francois Dugast <francois.dugast@intel.com>
 References: <20250908000448.180088-1-balbirs@nvidia.com>
- <20250908000448.180088-7-balbirs@nvidia.com>
- <d35eea42-ed32-481f-9dcf-704d22eb8706@redhat.com>
- <49039b9d-4c42-480f-a219-daf0958be28e@nvidia.com>
- <4cc2ba18-e7de-448f-aaee-043ed68dc6e3@redhat.com>
-In-Reply-To: <4cc2ba18-e7de-448f-aaee-043ed68dc6e3@redhat.com>
+ <20250908000448.180088-2-balbirs@nvidia.com>
+ <8c5267ec-cc85-4eff-b890-eb705472e2b2@redhat.com>
+ <f98d3149-9cc1-4211-af8f-e49547134b8c@nvidia.com>
+ <244005a2-4796-4985-853e-f916bdfd096a@redhat.com>
+ <ce40579b-4ded-473b-8fdb-a41d5b5021d5@nvidia.com>
+From: David Hildenbrand <david@redhat.com>
+Autocrypt: addr=david@redhat.com; keydata=
+ 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
+ qIws/H2t
+In-Reply-To: <ce40579b-4ded-473b-8fdb-a41d5b5021d5@nvidia.com>
 X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: uMrmJ9TpNFloCRgrWk8j1FKjMHpqZyUtC-bIPKpNi4o_1757655519
+X-Mimecast-MFC-PROC-ID: 8gis_wyPoUn2b90qD1NdDeTJCZNuh_8_-Ca6lkxleyw_1757668808
 X-Mimecast-Originator: redhat.com
 Content-Language: en-US
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
-
-On 9/12/25 08:28, Mika Penttilä wrote:
-
-> On 9/12/25 08:04, Balbir Singh wrote:
->
->> On 9/11/25 21:52, Mika Penttilä wrote:
->>> sending again for the v5 thread..
+On 12.09.25 06:49, Balbir Singh wrote:
+> On 9/11/25 22:52, David Hildenbrand wrote:
+>> On 11.09.25 14:49, Balbir Singh wrote:
+>>> On 9/11/25 21:45, David Hildenbrand wrote:
+>>>> On 08.09.25 02:04, Balbir Singh wrote:
+>>>>> Add routines to support allocation of large order zone device folios
+>>>>> and helper functions for zone device folios, to check if a folio is
+>>>>> device private and helpers for setting zone device data.
+>>>>>
+>>>>> When large folios are used, the existing page_free() callback in
+>>>>> pgmap is called when the folio is freed, this is true for both
+>>>>> PAGE_SIZE and higher order pages.
+>>>>>
+>>>>> Zone device private large folios do not support deferred split and
+>>>>> scan like normal THP folios.
+>>>>>
+>>>>> Cc: Andrew Morton <akpm@linux-foundation.org>
+>>>>> Cc: David Hildenbrand <david@redhat.com>
+>>>>> Cc: Zi Yan <ziy@nvidia.com>
+>>>>> Cc: Joshua Hahn <joshua.hahnjy@gmail.com>
+>>>>> Cc: Rakie Kim <rakie.kim@sk.com>
+>>>>> Cc: Byungchul Park <byungchul@sk.com>
+>>>>> Cc: Gregory Price <gourry@gourry.net>
+>>>>> Cc: Ying Huang <ying.huang@linux.alibaba.com>
+>>>>> Cc: Alistair Popple <apopple@nvidia.com>
+>>>>> Cc: Oscar Salvador <osalvador@suse.de>
+>>>>> Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+>>>>> Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
+>>>>> Cc: "Liam R. Howlett" <Liam.Howlett@oracle.com>
+>>>>> Cc: Nico Pache <npache@redhat.com>
+>>>>> Cc: Ryan Roberts <ryan.roberts@arm.com>
+>>>>> Cc: Dev Jain <dev.jain@arm.com>
+>>>>> Cc: Barry Song <baohua@kernel.org>
+>>>>> Cc: Lyude Paul <lyude@redhat.com>
+>>>>> Cc: Danilo Krummrich <dakr@kernel.org>
+>>>>> Cc: David Airlie <airlied@gmail.com>
+>>>>> Cc: Simona Vetter <simona@ffwll.ch>
+>>>>> Cc: Ralph Campbell <rcampbell@nvidia.com>
+>>>>> Cc: Mika Penttilä <mpenttil@redhat.com>
+>>>>> Cc: Matthew Brost <matthew.brost@intel.com>
+>>>>> Cc: Francois Dugast <francois.dugast@intel.com>
+>>>>>
+>>>>> Signed-off-by: Balbir Singh <balbirs@nvidia.com>
+>>>>> ---
+>>>>
+>>>> You missed my comments of this patch in v3.
+>>>>
 >>>
->>> On 9/8/25 03:04, Balbir Singh wrote:
+>>> Hi, David
 >>>
->>>> MIGRATE_VMA_SELECT_COMPOUND will be used to select THP pages during
->>>> migrate_vma_setup() and MIGRATE_PFN_COMPOUND will make migrating
->>>> device pages as compound pages during device pfn migration.
->>>>
->>>> migrate_device code paths go through the collect, setup
->>>> and finalize phases of migration.
->>>>
->>>> The entries in src and dst arrays passed to these functions still
->>>> remain at a PAGE_SIZE granularity. When a compound page is passed,
->>>> the first entry has the PFN along with MIGRATE_PFN_COMPOUND
->>>> and other flags set (MIGRATE_PFN_MIGRATE, MIGRATE_PFN_VALID), the
->>>> remaining entries (HPAGE_PMD_NR - 1) are filled with 0's. This
->>>> representation allows for the compound page to be split into smaller
->>>> page sizes.
->>>>
->>>> migrate_vma_collect_hole(), migrate_vma_collect_pmd() are now THP
->>>> page aware. Two new helper functions migrate_vma_collect_huge_pmd()
->>>> and migrate_vma_insert_huge_pmd_page() have been added.
->>>>
->>>> migrate_vma_collect_huge_pmd() can collect THP pages, but if for
->>>> some reason this fails, there is fallback support to split the folio
->>>> and migrate it.
->>>>
->>>> migrate_vma_insert_huge_pmd_page() closely follows the logic of
->>>> migrate_vma_insert_page()
->>>>
->>>> Support for splitting pages as needed for migration will follow in
->>>> later patches in this series.
->>>>
->>>> Cc: Andrew Morton <akpm@linux-foundation.org>
->>>> Cc: David Hildenbrand <david@redhat.com>
->>>> Cc: Zi Yan <ziy@nvidia.com>
->>>> Cc: Joshua Hahn <joshua.hahnjy@gmail.com>
->>>> Cc: Rakie Kim <rakie.kim@sk.com>
->>>> Cc: Byungchul Park <byungchul@sk.com>
->>>> Cc: Gregory Price <gourry@gourry.net>
->>>> Cc: Ying Huang <ying.huang@linux.alibaba.com>
->>>> Cc: Alistair Popple <apopple@nvidia.com>
->>>> Cc: Oscar Salvador <osalvador@suse.de>
->>>> Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
->>>> Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
->>>> Cc: "Liam R. Howlett" <Liam.Howlett@oracle.com>
->>>> Cc: Nico Pache <npache@redhat.com>
->>>> Cc: Ryan Roberts <ryan.roberts@arm.com>
->>>> Cc: Dev Jain <dev.jain@arm.com>
->>>> Cc: Barry Song <baohua@kernel.org>
->>>> Cc: Lyude Paul <lyude@redhat.com>
->>>> Cc: Danilo Krummrich <dakr@kernel.org>
->>>> Cc: David Airlie <airlied@gmail.com>
->>>> Cc: Simona Vetter <simona@ffwll.ch>
->>>> Cc: Ralph Campbell <rcampbell@nvidia.com>
->>>> Cc: Mika Penttilä <mpenttil@redhat.com>
->>>> Cc: Matthew Brost <matthew.brost@intel.com>
->>>> Cc: Francois Dugast <francois.dugast@intel.com>
->>>>
->>>> Signed-off-by: Balbir Singh <balbirs@nvidia.com>
->>>> ---
->>>>  include/linux/migrate.h |   2 +
->>>>  mm/migrate_device.c     | 456 ++++++++++++++++++++++++++++++++++------
->>>>  2 files changed, 395 insertions(+), 63 deletions(-)
->>>>
->>>> diff --git a/include/linux/migrate.h b/include/linux/migrate.h
->>>> index 1f0ac122c3bf..41b4cc05a450 100644
->>>> --- a/include/linux/migrate.h
->>>> +++ b/include/linux/migrate.h
->>>> @@ -125,6 +125,7 @@ static inline int migrate_misplaced_folio(struct folio *folio, int node)
->>>>  #define MIGRATE_PFN_VALID	(1UL << 0)
->>>>  #define MIGRATE_PFN_MIGRATE	(1UL << 1)
->>>>  #define MIGRATE_PFN_WRITE	(1UL << 3)
->>>> +#define MIGRATE_PFN_COMPOUND	(1UL << 4)
->>>>  #define MIGRATE_PFN_SHIFT	6
->>>>  
->>>>  static inline struct page *migrate_pfn_to_page(unsigned long mpfn)
->>>> @@ -143,6 +144,7 @@ enum migrate_vma_direction {
->>>>  	MIGRATE_VMA_SELECT_SYSTEM = 1 << 0,
->>>>  	MIGRATE_VMA_SELECT_DEVICE_PRIVATE = 1 << 1,
->>>>  	MIGRATE_VMA_SELECT_DEVICE_COHERENT = 1 << 2,
->>>> +	MIGRATE_VMA_SELECT_COMPOUND = 1 << 3,
->>>>  };
->>>>  
->>>>  struct migrate_vma {
->>>> diff --git a/mm/migrate_device.c b/mm/migrate_device.c
->>>> index f45ef182287d..1dfcf4799ea5 100644
->>>> --- a/mm/migrate_device.c
->>>> +++ b/mm/migrate_device.c
->>>> @@ -14,6 +14,7 @@
->>>>  #include <linux/pagewalk.h>
->>>>  #include <linux/rmap.h>
->>>>  #include <linux/swapops.h>
->>>> +#include <linux/pgalloc.h>
->>>>  #include <asm/tlbflush.h>
->>>>  #include "internal.h"
->>>>  
->>>> @@ -44,6 +45,23 @@ static int migrate_vma_collect_hole(unsigned long start,
->>>>  	if (!vma_is_anonymous(walk->vma))
->>>>  		return migrate_vma_collect_skip(start, end, walk);
->>>>  
->>>> +	if (thp_migration_supported() &&
->>>> +		(migrate->flags & MIGRATE_VMA_SELECT_COMPOUND) &&
->>>> +		(IS_ALIGNED(start, HPAGE_PMD_SIZE) &&
->>>> +		 IS_ALIGNED(end, HPAGE_PMD_SIZE))) {
->>>> +		migrate->src[migrate->npages] = MIGRATE_PFN_MIGRATE |
->>>> +						MIGRATE_PFN_COMPOUND;
->>>> +		migrate->dst[migrate->npages] = 0;
->>>> +		migrate->npages++;
->>>> +		migrate->cpages++;
->>>> +
->>>> +		/*
->>>> +		 * Collect the remaining entries as holes, in case we
->>>> +		 * need to split later
->>>> +		 */
->>>> +		return migrate_vma_collect_skip(start + PAGE_SIZE, end, walk);
->>>> +	}
->>>> +
->>> seems you have to split_huge_pmd() for the huge zero page here in case
->>> of !thp_migration_supported() afaics
->>>
->> Not really, if pfn is 0, we do a vm_insert_page (please see if (!page) line 1107) and
->> folio  handling in migrate_vma_finalize line 1284
-> Ok actually seems it is handled by migrate_vma_insert_page() which does
->
->         if (!pmd_none(*pmdp)) {
->                 if (pmd_trans_huge(*pmdp)) {
->                         if (!is_huge_zero_pmd(*pmdp))
->                                 goto abort;
->                         folio_get(pmd_folio(*pmdp));
->                         split_huge_pmd(vma, pmdp, addr);   <----- here
->                 } else if (pmd_leaf(*pmdp))
->                         goto abort;
->         }
->
-While at it, think the folio_get(pmd_folio(*pmdp)); is wrong for here,
-we split the pmd for huge zero page.
-
->> Thanks,
->> Balbir
+>>> Looks I missed your comments, just checked those were largely about alignment and
+>>> integrating the code for DEVICE_COHERENT and DEVICE_PRIVATE cases into similar looking
+>>> bits for zone device folio free and code-alignment. I'll take a look and update as needed.
 >>
-> --Mika
->
+>> Yes, and the confusing folio->mapping = NULL that I cannot connect to THP support.
+>>
+> 
+> I can remove that, let me reunify those bits, seems relatively straight forward
+
+BTW, I was wondering when we invalidate folio_test_anon() by clearing 
+folio->mapping int he current code flow?
+
+I mean, this must happen at some point when freeing device folios.
+
+-- 
+Cheers
+
+David / dhildenb
 
