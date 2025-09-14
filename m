@@ -1,94 +1,91 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 232502745C;
-	Sun, 14 Sep 2025 03:37:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4F7A23B616;
+	Sun, 14 Sep 2025 06:47:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757821035; cv=none; b=c3n7x+irrTzJm0S+I3WQWGK2oh28QDApl6itXp5jgEHE90l7Nitb2loYlmCnQbtw8tsrYprm+BDpB87/b7g2acYUr8c4wbdGpHz62yvPRAl3CJUV29JbEhvetFkywu8Azgs/lEfooLbzt3H1m5LLuhJa8Ws735LyylbH8VDbLVU=
+	t=1757832427; cv=none; b=Dlh/XeXY8XYNqOf5BZzw90z2+r+EfeOfjKFu0G6LkdY+NoaS29PobWbt26qBv2Z04lB/BGZy7V9EpiZTqauSUhB1Bla6D8ebYvUS0MDXKTYRhNlucK4nON68BBf89Opv70XLWGD53eyEie8urFAAEthlK/d8iEUd2q6wStBdq2s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757821035; c=relaxed/simple;
-	bh=bkHe9Vm5JzUUpMMNjnWLXeYD8tWI4frctGkhsHUCOPU=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=h2Ci3MSLXLKVdyCrP32p0ZRYaZBThzVu/MeX4pON74r+fiSX32axFiOwRsCEKUEc4NEWF6NHP8ONJt7PSydmWWTonMnJLs90gtkORqMgL6M6iEC1Abff12WvzbUwKoKsAzVJklTbeOVcm8q5IDLgTvk0cuqwMkylpY+c/gjYdGw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=k6bOEs6i; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1757832427; c=relaxed/simple;
+	bh=ngd42q6af0I6yj6kQcs47JogyuSAQZidJb5hPUi99xQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Xqn83pdOwOdq885PMBaylYKBuL/KvvqXy2Bisipd5FUhq5qfTTgZvEx7cG4tWGS3Q3lGImmtuU89pTEaCN5qXdCAjjm0BhuhvNPrG5SkYmeNohh4N/M3jRib7A25q11oXNvX4wr9mYWhUAHPseSh7yNItilyRlPQB4hZNHRAxes=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oABnD2WI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="k6bOEs6i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 853D3C4CEF0;
-	Sun, 14 Sep 2025 03:37:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1757821034;
-	bh=bkHe9Vm5JzUUpMMNjnWLXeYD8tWI4frctGkhsHUCOPU=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k6bOEs6itfiszz+TTmIHgqY9WY6+rOWbxuP8l2TAnhHcrqnwceeH8gTvLTb9eRVcp
-	 XMA1sWV4MCX5qhH67Hwbf29YKDAbPLZz8dtBHtcx737+9jOIHuNZTjulwt9qkFGKi1
-	 aE962yFCowlOvpCng7qweI7ERZz1qskpa1XJg81IjUPR1N2GEeFNMWcEwjZSDHXfgO
-	 kIxOusj/rkNKJlI8lbZLQ2AuE0RKoidok1chpBDxr425mrLZFHomFaDz08R9gs2Nd6
-	 adgarw8snTjgunC8oaT2HoAWxCeCr9twtkEfPGhvn3+/yd6Z1Q5i6/DQGZdQym8S4t
-	 NrfsWAY/YUChg==
-From: SeongJae Park <sj@kernel.org>
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oABnD2WI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB574C4CEF0;
+	Sun, 14 Sep 2025 06:47:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1757832426;
+	bh=ngd42q6af0I6yj6kQcs47JogyuSAQZidJb5hPUi99xQ=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=oABnD2WIh304JhRQRMbM7saDpmUlIVsRdBjAlxabhr9GYcyJ7cmsbnc0TBFSJfM7C
+	 oNYu/4XiB2RWsrpzqz0vVEDcpsMxXGpnm85/8zlW4jqcXTM2VQUHJBhUJL1hhGqoxb
+	 fu5mQCAuRv7DcwbYzZtwoj0wcQ773dvt8/jmd7uw=
+Date: Sun, 14 Sep 2025 08:47:03 +0200
+From: Greg KH <gregkh@linuxfoundation.org>
 To: SeongJae Park <sj@kernel.org>
-Cc: stable@vger.kernel.org,
-	damon@lists.linux.dev,
-	Quanmin Yan <yanquanmin1@huawei.com>,
-	Kefeng Wang <wangkefeng.wang@huawei.com>,
-	ze zuo <zuoze1@huawei.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: Re: [PATCH 6.6.y] mm/damon/lru_sort: avoid divide-by-zero in damon_lru_sort_apply_parameters()
-Date: Sat, 13 Sep 2025 20:37:11 -0700
-Message-Id: <20250914033711.2344-1-sj@kernel.org>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250914033350.2284-1-sj@kernel.org>
-References: 
+Cc: ekffu200098@gmail.com, akpm@linux-foundation.org,
+	stable@vger.kernel.org, damon@lists.linux.dev
+Subject: Re: FAILED: patch "[PATCH] mm/damon/core: set quota->charged_from to
+ jiffies at first" failed to apply to 5.15-stable tree
+Message-ID: <2025091447-stagnant-underwear-b8ff@gregkh>
+References: <2025091357-stapling-walrus-d0f7@gregkh>
+ <20250914015539.56587-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250914015539.56587-1-sj@kernel.org>
 
-On Sat, 13 Sep 2025 20:33:50 -0700 SeongJae Park <sj@kernel.org> wrote:
-
-> From: Quanmin Yan <yanquanmin1@huawei.com>
+On Sat, Sep 13, 2025 at 06:55:39PM -0700, SeongJae Park wrote:
+> Hi Greg,
 > 
-> Patch series "mm/damon: avoid divide-by-zero in DAMON module's parameters
-> application".
+> On Sat, 13 Sep 2025 14:25:57 +0200 <gregkh@linuxfoundation.org> wrote:
 > 
-> DAMON's RECLAIM and LRU_SORT modules perform no validation on
-> user-configured parameters during application, which may lead to
-> division-by-zero errors.
+> > 
+> > The patch below does not apply to the 5.15-stable tree.
+> > If someone wants it applied there, or to any other stable or longterm
+> > tree, then please email the backport, including the original git commit
+> > id to <stable@vger.kernel.org>.
+> > 
+> > To reproduce the conflict and resubmit, you may use the following commands:
+> > 
+> > git fetch https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/ linux-5.15.y
+> > git checkout FETCH_HEAD
+> > git cherry-pick -x ce652aac9c90a96c6536681d17518efb1f660fb8
+> > # <resolve conflicts, build, test, etc.>
+> > git commit -s
+> > git send-email --to '<stable@vger.kernel.org>' --in-reply-to '2025091357-stapling-walrus-d0f7@gregkh' --subject-prefix 'PATCH 5.15.y' HEAD^..
+> > 
+> > Possible dependencies:
+> > 
+> > 
+> > 
+> > thanks,
+> > 
+> > greg k-h
+> > 
+> > ------------------ original commit in Linus's tree ------------------
+> > 
+> > >From ce652aac9c90a96c6536681d17518efb1f660fb8 Mon Sep 17 00:00:00 2001
+> > From: Sang-Heon Jeon <ekffu200098@gmail.com>
+> > Date: Fri, 22 Aug 2025 11:50:57 +0900
+> > Subject: [PATCH] mm/damon/core: set quota->charged_from to jiffies at first
+> >  charge window
+> [...]
+> > Link: https://lkml.kernel.org/r/20250822025057.1740854-1-ekffu200098@gmail.com
+> > Fixes: 2b8a248d5873 ("mm/damon/schemes: implement size quota for schemes application speed control") # 5.16
 > 
-> Avoid the divide-by-zero by adding validation checks when DAMON modules
-> attempt to apply the parameters.
-> 
-> This patch (of 2):
-> 
-> During the calculation of 'hot_thres' and 'cold_thres', either
-> 'sample_interval' or 'aggr_interval' is used as the divisor, which may
-> lead to division-by-zero errors.  Fix it by directly returning -EINVAL
-> when such a case occurs.  Additionally, since 'aggr_interval' is already
-> required to be set no smaller than 'sample_interval' in damon_set_attrs(),
-> only the case where 'sample_interval' is zero needs to be checked.
-> 
-> Link: https://lkml.kernel.org/r/20250827115858.1186261-2-yanquanmin1@huawei.com
-> Fixes: 40e983cca927 ("mm/damon: introduce DAMON-based LRU-lists Sorting")
-> Signed-off-by: Quanmin Yan <yanquanmin1@huawei.com>
-> Reviewed-by: SeongJae Park <sj@kernel.org>
-> Cc: Kefeng Wang <wangkefeng.wang@huawei.com>
-> Cc: ze zuo <zuoze1@huawei.com>
-> Cc: <stable@vger.kernel.org>	[6.0+]
-> Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-> (cherry picked from commit 711f19dfd783ffb37ca4324388b9c4cb87e71363)
-> Signed-off-by: SeongJae Park <sj@kernel.org>
+> The broken commit was introduced from 5.16, so I don't think this commit need
+> to be cherry-picked on 5.15.y.  Please let me knwo if I'm missing something or
+> there is anything I can help.
 
-FYI, the commit was able to be cleanly cherry-picked, but seems it caused a
-build error, similar to that [1] for 6.1.y.  This patch fixes the build error.
+You are right, I was too loose in the version ranges here, thanks.
 
-[1] https://lore.kernel.org/20250914033221.49447-1-sj@kernel.org
-
-
-Thanks,
-SJ
-
-[...]
+greg k-h
