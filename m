@@ -1,63 +1,63 @@
-Received: from mail-yx1-f52.google.com (mail-yx1-f52.google.com [74.125.224.52])
+Received: from mail-yw1-f173.google.com (mail-yw1-f173.google.com [209.85.128.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 720C4341AA1
-	for <damon@lists.linux.dev>; Mon, 15 Sep 2025 15:07:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F766327A2E
+	for <damon@lists.linux.dev>; Mon, 15 Sep 2025 15:08:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757948827; cv=none; b=XWlqaqaD7RgUDmAxUspxm2rpbBB1OALuxNW3rpbaxM8JOaNzOlUtg/NwNe10yuH7/V+zfJAPdb6eWnP/6oGGjq5R8iHFefhJVFgdEy8ooZ5lCzMfYkeCy+6B27AK51FE897OMK7bURsQw3/GJJtWoaF+v3n+rk5+SSQuNS0AINc=
+	t=1757948936; cv=none; b=k5X65dN8TUptaNlNWEj4F0S5UpJVNG6IxjX0pjrp0CdTlH8ovk9M/d0+M0o3+PIW500LxH2bcJcOy71787uVDe0aDNUKCmL550lcVrT5EQ3NlSQKGis/DsRu4NSh4q8Tn7tMNa98yi+NHuyaSUdSGaVOkIiozI1yBZLV/CMb5dw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757948827; c=relaxed/simple;
-	bh=mvhyhVaE1NgOtTceXq0ofadHYAv2ARkQsHSzvKbsxAM=;
+	s=arc-20240116; t=1757948936; c=relaxed/simple;
+	bh=fpkLiRx4peIwEQMVeV0Sr+7DioZoAzUNHpOYmIWDnzo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Zb5QjQcwZxtRW/MK8Uh+zLmsgGCgtogL9SxtQEBGgogvfFOm5J8LkrDrgjFQ32KTYC0sFM6oQhvaQZdnvSoqVi3HJbqBAFeHvvgZy5H9o+HhQlBcjHWmdE0BNrXLNwMMZBZ/b99tX7gWhltHl3gLYHdRTwtxxzKOI8x2E4SECIg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Pd8FH333; arc=none smtp.client-ip=74.125.224.52
+	 MIME-Version; b=BKEadSudsQDB3DDsXUBKbGwk5MN7OfE9BXbLv/a3PM1c20tBVE6jgLtc1OHhDhY6NOY2SCp0DZNwobLOmsj73IG4Ft778V5VUBs/p4Wkb5ZAhPds/9/XTt1738+wDKC00ruM2MprIo7dZo+OasSB9gPWqycXu8QYQuFWIFZ/Hcs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Z66jhgS/; arc=none smtp.client-ip=209.85.128.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Pd8FH333"
-Received: by mail-yx1-f52.google.com with SMTP id 956f58d0204a3-62f9c2df5a3so572907d50.1
-        for <damon@lists.linux.dev>; Mon, 15 Sep 2025 08:07:05 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Z66jhgS/"
+Received: by mail-yw1-f173.google.com with SMTP id 00721157ae682-723ad237d1eso39287397b3.1
+        for <damon@lists.linux.dev>; Mon, 15 Sep 2025 08:08:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1757948824; x=1758553624; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1757948934; x=1758553734; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=nDVeU4L3YG1TiJ1MEpll75Z/ltEov2CndLJiRR2rTQE=;
-        b=Pd8FH333ctolIpBZnM5GfKU88xo/iKCgqrDupI5H9JaBfSEGhIj+5c3NC/BKwkezgz
-         mQMdxeN7LZu+BxLOpD3rRSBtwG5qjOl7in4g/D33tQ3XtI0/GRSTx7EYJI9wwu7bIznc
-         C3m790k+re9zFhuMw2sVet/CX70mDuWtg/M7ERzKM9Govb7H4btZ+mXSq2dPCXEc3+Rg
-         gJk3rkgb7ef9w+rfXaPYuwUeUU+04ib2gguFBWycGXenI1GVxYvLJDXqTkhPu+aeLwpO
-         dAdoFGsio4ZmJZXf5U7g9nKk1M1PWUQkthA28zgv3sgo+5oxas/6r7gAmTnYj8tjDSdf
-         bFpg==
+        bh=wwFsPBiwikLgXGeg1StWERPB9X7NSPvY1FsUVXJjxOU=;
+        b=Z66jhgS/NpOhkX6Mys13QPaJqXYfYvJ5zTi37h8nXEk40eSZzFBXBqY3QRf+ggwhh2
+         M2DHNV4vsXl2RDQyDnp2jKhOdtdO1+BZjTNtYwKrz9hKKiqiNtCnK7vi0QsRKT19pxxn
+         NF8fMIGMM6Qn2H/yWPi/OU2tpa+trEtW/AoWEKVe0WGL4mB2ZCufPugDY2D/oQOY+l76
+         HAx7GbrS2k4AxF9xHjsYNP59ZEASTDUu5wzPqlE2qhA6r2pnPSeJ8aKSmjW95nGiVyLG
+         HG3t0a+Ta6Zqf2nQ+D8qYicK4EKyPndoPyZAxbsv25AFtiIRbRi3vr9hU27t5tuhCYhq
+         HCWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757948824; x=1758553624;
+        d=1e100.net; s=20230601; t=1757948934; x=1758553734;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=nDVeU4L3YG1TiJ1MEpll75Z/ltEov2CndLJiRR2rTQE=;
-        b=VYrB+PZGIQRulvB9DMl3dXDuCe0HBumB1IcPFDbhBTOxopg1TmrEWbftt1diTk/R0G
-         IeZnS4092PwxzvM5FcYpzcg9v8eJ9Gfs8SnGHHoT7Tpni64MUMd2bdlhwecY0Xl3cjVc
-         BscY+v+w94/5PRfijpjxaX38E37XVKVYkEIOYANOaXDKoMlDgX3+wDARTJ7bBdJyITkK
-         ZwvbDIXcCqv7gkhkF1Dv8dWSuOj6914NsEnDdRR6RkVTvDIEH/txNxZT2j42yHbCckmk
-         a/7UZAXkPQ2YuLHQKJ347cl8m3aHIF76zwUbOJSquUc+azEBCCtGUKxe1CXNigoiFCut
-         fm0Q==
-X-Forwarded-Encrypted: i=1; AJvYcCXoAAI8uJ3eRI/eoYslTg3Vpoge1bza6atEex3inK3Xaen7Wd6benFQnzJDdY8pQJfORl2ryw==@lists.linux.dev
-X-Gm-Message-State: AOJu0YyXIVjog9TJyvZpZwzqO3qbk5xH0A0mxS9smSSk+Mz4tNeYz3Sf
-	MFKScYWvked+vwLlMLKtlZ7TeoEJBBb7KdZ5pnEGo12T51K1N2McuB0i
-X-Gm-Gg: ASbGncuhBGaTYr1vIO0H8nEnelhDocSGCHGhpXBSA3ZfbqeJBAYjVy7hPv7Q5yNUao/
-	A8+P/iZ6edEAwupIOjAzvTGqiSPn5+ChMU1ti5Yp6C81VBSWf/G0QnAco4zz9vbotDk95si0QLR
-	raSjVULQmrekZAA4Wsf3EEjLdQnU6w+ZVy8H8RpAlAxN9PEi9Ed0npQXPFgVcIk0TgYMNObe/dd
-	racRqlL0OVuJsKTsF4pHClPTOdqR7YjgOxOsfO3BNhsyAbLwBYSfR6SmHXpRLBWVUC4y1O2WiE+
-	EQx3KtDSwfUixM8aIqPAZ/IpP4JM59AfdFvscRW2AnPEtfsdnZ/g6tpw0P49qNLcCJsm0fW2MlI
-	CFTFOlTwaI+t2s28laC7gfWRh5qS6eJ/ixrC1s24Ul5ReQliNcrN50C3bc/7J7Mvv
-X-Google-Smtp-Source: AGHT+IH7pt4IX2Xw7+CU3ZHlHQK6hR4lJhRz8r+4QNMMkKKZ9nkGgDixZer0GbSaS8MxEPVoUip+3w==
-X-Received: by 2002:a05:690c:3388:b0:721:5b31:54be with SMTP id 00721157ae682-730650e0036mr114848797b3.39.1757948824149;
-        Mon, 15 Sep 2025 08:07:04 -0700 (PDT)
-Received: from localhost ([2a03:2880:25ff:5c::])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-72f76238392sm32913737b3.1.2025.09.15.08.07.03
+        bh=wwFsPBiwikLgXGeg1StWERPB9X7NSPvY1FsUVXJjxOU=;
+        b=nmgwsG9lAAcN0DIG3Hkv8omnfTOmyeQU1MtgclmxplFyCNpEAzoR2BTJctcGurdkI3
+         XgNYd+p00fjdqVqXykVxJPq6bVc1V1vyyco0WKy4mj0u69aKlW4M/HrcasG/XwQ7Q7Z9
+         XZ4qxpgmhFzBSWOylS7J3QSJUGdv+Zvi7pgshk9p3ram6Uoqo/eKHB55g+/eS7k5i8Wf
+         w98tuqwrFx/qigZv8WEZKIaq23DMl7CPY+kzFlagvcDNeBLh4kokgDrWN9yE83dhlt9p
+         ClWw8Suc7UC1FZQuZ8VxQFA8pf+SIi3KqCxucuPbnrHvOfP9qduEUCe25E7/r5o18r1r
+         Yffg==
+X-Forwarded-Encrypted: i=1; AJvYcCU4HV3yKgdTNRfqec9SOGVhsWui4XS7BIMs4bp5348kDsw+6D2v9cQljTvC3EpDs8A1GbWRAA==@lists.linux.dev
+X-Gm-Message-State: AOJu0YzwONncvA1/AfXpV7+ZmUXoTb4fkaWGA6gUP6Mgc1hCCpEmO03i
+	bMVeVxZmEdZOf716ovLaWB4xR1pDn76uzwHArXsfcV/Ae+6zpCgxnnGF
+X-Gm-Gg: ASbGnctdDNe09iTcXWIszEX7bqqTc9JFnK+tvGyQ52IqDJLXAeJ0mzb2Q1tuhTpAAmb
+	CYE/LiTpvJm6SQAXIXeUljYywxML5gPo/DgDNTn/yxYWC+6VRrSr1HC3jHoCcytOHgJMeimQBHz
+	CYTGBsRuz1I7tQcAVxojOfcEcJNmA1vg/aXjZrdfgIWRky2f+M5gHm9Xob6ExwWl2osYpBGmYs7
+	bXpFDWov/Y30DyWSqbZqQa2bDk1ufTV8/dRZTsrP4KnyvXOFnml1MUm+YRy9p+G5fiJEmd1kKdW
+	PU72mjfFxs8hA2nSbiZX6VZCfdHwX9/iM4UdQeadAkDm1OzbfI9jNXLpcxt3WSGE3VVZ62NuGSr
+	ZV0c4w+vKSWNQhNylKe7t3w02YNKqTKfqRyA475uqJKB8SutxDOfMKFU1L2l7EKHf
+X-Google-Smtp-Source: AGHT+IEoCH4/7SidphYGS+MZaTfXIWw2+iqeHbHWYFRR44N5J03EruPqOb3s6H+Eiuaqun0K37I/aQ==
+X-Received: by 2002:a05:690c:640e:b0:732:92b7:8b88 with SMTP id 00721157ae682-73292b78edfmr55749467b3.38.1757948933883;
+        Mon, 15 Sep 2025 08:08:53 -0700 (PDT)
+Received: from localhost ([2a03:2880:25ff:59::])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-73453627ddcsm8002397b3.38.2025.09.15.08.08.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 15 Sep 2025 08:07:03 -0700 (PDT)
+        Mon, 15 Sep 2025 08:08:53 -0700 (PDT)
 From: Joshua Hahn <joshua.hahnjy@gmail.com>
 To: SeongJae Park <sj@kernel.org>
 Cc: Andrew Morton <akpm@linux-foundation.org>,
@@ -74,11 +74,11 @@ Cc: Andrew Morton <akpm@linux-foundation.org>,
 	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: Re: [PATCH 4/6] Docs/mm/damon/maintainer-profile: update community meetup for reservation requirements
-Date: Mon, 15 Sep 2025 08:07:01 -0700
-Message-ID: <20250915150702.1499965-1-joshua.hahnjy@gmail.com>
+Subject: Re: [PATCH 0/6] mm/damon: misc fixups and improvements for 6.18
+Date: Mon, 15 Sep 2025 08:08:51 -0700
+Message-ID: <20250915150851.1508878-1-joshua.hahnjy@gmail.com>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20250915015807.101505-5-sj@kernel.org>
+In-Reply-To: <20250915015807.101505-1-sj@kernel.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -88,50 +88,58 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Sun, 14 Sep 2025 18:58:05 -0700 SeongJae Park <sj@kernel.org> wrote:
+On Sun, 14 Sep 2025 18:58:01 -0700 SeongJae Park <sj@kernel.org> wrote:
 
-> DAMON community meetup was having two different kinds of meetups:
-> reservation required ones and unrequired ones.  Now the reservation
-> unrequested one is gone, but the documentation on the maintainer-profile
-> is not updated.  Update.
-
-LGTM!
-Reviewed-by: Joshua Hahn <joshua.hahnjy@gmail.com>
-
-> Signed-off-by: SeongJae Park <sj@kernel.org>
-> ---
->  Documentation/mm/damon/maintainer-profile.rst | 17 ++++++-----------
->  1 file changed, 6 insertions(+), 11 deletions(-)
+> Misc fixes and improvements for DAMON that are not critical and
+> therefore aims to be merged into Linux 6.18-rc1.
 > 
-> diff --git a/Documentation/mm/damon/maintainer-profile.rst b/Documentation/mm/damon/maintainer-profile.rst
-> index 5cd07905a193..58a3fb3c5762 100644
-> --- a/Documentation/mm/damon/maintainer-profile.rst
-> +++ b/Documentation/mm/damon/maintainer-profile.rst
-> @@ -89,18 +89,13 @@ the maintainer.
->  Community meetup
->  ----------------
->  
-> -DAMON community is maintaining two bi-weekly meetup series for community
-> -members who prefer synchronous conversations over mails.
-> +DAMON community has a bi-weekly meetup series for members who prefer
-> +synchronous conversations over mails.  It is for discussions on specific topics
-> +between a group of members including the maintainer.  The maintainer shares the
-> +available time slots, and attendees should reserve one of those at least 24
-> +hours before the time slot, by reaching out to the maintainer.
->  
-> -The first one is for any discussion between every community member.  No
-> -reservation is needed.
-> -
-> -The seconds one is for discussions on specific topics between restricted
-> -members including the maintainer.  The maintainer shares the available time
-> -slots, and attendees should reserve one of those at least 24 hours before the
-> -time slot, by reaching out to the maintainer.
-> -
-> -Schedules and available reservation time slots are available at the Google `doc
-> +Schedules and reservation status are available at the Google `doc
->  <https://docs.google.com/document/d/1v43Kcj3ly4CYqmAkMaZzLiM2GEnWfgdGbZAH3mi2vpM/edit?usp=sharing>`_.
->  There is also a public Google `calendar
->  <https://calendar.google.com/calendar/u/0?cid=ZDIwOTA4YTMxNjc2MDQ3NTIyMmUzYTM5ZmQyM2U4NDA0ZGIwZjBiYmJlZGQxNDM0MmY4ZTRjOTE0NjdhZDRiY0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t>`_
+> The first patch improves DAMON's age counting for nr_accesses zero
+> to/from non-zero changes.
+> 
+> The second patch fixes an initial DAMOS apply interval delay issue that
+> is not realistic but still could happen on an odd setup.
+> 
+> The third patch fixes wrongly written code that doesn't cause any real
+> problem but could make code review confusing.
+> 
+> The fourth and the fifth patches update DAMON community meetup
+> description and DAMON user-space tool example command for DAMOS usage,
+> respectively.
+> 
+> Finally, the sixth patch updates MAINTAINERS section name for DAMON to
+> just DAMON.
+
+Hi SJ,
+
+I was unable to find this sixth patch on the mailing list. Maybe it got dropped
+somewhere? : -) 
+
+> Changes from RFC
+> (https://lore.kernel.org/20250909034353.7064-1-sj@kernel.org)
+> - The RFC was only for the first patch
+> - Rebase and wordsmith the first patch
+> - Add a few misc fixes and improvements for 6.18 to the series
+> 
+> SeongJae Park (6):
+>   mm/damon/core: reset age if nr_accesses changes between non-zero and
+>     zero
+>   mm/damon/core: set effective quota on first charge window
+>   mm/damon/lru_sort: use param_ctx correctly
+>   Docs/mm/damon/maintainer-profile: update community meetup for
+>     reservation requirements
+>   Docs/admin-guide/mm/damon/start: add --target_pid to DAMOS example
+>     command
+>   MAINTAINERS: rename DAMON section
+> 
+>  Documentation/admin-guide/mm/damon/start.rst  |  2 +-
+>  Documentation/mm/damon/maintainer-profile.rst | 17 ++++++-----------
+>  MAINTAINERS                                   |  2 +-
+>  mm/damon/core.c                               |  7 ++++++-
+>  mm/damon/lru_sort.c                           |  2 +-
+>  5 files changed, 15 insertions(+), 15 deletions(-)
+> 
+> 
+> base-commit: d245e17d619ea0336d50b0a6c914f5701d1b0e53
 > -- 
 > 2.39.5
 
