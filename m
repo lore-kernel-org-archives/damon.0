@@ -1,41 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBA9E22B5AD;
-	Mon, 15 Sep 2025 01:58:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBB0122B8A9;
+	Mon, 15 Sep 2025 01:58:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757901496; cv=none; b=GX6cpkVIieOQnu8+c+538hwDZrscbY+//8REx8bxH7mvRp5ImmApYfP9zBLK/K9lDvw8Pv962Al6obO6isUd8jKGdi6bbAYCVkPekNSJHNlHmKokHf2et+RC63uBs+202cdQHPJUtkIolVFQoE4Rd9HuzxqI1iLM0frz0T8SRiI=
+	t=1757901497; cv=none; b=U9VmuBT3uPbKdJESgYbMK/32O7I/JUiphL7ep1BpoA52WKxJPVSBcWO5mBHqtvkJI2pNBJsBZDMsmbFx6+YifDmTmQfYxLG/xotw+QB3dgIQvzWW1AnqdF0hv++OyhTJ3om0nfMlDVo1tSBy+9JYXUN9SO5qyZfWM0qdmQnI2tc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757901496; c=relaxed/simple;
-	bh=nGvVrC45Vt9+6E5tO/9Zsq1bOPvFtQ8UtnVHJOeO4A4=;
+	s=arc-20240116; t=1757901497; c=relaxed/simple;
+	bh=3+9qSsAlg4qC3YbAA//ENyr9S8mCKrCXEpzivdstPoU=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=f7Nk+GHP2VLQ3glFRPwjXd4WsU6UYyR22S5Yviaqs0ahdrnmgiTaZnGflBAI41gG6EsfWyY0cALc4rd33oOWGcMewh8SYRnm03hcDUDIwJfpzHzXl3zH+N4CwXZwgURmggtwEs+ZrLXwCS6fsF7PCX48lAK6mf3HQ0U2r7xVUCA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LZ/a/13l; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uxwoz8ZiNCH/l6IRNA8IKORNagjsMyFTNzzwjkKLgCa/LNfyI4jwMfaBQJHK3ND4PtsA1bSTHCaX3q5IwMz2JWr5Awa8mChBiZRD0u8Xy+gPPsT6o7i4a4KZU0/WRNWQQzidfMzaTVgQIgTNjhuJtvpxvaDyvn/Pz/Ws9oxcWto=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DXHmoBRO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LZ/a/13l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DD88C4CEF0;
-	Mon, 15 Sep 2025 01:58:15 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DXHmoBRO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 602C0C4CEF5;
+	Mon, 15 Sep 2025 01:58:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1757901495;
-	bh=nGvVrC45Vt9+6E5tO/9Zsq1bOPvFtQ8UtnVHJOeO4A4=;
+	s=k20201202; t=1757901496;
+	bh=3+9qSsAlg4qC3YbAA//ENyr9S8mCKrCXEpzivdstPoU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LZ/a/13l/K1JrCtefJnoQGLam5FR90aUMxEBXcPo0pELUkzQl4QrS7ftW9oXrJLi8
-	 pWAoUwc0TlelI102Agga97Ef8ZDzF7aVSKqyMeeQ5KDOFGcHD9+Y7U7U0dtR/BJdGV
-	 crJbVH/nQ6DMcg9zGbuj9W7O0t9Fq2yHw6CWkQ89jdo7rIzA1XjE7eksYZoKEDdSqX
-	 WmIX0rW+eVn26eQKBvwXJTbgDvjGGXgmRIrkjf8iBNKvI7cVlBJtlTHhiSeH5Y4cG/
-	 Wk0LxcLfvHmZQ3ZRmSAWcnXxWjfu868XaqaR8H4K8JmqVUQBPyPJrsWJkesyatSjw+
-	 jxS1ZjVbZ5kaw==
+	b=DXHmoBROJvMUvju390O3mU1he2Ful7Ud2Rx4qCKVAXCT2HixYfZFUBVk5mP8DWBK0
+	 dPD6lB7bseP7avTwOdWTmAHf9tIPRRzV0NA725P9X3wnzFqQ/m2ykRBJDHYah1V71x
+	 dWLQ2MWIqxE9Ybeu8yttGKAf5eYZKh3rPHT+70mI4EnN/1xag2HAjL2tsTYt+H/9YX
+	 wk2psPIYwXKb8etxdZ2DJFGgF7+PH6woObe2ym2A4J2AT6axT+Qo+TXZdEi4bli60r
+	 kv8bv5n0Mfk5kCF3gDPT7dtQqW45b9BoryfbsCvplZxtTZK7GbNRa6CIONumtJeKji
+	 cHOCrjNcNxMIQ==
 From: SeongJae Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SeongJae Park <sj@kernel.org>,
+	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
+	David Hildenbrand <david@redhat.com>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	Michal Hocko <mhocko@suse.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
 	damon@lists.linux.dev,
 	kernel-team@meta.com,
+	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [PATCH 3/6] mm/damon/lru_sort: use param_ctx correctly
-Date: Sun, 14 Sep 2025 18:58:04 -0700
-Message-Id: <20250915015807.101505-4-sj@kernel.org>
+Subject: [PATCH 4/6] Docs/mm/damon/maintainer-profile: update community meetup for reservation requirements
+Date: Sun, 14 Sep 2025 18:58:05 -0700
+Message-Id: <20250915015807.101505-5-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250915015807.101505-1-sj@kernel.org>
 References: <20250915015807.101505-1-sj@kernel.org>
@@ -47,32 +56,44 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-damon_lru_sort_apply_parameters() allocates a new DAMON context, stages
-user-specified DAMON parameters on it, and commits to running DAMON
-context at once, using damon_commit_ctx().  The code is, however,
-directly updating the monitoring attributes of the running context. This
-doesn't cause a real user problem but apparently this is an
-unintentional mistake that can cause code review confusions and future
-real problems.  Fix the wrong use of the parameter context.
+DAMON community meetup was having two different kinds of meetups:
+reservation required ones and unrequired ones.  Now the reservation
+unrequested one is gone, but the documentation on the maintainer-profile
+is not updated.  Update.
 
-Fixes: a30969436428 ("mm/damon/lru_sort: use damon_commit_ctx()")
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- mm/damon/lru_sort.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ Documentation/mm/damon/maintainer-profile.rst | 17 ++++++-----------
+ 1 file changed, 6 insertions(+), 11 deletions(-)
 
-diff --git a/mm/damon/lru_sort.c b/mm/damon/lru_sort.c
-index 14d31009c09e..ab6173a646bd 100644
---- a/mm/damon/lru_sort.c
-+++ b/mm/damon/lru_sort.c
-@@ -219,7 +219,7 @@ static int damon_lru_sort_apply_parameters(void)
- 		goto out;
- 	}
+diff --git a/Documentation/mm/damon/maintainer-profile.rst b/Documentation/mm/damon/maintainer-profile.rst
+index 5cd07905a193..58a3fb3c5762 100644
+--- a/Documentation/mm/damon/maintainer-profile.rst
++++ b/Documentation/mm/damon/maintainer-profile.rst
+@@ -89,18 +89,13 @@ the maintainer.
+ Community meetup
+ ----------------
  
--	err = damon_set_attrs(ctx, &damon_lru_sort_mon_attrs);
-+	err = damon_set_attrs(param_ctx, &damon_lru_sort_mon_attrs);
- 	if (err)
- 		goto out;
+-DAMON community is maintaining two bi-weekly meetup series for community
+-members who prefer synchronous conversations over mails.
++DAMON community has a bi-weekly meetup series for members who prefer
++synchronous conversations over mails.  It is for discussions on specific topics
++between a group of members including the maintainer.  The maintainer shares the
++available time slots, and attendees should reserve one of those at least 24
++hours before the time slot, by reaching out to the maintainer.
  
+-The first one is for any discussion between every community member.  No
+-reservation is needed.
+-
+-The seconds one is for discussions on specific topics between restricted
+-members including the maintainer.  The maintainer shares the available time
+-slots, and attendees should reserve one of those at least 24 hours before the
+-time slot, by reaching out to the maintainer.
+-
+-Schedules and available reservation time slots are available at the Google `doc
++Schedules and reservation status are available at the Google `doc
+ <https://docs.google.com/document/d/1v43Kcj3ly4CYqmAkMaZzLiM2GEnWfgdGbZAH3mi2vpM/edit?usp=sharing>`_.
+ There is also a public Google `calendar
+ <https://calendar.google.com/calendar/u/0?cid=ZDIwOTA4YTMxNjc2MDQ3NTIyMmUzYTM5ZmQyM2U4NDA0ZGIwZjBiYmJlZGQxNDM0MmY4ZTRjOTE0NjdhZDRiY0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t>`_
 -- 
 2.39.5
