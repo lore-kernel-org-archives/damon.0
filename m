@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 469E286342;
-	Tue, 16 Sep 2025 03:35:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6620C260565;
+	Tue, 16 Sep 2025 03:35:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757993718; cv=none; b=UcC8sPgzN83vTjDkR7ho3pRCoBCf9sdH39RTp3yFypNRMPi/VMMoi2oGPgKs/w9L11x31n8MCq4DhmIQlY7ta/KZFj9Nt5D/vpqNTvNzC75JKOFIEEN71BGQ7r1VH2hfFsU1MYYZag1+smR4F+jcaEX4rhzkuSTZ0sbPqRUEjLo=
+	t=1757993719; cv=none; b=Zh4JHLwLla9WngQ4GPc+yqlffKEpO0KtWiasPzOLPt5TxO9g0XnSJCigm+W6XEoaKOMB1oPp7MyA23BULVNBVOiNUYGigoKezZCG055CwHvvHswpW4EcOaXZ/orKpfJPibgI7ykqkZHncsOVrr/CLPnEUJKDbSuqgo4t0RL7dZ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757993718; c=relaxed/simple;
-	bh=W3dvzS2tlUSzksksMbckc+tKdCVNe/7RjYtxNtoI1mg=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=WQ9noAi/NCqYHZRX1qxRGlbp0wDa6A0kGN9PQm/vcgqUw4LXlzEWGBPwu9ah6qpxrGyCB5e540I77jX6PTZbsXoMwdYy2RiYJ0RQhOr9DME6Dzwhp4BB7RsZ5gZUn10CwZstlsycKnOQk0lrH1Lg71z5I0gqgLa5vCXle6+OYDI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Q5AWsJOa; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1757993719; c=relaxed/simple;
+	bh=yq6FzsyzX8HDFFWIsvaokYnQzl9M5W1Jr+HzsSN6nWg=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=A4tJAOYHP1i1B/60vg/xjbYLeUrqs96EJQKelV67/mPHwtQU1H0lmT1MQ9MOLU1uQ0AtYMTlO1WfYEQOvy3EY0WTX0BYIBlQyJwkeLXFCltICBnWG1fXwgIaVnK850PEer6thQt1N7P7Pczb8Zj8WNWZUPqbsRif5yO0nfqD9aM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZgVIllP7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Q5AWsJOa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EDF9C4CEEB;
-	Tue, 16 Sep 2025 03:35:16 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZgVIllP7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1D41C4CEF9;
+	Tue, 16 Sep 2025 03:35:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1757993716;
-	bh=W3dvzS2tlUSzksksMbckc+tKdCVNe/7RjYtxNtoI1mg=;
-	h=From:To:Cc:Subject:Date:From;
-	b=Q5AWsJOavN7d0+ussS1+eigFHxX/F9GrsUQQ97HLn6HbAGJQzkyuImy0S4raht+Xh
-	 DYN2QH/w9zZp9ZXmHr/15RTswsAh8eE4xbaUzfBqr/nGfmpcrr3NExy2SWqIsJGdoZ
-	 Jw6I+2RzceutyGZNcntMaIe87v6/BdU11/vOTApZZjcTAVo8pGCNQIwYZRWbuxFL0V
-	 72peq0NhggItH+2Tltb6526xjM+9Ryjdy1N4AAkOleMA1rvWQpcYQPfKYLULOJPB9W
-	 OsdXUiGk4dG4ESDgvOfFqnDWJH8xiOB7s7BG48Yh/L3f5onoM9aSCNA09r/o9NTrCW
-	 NWzIZk1aqNFKw==
+	s=k20201202; t=1757993719;
+	bh=yq6FzsyzX8HDFFWIsvaokYnQzl9M5W1Jr+HzsSN6nWg=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=ZgVIllP7jG1t5xaNp6Ej7+6h6D0S3fE4uC/XLFrEWCBoHupYxjo9jV8rDMtz0S3LQ
+	 nSZfP4F1iftVGRQFLXoEfzfEu6hrCwigUaTVghy+Uh2475SNcT6Vc+ZaBN19ZR1F7q
+	 EH9fdMvVUtRXl8y01N9V8dL0SoALaK3UjU3OBTnN4dA7SiZvo/f6g4ZUOpWgRx8HZO
+	 j4gSlqY+X6drLgbfTvW7KyNnpbH/6dU1S6yy16KXPRd92YW5bNuTuSRb95+gx1XoQh
+	 xIcz6dCNGllxAKbbucMBlLLCZTKCiaAsrI0OouakMAihQ0vW/nF68rW7qsF81YRvP4
+	 kWSCCN3mKRzzw==
 From: SeongJae Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SeongJae Park <sj@kernel.org>,
@@ -32,10 +33,12 @@ Cc: SeongJae Park <sj@kernel.org>,
 	kernel-team@meta.com,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [PATCH 0/7] mm/damon: define and use DAMON initialization check function
-Date: Mon, 15 Sep 2025 20:35:04 -0700
-Message-Id: <20250916033511.116366-1-sj@kernel.org>
+Subject: [PATCH 2/7] mm/damon/stat: use damon_initialized()
+Date: Mon, 15 Sep 2025 20:35:06 -0700
+Message-Id: <20250916033511.116366-3-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20250916033511.116366-1-sj@kernel.org>
+References: <20250916033511.116366-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -44,46 +47,55 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-If DAMON is tried to be used by its API callers when it is not yet
-successfully initialized, the callers could be crashed.  Such issues
-actually happened and were fixed [1].  DAMON API callers are therefore
-having their own hacks for seeing if it is safe to use DAMON or not.
-Those built on an untreliable assumption that DAMON should be ready to
-be used on module init time.  DAMON initialization could fail if
-KMEM_CACHE() fails, though.  Also those are basically duplications that
-make their maintenance difficult.
+DAMON_STAT is assuming DAMON is ready to use in module_init time, and
+uses its own hack to see if it is the time.  Use damon_initialized(),
+which is a way for seeing if DAMON is ready to be used that is more
+reliable and better to maintain instead of the hack.
 
-Make it reliable and easy to maintain, by implementing a new DAMON core
-layer API function for seeing if DAMON is ready to be used or not, and
-replacing the hacks of DAMON API callers with the new core layer
-function.
+Signed-off-by: SeongJae Park <sj@kernel.org>
+---
+ mm/damon/stat.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-Changes from RFC
-(https://lore.kernel.org/20250912023946.62337-1-sj@kernel.org)
-- Rebase on latest mm-new
-
-[1] https://lore.kernel.org/20250909022238.2989-1-sj@kernel.org
-
-SeongJae Park (7):
-  mm/damon/core: implement damon_initialized() function
-  mm/damon/stat: use damon_initialized()
-  mm/damon/reclaim: use damon_initialized()
-  mm/damon/lru_sort: use damon_initialized()
-  samples/damon/wsse: use damon_initialized()
-  samples/damon/prcl: use damon_initialized()
-  samples/damon/mtier: use damon_initialized()
-
- include/linux/damon.h |  1 +
- mm/damon/core.c       | 10 ++++++++++
- mm/damon/lru_sort.c   |  9 +++++++--
- mm/damon/reclaim.c    |  9 +++++++--
- mm/damon/stat.c       | 10 ++++++----
- samples/damon/mtier.c | 11 +++++++----
- samples/damon/prcl.c  | 11 +++++++----
- samples/damon/wsse.c  | 15 +++++++++------
- 8 files changed, 54 insertions(+), 22 deletions(-)
-
-
-base-commit: b6a9d79765ceb52c8889fd24e1ff3169cc12c80b
+diff --git a/mm/damon/stat.c b/mm/damon/stat.c
+index 87bcd8866d4b..c4fbd8cfa5eb 100644
+--- a/mm/damon/stat.c
++++ b/mm/damon/stat.c
+@@ -214,8 +214,6 @@ static void damon_stat_stop(void)
+ 	damon_destroy_ctx(damon_stat_context);
+ }
+ 
+-static bool damon_stat_init_called;
+-
+ static int damon_stat_enabled_store(
+ 		const char *val, const struct kernel_param *kp)
+ {
+@@ -229,7 +227,7 @@ static int damon_stat_enabled_store(
+ 	if (is_enabled == enabled)
+ 		return 0;
+ 
+-	if (!damon_stat_init_called)
++	if (!damon_initialized())
+ 		/*
+ 		 * probably called from command line parsing (parse_args()).
+ 		 * Cannot call damon_new_ctx().  Let damon_stat_init() handle.
+@@ -250,12 +248,16 @@ static int __init damon_stat_init(void)
+ {
+ 	int err = 0;
+ 
+-	damon_stat_init_called = true;
++	if (!damon_initialized()) {
++		err = -ENOMEM;
++		goto out;
++	}
+ 
+ 	/* probably set via command line */
+ 	if (enabled)
+ 		err = damon_stat_start();
+ 
++out:
+ 	if (err && enabled)
+ 		enabled = false;
+ 	return err;
 -- 
 2.39.5
