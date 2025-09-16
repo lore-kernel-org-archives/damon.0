@@ -1,53 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B657D1FBCB0;
-	Mon, 15 Sep 2025 18:44:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 414291C5F23;
+	Tue, 16 Sep 2025 03:05:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757961845; cv=none; b=ZBy6A62cS5nviRMRBHLL9dGTVUqnvEyzSyx1lBOUofS27QR8WA8Pc3QGDIvfrrjhB4DLvxmy1kaQZxePRh+b0o9jOjca4uD6YFrElavRZVfUsms69g/XkPfe3BWGPAodAMXqqPp0HfO0DbWdbuCXCy0CFaNUWndeMJ7d13u5w24=
+	t=1757991904; cv=none; b=K0N7e3k6BWR9tC2XN2+dgC6tWPT1ftzpnq1ZSP777Da/JhIyOkGgbiTPVqQ/nDWAn2dIuu33qiCnn9WinDF+CeAVBkBYqeioDWm/fIOu5T9Nmv2/wpKCbubnktWWgIVOo/EfBdMHMalC9Sbr49bSbiTg4x/IQQSA+e3IoIq/eho=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757961845; c=relaxed/simple;
-	bh=5eM7L2bJi+aIvVJOlm9jGV5Bxc2GCKc2GP0RXo1z1Jg=;
+	s=arc-20240116; t=1757991904; c=relaxed/simple;
+	bh=CDq+k6WKAKWCHXOa21JcbnmXe7JqkortJRjx4/7bAYw=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=FlUC7xU9m2OBB1KOtQa5hYDAJ5cSZR7MK3OubhagrC5k9bSlrCMYmNBpyVIvFDnE/E/Q9bBa950PRWBa4msScmYcKeAlPQYDXWEcK+OwotoJ/YGy1r8n39hfRtP/jYkXvwWM+qGImgXb3D6WTVLViAq1LA86lQaeucu+tAAC2Jg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jVXNFqMF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qDcs8Mr74Onu58TaCXpxeA0Cd+zGn4WbqVXfqIjXrPyr+eCMX9ns4+DkRZpLM3eQC7eMzieCes0JCvjZ+YWanv6UWi2yJdsVvw0P3sTttXIpcIZotbUkjUcUQ3xpgw3ssF2aaDemiqMY/eEGYfOjEXRU8/qjavdMFVuVPfuMGlo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=h0dr5Bsf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jVXNFqMF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38AAFC4CEF1;
-	Mon, 15 Sep 2025 18:44:05 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="h0dr5Bsf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6D09C4CEF1;
+	Tue, 16 Sep 2025 03:05:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1757961845;
-	bh=5eM7L2bJi+aIvVJOlm9jGV5Bxc2GCKc2GP0RXo1z1Jg=;
+	s=k20201202; t=1757991902;
+	bh=CDq+k6WKAKWCHXOa21JcbnmXe7JqkortJRjx4/7bAYw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jVXNFqMFCL2JfcNzfC2tFW0Bo8l5oT6Hep0aT7epPj5WMJQ9pc5s1nAx2sPWTU5MB
-	 SQQhBtqrssxO2kWPjuMxdcFu7xDvcA29w5ew3P8MjWv8HoocE0RV0AK2eZp+V2tatT
-	 CV2kQ3dUEpSHleg+X7ElNxJhx+u2Bhu7jVo23JufaSwESwaPyhzxWcmFqw33KghvM4
-	 dTbYrOhTEzrHNC9z33EUkRxFuvyTQJiIAHK5gw0SEy70JbmMbV16DNGtRrT+0WXkzJ
-	 v2wg7l64wFDid4SWurxcD9ka3iS84jdaXKhg3ukxqrcloBKQbGzoe2cJn3BOKClFUz
-	 KGwGYby9BtaNg==
+	b=h0dr5Bsf6F7wID+23pMS3qtrjYQw7SfnZQl42LtDNmJjlMGb5mGUg3pF7UTmUErLa
+	 pvSPR7oOrAgp/ho4rJY3oAmhfK0QuPba7c+3LqxfKRlRUoaF/1NsvAqUYxKL5Csbcf
+	 JmuztPVwKoYy3DK6f3XKugtJzs6hxResL+XMVZRP5wqWYsAp4+1ZRFTXNdcLs6uzyL
+	 Glt6kWD5BSDU39XQlyzK5EYGlOdQtGNDLoOczZEIpX0nhxjOgimEQNJy+Z6ySbHEJ+
+	 XwAHYd6Qx71N77KQAQV7IQnzHEKLRXQcHpzGIWF/u++CjCQgZGJQFSrMmD72W/RZWm
+	 mIqJDPyzd7/mw==
 From: SeongJae Park <sj@kernel.org>
-To: Joshua Hahn <joshua.hahnjy@gmail.com>
-Cc: SeongJae Park <sj@kernel.org>,
+To: SeongJae Park <sj@kernel.org>
+Cc: Joshua Hahn <joshua.hahnjy@gmail.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
-	David Hildenbrand <david@redhat.com>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
-	Michal Hocko <mhocko@suse.com>,
-	Mike Rapoport <rppt@kernel.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Vlastimil Babka <vbabka@suse.cz>,
 	damon@lists.linux.dev,
 	kernel-team@meta.com,
-	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: Re: [PATCH 4/6] Docs/mm/damon/maintainer-profile: update community meetup for reservation requirements
-Date: Mon, 15 Sep 2025 11:44:02 -0700
-Message-Id: <20250915184402.110517-1-sj@kernel.org>
+Subject: Re: [PATCH 3/6] mm/damon/lru_sort: use param_ctx correctly
+Date: Mon, 15 Sep 2025 20:04:59 -0700
+Message-Id: <20250916030459.114166-1-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250915150702.1499965-1-joshua.hahnjy@gmail.com>
+In-Reply-To: <20250915184306.110418-1-sj@kernel.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -57,19 +48,27 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Mon, 15 Sep 2025 08:07:01 -0700 Joshua Hahn <joshua.hahnjy@gmail.com> wrote:
+On Mon, 15 Sep 2025 11:43:06 -0700 SeongJae Park <sj@kernel.org> wrote:
 
-> On Sun, 14 Sep 2025 18:58:05 -0700 SeongJae Park <sj@kernel.org> wrote:
+> On Mon, 15 Sep 2025 08:05:47 -0700 Joshua Hahn <joshua.hahnjy@gmail.com> wrote:
 > 
-> > DAMON community meetup was having two different kinds of meetups:
-> > reservation required ones and unrequired ones.  Now the reservation
-> > unrequested one is gone, but the documentation on the maintainer-profile
-> > is not updated.  Update.
-> 
-> LGTM!
-> Reviewed-by: Joshua Hahn <joshua.hahnjy@gmail.com>
-
-Thank you!
+> > On Sun, 14 Sep 2025 18:58:04 -0700 SeongJae Park <sj@kernel.org> wrote:
+> > 
+> > > damon_lru_sort_apply_parameters() allocates a new DAMON context, stages
+> > > user-specified DAMON parameters on it, and commits to running DAMON
+> > > context at once, using damon_commit_ctx().  The code is, however,
+> > > directly updating the monitoring attributes of the running context. This
+> > > doesn't cause a real user problem but apparently this is an
+> > > unintentional mistake that can cause code review confusions and future
+> > > real problems.  Fix the wrong use of the parameter context.
+[...]
+> > So in particular, the global ctx will never have the correct attrs pre-patch,
+> > since it will always be rewritten by param_ctx, which never had its attrs
+> > initialized.
+[...]
+And it measn the monitoring attributes prameters of DAMON_LRU_SORT are not
+working at all.  I think this deserves to be a hotfix.  I will send v2 of this
+separately, cc-ing stable@.
 
 
 Thanks,
