@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EF5B2BD58A;
-	Tue, 16 Sep 2025 18:31:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45E8B2DAFD2;
+	Tue, 16 Sep 2025 18:31:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758047492; cv=none; b=gfizkkis8yg0HJmgh5bDLl4cB6nH2TkSXJKo0k0qxLIwIoJv5mvhJ71feKahkRG7UTmsIzdlJWAtWSMfGoewPdf1Fp7bSVpk+bLwQAi50H8oLvegR3pQFKMPZzJYCkFRSRhHHo5vUBppYNPH4LJa7ZqfKT4QTjfeTxAl6vRNyQk=
+	t=1758047493; cv=none; b=udVFmbyrg4zgzJX5R5/CiEMUrWMK1Q8ir0BZXFotw2XKY8KiXFVzFLnucYHUXNuvd627HAadbazulrLoWWstgVPAx2C0Slvw31k8ohzICYDQ9iYfnGNC2P3CEZkjewN5lrEPU5/zFpzn+9PXikDv+9FHsPxuVxwbGj0ZkZHjTDc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758047492; c=relaxed/simple;
-	bh=BVPIvvATKe2I5aamkuVMwHJN/okxBP1F7amj6w2lqa0=;
+	s=arc-20240116; t=1758047493; c=relaxed/simple;
+	bh=7h0SXCHIrLtkJvqCMts1fDwLssCc9jFcz1TwtN1yTk0=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=KcxSBV3C4gdVuGruCNad7kKyQsBwWlKmvfmxMF25Vn7pZfhzc0rPlABKtZdRngxaIqvEnjszZSAfHanttYDjY/vu8TXuj9Vh0au1d63ayWZWIg403XKi+unMG2s7zov+ElbMJbu5U8qk1tTnWBcWVw8sYJeeuHZW2hf563QGaJs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MoQXHer3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QgHiwQJBgvHInjBXIl7fZD/CHuzQQPe6svkIHvNkqAAEZUv9xGoZkflaDtPW87TtX0XPTXO2Q4UxGyyQQY34Tj1FZgexCfPjUSNOHVSxu/TZc8Oeqkfgk3QsPgiHcki8KIF2FrmzR8BXlH3MdmuBP3W7Pwchac6pR0YdX05Qv0Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dO9D/T+U; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MoQXHer3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6DDBC4CEF9;
-	Tue, 16 Sep 2025 18:31:31 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dO9D/T+U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B657BC4CEF7;
+	Tue, 16 Sep 2025 18:31:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1758047491;
-	bh=BVPIvvATKe2I5aamkuVMwHJN/okxBP1F7amj6w2lqa0=;
+	s=k20201202; t=1758047492;
+	bh=7h0SXCHIrLtkJvqCMts1fDwLssCc9jFcz1TwtN1yTk0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MoQXHer3AtMIRfigqulPv6i5Mkb+ktfl4XK7TU1Ai5vW1g6Pp6u/gKs/5BKnGDkQs
-	 lTSekckm0rCrJzkLz/QOwdRP+1gtL3NCsrShjfBLgIxSTIc5pOhFCqqmd626C/3wA6
-	 G8g+OFcc6n0/XWjudponNYf58faEGX9AZ0Nc4s7ulD1GjoRGoYWNAIW/W7TzCv0nLg
-	 Jat5H6VcbTLyBj6sRlzvaC1DQCkvfB86S2CbZItmg53Cz4r7oDfkpmuQSHPVdZ+2dm
-	 9AgyjmUs+8pJDiGVmfHlWSH3TqrPeq3OtQ5xtQlTQrzdbDJxUwxN4q+djN0/ksi6RI
-	 UREY/Vn4s2z9w==
+	b=dO9D/T+U4fIXZoWGmqq+0hnaP8FRrEocTXAw1wplxnxtODrrLMbq8X1Vo7D+lQI+3
+	 1da6zj9EYZ1qZBXD0o6QzbrW6opZDO3SXX45YZxOx/WilrvFKiknqBmue7zKZN8+jq
+	 7ALnwCVH8qH8Sqz3J0eI8mbBKPXxM+MdGK0x0SqvIl9Lpo36pF3BG6EmYz+IVMsmtd
+	 uLbJG0ue1r/EVSEuiMbhf3YI/rF/aBBv9ArHcsoO9ReUl2XHrAr5LN+fhUyJ1r3sQu
+	 TlLrPXWzfY+VYeTCsd16jZsv7YiTnteGkLmGTRbcVsmeCxmrnODNYwz0eaTAvInpC/
+	 rAjfH+zMNu/1g==
 From: SeongJae Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SeongJae Park <sj@kernel.org>,
@@ -33,9 +33,9 @@ Cc: SeongJae Park <sj@kernel.org>,
 	kernel-team@meta.com,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [PATCH 1/2] mm/damon/stat: expose the current tuned aggregation interval
-Date: Tue, 16 Sep 2025 11:31:26 -0700
-Message-Id: <20250916183127.65708-2-sj@kernel.org>
+Subject: [PATCH 2/2] mm/damon/stat: expose negative idle time
+Date: Tue, 16 Sep 2025 11:31:27 -0700
+Message-Id: <20250916183127.65708-3-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250916183127.65708-1-sj@kernel.org>
 References: <20250916183127.65708-1-sj@kernel.org>
@@ -47,42 +47,64 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-DAMON_STAT calculates the idle time for a region as the region's age
-multiplied by the aggregation interval.  That is, the aggregation
-interval is the granularity of the idle time.  Since the aggregation
-interval is auto-tuned and not exposed to users, however, users cannot
-easily know in what granularity the stat is made.  Expose the tuned
-aggregation interval in microseconds via a new parameter,
-aggr_interval_us.
+DAMON_STAT calculates the idle time of a region using the region's age
+if the region's nr_accesses is zero.  If the nr_accesses value is
+non-zero (positive), the idle time of the region becomes zero.
+
+This means the users cannot know how warm and hot data is distributed,
+using DAMON_STAT's memory_idle_ms_percentiles output.  The other stat,
+namely estimated_memory_bandwidth, can help understanding how the
+overall access temperature of the system is, but it is still very rough
+information.  On production systems, actually, a significant portion of
+the system memory is observed with zero idle time, and we cannot break
+it down based on its internal hotness distribution.
+
+Define the idle time of the region using its age, similar to those
+having zero nr_accesses, but multiples '-1' to distinguish it.  And
+expose that using the same parameter interface,
+memory_idle_ms_percentiles.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- mm/damon/stat.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ mm/damon/stat.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
 diff --git a/mm/damon/stat.c b/mm/damon/stat.c
-index c4fbd8cfa5eb..1a8465abef4a 100644
+index 1a8465abef4a..d8010968bbed 100644
 --- a/mm/damon/stat.c
 +++ b/mm/damon/stat.c
-@@ -39,6 +39,11 @@ module_param_array(memory_idle_ms_percentiles, ulong, NULL, 0400);
+@@ -34,8 +34,8 @@ module_param(estimated_memory_bandwidth, ulong, 0400);
+ MODULE_PARM_DESC(estimated_memory_bandwidth,
+ 		"Estimated memory bandwidth usage in bytes per second");
+ 
+-static unsigned long memory_idle_ms_percentiles[101] __read_mostly = {0,};
+-module_param_array(memory_idle_ms_percentiles, ulong, NULL, 0400);
++static long memory_idle_ms_percentiles[101] __read_mostly = {0,};
++module_param_array(memory_idle_ms_percentiles, long, NULL, 0400);
  MODULE_PARM_DESC(memory_idle_ms_percentiles,
  		"Memory idle time percentiles in milliseconds");
  
-+static unsigned long aggr_interval_us;
-+module_param(aggr_interval_us, ulong, 0400);
-+MODULE_PARM_DESC(aggr_interval_us,
-+		"Current tuned aggregation interval in microseconds");
-+
- static struct damon_ctx *damon_stat_context;
+@@ -61,10 +61,10 @@ static void damon_stat_set_estimated_memory_bandwidth(struct damon_ctx *c)
+ 		MSEC_PER_SEC / c->attrs.aggr_interval;
+ }
  
- static void damon_stat_set_estimated_memory_bandwidth(struct damon_ctx *c)
-@@ -133,6 +138,7 @@ static int damon_stat_damon_call_fn(void *data)
- 		return 0;
- 	last_refresh_jiffies = jiffies;
+-static unsigned int damon_stat_idletime(const struct damon_region *r)
++static int damon_stat_idletime(const struct damon_region *r)
+ {
+ 	if (r->nr_accesses)
+-		return 0;
++		return -1 * (r->age + 1);
+ 	return r->age + 1;
+ }
  
-+	aggr_interval_us = c->attrs.aggr_interval;
- 	damon_stat_set_estimated_memory_bandwidth(c);
- 	damon_stat_set_idletime_percentiles(c);
- 	return 0;
+@@ -122,7 +122,7 @@ static void damon_stat_set_idletime_percentiles(struct damon_ctx *c)
+ 		while (next_percentile <= accounted_bytes * 100 / total_sz)
+ 			memory_idle_ms_percentiles[next_percentile++] =
+ 				damon_stat_idletime(region) *
+-				c->attrs.aggr_interval / USEC_PER_MSEC;
++				(long)c->attrs.aggr_interval / USEC_PER_MSEC;
+ 	}
+ 	kfree(sorted_regions);
+ }
 -- 
 2.39.5
