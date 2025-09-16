@@ -1,259 +1,101 @@
-Received: from SN4PR0501CU005.outbound.protection.outlook.com (mail-southcentralusazon11011068.outbound.protection.outlook.com [40.93.194.68])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6F981917D0
-	for <damon@lists.linux.dev>; Tue, 16 Sep 2025 03:28:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.194.68
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757993287; cv=fail; b=HktxymHoa9HDpa5Iktf8GgUZtyS2ecOL/TLOpPsLZyAmHLAiP2wrbs87KLGNhgaHDol9KzYRBFhAfCa6yj3i+Ms0qKYP6GOWnv7+XnyZL5HG/0wrlEAs1Tz8EbPEu3ptYFqJwVhUntCq5dLMii81vMFWYRh7xn8vd6Yq1JuM1Yg=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757993287; c=relaxed/simple;
-	bh=cx3yASvPuYb8V5q63ksLEcLIIALV6YQiqYKmIOaAkOE=;
-	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=TGpNI71eKMeg6j8mz001N32XZl+G+rZr9NcPaoPK2YP7/RA5J991ndjGTnsckRc+wMQ2vETeQPl5DNeFzIAYBt6hrIST6Y4c2tGu+86wG6u9IA9hn+tlCJ8OjdsPFYpf3tGHU1yk/ZXf41kd7KT/vkZgu9tnAEeFA8NtIwG5ido=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=F0z43rKn; arc=fail smtp.client-ip=40.93.194.68
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46993CA5E;
+	Tue, 16 Sep 2025 03:35:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1757993718; cv=none; b=IWECSYYtFZeRxR9YFKDsz6I1HQChY7T/GNZUtd/KTwjMATjxKelyPt3WcDteEoas3vDQuFwzOQ0tvtTec8HHF8SOkjtO/MxvlnXKv5hbemr5jbBBj0ZZjHT2HuEBx9seEpoOofWNHG5g4cZ1lHvcFCNlJ6RgxgoSs8YMDX9+D10=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1757993718; c=relaxed/simple;
+	bh=9JcNBf3R6YvBmotNSylUCQN1TyYW4gyunQci2uE4WFk=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=IQvA8PLXmx/IW8Kr2wOcWmXCt6ofUnMYdSQHGn6oXpuyRHSPf8S0+FMMuw1jRodOeM4jo87r3kgRZGK5l61X+WcEjIFegfaPzmj+yBFpLPIWoNWsPKKF3W4Ij9JCi5PN0JA2/6k2gV4BukhfNuO4cW9dNJCKfxFRft0nWCQEIGc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=m5leU4h2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="F0z43rKn"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=KdS/gnPG1biWB6/8ZaOBCz6gEpQ+IkMNDS02FtYnmJMlC7YTzW/xkOH6Zzp24E/dy731SlcMM8h6pKzPJgZsiiBKwA9Yj7ohBYhXHQaUm0R+QiQtlgBzSP7VTGJugGQPpay8IW+AgHUUbOF8ZgnHZYNpytGQ17ojot9+t/VLlQox8rthsR9NhteyWe29yRPcQiZrVzgwog2FWcU6c7i4RGB04V0R6W9frO3vEWN0BjqPPAnUEohAjWNDb53APRG60F2EiVUX78euGXc5YudTItJVHXeglMD1UxGhCiKfXZvNYnmKYh7jXRPRDfn/aNNvqTz7xIuPPWB6WZyX4JOSag==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Al5M5VeE0PAyYl9c38zXqXAIw2Fm0hrGybMBZbWTtIc=;
- b=KpzVxWyk4uAWuLDTqKy/IfCkTsCWkA91mRHwWVJbC4knyOT/jG7Z4qtlMen0UUmsaaKKfQBvoG0orOrfVeSkiH1WvESjwZURkU7lznEvr8gwRLhGVa207XXxt/MHMAWRMPcgkr58UvcuHPtRi5hr2TPDcT11g9xfchaarv12EyWCT2AE6W/147ujDq14zTU7H4wQX0Q/tCGZ2n/s+TeV+Hkb96pyoc9T6CF7DL4KVGTYXgQIQcnyka6kW6waM14IVM4fW60cS+DFjXvUaYnkc3Fgbos3Ycltf2oikxMyAXf6Iadp2GZsaewXcA2z/DglfSTbzf5TUtzdCpl/cMelGQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Al5M5VeE0PAyYl9c38zXqXAIw2Fm0hrGybMBZbWTtIc=;
- b=F0z43rKn/52Eva25Ax0OtLpLxRqAuYEigj8X/OU4TIcnprOKj9FGaaFyUeT6biztajBzGjq4iPWM2zElZV8CJQOErglnojpMFmEqb6q7P7GXd9WBZ3Hk/MTziK0Xk6+8Iy6K+aZoS0a1S5scyxe2r2b8wEjrSBz/PpWKnD9anec5MJQ7fLk+VrFVLA2moV1SX6oSqul7paUrjeFGP6ytCwlIts3zPVZZCSJmKvoHML5ul47Cw3+9C6/RNGOuZMeE3v751HBHZnjk5VYoyZTt432pHGEfahiwBPsdneZuuXCHEPmUGNHa0LE6ydW61DHSSG9DXVGobFPcF23fWj4biw==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from PH8PR12MB7277.namprd12.prod.outlook.com (2603:10b6:510:223::13)
- by MN0PR12MB6293.namprd12.prod.outlook.com (2603:10b6:208:3c2::22) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9052.30; Tue, 16 Sep
- 2025 03:27:59 +0000
-Received: from PH8PR12MB7277.namprd12.prod.outlook.com
- ([fe80::3a4:70ea:ff05:1251]) by PH8PR12MB7277.namprd12.prod.outlook.com
- ([fe80::3a4:70ea:ff05:1251%7]) with mapi id 15.20.9115.018; Tue, 16 Sep 2025
- 03:27:59 +0000
-Message-ID: <8a2c4803-d613-4592-9114-d68b97bf3fb0@nvidia.com>
-Date: Tue, 16 Sep 2025 13:27:51 +1000
-User-Agent: Mozilla Thunderbird
-Subject: Re: [v5 02/15] mm/huge_memory: add device-private THP support to PMD
- operations
-To: David Hildenbrand <david@redhat.com>, linux-kernel@vger.kernel.org,
- linux-mm@kvack.org
-Cc: damon@lists.linux.dev, dri-devel@lists.freedesktop.org,
- Andrew Morton <akpm@linux-foundation.org>, Zi Yan <ziy@nvidia.com>,
- Joshua Hahn <joshua.hahnjy@gmail.com>, Rakie Kim <rakie.kim@sk.com>,
- Byungchul Park <byungchul@sk.com>, Gregory Price <gourry@gourry.net>,
- Ying Huang <ying.huang@linux.alibaba.com>,
- Alistair Popple <apopple@nvidia.com>, Oscar Salvador <osalvador@suse.de>,
- Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
- Baolin Wang <baolin.wang@linux.alibaba.com>,
- "Liam R. Howlett" <Liam.Howlett@oracle.com>, Nico Pache <npache@redhat.com>,
- Ryan Roberts <ryan.roberts@arm.com>, Dev Jain <dev.jain@arm.com>,
- Barry Song <baohua@kernel.org>, Lyude Paul <lyude@redhat.com>,
- Danilo Krummrich <dakr@kernel.org>, David Airlie <airlied@gmail.com>,
- Simona Vetter <simona@ffwll.ch>, Ralph Campbell <rcampbell@nvidia.com>,
- =?UTF-8?Q?Mika_Penttil=C3=A4?= <mpenttil@redhat.com>,
- Matthew Brost <matthew.brost@intel.com>,
- Francois Dugast <francois.dugast@intel.com>
-References: <20250908000448.180088-1-balbirs@nvidia.com>
- <20250908000448.180088-3-balbirs@nvidia.com>
- <17e3c19e-0719-4643-8db8-cf8c5b5aa022@redhat.com>
- <49776f0a-d891-40be-bce3-c2b1f16bd825@nvidia.com>
- <4de00290-7c29-42f5-b8aa-58a77b17c1d5@redhat.com>
-Content-Language: en-US
-From: Balbir Singh <balbirs@nvidia.com>
-In-Reply-To: <4de00290-7c29-42f5-b8aa-58a77b17c1d5@redhat.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: BYAPR02CA0043.namprd02.prod.outlook.com
- (2603:10b6:a03:54::20) To PH8PR12MB7277.namprd12.prod.outlook.com
- (2603:10b6:510:223::13)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="m5leU4h2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2DA3C4CEF9;
+	Tue, 16 Sep 2025 03:35:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1757993717;
+	bh=9JcNBf3R6YvBmotNSylUCQN1TyYW4gyunQci2uE4WFk=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=m5leU4h24iIaQ6mZznhs9PW6jvp8aW8gZKhwvsdZb92V5iSdWE4qTRHkBXPc3DSlN
+	 zf8/lD+fNNViNqCKK93TyvvbwHLPBUJF3+Gc3SzYGR1EY/n7VxH2Mkd5qsJseb5d3X
+	 cy2kjGjooVQEZx/AMAxwPeysfx1rdiKEvykqzJ8jXW8euso5Q4uuqD+d919dr+HXZ8
+	 dvntW0cZb1QExRthOwA6JBaPgI0uwI82JcchB/nd5BYH/Q7AMBkkmACjfcAA48toSF
+	 Z/+/OaQ+E2AB0j661UN20M8C9o/mtPmEMy/PF+j5A4Jf60ut8zTIiRKvOmqMet24Tv
+	 fBPY6Stm1IdMQ==
+From: SeongJae Park <sj@kernel.org>
+To: Andrew Morton <akpm@linux-foundation.org>
+Cc: SeongJae Park <sj@kernel.org>,
+	damon@lists.linux.dev,
+	kernel-team@meta.com,
+	linux-kernel@vger.kernel.org,
+	linux-mm@kvack.org
+Subject: [PATCH 1/7] mm/damon/core: implement damon_initialized() function
+Date: Mon, 15 Sep 2025 20:35:05 -0700
+Message-Id: <20250916033511.116366-2-sj@kernel.org>
+X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20250916033511.116366-1-sj@kernel.org>
+References: <20250916033511.116366-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PH8PR12MB7277:EE_|MN0PR12MB6293:EE_
-X-MS-Office365-Filtering-Correlation-Id: 35cdd70e-1b82-4682-6ed8-08ddf4d10905
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|10070799003|376014|7416014|1800799024|366016;
-X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?ZnpDVmx2T09Pb3R5eFA4OWlhTHpibHFwZzdMeU5CMWFXWGJPZjl6TGhBdjA1?=
- =?utf-8?B?bTZSczM0QmpLNTFYTVMvYlZVQitmQXZlMWYwVm16dDJhOUtoYzlxSG9kSlZR?=
- =?utf-8?B?TEVUdkxtQnRTTkZSUGNCQU0rcXlQbFhjMldTZER5Ym8rOG43cnF0TWpBdXVR?=
- =?utf-8?B?bXFMU0U1ZWs5M3dCZkM4MEs2dWFUcndOUldRSzQ1cjJrWkxjdmRvUzlMcElI?=
- =?utf-8?B?QTM0RGJBLzJBMWQxM3hxNWc2NHUrVHNHRGFLWHN1d1ZZcmphb0lwRHp5ZUZx?=
- =?utf-8?B?dTNwa0k5aTdMTDFqRHdHUGlrZmhkRmV5c2diVWFDZzBmSzNjOWp4RG5JeHZh?=
- =?utf-8?B?OTJXRm5scDRjSFhpaURBN2FBWXlnaEpkNmFEWUJTR2crc0psMjNBS2d2Wkxt?=
- =?utf-8?B?NDZ1RVpYSHdjd2tCRWE3dXdDNUlFems2OFZLd2JXMjBRMnZUOHpxZDdmTlJ0?=
- =?utf-8?B?aXlWcEhtc0RTeUtZYXJFT3hET0cvdy9KNzV6MzNQdmxYQ0ZTUGtiUE9adEtk?=
- =?utf-8?B?ZzdRYmx6Uk42QXdMNjZVUkhpekFwc2FTeVVaY1Rpc2NXUnU5bzF5cktqM1da?=
- =?utf-8?B?V3p5SitQeVlnL3ZxUFJzT3pOU2JzbTlVY0J0dTB4eVFiZVgrMDZSMlY4OGYw?=
- =?utf-8?B?ZGxhbFoxR0NQYjVneHNha1N3M3NwNncxU3JVK05UZlBmTGREZnhUYTd5SWlI?=
- =?utf-8?B?TkRzb0JMNGhIdUhITHdQUFNOMm9tdlVvUGsyL0pRbkZod21tZG1aNnR3Rk5q?=
- =?utf-8?B?eklQNVdRSFArcnR0UGk3WXZ5OXZuQ0ptSE81WEdEc1JmRUh1ZXJVbmllMzR4?=
- =?utf-8?B?OEJSbkJOZnJoTUhlam11aCtSU3ovS2lNR3FqNDhTM1FIa2VhaERXbXN3blBM?=
- =?utf-8?B?YlIyYTZDTHZ1RE5oYkhBWWxwYXFQdnFMcXoxWG82Y0taTTFyNU9HQkFkR1h4?=
- =?utf-8?B?aFYva2Q3cGplcmdlT29laTQvT3lDSzRDUnhnZVduNmFRcXU3dFc2UEgxa0ZH?=
- =?utf-8?B?R3JmdVE4QVRKbTZ2VXdVOTJ5SC80MS8rNU9xcnZDMmlISEQxVHJybGplOUpt?=
- =?utf-8?B?RzcraCtDOGZ6VjBmaFA0b2RrLzFRYWpxT0VSdFc5Q2wxYlRWcUtiVGsza2ZR?=
- =?utf-8?B?TVE4bnQ0c0JzcXY3WlhldFFsbUhORXBDc2dUZ3JuWDI2cm5QM1dXY2ZwNU1a?=
- =?utf-8?B?SWJRUldiaVNUR1B0bW94SmZzUXpZWHNiaWZ0ZnVkQkhtVXQwUkUrNUlNNVZn?=
- =?utf-8?B?R0IrUWhVVENFcUZOUW1xTUVwcFFmRXVHODBCVW1tWHVhR25xb1ZEWmk5VVdX?=
- =?utf-8?B?M1JaTUxNYXZyRDhMN242RUNNNFdwcGE5Q21lK25CZGVzNkZvR0xMRi9ZRkx6?=
- =?utf-8?B?WUw1dmZ2WGFzbkZ3M1hjRC9qTjAxYlhtbHB4eGpNUjlNY2J5VmxFcThVMlJq?=
- =?utf-8?B?ejlTNnVMdWdpMDNuejhucmJ1N0hVb2x6cnBLUWQvWUpobERnZkowM1RSa05B?=
- =?utf-8?B?eGhMR2VOcTZYNW9uUDBpK0RDK085d2l4ckphclc3cnpySnpBRDJkbUd4V3dB?=
- =?utf-8?B?Znoyd25ESnlHTkErdzMzQ3ZDY1QwamF0cllydkVBdG5pWEc4MnhYSGlqLzZ2?=
- =?utf-8?B?YkgzMGM5dTJrbWN1aGJKbTlJRTZZMThUSTFMMXdhazNSN2t2ZE5oOEI5bUN6?=
- =?utf-8?B?cExPZjdEZ3NVeStRWklnN3Qzc3laTFdaaEZwcHR6QUllMHR3TFJnT2VkYVVy?=
- =?utf-8?B?RXVaa2dnQVQxSHNxdTJWSHdoU2xUTFZlRTU4eE5FVTZ6N1FoUEtUem9JNXBB?=
- =?utf-8?B?MXFMci8wYnNSSXJnNm1aMjRCdkZiSEVtbEZJdkI5T01heXV4akN0bXJZdzFD?=
- =?utf-8?B?Z2ZERER4WVFKb3g4d2Z0WEJ4YVVYOGYza2ZxUW9MZUxRQXo0NFZwRHN3WHpN?=
- =?utf-8?Q?s+ZP/F8brHA=3D?=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PH8PR12MB7277.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(10070799003)(376014)(7416014)(1800799024)(366016);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?cnoyeDlOdlpLM01wbWQ1SWlWQWtXZHc4Nkd2bllYSHlRKzZ1SFk4clg1cVFX?=
- =?utf-8?B?WXBzWnlRZkhabHJnc3NpeFVJU2hTSThiVzgvRmN4NHRSS2dKMlNSRGE5WDFX?=
- =?utf-8?B?ajNUY21TdUI4NTFOamx4NzEyVk40VUUwalVmd085YVhnOEdDb2NQRDIzZlEw?=
- =?utf-8?B?bkdlWFlxSEdHVmN6UWRDeTh3VjJVUmZzS0UwOVhVMUJ5RTlaVVRQWUh2b1B0?=
- =?utf-8?B?YlNBb1lHQytmamNZSTJoTnJWZ2x1M0lRR1dlbWRoTDhxTGs5Z2diaStHbVB6?=
- =?utf-8?B?K25mWEJPZzFMQTlnNDNUM3pQN3hOa1hEZGJSZzF4czQzdk5DNU1nbGZwY1hp?=
- =?utf-8?B?NFVjTVpWSzBQRldPMU1QUmg1MFAvUlRXM1Qra3dNRkpWN2xYWEtxTEYxZnAr?=
- =?utf-8?B?VXQxYzk4eXQ1eURWU3ZxM0ZmM0tyc0lPNHMwTkI2NzNVUVRiRmE5YzMvZGZ2?=
- =?utf-8?B?VjFvaWg4bUo3eWdTTWkvNGhSL2xaTXdEaFNENzFuQnc2L1ZUVGVhOGcxOVh1?=
- =?utf-8?B?Y0l6dEtTRWxjbUJ4VWo4RllDRDFHaVM2OUlpejNidjRtdXg4YTBQNTlHdlZv?=
- =?utf-8?B?d2NWV09HTkVzV3N3a3dHRDhuTEZuR1plNmRNY3Q1SFRuMzhhdlY4RGtuQ2dD?=
- =?utf-8?B?bDBxV1lwNTJkc21WNE1mOUxaYVVSR1dNMll2c0tveGlqUDg2Zk14TVNMQWJy?=
- =?utf-8?B?TkNBc1N0K2ZFb3BBYk40ZDNVS2taOTlyUzgvaS9KZTVuNFVuTmltN2JHUEhN?=
- =?utf-8?B?RWVrMVZVNXExRlh0NVlLUXhTMm54YzhiZm1lT3hoYk10bTBVZ1FqTWJOenhE?=
- =?utf-8?B?YzNZZEpkVk40VGt6WFZNSVkxRUpEQXdnYTVlakpqRlRBSWx6OFppQVkvZDR1?=
- =?utf-8?B?U1pVam1qLzlSMFVuSkZPV1c5dlRjcEpWaC9GWndmRWtLelQ4eFp5N1FWVHdz?=
- =?utf-8?B?SEd1NkhBbkxSOE5uSm5HVW5ueXhkeVoxSmp3c0pjNUx5TDd5V0lRQmMyL1JH?=
- =?utf-8?B?VjYzbDZnTExLU2xiQnJiZm5CbVVocyt0b1hEaEtKVE5COUJNTElRdVRsWnR1?=
- =?utf-8?B?MzMxMGJOQVJOWllGb1dqVGhwdXBsSmEvcWY0TUpkSm1XZDR6bEZRd1ludTU1?=
- =?utf-8?B?OTRGemFabjdEU29CdVBhSVJ1RjQzZUhQMmtpN2ZqKzdKYU5nV1p5aHE1ZDky?=
- =?utf-8?B?cEM5WWRJNjdqeGJ0WGlQY0RLU2tLMDY2K3RVTS9NNkdpNUczTExGQzNlTnI0?=
- =?utf-8?B?OTM4TUN6SndzenhydjRCU0dRRmhwN1Z6U0NCTElBZ1NBeFZqRXg4c0NaS2pS?=
- =?utf-8?B?b1N1WVRjTldIQjNKY1RhMEZ4M3hlL3FpemwxanIxVW5hM3VYYnBobHg1bTQv?=
- =?utf-8?B?MG83VDZ0M0xVdUFWT1kycFZUTmJ4MEFBMUpET1Y1V3VHTXFYdzhKNC92ZkJC?=
- =?utf-8?B?T3B0RjZmYVU5UktET3BNcXhuNnRNRFcwZjBTV2o0MFpSbXVvZDdlTkNUSjBS?=
- =?utf-8?B?dmNxdk8xVzFkSXQ0bE53QWtwcXVJM1Y1YndkK3hleDY1aGlWcDBsdlZoTFkx?=
- =?utf-8?B?cTFkNGg4dzhoODc2aThWRTRKSHVnbFdPNWhiSDYzMVB0RktKMDRxdGVKOHpa?=
- =?utf-8?B?WUlOa0tmSFdsbWFEVVpJbVlCUWlyd0RRcC8vZzBTaVlGZUE3cHp3eitCbWFZ?=
- =?utf-8?B?SGxxUVJOTHVyY1VtMU5WSW91QnQ5Z3dNMHJCNEl0UnhmMXYrTlRMZ2pjaTZ4?=
- =?utf-8?B?aWczNTBCZG12Qk5tU2hsSVp6b0UrMGJaU2dQRHI2S0UyTWRsT3RudEI2dGRD?=
- =?utf-8?B?N2FzUzM1NmZnSHhDc2pSckFsMjZDR0htMms1bjVhRUNtbVFDUnFEajNzYkdH?=
- =?utf-8?B?REpwTXZFSGtYVlFhbjBVTEJxYUhOTkZKSjUwdjl0VkJWRXRlWUFnRWpSWlZB?=
- =?utf-8?B?UFZadk9RUEdoWGNxQ3RYcmJVSjJua1Awc3huMHJ5VXJVTDlrV3lidzRxdDVw?=
- =?utf-8?B?bFJ3NWUwQ2VYSzFWWTVIQUxiZmhQbU9ib1hncXlGQllydGUrUVRvWTBKR0dP?=
- =?utf-8?B?czU4MDI0TG1vU1VRVTEyM3pCZ2pJQW9hRFJwMHdDZnRUUklCc0RMc1ZZczhD?=
- =?utf-8?B?L05jTHFTTG1idnVZUy9xZEFESGI5c1ovRzk5Mjdwb2ZBajZuYk1nOVNXSEoy?=
- =?utf-8?Q?VQW0+NcnrHBwefNDU/3Kygu5jU81vZzb6S1KLRbMc7c0?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 35cdd70e-1b82-4682-6ed8-08ddf4d10905
-X-MS-Exchange-CrossTenant-AuthSource: PH8PR12MB7277.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Sep 2025 03:27:59.4874
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: ZD1xHn4QWDZcJhzT2Kfs6r7CGM8aRf5o1oJKpV/z26PcmIvcbuBmfA9kkUDFxt0iTYE7pKYrN0MOm01sT7v+6g==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN0PR12MB6293
+Content-Transfer-Encoding: 8bit
 
-On 9/15/25 18:10, David Hildenbrand wrote:
->>>> +
->>>
->>> Wrong indentation.
->>
->> checkpatch.pl did not complain, what I see is
->>
->> +        VM_WARN_ON(!is_pmd_migration_entry(pmd) &&
->> +                !is_pmd_device_private_entry(pmd));
->>
-> 
-> David complains :)
-> 
->> It looks different in your reply (is your email converting tabs to space?
->> did you want me to align the conditions?
-> 
-> Indeed, looks wrong, not sure why. Likely I messed it up.
-> 
+If DAMON is tried to be used when it is not yet successfully
+initialized, the caller could be crashed.  DAMON core layer is not
+providing a reliable way to see if it is successfully initialized and
+therefore ready to be used, though.  As a result, DAMON API callers are
+implementing their own hacks to see it.  The hacks simply assume DAMON
+should be ready on module init time.  It is not reliable as DAMON
+initialization can indeed fail if KMEM_CACHE() fails, and difficult to
+maintain as those are duplicates.  Implement a core layer API function
+for better reliability and maintainability to replace the hacks with
+followup commits.
 
-Ack
+Signed-off-by: SeongJae Park <sj@kernel.org>
+---
+ include/linux/damon.h |  1 +
+ mm/damon/core.c       | 10 ++++++++++
+ 2 files changed, 11 insertions(+)
 
->>
->> +        VM_WARN_ON(!is_pmd_migration_entry(pmd) &&
->> +               !is_pmd_device_private_entry(pmd));
->>
->>
-> 
-> Exactly.
-> 
->>
->>>
->>>> +        if (is_migration_entry(entry) &&
->>>> +            !is_readable_migration_entry(entry)) {
->>>
->>> Dito.
->>>
->>
->> Same as above :)
->>
->>
->>> Wonder if we want to be more explicit.
->>>
->>> if (is_readable_migration_entry(enrty) ||
->>>      is_readable_exclusive_migration_entry)) {
->>>
->>
->> !is_readable_migration_entry => writable entry or read exclusive, did you mean is_writable_migration_entry()
->> above?
-> 
-> Yes, sorry, my brain was dizzy after all the review lately.
-> 
-> if (is_writable_migration_entry(enrty) ||
->     is_readable_exclusive_migration_entry))
-> 
-> [...]
-> 
-
-Ack
-
->>>
->>> Couldn't we do here
->>>
->>> if (!pmd_present(pmdval))
->>>      goto nomap;
->>>
->>> To replace the original pmd_none() .. check.
->>>
->>> A page table must always be present IIRC.
->>>
->>
->> I am not sure about the pmd_none(), a page table may not be present, I've not audited
->> the callers. But I think we can do
-> 
-> IIRC page tables must always have the present bit set. So we can just simplify to the single pmd_present() check.
-> 
-
-Not sure about that one, are you happy if we follow it up later with a separate fix
-
-Balbir
+diff --git a/include/linux/damon.h b/include/linux/damon.h
+index aa7381be388c..cae8c613c5fc 100644
+--- a/include/linux/damon.h
++++ b/include/linux/damon.h
+@@ -938,6 +938,7 @@ static inline unsigned int damon_max_nr_accesses(const struct damon_attrs *attrs
+ }
+ 
+ 
++bool damon_initialized(void);
+ int damon_start(struct damon_ctx **ctxs, int nr_ctxs, bool exclusive);
+ int damon_stop(struct damon_ctx **ctxs, int nr_ctxs);
+ bool damon_is_running(struct damon_ctx *ctx);
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index 775121ae7a9b..93848b4c6944 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -2863,6 +2863,16 @@ void damon_update_region_access_rate(struct damon_region *r, bool accessed,
+ 		r->nr_accesses++;
+ }
+ 
++/**
++ * damon_initialized() - Return if DAMON is ready to be used.
++ *
++ * Return: true if DAMON is ready to be used, false otherwise.
++ */
++bool damon_initialized(void)
++{
++	return damon_region_cache != NULL;
++}
++
+ static int __init damon_init(void)
+ {
+ 	damon_region_cache = KMEM_CACHE(damon_region, 0);
+-- 
+2.39.5
