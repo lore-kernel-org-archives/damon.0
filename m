@@ -1,422 +1,341 @@
-Received: from SN4PR0501CU005.outbound.protection.outlook.com (mail-southcentralusazon11011009.outbound.protection.outlook.com [40.93.194.9])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f174.google.com (mail-yw1-f174.google.com [209.85.128.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D02A7313E1F
-	for <damon@lists.linux.dev>; Fri, 19 Sep 2025 13:26:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.194.9
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758288397; cv=fail; b=rvX7xjhvYCOwQ8Q5EtOsatzVCiwDgMB4+muyMrTPIggIa4R+Za6CAyrhpCpANOjagvVhNz89Ka3+hfaV6zccjSG5BsUXNwL99ucIhapRWmWvg9prk5C5+l1JzAETgxOmsXKtvSAbZzHCFHwV5d05JELSVL9magxSsbzB95qE1CQ=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758288397; c=relaxed/simple;
-	bh=WMnN1GEyqfCESa0wuokRYW3ruPAqColFT2RzhRDQiTs=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=HkrygPirIR9FWmZXkKypclmYByzASX2Cf+yGXxRanzMpvKPkLMCi8LQh62368Uh4/slCq9vF8wFlKAQ9L1oFrmPaOMvrWgbbtfhAWwqzu1GNs91Ewv3Y+vLdxOnNgjMRBnqJ0/wHjn1o9bI9gfL+EmXkMrBOAzsA0bs3zwdpPJw=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=GMidqoF5; arc=fail smtp.client-ip=40.93.194.9
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91CD729A2
+	for <damon@lists.linux.dev>; Sat, 20 Sep 2025 03:57:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.174
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1758340634; cv=none; b=UTBU56jGUBSzhWspdSHM+zwk2VCRSNyMxLSqsgxr99wwwZ8ML56cdizSKkyM/WGzxoH7aVDcvFhxjwIhvFSW72h5SDQ4eO5nEx/gM/jyFslTjb5JuENZWHHky3CjLmpaVGVGRiartwOk3yCNujurqyNeufmi70y8x+00K7W1dkY=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1758340634; c=relaxed/simple;
+	bh=ezIrjyDAfaEO1O+gjm6rbeKU3U6QaZqWBvX6ZZuNfUM=;
+	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=YLgi4WlAtJddy/EbQLglyQbnHREtnBEQUYpzY+9vNwK3PVZi+F9yxYzcgeg6yInOI/dFXC3pIGPlU43xHMlw/rH42NUYY9pl7rlPUydWN66F0TTTHGAH+4KSE9Oy3kzcQy0UX5HIUocCXl5+tOTGrb/bEf+BFPwRT8Ka0MZN8+Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=y2aQOAbW; arc=none smtp.client-ip=209.85.128.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="GMidqoF5"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=pK0604fsrdsi7ruOQWdWId/vo7zU74WoSrV4pk4wKSaf55t2DTykksBiQZSfQLFzh1+8eqHcNx6bIzg2jsaLDRDT409PoGa628eLkUHWugGlSSsu6Bk9xf3XofgzAuoYw9zrNRgOeKDokQVMBFxL6LYe0jbbwGX7JerBxhjhdilWxFHPnNAz3sO7CCK3YO1rQdux8r1LL6XM4nQBcVsnu4vBpcEkSuxWjUAlW2LjhVh+aJx7owxuuHTk3nBwcyAsy2EVzgNRNO5fUH+W0FP81hn0aS8h1C+bcSu88KEYLiS7TOgr4pskjpkurUNPURFfKsKpMXNdxj6rPUD3fxhlWA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=P6W8bsolvOdtvCfsnbQharuAmkNvBfByx34hWWXw0EI=;
- b=pF6yVv32w2l/0ARRa0UAggN3iWfY+rbN3NDxAtxjFKKYD6XosEnlyiz0BAyfzo135NQ5gBj1+Sp18M71ks4SQ0ng6kEiL/qW2i+ma15MOrkXX5rhFfBY5wGtbhUBymoxiH5VH2zHhcmKm35AK+Wp5qc4yIBOBj9xNWyTYwx1RmmvAb54nhkU2t7K7/k26atZzP6pyd2u2CFEVbkEPTg6IHAZ/gYzPKUzwdURaxaCKd5FolQxtvAq8zTN5XoI6oDRbml3TxSn3/5queX6eZrDSgNLwXE9Vg2DA2k0qyH8JE3SQvv+LXUOR2i22Abf11oS0RL4JEaE8bz78qNNtBORhw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=P6W8bsolvOdtvCfsnbQharuAmkNvBfByx34hWWXw0EI=;
- b=GMidqoF5BMhn4BTFnM1CWdP4eBuTNWnr7JMZ5EhJpkr+3IO4iuXyt4JrFlQylpcOzbvSsxwXbMrobg6pD93BIXk1OWx9JuajvAN7Q2kYPzAgxVDvEASxxbjbzhLM830Ps4l49GXO6z9POtfA7TMJZ8e/6SIOIHy5UqWvpsYdwunfuECZFNkH27jSDa2mv8QVMqNzzP8fVk3i4HcUGBUARSMcL75E0ifSN+XnRd4CKX/Od0C4CUY3crW++GAAP76/H4OyWvhP3rd+lTFm7Yl9EPwt2plIChjHvoi/jCVc9klCSNaGj3/s0IJhcHR0r6htim14aF5wYrGT7zjyO2Rqyw==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from DS7PR12MB9473.namprd12.prod.outlook.com (2603:10b6:8:252::5) by
- SJ1PR12MB6290.namprd12.prod.outlook.com (2603:10b6:a03:457::22) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9137.13; Fri, 19 Sep
- 2025 13:26:27 +0000
-Received: from DS7PR12MB9473.namprd12.prod.outlook.com
- ([fe80::5189:ecec:d84a:133a]) by DS7PR12MB9473.namprd12.prod.outlook.com
- ([fe80::5189:ecec:d84a:133a%6]) with mapi id 15.20.9137.015; Fri, 19 Sep 2025
- 13:26:27 +0000
-From: Zi Yan <ziy@nvidia.com>
-To: Balbir Singh <balbirs@nvidia.com>, Alistair Popple <apopple@nvidia.com>
-Cc: David Hildenbrand <david@redhat.com>, linux-kernel@vger.kernel.org,
- linux-mm@kvack.org, damon@lists.linux.dev, dri-devel@lists.freedesktop.org,
- Joshua Hahn <joshua.hahnjy@gmail.com>, Rakie Kim <rakie.kim@sk.com>,
- Byungchul Park <byungchul@sk.com>, Gregory Price <gourry@gourry.net>,
- Ying Huang <ying.huang@linux.alibaba.com>,
- Oscar Salvador <osalvador@suse.de>,
- Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
- Baolin Wang <baolin.wang@linux.alibaba.com>,
- "Liam R. Howlett" <Liam.Howlett@oracle.com>, Nico Pache <npache@redhat.com>,
- Ryan Roberts <ryan.roberts@arm.com>, Dev Jain <dev.jain@arm.com>,
- Barry Song <baohua@kernel.org>, Lyude Paul <lyude@redhat.com>,
- Danilo Krummrich <dakr@kernel.org>, David Airlie <airlied@gmail.com>,
- Simona Vetter <simona@ffwll.ch>, Ralph Campbell <rcampbell@nvidia.com>,
- =?utf-8?q?Mika_Penttil=C3=A4?= <mpenttil@redhat.com>,
- Matthew Brost <matthew.brost@intel.com>,
- Francois Dugast <francois.dugast@intel.com>
-Subject: Re: [v6 01/15] mm/zone_device: support large zone device private
- folios
-Date: Fri, 19 Sep 2025 09:26:23 -0400
-X-Mailer: MailMate (2.0r6272)
-Message-ID: <87F52459-85DC-49C3-9720-819FAA0D1602@nvidia.com>
-In-Reply-To: <f026c5a1-ec51-4fa5-bc58-c2d690f9248c@nvidia.com>
-References: <20250916122128.2098535-1-balbirs@nvidia.com>
- <20250916122128.2098535-2-balbirs@nvidia.com>
- <882D81FA-DA40-4FF9-8192-166DBE1709AF@nvidia.com>
- <f026c5a1-ec51-4fa5-bc58-c2d690f9248c@nvidia.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-ClientProxiedBy: BN9P223CA0019.NAMP223.PROD.OUTLOOK.COM
- (2603:10b6:408:10b::24) To DS7PR12MB9473.namprd12.prod.outlook.com
- (2603:10b6:8:252::5)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="y2aQOAbW"
+Received: by mail-yw1-f174.google.com with SMTP id 00721157ae682-71d6083cc69so27924197b3.2
+        for <damon@lists.linux.dev>; Fri, 19 Sep 2025 20:57:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1758340631; x=1758945431; darn=lists.linux.dev;
+        h=mime-version:references:message-id:in-reply-to:subject:cc:to:from
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=xH6hM5+uYUvpQzwjZ48WJR43EdufTTb4azsiErKH1OM=;
+        b=y2aQOAbWeawr7DK5QJAXi8g5V+yo8qbEvOUJWGrgTXW23DPqKaBw9L9kM8v0Z5fTCG
+         +QWhh3aNrooQxddJUtTmBGHm4hghYPz+r1hPJvzHCKrUzR2H8e2CvAphE6lBbDz8fvOi
+         +qG+4eyu3GOwtjEvMmPy1OHwK4+k9aaHSHsvC6HUA3Xk+MTv/xCDuL0e7UERCdFC9mKA
+         fo2M4WR4bw7DhfqZo25aiY9zitvPgjZdvxUzNBKi03lU8u/lgejtgLxJlsilWiHp1kE6
+         EzcNDJ4kFeRS9vnVaiZPukTdERl+yxtf0noOKqw7gVWIUXI4s0riM5phpX0z49nEiPiI
+         +hHQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1758340631; x=1758945431;
+        h=mime-version:references:message-id:in-reply-to:subject:cc:to:from
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=xH6hM5+uYUvpQzwjZ48WJR43EdufTTb4azsiErKH1OM=;
+        b=RDohN9lEr1o6wpQtCaDpkTD8B/YKy9exQeZ0jNHwgyD3JRepdY9H/GAL6rbhBMOYAq
+         SQvHr3C+rlDxKLs4kkShVa9Hj+vNMW5ozljprJnbXBfqFrRIVroeXB+rhHuLxxiwdt6t
+         6W1GUP0NUd1ywxmjc6pFwr24x8tsJTZrjUq6YWzujbMm/myM7gEmKVA+qvoH7w6C9snF
+         f3aZyJfznEclculmQsVJdduTEtfXdQ+X+3ptFlEYiAn7/rmt92xfSPmmo/ENJmuofQrD
+         q2XMOU9oWLtc/BeDQPKtaxfIsA+4Tq6/zmdkYNqmdc3LfJ08V1hhy17L87XGy2Rk4k6h
+         zr7w==
+X-Forwarded-Encrypted: i=1; AJvYcCUuO7Pc9caNzwjtmniYEaPgpFTa9vHanvxfBACz+serrk07kGcev8IC1xP82YHqigQZlPw5Kg==@lists.linux.dev
+X-Gm-Message-State: AOJu0YyEs5nPtF3xONALG00xo2LJDO5m6/D7aQPrIqv5D49Rb7QbbtBJ
+	5IYXJeAPGdyKunpHsjgBxLZd8Uf8Hqa+W6gVbWVqbYZ/OCq2meWR8B+3iGVNNY0HGg==
+X-Gm-Gg: ASbGnctyfvsS3/Ao9pR/ARC500zC6qssRYiUB+Mp5JoxL459jlgsgcXuxacbPu2BASf
+	0fjCUoBFWOgqw6jKvOEwOHnSRwnzOmIfSJXQXKfNMm5ocbzz+nfx+i+hzoeSWvcS0Ks+MUrsx8U
+	VbMvz3AZInDjEGEpDHj8TgROGYS5rDOu0M2rpPiE2H4N8UrgTL9f0CZ7fD5576p0M9RzB7WKEnV
+	ByXrI89abLjcR6HwXRRdKPpL586RRMqjrG/0fEq3HdgkACZve9O0J1UU+Feui3ZpHmxeprdzFMh
+	/upKX7FrdFMt89nPCVuPujfvIvFusGTffEvGthallxa33bK1kGBh0HHwBNBdQWx1HCXN5Hw3DzS
+	d5FbLGoEkGu8v8JgklLpChZQwqevScy8s7LIYlbcKKRVHgGeV10JTDsUGJ0H//Em/ARLOzriaG7
+	/zgaudDzk=
+X-Google-Smtp-Source: AGHT+IFOjydhTIxOMuRWaHPVHVnDuc+CupOCKpxARECSbvouVQMdvs/yAMFktox+RTHRaDtzQiQwxA==
+X-Received: by 2002:a05:690c:74c2:b0:71f:b944:100e with SMTP id 00721157ae682-73d40fc806cmr50255247b3.53.1758340631208;
+        Fri, 19 Sep 2025 20:57:11 -0700 (PDT)
+Received: from darker.attlocal.net (172-10-233-147.lightspeed.sntcca.sbcglobal.net. [172.10.233.147])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-73971700944sm19051247b3.28.2025.09.19.20.57.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 19 Sep 2025 20:57:09 -0700 (PDT)
+Date: Fri, 19 Sep 2025 20:56:56 -0700 (PDT)
+From: Hugh Dickins <hughd@google.com>
+To: SeongJae Park <sj@kernel.org>
+cc: Xinyu Zheng <zhengxinyu6@huawei.com>, 
+    Andrew Morton <akpm@linux-foundation.org>, 
+    "Paul E . McKenney" <paulmck@kernel.org>, 
+    Peter Zijlstra <peterz@infradead.org>, damon@lists.linux.dev, 
+    linux-mm@kvack.org, linux-kernel@vger.kernel.org, zouyipeng@huawei.com, 
+    Hugh Dickins <hughd@google.com>
+Subject: Re: [BUG REPORT] mm/damon: softlockup when kdamond walk page with
+ cpu hotplug
+In-Reply-To: <20250918085249.58966-1-sj@kernel.org>
+Message-ID: <296c2b3f-6748-158f-b85d-2952165c0588@google.com>
+References:  <20250918085249.58966-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DS7PR12MB9473:EE_|SJ1PR12MB6290:EE_
-X-MS-Office365-Filtering-Correlation-Id: b02e8228-d769-4f6d-1c8f-08ddf78022fc
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|7416014|366016|376014|1800799024|7053199007;
-X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?VDdIMTJ5SFI2aThRTU1SbmNnV1Z0Ui8wYTVSaVltSURZMWlZbjJPTUZyU0ZY?=
- =?utf-8?B?VE4wcFlnczhoREtReWdSQzE0a0M2SFlPNkdGZUdzQ2dyZkhwc1NxMHBIZ1Vp?=
- =?utf-8?B?c1VRSjYvQmZmVVVpdGNmWEtoeTdhOXl1MituRzF3OWJNc2NZZm90WUY3WDZI?=
- =?utf-8?B?ZC9ZUlhQWDFLTVg2OWZmYkRQZEtldnRqVXlpbkpCNTdZOU1SVlp5cnN0MEVs?=
- =?utf-8?B?RUthNG90ODVlMkZ0L2l5SUpOZ3hEQkx3MkUvaGphV1ZDSDF4QTF6WlRjckti?=
- =?utf-8?B?QmZuM3lBY1BwTm5QYi9lSlBUWWxCU2dGYkJrL0JzeVRYcTZVdzNZSko5NUZQ?=
- =?utf-8?B?Mm9ka3k5L3ViSHllU3hSdTRvNlJIaXNEa2JEdENJY1NTV1ZoamF3UVhXTDBL?=
- =?utf-8?B?VFNWVVdsU0FibGc2TUJKYWpOSG41QkMwajNIaS9XS2cvcW9yTFUvdHcvTS9y?=
- =?utf-8?B?VjRDSCt6R3hoaWsvby9FTHNaSzJJNGg0NUo1WkdjV04yYnRsV3VUTHNTYXNQ?=
- =?utf-8?B?NjE0VHRBMWhjejlId2F1Q3FENi9tbE5PNVZTMFU1WHFyQTJsNmxzUVRsL25K?=
- =?utf-8?B?VHEvM3dEb2tuQWhuVVJrekgxSjBhaEtwa2xCZXJ5UWN3U29aRjZkNTMwb1kv?=
- =?utf-8?B?SWVDMWNkVGRGWkwrZEVvaHVNVWNHUGt3Tzc4czVPYjFlSmxHb2I1ZC96MWta?=
- =?utf-8?B?V1U3TEQyWnYydTZQdzc5Nm96eHEvWkRtT3F6MlJIcDZ1bDhsT1lUbm5nV1FP?=
- =?utf-8?B?MWlMSnh6U29oMGFicUw2Q1JDaFhsN005ZlI2MS9CZjZXMGFZMVRKWmxWQTVL?=
- =?utf-8?B?cTBvaHdHMHNKcWhSanl4KzUrQXQvSEFGeXh1U2xmenRBR3ZhQUNkcE81bkd4?=
- =?utf-8?B?ck5vOEF6S0RKYnl2MXRzSlRzRDRpOGNhSmZVTzZhREszVmxUQWprOGo0SU9U?=
- =?utf-8?B?UHN2YXdUbmNIU0NtbGpBUUNwSnlyN1ZpRDI0dkQrVWw1QzVRQUh6L21LUFN4?=
- =?utf-8?B?TnVmbEtDSjcyTlJCeFYvR0R5N0JUZW1JNDdzbGtkb1FvVU9YY00xTGUzM1M4?=
- =?utf-8?B?QzYxaExYMUJOeEtPWFZLZWxZZld3RVJIMGd0SS9wZEYxRTN5akxNRGRkSHY2?=
- =?utf-8?B?WG5pZGFXMk9QdDBEZ3RsZ1N5WUhyb29JdWZHdHAybEZBOGpTV1hkQ2JrRVlO?=
- =?utf-8?B?c1o3VWMxV1MxQ24wbVF0bms5R1RQWTRSZkd0d1ViNVVaakNSK0JnR2xnMXVO?=
- =?utf-8?B?Z3hkdW5rWjFIM2p2MjVzbUlob25jRGtOZ3o1ZnFKR3ZIdkFGRlV0cnk0d2hi?=
- =?utf-8?B?Yk1EYzBSdHQwZEFRVTVEbEdLVzJjWVRKZ1JFdEcvWlJmT3ZCZ1JHWHZLOU4v?=
- =?utf-8?B?KzlCMXlVdThkZDlaSGxyNFVSSFBvWHpZYU5RU0dIT0xramlaVHcrOVEzOEtm?=
- =?utf-8?B?STVFTlB0UGd6aTVrUktNajkxcU1ML1VwSHpkTEd1dFpMR3k1M3psdHo5OWxn?=
- =?utf-8?B?OGQ3YkVpRFdjUThKMVhQcjhSYXF0S0xoSVR1ZllrcUJ4Uk9KN0lEb3NKVWl1?=
- =?utf-8?B?NUtodU10eUdUMW92V2dvcWxqMk1Nbm1kWFFUakFVaHVtZGpWNWhoZTVkSzRv?=
- =?utf-8?B?djROMlpzNkdzL3E2cDdiTGRKNDRLUFhiM1RONWNicGlSaDNsZ2MvRy9FS1hS?=
- =?utf-8?B?K1hzSnVJVDlUcWJ1cFFYM3R3S3RiSUNHRkw0Wmt4S1ZUZU9YOEJkUzdMdVFS?=
- =?utf-8?B?Qy9uU010alI0eDdiNlIvL0RHUVk4S0hqTkFabzdwL21MclQ0Vis2dDRPTTZ5?=
- =?utf-8?B?NXhhTGhmVUNDUm81bTViZk92VTF6Nkt1S2o5OUEvR2x0TG9LY05SOU1UY2dH?=
- =?utf-8?B?aDdGV2hkMDFKMEV2UUJicnlUR0RlWFN1TjZBZHdtQTNSejljc0c5RlR0M25v?=
- =?utf-8?Q?5NK/+SlvW2Y=3D?=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DS7PR12MB9473.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(7416014)(366016)(376014)(1800799024)(7053199007);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?NnlObWJBUEszWDR6U1NnNWZRdFB1RExaY21SVjQxNVM4NlAvbi9lanphbFQy?=
- =?utf-8?B?V0E5MU9CTzg5RHZEODk0OGh5ZEN4ZXN0dzVXdW5QakFzU1hlRVc4cmhLQ2tz?=
- =?utf-8?B?WFNZVnlaUUp5OFdVcTVYdGNwU1RNUmRWdHhzYnBoQnFCV0RUbEVLcjNPUmRw?=
- =?utf-8?B?c1VLMVR4SlVJemtIOXJSQlplZHBVRG51UklvVlpWc09CVkNJeVNjR0orS29X?=
- =?utf-8?B?bG02ZE83Yk1rNnJFT1IzWUMvd3Jzd0M2bXF6WHU3OVphV1VoMW0waElSVVd4?=
- =?utf-8?B?WmloRkVLWU1vdUdGYk1XcnRMUE1JOUpGOGFSbzVockM0TmljRnV3SUx4dXY5?=
- =?utf-8?B?RVJiTW1SVFJVQ1hkWloyNExBMWVZR2MxT1BtRGZLdmplbmtDZVNiNzlGNjdE?=
- =?utf-8?B?T1BxbVFKa25BR1ZKU010eXFmV2ViZWd3THZpSW5xK3lueHdFd1hKVkp2N0pD?=
- =?utf-8?B?R2daaUpyOHVLZWZkNGFLMG1sZWFHZ29sNWVhb3l2ZUVxYzQxUlErWFdKNXFh?=
- =?utf-8?B?N08xc255Y3ZUQ0FWT3ViTjJQeTh5bVlsUTNHMi9PZEhZbTA0RzB5ejNPbHFu?=
- =?utf-8?B?cFJqdU8xNWJSKzlGMjNRRU1lT0xuT2NER1YxVWxDbUtHbUxtWXI2aG5aaHBW?=
- =?utf-8?B?T2RuOTRlamRRVUpyMTJGVEM4QmtZeEwwK2l4NmtCY3JKaUpCb0crSzRTemVX?=
- =?utf-8?B?Y3Z3TmQzUVRYbUpzL3RaK1FnRmtWRTEvT0JLOTRvWWNYdmNQQThqMVg0RS9L?=
- =?utf-8?B?WStMMWJ1bjNrb3lQVXAvZDU3LzZIdHlsWGVIc0prMERna25NMjArOHZJVzZL?=
- =?utf-8?B?VlVsamttNnVqOTF3Yk1UN2hLZzlPTk5UWmV6Q3YvbGNEbURhUGgyZUVYWi9q?=
- =?utf-8?B?VTRHbm9RdnkyQ0dVOWVVcWo4L2o2K2dBT25XZnFHNitnT3Q1NjgzMXhqRStp?=
- =?utf-8?B?a1d6SEgwRVprZ2xqeXBObDBtV2NpNDVLT0Y3SWZ3NFY1dDBwQnpyZGZPNXlH?=
- =?utf-8?B?b3ZzcVo4ZkRxV2pPaWZBclpzYzRSMnZWcExYUWU1bXgxTG9zK3N4Z0dIa2h0?=
- =?utf-8?B?U1RubTFWQnhVQmtVTmNvamxsR1NPa0hNR1Q1cHFoRDRWN0o3WjVlSVg1c2sw?=
- =?utf-8?B?dXFQc0dBRzBVZ1ltL0VNZW9mbXhveVNieDRqZ2Npdk5IT0lDSEdsRTAzZk1u?=
- =?utf-8?B?VTBSQTZONFB6M2NTc29rWEtjcnhnYjVUaXJaT0ZRU2s0NkwrN2RnSTYrWDBO?=
- =?utf-8?B?TWZDL2ZOSDBYbkc2REd3akRxVnZ3ci9WdTU1LzJvcVlwVDdPQWZybWF0T2tX?=
- =?utf-8?B?aEZQWlhtd3RGeDkrVks3eWZ6TytKZ2s2VGM4R3AxUUZzUFFxb0EycGlIWm1U?=
- =?utf-8?B?QnpFU3V0TFJJSnk0cTRWNjN3Z1haaDhPMTJKNWd1RVFrcExoVVZRRmVsbTFn?=
- =?utf-8?B?MTZybDlORk5aQ05Ddm9ZYlQzeTZZU01OMHlkWTZyRXo1ZFJwc203YmJrV1o4?=
- =?utf-8?B?TEU3ZE5tWDNMa1YxbzZ4WUxvVDAyb1RIMDVJQ2g2ZjZyejFUL0Qzd2RDMnN3?=
- =?utf-8?B?QURGWWl3M3p6MDU4MVNsVHpvdGdHUEl5eS80dWx5UmhGT0lPUGhFaFNjNmU4?=
- =?utf-8?B?eGhrUDFyc3JGMFkzMW8rcTV4ZTV1aWZ6anZuMWUyMUFuYlkyQ0pVc3BZaUFk?=
- =?utf-8?B?SzBSZGlCQlRGcnYxYS9XdXFTQWcrdEdXR1lmci9CUnZkeXpDRno0YXNYTGVV?=
- =?utf-8?B?TTdEczR2dmswaU5vYjYzUFROSTJyZTdiRDQyTWdydHliRGFUSmxmNFlGeFNM?=
- =?utf-8?B?MjcraXZ2Q1J4V3NERk1NZXljRFRWWUkxdzlVY3FMVjRQUHdQL0FjcEk2Qkt6?=
- =?utf-8?B?Q3N4SUtyRUkrbklwdTZKOFYwa09HUDZoei9Jc2VTcC9PZ2JtWjZmS0NDMEd5?=
- =?utf-8?B?dktVeThKQ2FtKzZBK0FjTG1DeFhZdHhnbEZqY3lSZ1BLLzd5RVlWdWpqWE4w?=
- =?utf-8?B?eFlhdUNESVZtUnE2bi93cE5XaDFsVHQxUTQ3QzdPM3BoM3BwczhzQTdwQThL?=
- =?utf-8?B?bDdsWnBkSWNmalV0bWU0S3lWbFQzSEJlZGg2RjJRL2dZRkxHbFNtaW5VT0d0?=
- =?utf-8?Q?t0RgAqkDbmxpfxWuz4VljLXBY?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: b02e8228-d769-4f6d-1c8f-08ddf78022fc
-X-MS-Exchange-CrossTenant-AuthSource: DS7PR12MB9473.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 Sep 2025 13:26:27.3304
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: mjBNEtbbeXCYmPLe59cNWLDcgVm+h6kCOkkgI7DBGlToREuoZQq/3qKLc/1l9qiJ
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ1PR12MB6290
+Content-Type: text/plain; charset=US-ASCII
 
-On 19 Sep 2025, at 1:01, Balbir Singh wrote:
+On Thu, 18 Sep 2025, SeongJae Park wrote:
 
-> On 9/18/25 12:49, Zi Yan wrote:
->> On 16 Sep 2025, at 8:21, Balbir Singh wrote:
->>
->>> Add routines to support allocation of large order zone device folios
->>> and helper functions for zone device folios, to check if a folio is
->>> device private and helpers for setting zone device data.
->>>
->>> When large folios are used, the existing page_free() callback in
->>> pgmap is called when the folio is freed, this is true for both
->>> PAGE_SIZE and higher order pages.
->>>
->>> Zone device private large folios do not support deferred split and
->>> scan like normal THP folios.
->>>
->>> Signed-off-by: Balbir Singh <balbirs@nvidia.com>
->>> Cc: David Hildenbrand <david@redhat.com>
->>> Cc: Zi Yan <ziy@nvidia.com>
->>> Cc: Joshua Hahn <joshua.hahnjy@gmail.com>
->>> Cc: Rakie Kim <rakie.kim@sk.com>
->>> Cc: Byungchul Park <byungchul@sk.com>
->>> Cc: Gregory Price <gourry@gourry.net>
->>> Cc: Ying Huang <ying.huang@linux.alibaba.com>
->>> Cc: Alistair Popple <apopple@nvidia.com>
->>> Cc: Oscar Salvador <osalvador@suse.de>
->>> Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
->>> Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
->>> Cc: "Liam R. Howlett" <Liam.Howlett@oracle.com>
->>> Cc: Nico Pache <npache@redhat.com>
->>> Cc: Ryan Roberts <ryan.roberts@arm.com>
->>> Cc: Dev Jain <dev.jain@arm.com>
->>> Cc: Barry Song <baohua@kernel.org>
->>> Cc: Lyude Paul <lyude@redhat.com>
->>> Cc: Danilo Krummrich <dakr@kernel.org>
->>> Cc: David Airlie <airlied@gmail.com>
->>> Cc: Simona Vetter <simona@ffwll.ch>
->>> Cc: Ralph Campbell <rcampbell@nvidia.com>
->>> Cc: Mika Penttil=C3=A4 <mpenttil@redhat.com>
->>> Cc: Matthew Brost <matthew.brost@intel.com>
->>> Cc: Francois Dugast <francois.dugast@intel.com>
->>> ---
->>>  include/linux/memremap.h | 10 +++++++++-
->>>  mm/memremap.c            | 34 +++++++++++++++++++++-------------
->>>  mm/rmap.c                |  6 +++++-
->>>  3 files changed, 35 insertions(+), 15 deletions(-)
->>>
->>> diff --git a/include/linux/memremap.h b/include/linux/memremap.h
->>> index e5951ba12a28..9c20327c2be5 100644
->>> --- a/include/linux/memremap.h
->>> +++ b/include/linux/memremap.h
->>> @@ -206,7 +206,7 @@ static inline bool is_fsdax_page(const struct page =
-*page)
->>>  }
->>>
->>>  #ifdef CONFIG_ZONE_DEVICE
->>> -void zone_device_page_init(struct page *page);
->>> +void zone_device_folio_init(struct folio *folio, unsigned int order);
->>>  void *memremap_pages(struct dev_pagemap *pgmap, int nid);
->>>  void memunmap_pages(struct dev_pagemap *pgmap);
->>>  void *devm_memremap_pages(struct device *dev, struct dev_pagemap *pgma=
-p);
->>> @@ -215,6 +215,14 @@ struct dev_pagemap *get_dev_pagemap(unsigned long =
-pfn);
->>>  bool pgmap_pfn_valid(struct dev_pagemap *pgmap, unsigned long pfn);
->>>
->>>  unsigned long memremap_compat_align(void);
->>> +
->>> +static inline void zone_device_page_init(struct page *page)
->>> +{
->>> +	struct folio *folio =3D page_folio(page);
->>> +
->>> +	zone_device_folio_init(folio, 0);
->>
->> I assume it is for legacy code, where only non-compound page exists?
->>
->> It seems that you assume @page is always order-0, but there is no check
->> for it. Adding VM_WARN_ON_ONCE_FOLIO(folio_order(folio) !=3D 0, folio)
->> above it would be useful to detect misuse.
->>
->>> +}
->>> +
->>>  #else
->>>  static inline void *devm_memremap_pages(struct device *dev,
->>>  		struct dev_pagemap *pgmap)
->>> diff --git a/mm/memremap.c b/mm/memremap.c
->>> index 46cb1b0b6f72..a8481ebf94cc 100644
->>> --- a/mm/memremap.c
->>> +++ b/mm/memremap.c
->>> @@ -416,20 +416,19 @@ EXPORT_SYMBOL_GPL(get_dev_pagemap);
->>>  void free_zone_device_folio(struct folio *folio)
->>>  {
->>>  	struct dev_pagemap *pgmap =3D folio->pgmap;
->>> +	unsigned long nr =3D folio_nr_pages(folio);
->>> +	int i;
->>>
->>>  	if (WARN_ON_ONCE(!pgmap))
->>>  		return;
->>>
->>>  	mem_cgroup_uncharge(folio);
->>>
->>> -	/*
->>> -	 * Note: we don't expect anonymous compound pages yet. Once supported
->>> -	 * and we could PTE-map them similar to THP, we'd have to clear
->>> -	 * PG_anon_exclusive on all tail pages.
->>> -	 */
->>>  	if (folio_test_anon(folio)) {
->>> -		VM_BUG_ON_FOLIO(folio_test_large(folio), folio);
->>> -		__ClearPageAnonExclusive(folio_page(folio, 0));
->>> +		for (i =3D 0; i < nr; i++)
->>> +			__ClearPageAnonExclusive(folio_page(folio, i));
->>> +	} else {
->>> +		VM_WARN_ON_ONCE(folio_test_large(folio));
->>>  	}
->>>
->>>  	/*
->>> @@ -456,8 +455,8 @@ void free_zone_device_folio(struct folio *folio)
->>>  	case MEMORY_DEVICE_COHERENT:
->>>  		if (WARN_ON_ONCE(!pgmap->ops || !pgmap->ops->page_free))
->>>  			break;
->>> -		pgmap->ops->page_free(folio_page(folio, 0));
->>> -		put_dev_pagemap(pgmap);
->>> +		pgmap->ops->page_free(&folio->page);
->>> +		percpu_ref_put_many(&folio->pgmap->ref, nr);
->>>  		break;
->>>
->>>  	case MEMORY_DEVICE_GENERIC:
->>> @@ -480,14 +479,23 @@ void free_zone_device_folio(struct folio *folio)
->>>  	}
->>>  }
->>>
->>> -void zone_device_page_init(struct page *page)
->>> +void zone_device_folio_init(struct folio *folio, unsigned int order)
->>>  {
->>> +	struct page *page =3D folio_page(folio, 0);
->>
->> It is strange to see a folio is converted back to page in
->> a function called zone_device_folio_init().
->>
->>> +
->>> +	VM_WARN_ON_ONCE(order > MAX_ORDER_NR_PAGES);
->>> +
->>>  	/*
->>>  	 * Drivers shouldn't be allocating pages after calling
->>>  	 * memunmap_pages().
->>>  	 */
->>> -	WARN_ON_ONCE(!percpu_ref_tryget_live(&page_pgmap(page)->ref));
->>> -	set_page_count(page, 1);
->>> +	WARN_ON_ONCE(!percpu_ref_tryget_many(&page_pgmap(page)->ref, 1 << ord=
-er));
->>> +	folio_set_count(folio, 1);
->>>  	lock_page(page);
->>> +
->>> +	if (order > 1) {
->>> +		prep_compound_page(page, order);
->>> +		folio_set_large_rmappable(folio);
->>> +	}
->>
->> OK, so basically, @folio is not a compound page yet when zone_device_fol=
-io_init()
->> is called.
->>
->> I feel that your zone_device_page_init() and zone_device_folio_init()
->> implementations are inverse. They should follow the same pattern
->> as __alloc_pages_noprof() and __folio_alloc_noprof(), where
->> zone_device_page_init() does the actual initialization and
->> zone_device_folio_init() just convert a page to folio.
->>
->> Something like:
->>
->> void zone_device_page_init(struct page *page, unsigned int order)
->> {
->> 	VM_WARN_ON_ONCE(order > MAX_ORDER_NR_PAGES);
->>
->> 	/*
->> 	 * Drivers shouldn't be allocating pages after calling
->> 	 * memunmap_pages().
->> 	 */
->>
->>     WARN_ON_ONCE(!percpu_ref_tryget_many(&page_pgmap(page)->ref, 1 << or=
-der));
->> =09
->> 	/*
->> 	 * anonymous folio does not support order-1, high order file-backed fol=
-io
->> 	 * is not supported at all.
->> 	 */
->> 	VM_WARN_ON_ONCE(order =3D=3D 1);
->>
->> 	if (order > 1)
->> 		prep_compound_page(page, order);
->>
->> 	/* page has to be compound head here */
->> 	set_page_count(page, 1);
->> 	lock_page(page);
->> }
->>
->> void zone_device_folio_init(struct folio *folio, unsigned int order)
->> {
->> 	struct page *page =3D folio_page(folio, 0);
->>
->> 	zone_device_page_init(page, order);
->> 	page_rmappable_folio(page);
->> }
->>
->> Or
->>
->> struct folio *zone_device_folio_init(struct page *page, unsigned int ord=
-er)
->> {
->> 	zone_device_page_init(page, order);
->> 	return page_rmappable_folio(page);
->> }
->>
->>
->> Then, it comes to free_zone_device_folio() above,
->> I feel that pgmap->ops->page_free() should take an additional order
->> parameter to free a compound page like free_frozen_pages().
->>
->>
->> This is my impression after reading the patch and zone device page code.
->>
->> Alistair and David can correct me if this is wrong, since I am new to
->> zone device page code.
->> =09
->
-> Thanks, I did not want to change zone_device_page_init() for several
-> drivers (outside my test scope) that already assume it has an order size =
-of 0.
+> Hello,
+> 
+> On Thu, 18 Sep 2025 03:00:29 +0000 Xinyu Zheng <zhengxinyu6@huawei.com> wrote:
+> 
+> > A softlockup issue was found with stress test:
+> 
+> Thank you for sharing this great report!
+> 
+> > 
+> > watchdog: BUG: soft lockup - CPU#0 stuck for 26s! [migration/0:957]
+> > CPU: 0 PID: 957 Comm: migration/0 Kdump: loaded Tainted:
+> > Stopper: multi_cpu_stop+0x0/0x1e8 <- __stop_cpus.constprop.0+0x5c/0xb0
+> > pstate: 61400009 (nZCv daif +PAN -UAO -TCO +DIT -SSBS BTYPE=--)
+> > pc : rcu_momentary_dyntick_idle+0x4c/0xa0
+> > lr : multi_cpu_stop+0x10c/0x1e8
+> > sp : ffff800086013d60
+> > x29: ffff800086013d60 x28: 0000000000000001 x27: 0000000000000000
+> > x26: 0000000000000000 x25: 00000000ffffffff x24: 0000000000000000
+> > x23: 0000000000000001 x22: ffffab8f02977e00 x21: ffff8000b44ebb84
+> > x20: ffff8000b44ebb60 x19: 0000000000000001 x18: 0000000000000000
+> > x17: 000000040044ffff x16: 004000b5b5503510 x15: 0000000000000800
+> > x14: ffff081003921440 x13: ffff5c907c75d000 x12: a34000013454d99d
+> > x11: 0000000000000000 x10: 0000000000000f90 x9 : ffffab8f01b657bc
+> > x8 : ffff081005e060f0 x7 : ffff081f7fd7b610 x6 : 0000009e0bb34c91
+> > x5 : 00000000480fd060 x4 : ffff081f7fd7b508 x3 : ffff5c907c75d000
+> > x2 : ffff800086013d60 x1 : 00000000b8ccb304 x0 : 00000000b8ccb30c
+> > Call trace:
+> >  rcu_momentary_dyntick_idle+0x4c/0xa0
+> >  multi_cpu_stop+0x10c/0x1e8
+> >  cpu_stopper_thread+0xdc/0x1c0
+> >  smpboot_thread_fn+0x140/0x190
+> >  kthread+0xec/0x100
+> >  ret_from_fork+0x10/0x20
+> > 
+> > watchdog: BUG: soft lockup - CPU#18 stuck for 26s! [kdamond.0:408949]
+> > CPU: 18 PID: 408949 Comm: kdamond.0 Kdump: loaded Tainted:
+> > pstate: 61400009 (nZCv daif +PAN -UAO -TCO +DIT -SSBS BTYPE=--)
+> > pc : damon_mkold_pmd_entry+0x138/0x1d8
+> > lr : damon_mkold_pmd_entry+0x68/0x1d8
+> > sp : ffff8000c384bb00
+> > x29: ffff8000c384bb10 x28: 0000ffff6e2a4a9b x27: 0000ffff6e2a4a9b
+> > x26: ffff080090fdeb88 x25: 0000ffff6e2a4a9b x24: ffffab8f029a9020
+> > x23: ffff08013eb8dfe8 x22: 0000ffff6e2a4a9c x21: 0000ffff6e2a4a9b
+> > x20: ffff8000c384bd08 x19: 0000000000000000 x18: 0000000000000014
+> > x17: 00000000f90a2272 x16: 0000000004c87773 x15: 000000004524349f
+> > x14: 00000000ee10aa21 x13: 0000000000000000 x12: ffffab8f02af4818
+> > x11: 0000ffff7e7fffff x10: 0000ffff62700000 x9 : ffffab8f01d2f628
+> > x8 : ffff0800879fbc0c x7 : ffff0800879fbc00 x6 : ffff0800c41c7d88
+> > x5 : 0000000000000171 x4 : ffff08100aab0000 x3 : 00003081088800c0
+> > x2 : 0000000000000000 x1 : 0000000000000000 x0 : 0000000000000000
+> > Call trace:
+> >  damon_mkold_pmd_entry+0x138/0x1d8
+> >  walk_pmd_range.isra.0+0x1ac/0x3a8
+> >  walk_pud_range+0x120/0x190
+> >  walk_pgd_range+0x170/0x1b8
+> >  __walk_page_range+0x184/0x198
+> >  walk_page_range+0x124/0x1f0
+> >  damon_va_prepare_access_checks+0xb4/0x1b8
+> >  kdamond_fn+0x11c/0x690
+> >  kthread+0xec/0x100
+> >  ret_from_fork+0x10/0x20
+> > 
+> > The stress test enable numa balance and kdamond, operation 
+> > involves CPU hotplug and page fault with migration.
+> > 
+> > CPU0				 CPU18                      events
+> > ===============================	 ======================     ===============
+> > page_fault(user task invoke)
+> > migrate_pages(pmd page migrate)
+> > __schedule
+> > 				 kdamond_fn
+> > 				 walk_pmd_range
+> > 				 damon_mkold_pmd_entry      <= cpu hotplug
+> > stop_machine_cpuslocked	         // infinite loop
+> > queue_stop_cpus_work		 // waiting CPU 0 user task
+> > multi_cpu_stop(migration/0)	 // to be scheduled
+> > // infinite loop waiting for
+> > // cpu 18 ACK
+> > 
+> > Detail explanation:
+> > 1. When shutdown one cpu, a state machine in multi_cpu_stop() 
+> > will wait for other cpu's migration thread reach to same state. 
+> > In this case, all cpus are doing migration except cpu 18.
+> > 2. A user task which is bind on cpu 0 is allocating page and 
+> > invoke page fault to migrate page. Kdamond is looping between 
+> > damon_mkold_pmd_entry () and walk_pmd_range(),
+> 
+> damon_mkold_pmd_entry() calls pte_offset_map_lock().  If the call returns an
+> error, damon_mkold_pmd_entry() sets walk->action as ACTION_AGAIN, to retry.  If
+> the pte_offset_map_lock() continues fails, infinite loop can happen.  I
+> understand the loop you mentioned above is this case.
+> 
+> The error handling (retrying) was introduced by commit 7780d04046a2
+> ("mm/pagewalkers: ACTION_AGAIN if pte_offset_map_lock() fails").  According to
+> the commit message, it is assumed to be safe to retry pte_offset_map_lock()
+> inside walk_page_range(), but it is not for this corner case.  And the commit
+> introduced the error handling pattern in not only DAMON but also a few other
+> pte_offset_map_lock() callers, so I think same issue can happen on those, too?
+> 
+> So for the long term, I'm wondering if we should update pte_offset_map_lock()
+> or whole pte_offset_map_lock() error handling inside walk_page_range()
+> callbacks to deal with this corner case.  Or, other involved parts like CPU
+> hotplugging handling?
+> 
+> > since target page 
+> > is a migration entry. Kdamond can end the loop until user task is 
+> > scheduled on CPU 0. But CPU 0 is running migration/0.
+> > 3. CONFIG_PREEMPT_NONE is enable. So all cpu are in a infinite loop.
+> > 
+> > I found a similar softlockup issue which is also invoked by a memory 
+> > operation with cpu hotplug. To fix that issue, add a cond_resched() 
+> > to avoid block migration task.
+> > https://lore.kernel.org/all/20250211081819.33307-1-chenridong@huaweicloud.com/#t
+> > 
+> > May I ask if there is any solution we can fix this issue? Such as add a 
+> > cond_sched() in kdamond process.
+> 
+> I think adding cond_resched() on the error handling part of
+> damon_mkold_pmd_entry() is doable.  Since DAMON is a best-effort approach, just
+> returning without setting ACTION_AGAIN would also be ok for DAMON.  It will
+> simply make the behavior same to that before the commit 7780d04046a2
+> ("mm/pagewalkers: ACTION_AGAIN if pte_offset_map_lock() fails").
+> 
+> If this is a real issue making your products bleeding, please feel free to send
+> such a fix for DAMON (I'd prefer the second approach - just return without
+> setting ACTION_AGAIN) as a hotfix.
+> 
+> Nonetheless, for long term, as I mentioned above, I'm wondering if we should
+> update pte_offset_map_lock() internal, or add similar error handling
+> modification on every similar pte_offset_map_lock() error handling.
+> 
+> > Or is there any chance to do some yield 
+> > in stop machine process? Probably next time there is another different case 
+> > running with cpu hotplug can cause the same softlockup. 
+> 
+> I'm not familiar with stop machine process, so I have no good idea here but
+> this might also be an option?
 
-But my proposed zone_device_page_init() should still work for order-0
-pages. You just need to change call site to add 0 as a new parameter.
+This had me worried for a while: thought we might be needing to change
+lots of other places, and scatter cond_resched()s here and there.
 
+But no: no need for cond_resched()'s, this is all just a confusion about
+where pmd migration entries are handled: a pmd migration entry is accepted
+by pmd_trans_huge_lock(), but is not accepted by pmd_trans_huge().
 
-One strange thing I found in the original zone_device_page_init() is
-the use of page_pgmap() in
-WARN_ON_ONCE(!percpu_ref_tryget_many(&page_pgmap(page)->ref, 1 << order)).
-page_pgmap() calls page_folio() on the given page to access pgmap field.
-And pgmap field is only available in struct folio. The code initializes
-struct page, but in middle it suddenly finds the page is actually a folio,
-then treat it as a page afterwards. I wonder if it can be done better.
+See fs/proc/task_mmu.c for mm_walk examples of trying pmd_trans_huge_lock(),
+then pte_offset_map_lock() if it failed, or ACTION_AGAIN if that failed too.
 
-This might be a question to Alistair, since he made the change.
+When I ACTION_AGAINed damon_mkold_pmd_entry() and damon_young_pmd_entry()
+in 6.5, I didn't realize that the pmd migration entries were reaching the
+pte_offset_map_lock(), with corrupt results (or did pmd_bad() filter them
+out? I didn't think so, but it'll take me too long now to work out whether
+a pmd migration entry counts as pmd_bad or not); but knew that the new
+pte_offset_map_lock() filtered them out safely if there was a race.
 
-Best Regards,
-Yan, Zi
+But they've been reaching it without any race, so yes the ACTION_AGAIN
+would send the mm_walk back again and again for as long as the pmd
+migration entry remained there: not good, and Xinyu finds a lockup
+when hotplugging CPU without preemption.
+
+My suggested patch below (please take it over SJ, and do with it what
+you will), converting damon_mkold_pmd_entry() and damon_young_pmd_entry()
+to use pmd_trans_huge_lock() as I'd been expecting, so handling the
+pmd migration entry up in that block.  (Side note: patch against 6.17-rc,
+but I see mm.git adds also a damos_va_stat_pmd_entry(), which would
+better be converted to the same pmd_trans_huge_lock() pattern -
+though I notice you're not setting ACTION_AGAIN in that one.)
+
+But I have to admit, there's very little gained by using ACTION_AGAIN
+in these functions: it helps not to miss the range when racing against
+THP collapse or split, but you're already content to miss the extent
+if it has a pmd migration entry, and there can still be an instant when
+the range which used to have a page table does not yet show the THP.
+
+So if you prefer a smaller fix (but a larger source file!), just
+dropping the walk->action = ACTION_AGAIN lines should be good enough.
+
+Hugh
+
+p.s. I believe it would be possible to do the old/young business on
+migration entries, but I didn't have the patience to work out the
+conversions needed; and it shouldn't be part of a fix anyway.
+
+---
+ mm/damon/vaddr.c | 39 +++++++++------------------------------
+ 1 file changed, 9 insertions(+), 30 deletions(-)
+
+diff --git a/mm/damon/vaddr.c b/mm/damon/vaddr.c
+index 87e825349bdf..c6b51a52fca0 100644
+--- a/mm/damon/vaddr.c
++++ b/mm/damon/vaddr.c
+@@ -307,24 +307,14 @@ static int damon_mkold_pmd_entry(pmd_t *pmd, unsigned long addr,
+ 		unsigned long next, struct mm_walk *walk)
+ {
+ 	pte_t *pte;
+-	pmd_t pmde;
+ 	spinlock_t *ptl;
+ 
+-	if (pmd_trans_huge(pmdp_get(pmd))) {
+-		ptl = pmd_lock(walk->mm, pmd);
+-		pmde = pmdp_get(pmd);
+-
+-		if (!pmd_present(pmde)) {
+-			spin_unlock(ptl);
+-			return 0;
+-		}
+-
+-		if (pmd_trans_huge(pmde)) {
++	ptl = pmd_trans_huge_lock(pmd, walk->vma);
++	if (ptl) {
++		if (pmd_present(pmdp_get(pmd)))
+ 			damon_pmdp_mkold(pmd, walk->vma, addr);
+-			spin_unlock(ptl);
+-			return 0;
+-		}
+ 		spin_unlock(ptl);
++		return 0;
+ 	}
+ 
+ 	pte = pte_offset_map_lock(walk->mm, pmd, addr, &ptl);
+@@ -448,21 +438,12 @@ static int damon_young_pmd_entry(pmd_t *pmd, unsigned long addr,
+ 	struct damon_young_walk_private *priv = walk->private;
+ 
+ #ifdef CONFIG_TRANSPARENT_HUGEPAGE
+-	if (pmd_trans_huge(pmdp_get(pmd))) {
+-		pmd_t pmde;
++	ptl = pmd_trans_huge_lock(pmd, walk->vma);
++	if (ptl) {
++		pmd_t pmde = pmdp_get(pmd);
+ 
+-		ptl = pmd_lock(walk->mm, pmd);
+-		pmde = pmdp_get(pmd);
+-
+-		if (!pmd_present(pmde)) {
+-			spin_unlock(ptl);
+-			return 0;
+-		}
+-
+-		if (!pmd_trans_huge(pmde)) {
+-			spin_unlock(ptl);
+-			goto regular_page;
+-		}
++		if (!pmd_present(pmde))
++			goto huge_out;
+ 		folio = damon_get_folio(pmd_pfn(pmde));
+ 		if (!folio)
+ 			goto huge_out;
+@@ -476,8 +457,6 @@ static int damon_young_pmd_entry(pmd_t *pmd, unsigned long addr,
+ 		spin_unlock(ptl);
+ 		return 0;
+ 	}
+-
+-regular_page:
+ #endif	/* CONFIG_TRANSPARENT_HUGEPAGE */
+ 
+ 	pte = pte_offset_map_lock(walk->mm, pmd, addr, &ptl);
+-- 
+2.51.0
