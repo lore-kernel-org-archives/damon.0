@@ -1,48 +1,67 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A862189;
-	Sat, 20 Sep 2025 10:42:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E16225F79A
+	for <damon@lists.linux.dev>; Sat, 20 Sep 2025 10:53:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758364943; cv=none; b=NKQS7CPF/gOc0mq/F1bi0RyWC3X9EsMTevmofZto0QgGxrze1scooUTEhMIN6AZcKBdh4Sosf50a7PIkqVu42oZWbjBV8Q24LdVhf0GweksyGfTZssZML5Su+gFCGf2EmZPfY4NI6QoTZtEbgmT+jPfHWjIO8F4LqJ9QkcNKOz4=
+	t=1758365583; cv=none; b=m0qE/8koyXqaSPBWOBkZuq3EVNJJnVBrUws3BA5XpmA83K5l5gFoZkDM3aOKrZljNRdThq6ruxLdE9nogvruTfyopS0QIXez/dmlDih7x/PsGCP1sVsdVxZmueu+vPAvygizJOO8aA/yfIfHXqMA2mpuydT++3658E9exT2q0gw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758364943; c=relaxed/simple;
-	bh=9kwVqoLydbm2Rbeubw/EvPFJmKcEfrJda/IiMPaoeEU=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=VB8lx/hbbRLSQHVfBNw8Z9tKydcmHTS8qmdegmyJ7Q4+N3z1pFWBbvS9zzZkwfNantg0nmvil3etGo+JcOGPDPPq8IKs1pVyAQj7MgU58K34yv6zGxn8D7S8oq8W9vTfiJDxt4fd9AgSr9WVvbewCp7aLeV8ptFdYny0qjXGq94=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=O83uxJ3m; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1758365583; c=relaxed/simple;
+	bh=ILQ7np6iYcbWd/E3L3dxiJJYTSPoJju8STS1ry5D/E4=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=fKfOEwlyXTFNQNQzxmkLF1ZM4U76Mgge2yHQklDEXLGln51K6doUVMjnv/uc9D8NRvFcpH7JlbTg9ZzuEyd7dZ5G/xUq7ghi8teyGfVCyDQIbk0cbUJdTAFnZU/3GBf30MdhcZAC+fGCpZRQwTjgaENzwqiwkVUF6htRZ6riVG8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lfdN4z7x; arc=none smtp.client-ip=209.85.214.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="O83uxJ3m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6ADA4C4CEEB;
-	Sat, 20 Sep 2025 10:42:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1758364942;
-	bh=9kwVqoLydbm2Rbeubw/EvPFJmKcEfrJda/IiMPaoeEU=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O83uxJ3mk3gybuY33XyTcokG0zq83t1iApEr3h2IJvkiY7uOByucy4zzlJZbOeKGm
-	 SoTmG7WRl2NLBAUx1XuMQTNWJ6ER/14T70mp2NdHxMkUa9CJTva9MNuwN0hefq25gk
-	 zjSwXnjoWRQmUU4/O8Bd4epIB6xdbWmWQcRGRqkcDmC0g13avlzQuCVe+erhgUw7nq
-	 mWPzv73cVXnITs0h2IGJohXdmlcOy1BVULuEiFR3vMeBt+BT+td49w2d3WfvBRSr7u
-	 IKysXP9BJthGnRlB91Ly/LoEDCmSQzEUxF10SBpWLUUWQk/WcI28PbfKZGV5IoZ7DM
-	 1CgRl/5HTyXQQ==
-From: SeongJae Park <sj@kernel.org>
-To: Hugh Dickins <hughd@google.com>
-Cc: SeongJae Park <sj@kernel.org>,
-	Xinyu Zheng <zhengxinyu6@huawei.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	"Paul E . McKenney" <paulmck@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org,
-	zouyipeng@huawei.com
-Subject: Re: [BUG REPORT] mm/damon: softlockup when kdamond walk page with cpu hotplug
-Date: Sat, 20 Sep 2025 03:42:20 -0700
-Message-Id: <20250920104220.1399-1-sj@kernel.org>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <296c2b3f-6748-158f-b85d-2952165c0588@google.com>
-References: 
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lfdN4z7x"
+Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-267f0fe72a1so19077785ad.2
+        for <damon@lists.linux.dev>; Sat, 20 Sep 2025 03:53:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1758365580; x=1758970380; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=4Zw24UHgc0XYVtGuGaF7Ugi4fpJHTM194lXS61zOwf8=;
+        b=lfdN4z7xHvEt1Zxyhsubf9KQiRTdDoJG0pUfsKugUiBtY7aA9RF1UcXb9Cv2tg+KAp
+         ZJRUA+MVyhtcE2u+a4eFsAhTeKUAC/LnkizjsYvUkbGGBr5Q+EM7toV98RC5P5lyytZA
+         wX9wYDobafd7uciot0G6kj2CFkDjewuMNxwqw1UoB+53JeGpZpZe9pKLD5WQDyEVUpko
+         SvKfrTF+mb2rsDQsZtHgtPfZMFBsBAQzc9ffY4+9hAw+M13Tpz1/QmN5pwckS4A1RsEU
+         c2qYxqMZ/QsP0WRgDfzJsL8PgWjVoGUtudBUgKe4bqon90DSUmX0WYnUw3rgXAJzxCNp
+         Vr6Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1758365580; x=1758970380;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=4Zw24UHgc0XYVtGuGaF7Ugi4fpJHTM194lXS61zOwf8=;
+        b=hMTnFAeHB6gO/k0kXCQBBv7otOMNDZ2rUF9SNlmW3DP+gg1RRXMXZGgb1rPfKKMQek
+         EiQRfucbIFK4HGeXYSVZbVV4R6MZnCUejClPbjn8WALi22U/IKv26F4lDOzAMLyjnN/u
+         kull9JMSF062R7Lhj/l0SNTwjmqsNbwFjZ8rWUVivHEPryNxAxTNcU1lhoiye4NTVwrI
+         Yp7z2PibY3H8QM1I23ugHWTwIdHFxihX3lSy8yxV4G7A6UKCU2VIVPcIW4wO7KIYyzKT
+         yiw07ShU3bbo18UYRSBfr8RSF3m/yAXbi1GU8VkXLU/iz/SjetZRQRyz5i/zxSi/bQ8l
+         mFXQ==
+X-Gm-Message-State: AOJu0YxAHzrp1ljURfKDJP91aOQqCRfComx+d5YO2p3nhiE1CLyTSPJp
+	28DzYnIyIV2/ktixR1p/WX9EBuo6CjqBCFa3QT2+xb1A7YBtI2FyiaM0RUPTYw==
+X-Gm-Gg: ASbGncs0RiFm0TM6cVsdQNjAAQ58EilpgFkgQ3ZsUUf6qM0BA8A3M6vzn/hKn/GZStZ
+	wvRXo2kzUp/67Y5na/Q2Gs0iVEMy3Ljtbmsz1Unf25WBqffZ1ssYU2jL77CO/IPKD/4euHKYeNh
+	8gcaYmvXsGawU+uAA52dFDa3eNESsYsMRP87X0OB6ehbTzif0Axnt7txpH4SIqiNv+0qbeHFQpS
+	VTbqY/6AasBdO+mj0WwiZ8jassvrB5pSuW1H7sanpc/7BQufC2C8YDn/izAndHiyffH8xPu/8cS
+	R+Jo/d/ubw+jHxAVQMY56nZuesbEia/2gn6/8cllNp1hS1W3G30BzYWa7yxKijs5ehzAT0xAv92
+	ftgwx8BtyYmJ4fTvIMSeTtLM/IvjJ7t5yRk7o
+X-Google-Smtp-Source: AGHT+IGzwDlfyspE+IMTN3Dm/yPKZj/0hUEwcDlbe6QTyNxjv/QbU9bY/I207Q7ZnZiHLoWOilskzQ==
+X-Received: by 2002:a17:902:fc50:b0:269:b6bd:bc0b with SMTP id d9443c01a7336-269ba3cbf96mr67210805ad.10.1758365579861;
+        Sat, 20 Sep 2025 03:52:59 -0700 (PDT)
+Received: from localhost.localdomain ([240f:34:212d:1:8249:87c3:45e:6771])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-26980179981sm79851195ad.54.2025.09.20.03.52.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 20 Sep 2025 03:52:59 -0700 (PDT)
+From: Akinobu Mita <akinobu.mita@gmail.com>
+To: damon@lists.linux.dev
+Cc: akinobu.mita@gmail.com
+Subject: [PATCH] mm/damon/sysfs: do not ignore callback's return value in damon_sysfs_damon_call()
+Date: Sat, 20 Sep 2025 19:52:36 +0900
+Message-ID: <20250920105236.29952-1-akinobu.mita@gmail.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -51,137 +70,37 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Fri, 19 Sep 2025 20:56:56 -0700 (PDT) Hugh Dickins <hughd@google.com> wrote:
+The callback return value is ignored in damon_sysfs_damon_call(), which
+means that it is not possible to detect invalid user input when writing
+commands such as 'commit' to /sys/kernel/mm/damon/admin/kdamonds/<K>/state.
+Fix it.
 
-> On Thu, 18 Sep 2025, SeongJae Park wrote:
-> 
-> > Hello,
-> > 
-> > On Thu, 18 Sep 2025 03:00:29 +0000 Xinyu Zheng <zhengxinyu6@huawei.com> wrote:
-> > 
-> > > A softlockup issue was found with stress test:
-[...]
-> This had me worried for a while: thought we might be needing to change
-> lots of other places, and scatter cond_resched()s here and there.
-> 
-> But no: no need for cond_resched()'s, this is all just a confusion about
-> where pmd migration entries are handled: a pmd migration entry is accepted
-> by pmd_trans_huge_lock(), but is not accepted by pmd_trans_huge().
-> 
-> See fs/proc/task_mmu.c for mm_walk examples of trying pmd_trans_huge_lock(),
-> then pte_offset_map_lock() if it failed, or ACTION_AGAIN if that failed too.
-> 
-> When I ACTION_AGAINed damon_mkold_pmd_entry() and damon_young_pmd_entry()
-> in 6.5, I didn't realize that the pmd migration entries were reaching the
-> pte_offset_map_lock(), with corrupt results (or did pmd_bad() filter them
-> out? I didn't think so, but it'll take me too long now to work out whether
-> a pmd migration entry counts as pmd_bad or not); but knew that the new
-> pte_offset_map_lock() filtered them out safely if there was a race.
-> 
-> But they've been reaching it without any race, so yes the ACTION_AGAIN
-> would send the mm_walk back again and again for as long as the pmd
-> migration entry remained there: not good, and Xinyu finds a lockup
-> when hotplugging CPU without preemption.
-
-Thank you for your detailed and kind explanation, Hugh!
-
-> 
-> My suggested patch below (please take it over SJ, and do with it what
-> you will), converting damon_mkold_pmd_entry() and damon_young_pmd_entry()
-> to use pmd_trans_huge_lock() as I'd been expecting, so handling the
-> pmd migration entry up in that block.  (Side note: patch against 6.17-rc,
-> but I see mm.git adds also a damos_va_stat_pmd_entry(), which would
-> better be converted to the same pmd_trans_huge_lock() pattern -
-> though I notice you're not setting ACTION_AGAIN in that one.)
-> 
-> But I have to admit, there's very little gained by using ACTION_AGAIN
-> in these functions: it helps not to miss the range when racing against
-> THP collapse or split, but you're already content to miss the extent
-> if it has a pmd migration entry, and there can still be an instant when
-> the range which used to have a page table does not yet show the THP.
-> 
-> So if you prefer a smaller fix (but a larger source file!), just
-> dropping the walk->action = ACTION_AGAIN lines should be good enough.
-
-I agree all your points.
-
-I'd prefer the smaller source file following your suggested change below (using
-pmd_trans_huge_lock()) in long term.  But, for a short term, I'd prefer the
-smaller fix (dropping walk->action = ACTION_AGAIN) since it should also be
-merged into stable@, up to 6.5.y.
-
-So, I'd like to suggest as following.  Let's drop the
-'walk->action = ACTION_AGAIN' like the below attached one, for now.  After it
-is confirmed to fix the issue and merged into relevant trees including stable
-trees, let's revisit the code to cleanup following pmd_trans_huge_lock()
-pattern.
-
-Please let me know if I'm missing something, or you have other opinions.
-
-Xinyu, could you please test if the below attached patch fixes your issue and
-let us know the result?
-
-If Xinyu confirms the validity of the fix and no one objects to the above plan,
-I will post the fix as a formal one with a better commit message.
-
-
-Thanks,
-SJ
-
-[...]
-
-==== >8 ====
-From 743cafda8982624229541741dbfe5ff252328ac0 Mon Sep 17 00:00:00 2001
-From: SeongJae Park <sj@kernel.org>
-Date: Sat, 20 Sep 2025 03:35:34 -0700
-Subject: [PATCH] mm/damon/vaddr: do not try page table walk again
-
-For a quick fix of a softlockup issue:
-https://lore.kernel.org/20250918030029.2652607-1-zhengxinyu6@huawei.com
-
-Signed-off-by: SeongJae Park <sj@kernel.org>
+Signed-off-by: Akinobu Mita <akinobu.mita@gmail.com>
 ---
-From 743cafda8982624229541741dbfe5ff252328ac0 Mon Sep 17 00:00:00 2001
-From: SeongJae Park <sj@kernel.org>
-Date: Sat, 20 Sep 2025 03:35:34 -0700
-Subject: [PATCH] mm/damon/vaddr: do not try page table walk again
+ mm/damon/sysfs.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-For a quick fix of a softlockup issue:
-https://lore.kernel.org/20250918030029.2652607-1-zhengxinyu6@huawei.com
-
-Signed-off-by: SeongJae Park <sj@kernel.org>
----
- mm/damon/vaddr.c | 8 ++------
- 1 file changed, 2 insertions(+), 6 deletions(-)
-
-diff --git a/mm/damon/vaddr.c b/mm/damon/vaddr.c
-index 8c048f9b129e..7e834467b2d8 100644
---- a/mm/damon/vaddr.c
-+++ b/mm/damon/vaddr.c
-@@ -328,10 +328,8 @@ static int damon_mkold_pmd_entry(pmd_t *pmd, unsigned long addr,
- 	}
+diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
+index fe4e73d0ebbb..97e16f00f23e 100644
+--- a/mm/damon/sysfs.c
++++ b/mm/damon/sysfs.c
+@@ -1627,12 +1627,15 @@ static int damon_sysfs_damon_call(int (*fn)(void *data),
+ 		struct damon_sysfs_kdamond *kdamond)
+ {
+ 	struct damon_call_control call_control = {};
++	int err;
  
- 	pte = pte_offset_map_lock(walk->mm, pmd, addr, &ptl);
--	if (!pte) {
--		walk->action = ACTION_AGAIN;
-+	if (!pte)
- 		return 0;
--	}
- 	if (!pte_present(ptep_get(pte)))
- 		goto out;
- 	damon_ptep_mkold(pte, walk->vma, addr);
-@@ -481,10 +479,8 @@ static int damon_young_pmd_entry(pmd_t *pmd, unsigned long addr,
- #endif	/* CONFIG_TRANSPARENT_HUGEPAGE */
+ 	if (!kdamond->damon_ctx)
+ 		return -EINVAL;
+ 	call_control.fn = fn;
+ 	call_control.data = kdamond;
+-	return damon_call(kdamond->damon_ctx, &call_control);
++	err = damon_call(kdamond->damon_ctx, &call_control);
++
++	return err ? err : call_control.return_code;
+ }
  
- 	pte = pte_offset_map_lock(walk->mm, pmd, addr, &ptl);
--	if (!pte) {
--		walk->action = ACTION_AGAIN;
-+	if (!pte)
- 		return 0;
--	}
- 	ptent = ptep_get(pte);
- 	if (!pte_present(ptent))
- 		goto out;
+ struct damon_sysfs_schemes_walk_data {
 -- 
-2.39.5
+2.43.0
 
