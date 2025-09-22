@@ -1,197 +1,154 @@
-Received: from szxga01-in.huawei.com (szxga01-in.huawei.com [45.249.212.187])
+Received: from mailgw.kylinos.cn (mailgw.kylinos.cn [124.126.103.232])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 028E6219E8
-	for <damon@lists.linux.dev>; Mon, 22 Sep 2025 03:48:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.187
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 116CB28A73A
+	for <damon@lists.linux.dev>; Mon, 22 Sep 2025 10:10:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=124.126.103.232
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758512919; cv=none; b=a7ILldgpPpTyXKjqQKbXsnNGgpN3HkoCtrHWXCuSk2zoAAhgxsqJSKylroKOI77K4UAAX66gcGznlWHQ/HYzSpVL3wM/wXotmO49UZ+E2dQrEbzq7ho/mHkPrepjs/PXVJYLL+ZEqwlKau7EELop2CE42OWVS+eaEmNPWBY1FcE=
+	t=1758535852; cv=none; b=EyFYz+jpNqGcZESxlBP0IzATmjiEJrwfUHJToLfO+6bdmPoMEptQ4H468s9OdMeB0cH0WRkp7BKQCggB4hF+iumUt336oPiGMRdpWpg2+2MN7yzJjAqEOYqHAUhVnJrv6ZyHNW8zMKY6XhOvVfvHAMaR+T+Nabf+/0bvNgSFWTI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758512919; c=relaxed/simple;
-	bh=WO4T4xP4meCYH8qOpzhhrSChiZL0cEfYEkusq1KX3fQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=rU1t7DJIrA0cixFWzPQJmndn3QV6WtrsjhPjIUxkphiQ++rnzfotjt70rdO6fkPpHBppvQj0A1IO9mDNerMuHpXN1exMXwL5Z8ddd/DZubymXix+mt3pzl/Lbr5hbAbrqtEy8QrcTiLWT2CUJxjrQW3m6j+gmg97tqHIwomAWOA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; arc=none smtp.client-ip=45.249.212.187
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
-Received: from mail.maildlp.com (unknown [172.19.162.254])
-	by szxga01-in.huawei.com (SkyGuard) with ESMTP id 4cVTbf65n2z14MTN;
-	Mon, 22 Sep 2025 11:48:14 +0800 (CST)
-Received: from dggpemr200006.china.huawei.com (unknown [7.185.36.167])
-	by mail.maildlp.com (Postfix) with ESMTPS id 6C6D1180486;
-	Mon, 22 Sep 2025 11:48:33 +0800 (CST)
-Received: from [10.67.110.83] (10.67.110.83) by dggpemr200006.china.huawei.com
- (7.185.36.167) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.11; Mon, 22 Sep
- 2025 11:48:32 +0800
-Message-ID: <d7f78b73-6bb4-4ccd-b604-5bfa6473fd2a@huawei.com>
-Date: Mon, 22 Sep 2025 11:48:32 +0800
+	s=arc-20240116; t=1758535852; c=relaxed/simple;
+	bh=ViqvSWlBhLuHijAfZkLqZMriuAaig1reaRL4OvCY3S0=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=J6kPwEwC+jvM0NjhFGRjWyd57qkBdD5y9GT2kUjwFe9NVUGvYv0bFDQcP4+c8hv3CWYe17pIufX71UxWKCzP/Mh8CFoN4a+VRq2+awEu6tvvLxw8w6qIyJh0Ip1CBGCovjDedIqVxpcif+fncRxePz4vHCxtdmh6Pe6TEiK19qU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn; spf=pass smtp.mailfrom=kylinos.cn; arc=none smtp.client-ip=124.126.103.232
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kylinos.cn
+X-UUID: 65f05902979c11f08b9f7d2eb6caa7cf-20250922
+X-CTIC-Tags:
+	HR_CC_COUNT, HR_CC_DOMAIN_COUNT, HR_CC_NAME, HR_CC_NO_NAME, HR_CTE_8B
+	HR_CTT_TXT, HR_DATE_H, HR_DATE_WKD, HR_DATE_ZONE, HR_FROM_NAME
+	HR_SJ_DIGIT_LEN, HR_SJ_LANG, HR_SJ_LEN, HR_SJ_LETTER, HR_SJ_NOR_SYM
+	HR_SJ_PHRASE, HR_SJ_PHRASE_LEN, HR_SJ_WS, HR_TO_COUNT, HR_TO_DOMAIN_COUNT
+	HR_TO_NO_NAME, IP_TRUSTED, SRC_TRUSTED, DN_TRUSTED, SA_TRUSTED
+	SA_EXISTED, SN_TRUSTED, SN_EXISTED, SPF_NOPASS, DKIM_NOPASS
+	DMARC_NOPASS, CIE_BAD, CIE_GOOD, CIE_GOOD_SPF, GTI_FG_BS
+	GTI_RG_INFO, GTI_C_BU, AMN_T1, AMN_GOOD, AMN_C_TI
+	AMN_C_BU, ABX_MISS_RDNS
+X-CID-P-RULE: Release_Ham
+X-CID-O-INFO: VERSION:1.1.45,REQID:5c8a2a3f-503f-44a6-af0f-1a5d4aebc910,IP:10,
+	URL:0,TC:0,Content:0,EDM:0,RT:0,SF:-15,FILE:0,BULK:0,RULE:Release_Ham,ACTI
+	ON:release,TS:-5
+X-CID-INFO: VERSION:1.1.45,REQID:5c8a2a3f-503f-44a6-af0f-1a5d4aebc910,IP:10,UR
+	L:0,TC:0,Content:0,EDM:0,RT:0,SF:-15,FILE:0,BULK:0,RULE:Release_Ham,ACTION
+	:release,TS:-5
+X-CID-META: VersionHash:6493067,CLOUDID:31d7d39b95cce73a5dc3d5d670b85d5f,BulkI
+	D:250922154409NPG9RFLE,BulkQuantity:1,Recheck:0,SF:17|19|24|38|44|66|78|81
+	|82|102|850,TC:nil,Content:0|50,EDM:-3,IP:-2,URL:0,File:nil,RT:nil,Bulk:40
+	,QS:nil,BEC:nil,COL:0,OSI:0,OSA:0,AV:0,LES:1,SPR:NO,DKR:0,DKP:0,BRR:0,BRE:
+	0,ARC:0
+X-CID-BVR: 0
+X-CID-BAS: 0,_,0,_
+X-CID-FACTOR: TF_CID_SPAM_SNR,TF_CID_SPAM_FAS,TF_CID_SPAM_FSD,TF_CID_SPAM_FSI
+X-UUID: 65f05902979c11f08b9f7d2eb6caa7cf-20250922
+X-User: lienze@kylinos.cn
+Received: from localhost.localdomain [(223.70.159.239)] by mailgw.kylinos.cn
+	(envelope-from <lienze@kylinos.cn>)
+	(Generic MTA with TLSv1.3 TLS_AES_256_GCM_SHA384 256/256)
+	with ESMTP id 1089521498; Mon, 22 Sep 2025 18:10:42 +0800
+From: Enze Li <lienze@kylinos.cn>
+To: sj@kernel.org,
+	akpm@linux-foundation.org
+Cc: damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	enze.li@gmx.com,
+	Enze Li <lienze@kylinos.cn>
+Subject: [RFC PATCH 2/2] mm/damon/sysfs: add priority support for DAMOS targets
+Date: Mon, 22 Sep 2025 18:10:22 +0800
+Message-ID: <20250922101022.362822-3-lienze@kylinos.cn>
+X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20250922101022.362822-1-lienze@kylinos.cn>
+References: <20250922101022.362822-1-lienze@kylinos.cn>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [BUG REPORT] mm/damon: softlockup when kdamond walk page with cpu
- hotplug
-To: SeongJae Park <sj@kernel.org>, Hugh Dickins <hughd@google.com>
-CC: Andrew Morton <akpm@linux-foundation.org>, "Paul E . McKenney"
-	<paulmck@kernel.org>, Peter Zijlstra <peterz@infradead.org>,
-	<damon@lists.linux.dev>, <linux-mm@kvack.org>,
-	<linux-kernel@vger.kernel.org>, <zouyipeng@huawei.com>
-References: <20250920104220.1399-1-sj@kernel.org>
-Content-Language: en-US
-From: Xinyu Zheng <zhengxinyu6@huawei.com>
-In-Reply-To: <20250920104220.1399-1-sj@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: kwepems100002.china.huawei.com (7.221.188.206) To
- dggpemr200006.china.huawei.com (7.185.36.167)
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
+This patch extends the DAMON sysfs interface to support the configuration
+of target priorities, enabling users to assign and adjust the relative
+importance of monitored processes at runtime.  A new sysfs file, priority,
+is added under each target’s directory (e.g.,
+/sys/kernel/mm/damon/admin/kdamonds/0/contexts/<ctx>/targets/<target>/priority).
+Users can write an integer value to this file to set the priority level for
+the corresponding target.  Reading the file returns the currently assigned
+priority.
 
+The interface integrates seamlessly with the existing priority-based
+scheduling mechanism introduced in the core DAMON logic.  When a priority
+value is set via sysfs, it directly influences the frequency of scheme
+applications for the target.
 
-On 9/20/2025 6:42 PM, SeongJae Park wrote:
-> On Fri, 19 Sep 2025 20:56:56 -0700 (PDT) Hugh Dickins <hughd@google.com> wrote:
-> 
->> On Thu, 18 Sep 2025, SeongJae Park wrote:
->>
->>> Hello,
->>>
->>> On Thu, 18 Sep 2025 03:00:29 +0000 Xinyu Zheng <zhengxinyu6@huawei.com> wrote:
->>>
->>>> A softlockup issue was found with stress test:
-> [...]
->> This had me worried for a while: thought we might be needing to change
->> lots of other places, and scatter cond_resched()s here and there.
->>
->> But no: no need for cond_resched()'s, this is all just a confusion about
->> where pmd migration entries are handled: a pmd migration entry is accepted
->> by pmd_trans_huge_lock(), but is not accepted by pmd_trans_huge().
->>
->> See fs/proc/task_mmu.c for mm_walk examples of trying pmd_trans_huge_lock(),
->> then pte_offset_map_lock() if it failed, or ACTION_AGAIN if that failed too.
->>
->> When I ACTION_AGAINed damon_mkold_pmd_entry() and damon_young_pmd_entry()
->> in 6.5, I didn't realize that the pmd migration entries were reaching the
->> pte_offset_map_lock(), with corrupt results (or did pmd_bad() filter them
->> out? I didn't think so, but it'll take me too long now to work out whether
->> a pmd migration entry counts as pmd_bad or not); but knew that the new
->> pte_offset_map_lock() filtered them out safely if there was a race.
->>
->> But they've been reaching it without any race, so yes the ACTION_AGAIN
->> would send the mm_walk back again and again for as long as the pmd
->> migration entry remained there: not good, and Xinyu finds a lockup
->> when hotplugging CPU without preemption.
-> 
-> Thank you for your detailed and kind explanation, Hugh!
-> 
->>
->> My suggested patch below (please take it over SJ, and do with it what
->> you will), converting damon_mkold_pmd_entry() and damon_young_pmd_entry()
->> to use pmd_trans_huge_lock() as I'd been expecting, so handling the
->> pmd migration entry up in that block.  (Side note: patch against 6.17-rc,
->> but I see mm.git adds also a damos_va_stat_pmd_entry(), which would
->> better be converted to the same pmd_trans_huge_lock() pattern -
->> though I notice you're not setting ACTION_AGAIN in that one.)
->>
->> But I have to admit, there's very little gained by using ACTION_AGAIN
->> in these functions: it helps not to miss the range when racing against
->> THP collapse or split, but you're already content to miss the extent
->> if it has a pmd migration entry, and there can still be an instant when
->> the range which used to have a page table does not yet show the THP.
->>
->> So if you prefer a smaller fix (but a larger source file!), just
->> dropping the walk->action = ACTION_AGAIN lines should be good enough.
+This enhancement provides user-space administrators and adaptive system
+controllers with the ability to dynamically adjust monitoring and memory
+management priorities based on real-time workload requirements.  The change
+maintains full backward compatibility -- targets without a configured
+priority use the default behavior, ensuring no disruption to existing
+deployments.
 
-Hi, Hugh. Thank you for your patient explanation and solution!
+Signed-off-by: Enze Li <lienze@kylinos.cn>
+---
+ mm/damon/sysfs.c | 28 ++++++++++++++++++++++++++++
+ 1 file changed, 28 insertions(+)
 
-> 
-> I agree all your points.
-> 
-> I'd prefer the smaller source file following your suggested change below (using
-> pmd_trans_huge_lock()) in long term.  But, for a short term, I'd prefer the
-> smaller fix (dropping walk->action = ACTION_AGAIN) since it should also be
-> merged into stable@, up to 6.5.y.
-> 
-> So, I'd like to suggest as following.  Let's drop the
-> 'walk->action = ACTION_AGAIN' like the below attached one, for now.  After it
-> is confirmed to fix the issue and merged into relevant trees including stable
-> trees, let's revisit the code to cleanup following pmd_trans_huge_lock()
-> pattern.
-> 
-> Please let me know if I'm missing something, or you have other opinions.
-> 
-> Xinyu, could you please test if the below attached patch fixes your issue and
-> let us know the result?
-
-Thanks for all the reply and suggestion, SJ! I am trying to reproduce 
-the scenario now and will send the result back very soon!
-
-> 
-> If Xinyu confirms the validity of the fix and no one objects to the above plan,
-> I will post the fix as a formal one with a better commit message.
-> 
-> 
-> Thanks,
-> SJ
-> 
-
-> [...]
-> 
-> ==== >8 ====
->  From 743cafda8982624229541741dbfe5ff252328ac0 Mon Sep 17 00:00:00 2001
-> From: SeongJae Park <sj@kernel.org>
-> Date: Sat, 20 Sep 2025 03:35:34 -0700
-> Subject: [PATCH] mm/damon/vaddr: do not try page table walk again
-> 
-> For a quick fix of a softlockup issue:
-> https://lore.kernel.org/20250918030029.2652607-1-zhengxinyu6@huawei.com
-> 
-> Signed-off-by: SeongJae Park <sj@kernel.org>
-> ---
->  From 743cafda8982624229541741dbfe5ff252328ac0 Mon Sep 17 00:00:00 2001
-> From: SeongJae Park <sj@kernel.org>
-> Date: Sat, 20 Sep 2025 03:35:34 -0700
-> Subject: [PATCH] mm/damon/vaddr: do not try page table walk again
-> 
-> For a quick fix of a softlockup issue:
-> https://lore.kernel.org/20250918030029.2652607-1-zhengxinyu6@huawei.com
-> 
-> Signed-off-by: SeongJae Park <sj@kernel.org>
-> ---
->   mm/damon/vaddr.c | 8 ++------
->   1 file changed, 2 insertions(+), 6 deletions(-)
-> 
-> diff --git a/mm/damon/vaddr.c b/mm/damon/vaddr.c
-> index 8c048f9b129e..7e834467b2d8 100644
-> --- a/mm/damon/vaddr.c
-> +++ b/mm/damon/vaddr.c
-> @@ -328,10 +328,8 @@ static int damon_mkold_pmd_entry(pmd_t *pmd, unsigned long addr,
->   	}
->   
->   	pte = pte_offset_map_lock(walk->mm, pmd, addr, &ptl);
-> -	if (!pte) {
-> -		walk->action = ACTION_AGAIN;
-> +	if (!pte)
->   		return 0;
-> -	}
->   	if (!pte_present(ptep_get(pte)))
->   		goto out;
->   	damon_ptep_mkold(pte, walk->vma, addr);
-> @@ -481,10 +479,8 @@ static int damon_young_pmd_entry(pmd_t *pmd, unsigned long addr,
->   #endif	/* CONFIG_TRANSPARENT_HUGEPAGE */
->   
->   	pte = pte_offset_map_lock(walk->mm, pmd, addr, &ptl);
-> -	if (!pte) {
-> -		walk->action = ACTION_AGAIN;
-> +	if (!pte)
->   		return 0;
-> -	}
->   	ptent = ptep_get(pte);
->   	if (!pte_present(ptent))
->   		goto out;
-
+diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
+index 6d2b0dab50cb..cd08732f3b6d 100644
+--- a/mm/damon/sysfs.c
++++ b/mm/damon/sysfs.c
+@@ -212,6 +212,7 @@ struct damon_sysfs_target {
+ 	struct kobject kobj;
+ 	struct damon_sysfs_regions *regions;
+ 	int pid;
++	int priority;
+ };
+ 
+ static struct damon_sysfs_target *damon_sysfs_target_alloc(void)
+@@ -271,8 +272,33 @@ static void damon_sysfs_target_release(struct kobject *kobj)
+ static struct kobj_attribute damon_sysfs_target_pid_attr =
+ 		__ATTR_RW_MODE(pid_target, 0600);
+ 
++static ssize_t target_priority_show(struct kobject *kobj,
++		struct kobj_attribute *attr, char *buf)
++{
++	struct damon_sysfs_target *target = container_of(kobj,
++			struct damon_sysfs_target, kobj);
++
++	return sysfs_emit(buf, "%d\n", target->priority);
++}
++
++static ssize_t target_priority_store(struct kobject *kobj,
++		struct kobj_attribute *attr, const char *buf, size_t count)
++{
++	struct damon_sysfs_target *target = container_of(kobj,
++			struct damon_sysfs_target, kobj);
++	int err = kstrtoint(buf, 0, &target->priority);
++
++	if (err)
++		return -EINVAL;
++	return count;
++}
++
++static struct kobj_attribute damon_sysfs_target_priority =
++		__ATTR_RW_MODE(target_priority, 0600);
++
+ static struct attribute *damon_sysfs_target_attrs[] = {
+ 	&damon_sysfs_target_pid_attr.attr,
++	&damon_sysfs_target_priority.attr,
+ 	NULL,
+ };
+ ATTRIBUTE_GROUPS(damon_sysfs_target);
+@@ -1340,6 +1366,8 @@ static int damon_sysfs_add_target(struct damon_sysfs_target *sys_target,
+ 			/* caller will destroy targets */
+ 			return -EINVAL;
+ 	}
++	t->priority = sys_target->priority;
++
+ 	return damon_sysfs_set_regions(t, sys_target->regions);
+ }
+ 
 -- 
-Xinyu Zheng
+2.51.0
 
