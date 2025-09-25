@@ -1,200 +1,241 @@
-Received: from szxga05-in.huawei.com (szxga05-in.huawei.com [45.249.212.191])
+Received: from CY3PR05CU001.outbound.protection.outlook.com (mail-westcentralusazon11013069.outbound.protection.outlook.com [40.93.201.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 737271D6AA
-	for <damon@lists.linux.dev>; Thu, 25 Sep 2025 11:11:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.191
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758798685; cv=none; b=OMEoBWQZQtfRITED72fDsG5XdK6ESkvUxdW80lixb6hYzdZepaht4tQo/40K5YDX5GFn2+1JDccEG7KOfwtTFa/qBVTPmgoMBrQLfaFREOJafM/rQr28sRoK7RL1TUTYNF9nynHVGjKRzjyUTPvJd6jUxpS9QFc6VYC0yq6Ha5k=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758798685; c=relaxed/simple;
-	bh=RPGqskfNBJK2KMmXjQXlBPrIMbJaFtxk9HC8aROB+yo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=TpQreblcI7ZCPIFgDNQvphqx3eRLNvfCQWFuKvHgHwy38JjJRWqQDd2AYG5xGn2d2gGc4M2L1LBmtAgbDFAUmtqGe07FOVf2fkEBop5YzPSItDxtqmhM9/EUARQCaFm/VWQVVsl26ht97RcH/foNBEN2YwcLWj4Cqbd+BocPDQU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; arc=none smtp.client-ip=45.249.212.191
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
-Received: from mail.maildlp.com (unknown [172.19.162.112])
-	by szxga05-in.huawei.com (SkyGuard) with ESMTP id 4cXWCH6TvDz24hsP;
-	Thu, 25 Sep 2025 19:07:39 +0800 (CST)
-Received: from dggpemr200006.china.huawei.com (unknown [7.185.36.167])
-	by mail.maildlp.com (Postfix) with ESMTPS id BBC1C140149;
-	Thu, 25 Sep 2025 19:11:14 +0800 (CST)
-Received: from [10.67.110.83] (10.67.110.83) by dggpemr200006.china.huawei.com
- (7.185.36.167) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.11; Thu, 25 Sep
- 2025 19:11:14 +0800
-Message-ID: <eaee73bd-21cc-4da2-86a8-fe6a9576ab51@huawei.com>
-Date: Thu, 25 Sep 2025 19:11:13 +0800
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF8D7278E41
+	for <damon@lists.linux.dev>; Thu, 25 Sep 2025 11:14:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.201.69
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1758798845; cv=fail; b=m8Uw/W7Ys2MKsbs3QEERBlfpLbPoUMNb+93IBcpvlHPKexKS06oyN9wVQwEMXauzbcDwqebVVg9qa3ujuhwA8S8dDvxKL8Cwefzfnmpn7IWVY6J91EPg1GfY1vE6Zv+sst00v5xkJlhcl/z9pMUyL+o9vYe/5gOV0cmvNKGCa7c=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1758798845; c=relaxed/simple;
+	bh=Fwwbospziy6LhB46JvPgkvnpzZ3MjxWtkHQNb6WVFCU=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=VC64unfEffGMrvz4xMnD82YoYK51njyybB7wn1n0cubTzTVjKUc2zHrcXKI9tTGQa5MpQLPuAIzm1Qs5e+eaS3SHC7ftAMOSkEdZmwWq4ZjgLMDhV72lUn1EDJmoZzzmD+saSVwivmkjdF/P4ZwIFaa5M310O5h4iwzreA46DgE=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=BEcSi1/e; arc=fail smtp.client-ip=40.93.201.69
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="BEcSi1/e"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=Hg6fo/muHttbNo4KAp94YjIV2o8/EYJYncaPWLjXGEuDsUFDL8HfKm9ynAtRdKlO7rQMTl4r8CSVM1c+NXK7Lt1qtrb31gyl7pN0+LiOADtPq/1Mr+zk82roKx/Gqs1mntO9uk9jfDOQG3EAP87AO6UwXNHBajmA4aKcXUzTXaFxFFLUSWxRFXK5/Syjb38mP24EfLpXY/INTv1DztUS2MZfXYl9yVK30Di8YvCoh3zB5D20RKBLPQLUnQupf3YY1XfnEaVdo0O+u8RGoz3CisWcnrggiLrLUfbI8AxUKYcJtZsQsZCCath2muMDw7819Fney+9Gvuu/UAVvyGP8iw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=bj2QhACbEZ8TEywBQYNcdKIsqqG5e3RlpIq4UkeXraM=;
+ b=R+h7gFHOHBsIuWI9gVohQIoVL55K9QhYaISxFa1Zw3PSU5RYfJIqHSkAaOggAz5o03NYKKH8XH1eGRqQvPOD9V+GleN1ykxY/ew1fz26nOvwaARP87yVqf6Ua5UUvaQdFJZfMnMSws4RdMv9XWOuI6dbMyM7VDYDp1Oe9Nk2czbh7EJwsbybpzGdk/3TydBplHkSvEkn4vP5bZkQPJVRdxHNePsluCEMijR+6iTatSZMWjK0CDIRJrSlj2No2LfLaf11/k3JMGROpOlEG6GLtsBO43anFCTtUUoow/gf0d/qxYfKGtc+7cTcjXQuKScVkfcO5L3/H/KO0MT4UkicfA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=bj2QhACbEZ8TEywBQYNcdKIsqqG5e3RlpIq4UkeXraM=;
+ b=BEcSi1/eUKvgNR7q9vsEvdlB4IYFSOZ+irjSP31cMNU9Av5y4+xi6DRq/bxWtPyIHyYxgHEfjs2GwBfGlaFq5+BbebYfWZ04s/7azcPS72VW8Pa+uXVs1nEca82jG8z0+yRVHNo52Og/goA3vruO9jMlqk1DCdiCul3S4MXyZ77nWKxCEcOfz7DO1hO4Cwn/PiO+ndhkIgDKWdQnwbEu8eVB3rsjDdlzg4WGEUn4ocek8pjpmYYxR/61M4YWCxvDoSu/bY4Xti9EgENS3I0nhVL0o3xsb39gpDmYxLoSiOtkNJZ/s5rZBcmF4HPquEVajMBwyhT6DIWEYVVGlTa8Dg==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from PH8PR12MB7277.namprd12.prod.outlook.com (2603:10b6:510:223::13)
+ by CY5PR12MB6297.namprd12.prod.outlook.com (2603:10b6:930:22::19) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9160.9; Thu, 25 Sep
+ 2025 11:14:00 +0000
+Received: from PH8PR12MB7277.namprd12.prod.outlook.com
+ ([fe80::3a4:70ea:ff05:1251]) by PH8PR12MB7277.namprd12.prod.outlook.com
+ ([fe80::3a4:70ea:ff05:1251%7]) with mapi id 15.20.9160.008; Thu, 25 Sep 2025
+ 11:14:00 +0000
+Message-ID: <1f0037b3-5ee1-427e-9d0c-5f429d841916@nvidia.com>
+Date: Thu, 25 Sep 2025 21:13:53 +1000
+User-Agent: Mozilla Thunderbird
+Subject: Re: [v6 04/15] mm/huge_memory: implement device-private THP splitting
+To: David Hildenbrand <david@redhat.com>, linux-kernel@vger.kernel.org,
+ linux-mm@kvack.org
+Cc: damon@lists.linux.dev, dri-devel@lists.freedesktop.org,
+ Zi Yan <ziy@nvidia.com>, Joshua Hahn <joshua.hahnjy@gmail.com>,
+ Rakie Kim <rakie.kim@sk.com>, Byungchul Park <byungchul@sk.com>,
+ Gregory Price <gourry@gourry.net>, Ying Huang
+ <ying.huang@linux.alibaba.com>, Alistair Popple <apopple@nvidia.com>,
+ Oscar Salvador <osalvador@suse.de>,
+ Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+ Baolin Wang <baolin.wang@linux.alibaba.com>,
+ "Liam R. Howlett" <Liam.Howlett@oracle.com>, Nico Pache <npache@redhat.com>,
+ Ryan Roberts <ryan.roberts@arm.com>, Dev Jain <dev.jain@arm.com>,
+ Barry Song <baohua@kernel.org>, Lyude Paul <lyude@redhat.com>,
+ Danilo Krummrich <dakr@kernel.org>, David Airlie <airlied@gmail.com>,
+ Simona Vetter <simona@ffwll.ch>, Ralph Campbell <rcampbell@nvidia.com>,
+ =?UTF-8?Q?Mika_Penttil=C3=A4?= <mpenttil@redhat.com>,
+ Matthew Brost <matthew.brost@intel.com>,
+ Francois Dugast <francois.dugast@intel.com>
+References: <20250916122128.2098535-1-balbirs@nvidia.com>
+ <20250916122128.2098535-5-balbirs@nvidia.com>
+ <b0bd326a-0ef6-4c72-ae25-3faff1fd6eb7@redhat.com>
+Content-Language: en-US
+From: Balbir Singh <balbirs@nvidia.com>
+In-Reply-To: <b0bd326a-0ef6-4c72-ae25-3faff1fd6eb7@redhat.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: SJ0PR13CA0173.namprd13.prod.outlook.com
+ (2603:10b6:a03:2c7::28) To PH8PR12MB7277.namprd12.prod.outlook.com
+ (2603:10b6:510:223::13)
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [BUG REPORT] mm/damon: softlockup when kdamond walk page with cpu
- hotplug
-To: SeongJae Park <sj@kernel.org>
-CC: Andrew Morton <akpm@linux-foundation.org>, "Paul E . McKenney"
-	<paulmck@kernel.org>, Peter Zijlstra <peterz@infradead.org>,
-	<damon@lists.linux.dev>, <linux-mm@kvack.org>,
-	<linux-kernel@vger.kernel.org>, <zouyipeng@huawei.com>, Hugh Dickins
-	<hughd@google.com>
-References: <20250920104220.1399-1-sj@kernel.org>
-Content-Language: en-US
-From: Xinyu Zheng <zhengxinyu6@huawei.com>
-In-Reply-To: <20250920104220.1399-1-sj@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: kwepems200002.china.huawei.com (7.221.188.68) To
- dggpemr200006.china.huawei.com (7.185.36.167)
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PH8PR12MB7277:EE_|CY5PR12MB6297:EE_
+X-MS-Office365-Filtering-Correlation-Id: 5065309e-1683-4044-e7dd-08ddfc24a0e7
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|376014|7416014|1800799024|10070799003|366016|7053199007;
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?R3NUTnlLTWRzaXZUSjBmbUF4YTBMQUVPOXpSKzA0dUQzL05Wa1NOUTE2WFRu?=
+ =?utf-8?B?emF1SFlwK2daZzNZRDJMZTZZcy9KMFQwQkVoT0w2ZElGMGxvRHdXWDdCSm5l?=
+ =?utf-8?B?YW5BM1JXTXUxK3pTa0dJUmdycjd5b0R2NndBdUQzK1czZVhZK2FPNU04U21o?=
+ =?utf-8?B?NS9JdXhWdlNTZkNlelN1d0NtSUhjYUxPNklnbVJSczF3cUtFUlVKZGUrd3A3?=
+ =?utf-8?B?R3A1ejNsY2Vxc0xjb016b0tKVWN6dFhtdmdOM0diRGxuSHhZVG4wTDhPS25w?=
+ =?utf-8?B?RGI3ZTRhZkJOa2xhUWJaaDBtcWNHakNyZDRSSVBOeEpxZ2QvT2UwNHlveW9o?=
+ =?utf-8?B?V0RoTEZHa0kwYWtpTVlhTFE0RWFrNWdiS3dpaU52ckZvcVZhczVGa1lwa0xH?=
+ =?utf-8?B?N0F2d1pvb2dSVm8wN3BGS1Q0c29FbzlCekJib1dCbjV0dTNmMDZ3Zk53YkN0?=
+ =?utf-8?B?b2tGU3ZteFBnWnFYK0dDb3ZJS0N0NmZWcnliSmlBSlNqd2tPRFVwc3VOdlFE?=
+ =?utf-8?B?aWZVa0EvMHM4b1doL0JTbzZaeWhucHhyZTFTRnBKVjJaSE1JOHVmWDlhRlRF?=
+ =?utf-8?B?dkJSSCtGOUhNdXEzdlUzM3FZczFTRlRDbndheCt6YjJxWHNPalRyd3VHSWtP?=
+ =?utf-8?B?U0NPckZoSEk1NWxNTEYrbDZVSVBtQnY0bUpyZWhNdWlVWUF4OWh3NlA2Rjlh?=
+ =?utf-8?B?VTQ3NzBZaFVwT0tmZ3QyWVBta3hwb0FwODdPSUp6NURYbVpWcGZncVllQ0s5?=
+ =?utf-8?B?SE9VRzRTcW55aS93dFpaYVhGYVhKTjZremtNeG1Oem5KUlNCcGtoWllSVDBx?=
+ =?utf-8?B?YUx2aU1vbVBLQmZNS2Z4RmlmejlkWjgyd09JNXJwbDI2Z0k5OTkxNmhOaGNm?=
+ =?utf-8?B?c0VzcGlIRjUvempZVjZWWTBpMDNLOHN4Q25QWk1BeUJDV3FZTUkwNlFHMXRK?=
+ =?utf-8?B?OFp3bWtvZDhSR0RlbUorZUxEZ2JaK2kyQlJVYk1Ha21HbzdYdCt5anVGRC8x?=
+ =?utf-8?B?ZXgzS0lsTFBHMWp1a3AxN0VOUHhSYmdCNDZxRHZjeUE4c00yOWh6Zzk5YldN?=
+ =?utf-8?B?eWtFRWV0a3N6d3F1V2VONE82ek5LbW1CaVh3eXp3ZXZQaTZKRnBnb0JwZ0Nr?=
+ =?utf-8?B?Ny9VUXA2Vzd4L20wb0VwSjFZeld2QTgvc08vSUNhVytpNWFOMlVHMkJPUVB6?=
+ =?utf-8?B?N0xYa0ZDT2NtcmJhZHNzMkdtQVp5TXM5cjlaKzBvc3h5cFZrS3hIZ0UxT2ll?=
+ =?utf-8?B?Sld2MDNSZFB0ekhGbzNWci9za3k4RnZpMXVqcTVlREFrQUd2ZW9UNjV3MjlZ?=
+ =?utf-8?B?WUh0U3g1UlUwZXcxeEVIUnJHbExwRXNLQ1JnbEpKbFE2ZHFDaVFJa25SVUZh?=
+ =?utf-8?B?SWpadmROZkMzMEd2cktCVVRmdlU1aStoQVJ3ZDR1dnpPYkRPSzdWRkFzYm1h?=
+ =?utf-8?B?SC9HeXVkeEh5Y1p6aG45MkZtOEt2RHhNT2hzWDExNzVFbllOYW9KTmpDOGlG?=
+ =?utf-8?B?dGlTRGxJalM1YlZBc1lSYWVKTVNvSFZ6WGhxL01qNHd2eHJncm92dGtFdkM4?=
+ =?utf-8?B?cytMQXNRNkRxZVBOWUxkblVEb0x1NHNDNVhIWXNYSHo3V3lHYStNSmpmVGRh?=
+ =?utf-8?B?V3EyTVgrY3g0VWRCWWtycklQSlYzUTVsdUZoSnE2YVcwOGVWTE5ybmlrNXF0?=
+ =?utf-8?B?RC96KzIrOHZjUmYyWEw1eGF2NlpiQjNQRGVPeXA1QVZoZTFCNU5tN093U3Vl?=
+ =?utf-8?B?NVVmdkhPbUxrbnZMSWpzL2hrTGJDc0gwR3hlN1BOdjJ3NHEzSE5rOXRXdGxO?=
+ =?utf-8?B?bU1nQ0pzSXkwelF1VlJmS0lyRWRaSHk1TnpJYkxpS3NhL1ZBTHNoS0RSQTRi?=
+ =?utf-8?B?Yi9qVzJpUHlnOXVFaW9EU1NqUEpldFN6Qk5JcG91MmJBbTFscGZhMVBYY3N3?=
+ =?utf-8?Q?RUfB4K1c7cY=3D?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PH8PR12MB7277.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(7416014)(1800799024)(10070799003)(366016)(7053199007);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?dWttcHNnNW51TXdjb2JNQkpqdGhXNU52V1BkeFRkVVRJYk5PdzlSTTRtbXdH?=
+ =?utf-8?B?b3FIcG1TbUVYcDZrdXZZZEd3L1dLV2RTb0s4TmtNKzJkR3hPVXhBWld3amYx?=
+ =?utf-8?B?SDU4Y1k4dHVmUVJBYU1QN1lPSm4yeXdUMWlMczJvTzJSMG8vckRmWHlQUjc2?=
+ =?utf-8?B?azRIQ29NYmpxeWR3elVMVFdVaUVEWFNaRzFWbDhGUDNxWHNZWE1oeGFlajJH?=
+ =?utf-8?B?c3lhdGFObks3aG9aRnJsL2RmNVZiUDNrNUloZ2o3enNraUdmdTg1bjJWSFcy?=
+ =?utf-8?B?OThhQStTZGJrUlNibUV1TlZSdDlNbnRPb1F6UE9rd1duNUV5TEEzM0pqYytD?=
+ =?utf-8?B?OTZuclJGTlJEUzJNZUJwRVp6czg3QXVGOWJBb2ZRMXVmYVlWQTE5ZjI2Mm1q?=
+ =?utf-8?B?YTcydGtDVUtLd0pWaGErNHA0QWtUbUt5S0JYZ3pKK3V5V3V5YWFSbkhocE1i?=
+ =?utf-8?B?SUt4dEtzT1VWcEhpOWJvbGVxYTdjeTFWWkN6WlVUS2NjODU5T1JrWDEyS3pF?=
+ =?utf-8?B?cDR2N1hEcytJU2NNNExuL09BR3djcENoNWpTQ0JFUzZITTc1S0FHdTZyL0Fl?=
+ =?utf-8?B?WnVFSmtzNDVUWm02V2V5ODVOb1Y2NEt1TmJFUndTRk1yZEpYRlM2a1VlNGdj?=
+ =?utf-8?B?enB5U0J5OUR5RmZ6Z1lZUmQvUFVBd2ZwYWE0MUlCWDZmRzk2Sys3ODV5eWhy?=
+ =?utf-8?B?N2JXbC8vdXMzMlNXYzlMTTV4U3UxTG93amJuWXV3ajlraGV6YkFQTGxJaFQ5?=
+ =?utf-8?B?UjkrNjNENnFOc3FHL0FtUHlTV2toM0IrY1dMelhXZXFDcGpKQ1JuWVAvU0V0?=
+ =?utf-8?B?dlpkUG1RT0tvUVhtdVl3cGxUR3hUVnFCcTVobERkeTVKMU5nRmtWSkduRjd3?=
+ =?utf-8?B?R1R5M3NqVk81dTVqQXZPOGlBNWRUbUhSbE9HV2p3NmZKc043M3NtaVp2S3lT?=
+ =?utf-8?B?QVoxaDNZSnZwUHRsVzAwMEhPTzZaN1hKRUZTNGtaMmJoMHNnelhCaDNEd2Za?=
+ =?utf-8?B?eU9LOGkyTmx0b0p3SnNyR0JZTE40WXZDeS9DM0d4WWZFdzBWZDBHV1F4ckJk?=
+ =?utf-8?B?UXRZVmlKODFsM0xnazRwMjMxdmVlWEdRamE3OWsybWg3UitHRnNHdjJKajJu?=
+ =?utf-8?B?eGZKZTVPdnByTGx6RlVEa3NsRENZYS92OVVLVG9sU1dMb01rTEJXMi92Ui9J?=
+ =?utf-8?B?dGlmeHluUDlFdTBWVFczY0MyYW9aamdGK3hHK1J4R3lETmJWUEpCdERuZENy?=
+ =?utf-8?B?SHB6YmJNSmU1TThiTlpmUmprc2RmQ2VoZ1ZJSTVObmt4S3YxTWtudklQOGdw?=
+ =?utf-8?B?K2ZoQTdtcVZNRHN2aW1wU05lNEVNTkd3SE9WWC9TeWlxY3BsMVhyUXdYQWpj?=
+ =?utf-8?B?ZDdiNlNzVzRJQUpmYSt0Y1RManNPbk83M1pkRmVlR2tZNjBBNjhjTnBQVkEz?=
+ =?utf-8?B?cG8wdjZ0TCtoRFltTFZlYzgxbnZ3U0I1NTd1d0ZralNocnBKZitRZGYyV2tG?=
+ =?utf-8?B?YmNqTlBBNEtsV2JBS1VKUkVJTndIU0FuOG9LQ3dSR0p4UW4vRjZaZVdpUjB0?=
+ =?utf-8?B?SUlHemhqT29ESlJpSkc3WUFrRnVwbFdKQVE2bFNYbE44VEhOdWxwRyttT1RQ?=
+ =?utf-8?B?RllobzA2UDYyWXhGOEN3aUs1UXJHeUk4TUpOakkySDRHR3VCbjI0dURWZm5v?=
+ =?utf-8?B?Vnh4MU5ya0U1RXpGUU1KQWFUZ1hyTEpPOHBvbEFTdW1vZG1qNkU3azBsRXJj?=
+ =?utf-8?B?emlMVUNVL0FlZis3UDBIUjRpNHhHMEREWHI0TDhvWWNPU0owd3NpWWJhWENU?=
+ =?utf-8?B?TDBGRUhQYjQ0dGpQQjZrT3lLUDVweHZKMXVRcG9BSGtBNmFubnYwa3BpU0tG?=
+ =?utf-8?B?VUl6cm55aVl6WEh0R045SlNqUi90djNlWXoyL3hIenlNZTRUcGZ2bm9BZ3FF?=
+ =?utf-8?B?eUpmck1ZZm9jdXBvRllTN0lJVTBNOCtRYS9JandmTnhrSkRWbFRQc3lRaldy?=
+ =?utf-8?B?WTFNZGRESmpIU01hMTZuUHlLcWdmN0VURE9OVENMVVVtemE2WGQ0blVXeVFV?=
+ =?utf-8?B?VWFYdGFPYnY0czhDd25pS29GN1ZqUytwcFkzTzZDZlU3MWU4UWVNQXMrZVlm?=
+ =?utf-8?B?VnBnblhRL0FRcjM2VFltSkVGN0xldXF3NnIrbkxXWHpuU0Z0ak5ncVJRK2M1?=
+ =?utf-8?Q?51W0zbDRpbuROly3YkEDgw0oNwUauJfOtPIaeW/PiSsu?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 5065309e-1683-4044-e7dd-08ddfc24a0e7
+X-MS-Exchange-CrossTenant-AuthSource: PH8PR12MB7277.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Sep 2025 11:14:00.6807
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: k7wN7W4DmT0UCv8KzvB2Yv1Q6zVMLAxuTkq1IsxjzlOJLryNuX4nsD1JAF3UCdXkk6cczj7kwlnrafYEe5H8mQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY5PR12MB6297
 
-
-
-On 9/20/2025 6:42 PM, SeongJae Park wrote:
-> On Fri, 19 Sep 2025 20:56:56 -0700 (PDT) Hugh Dickins <hughd@google.com> wrote:
-> 
->> On Thu, 18 Sep 2025, SeongJae Park wrote:
+On 9/25/25 20:01, David Hildenbrand wrote:
+> On 16.09.25 14:21, Balbir Singh wrote:
+>> Add support for splitting device-private THP folios, enabling fallback
+>> to smaller page sizes when large page allocation or migration fails.
 >>
->>> Hello,
->>>
->>> On Thu, 18 Sep 2025 03:00:29 +0000 Xinyu Zheng <zhengxinyu6@huawei.com> wrote:
->>>
->>>> A softlockup issue was found with stress test:
-> [...]
->> This had me worried for a while: thought we might be needing to change
->> lots of other places, and scatter cond_resched()s here and there.
+>> Key changes:
+>> - split_huge_pmd(): Handle device-private PMD entries during splitting
+>> - Preserve RMAP_EXCLUSIVE semantics for anonymous exclusive folios
+>> - Skip RMP_USE_SHARED_ZEROPAGE for device-private entries as they
+>>    don't support shared zero page semantics
 >>
->> But no: no need for cond_resched()'s, this is all just a confusion about
->> where pmd migration entries are handled: a pmd migration entry is accepted
->> by pmd_trans_huge_lock(), but is not accepted by pmd_trans_huge().
+>> Signed-off-by: Balbir Singh <balbirs@nvidia.com>
+>> Cc: David Hildenbrand <david@redhat.com>
+>> Cc: Zi Yan <ziy@nvidia.com>
+>> Cc: Joshua Hahn <joshua.hahnjy@gmail.com>
+>> Cc: Rakie Kim <rakie.kim@sk.com>
+>> Cc: Byungchul Park <byungchul@sk.com>
+>> Cc: Gregory Price <gourry@gourry.net>
+>> Cc: Ying Huang <ying.huang@linux.alibaba.com>
+>> Cc: Alistair Popple <apopple@nvidia.com>
+>> Cc: Oscar Salvador <osalvador@suse.de>
+>> Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+>> Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
+>> Cc: "Liam R. Howlett" <Liam.Howlett@oracle.com>
+>> Cc: Nico Pache <npache@redhat.com>
+>> Cc: Ryan Roberts <ryan.roberts@arm.com>
+>> Cc: Dev Jain <dev.jain@arm.com>
+>> Cc: Barry Song <baohua@kernel.org>
+>> Cc: Lyude Paul <lyude@redhat.com>
+>> Cc: Danilo Krummrich <dakr@kernel.org>
+>> Cc: David Airlie <airlied@gmail.com>
+>> Cc: Simona Vetter <simona@ffwll.ch>
+>> Cc: Ralph Campbell <rcampbell@nvidia.com>
+>> Cc: Mika Penttilä <mpenttil@redhat.com>
+>> Cc: Matthew Brost <matthew.brost@intel.com>
+>> Cc: Francois Dugast <francois.dugast@intel.com>
+>> ---
+>>   mm/huge_memory.c | 138 +++++++++++++++++++++++++++++++++--------------
+>>   1 file changed, 98 insertions(+), 40 deletions(-)
 >>
->> See fs/proc/task_mmu.c for mm_walk examples of trying pmd_trans_huge_lock(),
->> then pte_offset_map_lock() if it failed, or ACTION_AGAIN if that failed too.
->>
->> When I ACTION_AGAINed damon_mkold_pmd_entry() and damon_young_pmd_entry()
->> in 6.5, I didn't realize that the pmd migration entries were reaching the
->> pte_offset_map_lock(), with corrupt results (or did pmd_bad() filter them
->> out? I didn't think so, but it'll take me too long now to work out whether
->> a pmd migration entry counts as pmd_bad or not); but knew that the new
->> pte_offset_map_lock() filtered them out safely if there was a race.
->>
->> But they've been reaching it without any race, so yes the ACTION_AGAIN
->> would send the mm_walk back again and again for as long as the pmd
->> migration entry remained there: not good, and Xinyu finds a lockup
->> when hotplugging CPU without preemption.
+>> diff --git a/mm/huge_memory.c b/mm/huge_memory.c
+>> index 78166db72f4d..5291ee155a02 100644
+>> --- a/mm/huge_memory.c
+>> +++ b/mm/huge_memory.c
+>> @@ -2872,16 +2872,18 @@ static void __split_huge_pmd_locked(struct vm_area_struct *vma, pmd_t *pmd,
+>>       struct page *page;
+>>       pgtable_t pgtable;
+>>       pmd_t old_pmd, _pmd;
+>> -    bool young, write, soft_dirty, pmd_migration = false, uffd_wp = false;
+>> -    bool anon_exclusive = false, dirty = false;
+>> +    bool soft_dirty, uffd_wp = false, young = false, write = false;
+>> +    bool anon_exclusive = false, dirty = false, present = false;
+>>       unsigned long addr;
+>>       pte_t *pte;
+>>       int i;
+>> +    swp_entry_t swp_entry;
 > 
-> Thank you for your detailed and kind explanation, Hugh!
-> 
->>
->> My suggested patch below (please take it over SJ, and do with it what
->> you will), converting damon_mkold_pmd_entry() and damon_young_pmd_entry()
->> to use pmd_trans_huge_lock() as I'd been expecting, so handling the
->> pmd migration entry up in that block.  (Side note: patch against 6.17-rc,
->> but I see mm.git adds also a damos_va_stat_pmd_entry(), which would
->> better be converted to the same pmd_trans_huge_lock() pattern -
->> though I notice you're not setting ACTION_AGAIN in that one.)
->>
->> But I have to admit, there's very little gained by using ACTION_AGAIN
->> in these functions: it helps not to miss the range when racing against
->> THP collapse or split, but you're already content to miss the extent
->> if it has a pmd migration entry, and there can still be an instant when
->> the range which used to have a page table does not yet show the THP.
->>
->> So if you prefer a smaller fix (but a larger source file!), just
->> dropping the walk->action = ACTION_AGAIN lines should be good enough.
-> 
-> I agree all your points.
-> 
-> I'd prefer the smaller source file following your suggested change below (using
-> pmd_trans_huge_lock()) in long term.  But, for a short term, I'd prefer the
-> smaller fix (dropping walk->action = ACTION_AGAIN) since it should also be
-> merged into stable@, up to 6.5.y.
-> 
-> So, I'd like to suggest as following.  Let's drop the
-> 'walk->action = ACTION_AGAIN' like the below attached one, for now.  After it
-> is confirmed to fix the issue and merged into relevant trees including stable
-> trees, let's revisit the code to cleanup following pmd_trans_huge_lock()
-> pattern.
-> 
-> Please let me know if I'm missing something, or you have other opinions.
-> 
-> Xinyu, could you please test if the below attached patch fixes your issue and
-> let us know the result?
-> 
-> If Xinyu confirms the validity of the fix and no one objects to the above plan,
-> I will post the fix as a formal one with a better commit message.
+> Not renaming this variable avoids a lot of churn below. So please keep it called "entry" in this patch.
 > 
 
-Hi, SJ. The below attached patch is works!
+Ack, will fix
 
-These days, I reproduced the same softlockup scenario for three times. 
-It can be reproduced around an hour when I increase the memory pressure.
-Then I patched the below fix, and ran the same testcase whole day, 
-softlock didn't trigger again.
-
-Sorry for the long wait. Thanks again for your solution and explanation!
-
-> 
-> Thanks,
-> SJ
-> 
-> [...]
-> 
-> ==== >8 ====
->  From 743cafda8982624229541741dbfe5ff252328ac0 Mon Sep 17 00:00:00 2001
-> From: SeongJae Park <sj@kernel.org>
-> Date: Sat, 20 Sep 2025 03:35:34 -0700
-> Subject: [PATCH] mm/damon/vaddr: do not try page table walk again
-> 
-> For a quick fix of a softlockup issue:
-> https://lore.kernel.org/20250918030029.2652607-1-zhengxinyu6@huawei.com
-> 
-> Signed-off-by: SeongJae Park <sj@kernel.org>
-> ---
->  From 743cafda8982624229541741dbfe5ff252328ac0 Mon Sep 17 00:00:00 2001
-> From: SeongJae Park <sj@kernel.org>
-> Date: Sat, 20 Sep 2025 03:35:34 -0700
-> Subject: [PATCH] mm/damon/vaddr: do not try page table walk again
-> 
-> For a quick fix of a softlockup issue:
-> https://lore.kernel.org/20250918030029.2652607-1-zhengxinyu6@huawei.com
-> 
-> Signed-off-by: SeongJae Park <sj@kernel.org>
-> ---
->   mm/damon/vaddr.c | 8 ++------
->   1 file changed, 2 insertions(+), 6 deletions(-)
-> 
-> diff --git a/mm/damon/vaddr.c b/mm/damon/vaddr.c
-> index 8c048f9b129e..7e834467b2d8 100644
-> --- a/mm/damon/vaddr.c
-> +++ b/mm/damon/vaddr.c
-> @@ -328,10 +328,8 @@ static int damon_mkold_pmd_entry(pmd_t *pmd, unsigned long addr,
->   	}
->   
->   	pte = pte_offset_map_lock(walk->mm, pmd, addr, &ptl);
-> -	if (!pte) {
-> -		walk->action = ACTION_AGAIN;
-> +	if (!pte)
->   		return 0;
-> -	}
->   	if (!pte_present(ptep_get(pte)))
->   		goto out;
->   	damon_ptep_mkold(pte, walk->vma, addr);
-> @@ -481,10 +479,8 @@ static int damon_young_pmd_entry(pmd_t *pmd, unsigned long addr,
->   #endif	/* CONFIG_TRANSPARENT_HUGEPAGE */
->   
->   	pte = pte_offset_map_lock(walk->mm, pmd, addr, &ptl);
-> -	if (!pte) {
-> -		walk->action = ACTION_AGAIN;
-> +	if (!pte)
->   		return 0;
-> -	}
->   	ptent = ptep_get(pte);
->   	if (!pte_present(ptent))
->   		goto out;
-
-
-Xinyu Zheng
-
+Thanks,
+Balbir
