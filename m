@@ -1,73 +1,72 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76FA9285C89
-	for <damon@lists.linux.dev>; Thu, 25 Sep 2025 10:06:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56B1B502BE
+	for <damon@lists.linux.dev>; Thu, 25 Sep 2025 10:12:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758794787; cv=none; b=TpvHC3uZvTXS7WOnhwrpwa3i5eVvPx0IHRNrxr7rfgZ8VeQIQI/wmGTRl1IrHl2I7Q05TDsWlWo7iHDzsP5Bc8chjXtEJ4hgR7H3iYMkSOsI6bzwycnEwsxDUIo6x3Y+UrRRUSu5pxSZCMWHvJxZcpmgtlHj+csbK6HTcIUADYQ=
+	t=1758795125; cv=none; b=ZbDkOEaaKchoy7R1rxLR4boYUxPhx7WKHykZEkK+Jjs0eSzYVdW13WsBdjGF9EBjWftV69eyyd9WvzxHdXRFDJ3VixZekzXRBpF/yvDM/yIBezP9TYeoYiFkkCTMLQEuwPm+BrR/VBCzb724F4r+AeG4kmMSFzw1GjuXAXRw9K8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758794787; c=relaxed/simple;
-	bh=KGbUjEpAkc4sIly8VUpEuSI3Y23L9o7q3N8FeciH2h8=;
+	s=arc-20240116; t=1758795125; c=relaxed/simple;
+	bh=bqjRzRkAxHbPvHDukofehyRkFCGJOoB0EPf4l7P7/nU=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=jXzWoJXLlqY7eX30g0fFHg/tU75/dIr3x0X8guntXdzTbut26I43zzjD9LExuL1cImIyaGEHmyRbO0H3/1Ew+sl77oT7MXlXbex9diw/j9jfMqASPST13b55xkAEiKOFt/C63ocARKE/e/SAo19HsQEAoBKL8HVBHH/jpNBcd74=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=TuHO+6ur; arc=none smtp.client-ip=170.10.133.124
+	 In-Reply-To:Content-Type; b=MhLiGSo8Rh5BDSMYibMDE3e+r97Q69EtWbcKl3AA+pVSd9sBDTanFmYxrj5y8xxbNbkW2e88EbFvd41XSNtvCplprzlrNCnwq+dgWMasGWtMz9v0G3MJ/jak3bRbqEjjUE9jHlIjPTsssEToJlm/K3VbRQKliw4duIpZhw0HP3c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=BjsoqQna; arc=none smtp.client-ip=170.10.129.124
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="TuHO+6ur"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="BjsoqQna"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1758794784;
+	s=mimecast20190719; t=1758795122;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=UQ1yIMrrwyU17r+tTnLpblX0dAaSzYGyBKLGlXcYZwI=;
-	b=TuHO+6urt6hJn3ze4poCZ3CLLNwR1YxLMijTAfvSWsiDQHwihRPlaixSpw0MLijNgEm9sv
-	gd76tehzjH+VnXrNbPZA3yxdkh88hIIIUC6Bc5CVXA0UOmDMhGWs32OTR/wjktKtWeHrs5
-	851k1SSlBgIDK7IiYyn4rYUw07+zBc4=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+	bh=lG8Q/FN8wXVOGFD2S5MD44NnHhqfaQZRP/OiKpWlrJQ=;
+	b=BjsoqQnaGQwWRGBCqIMJlbGvf3Yc5a1Md2kk1MFGZ7sEa2UdZOu69ncVG1kF7+VbAddf0r
+	lBMOuvp+fQj4qqng9ryHiUniwgVbpXVRQBsWrMFOzXXtllvK0rQ/gW7kjSQ4UZr2namQsW
+	MF+keq6KGL+59bRR7buktZq17vNWhuc=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-654-6F2qKOkiOciAGv8rgR3uiw-1; Thu, 25 Sep 2025 06:06:23 -0400
-X-MC-Unique: 6F2qKOkiOciAGv8rgR3uiw-1
-X-Mimecast-MFC-AGG-ID: 6F2qKOkiOciAGv8rgR3uiw_1758794782
-Received: by mail-wm1-f70.google.com with SMTP id 5b1f17b1804b1-46e31191379so4948765e9.3
-        for <damon@lists.linux.dev>; Thu, 25 Sep 2025 03:06:23 -0700 (PDT)
+ us-mta-389-WlI-Qoq0P3GUSrKu1rMMYQ-1; Thu, 25 Sep 2025 06:12:01 -0400
+X-MC-Unique: WlI-Qoq0P3GUSrKu1rMMYQ-1
+X-Mimecast-MFC-AGG-ID: WlI-Qoq0P3GUSrKu1rMMYQ_1758795120
+Received: by mail-wm1-f69.google.com with SMTP id 5b1f17b1804b1-46b303f6c9cso6218315e9.2
+        for <damon@lists.linux.dev>; Thu, 25 Sep 2025 03:12:00 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758794782; x=1759399582;
+        d=1e100.net; s=20230601; t=1758795120; x=1759399920;
         h=content-transfer-encoding:in-reply-to:autocrypt:content-language
          :from:references:cc:to:subject:user-agent:mime-version:date
          :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=UQ1yIMrrwyU17r+tTnLpblX0dAaSzYGyBKLGlXcYZwI=;
-        b=AVf1Y2AGBRoVkMTD9Qsp2dO28xQVTl7zRl6D8PFkmjQdonjucxYFStlg97F9jtUvsE
-         0KA7AYqtDZpgxictZGcalN/X9b3GH7DAgw2chTl3MCd59cU68yTV5HrCfbp1hju8xjdQ
-         5hs43eLOHY8escu0Y0X34a3d6dqlnZw9PYl9+5SeUxWGWspG3M7PG1XboPHWabP3rHQC
-         8xNQ2EFRHuSfXiYrzRxFdzxbOLUtREgp6O7ymXIJ3kt53smD9qY8PqATOv9IhlPSlVyF
-         E5o7JpLwhPCsPRVRRhTfQ/UGe+vwQv9yAgnxi2XQxgsrYHr0gbM6uygf5h2YqDjpVEXi
-         wxuQ==
-X-Forwarded-Encrypted: i=1; AJvYcCX1nY82gwJplSgp8gu+B8hf18IXGV0PqIeu8e8a42cUaBr+hrvaqPU4AP0aj0JqP3qt+YIyTQ==@lists.linux.dev
-X-Gm-Message-State: AOJu0YzTz8ukcpq4h3erap7kbMFME2+ChFhjFH+iNRavE+Lh8NjRsmz5
-	oTOL9Bni4fNb2yyrjStjO1/Q6MOPP036C6oHBOKJJ/astKW9y4S2k5HG4xUpPfTeOQM+VBETNOg
-	2PcutCOdPBF+SZ22RJ2cRkU7SrkoqX4dQ0XLsrVhY/PAODIOOczYN+65E
-X-Gm-Gg: ASbGnctrhKfT/c9VWTTQsu+vnBiTSGeLRCKNnj6MN9KgiK04oCx7H8YJ70nLVuuI4Ow
-	rgqefbfqrRx8qWuZmsrWkquK4cH2o1N8MTVMPMTbvsaXB8TKhRdYSg/5diL+8U0KKOOeTtwmouK
-	HURMnQJI1vdpjQCEVqb8LZaH2NdbYPUB8TzEaDE9zG4rPQ7r5Hx2cub+Ttx5L+Hw3jwj9Gw4dZE
-	bBDLp8tqTsVeofJuAK79fztMpUIMZZCKI0rzD9hOw/rN5sdqRBUmSsXi2vkwwm7P8zoffLsZ++x
-	VALqTHMl+k212S9c5/CxKkFL0Tx6LUKjiv0NO2V0hl53RugfvOd5ZwHVkclRvheHzvLNHLMYvAm
-	j+yGkEbhz3FpEICNXeYIJYDCxukADRxQT2uiBn/8j6pvplMFCZh87EpQkI4goKCyEG0CO
-X-Received: by 2002:a05:600c:1e87:b0:46e:27f7:80ce with SMTP id 5b1f17b1804b1-46e329e51c2mr23724835e9.23.1758794781989;
-        Thu, 25 Sep 2025 03:06:21 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEXJl4bhmMZAV2Ov8ckXqohzCkRtHDu295sdMoIicohDcdpvJzXAjcv+ktFKrVhD9D0sp0u6g==
-X-Received: by 2002:a05:600c:1e87:b0:46e:27f7:80ce with SMTP id 5b1f17b1804b1-46e329e51c2mr23724515e9.23.1758794781570;
-        Thu, 25 Sep 2025 03:06:21 -0700 (PDT)
+        bh=lG8Q/FN8wXVOGFD2S5MD44NnHhqfaQZRP/OiKpWlrJQ=;
+        b=ZLf51IWmlZT3CYZCG6pjqsJaLgpYN2enBgzD6mA0lF+xhMgGaERlwnr1AQaVTaKTGH
+         AN6v3Q8kQ++4zGM5v0JgNZID26loZyd/XlOh2J64IK9ExH8P7vZPtG5vPnajnr1lmGeZ
+         mczIMiEiNaKjOm7wtWCd4OIpnxctpIxGNGfrrG8/Qd4b8unW07iy+uuRl38u6KOsBks8
+         7MDKxTR96PyAXdxxKoTGnBjdZ4XeO+yBNkLLhoBMk7k68qqeiSRIVqLDuZnFdUJXOeT/
+         GAalt/Xncag5TPhAQZl5fDYac28vEMFFRIDP+VkGYb++bdpFNAW1YItcppB3esEhvyi/
+         CY4Q==
+X-Gm-Message-State: AOJu0YzoyY61he18lPZoqWcoTUqCTu7yWnEMyfarZRN6SjN2wSUD/K7c
+	LnU98gyN+ymsoXeHegDo/AepvObSyU1wtPHYvCAK0HIFZS5BExA2TFeCg+m4k2Mopcxa7D8CI9p
+	cMpoYHgKNQbKeb3qfJwrQy7KrCft3doWhTHkdxFNtnJmWHgEUGrsY5P4EKS93O9AU
+X-Gm-Gg: ASbGnctLHnbo1u4yzpwzV5rsxAsOadxZY0+/xya8nHWFQh2HuC3RlSi2DuF0dj2rxKc
+	hJhikaZc/QAsXxw+xkIqvoF7BaiEC4R2+HtA0uLua/Af7CJOP5a3aOOILN5PcU+XbtvdDIByRBM
+	LfquGrWg8VprN1dRs3ebeYor6O6P7XkTO/jQ+dAphb3VrAPLC10V0qxMvK64bAKURYwguYBt+ki
+	rdxLY0nFrm5SXbn5bCdNaXESsWeK3LMTDMQQKYjsHWUmBESM4fqdq5Fe8ZGMv1ofQ1YccEb/Bff
+	nxoXXHf3BbZ6NUVYW7hBe0eNfpbsVZ0pnbBBv+ozUYdCU/ayYvhMjzcLzCl9N4LBBxG6x9/+zp9
+	ZW2+5An2ynMH1MBfutgFXfT51rx8Jw35l4waxNgjQpWZDK2fRbFPD8L+ZupCyq9gnm9zj
+X-Received: by 2002:a05:600c:1ca5:b0:46e:2637:d182 with SMTP id 5b1f17b1804b1-46e32a08feamr34777965e9.28.1758795119582;
+        Thu, 25 Sep 2025 03:11:59 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGlNMDizXc3Rq/dhiO8rd/15mVcqt0iIObArVPXmOTFpH25amynq0pBhSR/qoFGTRlMvFSsQw==
+X-Received: by 2002:a05:600c:1ca5:b0:46e:2637:d182 with SMTP id 5b1f17b1804b1-46e32a08feamr34777545e9.28.1758795119112;
+        Thu, 25 Sep 2025 03:11:59 -0700 (PDT)
 Received: from ?IPV6:2003:d8:2f3f:f800:c101:5c9f:3bc9:3d08? (p200300d82f3ff800c1015c9f3bc93d08.dip0.t-ipconnect.de. [2003:d8:2f3f:f800:c101:5c9f:3bc9:3d08])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-46e2ab31f1dsm70034495e9.13.2025.09.25.03.06.19
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-46e33b9eabbsm29826805e9.3.2025.09.25.03.11.57
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 25 Sep 2025 03:06:20 -0700 (PDT)
-Message-ID: <c9a0f531-bba6-48a1-bb50-639fb4f2dfb6@redhat.com>
-Date: Thu, 25 Sep 2025 12:06:18 +0200
+        Thu, 25 Sep 2025 03:11:58 -0700 (PDT)
+Message-ID: <7fe72c55-fbf9-472e-8d10-5b6396994435@redhat.com>
+Date: Thu, 25 Sep 2025 12:11:56 +0200
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -75,14 +74,15 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [v6 04/15] mm/huge_memory: implement device-private THP splitting
-To: Zi Yan <ziy@nvidia.com>, Balbir Singh <balbirs@nvidia.com>
-Cc: linux-kernel@vger.kernel.org, linux-mm@kvack.org, damon@lists.linux.dev,
- dri-devel@lists.freedesktop.org, Joshua Hahn <joshua.hahnjy@gmail.com>,
+Subject: Re: [v6 07/15] mm/memory/fault: add THP fault handling for zone
+ device private pages
+To: Balbir Singh <balbirs@nvidia.com>, linux-kernel@vger.kernel.org,
+ linux-mm@kvack.org, Alistair Popple <apopple@nvidia.com>
+Cc: damon@lists.linux.dev, dri-devel@lists.freedesktop.org,
+ Zi Yan <ziy@nvidia.com>, Joshua Hahn <joshua.hahnjy@gmail.com>,
  Rakie Kim <rakie.kim@sk.com>, Byungchul Park <byungchul@sk.com>,
  Gregory Price <gourry@gourry.net>, Ying Huang
- <ying.huang@linux.alibaba.com>, Alistair Popple <apopple@nvidia.com>,
- Oscar Salvador <osalvador@suse.de>,
+ <ying.huang@linux.alibaba.com>, Oscar Salvador <osalvador@suse.de>,
  Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
  Baolin Wang <baolin.wang@linux.alibaba.com>,
  "Liam R. Howlett" <Liam.Howlett@oracle.com>, Nico Pache <npache@redhat.com>,
@@ -94,12 +94,7 @@ Cc: linux-kernel@vger.kernel.org, linux-mm@kvack.org, damon@lists.linux.dev,
  Matthew Brost <matthew.brost@intel.com>,
  Francois Dugast <francois.dugast@intel.com>
 References: <20250916122128.2098535-1-balbirs@nvidia.com>
- <20250916122128.2098535-5-balbirs@nvidia.com>
- <7987AB89-4E80-4A0D-8736-E95F998698DA@nvidia.com>
- <a77b03b8-508b-4bad-8913-fb825ecd8a0d@nvidia.com>
- <F6F6DB2E-C08B-417A-A8CB-3E759FE2C3A7@nvidia.com>
- <901c82e7-0442-4791-b249-b035f8ee428d@nvidia.com>
- <B24E4F6A-F61B-4E9B-A2FE-4004C62A3DD2@nvidia.com>
+ <20250916122128.2098535-8-balbirs@nvidia.com>
 From: David Hildenbrand <david@redhat.com>
 Autocrypt: addr=david@redhat.com; keydata=
  xsFNBFXLn5EBEAC+zYvAFJxCBY9Tr1xZgcESmxVNI/0ffzE/ZQOiHJl6mGkmA1R7/uUpiCjJ
@@ -145,40 +140,122 @@ Autocrypt: addr=david@redhat.com; keydata=
  3iyY2Nsd7JxfKu1PRhCGwXzRw5TlfEsoRI7V9A8isUCoqE2Dzh3FvYHVeX4Us+bRL/oqareJ
  CIFqgYMyvHj7Q06kTKmauOe4Nf0l0qEkIuIzfoLJ3qr5UyXc2hLtWyT9Ir+lYlX9efqh7mOY
  qIws/H2t
-In-Reply-To: <B24E4F6A-F61B-4E9B-A2FE-4004C62A3DD2@nvidia.com>
+In-Reply-To: <20250916122128.2098535-8-balbirs@nvidia.com>
 X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: fpkpCyk8xBz0zpbLfMvpHzRi9NT8l6R4sWJ0RtVYQGw_1758794782
+X-Mimecast-MFC-PROC-ID: 18X5SAj8ZyBP9OSNv-b5Nz4AvzxRl6tGLT3S478gBQU_1758795120
 X-Mimecast-Originator: redhat.com
 Content-Language: en-US
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
->>> Even if this is the only call site, there is no guarantee that
->>> there will be none in the future. I am not sure why we want caller
->>> to handle this special case. Who is going to tell the next user
->>> of RMP_USE_SHARED_ZEROPAGE or caller to try_to_map_unused_to_zeropage()
->>> that device private is incompatible with them?
->>>
->>
->> I don't disagree, but the question was why are device private pages even making
->> it to try_to_map_unused_to_zeropage()>>
+On 16.09.25 14:21, Balbir Singh wrote:
+> Implement CPU fault handling for zone device THP entries through
+> do_huge_pmd_device_private(), enabling transparent migration of
+> device-private large pages back to system memory on CPU access.
 > 
-> Then, it could be done in remove_migration_pte():
+> When the CPU accesses a zone device THP entry, the fault handler calls the
+> device driver's migrate_to_ram() callback to migrate the entire large page
+> back to system memory.
 > 
-> if (rmap_walk_arg->map_unused_to_zeropage &&
-> 	!folio_is_device_private(folio) &&
-> 	try_to_map_unused_to_zeropage(&pvmw, folio, idx))
-> 	continue;
+> Signed-off-by: Balbir Singh <balbirs@nvidia.com>
+> Cc: David Hildenbrand <david@redhat.com>
+> Cc: Zi Yan <ziy@nvidia.com>
+> Cc: Joshua Hahn <joshua.hahnjy@gmail.com>
+> Cc: Rakie Kim <rakie.kim@sk.com>
+> Cc: Byungchul Park <byungchul@sk.com>
+> Cc: Gregory Price <gourry@gourry.net>
+> Cc: Ying Huang <ying.huang@linux.alibaba.com>
+> Cc: Alistair Popple <apopple@nvidia.com>
+> Cc: Oscar Salvador <osalvador@suse.de>
+> Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+> Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
+> Cc: "Liam R. Howlett" <Liam.Howlett@oracle.com>
+> Cc: Nico Pache <npache@redhat.com>
+> Cc: Ryan Roberts <ryan.roberts@arm.com>
+> Cc: Dev Jain <dev.jain@arm.com>
+> Cc: Barry Song <baohua@kernel.org>
+> Cc: Lyude Paul <lyude@redhat.com>
+> Cc: Danilo Krummrich <dakr@kernel.org>
+> Cc: David Airlie <airlied@gmail.com>
+> Cc: Simona Vetter <simona@ffwll.ch>
+> Cc: Ralph Campbell <rcampbell@nvidia.com>
+> Cc: Mika Penttilä <mpenttil@redhat.com>
+> Cc: Matthew Brost <matthew.brost@intel.com>
+> Cc: Francois Dugast <francois.dugast@intel.com>
+> ---
+>   include/linux/huge_mm.h |  7 +++++++
+>   mm/huge_memory.c        | 36 ++++++++++++++++++++++++++++++++++++
+>   mm/memory.c             |  5 +++--
+>   3 files changed, 46 insertions(+), 2 deletions(-)
 > 
-> Maybe I am too hung up on this and someone else could pat on my back and
-> tell me it is OK to just do this at the only caller instead. :)
+> diff --git a/include/linux/huge_mm.h b/include/linux/huge_mm.h
+> index f327d62fc985..2d669be7f1c8 100644
+> --- a/include/linux/huge_mm.h
+> +++ b/include/linux/huge_mm.h
+> @@ -496,6 +496,8 @@ static inline bool folio_test_pmd_mappable(struct folio *folio)
+>   
+>   vm_fault_t do_huge_pmd_numa_page(struct vm_fault *vmf);
+>   
+> +vm_fault_t do_huge_pmd_device_private(struct vm_fault *vmf);
+> +
+>   extern struct folio *huge_zero_folio;
+>   extern unsigned long huge_zero_pfn;
+>   
+> @@ -671,6 +673,11 @@ static inline vm_fault_t do_huge_pmd_numa_page(struct vm_fault *vmf)
+>   	return 0;
+>   }
+>   
+> +static inline vm_fault_t do_huge_pmd_device_private(struct vm_fault *vmf)
+> +{
+> +	return 0;
+> +}
+> +
+>   static inline bool is_huge_zero_folio(const struct folio *folio)
+>   {
+>   	return false;
+> diff --git a/mm/huge_memory.c b/mm/huge_memory.c
+> index 5291ee155a02..90a1939455dd 100644
+> --- a/mm/huge_memory.c
+> +++ b/mm/huge_memory.c
+> @@ -1287,6 +1287,42 @@ static vm_fault_t __do_huge_pmd_anonymous_page(struct vm_fault *vmf)
+>   
+>   }
+>   
+> +vm_fault_t do_huge_pmd_device_private(struct vm_fault *vmf)
+> +{
+> +	struct vm_area_struct *vma = vmf->vma;
+> +	vm_fault_t ret = 0;
+> +	spinlock_t *ptl;
+> +	swp_entry_t swp_entry;
+> +	struct page *page;
+> +
+> +	if (vmf->flags & FAULT_FLAG_VMA_LOCK) {
+> +		vma_end_read(vma);
+> +		return VM_FAULT_RETRY;
+> +	}
+> +
+> +	ptl = pmd_lock(vma->vm_mm, vmf->pmd);
+> +	if (unlikely(!pmd_same(*vmf->pmd, vmf->orig_pmd))) {
+> +		spin_unlock(ptl);
+> +		return 0;
+> +	}
+> +
+> +	swp_entry = pmd_to_swp_entry(vmf->orig_pmd);
+> +	page = pfn_swap_entry_to_page(swp_entry);
+> +	vmf->page = page;
+> +	vmf->pte = NULL;
+> +	if (trylock_page(vmf->page)) {
 
-I think we shouldn't set a flag for a folio that does not make any 
-sense. Just like we don't set the flag for non-anon folios?
+We should be operating on a folio here. folio_trylock() + folio_get() + 
+folio_unlock() + folio_put().
 
-In addition, we could add a 
-VM_WARN_ON_ONCE(folio_is_device_private(folio)) in 
-try_to_map_unused_to_zeropage(), to catch any future abuse.
+> +		get_page(page);
+> +		spin_unlock(ptl);
+> +		ret = page_pgmap(page)->ops->migrate_to_ram(vmf);
+
+BTW, I was wondering whether it is really the right design to pass the 
+vmf here. Likely the const vma+addr+folio could be sufficient. I did not 
+look into all callbaks, though.
 
 -- 
 Cheers
