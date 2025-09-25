@@ -1,73 +1,72 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9381826CE25
-	for <damon@lists.linux.dev>; Thu, 25 Sep 2025 09:53:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25C8A2877C5
+	for <damon@lists.linux.dev>; Thu, 25 Sep 2025 10:01:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758793999; cv=none; b=isb1nzH8TuGo7o2zTbQ2EBOYTwO50iBJwo8yzSTuTFowAHAHViEq/FcZK84TgsIjTD1eJLBzAphnCOXQdw+rvSIdjDY7PBmhfORodt9awRglPQglacu3kolbA7cbIm/jzMqHbYtLN2bz239c18Fg4JHxxZKQj1KhMgBSoKZTntM=
+	t=1758794507; cv=none; b=Daz7f4wXMfyzcDxl7FwnQnOikCB3q/2+BsBxoYKKMxXT5kon891UU1tDcAj3rAoLmzWmIKAbqNtc78aGH4L7jH6VNiKm/9uEJ54v20EwM6W9NWAB9X4ZzDNEYa6RdG2SM6wiEHysRLWDQZOmKWhbkvKXSy6kkLNOszgFQc5DJ9M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758793999; c=relaxed/simple;
-	bh=2UZNMKHGpeYxjhLNIO9PhtmEAC2fZU89xTZT5YErSLg=;
+	s=arc-20240116; t=1758794507; c=relaxed/simple;
+	bh=03uKVV2ofw/Ng3veUOPWeDpclUpU7zZMmkbPpmIHfoE=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=smrf5elOfC8ysgZMJu1XcqVrz8oSsYhM43bWPxx7MuJIyga0FpF04lbL1hjesl20NWhoZWxGk45l9K+J4BQsi5wdMo3ZY7T6RQtuNhK3lokq3lG2Nr/tVJKLXmHk6g3FwM/gd6aXHKQjd4d+wUqEd/qu7v+Cx7+Gz6ZoPfyk2U8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=ikBzFBPY; arc=none smtp.client-ip=170.10.133.124
+	 In-Reply-To:Content-Type; b=SHKroDF/4d7OunOHlm4o8hWRIZoWLb+lLloxnw68Yu0BrkJWXBsLR1dTruYVZFFf3pR1uVW2n5tGCr+v1Zxl10ruk7uIqe7y/dyhidRqZD/7khTsWatqFvl2V+JLZVDRRWyeVadpcecwBV4GAIjcTaN9Ndz/2juUWKQRAvfktQg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=HeEb694U; arc=none smtp.client-ip=170.10.129.124
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="ikBzFBPY"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="HeEb694U"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1758793994;
+	s=mimecast20190719; t=1758794504;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=5IZ5ZyHPjVPn/a1sUZGku96Q30DI6b1ntIDJki2HPWc=;
-	b=ikBzFBPYlTlvZos5314dyIqwZp2RTw07UCtM7IrxOeQK0OhUI+frUcMKXkpB8gVkUaWuCY
-	p3G6HKZnPld+Uv/KyD8xp6PXL3GblyrbrRjCILiVAJXKbSU85turZzl//XAK7sC7bCu642
-	vEK546Lmv61i8dROPxAh9wlKTh8N/rw=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+	bh=8GYfmE+k0d5YWbdZiC8QhNj3hq9CWQkLFh7lpDQVQfE=;
+	b=HeEb694UTseM+GAg/J7muRfoXF7r4eyJyhUdyF4SkERLR3mNyCno2VHDuWeVPRc9oLeW72
+	QMnQ6Z8rj8TsYII7cZJcKCyFORzy+bOnk/E6Cttc8aHjaD596Pqs92frZbRxHqCFn3+mn3
+	h4p8Jl6ET6xvwKyopfdZNm2XBQp8jW8=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-28-D7gGbvDON_S5ipRIdfc8nQ-1; Thu, 25 Sep 2025 05:53:13 -0400
-X-MC-Unique: D7gGbvDON_S5ipRIdfc8nQ-1
-X-Mimecast-MFC-AGG-ID: D7gGbvDON_S5ipRIdfc8nQ_1758793992
-Received: by mail-wm1-f70.google.com with SMTP id 5b1f17b1804b1-46dee484548so4388985e9.2
-        for <damon@lists.linux.dev>; Thu, 25 Sep 2025 02:53:12 -0700 (PDT)
+ us-mta-641-jX3-rkOCMpC-j0ibgkPceQ-1; Thu, 25 Sep 2025 06:01:41 -0400
+X-MC-Unique: jX3-rkOCMpC-j0ibgkPceQ-1
+X-Mimecast-MFC-AGG-ID: jX3-rkOCMpC-j0ibgkPceQ_1758794501
+Received: by mail-wm1-f72.google.com with SMTP id 5b1f17b1804b1-45de18e7eccso3930985e9.0
+        for <damon@lists.linux.dev>; Thu, 25 Sep 2025 03:01:41 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758793992; x=1759398792;
+        d=1e100.net; s=20230601; t=1758794500; x=1759399300;
         h=content-transfer-encoding:in-reply-to:autocrypt:content-language
          :from:references:cc:to:subject:user-agent:mime-version:date
          :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=5IZ5ZyHPjVPn/a1sUZGku96Q30DI6b1ntIDJki2HPWc=;
-        b=Owi/EKiLR1KxuTY/kkOPCjV3tY0oadHbF+VsoaQzVGVXiRjz6m5AXCP8wCjCpWw6Ic
-         7xJr/gpYvEyqcs9CQZaF1uH9G3yc+TxI2xgXvlXdrW7bgVL/zmPQA9FHu47oC8hyBZ/G
-         WWVvf5vZmtpdJ3s2XFh7c50pL9PZgVVeac+CdI058L8gs0rT0SUuejsj0TBycgSOck/N
-         5unb0iZEYxvK4zFteIG+jnvkSkLqMxQx2tR6yCXAB7hhKRdsTA1lZz0hTkgPgZ39j8lz
-         A6d76GoyUMnX5zBQgpwviFdcnS93cISGUdPSZPrCcOtM8ixwzXmYt3PlGgmyhr+ewCdO
-         7Fmw==
-X-Forwarded-Encrypted: i=1; AJvYcCWWtn65TvuQGVLbgpSpXQp9Qt3MrkcCTtvy565FhoVlqcnK6w9GGNPPkTscF1dgveEBoqwx6w==@lists.linux.dev
-X-Gm-Message-State: AOJu0Yyfkpf3yJrEB9yUzNCmLuBO7MhIBb4M2N/Bcga+BZQfxNAyx/BP
-	8iPe+Ykicrzg/BSijeXQqPiVG+Cnxw3cf2kul5+rs7tmzWfiaJiazHZjeKooBpIMb54JsAR2Bk4
-	YvN6It4LxzNfxTLkWlA2oWfaCAjLWGmtJezpnsoMd+CnYHSuRlHJLEbcx
-X-Gm-Gg: ASbGncthhfIEWC8fg9NJrRqs8KywextNYDfNlvasi/Q/uDkvU0dbE77YNcX4FNejSPj
-	KUPgxLrsctArrVVforPAc/+q9ciab/u+Abn3Zq85esxCfjpKYnEB6C/MJZ/P7rttVl3f1U/LiMh
-	m25Y4P+X/QOOYbzn+NuJ4COi9d2i3S2lsEdUbrutf35qhhEMWBmgzEdh5iwONwRnSsWRFUPYLoW
-	ge93TLV0qR8akwIUvGK8xJzDcfcAUFRdohEkoJMb3xQohe2KzzIt1BUYGAC2mMhWHXEJC06Xptc
-	rdtYHSNO9smhLwJErxH0IIZheBAoFbcl/UlG5txpTFpVvFiBkCjxwk64FthPz6aB3oWWdHx2Fzi
-	wwuwFN/t4S2Z3Qo+yQgrJWgcFL27+ZPjSdZk7r7k9Qd2zqh9Dqh1KbqHCreIWXCsXIevU
-X-Received: by 2002:a05:600c:8b71:b0:46e:2d0d:804c with SMTP id 5b1f17b1804b1-46e329ae509mr28235965e9.11.1758793991630;
-        Thu, 25 Sep 2025 02:53:11 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEQdx4XV7EntPUilqRyAJNwUvFZd26RTmvdykMXr/gjLo1hfbQKEF9ym8IJ49CBAyUk65IGGg==
-X-Received: by 2002:a05:600c:8b71:b0:46e:2d0d:804c with SMTP id 5b1f17b1804b1-46e329ae509mr28235655e9.11.1758793991123;
-        Thu, 25 Sep 2025 02:53:11 -0700 (PDT)
+        bh=8GYfmE+k0d5YWbdZiC8QhNj3hq9CWQkLFh7lpDQVQfE=;
+        b=pJZxn6J8XLB7LeDMyM4oJez4FUBApeoWSSbLWUUzzcICFDv810KXj6DaSLsfPaljpm
+         M3vnoLjzLFS2SesO1vS5rRkfAHg9quMR2LRMiN7gwZM8UKIUfVdbAEFHjJHvaYH7iab6
+         uRLU9HYClHehiPjrjzbANTXxem7CBI+TqFDEIy2sZYfE7Hv6ehvYjfKXtvWj+aSpbWmN
+         XsyYWGNb4B1nlt9RHJaxt0sGx5VqLFlmtiInsCIFvVj4pKr6K1R4RPEAND2gDYgW3f7m
+         6E51ycEy0NkOFKcmEBWIwTJTN9w7ew3mCNQlLYU7vPNDGlfiv7bs4NEVwYLq55bo9zEe
+         oeoA==
+X-Gm-Message-State: AOJu0YztjQPT/B34fGqJ82U3qZgnHxIBAZCtak9CcXZMXNyKzzjevJqx
+	k8rWyzXKbGQhx4N2BZ5E+DNQpcAFErsAt6DAhxECZ6GRCezVAlerhnZ9pMPzp0NVyX+2Ei8PlKB
+	dzh0mrxKVM2ldM4W331ekcnqUUHhvkON3MJn5hmCxBWGjHBpHfbtJvSHl
+X-Gm-Gg: ASbGncs5vWNeF2ZJHYHVQ6wM1wsb7cvVMzf0rhcNEiEsXOkOf6oBEEBXurzLSXV6HaW
+	imSziTA/yJFc3n3mG31km1ike5KvYSE+NdkKIltHe1xGktiQTRm2PBOuH501EyZtQfl6IAWXFvO
+	LgC+ovvFUM6yT4q9iTytBCNdwaEqSVaGph6w4wW3PvQoMOYDkpmKSf55nnt2+LpMVxVp4DzFtFX
+	h0pMeGqJfVTCMaAaLMrWzPyWifwXOgh4GuB1V8Gv8b0snUCQfnZkA13/ECFBLQJPxChrYGFVffX
+	nqBd8stLBtkYLWbkrbZqVeO40ehHYRUeBwRuRjdM9BsPoiDiyI3d+ve4TAgGnL1XvF36pjkcOmQ
+	HyDnqSbKmOvfIsPUFKa0IghN86+7+9jUK9hqxYwnvMSQ/4opw83v+YrxcEdwKcppGo9Vn
+X-Received: by 2002:a05:600c:1d07:b0:45f:2805:91df with SMTP id 5b1f17b1804b1-46e329eb016mr27720715e9.20.1758794500335;
+        Thu, 25 Sep 2025 03:01:40 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGJBLgrscqxeUvK3zCTB81zQ03AZ8FMFwoE2WABAhafpLxL3o7HLyxi6RuvwKQYgGpl6h0/hw==
+X-Received: by 2002:a05:600c:1d07:b0:45f:2805:91df with SMTP id 5b1f17b1804b1-46e329eb016mr27719935e9.20.1758794499610;
+        Thu, 25 Sep 2025 03:01:39 -0700 (PDT)
 Received: from ?IPV6:2003:d8:2f3f:f800:c101:5c9f:3bc9:3d08? (p200300d82f3ff800c1015c9f3bc93d08.dip0.t-ipconnect.de. [2003:d8:2f3f:f800:c101:5c9f:3bc9:3d08])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-46e2a996d7dsm72815125e9.4.2025.09.25.02.53.08
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-46e2ab48570sm68576145e9.16.2025.09.25.03.01.37
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 25 Sep 2025 02:53:10 -0700 (PDT)
-Message-ID: <df1e62e6-57ac-4a5f-bf62-71fea47481af@redhat.com>
-Date: Thu, 25 Sep 2025 11:53:08 +0200
+        Thu, 25 Sep 2025 03:01:38 -0700 (PDT)
+Message-ID: <b0bd326a-0ef6-4c72-ae25-3faff1fd6eb7@redhat.com>
+Date: Thu, 25 Sep 2025 12:01:36 +0200
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -75,15 +74,15 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [v6 02/15] mm/huge_memory: add device-private THP support to PMD
- operations
-To: Alistair Popple <apopple@nvidia.com>, Balbir Singh <balbirs@nvidia.com>
-Cc: linux-kernel@vger.kernel.org, linux-mm@kvack.org, damon@lists.linux.dev,
- dri-devel@lists.freedesktop.org, Matthew Brost <matthew.brost@intel.com>,
+Subject: Re: [v6 04/15] mm/huge_memory: implement device-private THP splitting
+To: Balbir Singh <balbirs@nvidia.com>, linux-kernel@vger.kernel.org,
+ linux-mm@kvack.org
+Cc: damon@lists.linux.dev, dri-devel@lists.freedesktop.org,
  Zi Yan <ziy@nvidia.com>, Joshua Hahn <joshua.hahnjy@gmail.com>,
  Rakie Kim <rakie.kim@sk.com>, Byungchul Park <byungchul@sk.com>,
  Gregory Price <gourry@gourry.net>, Ying Huang
- <ying.huang@linux.alibaba.com>, Oscar Salvador <osalvador@suse.de>,
+ <ying.huang@linux.alibaba.com>, Alistair Popple <apopple@nvidia.com>,
+ Oscar Salvador <osalvador@suse.de>,
  Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
  Baolin Wang <baolin.wang@linux.alibaba.com>,
  "Liam R. Howlett" <Liam.Howlett@oracle.com>, Nico Pache <npache@redhat.com>,
@@ -92,10 +91,10 @@ Cc: linux-kernel@vger.kernel.org, linux-mm@kvack.org, damon@lists.linux.dev,
  Danilo Krummrich <dakr@kernel.org>, David Airlie <airlied@gmail.com>,
  Simona Vetter <simona@ffwll.ch>, Ralph Campbell <rcampbell@nvidia.com>,
  =?UTF-8?Q?Mika_Penttil=C3=A4?= <mpenttil@redhat.com>,
+ Matthew Brost <matthew.brost@intel.com>,
  Francois Dugast <francois.dugast@intel.com>
 References: <20250916122128.2098535-1-balbirs@nvidia.com>
- <20250916122128.2098535-3-balbirs@nvidia.com>
- <azcaqmqwdslvoei7ma4obtpxcdv7jdqfdc3ny4sylgwelwhfvo@okwd6y2oq5q4>
+ <20250916122128.2098535-5-balbirs@nvidia.com>
 From: David Hildenbrand <david@redhat.com>
 Autocrypt: addr=david@redhat.com; keydata=
  xsFNBFXLn5EBEAC+zYvAFJxCBY9Tr1xZgcESmxVNI/0ffzE/ZQOiHJl6mGkmA1R7/uUpiCjJ
@@ -141,132 +140,73 @@ Autocrypt: addr=david@redhat.com; keydata=
  3iyY2Nsd7JxfKu1PRhCGwXzRw5TlfEsoRI7V9A8isUCoqE2Dzh3FvYHVeX4Us+bRL/oqareJ
  CIFqgYMyvHj7Q06kTKmauOe4Nf0l0qEkIuIzfoLJ3qr5UyXc2hLtWyT9Ir+lYlX9efqh7mOY
  qIws/H2t
-In-Reply-To: <azcaqmqwdslvoei7ma4obtpxcdv7jdqfdc3ny4sylgwelwhfvo@okwd6y2oq5q4>
+In-Reply-To: <20250916122128.2098535-5-balbirs@nvidia.com>
 X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: I4EHVcCOGffrYAJ5D_WsPxaLxrStS7c2iGfEWPmMKGc_1758793992
+X-Mimecast-MFC-PROC-ID: l6_2iGFNSpAOT14JMeQUWH0DFRAbhi4lLK_vB-Y0Tsc_1758794501
 X-Mimecast-Originator: redhat.com
 Content-Language: en-US
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
-On 25.09.25 02:25, Alistair Popple wrote:
-> On 2025-09-16 at 22:21 +1000, Balbir Singh <balbirs@nvidia.com> wrote...
->> Extend core huge page management functions to handle device-private THP
->> entries.  This enables proper handling of large device-private folios in
->> fundamental MM operations.
->>
->> The following functions have been updated:
->>
->> - copy_huge_pmd(): Handle device-private entries during fork/clone
->> - zap_huge_pmd(): Properly free device-private THP during munmap
->> - change_huge_pmd(): Support protection changes on device-private THP
->> - __pte_offset_map(): Add device-private entry awareness
->>
->> Signed-off-by: Matthew Brost <matthew.brost@intel.com>
->> Signed-off-by: Balbir Singh <balbirs@nvidia.com>
->> Cc: David Hildenbrand <david@redhat.com>
->> Cc: Zi Yan <ziy@nvidia.com>
->> Cc: Joshua Hahn <joshua.hahnjy@gmail.com>
->> Cc: Rakie Kim <rakie.kim@sk.com>
->> Cc: Byungchul Park <byungchul@sk.com>
->> Cc: Gregory Price <gourry@gourry.net>
->> Cc: Ying Huang <ying.huang@linux.alibaba.com>
->> Cc: Alistair Popple <apopple@nvidia.com>
->> Cc: Oscar Salvador <osalvador@suse.de>
->> Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
->> Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
->> Cc: "Liam R. Howlett" <Liam.Howlett@oracle.com>
->> Cc: Nico Pache <npache@redhat.com>
->> Cc: Ryan Roberts <ryan.roberts@arm.com>
->> Cc: Dev Jain <dev.jain@arm.com>
->> Cc: Barry Song <baohua@kernel.org>
->> Cc: Lyude Paul <lyude@redhat.com>
->> Cc: Danilo Krummrich <dakr@kernel.org>
->> Cc: David Airlie <airlied@gmail.com>
->> Cc: Simona Vetter <simona@ffwll.ch>
->> Cc: Ralph Campbell <rcampbell@nvidia.com>
->> Cc: Mika Penttilä <mpenttil@redhat.com>
->> Cc: Matthew Brost <matthew.brost@intel.com>
->> Cc: Francois Dugast <francois.dugast@intel.com>
->> ---
->>   include/linux/swapops.h | 32 +++++++++++++++++++++++
->>   mm/huge_memory.c        | 56 ++++++++++++++++++++++++++++++++++-------
->>   mm/pgtable-generic.c    |  2 +-
->>   3 files changed, 80 insertions(+), 10 deletions(-)
->>
->> diff --git a/include/linux/swapops.h b/include/linux/swapops.h
->> index 64ea151a7ae3..2687928a8146 100644
->> --- a/include/linux/swapops.h
->> +++ b/include/linux/swapops.h
->> @@ -594,10 +594,42 @@ static inline int is_pmd_migration_entry(pmd_t pmd)
->>   }
->>   #endif  /* CONFIG_ARCH_ENABLE_THP_MIGRATION */
->>   
->> +#if defined(CONFIG_ZONE_DEVICE) && defined(CONFIG_ARCH_ENABLE_THP_MIGRATION)
->> +
->> +/**
->> + * is_pmd_device_private_entry() - Check if PMD contains a device private swap entry
->> + * @pmd: The PMD to check
->> + *
->> + * Returns true if the PMD contains a swap entry that represents a device private
->> + * page mapping. This is used for zone device private pages that have been
->> + * swapped out but still need special handling during various memory management
->> + * operations.
->> + *
->> + * Return: 1 if PMD contains device private entry, 0 otherwise
->> + */
->> +static inline int is_pmd_device_private_entry(pmd_t pmd)
->> +{
->> +	return is_swap_pmd(pmd) && is_device_private_entry(pmd_to_swp_entry(pmd));
->> +}
->> +
->> +#else /* CONFIG_ZONE_DEVICE && CONFIG_ARCH_ENABLE_THP_MIGRATION */
->> +
->> +static inline int is_pmd_device_private_entry(pmd_t pmd)
->> +{
->> +	return 0;
->> +}
->> +
->> +#endif /* CONFIG_ZONE_DEVICE && CONFIG_ARCH_ENABLE_THP_MIGRATION */
->> +
->>   static inline int non_swap_entry(swp_entry_t entry)
->>   {
->>   	return swp_type(entry) >= MAX_SWAPFILES;
->>   }
->>   
->> +static inline int is_pmd_non_present_folio_entry(pmd_t pmd)
+On 16.09.25 14:21, Balbir Singh wrote:
+> Add support for splitting device-private THP folios, enabling fallback
+> to smaller page sizes when large page allocation or migration fails.
 > 
-> I can't think of a better name either although I am curious why open-coding it
-> was so nasty given we don't have the equivalent for pte entries. Will go read
-> the previous discussion.
-
-I think for PTEs we just handle all cases (markers, hwpoison etc) 
-properly, manye not being supported yet on the PMD level. See 
-copy_nonpresent_pte() as an example.
-
-We don't even have helpers like is_pte_migration_entry().
-
->> diff --git a/mm/pgtable-generic.c b/mm/pgtable-generic.c
->> index 567e2d084071..0c847cdf4fd3 100644
->> --- a/mm/pgtable-generic.c
->> +++ b/mm/pgtable-generic.c
->> @@ -290,7 +290,7 @@ pte_t *___pte_offset_map(pmd_t *pmd, unsigned long addr, pmd_t *pmdvalp)
->>   
->>   	if (pmdvalp)
->>   		*pmdvalp = pmdval;
->> -	if (unlikely(pmd_none(pmdval) || is_pmd_migration_entry(pmdval)))
->> +	if (unlikely(pmd_none(pmdval) || !pmd_present(pmdval)))
+> Key changes:
+> - split_huge_pmd(): Handle device-private PMD entries during splitting
+> - Preserve RMAP_EXCLUSIVE semantics for anonymous exclusive folios
+> - Skip RMP_USE_SHARED_ZEROPAGE for device-private entries as they
+>    don't support shared zero page semantics
 > 
-> Why isn't is_pmd_non_present_folio_entry() used here?
+> Signed-off-by: Balbir Singh <balbirs@nvidia.com>
+> Cc: David Hildenbrand <david@redhat.com>
+> Cc: Zi Yan <ziy@nvidia.com>
+> Cc: Joshua Hahn <joshua.hahnjy@gmail.com>
+> Cc: Rakie Kim <rakie.kim@sk.com>
+> Cc: Byungchul Park <byungchul@sk.com>
+> Cc: Gregory Price <gourry@gourry.net>
+> Cc: Ying Huang <ying.huang@linux.alibaba.com>
+> Cc: Alistair Popple <apopple@nvidia.com>
+> Cc: Oscar Salvador <osalvador@suse.de>
+> Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+> Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
+> Cc: "Liam R. Howlett" <Liam.Howlett@oracle.com>
+> Cc: Nico Pache <npache@redhat.com>
+> Cc: Ryan Roberts <ryan.roberts@arm.com>
+> Cc: Dev Jain <dev.jain@arm.com>
+> Cc: Barry Song <baohua@kernel.org>
+> Cc: Lyude Paul <lyude@redhat.com>
+> Cc: Danilo Krummrich <dakr@kernel.org>
+> Cc: David Airlie <airlied@gmail.com>
+> Cc: Simona Vetter <simona@ffwll.ch>
+> Cc: Ralph Campbell <rcampbell@nvidia.com>
+> Cc: Mika Penttilä <mpenttil@redhat.com>
+> Cc: Matthew Brost <matthew.brost@intel.com>
+> Cc: Francois Dugast <francois.dugast@intel.com>
+> ---
+>   mm/huge_memory.c | 138 +++++++++++++++++++++++++++++++++--------------
+>   1 file changed, 98 insertions(+), 40 deletions(-)
+> 
+> diff --git a/mm/huge_memory.c b/mm/huge_memory.c
+> index 78166db72f4d..5291ee155a02 100644
+> --- a/mm/huge_memory.c
+> +++ b/mm/huge_memory.c
+> @@ -2872,16 +2872,18 @@ static void __split_huge_pmd_locked(struct vm_area_struct *vma, pmd_t *pmd,
+>   	struct page *page;
+>   	pgtable_t pgtable;
+>   	pmd_t old_pmd, _pmd;
+> -	bool young, write, soft_dirty, pmd_migration = false, uffd_wp = false;
+> -	bool anon_exclusive = false, dirty = false;
+> +	bool soft_dirty, uffd_wp = false, young = false, write = false;
+> +	bool anon_exclusive = false, dirty = false, present = false;
+>   	unsigned long addr;
+>   	pte_t *pte;
+>   	int i;
+> +	swp_entry_t swp_entry;
 
+Not renaming this variable avoids a lot of churn below. So please keep 
+it called "entry" in this patch.
 
-I thought I argued that
-
-	if (!pmd_present(pmdval)))
-
-Should be sufficient here in my last review?
-
-We want to detect page tables we can map after all.
 -- 
 Cheers
 
