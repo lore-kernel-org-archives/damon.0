@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2639822F76F;
-	Mon,  6 Oct 2025 17:18:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3103427B33B;
+	Wed,  8 Oct 2025 00:00:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759771123; cv=none; b=KgwdWcWeWtKImgmWIBMHjP8LM/sCrZ8iWw32Md1sOJr4w1biJNMAdCeqfgtCUPZPO6byWYbvg9rxJvgZBnGiWK7Ww5KBCz/kD94NvoEqEcRpR5MRdpxrvy+zou9WdtMfe4z8Q/yyuBg38ro3jwrXNfgazGRxSzJMdFMbPpkkaEI=
+	t=1759881619; cv=none; b=OR/CuS7wg7RqWpYgg66ktlb22aZ3I1so8wUa286zNhIwFQgUBk8mS9EO7oLwc8yoySjBbNuxBKsWb5DSuVOjia0HSBg5HiNQdWzXx3qz/PQuQPGmxkVaZo8wm9cNB3BvvAwXG/93EYOgSUeEqkpMjqvk/Ao2DsR++u+rJ84hwe0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759771123; c=relaxed/simple;
-	bh=SfxMdBU6y0tqa4mF6l4hXNxeVEuJfM5uMhZ8hI4CbCs=;
+	s=arc-20240116; t=1759881619; c=relaxed/simple;
+	bh=XJBMwUPakCIENOJ5JGM6h6npOfSqG5BKOSRQWEqhaWc=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=OCXajY46iINT4FMpFJvNYMn79E29Sn9LBMY+fn6SE48r/bLCmLlmJmyj7CKYoru5WXLsFrQ1ztg8ZMAlqn605pgtCKp3/r1tXXFbdhkm4VhKqBCRMnzRcqlS/TCiRxs4kg4e5crI/ynpbFDFB/o9uEV8EcHJNqPu7PWJB8csOEs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Fiejpe10; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FaSbZink7KPqz1tYQZnUDlG1DN3nAFLCmG5fJ4+fLv1Y7LjdKdkGDUgn8ar2WwEXJbRFf21bkUgdcN2K49chGeX9bZIcY9c1hZrDH8LJ8HwaDO7iTNAY7iwlzhi2ol8pdcvRKCcOELzsDbOa/MdcVXILx/0gUyqxw13rOz7fqA8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LkT/Y1g8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Fiejpe10"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E00FC4CEF5;
-	Mon,  6 Oct 2025 17:18:42 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LkT/Y1g8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7425BC4CEF1;
+	Wed,  8 Oct 2025 00:00:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1759771122;
-	bh=SfxMdBU6y0tqa4mF6l4hXNxeVEuJfM5uMhZ8hI4CbCs=;
+	s=k20201202; t=1759881618;
+	bh=XJBMwUPakCIENOJ5JGM6h6npOfSqG5BKOSRQWEqhaWc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Fiejpe10UbBJjarXtt6tSJk0J6IvEZTsNnc1DEqoWg0+eJ1AQ4zx2mx3EBwH0mnu4
-	 lmBxWg41qt/BPvziRJWL1VS46TXiDmYa/rhbUOTUObRSfFxXAShWL4Lq1YIPJBYJmH
-	 fIRTRllkIOCs0BKoP+KfHgD6KgFOk67QBV8V9KZLtDc32TPRi3UZRaeZjhs/2DNSLY
-	 Gc0D7ZjJZowkjAcZ2ayvZciCsE8IpLNrqDncDYU+GxtwxSLsajJ4GoFQKwUkV39lN/
-	 yRwrLX+Tu8QcctxAyNzaDBZXVO5rUzalSV4h/oEhDDo/jnj/fLQ4b5vmK8eAQBuA9R
-	 dWukQW+kcxCPQ==
+	b=LkT/Y1g8sW+oeGcLJAYTuRKgha8oR+0vHhIYAkMnM/ilfxGTXWXxZ5EM23ntytBIz
+	 vGe6WnBWm3S209VzN6FRC7thPPFPe6NsFMSmj8rF6dPa8xDX/pilKIa1WnoGBzHHfv
+	 5Xw42YfvsCJkTLQvVhJeXM6cRl8j3ippxyUdrXkoCjt8TG+CWL42VX8ZnHBmb0Ue9u
+	 qCQcTqRLI3gavlc4WWgcUdFMRjzNdHjxi+cyNb78GpNTPoBoE9eCYgF5aJ2wVZmeMB
+	 7St8oTWhkrLjLh2n4ohruEHP2soTgKccT3fMOOzHMNH5KfHuSpRogI4ssf2n9GcG/z
+	 rmOW68YW8kreA==
 From: SeongJae Park <sj@kernel.org>
-To: kernel test robot <lkp@intel.com>
-Cc: SeongJae Park <sj@kernel.org>,
-	oe-kbuild-all@lists.linux.dev,
-	linux-doc@vger.kernel.org,
-	damon@lists.linux.dev
-Subject: Re: [sj:damon/next 120/121] htmldocs: Documentation/admin-guide/mm/damon/stat.rst:13: WARNING: malformed hyperlink target. [docutils]
-Date: Mon,  6 Oct 2025 10:18:40 -0700
-Message-Id: <20251006171840.91462-1-sj@kernel.org>
+To: SeongJae Park <sj@kernel.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>,
+	damon@lists.linux.dev,
+	kernel-team@meta.com,
+	linux-kernel@vger.kernel.org,
+	linux-mm@kvack.org
+Subject: Re: [RFC PATCH 03/11] mm/damon/core: implement DAMOS_QUOTA_NODE_MEMCG_USED_BP
+Date: Tue,  7 Oct 2025 17:00:14 -0700
+Message-Id: <20251008000014.2845-1-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <202510060124.YaUaLfkH-lkp@intel.com>
+In-Reply-To: <20250619220023.24023-4-sj@kernel.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -46,20 +47,57 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Mon, 6 Oct 2025 01:45:41 +0200 kernel test robot <lkp@intel.com> wrote:
+On Thu, 19 Jun 2025 15:00:15 -0700 SeongJae Park <sj@kernel.org> wrote:
 
-> tree:   https://git.kernel.org/pub/scm/linux/kernel/git/sj/linux.git damon/next
-> head:   d2a846a38c8b6e1f2473db076998642ea3bac918
-> commit: 94d350c7971494ad1967e5d04745401a08adbd83 [120/121] Docs/admin-guide/mm/damon/stat: document aggr_interval_us parameter
-> reproduce: (https://download.01.org/0day-ci/archive/20251006/202510060124.YaUaLfkH-lkp@intel.com/reproduce)
+> Implement the behavior of DAMOS_QUOTA_NODE_MEMCG_USED_BP.  It uses sum
+> of active/inactive anon/file pages of a given cgroup on a given NUMA
+> node as the value of the metric.
 > 
-> If you fix the issue in a separate patch/commit (i.e. not just a new version of
-> the same patch/commit), kindly add following tags
-> | Reported-by: kernel test robot <lkp@intel.com>
-> | Closes: https://lore.kernel.org/oe-kbuild-all/202510060124.YaUaLfkH-lkp@intel.com/
+> Signed-off-by: SeongJae Park <sj@kernel.org>
+> ---
+>  mm/damon/core.c | 32 ++++++++++++++++++++++++++++++++
+>  1 file changed, 32 insertions(+)
+> 
+> diff --git a/mm/damon/core.c b/mm/damon/core.c
+> index d675dd932a23..1481b43f2710 100644
+> --- a/mm/damon/core.c
+> +++ b/mm/damon/core.c
+[...]
+> +static unsigned long damos_get_node_memcg_used_bp(
+> +		struct damos_quota_goal *goal)
+> +{
+> +	struct mem_cgroup *memcg;
+> +	struct lruvec *lruvec;
+> +	unsigned long used_pages;
+> +	struct sysinfo i;
+> +
+> +	rcu_read_lock();
+> +	memcg = mem_cgroup_from_id(goal->memcg_id);
+> +	mem_cgroup_flush_stats(memcg);
+> +	lruvec = mem_cgroup_lruvec(memcg, NODE_DATA(goal->nid));
+> +	used_pages = lruvec_page_state(lruvec, NR_ACTIVE_ANON);
+> +	used_pages += lruvec_page_state(lruvec, NR_INACTIVE_ANON);
+> +	used_pages += lruvec_page_state(lruvec, NR_ACTIVE_FILE);
+> +	used_pages += lruvec_page_state(lruvec, NR_INACTIVE_FILE);
+> +	rcu_read_unlock();
 
-Thank you for reporting this!  I just pushed a fix to my tree:
-https://git.kernel.org/sj/c/347be1d4cfca4617b44ae692cc67d7903953c542
+mem_cgroup_flush_stats() calls css_rstat_flush() which may block.  But the
+above diff is putting it inside an RCU read-side critical section.  Actually
+only mem_cgroup_from_id() needs to be called inside an RCU read-side critical
+section.  I will revise the next version to call rcu_read_unlock() right after
+mem_cgroup_from_id().
+
+Also, mem_cgroup_from_id() could return NULL if the memcg is removeed while
+DAMON is running, but this diff is not checking the NULL return case.  I will
+add the handling in the next version.
+
+> +
+> +	si_meminfo_node(&i, goal->nid);
+> +	return used_pages * PAGE_SIZE * 10000 / i.totalram;
+
+i.totalram is in number of pages unit, but the above code is assuming it is in
+bytes unit.  This makes the result significantly wrong.  I will fix this in the
+next version.
 
 
 Thanks,
