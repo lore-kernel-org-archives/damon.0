@@ -1,42 +1,51 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46D8D28689B;
-	Thu,  9 Oct 2025 21:20:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F048286D73;
+	Thu,  9 Oct 2025 21:20:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760044856; cv=none; b=Dz7NCrrZ/z+YH4HzKGgdgU5Zchf6KvsIAwd+gxytJX7SSbXYOhUztJl+WmBR+gDVPaxZmwTZ1dpU1eOXFvqqA9HJvFyPGR/AhHomQBGPhSrZB/wVXgazW1SF7cG5/oQXmldu1p8BO/jxe5LVu+CI3ZlHuOfgq5pEKwXNji575UA=
+	t=1760044858; cv=none; b=QJ3FjFwjS+o8fz0ut8iHMNMdwNl+3shJwS+Q0RZT3JFDhjBpFEYuy3441Ww/KMc/KDI4MLjqG19DatiMXHECX7wP7GgVJvIqNMG1ZvYfWEn25NRQVjF19FZY0bJ6Mqg3am7F5u8DTuakjBT1OVuBoGojgorner4nKJorUzROV9I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760044856; c=relaxed/simple;
-	bh=LW/6mDf7N5tp3NVaa/MTw5MzAUr1eIrJZfX1KpNkybA=;
+	s=arc-20240116; t=1760044858; c=relaxed/simple;
+	bh=iYqIOlBPNnXz4smGK3ct25Bt+psvuvYa3PTnXBMC96s=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=ZOLTmeSDy4dFqWlpaR9uJJHc2SYmtNjKybtUT5wUfZl1UA3Ly8D49NPsRMhpPe99r000ulC2/u1clpVsZrCUkObNuJwd7tzaQSaqVbydeUsRUmfOK4JtwhdWqzUtN+VN27Rt8oc6cTKLvJLJ0nW3i6sXnWVVU9BZUk5h86uM7mQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tz90siZg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gddHo9y2/XyPQN78J+Y8yZVcXjs4EeqraS+M2XqCTWcEUCXP1sGiwMXV5KXQ6vRoBiNoVa/O4LkBc5zI/9rA/0pXmINDandEXCiDa4pW0fg34yhmGhvImEd13GRATYd9HawgcG9/DXTEmEE0qdKTbPiRqJ5f0E28poe0QtuvbR0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fsZJkrSA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tz90siZg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BA1CC116D0;
-	Thu,  9 Oct 2025 21:20:55 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fsZJkrSA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEB18C4CEE7;
+	Thu,  9 Oct 2025 21:20:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1760044855;
-	bh=LW/6mDf7N5tp3NVaa/MTw5MzAUr1eIrJZfX1KpNkybA=;
+	s=k20201202; t=1760044857;
+	bh=iYqIOlBPNnXz4smGK3ct25Bt+psvuvYa3PTnXBMC96s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tz90siZgJeVmm6nJG5948QdV75YE3e3vx6SMoOo30urTFGr8SXMhYgE1BdGVItvUE
-	 ao0smPENqeNMT+3IRdPWVPkxrh63rfPjDqPIqecuGVQgdowuXFvPOtSEqlf6S3WU7w
-	 sIlL7ZjanGac5t9WD7wpXlJFwiy0yainSj6eVtsZEznYvZ0RJFXl5izlXaYz4INTZU
-	 3EaBRmhJpQs+qKyjY14VqNVGzhYbjfRz++1EtaCBKfWoFtMuHcrzY0eI6n0qP55wKN
-	 PAe0T1j6IhOVZVGWfG4rCXmh9/jBzqt+mj0hDMRt6lx113NgKZX5COGYZJUzTCr7MZ
-	 q2rNXksuqaeXw==
+	b=fsZJkrSAFJEJJLDKmJO2px5MRhIl/Y8a7LsCOSzS7pxW2kFDEh3zUtAwA9i4z4DYp
+	 kBTw+4KcA7oK5MwKs8kt8e7NK2/kuKXjgOZw6v247C1WtsBRi8CqhlyqAfDaFaTlYQ
+	 pY7FlQ3Fd5Vz0YMqidMIdbf5IMu9kqm02eeCentFFzIQZ3dEQQ+vudU9CoYtwaa4QF
+	 76WXDGgRzNgxzwkAdsd4ivR2yEhYN2CFNGv0gi2BTwyx/nD7reQ1PxOJEO/UY3J9JF
+	 AoksE2Nzi70gRjv9xWY9PMfkCc5u95OzyR8WtyTUu1xmrGPNd32pcClBsIGqzDozMX
+	 XT7W/T/8j3vXQ==
 From: SeongJae Park <sj@kernel.org>
 To: 
 Cc: SeongJae Park <sj@kernel.org>,
+	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
+	David Hildenbrand <david@redhat.com>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	Michal Hocko <mhocko@suse.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
 	damon@lists.linux.dev,
 	kernel-team@meta.com,
+	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH v2 07/10] mm/damon/sysfs-schemes: support DAMOS_QUOTA_NODE_MEMCG_FREE_BP
-Date: Thu,  9 Oct 2025 14:20:39 -0700
-Message-Id: <20251009212042.60084-8-sj@kernel.org>
+Subject: [RFC PATCH v2 08/10] Docs/mm/damon/design: document DAMOS_QUOTA_NODE_MEMCG_{USED,FREE}_BP
+Date: Thu,  9 Oct 2025 14:20:40 -0700
+Message-Id: <20251009212042.60084-9-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20251009212042.60084-1-sj@kernel.org>
 References: <20251009212042.60084-1-sj@kernel.org>
@@ -48,35 +57,52 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Extend DAMON sysfs to support DAMOS_QUOTA_NODE_MEMCG_FREE_BP.
+Update design doc for the newly added two DAMOS quota auto-tuning target
+goal metrics, DAMOS_QUOTA_NODE_MEMCG_{USED,FREE}_BP.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- mm/damon/sysfs-schemes.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ Documentation/mm/damon/design.rst | 21 +++++++++++++++------
+ 1 file changed, 15 insertions(+), 6 deletions(-)
 
-diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
-index c679e62fd4b9..c98cf4bd2fbb 100644
---- a/mm/damon/sysfs-schemes.c
-+++ b/mm/damon/sysfs-schemes.c
-@@ -1034,6 +1034,10 @@ struct damos_sysfs_qgoal_metric_name damos_sysfs_qgoal_metric_names[] = {
- 		.metric = DAMOS_QUOTA_NODE_MEMCG_USED_BP,
- 		.name = "node_memcg_used_bp",
- 	},
-+	{
-+		.metric = DAMOS_QUOTA_NODE_MEMCG_FREE_BP,
-+		.name = "node_memcg_free_bp",
-+	},
- };
+diff --git a/Documentation/mm/damon/design.rst b/Documentation/mm/damon/design.rst
+index 80354f4f42ba..b54925ea78e9 100644
+--- a/Documentation/mm/damon/design.rst
++++ b/Documentation/mm/damon/design.rst
+@@ -564,9 +564,9 @@ aggressiveness (the quota) of the corresponding scheme.  For example, if DAMOS
+ is under achieving the goal, DAMOS automatically increases the quota.  If DAMOS
+ is over achieving the goal, it decreases the quota.
  
- static ssize_t target_metric_show(struct kobject *kobj,
-@@ -2552,6 +2556,7 @@ static int damos_sysfs_add_quota_score(
- 			goal->nid = sysfs_goal->nid;
- 			break;
- 		case DAMOS_QUOTA_NODE_MEMCG_USED_BP:
-+		case DAMOS_QUOTA_NODE_MEMCG_FREE_BP:
- 			err = damon_sysfs_memcg_path_to_id(
- 					sysfs_goal->path, &goal->memcg_id);
- 			if (err) {
+-The goal can be specified with four parameters, namely ``target_metric``,
+-``target_value``, ``current_value`` and ``nid``.  The auto-tuning mechanism
+-tries to make ``current_value`` of ``target_metric`` be same to
++The goal can be specified with five parameters, namely ``target_metric``,
++``target_value``, ``current_value``, ``nid`` and ``path``.  The auto-tuning
++mechanism tries to make ``current_value`` of ``target_metric`` be same to
+ ``target_value``.
+ 
+ - ``user_input``: User-provided value.  Users could use any metric that they
+@@ -581,9 +581,18 @@ tries to make ``current_value`` of ``target_metric`` be same to
+   set by users at the initial time.  In other words, DAMOS does self-feedback.
+ - ``node_mem_used_bp``: Specific NUMA node's used memory ratio in bp (1/10,000).
+ - ``node_mem_free_bp``: Specific NUMA node's free memory ratio in bp (1/10,000).
+-
+-``nid`` is optionally required for only ``node_mem_used_bp`` and
+-``node_mem_free_bp`` to point the specific NUMA node.
++- ``node_memcg_used_bp``: Specific cgroup's node used memory ratio for a
++  specific NUMA node, in bp (1/10,000).
++- ``node_memcg_free_bp``: Specific cgroup's node unused memory ratio for a
++  specific NUMA node, in bp (1/10,000).
++
++``nid`` is optionally required for only ``node_mem_used_bp``,
++``node_mem_free_bp``, ``node_memcg_used_bp`` and ``node_memcg_free_bp`` to
++point the specific NUMA node.
++
++``path`` is optionally required for only ``node_memcg_used_bp`` and
++``node_memcg_free_bp`` to point the path to the cgroup.  The value should be
++the path of the memory cgroup from the cgroups mount point.
+ 
+ To know how user-space can set the tuning goal metric, the target value, and/or
+ the current value via :ref:`DAMON sysfs interface <sysfs_interface>`, refer to
 -- 
 2.39.5
