@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 308E72820DB;
-	Thu,  9 Oct 2025 21:20:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46D8D28689B;
+	Thu,  9 Oct 2025 21:20:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760044855; cv=none; b=Iia2RCGWJf3dg3qdnFRyZwGRy+8YdxM1KNM49EPTZfykcyP95GNfjbDxULvSDoiZ8q371BUrep67WNaAlfsZ85CHdKMz5KhHuUgKJ/0PinELPWIsVj2GM/n2MvJk4hkaMHqYIl9X+0PkXHcB4YoegsmuiF2kuHsxoqQuCxqUwa4=
+	t=1760044856; cv=none; b=Dz7NCrrZ/z+YH4HzKGgdgU5Zchf6KvsIAwd+gxytJX7SSbXYOhUztJl+WmBR+gDVPaxZmwTZ1dpU1eOXFvqqA9HJvFyPGR/AhHomQBGPhSrZB/wVXgazW1SF7cG5/oQXmldu1p8BO/jxe5LVu+CI3ZlHuOfgq5pEKwXNji575UA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760044855; c=relaxed/simple;
-	bh=CkhTLsuJMtU34HmXX0O02XR+nCAeXgrwHrAqstQf9yE=;
+	s=arc-20240116; t=1760044856; c=relaxed/simple;
+	bh=LW/6mDf7N5tp3NVaa/MTw5MzAUr1eIrJZfX1KpNkybA=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=lFMTF+OsC1c09pO7egJn/aUAIeWToY4anh3cQv8TLnK0lwOcNUHjvDj5ajEB7oyKQlmO+SfKrtnlBeagTYlZhWuk2L256lheNHuU+zsxxtq0glCavq5J00rF0EkZuB9JrChuOB55Mwi2totzhBnuThOPCZ90bV7ENhQK+VRkG9U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JEVumExa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZOLTmeSDy4dFqWlpaR9uJJHc2SYmtNjKybtUT5wUfZl1UA3Ly8D49NPsRMhpPe99r000ulC2/u1clpVsZrCUkObNuJwd7tzaQSaqVbydeUsRUmfOK4JtwhdWqzUtN+VN27Rt8oc6cTKLvJLJ0nW3i6sXnWVVU9BZUk5h86uM7mQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tz90siZg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JEVumExa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8266DC113D0;
-	Thu,  9 Oct 2025 21:20:54 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tz90siZg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BA1CC116D0;
+	Thu,  9 Oct 2025 21:20:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1760044854;
-	bh=CkhTLsuJMtU34HmXX0O02XR+nCAeXgrwHrAqstQf9yE=;
+	s=k20201202; t=1760044855;
+	bh=LW/6mDf7N5tp3NVaa/MTw5MzAUr1eIrJZfX1KpNkybA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JEVumExa/JemdD+OCfcpdTleOjTbQhH/UBhfCnnG/kq3lyQD+OIVN1PzJI9YBObXs
-	 dCvMgOALWBGYu7MNRIRSWRCq92x1JKNgQzcsY6mXS9bVXnMRYQXi0Q+vowzSeJH3+o
-	 GHieqAC4FdPUcc+yDKyJT4pMxYChEl0x4opfEqPfylL2IVAP/O1f6WeADIPIbkxoND
-	 pa5hslqk2R0ZH+mRkQK6mHwZT1IPPQb6sFIlW6KCs0crcbRm9IUlyOoPwgcIq9Ett2
-	 kZLNGw0z7wxyKMr7HWxtkIVk+MoS1AsB/b9gC8Lw76dgANzwsLsqnEdZDN/mKTsDM1
-	 rbwC3AYpqbybA==
+	b=tz90siZgJeVmm6nJG5948QdV75YE3e3vx6SMoOo30urTFGr8SXMhYgE1BdGVItvUE
+	 ao0smPENqeNMT+3IRdPWVPkxrh63rfPjDqPIqecuGVQgdowuXFvPOtSEqlf6S3WU7w
+	 sIlL7ZjanGac5t9WD7wpXlJFwiy0yainSj6eVtsZEznYvZ0RJFXl5izlXaYz4INTZU
+	 3EaBRmhJpQs+qKyjY14VqNVGzhYbjfRz++1EtaCBKfWoFtMuHcrzY0eI6n0qP55wKN
+	 PAe0T1j6IhOVZVGWfG4rCXmh9/jBzqt+mj0hDMRt6lx113NgKZX5COGYZJUzTCr7MZ
+	 q2rNXksuqaeXw==
 From: SeongJae Park <sj@kernel.org>
 To: 
 Cc: SeongJae Park <sj@kernel.org>,
@@ -34,9 +34,9 @@ Cc: SeongJae Park <sj@kernel.org>,
 	kernel-team@meta.com,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH v2 06/10] mm/damon/core: add DAMOS quota gaol metric for per-memcg per-numa free memory
-Date: Thu,  9 Oct 2025 14:20:38 -0700
-Message-Id: <20251009212042.60084-7-sj@kernel.org>
+Subject: [RFC PATCH v2 07/10] mm/damon/sysfs-schemes: support DAMOS_QUOTA_NODE_MEMCG_FREE_BP
+Date: Thu,  9 Oct 2025 14:20:39 -0700
+Message-Id: <20251009212042.60084-8-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20251009212042.60084-1-sj@kernel.org>
 References: <20251009212042.60084-1-sj@kernel.org>
@@ -48,82 +48,35 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Add a variant of DAMOS_QUOTA_NODE_MEMCG_USED_BP, for the free memory
-portion.  The value of the metric is implemented as the entire memory of
-the given NUMA node subtracted by the given cgroup's usage.  So from a
-perspective, "unused" could be a better term than "free".  But arguably
-it is not very clear what is better, so use the term "free".
+Extend DAMON sysfs to support DAMOS_QUOTA_NODE_MEMCG_FREE_BP.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- include/linux/damon.h | 6 ++++--
- mm/damon/core.c       | 9 +++++++--
- 2 files changed, 11 insertions(+), 4 deletions(-)
+ mm/damon/sysfs-schemes.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/include/linux/damon.h b/include/linux/damon.h
-index 0d63ceb7e6ef..0edf41d36ea1 100644
---- a/include/linux/damon.h
-+++ b/include/linux/damon.h
-@@ -148,6 +148,7 @@ enum damos_action {
-  * @DAMOS_QUOTA_NODE_MEM_USED_BP:	MemUsed ratio of a node.
-  * @DAMOS_QUOTA_NODE_MEM_FREE_BP:	MemFree ratio of a node.
-  * @DAMOS_QUOTA_NODE_MEMCG_USED_BP:	MemUsed ratio of a node for a cgroup.
-+ * @DAMOS_QUOTA_NODE_MEMCG_FREE_BP:	MemFree ratio of a node for a cgroup.
-  * @NR_DAMOS_QUOTA_GOAL_METRICS:	Number of DAMOS quota goal metrics.
-  *
-  * Metrics equal to larger than @NR_DAMOS_QUOTA_GOAL_METRICS are unsupported.
-@@ -158,6 +159,7 @@ enum damos_quota_goal_metric {
- 	DAMOS_QUOTA_NODE_MEM_USED_BP,
- 	DAMOS_QUOTA_NODE_MEM_FREE_BP,
- 	DAMOS_QUOTA_NODE_MEMCG_USED_BP,
-+	DAMOS_QUOTA_NODE_MEMCG_FREE_BP,
- 	NR_DAMOS_QUOTA_GOAL_METRICS,
+diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
+index c679e62fd4b9..c98cf4bd2fbb 100644
+--- a/mm/damon/sysfs-schemes.c
++++ b/mm/damon/sysfs-schemes.c
+@@ -1034,6 +1034,10 @@ struct damos_sysfs_qgoal_metric_name damos_sysfs_qgoal_metric_names[] = {
+ 		.metric = DAMOS_QUOTA_NODE_MEMCG_USED_BP,
+ 		.name = "node_memcg_used_bp",
+ 	},
++	{
++		.metric = DAMOS_QUOTA_NODE_MEMCG_FREE_BP,
++		.name = "node_memcg_free_bp",
++	},
  };
  
-@@ -183,8 +185,8 @@ enum damos_quota_goal_metric {
-  * If @metric is DAMOS_QUOTA_NODE_MEM_{USED,FREE}_BP, @nid represents the node
-  * id of the target node to account the used/free memory.
-  *
-- * If @metric is DAMOS_QUOTA_NODE_MEMCG_USED_BP, @nid and @memcg_id represents
-- * the node id and the cgroup to account the used memory for.
-+ * If @metric is DAMOS_QUOTA_NODE_MEMCG_{USED,FREE}_BP, @nid and @memcg_id
-+ * represents the node id and the cgroup to account the used memory for.
-  */
- struct damos_quota_goal {
- 	enum damos_quota_goal_metric metric;
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index 1eacf78aa358..a31ede50906c 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -2039,7 +2039,7 @@ static unsigned long damos_get_node_memcg_used_bp(
- {
- 	struct mem_cgroup *memcg;
- 	struct lruvec *lruvec;
--	unsigned long used_pages;
-+	unsigned long used_pages, numerator;
- 	struct sysinfo i;
- 
- 	rcu_read_lock();
-@@ -2059,7 +2059,11 @@ static unsigned long damos_get_node_memcg_used_bp(
- 	used_pages += lruvec_page_state(lruvec, NR_INACTIVE_FILE);
- 
- 	si_meminfo_node(&i, goal->nid);
--	return used_pages * 10000 / i.totalram;
-+	if (goal->metric == DAMOS_QUOTA_NODE_MEMCG_USED_BP)
-+		numerator = used_pages;
-+	else	/* DAMOS_QUOTA_NODE_MEMCG_FREE_BP */
-+		numerator = i.totalram - used_pages;
-+	return numerator * 10000 / i.totalram;
- }
- #else
- static __kernel_ulong_t damos_get_node_mem_bp(
-@@ -2094,6 +2098,7 @@ static void damos_set_quota_goal_current_value(struct damos_quota_goal *goal)
- 		goal->current_value = damos_get_node_mem_bp(goal);
- 		break;
- 	case DAMOS_QUOTA_NODE_MEMCG_USED_BP:
-+	case DAMOS_QUOTA_NODE_MEMCG_FREE_BP:
- 		goal->current_value = damos_get_node_memcg_used_bp(goal);
- 		break;
- 	default:
+ static ssize_t target_metric_show(struct kobject *kobj,
+@@ -2552,6 +2556,7 @@ static int damos_sysfs_add_quota_score(
+ 			goal->nid = sysfs_goal->nid;
+ 			break;
+ 		case DAMOS_QUOTA_NODE_MEMCG_USED_BP:
++		case DAMOS_QUOTA_NODE_MEMCG_FREE_BP:
+ 			err = damon_sysfs_memcg_path_to_id(
+ 					sysfs_goal->path, &goal->memcg_id);
+ 			if (err) {
 -- 
 2.39.5
