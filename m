@@ -1,44 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FC6121B9DE
-	for <damon@lists.linux.dev>; Tue, 14 Oct 2025 18:25:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAB50308F19;
+	Tue, 14 Oct 2025 20:59:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760466345; cv=none; b=X56Ug7hyXUy5XsjkwFosrCH6byDuqenS7iIJBUiFPRGdwqm/m5zHQNoedwC1K7r5+NuFsS96ujqLTM1rYDrQ9G6RRqa5Lz1TBiCy9InmPeIHv5zlay6Ed/cd7p7XfMBctzfylneih7BV7uLUnjOSNO8UVbVfk+cKvcf+FHFBxB4=
+	t=1760475591; cv=none; b=uBd4YJIKKgktyfzLGe44fxqqOgdCORB5XloC/lFMw9Ph6xodsVvXtPEyhaajH0ooxOCckTRxbdWn1mAn31fHPSM/+Mmx/oDNGN+twGviDU9MwqZb7IZoXhmUk0TgRXJEAK2KU4MxiVK9D2xqmrO/x8ghjamh9P5QcU/giCyif/w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760466345; c=relaxed/simple;
-	bh=Y9Tu1SuK1U50HGeWWFYQ+9vjydcCGD17mbmw+C/L+jk=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a5IdhKTN6WFxZCIRxoW7ALkx4I7Yon19w65EiXrxcuGDbfqHDtvjzMOwH9TY+CcgJuU++4uZd0z1wHqmWqDDwN3KA8cZagKTQEzwv9hbPbXxuKzdmdPZD+oAPFQS+8N79qMZaM9PMWwLRrTP08fm85aI81Ihnxkd/CzgYHC+VgU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=E2AyN+Ce; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1760475591; c=relaxed/simple;
+	bh=CwCpWIEbjznOcuvaN31S0BbRxv1BAYgTlvJi+4awgk0=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=AWS4aKUK1qlhQlQwiSgosoLnsoFegcsCjkBTOuGDdCVdhi0p3wwKqCkSVNYIqb0wwnMRoCYsZWBB+aCq7Qxb2d4utsJTATnU+/do91sKV10q1Q4guJ8u/k8aQ+u5u5R4tcw+L+VIaAjz+n5XyWBMlEkKvZSdGQw74IJy2hewYbw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=l20NnhA7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="E2AyN+Ce"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AA96C4CEFE;
-	Tue, 14 Oct 2025 18:25:44 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="l20NnhA7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F46BC4CEE7;
+	Tue, 14 Oct 2025 20:59:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1760466344;
-	bh=Y9Tu1SuK1U50HGeWWFYQ+9vjydcCGD17mbmw+C/L+jk=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E2AyN+CehSRvFD/j7+72y7eCCx5KD9lOnW44xvaH8EcNmnjIwBBM5Iex5eJKgoJJF
-	 aV675fWSmz8FYbykCkaVNnXbCCrhsGyw8HYiGYFiAc9aXZPKySyRpq/QWzRjC7AqOu
-	 OtJze5iSOjj+BC38p54cQxWMmR0/pbfmngU0Fy8EfjjzKEfgHmL1XGrxm44+8VOppI
-	 lx6FEMTXDf7w59st2U6h0c5fiaaIUE7flkXphoS6fhA4Oin4a7K1BknfGcBrXmwZDp
-	 +UwgJ+gPwEZ7033tWzkzYfUT0cyfa8bJ9qmxk57G89vFXFX92eCsyFDMDDWxGdtn8v
-	 p8AR5OGYabQXA==
+	s=k20201202; t=1760475590;
+	bh=CwCpWIEbjznOcuvaN31S0BbRxv1BAYgTlvJi+4awgk0=;
+	h=From:To:Cc:Subject:Date:From;
+	b=l20NnhA76N7s1JSZeE4HhkKM+jYSydazTLNhwgoJedy5N4CCAltIeitOYzgB97nb4
+	 yJSSA9ISOIGcN2F9dO+VCT1VLFrvp54XNbUrWUdkDP2FiTUs/ZDkDeRWtmzY/FhZ7+
+	 Ag9wxqiH2XLDqbC9Ggh/zHwDP6RlKazJnmRgHiV2FJAyV/4/EQIRApzSRJoDFpR/D2
+	 G0WEYRuObwpMkxOXM9nuIjaVqQyPF++e+Nhf/APPitSe86Ru9BXWjh/pmchadrsuWT
+	 3t5rjmLa779clCBhePxGVHmeqGxEMLEm3mMkhZ7cPhhZloWcJIWfjfJzO+QjzwkjjY
+	 tRLtLdypBkohw==
 From: SeongJae Park <sj@kernel.org>
-To: Enze Li <lienze@kylinos.cn>
+To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SeongJae Park <sj@kernel.org>,
-	akpm@linux-foundation.org,
+	"# 6 . 17 . x" <stable@vger.kernel.org>,
 	damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	enze.li@gmx.com
-Subject: Re: [PATCH] mm/damon/core: fix potential memory leak by cleaning ops_filter in damon_destroy_scheme
-Date: Tue, 14 Oct 2025 11:25:38 -0700
-Message-ID: <20251014182539.50115-1-sj@kernel.org>
+	linux-kernel@vger.kernel.org,
+	linux-mm@kvack.org
+Subject: [PATCH] mm/damon/core: fix list_add_tail() call on damon_call()
+Date: Tue, 14 Oct 2025 13:59:36 -0700
+Message-ID: <20251014205939.1206-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20251014084225.313313-1-lienze@kylinos.cn>
-References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -47,34 +44,59 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Tue, 14 Oct 2025 16:42:25 +0800 Enze Li <lienze@kylinos.cn> wrote:
+Each damon_ctx maintains callback requests using a linked list
+(damon_ctx->call_controls).  When a new callback request is received via
+damon_call(), the new request should be added to the list.  However, the
+function is making a mistake at list_add_tail() invocation: putting the
+new item to add and the list head to add it before, in the opposite
+order.  Because of the linked list manipulation implementation, the new
+request can still be reached from the context's list head.  But the list
+items that were added before the new request are dropped from the list.
 
-> Currently, damon_destroy_scheme() only cleans up the filter list but
-> leaves ops_filter untouched, which could lead to memory leaks when
-> a scheme is destroyed.
-> 
-> This patch ensures both filter and ops_filter are properly freed in
-> damon_destroy_scheme(), preventing potential memory leaks.
+As a result, the callbacks are unexpectedly not invocated.  Worse yet,
+if the dropped callback requests were dynamically allocated, the memory
+is leaked.  Actually DAMON sysfs interface is using a dynamically
+allocated repeat-mode callback request for automatic essential stats
+update.  And because the online DAMON parameters commit is using
+a non-repeat-mode callback request, the issue can easily be reproduced,
+like below.
 
-Thank you for fixing this!
+    # damo start --damos_action stat --refresh_stat 1s
+    # damo tune --damos_action stat --refresh_stat 1s
 
-FYI the leak is not only potential but can easily be reproduced using the ops
-damos filters.  For example, I was able to reproduce it using DAMON user-space
-tool (damo), like below.
+The first command dynamically allocates the repeat-mode callback request
+for automatic essential stat update.  Users can see the essential stats
+are automatically updated for every second, using the sysfs interface.
 
-    $ sudo ./damo start
-    $ sudo ./damo report access --snapshot_damos_filter allow anon
+The second command calls damon_commit() with a new callback request that
+was made for the commit.  As a result, the previously added repeat-mode
+callback request is dropped from the list.  The automatic stats refresh
+stops working, and the memory for the repeat-mode callback request is
+leaked.  It can be confirmed using kmemleak.
 
-After the above steps I confirmed it leaks the memory using kmemleak.
+Fix the mistake on the list_add_tail() call.
 
-> 
-> Fixes: ab82e57981d0 ("mm/damon/core: introduce damos->ops_filters")
-> Signed-off-by: Enze Li <lienze@kylinos.cn>
+Fixes: 004ded6bee11 ("mm/damon: accept parallel damon_call() requests")
+Cc: <stable@vger.kernel.org> # 6.17.x
+Signed-off-by: SeongJae Park <sj@kernel.org>
+---
+ mm/damon/core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Reviewed-by: SeongJae Park <sj@kernel.org>
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index 417f33a7868e..109b050c795a 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -1453,7 +1453,7 @@ int damon_call(struct damon_ctx *ctx, struct damon_call_control *control)
+ 	INIT_LIST_HEAD(&control->list);
+ 
+ 	mutex_lock(&ctx->call_controls_lock);
+-	list_add_tail(&ctx->call_controls, &control->list);
++	list_add_tail(&control->list, &ctx->call_controls);
+ 	mutex_unlock(&ctx->call_controls_lock);
+ 	if (!damon_is_running(ctx))
+ 		return -EINVAL;
 
-
-Thanks,
-SJ
-
-[...]
+base-commit: 49926cfb24ad064c8c26f8652e8a61bbcde37701
+-- 
+2.47.3
