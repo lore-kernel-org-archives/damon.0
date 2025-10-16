@@ -1,44 +1,46 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from canpmsgout03.his.huawei.com (canpmsgout03.his.huawei.com [113.46.200.218])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0419B26CE25
-	for <damon@lists.linux.dev>; Wed, 15 Oct 2025 15:07:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8FE725B1DA
+	for <damon@lists.linux.dev>; Thu, 16 Oct 2025 11:02:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=113.46.200.218
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760540834; cv=none; b=Xzd33uXIOrJ4ctX23tjekeB/U7tgbpGPLuxBlbrdsOpCh9HEmU955TPz7b8qxumBxUq4/1URyV5AM8jzQqUtSZA2Uf4edTeQfKNOCHkqp/LwfWwPTu1HQTkUIdMAqUnfgSDD0qVU1abi1NH2bi4lfNQ5AnCKbNNOwXbpKoTaIr4=
+	t=1760612571; cv=none; b=j1yZbGhwsXmPeRAkJprBqZLWXxb2pRi4P3w+fKQkRc0qWf2CvjsDnTabIL7Fr/l1gE15Wlgcz4x4+maaArUz/3M8pFd6DD+zOqbuvIaZjBOIEHxO+Oxklck+i2WBQ0aaxQqQlir9pVBsXxPdE/fH2j8aR56hb1mzpl8rSSJ+eiI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760540834; c=relaxed/simple;
-	bh=5hXx2RD+bmNSeJIwcoPLQR4SB2ipmLncmu2KyKpJLh0=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HNDgGneuZwRAgxUhZVJR8MSmug+cQ4Wx4kTPg9REdJVKcqCcV0U8OgiaKEnKTSsUrUntWkx9cr/GtRddSJtbP1WfD7xSfJq7BeMfXDSc3VJu7iN42D/WnC2MXrrLUMBDZYHW3fhgkRQ3p5WiL+dBTOFiL3VaPcRwZ5QGUsrtFW0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pwEM8WBm; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1760612571; c=relaxed/simple;
+	bh=3U6mKEsp/xuVHLB2nhHRtmgO0ouTQPLIP8tq4d9tIAk=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=pXswoTZExpxBQz+6v3+AdpBDnvLoELkDGijmRsC0LjnEP6yfPc5EPeqjl6mxNYjwYqjMTcbUpD3ugJ5KZB0pBmQNhUnbFNPdXFECSQHNrnsGmNJz5Qov0mi39xkBLXYE8f5xmPVcg89OpLmPltXhb84KUy4PjkvBOAssAB9e5H0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b=PVH3AjvB; arc=none smtp.client-ip=113.46.200.218
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pwEM8WBm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9F6EC4CEFB;
-	Wed, 15 Oct 2025 15:07:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1760540833;
-	bh=5hXx2RD+bmNSeJIwcoPLQR4SB2ipmLncmu2KyKpJLh0=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pwEM8WBmmycAcispyGwA3tgWT/07O+zjujTHq8qpSkO+jGrMofRhMHO7uGyPpscFS
-	 HYKXJ61AFvd5hEVDut13Z5rHo0Sja60zeOzpADSijfkX3NQblD+x3c/lI9nY9MbZXy
-	 70LFdB+1V9VAqOKh/b2vcsgwO2BsB1ADtbWDeW1cSCEEdPnzrQgXrpf5fY0Y3cLmRY
-	 wMGVfooAiC94uiJPrkzLCpOMbYC0LbMqOCz9UuK93XbtP7wXZVe8kdYWcqFxPpwlFD
-	 objtyTYuIAa7H8C58ksHGWBeFMrebIJrJmv6CDMN8CBcRk7WKer0ELHe1kRihoUSRb
-	 9PhHQYIuivyBQ==
-From: SeongJae Park <sj@kernel.org>
-To: Enze Li <lienze@kylinos.cn>
-Cc: SeongJae Park <sj@kernel.org>,
-	akpm@linux-foundation.org,
-	damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	enze.li@gmx.com
-Subject: Re: [PATCH] mm/damon/core: fix potential memory leak by cleaning ops_filter in damon_destroy_scheme
-Date: Wed, 15 Oct 2025 08:07:00 -0700
-Message-ID: <20251015150701.68087-1-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <87jz0wg9uw.fsf@>
-References: 
+	dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b="PVH3AjvB"
+dkim-signature: v=1; a=rsa-sha256; d=huawei.com; s=dkim;
+	c=relaxed/relaxed; q=dns/txt;
+	h=From;
+	bh=YA8D5I96zsXRtdPpR5at9hJZuoUIlUR0M7FDNK1mdqI=;
+	b=PVH3AjvBH98EWotO5/VLOPldqTmMmYiNlNV+Bl1atBgPKDreShqY5goNPA2WDOeykki2sMx+v
+	HuoZc/ZGEjExlvoTSYoJa2ZX9GHgzDRJIWJJHOQd0P/bluTH5tSy0cGYmZjBO7pIiUhiKfbS7wf
+	J9/mqUs/wLmtNaO3PU/CgS4=
+Received: from mail.maildlp.com (unknown [172.19.162.254])
+	by canpmsgout03.his.huawei.com (SkyGuard) with ESMTPS id 4cnQ4l3rHFzpSv6;
+	Thu, 16 Oct 2025 19:01:43 +0800 (CST)
+Received: from dggpemf200018.china.huawei.com (unknown [7.185.36.31])
+	by mail.maildlp.com (Postfix) with ESMTPS id EBF2F18048B;
+	Thu, 16 Oct 2025 19:02:39 +0800 (CST)
+Received: from huawei.com (10.50.85.135) by dggpemf200018.china.huawei.com
+ (7.185.36.31) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.11; Thu, 16 Oct
+ 2025 19:02:39 +0800
+From: Quanmin Yan <yanquanmin1@huawei.com>
+To: <sj@kernel.org>
+CC: <akpm@linux-foundation.org>, <damon@lists.linux.dev>,
+	<linux-kernel@vger.kernel.org>, <linux-mm@kvack.org>,
+	<yanquanmin1@huawei.com>, <wangkefeng.wang@huawei.com>, <zuoze1@huawei.com>
+Subject: [PATCH] mm/damon: add a min_sz_region parameter to damon_set_region_biggest_system_ram_default()
+Date: Thu, 16 Oct 2025 18:47:17 +0800
+Message-ID: <20251016104717.2194909-1-yanquanmin1@huawei.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -46,68 +48,115 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: kwepems200002.china.huawei.com (7.221.188.68) To
+ dggpemf200018.china.huawei.com (7.185.36.31)
 
-On Wed, 15 Oct 2025 10:46:47 +0800 Enze Li <lienze@kylinos.cn> wrote:
+After adding addr_unit support for DAMON_LRU_SORT and DAMON_RECLAIM,
+the related region setup now requires alignment based on min_sz_region.
 
-> Hi SJ,
-> 
-> On Tue, Oct 14 2025 at 11:25:38 AM -0700, SeongJae Park wrote:
-> 
-> > On Tue, 14 Oct 2025 16:42:25 +0800 Enze Li <lienze@kylinos.cn> wrote:
-> >
-> >> Currently, damon_destroy_scheme() only cleans up the filter list but
-> >> leaves ops_filter untouched, which could lead to memory leaks when
-> >> a scheme is destroyed.
-> >> 
-> >> This patch ensures both filter and ops_filter are properly freed in
-> >> damon_destroy_scheme(), preventing potential memory leaks.
-> >
-> > Thank you for fixing this!
-> >
-> > FYI the leak is not only potential but can easily be reproduced using the ops
-> > damos filters.  For example, I was able to reproduce it using DAMON user-space
-> > tool (damo), like below.
-> >
-> >     $ sudo ./damo start
-> >     $ sudo ./damo report access --snapshot_damos_filter allow anon
-> >
-> > After the above steps I confirmed it leaks the memory using kmemleak.
-> 
-> Thank you for the review.
-> 
-> Considering that similar memory leak issues might occur elsewhere in the
-> future, should we consider exploring the introduction of Rust for
-> certain modules as a proactive measure?
-> 
-> My search through the mailing list archives didn't reveal similar
-> discussions, though I might have missed them.
+Add min_sz_region to damon_set_region_biggest_system_ram_default()
+and use it when calling damon_set_regions(), replacing the previously
+hardcoded DAMON_MIN_REGION.
 
-I also don't remember discussing Rust for DAMON on the mailing list.  You must
-be right, or I also missed some :)
+Fixes: 2e0fe9245d6b ("mm/damon/lru_sort: support addr_unit for DAMON_LRU_SORT")
+Fixes: 7db551fcfb2a ("mm/damon/reclaim: support addr_unit for DAMON_RECLAIM")
+Signed-off-by: Quanmin Yan <yanquanmin1@huawei.com>
+---
+ include/linux/damon.h | 3 ++-
+ mm/damon/core.c       | 6 ++++--
+ mm/damon/lru_sort.c   | 3 ++-
+ mm/damon/reclaim.c    | 3 ++-
+ mm/damon/stat.c       | 3 ++-
+ 5 files changed, 12 insertions(+), 6 deletions(-)
 
-> Would you be open to
-> sharing your insights on this matter?
+diff --git a/include/linux/damon.h b/include/linux/damon.h
+index cae8c613c5fc..1ce75a20febf 100644
+--- a/include/linux/damon.h
++++ b/include/linux/damon.h
+@@ -947,7 +947,8 @@ int damon_call(struct damon_ctx *ctx, struct damon_call_control *control);
+ int damos_walk(struct damon_ctx *ctx, struct damos_walk_control *control);
+ 
+ int damon_set_region_biggest_system_ram_default(struct damon_target *t,
+-				unsigned long *start, unsigned long *end);
++				unsigned long *start, unsigned long *end,
++				unsigned long min_sz_region);
+ 
+ #endif	/* CONFIG_DAMON */
+ 
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index 93848b4c6944..e29f08b8a114 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -2767,6 +2767,7 @@ static bool damon_find_biggest_system_ram(unsigned long *start,
+  * @t:		The monitoring target to set the region.
+  * @start:	The pointer to the start address of the region.
+  * @end:	The pointer to the end address of the region.
++ * @min_sz_region:	Minimum region size.
+  *
+  * This function sets the region of @t as requested by @start and @end.  If the
+  * values of @start and @end are zero, however, this function finds the biggest
+@@ -2777,7 +2778,8 @@ static bool damon_find_biggest_system_ram(unsigned long *start,
+  * Return: 0 on success, negative error code otherwise.
+  */
+ int damon_set_region_biggest_system_ram_default(struct damon_target *t,
+-			unsigned long *start, unsigned long *end)
++			unsigned long *start, unsigned long *end,
++			unsigned long min_sz_region)
+ {
+ 	struct damon_addr_range addr_range;
+ 
+@@ -2790,7 +2792,7 @@ int damon_set_region_biggest_system_ram_default(struct damon_target *t,
+ 
+ 	addr_range.start = *start;
+ 	addr_range.end = *end;
+-	return damon_set_regions(t, &addr_range, 1, DAMON_MIN_REGION);
++	return damon_set_regions(t, &addr_range, 1, min_sz_region);
+ }
+ 
+ /*
+diff --git a/mm/damon/lru_sort.c b/mm/damon/lru_sort.c
+index 42b9a656f9de..49b4bc294f4e 100644
+--- a/mm/damon/lru_sort.c
++++ b/mm/damon/lru_sort.c
+@@ -242,7 +242,8 @@ static int damon_lru_sort_apply_parameters(void)
+ 
+ 	err = damon_set_region_biggest_system_ram_default(param_target,
+ 					&monitor_region_start,
+-					&monitor_region_end);
++					&monitor_region_end,
++					param_ctx->min_sz_region);
+ 	if (err)
+ 		goto out;
+ 	err = damon_commit_ctx(ctx, param_ctx);
+diff --git a/mm/damon/reclaim.c b/mm/damon/reclaim.c
+index 7ba3d0f9a19a..36a582e09eae 100644
+--- a/mm/damon/reclaim.c
++++ b/mm/damon/reclaim.c
+@@ -250,7 +250,8 @@ static int damon_reclaim_apply_parameters(void)
+ 
+ 	err = damon_set_region_biggest_system_ram_default(param_target,
+ 					&monitor_region_start,
+-					&monitor_region_end);
++					&monitor_region_end,
++					param_ctx->min_sz_region);
+ 	if (err)
+ 		goto out;
+ 	err = damon_commit_ctx(ctx, param_ctx);
+diff --git a/mm/damon/stat.c b/mm/damon/stat.c
+index d8010968bbed..6c4503d2aee3 100644
+--- a/mm/damon/stat.c
++++ b/mm/damon/stat.c
+@@ -187,7 +187,8 @@ static struct damon_ctx *damon_stat_build_ctx(void)
+ 	if (!target)
+ 		goto free_out;
+ 	damon_add_target(ctx, target);
+-	if (damon_set_region_biggest_system_ram_default(target, &start, &end))
++	if (damon_set_region_biggest_system_ram_default(target, &start, &end,
++							ctx->min_sz_region))
+ 		goto free_out;
+ 	return ctx;
+ free_out:
+-- 
+2.43.0
 
-In short, I agree adopting Rust for DAMON could be helpful.  As you mentioned,
-rewriting certain buggy DAMON modules such as DAMON sysfs interface in Rust
-could be a good idea.  There was also a private discussion about writing DAMON
-user-space tool or library in Rust.  I think that could also be an interesting
-idea.  So I'd say I'm open to Rust adoption on DAMON, not only in kernel space
-but also in user-space.
-
-Nonetheless, I know nothing about Rust, and having limited resource.  I
-actually wanted to learn Rust and start writing a sample DAMON module in Rust.
-I got the idea from the last year LPC, but still made no progress at all.  So
-I'm open to Rust adoption in long term, but cannot guarantee something in short
-term for now.
-
-The user-space Rust adoption could be done regardless of my help, though.  That
-is, someone could develop and maintain a new user-space tool or library for
-DAMON with Rust, independent of 'damo'.  My poor knowledge about Rush shouldn't
-be a blocker for such projects.
-
-
-Thanks,
-SJ
-
-[...]
