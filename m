@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36B042D8362;
-	Sat, 18 Oct 2025 20:44:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 692322D94A4;
+	Sat, 18 Oct 2025 20:44:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760820293; cv=none; b=QHMoCFdfnc/pIb8cJUQGXRyJwgco8eRIPhrrKCJ8MEyN3mgaOy0wZwSxKerBsOAldqdgzG3X/nF7Bypn7o491M9wfnOuc+mwm3FHwT9nJ4Tpesu5f+BGG0WjEq9zuJBztQh2Ym8faoo09KQ8oKWDccTiD6xgTepYrrFIcUcs6QM=
+	t=1760820293; cv=none; b=o6mqlpx8CyoTaKA86R/7Pxn5UAQiKAaXg4+dV4WpzMOMuVJ/fkK/MJ8reCGlBqzFv70//hWDx9j39wdaUr9csBju7opsGi3dfyc2J0Ox2A7u0vfdKKcNSjmE2nBFnFAxouz+Ph4akdjePRR8X46P1UPBvJFc6q2sZEL55nP+uos=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1760820293; c=relaxed/simple;
-	bh=S4lW4Yt0S7MkHRb5GuM0MpYSg8IJozn8ecS6DJPFv08=;
+	bh=JDAR5vBDfrQKj9l07eWZCbXqGebT8PFUKr3f9iHJS+U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PVb2LglC2WdMsMFOXlkoTA/4FvQI+o1YZMmP8zwlZ1HLW9upxOnWN/JXg2xDR0txR6Tvwub69Sj8s0Qt+aDJulekY/5tQKBdPl7EElYqJIsYT5rqe/mojwRrInb0uU2sUc4/KiTuia8N0dM1+zpGYgR1l4guJ+/t9wPXdJgnaTs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DqXsi/52; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=G6Z7OYbbhp1EOJd29luNKmbvyXJQhGo6hwkT8fOOlWsECH2J/CWbZcp7E1lzGTTJgKl8nY3ZwvGYbRW692PxBsq1IvP/nOtsZ5wDjncfVpsj+1UpyqkwM8a+SyxfqNDoSNREkiR1a1F4uxUfnN23+SxLb/OdcpgrcHHMlzt282Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FDYx4y6w; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DqXsi/52"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D96FC4CEFE;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FDYx4y6w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBBCFC116B1;
 	Sat, 18 Oct 2025 20:44:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1760820292;
-	bh=S4lW4Yt0S7MkHRb5GuM0MpYSg8IJozn8ecS6DJPFv08=;
+	s=k20201202; t=1760820293;
+	bh=JDAR5vBDfrQKj9l07eWZCbXqGebT8PFUKr3f9iHJS+U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DqXsi/52g5a5C4pINsXt4g4P/sejZ00AhNJflJ/NDCRkGGHM6Wo1b4RBxlcaJU3mp
-	 3Qzyq8DIZRrbii3iw7BY/KyIObXLJtaRZ3zSV9gltUis/hoWGq2Ixan/X8kidTGNjX
-	 Ez4IRFb4PzV5170Fs0vN/yWoglJJgf8x5Lzh2aLgHxcgtTm0OSJ2nlH4cNo8sPyZog
-	 p6V3+s3CYVt/dr4+x8XMe2BarNkBFCQuv53m6pSc0yVbkur2G+dLxGhB5l0jH1FHSd
-	 SZfIB/dJiMA6QYK7p+hvcUTaoL1VFxceXBC25QoJlFEEqo+nrNpZuKhLFLCI+LW2u9
-	 zHPEz7x7FxxoQ==
+	b=FDYx4y6wSdB04oRFCmuLkrqCOm3Fdh8tM9f3mb5PxueJPZaw3cNorfkUUjXq3urLg
+	 rDb2Tc+3mneR9llm1GcWC8cykf95pS34V1lznO4Fg0mY+vwnvWE75g7wNVHTPFTYvY
+	 OBpUeWqpKSiInr6pk+r6ZIRj6JV8O2DL2wiMr312gb9eYm5KC8b3Wr+HC9tlJCpfNk
+	 qmtwKre01Sj23dLd0x7T3Q5mgi8UkQT4IUd77sqYhuXR+7n5WMkY+7LQbqA77Q3jZY
+	 ZXCR7lZgxHbg/WIEVZCGMM7VnS9CwlHAlTLDrf3NC6paaJ42GTHSvt9WdHtGVHFslT
+	 rqedKtWmBI8NQ==
 From: SeongJae Park <sj@kernel.org>
 To: 
 Cc: SeongJae Park <sj@kernel.org>,
@@ -36,9 +36,9 @@ Cc: SeongJae Park <sj@kernel.org>,
 	linux-kernel@vger.kernel.org,
 	linux-kselftest@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH 1/4] selftests/damon/_damon_sysfs: support obsolete_target file
-Date: Sat, 18 Oct 2025 13:44:42 -0700
-Message-ID: <20251018204448.8906-2-sj@kernel.org>
+Subject: [RFC PATCH 3/4] sysfs.py: extend assert_ctx_committed() for monitoring targets
+Date: Sat, 18 Oct 2025 13:44:44 -0700
+Message-ID: <20251018204448.8906-4-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20251018204448.8906-1-sj@kernel.org>
 References: <20251018204448.8906-1-sj@kernel.org>
@@ -50,49 +50,43 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-A DAMON sysfs file, namely obsolete_target, has newly introduced.  Add a
-support of that file to _damon_sysfs.py so that DAMON selftests for the
-file can be easily written.
+assert_ctx_committed() is not asserting monitoring targets commitment,
+since all existing callers of the function assumes no target changes.
+Extend it for future usage.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- tools/testing/selftests/damon/_damon_sysfs.py | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ tools/testing/selftests/damon/sysfs.py | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/tools/testing/selftests/damon/_damon_sysfs.py b/tools/testing/selftests/damon/_damon_sysfs.py
-index a0e6290833fb..748778b563cd 100644
---- a/tools/testing/selftests/damon/_damon_sysfs.py
-+++ b/tools/testing/selftests/damon/_damon_sysfs.py
-@@ -475,12 +475,14 @@ class Damos:
+diff --git a/tools/testing/selftests/damon/sysfs.py b/tools/testing/selftests/damon/sysfs.py
+index 2666c6f0f1a5..fd8d3698326e 100755
+--- a/tools/testing/selftests/damon/sysfs.py
++++ b/tools/testing/selftests/damon/sysfs.py
+@@ -164,6 +164,16 @@ def assert_monitoring_attrs_committed(attrs, dump):
+     assert_true(dump['max_nr_regions'] == attrs.max_nr_regions,
+                 'max_nr_regions', dump)
  
- class DamonTarget:
-     pid = None
-+    obsolete = None
-     # todo: Support target regions if test is made
-     idx = None
-     context = None
++def assert_monitoring_target_committed(target, dump):
++    # target.pid is the pid "number", while dump['pid'] is 'struct pid'
++    # pointer, and hence cannot be compared.
++    assert_true(dump['obsolete'] == target.obsolete, 'target obsolete', dump)
++
++def assert_monitoring_targets_committed(targets, dump):
++    assert_true(len(targets) == len(dump), 'len_targets', dump)
++    for idx, target in enumerate(targets):
++        assert_monitoring_target_committed(target, dump[idx])
++
+ def assert_ctx_committed(ctx, dump):
+     ops_val = {
+             'vaddr': 0,
+@@ -172,6 +182,7 @@ def assert_ctx_committed(ctx, dump):
+             }
+     assert_true(dump['ops']['id'] == ops_val[ctx.ops], 'ops_id', dump)
+     assert_monitoring_attrs_committed(ctx.monitoring_attrs, dump['attrs'])
++    assert_monitoring_targets_committed(ctx.targets, dump['adaptive_targets'])
+     assert_schemes_committed(ctx.schemes, dump['schemes'])
  
--    def __init__(self, pid):
-+    def __init__(self, pid, obsolete=False):
-         self.pid = pid
-+        self.obsolete = obsolete
- 
-     def sysfs_dir(self):
-         return os.path.join(
-@@ -491,8 +493,13 @@ class DamonTarget:
-                 os.path.join(self.sysfs_dir(), 'regions', 'nr_regions'), '0')
-         if err is not None:
-             return err
--        return write_file(
-+        err = write_file(
-                 os.path.join(self.sysfs_dir(), 'pid_target'), self.pid)
-+        if err is not None:
-+            return err
-+        return write_file(
-+                os.path.join(self.sysfs_dir(), 'obsolete_target'),
-+                'Y' if self.obsolete else 'N')
- 
- class IntervalsGoal:
-     access_bp = None
+ def assert_ctxs_committed(ctxs, dump):
 -- 
 2.47.3
