@@ -1,43 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2D3433374E;
-	Fri, 17 Oct 2025 21:27:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAAB627462;
+	Sat, 18 Oct 2025 20:44:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760736437; cv=none; b=lll3kViSIErKssFDqldw7m0vcggq/WTnxZ644rKWrle/4/va5t5iE4sVNKwfFBcUPbAe63FBBQfGnV4ie653mBMTr8Vnrwjfz19GMSn8JpEyc9PT+64BZYqCQKnB+6cd6uQaOfiEWIsAhkeeSX52LyqKLqLvlEc9PtWFSOhY7rQ=
+	t=1760820292; cv=none; b=VW6RAB96uub2Ylj4HL1AIaE2t2G4RicYZq2DI55ybCehkA2RKrbNgD0+8cDhCMVWrrqQPUxr6Dl4x1mHRl+y1gJux0sDA9kOaCG90l6kFNIr0HoiwoE+AFaUqTxr0ZCQR2KcbKYamAac3X7s7ebs+xDZY5r3SLUZYPjc5LC2XDU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760736437; c=relaxed/simple;
-	bh=7XL7RxGNEj8c6993fvAFt0s4Fr/lZea2SH1v+aqXmgs=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hutyTboHwAcWoADKi0gfQtx9LRoQeANPDhWMO2tJsxQ+J8JXScdRffrcsAKjZlPSHBZldDcZIAsckPkIvD+VJuMabA+dO3X0s7Qiffm1qR+ufQyVjmIdBSioz/yG0yAAhQePOnUohSvjQI2PI0V6M0/6Ube2Fgxj00jqGkaG22o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jgsO98Fv; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1760820292; c=relaxed/simple;
+	bh=CeZZk9p5z6KkgS+x4IVFKcC4JWjTbvSMfd0yyRSruDY=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=GQ3HJGxbRfa3hvF8bpspzDUjTTHG2miBDx1flqRmOe4xIGb0gGAnWQz5AL+KDQ+mRKmZD9SGfAQ1UXFWCTmLMnmMvAZDUDQCuugfP2VndPD8lufbnO6tp1WwtZ0Xv1DVU1kTSYVDfyglPapQMj2mLQzFNneKu9LcZrXDMkP1tJY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=f7I73goU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jgsO98Fv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54B79C4CEF9;
-	Fri, 17 Oct 2025 21:27:16 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="f7I73goU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29529C4CEF8;
+	Sat, 18 Oct 2025 20:44:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1760736436;
-	bh=7XL7RxGNEj8c6993fvAFt0s4Fr/lZea2SH1v+aqXmgs=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jgsO98FvaV+BXTnvfVps7yKqGihceycqqSVJVMPwFMoebj+z6AbjR6yy+miS1xeqb
-	 I3CT+uF7OFfFcULkZQYdopgQmCG34P4QtAocVwNFA5plEujtnqanJX0RA62Zt7nas3
-	 3YPi51UtDvyGWhxAgh5sFfsuQzqD0FWWbYa0ZQ2Rbv5q282UYaSRCZPdp/+fgqd6FA
-	 F/V6llAPmDJwZ/zV0Nk5KrnuY1WAnpbAjQb2MBmqxduVO2QzSZeenpw6jVjNKeZ2o2
-	 FggeUkALvzrU6lo6CIneHbaOgByciKZjGLPmvTV72LRApmmdgjOK6FNOMCuCPH1xx5
-	 h9+aR6vEVOwRQ==
+	s=k20201202; t=1760820292;
+	bh=CeZZk9p5z6KkgS+x4IVFKcC4JWjTbvSMfd0yyRSruDY=;
+	h=From:To:Cc:Subject:Date:From;
+	b=f7I73goUIQgzvVeUabqDD8fY5jbdxieK4x5mjlKJPTGypIiqKbjsZntJR3jrTbKui
+	 3bk/9TD3om0MatV/qQw6rMSvtZZVEwvB5er/jlIDkqNHqZprevvQ3CabjF2uMCayQK
+	 al6YEuwFeKp0jxe44zwxDLo2JtWm5mt9EWx1hYK+7bp7jCRtF0v7YnQxehhqWkntUR
+	 1g/E8zeIntDKzD4+ybhrg2nQ0sLWk/2A6UUDDJMn61eR6dQQV1hFhU1E9A/2IDucz7
+	 VA5Oraxe5hzKAaKGos/Y9iZwbyEj9w6avLQtJLRJ9sDYNIh+k4NLc041IndztpdDHq
+	 To3/4ZT7ON2DQ==
 From: SeongJae Park <sj@kernel.org>
-To: Andrew Morton <akpm@linux-foundation.org>
+To: 
 Cc: SeongJae Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Bijan Tabatabai <bijan311@gmail.com>,
+	Shuah Khan <shuah@kernel.org>,
 	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
+	linux-kselftest@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [PATCH 10/10] Docs/ABI/damon: document DAMOS quota goal path file
-Date: Fri, 17 Oct 2025 14:27:02 -0700
-Message-ID: <20251017212706.183502-11-sj@kernel.org>
+Subject: [RFC PATCH 0/4] selftests/damon: add a test for obsolete_target sysfs file
+Date: Sat, 18 Oct 2025 13:44:41 -0700
+Message-ID: <20251018204448.8906-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20251017212706.183502-1-sj@kernel.org>
-References: <20251017212706.183502-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -46,30 +47,34 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-A DAMON sysfs interface file for DAMOS quota goal's optional path
-argument has been added.  Document it on the ABI doc.
+An RFC patch series [1] that add a new DAMON sysfs file for arbitrary
+targets removal is under review.  Add a selftest for the feature.  The
+new test uses the feature using the python wrapper of DAMON sysfs
+interface, and confirm the expected internal data structure change is
+made using drgn.
 
-Signed-off-by: SeongJae Park <sj@kernel.org>
----
- Documentation/ABI/testing/sysfs-kernel-mm-damon | 6 ++++++
- 1 file changed, 6 insertions(+)
+So this patch series may better to be a part of the other one [1] that
+introduces the obsolete_target file.  But, because no significant change
+is requested on the series so far, I'm posting this as an individual
+RFC.
 
-diff --git a/Documentation/ABI/testing/sysfs-kernel-mm-damon b/Documentation/ABI/testing/sysfs-kernel-mm-damon
-index b6b71db36ca7..dce6c2cda4e8 100644
---- a/Documentation/ABI/testing/sysfs-kernel-mm-damon
-+++ b/Documentation/ABI/testing/sysfs-kernel-mm-damon
-@@ -303,6 +303,12 @@ Contact:	SeongJae Park <sj@kernel.org>
- Description:	Writing to and reading from this file sets and gets the nid
- 		parameter of the goal.
- 
-+What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/schemes/<S>/quotas/goals/<G>/path
-+Date:		Oct 2025
-+Contact:	SeongJae Park <sj@kernel.org>
-+Description:	Writing to and reading from this file sets and gets the path
-+		parameter of the goal.
-+
- What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/schemes/<S>/quotas/weights/sz_permil
- Date:		Mar 2022
- Contact:	SeongJae Park <sj@kernel.org>
+In the next version, I may merge the two series into one, to add all
+related changes at one step.
+
+[1] https://lore.kernel.org/20251016214736.84286-1-sj@kernel.org
+
+SeongJae Park (4):
+  selftests/damon/_damon_sysfs: support obsolete_target file
+  drgn_dump_damon_status: dump damon_target->obsolete
+  sysfs.py: extend assert_ctx_committed() for monitoring targets
+  selftests/damon/sysfs: add obsolete_target test
+
+ tools/testing/selftests/damon/_damon_sysfs.py | 11 ++++-
+ .../selftests/damon/drgn_dump_damon_status.py |  1 +
+ tools/testing/selftests/damon/sysfs.py        | 48 +++++++++++++++++++
+ 3 files changed, 58 insertions(+), 2 deletions(-)
+
+
+base-commit: 1aba8bd57e6aaa1c9e699c8de66bcc931d4b1116
 -- 
 2.47.3
