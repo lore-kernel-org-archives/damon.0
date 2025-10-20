@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AD6723D7CF;
-	Mon, 20 Oct 2025 15:07:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7D37EEBA;
+	Mon, 20 Oct 2025 15:07:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760972821; cv=none; b=GCk/LEyVVupLfvmA9qaQWm7lIKvgXdbWWP5+o8SmJyXmlAmFH3vdLOOzU+UgoX1WVJOmNQXQxktb6+bJ6FFvGzI1Rf8wdhwYFJr3hv8YsGJvbrYnX4xIEqS5OcVUmh1HJLQeEjQX2rB8YO9fsKuCKakGWLwskN0Qw3uFau57pj0=
+	t=1760972853; cv=none; b=j2wrbH0tSPYAhBqUlkivj/7R6p2hZ6+66DbP4gn5IBiLkKDqv5yyqioVSii6euNlSGJESwaMBojZqO01xSbkR5ApvZ8wkOAQ+90zS7ViVEGep+nNwGtEQYQ3quqDbptOPHpTQ489OISKLru6dcVGDrbE4LCbopsJxAgVXMDIaaE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760972821; c=relaxed/simple;
-	bh=VkXbnXw/vuCVvpS9dasnvuX64xDMjhUIc9Ev+AKSHzE=;
+	s=arc-20240116; t=1760972853; c=relaxed/simple;
+	bh=bwQhCkgMC99Zv8LyOcM3w8mRBTrpsRR+wIqeIhD4C98=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gbhCJUDOTIFVXr5uMTPh07xGLUuWDj9iwjLTce+eGDe5T+1QtPRe4pSlwUd4dKaAsbZ2BBdMUV+oiUp1VRNrPz82zVfl5gX5CDFIUvqROnrP1aS0943eE0nCsn+Fcg4Poj4/nV9pfhcrw3gDEkUK7c2/AnUkr4n0mfbsgLcPnOA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NPOwehLB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kxlWUnZ5r2Asx32X6/52Al+Ad3l+mRHvuGjevZnzlsRqaYkBIrxBFEzLFMV+2HDa0L94KZSMuNnFJkkJ5HtPTwP7OwWN2s9IVDnzrYVq4Oa+3cmFeR5zaTNOmDf/4frMVjpH9O7UTaQtvWWe9wi1b2szq/VLyJl9nkrA8kchWqc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uCTjzl4x; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NPOwehLB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63BCFC4CEF9;
-	Mon, 20 Oct 2025 15:07:00 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uCTjzl4x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92FB3C4CEF9;
+	Mon, 20 Oct 2025 15:07:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1760972821;
-	bh=VkXbnXw/vuCVvpS9dasnvuX64xDMjhUIc9Ev+AKSHzE=;
+	s=k20201202; t=1760972853;
+	bh=bwQhCkgMC99Zv8LyOcM3w8mRBTrpsRR+wIqeIhD4C98=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NPOwehLByObcO8jyMl928E2PZUJ+5wmYZZnzHF7xf4EZn86JaSmVPcs6UuAz1sd0Z
-	 WUW1oWlxs/yxixr4j+aMNjU9rfFHtlWxcPpGiBP6OFCcsjhsBSxVwsb9GSUWyq7dE3
-	 Azu1KpZNz5uwL27U1dHA60JUq9Hzv/25OQ7av08hICgBDacyTVLTABC5YoNiV2PStK
-	 15DtZIjlBKzWuJkd1VryrUYi05W/uJpWL/iuisotNI7uTvsm8TPbPhtHIL+3ezxsgh
-	 Ezs+HE2EpY9d0k7P3VXjP8mQrl4A+/1TGu9EeCuXLHtc+Wd8lqJ6C2GSvC6lis0PYD
-	 GVSRDj3GK80mQ==
+	b=uCTjzl4xQQLSCh8BfOGlfloYGuPhOktRQn9TYbo7BRbisO/vuuEnbusYZxtHVts0S
+	 Ap0LGagK2ejJlbWOt3zmBHsfNvJmwAJ1N1021RdYA8oh0TO4cvf094l2r+LYtuZlrk
+	 Db+Mew64WEk7VQgTyAcldwPAXa4XInE7swqqVHm+hrhkNnbk6PiAjysjEV8AzWsMyq
+	 45k9uGsnpbVx0JWgYrufPGtAnJ7f/o3R/bXyd6lX4uCIB3jQtk5yhEF+L6YAasSpT/
+	 YpARKswuOiiqvqokaSHQrOEfwE9enhX+bqTNoLD2HT+jWJEEWLA0HHSVtZ5ID5Hj8V
+	 JOjM4cgWAEHqQ==
 From: SeongJae Park <sj@kernel.org>
 To: Quanmin Yan <yanquanmin1@huawei.com>
 Cc: SeongJae Park <sj@kernel.org>,
@@ -35,11 +35,11 @@ Cc: SeongJae Park <sj@kernel.org>,
 	linux-mm@kvack.org,
 	wangkefeng.wang@huawei.com,
 	zuoze1@huawei.com
-Subject: Re: [PATCH v2 1/2] mm/damon: add a min_sz_region parameter to damon_set_region_biggest_system_ram_default()
-Date: Mon, 20 Oct 2025 08:06:58 -0700
-Message-ID: <20251020150658.39741-1-sj@kernel.org>
+Subject: Re: [PATCH v2 2/2] mm/damon/reclaim: use min_sz_region for core address alignment when setting regions
+Date: Mon, 20 Oct 2025 08:07:30 -0700
+Message-ID: <20251020150731.45034-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20251020130125.2875164-2-yanquanmin1@huawei.com>
+In-Reply-To: <20251020130125.2875164-3-yanquanmin1@huawei.com>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -49,14 +49,14 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Mon, 20 Oct 2025 21:01:24 +0800 Quanmin Yan <yanquanmin1@huawei.com> wrote:
+On Mon, 20 Oct 2025 21:01:25 +0800 Quanmin Yan <yanquanmin1@huawei.com> wrote:
 
-> In DAMON_LRU_SORT, damon_set_regions() will apply DAMON_MIN_REGION as
-> the core address alignment, and the monitoring target address ranges
+> When setting regions in DAMON_RECLAIM, DAMON_MIN_REGION will be applied
+> as the core address alignment, and the monitoring target address ranges
 > would be aligned on DAMON_MIN_REGION * addr_unit. When users 1) set
 > addr_unit to a value larger than 1, and 2) set the monitoring target
 > address range as not aligned on DAMON_MIN_REGION * addr_unit, it will
-> cause DAMON_LRU_SORT to operate on unexpectedly large physical address
+> cause DAMON_RECLAIM to operate on unexpectedly large physical address
 > ranges.
 > 
 > For example, if the user sets the monitoring target address range to
@@ -66,11 +66,10 @@ On Mon, 20 Oct 2025 21:01:24 +0800 Quanmin Yan <yanquanmin1@huawei.com> wrote:
 > system, and [0, 4 MiB) in the physical address space, which is an
 > unexpected range.
 > 
-> To fix the issue, add a min_sz_region parameter to
-> damon_set_region_biggest_system_ram_default() and use it when calling
-> damon_set_regions(), replacing the direct use of DAMON_MIN_REGION.
+> To fix the issue, use min_sz_region for core address alignment when
+> setting regions.
 > 
-> Fixes: 2e0fe9245d6b ("mm/damon/lru_sort: support addr_unit for DAMON_LRU_SORT")
+> Fixes: 7db551fcfb2a ("mm/damon/reclaim: support addr_unit for DAMON_RECLAIM")
 > Signed-off-by: Quanmin Yan <yanquanmin1@huawei.com>
 
 Reviewed-by: SeongJae Park <sj@kernel.org>
