@@ -1,46 +1,75 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f171.google.com (mail-pg1-f171.google.com [209.85.215.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B421632;
-	Tue, 21 Oct 2025 01:08:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 886A51F099C
+	for <damon@lists.linux.dev>; Tue, 21 Oct 2025 16:23:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761008931; cv=none; b=JTgsHHtFSjGEgW38UmujSJAnwmhkxoRzNrqxlBpxMDyl7XimbVZW4/VUnHSo/0g9g10pFFDnEM+Qv3q2apV7sBjdfmSJ1duaSY6Iwegn/o3V16fhZXGFKpBGq8paNE4QS3rpV12JstHVZSMq0Kb9Xh2BsHxE1OZnF70sQM1OnDI=
+	t=1761063832; cv=none; b=aCn4RgyoIoag9edrV4x4grYppBNkzwf9LrHuy/BVh4MkulU83D8TUKEZQURv5Nxg6XXg7u76nAG+ZJ/cdHIjb3vZOf3glveZWbSa+kue8emdyRtzjnQnPZKZDcdY5JdLmHEbSMj3B5mLc64rdWgwsZHHTZNy3236YOCkW/365/A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761008931; c=relaxed/simple;
-	bh=oxV6DkSuzv67RKygZK1LFo8YEpvX0EUdzoFetLXu8UY=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ooa5DdD7dq4aMhfdZsQHUcHY97BTixiwbh/YLiu/mLikDjHtkE+/HZwiFQBWdIsnmtyC+e3Q+5gfNE+3bk4FyU89rV9COxw2MjjIozi96zvtawGZZmqFF/zvygxYbrT8mDGHQt7IVAaZoS1eryp5o4t73fgKdafwM3sakAjqCJQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WvgMIthJ; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1761063832; c=relaxed/simple;
+	bh=PXx5eLkbxk9JSDFEIVcWzFW4mmXCb7V+VCISbaH2UAU=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=MPn+3ZjIgrZPZo8cSwpOMKPLU0fCPSPbvki+Um4T57bkOucrEzYUa96+erfNhL8HF673lJPBEUdA+LodkXOi+PrdexT2C9d8n9zde5S07tEi5iRxgXcrj/Z7UVAUQlwdu0yl+9hUvNazkbp+rCB/o6A6Dkj6j8aORmO/8UFWM/g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BbEoKfAw; arc=none smtp.client-ip=209.85.215.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WvgMIthJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08544C4CEFB;
-	Tue, 21 Oct 2025 01:08:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761008929;
-	bh=oxV6DkSuzv67RKygZK1LFo8YEpvX0EUdzoFetLXu8UY=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WvgMIthJ9SQxyaW3JpAr/WZsuYjZratdc9EjcLbPJRzPyBIU8k7kz2hbJVE8jrfWO
-	 sHdgVx2arHT2FYNVnnsyrjunuNXpDv4Y/QjK029h/y0y/LZYGpFlsNlXb+9ENj4NNi
-	 scNqrMwb8zEHl6Uw3Dw1Ql8WHfd16eoNbMP7beU495GzI34VcegiXTji4VVfb5tvHN
-	 KqyNGx5mgBCrsttYPbdzmtqfJ3I1STv3Vz7jW/jxPkVAvfVwupJAlOE2QTTgnDoLQg
-	 lia+48SNFDWzC5xbe4z3ZYglHnxmMAqbMgSHEXLlD6w0jVeXNKo4iJDL3+bpB5OXsA
-	 byM0UDe8/TRbw==
-From: SeongJae Park <sj@kernel.org>
-To: Swaraj Gaikwad <swarajgaikwad1925@gmail.com>
-Cc: SeongJae Park <sj@kernel.org>,
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BbEoKfAw"
+Received: by mail-pg1-f171.google.com with SMTP id 41be03b00d2f7-b6093f8f71dso3993305a12.3
+        for <damon@lists.linux.dev>; Tue, 21 Oct 2025 09:23:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1761063831; x=1761668631; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=+rHjyJNySjOtG/oaWeyGKlZi0ukwWvydylLz+ummOiU=;
+        b=BbEoKfAw5iM9rejmMUtS//R73Byb+vgdf9JpJ/VmUZwSks07RcZykTEm17TUNHxO7k
+         28dM5IjPlaziPR2Jk7gufZpxxhJb8eqWNpkODoitJYH/ZJthUmR5LfPsrcf3x6aTlHb9
+         SARVOTjtakkS/zjKSollt6ZUDrmib/uFwZBL5DRRBr6xCEn5xSYKXJ8JPFbJu5oxb3GN
+         z+arn4eIeZIOlIiVDSpuvq63aunWKSJWP52cn0pGdBtx4w7UkRhG0sr+DGmdGcNIkeOI
+         6WXuXS/kYnKYWWR9saQh7tHQjgutd7LVvQYPnZfykA42L8rPGKvTu4/CIDeu2C2Ls88n
+         BTLg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1761063831; x=1761668631;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=+rHjyJNySjOtG/oaWeyGKlZi0ukwWvydylLz+ummOiU=;
+        b=Z+Cf0Crz0T+ZxpIyAqVV6m5XpL66Yk0W+c1EBpbcv0PpsR9cBgzkFudbksxSCQbLoX
+         xsOxmHfpYP7OlBq68izchzgTFiwvFKNxONVU0zEWJkNEDSYsSFMOoTBD1I6IR6OiT1BZ
+         /01ThUD69GZAiYbMxd4XPX3GVYCKBmjPExHl7fyUhYuG92jQfLqG6T4QOflc81Okb9qf
+         HW1VKWht0g6IdljZ5xKvSx7XFNeTD3IpDfXSj5csGhNPYT+Jyn6wH0DMZRYEfPUrIeG8
+         fG/QqAc4BCwofKS1q61is73NqsAuswNXO2IFzKQZabnj2lLDI/BYSX9Y08aZHWqhvheL
+         Phcw==
+X-Forwarded-Encrypted: i=1; AJvYcCXMEOTyMEynWDwgxiaPq9NPGsKvw7ymCouAJr4qAlsJRRIdMxp21cHW4yeKmNEChputJYM7gg==@lists.linux.dev
+X-Gm-Message-State: AOJu0Yxvct0wUmm3HTe5foUeGZBAqDD1JRyr2afF8G7iqNdxOJaMdWeH
+	Rg7j3JV1wm+oifjGs1Jgdxblc44LfIbrbIoCgyy7mJTIisGWB1SLAlQN
+X-Gm-Gg: ASbGncslfMRXd5sBGVOYp9cP1gcHqeoqwWKuUASojq3ObH4gizLwhnR4o40A5Q6OM3B
+	6LZBGmma3FhmhxlmuLJLY0j2WZvvqYCVtGq0ja/I1rUni5ksxGlTfjoGZo+mzWZPa1Y9v0rvzyU
+	8xlLthy1402rdZb8lZcTed9a9cnQnc4g/z3VCIQEXHY7s7+ER/zIB9dFxh6cNoGy8IF8DHO8ZMk
+	l2wZyty1aX/IsBWNPqxdr/+GbYBIbYCKhwi6By1HEkfvlSncKNAboKlCE7t6ZOCl5D5zHmuNjNq
+	eHAuqydbueJn6K97/LvyUflM4nTpJs2a7MaC7CwkqSDmBVU7quoERaRkogHXeKm25ptY8PSQIZ8
+	CCf4ZBF5WdPot1+XBPIKXnHYl+HQ4aeq+Kkdvb/keFC4TnYRpix+nTS7YvBbM2BFE/Hhpy1KSjh
+	CdfGu5w9lus3ZJWreO0No=
+X-Google-Smtp-Source: AGHT+IHkHuRO/cGncKISQZWD1qXwaE7w5T+jTVF2YE5Hm+JwJpfutTKAmSOGddAAEiei3b1lnpM3QA==
+X-Received: by 2002:a17:902:f64a:b0:269:9e4d:4c8b with SMTP id d9443c01a7336-290ca403110mr218424325ad.21.1761063830609;
+        Tue, 21 Oct 2025 09:23:50 -0700 (PDT)
+Received: from LilGuy ([2409:40c2:1050:6e5a:c22e:8b12:2301:3845])
+        by smtp.googlemail.com with ESMTPSA id d9443c01a7336-292471d5938sm113390265ad.58.2025.10.21.09.23.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 21 Oct 2025 09:23:50 -0700 (PDT)
+From: Swaraj Gaikwad <swarajgaikwad1925@gmail.com>
+To: SeongJae Park <sj@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	damon@lists.linux.dev (open list:DAMON),
 	linux-mm@kvack.org (open list:DAMON),
-	linux-kernel@vger.kernel.org (open list),
-	skhan@linuxfoundation.org,
-	david.hunter.linux@gmail.com
-Subject: Re: [PATCH] mm/damon/sysfs: Remove misleading todo comment in nid_show()
-Date: Mon, 20 Oct 2025 18:08:46 -0700
-Message-ID: <20251021010847.68473-1-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20251021021712.59017-2-swarajgaikwad1925@gmail.com>
-References: 
+	linux-kernel@vger.kernel.org (open list)
+Cc: skhan@linuxfoundation.org,
+	david.hunter.linux@gmail.com,
+	Swaraj Gaikwad <swarajgaikwad1925@gmail.com>
+Subject: [PATCH] mm/damon/sysfs: Remove misleading todo comment in nid_show()
+Date: Tue, 21 Oct 2025 21:53:24 +0000
+Message-ID: <20251021215323.29734-2-swarajgaikwad1925@gmail.com>
+X-Mailer: git-send-email 2.51.0
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -49,62 +78,46 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hello Swaraj,
+The TODO comment in nid_show() suggested returning an error if the goal was
+not using nid. However, this comment was found to be inaccurate and
+misleading.This patch removes the TODO comment without changing any
+existing behavior.
 
-On Tue, 21 Oct 2025 02:17:13 +0000 Swaraj Gaikwad <swarajgaikwad1925@gmail.com> wrote:
+This change follows feedback from SJ who pointed out [1] that wiring-order
+independence is expected and the function should simply show the last
+set value. and [2] checkpatch.pl complain about number of chars per line
 
-> The TODO comment in nid_show() suggested returning an error if the goal was
-> not using nid. However, this comment was found to be inaccurate and misleading.
-> This patch removes the TODO comment without changing any existing behavior.
+No functional code changes were made.
 
-checkpatch.pl complains as below.
+Tested with KUnit:
+- Built kernel with KUnit and DAMON sysfs tests enabled.
+- Executed KUnit tests:
+  ./tools/testing/kunit/kunit.py run --kunitconfig ./mm/damon/tests/
+- All 25 tests passed, including damon_sysfs_test_add_targets.
 
-    WARNING: Prefer a maximum 75 chars per line (possible unwrapped commit description?)
-    #10:
-    not using nid. However, this comment was found to be inaccurate and misleading.
+Signed-off-by: Swaraj Gaikwad <swarajgaikwad1925@gmail.com>
+Suggested-by: SeongJae Park <sj@kernel.org>
 
-> 
-> This change follows feedback from SJ who pointed out that wiring-order
+[1] https://lore.kernel.org/lkml/20251020151315.66260-1-sj@kernel.org/
+[2] https://lore.kernel.org/lkml/20251021010847.68473-1-sj@kernel.org/
+---
+ mm/damon/sysfs-schemes.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-s/wiring/writing/
+diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
+index 6536f16006c9..760279092b4f 100644
+--- a/mm/damon/sysfs-schemes.c
++++ b/mm/damon/sysfs-schemes.c
+@@ -1112,7 +1112,6 @@ static ssize_t nid_show(struct kobject *kobj,
+ 	struct damos_sysfs_quota_goal *goal = container_of(kobj, struct
+ 			damos_sysfs_quota_goal, kobj);
 
-Also, giving a pointer to the previous discussion could be a good practice, in
-my opinion.  E.g.,
+-	/* todo: return error if the goal is not using nid */
 
-   This change follows feedback from SJ who pointed out [1] that ...
-   [...]
-   [1] https://lore.kernel.org/20251020151315.66260-1-sj@kernel.org
+ 	return sysfs_emit(buf, "%d\n", goal->nid);
+ }
 
-> independence is expected and the function should simply show the last set value.
-> 
-> No functional code changes were made.
-> 
-> Tested with KUnit:
-> - Built kernel with KUnit and DAMON sysfs tests enabled.
-> - Executed KUnit tests:
->   ./kunit.py run --kunitconfig ./mm/mm/damon/tests/.kunitconfig
+base-commit: 3a8660878839faadb4f1a6dd72c3179c1df56787
+--
+2.51.0
 
-Not an important thing, but...  if you were doing this on the root of
-unmodified linux tree, the command you executed would be,
-
-./tools/testing/kunit/kunit.py run --kunitconfig ./mm/damon/tests
-
-I guess it was just a simple copy-and-pasta mistake and I don't really mind,
-though.
-
-> - All 25 tests passed, including damon_sysfs_test_add_targets.
-> 
-> Signed-off-by: Swaraj Gaikwad <swarajgaikwad1925@gmail.com>
-> Suggested-by: SeongJae Park <sj@kernel.org>
-
-Other than the abovely mentioned trivial things, so nice patch, thank you!  For
-another version of this patch that the above trivial things are fixed, please
-feel free to add below.
-
-Reviewed-by: SeongJae Park <sj@kernel.org>
-
-
-Thanks,
-SJ
-
-[...]
