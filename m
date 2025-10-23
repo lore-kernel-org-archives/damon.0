@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 334DA21D5BC;
-	Thu, 23 Oct 2025 01:25:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C80CA223702;
+	Thu, 23 Oct 2025 01:25:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761182744; cv=none; b=OAE0nyGUquz/WB3+4f9b+PahxpnMj+HYJ9CVSo+aSZd0L59lRGwrXOrL1R2K8qZTnw7m30BhzIaBnXT8L11uI0bWeSv5FQ7sXngbci7pKKPRKmAXaQ30wrmOLsa5pvaO1C8Rfnrm3934U2t1dCjt9Svg5/optQYTY7BCXT8MWLU=
+	t=1761182744; cv=none; b=G8we3bFEuByi3vNV6BbQF2aA70XjPNnCKytx1jQbB+RrujKwsYctGrZSwHcNvoQGRKI9nr/B1PzQInbaHy7FiqX3T6oCN0MLKSqSSOKtSQONfIJIvAG2nH8sesVv/20ycSEgWjwMYVLS02SKZVmxxrkQxMSiL4w9mZNPGuH9kow=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1761182744; c=relaxed/simple;
-	bh=K6zRg1CjAedGEmFhj0IW60penVdcjigiHWIj6JeYghw=;
+	bh=RKBfxsBzDKUrYjFTiKbvh8ntTnFoyVwTsTEd+4eRipY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ttFhH9buVRG712yzO8gS7QW4v4UZFE1X0AziMDr4zyzXLCJ0dkVEuZ7yst1TKP15XMJF7qaNHfr7MbkDZC+OxXBfNHTWsFg6spRHA7Qk60++TfiS2xt/rk5i7hIZvPzcGe/S1+2Z7Y7saTFulITTSEhA/xezs/CNtbTeHzYHIPM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XViU0NHr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CR18YmiIF1KDYgtONUH8AvrvJRNIgJco9/M0kkNqW8pU37j0YRxuior6MXAFw1NH5f20SFmt6px2pDAGk/+jvcrMPL56pYKp3WPlW4OsYsLC8rqjnk55rX0VQB6Ap54Aff1yuDBLC9br2jNBJZh1n9TYgN1f0wK8mTa2QZAscDA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uezsR/zJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XViU0NHr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A72EC4CEFF;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uezsR/zJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D239CC116B1;
 	Thu, 23 Oct 2025 01:25:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761182743;
-	bh=K6zRg1CjAedGEmFhj0IW60penVdcjigiHWIj6JeYghw=;
+	s=k20201202; t=1761182744;
+	bh=RKBfxsBzDKUrYjFTiKbvh8ntTnFoyVwTsTEd+4eRipY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XViU0NHrDt1Steby8mcv0Nh3QRh9omfLt4bf6GvlSEMKV5UcVHBT2foqct9/AcxvT
-	 Ck6F1pBnNSFDTpzjJ6YINcSmcKkvEMe4e43/HzQjx0DwQC19vmHy+fAy9g2wDOWxck
-	 nVDrdD38tmZC6VAOzMBbsKnyeDpr5Xk8D9dbTD2UOAjREwax8jKfzOYfviPS9rwGTi
-	 us3tYf9kvHaw1VqFSDvkQVIWeD+l+Ns6+RMyN/RVUUPqKYDBNUyJKQK1bRu2RviOWl
-	 sCoJPmKw8icGDTEJnk7cMD2/aimYoPIXOryOwYIjs1YaEJ/wuqoqdSQJaALNgu28i4
-	 LP37n2Omj8F/Q==
+	b=uezsR/zJxoo+BgYu1GbfDfbFJOX02+pWxKCRXgxjhRtIgWFIdTDzahq7STAK6a6Ex
+	 rCrmY3omr5ZoSoytdOgy+5pemZYlaOTn9TYlJ5MWCInC6i9a+iSEW5FmDweM4cWmq8
+	 eF8lAvypVFdPAQWzr0Fgjoy3uFf4NAHp9k31Z59kaD9CO1/gsAyXVTGUAPkNLGmnAV
+	 9U+xiEEjvBqaUy9fYV/hQ7NC/EoqYvW/WUPbHBgMtDU7duCDO3vofznEhm8GBQG8CS
+	 ZdhiWEbkBx6au3ai7F53rC3/3HkKNyC7AfU0zLLBoZ0jBZviOiu/Q/5SrWGXHWyllF
+	 obXd6bIItSOKQ==
 From: SeongJae Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SeongJae Park <sj@kernel.org>,
 	Bijan Tabatabai <bijan311@gmail.com>,
+	Shuah Khan <shuah@kernel.org>,
 	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
+	linux-kselftest@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [PATCH 5/9] Docs/ABI/damon: document obsolete_target sysfs file
-Date: Wed, 22 Oct 2025 18:25:29 -0700
-Message-ID: <20251023012535.69625-6-sj@kernel.org>
+Subject: [PATCH 6/9] selftests/damon/_damon_sysfs: support obsolete_target file
+Date: Wed, 22 Oct 2025 18:25:30 -0700
+Message-ID: <20251023012535.69625-7-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20251023012535.69625-1-sj@kernel.org>
 References: <20251023012535.69625-1-sj@kernel.org>
@@ -47,32 +49,49 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Update DAMON ABI document for the newly added obsolete_target DAMON
-sysfs file.
+A DAMON sysfs file, namely obsolete_target, has been newly introduced.
+Add a support of that file to _damon_sysfs.py so that DAMON selftests
+for the file can be easily written.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
-Reviewed-by: Bijan Tabatabai <bijan311@gmail.com>
 ---
- Documentation/ABI/testing/sysfs-kernel-mm-damon | 7 +++++++
- 1 file changed, 7 insertions(+)
+ tools/testing/selftests/damon/_damon_sysfs.py | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/ABI/testing/sysfs-kernel-mm-damon b/Documentation/ABI/testing/sysfs-kernel-mm-damon
-index dce6c2cda4e8..4fb8b7a6d625 100644
---- a/Documentation/ABI/testing/sysfs-kernel-mm-damon
-+++ b/Documentation/ABI/testing/sysfs-kernel-mm-damon
-@@ -164,6 +164,13 @@ Description:	Writing to and reading from this file sets and gets the pid of
- 		the target process if the context is for virtual address spaces
- 		monitoring, respectively.
+diff --git a/tools/testing/selftests/damon/_damon_sysfs.py b/tools/testing/selftests/damon/_damon_sysfs.py
+index a0e6290833fb..748778b563cd 100644
+--- a/tools/testing/selftests/damon/_damon_sysfs.py
++++ b/tools/testing/selftests/damon/_damon_sysfs.py
+@@ -475,12 +475,14 @@ class Damos:
  
-+What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/targets/<T>/obsolete_target
-+Date:		Oct 2025
-+Contact:	SeongJae Park <sj@kernel.org>
-+Description:	Writing to and reading from this file sets and gets the
-+		obsoleteness of the matching parameters commit destination
-+		target.
-+
- What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/targets/<T>/regions/nr_regions
- Date:		Mar 2022
- Contact:	SeongJae Park <sj@kernel.org>
+ class DamonTarget:
+     pid = None
++    obsolete = None
+     # todo: Support target regions if test is made
+     idx = None
+     context = None
+ 
+-    def __init__(self, pid):
++    def __init__(self, pid, obsolete=False):
+         self.pid = pid
++        self.obsolete = obsolete
+ 
+     def sysfs_dir(self):
+         return os.path.join(
+@@ -491,8 +493,13 @@ class DamonTarget:
+                 os.path.join(self.sysfs_dir(), 'regions', 'nr_regions'), '0')
+         if err is not None:
+             return err
+-        return write_file(
++        err = write_file(
+                 os.path.join(self.sysfs_dir(), 'pid_target'), self.pid)
++        if err is not None:
++            return err
++        return write_file(
++                os.path.join(self.sysfs_dir(), 'obsolete_target'),
++                'Y' if self.obsolete else 'N')
+ 
+ class IntervalsGoal:
+     access_bp = None
 -- 
 2.47.3
