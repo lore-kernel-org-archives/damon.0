@@ -1,46 +1,52 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A81BD7262A;
-	Wed, 22 Oct 2025 00:46:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 794BBEEC0;
+	Thu, 23 Oct 2025 01:25:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761094000; cv=none; b=YdsXJpoymdNs8iF7AgUNRga2K03d1jfBxNq4OjHc4aNFu+DgiIlvEianIRE7kuOLp+pNQ6czJ6FMipf5zM2iqd9RTCkKiIQyVYfzP8XzsqQo/+Vh4cF8OGT4z4L+QtyKGze1KzDnai1SQwGu+p3s/mAawl+6ggwE9FKXPdK75xE=
+	t=1761182740; cv=none; b=GtZuYCAwD8tkcWAie5hBeOURUqZEqVz4WM+uBlHWUSGTpe0RlmGNQavirXfoGW01AL1/Jtuzi8mylvWFI80okT+1+GiI3dMlPi6l4ke5C8UhFQ/Qd4lD2dj5V0dq0TlmkcA3Ho8SfW6k/6cAPXZ7Wqg72jfLgxaSUBI+Js0hzBw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761094000; c=relaxed/simple;
-	bh=goRiRUZ7sLTgCensnC5aP5+GySLWz9riJcQIkmhcGh0=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Rnibbura9g41sFXM/KEKwI8d22Ay+eXcn6uB74BqhvNSpFQQQ9bnjeJieN2hhPhqaMGMro/FvWzawDsTSZT91K8fnch5Y8l+r79N16eV/Pzdv2V87Nwj0KM0Y/OzFk6ZJQrvR+f7gp/VJLqa77dl3x11QS/mEV7ADljszNkbYow=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=R2w2Escy; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1761182740; c=relaxed/simple;
+	bh=5dAZqb/8nKzWGonIOSbPc0VMsx+iKGKnuvKbkmMuljY=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Xwf8v6y2qHMOZ8b7GX0hceMdeGsvZrjfJsTMXqmZmYULnRua/C+ARjecDbogesGYVnkfriomFUL6Eodf7HhvyBSAgkLhBX0Y8ROf5E73hwTSZV0Mwv2LkGaxSJFhAelHUdwOVm0gLJlXMcIAZBkk78+X72v7COfSyKw/v+n7kxA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=p5VsN2Tb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="R2w2Escy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B784DC4CEF1;
-	Wed, 22 Oct 2025 00:46:39 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="p5VsN2Tb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3D3AC4CEE7;
+	Thu, 23 Oct 2025 01:25:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761094000;
-	bh=goRiRUZ7sLTgCensnC5aP5+GySLWz9riJcQIkmhcGh0=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R2w2EscyYS5Hpa+kcsHfoJeHMyQAeTCA/OWsOxJNz+zmybaorMUOs7EmKx5jVImeB
-	 OKO4hZ3q0yJxaT3ecb78et9Kmx5uEwg8uxRJyTgCih+7lM0Pl4WWFMBfqbfatlSoQ6
-	 g9DsXHzlv08RiH1NFEUGzVlCB9fuxl0Xz4ysBXpDX/VE5jegPCyijZsELDzCvdrAHz
-	 jM+nQrhTmrTbflWdiKigNM67gJs7JIWlwhNDJJ324cyTqgRfc5j90DidvNRsQ6JOUo
-	 qyhlIhQnb94+EI2PC2n2ODYFmJF9aSxsuXD6+4HL1Kiy4TqWOsuqMpuQeRlIgXl2BV
-	 0pq9EduwChm8Q==
+	s=k20201202; t=1761182740;
+	bh=5dAZqb/8nKzWGonIOSbPc0VMsx+iKGKnuvKbkmMuljY=;
+	h=From:To:Cc:Subject:Date:From;
+	b=p5VsN2TbC2z+vM835LYYIWswWOiEQ6xdRmtG1t7XCvXQBthUHQD9ldMl2vCRCmGR+
+	 FtOBnSJ1Uasrb35cEOosHVnRg1HeG22t8Q7NquQzTBlqF3eoLDcQ7P+hOlXAgoosfP
+	 vbc6jEIZ9llkw5ia3cgAfZa2vMWWmy11FXlagHmY7EwXKYkKAm8UAyZZw+ZgIiVRmy
+	 uiAqXUIecH4ayO+G397CA7tMAUsbWgGf1E8wuK4OwAUOBJG5I5412ud2ShTiiqhOTG
+	 J3wCFqYtDdsHsjIKmKfbo+2jiBMSTuHroHZGzJvwXzPF4La1o37djH9LFvovvuDM+2
+	 pDOY7sCbE04TA==
 From: SeongJae Park <sj@kernel.org>
-To: Swaraj Gaikwad <swarajgaikwad1925@gmail.com>
+To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SeongJae Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	damon@lists.linux.dev (open list:DAMON),
-	linux-mm@kvack.org (open list:DAMON),
-	linux-kernel@vger.kernel.org (open list),
-	skhan@linuxfoundation.org,
-	david.hunter.linux@gmail.com
-Subject: Re: [PATCH] mm/damon/sysfs: Remove misleading todo comment in nid_show()
-Date: Tue, 21 Oct 2025 17:46:36 -0700
-Message-ID: <20251022004637.119085-1-sj@kernel.org>
+	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
+	Bijan Tabatabai <bijan311@gmail.com>,
+	David Hildenbrand <david@redhat.com>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	Michal Hocko <mhocko@suse.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Shuah Khan <shuah@kernel.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	damon@lists.linux.dev,
+	linux-doc@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-kselftest@vger.kernel.org,
+	linux-mm@kvack.org
+Subject: [PATCH 0/9] mm/damon: support pin-point targets removal
+Date: Wed, 22 Oct 2025 18:25:24 -0700
+Message-ID: <20251023012535.69625-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20251021215323.29734-2-swarajgaikwad1925@gmail.com>
-References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -49,85 +55,72 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Tue, 21 Oct 2025 21:53:24 +0000 Swaraj Gaikwad <swarajgaikwad1925@gmail.com> wrote:
+DAMON maintains the targets in a list, and allows committing only an
+entire list of targets having the new parameters.  Targets having same
+index on the lists are treated as matching source and destination
+targets.  If an existing target cannot find a matching one in the
+sources list, the target is removed.  This means that there is no way to
+remove only a specific monitoring target in the middle of the current
+targets list.
 
-> The TODO comment in nid_show() suggested returning an error if the goal was
-> not using nid. However, this comment was found to be inaccurate and
-> misleading.This patch removes the TODO comment without changing any
-> existing behavior.
-> 
-> This change follows feedback from SJ who pointed out [1] that wiring-order
-> independence is expected and the function should simply show the last
-> set value. and [2] checkpatch.pl complain about number of chars per line
+Such pin-point target removal is really needed in some use cases,
+though.  Monitoring access patterns on virtual address spaces of
+processes that spawned from the same ancestor is one example.  If a
+process of the group is terminated, the user may want to remove the
+matching DAMON target as soon as possible, to save in-kernel memory
+usage for the unnecessary target data.  The user may also want to do
+that without turning DAMON off or removing unnecessary targets, to keep
+the current monitoring results for other active processes.
 
-This is another revision of your previous patch [1], right?  Thank you for
-fixing the things I commented on.
+Extend DAMON kernel API and sysfs ABI to support the pin-point removal
+in the following way.  For API, add a new damon_target field, namely
+'obsolete'.  If the field on parameters commit source target is set, it
+means the matching destination target is obsolete.  Then the parameters
+commit logic removes the destination target from the existing targets
+list.  For sysfs ABI, add a new file under the target directory, namely
+'obsolete_target'.  It is connected with the 'obsolete' field of the
+commit source targets, so internally using the new API.
 
-That said, marking the fact that this is a new revision of other one on
-subject, for example, setting the subject prefix as "[PATCH v2]", and adding
-changelog from the previous version in commentary section could help review.
-Please consider doing so from your next patch.  Please refer to the related
-docs [2,3] for more details about that.
+Also add a selftest for the new feature.  The related helper scripts for
+manipulating the sysfs interface and dumping in-kernel DAMON status are
+also extended for this.  Note that the selftest part was initially
+posted as an individual RFC series [1], but now merged into this one.
 
-> 
-> No functional code changes were made.
-> 
-> Tested with KUnit:
-> - Built kernel with KUnit and DAMON sysfs tests enabled.
-> - Executed KUnit tests:
->   ./tools/testing/kunit/kunit.py run --kunitconfig ./mm/damon/tests/
-> - All 25 tests passed, including damon_sysfs_test_add_targets.
-> 
-> Signed-off-by: Swaraj Gaikwad <swarajgaikwad1925@gmail.com>
-> Suggested-by: SeongJae Park <sj@kernel.org>
+Bijan Tabatabai (bijan311@gmail.com) has originally reported this issue,
+and participated in this solution design on a GitHub issue [1] for DAMON
+user-space tool.
 
-Reviewed-by: SeongJae Park <sj@kernel.org>
+Changes from RFC
+(https://lore.kernel.org/20251016214736.84286-1-sj@kernel.org)
+- Wordsmith commit messages
+- Add Reviewed-by: tags from Bijan
+- Add a kselftest for the functionality of the new feature
+  (https://lore.kernel.org/20251018204448.8906-1-sj@kernel.org)
 
-> 
-> [1] https://lore.kernel.org/lkml/20251020151315.66260-1-sj@kernel.org/
-> [2] https://lore.kernel.org/lkml/20251021010847.68473-1-sj@kernel.org/
+[1] https://github.com/damonitor/damo/issues/36
 
-And you should have put the above two lines before the above Signed-off-by:
-line.  Please consider doing so from the next time.  Again, read the document
-[1] for more details.
+SeongJae Park (9):
+  mm/damon/core: add damon_target->obsolete for pin-point removal
+  mm/damon/sysfs: test commit input against realistic destination
+  mm/damon/sysfs: implement obsolete_target file
+  Docs/admin-guide/mm/damon/usage: document obsolete_target file
+  Docs/ABI/damon: document obsolete_target sysfs file
+  selftests/damon/_damon_sysfs: support obsolete_target file
+  drgn_dump_damon_status: dump damon_target->obsolete
+  sysfs.py: extend assert_ctx_committed() for monitoring targets
+  selftests/damon/sysfs: add obsolete_target test
 
-I found Andrew picked this patch on mm tree, adjusting the above two lines
-properly [4].  So no new revision would be required.  But I'm noting this for
-your next work.
-
-> ---
->  mm/damon/sysfs-schemes.c | 1 -
->  1 file changed, 1 deletion(-)
-> 
-> diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
-> index 6536f16006c9..760279092b4f 100644
-> --- a/mm/damon/sysfs-schemes.c
-> +++ b/mm/damon/sysfs-schemes.c
-> @@ -1112,7 +1112,6 @@ static ssize_t nid_show(struct kobject *kobj,
->  	struct damos_sysfs_quota_goal *goal = container_of(kobj, struct
->  			damos_sysfs_quota_goal, kobj);
-> 
-> -	/* todo: return error if the goal is not using nid */
-> 
->  	return sysfs_emit(buf, "%d\n", goal->nid);
->  }
-
-And this results in the code having two empty lines.  Just one single empty
-line would be enough.  But that's too trivial, so I wouldn't request a new
-revision to you, or in-queue direct fix to Andrew.
-
-I only hope my trivial comments to help your future patches be easier to review
-and more smoothly be merged :)
-
-So, thank you for this nice patch.
-
-[1] https://lore.kernel.org/20251021021712.59017-2-swarajgaikwad1925@gmail.com
-[2] https://docs.kernel.org/process/submitting-patches.html#subject-line
-[3] https://docs.kernel.org/process/submitting-patches.html#commentary
-[4] https://lore.kernel.org/20251021183613.C4A6DC4CEF7@smtp.kernel.org
+ .../ABI/testing/sysfs-kernel-mm-damon         |  7 +++
+ Documentation/admin-guide/mm/damon/usage.rst  | 13 +++--
+ include/linux/damon.h                         |  6 +++
+ mm/damon/core.c                               | 10 +++-
+ mm/damon/sysfs.c                              | 51 ++++++++++++++++++-
+ tools/testing/selftests/damon/_damon_sysfs.py | 11 +++-
+ .../selftests/damon/drgn_dump_damon_status.py |  1 +
+ tools/testing/selftests/damon/sysfs.py        | 48 +++++++++++++++++
+ 8 files changed, 140 insertions(+), 7 deletions(-)
 
 
-Thanks,
-SJ
-
-[...]
+base-commit: a3e008fdd7964bc3e6d876491c202d476406ed59
+-- 
+2.47.3
