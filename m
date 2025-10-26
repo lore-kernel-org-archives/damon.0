@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2A60129E6E;
-	Sun, 26 Oct 2025 18:22:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5028D2D12EC;
+	Sun, 26 Oct 2025 18:22:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761502944; cv=none; b=MqW6ak5bA9Ga16kwtEvw0kewGg0A/sCU3/t8aKNR5kEjvnGar6udgCdX5rsYjQVpH1eiYo/IZQvAHx/0TD/piDh772EpmGaFZ/33LeZjvewC3pTYIeTeVkZ0Kw+D3E4/wrxCqMPJbyoDWnpKMrjT6FsKQ8joU92HLasn/lVvLr0=
+	t=1761502944; cv=none; b=fkKu6E7IHDdcyTfqVmvx5qlefDuwlO4ZhAk7wVbZMAG6uOc5JsmnUOfwbt4Z7i/Z+yBYBnOfnlhksXZ4xLpA3M2j65XgZGihRULZJ18f06ZohG7jpzHM63IsMSZ8Edh0c3ERkNllzDUGMwQk6OQ666YG2kSA6DQT+DQj5NDkPCU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1761502944; c=relaxed/simple;
-	bh=GiKZojVeog5YOllrsDes1GwbWKFkabuDbGBFBP0siC0=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=AmBYs2DKj6SiOM/Lcm9ITAfmFJZyNOKIPCA2vNOy3EDyauGdZP9eIcth0ypfuPwBdyl5W7S/gvDPfJ5lLoXTju5O0Jvv7ofhR+EmBThLELozbWUK8/bfsDz7OEbJduvxokQuNGJIVM0whFOFAsLqPom+Wp+Nh3O0+ffE47EWejI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=l6JS8Tx9; arc=none smtp.client-ip=10.30.226.201
+	bh=2OxNFKvhCT36RDHavLAyK2OGp+6UAUMynMMToyr3JtU=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=pr9aMe/INDBs0oBFscempugH6+WjC0FGuRrK87ZKowSq8D+OjOaZbV/4kvaNA6pALUgsQw9P5VJmSccpS4cHJMCrswzegpXBbkFNqk7BikFTky0optVOAB1apbVnlWfsUuq7vlHPGcj+Ip7fvuZ+5Aef1kQHLO1s9eQIsBsdJ4Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=huyxrle8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="l6JS8Tx9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3600C4CEE7;
-	Sun, 26 Oct 2025 18:22:22 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="huyxrle8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E99EFC116C6;
+	Sun, 26 Oct 2025 18:22:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761502943;
-	bh=GiKZojVeog5YOllrsDes1GwbWKFkabuDbGBFBP0siC0=;
-	h=From:To:Cc:Subject:Date:From;
-	b=l6JS8Tx9QJHnZ/QS+03PmXD+ZLF0mnbSH9X7NFXeo+oY9KW77lstrx8MfPsbmFkfi
-	 izQVOMQn/kc9Irh8pG0rCN237YpZHkobm5WXB8DEMkYXZ3oQFihP6tLF5fYMjEZ75j
-	 AQ7qfckSBBVjTWpsz0PLmthmt4pPhHGb9vhdazIN+lZJMX8SjoqgcMLDlXynSrzreD
-	 /puxr1dv+DraGT738SAjH5KNDJ4cdt4ZVplqPX/onibP7TgGRvO+aaJLZjZwL9y0v6
-	 6TdnGn1AnA898sj4g4MVSPCcQzdP+WcD0kvyE11USzfSfZBVhpxGQDJfNKOjcS6EWp
-	 LPrzxg0FoWYig==
+	s=k20201202; t=1761502944;
+	bh=2OxNFKvhCT36RDHavLAyK2OGp+6UAUMynMMToyr3JtU=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=huyxrle8m2VS/tPkSLY/a3secq5QD21olmVFnk+tEm911u4eZdB6SU7qaYj2eF0gK
+	 gpWzMJYOt8vybSCS4Y9miij0pJiU5UalTlQqfGAMVtlAcvma8QfvcjkWr/CpoT1pJL
+	 6Xm9qn/NvEhe80WGuKeg5NbqtDgkEyNnvWAQZZaXkWVpuDOjEK5lTOnWQ0uTp23eXX
+	 JsYVdqymwjAyDGNJ18VbUseyhj/hR3ISscQ4nLD3WzVku3o6kRSfGTOrBJFl7y0tqM
+	 6c/7uEB1MuqZyTgEm+H3vvedJgo39A9T8kMgVtllJ2+sBtpuV/N+8FH6lxT7DJwNM2
+	 JfgJ5Skle1M3A==
 From: SeongJae Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SeongJae Park <sj@kernel.org>,
@@ -40,10 +41,12 @@ Cc: SeongJae Park <sj@kernel.org>,
 	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [PATCH 0/8] mm/damon: misc documentation fixups
-Date: Sun, 26 Oct 2025 11:22:05 -0700
-Message-ID: <20251026182216.118200-1-sj@kernel.org>
+Subject: [PATCH 3/8] Docs/admin-guide/mm/damon/stat: fix a typo: s/sampling events/sampling interval/
+Date: Sun, 26 Oct 2025 11:22:08 -0700
+Message-ID: <20251026182216.118200-4-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20251026182216.118200-1-sj@kernel.org>
+References: <20251026182216.118200-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -52,34 +55,25 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-As the subject says.
+It is a contextual typo.  Fix it.
 
-First three patches fix up issues in the documents, including wrong
-explanation of a behavior, wrong link, and a contextual typo.  Following
-five patches update documents for not yet documented features and
-behaviors.
+Signed-off-by: SeongJae Park <sj@kernel.org>
+---
+ Documentation/admin-guide/mm/damon/stat.rst | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-SeongJae Park (8):
-  mm/damon/core: fix wrong comment of damon_call() return timing
-  Docs/mm/damon/design: fix wrong link to intervals goal section
-  Docs/admin-guide/mm/damon/stat: fix a typo: s/sampling events/sampling
-    interval/
-  Docs/admin-guide/mm/damon/usage: document empty target regions commit
-    behavior
-  Docs/admin-guide/mm/damon/reclaim: document addr_unit parameter
-  Docs/admin-guide/mm/damon/lru_sort: document addr_unit parameter
-  Docs/admin-guide/mm/damon/stat: document aggr_interval_us parameter
-  Docs/admin-guide/mm/damon/stat: document negative idle time
-
- .../admin-guide/mm/damon/lru_sort.rst         | 22 ++++++++++++
- .../admin-guide/mm/damon/reclaim.rst          | 22 ++++++++++++
- Documentation/admin-guide/mm/damon/stat.rst   | 35 ++++++++++++++-----
- Documentation/admin-guide/mm/damon/usage.rst  |  8 ++++-
- Documentation/mm/damon/design.rst             |  4 +--
- mm/damon/core.c                               |  2 +-
- 6 files changed, 80 insertions(+), 13 deletions(-)
-
-
-base-commit: 1148e04980a5471922064ff4b19cd154643da743
+diff --git a/Documentation/admin-guide/mm/damon/stat.rst b/Documentation/admin-guide/mm/damon/stat.rst
+index 4c517c2c219a..20f540a9d3d2 100644
+--- a/Documentation/admin-guide/mm/damon/stat.rst
++++ b/Documentation/admin-guide/mm/damon/stat.rst
+@@ -17,7 +17,7 @@ DAMON_STAT uses monitoring intervals :ref:`auto-tuning
+ <damon_design_monitoring_intervals_autotuning>` to make its accuracy high and
+ overhead minimum.  It auto-tunes the intervals aiming 4 % of observable access
+ events to be captured in each snapshot, while limiting the resulting sampling
+-events to be 5 milliseconds in minimum and 10 seconds in maximum.  On a few
++interval to be 5 milliseconds in minimum and 10 seconds in maximum.  On a few
+ production server systems, it resulted in consuming only 0.x % single CPU time,
+ while capturing reasonable quality of access patterns.
+ 
 -- 
 2.47.3
