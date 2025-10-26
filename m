@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 579D02DA777;
-	Sun, 26 Oct 2025 18:22:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E97F82EF65C;
+	Sun, 26 Oct 2025 18:22:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761502944; cv=none; b=KatPqsF3caQd/EVflwYqWn1CJuY34b9Vdg5INFiXV0CRWLOQxL4WKZcfSoF4YHqc7X+UI9V02896i6eJX3mrL/0IwpuowmGTDkqOY0cCOyCvLoUF2T/6D9nFfh24T3Jgkiw4WC71jAgh1rc/PaJe2uEhaHX3y+RSuw50APVe6q0=
+	t=1761502945; cv=none; b=Q9BpqUipz2BjI3jU0vXHFYED/whav1gEFfSd2a/z/mWBkcW5f7UCfPwUfJ7Bpmg5Z+MTiQGxdZ0Mz5VGPgr1vj4gVtqy+nKgpjkI0CtqrdLpLekOFIQHx2Zf1FiXKxwEz5jRoNhk7GmePeIh6AvjiZTvhfRKwGtmmMczCH11HnE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761502944; c=relaxed/simple;
-	bh=vR/jN1F5Lce+/wYJ3r7vPrVeoUjeNepMfhGqCYSRWqk=;
+	s=arc-20240116; t=1761502945; c=relaxed/simple;
+	bh=6KFGqHMIsMqbpZ/3NGUtXQIvFV13533Rw2CJqlg7hEo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B95mrDgfopvB3Vz4iLg0wweT8sDcx33rj5kzqcyaPhDvD5Vv5qUC87TuJM/0q1ks9R+/DW4IdF9PG/jXE6BX1QtmDXOKH4OlK6i3EwDNBqWVb6BGFBETPS1gkkmVHd17qX0W54W/73ZBhf8xylmrnNdzvxw4nDUmJ0AM/NJY5d8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rrUXWisV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aE0WWVkcJOtQTQfz/6HIyY717LGdQyixy/8JFVt9YTF9apuwmBaG1q/+2ko/N9uAj/+ULWOXFdTldAw6MeQR8noKjzVlTdhocObtTmt/NNBUAv1YaXWfpU6oXxMCgsxAiZaw1Z7zrkYbnns/PNYaaMM+9Ch6+K7dcR/J4wrHaPI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RTAlIaFC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rrUXWisV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 913E6C116D0;
-	Sun, 26 Oct 2025 18:22:23 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RTAlIaFC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F52AC113D0;
+	Sun, 26 Oct 2025 18:22:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761502943;
-	bh=vR/jN1F5Lce+/wYJ3r7vPrVeoUjeNepMfhGqCYSRWqk=;
+	s=k20201202; t=1761502944;
+	bh=6KFGqHMIsMqbpZ/3NGUtXQIvFV13533Rw2CJqlg7hEo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rrUXWisVTkQuT/o97FuvkpH48DZbMUE8mE2W8Umu5nU3QnHmLelcE5jBmq95VgdCr
-	 pY/zhcBoT8GkIudvveTt1LFwjoCVwxxN58tWskdBWOJ/oadZBuZaTf9l499ApRhP+y
-	 HYlXni3I9sVHVfTDml1uHzYVAxTRvsrBfbuTCCs81RZhz6a29HzIy0mOGp73H/lEDf
-	 EesRjDcqND1pYBOzH7F9SFKGoUdGBZknts4E8rkxMqOhDQ1DXFTzbUs08qVOMlw4JS
-	 +Bk5Womdr7dJUTyra0iV2Wvnrlg0W0qfP42AVCgCzLYoP78dpvJMA1MQboaEuCs/cG
-	 DPdMcDpxOvNHg==
+	b=RTAlIaFCfytgwXs9ORvXAod3Fz7oB58hyIdfeAIeJu5EwMeMSDUqlhKhIkn5ODmpD
+	 qp7P/wbYITc5L5MWvAoJnSeUPat0zM69YQPvRvVJHIh3iRW1gO8iM1jdMybEKeUtUF
+	 uaPhIU4SK+a2NMrYjjOml5gi38w+Rh3Mo5J67ZjMuwAp3STSGZdIGW96vhjbVADBKu
+	 29sb9E46HBaFw7M9kUd+hByxhqalpWUuBNk/w85RVclxBwSAxyMml/gIWSt8AaflKf
+	 JtMnsBeUFq9z0L5nNLX7vgz0fJRbkdv6hu4qgskZXaUHt1GmXtTGBQn6NLEiUVumBt
+	 M1F+k6de/VBew==
 From: SeongJae Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SeongJae Park <sj@kernel.org>,
@@ -41,9 +41,9 @@ Cc: SeongJae Park <sj@kernel.org>,
 	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [PATCH 2/8] Docs/mm/damon/design: fix wrong link to intervals goal section
-Date: Sun, 26 Oct 2025 11:22:07 -0700
-Message-ID: <20251026182216.118200-3-sj@kernel.org>
+Subject: [PATCH 4/8] Docs/admin-guide/mm/damon/usage: document empty target regions commit behavior
+Date: Sun, 26 Oct 2025 11:22:09 -0700
+Message-ID: <20251026182216.118200-5-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20251026182216.118200-1-sj@kernel.org>
 References: <20251026182216.118200-1-sj@kernel.org>
@@ -55,30 +55,42 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Commit b243d666d107 ("Docs/admin-guide/mm/damon/usage: add
-intervals_goal directory on the hierarchy") mistakenly added a wrong
-reference for intervals goal usage documentation on the design document.
-Fix it.
+Committing a monitoring target with empty target regions is for keeping
+the current monitoring results.  This behavior was introduced by commit
+973233600676 ("mm/damon/sysfs: update monitoring target regions for
+online input commit").  The behavior is not documented, though.  Update
+the usage document for clarifying this behavior.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- Documentation/mm/damon/design.rst | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ Documentation/admin-guide/mm/damon/usage.rst | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/mm/damon/design.rst b/Documentation/mm/damon/design.rst
-index b54925ea78e9..2d8d8ca1e0a3 100644
---- a/Documentation/mm/damon/design.rst
-+++ b/Documentation/mm/damon/design.rst
-@@ -381,8 +381,8 @@ That is, assumes 4% (20% of 20%) DAMON-observed access events ratio (source)
- to capture 64% (80% multipled by 80%) real access events (outcomes).
+diff --git a/Documentation/admin-guide/mm/damon/usage.rst b/Documentation/admin-guide/mm/damon/usage.rst
+index d8a3d6e740b3..9991dad60fcf 100644
+--- a/Documentation/admin-guide/mm/damon/usage.rst
++++ b/Documentation/admin-guide/mm/damon/usage.rst
+@@ -134,7 +134,8 @@ Users can write below commands for the kdamond to the ``state`` file.
+ - ``on``: Start running.
+ - ``off``: Stop running.
+ - ``commit``: Read the user inputs in the sysfs files except ``state`` file
+-  again.
++  again.  Monitoring :ref:`target region <sysfs_regions>` inputs are also be
++  ignored if no target region is specified.
+ - ``update_tuned_intervals``: Update the contents of ``sample_us`` and
+   ``aggr_us`` files of the kdamond with the auto-tuning applied ``sampling
+   interval`` and ``aggregation interval`` for the files.  Please refer to
+@@ -296,6 +297,11 @@ In the beginning, this directory has only one file, ``nr_regions``.  Writing a
+ number (``N``) to the file creates the number of child directories named ``0``
+ to ``N-1``.  Each directory represents each initial monitoring target region.
  
- To know how user-space can use this feature via :ref:`DAMON sysfs interface
--<sysfs_interface>`, refer to :ref:`intervals_goal <sysfs_scheme>` part of
--the documentation.
-+<sysfs_interface>`, refer to :ref:`intervals_goal
-+<damon_usage_sysfs_monitoring_intervals_goal>` part of the documentation.
++If ``nr_regions`` is zero when committing new DAMON parameters online (writing
++``commit`` to ``state`` file of :ref:`kdamond <sysfs_kdamond>`), the commit
++logic ignores the target regions.  In other words, the current monitoring
++results for the target are preserved.
++
+ .. _sysfs_region:
  
- 
- .. _damon_design_damos:
+ regions/<N>/
 -- 
 2.47.3
