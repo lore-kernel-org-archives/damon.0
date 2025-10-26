@@ -1,46 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE2BB19C54F;
-	Thu, 23 Oct 2025 01:25:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2A107263E;
+	Sun, 26 Oct 2025 18:22:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761182746; cv=none; b=OPjKmKF2gW3mi6Diz9cxUvktGZWfQLrDksQQ1e+BKAAPf7kx6mOhRkAHQikBQPPGGZhHnvvdcuxLa+Nq8SNYGgvkZTEfsduEo+a8KaycU6xaBHDyhXle88mK0yR3KgfxCC/NiJQGcVyJ2Yt2y3vV1SHWozIDANf/BHqIPAb5dfk=
+	t=1761502943; cv=none; b=n1sRFfnPxCeCet9KRzv6bxcOMS/e3AYhi1aHyztRM3QoJ32QkNMw7z8cVZNs4WdeDmKhPqsUY9Qb+GEhdjnfHNvI+wEahX3A89MpL7sXxtjEAooLCjc+cCAul33hYrKsW3yvo8gBOd36YijvXupHe38Y9xm7gMzLE0Nsphohk+M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761182746; c=relaxed/simple;
-	bh=mizIUChAFsqpIHY6nU9Fx3Ot5p8OeQz4ge3WLnGs1IU=;
+	s=arc-20240116; t=1761502943; c=relaxed/simple;
+	bh=1E84e4fabiNAb3ypwhroOSlt1p8IcxO3BF19toErg4k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EL0FSzaLdrgsEwSd3jC0KXOCfW+Cp7hljXF1W961BSq00CswvKSaowAaGVarYu1Svp/pptBPvmasnzZCNFSKVqtc8Tg00sC5eKzZObM9qAU7idT5LAEWQUGZh7VnvTohbO0K6yRaNrZwXjjUi/fNUEVsUrzi7P537NuBhqQSy2s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PEC19Zx5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dCG98Tu3267Hjhern2YOHV+4z17dmMiRJdUP3tkvzc3waqK55+XQWHcEmhLCGZECFuvRw/OW6K45Tj4ZYICfCzQJKzqWnRvi8Tf5q51XnNhaEPBbeKA/InuXxR4pM94zKQ17OhjROO9eOA4AEqWYr58SCzgZgh5S6I0ZZXO4ViA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZoQDN6au; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PEC19Zx5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E9DEC4CEF5;
-	Thu, 23 Oct 2025 01:25:46 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZoQDN6au"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E3E3C113D0;
+	Sun, 26 Oct 2025 18:22:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761182746;
-	bh=mizIUChAFsqpIHY6nU9Fx3Ot5p8OeQz4ge3WLnGs1IU=;
+	s=k20201202; t=1761502943;
+	bh=1E84e4fabiNAb3ypwhroOSlt1p8IcxO3BF19toErg4k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PEC19Zx5pg5krCxzuGcALpzBIgJ6qxXP6/2C8Uf6glMamZ7D9BRYKj115ySio1fuf
-	 L5wRsksk56d3RlbZEr/CGXziGLKEIglLy1r8XJz7BPIog3T9em2X7ycXDpkxA75XcX
-	 TuG1/kuGVN1WH6pJZHLeRAMwoa5mMed1mKlhtRW1c67mhQXzS6Wyslzg7phVLJtTpa
-	 FgVPQOwv8MTGvJYESIoeMPgl4vgVkE668l/Kptr7SZlfRsqGFhVA1yKwZLhRTO9wli
-	 HDkQvHDkgF67ccEGcxs/hDFYlGZ9qbeAsYTDc9m+pxhLsG9msCwHGOlgGaXVNpQKJ4
-	 E8BTvG3MYgalw==
+	b=ZoQDN6au+Tg5geccepd0n5jaQo5frnLxxevptxzekhIHdri4IX4MB83uqi4rbENvn
+	 mKAML5NeJN7pF0s3WvoVuSHYhCv2xH4XXY7aMOJgONt12eB0tzjNvC/oezxe0O917r
+	 L+aCZCAOP1i7uv5/qr55/PIbj16bGMKZqkJKtN3Q84ZjgCIvL8y73L2tdLJzM6Z1OQ
+	 lfEalv6kLoQ1e1cGkuenIeTqRZROhxn6Pf8qFgNJbmZJCNpI6XxaofEb3N8KWAbphZ
+	 MnnuoeRmKHsJYL2VdEcfWmO0Vmaetk91qylNGyU/ycyXaZ7+AHV2Ohnoz+p2mmHKkN
+	 U6coEcNAa2a5g==
 From: SeongJae Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SeongJae Park <sj@kernel.org>,
-	Bijan Tabatabai <bijan311@gmail.com>,
-	Shuah Khan <shuah@kernel.org>,
 	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
-	linux-kselftest@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [PATCH 9/9] selftests/damon/sysfs: add obsolete_target test
-Date: Wed, 22 Oct 2025 18:25:33 -0700
-Message-ID: <20251023012535.69625-10-sj@kernel.org>
+Subject: [PATCH 1/8] mm/damon/core: fix wrong comment of damon_call() return timing
+Date: Sun, 26 Oct 2025 11:22:06 -0700
+Message-ID: <20251026182216.118200-2-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20251023012535.69625-1-sj@kernel.org>
-References: <20251023012535.69625-1-sj@kernel.org>
+In-Reply-To: <20251026182216.118200-1-sj@kernel.org>
+References: <20251026182216.118200-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -49,63 +46,31 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-A new DAMON sysfs file for pin-point target removal, namely
-obsolete_target, has been added.  Add a test for the functionality.  It
-starts DAMON with three monitoring target processes, mark one in the
-middle as obsolete, commit it, and confirm the internal DAMON status is
-updated to remove the target in the middle.
+damon_call() works asynchronously and synchronously for repeat and
+non-repeat mode requests, respectively.  The comment about the behavior
+is wrong, though.  Fix it.
+
+The wrong comment was introduced together with the repeat mode, by
+commit 43df7676e550 ("mm/damon/core: introduce repeat mode
+damon_call()").
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- tools/testing/selftests/damon/sysfs.py | 37 ++++++++++++++++++++++++++
- 1 file changed, 37 insertions(+)
+ mm/damon/core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/damon/sysfs.py b/tools/testing/selftests/damon/sysfs.py
-index fd8d3698326e..b34aea0a6775 100755
---- a/tools/testing/selftests/damon/sysfs.py
-+++ b/tools/testing/selftests/damon/sysfs.py
-@@ -279,5 +279,42 @@ def main():
- 
-     kdamonds.stop()
- 
-+    # test obsolete_target.
-+    proc1 = subprocess.Popen(['sh'], stdout=subprocess.PIPE,
-+                             stderr=subprocess.PIPE)
-+    proc2 = subprocess.Popen(['sh'], stdout=subprocess.PIPE,
-+                             stderr=subprocess.PIPE)
-+    proc3 = subprocess.Popen(['sh'], stdout=subprocess.PIPE,
-+                             stderr=subprocess.PIPE)
-+    kdamonds = _damon_sysfs.Kdamonds(
-+            [_damon_sysfs.Kdamond(
-+                contexts=[_damon_sysfs.DamonCtx(
-+                    ops='vaddr',
-+                    targets=[
-+                        _damon_sysfs.DamonTarget(pid=proc1.pid),
-+                        _damon_sysfs.DamonTarget(pid=proc2.pid),
-+                        _damon_sysfs.DamonTarget(pid=proc3.pid),
-+                        ],
-+                    schemes=[_damon_sysfs.Damos()],
-+                    )])])
-+    err = kdamonds.start()
-+    if err is not None:
-+        print('kdamond start failed: %s' % err)
-+        exit(1)
-+    kdamonds.kdamonds[0].contexts[0].targets[1].obsolete = True
-+    kdamonds.kdamonds[0].commit()
-+
-+    status, err = dump_damon_status_dict(kdamonds.kdamonds[0].pid)
-+    if err is not None:
-+        print(err)
-+        kdamonds.stop()
-+        exit(1)
-+
-+    del kdamonds.kdamonds[0].contexts[0].targets[1]
-+
-+    assert_ctxs_committed(kdamonds.kdamonds[0].contexts, status['contexts'])
-+
-+    kdamonds.stop()
-+
- if __name__ == '__main__':
-     main()
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index d78f4452e536..06ad359024ad 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -1448,7 +1448,7 @@ bool damon_is_running(struct damon_ctx *ctx)
+  * Ask DAMON worker thread (kdamond) of @ctx to call a function with an
+  * argument data that respectively passed via &damon_call_control->fn and
+  * &damon_call_control->data of @control.  If &damon_call_control->repeat of
+- * @control is set, further wait until the kdamond finishes handling of the
++ * @control is unset, further wait until the kdamond finishes handling of the
+  * request.  Otherwise, return as soon as the request is made.
+  *
+  * The kdamond executes the function with the argument in the main loop, just
 -- 
 2.47.3
