@@ -1,137 +1,125 @@
-Received: from canpmsgout01.his.huawei.com (canpmsgout01.his.huawei.com [113.46.200.216])
+Received: from canpmsgout03.his.huawei.com (canpmsgout03.his.huawei.com [113.46.200.218])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B43621FF26
-	for <damon@lists.linux.dev>; Wed, 29 Oct 2025 02:03:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=113.46.200.216
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C131524D1
+	for <damon@lists.linux.dev>; Thu, 30 Oct 2025 02:07:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=113.46.200.218
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761703387; cv=none; b=m2TQ79OSNA7wS5vDdLZhLrNO11mIqUiPt6vyYSeRLR8RCGqM05h9/k0KeQQYTkqiNKq0jtOqForBEfldeG3dQEaUNXnJFsFY0UsT5z7lJJAO3356xK1FHMMBSAfJ+gYZHUgQ/7fBrrepk9zJ2xydXMTVzB9w/Mlvkbcy33NLTQI=
+	t=1761790037; cv=none; b=gaaX3sqVKwjX4MXDDeIXz2giVp4FKSS18YA7dti/8L/8VMN2HCgw1VK2KdMMPGvDOzLE5kSCnj0ZjDjfy36MuH4m5S4xBGsLICGddyPXbU7DMdaN5kDhu5Q5syw809MnsY2jI01nRLZbBWC2W04Z9j2XbWxS7xmfLbZAwXoJoz8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761703387; c=relaxed/simple;
-	bh=g/fvQ8NZZJPX0GUAoJn3gUUXjyoM7DA3e77ObOIxp70=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=FFPJS/QgS+cXuPRvc/oQ52yozNVWrk4wB+spFF0LMYHSsmtfn3lQu1hIl1RUX5n2+OafCy5G+5IzCDTG86au0I/0Jt42TL5eFVwsbM2BI2/+pVkgrZwhg8kqOBkbr7Q5AqJ8qX2BBJm9kIr54pQg3hMr6um8F3RG43jJOUnisFw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b=ykAmuVZh; arc=none smtp.client-ip=113.46.200.216
+	s=arc-20240116; t=1761790037; c=relaxed/simple;
+	bh=eNxP1kxYJUGJIDwdHoCty2HweZbHrUTXcGaUWNkzXjQ=;
+	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=GeNjM6c3JvAwRifpBA8wbvqaTg5ngh1RRCbDRKnNz3SO9/dfcDgSJTHcsiDhHclv+1Y1/NvMMkq2bp+Hs0HT3F8b/CzKsjLamQqdyfY+BVu1Bp33D4gp9nUHwhySDtW8J38PSTUtunT60eg8ThF0evkxnH9S6zINBvFYcC6A08w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b=YU8+A9Fh; arc=none smtp.client-ip=113.46.200.218
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b="ykAmuVZh"
+	dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b="YU8+A9Fh"
 dkim-signature: v=1; a=rsa-sha256; d=huawei.com; s=dkim;
 	c=relaxed/relaxed; q=dns/txt;
 	h=From;
-	bh=+eK4vDSuRTOhJF4MJ84IKuDsgIzYi81R9gWmu7j/t3U=;
-	b=ykAmuVZhMSyM5Iky45LoxzvpXZJ3wHa2hOshvGtKHvA2nQyir2aHEYnSo1IehVSuXBgb7m4Ew
-	QChnPxMkYaJStFl+t5lShcqGvdSKsYce4XNF/VuOJiWpx+jtbDPn8J7Q/MpQDTjS9JWZWFPh1Eb
-	4cm+bG+sHj81lHDuPuyQGjQ=
-Received: from mail.maildlp.com (unknown [172.19.163.252])
-	by canpmsgout01.his.huawei.com (SkyGuard) with ESMTPS id 4cx9Tx4Cxsz1T4HJ;
-	Wed, 29 Oct 2025 10:01:57 +0800 (CST)
+	bh=3lQbFuRe/0xuO7BK5YDklifoaPlkhacuORBMPC4fqSg=;
+	b=YU8+A9Fh1PyjGZNM4lKgkU0lc73vXHuAqphJpw2tqmXf+puEYsHp62CbDSEExG7VGTh2SEIpj
+	/VnDSz/9BtQG+PH3GEvbe1YV+yyB/Rb4JFQsXQneGlXVVu+/pvTTBM+ppQ+dzI+JwjO7dXSsSBg
+	h+02tlQwpwDUFGk48zj2O2Y=
+Received: from mail.maildlp.com (unknown [172.19.88.194])
+	by canpmsgout03.his.huawei.com (SkyGuard) with ESMTPS id 4cxnX14ptSzpSv6;
+	Thu, 30 Oct 2025 10:05:53 +0800 (CST)
 Received: from dggpemf200018.china.huawei.com (unknown [7.185.36.31])
-	by mail.maildlp.com (Postfix) with ESMTPS id 0E4F6180B67;
-	Wed, 29 Oct 2025 10:03:01 +0800 (CST)
-Received: from [10.174.177.149] (10.174.177.149) by
- dggpemf200018.china.huawei.com (7.185.36.31) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.11; Wed, 29 Oct 2025 10:03:00 +0800
-Message-ID: <75364faa-4cce-4e0b-ae43-dc725e6918da@huawei.com>
-Date: Wed, 29 Oct 2025 10:02:59 +0800
+	by mail.maildlp.com (Postfix) with ESMTPS id 7FB9A1400CA;
+	Thu, 30 Oct 2025 10:07:13 +0800 (CST)
+Received: from huawei.com (10.50.85.135) by dggpemf200018.china.huawei.com
+ (7.185.36.31) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.11; Thu, 30 Oct
+ 2025 10:07:12 +0800
+From: Quanmin Yan <yanquanmin1@huawei.com>
+To: <sj@kernel.org>
+CC: <akpm@linux-foundation.org>, <damon@lists.linux.dev>,
+	<linux-kernel@vger.kernel.org>, <linux-mm@kvack.org>,
+	<yanquanmin1@huawei.com>, <wangkefeng.wang@huawei.com>, <zuoze1@huawei.com>
+Subject: [PATCH v2 2/2] mm/damon/sysfs: change next_update_jiffies to a global variable
+Date: Thu, 30 Oct 2025 10:07:46 +0800
+Message-ID: <20251030020746.967174-3-yanquanmin1@huawei.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20251030020746.967174-1-yanquanmin1@huawei.com>
+References: <20251030020746.967174-1-yanquanmin1@huawei.com>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] mm/damon/stat: set last_refresh_jiffies to jiffies at
- startup
-To: SeongJae Park <sj@kernel.org>
-CC: <akpm@linux-foundation.org>, <damon@lists.linux.dev>,
-	<linux-kernel@vger.kernel.org>, <linux-mm@kvack.org>,
-	<wangkefeng.wang@huawei.com>, <zuoze1@huawei.com>
-References: <20251029013038.66625-1-sj@kernel.org>
-From: Quanmin Yan <yanquanmin1@huawei.com>
-In-Reply-To: <20251029013038.66625-1-sj@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: kwepems100002.china.huawei.com (7.221.188.206) To
+X-ClientProxiedBy: kwepems500002.china.huawei.com (7.221.188.17) To
  dggpemf200018.china.huawei.com (7.185.36.31)
 
+In DAMON’s damon_sysfs_repeat_call_fn(), time_before() is used to compare
+the current jiffies with next_update_jiffies to determine whether to
+update the sysfs files at this moment.
 
-在 2025/10/29 9:30, SeongJae Park 写道:
-> On Tue, 28 Oct 2025 07:32:49 -0700 SeongJae Park <sj@kernel.org> wrote:
->
->> On Tue, 28 Oct 2025 07:19:14 -0700 SeongJae Park <sj@kernel.org> wrote:
->>
->>> On Tue, 28 Oct 2025 14:19:27 +0800 Quanmin Yan <yanquanmin1@huawei.com> wrote:
->>>
->>>> In DAMON_STAT's damon_stat_damon_call_fn(), time_before_eq() is used to
->>>> avoid unnecessarily frequent stat update.
->>>>
->>>> On 32-bit systems, the kernel initializes jiffies to "-5 minutes" to make
->>>> jiffies wrap bugs appear earlier. However, this causes time_before_eq()
->>>> in DAMON_STAT to unexpectedly return true during the first 5 minutes
->>>> after boot on 32-bit systems (see [1] for more explanation, which fixes
->>>> another jiffies-related issue in DAMON). As a result, DAMON_STAT does not
->>>> update any monitoring results during that period, which can be more
->>>> confusing when DAMON_STAT_ENABLED_DEFAULT is enabled.
->>>>
->>>> Fix it by setting last_refresh_jiffies to jiffies at startup.
->>> Nice catch, thank you for this patch!
->>>
->>>> [1] https://lkml.kernel.org/r/20250822025057.1740854-1-ekffu200098@gmail.com
->>>>
->>>> Fixes: fabdd1e911da ("mm/damon/stat: calculate and expose estimated memory bandwidth")
->>>> Signed-off-by: Quanmin Yan <yanquanmin1@huawei.com>
->>>> ---
->>>>   mm/damon/stat.c | 3 +++
->>>>   1 file changed, 3 insertions(+)
->>>>
->>>> diff --git a/mm/damon/stat.c b/mm/damon/stat.c
->>>> index 6c4503d2aee3..6dc3e18de910 100644
->>>> --- a/mm/damon/stat.c
->>>> +++ b/mm/damon/stat.c
->>>> @@ -132,6 +132,9 @@ static int damon_stat_damon_call_fn(void *data)
->>>>   	struct damon_ctx *c = data;
->>>>   	static unsigned long last_refresh_jiffies;
->>>>   
->>>> +	if (unlikely(!last_refresh_jiffies))
->>>> +		last_refresh_jiffies = jiffies;
->>>> +
->>> How about doing the initialization together with the declaration?  E.g.,
->>>
->>>   static int damon_stat_damon_call_fn(void *data)
->>>   {
->>>          struct damon_ctx *c = data;
->>> -       static unsigned long last_refresh_jiffies;
->>> +       static unsigned long last_refresh_jiffies = jiffies;
-> Please ignore the above suggestion.  It will even not build, like below...
->
-> .../mm/damon/stat.c: In function ‘damon_stat_damon_call_fn’:
-> .../mm/damon/stat.c:133:53: error: initializer element is not constant
->    133 |         static unsigned long last_refresh_jiffies = jiffies;
->        |                                                     ^~~~~~~
->
->> Actually, a similar issue can happen again if DAMON_STAT is stopped and
->> restarted by user.  That is, if user stops DAMON_STAT just after
->> last_refresh_jiffies is updated, and restart it after 5 seconds or more, the
->> time_before_eq() on damon_call_fn() will return true, so stat updates will
->> happen earlier than expected.  Shouldn't be a real problem, but better to avoid
->> if possible.
->>
->> How about making last_refresh_jiffies a global variable and initialize it on
->> damon_stat_start()?  To avoid unnecessary name conflicts, the variable name
->> would also better to be changed, e.g., damon_stat_last_refresh_jiffies.
-> But, please consider the above one.
->
-> And I just realized a similar issue exist for next_update_jiffies in
-> mm/damon/sysfs.c file.  Please feel free to send a patch for that if you
-> willing to.
->
-OK, I’ll review all these issues and send a new patch set once everything
-is ready.🙂
+On 32-bit systems, the kernel initializes jiffies to "-5 minutes" to make
+jiffies wrap bugs appear earlier. However, this causes time_before() in
+damon_sysfs_repeat_call_fn() to unexpectedly return true during the first
+5 minutes after boot on 32-bit systems (see [1] for more explanation,
+which fixes another jiffies-related issue before). As a result, DAMON
+does not update sysfs files during that period.
 
-Thanks,
-Quanmin Yan
+There is also an issue unrelated to the system’s word size[2]: if the
+user stops DAMON just after next_update_jiffies is updated and restarts
+it after 'refresh_ms' or a longer delay, next_update_jiffies will retain
+an older value, causing time_before() to return false and the update to
+happen earlier than expected.
 
-[...]
+Fix these issues by making next_update_jiffies a global variable and
+initializing it each time DAMON is started.
+
+[1] https://lkml.kernel.org/r/20250822025057.1740854-1-ekffu200098@gmail.com
+[2] https://lore.kernel.org/all/20251029013038.66625-1-sj@kernel.org/
+
+Fixes: d809a7c64ba8 ("mm/damon/sysfs: implement refresh_ms file internal work")
+Suggested-by: SeongJae Park <sj@kernel.org>
+Signed-off-by: Quanmin Yan <yanquanmin1@huawei.com>
+---
+ mm/damon/sysfs.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
+
+diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
+index 43ee9ce4dd84..e2bd2d7becdd 100644
+--- a/mm/damon/sysfs.c
++++ b/mm/damon/sysfs.c
+@@ -1601,16 +1601,17 @@ static struct damon_ctx *damon_sysfs_build_ctx(
+ 	return ctx;
+ }
+ 
++static unsigned long damon_sysfs_next_update_jiffies;
++
+ static int damon_sysfs_repeat_call_fn(void *data)
+ {
+ 	struct damon_sysfs_kdamond *sysfs_kdamond = data;
+-	static unsigned long next_update_jiffies;
+ 
+ 	if (!sysfs_kdamond->refresh_ms)
+ 		return 0;
+-	if (time_before(jiffies, next_update_jiffies))
++	if (time_before(jiffies, damon_sysfs_next_update_jiffies))
+ 		return 0;
+-	next_update_jiffies = jiffies +
++	damon_sysfs_next_update_jiffies = jiffies +
+ 		msecs_to_jiffies(sysfs_kdamond->refresh_ms);
+ 
+ 	if (!mutex_trylock(&damon_sysfs_lock))
+@@ -1656,6 +1657,9 @@ static int damon_sysfs_turn_damon_on(struct damon_sysfs_kdamond *kdamond)
+ 	}
+ 	kdamond->damon_ctx = ctx;
+ 
++	damon_sysfs_next_update_jiffies =
++		jiffies + msecs_to_jiffies(kdamond->refresh_ms);
++
+ 	repeat_call_control->fn = damon_sysfs_repeat_call_fn;
+ 	repeat_call_control->data = kdamond;
+ 	repeat_call_control->repeat = true;
+-- 
+2.43.0
 
