@@ -1,82 +1,91 @@
-Received: from canpmsgout05.his.huawei.com (canpmsgout05.his.huawei.com [113.46.200.220])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6C052FD681
-	for <damon@lists.linux.dev>; Thu, 30 Oct 2025 02:07:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=113.46.200.220
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2409272811;
+	Thu, 30 Oct 2025 14:31:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761790043; cv=none; b=FeUWkTs1s4pBfA5pfR/VB7gWHtA8iHL/DwyM2Xu8eXvuaJ3NYmnD4xMUNeWdJ+12R45EQeM8uumpe5HEhOGPWYrMG7BbANaUQr+/vWZ2rpON7Re49OSpip5O0fDgZHQTXJCYX9M7JTRpDP6tC5BpM3x3uZe9vO1znHKS8TVMkBU=
+	t=1761834684; cv=none; b=IwkyNvqlAoiqs/pl0McQ2904eE598dcuUPMJLY46lAeDYi6FImprySEUKgEG4q7Ythoa9WoJMHSkrcS75LQWZOXZqUKXSMbfnOhhTPms4hNsAP80960/fQt45ea8rhDoq7MKxycjQuUIUhagLCjFhfVYFeUV0Zn81X75tjeZsCE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761790043; c=relaxed/simple;
-	bh=6wFQctrH9Emy+DRHKHrRYkLJTyaBAsLrNSRHmSQcQSM=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=a6N9SioxOzvXKN5PyZwBJFwTU3n5LVYvRDunFo94XNpwy/VyfcP4hdrRdPzwhqj+BFxa0jHEUGcdzcE38uhfq+jHGLMBwVrVT0pj5pz2ZB9YJ4bpNv5fPyo9ntTnQSKBeOkZUh3EZS+oSbTHk7O8KMs9iS/JQHz+RLMbDVv7Nkg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b=O41fgqk8; arc=none smtp.client-ip=113.46.200.220
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
+	s=arc-20240116; t=1761834684; c=relaxed/simple;
+	bh=wVeI2bnXMnl1w241QzL6qX0vCpn21BM863M6E2kLIP8=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=ANDBHG3ZlJpXH0X71ELV2UHbXtGpgHinLJJKGf97VMyoK1v0u6uWHWx0SXzxFSmw5tu8wUveq3FNNq04hqlsdInliS2Ucg8cmiCZzRrnNv2TYE7gZr5+ejMoBNz7sa3tBEfsTm/5Qs/ENwT/3lxSsLqGfXyZfdcvw27iKkD7WrA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Zmmw5/Dx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b="O41fgqk8"
-dkim-signature: v=1; a=rsa-sha256; d=huawei.com; s=dkim;
-	c=relaxed/relaxed; q=dns/txt;
-	h=From;
-	bh=CF/pzoLZDqGYNJEmki4gmVAam6PfVGZJ9Q6V3dL36n8=;
-	b=O41fgqk84/0l1v2gXv3gyw/kKurEfhYPJyQaDFb2ozXRL7OEsXhnIcxw8tT3pxZWlE4aWkSCW
-	XWuUMZrIKcRRArKU1SnY37G+KIEApS12ZLMR2bGE0s+A6QWrUNadmkkEHdhTR98POkC2xcE3s3J
-	8/WMFcgtEOzj7zodrQanzRg=
-Received: from mail.maildlp.com (unknown [172.19.88.105])
-	by canpmsgout05.his.huawei.com (SkyGuard) with ESMTPS id 4cxnXq4fwRz12LFQ;
-	Thu, 30 Oct 2025 10:06:35 +0800 (CST)
-Received: from dggpemf200018.china.huawei.com (unknown [7.185.36.31])
-	by mail.maildlp.com (Postfix) with ESMTPS id 7A8B1140279;
-	Thu, 30 Oct 2025 10:07:12 +0800 (CST)
-Received: from huawei.com (10.50.85.135) by dggpemf200018.china.huawei.com
- (7.185.36.31) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.11; Thu, 30 Oct
- 2025 10:07:11 +0800
-From: Quanmin Yan <yanquanmin1@huawei.com>
-To: <sj@kernel.org>
-CC: <akpm@linux-foundation.org>, <damon@lists.linux.dev>,
-	<linux-kernel@vger.kernel.org>, <linux-mm@kvack.org>,
-	<yanquanmin1@huawei.com>, <wangkefeng.wang@huawei.com>, <zuoze1@huawei.com>
-Subject: [PATCH v2 0/2] mm/damon: fixes for the jiffies-related issues
-Date: Thu, 30 Oct 2025 10:07:44 +0800
-Message-ID: <20251030020746.967174-1-yanquanmin1@huawei.com>
-X-Mailer: git-send-email 2.43.0
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Zmmw5/Dx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05BEAC4CEF8;
+	Thu, 30 Oct 2025 14:31:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1761834684;
+	bh=wVeI2bnXMnl1w241QzL6qX0vCpn21BM863M6E2kLIP8=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=Zmmw5/DxF/Q7Hn3z5GWlK4KKI+8xA4rJZuQbGWiaovZxVH59927YB0QXzb74DAoRe
+	 +ns92p7RyrWSP6aTuFeb37I6lJ5inAlGAvzQuDpibr6DDp+Ak8dLCt6vqtusQohnOv
+	 YTxZLxLo20oI6dAhGO+tIz9P0jIcdBnHWmLhAWgoHarexv43JujzLGCai58myLDssS
+	 my4arN+0SUr9abOWKzoD3lSV/7FTPxXb9PDSeGt5aYs4nlDlizX387iJGHMxGW+p1J
+	 zukfGgVZ524yqGT6oad3PhLYHQKiPUIerTI7m+Nvp41d0d0I2gSDVqDz/0AlfMI1p5
+	 FFv55IqYizoZQ==
+From: SeongJae Park <sj@kernel.org>
+To: Quanmin Yan <yanquanmin1@huawei.com>
+Cc: SeongJae Park <sj@kernel.org>,
+	akpm@linux-foundation.org,
+	damon@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	linux-mm@kvack.org,
+	wangkefeng.wang@huawei.com,
+	zuoze1@huawei.com
+Subject: Re: [PATCH v2 1/2] mm/damon/stat: change last_refresh_jiffies to a global variable
+Date: Thu, 30 Oct 2025 07:31:15 -0700
+Message-ID: <20251030143116.46746-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20251030020746.967174-2-yanquanmin1@huawei.com>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: kwepems500002.china.huawei.com (7.221.188.17) To
- dggpemf200018.china.huawei.com (7.185.36.31)
 
-On 32-bit systems, the kernel initializes jiffies to "-5 minutes" to
-make jiffies wrap bugs appear earlier. However, this may cause the
-time_before() series of functions to return unexpected values, resulting
-in DAMON not functioning as intended. Meanwhile, similar issues exist
-in some specific user operation scenarios.
+On Thu, 30 Oct 2025 10:07:45 +0800 Quanmin Yan <yanquanmin1@huawei.com> wrote:
 
-This patchset addresses these issues. The first patch is about the
-DAMON_STAT module, and the second patch is about the core layer's sysfs.
+> In DAMON_STAT's damon_stat_damon_call_fn(), time_before_eq() is used to
+> avoid unnecessarily frequent stat update.
+> 
+> On 32-bit systems, the kernel initializes jiffies to "-5 minutes" to make
+> jiffies wrap bugs appear earlier. However, this causes time_before_eq()
+> in DAMON_STAT to unexpectedly return true during the first 5 minutes
+> after boot on 32-bit systems (see [1] for more explanation, which fixes
+> another jiffies-related issue before). As a result, DAMON_STAT does not
+> update any monitoring results during that period, which becomes more
+> confusing when DAMON_STAT_ENABLED_DEFAULT is enabled.
+> 
+> There is also an issue unrelated to the system’s word size[2]: if the
+> user stops DAMON_STAT just after last_refresh_jiffies is updated and
+> restarts it after 5 seconds or a longer delay, last_refresh_jiffies will
+> retain an older value, causing time_before_eq() to return false and the
+> update to happen earlier than expected.
+> 
+> Fix these issues by making last_refresh_jiffies a global variable and
+> initializing it each time DAMON_STAT is started.
+> 
+> [1] https://lkml.kernel.org/r/20250822025057.1740854-1-ekffu200098@gmail.com
+> [2] https://lore.kernel.org/all/20251028143250.50144-1-sj@kernel.org/
 
-Changes from v1
-(https://lore.kernel.org/all/20251028061927.1378746-1-yanquanmin1@huawei.com/)
-- Added commit information describing another similar issue. (found by SJ)
-- Making last_refresh_jiffies a global variable and initialize it on
-  damon_stat_start(). (suggested by SJ)
-- Added a new patch that fixes the same root cause issue in the core
-  layer's sysfs. (found and suggested by SJ)
+Thank you for finding and fixing these!
 
-Quanmin Yan (2):
-  mm/damon/stat: change last_refresh_jiffies to a global variable
-  mm/damon/sysfs: change next_update_jiffies to a global variable
+> 
+> Fixes: fabdd1e911da ("mm/damon/stat: calculate and expose estimated memory bandwidth")
+> Suggested-by: SeongJae Park <sj@kernel.org>
+> Signed-off-by: Quanmin Yan <yanquanmin1@huawei.com>
 
- mm/damon/stat.c  |  9 ++++++---
- mm/damon/sysfs.c | 10 +++++++---
- 2 files changed, 13 insertions(+), 6 deletions(-)
+Reviewed-by: SeongJae Park <sj@kernel.org>
 
--- 
-2.43.0
 
+Thanks,
+SJ
+
+[...]
