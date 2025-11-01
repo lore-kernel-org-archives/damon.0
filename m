@@ -1,35 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74C312FE573;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C22572FF641;
 	Sat,  1 Nov 2025 18:20:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762021239; cv=none; b=GYPiYSAsNEihR2snnLGuWF6Bn9MnNvheFKo4NJ39n5FqoaCs+wuIocZDZfe6Md+/p9p/ZMSqV18uDPE96ynvfAHNh/bLtj5QHlxXLm4ZOa/Ycc8OjDXRoHuYDvgkOHrhFKPN/L5QCQWLx5fW9yms/3Gzdefut+z7MRjfwlaZjFY=
+	t=1762021239; cv=none; b=G62u4SeFDglLPwjYPnLYNDuttHTUfEMHaCkjaEkgvHLcfTkt+Ab9QcrS7iDBzKtTf5/cKbIjxyTJjeCYA6l0ky0xyK6Sd7sFNNt9bzlV9UULa8a6URcX7ySlaqkyZOKPV01smlmkxtR6WPjyqooKNY8g+1u4afHglV7rf4Cd/Vo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1762021239; c=relaxed/simple;
-	bh=57kC+8zBcKudPnCnx3LGmauWpC85FOLpVi+rp5j0Qcs=;
+	bh=oHkIjcA8qu06VIriuctGm/Bl5usqrU/VIxGOhoxmkJo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZLioVINTm6EOawfybV3CJOA2qqIdTh+FPLBkFLZmelMa3uAwirmnAieJQjj4acF4WcCkQ53TD2NudFIzscE5B6eEmttptbGP2QR3Z60VvTsAHP+q284rLo0E98BBUzeLT8lI+qNXg769XGXta2bV5V5p116nZv8UmD+HTLuDhKU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Q0pNGtMs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SQQSisXmlem4k59L3Huiv/d/WIPKHzuYmEpobNhDwD759vFWH3HzcvMcFtUFFH86TuApq0ruyZRhGASXROOErBFYLR3HHJLI7CugGS6iPSFMjjIZjU6QPkg6ewwlNzy/lsScM95qgUIgkS/5psIuxtnzatGH7Ax4OFMJTbIpMUM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kVlar5I+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Q0pNGtMs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5C2AC116C6;
-	Sat,  1 Nov 2025 18:20:38 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kVlar5I+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61AC2C19424;
+	Sat,  1 Nov 2025 18:20:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1762021238;
-	bh=57kC+8zBcKudPnCnx3LGmauWpC85FOLpVi+rp5j0Qcs=;
+	s=k20201202; t=1762021239;
+	bh=oHkIjcA8qu06VIriuctGm/Bl5usqrU/VIxGOhoxmkJo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q0pNGtMsrufRK+kEJFJrtki3V3cJOp38O3M0vlm+UIv8hX31367RJuWecM0108LCc
-	 v7XKC9Q62+gQVFmuxewnLt87M1IhTLf1nPSXBs1V5/QGIvm4u04sgxjysm1aQc2noh
-	 LWyVKFH+7KvlCR8eZUWDkUzAakj+7QxSDvz6KtNjG11xXaxD/PMCNqApWPFB2BBkwM
-	 Ga7qs2fUk3Lnsx5Qx/Am3lZkB2WM3nesVH/yZNeDCZhmouO4a/JIpKdsLA3U1sFgyZ
-	 8iWbxO588pd6OoDf+OwoZHuIq9iq5K65b2C5Fki6kavJ493+CEKGwLhkrHCndTlUHW
-	 OOZUbfIik8afg==
+	b=kVlar5I+77xLhdhlMqli0zqKISxDQR3PpChs2MikS2WxH/2uyinmBsbauj612EoNj
+	 C8OL+5Xy/Cxfqhusr8xL7TjP+9PSq3bTiYIwRF+k/+ffUroFfgo2kCLqr83007Uf81
+	 6z8/swOvObW2pChaUmpj+/JwA9YLy97/EeyBMw0H8UH4MrrfVKX3z1mduQ+47OBuTX
+	 QbTHYq6Fk3O39yYp0+879I5R4zEB6n5rMTlzK/BkFOEXRfCh3W6BsZFHRSMSjffyXA
+	 KtdQiGk+SQ673mbnyPMruQ0jUBC1AtNdG89NwgiODKTbylUasjPnZ8nEtzrGkJu87S
+	 0grc33RzWwU4Q==
 From: SeongJae Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SeongJae Park <sj@kernel.org>,
-	"# 5 . 19 . x" <stable@vger.kernel.org>,
+	"# 6 . 3 . x" <stable@vger.kernel.org>,
 	Brendan Higgins <brendan.higgins@linux.dev>,
 	David Gow <davidgow@google.com>,
 	damon@lists.linux.dev,
@@ -37,9 +37,9 @@ Cc: SeongJae Park <sj@kernel.org>,
 	linux-kernel@vger.kernel.org,
 	linux-kselftest@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [PATCH 09/22] mm/damon/tests/core-kunit: handle alloc failures in damon_test_ops_registration()
-Date: Sat,  1 Nov 2025 11:20:03 -0700
-Message-ID: <20251101182021.74868-10-sj@kernel.org>
+Subject: [PATCH 11/22] mm/damon/tests/core-kunit: handle alloc failures in damon_test_update_monitoring_result()
+Date: Sat,  1 Nov 2025 11:20:05 -0700
+Message-ID: <20251101182021.74868-12-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20251101182021.74868-1-sj@kernel.org>
 References: <20251101182021.74868-1-sj@kernel.org>
@@ -51,33 +51,33 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-damon_test_ops_registration() is assuming all dynamic memory allocation
-in it will succeed.  Those are indeed likely in the real use cases since
-those allocations are too small to fail, but theoretically those could
-fail.  In the case, inappropriate memory access can happen.  Fix it by
-appropriately cleanup pre-allocated memory and skip the execution of the
-remaining tests in the failure cases.
+damon_test_update_monitoring_result() is assuming all dynamic memory
+allocation in it will succeed.  Those are indeed likely in the real use
+cases since those allocations are too small to fail, but theoretically
+those could fail.  In the case, inappropriate memory access can happen.
+Fix it by appropriately cleanup pre-allocated memory and skip the
+execution of the remaining tests in the failure cases.
 
-Fixes: 4f540f5ab4f2 ("mm/damon/core-test: add a kunit test case for ops registration")
-Cc: <stable@vger.kernel.org> # 5.19.x
+Fixes: f4c978b6594b ("mm/damon/core-test: add a test for damon_update_monitoring_results()")
+Cc: <stable@vger.kernel.org> # 6.3.x
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
  mm/damon/tests/core-kunit.h | 3 +++
  1 file changed, 3 insertions(+)
 
 diff --git a/mm/damon/tests/core-kunit.h b/mm/damon/tests/core-kunit.h
-index 10618cdd188e..96c8f1269f44 100644
+index e38c95f86a68..10c9953581ee 100644
 --- a/mm/damon/tests/core-kunit.h
 +++ b/mm/damon/tests/core-kunit.h
-@@ -320,6 +320,9 @@ static void damon_test_ops_registration(struct kunit *test)
- 	struct damon_operations ops = {.id = DAMON_OPS_VADDR}, bak;
- 	bool need_cleanup = false;
+@@ -429,6 +429,9 @@ static void damon_test_update_monitoring_result(struct kunit *test)
+ 	struct damon_attrs new_attrs;
+ 	struct damon_region *r = damon_new_region(3, 7);
  
-+	if (!c)
-+		kunit_skip(test, "ctx alloc fail");
++	if (!r)
++		kunit_skip(test, "region alloc fail");
 +
- 	/* DAMON_OPS_VADDR is registered only if CONFIG_DAMON_VADDR is set */
- 	if (!damon_is_registered_ops(DAMON_OPS_VADDR)) {
- 		bak.id = DAMON_OPS_VADDR;
+ 	r->nr_accesses = 15;
+ 	r->nr_accesses_bp = 150000;
+ 	r->age = 20;
 -- 
 2.47.3
