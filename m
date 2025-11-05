@@ -1,67 +1,72 @@
-Received: from mail-qk1-f170.google.com (mail-qk1-f170.google.com [209.85.222.170])
+Received: from mail-qv1-f41.google.com (mail-qv1-f41.google.com [209.85.219.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8704132E140
-	for <damon@lists.linux.dev>; Wed,  5 Nov 2025 14:42:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6C2431DDBD
+	for <damon@lists.linux.dev>; Wed,  5 Nov 2025 17:21:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762353751; cv=none; b=k4R7xNA5iWD1Nopp83k2reh2xqMMNBOqwR09XGnZ5Rt/4l0/Hy3UshX5dbYfsPzKZ7LevPtmHz8t6kt5TcVEDmanXCu/Z3WmTdLPxd82wE0kkvcPB1L/v+G7m8ZOMBotqnumpib9+SPtbu+T38C1cLySerTDkoINJ0hhCS34nPM=
+	t=1762363279; cv=none; b=UgQPxEPGNyLjOIfHMdzYTpY+XASslkQtHMmxnODBkaQbknvhRzE+K+lQqJr3oiAEVp23FilTmQWu4bl6Tbh1RlpsBWAryzxKoqtwcrddsK0HfRyk92lkhxyJDBjglUdqaVJRxgf2hIY7oiWMTItYGZubX7qc8YRPLjIr2fIe4zQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762353751; c=relaxed/simple;
-	bh=ij2iHrslX/5yNAV81WvwyiP5ZRrrhcDqQSgtHEa9ZoY=;
+	s=arc-20240116; t=1762363279; c=relaxed/simple;
+	bh=R+scxNFIJ7A2QKHZGih1Ehc3wdUpOLgJ/krGtFdCacU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rrobb3pDFGpIjxtRmqqUZrYscLHFGtr5w2XuNgpA42b8PtJXhnxaDgSUJD5NMVvhh67YysERw1FEUpWgDtubLdCKVF6hxZEaEkNyf1udN8cPoAzx8hxeTyJ4deGmS4ovHMt8zoc8TSaLCfxHE/Pg+XQKUMpic2Z73f6j/CX65HY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gourry.net; spf=pass smtp.mailfrom=gourry.net; dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.b=g+Xl2xYS; arc=none smtp.client-ip=209.85.222.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gourry.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gourry.net
+	 Content-Type:Content-Disposition:In-Reply-To; b=dn0nKN0yTvwbVZqco0P35lnzOigeaA1tZpcq8sGD5cP1QJNJW3m889pBNgn394rbuUCpEXY3DcGwig5SU0OPpNMLdtNoK+k32SjJtkpF3zFqiuwg4HY8nHMGEQHI0/7bOI+U2jkZ/Cm2D+BAnmk8PAuemOVgbfA+0FTdrrXqWLY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ziepe.ca; spf=pass smtp.mailfrom=ziepe.ca; dkim=pass (2048-bit key) header.d=ziepe.ca header.i=@ziepe.ca header.b=GkAJTfsB; arc=none smtp.client-ip=209.85.219.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ziepe.ca
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ziepe.ca
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.b="g+Xl2xYS"
-Received: by mail-qk1-f170.google.com with SMTP id af79cd13be357-8b220ddc189so162589985a.0
-        for <damon@lists.linux.dev>; Wed, 05 Nov 2025 06:42:29 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=ziepe.ca header.i=@ziepe.ca header.b="GkAJTfsB"
+Received: by mail-qv1-f41.google.com with SMTP id 6a1803df08f44-88059c28da1so1393166d6.2
+        for <damon@lists.linux.dev>; Wed, 05 Nov 2025 09:21:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gourry.net; s=google; t=1762353748; x=1762958548; darn=lists.linux.dev;
+        d=ziepe.ca; s=google; t=1762363276; x=1762968076; darn=lists.linux.dev;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=gCP0hsq/q40gFxNmjoVFcp0QbOx89aTWebuusBQgCaY=;
-        b=g+Xl2xYSv3Z1WBrgaYV97hQsZ4/cz89wxjIyFDVgqDCRule5XVoC8g8ohHBEtYTEJ+
-         G4V2hcVS1tQ0gHrpUsEtLFouOVqtSC0zJQOPS4At1VffS7vl8keyigHx2b2KqzsolSyG
-         TQPeI/0Snwrqw/cv0QgI8nUY/uOioeBy+cTFc3esTGpBBEjr1JgyLFNPevn9qaMvzc4e
-         eMoqzxRgQEA/bqVZpR4+XpcnnDftIJYnsPmtF2YDfp2rVEJxPnw+Ve3/1kYgM1kziTz1
-         RMAc+cV5OT4BtPWCBPT90f+W5aBR9CFJ5Bog1rUDyINGaw0IuUdyiMULR57e9wDDaB2Y
-         7ogw==
+        bh=2cq2mS+yWhZev0zm4YEm/j+lSP0FbcQSTW4gUm6tSNU=;
+        b=GkAJTfsBxdqpe6nYztNxI2kRIrCyTnZ5M1Q/o0IbF2cgbfpc6PZpqx7K2i3ENKRLXG
+         LQeY8U1pd1Tuu0Li/rTNMOVA2pcgXpfKJd2jtBjs6jEUM2blDCbj/a5ZunxAzwn5/ogh
+         jD/6iKk0BxNpHl4hnNYYhfeiZJysLeMvwXOIl0/WndbwXq3oTLPTtfb2DmjRNfNXH8m4
+         SZ60ex9tHWCezp/ohGOek5R1eK30ZOe32P1XdL7X3X6lUkbRVE+h3EktE7Wnq9lHCeTa
+         Mss0pK7eN9i0PWHM0U6S8yankCvi6tJjTSuR54guT0Xp/Q0ch7lyL9oo7oMBpiTWoNgG
+         6IZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762353748; x=1762958548;
+        d=1e100.net; s=20230601; t=1762363276; x=1762968076;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=gCP0hsq/q40gFxNmjoVFcp0QbOx89aTWebuusBQgCaY=;
-        b=SdXvyoarNjUQM/oXe1GA4NTSbZqcxEo0Kj2ChHa44VAB70oi4rgkcEaNHpuuo+WPUF
-         qNSjlWGub2lA8BF5earSBfq7EgqBgv7d80mfIkvThxn8T2NOg4B49QIXCZBxWkhwKcj8
-         I0PDXVXYD9IzTafFCVk+Mdlh4pA8nwUiNW8tRKUbSAafH8ZWBqjwQ4vnuQDr+mPMQ6M1
-         l3JjOUuBKoBdyoUNJSGRZd4P9uy7enmlgks2P/B+lvHWxGSuUdzfBOrgnpAd7nbJCVQ0
-         BSAycfpI8LXyBIQMBn77O7Fpl/wViY2eBULcmsvvsI3ONdJH38s2W0i4WNO3aEP5v2U9
-         N+dQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUdRAU/eSSuv39A2rCvwLwHUHbFDNZjWbABvXFzXTDV19o4XTy1bnuGrbTbgVo46+6Dmh4OBg==@lists.linux.dev
-X-Gm-Message-State: AOJu0Yyqbr/tQNa3NTZPDUESPdu9EaoDszqQ3z7vJ+9q0N9Rtsy+hIxV
-	zQfzeSLZ/dsfJ70AvdKwG+wP7jewDF6i+8euWy81xdwNuwGCaEa0kDJ/0jUAqpqLqxM=
-X-Gm-Gg: ASbGncsMFRIxPJ2N9fZxFA6NxYEF6Q5bV2KUEnVrgWh/c/g8jXm5QVb73gAaWk5aEQ5
-	wCeqOIVI56Thc0X2fByIhj9+hrnwi4adpjnTCWH0MrBASWj70/nFMxD79EOE2VXspy1PUtVEyv1
-	4VsMX4DpYqI+wUroVeV71o0UB/ka2Wg2oTtr0fI7ylmaggOvcSlH6EQlf5s5HPDxixCKPhCTLAz
-	XBTXxc2Kc4Y4ffwaD4rcah0Wkd99KIH51U8EGtpUybfgF9E518xl5RFMJuAlx+ymmbs7KZNjcdQ
-	J/hptzX3II6R9mHgBsWWbE4NBTcGX1DzMPhqkFF7u6YB1YD/zIoXtag2cPXArjvDjiGPEkfqDPa
-	yeZG0JHuNkbW9GAJok6a7qpXQMJuLAh8VFFtBgX3uzDxgIilXy8A+PM8nGBs0ccl26dzwY2Wp6j
-	3pUKuHJ4uZG9cl8CWk5LTYN5gqQn8DfzYaOp9dOg/HALfymqVo3P8oJKRtmmM+Ugv3cVe59Q==
-X-Google-Smtp-Source: AGHT+IFOPmymxkVWTStAmI1fSxsEHrX8n+cH3NR2hrKHNMeSwi6zTbwFsDY5mjtR5/Zbzi6pU1fUXg==
-X-Received: by 2002:a05:620a:4416:b0:8ab:4ada:9b2f with SMTP id af79cd13be357-8b220b7f441mr375892585a.56.1762353748298;
-        Wed, 05 Nov 2025 06:42:28 -0800 (PST)
-Received: from gourry-fedora-PF4VCD3F (pool-96-255-20-138.washdc.ftas.verizon.net. [96.255.20.138])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-8b21fc36dbasm239867985a.19.2025.11.05.06.42.26
+        bh=2cq2mS+yWhZev0zm4YEm/j+lSP0FbcQSTW4gUm6tSNU=;
+        b=L5jcyUBediPmkroOy11zBlKCmp5d7nh81vE764UQVEUjDJos/0FXBL5IyQWbfyndcR
+         nmY9KM+hv9ytJElGucELkQSvUTEPc1OmUvHAjEl9dhQWBucn1hMszhxqKgGUB9wLlUnF
+         IiMvXfOlGMSljeA/lHCThUUdEkCNK6RwXyzQC6JIDwck/V9R9OJ124By+yyrCHOsea+6
+         pa+uPA8+jBaMDzD/fxtMB3L/YZOm9ahuES6aDJvZD+MZ+V5ZyLIEDTNeIiQL4fkm5fu6
+         H6CeXcS3RIZ2+aXLgaeEtcFhYNbvA8DkPPrutWsYbnmzTu4BWc42yMo/W8BPeAU5OnmL
+         X7Sg==
+X-Forwarded-Encrypted: i=1; AJvYcCX48NoRGvhp6jWrh9vM+Vyp/gUMKtQEflgxXC+SAzk219mISMXElum84U0FFR1AOvvCQVcm/g==@lists.linux.dev
+X-Gm-Message-State: AOJu0YycBBurC+yDPPjN9FyrTdp4L9XPVqvxCNOFJa7f0k6d7uwB4kzk
+	XgHKdxydoNBM2ZNOj1ZfsV4E1/GlaIFVsHCbJhgguKKVeHiLubIfjBxCIK13r4apE6c=
+X-Gm-Gg: ASbGncskqyGM/nfdI/2DTlTTWblxrGOlaWpzOR7A+vbkK9PsCV6d3DoDFGVZgBuzMoS
+	3CmfNz5occGB+uGgyscuA2IAel95Ldxu7PXQf1nCwGC3myOE+uCmN95jjGaA0pD+Glx/vdk6P6W
+	Rl2SdXcRb4So/cACahDwXNjFnq4E9l6mto1e5QAbsUv8fwm18/12+YAqlpYxR2CLWSqm+6cc7ym
+	t6J0dB9Yfe61fM6mCDEvmv03qtTuGvXgVx8BCGb8KH4FwwTixnGOIO7m0uac63I2nNZtyiEPi/l
+	FAtDV0dS1DdDfXgUez7L2THMt6AuuGPtdbmfrE90EqLbZnA9kE9PaRCGOZcHJvqygrCidnRwgl3
+	oLWngcOV/ThmvZPGuhYwFdE4j+q9eSQE1/OWycvR8Pe3gHEsETLeZLqUjKBHTzV3eH8GKtiCOKd
+	OLsNG86f9gbWdKLyWNZwAlz1hGuMYIw7w1s/W+bD3sNvmufQ==
+X-Google-Smtp-Source: AGHT+IGCK5Ht7P6eoqM7YgVZ6ef4jlofMTj5LlbxF9x0JfdkYp0y/H774e8UOGf7CmqXFow5BgQdlA==
+X-Received: by 2002:ad4:576e:0:b0:880:5779:d489 with SMTP id 6a1803df08f44-88071095623mr52524556d6.3.1762363276490;
+        Wed, 05 Nov 2025 09:21:16 -0800 (PST)
+Received: from ziepe.ca (hlfxns017vw-47-55-120-4.dhcp-dynamic.fibreop.ns.bellaliant.net. [47.55.120.4])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-880828c457bsm996916d6.5.2025.11.05.09.21.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 05 Nov 2025 06:42:27 -0800 (PST)
-Date: Wed, 5 Nov 2025 09:42:24 -0500
-From: Gregory Price <gourry@gourry.net>
-To: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Cc: Andrew Morton <akpm@linux-foundation.org>,
+        Wed, 05 Nov 2025 09:21:15 -0800 (PST)
+Received: from jgg by wakko with local (Exim 4.97)
+	(envelope-from <jgg@ziepe.ca>)
+	id 1vGhC7-00000007Bv7-1e20;
+	Wed, 05 Nov 2025 13:21:15 -0400
+Date: Wed, 5 Nov 2025 13:21:15 -0400
+From: Jason Gunthorpe <jgg@ziepe.ca>
+To: Gregory Price <gourry@gourry.net>
+Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Christian Borntraeger <borntraeger@linux.ibm.com>,
 	Janosch Frank <frankja@linux.ibm.com>,
 	Claudio Imbrenda <imbrenda@linux.ibm.com>,
@@ -95,8 +100,7 @@ Cc: Andrew Morton <akpm@linux-foundation.org>,
 	Kairui Song <kasong@tencent.com>, Nhat Pham <nphamcs@gmail.com>,
 	Baoquan He <bhe@redhat.com>, Chris Li <chrisl@kernel.org>,
 	SeongJae Park <sj@kernel.org>, Matthew Wilcox <willy@infradead.org>,
-	Jason Gunthorpe <jgg@ziepe.ca>, Leon Romanovsky <leon@kernel.org>,
-	Xu Xin <xu.xin16@zte.com.cn>,
+	Leon Romanovsky <leon@kernel.org>, Xu Xin <xu.xin16@zte.com.cn>,
 	Chengming Zhou <chengming.zhou@linux.dev>,
 	Jann Horn <jannh@google.com>, Miaohe Lin <linmiaohe@huawei.com>,
 	Naoya Horiguchi <nao.horiguchi@gmail.com>,
@@ -109,9 +113,10 @@ Cc: Andrew Morton <akpm@linux-foundation.org>,
 	linux-arch@vger.kernel.org, damon@lists.linux.dev
 Subject: Re: [PATCH 02/16] mm: introduce leaf entry type and use to simplify
  leaf entry logic
-Message-ID: <aQtiUPwhY5brDrna@gourry-fedora-PF4VCD3F>
+Message-ID: <20251105172115.GQ1204670@ziepe.ca>
 References: <cover.1762171281.git.lorenzo.stoakes@oracle.com>
  <2c75a316f1b91a502fad718de9b1bb151aafe717.1762171281.git.lorenzo.stoakes@oracle.com>
+ <aQtiUPwhY5brDrna@gourry-fedora-PF4VCD3F>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -120,36 +125,40 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <2c75a316f1b91a502fad718de9b1bb151aafe717.1762171281.git.lorenzo.stoakes@oracle.com>
+In-Reply-To: <aQtiUPwhY5brDrna@gourry-fedora-PF4VCD3F>
 
-On Mon, Nov 03, 2025 at 12:31:43PM +0000, Lorenzo Stoakes wrote:
-> +typedef swp_entry_t leaf_entry_t;
-> +
-> +#ifdef CONFIG_MMU
-> +
-> +/* Temporary until swp_entry_t eliminated. */
-> +#define LEAF_TYPE_SHIFT SWP_TYPE_SHIFT
-> +
-> +enum leaf_entry_type {
-> +	/* Fundamental types. */
-> +	LEAFENT_NONE,
-> +	LEAFENT_SWAP,
-> +	/* Migration types. */
-> +	LEAFENT_MIGRATION_READ,
-> +	LEAFENT_MIGRATION_READ_EXCLUSIVE,
-> +	LEAFENT_MIGRATION_WRITE,
-> +	/* Device types. */
-> +	LEAFENT_DEVICE_PRIVATE_READ,
-> +	LEAFENT_DEVICE_PRIVATE_WRITE,
-> +	LEAFENT_DEVICE_EXCLUSIVE,
-> +	/* H/W posion types. */
-> +	LEAFENT_HWPOISON,
-> +	/* Marker types. */
-> +	LEAFENT_MARKER,
-> +};
-> +
+On Wed, Nov 05, 2025 at 09:42:24AM -0500, Gregory Price wrote:
+> On Mon, Nov 03, 2025 at 12:31:43PM +0000, Lorenzo Stoakes wrote:
+> > +typedef swp_entry_t leaf_entry_t;
+> > +
+> > +#ifdef CONFIG_MMU
+> > +
+> > +/* Temporary until swp_entry_t eliminated. */
+> > +#define LEAF_TYPE_SHIFT SWP_TYPE_SHIFT
+> > +
+> > +enum leaf_entry_type {
+> > +	/* Fundamental types. */
+> > +	LEAFENT_NONE,
+> > +	LEAFENT_SWAP,
+> > +	/* Migration types. */
+> > +	LEAFENT_MIGRATION_READ,
+> > +	LEAFENT_MIGRATION_READ_EXCLUSIVE,
+> > +	LEAFENT_MIGRATION_WRITE,
+> > +	/* Device types. */
+> > +	LEAFENT_DEVICE_PRIVATE_READ,
+> > +	LEAFENT_DEVICE_PRIVATE_WRITE,
+> > +	LEAFENT_DEVICE_EXCLUSIVE,
+> > +	/* H/W posion types. */
+> > +	LEAFENT_HWPOISON,
+> > +	/* Marker types. */
+> > +	LEAFENT_MARKER,
+> > +};
+> > +
+> 
+> Have been browsing the patch set again, will get around a deeper review,
+> but just wanted to say this is a thing of beauty :]
 
-Have been browsing the patch set again, will get around a deeper review,
-but just wanted to say this is a thing of beauty :]
++1 I thought the same thing. So much clearer what is going on here,
+and I didn't realize we had so many types already..
 
-~Gregory
+Jason
