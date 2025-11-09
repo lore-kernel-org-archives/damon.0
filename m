@@ -1,73 +1,73 @@
-Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
+Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FA5D34D390
-	for <damon@lists.linux.dev>; Sun,  9 Nov 2025 12:49:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C1992F6578
+	for <damon@lists.linux.dev>; Sun,  9 Nov 2025 13:10:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762692584; cv=none; b=haNw865++SRjRKWOW8cBa+1uOONrUXrB/MwKWycODvFHyr0/NNHS6yCkrgnF30IDY6lXEo5nwKV4ea+zoxs4irjyqGgKr/c6E2fy6b/2Q5loccgvbevMIBVUxnpVZ4zogPzf0CbrJgI/3t9Xw6vfyuTisfYs7/clUi0zFC3LdHQ=
+	t=1762693859; cv=none; b=f00e6dpBT3pmpUPPw7Op4LlkeRLdlqUgF4aeZqD5j1ywQ4Z2pAlMreamqagKnMakfOInTU0ZXjHGrcd9zsB0spPg6VkTkadduIjA9F0uDdZhSZ6WlJoil2Mjc0qC5itg7O65+JS6CVFD9Rmxq0P/7HK9jg17ULTfiPYvay9xphU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762692584; c=relaxed/simple;
-	bh=JF2q7sTKzYiIVusFfVQ6qlbWbep+D+t1c3S+sk6voF0=;
+	s=arc-20240116; t=1762693859; c=relaxed/simple;
+	bh=NnSoECfC7HDUZWeEocUxEKjYCg5JMU8aKAcSsGGo+G4=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=h/lvGsfzPkwFjOZubeHnTPHm+4p28sqJKoHnfIvKQIWaaccKoh60htQrntztX3iuyMvkBOg8CnbspWHE4MtksZV0Kzx9r9kdg+w6qYnW9zr5tZgo5qcIrR64RWu32lqNQQJ1r3cx8UlX1AIthtBOMyAH9F/34UPk8ctHICdZaiU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NyIVkjxj; arc=none smtp.client-ip=209.85.218.52
+	 To:Cc:Content-Type; b=gaGqywUPcN+VpPVxg134wY6fGwP5efFAdy7n+JfX//6+e7bqvx2/ruCLwpjru+Z0tTFLOGewoTzsYdWQ9uP3WYRU/n/8Yh/KRjmURubF6i9S9YZLPwo/yPu8B4r+66CeXZFPEbumDibfoI3kP/BT3VaczaUG4/LyqJsvhhwhqxg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dXSt7pee; arc=none smtp.client-ip=209.85.208.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NyIVkjxj"
-Received: by mail-ej1-f52.google.com with SMTP id a640c23a62f3a-b626a4cd9d6so337130066b.3
-        for <damon@lists.linux.dev>; Sun, 09 Nov 2025 04:49:41 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dXSt7pee"
+Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-63b9da57cecso3480089a12.0
+        for <damon@lists.linux.dev>; Sun, 09 Nov 2025 05:10:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1762692580; x=1763297380; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1762693856; x=1763298656; darn=lists.linux.dev;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=hDZ3xafdhT/YtTTUoql25uDvUJxupIOBYIVvt5riwwA=;
-        b=NyIVkjxjy1vp9fhRo/AvJHcXy7SA/5QkQ5+qUKDjITf/O5Fss+1O5jTx0VJ5uzBmSj
-         ZI/i9/aLofuLMmc5ayjvYGvwjGKjGth5uj+YXEDrUR507J2m7H9qKQLReEnojda2ShyY
-         O07MTEqIJUfVX2zNn3lAS1fYxDUV96omQnIDzUueD9bk7s1KIPh6bFbSOHiZvVX9dvCq
-         xlquqiy4bLAddvwNMwizHTrTfxYbi0XFV0+L/GIXweAv2JMOZTJkMgCy47nzA90LECyM
-         FtmAiG+jB8hSqmIkcIPh1GTlV85GHtIowNYFjCEryEHgC5Mk6ttBAdBv7EbZ1YhssrcA
-         6EcQ==
+        bh=JKARBXSwr1aXmZWX6tJUZ+Zm/9hq/LiOLLKvc+8uGy4=;
+        b=dXSt7peeaoy7YrSVT5fAOgUovdPyCbMuwAtqZ1KL7NJTgR/b1kAht1OOb50wuqdhFU
+         kT9hSYhd7ErkGpDR94Z/FkVxtK0qzjkTaKxHyt8pF0w6jwlaIL8COGyy7atJAvjaZt0c
+         ZmKVvUTa5J19MbiwCGgSby2MO7vXHSBECAxiNOJN/pihqd7j2Lk5b/eV3haFg91KQB1n
+         PT9NoEaN4zNKgValzNuaxM40xeuCul2MkNHLoSMHoHXsRRbQ7Frl5La+aDpHCoqv5RpS
+         QrzI4Aa8A5cIDiwp8Fb5zgIGEO8voQLchkD7Q7zTr8mGPAOX8FyHJXD8ccikb37cTQfb
+         2u0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762692580; x=1763297380;
+        d=1e100.net; s=20230601; t=1762693856; x=1763298656;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=hDZ3xafdhT/YtTTUoql25uDvUJxupIOBYIVvt5riwwA=;
-        b=SacE+dQIwI3moc6sMgV6MrsEorxwN4H/IDcjtI+F6JpPrJ2S/tbjWfgLRl/O24m9Cj
-         SLVGM4qVtyFj7myXW/BT13sEkIt8u2hkLXosat3AUTSyZZwE9nTLZykh8hukKPQiefnK
-         zDlUXdJiG5F5GKF6n9jtlm5xqPM55eBgsXKAUruoFZ+zthi38VlE6Ii1Io1l3cFEGi09
-         caSAyaxsZQo139TkTe0Jg1YXJP8XXkr17ZFO/ZdXHtJ5VQ2MWBHAeS/p6oDgn2bRnXWv
-         R6lQj0NCMtKB0XKc0KJGlQzDU6W7HtyGZtBvgmwibA+xWiXTXyjC6dMpcimo40+Lq6u/
-         tQRg==
-X-Forwarded-Encrypted: i=1; AJvYcCUAwFpOcLueTguGmOyHsP34NgIm3q89+d0icP9C7CLP2MoFNu72kdrGOvCeJiroA1/J2vlRhg==@lists.linux.dev
-X-Gm-Message-State: AOJu0YwP4/TFrvw+H437+VxdGvBbZDMkEI8mxU+aAzPYOM57BrZ9WLu2
-	85MpSEhV2i8idbXZlqUrtzVRq4/MBa6F57jU6wM2yAco3bcKHYaa5hBIAH2NZZdKb1FDnQGiJk7
-	CDWbiiy3JWQshaTyB6JSGzcDNAATUP8M=
-X-Gm-Gg: ASbGnctUiAXpnepS6N+ofg7TgedwQs6B6BQQ320Io0G5aATbtDZZubU9wY9nzi30Bow
-	QocsuhNVu9dLZQqxFjGXlLFyXFq+uA+2xYU8h+GsiB8Ge9b0xODlR4NzguUjN//qMI6SM0F8eWn
-	6TeJFoizYU3WcBN0fAzDGZ4uVLUr1sQkx/tzdD7m97YV+NwoUJXCG4aDOi7IoQ8i+B6dPw+k7aa
-	WV8grIrmIV6bbmwKrkFuz8W3prOKwIVG/0lfVJezcR6VD+YjCxK4TftHhj5
-X-Google-Smtp-Source: AGHT+IHNVHcrPcoXcfMQAdrM6mfxVNIvqirPfSk4ZwLH/WJQN1X+/EwZuiwM1z9Tvembh+GaQUpS/PpKFfhnQ7ESKbE=
-X-Received: by 2002:a17:907:869f:b0:b33:a2ef:c7 with SMTP id
- a640c23a62f3a-b72e058a781mr441932566b.55.1762692579280; Sun, 09 Nov 2025
- 04:49:39 -0800 (PST)
+        bh=JKARBXSwr1aXmZWX6tJUZ+Zm/9hq/LiOLLKvc+8uGy4=;
+        b=t0IYxjUvPj144C4lXXvU5QHEhujrhSIRacOv2ciPfV35BR1OtfgDlntdDfeXWYkKe3
+         PiGRGghmXrL7Eh5gF+j2wNj6Doh2WZseH4nntMuImoDYiBZlZ8zXK7vVv5I0QnvqH0Or
+         sjR99zFoFfHKo7bUx9iPNza3fIU9yc5rb9bKsIdWgWLFTQJ85kKyIQOlaV9GtCYMjUiW
+         KaaZK0slqhes2EGlTgq7sBRRbEUzwksCwTsZVNNrCHA16gYnAARR0qwHkBRbLp9+SnDe
+         kt9LTHBHxnj9SO1VZ3MsgJxmjN15wSpxZwZJVViqBPb1HUXjIqJWiohbuWZM80El731H
+         o+EA==
+X-Forwarded-Encrypted: i=1; AJvYcCWZDUALrwgU3vU0Iu33Ml/9sjIo9dikS67do40m24eQ97OU0r+7zL6hAIbb8p5WnWXvQVaPbg==@lists.linux.dev
+X-Gm-Message-State: AOJu0YzqQMIXXlFNO89bcL2iqAvnEsyjRg57iou8cHZ/rWvKoZCpcqpr
+	MxRLZMD86Fz5P7Qmq4VOysLlOp2MuabReN/8F+TmnknccTW82/cppSLFQVm7WBpye7vDqTpWHWh
+	Jyr+vw3n4Gbl5LH90qz8k9Z2x5YBRqPo=
+X-Gm-Gg: ASbGncshBljbva1s5h1i5uqROs1+ERupzh8fW5u/E6WDuJZuN1fEfZUT0AzRTC0crmE
+	BifHyuAmYgls5+2Z3RZXFonr6luSVAOpB0Z87XduIFgn/4NNpGGBX9fW6nZs9wYLIFwCbPxzGnl
+	x/GZV8RgPQ8R55SpG/u9o9yN9PfLXQJpzY+3xMGVxmYbJKvX/JqZEzQRdQ0JYkEvXWr+S7Kpdqb
+	lbgln9rBZrBe9LojIbJVPR+EuSjAo5GmnHShe3GYh+5XScTchFPVc29ZqXBNkHSncDGX6w=
+X-Google-Smtp-Source: AGHT+IEl9MW22IQb8cz6gkNnRNDIsMMkyhNIsn4ivK8T6yzVCykEJxEU+foa+7QckGYATPbFT8xxfS3qce8kjw2WQNA=
+X-Received: by 2002:a05:6402:2707:b0:640:c2df:f00a with SMTP id
+ 4fb4d7f45d1cf-6415dc128edmr3509625a12.9.1762693855567; Sun, 09 Nov 2025
+ 05:10:55 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <cover.1762621567.git.lorenzo.stoakes@oracle.com> <75c2e8fa38de383757a49bcc3f5c081be1e27a40.1762621568.git.lorenzo.stoakes@oracle.com>
-In-Reply-To: <75c2e8fa38de383757a49bcc3f5c081be1e27a40.1762621568.git.lorenzo.stoakes@oracle.com>
+References: <cover.1762621567.git.lorenzo.stoakes@oracle.com> <cd103d9bdc8c0dbb63a0361599b02081520191b4.1762621568.git.lorenzo.stoakes@oracle.com>
+In-Reply-To: <cd103d9bdc8c0dbb63a0361599b02081520191b4.1762621568.git.lorenzo.stoakes@oracle.com>
 From: Kairui Song <ryncsn@gmail.com>
-Date: Sun, 9 Nov 2025 20:49:02 +0800
-X-Gm-Features: AWmQ_bm7gm65mOXTd2rtxZ-2sSA2POMXyYBKPT6giX8icbqtDuQMmyxTTsU5nEc
-Message-ID: <CAMgjq7AP383YfU3L5ZxJ9U3x-vRPnEkEUtmnPdXD29HiNC8OrA@mail.gmail.com>
-Subject: Re: [PATCH v2 04/16] mm: eliminate is_swap_pte() when
- softleaf_from_pte() suffices
+Date: Sun, 9 Nov 2025 21:10:18 +0800
+X-Gm-Features: AWmQ_bmfH3ksRfR0A2K2gyRnNJuT_yTKuVqefgY6nG1gVo5-Pc4ryZAWbXuQhCE
+Message-ID: <CAMgjq7B1AzqGk7nSxwY_paTxeJt8-=+T+2Wc6dBT_6XfGFhGvA@mail.gmail.com>
+Subject: Re: [PATCH v2 02/16] mm: introduce leaf entry type and use to
+ simplify leaf entry logic
 To: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
 Cc: Andrew Morton <akpm@linux-foundation.org>, 
 	Christian Borntraeger <borntraeger@linux.ibm.com>, Janosch Frank <frankja@linux.ibm.com>, 
@@ -101,145 +101,386 @@ Cc: Andrew Morton <akpm@linux-foundation.org>,
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Sun, Nov 9, 2025 at 2:16=E2=80=AFAM Lorenzo Stoakes
+On Sun, Nov 9, 2025 at 1:41=E2=80=AFAM Lorenzo Stoakes
 <lorenzo.stoakes@oracle.com> wrote:
 >
-> In cases where we can simply utilise the fact that softleaf_from_pte()
-> treats present entries as if they were none entries and thus eliminate
-> spurious uses of is_swap_pte(), do so.
+> The kernel maintains leaf page table entries which contain either:
 >
-> No functional change intended.
+> - Nothing ('none' entries)
+> - Present entries (that is stuff the hardware can navigate without fault)
+> - Everything else that will cause a fault which the kernel handles
+>
+> In the 'everything else' group we include swap entries, but we also inclu=
+de
+> a number of other things such as migration entries, device private entrie=
+s
+> and marker entries.
+>
+> Unfortunately this 'everything else' group expresses everything through
+> a swp_entry_t type, and these entries are referred to swap entries even
+> though they may well not contain a... swap entry.
+>
+> This is compounded by the rather mind-boggling concept of a non-swap swap
+> entry (checked via non_swap_entry()) and the means by which we twist and
+> turn to satisfy this.
+>
+> This patch lays the foundation for reducing this confusion.
+>
+> We refer to 'everything else' as a 'software-define leaf entry' or
+> 'softleaf'. for short And in fact we scoop up the 'none' entries into thi=
+s
+> concept also so we are left with:
+>
+> - Present entries.
+> - Softleaf entries (which may be empty).
+>
+> This allows for radical simplification across the board - one can simply
+> convert any leaf page table entry to a leaf entry via softleaf_from_pte()=
+.
+>
+> If the entry is present, we return an empty leaf entry, so it is assumed
+> the caller is aware that they must differentiate between the two categori=
+es
+> of page table entries, checking for the former via pte_present().
+>
+> As a result, we can eliminate a number of places where we would otherwise
+> need to use predicates to see if we can proceed with leaf page table entr=
+y
+> conversion and instead just go ahead and do it unconditionally.
+>
+> We do so where we can, adjusting surrounding logic as necessary to
+> integrate the new softleaf_t logic as far as seems reasonable at this
+> stage.
+>
+> We typedef swp_entry_t to softleaf_t for the time being until the
+> conversion can be complete, meaning everything remains compatible
+> regardless of which type is used. We will eventually remove swp_entry_t
+> when the conversion is complete.
+>
+> We introduce a new header file to keep things clear - leafops.h - this
+> imports swapops.h so can direct replace swapops imports without issue, an=
+d
+> we do so in all the files that require it.
+>
+> Additionally, add new leafops.h file to core mm maintainers entry.
 >
 > Signed-off-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
 > ---
->  mm/internal.h   |  7 +++----
->  mm/madvise.c    |  8 +++-----
->  mm/swap_state.c | 12 ++++++------
->  mm/swapfile.c   |  9 ++++-----
->  4 files changed, 16 insertions(+), 20 deletions(-)
->
-> diff --git a/mm/internal.h b/mm/internal.h
-> index 9465129367a4..f0c7461bb02c 100644
-> --- a/mm/internal.h
-> +++ b/mm/internal.h
-> @@ -15,7 +15,7 @@
->  #include <linux/pagewalk.h>
->  #include <linux/rmap.h>
->  #include <linux/swap.h>
-> -#include <linux/swapops.h>
-> +#include <linux/leafops.h>
->  #include <linux/swap_cgroup.h>
->  #include <linux/tracepoint-defs.h>
->
-> @@ -380,13 +380,12 @@ static inline int swap_pte_batch(pte_t *start_ptep,=
- int max_nr, pte_t pte)
->  {
->         pte_t expected_pte =3D pte_next_swp_offset(pte);
->         const pte_t *end_ptep =3D start_ptep + max_nr;
-> -       swp_entry_t entry =3D pte_to_swp_entry(pte);
-> +       const softleaf_t entry =3D softleaf_from_pte(pte);
->         pte_t *ptep =3D start_ptep + 1;
->         unsigned short cgroup_id;
->
->         VM_WARN_ON(max_nr < 1);
-> -       VM_WARN_ON(!is_swap_pte(pte));
-> -       VM_WARN_ON(non_swap_entry(entry));
-> +       VM_WARN_ON(!softleaf_is_swap(entry));
->
->         cgroup_id =3D lookup_swap_cgroup_id(entry);
->         while (ptep < end_ptep) {
-> diff --git a/mm/madvise.c b/mm/madvise.c
-> index 2d5ad3cb37bb..58d82495b6c6 100644
-> --- a/mm/madvise.c
-> +++ b/mm/madvise.c
-> @@ -195,7 +195,7 @@ static int swapin_walk_pmd_entry(pmd_t *pmd, unsigned=
- long start,
->
->         for (addr =3D start; addr < end; addr +=3D PAGE_SIZE) {
->                 pte_t pte;
-> -               swp_entry_t entry;
-> +               softleaf_t entry;
->                 struct folio *folio;
->
->                 if (!ptep++) {
-> @@ -205,10 +205,8 @@ static int swapin_walk_pmd_entry(pmd_t *pmd, unsigne=
-d long start,
->                 }
->
->                 pte =3D ptep_get(ptep);
-> -               if (!is_swap_pte(pte))
-> -                       continue;
-> -               entry =3D pte_to_swp_entry(pte);
-> -               if (unlikely(non_swap_entry(entry)))
-> +               entry =3D softleaf_from_pte(pte);
-> +               if (unlikely(!softleaf_is_swap(entry)))
->                         continue;
->
->                 pte_unmap_unlock(ptep, ptl);
-> diff --git a/mm/swap_state.c b/mm/swap_state.c
-> index d20d238109f9..8881a79f200c 100644
-> --- a/mm/swap_state.c
-> +++ b/mm/swap_state.c
-> @@ -12,7 +12,7 @@
->  #include <linux/kernel_stat.h>
->  #include <linux/mempolicy.h>
->  #include <linux/swap.h>
-> -#include <linux/swapops.h>
-> +#include <linux/leafops.h>
->  #include <linux/init.h>
->  #include <linux/pagemap.h>
->  #include <linux/pagevec.h>
-> @@ -732,7 +732,6 @@ static struct folio *swap_vma_readahead(swp_entry_t t=
-arg_entry, gfp_t gfp_mask,
->         pte_t *pte =3D NULL, pentry;
->         int win;
->         unsigned long start, end, addr;
-> -       swp_entry_t entry;
->         pgoff_t ilx;
->         bool page_allocated;
->
-> @@ -744,16 +743,17 @@ static struct folio *swap_vma_readahead(swp_entry_t=
- targ_entry, gfp_t gfp_mask,
->
->         blk_start_plug(&plug);
->         for (addr =3D start; addr < end; ilx++, addr +=3D PAGE_SIZE) {
-> +               softleaf_t entry;
-> +
->                 if (!pte++) {
->                         pte =3D pte_offset_map(vmf->pmd, addr);
->                         if (!pte)
->                                 break;
->                 }
->                 pentry =3D ptep_get_lockless(pte);
-> -               if (!is_swap_pte(pentry))
-> -                       continue;
-> -               entry =3D pte_to_swp_entry(pentry);
-> -               if (unlikely(non_swap_entry(entry)))
-> +               entry =3D softleaf_from_pte(pentry);
-> +
-> +               if (!softleaf_is_swap(entry))
+>  MAINTAINERS                   |   1 +
+>  fs/proc/task_mmu.c            |  26 +--
+>  fs/userfaultfd.c              |   6 +-
+>  include/linux/leafops.h       | 382 ++++++++++++++++++++++++++++++++++
+>  include/linux/mm_inline.h     |   6 +-
+>  include/linux/mm_types.h      |  25 +++
+>  include/linux/swapops.h       |  28 ---
+>  include/linux/userfaultfd_k.h |  51 +----
+>  mm/hmm.c                      |   2 +-
+>  mm/hugetlb.c                  |  37 ++--
+>  mm/madvise.c                  |  16 +-
+>  mm/memory.c                   |  41 ++--
+>  mm/mincore.c                  |   6 +-
+>  mm/mprotect.c                 |   6 +-
+>  mm/mremap.c                   |   4 +-
+>  mm/page_vma_mapped.c          |  11 +-
+>  mm/shmem.c                    |   7 +-
+>  mm/userfaultfd.c              |   6 +-
+>  18 files changed, 497 insertions(+), 164 deletions(-)
+>  create mode 100644 include/linux/leafops.h
 
 Hi Lorenzo,
 
-This part isn't right, is_swap_pte excludes present PTE and non PTE,
-but softleaf_from_pte returns a invalid swap entry from a non PTE.
+Thanks, overloading swap entry types for things like migration always
+looked confusing to me.
 
-This may lead to a kernel panic as the invalid swap value will be
-0x3ffffffffffff on x86_64 (pte_to_swp_entry(0)), the offset value will
-cause out of border access.
+There is a problem with this patch as I mentioned here:
+https://lore.kernel.org/linux-mm/CAMgjq7AP383YfU3L5ZxJ9U3x-vRPnEkEUtmnPdXD2=
+9HiNC8OrA@mail.gmail.com/
 
-We might need something like this on top of patch 2:
+>
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 2628431dcdfe..314910a70bbf 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -16257,6 +16257,7 @@ T:      git git://git.kernel.org/pub/scm/linux/ke=
+rnel/git/akpm/mm
+>  F:     include/linux/gfp.h
+>  F:     include/linux/gfp_types.h
+>  F:     include/linux/highmem.h
+> +F:     include/linux/leafops.h
+>  F:     include/linux/memory.h
+>  F:     include/linux/mm.h
+>  F:     include/linux/mm_*.h
+> diff --git a/fs/proc/task_mmu.c b/fs/proc/task_mmu.c
+> index fc35a0543f01..24d26b49d870 100644
+> --- a/fs/proc/task_mmu.c
+> +++ b/fs/proc/task_mmu.c
+> @@ -14,7 +14,7 @@
+>  #include <linux/rmap.h>
+>  #include <linux/swap.h>
+>  #include <linux/sched/mm.h>
+> -#include <linux/swapops.h>
+> +#include <linux/leafops.h>
+>  #include <linux/mmu_notifier.h>
+>  #include <linux/page_idle.h>
+>  #include <linux/shmem_fs.h>
+> @@ -1230,11 +1230,11 @@ static int smaps_hugetlb_range(pte_t *pte, unsign=
+ed long hmask,
+>         if (pte_present(ptent)) {
+>                 folio =3D page_folio(pte_page(ptent));
+>                 present =3D true;
+> -       } else if (is_swap_pte(ptent)) {
+> -               swp_entry_t swpent =3D pte_to_swp_entry(ptent);
+> +       } else {
+> +               const softleaf_t entry =3D softleaf_from_pte(ptent);
+>
+> -               if (is_pfn_swap_entry(swpent))
+> -                       folio =3D pfn_swap_entry_folio(swpent);
+> +               if (softleaf_has_pfn(entry))
+> +                       folio =3D softleaf_to_folio(entry);
+>         }
+>
+>         if (folio) {
+> @@ -1955,9 +1955,9 @@ static pagemap_entry_t pte_to_pagemap_entry(struct =
+pagemapread *pm,
+>                 flags |=3D PM_SWAP;
+>                 if (is_pfn_swap_entry(entry))
+>                         page =3D pfn_swap_entry_to_page(entry);
+> -               if (pte_marker_entry_uffd_wp(entry))
+> +               if (softleaf_is_uffd_wp_marker(entry))
+>                         flags |=3D PM_UFFD_WP;
+> -               if (is_guard_swp_entry(entry))
+> +               if (softleaf_is_guard_marker(entry))
+>                         flags |=3D  PM_GUARD_REGION;
+>         }
+>
+> @@ -2330,18 +2330,18 @@ static unsigned long pagemap_page_category(struct=
+ pagemap_scan_private *p,
+>                 if (pte_soft_dirty(pte))
+>                         categories |=3D PAGE_IS_SOFT_DIRTY;
+>         } else if (is_swap_pte(pte)) {
+> -               swp_entry_t swp;
+> +               softleaf_t entry;
+>
+>                 categories |=3D PAGE_IS_SWAPPED;
+>                 if (!pte_swp_uffd_wp_any(pte))
+>                         categories |=3D PAGE_IS_WRITTEN;
+>
+> -               swp =3D pte_to_swp_entry(pte);
+> -               if (is_guard_swp_entry(swp))
+> +               entry =3D softleaf_from_pte(pte);
+> +               if (softleaf_is_guard_marker(entry))
+>                         categories |=3D PAGE_IS_GUARD;
+>                 else if ((p->masks_of_interest & PAGE_IS_FILE) &&
+> -                        is_pfn_swap_entry(swp) &&
+> -                        !folio_test_anon(pfn_swap_entry_folio(swp)))
+> +                        softleaf_has_pfn(entry) &&
+> +                        !folio_test_anon(softleaf_to_folio(entry)))
+>                         categories |=3D PAGE_IS_FILE;
+>
+>                 if (pte_swp_soft_dirty(pte))
+> @@ -2466,7 +2466,7 @@ static void make_uffd_wp_huge_pte(struct vm_area_st=
+ruct *vma,
+>  {
+>         unsigned long psize;
+>
+> -       if (is_hugetlb_entry_hwpoisoned(ptent) || is_pte_marker(ptent))
+> +       if (is_hugetlb_entry_hwpoisoned(ptent) || pte_is_marker(ptent))
+>                 return;
+>
+>         psize =3D huge_page_size(hstate_vma(vma));
+> diff --git a/fs/userfaultfd.c b/fs/userfaultfd.c
+> index 04c66b5001d5..e33e7df36927 100644
+> --- a/fs/userfaultfd.c
+> +++ b/fs/userfaultfd.c
+> @@ -29,7 +29,7 @@
+>  #include <linux/ioctl.h>
+>  #include <linux/security.h>
+>  #include <linux/hugetlb.h>
+> -#include <linux/swapops.h>
+> +#include <linux/leafops.h>
+>  #include <linux/miscdevice.h>
+>  #include <linux/uio.h>
+>
+> @@ -251,7 +251,7 @@ static inline bool userfaultfd_huge_must_wait(struct =
+userfaultfd_ctx *ctx,
+>         if (huge_pte_none(pte))
+>                 return true;
+>         /* UFFD PTE markers require handling. */
+> -       if (is_uffd_pte_marker(pte))
+> +       if (pte_is_uffd_marker(pte))
+>                 return true;
+>         /* If VMA has UFFD WP faults enabled and WP fault, wait for handl=
+er. */
+>         if (!huge_pte_write(pte) && (reason & VM_UFFD_WP))
+> @@ -330,7 +330,7 @@ static inline bool userfaultfd_must_wait(struct userf=
+aultfd_ctx *ctx,
+>         if (pte_none(ptent))
+>                 goto out;
+>         /* UFFD PTE markers require handling. */
+> -       if (is_uffd_pte_marker(ptent))
+> +       if (pte_is_uffd_marker(ptent))
+>                 goto out;
+>         /* If VMA has UFFD WP faults enabled and WP fault, wait for handl=
+er. */
+>         if (!pte_write(ptent) && (reason & VM_UFFD_WP))
+> diff --git a/include/linux/leafops.h b/include/linux/leafops.h
+> new file mode 100644
+> index 000000000000..1376589d94b0
+> --- /dev/null
+> +++ b/include/linux/leafops.h
+> @@ -0,0 +1,382 @@
+> +/* SPDX-License-Identifier: GPL-2.0 */
+> +/*
+> + * Describes operations that can be performed on software-defined page t=
+able
+> + * leaf entries. These are abstracted from the hardware page table entri=
+es
+> + * themselves by the softleaf_t type, see mm_types.h.
+> + */
+> +#ifndef _LINUX_LEAFOPS_H
+> +#define _LINUX_LEAFOPS_H
+> +
+> +#include <linux/mm_types.h>
+> +#include <linux/swapops.h>
+> +#include <linux/swap.h>
+> +
+> +#ifdef CONFIG_MMU
+> +
+> +/* Temporary until swp_entry_t eliminated. */
+> +#define LEAF_TYPE_SHIFT SWP_TYPE_SHIFT
+> +
+> +enum softleaf_type {
+> +       /* Fundamental types. */
+> +       SOFTLEAF_NONE,
+> +       SOFTLEAF_SWAP,
+> +       /* Migration types. */
+> +       SOFTLEAF_MIGRATION_READ,
+> +       SOFTLEAF_MIGRATION_READ_EXCLUSIVE,
+> +       SOFTLEAF_MIGRATION_WRITE,
+> +       /* Device types. */
+> +       SOFTLEAF_DEVICE_PRIVATE_READ,
+> +       SOFTLEAF_DEVICE_PRIVATE_WRITE,
+> +       SOFTLEAF_DEVICE_EXCLUSIVE,
+> +       /* H/W posion types. */
+> +       SOFTLEAF_HWPOISON,
+> +       /* Marker types. */
+> +       SOFTLEAF_MARKER,
+> +};
+> +
+> +/**
+> + * softleaf_mk_none() - Create an empty ('none') leaf entry.
+> + * Returns: empty leaf entry.
+> + */
+> +static inline softleaf_t softleaf_mk_none(void)
+> +{
+> +       return ((softleaf_t) { 0 });
+> +}
+> +
+> +/**
+> + * softleaf_from_pte() - Obtain a leaf entry from a PTE entry.
+> + * @pte: PTE entry.
+> + *
+> + * If @pte is present (therefore not a leaf entry) the function returns =
+an empty
+> + * leaf entry. Otherwise, it returns a leaf entry.
+> + *
+> + * Returns: Leaf entry.
+> + */
+> +static inline softleaf_t softleaf_from_pte(pte_t pte)
+> +{
+> +       if (pte_present(pte))
+> +               return softleaf_mk_none();
+> +
+> +       /* Temporary until swp_entry_t eliminated. */
+> +       return pte_to_swp_entry(pte);
+> +}
+> +
+> +/**
+> + * softleaf_is_none() - Is the leaf entry empty?
+> + * @entry: Leaf entry.
+> + *
+> + * Empty entries are typically the result of a 'none' page table leaf en=
+try
+> + * being converted to a leaf entry.
+> + *
+> + * Returns: true if the entry is empty, false otherwise.
+> + */
+> +static inline bool softleaf_is_none(softleaf_t entry)
+> +{
+> +       return entry.val =3D=3D 0;
+> +}
+> +
+> +/**
+> + * softleaf_type() - Identify the type of leaf entry.
+> + * @enntry: Leaf entry.
+> + *
+> + * Returns: the leaf entry type associated with @entry.
+> + */
+> +static inline enum softleaf_type softleaf_type(softleaf_t entry)
+> +{
+> +       unsigned int type_num;
+> +
+> +       if (softleaf_is_none(entry))
+> +               return SOFTLEAF_NONE;
+> +
+> +       type_num =3D entry.val >> LEAF_TYPE_SHIFT;
+> +
+> +       if (type_num < MAX_SWAPFILES)
+> +               return SOFTLEAF_SWAP;
+> +
+> +       switch (type_num) {
+> +#ifdef CONFIG_MIGRATION
+> +       case SWP_MIGRATION_READ:
+> +               return SOFTLEAF_MIGRATION_READ;
+> +       case SWP_MIGRATION_READ_EXCLUSIVE:
+> +               return SOFTLEAF_MIGRATION_READ_EXCLUSIVE;
+> +       case SWP_MIGRATION_WRITE:
+> +               return SOFTLEAF_MIGRATION_WRITE;
+> +#endif
+> +#ifdef CONFIG_DEVICE_PRIVATE
+> +       case SWP_DEVICE_WRITE:
+> +               return SOFTLEAF_DEVICE_PRIVATE_WRITE;
+> +       case SWP_DEVICE_READ:
+> +               return SOFTLEAF_DEVICE_PRIVATE_READ;
+> +       case SWP_DEVICE_EXCLUSIVE:
+> +               return SOFTLEAF_DEVICE_EXCLUSIVE;
+> +#endif
+> +#ifdef CONFIG_MEMORY_FAILURE
+> +       case SWP_HWPOISON:
+> +               return SOFTLEAF_HWPOISON;
+> +#endif
+> +       case SWP_PTE_MARKER:
+> +               return SOFTLEAF_MARKER;
+> +       }
+> +
+> +       /* Unknown entry type. */
+> +       VM_WARN_ON_ONCE(1);
+> +       return SOFTLEAF_NONE;
+> +}
+> +
+> +/**
+> + * softleaf_is_swap() - Is this leaf entry a swap entry?
+> + * @entry: Leaf entry.
+> + *
+> + * Returns: true if the leaf entry is a swap entry, otherwise false.
+> + */
+> +static inline bool softleaf_is_swap(softleaf_t entry)
+> +{
+> +       return softleaf_type(entry) =3D=3D SOFTLEAF_SWAP;
+> +}
+> +
+> +/**
+> + * softleaf_is_swap() - Is this leaf entry a migration entry?
+> + * @entry: Leaf entry.
+> + *
+> + * Returns: true if the leaf entry is a migration entry, otherwise false=
+.
+> + */
+> +static inline bool softleaf_is_migration(softleaf_t entry)
 
-diff --git a/include/linux/leafops.h b/include/linux/leafops.h
-index 1376589d94b0..49de62f96835 100644
---- a/include/linux/leafops.h
-+++ b/include/linux/leafops.h
-@@ -54,7 +54,7 @@ static inline softleaf_t softleaf_mk_none(void)
-  */
- static inline softleaf_t softleaf_from_pte(pte_t pte)
- {
--       if (pte_present(pte))
-+       if (pte_present(pte) || pte_none(pte))
-                return softleaf_mk_none();
+And a nitpick here, the kerneldoc above doesn't match the function name her=
+e.
 
-        /* Temporary until swp_entry_t eliminated. */
+And now swap functions (swap_cache_*) that expects a swp_entry_t is
+getting a softleaf_t instead, they are the same thing right now, so
+that's fine. Will we need something like a softleaf_to_swap?
