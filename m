@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FE9E33F388;
-	Wed, 12 Nov 2025 15:42:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B89C33ADB3;
+	Wed, 12 Nov 2025 15:42:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762962133; cv=none; b=AIHisnDX8eQMOcfo1xiH3/3FuUG6p4v0RLAniEuA165N/dmdqc167PjqOkxQhSWeYMh8xM93AncBY2yEowj1uebomxC36imKh4WUTtIANvzkrTEdXTdFTiZDG3sLItJvZSkdt1wjgxf1BAdUQ8MUwQu2Kq32M+m/yxmUZ2EkQVg=
+	t=1762962140; cv=none; b=GT4Ho0olAC0SPFAD0MggYghytWZQp6q9B8piUyax1vmYIQtWHyPAjuJtoQ1+AtKU/i/xmhB/FBB6yycs9jBR9eo+8XoeRKs78vKzkz3V5FdVUifDDouuYvFo/F1DmQQMDrjxogQN5Gv8hpa38rq22iYYgqTTPPWt5ve+mHsbYuc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762962133; c=relaxed/simple;
-	bh=Ydpo3xsumi/0AU0ywoSi8MHefmYKBp2O+zycDWbAlqg=;
+	s=arc-20240116; t=1762962140; c=relaxed/simple;
+	bh=1rHJgGszkdfaLNjPQTgFPJf9bjvlypOeFoo13vrtMto=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LFkZLUunT4rgbt5JbRQgpxjZdjFPuF/Fu/1yFtZTYpBV0R61OOKDJ/FUBcfIfzhS6Zbi7lt77zjlWfD5Xu19HVBvm10prSxoPYnB7uHb1NKXN/r3NwgKShFQdZ+hoZ67HMUB7jbbklQ7DQvsoeFHxhPWOs8X/uZ7Mkso2LZyvQs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Rg+Iy5FU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Jlj2XrdsojU7OhGYYHZomEBSW1mcy5Abh9oAwCWy+LRudHmEZB06aXd0MarMNlrPeIUrXeB15ZgdsTH1LzkEsAIIPp9AocV4CI6fDNcI58IzLAjGbm7hfbcxDos2sQlEW0UphM8Er+8cfn9kYF7eY6fqzGhdvCV4xkNhnGgKCB0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=q476rGfT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Rg+Iy5FU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C70B9C113D0;
-	Wed, 12 Nov 2025 15:42:07 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="q476rGfT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 977D6C4CEF5;
+	Wed, 12 Nov 2025 15:42:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1762962133;
-	bh=Ydpo3xsumi/0AU0ywoSi8MHefmYKBp2O+zycDWbAlqg=;
+	s=k20201202; t=1762962140;
+	bh=1rHJgGszkdfaLNjPQTgFPJf9bjvlypOeFoo13vrtMto=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Rg+Iy5FUuR0ooXsRWmZ7hGatyVWmvp72qpBrqVWMcmB/BuD7VDSM+iqFRVTPiczNx
-	 5U2G+YmR+esLUWkDZF0qWemYZXgEnh5ngPcocxe1UnXxc/yK+9gCaQkKbv8KA6KR0c
-	 mq3RaDiWMH2WnEcKJxhqk3qFLKWbLn++cjQK7fF1FWAxUqjPC/pZrbIiouTc+2C6cD
-	 +6X0a1lHaESDqKqwA6n0jxZ3qb0+SDXEla6TyFJthCovxImSHbJ6+l5gZ6thQH3hZi
-	 hYZ0FWZrB3AgEuhyh8NJDbqStNejmwBULgg8U10Np7m5eR505QXSMQ/iRnj7mdrPUM
-	 JqN0EnmuyfyXQ==
+	b=q476rGfTrYl4tz8y5mq9CS1pT/6YlSCHU1cNxcS1yQ8qnfxTacdAaWz1jFQQnceTr
+	 DE6zFlkuS6mCsTM0RV0tOC9XXJ23ZVUdZA3ghKdZg2l1qT2gxRJbjIEILdLoh3AEL1
+	 2sxKFoTiOAshj+O8U2L4k9I5tRmY/us7DyiDq2OdmzqQZbtILTfbgMTjKDw2hUBPuf
+	 OK61rWD5sGnqkImo1IwtrkZRX5ekoiizatRueQLw0LL9bR2v/73lDx2EbZDzJ8czTq
+	 yknaZdVaOadcM0nw03uf4QBB/7xIKBAljlfyuQmFHdBl9WMRG3ziJux/jJd9IWeTit
+	 JdpXoNuP94qEQ==
 From: SeongJae Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SeongJae Park <sj@kernel.org>,
-	Shuah Khan <shuah@kernel.org>,
 	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
-	linux-kselftest@vger.kernel.org,
-	linux-mm@kvack.org
-Subject: [PATCH 2/9] mm/damon: rename damos->filters to damos->core_filters
-Date: Wed, 12 Nov 2025 07:41:05 -0800
-Message-ID: <20251112154114.66053-3-sj@kernel.org>
+	linux-mm@kvack.org,
+	Hugh Dickins <hughd@google.com>
+Subject: [PATCH 3/9] mm/damon/vaddr: cleanup using pmd_trans_huge_lock()
+Date: Wed, 12 Nov 2025 07:41:06 -0800
+Message-ID: <20251112154114.66053-4-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20251112154114.66053-1-sj@kernel.org>
 References: <20251112154114.66053-1-sj@kernel.org>
@@ -48,152 +47,107 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-DAMOS filters that are handled by the ops layer are linked to
-damos->ops_filters.  Owing to the ops_ prefix on the name, it is easy to
-understand it is for ops layer handled filters.  The other types of
-filters, which are handled by the core layer, are linked to
-damos->filters.  Because of the name, it is easy to confuse the list is
-there for not only core layer handled ones but all filters.  Avoid such
-confusions by renaming the field to core_filters.
+Three pmd walk functions in vaddr.c are using pmd_trans_huge() and
+pmd_lock() to handle THPs.  Simplify the code by replacing the two
+function calls with a single pmd_trans_huge_lock() call.
 
+Note that this cleanup is not only reducing the lines of code, but also
+simplifies code execution flows for migration entries case, as kindly
+explained [1] by Hugh, who suggested this cleanup.
+
+[1] https://lore.kernel.org/296c2b3f-6748-158f-b85d-2952165c0588@google.com
+
+Suggested-by: Hugh Dickins <hughd@google.com>
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- include/linux/damon.h                                  | 10 +++++-----
- mm/damon/core.c                                        |  6 +++---
- mm/damon/tests/core-kunit.h                            |  4 ++--
- .../testing/selftests/damon/drgn_dump_damon_status.py  |  8 ++++----
- tools/testing/selftests/damon/sysfs.py                 |  2 +-
- 5 files changed, 15 insertions(+), 15 deletions(-)
+ mm/damon/vaddr.c | 48 ++++++++++++------------------------------------
+ 1 file changed, 12 insertions(+), 36 deletions(-)
 
-diff --git a/include/linux/damon.h b/include/linux/damon.h
-index 6e3db165fe60..3813373a9200 100644
---- a/include/linux/damon.h
-+++ b/include/linux/damon.h
-@@ -492,7 +492,7 @@ struct damos_migrate_dests {
-  * @wmarks:		Watermarks for automated (in)activation of this scheme.
-  * @migrate_dests:	Destination nodes if @action is "migrate_{hot,cold}".
-  * @target_nid:		Destination node if @action is "migrate_{hot,cold}".
-- * @filters:		Additional set of &struct damos_filter for &action.
-+ * @core_filters:	Additional set of &struct damos_filter for &action.
-  * @ops_filters:	ops layer handling &struct damos_filter objects list.
-  * @last_applied:	Last @action applied ops-managing entity.
-  * @stat:		Statistics of this scheme.
-@@ -518,7 +518,7 @@ struct damos_migrate_dests {
-  *
-  * Before applying the &action to a memory region, &struct damon_operations
-  * implementation could check pages of the region and skip &action to respect
-- * &filters
-+ * &core_filters
-  *
-  * The minimum entity that @action can be applied depends on the underlying
-  * &struct damon_operations.  Since it may not be aligned with the core layer
-@@ -562,7 +562,7 @@ struct damos {
- 			struct damos_migrate_dests migrate_dests;
- 		};
- 	};
--	struct list_head filters;
-+	struct list_head core_filters;
- 	struct list_head ops_filters;
- 	void *last_applied;
- 	struct damos_stat stat;
-@@ -872,10 +872,10 @@ static inline unsigned long damon_sz_region(struct damon_region *r)
- 	list_for_each_entry_safe(goal, next, &(quota)->goals, list)
- 
- #define damos_for_each_core_filter(f, scheme) \
--	list_for_each_entry(f, &(scheme)->filters, list)
-+	list_for_each_entry(f, &(scheme)->core_filters, list)
- 
- #define damos_for_each_core_filter_safe(f, next, scheme) \
--	list_for_each_entry_safe(f, next, &(scheme)->filters, list)
-+	list_for_each_entry_safe(f, next, &(scheme)->core_filters, list)
- 
- #define damos_for_each_ops_filter(f, scheme) \
- 	list_for_each_entry(f, &(scheme)->ops_filters, list)
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index d4cb11ced13f..aedb315b075a 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -306,7 +306,7 @@ void damos_add_filter(struct damos *s, struct damos_filter *f)
- 	if (damos_filter_for_ops(f->type))
- 		list_add_tail(&f->list, &s->ops_filters);
- 	else
--		list_add_tail(&f->list, &s->filters);
-+		list_add_tail(&f->list, &s->core_filters);
- }
- 
- static void damos_del_filter(struct damos_filter *f)
-@@ -397,7 +397,7 @@ struct damos *damon_new_scheme(struct damos_access_pattern *pattern,
- 	 */
- 	scheme->next_apply_sis = 0;
- 	scheme->walk_completed = false;
--	INIT_LIST_HEAD(&scheme->filters);
-+	INIT_LIST_HEAD(&scheme->core_filters);
- 	INIT_LIST_HEAD(&scheme->ops_filters);
- 	scheme->stat = (struct damos_stat){};
- 	INIT_LIST_HEAD(&scheme->list);
-@@ -995,7 +995,7 @@ static void damos_set_filters_default_reject(struct damos *s)
- 		s->core_filters_default_reject = false;
- 	else
- 		s->core_filters_default_reject =
--			damos_filters_default_reject(&s->filters);
-+			damos_filters_default_reject(&s->core_filters);
- 	s->ops_filters_default_reject =
- 		damos_filters_default_reject(&s->ops_filters);
- }
-diff --git a/mm/damon/tests/core-kunit.h b/mm/damon/tests/core-kunit.h
-index 0d2d8cda8631..4380d0312d24 100644
---- a/mm/damon/tests/core-kunit.h
-+++ b/mm/damon/tests/core-kunit.h
-@@ -876,7 +876,7 @@ static void damos_test_commit_filter(struct kunit *test)
- static void damos_test_help_initailize_scheme(struct damos *scheme)
+diff --git a/mm/damon/vaddr.c b/mm/damon/vaddr.c
+index 7e834467b2d8..0ad1ce120aa1 100644
+--- a/mm/damon/vaddr.c
++++ b/mm/damon/vaddr.c
+@@ -307,24 +307,14 @@ static int damon_mkold_pmd_entry(pmd_t *pmd, unsigned long addr,
+ 		unsigned long next, struct mm_walk *walk)
  {
- 	INIT_LIST_HEAD(&scheme->quota.goals);
--	INIT_LIST_HEAD(&scheme->filters);
-+	INIT_LIST_HEAD(&scheme->core_filters);
- 	INIT_LIST_HEAD(&scheme->ops_filters);
- }
+ 	pte_t *pte;
+-	pmd_t pmde;
+ 	spinlock_t *ptl;
  
-@@ -1140,7 +1140,7 @@ static void damon_test_set_filters_default_reject(struct kunit *test)
- 	struct damos scheme;
- 	struct damos_filter *target_filter, *anon_filter;
+-	if (pmd_trans_huge(pmdp_get(pmd))) {
+-		ptl = pmd_lock(walk->mm, pmd);
+-		pmde = pmdp_get(pmd);
+-
+-		if (!pmd_present(pmde)) {
+-			spin_unlock(ptl);
+-			return 0;
+-		}
+-
+-		if (pmd_trans_huge(pmde)) {
++	ptl = pmd_trans_huge_lock(pmd, walk->vma);
++	if (ptl) {
++		if (pmd_present(pmdp_get(pmd)))
+ 			damon_pmdp_mkold(pmd, walk->vma, addr);
+-			spin_unlock(ptl);
+-			return 0;
+-		}
+ 		spin_unlock(ptl);
++		return 0;
+ 	}
  
--	INIT_LIST_HEAD(&scheme.filters);
-+	INIT_LIST_HEAD(&scheme.core_filters);
- 	INIT_LIST_HEAD(&scheme.ops_filters);
+ 	pte = pte_offset_map_lock(walk->mm, pmd, addr, &ptl);
+@@ -446,21 +436,12 @@ static int damon_young_pmd_entry(pmd_t *pmd, unsigned long addr,
+ 	struct damon_young_walk_private *priv = walk->private;
  
- 	damos_set_filters_default_reject(&scheme);
-diff --git a/tools/testing/selftests/damon/drgn_dump_damon_status.py b/tools/testing/selftests/damon/drgn_dump_damon_status.py
-index cb4fdbe68acb..5374d18d1fa8 100755
---- a/tools/testing/selftests/damon/drgn_dump_damon_status.py
-+++ b/tools/testing/selftests/damon/drgn_dump_damon_status.py
-@@ -175,11 +175,11 @@ def scheme_to_dict(scheme):
-         ['target_nid', int],
-         ['migrate_dests', damos_migrate_dests_to_dict],
-         ])
--    filters = []
-+    core_filters = []
-     for f in list_for_each_entry(
--            'struct damos_filter', scheme.filters.address_of_(), 'list'):
--        filters.append(damos_filter_to_dict(f))
--    dict_['filters'] = filters
-+            'struct damos_filter', scheme.core_filters.address_of_(), 'list'):
-+        core_filters.append(damos_filter_to_dict(f))
-+    dict_['core_filters'] = core_filters
-     ops_filters = []
-     for f in list_for_each_entry(
-             'struct damos_filter', scheme.ops_filters.address_of_(), 'list'):
-diff --git a/tools/testing/selftests/damon/sysfs.py b/tools/testing/selftests/damon/sysfs.py
-index b34aea0a6775..b4c5ef5c4d69 100755
---- a/tools/testing/selftests/damon/sysfs.py
-+++ b/tools/testing/selftests/damon/sysfs.py
-@@ -132,7 +132,7 @@ def assert_scheme_committed(scheme, dump):
-     assert_watermarks_committed(scheme.watermarks, dump['wmarks'])
-     # TODO: test filters directory
-     for idx, f in enumerate(scheme.core_filters.filters):
--        assert_filter_committed(f, dump['filters'][idx])
-+        assert_filter_committed(f, dump['core_filters'][idx])
-     for idx, f in enumerate(scheme.ops_filters.filters):
-         assert_filter_committed(f, dump['ops_filters'][idx])
+ #ifdef CONFIG_TRANSPARENT_HUGEPAGE
+-	if (pmd_trans_huge(pmdp_get(pmd))) {
+-		pmd_t pmde;
+-
+-		ptl = pmd_lock(walk->mm, pmd);
+-		pmde = pmdp_get(pmd);
++	ptl = pmd_trans_huge_lock(pmd, walk->vma);
++	if (ptl) {
++		pmd_t pmde = pmdp_get(pmd);
+ 
+-		if (!pmd_present(pmde)) {
+-			spin_unlock(ptl);
+-			return 0;
+-		}
+-
+-		if (!pmd_trans_huge(pmde)) {
+-			spin_unlock(ptl);
+-			goto regular_page;
+-		}
++		if (!pmd_present(pmde))
++			goto huge_out;
+ 		folio = damon_get_folio(pmd_pfn(pmde));
+ 		if (!folio)
+ 			goto huge_out;
+@@ -474,8 +455,6 @@ static int damon_young_pmd_entry(pmd_t *pmd, unsigned long addr,
+ 		spin_unlock(ptl);
+ 		return 0;
+ 	}
+-
+-regular_page:
+ #endif	/* CONFIG_TRANSPARENT_HUGEPAGE */
+ 
+ 	pte = pte_offset_map_lock(walk->mm, pmd, addr, &ptl);
+@@ -910,13 +889,10 @@ static int damos_va_stat_pmd_entry(pmd_t *pmd, unsigned long addr,
+ 	int nr;
+ 
+ #ifdef CONFIG_TRANSPARENT_HUGEPAGE
+-	if (pmd_trans_huge(*pmd)) {
+-		pmd_t pmde;
++	ptl = pmd_trans_huge_lock(pmd, vma);
++	if (ptl) {
++		pmd_t pmde = pmdp_get(pmd);
+ 
+-		ptl = pmd_trans_huge_lock(pmd, vma);
+-		if (!ptl)
+-			return 0;
+-		pmde = pmdp_get(pmd);
+ 		if (!pmd_present(pmde))
+ 			goto huge_unlock;
  
 -- 
 2.47.3
