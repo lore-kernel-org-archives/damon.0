@@ -1,356 +1,249 @@
-Received: from mx0b-00069f02.pphosted.com (mx0b-00069f02.pphosted.com [205.220.177.32])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 292E82F9DB5
-	for <damon@lists.linux.dev>; Thu, 13 Nov 2025 15:33:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=205.220.177.32
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763047999; cv=fail; b=Ys8ZtNNcou0iZVh+Gy9I9k334bqOXdtOrDuuRefgpkLFBkEfnXyBtZIk/AT3hm37TaImNSIhZv0wVcqAYeeLiJXy8HGIKVqmCGf2spQSE6ZvJoRjvrqANXI+skDPASNG2yxWxwLKLrWzFFUm3lz3SRtt/8K2aBDo4yDaQOY2WaE=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763047999; c=relaxed/simple;
-	bh=w+ivmnX8IAfpfPlduXVHEAgfyDjpXgkUagiFPbIThRA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=hiw7SAETxX16CyCTr1Lf4IlLDFhA0NazyibsNKdnZrhnRm9WzkpO34f1FU5QZerQWWcf92ztHLY4JU0dNda7NViBpKafb7b/xu4CA93g/JjIXD2acfa+QiEEdXpZkt23Bjo13MRgLb9eQKQ+eUg6+YEPLvTDU4sWfo/QTL6nje4=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oracle.com; spf=pass smtp.mailfrom=oracle.com; dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b=TYCzqV0Y; dkim=pass (1024-bit key) header.d=oracle.onmicrosoft.com header.i=@oracle.onmicrosoft.com header.b=y9aYqBpR; arc=fail smtp.client-ip=205.220.177.32
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oracle.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oracle.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 238C1261B91
+	for <damon@lists.linux.dev>; Fri, 14 Nov 2025 01:43:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1763084581; cv=none; b=ZYYl9+nUE0mZRLOptW77/CD5Hp8yoS83xe+jg7b3O6V9bC5EQfcC/+x5FwXE+pzRJEZ7oRLj/tSQMNWnrq7APpd0kdMNSgOd42gkBIYudOAKgO0w9d1tHzwTDu5+0AalZrvZwR1IGTqeLQlZ/DLfO/fQzZZLh3w7Ve27cKjCG/U=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1763084581; c=relaxed/simple;
+	bh=aRE+wMnR2pS1uJvM8oQeGCIiCMvzPKaWlWT5NwcMf4s=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=EsFhRZt9hZR0iy1k0p8SZ9qSB6O3bivUnL4HygJLtK9u0kcu60vc3DCSkRj0yKxCQjs80hY6Zs4HrCWlCsEgcdG9yQn8GhA+Y+hNkuqwqrSvR/FV9suJwg/XkPfNiz3nBDbF5wp0uvDRK3wvbxaXh1+Gl0FpLqjuOAHFNGCAsuE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IS+Zbf2B; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b="TYCzqV0Y";
-	dkim=pass (1024-bit key) header.d=oracle.onmicrosoft.com header.i=@oracle.onmicrosoft.com header.b="y9aYqBpR"
-Received: from pps.filterd (m0246630.ppops.net [127.0.0.1])
-	by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5ADEA6Jq028865;
-	Thu, 13 Nov 2025 15:33:06 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
-	:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=corp-2025-04-25; bh=ab6Uc8xj5uVAvD0uUt
-	6AKk1KfouZY4mRIdRX43TD3lg=; b=TYCzqV0YaFZBHUY10N1Zict+EdfwVFa6lY
-	8ji05l0kWqW4soMBl6UGqcD3Yfddc68e5abp4/wIc4D3l5fkRm6WyDWHP8pytdmt
-	2ZUqLWFgPPB/gHd4BG5LLXENHrlIS7HKhd8Bv0PlyXMmB18+IR0zTzv/otkN7Wki
-	WIOSuZ8otN+V5UXsYfM6r033nVQNu0i1QQGwsM/PkbxJUF340/g+jSKwbB/JI65h
-	mRu+05dHLWTiarQKsJrhcZCCfgTZ0ABe7WOzIdL44eR1BoYPqBa/iOu5MmYXuKE8
-	fx21LF4kQGzEYDN5EIx/Ers/nNRIyXiNBZBvvFwoCeXmpC4LQKew==
-Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (iadpaimrmta02.appoci.oracle.com [147.154.18.20])
-	by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4acxpnj55f-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Thu, 13 Nov 2025 15:33:05 +0000 (GMT)
-Received: from pps.filterd (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
-	by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2) with ESMTP id 5ADDwOh0027744;
-	Thu, 13 Nov 2025 15:33:05 GMT
-Received: from ch5pr02cu005.outbound.protection.outlook.com (mail-northcentralusazon11012054.outbound.protection.outlook.com [40.107.200.54])
-	by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id 4a9vagb6pt-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Thu, 13 Nov 2025 15:33:05 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=mbNyoWSS5loHlGaLx+cSgsduFEjBcoWJu5NMK5XMWAQXaJ0EhhHu9o2ZKU1aYfKyBKNviIDGMOlCFoEHU1o0I14DwnjdBKv861toiOt+IlGVeEHAATsn4o5i4VK7BWZf3unSFvCToK+aHONWDz5xT6NqXoKyttcfZx8uj4A1WY7Dd4zYcFCY81fuDAFQN/CznFw7sQQSNR9L23KHDLJpnvmZso6QmSI8k/sa2uyYOaQ5BlIxBTMFd2yIvcFriER9xmJbPVhJG2Zly5C9ew5EVgndUBMVB0+YkUS/QzhA3iweN1k4VD8NlgkVe0YisCDc++8Rayjv2oUtCK0lT2h7wA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=ab6Uc8xj5uVAvD0uUt6AKk1KfouZY4mRIdRX43TD3lg=;
- b=ucs7MoSRBX4MDHLQ2cClJzJQ2HYIYJMICAFPUrIkVf7JpoKAwxfPaSoKyeS1JgurvDza1KbWTM2pkhaxraVNbrxupS998cCBNNBicJmbdDsrDDqNj0+wizO8/w6mKmTVNoSRt8e4AT6Sds7Mld2ZLxYcAc/eKMqsqHeXLotbIn6aSKMdpT0POnhqJ4ZwVf25SBUpBBYcOhj3Dh1FatW2zN9AeVWW8tZSvqzjDzoHWAUjheN7utftAIVacwNmwf92LbVIL7yrs0NhT5i0tSx0QyBtlGc22sXflJ0x8MaKd74gfPLoLI3zj/A5VYInNEoccBVbfls+Xpv1AB7Vdm0KZA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
- dkim=pass header.d=oracle.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=ab6Uc8xj5uVAvD0uUt6AKk1KfouZY4mRIdRX43TD3lg=;
- b=y9aYqBpRagMXJW7D0jr01/B3t9ntNo4yzrsEvgCVPeyoEG9IEPMuzNaKpr0WEhnMscoD9dSSnvJqNcPopfd/2CArkn94KCKynuR2Vf+7XAVyeUkbAMQmrbshKj30FRcRJe7byzUldxAoDYSWOxK1g4VK9FUNaaZ7gv/qf+w+qQU=
-Received: from DM4PR10MB8218.namprd10.prod.outlook.com (2603:10b6:8:1cc::16)
- by DS0PR10MB7980.namprd10.prod.outlook.com (2603:10b6:8:1b9::13) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9320.16; Thu, 13 Nov
- 2025 15:32:58 +0000
-Received: from DM4PR10MB8218.namprd10.prod.outlook.com
- ([fe80::2650:55cf:2816:5f2]) by DM4PR10MB8218.namprd10.prod.outlook.com
- ([fe80::2650:55cf:2816:5f2%7]) with mapi id 15.20.9320.013; Thu, 13 Nov 2025
- 15:32:58 +0000
-Date: Thu, 13 Nov 2025 15:32:55 +0000
-From: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-To: Andrew Morton <akpm@linux-foundation.org>
-Cc: Christian Borntraeger <borntraeger@linux.ibm.com>,
-        Janosch Frank <frankja@linux.ibm.com>,
-        Claudio Imbrenda <imbrenda@linux.ibm.com>,
-        David Hildenbrand <david@redhat.com>,
-        Alexander Gordeev <agordeev@linux.ibm.com>,
-        Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
-        Heiko Carstens <hca@linux.ibm.com>, Vasily Gorbik <gor@linux.ibm.com>,
-        Sven Schnelle <svens@linux.ibm.com>, Peter Xu <peterx@redhat.com>,
-        Alexander Viro <viro@zeniv.linux.org.uk>,
-        Christian Brauner <brauner@kernel.org>, Jan Kara <jack@suse.cz>,
-        Arnd Bergmann <arnd@arndb.de>, Zi Yan <ziy@nvidia.com>,
-        Baolin Wang <baolin.wang@linux.alibaba.com>,
-        "Liam R . Howlett" <Liam.Howlett@oracle.com>,
-        Nico Pache <npache@redhat.com>, Ryan Roberts <ryan.roberts@arm.com>,
-        Dev Jain <dev.jain@arm.com>, Barry Song <baohua@kernel.org>,
-        Lance Yang <lance.yang@linux.dev>, Muchun Song <muchun.song@linux.dev>,
-        Oscar Salvador <osalvador@suse.de>, Vlastimil Babka <vbabka@suse.cz>,
-        Mike Rapoport <rppt@kernel.org>,
-        Suren Baghdasaryan <surenb@google.com>, Michal Hocko <mhocko@suse.com>,
-        Matthew Brost <matthew.brost@intel.com>,
-        Joshua Hahn <joshua.hahnjy@gmail.com>, Rakie Kim <rakie.kim@sk.com>,
-        Byungchul Park <byungchul@sk.com>, Gregory Price <gourry@gourry.net>,
-        Ying Huang <ying.huang@linux.alibaba.com>,
-        Alistair Popple <apopple@nvidia.com>,
-        Axel Rasmussen <axelrasmussen@google.com>,
-        Yuanchu Xie <yuanchu@google.com>, Wei Xu <weixugc@google.com>,
-        Kemeng Shi <shikemeng@huaweicloud.com>,
-        Kairui Song <kasong@tencent.com>, Nhat Pham <nphamcs@gmail.com>,
-        Baoquan He <bhe@redhat.com>, Chris Li <chrisl@kernel.org>,
-        SeongJae Park <sj@kernel.org>, Matthew Wilcox <willy@infradead.org>,
-        Jason Gunthorpe <jgg@ziepe.ca>, Leon Romanovsky <leon@kernel.org>,
-        Xu Xin <xu.xin16@zte.com.cn>,
-        Chengming Zhou <chengming.zhou@linux.dev>,
-        Jann Horn <jannh@google.com>, Miaohe Lin <linmiaohe@huawei.com>,
-        Naoya Horiguchi <nao.horiguchi@gmail.com>,
-        Pedro Falcato <pfalcato@suse.de>,
-        Pasha Tatashin <pasha.tatashin@soleen.com>,
-        Rik van Riel <riel@surriel.com>, Harry Yoo <harry.yoo@oracle.com>,
-        Hugh Dickins <hughd@google.com>, linux-kernel@vger.kernel.org,
-        kvm@vger.kernel.org, linux-s390@vger.kernel.org,
-        linux-fsdevel@vger.kernel.org, linux-mm@kvack.org,
-        linux-arch@vger.kernel.org, damon@lists.linux.dev
-Subject: Re: [PATCH v3 02/16] mm: introduce leaf entry type and use to
- simplify leaf entry logic
-Message-ID: <4d8510ae-1ed8-440d-b864-d75147c05510@lucifer.local>
-References: <cover.1762812360.git.lorenzo.stoakes@oracle.com>
- <c879383aac77d96a03e4d38f7daba893cd35fc76.1762812360.git.lorenzo.stoakes@oracle.com>
- <b55a87cc-239c-4475-88aa-6296e67b4e7d@lucifer.local>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <b55a87cc-239c-4475-88aa-6296e67b4e7d@lucifer.local>
-X-ClientProxiedBy: LO4P265CA0063.GBRP265.PROD.OUTLOOK.COM
- (2603:10a6:600:2af::16) To DM4PR10MB8218.namprd10.prod.outlook.com
- (2603:10b6:8:1cc::16)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IS+Zbf2B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A071CC4CEF5;
+	Fri, 14 Nov 2025 01:43:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1763084581;
+	bh=aRE+wMnR2pS1uJvM8oQeGCIiCMvzPKaWlWT5NwcMf4s=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=IS+Zbf2BOHCCtzc1IhDP4Cfa5hYLs1/tAaydWZPryWHjdiF+3LRrkbsKOkoBRGXM2
+	 uyvnHggyYOKUDY9KfuROn6dFHzdWHSU4ciT95BNQh1fIhx9/IJP1Db6zzsY8vc/M6K
+	 Mv2e7njpt5367w0T1pOMZgewma4iVQfeGalzRLQ5N7sKgvDaxGc2FOKd179R5V2P0h
+	 OVlAWk6aMfsgwcEu1tRjAyw1h+VohQmoBDlLE8jH69HFntnt21qiQTz0HZV75jWuKr
+	 19IwAxko9fHO+rCVsfUqAo77X6v02NB6byt7snP2hdhu62GDiV/lHVnrxfL5wv2Lau
+	 +P7dtW7kJtWNQ==
+From: SeongJae Park <sj@kernel.org>
+To: David Rientjes <rientjes@google.com>
+Cc: SeongJae Park <sj@kernel.org>,
+	Davidlohr Bueso <dave@stgolabs.net>,
+	Fan Ni <nifan.cxl@gmail.com>,
+	Gregory Price <gourry@gourry.net>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Joshua Hahn <joshua.hahnjy@gmail.com>,
+	Raghavendra K T <rkodsara@amd.com>,
+	"Rao, Bharata Bhasker" <bharata@amd.com>,
+	Wei Xu <weixugc@google.com>,
+	Xuezheng Chu <xuezhengchu@huawei.com>,
+	Yiannis Nikolakopoulos <yiannis@zptcorp.com>,
+	Zi Yan <ziy@nvidia.com>,
+	linux-mm@kvack.org,
+	damon@lists.linux.dev,
+	Honggyu Kim <honggyu.kim@sk.com>,
+	Yunjeong Mun <yunjeong.mun@sk.com>
+Subject: Re: [Linux Memory Hotness and Promotion] Notes from October 23, 2025
+Date: Thu, 13 Nov 2025 17:42:54 -0800
+Message-ID: <20251114014255.72884-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <d952a84f-332e-8f7a-4816-2c1cbd8f5b00@google.com>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DM4PR10MB8218:EE_|DS0PR10MB7980:EE_
-X-MS-Office365-Filtering-Correlation-Id: 3f589e65-15ca-4f06-bae7-08de22c9ec6e
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|7416014|376014|1800799024|366016;
-X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?46eQhyCGLj9NS25HIHqNgIhL/ZZOA2l3xb3xAVkdVEN8Rw+Ex8+qXEnMfnQ/?=
- =?us-ascii?Q?9Vddk5tUOuJWQPJ+9kvMm+i5RnWVPPYTk12ucdv3pz/lsLpmMe0gqYk7A6r8?=
- =?us-ascii?Q?YtnQLktOHrJpyjnGC9b8s55NVHlg7sku4eo4RXGRZSLsO08h7vro6Ih+sKEV?=
- =?us-ascii?Q?gmxh8ld+Pdz+ly5RI4KC6IfdtNDvR3qvcnhSf956T08gtorCiGL2MrYQmiZP?=
- =?us-ascii?Q?eATKOowLsAgHH6/BrZrMW1Z4+WBLa3dlu4vuiElqHOwxfuxCqDcnGev81hhv?=
- =?us-ascii?Q?6HmQ3y0my180co+jeRaKISEYLPtD5ed21HaxocT6o8YPExW7zmsGRkLcx8vk?=
- =?us-ascii?Q?W2Vgvyq3qgOW9X6aqoG7Z3SxLK+zDQOvtbfL1DAfOjjPlEBQWinCgP7dpcPx?=
- =?us-ascii?Q?+JmuopW5YPEjW7Ph0FvCjI0VanBhIb7jicf/ksMaSpBzGBbsR3Y7SmuB8YdM?=
- =?us-ascii?Q?1aPeFXzjK/kgGV8kNvFSA/8bJxktnArkNZGJXUA2YU+KzvdH2Feeku0/J+cr?=
- =?us-ascii?Q?4ZCkDi4rwCOGEO2RI/fufrd+rhbGQylssdjw3gMvbgr230DisJ3CP/7ePkYI?=
- =?us-ascii?Q?Ox1IQhXfkImiA3CtwKYNcubI+SpPQzSvM5rjijsVqu91PCrF7grDpwSRu7jR?=
- =?us-ascii?Q?7wXr98+M1IW5Ge4i24yZl/jC6gGrIvH02fuy14mp9X2SuxLXPFMtxb02wzTr?=
- =?us-ascii?Q?IwFXIvq5OtgRp38RFtMNjOuzn6l5GCPS61iKH9XGVrHy5NSa/4XUDc+gl/lG?=
- =?us-ascii?Q?upo6tWM2T20kxjBhhm8sFuuXfhGRYzKiCrWoerhH38qM05LKf1CFeoLb6d87?=
- =?us-ascii?Q?XxmT85zwcd9+c7ZZezSB5+Z9iVgPuoMywE+uZxlT726OsvRyase/UoTEN2pB?=
- =?us-ascii?Q?j4nAA2o+WcqSR8MY8sDALD+peFchDLtPuNMOlCl8lBwrzjlzPhB5vzOJXQkx?=
- =?us-ascii?Q?dSXzhjZAGug21EMvDZq+mTRSdQKBup9QWo2urZYei7GQOEjyjtpqPxGd7ONN?=
- =?us-ascii?Q?H2k3xll9i/9u4BYwHveqtwFPcqOES8HOOYHz60ojzZKrJon0H0WOLiP0uZMq?=
- =?us-ascii?Q?9c71UrdUXBwUZnNEvU19If1YfFHEQ9JIcInKMcblgs2ZzZpUl9bPYmNA/oP0?=
- =?us-ascii?Q?oti8layCf1WIU4ON2LRJ52YvMXx4APr0eFxD/QR1mFuN+YwVYlMe/B+9f9YT?=
- =?us-ascii?Q?SB0JOgNwmvhIm4Mdo1TgzFDgNQbmjj+ESviR/zWKqiH1mTD52DMrj5ctX6yX?=
- =?us-ascii?Q?alEFJMd4mrBmqWkisIMlq6t9kh2yeT3vDGTWav204YF+fJUQeYHu+CTdAbLI?=
- =?us-ascii?Q?r4xVqEucRaBTROAODXOSVjav6gM8d9/nEQl2kce0hpXIiEmMwVVDgc55lXyh?=
- =?us-ascii?Q?mVln4S0ILd92Iie6TFEIHwZ4QdSFeDNjPwfIsQRvi+gP4KrHJH4idp5yIFZe?=
- =?us-ascii?Q?0l7412thoODaq0FtvMCV36y+YVDN6K88?=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM4PR10MB8218.namprd10.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(7416014)(376014)(1800799024)(366016);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?hgvrkHMFsDn/LtpogLXXz08k6xISKwBhENblta5jD2NtswUvgzci66JdstYz?=
- =?us-ascii?Q?NV4VxVt1vON6+SbZMRvnTLZgvIobKtUAfcJXei4F0LD2Y2/WUqOBGM9WKZ9z?=
- =?us-ascii?Q?UcpolA6s6B+s702bbbycA0Ro4O12Rz+KGLtIdsi9tnOpE1Z8DIaNGGpJUP87?=
- =?us-ascii?Q?wBJKtC1AEK6PrnvHo1WJL0a1pZAce0mpRCfddMkeSa74/80F9/OX6SUxEt4I?=
- =?us-ascii?Q?oRDXLG+coLhYUDt0Es443Eyrvto3Ed0cGjxQR7o0TAdBwA2QfFuE/RubbJGx?=
- =?us-ascii?Q?29WUhSBav4gqWqZGodhc9WmNHQOps8Q02zhCXPNU6OXboLiSgiAQlOgiQsKR?=
- =?us-ascii?Q?HOsjyDayVXwnCTwLR4mUQd14srqq4cEb42l9GWSR7gnyBbFmjPUoycdlRec+?=
- =?us-ascii?Q?bFEsEMDv8+M5GcnKrCjhC//sHPwUA6Y6ix8LepMtSzl2TWCMYmUHzhe7Oqgn?=
- =?us-ascii?Q?XjB4+ESR8YE3umRoeP557lUfRyp02156GW5ryOPTU7drohhOd4uMM6acnRXa?=
- =?us-ascii?Q?Dmvc3rvUXQuifl/XgEM+Q0YDkhqyIE3ZPADLssqhxfg6enZjh/Ju3eZMFqr/?=
- =?us-ascii?Q?mQWwK9x8K4i21gti9b9m4Hs+jENqE4+AabmKYOXt3TU2HH0GDzNbMogBRTGi?=
- =?us-ascii?Q?S5BhzlDDgYtF98Oa1eUiE9vMYamcKUXlX/o1PLajEDOnicGYeHFLJftijsZp?=
- =?us-ascii?Q?wg9kUTzNjdY5z5l6L1B5Mf7sH8auPfdaC+uvlSNoUAzyNrs13AT66zKh6a/Y?=
- =?us-ascii?Q?pdaFSbaQXF5XLfMb9APO+VegnsXL80WiXzJAwemujwjbB+HZHBvNWccQrm17?=
- =?us-ascii?Q?T3vsGr/TCHYOk8vm7bb6+HIaRsgkhkec03/k06rWQRrWGy/gRVP5WruhT+O9?=
- =?us-ascii?Q?RpBI9D8jqM6/GsMQn6gQdUi/4SCGdzSITxwERpK3EKXYSpDTOp/toL7xDFpo?=
- =?us-ascii?Q?nTawA5nFz+KcCrhWUMoSUcRgbXlb5zMbBEj4y9zaCs/8Mpt19NYEHIIroR7F?=
- =?us-ascii?Q?o6WM/0SkVseHvyT6EujXVQ88VvJwkl/0RDwC+qXZPsjT16OoxFmjudbfGmMT?=
- =?us-ascii?Q?VQy0a1phguptbyN+904kPoCGasI9tZTj0sD//lC+GaLzZ+ttRETrH/3eOQ6N?=
- =?us-ascii?Q?FD4w+dVLKasEQvxAzXKvqhq/zDYrDIieNZqedvDd4YK/LhDO+GqFctaGuLdC?=
- =?us-ascii?Q?o3Wcyvl8E6IfuAbxXPQvK5RKQEgyFtdG+C8/2rWGVLmrAIw3HX4mm6zqRZP0?=
- =?us-ascii?Q?e/AuEyUc1cYvLiw/3RllJkp7vdUUVKZKlkbnApIUSMQddbsSiKLwA3Xlk+AQ?=
- =?us-ascii?Q?dI/RRW9P9JI42VruwCOea/p+o2j8J/T4vxp6MU4Qb3tCW1CofTPj+3ljVli0?=
- =?us-ascii?Q?PR6yJWKAZwPlZgFbAtLJta5KraNCcCpa8rri5exEs7/loiWcvDYTqIG/Ook4?=
- =?us-ascii?Q?OhpJh90ECAqcm0UPZ7sNJAQffzbzHo+mjMvNRmTLn3G8PPdkBXF/pwbr/gEF?=
- =?us-ascii?Q?N3Zv5Lj58lVLnFeOs9mURiRC2bhrs5a5b8mvopws6O1VjEeWTdNo0eUvfc6d?=
- =?us-ascii?Q?Fo+vtX3UR1Ll8BAvttyt7aeZbKfEldiPSRLIeiWaMcPnewTso5lxrIDv9Bj6?=
- =?us-ascii?Q?qw=3D=3D?=
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0:
-	Kjicl+ag4+vz2T9yCAkShMmvaIb4NiC2CzG+an4d7Nf+B62yCuCCWLSxnZ5fU31Dwbs5O50uFmg2XxrRPoIWUeeeSqirY/pkWeGeAqshXBS51O2s2kFnDDS4ADY90QnvUszk3U/aA8WbG3eZ1MXuPJ9+sdArLnrQAP5/DPHUI6GLrP7DP8nJM0mr0B8jXeEtUOnxOdD/4O0UfI8GL2X1HqPzPbxmjiSs83P5FhXzpzcK2Zh71YppVG97nm2M6mcRL/SmgVr86Pd+VF+MyDra0MmbOB7EcyS39XNJ2QQCyaPPytnMBzZUrs+qj16gcvRpyfINrJufg0/pq858S5HoQ6d6d9XT6W5f+lv7pTrLktti22kap8abkrK4xKWEqQKnQGzgbFhvmTvZK6QWyWomMJKdqpFg+JofroVRRX39NiGNK8eivQ3+KRX94h3TK+dDRA+QhTIyrDAMbqTAuSw58jNsgqqI/9CIa2X2HQ38QweFyGSB7NT9+XirnRaouipAauDSW3fUELegpm/976zoWTKvmv5wyK9+PBCeHmf5UQwBSidXIZfuT7r3yv1i+z7JudyR0SyKz6IEM32GqQnhPBRgW/RsfbgiH4VPJfxxdJI=
-X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 3f589e65-15ca-4f06-bae7-08de22c9ec6e
-X-MS-Exchange-CrossTenant-AuthSource: DM4PR10MB8218.namprd10.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Nov 2025 15:32:58.4711
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: nieS3OaXPMl0oN7/MnrHtMHirKvag9SSdGmw70ACeZp9xavpMVFuu5FHDJAdskRJ4BYpqK685WhXxXOUfUfqBav4lbhzncWVtNP8gMNa2ow=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR10MB7980
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-11-13_02,2025-11-13_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0 adultscore=0
- malwarescore=0 spamscore=0 suspectscore=0 bulkscore=0 mlxscore=0
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2510240000 definitions=main-2511130120
-X-Authority-Analysis: v=2.4 cv=Criys34D c=1 sm=1 tr=0 ts=6915fa31 b=1 cx=c_pps
- a=e1sVV491RgrpLwSTMOnk8w==:117 a=e1sVV491RgrpLwSTMOnk8w==:17
- a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19 a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19
- a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
- a=6UeiqGixMTsA:10 a=GoEa3M9JfhUA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=yPCof4ZbAAAA:8 a=_kY1ol5zgQWaeB7_AXgA:9 a=CjuIK1q_8ugA:10 cc=ntf
- awl=host:13634
-X-Proofpoint-GUID: _MBoCiJ9e2n0hyD6iVpDF5qFTUWjw9kg
-X-Proofpoint-ORIG-GUID: _MBoCiJ9e2n0hyD6iVpDF5qFTUWjw9kg
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTEyMDE0MSBTYWx0ZWRfX43zhlj9RRu1E
- b1V7qh0xFzirDzGl0nfUGeSRpOTw1PN6jD1qzh+fZ/zNbb2zu24k1Hn9OeK3fRXiYqXg5k1hnG5
- grhn3Piyul94DQb11+seXpED2D+I0FKNUB7KncqXEJEhZifn27beVjKKoESmWJMdnBilQBontu1
- S8gA/H53Axw4+0AL3okhqLx31eZ4yB6Nv1ZoON25Xx5pxlvUAzHPqxMxt7zBMS99FrG6wrk1OEN
- xv9cux1TnaULoQiW+xxni8s70ZHcWOVXIk21cSVDerEMF7GPUY6ccUFgfBtmHfl2dJ7hodfqbS4
- 9ET1o05FvWQKQlyDMwvPjOdyfKSJz163aZYHUkde7i9Shwu1IE5V4NMW+4S5OPkHbT4vVW58Apj
- O2TUfhNn4jzMKCb43l1BKe0UChIZNlVH3v1AzyjqJRgtT+pq43M=
+Content-Transfer-Encoding: 8bit
 
-OK Andrew please disregard and drop this, I was being too paranoid...
+Cc-ing HMSDK developers and DAMON mailing list.
 
-Comment at SWAP_ENTRY_INVALID indicates 0,0 is reserved as I thought before.
+On Sun, 2 Nov 2025 16:41:19 -0800 (PST) David Rientjes <rientjes@google.com> wrote:
 
-Cheers, Lorenzo
+> Hi everybody,
+> 
+> Here are the notes from the last Linux Memory Hotness and Promotion call
+> that happened on Thursday, October 9.  Thanks to everybody who was 
+> involved!
+> 
+> These notes are intended to bring people up to speed who could not attend 
+> the call as well as keep the conversation going in between meetings.
 
-On Thu, Nov 13, 2025 at 02:56:09PM +0000, Lorenzo Stoakes wrote:
-> Hi Andrew,
->
-> Please apply the attached fix-patch.
->
-> This ensures that we do not accidentally conflict with any valid swap
-> entry. We can do so without occupying any additional swap (softleaf) type.
->
-> Cheers, Lorenzo
->
-> ----8<----
-> From 78439310eded5db10692c3e8d0d322bdd6409eff Mon Sep 17 00:00:00 2001
-> From: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-> Date: Thu, 13 Nov 2025 14:20:34 +0000
-> Subject: [PATCH] mm: avoid any possible collision between swap entries,
->  SOFTLEAF_NONE
->
-> The way swap entries are encoded varies by architecture. For x86-64 for
-> instance, the encoded swap offset is the one's complement of the specified
-> swap offset.
->
-> As a result, device 0, offset 0 would be encoded as 0..01..10b.
->
-> This means it is possible to specify a PTE entry that is both device 0,
-> offset 0 and something that will be identified as a swap entry rather than
-> a pte_none() entry.
->
-> For other architectures, the encoding may preclude such entries being
-> valid.
->
-> The softleaf implementation currently depends on a 0..0b entry being
-> uniquely identifiable as a none entry.
->
-> This is therefore not a safe assumption, so let's fix that.
->
-> PTE markers unconditionally occupy a softleaf type, and currently use only
-> 3 bits of the offset field to encode their type with no further information
-> recorded.
->
-> It is therefore no issue at all to add an additional marker type
-> designating the field as a none entry.
->
-> We also make the none checks more canonical by adjusting softleaf_is_none()
-> to reference softleaf_mk_none().
->
-> By doing so we avoid any possible collision with swap file entries while
-> taking up no further meaningful resource.
->
-> Signed-off-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-> ---
->  include/linux/leafops.h | 8 +++++---
->  include/linux/swap.h    | 1 +
->  include/linux/swapops.h | 6 +++++-
->  3 files changed, 11 insertions(+), 4 deletions(-)
->
-> diff --git a/include/linux/leafops.h b/include/linux/leafops.h
-> index cff9d94fd5d1..74fd95b55e9c 100644
-> --- a/include/linux/leafops.h
-> +++ b/include/linux/leafops.h
-> @@ -40,7 +40,8 @@ enum softleaf_type {
->   */
->  static inline softleaf_t softleaf_mk_none(void)
->  {
-> -	return ((softleaf_t) { 0 });
-> +	/* Uniquely identifies none entry. */
-> +	return make_pte_marker_entry(PTE_MARKER_SOFTLEAF_NONE);
->  }
->
->  /**
-> @@ -72,7 +73,7 @@ static inline softleaf_t softleaf_from_pte(pte_t pte)
->   */
->  static inline bool softleaf_is_none(softleaf_t entry)
->  {
-> -	return entry.val == 0;
-> +	return entry.val == softleaf_mk_none().val;
->  }
->
->  /**
-> @@ -199,7 +200,8 @@ static inline bool softleaf_is_hwpoison(softleaf_t entry)
->   */
->  static inline bool softleaf_is_marker(softleaf_t entry)
->  {
-> -	return softleaf_type(entry) == SOFTLEAF_MARKER;
-> +	return softleaf_type(entry) == SOFTLEAF_MARKER &&
-> +		!softleaf_is_none(entry);
->  }
->
->  /**
-> diff --git a/include/linux/swap.h b/include/linux/swap.h
-> index 38ca3df68716..e5abea55448b 100644
-> --- a/include/linux/swap.h
-> +++ b/include/linux/swap.h
-> @@ -112,6 +112,7 @@ static inline int current_is_kswapd(void)
->  #define SWP_HWPOISON_NUM 0
->  #endif
->
-> +/* Leave a type reserved for softleaf none. */
->  #define MAX_SWAPFILES \
->  	((1 << MAX_SWAPFILES_SHIFT) - SWP_DEVICE_NUM - \
->  	SWP_MIGRATION_NUM - SWP_HWPOISON_NUM - \
-> diff --git a/include/linux/swapops.h b/include/linux/swapops.h
-> index 0a4b3f51ecf5..04e74716a845 100644
-> --- a/include/linux/swapops.h
-> +++ b/include/linux/swapops.h
-> @@ -419,7 +419,11 @@ typedef unsigned long pte_marker;
->   * PROT_NONE, rather than if they were a memory hole or equivalent.
->   */
->  #define  PTE_MARKER_GUARD			BIT(2)
-> -#define  PTE_MARKER_MASK			(BIT(3) - 1)
-> +
-> +/* Internal use by the softleaf implementation to represent 'none' entries. */
-> +#define  PTE_MARKER_SOFTLEAF_NONE		BIT(3)
-> +
-> +#define  PTE_MARKER_MASK			(BIT(4) - 1)
->
->  static inline swp_entry_t make_pte_marker_entry(pte_marker marker)
->  {
-> --
-> 2.51.0
+I was unable to join the call due to a conflict.  This note is very helpful.
+Thank you for taking and sharing this note, David!
+
+> 
+> ----->o-----
+> Ravi Jonnalagadda presented dynamic interleaving slides, co-developed with 
+> Bijan Tabatabai, discussing the current approach of promoting all hot 
+> pages into DRAM tier and demoting all cold pages.  If the bandwidth 
+> utilization is high, it will saturate the top tier even though there is 
+> bandwidth available on the lower tier.  The preference was to demote cold 
+> pages when under-utilizing memory in the top tier and then interleave hot 
+> pages to maximize bandwidth utilization.  For Ravi's experimentation, this 
+> has been 3/4 of maximum write bandwidth for the top tier.  If this 
+> threshold is not reached, memory is demoted.
+
+I had a grateful chance to discuss about above in more detail with Ravi.
+Sharing my detailed thoughts here, too.
+
+I agree to the concern.  I also heard similar concerns for general
+latency-aware memory tiering approaches from multiple people in the past.
+
+The memory capacity extension solution of HMSDK [1], which is developed by SK
+Hynix, is one good example.  To my understanding (please correct me if I'm
+wrong), HMSDK is providing separate solutions for bandwidth and capacity
+expansions.  The user should first understand whether their workload is
+bandwidth-hungry or capacity-hungry, and select a proper solution.  I suspect
+the concern from Ravi was one of the reasons.
+
+I also recently developed a DAMON-based memory tiering approach [2] that
+implementing the main idea of TPP [3]: promoting and demoting hot and cold
+pages aiming a level of the faster node's space utilization.  I didn't see the
+bandwidth issue from my simple tests of it, but I think the very same problem
+can be applied to both DAMON-based approach and the original TPP
+implementation.
+
+> 
+> Ravi suggested adaptive interleaving of memory to optimize both bandwidth 
+> and capacity utilization.  He suggested an approach of a migrator in 
+> kernel space and a calibrator in userspace.  The calibrator would monitor 
+> system bandwidth utilization and, using different weights, determine the 
+> optimal weights for interleaving the hot pages for the highest bandwidth.  
+> If bandwidth saturation is not hit, only cold pages get demoted.  The 
+> migrator reads the target interleave ratio and rearrange the hot pages 
+> from the calibrator and demotes cold pages to the target node.  Currently 
+> this uses DAMOS policies, Migrate_hot and Migrate_cold.
+
+This implementation makes sense to me, especially if the aimed use case is for
+specific virtual address spaces.  Nevertheless, if a physical address space
+based version is also an option, I think there could be yet another way to
+achive the goal (optimizing both bandwidth and capacity).
+
+My idea is tweaking TPP idea a little bit: migrate pages among NUMA nodees
+aiming a level of both space and bandwidth utilization of the faster (e.g.,
+DRAM) node.  In more detail, do the hot pages promotion and cold pages
+demotions for the target level of faster node space utilization, same to the
+original TPP idea.  But, stop the hot page promotions if the memory bandwidth
+consumption of the faster node exceeds a level.  In the case, instead, start
+demoting _hot_ pages until the memory bandwidth consumption on the faster node
+decreases below the limit level.
+
+I think this idea could easily be prototyped by extending the
+DAMON-based TPP implementation [2].  Let me briefly explain the prototyping
+idea assuming the readers are familiar with the DAMON-based TPP implementation.
+If you are not familiar with, please feel free to ask questions to me, or refer
+to the cover letter [2] of the patch series.
+
+First, add another DAMOS quota goal for the hot pages promotion scheme.  The
+goal will aim to achieve a high level memory bandwidth consumption of the
+faster node.  The target level will be reasonably high but not too high to keep
+head room remained.  So the hot pages promotion scheme will be activated at the
+beginning, promote hot pages, make the faster node's space and bandwidth
+utilization increase.  But if the memory bandwidth consumption of the faster
+node surpasses the target leevel as a result of the hot pages promotion or the
+workload's access pattern change, the hot pages promotion scheme will be less
+aggressive and eventually stop.
+
+Second, add another DAMOS scheme to the faster node access monitoring DAMON
+context.  The new scheme does hot pages demotion with a quota goal that aim to
+make unused (free, or available) memory bandwidth of the faster node a headroom
+level.  This scheme will do nothing at the beginning of the system since the
+faster node may have available (unused) memory bandwidth more than the headroom
+level.  This scheme will start the hot pages demotion once the faster node's
+available memory bandwidth becomes less than the desired headroom level, due to
+increased loads or the hot pages promotion.  And once the unused memory
+bandwidth of the faster node becomes higher than the head room level as a
+result of the hot pages demotion or access pattern change, the hot pages
+demotion will be deactivated again.
+
+For example, a change like below can be made to the simple DAMON-based TPP
+implementation [4].
+
+diff --git a/scripts/mem_tier.sh b/scripts/mem_tier.sh
+index 9e685751..83757fa9 100644
+--- a/scripts/mem_tier.sh
++++ b/scripts/mem_tier.sh
+@@ -30,16 +30,25 @@ fi
+ "$damo_bin" module stat write enabled N
+ "$damo_bin" start \
+        --numa_node 0 --monitoring_intervals_goal 4% 3 5ms 10s \
++               `# demote cold pages for faster node headroom space` \
+                --damos_action migrate_cold 1 --damos_access_rate 0% 0% \
+                --damos_apply_interval 1s \
+                --damos_quota_interval 1s --damos_quota_space 200MB \
+                --damos_quota_goal node_mem_free_bp 0.5% 0 \
+                --damos_filter reject young \
++               `# demote hot pages for faster node headroom bandwidth` \
++               --damos_action migrate_hot 1 --damos_access_rate 5% max \
++                       --damos_apply_interval 1s \
++                       --damos_quota_interval 1s --damos_quota_space 200MB \
++                       --damos_quota_goal node_membw_free_bp 5% 0 \
++                       --damos_filter allow young \
+        --numa_node 1 --monitoring_intervals_goal 4% 3 5ms 10s \
++               `# promote hot pages for faster node space/bandwidth high utilization` \
+                --damos_action migrate_hot 0 --damos_access_rate 5% max \
+                --damos_apply_interval 1s \
+                --damos_quota_interval 1s --damos_quota_space 200MB \
+                --damos_quota_goal node_mem_used_bp 99.7% 0 \
++               --damos_quota_goal node_membw_used_bp 95% 0 \
+                --damos_filter allow young \
+-               --damos_nr_quota_goals 1 1 --damos_nr_filters 1 1 \
+-       --nr_targets 1 1 --nr_schemes 1 1 --nr_ctxs 1 1
++               --damos_nr_quota_goals 1 1 2 --damos_nr_filters 1 1 1 \
++       --nr_targets 1 1 --nr_schemes 2 1 --nr_ctxs 1 1
+
+"node_membw_free_bp" and "node_membw_used_bp" are _imaginary_ DAMOS quota goal
+metrics representing the available (unused) or consuming level of memory
+bandiwdth of a given NUMA node.  Those are imaginery ones that arenot supported
+on DAMON of today.  If this idea makes sense, we may develop the support of the
+metrics.
+
+But even before the metrics are implemented, we could prototype this for early
+proof of concepts by setting the DAMOS quota goals using the user_input goal
+metric [5] and run a user-space program that measures the memory bandwidth of
+the faster node and feeds it to DAMON using the DAMON sysfs interface.
+
+Implementing both the memory bandwidth/space utilization monitoring and the
+quota auto-tuning logic on user-space, and directly adjusting the quotas of
+DAMOS schemes instead of using the quota goals could also be an option.
+
+I have no plan to implement the "node_membw_{free,used}_bp" quota goal metrics
+or do the user_input based prototyping at the moment.  But, as always, if you
+watn the features and/or willing to step up for development of the features, I
+will be happy to help.
+
+[...]
+> Ravi suggested hotness information need not be used exclusively for 
+> promotion and that there is an advantage seen in rearranging hot pages 
+> based on weights.  He also suggested a standard subsystem that can provide 
+> bandwidth information would be very useful (including sources such as IBS, 
+> PEBS, and PMU sources).
+
+If we decide to implement the above per-node memory bandwidth based DAMOS quota
+goal metrics, I think this standard subsystem could also be useful for the
+implementation.
+
+FYI, users can _estimate_ memory bandwidth of the system or workloads from
+DAMON's monitoring results snapshot.  For example, if DAMON is seeing a 1 GiB
+memory region that is consistently being accessed about 10 times per second, we
+can estimate it is consuming 10 GiB/s memory bandwidth.
+
+DAMON user-space tool provides this estimated bandwidth per monitoring results
+snapshot with 'damo report access' command.  DAMON_STAT module, which is
+recently developed for providing system wide high level data access pattern in
+an easy way, also provides this _estimated_ memory bandwidth usage.
+
+[1] https://events.linuxfoundation.org/open-source-summit-korea/program/schedule/
+[2] https://lore.kernel.org/all/20250420194030.75838-1-sj@kernel.org/
+[3] https://symbioticlab.org/publications/files/tpp:asplos23/tpp-asplos23.pdf
+[4] https://github.com/damonitor/damo/blob/v3.0.4/scripts/mem_tier.sh
+[5] https://docs.kernel.org/mm/damon/design.html#aim-oriented-feedback-driven-auto-tuning
+
+
+Thanks,
+SJ
+
+[...]
