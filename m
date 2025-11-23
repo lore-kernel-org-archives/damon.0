@@ -1,41 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D900E2D7804;
-	Sun, 23 Nov 2025 18:43:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BF4A2DC320;
+	Sun, 23 Nov 2025 18:43:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763923424; cv=none; b=ShxeTs1AAD1T751GFpvMtajAUnRXkYWe72ClRlq2Gfzng9MrbjOOA1zVn3acU4VwDQsd5AAZ8fgpWmCm5o6NjPyZ26jEy8p/XXV7jBDRr2VJ18SUqG9A6a73gUr8H4FuGzhJ0cGzD3zEQ9g+e/8LeKwlvMru7Ag0l+d7QLILOuk=
+	t=1763923425; cv=none; b=KJmFdcqgLSNOpi7zobqJNlHl7tvQlTtztyB+omerU/R9ZekrBo6jKahxgPgVCyGwLgrZjPRkBi8fEVa902LCBr2spT0XQe85tTEks1DAYbVyLggi3Nn+h3mApuqbgKmHRuWlmwS+xM56Fgkq+E9CpabvhAFZZH29gfqMlgkq+ow=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763923424; c=relaxed/simple;
-	bh=flHCn1jzwJYbHp6Nyj2GAUs2tIfp0Jhpc5MXnsDhPc8=;
+	s=arc-20240116; t=1763923425; c=relaxed/simple;
+	bh=vPTC/eKfLkll500maYdRrQDlL8kK86gyaCZ9jL7BWDM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fHR2aGJVknlfyZlZtbQaDM7918meyEtItecg2h2wS1cTWNOACK1MI450Msk1DmPHEvWv/29kZes94/xV7i3xBG0qhxpRP+IfZNAom9YB7nGV4RijKlBZcAE2SY1pS/SqqZa8gTGeVd/xUwtHvpIe7iB7lCDmFjXgZ70REPgkGmI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EWcxawcm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ifXs8W3+wyGB1c9rFt/8dK/knMAFO2zHTUlQvfWNRLLUy/VlauxlMF/9tOMrsvPMsQaZWOJkXz1zdIgAzWY0Sji8DggXJ4Iey2XvkY482CuhjSNoQnF+sZW+cYPoJ703DbATIWWeeTdNbASdBst9ZnjqTtqff0jt2uboNHdT6YU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HR3R4cUb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EWcxawcm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98571C19422;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HR3R4cUb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6E96C19423;
 	Sun, 23 Nov 2025 18:43:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1763923424;
-	bh=flHCn1jzwJYbHp6Nyj2GAUs2tIfp0Jhpc5MXnsDhPc8=;
+	s=k20201202; t=1763923425;
+	bh=vPTC/eKfLkll500maYdRrQDlL8kK86gyaCZ9jL7BWDM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EWcxawcm3Wldt4q2Fk+N/iVtuR2wUJd4gie6Gwzx0wakwV72c2gYTNBoOY9FUhvXQ
-	 8Mu3ZswD/pPPtgFMiCsEH9649+sKKLO7GguUAVZVLV8828LgjhI91u5ySL9IgQyySv
-	 llMTWbih/na/Q/hlRpkYmE+dDbe4GVxyb+XSuqEcLWadebqsTtsheGIYeCGoeDXUrD
-	 5hOpw9cBW7yESLVi2uxKTcCrE6zcpSYNDxkAsAU1JEvZyR1jVhy2NNLJd6dsD0Mqwt
-	 dTEzcxzfhflNWP0FX1+XDXN6OW86t9yIVdoO6naM+m5ZzIQOImWSxpVKopwt/ifhv9
-	 fPynkYljdoN3g==
+	b=HR3R4cUbNLbqybOvOYXzWLHXNxghlfQSspgN2RSov7tFY3h3ydIypBfGfHpCLCDan
+	 BwObokJtrIAbpDkOYRJFcS3647LBAJo251CSuQlPJ4vGxyOWNSdqetvDp29u1W8n21
+	 2kzWyb5F0DjMPOz7ARkx+zG5taQlFN7qpD0SmAVIzJ1ptNJJKLGKYlt6FAkX0O3aq2
+	 0sZEC0PsOqPXe5nSdplFJF/D03+uh7F+3BrcVvF/F6Zq+QBa43YqoG8QZyGoBaXySu
+	 yifZRO9RXWvt9RlApJcwNya65xh6c85RyVnYEHI1XfSAyFnVLnN0rY8FWTjyNxVWCS
+	 1UkyHpR/Z4vRg==
 From: SeongJae Park <sj@kernel.org>
 To: 
 Cc: SeongJae Park <sj@kernel.org>,
+	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
+	David Hildenbrand <david@kernel.org>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	Michal Hocko <mhocko@suse.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
 	damon@lists.linux.dev,
+	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH 02/12] mm/damon/sysfs-schemes: introduce nr_snapshots damos stat file
-Date: Sun, 23 Nov 2025 10:43:16 -0800
-Message-ID: <20251123184329.85287-3-sj@kernel.org>
+Subject: [RFC PATCH 03/12] Docs/mm/damon/design: update for nr_snapshots damos stat
+Date: Sun, 23 Nov 2025 10:43:17 -0800
+Message-ID: <20251123184329.85287-4-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20251123184329.85287-1-sj@kernel.org>
 References: <20251123184329.85287-1-sj@kernel.org>
@@ -47,68 +56,26 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Introduce a new DAMON sysfs interface file for exposing the newly added
-DAMOS stat, nr_snapshots.  The file has the name same to the stat name
-(nr_snapshots) and placed under the damos stat sysfs directory.
+Update DAMON design document for the newly added damos stat,
+nr_snapshots.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- mm/damon/sysfs-schemes.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ Documentation/mm/damon/design.rst | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
-index 30d20f5b3192..4d25469f957f 100644
---- a/mm/damon/sysfs-schemes.c
-+++ b/mm/damon/sysfs-schemes.c
-@@ -204,6 +204,7 @@ struct damon_sysfs_stats {
- 	unsigned long sz_applied;
- 	unsigned long sz_ops_filter_passed;
- 	unsigned long qt_exceeds;
-+	unsigned long nr_snapshots;
- };
+diff --git a/Documentation/mm/damon/design.rst b/Documentation/mm/damon/design.rst
+index 2d8d8ca1e0a3..5cc7b7d662be 100644
+--- a/Documentation/mm/damon/design.rst
++++ b/Documentation/mm/damon/design.rst
+@@ -718,6 +718,8 @@ scheme's execution.
+ - ``nr_applied``: Total number of regions that the scheme is applied.
+ - ``sz_applied``: Total size of regions that the scheme is applied.
+ - ``qt_exceeds``: Total number of times the quota of the scheme has exceeded.
++- ``nr_snapshots``: Total number of DAMON snapshots that the scheme is tried to
++  be applied.
  
- static struct damon_sysfs_stats *damon_sysfs_stats_alloc(void)
-@@ -265,6 +266,15 @@ static ssize_t qt_exceeds_show(struct kobject *kobj,
- 	return sysfs_emit(buf, "%lu\n", stats->qt_exceeds);
- }
- 
-+static ssize_t nr_snapshots_show(struct kobject *kobj,
-+		struct kobj_attribute *attr, char *buf)
-+{
-+	struct damon_sysfs_stats *stats = container_of(kobj,
-+			struct damon_sysfs_stats, kobj);
-+
-+	return sysfs_emit(buf, "%lu\n", stats->nr_snapshots);
-+}
-+
- static void damon_sysfs_stats_release(struct kobject *kobj)
- {
- 	kfree(container_of(kobj, struct damon_sysfs_stats, kobj));
-@@ -288,6 +298,9 @@ static struct kobj_attribute damon_sysfs_stats_sz_ops_filter_passed_attr =
- static struct kobj_attribute damon_sysfs_stats_qt_exceeds_attr =
- 		__ATTR_RO_MODE(qt_exceeds, 0400);
- 
-+static struct kobj_attribute damon_sysfs_stats_nr_snapshots_attr =
-+		__ATTR_RO_MODE(nr_snapshots, 0400);
-+
- static struct attribute *damon_sysfs_stats_attrs[] = {
- 	&damon_sysfs_stats_nr_tried_attr.attr,
- 	&damon_sysfs_stats_sz_tried_attr.attr,
-@@ -295,6 +308,7 @@ static struct attribute *damon_sysfs_stats_attrs[] = {
- 	&damon_sysfs_stats_sz_applied_attr.attr,
- 	&damon_sysfs_stats_sz_ops_filter_passed_attr.attr,
- 	&damon_sysfs_stats_qt_exceeds_attr.attr,
-+	&damon_sysfs_stats_nr_snapshots_attr.attr,
- 	NULL,
- };
- ATTRIBUTE_GROUPS(damon_sysfs_stats);
-@@ -2761,6 +2775,7 @@ void damon_sysfs_schemes_update_stats(
- 		sysfs_stats->sz_ops_filter_passed =
- 			scheme->stat.sz_ops_filter_passed;
- 		sysfs_stats->qt_exceeds = scheme->stat.qt_exceeds;
-+		sysfs_stats->nr_snapshots = scheme->stat.nr_snapshots;
- 	}
- }
- 
+ "A scheme is tried to be applied to a region" means DAMOS core logic determined
+ the region is eligible to apply the scheme's :ref:`action
 -- 
 2.47.3
