@@ -1,43 +1,56 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B25F42DF6F5;
-	Sun, 23 Nov 2025 18:43:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5B9D35962;
+	Sun, 23 Nov 2025 19:55:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763923428; cv=none; b=EXLsuzGfVR3tugsJezRtUxhxStsrwKYe0KQ9TEhaZXKNTcZXLyWRnR7a5iP1rhiIjJgKq5tAE/fK58bHjBB0JqsdRfzadrXE3bmO5YUrSsV2xDIUXV/qGTKE90OLH5hhvyOMqAyAF7Fddw44iabYTAITgIuNlkTwwExjvG27oG0=
+	t=1763927713; cv=none; b=R8JQgEc0YbhcCVaE99QelMBMQu6Ub5wK0NVzAGFb9Yjrm3HXrdGI9LOHJLufXhKHaQ+DPMzXdG3WnIiluj3YH3XRc4dFks2VTSKCvFTZcj+MZYQ9pYQOE33P0p4uaiOTfVN/2RyW0JBhqLr4KJ8SKLRrM6VbqVHvAhdVpgs02ek=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763923428; c=relaxed/simple;
-	bh=Ybb1QxrTxcSMGL/dvuVAmRcZVW1T/bi0bFKyjCzx1os=;
+	s=arc-20240116; t=1763927713; c=relaxed/simple;
+	bh=ONzvLa3ZaViSZ5gG52gKU5AhTjht5Jg3NT5f81KKlSw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dstQnUaLOdDonSMtFYzY0myP073tnurgM5b8iOu/w2OAwGJqsNwB3l28abjLUOhwhvs8wayoLHJ/xxIv3jBjMNFH8FD8OSOri91owlzafiHdBou+VY4gj+Hn/BOWBGMx5+F952nUMuKKYZ8AkWey1ITE77WmLj5zIhhjBdrZC/Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BYi9f6Rx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DFAAqiDCZEJJCnFUfK6MFB6y1uHmV3lpoFATNlRMZVaceNRvJXxqgqdoaFihAlMAUXaXZ/g4hOpvGU1zH6TsbXYsLgIRKkA2gZYtdCl3qC1Fg12YGg4N591EjeGYCtJupNT71uCeblHdhMscTVBHJ87SUUEC7z0a6MW2xpwN9hA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=skTlV8tc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BYi9f6Rx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC1A3C116B1;
-	Sun, 23 Nov 2025 18:43:47 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="skTlV8tc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D75FCC113D0;
+	Sun, 23 Nov 2025 19:55:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1763923427;
-	bh=Ybb1QxrTxcSMGL/dvuVAmRcZVW1T/bi0bFKyjCzx1os=;
+	s=k20201202; t=1763927712;
+	bh=ONzvLa3ZaViSZ5gG52gKU5AhTjht5Jg3NT5f81KKlSw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BYi9f6Rxc+0CMnIHUHMDz+lfgFgknCKtvqjVXfYl+ve/HQa7T34ClRr6hEVo0/svZ
-	 tBbqdU/pAr3Wx4t6yoqbOGnxB7At1cegTkOf63a7/Z91Y42MYkE61i65+LgDRitFFR
-	 NpFSrSWW39sMVdAFNy1K6+pZ8qteehu2Ve4Wz8kS8AgkJ/ug9qmG072Xo7B9ikNjOV
-	 r8iHDaN/UmObSd4WTqCejsHaKE5Xa/7T2QWj4c3Piwqlv5xe3ALScwDzhPZDGyLrHO
-	 jEQpkBey3hUJIxrRLfH3ekhusmaCYgLuxArQAM1Mc2uepF0ypmKzzTj4gVLpM2V208
-	 h1X+1I6NtwkIw==
+	b=skTlV8tcUzDnx2NS3oZTafwFn37YIjjnSUVdOBv824NMHQ+dj9G0HAp8SEFSOrXTa
+	 Vm6RwVSDxdU5umROdYBSsirLxayteUVafAXZo3AbG60PFDpUDeajJitU5UVbG+3IfZ
+	 g8WG5HQIiQbHNZMhqCBJcFzTEHG0oL1zdIloVCRxiKWjWLZW0yTUrbXFRsbqmYv37M
+	 WTD7XlpSEIi5yc+d/whvBmMDK6vGXzlC0vRmzxl96b8QjYTOjfl+ZhGT7Hx2zdklFM
+	 izzBK/4PQb53PSkWoUsuMoOAcfpOPln+yrqaS8MfKbN8s0TcIQE403itH1Sw6ViSWq
+	 Nm1xpdMvXtnRg==
 From: SeongJae Park <sj@kernel.org>
-To: 
-Cc: SeongJae Park <sj@kernel.org>,
+To: SeongJae Park <sj@kernel.org>
+Cc: "Liam R. Howlett" <Liam.Howlett@oracle.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	David Hildenbrand <david@kernel.org>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Michal Hocko <mhocko@suse.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
 	damon@lists.linux.dev,
+	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org
-Subject: [RFC PATCH 11/12] Docs/ABI/damon: update for max_nr_snapshots
-Date: Sun, 23 Nov 2025 10:43:25 -0800
-Message-ID: <20251123184329.85287-12-sj@kernel.org>
+	linux-mm@kvack.org,
+	linux-trace-kernel@vger.kernel.org
+Subject: Re: [RFC PATCH 00/12] mm/damos/stat: introduce nr_snapshots, max_nr_snapshots and tracepoint
+Date: Sun, 23 Nov 2025 11:54:55 -0800
+Message-ID: <20251123195456.24755-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20251123184329.85287-1-sj@kernel.org>
-References: <20251123184329.85287-1-sj@kernel.org>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -46,31 +59,15 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Update DAMON ABI document for the newly added DAMON sysfs interface
-file, max_nr_snapshots.
+On Sun, 23 Nov 2025 10:43:14 -0800 SeongJae Park <sj@kernel.org> wrote:
 
-Signed-off-by: SeongJae Park <sj@kernel.org>
----
- Documentation/ABI/testing/sysfs-kernel-mm-damon | 7 +++++++
- 1 file changed, 7 insertions(+)
+> Introduce three changes for improving DAMOS stat's provided information,
+> deterministic control, and reading usability.
 
-diff --git a/Documentation/ABI/testing/sysfs-kernel-mm-damon b/Documentation/ABI/testing/sysfs-kernel-mm-damon
-index 8ec469eb4471..4504a0f8b446 100644
---- a/Documentation/ABI/testing/sysfs-kernel-mm-damon
-+++ b/Documentation/ABI/testing/sysfs-kernel-mm-damon
-@@ -522,6 +522,13 @@ Contact:	SeongJae Park <sj@kernel.org>
- Description:	Reading this file returns the total number of DAMON snapshots
- 		that the scheme has tried to be applied.
- 
-+What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/schemes/<S>/stats/max_nr_snapshots
-+Date:		Nov 2025
-+Contact:	SeongJae Park <sj@kernel.org>
-+Description:	Writing a number to this file sets the upper limit of
-+		nr_snapshots that deactivates the scheme when the limit is
-+		reached or exceeded.
-+
- What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/schemes/<S>/tried_regions/total_bytes
- Date:		Jul 2023
- Contact:	SeongJae Park <sj@kernel.org>
--- 
-2.47.3
+FYI, I'm not aiming to make this be merged in 6.19-rc1.
+
+
+Thanks,
+SJ
+
+[...]
