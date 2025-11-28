@@ -1,123 +1,150 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F7832EBDF2;
-	Thu, 27 Nov 2025 19:33:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00CDF1FDE39
+	for <damon@lists.linux.dev>; Fri, 28 Nov 2025 19:39:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764272020; cv=none; b=NIZUIdHswkpM1cNkXuydMLR9e/9zkqZvnBvJ39zfnsE6sT4yDn89wcsDz/FFpaunKGc304sVmXmMbI/b1qtgJlN8YN/hyLoqrUYrPpE3zT8f/pegQk26OJC0HE5MR+loRBlTrUE266U4u1ZyAke7Lf3FW+URpZVyFPjWO1WFrZ4=
+	t=1764358795; cv=none; b=FGQBUD/rARzzO57JutiuuTDAiCqW5RK+iG48k61JHyYeNuVYAqX6In0XiUgX/7AcigCZLDDXQBd3hbiFub25JJNRRcRx+EgkKJoUd86jQr+SDeOHgkB2uYqbnEuD1OLguJml/LDOGmoOtbxGYdBrpNqzINvrRU4mmb0jLBvWe0A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764272020; c=relaxed/simple;
-	bh=bKwbRmbrl+X8raFsxUCv3iqsRGv3g/qP8jWuzhz/5xo=;
-	h=Date:From:To:Cc:Subject:Message-Id:In-Reply-To:References:
-	 Mime-Version:Content-Type; b=cp9TYjzHPPVwoBljOxZ2yegluto7PD3bodLA0biw29bAn9Ed1m4xSr0s866Hd+yJnG3rmrT1W9fCfw0Tv5HY1Ukk0T9LsNiHyFatD9LkTzMCkauZyL+dvZzL0VDYBhV0qo7Vgvf0MeyYYLkmUlI/yq08feJLfjCWj+kEgLv+baA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linux-foundation.org header.i=@linux-foundation.org header.b=C82VoaDh; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1764358795; c=relaxed/simple;
+	bh=evluNqRjpkSiTj5nKrsrke299q89M+WIcAN7tajJ5QM=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=fdt98RYahVC139qwpc75g9HlRLLWWBU8/WstZpF78Z68erbagPP1PZYdlMg1wWMHtYZkrrwe0KmLbtJep/iSKzB4Pz7fZeBk5G0OKvODz7CoQVrwMMa1OQVI2aVug5BbesmvGp7zCzB7ua5+94ZsuTp0clNPZUGOrr6gjWRYlQ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UWQkVxYU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux-foundation.org header.i=@linux-foundation.org header.b="C82VoaDh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9F48C4CEF8;
-	Thu, 27 Nov 2025 19:33:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linux-foundation.org;
-	s=korg; t=1764272019;
-	bh=bKwbRmbrl+X8raFsxUCv3iqsRGv3g/qP8jWuzhz/5xo=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=C82VoaDhd0sLSQSLoV+c3099bDHqryfKIwdPCaSkPbMob2hxR6Mo96WsptlVjIgXk
-	 uP97+DGgersxABmCaWxwVwO/9cRncMCk679v0utJXbOe3eUAoBEmHyUK962izBaUuz
-	 ghigxFj1nYps4+6cypgfSmpBaKlAIGYwIYKpVSas=
-Date: Thu, 27 Nov 2025 11:33:37 -0800
-From: Andrew Morton <akpm@linux-foundation.org>
-To: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Cc: Christian Borntraeger <borntraeger@linux.ibm.com>, Janosch Frank
- <frankja@linux.ibm.com>, Claudio Imbrenda <imbrenda@linux.ibm.com>, David
- Hildenbrand <david@redhat.com>, Alexander Gordeev <agordeev@linux.ibm.com>,
- Gerald Schaefer <gerald.schaefer@linux.ibm.com>, Heiko Carstens
- <hca@linux.ibm.com>, Vasily Gorbik <gor@linux.ibm.com>, Sven Schnelle
- <svens@linux.ibm.com>, Peter Xu <peterx@redhat.com>, Alexander Viro
- <viro@zeniv.linux.org.uk>, Christian Brauner <brauner@kernel.org>, Jan Kara
- <jack@suse.cz>, Arnd Bergmann <arnd@arndb.de>, Zi Yan <ziy@nvidia.com>,
- Baolin Wang <baolin.wang@linux.alibaba.com>, "Liam R . Howlett"
- <Liam.Howlett@oracle.com>, Nico Pache <npache@redhat.com>, Ryan Roberts
- <ryan.roberts@arm.com>, Dev Jain <dev.jain@arm.com>, Barry Song
- <baohua@kernel.org>, Lance Yang <lance.yang@linux.dev>, Muchun Song
- <muchun.song@linux.dev>, Oscar Salvador <osalvador@suse.de>, Vlastimil
- Babka <vbabka@suse.cz>, Mike Rapoport <rppt@kernel.org>, Suren Baghdasaryan
- <surenb@google.com>, Michal Hocko <mhocko@suse.com>, Matthew Brost
- <matthew.brost@intel.com>, Joshua Hahn <joshua.hahnjy@gmail.com>, Rakie Kim
- <rakie.kim@sk.com>, Byungchul Park <byungchul@sk.com>, Gregory Price
- <gourry@gourry.net>, Ying Huang <ying.huang@linux.alibaba.com>, Alistair
- Popple <apopple@nvidia.com>, Axel Rasmussen <axelrasmussen@google.com>,
- Yuanchu Xie <yuanchu@google.com>, Wei Xu <weixugc@google.com>, Kemeng Shi
- <shikemeng@huaweicloud.com>, Kairui Song <kasong@tencent.com>, Nhat Pham
- <nphamcs@gmail.com>, Baoquan He <bhe@redhat.com>, Chris Li
- <chrisl@kernel.org>, SeongJae Park <sj@kernel.org>, Matthew Wilcox
- <willy@infradead.org>, Jason Gunthorpe <jgg@ziepe.ca>, Leon Romanovsky
- <leon@kernel.org>, Xu Xin <xu.xin16@zte.com.cn>, Chengming Zhou
- <chengming.zhou@linux.dev>, Jann Horn <jannh@google.com>, Miaohe Lin
- <linmiaohe@huawei.com>, Naoya Horiguchi <nao.horiguchi@gmail.com>, Pedro
- Falcato <pfalcato@suse.de>, Pasha Tatashin <pasha.tatashin@soleen.com>, Rik
- van Riel <riel@surriel.com>, Harry Yoo <harry.yoo@oracle.com>, Hugh Dickins
- <hughd@google.com>, linux-kernel@vger.kernel.org, kvm@vger.kernel.org,
- linux-s390@vger.kernel.org, linux-fsdevel@vger.kernel.org,
- linux-mm@kvack.org, linux-arch@vger.kernel.org, damon@lists.linux.dev
-Subject: Re: [PATCH v3 14/16] mm: remove is_hugetlb_entry_[migration,
- hwpoisoned]()
-Message-Id: <20251127113337.c6a897e0b786d56084d23025@linux-foundation.org>
-In-Reply-To: <66178124-ebdf-4e23-b8ca-ed3eb8030c81@lucifer.local>
-References: <cover.1762812360.git.lorenzo.stoakes@oracle.com>
-	<0e92d6924d3de88cd014ce1c53e20edc08fc152e.1762812360.git.lorenzo.stoakes@oracle.com>
-	<66178124-ebdf-4e23-b8ca-ed3eb8030c81@lucifer.local>
-X-Mailer: Sylpheed 3.8.0beta1 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UWQkVxYU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29751C4CEF1;
+	Fri, 28 Nov 2025 19:39:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1764358794;
+	bh=evluNqRjpkSiTj5nKrsrke299q89M+WIcAN7tajJ5QM=;
+	h=From:To:Cc:Subject:Date:From;
+	b=UWQkVxYUWCW/pv6hjy8IPu/eozOqJbYtse0tpGDloln2w0yBNbt9uObGuh9dzZczS
+	 HXUl/Couur+7IJsoiXb2XiHeRdGiEfJABlb3tWyOkHxDSpwOxOtXvzOXGSbvf/+9YW
+	 qCrZMJjZqnXl8KpLd7Nnu01rewgnJogl67vMVadJaqY0HXxLgowMdNWmIZz62Xm9H3
+	 zgN/Z8JcwqN+eE0hrY7TVoXHLUeGoa9ZfMREbAPGeZMl7Jp5S5XgSmP3ML/GKoDshd
+	 U/mnrymE+rmhAtuHP54VhgHb132S25m7PEaovKrrNfqj40Ns54toU2OerckQgmFx9q
+	 PMz5Svc4IZxTg==
+From: SeongJae Park <sj@kernel.org>
+To: damon@lists.linux.dev
+Cc: SeongJae Park <sj@kernel.org>,
+	Xin Hao <xhao@linux.alibaba.com>,
+	Pedro Demarchi Gomes <pedrodemargomes@gmail.com>,
+	Andrew Paniakin <apanyaki@amazon.com>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Subject: A rough plan for CPUs/write-only monitoring RFC v3 and future
+Date: Fri, 28 Nov 2025 11:39:46 -0800
+Message-ID: <20251128193947.80866-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-On Thu, 27 Nov 2025 17:45:17 +0000 Lorenzo Stoakes <lorenzo.stoakes@oracle.com> wrote:
-
-> Hi Andrew,
-> 
-> Please apply this fix.
-> 
-
-The offending patch is in mm-stable now, so I'll do this as a
-hey-git-made-me-add-a-bisection-hole commit.
+Hello DAMON community,
 
 
-From: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Subject: fs/proc/task_mmu.c: fix make_uffd_wp_huge_pte() huge pte handling
-Date: Thu, 27 Nov 2025 17:45:17 +0000
+I'm working [1] on extending DAMON to monitor accesses that are made by
+specific CPUs, and/or for writes.  The aimed usages include NUMA hit/miss
+monitoring [2], Kernel Same page Merging scan target selection [3,4], cache
+aware CPU scheduling, live migration target VM selection [5], and general
+NUMA-aware pages migration [6].
 
-make_uffd_wp_huge_pte() should return after handling a huge_pte_none()
-pte.
+I posted its first working version as RFC v2 [7] about four months ago.  After
+the posting, it got interests and tests publicly [5] and privately.  RFC v2
+was, however, a never upstreamable hack that was made for only showing if it
+can be implemented.  For making it upstreamed, a significant amount of efforts
+are expected [8].  And after the posting, I was unfortunately unable to spend
+meaningful time on it due to other events and work.  I received more continued
+interests in the work recently, and hence I'm trying to spend more time on it.
 
-Link: https://lkml.kernel.org/r/66178124-ebdf-4e23-b8ca-ed3eb8030c81@lucifer.local
-Fixes: 03bfbc3ad6e4 ("mm: remove is_hugetlb_entry_[migration, hwpoisoned]()")
-Signed-off-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Reported-by: Vlastimil Babka <vbabka@suse.cz>
-Closes: https://lkml.kernel.org/r/dc483db3-be4d-45f7-8b40-a28f5d8f5738@suse.cz
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
----
+The Rough Plan
+--------------
 
- fs/proc/task_mmu.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+The rough plan of it that I shared on DAMON blog [8] was just saying "it needs
+to be upstreamed and it will require a significant amount of effort".  So I'm
+sharing yet another rough plan here.
 
---- a/fs/proc/task_mmu.c~fs-proc-task_mmuc-fix-make_uffd_wp_huge_pte-huge-pte-handling
-+++ a/fs/proc/task_mmu.c
-@@ -2500,9 +2500,11 @@ static void make_uffd_wp_huge_pte(struct
- 	const unsigned long psize = huge_page_size(hstate_vma(vma));
- 	softleaf_t entry;
- 
--	if (huge_pte_none(ptent))
-+	if (huge_pte_none(ptent)) {
- 		set_huge_pte_at(vma->vm_mm, addr, ptep,
- 				make_pte_marker(PTE_MARKER_UFFD_WP), psize);
-+		return;
-+	}
- 
- 	entry = softleaf_from_pte(ptent);
- 	if (softleaf_is_hwpoison(entry) || softleaf_is_marker(entry))
-_
+This work require multiple changes including
+1. extending DAMON for receiving access report from other subsystems
+   (damon_report_access() [9]),
+2. making other subsystem who can capture origin CPU/writeness of accesses
+   (e.g., page fault handler [10]) report the information to DAMON,
+3. extending DAMON for filtering the reports for origin CPU/writeness of
+   accesses.
 
+The first part in the current implementation has many rooms to improve in terms
+of performance.  I don't think that's upstreaming blocker though, unless some
+early testers find a problem of it.  So I think this is not a blocker for this
+project, at least at the moment.
+
+For the second part, I'm trying to modify the page fault handler, to use
+information like NUMA balancing hint faults.  As Lorenzo pointed out on RFC v2,
+it needs to have clean and non disruptive design.  Also this requires alignment
+of multiple stakeholders, including MM core and NUMA balancing maintainers.  I
+think this is the biggest challenge of this project.  Using other subsystems or
+features such as instruction sampling can be another way to go.  But for
+general availability of it on any architecture and virtual machine internal
+cases, people I privately discussed preferred this fault based approach.  I
+will try to make the alignment with the stakeholders, after the upcoming LPC [11].
+Unless I make good progress on this part very quickly, I will propose an
+LSFMMBPF'26 [12] session for this.  So hopefully we will make some alignment
+among the stakeholders by LSFMM.  Hopefully we will get a more concrete
+upstreaming plan and timeline, at least after the LSFMM'26.
+
+The third part in current implementation is very ugly.  Especially its kernel
+API and user ABI need to be redesigned from the beginning.  The interface is
+better to be stabilized sooner, as changes of the interface will make the early
+users/testers be confused and frustrated.  I started working on this, and
+hopefully I will share RFC v3 of this project with the stabilized interface, by
+upcoming LPC'25.
+
+Summary and Message for User/Tester
+-----------------------------------
+
+To summarize the major expected timeline here,
+
+1. By LPC'25 (2025-12-13), another version having stabilized DAMON interface
+   will be shared.
+2. By LSFMMBPF'26 (2026-05-06), an alignment on part 2 stakeholders will be
+   made.
+3. After the alignment, a more clear plan will be made.
+
+If you are already using or testing RFC v2 of this project, please be aware the
+kernel API and user ABI will significantly be changed on the version that I am willing to
+share by LPC'25.  It means if you are directly using or testing the features
+via the kernel API and/or user ABI, your usages or tests might need to be
+updated.
+
+The support of the features on DAMON user-sapce tool (damo) is also
+experimental at the moment, and that will also be changed in more stable form
+in future.  But, the experimental interface will support both before-LPC and
+after-LPC DAMON for the short term.  Hence, if you are using or testing the
+features via DAMON user-space tool's experimental interface, you will not need
+to make any change in the short term.
+
+Please feel free to raise any questions or comments on the plan and the
+project.
+
+References
+----------
+
+[1] https://damonitor.github.io/posts/write_only_cpus_only_monitoring/
+[2] https://lore.kernel.org/linux-mm/cover.1645024354.git.xhao@linux.alibaba.com/
+[3] https://lore.kernel.org/lkml/20220203131237.298090-1-pedrodemargomes@gmail.com/
+[4] https://lore.kernel.org/damon/20250129044041.25884-1-pedrodemargomes@gmail.com/
+[5] https://lore.kernel.org/all/aJAfTUh-49pYuhbg@3c06303d853a/
+[6] https://lpc.events/event/19/contributions/2066/
+[7] https://lore.kernel.org/all/20250727201813.53858-1-sj@kernel.org/
+[8] https://damonitor.github.io/posts/write_only_cpus_only_monitoring/#cautions-and-plan-to-drop-experimental-tag
+[9] https://lwn.net/Articles/1016525/
+[10] https://lore.kernel.org/all/20250727201813.53858-6-sj@kernel.org/
+[11] https://lpc.events/event/19/
+[12] https://events.linuxfoundation.org/lsfmmbpf/
+
+
+Thanks,
+SJ
