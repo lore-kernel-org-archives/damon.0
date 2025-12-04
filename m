@@ -1,72 +1,42 @@
-Received: from mail-pf1-f177.google.com (mail-pf1-f177.google.com [209.85.210.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33677221555
-	for <damon@lists.linux.dev>; Wed,  3 Dec 2025 08:05:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF1C62749D9;
+	Thu,  4 Dec 2025 10:04:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764749104; cv=none; b=BQCMQwpsg1syounx/kMXFejVFcNFCP9zg2fnsNVgrxK5ggM400TmwbD0b16E4w6jpefRriLZ8RBtm8fsRGJzuWC3nmNvx72TfbO5fqf1yaXY5PfXUnC7t71+vypVhUGEeSfFgjJY1CSM5Avmy1ylKjEDkFf+SOcTjb/BgYK4mVM=
+	t=1764842647; cv=none; b=gdqzRfJquioIFURhlyR7rcQTs3FLxtlp/2jiaw6+u0f1KTaFKL/rqb8qWf8chugyMiAJgFF0rgR4x4/4E1vZhPDyb0h6xwvQAGPeRErac4y+ixBFek33R5N8niXf3/z/nIiKP/EE2mjtjYohIKliiQ1wLq1oJSZUMyuqf6pMl6A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764749104; c=relaxed/simple;
-	bh=W1n0AeaetZUL8pTtc/RVjiVYj1lt3369qAgFmxMyL8w=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=aDvCIbgxrxLD6cRgz0m7d8d+UaeIV/Ct512B7i9wNrw+Tsp+hE3+Sk59wCGQLRM9OSlYN9gLdBnGNVvU7ctN74LsbdmZ+vNySGYKB9Rc5gIEkvoRIzzgczYfdnj9WCK8BAcjKC3blxtIsY2DWakUsc6WuZ9CMPWhDBEflQpS6SA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fpaobuMh; arc=none smtp.client-ip=209.85.210.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1764842647; c=relaxed/simple;
+	bh=ArE/hdVTiVvxgqAXC1TACYkyTmhmvDBhTBXlLDgls4M=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=DMWOJLQ4TY+dzmAmffF9APrITiJMc1+HeZBsnK5hHcvuhTaewHaTteTrAaKN2eJQwHJ+1giaqoH2EwYJK9FpO5nttCOEovl5toiQEXbbv1bgqPCEn0YoX0VDFUcAPv5abxrEqWR5cSQ7JtgKTQBUI6E/nDupsNhVDIAMcQqyNdo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Wl65G0nu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fpaobuMh"
-Received: by mail-pf1-f177.google.com with SMTP id d2e1a72fcca58-7bb710d1d1dso9887212b3a.1
-        for <damon@lists.linux.dev>; Wed, 03 Dec 2025 00:05:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1764749101; x=1765353901; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=R9a/AxV+wC8jwsiLQBhrbX+GTyTSM7uRmBDhsxzqnBc=;
-        b=fpaobuMhV2sK/54pC79bzgwFpt/iVzkE3HF9HMdmqe4o5z6J96sHU5lJAocU2YE9s8
-         4bLkqhpu4U01wZXv1L+NEiBlG+Ce5ZejNXMgYCzqJu7Pq6YQ9CXHX4jP0LTjif2sYW7c
-         oEujSOzD/EM8P816DPjpd1VBQfFndoGdCfr4PTO0IKLpi3Xs9kN4fyjyGBGXcUFZc+sv
-         rqOWD68pTxJRU/Wv1JaeLv//ZYi5oTc5FJ+6K2dR6WABDFNSjiBjhJ0VzheizEaDe3Hz
-         iXXBvbd9H1KGss9+Y9Yq3be3EaDz+sTlKmyCiT/HFih0vpCbSMeUBYELXf+uE3fZerIJ
-         +35g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1764749101; x=1765353901;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=R9a/AxV+wC8jwsiLQBhrbX+GTyTSM7uRmBDhsxzqnBc=;
-        b=frExL5D30BCAwIXL9jw4jZ7ViCy1SWjn2DuTmU9Z4fQz+mQXYlQ1c16VmJNtxUVFOs
-         W+m/aWmbvl0425Vx1y/VgaazJcTtxx7wX1msMMiCEdHxf9FCMMiF0Slz+KM+wAYXhoXx
-         DhN8zlFyMaNxnaxOdwUup3eHpDUF/wiNEY9Xa6HSvdejCNba+bDYCfygezmuVa7pYQkK
-         vAViM9RG3GqQUBI1qkDHclEpI7YwnLF2Ei3tyko0xTbxMhv2fAcVtBMORcaXDq/sY2EY
-         8elVIBiglbzz8CU1leeLEoZ5u2mCxfKPvG0o0k7Dg+LnsN4U1/xT0tEVooF7Y3NZm/SM
-         h+bw==
-X-Forwarded-Encrypted: i=1; AJvYcCWDga38rxbMgxcTukMPhA6y2HOGSiI6dSvQHNHZ7+P1lLJeriyS45suTJO84nf8Z2dGr/gNhg==@lists.linux.dev
-X-Gm-Message-State: AOJu0YzIae1ttwkR2rhgePC3/0gLK5KCjosWdxD/QzT8aEkKGDYCSrcr
-	GqLH2VW2WtBiy+FtiKQRijPUQWzwUC46G/TXRJ5Q8/vxCiYaQP/PWELk
-X-Gm-Gg: ASbGncvY9NqbtfWnvR5s9X1uXCtJ7pRXh+xq2sOY9tJlj8TVenOuhx18WFQBblCxp4Q
-	JxqGDTW4X41mevnaYwqPPodyFUhgmL/JSjxgVB4lalLXoLljqaqhdGEnCW2FHjdd9BYtxgc2diA
-	AygW2OmCJH+lAPvb5aMQ3mRp61TEV5R+IfX/z2hwsSJv2y7muIjZd60+mRhFEXhWw2i/rMhmNva
-	gibkEh6zCQMP8ybwmGwTzi8BeT2HE4Au8bJgLVjAJ47asDFR7vdv5ZtaYI3JMM/a4AkgrU7zp8T
-	X4F2TCxWPkqbS+mic62n22PkcdEZ+d+24dztu9iJltr420MiNhVH4af147dwFTm8u3rNjdmdDuh
-	V3Hm+th6jX2VXAR4qzABL9iQqkc6BD2G9YvDO/wABnEuIERLZdwimpXOEAHVVFmUvlrQXsDXL72
-	hppgaNO8FOSfL1
-X-Google-Smtp-Source: AGHT+IEKnfRdlKVBSs8FMLtPg066nv9w/0bsZDbFhrjOTm0rk01/YNwhJ9ucFUGfG3SebblIOnE7gg==
-X-Received: by 2002:a05:6a00:2d04:b0:7b8:bab9:5794 with SMTP id d2e1a72fcca58-7e00e3b938bmr1721264b3a.26.1764749101329;
-        Wed, 03 Dec 2025 00:05:01 -0800 (PST)
-Received: from HP-Note-Host.. ([222.234.91.137])
-        by smtp.googlemail.com with ESMTPSA id d2e1a72fcca58-7d15f9260a4sm19331963b3a.58.2025.12.03.00.04.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 03 Dec 2025 00:05:00 -0800 (PST)
-From: Jung-JaeJoon <rgbi3307@gmail.com>
-To: sj@kernel.org
-Cc: Jung-JaeJoon <rgbi3307@gmail.com>,
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Wl65G0nu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD75EC4CEFB;
+	Thu,  4 Dec 2025 10:04:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1764842647;
+	bh=ArE/hdVTiVvxgqAXC1TACYkyTmhmvDBhTBXlLDgls4M=;
+	h=From:To:Cc:Subject:Date:From;
+	b=Wl65G0nuaALQFV4IweK54wl0c2W2lLgcJK4D9+9fDo6TlZgDmnfvpG3IeN1koRwlR
+	 nKDnneiUJR5EYB8zVWL03kjdD8sSthJWa2npK75m9XGo1ks1HWHWXq+ld78VrQK1n3
+	 oKMM16POl2li41iO3P8PRLSGYFsIHXvalDu1voHPpOrylrVQ2P5alIfMKJiC8fvNYt
+	 oTQSEggm6gjc6BXh8KnUnPoA0Vha9Eone25cEPc64lmY/xfFcU1gD0S+0IElxt67LI
+	 /u7oGpfifeIhQNvfwSops+BCovGgMwH1Sa3f7JX6NBfCMNnyIJvUFVpwvREXzDmUM3
+	 AoUPhUEWbxkGQ==
+From: Arnd Bergmann <arnd@kernel.org>
+To: SeongJae Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Cc: Arnd Bergmann <arnd@arndb.de>,
+	Quanmin Yan <yanquanmin1@huawei.com>,
 	damon@lists.linux.dev,
 	linux-mm@kvack.org,
-	rgbi3307@naver.com
-Subject: [PATCH v2] mm/damon/stat: deduplicate intervals_goal setup in damon_stat_build_ctx()
-Date: Wed,  3 Dec 2025 17:04:33 +0900
-Message-ID: <20251203080440.16096-1-rgbi3307@gmail.com>
-X-Mailer: git-send-email 2.43.0
+	linux-kernel@vger.kernel.org
+Subject: [PATCH] mm/damon/tests/core-kunit: avoid damos_test_commit stack warning
+Date: Thu,  4 Dec 2025 11:03:54 +0100
+Message-Id: <20251204100403.1034980-1-arnd@kernel.org>
+X-Mailer: git-send-email 2.39.5
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -75,38 +45,58 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The damon_stat_build_ctx() function sets the values
-of attrs.intervals_goal structure members.
-These values are applied to damon_ctx in damon_set_attrs().
-However, It is resetting the values that were already applied previously
-to the same values.
-I suggest removing this code as it constitutes duplicate execution.
+From: Arnd Bergmann <arnd@arndb.de>
 
-Signed-off-by: Jung-JaeJoon <rgbi3307@gmail.com>
-Reviewed-by: SeongJae Park <sj@kernel.org>
+The newly added damos_test_commit() constructs multiple large structures
+on the stack, which exceeds the warning limit in some cases:
+
+In file included from mm/damon/core.c:2941:
+mm/damon/tests/core-kunit.h: In function 'damos_test_commit':
+mm/damon/tests/core-kunit.h:965:1: error: the frame size of 1520 bytes is larger than 1280 bytes [-Werror=frame-larger-than=]
+
+Split this function up into two separate ones that are called sequentially,
+so they can occupy the same stack slots.
+
+Fixes: 299a88f6ec13 ("mm/damon/tests/core-kunit: add damos_commit() test")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 ---
- mm/damon/stat.c | 8 --------
- 1 file changed, 8 deletions(-)
+ mm/damon/tests/core-kunit.h | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/mm/damon/stat.c b/mm/damon/stat.c
-index bf8626859902..51dd29685915 100644
---- a/mm/damon/stat.c
-+++ b/mm/damon/stat.c
-@@ -173,14 +173,6 @@ static struct damon_ctx *damon_stat_build_ctx(void)
- 	if (damon_set_attrs(ctx, &attrs))
- 		goto free_out;
+diff --git a/mm/damon/tests/core-kunit.h b/mm/damon/tests/core-kunit.h
+index a1eff023e928..8cb369b63e08 100644
+--- a/mm/damon/tests/core-kunit.h
++++ b/mm/damon/tests/core-kunit.h
+@@ -924,7 +924,7 @@ static void damos_test_commit_for(struct kunit *test, struct damos *dst,
+ 	}
+ }
  
--	/*
--	 * auto-tune sampling and aggregation interval aiming 4% DAMON-observed
--	 * accesses ratio, keeping sampling interval in [5ms, 10s] range.
--	 */
--	ctx->attrs.intervals_goal = (struct damon_intervals_goal) {
--		.access_bp = 400, .aggrs = 3,
--		.min_sample_us = 5000, .max_sample_us = 10000000,
--	};
- 	if (damon_select_ops(ctx, DAMON_OPS_PADDR))
- 		goto free_out;
- 
+-static void damos_test_commit(struct kunit *test)
++static void damos_test_commit_pageout(struct kunit *test)
+ {
+ 	damos_test_commit_for(test,
+ 			&(struct damos){
+@@ -945,6 +945,10 @@ static void damos_test_commit(struct kunit *test)
+ 					DAMOS_WMARK_FREE_MEM_RATE,
+ 					800, 50, 30},
+ 			});
++}
++
++static void damos_test_commit_migrate_hot(struct kunit *test)
++{
+ 	damos_test_commit_for(test,
+ 			&(struct damos){
+ 				.pattern = (struct damos_access_pattern){
+@@ -1230,7 +1234,8 @@ static struct kunit_case damon_test_cases[] = {
+ 	KUNIT_CASE(damos_test_commit_quota),
+ 	KUNIT_CASE(damos_test_commit_dests),
+ 	KUNIT_CASE(damos_test_commit_filter),
+-	KUNIT_CASE(damos_test_commit),
++	KUNIT_CASE(damos_test_commit_pageout),
++	KUNIT_CASE(damos_test_commit_migrate_hot),
+ 	KUNIT_CASE(damon_test_commit_target_regions),
+ 	KUNIT_CASE(damos_test_filter_out),
+ 	KUNIT_CASE(damon_test_feed_loop_next_input),
 -- 
-2.43.0
+2.39.5
 
