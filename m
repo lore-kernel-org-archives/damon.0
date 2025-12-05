@@ -1,107 +1,95 @@
-Received: from mailgw.kylinos.cn (mailgw.kylinos.cn [124.126.103.232])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8B543128B8
-	for <damon@lists.linux.dev>; Fri,  5 Dec 2025 10:15:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=124.126.103.232
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2E601E570D;
+	Fri,  5 Dec 2025 19:35:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764929744; cv=none; b=MLJe/5GriZsuwcNrLWBWSV4rfWdN5cz9T3voRl0GWl9BQSgeFPUH4c0fDEpJyMfD28EOYqPUVXvlho1Oi7KzkwTGaBGvExmVWlozfBt08KVf7a2MHXTPNYKZJtFkX9Y5FQWBAtRSO+mhI/lpxW5BVcmxU/y1mwHaxG17qh0RMVU=
+	t=1764963355; cv=none; b=aQl4N0dOZ3gqSNOJIajWN8ADwObNWUrVtLyk19JSCOC1dB4xGcQU/DPKnF9zIgCzyusAzO3NQRbPkdvrthJ8XNdem848TfY5Ac3KQfyxienb2IZs7u17BfDLEY1Or1ymi28RjNyE/Fh/5+N4v2+aNi+nJv5CCmchwQjqGajRGeI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764929744; c=relaxed/simple;
-	bh=1+WXuoOh5kjX/p6qM3X9llii9TYOsxXHJxFFzUhF4V4=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Ll8HayL+j+CBtid5lL3MBFd71+VGsziK16dxh293iT2Mij2n0yeLzetTcroPzc5NEt0/SsQkKqhYqXJ4Qs5+A/w6VOvYecVjVvzTABVN60Dyqs14vn00WXxq+UUdR7IIuoWbQdEpbB9GUuG+ok+DFggN6b1vubulkT4tBNSG3do=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn; spf=pass smtp.mailfrom=kylinos.cn; arc=none smtp.client-ip=124.126.103.232
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kylinos.cn
-X-UUID: 535366cad1c311f0a38c85956e01ac42-20251205
-X-CID-P-RULE: Release_Ham
-X-CID-O-INFO: VERSION:1.3.6,REQID:955f59a5-3b4b-429d-bd7a-dea09183ef29,IP:10,U
-	RL:0,TC:0,Content:0,EDM:0,RT:0,SF:-5,FILE:0,BULK:0,RULE:Release_Ham,ACTION
-	:release,TS:5
-X-CID-INFO: VERSION:1.3.6,REQID:955f59a5-3b4b-429d-bd7a-dea09183ef29,IP:10,URL
-	:0,TC:0,Content:0,EDM:0,RT:0,SF:-5,FILE:0,BULK:0,RULE:Release_Ham,ACTION:r
-	elease,TS:5
-X-CID-META: VersionHash:a9d874c,CLOUDID:8a994e7d01d71d9bcc814bd90862e641,BulkI
-	D:251205181532NSGTDAPV,BulkQuantity:0,Recheck:0,SF:17|19|64|66|78|80|81|82
-	|83|102|127|841|850|898,TC:nil,Content:0|15|50,EDM:-3,IP:-2,URL:99|1,File:
-	nil,RT:nil,Bulk:nil,QS:nil,BEC:nil,COL:0,OSI:0,OSA:0,AV:0,LES:1,SPR:NO,DKR
-	:0,DKP:0,BRR:0,BRE:0,ARC:0
-X-CID-BVR: 2,SSN|SDN
-X-CID-BAS: 2,SSN|SDN,0,_
-X-CID-FACTOR: TF_CID_SPAM_SNR,TF_CID_SPAM_FAS,TF_CID_SPAM_FSD,TF_CID_SPAM_ULS
-X-CID-RHF: D41D8CD98F00B204E9800998ECF8427E
-X-UUID: 535366cad1c311f0a38c85956e01ac42-20251205
-X-User: lienze@kylinos.cn
-Received: from localhost.localdomain [(223.70.160.239)] by mailgw.kylinos.cn
-	(envelope-from <lienze@kylinos.cn>)
-	(Generic MTA with TLSv1.3 TLS_AES_256_GCM_SHA384 256/256)
-	with ESMTP id 1541234963; Fri, 05 Dec 2025 18:15:29 +0800
-From: Enze Li <lienze@kylinos.cn>
-To: Jung-JaeJoon <rgbi3307@gmail.com>
-Cc: sj@kernel.org,  damon@lists.linux.dev,  linux-mm@kvack.org,
-  rgbi3307@naver.com, enze.li@gmx.com
-Subject: Re: [PATCH v2] mm/damon/stat: deduplicate intervals_goal setup in
- damon_stat_build_ctx()
-In-Reply-To: <20251203080440.16096-1-rgbi3307@gmail.com> (Jung-JaeJoon's
-	message of "Wed, 3 Dec 2025 17:04:33 +0900")
-References: <20251203080440.16096-1-rgbi3307@gmail.com>
-Date: Fri, 05 Dec 2025 18:15:24 +0800
-Message-ID: <875xal44lf.fsf@>
+	s=arc-20240116; t=1764963355; c=relaxed/simple;
+	bh=Jo4zjCKoG72AfS5e5YfO2hAlRtFfxB493GBbVpdnDZI=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=ibra6UV55tvgMz3XKNrjk80YfyVYiv4VB3JJGH1/EmIPbxoKvCqGc7ySap6/HiDr/uPKZRKHmSPevIwlBgMdmcvD9BWixckEm1QhXrpyIHTLOaCZ2ZhyK8qNojDPST/HtKindi7k6eHiN8aHPe5lIVc6GfaSJEhwBfwabbrFvX8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=X2q1VX+f; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="X2q1VX+f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B1E9C4CEF1;
+	Fri,  5 Dec 2025 19:35:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1764963355;
+	bh=Jo4zjCKoG72AfS5e5YfO2hAlRtFfxB493GBbVpdnDZI=;
+	h=From:To:Cc:Subject:Date:From;
+	b=X2q1VX+fPSakm2kn9lOkU7VM3+bYchl6VDy99IAV7b8yB95z6MriO7Qs46gLDOqHo
+	 oVrmeZK9xba0I/uQn8CnDddO0nr3aolWK+w4C4XbWCrsLyGhLqu7HQeDK3EuVU32lA
+	 Y7zp7m8oMQfT9XiIjV6788caylne2dgns3SNRxpU3dA1ot3uJBixNour2ORLUiRWM0
+	 24DkMadpERWJghahN2fWVcn25wDsAabQCp/G2bXCEVJ8swbuRjeQ+Hwj/vM4CY/m88
+	 /MyyYtHohUGvElnGU5d+r216P2lRT5wM9LilhOjAvnmJGxCoHL3ZPFcgMBX8uOgQAY
+	 2QYxp88BIquNA==
+From: SeongJae Park <sj@kernel.org>
+To: damon@lists.linux.dev
+Cc: SeongJae Park <sj@kernel.org>,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org
+Subject: DAMON Beer/Coffee/Tea chat reminder for the week of 2025-12-06
+Date: Fri,  5 Dec 2025 11:35:39 -0800
+Message-ID: <20251205193540.75695-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 
-Hello JaeJoon,
+Hello,
 
-Thanks for your patch!  I've a trivial comment inline, see below.
 
-On Wed, Dec 03 2025 at 05:04:33 PM +0900, Jung-JaeJoon wrote:
+This is yet another reminder of upcoming DAMON Beer/Coffee/Tea chats
+(https://docs.google.com/document/d/1v43Kcj3ly4CYqmAkMaZzLiM2GEnWfgdGbZAH3mi2vpM/edit?usp=sharing)
+for the week of 2025-12-08.
 
-> The damon_stat_build_ctx() function sets the values
-> of attrs.intervals_goal structure members.
-> These values are applied to damon_ctx in damon_set_attrs().
-> However, It is resetting the values that were already applied previously
-> to the same values.
-> I suggest removing this code as it constitutes duplicate execution.
+On the week of 2025-12-08, I will travel Japan for OSSummit Japan and LPC.
+Attending video calls on the usual Pacific time-optimized time slot during the
+week will be challenging for me.  So let's do the chats for the week without
+the pre-booked time slots, but as an unlimited and possibly in-person version.
+That is, let's make it can happen at any time and any place (not only Google
+Meet but also somewhere in Tokyo, Japan) as long as we can.
 
-Would you mind reformatting the patch description?  The kernel community
-documentation recommends wrapping lines at 75 columns [1].  While the
-current length is within the limit, adjusting it for more balanced line
-lengths would improve readability.  Also, I suggest using two spaces
-after a period instead of a line break.
+If you have any DAMON topic that you want to discuss with me during the week,
+send an email to sj@kernel.org saying you have a topic to discuss, with
+when/where you want to meet.  Then we can further adjust our schedule.  If you
+also attend OSSummit Japan or LPC in person, you are also very welcome to just
+reach out to me in person at any time/place without making appointment.  Then,
+we can have an instant in-person DAMON Beer/Coffee/Tea chat.
 
-[1] https://www.kernel.org/doc/html/latest/process/submitting-patches.html#subject-line
+So next time slots including six virtual-only ones are as below.
+
+(week of 2025-12-08 is all reservable for virtual and/or in-person chats in
+Tokyo, Japan)
+2025-12-22 (Mon) 18:00 PT (not yet reserved)
+2025-12-24 (Wed) 09:30 PT (not yet reserved)
+2026-01-05 (Mon) 18:00 PT (not yet reserved)
+2026-01-07 (Wed) 09:30 PT (not yet reserved)
+2026-01-19 (Mon) 18:00 PT (not yet reserved)
+2026-01-21 (Wed) 09:30 PT (not yet reserved)
+
+Please reach out to me (sj@kernel.org or whatever) to reserve the
+not-yet-reserved time slots for your topics.  The reservation is made in a
+First-Come First-Served way, and I will send a Google Meet link to
+reservation-confirmed attendees.
+
+Please note that other time slots are also available on demands.
+
+Shared Calendar
+---------------
+
+You can get the schedule via this shared Google Calendar:
+https://calendar.google.com/calendar/u/0?cid=ZDIwOTA4YTMxNjc2MDQ3NTIyMmUzYTM5ZmQyM2U4NDA0ZGIwZjBiYmJlZGQxNDM0MmY4ZTRjOTE0NjdhZDRiY0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t
+
+You can also get the past and upcoming schedules via
+https://docs.google.com/document/d/1v43Kcj3ly4CYqmAkMaZzLiM2GEnWfgdGbZAH3mi2vpM/edit?usp=sharing
+
 
 Thanks,
-Enze
-
->
-> Signed-off-by: Jung-JaeJoon <rgbi3307@gmail.com>
-> Reviewed-by: SeongJae Park <sj@kernel.org>
-> ---
->  mm/damon/stat.c | 8 --------
->  1 file changed, 8 deletions(-)
->
-> diff --git a/mm/damon/stat.c b/mm/damon/stat.c
-> index bf8626859902..51dd29685915 100644
-> --- a/mm/damon/stat.c
-> +++ b/mm/damon/stat.c
-> @@ -173,14 +173,6 @@ static struct damon_ctx *damon_stat_build_ctx(void)
->  	if (damon_set_attrs(ctx, &attrs))
->  		goto free_out;
->  
-> -	/*
-> -	 * auto-tune sampling and aggregation interval aiming 4% DAMON-observed
-> -	 * accesses ratio, keeping sampling interval in [5ms, 10s] range.
-> -	 */
-> -	ctx->attrs.intervals_goal = (struct damon_intervals_goal) {
-> -		.access_bp = 400, .aggrs = 3,
-> -		.min_sample_us = 5000, .max_sample_us = 10000000,
-> -	};
->  	if (damon_select_ops(ctx, DAMON_OPS_PADDR))
->  		goto free_out;
+SJ
