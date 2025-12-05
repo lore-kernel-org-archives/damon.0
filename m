@@ -1,78 +1,107 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mailgw.kylinos.cn (mailgw.kylinos.cn [124.126.103.232])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58DC82C21C5;
-	Thu,  4 Dec 2025 15:01:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8B543128B8
+	for <damon@lists.linux.dev>; Fri,  5 Dec 2025 10:15:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=124.126.103.232
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764860516; cv=none; b=IEy8DRoKrJJZEmU6D7I9LtVkHfVDRcEWi5SL/aaE5w9U2Bn7gs4BKEi85nKW65IE7ydLyQvNeba3R4zQdEBjHaE6WkWzZK9qzEqdl0OrddT2qrL1Z0C++I/DR63PQcgkBwS+HZARN/8MFILJap1IEav0vGBTJAyiiTxdGIrq/0E=
+	t=1764929744; cv=none; b=MLJe/5GriZsuwcNrLWBWSV4rfWdN5cz9T3voRl0GWl9BQSgeFPUH4c0fDEpJyMfD28EOYqPUVXvlho1Oi7KzkwTGaBGvExmVWlozfBt08KVf7a2MHXTPNYKZJtFkX9Y5FQWBAtRSO+mhI/lpxW5BVcmxU/y1mwHaxG17qh0RMVU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764860516; c=relaxed/simple;
-	bh=pR2jWjpjbwh4nwMGO8dc0JFboTlxP3WCMbfFWA/9guQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TSgOeJ4drHll7HlYud1oaun2UlXGy/NyNCNQ4mExNb1qeTrrSLLhGzzUYlfOIUDKqJ3G6lbUslCmBQAUYVWpvGtNZcjnLsczqyORlKciEEqJxcVvYXuUMFYHWLH43gEE7jZioVsXJysH64NKGuWeemYFD+bSX9xbTLY294EOQM8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JugDzLsA; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JugDzLsA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84F2BC4CEFB;
-	Thu,  4 Dec 2025 15:01:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1764860515;
-	bh=pR2jWjpjbwh4nwMGO8dc0JFboTlxP3WCMbfFWA/9guQ=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JugDzLsAwewUuWm3RGfQrZU8thoOaR36Rclgz6nb5R1ak0sG6BBGpUJ5bx2X7JKc5
-	 slbsVm2TAbf5qd9yifylxOoIS6NVdzgclPhu661zbciYKVNb/PomDtNEefoRE1Bt8s
-	 sPevnXvV258BpJwwvlt6MSRFQPlJIOA2wqStB8TAUQskOJH9s5zTDsiAszajhY0840
-	 BlZjbynt2Cu5vvMwemEMnbi3Hv4kGId99C/6EboJU9e47hfGI7bkbkpgq+LwK6ISgH
-	 9aA2MkwnTFn5ZKasx9YB9PaZO5GZdHNBG4ja0eME+zfat/3FWHFQ1H3ls5/0MK9va9
-	 YQfX5PYSoRAhw==
-From: SeongJae Park <sj@kernel.org>
-To: Arnd Bergmann <arnd@kernel.org>
-Cc: SeongJae Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Quanmin Yan <yanquanmin1@huawei.com>,
-	damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] mm/damon/tests/core-kunit: avoid damos_test_commit stack warning
-Date: Thu,  4 Dec 2025 07:01:50 -0800
-Message-ID: <20251204150151.83380-1-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20251204100403.1034980-1-arnd@kernel.org>
-References: 
+	s=arc-20240116; t=1764929744; c=relaxed/simple;
+	bh=1+WXuoOh5kjX/p6qM3X9llii9TYOsxXHJxFFzUhF4V4=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Ll8HayL+j+CBtid5lL3MBFd71+VGsziK16dxh293iT2Mij2n0yeLzetTcroPzc5NEt0/SsQkKqhYqXJ4Qs5+A/w6VOvYecVjVvzTABVN60Dyqs14vn00WXxq+UUdR7IIuoWbQdEpbB9GUuG+ok+DFggN6b1vubulkT4tBNSG3do=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn; spf=pass smtp.mailfrom=kylinos.cn; arc=none smtp.client-ip=124.126.103.232
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kylinos.cn
+X-UUID: 535366cad1c311f0a38c85956e01ac42-20251205
+X-CID-P-RULE: Release_Ham
+X-CID-O-INFO: VERSION:1.3.6,REQID:955f59a5-3b4b-429d-bd7a-dea09183ef29,IP:10,U
+	RL:0,TC:0,Content:0,EDM:0,RT:0,SF:-5,FILE:0,BULK:0,RULE:Release_Ham,ACTION
+	:release,TS:5
+X-CID-INFO: VERSION:1.3.6,REQID:955f59a5-3b4b-429d-bd7a-dea09183ef29,IP:10,URL
+	:0,TC:0,Content:0,EDM:0,RT:0,SF:-5,FILE:0,BULK:0,RULE:Release_Ham,ACTION:r
+	elease,TS:5
+X-CID-META: VersionHash:a9d874c,CLOUDID:8a994e7d01d71d9bcc814bd90862e641,BulkI
+	D:251205181532NSGTDAPV,BulkQuantity:0,Recheck:0,SF:17|19|64|66|78|80|81|82
+	|83|102|127|841|850|898,TC:nil,Content:0|15|50,EDM:-3,IP:-2,URL:99|1,File:
+	nil,RT:nil,Bulk:nil,QS:nil,BEC:nil,COL:0,OSI:0,OSA:0,AV:0,LES:1,SPR:NO,DKR
+	:0,DKP:0,BRR:0,BRE:0,ARC:0
+X-CID-BVR: 2,SSN|SDN
+X-CID-BAS: 2,SSN|SDN,0,_
+X-CID-FACTOR: TF_CID_SPAM_SNR,TF_CID_SPAM_FAS,TF_CID_SPAM_FSD,TF_CID_SPAM_ULS
+X-CID-RHF: D41D8CD98F00B204E9800998ECF8427E
+X-UUID: 535366cad1c311f0a38c85956e01ac42-20251205
+X-User: lienze@kylinos.cn
+Received: from localhost.localdomain [(223.70.160.239)] by mailgw.kylinos.cn
+	(envelope-from <lienze@kylinos.cn>)
+	(Generic MTA with TLSv1.3 TLS_AES_256_GCM_SHA384 256/256)
+	with ESMTP id 1541234963; Fri, 05 Dec 2025 18:15:29 +0800
+From: Enze Li <lienze@kylinos.cn>
+To: Jung-JaeJoon <rgbi3307@gmail.com>
+Cc: sj@kernel.org,  damon@lists.linux.dev,  linux-mm@kvack.org,
+  rgbi3307@naver.com, enze.li@gmx.com
+Subject: Re: [PATCH v2] mm/damon/stat: deduplicate intervals_goal setup in
+ damon_stat_build_ctx()
+In-Reply-To: <20251203080440.16096-1-rgbi3307@gmail.com> (Jung-JaeJoon's
+	message of "Wed, 3 Dec 2025 17:04:33 +0900")
+References: <20251203080440.16096-1-rgbi3307@gmail.com>
+Date: Fri, 05 Dec 2025 18:15:24 +0800
+Message-ID: <875xal44lf.fsf@>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-On Thu,  4 Dec 2025 11:03:54 +0100 Arnd Bergmann <arnd@kernel.org> wrote:
+Hello JaeJoon,
 
-> From: Arnd Bergmann <arnd@arndb.de>
-> 
-> The newly added damos_test_commit() constructs multiple large structures
-> on the stack, which exceeds the warning limit in some cases:
-> 
-> In file included from mm/damon/core.c:2941:
-> mm/damon/tests/core-kunit.h: In function 'damos_test_commit':
-> mm/damon/tests/core-kunit.h:965:1: error: the frame size of 1520 bytes is larger than 1280 bytes [-Werror=frame-larger-than=]
-> 
-> Split this function up into two separate ones that are called sequentially,
-> so they can occupy the same stack slots.
+Thanks for your patch!  I've a trivial comment inline, see below.
 
-Thank you for catching and fixing this, Arnd!
+On Wed, Dec 03 2025 at 05:04:33 PM +0900, Jung-JaeJoon wrote:
 
-> 
-> Fixes: 299a88f6ec13 ("mm/damon/tests/core-kunit: add damos_commit() test")
-> Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+> The damon_stat_build_ctx() function sets the values
+> of attrs.intervals_goal structure members.
+> These values are applied to damon_ctx in damon_set_attrs().
+> However, It is resetting the values that were already applied previously
+> to the same values.
+> I suggest removing this code as it constitutes duplicate execution.
 
-Reviewed-by: SeongJae Park <sj@kernel.org>
+Would you mind reformatting the patch description?  The kernel community
+documentation recommends wrapping lines at 75 columns [1].  While the
+current length is within the limit, adjusting it for more balanced line
+lengths would improve readability.  Also, I suggest using two spaces
+after a period instead of a line break.
 
+[1] https://www.kernel.org/doc/html/latest/process/submitting-patches.html#subject-line
 
 Thanks,
-SJ
+Enze
 
-[...]
+>
+> Signed-off-by: Jung-JaeJoon <rgbi3307@gmail.com>
+> Reviewed-by: SeongJae Park <sj@kernel.org>
+> ---
+>  mm/damon/stat.c | 8 --------
+>  1 file changed, 8 deletions(-)
+>
+> diff --git a/mm/damon/stat.c b/mm/damon/stat.c
+> index bf8626859902..51dd29685915 100644
+> --- a/mm/damon/stat.c
+> +++ b/mm/damon/stat.c
+> @@ -173,14 +173,6 @@ static struct damon_ctx *damon_stat_build_ctx(void)
+>  	if (damon_set_attrs(ctx, &attrs))
+>  		goto free_out;
+>  
+> -	/*
+> -	 * auto-tune sampling and aggregation interval aiming 4% DAMON-observed
+> -	 * accesses ratio, keeping sampling interval in [5ms, 10s] range.
+> -	 */
+> -	ctx->attrs.intervals_goal = (struct damon_intervals_goal) {
+> -		.access_bp = 400, .aggrs = 3,
+> -		.min_sample_us = 5000, .max_sample_us = 10000000,
+> -	};
+>  	if (damon_select_ops(ctx, DAMON_OPS_PADDR))
+>  		goto free_out;
