@@ -1,102 +1,94 @@
-Received: from mail-yx1-f44.google.com (mail-yx1-f44.google.com [74.125.224.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mailgw.kylinos.cn (mailgw.kylinos.cn [124.126.103.232])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 793C0DDC5
-	for <damon@lists.linux.dev>; Sat,  6 Dec 2025 04:17:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D47B5178372
+	for <damon@lists.linux.dev>; Sat,  6 Dec 2025 08:04:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=124.126.103.232
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764994648; cv=none; b=OA7R0LZS4oCYiFWT/ei45NJPjvGofFoEX/AjK2c3gnjVlA580ru/eMAL6bAukyz4r3VOIlCX60VpjXUGPzn80qTbXsuLPTChrPxdSnTQq5i9yREuvnGGiDzMPczl0yEmGzYJXXb84xWtwa0uI3G9wYV9hcsS9zdLWlAoVNAGpWE=
+	t=1765008257; cv=none; b=J2tU+UctjD8CVP1tQR2db+4OHZ6VexJoY31ZK+F0YiEVWJV4ANiZhJ1OhxEXlvhi6AmzwKoCP1u5Rey2ouOPdE2Pf/tCwWfISVHWtRm0b83fYXHBFipkuF34brXPiXZs1UwU0c0K30pmiVXGDLdArGMVUelhKARCfhEt7VqJTBg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764994648; c=relaxed/simple;
-	bh=z6I/SPon5vsFBts0fhfNI+MspwRwOTN1YvMCeneKp3U=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=rbATKLJGablqTKDExrTAuOWfeM2xVQWGnJ+4gaRlhIUhhPmZ5JEkXvSCgaOH7Q7wHCARsTUgkvXFbAMXo3PX2lD4b94dS/FgkSjzNqmwjUzxXqYubtFTqwKtsQLhyR94UEzkauC30VH11gOIkduT4cefEJLK3HicBP/eNjUZQgw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mvQ2aSzy; arc=none smtp.client-ip=74.125.224.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mvQ2aSzy"
-Received: by mail-yx1-f44.google.com with SMTP id 956f58d0204a3-6443b62daf6so2498440d50.0
-        for <damon@lists.linux.dev>; Fri, 05 Dec 2025 20:17:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1764994646; x=1765599446; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=gCGqBpcBaXv11CyxxHq0NCH/Lzi9jNJrRnRrD7ZpxfE=;
-        b=mvQ2aSzy27EvsNnJ+EZ0RGFoJ9j++OakORsY1R9EhOUOTG8Tb99Bj8eEcAJmj0x1Vf
-         SymMVXEFx60A/FgqAPwUIEkoS/SpARW2R+kFmHRJwRWCHF/WFCv1QzMH3Furle12rkPa
-         bhBwKu+XvGwO98MpK+U95FJKsXQRT+tvXFRzrkNTfitvV1ClbuSmHciEwSubN04Z8sa/
-         8oQIFPOB8ka9VJZk2x1Im4v6k9xHsocQbrx+2FZqzySiVVN9j23rTqqHlNBfsi2JLUVf
-         9pVGKzEWsBHZaw2Y/VS0PeD3YJZ6EAddHoVg4zQ1IIl7+htk6WMd7Umh1FKX8FHFSJ5W
-         VUAQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1764994646; x=1765599446;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=gCGqBpcBaXv11CyxxHq0NCH/Lzi9jNJrRnRrD7ZpxfE=;
-        b=dWAUvrB5CONLUljiU7wfW7TiEBAxyH0Vz0xBJHFeO4wlI7223Ykid9UxzYLY7TDsAl
-         0vkLFV7N/ZNxSfLn1z0NAcwPfssmuCG8wk6k16VCs6GMsxoULMuONDOUwVrLjTL8zDcq
-         LGHY0/FI0cW1Ec4vsMDazgramInevuut8tvw8h8N+An9WV/NcxS7ncBqbxAGPuMxjdlP
-         4QQQFkKawJjNVG1pM81yBomtE2aX7/Zsk0TwG9HH3bFIPGwIdH1z9grKRyuB90/KjOUB
-         W+LlLXQpCM4sNH0PCl4AxwAcjjRr7VvUAh9H4AIZ8A2hlSLpLSFIK2UqG0P9sQ3g9UHF
-         PqDQ==
-X-Gm-Message-State: AOJu0YwJapGZm7hMW663evp8TjEgiRNVmtKxbIGa9te3Mox3lEOMAlUw
-	yGSEnpeCRfrQJooEwdW1MaxUU35NUMtIskeEV7oRLxBm9EvVwuB6OmS/QSYuJ0++4L4G6P0lGzP
-	37NNRbJLdxzbvaEazXH1rROcc2cDlxeo=
-X-Gm-Gg: ASbGncvhLxNZKWZ47/P/m2nFlpA0irrk/b5Y3VcZAfg4qNcMgYx8PRj5Fs/n+LoVU/h
-	ufl/RcA4xpKMLxjvxGadTND0spO69MX4qch4qlU7aPOR9iv3lHZVLk3LUapTBRfGz1kFDq1CCzH
-	04KNQzEaTrCv9mJdUytBM5KWqgFRsjuILB9REUZZSxUPWKpjqO9mxwGlupSwd3dkcrf4LingM/o
-	xlHatb8rZ1AOb5tU0vBeEs04SzA/0mYejOwp9cUXJwSZVnIvJgh1jsv/qw5/3+66MUFlO47
-X-Google-Smtp-Source: AGHT+IG9/xl2G4VhMoTHl18YwbsrHUhUMHPjfhhJlIvvUrtycYH1yJ1ZnRNrFaa/+v46+WADeOT9m+FhNo77BNMtitY=
-X-Received: by 2002:a05:690e:124c:b0:63f:a6da:4b3b with SMTP id
- 956f58d0204a3-6444e74c6d5mr956904d50.14.1764994646353; Fri, 05 Dec 2025
- 20:17:26 -0800 (PST)
+	s=arc-20240116; t=1765008257; c=relaxed/simple;
+	bh=7WFAOMrQhbm4c6X3GcJ80xCvh1H23JPESjlsvIWIn7Q=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=rIg6z8vFyK4z4NUp/Co0u7dauMKnzmwQ2+nOitL81EcFFssRFV+3I4LWb5+Ti/Om4MK1nSKSVWQJzWdj96L5LdSV9qxRDHAfH+v+XHKf3sVmpubXr0q62Pxh1YXZymHo69rm3375NgIUkyB/YmCN5mwu55uOfs1lrawgAa1+rv4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn; spf=pass smtp.mailfrom=kylinos.cn; arc=none smtp.client-ip=124.126.103.232
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kylinos.cn
+X-UUID: 6703177cd27911f0a38c85956e01ac42-20251206
+X-CID-P-RULE: Release_Ham
+X-CID-O-INFO: VERSION:1.3.6,REQID:24d1c11a-0485-457b-b7ae-f774be3e8a44,IP:10,U
+	RL:0,TC:0,Content:3,EDM:0,RT:0,SF:-5,FILE:0,BULK:0,RULE:Release_Ham,ACTION
+	:release,TS:8
+X-CID-INFO: VERSION:1.3.6,REQID:24d1c11a-0485-457b-b7ae-f774be3e8a44,IP:10,URL
+	:0,TC:0,Content:3,EDM:0,RT:0,SF:-5,FILE:0,BULK:0,RULE:Release_Ham,ACTION:r
+	elease,TS:8
+X-CID-META: VersionHash:a9d874c,CLOUDID:f46e655ae615888f6a1a766054581a24,BulkI
+	D:251206095026SCT0TVTN,BulkQuantity:2,Recheck:0,SF:17|19|38|64|66|78|80|81
+	|82|83|102|127|841|898,TC:nil,Content:4|15|50,EDM:-3,IP:-2,URL:0,File:nil,
+	RT:nil,Bulk:40,QS:nil,BEC:nil,COL:0,OSI:0,OSA:0,AV:0,LES:1,SPR:NO,DKR:0,DK
+	P:0,BRR:0,BRE:0,ARC:0
+X-CID-BVR: 2,SSN|SDN
+X-CID-BAS: 2,SSN|SDN,0,_
+X-CID-FACTOR: TF_CID_SPAM_FAS,TF_CID_SPAM_FSD,TF_CID_SPAM_SNR
+X-CID-RHF: D41D8CD98F00B204E9800998ECF8427E
+X-UUID: 6703177cd27911f0a38c85956e01ac42-20251206
+X-User: lienze@kylinos.cn
+Received: from [192.168.3.106] [(61.48.214.33)] by mailgw.kylinos.cn
+	(envelope-from <lienze@kylinos.cn>)
+	(Generic MTA with TLSv1.3 TLS_AES_128_GCM_SHA256 128/128)
+	with ESMTP id 613505101; Sat, 06 Dec 2025 15:58:50 +0800
+Message-ID: <924cfaa0-ad83-4d68-a6da-c1e8537b3232@kylinos.cn>
+Date: Sat, 6 Dec 2025 15:58:45 +0800
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20251206011716.7185-1-rgbi3307@gmail.com> <20251206015010.47826-1-sj@kernel.org>
-In-Reply-To: <20251206015010.47826-1-sj@kernel.org>
-From: JaeJoon Jung <rgbi3307@gmail.com>
-Date: Sat, 6 Dec 2025 13:17:15 +0900
-X-Gm-Features: AQt7F2qsagOSR-iF20VCYZdpEZUQbABvnzlLKK-suACb2kbHTO0bBCSTeAWiK2w
-Message-ID: <CAHOvCC78_ci_6dg=ctt5HjgZDn4bVmNZw-qfATvShnn_7qoMaA@mail.gmail.com>
-Subject: Re: [PATCH v3] mm/damon/stat: deduplicate intervals_goal setup in damon_stat_build_ctx()
-To: SeongJae Park <sj@kernel.org>
-Cc: damon@lists.linux.dev, linux-mm@kvack.org, lienze@kylinos.cn
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+From: Enze Li <lienze@kylinos.cn>
+Subject: Re: [PATCH v3] mm/damon/stat: deduplicate intervals_goal setup in
+ damon_stat_build_ctx()
+To: JaeJoon Jung <rgbi3307@gmail.com>, SeongJae Park <sj@kernel.org>
+Cc: damon@lists.linux.dev, linux-mm@kvack.org, enze.li@gmx.com
+References: <20251206011716.7185-1-rgbi3307@gmail.com>
+ <20251206015010.47826-1-sj@kernel.org>
+ <CAHOvCC78_ci_6dg=ctt5HjgZDn4bVmNZw-qfATvShnn_7qoMaA@mail.gmail.com>
+Content-Language: en-US
+In-Reply-To: <CAHOvCC78_ci_6dg=ctt5HjgZDn4bVmNZw-qfATvShnn_7qoMaA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Sat, 6 Dec 2025 at 10:50, SeongJae Park <sj@kernel.org> wrote:
->
-> On Sat,  6 Dec 2025 10:17:13 +0900 JaeJoon Jung <rgbi3307@gmail.com> wrote:
->
-> > The damon_stat_build_ctx() function sets the values of intervals_goal
-> > structure members.  These values are applied to damon_ctx in
-> > damon_set_attrs().  However, It is resetting the values that were already
-> > applied previously to the same values.  I suggest removing this code as it
-> > constitutes duplicate execution.
-> >
-> > Signed-off-by: JaeJoon Jung <rgbi3307@gmail.com>
-> > Reviewed-by: Enze Li <lienze@kylinos.cn>
->
-> I show Enze did suggest changes [1] to v2 of this patch.  But I don't show Enze
-> gave Reviewed-by: tag to the patch.  Am I missing something?
+On 2025/12/6 12:17, JaeJoon Jung wrote:
+> On Sat, 6 Dec 2025 at 10:50, SeongJae Park <sj@kernel.org> wrote:
+>>
+>> On Sat,  6 Dec 2025 10:17:13 +0900 JaeJoon Jung <rgbi3307@gmail.com> wrote:
+>>
+>>> The damon_stat_build_ctx() function sets the values of intervals_goal
+>>> structure members.  These values are applied to damon_ctx in
+>>> damon_set_attrs().  However, It is resetting the values that were already
+>>> applied previously to the same values.  I suggest removing this code as it
+>>> constitutes duplicate execution.
+>>>
+>>> Signed-off-by: JaeJoon Jung <rgbi3307@gmail.com>
+>>> Reviewed-by: Enze Li <lienze@kylinos.cn>
+>>
+>> I show Enze did suggest changes [1] to v2 of this patch.  But I don't show Enze
+>> gave Reviewed-by: tag to the patch.  Am I missing something?
+> 
+> I added "Reviewed-by: Enze".
+> It is just minor commit message format suggestion.
+> Am I putting too much emphasis on this?
+> Should I delete "Reviewed-by: Enze"?
 
-I added "Reviewed-by: Enze".
-It is just minor commit message format suggestion.
-Am I putting too much emphasis on this?
-Should I delete "Reviewed-by: Enze"?
+I have carefully reviewed both the commit message and the code changes
+in the patch, it looks good to me.
 
->
-> [1] https://lore.kernel.org/875xal44lf.fsf@
->
-> > Reviewed-by: SeongJae Park <sj@kernel.org>
->
->
-> Thanks,
-> SJ
->
-> [...]
+Feel free to add,
+
+Reviewed-by: Enze Li <lienze@kylinos.cn>
+
+Thanks,
+Enze
+
+<...>
