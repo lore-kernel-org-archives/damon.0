@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71E8B31A808;
-	Mon,  8 Dec 2025 06:30:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA39631B82B;
+	Mon,  8 Dec 2025 06:30:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765175411; cv=none; b=cXZfYpyDhbwoHcRqrG3V8uDPiwsJlLmttBP3diNHG814JQBd8T0RKmax8UBLhbykhHre50bnVLyuf8/FabuL/XYcitdLu90OSaQTS81gmUNyEAV137xZHZy6QuAEZQXINPO1ZvKBnxSQ/6GMQeocWHFeH+hCN316Km4JyGexPH8=
+	t=1765175413; cv=none; b=JQaesU8ZZTLlemqrYBmTpAj0bQMMFn5QiIYKaLLUX2a/qorYW77MBEvn6oALbhVPqwsO8jcxMtZazI1mhCR+CKEx54ZidUQs+ZhMFt4htXyvV4w1lQJv53u0kUau5v7Cgdnk1L0Oz218tD7XqCc29N9mMp2IEcJZWr/4vWykYJ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765175411; c=relaxed/simple;
-	bh=55qSAyG5lbRxWMFpgyshAGzR1uB1VLHtbYjVj1MXVYk=;
+	s=arc-20240116; t=1765175413; c=relaxed/simple;
+	bh=DBAN6hkU/P5RDm6zU3vPLM0u0djvJ5SiKcRHSXDFMxg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IY2ivnbN8s4b1FNv4r/Dv90CDY4d7EUlhw33hat/rmeDysywttm9qTpzEOrFYanXn3eMzwQFrSJEb50O01i07ClSUEFskiY/vdS2eEIm1k+Xtuh5KCDTUb3Sf7MmYEzgMPzi+V0/FseLQOUo66C0Rx7kq2jBpVA0z4ddmXY9Qdw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pATG9OqS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uhjyw1+Wy12YiVlzZUqGIPwaYOPTqx/i0V5RpW9SjSFpD+gb9fl9KiA91sKVXR/s/DbSmSJS9y1fICKRMgI+hItPzarA6+jaHTAwKtwMSf5vT0nupccElG0LbGkf7Y6rCc6mblnMvXlN1adUmKW4msny6SvX/Hb3asx1mJg6fuk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=u9bFz9IJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pATG9OqS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DA33C113D0;
-	Mon,  8 Dec 2025 06:30:10 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="u9bFz9IJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A57FEC116B1;
+	Mon,  8 Dec 2025 06:30:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1765175411;
-	bh=55qSAyG5lbRxWMFpgyshAGzR1uB1VLHtbYjVj1MXVYk=;
+	s=k20201202; t=1765175412;
+	bh=DBAN6hkU/P5RDm6zU3vPLM0u0djvJ5SiKcRHSXDFMxg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pATG9OqSqP99RXBWGY7fJfLyZtQHGWBxHulVCPM+ydODfXlD5TnhqK+S5lzerqbZp
-	 ekZhX9dMxDZRFfUaHT5/AvN0sqkS6YKZcSOE0NvI5G68DU6bsdO/BIMidyCJY5f5uD
-	 7Vk+6Q1+zj24SDQCehMBMTSI5cwHPpdF896WJoTaJl0qTwmmI0QgVvTKPuzlG2xCn0
-	 ziYlMA33EZHcUSw0rkmrwUQHl+DvAYvJdYA1LgqQtpp7+g2Bk8Z30yh6aCrZ5aB4dQ
-	 PxFDxYAGQxvIu08k+g0FHN14/31RkH8JClxSmy8if7CD2SAFIcNFLbMAxaYadwxx9A
-	 H0blcK8k17xZw==
+	b=u9bFz9IJ0NFa6OquQ+K7h90ewPoaDRUvo5S3k4xHwsSXIP5d71Z+/NK6jSVU2a153
+	 t5QmPH/kEcJc+2qIbDy5odH3l5EKXL7FFsJwYu2kAW+W84JlSl0CmuK2Sbnzc5c6Fk
+	 7aiYMY3VS8WuHh06ZSNC4RuDS69q4heswKZttGoQzE3aaCiBaeGnXUAiwNagbPbnZE
+	 NsKjJv0/2StxSRaHStwFbxsKxgfxzA0mcfWBzlos2tgiw0INJuuJ+WjO3woN+xBGK+
+	 S2WUoXQIIjs3lwquGnwmXicuRu4oOYkT9VGwdhy7MDGfvSoQgUsEd+aA3eY9POSAgY
+	 dIZbaAUzOsPwA==
 From: SeongJae Park <sj@kernel.org>
 To: 
 Cc: SeongJae Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
 	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH v3 14/37] mm/damon/core: report access origin cpu of page faults
-Date: Sun,  7 Dec 2025 22:29:18 -0800
-Message-ID: <20251208062943.68824-15-sj@kernel.org>
+Subject: [RFC PATCH v3 15/37] mm/damon: implement sample filter data structure for cpus-only monitoring
+Date: Sun,  7 Dec 2025 22:29:19 -0800
+Message-ID: <20251208062943.68824-16-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20251208062943.68824-1-sj@kernel.org>
 References: <20251208062943.68824-1-sj@kernel.org>
@@ -47,25 +46,77 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The CPU that executes the page fault event reporting function is the CPU
-that made the access.  Report the origin CPU of the access.
+Access information that is reported via damon_report_access() can inform
+DAMON not only whether there was an access, but also additional things
+such as the access-generated CPU.  By filtering in/out specific types of
+the reported access based on such additional information, DAMON can
+support more fine-tuned monitoring, such as per-CPUs access monitoring.
+Implement a core API data structure for controlling such filtering.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- mm/damon/core.c | 1 +
- 1 file changed, 1 insertion(+)
+ include/linux/damon.h | 39 +++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 37 insertions(+), 2 deletions(-)
 
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index a14754a47c7f..d2f842d8afd2 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -1585,6 +1585,7 @@ void damon_report_page_fault(struct vm_fault *vmf, bool huge_pmd)
- {
- 	struct damon_access_report access_report = {
- 		.size = 1,	/* todo: set appripriately */
-+		.cpu = smp_processor_id(),
- 	};
+diff --git a/include/linux/damon.h b/include/linux/damon.h
+index e23a10ba7c92..78be584ce5dd 100644
+--- a/include/linux/damon.h
++++ b/include/linux/damon.h
+@@ -781,18 +781,53 @@ struct damon_primitives_enabled {
+ 	bool page_fault;
+ };
  
- 	if (huge_pmd)
++/**
++ * enum damon_sample_filter_type - Type of &struct damon_sample_filter.
++ *
++ * @DAMON_FILTER_TYPE_CPUMASK:	Filter by access-generated CPUs.
++ *
++ * Read &struct damon_sample_control for more details.
++ */
++enum damon_sample_filter_type {
++	DAMON_FILTER_TYPE_CPUMASK,
++};
++
++/**
++ * struct damon_sample_filter - &struct damon_access_report filter.
++ *
++ * @type:	The type of this filter.
++ * @matching:	Whether it is for condition-matching reports.
++ * @allow:	Whether to include or excludie the @matching reports.
++ * @cpumask:	Access-generated CPUs if @type is DAMON_FILTER_TYPE_CPUMASK.
++ * @list:	List head for siblings.
++ *
++ * Read &struct damon_sample_control for more details.
++ */
++struct damon_sample_filter {
++	enum damon_sample_filter_type type;
++	bool matching;
++	bool allow;
++	cpumask_t cpumask;
++	struct list_head list;
++};
++
+ /**
+  * struct damon_sample_control - Low level access check sampling rules.
+  *
+  * @primitives_enabled:	Enablement of access check primitives.
++ * @sample_filters:	List of access check sample filters.
+  *
+  * DAMON collect low level access information using sampling, and aggregate
+  * that to make higher access pattern picture.  It can use multiple sampling
+- * primitives including page table accessed bits and page fault events.  This
+- * struct is for controlling what sampling primitives to use (enable).
++ * primitives including page table accessed bits and page fault events.  It can
++ * also filter in/out specific types of sampled access events to monitor
++ * accesses of specific types, such as access-generated CPUs.  This struct is
++ * for controlling what sampling primitives to use (enable), and what sampled
++ * access events should be filtered in/out.
+  */
+ struct damon_sample_control {
+ 	struct damon_primitives_enabled primitives_enabled;
++	struct list_head sample_filters;
+ };
+ 
+ /**
 -- 
 2.47.3
