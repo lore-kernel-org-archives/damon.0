@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDB1931AAB3;
-	Mon,  8 Dec 2025 06:29:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A3D331984D;
+	Mon,  8 Dec 2025 06:30:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765175400; cv=none; b=ORBuvpDLqi+UJG/ZBCNrZMRHBq0lHHKhEcQZq0u5alTPO+pySGtco7JElqxfu270gSCxXDHb2JBchIdGi3NAk1X4Dlll0TUhLB215tP2Ln2IpOf17gzeiEYPRhfl2ccps3Uh/1e8NSwJCSIVEI1YvPN/lnWVYargeEo2VtWdv1A=
+	t=1765175401; cv=none; b=KjN7UDslZ2nWLDGM32bJ8PfgnvEdv2o0e2zQg8G6D4ShjwXn6SKmq4f1WEPpqbEyYjR7GpsJZ8lWc34pY7Y9pkU0osDYHW0rlpNvRUfalAokFVYGivnmUKVxzOepbLRXKIkY02R791O46ceSbQ43GejT/yiao45QwRMboKBJdRQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765175400; c=relaxed/simple;
-	bh=kw63posGt47cF3PzxW8YgBTIV3frYoxoD81lOplefX8=;
+	s=arc-20240116; t=1765175401; c=relaxed/simple;
+	bh=PIidHNr/VkcFOE2gAHJhxadKF2Da7aKAwZ3oDyJGFRg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ab1+xVOkBVEAOyTd5srVdp//r4BbjDML7R42e+Tp91G/i1kJ9jOw9qstELZSXVRFoKqehYcIOyHM1iYB6PD5Bx45PuWHWtDCrt2ULjfMCFYFUnbu7woretLXsWLXrw0uiAnFRcGZc08NwitqYx/iWjC2AsJ2NBAp/D6A+3vL5eU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bBWtheks; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WzQ2cS8Z0Zkpy7kk6CN8xqjBdmudBNH0T4/sjhiBbVGon9Mp6sZ01TXQ/VPZScJ9SywDoR5YnThTSK6V2cL5gC2sxlzQTWuxZei7dEK7A9u5dqytqO7PtLt3/O1UDY270Xt9RD2N1bu+BLhQt+zEmtmmC/KtlCWfRz2U9Kvek70=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IuqerH5f; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bBWtheks"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E4B2C4CEF1;
-	Mon,  8 Dec 2025 06:29:58 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IuqerH5f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF121C116B1;
+	Mon,  8 Dec 2025 06:29:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1765175399;
-	bh=kw63posGt47cF3PzxW8YgBTIV3frYoxoD81lOplefX8=;
+	s=k20201202; t=1765175400;
+	bh=PIidHNr/VkcFOE2gAHJhxadKF2Da7aKAwZ3oDyJGFRg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bBWtheksOgHWBstZsj7GigQ1TcugWneeQURbZ71ey2h+Ojpj12DQybju+3H4WjIaO
-	 8oXwugeidzsjW8kCg3bXXZVOPcB44WgQsLlE+TZbM9Fq9J934FBXgLEaTRgZzSW7BL
-	 2kb3lbw5g+TzzRC9SFzPsEL9ndBuajBI52JFKMYAyk9uusLf1jOOfgrIO2xJXvJTEn
-	 r+IWVn9PyF/M5FJmGc2aMTqNu/ceeAxcMvgIU+YPnI1JDdG2MsCxXCz8Q1OeS94nSr
-	 JXnvBWRlMqGrzYj6/pAYNxdw4YFQEhmB0Z8eiWLJJrUG96ZIFmIZtYblqvFQ7KUXZm
-	 o5deaTstAHt7g==
+	b=IuqerH5fST4Q0MUSx48O3pCSTGmeM3CXG4UcARZdiFmwDCgxJavXxf9W6niH2Szya
+	 a8KPStk1sjhHmlrO0kQVZDKgYRHZunmYcAQWbHNDyJbQfm8/u19camQsfCvZ3afmI2
+	 VrqZrkoV3ZACOyz6cJPSEsg5la75dOzdubY1oPlXdVew1BCuKgAdMScP21JtOPSr0N
+	 OxSlhXvLB/ArTSA2EzEKEsYmYQRCCWcgDb0CK4mGC75BdfG2LCR4irNdou/5NyIP1m
+	 jSj6M2gUsqa/dgoV7MF6rACA1e/d6T7wbVuf9GYDowCI9c56sNUNWf5U9yoZiW5/nV
+	 YNhgaPPwSUMwg==
 From: SeongJae Park <sj@kernel.org>
 To: 
 Cc: SeongJae Park <sj@kernel.org>,
@@ -33,9 +33,9 @@ Cc: SeongJae Park <sj@kernel.org>,
 	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH v3 07/37] mm/damon/core: apply access reports to high level snapshot
-Date: Sun,  7 Dec 2025 22:29:11 -0800
-Message-ID: <20251208062943.68824-8-sj@kernel.org>
+Subject: [RFC PATCH v3 08/37] mm/damon/sysfs: implement monitoring_attrs/sample/ dir
+Date: Sun,  7 Dec 2025 22:29:12 -0800
+Message-ID: <20251208062943.68824-9-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20251208062943.68824-1-sj@kernel.org>
 References: <20251208062943.68824-1-sj@kernel.org>
@@ -47,121 +47,108 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Now any DAMON API callers can report their observed access information.
-The DAMON core layer is just ignoring those, though.  Update the core to
-use the reported information at building the high level access pattern
-snapshot.
+Add a sysfs directory for letting DAMON ABI users control what access
+sampling primitives to use, among page table Accessed bit and page fault
+events.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- include/linux/damon.h |  1 +
- mm/damon/core.c       | 68 ++++++++++++++++++++++++++++++++++++++++++-
- 2 files changed, 68 insertions(+), 1 deletion(-)
+ mm/damon/sysfs.c | 53 ++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 53 insertions(+)
 
-diff --git a/include/linux/damon.h b/include/linux/damon.h
-index b8ebb2aa02c8..b04c2e36833a 100644
---- a/include/linux/damon.h
-+++ b/include/linux/damon.h
-@@ -83,6 +83,7 @@ struct damon_region {
- 	unsigned int age;
- /* private: Internal value for age calculation. */
- 	unsigned int last_nr_accesses;
-+	bool access_reported;
+diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
+index e2bd2d7becdd..851e8c0dc989 100644
+--- a/mm/damon/sysfs.c
++++ b/mm/damon/sysfs.c
+@@ -749,6 +749,41 @@ static const struct kobj_type damon_sysfs_intervals_ktype = {
+ 	.default_groups = damon_sysfs_intervals_groups,
  };
  
- /**
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index 296117d5e7f7..a14754a47c7f 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -137,6 +137,7 @@ struct damon_region *damon_new_region(unsigned long start, unsigned long end)
- 
- 	region->age = 0;
- 	region->last_nr_accesses = 0;
-+	region->access_reported = false;
- 
- 	return region;
- }
-@@ -2745,6 +2746,68 @@ static void kdamond_init_ctx(struct damon_ctx *ctx)
- 	}
- }
- 
-+static void kdamond_apply_access_report(struct damon_access_report *report,
-+		struct damon_target *t, struct damon_ctx *ctx)
-+{
-+	struct damon_region *r;
++/*
++ * sample directory
++ */
 +
-+	/* todo: make search faster, e.g., binary search? */
-+	damon_for_each_region(r, t) {
-+		if (report->addr < r->ar.start)
-+			continue;
-+		if (r->ar.end < report->addr + report->size)
-+			continue;
-+		if (!r->access_reported)
-+			damon_update_region_access_rate(r, true, &ctx->attrs);
-+		r->access_reported = true;
-+	}
++struct damon_sysfs_sample {
++	struct kobject kobj;
++};
++
++static struct damon_sysfs_sample *damon_sysfs_sample_alloc(void)
++{
++	struct damon_sysfs_sample *sample = kmalloc(
++			sizeof(*sample), GFP_KERNEL);
++
++	if (!sample)
++		return NULL;
++	sample->kobj = (struct kobject){};
++	return sample;
 +}
 +
-+static unsigned int kdamond_apply_zero_access_report(struct damon_ctx *ctx)
++static void damon_sysfs_sample_release(struct kobject *kobj)
 +{
-+	struct damon_target *t;
-+	struct damon_region *r;
-+	unsigned int max_nr_accesses = 0;
-+
-+	damon_for_each_target(t, ctx) {
-+		damon_for_each_region(r, t) {
-+			if (r->access_reported)
-+				r->access_reported = false;
-+			else
-+				damon_update_region_access_rate(r, false,
-+						&ctx->attrs);
-+			max_nr_accesses = max(max_nr_accesses, r->nr_accesses);
-+		}
-+	}
-+	return max_nr_accesses;
++	kfree(container_of(kobj, struct damon_sysfs_sample, kobj));
 +}
 +
-+static unsigned int kdamond_check_reported_accesses(struct damon_ctx *ctx)
-+{
-+	int i;
-+	struct damon_access_report *report;
-+	struct damon_target *t;
++static struct attribute *damon_sysfs_sample_attrs[] = {
++	NULL,
++};
++ATTRIBUTE_GROUPS(damon_sysfs_sample);
 +
-+	/* currently damon_access_report supports only physical address */
-+	if (damon_target_has_pid(ctx))
-+		return 0;
-+
-+	mutex_lock(&damon_access_reports_lock);
-+	for (i = 0; i < damon_access_reports_len; i++) {
-+		report = &damon_access_reports[i];
-+		if (time_before(report->report_jiffies,
-+					jiffies -
-+					usecs_to_jiffies(
-+						ctx->attrs.sample_interval)))
-+			continue;
-+		damon_for_each_target(t, ctx)
-+			kdamond_apply_access_report(report, t, ctx);
-+	}
-+	mutex_unlock(&damon_access_reports_lock);
-+	/* For nr_accesses_bp, absence of access should also be reported. */
-+	return kdamond_apply_zero_access_report(ctx);
-+}
++static const struct kobj_type damon_sysfs_sample_ktype = {
++	.release = damon_sysfs_sample_release,
++	.sysfs_ops = &kobj_sysfs_ops,
++	.default_groups = damon_sysfs_sample_groups,
++};
 +
  /*
-  * The monitoring daemon that runs as a kernel thread
+  * monitoring_attrs directory
   */
-@@ -2790,7 +2853,10 @@ static int kdamond_fn(void *data)
- 		kdamond_usleep(sample_interval);
- 		ctx->passed_sample_intervals++;
+@@ -757,6 +792,7 @@ struct damon_sysfs_attrs {
+ 	struct kobject kobj;
+ 	struct damon_sysfs_intervals *intervals;
+ 	struct damon_sysfs_ul_range *nr_regions_range;
++	struct damon_sysfs_sample *sample;
+ };
  
--		if (ctx->ops.check_accesses)
-+		/* todo: make these non-exclusive */
-+		if (ctx->sample_control.primitives_enabled.page_fault)
-+			max_nr_accesses = kdamond_check_reported_accesses(ctx);
-+		else if (ctx->ops.check_accesses)
- 			max_nr_accesses = ctx->ops.check_accesses(ctx);
+ static struct damon_sysfs_attrs *damon_sysfs_attrs_alloc(void)
+@@ -773,6 +809,7 @@ static int damon_sysfs_attrs_add_dirs(struct damon_sysfs_attrs *attrs)
+ {
+ 	struct damon_sysfs_intervals *intervals;
+ 	struct damon_sysfs_ul_range *nr_regions_range;
++	struct damon_sysfs_sample *sample;
+ 	int err;
  
- 		if (ctx->passed_sample_intervals >= next_aggregation_sis)
+ 	intervals = damon_sysfs_intervals_alloc(5000, 100000, 60000000);
+@@ -801,8 +838,23 @@ static int damon_sysfs_attrs_add_dirs(struct damon_sysfs_attrs *attrs)
+ 	if (err)
+ 		goto put_nr_regions_intervals_out;
+ 	attrs->nr_regions_range = nr_regions_range;
++
++	sample = damon_sysfs_sample_alloc();
++	if (!sample) {
++		err = -ENOMEM;
++		goto put_nr_regions_intervals_out;
++	}
++	err = kobject_init_and_add(&sample->kobj,
++			&damon_sysfs_sample_ktype, &attrs->kobj,
++			"sample");
++	if (err)
++		goto put_sample_out;
++	attrs->sample = sample;
+ 	return 0;
+ 
++put_sample_out:
++	kobject_put(&sample->kobj);
++	attrs->sample = NULL;
+ put_nr_regions_intervals_out:
+ 	kobject_put(&nr_regions_range->kobj);
+ 	attrs->nr_regions_range = NULL;
+@@ -817,6 +869,7 @@ static void damon_sysfs_attrs_rm_dirs(struct damon_sysfs_attrs *attrs)
+ 	kobject_put(&attrs->nr_regions_range->kobj);
+ 	damon_sysfs_intervals_rm_dirs(attrs->intervals);
+ 	kobject_put(&attrs->intervals->kobj);
++	kobject_put(&attrs->sample->kobj);
+ }
+ 
+ static void damon_sysfs_attrs_release(struct kobject *kobj)
 -- 
 2.47.3
