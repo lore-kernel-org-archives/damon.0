@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A3D331984D;
-	Mon,  8 Dec 2025 06:30:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3ACF31AA8D;
+	Mon,  8 Dec 2025 06:30:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765175401; cv=none; b=KjN7UDslZ2nWLDGM32bJ8PfgnvEdv2o0e2zQg8G6D4ShjwXn6SKmq4f1WEPpqbEyYjR7GpsJZ8lWc34pY7Y9pkU0osDYHW0rlpNvRUfalAokFVYGivnmUKVxzOepbLRXKIkY02R791O46ceSbQ43GejT/yiao45QwRMboKBJdRQ=
+	t=1765175402; cv=none; b=Vli6durf3/GgjnsvJzGEU8J0JYEp+Ce2YbnOKmFYo8E5oKjc1iujCSGw830mdDLE/XA2jzFvvfza4Ul8TotNm42Q3o7Umn6Q43DuP/SmSgON3kIyEbPeEUxny6XZVP/vVK/GCK0G1eU/6DJ7dLoyee3PwV16QfWdTpuW0Zrzb7Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765175401; c=relaxed/simple;
-	bh=PIidHNr/VkcFOE2gAHJhxadKF2Da7aKAwZ3oDyJGFRg=;
+	s=arc-20240116; t=1765175402; c=relaxed/simple;
+	bh=yNKU0Z4igXUk3W3EuJXr4KHd7edg/Rmbwvdbsef5Gq4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WzQ2cS8Z0Zkpy7kk6CN8xqjBdmudBNH0T4/sjhiBbVGon9Mp6sZ01TXQ/VPZScJ9SywDoR5YnThTSK6V2cL5gC2sxlzQTWuxZei7dEK7A9u5dqytqO7PtLt3/O1UDY270Xt9RD2N1bu+BLhQt+zEmtmmC/KtlCWfRz2U9Kvek70=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IuqerH5f; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K+8dMqEL5Krf/GAYQYZ075lES9gyDiZ7Ii240iDnE0ysKc9ylWizpprs/9acPfMDmJCF5HUIN5SiYENXJdvEME5aUNE6h7Rcis5pMjCGvdYyVT/rseQGer5LaoqZo/1Lk/lrRs8sVUspkOj19wpzf8wdIzgLNKb7CvyoqCMFJ1g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WrME62N/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IuqerH5f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF121C116B1;
-	Mon,  8 Dec 2025 06:29:59 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WrME62N/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FEA4C4CEF1;
+	Mon,  8 Dec 2025 06:30:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1765175400;
-	bh=PIidHNr/VkcFOE2gAHJhxadKF2Da7aKAwZ3oDyJGFRg=;
+	s=k20201202; t=1765175402;
+	bh=yNKU0Z4igXUk3W3EuJXr4KHd7edg/Rmbwvdbsef5Gq4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IuqerH5fST4Q0MUSx48O3pCSTGmeM3CXG4UcARZdiFmwDCgxJavXxf9W6niH2Szya
-	 a8KPStk1sjhHmlrO0kQVZDKgYRHZunmYcAQWbHNDyJbQfm8/u19camQsfCvZ3afmI2
-	 VrqZrkoV3ZACOyz6cJPSEsg5la75dOzdubY1oPlXdVew1BCuKgAdMScP21JtOPSr0N
-	 OxSlhXvLB/ArTSA2EzEKEsYmYQRCCWcgDb0CK4mGC75BdfG2LCR4irNdou/5NyIP1m
-	 jSj6M2gUsqa/dgoV7MF6rACA1e/d6T7wbVuf9GYDowCI9c56sNUNWf5U9yoZiW5/nV
-	 YNhgaPPwSUMwg==
+	b=WrME62N/PIHC0ErSD9JgYLo9mp27uJj3fEFSvF32aAnvVB0Mc9jn/hxaAvgLXa3Zy
+	 HKLkMxqoIIIYF2fMInXLwCbzYMSF4F6isxZ5pkA+LWtHcntMpjy72AiBnmrtm3Fzsd
+	 Jl5Jxw6g3zU66UjAL+5M3P1ftZ0GstG2jEsL57AfRFuqmF49XAHTpKOKxmkjH865zp
+	 39h3e/whDgUHJzw+ZhkCLPumPQv/WsrDdeAFrubui+vA69poFTnVqTMYpFmzMoRZeK
+	 3xsr3NSLbACB/5uT0gEFuTjM1TxMdzEaXwg3H7qAWiuBrdhShHMvUyRvp6QSTAirD/
+	 DJs0J+I5eOpjQ==
 From: SeongJae Park <sj@kernel.org>
 To: 
 Cc: SeongJae Park <sj@kernel.org>,
@@ -33,9 +33,9 @@ Cc: SeongJae Park <sj@kernel.org>,
 	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH v3 08/37] mm/damon/sysfs: implement monitoring_attrs/sample/ dir
-Date: Sun,  7 Dec 2025 22:29:12 -0800
-Message-ID: <20251208062943.68824-9-sj@kernel.org>
+Subject: [RFC PATCH v3 09/37] mm/damon/sysfs: implement sample/primitives/ dir
+Date: Sun,  7 Dec 2025 22:29:13 -0800
+Message-ID: <20251208062943.68824-10-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20251208062943.68824-1-sj@kernel.org>
 References: <20251208062943.68824-1-sj@kernel.org>
@@ -47,108 +47,184 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Add a sysfs directory for letting DAMON ABI users control what access
-sampling primitives to use, among page table Accessed bit and page fault
-events.
+Add a sysfs directory that will be used to let DAMON ABI users control
+what access sampling primitives to use, among page table Accessed bit,
+and page fault events.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- mm/damon/sysfs.c | 53 ++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 53 insertions(+)
+ mm/damon/sysfs.c | 132 +++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 132 insertions(+)
 
 diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
-index e2bd2d7becdd..851e8c0dc989 100644
+index 851e8c0dc989..14478fd79953 100644
 --- a/mm/damon/sysfs.c
 +++ b/mm/damon/sysfs.c
-@@ -749,6 +749,41 @@ static const struct kobj_type damon_sysfs_intervals_ktype = {
+@@ -749,12 +749,111 @@ static const struct kobj_type damon_sysfs_intervals_ktype = {
  	.default_groups = damon_sysfs_intervals_groups,
  };
  
 +/*
-+ * sample directory
++ * access check primitives directory
 + */
 +
-+struct damon_sysfs_sample {
++struct damon_sysfs_primitives {
 +	struct kobject kobj;
++	bool page_table;
++	bool page_fault;
 +};
 +
-+static struct damon_sysfs_sample *damon_sysfs_sample_alloc(void)
++static struct damon_sysfs_primitives *damon_sysfs_primitives_alloc(
++		bool page_table, bool page_fault)
 +{
-+	struct damon_sysfs_sample *sample = kmalloc(
-+			sizeof(*sample), GFP_KERNEL);
++	struct damon_sysfs_primitives *primitives = kmalloc(
++			sizeof(*primitives), GFP_KERNEL);
 +
-+	if (!sample)
++	if (!primitives)
 +		return NULL;
-+	sample->kobj = (struct kobject){};
-+	return sample;
++
++	primitives->kobj = (struct kobject){};
++	primitives->page_table = page_table;
++	primitives->page_fault = page_fault;
++	return primitives;
 +}
 +
-+static void damon_sysfs_sample_release(struct kobject *kobj)
++static ssize_t page_table_show(struct kobject *kobj,
++		struct kobj_attribute *attr, char *buf)
 +{
-+	kfree(container_of(kobj, struct damon_sysfs_sample, kobj));
++	struct damon_sysfs_primitives *primitives = container_of(kobj,
++			struct damon_sysfs_primitives, kobj);
++
++	return sysfs_emit(buf, "%c\n", primitives->page_table ? 'Y' : 'N');
 +}
 +
-+static struct attribute *damon_sysfs_sample_attrs[] = {
++static ssize_t page_table_store(struct kobject *kobj,
++		struct kobj_attribute *attr, const char *buf, size_t count)
++{
++	struct damon_sysfs_primitives *primitives = container_of(kobj,
++			struct damon_sysfs_primitives, kobj);
++	bool enable;
++	int err = kstrtobool(buf, &enable);
++
++	if (err)
++		return err;
++	primitives->page_table = enable;
++	return count;
++}
++
++static ssize_t page_fault_show(struct kobject *kobj,
++		struct kobj_attribute *attr, char *buf)
++{
++	struct damon_sysfs_primitives *primitives = container_of(kobj,
++			struct damon_sysfs_primitives, kobj);
++
++	return sysfs_emit(buf, "%c\n", primitives->page_fault ? 'Y' : 'N');
++}
++
++static ssize_t page_fault_store(struct kobject *kobj,
++		struct kobj_attribute *attr, const char *buf, size_t count)
++{
++	struct damon_sysfs_primitives *primitives = container_of(kobj,
++			struct damon_sysfs_primitives, kobj);
++	bool enable;
++	int err = kstrtobool(buf, &enable);
++
++	if (err)
++		return err;
++	primitives->page_fault = enable;
++	return count;
++}
++
++static void damon_sysfs_primitives_release(struct kobject *kobj)
++{
++	struct damon_sysfs_primitives *primitives = container_of(kobj,
++			struct damon_sysfs_primitives, kobj);
++
++	kfree(primitives);
++}
++
++static struct kobj_attribute damon_sysfs_primitives_page_table_attr =
++		__ATTR_RW_MODE(page_table, 0600);
++
++static struct kobj_attribute damon_sysfs_primitives_page_fault_attr =
++		__ATTR_RW_MODE(page_fault, 0600);
++
++static struct attribute *damon_sysfs_primitives_attrs[] = {
++	&damon_sysfs_primitives_page_table_attr.attr,
++	&damon_sysfs_primitives_page_fault_attr.attr,
 +	NULL,
 +};
-+ATTRIBUTE_GROUPS(damon_sysfs_sample);
++ATTRIBUTE_GROUPS(damon_sysfs_primitives);
 +
-+static const struct kobj_type damon_sysfs_sample_ktype = {
-+	.release = damon_sysfs_sample_release,
++static const struct kobj_type damon_sysfs_primitives_ktype = {
++	.release = damon_sysfs_primitives_release,
 +	.sysfs_ops = &kobj_sysfs_ops,
-+	.default_groups = damon_sysfs_sample_groups,
++	.default_groups = damon_sysfs_primitives_groups,
 +};
 +
  /*
-  * monitoring_attrs directory
+  * sample directory
   */
-@@ -757,6 +792,7 @@ struct damon_sysfs_attrs {
+ 
+ struct damon_sysfs_sample {
  	struct kobject kobj;
- 	struct damon_sysfs_intervals *intervals;
- 	struct damon_sysfs_ul_range *nr_regions_range;
-+	struct damon_sysfs_sample *sample;
++	struct damon_sysfs_primitives *primitives;
  };
  
- static struct damon_sysfs_attrs *damon_sysfs_attrs_alloc(void)
-@@ -773,6 +809,7 @@ static int damon_sysfs_attrs_add_dirs(struct damon_sysfs_attrs *attrs)
- {
- 	struct damon_sysfs_intervals *intervals;
- 	struct damon_sysfs_ul_range *nr_regions_range;
-+	struct damon_sysfs_sample *sample;
- 	int err;
+ static struct damon_sysfs_sample *damon_sysfs_sample_alloc(void)
+@@ -768,6 +867,35 @@ static struct damon_sysfs_sample *damon_sysfs_sample_alloc(void)
+ 	return sample;
+ }
  
- 	intervals = damon_sysfs_intervals_alloc(5000, 100000, 60000000);
-@@ -801,8 +838,23 @@ static int damon_sysfs_attrs_add_dirs(struct damon_sysfs_attrs *attrs)
- 	if (err)
- 		goto put_nr_regions_intervals_out;
- 	attrs->nr_regions_range = nr_regions_range;
++static int damon_sysfs_sample_add_dirs(
++		struct damon_sysfs_sample *sample)
++{
++	struct damon_sysfs_primitives *primitives;
++	int err;
 +
-+	sample = damon_sysfs_sample_alloc();
-+	if (!sample) {
-+		err = -ENOMEM;
-+		goto put_nr_regions_intervals_out;
-+	}
-+	err = kobject_init_and_add(&sample->kobj,
-+			&damon_sysfs_sample_ktype, &attrs->kobj,
-+			"sample");
++	primitives = damon_sysfs_primitives_alloc(true, false);
++	if (!primitives)
++		return -ENOMEM;
++	err = kobject_init_and_add(&primitives->kobj,
++			&damon_sysfs_primitives_ktype, &sample->kobj,
++			"primitives");
++	if (err)
++		goto put_primitives_out;
++	sample->primitives = primitives;
++
++put_primitives_out:
++	kobject_put(&primitives->kobj);
++	sample->primitives = NULL;
++	return err;
++}
++
++static void damon_sysfs_sample_rm_dirs(
++		struct damon_sysfs_sample *sample)
++{
++	if (sample->primitives)
++		kobject_put(&sample->primitives->kobj);
++}
++
+ static void damon_sysfs_sample_release(struct kobject *kobj)
+ {
+ 	kfree(container_of(kobj, struct damon_sysfs_sample, kobj));
+@@ -847,6 +975,9 @@ static int damon_sysfs_attrs_add_dirs(struct damon_sysfs_attrs *attrs)
+ 	err = kobject_init_and_add(&sample->kobj,
+ 			&damon_sysfs_sample_ktype, &attrs->kobj,
+ 			"sample");
 +	if (err)
 +		goto put_sample_out;
-+	attrs->sample = sample;
- 	return 0;
- 
-+put_sample_out:
-+	kobject_put(&sample->kobj);
-+	attrs->sample = NULL;
- put_nr_regions_intervals_out:
- 	kobject_put(&nr_regions_range->kobj);
- 	attrs->nr_regions_range = NULL;
-@@ -817,6 +869,7 @@ static void damon_sysfs_attrs_rm_dirs(struct damon_sysfs_attrs *attrs)
++	err = damon_sysfs_sample_add_dirs(sample);
+ 	if (err)
+ 		goto put_sample_out;
+ 	attrs->sample = sample;
+@@ -869,6 +1000,7 @@ static void damon_sysfs_attrs_rm_dirs(struct damon_sysfs_attrs *attrs)
  	kobject_put(&attrs->nr_regions_range->kobj);
  	damon_sysfs_intervals_rm_dirs(attrs->intervals);
  	kobject_put(&attrs->intervals->kobj);
-+	kobject_put(&attrs->sample->kobj);
++	damon_sysfs_sample_rm_dirs(attrs->sample);
+ 	kobject_put(&attrs->sample->kobj);
  }
  
- static void damon_sysfs_attrs_release(struct kobject *kobj)
 -- 
 2.47.3
