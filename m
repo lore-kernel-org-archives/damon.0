@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D8B331AF0A;
-	Mon,  8 Dec 2025 06:30:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6239B13790B;
+	Mon,  8 Dec 2025 06:30:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765175415; cv=none; b=mQ4lsmYGwV02ZUbLe1FprrrOTpUFdJ+IFPp7eprko3Ck6RgqJykBzr/xizcAZ+L9bA2NQcMz9kFt1E9F7ttTuf1fheJh05IdyWWpBqQ6R7BHEvINdFYGBbbKd+n8tHYBVc773EUDz+MLnT80xUvbLlsTRGfjSF+Zy4Uo9tyTYWc=
+	t=1765175417; cv=none; b=jDa3Z0bx1CT1o+dfjFk5N4XAnoDfJU1HU0v25rl7yURiV2cGwjjcGdkJYzEJ8Vb88JlnyNmmrNABwSFxFAP3g3qb7JZfx5lMWejxVudMuDHai0tL6T0DEXzPoy1K5grWlYDPFyxcPptKjO5BX+BBSFAZVDYKWUJX7fNfXuk13xI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765175415; c=relaxed/simple;
-	bh=CBKpePU8YzS24DYStTop8saXN/aFoeKY8A1ZQfy6x5c=;
+	s=arc-20240116; t=1765175417; c=relaxed/simple;
+	bh=Fdrtqh4dKdLy2JHMv9GeJLVmZnlNDk6aLdhfIH2zS/Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=utEWsi1lG7FLojZCkKH81bz5kcsMTjbbXwb0S+byZsiqo4yGwxYgn7LonVATwpJbfGNdIOZhCDcklnojSNZIWvD/+KXtq+mrFnqyJ5GI+vxuKLo7SD3szKt6BalDHB6IOv9HCBRPmgIZREmN2w+qDvMIPvYVbSvqAhHl+VCzfao=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=n1fWbwwd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kKvmaxQq1DBS9d9u4g29ZtA1yZoH+7GkT2BcysZ/zGLR1OhBKcUyMy83xTCxDsSwghl3aewHYld7XfdGFT5VmTKrvbbfcZhsP0BHj8SjaRRtVsEARg+ffPehG4RB0ULgkl+TupipZWhsyAptAFee4Hevv2QIew7KlsV2XuJtzok=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hZn3EHdk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="n1fWbwwd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 297D2C19421;
-	Mon,  8 Dec 2025 06:30:14 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hZn3EHdk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A998C116B1;
+	Mon,  8 Dec 2025 06:30:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1765175415;
-	bh=CBKpePU8YzS24DYStTop8saXN/aFoeKY8A1ZQfy6x5c=;
+	s=k20201202; t=1765175416;
+	bh=Fdrtqh4dKdLy2JHMv9GeJLVmZnlNDk6aLdhfIH2zS/Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n1fWbwwdL26H7CSpT1GiJ3AXdvHU2IoXrM7xZolVsqDyKPyOqF/8dNFIB3QywHqBy
-	 4YIGrJZ1XhOsJiXFJ5xEvJ2qURr2ItUpG13MwlQ4tvtts08nLfjyFn4LlDzJRnrJS4
-	 ApOrQasTN5tCXMWznZl364rhzFlGYVy8MdJqxyUjqQyyBK2OorUA6VEC07qdSIITgh
-	 46i5xwRlJK+r9e/oj6UeoEjJQxu6Anm/BS+ZX7IXz/23Xcz2xocIbTZl6JqYCfzyxY
-	 j6+Kms2homn/pE2wPiIPeOcGFX0tZKx34/pbbECHjMI6wpFuRfDUSzXLSppPb98TGd
-	 zp1YsLwz1jrmA==
+	b=hZn3EHdkDpxrRmJltAlArQeaA57+8Wo92tB0OhFhhDJ4QTwsfWMhHq3XoUr5ZNDpA
+	 GqBKwPf/5UC82CkIgWWTfyNVmJzrSmvqVvVn6Jt+UUQvfoDGHjye+RvrC7zuoZ20oG
+	 EgguVOwNeu6ve5Dtxrf5Bo3fzHPjtI9ZJu/dpVkNSjpWhHDSMYWoP23uhZH/xMjmka
+	 +qc4Zd9URYiVZRPV7ykkEm3gACny9AZ53ua1BElOi8w7XvPqBmls2ZWMllFgtiEnHr
+	 1/qBFl51cnDBPbOi68h1fTJnvqk8NyIIJ/3VcoZIsOHqmHlKfkcMtZukfOSXuhJdbe
+	 sFtnr5Tv+8Jmg==
 From: SeongJae Park <sj@kernel.org>
 To: 
 Cc: SeongJae Park <sj@kernel.org>,
@@ -33,9 +33,9 @@ Cc: SeongJae Park <sj@kernel.org>,
 	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH v3 17/37] mm/damon/core: commit damon_sample_filters
-Date: Sun,  7 Dec 2025 22:29:21 -0800
-Message-ID: <20251208062943.68824-18-sj@kernel.org>
+Subject: [RFC PATCH v3 18/37] mm/damon/core: apply sample filter to access reports
+Date: Sun,  7 Dec 2025 22:29:22 -0800
+Message-ID: <20251208062943.68824-19-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20251208062943.68824-1-sj@kernel.org>
 References: <20251208062943.68824-1-sj@kernel.org>
@@ -47,115 +47,77 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The data structure for access sample results filtering is not supported
-on the online parameters update function.  Hence the feature cannot be
-used with the online parameters update.  Add the support.
+The data structure for access sample results filtering is not really
+being used on the core layer.  Implement the support.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- mm/damon/core.c | 76 ++++++++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 75 insertions(+), 1 deletion(-)
+ mm/damon/core.c | 41 +++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 41 insertions(+)
 
 diff --git a/mm/damon/core.c b/mm/damon/core.c
-index 4b98473eef84..d952a833a05e 100644
+index d952a833a05e..b627fc84161c 100644
 --- a/mm/damon/core.c
 +++ b/mm/damon/core.c
-@@ -573,6 +573,19 @@ void damon_destroy_sample_filter(struct damon_sample_filter *f,
- 	damon_free_sample_filter(f);
+@@ -586,6 +586,13 @@ static struct damon_sample_filter *damon_nth_sample_filter(int n,
+ 	return NULL;
  }
  
-+static struct damon_sample_filter *damon_nth_sample_filter(int n,
++static struct damon_sample_filter *damon_last_sample_filter_or_null(
 +		struct damon_sample_control *ctrl)
 +{
-+	struct damon_sample_filter *f;
-+	int i = 0;
-+
-+	damon_for_each_sample_filter(f, ctrl) {
-+		if (i++ == n)
-+			return f;
-+	}
-+	return NULL;
++	return list_last_entry_or_null(&ctrl->sample_filters,
++			struct damon_sample_filter, list);
 +}
 +
  struct damon_ctx *damon_new_ctx(void)
  {
  	struct damon_ctx *ctx;
-@@ -1290,6 +1303,67 @@ static int damon_commit_targets(
- 	return 0;
+@@ -2866,11 +2873,45 @@ static void kdamond_init_ctx(struct damon_ctx *ctx)
+ 	}
  }
  
-+static int damon_commit_sample_filter_arg(struct damon_sample_filter *dst,
-+		struct damon_sample_filter *src)
++static bool damon_sample_filter_matching(struct damon_access_report *report,
++		struct damon_sample_filter *filter)
 +{
-+	switch (src->type) {
++	bool matched = false;
++
++	switch (filter->type) {
 +	case DAMON_FILTER_TYPE_CPUMASK:
-+		dst->cpumask = src->cpumask;
++		matched = cpumask_test_cpu(report->cpu, &filter->cpumask);
 +		break;
 +	default:
 +		break;
 +	}
-+	return 0;
++	return matched == filter->matching;
 +}
 +
-+static int damon_commit_sample_filter(struct damon_sample_filter *dst,
-+		struct damon_sample_filter *src)
++static bool damon_sample_filter_out(struct damon_access_report *report,
++		struct damon_sample_control *ctrl)
 +{
-+	int err;
++	struct damon_sample_filter *filter;
 +
-+	err = damon_commit_sample_filter_arg(dst, src);
-+	if (err)
-+		return err;
-+	dst->matching = src->matching;
-+	dst->allow = src->allow;
-+	return 0;
++	damon_for_each_sample_filter(filter, ctrl) {
++		if (damon_sample_filter_matching(report, filter) &&
++				!filter->allow)
++			return true;
++	}
++	filter = damon_last_sample_filter_or_null(ctrl);
++	if (!filter)
++		return false;
++	return !filter->allow;
 +}
 +
-+static int damon_commit_sample_filters(struct damon_sample_control *dst,
-+		struct damon_sample_control *src)
-+{
-+	struct damon_sample_filter *dst_filter, *next, *src_filter, *new_filter;
-+	int i = 0, j = 0, err;
-+
-+	damon_for_each_sample_filter_safe(dst_filter, next, dst) {
-+		src_filter = damon_nth_sample_filter(i++, src);
-+		if (src_filter) {
-+			err = damon_commit_sample_filter(dst_filter,
-+					src_filter);
-+			if (err)
-+				return err;
-+		} else {
-+			damon_destroy_sample_filter(dst_filter, dst);
-+		}
-+	}
-+
-+	damon_for_each_sample_filter_safe(src_filter, next, src) {
-+		if (j++ < i)
-+			continue;
-+
-+		new_filter = damon_new_sample_filter(
-+				src_filter->type, src_filter->matching,
-+				src_filter->allow);
-+		if (!new_filter)
-+			return -ENOMEM;
-+		err = damon_commit_sample_filter_arg(new_filter, src_filter);
-+		if (err)
-+			return err;
-+		damon_add_sample_filter(dst, new_filter);
-+	}
-+	return 0;
-+}
-+
- static bool damon_primitives_enabled_invalid(
- 		struct damon_primitives_enabled *config)
+ static void kdamond_apply_access_report(struct damon_access_report *report,
+ 		struct damon_target *t, struct damon_ctx *ctx)
  {
-@@ -1304,7 +1378,7 @@ static int damon_commit_sample_control(
- 		return -EINVAL;
+ 	struct damon_region *r;
  
- 	dst->primitives_enabled = src->primitives_enabled;
--	return 0;
-+	return damon_commit_sample_filters(dst, src);
- }
- 
- /**
++	if (damon_sample_filter_out(report, &ctx->sample_control))
++		return;
++
+ 	/* todo: make search faster, e.g., binary search? */
+ 	damon_for_each_region(r, t) {
+ 		if (report->addr < r->ar.start)
 -- 
 2.47.3
