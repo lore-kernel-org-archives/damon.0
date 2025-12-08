@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA39631B82B;
-	Mon,  8 Dec 2025 06:30:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A46531D366;
+	Mon,  8 Dec 2025 06:30:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765175413; cv=none; b=JQaesU8ZZTLlemqrYBmTpAj0bQMMFn5QiIYKaLLUX2a/qorYW77MBEvn6oALbhVPqwsO8jcxMtZazI1mhCR+CKEx54ZidUQs+ZhMFt4htXyvV4w1lQJv53u0kUau5v7Cgdnk1L0Oz218tD7XqCc29N9mMp2IEcJZWr/4vWykYJ4=
+	t=1765175414; cv=none; b=Hck9KG0fDUA0+BO38Tlg05NAFU5CLV6bANM60pesNJgFifhB0DFDXyDrNMv0FVom0bXsWi9I8SwC/zbEcpI2QZDeywCE543/6dTJeF7w6MNu94W8E0ISivC3JZhOsYrbzLhFSu5GB7l/blV7OIHI9btH3bJjEZMJC4RCCIKmIpw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765175413; c=relaxed/simple;
-	bh=DBAN6hkU/P5RDm6zU3vPLM0u0djvJ5SiKcRHSXDFMxg=;
+	s=arc-20240116; t=1765175414; c=relaxed/simple;
+	bh=YPnSi5M7u97aTRieMiHi7Bu1nhCZ+HHUKBFpBBpeqKc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uhjyw1+Wy12YiVlzZUqGIPwaYOPTqx/i0V5RpW9SjSFpD+gb9fl9KiA91sKVXR/s/DbSmSJS9y1fICKRMgI+hItPzarA6+jaHTAwKtwMSf5vT0nupccElG0LbGkf7Y6rCc6mblnMvXlN1adUmKW4msny6SvX/Hb3asx1mJg6fuk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=u9bFz9IJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=B7wwYgUPmPPBpRnL/kENzjyBvqLM/fCL44eCfgNuSYrPI9Z4kUioGEA8L9EF6ciFjgHQt5o03zxZPGKtv+F42SPPGfNOwDZRLccq0aMLip0WgZiVOwx+yDslzk1ebKJKftViUK7j0G1sL3Dem0VGKAc02f7xyA/quSLQboEGQ24=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bwtpk9Vd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="u9bFz9IJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A57FEC116B1;
-	Mon,  8 Dec 2025 06:30:11 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bwtpk9Vd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2673C113D0;
+	Mon,  8 Dec 2025 06:30:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1765175412;
-	bh=DBAN6hkU/P5RDm6zU3vPLM0u0djvJ5SiKcRHSXDFMxg=;
+	s=k20201202; t=1765175413;
+	bh=YPnSi5M7u97aTRieMiHi7Bu1nhCZ+HHUKBFpBBpeqKc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u9bFz9IJ0NFa6OquQ+K7h90ewPoaDRUvo5S3k4xHwsSXIP5d71Z+/NK6jSVU2a153
-	 t5QmPH/kEcJc+2qIbDy5odH3l5EKXL7FFsJwYu2kAW+W84JlSl0CmuK2Sbnzc5c6Fk
-	 7aiYMY3VS8WuHh06ZSNC4RuDS69q4heswKZttGoQzE3aaCiBaeGnXUAiwNagbPbnZE
-	 NsKjJv0/2StxSRaHStwFbxsKxgfxzA0mcfWBzlos2tgiw0INJuuJ+WjO3woN+xBGK+
-	 S2WUoXQIIjs3lwquGnwmXicuRu4oOYkT9VGwdhy7MDGfvSoQgUsEd+aA3eY9POSAgY
-	 dIZbaAUzOsPwA==
+	b=bwtpk9Vd4vrAjXdu+Ctd4td0gpjFcxyLgrazZzrenIIZvhJn+IUMrfbqM012cAkPK
+	 4VyOKWJtp1gDHMdQ+i+MyhhJ9tz0oclTNl3ruANfwuKzTKbjbMp2uGqePbWHoHvztQ
+	 9ghRHb7AHRZZAzH7iYKqlNrPAZuYtfgfBcdH2H3O6fZDYHfpA3bAQeGokqZ2OQ1dCs
+	 t9bkI/OOqV/F5+nKVCawY9qS0EMKXsyDlervg5viMH36AAOUy0zD54FEcU6VMZwRo4
+	 Mv6ak+y8CjbpLzR5hpINFvZFct2LEgTwreIMdv27mspWLjTQY1JJM9FHFUlEmrMoGK
+	 TJgbSfE0dwdPw==
 From: SeongJae Park <sj@kernel.org>
 To: 
 Cc: SeongJae Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH v3 15/37] mm/damon: implement sample filter data structure for cpus-only monitoring
-Date: Sun,  7 Dec 2025 22:29:19 -0800
-Message-ID: <20251208062943.68824-16-sj@kernel.org>
+Subject: [RFC PATCH v3 16/37] mm/damon/core: implement damon_sample_filter manipulations
+Date: Sun,  7 Dec 2025 22:29:20 -0800
+Message-ID: <20251208062943.68824-17-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20251208062943.68824-1-sj@kernel.org>
 References: <20251208062943.68824-1-sj@kernel.org>
@@ -46,77 +47,123 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Access information that is reported via damon_report_access() can inform
-DAMON not only whether there was an access, but also additional things
-such as the access-generated CPU.  By filtering in/out specific types of
-the reported access based on such additional information, DAMON can
-support more fine-tuned monitoring, such as per-CPUs access monitoring.
-Implement a core API data structure for controlling such filtering.
+Add basic manipulation helper functions for damon_sample_filter data
+structure.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- include/linux/damon.h | 39 +++++++++++++++++++++++++++++++++++++--
- 1 file changed, 37 insertions(+), 2 deletions(-)
+ include/linux/damon.h | 15 +++++++++++++++
+ mm/damon/core.c       | 45 +++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 60 insertions(+)
 
 diff --git a/include/linux/damon.h b/include/linux/damon.h
-index e23a10ba7c92..78be584ce5dd 100644
+index 78be584ce5dd..aff34dce7c7c 100644
 --- a/include/linux/damon.h
 +++ b/include/linux/damon.h
-@@ -781,18 +781,53 @@ struct damon_primitives_enabled {
- 	bool page_fault;
- };
+@@ -947,6 +947,12 @@ static inline unsigned long damon_sz_region(struct damon_region *r)
+ #define damon_for_each_target_safe(t, next, ctx)	\
+ 	list_for_each_entry_safe(t, next, &(ctx)->adaptive_targets, list)
  
-+/**
-+ * enum damon_sample_filter_type - Type of &struct damon_sample_filter.
-+ *
-+ * @DAMON_FILTER_TYPE_CPUMASK:	Filter by access-generated CPUs.
-+ *
-+ * Read &struct damon_sample_control for more details.
-+ */
-+enum damon_sample_filter_type {
-+	DAMON_FILTER_TYPE_CPUMASK,
-+};
++#define damon_for_each_sample_filter(f, control) \
++	list_for_each_entry(f, &(control)->sample_filters, list)
 +
-+/**
-+ * struct damon_sample_filter - &struct damon_access_report filter.
-+ *
-+ * @type:	The type of this filter.
-+ * @matching:	Whether it is for condition-matching reports.
-+ * @allow:	Whether to include or excludie the @matching reports.
-+ * @cpumask:	Access-generated CPUs if @type is DAMON_FILTER_TYPE_CPUMASK.
-+ * @list:	List head for siblings.
-+ *
-+ * Read &struct damon_sample_control for more details.
-+ */
-+struct damon_sample_filter {
-+	enum damon_sample_filter_type type;
-+	bool matching;
-+	bool allow;
-+	cpumask_t cpumask;
-+	struct list_head list;
-+};
++#define damon_for_each_sample_filter_safe(f, next, control) \
++	list_for_each_entry_safe(f, next, &(control)->sample_filters, list)
 +
- /**
-  * struct damon_sample_control - Low level access check sampling rules.
-  *
-  * @primitives_enabled:	Enablement of access check primitives.
-+ * @sample_filters:	List of access check sample filters.
-  *
-  * DAMON collect low level access information using sampling, and aggregate
-  * that to make higher access pattern picture.  It can use multiple sampling
-- * primitives including page table accessed bits and page fault events.  This
-- * struct is for controlling what sampling primitives to use (enable).
-+ * primitives including page table accessed bits and page fault events.  It can
-+ * also filter in/out specific types of sampled access events to monitor
-+ * accesses of specific types, such as access-generated CPUs.  This struct is
-+ * for controlling what sampling primitives to use (enable), and what sampled
-+ * access events should be filtered in/out.
-  */
- struct damon_sample_control {
- 	struct damon_primitives_enabled primitives_enabled;
-+	struct list_head sample_filters;
- };
+ #define damon_for_each_scheme(s, ctx) \
+ 	list_for_each_entry(s, &(ctx)->schemes, list)
  
- /**
+@@ -1022,6 +1028,15 @@ void damon_free_target(struct damon_target *t);
+ void damon_destroy_target(struct damon_target *t, struct damon_ctx *ctx);
+ unsigned int damon_nr_regions(struct damon_target *t);
+ 
++struct damon_sample_filter *damon_new_sample_filter(
++		enum damon_sample_filter_type filter_type, bool matching,
++		bool allow);
++void damon_add_sample_filter(struct damon_sample_control *ctrl,
++		struct damon_sample_filter *filter);
++void damon_free_sample_filter(struct damon_sample_filter *filter);
++void damon_destroy_sample_filter(struct damon_sample_filter *filter,
++		struct damon_sample_control *ctrl);
++
+ struct damon_ctx *damon_new_ctx(void);
+ void damon_destroy_ctx(struct damon_ctx *ctx);
+ int damon_set_attrs(struct damon_ctx *ctx, struct damon_attrs *attrs);
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index d2f842d8afd2..4b98473eef84 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -533,6 +533,46 @@ unsigned int damon_nr_regions(struct damon_target *t)
+ 	return t->nr_regions;
+ }
+ 
++struct damon_sample_filter *damon_new_sample_filter(
++		enum damon_sample_filter_type filter_type, bool matching,
++		bool allow)
++{
++	struct damon_sample_filter *filter;
++
++	filter = kmalloc(sizeof(*filter), GFP_KERNEL);
++	if (!filter)
++		return NULL;
++	filter->type = filter_type;
++	filter->matching = matching;
++	filter->allow = allow;
++	INIT_LIST_HEAD(&filter->list);
++	return filter;
++}
++
++void damon_add_sample_filter(struct damon_sample_control *ctrl,
++		struct damon_sample_filter *filter)
++{
++	list_add_tail(&filter->list, &ctrl->sample_filters);
++}
++
++static void damon_del_sample_filter(struct damon_sample_filter *f,
++		struct damon_sample_control *ctrl)
++{
++	list_del(&f->list);
++}
++
++void damon_free_sample_filter(struct damon_sample_filter *f)
++{
++	kfree(f);
++}
++
++void damon_destroy_sample_filter(struct damon_sample_filter *f,
++		struct damon_sample_control *ctrl)
++{
++	damon_del_sample_filter(f, ctrl);
++	damon_free_sample_filter(f);
++}
++
+ struct damon_ctx *damon_new_ctx(void)
+ {
+ 	struct damon_ctx *ctx;
+@@ -561,6 +601,7 @@ struct damon_ctx *damon_new_ctx(void)
+ 	ctx->attrs.max_nr_regions = 1000;
+ 
+ 	ctx->sample_control.primitives_enabled.page_table = true;
++	INIT_LIST_HEAD(&ctx->sample_control.sample_filters);
+ 
+ 	ctx->addr_unit = 1;
+ 	ctx->min_sz_region = DAMON_MIN_REGION;
+@@ -582,12 +623,16 @@ static void damon_destroy_targets(struct damon_ctx *ctx)
+ void damon_destroy_ctx(struct damon_ctx *ctx)
+ {
+ 	struct damos *s, *next_s;
++	struct damon_sample_filter *f, *next_f;
+ 
+ 	damon_destroy_targets(ctx);
+ 
+ 	damon_for_each_scheme_safe(s, next_s, ctx)
+ 		damon_destroy_scheme(s);
+ 
++	damon_for_each_sample_filter_safe(f, next_f, &ctx->sample_control)
++		damon_destroy_sample_filter(f, &ctx->sample_control);
++
+ 	kfree(ctx);
+ }
+ 
 -- 
 2.47.3
