@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6239B13790B;
-	Mon,  8 Dec 2025 06:30:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E52131A808;
+	Mon,  8 Dec 2025 06:30:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765175417; cv=none; b=jDa3Z0bx1CT1o+dfjFk5N4XAnoDfJU1HU0v25rl7yURiV2cGwjjcGdkJYzEJ8Vb88JlnyNmmrNABwSFxFAP3g3qb7JZfx5lMWejxVudMuDHai0tL6T0DEXzPoy1K5grWlYDPFyxcPptKjO5BX+BBSFAZVDYKWUJX7fNfXuk13xI=
+	t=1765175418; cv=none; b=YXczHs09oC+bglNRCGBJigbybdsEOU68/4JWFISgKxsVvvSdxaNvS/RIj/ftp7v+btUTfo/SMLacxpv0jASoLdVJ0fwONFtZfdH4T1ZNVXBO8TbLXdso4q1F1job/WOe/nN5h0vHOD6e+DyR4yOHNANFG4PYH9NhyYMqNsZy5VI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765175417; c=relaxed/simple;
-	bh=Fdrtqh4dKdLy2JHMv9GeJLVmZnlNDk6aLdhfIH2zS/Q=;
+	s=arc-20240116; t=1765175418; c=relaxed/simple;
+	bh=R9m1eSl/V//tH4nv+68KXrctOAqXsKHuChO2fV0643Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kKvmaxQq1DBS9d9u4g29ZtA1yZoH+7GkT2BcysZ/zGLR1OhBKcUyMy83xTCxDsSwghl3aewHYld7XfdGFT5VmTKrvbbfcZhsP0BHj8SjaRRtVsEARg+ffPehG4RB0ULgkl+TupipZWhsyAptAFee4Hevv2QIew7KlsV2XuJtzok=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hZn3EHdk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XElzzI6kah4QJkypF0f+UtlT48iIBUKok7v8owBWA5n2OJAOoKZQsmvrcAXFFxaBbt851CeyM2kmVjfNt7yK4Lf4C4VmmjiGCxjgAqZuolbnYuut+Uh1qaIv9k4WOzWiv67LTLFB4uVEByeMb4DjTm321/o/UxZpwN1UdUy2L64=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KBamaiLI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hZn3EHdk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A998C116B1;
-	Mon,  8 Dec 2025 06:30:15 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KBamaiLI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB7B3C4CEF1;
+	Mon,  8 Dec 2025 06:30:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1765175416;
-	bh=Fdrtqh4dKdLy2JHMv9GeJLVmZnlNDk6aLdhfIH2zS/Q=;
+	s=k20201202; t=1765175417;
+	bh=R9m1eSl/V//tH4nv+68KXrctOAqXsKHuChO2fV0643Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hZn3EHdkDpxrRmJltAlArQeaA57+8Wo92tB0OhFhhDJ4QTwsfWMhHq3XoUr5ZNDpA
-	 GqBKwPf/5UC82CkIgWWTfyNVmJzrSmvqVvVn6Jt+UUQvfoDGHjye+RvrC7zuoZ20oG
-	 EgguVOwNeu6ve5Dtxrf5Bo3fzHPjtI9ZJu/dpVkNSjpWhHDSMYWoP23uhZH/xMjmka
-	 +qc4Zd9URYiVZRPV7ykkEm3gACny9AZ53ua1BElOi8w7XvPqBmls2ZWMllFgtiEnHr
-	 1/qBFl51cnDBPbOi68h1fTJnvqk8NyIIJ/3VcoZIsOHqmHlKfkcMtZukfOSXuhJdbe
-	 sFtnr5Tv+8Jmg==
+	b=KBamaiLINXILpgvGkgCQPbnTIHWtwp2rObqcA/i3cCRUkLuYOUTyDUBNU0lqHPqWJ
+	 gVbtbaaGI3dPObeMnBCW58NnnqLc707Oiqa7T8R3biwJ9nF94DTs0P6XVf6hOPpLQF
+	 l1+UpWH3GBSnC0/rp1YEGAABhen7ltyKK3nHuk42tlZDfVzhbzsIWfG1pTwjDTW3pK
+	 gmRChhrcxN7V406wIiciL5N7BlFleI+z6LkmuU00RUgoAr8vXhBFf6XLE0I6VadldR
+	 X+di5Q5FhDiFvn5zl+dLDLPKZDnzLSJRp0shJ6RhRJ02fowl7VGccZra1NDAEqaNg9
+	 DCh5eL0wV/IPQ==
 From: SeongJae Park <sj@kernel.org>
 To: 
 Cc: SeongJae Park <sj@kernel.org>,
@@ -33,9 +33,9 @@ Cc: SeongJae Park <sj@kernel.org>,
 	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH v3 18/37] mm/damon/core: apply sample filter to access reports
-Date: Sun,  7 Dec 2025 22:29:22 -0800
-Message-ID: <20251208062943.68824-19-sj@kernel.org>
+Subject: [RFC PATCH v3 19/37] mm/damon/sysfs: implement sample/filters/ directory
+Date: Sun,  7 Dec 2025 22:29:23 -0800
+Message-ID: <20251208062943.68824-20-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20251208062943.68824-1-sj@kernel.org>
 References: <20251208062943.68824-1-sj@kernel.org>
@@ -47,77 +47,100 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The data structure for access sample results filtering is not really
-being used on the core layer.  Implement the support.
+Add a directory for letting DAMON ABI users install and uninstall DAMON
+sample filters.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- mm/damon/core.c | 41 +++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 41 insertions(+)
+ mm/damon/sysfs.c | 48 ++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 48 insertions(+)
 
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index d952a833a05e..b627fc84161c 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -586,6 +586,13 @@ static struct damon_sample_filter *damon_nth_sample_filter(int n,
- 	return NULL;
+diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
+index 16d58cde03e8..4208fed2b8df 100644
+--- a/mm/damon/sysfs.c
++++ b/mm/damon/sysfs.c
+@@ -749,6 +749,36 @@ static const struct kobj_type damon_sysfs_intervals_ktype = {
+ 	.default_groups = damon_sysfs_intervals_groups,
+ };
+ 
++/*
++ * access check report filters directory
++ */
++
++struct damon_sysfs_sample_filters {
++	struct kobject kobj;
++};
++
++static struct damon_sysfs_sample_filters *
++damon_sysfs_sample_filters_alloc(void)
++{
++	return kzalloc(sizeof(struct damon_sysfs_sample_filters), GFP_KERNEL);
++}
++
++static void damon_sysfs_sample_filters_release(struct kobject *kobj)
++{
++	kfree(container_of(kobj, struct damon_sysfs_sample_filters, kobj));
++}
++
++static struct attribute *damon_sysfs_sample_filters_attrs[] = {
++	NULL,
++};
++ATTRIBUTE_GROUPS(damon_sysfs_sample_filters);
++
++static const struct kobj_type damon_sysfs_sample_filters_ktype = {
++	.release = damon_sysfs_sample_filters_release,
++	.sysfs_ops = &kobj_sysfs_ops,
++	.default_groups = damon_sysfs_sample_filters_groups,
++};
++
+ /*
+  * access check primitives directory
+  */
+@@ -854,6 +884,7 @@ static const struct kobj_type damon_sysfs_primitives_ktype = {
+ struct damon_sysfs_sample {
+ 	struct kobject kobj;
+ 	struct damon_sysfs_primitives *primitives;
++	struct damon_sysfs_sample_filters *filters;
+ };
+ 
+ static struct damon_sysfs_sample *damon_sysfs_sample_alloc(void)
+@@ -871,6 +902,7 @@ static int damon_sysfs_sample_add_dirs(
+ 		struct damon_sysfs_sample *sample)
+ {
+ 	struct damon_sysfs_primitives *primitives;
++	struct damon_sysfs_sample_filters *filters;
+ 	int err;
+ 
+ 	primitives = damon_sysfs_primitives_alloc(true, false);
+@@ -883,6 +915,19 @@ static int damon_sysfs_sample_add_dirs(
+ 		goto put_primitives_out;
+ 	sample->primitives = primitives;
+ 
++	filters = damon_sysfs_sample_filters_alloc();
++	if (!filters)
++		return -ENOMEM;
++	err = kobject_init_and_add(&filters->kobj,
++			&damon_sysfs_sample_filters_ktype, &sample->kobj,
++			"filters");
++	if (err)
++		goto put_filters_out;
++	sample->filters = filters;
++	return 0;
++put_filters_out:
++	kobject_put(&filters->kobj);
++	sample->filters = NULL;
+ put_primitives_out:
+ 	kobject_put(&primitives->kobj);
+ 	sample->primitives = NULL;
+@@ -894,6 +939,9 @@ static void damon_sysfs_sample_rm_dirs(
+ {
+ 	if (sample->primitives)
+ 		kobject_put(&sample->primitives->kobj);
++	if (sample->filters) {
++		kobject_put(&sample->filters->kobj);
++	}
  }
  
-+static struct damon_sample_filter *damon_last_sample_filter_or_null(
-+		struct damon_sample_control *ctrl)
-+{
-+	return list_last_entry_or_null(&ctrl->sample_filters,
-+			struct damon_sample_filter, list);
-+}
-+
- struct damon_ctx *damon_new_ctx(void)
- {
- 	struct damon_ctx *ctx;
-@@ -2866,11 +2873,45 @@ static void kdamond_init_ctx(struct damon_ctx *ctx)
- 	}
- }
- 
-+static bool damon_sample_filter_matching(struct damon_access_report *report,
-+		struct damon_sample_filter *filter)
-+{
-+	bool matched = false;
-+
-+	switch (filter->type) {
-+	case DAMON_FILTER_TYPE_CPUMASK:
-+		matched = cpumask_test_cpu(report->cpu, &filter->cpumask);
-+		break;
-+	default:
-+		break;
-+	}
-+	return matched == filter->matching;
-+}
-+
-+static bool damon_sample_filter_out(struct damon_access_report *report,
-+		struct damon_sample_control *ctrl)
-+{
-+	struct damon_sample_filter *filter;
-+
-+	damon_for_each_sample_filter(filter, ctrl) {
-+		if (damon_sample_filter_matching(report, filter) &&
-+				!filter->allow)
-+			return true;
-+	}
-+	filter = damon_last_sample_filter_or_null(ctrl);
-+	if (!filter)
-+		return false;
-+	return !filter->allow;
-+}
-+
- static void kdamond_apply_access_report(struct damon_access_report *report,
- 		struct damon_target *t, struct damon_ctx *ctx)
- {
- 	struct damon_region *r;
- 
-+	if (damon_sample_filter_out(report, &ctx->sample_control))
-+		return;
-+
- 	/* todo: make search faster, e.g., binary search? */
- 	damon_for_each_region(r, t) {
- 		if (report->addr < r->ar.start)
+ static void damon_sysfs_sample_release(struct kobject *kobj)
 -- 
 2.47.3
