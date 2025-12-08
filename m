@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71A2731AF25;
-	Mon,  8 Dec 2025 06:30:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71E8B31A808;
+	Mon,  8 Dec 2025 06:30:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765175410; cv=none; b=SAqWz0B3naZGTFZR7ZaDt/XeLuy6FZlhfFAQ8a5CDPNtsLJhxGuOE/S+SuyqP1P1g7+FNTBeeRtuhL8I6gJTw1BbrjAImpVyt42bbbgQGp45Pfh+FD5oEtYvLh6zUYJtKWeoprP0oCapRLlW/6SgUCC0c8om6EFIxxqBcV9/Pjg=
+	t=1765175411; cv=none; b=cXZfYpyDhbwoHcRqrG3V8uDPiwsJlLmttBP3diNHG814JQBd8T0RKmax8UBLhbykhHre50bnVLyuf8/FabuL/XYcitdLu90OSaQTS81gmUNyEAV137xZHZy6QuAEZQXINPO1ZvKBnxSQ/6GMQeocWHFeH+hCN316Km4JyGexPH8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765175410; c=relaxed/simple;
-	bh=At5tPajQSPLt9hOlFCrxmrzWPKun1WpQ7z3727tgAL0=;
+	s=arc-20240116; t=1765175411; c=relaxed/simple;
+	bh=55qSAyG5lbRxWMFpgyshAGzR1uB1VLHtbYjVj1MXVYk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=txe6HiZRFlCstd3iL2xteJ8PPnPhU8f08hDKa5Wse32qLu1RUTi44MDSK0S3slUO0oY03xf+1amN0d/5XO8Ik5ivJEfS8+LQo90V0APNHlyxQvU89oolmTOx1Ocnv1fGqXQeJAbWQtX1wUHLvHFOcg4HHShkL2OBnLjL9KvZDsY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bWYxgDEw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IY2ivnbN8s4b1FNv4r/Dv90CDY4d7EUlhw33hat/rmeDysywttm9qTpzEOrFYanXn3eMzwQFrSJEb50O01i07ClSUEFskiY/vdS2eEIm1k+Xtuh5KCDTUb3Sf7MmYEzgMPzi+V0/FseLQOUo66C0Rx7kq2jBpVA0z4ddmXY9Qdw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pATG9OqS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bWYxgDEw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23296C116B1;
-	Mon,  8 Dec 2025 06:30:09 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pATG9OqS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DA33C113D0;
+	Mon,  8 Dec 2025 06:30:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1765175409;
-	bh=At5tPajQSPLt9hOlFCrxmrzWPKun1WpQ7z3727tgAL0=;
+	s=k20201202; t=1765175411;
+	bh=55qSAyG5lbRxWMFpgyshAGzR1uB1VLHtbYjVj1MXVYk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bWYxgDEwewUI4Si1uvn2A7qlU6sI0b+yWp6SF/szJF2mbBBdXg0ZIAIekRW+ZOrrG
-	 6TbmzOGczenZfeBVT1eGwM8skmQNCoC+T7rzUAg1s/D7qKk5krfv223sDy+Et7SKYV
-	 oKDb/jYUtQD9s5Sp7d1+s6HJyBRA78C9StrcOfWWsYip5AOF/H+pRJNQBU5+6oOv9w
-	 bB8o7cqHCaJ9YJ8Qk3M3o0RMOD2nKZPDQiL6V77bFV/BxTWnDPT447D3IS3ql5eu4y
-	 Hm319ClPVM1KMf1IeY6kU7NtDbSWg2Wq3lUwZjBk+UOcPyDyvcpSJnwXRSjLE7qQRx
-	 /YO2G1qXPqUiw==
+	b=pATG9OqSqP99RXBWGY7fJfLyZtQHGWBxHulVCPM+ydODfXlD5TnhqK+S5lzerqbZp
+	 ekZhX9dMxDZRFfUaHT5/AvN0sqkS6YKZcSOE0NvI5G68DU6bsdO/BIMidyCJY5f5uD
+	 7Vk+6Q1+zj24SDQCehMBMTSI5cwHPpdF896WJoTaJl0qTwmmI0QgVvTKPuzlG2xCn0
+	 ziYlMA33EZHcUSw0rkmrwUQHl+DvAYvJdYA1LgqQtpp7+g2Bk8Z30yh6aCrZ5aB4dQ
+	 PxFDxYAGQxvIu08k+g0FHN14/31RkH8JClxSmy8if7CD2SAFIcNFLbMAxaYadwxx9A
+	 H0blcK8k17xZw==
 From: SeongJae Park <sj@kernel.org>
 To: 
 Cc: SeongJae Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH v3 13/37] mm/damon: extend damon_access_report for origin CPU reporting
-Date: Sun,  7 Dec 2025 22:29:17 -0800
-Message-ID: <20251208062943.68824-14-sj@kernel.org>
+Subject: [RFC PATCH v3 14/37] mm/damon/core: report access origin cpu of page faults
+Date: Sun,  7 Dec 2025 22:29:18 -0800
+Message-ID: <20251208062943.68824-15-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20251208062943.68824-1-sj@kernel.org>
 References: <20251208062943.68824-1-sj@kernel.org>
@@ -46,33 +47,25 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Add a field to damon_access_report that can be used to report which CPU
-has made the reporting access.
+The CPU that executes the page fault event reporting function is the CPU
+that made the access.  Report the origin CPU of the access.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- include/linux/damon.h | 2 ++
- 1 file changed, 2 insertions(+)
+ mm/damon/core.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/include/linux/damon.h b/include/linux/damon.h
-index b04c2e36833a..e23a10ba7c92 100644
---- a/include/linux/damon.h
-+++ b/include/linux/damon.h
-@@ -115,6 +115,7 @@ struct damon_target {
-  * struct damon_access_report - Represent single acces report information.
-  * @addr:		The start address of the accessed address range.
-  * @size:		The size of the accessed address range.
-+ * @cpu:		The id of the CPU that made the access.
-  *
-  * Any DAMON API callers that notified access events can report the information
-  * to DAMON using damon_report_access().  This struct contains the reporting
-@@ -123,6 +124,7 @@ struct damon_target {
- struct damon_access_report {
- 	unsigned long addr;
- 	unsigned long size;
-+	unsigned int cpu;
- /* private: */
- 	unsigned long report_jiffies;	/* when this report is made */
- };
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index a14754a47c7f..d2f842d8afd2 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -1585,6 +1585,7 @@ void damon_report_page_fault(struct vm_fault *vmf, bool huge_pmd)
+ {
+ 	struct damon_access_report access_report = {
+ 		.size = 1,	/* todo: set appripriately */
++		.cpu = smp_processor_id(),
+ 	};
+ 
+ 	if (huge_pmd)
 -- 
 2.47.3
