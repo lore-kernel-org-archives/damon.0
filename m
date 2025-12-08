@@ -1,50 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D9BC31A041;
-	Mon,  8 Dec 2025 06:30:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71A2731AF25;
+	Mon,  8 Dec 2025 06:30:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765175409; cv=none; b=pSoS8r8t1aql6bkZ6UR+ueuOL5q8mXnQJDWwVBTioo9sU5oZzlI2HEx3TjdkKlNEwGSJuHtX2xtK4TrbJ7A8UtsLA3PYh4cWOX4orXHarVmWdbZtg8RNuDlsh1LOkBhcRb94nzZDmAA/KyVzaxIGjNVm2bMyMd04LjND4rs0F7o=
+	t=1765175410; cv=none; b=SAqWz0B3naZGTFZR7ZaDt/XeLuy6FZlhfFAQ8a5CDPNtsLJhxGuOE/S+SuyqP1P1g7+FNTBeeRtuhL8I6gJTw1BbrjAImpVyt42bbbgQGp45Pfh+FD5oEtYvLh6zUYJtKWeoprP0oCapRLlW/6SgUCC0c8om6EFIxxqBcV9/Pjg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765175409; c=relaxed/simple;
-	bh=BIoh7tGOQxVtDXmZY7UkJm8cloeuUXw++f1jh950BB0=;
+	s=arc-20240116; t=1765175410; c=relaxed/simple;
+	bh=At5tPajQSPLt9hOlFCrxmrzWPKun1WpQ7z3727tgAL0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=uIfRbH4kZdSPuSG9yW0T1QNVFZH20ZNy81OvBZFrJssrLIgcaNmJXHCwrWGJT495uqR+lfGdByckTOz/ON61PjeGy1Cex0YEGS0kqR4hZCdpuUDErU+yIn/VOcIdPVzgFI97L/8uQgY3MJ882uIbFnjUHYMoD8j92/aPgWGf41k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RLiFBe5i; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=txe6HiZRFlCstd3iL2xteJ8PPnPhU8f08hDKa5Wse32qLu1RUTi44MDSK0S3slUO0oY03xf+1amN0d/5XO8Ik5ivJEfS8+LQo90V0APNHlyxQvU89oolmTOx1Ocnv1fGqXQeJAbWQtX1wUHLvHFOcg4HHShkL2OBnLjL9KvZDsY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bWYxgDEw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RLiFBe5i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 849C5C113D0;
-	Mon,  8 Dec 2025 06:30:06 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bWYxgDEw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23296C116B1;
+	Mon,  8 Dec 2025 06:30:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1765175408;
-	bh=BIoh7tGOQxVtDXmZY7UkJm8cloeuUXw++f1jh950BB0=;
+	s=k20201202; t=1765175409;
+	bh=At5tPajQSPLt9hOlFCrxmrzWPKun1WpQ7z3727tgAL0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RLiFBe5iASWmPouudCyfwWsSiKUlu5UqEFg7KIkZQ/15AoC6ic71KPhH1QVqAemjA
-	 As92e7k+awmI3oMmflwuPiaCwOgOXfB750LFYek0Em9a1uC/cVSpPE3OW2RSaXxIns
-	 UMOV1bRFEhAyqm5pSNNbLO7on0TsM7STy06hTRilHUjQsWRaUyAMAeuyJBCC9Yk6Wq
-	 yqMU0lkBOT3CYS9cP38/onZptUSA9GxM8y/5OywZnlUl2U3y99wX5KeliufVc801xl
-	 WRbO8jkdXllfuVYJAgwRLrwFlQ3JeEKU1Pdc7BqduYfgJQ9sG8/Yg5KJUUTwxPHGeS
-	 7m/a/Ud+zItLw==
+	b=bWYxgDEwewUI4Si1uvn2A7qlU6sI0b+yWp6SF/szJF2mbBBdXg0ZIAIekRW+ZOrrG
+	 6TbmzOGczenZfeBVT1eGwM8skmQNCoC+T7rzUAg1s/D7qKk5krfv223sDy+Et7SKYV
+	 oKDb/jYUtQD9s5Sp7d1+s6HJyBRA78C9StrcOfWWsYip5AOF/H+pRJNQBU5+6oOv9w
+	 bB8o7cqHCaJ9YJ8Qk3M3o0RMOD2nKZPDQiL6V77bFV/BxTWnDPT447D3IS3ql5eu4y
+	 Hm319ClPVM1KMf1IeY6kU7NtDbSWg2Wq3lUwZjBk+UOcPyDyvcpSJnwXRSjLE7qQRx
+	 /YO2G1qXPqUiw==
 From: SeongJae Park <sj@kernel.org>
 To: 
 Cc: SeongJae Park <sj@kernel.org>,
-	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	David Hildenbrand <david@kernel.org>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
-	Michal Hocko <mhocko@suse.com>,
-	Mike Rapoport <rppt@kernel.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Vlastimil Babka <vbabka@suse.cz>,
 	damon@lists.linux.dev,
-	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH v3 12/37] Docs/admin-guide/mm/damon/usage: document sample primitives dir
-Date: Sun,  7 Dec 2025 22:29:16 -0800
-Message-ID: <20251208062943.68824-13-sj@kernel.org>
+Subject: [RFC PATCH v3 13/37] mm/damon: extend damon_access_report for origin CPU reporting
+Date: Sun,  7 Dec 2025 22:29:17 -0800
+Message-ID: <20251208062943.68824-14-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20251208062943.68824-1-sj@kernel.org>
 References: <20251208062943.68824-1-sj@kernel.org>
@@ -54,61 +44,35 @@ List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Update DAMON usage document for the selective access sampling primitives
-activation, which is essential for using page fault events as the access
-check sampling primitive.
+Add a field to damon_access_report that can be used to report which CPU
+has made the reporting access.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- Documentation/admin-guide/mm/damon/usage.rst | 19 ++++++++++++++++---
- 1 file changed, 16 insertions(+), 3 deletions(-)
+ include/linux/damon.h | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/Documentation/admin-guide/mm/damon/usage.rst b/Documentation/admin-guide/mm/damon/usage.rst
-index 7da4c002cb39..897a89950351 100644
---- a/Documentation/admin-guide/mm/damon/usage.rst
-+++ b/Documentation/admin-guide/mm/damon/usage.rst
-@@ -65,6 +65,7 @@ comma (",").
-     │ │ │ │ │ :ref:`monitoring_attrs <sysfs_monitoring_attrs>`/
-     │ │ │ │ │ │ intervals/sample_us,aggr_us,update_us
-     │ │ │ │ │ │ │ intervals_goal/access_bp,aggrs,min_sample_us,max_sample_us
-+    │ │ │ │ │ │ sample/primitives/page_table,page_faults
-     │ │ │ │ │ │ nr_regions/min,max
-     │ │ │ │ │ :ref:`targets <sysfs_targets>`/nr_targets
-     │ │ │ │ │ │ :ref:`0 <sysfs_target>`/pid_target,obsolete_target
-@@ -215,9 +216,9 @@ contexts/<N>/monitoring_attrs/
- ------------------------------
- 
- Files for specifying attributes of the monitoring including required quality
--and efficiency of the monitoring are in ``monitoring_attrs`` directory.
--Specifically, two directories, ``intervals`` and ``nr_regions`` exist in this
--directory.
-+and efficiency of the monitoring, and types of accesses to monitor are in
-+``monitoring_attrs`` directory.  Specifically, three directories, ``intervals``
-+, ``nr_regions`` and ``sample`` exist in this directory.
- 
- Under ``intervals`` directory, three files for DAMON's sampling interval
- (``sample_us``), aggregation interval (``aggr_us``), and update interval
-@@ -232,6 +233,18 @@ writing to and rading from the files.
- For more details about the intervals and monitoring regions range, please refer
- to the Design document (:doc:`/mm/damon/design`).
- 
-+Under ``sample`` directory, a directory, ``primitives`` exists.
-+
-+contexts/<N>/monitoring_attrs/sample/primitives/
-+------------------------------------------------
-+
-+This directory is for the access sampling primitives :ref:`selection
-+<damon_design_sampling_primitives_selection>`.  Under ``primitives`` directory,
-+two files, ``page_table`` and ``page_faults`` exist.  By writing ``Y`` or ``N``
-+to these files, users can select whether to use the :ref:`page table accessed
-+bit <damon_design_pte_accessed_bit_access_check>` and :ref:`page fault events
-+<damon_design_page_fault_access_check>`, respectively.
-+
- .. _damon_usage_sysfs_monitoring_intervals_goal:
- 
- contexts/<N>/monitoring_attrs/intervals/intervals_goal/
+diff --git a/include/linux/damon.h b/include/linux/damon.h
+index b04c2e36833a..e23a10ba7c92 100644
+--- a/include/linux/damon.h
++++ b/include/linux/damon.h
+@@ -115,6 +115,7 @@ struct damon_target {
+  * struct damon_access_report - Represent single acces report information.
+  * @addr:		The start address of the accessed address range.
+  * @size:		The size of the accessed address range.
++ * @cpu:		The id of the CPU that made the access.
+  *
+  * Any DAMON API callers that notified access events can report the information
+  * to DAMON using damon_report_access().  This struct contains the reporting
+@@ -123,6 +124,7 @@ struct damon_target {
+ struct damon_access_report {
+ 	unsigned long addr;
+ 	unsigned long size;
++	unsigned int cpu;
+ /* private: */
+ 	unsigned long report_jiffies;	/* when this report is made */
+ };
 -- 
 2.47.3
