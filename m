@@ -1,41 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A119A31A800;
-	Mon,  8 Dec 2025 06:30:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB626322B95;
+	Mon,  8 Dec 2025 06:30:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765175445; cv=none; b=KDzDtgJihZPwdUWjcq7uByZs5CGBuCAhlZ2iCe9jxd3PH1PXzJD1wzxf+kkfiFYoH8VBYu25WIQkL5oFF//npQvuXpSOv+30Kci6Fh1ACv1tl28c9WnOh9YXDae2QLDepK3FUSyOUtqVf0w1oWC910uEqWadJA4sxmCGIbHHwU0=
+	t=1765175448; cv=none; b=QGKUpTht96s/RdxnA4wbywIulxBNgCGXFFuvwva7ie03/MTop2ODGaIQTR6hxVFJMVOPuRDjLV3Z+bE06rdSqJgppxqKAkOkU5F1/hNvbmUCLhY4na2e1IOpfzCFoAINoUQxwlJVxgbON0JuDAD79okCx36ql2zIHcq+95bIXy4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765175445; c=relaxed/simple;
-	bh=my96BzscRoG5OJJ+4DXHi+6nxWHst+CeituNuj8uGfI=;
+	s=arc-20240116; t=1765175448; c=relaxed/simple;
+	bh=7LPwC6Tdvp2/F8X1UVIxGeo9+bnDQ2Da295YW1KdEhA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R0hqYaIYDcmiTy2IPHIejpBgW+zPRs6vCx3rzs742M8SQBLljLlPFhq0CES9kyXK3e66gptdyPRmmbOinkWU/UpMwXbhbMUJXDzubwkXMkr6PhCpEM32OYhA8cmeAK+C0GZWFDM1qhgzitW22H7li+3+KrUg0njc3XUSObzMUDk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UQEDMWUt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Xgr/j0OxeOQpDi3v/q9Ys0Jt5B6AM9uhDOy9c6ph1SrEGVrbMXVEjCFPwzh9e43jmzea7h2ufdlYBJOAI8YrhxWVuxPJDsuhqNkwQUW0F0MIDrwS13QHaNMwNgRDwnjLcNBSk+sE1woX0NMr61Tc7ClgRMWVhA/nPTQQqvQrUNw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MiIlJ+UI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UQEDMWUt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FB2EC4CEF1;
-	Mon,  8 Dec 2025 06:30:44 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MiIlJ+UI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F421C116B1;
+	Mon,  8 Dec 2025 06:30:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1765175445;
-	bh=my96BzscRoG5OJJ+4DXHi+6nxWHst+CeituNuj8uGfI=;
+	s=k20201202; t=1765175447;
+	bh=7LPwC6Tdvp2/F8X1UVIxGeo9+bnDQ2Da295YW1KdEhA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UQEDMWUtVie4xcVROv00P1YKbtb+Gi24FUrk16/pvmtqaujQM4CTfk82pEL27xTj/
-	 uQ4+24tBDGsoDWrertUrcW8EZmtJe4fcI5VaPxtiddAQKYIdsudknTIltccKXv/152
-	 pasQqgRDZHC5BySXsw2btEm9VljjOGwpVzsgnvZPt92Q4rbWFEU5UfeSh55+6Fxxi0
-	 d25dNjG+x4kKnRi/Zluf6E/Li0Q9b7/k0bOrYf35FnMYwRYC1+/0y2X4LJ6SXvg9PY
-	 /qNQDlDe9+rariOO1/7b/IB6MeSd38iCF7gtJrnZ+oVprVdY3uv6xqVHhcX4zhjjmz
-	 z7QJwjjugrOAg==
+	b=MiIlJ+UIhaWDtXpVtWGyfXhcGkfyDG2je19PMonZ1FJur8CzHYiCsCW7W+Xz/Cs7X
+	 f0ApIzkuEp6CBnrLykZlYX1TO6xtB0Q2qb02e8WQP+kCSn5RPcThXAWAriKYeu+VEM
+	 hnWYsawXlfplP9ofPhSyiuOVPeVEEwnWGWPe1Hg54CxxzOOAxTRsA56PE/AUlObxjI
+	 30MyNHFDj3mBswCevCm36eEGQA7rmEDvN4GP28hORUJDMs9ltF+lvxGtPiDAVSPtq2
+	 6Q+fMHbT1daCzHKPwvNtSOZTSeBHpyUEzIKZmpUh2wKwFU+IAW1LW4jwd1r9nLW9db
+	 rLZwHbnPPr+EA==
 From: SeongJae Park <sj@kernel.org>
 To: 
 Cc: SeongJae Park <sj@kernel.org>,
+	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
+	David Hildenbrand <david@kernel.org>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	Michal Hocko <mhocko@suse.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
 	damon@lists.linux.dev,
+	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH v3 36/37] mm/damon/sysfs: support write-type access sample filter
-Date: Sun,  7 Dec 2025 22:29:40 -0800
-Message-ID: <20251208062943.68824-37-sj@kernel.org>
+Subject: [RFC PATCH v3 37/37] Docs/mm/damon/design: document write access sample filter type
+Date: Sun,  7 Dec 2025 22:29:41 -0800
+Message-ID: <20251208062943.68824-38-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20251208062943.68824-1-sj@kernel.org>
 References: <20251208062943.68824-1-sj@kernel.org>
@@ -47,29 +56,35 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Allow users utilizing the write/read-only access sample results
-filtering, by adding a new supported input for specifying the filter is
-for that purpose.
+Update DAMON design document for the write access sample results
+filtering.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- mm/damon/sysfs.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ Documentation/mm/damon/design.rst | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
-index b96df2d2d17e..d6f6a012a0e2 100644
---- a/mm/damon/sysfs.c
-+++ b/mm/damon/sysfs.c
-@@ -782,6 +782,10 @@ damon_sysfs_sample_filter_type_names[] = {
- 		.type = DAMON_FILTER_TYPE_THREADS,
- 		.name = "threads",
- 	},
-+	{
-+		.type = DAMON_FILTER_TYPE_WRITE,
-+		.name = "write",
-+	},
- };
+diff --git a/Documentation/mm/damon/design.rst b/Documentation/mm/damon/design.rst
+index 4c6d83263a7b..b194bf4a6519 100644
+--- a/Documentation/mm/damon/design.rst
++++ b/Documentation/mm/damon/design.rst
+@@ -148,7 +148,7 @@ the page protection in a way similar to that of NUMA balancing hinting faults.
+ Then the page fault handler reports the faults happend by the installed page
+ protection to DAMON core layer.  Compared to the accessed-bit based one, this
+ approach gives more information to DAMON, such as the access-generated
+-CPU/threads.
++CPU/threads and whether it was for writing or reading.
  
- static ssize_t type_show(struct kobject *kobj,
+ ``paddr`` uses :ref:`accessed-bit based check
+ <damon_design_pte_accessed_bit_access_check>` by default, and users can change
+@@ -317,6 +317,8 @@ Below ``type`` of access sampling results filter are currently supported.
+ - threads
+     - Whether the sampled access was generated by a thread that having a thread
+       (task) id that exist in a given array of ids.
++- write
++    - Whether the sampled access was for writing.
+ 
+ 
+ .. _damon_design_age_tracking:
 -- 
 2.47.3
