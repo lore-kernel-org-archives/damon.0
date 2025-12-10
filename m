@@ -1,43 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE8602FE566
-	for <damon@lists.linux.dev>; Wed, 10 Dec 2025 09:15:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57BD879F2;
+	Wed, 10 Dec 2025 15:09:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765358105; cv=none; b=izsxq0lvcIjl0hmVmPIR9gLElW6M/33qflQtrbVIxjB7ef/kpsthkYGbF0jrQ6d74lzJxwwcvgPqIq6/6qIDBjV/yZGj1BDlu+nltMmmlTF8RXsBWoCT7Px7xe18mjAZzfE2fXpcbeFMj/6ph9vhRfYvpUVhAMbiU+LTNV3/okA=
+	t=1765379375; cv=none; b=m//RWvZoUSDhhWeeGNJ6EJvrQ+Qg9xsctn5rC8iFwVZGiBcccUsg50RX8g7O3BAjeHr4MggWGuQOwEnvJmRa1ydUUk5FukRcWD6F5Y2iDAc5DKbUxlBMQycDjGwJ5kkEzshR6OHz5ox7icf9GFE/qRbmMRRNvfYiY8Fi0j6cpYc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765358105; c=relaxed/simple;
-	bh=S42l+IFg4lVCAaNGZ+4P62KXbqFkfaIiQw3CI15+7Pw=;
+	s=arc-20240116; t=1765379375; c=relaxed/simple;
+	bh=RNmnMRCESvvHPFXhuXOJd3zbdNDnT+Lv6azVvJPG2UI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nBtDkeIsJGSbkW+4/kDsUZ2lttV0OZGHFN4mwmrO0cQiF62cJDTrllGTbJ78/ftsIhTSC1JdZQ0csN7grk+rg1jBKhGI4KrsfY26EOcEtksZ3rHpkVIVieo708ktmUTrRKt/Mwxn6Dy7xWcmT3M8Ls/48qBlRy8fhpA9ohD52I0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=plrM2pE3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RHJHJ1piWjLtqG7h5bLB4v8P12f0L0W3f5aVb2dVbEIREjERFxa6Wvh9nOUFWb3fcQBeKCYVTmZ34yvsLKqy25CjssiKfBDtuJX+c1aBn3elLpz6BX1Wf51Z4f2/jLTf8GKCB9ys7h9VbwB57/Zhwu4kiH5MRWx1XZKhjvKRSHU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LzY+YMpn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="plrM2pE3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3594CC4CEF1;
-	Wed, 10 Dec 2025 09:15:04 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LzY+YMpn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B604C4CEF1;
+	Wed, 10 Dec 2025 15:09:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1765358105;
-	bh=S42l+IFg4lVCAaNGZ+4P62KXbqFkfaIiQw3CI15+7Pw=;
+	s=k20201202; t=1765379374;
+	bh=RNmnMRCESvvHPFXhuXOJd3zbdNDnT+Lv6azVvJPG2UI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=plrM2pE3U3Vag97KDesGNar970xndDRJj+JiE8XGe7L4liZ+BT8BKsqKhdvjipJGv
-	 4wB1lFfFKPyDehP0wxoANWPzk6DIYi8boK/5DsUbHiMRqAMl1fQOf9OcWML+M0FW1l
-	 TIEo6BD+hVL4PHMe4KPcOWYiHHZcdgVJAZeyfveQJDvGBlcAcEPOsw3CDEHRkvO0Y7
-	 qg0/kSls5yt8X7Je2pDoaAEWI0J/7rBZdjoWS6WTpB2Vb70u4UMPRRiuXDV7DsMxE/
-	 l0MGtf2hS+K5bPiZkaQO/bMsxp2be/ygYZah5wprJChAUcH+EJyg1NQxuW/zZYqPCp
-	 AqbtrKgWJTAKQ==
+	b=LzY+YMpnkL8T8+6BMETspq6d93c5ln9SEAyW+/EtA/UfdcxDc7MhLz8KhjGcSMb/A
+	 ITPaTW92f0vl1ze5oJ28cNk++oEn62ZQU1wCXI2efEUgzwkUVB4q9bJ+TWSok5h6De
+	 e8y19U+jU2WogiOYUQvAKa5W6L/+GvB781OKQqPdGJ8jI7MAnjpXLQ9tU7RcabHNl1
+	 hVoWcOKjcBx90H1OxPaWR1jT/RXbCAK/o6DJTkGFZHS/vpojXUsemeqHEIK8M+ItvI
+	 wHi5lQiJwcNz+H4pdyU4vsYFRMDM+V8WjOnlfbetvCH3BeXIzSSv+hbQgsKMrrFK5O
+	 H/aeQRzK234uQ==
 From: SeongJae Park <sj@kernel.org>
-To: Enze Li <lienze@kylinos.cn>
+To: Swaraj Gaikwad <swarajgaikwad1925@gmail.com>
 Cc: SeongJae Park <sj@kernel.org>,
-	akpm@linux-foundation.org,
-	damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	enze.li@gmx.com
-Subject: Re: [PATCH] mm/damon/core: fix wasteful CPU calls by skipping non-existent targets
-Date: Wed, 10 Dec 2025 01:15:00 -0800
-Message-ID: <20251210091501.55277-1-sj@kernel.org>
+	Andrew Morton <akpm@linux-foundation.org>,
+	damon@lists.linux.dev (open list:DAMON),
+	linux-mm@kvack.org (open list:DAMON),
+	linux-kernel@vger.kernel.org (open list),
+	skhan@linuxfoundation.org,
+	david.hunter.linux@gmail.com
+Subject: Re: [PATCH] mm/damon/sysfs: check for online node in target_nid_store
+Date: Wed, 10 Dec 2025 07:09:30 -0800
+Message-ID: <20251210150930.57679-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20251210052508.264433-1-lienze@kylinos.cn>
+In-Reply-To: <20251210111708.46959-1-swarajgaikwad1925@gmail.com>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -47,42 +49,58 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Wed, 10 Dec 2025 13:25:08 +0800 Enze Li <lienze@kylinos.cn> wrote:
+Hello Swaraj,
 
-> Currently, DAMON does not proactively clean up invalid monitoring
-> targets during its runtime.  When some monitored processes exit, DAMON
-> continues to make the following unnecessary function calls,
-> 
->   --damon_for_each_target--
->   --damon_for_each_region--
->       damon_do_apply_schemes
->         damos_apply_scheme
->           damon_va_apply_scheme
->             damos_madvise
->               damon_get_mm
-> 
-> it is only in the damon_get_mm() function that it may finally discover
-> the target no longer exists, which wastes CPU resources. A simple idea
-> is to check for the existence of monitoring targets within the
-> kdamond_need_stop() function and promptly clean up non-existent targets.
-> 
-> However, SJ pointed out that this approach is problematic because the
-> online commit logic incorrectly uses list indices to update the
-> monitoring state.  This can lead to data loss if the target list is
-> changed concurrently.  Meanwhile, SJ suggests checking for target
-> existence at the damon_for_each_target level, and if a target does not
-> exist, simply skip it and proceed to the next one.
+On Wed, 10 Dec 2025 11:17:07 +0000 Swaraj Gaikwad <swarajgaikwad1925@gmail.com> wrote:
 
-Thank you for making this patch, Enze!
+> The 'target_nid_store' function previously accepted any integer value
+> written to the 'target_nid' sysfs file without validation. This allowed
+> users to set invalid Node IDs (e.g., -1 or 9999).
+
+Nice catch!  Actually this was even able to trigger kernel BUG, as commit
+7e6c3130690a ("mm/damon/ops-common: ignore migration request to invalid nodes")
+explains.  And the commit fixed the issue by avoiding only the kernel BUG,
+while still allowing the invalid input.  The intention was to make the
+interface as simple as possible unless it causes real issues.  It is for both
+maiking the maintenance easy and allowing flexible usages of the interface.  It
+is a king of consistent deisgn philosophy of the DAMON sysfs interface.  For
+this particular case, the current behavior allows flexible usages regardless of
+possible hot [un]plug of NUMA nodes.  IOW, I'd argue this is not a bug but an
+intended behavior.
+
+Maybe the commit message should have more clearly explained the intention.  As
+the author of the commit, I apology for not making the intention clear.
 
 > 
-> Suggested-by: SeongJae Park <sj@kernel.org>
-> Signed-off-by: Enze Li <lienze@kylinos.cn>
+> This patch adds a check using 'node_online(nid)' to ensure the input
+> is a valid, online node. If the node is invalid, it returns
+> -EINVAL.
 
-Reviewed-by: SeongJae Park <sj@kernel.org>
+I'm sadly have to say that I'm not very convinced with this change because it
+makes a behavioral change.  Making behavioral changes is ok as long as the
+changes are obvious improvements.  I don't feel this change is an obvious
+improvement for following reasons.  After all, it is making the interface bit
+more complicated, in terms of its maintenance.  Seond, and more importantly, it
+makes it less flexible in case of possible hot [un]plugging of NUMA nodes.
+Suppose the user knows they will hot-plug a NUMA node and wants to set the
+target NUMA node before doing the hotplug.
+
+> This change also resolves the TODO comment "error handling
+> for target_nid range".
+
+Thank you for mentioning this!  Seems the comment was intended to be addressed
+before the code be upstreamed, and I missed it, sorry.  That's also why I'm
+saying thank you :)  I think we should just remove the comment.
+
+So, I'd suggest you to send a new version of this patch for such comment
+removal only.  Of course, further documentation improvements woudl be nice,
+though I wouldn't insist you should do that as a part of the next version of
+this patch.  What do you think?
+
+Please let me know if I'm missing something.
 
 
-Thanks,
+Thank,
 SJ
 
 [...]
