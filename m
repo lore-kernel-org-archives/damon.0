@@ -1,46 +1,79 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57BD879F2;
-	Wed, 10 Dec 2025 15:09:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 289C419C54F
+	for <damon@lists.linux.dev>; Wed, 10 Dec 2025 21:37:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765379375; cv=none; b=m//RWvZoUSDhhWeeGNJ6EJvrQ+Qg9xsctn5rC8iFwVZGiBcccUsg50RX8g7O3BAjeHr4MggWGuQOwEnvJmRa1ydUUk5FukRcWD6F5Y2iDAc5DKbUxlBMQycDjGwJ5kkEzshR6OHz5ox7icf9GFE/qRbmMRRNvfYiY8Fi0j6cpYc=
+	t=1765402653; cv=none; b=QH7W6n9Yh12p/biXaxGWkLfE5xdb8HZxy6M071sJiuBJ+6VUws7RkKxPqZQgVV4WKPjOcf7dtYXhvs+4Q0j5VJuMTFaLh3/kYcQDFRoSvbE1C4T/bDfOzUVEKph/3oIYTt5JlLVZ6PpWEvBl32m8/FaMKlGzGzKsMAezxtfbiBk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765379375; c=relaxed/simple;
-	bh=RNmnMRCESvvHPFXhuXOJd3zbdNDnT+Lv6azVvJPG2UI=;
+	s=arc-20240116; t=1765402653; c=relaxed/simple;
+	bh=AyEbySivgLXxF2lNHpPjplLtb1DpRYpjqjealx++z0U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RHJHJ1piWjLtqG7h5bLB4v8P12f0L0W3f5aVb2dVbEIREjERFxa6Wvh9nOUFWb3fcQBeKCYVTmZ34yvsLKqy25CjssiKfBDtuJX+c1aBn3elLpz6BX1Wf51Z4f2/jLTf8GKCB9ys7h9VbwB57/Zhwu4kiH5MRWx1XZKhjvKRSHU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LzY+YMpn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Dq3H5WkGNb5pvJr7m9GE10zSNbfEKTzpy2vd+2+enDBiDvM/zLlmlN7IInF6No6fahZZUq3aXG41+2weLqsoCLDx1L4ck0RXSwvl8MlVJyF6dwUaiscTelNUUIrZYaK620Qi0yaqHwVY4oDet0O0WTxIj2hhuLXZ5EW4uI50SvA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=a0W2qMfk; arc=none smtp.client-ip=209.85.214.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LzY+YMpn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B604C4CEF1;
-	Wed, 10 Dec 2025 15:09:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1765379374;
-	bh=RNmnMRCESvvHPFXhuXOJd3zbdNDnT+Lv6azVvJPG2UI=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LzY+YMpnkL8T8+6BMETspq6d93c5ln9SEAyW+/EtA/UfdcxDc7MhLz8KhjGcSMb/A
-	 ITPaTW92f0vl1ze5oJ28cNk++oEn62ZQU1wCXI2efEUgzwkUVB4q9bJ+TWSok5h6De
-	 e8y19U+jU2WogiOYUQvAKa5W6L/+GvB781OKQqPdGJ8jI7MAnjpXLQ9tU7RcabHNl1
-	 hVoWcOKjcBx90H1OxPaWR1jT/RXbCAK/o6DJTkGFZHS/vpojXUsemeqHEIK8M+ItvI
-	 wHi5lQiJwcNz+H4pdyU4vsYFRMDM+V8WjOnlfbetvCH3BeXIzSSv+hbQgsKMrrFK5O
-	 H/aeQRzK234uQ==
-From: SeongJae Park <sj@kernel.org>
-To: Swaraj Gaikwad <swarajgaikwad1925@gmail.com>
-Cc: SeongJae Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	damon@lists.linux.dev (open list:DAMON),
-	linux-mm@kvack.org (open list:DAMON),
-	linux-kernel@vger.kernel.org (open list),
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="a0W2qMfk"
+Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-29558061c68so3725085ad.0
+        for <damon@lists.linux.dev>; Wed, 10 Dec 2025 13:37:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1765402651; x=1766007451; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=9hLmL5UBaH7Jl//7hZV10HWpa1IsgMF0lpOrAgcARCs=;
+        b=a0W2qMfkTLxak1QbGLgKmmyYQt9KYP1AJdJ9ukxc9iU7h++mOj58T10jYYZ+Inx/LQ
+         D6CUf5G+XxfOQ5d0/zqNvLFEQ8dO8UaU4sImcGHiyGFJbarhzrsS76LzqA8UR83OhVkv
+         sJVFx069B6XlTpI66UHqcBVTtRfItBG8+GYju6qDKrEGM2HzqIae7UmfjEUQx0mjnlo4
+         3YGCQk5iVmfUUz8iW2s5oOGiHhBy8U+wiwAAlWEZW8nhsZd28RGtp4uTrm1E4rynRR7l
+         Djwq1gcFEgdiU9Oo5UZEEIKkoF1qV83PlvrIP/CEykEVt0t3bj1rNAEsQ40OFKMf+Aum
+         U2cw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1765402651; x=1766007451;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=9hLmL5UBaH7Jl//7hZV10HWpa1IsgMF0lpOrAgcARCs=;
+        b=WiCwnCzN6OZqcoK4LR3VjGDO/7W7ftRmL9EAnrKjcWLyyfq/3IFzVo6vwNQBZrEbyk
+         AenlWnj+GX/M08HMqlxUB5ccRpY2E7Vx8W5LI1rtqBRTZttwDFtXBHlVSutsz//wa9Da
+         CAyQEJeA3I/05JaAuRSllqjQG6sD+ZJpvHsn2dChc9AgVLkqRyWHQG9D6y93wzyA0OvP
+         R8rmCD6OzBHKe3zcGrLBtrC540mbFGQubuB82UjfzIyoWvnxlVafbQ8VI721IqsvoLuP
+         pFaPJgxomLkjYzPycwC1NzkJ0OpesM+m/a0T77ZL6H5nzs9bavnq/7mQ+jHgACWVMh32
+         rvrA==
+X-Forwarded-Encrypted: i=1; AJvYcCX7aVwyMl1PUGf9GyPsBnmj/9NAUglMBfj89Ux53dL2dFwmJO5TKUKQu69IglEuEh8Dw1hQEg==@lists.linux.dev
+X-Gm-Message-State: AOJu0YzaHu6jmgPcfVjqIDngFociZ/tHtQh9Rf2sptxv6z/EEnIUfpqQ
+	GjuE7Ja2BhyYJ9uxhump4mvRBngn1waSzz9NzKoRBWvo1K0KvBfxzgfU
+X-Gm-Gg: AY/fxX5BI7LcuhMdUoePV78PHD5CNvZ//GicDTf0vPRP0ytTt1qv+hMFrq5t/xpHTSa
+	IKeJ88SwowgWMMp0tspiSnACfbADsE5xw4lpPk/LLPKuVe0Bk2cMw9tcC9+2CUoKpOZBcp0iK4C
+	fhsECPmuPSmNn0+Hfgy9iO+9zt9HBVR2QmiryZJeWstqFxUS6qGx5ft2VS7GoBHRZYHvu1nMzys
+	hVbNf4Syy87ldPpo9juM8ybrWYM6yay/vvSMzpxcEMmA6ROPqm2O6AeKtkfxB3FdUtUmwjO7EKz
+	BsqY69CCUi/E/i7sPcS6kWJA0POzLb60oPa2xOCiXgGQznbK8NIvPHHPLFSlM1xLZCOfn/uw6vF
+	Izpz15/Q4t73HM8wGj+NK3GDeJrqdNeWUFJHQLf0DxTgFQndmGUmkDukTB45U3973M+YaITSMv8
+	68mFiwriVLiPq44yPvOGxQ83Fqj58=
+X-Google-Smtp-Source: AGHT+IFOKeCD7SLJaoyaxSzMzfFpQdgEfp6KhJDB1eupbtl6YbSdpyQhFlSIJb3jOZCFQdhFRs3+hQ==
+X-Received: by 2002:a17:903:32d1:b0:295:8db9:305f with SMTP id d9443c01a7336-29ec2d40dd6mr37532245ad.34.1765402651414;
+        Wed, 10 Dec 2025 13:37:31 -0800 (PST)
+Received: from LilGuy ([2409:40c2:1056:3997:289:7d28:d8ed:a86])
+        by smtp.googlemail.com with ESMTPSA id d9443c01a7336-29ee9d38b3dsm2922135ad.36.2025.12.10.13.37.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 10 Dec 2025 13:37:30 -0800 (PST)
+From: Swaraj Gaikwad <swarajgaikwad1925@gmail.com>
+To: sj@kernel.org
+Cc: akpm@linux-foundation.org,
+	damon@lists.linux.dev,
+	david.hunter.linux@gmail.com,
+	linux-kernel@vger.kernel.org,
+	linux-mm@kvack.org,
 	skhan@linuxfoundation.org,
-	david.hunter.linux@gmail.com
-Subject: Re: [PATCH] mm/damon/sysfs: check for online node in target_nid_store
-Date: Wed, 10 Dec 2025 07:09:30 -0800
-Message-ID: <20251210150930.57679-1-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20251210111708.46959-1-swarajgaikwad1925@gmail.com>
-References: 
+	swarajgaikwad1925@gmail.com
+Subject: [PATCH v2] mm/damon/sysfs-schemes: Remove outdated TODO in target_nid_store()
+Date: Thu, 11 Dec 2025 03:07:08 +0000
+Message-ID: <20251211030707.16417-2-swarajgaikwad1925@gmail.com>
+X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20251210150930.57679-1-sj@kernel.org>
+References: <20251210150930.57679-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -49,58 +82,44 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hello Swaraj,
+The TODO comment in target_nid_store() suggested adding range validation
+for target_nid. As discussed in [1], the current behavior of accepting
+any integer value is intentional. DAMON sysfs aims to remain flexible,
+including supporting users who prepare node IDs before future NUMA hotplug
+events.
 
-On Wed, 10 Dec 2025 11:17:07 +0000 Swaraj Gaikwad <swarajgaikwad1925@gmail.com> wrote:
+Because this behavior matches the broader design philosophy of the DAMON
+sysfs interface, the TODO comment is now misleading. This patch removes the
+comment.
 
-> The 'target_nid_store' function previously accepted any integer value
-> written to the 'target_nid' sysfs file without validation. This allowed
-> users to set invalid Node IDs (e.g., -1 or 9999).
+No functional changes.
 
-Nice catch!  Actually this was even able to trigger kernel BUG, as commit
-7e6c3130690a ("mm/damon/ops-common: ignore migration request to invalid nodes")
-explains.  And the commit fixed the issue by avoiding only the kernel BUG,
-while still allowing the invalid input.  The intention was to make the
-interface as simple as possible unless it causes real issues.  It is for both
-maiking the maintenance easy and allowing flexible usages of the interface.  It
-is a king of consistent deisgn philosophy of the DAMON sysfs interface.  For
-this particular case, the current behavior allows flexible usages regardless of
-possible hot [un]plug of NUMA nodes.  IOW, I'd argue this is not a bug but an
-intended behavior.
+[1] https://lore.kernel.org/lkml/20251210150930.57679-1-sj@kernel.org/
 
-Maybe the commit message should have more clearly explained the intention.  As
-the author of the commit, I apology for not making the intention clear.
+v2:
+ - Removed the logic changes (validation) introduced in v1.
+ - Updated commit message to reflect that only the comment is being removed.
 
-> 
-> This patch adds a check using 'node_online(nid)' to ensure the input
-> is a valid, online node. If the node is invalid, it returns
-> -EINVAL.
+Suggested-by: SeongJae Park <sj@kernel.org>
+Signed-off-by: Swaraj Gaikwad <swarajgaikwad1925@gmail.com>
+---
+ mm/damon/sysfs-schemes.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-I'm sadly have to say that I'm not very convinced with this change because it
-makes a behavioral change.  Making behavioral changes is ok as long as the
-changes are obvious improvements.  I don't feel this change is an obvious
-improvement for following reasons.  After all, it is making the interface bit
-more complicated, in terms of its maintenance.  Seond, and more importantly, it
-makes it less flexible in case of possible hot [un]plugging of NUMA nodes.
-Suppose the user knows they will hot-plug a NUMA node and wants to set the
-target NUMA node before doing the hotplug.
+diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
+index 6536f16006c9..14a17da350ab 100644
+--- a/mm/damon/sysfs-schemes.c
++++ b/mm/damon/sysfs-schemes.c
+@@ -2245,7 +2245,6 @@ static ssize_t target_nid_store(struct kobject *kobj,
+ 			struct damon_sysfs_scheme, kobj);
+ 	int err = 0;
 
-> This change also resolves the TODO comment "error handling
-> for target_nid range".
+-	/* TODO: error handling for target_nid range. */
+ 	err = kstrtoint(buf, 0, &scheme->target_nid);
 
-Thank you for mentioning this!  Seems the comment was intended to be addressed
-before the code be upstreamed, and I missed it, sorry.  That's also why I'm
-saying thank you :)  I think we should just remove the comment.
+ 	return err ? err : count;
 
-So, I'd suggest you to send a new version of this patch for such comment
-removal only.  Of course, further documentation improvements woudl be nice,
-though I wouldn't insist you should do that as a part of the next version of
-this patch.  What do you think?
+base-commit: e9a6fb0bcdd7609be6969112f3fbfcce3b1d4a7c
+--
+2.52.0
 
-Please let me know if I'm missing something.
-
-
-Thank,
-SJ
-
-[...]
