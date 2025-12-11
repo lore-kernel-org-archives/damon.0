@@ -1,127 +1,128 @@
-Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
+Received: from mail-yx1-f53.google.com (mail-yx1-f53.google.com [74.125.224.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23C873009E5
-	for <damon@lists.linux.dev>; Wed, 10 Dec 2025 21:57:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30ACF70824
+	for <damon@lists.linux.dev>; Thu, 11 Dec 2025 03:30:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765403879; cv=none; b=RGhmkIM47xlj5Ul77VN2XorOX5w/vD9q1jvMuc+wb17g2hNlVP5ALxKDdNt5o2jRs9XJ0qPjYMJPRPZ8Gfgl8vcw+Oh1eSBX2hyuvmFfIwXPyQNRn4EJw7pQva5oyiLsinHaTpqRcfqGsSSJQI9foNJHq9OAd3vYuBSNPVRgj6w=
+	t=1765423813; cv=none; b=gZJtmvhp2fOs4wirENtbGalDgiuwJ3B5fptHwEwvx5IZwC1jdVErR3gyXQApDCn44K3i0GM+O6i40A91ODyv+cpO86ajBKFJNnHFdcs+zL+kMko3wtqaY6rm6twuLMaXOwUvZ8sVIF2z8Z3HeO8XQwnQdGQeg0mPaCsA9qsvom0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765403879; c=relaxed/simple;
-	bh=hjFMPk59DGnxn00qcVwY32mfbF1V9dBUxD/wPXoJNFU=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=qoT0GnY99keArv0cyxly1aPVBbBv9N/j5v6NXkr/RFAvvVLKaACyW1WBgMVHT/yL/XLHM73OBRdJ3+kvkHg6cgdzfDhfxfIzQwI/Fnn31KlFDgxzwCeC0KHeXIw+/RBciGXKORZ9zZqVgDpvFIzUF5JxU/RLbhS0EmV0NSFAu7I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TX/uwXmy; arc=none smtp.client-ip=209.85.210.180
+	s=arc-20240116; t=1765423813; c=relaxed/simple;
+	bh=Z9L1QHHEtC/2SJYzILHjsr65F3Ix9ago3XyUR2DUFtY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=vCahm6ihok+ZNJcTw9SYtTwxuGxntgIi2eceRGPSffhy2TFwcXoYiDiSAwjx2yyWpJszC36JrZ6jDF1QZ5Z6cZXXVkpd1UmYsufyKexrPsf8rRkt2E+u1DYiIvBSY+bRT4lmP8IbxgHdOLuHsvQ98EjbKpMdKViTQq9gJrFUBrI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VrXrLFTX; arc=none smtp.client-ip=74.125.224.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TX/uwXmy"
-Received: by mail-pf1-f180.google.com with SMTP id d2e1a72fcca58-7aab7623f42so349551b3a.2
-        for <damon@lists.linux.dev>; Wed, 10 Dec 2025 13:57:57 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VrXrLFTX"
+Received: by mail-yx1-f53.google.com with SMTP id 956f58d0204a3-64464de1c45so450262d50.2
+        for <damon@lists.linux.dev>; Wed, 10 Dec 2025 19:30:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1765403877; x=1766008677; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=+hm1NbizhX2u/6oOBSk1ArXnzSC2i/yu4zfAVJxLwRo=;
-        b=TX/uwXmydXoS1mhIRKLYUNchEGOqBH98G3TpfQI10UaMGFta03JfCUOJPE9qX50Nuy
-         q0zhPCm7ilGRcosZHG4fH1mNlRAVYd7TH9Sh5L61QEBaEv/l5Oh+GDMmOnvKAjERFtpn
-         lb1gbl371uruyi21fuQVRvFz9p+A9uxvooC85wQD0adgDmKwXKHSKpdll416mO34ydjd
-         /omMk5u/9mNdzr8bJHwyeeEcZexEeLbpjc2RZv3Sx2rNiMrlN4o6WA5Fdv0bDkJR3FYZ
-         xOI5g6iUBLsI3qfgfeBZtv7+E1gJdtPnwilxUsXs1vdDbHw2sQMYN2rFu4c6TpCXcTd0
-         Z50w==
+        d=gmail.com; s=20230601; t=1765423811; x=1766028611; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=A+kgBa13isDA0TWyZlnig6dj5RwcTvhBOmcf0rRVr9A=;
+        b=VrXrLFTXkWrJnei9enmZeZq888mYUTdkfEDQEo94ZD8G/HM+0Wm70SYISOTuV03ztC
+         f7coBP5kyZc0IfhZRjUW8NxzzvL0Uf6XLEblirrGCuJk8tIMzu45MfxxXgtS2EGHVOYQ
+         AiVmeUN/80HOlHjatbu8V95uKYZqWfNM2sXgT1y9FM2lpja/raXWlZOvSY0TwUCKJkyk
+         KNWOij00iu0YQNRxiJYIX35XypUp93cWAjARBQ1w66Jxacqusy6Szb5uyfzKntXO9myh
+         OZZ+GZ+xUmp/PaWyM+kV/pF4yETZOQ9evxRh4/oRVb2SM+njophBKDef3+XMBR53yVtH
+         w8kg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765403877; x=1766008677;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=1e100.net; s=20230601; t=1765423811; x=1766028611;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=+hm1NbizhX2u/6oOBSk1ArXnzSC2i/yu4zfAVJxLwRo=;
-        b=p6dgtWRRrGzrjV7XcLkt+xRsM3T5O9Yb+sAkwGlpfOM64Bs8q6AKOqI3preU1jdIr3
-         XxlKjYB4+Zw2l10NuIgIL9pzpsKEr7erIxgZQ8166F8959UVSdpiUNdupa09GXVMM8Oi
-         +fIMUWONXTLzAbU/gvVQzJE230zb4rH8AI+Y9OCVWpiQBw4mCKeGRlSwiHIM+q9c0l6+
-         kNsrYUwU6Nc3TltM3Y8HcJxQ+Ii7Vs8ZaUXP2ekZznYn7r4PHv+S3FTnqRSKgxzoZwSO
-         696JL7dEZh47gUDMPHRu/myRsqCytVCok7Pvw9t6mOe3X8ZTEhF3ylbXox7eti/TxSQd
-         TeeQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUigIhoCpXOTveHAB1z69yirdrKFgl28gVW9aO480rGL1VoSVJ/wc8GrwHhXjzlUKacuGsKAg==@lists.linux.dev
-X-Gm-Message-State: AOJu0Yxwq/mtnwCJd63FVGSRd3cEiBbuST5L6L+OBGPfq3TU1lVxBXJM
-	rfZK565pN8dnxKYO2uQ6pl3+x//D3I0sqAcwcT5eFWyCP5BVmToaNzr7
-X-Gm-Gg: AY/fxX6mnOrkMt44DgKmHM8cqOyTRodMO1SqfFWFYh3w1VKwgTpdMq52brbdn8SB1VP
-	mNbIQS7A8D4tOwt1oIF/f+BkSOus4ybxqffQXwK4kWOpWKvblzdY46BBbLdsCtpD5g5WYcCgmCu
-	kcEDz5oljUMftGceXGaVbkSC3U1JTeibCGYLazWgrHF2VtEzd9/Xz0VsslS/ExOXVZLMBLLMc9E
-	zmSNumZBugxTWrtfSZd9QpKp2INdvatiXN6ew9IkgH4CKR81WmwF6N7JDK9Orb4ZGkiKr6uJ9wq
-	zkpASEbInfTZCtbuSMboiT9DdAlqEcgso2lsCP/jhlubL7+Qf3A+poNP/Y3PNnHTDbBM4EZ/yR0
-	4Vfj1EfnqTgDm1hMgwl6VFA9VrjBgKrigOQ/twKVribJ6xGcio9oXgOLuwLNdZG2ry/TMVJF5yC
-	c+q8+kC44TPAEpypy4MUfHqSoAal8=
-X-Google-Smtp-Source: AGHT+IHA+9Qz7ydU3Ty9NpHFSEVIZQE81z8wV2mYZQOhee792sM2qH9nyagSd+BRXofaMXiX+aNkbA==
-X-Received: by 2002:a05:6a00:4f82:b0:7f1:7c82:fe2e with SMTP id d2e1a72fcca58-7f22dabffacmr4111460b3a.1.1765403877452;
-        Wed, 10 Dec 2025 13:57:57 -0800 (PST)
-Received: from LilGuy ([2409:40c2:1056:3997:289:7d28:d8ed:a86])
-        by smtp.googlemail.com with ESMTPSA id d2e1a72fcca58-7f4c54812aesm453133b3a.65.2025.12.10.13.57.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 Dec 2025 13:57:56 -0800 (PST)
-From: Swaraj Gaikwad <swarajgaikwad1925@gmail.com>
-To: SeongJae Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	damon@lists.linux.dev (open list:DAMON),
-	linux-mm@kvack.org (open list:DAMON),
-	linux-kernel@vger.kernel.org (open list)
-Cc: skhan@linuxfoundation.org,
-	david.hunter.linux@gmail.com,
-	Swaraj Gaikwad <swarajgaikwad1925@gmail.com>
-Subject: [PATCH v3] mm/damon/sysfs-schemes: Remove outdated TODO in target_nid_store()
-Date: Thu, 11 Dec 2025 03:27:22 +0000
-Message-ID: <20251211032722.4928-2-swarajgaikwad1925@gmail.com>
-X-Mailer: git-send-email 2.52.0
+        bh=A+kgBa13isDA0TWyZlnig6dj5RwcTvhBOmcf0rRVr9A=;
+        b=Gx8/nl234nirGudtuKJTHWxBSvM/9vdL22kcXjQOfS/Y2KVzT1Dc0UeFjMJkJZYtac
+         1oGftp8uTYpFSewAohp5CWoeuqtc9phORO8f/SC5ISqqzhq/LxnHsRvBPfR5i7amXoz6
+         1lZIBe12nlHADkVEIWZtaOm1CI2guJy2sF4trsgIniazd9vkSxuvhWqb3jSlGlrXNcgF
+         QUB9NXWAUAasUO1KPcKyv88OKscFtta6kkxjgY0IGOOsUyHS1dsAd1jKwIAngAaVY2CQ
+         IDkjDvY5Oq8IMnyf0qpW+Abhdv5bpRZ8a2iVhCP46k3mMFpYLHLA/9B7NTEeGaIiF3/a
+         gnzQ==
+X-Gm-Message-State: AOJu0Yxg7rjnrE+5bjsz1ZET+kyGw3mGuL9WMpM3IPOLJPgnmWNckV2d
+	S7d9fdHTeXH2JbXyjEhp+2pZy3ANFPSqrnGXsxOc/ES63uwzxCev1xWOgj1fgWuR+yT3MSeA7yn
+	5iJO16EXWvC+8Vs3hrABZ/nykAjSv/fXv8OQiGyM=
+X-Gm-Gg: AY/fxX79m7EI+8Dmhkdn4RzxcJqUIYNPEADwDo2QPmSxEo+9CtUj49yevIigWMka8tG
+	4oE1BmW7bMUL2polpdnXGWXry/5q8lbTGWqFtLaa6zUVvDJpiFQJMvyjowerg9tQpiLz77s1j1r
+	AB+UGaoWyQzWRzZtflujQOLz/Dzh4t4Kl3M3gt1/C/9zpMuJJh56KfbplkKQDVaEDYMHm1Eu+pi
+	SYQDgQE51hmmB7PG+kf78mTSyRclit9OMq3H5gOK5fhwcsGu6jSbderB01zHQsWv06gaTQQ
+X-Google-Smtp-Source: AGHT+IGx1i/hmxNAhGumNMn4ohfzd7BdjnbBCPqjWbQs+69758IpzoHPpanbHngMm3xv6KkbqhaIcmYer50SEAgvZm8=
+X-Received: by 2002:a05:690e:190b:b0:644:60d9:7507 with SMTP id
+ 956f58d0204a3-6446eb5e004mr3726542d50.87.1765423811010; Wed, 10 Dec 2025
+ 19:30:11 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <CAHOvCC6_-h1jQkZMbtYDC_jrB490jzp1t1Fx-_mhYnE7tqvzbw@mail.gmail.com>
+ <20251210025400.51467-1-sj@kernel.org>
+In-Reply-To: <20251210025400.51467-1-sj@kernel.org>
+From: JaeJoon Jung <rgbi3307@gmail.com>
+Date: Thu, 11 Dec 2025 12:29:59 +0900
+X-Gm-Features: AQt7F2oJTFEnWJmg4wO_UeTkwCp5xM6MSBqPed-yCVo1NfNtcF-iEdE1q61GoxY
+Message-ID: <CAHOvCC6bJLf=LuBpm90n5poz8Sqhz9wjXtk5ypbPwkvhb1ptag@mail.gmail.com>
+Subject: Re: [PATCH] mm/damon: modified damon_call_control from static to kmalloc
+To: SeongJae Park <sj@kernel.org>
+Cc: damon@lists.linux.dev, linux-mm@kvack.org
+Content-Type: text/plain; charset="UTF-8"
 
-The TODO comment in target_nid_store() suggested adding range validation
-for target_nid. As discussed in [1], the current behavior of accepting
-any integer value is intentional. DAMON sysfs aims to remain flexible,
-including supporting users who prepare node IDs before future NUMA hotplug
-events.
+On Wed, 10 Dec 2025 at 11:54, SeongJae Park <sj@kernel.org> wrote:
+>
+> On Tue, 9 Dec 2025 21:20:42 +0900 JaeJoon Jung <rgbi3307@gmail.com> wrote:
+>
+> > Hello, SeongJae,
+> >
+> > Thank you for your detailed feedback.
+> > My patch has the advantage of removing the use of
+> > the damon_call_control.dealloc_on_cancel variable.
+>
+> Thank you for keeping this conversation for enlightening me, Jaejoon.
+>
+> Could you please elaborate why you think the removal is an advantage?  I
+> understand reducing code is good in general.  But that's only if the code is
+> unnecessary.  dealloc_on_cancel is there for real use case, so I don't clearly
+> see why it is an advantage.
 
-Because this behavior matches the broader design philosophy of the DAMON
-sysfs interface, the TODO comment is now misleading. This patch removes the
-comment without introducing any behavioral change.
+I suggested removing the dealloc_on_cancel condition from the patch.
+When using the damon_call_control structure, if you only use kmalloc()/kfree()
+when canceled without dealloc_on_cancel.  However, currently, in other modules,
+since it is static struct damon_call_control { ... }, kfree() is not allowed,
+so dealloc_on_cancel condition is additionally required.
+Because kmalloc()/kfree() and static are mixed together,
+dealloc_on_cancel condition is required.
+As you pointed out in the previous email, kmalloc()/kfree() has the burden of
+memory allocation and deallocation, and static has the disadvantage of
+increasing
+the code size.  Both have their pros and cons.
+Among these, I proposed unifying them into kmalloc()/kfree() methods and
+removing the dealloc_on_cancel
 
-No functional changes.
+>
+> Meanwhile I find the feature might look complicated, or not well documented.
+> Specifically, dealloc_on_cancel should be set on only dynamic-allocated
+> damon_call_control object, but that is not well documented on the kernel-doc
+> comments.  Are you saying removing it is an advantage because it makes reading
+> code easier?  If that's the case, how about improving the documentation?
+>
 
-[1] https://lore.kernel.org/lkml/20251210150930.57679-1-sj@kernel.org/
+dealloc_on_cancel is only used in mm/damon/sysfs.c.  Here, since kmalloc
+the damon_call_control structure, the dealloc_on_cancel=true condition is
+required.  If you want to keep the current code as is and only change the
+comment, it would be clearer to comment it out like this:
 
-Suggested-by: SeongJae Park <sj@kernel.org>
-Reviewed-by: SeongJae Park <sj@kernel.org>
-Signed-off-by: Swaraj Gaikwad <swarajgaikwad1925@gmail.com>
----
-v3:
- - Added Reviewed-by tag.
- - Moved version history below the '---' line.
+De-allocate when canceled.
+--> To perform kfree() if allocated with kmalloc() when canceled.
 
-v2:
- - Removed the logic changes (validation) introduced in v1.
- - Updated commit message to reflect that only the comment is
-   being removed.
-
- mm/damon/sysfs-schemes.c | 1 -
- 1 file changed, 1 deletion(-)
-
-diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
-index 6536f16006c9..14a17da350ab 100644
---- a/mm/damon/sysfs-schemes.c
-+++ b/mm/damon/sysfs-schemes.c
-@@ -2245,7 +2245,6 @@ static ssize_t target_nid_store(struct kobject *kobj,
- 			struct damon_sysfs_scheme, kobj);
- 	int err = 0;
-
--	/* TODO: error handling for target_nid range. */
- 	err = kstrtoint(buf, 0, &scheme->target_nid);
-
- 	return err ? err : count;
-
-base-commit: e9a6fb0bcdd7609be6969112f3fbfcce3b1d4a7c
---
-2.52.0
-
+> Btw, please consider not doing "top posting" [1].
+>
+> [1] https://subspace.kernel.org/etiquette.html#do-not-top-post-when-replying
+>
+>
+> Thanks,
+> SJ
+>
+> [...]
