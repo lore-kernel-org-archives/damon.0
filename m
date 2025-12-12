@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3D8426E6F2
-	for <damon@lists.linux.dev>; Fri, 12 Dec 2025 03:38:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD40128690
+	for <damon@lists.linux.dev>; Fri, 12 Dec 2025 03:46:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765510689; cv=none; b=rB7Ku7Hk9j62qAW3MK/JKMEDIZSNP+rJw54pKLCGtBaZo8wIU1Pjg0PZH9Qsfgu+rmBU/ctVkQrzKhqdH+4mJukioyHC9JsRvyweImOSSBfM+BKhYNzI9u+fPWLCERGyi8g+aDvBxzjERmPNIrkbx2dqfpgyAFHK8jsVkSXwslE=
+	t=1765511176; cv=none; b=Q9MyQP5MCJBGEGR9gMNWoMWWpu10/2KHmsXrQau63wFrqileGYK633IWu9eHmbZrwXYY29wfNhsGcWjUm14z9KHGgIXz+9tdm1zlBH1qeEMiSek9io5+uQHtRKmaYM1W9bY4V+tH+8+frj2UMEu+K3BtHDdSXUtRqWAywWgNOiI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765510689; c=relaxed/simple;
-	bh=Td11YCdlKUJ7FHmE410jVInO0wKwvj4dwWtCXzArXFU=;
+	s=arc-20240116; t=1765511176; c=relaxed/simple;
+	bh=qWErqwHAXMoJbr0ah1yv8tAp2YJDlDct0fUARVDvVi8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jQWttQnK8UD/f33fK1E5Cl72TlekcHZl6L8Yc6ZI8Un6R4jh+CszeIYoBQiso4h2qUf/NRPPTINPRkqDaUGX/gi/e0EGs6uIUB4bBpstsszUWN1NqW5WOOLbLQpv07OXowga+ooJzM9Yw8CfLkheeHSGnmWkbIUyNXhjpGAwfJY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iaDCkIY3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UTNMzN7CdV76lhffT/J7QxkqQu0rbFzDR1dvIt43gRhV9dwQ4GAPuwu5UwB6efzRmVV1Unxz5lCNyhlNVDMXreXkDSk6ueBJXjlPyCwZFaeKqFiRa+V7G3+VTWo2PBRJYD8XbSuze4wsyHlX0v+qJABvNQm/iY5BGK+Gm9lQf/8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=C4QZX/JD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iaDCkIY3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46A88C116B1;
-	Fri, 12 Dec 2025 03:38:07 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="C4QZX/JD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F894C4CEF1;
+	Fri, 12 Dec 2025 03:46:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1765510688;
-	bh=Td11YCdlKUJ7FHmE410jVInO0wKwvj4dwWtCXzArXFU=;
+	s=k20201202; t=1765511176;
+	bh=qWErqwHAXMoJbr0ah1yv8tAp2YJDlDct0fUARVDvVi8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iaDCkIY36BXWA8Nrkj85IiL5qnS2jVrpd7Qt+t9Wx3T1pO2IDGgY6jszW08m6Wu23
-	 ntPSzRo+9LVDxfy47lmlZeHjMnD6bOPHSebCwBwo+vWAvrbbChlug5eCdKhdBdYm25
-	 7YUgzi+5+jQ6ZD0nR+AaXG/4nrT6l6OgVoBNLTmIVcUfcMUGTlXlHrqXhlr8KDosEo
-	 VEVOe49x/979Sm8zK/zEQU5YIPXrDDCm40kKJ53/SB3zQA60OR8d6sZtY76ODAI/4h
-	 2rRQs0Hd8XDFe410YDc29kzkOcvZ/rnzsec4fGbbKakUILWbpzo8RhGArHSYEpGPPO
-	 oDHscKOWdQmRA==
+	b=C4QZX/JD1nZN7473nf5CYMKQ0CFajZXk8vZziiCmrLgU2wuvXn55tATlM/mJvmK1w
+	 6CIFM0Yh/83i+ThQSdmg5FIsxBkfKvkHApjPaIRqZlOFDdKIt5xUvOWK1rLfW/5zty
+	 eFtABNX2glTPZuwG7CVCEliHWQT7Zx+SMaPhWw7i3vq/qx8tVSzVaemxW0WSqc8xXQ
+	 I30rOT8i4WFzx1/vZHX+cWQpXjrpqbK3C7nQoY/xfDzKbNOAajcnvEV36Bam4cbNIh
+	 qSPA4pCkOjZUzEiLkyzGl0BHBizALqxRMCG0FVSv9MykJZpRUQZmvQZC78aZ4PNCmZ
+	 cagh4AXKUb6nQ==
 From: SeongJae Park <sj@kernel.org>
-To: Enze Li <lienze@kylinos.cn>
+To: JaeJoon Jung <rgbi3307@gmail.com>
 Cc: SeongJae Park <sj@kernel.org>,
-	akpm@linux-foundation.org,
 	damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	enze.li@gmx.com
-Subject: Re: [RFC PATCH 0/2] mm/damon: Introduce basic auto-tuning framework with priority support
-Date: Thu, 11 Dec 2025 19:38:04 -0800
-Message-ID: <20251212033804.40832-1-sj@kernel.org>
+	linux-mm@kvack.org
+Subject: Re: [PATCH] mm/damon: modified damon_call_control from static to kmalloc
+Date: Thu, 11 Dec 2025 19:46:12 -0800
+Message-ID: <20251212034613.41033-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20251209145026.3263754-1-lienze@kylinos.cn>
+In-Reply-To: <CAHOvCC6ixeLQeTJANkAvQhRviLyr7=xNBs-_jeKEo+qF6E3qAg@mail.gmail.com>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -47,58 +45,44 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Tue,  9 Dec 2025 22:50:24 +0800 Enze Li <lienze@kylinos.cn> wrote:
+On Thu, 11 Dec 2025 17:13:09 +0900 JaeJoon Jung <rgbi3307@gmail.com> wrote:
 
-Sorry for late response!
-
-> Currently, users need to manually tune multiple parameters (e.g.,
-> watermarks, quotas) for different workloads when using DAMON.  This
-> increases the barrier to entry and complicates adoption.
-
-I cannot agree this more!
-
-> This patchset
-> aims to lower this barrier by introducing a basic auto-tuning
-> framework for DAMON, which allows the system to automatically adapt
-> DAMON's operational parameters based on user-provided hints and system
-> state.
+> On Thu, 11 Dec 2025 at 16:54, SeongJae Park <sj@kernel.org> wrote:
+> >
+> > On Thu, 11 Dec 2025 16:38:46 +0900 JaeJoon Jung <rgbi3307@gmail.com> wrote:
+> >
+> > > On Thu, 11 Dec 2025 at 15:04, SeongJae Park <sj@kernel.org> wrote:
+> > [...]
+> > > > Sounds good.  Would you mind sending a patch for that?
+> > >
+> > > Would you like me to send you the patch with only the comments corrected?
+> >
+> > I was just asking your preferrence, and seems you have no strong one.  I will
+> > do that on my own unless you mind.
 > 
-> The core idea is to allow users to assign a simple priority level to
-> each monitoring target.  Based on these priorities and the current system
-> conditions (initially focusing on free memory), the framework
-> dynamically adjusts DAMON's parameters.  The initial implementation
-> focuses on the automatic management of watermarks.
+> I have been argued the following so far:
+> "I proposed unifying them into kmalloc()/kfree() methods and
+> removing the dealloc_on_cancel."
 
-How difficult watermarks tuning is?  Do you have some real use case or
-realistic benchmarks showing it?  Could you please share that?
+Based on your previous email [1], I understand you argue this patch is better
+to be merged as-is, though you agree it has the pros and the cons.  And
+therefore you are letting me to make the final decision.
 
-> 
-> While the auto-tuning functionality could be implemented in user space
-> as a separate daemon, integrating it directly into the DAMON kernel
-> subsystem offers distinct advantages essential for a memory management
-> automation feature.  First, it delivers superior performance and
-> real-time responsiveness by executing tuning logic within the monitoring
-> thread (kdamond) context, eliminating the latency and overhead of
-> frequent kernel-user space context switches and system calls.  This
-> ensures parameter adjustments can keep pace with DAMON's monitoring
-> cycles.  Second, it provides inherent reliability as the tuning logic
-> becomes an integral part of the DAMON context, immune to failures of any
-> user-space process (e.g., termination by the OOM killer) and requiring
-> no additional service management.  Finally, it offers a simplified,
-> out-of-the-box experience where users enable auto-tuning through a
-> single configuration without needing to install, maintain, or ensure
-> version compatibility of an external tool.  This kernel-based approach
-> aligns with the goal of creating a robust, low-overhead, and truly
-> self-adaptive memory management subsystem.
+I was implicitly saying I show the cons more than the pros, so don't want to
+merge this as is.  Sorry if it was too implicit.  Hope now my opinion is
+clearly reached out to you.
 
-I agree your points.  In-kernel auto-tuning is much more efficient and simple
-to use, compared to user-space based ones.  Nonetheless, the disadvantage of
-in-kernel auto-tuning is it increases the maintenace burden.  I'd like to add
-lengthy change only if it shows clear benefit.
+I also suggested making the comment better, and you agreed it but I understand
+you are not interested in making that change.  I will do it.
 
-From this cover letter, I show only "potential" future benefits that might not
-land on the real world.  Do you have some real use case or realistic benchmarks
-showing the benefit you explained above?  If so, could you please share those?
+So, all is well and no more action from your side is required.
+
+> I apologize for not being able to respond promptly and smoothly
+> this week due to a busy my external lecture schedule.
+
+No worry, take your time.
+
+[1] https://lore.kernel.org/CAHOvCC6bJLf=LuBpm90n5poz8Sqhz9wjXtk5ypbPwkvhb1ptag@mail.gmail.com
 
 
 Thanks,
