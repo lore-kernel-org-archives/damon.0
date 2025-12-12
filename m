@@ -1,131 +1,167 @@
-Received: from mail-yw1-f182.google.com (mail-yw1-f182.google.com [209.85.128.182])
+Received: from mail-yw1-f172.google.com (mail-yw1-f172.google.com [209.85.128.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CB6D7261D
-	for <damon@lists.linux.dev>; Fri, 12 Dec 2025 07:30:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6C0D13D891
+	for <damon@lists.linux.dev>; Fri, 12 Dec 2025 12:46:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765524639; cv=none; b=MctST9mZGJuittVasSXv3x2lZXH9DE+QSag4yQ8o25o3xtu7owQ90O+QkeACVEAfZEVVZEwQRtYxidhtrqdEdBBprrjXls0hNcmqICuO3LG39GQfum7p73BEc1pXsf1TZo12R5ZrHyhFajifjGoj+Vlv/LqVGYGj/lCMbaEfBhs=
+	t=1765543577; cv=none; b=gMbPDSg9oEXG0kSExDrGxUeMCR4Jkkr0NYzVniQ52daNZ7AvEPyB/nhhZ9kK7GEPX+6opTu7iXdhnJ961uasvIL+MIEJGhVmuhw3Eyn0PrRsqaa2U5Y/KyZBKBVuoBTKZLyYz09jfSO8RtHXMvvhXlt5qb2p1qVEf+YkaccO3Zs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765524639; c=relaxed/simple;
-	bh=a8ToLTXWuq8isc6w/+8kZ/8l78d6KuCAN1LthUj43vE=;
+	s=arc-20240116; t=1765543577; c=relaxed/simple;
+	bh=6H2KYgH+XZqen82sxWQdSGEPG7omAPRoI3c0FktDdKc=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=sO3bGr+noYidX27sIGAmO8OPWyqB7fN5OgOU5Y1X2SPkJ+a2IRLhBIZuM17RSIMIvEfhsjBMvScbe/TCwlI5xm4m0ZAPSSdva6+dnZ5fkblAWAOvB/MumHfHPjyPqhKkzKFGAwvoOUfh0km3oQo81YhCohPuHd7FSOk6wpYJqic=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=b4jJRZ54; arc=none smtp.client-ip=209.85.128.182
+	 To:Cc:Content-Type; b=EGDuZZsWDp76tTjwxTsrQvigCH0dlAT4gmd2Tts0Us6tYtiNzth8QaWpqR2FwLR3w6ymHABhD5gisQ6336sxI/xbix0nXz2R5vtvwhd0XK0szWM9LwcqLC1x/z3ne+ny3Qx0DisGEHEuMUjnsEpYEfl899G4FtQla+PdtMV58QE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RIdMy4FC; arc=none smtp.client-ip=209.85.128.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="b4jJRZ54"
-Received: by mail-yw1-f182.google.com with SMTP id 00721157ae682-78c8d74bf4cso8450067b3.1
-        for <damon@lists.linux.dev>; Thu, 11 Dec 2025 23:30:38 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RIdMy4FC"
+Received: by mail-yw1-f172.google.com with SMTP id 00721157ae682-78d6eb6956cso11154757b3.3
+        for <damon@lists.linux.dev>; Fri, 12 Dec 2025 04:46:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1765524637; x=1766129437; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1765543574; x=1766148374; darn=lists.linux.dev;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=gbY/nvu9k0jdFLf6PceIz4U/m+vG+cifGKFXmRqaXwk=;
-        b=b4jJRZ54gQm6i0o+nNbZ8RP6ccZeQwTYQcMXPVx32tSkiAvjFfDnvLHCxqhzB74TdW
-         w7aycGy/lJPWYA/HkDq2BJGwcGixhWhKM1QY3Z3rZNuQbVFAJJUJlUsMaCoFX/D+G7lP
-         I1BDSYIo/kovlECdLMXGMpt5wUoWqTICj5+bhN07uPRz4AQHXkUy75MeAIt6r4Iwb020
-         uXUDHOVMpHg+nUL5hiQ4laMxlbd4/mwn3AK2/FUyiuWg6d/I+X5fWZW4nPqb29zuK43d
-         AZzlui125nULSfQNcVpAsbzaJG4003fZz5TGIejTjwbjGF2sjYI+jttNPi2ie1kgMDFU
-         fw0Q==
+        bh=nA7IxAffT0jShcW8gwjmTQr11pMi+BjOFiGJxDMKjNo=;
+        b=RIdMy4FC8KK5ola8O8aUD9VnVhl+ynYQyj0U0p7haJDIn2oZAfLmIVcILb5GSbkXuB
+         TyLTuUPgj2BI4R0jc2qMS8y7U4ytG4fPwDltSAIrwxz4AbnxombPhOgESWFwBWwk0DJl
+         Ao9h6feLR5kdLBMq6QKENUf35R1NYRk/wdQ5S9C4va6nYZZfwaRrGqMwm7cExPY7/0gA
+         ryZe+S1KWa7AJYR28KVZoDN0qISunV4hNsqFvHbeHfFDJmu4GAAmUZMNZxrRXG3nQVWi
+         By1CxR1rL1Z5yQnlxgUvM8JbJsfvnX06jdrEqQCgH/gj7nvIyrwjwtD4zpz6QEsxUgsQ
+         kFDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765524637; x=1766129437;
+        d=1e100.net; s=20230601; t=1765543574; x=1766148374;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=gbY/nvu9k0jdFLf6PceIz4U/m+vG+cifGKFXmRqaXwk=;
-        b=IOBanTw/5BO0V1D1ZZKKRvedBIFF8l4cFeJ0ZJKwy8rrYhFLvELf4MlQ/Elb19Q7OJ
-         pvgA/RVDAYaSA2iQKCYW6UtPlfUZWsHUAXIc+Ydn0le8uOpZ8qmg4mhE52iuDpLHu4hl
-         KfN9nCNVGDwV4Jib/WYfjBbyvARfhKVJuyJ0wN/IEV/4lsvJOGLIxmVUKR13g8iOcIZZ
-         Uv/hmX1RUkQGtnfgwT/GNaJjytNFzBo8FZ9ZuLqIQsYmAOy8OjFh8s395hv6FSh0y8OI
-         3LthA929zj/j0k0x3oA6o0ojQs7QAlXBI+rLQf0XOHGb8AelL6zucEsQNVAITuU2++tq
-         C1tQ==
-X-Gm-Message-State: AOJu0Yy0zUDXfUDKoh3jNqo0nuBe0TstmEyXx0uCCwE+ztgkIqkb+fQd
-	QCzmokGUbvVQieDrwkdmMO5nULdyJlcqW+udnRjj6TjYVAiA+ZaWA5ecnNByozH/kjJNegVtvsS
-	H3hpep1hq7/+p/MLXD5jHyPBk807Tm8A=
-X-Gm-Gg: AY/fxX51MvNjadD7fB2tRU82o7SRL9Omtl8boGmaE/Es5jB4ZnsckGMMz2swx6owaZB
-	fVUTYxLYg5R3N3Mo/YiO5udwUTfELclZBpMRQFCq43jphr3IGZ6tN/v0+ydFfUD1dJgOS+peGTI
-	lMYGQdsvvVgSnAjTTMisgkzS01eTBSkTGeex2ey96vBFmggcacpU1QOkJmPgExYMNkOQ5dATv/m
-	j+7Izo7JhJa6ANgwGocGRqs2lWc7tPQ58rsWSSDTYgy4vAEUvVWOULqc/NUO8/hK2QYXYm8
-X-Google-Smtp-Source: AGHT+IEzDVXB1bjCbfAIBeJJ9LVwd+PZ1SexNTZG4im+40TkPh9ylFdtSqrLakFNNss0Y8TrUpzAomad+Rqj/W8ypP4=
-X-Received: by 2002:a05:690e:14c6:b0:645:591a:cb60 with SMTP id
- 956f58d0204a3-645591accffmr68426d50.81.1765524637312; Thu, 11 Dec 2025
- 23:30:37 -0800 (PST)
+        bh=nA7IxAffT0jShcW8gwjmTQr11pMi+BjOFiGJxDMKjNo=;
+        b=Niem57CcUWIe5j/nfl1wNEf107ZfGnLrd1+RDl1QSRa53rKJ3k9m5CBpTDRvdMMHD+
+         2owPsDrNMPV1a2EZovcGn32XNPA9Iee7SKg/7+12SQbsR1B20UodjLuMvqU6sID2jnAl
+         lSRjVqztO+GjbjR+bBnsSZZVZDbmgzKrwnmshm0+VdiPbOX9amOVPhKWoj3bL48InohQ
+         dNMcrJHn//lyHOOKfSw0h7IP4idX/BdfexN8Jap1h2EqnIe5zA5isN5g9NJ5PQLj4iju
+         OL5hxYoookV19zPkSi14jTrTACQzPCO/36vFCIyKY/w8GF2J1wkMgjkeWj6cTpnFYCOC
+         GUig==
+X-Forwarded-Encrypted: i=1; AJvYcCUlD4fTXiVpvt/2jSbrQXi2lpcabWdd1ptsDMAAxlgWrYR+c9r7uA0f5XMHqLZGlSL6/QfQ0Q==@lists.linux.dev
+X-Gm-Message-State: AOJu0YyvYFOHsARjZBJ4BvEgCVL5Jd5AATc02U5w/LgN4FIznckSlKOI
+	tCGz5EXeHWZTVO6tLaK/0FNylboS5OfOXdiODPh8Rk56mFi9O9P8lxa18gRUQRxAN9dNdtSazO+
+	I5kHYnpVo8FG/AaR6xHnO7pWmLZ+btNg=
+X-Gm-Gg: AY/fxX4NXjAj88VxBFEFb63V4rX24lqiXcC9ya5Weegt9MtWyxVd+wfz+M5yxFowk1/
+	SzqdQ34rzaD919kqu5ZqSUNwqD3gN1u1slIYUmOvPWJCUr2hZOqIQuc2yTj1MmSqfyKiNjzcxPE
+	kqmRBBJb0WuWX41Dh6TShxTU9stHwJgXR9hQpEukXHixtmTNLQNaX3haOdLEmelengi202B39Ih
+	Ex+xuEarth5ajXFBrgvGAoXeW32Ra4xa6C3DTK5v2P1d6z0ipbOddRocwZVkgiqOjAw4phr
+X-Google-Smtp-Source: AGHT+IHz3KgQ+bSNndy9mQEOrCQS3hjN2SHmQrqtmhCRSLsPMmyLQIeagCd7ClGGQ0WC1mwsePEjbW190wH0H0L6KUc=
+X-Received: by 2002:a05:690c:4b0e:b0:786:5be2:d467 with SMTP id
+ 00721157ae682-78e66d45ca3mr15244917b3.3.1765543574467; Fri, 12 Dec 2025
+ 04:46:14 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <CAHOvCC6ixeLQeTJANkAvQhRviLyr7=xNBs-_jeKEo+qF6E3qAg@mail.gmail.com>
- <20251212034613.41033-1-sj@kernel.org>
-In-Reply-To: <20251212034613.41033-1-sj@kernel.org>
+References: <20251208062943.68824-1-sj@kernel.org> <20251208062943.68824-5-sj@kernel.org>
+In-Reply-To: <20251208062943.68824-5-sj@kernel.org>
 From: JaeJoon Jung <rgbi3307@gmail.com>
-Date: Fri, 12 Dec 2025 16:30:25 +0900
-X-Gm-Features: AQt7F2qCMypcBYiHBd8_DY3c8sXx5SQAojnD2TiuRCXQxR3VNlNM3OEJCHwUvv8
-Message-ID: <CAHOvCC4h_pv59Eb8euiv_=oQ600qJOjs8P8Onc39NrJnEaEV8w@mail.gmail.com>
-Subject: Re: [PATCH] mm/damon: modified damon_call_control from static to kmalloc
+Date: Fri, 12 Dec 2025 21:46:03 +0900
+X-Gm-Features: AQt7F2owg67X9ZNKOIXuzDIfqmLKkjj8_msgVF95SsQ8FgSGWYFqbNql5MoYxeE
+Message-ID: <CAHOvCC6B1q+1TLEw5WAQM+E_L2tQQArgq=Hy5JZ35m4_H7s_5Q@mail.gmail.com>
+Subject: Re: [RFC PATCH v3 04/37] mm/damon/core: implement damon_report_page_fault()
 To: SeongJae Park <sj@kernel.org>
-Cc: damon@lists.linux.dev, linux-mm@kvack.org
+Cc: Andrew Morton <akpm@linux-foundation.org>, damon@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, linux-mm@kvack.org
 Content-Type: text/plain; charset="UTF-8"
 
-On Fri, 12 Dec 2025 at 12:46, SeongJae Park <sj@kernel.org> wrote:
+On Mon, 8 Dec 2025 at 15:33, SeongJae Park <sj@kernel.org> wrote:
 >
-> On Thu, 11 Dec 2025 17:13:09 +0900 JaeJoon Jung <rgbi3307@gmail.com> wrote:
+> Implement a DAMON core API for reporting page fault events to DAMON.  It
+> is a wrapper of damon_report_access().
 >
-> > On Thu, 11 Dec 2025 at 16:54, SeongJae Park <sj@kernel.org> wrote:
-> > >
-> > > On Thu, 11 Dec 2025 16:38:46 +0900 JaeJoon Jung <rgbi3307@gmail.com> wrote:
-> > >
-> > > > On Thu, 11 Dec 2025 at 15:04, SeongJae Park <sj@kernel.org> wrote:
-> > > [...]
-> > > > > Sounds good.  Would you mind sending a patch for that?
-> > > >
-> > > > Would you like me to send you the patch with only the comments corrected?
-> > >
-> > > I was just asking your preferrence, and seems you have no strong one.  I will
-> > > do that on my own unless you mind.
-> >
-> > I have been argued the following so far:
-> > "I proposed unifying them into kmalloc()/kfree() methods and
-> > removing the dealloc_on_cancel."
->
-> Based on your previous email [1], I understand you argue this patch is better
-> to be merged as-is, though you agree it has the pros and the cons.  And
-> therefore you are letting me to make the final decision.
+> This is a temporal hack.  In future versions that will have no RFC tag,
+> only damon_report_access() may be used.
 
-There are pros and cons to both, so I agree with your opinion.
+It's a minor, but git am throws an error when applying the [RFC PATCH v3 04/37]
+patch file.  I am testing it by modifying it as follows.
+damon_report_access() is
+called by damon_report_page_fault(), so they depend on each other.
 
->
-> I was implicitly saying I show the cons more than the pros, so don't want to
-> merge this as is.  Sorry if it was too implicit.  Hope now my opinion is
-> clearly reached out to you.
->
-> I also suggested making the comment better, and you agreed it but I understand
-> you are not interested in making that change.  I will do it.
-
-I can also send you a patch for the comment.
-But, I've been looking at the documents you've been working on lately.
-It would be nice if the documentation could continue to be improved on your end,
-so that there is no confusion.
-
->
-> So, all is well and no more action from your side is required.
->
-> > I apologize for not being able to respond promptly and smoothly
-> > this week due to a busy my external lecture schedule.
->
-> No worry, take your time.
+#ifdef CONFIG_MMU
+void damon_report_access(struct damon_access_report *report);
+void damon_report_page_fault(struct vm_fault *vmf, bool huge_pmd);
+#else
+static inline void damon_report_access(struct damon_access_report *report)
+{
+}
+static inline void damon_report_page_fault(struct vm_fault *vmf, bool huge_pmd)
+{
+}
+#endif
 
 Thanks,
 JaeJoon
 
 >
-> [1] https://lore.kernel.org/CAHOvCC6bJLf=LuBpm90n5poz8Sqhz9wjXtk5ypbPwkvhb1ptag@mail.gmail.com
+> Signed-off-by: SeongJae Park <sj@kernel.org>
+> ---
+>  include/linux/damon.h | 10 ++++++++++
+>  mm/damon/core.c       | 17 +++++++++++++++++
+>  2 files changed, 27 insertions(+)
 >
+> diff --git a/include/linux/damon.h b/include/linux/damon.h
+> index b9359c76a6f1..b8ebb2aa02c8 100644
+> --- a/include/linux/damon.h
+> +++ b/include/linux/damon.h
+> @@ -1017,6 +1017,13 @@ int damon_call(struct damon_ctx *ctx, struct damon_call_control *control);
+>  int damos_walk(struct damon_ctx *ctx, struct damos_walk_control *control);
 >
-> Thanks,
-> SJ
+>  void damon_report_access(struct damon_access_report *report);
+> +#ifdef CONFIG_MMU
+> +void damon_report_page_fault(struct vm_fault *vmf, bool huge_pmd);
+> +#else
+> +static inline void damon_report_page_fault(struct vm_fault *vmf, bool huge_pmd)
+> +{
+> +}
+> +#endif
 >
-> [...]
+>  int damon_set_region_biggest_system_ram_default(struct damon_target *t,
+>                                 unsigned long *start, unsigned long *end,
+> @@ -1027,6 +1034,9 @@ int damon_set_region_biggest_system_ram_default(struct damon_target *t,
+>  static inline void damon_report_access(struct damon_access_report *report)
+>  {
+>  }
+> +static inline void damon_report_page_fault(struct vm_fault *vmf, bool huge_pmd)
+> +{
+> +}
+>
+>  #endif /* CONFIG_DAMON */
+>
+> diff --git a/mm/damon/core.c b/mm/damon/core.c
+> index 89305d42e116..296117d5e7f7 100644
+> --- a/mm/damon/core.c
+> +++ b/mm/damon/core.c
+> @@ -1579,6 +1579,23 @@ void damon_report_access(struct damon_access_report *report)
+>         mutex_unlock(&damon_access_reports_lock);
+>  }
+>
+> +#ifdef CONFIG_MMU
+> +void damon_report_page_fault(struct vm_fault *vmf, bool huge_pmd)
+> +{
+> +       struct damon_access_report access_report = {
+> +               .size = 1,      /* todo: set appripriately */
+> +       };
+> +
+> +       if (huge_pmd)
+> +               access_report.addr = PFN_PHYS(pmd_pfn(vmf->orig_pmd));
+> +       else
+> +               access_report.addr = PFN_PHYS(pte_pfn(vmf->orig_pte));
+> +       /* todo: report vmf->address as virtual address */
+> +
+> +       damon_report_access(&access_report);
+> +}
+> +#endif
+> +
+>  /*
+>   * Warn and fix corrupted ->nr_accesses[_bp] for investigations and preventing
+>   * the problem being propagated.
+> --
+> 2.47.3
+>
