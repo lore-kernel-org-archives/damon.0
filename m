@@ -1,201 +1,215 @@
-Received: from mail-yw1-f179.google.com (mail-yw1-f179.google.com [209.85.128.179])
+Received: from mail-yx1-f47.google.com (mail-yx1-f47.google.com [74.125.224.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D409EB67E
-	for <damon@lists.linux.dev>; Sat, 13 Dec 2025 01:10:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DDBF2A1BA
+	for <damon@lists.linux.dev>; Sat, 13 Dec 2025 01:37:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765588252; cv=none; b=lZcK2u94zogaWGZ+9RIWgyb8JBFy8co48CkLwVKOz6JuwQ+NEA1gK5Kf8gk7Unx56AlquCgiIeDWrDlUexxT8IYeKWEcLPqDd5SmP/5XDVf+EeeqQg0czIXhaipbvmeOJ/YWquGeKReZtE67WL//bFKsFtghSzvJpQ2k+PJlwNo=
+	t=1765589849; cv=none; b=bWMNwwoglPueX62aPnXkbHCNiW/hNVDfDAjLEFqN6PfZbF05M19jywMsjlYVuGhN+iRO9IO99FEhTS/GXYhjRyT/r4PP0cphRpAbbRDZoAjjq+FUBCyg9RSENcZWi1TRM+/EMuptimuMBAEKV0yaqpYqrZQuN5xxZ46WHedQK4w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765588252; c=relaxed/simple;
-	bh=Z0hITbgab0NjL9CfQOBY1rdkjw21DUmq0JPShIFpQ90=;
+	s=arc-20240116; t=1765589849; c=relaxed/simple;
+	bh=jfdBsMHJ7yki8Lg6hXR6vlG4FbRIXYEeY4phnmAqAbE=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=i3+xcjx7zHwVQ5y7Mnu1ypEHKv18hH0r23FVVdr4Xu9fly/FC/9RbCQTEh7JZjlm5+Hdhi69dRcEyZf5wb29sYkj9IM/711Pk0l3UrrqEoqwfzHu54Z3ct5OZDQci9BVwRig5W2kWDIT1k50drw9NCJ7Z9EaIGh6XfdDvGYz74c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SkFkMlGg; arc=none smtp.client-ip=209.85.128.179
+	 To:Cc:Content-Type; b=SJmqLsaBZxmxWSMvvnpWQ6nv6Wj/UpK4Ge0ty4R2jGewl82QIYDJCPDT2u9/kFrHtLPN8HeKvdIypnuK/8CYsZdidI7x9/njmfXp+DYTUca9jPvVMxnkPF4rp0S899Cl/y9IQ9we7U+mg+00h876md1ySYli6aIq+URtRidPXYs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=V3AzURhi; arc=none smtp.client-ip=74.125.224.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SkFkMlGg"
-Received: by mail-yw1-f179.google.com with SMTP id 00721157ae682-78a6a7654a4so18456597b3.0
-        for <damon@lists.linux.dev>; Fri, 12 Dec 2025 17:10:50 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="V3AzURhi"
+Received: by mail-yx1-f47.google.com with SMTP id 956f58d0204a3-642fcb38f35so1645266d50.1
+        for <damon@lists.linux.dev>; Fri, 12 Dec 2025 17:37:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1765588250; x=1766193050; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=H69U5CDYHq4197VbTLKqjL8FPFMWb4JhR7VTb4JaM7g=;
-        b=SkFkMlGgirx+UrzPkV56/TydaY81xBUAoQDhyJfJIYJghhxh1DCUdiOVCecRfGnwfh
-         AemyoBWoaI6VbiiLo78mi3ws+AoIY117IrtwQnaOAxTzlaCz8UyovLk12MEvzU35hr3d
-         n+LvOgXqgExK0FZowjPSISrGAaRVxUSWjdM8hq0uOtLUxk97SvkIIA8S95avx4lj9k9D
-         GEKRVur+x+JU7MMgML2tZ7cavO7MpirqvklO2VuudCFRn1q0RqmnYRLxnSIEYiLbTdGV
-         rLT5E+xHdd6p7zTAFVC8k4ePfh3WiA9N9Bw/tV0lKQYh3NwFTiefUIoTpeKXSSN+lt5v
-         HfYQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765588250; x=1766193050;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1765589846; x=1766194646; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=H69U5CDYHq4197VbTLKqjL8FPFMWb4JhR7VTb4JaM7g=;
-        b=rJ3YbAPUSBEBwaAmPBEqQMdrY9drdrc2drCCbEit2ci3aKSKRA/fUacTqkPUJeT6hz
-         CirXBwkQF9nPEeDYXU3MzbGTpxLyWpoyvIE79UYBi3664NpPo8RtpJ9wwJr5Y0xUgipr
-         bM0YKmV8jDG15dvWAjP98E8ho5Um6J0lhMrFTZHtADCC/cLHtmcBFMLdZLitiMbkNBzK
-         pfL0xnKfvh2hOlVeErIo04oasMGjFuKEEKj5IMKMJm0jwJMZltNv6Gxjw0g0I72qHabl
-         j6URxkEKiPLTHvDZE5LviPX8K9n9uXEVzmvUuSe0P74wXR/EVoOZCI/rnB1iU+pgPnuD
-         w7rA==
-X-Forwarded-Encrypted: i=1; AJvYcCVyftGdtc9R3I6iC7YqLWI/Dobes16QS/x7Gg0zfk4Sp0NP9GHklt3+BIXIMAyvdA24shM7Yg==@lists.linux.dev
-X-Gm-Message-State: AOJu0Yw/447vd5S0yySuAVyw/rso0XrzNF0V8KnnuD9THrhskrwYW5QM
-	WQIyQ/KG7wznlr3z2isR7URAIIQ7XySXk3dxCMcmp+Od+gU8Zw5pNV/IHRCe/Y2y+/kttBtNTWb
-	E74ekhOQdl+GIEXl37jtwHQOwQnfr9fg=
-X-Gm-Gg: AY/fxX4tp3N+ijFYDgpwZVa9f9Y6RqmE9+x1syVhhJFb94K6Y9sdd+rrp0n3oT9+3Em
-	horpNfF/Bv7/afESOjL/4BnCTscSGTbZqgaJbS8hS16SzeIyXjCoiG3UsXfZXjmDoY71o1E6MLu
-	KwraNhgkJHLpEJjWBSFlwlxDzoDo4zfnSMZsawvt0ewDPs5u+B5Xla7bnDiPJy0lNDxc2jtaJmR
-	xk5KTYWeXZx56ld0z9Olcxc/H2BZs4SSaPVBgrn9wbS4YOecyapTq1sPhzJ/adcgu/1jAMn
-X-Google-Smtp-Source: AGHT+IFh0yCO4DCvhJF/e90OOfihjwNmvglPMYyupmK4fLMSTIYYCvDFBzxXiOXo0lY9wEjXztUxJ/qb/Fbqsvn99NM=
-X-Received: by 2002:a05:690c:62c9:b0:784:883c:a88d with SMTP id
- 00721157ae682-78e66e75022mr28160487b3.52.1765588249806; Fri, 12 Dec 2025
- 17:10:49 -0800 (PST)
+        bh=csAfRwOb+6hGQnPT+25Zp2eP5dk+D8F+hnBaGvdyJOU=;
+        b=V3AzURhiOuMFYvS4T/tjSWAzcmn37WAKsgtrrEqTtP1mkTGr1LfpWqeHKv1UvOV+Le
+         ILA3ng32ICCbaTwi88vK1VuYrPQ81Efov089X/HtDlhipWeGWobqh/3v2hzC3vtrCcLf
+         tHcA2ud5Vqje7i1SMMRgMX4RtE/WdeIjCE/Fw4Mwx9cm6hGlBVO11uT7bKAd2Ny8HNdg
+         2ghptacZRBjSUvjKiuTfPGqE8vurBdtqGtvjamPJjheX0gG6G4ErXsjmvWW1mqlanl2u
+         GieT2CMykFWwDbNNo338iR6j90B50fPIPW3HPtzI0NuD15qpVBZS7dyWwXI+euiTXs9R
+         nhaw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1765589846; x=1766194646;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=csAfRwOb+6hGQnPT+25Zp2eP5dk+D8F+hnBaGvdyJOU=;
+        b=Pu4+jNFul1TiR4ESuB/Yeg7WtI7U9dGjrenyWEGM/upf3WZoyw0Tv/kGPs3LBaEYk1
+         SawdhxhiWdm0TKMsSeey+w+M34Y0QVDnfZqxG38wmS8I4XPp2UL7ENdOrNc59F8tCGyo
+         D8YoVZRS6ziQK2jI8woG9PwTwDxxClKvDTRACEZRKkPsqIan+rtVXaW+pworBCCSY6O4
+         tW0NslMl1p/dB+6kjnt498WN1Qz9MIUcWuEZKhEhfuid56fy/ceq/9AjGENL0VneCrCl
+         Msar6cakCHlyqQoZneXR6flOdjB2G56pXR74sfTR9VVk/VK2B/qbBirrdQO0bY7L1RV6
+         tvIA==
+X-Forwarded-Encrypted: i=1; AJvYcCUuDMnxX4sU/ijD3CQDLPKFeXVYCrobbeX9/L9FSU/wRy0B9kmSn5O7scp9MUg5W+UtYDStig==@lists.linux.dev
+X-Gm-Message-State: AOJu0YyzFSDCE0cCs8P7DxFl3iyi6C1WkVeIFBSQlyP2H2lr8xNO2Nou
+	79CxJtynKcvOg0Sbuxed+Oric1s+2lwWUfXhj8/e0azeOHEiAn4To33FqXNBdTlDZiO3Obn6Bsf
+	7WM2dvJgEtca0ULbzbOZbv67gHe6SetzQH+7QfQ0=
+X-Gm-Gg: AY/fxX5m1dhvFb8qLyIP4IaAJzx0a/ixCXO3udqegshkX5zaL6TVYsAMF84zxNdrEy2
+	r2WRI1UqssiHEGbQ9I+GqFoG7u384SxeCD6BY8W/GGqRy9U8tV8wtpzQssM4DUfM2DUtRvCpxC/
+	17kuJ9FJkBmUdLJ9h0quGYozzS6UZXG8jwPzgW75OdXmjZGFXHftxRTSL0iNLEdXQLmoRY5OEJp
+	1+YdlRzNWMH8wZHkKudCw7sW/TC5cVTql1KOQ66LniBx0XoAjFSA0gKzTlobvGovR7HeWKo
+X-Google-Smtp-Source: AGHT+IHwifFUh7ghZ7Sb2I67Rfsfo8yTZn4nkMEXK+s046YgWD01E/NmfDNjVDBefF/mtE2oIr3GKkZDMqdj3mL0lOs=
+X-Received: by 2002:a05:690e:1488:b0:644:2e68:d1a0 with SMTP id
+ 956f58d0204a3-645555dba05mr2603842d50.32.1765589846413; Fri, 12 Dec 2025
+ 17:37:26 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <CAHOvCC4WQPo5HrCJ+958t1ab2NDzbg493XYarqACARTpYskVzQ@mail.gmail.com>
- <20251212231148.49843-1-sj@kernel.org>
-In-Reply-To: <20251212231148.49843-1-sj@kernel.org>
+References: <CAHOvCC4jUGpyezSNMChyOCio-vTA=kK3CYS3O1CzEXxEiMjPyg@mail.gmail.com>
+ <20251213005639.50513-1-sj@kernel.org>
+In-Reply-To: <20251213005639.50513-1-sj@kernel.org>
 From: JaeJoon Jung <rgbi3307@gmail.com>
-Date: Sat, 13 Dec 2025 10:10:38 +0900
-X-Gm-Features: AQt7F2ozNy49he0FHbezx-HKAtCT9iN5jmwm0-PfIpuyrs8ubUzntd6g14IB0t8
-Message-ID: <CAHOvCC6TXo=7svC2Ka=+rf_YLTMnaF8QUV_nNvuef20XMZ=+pA@mail.gmail.com>
-Subject: Re: [RFC PATCH v3 07/37] mm/damon/core: apply access reports to high
- level snapshot
+Date: Sat, 13 Dec 2025 10:37:14 +0900
+X-Gm-Features: AQt7F2peAf6ZXv8embAaS15t1cFvNlEzS6J9k2Rhhus4lzgna_Wm9102lTI4V_Q
+Message-ID: <CAHOvCC6Bt-PcxhT=TJpukSyPyj-9e=dP--aQ8YR9JVKYJ913=w@mail.gmail.com>
+Subject: Re: [RFC PATCH v3 04/37] mm/damon/core: implement damon_report_page_fault()
 To: SeongJae Park <sj@kernel.org>
 Cc: Andrew Morton <akpm@linux-foundation.org>, damon@lists.linux.dev, 
 	linux-kernel@vger.kernel.org, linux-mm@kvack.org
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Sat, 13 Dec 2025 at 08:11, SeongJae Park <sj@kernel.org> wrote:
+On Sat, 13 Dec 2025 at 09:56, SeongJae Park <sj@kernel.org> wrote:
 >
-> On Fri, 12 Dec 2025 22:20:04 +0900 JaeJoon Jung <rgbi3307@gmail.com> wrote:
+> On Sat, 13 Dec 2025 09:31:22 +0900 JaeJoon Jung <rgbi3307@gmail.com> wrot=
+e:
 >
-> > On Mon, 8 Dec 2025 at 15:35, SeongJae Park <sj@kernel.org> wrote:
+> > On Sat, 13 Dec 2025 at 07:47, SeongJae Park <sj@kernel.org> wrote:
 > > >
-> > > Now any DAMON API callers can report their observed access information.
-> > > The DAMON core layer is just ignoring those, though.  Update the core to
-> > > use the reported information at building the high level access pattern
-> > > snapshot.
+> > > On Fri, 12 Dec 2025 21:46:03 +0900 JaeJoon Jung <rgbi3307@gmail.com> =
+wrote:
+> > >
+> > > > On Mon, 8 Dec 2025 at 15:33, SeongJae Park <sj@kernel.org> wrote:
+> > > > >
+> > > > > Implement a DAMON core API for reporting page fault events to DAM=
+ON.  It
+> > > > > is a wrapper of damon_report_access().
+> > > > >
+> > > > > This is a temporal hack.  In future versions that will have no RF=
+C tag,
+> > > > > only damon_report_access() may be used.
+> > > >
+> > > > It's a minor, but git am throws an error when applying the [RFC PAT=
+CH v3 04/37]
+> > > > patch file.
+> > >
+> > > Interesting.  I can do 'git am' this patch without error on mm-new br=
+anch.  Are
+> > > you using something other than mm-new as your baseline?
+> > >
+> > > > I am testing it by modifying it as follows.
+> > > > damon_report_access() is
+> > > > called by damon_report_page_fault(), so they depend on each other.
+> > > >
+> > > > #ifdef CONFIG_MMU
+> > > > void damon_report_access(struct damon_access_report *report);
+> > > > void damon_report_page_fault(struct vm_fault *vmf, bool huge_pmd);
+> > > > #else
+> > > > static inline void damon_report_access(struct damon_access_report *=
+report)
+> > > > {
+> > > > }
+> > > > static inline void damon_report_page_fault(struct vm_fault *vmf, bo=
+ol huge_pmd)
+> > > > {
+> > > > }
+> > > > #endif
+> > >
+> > > Seems this is not for fixing a 'git am' error but build error...?  Ca=
+n you
+> > > share what error exactly you are seeing?
 > >
-> > It seems inefficient to repeatedly access the damon_access_reports[1000] array
-> > using a for loop in the kdamond_check_reported_accesses() function.
-> > It is inefficient to for loop through the entire
-> > damon_access_reports[1000] array.
-> > When CONFIG_HZ and jiffies are increased as follows and
-> > damond sample_interval is 5000us (5ms), the time flow diagram is as follows.
+> > You have been deploying RFC PATCH v1, v2, and v3 starting from 2025-06-=
+29.
+> > I am currently working with the latest version v6.18.1 (as of 2025-12-1=
+3).
 > >
-> > CONFIG_HZ 1000, jiffies == 1ms
-> > damond sample_interval == 5000us (5ms)
+> > $ head Makefile
+> > # SPDX-License-Identifier: GPL-2.0
+> > VERSION =3D 6
+> > PATCHLEVEL =3D 18
+> > SUBLEVEL =3D 1
+> > EXTRAVERSION =3D
+> > NAME =3D Baby Opossum Posse
 > >
-> > reports_len(==): [0 ... 5]
-> >                                                      [*]
-> >         0    1    2    3    4    5     6    7    8    9        997    998     999
-> >         [====|====|====|====|====]-----|----|----|----|  ....  |------|-------|
-> > jiffies++    1    2    3    4    5     0    0    0    0        0      0       0
-> > damond_fn(sample interval)      -5[0<]
+> > When applying RFC PATCH v1, v2, v3 with the above version, errors occur
+> > in several places in 'git am' as follows.
 > >
-> > reports_len(==): [997 ... 2]
-> >                                   [*]
-> >         0      1      2    3    4    5     6    7    8    9        997   998   999
-> >         [======|======]----|----|----|-----|----|----|----|  ....  [=====|=====]
-> > jiffies++   1001      1002 3    4    5     6    7    8    9        997   998   999
-> > damond_fn(sample interval)
-> >                             -5[997<]
+> > -------- [RFC PATCH v1] -----------------------------------------------=
+--
+> >
+> > $ git am '[RFC PATCH 1/6]'
+> > Applying: mm/damon/core: introduce damon_report_access()
+> >
+> > $ git am '[RFC PATCH 2/6]'
+> > Applying: mm/damon/core: add eliglble_report() ops callback
+> >
+> > $ git am '[RFC PATCH 3/6]'
+> > Applying: mm/damon/core: check received access reports
+> >
+> > $ git am '[RFC PATCH 4/6]'
+> > Applying: mm/damon/vaddr: impleement eligible_report() callback
+> > error: patch failed: mm/damon/vaddr.c:610
+> > error: mm/damon/vaddr.c: patch does not apply
+> > Patch failed at 0001 mm/damon/vaddr: impleement eligible_report() callb=
+ack
+> > hint: Use 'git am --show-current-patch=3Ddiff' to see the failed patch
+> > When you have resolved this problem, run "git am --continue".
+> > If you prefer to skip this patch, run "git am --skip" instead.
+> > To restore the original branch and stop patching, run "git am --abort".
+> [...]
 >
-> Please use fixed-length fonts for something like above, from next time.  I
-> fixed the diagram with my best effort, as above.  But I still fail at
-> understanding your point.  More clarification about what the diagram means
-> would be nice.
-
-Thank you for readjusting the font to fit.  The first diagram above is when
-reports_len is processed normally starting from 0 to reports_len.
-The second diagram shows the process where reports_len increases to its
-maximum values of 997, 998, 999, and then returns to 0.
-The biggest problem here is that the latter part of the array is not processed.
-
+> Thank you for sharing these!  We are working on moving baseline, specific=
+ally
+> mm-new in most cases.  And we keep under-development patches on damon/nex=
+t
+> tree.  Please refer to the document [1] for more details.
 >
+> And a later version of the patch series is for replacing the old version.=
+  If
+> you have no special reason to apply the old versions of the patches, I'd
+> suggest to use only the latest version.  And if you have no special reaso=
+ns to
+> use only 6.18.1, I'd recommend to just play with the commits on damon/nex=
+t
+> tree that was used to generate the patch files.
+>
+> Nonetheless, if you have a strong reason to do work on only 6.18.1, pleas=
+e feel
+> free to ask help if needed.
+>
+> > If I build the kernel with the above status, I get compilation errors
+> > as follows.
 > >
-> > It seems that only the section corresponding to the sample interval ([==|==])
-> > can be cycled as follows.  And, how about enjoying damon_access_reports[1000]
-> > as damon_access_reports[500]?  Even if it reduce the 1000ms to 500ms
-> > array space, it seems that it can sufficiently report and process within
-> > the sample interval of 5ms.
+> > /home/arm64/projects/kernel/linux-stable/mm/damon/sysfs.c:758:25:
+> > error: =E2=80=98DAMON_FILTER_TYPE_WRITE=E2=80=99 undeclared here (not i=
+n a function);
+> > did you mean =E2=80=98DAMOS_FILTER_TYPE_TARGET=E2=80=99?
+> >   758 |                 .type =3D DAMON_FILTER_TYPE_WRITE,
+> >       |                         ^~~~~~~~~~~~~~~~~~~~~~~
+> >       |                         DAMOS_FILTER_TYPE_TARGET
+> [...]
 >
-> Are you assuming the the reports can be made only once per 1 millisecond?  That
-> is not true.  The design assumes any kernel API caller could make the report,
-> so more than one report can be made within one millisecond.  Am I
-> missingsomething?
+> Makes sense.  Again, I'd recommend using mm-new as your baseline or play =
+with
+> the commits on damon/next, but if you need help, please feel free to reac=
+h out
+> :)
 
-jiffies 1ms is just to simply unfold the passage of time when
-CONFIG_HZ is set to 1000.
-This is a simplification to help it understand the flow of time.
-
->
-> >
-> >  static unsigned int kdamond_check_reported_accesses(struct damon_ctx *ctx)
-> >  {
-> > -       int i;
-> > +       int i = damon_access_reports_len;
-> > +       unsigned int nr = 0;
-> >         struct damon_access_report *report;
-> >         struct damon_target *t;
-> >
-> > @@ -2904,16 +2905,18 @@ static unsigned int
-> > kdamond_check_reported_accesses(struct damon_ctx *ctx)
-> >                 return 0;
-> >
-> >         mutex_lock(&damon_access_reports_lock);
-> > -       for (i = 0; i < damon_access_reports_len; i++) {
-> > -               report = &damon_access_reports[i];
-> > -               if (time_before(report->report_jiffies,
-> > -                                       jiffies -
-> > -                                       usecs_to_jiffies(
-> > -                                               ctx->attrs.sample_interval)))
-> > -                       continue;
-> > +       report = &damon_access_reports[i];
-> > +       while (time_after(report->report_jiffies,
-> > +               jiffies - usecs_to_jiffies(ctx->attrs.sample_interval))) {
-> >                 damon_for_each_target(t, ctx)
-> >                         kdamond_apply_access_report(report, t, ctx);
-> > +               if (++nr >= DAMON_ACCESS_REPORTS_CAP)
-> > +                       break;
-> > +
-> > +               i = (i == 0) ? (DAMON_ACCESS_REPORTS_CAP - 1) : (i - 1);
-> > +               report = &damon_access_reports[i];
-> >         }
-> > +
-> >         mutex_unlock(&damon_access_reports_lock);
-> >         /* For nr_accesses_bp, absence of access should also be reported. */
-> >         return kdamond_apply_zero_access_report(ctx);
-> > }
->
-> So I still don't get your points before the above code diff, but I understand
-> this code diff.
->
-> I agree this is more efficient.  I will consider doing something like this in
-> the next spin.
-
-What I tried above is to process the current array [1000] as
-efficiently as possible.
-But, if I think again, It would be better to store it in a linked-list
-and process it
-in FIFO mode whenever requested in damon_report_page_fault(),
-damon_report_access(report)
-instead of storing it in an array.  I'm also analyzing the source code
-starting this week,
-so I'll organize it a bit more and get back to you with my opinion.
-
-Thanks,
-JaeJoon
+Thank you for your detailed and kind reply.
+I am glad to refer to damon/next and mm-new in the document [1] you provide=
+d.
+I will continue to share the analysis with you.
 
 >
+> [1] https://origin.kernel.org/doc/html/latest/mm/damon/maintainer-profile=
+.html#scm-trees
+> [2]
 >
 > Thanks,
 > SJ
