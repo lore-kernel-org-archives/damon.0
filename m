@@ -1,19 +1,20 @@
 Received: from mailgw.kylinos.cn (mailgw.kylinos.cn [124.126.103.232])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1F5133B6FF
-	for <damon@lists.linux.dev>; Mon, 15 Dec 2025 14:21:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65041346E72
+	for <damon@lists.linux.dev>; Mon, 15 Dec 2025 14:21:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=124.126.103.232
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765808520; cv=none; b=gU8LFGtZ//gq6/zxEf3nmxP01P29L/JBf9HQnrDgo5CmKBUrXjGsUHmXy9/pvEmKQhdrR83mMV3CWn1Y65hlxhD1p0CA9jzbWp+mWPPVjYVqGkxup3al/cc33QDeD8w16zpWanZgyJqgbc9fsIBAIkKJOCNuome8cqdgDC1MQGI=
+	t=1765808522; cv=none; b=Rl0cmMeaQ/rpQ98rMH3tmbnisM/4EwlcPZE04LcxH0HPW+1MmvtcPfXkB67TG9nM+p5BRaq+/nu3mHiw1RqguHs7WUYuucWsEovVG/rlUxgDtZrra92e7zlEGvSYuoi7IMx6MKlck6/KIZi6E1SiiZHaCb6DlP7ZNCi2dFGRsTE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765808520; c=relaxed/simple;
-	bh=7CtgNzciMeN/j01y/n5Gaf06poZYvQB7EKFA/KTPCjc=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=jq1+sF1IfgaJIhBoEtZjBB+O9h9yWiR0gE5qkgmDij+D/eHIw/l8/lRBaaro/r2FEdoJH/3JnZRIy2t531zts+h6W0nztJvkfNsqOxSTkXHJz9/rWxtdeMwtTJw1z1aJe19IiR0ibgLTSd5I0pvHicu7QOzqLOXR9HdBqhi87Is=
+	s=arc-20240116; t=1765808522; c=relaxed/simple;
+	bh=X06HkMeFnHhefSMq3DKbFXnHboiHbYAmjVtPeR5Hy+A=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=p+jm104dKMQoV6YWTITWDfwK9BJUY/skwpmQgDRxkTKjOOFU81OLrvtjiqMw4o1p5nvDRcrWK+Nj4qd2zKmL/cECAELPQLYgIrNwu6TUOnouuZDlHk6cjloefbry4F1vA8iu9OwqYY60DMU3tH8SQcn/qbbrk8Efeo3S+YuQNRA=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn; spf=pass smtp.mailfrom=kylinos.cn; arc=none smtp.client-ip=124.126.103.232
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kylinos.cn
-X-UUID: 64f5d272d9c111f0a38c85956e01ac42-20251215
+X-UUID: 67006cbcd9c111f0a38c85956e01ac42-20251215
 X-CTIC-Tags:
 	HR_CC_COUNT, HR_CC_DOMAIN_COUNT, HR_CC_NAME, HR_CC_NO_NAME, HR_CTE_8B
 	HR_CTT_MISS, HR_DATE_H, HR_DATE_WKD, HR_DATE_ZONE, HR_FROM_NAME
@@ -25,27 +26,27 @@ X-CTIC-Tags:
 	CIE_GOOD_SPF, GTI_FG_BS, GTI_RG_INFO, GTI_C_BU, AMN_GOOD
 	ABX_MISS_RDNS
 X-CID-P-RULE: Release_Ham
-X-CID-O-INFO: VERSION:1.3.6,REQID:f43e1b67-0c3b-4f04-88b6-56baf8ccb14e,IP:10,U
+X-CID-O-INFO: VERSION:1.3.6,REQID:a159553b-53a4-4e5b-bd6e-11bb762e76f6,IP:10,U
 	RL:0,TC:0,Content:0,EDM:0,RT:0,SF:-5,FILE:0,BULK:0,RULE:Release_Ham,ACTION
 	:release,TS:5
-X-CID-INFO: VERSION:1.3.6,REQID:f43e1b67-0c3b-4f04-88b6-56baf8ccb14e,IP:10,URL
+X-CID-INFO: VERSION:1.3.6,REQID:a159553b-53a4-4e5b-bd6e-11bb762e76f6,IP:10,URL
 	:0,TC:0,Content:0,EDM:0,RT:0,SF:-5,FILE:0,BULK:0,RULE:Release_Ham,ACTION:r
 	elease,TS:5
-X-CID-META: VersionHash:a9d874c,CLOUDID:dd1bf524195dcf197d833e47ec69bb52,BulkI
-	D:2512152221510JK8K5F8,BulkQuantity:0,Recheck:0,SF:17|19|38|66|78|102|127|
-	898,TC:nil,Content:0|15|50,EDM:-3,IP:-2,URL:0,File:nil,RT:nil,Bulk:nil,QS:
-	nil,BEC:nil,COL:0,OSI:0,OSA:0,AV:0,LES:1,SPR:NO,DKR:0,DKP:0,BRR:0,BRE:0,AR
-	C:0
+X-CID-META: VersionHash:a9d874c,CLOUDID:3f795d0f366ff774f0650dac6b0e463c,BulkI
+	D:251215222154C0FZ39VJ,BulkQuantity:0,Recheck:0,SF:17|19|38|66|78|81|82|10
+	2|127|898,TC:nil,Content:0|15|50,EDM:-3,IP:-2,URL:0,File:nil,RT:nil,Bulk:n
+	il,QS:nil,BEC:nil,COL:0,OSI:0,OSA:0,AV:0,LES:1,SPR:NO,DKR:0,DKP:0,BRR:0,BR
+	E:0,ARC:0
 X-CID-BVR: 2,SSN|SDN
 X-CID-BAS: 2,SSN|SDN,0,_
 X-CID-FACTOR: TF_CID_SPAM_SNR,TF_CID_SPAM_FAS,TF_CID_SPAM_FSD
 X-CID-RHF: D41D8CD98F00B204E9800998ECF8427E
-X-UUID: 64f5d272d9c111f0a38c85956e01ac42-20251215
+X-UUID: 67006cbcd9c111f0a38c85956e01ac42-20251215
 X-User: lienze@kylinos.cn
 Received: from ubuntu.. [(61.48.214.33)] by mailgw.kylinos.cn
 	(envelope-from <lienze@kylinos.cn>)
 	(Generic MTA with TLSv1.3 TLS_AES_256_GCM_SHA384 256/256)
-	with ESMTP id 1342721327; Mon, 15 Dec 2025 22:21:49 +0800
+	with ESMTP id 1269189267; Mon, 15 Dec 2025 22:21:52 +0800
 From: Enze Li <lienze@kylinos.cn>
 To: sj@kernel.org,
 	akpm@linux-foundation.org
@@ -53,10 +54,12 @@ Cc: damon@lists.linux.dev,
 	linux-mm@kvack.org,
 	enze.li@gmx.com,
 	Enze Li <lienze@kylinos.cn>
-Subject: [PATCH 0/2] mm/damon: export symbols and introduce prdm module
-Date: Mon, 15 Dec 2025 22:20:55 +0800
-Message-ID: <20251215142057.588500-1-lienze@kylinos.cn>
+Subject: [PATCH 1/2] mm/damon/core: export necessary symbols
+Date: Mon, 15 Dec 2025 22:20:56 +0800
+Message-ID: <20251215142057.588500-2-lienze@kylinos.cn>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20251215142057.588500-1-lienze@kylinos.cn>
+References: <20251215142057.588500-1-lienze@kylinos.cn>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -65,59 +68,104 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-This patchset makes DAMON's advanced memory management accessible to a
-broader range of users through two complementary enhancements.  First,
-it exports the necessary DAMON core symbols to enable building loadable
-kernel modules.  Building on this foundation, it then introduces the
-'prdm' module, which extends the concept from the DAMON sample code
-(prcl.c) into a production-ready, user-friendly tool.
+This patch exports necessary DAMON core symbols to allow building
+loadable kernel modules that leverage DAMON's monitoring capabilities
+for advanced memory management techniques, such as proactive
+reclamation.
 
-The key strength of this module is its out-of-the-box simplicity: by
-simply specifying the PIDs of target processes and enabling the module,
-users can concurrently monitor memory access patterns across multiple
-processes and trigger proactive reclamation automatically.  This
-significantly lowers the barrier to using DAMON, allowing system
-administrators and regular users without deep kernel expertise to easily
-apply sophisticated memory optimization.
+The exported functions include those for context creation/destruction,
+target and scheme management, and monitoring control.  This enables
+external modules to create dedicated DAMON contexts and targets,
+operation schemes, and control the monitoring lifecycle without
+requiring direct modifications to the core DAMON subsystem.
 
-The goal is to help alleviate system-wide memory pressure and improve
-performance for various workloads, advancing DAMON from a
-developer-centric tool towards a practical solution for a wider
-audience.
+Signed-off-by: Enze Li <lienze@kylinos.cn>
+---
+ mm/damon/core.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-To test this 'prdm' module, you can follow these steps,
-
-  # modprobe prdm
-  # cd /sys/module/prdm/parameters
-  # echo <target1_pid> > damon_prdm.target_pid
-  # echo <target2_pid> > damon_prdm.target_pid
-  # echo <target3_pid> > damon_prdm.target_pid
-  # cat damon_prdm.target_pid
-  Tasks: <target1_pid> <target2_pid> <target3_pid>(exited)
-  # echo Y > damon_prdm.enabled
-
-To stop the monitoring,
-
-  # echo N > damon_prdm.enabled
-  # rmmod prdm
-
-Enze Li (2):
-  mm/damon/core: export necessary symbols
-  mm/damon/modules: introduce prdm module for DAMON
-
- mm/damon/Kconfig          |   2 +
- mm/damon/Makefile         |   1 +
- mm/damon/core.c           |  10 ++
- mm/damon/modules/Kconfig  |  18 +++
- mm/damon/modules/Makefile |   3 +
- mm/damon/modules/prdm.c   | 251 ++++++++++++++++++++++++++++++++++++++
- 6 files changed, 285 insertions(+)
- create mode 100644 mm/damon/modules/Kconfig
- create mode 100644 mm/damon/modules/Makefile
- create mode 100644 mm/damon/modules/prdm.c
-
-
-base-commit: 8f0b4cce4481fb22653697cced8d0d04027cb1e8
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index f9fc0375890a..b3f6b36a034d 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -108,6 +108,7 @@ int damon_select_ops(struct damon_ctx *ctx, enum damon_ops_id id)
+ 	mutex_unlock(&damon_ops_lock);
+ 	return err;
+ }
++EXPORT_SYMBOL_GPL(damon_select_ops);
+ 
+ /*
+  * Construct a damon_region struct
+@@ -409,6 +410,7 @@ struct damos *damon_new_scheme(struct damos_access_pattern *pattern,
+ 
+ 	return scheme;
+ }
++EXPORT_SYMBOL_GPL(damon_new_scheme);
+ 
+ static void damos_set_next_apply_sis(struct damos *s, struct damon_ctx *ctx)
+ {
+@@ -478,11 +480,13 @@ struct damon_target *damon_new_target(void)
+ 
+ 	return t;
+ }
++EXPORT_SYMBOL_GPL(damon_new_target);
+ 
+ void damon_add_target(struct damon_ctx *ctx, struct damon_target *t)
+ {
+ 	list_add_tail(&t->list, &ctx->adaptive_targets);
+ }
++EXPORT_SYMBOL_GPL(damon_add_target);
+ 
+ bool damon_targets_empty(struct damon_ctx *ctx)
+ {
+@@ -553,6 +557,7 @@ struct damon_ctx *damon_new_ctx(void)
+ 
+ 	return ctx;
+ }
++EXPORT_SYMBOL_GPL(damon_new_ctx);
+ 
+ static void damon_destroy_targets(struct damon_ctx *ctx)
+ {
+@@ -573,6 +578,7 @@ void damon_destroy_ctx(struct damon_ctx *ctx)
+ 
+ 	kfree(ctx);
+ }
++EXPORT_SYMBOL_GPL(damon_destroy_ctx);
+ 
+ static bool damon_attrs_equals(const struct damon_attrs *attrs1,
+ 		const struct damon_attrs *attrs2)
+@@ -763,6 +769,7 @@ void damon_set_schemes(struct damon_ctx *ctx, struct damos **schemes,
+ 	for (i = 0; i < nr_schemes; i++)
+ 		damon_add_scheme(ctx, schemes[i]);
+ }
++EXPORT_SYMBOL_GPL(damon_set_schemes);
+ 
+ static struct damos_quota_goal *damos_nth_quota_goal(
+ 		int n, struct damos_quota *q)
+@@ -1371,6 +1378,7 @@ int damon_start(struct damon_ctx **ctxs, int nr_ctxs, bool exclusive)
+ 
+ 	return err;
+ }
++EXPORT_SYMBOL_GPL(damon_start);
+ 
+ /*
+  * __damon_stop() - Stops monitoring of a given context.
+@@ -1414,6 +1422,7 @@ int damon_stop(struct damon_ctx **ctxs, int nr_ctxs)
+ 	}
+ 	return err;
+ }
++EXPORT_SYMBOL_GPL(damon_stop);
+ 
+ /**
+  * damon_is_running() - Returns if a given DAMON context is running.
+@@ -2924,6 +2933,7 @@ bool damon_initialized(void)
+ {
+ 	return damon_region_cache != NULL;
+ }
++EXPORT_SYMBOL_GPL(damon_initialized);
+ 
+ static int __init damon_init(void)
+ {
 -- 
-2.52.0
+2.43.0
 
