@@ -1,49 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 617003451CE;
-	Tue, 16 Dec 2025 08:02:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56FBA3451BF;
+	Tue, 16 Dec 2025 08:02:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765872122; cv=none; b=HoO3Afh3l9jsU/eakQfgIU+N37VVcd+8/gJg2HQGNCD4vvto/X+OuTHb32H8XoxX9IWf9Atf5d+PvAV2ruFbGeIXFiXUBzOuRiYr5OFJi3Gk5AOsltgz+qLKewC+tw12C2Zm0i2Y2cNLZxYMTrWgapmEwgx2gPbJftyR/EfwLg4=
+	t=1765872124; cv=none; b=nfK7ZEYXBbUwaf/pksmVIA35q3FNmJxvNCQ3YQ4yO6G8fCFUZ68wNUsUQFG1c4GeIYqWnSsyMitczJYFJGaItGpcwNplF/hJtj+18wcbO5FmiH6ZemeQLcPm2sfKmFpdZ5gaZZ+VYlZKi2tHHEAeLrLJuoLWuWS8LddmIsWIfRQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765872122; c=relaxed/simple;
-	bh=ihzFy5TOJPnYv7zeqZ3FA4BsW8yTIpVlYGwomLZgsUk=;
+	s=arc-20240116; t=1765872124; c=relaxed/simple;
+	bh=Z294j8tQ+uhgFiZieSNAE5/gve3h32Q0RHDWAYvQ4ng=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=MISVp4aWdm3ODAI2L2Y/orTHxxwueLuVLgutK43IzSesioStUXLkyy0M1ngNhbVyzVJgMBM0LaOAVEl444KS0QYyhRItN0Q+c8h8UdSYBRQ/jdCFd2C0a2MWC+TdoTc8xDagTJ7s16hS4iFZECLPKw6qtqOu9FCkY6MxrFwWbXI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BxXE8PUM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FloY7jU9WwHmH/uoPCHY6Vct4bYs2tvwgyxjYIjuKEdt28vR7q2ZezcPKE42ROLT+W3LyUDpCmP4lTX0eCeKT+wT2UjjO6jvyWn5lE77XePxvvt/xycJWeNKoTEHG2T1kD0QYO6a+fitFIl8Y7/Y+o9DV/OV5c2gosAdVOwtCu4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bXDV+jGv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BxXE8PUM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 679EBC113D0;
-	Tue, 16 Dec 2025 08:01:59 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bXDV+jGv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E980C4CEF1;
+	Tue, 16 Dec 2025 08:02:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1765872121;
-	bh=ihzFy5TOJPnYv7zeqZ3FA4BsW8yTIpVlYGwomLZgsUk=;
+	s=k20201202; t=1765872123;
+	bh=Z294j8tQ+uhgFiZieSNAE5/gve3h32Q0RHDWAYvQ4ng=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BxXE8PUMFi+wy0z7oFUzsOvqXnJSFUCjLVg2ARDbknet3abyC4cwZtsPddcglwbb0
-	 z0ln6Vsi4imR36cGKInmAYGJXCQtWRSDDd/SB2xmk+2GYUSTCGqzzoqM7pHVdtn0kF
-	 UfUDRCIvzgxdtiOMcOp8nfTPwBQJKLUcIKnRywtD/1R2X+bXr+8R8s2OAz7ucJTaBx
-	 lCyBuC07SraNRQRidD7whHRB3VUByDviTFE38WbfUMkhMD4UcKTYMO2H6GoeGvWxVF
-	 MmeRTIy+MCVH1LiK4vP6d8SVnRfKvboeoBa9gn3lltxZUH9/jnpWwaNNTEy9Yns90e
-	 5fGU5jNhrrN7w==
+	b=bXDV+jGvJc0fSESzG5TJkcX3/zacToRGcwhCH9SZbpJO/JarzFRnpNAzE4W69oT4P
+	 rPDMGTbNR5NGj1Bfi1wVDq2W7OKRBxbzBKg9HUmwF6BEwLx+ZEvpiMq7Yx4lgPR+2s
+	 1bJI+P/K72A8zYTLN/ZPdbO9q4+cX+Ej5dyrNE+HFs23GBUyUWOnTqLwppG/kGdwVw
+	 2se9p6L7hOdPoa5v62xJsb0o2cOwytCeq1mjAI9LtpAR/X9s6MGXI2zbqP90vHVVtl
+	 4A9k/v/GXc8gjzNuMlB3Gt9shwv/DjfjAxW/CuI3NrW2JAhO6af/CgRy1nQLibasE6
+	 fhdsaIfM3mQWA==
 From: SeongJae Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SeongJae Park <sj@kernel.org>,
-	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
-	David Hildenbrand <david@kernel.org>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
-	Michal Hocko <mhocko@suse.com>,
-	Mike Rapoport <rppt@kernel.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Vlastimil Babka <vbabka@suse.cz>,
 	damon@lists.linux.dev,
-	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [PATCH 10/12] Docs/admin-guide/mm/damon/usage: update for max_nr_snapshots
-Date: Tue, 16 Dec 2025 00:01:23 -0800
-Message-ID: <20251216080128.42991-11-sj@kernel.org>
+Subject: [PATCH 11/12] Docs/ABI/damon: update for max_nr_snapshots
+Date: Tue, 16 Dec 2025 00:01:24 -0800
+Message-ID: <20251216080128.42991-12-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20251216080128.42991-1-sj@kernel.org>
 References: <20251216080128.42991-1-sj@kernel.org>
@@ -53,45 +44,33 @@ List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Update DAMON usage document for the newly added DAMON sysfs interface
+Update DAMON ABI document for the newly added DAMON sysfs interface
 file, max_nr_snapshots.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- Documentation/admin-guide/mm/damon/usage.rst | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ Documentation/ABI/testing/sysfs-kernel-mm-damon | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/Documentation/admin-guide/mm/damon/usage.rst b/Documentation/admin-guide/mm/damon/usage.rst
-index d0944bd78964..7da4c002cb39 100644
---- a/Documentation/admin-guide/mm/damon/usage.rst
-+++ b/Documentation/admin-guide/mm/damon/usage.rst
-@@ -87,7 +87,7 @@ comma (",").
-     │ │ │ │ │ │ │ │ 0/type,matching,allow,memcg_path,addr_start,addr_end,target_idx,min,max
-     │ │ │ │ │ │ │ :ref:`dests <damon_sysfs_dests>`/nr_dests
-     │ │ │ │ │ │ │ │ 0/id,weight
--    │ │ │ │ │ │ │ :ref:`stats <sysfs_schemes_stats>`/nr_tried,sz_tried,nr_applied,sz_applied,sz_ops_filter_passed,qt_exceeds,nr_snapshots
-+    │ │ │ │ │ │ │ :ref:`stats <sysfs_schemes_stats>`/nr_tried,sz_tried,nr_applied,sz_applied,sz_ops_filter_passed,qt_exceeds,nr_snapshots,max_nr_snapshots
-     │ │ │ │ │ │ │ :ref:`tried_regions <sysfs_schemes_tried_regions>`/total_bytes
-     │ │ │ │ │ │ │ │ 0/start,end,nr_accesses,age,sz_filter_passed
-     │ │ │ │ │ │ │ │ ...
-@@ -543,10 +543,11 @@ online analysis or tuning of the schemes.  Refer to :ref:`design doc
+diff --git a/Documentation/ABI/testing/sysfs-kernel-mm-damon b/Documentation/ABI/testing/sysfs-kernel-mm-damon
+index 7571aa78b7bb..f2af2ddedd32 100644
+--- a/Documentation/ABI/testing/sysfs-kernel-mm-damon
++++ b/Documentation/ABI/testing/sysfs-kernel-mm-damon
+@@ -522,6 +522,13 @@ Contact:	SeongJae Park <sj@kernel.org>
+ Description:	Reading this file returns the total number of DAMON snapshots
+ 		that the scheme has tried to be applied.
  
- The statistics can be retrieved by reading the files under ``stats`` directory
- (``nr_tried``, ``sz_tried``, ``nr_applied``, ``sz_applied``,
--``sz_ops_filter_passed``, ``qt_exceeds`` and ``nr_snapshots``), respectively.
--The files are not updated in real time, so you should ask DAMON sysfs interface
--to update the content of the files for the stats by writing a special keyword,
--``update_schemes_stats`` to the relevant ``kdamonds/<N>/state`` file.
-+``sz_ops_filter_passed``, ``qt_exceeds``, ``nr_snapshots`` and
-+``max_nr_snapshots``), respectively.  The files are not updated in real time,
-+so you should ask DAMON sysfs interface to update the content of the files for
-+the stats by writing a special keyword, ``update_schemes_stats`` to the
-+relevant ``kdamonds/<N>/state`` file.
- 
- .. _sysfs_schemes_tried_regions:
- 
++What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/schemes/<S>/stats/max_nr_snapshots
++Date:		Dec 2025
++Contact:	SeongJae Park <sj@kernel.org>
++Description:	Writing a number to this file sets the upper limit of
++		nr_snapshots that deactivates the scheme when the limit is
++		reached or exceeded.
++
+ What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/schemes/<S>/tried_regions/total_bytes
+ Date:		Jul 2023
+ Contact:	SeongJae Park <sj@kernel.org>
 -- 
 2.47.3
