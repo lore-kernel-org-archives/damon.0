@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD9E534253F;
-	Tue, 16 Dec 2025 08:01:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01E64342CB8;
+	Tue, 16 Dec 2025 08:01:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765872104; cv=none; b=LNWozP1PpNeqa5Og5tBSrQezr7GMoHa2PD98cFPkONhO16WuvREUmVtlYpgi/BPZF/Ji8u4G23dKEaJ9s0scM/RPWS5kplLfaT8qNO8lSVT0s9x00mc18BIUVy35XJLKc5LXDrr1z4IDtkfpMbqQgIQlyuGl/j+ERNumazjs5kQ=
+	t=1765872106; cv=none; b=VS5NoCp9exMnCijR8kxLz5gbbBSArpNQxH9QOxBHAewVzVQBKaMeU74nZfaPa9qGHr52Jt8MRZOAfSx4OI5I3ZXcdm4NaLyd10QBhFbi0uTJHkCwfIfv1M5ojKPvNvGMgjyg/rutCDTOJ6VVK/3Wv3ndfjKfjqyTHrJdxuNllnU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765872104; c=relaxed/simple;
-	bh=FHEw5hu5B8m0TfMg+08OEnZOsjSGxKvHndmP4M5Ow1c=;
+	s=arc-20240116; t=1765872106; c=relaxed/simple;
+	bh=EheTKTWNwlESlsGw3Z3YuTZbvfPyPa97pgV7/l/okj8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WSIUKIU0NJ6bdc+DQfeSASRfjF7rezd/Tqk45T27Cv8vhoVnv2uxVvQIvwbMW77hv5Rzu3uKo7B69yDQkD7TljHtWVTjTPh5NtdqwmciBoJyDQiKbAEg0W9n2KThS8nDMqWNER6I/5feHfQQ+0LO6g1k5C4x+3xb6HIiCOPFz8E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=D6bSg4ZK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WmA6kYuYTHfrQnAO74tdsbOthSFxuhBqnOnR+/7YtfSVG6OqQr5u82vUc0Cc8b3E5+qEEY2ck/RmB2itIH1rzM8/YxwUa7yOR/ucxgBzvBfoUmrApP6jR9P2swz/3ALyg9r9pz3JmYHUMsp2u4ylKg6KmY6HlhhQNRNvTPPx9Cc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PtTftagF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="D6bSg4ZK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D2FEC19423;
-	Tue, 16 Dec 2025 08:01:43 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PtTftagF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93556C4CEF1;
+	Tue, 16 Dec 2025 08:01:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1765872104;
-	bh=FHEw5hu5B8m0TfMg+08OEnZOsjSGxKvHndmP4M5Ow1c=;
+	s=k20201202; t=1765872105;
+	bh=EheTKTWNwlESlsGw3Z3YuTZbvfPyPa97pgV7/l/okj8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D6bSg4ZKdyQZYD8/5fdt9puKkD7nDp9CqTQM85B6Cujj2f6wuAeQamtzQ0fxuB/bK
-	 Pfw5mwujN9mnggDHLTLFtyvAvCA/0bmDVgxVZYbo0V0pi2Sk8GoWmi2vPbELWzd1AZ
-	 5jDqYGrCnLUKkWQ7YOlMr0CYDc1VGF1It8jJfs7EHbB4by/f222ZygFB8B+6GGfOTL
-	 aFFROa5vc+sNKhHBMPZSy+l/A54w1hy8n4PeKvpa0FojLKtagGqY3ttBZrZaH85kAc
-	 8SK4mEZnybP+eqNo3652hdmUnzSXo/lv2t80y37HIt4ZOcecE1AHaaWG8YhYUf8MMX
-	 DNkmOeY7nMdLg==
+	b=PtTftagFA6aDpibycmhBVk+mdFNBF0N5kixw4SIegT3Uk5eNoeKz8vtoXLTeZ+k5Y
+	 klim1SnBtXXcyu0Twva67/CC+W9QK62Wgr4GNAzIdXXYEyMs/PZJfgy8IWrQZFAJ46
+	 0eMnkH/nNRMGP9ES+CbFoWPT3emcFnpQbYxhrAv2ZtJQEV94SoLrON3OZvBbfx0aW9
+	 3RUrK3v3UmPVb2/CBmWsjbb0QCE5MMaSES9M1SuUYJ9j0iBTkgKewWprEEYRdZun69
+	 jdDoAIXYASZoWgGp7N90a0A6Jzq4sC2NNV5Amy2gF4jCEA/o2ewXfbWob1ebCJczjM
+	 svBhe6cSBUouA==
 From: SeongJae Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SeongJae Park <sj@kernel.org>,
 	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [PATCH 01/12] mm/damon/core: introduce nr_snapshots damos stat
-Date: Tue, 16 Dec 2025 00:01:14 -0800
-Message-ID: <20251216080128.42991-2-sj@kernel.org>
+Subject: [PATCH 02/12] mm/damon/sysfs-schemes: introduce nr_snapshots damos stat file
+Date: Tue, 16 Dec 2025 00:01:15 -0800
+Message-ID: <20251216080128.42991-3-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20251216080128.42991-1-sj@kernel.org>
 References: <20251216080128.42991-1-sj@kernel.org>
@@ -46,72 +46,66 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-DAMON generates monitoring results snapshots for every sampling
-interval.  DAMOS applies given schemes on the regions of the snapshots,
-for every apply interval of the scheme.
-
-DAMOS stat informs a given scheme has tried to how many memory entities
-and applied, in the region and byte level.  In some use cases including
-user-space oriented tuning and investigations, it is useful to know that
-in the DAMON-snapshot level.  Introduce a new stat, namely nr_snapshots
-for DAMON core API callers.
+Introduce a new DAMON sysfs interface file for exposing the newly added
+DAMOS stat, nr_snapshots.  The file has the name same to the stat name
+(nr_snapshots) and placed under the damos stat sysfs directory.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- include/linux/damon.h |  3 +++
- mm/damon/core.c       | 13 ++++++++++---
- 2 files changed, 13 insertions(+), 3 deletions(-)
+ mm/damon/sysfs-schemes.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-diff --git a/include/linux/damon.h b/include/linux/damon.h
-index 3813373a9200..1d8a1515e75a 100644
---- a/include/linux/damon.h
-+++ b/include/linux/damon.h
-@@ -330,6 +330,8 @@ struct damos_watermarks {
-  * @sz_ops_filter_passed:
-  *		Total bytes that passed ops layer-handled DAMOS filters.
-  * @qt_exceeds: Total number of times the quota of the scheme has exceeded.
-+ * @nr_snapshots:
-+ *		Total number of DAMON snapshots that the scheme has tried.
-  *
-  * "Tried an action to a region" in this context means the DAMOS core logic
-  * determined the region as eligible to apply the action.  The access pattern
-@@ -355,6 +357,7 @@ struct damos_stat {
+diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
+index a71059e65d34..a1f555e1125a 100644
+--- a/mm/damon/sysfs-schemes.c
++++ b/mm/damon/sysfs-schemes.c
+@@ -204,6 +204,7 @@ struct damon_sysfs_stats {
  	unsigned long sz_applied;
  	unsigned long sz_ops_filter_passed;
  	unsigned long qt_exceeds;
 +	unsigned long nr_snapshots;
  };
  
- /**
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index 53fb988b6a0d..6f3328b29a65 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -157,6 +157,12 @@ void damon_destroy_region(struct damon_region *r, struct damon_target *t)
- 	damon_free_region(r);
+ static struct damon_sysfs_stats *damon_sysfs_stats_alloc(void)
+@@ -265,6 +266,15 @@ static ssize_t qt_exceeds_show(struct kobject *kobj,
+ 	return sysfs_emit(buf, "%lu\n", stats->qt_exceeds);
  }
  
-+static bool damon_is_last_region(struct damon_region *r,
-+		struct damon_target *t)
++static ssize_t nr_snapshots_show(struct kobject *kobj,
++		struct kobj_attribute *attr, char *buf)
 +{
-+	return list_is_last(&t->regions_list, &r->list);
++	struct damon_sysfs_stats *stats = container_of(kobj,
++			struct damon_sysfs_stats, kobj);
++
++	return sysfs_emit(buf, "%lu\n", stats->nr_snapshots);
 +}
 +
- /*
-  * Check whether a region is intersecting an address range
-  *
-@@ -1949,10 +1955,11 @@ static void damon_do_apply_schemes(struct damon_ctx *c,
- 		if (damos_skip_charged_region(t, &r, s, c->min_sz_region))
- 			continue;
+ static void damon_sysfs_stats_release(struct kobject *kobj)
+ {
+ 	kfree(container_of(kobj, struct damon_sysfs_stats, kobj));
+@@ -288,6 +298,9 @@ static struct kobj_attribute damon_sysfs_stats_sz_ops_filter_passed_attr =
+ static struct kobj_attribute damon_sysfs_stats_qt_exceeds_attr =
+ 		__ATTR_RO_MODE(qt_exceeds, 0400);
  
--		if (!damos_valid_target(c, t, r, s))
--			continue;
-+		if (damos_valid_target(c, t, r, s))
-+			damos_apply_scheme(c, t, r, s);
- 
--		damos_apply_scheme(c, t, r, s);
-+		if (damon_is_last_region(r, t))
-+			s->stat.nr_snapshots++;
++static struct kobj_attribute damon_sysfs_stats_nr_snapshots_attr =
++		__ATTR_RO_MODE(nr_snapshots, 0400);
++
+ static struct attribute *damon_sysfs_stats_attrs[] = {
+ 	&damon_sysfs_stats_nr_tried_attr.attr,
+ 	&damon_sysfs_stats_sz_tried_attr.attr,
+@@ -295,6 +308,7 @@ static struct attribute *damon_sysfs_stats_attrs[] = {
+ 	&damon_sysfs_stats_sz_applied_attr.attr,
+ 	&damon_sysfs_stats_sz_ops_filter_passed_attr.attr,
+ 	&damon_sysfs_stats_qt_exceeds_attr.attr,
++	&damon_sysfs_stats_nr_snapshots_attr.attr,
+ 	NULL,
+ };
+ ATTRIBUTE_GROUPS(damon_sysfs_stats);
+@@ -2760,6 +2774,7 @@ void damon_sysfs_schemes_update_stats(
+ 		sysfs_stats->sz_ops_filter_passed =
+ 			scheme->stat.sz_ops_filter_passed;
+ 		sysfs_stats->qt_exceeds = scheme->stat.qt_exceeds;
++		sysfs_stats->nr_snapshots = scheme->stat.nr_snapshots;
  	}
  }
  
