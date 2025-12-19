@@ -1,84 +1,253 @@
-Received: from relay.hostedemail.com (smtprelay0011.hostedemail.com [216.40.44.11])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4119C2D5C76
-	for <damon@lists.linux.dev>; Thu, 18 Dec 2025 17:28:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=216.40.44.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E37EA33A9F9
+	for <damon@lists.linux.dev>; Fri, 19 Dec 2025 11:46:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766078887; cv=none; b=M5mWKjn76B4GsbKWMtDT/8hcIqDH5muzgvqeWugzqzQsjAdhyga8cLPmV/GeHatCLWu90l9+4sxwmfv21us5UzSzBy9+Y6EfcEA7S+9puvIM1Wtw7aWaQIiPLjFrDemqLnOQ427sd6yT7eTz58q2Xnn7VaGFrIsQpAGVDyHXWdg=
+	t=1766144806; cv=none; b=bwjQJbvvbnGFlcvQ2zvCYozjr00I7vozAbNEsUvN+vJH4/49TsmDJBC8YxODLzhUaTOwlld6FsMtkDZ3Ppq+eX49X5ii1RnFU3QttHlh+v/9M/0JrkJ34U9Ar9IDRkCuXsVa9uygxJ+n3jPXfSMgquXQA1XGnNu8Tul3AanKbnY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766078887; c=relaxed/simple;
-	bh=0QpK/SI+pFFJkcgrVRRUsTdd+2zpDBgpuR2wJiOTWvk=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=akpmLNtPVsJ1OwibhVwrf4734AFAz2TRYYL8BAm1UX+Qdm4A6YMrot6Re58uPVlJuvZf4pxRYyzCPJ11gztOUN/fFcyDLICeDKp8LnfsEXhe+eCd4Sj/qY+2s1TJZJesKTshQ1AcqocMW5ZmQoj6LvXilwFW/Ig7e1rBMsJxJT0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=goodmis.org; spf=pass smtp.mailfrom=goodmis.org; arc=none smtp.client-ip=216.40.44.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=goodmis.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=goodmis.org
-Received: from omf02.hostedemail.com (a10.router.float.18 [10.200.18.1])
-	by unirelay02.hostedemail.com (Postfix) with ESMTP id 5E7CB13862C;
-	Thu, 18 Dec 2025 17:28:03 +0000 (UTC)
-Received: from [HIDDEN] (Authenticated sender: rostedt@goodmis.org) by omf02.hostedemail.com (Postfix) with ESMTPA id 54C1480009;
-	Thu, 18 Dec 2025 17:28:01 +0000 (UTC)
-Date: Thu, 18 Dec 2025 12:29:39 -0500
-From: Steven Rostedt <rostedt@goodmis.org>
-To: Andrew Morton <akpm@linux-foundation.org>
-Cc: SeongJae Park <sj@kernel.org>, Masami Hiramatsu <mhiramat@kernel.org>,
- Mathieu Desnoyers <mathieu.desnoyers@efficios.com>, damon@lists.linux.dev,
- linux-kernel@vger.kernel.org, linux-mm@kvack.org,
- linux-trace-kernel@vger.kernel.org
-Subject: Re: [PATCH 12/12] mm/damon/core: add trace point for damos stat per
- apply interval
-Message-ID: <20251218122939.57963cd1@gandalf.local.home>
-In-Reply-To: <20251217182915.5284d66b58ac7b744b8dcf7f@linux-foundation.org>
-References: <20251217174851.28e7c4e5@gandalf.local.home>
-	<20251217235219.2750-1-sj@kernel.org>
-	<20251217182915.5284d66b58ac7b744b8dcf7f@linux-foundation.org>
-X-Mailer: Claws Mail 3.20.0git84 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
+	s=arc-20240116; t=1766144806; c=relaxed/simple;
+	bh=ZMIY8bvpAjYIhNLbORbK74fYFOO6FDDan9bMjBbDML8=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=BhNJOg6t401wyGtdDZ0MKnoMAfXYcETqFmNnx4OGI8EmTM0/M6mqhAPNAGAzLodRKeqHl38sQSDh2l0F1JhsSTYTWduluy3a5sO7jNAXc6V2NSAgqWNzAXypkqUrJo+5oINUW+3xz9idgXmbNQ8ENdee93j0nH5iQJn62i9+plE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dETzg5j3; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dETzg5j3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 380C5C4CEF1;
+	Fri, 19 Dec 2025 11:46:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1766144805;
+	bh=ZMIY8bvpAjYIhNLbORbK74fYFOO6FDDan9bMjBbDML8=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=dETzg5j31g043NXtaTvY6nlXP+kWJJme+5yA3MJx9PHC3Z5sdLJJz5nShg8YmxH3e
+	 5kIbk4xdU9H14nPUvieVZekusoB8RbaKbI5ZBpQPK4SkF6y1MFDZ6jBfGAhSZBN5ZO
+	 sms3XtIeFwh+QBCpoK+AgpGu5kv6irIZOTGiDgTl49GJJimpTLOD19j1sJwXtbCJM4
+	 5dcuFovc9TBKgu/KpH04pZt4T4mgwMIOwsqi9IMyXfIqWqEkEAdsgW02uvD1Tc/Mns
+	 b5Wg5Vz3/p5Es7/CbIVMgmeK+Bu+z1NXpbjC6U9rZvHEjdi5jFDdNPoDE5ZOqNifI6
+	 0IG872Xai0aIg==
+From: SeongJae Park <sj@kernel.org>
+To: Enze Li <lienze@kylinos.cn>
+Cc: SeongJae Park <sj@kernel.org>,
+	akpm@linux-foundation.org,
+	damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	enze.li@gmx.com
+Subject: Re: [PATCH 0/2] mm/damon: export symbols and introduce prdm module
+Date: Fri, 19 Dec 2025 03:46:32 -0800
+Message-ID: <20251219114633.41156-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <2c8dd0de-e650-4a74-b1f7-61ed81c03d26@kylinos.cn>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-X-Stat-Signature: 6payrkwug7d5baq3ayi8txdc8p6zpnfs
-X-Rspamd-Server: rspamout01
-X-Rspamd-Queue-Id: 54C1480009
-X-Session-Marker: 726F737465647440676F6F646D69732E6F7267
-X-Session-ID: U2FsdGVkX18LqqMBRgo7b7noeiaKz6NeF6w2KmXGUdM=
-X-HE-Tag: 1766078881-76418
-X-HE-Meta: U2FsdGVkX18iZGF2g2mjWYfsz1mg6gAMGDTeGr7Hsp3vnmWhVpznh9bseXMrHQAyqOPNqYiM6xtd0/K3q2t/gV4U8v784Q+/xMFiDaVeuFGb/CFF67yLKAcDG1Ldu8q24u+KA99Fyno9AVE2dfUEI4+mD2LxHGm0TjlLVZODWKMRJd+MdlYWvs80EOuFEFPl4JT4fEDJeWAxirNk4g95dVwyxU2LNwEfTBJVq+roTMZinhWscIWVbxj1OQP8SRzoq0HoZF7P97TrOXQ5TVbFxM4biT/PAZpDZMFCauoVsRRCZRC3pO/ZCKMBFbXenDnXOEqSP1VTISCbP4hhVmpMFUMh7ns4N+mxc4QVE8Hn3w1Sz9RbkZ1gAC0LKI7rS7dj
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Wed, 17 Dec 2025 18:29:15 -0800
-Andrew Morton <akpm@linux-foundation.org> wrote:
+On Thu, 18 Dec 2025 21:46:37 +0800 Enze Li <lienze@kylinos.cn> wrote:
 
-> > > Nit, but it's been stated that strings should not be broken up because of
-> > > the column limit.  
+> On 2025/12/16 07:16, SeongJae Park wrote:
+> > Hello Enze,
+> > 
+> > On Mon, 15 Dec 2025 22:20:55 +0800 Enze Li <lienze@kylinos.cn> wrote:
+> > 
+> >> This patchset makes DAMON's advanced memory management accessible to a
+> >> broader range of users through two complementary enhancements.  First,
+> >> it exports the necessary DAMON core symbols to enable building loadable
+> >> kernel modules.  Building on this foundation, it then introduces the
+> >> 'prdm' module, which extends the concept from the DAMON sample code
+> >> (prcl.c) into a production-ready, user-friendly tool.
+> >>
+> >> The key strength of this module is its out-of-the-box simplicity: by
+> >> simply specifying the PIDs of target processes and enabling the module,
+> >> users can concurrently monitor memory access patterns across multiple
+> >> processes and trigger proactive reclamation automatically.  This
+> >> significantly lowers the barrier to using DAMON, allowing system
+> >> administrators and regular users without deep kernel expertise to easily
+> >> apply sophisticated memory optimization.
+> > 
+> > I agree your points about the problems and the direction for improving the
+> > situation.
 > 
-> screw the rules
+> Thank you, SJ!  Glad we are on the same page. :)
+> 
+> > However, we have a module for such use case, namely DAMON_RECLAIM.
+> > It was designed for a reason that very same to what you described above.  One
+> > key difference between DAMON_RECLAIM and prdm is, to my understanding,
+> > DAMON_RECLAIM works for the physical address space, while prdm works for
+> > virtual address spaces.
+> 
+> Yes, I have studied the implementation and architecture of this module
+> quite thoroughly.  However, there are certain limitations when
+> considering it for production use.
 
-Heh.
+To my understanding, DAMON_RECLAIM is being used in multiple real world
+products.  I understand you are saying there could be limitations for some
+different production uses, and I agree.
+
+> To my knowledge, few would perform
+> indiscriminate page reclamation across the entire system.  In most
+> practical scenarios, people prefer to protect critical processes from
+> being swapped out, while applying page migration and reclamation only to
+> less critical or performance-insensitive processes.
+
+Thank you for kindly explaining above.  I agree such protection of critical
+processes could be useful and required.  Nonetheless, to me, it sounds like you
+could also do such protection using DAMOS_FILTER_TYPE_MEMCG.  Actually the
+feature was developed for such use cases, and I recently met some people who
+willing to use DAMON on their products in a way very similar to what you
+described.  I suggested them to try DAMOS_FILTER_TYPE_MEMCG.  Have you
+considered using DAMOS_FILTER_TYPE_MEMCG?
 
 > 
-> > --- a/include/trace/events/damon.h
-> > +++ b/include/trace/events/damon.h
-> > @@ -40,9 +40,7 @@ TRACE_EVENT(damos_stat_after_apply_interval,
-> >  		__entry->nr_snapshots = stat->nr_snapshots;
-> >  	),
-> >  
-> > -	TP_printk("ctx_idx=%u scheme_idx=%u nr_tried=%lu sz_tried=%lu "
-> > -			"nr_applied=%lu sz_tried=%lu sz_ops_filter_passed=%lu "
-> > -			"qt_exceeds=%lu nr_snapshots=%lu",
-> > +	TP_printk("ctx_idx=%u scheme_idx=%u nr_tried=%lu sz_tried=%lu nr_applied=%lu sz_tried=%lu sz_ops_filter_passed=%lu qt_exceeds=%lu nr_snapshots=%lu",
-> >  			__entry->context_idx, __entry->scheme_idx,
-> >  			__entry->nr_tried, __entry->sz_tried,
-> >  			__entry->nr_applied, __entry->sz_applied,  
+> As we all know, frequent page migration inevitably introduces some
+> latency to process response times.  Therefore, the ability to target
+> large, inactive memory consumers for reclamation addresses a strong,
+> genuine demand from real production environments.
 > 
-> because that's just crazy.  Let's use some judgment here!
+> > Is the virtual address spaces proactive reclamation is
+> > what you really need?  If so, could you please further describe your expected
+> > or planned usage of it?
+> 
+> Consider the following scenario: a host machine runs three virtual
+> machines -- Machine A, Machine B, and Machine C.  It is known that
+> Machine A handles massive traffic, while Machines B and C have
+> relatively light workloads.  When memory pressure arises, besides
+> releasing caches, the system can utilize prdm to perform precise page
+> migration targeting Machines B and C, ensuring memory usage remains
+> within a safe margin.
+> 
+> The data below, collected from a test environment, demonstrates the
+> effectiveness of prdm.  After enabling prdm to monitor the two
+> lower-activity VMs (2316, 2284), I observed that the DAMON-based prdm
+> successfully migrated 5.5 GB of pages to the swap partition.
+> 
+>  PID USER  PR  NI    VIRT    RES    SHR S  %CPU  %MEM     TIME+ COMMAND
+> 2253 qemu  20   0 11.251g 3.822g  32.7m S 4.989 12.28   0:48.75
+> qemu-system-x86
+> 2316 qemu  20   0 12.191g 1.524g  34.3m S 5.322 4.893   0:49.05
+> qemu-system-x86
+> 2284 qemu  20   0 12.092g 1.184g  32.5m S 5.987 3.803   0:48.10
+> qemu-system-x86
+> 
+> root@localhost /s/m/p/parameters# free -h
+>        total        used        free      shared  buff/cache   available
+> Mem:    31Gi        12Gi        15Gi       5.5Mi       3.2Gi        18Gi
+> Swap:   31Gi       5.5Gi        25Gi
 
-Does it really matter? Actually, I prefer this way because it better shows
-where the format ends and the parameters start. I care more about the
-parameters than the format string, except to look for each "%*" value.
+Thank you for sharing this nice explanation use case.  I think this all make
+sense.
 
--- Steve
+> 
+> > 
+> > If the virtual address spaces proactive reclamation is really what you need, I
+> > think extending DAMON_RECLAIM for the purpose might be doable and even simpler
+> > than introducing a new module.  How about doing so?
+> 
+> Before developing prdm, I had considered implementing the same
+> functionality based on DAMON_RECLAIM.  However, I gradually realized
+> this would make DAMON_RECLAIM overly complex and less
+> user-friendly—especially given its existing module-specific exported
+> interfaces, which could confuse users.  This approach would create
+> significant barriers to promoting wider DAMON adoption.  Consequently,
+> building upon the prcl sample became the preferred choice.
+
+I agree DAMON_RECLAIM already have no small number of parameters, and adding
+more may make it look even more complex.  But, users may use only parameters
+that really need to be set for their real use case.
+
+For example, if we implement virtual address spaces mode in DAMON_RECLAIM, I
+think we can simply add target_pid parameter that works very same to that of
+prdm.  If it is unset, DAMON_RECLAIM works in the physical address mode.  If it
+is set, it works in the virtual address mode.  Adding just one more parameter
+that doesn't break old usage doesn't seem that complex change to me, at least
+in terms of the user experience.
+
+As I mentioned above, yet another example would be using
+DAMOS_FILTER_TYPE_MEMCG.  For this, we may be able to add a parameter for
+describing the memcg of critical processes.  Again, adding just one more
+parameter that doesn't affect old usages doesn't seem too complex changes to
+me, at least in terms of the user experience.
+
+Meanwhile, I agree adding a new simpler module could make it easy for new
+users.  But, I concern if having two modules for DAMON-based reclamation will
+make users get difficulty at finding the correct one for their usage, since
+they may now need to compare two modules.
+
+For the above reasons, I still feel extending DAMON_RECLAIM is a better
+approach in terms of user experience.
+
+I'm not saying DAMON_RECLAIM's user interface is perfect.  Especially its
+documentation may have many rooms to improve.
+
+And I'm not very sure if the virtual address spaces reclamation is somewhat
+need to be supported from modules rather than using DAMON sysfs interface or
+DAMON user-space tool.  I implemented DAMON modules including DAMON_RECLAIM,
+DAMON_LRU_SORT and DAMON_STAT for users who willing to enable those always, and
+therefore want to avoid runtime controls.  That is, users can use those modules
+by modifying the kernel command line options.  My expectation for DAMON modules
+may not well documented.  If so, it's my bad.  I will try to recheck the
+documentation and make that more clearly documented.
+
+For virtual address spaces reclamation, however, runtime control is essential
+since you don't know the pid of the processes before the runtime.  In the case,
+I think using DAMON sysfs interface or DAMON user-space tool could be a better
+approach.  Have you considered using those?
+
+> 
+> > 
+> > And, even more importantly, why it should be a loadable module rather than a
+> > static module?  Do you have a specific use case that requires it to be a
+> > loadable module?
+> 
+> Yes, loadability is crucial for operational flexibility in practical
+> production environments.  Beyond some obvious advantages, I would like
+> to highlight a key scenario: system administrators can load the prdm
+> module upon detecting memory pressure and unload it immediately after
+> reclamation is complete, thereby eliminating any overhead during normal
+> operation.
+
+I agree always having prdm in kernel is an overhead.  But, I think the
+overhead is not meaningfully big.  Also, as I mentioned above, my intended use
+cases of DAMON modules is for cases that willing to simply always use the
+modules.  If runtime controls are essential, I think using DAMON sysfs
+interface or DAMON user-space tool is a better choice.
+
+Someone might argue DAMON sysfs interface is unnecessarily big compared to
+prdm.  But, I have to ask again in the case.  Does the overhead really
+meaningfully big for a real world use case?
+
+> Furthermore, it supports zero-downtime updates, meaning that
+> improvements targeting prdm can be deployed via a simple module reload,
+> avoiding costly system reboots.
+
+So I'm not really convinced at needs of prdm module at the moment.  But I agree
+your above point is a good example advantage of loadable modules.  Also there
+were private requests to support loadable DAMON modules.  No one among those
+were for real production use case, and I understand you are also doing this
+work for imaginable use cases, not your real products.  Please correct me if
+I'm wrong.  But as the request is repeated, if you willing to convert existing
+DAMON modules to support loadable modules build and expose required DAMON
+functions for that, at least I wouldn't oppose.
+
+> 
+> Finally, I would like to add that designing prdm with an extremely
+> simple workflow -- load the module, set the target PIDs, and enable the
+> switch -- will contribute to the promotion of DAMON, allowing a broader
+> user base to benefit from the DAMON system.
+
+That workflow is definitely much easier than directly using DAMON sysfs
+interface.  But, for the reason we have DAMON user-space tool.  Using it, the
+workflow can also be as simple as prdm, like below.
+
+   # damo start $TARGET_PID --damos_action pageout --damos_access_rate 0% 0% --damos_age 2m max
+
+
+Thanks,
+SJ
+
+[...]
