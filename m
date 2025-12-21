@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39BD130F92D
-	for <damon@lists.linux.dev>; Sun, 21 Dec 2025 19:27:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12C262FF664;
+	Sun, 21 Dec 2025 20:13:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766345274; cv=none; b=laz9U3xzha3fA2ilTAyzgd6GzN2VdBYPrR4t/yrEK7BEEF8K9T/LFb85ptNeogkqR+fFRgMMmxoPXUHYqotAkjeSdb/asH45numsTceT9/w36zMY1QpVe5oW2cB6xwdWlyLRgzGqoqPIMu/7vaCa3WBWWBImXxZOhvlLjcj148M=
+	t=1766348038; cv=none; b=ihHo6Wv80e677H0viEdTDZ8wOqyTl1lBVQJlyi1rOrqtJ6PspifGCA/gHL5XbspERU7Wah9rjhzqhb5ZqovJvsn6m2N0oRhehX9zHkFYgQZ57ofOx0VWSUHu4Cukmppr/mAoFMMB12UCXXPMsiyWOb0R6ClCNSa3M4IVUHbZDaA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766345274; c=relaxed/simple;
-	bh=7F4TPMVb6bOzlf1ttXAT3unF5sWnabnhKyb4rPY4OUE=;
+	s=arc-20240116; t=1766348038; c=relaxed/simple;
+	bh=L+HwWcueprOkDL5bY7kcoLnxKlOmqZ8wBaIYvEpHcuk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ggKmTWkIRpq8sYJlFA2wFazJHZjLQjch/m0ccnTxD382yn1Eq2xoFQpWLZwBdakmANMzv1rTOAo+c5MDXMjTNZs/tsCmUacCzcgLBt7PjgPMZn8iXq85IktxZfIyKIYG0SMTzqpkqYZAvJNqUeKLIgScpWLU2MLI5MF8EYVSn+8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TOckPfkz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=suGZMjzn5N5zQg9LMxdSou4ZQR9DDzURgpOo/SNCPey4XCyOaVAgOIdewfQXAxpwE3YHdU+HbnkIk+Hys1XutIMsWLdcYrtnk81KiBoFJdnt/QZ+8f/03b77r2t5hkvpJF3SeWlLusmmYfDk/2dOxeQoW/2cILORhPqJY+KJHeo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kuX/TvQL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TOckPfkz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0983DC4CEFB;
-	Sun, 21 Dec 2025 19:27:53 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kuX/TvQL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A4ACC4CEFB;
+	Sun, 21 Dec 2025 20:13:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1766345273;
-	bh=7F4TPMVb6bOzlf1ttXAT3unF5sWnabnhKyb4rPY4OUE=;
+	s=k20201202; t=1766348037;
+	bh=L+HwWcueprOkDL5bY7kcoLnxKlOmqZ8wBaIYvEpHcuk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TOckPfkzVyDWVRPTUlGTXT2Y5N9C+tgKYm06vcUwNmzBNR8STdiHzelZhq4zyio7C
-	 dB01Bh9JO5Z5/IHCtKN2My5ZEsIJB67JdsH5rhqQwlpBCejHkxeIioVOQamYxl5Pce
-	 foeevengrQikpbKOOqbS6Xe9IJkxY7gTabg65Br1rHyrlMyT/XbtTsV/KnkDG6kaXY
-	 /wrFYyzZzAwILKPHZTpIZ1P/GZJbvLQWDlTYGVRzY5owroIzhi2EVSydOqC0ZB/ltR
-	 IBN1ZJM/OVayWl551QQINU9itAVnmCVUc3Z9sTvf0EhCiEJRLr6sdYbcrppgrt3RMF
-	 zQ4l73tmWnypw==
+	b=kuX/TvQLnJs6M4/+yEHXi0Kh1zn/tvDGxyP+FaKLIRHkm/dXlUV6+HMfUlkr5ZBgh
+	 AhYF/edfKH7iXkes8p6TZmi2R+GH/7wLWpyPeDhUKuM/a/f+oI2ferqyox3fz6pTGj
+	 PBiRaO1ROoOYySERM3/+8nFn3wjdhRlPPQkLgLolOcWqWBywEKYZ+qU8jSaQ/0oiqH
+	 VCkvuLgk+BDlRdrDHEIS33hx1m46lCqYi96VWgGK5yh/QACqozxMouZ8hYZLRLbaJR
+	 uuqeYmlgKQV0W72lDPX5DqnEwBwS9ikpbpN9Is1XMb80/FI6c0xIpIcXHo0ss7Sd6+
+	 Y7fKPAcLx3T5A==
 From: SeongJae Park <sj@kernel.org>
-To: JaeJoon Jung <rgbi3307@gmail.com>
+To: Shu Anzai <shu17az@gmail.com>
 Cc: SeongJae Park <sj@kernel.org>,
-	Enze Li <lienze@kylinos.cn>,
 	akpm@linux-foundation.org,
+	yanquanmin1@huawei.com,
 	damon@lists.linux.dev,
 	linux-mm@kvack.org,
-	enze.li@gmx.com
-Subject: Re: [PATCH 0/2] mm/damon: export symbols and introduce prdm module
-Date: Sun, 21 Dec 2025 11:27:50 -0800
-Message-ID: <20251221192751.42586-1-sj@kernel.org>
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] mm/damon/tests/core-kunit: extend test scenarios and remove redundancy
+Date: Sun, 21 Dec 2025 12:13:55 -0800
+Message-ID: <20251221201356.43083-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <CAHOvCC4opA5kdX0c3RrUL0g9e95JJb5hr=ZaGS7FGoQ-nxgF3Q@mail.gmail.com>
+In-Reply-To: <20251221130114.1483856-1-shu17az@gmail.com>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -48,136 +48,183 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Sun, 21 Dec 2025 20:04:23 +0900 JaeJoon Jung <rgbi3307@gmail.com> wrote:
+Hello Shu,
 
-> On Sun, 21 Dec 2025 at 17:12, SeongJae Park <sj@kernel.org> wrote:
-> >
-> > On Sun, 21 Dec 2025 11:42:43 +0900 JaeJoon Jung <rgbi3307@gmail.com> wrote:
-> >
-> > > On Fri, 19 Dec 2025 at 21:52, SeongJae Park <sj@kernel.org> wrote:
-> > > >
-> > > > On Thu, 18 Dec 2025 21:46:37 +0800 Enze Li <lienze@kylinos.cn> wrote:
-> > > >
-> > > > > On 2025/12/16 07:16, SeongJae Park wrote:
-> > > > > > Hello Enze,
-> > > > > >
-> > > > > > On Mon, 15 Dec 2025 22:20:55 +0800 Enze Li <lienze@kylinos.cn> wrote:
-> > [...]
-> > > > If runtime controls are essential, I think using DAMON sysfs
-> > > > interface or DAMON user-space tool is a better choice.
-> > >
-> > > I also think the current DAMON design structure is suitable for DAMON sysfs
-> > > and user-space tools.  DAMON sysfs can run multiple nr_ctxs, so I think it
-> > > would be a good idea to consolidate it into this.  As Enze mentioned, DAMON
-> > > was originally designed as a kernel loadable module,
-> >
-> > I don't recall where Enze mentioned so.  Could you please give me a pointer?
-> 
-> Although Enze did not directly state this, His patch is a loadable module,
-> which implies that it was "designed as a kernel loadable module."
 
-Thanks for clarifying.  I understand you are saying Enze's prdm module is
-designed as a loadable module, while you are not saying about other parts of
-DAMON.
+Thank you for sending this patch :)
+
+On Sun, 21 Dec 2025 13:01:14 +0000 Shu Anzai <shu17az@gmail.com> wrote:
+
+> Add some missing test scenarios to cover a wider range of cases. Also,
+> remove a redundant case in damos_test_commit_quota_goal().
+
+Seems this patch is making more than one change to multiple test cases at once.
+It makes following which change is for what purpose bit difficult for me.  I'd
+suggest splitting this into smaller ones that making changes for each test
+function, and adding more explanation of the changes.  E.g., a patch for
+damon_test_split_at(), another one for damon_test_merge_two(), and so on.  Not
+a strong request, though.
+
+I have two questions below, though.
 
 > 
-> >
-> > And I'm not sure based on what you are saying it was originally designed as a
-> > loadable module.  Maybe you are saying something before DAMON's mainline
-> > landing, but that's quite long ago and my memory management is not good.  Could
-> > you please add more contexts?
-> >
-> > > but I was curious as to
-> > > why it wasn't run that way.
-> >
-> > Maybe I could give you an answer if you could give me the context that I asked
-> > above.
-> >
-> > > When executing the damon_start(**ctxs,
-> > > nr_ctxs, exclusive)
-> > > function, nr_ctxs=1, exclusive=true is passed so that modules are currently
-> > > executed only one at a time.  Therefore, there is no point in running
-> > > DAMON
-> > > as a kernel module, since you are not running multiple modules simultaneously.
-> >
-> > I'm not following your point well.  Could you please elaborate your point?
+> Signed-off-by: Shu Anzai <shu17az@gmail.com>
+> ---
+>  mm/damon/tests/core-kunit.h | 51 ++++++++++++++++++++++++-------------
+>  1 file changed, 33 insertions(+), 18 deletions(-)
 > 
-> So far in my view, I have analyzed DAMON as follows:
-> 
-> DAMON core  <---------> kernel module   <------> damo(user-space)
-> mm/damon/core.c         mm/damon/lru_sort.c
-> mm/damon/vaddr.c        mm/damon/reclaim.c
-> mm/damon/paddr.c        samples/damon/*.c
-> mm/damon/sysfs.c
-> 
-> Above, lru_sort and reclaim are DAMON core characteristics, but they have
-> a kernel module structure because they are executed with module_init().
-> I personally think this is inappropriate.
+> diff --git a/mm/damon/tests/core-kunit.h b/mm/damon/tests/core-kunit.h
+> index f59ae7ee19a0..e9ccc3fb34f9 100644
+> --- a/mm/damon/tests/core-kunit.h
+> +++ b/mm/damon/tests/core-kunit.h
+> @@ -158,6 +158,7 @@ static void damon_test_split_at(struct kunit *test)
+>  	r->nr_accesses_bp = 420000;
+>  	r->nr_accesses = 42;
+>  	r->last_nr_accesses = 15;
+> +	r->age = 10;
+>  	damon_add_region(r, t);
+>  	damon_split_region_at(t, r, 25);
+>  	KUNIT_EXPECT_EQ(test, r->ar.start, 0ul);
+> @@ -170,6 +171,7 @@ static void damon_test_split_at(struct kunit *test)
+>  	KUNIT_EXPECT_EQ(test, r->nr_accesses_bp, r_new->nr_accesses_bp);
+>  	KUNIT_EXPECT_EQ(test, r->nr_accesses, r_new->nr_accesses);
+>  	KUNIT_EXPECT_EQ(test, r->last_nr_accesses, r_new->last_nr_accesses);
+> +	KUNIT_EXPECT_EQ(test, r->age, r_new->age);
+>  
+>  	damon_free_target(t);
+>  }
 
-Could you please further clarify why you think it is inappropriate?
+I understand that the above change is increasing the coverage of this test to
+also verify the age of splitted region.  Nice.
 
-> Additionally, currently, DAMON is
-> executed only once at a time according to the exclusive=true condition
-> when damon_start() is called.  In this structure, I believe that the meaning
-> of "kernel loadable module"  is non-existent.
+Correct me if I'm misunderstanding the intention of the above diff.
 
-I have to say I still don't get your points.  More elaboration would be nice.
+> @@ -190,6 +192,7 @@ static void damon_test_merge_two(struct kunit *test)
+>  	}
+>  	r->nr_accesses = 10;
+>  	r->nr_accesses_bp = 100000;
+> +	r->age = 9;
+>  	damon_add_region(r, t);
+>  	r2 = damon_new_region(100, 300);
+>  	if (!r2) {
+> @@ -198,12 +201,15 @@ static void damon_test_merge_two(struct kunit *test)
+>  	}
+>  	r2->nr_accesses = 20;
+>  	r2->nr_accesses_bp = 200000;
+> +	r2->age = 21;
+>  	damon_add_region(r2, t);
+>  
+>  	damon_merge_two_regions(t, r, r2);
+>  	KUNIT_EXPECT_EQ(test, r->ar.start, 0ul);
+>  	KUNIT_EXPECT_EQ(test, r->ar.end, 300ul);
+>  	KUNIT_EXPECT_EQ(test, r->nr_accesses, 16u);
+> +	KUNIT_EXPECT_EQ(test, r->nr_accesses_bp, 160000u);
+> +	KUNIT_EXPECT_EQ(test, r->age, 17u);
+>  
+>  	i = 0;
+>  	damon_for_each_region(r3, t) {
 
-> 
-> >
-> > > I'm doing some more research into why we run modules with exclusive=true.
-> >
-> > Hoplefully commit 8b9b0d335a34 ("mm/damon/core: allow non-exclusive DAMON
-> > start/stop") will give you more contexts.
-> >
-> > To summarize again, the intention is to avoid kdamonds interrupting each
-> > other's access checks.  For example, suppose the DAMON context for
-> > DAMON_RECLAIM and another one (could be created by DAMON sysfs interface users
-> > or other DAMON modules, say, DAMON_STAT) are running concurrently.  And if
-> > those pick a same page as access check sampling target, their finding of the
-> > access on the page depend on a race condition.  To avoid such a case, DAMON
-> > modules call damon_start() with exclusive argument set.
-> >
-> > Maybe this is unclearly documented.  I will recheck the documentation and
-> > improve it to make this more clear.  If you find the rooms to improve and have
-> > ideas for the improvements, please feel free to send patches.
-> >
-> > > One more thing I would like to add is that I think it would be less
-> > > confusing
-> > > to move lru_sort and reclaim to the samples/damon/ path.
-> >
-> > No, I don't think so.  Those are for real world products, not for samples.
-> >
-> > > And it would
-> > > be
-> > > a good idea to organize the core sources toward
-> > > mm/damon/modules-common.c source.
-> >
-> > I don't find exactly what kind of reorganization you mean.  But I agree there
-> > could be rooms to improve in terms of the files and code organization.  Any
-> > suggestion is welcome.
-> >
-> > [...]
-> > > > > Finally, I would like to add that designing prdm with an extremely
-> > > > > simple workflow -- load the module, set the target PIDs, and enable the
-> > > > > switch -- will contribute to the promotion of DAMON, allowing a broader
-> > > > > user base to benefit from the DAMON system.
-> > > >
-> > > > That workflow is definitely much easier than directly using DAMON sysfs
-> > > > interface.  But, for the reason we have DAMON user-space tool.  Using it, the
-> > > > workflow can also be as simple as prdm, like below.
-> > > >
-> > > >    # damo start $TARGET_PID --damos_action pageout --damos_access_rate 0% 0% --damos_age 2m max
-> > >
-> > > Where can I find the damo source or documentation?
-> >
-> > You could use https://github.com/damonitor/damo and its README.md file.
-> 
-> Thank you so much for sharing.  I am trying to analyze the related contents
-> in more detail to improve your DAMON.  I'll try to organize it a bit better
-> and send you a patch.
+I understand that the above change is increasing the coverage of this test to
+also verify the age handling of the merge logic.  Looks good!
 
-Looking forward.
+> @@ -232,12 +238,12 @@ static void damon_test_merge_regions_of(struct kunit *test)
+>  {
+>  	struct damon_target *t;
+>  	struct damon_region *r;
+> -	unsigned long sa[] = {0, 100, 114, 122, 130, 156, 170, 184};
+> -	unsigned long ea[] = {100, 112, 122, 130, 156, 170, 184, 230};
+> -	unsigned int nrs[] = {0, 0, 10, 10, 20, 30, 1, 2};
+> +	unsigned long sa[] = {0, 100, 114, 122, 130, 156, 170, 184, 235, 240};
+> +	unsigned long ea[] = {100, 112, 122, 130, 156, 170, 184, 230, 240, 10235};
+> +	unsigned int nrs[] = {0, 0, 10, 10, 20, 30, 1, 2, 5, 5};
+>  
+> -	unsigned long saddrs[] = {0, 114, 130, 156, 170};
+> -	unsigned long eaddrs[] = {112, 130, 156, 170, 230};
+> +	unsigned long saddrs[] = {0, 114, 130, 156, 170, 235, 240};
+> +	unsigned long eaddrs[] = {112, 130, 156, 170, 230, 240, 10235};
+>  	int i;
+>  
+>  	t = damon_new_target();
+> @@ -255,9 +261,9 @@ static void damon_test_merge_regions_of(struct kunit *test)
+>  	}
+>  
+>  	damon_merge_regions_of(t, 9, 9999);
+> -	/* 0-112, 114-130, 130-156, 156-170 */
+> -	KUNIT_EXPECT_EQ(test, damon_nr_regions(t), 5u);
+> -	for (i = 0; i < 5; i++) {
+> +	/* 0-112, 114-130, 130-156, 156-170, 170-230, 235-240, 240-10235 */
+> +	KUNIT_EXPECT_EQ(test, damon_nr_regions(t), 7u);
+> +	for (i = 0; i < 7; i++) {
+>  		r = __nth_region_of(t, i);
+>  		KUNIT_EXPECT_EQ(test, r->ar.start, saddrs[i]);
+>  		KUNIT_EXPECT_EQ(test, r->ar.end, eaddrs[i]);
+
+I understand the above change adds two regions on the test input, but I'm not
+following what logic it intends to additionally test.  Could you please
+clarify?
+
+> @@ -269,6 +275,9 @@ static void damon_test_split_regions_of(struct kunit *test)
+>  {
+>  	struct damon_target *t;
+>  	struct damon_region *r;
+> +	unsigned long sa[] = {0, 300, 500};
+> +	unsigned long ea[] = {220, 400, 700};
+> +	int i;
+>  
+>  	t = damon_new_target();
+>  	if (!t)
+> @@ -286,14 +295,19 @@ static void damon_test_split_regions_of(struct kunit *test)
+>  	t = damon_new_target();
+>  	if (!t)
+>  		kunit_skip(test, "second target alloc fail");
+> -	r = damon_new_region(0, 220);
+> -	if (!r) {
+> -		damon_free_target(t);
+> -		kunit_skip(test, "second region alloc fail");
+> +	for (i = 0; i < ARRAY_SIZE(sa); i++) {
+> +		r = damon_new_region(sa[i], ea[i]);
+> +		if (!r) {
+> +			damon_free_target(t);
+> +			kunit_skip(test, "region alloc fail");
+> +		}
+> +		damon_add_region(r, t);
+> +	}
+> +	damon_split_regions_of(t, 4, 5);
+> +	KUNIT_EXPECT_LE(test, damon_nr_regions(t), 12u);
+> +	damon_for_each_region(r, t) {
+> +		KUNIT_EXPECT_GE(test, damon_sz_region(r) % 5ul, 0ul);
+>  	}
+> -	damon_add_region(r, t);
+> -	damon_split_regions_of(t, 4, 1);
+> -	KUNIT_EXPECT_LE(test, damon_nr_regions(t), 4u);
+>  	damon_free_target(t);
+>  }
+
+I understand that the above change make the existing test scenario bit more
+complex, and cover the alignment.  Looks good.  But
+damon_test_split_regions_of() aims to cover multiple scenarios.  Your change is
+updating one existing test scenario, so I'm bit concerned at the fact that it
+is removing one test case.  I understand the updated test scenario is including
+the old one, but I think keeping the current test is also ok, as long as the
+maintenace burden is not that high.  So, instead of modifying an existing test
+scenario, how about adding the new test case?
+
+>  
+> @@ -574,9 +588,10 @@ static void damos_test_commit_quota_goal(struct kunit *test)
+>  			});
+>  	damos_test_commit_quota_goal_for(test, &dst,
+>  			&(struct damos_quota_goal) {
+> -			.metric = DAMOS_QUOTA_USER_INPUT,
+> -			.target_value = 789,
+> -			.current_value = 12,
+> +			.metric = DAMOS_QUOTA_SOME_MEM_PSI_US,
+> +			.target_value = 234,
+> +			.current_value = 345,
+> +			.last_psi_total = 567,
+>  			});
+>  }
+
+Thank you for correcting this!
 
 
 Thanks,
