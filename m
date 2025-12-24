@@ -1,72 +1,44 @@
-Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54AB9326D63
-	for <damon@lists.linux.dev>; Wed, 24 Dec 2025 12:44:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D11FD1D5CC6;
+	Wed, 24 Dec 2025 15:31:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766580262; cv=none; b=gCcV4VD3oQNrGGWE4AHF5lyEDJxMCG9YMuZdT13FvrIVw7fGukiiNNK1IfgLPItuGHN519pTtT08VBkoaVp/lG1xY0x2JsMKhXwbLxFaz+VkBdjFrYuo3GgwAtCBsLU29EFpfrIBA2KO1fhdRLwBXXr66TP7/ueg7sR9yefdRt4=
+	t=1766590291; cv=none; b=Iifc1a8FFK/kJ9k8Mea0McfspJ4u08EHZUPFx0IDD6aySaMZs85BtuDlt4VAUkKxXimZYqsD+UGtbTR3oA8MZZmaz7zXl1DqbkKSNSl9JYWnVKrcvIUg/7e0eXxEU16vXvV7Y04EArMMfg7F8IOIZ7ZKH2d+h8g9zVIU81JL7G0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766580262; c=relaxed/simple;
-	bh=bFLgGwjSjYn9nTB8sXEX57wdcy4V+7gCo2uhDro/w4o=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=ZVWdXpv6dyBf5i4jCzlJjkZI1brUZITfn4n2ra35HerRNhq9D2i+aQxRRQBW77y5eNd323WL6FRRBV70O6ZktUfP/A6jem1c/TwSTebhZqOJAG1PouJJg0o+bRnAAeQXbsdy2oyG1EYZqLP90LxGsmLrP/66D8rsM7KOh/Q47dE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gRu7OVFr; arc=none smtp.client-ip=209.85.214.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1766590291; c=relaxed/simple;
+	bh=pYAUqa6oFZYO/VGx8zrWIvrkonzQsyd2twadgZmVNJI=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=kGwnpwRQcDV3X3ju2pwZv1MDcFSErXCUFaawL0OQz8sTWvmwBpVQQe+a64W9+Wr8fORYWS+CWK2JrFeJbCPlDmlw30b7mehe1gy6mVyUT8dB4qH14Nm0WeLwFasIIh+FPrB1tHHNBMLhuQ4fzq6+hNlo21eWSs3hE1928rEVDbo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ikH47xnw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gRu7OVFr"
-Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-2a102494058so34401965ad.0
-        for <damon@lists.linux.dev>; Wed, 24 Dec 2025 04:44:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1766580260; x=1767185060; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=BKYQvQ6NReD5wn+v/jU8gptz8GYN9a8ubrCMIsRMan0=;
-        b=gRu7OVFrqbe+t9fjTKXSuabHDUk3WAB3ZcKomeS44BvoXO+w26qaBvNqf7Eatdgm7z
-         SRRJ5edZlI8mF3mt47w+kQ80p44I9EybqlO4g6gJrdTIzFWVdOFJKAn9E8suYh9E9wRa
-         2miA+MHsGDaKYrKOU/rYH5m858oB+Yijk/BzBRDQBjffwxWqaetsQdCrBwee05tYyZMG
-         HJFmY8rf/mmMLHJU36McumC6/NojRGLvAen7a7GJ2DHPT78cotCRa51+aaptA2XipEdo
-         JSV+ppTB5vFPKYTW0eiiNSfELo1nQMCXwBZDGiIgnEplfiZPV7nTmvcmNZFb1NEr5w1z
-         fPwg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1766580260; x=1767185060;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=BKYQvQ6NReD5wn+v/jU8gptz8GYN9a8ubrCMIsRMan0=;
-        b=W78tlL8hHZ2uqXCCoIQAfH9/Wh/QIcP9J4NUdHaab98Jb6brDh6LQKdV+sur3yPpyu
-         boG3XwjJ/gOTHkw4stq4kiWs20yHE4lkbj2Of3F6MIyZf05QtBeaonzCv0JmSbti0YEm
-         eTVSYgWoZVGgk+zAKjAnmDW5F8SP1AmQu9bAfs/72CYAKW6+aTk/1VGmsdoHsLfPr4lK
-         M3K+jtDouWJ37MwKR5qoFiia/jwgn2/AgbAgCuP4aEFPxIdjH24vNzLHFX+zNDuItpu+
-         Zw0ms5OdlfD5LW8/CtIqXE9yUFqZ/xcCt2ZVa7PQD+ApeHj3ZeSI63sqjSXirM4BxmUx
-         LUiQ==
-X-Forwarded-Encrypted: i=1; AJvYcCU2hXgSSsb9RNr/KT26ro1Bmh3tv1VJcC0Hk1eUoYG0uaRBCp1IX5Nt+Bo7Y9tmZFnrPtmn8w==@lists.linux.dev
-X-Gm-Message-State: AOJu0YyAWQg9eWwEMrSvAlzAZ61kB1vhNpBgh9pjXBG9uG8fPLer9JUU
-	1b8ys+FurjtL4V/L5ogFkXhMM49qv10OWyhVzHtoLqCbwArzIdVxXoD7
-X-Gm-Gg: AY/fxX7Daf6+MVY5WMdN+jTwXk575Exw6EsgFdZ7PVXT6uzit38HhfH7R2smuhkdobl
-	cuS0c8u33Kt97aywNDq13xSmgCDu2wdLNCv+543+mrz4pFHSQABZad9BopaRHUOFXeCBuLUvf+F
-	piBiky7Jp1Ck765p9pX5jiNf1/RPJLvKKb2hlm9sU3TDQNpHupKWGQXWBEeltWTiUvR77NOP/Iy
-	l23FVLhEn59Vox+ssDTiKyP6eJAY5He9fa/+cSkUbYZxwHmlkbcBw4XdJpY3n9I6nuO3mgs6OeG
-	3tSRLOWx+3UQEOftFfgOOes0h1Xs++BRsAAYXTAn4C1UEvecauDFGm2eR3AjQOZJLyc7wIdmUz3
-	IEmXbJQPOzYOk9sD8pC8Qnb6p4bGageO2Cq3LvrkPd4pnfqv+64TEP9GopFbSYiegRb2NZmeRlj
-	jYHT0ISLrxYqnS
-X-Google-Smtp-Source: AGHT+IGaFz5m5x5yWwSs6Wyputwoz09+EBgCA1HOBett09MOFwgLX12SwSxMG9G9A+65lYQFeOLZsA==
-X-Received: by 2002:a17:903:32c5:b0:2a0:97ea:b1bd with SMTP id d9443c01a7336-2a2ca8f6621mr237053685ad.0.1766580260481;
-        Wed, 24 Dec 2025 04:44:20 -0800 (PST)
-Received: from HP-Note-Host.. ([222.234.91.137])
-        by smtp.googlemail.com with ESMTPSA id d9443c01a7336-2a2f3d5f5dasm154014665ad.82.2025.12.24.04.44.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 24 Dec 2025 04:44:20 -0800 (PST)
-From: JaeJoon Jung <rgbi3307@gmail.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ikH47xnw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C39F1C4CEF7;
+	Wed, 24 Dec 2025 15:31:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1766590288;
+	bh=pYAUqa6oFZYO/VGx8zrWIvrkonzQsyd2twadgZmVNJI=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=ikH47xnwgcwk6YycFzvdnpoP/MCZ3++SorzRiscRX78pyuh8PaCvkA6a76/zuyARJ
+	 MzQWd7Ozqdz5hEDC0Q7E04ZN8IML582sse5UatqofBWHqabCAFdqSG8Hru48qF27Xx
+	 c0Yv1Xj704bqoYijArC5yH02+3QTj2GsbdB8BQwgIkK0POQYQB0KpsNM4fOvj3W5CU
+	 wIaO9Mp3lqwm/FSrcNoHzmsUwa6s81AzklS7UAqaPgZyAeqBETu62pz/EljNd09l6V
+	 JKFAcZx0ZWvapytQ3UjGNSTAp+CBoVk6yIzxO6QKyZMhPKTFHVypA+Uao4YNwTB5Q/
+	 mTOb3CtYf2WKw==
+From: SeongJae Park <sj@kernel.org>
 To: SeongJae Park <sj@kernel.org>
-Cc: JaeJoon Jung <rgbi3307@gmail.com>,
+Cc: Shu Anzai <shu17az@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	damon@lists.linux.dev,
 	linux-mm@kvack.org,
-	rgbi3307@nate.com
-Subject: [PATCH] mm/damon/core: modified control->repeat loop at the kdamond_call()
-Date: Wed, 24 Dec 2025 21:43:54 +0900
-Message-ID: <20251224124355.31667-1-rgbi3307@gmail.com>
-X-Mailer: git-send-email 2.43.0
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 4/5] mm/damon/tests/core-kunit: add test cases for multiple regions in damon_test_split_regions_of()
+Date: Wed, 24 Dec 2025 07:31:23 -0800
+Message-ID: <20251224153125.69194-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20251224053407.81911-1-sj@kernel.org>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -75,125 +47,109 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The kdamond_call() function is executed repeatedly in the kdamond_fn()
-kernel thread.  The kdamond_call() function is implemented as a while loop.
-Therefore, it is important to improve the list processing logic here to
-ensure faster execution of control->fn().  For ease of explanation,
-the data structure names will be abbreviated as follows:
+On Tue, 23 Dec 2025 21:34:06 -0800 SeongJae Park <sj@kernel.org> wrote:
 
-damon_call_control.list: C.list
-ctx->call_controls: CTX.head
-repeat_controls: R.head
+> On Wed, 24 Dec 2025 04:21:59 +0000 Shu Anzai <shu17az@gmail.com> wrote:
+> 
+> > Extend damon_test_split_regions_of() to verify that it correctly handles 
+> > multiple regions with various 'min_sz_region'.
+> > 
+> > Signed-off-by: Shu Anzai <shu17az@gmail.com>
+> > ---
+> >  mm/damon/tests/core-kunit.h | 21 +++++++++++++++++++++
+> >  1 file changed, 21 insertions(+)
+> > 
+> > diff --git a/mm/damon/tests/core-kunit.h b/mm/damon/tests/core-kunit.h
+> > index 2eb6f41635a8..36622a2c11f1 100644
+> > --- a/mm/damon/tests/core-kunit.h
+> > +++ b/mm/damon/tests/core-kunit.h
+> > @@ -275,6 +275,9 @@ static void damon_test_split_regions_of(struct kunit *test)
+> >  {
+> >  	struct damon_target *t;
+> >  	struct damon_region *r;
+> > +	unsigned long sa[] = {0, 300, 500};
+> > +	unsigned long ea[] = {220, 400, 700};
+> > +	int i;
+> >  
+> >  	t = damon_new_target();
+> >  	if (!t)
+> > @@ -301,6 +304,24 @@ static void damon_test_split_regions_of(struct kunit *test)
+> >  	damon_split_regions_of(t, 4, 1);
+> >  	KUNIT_EXPECT_LE(test, damon_nr_regions(t), 4u);
+> >  	damon_free_target(t);
+> > +
+> > +	t = damon_new_target();
+> > +	if (!t)
+> > +		kunit_skip(test, "third target alloc fail");
+> > +	for (i = 0; i < ARRAY_SIZE(sa); i++) {
+> > +		r = damon_new_region(sa[i], ea[i]);
+> > +		if (!r) {
+> > +			damon_free_target(t);
+> > +			kunit_skip(test, "region alloc fail");
+> > +		}
+> > +		damon_add_region(r, t);
+> > +	}
+> > +	damon_split_regions_of(t, 4, 5);
+> > +	KUNIT_EXPECT_LE(test, damon_nr_regions(t), 12u);
+> > +	damon_for_each_region(r, t) {
+> > +		KUNIT_EXPECT_GE(test, damon_sz_region(r) % 5ul, 0ul);
+> > +	}
+> 
+> Nit.  The above braces for single statement is unnecessary.
 
-the execution flow of the while loop of the kdamond_call() function,
+Andrew, could you please pick this series with below attaching fixup for this
+one?
 
-Before modification:
-Old while loop:
+> 
+> > +	damon_free_target(t);
+> >  }
+> >  
+> >  static void damon_test_ops_registration(struct kunit *test)
+> > -- 
+> > 2.43.0
+> 
+> Other than the above trivial nit for the unnecessary braces,
+> 
+> Reviewed-by: SeongJae Park <sj@kernel.org>
+> 
+> 
+> Thanks,
+> SJ
 
-        CTX.head <-----> C.list <-----> C.list <----> C.list
-        ^                   |                           |
-        |               if (C.repeat)            if (!C.repeat)
-   restore: only one        |                           |
-   list_add_tail()        list_del()                  list_del()
-        |                   |                           |
-        +                   |                       complete()
-        R.head <------ list_add()
 
-To process C.repeat above, we use an additional list, repeat_controls.
-The process of adding C.list to repeat_controls and then restoring it back
-to CTX.head is complex and inefficient.  Furthermore, there's the problem
-of restoring only a single C.list to CTX.head.
+Thanks,
+SJ
 
-Below, repeat_controls is removed and the existing CTX.head is modified to
-loop once(1st rotation).  This simplifies list processing and creates a
-more efficient structure.
+==== >8 ====
+From dde3e0e84056f85cd5cbface38c1f617bfbd0bd4 Mon Sep 17 00:00:00 2001
+From: SeongJae Park <sj@kernel.org>
+Date: Wed, 24 Dec 2025 07:27:04 -0800
+Subject: [PATCH] mm/damon/tests/core-kunit: remove braces for a single
+ statement
 
-Modified while loop:
-Not used repeat_controls:
+damon_test_split_regions_of() has braces for a single statement, which
+is unnecessary.  Remove it.
 
-        CTX.head <-----> C.list <-----> C.list <----> C.list <-------+
-                            |                           |            |
-                        if (C.repeat)            if (!C.repeat)      |
-                            |                           |            |
-                          list_del()                  list_del()     |
-                            |                           |            |
-                            |                       complete()       |
-                            |                                        |
-                          first --------> list_add_tail() -----------+
-
-        if (C.list == first) break;
-
-Signed-off-by: JaeJoon Jung <rgbi3307@gmail.com>
+Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- mm/damon/core.c | 37 +++++++++++++++++++------------------
- 1 file changed, 19 insertions(+), 18 deletions(-)
+ mm/damon/tests/core-kunit.h | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index 824aa8f22db3..babad37719b6 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -2554,42 +2554,43 @@ static void kdamond_usleep(unsigned long usecs)
-  */
- static void kdamond_call(struct damon_ctx *ctx, bool cancel)
- {
--	struct damon_call_control *control;
--	LIST_HEAD(repeat_controls);
--	int ret = 0;
-+	struct damon_call_control *control, *first = NULL;
-+	unsigned int idx = 0;
-
- 	while (true) {
- 		mutex_lock(&ctx->call_controls_lock);
- 		control = list_first_entry_or_null(&ctx->call_controls,
- 				struct damon_call_control, list);
- 		mutex_unlock(&ctx->call_controls_lock);
--		if (!control)
-+
-+		/* check control empty or 1st rotation */
-+		if (!control || control == first)
- 			break;
--		if (cancel) {
-+
-+		if (++idx == 1)
-+			first = control;
-+
-+		if (cancel)
- 			control->canceled = true;
--		} else {
--			ret = control->fn(control->data);
--			control->return_code = ret;
--		}
-+		else
-+			control->return_code = control->fn(control->data);
-+
- 		mutex_lock(&ctx->call_controls_lock);
- 		list_del(&control->list);
- 		mutex_unlock(&ctx->call_controls_lock);
-+
- 		if (!control->repeat) {
-+			/* run control->fn() one time */
- 			complete(&control->completion);
- 		} else if (control->canceled && control->dealloc_on_cancel) {
- 			kfree(control);
--			continue;
- 		} else {
--			list_add(&control->list, &repeat_controls);
-+			/* to repeat next time */
-+			mutex_lock(&ctx->call_controls_lock);
-+			list_add_tail(&control->list, &ctx->call_controls);
-+			mutex_unlock(&ctx->call_controls_lock);
- 		}
+diff --git a/mm/damon/tests/core-kunit.h b/mm/damon/tests/core-kunit.h
+index 36622a2c11f1..252ce3e001c8 100644
+--- a/mm/damon/tests/core-kunit.h
++++ b/mm/damon/tests/core-kunit.h
+@@ -318,9 +318,8 @@ static void damon_test_split_regions_of(struct kunit *test)
  	}
--	control = list_first_entry_or_null(&repeat_controls,
--			struct damon_call_control, list);
--	if (!control || cancel)
--		return;
--	mutex_lock(&ctx->call_controls_lock);
--	list_add_tail(&control->list, &ctx->call_controls);
--	mutex_unlock(&ctx->call_controls_lock);
+ 	damon_split_regions_of(t, 4, 5);
+ 	KUNIT_EXPECT_LE(test, damon_nr_regions(t), 12u);
+-	damon_for_each_region(r, t) {
++	damon_for_each_region(r, t)
+ 		KUNIT_EXPECT_GE(test, damon_sz_region(r) % 5ul, 0ul);
+-	}
+ 	damon_free_target(t);
  }
-
- /* Returns negative error code if it's not activated but should return */
---
-2.43.0
+ 
+-- 
+2.47.3
 
