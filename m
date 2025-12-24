@@ -1,64 +1,64 @@
-Received: from mail-pg1-f180.google.com (mail-pg1-f180.google.com [209.85.215.180])
+Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8702329C57
-	for <damon@lists.linux.dev>; Wed, 24 Dec 2025 04:22:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 566D8329C75
+	for <damon@lists.linux.dev>; Wed, 24 Dec 2025 04:22:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766550147; cv=none; b=O3YREa59lShNPO8Udk3HFi/C5hoSqZluGvlqUb8K1tNx/xR6Nw0mazYwt/M9zGoisFgJ4actkUaYjiY+xZMACqxHAvv/wl+CYzO9QGYOAS5bK0pULVWYTKzO2UkAC/ajJEGmTdQRbZ7pHABvDSI2aC5d9sxcs4wnnTzuA6ZqQic=
+	t=1766550148; cv=none; b=iveZeTWzT6SKIF0p0ynoGJHHPN87kcmuT7gXyi5tt1I20Jk7NYZPRZe/v6Oh4ex6deDsAHmrUczt5j7eWC7PrZFiC5RwhvhkOXtmKfwZavtBvThR0cKb5h8BWpLdUp09NVaq8NL2Y2cMbJmv/NzOZnL1ogdB62ReG/eJcj7+LF4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766550147; c=relaxed/simple;
-	bh=OLcX8Zd+fdUl6dxE06+L08d3gACwTJsWI4bS9MuvLJA=;
+	s=arc-20240116; t=1766550148; c=relaxed/simple;
+	bh=YWzv4mR6lx/LhKtGrLACg+b81I/0rCPwOCqzO7QxXro=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g9OIMhDoozWKosGuAHD7WJC5c95j2khe4p7abxHe0iXj+5O9dc14m0p7faCYmMvQ9zgeUL7m7WF2N6lAa9WgttY44g0EyQMUQCZ/v8KHexXnFVQP/CPOO+6JFEX0tTvascfhegWEojVALQKIJHghSmDVTv93KXvjKQ93/63MhYU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PCSxxoeW; arc=none smtp.client-ip=209.85.215.180
+	 MIME-Version; b=VATy5KE5pYPfZTmHQBtTak14OQ9/G7KFlXMUONG6y/XYWL6s4jLz60G2wKdToDniUYtef8Q8yUGFv9hQeLkIjQu2NdHw0ThDjkVVLn6aLkw6Vab7BiZoq/HazhoRwfU0YRMp/GOn5F7m5hf2aMqTjXgMGOMqZsvfR75PqYnLYsM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kpKC44F7; arc=none smtp.client-ip=209.85.214.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PCSxxoeW"
-Received: by mail-pg1-f180.google.com with SMTP id 41be03b00d2f7-c1e4a9033abso4670411a12.3
-        for <damon@lists.linux.dev>; Tue, 23 Dec 2025 20:22:25 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kpKC44F7"
+Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-2a09757004cso71179575ad.3
+        for <damon@lists.linux.dev>; Tue, 23 Dec 2025 20:22:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1766550145; x=1767154945; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1766550147; x=1767154947; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=qAW++Y4fgSGuWCowvvKY4zihTht5dFRLAo1G1kvZ8PA=;
-        b=PCSxxoeWGc2iEXMRO4o+JXX63cSH9WUs2BLbIVkW0eQgfkBgDrIeVtywf2ppP4EVjV
-         jOmT0uKZCtLwd2SUnohId7WWDiQ1p4i8yN26BO5PGkREnoxTiLPjIgqlNQ4BgdJAJUKZ
-         4z644SbyVoPS7P7QHhk3gK4X5CqyVBcynU+X/4GNp0TJCMmqb6pYE9Ol5N31xeqHYFlS
-         R0OmaLMvEYKKpNZsa6V8QAJjOXjM3J4mXpWzRP4XeBxX+PQ5wuWehPMLwch5hMXKeHmR
-         P4NCLEan+2je0fePqW3iQOBMOd1UNCnHvy1QYo67rE/MbW5o9U2ieu7+FMbD8yRHDhHc
-         RRqw==
+        bh=D8remLMvBFK5RUdUzYsP7LKIRjVVtdklxr8EKcqM/1U=;
+        b=kpKC44F7RwDfi8aT9EA2sz68XWNJT/X2QjYmjox7FjcV4dU546VeEuzEeASSciVIWA
+         GDnfxh/Jr1Ixfdw5sPIHkwnQIgxaxIxoYldlTA253BwajXV0IC7vmcSeltUHp95+2Pok
+         QrfGdKnRvSnSXqgE7vLk8jI3yJWdZnILgdML9jsQG3XXopDPymlMyFsAQ8rGXn6bksYb
+         V3dL4RDKk3/r8NhTOgdmsY0zylgr7gyiv4qO9Jw72GNsvmmbVCVKVESzwEgo8OZyuxTu
+         Axusav/DX9NR0PFV+06pcoHb0tlBCDa6pS76kYmW/8lZ1Qn72urbbXGWrhKr1qI1evOK
+         Jy2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1766550145; x=1767154945;
+        d=1e100.net; s=20230601; t=1766550147; x=1767154947;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=qAW++Y4fgSGuWCowvvKY4zihTht5dFRLAo1G1kvZ8PA=;
-        b=c5aatXLjlDmYb+Govo75zUE0fGMo2kKKISPHhkUFwrRD4e28SoOBYpArcTRucnmdxe
-         Dfe7MYPgW7xnXpSh/3i8YlforSQbszD/tVkArEjo0WCSOevL9MZafHc8ZGi4AuDELcrj
-         2rBMVTCkTyuVxTjQE18Oi5mD0NvnOcXGYDjTnh5a8GZshXNWQxPVBBYuVvmLRmGCMHIW
-         8OyRLW11N8Q5g7IcgJ97axVvi5ECSszk2GspwrOwILWvShKGhAQaH0Z39vfb5yG1cpbx
-         2D0wb5bSitIVXVtaWhEuadp4KYOXdjXcmFS27wfyC+VZZE8eRezJH5L/0ActCo7AzAdm
-         Ak6Q==
-X-Forwarded-Encrypted: i=1; AJvYcCXME/q9COeCdDXwrZyvsFubj++g6sXI68HU65vOsRGu8L7oRHJXlk3rw8xorAcQuqRz2TzQLA==@lists.linux.dev
-X-Gm-Message-State: AOJu0YyfdfH/VkmK08hanj5YF2xAACQw+dp58R7CBDbwaDGuQuF/Qabf
-	dCI5MjYYQZrL3XnFo76M48iRUSu03w/qrzwYsJzHfhyUpLH3ixG6YPtI
-X-Gm-Gg: AY/fxX5n2H1OIT+JF8XnF8FoKXLjoAl4ZRKMqGj4DcV2iJOzXaIoVn01hake1zKrj3e
-	Gyu7OYZaRDhBONskjNeFABhLIWH3LnKsdLUaUzGtmm78h/LyCiU1z1SqhejkB54yHHhXErO3rk+
-	QGsAV/MVwTTdMYJ+gRPmsbth1bCV191jSaHDn8de53lb/DC+NPZVWjftnY6Yqv+olc9joYkEVnF
-	A9b3AlkI8QECEk2IODnEHrMqJ7O/+NlDHwP9OoA67CaGGKpD5AuIoapjmhCF64jHVeBTI8OKid0
-	S3pHLNg0WRD4lMb1coJNpUXtB28i0rcAl7MXV2XSFbhg3y0hoDz+o1ccPQwuBfHMNCJQwLrrfWW
-	fyVFfTitXzFJr+3IMWBzSE49/kxKhLfy6VP+miwWlrFaqYBcDqFuMvvM6X15pzmhEgeIrRUeZJu
-	Is
-X-Google-Smtp-Source: AGHT+IEu3ypAtOJAXn9xiXQKRtee61CBDqJzBQT9KTWObNvd9b3sJXcWL8HyG3+q6D0Cz6eLFD6TVg==
-X-Received: by 2002:a05:7022:2590:b0:11d:fcb2:3311 with SMTP id a92af1059eb24-121722e32demr13284390c88.27.1766550144772;
-        Tue, 23 Dec 2025 20:22:24 -0800 (PST)
+        bh=D8remLMvBFK5RUdUzYsP7LKIRjVVtdklxr8EKcqM/1U=;
+        b=jtKA4SRXliuTO0nt+v6yXvCs792Nh5MqAB3iCjmGJktxxLDCstsCiCvQ/0e6kiyMWv
+         ADIJMwfAucZ3nt+ly6SFzbTZHVVZ4bXHTaRSC1PJ6hqfAeBXHxv2nZcTsKcsDkuXzvj5
+         G7DDN8a/MgJqkCq9sotVLJfcVlXd7oYNBB2jCuiuoe8IjT2IRHLAftR5g9XhCqEQNPc1
+         1Xk7w1ejx2bLIvS8VnKhFr4iL3U6bOnbfuvwem4bBQjOz5RGWqYhnkgcSfwXz33UVbD4
+         rT5t76Vt9N3ZQNsZn/lfY2QIg9E8FRNQgq+6H7BPr+mdDT/R8RyjAlPstJrg5PMsqqTO
+         FsrA==
+X-Forwarded-Encrypted: i=1; AJvYcCW49S8tfkF74YodI5oPyxYtTt4SKt8pI/qfbHrwOeHT8742wQ91ueCp6QO1QjXGMLVE7B+/TQ==@lists.linux.dev
+X-Gm-Message-State: AOJu0Yzl4A0Xf/xl3PyBGaAIgS4YhZIprLZMEuXWw32JJ8HEF8dbgE/m
+	SUwQDivtv+EOVhp4P026B68RZJP8NGJ/uqWaa4Y/KyzLDuVnGpBnQO/0yOx0b5+E
+X-Gm-Gg: AY/fxX7iAcqIHRUzAr+Ur0lKp3w5K0Ssbbur721nMpdYKRY6GKGK5ssFeP2uPLqG05y
+	BOM/WlO+jUDD1v+KEwtQAFD+MK25XB7cwgNC8lHLAtPaEJgDuIGQQ9SxnRii91FfP9Ii7B+rOgp
+	qD0DuLV7yLWqaIIJhanfWEjsGMQl961rtl6Gjeq/nN2RjB7OAOs/4Aqn6TBmCNJ6zeyMA2nxEKj
+	585qNTJkc4SzrKuANGJw5q1xqRZ0KeHQs4oYSY6iYrlbbeM9pqTG8oEM8phxqkjP1A0bH7msJq3
+	mEO2rJxUK5EefNkiMZPW7FxZw1a7IXXAiYQk1CLQtbEVergh0d4rU89VYDuPWJDO99/Zfj3Yp8C
+	t4LpFaMyHhMKZoAiIUFLpNCnmCfgdde6yuvdYJYtWSryVuTau2faX/eCZs9BMYpGEEHx6p5KfVw
+	SkTHvkdOuAUmmvw147iXX10Q==
+X-Google-Smtp-Source: AGHT+IHfPiFWmZDW4o5w7sYzXHS8vE/zaayVH1U7R9hjLU9hYqPevU+4g14ejv4+rRb+HrXioe9eQQ==
+X-Received: by 2002:a05:7022:2586:b0:119:e56c:18a7 with SMTP id a92af1059eb24-121722b4e90mr16067286c88.15.1766550146638;
+        Tue, 23 Dec 2025 20:22:26 -0800 (PST)
 Received: from dev.. ([208.184.112.130])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-121724de268sm48542031c88.8.2025.12.23.20.22.24
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-121724de268sm48542031c88.8.2025.12.23.20.22.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 23 Dec 2025 20:22:24 -0800 (PST)
+        Tue, 23 Dec 2025 20:22:26 -0800 (PST)
 From: Shu Anzai <shu17az@gmail.com>
 To: SeongJae Park <sj@kernel.org>
 Cc: Andrew Morton <akpm@linux-foundation.org>,
@@ -66,9 +66,9 @@ Cc: Andrew Morton <akpm@linux-foundation.org>,
 	linux-mm@kvack.org,
 	linux-kernel@vger.kernel.org,
 	Shu Anzai <shu17az@gmail.com>
-Subject: [PATCH v2 4/5] mm/damon/tests/core-kunit: add test cases for multiple regions in damon_test_split_regions_of()
-Date: Wed, 24 Dec 2025 04:21:59 +0000
-Message-ID: <20251224042200.2061847-5-shu17az@gmail.com>
+Subject: [PATCH v2 5/5] mm/damon/tests/core-kunit: remove a redundant test case and add a new test case in damos_test_commit_quota_goal()
+Date: Wed, 24 Dec 2025 04:22:00 +0000
+Message-ID: <20251224042200.2061847-6-shu17az@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20251224042200.2061847-1-shu17az@gmail.com>
 References: <20251224042200.2061847-1-shu17az@gmail.com>
@@ -80,53 +80,33 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Extend damon_test_split_regions_of() to verify that it correctly handles 
-multiple regions with various 'min_sz_region'.
+Remove a redundant test case from damos_test_commit_quota_goal() 
+as it is already covered. Instead, add a new test for 
+DAMOS_QUOTA_SOME_MEM_PSI_US, which was previously not tested.
 
 Signed-off-by: Shu Anzai <shu17az@gmail.com>
 ---
- mm/damon/tests/core-kunit.h | 21 +++++++++++++++++++++
- 1 file changed, 21 insertions(+)
+ mm/damon/tests/core-kunit.h | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
 diff --git a/mm/damon/tests/core-kunit.h b/mm/damon/tests/core-kunit.h
-index 2eb6f41635a8..36622a2c11f1 100644
+index 36622a2c11f1..4bf1d172436b 100644
 --- a/mm/damon/tests/core-kunit.h
 +++ b/mm/damon/tests/core-kunit.h
-@@ -275,6 +275,9 @@ static void damon_test_split_regions_of(struct kunit *test)
- {
- 	struct damon_target *t;
- 	struct damon_region *r;
-+	unsigned long sa[] = {0, 300, 500};
-+	unsigned long ea[] = {220, 400, 700};
-+	int i;
- 
- 	t = damon_new_target();
- 	if (!t)
-@@ -301,6 +304,24 @@ static void damon_test_split_regions_of(struct kunit *test)
- 	damon_split_regions_of(t, 4, 1);
- 	KUNIT_EXPECT_LE(test, damon_nr_regions(t), 4u);
- 	damon_free_target(t);
-+
-+	t = damon_new_target();
-+	if (!t)
-+		kunit_skip(test, "third target alloc fail");
-+	for (i = 0; i < ARRAY_SIZE(sa); i++) {
-+		r = damon_new_region(sa[i], ea[i]);
-+		if (!r) {
-+			damon_free_target(t);
-+			kunit_skip(test, "region alloc fail");
-+		}
-+		damon_add_region(r, t);
-+	}
-+	damon_split_regions_of(t, 4, 5);
-+	KUNIT_EXPECT_LE(test, damon_nr_regions(t), 12u);
-+	damon_for_each_region(r, t) {
-+		KUNIT_EXPECT_GE(test, damon_sz_region(r) % 5ul, 0ul);
-+	}
-+	damon_free_target(t);
+@@ -601,9 +601,10 @@ static void damos_test_commit_quota_goal(struct kunit *test)
+ 			});
+ 	damos_test_commit_quota_goal_for(test, &dst,
+ 			&(struct damos_quota_goal) {
+-			.metric = DAMOS_QUOTA_USER_INPUT,
+-			.target_value = 789,
+-			.current_value = 12,
++			.metric = DAMOS_QUOTA_SOME_MEM_PSI_US,
++			.target_value = 234,
++			.current_value = 345,
++			.last_psi_total = 567,
+ 			});
  }
  
- static void damon_test_ops_registration(struct kunit *test)
 -- 
 2.43.0
 
