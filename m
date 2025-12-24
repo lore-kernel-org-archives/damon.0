@@ -1,45 +1,41 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from out-185.mta0.migadu.com (out-185.mta0.migadu.com [91.218.175.185])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC0FC277CBF
-	for <damon@lists.linux.dev>; Mon, 22 Dec 2025 21:33:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADF464A35
+	for <damon@lists.linux.dev>; Wed, 24 Dec 2025 03:46:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.185
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766439225; cv=none; b=aXdef7URxt4uuYjl/vKl3OII7qbBzF80iGY2a/O4HTU7zjj/vUXyXD0vwkm8wy5uMxDTaJvbcJqVa5kNZQyBX1eS4wd1D1t5ReJwNGpOVri4SBci6g30WcmpU8iqwQAlvfPjK9h+UczOHbwHhcDZG7NGRM1vLIK96thfq2CFcZs=
+	t=1766547967; cv=none; b=jjqTW0mnl2J52+PQ1kIZ1v04NSjJimZHH+WK0CmKTcsKL0iTVXYbqvPYMVce5ifhstMeL679TbNno6XUe0GwS9BFUlU4toLFw5bjAIbFtR8v6ZraGRtiu5o0QwSk44wA3n1VVIpARlJMXWXlicbBRkJvpDXv2v9bjzdisgFbUXc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766439225; c=relaxed/simple;
-	bh=0r26v+vgZ7y2B5fP+hL/CfC1LxsSYQaGQALoSUVLma8=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XsHy9/l3OJrlHvmP9QnqoJXy5URAgQhPMK1aliWESGOife5Btm5XzyMfifexpyUQxLQ06KGq5fELxmjThRq1fJaQblSFVX2q3p7PVsOdHEMdkpsnsvXUEYZtjNr1FGISpeaCBHDA7tQYtHKOeGnThGCfc0D3+3XoWNjj6JaT3J8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QOD3u4tq; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1766547967; c=relaxed/simple;
+	bh=iHvGdso28WEtSoP+2m3AYidMECha6ww3ar+AohPHQpU=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=l1dXrSWSPXY0Kvyyq/5u7YMscbsMZ4FWj4RXYts5j/8T8u/q1GiKH9CcL3tYAvu2MXPm/w0TKJZ2ZhguN4qLJCwUAM2pMikJxCuyhWtQdyBOFeAkeTSmRh38OvbF/wADJ6RbyZnFZ/aZ2r/xhiSmoNzb34M3tz8PTF83WcZjTGc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=lvjG7KPr; arc=none smtp.client-ip=91.218.175.185
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QOD3u4tq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A5CCC4CEF1;
-	Mon, 22 Dec 2025 21:33:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1766439225;
-	bh=0r26v+vgZ7y2B5fP+hL/CfC1LxsSYQaGQALoSUVLma8=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QOD3u4tqwmNzqI4c/1BKxggeRudS6Iou54JHJvqcWLOzHaEW/EKf0d/O+cTcfSka6
-	 5KWyLlbWWNX4iOAYgUiXISlAcIN+icxrL5G/HmNLKsJ60T6pE/r18FbYJXKdtXBNyH
-	 029BBUHq/UN+hpy9eFNAcUreDxYi3lPKm4pyFGzt1Fk719nBbO7haka/GvV5bVz8Aq
-	 hY4rVHy2orsflqWD6XU+85M6pHk6WLNpYZpAJgJI0iOBc+CtqCBo1tUIR0vaJLykN0
-	 dG8kIJVbsbkpP2IlbtwwdWMYDRrqqrLkV8YsXO2TXQuBZvRHGWVowecd5MEVm2jRsT
-	 /3Da4VbMWdYww==
-From: SeongJae Park <sj@kernel.org>
-To: JaeJoon Jung <rgbi3307@gmail.com>
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="lvjG7KPr"
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1766547962;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=SypNxq4ihkSOpwufXMhOr4v6vA4rTimGBEpmyUwAS38=;
+	b=lvjG7KPr3mKzGajh8YrxhwMJQ1a8J2HScnYZq9MVlcn/asADajOhFVEAb9UP2H6Bmk6H5X
+	2x7u/CdWwkIWl873VSWvPxx0RKUKhnKYDX/UxembPa88QErwNyTOmYs1kp+l08BjT30A+/
+	SWXYO/277sqa4GJjcRD1rR4oDyisjQQ=
+From: Shakeel Butt <shakeel.butt@linux.dev>
+To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SeongJae Park <sj@kernel.org>,
-	Enze Li <lienze@kylinos.cn>,
-	akpm@linux-foundation.org,
 	damon@lists.linux.dev,
 	linux-mm@kvack.org,
-	enze.li@gmx.com
-Subject: Re: [PATCH 0/2] mm/damon: export symbols and introduce prdm module
-Date: Mon, 22 Dec 2025 13:33:40 -0800
-Message-ID: <20251222213341.3687-1-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <CAHOvCC6wQ5h5j42iTaepRnSkA6mqeY-ExpHA4Qc6K+-xb6T0eQ@mail.gmail.com>
-References: 
+	cgroups@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Meta kernel team <kernel-team@meta.com>
+Subject: [PATCH] memcg: damon: get memcg reference before access
+Date: Tue, 23 Dec 2025 19:45:27 -0800
+Message-ID: <20251224034527.3751306-1-shakeel.butt@linux.dev>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -47,68 +43,50 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+X-Migadu-Flow: FLOW_OUT
 
-On Tue, 23 Dec 2025 05:57:55 +0900 JaeJoon Jung <rgbi3307@gmail.com> wrote:
+The commit b74a120bcf507 ("mm/damon/core: implement
+DAMOS_QUOTA_NODE_MEMCG_USED_BP") added accesses to memcg structure
+without getting reference to it. This is unsafe. Let's get the reference
+before accessing the memcg.
 
-> On Mon, 22 Dec 2025 at 04:27, SeongJae Park <sj@kernel.org> wrote:
-> > On Sun, 21 Dec 2025 20:04:23 +0900 JaeJoon Jung <rgbi3307@gmail.com> wrote:
-[...]
-> > > So far in my view, I have analyzed DAMON as follows:
-> > >
-> > > DAMON core  <---------> kernel module   <------> damo(user-space)
-> > > mm/damon/core.c         mm/damon/lru_sort.c
-> > > mm/damon/vaddr.c        mm/damon/reclaim.c
-> > > mm/damon/paddr.c        samples/damon/*.c
-> > > mm/damon/sysfs.c
-> > >
-> > > Above, lru_sort and reclaim are DAMON core characteristics, but they have
-> > > a kernel module structure because they are executed with module_init().
-> > > I personally think this is inappropriate.
-> >
-> > Could you please further clarify why you think it is inappropriate?
-> >
-> > > Additionally, currently, DAMON is
-> > > executed only once at a time according to the exclusive=true condition
-> > > when damon_start() is called.  In this structure, I believe that the meaning
-> > > of "kernel loadable module"  is non-existent.
-> >
-> > I have to say I still don't get your points.  More elaboration would be nice.
-> 
-> To summarize the Damon I have analyzed so far,
-> 
-> DAMON core  <---------------> DAMON kernel module
-> | mm/damon/core.c               + mm/damon/lru_sort.c (schemes setting)
-> | mm/damon/vaddr.c              + mm/damon/reclaim.c (quota, filter)
-> | mm/damon/paddr.c              + samples/damon/*.c (using samples)
-> | mm/damon/sysfs.c
->             |
->         /sys/kernel/mm/damon/admin
->             |
->             +--------------------------> open/read(get)/write(set)/close
->                                                (user-space system call)
+Fixes: b74a120bcf507 ("mm/damon/core: implement DAMOS_QUOTA_NODE_MEMCG_USED_BP")
+Signed-off-by: Shakeel Butt <shakeel.butt@linux.dev>
+---
+ mm/damon/core.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-Nice analysis.  Please consider further referring to the 'overall
-architectures' section of the design doc [1].
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index 4ad5f290d382..89982e0229f0 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -2051,13 +2051,15 @@ static unsigned long damos_get_node_memcg_used_bp(
+ 
+ 	rcu_read_lock();
+ 	memcg = mem_cgroup_from_id(goal->memcg_id);
+-	rcu_read_unlock();
+-	if (!memcg) {
++	if (!memcg || !mem_cgroup_tryget(memcg)) {
++		rcu_read_unlock();
+ 		if (goal->metric == DAMOS_QUOTA_NODE_MEMCG_USED_BP)
+ 			return 0;
+ 		else	/* DAMOS_QUOTA_NODE_MEMCG_FREE_BP */
+ 			return 10000;
+ 	}
++	rcu_read_unlock();
++
+ 	mem_cgroup_flush_stats(memcg);
+ 	lruvec = mem_cgroup_lruvec(memcg, NODE_DATA(goal->nid));
+ 	used_pages = lruvec_page_state(lruvec, NR_ACTIVE_ANON);
+@@ -2065,6 +2067,8 @@ static unsigned long damos_get_node_memcg_used_bp(
+ 	used_pages += lruvec_page_state(lruvec, NR_ACTIVE_FILE);
+ 	used_pages += lruvec_page_state(lruvec, NR_INACTIVE_FILE);
+ 
++	mem_cgroup_put(memcg);
++
+ 	si_meminfo_node(&i, goal->nid);
+ 	if (goal->metric == DAMOS_QUOTA_NODE_MEMCG_USED_BP)
+ 		numerator = used_pages;
+-- 
+2.47.3
 
-> 
-> The DAMON kernel module above is a sample that sets some parameters of
-> DAMON.  I think it's better to use damon/sysfs since all of this can be
-> done in damon/sysfs.
-
-I agree using DAMON sysfs only can be better for some use cases.  But nothing
-fits all.  Hence we intentionally provide both general purpose user interface
-module (DAMON sysfs interface) and special-purpose modules.  Please refer to
-the 'modules' section of the design doc [1] for more details.
-
-> I am continuing to analyze this.  If any
-> improvements are found, I'll send you a patch.
-
-Looking forward!
-
-[1] https://origin.kernel.org/doc/html/latest/mm/damon/design.html
-
-
-Thanks,
-SJ
-
-[...]
