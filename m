@@ -1,32 +1,32 @@
-Received: from out-180.mta0.migadu.com (out-180.mta0.migadu.com [91.218.175.180])
+Received: from out-188.mta1.migadu.com (out-188.mta1.migadu.com [95.215.58.188])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D040296BA5
-	for <damon@lists.linux.dev>; Thu, 25 Dec 2025 23:21:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA7D02C030E
+	for <damon@lists.linux.dev>; Thu, 25 Dec 2025 23:21:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.188
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766704902; cv=none; b=KmClvp1mvd8NDc4PnQiJBpKtw4M5R/AZgqzAzI5zzLj5LWfpJ3rTgUnQk3Yt0bS41DQSd3qR+hjySKfxF4H5qmZBp0EKBSgnPP6rx9JHdChjt2/Sct4K9WvcyJrotBW+AyS/enJkdpjJH8tBzGkL19cZZWvxYgYcKzpI15xyYAM=
+	t=1766704915; cv=none; b=YPi7RD1o+ixREynQ3VRwtnk9rqd0eOMRAydDJyY8STaATRjW3AfG6DxuNATmf6bGRBP+vPPXomQn44Nlw3rH/hi/O1x9zv3oMtmYijSyNBLinRWDPMK0KNPB5QFvwa4/UBgLKE8GI7taqVnzTQJ8194fOaWPhsa/fxcSqFcNbnc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766704902; c=relaxed/simple;
-	bh=eHc/9h6653MgzBLH8SGSWdotekhAKEDDGV2/8yjGhjg=;
+	s=arc-20240116; t=1766704915; c=relaxed/simple;
+	bh=el8HAB0sOOLSau6RTNfayIxRkLKv+Hwe1XlsZYDYSnM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r2IrAVdUqMQhmlfRyTKhDshPOMrpNzZleQBbnm3FzevRDN0HcuWB0uBucpI9pHLCbxcWIsnEhvYhLuejBxCD0S+fpHj1s63RLaXqZVlg5R/4qoNrs1g/QCxeeNsC+YG8aGcUAqCzYWrI8D13G7fgFpESGADHudhcl0I4/vwKDmA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=vbIrljY9; arc=none smtp.client-ip=91.218.175.180
+	 MIME-Version; b=bwhxAq9rI2TwtIfclmA8qwQufkW5B0r6Y5O8C8M14FSniu7FJC6kh9t0BhjxUrc/lJdclMz4Aug3NtAdeXBUMVF9w/U5d8Rczy0ooScZHz2YsACQTshSTp/HFvBCFB910t5/OSrsR671hVEpJ++zffYfy9Pk+vBgGKN6jWglznY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=wylAyIn8; arc=none smtp.client-ip=95.215.58.188
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="vbIrljY9"
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="wylAyIn8"
 X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1766704898;
+	t=1766704909;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=HNWA2wy5x9qmESizAoWxNjF5HTjl76WyG9bV89v6wkc=;
-	b=vbIrljY9Mm8NiHjnoyWxvDlzPBU2XDS3DgZXbUz8CnkO/r1IXynRdZ8/R1sxe1r4/n2nhn
-	grLSA4DBmRv8k2SMke7G7nnY2fKRze3XDs+LQhTS4HCHZYnjRzuCWi6jsah7qfHMH6W3nv
-	sqCjwirvPFv+S3Obsz/ngB7fVRGsvVw=
+	bh=WHLUPExoPKnJu0oj7221nxhPbwe4fH4Njx6PIRBvWXw=;
+	b=wylAyIn8SEF0kBQem+PiUWjgcrj8RTvksgBmWjmdsjlPCewjVoa5/4qRUwLPRZOatWv5DT
+	PJJCCmjYTPrTF01gdMkY9TnG6ZoaVWfWaH6T+4WDk/wsvXmE1VTbhbXqBWcdN2+nYpJN7G
+	h8VaIoHLozD6gKU1RUvpW2Aqci9G5P4=
 From: Shakeel Butt <shakeel.butt@linux.dev>
 To: Andrew Morton <akpm@linux-foundation.org>
 Cc: Johannes Weiner <hannes@cmpxchg.org>,
@@ -39,9 +39,9 @@ Cc: Johannes Weiner <hannes@cmpxchg.org>,
 	cgroups@vger.kernel.org,
 	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH 3/8] memcg: mem_cgroup_get_from_ino() returns NULL on error
-Date: Thu, 25 Dec 2025 15:21:11 -0800
-Message-ID: <20251225232116.294540-4-shakeel.butt@linux.dev>
+Subject: [PATCH 4/8] memcg: use cgroup_id() instead of cgroup_ino() for memcg ID
+Date: Thu, 25 Dec 2025 15:21:12 -0800
+Message-ID: <20251225232116.294540-5-shakeel.butt@linux.dev>
 In-Reply-To: <20251225232116.294540-1-shakeel.butt@linux.dev>
 References: <20251225232116.294540-1-shakeel.butt@linux.dev>
 Precedence: bulk
@@ -53,54 +53,106 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Migadu-Flow: FLOW_OUT
 
-Change mem_cgroup_get_from_ino() to return NULL on error instead of
-ERR_PTR values. This simplifies the API: NULL indicates failure, and a
-valid pointer indicates success with a CSS reference held that the
-caller must release via mem_cgroup_put().
+Switch mem_cgroup_ino() from using cgroup_ino() to cgroup_id(). The
+cgroup_ino() returns the kernfs inode number while cgroup_id() returns
+the kernfs node ID. For 64-bit systems, they are the same. Also
+cgroup_get_from_id() expects 64-bit node ID which is called by
+mem_cgroup_get_from_ino().
+
+Change the type from unsigned long to u64 to match cgroup_id()'s return
+type, and update the format specifiers accordingly.
+
+Note that the names mem_cgroup_ino() and mem_cgroup_get_from_ino() are
+now misnomers since they deal with cgroup IDs rather than inode numbers.
+A follow-up patch will rename them.
 
 Signed-off-by: Shakeel Butt <shakeel.butt@linux.dev>
 ---
- mm/memcontrol.c     | 6 ++----
- mm/shrinker_debug.c | 2 +-
- 2 files changed, 3 insertions(+), 5 deletions(-)
+ include/linux/memcontrol.h | 10 +++++-----
+ mm/memcontrol.c            |  2 +-
+ mm/shrinker_debug.c        |  7 ++++---
+ 3 files changed, 10 insertions(+), 9 deletions(-)
 
+diff --git a/include/linux/memcontrol.h b/include/linux/memcontrol.h
+index 77f32be26ea8..c823150ec288 100644
+--- a/include/linux/memcontrol.h
++++ b/include/linux/memcontrol.h
+@@ -836,12 +836,12 @@ static inline unsigned short mem_cgroup_id(struct mem_cgroup *memcg)
+ }
+ struct mem_cgroup *mem_cgroup_from_id(unsigned short id);
+ 
+-static inline unsigned long mem_cgroup_ino(struct mem_cgroup *memcg)
++static inline u64 mem_cgroup_ino(struct mem_cgroup *memcg)
+ {
+-	return memcg ? cgroup_ino(memcg->css.cgroup) : 0;
++	return memcg ? cgroup_id(memcg->css.cgroup) : 0;
+ }
+ 
+-struct mem_cgroup *mem_cgroup_get_from_ino(unsigned long ino);
++struct mem_cgroup *mem_cgroup_get_from_ino(u64 ino);
+ 
+ static inline struct mem_cgroup *mem_cgroup_from_seq(struct seq_file *m)
+ {
+@@ -1306,12 +1306,12 @@ static inline struct mem_cgroup *mem_cgroup_from_private_id(unsigned short id)
+ 	return NULL;
+ }
+ 
+-static inline unsigned long mem_cgroup_ino(struct mem_cgroup *memcg)
++static inline u64 mem_cgroup_ino(struct mem_cgroup *memcg)
+ {
+ 	return 0;
+ }
+ 
+-static inline struct mem_cgroup *mem_cgroup_get_from_ino(unsigned long ino)
++static inline struct mem_cgroup *mem_cgroup_get_from_ino(u64 ino)
+ {
+ 	return NULL;
+ }
 diff --git a/mm/memcontrol.c b/mm/memcontrol.c
-index e85816960e38..92beb74482fa 100644
+index 92beb74482fa..1ff2f9bd820c 100644
 --- a/mm/memcontrol.c
 +++ b/mm/memcontrol.c
-@@ -3624,17 +3624,15 @@ struct mem_cgroup *mem_cgroup_get_from_ino(unsigned long ino)
+@@ -3620,7 +3620,7 @@ struct mem_cgroup *mem_cgroup_from_id(unsigned short id)
+ 	return mem_cgroup_from_private_id(id);
+ }
+ 
+-struct mem_cgroup *mem_cgroup_get_from_ino(unsigned long ino)
++struct mem_cgroup *mem_cgroup_get_from_ino(u64 ino)
  {
  	struct cgroup *cgrp;
  	struct cgroup_subsys_state *css;
--	struct mem_cgroup *memcg;
-+	struct mem_cgroup *memcg = NULL;
- 
- 	cgrp = cgroup_get_from_id(ino);
- 	if (IS_ERR(cgrp))
--		return ERR_CAST(cgrp);
-+		return NULL;
- 
- 	css = cgroup_get_e_css(cgrp, &memory_cgrp_subsys);
- 	if (css)
- 		memcg = container_of(css, struct mem_cgroup, css);
--	else
--		memcg = ERR_PTR(-ENOENT);
- 
- 	cgroup_put(cgrp);
- 
 diff --git a/mm/shrinker_debug.c b/mm/shrinker_debug.c
-index 20eaee3e97f7..8aaeb8f5c3af 100644
+index 8aaeb8f5c3af..7ef16a0b2959 100644
 --- a/mm/shrinker_debug.c
 +++ b/mm/shrinker_debug.c
-@@ -130,7 +130,7 @@ static ssize_t shrinker_debugfs_scan_write(struct file *file,
+@@ -70,7 +70,7 @@ static int shrinker_debugfs_count_show(struct seq_file *m, void *v)
+ 					       memcg_aware ? memcg : NULL,
+ 					       count_per_node);
+ 		if (total) {
+-			seq_printf(m, "%lu", mem_cgroup_ino(memcg));
++			seq_printf(m, "%llu", mem_cgroup_ino(memcg));
+ 			for_each_node(nid)
+ 				seq_printf(m, " %lu", count_per_node[nid]);
+ 			seq_putc(m, '\n');
+@@ -106,7 +106,8 @@ static ssize_t shrinker_debugfs_scan_write(struct file *file,
+ 					   size_t size, loff_t *pos)
+ {
+ 	struct shrinker *shrinker = file->private_data;
+-	unsigned long nr_to_scan = 0, ino, read_len;
++	unsigned long nr_to_scan = 0, read_len;
++	u64 ino;
+ 	struct shrink_control sc = {
+ 		.gfp_mask = GFP_KERNEL,
+ 	};
+@@ -119,7 +120,7 @@ static ssize_t shrinker_debugfs_scan_write(struct file *file,
+ 		return -EFAULT;
+ 	kbuf[read_len] = '\0';
  
- 	if (shrinker->flags & SHRINKER_MEMCG_AWARE) {
- 		memcg = mem_cgroup_get_from_ino(ino);
--		if (!memcg || IS_ERR(memcg))
-+		if (!memcg)
- 			return -ENOENT;
+-	if (sscanf(kbuf, "%lu %d %lu", &ino, &nid, &nr_to_scan) != 3)
++	if (sscanf(kbuf, "%llu %d %lu", &ino, &nid, &nr_to_scan) != 3)
+ 		return -EINVAL;
  
- 		if (!mem_cgroup_online(memcg)) {
+ 	if (nid < 0 || nid >= nr_node_ids)
 -- 
 2.47.3
 
