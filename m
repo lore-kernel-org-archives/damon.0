@@ -1,242 +1,173 @@
-Received: from mail-yx1-f54.google.com (mail-yx1-f54.google.com [74.125.224.54])
+Received: from mail-yx1-f53.google.com (mail-yx1-f53.google.com [74.125.224.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A8A56FBF
-	for <damon@lists.linux.dev>; Fri, 26 Dec 2025 23:42:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 278A42B2DA
+	for <damon@lists.linux.dev>; Fri, 26 Dec 2025 23:53:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766792546; cv=none; b=QTaX0NJAWyz6t5Y1J/1iAnOeN1noA+jkU4FJbKkwnWZu2JuPryjfJjHzCAcg6/Vs4OscSnFeVjH4NAB+79zJjo1KB6fB4xbz8kSaLEUAT+KCTL0rQGJiwFslCFcMDlYo3b2D3909HOr4Mzq0rxi+H8O6OG1CwwNUy1uZruMdWqc=
+	t=1766793215; cv=none; b=OOZSSvtqAc75jlQhgdmNOa6T/qWdO9KSYumGHTdowX1hr1b87B/oDOMdI8esIxtXXzdy7SQBFWgXoJxXEgxS2DFwpvK2vMqyBhzcwbcRz1PtZeLjMX5gFrXUS14bMHnb+9m1nmn0+rD17gOXFWbuo3As0shAKy8RP8R8KOevzKE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766792546; c=relaxed/simple;
-	bh=+AGEuC63Ukq2CTAPd3FBLFClTzAzmPwpjjnRg4a41dw=;
+	s=arc-20240116; t=1766793215; c=relaxed/simple;
+	bh=hov6AVhV5b5XsGFbd5CK+f1wMm5hJtZzruAXbkOy6rM=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=fVH1vKaXgzszUxvcYxRkCr+YvinMdWrM6JNxrG4GwZI/2XJlz8m+vdgyuG8v4ibAik6KjUwXCGcQwSsVNzoB6H+UsXUn53De3cbj49WCwB0tBM3tE/zpKVXl5usQI07OSAqlaDHkIyRrn27fosq+AlTE88t2FywXjskPbCSCODM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kDskSAXM; arc=none smtp.client-ip=74.125.224.54
+	 To:Cc:Content-Type; b=ITx5X31n9Li7j0kqViXc2ZXhELInbxKQNcE0DH9aTYDuLQrwDBjO/cngeSdSJ9Po7wTVg6CctjzG7y5EM/YsbEvDUF7t3gzWs3XlR8IxFHTGM6sHUK/DdEpVsS0ZGqWOTfCGNcWxbllGe0v2E5hAmaVmIqRra+UOs7hQXwTV7pM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=loxwqfxC; arc=none smtp.client-ip=74.125.224.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kDskSAXM"
-Received: by mail-yx1-f54.google.com with SMTP id 956f58d0204a3-64455a2a096so6060254d50.3
-        for <damon@lists.linux.dev>; Fri, 26 Dec 2025 15:42:24 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="loxwqfxC"
+Received: by mail-yx1-f53.google.com with SMTP id 956f58d0204a3-64472ea7d18so4943837d50.2
+        for <damon@lists.linux.dev>; Fri, 26 Dec 2025 15:53:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1766792543; x=1767397343; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1766793213; x=1767398013; darn=lists.linux.dev;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=fAZppyva63DEjptZqcQdtviylUco9oD9YcVtJdE6l+o=;
-        b=kDskSAXMhbLAO5RNg8I5G/RyeQbxCqnSwTqYmDiN0tQRQGgrzb0Y909kxRsv9oezNN
-         DobnDAgDzJraN46A2MTVM0fyH1ZHPb5k9IiwycoP3NOt+7lkSMsFHbHT5R+Il6DJsGyp
-         fvAQA0cUmA7eLEHWX95Pp/hEc66vJjLZedDJBjkgzdNghqAxGeKrOq/06ZQKcIUSLEK9
-         zaxSJgj2KPbETNnb456zk84Xgd1CYdZefwxi/3b+XvBYR+MgG1El48mbwhebyvVHUq5S
-         qBokbpPib1vh+KiZKfmE9XALDoV16dHqKqjRz/ZQlRMpZSTT0bg2MiJjc+WA2+8S6O5W
-         Gedw==
+        bh=5JTcSmilid40WVSQLI0qecHKHI64cGOCVGN86fIcYR8=;
+        b=loxwqfxCZ6hWz+keRRztovK3WHDyem4YSSu6DXUVU/sLMP3cxXnwclxM14OSdR/PRB
+         6ow542sSSwmTnHMJc3Ic4QlYIqBgrT/y4FoknW7Db1ve3jzMRDOtaC1txNUE3mYtRwUL
+         ddsZUKzOetL+oJhpDwG7oRZEk2TNw+f6LXZ/HstwkUVpXI3LAgCbpGsSN6UtEbdsRSLx
+         kzrVePgsw4px9DOrli8+J0P4qhzeU9kSVtb1wMvYH4LO+N4XpC72HE/M/Io629AU3xHH
+         lghefoKLAxlsY92Vp3ouuxPiawyOU/56m2K6O6QCuptMNmdbHZY5VS+aN2OHXu4La3f4
+         WX5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1766792543; x=1767397343;
+        d=1e100.net; s=20230601; t=1766793213; x=1767398013;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=fAZppyva63DEjptZqcQdtviylUco9oD9YcVtJdE6l+o=;
-        b=p6KRUYuP6C1wpShFhyXAkEWFf6w0kbRwDxcUeTkzd6Zo54xI4XWOzhrT7h6CImC07X
-         JOfTgQCFSGU/aVipKfulTcvruAbZ6BXl2WvT88t32VQWihq+MZ7ZMW7r/xHu5fcVS5Ch
-         x6HJbynJoNoJhR6enDBwnEUCQT1VZlonaZtLeFl6EMtoQhVoScGxW8ZmAptrp+ZlA9SY
-         6GbNbIhTnnd63ZYYlou8uOjG2BqcFlovon7kEUDUc6zQ0Bg8wQtRuHccHI9aExadP8zj
-         Ca6kM3eVHgeKWbZk5oZZ4sVCq+fx/AQU5JMz1RkK1DXUURO9WJm1UEK5WEobmWt7wRbS
-         yu+A==
-X-Gm-Message-State: AOJu0YyBrdusvAY4GHXwhXn8DcD2fKdQrpc3X13VoMfT9izkmUp7bi9C
-	kiE9yWk+C1s1lcRetDev62PEUapOD+7parFYSnziI7vNhuEYH9JZodWWijMzV89OLnkFj4kc+VH
-	iit+r9ZC40wm6aHnNX266Oeyh+bZ5jHI=
-X-Gm-Gg: AY/fxX75bZE+Xp0nJBEbAOIhRSKupzOmFYM3LR/+ccZbvqF4CRkJglxV9bkdvLElxBq
-	giYIrUqmF50mLv63Gx7527Epk9AMAWdHsRpjgnjxVOIErm+fYs/uVhFv0KUbP/4hByCaswB+VZF
-	b8Qmqofk5/IOyYn4vCoDJ0axkMggQ25lIVBho5oWDHx3s/FDeO0kJI1jEQIbKPWefjuaC7K/wfk
-	/ssNCFCXIQ7CPq479RVkzf4Fk0+QQ5oclq/vrJ6SWue0VSHbEJ92zCODZwkdRYySYeza/CW
-X-Google-Smtp-Source: AGHT+IHWXW3HAQ2IWb0fPDByyES6LykAonpabAqCQdmat1G1q6oNNSUa6z5qQifEQZr99TfRO77TdqFM0nr2FQzcz10=
-X-Received: by 2002:a05:690c:c4ce:b0:78f:bc2b:83f5 with SMTP id
- 00721157ae682-78fbc2b8fd3mr421701197b3.20.1766792543250; Fri, 26 Dec 2025
- 15:42:23 -0800 (PST)
+        bh=5JTcSmilid40WVSQLI0qecHKHI64cGOCVGN86fIcYR8=;
+        b=T7dvCmBnYe2lbSlGGPDWlgGvcMHPduEA7EjtBPIYq9EHvajd4XZCJvSEj5rlasRQxi
+         aWQ+3VoJTqCyyOvQ8xwK0Ez1ML/4Ju0LpYeiFGgwH93/otYDq3obPXrWW5FIBGlyQdz5
+         AuOwfxA3oUHKOGwV86dx7uXdhYPc2eovLy98BUIQuaqqgfL4f9Eubv+WuB0241I9nOtE
+         NH9PNIcoHqvYd9H9o0fF011v4ak0i/SK1dsvI3BRrnHo38htbIW4ObSs9X7orsjPRCiA
+         gPau3MEMbdldYvPalds1EI6TP035VhFz0MYqMerM7LAAfXfQWKTwZFbAKZp4Z/iB8VBN
+         HfSw==
+X-Gm-Message-State: AOJu0YwGQsKEQdBzz6naWBwcvpc4vbrlHBjN7pVsKHoV9XoH9h8I/8e3
+	yn/PdyxtyBxM8X9cVauZGnLTVMgnL6B08QlGw7zQ18zvgCwCYn6I+6iJjLT7Ad73MA3+BrdRoEa
+	utWs9Om+0GrsG9AVPD9PhG+6oM21cMgA=
+X-Gm-Gg: AY/fxX6WfrjKCQAdivtdmfw02fX7Ff8hA7J/M1x27+5bCPvM4cD/ggSRD/mtqPjjtn6
+	NXNLyyXYpeCKG+hyD1hlg30fKp0KIkM3v9eyDUeLHNX4ksc4K83iyrj/rPKrtUSm1QSeKcrLCKX
+	q4Uwj05x78xN9AfEgzwd65mFg1+N/rGtzikRSj443uLSFEBxQTqCsnMr+7+Qy6efywMoeiLjH+p
+	dsWDQ2XHJXz9jp/DI/ZqXetgTReiqLXZmzrGEK8+gzrCQp/jKilu7aOiOqCE2dPzUjC0P6aY96I
+	+xJxQhY=
+X-Google-Smtp-Source: AGHT+IEAZAGqF9F6MxR1VLl7olkR5UmCPFUFao00Law/8wX3U6qC8XMgr6p+96BB+k6/+ca/7seKX62CnzUkAcpJmvg=
+X-Received: by 2002:a53:adc3:0:b0:641:f5bc:6983 with SMTP id
+ 956f58d0204a3-6466a8c568amr15091028d50.79.1766793212876; Fri, 26 Dec 2025
+ 15:53:32 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <CAHOvCC4f2xPK_LwFoisdqr_wX-RbdW9KUq48+82CMC=5ViF=ag@mail.gmail.com>
- <20251226183122.254549-1-sj@kernel.org>
-In-Reply-To: <20251226183122.254549-1-sj@kernel.org>
+References: <CAHOvCC6PQKAK5WojmVFqBw0V-TZ+11CM_2uq4z8TxsyEu3gLVQ@mail.gmail.com>
+ <20251226184111.254674-1-sj@kernel.org>
+In-Reply-To: <20251226184111.254674-1-sj@kernel.org>
 From: JaeJoon Jung <rgbi3307@gmail.com>
-Date: Sat, 27 Dec 2025 08:42:12 +0900
-X-Gm-Features: AQt7F2qXA2NW8S6__pIPvLxhHe9J8Tr2XiSGV87pAHvpagp774VRSyEShoAx2fo
-Message-ID: <CAHOvCC6L7TAX5Pu4pLVvYBsGc7tVYexgqJmiZ7UEhu7N4_jubw@mail.gmail.com>
-Subject: Re: [PATCH] mm/damon/core: modified control->repeat loop at the kdamond_call()
+Date: Sat, 27 Dec 2025 08:53:21 +0900
+X-Gm-Features: AQt7F2qKCfyxqagV7UlDOzpbncHuGGXw7tVVuiMUC6LDgDSt7Cv44S0l7SIN9po
+Message-ID: <CAHOvCC7HqeGY1uxy7FxLKTFHAJPcWWbKJRjZ06W9bC4oAejOsw@mail.gmail.com>
+Subject: Re: [PATCH] mm/damon/sysfs: preventing duplicated list_add_tail() at
+ the damon_call()
 To: SeongJae Park <sj@kernel.org>
 Cc: damon@lists.linux.dev, linux-mm@kvack.org, rgbi3307@nate.com
 Content-Type: text/plain; charset="UTF-8"
 
-On Sat, 27 Dec 2025 at 03:31, SeongJae Park <sj@kernel.org> wrote:
+On Sat, 27 Dec 2025 at 03:41, SeongJae Park <sj@kernel.org> wrote:
 >
-> On Fri, 26 Dec 2025 11:19:28 +0900 JaeJoon Jung <rgbi3307@gmail.com> wrote:
+> On Fri, 26 Dec 2025 10:48:31 +0900 JaeJoon Jung <rgbi3307@gmail.com> wrote:
 >
-> > On Fri, 26 Dec 2025 at 05:01, SeongJae Park <sj@kernel.org> wrote:
+> > On Fri, 26 Dec 2025 at 04:50, SeongJae Park <sj@kernel.org> wrote:
 > > >
-> > > On Thu, 25 Dec 2025 12:10:30 +0900 JaeJoon Jung <rgbi3307@gmail.com> wrote:
+> > > On Thu, 25 Dec 2025 11:35:33 +0900 JaeJoon Jung <rgbi3307@gmail.com> wrote:
 > > >
-> > > > On Thu, 25 Dec 2025 at 10:07, SeongJae Park <sj@kernel.org> wrote:
+> > > > On Thu, 25 Dec 2025 at 09:32, SeongJae Park <sj@kernel.org> wrote:
 > > > > >
-> > > > > On Wed, 24 Dec 2025 21:43:54 +0900 JaeJoon Jung <rgbi3307@gmail.com> wrote:
+> > > > > Hello JaeJoon,
 > > > > >
-> > > > > > The kdamond_call() function is executed repeatedly in the kdamond_fn()
-> > > > > > kernel thread.  The kdamond_call() function is implemented as a while loop.
-> > > > > > Therefore, it is important to improve the list processing logic here to
-> > > > > > ensure faster execution of control->fn().
-> > > > >
-> > > > > That depends on how critical the performance is, and how much complexity the
-> > > > > optimization introduces.  I have no idea about if the performance of
-> > > > > kdamond_call() is really important.  If you have a realistic use case that
-> > > > > shows it, sharing it would be nice.
-> > > >
-> > > > This is because kdamond_call() is called repeatedly in kdamond_fn().
-> > >
-> > > Yes, it is repeatedly called.  But, my question is, does it impose overhead
-> > > that great enough to make a negative impact to the real world.
-> >
-> > I agree that the overhead is not that much since there are only a few lists
-> > added to ctx->call_controls(CTX.head).
+> > > > > On Wed, 24 Dec 2025 18:43:58 +0900 JaeJoon Jung <rgbi3307@gmail.com> wrote:
 > [...]
-> > > > > > diff --git a/mm/damon/core.c b/mm/damon/core.c
-> > > > > > index 824aa8f22db3..babad37719b6 100644
-> > > > > > --- a/mm/damon/core.c
-> > > > > > +++ b/mm/damon/core.c
-> > > > > > @@ -2554,42 +2554,43 @@ static void kdamond_usleep(unsigned long usecs)
-> > > > > >   */
-> > > > > >  static void kdamond_call(struct damon_ctx *ctx, bool cancel)
-> > > > > >  {
-> > > > > > -     struct damon_call_control *control;
-> > > > > > -     LIST_HEAD(repeat_controls);
-> > > > > > -     int ret = 0;
-> > > > > > +     struct damon_call_control *control, *first = NULL;
-> > > > > > +     unsigned int idx = 0;
-> > > > > >
-> > > > > >       while (true) {
-> > > > > >               mutex_lock(&ctx->call_controls_lock);
-> > > > > >               control = list_first_entry_or_null(&ctx->call_controls,
-> > > > > >                               struct damon_call_control, list);
-> > > > > >               mutex_unlock(&ctx->call_controls_lock);
-> > > > > > -             if (!control)
-> > > > > > +
-> > > > > > +             /* check control empty or 1st rotation */
-> > > > > > +             if (!control || control == first)
-> > > > > >                       break;
-> > > > > > -             if (cancel) {
-> > > > > > +
-> > > > > > +             if (++idx == 1)
-> > > > > > +                     first = control;
-> > > > > > +
-> > > > > > +             if (cancel)
-> > > > > >                       control->canceled = true;
-> > > > > > -             } else {
-> > > > > > -                     ret = control->fn(control->data);
-> > > > > > -                     control->return_code = ret;
-> > > > > > -             }
-> > > > > > +             else
-> > > > > > +                     control->return_code = control->fn(control->data);
-> > > > > > +
-> > > > > >               mutex_lock(&ctx->call_controls_lock);
-> > > > > >               list_del(&control->list);
-> > > > > >               mutex_unlock(&ctx->call_controls_lock);
-> > > > > > +
-> > > > > >               if (!control->repeat) {
-> > > > > > +                     /* run control->fn() one time */
-> > > > > >                       complete(&control->completion);
-> > > > > >               } else if (control->canceled && control->dealloc_on_cancel) {
-> > > > > >                       kfree(control);
-> > > > > > -                     continue;
-> > > > > >               } else {
-> > > > > > -                     list_add(&control->list, &repeat_controls);
-> > > > > > +                     /* to repeat next time */
-> > > > > > +                     mutex_lock(&ctx->call_controls_lock);
-> > > > > > +                     list_add_tail(&control->list, &ctx->call_controls);
-> > > > > > +                     mutex_unlock(&ctx->call_controls_lock);
-> > > > > >               }
-> > > > > >       }
-> > > > >
-> > > > > Let's suppose there are two damon_call_control objects on the
-> > > > > ctx->call_controls.  The first one has ->repeat unset, while the second one
-> > > > > has.  Then, it seems the 'break' condition will never met and therefore this
-> > > > > loop will never finished.  Am I missing something?
-> > > >
-> > > > You misjudged.
-> > > > If (!C.repeat), it will be removed with list_del() and disappear.
-> > > > If (C.repeat) loops through the loop once, and when it returns to the
-> > > > first, it breaks.
+> > > > diff --git a/mm/damon/core.c b/mm/damon/core.c
+> > > > index babad37719b6..2ead0bb3c462 100644
+> > > > --- a/mm/damon/core.c
+> > > > +++ b/mm/damon/core.c
+> > > > @@ -1462,6 +1462,9 @@ bool damon_is_running(struct damon_ctx *ctx)
+> > > >   */
+> > > >  int damon_call(struct damon_ctx *ctx, struct damon_call_control *control)
+> > > >  {
+> > > > +       if (!damon_is_running(ctx))
+> > > > +               return -EINVAL;
+> > > > +
+> > > >         if (!control->repeat)
+> > > >                 init_completion(&control->completion);
+> > > >         control->canceled = false;
+> > > > @@ -1470,8 +1473,6 @@ int damon_call(struct damon_ctx *ctx, struct
+> > > > damon_call_control *control)
+> > > >         mutex_lock(&ctx->call_controls_lock);
+> > > >         list_add_tail(&control->list, &ctx->call_controls);
+> > > >         mutex_unlock(&ctx->call_controls_lock);
+> > > > -       if (!damon_is_running(ctx))
+> > > > -               return -EINVAL;
+> > > >         if (control->repeat)
+> > > >                 return 0;
+> > > >         wait_for_completion(&control->completion);
 > > >
-> > > Maybe my explanation was not enough.  Let me explain a bit in more detail.
+> > > Let's assume DAMON is terminated between the damon_is_running() and
+> > > list_add_tail().  In the case, the control->fn() will never be called back.  If
+> > > control->repeat is false, this function will even inifnitely wait.
+> >
+> > As you said, there are cases where kdamond is terminated(stopped) in
+> > damon_is_running() and list_add_tail().  It may be a very rare case, but
+> > I missed this case.
+> >
 > > >
-> > > In the scenario I mentioned, at the first iteration of the loop, 'first' will
-> > > be the first control object, which has ->repeat unset.  The object will be
-> > > removed from the list.  In the second iteration of the loop, it handles the
-> > > second object, which has ->repeat set.  The object is added to the list again.
-> > > In the third iteration, the loop runs for the second object again.  Because it
-> > > is not same to 'first', the 'break' statement is not reached.  The loop
-> > > continues forever.
-> > >
-> > > Am I missing something?
+> > > I think we should keep the damon_is_running() as is, but further check if it
+> > > was terminated without handling the control object, and remove it from the list
+> > > in the case.  Like below.
+> [...]
+> > However, the damon_call_handle_inactive_ctx() function is to post-process
+> > the duplicate addition of control->list.  Rather, it is more efficient to
+> > prevent duplicate additions in advance, as follows:
+> > I have tested the following and it works fine.
 > >
-> > Thank you for your detailed review.
-> > There may be cases where C->repeat=false is the first control.
-> > This can also be solved simply as follows:
+> > @@ -1467,11 +1496,14 @@ int damon_call(struct damon_ctx *ctx, struct
+> > damon_call_control *control)
+> >         control->canceled = false;
+> >         INIT_LIST_HEAD(&control->list);
 > >
-> > @@ -2567,9 +2599,6 @@ static void kdamond_call(struct damon_ctx *ctx,
-> > bool cancel)
-> >                 if (!control || control == first)
-> >                         break;
-> >
-> > -               if (++idx == 1)
-> > -                       first = control;
-> > -
-> >                 if (cancel)
-> >                         control->canceled = true;
-> >                 else
-> > @@ -2589,6 +2618,8 @@ static void kdamond_call(struct damon_ctx *ctx,
-> > bool cancel)
-> >                         mutex_lock(&ctx->call_controls_lock);
-> >                         list_add_tail(&control->list, &ctx->call_controls);
-> >                         mutex_unlock(&ctx->call_controls_lock);
-> > +                       if (++idx == 1)
-> > +                               first = control;
-> >                 }
-> >         }
-> >  }
+> > -       mutex_lock(&ctx->call_controls_lock);
+> > -       list_add_tail(&control->list, &ctx->call_controls);
+> > -       mutex_unlock(&ctx->call_controls_lock);
+> > -       if (!damon_is_running(ctx))
+> > +       if (damon_is_running(ctx)) {
+> > +               mutex_lock(&ctx->call_controls_lock);
+> > +               list_add_tail(&control->list, &ctx->call_controls);
+> > +               mutex_unlock(&ctx->call_controls_lock);
+> > +       } else {
+> > +               /* return damon_call_handle_inactive_ctx(ctx, control); */
+> >                 return -EINVAL;
+> > +       }
+> >         if (control->repeat)
+> >                 return 0;
+> >         wait_for_completion(&control->completion);
 >
-> Yes, that should fix the issue.
->
-> And it seems 'idx' is being used for only this?  If I'm not wrong, I think it
-> may be easier to read if you do something like 'first = first ? first :
-> control' and drop 'idx'.
+> I think this is not differnt from your previous suggestion, and thus it has the
+> same issue.  What if DAMON is terminated between damon_is_running() and
+> list_add_tail() call?  Please let me know if I'm missing something.
 
-It's better removing idx.
-Thanks.
+I think it is good idea to insert a barrier() between damon_is_running()
+and list_add_tail() to prevent context-switching.  What do you think this?
+
+Thanks,
 JaeJoon
 
-@@ -2587,7 +2587,6 @@ static void kdamond_usleep(unsigned long usecs)
- static void kdamond_call(struct damon_ctx *ctx, bool cancel)
- {
-        struct damon_call_control *control, *first = NULL;
--       unsigned int idx = 0;
-
-        while (true) {
-                mutex_lock(&ctx->call_controls_lock);
-@@ -2618,8 +2617,8 @@ static void kdamond_call(struct damon_ctx *ctx,
-bool cancel)
-                        mutex_lock(&ctx->call_controls_lock);
-                        list_add_tail(&control->list,
-&ctx->call_controls);
-                        mutex_unlock(&ctx->call_controls_lock);
--                       if (++idx == 1)
--                               first = control;
-+
-+                       first = (first) ? first : control;
-                }
-        }
- }
-
+>
+> >
+> > > If you don't mind, I'll post the above diff as a patch, adding a 'Reported-by:'
+> > > tag for you.
+> >
+> > 'Reported-by:' is OK.  However, please check the above again.
+>
+> Thank you!
 >
 >
 > Thanks,
