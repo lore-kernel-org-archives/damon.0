@@ -1,200 +1,153 @@
-Received: from mail-yw1-f171.google.com (mail-yw1-f171.google.com [209.85.128.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from frasgout.his.huawei.com (frasgout.his.huawei.com [185.176.79.56])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D0442264A9
-	for <damon@lists.linux.dev>; Mon, 29 Dec 2025 03:39:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94DFF329C74
+	for <damon@lists.linux.dev>; Mon, 29 Dec 2025 14:55:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.176.79.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766979551; cv=none; b=bq/FV6hr4dFjcZ5KtbMt4HqSQYk9aZAVOYLZTkeAJ+5K46wFIFTyycXd6TJ+iWqHgvIAu8i27VHGpzw64C7LsTPlp6mHjnBkRrD8n4oOdpntLPEDXREErkY4tSfMa6kN3l8ZemHShlPrlweMwKGd8B+iH7GAB2PQrwPTYYqKc5g=
+	t=1767020153; cv=none; b=WPtBSxTa6ssZFw5F0/lemg5yc4tgXS50j8MLK8dDGuB0dum/Yw2EMGzRk2ThOXbGmXOj/Y+8N2QAb0gNPcQ687wKOc/1uZJB7x9E3tnjwvjxCiDQ/0VouG4UXFIC9p7er6j1lEX2GlqfU1ttN8hfkjyuSFaZC6O49eibIOwwBC4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766979551; c=relaxed/simple;
-	bh=zFVZi6DOjACsavzTRTR+p7X7w2BGWdvRIIRhA0FpJQw=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ojvIiyhGJZIpUOUPjPXS/88STFT2wqMuQ4Bp+sGG9dTPeXvgJQEEGEjFD01IZKtS4oWvfhonVOLKhTUkTNtPFV35W51AdWNyJ7e9nrmpybIth9+VMClDgZ92zAiNBFBasyUYxEJfszRPsSu2PZ7SG7GA3oB7MFXJJdPPRNE8QUw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Lf4wg/m3; arc=none smtp.client-ip=209.85.128.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Lf4wg/m3"
-Received: by mail-yw1-f171.google.com with SMTP id 00721157ae682-786a822e73aso76127497b3.3
-        for <damon@lists.linux.dev>; Sun, 28 Dec 2025 19:39:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1766979549; x=1767584349; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=Ec38jWe/KrrUFJROzDPN7mPmD+4inQ2VXMt0xla13TE=;
-        b=Lf4wg/m3LGruQs5zEmSOLBH4w35POs3LQ5n73mQDuo984Wuk2opdcmWAnJw9D12G1P
-         Qs28bvFgUjOtTNKggSnQy619uJ15GaTTx/5tZNBA8e3Xg3WZM4mF3ZA72SrxEy38/E75
-         qax9nvVTGVLIgjzZmqGJ4LakpnC5AqGQsZV0/tt6cUrZawXkkOOGuRY8jdWMNnErRQkK
-         Gc3WUlb0ik8B7xb5PBLZ2xWLgb/md3MZALmTbUPPVl0lvWNwIUC4CyBvyEXRW+0ojBKr
-         T6+Loc8XG+S6NswKRZqX/+ICH8Z3dBHgIYubZ1ero9DzGKroQs/6EZwHv8/gAQ1d5bdZ
-         tSLg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1766979549; x=1767584349;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Ec38jWe/KrrUFJROzDPN7mPmD+4inQ2VXMt0xla13TE=;
-        b=TeVXVAvhF48mwgxMFDhVWvuBxV+iLGJSKcOrOsadc4UZQ5RajdFF3BsQ7Fb3HXXDNG
-         id5vad54rmky3oj/YbH0JqZpeRyGlAsNASc9NKUsPQdNo/GXlVjHlPOZDhHzU9SGSjq5
-         Aq1KW3YuEZxHDhdSh/peqM99qWzt30/W5eby8ORt2N6oWFcy0lyQp+hHlWBNgELbfRJ4
-         9FfSc1h0y3JhRnFLr0UD6sk804Hxtu0gfTABkjFcDfd+hRlYzj7QN+B0hrNBVZa+OBcb
-         x7B/iqdFT6DI5t7H4BUZk8bfm+hx1j22iM/HE0PNsVhlxu8KxQOcKZcyAbZ4UvPuGDk6
-         9iRw==
-X-Gm-Message-State: AOJu0Yyk9709wCdw58JiBAQceUs+wiIT/N3x6kDFs48WK+XK4YVzQ4Fj
-	gtLpuOwLtMppBTV20ofRWb/Mp7jawc3ljLcKUrjQo9zPEoFmMHL0mRZoxMlVFFoSmA2Z97VcmfS
-	E338wJp/WELVQgFqEki6I5YOBcpPeb0+adF8ui6Y=
-X-Gm-Gg: AY/fxX415XCIUgPAg2jVqnHymOfOmb+nVHCqLELq3iTi+TK+yDq9bAn3eHH0QwORmEJ
-	MjHFDhxQJ/YtmNxrSvf95GRCYrm8ANB0mbx82ez2X+v9eJ7nZ58c1FqFZWj6mqXLVbyoieAHQl2
-	NdX7gEnwcUl99P3l/IzRKBZ8AliYSpCPxUtp05Z+dXUBrJoyhCUQdB45eao+xrDTjmQHrj41Ip3
-	DmimS4vmR+DAaTn8by5ma5J2sMJpRMog+iBXhdmNndYyH/jiwPKMf+u6kmB3d+civyNVIx4
-X-Google-Smtp-Source: AGHT+IGMny9fg2k7Qgju0UYglg0kRUQjni0y2DiDufbvlgIlQAJlK2OlV8/96K2ETe8W7aLi49b3kLRDvZ1JRDHcJ+c=
-X-Received: by 2002:a53:b549:0:b0:645:6c99:bf17 with SMTP id
- 956f58d0204a3-6466a8afe74mr19566506d50.52.1766979549111; Sun, 28 Dec 2025
- 19:39:09 -0800 (PST)
+	s=arc-20240116; t=1767020153; c=relaxed/simple;
+	bh=jPBSnc1RpG/FnqNzwMij/WFXFe4qK6H+FMVDp0qDC80=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=XnaQkve8ZmN2YY/MbBGx5lq0TZ6NxkzsAA++y9sgJlG6NTAdxaTgLVQFb+kTq7wyBDQKpyq2JbLOuDUOKoXH2TsRxCCo/O79vex6J4kyAC7y+Y1W9958M7g4joxPR4AGeKoEdnekOVqREbww8uu8AEkYSd9WGoYiY2gBPZiL1fY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei-partners.com; spf=pass smtp.mailfrom=huawei-partners.com; arc=none smtp.client-ip=185.176.79.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei-partners.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei-partners.com
+Received: from mail.maildlp.com (unknown [172.18.224.107])
+	by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4dfzlg1dy2zJ46DY;
+	Mon, 29 Dec 2025 22:54:55 +0800 (CST)
+Received: from mscpeml500003.china.huawei.com (unknown [7.188.49.51])
+	by mail.maildlp.com (Postfix) with ESMTPS id 4A3DD40570;
+	Mon, 29 Dec 2025 22:55:44 +0800 (CST)
+Received: from mscphis01197.huawei.com (10.123.65.218) by
+ mscpeml500003.china.huawei.com (7.188.49.51) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.11; Mon, 29 Dec 2025 17:55:43 +0300
+From: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
+To: <gutierrez.asier@huawei-partners.com>, <sj@kernel.org>,
+	<akpm@linux-foundation.org>, <damon@lists.linux.dev>, <linux-mm@kvack.org>,
+	<linux-kernel@vger.kernel.org>, <wangkefeng.wang@huawei.com>,
+	<artem.kuzin@huawei.com>, <stepanov.anatoly@huawei.com>
+Subject: [RFC PATCH v1] mm: improve call_controls_lock
+Date: Mon, 29 Dec 2025 14:55:32 +0000
+Message-ID: <20251229145533.2437293-1-gutierrez.asier@huawei-partners.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <CAHOvCC7HqeGY1uxy7FxLKTFHAJPcWWbKJRjZ06W9bC4oAejOsw@mail.gmail.com>
- <20251227174239.273581-1-sj@kernel.org>
-In-Reply-To: <20251227174239.273581-1-sj@kernel.org>
-From: JaeJoon Jung <rgbi3307@gmail.com>
-Date: Mon, 29 Dec 2025 12:38:58 +0900
-X-Gm-Features: AQt7F2osd3IZrYaArYmRyOWBHGQGj20PD3b4hoISM9vUO7_MR3MY1NQLMXu3mg0
-Message-ID: <CAHOvCC7KAmj8hb8GtTJ+P_GUGqjP1WO8uqnpFjMPQmKFrc1oZw@mail.gmail.com>
-Subject: Re: [PATCH] mm/damon/sysfs: preventing duplicated list_add_tail() at
- the damon_call()
-To: SeongJae Park <sj@kernel.org>
-Cc: damon@lists.linux.dev, linux-mm@kvack.org, rgbi3307@nate.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: mscpeml100003.china.huawei.com (10.199.174.67) To
+ mscpeml500003.china.huawei.com (7.188.49.51)
 
-On Sun, 28 Dec 2025 at 02:42, SeongJae Park <sj@kernel.org> wrote:
->
-> On Sat, 27 Dec 2025 08:53:21 +0900 JaeJoon Jung <rgbi3307@gmail.com> wrote:
->
-> > On Sat, 27 Dec 2025 at 03:41, SeongJae Park <sj@kernel.org> wrote:
-> > >
-> > > On Fri, 26 Dec 2025 10:48:31 +0900 JaeJoon Jung <rgbi3307@gmail.com> wrote:
-> > >
-> > > > On Fri, 26 Dec 2025 at 04:50, SeongJae Park <sj@kernel.org> wrote:
-> > > > >
-> > > > > On Thu, 25 Dec 2025 11:35:33 +0900 JaeJoon Jung <rgbi3307@gmail.com> wrote:
-> > > > >
-> > > > > > On Thu, 25 Dec 2025 at 09:32, SeongJae Park <sj@kernel.org> wrote:
-> > > > > > >
-> > > > > > > Hello JaeJoon,
-> > > > > > >
-> > > > > > > On Wed, 24 Dec 2025 18:43:58 +0900 JaeJoon Jung <rgbi3307@gmail.com> wrote:
-> > > [...]
-> > > > > > diff --git a/mm/damon/core.c b/mm/damon/core.c
-> > > > > > index babad37719b6..2ead0bb3c462 100644
-> > > > > > --- a/mm/damon/core.c
-> > > > > > +++ b/mm/damon/core.c
-> > > > > > @@ -1462,6 +1462,9 @@ bool damon_is_running(struct damon_ctx *ctx)
-> > > > > >   */
-> > > > > >  int damon_call(struct damon_ctx *ctx, struct damon_call_control *control)
-> > > > > >  {
-> > > > > > +       if (!damon_is_running(ctx))
-> > > > > > +               return -EINVAL;
-> > > > > > +
-> > > > > >         if (!control->repeat)
-> > > > > >                 init_completion(&control->completion);
-> > > > > >         control->canceled = false;
-> > > > > > @@ -1470,8 +1473,6 @@ int damon_call(struct damon_ctx *ctx, struct
-> > > > > > damon_call_control *control)
-> > > > > >         mutex_lock(&ctx->call_controls_lock);
-> > > > > >         list_add_tail(&control->list, &ctx->call_controls);
-> > > > > >         mutex_unlock(&ctx->call_controls_lock);
-> > > > > > -       if (!damon_is_running(ctx))
-> > > > > > -               return -EINVAL;
-> > > > > >         if (control->repeat)
-> > > > > >                 return 0;
-> > > > > >         wait_for_completion(&control->completion);
-> > > > >
-> > > > > Let's assume DAMON is terminated between the damon_is_running() and
-> > > > > list_add_tail().  In the case, the control->fn() will never be called back.  If
-> > > > > control->repeat is false, this function will even inifnitely wait.
-> > > >
-> > > > As you said, there are cases where kdamond is terminated(stopped) in
-> > > > damon_is_running() and list_add_tail().  It may be a very rare case, but
-> > > > I missed this case.
-> > > >
-> > > > >
-> > > > > I think we should keep the damon_is_running() as is, but further check if it
-> > > > > was terminated without handling the control object, and remove it from the list
-> > > > > in the case.  Like below.
-> > > [...]
-> > > > However, the damon_call_handle_inactive_ctx() function is to post-process
-> > > > the duplicate addition of control->list.  Rather, it is more efficient to
-> > > > prevent duplicate additions in advance, as follows:
-> > > > I have tested the following and it works fine.
-> > > >
-> > > > @@ -1467,11 +1496,14 @@ int damon_call(struct damon_ctx *ctx, struct
-> > > > damon_call_control *control)
-> > > >         control->canceled = false;
-> > > >         INIT_LIST_HEAD(&control->list);
-> > > >
-> > > > -       mutex_lock(&ctx->call_controls_lock);
-> > > > -       list_add_tail(&control->list, &ctx->call_controls);
-> > > > -       mutex_unlock(&ctx->call_controls_lock);
-> > > > -       if (!damon_is_running(ctx))
-> > > > +       if (damon_is_running(ctx)) {
-> > > > +               mutex_lock(&ctx->call_controls_lock);
-> > > > +               list_add_tail(&control->list, &ctx->call_controls);
-> > > > +               mutex_unlock(&ctx->call_controls_lock);
-> > > > +       } else {
-> > > > +               /* return damon_call_handle_inactive_ctx(ctx, control); */
-> > > >                 return -EINVAL;
-> > > > +       }
-> > > >         if (control->repeat)
-> > > >                 return 0;
-> > > >         wait_for_completion(&control->completion);
-> > >
-> > > I think this is not differnt from your previous suggestion, and thus it has the
-> > > same issue.  What if DAMON is terminated between damon_is_running() and
-> > > list_add_tail() call?  Please let me know if I'm missing something.
-> >
-> > I think it is good idea to insert a barrier() between damon_is_running()
-> > and list_add_tail() to prevent context-switching.  What do you think this?
->
-> I don't think barrier() works in the way.  Please correct me if I'm wrong.
+This is a minor patch set for a call_controls_lock synchronization improvement.
 
-Yes, there is no need to use memory barriers.  Since each kdamond runs
-its
-own damon_ctx, the concurrent access problem can be sufficiently
-solved with
-mutext_lock.  The problem discussed so far can be solved by applying
-mutex_lock to both ctx->kdamond and ctx->call_controls.
-Please refer to the modified code below:
+Spinlocks are faster than mutexes, even when the mutex takes the fast
+path. Hence, this patch replaces the mutex call_controls_lock with a spinlock.
 
-@@ -1496,14 +1502,15 @@ int damon_call(struct damon_ctx *ctx, struct
-damon_call_control *control)
-        control->canceled = false;
-        INIT_LIST_HEAD(&control->list);
+Initial benchmarking shows the following results
 
--       if (damon_is_running(ctx)) {
--               mutex_lock(&ctx->call_controls_lock);
-+       mutex_lock(&ctx->call_controls_lock);
-+       if (ctx->kdamond) {
-                list_add_tail(&control->list, &ctx->call_controls);
--               mutex_unlock(&ctx->call_controls_lock);
-        } else {
--               /* return damon_call_handle_inactive_ctx(ctx, control); */
-+               mutex_unlock(&ctx->call_controls_lock);
-                return -EINVAL;
-        }
-+       mutex_unlock(&ctx->call_controls_lock);
-+
-        if (control->repeat)
-                return 0;
-        wait_for_completion(&control->completion);
 
->
->
-> Thanks,
-> SJ
->
-> [...]
+# bpftrace -e 'kprobe:kdamond_call { @start[tid] = nsecs; }
+    kretprobe:kdamond_call /@start[tid]/
+    { @ns[comm] = hist(nsecs - @start[tid]); delete(@start[tid]); }'
+
+@ns[kdamond.0]:
+[16K, 32K)            22 |@@@@@@@@@@@@                                        |
+[32K, 64K)            90 |@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@|
+[64K, 128K)            0 |                                                    |
+[128K, 256K)           1 |                                                    |
+
+@ns[kdamond.0]:
+[16K, 32K)            19 |@@@@@@@@                                            |
+[32K, 64K)           118 |@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@|
+[64K, 128K)            0 |                                                    |
+[128K, 256K)           1 |
+
+Signed-off-by: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
+---
+ include/linux/damon.h |  2 +-
+ mm/damon/core.c       | 17 ++++++++---------
+ 2 files changed, 9 insertions(+), 10 deletions(-)
+
+diff --git a/include/linux/damon.h b/include/linux/damon.h
+index 3813373a9200..43665e63a498 100644
+--- a/include/linux/damon.h
++++ b/include/linux/damon.h
+@@ -801,7 +801,7 @@ struct damon_ctx {
+ 
+ 	/* lists of &struct damon_call_control */
+ 	struct list_head call_controls;
+-	struct mutex call_controls_lock;
++	spinlock_t call_controls_lock;
+ 
+ 	struct damos_walk_control *walk_control;
+ 	struct mutex walk_control_lock;
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index f9fc0375890a..a929bdf3bc7b 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -539,7 +539,6 @@ struct damon_ctx *damon_new_ctx(void)
+ 
+ 	mutex_init(&ctx->kdamond_lock);
+ 	INIT_LIST_HEAD(&ctx->call_controls);
+-	mutex_init(&ctx->call_controls_lock);
+ 	mutex_init(&ctx->walk_control_lock);
+ 
+ 	ctx->attrs.min_nr_regions = 10;
+@@ -1457,9 +1456,9 @@ int damon_call(struct damon_ctx *ctx, struct damon_call_control *control)
+ 	control->canceled = false;
+ 	INIT_LIST_HEAD(&control->list);
+ 
+-	mutex_lock(&ctx->call_controls_lock);
++	spin_lock(&ctx->call_controls_lock);
+ 	list_add_tail(&control->list, &ctx->call_controls);
+-	mutex_unlock(&ctx->call_controls_lock);
++	spin_unlock(&ctx->call_controls_lock);
+ 	if (!damon_is_running(ctx))
+ 		return -EINVAL;
+ 	if (control->repeat)
+@@ -2549,10 +2548,10 @@ static void kdamond_call(struct damon_ctx *ctx, bool cancel)
+ 	int ret = 0;
+ 
+ 	while (true) {
+-		mutex_lock(&ctx->call_controls_lock);
++		spin_lock(&ctx->call_controls_lock);
+ 		control = list_first_entry_or_null(&ctx->call_controls,
+ 				struct damon_call_control, list);
+-		mutex_unlock(&ctx->call_controls_lock);
++		spin_unlock(&ctx->call_controls_lock);
+ 		if (!control)
+ 			break;
+ 		if (cancel) {
+@@ -2561,9 +2560,9 @@ static void kdamond_call(struct damon_ctx *ctx, bool cancel)
+ 			ret = control->fn(control->data);
+ 			control->return_code = ret;
+ 		}
+-		mutex_lock(&ctx->call_controls_lock);
++		spin_lock(&ctx->call_controls_lock);
+ 		list_del(&control->list);
+-		mutex_unlock(&ctx->call_controls_lock);
++		spin_unlock(&ctx->call_controls_lock);
+ 		if (!control->repeat) {
+ 			complete(&control->completion);
+ 		} else if (control->canceled && control->dealloc_on_cancel) {
+@@ -2577,9 +2576,9 @@ static void kdamond_call(struct damon_ctx *ctx, bool cancel)
+ 			struct damon_call_control, list);
+ 	if (!control || cancel)
+ 		return;
+-	mutex_lock(&ctx->call_controls_lock);
++	spin_lock(&ctx->call_controls_lock);
+ 	list_add_tail(&control->list, &ctx->call_controls);
+-	mutex_unlock(&ctx->call_controls_lock);
++	spin_unlock(&ctx->call_controls_lock);
+ }
+ 
+ /* Returns negative error code if it's not activated but should return */
+-- 
+2.43.0
+
+
