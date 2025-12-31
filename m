@@ -1,44 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB3D686352;
-	Wed, 31 Dec 2025 01:25:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A16F7FBA2
+	for <damon@lists.linux.dev>; Wed, 31 Dec 2025 01:28:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767144326; cv=none; b=XRmhnW3JNqUuTvnI8KTt5VyYcSkzX916xcH2FmgxqURrCbwMuc5Ape0vu0nxapKh0ZYt8TsqId4VL4MZAfckol+Quzdkn55xkFMKl9wnTDLaHNEGxD9Yh8eYLyEk0YDUiuQ1hjpt9Q5zASoSvq0VYlgrNcX92awu30MSXe+uEqE=
+	t=1767144514; cv=none; b=VSbOmyoXxw9gKMVVhoc0h59ckx1Pxaym3qYMosiIYGe9OV5aQdYz4XABAPMB3HBgo6rixuN1wH2y3Ew7MrfpNN+uDfs7zr/bLyIRhrs3prexp7j8sfOf+RMwicBfDBWT5P9RuW9Tzkkrg5xEgw284f4FjxRFPEZGfwtVe4U6pgk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767144326; c=relaxed/simple;
-	bh=O5xxeuSOtbrcGO6p0D++q4AK9X/cFtiDX/QhXReUnnU=;
+	s=arc-20240116; t=1767144514; c=relaxed/simple;
+	bh=ieXve5YsxFahnvCXjygTnnUDVMZBIFsMEh43LtkNUPk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KX2OOgT6i87w84XlZYSOFsAmWqADiQ5K+UeQgaqz29fdLJ5h4WJDmwZM+MZprMemfh0z9WqxarnsTCV0UmdjqA7uVdYFOmKBMaDcyovHsP0B1+o1lnsYXWNBIWJQKYosKnOu+pjZbIVhEDUkor1MMXXxtqw5COPWmWd7TtX/OZw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ovjUx9Y9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YobfIQ8+d9bQwVhKXT8Ouy7yind+W2FaiWcOLA6Ks2ZD06KkiFjL3zkyh4MAdVdzErqdddYcdwhuoT9MHZjr6s6u6O06l8qZdxaEqXXu/zZtUKehhosZt6Hcod3Pp0xrvNCx3zXN/2fZIrh8gk9iqhTVMuECyM+qjm9TBwH5C1w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Eu9RvOUC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ovjUx9Y9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94C93C116C6;
-	Wed, 31 Dec 2025 01:25:25 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Eu9RvOUC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF6F8C116C6;
+	Wed, 31 Dec 2025 01:28:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1767144325;
-	bh=O5xxeuSOtbrcGO6p0D++q4AK9X/cFtiDX/QhXReUnnU=;
+	s=k20201202; t=1767144514;
+	bh=ieXve5YsxFahnvCXjygTnnUDVMZBIFsMEh43LtkNUPk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ovjUx9Y9iiMW5glAhyrYp5ExTgMJT3Yl+5KuUqsL8mwD23ntkR9sDaM37MqmLcAPm
-	 c3mZraznn7ipiZOCFmczpodFb95ZPd7ZZWL0VyEHDV0KSikwkN6vX3uaQT86wOBY/t
-	 wlxPoo2Or2IkubTHkzVyEAlPOHsnbtv0PLiySMO9LZqZhBdhxoZxeKi1/i06b32Nrt
-	 OCJAw2hXYu/16iPIHFqfV2crQo8Q6hF4mm45dpG6hOMaXvS3qohMjhXLb1Isnz3V2y
-	 a9H6A5Q6/XQ3cOO/gz71nZKzXLylxfRBQ23CG1ILn7iKXvQbh/EH659XEnT4bdfyy9
-	 0/RA2rf6/CbUA==
+	b=Eu9RvOUCRm/FRXhdQPiO3RGhghrck1gZTxKmmlBdWPsvvIQYy98ClGWMuupobsQoh
+	 B65UHQAgMM1sewdGri4oW7Sw+NgRn5IfM5i31t8Ev4rIqFSfHAYM2BzOHNCDaKsw1g
+	 rML1p9FNIJ+H4kJIGSKRpxpIoFDBs4pgfSbXCQjmJ42evOGIzW7c1Q9U5hwcQIIREM
+	 yxsYXU9VmSDNBPbeQY0BfiAIJZQg73pqS4A+ZI6tqf3D7U4KYugo0RN6GHy5PRtKxd
+	 BXtqJ9UEZZblI6A+KTVbu9Hpr6nBwQ6TMV1s2IN9FI3mDQeHJoq2xTF24O7uxo3o/I
+	 I7I4l6K9K+OgQ==
 From: SeongJae Park <sj@kernel.org>
 To: SeongJae Park <sj@kernel.org>
-Cc: Andrew Morton <akpm@linux-foundation.org>,
-	"# 6 . 14 . x" <stable@vger.kernel.org>,
+Cc: JaeJoon Jung <rgbi3307@gmail.com>,
 	damon@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org,
-	JaeJoon Jung <rgbi3307@gmail.com>
-Subject: Re: [PATCH] mm/damon/core: remove call_control in inactive contexts
-Date: Tue, 30 Dec 2025 17:25:20 -0800
-Message-ID: <20251231012522.75876-1-sj@kernel.org>
+	rgbi3307@nate.com
+Subject: Re: [PATCH] mm/damon/core: modified control->repeat loop at the kdamond_call()
+Date: Tue, 30 Dec 2025 17:28:24 -0800
+Message-ID: <20251231012826.75989-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20251230034516.48129-1-sj@kernel.org>
+In-Reply-To: <20251230005716.47160-1-sj@kernel.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -48,42 +46,24 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Mon, 29 Dec 2025 19:45:14 -0800 SeongJae Park <sj@kernel.org> wrote:
+On Mon, 29 Dec 2025 16:57:15 -0800 SeongJae Park <sj@kernel.org> wrote:
 
-> On Mon, 29 Dec 2025 18:41:28 -0800 SeongJae Park <sj@kernel.org> wrote:
+> On Tue, 30 Dec 2025 09:14:37 +0900 JaeJoon Jung <rgbi3307@gmail.com> wrote:
 > 
-> > On Mon, 29 Dec 2025 17:45:30 -0800 SeongJae Park <sj@kernel.org> wrote:
-> > 
-> > > On Sun, 28 Dec 2025 10:31:01 -0800 SeongJae Park <sj@kernel.org> wrote:
-> > > 
-> [...]
-> > > I will send a new version of this fix soon.
-> > 
-> > So far, I got two fixup ideas.
-> > 
-> > The first one is keeping the current code as is, and additionally modifying
-> > kdamond_call() to protect all call_control object accesses under
-> > ctx->call_controls_lock protection.
-> > 
-> > The second one is reverting this patch, and doing the DAMON running status
-> > check before adding the damon_call_control object, but releasing the
-> > kdamond_lock after the object insertion is done.
-> > 
-> > I'm in favor of the second one at the moment, as it seems more simple.
+> > I will reflect the above in patch v2.
+> > Would you like me to resend patch v2 ?
 > 
-> I don't really like both approaches because those implicitly add locking rules.
-> If the first approach is taken, damon_call() callers should aware they should
-> not register callback functions that can hold call_controls_lock.  If the
-> second approach is taken, we should avoid holding kdamond_lock while holding
-> damon_call_control lock.  The second implicit rule seems easier to keep to me,
-> but I want to avoid that if possible.
+> I just found my fix [1] of the bug that you reported has a race condition.  And
+> to fix that, I think kdamond_call() will anyway need to be modified.  I will
+> shortly send more details as a reply to the fix [1].  Can you please hold this
+> refactoring until all discussions about the bug fix is done?  Sorry for your
+> inconvenience.
 > 
-> The third idea I just got is, keeping this patch as is, and moving the final
-> kdamond_call() invocation to be made _before_ the ctx->kdamond reset.  That
-> removes the race condition between the final kdamond_call() and
-> damon_call_handle_inactive_ctx(), without introducing new locking rules.
+> [1] https://lore.kernel.org/20251228183105.289441-1-sj@kernel.org
 
-I just posted the v2 [1] with the third idea.
+I ended up sending the new version of the fix [1] without changes on
+kdamond_call().  Unless you have concerns on the fix, please feel free to
+proceed to v2 of this patch.  Thank you for patiently waiting.
 
 [1] https://lore.kernel.org/20251231012315.75835-1-sj@kernel.org
 
