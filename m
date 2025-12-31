@@ -1,219 +1,152 @@
-Received: from mail-yx1-f42.google.com (mail-yx1-f42.google.com [74.125.224.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 823C0311942
-	for <damon@lists.linux.dev>; Wed, 31 Dec 2025 07:51:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 284CE27E1C5;
+	Wed, 31 Dec 2025 15:26:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767167499; cv=none; b=sMUSnaguPK2w55dQ9AM+ROqlxL/EH8ML+DpyubX4Qv1N41xvO43IsJ6ioPVNxfkAn1XUXa0A+1qMZg+5lAMCA8y+saPWu/ajR5S0uHqtY02pCCI9Wmuwc+/amWQ8mT2/rFIt+0+LlRmCme4Ufu7D9ll0A8/EwnDkD6eMuNEUY/I=
+	t=1767194785; cv=none; b=NOqXwnqSy2YQAD+3zOsrFcMUYie5NYa0zmu13u/y0h8s0xW1S3+Fxd7COGGhVgCm0d+VaBtXYiy1wNqjTTN04993LZPgMiolkPYFdDgvD4WeUaY6RWQ5M/BgO8Kk8a2lvT58vIeqbVVzxL6lEG1ru7lWD5DOAnGmrAYicBKeYcE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767167499; c=relaxed/simple;
-	bh=wmEahf6Iji88xxYTwO8AhSC1dlfXFvkLiF6PpyVFEBs=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=kN5OCqtk+MdCUG/u+pn1ZEpLp/Ds/Kcqwvyt7rHKo1fWJRxQ55axKoyZnqxrrHRKGYyWYgHxtbYup6uKhOMjbuVWTW/51I6bPCEK5iADNbyVrEwgoSgZJyO1yz8DKCSEujvk4glXCXnC5k/1vymDpDHKwH/D5Y1NilrJLNau3sg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WIN3fifM; arc=none smtp.client-ip=74.125.224.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1767194785; c=relaxed/simple;
+	bh=JzGS4bo9AEHd9uEqNevElOW0FoRxhHNAv/dVhm19Igs=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=Guft8f0OyVgeuLYyhqAdIYTnNCA8UIc/Kku5NX4Uj3J8ngAn53wQjGy5l4UB0Pd3vRJObU9sRDovDj22yuiJtf9mm8aLHyLVtXfouvHRh9RFxo16izxXo0PzIQtNxY3oVDuFS+RUofGSop3bKL33J/FW9fpjBy2sPXVg5v/MKHg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IwgTUA9F; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WIN3fifM"
-Received: by mail-yx1-f42.google.com with SMTP id 956f58d0204a3-64471fcdef0so8403333d50.1
-        for <damon@lists.linux.dev>; Tue, 30 Dec 2025 23:51:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1767167496; x=1767772296; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=V4FoL6BJ8eGQpI9Ifz86ZV3A5o06nVwvo0WVTcpDty8=;
-        b=WIN3fifM6zs0Jr1tw/5XLDuKWzqO9IdSoLbjESMpCCHk7IYPd3ZMUzkUq/ZE7jOvtJ
-         05905V7cAttDid0cxwfWWH1Fr+lV9lpPDQxaQ3yVNj6OUE280yuM2mKOb0XSlwt4eSd7
-         0R3hi22VDDNE7Rjj0ifpCbNuloSzbmK8o/XdbPFljyBlmw4lQUAIJl2Kr5vT22qKrEay
-         lo5FA1/J2iH62vERTm3NNWxLbC3QwyeQNWbnZS/cK8IVXfq6l8nQ4VtY0OZZNhdBV6I2
-         sXCgst7SQAgikkor6Ei2oCvamESWX+GEwfPfu4oJ0XPMNy2SKzsyuYzZSrU2s5JWXcXQ
-         wQtA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767167496; x=1767772296;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=V4FoL6BJ8eGQpI9Ifz86ZV3A5o06nVwvo0WVTcpDty8=;
-        b=IkzUx8Jc7VlMEfPmaeWvcbo0JzCa++VhF/YobZknrmccjpRuGJs3hhalA0ofsrf7LC
-         6E17Y+eN85rENnjI2LEDxbL+ML8yshEFHguCeV0uhYTF+1gLaEqS9QwO5QDSgPI/dat/
-         i/lU6xmnFdExNCgBifJDvcTOP+bJF5esCohZuMwNpgfAC7yL6Flq4UJRtLbavBv+8MC6
-         Ut+29nnCEo1MDBnlN/9da86A+vGj3e9CmXrrLE7T1E2I5ZtwwLU+kFJJwq/+tiVx94i+
-         TYAZuG+KsOpxz7qJts8iOydpSGtzXXL054PpbfrV7ZG6RHiBkEQ7mCTVjoH/jsVukd1x
-         tv0g==
-X-Forwarded-Encrypted: i=1; AJvYcCWxD8wxVWHqAofAFOa5Tdg11EjGiutA53nE/byRS4O63rRdpQQeeRwRXMqgdlXRhKmJ93lBrA==@lists.linux.dev
-X-Gm-Message-State: AOJu0Yx9FHEp0WREG1eir0ZJ0CTYQNDBzk4v8cmch+hC3EthzEU3Yg6L
-	7Ms2c2GM3+8CNDcTIaSphvixSm/8SEg+VeYpZC5JQ/l13hG2UaZrelYUN81/klBUa8c4PvyJh+u
-	rWktgjXJpCcHTckvEYsNcYieGQa8kFRs=
-X-Gm-Gg: AY/fxX47N7RhdkmSvRjGscU6Thfe+jsaq09eQXnrFQ9qR2wclJ+26AcMzQwdhGBRxzc
-	D8Q7x3IbNI7xcSx2VfgGSV7UhLHF92ALrw/IU9gORJ8h2U7i22YvOCjEZclOQ6ZjSLR56WnfLO0
-	rorDunj9etWeJhPgzF4k2q7ejEfO+YzTiJINRXFgTVtzeF88wZxiDnz/YnAS9bVTgLbSLJC3k+Q
-	OhHGT40udeU/8oxl0g7ck+b2n7e501Dnn7/0YVUWfsv0POJ4W3qr1fezBiFUlJcLktUyGk7HQSS
-	B0TFD6E=
-X-Google-Smtp-Source: AGHT+IG7vBLOnJgiH1nk4vyDl8tcZoRrDP3Sq7Ndc3H7dPAw7OglASU+n2daZSgkTx9rDXmJEVV1PsqS8FXUOjEoreM=
-X-Received: by 2002:a05:690c:c4f6:b0:786:5afa:375c with SMTP id
- 00721157ae682-78fb40d9808mr634822837b3.67.1767167496022; Tue, 30 Dec 2025
- 23:51:36 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IwgTUA9F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86F05C113D0;
+	Wed, 31 Dec 2025 15:26:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1767194784;
+	bh=JzGS4bo9AEHd9uEqNevElOW0FoRxhHNAv/dVhm19Igs=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=IwgTUA9FYr4mYFVd6xyDozLB83BwIlj0A2rTYaJ9gB54HsYl57jEDc6egzI9cVjpY
+	 RyaNoTSgGN/aP7V9jLpssR05usdrRRfpewVartIW90tZjzWyJaDslu31/5KniwXvlB
+	 AXgpMZucEcvocRrAYwf/vC/CDGcjElF4G8de59z8r3WHlQ6Y6/Xh7A2S2mM5ETToAL
+	 aU2Qu6JFxLPe13JJ0LyUNKTMkQawCCJTidR8PlUaHMMJQde6NLvQUtZsTN5/steuzx
+	 edV2eglkhXjK4m4x3aoGcXimj/V5ydiYEhmKD9uR00PLSx8LPTgbdgCW8heq9J+ROK
+	 lRh0IizCafiJg==
+From: SeongJae Park <sj@kernel.org>
+To: JaeJoon Jung <rgbi3307@gmail.com>
+Cc: SeongJae Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	"# 6 . 14 . x" <stable@vger.kernel.org>,
+	damon@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	linux-mm@kvack.org
+Subject: Re: [PATCH] mm/damon/core: remove call_control in inactive contexts
+Date: Wed, 31 Dec 2025 07:26:16 -0800
+Message-ID: <20251231152617.82118-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <CAHOvCC6F5zLnBF=v7G5k1WdDZZmkBAK94ixzLiPF0W53wdtyeA@mail.gmail.com>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <CAHOvCC4FhpLrknhvWbDd=cxaLUyxHFkFxBDYSC3waeg4FC+TBg@mail.gmail.com>
- <20251231045948.77624-1-sj@kernel.org> <CAHOvCC6ZPyi=tMK9YhcuWPEzdnTje1ADCWzhs7uJCwHh3SMHpg@mail.gmail.com>
-In-Reply-To: <CAHOvCC6ZPyi=tMK9YhcuWPEzdnTje1ADCWzhs7uJCwHh3SMHpg@mail.gmail.com>
-From: JaeJoon Jung <rgbi3307@gmail.com>
-Date: Wed, 31 Dec 2025 16:51:24 +0900
-X-Gm-Features: AQt7F2rbXWScOtn-DPVdAbBtInij9YHNhpS4M4pSxfM4eczg8C3v1kShn-F9j44
-Message-ID: <CAHOvCC602B=SSU+4HQ-Q6fuFEfxuA08G9zLLQy64gPfMK=mY-Q@mail.gmail.com>
-Subject: Re: [RFC PATCH v1] mm: improve call_controls_lock
-To: SeongJae Park <sj@kernel.org>
-Cc: Asier Gutierrez <gutierrez.asier@huawei-partners.com>, akpm@linux-foundation.org, 
-	damon@lists.linux.dev, linux-mm@kvack.org, linux-kernel@vger.kernel.org, 
-	wangkefeng.wang@huawei.com, artem.kuzin@huawei.com, 
-	stepanov.anatoly@huawei.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 
-On Wed, 31 Dec 2025 at 15:10, JaeJoon Jung <rgbi3307@gmail.com> wrote:
->
-> On Wed, 31 Dec 2025 at 13:59, SeongJae Park <sj@kernel.org> wrote:
+On Wed, 31 Dec 2025 14:27:54 +0900 JaeJoon Jung <rgbi3307@gmail.com> wrote:
+
+> On Wed, 31 Dec 2025 at 10:25, SeongJae Park <sj@kernel.org> wrote:
 > >
-> > On Wed, 31 Dec 2025 11:15:00 +0900 JaeJoon Jung <rgbi3307@gmail.com> wrote:
+> > On Mon, 29 Dec 2025 19:45:14 -0800 SeongJae Park <sj@kernel.org> wrote:
 > >
-> > > On Tue, 30 Dec 2025 at 00:23, SeongJae Park <sj@kernel.org> wrote:
+> > > On Mon, 29 Dec 2025 18:41:28 -0800 SeongJae Park <sj@kernel.org> wrote:
+> > >
+> > > > On Mon, 29 Dec 2025 17:45:30 -0800 SeongJae Park <sj@kernel.org> wrote:
 > > > >
-> > > > Hello Asier,
-> > > >
-> > > >
-> > > > Thank you for sending this patch!
-> > > >
-> > > > On Mon, 29 Dec 2025 14:55:32 +0000 Asier Gutierrez <gutierrez.asier@huawei-partners.com> wrote:
-> > > >
-> > > > > This is a minor patch set for a call_controls_lock synchronization improvement.
-> > > >
-> > > > Please break description lines to not exceed 75 characters per line.
-> > > >
+> > > > > On Sun, 28 Dec 2025 10:31:01 -0800 SeongJae Park <sj@kernel.org> wrote:
 > > > > >
-> > > > > Spinlocks are faster than mutexes, even when the mutex takes the fast
-> > > > > path. Hence, this patch replaces the mutex call_controls_lock with a spinlock.
+> > > [...]
+> > > > > I will send a new version of this fix soon.
 > > > >
-> > > > But call_controls_lock is not being used on performance critical part.
-> > > > Actually, most of DAMON code is not performance critical.  I really appreciate
-> > > > your patch, but I have to say I don't think this change is really needed now.
-> > > > Please let me know if I'm missing something.
+> > > > So far, I got two fixup ideas.
+> > > >
+> > > > The first one is keeping the current code as is, and additionally modifying
+> > > > kdamond_call() to protect all call_control object accesses under
+> > > > ctx->call_controls_lock protection.
+> > > >
+> > > > The second one is reverting this patch, and doing the DAMON running status
+> > > > check before adding the damon_call_control object, but releasing the
+> > > > kdamond_lock after the object insertion is done.
+> > > >
+> > > > I'm in favor of the second one at the moment, as it seems more simple.
 > > >
-> > > Paradoxically, when it comes to locking, spin_lock is better than
-> > > mutex_lock
-> > > because "most of DAMON code is not performance critical."
+> > > I don't really like both approaches because those implicitly add locking rules.
+> > > If the first approach is taken, damon_call() callers should aware they should
+> > > not register callback functions that can hold call_controls_lock.  If the
+> > > second approach is taken, we should avoid holding kdamond_lock while holding
+> > > damon_call_control lock.  The second implicit rule seems easier to keep to me,
+> > > but I want to avoid that if possible.
 > > >
-> > > DAMON code only accesses the ctx belonging to kdamond itself. For
-> > > example:
-> > > kdamond.0 --> ctx.0
-> > > kdamond.1 --> ctx.1
-> > > kdamond.2 --> ctx.2
-> > > kdamond.# --> ctx.#
-> > >
-> > > There is no cross-approach as shown below:
-> > > kdamond.0 --> ctx.1
-> > > kdamond.1 --> ctx.2
-> > > kdamond.2 --> ctx.0
-> > >
-> > > Only the data belonging to kdamond needs to be resolved for concurrent access.
-> > > most DAMON code needs to lock/unlock briefly when add/del linked
-> > > lists,
-> > > so spin_lock is effective.
+> > > The third idea I just got is, keeping this patch as is, and moving the final
+> > > kdamond_call() invocation to be made _before_ the ctx->kdamond reset.  That
+> > > removes the race condition between the final kdamond_call() and
+> > > damon_call_handle_inactive_ctx(), without introducing new locking rules.
 > >
-> > I don't disagree this.  Both spinlock and mutex effectively work for DAMON's
-> > locking usages.
-> >
-> > > If you handle it with a mutex, it becomes
-> > > more
-> > > complicated because the rescheduling occurs as a context switch occurs
-> > > inside the kernel.
-> >
-> > Can you please elaborate what kind of complexities you are saying about?
-> > Adding some examples would be nice.
-> >
-> > > Moreover, since the call_controls_lock that is
-> > > currently
-> > > being raised as a problem only occurs in two places, the kdamon_call()
-> > > loop
-> > > and the damon_call() function, it is effective to handle it with a
-> > > spin_lock
-> > > as shown below.
-> > >
-> > > @@ -1502,14 +1501,15 @@ int damon_call(struct damon_ctx *ctx, struct
-> > > damon_call_control *control)
-> > >         control->canceled = false;
-> > >         INIT_LIST_HEAD(&control->list);
-> > >
-> > > -       mutex_lock(&ctx->call_controls_lock);
-> > > +       spin_lock(&ctx->call_controls_lock);
-> > > +       /* damon_is_running */
-> > >         if (ctx->kdamond) {
-> > >                 list_add_tail(&control->list, &ctx->call_controls);
-> > >         } else {
-> > > -               mutex_unlock(&ctx->call_controls_lock);
-> > > +               spin_unlock(&ctx->call_controls_lock);
-> > >                 return -EINVAL;
-> > >         }
-> > > -       mutex_unlock(&ctx->call_controls_lock);
-> > > +       spin_unlock(&ctx->call_controls_lock);
-> > >
-> > >         if (control->repeat)
-> > >                 return 0;
-> >
-> > Are you saying the above diff can fix the damon_call() use-after-free bug [1]?
-> > Can you please elaborate why you think so?
+> > I just posted the v2 [1] with the third idea.
 > >
 > > [1] https://lore.kernel.org/20251231012315.75835-1-sj@kernel.org
-> >
->
-> The above code works fine with spin_lock.  However, when booting the kernel,
-> the spin_lock call trace from damon_call() is output as follows:
-> If you have any experience with the following, please share it.
->
-> [    0.834450] Call Trace:
-> [    0.834456] [<ffffffff8001b376>] dump_backtrace+0x1c/0x24
-> [    0.834471] [<ffffffff800024e0>] show_stack+0x28/0x34
-> [    0.834480] [<ffffffff80014f4c>] dump_stack_lvl+0x48/0x66
-> [    0.834493] [<ffffffff80014f7e>] dump_stack+0x14/0x1c
-> [    0.834503] [<ffffffff800032c6>] spin_dump+0x62/0x6e
-> [    0.834511] [<ffffffff80087376>] do_raw_spin_lock+0xd0/0x128
-> [    0.834523] [<ffffffff80de9378>] _raw_spin_lock+0x1a/0x22
-> [    0.834538] [<ffffffff80255c0c>] damon_call+0x38/0x100
-> [    0.834548] [<ffffffff8025f022>] damon_stat_start+0x10e/0x168
-> [    0.834558] [<ffffffff80e21ab4>] damon_stat_init+0x2a/0x44
-> [    0.834568] [<ffffffff800157c0>] do_one_initcall+0x40/0x202
-> [    0.834579] [<ffffffff80e015f6>] kernel_init_freeable+0x1fc/0x27e
-> [    0.834588] [<ffffffff80de0a9e>] kernel_init+0x1e/0x13c
-> [    0.834599] [<ffffffff8001716a>] ret_from_fork_kernel+0x10/0xf8
-> [    0.834607] [<ffffffff80deab22>] ret_from_fork_kernel_asm+0x16/0x18
-> [    0.943407] NFS: Registering the id_resolver key type
-> [    0.948996] Key type id_resolver registered
-> [    0.953614] Key type id_legacy registered
+> 
+> I generally agree with what you've said so far.  However, it's inefficient
+> to continue executing damon_call_handle_inactive_ctx() while kdamond is
+> "off".  There's no need to add a new damon_call_handle_inactive_ctx()
+> function.
 
-The above occurred because spin_lock_init() was not performed.  The problem
-is that spin_lock_init() was not added while deleting mutex_init().
-Please refer to the contents below.
+As I mentioned before on other threads with you, we care not only efficiency
+but also maintainability of the code.  The inefficiency you are saying about
+happens only in corner cases because damon_call() is not usually called while
+kdamond is off.  So the gain of making this efficient is not that big.
 
-@@ -539,6 +539,7 @@ struct damon_ctx *damon_new_ctx(void)
+Meanwhile, to avoid this, as I mentioned on the previous reply to the first and
+the second idea of the fix, we need to add locking rule, which makes the code
+bit difficult to maintain.
 
-        mutex_init(&ctx->kdamond_lock);
-        INIT_LIST_HEAD(&ctx->call_controls);
--       mutex_init(&ctx->call_controls_lock);
-+       spin_lock_init(&ctx->call_controls_lock);
-        mutex_init(&ctx->walk_control_lock);
+I therefore think the v2 is a good tradeoff.
 
-        ctx->attrs.min_nr_regions = 10;
+> As shown below, it's better to call list_add only when kdamond
+> is "on" (true), and then use the existing code to end with
+> kdamond_call(ctx, true) when kdamond is "off."
+> 
+> +static void kdamond_call(struct damon_ctx *ctx, bool cancel);
+> +
+>  /**
+>   * damon_call() - Invoke a given function on DAMON worker thread (kdamond).
+>   * @ctx:       DAMON context to call the function for.
+> @@ -1496,14 +1475,17 @@ int damon_call(struct damon_ctx *ctx, struct
+> damon_call_control *control)
+>         control->canceled = false;
+>         INIT_LIST_HEAD(&control->list);
+> 
+> -       if (damon_is_running(ctx)) {
+> -               mutex_lock(&ctx->call_controls_lock);
+> +       mutex_lock(&ctx->call_controls_lock);
+> +       if (ctx->kdamond) {
 
->
-> Thanks,
-> JaeJoon
->
-> >
-> > Thanks,
-> > SJ
-> >
-> > [...]
+This is wrong.  You shouldn't access ctx->kdamond without holding
+ctx->kdamond_lock.  Please read the comment about kdamond_lock field on damon.h
+file.
+
+>                 list_add_tail(&control->list, &ctx->call_controls);
+> -               mutex_unlock(&ctx->call_controls_lock);
+>         } else {
+> -               /* return damon_call_handle_inactive_ctx(ctx, control); */
+> +               mutex_unlock(&ctx->call_controls_lock);
+> +               if (!list_empty_careful(&ctx->call_controls))
+> +                       kdamond_call(ctx, true);
+>                 return -EINVAL;
+>         }
+> +       mutex_unlock(&ctx->call_controls_lock);
+> +
+>         if (control->repeat)
+>                 return 0;
+>         wait_for_completion(&control->completion);
+
+
+Thanks,
+SJ
+
+[...]
