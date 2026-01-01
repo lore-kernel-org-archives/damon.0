@@ -1,47 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8047C1DFD8B;
-	Wed, 31 Dec 2025 15:32:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E033A242D62;
+	Thu,  1 Jan 2026 00:52:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767195150; cv=none; b=WR6sbRdz1ip2C5AJ3OTsTdM3Zuk4YCVPK8tWZOlHelfMsXjZVMrdykOjcqDwEI28SmKdfDFyyfJ5jtvAv57QvogLvTKasF1mQMdy040Vhh5PxzY1V+/++rsPAbC5nMydboX2xkPBFoWps2oKnGRaaqgRFBEOqn1UMinlGVBB7PU=
+	t=1767228771; cv=none; b=cnHNoG6+mzwpSK/HFa3jk+XOMapZsuE+N+PFcVbuiU0sZ3AxN29ixcJ/Co+Nas2cf1HgpI1gojEqi1IKLyJUUSZyOA9ZK313dj1yqlcbBYHuXopOOM8wB8P8V4/VBCQTfTNKVkX4JYWzqFtV0eWmi6Sn9BRoGO2PlAG9izHqQx4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767195150; c=relaxed/simple;
-	bh=wZSt7/UMXpEBgJcZocMzNkrHh9oTHPi1H+DWNxUfbIM=;
+	s=arc-20240116; t=1767228771; c=relaxed/simple;
+	bh=uRFI9tQrnCYxWpT5BJj60ROQreng33NJj7TDugKTC0I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nNpn2HlQFDaumgnyPi+l32oZPtDU4h+UKwXEe722mxzj9TKd8QUt8YpEh+XOsxNrm9anI/yUSdXvzRaXOTTtTqpJlg9bQ1ZI4AhMz2s12r7xTshOSTmht0H7Aeu3D2rtlYk1rcXA/MHwyfaoKQeebjDhzUxtyF5pkAzBr+Na8m0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=p5pdPmm6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=UnEYh3F6bQOmPGtwSoAcy8gFP84oJymlgTuBk5KNz+KaEaEIs7BZdNUam7j4eFZs+HMynfYZrGkzsXgQRiUZ/4QVyklo6DXxb0Nhsdk1Ro5HWx8cG0XGH2B2NT0/AUPDObugHYSXnmnHg7CuwRNMcWgj/7fQrLjn5o/3RadcFXI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AmdLyjeK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="p5pdPmm6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3752C113D0;
-	Wed, 31 Dec 2025 15:32:29 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AmdLyjeK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F8D0C113D0;
+	Thu,  1 Jan 2026 00:52:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1767195150;
-	bh=wZSt7/UMXpEBgJcZocMzNkrHh9oTHPi1H+DWNxUfbIM=;
+	s=k20201202; t=1767228770;
+	bh=uRFI9tQrnCYxWpT5BJj60ROQreng33NJj7TDugKTC0I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p5pdPmm6tf16Z03/jVsx9PPzuhDvh0wSBsMhQqPhXgmWs8F9OXA8R/VATda/W+b+D
-	 dt4oXj1tWSYiGZ9V3+1TKSx7DLyI+LatmVKvzOlaWaL826Vqn/+rUWsZiMCEzD9XAd
-	 55ao3aCn9ULX+Q+bz7tTPeVx+MSuFapxwsy5rz77WPNoecxlNa0aKE07f1XGKsx8bT
-	 dtfZ5S89xPLQbcUS9B1KlVCLXAK/4oZH25VuNJX9XO4VvFDnxHOeVm7rJaeaJ2756f
-	 zHOkN2gTJVSAJSBWrvq+0N0wHGgKrLvtELfmAov8AW/ae+ICP1lc9JN/AtYpVp0x3S
-	 a7T2MY8uoqZXA==
+	b=AmdLyjeKJE+Dr8YmzkZuoR+GC8w82koPUFL5eXmgfMdc3wHxYZiW38fhI7YmuVPPa
+	 KTub+t33ztfKcTpasShLRy2yJeg/55WB4CKm1u72Vgyp3MBv1fuiCuocqJCBDcjPhx
+	 cFnapSrqsul1Bzk0uS9wOzEpfAuGARrhYIksuSMGQYJLesP6sZgRyXSgqAYA0NSJCp
+	 FGgKjC22I22lHTgc6lfY04+WDs+WAOI4eHBoHzdM64KxXjJ09F/ZtwAqtOnHPEPE67
+	 2PrbdvCU99S5vUGzaB315+SJjvI6uQvhLphYpPYMr2kREhGWgg36hLgGjWmgur+nqI
+	 XGkoWbrfvIUOQ==
 From: SeongJae Park <sj@kernel.org>
-To: JaeJoon Jung <rgbi3307@gmail.com>
-Cc: SeongJae Park <sj@kernel.org>,
-	Asier Gutierrez <gutierrez.asier@huawei-partners.com>,
-	akpm@linux-foundation.org,
-	damon@lists.linux.dev,
-	linux-mm@kvack.org,
+To: SeongJae Park <sj@kernel.org>
+Cc: Aaron Yang <yangqixiao@inspur.com>,
 	linux-kernel@vger.kernel.org,
-	wangkefeng.wang@huawei.com,
-	artem.kuzin@huawei.com,
-	stepanov.anatoly@huawei.com
-Subject: Re: [RFC PATCH v1] mm: improve call_controls_lock
-Date: Wed, 31 Dec 2025 07:32:15 -0800
-Message-ID: <20251231153216.82343-1-sj@kernel.org>
+	akpm@linux-foundation.org,
+	linux-mm@kvack.org,
+	damon@lists.linux.dev
+Subject: Re: [PATCH v1] mm/damon/pa: initialize 'folio' to NULL to prevent use of uninitialized value
+Date: Wed, 31 Dec 2025 16:52:41 -0800
+Message-ID: <20260101005243.84695-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <CAHOvCC6ZPyi=tMK9YhcuWPEzdnTje1ADCWzhs7uJCwHh3SMHpg@mail.gmail.com>
+In-Reply-To: <20251231070029.79682-1-sj@kernel.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -49,108 +45,73 @@ List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On Wed, 31 Dec 2025 15:10:12 +0900 JaeJoon Jung <rgbi3307@gmail.com> wrote:
++ damon@
 
-> On Wed, 31 Dec 2025 at 13:59, SeongJae Park <sj@kernel.org> wrote:
-> >
-> > On Wed, 31 Dec 2025 11:15:00 +0900 JaeJoon Jung <rgbi3307@gmail.com> wrote:
-> >
-> > > On Tue, 30 Dec 2025 at 00:23, SeongJae Park <sj@kernel.org> wrote:
-> > > >
-> > > > Hello Asier,
-> > > >
-> > > >
-> > > > Thank you for sending this patch!
-> > > >
-> > > > On Mon, 29 Dec 2025 14:55:32 +0000 Asier Gutierrez <gutierrez.asier@huawei-partners.com> wrote:
-> > > >
-> > > > > This is a minor patch set for a call_controls_lock synchronization improvement.
-> > > >
-> > > > Please break description lines to not exceed 75 characters per line.
-> > > >
-> > > > >
-> > > > > Spinlocks are faster than mutexes, even when the mutex takes the fast
-> > > > > path. Hence, this patch replaces the mutex call_controls_lock with a spinlock.
-> > > >
-> > > > But call_controls_lock is not being used on performance critical part.
-> > > > Actually, most of DAMON code is not performance critical.  I really appreciate
-> > > > your patch, but I have to say I don't think this change is really needed now.
-> > > > Please let me know if I'm missing something.
-> > >
-> > > Paradoxically, when it comes to locking, spin_lock is better than
-> > > mutex_lock
-> > > because "most of DAMON code is not performance critical."
-> > >
-> > > DAMON code only accesses the ctx belonging to kdamond itself. For
-> > > example:
-> > > kdamond.0 --> ctx.0
-> > > kdamond.1 --> ctx.1
-> > > kdamond.2 --> ctx.2
-> > > kdamond.# --> ctx.#
-> > >
-> > > There is no cross-approach as shown below:
-> > > kdamond.0 --> ctx.1
-> > > kdamond.1 --> ctx.2
-> > > kdamond.2 --> ctx.0
-> > >
-> > > Only the data belonging to kdamond needs to be resolved for concurrent access.
-> > > most DAMON code needs to lock/unlock briefly when add/del linked
-> > > lists,
-> > > so spin_lock is effective.
-> >
-> > I don't disagree this.  Both spinlock and mutex effectively work for DAMON's
-> > locking usages.
-> >
-> > > If you handle it with a mutex, it becomes
-> > > more
-> > > complicated because the rescheduling occurs as a context switch occurs
-> > > inside the kernel.
-> >
-> > Can you please elaborate what kind of complexities you are saying about?
-> > Adding some examples would be nice.
-> >
-> > > Moreover, since the call_controls_lock that is
-> > > currently
-> > > being raised as a problem only occurs in two places, the kdamon_call()
-> > > loop
-> > > and the damon_call() function, it is effective to handle it with a
-> > > spin_lock
-> > > as shown below.
-> > >
-> > > @@ -1502,14 +1501,15 @@ int damon_call(struct damon_ctx *ctx, struct
-> > > damon_call_control *control)
-> > >         control->canceled = false;
-> > >         INIT_LIST_HEAD(&control->list);
-> > >
-> > > -       mutex_lock(&ctx->call_controls_lock);
-> > > +       spin_lock(&ctx->call_controls_lock);
-> > > +       /* damon_is_running */
-> > >         if (ctx->kdamond) {
-> > >                 list_add_tail(&control->list, &ctx->call_controls);
-> > >         } else {
-> > > -               mutex_unlock(&ctx->call_controls_lock);
-> > > +               spin_unlock(&ctx->call_controls_lock);
-> > >                 return -EINVAL;
-> > >         }
-> > > -       mutex_unlock(&ctx->call_controls_lock);
-> > > +       spin_unlock(&ctx->call_controls_lock);
-> > >
-> > >         if (control->repeat)
-> > >                 return 0;
-> >
-> > Are you saying the above diff can fix the damon_call() use-after-free bug [1]?
-> > Can you please elaborate why you think so?
-> >
-> > [1] https://lore.kernel.org/20251231012315.75835-1-sj@kernel.org
-> >
+On Tue, 30 Dec 2025 23:00:22 -0800 SeongJae Park <sj@kernel.org> wrote:
+
+> Hello Aaron,
 > 
-> The above code works fine with spin_lock.  However, when booting the kernel,
-> the spin_lock call trace from damon_call() is output as follows:
-> If you have any experience with the following, please share it.
+> 
+> Thank you for sending this patch!
+> 
+> For the patch subject, let's use 'mm/damon/paddr:' as the prefix of the
+> subject, for making it consistent with other past commits for the paddr.c file.
+> 
+> On Wed, 31 Dec 2025 13:57:37 +0800 Aaron Yang <yangqixiao@inspur.com> wrote:
+> 
+> > In damon_pa_mark_accessed_or_deactivate(), the local variable 'folio'
+> > is declared but not initialized. If the region [r->ar.start, r->ar.end)
+> > is empty or invalid such that the while-loop body is never entered,
+> > 'folio' retains an indeterminate (garbage) value. The function then
+> > unconditionally assigns this uninitialized pointer to s->last_applied
+> > (line 239), resulting in undefined behavior. Subsequent dereference or
+> > folio_put() on s->last_applied may cause crashes or memory corruption.
+> 
+> Nice finding!
+> 
+> > 
+> > Although DAMON regions are typically non-empty, zero-length regions
+> > can arise during region merging/splitting or due to address unit
+> > alignment — making this path reachable in practice.
+> 
+> But, can zero-length regions be made in real?  damon_ctx->min_sz_region
+> disallows DAMON having regions of size less that it, and all DAMON API callers
+> set it at least 1.  That is, DAMON code is at least intentionally designed to
+> prohibit zero-length regions.  And many parts of DAMON including
+> damon_pa_mark_accessed_or_deactivate() are written under the assumption that
+> there is no zero-length regions.  If there is a case that allows zero-length
+> regions, all such parts could trigger problems.
+> 
+> > 
+> > Fix by initializing 'folio' to NULL. Assigning NULL to s->last_applied
+> > is safe and semantically correct: it cleanly indicates "no folio was
+> > processed in this invocation", and callers are expected to check for
+> > NULL before use (as per common kernel practice).
+> 
+> For the above mentioned reason, I'd like to fix the code that allows
+> zero-length regions, rather than making only this single function safe from the
+> bug.
 
-Can you please reply to my questions above, first?
+I still think in the above way.  But in my second thought, I also find no
+reason to oppose to initializing 'folio' to NULL.  It adds overheads of
+unnecessary initialization, but those seems quite negligible.  Meanwhile,
+_arguably_ it makes the function more complete and easy to read in my humble
+opinion.  The function might better to have further cleanup or complete
+rewriting, but I think such complete rewriting is too much request, while
+initializing the variable is a readability improvement for at least someone.
+
+That said, to do the initialization, I think the commit message need to be
+correctly updated.  Otherwise, it may only confuse people and encourage making
+changes that allow zero-length regions.  Also, this pattern exists on
+damon_pa_pageout(), damon_pa_migrate() and damon_pa_stat(), so better to update
+those altogether for consistency.
+
+So, Aaron, if you still williing to make this change, could you please send v2
+after doing aobvely commented requests (updating commit message and making
+changes to other functions)?
 
 
 Thanks,
