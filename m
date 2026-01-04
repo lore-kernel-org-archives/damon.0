@@ -1,120 +1,92 @@
-Received: from ssh248.corpemail.net (ssh248.corpemail.net [210.51.61.248])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D297E173
-	for <damon@lists.linux.dev>; Sun,  4 Jan 2026 01:33:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=210.51.61.248
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55068126F0A;
+	Sun,  4 Jan 2026 17:57:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767490396; cv=none; b=KlebLgiSOx1ChXgCP7t+kIogjdrq3L+UqEoUN+RdvUkzoFxH81/FSXZOCGVaCHzfUAKvMqwmcbLCU8JpoN19DbycGNB1JAE7rOTkE9Q6pAB3pG1Nthf2+6/pKnuoWiCe9rhqZzDKDsIbFnT3AaSOJ8GxSHB200hkFojsqOPV+Uo=
+	t=1767549426; cv=none; b=IiC5yhEebwhNyn+JQ7lKOoKaXVMZNLYysLbIA9n+sIwBjWvbKwLjWL7/riYvCosx6r3fV3xZWR4rXAyM1nsWN1xtyl7NomlCm6iqr3kx+xaHH1vx4LESfz/0vH4kTF+JN96BiEZnl/XNDsncTmsmnJIYOvx6jBy30gXZofFed2I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767490396; c=relaxed/simple;
-	bh=KJbsc163JyofqO7qEkSRnV/OWNJtiJo1sVpReyNv0/c=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=d8lgsibOdKJqhy/4O9lcipSCe9eGMeY2fZJ2aASHYnuBb9XJ6rWSUaxFmEbhRD0x5LrQ3UBznmOSEEFK/Vk50eXGWBPCIG/0ThzuBnz5vA3vWShW5o9hh7q4EgAsChTamXUf3lEKUVfjRvRzRyO1vUKXSOL9SZb6NtjlfhttbsA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=inspur.com; spf=pass smtp.mailfrom=inspur.com; arc=none smtp.client-ip=210.51.61.248
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=inspur.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=inspur.com
-Received: from inspur.com
-        by ssh248.corpemail.net ((D)) with ESMTP id 202601040932568941
-        for <damon@lists.linux.dev>; Sun, 04 Jan 2026 09:32:56 +0800
-Received: from anolis.. (unknown [10.94.14.65])
-	by app9 (Coremail) with SMTP id cQJkCsDwJ_dJw1lpIl8OAA--.16032S2;
-	Sun, 04 Jan 2026 09:32:57 +0800 (CST)
-From: Aaron Yang <yangqixiao@inspur.com>
-To: sj@kernel.org
-Cc: linux-mm@kvack.org,
-	damon@lists.linux.dev,
-	Aaron Yang <yangqixiao@inspur.com>
-Subject: [PATCH v2] mm/damon/paddr: initialize 'folio' variables to NULL for safety and clarity
-Date: Sun,  4 Jan 2026 09:32:55 +0800
-Message-ID: <20260104013255.16962-1-yangqixiao@inspur.com>
+	s=arc-20240116; t=1767549426; c=relaxed/simple;
+	bh=x1nTKAnylCVX9MkM3owrH+0o0UMQ59gwlM/bk3ClXlo=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=VWSYW9IS3vz1c9ibPVK8mDU6Qg1jmnyu7UN6qB/XuwcEj/rMBKOKhc9z6G+oiwPMTS52d6Zn4AR1OLx45LtaOKHEbxhTnJwDlsmxVKXGcrHpsOvUsEJHqQ2tzdtjPf0CrV2nZoFTlEE8dSnSSmRloych/wu08UNeB5MlwoiihwM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Cylcqxt9; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Cylcqxt9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E963C19421;
+	Sun,  4 Jan 2026 17:57:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1767549426;
+	bh=x1nTKAnylCVX9MkM3owrH+0o0UMQ59gwlM/bk3ClXlo=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=Cylcqxt9bw72yxbJmPw4Pp37ZBxVaS4bC7kFNXF5302Hd7ABMuaSGzMtWY1lYoWhx
+	 h0YscHLNcth4jhLq5eSay1vL6oYDWPKB4NzVGhsurFZPAcZb93sHMM+nrNlXTeA0S3
+	 d8Y+Js0Vs7pSG8KTaWYzmLuW8CYt+1OGwVpab0HRWJclq/SRFyBjRzgvFtsMzzjAv/
+	 cThsC+CA7Zy70+nj6fiKor0y4nWN8Zh9zbZwQAj9oSV+nE3bIPkkjd34Je5EBXQTEC
+	 PDPgd5pBGr5DtPwBusWGbrgh3hdHkFEw04nIaj9lLUpVSSqSMdjDM580UUty+zAXAy
+	 sYRszjF2sA7VA==
+From: SeongJae Park <sj@kernel.org>
+To: kernel test robot <lkp@intel.com>
+Cc: SeongJae Park <sj@kernel.org>,
+	oe-kbuild-all@lists.linux.dev,
+	linux-doc@vger.kernel.org,
+	damon@lists.linux.dev
+Subject: Re: [sj:damon/next 110/118] htmldocs: Documentation/admin-guide/mm/damon/usage.rst:9: WARNING: Mismatch: both interpreted text role prefix and reference suffix. [docutils]
+Date: Sun,  4 Jan 2026 09:57:02 -0800
+Message-ID: <20260104175704.57959-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
+In-Reply-To: <202601040942.MWKEmMKA-lkp@intel.com>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:cQJkCsDwJ_dJw1lpIl8OAA--.16032S2
-X-Coremail-Antispam: 1UD129KBjvJXoW7Zw4kGry7CFyxtry3Cry8Zrb_yoW8ZrW7pa
-	yxG34DKrWjgFWku34DAF4kZry3trWUXF9xCFWfGa4SkF1Sgr1kKw4UA34UtF1UZryUGFs3
-	ZrWFqay7WFZ7JF7anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUUyq14x267AKxVWUJVW8JwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
-	rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK02
-	1l84ACjcxK6xIIjxv20xvE14v26w1j6s0DM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26rxl
-	6s0DM28EF7xvwVC2z280aVAFwI0_GcCE3s1l84ACjcxK6I8E87Iv6xkF7I0E14v26rxl6s
-	0DM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xII
-	jxv20xvE14v26r1j6r18McIj6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr
-	1lF7xvr2IYc2Ij64vIr41lF7I21c0EjII2zVCS5cI20VAGYxC7MxAIw28IcxkI7VAKI48J
-	MxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwV
-	AFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUAVWUtwCIc40Y0x0EwIxGrwCI42IY6xIIjxv2
-	0xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AKxVWUJVW8JwCI42IY6xAIw20EY4
-	v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x0267AK
-	xVWUJVW8JbIYCTnIWIevJa73UjIFyTuYvjfU5WlkUUUUU
-X-CM-SenderInfo: 51dqw15l0lt0o6lq211xuou0bp/
-tUid: 2026104093257455ad401ea5bc51ae3bf98b8118e7f70
-X-Abuse-Reports-To: service@corp-email.com
-Abuse-Reports-To: service@corp-email.com
-X-Complaints-To: service@corp-email.com
-X-Report-Abuse-To: service@corp-email.com
 
-In damon_pa_mark_accessed_or_deactivate(), damon_pa_pageout(),
-damon_pa_migrate(), and damon_pa_stat(), the local variable 'folio' is
-declared but not initialized.
+On Sun, 04 Jan 2026 09:49:08 +0100 kernel test robot <lkp@intel.com> wrote:
 
-Initialize 'folio' to NULL to:
-- Follow kernel convention: uninitialized pointers should be
-  explicitly NULL
-- Improve code readability and maintainability
-- Provide safe fallback (NULL assignment to s->last_applied is harmless
-  and callers check for NULL before dereference)
+> tree:   https://git.kernel.org/pub/scm/linux/kernel/git/sj/linux.git damon/next
+> head:   28d3c5e02b31f08aa715cf01ead66c072a9c5d5a
+> commit: 5ff971ba3599d1e5d6a1721a85d50969a3c270ca [110/118] Docs/admin-guide/mm/damon/usage: suggest use of DAMON modules
+> reproduce: (https://download.01.org/0day-ci/archive/20260104/202601040942.MWKEmMKA-lkp@intel.com/reproduce)
+> 
+> If you fix the issue in a separate patch/commit (i.e. not just a new version of
+> the same patch/commit), kindly add following tags
+> | Reported-by: kernel test robot <lkp@intel.com>
+> | Closes: https://lore.kernel.org/oe-kbuild-all/202601040942.MWKEmMKA-lkp@intel.com/
+> 
+> All warnings (new ones prefixed by >>):
+> 
+>    WARNING: No kernel-doc for file ./include/linux/pci.h
+>    ERROR: Cannot find file ./include/linux/mod_devicetable.h
+>    WARNING: No kernel-doc for file ./include/linux/mod_devicetable.h
+>    ERROR: Cannot find file ./include/linux/bootconfig.h
+>    WARNING: No kernel-doc for file ./include/linux/bootconfig.h
+> >> Documentation/admin-guide/mm/damon/usage.rst:9: WARNING: Mismatch: both interpreted text role prefix and reference suffix. [docutils]
+>    ERROR: Cannot find file ./include/linux/pstore_zone.h
+>    ERROR: Cannot find file ./include/linux/pstore_zone.h
+>    WARNING: No kernel-doc for file ./include/linux/pstore_zone.h
+>    ERROR: Cannot find file ./include/linux/pstore_blk.h
+>    ERROR: Cannot find file ./include/linux/pstore_blk.h
 
-Signed-off-by: Aaron Yang <yangqixiao@inspur.com>
----
- mm/damon/paddr.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+Thank you for this report!
 
-diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
-index 07a8aead439e..7d887a3c0866 100644
---- a/mm/damon/paddr.c
-+++ b/mm/damon/paddr.c
-@@ -156,7 +156,7 @@ static unsigned long damon_pa_pageout(struct damon_region *r,
- 	LIST_HEAD(folio_list);
- 	bool install_young_filter = true;
- 	struct damos_filter *filter;
--	struct folio *folio;
-+	struct folio *folio = NULL;
- 
- 	/* check access in page level again by default */
- 	damos_for_each_ops_filter(filter, s) {
-@@ -212,7 +212,7 @@ static inline unsigned long damon_pa_mark_accessed_or_deactivate(
- 		unsigned long *sz_filter_passed)
- {
- 	phys_addr_t addr, applied = 0;
--	struct folio *folio;
-+	struct folio *folio = NULL;
- 
- 	addr = damon_pa_phys_addr(r->ar.start, addr_unit);
- 	while (addr < damon_pa_phys_addr(r->ar.end, addr_unit)) {
-@@ -262,7 +262,7 @@ static unsigned long damon_pa_migrate(struct damon_region *r,
- {
- 	phys_addr_t addr, applied;
- 	LIST_HEAD(folio_list);
--	struct folio *folio;
-+	struct folio *folio = NULL;
- 
- 	addr = damon_pa_phys_addr(r->ar.start, addr_unit);
- 	while (addr < damon_pa_phys_addr(r->ar.end, addr_unit)) {
-@@ -295,7 +295,7 @@ static unsigned long damon_pa_stat(struct damon_region *r,
- 		unsigned long *sz_filter_passed)
- {
- 	phys_addr_t addr;
--	struct folio *folio;
-+	struct folio *folio = NULL;
- 
- 	if (!damos_ops_has_filter(s))
- 		return 0;
--- 
-2.47.3
+> 
+> 
+> vim +9 Documentation/admin-guide/mm/damon/usage.rst
+> 
+>      8	
+>    > 9	- *Special-purpose DAMON modules.*
+>     10	  :ref:`This <damon_modules_special_purpose>`_ is for people who building,
 
+The '_' at the end of the reference was the problem.  I just pushed a fix to
+damon/next tree.
+
+
+Thanks,
+SJ
+
+[...]
