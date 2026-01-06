@@ -1,45 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C73D533D6;
-	Tue,  6 Jan 2026 00:52:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67C924A3C;
+	Tue,  6 Jan 2026 00:55:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767660757; cv=none; b=HwhCMXVg+0aceEqNoRUirl2Rg+RwuSxWLWiI7owiKsl/0TWn4NJ9HXq/afyh29sLosqE5w8LTylIxzPFtIfJkPpuZaotklT5JRdSRxaPw016nHIxlU1gArnjnGkARgUHBNW9xUNwJRSmh5coP2Hy3v1pszjI60nCrT1yf8yXfFA=
+	t=1767660902; cv=none; b=HwRjWzUZLjvLs0mKMhZxeBkmMkKyGBJuo0c7n6K2ez+ChXLW9afGlYxX74jaG+aaLjJ28+BjZ7Za065xcbsAn7Wkk4L+tKc8MYNX2ozushqRMTsbfnvRdNFbtsfnJGGdyA6lZDEP9PHbhGzmr++cFj0eFvxn/SF6vvX5tomD8jQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767660757; c=relaxed/simple;
-	bh=vTsJ2G1Q9TQJfo3pMoQqiMpn0wGcHpai1csSJ3EpRbI=;
+	s=arc-20240116; t=1767660902; c=relaxed/simple;
+	bh=EBuLOWMz/1O9AEfxfMF4jsQ50nr4wyVXe3et10FcT70=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UmVAoYoAD7BFy6HOo1JVhum3EtpuYu/aXmmY+ReE4/NNfLz9T8+32dPB6GwOSweP+H79fhO2Eau1bHEVIgzN1f+Df7PgRS9leqKPds0QQVAwXvFyLhzD9aUx5hyHaohdp2hvNJTItKWyoWV1YW/YBI+iDClkRI5OR+o2M79S7D4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RvDjdF1k; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CeeW9VHaoygkSHTFl3sYZ4h3H52eYbjDhKqw2igtzfI84JOKuKqcoTCOdvJWPNQv4wM/v1aY7C8lKM9iRaRk8XB342/6BtknuX5O0JVSyp6LeJhbaoSnKHa6lOx+tVjbV0hvUpAuobTGce3OQ/l6tUNSze52lHcwuJYUOHDAySU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kARgBpbx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RvDjdF1k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D02C9C116D0;
-	Tue,  6 Jan 2026 00:52:36 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kARgBpbx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24F45C116D0;
+	Tue,  6 Jan 2026 00:55:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1767660757;
-	bh=vTsJ2G1Q9TQJfo3pMoQqiMpn0wGcHpai1csSJ3EpRbI=;
+	s=k20201202; t=1767660902;
+	bh=EBuLOWMz/1O9AEfxfMF4jsQ50nr4wyVXe3et10FcT70=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RvDjdF1ktwmpPBES8Whnw2dN5zuXJN1X3tFdoosc65emjGUvs5DSQe1io+Uve0upp
-	 pt5cjLmuiSsblUCbuBRl/eoPMjH3iTBQcd6yVYzmHMEDjekSpwP9tdtInWzqlfO5C3
-	 Le/H+p9FXF8K5L687guIWAuDqEBhkAMz4yf23IaAHkDs8n7fsBcdQ1rNhiLTtKUzMw
-	 GEmq5VksOa7BeuTKj0MyqS/2K0uHoF7Fgyuq7cWtRaYWECgD49TCdvB4m/yxbkFXoM
-	 ToLgxOWOPt4pZY9U/+11Z/4zkiK2EE6bgldYEpqZoZAnXrWDVzALOmbureaUTeCkam
-	 eHw9zSh4nnhMw==
+	b=kARgBpbx4dcqPnk0taZE7b88dZ4lqE+izbsXdl0UPP2XmYjVtK6yV9dHhxCctNn3T
+	 9tFhKByVdnkJ1+4MhQou994Q3OcIjuQv9tSeHinOhzZPD89ZlImMEuj6/zg0D8BM/n
+	 974fmk6G/tKovMQgu1MIm5QRvVeqVyfBz6cB3fk4+Ur1TxwU80QOPfomc2dujl6zGX
+	 ezPzk0FsJNPdHDSdoUNxZ9ne8Ek5Ic3ILd6L1Hfbxdd/g1Zl6scwhxl4yPPyhDj5yr
+	 0GvhJtb69JTh54RLjZ+ZhPWqLV/Qn1s3JGEE0Y/JZ5TMKsux4BtuPYRUv4T8rh9rzS
+	 eRlFJbMO1ALuw==
 From: SeongJae Park <sj@kernel.org>
 To: stable@vger.kernel.org
-Cc: SeongJae Park <sj@kernel.org>,
-	damon@lists.linux.dev,
+Cc: damon@lists.linux.dev,
+	SeongJae Park <sj@kernel.org>,
 	Brendan Higgins <brendan.higgins@linux.dev>,
 	David Gow <davidgow@google.com>,
 	Kefeng Wang <wangkefeng.wang@huawei.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6.y] mm/damon/tests/vaddr-kunit: handle alloc failures on damon_do_test_apply_three_regions()
-Date: Mon,  5 Jan 2026 16:52:32 -0800
-Message-ID: <20260106005234.129270-1-sj@kernel.org>
+Subject: [PATCH 6.6.y] mm/damon/tests/vaddr-kunit: handle alloc failures on damon_test_split_evenly_succ()
+Date: Mon,  5 Jan 2026 16:54:53 -0800
+Message-ID: <20260106005453.143393-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <2026010547-stays-strewn-1e8b@gregkh>
-References: <2026010547-stays-strewn-1e8b@gregkh>
+In-Reply-To: <2026010512-stainless-reliance-2417@gregkh>
+References: <2026010512-stainless-reliance-2417@gregkh>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -48,14 +48,14 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-damon_do_test_apply_three_regions() is assuming all dynamic memory
-allocation in it will succeed.  Those are indeed likely in the real use
-cases since those allocations are too small to fail, but theoretically
-those could fail.  In the case, inappropriate memory access can happen.
-Fix it by appropriately cleanup pre-allocated memory and skip the
-execution of the remaining tests in the failure cases.
+damon_test_split_evenly_succ() is assuming all dynamic memory allocation
+in it will succeed.  Those are indeed likely in the real use cases since
+those allocations are too small to fail, but theoretically those could
+fail.  In the case, inappropriate memory access can happen.  Fix it by
+appropriately cleanup pre-allocated memory and skip the execution of the
+remaining tests in the failure cases.
 
-Link: https://lkml.kernel.org/r/20251101182021.74868-18-sj@kernel.org
+Link: https://lkml.kernel.org/r/20251101182021.74868-20-sj@kernel.org
 Fixes: 17ccae8bb5c9 ("mm/damon: add kunit tests")
 Signed-off-by: SeongJae Park <sj@kernel.org>
 Cc: Brendan Higgins <brendan.higgins@linux.dev>
@@ -63,31 +63,34 @@ Cc: David Gow <davidgow@google.com>
 Cc: Kefeng Wang <wangkefeng.wang@huawei.com>
 Cc: <stable@vger.kernel.org>	[5.15+]
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-(cherry picked from commit 2b22d0fcc6320ba29b2122434c1d2f0785fb0a25)
-Signed-off-by: SeongJae Park <sj@kernel.org>
+(cherry picked from commit 0a63a0e7570b9b2631dfb8d836dc572709dce39e)
 ---
- mm/damon/vaddr-test.h | 6 ++++++
- 1 file changed, 6 insertions(+)
+ mm/damon/vaddr-test.h | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
 diff --git a/mm/damon/vaddr-test.h b/mm/damon/vaddr-test.h
-index b4fc21ef3c70..8d59e9cc57e5 100644
+index b4fc21ef3c70..9813002a981c 100644
 --- a/mm/damon/vaddr-test.h
 +++ b/mm/damon/vaddr-test.h
-@@ -136,8 +136,14 @@ static void damon_do_test_apply_three_regions(struct kunit *test,
- 	int i;
+@@ -269,10 +269,17 @@ static void damon_test_split_evenly_succ(struct kunit *test,
+ 	unsigned long start, unsigned long end, unsigned int nr_pieces)
+ {
+ 	struct damon_target *t = damon_new_target();
+-	struct damon_region *r = damon_new_region(start, end);
++	struct damon_region *r;
+ 	unsigned long expected_width = (end - start) / nr_pieces;
+ 	unsigned long i = 0;
  
- 	t = damon_new_target();
 +	if (!t)
 +		kunit_skip(test, "target alloc fail");
- 	for (i = 0; i < nr_regions / 2; i++) {
- 		r = damon_new_region(regions[i * 2], regions[i * 2 + 1]);
-+		if (!r) {
-+			damon_destroy_target(t);
-+			kunit_skip(test, "region alloc fail");
-+		}
- 		damon_add_region(r, t);
- 	}
- 
++	r = damon_new_region(start, end);
++	if (!r) {
++		damon_free_target(t);
++		kunit_skip(test, "region alloc fail");
++	}
+ 	damon_add_region(r, t);
+ 	KUNIT_EXPECT_EQ(test,
+ 			damon_va_evenly_split_region(t, r, nr_pieces), 0);
 -- 
 2.47.3
 
