@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86F7419005E;
-	Tue,  6 Jan 2026 01:28:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52323314A62;
+	Tue,  6 Jan 2026 01:34:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767662896; cv=none; b=jd9iUtWh2EZbKoiaAn54qLJYBXfISexzNX7E/PZC6X+7/YBJo2qTBf5ufsbkNn0M+Paj40T6YQBHkEJSG5TCKKcHDYfyTkaEU073XYwZrcQlfboCpAqaZV4QT6LAb1Xz4CL6/w4wkCBn39s/vwe0LvEYTPEWC1n4Jph7CotOhno=
+	t=1767663290; cv=none; b=leuZAJ9qrv9kXLCc3Qui7e2Bn5aIdAHFQ6fgHl0w0tpLghVAqsfMovvVGfaoTT5FpHtkW0cx8qUvk+2vpPb7+AriICLLiW8YYz49fGptNUTrlZ0yWuqRQw99NjOf9fTd/evqoXPOE+CmNINWw6R1ckIazqMnnJFWj6FQe5SXObc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767662896; c=relaxed/simple;
-	bh=jRbLr/vFdmc7H7zJR5iEEpMCWfu8hjpCIOBnBCTpJjc=;
+	s=arc-20240116; t=1767663290; c=relaxed/simple;
+	bh=TYGAjF/EMfMwcdaIDc1cALfyTquNVLUomCeOnLJuMFc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pDbrlEK6oqFVbVIVmLXGnHHlABb7nsstgDw6uXQ8rBGun10Cj/DDkJNA+UOTzGMVMsWiOcsAqx5oLYbvHzJ/9brfOctNpHY5LL33XRAbX9vEiamG/l3u5FynG/851mgxV2+/+JaSwhABvIdcnVbt3dUmGPXtDDb2iJse5dPcjDY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ot9GTP0L; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=n7DekK5k++UJjnW4e3qkH1St0Ep1/Prpyj6trJ4CvaD0f7rT0G3XYZYvq7g3NnJrU99AsnNvaHTAXNEFnLuj4HrFeMKnyUhfsoycD0Yh3qmlUqtvMTLruZ6qtuBFA3l9dkLup+3141Wk/xOKFIn8cE+JNzLf8Wq7c4+NtbAOjMg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PM94V/Yk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ot9GTP0L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC80DC116D0;
-	Tue,  6 Jan 2026 01:28:15 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PM94V/Yk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05E24C116D0;
+	Tue,  6 Jan 2026 01:34:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1767662896;
-	bh=jRbLr/vFdmc7H7zJR5iEEpMCWfu8hjpCIOBnBCTpJjc=;
+	s=k20201202; t=1767663289;
+	bh=TYGAjF/EMfMwcdaIDc1cALfyTquNVLUomCeOnLJuMFc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ot9GTP0L9kCiCXB16ciNs/3EmqNnhxZO0MHqi5iB1MnrxnSgHQDFMv07AlQzCgDta
-	 dvt8pWSp+leN/rBrWT/LIbLijDbEFpjRmU/Di54lnJuMPIovo9nyNoKfGPMByPJpgq
-	 J6wtI5s3Km8mlDC7K3CPb+DMY33wo+SrjC1E8ttDJdy6vvX3lFCU6+goYZJIo/fz8k
-	 +8XcIxzLk4MyCj01EzoZaM741KmpRGPa5iOYeB7Q95eBgnVWjQPccMEETdH+u8pMhC
-	 SbIbMICIbPzJE+mKl95qbZQoXeqOqn40XtjDaVv+WT3OOjuC70kB4Lez0qTVBeL1ZL
-	 ZC9tZtyaAxRqQ==
+	b=PM94V/Ykd3pHOJpjdmuYbqk1EBjuAaSE2tNaXopHoKXDX8CXTJRmQA2jxf1ehLdXr
+	 ctLS9sfKPiB59h7T/FjWc1MLHwA8YMnrBGFH2HmPRC8+ITM4dWTIK5pr5BLo1Tv0ku
+	 IvhMFE6dbdiuAI+bJG22gzEa/O6DtbS6eRNtLgRj6gmcRFHOHLx3LHWFyY1NopyBFW
+	 8o3XPS0oXqXq53ry/jTpxrNkKm8dZf+t6BvlAfiv43ur4+6r8reyVjM3xgTAiOzPcN
+	 Xo5FCwOli8AW1Lg5mCnkK9DvDXwjdyi/f3odw0kjOW1GyvCStWycIOEA1/QySksVk8
+	 zEaSsAUE6y5bA==
 From: SeongJae Park <sj@kernel.org>
 To: stable@vger.kernel.org
 Cc: damon@lists.linux.dev,
@@ -34,12 +34,12 @@ Cc: damon@lists.linux.dev,
 	David Gow <davidgow@google.com>,
 	Kefeng Wang <wangkefeng.wang@huawei.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6.y] mm/damon/tests/core-kunit: handle alloc failures on damos_test_filter_out()
-Date: Mon,  5 Jan 2026 17:28:05 -0800
-Message-ID: <20260106012805.282751-1-sj@kernel.org>
+Subject: [PATCH 6.6.y] mm/damon/tests/core-kunit: handle alloc failures in damon_test_set_regions()
+Date: Mon,  5 Jan 2026 17:34:37 -0800
+Message-ID: <20260106013437.296300-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <2026010525-threaten-recliner-cac7@gregkh>
-References: <2026010525-threaten-recliner-cac7@gregkh>
+In-Reply-To: <2026010548-consent-fried-e16b@gregkh>
+References: <2026010548-consent-fried-e16b@gregkh>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -48,54 +48,59 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-damon_test_filter_out() is assuming all dynamic memory allocation in it
+damon_test_set_regions() is assuming all dynamic memory allocation in it
 will succeed.  Those are indeed likely in the real use cases since those
 allocations are too small to fail, but theoretically those could fail.  In
 the case, inappropriate memory access can happen.  Fix it by appropriately
 cleanup pre-allocated memory and skip the execution of the remaining tests
 in the failure cases.
 
-Link: https://lkml.kernel.org/r/20251101182021.74868-16-sj@kernel.org
-Fixes: 26713c890875 ("mm/damon/core-test: add a unit test for __damos_filter_out()")
+Link: https://lkml.kernel.org/r/20251101182021.74868-11-sj@kernel.org
+Fixes: 62f409560eb2 ("mm/damon/core-test: test damon_set_regions")
 Signed-off-by: SeongJae Park <sj@kernel.org>
 Cc: Brendan Higgins <brendan.higgins@linux.dev>
 Cc: David Gow <davidgow@google.com>
 Cc: Kefeng Wang <wangkefeng.wang@huawei.com>
-Cc: <stable@vger.kernel.org>	[6.6+]
+Cc: <stable@vger.kernel.org>	[6.1+]
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-(cherry picked from commit d14d5671e7c9cc788c5a1edfa94e6f9064275905)
-Signed-off-by: SeongJae Park <sj@kernel.org>
+(cherry picked from commit 74d5969995d129fd59dd93b9c7daa6669cb6810f)
 ---
- mm/damon/core-test.h | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ mm/damon/core-test.h | 17 +++++++++++++++--
+ 1 file changed, 15 insertions(+), 2 deletions(-)
 
 diff --git a/mm/damon/core-test.h b/mm/damon/core-test.h
-index 6cc8b245586d..7ed28bf9704a 100644
+index 6cc8b245586d..6629407cf986 100644
 --- a/mm/damon/core-test.h
 +++ b/mm/damon/core-test.h
-@@ -360,11 +360,22 @@ static void damos_test_filter_out(struct kunit *test)
- 	struct damos_filter *f;
+@@ -270,13 +270,26 @@ static void damon_test_ops_registration(struct kunit *test)
+ static void damon_test_set_regions(struct kunit *test)
+ {
+ 	struct damon_target *t = damon_new_target();
+-	struct damon_region *r1 = damon_new_region(4, 16);
+-	struct damon_region *r2 = damon_new_region(24, 32);
++	struct damon_region *r1, *r2;
+ 	struct damon_addr_range range = {.start = 8, .end = 28};
+ 	unsigned long expects[] = {8, 16, 16, 24, 24, 28};
+ 	int expect_idx = 0;
+ 	struct damon_region *r;
  
- 	f = damos_new_filter(DAMOS_FILTER_TYPE_ADDR, true);
-+	if (!f)
-+		kunit_skip(test, "filter alloc fail");
- 	f->addr_range = (struct damon_addr_range){
- 		.start = DAMON_MIN_REGION * 2, .end = DAMON_MIN_REGION * 6};
- 
- 	t = damon_new_target();
-+	if (!t) {
-+		damos_destroy_filter(f);
++	if (!t)
 +		kunit_skip(test, "target alloc fail");
-+	}
- 	r = damon_new_region(DAMON_MIN_REGION * 3, DAMON_MIN_REGION * 5);
-+	if (!r) {
-+		damos_destroy_filter(f);
++	r1 = damon_new_region(4, 16);
++	if (!r1) {
 +		damon_free_target(t);
 +		kunit_skip(test, "region alloc fail");
 +	}
- 	damon_add_region(r, t);
- 
- 	/* region in the range */
++	r2 = damon_new_region(24, 32);
++	if (!r2) {
++		damon_free_target(t);
++		damon_free_region(r1);
++		kunit_skip(test, "second region alloc fail");
++	}
++
+ 	damon_add_region(r1, t);
+ 	damon_add_region(r2, t);
+ 	damon_set_regions(t, &range, 1);
 -- 
 2.47.3
 
