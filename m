@@ -1,66 +1,112 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9CB82BDC3F;
-	Tue,  6 Jan 2026 18:50:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF323221FB6;
+	Thu,  8 Jan 2026 01:31:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767725440; cv=none; b=u+Am2cVWOpZv2zmgV76DVCM1luCKnU8JmzaCzIysbRM3gG//Oxmm6qJP/v9PHcEmeNESXMtFEdVXQqzuJNQyA1fW3iCigFgMp5JaIdqqGLUxYGXzDkvqXxojA+89xInu1qLZ4VIAIJL8kNuKaykJ6FN9e1fnPprSupon1uRDFoo=
+	t=1767835869; cv=none; b=MpEJojFbAaoQB4jtcKkWS8mAP7n69AISrLJmAuzL8IMkserJMEi5kv6iRtwYM+jnXRocw7ZLekMRpCL5BN91MSWg1poBfSvgwOFV//mMOeJ9UeTdtBttk/pPAqzcuzI/JJUrKmH2xXfuEK4a3TnFK31ggVuhNXN1kZqDNHcIVzc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767725440; c=relaxed/simple;
-	bh=BGJr4bLtW5UW/a277QKOKmHsnFt20Odg1H9gTtbyE1s=;
-	h=Date:From:To:Cc:Subject:Message-Id:In-Reply-To:References:
-	 Mime-Version:Content-Type; b=Iyc9okw2CrnrcYTTWY56QA1bE99SsJalR7ujWWI32H/BcvSUY4Ez2PeJiDQ/iZQfWlXlwP7XuME23pngIpn92iT8uT+pvBPnXsK4rrgD6JxhVB1Slk5csxxpW2suf/Z74th9JOLkT1f3VSVodxQuTYMDatl9zfvzXOolh6K/nBs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linux-foundation.org header.i=@linux-foundation.org header.b=uzgfWQKK; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1767835869; c=relaxed/simple;
+	bh=jqQybe765b7V3vpl7bLtb/2Dt7yGTpnbwerkN0QRAY0=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=HXuBzFk1qkPXqSKwQigfI3FN3syG3nGW2Ep61t3RVt1BGpK9D55VkwOGKTl9nocF8PPhoy5yV+/gZyUoS2HPT7HD7UVcmctWXeEANdD3GIM5WddsbxFXrDwwPBa7dOqjcHcONaIplqHOr/AnDQ9wTCRYzwcLuYRh1QpuWY5w+dA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hTPXBHjM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux-foundation.org header.i=@linux-foundation.org header.b="uzgfWQKK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF539C19422;
-	Tue,  6 Jan 2026 18:50:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linux-foundation.org;
-	s=korg; t=1767725440;
-	bh=BGJr4bLtW5UW/a277QKOKmHsnFt20Odg1H9gTtbyE1s=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=uzgfWQKKLTZB1dDYmXUoV0mbXXgbygdMa6q5F+JbPdi5wCqV/md1YPFhVTLmxdXWE
-	 2ibS+rwuIr9LAPOSD0Q2ern1ti+UqhyzqBUy/LkEFSmDoeJvARo2crGd5UdY/cmmGx
-	 kj9K0yvRMDC86cki2gcu5A8aKn+QXC71u83F6Bug=
-Date: Tue, 6 Jan 2026 10:50:39 -0800
-From: Andrew Morton <akpm@linux-foundation.org>
-To: Michal Hocko <mhocko@suse.com>
-Cc: Shakeel Butt <shakeel.butt@linux.dev>, Johannes Weiner
- <hannes@cmpxchg.org>, Roman Gushchin <roman.gushchin@linux.dev>, Muchun
- Song <muchun.song@linux.dev>, SeongJae Park <sj@kernel.org>, Meta kernel
- team <kernel-team@meta.com>, linux-mm@kvack.org, cgroups@vger.kernel.org,
- damon@lists.linux.dev, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 0/8] memcg: separate private and public ID namespaces
-Message-Id: <20260106105039.6f1cdcead82934422e755ac3@linux-foundation.org>
-In-Reply-To: <aVzjN5z3w114fNB4@tiehlicka>
-References: <20251225232116.294540-1-shakeel.butt@linux.dev>
-	<aVzjN5z3w114fNB4@tiehlicka>
-X-Mailer: Sylpheed 3.8.0beta1 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hTPXBHjM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11192C4CEF1;
+	Thu,  8 Jan 2026 01:31:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1767835864;
+	bh=jqQybe765b7V3vpl7bLtb/2Dt7yGTpnbwerkN0QRAY0=;
+	h=From:To:Cc:Subject:Date:From;
+	b=hTPXBHjMS37oqA9nTxNB/orN4bD6O0KQXXtvraQGHyYTlVNA4nrkAvNL/+lN0uasA
+	 QkZcyCextiroPHZB1lHHBkMXYXd9gjYdhjF79O44Nv+nMlCYdB6DzHJUI14lTEsKhU
+	 /LnZyrDWWskQoPqqKcAFZOrYqi9fVT7Tzpb8wlzYVR1Bjz4eqRH1wPaTFqvXjjQA08
+	 xCbvHW3tWt+xkVo0DW8hCmXeUXjMCqAc9M7ZssOYBvjpqPACsPN+89Fq01G9Juy+4N
+	 pzzGqvKg0/O2c3jymEsOKCfw1IWUjzvFH/5w+WTwMMs3kJgjrOHlWDUvqxOCzBUUHh
+	 Oep+kHjOrWjYQ==
+From: SeongJae Park <sj@kernel.org>
+To: Andrew Morton <akpm@linux-foundation.org>
+Cc: Aaron Yang <yangqixiao@inspur.com>,
+	SeongJae Park <sj@kernel.org>,
+	damon@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	linux-mm@kvack.org
+Subject: [PATCH v3] mm/damon/paddr: initialize 'folio' variables to NULL for clarity
+Date: Wed,  7 Jan 2026 17:30:38 -0800
+Message-ID: <20260108013041.80601-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-On Tue, 6 Jan 2026 11:25:59 +0100 Michal Hocko <mhocko@suse.com> wrote:
+From: Aaron Yang <yangqixiao@inspur.com>
 
-> > Note: please apply this series after the patch at
-> > https://lore.kernel.org/20251225002904.139543-1-shakeel.butt@linux.dev/
+In damon_pa_mark_accessed_or_deactivate(), damon_pa_pageout(),
+damon_pa_migrate(), and damon_pa_stat(), the local variable 'folio' is
+declared but not initialized.
 
-OK, that's in mm-hotfixes-unstable.
+Initialize 'folio' to NULL to improve code readability and
+maintainability.
 
-> Makes sense to me. Originally I was not supper happy about the private
-> interface as this should be really private to memcg proper but then I
-> have noticed the lru code needs this outside and dealing with that would
-> be quite messy so an explicit name is probably better in the end.
-> 
-> Feel free to add
-> Acked-by: Michal Hocko <mhocko@suse.com>
+Link: https://patch.msgid.link/20260104013255.16962-1-yangqixiao@inspur.com
+Signed-off-by: Aaron Yang <yangqixiao@inspur.com>
+Reviewed-by: SeongJae Park <sj@kernel.org>
+Signed-off-by: SeongJae Park <sj@kernel.org>
+---
 
-Great, thanks, I'll add it.  The series in somewhat old (Dec 25) but
-nothing seems to have changed.
+Changes from v2
+(https://lore.kernel.org/20260104013255.16962-1-yangqixiao@inspur.com)
+- Wordsmith comment for the purpose of the change.
 
+ mm/damon/paddr.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
+index 07a8aead439e..7d887a3c0866 100644
+--- a/mm/damon/paddr.c
++++ b/mm/damon/paddr.c
+@@ -156,7 +156,7 @@ static unsigned long damon_pa_pageout(struct damon_region *r,
+ 	LIST_HEAD(folio_list);
+ 	bool install_young_filter = true;
+ 	struct damos_filter *filter;
+-	struct folio *folio;
++	struct folio *folio = NULL;
+ 
+ 	/* check access in page level again by default */
+ 	damos_for_each_ops_filter(filter, s) {
+@@ -212,7 +212,7 @@ static inline unsigned long damon_pa_mark_accessed_or_deactivate(
+ 		unsigned long *sz_filter_passed)
+ {
+ 	phys_addr_t addr, applied = 0;
+-	struct folio *folio;
++	struct folio *folio = NULL;
+ 
+ 	addr = damon_pa_phys_addr(r->ar.start, addr_unit);
+ 	while (addr < damon_pa_phys_addr(r->ar.end, addr_unit)) {
+@@ -262,7 +262,7 @@ static unsigned long damon_pa_migrate(struct damon_region *r,
+ {
+ 	phys_addr_t addr, applied;
+ 	LIST_HEAD(folio_list);
+-	struct folio *folio;
++	struct folio *folio = NULL;
+ 
+ 	addr = damon_pa_phys_addr(r->ar.start, addr_unit);
+ 	while (addr < damon_pa_phys_addr(r->ar.end, addr_unit)) {
+@@ -295,7 +295,7 @@ static unsigned long damon_pa_stat(struct damon_region *r,
+ 		unsigned long *sz_filter_passed)
+ {
+ 	phys_addr_t addr;
+-	struct folio *folio;
++	struct folio *folio = NULL;
+ 
+ 	if (!damos_ops_has_filter(s))
+ 		return 0;
+
+base-commit: 86666ce88b232c311d17ff74d74a2ef3215b9eb5
+-- 
+2.47.3
