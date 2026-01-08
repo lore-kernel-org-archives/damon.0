@@ -1,41 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF323221FB6;
-	Thu,  8 Jan 2026 01:31:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD4E82D0C7A;
+	Thu,  8 Jan 2026 05:00:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767835869; cv=none; b=MpEJojFbAaoQB4jtcKkWS8mAP7n69AISrLJmAuzL8IMkserJMEi5kv6iRtwYM+jnXRocw7ZLekMRpCL5BN91MSWg1poBfSvgwOFV//mMOeJ9UeTdtBttk/pPAqzcuzI/JJUrKmH2xXfuEK4a3TnFK31ggVuhNXN1kZqDNHcIVzc=
+	t=1767848404; cv=none; b=fjhPVaALbvXDkHJsYJICH6vnOkf056W7rtMqTqJ55ajddo+C4niM3vF6PeS+9a5IZMtCM41ZCJUabfe8Ie8pqxbekqAjv6IZeJd6XGdGwO4gfdnzbBzBMJA+uu9i2rxTo0Zoeh+UVo8dfQXMhCXUIVNDXT+wquGfDOcNTctU/rs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767835869; c=relaxed/simple;
-	bh=jqQybe765b7V3vpl7bLtb/2Dt7yGTpnbwerkN0QRAY0=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=HXuBzFk1qkPXqSKwQigfI3FN3syG3nGW2Ep61t3RVt1BGpK9D55VkwOGKTl9nocF8PPhoy5yV+/gZyUoS2HPT7HD7UVcmctWXeEANdD3GIM5WddsbxFXrDwwPBa7dOqjcHcONaIplqHOr/AnDQ9wTCRYzwcLuYRh1QpuWY5w+dA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hTPXBHjM; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1767848404; c=relaxed/simple;
+	bh=1B3KdBEHnVGrwHaFJwXfUoo0ljW4nYwZYlVoHlNtMbM=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=dpPrexarPhXPYuB0K6wtLvcThU1Fo8uvn8hyJlbgdU6XbTAQKN5AXCKziCCt6YtX8iHS1qRo1pWh0e2975foAP3gN3WQw2+ZXZiyVAEzS5atk8ZDc2IH1LClnvcJOnnrETOZWe6rXU4RCBAe40/krpR3iMfUPY/SZTrGqiUnX2w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tQNMbCmB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hTPXBHjM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11192C4CEF1;
-	Thu,  8 Jan 2026 01:31:04 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tQNMbCmB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD8A6C116C6;
+	Thu,  8 Jan 2026 05:00:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1767835864;
-	bh=jqQybe765b7V3vpl7bLtb/2Dt7yGTpnbwerkN0QRAY0=;
-	h=From:To:Cc:Subject:Date:From;
-	b=hTPXBHjMS37oqA9nTxNB/orN4bD6O0KQXXtvraQGHyYTlVNA4nrkAvNL/+lN0uasA
-	 QkZcyCextiroPHZB1lHHBkMXYXd9gjYdhjF79O44Nv+nMlCYdB6DzHJUI14lTEsKhU
-	 /LnZyrDWWskQoPqqKcAFZOrYqi9fVT7Tzpb8wlzYVR1Bjz4eqRH1wPaTFqvXjjQA08
-	 xCbvHW3tWt+xkVo0DW8hCmXeUXjMCqAc9M7ZssOYBvjpqPACsPN+89Fq01G9Juy+4N
-	 pzzGqvKg0/O2c3jymEsOKCfw1IWUjzvFH/5w+WTwMMs3kJgjrOHlWDUvqxOCzBUUHh
-	 Oep+kHjOrWjYQ==
+	s=k20201202; t=1767848404;
+	bh=1B3KdBEHnVGrwHaFJwXfUoo0ljW4nYwZYlVoHlNtMbM=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=tQNMbCmBM9WpAmQhgaPJlGrgLfeeGSplgIBSGEGP6VX90OUNEZ3Ioun9kY5r6qB1S
+	 d4QlsO3fYjjFIjM3iLTiHpBuqdNY/3811RGlnhZ68pBR7ElHNt7dkbjsD2JKdpTzNl
+	 igdlHBIafM+F+kZjqS0tBRHWmJrOVSMtg665Gks9Y+VZhAy3hrIHYBqJAOTiHlzaYj
+	 iXYFMD08wjVySlCJ360/9ZG2vHol3zJRMu+q7JOP6PHkdt+72DvIiK5CUeqLALQuyc
+	 cqJ/MPq8UQuy3HsLjtQwUspDb2MiFjdSu7K0zjUduWIyuiSPIqHlFnMTg6ERugEqVw
+	 iXCFGyxISnQqg==
 From: SeongJae Park <sj@kernel.org>
-To: Andrew Morton <akpm@linux-foundation.org>
-Cc: Aaron Yang <yangqixiao@inspur.com>,
-	SeongJae Park <sj@kernel.org>,
+To: Shakeel Butt <shakeel.butt@linux.dev>
+Cc: SeongJae Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Michal Hocko <mhocko@kernel.org>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Muchun Song <muchun.song@linux.dev>,
+	Meta kernel team <kernel-team@meta.com>,
+	linux-mm@kvack.org,
+	cgroups@vger.kernel.org,
 	damon@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org
-Subject: [PATCH v3] mm/damon/paddr: initialize 'folio' variables to NULL for clarity
-Date: Wed,  7 Jan 2026 17:30:38 -0800
-Message-ID: <20260108013041.80601-1-sj@kernel.org>
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 8/8] memcg: rename mem_cgroup_ino() to mem_cgroup_id()
+Date: Wed,  7 Jan 2026 20:59:53 -0800
+Message-ID: <20260108045954.78552-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20251225232116.294540-9-shakeel.butt@linux.dev>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -44,69 +53,58 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-From: Aaron Yang <yangqixiao@inspur.com>
+On Thu, 25 Dec 2025 15:21:16 -0800 Shakeel Butt <shakeel.butt@linux.dev> wrote:
 
-In damon_pa_mark_accessed_or_deactivate(), damon_pa_pageout(),
-damon_pa_migrate(), and damon_pa_stat(), the local variable 'folio' is
-declared but not initialized.
+> Rename mem_cgroup_ino() to mem_cgroup_id() and mem_cgroup_get_from_ino()
+> to mem_cgroup_get_from_id(). These functions now use cgroup IDs (from
+> cgroup_id()) rather than inode numbers, so the names should reflect that.
+> 
+> Signed-off-by: Shakeel Butt <shakeel.butt@linux.dev>
 
-Initialize 'folio' to NULL to improve code readability and
-maintainability.
+I left trivial comments below.  Because those are only trivial,
 
-Link: https://patch.msgid.link/20260104013255.16962-1-yangqixiao@inspur.com
-Signed-off-by: Aaron Yang <yangqixiao@inspur.com>
 Reviewed-by: SeongJae Park <sj@kernel.org>
-Signed-off-by: SeongJae Park <sj@kernel.org>
----
 
-Changes from v2
-(https://lore.kernel.org/20260104013255.16962-1-yangqixiao@inspur.com)
-- Wordsmith comment for the purpose of the change.
+> ---
+>  include/linux/memcontrol.h |  8 ++++----
+>  mm/damon/core.c            |  2 +-
+>  mm/damon/ops-common.c      |  2 +-
+>  mm/damon/sysfs-schemes.c   |  2 +-
+>  mm/memcontrol.c            |  2 +-
+>  mm/shrinker_debug.c        | 10 +++++-----
+>  mm/vmscan.c                |  6 +++---
+>  7 files changed, 16 insertions(+), 16 deletions(-)
+> 
+> diff --git a/include/linux/memcontrol.h b/include/linux/memcontrol.h
+> index 3e7d69020b39..5a1161cadb8d 100644
+> --- a/include/linux/memcontrol.h
+> +++ b/include/linux/memcontrol.h
+[...]
+> -struct mem_cgroup *mem_cgroup_get_from_ino(u64 ino);
+> +struct mem_cgroup *mem_cgroup_get_from_id(u64 ino);
 
- mm/damon/paddr.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+Nit.  How about renaming the argument from 'ino' to 'id'?
 
-diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
-index 07a8aead439e..7d887a3c0866 100644
---- a/mm/damon/paddr.c
-+++ b/mm/damon/paddr.c
-@@ -156,7 +156,7 @@ static unsigned long damon_pa_pageout(struct damon_region *r,
- 	LIST_HEAD(folio_list);
- 	bool install_young_filter = true;
- 	struct damos_filter *filter;
--	struct folio *folio;
-+	struct folio *folio = NULL;
- 
- 	/* check access in page level again by default */
- 	damos_for_each_ops_filter(filter, s) {
-@@ -212,7 +212,7 @@ static inline unsigned long damon_pa_mark_accessed_or_deactivate(
- 		unsigned long *sz_filter_passed)
- {
- 	phys_addr_t addr, applied = 0;
--	struct folio *folio;
-+	struct folio *folio = NULL;
- 
- 	addr = damon_pa_phys_addr(r->ar.start, addr_unit);
- 	while (addr < damon_pa_phys_addr(r->ar.end, addr_unit)) {
-@@ -262,7 +262,7 @@ static unsigned long damon_pa_migrate(struct damon_region *r,
- {
- 	phys_addr_t addr, applied;
- 	LIST_HEAD(folio_list);
--	struct folio *folio;
-+	struct folio *folio = NULL;
- 
- 	addr = damon_pa_phys_addr(r->ar.start, addr_unit);
- 	while (addr < damon_pa_phys_addr(r->ar.end, addr_unit)) {
-@@ -295,7 +295,7 @@ static unsigned long damon_pa_stat(struct damon_region *r,
- 		unsigned long *sz_filter_passed)
- {
- 	phys_addr_t addr;
--	struct folio *folio;
-+	struct folio *folio = NULL;
- 
- 	if (!damos_ops_has_filter(s))
- 		return 0;
+[...]
+> -static inline struct mem_cgroup *mem_cgroup_get_from_ino(u64 ino)
+> +static inline struct mem_cgroup *mem_cgroup_get_from_id(u64 ino)
 
-base-commit: 86666ce88b232c311d17ff74d74a2ef3215b9eb5
--- 
-2.47.3
+Ditto.
+
+[...]
+> --- a/mm/memcontrol.c
+> +++ b/mm/memcontrol.c
+> @@ -3615,7 +3615,7 @@ struct mem_cgroup *mem_cgroup_from_private_id(unsigned short id)
+>  	return xa_load(&mem_cgroup_private_ids, id);
+>  }
+>  
+> -struct mem_cgroup *mem_cgroup_get_from_ino(u64 ino)
+> +struct mem_cgroup *mem_cgroup_get_from_id(u64 ino)
+
+Ditto.
+
+
+Thanks,
+SJ
+
+[...]
