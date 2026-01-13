@@ -1,40 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A7E83933E8;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5524393405;
 	Tue, 13 Jan 2026 15:27:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768318052; cv=none; b=M9UDKSYLUnj8+bHNd1ktXXmhKqiEvYox0SohSMtR+z8QfukzmGb2+EH5KOhKiM/PLbQKepEmKHhSRc0I0B7ETnn6wbi8dHK0Lo0UCVd8wg6PhM0djuZO2dsHfCEC1nNrZ2/KOVUESEPoQvp0OTvCsfHYqqRZ30wv4FPFQQoQgfU=
+	t=1768318053; cv=none; b=Q1CgOCNwNgQ3I5IXAXb2a//oSx4SQzAeHJzpmIpD0PJ5bte2wZoU2wJxVFuvp8Kwhs9KSmPnbfAfHgWqX7n/llJ6k19ssSlPjtskuV78ufYbkiIc8FvVxVXNJLU/1AFCykZM7wH66yP1R31Lqpuqq3ttonN10lloNTzc1X4IxLQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768318052; c=relaxed/simple;
-	bh=Ps1Llk1zn7k8iBguPu+c50Hh6cMt1or4lC99Uh+5urc=;
+	s=arc-20240116; t=1768318053; c=relaxed/simple;
+	bh=Wj0dAUEbE3nyWuMQ+51OFmWg9i5unPK4WiDRQNYOALc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fsfkawldBJHWcBfMKqhDWFuA7R8qKse7VxjE/3xIFjh7ax46/LN4OXUndJ+PJ0Y3bKdVA/huHsxDmqpFwhAUopdmEvMf2I61s99J6d47NfQFfHsAx1X4B0d1A4If+wASFI90rPk9M2tLwboEm3curVNhRiiIbnKoyOWk5/3wNn0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Zk2ebu7+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VZuZ5AQ/tYgjf7CWrMU3EpN3+de0ZJdbBkihgYFz9XOgNCwXlHJSgoNa5dvCJhlHUuV605Tsbx2SYBKIighppjUhMqbw7Cwd5X9JJVPK4A6XsdgVY/f1nl84X+vpEo5hX0htoIRUxhm8IFJa+Kg4l+PE+DzFiC6B56WNj/1KXos=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YdqTQfw5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Zk2ebu7+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01167C19422;
-	Tue, 13 Jan 2026 15:27:31 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YdqTQfw5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E7F4C19424;
+	Tue, 13 Jan 2026 15:27:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1768318052;
-	bh=Ps1Llk1zn7k8iBguPu+c50Hh6cMt1or4lC99Uh+5urc=;
+	bh=Wj0dAUEbE3nyWuMQ+51OFmWg9i5unPK4WiDRQNYOALc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Zk2ebu7+GAxnV8yJ3e1uSgG0okFBS2+bpqblZ/XsSuXKo3ZOACswlTS/P2AgCE88i
-	 Tf8A1g6E1f6j0068Nqhxmr/AJhZSGngoDXYG5DI4eO92dx/edIzFSnx1UzF2uE9HCb
-	 oEyIqtftImRHgSNsTgu8n8aOFkNCiBz4oKrSDTROyi05aPZJanwziQTd/8JkjyVdTf
-	 45gWlqMgZCyL3BCLM0Z1VIqHHh+UFyhONN+y5f5hQK/iGQAk+ImdvyL7ab0QcCAHUo
-	 WkRbzVUVrQYxD5Eea8XTJA0Ax+faZMBn5uVkBI1uUiLHCbAy2JfGE3axG5voYRLye9
-	 YxnOY/FivKOHQ==
+	b=YdqTQfw59TQTrYZHgAP3pNMp/sMoVB6t0t/t+feeT8iON9eWWmQIdgg9tB4lzdMrt
+	 0EFRTszgUKharMpOUI3taS5WRcGSpXt1bY2zvJRXQ/rF2Inbs0fmu7eS7d6mw0qkR3
+	 oe6TR5PrLMjWmPf/jdlQtN8JHPe3lg0zvHTmjJcanyYXRvMtdAVZQFBSqgNY0S2YQ7
+	 3tVZNFOvrpHLBt6jqs13jRVygx0mAe+PUQ4NfIDoPXrOvZXuMJ8y5iXDxBx5fneGZE
+	 bMmlhbq4KVYlz3z0t67O8NmMOC3dWaubERxRXMRav6j2BTIkG7Fwdu7dMdxeyKBsrt
+	 Q3NXYeY3Vj1zQ==
 From: SeongJae Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SeongJae Park <sj@kernel.org>,
+	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
+	David Hildenbrand <david@kernel.org>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	Michal Hocko <mhocko@suse.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
 	damon@lists.linux.dev,
+	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [PATCH 06/11] mm/damon/lru_sort: support young page filters
-Date: Tue, 13 Jan 2026 07:27:11 -0800
-Message-ID: <20260113152717.70459-7-sj@kernel.org>
+Subject: [PATCH 07/11] Docs/admin-guide/mm/damon/lru_sort: document filter_young_pages
+Date: Tue, 13 Jan 2026 07:27:12 -0800
+Message-ID: <20260113152717.70459-8-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260113152717.70459-1-sj@kernel.org>
 References: <20260113152717.70459-1-sj@kernel.org>
@@ -46,85 +55,38 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-DAMON monitors access patterns at the region level, and hence there
-could be some page level mismatches.  A few hot pages could be located
-in cold regions, and vice versa.  Young page filters can be useful for
-doing additional page level access checks before applying some DAMOS
-action.
-
-DAMON_LRU_SORT is not using young page filters, though.  Add a parameter
-for using it.
+Document the new DAMON_LRU_SORT parameter, filter_young_pages.  It can
+be used to use page level access re-check for the LRU sorting.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- mm/damon/lru_sort.c | 41 +++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 41 insertions(+)
+ Documentation/admin-guide/mm/damon/lru_sort.rst | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-diff --git a/mm/damon/lru_sort.c b/mm/damon/lru_sort.c
-index a74c4ec170a9..f1fdb37b9b47 100644
---- a/mm/damon/lru_sort.c
-+++ b/mm/damon/lru_sort.c
-@@ -41,6 +41,21 @@ static bool enabled __read_mostly;
- static bool commit_inputs __read_mostly;
- module_param(commit_inputs, bool, 0600);
+diff --git a/Documentation/admin-guide/mm/damon/lru_sort.rst b/Documentation/admin-guide/mm/damon/lru_sort.rst
+index 72a943202676..bb222a32aefd 100644
+--- a/Documentation/admin-guide/mm/damon/lru_sort.rst
++++ b/Documentation/admin-guide/mm/damon/lru_sort.rst
+@@ -79,6 +79,20 @@ of parametrs except ``enabled`` again.  Once the re-reading is done, this
+ parameter is set as ``N``.  If invalid parameters are found while the
+ re-reading, DAMON_LRU_SORT will be disabled.
  
-+/*
-+ * Filter [non-]young pages accordingly for LRU [de]prioritizations.
-+ *
-+ * If this is set, check page level access (youngness) once again before each
-+ * LRU [de]prioritization operation.  LRU prioritization operation is skipped
-+ * if the page has not accessed since the last check (not young).  LRU
-+ * deprioritization operation is skipped if the page has accessed since the
-+ * last check (young).  The feature is enabled or disabled if this parameter is
-+ * set as ``Y`` or ``N``, respectively.
-+ *
-+ * Disabled by default.
-+ */
-+static bool filter_young_pages __read_mostly;
-+module_param(filter_young_pages, bool, 0600);
++filter_young_pages
++------------------
 +
- /*
-  * Access frequency threshold for hot memory regions identification in permil.
-  *
-@@ -193,6 +208,28 @@ static struct damos *damon_lru_sort_new_cold_scheme(unsigned int cold_thres)
- 	return damon_lru_sort_new_scheme(&pattern, DAMOS_LRU_DEPRIO);
- }
++Filter [non-]young pages accordingly for LRU [de]prioritizations.
++
++If this is set, check page level access (youngness) once again before each
++LRU [de]prioritization operation.  LRU prioritization operation is skipped
++if the page has not accessed since the last check (not young).  LRU
++deprioritization operation is skipped if the page has accessed since the
++last check (young).  The feature is enabled or disabled if this parameter is
++set as ``Y`` or ``N``, respectively.
++
++Disabled by default.
++
+ hot_thres_access_freq
+ ---------------------
  
-+static int damon_lru_sort_add_filters(struct damos *hot_scheme,
-+		struct damos *cold_scheme)
-+{
-+	struct damos_filter *filter;
-+
-+	if (!filter_young_pages)
-+		return 0;
-+
-+	/* disallow prioritizing not-young pages */
-+	filter = damos_new_filter(DAMOS_FILTER_TYPE_YOUNG, false, false);
-+	if (!filter)
-+		return -ENOMEM;
-+	damos_add_filter(hot_scheme, filter);
-+
-+	/* disabllow de-prioritizing young pages */
-+	filter = damos_new_filter(DAMOS_FILTER_TYPE_YOUNG, true, false);
-+	if (!filter)
-+		return -ENOMEM;
-+	damos_add_filter(cold_scheme, filter);
-+	return 0;
-+}
-+
- static int damon_lru_sort_apply_parameters(void)
- {
- 	struct damon_ctx *param_ctx;
-@@ -240,6 +277,10 @@ static int damon_lru_sort_apply_parameters(void)
- 	damon_set_schemes(param_ctx, &hot_scheme, 1);
- 	damon_add_scheme(param_ctx, cold_scheme);
- 
-+	err = damon_lru_sort_add_filters(hot_scheme, cold_scheme);
-+	if (err)
-+		goto out;
-+
- 	err = damon_set_region_biggest_system_ram_default(param_target,
- 					&monitor_region_start,
- 					&monitor_region_end,
 -- 
 2.47.3
