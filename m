@@ -1,49 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5524393405;
-	Tue, 13 Jan 2026 15:27:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2ECEF393412;
+	Tue, 13 Jan 2026 15:27:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768318053; cv=none; b=Q1CgOCNwNgQ3I5IXAXb2a//oSx4SQzAeHJzpmIpD0PJ5bte2wZoU2wJxVFuvp8Kwhs9KSmPnbfAfHgWqX7n/llJ6k19ssSlPjtskuV78ufYbkiIc8FvVxVXNJLU/1AFCykZM7wH66yP1R31Lqpuqq3ttonN10lloNTzc1X4IxLQ=
+	t=1768318053; cv=none; b=lc1HoJ9y7molrsMsUFdZFnGwANnqniYk0K8YWiHjJlKf53lsZiWVkVqV5DFCKDDlnxVRAZRiE/GfZ0hLUc2b/iTONMpuHq3GJBn8LP1mpvpeoZpfnFoNn0cpLAQEtsBmFNHkHWSz9XaJ8URydeT4UFHGiOfmd9/ChK/Eru4YV8M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1768318053; c=relaxed/simple;
-	bh=Wj0dAUEbE3nyWuMQ+51OFmWg9i5unPK4WiDRQNYOALc=;
+	bh=pLryvh98ed6XxIPENni66cywNufL7GDRDX92gXVXv0M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VZuZ5AQ/tYgjf7CWrMU3EpN3+de0ZJdbBkihgYFz9XOgNCwXlHJSgoNa5dvCJhlHUuV605Tsbx2SYBKIighppjUhMqbw7Cwd5X9JJVPK4A6XsdgVY/f1nl84X+vpEo5hX0htoIRUxhm8IFJa+Kg4l+PE+DzFiC6B56WNj/1KXos=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YdqTQfw5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OxNlqFfAoHOfXFVHFYn7THB4MrqZxCicdHsf/rbIP0dYtzefamKdJkDe75FqyyNUHy/wpzhWqCAZKTgSJNDsskaAp5ual1FHE5C3ekP04hfDkD/Ul5aoTnLzIuGyUX+mr438A54ylLPBGTjcPKmQuE+Qeh3h9avxbVXqHQmbw9I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MbPlCZKp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YdqTQfw5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E7F4C19424;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MbPlCZKp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5994C2BC86;
 	Tue, 13 Jan 2026 15:27:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1768318052;
-	bh=Wj0dAUEbE3nyWuMQ+51OFmWg9i5unPK4WiDRQNYOALc=;
+	s=k20201202; t=1768318053;
+	bh=pLryvh98ed6XxIPENni66cywNufL7GDRDX92gXVXv0M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YdqTQfw59TQTrYZHgAP3pNMp/sMoVB6t0t/t+feeT8iON9eWWmQIdgg9tB4lzdMrt
-	 0EFRTszgUKharMpOUI3taS5WRcGSpXt1bY2zvJRXQ/rF2Inbs0fmu7eS7d6mw0qkR3
-	 oe6TR5PrLMjWmPf/jdlQtN8JHPe3lg0zvHTmjJcanyYXRvMtdAVZQFBSqgNY0S2YQ7
-	 3tVZNFOvrpHLBt6jqs13jRVygx0mAe+PUQ4NfIDoPXrOvZXuMJ8y5iXDxBx5fneGZE
-	 bMmlhbq4KVYlz3z0t67O8NmMOC3dWaubERxRXMRav6j2BTIkG7Fwdu7dMdxeyKBsrt
-	 Q3NXYeY3Vj1zQ==
+	b=MbPlCZKpIa9lOj8AUJONXGdiS2aKBOANl+x8LvCD7wN/3tBH/k1xZ21qPaPOTgd1/
+	 JQ6KtXiAKUbQtF/268czWsrcAIKAMqWUEOd5YMI2HaveSZkVKBOQEKI+R1GrfEDrOz
+	 L9n/QK7uEmuy03W2+7Yc3lG1HjtzKD4RXxfhSMaZjkbSkEpyWBPz1fvlvNNGboeBOi
+	 KRemgqA15qfU3IjPJtr2AHIP1eAYyb6+R0Nh7yCUD+2ZKh7wqUawGcv3Oyj4LlEVx8
+	 joZHlZo2O1H5B+yqoalAjodSq8qbWo/UHo06cHVY0PCsirMjc3k6J3nb/xY/Htz9Cz
+	 Tx/bOa4/5q2ZA==
 From: SeongJae Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SeongJae Park <sj@kernel.org>,
-	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
-	David Hildenbrand <david@kernel.org>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
-	Michal Hocko <mhocko@suse.com>,
-	Mike Rapoport <rppt@kernel.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Vlastimil Babka <vbabka@suse.cz>,
 	damon@lists.linux.dev,
-	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [PATCH 07/11] Docs/admin-guide/mm/damon/lru_sort: document filter_young_pages
-Date: Tue, 13 Jan 2026 07:27:12 -0800
-Message-ID: <20260113152717.70459-8-sj@kernel.org>
+Subject: [PATCH 08/11] mm/damon/lru_sort: support active:inactive memory ratio based auto-tuning
+Date: Tue, 13 Jan 2026 07:27:13 -0800
+Message-ID: <20260113152717.70459-9-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260113152717.70459-1-sj@kernel.org>
 References: <20260113152717.70459-1-sj@kernel.org>
@@ -55,38 +46,80 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Document the new DAMON_LRU_SORT parameter, filter_young_pages.  It can
-be used to use page level access re-check for the LRU sorting.
+Doing DAMOS_LRU_[DE]PRIO with DAMOS_QUOTA_[IN]ACTIVE_MEM_BP based quota
+auto-tuning can be easy and intuitive, compared to the manual
+[de]prioritization target access pattern thresholds tuning.  For
+example, users can ask DAMON to "find hot/cold pages and
+activate/deactivate those aiming 50:50 active:inactive memory size." But
+DAMON_LRU_SORT has no interface to do that.  Add a module parameter for
+setting the target ratio.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- Documentation/admin-guide/mm/damon/lru_sort.rst | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ mm/damon/lru_sort.c | 37 +++++++++++++++++++++++++++++++++++++
+ 1 file changed, 37 insertions(+)
 
-diff --git a/Documentation/admin-guide/mm/damon/lru_sort.rst b/Documentation/admin-guide/mm/damon/lru_sort.rst
-index 72a943202676..bb222a32aefd 100644
---- a/Documentation/admin-guide/mm/damon/lru_sort.rst
-+++ b/Documentation/admin-guide/mm/damon/lru_sort.rst
-@@ -79,6 +79,20 @@ of parametrs except ``enabled`` again.  Once the re-reading is done, this
- parameter is set as ``N``.  If invalid parameters are found while the
- re-reading, DAMON_LRU_SORT will be disabled.
+diff --git a/mm/damon/lru_sort.c b/mm/damon/lru_sort.c
+index f1fdb37b9b47..f3a9dfc246b6 100644
+--- a/mm/damon/lru_sort.c
++++ b/mm/damon/lru_sort.c
+@@ -41,6 +41,20 @@ static bool enabled __read_mostly;
+ static bool commit_inputs __read_mostly;
+ module_param(commit_inputs, bool, 0600);
  
-+filter_young_pages
-+------------------
++/*
++ * Desired active to [in]active memory ratio in bp (1/10,000).
++ *
++ * While keeping the caps that set by other quotas, DAMON_LRU_SORT
++ * automatically increases and decreases the effective level of the quota
++ * aiming the LRU [de]prioritizations of the hot and cold memory resulting in
++ * this active to [in]active memory ratio.  Value zero means disabling this
++ * auto-tuning feature.
++ *
++ * Disabled by default.
++ */
++static unsigned long active_mem_bp __read_mostly;
++module_param(active_mem_bp, ulong, 0600);
 +
-+Filter [non-]young pages accordingly for LRU [de]prioritizations.
-+
-+If this is set, check page level access (youngness) once again before each
-+LRU [de]prioritization operation.  LRU prioritization operation is skipped
-+if the page has not accessed since the last check (not young).  LRU
-+deprioritization operation is skipped if the page has accessed since the
-+last check (young).  The feature is enabled or disabled if this parameter is
-+set as ``Y`` or ``N``, respectively.
-+
-+Disabled by default.
-+
- hot_thres_access_freq
- ---------------------
+ /*
+  * Filter [non-]young pages accordingly for LRU [de]prioritizations.
+  *
+@@ -208,6 +222,26 @@ static struct damos *damon_lru_sort_new_cold_scheme(unsigned int cold_thres)
+ 	return damon_lru_sort_new_scheme(&pattern, DAMOS_LRU_DEPRIO);
+ }
  
++static int damon_lru_sort_add_quota_goals(struct damos *hot_scheme,
++		struct damos *cold_scheme)
++{
++	struct damos_quota_goal *goal;
++
++	if (!active_mem_bp)
++		return 0;
++	goal = damos_new_quota_goal(DAMOS_QUOTA_ACTIVE_MEM_BP, active_mem_bp);
++	if (!goal)
++		return -ENOMEM;
++	damos_add_quota_goal(&hot_scheme->quota, goal);
++	/* aim 0.2 % goal conflict, to keep little ping pong */
++	goal = damos_new_quota_goal(DAMOS_QUOTA_INACTIVE_MEM_BP,
++			10000 - active_mem_bp + 2);
++	if (!goal)
++		return -ENOMEM;
++	damos_add_quota_goal(&hot_scheme->quota, goal);
++	return 0;
++}
++
+ static int damon_lru_sort_add_filters(struct damos *hot_scheme,
+ 		struct damos *cold_scheme)
+ {
+@@ -277,6 +311,9 @@ static int damon_lru_sort_apply_parameters(void)
+ 	damon_set_schemes(param_ctx, &hot_scheme, 1);
+ 	damon_add_scheme(param_ctx, cold_scheme);
+ 
++	err = damon_lru_sort_add_quota_goals(hot_scheme, cold_scheme);
++	if (err)
++		goto out;
+ 	err = damon_lru_sort_add_filters(hot_scheme, cold_scheme);
+ 	if (err)
+ 		goto out;
 -- 
 2.47.3
