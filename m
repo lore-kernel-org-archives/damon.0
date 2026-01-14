@@ -1,44 +1,85 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dl1-f68.google.com (mail-dl1-f68.google.com [74.125.82.68])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CD5635CBB0;
-	Wed, 14 Jan 2026 05:53:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDFB331ED67
+	for <damon@lists.linux.dev>; Wed, 14 Jan 2026 06:05:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.68
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768369998; cv=none; b=kh+K58tblXkJAkQbrN2hlZAXLp4z2UuDMlGsxoSshYWQZnjY+R/lFBoUxo+4RGRetp7AqqaDYB0d67iXdqg3Bx+cYqoOykAPcVEhvG+4GBX85GC5y5Hu9y9r4PJLTKQ8vWSuKCk2OYh7blEl0izQel2z5KNX1WoQ3ZeLuWiBcHI=
+	t=1768370728; cv=none; b=aECV/gB5rB8LJ2T0z2M7+5Hond+sCO6EwilK0EOkejEoGjcNSBUDJ43NbQ+qqXgVtKOArJ0uWT7nPixDlwPCAOfW2nlGOXa4MxjGrk+vJR+Ga3yV3oCkcKygl5JPU2eTGIlavli18j5ZYFtXXDgLC1B/v4S55KEZ0pF1Bzm73Rc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768369998; c=relaxed/simple;
-	bh=V+SlBavLJRAAZg4Ll9BOkS3GsX17kKE4EmJ2ubSxjKE=;
+	s=arc-20240116; t=1768370728; c=relaxed/simple;
+	bh=UuOoBajVj0wkg0g4yo/s1ny3PHf3Yl5+HedHG//0BQQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kMWE/5dW5Kox1cQdWwxRKpx4yTpamylq+xbG0xoQLlIc/eXQXI0NGn2fTrHM7DzzrE7XcnFHhp4VpGmmgbXhyUj+iIln9Q0Rdu42niTRtaCkLW00T3SPK2AinbwklA8Hmc/kgKyHrtjzNvZT/qJdWreY95wckG9moKSLK28G1BM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tDpC5MJV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZAY9H1OncbwkPYi77MoG8w6Bvu9K2b36v7UVugBrOVzAd6osH5Bi2gN5csxN3Kq3ggOCfZFrxJ0mot9UKieR128vyctXzjsyGXczm3Hyf1II5RgHqI9M4KlSKmsShQsUOsIk4DYjwrFYWIYsr4s1hqOIRzDvC7R7N+AL0dui58w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mnCf0b80; arc=none smtp.client-ip=74.125.82.68
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tDpC5MJV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9208DC4CEF7;
-	Wed, 14 Jan 2026 05:53:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1768369996;
-	bh=V+SlBavLJRAAZg4Ll9BOkS3GsX17kKE4EmJ2ubSxjKE=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tDpC5MJVH1/nhAPRueH4hsrd7ITCEK5QtUFuz21OuvxBEEOaa8IMvhT64bPEg3bu7
-	 +vWn6q1EMRHj9vn40URiDRiKLrqS3iIaaDkM+gOgbVBS/GiKt3L+LAiL04T5PeLikE
-	 G82mbGia4WIS/5mjXs60WEpyK6FXeFwQOKfGeJG02E7CKRDIXTzDSv/wGOCSAgAbRX
-	 ZWcsKJQpVWxtsL/xmxy0SaUSdySkyYGfv9bNGTZdS9LBRRkYG1o2wgH3vHra7THZu4
-	 +FI/W4VABwLr/E/XVWEr5xoz5yWyfrn2OWrB3NleDzsqe9u7wZcXeFhnnF/8sL/kzs
-	 tzO1qbfiUN2lg==
-From: SeongJae Park <sj@kernel.org>
-To: wang lian <lianux.mm@gmail.com>
-Cc: SeongJae Park <sj@kernel.org>,
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mnCf0b80"
+Received: by mail-dl1-f68.google.com with SMTP id a92af1059eb24-11f42e97229so70885c88.0
+        for <damon@lists.linux.dev>; Tue, 13 Jan 2026 22:05:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1768370718; x=1768975518; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=UuOoBajVj0wkg0g4yo/s1ny3PHf3Yl5+HedHG//0BQQ=;
+        b=mnCf0b80a99CTBAxP3iIUkS/lXen1r6isaWaSvnZkki0PHGa72XC5ZVFLfF2HOG1c9
+         dtsM9OrOJw01RvThGyAKt0SHEFkeQ57r8VTtDjoSGMOMCDx5AA4BETM/dBnKGT6bbWew
+         Ze7crYqeDJ0oTvhm5CPNSTza3yeF/pQgdnX5HO5BonV91BMXANj46+BkWV6njw8q6nwt
+         vS3gnO4i/0CV2SCekz8RB+FwwLaSzvMHknf9YBVARjg4O5yd5ZODOdXI9/aC28WN13oX
+         ZXMImsqsT+q+ir5icP3rir6aSeAzN9JjmKfXJMVCWw90sgxSVmOFMm4+6arWSBMarDv8
+         UIxg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1768370718; x=1768975518;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=UuOoBajVj0wkg0g4yo/s1ny3PHf3Yl5+HedHG//0BQQ=;
+        b=tDKG69ubwb411eW8W7STMgxzn1/cYu3vQIEIiVqt+YlLvY2sNgv+joCJqrwb0EZJvS
+         Hu1BoYpqZhHs5Q2kMrYtmV/LKvasae7bUzsz7gyvF86xaTdqyP43mxezqMpVwsUOHl79
+         5WlOPk1QQtVa1gfADPSlpvkWhlOK53LN42GsjVDDKSYX35jm9jvsKcvZ+XwNlls/rb0v
+         JmxQMH74C763QxYBwH/oMq9+wBj4gG+Rq2k8hFi+kIz8K6zYYycTZQ4HpXm4Dt8hBjQp
+         gd6gzoP+u1Br8A8053FFP1CDNKuMVmqrFXjY8Fp04MGiGvf24GHJGR80JL+mK7mzycNw
+         MDPA==
+X-Forwarded-Encrypted: i=1; AJvYcCWfmro28zvdgFQ18a6YWTkI3kgsMrOUHbXvula9WsUr8pG4mjuHw1VcnraIABt/3AHU2pQ9JA==@lists.linux.dev
+X-Gm-Message-State: AOJu0YwzkeH11gGTMD8zsDd0AcqYS+9W156Kh52VqPxthn/bNQKlAmOK
+	wpOwhw18EOW1gpbtgtazHZGRRaTPa6Gl1o8M7muamXIp3W+OGQ1oun0S
+X-Gm-Gg: AY/fxX6sp3mfRWdW+zhRR9Dpa3+wxvvYQrO7c8xfNWz6SBh8msNhxilazqdwZVg/FcE
+	8MdvU1xgkboIaaDKypFH/2JhofmA+y12v/5lBwp9UYmzc7I7gNrPdmjZ69i/YnBxzsj+HPYhcO+
+	PGwGJRQ5HQIHk5oir00awW6Nnl1mafQEow3l0CkmDjgUoHJvoQETjdKcHOkm3OHZK2spmrXXWTB
+	+NSEzi0a16NK50bQpaAdHRYDi/4QlTUiCry+pQtvmDcn+g8BMP0zTfeW/vm67jSxpkSvV4EuLEI
+	DxmXTCEy4mitAMk5xLbZSFpbk5/5YXhw11zxleyD+4ZoGH2d+5CRiei4tFhXozjL8R7PtJGM+XG
+	8BNkYY2kGTthxZPBSGFzt3jWnah4WySLFAL3iUu2QA5HRngkqt30RW/5EDl0MwVANQtUZ799Y4Z
+	9U
+X-Received: by 2002:a05:7023:906:b0:11a:4ffb:9825 with SMTP id a92af1059eb24-12336a47f3cmr1905143c88.6.1768370718015;
+        Tue, 13 Jan 2026 22:05:18 -0800 (PST)
+Received: from localhost.localdomain ([2607:f130:0:11a::31])
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-121f248c239sm24911154c88.9.2026.01.13.22.05.13
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Tue, 13 Jan 2026 22:05:17 -0800 (PST)
+From: wang lian <lianux.mm@gmail.com>
+To: sj@kernel.org
+Cc: Liam.Howlett@oracle.com,
 	akpm@linux-foundation.org,
+	corbet@lwn.net,
 	damon@lists.linux.dev,
+	david@kernel.org,
+	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org
-Subject: Re: [PATCH 08/11] mm/damon/lru_sort: support active:inactive memory ratio based auto-tuning
-Date: Tue, 13 Jan 2026 21:53:07 -0800
-Message-ID: <20260114055308.79884-1-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260114053629.85750-1-lianux.mm@gmail.com>
-References: 
+	linux-mm@kvack.org,
+	lorenzo.stoakes@oracle.com,
+	mhocko@suse.com,
+	rppt@kernel.org,
+	surenb@google.com,
+	vbabka@suse.cz,
+	wang lian <lianux.mm@gmail.com>
+Subject: Re: [PATCH 09/11] Docs/admin-guide/mm/damon/lru_sort: document active_mem_bp parameter
+Date: Wed, 14 Jan 2026 14:05:04 +0800
+Message-ID: <20260114060504.87119-1-lianux.mm@gmail.com>
+X-Mailer: git-send-email 2.50.1
+In-Reply-To: <20260113152717.70459-10-sj@kernel.org>
+References: <20260113152717.70459-10-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -47,80 +88,13 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Wed, 14 Jan 2026 13:36:28 +0800 wang lian <lianux.mm@gmail.com> wrote:
 
-> 
-> > Doing DAMOS_LRU_[DE]PRIO with DAMOS_QUOTA_[IN]ACTIVE_MEM_BP based quota
-> > auto-tuning can be easy and intuitive, compared to the manual
-> > [de]prioritization target access pattern thresholds tuning.  For
-> > example, users can ask DAMON to "find hot/cold pages and
-> > activate/deactivate those aiming 50:50 active:inactive memory size." But
-> > DAMON_LRU_SORT has no interface to do that.  Add a module parameter for
-> > setting the target ratio.
-> 
-> > Signed-off-by: SeongJae Park <sj@kernel.org>
-> 
-> ```
-> > +static int damon_lru_sort_add_quota_goals(struct damos *hot_scheme,
-> > +		struct damos *cold_scheme)
-> > +{
-> > 	struct damos_quota_goal *goal;
-> > +
-> > +	if (!active_mem_bp)
-> > +		return 0;
-> > +	goal = damos_new_quota_goal(DAMOS_QUOTA_ACTIVE_MEM_BP, active_mem_bp);
-> > +	if (!goal)
-> > +		return -ENOMEM;
-> > +	damos_add_quota_goal(&hot_scheme->quota, goal);
-> > +	/* aim 0.2 % goal conflict, to keep little ping pong */
-> > +	goal = damos_new_quota_goal(DAMOS_QUOTA_INACTIVE_MEM_BP,
-> > +			10000 - active_mem_bp + 2);
-> > +	if (!goal)
-> > +		return -ENOMEM;
-> > +	damos_add_quota_goal(&hot_scheme->quota, goal);
-> > +	return 0;
-> > +}
-> 
-> The second goal (Inactive ratio target) is added to hot_scheme again. 
-> Should this be cold_scheme? Currently the cold_scheme parameter appears to be unused.
+> Document a newly added DAMON_LRU_SORT parameter for doing auto-tuning
+> aiming an active to inactive memory size ratio.
 
-You are right, thank you for catching this, Wang!
+> Signed-off-by: SeongJae Park <sj@kernel.org>
 
-Andrew, could you please add below attaching fixup?
-
-
-Thanks,
-SJ
-
-[...]
-=== >8 ===
-From c8dbbf0cfb01de606d47f455bccc2d7b2d6d07ef Mon Sep 17 00:00:00 2001
-From: SeongJae Park <sj@kernel.org>
-Date: Tue, 13 Jan 2026 21:48:53 -0800
-Subject: [PATCH] mm/damon/lru_sort: add inactive mem ratio quota goal to
- cold_scheme
-
-damon_lru_sort_add_quota_goals() is adding inactive memory ratio quota
-goal, which is for cold pages scheme, to hot pages scheme.  Fix it.
-
-Signed-off-by: SeongJae Park <sj@kernel.org>
----
- mm/damon/lru_sort.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/mm/damon/lru_sort.c b/mm/damon/lru_sort.c
-index f3a9dfc246b6..8af97642912a 100644
---- a/mm/damon/lru_sort.c
-+++ b/mm/damon/lru_sort.c
-@@ -238,7 +238,7 @@ static int damon_lru_sort_add_quota_goals(struct damos *hot_scheme,
- 			10000 - active_mem_bp + 2);
- 	if (!goal)
- 		return -ENOMEM;
--	damos_add_quota_goal(&hot_scheme->quota, goal);
-+	damos_add_quota_goal(&cold_scheme->quota, goal);
- 	return 0;
- }
- 
--- 
-2.47.3
-
+Acked-by: wang lian <lianux.mm@gmail.com>
+--
+Best Regards,
+wang lian
