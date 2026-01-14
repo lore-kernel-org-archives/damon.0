@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EA5B1EA65;
-	Wed, 14 Jan 2026 15:20:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8AD02D77F7;
+	Wed, 14 Jan 2026 15:46:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768404057; cv=none; b=lvMo5O3fVspyHBtTpzfweXMj1ycN7sEDFWfuli3nI2SKhQg1GP+KKy9e1q4yzehmj1jUu0130HTJLkBIeXKOT0wL4KyzvXZ+rZIbtp3JGh52To3Xu8LqEN9uNxA7Z42p541Ml5LGkfaM/X+uDS2XEDc27gnKxzN0xFTcA24zXOw=
+	t=1768405590; cv=none; b=m94vZRV5Kn4jClIFR67XPPEZ131btGY0iunyEpnIwTSfxktZwWc9TujEvs2ke+JNjUQoTCJZ5UGidrCGHKA5TXkFSfBB0eUVAtPdiKfpCKeJ/Gn/suYGAW28RnTnG0rop56e552SiFRKcPucN+qzVBRg6jajRCQyuEHmKIi8ZpI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768404057; c=relaxed/simple;
-	bh=D5tB8wxme+mhdJymsubX32VBj8KaE1ZvdlhzozuhqS8=;
+	s=arc-20240116; t=1768405590; c=relaxed/simple;
+	bh=j2ky40jno61TnJrLoMTlC2emFFzgQJSeqNa7tzJbpMY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lsKIwV8o1P7Vh0BDx2GSHNOLezdwHWZ3H9veQXiI5zGQy9iwt9Nv0lKfbsFecOaRK0EukWj7Oi0RY5OgOq3Src/3tvprv5IQQOOox61wfKVxrVfpSYpKNLsmYvl0NJehaRx3uePL6wtHrO6X+t5PNx/wmL+RZp2Q9d1DUh2frPw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CoVWVWto; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uY/uBOb8ftb90piXXD6K5ZjHmPFDd3VyxW5ZNRrVWsBzdcsvJMD8Q1yNdg53y3DRj2wid4GuBKrWYQnoMEthGmT34Vty4yBNYkzPcn3aq3cfOR09KHO2vtK0MFGpPSSFsmJnWFYulP+ie6ZcB5EFlI7DiAYnjVQWBW3ZjeFqeGo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rs9IGEnt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CoVWVWto"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98387C16AAE;
-	Wed, 14 Jan 2026 15:20:55 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rs9IGEnt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 391DFC19422;
+	Wed, 14 Jan 2026 15:46:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1768404055;
-	bh=D5tB8wxme+mhdJymsubX32VBj8KaE1ZvdlhzozuhqS8=;
+	s=k20201202; t=1768405590;
+	bh=j2ky40jno61TnJrLoMTlC2emFFzgQJSeqNa7tzJbpMY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CoVWVWtoNYSIuaM67czxWeeltkCUUM80TykrLoivBpiUQqYxmyWbnuHJnKczmocJH
-	 8ocxMluyjqNFYjFautQzhwSISBzNuifxGxBl9smTmeva7k2IsUuzDG0ieIzKMseJXz
-	 nxFWOMJhyK8cEDM/9V7VR99FNq5YytDF9ncfv+F+jDejbMJQVrOr48Xm1OzLFMWeiE
-	 Ot/fX6A4c2ETe+rlKCRiyZ/Ef0t8rzFPicEa0EtWjA1LbPDCRY4LBMglfvGzr8JNNI
-	 ezoyqtnr6hS594O2HbIMd0j4QL6D4T/hAZc46Teem52N+zfOnJyGyFN/nnL1IgfQrm
-	 uwBDEOX6o+5cg==
+	b=rs9IGEnt0mEVXhJIpYAUo7LYNmJHYh8psDGVHFS+qmbNyYzpR12tFbsIYwBVBmoeE
+	 JtKjTxlne79AnOLUPHJypfdsBK2FR70A8gZsytebi5Rugv1w1pIpGz1Ykuaz9BN0zx
+	 TrACdWA6osRN+Wv93M+3nMR8iQy96ubYHUB+u6IMvGJdZF0p1mjHsdJuNA94HUbzaX
+	 zjo6iFbABsrnLIt3dA3F04LeTKl3yGlhNv9H6qLWEOn/3drVyFnjhEmmUpn0L/Zk23
+	 yChV/wTh76m6m4+ywO11qtnmYiWvwDP33ktWZFG6vbz8JxIk3U5+x5onqrlM0Z/MWW
+	 FO4ejJZBtxhxw==
 From: SeongJae Park <sj@kernel.org>
-To: Chris Mason <clm@meta.com>
+To: JaeJoon Jung <rgbi3307@gmail.com>
 Cc: SeongJae Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
 	damon@lists.linux.dev,
+	linux-mm@kvack.org,
 	linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org
-Subject: Re: [PATCH 01/12] mm/damon/core: introduce nr_snapshots damos stat
-Date: Wed, 14 Jan 2026 07:20:48 -0800
-Message-ID: <20260114152049.99727-1-sj@kernel.org>
+	rgbi3307@nate.com
+Subject: Re: [PATCH 1/2] mm/damon/core: modified and tunning damon_split_regions_of()
+Date: Wed, 14 Jan 2026 07:46:21 -0800
+Message-ID: <20260114154622.100466-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260114122959.1164957-1-clm@meta.com>
+In-Reply-To: <20260113121646.31441-1-rgbi3307@gmail.com>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -47,132 +47,53 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Wed, 14 Jan 2026 04:29:56 -0800 Chris Mason <clm@meta.com> wrote:
+Hello JaeJoon, thank you for continued interest in DAMON.
 
-> On Tue, 16 Dec 2025 00:01:14 -0800 SeongJae Park <sj@kernel.org> wrote:
-> 
-> > DAMON generates monitoring results snapshots for every sampling
-> > interval.  DAMOS applies given schemes on the regions of the snapshots,
-> > for every apply interval of the scheme.
-> > 
-> > DAMOS stat informs a given scheme has tried to how many memory entities
-> > and applied, in the region and byte level.  In some use cases including
-> > user-space oriented tuning and investigations, it is useful to know that
-> > in the DAMON-snapshot level.  Introduce a new stat, namely nr_snapshots
-> > for DAMON core API callers.
-> 
-> Hi everyone,
-> 
-> I ran mm-new through the AI review prompts and this one was flagged:
+On Tue, 13 Jan 2026 21:16:42 +0900 JaeJoon Jung <rgbi3307@gmail.com> wrote:
 
-Thank you Chris, this is a very helpful and great gift for the community!
+> Before modification:
+>                                                              sz_region
+>     |--------|--------|--------||--------|--------|--------|--------|
+> nr_subs:     1        2        3        4        5                  9
+> split random:    <----------- (*] randmon        LOST -------------->
+> 
+> When dividing sz_region at rand, the random value may be small, such as
+> 1 or 2.  At this time, there is a problem that only the front areas
+> corresponding to 1 and 2 are divided, and the remaining back area
+> becomes too wide.  If the area is too wide, there will be many missed
+> address access judgments.
+> 
+> After modification:
+>                                                              sz_region
+>     |--------|--------|--------|--------|--------|--------|--------||
+> nr_subs:     1        2        3        4        5                  9
+> split from   <------------ (sz_region / nr_subs) ------------------>
+> 
+> It is recommended to divide sz_region evenly in the ratio (sz_region /
+> nr_subs) rather than using rand.  In this way, if you decide nr_subs well,
+> you can logically match the number of divisions and their sizes.
+
+I was thinking about how to reply to this patch.  Since it is taking unusually
+long time, let me add short comments for direct future of this patch.
+
+The existing code uses random() for a reason.  This change might break it.  Can
+you further explain what was the point of the use of random(), and why this
+change is not breaking it?
 
 > 
-> > diff --git a/mm/damon/core.c b/mm/damon/core.c
-> > --- a/mm/damon/core.c
-> > +++ b/mm/damon/core.c
-> > @@ -157,6 +157,12 @@ void damon_destroy_region(struct damon_region *r, struct damon_target *t)
-> >  	damon_free_region(r);
-> >  }
-> >
-> > +static bool damon_is_last_region(struct damon_region *r,
-> > +		struct damon_target *t)
-> > +{
-> > +	return list_is_last(&t->regions_list, &r->list);
->                            ^^^^^^^^^^^^^^^^  ^^^^^^^^
-> 
-> Are the arguments to list_is_last() swapped here? The kernel's
-> list_is_last() expects (entry, head) but this passes (head, entry).
-> 
-> Looking at include/linux/list.h:
-> 
->     static inline int list_is_last(const struct list_head *list,
->                                    const struct list_head *head)
->     {
->         return list->next == head;
->     }
-> 
-> The current code checks if t->regions_list.next == &r->list, which will
-> be true when r is the first region in the list, not the last.
-> 
-> Compare with the existing damon_last_region() in include/linux/damon.h
-> which correctly uses &t->regions_list as the head:
-> 
->     static inline struct damon_region *damon_last_region(struct damon_target *t)
->     {
->         return list_last_entry(&t->regions_list, struct damon_region, list);
->     }
-> 
-> Should this be:
-> 
->     return list_is_last(&r->list, &t->regions_list);
-> 
-> > +}
-> > +
-> 
-> [ ... ]
-> 
-> > @@ -1978,10 +1984,11 @@ static void damon_do_apply_schemes(struct damon_ctx *c,
-> 
-> [ ... ]
-> 
-> > +		if (damon_is_last_region(r, t))
-> > +			s->stat.nr_snapshots++;
-> 
-> If the list_is_last() arguments are indeed swapped, this will increment
-> nr_snapshots when processing the first region of each target rather than
-> the last, causing the stat to be counted once per target instead of once
-> per complete snapshot.
+> Signed-off-by: JaeJoon Jung <rgbi3307@gmail.com>
 
-AI is all correct.  Note that this is not making user-visible issues, though it
-is clearly a bug that better to be fixed.  I explain the reason in below fixup
-patch.
+Unless you can give me a convincing answer to my above question,
 
-Andrew, the commit to fix is in mm-unstable.  Could you please squash below
-attaching fixup to the commit?
+Nacked-by: SeongJae Park <sj@kernel.org>
+
+Same for your followup patch [1].  Btw, please send patches of same series as
+one thread from next time.
+
+[1] https://lore.kernel.org/20260113121731.31468-1-rgbi3307@gmail.com
 
 
 Thanks,
 SJ
 
 [...]
-=== >8 ===
-From 551b89fd05f0c40c824d2a5c0ca6c2a63766fbab Mon Sep 17 00:00:00 2001
-From: SeongJae Park <sj@kernel.org>
-Date: Wed, 14 Jan 2026 06:57:38 -0800
-Subject: [PATCH] mm/damon/core: fix wrong list_is_last() call in
- damons_is_last_region()
-
-damon_is_last_region() is calling list_is_last() with swapped arguments.
-As a result, it works like damon_is_first_region().  Not that this is
-not making user-visible impact, because the function is only used to
-increment nr_snapshots stat once per DAMOS' regions iteration, and the
-stat is exposed users only after the iteration is completed.  That's why
-it passed a user space test.  Nonetheless, the bug is a bug and could
-cause real user issues in future.  Fix it by correcting the order of
-arguments for list_lis_last().
-
-Reported-by: Chris Mason <clm@meta.com>
-Closes: https://lore.kernel.org/20260114122959.1164957-1-clm@meta.com
-Fixes: bbb3a45f1923 ("mm/damon/core: introduce nr_snapshots damos stat") # mm-unstable
-Signed-off-by: SeongJae Park <sj@kernel.org>
----
- mm/damon/core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index 385900733a0b..5d7e58cbd9fe 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -190,7 +190,7 @@ void damon_destroy_region(struct damon_region *r, struct damon_target *t)
- static bool damon_is_last_region(struct damon_region *r,
- 		struct damon_target *t)
- {
--	return list_is_last(&t->regions_list, &r->list);
-+	return list_is_last(&r->list, &t->regions_list);
- }
- 
- /*
--- 
-2.47.3
-
