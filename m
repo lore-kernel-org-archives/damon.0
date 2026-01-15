@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70B4E3ACA4E;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7099227EFE3;
 	Thu, 15 Jan 2026 15:20:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768490453; cv=none; b=Y+zDh5ngCoBJN9MmPuevf8MuZ2yq5LzvNITZAxGBVfvB2DymtxsbSxttV6QzF127LnR7UpBKfXHHp2zliLyHnMxnoG4h6hguTdULwRIkGvMmoOogOCF06j4yGzQzrJfn0HMFU4DYrDvPYlfqTh8caZE8MA1lXeahB7MaSURn1y0=
+	t=1768490453; cv=none; b=BNaUX1rkp1dbwQi+UlKLMP8cOl2cPfljHbqYnzpv7MoK0fpDNBGxha2aiT8WcmHO1e6BD2wXSqa/EiXVVwypxemV7mGfN07HyUHsv2lCUFHbJlQ7K9yRSSzsIkgyGe7mF3JgLOiGz/exlzunlNRwdXpE4yr5y6NEZ8uQrltta1I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1768490453; c=relaxed/simple;
-	bh=1IPEhfIuLNwm0i05nT9ETMSk54stCMKIEwoga36jhG8=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fAOTGrwwdgL7BpjCMCsh7BbYneGqrK53+8tz1BFM8e/AowjTwpX8sMejoQWnIKtN9uXlroo4QMY7oC+d9m8hjVsKLa4TcN++DeTR0gvxIcHhcV2MUJ1Qt4Qf8t7gzhaW6dPFtBJ7dMZWmgs7oSmCaZnNwlEqPFIxo5R8+t4KI0k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mmUrtir3; arc=none smtp.client-ip=10.30.226.201
+	bh=7ggD0S4FVhSUFeQt1c6mab7wiJsXipetONzU/ymQkDg=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=VxiQz/TCzBFuqEKtpf4nnCqwBdsJMUKTHTUG9p5KnRKw3Pj4PDY0h1KQcUqTSAX/W0VyMJXh9qYij8fqMJmAx/UTugxB0pw7HASNkSVg9aKbm+WRkvAaViKehg2sBNAqTnaKCIwntYWELZr3dji+PxPok4fIXeGFM5W3betJ15Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BX17cijj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mmUrtir3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4916C19423;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BX17cijj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB8B9C116D0;
 	Thu, 15 Jan 2026 15:20:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1768490453;
-	bh=1IPEhfIuLNwm0i05nT9ETMSk54stCMKIEwoga36jhG8=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mmUrtir3+hVR4Mbud547emvQzHs+RYh7LX8xdBcT2SrKDVGqkZTAuU1EFqltZIXKl
-	 9uAk6zpfvcfInlVcqJcJru8oasDn4gdYgO4G4oPAl8eBozA+j/SPwWxbLNygI7Vf/h
-	 zuxaqG75HrkZXQg9ffN1bfOenK3Me7Ds6xfAfDYfDg0h9A1gPs8jO/wx8c678ninhQ
-	 9ig1Q/z/IElFee9dHwqy7wiczstggxeEOTgHwW6sdT/Bl5LdW1U7KRiLIF8B4o1XVQ
-	 YVR7JVEQxpfpQOa1jDdvFkb7l1bOePJgdXjwxStmmHabVHVz0HoCITr8ano4xV/vuv
-	 MRLxIRCfMeqTQ==
+	s=k20201202; t=1768490452;
+	bh=7ggD0S4FVhSUFeQt1c6mab7wiJsXipetONzU/ymQkDg=;
+	h=From:To:Cc:Subject:Date:From;
+	b=BX17cijjapR9Priw09Qu6P+VJV5P6SfGe5/A97an7EA9ghdfS0SIRZf0F8Wk3z7Az
+	 eOhhnEp4eBhxHbiJKXvBNSjgp3fay/pnkC5UcQNawIZs6W9WLN3PZbXGb3KPTwe496
+	 NPSt8mAnceh0hQHiWZC2OvoWPaUzC3rWVDmu1lqD/PwGmlQbJpPg01SxIz5uv307kQ
+	 voN/AVMX7apzdo9IFF9UZvRSUfEAqmlP5KR/jK9IQ/CeOS0LQ0o4GxRkuAjowTVlhD
+	 5Q+9u3IgAvfrywM4mEsJ51gPQcmcTgy5cvpebZ4wPoCzAAQ3qUJGBQrp8dmMtA8+GW
+	 rBIt2aI2mYIUA==
 From: SeongJae Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SeongJae Park <sj@kernel.org>,
 	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [PATCH 1/5] mm/damon/core: implement damon_kdamond_pid()
-Date: Thu, 15 Jan 2026 07:20:41 -0800
-Message-ID: <20260115152047.68415-2-sj@kernel.org>
+Subject: [PATCH 0/5] mm/damon: hide kdamond and kdamond_lock from API callers
+Date: Thu, 15 Jan 2026 07:20:40 -0800
+Message-ID: <20260115152047.68415-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260115152047.68415-1-sj@kernel.org>
-References: <20260115152047.68415-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -46,57 +43,41 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-'kdamond' and 'kdamond_lock' are directly being used by DAMON API
-callers for getting the pid of the corresponding kdamond.  To discourage
-invention of creative but complicated and erroneous new usages of the
-fields that require careful synchronization, implement a new API
-function that can simply be used without the manual synchronizations.
+'kdamond' and 'kdamond_lock' fields initially exposed to DAMON API
+callers for flexible synchronization and use cases.  As DAMON API became
+somewhat complicated compared to the early days, Keeping those exposed
+could only encourage the API callers to invent more creative but
+complicated and difficult-to-debug use cases.
 
-Signed-off-by: SeongJae Park <sj@kernel.org>
----
- include/linux/damon.h |  1 +
+Fortunately DAMON API callers didn't invent that many creative use
+cases.  There exist only two use cases of 'kdamond' and 'kdamond_lock'.
+Finding whether the kdamond is actively running, and getting the pid of
+the kdamond.  For the first use case, a dedicated API function, namely
+'damon_is_running()' is provided, and all DAMON API callers are using
+the function for the use case.  Hence only the second use case is where
+the fields are directly being used by DAMON API callers.
+
+To prevent future invention of complicated and erroneous use cases of
+the fields, hide the fields from the API callers.  For that, provide new
+dedicated DAMON API functions for the remaining use case, namely
+damon_kdamond_pid(), migrate DAMON API callers to use the new function,
+and mark the fields as private fields.
+
+SeongJae Park (5):
+  mm/damon/core: implement damon_kdamond_pid()
+  mm/damon/sysfs: use damon_kdamond_pid()
+  mm/damon/lru_sort: use damon_kdamond_pid()
+  mm/damon/reclaim: use damon_kdamond_pid()
+  mm/damon: hide kdamond and kdamond_lock of damon_ctx
+
+ include/linux/damon.h | 30 +++++++++++++++---------------
  mm/damon/core.c       | 17 +++++++++++++++++
- 2 files changed, 18 insertions(+)
+ mm/damon/lru_sort.c   |  4 +++-
+ mm/damon/reclaim.c    |  4 +++-
+ mm/damon/sysfs.c      |  7 +++----
+ 5 files changed, 41 insertions(+), 21 deletions(-)
 
-diff --git a/include/linux/damon.h b/include/linux/damon.h
-index 26fb8e90dff6..5b7ea7082134 100644
---- a/include/linux/damon.h
-+++ b/include/linux/damon.h
-@@ -972,6 +972,7 @@ bool damon_initialized(void);
- int damon_start(struct damon_ctx **ctxs, int nr_ctxs, bool exclusive);
- int damon_stop(struct damon_ctx **ctxs, int nr_ctxs);
- bool damon_is_running(struct damon_ctx *ctx);
-+int damon_kdamond_pid(struct damon_ctx *ctx);
- 
- int damon_call(struct damon_ctx *ctx, struct damon_call_control *control);
- int damos_walk(struct damon_ctx *ctx, struct damos_walk_control *control);
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index 729a5f7fac94..81b998d32074 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -1442,6 +1442,23 @@ bool damon_is_running(struct damon_ctx *ctx)
- 	return running;
- }
- 
-+/**
-+ * damon_kdamond_pid() - Return pid of a given DAMON context's worker thread.
-+ * @ctx:	The DAMON context of the question.
-+ *
-+ * Return: pid if @ctx is running, negative error code otherwise.
-+ */
-+int damon_kdamond_pid(struct damon_ctx *ctx)
-+{
-+	int pid = -EINVAL;
-+
-+	mutex_lock(&ctx->kdamond_lock);
-+	if (ctx->kdamond)
-+		pid = ctx->kdamond->pid;
-+	mutex_unlock(&ctx->kdamond_lock);
-+	return pid;
-+}
-+
- /*
-  * damon_call_handle_inactive_ctx() - handle DAMON call request that added to
-  *				      an inactive context.
+
+base-commit: 1aebb6fcfd6a8da57a4eda7863d69e533c392ae0
 -- 
 2.47.3
