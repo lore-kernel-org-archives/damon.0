@@ -1,72 +1,39 @@
-Received: from mail-pl1-f195.google.com (mail-pl1-f195.google.com [209.85.214.195])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98039156237
-	for <damon@lists.linux.dev>; Fri, 16 Jan 2026 05:07:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.195
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 353897260D;
+	Fri, 16 Jan 2026 22:48:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768540081; cv=none; b=RcptLpRWwWfMFRgKDIrXEnUECFNse0D3pLKjmWZZ1yvh6Huv+PSJ1BMTSpGfsxCWW4yytbQpsBdD4AD4L5jfgk4LCTOTjJKGrv0oGPTRrdFIYO6F8J9HlPP+2kcVKMNLjlAq8+NFJm2ukDmDEAghS0vgdoqUn6cMpueC++lKYbQ=
+	t=1768603681; cv=none; b=Ov6dWcrgei/CT0xTQ738Wn8PGp4Wu1YuV+1oKtuZ8YiCFbmpkd6s1I0T2E2LceUssHjBcuezEy0eW+cmDNQ2JPcynT3+s8U5cBx9/Cb7VcgGVJJiZ+s5sT8A0a56sxchzsTan747Tkxtmd7hBcZtvumH2Zcb65aotZll4IzR1/0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768540081; c=relaxed/simple;
-	bh=kLpWswneAx0RGuQsWD+kukGYeyKKODoF+KXeA1cVpeE=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=XcRqqEpejWW8f0z4fY2xGKmvk+5AIdxnXCf5YXtAg7ujdG7BPA166iuvHpbfVAaisBxn+YEhekiQ1YnphSJTAu07HineWTIrO/UiQnA5aM9d6hrVB8Ce0s3jui6oaBvnJoTljhbgIKN/8tcJq/4yCQ1lpIpCd2OMg5kgGhipZyc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Qnj+ixGE; arc=none smtp.client-ip=209.85.214.195
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1768603681; c=relaxed/simple;
+	bh=Y1fgslvUFGv7FFMMxCuMeKzRLD1x+G0p7+kfTN3IfXM=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=utCLpGP7H/JvkeMxgjL7ujGkNb30G+e88bKelYQtzPQkj0tKMAvOewCzTp0CgkbnOK8FjLJAcX9k33mFDissP02HRoKN6QWQC/0TYg7wHV7tfI2/jT7Cx9IxKVr4us04twmY/GbaPmY7iXXw9U7r5OChA6HuvMP8UfuMAnqOp84=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fpii7T5h; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Qnj+ixGE"
-Received: by mail-pl1-f195.google.com with SMTP id d9443c01a7336-2a110548cdeso11873245ad.0
-        for <damon@lists.linux.dev>; Thu, 15 Jan 2026 21:07:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1768540078; x=1769144878; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=LE6O+8bJNWV1Ml1X2gUOFjzkYDBsJiSiNmPWn00M8ME=;
-        b=Qnj+ixGEMGcN7CBVimzNSjRWfsVi4VNIxH7FsVdsWXW3BPEOsUIoTcKZhem/aFNwVB
-         SwYbRGQPxUbjhoAzB3yumveufH7/pO4yWIjzB0ycyrHUaXQC3et9UVCs58X0wTnCZ6GB
-         V0ePZnr6G3tBYqGG4gPkaJEsQtwTDvK5ydj9qKXsdqQdwkraIwOKcIwZQI2gnTh6Bh8R
-         ymdWs2rA3jG/W45va8kn1adX5CTh1DUAtFBEPeqa2OiN/W8g7/83YI4hhdlP9t5mbq+H
-         GThZJmieQ6XXDnEa8ngJYIbk2GCfzbauP9bXAIich0bg3LMJvvOGpRmUiNaedHBBTDiY
-         IqlA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768540078; x=1769144878;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=LE6O+8bJNWV1Ml1X2gUOFjzkYDBsJiSiNmPWn00M8ME=;
-        b=dzp/crUvO1VVf2PjgEyhsiPEtyzjcK+6ZIqrig44hZPMVre3PSakbPDiI/nT9HZFub
-         QEOtJdnWQ09yCmpVP8EgMLQnOMeinoPzi16UI94eoIngl+oL8V/wFc7cUBNjZdhL/xUT
-         CkFb5/yCfEp2QVaF1DhYhoxMJSHLckKyRNNTnNbXkiNmiHA8f8pYTkB9op23PnCMO6Sz
-         G6d+MWHCaIF+DMlhxo4Bsq90nkYWeqfojx0nVFMX2OSPp7Hj6V4hzJNaEDOjJ2EexCyI
-         MfyytzS7mQKRSABwwW1C3NQKYF72EsGQGMp7TaZzX4e+413RenVK6Uhh0P564bzIGQAT
-         0K2A==
-X-Forwarded-Encrypted: i=1; AJvYcCXoW1Ckkih8+J7o9WqipgDgze9iw8BdKFL6/K84kP/pc2yQHjk/oSKOhDuyJAebVJPeEec4XA==@lists.linux.dev
-X-Gm-Message-State: AOJu0YxmycN7eo31A3s/JUoU9suNa5Wt17u95dL595UUWOoyIEWUu8xV
-	jnR4T3ge+w/0qiklmwWx159s9NTd4P8z0c+T2cPMgicCAuXzdW1QBFn/
-X-Gm-Gg: AY/fxX7FhqOvbUxzOILusaKab267Of4g8icHliQ8zsDkAvEVWkhaLHWw8Rl8RXX3G3Q
-	sZwIFrQUOsOF3GS/PXkVpxmfbqQ0bTX+l9MgSgCRB/uwzVeicxAGGJMOJrwWRApGFgSjri9+5nz
-	FprMq4JLJpKycHk/Y7Ef9fUHSXfbrMfd44dW7WjvGtgQ2zMBK8XXqhb8MaAJszhLtjCu7diyHvC
-	RqifNwhOiOBSQnDW+pMEw7K0kT5nFyZsbjvVyU3koOwZUu9BD6UqBd3o7NufNnPRvT8Mn5b4ZN5
-	+WEwEOYGcbMj3kFOv4umpGdt4Boru4WtZ8extV1x/+8Qz6Hm63PtWX+/j70brBrPDVIMxj8sz8s
-	JmZk5KsYhg2iUpuftg+8bp4rNAIC7G8bRf3/g9pR70CHysMqMwbWJW+FTM67u2JD7PwfR6XqS1N
-	08h2nbGkoHwphv
-X-Received: by 2002:a17:902:d488:b0:295:7b89:cb8f with SMTP id d9443c01a7336-2a717413b94mr15503975ad.0.1768540077749;
-        Thu, 15 Jan 2026 21:07:57 -0800 (PST)
-Received: from HP-Note-Host.. ([222.234.91.137])
-        by smtp.googlemail.com with ESMTPSA id d9443c01a7336-2a7193dd523sm8544085ad.62.2026.01.15.21.07.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 15 Jan 2026 21:07:57 -0800 (PST)
-From: JaeJoon Jung <rgbi3307@gmail.com>
-To: sj@kernel.org
-Cc: JaeJoon Jung <rgbi3307@gmail.com>,
-	damon@lists.linux.dev,
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fpii7T5h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EBEDC116C6;
+	Fri, 16 Jan 2026 22:48:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1768603680;
+	bh=Y1fgslvUFGv7FFMMxCuMeKzRLD1x+G0p7+kfTN3IfXM=;
+	h=From:To:Cc:Subject:Date:From;
+	b=fpii7T5hayCWs0pysxiBoH/iS//50XKk8pkwZJCe8ne1rJaRGKqDmnGFwq7QLEwDf
+	 bddwlakbSJUPQK5sXmD970nQLqrMwGuwRE4KkvwTjep2AjQQ3QgDTiufVk76Kq9G3n
+	 C/qAYglLGofQUBChwX+exBOe92JHFV1MbVr9KzTB3NkWQIjj+mg8k9JLrv5v8W8KU+
+	 dQIIHB5ci5RzVBX5dlAgCZo1GzmBspVOURgenyygeKmWcCBOZ1ROtutxQLytVYhFS4
+	 SuMxJ6nwQ0YxU2rSo7GBlu3hdnCLlBMIOItn0TRIx2sNx4YSpq+1nkCln6lTkS9CEL
+	 tNI8FvKST4G3Q==
+From: SeongJae Park <sj@kernel.org>
+To: damon@lists.linux.dev
+Cc: SeongJae Park <sj@kernel.org>,
 	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org,
-	rgbi3307@nate.com
-Subject: [PATCH] mm/damon/core: reinitialize when passed_sample_intervals occurred overflow
-Date: Fri, 16 Jan 2026 14:07:35 +0900
-Message-ID: <20260116050737.21407-1-rgbi3307@gmail.com>
-X-Mailer: git-send-email 2.43.0
+	linux-kernel@vger.kernel.org
+Subject: DAMON Beer/Coffee/Tea chat reminder for the week of 2026-01-19
+Date: Fri, 16 Jan 2026 14:47:58 -0800
+Message-ID: <20260116224759.40500-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -75,51 +42,41 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-To concisely explain the variables that calculate the time flow in
-kdamond_fn(), we write them as follows:
+Hello,
 
-unsigned long ctx->passed_sample_intervals: c.psi
-unsigned long ctx->next_ops_update_sis: c.nui
 
-Normal:
-[-----------------+---------------+-------------------+----------]
-                c.psi           c.nui
-                  --------------->              next c.nui
-                        if (c.psi >= c.nui) ---------->
+This is yet another reminder of upcoming DAMON Beer/Coffee/Tea chats
+(https://docs.google.com/document/d/1v43Kcj3ly4CYqmAkMaZzLiM2GEnWfgdGbZAH3mi2vpM/edit?usp=sharing)
+for the week of 2026-01-19.
 
-Overflow(OF):
-[-----------------+---------------+-------------------+----------]
-                                c.psi               c.nui
-                                  -------------------->
-                                            if (c.psi >= c.nui) ---> OF
-[-----+-----------
-    next c.nui
+As usual, we have two time slots for meetings in the week.  The one for
+wednesday is already reserved.
 
-Overflow(OF) occurred if (c.psi >= next c.nui):
-Overflow may occur as shown above. In this case, re-run kdamond_init_ctx()
-to reinitialize the relevant variables.
+Next time slots including six virtual-only ones are as below.
 
-Signed-off-by: JaeJoon Jung <rgbi3307@gmail.com>
----
- mm/damon/core.c | 5 +++++
- 1 file changed, 5 insertions(+)
+2026-01-19 (Mon) 18:00 PT (not yet reserved)
+2026-01-21 (Wed) 09:30 PT (reserved)
+2026-02-02 (Mon) 18:00 PT (not yet reserved)
+2026-02-04 (Wed) 09:30 PT (not yet reserved)
+2026-02-16 (Mon) 18:00 PT (not yet reserved)
+2026-02-18 (Wed) 09:30 PT (not yet reserved)
 
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index f9fc0375890a..c4b2831cff89 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -2740,6 +2740,11 @@ static int kdamond_fn(void *data)
- 			if (ctx->ops.update)
- 				ctx->ops.update(ctx);
- 			sz_limit = damon_region_sz_limit(ctx);
-+
-+			/* reinitialize when overflow occurs */
-+			if (ctx->passed_sample_intervals >=
-+					ctx->next_ops_update_sis)
-+				kdamond_init_ctx(ctx);
- 		}
- 	}
- done:
---
-2.43.0
+Please reach out to me (sj@kernel.org or whatever) to reserve the
+not-yet-reserved time slots for your topics.  The reservation is made in a
+First-Come First-Served way, and I will send a Google Meet link to
+reservation-confirmed attendees.
 
+Please note that other time slots are also available on demands.
+
+Shared Calendar
+---------------
+
+You can get the schedule via this shared Google Calendar:
+https://calendar.google.com/calendar/u/0?cid=ZDIwOTA4YTMxNjc2MDQ3NTIyMmUzYTM5ZmQyM2U4NDA0ZGIwZjBiYmJlZGQxNDM0MmY4ZTRjOTE0NjdhZDRiY0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t
+
+You can also get the past and upcoming schedules via
+https://docs.google.com/document/d/1v43Kcj3ly4CYqmAkMaZzLiM2GEnWfgdGbZAH3mi2vpM/edit?usp=sharing
+
+
+Thanks,
+SJ
