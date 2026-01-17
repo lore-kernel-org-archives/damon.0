@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF0841A0BF1;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF0E8233711;
 	Sat, 17 Jan 2026 17:53:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768672385; cv=none; b=dwvUgxDBaPJgjgJv0XZyLDJQz/HxzHbGfCUzC9FQRfbgrZLjXtT9QogVyWQXnhi0fkAKzBxXIHx+XM+N3KAcHy/peegwgO4kElbKAd+Fejqta/70gen1MuOqOs1OtlHgsTpATXGdMMedL06g3XksQ7THeGrdHY2bI9SPQ6ezIlA=
+	t=1768672385; cv=none; b=ZZrYjBNJiRnmEAu+P7iCNyEhzs0ad97Ff7Zi/nJVz5CN90oTK5UOiYONWaVf38SRUC8gYIi5oI7nVFGT5/E0ffdluC2kduCf2XWMulh1sME7JkkoF2PcaXc0UkTMIcNlbArFwyFS09VGUf4wBsbqbm2yz9oZB5ckLXk+p+anrag=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1768672385; c=relaxed/simple;
-	bh=BrhbCrEirTOhCYFjA97mSPQaKUy3EH5FD2Gu/gQI3T8=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=McfdLt06NqN/4RkdN7LMplvoUkOn+6VTA5CXlmDyyYggcXsXT3IRBBGRo0eG9JMDI1FXAjB53sftaIlLXa94XEJjjQO77s91qiUSUYSDv0Lik6oFfVdTZVm+vFSRn7f5ft6862cwkbY8g7vJXMcnBkMIjpWK+PoLQodHqHSgbRY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MgIAAu1w; arc=none smtp.client-ip=10.30.226.201
+	bh=AH/DZBwYEbnLl/A558vtilxxCPLZZlZguhHUqR5KoKU=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=LxjLyFCr71TAxk/oxqUxjCH0KR2PkvVicmGx4wnJSquSX1qNb9fRxQM20ymXZSHt0xLLkiTtzYhjwIc4usdfSizjU1jQUsVK1CIB79Zm7QcTHbvYn68qCHo2AUBkAldW+mHBBhptupPePKaUPqpvNTmlWFQS1/vFZusQnV2LrkM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uRo/RGFb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MgIAAu1w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75EB5C4CEF7;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uRo/RGFb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3594C19424;
 	Sat, 17 Jan 2026 17:53:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1768672384;
-	bh=BrhbCrEirTOhCYFjA97mSPQaKUy3EH5FD2Gu/gQI3T8=;
-	h=From:To:Cc:Subject:Date:From;
-	b=MgIAAu1w4/CWCZJiuLLu5kFcobQQr2kktaP5aJUyrLFsARW4KF8/g4i8gcsk3uKhs
-	 k6WnlweJvSFt+ha6mHfoQGQODYc3RcD417fU43BA4ZexjId0zXOjaMPdG47jQaVtrd
-	 EWHBiGxUyDwmK0x1tNJEtdrcMNpP7lizmH2IzdMyrJsgh0tKPh0g7y30QUjAxqVIgJ
-	 1TvEKiCT4Ql/HfUqEDWyLUcBoMNl/7TcXnt/nYhUpnJW0MUDtzJnFwfp6kJxDMobOz
-	 QgNfqsXExC0kvwgmtW/ku93cGdA5zi5598Q+mpUomS/xR22gSoPRWCvNJ1byoELGy8
-	 Qebwzn6y9/K1Q==
+	bh=AH/DZBwYEbnLl/A558vtilxxCPLZZlZguhHUqR5KoKU=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=uRo/RGFb2F1Gvvj5IoUxCZoRDJzJrhCdh704F49bhGjp7psN3RSMgSFfPTx5V5gxX
+	 O8huFE/LLrRSypF/OgWTE4yjXVLTV6Sa4MQ+ylPhEPONuEpHmZEMqm7j2g0B6HKAlf
+	 diUk1K/CyqRrUiJA7e5RM2L9/nnMN1M/GcGi7+PThcGvG/8yNEJbniYaYg6sw0Yg3b
+	 MylR0Xq7YxkgxsHm06EYJ7Cx8kI/sjKrlJhfy2Lo6kycV6JkenhPbFQvy27aoDBf2/
+	 ypSdQJ2r+AGAjcP817uLI0hkpjCeABas7o6uHL7wdA4fqjk9yUl5PJP8nn3AslCz7V
+	 5s8mqpq/NrGRA==
 From: SeongJae Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SeongJae Park <sj@kernel.org>,
 	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [PATCH 0/8] mm/damon: cleanup kdamond, damon_call(), damos filter and DAMON_MIN_REGION
-Date: Sat, 17 Jan 2026 09:52:47 -0800
-Message-ID: <20260117175256.82826-1-sj@kernel.org>
+Subject: [PATCH 1/8] mm/damon: remove damon_operations->cleanup()
+Date: Sat, 17 Jan 2026 09:52:48 -0800
+Message-ID: <20260117175256.82826-2-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260117175256.82826-1-sj@kernel.org>
+References: <20260117175256.82826-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -43,45 +46,82 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Do miscellaneous code cleanups for improving readability.  First three
-patches cleanup kdamond termination process, by removing unused
-operation set cleanup callback (patch 1) and moving damon_ctx specific
-resource cleanups on kdamond termination to synchronization-easy place
-(patches 2 and 3).  Next two patches touch damon_call() infrastructure,
-by refactoring kdamond_call() function to do less and simpler locking
-operations (patch 4), and documenting when dealloc_on_free does work
-(patch 5).  Final three patches rename things for clear uses of those.
-Those rename damos_filter_out() to be more explicit about the fact that
-it is only for core-handled filters (patch 6), DAMON_MIN_REGION macro to
-be more explicit it is not about number of regions but size of each
-region (patch 7), and damon_ctx->min_sz_region to be different from
-damos_access_patern->min_sz_region (patch 8), so that those are not
-confusing and easy to grep.
+damon_operations->cleanup() was added for a case that an operation set
+implementation requires additional cleanups.  But no such implementation
+exists at the moment.  Remove it.
 
-SeongJae Park (8):
-  mm/damon: remove damon_operations->cleanup()
-  mm/damon/core: cleanup targets and regions at once on kdamond
-    termination
-  mm/damon/core: cancel damos_walk() before damon_ctx->kdamond reset
-  mm/damon/core: process damon_call_control requests on a local list
-  mm/damon: document damon_call_control->dealloc_on_cancel repeat
-    behavior
-  mm/damon/core: rename damos_filter_out() to damos_core_filter_out()
-  mm/damon: rename DAMON_MIN_REGION to DAMON_MIN_REGION_SZ
-  mm/damon: rename min_sz_region of damon_ctx to min_region_sz
+Signed-off-by: SeongJae Park <sj@kernel.org>
+---
+ include/linux/damon.h | 3 ---
+ mm/damon/core.c       | 2 --
+ mm/damon/paddr.c      | 1 -
+ mm/damon/vaddr.c      | 1 -
+ 4 files changed, 7 deletions(-)
 
- include/linux/damon.h        |  15 ++--
- mm/damon/core.c              | 143 +++++++++++++++--------------------
- mm/damon/lru_sort.c          |   4 +-
- mm/damon/paddr.c             |   1 -
- mm/damon/reclaim.c           |   4 +-
- mm/damon/stat.c              |   2 +-
- mm/damon/sysfs.c             |  11 +--
- mm/damon/tests/vaddr-kunit.h |   2 +-
- mm/damon/vaddr.c             |  25 +++---
- 9 files changed, 89 insertions(+), 118 deletions(-)
-
-
-base-commit: 886ef5515d08f05191b61a347fc18f371627bdd4
+diff --git a/include/linux/damon.h b/include/linux/damon.h
+index e6930d8574d3..bd4c76b126bd 100644
+--- a/include/linux/damon.h
++++ b/include/linux/damon.h
+@@ -607,7 +607,6 @@ enum damon_ops_id {
+  * @apply_scheme:		Apply a DAMON-based operation scheme.
+  * @target_valid:		Determine if the target is valid.
+  * @cleanup_target:		Clean up each target before deallocation.
+- * @cleanup:			Clean up the context.
+  *
+  * DAMON can be extended for various address spaces and usages.  For this,
+  * users should register the low level operations for their target address
+@@ -640,7 +639,6 @@ enum damon_ops_id {
+  * @target_valid should check whether the target is still valid for the
+  * monitoring.
+  * @cleanup_target is called before the target will be deallocated.
+- * @cleanup is called from @kdamond just before its termination.
+  */
+ struct damon_operations {
+ 	enum damon_ops_id id;
+@@ -656,7 +654,6 @@ struct damon_operations {
+ 			struct damos *scheme, unsigned long *sz_filter_passed);
+ 	bool (*target_valid)(struct damon_target *t);
+ 	void (*cleanup_target)(struct damon_target *t);
+-	void (*cleanup)(struct damon_ctx *context);
+ };
+ 
+ /*
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index 81b998d32074..53514cb712cf 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -2859,8 +2859,6 @@ static int kdamond_fn(void *data)
+ 			damon_destroy_region(r, t);
+ 	}
+ 
+-	if (ctx->ops.cleanup)
+-		ctx->ops.cleanup(ctx);
+ 	kfree(ctx->regions_score_histogram);
+ 	kdamond_call(ctx, true);
+ 
+diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
+index 4c2c935d82d6..9bfe48826840 100644
+--- a/mm/damon/paddr.c
++++ b/mm/damon/paddr.c
+@@ -373,7 +373,6 @@ static int __init damon_pa_initcall(void)
+ 		.prepare_access_checks = damon_pa_prepare_access_checks,
+ 		.check_accesses = damon_pa_check_accesses,
+ 		.target_valid = NULL,
+-		.cleanup = NULL,
+ 		.apply_scheme = damon_pa_apply_scheme,
+ 		.get_scheme_score = damon_pa_scheme_score,
+ 	};
+diff --git a/mm/damon/vaddr.c b/mm/damon/vaddr.c
+index 23ed738a0bd6..40c73adf1946 100644
+--- a/mm/damon/vaddr.c
++++ b/mm/damon/vaddr.c
+@@ -1014,7 +1014,6 @@ static int __init damon_va_initcall(void)
+ 		.check_accesses = damon_va_check_accesses,
+ 		.target_valid = damon_va_target_valid,
+ 		.cleanup_target = damon_va_cleanup_target,
+-		.cleanup = NULL,
+ 		.apply_scheme = damon_va_apply_scheme,
+ 		.get_scheme_score = damon_va_scheme_score,
+ 	};
 -- 
 2.47.3
