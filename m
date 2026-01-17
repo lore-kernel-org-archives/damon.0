@@ -1,45 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74B803128A3;
-	Sat, 17 Jan 2026 02:07:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF0841A0BF1;
+	Sat, 17 Jan 2026 17:53:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768615660; cv=none; b=MJOXft93dwGob3Xt/YjitOZid/Ca0wX020MnGooVQHBvSJBOG7dUBnf3pTK3RMyRoBnnRWPGVt3pxLrZfQOHiPIHrqMUsEOWxd8UmvGGeemGNXZBX9bc79Qr6GPio2NSDrNs5Ac/xdXDa6iwkeupbC2recVrG5LV+Ieqtl07S9k=
+	t=1768672385; cv=none; b=dwvUgxDBaPJgjgJv0XZyLDJQz/HxzHbGfCUzC9FQRfbgrZLjXtT9QogVyWQXnhi0fkAKzBxXIHx+XM+N3KAcHy/peegwgO4kElbKAd+Fejqta/70gen1MuOqOs1OtlHgsTpATXGdMMedL06g3XksQ7THeGrdHY2bI9SPQ6ezIlA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768615660; c=relaxed/simple;
-	bh=CG7FIKN2uhUYlogFlECFQp/aiQrzKBqLzUq1oqqm9T4=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W0XMSqKfB8B7Zcbg57+DshgOaa5+q6rHq8hDVq8eEaChuwbuqMi2MLiAZBD0ksIZJaM1GRI3qB08HUh4eAdFsM2PFAoAaOk1dw+Zr1YZweiW3kGmqEWCxXkanQwiVgj6lhmD1i+YncD/H00TXD5BKycY/Hd8iy0MB1UN82H38tg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=at9hip/N; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1768672385; c=relaxed/simple;
+	bh=BrhbCrEirTOhCYFjA97mSPQaKUy3EH5FD2Gu/gQI3T8=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=McfdLt06NqN/4RkdN7LMplvoUkOn+6VTA5CXlmDyyYggcXsXT3IRBBGRo0eG9JMDI1FXAjB53sftaIlLXa94XEJjjQO77s91qiUSUYSDv0Lik6oFfVdTZVm+vFSRn7f5ft6862cwkbY8g7vJXMcnBkMIjpWK+PoLQodHqHSgbRY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MgIAAu1w; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="at9hip/N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E459C19425;
-	Sat, 17 Jan 2026 02:07:40 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MgIAAu1w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75EB5C4CEF7;
+	Sat, 17 Jan 2026 17:53:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1768615660;
-	bh=CG7FIKN2uhUYlogFlECFQp/aiQrzKBqLzUq1oqqm9T4=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=at9hip/NNgMK8XQXptqszZ0yNlLCCj33sTWAYLEG7gA86bgGbokQZ6kMguug4V2HD
-	 0GLqeAdfMX4UfamKQb9liCDGMwge3QZmZ1JKHjfUADAXDmMi36bhwKB8dNgyI/j3gy
-	 zjuYz8Keoai8fJLsezHOoK8HnZngvOhHl9gpJS8kllJ0USgEEnJnZvpZARkQrsPTI9
-	 +UmhKqb7jXAiReAvDexmQCAVfRI6abg/0SAg86Xtn+xbkA/wYNO5v/LB9ywXymGOWf
-	 DbZpGm5YCaZ4ioKXa5CcKDtWxO8WD5nmKK8HisOiLj9SOIvpZggL/3pweYE61B0xew
-	 FE/g3vijElxvQ==
+	s=k20201202; t=1768672384;
+	bh=BrhbCrEirTOhCYFjA97mSPQaKUy3EH5FD2Gu/gQI3T8=;
+	h=From:To:Cc:Subject:Date:From;
+	b=MgIAAu1w4/CWCZJiuLLu5kFcobQQr2kktaP5aJUyrLFsARW4KF8/g4i8gcsk3uKhs
+	 k6WnlweJvSFt+ha6mHfoQGQODYc3RcD417fU43BA4ZexjId0zXOjaMPdG47jQaVtrd
+	 EWHBiGxUyDwmK0x1tNJEtdrcMNpP7lizmH2IzdMyrJsgh0tKPh0g7y30QUjAxqVIgJ
+	 1TvEKiCT4Ql/HfUqEDWyLUcBoMNl/7TcXnt/nYhUpnJW0MUDtzJnFwfp6kJxDMobOz
+	 QgNfqsXExC0kvwgmtW/ku93cGdA5zi5598Q+mpUomS/xR22gSoPRWCvNJ1byoELGy8
+	 Qebwzn6y9/K1Q==
 From: SeongJae Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SeongJae Park <sj@kernel.org>,
-	Shuah Khan <shuah@kernel.org>,
 	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
-	linux-kselftest@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [PATCH 5/5] selftests/damon/wss_estimation: deduplicate failed samples output
-Date: Fri, 16 Jan 2026 18:07:28 -0800
-Message-ID: <20260117020731.226785-6-sj@kernel.org>
+Subject: [PATCH 0/8] mm/damon: cleanup kdamond, damon_call(), damos filter and DAMON_MIN_REGION
+Date: Sat, 17 Jan 2026 09:52:47 -0800
+Message-ID: <20260117175256.82826-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260117020731.226785-1-sj@kernel.org>
-References: <20260117020731.226785-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -48,37 +43,45 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-When the test fails, it shows whole sampled working set size
-measurements.  The purpose is showing the distribution of the measured
-values, to let the tester know if it was just intermittent failure.
-Multiple same values on the output are therefore unnecessary.  It was
-not a big deal since the test was failing only once in the past.  But
-the test can now fail multiple times with increased working set size,
-until it passes or the working set size reaches a limit.  Hence the
-noisy output can be quite long and annoying.  Print only the
-deduplicated distribution information.
+Do miscellaneous code cleanups for improving readability.  First three
+patches cleanup kdamond termination process, by removing unused
+operation set cleanup callback (patch 1) and moving damon_ctx specific
+resource cleanups on kdamond termination to synchronization-easy place
+(patches 2 and 3).  Next two patches touch damon_call() infrastructure,
+by refactoring kdamond_call() function to do less and simpler locking
+operations (patch 4), and documenting when dealloc_on_free does work
+(patch 5).  Final three patches rename things for clear uses of those.
+Those rename damos_filter_out() to be more explicit about the fact that
+it is only for core-handled filters (patch 6), DAMON_MIN_REGION macro to
+be more explicit it is not about number of regions but size of each
+region (patch 7), and damon_ctx->min_sz_region to be different from
+damos_access_patern->min_sz_region (patch 8), so that those are not
+confusing and easy to grep.
 
-Signed-off-by: SeongJae Park <sj@kernel.org>
----
- .../sysfs_update_schemes_tried_regions_wss_estimation.py    | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+SeongJae Park (8):
+  mm/damon: remove damon_operations->cleanup()
+  mm/damon/core: cleanup targets and regions at once on kdamond
+    termination
+  mm/damon/core: cancel damos_walk() before damon_ctx->kdamond reset
+  mm/damon/core: process damon_call_control requests on a local list
+  mm/damon: document damon_call_control->dealloc_on_cancel repeat
+    behavior
+  mm/damon/core: rename damos_filter_out() to damos_core_filter_out()
+  mm/damon: rename DAMON_MIN_REGION to DAMON_MIN_REGION_SZ
+  mm/damon: rename min_sz_region of damon_ctx to min_region_sz
 
-diff --git a/tools/testing/selftests/damon/sysfs_update_schemes_tried_regions_wss_estimation.py b/tools/testing/selftests/damon/sysfs_update_schemes_tried_regions_wss_estimation.py
-index cdccb9f0f855..35c724a63f6c 100755
---- a/tools/testing/selftests/damon/sysfs_update_schemes_tried_regions_wss_estimation.py
-+++ b/tools/testing/selftests/damon/sysfs_update_schemes_tried_regions_wss_estimation.py
-@@ -53,7 +53,11 @@ def pass_wss_estimation(sz_region):
-             print('the error rate is not acceptable (> %f)' %
-                     acceptable_error_rate)
-             print('samples are as below')
--            print('\n'.join(['%d' % wss for wss in wss_collected]))
-+            for idx, wss in enumerate(wss_collected):
-+                if idx < len(wss_collected) - 1 and \
-+                        wss_collected[idx + 1] == wss:
-+                    continue
-+                print('%d/%d: %d' % (idx, len(wss_collected), wss))
-             return False
-     return True
- 
+ include/linux/damon.h        |  15 ++--
+ mm/damon/core.c              | 143 +++++++++++++++--------------------
+ mm/damon/lru_sort.c          |   4 +-
+ mm/damon/paddr.c             |   1 -
+ mm/damon/reclaim.c           |   4 +-
+ mm/damon/stat.c              |   2 +-
+ mm/damon/sysfs.c             |  11 +--
+ mm/damon/tests/vaddr-kunit.h |   2 +-
+ mm/damon/vaddr.c             |  25 +++---
+ 9 files changed, 89 insertions(+), 118 deletions(-)
+
+
+base-commit: 886ef5515d08f05191b61a347fc18f371627bdd4
 -- 
 2.47.3
