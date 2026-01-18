@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF7A61684BE;
-	Sun, 18 Jan 2026 18:03:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55F5B22B8C5;
+	Sun, 18 Jan 2026 18:03:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768759392; cv=none; b=AnSPMF9JWIx8pJfKpolDD6ncpX+WJLR6r6lFCrK2/k3QldigEDZtHwceJzoq3/Za7WbD07vjOvZjXxvgzk2hly3qn5MYjdFXB2gAS6L0r33xfshulo0xDZ+EJIMjHTr1h1UIF229bi+UjvECaNDy/8ReIz/6iGW7S8uEoJCbUwM=
+	t=1768759392; cv=none; b=Y5OpMnK3zS14mkMgeEBqoOi8JiaQamWU1g7plDEOyJzu5Ki/eU4OZm+JzQvDvXlVtVSb1vXL7Z5dByCHHJxbJTZgd8mGqDH/eodOz2b7oeACkXmImHX6tizH1QF9VccEvjpa889PvvTBzbl/pCx0melYhRGiwypEue/xfSF+/aQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1768759392; c=relaxed/simple;
-	bh=QNYks7ttqO9vmoAFlbyr+Kp8wOzmYyCyw42vhGbKo9M=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=CW7c9CzLIbk7XFbnSxq5dKpxWB2WrBTnzAHlQ+CfuchvVsQjkXU6uYjb1ofE5+VTkWnE7i/lsDF02bw4GV8g5nn5wa5o0f+Da6+4UDplqzdKMM15WofizqE8IyD7LhN26pw5wV3nuKiPoGZr+xBdrafHFeQXGvmuWQdnKHEU9ZU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=u1ph9fId; arc=none smtp.client-ip=10.30.226.201
+	bh=83IuoEFZc740QLG5aKQwcz8CHpKwZZ8E6QMpPE52AHk=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=olw8KjORc1py73wRD46UzRSIXqlWyHxcd3Es3kaRgraLQqx0xWUdLDsvFOee+7mGBEySt8N/eTev2pUTFc5/EYqMplp2xlsORPdWmxZeIJPh9tG95jT8kHJmCqfvLt6vOfzfwuyM8SDeQ5HGsgGejQDln/gdndjakXXFctpOQn8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fWz+F1u2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="u1ph9fId"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 443C6C116D0;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fWz+F1u2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAF20C19423;
 	Sun, 18 Jan 2026 18:03:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1768759391;
-	bh=QNYks7ttqO9vmoAFlbyr+Kp8wOzmYyCyw42vhGbKo9M=;
-	h=From:To:Cc:Subject:Date:From;
-	b=u1ph9fIdAnZvv9dJCjjcTSv4bbYyqmA328oMhUxvu485T+x7uorCIBD/RYRusOVXA
-	 a8JBOWQ6Ee3v9chlzb0necHDvjcvbtMgWfVB5EZ2Zq5SUXvGfD7IuFZ8nbG4j+BJwA
-	 K/93Op3MB1fy6zig5Pu7X5hfPHmQzyzL2nNNgqSAVLibscXv9JiVqKaW/CQDufDQhx
-	 Q3YKl17q1h6u5Nn9BCloV2Bdv/IwWGQntCP5GYGf3RVAO8dktfaMjkXLi4LElkkkMP
-	 CAKMwmhwA2gAJbzhHne5R4IOUEyHVkcgZqu0dN8s/CKcBUhEpHKCExW8EKcwHFKYa6
-	 LCe9LZdXfaUIQ==
+	bh=83IuoEFZc740QLG5aKQwcz8CHpKwZZ8E6QMpPE52AHk=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=fWz+F1u2EZ9yGEw3rOBKhxt5QQtmFKsc3wwyz5sy4hP1KAsBNR9Sm/3l+es57SZJ8
+	 1YXKlPu02whCdxvVeJTqyJBLKNZYHS7jDfwCQIRCWItCKrbHn6XIp+rlfStnSGEhgv
+	 kt0Jro1/f3e+3xdh05vBDp1tpLUF6/8b/AlM0rsSHrvUF/e5H708cVhSRiuwQmCPGt
+	 ttEl49dq4FxIgNVXutmlwFMbukr3l6gpV5j906Ot9HyXixjYFXhNGzEwFMrCVZ5bHt
+	 hduyjVpjCRY4qwWk7fvBWcXLYxiOXOS4wH4RWdwuBVswxPNlTfRyTxgob1rGJexsB2
+	 JjEuCFXgguSvw==
 From: SeongJae Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SeongJae Park <sj@kernel.org>,
@@ -40,10 +41,12 @@ Cc: SeongJae Park <sj@kernel.org>,
 	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [PATCH 0/8] Docs/mm/damon: update intro, modules, maintainer profile, and misc
-Date: Sun, 18 Jan 2026 10:02:51 -0800
-Message-ID: <20260118180305.70023-1-sj@kernel.org>
+Subject: [PATCH 1/8] Docs/mm/damon/index: simplify the intro
+Date: Sun, 18 Jan 2026 10:02:52 -0800
+Message-ID: <20260118180305.70023-2-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260118180305.70023-1-sj@kernel.org>
+References: <20260118180305.70023-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -52,37 +55,56 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Update DAMON documentations for wordsmithing, clarifications, and
-miscellaneous outdated things with eight patches.  Patch 1 simplifies
-the brief introduction of DAMON.  Patch 2 updates DAMON user-space tool
-packaged distros information on design doc to include not only Fedora,
-but refer to repology.  Three following patches update design and usage
-documents for clarifying DAMON sample modules purposes (patch 3), and
-outdated information about usages of DAMON modules (patches 4 and 5).
-Final three patches update usage and maintainer-profile for sysfs
-refresh_ms feature behavior (patch 6), synchronize DAMON MAINTAINERS
-section name (patch 7), and broken damon-tests performance tests
-(patch 8).
+The intro is a bit verbose and redundant.  Simplify it by replacing
+details with more links to the design docs, and refining the design
+points list.
 
-SeongJae Park (8):
-  Docs/mm/damon/index: simplify the intro
-  Docs/mm/damon/design: link repology instead of Fedora package
-  Docs/mm/damon/design: document DAMON sample modules
-  Docs/mm/damon/design: add reference to DAMON_STAT usage
-  Docs/admin-guide/mm/damon/usage: introduce DAMON modules at the
-    beginning
-  Docs/admin-guide/mm/damon/usage: update stats update process for
-    refresh_ms
-  Docs/mm/damon/maintainer-profile: fix wrong MAITNAINERS section name
-  Docs/mm/damon/maintainer-profile: remove damon-tests/perf suggestion
+Signed-off-by: SeongJae Park <sj@kernel.org>
+---
+ Documentation/mm/damon/index.rst | 31 +++++++++----------------------
+ 1 file changed, 9 insertions(+), 22 deletions(-)
 
- Documentation/admin-guide/mm/damon/usage.rst  | 16 +++++++---
- Documentation/mm/damon/design.rst             | 21 +++++++++++--
- Documentation/mm/damon/index.rst              | 31 ++++++-------------
- Documentation/mm/damon/maintainer-profile.rst |  7 ++---
- 4 files changed, 42 insertions(+), 33 deletions(-)
-
-
-base-commit: 4bdd7e0e4afe2bb6bc27862130f1cd365f3cbbef
+diff --git a/Documentation/mm/damon/index.rst b/Documentation/mm/damon/index.rst
+index 31c1fa955b3d..82f6c5eea49a 100644
+--- a/Documentation/mm/damon/index.rst
++++ b/Documentation/mm/damon/index.rst
+@@ -4,28 +4,15 @@
+ DAMON: Data Access MONitoring and Access-aware System Operations
+ ================================================================
+ 
+-DAMON is a Linux kernel subsystem that provides a framework for data access
+-monitoring and the monitoring results based system operations.  The core
+-monitoring :ref:`mechanisms <damon_design_monitoring>` of DAMON make it
+-
+- - *accurate* (the monitoring output is useful enough for DRAM level memory
+-   management; It might not appropriate for CPU Cache levels, though),
+- - *light-weight* (the monitoring overhead is low enough to be applied online),
+-   and
+- - *scalable* (the upper-bound of the overhead is in constant range regardless
+-   of the size of target workloads).
+-
+-Using this framework, therefore, the kernel can operate system in an
+-access-aware fashion.  Because the features are also exposed to the :doc:`user
+-space </admin-guide/mm/damon/index>`, users who have special information about
+-their workloads can write personalized applications for better understanding
+-and optimizations of their workloads and systems.
+-
+-For easier development of such systems, DAMON provides a feature called
+-:ref:`DAMOS <damon_design_damos>` (DAMon-based Operation Schemes) in addition
+-to the monitoring.  Using the feature, DAMON users in both kernel and :doc:`user
+-spaces </admin-guide/mm/damon/index>` can do access-aware system operations
+-with no code but simple configurations.
++DAMON is a Linux kernel subsystem for efficient :ref:`data access monitoring
++<damon_design_monitoring>` and :ref:`access-aware system operations
++<damon_design_damos>`.  It is designed for being
++
++ - *accurate* (for DRAM level memory management),
++ - *light-weight* (for production online usages),
++ - *scalable* (in terms of memory size),
++ - *tunable* (for flexible usages), and
++ - *autoamted* (for production operation without manual tunings).
+ 
+ .. toctree::
+    :maxdepth: 2
 -- 
 2.47.3
