@@ -1,62 +1,62 @@
-Received: from mail-yw1-f194.google.com (mail-yw1-f194.google.com [209.85.128.194])
+Received: from mail-yw1-f195.google.com (mail-yw1-f195.google.com [209.85.128.195])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 761AE38F25A
-	for <damon@lists.linux.dev>; Fri, 23 Jan 2026 04:57:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.194
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2DE33859D5
+	for <damon@lists.linux.dev>; Fri, 23 Jan 2026 04:57:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.195
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769144274; cv=none; b=L02N1COPMYoXjJCpcCcyn89xrmEFrBy6KKaj09cXVXICgdmaoVgAHs9umNQ84Xfq1vPBxJetf1SHUWXVrINVH1oT7/HOTgYXCr2PWvFDVq0xrdauIH71zyZK2YoxvyyxI3DGhDUoEzH4h7tOnE4A6XBvaEcNM8me1ptqf/B10Rc=
+	t=1769144275; cv=none; b=FP5dAu5vXh1NV49BPRY5O0NoCHh8tGmaNRxiTs3+pUHUgGQx2IfQIA0BsEl7T5EMbcGjLWC4EJOtIWTwbVTEfPOiGJ50Vi2W3FZ/MKXpWOVeg/wvswby4RRW2DEruh/NN2f8cLElh0lI4NS74j2fkS6jA5JzRMozNh0FyFAoOfo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769144274; c=relaxed/simple;
-	bh=+AOWSwl3iOQaWr6u6EF8dNnZr3QA8X8HEruWVBZRH4w=;
+	s=arc-20240116; t=1769144275; c=relaxed/simple;
+	bh=REwnbFI5Ih419YIeGbeMhAV79Y8hP0BScdx6C3Cv9Aw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ffaUqA5zOT3STxeGIkNumd1POW45tLXCtn9JwPx049oEMkAdfHmnQ0LfWnRNOLJahaE/jUHa/EboVtPGxb71KgEwK6P5gHY3rNHSWzgDoSjfYry2hQu1VWhtq0WjEJyLVNyhD8DQ553/hNFdLuCm3jckqaSZdp1cw23ybd7LwLs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WwtT28i7; arc=none smtp.client-ip=209.85.128.194
+	 MIME-Version; b=ICiF2t58CajXAlTH7225Nm8UTILapCiWuWniEAoOn9DDyjXYKTDfJSRo0wXx7+Sn2D4/CDg5AZYdYBjohIDeN+bkjmID/jS4PvTwN7+GN54qxeaziDDc1gqDIhr3zHuL4Tuv+S9TCCXwjcGt+9mPExduva8WBAufElRRnLdb3lE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ncaAgYsa; arc=none smtp.client-ip=209.85.128.195
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WwtT28i7"
-Received: by mail-yw1-f194.google.com with SMTP id 00721157ae682-79407df9391so19297717b3.1
-        for <damon@lists.linux.dev>; Thu, 22 Jan 2026 20:57:48 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ncaAgYsa"
+Received: by mail-yw1-f195.google.com with SMTP id 00721157ae682-7927b1620ddso26722257b3.0
+        for <damon@lists.linux.dev>; Thu, 22 Jan 2026 20:57:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1769144266; x=1769749066; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1769144267; x=1769749067; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=1D+wUgUp3AIJjrSF87TlviSGACs4vs0t8FpLdk/Qkks=;
-        b=WwtT28i7NMXHKb0SZROJ4EcUUs0DKyIRObWlPiYedWJr+bxJqV6ctv6IrvRZ4YsmRZ
-         UORl6d9pdGasntM5GNuTRA8U6L0vUvry1PyjH4wsKY+CwTCvHZGGL0lSHRw5YV8Gu1mJ
-         OjWgVw1JX8WrqZII0THRogBxkUmJ6Tyb612ML91f0FyU0+Ci/RPxKwmKA4Q4GxfWxIFP
-         dUo3UV/fCym907AhDx2gE4VRPRAwn2xHFuREf9ihlGdwlN+V9XQ/VWBKn/hlgfbS6S19
-         UI9Aa3YkOZigdJ6avpK+Uzi4kF/xdDevTzzjaVhtwfZ5aSjdIRGUk2Z/kTPl9F1CsDpB
-         Y+xg==
+        bh=W2Hj3YMXyp6jb16WaA5iRCtpYS8eji7c2VCvrHXWtMA=;
+        b=ncaAgYsauOnj6N+waJP7eFg66fssha7GX+3lN2MPI7w8gbXdH4Wjq0QyNoe6MAT5i5
+         mV7eRlJXDsi/lOnqs3GknvCiVtInAu4V5qcFFkIJ78xTWHR+6pHC2QZWOuFVjN9sTCp3
+         K3T6uHVSNowsxBxp7RKh3uUZ7ub+EHxtL0gUs0CUGLTT7OaNj6rt1g4H5959htTmwW97
+         ox/4N+OYzuDfz7pZuEInonYrVsuMV5c8KG4ROs6CAEFDBFR5yduOc+q8aijaq69TSw2h
+         852fYYDKD9g22hyCLXzR3UNgynoAGIu5Sqp5VEmBC5m3E9lU3MoAP3QJNaEp1Mn2HN28
+         zg3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769144266; x=1769749066;
+        d=1e100.net; s=20230601; t=1769144267; x=1769749067;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=1D+wUgUp3AIJjrSF87TlviSGACs4vs0t8FpLdk/Qkks=;
-        b=IoPMexdBBJD5m2a9Zg45eYnDYB5mgcXSZN8j7E9IYwqO3FCvTLK+XaU6QZvJUElqI1
-         3so8FLbHnI1GmZg1Om9jFBLOR9EYeW1I8kO7LAYpOo1KctH769JUJbKpuXVO1sDzxM4c
-         WiQU8exAFNUPlmoklslndgf4acgFI6BkW2UyvTMC/XTKa/SFu6pb/OATT7q0ubRS1wgg
-         SHpYSWlEOHg5CstES5CSrrPdjcyZTKHZXzgPBZcXCI/UxCKsZNvViMi+/L4S9gCSfJaY
-         2s7N4uXJoxFM0B/5xoY9PlY5r4C7e34e6e0R0DBmukiDcudJ6FFYI+ld/eDWJUeLrhFz
-         LSkw==
-X-Gm-Message-State: AOJu0Yx0GS7bYaQ/yfR0e8FxTOluqHWNcp52TkFQqWfkDERtzdPUlf0i
-	yZ4cWqYFmG6uMYQCWjHfPIGQ7573XFyVMCS9mGE7bi5/TrQI9XI7ovDWjFdzclQ=
-X-Gm-Gg: AZuq6aJL5fIDo9OfaQ3B3DtSRRxQ7ZAugrAX2JbwYXgRrVbCBjmKuHNnNsQXcYniEgs
-	ZE5A3sSP515FarvbnVSU6dtj2oB2KkWS/NSYLrQtZcw/xX2aO3JCh//POK164yjsihPagREyM6E
-	+rPfxUUXvnRHcjZ9b2ETZiRyiXcN6CseJal/ZiyW56Uerg8a5DaOjL6fg13+Y6B8ujvFuLZLJpt
-	OccyI7EMKgG5KiyVPD452fdRFNzSJ1u9lsGDRt/uFh6AxXec82G1OCsfp/Tsc68PjXH+hOUxhy9
-	oAidzIWr8i602WhgzweUE1TskUrvE7HY+S0oyrxdRiSr1+i0XJqIo9Tu+TXFpwo4f6We8uOcEPL
-	nXkF+EW8QKdN3SGBudadtLTVYad4iSpsh0cEL5zpk/5/YJItqTWv1gTX4p6flqUaHLMQESd+hyH
-	HgFfjcnl3sLaY+pH82BdXT3Udhw74eeey+LRHi+gTQ6ptqA1iYzeAuXTHzjnOE3A==
-X-Received: by 2002:a05:690c:630a:b0:793:c850:9e05 with SMTP id 00721157ae682-79439900187mr15750197b3.28.1769144265778;
-        Thu, 22 Jan 2026 20:57:45 -0800 (PST)
+        bh=W2Hj3YMXyp6jb16WaA5iRCtpYS8eji7c2VCvrHXWtMA=;
+        b=YKEWpM69MYNZg/tQsjhInMxt2Ki0edYXMR5brQovsLoB80N6+kzLnqCqZdMi5MtFSf
+         GwDVs6q/WlivvvJvQxlaF+Bx+C5uRB96bscmkcxwbQLr3CeXpYnWfAtfsDF0WeGMskEV
+         OW2CIvK0d6cCqnP6mGi9URTKgBSs4g7uf1JtLuJxvKxSPFUy8wPIwCO3ImXeju8W5XyQ
+         5KVbYVwiKEUr3ZFIC3PqPZzWGkrL0rY/ErHNle3z+NRErRNIrZ2zl+v1K20/PPFrlOXv
+         gVAKuZbK/gMQV+txKnjzpOAkfk9sBkoOFHO1Y/XFcDrmOtrdSTkMV2Z06DKS5PFpPqyg
+         eMvA==
+X-Gm-Message-State: AOJu0Yyj3+nrPmnS8kAXiNfYdUw71g1Qn2brzBxa0FCUgspkh0ukPGEG
+	fpZdZGYTIiiMpW+D6bQKYgIdPlRpB0JInAZHcoq3SkBl3N/6Ui1Y1hcN417ruk0=
+X-Gm-Gg: AZuq6aJUn6Ao0OpkZ8EU2AgEOQUAZgY6xRPjulLMvrRhM/5P2SVeyFxc2emuurey/69
+	yH5SsDLY8ML0nL4NV28y31n752NVMVnWmZgK6u4H7C+D4TYaRru6ulQYXMV/nMCcsegzvIr2N0/
+	utFFveWYHffNw1mJJeSj/gWL5kEtECRsdWbYj25+w2uAoJMQtpAkwwC0RIRNOUdGEjh82NoyArl
+	XuxGyNeOwkjj+t9Gb+4gTnFOvGVx92CaRHX0KzdWq59GXloEM+F5eSOY+imoAhC7DKD8jDvW1jo
+	OfAsRlqOHWJ3ZWbH+HkXDxtd51JHZEP5tDffrq8roAiQY5eLjev43ryZLasT1ihI1XpqQj4wLnH
+	PCVwnA9wUBi55rC9EgCLLxBkrUUiRsGIVCjbESxHmMqARybyv/qpyiZmzl8Xlwavb1jbIGohn2m
+	yJyOzFkMZ0WtIwVsm9c9Fyhd36VEvPC+dmbdwZe0FsMcdnB8i80eyyaT0j38k/oA==
+X-Received: by 2002:a05:690c:688f:b0:794:1f46:79eb with SMTP id 00721157ae682-7942a70b7dcmr45404977b3.5.1769144267450;
+        Thu, 22 Jan 2026 20:57:47 -0800 (PST)
 Received: from localhost (23-116-43-216.lightspeed.sntcca.sbcglobal.net. [23.116.43.216])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-7943b2d060esm6104507b3.56.2026.01.22.20.57.45
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-7943af14432sm6354717b3.8.2026.01.22.20.57.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 22 Jan 2026 20:57:45 -0800 (PST)
+        Thu, 22 Jan 2026 20:57:47 -0800 (PST)
 From: Ravi Jonnalagadda <ravis.opensrc@gmail.com>
 To: damon@lists.linux.dev,
 	linux-mm@kvack.org,
@@ -68,9 +68,9 @@ Cc: sj@kernel.org,
 	bijan311@gmail.com,
 	ajayjoshi@micron.com,
 	Ravi Jonnalagadda <ravis.opensrc@gmail.com>
-Subject: [RFC PATCH 3/5] mm/damon/core: add new ops-specific goal metric
-Date: Thu, 22 Jan 2026 20:57:26 -0800
-Message-ID: <20260123045733.6954-4-ravis.opensrc@gmail.com>
+Subject: [RFC PATCH 4/5] mm/damon/paddr: capacity clamp and directional early-exit for node_sys_bp
+Date: Thu, 22 Jan 2026 20:57:27 -0800
+Message-ID: <20260123045733.6954-5-ravis.opensrc@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260123045733.6954-1-ravis.opensrc@gmail.com>
 References: <20260123045733.6954-1-ravis.opensrc@gmail.com>
@@ -82,111 +82,75 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Convert static functions in core.c to pass damon_ctx* and damos* down to
-`damos_set_quota_goal_current_value()`. This keeps all goal metrics (PSI,
-node_mem*, node_memcg*, and the new node_sys_bp) computed in one place,
-while core remains generic and ops-specific computation is delegated via
-ctx->ops.get_goal_metric().
-
-Only static functions in this file are touched; no external ABI changes.
+Clamp effective target to node capacity (bp) and skip in-migration if
+the node already meets/exceeds it. This avoids oscillation and
+unnecessary work in two-context DRAM/CXL setups when quota goals
+(e.g., node_sys_bp) are met.
 
 Signed-off-by: Ravi Jonnalagadda <ravis.opensrc@gmail.com>
 ---
- mm/damon/core.c | 34 +++++++++++++++++++++++++++-------
- 1 file changed, 27 insertions(+), 7 deletions(-)
+ mm/damon/paddr.c | 44 ++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 44 insertions(+)
 
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index 84f80a20f233..d898bfcbef72 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -2119,8 +2119,20 @@ static unsigned long damos_get_node_memcg_used_bp(
+diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
+index 30e4e5663dcb..64dbdd2196a5 100644
+--- a/mm/damon/paddr.c
++++ b/mm/damon/paddr.c
+@@ -300,10 +300,54 @@ static unsigned long damon_pa_deactivate_pages(struct damon_region *r,
+ 			sz_filter_passed);
  }
- #endif
  
-+static unsigned long
-+damos_get_goal_metric_from_ops(struct damon_ctx *ctx, struct damos *scheme,
-+				       const struct damos_quota_goal *goal)
++static unsigned long damon_pa_node_capacity_bp(int nid)
 +{
-+	if (!ctx || !goal)
++	struct pglist_data *pgdat;
++	unsigned long sys_total = damon_pa_totalram_bytes();
++	unsigned long node_pages, node_total;
++
++	if (nid < 0 || !sys_total)
 +		return 0;
-+	if (!ctx->ops.get_goal_metric)
++	pgdat = NODE_DATA(nid);
++	if (!pgdat)
 +		return 0;
-+	return ctx->ops.get_goal_metric(ctx, scheme, goal);
++	node_pages = pgdat->node_spanned_pages;
++	node_total = node_pages << PAGE_SHIFT;
++	return div64_u64((u64)node_total * 10000ULL, sys_total);
 +}
- 
--static void damos_set_quota_goal_current_value(struct damos_quota_goal *goal)
-+static void damos_set_quota_goal_current_value(struct damon_ctx *ctx,
-+				       struct damos *scheme,
-+				       struct damos_quota_goal *goal)
++
+ static unsigned long damon_pa_migrate(struct damon_region *r,
+ 		unsigned long addr_unit, struct damos *s,
+ 		unsigned long *sz_filter_passed)
  {
- 	u64 now_psi_total;
- 
-@@ -2141,19 +2153,25 @@ static void damos_set_quota_goal_current_value(struct damos_quota_goal *goal)
- 	case DAMOS_QUOTA_NODE_MEMCG_FREE_BP:
- 		goal->current_value = damos_get_node_memcg_used_bp(goal);
- 		break;
-+	case DAMOS_QUOTA_NODE_SYS_BP:
-+		goal->current_value = damos_get_goal_metric_from_ops(ctx,
-+							scheme, goal);
-+		break;
- 	default:
- 		break;
- 	}
- }
- 
- /* Return the highest score since it makes schemes least aggressive */
--static unsigned long damos_quota_score(struct damos_quota *quota)
-+static unsigned long damos_quota_score(struct damon_ctx *ctx,
-+				       struct damos *scheme,
-+				       struct damos_quota *quota)
- {
- 	struct damos_quota_goal *goal;
- 	unsigned long highest_score = 0;
- 
- 	damos_for_each_quota_goal(goal, quota) {
--		damos_set_quota_goal_current_value(goal);
-+		damos_set_quota_goal_current_value(ctx, scheme, goal);
- 		highest_score = max(highest_score,
- 				goal->current_value * 10000 /
- 				goal->target_value);
-@@ -2165,7 +2183,9 @@ static unsigned long damos_quota_score(struct damos_quota *quota)
- /*
-  * Called only if quota->ms, or quota->sz are set, or quota->goals is not empty
-  */
--static void damos_set_effective_quota(struct damos_quota *quota)
-+static void damos_set_effective_quota(struct damon_ctx *ctx,
-+				      struct damos *scheme,
-+				      struct damos_quota *quota)
- {
- 	unsigned long throughput;
- 	unsigned long esz = ULONG_MAX;
-@@ -2176,7 +2196,7 @@ static void damos_set_effective_quota(struct damos_quota *quota)
- 	}
- 
- 	if (!list_empty(&quota->goals)) {
--		unsigned long score = damos_quota_score(quota);
-+		unsigned long score = damos_quota_score(ctx, scheme, quota);
- 
- 		quota->esz_bp = damon_feed_loop_next_input(
- 				max(quota->esz_bp, 10000UL),
-@@ -2227,7 +2247,7 @@ static void damos_adjust_quota(struct damon_ctx *c, struct damos *s)
- 	/* First charge window */
- 	if (!quota->total_charged_sz && !quota->charged_from) {
- 		quota->charged_from = jiffies;
--		damos_set_effective_quota(quota);
-+		damos_set_effective_quota(c, s, quota);
- 	}
- 
- 	/* New charge window starts */
-@@ -2240,7 +2260,7 @@ static void damos_adjust_quota(struct damon_ctx *c, struct damos *s)
- 		quota->charged_sz = 0;
- 		if (trace_damos_esz_enabled())
- 			cached_esz = quota->esz;
--		damos_set_effective_quota(quota);
-+		damos_set_effective_quota(c, s, quota);
- 		if (trace_damos_esz_enabled() && quota->esz != cached_esz)
- 			damos_trace_esz(c, s, quota);
- 	}
++	/*
++	 * Capacity clamp + directional early-exit for node_sys_bp goals:
++	 * If we are migrating INTO g->nid and the current bp for that node is
++	 * already >= min(target_bp, capacity_bp), skip work this interval.
++	 */
++	{
++		struct damos_quota_goal *g;
++
++		list_for_each_entry(g, &s->quota.goals, list) {
++			unsigned long cap_bp, effective_target_bp;
++
++			if (g->metric != DAMOS_QUOTA_NODE_SYS_BP)
++				continue;
++			if (g->nid < 0)
++				continue;
++
++			cap_bp = damon_pa_node_capacity_bp(g->nid);
++			if (!cap_bp)
++				break;
++
++			effective_target_bp = min(g->target_value, cap_bp);
++			if (s->target_nid == g->nid &&
++			    g->current_value >= effective_target_bp)
++				return 0;
++			break;
++		}
++	}
++
+ 	phys_addr_t addr, applied;
+ 	LIST_HEAD(folio_list);
+ 	struct folio *folio;
 -- 
 2.43.0
 
