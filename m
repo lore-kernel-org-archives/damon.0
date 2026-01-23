@@ -1,789 +1,337 @@
-Received: from mail-pg1-f178.google.com (mail-pg1-f178.google.com [209.85.215.178])
+Received: from mail-yw1-f194.google.com (mail-yw1-f194.google.com [209.85.128.194])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEE2137B406
-	for <damon@lists.linux.dev>; Fri, 23 Jan 2026 02:11:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA7E0392B69
+	for <damon@lists.linux.dev>; Fri, 23 Jan 2026 04:57:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.194
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769134303; cv=none; b=CmJfYwA9Xhn2WRamMfgThSzskJ1qKr8+Jv2+fuCwqeIrs7nNYpj3Cg8jyh9NiEVXfDQEMGNLRPfoA+KocKHyC6b/bL5DSWJ9EGNk6EU43D3I8wm73Np5tBJxs44XVFHEUeLbZy7EzHXZW9dRcr8nL+r7hpIXo8pUU0lbLU1WXuo=
+	t=1769144269; cv=none; b=iiaZIt62hiu90nebYgKcii45y8KyrZIMSJdFphAYOFQdcBwN3phpaADZEG8drTEPKBq7sYebwV4u1xwjcrJOOTbWCHDTa9CJsPHhp2Nhjy27Z/taaKap1TRivPPkWNQPcX6akzzL/owp7IWoRDFpM+DvWmNbAG21vb2U8cbVSRc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769134303; c=relaxed/simple;
-	bh=XLxOp+SksKhv+5T175voz/v1FYX6066z5ZIehTIlo44=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ATmUmIqRQT3JUlzqU5IZS/ut+QNlBYtrhNCa7qPPESaXTtMmoieT3KNh9Asp72yJf+ppfcgXZ7p4duHOp/vwCKo1k2zpck7xe0vup8VygWIGhwpaXgFwVjyeMXVt0VxPYcZg8CcUpD2NeCXnE8duSqsiNvM2+rvaPn8zaQEo6bA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ThCT+Uip; arc=none smtp.client-ip=209.85.215.178
+	s=arc-20240116; t=1769144269; c=relaxed/simple;
+	bh=ZcUmMHoebdbK/BuUi4NdTdmGsnkYnj/TqGmD1517cxc=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=hy1L7msgxSPa39JetrQ9BKphC+zHd3whfFQrzNf1Dl2vNvMT8mOuM33cjwG1WOwaivdwAKX/M+iDRg4wghl7f9GiXuZwIIPpIebA1fRqlSAezuwlFia04BP9aoLCTavUJpXg2FS6dUdL0fRL9/Bwmjk2GQTZvL5I0k60WbUfvhg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XRLVaVQT; arc=none smtp.client-ip=209.85.128.194
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ThCT+Uip"
-Received: by mail-pg1-f178.google.com with SMTP id 41be03b00d2f7-c622ce9a33bso515538a12.2
-        for <damon@lists.linux.dev>; Thu, 22 Jan 2026 18:11:02 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XRLVaVQT"
+Received: by mail-yw1-f194.google.com with SMTP id 00721157ae682-79430ef54c3so13881897b3.2
+        for <damon@lists.linux.dev>; Thu, 22 Jan 2026 20:57:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1769134258; x=1769739058; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=/MWWNUHdoxkkBnQ9aWgKGZtECd2UHxVzPBy9BVberW4=;
-        b=ThCT+UipvF+9QuQ57nKudXXZLtt7XBHStPg4Xs9fWjHHpkG6KtotzHY2OXxhPWHjW5
-         BwwH+ZmwxB4YUMWF6odvWgZsmz+tClbMkr57toef/UwOWEYvIIZFgamKPBtkIlVsh6Wb
-         3gb/AJoqsTkSjPQAXRlyG8UalITBB3Uoo+GpG7XH0+ezklmfA9GnxdqEQA5dVAQkZ7nz
-         UL+WKBkyWzOlUzX3cGwwc4tvzizdQiaZTbloCm4D0k418XcwccL050QPDTnR2dgmkt3/
-         GSUgTnFk5r/38o/JtLJPhjQc6RSVC5Gfh2wOYQdfCmQP9MbNjeToRNGABa7NC8im4wFU
-         2kUQ==
+        d=gmail.com; s=20230601; t=1769144261; x=1769749061; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=EJkgvPZFHCE7A0AwblR4LoBvEnU1RF29gonEpvLNZc8=;
+        b=XRLVaVQTWFHajNywTSIpNV57bnCC+tWjFdrbNXXDV1K9XLLaMiVvo0EsqfBf9P39PS
+         Jndt9HrQ5I3MO4wvSClyEZCSkr5W6nxAs6JU/iCsLzk3xilsJEXk+w6HWv9RfZzvLgLR
+         DE3hmqzu6EgHGZXkQccC0X53PySdNIR2Ev1qGZMmY6cShJvGru/+6AWLrVef1Xnhd09t
+         eXj53IfY7hQR9sZzkew1Gs/LOtfaboJSL/LwAQekR+acXO6JyRTvEaThjbhu1R16zEW+
+         elQc2ycML5IyHCL4Jr83Vu0LLDi193n0hV9n3ds+J63I6XdwVo2qTiMF1i0bKixvQcKh
+         RhTQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769134258; x=1769739058;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=/MWWNUHdoxkkBnQ9aWgKGZtECd2UHxVzPBy9BVberW4=;
-        b=CzHjfCfh4PzCbWy17CyMBKxKt/+08UE00jc0GbjGrdPEAgz80MCTfUDpBOpFj6svSV
-         8Hiy0hx3CC4YfvEe0rFKoivWYrkA/TFpxcjKBL4rnJtS+koEUou3mJmdo2+sqOI/96Kc
-         YyFhqBvldzZhWDQhraPPK9FhD2KxVdq0E7DEfSLJ8V/sL1bdcBgL4Kh4t43U9JHk/XCw
-         +XouuXB/tU5mvogT822In1LiM+ocCgyncoFXf6CzZwNpTasfl/Xw4jfF7+gLsdjVSyYQ
-         Ftew26rKpzD9yDKzKS9DIyJpuFjeAvSRU8j/cuRbD5DkeJ5uwVIJU7J4oDqhH/A89ro/
-         2pxg==
-X-Gm-Message-State: AOJu0YwCSGgh3H8ij5cjR97BEntIEXP7frbDrkK7K8UKUCUn7w97JLQb
-	aJSWVlKxzOglpsscZPXib8+RMCtQvkrB2qzTk1gE0vNSMs6IiBmX1r35pqGXF3e1
-X-Gm-Gg: AZuq6aKtMpAm2rKE7xsDdKrkZbPNhImvnjWryQYLpngo0/gnyZxysetUoZe7TK+26Kc
-	TDv2E+uRCd+EzLLLA7UFlNJxwieEGayE8ptzVBl6YFGSiG7VlYzAmFaYLK/k2GvG9m2Yex865ff
-	d6Ms7deltRNqIamJJ8+TMS+KfF7qJDlr3nCZPYGo3yFMxLGP4j+uWWDRAqGKbKdRYF+V7Fqw7jB
-	yE7SuvcSP/B9mHuPS/2nVQdPn4Cm4kjB6u/sCj1cPVxnQRYhE3POrAc6NPDl1cJ3cIhnqH7PwFO
-	HjRd4efEcsOk1jftMKInuhrvebpm5k5y7J/FGY0i+ymscSgiaqqUPkvlWxNUb8zezPOHcArq2aB
-	7zDgdmzmuabZ/TwPCQJMuKZcrHcot+hwKZvrk1865LkrL39AXk9PtkNGdw88W7HVHMwBneee0IL
-	5FJbvfmRS/dN3gw7W4rGuRpKh/sw==
-X-Received: by 2002:a17:90b:2701:b0:353:49f2:1e7c with SMTP id 98e67ed59e1d1-35369308d98mr1102690a91.30.1769134258095;
-        Thu, 22 Jan 2026 18:10:58 -0800 (PST)
-Received: from localhost.localdomain ([240f:34:212d:1:a458:c153:e5c3:234f])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3533521707asm3544251a91.8.2026.01.22.18.10.56
+        d=1e100.net; s=20230601; t=1769144261; x=1769749061;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=EJkgvPZFHCE7A0AwblR4LoBvEnU1RF29gonEpvLNZc8=;
+        b=n4k4Q/qU0m5geXsdPZUe0weQIHo0ZFJtyg7t+x+UkxJIUei4w25c8B3BaDNRMRqRxU
+         VWeGd2GQ8mdJL/OYZW7eNTRrDxXAoguJSx6kkDmsZ3419FXAGIlxN7XcyOMDdzzzfeq7
+         RzANJ0gNZwVWQpuPK6IJsGi1xAF4CsP3Y37uFaSuAWJBF4l7sUbsnowgd7DfTCI2OcF2
+         ipAA98QjMDfQeDxJmmyd59jNtJ/2qK8Z+nD64wccyYjf0yNDhOENYCVbfMej6XPFuXZ/
+         g4uLsVHmVBmFyNEJL4p8iKm5wOYZuPU47HoxEvuqslFBFLIGUf+dczSfBVFwKrn+ARpr
+         NcAQ==
+X-Gm-Message-State: AOJu0YxTNLxPXwjpEa0rvte5MrNOMOW89XvZ4BJWToMzxk+wbw/7M0PT
+	PJvVeSDJzgY2/l7sZJFT710hIYCkn5v+c+rbbAS1guTTSYgs4lWw8IJVK5NZQO8=
+X-Gm-Gg: AZuq6aIxnW9q79HuLDTTRuEZVTmbExFXWkKu0j5sdsXiX0qK48VuiViR4ggDgPEMvbX
+	le3aTuzwANqoYPUgphp3A2YOzh3VSuEh0wixlxW1scl0jsP+vg/80KGoTjnedDxKQDK4jdT3VKx
+	bYVz8PZwDgN/JkMNX7pxMo4r7d4HjXmvRMNKC4Se8DBVSOUNlMrwIrMqYeZ56hDIslEkTZNnyU4
+	agxBeT8NT1ktkTqthPZvNECCvcNPa1LUIx8E+hAOHtTGwVenq38+sginPJ+E9SN11fYWGnbsp3O
+	b4LO0NFNBYeH0QmTGScT2iJgm6DL2olq6F7qHBfFmIMhlelyCg3dWxt+ET2FEOWvqdqCVqbeEO3
+	+WF5nbb4iIQ6BtT12ze/OH7uLE+kq08cjYR5hj4gRqf2/CR+GHUHkg51kfb+26mfeOBYrLK4CPs
+	CFHxzCkSyozcOHK5xDhPLi+Jf1H+hwIEuWzIAjwS1t1p9D4ezrWCJuX+sKjsrPWA==
+X-Received: by 2002:a05:690c:4444:b0:794:93e:d0f8 with SMTP id 00721157ae682-794398be450mr16665047b3.7.1769144260705;
+        Thu, 22 Jan 2026 20:57:40 -0800 (PST)
+Received: from localhost (23-116-43-216.lightspeed.sntcca.sbcglobal.net. [23.116.43.216])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-7943af13d6dsm6408937b3.9.2026.01.22.20.57.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 22 Jan 2026 18:10:57 -0800 (PST)
-From: Akinobu Mita <akinobu.mita@gmail.com>
-To: damon@lists.linux.dev
+        Thu, 22 Jan 2026 20:57:40 -0800 (PST)
+From: Ravi Jonnalagadda <ravis.opensrc@gmail.com>
+To: damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org,
+	linux-doc@vger.kernel.org
 Cc: sj@kernel.org,
-	akinobu.mita@gmail.com
-Subject: [RFC PATCH 4/4] mm/damon: allow user to set min and max size of region
-Date: Fri, 23 Jan 2026 11:10:14 +0900
-Message-ID: <20260123021014.26915-5-akinobu.mita@gmail.com>
+	akpm@linux-foundation.org,
+	corbet@lwn.net,
+	bijan311@gmail.com,
+	ajayjoshi@micron.com,
+	Ravi Jonnalagadda <ravis.opensrc@gmail.com>
+Subject: [RFC PATCH 0/5] mm/damon: Add node_sys_bp quota goal metric for PA-based migration control
+Date: Thu, 22 Jan 2026 20:57:23 -0800
+Message-ID: <20260123045733.6954-1-ravis.opensrc@gmail.com>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260123021014.26915-1-akinobu.mita@gmail.com>
-References: <20260123021014.26915-1-akinobu.mita@gmail.com>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Currently, the region size is limited to a page size or more,
-but this patch makes it possible to set the upper and lower limits using
-the following sysfs interfaces:
+This series introduces a new DAMON quota goal metric, `node_sys_bp`, designed
+for controlling memory migration in heterogeneous memory systems (e.g.,
+DRAM↔CXL tiering). These patches are provided as an initial RFC and have
+not been tested on actual hardware.
 
-What: /sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/targets/<T>/region_sz/min
-Description: Writing a value to this file sets the minimum size of monitoring regions of
-the DAMON target as the value.  Reading this file returns the value.
+Background and Motivation
+=========================
 
-What: /sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/targets/<T>/region_sz/max
-Description: Writing a value to this file sets the maximum size of monitoring regions of
-the DAMON target as the value.  Reading this file returns the value.
+A previous patch series [1] by Bijan Tabatabai and myself added weighted
+interleave support for DAMON migrate_{hot,cold} actions. That series
+implemented the feature for vaddr (virtual address) schemes because the
+weight-based approach requires VMA offset information to determine target
+nodes:
 
-By setting the minimum and maximum sizes of regions to the same value,
-the region size can be kept constant (no region merging or splitting).
+    target_node = (vma_offset % total_weight) → node_from_weights
 
-This patch allows you to set the minimum and maximum size of a region,
-so it may not be possible to simultaneously satisfy the existing minimum and
-maximum settings for the number of damon regions (min_regions, max_regions).
----
- .../ABI/testing/sysfs-kernel-mm-damon         |   3 +
- include/linux/damon.h                         |   8 +-
- mm/damon/core.c                               | 150 +++++++++++++++---
- mm/damon/sysfs.c                              |  29 +++-
- mm/damon/tests/core-kunit.h                   |   2 +-
- mm/damon/tests/sysfs-kunit.h                  |   2 +
- mm/damon/tests/vaddr-kunit.h                  |   7 +-
- mm/damon/vaddr.c                              |  68 ++++----
- 8 files changed, 211 insertions(+), 58 deletions(-)
+For paddr (physical address) schemes, obtaining VMA offset requires costly
+rmap (reverse mapping) walks. As noted in that series:
 
-diff --git a/Documentation/ABI/testing/sysfs-kernel-mm-damon b/Documentation/ABI/testing/sysfs-kernel-mm-damon
-index 405a1a7f1eb6..5a49a65966b2 100644
---- a/Documentation/ABI/testing/sysfs-kernel-mm-damon
-+++ b/Documentation/ABI/testing/sysfs-kernel-mm-damon
-@@ -571,6 +571,9 @@ Description:	Reading this file returns the size of the memory in the region
- 		that passed DAMON operations layer-handled filters of the
- 		scheme in bytes.
- 
-+What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/targets/<T>/region_sz/min
-+What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/targets/<T>/region_sz/max
-+
- What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/perf_events/nr_perf_events
- What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/perf_events/<P>/type
- What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/perf_events/<P>/config
-diff --git a/include/linux/damon.h b/include/linux/damon.h
-index c50c1beea5b2..00b4890a3ec2 100644
---- a/include/linux/damon.h
-+++ b/include/linux/damon.h
-@@ -91,6 +91,8 @@ struct damon_region {
-  * struct damon_target - Represents a monitoring target.
-  * @pid:		The PID of the virtual address space to monitor.
-  * @nr_regions:		Number of monitoring target regions of this target.
-+ * @min_region_sz:	The minimum size of adaptive monitoring regions.
-+ * @max_region_sz:	The maximum size of adaptive monitoring regions.
-  * @regions_list:	Head of the monitoring target regions of this target.
-  * @list:		List head for siblings.
-  * @obsolete:		Whether the commit destination target is obsolete.
-@@ -107,6 +109,8 @@ struct damon_region {
- struct damon_target {
- 	struct pid *pid;
- 	unsigned int nr_regions;
-+	unsigned long min_region_sz;
-+	unsigned long max_region_sz;
- 	struct list_head regions_list;
- 	struct list_head list;
- 	bool obsolete;
-@@ -944,7 +948,7 @@ static inline void damon_insert_region(struct damon_region *r,
- void damon_add_region(struct damon_region *r, struct damon_target *t);
- void damon_destroy_region(struct damon_region *r, struct damon_target *t);
- int damon_set_regions(struct damon_target *t, struct damon_addr_range *ranges,
--		unsigned int nr_ranges, unsigned long min_sz_region);
-+		unsigned int nr_ranges, unsigned long min_sz_region, bool split);
- void damon_update_region_access_rate(struct damon_region *r, bool accessed,
- 		struct damon_attrs *attrs);
- 
-@@ -1013,6 +1017,8 @@ int damos_walk(struct damon_ctx *ctx, struct damos_walk_control *control);
- int damon_set_region_biggest_system_ram_default(struct damon_target *t,
- 				unsigned long *start, unsigned long *end,
- 				unsigned long min_sz_region);
-+int damon_evenly_split_region(struct damon_target *t,
-+			struct damon_region *r, unsigned int nr_pieces, unsigned long sz_piece);
- 
- #endif	/* CONFIG_DAMON */
- 
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index 186c3bbf9534..2e5795632865 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -178,9 +178,10 @@ static bool damon_intersect(struct damon_region *r,
-  * Fill holes in regions with new regions.
-  */
- static int damon_fill_regions_holes(struct damon_region *first,
--		struct damon_region *last, struct damon_target *t)
-+		struct damon_region *last, struct damon_target *t, bool split)
- {
- 	struct damon_region *r = first;
-+	unsigned long max_region_sz = split ? t->max_region_sz : 0;
- 
- 	damon_for_each_region_from(r, t) {
- 		struct damon_region *next, *newr;
-@@ -193,6 +194,8 @@ static int damon_fill_regions_holes(struct damon_region *first,
- 			if (!newr)
- 				return -ENOMEM;
- 			damon_insert_region(newr, r, next, t);
-+			if (max_region_sz)
-+				damon_evenly_split_region(t, newr, -1, max_region_sz);
- 		}
- 	}
- 	return 0;
-@@ -204,6 +207,7 @@ static int damon_fill_regions_holes(struct damon_region *first,
-  * @ranges:	array of new monitoring target ranges.
-  * @nr_ranges:	length of @ranges.
-  * @min_sz_region:	minimum region size.
-+ * @split:	split a new region into small regions
-  *
-  * This function adds new regions to, or modify existing regions of a
-  * monitoring target to fit in specific ranges.
-@@ -211,9 +215,12 @@ static int damon_fill_regions_holes(struct damon_region *first,
-  * Return: 0 if success, or negative error code otherwise.
-  */
- int damon_set_regions(struct damon_target *t, struct damon_addr_range *ranges,
--		unsigned int nr_ranges, unsigned long min_sz_region)
-+		unsigned int nr_ranges, unsigned long min_sz_region, bool split)
- {
- 	struct damon_region *r, *next;
-+	unsigned long min_region_sz = max(min_sz_region, t->min_region_sz);
-+	unsigned long max_region_sz = split ? t->max_region_sz : 0;
-+	unsigned long orig_start, orig_end;
- 	unsigned int i;
- 	int err;
- 
-@@ -248,19 +255,34 @@ int damon_set_regions(struct damon_target *t, struct damon_addr_range *ranges,
- 			/* no region intersects with this range */
- 			newr = damon_new_region(
- 					ALIGN_DOWN(range->start,
--						min_sz_region),
--					ALIGN(range->end, min_sz_region));
-+						min_region_sz),
-+					ALIGN(range->end, min_region_sz));
- 			if (!newr)
- 				return -ENOMEM;
- 			damon_insert_region(newr, damon_prev_region(r), r, t);
-+			if (max_region_sz)
-+				damon_evenly_split_region(t, newr, -1, max_region_sz);
- 		} else {
- 			/* resize intersecting regions to fit in this range */
-+			orig_start = first->ar.start;
- 			first->ar.start = ALIGN_DOWN(range->start,
--					min_sz_region);
--			last->ar.end = ALIGN(range->end, min_sz_region);
-+					min_region_sz);
-+			orig_end = last->ar.end;
-+			last->ar.end = ALIGN(range->end, min_region_sz);
-+			if (first->ar.start < orig_start) {
-+				if (max_region_sz)
-+					damon_evenly_split_region(t, first, -1, max_region_sz);
-+				if (first == last)
-+					continue;
-+			}
-+
-+			if (orig_end < last->ar.end) {
-+				if (max_region_sz)
-+					damon_evenly_split_region(t, last, -1, max_region_sz);
-+			}
- 
- 			/* fill possible holes in the range */
--			err = damon_fill_regions_holes(first, last, t);
-+			err = damon_fill_regions_holes(first, last, t, split);
- 			if (err)
- 				return err;
- 		}
-@@ -479,6 +501,8 @@ struct damon_target *damon_new_target(void)
- 
- 	t->pid = NULL;
- 	t->nr_regions = 0;
-+	t->min_region_sz = 0;
-+	t->max_region_sz = 0;
- 	INIT_LIST_HEAD(&t->regions_list);
- 	INIT_LIST_HEAD(&t->list);
- 	t->obsolete = false;
-@@ -1172,7 +1196,7 @@ static int damon_commit_target_regions(struct damon_target *dst,
- 	i = 0;
- 	damon_for_each_region(src_region, src)
- 		ranges[i++] = src_region->ar;
--	err = damon_set_regions(dst, ranges, i, src_min_sz_region);
-+	err = damon_set_regions(dst, ranges, i, src_min_sz_region, true);
- 	kfree(ranges);
- 	return err;
- }
-@@ -1192,6 +1216,25 @@ static int damon_commit_target(
- 	if (src_has_pid)
- 		get_pid(src->pid);
- 	dst->pid = src->pid;
-+	dst->min_region_sz = src->min_region_sz;
-+	dst->max_region_sz = src->max_region_sz;
-+	if (dst->min_region_sz > dst->max_region_sz) {
-+		pr_debug("invalid min_region_sz=%lu and max_region_sz=%lu\n",
-+				dst->min_region_sz, dst->max_region_sz);
-+		dst->min_region_sz = dst->max_region_sz = 0;
-+	}
-+	if (dst->min_region_sz) {
-+		if (dst->min_region_sz < DAMON_MIN_REGION || !is_power_of_2(dst->min_region_sz)) {
-+			pr_debug("invalid min_region_sz=%lu\n", dst->min_region_sz);
-+			dst->min_region_sz = dst->max_region_sz = 0;
-+		}
-+	}
-+	if (dst->max_region_sz) {
-+		if (dst->max_region_sz < DAMON_MIN_REGION || !is_power_of_2(dst->max_region_sz)) {
-+			pr_debug("invalid max_region_sz=%lu\n", dst->max_region_sz);
-+			dst->min_region_sz = dst->max_region_sz = 0;
-+		}
-+	}
- 	return 0;
- }
- 
-@@ -1770,6 +1813,7 @@ static bool damos_skip_charged_region(struct damon_target *t,
- {
- 	struct damon_region *r = *rp;
- 	struct damos_quota *quota = &s->quota;
-+	unsigned long min_region_sz = max(min_sz_region, t->min_region_sz);
- 	unsigned long sz_to_skip;
- 
- 	/* Skip previously charged regions */
-@@ -1788,11 +1832,11 @@ static bool damos_skip_charged_region(struct damon_target *t,
- 		if (quota->charge_addr_from && r->ar.start <
- 				quota->charge_addr_from) {
- 			sz_to_skip = ALIGN_DOWN(quota->charge_addr_from -
--					r->ar.start, min_sz_region);
-+					r->ar.start, min_region_sz);
- 			if (!sz_to_skip) {
--				if (damon_sz_region(r) <= min_sz_region)
-+				if (damon_sz_region(r) <= min_region_sz)
- 					return true;
--				sz_to_skip = min_sz_region;
-+				sz_to_skip = min_region_sz;
- 			}
- 			damon_split_region_at(t, r, sz_to_skip);
- 			r = damon_next_region(r);
-@@ -1823,6 +1867,7 @@ static bool damos_filter_match(struct damon_ctx *ctx, struct damon_target *t,
- 	bool matched = false;
- 	struct damon_target *ti;
- 	int target_idx = 0;
-+	unsigned long min_region_sz = max(min_sz_region, t->min_region_sz);
- 	unsigned long start, end;
- 
- 	switch (filter->type) {
-@@ -1835,8 +1880,8 @@ static bool damos_filter_match(struct damon_ctx *ctx, struct damon_target *t,
- 		matched = target_idx == filter->target_idx;
- 		break;
- 	case DAMOS_FILTER_TYPE_ADDR:
--		start = ALIGN_DOWN(filter->addr_range.start, min_sz_region);
--		end = ALIGN_DOWN(filter->addr_range.end, min_sz_region);
-+		start = ALIGN_DOWN(filter->addr_range.start, min_region_sz);
-+		end = ALIGN_DOWN(filter->addr_range.end, min_region_sz);
- 
- 		/* inside the range */
- 		if (start <= r->ar.start && r->ar.end <= end) {
-@@ -1974,6 +2019,7 @@ static void damos_apply_scheme(struct damon_ctx *c, struct damon_target *t,
- 	struct damos_quota *quota = &s->quota;
- 	unsigned long sz = damon_sz_region(r);
- 	struct timespec64 begin, end;
-+	unsigned long min_region_sz = max(c->min_sz_region, t->min_region_sz);
- 	unsigned long sz_applied = 0;
- 	unsigned long sz_ops_filter_passed = 0;
- 	/*
-@@ -2007,7 +2053,7 @@ static void damos_apply_scheme(struct damon_ctx *c, struct damon_target *t,
- 	if (c->ops.apply_scheme) {
- 		if (quota->esz && quota->charged_sz + sz > quota->esz) {
- 			sz = ALIGN_DOWN(quota->esz - quota->charged_sz,
--					c->min_sz_region);
-+					min_region_sz);
- 			if (!sz)
- 				goto update_stat;
- 			damon_split_region_at(t, r, sz);
-@@ -2484,6 +2530,14 @@ static void damon_merge_regions_of(struct damon_target *t, unsigned int thres,
- 	}
- }
- 
-+static bool damon_adaptive_region_adjustment_is_enabled(struct damon_target *t)
-+{
-+	if (!t->min_region_sz || !t->max_region_sz)
-+		return true;
-+
-+	return t->min_region_sz != t->max_region_sz;
-+}
-+
- /*
-  * Merge adjacent regions having similar access frequencies
-  *
-@@ -2507,17 +2561,28 @@ static void kdamond_merge_regions(struct damon_ctx *c, unsigned int threshold,
- 	struct damon_target *t;
- 	unsigned int nr_regions;
- 	unsigned int max_thres;
-+	bool might_merge = false;
- 
- 	max_thres = c->attrs.aggr_interval /
- 		(c->attrs.sample_interval ?  c->attrs.sample_interval : 1);
- 	do {
- 		nr_regions = 0;
- 		damon_for_each_target(t, c) {
--			damon_merge_regions_of(t, threshold, sz_limit);
-+			unsigned long target_sz_limit = max(sz_limit, t->min_region_sz);
-+
-+			if (t->max_region_sz)
-+				target_sz_limit = min(sz_limit, t->max_region_sz);
-+			if (damon_adaptive_region_adjustment_is_enabled(t))
-+				might_merge = true;
-+			else
-+				target_sz_limit = 0;
-+
-+			damon_merge_regions_of(t, threshold, target_sz_limit);
- 			nr_regions += damon_nr_regions(t);
- 		}
- 		threshold = max(1, threshold * 2);
- 	} while (nr_regions > c->attrs.max_nr_regions &&
-+			might_merge &&
- 			threshold / 2 < max_thres);
- }
- 
-@@ -2551,6 +2616,7 @@ static void damon_split_regions_of(struct damon_target *t, int nr_subs,
- 				  unsigned long min_sz_region)
- {
- 	struct damon_region *r, *next;
-+	unsigned long min_region_sz = max(min_sz_region, t->min_region_sz);
- 	unsigned long sz_region, sz_sub = 0;
- 	int i;
- 
-@@ -2558,17 +2624,20 @@ static void damon_split_regions_of(struct damon_target *t, int nr_subs,
- 		sz_region = damon_sz_region(r);
- 
- 		for (i = 0; i < nr_subs - 1 &&
--				sz_region > 2 * min_sz_region; i++) {
-+				sz_region > 2 * min_region_sz; i++) {
- 			/*
- 			 * Randomly select size of left sub-region to be at
- 			 * least 10 percent and at most 90% of original region
- 			 */
- 			sz_sub = ALIGN_DOWN(damon_rand(1, 10) *
--					sz_region / 10, min_sz_region);
-+					sz_region / 10, min_region_sz);
- 			/* Do not allow blank region */
- 			if (sz_sub == 0 || sz_sub >= sz_region)
- 				continue;
- 
-+			if (t->max_region_sz)
-+				sz_sub = min(sz_sub, t->max_region_sz);
-+
- 			damon_split_region_at(t, r, sz_sub);
- 			sz_region = sz_sub;
- 		}
-@@ -2603,8 +2672,11 @@ static void kdamond_split_regions(struct damon_ctx *ctx)
- 			nr_regions < ctx->attrs.max_nr_regions / 3)
- 		nr_subregions = 3;
- 
--	damon_for_each_target(t, ctx)
-+	damon_for_each_target(t, ctx) {
-+		if (!damon_adaptive_region_adjustment_is_enabled(t))
-+			continue;
- 		damon_split_regions_of(t, nr_subregions, ctx->min_sz_region);
-+	}
- 
- 	last_nr_regions = nr_regions;
- }
-@@ -3005,7 +3077,7 @@ int damon_set_region_biggest_system_ram_default(struct damon_target *t,
- 
- 	addr_range.start = *start;
- 	addr_range.end = *end;
--	return damon_set_regions(t, &addr_range, 1, min_sz_region);
-+	return damon_set_regions(t, &addr_range, 1, min_sz_region, true);
- }
- 
- /*
-@@ -3078,6 +3150,46 @@ void damon_update_region_access_rate(struct damon_region *r, bool accessed,
- 		r->nr_accesses++;
- }
- 
-+int damon_evenly_split_region(struct damon_target *t,
-+		struct damon_region *r, unsigned int nr_pieces, unsigned long sz_piece)
-+{
-+	unsigned long sz_orig, orig_end;
-+	struct damon_region *n = NULL, *next;
-+	unsigned long start;
-+	unsigned int i;
-+
-+	if (!r || !nr_pieces || !sz_piece)
-+		return -EINVAL;
-+
-+	if (nr_pieces == 1)
-+		return 0;
-+
-+	orig_end = r->ar.end;
-+	sz_orig = damon_sz_region(r);
-+
-+	if (t->max_region_sz)
-+		sz_piece = min(sz_piece, t->max_region_sz);
-+
-+	if (sz_orig <= sz_piece)
-+		return 0;
-+
-+	r->ar.end = r->ar.start + sz_piece;
-+	next = damon_next_region(r);
-+	for (start = r->ar.end, i = 1; i < nr_pieces && start + sz_piece <= orig_end;
-+			start += sz_piece, i++) {
-+		n = damon_new_region(start, start + sz_piece);
-+		if (!n)
-+			return -ENOMEM;
-+		damon_insert_region(n, r, next, t);
-+		r = n;
-+	}
-+	/* complement last region for possible rounding error */
-+	if (n)
-+		n->ar.end = orig_end;
-+
-+	return 0;
-+}
-+
- /**
-  * damon_initialized() - Return if DAMON is ready to be used.
-  *
-diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
-index 1dc996f810bb..b48ffbcf8805 100644
---- a/mm/damon/sysfs.c
-+++ b/mm/damon/sysfs.c
-@@ -211,6 +211,7 @@ static const struct kobj_type damon_sysfs_regions_ktype = {
- struct damon_sysfs_target {
- 	struct kobject kobj;
- 	struct damon_sysfs_regions *regions;
-+	struct damon_sysfs_ul_range *region_sz_range;
- 	int pid;
- 	bool obsolete;
- };
-@@ -223,6 +224,7 @@ static struct damon_sysfs_target *damon_sysfs_target_alloc(void)
- static int damon_sysfs_target_add_dirs(struct damon_sysfs_target *target)
- {
- 	struct damon_sysfs_regions *regions = damon_sysfs_regions_alloc();
-+	struct damon_sysfs_ul_range *region_sz_range;
- 	int err;
- 
- 	if (!regions)
-@@ -231,14 +233,35 @@ static int damon_sysfs_target_add_dirs(struct damon_sysfs_target *target)
- 	err = kobject_init_and_add(&regions->kobj, &damon_sysfs_regions_ktype,
- 			&target->kobj, "regions");
- 	if (err)
--		kobject_put(&regions->kobj);
-+		goto put_regions_out;
- 	else
- 		target->regions = regions;
-+
-+	region_sz_range = damon_sysfs_ul_range_alloc(0, 0);
-+	if (!region_sz_range) {
-+		err = -ENOMEM;
-+		goto put_regions_out;
-+	}
-+
-+	err = kobject_init_and_add(&region_sz_range->kobj,
-+			&damon_sysfs_ul_range_ktype, &target->kobj, "region_sz");
-+	if (err)
-+		goto put_region_sz_out;
-+	target->region_sz_range = region_sz_range;
-+	return 0;
-+
-+put_region_sz_out:
-+	kobject_put(&region_sz_range->kobj);
-+	target->region_sz_range = NULL;
-+put_regions_out:
-+	kobject_put(&regions->kobj);
-+	target->regions = NULL;
- 	return err;
- }
- 
- static void damon_sysfs_target_rm_dirs(struct damon_sysfs_target *target)
- {
-+	kobject_put(&target->region_sz_range->kobj);
- 	damon_sysfs_regions_rm_dirs(target->regions);
- 	kobject_put(&target->regions->kobj);
- }
-@@ -1717,7 +1740,7 @@ static int damon_sysfs_set_regions(struct damon_target *t,
- 		if (ranges[i - 1].end > ranges[i].start)
- 			goto out;
- 	}
--	err = damon_set_regions(t, ranges, sysfs_regions->nr, min_sz_region);
-+	err = damon_set_regions(t, ranges, sysfs_regions->nr, min_sz_region, true);
- out:
- 	kfree(ranges);
- 	return err;
-@@ -1739,6 +1762,8 @@ static int damon_sysfs_add_target(struct damon_sysfs_target *sys_target,
- 			return -EINVAL;
- 	}
- 	t->obsolete = sys_target->obsolete;
-+	t->min_region_sz = sys_target->region_sz_range->min;
-+	t->max_region_sz = sys_target->region_sz_range->max;
- 	return damon_sysfs_set_regions(t, sys_target->regions, ctx->min_sz_region);
- }
- 
-diff --git a/mm/damon/tests/core-kunit.h b/mm/damon/tests/core-kunit.h
-index 92ea25e2dc9e..d873582b729c 100644
---- a/mm/damon/tests/core-kunit.h
-+++ b/mm/damon/tests/core-kunit.h
-@@ -399,7 +399,7 @@ static void damon_test_set_regions(struct kunit *test)
- 
- 	damon_add_region(r1, t);
- 	damon_add_region(r2, t);
--	damon_set_regions(t, &range, 1, 1);
-+	damon_set_regions(t, &range, 1, 1, false);
- 
- 	KUNIT_EXPECT_EQ(test, damon_nr_regions(t), 3);
- 	damon_for_each_region(r, t) {
-diff --git a/mm/damon/tests/sysfs-kunit.h b/mm/damon/tests/sysfs-kunit.h
-index 0c665ed255a3..2298bd63de5e 100644
---- a/mm/damon/tests/sysfs-kunit.h
-+++ b/mm/damon/tests/sysfs-kunit.h
-@@ -70,6 +70,7 @@ static void damon_sysfs_test_add_targets(struct kunit *test)
- 		kunit_skip(test, "sysfs_regions alloc fail");
- 	}
- 
-+	sysfs_target->region_sz_range = damon_sysfs_ul_range_alloc(0, 0);
- 	sysfs_targets->targets_arr[0] = sysfs_target;
- 
- 	ctx = damon_new_ctx();
-@@ -93,6 +94,7 @@ static void damon_sysfs_test_add_targets(struct kunit *test)
- 	kfree(sysfs_targets->targets_arr);
- 	kfree(sysfs_targets);
- 	kfree(sysfs_target->regions);
-+	kfree(sysfs_target->region_sz_range);
- 	kfree(sysfs_target);
- }
- 
-diff --git a/mm/damon/tests/vaddr-kunit.h b/mm/damon/tests/vaddr-kunit.h
-index 30dc5459f1d2..a898403cf879 100644
---- a/mm/damon/tests/vaddr-kunit.h
-+++ b/mm/damon/tests/vaddr-kunit.h
-@@ -65,6 +65,7 @@ static int __link_vmas(struct maple_tree *mt, struct vm_area_struct *vmas,
-  */
- static void damon_test_three_regions_in_vmas(struct kunit *test)
- {
-+	struct damon_target *t = damon_new_target();
- 	static struct mm_struct mm;
- 	struct damon_addr_range regions[3] = {0};
- 	/* 10-20-25, 200-210-220, 300-305, 307-330 */
-@@ -81,7 +82,7 @@ static void damon_test_three_regions_in_vmas(struct kunit *test)
- 	if (__link_vmas(&mm.mm_mt, vmas, ARRAY_SIZE(vmas)))
- 		kunit_skip(test, "Failed to create VMA tree");
- 
--	__damon_va_three_regions(&mm, regions);
-+	__damon_va_three_regions(t, &mm, regions);
- 
- 	KUNIT_EXPECT_EQ(test, 10ul, regions[0].start);
- 	KUNIT_EXPECT_EQ(test, 25ul, regions[0].end);
-@@ -89,6 +90,8 @@ static void damon_test_three_regions_in_vmas(struct kunit *test)
- 	KUNIT_EXPECT_EQ(test, 220ul, regions[1].end);
- 	KUNIT_EXPECT_EQ(test, 300ul, regions[2].start);
- 	KUNIT_EXPECT_EQ(test, 330ul, regions[2].end);
-+
-+	damon_free_target(t);
- }
- 
- static struct damon_region *__nth_region_of(struct damon_target *t, int idx)
-@@ -147,7 +150,7 @@ static void damon_do_test_apply_three_regions(struct kunit *test,
- 		damon_add_region(r, t);
- 	}
- 
--	damon_set_regions(t, three_regions, 3, DAMON_MIN_REGION);
-+	damon_set_regions(t, three_regions, 3, DAMON_MIN_REGION, false);
- 
- 	for (i = 0; i < nr_expected / 2; i++) {
- 		r = __nth_region_of(t, i);
-diff --git a/mm/damon/vaddr.c b/mm/damon/vaddr.c
-index 68f2bb844d06..c4dbc50c7baa 100644
---- a/mm/damon/vaddr.c
-+++ b/mm/damon/vaddr.c
-@@ -69,10 +69,8 @@ static struct mm_struct *damon_get_mm(struct damon_target *t)
- static int damon_va_evenly_split_region(struct damon_target *t,
- 		struct damon_region *r, unsigned int nr_pieces)
- {
--	unsigned long sz_orig, sz_piece, orig_end;
--	struct damon_region *n = NULL, *next;
--	unsigned long start;
--	unsigned int i;
-+	unsigned long sz_piece;
-+	unsigned long min_region_sz = max(DAMON_MIN_REGION, t->min_region_sz);
- 
- 	if (!r || !nr_pieces)
- 		return -EINVAL;
-@@ -80,27 +78,12 @@ static int damon_va_evenly_split_region(struct damon_target *t,
- 	if (nr_pieces == 1)
- 		return 0;
- 
--	orig_end = r->ar.end;
--	sz_orig = damon_sz_region(r);
--	sz_piece = ALIGN_DOWN(sz_orig / nr_pieces, DAMON_MIN_REGION);
-+	sz_piece = ALIGN_DOWN(damon_sz_region(r) / nr_pieces, min_region_sz);
- 
- 	if (!sz_piece)
- 		return -EINVAL;
- 
--	r->ar.end = r->ar.start + sz_piece;
--	next = damon_next_region(r);
--	for (start = r->ar.end, i = 1; i < nr_pieces; start += sz_piece, i++) {
--		n = damon_new_region(start, start + sz_piece);
--		if (!n)
--			return -ENOMEM;
--		damon_insert_region(n, r, next, t);
--		r = n;
--	}
--	/* complement last region for possible rounding error */
--	if (n)
--		n->ar.end = orig_end;
--
--	return 0;
-+	return damon_evenly_split_region(t, r, -1, sz_piece);
- }
- 
- static unsigned long sz_range(struct damon_addr_range *r)
-@@ -121,12 +104,13 @@ static unsigned long sz_range(struct damon_addr_range *r)
-  *
-  * Returns 0 if success, or negative error code otherwise.
-  */
--static int __damon_va_three_regions(struct mm_struct *mm,
-+static int __damon_va_three_regions(struct damon_target *t, struct mm_struct *mm,
- 				       struct damon_addr_range regions[3])
- {
- 	struct damon_addr_range first_gap = {0}, second_gap = {0};
- 	VMA_ITERATOR(vmi, mm, 0);
- 	struct vm_area_struct *vma, *prev = NULL;
-+	unsigned long min_region_sz = max(DAMON_MIN_REGION, t->min_region_sz);
- 	unsigned long start;
- 
- 	/*
-@@ -157,20 +141,35 @@ static int __damon_va_three_regions(struct mm_struct *mm,
- 	}
- 	rcu_read_unlock();
- 
--	if (!sz_range(&second_gap) || !sz_range(&first_gap))
-+	if (!sz_range(&second_gap) || !sz_range(&first_gap)) {
-+		pr_warn_once("The size of the first and second gaps are %lu and %lu\n",
-+				sz_range(&first_gap), sz_range(&second_gap));
- 		return -EINVAL;
-+	}
- 
- 	/* Sort the two biggest gaps by address */
- 	if (first_gap.start > second_gap.start)
- 		swap(first_gap, second_gap);
- 
- 	/* Store the result */
--	regions[0].start = ALIGN(start, DAMON_MIN_REGION);
--	regions[0].end = ALIGN(first_gap.start, DAMON_MIN_REGION);
--	regions[1].start = ALIGN(first_gap.end, DAMON_MIN_REGION);
--	regions[1].end = ALIGN(second_gap.start, DAMON_MIN_REGION);
--	regions[2].start = ALIGN(second_gap.end, DAMON_MIN_REGION);
--	regions[2].end = ALIGN(prev->vm_end, DAMON_MIN_REGION);
-+	regions[0].start = ALIGN_DOWN(start, min_region_sz);
-+	regions[0].end = ALIGN(first_gap.start, min_region_sz);
-+	regions[1].start = ALIGN_DOWN(first_gap.end, min_region_sz);
-+	regions[1].end = ALIGN(second_gap.start, min_region_sz);
-+	regions[2].start = ALIGN_DOWN(second_gap.end, min_region_sz);
-+	regions[2].end = ALIGN(prev->vm_end, min_region_sz);
-+
-+	for (int i = 0; i < 3; i++) {
-+		if (!sz_range(&regions[i])) {
-+			pr_warn_once("The size of the %dth range is %lu\n",
-+					i, sz_range(&regions[i]));
-+			return -EINVAL;
-+		}
-+		if (i > 0 && regions[i - 1].end >= regions[i].start) {
-+			pr_warn_once("%dth and %dth regions overlap\n", i - 1, i);
-+			return -EINVAL;
-+		}
-+	}
- 
- 	return 0;
- }
-@@ -191,7 +190,7 @@ static int damon_va_three_regions(struct damon_target *t,
- 		return -EINVAL;
- 
- 	mmap_read_lock(mm);
--	rc = __damon_va_three_regions(mm, regions);
-+	rc = __damon_va_three_regions(t, mm, regions);
- 	mmap_read_unlock(mm);
- 
- 	mmput(mm);
-@@ -246,6 +245,7 @@ static void __damon_va_init_regions(struct damon_ctx *ctx,
- 	struct damon_target *ti;
- 	struct damon_region *r;
- 	struct damon_addr_range regions[3];
-+	unsigned long min_region_sz = max(DAMON_MIN_REGION, t->min_region_sz);
- 	unsigned long sz = 0, nr_pieces;
- 	int i, tidx = 0;
- 
-@@ -263,8 +263,10 @@ static void __damon_va_init_regions(struct damon_ctx *ctx,
- 		sz += regions[i].end - regions[i].start;
- 	if (ctx->attrs.min_nr_regions)
- 		sz /= ctx->attrs.min_nr_regions;
--	if (sz < DAMON_MIN_REGION)
--		sz = DAMON_MIN_REGION;
-+	if (t->max_region_sz)
-+		sz = clamp(sz, min_region_sz, t->max_region_sz);
-+	else
-+		sz = max(sz, min_region_sz);
- 
- 	/* Set the initial three regions of the target */
- 	for (i = 0; i < 3; i++) {
-@@ -303,7 +305,7 @@ static void damon_va_update(struct damon_ctx *ctx)
- 	damon_for_each_target(t, ctx) {
- 		if (damon_va_three_regions(t, three_regions))
- 			continue;
--		damon_set_regions(t, three_regions, 3, DAMON_MIN_REGION);
-+		damon_set_regions(t, three_regions, 3, DAMON_MIN_REGION, true);
- 	}
- }
- 
+    "However, finding out how a folio is mapped inside of a VMA requires
+     a costly rmap walk when using a paddr scheme. As such, we have
+     decided that this functionality makes more sense as a vaddr scheme."
+
+This new series takes a different approach that enables PA-based migration
+WITHOUT requiring rmap walks, by using basis points (bp) target-state goals
+instead of weight-based action rates.
+
+The rmap Cost vs Oscillation Trade-off
+======================================
+
+For PA-based migration with weights, there are two possibilities:
+
+  1. Weight-based with rmap:
+     - Use rmap to find VMA offset for each physical page
+     - Apply weights based on VMA offset (same algorithm as VA)
+     - Works correctly: VMA offset provides stable identity
+     - Problem: rmap walks are expensive for every migration candidate
+
+  2. Weight-based without rmap:
+     - Attempt to apply weights using only physical address information
+     - No stable identity across migrations
+     - Results in page oscillation (see below)
+     - Not viable
+
+The Oscillation Problem (Weights Without rmap)
+==============================================
+
+Weight-based migration relies on a stable identifier to determine which node
+a page "belongs to". For VA, this is the VMA offset - it remains constant
+regardless of which physical node backs the page. For PA without rmap, no
+such stable identifier exists.
+
+Consider a two-node system with weights {Node 0: 40, Node 1: 60}:
+
+  Initial state:
+    Hot pages on Node 0: PFN 0x1000, 0x1001, 0x1002, 0x1003, 0x1004
+    Node 1: empty
+
+  Iteration 1 - Weight-based selection (no rmap):
+    System tries to achieve 40/60 distribution
+    Selects pages at PFN 0x1002, 0x1003, 0x1004 (60%) for Node 1
+    After migration, these pages get NEW PFNs on Node 1:
+      PFN 0x1002 → PFN 0x5000 (Node 1)
+      PFN 0x1003 → PFN 0x5001 (Node 1)
+      PFN 0x1004 → PFN 0x5002 (Node 1)
+
+  State after Iteration 1:
+    Node 0: PFN 0x1000, 0x1001 (40%)
+    Node 1: PFN 0x5000, 0x5001, 0x5002 (60%)
+
+  Iteration 2 - Weight-based selection runs again:
+    System sees pages at PFN 0x5000, 0x5001, 0x5002 on Node 1
+    These are "new" pages from the system's perspective
+    NO MEMORY that these were just migrated FROM Node 0
+    Weight-based logic may select some for migration back to Node 0
+
+  Iteration 3, 4, 5...:
+    Same pages continue bouncing between nodes
+    Each migration changes the PFN, erasing any "history"
+    System never converges to stable state
+
+The fundamental issue: weights define an ACTION RATE ("migrate X% of
+candidate pages to each node") rather than a TARGET STATE. Without stable
+page identity (which rmap provides via VMA offset), the system cannot
+determine which pages have already been "handled" and continues to
+reprocess the same logical pages indefinitely.
+
+With rmap, the VMA offset provides stable identity - a page at file offset
+0x1000 always hashes to the same target node regardless of its current PFN.
+Without rmap, we have no such anchor, and weights become meaningless.
+
+Solution: bp-Based Target State Goals
+=====================================
+
+Instead of specifying action rates, `node_sys_bp` specifies a TARGET STATE:
+
+    "Node N should contain X basis points (X/10000) of system memory"
+
+The migration control loop:
+
+  1. Calculate current_bp: sum bytes per node across monitored regions
+  2. Compare: if current_bp >= target_bp, STOP (goal satisfied)
+  3. Otherwise: continue migrating toward target
+
+  Example with target: "Node 0 should have 4000 bp (40%)"
+
+    Iteration 1:
+      current_bp = 10000 (100% on Node 0)
+      target_bp  = 4000 (40%)
+      current > target → migrate cold pages away from Node 0
+
+    After Iteration 1:
+      current_bp = 4000 (40% on Node 0)
+
+    Iteration 2:
+      current_bp = 4000
+      target_bp  = 4000
+      current >= target → STOP, goal satisfied
+
+    No oscillation - migration stops when target state is reached.
+
+No page identity tracking needed because we measure the END STATE, not
+which specific pages were moved. The early-exit prevents oscillation by
+stopping when the goal is met.
+
+Why get_goal_metric() Ops Callback
+==================================
+
+The bp calculation requires iterating over monitored PA regions:
+
+    for (pfn = start_pfn; pfn < end_pfn; pfn++) {
+        if (page_to_nid(pfn_to_page(pfn)) == nid)
+            node_bytes += PAGE_SIZE;
+    }
+    bp = node_bytes * 10000 / system_total;
+
+This requires address-space knowledge that only the ops provider has.
+Existing goal metrics (PSI, node_mem_*, node_memcg_*) are computed in
+core using system-wide data that doesn't require iterating monitored
+regions.
+
+The new `get_goal_metric()` callback in `damon_operations` allows:
+
+  1. Core to remain generic - handles all common metrics
+  2. Ops providers to implement metrics requiring region iteration
+  3. Clean separation - PA implements node_sys_bp, VA could add
+     different metrics in future
+  4. Optional implementation - ops return 0 if metric unsupported
+
+This design ensures node_sys_bp is only computed when using PA contexts
+where it makes sense, while keeping the core quota goal infrastructure
+unchanged for other metrics and ops providers.
+
+The callback pattern allows each ops provider to implement metrics
+specific to its address space model without burdening the core with
+ops-specific knowledge.
+
+Advantages of PA-Based Migration
+================================
+
+PA-based migration with DAMON enables integration of multiple hotness
+sources for migration decisions:
+
+  1. DAMON's native access pattern monitoring
+  2. Fault-based information (similar to NUMA Balancing)
+  3. Future: Hardware monitoring units (e.g., CXL CHMU)
+  4. Future: Instruction-Based Sampling (AMD IBS, Intel PEBS)
+
+Unlike VA-based approaches tied to individual process address spaces, PA
+monitoring can aggregate hotness information from multiple sources to make
+system-wide migration decisions across the entire physical memory space.
+
+Complementary to Existing vaddr Migration
+=========================================
+
+This series complements rather than replaces the vaddr weighted interleave
+migration merged in 6.18:
+
+  vaddr migration (weight-based):
+    - Per-process control
+    - Fine-grained interleave patterns via VMA offset
+    - Deterministic placement based on weights
+
+  paddr migration (bp-based, this series):
+    - System-wide control
+    - Target-state goals for node capacity management
+    - No rmap overhead
+    - Aggregates multiple hotness sources
+
+Capacity Clamping
+=================
+
+The series also implements capacity clamping for `node_sys_bp` goals. In a
+system where Node 0 has 40% of total RAM, setting a target of 50% is
+impossible. The implementation clamps:
+
+    effective_target = min(user_target, node_capacity_bp)
+
+This prevents the quota auto-tuning from chasing impossible targets and
+avoids thrashing in two-context DRAM↔CXL setups.
+
+Patches
+=======
+
+  1/5: mm/damon/core: add DAMOS_QUOTA_NODE_SYS_BP metric
+       Adds the enum value and documentation.
+
+  2/5: mm/damon: add get_goal_metric() op and PA provider
+       Introduces the ops callback and PA implementation that iterates
+       monitored regions to calculate node_sys_bp without rmap.
+
+  3/5: mm/damon/core: add new ops-specific goal metric
+       Wires the new metric into core's quota goal evaluation, delegating
+       to ops.get_goal_metric() for DAMOS_QUOTA_NODE_SYS_BP.
+
+  4/5: mm/damon/paddr: capacity clamp and directional early-exit
+       Adds capacity clamping and early-exit logic to prevent migration
+       when goal is already satisfied.
+
+  5/5: mm/damon/sysfs-schemes: accept "node_sys_bp" in goal's target_metric
+       Exposes the new metric to userspace via sysfs.
+
+Status
+======
+
+This is an early RFC for design review. The patches:
+  - Compile successfully with no errors or warnings
+  - Have NOT been tested on actual hardware
+
+Feedback on the overall approach and design is appreciated.
+
+References
+==========
+
+[1] mm/damon/vaddr: Allow interleaving in migrate_{hot,cold} actions (v4)
+    https://lore.kernel.org/linux-mm/20250709005952.17776-1-bijan311@gmail.com/
+    Merged in Linux 6.18
+
+
+Ravi Jonnalagadda (5):
+  mm/damon/core: add DAMOS_QUOTA_NODE_SYS_BP metric
+  mm/damon: add get_goal_metric() op and PA provider
+  mm/damon/core: add new ops-specific goal metric
+  mm/damon/paddr: capacity clamp and directional early-exit for
+    node_sys_bp
+  mm/damon/sysfs-schemes: accept "node_sys_bp" in goal's target_metric
+
+ include/linux/damon.h    |   5 ++
+ mm/damon/core.c          |  34 ++++++++++---
+ mm/damon/paddr.c         | 102 +++++++++++++++++++++++++++++++++++++++
+ mm/damon/sysfs-schemes.c |   7 +++
+ 4 files changed, 141 insertions(+), 7 deletions(-)
+
 -- 
 2.43.0
 
