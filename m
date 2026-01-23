@@ -1,62 +1,62 @@
-Received: from mail-yw1-f194.google.com (mail-yw1-f194.google.com [209.85.128.194])
+Received: from mail-yx1-f66.google.com (mail-yx1-f66.google.com [74.125.224.66])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C1E9347FFA
-	for <damon@lists.linux.dev>; Fri, 23 Jan 2026 04:57:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.194
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2BEF2C1590
+	for <damon@lists.linux.dev>; Fri, 23 Jan 2026 04:57:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.66
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769144275; cv=none; b=Nc0p+t/S2Z/ad0rA1boiAEJiTyUbCD1puN/dN0++IfYQo53dZruSUKb2bY4GQU/XAZzcZI2hoEEEzbwNp98nPHG111yiTGmsiqXcRILN5hwoPIyK02++hehK0dwH1IYT605pYfcSTBc75P7Aok3VBRFi4Mw7m/0T5jWvjAnSKqw=
+	t=1769144281; cv=none; b=LoHuXsyZK0+ksWk9Zc+4IRBmyqKXiFJpqnQRCNxWqT0dwIY6W6W0M5FZoGJpZE7NJUxWwv1btekgVY5G+XrD/7BL5U5vos7/sDDyTeY7+q+JVD42zJQlI7NhBORQr8PQdfxoBAlfgVjRDMIps/2hS/UnlgT3EeFKO0HRzUQ1IUM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769144275; c=relaxed/simple;
-	bh=gNJCsIARzmkXf+EBb/WlklHpeUg8wMqbpfoVNXrZwnU=;
+	s=arc-20240116; t=1769144281; c=relaxed/simple;
+	bh=uSGUjxT6vDYwFOxXkjkFU0pbIbdjzCnzKu1CcO3NxY8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z2bTv9J1j/GRkH+lGdaZTj1KvO6g119NH6yPmqAIMRPZ87+7mw8fpsvTXj/EJys1edk21O9BambNi8VUSyb4fnxVr/NWzZsqt9xn2YgOnmFXdF5bZBr4YosaWzNdGnAjtVICctLcLDsAEMaZXSCYzDPxnjEXoXGtzmuGYjVvfvw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Kk6Ao0cG; arc=none smtp.client-ip=209.85.128.194
+	 MIME-Version; b=EDxo7Hnm5HTr9ou3Yibd+jmGyT1KZI5TNxsfzd5iiYVibTOGzVz6/wlExsUAWV3Qp+KdUaNi5kIkO6s3yFMy8sqywu6/ClLNusyRC3fYxZ0zraS0lCTZIENlYAhdK8zPhda0mE7HU9zePITsA9E0zj+qqUtr9XmY95yvYAMsWi0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IntUi0cc; arc=none smtp.client-ip=74.125.224.66
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Kk6Ao0cG"
-Received: by mail-yw1-f194.google.com with SMTP id 00721157ae682-78fdb90b670so16494587b3.2
-        for <damon@lists.linux.dev>; Thu, 22 Jan 2026 20:57:45 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IntUi0cc"
+Received: by mail-yx1-f66.google.com with SMTP id 956f58d0204a3-64959e30705so845752d50.1
+        for <damon@lists.linux.dev>; Thu, 22 Jan 2026 20:57:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1769144262; x=1769749062; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1769144269; x=1769749069; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=zUE9K2FZw5Ls36EWUpBYNIoEjPdLY+PpGcwmuAyPWmY=;
-        b=Kk6Ao0cGPy4kH3WOyRneQXVlstmTUfhNV3I4any2dOqHKKRPh26qwjrmXENfbe3tTh
-         5V2GZBcGpygInvMpTFmcBuMza6dZ3h76kkli8YrtWeyc9qnGt5bgZVPesnlba7QLHY8I
-         DFRhTZPWjhy2iBxCNikiw7ajl9ByvDslu0Hvgxom7aaT5DQAwnahmhH0FB/5skJeI+v+
-         dKNFMEXbik5ILFuoGBkTI3TUsPriTEo0nfUfNEhrnKtERKiqOCDei88rNKqXQVlxLnHg
-         pP7Ko6G2/mT50bzEmuutBiX1LJkHYuT/0PxfYD9xCHF7cUkb5GojAYDjv4qNbMOCoZI2
-         EpBg==
+        bh=XZ4usUMGfNo7J4lew0QKMfQ7VuYcLUlFI2hm5aH3MjE=;
+        b=IntUi0cc32aloJ1jsMNdcG7WYwNnr+4Apu1DPS2j8faD57JgfTXaDzmDZE53koqDdO
+         0KlDA5v/nErKlt7GR2fXXHvfmOpi+WAnLk6AyXAr59dT2FQgA/cSTHwj0YToGyZPMZI3
+         68seWoG2HJ+vSbUhypD1b8aSffolR/B7xcNS9wob2/T11SC1qCHAv5BVEfNmmq9ZGuKY
+         7AbV2mifuJS7kIyaJpb+uZ6f+wivXCwkDjQQtqv8vd/Y2nL5WBEW4Hv9VbB9kL/OCK0l
+         1fmCgrNiqhnGrBEerLofElox80Ywzz/pnejiotJBd5NPA5wY4jeZ4zxC/073mvjLO/KD
+         HNzQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769144262; x=1769749062;
+        d=1e100.net; s=20230601; t=1769144269; x=1769749069;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=zUE9K2FZw5Ls36EWUpBYNIoEjPdLY+PpGcwmuAyPWmY=;
-        b=bweDnIi1UOcLnfiUoSIsXm/34c1++ho43cfKzuTzkOf73KMVbtnHCh1j0zGTeLi324
-         0/g2YzFNV5qdUNAulwV83GNmaoendJvQRBAs9lFoOkE1oD8VRG7fjqbLfO5ipKUXK5gD
-         g7GDoItfjJ2VB2Y7l8SmNgVMnX3a2FSsrOqPycKhWwRuZFbCz5HVgiRT9G1aZwQHAC8/
-         mwuB3/AAVDgtylcUDPaQ45xdC9DSHL0m1eqAdUwS8RHgyzBxrVSBHeQlNLLDMxSIUj1G
-         sWJlXEYwApJqInsmtY7ORMciEeYeXsASDhB6r74I8nRWe/yzn2iQgh92b/sv1ivWJCt7
-         fONA==
-X-Gm-Message-State: AOJu0YznyozoTcvq2fYUTW+tdXzy/rJY5jVerHW0jY0tMcQsv99bMxMn
-	+swvif4wZogI24/0jezK00UEuhmmWrGiTKBG4+7ZSn+PoB9IkAdbsyaHjluhufQ=
-X-Gm-Gg: AZuq6aLQVM4Ur0IYzSP+sUgHzdgPHFiqvUv9SpoupYyVoT/EouWQ+eSG5mPD8C2Sph7
-	YejPTe3T6BMpLU9qwFHxFd0w706TpR7ZFhxtw1KlUNVpzvj7eEerbK8hNpyt77lKrPPZ83gUmMS
-	iXcSR79mhgzksXRcpD3yi9zkiA1MLN9RnnUpOPrghZYywUE/W1Dj8pLPs60gMJlfPDdDEBg8CCC
-	In77tpbfgmXwz/327hud3cISd/ew4xFgv1hLD8YYlNY3scycVsluJvEM6QL5ZMscnZzlGTf9xHX
-	/gNfnnoHK9VBR0Ag6U/r0hp5kCD2iK3YeM+dPtvfPOfMe02xhxMQ4QL8xmI27pqNRZ2XMihvb7w
-	ltMdX7iiUxDdXU8Y4NYG19aIWeqtFCFT4GmdYGcYvkH6rln2Apb9VRZwJSQP9vp19fGKBJSh0OX
-	OXLgIjZ9zzikKmh9XWbJfoKIh1rvbK1h8N+D8E3bzCcqteg7/+O2rEQ7YLiYyhsg==
-X-Received: by 2002:a05:690c:39c:b0:794:4c3:65ec with SMTP id 00721157ae682-7943992fbf6mr17105327b3.22.1769144262401;
-        Thu, 22 Jan 2026 20:57:42 -0800 (PST)
+        bh=XZ4usUMGfNo7J4lew0QKMfQ7VuYcLUlFI2hm5aH3MjE=;
+        b=h23J4kSghrJjzxFkD/eD/IC2Leu5vFItP7SsONP+p7tyUXA6iOq6RJ+uEeuEMwHCCb
+         wmFuWYgBLaT8oSO8Yqnsw3JN8tVVuB2JSMWnVCW0hx9d5U+syPbTtR5So1odOqmckMPJ
+         BU63rpfszI+f6CC5DosCiYR1jw3o4qKmo2trEBTKeATviNlxpg1KypHQm/VRZUpliO4W
+         Y13bTsmvjb5v1Kt/WTMEzHA8WMUbnnLKTpxIN9AyymZYlFbTYHapdFhiUkOx+YzlkyPd
+         VBQCdEktTWZkJSAITM/7RNZ6htQtTnbEdvZqEkZhOO4/1Cx5iHt/gSa6bvk0cLXJVqAb
+         HUAw==
+X-Gm-Message-State: AOJu0YyKX7cIX5a+MHDauLLRxn1CZ3o9GJ11id9MW81jAGC7fjEqYlEy
+	ke2aOwvIa9LPkIipDgqdzT0mj3lU3tD6byZz2udaiZcL96f/fjKXOBrU1ELWkuo=
+X-Gm-Gg: AZuq6aIRAioC1R54LmIZELU9GDM+lnu/jSqweAuZEZfN+O7TzuxGo2V2QRsOneKMw/p
+	sLP2iMu1GhvajWGT0SDnfp5FtAlkzFm3BH+DJjNKRIgQQl6g2KpHVTBnQsiDOHpGmJVLY+NOlzO
+	YzNzXLwxXt4CmO8CO09U8lnPfzbCtIypc0+HwSpUsq57kwkzi/RQ1d+kFpAhrY4xY/Ix9cyQlQH
+	W2MrzLkYg3qzQTsMnKV6RgXjDMbhzwxsFyx+b7nPfcX9zOGc+UHhu9MZkSfp/RbC39LFxtxZZ8Z
+	0d1PiB+F21EnqWYaj/+P0OJEb02mmcS1P0nle1rRHtTnsrb64HJnq436f1mc2EoAuLstlL4Vb7G
+	SLW15q0ORGBR4QGggLmpIybQtxWAE70PKb8SUc9CkBtH0jcvJiE0MPgka1lkn+KoPWeMpfY5JY9
+	OrCQ/Bh3DJSjh4o3/IieP7y7H0OWx9npIq3OcR/UDj3aCNBeFPL9CTEbhIJ+lOIw==
+X-Received: by 2002:a05:690c:9693:b0:786:5afa:375c with SMTP id 00721157ae682-79439a09235mr29912047b3.67.1769144269171;
+        Thu, 22 Jan 2026 20:57:49 -0800 (PST)
 Received: from localhost (23-116-43-216.lightspeed.sntcca.sbcglobal.net. [23.116.43.216])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-7943b2b9bfcsm6436687b3.38.2026.01.22.20.57.41
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-7943af14427sm6466517b3.12.2026.01.22.20.57.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 22 Jan 2026 20:57:42 -0800 (PST)
+        Thu, 22 Jan 2026 20:57:48 -0800 (PST)
 From: Ravi Jonnalagadda <ravis.opensrc@gmail.com>
 To: damon@lists.linux.dev,
 	linux-mm@kvack.org,
@@ -68,9 +68,9 @@ Cc: sj@kernel.org,
 	bijan311@gmail.com,
 	ajayjoshi@micron.com,
 	Ravi Jonnalagadda <ravis.opensrc@gmail.com>
-Subject: [RFC PATCH 1/5] mm/damon/core: add DAMOS_QUOTA_NODE_SYS_BP metric
-Date: Thu, 22 Jan 2026 20:57:24 -0800
-Message-ID: <20260123045733.6954-2-ravis.opensrc@gmail.com>
+Subject: [RFC PATCH 5/5] mm/damon/sysfs-schemes: accept "node_sys_bp" in goal's target_metric
+Date: Thu, 22 Jan 2026 20:57:28 -0800
+Message-ID: <20260123045733.6954-6-ravis.opensrc@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260123045733.6954-1-ravis.opensrc@gmail.com>
 References: <20260123045733.6954-1-ravis.opensrc@gmail.com>
@@ -82,37 +82,40 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Add a node-scoped "system bp" goal metric for PA-based migration
-control.
-
-This metric represents basis points (bp, 1/10,000) for
-(scheme-eligible bytes on node nid) / (system total bytes)
+Allow userspace to select the new goal metric "node_sys_bp" by writing
+it to goals/<G>/target_metric. Also set goal->nid for this metric when
+committing goals from sysfs to the running schemes.
 
 Signed-off-by: Ravi Jonnalagadda <ravis.opensrc@gmail.com>
 ---
- include/linux/damon.h | 2 ++
- 1 file changed, 2 insertions(+)
+ mm/damon/sysfs-schemes.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/include/linux/damon.h b/include/linux/damon.h
-index 3813373a9200..ec5ed1a217fc 100644
---- a/include/linux/damon.h
-+++ b/include/linux/damon.h
-@@ -155,6 +155,7 @@ enum damos_action {
-  * @DAMOS_QUOTA_NODE_MEM_FREE_BP:	MemFree ratio of a node.
-  * @DAMOS_QUOTA_NODE_MEMCG_USED_BP:	MemUsed ratio of a node for a cgroup.
-  * @DAMOS_QUOTA_NODE_MEMCG_FREE_BP:	MemFree ratio of a node for a cgroup.
-+ * @DAMOS_QUOTA_NODE_SYS_BP:		Scheme-eligible bytes ratio of a node.
-  * @NR_DAMOS_QUOTA_GOAL_METRICS:	Number of DAMOS quota goal metrics.
-  *
-  * Metrics equal to larger than @NR_DAMOS_QUOTA_GOAL_METRICS are unsupported.
-@@ -166,6 +167,7 @@ enum damos_quota_goal_metric {
- 	DAMOS_QUOTA_NODE_MEM_FREE_BP,
- 	DAMOS_QUOTA_NODE_MEMCG_USED_BP,
- 	DAMOS_QUOTA_NODE_MEMCG_FREE_BP,
-+	DAMOS_QUOTA_NODE_SYS_BP,
- 	NR_DAMOS_QUOTA_GOAL_METRICS,
+diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
+index 3a699dcd5a7f..37cd5d715821 100644
+--- a/mm/damon/sysfs-schemes.c
++++ b/mm/damon/sysfs-schemes.c
+@@ -1038,6 +1038,10 @@ struct damos_sysfs_qgoal_metric_name damos_sysfs_qgoal_metric_names[] = {
+ 		.metric = DAMOS_QUOTA_NODE_MEMCG_FREE_BP,
+ 		.name = "node_memcg_free_bp",
+ 	},
++	{
++		.metric = DAMOS_QUOTA_NODE_SYS_BP,
++		.name = "node_sys_bp",
++	},
  };
  
+ static ssize_t target_metric_show(struct kobject *kobj,
+@@ -2566,6 +2570,9 @@ static int damos_sysfs_add_quota_score(
+ 			}
+ 			goal->nid = sysfs_goal->nid;
+ 			break;
++		case DAMOS_QUOTA_NODE_SYS_BP:
++			goal->nid = sysfs_goal->nid;
++			break;
+ 		default:
+ 			break;
+ 		}
 -- 
 2.43.0
 
