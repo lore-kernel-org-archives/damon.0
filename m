@@ -1,138 +1,667 @@
-Received: from mail-qt1-f179.google.com (mail-qt1-f179.google.com [209.85.160.179])
+Received: from mail-dl1-f67.google.com (mail-dl1-f67.google.com [74.125.82.67])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C06F6310774
-	for <damon@lists.linux.dev>; Tue, 27 Jan 2026 12:56:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.160.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E899B32B99C
+	for <damon@lists.linux.dev>; Tue, 27 Jan 2026 18:53:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.67
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769518617; cv=pass; b=Q2RIKI1P+dh2AwD4hv+No9CtXjfcsmPuZ/ucVoRBTGldU+dFKTeD++5Q7YREi5a1s3X+HDWMzWqEg3FwbAChU3+SUwIwyyP+B6/8WERS0Ms9XiBPSAIwlKEVyTUtIU7VkgDjZwqpm1peaBAHKUoent2ZyUnJSrOnpIdRPK1x3Eg=
+	t=1769539989; cv=pass; b=PNFM3gQFUgBAcewmght3NNQ0Mj11jle3PsO1qTVvzk/VYVvIz6BmPebA3UCdbvzWRneED3RuQgGFII5lqNNAkI+kxH/LD1jUuhnnoCjFaxs1zTwNu3PvOss0aaiuaBRPwQDFhUMevxeJVApx2y3jZwE6YI35nDEOXpEBWYnpTTE=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769518617; c=relaxed/simple;
-	bh=ubrkqs4rvwbrLUkrZ5FPplHf8omJhRh/vJEV1N1VGTU=;
+	s=arc-20240116; t=1769539989; c=relaxed/simple;
+	bh=II6AQ5O86X0B5Z2rRMtmz0KVbfBmoQ0kpyWUVS6llnE=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=UOiEjHyGuz01Nl8qa5SCutfgVVR/N7RzNv+PdBVQA0QtHkw70LDVbY49dvHn3osY5/C8IThEbm5P657m7wqR8dvxuA098DMIJtfc7irOSm8uFIDPBw/ELBiZA7u/waUspIBCX3+B/sZ+PXXag4CvVSqxIVldt1VDGpv+OhLgvDY=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JBRMcg1N; arc=pass smtp.client-ip=209.85.160.179
+	 To:Cc:Content-Type; b=P+8PJmU+gWq8ctdt3FWZy+xonPv5BT07isHqBsRZW25UVdpYPjt3ouwkn2FiiccaF+U5GyAt1afqBcXenxfx4Rc5hxeXMGBRl17imZ8KyD6KTdmnUtTP5aq5eB202tGQ9lrZpwywecQ3m0X1iMrdEeuExBYBp1CVtF2gNOZB8mo=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CRzQgaiV; arc=pass smtp.client-ip=74.125.82.67
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JBRMcg1N"
-Received: by mail-qt1-f179.google.com with SMTP id d75a77b69052e-502a4e3e611so50549141cf.0
-        for <damon@lists.linux.dev>; Tue, 27 Jan 2026 04:56:55 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1769518615; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CRzQgaiV"
+Received: by mail-dl1-f67.google.com with SMTP id a92af1059eb24-11f1fb91996so12522231c88.1
+        for <damon@lists.linux.dev>; Tue, 27 Jan 2026 10:53:06 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1769539986; cv=none;
         d=google.com; s=arc-20240605;
-        b=M2Djwtu07d52iIc6peBax95owZt/7B5SO0BoVHs4502TlxhSSBiAN3rifugirRTcdO
-         bSZyI6QNa7dBIqMR5lQ8lildBrU/6XUEKzJrdnmAEGRmVDOU4y4U6ycK0GHqoNyeYs5D
-         qLaxOZ0nCV6Y5ml0v2vs8QSFpBJbXZD3gAscNhhzbkeohIRxudVHLJ7ImMroVCu1FITA
-         AtgmedgonEFOiGebEUpy+Gib5hEzsTZ6our0SRwbVCcGR3Q24tfTvqVuWBDSfJSbn9KH
-         L38SBd9Z1m6ET3P2AVNUHmJNG+3tR4OX46Tx9xqZ31tiMT0gDi0YwIgv1/z4cowvemRM
-         hVNg==
+        b=iNiCPepc9AGZrVomb5QPWMwMBoeQIgZkFTVwBtfJe4ZFs9gwYlT9TX2LxMF1GY8Hw6
+         YybssXV4jcIYbyXigW46qhch7RlnlSyFqx5askFxNGK7/pmrOb3gG7nj/2fMGVjtsoxX
+         EbSMz4HOz1q0+hHeLPYn5x4Eqfzsz8d3p9mYlBch+4HHlJdF4NHY96qM8Sdz4JIqc+qs
+         0uS9z6Zw8kxDWQPykmyENG0RaOs5XW2UiPrd24+Bn7YcCyeiqP+chPAdSMoiI1y8DWm9
+         TPRrqcBmEvkrgBjadsbMC9aYW03Ih3HgN/ukiJs4Ql87s6Ti9kHbgJ5TiFTZ/JmH1AVk
+         djug==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=AC7UFWp9PeHQpeKmmheGmxDeCajyTPmISibkaDG915o=;
-        fh=LuNIxDwrU8tBU0lHgCDdCWufQL5TCnYVCcwzLcZSFis=;
-        b=KiDmejNZtd7nHFTwI5lgohnuAilwqDXXWN5GIESz5wWC4AMzhVoRXopJdlnzNpnVMi
-         y+Rk5zojvwtB2wM1sW7OtVxNsMwGwjUPe1VpStgpfJQKPxkC8Vh/WEeBP1ZJie8Fnn67
-         WTgDPerJ4tm2nPVDQcLBoBal/PIKaZpZVIYNe2fVe00HibN7Ib1cTdg4YJ8d+Q+SRk+K
-         JiMkzk0hDwFvvPcDu4r9LCfsHT8vAMvU9qKkZ/uFGv/e7CY29C2bubL4A3eT8ATnbcpK
-         oWiaAl5Ef+Y9Y4u/8TJSii7orfm4C1Quam5CN5CFRcRmu37W0kVhvM+IhKl+ytofnY+Z
-         8u8g==;
+        bh=hrLY1d8MKKr/lNfj/RjogCGbPhK6ypIdEBSRs17/+is=;
+        fh=GA8F2XcFVhMy79gRwS1pZp+Jl5jNr8rDzbv8ke380HM=;
+        b=FsRiLskDK5DerYtd/IduI+otBs110YqNsTgR1zdnU1nR1acRm5W+94PRRyfXtZlJZL
+         KdZVoxsc1VQF6kYAyKRwwS1LiiGrKVXpfdj9DRDaZ3MEEOa6GbTRRJ2jckIdcR8aysyX
+         0TR+Osn7LGwV9SRaVLGn91bc5IatjZX2vQZ+vtDaZ7tzfRU/+RhiGo0/cjTAmRiyY3nc
+         03j1HHyEZGV+pk18waBi5jKejQ+QtJ56J0gJu5utDbn0OPDzEezOyImQ2tWf0lfYZk8L
+         fIA9TMmmMrbT8aZvAAp8R8CKM8eJS+sqJwCoF3WOCyFrweg3YTfrwe2sidhSoy8MgWTD
+         SeJQ==;
         darn=lists.linux.dev
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1769518615; x=1770123415; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1769539986; x=1770144786; darn=lists.linux.dev;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=AC7UFWp9PeHQpeKmmheGmxDeCajyTPmISibkaDG915o=;
-        b=JBRMcg1NHtRNNAcO/BQqpnjjd4OtG1Y8gEvGYkBvVIAw1EgzlxL5HssWMJhJu+bs5e
-         8/6bS7lqPylmDgGkLRhaly/eR29UC/xAX+YmMH9TIvJN85W9XcdyC5IYSxta6pSPFHPp
-         K7DxIgxRgVujh7vOWGZT1U1vsyI43YgT/O1PLVWuQx8dZ0F1gWYJVZw/WEUF3g6Cq3GW
-         3pS1wxVdPwvS/Jix96uYMM5Ngqrqpi0mhY3sg5gE9FXY+ndhXNZpBWw6ZmnKIwzam4Tn
-         eGEhVw9v9WfXs+HAFDRF8wCQFzcDcH51Hzxa1UTKcPitW9DqDAeollujoi/X7OVZ6sb2
-         DzHg==
+        bh=hrLY1d8MKKr/lNfj/RjogCGbPhK6ypIdEBSRs17/+is=;
+        b=CRzQgaiVDesQNi/yCVa8+bcXx6QRDQg2HJtWXkfKhKVKoKMoIt8Ac2bKR9E6NgffcT
+         48R/sxU6kwNeqIWqWDm7E0OxTM371bWIbwggskseKCxWWpKE+sCHYKqG4HjmjZ11Zm5o
+         G+Wcljib3ytayFWYzEIXZl4zH5hvp13S1mp122zb/ivfklrNKQombrUP5P2MVabSnPiB
+         p00bEcpR6P50LLmkk6KraWohZv6/HBY/WesnrSaX7OH71kqQZyyLhupZvNoTNZoy7RNJ
+         HvWGrU4c/jp/nMGwwn+G+38a8txSDDJIxjRI+NyGhklyBCQypY/3lwt7420+IYyxuUbg
+         uw2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769518615; x=1770123415;
+        d=1e100.net; s=20230601; t=1769539986; x=1770144786;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=AC7UFWp9PeHQpeKmmheGmxDeCajyTPmISibkaDG915o=;
-        b=MVD4fgoGOSH8F8Os1FzZ8UsY7768C+LdKuMZqzGzLhAGc+bOF+GkHMUF8J8u5QXxVM
-         q5p+HDIzDa+V6wpwcmFUHfnMKKCW/x+RhG6GSW+srCTj0y+AFLGLjwszxbiTm84+eShG
-         6ocqF9iLwKAX+PI2agiSM5Nn5JgnD8ILKFHKxuiMNqgMi1d5OhVlPX70pULTXDZ3lvV2
-         egReCTOQPmzcKtaRhCWJyujg06ne6x4b0cw1fR7iZ07fyujzhnGNPi1OvNg571EHCwE5
-         NFZ9ZIJd1XYmwma/yuuzc6s8Hpb+JzJgagxb+EhcAKPSAgyna3HvGXLOtU4pJEXm43SG
-         canA==
-X-Gm-Message-State: AOJu0YzH4f9qz4TY4jdYHGVwa2gmFAfM2tH63SUkMQw2fNUJVFNlAIpZ
-	M33YCoZxkfQynvS0J3OYVkHLa3ZnW4X107qrgjbPhAKXRWiyjSIFleU/empK3dXlRYe/wXIojCM
-	R9mVilU9HEAZ3jqbq3T49wV67Ct3rbKc=
-X-Gm-Gg: AZuq6aIruPW9fvGRAPM68YutpO1t6h51Gi6RObjDZHgBYHsr6Gag/FQJIPuYG/a5xiO
-	EFVknsfHJK8ckvNOcRw+VcMEEYMdsyux0mBMZJYZYu4Wz/QmfS1kkRm4iwtHiNvR2uV0GlSyAes
-	S/dAgnLvBVvL39MO/npjps1llJS3TsK45ajZljiBKuvoR3WRyixdapLMngI702yhyMSGfHMmWJE
-	GRTm5XDSAhNdh1Fwj+xJuD7/uJ5H/AhgWaSsX9bIz4UOnfWvyp55A3Ac6XfEBbOvXUlYlYei0EC
-	Ij+IV/4JeX4KK7JqjEYzn28=
-X-Received: by 2002:ac8:7d89:0:b0:4f1:c1fe:ba3d with SMTP id
- d75a77b69052e-50330075b80mr15248161cf.7.1769518614658; Tue, 27 Jan 2026
- 04:56:54 -0800 (PST)
+        bh=hrLY1d8MKKr/lNfj/RjogCGbPhK6ypIdEBSRs17/+is=;
+        b=tQRFNt+aiF2YKVzJ96sPU/3XbHO+FZ8JG3FR434PQWfX5v7RWK3x/aTmUBEWhMkqWJ
+         HVA5/L+98l7mTfviJSzfX0c7IjbPmacQCmORbNUpPs6MslPkAwrwV+HSjLt9CvcChLch
+         6OGmBGz22SnTsLKSYG0XyJsWSJvVw8gwM5sJISjYh5DJlp25VbYV4C7QRIqK+VtPYpZR
+         EgUKvbBO0meypmm3VC1yJfxf4Qk+W6Pgvf5VAIcAdtCspKHFkUFUNuazzXYqGizftMO4
+         1zbBITfAVbV9Gyfcarx2sOM4KsprwEVYyPFd7t/jPf/kfay1wI7KQ1qhy8/oSANrppss
+         dMAg==
+X-Gm-Message-State: AOJu0YxP400sU8eYIu+GmQp94+XFukK94xMsZTAGzGrxp/aIN0wcy7vH
+	6y4MJiy5liux6OvCyuGBhG7QrG75m7hMmpMMpl/UIWr/1VmTmOJZ5sqEshGGuYQUkP98JzEotmL
+	tRf9BiddzDL+3E5NvOvLyd1MWxKDl/A==
+X-Gm-Gg: AZuq6aI7UNjMe4JUv9mxjrx5vVW3Bs2vZyD459b6f7sLUg0iYejYLMkv6mBIbOmSJBL
+	DtNX+aCj4oAek7woON6zNZo6b2aEaD53Q3t3j/cbRx0vbVb/PcAYOJn0Z8KtYM6khNRPd3ktfPU
+	gIH28z5OFbICQrqak/j2wdcQqV6prGKCj3xsG3D1c8d7KToqkx67Y3MAVVc2EKpwBhohwlYrglo
+	3C8CPhVBgfjK11kgE4eQY3Nfbdu2N1t6gSnzWiknCsB4Z4uQhw8Q0I7swLCCBvu+ogZF7M=
+X-Received: by 2002:a05:7022:3b86:b0:123:3bba:fc4c with SMTP id
+ a92af1059eb24-124a0114530mr1399404c88.38.1769539985752; Tue, 27 Jan 2026
+ 10:53:05 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <CAC5umyjmJE9SBqjbetZZecpY54bHpn2AvCGNv3aF6J=1cfoPXQ@mail.gmail.com>
- <20260127064338.67909-1-sj@kernel.org>
-In-Reply-To: <20260127064338.67909-1-sj@kernel.org>
-From: Akinobu Mita <akinobu.mita@gmail.com>
-Date: Tue, 27 Jan 2026 21:56:43 +0900
-X-Gm-Features: AZwV_QijuXZtUjrJwIyW8mlQ1SWqZ0tqKrn7OvytREEWREa7_KN4p6GjFC4spxQ
-Message-ID: <CAC5umyhVW+Rh2YfUCZCPu_7NuBh8FSGrsK23_EopDv2ixAe36w@mail.gmail.com>
-Subject: Re: [RFC PATCH 0/4] mm/damon: introduce perf event based access check
+References: <20260123045733.6954-1-ravis.opensrc@gmail.com> <20260124015045.78075-1-sj@kernel.org>
+In-Reply-To: <20260124015045.78075-1-sj@kernel.org>
+From: Ravi Jonnalagadda <ravis.opensrc@gmail.com>
+Date: Tue, 27 Jan 2026 10:52:53 -0800
+X-Gm-Features: AZwV_QhLWpILFmBNmv_VUaKUIKDcnzxznZsbnQGx_3zRIdW1Tlcdm7ps20MNsQ8
+Message-ID: <CALa+Y17__d=ZsM1yX+MXx0ozVdsXnFqF4p0g+kATEitrWyZFfg@mail.gmail.com>
+Subject: Re: [RFC PATCH 0/5] mm/damon: Add node_sys_bp quota goal metric for
+ PA-based migration control
 To: SeongJae Park <sj@kernel.org>
-Cc: damon@lists.linux.dev
+Cc: damon@lists.linux.dev, linux-mm@kvack.org, linux-kernel@vger.kernel.org, 
+	linux-doc@vger.kernel.org, akpm@linux-foundation.org, corbet@lwn.net, 
+	bijan311@gmail.com, ajayjoshi@micron.com, Honggyu Kim <honggyu.kim@sk.com>, 
+	Yunjeong Mun <yunjeong.mun@sk.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-2026=E5=B9=B41=E6=9C=8827=E6=97=A5(=E7=81=AB) 15:43 SeongJae Park <sj@kerne=
-l.org>:
-> Actually DAMON is internally setting such maximum region size based on th=
-e
-> min_nr_regions parameter, via damon_region_sz_limit().  Nonetheless, the =
-limit
-> is applied only in regions merge time.  That's why it requires the region=
+On Fri, Jan 23, 2026 at 5:50=E2=80=AFPM SeongJae Park <sj@kernel.org> wrote=
+:
+>
+> Cc-ing SK hynix folks (Honggyu and Yunjeong) for quota auto-tuning behavi=
+or
+> confusion (not stop immediately after satisfying the goal) I discuss belo=
+w.
+>
+> Hello Ravi,
+>
+
+ Hi SJ,
+
+  Thank you for the detailed review and for Cc'ing SK hynix folks.
+
+>
+> Thank you for sharing this great RFC!
+>
+> I had a chance to be involved in a high level design of this series, off =
+the
+> mailing list.  I'm disclosing the fact for others' context, since a few o=
+f my
+> comments below are based on the previous off-list discussion.
+>
+> On Thu, 22 Jan 2026 20:57:23 -0800 Ravi Jonnalagadda <ravis.opensrc@gmail=
+.com> wrote:
+>
+> > This series introduces a new DAMON quota goal metric,
+>
+> As I discussed off the list, I believe the new goal can be useful.  Thank=
+ you
+> again for making this!
+>
+> > `node_sys_bp`, designed
+> > for controlling memory migration in heterogeneous memory systems (e.g.,
+> > DRAM=E2=86=94CXL tiering). These patches are provided as an initial RFC=
+ and have
+> > not been tested on actual hardware.
+>
+> I feel like the name is not very self explaining what it is, though.  I'm=
+ also
+> bit confused about what it does is what we discussed off list.  I'll add =
+more
+> details below, on more detailed explanation about the new goal.
+>
+
+Will change the name to damos_target_mem_node_sys_bp in v2.
+
+> >
+> > Background and Motivation
+> > =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D
+> >
+> > A previous patch series [1] by Bijan Tabatabai and myself added weighte=
+d
+> > interleave support for DAMON migrate_{hot,cold} actions. That series
+> > implemented the feature for vaddr (virtual address) schemes because the
+> > weight-based approach requires VMA offset information to determine targ=
+et
+> > nodes:
+> >
+> >     target_node =3D (vma_offset % total_weight) =E2=86=92 node_from_wei=
+ghts
+> >
+> > For paddr (physical address) schemes, obtaining VMA offset requires cos=
+tly
+> > rmap (reverse mapping) walks. As noted in that series:
+> >
+> >     "However, finding out how a folio is mapped inside of a VMA require=
 s
-> split to happen sufficiently until the real fixed granularity monitoring =
-is
-> started.
+> >      a costly rmap walk when using a paddr scheme. As such, we have
+> >      decided that this functionality makes more sense as a vaddr scheme=
+."
 >
-> And I think this behavior is just a bug, or suboptimum implementation at =
-least.
-> That is, users set the minimum number of regions but it may not really be=
- kept.
-> That's definitely confusing behavior.  Actually there was a similar case =
-that
-> number of regions can be larger than the max_nr_regions.  We fixed it, wi=
-th
-> commit 310d6c15e910 ("mm/damon/core: merge regions aggressively when
-> max_nr_regions is unmet").  I think we discussed about similar case for
-> min_nr_regions, but I cannot find the discussion for now.
+> Indeed the rmap overhead was one main concern.  I'd like to also note tha=
+t,
+> however, another major concern from me was that the behavior sounds not e=
+asy to
+> intuitively understand.
 >
-> So, I think it is better to fix this rather than introducing a new parame=
-ter.
+> >
+> > This new series takes a different approach that enables PA-based migrat=
+ion
+> > WITHOUT requiring rmap walks, by using basis points (bp) target-state g=
+oals
+> > instead of weight-based action rates.
+> >
+> > The rmap Cost vs Oscillation Trade-off
+> > =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> >
+> > For PA-based migration with weights, there are two possibilities:
+> >
+> >   1. Weight-based with rmap:
+> >      - Use rmap to find VMA offset for each physical page
+> >      - Apply weights based on VMA offset (same algorithm as VA)
+> >      - Works correctly: VMA offset provides stable identity
+> >      - Problem: rmap walks are expensive for every migration candidate
+> >
+> >   2. Weight-based without rmap:
+> >      - Attempt to apply weights using only physical address information
+> >      - No stable identity across migrations
+> >      - Results in page oscillation (see below)
+> >      - Not viable
+> >
+> > The Oscillation Problem (Weights Without rmap)
+> > =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> >
+> > Weight-based migration relies on a stable identifier to determine which=
+ node
+> > a page "belongs to". For VA, this is the VMA offset - it remains consta=
+nt
+> > regardless of which physical node backs the page. For PA without rmap, =
+no
+> > such stable identifier exists.
+> >
+> > Consider a two-node system with weights {Node 0: 40, Node 1: 60}:
+> >
+> >   Initial state:
+> >     Hot pages on Node 0: PFN 0x1000, 0x1001, 0x1002, 0x1003, 0x1004
+> >     Node 1: empty
+> >
+> >   Iteration 1 - Weight-based selection (no rmap):
+> >     System tries to achieve 40/60 distribution
+> >     Selects pages at PFN 0x1002, 0x1003, 0x1004 (60%) for Node 1
+> >     After migration, these pages get NEW PFNs on Node 1:
+> >       PFN 0x1002 =E2=86=92 PFN 0x5000 (Node 1)
+> >       PFN 0x1003 =E2=86=92 PFN 0x5001 (Node 1)
+> >       PFN 0x1004 =E2=86=92 PFN 0x5002 (Node 1)
+> >
+> >   State after Iteration 1:
+> >     Node 0: PFN 0x1000, 0x1001 (40%)
+> >     Node 1: PFN 0x5000, 0x5001, 0x5002 (60%)
+> >
+> >   Iteration 2 - Weight-based selection runs again:
+> >     System sees pages at PFN 0x5000, 0x5001, 0x5002 on Node 1
+> >     These are "new" pages from the system's perspective
+> >     NO MEMORY that these were just migrated FROM Node 0
+> >     Weight-based logic may select some for migration back to Node 0
+> >
+> >   Iteration 3, 4, 5...:
+> >     Same pages continue bouncing between nodes
+> >     Each migration changes the PFN, erasing any "history"
+> >     System never converges to stable state
+> >
+> > The fundamental issue: weights define an ACTION RATE ("migrate X% of
+> > candidate pages to each node") rather than a TARGET STATE. Without stab=
+le
+> > page identity (which rmap provides via VMA offset), the system cannot
+> > determine which pages have already been "handled" and continues to
+> > reprocess the same logical pages indefinitely.
+> >
+> > With rmap, the VMA offset provides stable identity - a page at file off=
+set
+> > 0x1000 always hashes to the same target node regardless of its current =
+PFN.
+> > Without rmap, we have no such anchor, and weights become meaningless.
+> >
+> > Solution: bp-Based Target State Goals
+> > =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> >
+> > Instead of specifying action rates, `node_sys_bp` specifies a TARGET ST=
+ATE:
+> >
+> >     "Node N should contain X basis points (X/10000) of system memory"
+>
+> I'm not sure if this is exactly what we discussed off list.  What I expec=
+ted
+> the goal would be based on our discussion is, what the first patch is say=
+ing.
+> To quote the part,
+>
+>     @@ -155,6 +155,7 @@ enum damos_action {
+>       * @DAMOS_QUOTA_NODE_MEM_FREE_BP:      MemFree ratio of a node.
+>       * @DAMOS_QUOTA_NODE_MEMCG_USED_BP:    MemUsed ratio of a node for a=
+ cgroup.
+>       * @DAMOS_QUOTA_NODE_MEMCG_FREE_BP:    MemFree ratio of a node for a=
+ cgroup.
+>     + * @DAMOS_QUOTA_NODE_SYS_BP:           Scheme-eligible bytes ratio o=
+f a node.
+>       * @NR_DAMOS_QUOTA_GOAL_METRICS:       Number of DAMOS quota goal me=
+trics.
+>
+> That is, my understanding of what we want to achive with the new goal is,
+> letting users to ask DAMON "migrate hot pages of node A to node B, aiming
+> X % of node B becomes hot, as a result of the migrations".
+>
 
-I agree with that.
+Yes, this is the intent. Looking back at my implementation, I see the
+mismatch:
 
-> Maybe we can split regions based on the min_nr_regions based size limit, =
-before
-> starting the main loop of kdamond_fn().  Similar to the max_nr_regions
-> violation, there could be yet another corner case on online parameters co=
-mmit
-> situation, so it would better to check the case, too.  You could implemen=
-t such
-> fix on your own, or let me do that.  In the latter case, if you don't min=
-d, I
-> will add your Reported-by: tag to the fix.  Please let me know your
-> preferrence.
+1. **Numerator**: Should count only scheme-eligible bytes.
 
-You'll be better able to fix it, so please fix it at your convenience.
-Adding Reported-by: tag is fine.
+2. **Denominator**: Should use node capacity, but I used total system
+   memory.
+
+> But your above description is not saying about the "scheme-eligibility". =
+ Also,
+> the goal metric is the ratio of the memory to the entire system memory, n=
+ot
+> just a given node.  My quick read of damon_pa_get_node_sys_bp() on the se=
+cond
+> patch of this series confirms the implementation is following your descri=
+ption,
+> not what I imagined.
+>
+
+You're right. The implementation diverged from what we discussed. I'll
+fix both the numerator and denominator in v2.
+
+> Have you found something we missed during the off list discussion, and
+> therefore changed the definition of the goal to the current one?  If so, =
+could
+> you share the details?  Or, you might also wanted to implement what I exp=
+ected,
+> but something bothered your code and documentation?
+>
+
+While implementing, I was thinking about how the metric would behave
+in a
+system-wide context across multiple nodes and ended up using total
+system
+memory as the denominator, thinking it would simplify distribution
+calculations. However, as you pointed out, using node capacity as the
+denominator is the right approach. I'll fix this in v2.
+
+> >
+> > The migration control loop:
+> >
+> >   1. Calculate current_bp: sum bytes per node across monitored regions
+> >   2. Compare: if current_bp >=3D target_bp, STOP (goal satisfied)
+> >   3. Otherwise: continue migrating toward target
+> >
+> >   Example with target: "Node 0 should have 4000 bp (40%)"
+>
+> Regardless of why my expectation was different from this one, the goal I =
+was
+> expecting might still be used for your descripted case.  That is, the sch=
+eme's
+> target access pattern could be "any access pattern", and the target metri=
+c
+> value could be adjusted based on the ratio between the node 0 memory and =
+the
+> total memory.  For example, let's suppose there is 100 GiB memory in tota=
+l, and
+> 80 GiB memory in node 0 (80% of total memory in node 0).  Then 40 % of to=
+tal
+> memory, which is the target of the above example, is 40 GiB, which is 50 =
+% of
+> node 0.  So, you could use the goal I expected, with 50 % as the target v=
+alue.
+
+Agreed.
+
+> Imaginable usage of that would look like,
+>
+>     # --damos_quota_goal receives <metric name>, <target metric value>, a=
+nd
+>     # <node id of the goal>
+>     damo tune --damos_action migrate_hot --damos_quota_goal new_goal_metr=
+ic 50% 0
+>
+> I sure you know that you could s/migrate_hot/migrate_cold/ if you prefer
+> migrating cold pages first.
+>
+> So, the metric of my expected definition can still be useful for your new=
+ use
+> case.  I'd prefer my expected definition if there is no concern, since it=
+ seems
+> useful for more cases.
+>
+> >
+> >     Iteration 1:
+> >       current_bp =3D 10000 (100% on Node 0)
+>
+
+Got it.
+
+> How could 100% system memory can be on node 0?  Are you saying 100% of "h=
+ot"
+> memory?  This makes me suspect you _might_ actually wanted to implement w=
+hat I
+> was expecting and the first patch of this series is documenting
+> (Scheme-eligible bytes ratio of a node) but somehow something bothered yo=
+u to
+> drop the ball in a wrong place.
+>
+> >       target_bp  =3D 4000 (40%)
+> >       current > target =E2=86=92 migrate cold pages away from Node 0
+> >
+> >     After Iteration 1:
+> >       current_bp =3D 4000 (40% on Node 0)
+> >
+> >     Iteration 2:
+> >       current_bp =3D 4000
+> >       target_bp  =3D 4000
+> >       current >=3D target =E2=86=92 STOP, goal satisfied
+>
+
+Right, that example was misleading. With node capacity as denominator,
+"current_bp =3D 10000" would mean "100% of the node's capacity is
+scheme-eligible pages" which would be a valid state.
+
+> Please note that the goal-based quota auto-tuning works in proportional w=
+ay,
+> preferring small steps and "eventual" goal convergence.  As a result, mig=
+ration
+> will occur a few more times until it is completely stopped after the goal=
+ is
+> satisfied.  Unless there is another scheme that migrates pages into node =
+0, you
+> may end up having node 0 having a bit less than the 40% memory.
+>
+> >
+> >     No oscillation - migration stops when target state is reached.
+>
+> So, little bit of oscillation could still happen.  Hopefully that shouldn=
+'t be
+> significant, though.
+>
+
+Yes, As we discussed offline, for a two-context approach:
+
+      Context 0: monitors node 0, migrate_hot =E2=86=92 node 1
+        goal: damos_target_mem_node_sys_bp, nid=3D1, target=3D4000
+        "Stop when node 1 is 40% hot"
+
+      Context 1: monitors node 1, migrate_hot =E2=86=92 node 0
+        goal: damos_target_mem_node_sys_bp, nid=3D0, target=3D6000
+        "Stop when node 0 is 60% hot"
+
+Each context eventually stops when its target node reaches the desired
+threshold,
+and the reverse direction is handled by the other context. For my use
+case, eventual convergence with this setup could be acceptable.
+An immediate-stop feature could still be useful for the broader community.
+Will test and post results after the next iteration.
+
+> IIRC, SK hynix people also confused with the behavior when they experimen=
+ted
+> migrate_{hot,cold} action with NODE_MEM_USED_BP goal based quota auto-tun=
+ing,
+> but using only a single scheme that does migration in a single direction.
+> Because this is at least second time it made confusion, if you need, mayb=
+e I
+> can try to add a feature for making DAMOS immediately stops after the goa=
+l is
+> satisfied.  Let me know if such new feature can be useful for you.  Cc-in=
+g SK
+> hynix people (Honggyu and Yunjeong) so that they can correct me if my mem=
+ory is
+> broken, or answer if the new feature I described here can be useful for t=
+hem.
+>
+> >
+> > No page identity tracking needed because we measure the END STATE, not
+> > which specific pages were moved. The early-exit prevents oscillation by
+> > stopping when the goal is met.
+> >
+> > Why get_goal_metric() Ops Callback
+> > =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> >
+> > The bp calculation requires iterating over monitored PA regions:
+> >
+> >     for (pfn =3D start_pfn; pfn < end_pfn; pfn++) {
+> >         if (page_to_nid(pfn_to_page(pfn)) =3D=3D nid)
+> >             node_bytes +=3D PAGE_SIZE;
+> >     }
+> >     bp =3D node_bytes * 10000 / system_total;
+> >
+> > This requires address-space knowledge that only the ops provider has.
+> > Existing goal metrics (PSI, node_mem_*, node_memcg_*) are computed in
+> > core using system-wide data that doesn't require iterating monitored
+> > regions.
+> >
+> > The new `get_goal_metric()` callback in `damon_operations` allows:
+> >
+> >   1. Core to remain generic - handles all common metrics
+>
+> I agree this is indeed making the design clean.  But, we already having s=
+uch
+> exception, like core.c code using 'damon_target_has_pid().  Having just o=
+ne
+> more exception seems ok to me, unless it makes code too ugly.
+>
+> >   2. Ops providers to implement metrics requiring region iteration
+> >   3. Clean separation - PA implements node_sys_bp, VA could add
+> >      different metrics in future
+>
+> I agree it could be useful for clean support of virtual address mode in f=
+uture.
+> But, I'd prefer making this as simple and small as possible for the suppo=
+rt we
+> will use at the moment.
+>
+> >   4. Optional implementation - ops return 0 if metric unsupported
+>
+> Again, letting core logic having a bit of ops layer information is not a =
+big
+> problem to my humble perspective.
+>
+> So, I'd more prefer not adding the Ops callback, unless you have some oth=
+er
+> concerns.
+>
+
+Agreed. I'll remove the get_goal_metric() ops callback in v2
+
+> >
+> > This design ensures node_sys_bp is only computed when using PA contexts
+> > where it makes sense, while keeping the core quota goal infrastructure
+> > unchanged for other metrics and ops providers.
+> >
+> > The callback pattern allows each ops provider to implement metrics
+> > specific to its address space model without burdening the core with
+> > ops-specific knowledge.
+> >
+> > Advantages of PA-Based Migration
+> > =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> >
+> > PA-based migration with DAMON enables integration of multiple hotness
+> > sources for migration decisions:
+> >
+> >   1. DAMON's native access pattern monitoring
+> >   2. Fault-based information (similar to NUMA Balancing)
+> >   3. Future: Hardware monitoring units (e.g., CXL CHMU)
+> >   4. Future: Instruction-Based Sampling (AMD IBS, Intel PEBS)
+> >
+> > Unlike VA-based approaches tied to individual process address spaces, P=
+A
+> > monitoring can aggregate hotness information from multiple sources to m=
+ake
+> > system-wide migration decisions across the entire physical memory space=
+.
+>
+> Maybe you are saying about the damon_report_access() based DAMON extensio=
+n
+> project [1]?  Since it is not yet upstreamed, and the long term plan is t=
+o
+> support not only physical address but also virtual address space, I think=
+ this
+> section is better to be removed, unless the DAMON extension project is me=
+rged
+> before this patch series.  I expect this patch series will be merged much
+> earlier than the extension project.
+>
+
+Agreed. I'll remove the references to future hotness sources.
+
+> >
+> > Complementary to Existing vaddr Migration
+> > =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> >
+> > This series complements rather than replaces the vaddr weighted interle=
+ave
+> > migration merged in 6.18:
+> >
+> >   vaddr migration (weight-based):
+> >     - Per-process control
+> >     - Fine-grained interleave patterns via VMA offset
+> >     - Deterministic placement based on weights
+> >
+> >   paddr migration (bp-based, this series):
+> >     - System-wide control
+> >     - Target-state goals for node capacity management
+> >     - No rmap overhead
+> >     - Aggregates multiple hotness sources
+>
+> As I mentioned above, the last item could be dropped until the extension
+> project [1] is upstreamed.
+>
+> >
+> > Capacity Clamping
+> > =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> >
+> > The series also implements capacity clamping for `node_sys_bp` goals. I=
+n a
+> > system where Node 0 has 40% of total RAM, setting a target of 50% is
+> > impossible. The implementation clamps:
+> >
+> >     effective_target =3D min(user_target, node_capacity_bp)
+> >
+> > This prevents the quota auto-tuning from chasing impossible targets and
+> > avoids thrashing in two-context DRAM=E2=86=94CXL setups.
+> >
+> > Patches
+> > =3D=3D=3D=3D=3D=3D=3D
+> >
+> >   1/5: mm/damon/core: add DAMOS_QUOTA_NODE_SYS_BP metric
+> >        Adds the enum value and documentation.
+> >
+> >   2/5: mm/damon: add get_goal_metric() op and PA provider
+> >        Introduces the ops callback and PA implementation that iterates
+> >        monitored regions to calculate node_sys_bp without rmap.
+> >
+> >   3/5: mm/damon/core: add new ops-specific goal metric
+> >        Wires the new metric into core's quota goal evaluation, delegati=
+ng
+> >        to ops.get_goal_metric() for DAMOS_QUOTA_NODE_SYS_BP.
+> >
+> >   4/5: mm/damon/paddr: capacity clamp and directional early-exit
+> >        Adds capacity clamping and early-exit logic to prevent migration
+> >        when goal is already satisfied.
+> >
+> >   5/5: mm/damon/sysfs-schemes: accept "node_sys_bp" in goal's target_me=
+tric
+> >        Exposes the new metric to userspace via sysfs.
+> >
+> > Status
+> > =3D=3D=3D=3D=3D=3D
+> >
+> > This is an early RFC for design review. The patches:
+> >   - Compile successfully with no errors or warnings
+> >   - Have NOT been tested on actual hardware
+>
+> I understand you plan to run tests, and that would be useful, appreciate.=
+  Note
+> that I think having no test results is blocker for RFC patch series.  So,=
+ again
+> appreciate for sharing this RFC! :)
+>
+> >
+> > Feedback on the overall approach and design is appreciated.
+>
+> I hope my above comments helps the forward progress of this nice series.
+>
+
+They are very helpful. Thanks a lot.
+
+> >
+> > References
+> > =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> >
+> > [1] mm/damon/vaddr: Allow interleaving in migrate_{hot,cold} actions (v=
+4)
+> >     https://lore.kernel.org/linux-mm/20250709005952.17776-1-bijan311@gm=
+ail.com/
+> >     Merged in Linux 6.18
+> >
+> >
+> > Ravi Jonnalagadda (5):
+> >   mm/damon/core: add DAMOS_QUOTA_NODE_SYS_BP metric
+> >   mm/damon: add get_goal_metric() op and PA provider
+> >   mm/damon/core: add new ops-specific goal metric
+> >   mm/damon/paddr: capacity clamp and directional early-exit for
+> >     node_sys_bp
+> >   mm/damon/sysfs-schemes: accept "node_sys_bp" in goal's target_metric
+> >
+> >  include/linux/damon.h    |   5 ++
+> >  mm/damon/core.c          |  34 ++++++++++---
+> >  mm/damon/paddr.c         | 102 +++++++++++++++++++++++++++++++++++++++
+> >  mm/damon/sysfs-schemes.c |   7 +++
+> >  4 files changed, 141 insertions(+), 7 deletions(-)
+> >
+> > --
+> > 2.43.0
+>
+> [1] https://lore.kernel.org/damon/20251208062943.68824-1-sj@kernel.org/
+>
+>
+> Thanks,
+> SJ
+
+Thanks,
+Ravi.
