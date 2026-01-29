@@ -1,61 +1,63 @@
-Received: from mail-dl1-f65.google.com (mail-dl1-f65.google.com [74.125.82.65])
+Received: from mail-dy1-f195.google.com (mail-dy1-f195.google.com [74.125.82.195])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B2E8312821
-	for <damon@lists.linux.dev>; Thu, 29 Jan 2026 21:58:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.65
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC34C312821
+	for <damon@lists.linux.dev>; Thu, 29 Jan 2026 21:58:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.195
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769723901; cv=none; b=SwD7UkkUOwFn/6IXAb0pRlnPhuesJiUXfkNvBAg3DTrW2/AVlr6zwjmWIhU6lBw521idsUj02MlOxnNVT8O5gz/XhBe5dGwNntbXUYVjf3EhC+ogMmLrY0CPnF/Jb0MrDJBjdicSEno0EbmHDUDOQ8l8ziu71Zlo+fw8sn6zQXY=
+	t=1769723903; cv=none; b=gnWnQGMFq/WCzQ+pbuGN/JQ2qG9JfhtFcM3XDYXgOW7L6b9Ri6Blw+2Yu1moqHMDwYwlcRrw0IKaGDj/YWwh1R5e9rlYeCG+GUhtEo5j19CujoIi1eXq+r0tx/41O90COhTJEIHgVr27iagHmgK3MyVIqNk07BU5Ete0iEIhdD4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769723901; c=relaxed/simple;
-	bh=fy8EK8PWQZsqSffsYil7YART3hXT+T+mHqmJlgR9iak=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=onvY1Blcz16RoUwm0safZFPNwceBzJkZ4d4uahctYTun02TBTsc5Z7vM0MU8IilDFgiTf1thRVVRTf5J8xiQstxm7uZ4lIymS2oIZ8AdC83kt/+0cS7uBI16kfrLwYxMQdesMkj4owzmO0mcCXLWbek+2Fx06Cy6MaXf5fgrmIk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=S22DOWrG; arc=none smtp.client-ip=74.125.82.65
+	s=arc-20240116; t=1769723903; c=relaxed/simple;
+	bh=E2PzmQBsrkUQlUCjGwf4xR0qYrrxe/5JAZuNmStoFY4=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=mF6+XqH3hy3ewaEHFxAij4BIqtQR8RQat0LasgeOXCKE80hzVLyr3DTd16bzKDjVPK4sNI+OometsdoyBikx4u7yGae2AvD+nQK1f2QuXvU3ibwymvKaFa25BKajCG4CvpLDG3Ero6D5vfu8AXx/nk0RxRRPvNeoPFGJsY6lK/k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OzjhVZGs; arc=none smtp.client-ip=74.125.82.195
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="S22DOWrG"
-Received: by mail-dl1-f65.google.com with SMTP id a92af1059eb24-1233c155a42so2488075c88.1
-        for <damon@lists.linux.dev>; Thu, 29 Jan 2026 13:58:19 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OzjhVZGs"
+Received: by mail-dy1-f195.google.com with SMTP id 5a478bee46e88-2b7c5db431cso790044eec.1
+        for <damon@lists.linux.dev>; Thu, 29 Jan 2026 13:58:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1769723899; x=1770328699; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=C7ZtJvE3dpFWqwjZMa9omEQRwNhNuc19ZVJnJ8avCkY=;
-        b=S22DOWrGumb3z8CH/RA/gnQ6c816dxAwtYM6UElew3GU/IFxtty7O5l09rN1Bf/a/y
-         0ejeuVfH9EGBfciN01XCVBesj2OAII+O6eElsTFIs3PEGR0kh9YJkcUA5kHJ05PtNqRm
-         5dTDsPbJ2amiETwEsFgYs1wY9m9/C+sAlq40ZTD3pGJgYhkG3BVyMsgychrIEJI3aaVd
-         yNsNl84jeEE2lQckTRtL6r5oGkbvhZWOmn1/IT2E78TXlzviA1J6tTpxjHVADeKd7qtw
-         b1KUUDyAEmHjX2fTT7TWU60wkfdbqIqrJakQ+ERTWrRmXNGQTf0K3FHkSKeebaKjGGVu
-         rr6w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769723899; x=1770328699;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1769723901; x=1770328701; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=C7ZtJvE3dpFWqwjZMa9omEQRwNhNuc19ZVJnJ8avCkY=;
-        b=QSPfKyeqvqp3tF0orIhQppzOoKn38hCxNx+FVL1GNyBI6ziEGWm5XomvteVaARq35r
-         /4H84pJ3U0UHEA0n+4WeKuh+LoTFU2GG7qMSLPP+cCtSbyS40zWFgmsX2OQGqpsPdHIl
-         IE57+vZuPdiBvYHz3oXyD5v0m1vQ2BVWsnG5ZVmZ2ohdFPcZ40STAhKcKc6k+6gEkgYD
-         YC7uRrt5HRgJ1QHucYswD9x8MFgcN/UgUURHSF7cweGKYZFwf/5wb9e/e36J9sYnwvE4
-         U71IFCgYqBrH/7top1jo7mtdjgL812S3gQMl1bnwA5hgC39oW9dTNdI2Ms4Wr+DgpifQ
-         e3sw==
-X-Forwarded-Encrypted: i=1; AJvYcCVbosc6dK4LBle4Wh2AOga0UpJSIF+SySi91HKH9nU/m2hO69cDRyO/M+8Nn5h8jYJBdQhjNA==@lists.linux.dev
-X-Gm-Message-State: AOJu0Ywsuozi7duTaL3Q/iOTsOc8TR7Ma4dAU9fd8CA/3zKu9P399MUU
-	ui58gQaAGmibXjDn+lBxjU73IUe7XsH7SCw7Lav6PTRwpI92cE6+nAE=
-X-Gm-Gg: AZuq6aJq+FhubT7ZyOKymB9gvAnLU8AvJWz8/NnIwp+fBxCvOs6oyzCFKHb7UW1lEiX
-	S3n00zhBF0lzwzUiTkAnkH+0+JdRcu9p1q6AH15ch1S3zThmSXs5ccF/9ay2cWC+CHMmM+KoCcN
-	SzWLSn5WKsmSpP4tTSsSQh+WoW61EYk3aYRJXFpIAZ+RiRmeAUuY/CnA/9sHOmLuVxgZpt1H8V4
-	DQ12s4jLN6srOjzLPwEvfSNG6c3240ihSZEHzQxCYTmkJIhpist394J6H3cnLA+kA2Bo1/xafx1
-	Vn3HNZmxqI0Nt1pcr0mPo6X/OObMegQ0wKntlGXA2DXU2NoCZdWizTd/EioDgVMGimFGs0nWSa+
-	ip795EkJjbTYz5iUxt0ZklVSiJfhMKbmVd98VBgaxwc4SlbHuBLat9kXpcTSZpGlLJ8OK0NGjj2
-	uoyB5GRvMxUw==
-X-Received: by 2002:a05:7022:68aa:b0:124:a610:62f6 with SMTP id a92af1059eb24-125c1006e73mr427951c88.44.1769723899034;
-        Thu, 29 Jan 2026 13:58:19 -0800 (PST)
+        bh=JuNybkTlqvH+9m8T0FgwqGQF2N52zzKrzPQ6MtpsUMY=;
+        b=OzjhVZGsrdeS7z6EyI+Q4azSOUjXtDFV/NshG2GWDLOreWJ1Qqz/j41lVENl6GziLU
+         9WCLBYd5cqUDZmQp/gwrQELp8egXZDYq62PPFlUhjUNLKeO0NeoFaiTCb9Fy8Oo1AuLI
+         rId+WL3JkEmfPIE3b0LAuCnxjsBMeVkWIA6ydlOWIxmazXgYKvg920vIoROjBpBrxQeU
+         neuXAEofPOG7kzOKKHApUVMC5q04VfVhIbI1m9YxBWAQdGQvRdhiOFCbA4PxTG1xQkwZ
+         iNsJNoGBm7QWa4miCiHBGrC9P22WteGwltUx6P/ta+WP2cVNsSh7IQWJNN0m8Fv+wHKz
+         +L7g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1769723901; x=1770328701;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=JuNybkTlqvH+9m8T0FgwqGQF2N52zzKrzPQ6MtpsUMY=;
+        b=pEaaQoWIVLSuqdHNOR4AHHAMWRP797iCO7dJSethPnmm810rnMVFnwW0p+h5YFpbG+
+         eiKj7dMEDQeQq+3PI07bPvdTYrBboPZzE+NeFMgMLQehSYL/+vc4M9P5kO1JWgF5OEvv
+         hGZL/CqMxe9+0mWUj+u1cRe7iutCvvExWH2O0fnP0FVqjviqgoCaNB5Arw4PjgYaQOCc
+         dNg74NS0lTSYTLBYqKaMZcZShbbBe/uHIjdg3LjYeMD1VdwfYfF1DAf9N793QqsHN1NM
+         qlZU1Qcod7S8ZcTmkzl+EHKC5WHylT/br/5oCHLTAf1dZl1FDKrlhhbMs8hP8VAF0Qye
+         +3Qw==
+X-Forwarded-Encrypted: i=1; AJvYcCXjxfUqlzvV4m9JzparghGFciMdx7Iya8yaFt3FXC45ZY0rMX2mqpNGUloWTxrEvaHl9PKG9w==@lists.linux.dev
+X-Gm-Message-State: AOJu0YwFxxmbo/fF2SpaTKmLpOKC2wHYGeM7thC9tlW6HaS6uYkE8bqp
+	bmEAsZeFPS0CWxoWstN9hZn40EHMYl68gqskPKLuKPkVDoHQ1xbHjQ0=
+X-Gm-Gg: AZuq6aIjADuZakp0N/E2zPiNST6IvSKaQdRv7do+kVh+3gM924LC5T/smDnWDpdUcJp
+	uv/RcLFxIiKqHlIDLAFize3nGyVd98kw54RluerA5iH/5SSrVxYYiQ5DlSXkoPfGJCv6Bbrp5Df
+	Vb+yqlI2scG+gC9YE0iG8vD9LO4GDT0pr2LKzlRAGgYIgnY0dRsuuwHOWRCzfXS8AdiDz8xzSdt
+	yzD8BlFT5j0SsPoBCXCkWjOq8+YsiFOwLinBtey6jYDmS7HeKzP59E/MWacmbe0+JE0fJmY7hCE
+	Owy+pucaMp4hZ+AMxGYJ1frTSlgrxGyW9mUYTeH66V2Lot0fH4OYOTLKtsUJfKEZotJ0ZQKSm8Z
+	la3h9i45k4n2zesEnCJaDoBzvraPNuPMryUJiI2wyjuczAbh1GhasGWDGcJxRlbbBVk31vEogXK
+	TY+NVxdccBGw==
+X-Received: by 2002:a05:7300:6404:b0:2b0:4c12:d74d with SMTP id 5a478bee46e88-2b7c865541fmr553751eec.15.1769723900641;
+        Thu, 29 Jan 2026 13:58:20 -0800 (PST)
 Received: from localhost ([137.201.204.52])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2b7a1af8a7bsm8593035eec.34.2026.01.29.13.58.18
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2b7a16cf8d6sm8585570eec.3.2026.01.29.13.58.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 29 Jan 2026 13:58:18 -0800 (PST)
+        Thu, 29 Jan 2026 13:58:20 -0800 (PST)
 From: Ravi Jonnalagadda <ravis.opensrc@gmail.com>
 To: sj@kernel.org,
 	damon@lists.linux.dev,
@@ -69,10 +71,12 @@ Cc: akpm@linux-foundation.org,
 	honggyu.kim@sk.com,
 	yunjeong.mun@sk.com,
 	Ravi Jonnalagadda <ravis.opensrc@gmail.com>
-Subject: [RFC PATCH v2 0/3] mm/damon: Introduce node_target_mem_bp Quota Goal Metric
-Date: Thu, 29 Jan 2026 13:58:11 -0800
-Message-ID: <20260129215814.1618-1-ravis.opensrc@gmail.com>
+Subject: [PATCH 1/3] mm/damon/core: add DAMOS_QUOTA_NODE_TARGET_MEM_BP metric
+Date: Thu, 29 Jan 2026 13:58:12 -0800
+Message-ID: <20260129215814.1618-2-ravis.opensrc@gmail.com>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260129215814.1618-1-ravis.opensrc@gmail.com>
+References: <20260129215814.1618-1-ravis.opensrc@gmail.com>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -81,133 +85,52 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-This series introduces a new DAMON quota goal metric, `node_target_mem_bp`,
-designed for controlling memory migration in heterogeneous memory systems
-(e.g., DRAM and CXL memory tiering).
+Add a new quota goal metric DAMOS_QUOTA_NODE_TARGET_MEM_BP for
+physical address space-based DAMON operation schemes. This metric
+represents the ratio of scheme-eligible memory on a specific NUMA node
+to that node's total capacity, expressed in basis points (1/10000).
 
-v1: https://lore.kernel.org/linux-mm/20260123045733.6954-1-ravis.opensrc@gmail.com/T/#u
+The metric enables auto-tuning of DAMOS quotas based on how much
+memory on a node matches the scheme's access pattern criteria, which
+is essential for controlling memory migration in heterogeneous memory
+systems (e.g., DRAM and CXL memory tiering).
 
-Changes since v1:
-=================
+Suggested-by: SeongJae Park <sj@kernel.org>
+Signed-off-by: Ravi Jonnalagadda <ravis.opensrc@gmail.com>
+---
+ include/linux/damon.h | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-- Renamed metric from `node_sys_bp` to `node_target_mem_bp` for consistency
-  with existing node-related quota goal metrics (node_mem_used_bp,
-  node_mem_free_bp) as suggested by SJ.
-
-- Fixed the metric calculation:
-  * Numerator: Now correctly counts only scheme-eligible bytes (regions
-    matching the scheme's access pattern criteria).
-  * Denominator: Now uses node capacity instead of total system memory.
-
-- Removed the get_goal_metric() ops callback. The implementation now
-  resides in core.c, following the existing pattern for other metrics
-  that have ops-layer dependencies.
-
-- Removed the early-exit optimization patch. As SJ noted, this would
-  introduce a behavioral change for existing users and should be an
-  opt-in feature with a properly designed interface. This can be
-  addressed in a separate follow-up series.
-
-- Removed capacity clamping logic (was tied to early-exit behavior).
-
-Background and Motivation
-=========================
-
-A previous patch series [1] added weighted interleave support for DAMON
-migrate_{hot,cold} actions for vaddr schemes. That approach requires VMA
-offset information to determine target nodes, which for paddr schemes
-would require costly rmap walks.
-
-This series takes a different approach for PA-based migration control
-using basis points (bp) target-state goals instead of weight-based
-action rates, avoiding the need for rmap walks entirely.
-
-What This Metric Does
-=====================
-
-The `node_target_mem_bp` metric measures:
-
-    scheme_eligible_bytes_on_node / node_capacity
-
-expressed in basis points (bp, 1/10000).
-
-"Scheme-eligible bytes" are regions that match the scheme's access pattern
-criteria (size, nr_accesses, age). This allows users to specify goals like:
-
-    "Migrate hot pages until node N contains X% hot memory"
-
-Unlike weight-based approaches that specify ACTION RATES, this metric
-specifies a TARGET STATE, which naturally prevents oscillation issues
-that would occur with weight-based PA migration without rmap.
-
-Two-Context Setup for Hot Page Distribution
-===========================================
-
-For distributing hot pages between two NUMA nodes (e.g., DRAM node 0 and
-CXL node 1), two DAMON contexts work together:
-
-    Context 0: monitors node 0, migrate_hot -> node 1
-      goal: node_target_mem_bp, nid=0, target=6000
-      "Migrate hot pages out when node 0 exceeds 60% hot"
-
-    Context 1: monitors node 1, migrate_hot -> node 0
-      goal: node_target_mem_bp, nid=1, target=4000
-      "Migrate hot pages out when node 1 exceeds 40% hot"
-
-Each context migrates excess hot pages to the other node. The system
-converges when both nodes reach their target hot memory ratios.
-
-Complementary to Existing vaddr Migration
-=========================================
-
-This series complements rather than replaces the vaddr weighted interleave
-migration:
-
-  vaddr migration (weight-based):
-    - Per-process control
-    - Fine-grained interleave patterns via VMA offset
-    - Deterministic placement based on weights
-
-  paddr migration (bp-based, this series):
-    - System-wide control
-    - Target-state goals for node capacity management
-    - No rmap overhead
-
-Patch Organization
-==================
-
-1. mm/damon/core: add DAMOS_QUOTA_NODE_TARGET_MEM_BP metric
-   - Adds new enum value and documentation
-
-2. mm/damon/core: implement NODE_TARGET_MEM_BP metric calculation
-   - Adds damos_get_node_target_mem_bp() function
-   - Updates function signatures to pass ctx and scheme through call chain
-
-3. mm/damon/sysfs-schemes: expose NODE_TARGET_MEM_BP metric
-   - Exposes metric as 'node_target_mem_bp' in sysfs
-
-Status
-======
-
-These patches have been compile-tested but have NOT been tested on actual
-hardware. Feedback on the design and approach is appreciated.
-
-References
-==========
-
-[1] mm/damon/vaddr: Allow interleaving in migrate_{hot,cold} actions
-    https://lore.kernel.org/linux-mm/20250709005952.17776-1-bijan311@gmail.com/
-
-Ravi Jonnalagadda (3):
-  mm/damon/core: add DAMOS_QUOTA_NODE_TARGET_MEM_BP metric
-  mm/damon/core: implement NODE_TARGET_MEM_BP metric calculation
-  mm/damon/sysfs-schemes: expose NODE_TARGET_MEM_BP metric
-
- include/linux/damon.h    |  5 +++
- mm/damon/core.c          | 66 +++++++++++++++++++++++++++++++++++-----
- mm/damon/sysfs-schemes.c |  5 +++
- 3 files changed, 69 insertions(+), 7 deletions(-)
-
+diff --git a/include/linux/damon.h b/include/linux/damon.h
+index 3813373a9200..5eebb8aaab85 100644
+--- a/include/linux/damon.h
++++ b/include/linux/damon.h
+@@ -155,6 +155,7 @@ enum damos_action {
+  * @DAMOS_QUOTA_NODE_MEM_FREE_BP:	MemFree ratio of a node.
+  * @DAMOS_QUOTA_NODE_MEMCG_USED_BP:	MemUsed ratio of a node for a cgroup.
+  * @DAMOS_QUOTA_NODE_MEMCG_FREE_BP:	MemFree ratio of a node for a cgroup.
++ * @DAMOS_QUOTA_NODE_TARGET_MEM_BP:	Scheme-eligible memory ratio of a node.
+  * @NR_DAMOS_QUOTA_GOAL_METRICS:	Number of DAMOS quota goal metrics.
+  *
+  * Metrics equal to larger than @NR_DAMOS_QUOTA_GOAL_METRICS are unsupported.
+@@ -166,6 +167,7 @@ enum damos_quota_goal_metric {
+ 	DAMOS_QUOTA_NODE_MEM_FREE_BP,
+ 	DAMOS_QUOTA_NODE_MEMCG_USED_BP,
+ 	DAMOS_QUOTA_NODE_MEMCG_FREE_BP,
++	DAMOS_QUOTA_NODE_TARGET_MEM_BP,
+ 	NR_DAMOS_QUOTA_GOAL_METRICS,
+ };
+ 
+@@ -193,6 +195,9 @@ enum damos_quota_goal_metric {
+  *
+  * If @metric is DAMOS_QUOTA_NODE_MEMCG_{USED,FREE}_BP, @nid and @memcg_id
+  * represents the node id and the cgroup to account the used memory for.
++ *
++ * If @metric is DAMOS_QUOTA_NODE_TARGET_MEM_BP, @nid represents the node
++ * to measure scheme-eligible memory ratio against its capacity.
+  */
+ struct damos_quota_goal {
+ 	enum damos_quota_goal_metric metric;
 -- 
 2.43.0
 
