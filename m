@@ -1,85 +1,78 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B9F729D27D
-	for <damon@lists.linux.dev>; Sat, 31 Jan 2026 01:56:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AB3636A030;
+	Sat, 31 Jan 2026 19:41:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769824607; cv=none; b=g2PSHCeVslXHN7vIXvrw2kIpSI56A/j8LqkWkC/QJubFziwVwkkKFo0vSBNNAnipj73739qpI+wr2N5fMq7hcQoUT624F9CHstzy3UHsnfjkZHBqGKIqWslQ/u0efhF4F2eMcBBXP+FhHEV9jAl7nndcRobv/Tl6CDj+dzen4aI=
+	t=1769888511; cv=none; b=AC4ySM7EgBP2yrEAe4hgMPBlMXyNnP62OhQ4fk/cfJe0F/4gApKBH17LuXXka6F+DXaTK9ObSn0xF2YMgCtUnqCSQAFkx+manP+VK2o8zqo10v/jBSENSerohz98dYw24HvurUpm+Hio1wbvt7/GQW1PPK8SW8ks0240/ODU1k4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769824607; c=relaxed/simple;
-	bh=TLqvCF4t7yFws2JJgVsnqE5uDHYvXZpXYYnuo6IsZgM=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=rrK8PCDiePsoDPwg6WhmyTkqiNltR0wbCcB0KEP/Oj9+OLYvcKvK1pdAjpZBPePdwK6cxitAdPQcnqTnftcNtZDtOdJ8/ZOdzID1x48VsT0avRBmiPkAwZnA0bNj3gDwooecWSlo5JBB2mK5guJIyPU0cAFD3jyDxApcObN4KLA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ImRH2ypy; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1769888511; c=relaxed/simple;
+	bh=Lni0/9CHbjEMqtpfuZwpe7kNBiN1clVWOsovCwhBxjQ=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Y7FgB/22ku6z7e6JeE4SXbPCohynWExlRE2jfuS8EG3TBZ1D3uWuUnhnX5bzeSwQlsrKt/MOGsOgCUbN+2xH2J47XcSpIJxgWFNNdpSjn7hs+Llx9zJd/j3AiUG+Pm84QlWeGIKq/a7kaherLCwowtdeVGswJ71g19hKzRvR/G4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LA7wXFxe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ImRH2ypy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E04F0C4CEF7;
-	Sat, 31 Jan 2026 01:56:46 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LA7wXFxe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82EE8C4CEF1;
+	Sat, 31 Jan 2026 19:41:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1769824607;
-	bh=TLqvCF4t7yFws2JJgVsnqE5uDHYvXZpXYYnuo6IsZgM=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ImRH2ypyq96835K/c6I0GkZRWdgWuU5RwayIfD9PzrnnYomfw1lbf8p9zc8aCk/gW
-	 IwfGt4Ko+7YPompvYRPPsFjQ6cTqluHxz5RInklq0ujPYlBEH0tiS4kvpJzL/0Vb0A
-	 /gPQZ4fB8WV90i4C9rEcHqC7V9XhpTIQrZaIhKoCPQoOABzDJoUG6bH1eb1lAxSpGK
-	 UiyCtF43nbLbz/FhFri4Ad4D5BODCYy1ZFBDqI5HTVCyQKwQn6RcJksGtoAkhBl0pC
-	 DRt5/kFpyfUWdlB5F/7m7sT2A/bxwr08I/RV40a1A9HXfRwouwIbDE1q18TpLNR7mN
-	 RrZN/v1ysHjgQ==
+	s=k20201202; t=1769888510;
+	bh=Lni0/9CHbjEMqtpfuZwpe7kNBiN1clVWOsovCwhBxjQ=;
+	h=From:To:Cc:Subject:Date:From;
+	b=LA7wXFxe4H6NpXWZXW19T7QuVddWQh/1KQZfPkOcngYhzqAJgib5hqcQ/WpZTeBLS
+	 rHrzj8264fZocWwS8Xm9A/M8j8UMHBw9UmcMTGcO8Cp6XznEfVBFyNRCADxKJZo+Ov
+	 LhyVTiIAghQqBJadr6a9Mluyk6lB6/O0GZSf/rfnyu7f1if1/9ZSPsFOP/2GJdpIof
+	 +hFMqutJPTOkctSZnQtrEEBY6obeEXik16eIirkj271Aco1br/dCx5DU3oXVHMSp9P
+	 qr9qYal/agW/obRuv4Dcttajw5+8p81+2BhVQnbAfGcZkFL7kC6T5tMJxXRvnCkvbZ
+	 CH3q2Et+JnDCw==
 From: SeongJae Park <sj@kernel.org>
-To: SeongJae Park <sj@kernel.org>
-Cc: Quanmin Yan <yanquanmin1@huawei.com>,
-	akpm@linux-foundation.org,
+To: 
+Cc: SeongJae Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	enze.li@gmx.com,
-	sunnanyong@huawei.com,
-	Enze Li <lienze@kylinos.cn>
-Subject: Re: [PATCH] mm/damon: unify address range representation with damon_addr_range
-Date: Fri, 30 Jan 2026 17:56:41 -0800
-Message-ID: <20260131015643.79158-1-sj@kernel.org>
+	linux-kernel@vger.kernel.org,
+	linux-mm@kvack.org
+Subject: [RFC PATCH 0/2] mm/damon/core: improve DAMOS quota efficiency for core layer filters
+Date: Sat, 31 Jan 2026 11:41:41 -0800
+Message-ID: <20260131194145.66286-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260130033847.52289-1-sj@kernel.org>
-References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On Thu, 29 Jan 2026 19:38:45 -0800 SeongJae Park <sj@kernel.org> wrote:
+Improve two below problematic behaviors of DAMOS that makes it less
+efficient when core layer filters are used.
 
-> Hello Quanmin,
-> 
-> On Fri, 30 Jan 2026 11:07:08 +0800 Quanmin Yan <yanquanmin1@huawei.com> wrote:
-[...]
-> > Actually, DAMON only actively searches for the biggest System RAM
-> > address when the user does not set a monitoring region. In this case,
-> > we always reset addr_unit to 1, which essentially restricts DAMON’s
-> > monitorable address range to 0–UL. Therefore, the described situation
-> > does not occur. For details, please refer to commit [1].
-> 
-> Again, you are correct.  There is no user scenario that can trigger the
-> problematic situation in the real world.  Nevertheless, assigning
-> 'resource_size_t' value to 'unsigned long' storage makes no sense, so I'm
-> calling such things a bug.  Not impacting user world, but still a bug is a bug.
+DAMOS generates the under-quota regions prioritization-purpose access
+temperature histogram [1] with only the scheme target access pattern.
+The DAMOS filters are ignored on the histogram, and this can result in
+the scheme not applied to eligible regions.  For working around this,
+users had to use separate DAMON contexts.  The memory tiering approaches
+are such examples.
 
-I was arguing it as a bug even though ABI users cannot trigger the overflow,
-since damon_set_region_biggest_system_ram_default() is exposed to DAMON API
-callers, and I was thinking a future caller of the function could trigger the
-problem.  But I now realize the API function is safe from any call, since
-damon_find_biggest_system_ram() is avoiding the case, by setting 'end'
-parameter of walk_system_ram_res() as 'ULONG_MAX'.  Maybe it is not really
-appropriate to call it a bug.
+DAMOS splits regions that intersect with address filters, so that only
+filtered-out part of the region is skipped.  But, the implementation is
+skipping the other part of the region that is not filtered out, too.  As
+a result, DAMOS can work slower than expected.
 
-That said, I now think this as a room to improve for the readability of the
-code.
+Improve the two inefficient behaviors with two patches, respectively.
+Read the patches for more details about the problem and how those are
+fixed.
+
+[1] "Prioritization" section of Documentation/mm/damon/design.rst
+
+SeongJae Park (2):
+  mm/damon/core: set quota-score histogram with core filters
+  mm/damon/core: do non-safe region walk on kdamond_apply_schemes()
+
+ mm/damon/core.c | 24 +++++++++++++-----------
+ 1 file changed, 13 insertions(+), 11 deletions(-)
 
 
-Thanks,
-SJ
-
-[...]
+base-commit: ae5fb88b410209639b49d5d271809fdb614df91f
+-- 
+2.47.3
