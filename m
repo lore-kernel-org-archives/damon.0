@@ -1,24 +1,24 @@
 Received: from frasgout.his.huawei.com (frasgout.his.huawei.com [185.176.79.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5BAB37649B
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D57EB37472B
 	for <damon@lists.linux.dev>; Mon,  2 Feb 2026 14:57:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.176.79.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770044258; cv=none; b=j9GvL5tjSuQulx9u2DTasJslnyNR122v1uL21PUVhblblTInXTpWfv44magTvfEeb2CR8RgqpOvXojX5YZrwvhCX4M+gDuzxPQPbAUrhHLPHpSs64kivr9p+qeI+2hlwYEkMo0umhbOPuN9tEU20aaZNer1dFx6auVE84ZbmgTE=
+	t=1770044259; cv=none; b=eDO3nEuT/phMSJ8/bqu/HzEgHFZuXG8RlrCa+p/G0QoO7ccqEDpUgtzhmFew1RkVoNXpC2OmR/L7Bt7VW+GUgtnCCEjfqbAOBblaLnquv3mNR+1IauMz4cRUf6IMBvAzSfzFiB6sIMOdAhC3CcumL67mvPD7EP5B6bkXcK8FcOE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770044258; c=relaxed/simple;
-	bh=jvIqWr/roJaqitIQaLbC5TmcuXVJ+whYeT8cykKkXQg=;
+	s=arc-20240116; t=1770044259; c=relaxed/simple;
+	bh=euhHPSZ9q7E3JiioOhSZA/Ja91LbAlC/CfrqmqmJEdo=;
 	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=utvNWqDBZbbtrSjXCJfSAMoaBK4nEJQtVFWWiGOw11xzcAcK9mn5mNSWPB6D4yHg2ifZRrlUdkrbGx8HNYAUBYWO6ca5o0XU+JPcV17jhXhYgP6F0krPvWxjEFhlOpIKsnbYRN5AB2UJdnOnlMYcLxdmAN658mV/1FC5nXH2uG8=
+	 MIME-Version:Content-Type; b=XL3kn8a1I23UoCZd54x6mabUsjv7/hHZcIajSR7YVS6qpjJ+MIipdXe9a2YihlV19YsA6qQQfAvKU0kfIKBwgcaLvYRmeiI2rAo2vfC4ban6YtMkwCVvUGFujs1CeQxiWbXn84Ruf6SKo7yh8rk8bwAiTsvOn3a2u8woWkx0Fao=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei-partners.com; spf=pass smtp.mailfrom=huawei-partners.com; arc=none smtp.client-ip=185.176.79.56
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei-partners.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei-partners.com
 Received: from mail.maildlp.com (unknown [172.18.224.107])
-	by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4f4V7Q6JvLzHnH83;
-	Mon,  2 Feb 2026 22:56:34 +0800 (CST)
+	by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4f4V7f4Z18zJ46cY;
+	Mon,  2 Feb 2026 22:56:46 +0800 (CST)
 Received: from mscpeml500003.china.huawei.com (unknown [7.188.49.51])
-	by mail.maildlp.com (Postfix) with ESMTPS id 6F48440584;
+	by mail.maildlp.com (Postfix) with ESMTPS id 8438C40571;
 	Mon,  2 Feb 2026 22:57:32 +0800 (CST)
 Received: from mscphis01197.huawei.com (10.123.65.218) by
  mscpeml500003.china.huawei.com (7.188.49.51) with Microsoft SMTP Server
@@ -30,9 +30,9 @@ To: <gutierrez.asier@huawei-partners.com>, <artem.kuzin@huawei.com>,
 	<yanquanmin1@huawei.com>, <zuoze1@huawei.com>, <sj@kernel.org>,
 	<damon@lists.linux.dev>, <akpm@linux-foundation.org>, <linux-mm@kvack.org>,
 	<linux-kernel@vger.kernel.org>
-Subject: [RFC PATCH v1 1/4] mm/damon: Generic context creation for modules
-Date: Mon, 2 Feb 2026 14:56:46 +0000
-Message-ID: <20260202145650.1795854-2-gutierrez.asier@huawei-partners.com>
+Subject: [RFC PATCH v1 2/4] mm/damon: Support for synchrounous huge pages collapse
+Date: Mon, 2 Feb 2026 14:56:47 +0000
+Message-ID: <20260202145650.1795854-3-gutierrez.asier@huawei-partners.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260202145650.1795854-1-gutierrez.asier@huawei-partners.com>
 References: <20260202145650.1795854-1-gutierrez.asier@huawei-partners.com>
@@ -49,106 +49,71 @@ X-ClientProxiedBy: mscpeml100003.china.huawei.com (10.199.174.67) To
 
 From: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
 
-Damon_modules_new_paddr_ctx_target. This works  only for physical contexts.
-In case of virtual addresses, we should  duplicate the code.
+* Support for huge pages collapse, which will be used by
+  dynamic_hugepages module.
 
-It is more elegant to have a generic version of new context creation which
-receives the mode as a parameter.
+* Include the new module for compilation
 
 Signed-off-by: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
 Co-developed-by: Anatoly Stepanov <stepanov.anatoly@huawei.com>
 ---
- mm/damon/lru_sort.c       | 6 ++++--
- mm/damon/modules-common.c | 7 ++++---
- mm/damon/modules-common.h | 5 +++--
- mm/damon/reclaim.c        | 5 +++--
- 4 files changed, 14 insertions(+), 9 deletions(-)
+ include/linux/damon.h | 1 +
+ mm/damon/Kconfig      | 7 +++++++
+ mm/damon/Makefile     | 1 +
+ mm/damon/vaddr.c      | 3 +++
+ 4 files changed, 12 insertions(+)
 
-diff --git a/mm/damon/lru_sort.c b/mm/damon/lru_sort.c
-index 49b4bc294f4e..ac34b02dace8 100644
---- a/mm/damon/lru_sort.c
-+++ b/mm/damon/lru_sort.c
-@@ -201,7 +201,8 @@ static int damon_lru_sort_apply_parameters(void)
- 	unsigned int hot_thres, cold_thres;
- 	int err;
+diff --git a/include/linux/damon.h b/include/linux/damon.h
+index 3813373a9200..de5a994f92c2 100644
+--- a/include/linux/damon.h
++++ b/include/linux/damon.h
+@@ -142,6 +142,7 @@ enum damos_action {
+ 	DAMOS_LRU_DEPRIO,
+ 	DAMOS_MIGRATE_HOT,
+ 	DAMOS_MIGRATE_COLD,
++	DAMOS_COLLAPSE,
+ 	DAMOS_STAT,		/* Do nothing but only record the stat */
+ 	NR_DAMOS_ACTIONS,
+ };
+diff --git a/mm/damon/Kconfig b/mm/damon/Kconfig
+index 8c868f7035fc..2355aacb6d12 100644
+--- a/mm/damon/Kconfig
++++ b/mm/damon/Kconfig
+@@ -110,4 +110,11 @@ config DAMON_STAT_ENABLED_DEFAULT
+ 	  Whether to enable DAMON_STAT by default.  Users can disable it in
+ 	  boot or runtime using its 'enabled' parameter.
  
--	err = damon_modules_new_paddr_ctx_target(&param_ctx, &param_target);
-+	err = damon_modules_new_ctx_target(&param_ctx, &param_target,
-+				DAMON_OPS_PADDR);
- 	if (err)
- 		return err;
- 
-@@ -375,7 +376,8 @@ static int __init damon_lru_sort_init(void)
- 		err = -ENOMEM;
- 		goto out;
- 	}
--	err = damon_modules_new_paddr_ctx_target(&ctx, &target);
-+	err = damon_modules_new_ctx_target(&ctx, &target,
-+				DAMON_OPS_PADDR);
- 	if (err)
- 		goto out;
- 
-diff --git a/mm/damon/modules-common.c b/mm/damon/modules-common.c
-index 86d58f8c4f63..5ba24e0ad9a1 100644
---- a/mm/damon/modules-common.c
-+++ b/mm/damon/modules-common.c
-@@ -14,8 +14,9 @@
-  * @ctxp:	Pointer to save the point to the newly created context
-  * @targetp:	Pointer to save the point to the newly created target
-  */
--int damon_modules_new_paddr_ctx_target(struct damon_ctx **ctxp,
--		struct damon_target **targetp)
-+int damon_modules_new_ctx_target(struct damon_ctx **ctxp,
-+				struct damon_target **targetp,
-+				enum damon_ops_id mode)
- {
- 	struct damon_ctx *ctx;
- 	struct damon_target *target;
-@@ -24,7 +25,7 @@ int damon_modules_new_paddr_ctx_target(struct damon_ctx **ctxp,
- 	if (!ctx)
- 		return -ENOMEM;
- 
--	if (damon_select_ops(ctx, DAMON_OPS_PADDR)) {
-+	if (damon_select_ops(ctx, mode)) {
- 		damon_destroy_ctx(ctx);
- 		return -EINVAL;
- 	}
-diff --git a/mm/damon/modules-common.h b/mm/damon/modules-common.h
-index f103ad556368..87d8058d7d85 100644
---- a/mm/damon/modules-common.h
-+++ b/mm/damon/modules-common.h
-@@ -45,5 +45,6 @@
- 	module_param_named(nr_##qt_exceed_name, stat.qt_exceeds, ulong,	\
- 			0400);
- 
--int damon_modules_new_paddr_ctx_target(struct damon_ctx **ctxp,
--		struct damon_target **targetp);
-+int damon_modules_new_ctx_target(struct damon_ctx **ctxp,
-+				struct damon_target **targetp,
-+				enum damon_ops_id mode);
-diff --git a/mm/damon/reclaim.c b/mm/damon/reclaim.c
-index 36a582e09eae..b64fb810e096 100644
---- a/mm/damon/reclaim.c
-+++ b/mm/damon/reclaim.c
-@@ -197,7 +197,8 @@ static int damon_reclaim_apply_parameters(void)
- 	struct damos_filter *filter;
- 	int err;
- 
--	err = damon_modules_new_paddr_ctx_target(&param_ctx, &param_target);
-+	err = damon_modules_new_ctx_target(&param_ctx, &param_target,
-+				DAMON_OPS_PADDR);
- 	if (err)
- 		return err;
- 
-@@ -379,7 +380,7 @@ static int __init damon_reclaim_init(void)
- 		err = -ENOMEM;
- 		goto out;
- 	}
--	err = damon_modules_new_paddr_ctx_target(&ctx, &target);
-+	err = damon_modules_new_ctx_target(&ctx, &target, DAMON_OPS_PADDR);
- 	if (err)
- 		goto out;
- 
++config DAMON_HOT_HUGEPAGE
++	bool "Build DAMON-based collapse of hot regions (DAMON_HOT_HUGEPAGES)"
++	depends on DAMON_VADDR
++	help
++	 Collapse hot region into huge pages. Hot regions are determined by
++	 DAMON-based sampling
++
+ endmenu
+diff --git a/mm/damon/Makefile b/mm/damon/Makefile
+index d8d6bf5f8bff..998bddc17819 100644
+--- a/mm/damon/Makefile
++++ b/mm/damon/Makefile
+@@ -7,3 +7,4 @@ obj-$(CONFIG_DAMON_SYSFS)	+= sysfs-common.o sysfs-schemes.o sysfs.o
+ obj-$(CONFIG_DAMON_RECLAIM)	+= modules-common.o reclaim.o
+ obj-$(CONFIG_DAMON_LRU_SORT)	+= modules-common.o lru_sort.o
+ obj-$(CONFIG_DAMON_STAT)	+= modules-common.o stat.o
++obj-$(CONFIG_DAMON_HOT_HUGEPAGE)	+= modules-common.o dynamic_hugepages.o
+diff --git a/mm/damon/vaddr.c b/mm/damon/vaddr.c
+index 23ed738a0bd6..4acbc1a6a5be 100644
+--- a/mm/damon/vaddr.c
++++ b/mm/damon/vaddr.c
+@@ -970,6 +970,9 @@ static unsigned long damon_va_apply_scheme(struct damon_ctx *ctx,
+ 	case DAMOS_NOHUGEPAGE:
+ 		madv_action = MADV_NOHUGEPAGE;
+ 		break;
++	case DAMOS_COLLAPSE:
++		madv_action = MADV_COLLAPSE;
++		break;
+ 	case DAMOS_MIGRATE_HOT:
+ 	case DAMOS_MIGRATE_COLD:
+ 		return damos_va_migrate(t, r, scheme, sz_filter_passed);
 -- 
 2.43.0
 
