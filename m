@@ -1,49 +1,40 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from h3cspam02-ex.h3c.com (smtp.h3c.com [221.12.31.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6877635CBD5;
-	Tue,  3 Feb 2026 05:35:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC1FC314B79
+	for <damon@lists.linux.dev>; Tue,  3 Feb 2026 10:55:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=221.12.31.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770096921; cv=none; b=FINfoG/GFO8nkqw1WJehC0RhWFn71sSwrYwTHxIi1e7OFq/qqmjRiK7uoKnfgWJFI8m/jUttBygbC22K/to5AULDvVZrv2G5DPmMqwhwmNH5butmuCIY5ctxL1o7dEEq/i6fWqd3oEmOTX0IQvy3gMSU4nH1zHKd+h6vugnAySg=
+	t=1770116106; cv=none; b=BQjUx37fvKVol8EuQgju9sclNYJbj2EDRC91X7NzR6qTa7UumITVMM0yogcrnNsIqp0BysvAeHLiSROx+tquaCzayqRZ6yBrLeN5kVIyEd6kAgyGnL8eg4uMnj1fP5sDkT0ePrt010FrxKJaQ0dRch1l74s+j3lnQCVlntUpHLo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770096921; c=relaxed/simple;
-	bh=4rPxl6OOP6sNccgj3vhJcnJxxzSSyqrvjl9HaMBD1j4=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O7NX6Tt2RaZdwhAi/VIStY5pZLojC+Y2CYKwLDsfX2f7VAai7Y9oVEEdvyoUeEYenBZoFRYuFn5C/BCDTbUTcyi2g6o/kUts8C38WPa0T+rYeoCRGeTSTvAfpwTlfKYS9o/+xWvbrgpyh1SP9TZPjMcJnkCL2B5/tZrJIH4uQC4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LWth5Gk5; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LWth5Gk5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B863C116D0;
-	Tue,  3 Feb 2026 05:35:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1770096921;
-	bh=4rPxl6OOP6sNccgj3vhJcnJxxzSSyqrvjl9HaMBD1j4=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LWth5Gk5KeVbwGf/muRDw7eEJYlaNSwLqCCCb9ECwm26tdnENHiCzbn/wdbr0wbgE
-	 yvmYQd/MuUkz1CFM05NPGBc46/uN/NQjGiXonOkYxwhZT1CbpUNOCti1dyVXGeimXT
-	 UwZvMVmmuDjfrbCAdutZ3vuouBvU9z66vJosrMVQ/SsFoCsbFl2KQPQAlnghrnmFkk
-	 bPLIbxewq8VlpQRrKcyUeC7Fu27fDBngZFJYAlEMpk3+N13D7Cg4gWGyL2i9TE8rKo
-	 eToeSk+qJqrmq3VlZs7nInxGA1jixZuMu+esioGY5/4h/AtPvXA0TUrNCVFJixlyBy
-	 6ahifE5tTCQ/g==
-From: SeongJae Park <sj@kernel.org>
-To: gutierrez.asier@huawei-partners.com
-Cc: SeongJae Park <sj@kernel.org>,
-	artem.kuzin@huawei.com,
-	stepanov.anatoly@huawei.com,
-	wangkefeng.wang@huawei.com,
-	yanquanmin1@huawei.com,
-	zuoze1@huawei.com,
-	damon@lists.linux.dev,
-	akpm@linux-foundation.org,
-	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [RFC PATCH v1 4/4] documentation/mm/damon: Documentation for the dynamic_hugepages module
-Date: Mon,  2 Feb 2026 21:34:45 -0800
-Message-ID: <20260203053446.68919-1-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260202145650.1795854-5-gutierrez.asier@huawei-partners.com>
-References: 
+	s=arc-20240116; t=1770116106; c=relaxed/simple;
+	bh=fRwPjReG3GV3U9+veyyU8sYQkEsMVpWr7PMct2HsJvs=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=ePgvknYcjXnvFOvKg0lVtRLdWAWGEQ7p0jP+dRim04p21aLlR3ll96vpo/Kt7l29Gb4NwitlsLMdq4lI15sitcoTHpbKYya0WTJsMixhPqy1DHyF/mDII2mP3JqJ/5Fbs/1KMWkKeofs2Dr2xiCaUZzyj258LBfRpy46VdkBiD0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=h3c.com; spf=pass smtp.mailfrom=h3c.com; arc=none smtp.client-ip=221.12.31.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=h3c.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=h3c.com
+Received: from h3cspam02-ex.h3c.com (localhost [127.0.0.2] (may be forged))
+	by h3cspam02-ex.h3c.com with ESMTP id 6139sq5D069674
+	for <damon@lists.linux.dev>; Tue, 3 Feb 2026 17:54:52 +0800 (+08)
+	(envelope-from qin.yuA@h3c.com)
+Received: from mail.maildlp.com ([172.25.15.154])
+	by h3cspam02-ex.h3c.com with ESMTP id 6139s72e067249;
+	Tue, 3 Feb 2026 17:54:07 +0800 (+08)
+	(envelope-from qin.yuA@h3c.com)
+Received: from DAG6EX08-BJD.srv.huawei-3com.com (unknown [10.153.34.10])
+	by mail.maildlp.com (Postfix) with ESMTP id 4B12D2011873;
+	Tue,  3 Feb 2026 18:03:53 +0800 (CST)
+Received: from localhost.localdomain (10.142.164.51) by
+ DAG6EX08-BJD.srv.huawei-3com.com (10.153.34.10) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.2.1258.27; Tue, 3 Feb 2026 17:54:07 +0800
+From: qinyu <qin.yuA@h3c.com>
+To: <sj@kernel.org>
+CC: <damon@lists.linux.dev>, <linux-mm@kvack.org>, qinyu <qin.yuA@h3c.com>
+Subject: [PATCH] mm/damon: remove redudnant mmu notifier call in pmdp mkold
+Date: Tue, 3 Feb 2026 17:54:00 +0800
+Message-ID: <20260203095400.2465255-1-qin.yuA@h3c.com>
+X-Mailer: git-send-email 2.33.0
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -51,66 +42,39 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: BJSMTP02-EX.srv.huawei-3com.com (10.63.20.133) To
+ DAG6EX08-BJD.srv.huawei-3com.com (10.153.34.10)
+X-DNSRBL: 
+X-SPAM-SOURCE-CHECK: pass
+X-MAIL:h3cspam02-ex.h3c.com 6139sq5D069674
 
-Let's use "Docs/admin-guide/mm/damon:" as the prefix of the commit subject.
+Currently, mmu_notifier_clear_young() is called immediately after
+pmdp_clear_young_notify(), which already calls mmu_notifier_clear_young()
+internally. This results in a redundant notifier call.
 
-On Mon, 2 Feb 2026 14:56:49 +0000 <gutierrez.asier@huawei-partners.com> wrote:
+Replace pmdp_clear_young_notify() with the non-notify variant to avoid the
+duplicate call and make the pmdp path consistent with the corresponding
+ptep_mkold() code.
 
-> From: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
-> 
-> Documentation for dynamic_hugepage DAMON module.
-> 
-> Signed-off-by: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
-> Co-developed-by: Anatoly Stepanov <stepanov.anatoly@huawei.com>
-> ---
->  .../mm/damon/dynamic_hugepages.rst (new)      | 173 ++++++++++++++++++
->  1 file changed, 173 insertions(+)
-> 
-> diff --git a/Documentation/admin-guide/mm/damon/dynamic_hugepages.rst b/Documentation/admin-guide/mm/damon/dynamic_hugepages.rst
-> new file mode 100644
-> index 000000000000..a6afb0910661
-> --- /dev/null
-> +++ b/Documentation/admin-guide/mm/damon/dynamic_hugepages.rst
-[...]
-> +How It Works?
-> +=============
-> +
-> +DAMON_HOT_HUGEPAGE spawns a new kthread which will monitor the applications in
-> +the system. The monitor thread will calculate the moving average of the sum of
-> +utimes of all the threads for all the processes. Then, pick the top three and
-> +launch a damon process to monitor the hot regions in those tasks.
-> +
-> +Since we don't know the minaccess number in advance, we set it to 90 initially,
+Signed-off-by: qinyu <qin.yuA@h3c.com>
+---
+ mm/damon/ops-common.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-minaccess number -> optimum value of the min_nr_accesses value ?
+diff --git a/mm/damon/ops-common.c b/mm/damon/ops-common.c
+index a218d9922..8c6d61342 100644
+--- a/mm/damon/ops-common.c
++++ b/mm/damon/ops-common.c
+@@ -90,7 +90,7 @@ void damon_pmdp_mkold(pmd_t *pmd, struct vm_area_struct *vma, unsigned long addr
+ 		return;
+ 
+ 	if (likely(pmd_present(pmdval)))
+-		young |= pmdp_clear_young_notify(vma, addr, pmd);
++		young |= pmdp_test_and_clear_young(vma, addr, pmd);
+ 	young |= mmu_notifier_clear_young(vma->vm_mm, addr, addr + HPAGE_PMD_SIZE);
+ 	if (young)
+ 		folio_set_young(folio);
+-- 
+2.33.0
 
-[...]
-> +Example
-> +=======
-> +Below runtime example commands make DAMON_HOT_HUGEPAGE to find memory regions in
-> +the 3 most active tasks. It also asks DAMON_HOT_HUGEPAGE to do nothing if the
-> +system's free memory rate is more than 50%, but start the real works if it
-> +becomes lower than 40%.
-> +
-> +    # cd /sys/module/damon_dynamic_hotpages/parameters/
-> +    # echo 10 > quota_ms
-> +    # echo 1000 > quota_reset_interval_ms
-> +    # echo 500 > wmarks_high
-> +    # echo 400 > wmarks_mid
-> +    # echo 200 > wmarks_low
-> +    # echo Y > enabled
-> \ No newline at end of file
-
-Please generously give a new line ;)
-
-My high line comments including name of the module, the expected use case of
-the watermarks also apply above.  Same to my comment on the third patch of this
-series,  I will do more detailed review of this patch again on the next
-version, since I presume the high level idea discussion is the main goal of
-this series.  Correct me if I'm wrong.
-
-
-Thanks,
-SJ
-
-[...]
