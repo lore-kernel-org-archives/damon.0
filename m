@@ -1,119 +1,152 @@
-Received: from frasgout.his.huawei.com (frasgout.his.huawei.com [185.176.79.56])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D57EB37472B
-	for <damon@lists.linux.dev>; Mon,  2 Feb 2026 14:57:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.176.79.56
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70DA6E55C;
+	Tue,  3 Feb 2026 01:10:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770044259; cv=none; b=eDO3nEuT/phMSJ8/bqu/HzEgHFZuXG8RlrCa+p/G0QoO7ccqEDpUgtzhmFew1RkVoNXpC2OmR/L7Bt7VW+GUgtnCCEjfqbAOBblaLnquv3mNR+1IauMz4cRUf6IMBvAzSfzFiB6sIMOdAhC3CcumL67mvPD7EP5B6bkXcK8FcOE=
+	t=1770081028; cv=none; b=OM+P+8ZPkA3437sJIbl7aXI5Mq/0Y8Hj2CYGBbVJqQkdqtQDZymBxxNivTWUaIA7YjmZ/BBTPfYqBYiuCyKW95qTm+F8Bqecr4FoD2qbdfZhVNWwSMOZxhH9jF5TMnQlQDcZrEw6zEjxwRpKE8zhJBPGVqlVSQLqHpA26atufX4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770044259; c=relaxed/simple;
-	bh=euhHPSZ9q7E3JiioOhSZA/Ja91LbAlC/CfrqmqmJEdo=;
-	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=XL3kn8a1I23UoCZd54x6mabUsjv7/hHZcIajSR7YVS6qpjJ+MIipdXe9a2YihlV19YsA6qQQfAvKU0kfIKBwgcaLvYRmeiI2rAo2vfC4ban6YtMkwCVvUGFujs1CeQxiWbXn84Ruf6SKo7yh8rk8bwAiTsvOn3a2u8woWkx0Fao=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei-partners.com; spf=pass smtp.mailfrom=huawei-partners.com; arc=none smtp.client-ip=185.176.79.56
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei-partners.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei-partners.com
-Received: from mail.maildlp.com (unknown [172.18.224.107])
-	by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4f4V7f4Z18zJ46cY;
-	Mon,  2 Feb 2026 22:56:46 +0800 (CST)
-Received: from mscpeml500003.china.huawei.com (unknown [7.188.49.51])
-	by mail.maildlp.com (Postfix) with ESMTPS id 8438C40571;
-	Mon,  2 Feb 2026 22:57:32 +0800 (CST)
-Received: from mscphis01197.huawei.com (10.123.65.218) by
- mscpeml500003.china.huawei.com (7.188.49.51) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.11; Mon, 2 Feb 2026 17:57:32 +0300
-From: <gutierrez.asier@huawei-partners.com>
-To: <gutierrez.asier@huawei-partners.com>, <artem.kuzin@huawei.com>,
-	<stepanov.anatoly@huawei.com>, <wangkefeng.wang@huawei.com>,
-	<yanquanmin1@huawei.com>, <zuoze1@huawei.com>, <sj@kernel.org>,
-	<damon@lists.linux.dev>, <akpm@linux-foundation.org>, <linux-mm@kvack.org>,
-	<linux-kernel@vger.kernel.org>
-Subject: [RFC PATCH v1 2/4] mm/damon: Support for synchrounous huge pages collapse
-Date: Mon, 2 Feb 2026 14:56:47 +0000
-Message-ID: <20260202145650.1795854-3-gutierrez.asier@huawei-partners.com>
-X-Mailer: git-send-email 2.43.0
+	s=arc-20240116; t=1770081028; c=relaxed/simple;
+	bh=2RdGROADSPTSvf3X10eeb10ai2q30UTfJxWuJZcpIQA=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=F19t7aDwePKbup8gUi9sdNfJj24gY/A8ReSWWX9/FpJZVTFfODDmyekt4OsAMcolGQcwbuNdN1dtfNl01FlADRZnorDCkc0VEqg+/su8wzl1GpfoDoLfOKoiPN3AqUNSpdzpTeNSoGi4CLF9FYunFO2R9aI3P+FN2hsdndqVOj4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Z+dANVh7; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Z+dANVh7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC7DCC116C6;
+	Tue,  3 Feb 2026 01:10:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1770081028;
+	bh=2RdGROADSPTSvf3X10eeb10ai2q30UTfJxWuJZcpIQA=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=Z+dANVh79IpjEyJWVw4SFY4tpnPUi5xOFeNj1mlrutVwGsO3kpQU4Dwwu5YPe83s0
+	 aWF4VkGemt44wPVPT1dqtfx5v48zlbW+F7e5EEMNk9JIhrohZ7BTh5VNtIZ/PKdKsm
+	 Ogpgr3fgg6jfWs02boTMG39Sn7uCO7P4tL2Qqu1XzAIglQpHArKQuNloKOKRR1+tUZ
+	 6YsllF7p9xoO0A9twY5PMtWIftKfhwKTUccK608QLpbYt5Rqst8tw/mkcxClKYgCjk
+	 V2RyhlHNDnv17B/CrRjiNQOdO/7JcZqq3/la1xVetqfYw8XglJN/ZQOtd0++TFImja
+	 /Aw7XNVQGivCg==
+From: SeongJae Park <sj@kernel.org>
+To: gutierrez.asier@huawei-partners.com
+Cc: SeongJae Park <sj@kernel.org>,
+	artem.kuzin@huawei.com,
+	stepanov.anatoly@huawei.com,
+	wangkefeng.wang@huawei.com,
+	yanquanmin1@huawei.com,
+	zuoze1@huawei.com,
+	damon@lists.linux.dev,
+	akpm@linux-foundation.org,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [RFC PATCH v1 0/4] mm/damon: Support hot application detections
+Date: Mon,  2 Feb 2026 17:10:18 -0800
+Message-ID: <20260203011020.67357-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260202145650.1795854-1-gutierrez.asier@huawei-partners.com>
-References: <20260202145650.1795854-1-gutierrez.asier@huawei-partners.com>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: mscpeml100003.china.huawei.com (10.199.174.67) To
- mscpeml500003.china.huawei.com (7.188.49.51)
 
-From: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
+Hello Asier,
 
-* Support for huge pages collapse, which will be used by
-  dynamic_hugepages module.
 
-* Include the new module for compilation
+Thank you for sharing this nice RFC patch series!
 
-Signed-off-by: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
-Co-developed-by: Anatoly Stepanov <stepanov.anatoly@huawei.com>
----
- include/linux/damon.h | 1 +
- mm/damon/Kconfig      | 7 +++++++
- mm/damon/Makefile     | 1 +
- mm/damon/vaddr.c      | 3 +++
- 4 files changed, 12 insertions(+)
+On Mon, 2 Feb 2026 14:56:45 +0000 <gutierrez.asier@huawei-partners.com> wrote:
 
-diff --git a/include/linux/damon.h b/include/linux/damon.h
-index 3813373a9200..de5a994f92c2 100644
---- a/include/linux/damon.h
-+++ b/include/linux/damon.h
-@@ -142,6 +142,7 @@ enum damos_action {
- 	DAMOS_LRU_DEPRIO,
- 	DAMOS_MIGRATE_HOT,
- 	DAMOS_MIGRATE_COLD,
-+	DAMOS_COLLAPSE,
- 	DAMOS_STAT,		/* Do nothing but only record the stat */
- 	NR_DAMOS_ACTIONS,
- };
-diff --git a/mm/damon/Kconfig b/mm/damon/Kconfig
-index 8c868f7035fc..2355aacb6d12 100644
---- a/mm/damon/Kconfig
-+++ b/mm/damon/Kconfig
-@@ -110,4 +110,11 @@ config DAMON_STAT_ENABLED_DEFAULT
- 	  Whether to enable DAMON_STAT by default.  Users can disable it in
- 	  boot or runtime using its 'enabled' parameter.
- 
-+config DAMON_HOT_HUGEPAGE
-+	bool "Build DAMON-based collapse of hot regions (DAMON_HOT_HUGEPAGES)"
-+	depends on DAMON_VADDR
-+	help
-+	 Collapse hot region into huge pages. Hot regions are determined by
-+	 DAMON-based sampling
-+
- endmenu
-diff --git a/mm/damon/Makefile b/mm/damon/Makefile
-index d8d6bf5f8bff..998bddc17819 100644
---- a/mm/damon/Makefile
-+++ b/mm/damon/Makefile
-@@ -7,3 +7,4 @@ obj-$(CONFIG_DAMON_SYSFS)	+= sysfs-common.o sysfs-schemes.o sysfs.o
- obj-$(CONFIG_DAMON_RECLAIM)	+= modules-common.o reclaim.o
- obj-$(CONFIG_DAMON_LRU_SORT)	+= modules-common.o lru_sort.o
- obj-$(CONFIG_DAMON_STAT)	+= modules-common.o stat.o
-+obj-$(CONFIG_DAMON_HOT_HUGEPAGE)	+= modules-common.o dynamic_hugepages.o
-diff --git a/mm/damon/vaddr.c b/mm/damon/vaddr.c
-index 23ed738a0bd6..4acbc1a6a5be 100644
---- a/mm/damon/vaddr.c
-+++ b/mm/damon/vaddr.c
-@@ -970,6 +970,9 @@ static unsigned long damon_va_apply_scheme(struct damon_ctx *ctx,
- 	case DAMOS_NOHUGEPAGE:
- 		madv_action = MADV_NOHUGEPAGE;
- 		break;
-+	case DAMOS_COLLAPSE:
-+		madv_action = MADV_COLLAPSE;
-+		break;
- 	case DAMOS_MIGRATE_HOT:
- 	case DAMOS_MIGRATE_COLD:
- 		return damos_va_migrate(t, r, scheme, sz_filter_passed);
--- 
-2.43.0
+> From: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
+> 
+> Overview
+> ----------
+> 
+> This patch set introduces a new dynamic mechanism for detecting hot applications
+> and hot regions in those applications.
+> 
+> Motivation
+> -----------
+> 
+> Currently DAMON requires the system administrator to provide information about
+> which application needs to be monitored and all the parameters. Ideally this
+> should be done automatically, with minimal intervention from the system
+> administrator.
+> 
+> 
+> Since TLB is a bottleneck for many systems, a way to optimize TLB misses (or
+> hits) is to use huge pages. Unfortunately, using "always" in THP leads to memory
+> fragmentation and memory waste. For this reason, most application guides and
+> system administrators suggest to disable THP.
+> 
+> We would like to detect: 1. which applications are hot in the system and 2.
+> which memory regions are hot in order to collapse those regions.
+> 
+> 
+> Solution
+> -----------
+> 
+>      ┌────────────┐           ┌────────────┐
+>      │Damon_module│           │Task_monitor│
+>      └──────┬─────┘           └──────┬─────┘
+>             │         start          │
+>             │───────────────────────>│
+>             │                        │
+>             │                        │────┐
+>             │                        │    │ calculate task load
+>             │                        │<───┘
+>             │                        │
+>             │                        │────┐
+>             │                        │    │ sort tasks
+>             │                        │<───┘
+>             │                        │
+>             │                        │────┐
+>             │                        │    │ start kdamond for top 3 tasks
+>             │                        │<───┘
+>      ┌──────┴─────┐           ┌──────┴─────┐
+>      │Damon_module│           │Task_monitor│
+>      └────────────┘           └────────────┘
+> 
+> 
+> We calculate the task load base on the sum of all the utime for all the threads
+> in a given task. Once we get total utime, we use the exponential load average
+> provided by calc_load. The tasks that become cold, the kdamond will be stopped
+> for them.
 
+Sounds interesting, and this high level idea makes sense to me. :)
+
+I'd like to further learn a few things.  Is there a reason to think the top 3
+tasks are enough number of tasks?  Also, what if a region was hot and
+successfully promoted to use huge pages, but later be cold?  Should we also
+have a DAMOS scheme for splitting such no-more-hot huge pages?
+
+> 
+> In each kdamond, we start with a high min_access value. Our goal is to find the
+> "maximum" min_access value at which point the DAMON action is applied. In each
+> cycle, if no action is applied, we lower the min_access.
+
+Sounds like a nice auto-tuning.  And we have DAMOS quota goal for that kind of
+auto-tuning.  Have you considered using that?
+
+> 
+> Regarding the action, we introduce a new action: DAMOS_COLLAPSE. This allows us
+> collapse synchronously and avoid polluting khugepaged and other parts of the MM
+> subsystem with DAMON stuff. DAMOS_HUGEPAGE eventually calls hugepage_madvise,
+> which needs the correct vm_flags_t set.
+> 
+> Benchmark
+> -----------
+
+Seems you forgot writing this section up.  Or, you don't have benchmark results
+yet, but only mistakenly wrote the above section header?  Either is fine, as
+this is just an RFC.  Nevertheless, test results and your expected use case of
+this patch series will be very helpful.
+
+
+Thanks,
+SJ
+
+[...]
