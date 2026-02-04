@@ -1,50 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67716366821;
-	Wed,  4 Feb 2026 06:06:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C283A227EB9;
+	Wed,  4 Feb 2026 07:17:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770185209; cv=none; b=IDk+a79ZyoPr/i7wvwo+uEnYW2I5WwStcPCPVpn2KjkDC9dirVLW06JlOkBhLhltYVglz3/Y5eXtKK00ZXlbG5mfIfftjuEznso7eAsI/SlghZ99rxbGzZ3Lio8wqZKSMS+npl/dzFtrittLSRE5Y5ZhOWf37u3Jk3haGl49IcE=
+	t=1770189434; cv=none; b=mQVLt4nnzeywR8GuWuYvhHZsvPNeNtxNs0xxja0PRQ2uqRH49etUBMG4dDz7eJbsLUAs4dAa1xa9kjDF9Tz1Q2X/qh8n9uqWGDpfuFLDNqVQl7Fhu3MMbeLk0TsD/hglQdYpFu0p6dV0OPqvd91K2V+Q1ZWM8KrqOpU6hNgwTwo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770185209; c=relaxed/simple;
-	bh=YDx6StxtpDi58Lvtwkex+sore9y1zO7/lL+DfNC6Sq8=;
+	s=arc-20240116; t=1770189434; c=relaxed/simple;
+	bh=PbpHINPIxKlo9HPoQQXP6SMwz/+sggXsDbHwfHXEEkM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h3Xmv5Tq6prj2QEmYw00gnkhadUi9M2XkRKGvBgPO05rrKomVwwv+WCeTpoHpJeTT6+O6le50wwsPGGs4JNIo6tfj9ohEE0bXLQmx91O3b67UxYWbg0qtgfg49l1pMWm3LVU9pxNQ3scHCFc9IZ+19aBsQIvEVfZkRyoaY3iCgc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=k6pDqTIf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZiDnwuIKzXI4guxC2Qd1oSAO99YlpeOB3CgQiI59OiR7uNUQwOURoAWrsYU1ZLrMMBxZJcXhmEuV5gtNTN8EYhqz0SgVKAfUUA56SOeWnsssUVozmREB+ZqC1pA2Yljd8TEhhA+z6XQa4N7Ft9JMkLEm+rrB9i8Kw+7STrqz3BQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=alX5ja/r; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="k6pDqTIf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9261C4CEF7;
-	Wed,  4 Feb 2026 06:06:48 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="alX5ja/r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4028CC4CEF7;
+	Wed,  4 Feb 2026 07:17:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1770185209;
-	bh=YDx6StxtpDi58Lvtwkex+sore9y1zO7/lL+DfNC6Sq8=;
+	s=k20201202; t=1770189434;
+	bh=PbpHINPIxKlo9HPoQQXP6SMwz/+sggXsDbHwfHXEEkM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k6pDqTIfKYSOHU297/fPjNP2NvQ2xMkHZOQq1eSZ1tF7slzQRnBqZSAx9mYGWMNTI
-	 aDngLHWLLoiXoqHGUhdRuHyDbRuNrJgxWYqT8TAU4x5KHzX9lYalnmB66IJxPn4QWH
-	 K14oTzSPh9cCeq9Yl4j9WgXaUD4G3zC5q0gwicfMNIjWmuW8v9rpHGL0XKeqD+9c9W
-	 0HJv99ge8aOev5BnLoYfuzMuj4Z7G5idL05MuBDsByOXgguTSzazN8od7p6lg6+fcQ
-	 QVxH6vkHAu+0zW+TsFySilcaTUZMRmRqtf0JyXDeJg/jLhPFAEheKsbVC7RNbdjv+0
-	 vJp1A34Yv4nxg==
+	b=alX5ja/rxhvf5yBZcCNXHG6rAaG5VEkuC40wnmWvqMN6tM20LdqGLTogEH39uhSgK
+	 H/Q9S7C8aF1gsQKYdz1rjlPs0uHp8T5ZY1vGAiHOEhZtXr3O3jM9ytNzuozft2XdPj
+	 CFnhrg65NijjL3rspj1ZmBNWZzWV2ACtewNPl+b0+SXsRupHsfoLW1jd/c/dm9vmX7
+	 Z96d40SD/Ob8bq89SOm6B2UEOncXijT9pARMFVg6wnaOLyw4sqAnFwSxtCEyuk5+vV
+	 LpKs3AxRrLThnBl1CCr6m7V7lSwiF3Bc2jZXElLj9ZO6REzoVMBVZM03dkLzYR5dke
+	 VQphjGTIq7o7Q==
 From: SeongJae Park <sj@kernel.org>
-To: Yunjeong Mun <yunjeong.mun@sk.com>
+To: Gutierrez Asier <gutierrez.asier@huawei-partners.com>
 Cc: SeongJae Park <sj@kernel.org>,
-	honggyu.kim@sk.com,
-	kernel_team@skhynix.com,
-	Ravi Jonnalagadda <ravis.opensrc@gmail.com>,
+	artem.kuzin@huawei.com,
+	stepanov.anatoly@huawei.com,
+	wangkefeng.wang@huawei.com,
+	yanquanmin1@huawei.com,
+	zuoze1@huawei.com,
 	damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org,
-	linux-doc@vger.kernel.org,
 	akpm@linux-foundation.org,
-	corbet@lwn.net,
-	bijan311@gmail.com,
-	ajayjoshi@micron.com
-Subject: Re: [RFC PATCH 0/5] mm/damon: Add node_sys_bp quota goal metric for
-Date: Tue,  3 Feb 2026 22:06:40 -0800
-Message-ID: <20260204060641.97191-1-sj@kernel.org>
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [RFC PATCH v1 0/4] mm/damon: Support hot application detections
+Date: Tue,  3 Feb 2026 23:17:11 -0800
+Message-ID: <20260204071712.16325-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260204022537.814-1-yunjeong.mun@sk.com>
+In-Reply-To: <af4f3e15-a306-4728-b5bf-1deaa700c99b@huawei-partners.com>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -54,58 +52,45 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Wed,  4 Feb 2026 11:25:35 +0900 Yunjeong Mun <yunjeong.mun@sk.com> wrote:
+On Tue, 3 Feb 2026 17:25:11 +0300 Gutierrez Asier <gutierrez.asier@huawei-partners.com> wrote:
 
-> On Fri, Jan 23, 2026 at 05:50:43PM -0800, SeongJae Park wrote:
-> > Cc-ing SK hynix folks (Honggyu and Yunjeong) for quota auto-tuning behavior
-> > confusion (not stop immediately after satisfying the goal) I discuss below.
-> > 
+> SeongJae,
 > 
-> Hi Seonjae, thanks for Cc-ing us :)
-> 
-> > 
-> > Please note that the goal-based quota auto-tuning works in proportional way,
-> > preferring small steps and "eventual" goal convergence.  As a result, migration
-> > will occur a few more times until it is completely stopped after the goal is
-> > satisfied.  Unless there is another scheme that migrates pages into node 0, you
-> > may end up having node 0 having a bit less than the 40% memory.
-> > 
-> > > 
-> > >     No oscillation - migration stops when target state is reached.
-> > 
-> > So, little bit of oscillation could still happen.  Hopefully that shouldn't be
-> > significant, though.
-> > 
-> > IIRC, SK hynix people also confused with the behavior when they experimented
-> > migrate_{hot,cold} action with NODE_MEM_USED_BP goal based quota auto-tuning,
-> > but using only a single scheme that does migration in a single direction.
-> > Because this is at least second time it made confusion, if you need, maybe I
-> > can try to add a feature for making DAMOS immediately stops after the goal is
-> > satisfied.  Let me know if such new feature can be useful for you.  Cc-ing SK
-> > hynix people (Honggyu and Yunjeong) so that they can correct me if my memory is
-> > broken, or answer if the new feature I described here can be useful for them.
-> > 
-> 
-> Yes, you're absolutely right. Currently, esz(effective size) starts from 0 and 
-> esz gradually increases as `current` approaches `target`.
-> Once `current` reaches `target`,  `esz` then begins to decrease.
-> 
-> However, we observed that even after `current` hits `target`, 
-> migration still continues relatively aggressively - because `esz`  remains high, 
-> and it takes time for it to decrease.
-> 
-> To address this, we previously suggested that initializing `esz`  at `target`
-> (or something suitably large value, rather than 0) and letting it gradually 
-> decrease as `current` gets closer to  `target`.  
-> This would allow for stronger migration when `current` is far form `target`, 
-> and gradually weaken migration as `current` approaches `target`.
-> 
-> Such a feature would be useful for us to experiment with tiered memory system :)
+> Thanks a lot for all the useful feedback.
 
-Thank you for confirming, Yunjeong.  I now agree this is what really need to be
-implemented.  And I agree your suggestion makes sense for the use case.  I want
-to take sufficient time for good design of it, though.  I will share update as
-soon as I get some idea.
+The pleasure is mine! :)
+
+> 
+> One thing that I was not sure about while working on this patch set
+> is whether to have an external new module or adding the logic to 
+> damon core. I mean, the hot application detecting can be useful for
+> all other modules and can improve DAMON performance.
+
+All exising non-sample DAMON modules are working for the physical address
+space.  I hence finding no many opportunities to bring benefits of hot
+application detection to those.
+
+I agree the hot applications detection could be useful in general and creative
+DAMON use cases for virtual address spaces.  Implementing the feature in DAMON
+core layer and exposing it via DAMON sysfs interface will help such use cases.
+But it seems not straightforward to imagine how the sysfs interface can be
+extended for the feature.
+
+So, I think it would better to be implemented inside the new module at the
+moment.  Later, if we end up having more modules that use the feature, we could
+move it to the modules-common or the core.  If we further find a good way to
+integrate that with sysfs interface, definitely it could go to core.
+
+From this point, however, I realize the feature can also be implemented in the
+user sapce in a pretty straightforward way.  Have you considered that?
+
+> What do you think?
+> My implementation was module based because I tried to avoid changes
+> to DAMON core for the RFC.
+
+If there is a good reason to implement that not in the user space but the
+kernel space, as I mentioned above, it seems the module is the right place to
+me.
 
 
 Thanks,
