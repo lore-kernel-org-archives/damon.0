@@ -1,34 +1,23 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21A4F13A258;
-	Wed,  4 Feb 2026 00:29:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+Received: from invmail4.hynix.com (exvmail4.hynix.com [166.125.252.92])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2FBAE2C17B3
+	for <damon@lists.linux.dev>; Wed,  4 Feb 2026 02:40:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=166.125.252.92
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770164948; cv=none; b=hLDqnI0ycN5u17Zg0F8n+ltKZBSRxulkKMgoe8YG1KMTU13VWbRA2n0L49OfXe9crZwxTnzjuATyJ+u1e60RpLK8Q0bK+36W6Iacptxt6zoUynB/ZxWIPtu79xMHICy6tMh2GmwTRjKWR14NabHT4N3h7TxeEAHoWHuQMRNg4xU=
+	t=1770172853; cv=none; b=AOJlor1oaT6UeookbV3qDHS2OaUotCsLyq5vrm4vFcTOPt7UWOQSYypnaH4E1QALuTu2UgoAx7oevJwvgkcQ5dKQt6OiKunIPSTvtVLcy0QJLEW90+n3s2w0a4YqKKMcvlWTXGFySdINkjf3JxP33oto6cDa31JxIZickCj+F0g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770164948; c=relaxed/simple;
-	bh=qXE3g6jBKd0Y66pW7cPox46N88wlCWyAaIJYLCmu0uQ=;
+	s=arc-20240116; t=1770172853; c=relaxed/simple;
+	bh=hYP/+GFnJaC6xd6pVO5rm6DcPV024iBSq7kygw3XN/U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=RaKrN1TYsSp/Iu7SgPqHEZqzpGH5V7sWTkLInlTsmZr0v1XVsxk42XPq4vg3WopbkULekHFyBT4AK7YS4LJD14eG2Oji08mfgBrXpd3l+t3XDCGsSi3pwyMCgyScp7JCWu0vWYKKXo/beIHJ4Q4119DqKOUwOzOznXheeB3+CxU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IU8Q6VfB; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IU8Q6VfB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6442BC2BC86;
-	Wed,  4 Feb 2026 00:29:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1770164947;
-	bh=qXE3g6jBKd0Y66pW7cPox46N88wlCWyAaIJYLCmu0uQ=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IU8Q6VfBQMpLFZ67aNKfIJIqzkP9TvOhTNtI59fwSZSXV6YqPxKwrWdmpHBv1dwSg
-	 0VX5XZAN2rHTJ0fg32vC10Tsf1IkW0dCshjF1o730hypxasYnFn7LYpV9dECkI+2ji
-	 ID09hCOwY7aUJJA2j5qoXyaGuhMo+MWELNg3FAYKxAf5zf6fdPhQ/ZaqY5ZxiM/zKn
-	 G7+fEneH8mR2fRK4JYehWvbxOT9ag3t7+WbSuwXO99Hwcpf/mqviuc1hWzmw4/IHbz
-	 7aGM2i79izcajfS5FS0mr/49sCoZxV1zCtmF82l5Sy08MXY7wRjrxOR27yq85g47gW
-	 mtTmJPdG6tunw==
-From: SeongJae Park <sj@kernel.org>
-To: Ravi Jonnalagadda <ravis.opensrc@gmail.com>
-Cc: SeongJae Park <sj@kernel.org>,
+	 MIME-Version; b=geDPvi0LFhtxa2NsT8T++WRKJWaIJsCVdBXkRc2Tz7Dm3Jh9QHk6p8Im5huRGAoRZRUvQ7TKACJKa4R+l0Xe17ExDyXwxqRZTcaNFKdVQfpvSZDo+IWwvRySWk2wlYwlafAUXaVGS6EPeRAyolX0UU30+pFWDvwbkR2C8XBRw9k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sk.com; spf=pass smtp.mailfrom=sk.com; arc=none smtp.client-ip=166.125.252.92
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sk.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sk.com
+X-AuditID: a67dfc5b-c45ff70000001609-89-6982ae246dfa
+From: Yunjeong Mun <yunjeong.mun@sk.com>
+To: sj@kernel.org
+Cc: honggyu.kim@sk.com,
+	kernel_team@skhynix.com,
+	Ravi Jonnalagadda <ravis.opensrc@gmail.com>,
 	damon@lists.linux.dev,
 	linux-mm@kvack.org,
 	linux-kernel@vger.kernel.org,
@@ -36,14 +25,12 @@ Cc: SeongJae Park <sj@kernel.org>,
 	akpm@linux-foundation.org,
 	corbet@lwn.net,
 	bijan311@gmail.com,
-	ajayjoshi@micron.com,
-	honggyu.kim@sk.com,
-	yunjeong.mun@sk.com
-Subject: Re: [RFC PATCH v2 0/3] mm/damon: Introduce node_target_mem_bp Quota Goal Metric
-Date: Tue,  3 Feb 2026 16:28:58 -0800
-Message-ID: <20260204002900.49291-1-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <CALa+Y1475VSnrNTn-AQtTTnye+sdAGu9sVO0YMEtLidNW53_=A@mail.gmail.com>
+	ajayjoshi@micron.com
+Subject: Re: [RFC PATCH 0/5] mm/damon: Add node_sys_bp quota goal metric for
+Date: Wed,  4 Feb 2026 11:25:35 +0900
+Message-ID: <20260204022537.814-1-yunjeong.mun@sk.com>
+X-Mailer: git-send-email 2.48.1.windows.1
+In-Reply-To: <20260124015045.78075-1-sj@kernel.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -51,68 +38,79 @@ List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrLLMWRmVeSWpSXmKPExsXC9ZZnoa7KuqZMgz+7RCxW7G1lt5izfg2b
+	RcOPz2wWTw60M1o8+f+b1WJh2xIWi8u75rBZ3Fvzn9Xi5FsHi8Nf3zA5cHnsnHWX3WPTqk42
+	j02fJrF7nJjxm8XjxeaZjB6L+yazenxf38Hm8XmTXABHFJdNSmpOZllqkb5dAlfGqyOnGQuO
+	CFVMODCdpYHxPV8XIweHhICJxJpTfl2MnGDmxDXP2UBsNgENiYOHTjKD2CICghL9j2ewdjFy
+	cTALrGSSuLj4CRNIQljAR+L6udVgNouAqsTrjTfYQWxeATOJ+ZOPMkMM1ZRouHQPrIZTwFhi
+	2t9NrCC2kACPxKsN+xkh6gUlTs58wgJiMwvISzRvnc0MskxC4DKbxMvzr1ghBklKHFxxg2UC
+	I/8sJD2zkPQsYGRaxSiUmVeWm5iZY6KXUZmXWaGXnJ+7iREY6Mtq/0TvYPx0IfgQowAHoxIP
+	b8DHxkwh1sSy4srcQ4wSHMxKIrzp0+szhXhTEiurUovy44tKc1KLDzFKc7AoifMafStPERJI
+	TyxJzU5NLUgtgskycXBKNTDaSbhoL+LZedW48e7tpSK/NZdECp/hM7y1NkPEX1VVKJ+N9dkm
+	tXO8nuJV4d+vzvhrkyP2Ts/+lZrLBKlXJordIReXr53i5uH3xTm+LWgvo84xz+kfpAr3zONz
+	NVOY9ONumYj2kr8+lhaPi1oW68/ZLpvJp+bqq9d3dMXLzUXqtlEprw34lJVYijMSDbWYi4oT
+	AVNY2FBwAgAA
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrHLMWRmVeSWpSXmKPExsXCNUNWR1dlXVOmweE/rBYr9rayW8xZv4bN
+	ouHHZzaLJwfaGS2e/P/NavH52Wtmi8NzT7JaLGxbwmJxedccNot7a/6zWpx862Bx+OsbJgce
+	j52z7rJ7bFrVyeax6dMkdo8TM36zeLzYPJPRY3HfZFaP7+s72Dy+3fbwWPziA5PH501yAVxR
+	XDYpqTmZZalF+nYJXBmvjpxmLDgiVDHhwHSWBsb3fF2MnBwSAiYSE9c8ZwOx2QQ0JA4eOskM
+	YosICEr0P57B2sXIxcEssJJJ4uLiJ0wgCWEBH4nr51aD2SwCqhKvN95gB7F5Bcwk5k8+ygwx
+	VFOi4dI9sBpOAWOJaX83sYLYQgI8Eq827GeEqBeUODnzCQuIzSwgL9G8dTbzBEaeWUhSs5Ck
+	FjAyrWIUycwry03MzDHVK87OqMzLrNBLzs/dxAgM5WW1fybuYPxy2f0QowAHoxIPb8DHxkwh
+	1sSy4srcQ4wSHMxKIrzp0+szhXhTEiurUovy44tKc1KLDzFKc7AoifN6hacmCAmkJ5akZqem
+	FqQWwWSZODilGhhvufOnTTnH8ndiosISu2RJz/YLzHeuKtyV0Ix8npbhcUrvr57a3X7+5uUG
+	QQV91sdqmVZOXSKrH9S3/G+216PHhVMjw65Ed0o9YjJuYTgkkHX25bJPNo36FTy7vnVe+WiT
+	aOis1iS80ab6nFccq9jPqdcXete0uMblP9e5kbTwXWzyLcnXN5RYijMSDbWYi4oTAfwAvkph
+	AgAA
+X-CFilter-Loop: Reflected
 
-On Tue, 3 Feb 2026 11:48:06 -0800 Ravi Jonnalagadda <ravis.opensrc@gmail.com> wrote:
-
-> On Sat, Jan 31, 2026 at 11:54 AM SeongJae Park <sj@kernel.org> wrote:
-> >
-> > On Thu, 29 Jan 2026 17:48:06 -0800 SeongJae Park <sj@kernel.org> wrote:
-> >
-> > > On Thu, 29 Jan 2026 13:58:11 -0800 Ravi Jonnalagadda <ravis.opensrc@gmail.com> wrote:
-> > >
-> > > > This series introduces a new DAMON quota goal metric, `node_target_mem_bp`,
-> > > > designed for controlling memory migration in heterogeneous memory systems
-> > > > (e.g., DRAM and CXL memory tiering).
-> > > >
-> > > > v1: https://lore.kernel.org/linux-mm/20260123045733.6954-1-ravis.opensrc@gmail.com/T/#u
-> > [...]
-> > >     Context 0: monitors node 0, migrate_hot -> node 1
-> > >       goal: node_ineligible_mem_bp, nid=0, target=4000
-> > >
-> > >     Context 1: monitors node 1, migrate_hot -> node 0
-> > >       goal: node_target_mem_bp, nid=0, target=6000
-> >
-> > In offline, Ravi enlightened me that using a single context with two schemes
-> > instead of the above two contexts setup can be more efficienct and useful.  I
-> > agree that.  It will be able to only single kdamond, and there could be more
-> > flexible use cases that can use the whole-memory access pattern.
-> >
-> > That is, we can use single context with the two schemes, but adding a core
-> > layer DAMOS filters for applying the schemes to only memory of node 0 and node
-> > 1, respectively.  Similar for memory tiering use cases.
-> >
-> > But I was recommending the multi contexts approach to people because the
-> > current implementation of DAMOS is not efficient when both quota and core layer
-> > filters are used.  I was actually working on making it improved, and just
-> > posted an RFC patch series [1].  After the patches are merged, hopefully the
-> > single context approach will be useful and effcient enough for varying use
-> > cases including the memory tiering.
-> >
-> > [1] https://lore.kernel.org/20260131194145.66286-1-sj@kernel.org
-> >
-> Thanks for providing the DAMOS_FILTER patch update SJ.
+On Fri, Jan 23, 2026 at 05:50:43PM -0800, SeongJae Park wrote:
+> Cc-ing SK hynix folks (Honggyu and Yunjeong) for quota auto-tuning behavior
+> confusion (not stop immediately after satisfying the goal) I discuss below.
 > 
-> For v3, I plan to introduce two complementary metrics:
-> DAMOS_QUOTA_NODE_ELIGIBLE_MEM_BP
-> and DAMOS_QUOTA_NODE_INELIGIBLE_MEM_BP.
-> 
-> This will support the following approaches for hot memory migration:
-> 1. Single context with two schemes using both metrics.
-> (along with DAMOS_FILTER_TYPE_ADDR)
-> 2. Two DAMON contexts each using
-> DAMOS_QUOTA_NODE_INELIGIBLE_MEM_BP.
 
-Sounds good!
+Hi Seonjae, thanks for Cc-ing us :)
 
 > 
-> Will provide more details on the implementation and usage in the v3 series.
+> Please note that the goal-based quota auto-tuning works in proportional way,
+> preferring small steps and "eventual" goal convergence.  As a result, migration
+> will occur a few more times until it is completely stopped after the goal is
+> satisfied.  Unless there is another scheme that migrates pages into node 0, you
+> may end up having node 0 having a bit less than the 40% memory.
+> 
+> > 
+> >     No oscillation - migration stops when target state is reached.
+> 
+> So, little bit of oscillation could still happen.  Hopefully that shouldn't be
+> significant, though.
+> 
+> IIRC, SK hynix people also confused with the behavior when they experimented
+> migrate_{hot,cold} action with NODE_MEM_USED_BP goal based quota auto-tuning,
+> but using only a single scheme that does migration in a single direction.
+> Because this is at least second time it made confusion, if you need, maybe I
+> can try to add a feature for making DAMOS immediately stops after the goal is
+> satisfied.  Let me know if such new feature can be useful for you.  Cc-ing SK
+> hynix people (Honggyu and Yunjeong) so that they can correct me if my memory is
+> broken, or answer if the new feature I described here can be useful for them.
+> 
 
-Looking forward to it!
+Yes, you're absolutely right. Currently, esz(effective size) starts from 0 and 
+esz gradually increases as `current` approaches `target`.
+Once `current` reaches `target`,  `esz` then begins to decrease.
 
+However, we observed that even after `current` hits `target`, 
+migration still continues relatively aggressively - because `esz`  remains high, 
+and it takes time for it to decrease.
 
-Thanks,
-SJ
+To address this, we previously suggested that initializing `esz`  at `target`
+(or something suitably large value, rather than 0) and letting it gradually 
+decrease as `current` gets closer to  `target`.  
+This would allow for stronger migration when `current` is far form `target`, 
+and gradually weaken migration as `current` approaches `target`.
 
-[...]
+Such a feature would be useful for us to experiment with tiered memory system :)
+
+Best Regards,
+Yunjeong
+
