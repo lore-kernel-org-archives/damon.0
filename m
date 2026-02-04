@@ -1,191 +1,109 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from frasgout.his.huawei.com (frasgout.his.huawei.com [185.176.79.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 468E538B983;
-	Wed,  4 Feb 2026 07:31:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 952B13D5223
+	for <damon@lists.linux.dev>; Wed,  4 Feb 2026 13:07:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.176.79.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770190301; cv=none; b=Lk9iKO2tc6t9Q+1Pb+XcexriI5ZHhH3ju2sGKlHulOU49idfRudI8m8KAlflhhU5sUXGnATpnj4cneelYViUqQnCFtsX8nuXgjZh+32MWPnIV1Vw9FeKjSGbKITyzKrMQ9wKfIr7Ml+perdSbMVe/mT5UQlOMsPAnxkPx7MFlg8=
+	t=1770210464; cv=none; b=Nz+CggqhTZUUskEHPFOTIw1HLQdVE0bd51Z1fvdRAoHapwjWeGdWg7Jxv8PWk5q5oGEIoOIHdhsPQKbrtrbIiADpwlWm/dvLp+GhGXEweY3nLpVk43eTlKp1oEivrgP33HnZaqWPgYdKyUYDqGRyJ8UlYWTZyKCr4FFYT0bU52E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770190301; c=relaxed/simple;
-	bh=h8IFr3hAC3Re7Gtgad9D9ErBYgAe1ei2FUSAKZYjjM0=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=imJz0tyEA1/x78ACshNNWrbgL1IU7kFfwNwlfr6KQhNPYTfUsaE5id9RANiKjMNe2mpUsKN/BK4YFezi/QWZ+7o6JRBrOzO58g1E0icfOktu3QUSQLJ3kbrj1fGJFoEjDTq06wJy5a00nIs0xw1PoJaDcRf8ah/JkZ+xqzz9qso=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eLzhmU/v; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eLzhmU/v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAD87C4CEF7;
-	Wed,  4 Feb 2026 07:31:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1770190300;
-	bh=h8IFr3hAC3Re7Gtgad9D9ErBYgAe1ei2FUSAKZYjjM0=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eLzhmU/vh6ibnUoQIkKF4n1DxSPWw1DfbD9La3zxbhOgTEVxFcSZzvL6jb9IRp0kM
-	 2gU/cVFQd5dF9sKT+eN4nY/uQxDplOAMY/y/Bvo8kSJAcUYSRvDeP7MBME4ILFTkkG
-	 BRzmEJd9LlvViVTmsGOy1g6Pk793bzFKKR98yff9xyeZzSxLoOZuxIS/dj4XnB6srk
-	 dYE4w4s7tnR0z16XGOhM6ldkBUCc8tbWnbAT1PYAsDm6ry/Qu7cior/cD2kRXQ0UJ5
-	 cmyplZxx0R5cMCUiJx3ogXvtAsrOQzgeyrMRJo/XCKdxQix0X8ImvwhkvDdJCss5o6
-	 G6OHWOgpc5Bsw==
-From: SeongJae Park <sj@kernel.org>
-To: Gutierrez Asier <gutierrez.asier@huawei-partners.com>
-Cc: SeongJae Park <sj@kernel.org>,
-	artem.kuzin@huawei.com,
-	stepanov.anatoly@huawei.com,
-	wangkefeng.wang@huawei.com,
-	yanquanmin1@huawei.com,
-	zuoze1@huawei.com,
-	damon@lists.linux.dev,
-	akpm@linux-foundation.org,
-	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [RFC PATCH v1 0/4] mm/damon: Support hot application detections
-Date: Tue,  3 Feb 2026 23:31:32 -0800
-Message-ID: <20260204073133.16471-1-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <56e9d735-d728-445d-9d5d-f044c9fe53b2@huawei-partners.com>
-References: 
+	s=arc-20240116; t=1770210464; c=relaxed/simple;
+	bh=RnF2+n9sGW5Z5FNVADHxsiwhB17zi+K/YhZ03gS8aGU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=fc6rrgNi4g6gn8O1RU/5hsMU1fm9UFbJ5NSgomK9C1E4NrVa/VxGwvOMtPcQEIfwIImTqJbe7BLTnBoIbN+DJrwDhGGgjPeyzGHI2DKGHJeRtTab9Hz7YcnIDqMds5EKc804m8en4Cfcjs+xpQN5qwF9g4mfQ+v6lyr5MFrPivA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei-partners.com; spf=pass smtp.mailfrom=huawei-partners.com; arc=none smtp.client-ip=185.176.79.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei-partners.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei-partners.com
+Received: from mail.maildlp.com (unknown [172.18.224.83])
+	by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4f5gbg5N0HzHnGk1;
+	Wed,  4 Feb 2026 21:06:39 +0800 (CST)
+Received: from mscpeml500003.china.huawei.com (unknown [7.188.49.51])
+	by mail.maildlp.com (Postfix) with ESMTPS id 1E36D40569;
+	Wed,  4 Feb 2026 21:07:41 +0800 (CST)
+Received: from [10.123.123.154] (10.123.123.154) by
+ mscpeml500003.china.huawei.com (7.188.49.51) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.11; Wed, 4 Feb 2026 16:07:40 +0300
+Message-ID: <8b8e9dde-33ff-41f7-8563-d9aeaf5efeb5@huawei-partners.com>
+Date: Wed, 4 Feb 2026 16:07:40 +0300
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v1 0/4] mm/damon: Support hot application detections
+To: SeongJae Park <sj@kernel.org>
+CC: <artem.kuzin@huawei.com>, <stepanov.anatoly@huawei.com>,
+	<wangkefeng.wang@huawei.com>, <yanquanmin1@huawei.com>, <zuoze1@huawei.com>,
+	<damon@lists.linux.dev>, <akpm@linux-foundation.org>, <linux-mm@kvack.org>,
+	<linux-kernel@vger.kernel.org>
+References: <20260204071712.16325-1-sj@kernel.org>
+Content-Language: en-US
+From: Gutierrez Asier <gutierrez.asier@huawei-partners.com>
+In-Reply-To: <20260204071712.16325-1-sj@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: mscpeml100003.china.huawei.com (10.199.174.67) To
+ mscpeml500003.china.huawei.com (7.188.49.51)
 
-On Tue, 3 Feb 2026 16:03:04 +0300 Gutierrez Asier <gutierrez.asier@huawei-partners.com> wrote:
 
-> Hi SeongJae!
+
+On 2/4/2026 10:17 AM, SeongJae Park wrote:
+> On Tue, 3 Feb 2026 17:25:11 +0300 Gutierrez Asier <gutierrez.asier@huawei-partners.com> wrote:
 > 
-> On 2/3/2026 4:10 AM, SeongJae Park wrote:
-> > Hello Asier,
-> > 
-> > 
-> > Thank you for sharing this nice RFC patch series!
-> > 
-> > On Mon, 2 Feb 2026 14:56:45 +0000 <gutierrez.asier@huawei-partners.com> wrote:
-> > 
-> >> From: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
-> >>
-> >> Overview
-> >> ----------
-> >>
-> >> This patch set introduces a new dynamic mechanism for detecting hot applications
-> >> and hot regions in those applications.
-> >>
-> >> Motivation
-> >> -----------
-> >>
-> >> Currently DAMON requires the system administrator to provide information about
-> >> which application needs to be monitored and all the parameters. Ideally this
-> >> should be done automatically, with minimal intervention from the system
-> >> administrator.
-> >>
-> >>
-> >> Since TLB is a bottleneck for many systems, a way to optimize TLB misses (or
-> >> hits) is to use huge pages. Unfortunately, using "always" in THP leads to memory
-> >> fragmentation and memory waste. For this reason, most application guides and
-> >> system administrators suggest to disable THP.
-> >>
-> >> We would like to detect: 1. which applications are hot in the system and 2.
-> >> which memory regions are hot in order to collapse those regions.
-> >>
-> >>
-> >> Solution
-> >> -----------
-> >>
-> >>      ┌────────────┐           ┌────────────┐
-> >>      │Damon_module│           │Task_monitor│
-> >>      └──────┬─────┘           └──────┬─────┘
-> >>             │         start          │
-> >>             │───────────────────────>│
-> >>             │                        │
-> >>             │                        │────┐
-> >>             │                        │    │ calculate task load
-> >>             │                        │<───┘
-> >>             │                        │
-> >>             │                        │────┐
-> >>             │                        │    │ sort tasks
-> >>             │                        │<───┘
-> >>             │                        │
-> >>             │                        │────┐
-> >>             │                        │    │ start kdamond for top 3 tasks
-> >>             │                        │<───┘
-> >>      ┌──────┴─────┐           ┌──────┴─────┐
-> >>      │Damon_module│           │Task_monitor│
-> >>      └────────────┘           └────────────┘
-> >>
-> >>
-> >> We calculate the task load base on the sum of all the utime for all the threads
-> >> in a given task. Once we get total utime, we use the exponential load average
-> >> provided by calc_load. The tasks that become cold, the kdamond will be stopped
-> >> for them.
-> > 
-> > Sounds interesting, and this high level idea makes sense to me. :)
-> > 
-> > I'd like to further learn a few things.  Is there a reason to think the top 3
-> > tasks are enough number of tasks?  Also, what if a region was hot and
-> > successfully promoted to use huge pages, but later be cold?  Should we also
-> > have a DAMOS scheme for splitting such no-more-hot huge pages?
+>> SeongJae,
+>>
+>> Thanks a lot for all the useful feedback.
 > 
-> No specific reason. This was just for the RFC. We could move this to a parameter
-> somehow.
+> The pleasure is mine! :)
+> 
+>>
+>> One thing that I was not sure about while working on this patch set
+>> is whether to have an external new module or adding the logic to 
+>> damon core. I mean, the hot application detecting can be useful for
+>> all other modules and can improve DAMON performance.
+> 
+> All exising non-sample DAMON modules are working for the physical address
+> space.  I hence finding no many opportunities to bring benefits of hot
+> application detection to those.
+> 
+> I agree the hot applications detection could be useful in general and creative
+> DAMON use cases for virtual address spaces.  Implementing the feature in DAMON
+> core layer and exposing it via DAMON sysfs interface will help such use cases.
+> But it seems not straightforward to imagine how the sysfs interface can be
+> extended for the feature.
+> 
+> So, I think it would better to be implemented inside the new module at the
+> moment.  Later, if we end up having more modules that use the feature, we could
+> move it to the modules-common or the core.  If we further find a good way to
+> integrate that with sysfs interface, definitely it could go to core.
+> 
+> From this point, however, I realize the feature can also be implemented in the
+> user sapce in a pretty straightforward way.  Have you considered that?
 
-Makes sense.  Depending on the test results with 3 tasks default value, I think
-we could just keep it a hard-coded default one.  If it turns out it is not
-working good for different cases, we could make it a tunable parameter or
-internally auto-tuned.
+I though about it. However, accessing the task_struct directly and extracting
+the utime is much more efficient that getting the required info from the user
+space.
 
 > 
-> In case of a region turning cold, I haven't worked on it. In turning hot means
-> that we collapse the hot region, we should do the opposite (split) in case the
-> area turns cold. I haven't thought about it, but that a good catch. Thanks!
-
-You're welcome!
-
+>> What do you think?
+>> My implementation was module based because I tried to avoid changes
+>> to DAMON core for the RFC.
 > 
-> >>
-> >> In each kdamond, we start with a high min_access value. Our goal is to find the
-> >> "maximum" min_access value at which point the DAMON action is applied. In each
-> >> cycle, if no action is applied, we lower the min_access.
-> > 
-> > Sounds like a nice auto-tuning.  And we have DAMOS quota goal for that kind of
-> > auto-tuning.  Have you considered using that?
-
-Maybe you missed the above question?
-
-> > 
-> >>
-> >> Regarding the action, we introduce a new action: DAMOS_COLLAPSE. This allows us
-> >> collapse synchronously and avoid polluting khugepaged and other parts of the MM
-> >> subsystem with DAMON stuff. DAMOS_HUGEPAGE eventually calls hugepage_madvise,
-> >> which needs the correct vm_flags_t set.
-> >>
-> >> Benchmark
-> >> -----------
-> > 
-> > Seems you forgot writing this section up.  Or, you don't have benchmark results
-> > yet, but only mistakenly wrote the above section header?  Either is fine, as
-> > this is just an RFC.  Nevertheless, test results and your expected use case of
-> > this patch series will be very helpful.
-> > 
-> > 
-> > Thanks,
-> > SJ
-> > 
-> > [...]
-> > 
+> If there is a good reason to implement that not in the user space but the
+> kernel space, as I mentioned above, it seems the module is the right place to
+> me.
 > 
-> Sure, will add the benchmark results in the next RFC version.
+> 
+> Thanks,
+> SJ
+> 
+> [...]
+> 
 
-Looking forward!  I'm particularly interested in your expected or planned use
-case, including why you implement the top n processes logic inside the kernel
-instead of putting it on the user space.  I'm also interested in how well the
-test setup is representing the realistic use case, and how good the results is.
-That will help us deciding important things including whether this can be
-merged, and if some corner cases handling should be made before or after
-merging it, earlier.
+-- 
+Asier Gutierrez
+Huawei
 
-
-Thanks,
-SJ
