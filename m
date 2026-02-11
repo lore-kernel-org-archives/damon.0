@@ -1,44 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09FB52C11FA;
-	Wed, 11 Feb 2026 05:07:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D5D5258EE0;
+	Wed, 11 Feb 2026 06:59:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770786452; cv=none; b=RA7ndrFlAJEAvptoxMF2XHQugTNsb/A2L3IhVVJLFefSaQ9gu+fuwfzLJ5l7dz3FPVwSOLQizHav4pE6xtz7unt1gzpHhMNYvEhQhUWT+T8yu3UvGMKHqB2/CIyq26AQ7JeoTyEZvddP9C06QMUGLn2v7jWXkQjEWm+3NYueV0w=
+	t=1770793158; cv=none; b=TEowtcaHNToYTX8o6B1mVHlpncf5RbPxmw79j/wdOuuoKYxfxQGAPLdibbdT1KTShsppb9u8WYf7FVx+8Xoa4KDAR5pWm+ynInpp6Ut2DT37pmn5a7WRAEKgcJKeGs9xYlB1X2y1Al7f/eCDY89q19U3o6yJQluN1yVX0vKO3Fo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770786452; c=relaxed/simple;
-	bh=UTpjsZww6YPPiWFz55VMFdksp+RP1wddMHWtM/ylmIY=;
+	s=arc-20240116; t=1770793158; c=relaxed/simple;
+	bh=rclUdVW+gYi3vSJidp7DNr34hFtP2+tfLi6yHa+zmwc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OLxFFng+i7+LSb8lJXu5Ncn4TrDYQQJTG0VAXuZJ8787fk9bg2td36JhPadkt+vcGPYdHmKhPjUOujFCXKuh9zBKWxT46tVXn8bG8G2075oNd+1R6ExzWWyXTqqZ5heOwdKQsIhWY70nEHEd6p9lxNPEUHlhkbKsaOYw0K6w6EA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Yt4r16Bz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=thJzOxGb6wMM1gKhu7G+BwERQlyggdjOtw02HRoKN26VG7TIqL+KajGyMG+eT72hROlRgmraAP9YrL9I1eXv9P/ZILM1d0oh0ILm8PlfzRgqp+UC6bWzKEthow53hjN7n0cq5QjHmSA0kFpradq6SY7U0RTBtIOLeMKnFkxn7aE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=daQmtwYN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Yt4r16Bz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7713DC4CEF7;
-	Wed, 11 Feb 2026 05:07:31 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="daQmtwYN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C49C2C4CEF7;
+	Wed, 11 Feb 2026 06:59:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1770786451;
-	bh=UTpjsZww6YPPiWFz55VMFdksp+RP1wddMHWtM/ylmIY=;
+	s=k20201202; t=1770793158;
+	bh=rclUdVW+gYi3vSJidp7DNr34hFtP2+tfLi6yHa+zmwc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Yt4r16BzYI4WeotGZ0dx3l13TAzZEJ7pDFFXMu0AraLYNQiFZTqgnyClgwHC6VAE4
-	 m9wCXzt8mqsrCWV6v9XxCcQQKZEdNj3xYxOXX+E7P8IiJ6rUWAnsoJJ6pu8J2Xw/f7
-	 Cj9giHjT3BwMx7ngk+oJLDxYVWpPr2cI69sDAU5qdSvL2aaP9A19J4apIyhCx+gngp
-	 pPjfLr/8THLNbPIrmbRCoj9ydHZYAIf9+bUugyIiblY3Fv5bA6MGkbvRPnz+7QgA1l
-	 U1FnOUvC5jDQ9YKZF1aB0XJb4iNIVIAK3a+pGY9wE+5Orwzsiu5I57/etCCabfuaKr
-	 f8RK5y/zFN8wQ==
+	b=daQmtwYNuAqsJUQHTDrvZf8/bIzvWnDmzifjZW+ZzMtug3jXXhRvaLh80p9eTEzbg
+	 gSi45aZxI7ri98rUSaNBG3V5PTuWrFX3fXlwShfB8izNeU2KaFL9J59yNFSwvIG4Vw
+	 zCX3/K37sX4uyf3E1fdCufQpZxkZ21jQ8te37SNJjKca+j8A2aWrED46May48oxVAL
+	 EGbJbMOb2ka1cPlTF5yLQ/6A8pJAlggweOaWQFrWBz/GP3gS3lXlogcP9yOGsNyNL2
+	 InEfiGmU1pexSBueCYTgJzsufV7gJVwg5Ms1fY0xWnsVICq//9/Nn4zh8BQNnyfWfT
+	 KyUIvZIga8lwQ==
 From: SeongJae Park <sj@kernel.org>
-To: 
+To: gutierrez.asier@huawei-partners.com
 Cc: SeongJae Park <sj@kernel.org>,
-	linux-mm@kvack.org,
-	Asier Gutierrez <gutierrez.asier@huawei-partners.com>,
+	artem.kuzin@huawei.com,
+	stepanov.anatoly@huawei.com,
+	wangkefeng.wang@huawei.com,
+	yanquanmin1@huawei.com,
+	zuoze1@huawei.com,
 	damon@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	lsf-pc@lists.linux-foundation.org
-Subject: Re: [LSF/MM/BPF TOPIC] Data Access-aware Transparent Hugepages
-Date: Tue, 10 Feb 2026 21:07:28 -0800
-Message-ID: <20260211050729.69719-1-sj@kernel.org>
+	akpm@linux-foundation.org,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [RFC PATCH v1 0/4] mm/damon: Support hot application detections
+Date: Tue, 10 Feb 2026 22:59:12 -0800
+Message-ID: <20260211065914.68174-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260211044533.69515-1-sj@kernel.org>
+In-Reply-To: <20260202145650.1795854-1-gutierrez.asier@huawei-partners.com>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -46,45 +50,113 @@ List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On Tue, 10 Feb 2026 20:45:33 -0800 SeongJae Park <sj@kernel.org> wrote:
+On Mon, 2 Feb 2026 14:56:45 +0000 <gutierrez.asier@huawei-partners.com> wrote:
 
-> Forgot Cc-ing damon@ and linux-kernel@.  Adding those.  Sorry for noise.
-
-And lsf-pc@ ...
-
+> From: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
 > 
-> On Tue, 10 Feb 2026 18:28:55 SeongJae Park <sj@kernel.org> wrote:
+> Overview
+> ----------
 > 
-> > Hello,
-> > 
-> > 
-> > Transparent Huge Pages (THP) could be more efficient if those are used only for
-> > frequently accessed data.  DAMON is one of the ways for fidning such hot data,
-> > and hence there were interests in utilizing DAMON for access-aware THP.  A
-> > simple experiment leveraging MADV_[NO]HUGEPAGE based on DAMON-identifed hot and
-> > cold memory regions was conducted as a proof of the concept.  The experiment
-> > demonstrated [1] an 80% reduction in memory overhead while retaining 46% of THP
-> > performance gains.
-> > 
-> > Multiple discussions for further developing production level access-aware THP
-> > solutions have followed.  Most of the discussions were made in private, though
-> > Asier recently proposed yet another approach [2] on the mailing list.  As a
-> > result, we collected interesting challenges and ideas for the production level
-> > data access-aware THP.  Some of the ideas are not yet public, could be
-> > controversial, and missing important things that more eyeballs can find.  I
-> > want to discuss those in LSF/MM/BPF to get more ideas and make high level
-> > community alignments for next steps.
-> > 
-> > [1] https://assets.amazon.science/b7/2b/ce53222247739b174f2b54498d1a/daos-data-access-aware-operating-system.pdf
-> > [2] https://lore.kernel.org/20260202145650.1795854-1-gutierrez.asier@huawei-partners.com
-> > 
-> > 
-> > Thanks,
-> > SJ
-> > 
+> This patch set introduces a new dynamic mechanism for detecting hot applications
+> and hot regions in those applications.
 > 
-> Sent using hkml (https://github.com/sjp38/hackermail)
+> Motivation
+> -----------
+> 
+> Currently DAMON requires the system administrator to provide information about
+> which application needs to be monitored and all the parameters. Ideally this
+> should be done automatically, with minimal intervention from the system
+> administrator.
+> 
+> 
+> Since TLB is a bottleneck for many systems, a way to optimize TLB misses (or
+> hits) is to use huge pages. Unfortunately, using "always" in THP leads to memory
+> fragmentation and memory waste. For this reason, most application guides and
+> system administrators suggest to disable THP.
+> 
+> We would like to detect: 1. which applications are hot in the system and 2.
+> which memory regions are hot in order to collapse those regions.
+> 
+> 
+> Solution
+> -----------
+> 
+>      ┌────────────┐           ┌────────────┐
+>      │Damon_module│           │Task_monitor│
+>      └──────┬─────┘           └──────┬─────┘
+>             │         start          │
+>             │───────────────────────>│
+>             │                        │
+>             │                        │────┐
+>             │                        │    │ calculate task load
+>             │                        │<───┘
+>             │                        │
+>             │                        │────┐
+>             │                        │    │ sort tasks
+>             │                        │<───┘
+>             │                        │
+>             │                        │────┐
+>             │                        │    │ start kdamond for top 3 tasks
+>             │                        │<───┘
+>      ┌──────┴─────┐           ┌──────┴─────┐
+>      │Damon_module│           │Task_monitor│
+>      └────────────┘           └────────────┘
+> 
+> 
+> We calculate the task load base on the sum of all the utime for all the threads
+> in a given task. Once we get total utime, we use the exponential load average
+> provided by calc_load. The tasks that become cold, the kdamond will be stopped
+> for them.
+> 
+> In each kdamond, we start with a high min_access value. Our goal is to find the
+> "maximum" min_access value at which point the DAMON action is applied. In each
+> cycle, if no action is applied, we lower the min_access.
+> 
+> Regarding the action, we introduce a new action: DAMOS_COLLAPSE. This allows us
+> collapse synchronously and avoid polluting khugepaged and other parts of the MM
+> subsystem with DAMON stuff. DAMOS_HUGEPAGE eventually calls hugepage_madvise,
+> which needs the correct vm_flags_t set.
+> 
+> Benchmark
+> -----------
+> 
+> Asier Gutierrez (4):
+>    mm/damon: Generic context creation for modules
+>    mm/damon: Support for synchrounous huge pages collapse
+>    mm/damon: New module with hot application detection
+>    documentation/mm/damon: Documentation for the dynamic_hugepages 
+> module
+> 
+>  .../mm/damon/dynamic_hugepages.rst (new)      | 173 ++++++
+>  include/linux/damon.h                         |   1 +
+>  mm/damon/Kconfig                              |   7 +
+>  mm/damon/Makefile                             |   1 +
+>  mm/damon/dynamic_hugepages.c (new)            | 579 ++++++++++++++++++
+>  mm/damon/lru_sort.c                           |   6 +-
+>  mm/damon/modules-common.c                     |   7 +-
+>  mm/damon/modules-common.h                     |   5 +-
+>  mm/damon/reclaim.c                            |   5 +-
+>  mm/damon/vaddr.c                              |   3 +
+>  10 files changed, 778 insertions(+), 9 deletions(-)
+>  create mode 100644 Documentation/admin-guide/mm/damon/dynamic_hugepages.rst
+>  create mode 100644 mm/damon/dynamic_hugepages.c
 
-Sent using hkml (https://github.com/sjp38/hackermail)
+By the way, I proposed [1] an LSF/MM/BPF session for access-aware THP today.  I
+also mentioned this patch series on the proposal as one of potential discussion
+topics, and Cc-ed Asier.
+
+I just wanted to make sure that the proposal is never a sort of implicit
+request to hold the progress of this patch series.  Please continue discussions
+and revisioning of this patch series regardless of the proposed LSF/MM/BPF
+session.
+
+[1] https://lore.kernel.org/20260211050729.69719-1-sj@kernel.org
+
+
+Thanks,
+SJ
+
+[...]
