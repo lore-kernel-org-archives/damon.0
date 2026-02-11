@@ -1,42 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D7151CFBA;
-	Wed, 11 Feb 2026 04:45:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09FB52C11FA;
+	Wed, 11 Feb 2026 05:07:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770785142; cv=none; b=spDp0C1Pz4/eMj3wUMXdCcPUT9QyJmncZtwF6slxzi4DH2d40buC1eZHJ6UB/wK7VKHLwMRw9snYNwaqXtTqGnIegWXmw4/pYQ2OIXY/9qiuYmQVkIZlPM8sxPBQGpdZBUyRBWUF7bNE52YzkYvvfKQbHk+D7gujAnVby8vZ1CE=
+	t=1770786452; cv=none; b=RA7ndrFlAJEAvptoxMF2XHQugTNsb/A2L3IhVVJLFefSaQ9gu+fuwfzLJ5l7dz3FPVwSOLQizHav4pE6xtz7unt1gzpHhMNYvEhQhUWT+T8yu3UvGMKHqB2/CIyq26AQ7JeoTyEZvddP9C06QMUGLn2v7jWXkQjEWm+3NYueV0w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770785142; c=relaxed/simple;
-	bh=E5hH+94BQyQzA+weVXnVfrJGvZPLtKrpyR0k8/5AQms=;
+	s=arc-20240116; t=1770786452; c=relaxed/simple;
+	bh=UTpjsZww6YPPiWFz55VMFdksp+RP1wddMHWtM/ylmIY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WG2E3NiNJreYK1Gn7iOtyepNr+QRiTAVS9qwuup4seD6ll9VdDNft1IWYLWM39S0S3Dc/swFFV/zUJOtaqI2vsBzews02HYlPUCQh7oBgR6dfAdRaceTeUBX035INX+cGVNAlq5hnXms57DsKD2IYjK2vlTKoS51qd7Y0l5DIMo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sdFUGL+b; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OLxFFng+i7+LSb8lJXu5Ncn4TrDYQQJTG0VAXuZJ8787fk9bg2td36JhPadkt+vcGPYdHmKhPjUOujFCXKuh9zBKWxT46tVXn8bG8G2075oNd+1R6ExzWWyXTqqZ5heOwdKQsIhWY70nEHEd6p9lxNPEUHlhkbKsaOYw0K6w6EA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Yt4r16Bz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sdFUGL+b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA4D3C4CEF7;
-	Wed, 11 Feb 2026 04:45:41 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Yt4r16Bz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7713DC4CEF7;
+	Wed, 11 Feb 2026 05:07:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1770785141;
-	bh=E5hH+94BQyQzA+weVXnVfrJGvZPLtKrpyR0k8/5AQms=;
+	s=k20201202; t=1770786451;
+	bh=UTpjsZww6YPPiWFz55VMFdksp+RP1wddMHWtM/ylmIY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sdFUGL+bB3yHHLYGp3uRMfz4GT7WL9dcbyIhwyKGHGPChZv0av4AfVdCHTTG37oz8
-	 XAs9Rv3JJJF840+0yCqH9Xp/Nba+Dsr2ATMSpCX0WCAuXg2Z15JdA8HT947N0vmijk
-	 7k7dDib1TEcpcKgoKLUsCPWVpjjZZmXNXBIxAMphwen+pH5L6C2ctaCXYO3S42v+DT
-	 mDNYxbRUorkKD5mja4kEqAlEfnKgYcr6i+ds6O4ythHzcoPegrAlt9fOeyb1RkuZQW
-	 8thUrMqc1oiypWWYtoZhDLeol0M+Q5QBL2mN1HCpHbTcwEnSnwnIquTTrmCUcSPJse
-	 bRawS+CdFqTyA==
+	b=Yt4r16BzYI4WeotGZ0dx3l13TAzZEJ7pDFFXMu0AraLYNQiFZTqgnyClgwHC6VAE4
+	 m9wCXzt8mqsrCWV6v9XxCcQQKZEdNj3xYxOXX+E7P8IiJ6rUWAnsoJJ6pu8J2Xw/f7
+	 Cj9giHjT3BwMx7ngk+oJLDxYVWpPr2cI69sDAU5qdSvL2aaP9A19J4apIyhCx+gngp
+	 pPjfLr/8THLNbPIrmbRCoj9ydHZYAIf9+bUugyIiblY3Fv5bA6MGkbvRPnz+7QgA1l
+	 U1FnOUvC5jDQ9YKZF1aB0XJb4iNIVIAK3a+pGY9wE+5Orwzsiu5I57/etCCabfuaKr
+	 f8RK5y/zFN8wQ==
 From: SeongJae Park <sj@kernel.org>
-To: SeongJae Park <sj@kernel.org>
-Cc: linux-mm@kvack.org,
+To: 
+Cc: SeongJae Park <sj@kernel.org>,
+	linux-mm@kvack.org,
 	Asier Gutierrez <gutierrez.asier@huawei-partners.com>,
 	damon@lists.linux.dev,
-	linux-kernel@vger.kernel.org
+	linux-kernel@vger.kernel.org,
+	lsf-pc@lists.linux-foundation.org
 Subject: Re: [LSF/MM/BPF TOPIC] Data Access-aware Transparent Hugepages
-Date: Tue, 10 Feb 2026 20:45:33 -0800
-Message-ID: <20260211044533.69515-1-sj@kernel.org>
+Date: Tue, 10 Feb 2026 21:07:28 -0800
+Message-ID: <20260211050729.69719-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260211022845.68865-1-sj@kernel.org>
+In-Reply-To: <20260211044533.69515-1-sj@kernel.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -46,36 +48,43 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Forgot Cc-ing damon@ and linux-kernel@.  Adding those.  Sorry for noise.
+On Tue, 10 Feb 2026 20:45:33 -0800 SeongJae Park <sj@kernel.org> wrote:
 
-On Tue, 10 Feb 2026 18:28:55 SeongJae Park <sj@kernel.org> wrote:
+> Forgot Cc-ing damon@ and linux-kernel@.  Adding those.  Sorry for noise.
 
-> Hello,
+And lsf-pc@ ...
+
 > 
+> On Tue, 10 Feb 2026 18:28:55 SeongJae Park <sj@kernel.org> wrote:
 > 
-> Transparent Huge Pages (THP) could be more efficient if those are used only for
-> frequently accessed data.  DAMON is one of the ways for fidning such hot data,
-> and hence there were interests in utilizing DAMON for access-aware THP.  A
-> simple experiment leveraging MADV_[NO]HUGEPAGE based on DAMON-identifed hot and
-> cold memory regions was conducted as a proof of the concept.  The experiment
-> demonstrated [1] an 80% reduction in memory overhead while retaining 46% of THP
-> performance gains.
+> > Hello,
+> > 
+> > 
+> > Transparent Huge Pages (THP) could be more efficient if those are used only for
+> > frequently accessed data.  DAMON is one of the ways for fidning such hot data,
+> > and hence there were interests in utilizing DAMON for access-aware THP.  A
+> > simple experiment leveraging MADV_[NO]HUGEPAGE based on DAMON-identifed hot and
+> > cold memory regions was conducted as a proof of the concept.  The experiment
+> > demonstrated [1] an 80% reduction in memory overhead while retaining 46% of THP
+> > performance gains.
+> > 
+> > Multiple discussions for further developing production level access-aware THP
+> > solutions have followed.  Most of the discussions were made in private, though
+> > Asier recently proposed yet another approach [2] on the mailing list.  As a
+> > result, we collected interesting challenges and ideas for the production level
+> > data access-aware THP.  Some of the ideas are not yet public, could be
+> > controversial, and missing important things that more eyeballs can find.  I
+> > want to discuss those in LSF/MM/BPF to get more ideas and make high level
+> > community alignments for next steps.
+> > 
+> > [1] https://assets.amazon.science/b7/2b/ce53222247739b174f2b54498d1a/daos-data-access-aware-operating-system.pdf
+> > [2] https://lore.kernel.org/20260202145650.1795854-1-gutierrez.asier@huawei-partners.com
+> > 
+> > 
+> > Thanks,
+> > SJ
+> > 
 > 
-> Multiple discussions for further developing production level access-aware THP
-> solutions have followed.  Most of the discussions were made in private, though
-> Asier recently proposed yet another approach [2] on the mailing list.  As a
-> result, we collected interesting challenges and ideas for the production level
-> data access-aware THP.  Some of the ideas are not yet public, could be
-> controversial, and missing important things that more eyeballs can find.  I
-> want to discuss those in LSF/MM/BPF to get more ideas and make high level
-> community alignments for next steps.
-> 
-> [1] https://assets.amazon.science/b7/2b/ce53222247739b174f2b54498d1a/daos-data-access-aware-operating-system.pdf
-> [2] https://lore.kernel.org/20260202145650.1795854-1-gutierrez.asier@huawei-partners.com
-> 
-> 
-> Thanks,
-> SJ
-> 
+> Sent using hkml (https://github.com/sjp38/hackermail)
 
 Sent using hkml (https://github.com/sjp38/hackermail)
