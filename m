@@ -1,51 +1,38 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from frasgout.his.huawei.com (frasgout.his.huawei.com [185.176.79.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E10272BCF4A;
-	Thu, 12 Feb 2026 06:30:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79B5723717F
+	for <damon@lists.linux.dev>; Thu, 12 Feb 2026 09:44:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.176.79.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770877819; cv=none; b=F4LlI3LJgQU6q+Qc7VmwIbEbzZn71ZIlmvADhNKYAO7S4lWzlg/97KW+GWFQTn430/D+6HxiIvCBB4xymJlpQ755JYs/q0LD/IITcTUZwzL0qJm3mTjP6o5htTxla825nqjEhSJ8rVQAFdzrfLxKN1Ayps0hBGCKtHyf+VFnowo=
+	t=1770889468; cv=none; b=dnj03cPYPmE828R8n3kGgskhvIOmGj0rmQr0wDhbLfnyvlz+4HF9q5HwhsqNZ8wF1N1me2yQwGjoNLO1OAupzskkG2prK0p8v3Io2MCwXb6UZp6gTgu8y2piQz3Kkjq27YlmTpBRAZH4LDmDKxqdNMxowMFUMDPFOz6tiH+rXgQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770877819; c=relaxed/simple;
-	bh=pW8zfzWPeGX/NrtwmdEhpxnSoeYoudMU3BLTUgjZrks=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IfJcsUgVwtd9AEgC/yC8mEMNlr24NZ8x1mwJnbAKFqVz+TKlDR1EvjU6BTrHUpf7IY+Xhk657XdDEDlfgaUGpEncl5ryWTba1trvHjELcJxw1wCBT6SlCQ011GVWq560nI0x7wxqwbMp8msenmqJtzH3f9oPOR1+6tg7SFmtsek=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dQdBVOoo; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dQdBVOoo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 242F1C4CEF7;
-	Thu, 12 Feb 2026 06:30:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1770877818;
-	bh=pW8zfzWPeGX/NrtwmdEhpxnSoeYoudMU3BLTUgjZrks=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dQdBVOooaa7gvsHwCnljCEeeqnL5QpFI2pjxdkuOhWGIEotMDtyThVuqfFrInzeuV
-	 O4IcwF9shTMX1YwjINUlOxQM2lS0ErJaA8l4N6XfwEg7iOa+zbpSJUoqI5iTMTUSbd
-	 YAPdYaOdB00uwiS4P8jHqDvM2yf6sdbPhO04G8+vTPuf36/K/eH0TcOALKwTiQva1o
-	 Y3ynfsSnA2nPfOL12U9AGX3Cu6y17fApeKRiqjJU6rl0Q78XLIcJ2nEm1I00E+ont6
-	 F1+qnVYq5go4sNdsolG7zxUHNOZf6ezLtrSp9oy4r6K59hVWDxz2SxfShHjRCFqCDL
-	 qSV9vCKFTRzhg==
-From: SeongJae Park <sj@kernel.org>
-To: SeongJae Park <sj@kernel.org>
-Cc: Yunjeong Mun <yunjeong.mun@sk.com>,
-	honggyu.kim@sk.com,
-	kernel_team@skhynix.com,
-	Ravi Jonnalagadda <ravis.opensrc@gmail.com>,
-	damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org,
-	linux-doc@vger.kernel.org,
-	akpm@linux-foundation.org,
-	corbet@lwn.net,
-	bijan311@gmail.com,
-	ajayjoshi@micron.com
-Subject: Re: [RFC PATCH 0/5] mm/damon: Add node_sys_bp quota goal metric for
-Date: Wed, 11 Feb 2026 22:30:09 -0800
-Message-ID: <20260212063009.70556-1-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260204060641.97191-1-sj@kernel.org>
-References: 
+	s=arc-20240116; t=1770889468; c=relaxed/simple;
+	bh=ojnRvVZ6fFD7sjKkIv24Q33ICvaU2oumUIWq8+t1DRk=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=OLGFInyswQaCiZG0s1VDppwBn0WCwsfoH9dkAyHr2LpHAEcveHqKc9C4swdG9k6zQkE/72BgUeONr963lfcF7B/AOYWtC+rF37PeXIAO5uqJLdjei5OqFpfo3oiUwZTyeCNA1Kpowtztu3JK+b+8NMl7Mb+Fl6qMzN9spZNO1uE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei-partners.com; spf=pass smtp.mailfrom=huawei-partners.com; arc=none smtp.client-ip=185.176.79.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei-partners.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei-partners.com
+Received: from mail.maildlp.com (unknown [172.18.224.83])
+	by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4fBVkR3nKtzJ46cC;
+	Thu, 12 Feb 2026 17:44:15 +0800 (CST)
+Received: from mscpeml500003.china.huawei.com (unknown [7.188.49.51])
+	by mail.maildlp.com (Postfix) with ESMTPS id 33AE840569;
+	Thu, 12 Feb 2026 17:44:17 +0800 (CST)
+Received: from mscphis01197.huawei.com (10.123.65.218) by
+ mscpeml500003.china.huawei.com (7.188.49.51) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.11; Thu, 12 Feb 2026 12:44:16 +0300
+From: <gutierrez.asier@huawei-partners.com>
+To: <gutierrez.asier@huawei-partners.com>, <artem.kuzin@huawei.com>,
+	<stepanov.anatoly@huawei.com>, <wangkefeng.wang@huawei.com>,
+	<yanquanmin1@huawei.com>, <zuoze1@huawei.com>, <sj@kernel.org>,
+	<damon@lists.linux.dev>, <akpm@linux-foundation.org>, <linux-mm@kvack.org>,
+	<linux-kernel@vger.kernel.org>
+Subject: [PATCH v1] mm/damon: remove unused code
+Date: Thu, 12 Feb 2026 09:43:26 +0000
+Message-ID: <20260212094326.906497-1-gutierrez.asier@huawei-partners.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -53,49 +40,107 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: mscpeml500004.china.huawei.com (7.188.26.250) To
+ mscpeml500003.china.huawei.com (7.188.49.51)
 
-On Tue,  3 Feb 2026 22:06:40 -0800 SeongJae Park <sj@kernel.org> wrote:
+From: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
 
-> On Wed,  4 Feb 2026 11:25:35 +0900 Yunjeong Mun <yunjeong.mun@sk.com> wrote:
-> 
-> > On Fri, Jan 23, 2026 at 05:50:43PM -0800, SeongJae Park wrote:
-[...]
-> > > IIRC, SK hynix people also confused with the behavior when they experimented
-> > > migrate_{hot,cold} action with NODE_MEM_USED_BP goal based quota auto-tuning,
-> > > but using only a single scheme that does migration in a single direction.
-> > > Because this is at least second time it made confusion, if you need, maybe I
-> > > can try to add a feature for making DAMOS immediately stops after the goal is
-> > > satisfied.  Let me know if such new feature can be useful for you.  Cc-ing SK
-> > > hynix people (Honggyu and Yunjeong) so that they can correct me if my memory is
-> > > broken, or answer if the new feature I described here can be useful for them.
-> > > 
-> > 
-> > Yes, you're absolutely right. Currently, esz(effective size) starts from 0 and 
-> > esz gradually increases as `current` approaches `target`.
-> > Once `current` reaches `target`,  `esz` then begins to decrease.
-> > 
-> > However, we observed that even after `current` hits `target`, 
-> > migration still continues relatively aggressively - because `esz`  remains high, 
-> > and it takes time for it to decrease.
-> > 
-> > To address this, we previously suggested that initializing `esz`  at `target`
-> > (or something suitably large value, rather than 0) and letting it gradually 
-> > decrease as `current` gets closer to  `target`.  
-> > This would allow for stronger migration when `current` is far form `target`, 
-> > and gradually weaken migration as `current` approaches `target`.
-> > 
-> > Such a feature would be useful for us to experiment with tiered memory system :)
-> 
-> Thank you for confirming, Yunjeong.  I now agree this is what really need to be
-> implemented.  And I agree your suggestion makes sense for the use case.  I want
-> to take sufficient time for good design of it, though.  I will share update as
-> soon as I get some idea.
+damon_target is not used by get_scheme_score operations, nor with
+virtual neither with physical addresses.
 
-I just posted an RFC patch series for this:
-https://lore.kernel.org/20260212062314.69961-1-sj@kernel.org
+Signed-off-by: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
 
+---
+ include/linux/damon.h |  3 +--
+ mm/damon/core.c       | 10 +++++-----
+ mm/damon/paddr.c      |  3 +--
+ mm/damon/vaddr.c      |  3 +--
+ 4 files changed, 8 insertions(+), 11 deletions(-)
 
-Thanks,
-SJ
+diff --git a/include/linux/damon.h b/include/linux/damon.h
+index 3813373a9200..34b68f5af425 100644
+--- a/include/linux/damon.h
++++ b/include/linux/damon.h
+@@ -639,8 +639,7 @@ struct damon_operations {
+ 	void (*prepare_access_checks)(struct damon_ctx *context);
+ 	unsigned int (*check_accesses)(struct damon_ctx *context);
+ 	int (*get_scheme_score)(struct damon_ctx *context,
+-			struct damon_target *t, struct damon_region *r,
+-			struct damos *scheme);
++			struct damon_region *r, struct damos *scheme);
+ 	unsigned long (*apply_scheme)(struct damon_ctx *context,
+ 			struct damon_target *t, struct damon_region *r,
+ 			struct damos *scheme, unsigned long *sz_filter_passed);
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index 84f80a20f233..cc4cc953f3a4 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -1651,15 +1651,15 @@ static bool __damos_valid_target(struct damon_region *r, struct damos *s)
+ 		r->age <= s->pattern.max_age_region;
+ }
+ 
+-static bool damos_valid_target(struct damon_ctx *c, struct damon_target *t,
+-		struct damon_region *r, struct damos *s)
++static bool damos_valid_target(struct damon_ctx *c, struct damon_region *r,
++			struct damos *s)
+ {
+ 	bool ret = __damos_valid_target(r, s);
+ 
+ 	if (!ret || !s->quota.esz || !c->ops.get_scheme_score)
+ 		return ret;
+ 
+-	return c->ops.get_scheme_score(c, t, r, s) >= s->quota.min_score;
++	return c->ops.get_scheme_score(c, r, s) >= s->quota.min_score;
+ }
+ 
+ /*
+@@ -1978,7 +1978,7 @@ static void damon_do_apply_schemes(struct damon_ctx *c,
+ 		if (damos_skip_charged_region(t, &r, s, c->min_sz_region))
+ 			continue;
+ 
+-		if (!damos_valid_target(c, t, r, s))
++		if (!damos_valid_target(c, r, s))
+ 			continue;
+ 
+ 		damos_apply_scheme(c, t, r, s);
+@@ -2256,7 +2256,7 @@ static void damos_adjust_quota(struct damon_ctx *c, struct damos *s)
+ 		damon_for_each_region(r, t) {
+ 			if (!__damos_valid_target(r, s))
+ 				continue;
+-			score = c->ops.get_scheme_score(c, t, r, s);
++			score = c->ops.get_scheme_score(c, r, s);
+ 			c->regions_score_histogram[score] +=
+ 				damon_sz_region(r);
+ 			if (score > max_score)
+diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
+index 07a8aead439e..7b4b1e27beb7 100644
+--- a/mm/damon/paddr.c
++++ b/mm/damon/paddr.c
+@@ -345,8 +345,7 @@ static unsigned long damon_pa_apply_scheme(struct damon_ctx *ctx,
+ }
+ 
+ static int damon_pa_scheme_score(struct damon_ctx *context,
+-		struct damon_target *t, struct damon_region *r,
+-		struct damos *scheme)
++		struct damon_region *r, struct damos *scheme)
+ {
+ 	switch (scheme->action) {
+ 	case DAMOS_PAGEOUT:
+diff --git a/mm/damon/vaddr.c b/mm/damon/vaddr.c
+index 23ed738a0bd6..757b9e18847a 100644
+--- a/mm/damon/vaddr.c
++++ b/mm/damon/vaddr.c
+@@ -986,8 +986,7 @@ static unsigned long damon_va_apply_scheme(struct damon_ctx *ctx,
+ }
+ 
+ static int damon_va_scheme_score(struct damon_ctx *context,
+-		struct damon_target *t, struct damon_region *r,
+-		struct damos *scheme)
++		struct damon_region *r, struct damos *scheme)
+ {
+ 
+ 	switch (scheme->action) {
+-- 
+2.43.0
 
-[...]
