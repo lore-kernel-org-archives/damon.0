@@ -1,38 +1,49 @@
-Received: from frasgout.his.huawei.com (frasgout.his.huawei.com [185.176.79.56])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79B5723717F
-	for <damon@lists.linux.dev>; Thu, 12 Feb 2026 09:44:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.176.79.56
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BD56286D55;
+	Thu, 12 Feb 2026 15:41:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770889468; cv=none; b=dnj03cPYPmE828R8n3kGgskhvIOmGj0rmQr0wDhbLfnyvlz+4HF9q5HwhsqNZ8wF1N1me2yQwGjoNLO1OAupzskkG2prK0p8v3Io2MCwXb6UZp6gTgu8y2piQz3Kkjq27YlmTpBRAZH4LDmDKxqdNMxowMFUMDPFOz6tiH+rXgQ=
+	t=1770910919; cv=none; b=UVD3CZb9xTb5eNbCPg9ISdayJgXeHpZQQwvDrdRWtW5cB875iZ/EWvOz+p6rthf/RfFTUpmJtBOmsPdPD84YUoGv0soMRXDXuIzE/L8Uvfh+XZo2nocddcXZlPd7aDIkDM2HK9gm1iOgF83FHE3QK5OsIokrHVF2q1Y1UX7ECxQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770889468; c=relaxed/simple;
-	bh=ojnRvVZ6fFD7sjKkIv24Q33ICvaU2oumUIWq8+t1DRk=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=OLGFInyswQaCiZG0s1VDppwBn0WCwsfoH9dkAyHr2LpHAEcveHqKc9C4swdG9k6zQkE/72BgUeONr963lfcF7B/AOYWtC+rF37PeXIAO5uqJLdjei5OqFpfo3oiUwZTyeCNA1Kpowtztu3JK+b+8NMl7Mb+Fl6qMzN9spZNO1uE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei-partners.com; spf=pass smtp.mailfrom=huawei-partners.com; arc=none smtp.client-ip=185.176.79.56
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei-partners.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei-partners.com
-Received: from mail.maildlp.com (unknown [172.18.224.83])
-	by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4fBVkR3nKtzJ46cC;
-	Thu, 12 Feb 2026 17:44:15 +0800 (CST)
-Received: from mscpeml500003.china.huawei.com (unknown [7.188.49.51])
-	by mail.maildlp.com (Postfix) with ESMTPS id 33AE840569;
-	Thu, 12 Feb 2026 17:44:17 +0800 (CST)
-Received: from mscphis01197.huawei.com (10.123.65.218) by
- mscpeml500003.china.huawei.com (7.188.49.51) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.11; Thu, 12 Feb 2026 12:44:16 +0300
-From: <gutierrez.asier@huawei-partners.com>
-To: <gutierrez.asier@huawei-partners.com>, <artem.kuzin@huawei.com>,
-	<stepanov.anatoly@huawei.com>, <wangkefeng.wang@huawei.com>,
-	<yanquanmin1@huawei.com>, <zuoze1@huawei.com>, <sj@kernel.org>,
-	<damon@lists.linux.dev>, <akpm@linux-foundation.org>, <linux-mm@kvack.org>,
-	<linux-kernel@vger.kernel.org>
-Subject: [PATCH v1] mm/damon: remove unused code
-Date: Thu, 12 Feb 2026 09:43:26 +0000
-Message-ID: <20260212094326.906497-1-gutierrez.asier@huawei-partners.com>
-X-Mailer: git-send-email 2.43.0
+	s=arc-20240116; t=1770910919; c=relaxed/simple;
+	bh=lPmdnddKRkpLgqLzVEUhIh9YWowTDlxwVWyDcl8i5K4=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=L55yj8FdpGKHb9GGt2lMXVJDPjTjEmLIYk+NAizwPGv1hOrudPi9Jtqq+He6Gnwq8tZmFvhhUjnmfVwxi8MAEsoUYyM5f64ORDcWHND+0RPa/zMVfRxnArwWc7M6sMdIK0HM83Ccn7fuVNF0/LnBUIxLJ00w1W9g1i0R5Lzp+x4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=T9OxGuWy; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="T9OxGuWy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEA3EC4CEF7;
+	Thu, 12 Feb 2026 15:41:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1770910919;
+	bh=lPmdnddKRkpLgqLzVEUhIh9YWowTDlxwVWyDcl8i5K4=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=T9OxGuWyesVcuJd2eMzY7c/ltmDEBn811L79sxhQmFlCdwbL3+bKNZ+lInI8hSory
+	 9cbaE1rAIqlN7hfgiZMoiRcxUgZ6HlY+xZEVw1bHHLakl5Pz2+aJh7jCnK0Us524rB
+	 PC9xbdevqUVriwNg4hYIBqbUxQmrnUGYQzvzDivViwceHFjVtHYiLKMFG6WdEC/ZDU
+	 e3SFExn6Nph+DwDlLgcVqEZLXhS9kvbnbP+RHKGXFh9PF4lfbA+h2FnBc9V3Jn/Qj1
+	 CBc8es2omLl0gezCP1yrnwUgWc4vyuJtfjTN8alDKsY8QGzpW6BEoM/Xl1iOPnE79V
+	 X7i2qWzAilymA==
+From: SeongJae Park <sj@kernel.org>
+To: gutierrez.asier@huawei-partners.com
+Cc: SeongJae Park <sj@kernel.org>,
+	artem.kuzin@huawei.com,
+	stepanov.anatoly@huawei.com,
+	wangkefeng.wang@huawei.com,
+	yanquanmin1@huawei.com,
+	zuoze1@huawei.com,
+	damon@lists.linux.dev,
+	akpm@linux-foundation.org,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v1] mm/damon: remove unused code
+Date: Thu, 12 Feb 2026 07:41:56 -0800
+Message-ID: <20260212154157.75372-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260212094326.906497-1-gutierrez.asier@huawei-partners.com>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -40,17 +51,60 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: mscpeml500004.china.huawei.com (7.188.26.250) To
- mscpeml500003.china.huawei.com (7.188.49.51)
 
+On Thu, 12 Feb 2026 09:43:26 +0000 <gutierrez.asier@huawei-partners.com> wrote:
+
+> From: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
+> 
+> damon_target is not used by get_scheme_score operations, nor with
+> virtual neither with physical addresses.
+
+Good finding, thank you for this patch, Asier!
+
+The subject seems bit ambiguous, though.  What about "remove unused target
+param of get_scheme_score()" ?
+
+> 
+> Signed-off-by: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
+
+Other than the subject,
+
+Reviewed-by: SeongJae Park <sj@kernel.org>
+
+Also, DAMON patches are recommended to use mm-new as thier baseline [1] unless
+there are other reasons to not to do so.  But I found 'git am' of this patch on
+the mm-new fails.  It works on the master of mm.git, which is a commit of
+Linus' tree, though.  So, maybe this patch is not using mm-new as the baseline?
+Please consider using mm-new as the baseline next time, or specify why you use
+choose different tree as the baseline.
+
+Assuming you are ok to the subject change (let me know if you are not), I'm
+attaching a new version of this patch that has changed the subject with my
+suggestion, and manually resolved the conflicts on mm-new, for Andrew's
+convenience.  I also applied that to my tree (damon/next), and I will repost it
+if Andrew miss this (as we are in the middle of merge window, maintainers could
+miss many things).
+
+[1] https://origin.kernel.org/doc/html/latest/mm/damon/maintainer-profile.html#scm-trees
+
+
+Thanks,
+SJ
+
+[...]
+======= >8 =======
+From e09d66bb116604c9dc5b22540641e991d977ea6b Mon Sep 17 00:00:00 2001
 From: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
+Date: Thu, 12 Feb 2026 09:43:26 +0000
+Subject: [PATCH] mm/damon/: remove unused target param of get_scheme_score()
 
 damon_target is not used by get_scheme_score operations, nor with
 virtual neither with physical addresses.
 
 Signed-off-by: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
 
+Link: https://patch.msgid.link/20260212094326.906497-1-gutierrez.asier@huawei-partners.com
+Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
  include/linux/damon.h |  3 +--
  mm/damon/core.c       | 10 +++++-----
@@ -59,10 +113,10 @@ Signed-off-by: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
  4 files changed, 8 insertions(+), 11 deletions(-)
 
 diff --git a/include/linux/damon.h b/include/linux/damon.h
-index 3813373a9200..34b68f5af425 100644
+index a4fea23da8576..9a88cf8d152d8 100644
 --- a/include/linux/damon.h
 +++ b/include/linux/damon.h
-@@ -639,8 +639,7 @@ struct damon_operations {
+@@ -647,8 +647,7 @@ struct damon_operations {
  	void (*prepare_access_checks)(struct damon_ctx *context);
  	unsigned int (*check_accesses)(struct damon_ctx *context);
  	int (*get_scheme_score)(struct damon_ctx *context,
@@ -73,17 +127,17 @@ index 3813373a9200..34b68f5af425 100644
  			struct damon_target *t, struct damon_region *r,
  			struct damos *scheme, unsigned long *sz_filter_passed);
 diff --git a/mm/damon/core.c b/mm/damon/core.c
-index 84f80a20f233..cc4cc953f3a4 100644
+index 5e2724a4f285e..925908415a041 100644
 --- a/mm/damon/core.c
 +++ b/mm/damon/core.c
-@@ -1651,15 +1651,15 @@ static bool __damos_valid_target(struct damon_region *r, struct damos *s)
+@@ -1679,15 +1679,15 @@ static bool __damos_valid_target(struct damon_region *r, struct damos *s)
  		r->age <= s->pattern.max_age_region;
  }
  
 -static bool damos_valid_target(struct damon_ctx *c, struct damon_target *t,
 -		struct damon_region *r, struct damos *s)
 +static bool damos_valid_target(struct damon_ctx *c, struct damon_region *r,
-+			struct damos *s)
++		struct damos *s)
  {
  	bool ret = __damos_valid_target(r, s);
  
@@ -95,16 +149,16 @@ index 84f80a20f233..cc4cc953f3a4 100644
  }
  
  /*
-@@ -1978,7 +1978,7 @@ static void damon_do_apply_schemes(struct damon_ctx *c,
- 		if (damos_skip_charged_region(t, &r, s, c->min_sz_region))
+@@ -2011,7 +2011,7 @@ static void damon_do_apply_schemes(struct damon_ctx *c,
+ 				s->max_nr_snapshots <= s->stat.nr_snapshots)
  			continue;
  
--		if (!damos_valid_target(c, t, r, s))
-+		if (!damos_valid_target(c, r, s))
- 			continue;
+-		if (damos_valid_target(c, t, r, s))
++		if (damos_valid_target(c, r, s))
+ 			damos_apply_scheme(c, t, r, s);
  
- 		damos_apply_scheme(c, t, r, s);
-@@ -2256,7 +2256,7 @@ static void damos_adjust_quota(struct damon_ctx *c, struct damos *s)
+ 		if (damon_is_last_region(r, t))
+@@ -2309,7 +2309,7 @@ static void damos_adjust_quota(struct damon_ctx *c, struct damos *s)
  		damon_for_each_region(r, t) {
  			if (!__damos_valid_target(r, s))
  				continue;
@@ -114,10 +168,10 @@ index 84f80a20f233..cc4cc953f3a4 100644
  				damon_sz_region(r);
  			if (score > max_score)
 diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
-index 07a8aead439e..7b4b1e27beb7 100644
+index 9bfe488268407..5cdcc5037cbc1 100644
 --- a/mm/damon/paddr.c
 +++ b/mm/damon/paddr.c
-@@ -345,8 +345,7 @@ static unsigned long damon_pa_apply_scheme(struct damon_ctx *ctx,
+@@ -343,8 +343,7 @@ static unsigned long damon_pa_apply_scheme(struct damon_ctx *ctx,
  }
  
  static int damon_pa_scheme_score(struct damon_ctx *context,
@@ -128,7 +182,7 @@ index 07a8aead439e..7b4b1e27beb7 100644
  	switch (scheme->action) {
  	case DAMOS_PAGEOUT:
 diff --git a/mm/damon/vaddr.c b/mm/damon/vaddr.c
-index 23ed738a0bd6..757b9e18847a 100644
+index 83ab3d8c37920..4e3430d4191d1 100644
 --- a/mm/damon/vaddr.c
 +++ b/mm/damon/vaddr.c
 @@ -986,8 +986,7 @@ static unsigned long damon_va_apply_scheme(struct damon_ctx *ctx,
@@ -142,5 +196,5 @@ index 23ed738a0bd6..757b9e18847a 100644
  
  	switch (scheme->action) {
 -- 
-2.43.0
+2.47.3
 
