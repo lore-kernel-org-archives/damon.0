@@ -1,73 +1,70 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from frasgout.his.huawei.com (frasgout.his.huawei.com [185.176.79.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D92321E0AD;
-	Thu, 12 Feb 2026 16:51:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C970311C1D
+	for <damon@lists.linux.dev>; Fri, 13 Feb 2026 09:22:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.176.79.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770915101; cv=none; b=plubk+AaVIhyKqlDxtxEBHpu5nxD32ESvhBFny9pYeLRr2FA77KaJFK2rSStRlXziSTXs6PABFwCnypezctJGZE0qRo+JSVaYzCs/XUzrJNI9/IMvNR8LlsqyFESzs8DSjlfY3w0xV5nBdQmLINkslc89iO962lalfLAJf1/ZZk=
+	t=1770974551; cv=none; b=jM3OPUu1XBW7XiV6Fspgypc+Sok1W4LITEHYWuu7dPvKKJHbPSshBv6DKUySEqmyqh5B77rmNPvvbu65RthglyvK8k9riyER39hgC9T6JE9xxCJs1VZBc5kvLhFMwGnHQ1/41+PKdrZbPV6jDLtUamIJIPBRkWtJ8lkRBvXOlc8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770915101; c=relaxed/simple;
-	bh=0Tmwn34HgUslYUvP6qlQX3bMzbD4sMxV/6/jElQ4/+s=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hJkY9XA4DxJoHnyITODSvVDP3uqE4PxzGkOioMwYvOhsYx64mcsaUGB/CEd7j0+i5zjrByubE2IbNz3RVEb3/GrJumJA+47p6+kHUTUr3aClW9NzlM3lvIeHMpHEgqMI6wtxoeQNL6jMU7rcD4kWo9Wk7PyCaG2Zgud58EShqaw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QecM5KFX; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QecM5KFX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F655C4CEF7;
-	Thu, 12 Feb 2026 16:51:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1770915100;
-	bh=0Tmwn34HgUslYUvP6qlQX3bMzbD4sMxV/6/jElQ4/+s=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QecM5KFXi86YDdrbPZ0f7tNdAolbHfUbqAofTXm2hWRh66PB4515vmkKgXGyfQ4I3
-	 KcNAkuDbnAzC3+XjAlYIWwwtSgXkEf5NnGKbVQ+hC9rOhj31jInqzuFsbhs0X/aV+A
-	 +SDUVY5jgmd1Gl+1UQ61ak9/jijhj+yOQS300FVXjh4L3O8vt6TTJgO7VPnXEW21B/
-	 yigYv3+WaefpM+QgFenKhX/ijhywsuC0bsbfgI8d64RzYN6GrZATE4xg82ZPDDoyxc
-	 em6nMXgrZUO+NEa8SYs26w01KDiF52OhNbN0q3OPEW1zdFyUD5JOBWH8/fl6CtJwfX
-	 TAKC6GLJsNtQQ==
-From: SeongJae Park <sj@kernel.org>
-To: SeongJae Park <sj@kernel.org>
-Cc: gutierrez.asier@huawei-partners.com,
-	artem.kuzin@huawei.com,
-	stepanov.anatoly@huawei.com,
-	wangkefeng.wang@huawei.com,
-	yanquanmin1@huawei.com,
-	zuoze1@huawei.com,
-	damon@lists.linux.dev,
-	akpm@linux-foundation.org,
-	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v1] mm/damon: remove unused code
-Date: Thu, 12 Feb 2026 08:51:37 -0800
-Message-ID: <20260212165138.60213-1-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260212154157.75372-1-sj@kernel.org>
-References: 
+	s=arc-20240116; t=1770974551; c=relaxed/simple;
+	bh=b9ZAvC/Bij029/l5Yf17/oAnvdaXhzrJSzLH1xPSajU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=uh819Gl1F/JPVlMaNSO+rx/UbaHj58SQMLGgXCHxN0j2uDdDX5SosHFNonaOarArHgD89+nPKsDYL+yjuf/CUP9Yp38etcbq7fvTHJn/sUEdC7AWCsBTEfw7cNNfOfGUncxQeF0P0Fr4YgUGxgBYKuDG3IBRJq5yBLW8Rn08Ga0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei-partners.com; spf=pass smtp.mailfrom=huawei-partners.com; arc=none smtp.client-ip=185.176.79.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei-partners.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei-partners.com
+Received: from mail.maildlp.com (unknown [172.18.224.107])
+	by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4fC6Bj4nnMzJ46Yd;
+	Fri, 13 Feb 2026 17:22:21 +0800 (CST)
+Received: from mscpeml500003.china.huawei.com (unknown [7.188.49.51])
+	by mail.maildlp.com (Postfix) with ESMTPS id EC1AF40585;
+	Fri, 13 Feb 2026 17:22:24 +0800 (CST)
+Received: from [10.123.123.154] (10.123.123.154) by
+ mscpeml500003.china.huawei.com (7.188.49.51) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.11; Fri, 13 Feb 2026 12:22:24 +0300
+Message-ID: <eebad564-10c1-4ce9-953d-c859cd87dc88@huawei-partners.com>
+Date: Fri, 13 Feb 2026 12:22:23 +0300
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1] mm/damon: remove unused code
+To: SeongJae Park <sj@kernel.org>
+CC: <artem.kuzin@huawei.com>, <stepanov.anatoly@huawei.com>,
+	<wangkefeng.wang@huawei.com>, <yanquanmin1@huawei.com>, <zuoze1@huawei.com>,
+	<damon@lists.linux.dev>, <akpm@linux-foundation.org>, <linux-mm@kvack.org>,
+	<linux-kernel@vger.kernel.org>
+References: <20260212154157.75372-1-sj@kernel.org>
+Content-Language: en-US
+From: Gutierrez Asier <gutierrez.asier@huawei-partners.com>
+In-Reply-To: <20260212154157.75372-1-sj@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: mscpeml100003.china.huawei.com (10.199.174.67) To
+ mscpeml500003.china.huawei.com (7.188.49.51)
 
-On Thu, 12 Feb 2026 07:41:56 -0800 SeongJae Park <sj@kernel.org> wrote:
+Hi,
 
+On 2/12/2026 6:41 PM, SeongJae Park wrote:
 > On Thu, 12 Feb 2026 09:43:26 +0000 <gutierrez.asier@huawei-partners.com> wrote:
 > 
-> > From: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
-> > 
-> > damon_target is not used by get_scheme_score operations, nor with
-> > virtual neither with physical addresses.
+>> From: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
+>>
+>> damon_target is not used by get_scheme_score operations, nor with
+>> virtual neither with physical addresses.
 > 
 > Good finding, thank you for this patch, Asier!
 > 
 > The subject seems bit ambiguous, though.  What about "remove unused target
 > param of get_scheme_score()" ?
 > 
-> > 
-> > Signed-off-by: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
+>>
+>> Signed-off-by: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
 > 
 > Other than the subject,
 > 
@@ -106,16 +103,6 @@ On Thu, 12 Feb 2026 07:41:56 -0800 SeongJae Park <sj@kernel.org> wrote:
 > Signed-off-by: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
 > 
 > Link: https://patch.msgid.link/20260212094326.906497-1-gutierrez.asier@huawei-partners.com
-
-Oops, I attached an old version of the modified patch that not adjusted this
-tags area.  Andrew, if you pick this up, could you please add below together:
-
-Reviewed-by: SeongJae Park <sj@kernel.org>
-
-
-Thanks,
-SJ
-
 > Signed-off-by: SeongJae Park <sj@kernel.org>
 > ---
 >  include/linux/damon.h |  3 +--
@@ -207,7 +194,14 @@ SJ
 >  {
 >  
 >  	switch (scheme->action) {
-> -- 
-> 2.47.3
 
-Sent using hkml (https://github.com/sjp38/hackermail)
+Yes, I will change the subject.
+
+My bad, I didn't try the patch against mm-next. Indeed, as you
+suggested, it doesn't compile. I will submit a new version
+of this patch after checking it works with mm-next.
+
+-- 
+Asier Gutierrez
+Huawei
+
