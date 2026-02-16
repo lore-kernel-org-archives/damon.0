@@ -1,190 +1,250 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 061DE2E62A9;
-	Mon, 16 Feb 2026 18:57:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CB238635D;
+	Mon, 16 Feb 2026 21:06:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771268269; cv=none; b=oDQ/aFi1Rr34A2vmeQBP760QBs36TrvplgqOA3Qc9e6CqFV0CZaipTLw5N+KhN4ELwevarcTEnMz/4mriaXFjDQUw3EBDfA03wkZOCKeaV9PQ0iWpRtMoz092AuU40WzonbGPjDSik1MWfHaCEk5Zim2sVqkfO9cxJjCtQtwlNs=
+	t=1771276008; cv=none; b=YdULl2SmeARwpfkyvhwR+d44AOG5XK2k5jum08xcfZg51GEtI5BEUm4eVoa/Q9s353Sx1oDwtQGfpFNDf7/sQhOqmbzyrJlHXS8Fqyx7fym4i+fpYy8C49DquzyIDvZB5Zg9r049idAh4Gsaxhp0llDNFwz8C/owlPJL8ADbGqA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771268269; c=relaxed/simple;
-	bh=lQ2xyyBLXyHLyreiYyKcm6LlV+Vy+ZHITtyVg+hPIgg=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=tW+QhX0cYLAVxf0T8PQ50vymXOQZleqKbeu5QYrrAZjwdUHFD3V/xAtiDaKAscPdj7eP2Ep0HPXRD/3TVqUdy0i8KlfKoVLo3XxcyHZX0fOdxeUe9Txb2AFG7naz3Cxf6ooPAiHTOCkEfLQJK77Rc3d8XzQIPzBpGYfNV6eHG34=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rW8J7eWF; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1771276008; c=relaxed/simple;
+	bh=NG+dm0s43ukyI2Anb776ST2gZS5qq0/DGcoJ9RFJq84=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=N/La445+GaFxtYugC2TCzgZyDO4fqn5H6LJl5rmpT9wPnVKh+kG6VGeJxXfP2OPnE4Z79fynYuMdjmCALPHQi07IamFAA3a6wJlTCQnICNFl2srU7EneWTH/EpQRIc2QIg5Y6TuBP/P149RIwXAvPjJN+7YUw9LbJViLGsqaniA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kpnhcbom; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rW8J7eWF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B6EBC116C6;
-	Mon, 16 Feb 2026 18:57:48 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kpnhcbom"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18B9CC116C6;
+	Mon, 16 Feb 2026 21:06:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771268268;
-	bh=lQ2xyyBLXyHLyreiYyKcm6LlV+Vy+ZHITtyVg+hPIgg=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rW8J7eWFtzv1ZCG2v/ALJTmtLtZEVya180Dgfva2dYVX3PjHEjHg71QpvT8BVRtF4
-	 hyHW6tcINHuH7LFFbmSsPp5RmBp4V6+hTf/qK3akLn4aazKKh/g+I2pbRmmuV8ioJJ
-	 x4dbgreuc2NcmjhQ1m7zkZhrJzz3p1wT1ow61OeEv+eHY/WIIHvmvVSriRWobFUzt1
-	 XwXv2x/Zb6NHY5EjArVB+AdRKjxz2XxNyorXMQKnB4pcjrY7eguoxVraM1PCRFOKB+
-	 r+1Bt5AQ5dXf6oWtxNPgYH9kmT2nFH+E7WZDxbPzWn0a35zVmAE7K80g/X4BkshOJM
-	 zSDV3W7k1Unqg==
+	s=k20201202; t=1771276008;
+	bh=NG+dm0s43ukyI2Anb776ST2gZS5qq0/DGcoJ9RFJq84=;
+	h=From:To:Cc:Subject:Date:From;
+	b=kpnhcbomUE/SnBdEgIq4mosGBFBn1Fi7UNxbdwVlPhJzZXc2hhLfK8x5PN6q0LweZ
+	 2JTk1QRGYPxC+FhtQY+T5vW058BM3fngT3rh/1OBkc3CLaii/6RyC/YJfMFYpnRDx1
+	 dGyCfrVS0+U6qfg04eZX7vS0ZdodsTBtzmJ9blP56pQbxMrPPqSVqiMDUJvY3j27w+
+	 WR7Dcu3rGfS7VP9p60D2v54yPY1I1BWQU7n0MSP5XNJEVRMOMPnslUwD7B3ZD/ZTq/
+	 hrAqlnftNmY4URIJWc/m6djJPwONal4ni2PMw2QUf2RvDgoeqTk9l2EjF951gSPCAH
+	 uMz564vwy707Q==
 From: SeongJae Park <sj@kernel.org>
-To: Raul Pazemecxas De Andrade <raul_pazemecxas@hotmail.com>
+To: damon@lists.linux.dev
 Cc: SeongJae Park <sj@kernel.org>,
-	Greg KH <gregkh@linuxfoundation.org>,
-	"security@kernel.org" <security@kernel.org>,
-	"damon@lists.linux.dev" <damon@lists.linux.dev>,
-	"linux-mm@kvack.org" <linux-mm@kvack.org>,
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
-Subject: RE: [PATCH] mm/damon/core: dangling walk_control pointer in damos_walk() on inactive context
-Date: Mon, 16 Feb 2026 10:57:40 -0800
-Message-ID: <20260216185741.74145-1-sj@kernel.org>
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org
+Subject: DAMON Yearly Retrospect (2024)
+Date: Mon, 16 Feb 2026 13:06:24 -0800
+Message-ID: <20260216210625.68098-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To:  <CPUPR80MB81718B12798BCF9959535B05956CA@CPUPR80MB8171.lamprd80.prod.outlook.com>
-References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
+After DAMON has upstreamed in 2021, I shared yearly retrospects for 2022 [1]
+and 2023 [2].  And somehow I forgot to do that for 2024 and 2025.  Let me share
+the retrospect of 2024, before my memory goes away.
 
-Hello Raul,
+Summary
+=======
 
-On Mon, 16 Feb 2026 16:26:22 +0000 Raul Pazemecxas De Andrade <raul_pazemecxas@hotmail.com> wrote:
+2024 was a year that DAMON has been more publicly and widely adopted.  AWS
+published their usage of DAMON as a VLDB paper.  SK hynix developed and
+upstreamed DAMON features for memory tiering.  Debian kernel team has enabled
+DAMON build config on their kernels.  Citations of DAMON papers have also
+increased from 10 in 2023 to 17 in 2024.
 
-> From 7d82f231f99949d041045789d3ed912ad7e25546 Mon Sep 17 00:00:00 2001
-> From: Raul Pazemecxas De Andrade <raul_pazemecxas@hotmail.com>
-> Date: Mon, 16 Feb 2026 13:06:04 -0300
-> Subject: [PATCH] mm/damon/core: clear walk_control on inactive context in
->  damos_walk()
+DAMON's status and future plans have presented and discussed on multiple
+conferences, including OSSummit NA, LSF/MM/BPF, OSSummit EU, and LPC.
 
-Seems you copy-pasted this patch on your email body.  It is more usual to send
-the patch as a complete new mail thread, using 'git send-email'.  Please
-consider doing so if you send a patch again, next time.
+Number of development participants and commits have reduced compared to 2023,
+though.  Hopefully that reflects how DAMON continues being stabilized.
 
-> 
-> damos_walk() sets ctx->walk_control to the caller-provided control
-> structure before checking whether the context is running. If the context
-> is inactive (damon_is_running() returns false), the function returns
-> -EINVAL without clearing ctx->walk_control. This leaves a dangling
-> pointer to a stack-allocated structure that will be freed when the
-> caller returns.
+Events
+======
 
-Nice catch!
+In January, Linux 6.8-rc1 has released, with feedback-driven DAMOS
+aggressiveness auto-tuning [3] feature.  The feature allows users simply feed
+DAMOS rewards for current aggressiveness, and DAMOS can automatically tune the
+aggressiveness to convince the user.
 
-> 
-> This is structurally identical to the bug fixed in commit f9132fbc2e83
-> ("mm/damon/core: remove call_control in inactive contexts") for
-> damon_call(), which had the same pattern of linking a control object
-> and returning an error without unlinking it.
+In March, Linux 6.9-rc1 has released, with DAMOS aggressiveness self-tuning [4]
+feature.  It makes the aggressiveness auto-tuning can work itself, without
+user's feedback.
 
-Correct.  Nonetheless, the user impact is prettry trivial compared to the
-damon_call() bug.  Let me explain why I think so below.
+In April, DAMON was presented [4] at OSSummit North America.  The presentation
+was focusing on the feedback-driven DAMOS auto/self-tuning.
 
-> 
-> The dangling walk_control pointer can cause:
-> 1. Use-after-free if the context is later started and kdamond
->    dereferences ctx->walk_control (e.g., in damos_walk_cancel()
->    which writes to control->canceled and calls complete())
+In May, DAMON updates and future plans were discussed [5] at LSF/MM/BPF.  The
+plan was including DAMON-based memory tiering and holistic access-aware memory
+autoscaling for cloud providers.
 
-But, there is no such use case to my understanding.  DAMON sysfs interface is
-the only damos_walk() user.  And when a user asks it to turn DAMON on with a
-context that was used before and now stopped, it does not use the damon_ctx
-object that was used before.  Instead, it deallocates the damon_ctx object that
-was used before, allocates a new damon_ctx object, and use the new one.  The
-new one doesn't have the stale pointer, so no real issue happens.  Please let
-me know if I'm missing something.
+In July, Linux 6.11-rc1 has released, with DAMON changes [6] for CXL memory
+tiering.  The change is developed by SK hynix for their heterogeneous memory
+software development kit.
 
-So this is a good theory for potential future bugs.  Nonetheless, this is not
-what can happen right now in the real world.  I agree the pointer is better to
-be cleared as this patch suggests, to reduce such potential future risks.
+In July, AWS published a paper [7] introducing their DAMON usage as a part of
+it, at VLDB.  The paper introduces AWS Aurora Serverless V2, which uses DAMON
+as its core part of memory auto-scaling.  Specifically, they use DAMON for
+proactively reclaiming cold pages inside guests.
 
-> 2. Permanent -EBUSY from subsequent damos_walk() calls, since the
->    stale pointer is non-NULL
+In August, DAMON project repositories on GitHub has moved [8] from awslabs
+organization to damonitor organization.
 
-This is the real bug.  Returning -EBUSY while DAMON is turned off may confuse
-users.  Nonetheless, this happens only while the DAMON context is turned off.
-If you starts it again, DAMON sysfs interface starts it with newly allocated
-internal damon_ctx object as I mentioned above.  The new object doesn't have
-the stale pointer, so works normally.
+In September, DAMON use cases were presented [9] at OSSummit EU.  The talk was
+mainly covering DAMON usages from AWS and SK hynix.  Honggyu Kim, an SK hynix
+engineer who developed DAMON-based memory tiering, has shared their use case on
+the talk.
 
-For example, after the reproducer steps in your bug report [1], you can show
-below:
+In September, DAMON long term development plan was presented [10] at LPC Kernel
+Memory Management Micro-conference.  The plan was about how DAMON will be
+flexible but also just works.
 
-    # echo on > $DAMON/0/state
-    # echo "update_schemes_tried_regions" > $DAMON/0/state
-    # echo $?
-    # 0
+In September, Debian enabled [11] DAMON build configuration on their kernels.
 
-Again, I think this is a real bug that could make users be confused, and
-therefore better to be fixed.  Nonetheless, calling damos_walk() against
-stopped DAMON context seems not a common use case.  So I think the real impact
-is trivial.
+In December, DAMON monitoring intervals tuning guide has published [12].  The
+guide includes the monitoring and tuning results on real world server
+workloads.
 
-> 
-> Fix this by clearing ctx->walk_control under walk_control_lock before
-> returning -EINVAL, mirroring the fix pattern from f9132fbc2e83.
+Features
+========
 
-Sounds reasonable.
+In 2024, a few new DAMON features have landed on the mainline.  Among those,
+below two features are noticeable to  me.
 
-> 
-> Reported-by: Raul Pazemecxas De Andrade <raul_pazemecxas@hotmail.com>
+DAMOS aggressiveness auto-tuning feature have landed in two parts.  The first
+part [3] on v6.8, and the second part [4] on v6.9.  This feature makes access
+aware system operations nearly self-driving.
 
-Closes: https://lore.kernel.org/CPUPR80MB8171025468965E583EF2490F956CA@CPUPR80MB8171.lamprd80.prod.outlook.com
+DAMON changes for CXL memory tiering has developed by SK hynix and landed [6]
+on v6.11.  The feature allows users to setup DAMOS for migrating hot and cold
+pages for appropriate tiers.
 
-> Fixes: bf0eaba0ff9c ("mm/damon/core: implement damos_walk()")
-> Cc: stable@vger.kernel.org
-> Signed-off-by: Raul Pazemecxas De Andrade <raul_pazemecxas@hotmail.com>
+Statistics
+==========
 
-Reviewed-by: SeongJae Park <sj@kernel.org>
+In 2024, 20 people made 157 commits for DAMON on the mainline.  I got the
+numbers with name of the contributors using my script [13] as below.
 
-> ---
->  mm/damon/core.c | 7 ++++++-
->  1 file changed, 6 insertions(+), 1 deletion(-)
-> 
-> diff --git a/mm/damon/core.c b/mm/damon/core.c
-> index 5e2724a4f..fb00879af 100644
-> --- a/mm/damon/core.c
-> +++ b/mm/damon/core.c
-> @@ -1559,8 +1559,13 @@ int damos_walk(struct damon_ctx *ctx, struct damos_walk_control *control)
->       }
->       ctx->walk_control = control;
->       mutex_unlock(&ctx->walk_control_lock);
-> -     if (!damon_is_running(ctx))
-> +     if (!damon_is_running(ctx)) {
-> +           mutex_lock(&ctx->walk_control_lock);
-> +           if (ctx->walk_control == control)
-> +                 ctx->walk_control = NULL;
-> +           mutex_unlock(&ctx->walk_control_lock);
->             return -EINVAL;
-> +     }
->       wait_for_completion(&control->completion);
->       if (control->canceled)
->             return -ECANCELED;
-> -- 
-> 2.51.2
+    $ ./lazybox/version_control/authors.py ./linux --skip_merge_commits \
+            --since 2024-01-01 --until 2024-12-31 --linux_subsystems DAMON
+    1. SeongJae Park <sj@kernel.org>: 133 commits
+    2. Zheng Yejian <zhengyejian@huaweicloud.com>: 2 commits
+    3. Anna-Maria Behnsen <anna-maria@linutronix.de>: 2 commits
+    4. Honggyu Kim <honggyu.kim@sk.com>: 2 commits
+    5. Hyeongtak Ji <hyeongtak.ji@sk.com>: 2 commits
+    6. Barry Song <v-songbaohua@oppo.com>: 2 commits
+    7. Akinobu Mita <akinobu.mita@gmail.com>: 1 commits
+    8. Maximilian Heyne <mheyne@amazon.de>: 1 commits
+    9. Andrew Paniakin <apanyaki@amazon.com>: 1 commits
+    10. James Houghton <jthoughton@google.com>: 1 commits
+    11. Ba Jing <bajing@cmss.chinamobile.com>: 1 commits
+    12. Leo Stone <leocstone@gmail.com>: 1 commits
+    13. Jinjie Ruan <ruanjinjie@huawei.com>: 1 commits
+    14. Diederik de Haas <didi.debian@cknow.org>: 1 commits
+    15. Liam R. Howlett <Liam.Howlett@oracle.com>: 1 commits
+    16. Peng Hao <flyingpeng@tencent.com>: 1 commits
+    17. Christophe Leroy <christophe.leroy@csgroup.eu>: 1 commits
+    18. Alex Rusuf <yorha.op@gmail.com>: 1 commits
+    19. Javier Carrasco <javier.carrasco.cruz@gmail.com>: 1 commits
+    20. Vincenzo Mezzela <vincenzo.mezzela@gmail.com>: 1 commits
+    # 20 authors, 157 commits in total
 
-I also found 'git am' of this patch is not cleanly working on mm-new.  Please
-consider using mm-new as the baseline [2] next time.
+Huge appreciation to all the developers.  It was a grateful year to work with
+you.
 
-To ensure this is not forgotten and merged into the mainline, I added this
-patch to my tree, after manually rebasing on mm-new, adding a note about the
-user impact, and adding the above tags that I offered.  Unless I find something
-on this patch needs to be changed, and you mind, I will post it again after the
-current merge window, to make sure it goes to the mainline.  So no additional
-work from your side is required.
+The last line of the output for 2023 was like below:
 
-Nonetheless, if you prefer to make a new revision of this patch and repost on
-your own, please do so.
+    $ ./lazybox/version_control/authors.py ./linux --skip_merge_commits \
+            --since 2023-01-01 --until 2023-12-31 --linux_subsystems DAMON
+    [...]
+    # 25 authors, 180 commits in total
 
-[1] https://lore.kernel.org/CPUPR80MB8171025468965E583EF2490F956CA@CPUPR80MB8171.lamprd80.prod.outlook.com
-[2] https://origin.kernel.org/doc/html/latest/mm/damon/maintainer-profile.html#scm-trees
-[3] https://git.kernel.org/pub/scm/linux/kernel/git/sj/damon-hack.git/tree/patches/next/mm-damon-core-clear-walk_control-on-inactive-context.patch?id=398e6f536b37de82f789d74ea93815dfcb129d99
+So, both the number of developers (25 -> 20) and commits (180 -> 157) have
+reduced.  Hopefully this means that DAMON is becoming more stabilized and
+reliable.
 
+DAMON User-space Tool
+---------------------
 
-Thanks,
-SJ
+DAMON user-space tool is also an important part of DAMON project.  In 2024,
+eight people made 1,031 commits for DAMON user-space tool.  The list of the
+developers are as below:
 
-[...]
+    $ ./lazybox/version_control/authors.py ./damo --skip_merge_commits \
+            --since 2024-01-01 --until 2024-12-31
+    1. SeongJae Park <sj@kernel.org>: 753 commits
+    2. SeongJae Park <sj38.park@gmail.com>: 264 commits
+    3. Mithun Veluri <velurimithun38@gmail.com>: 4 commits
+    4. Honggyu Kim <honggyu.kim@sk.com>: 3 commits
+    5. m8 <umusasadik@gmail.com>: 2 commits
+    6. Yunjeong Mun <yunjeong.mun@sk.com>: 2 commits
+    7. Akinobu Mita <akinobu.mita@gmail.com>: 1 commits
+    8. Alex Rusuf <yorha.op@gmail.com>: 1 commits
+    9. Piyush Thange <pthange19@gmail.com>: 1 commits
+    # 9 authors, 1031 commits in total
+
+Note that I was counted twice due to different email address usages.
+
+The tool's output for 2023 was like below:
+
+    $ ./lazybox/version_control/authors.py ./damo --skip_merge_commits \
+            --since 2023-01-01 --until 2023-12-31
+    1. SeongJae Park <sj38.park@gmail.com>: 1793 commits
+    2. SeongJae Park <sj@kernel.org>: 58 commits
+    3. Honggyu Kim <honggyu.kp@gmail.com>: 8 commits
+    4. sjpark <sjpark@amazon.com>: 5 commits
+    5. Michel Alexandre Salim <salimma@fedoraproject.org>: 4 commits
+    6. SeongJae Park <sjpark@amazon.com>: 3 commits
+    7. Honggyu Kim <honggyu.kim@sk.com>: 2 commits
+    8. Andrew Paniakin <apanyaki@amazon.com>: 1 commits
+    9. fdu <1050329+fdu@users.noreply.github.com>: 1 commits
+    10. Puranjay Mohan <pjy@amazon.com>: 1 commits
+    11. Puranjay Mohan <pjy@amazon.de>: 1 commits
+    # 11 authors, 1877 commits in total
+
+Note that I was counted four times, and Puranjay was counted twice.  So, seven
+people made 1,877 commits for DAMON user-space tool in 2023.  The number of
+contributors have increased, while the number of total commits have quite
+reduced.  The reduction of the commits was mainly from my side.  I was making
+~1,800 commits in 2023, but only ~1,000 commits in 2024.  I actually feel DAMON
+user-space tool is being more stabilized.  I also spent quite amount of my time
+that I used to use for DAMON user-space tool for another tool, hkml [16].
+
+Paper Citations
+---------------
+
+Yet another interesting statistics about the number of DAMON paper citations.
+I published two academic papers introducing DAMON in 2019 [14] and 2022 [15].
+
+The number of citations for the two papers have quite increased, as below.
+
+2019-published paper: 6 (2023) -> 10 (2024)
+2022-published paper: 4 (2023) -> 7  (2024)
+
+Conclusion
+==========
+
+So, 2024 was a year DAMON has more publicly and widely adopted, and extended
+itself for more use cases.
+
+References
+==========
+
+[1] 2022 retrospect: https://lore.kernel.org/20221229171209.162356-1-sj@kernel.org/
+[2] 2023 retrospect: https://lore.kernel.org/20231231222250.140364-1-sj@kernel.org/
+[3] DAMOS auto-tune: https://git.kernel.org/torvalds/c/9294a037c01564786
+[4] DAMOS self-tune: https://git.kernel.org/torvalds/c/78f2f60377ee43b7f
+[5] OSSummit NA talk: https://ossna2024.sched.com/event/1aBOg
+[6] DAMOS memory-tiering: https://git.kernel.org/torvalds/c/a00ce85af2a1be49
+[7] VLDB AWS paper: https://www.amazon.science/publications/resource-management-in-aurora-serverless
+[8] awslabs to damonitor GitHub repos move: https://lore.kernel.org/all/20240813232158.83903-1-sj@kernel.org/
+[9] OSSummit EU talk: https://osseu2024.sched.com/event/1ej2S
+[10] LPC talk: https://lpc.events/event/18/contributions/1768/
+[11] Debian DAMON enablement: https://salsa.debian.org/kernel-team/linux/-/merge_requests/1172
+[12] DAMON tuning guide: https://lore.kernel.org/all/20241202175459.2005526-1-sj@kernel.org/
+[13] https://github.com/sjp38/lazybox/blob/master/version_control/authors.py
+[14] 2019 DAMON paper: https://dl.acm.org/doi/abs/10.1145/3366626.3368125
+[15] 2022 DAMON paper: https://dl.acm.org/doi/abs/10.1145/3502181.3531466
+[16] hkml: https://github.com/sjp38/hackermail
