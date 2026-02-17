@@ -1,41 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 237D522097;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C62C13B7A3;
 	Tue, 17 Feb 2026 00:04:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771286656; cv=none; b=YMZOY2J22l0Jna0kvPnHLHZa9uh4bLyUz9P9v5PN3iEHQEf3c+U7z1RcfiO8HLMGO5S+GyAKh8H1YE+3aCRKdajaFSY1QojzW0l5Z7d9wF6hJOxEH1rrs2bn/bkNiz7KtGOC1qBsqOtup0JfL2U3jhYl6xR8Do0ckBYGj70QAsQ=
+	t=1771286656; cv=none; b=ojzDpGn4D0uK/P/AilWivMSnCCFVpxerRBvQNMS6MB0k2qy9AH4bpHBVInoE7+7wb5YWuriahODYQNNUG8Qj1A8OEn8ZsdBbJXkl52Ct9zpiRvBC/wjJVwQ5Q7dwgVLDCEPm74jt3l3Yxpi7s8IH2cl/H7p/aYmhc/+VZaltdBI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1771286656; c=relaxed/simple;
-	bh=O5C60gzaAjye3NBs36/CbgGUC2VmIz0qx2BwHipnsFA=;
+	bh=bCw9hVCbQXONIXZgAbBvfEk2u6XzT2XAiGuqMrqAhNQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EBJTpI3F7CCX6RjYdriY2fdpM5RDZtrltFlGkjCWzYonWePT5BCv1H8zHaVyTcP24soLYJxFWL9Rc0p0x77NDaM4MqdL8lll4QeLG/r7buJvZgoyw2WH/uOrUUam17bmnfzLL0ANfiRX3tGKKneDNEx/niEXI6RGwxduCgnNyMw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=S6xTn4/Z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HN8ODTE5chNztOffKmEXn7kXc96i+Fe6KiWCQRdlfyXqjHYIS6fSDL5H4JzXPTs48xKHM+yUP+FQDyFXPmxnN4pixNBRj+xqRf7gXBtQMzuswAmtrVHNsLIlyi8REp6csIZaGy3JAgMdN9v+pziAobUDctzvxIE8LXfWi5k1oRs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=csbwqWtg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="S6xTn4/Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2D8BC2BC9E;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="csbwqWtg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03ED1C2BCAF;
 	Tue, 17 Feb 2026 00:04:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771286655;
-	bh=O5C60gzaAjye3NBs36/CbgGUC2VmIz0qx2BwHipnsFA=;
+	s=k20201202; t=1771286656;
+	bh=bCw9hVCbQXONIXZgAbBvfEk2u6XzT2XAiGuqMrqAhNQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S6xTn4/ZAOgV97D197xEQgfJDVMFHtAxGheucrTDdQeJ5ih34kaNezsFovtwsGKFz
-	 xHknEHMphZtkYEJUR6SUCxuXrAZ563OxCzOvkVaH97RkeNj/YNrpwquv8CyzS/KtEO
-	 d9UYK+mHDLPG7izHUsrgmDr1veyudyqNVa1Qt62hiiWmfb8XbBCMInTkzG4QXmBEcw
-	 k+tpr+n+Ml2FUQvoxiFupRlA9ITIJ8q7yRdAUbRNJIyY3oUkJY4dY6q6t4QeMpGkmk
-	 u8IiL8YpUMmMhUvxRDcEOhh2XQUFj/rYhjXOg3o1k4ADHv6TJ/6SzvtWCaC58r6WSs
-	 b67kAka0jx+HA==
+	b=csbwqWtgktX3/5Ys0Xd+IVS3AX2fp0Rfu/Zwwz2X3M+PCCWuq/0yd5BEHiFSH+S8i
+	 WcLOdNS1zwLkWFVmFM/wV66KcW/y7aRLsImRz9uHOa53xGlBpQaYibPfW93Dv0YSjw
+	 u+P7jg5SPhpRfM1XU4MYiGIafXF7YuTJq9zX6IYK8aR3BGJ94z27p7PQSi/9/Y3GjY
+	 ywGwSbECaFRr5BagHAZLskBHLsAm4D3BnJHgTlYlNLPnFnP6Clfcin+1q0+QQfU1Fe
+	 OR4MwUPHlyE7fsuR1+OY7LSPkAumgkGjgdArUiFpmdsjkV1HHEc7d1ntGhRnCRCftZ
+	 X3Fp5MjVIJuIw==
 From: SeongJae Park <sj@kernel.org>
 To: 
 Cc: SeongJae Park <sj@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
+	Brendan Higgins <brendan.higgins@linux.dev>,
+	David Gow <davidgow@google.com>,
 	damon@lists.linux.dev,
+	kunit-dev@googlegroups.com,
 	linux-kernel@vger.kernel.org,
+	linux-kselftest@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH 2/3] mm/damon/vaddr: do not split regions for min_nr_regions
-Date: Mon, 16 Feb 2026 16:03:57 -0800
-Message-ID: <20260217000400.69056-3-sj@kernel.org>
+Subject: [RFC PATCH 3/3] mm/damon/test/core-kunit: add damon_apply_min_nr_regions() test
+Date: Mon, 16 Feb 2026 16:03:58 -0800
+Message-ID: <20260217000400.69056-4-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260217000400.69056-1-sj@kernel.org>
 References: <20260217000400.69056-1-sj@kernel.org>
@@ -47,209 +51,82 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The previous commit made DAMON core split regions at the beginning for
-min_nr_regions.  The virtual address space operation set (vaddr) does
-similar work on its own, for a case user delegates entire initial
-monitoring regions setup to vaddr.  It is unnecessary now, as DAMON core
-will do similar work for any case.  Remove the duplicated work in vaddr.
-
-Also, remove a helper function that was being used only for the work,
-and the test code of the helper function.
+Add a kunit test for the functionality of damon_apply_min_nr_regions().
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- mm/damon/tests/vaddr-kunit.h | 76 ------------------------------------
- mm/damon/vaddr.c             | 70 +--------------------------------
- 2 files changed, 2 insertions(+), 144 deletions(-)
+ mm/damon/tests/core-kunit.h | 52 +++++++++++++++++++++++++++++++++++++
+ 1 file changed, 52 insertions(+)
 
-diff --git a/mm/damon/tests/vaddr-kunit.h b/mm/damon/tests/vaddr-kunit.h
-index cfae870178bfd..98e734d77d517 100644
---- a/mm/damon/tests/vaddr-kunit.h
-+++ b/mm/damon/tests/vaddr-kunit.h
-@@ -252,88 +252,12 @@ static void damon_test_apply_three_regions4(struct kunit *test)
- 			new_three_regions, expected, ARRAY_SIZE(expected));
+diff --git a/mm/damon/tests/core-kunit.h b/mm/damon/tests/core-kunit.h
+index 92ea25e2dc9e3..4c19ccac5a2ee 100644
+--- a/mm/damon/tests/core-kunit.h
++++ b/mm/damon/tests/core-kunit.h
+@@ -1241,6 +1241,57 @@ static void damon_test_set_filters_default_reject(struct kunit *test)
+ 	damos_free_filter(target_filter);
  }
  
--static void damon_test_split_evenly_fail(struct kunit *test,
--		unsigned long start, unsigned long end, unsigned int nr_pieces)
--{
--	struct damon_target *t = damon_new_target();
--	struct damon_region *r;
--
--	if (!t)
--		kunit_skip(test, "target alloc fail");
--
--	r = damon_new_region(start, end);
--	if (!r) {
--		damon_free_target(t);
--		kunit_skip(test, "region alloc fail");
--	}
--
--	damon_add_region(r, t);
--	KUNIT_EXPECT_EQ(test,
--			damon_va_evenly_split_region(t, r, nr_pieces), -EINVAL);
--	KUNIT_EXPECT_EQ(test, damon_nr_regions(t), 1u);
--
--	damon_for_each_region(r, t) {
--		KUNIT_EXPECT_EQ(test, r->ar.start, start);
--		KUNIT_EXPECT_EQ(test, r->ar.end, end);
--	}
--
--	damon_free_target(t);
--}
--
--static void damon_test_split_evenly_succ(struct kunit *test,
--	unsigned long start, unsigned long end, unsigned int nr_pieces)
--{
--	struct damon_target *t = damon_new_target();
--	struct damon_region *r;
--	unsigned long expected_width = (end - start) / nr_pieces;
--	unsigned long i = 0;
--
--	if (!t)
--		kunit_skip(test, "target alloc fail");
--	r = damon_new_region(start, end);
--	if (!r) {
--		damon_free_target(t);
--		kunit_skip(test, "region alloc fail");
--	}
--	damon_add_region(r, t);
--	KUNIT_EXPECT_EQ(test,
--			damon_va_evenly_split_region(t, r, nr_pieces), 0);
--	KUNIT_EXPECT_EQ(test, damon_nr_regions(t), nr_pieces);
--
--	damon_for_each_region(r, t) {
--		if (i == nr_pieces - 1) {
--			KUNIT_EXPECT_EQ(test,
--				r->ar.start, start + i * expected_width);
--			KUNIT_EXPECT_EQ(test, r->ar.end, end);
--			break;
--		}
--		KUNIT_EXPECT_EQ(test,
--				r->ar.start, start + i++ * expected_width);
--		KUNIT_EXPECT_EQ(test, r->ar.end, start + i * expected_width);
--	}
--	damon_free_target(t);
--}
--
--static void damon_test_split_evenly(struct kunit *test)
--{
--	KUNIT_EXPECT_EQ(test, damon_va_evenly_split_region(NULL, NULL, 5),
--			-EINVAL);
--
--	damon_test_split_evenly_fail(test, 0, 100, 0);
--	damon_test_split_evenly_succ(test, 0, 100, 10);
--	damon_test_split_evenly_succ(test, 5, 59, 5);
--	damon_test_split_evenly_succ(test, 4, 6, 1);
--	damon_test_split_evenly_succ(test, 0, 3, 2);
--	damon_test_split_evenly_fail(test, 5, 6, 2);
--}
--
++static void damon_test_apply_min_nr_regions_for(struct kunit *test,
++		unsigned long sz_regions, unsigned long min_region_sz,
++		unsigned long min_nr_regions,
++		unsigned long max_region_sz_expect,
++		unsigned long nr_regions_expect)
++{
++	struct damon_ctx *ctx;
++	struct damon_target *t;
++	struct damon_region *r;
++	unsigned long max_region_size;
++
++	ctx = damon_new_ctx();
++	if (!ctx)
++		kunit_skip(test, "ctx alloc fail\n");
++	t = damon_new_target();
++	if (!t) {
++		damon_destroy_ctx(ctx);
++		kunit_skip(test, "target alloc fail\n");
++	}
++	damon_add_target(ctx, t);
++	r = damon_new_region(0, sz_regions);
++	if (!r) {
++		damon_destroy_ctx(ctx);
++		kunit_skip(test, "region alloc fail\n");
++	}
++	damon_add_region(r, t);
++
++	ctx->min_region_sz = min_region_sz;
++	ctx->attrs.min_nr_regions = min_nr_regions;
++	max_region_size = damon_apply_min_nr_regions(ctx);
++
++	KUNIT_EXPECT_EQ(test, max_region_size, max_region_sz_expect);
++	KUNIT_EXPECT_EQ(test, damon_nr_regions(t), nr_regions_expect);
++
++	damon_destroy_ctx(ctx);
++}
++
++static void damon_test_apply_min_nr_regions(struct kunit *test)
++{
++	/* common, expected setup */
++	damon_test_apply_min_nr_regions_for(test, 10, 1, 10, 1, 10);
++	/* no zero size limit */
++	damon_test_apply_min_nr_regions_for(test, 10, 1, 15, 1, 10);
++	/* max size should be aligned by min_region_sz */
++	damon_test_apply_min_nr_regions_for(test, 10, 2, 2, 6, 2);
++	/*
++	 * when min_nr_regions and min_region_sz conflicts, min_region_sz wins.
++	 */
++	damon_test_apply_min_nr_regions_for(test, 10, 2, 10, 2, 5);
++}
++
  static struct kunit_case damon_test_cases[] = {
- 	KUNIT_CASE(damon_test_three_regions_in_vmas),
- 	KUNIT_CASE(damon_test_apply_three_regions1),
- 	KUNIT_CASE(damon_test_apply_three_regions2),
- 	KUNIT_CASE(damon_test_apply_three_regions3),
- 	KUNIT_CASE(damon_test_apply_three_regions4),
--	KUNIT_CASE(damon_test_split_evenly),
+ 	KUNIT_CASE(damon_test_target),
+ 	KUNIT_CASE(damon_test_regions),
+@@ -1267,6 +1318,7 @@ static struct kunit_case damon_test_cases[] = {
+ 	KUNIT_CASE(damos_test_filter_out),
+ 	KUNIT_CASE(damon_test_feed_loop_next_input),
+ 	KUNIT_CASE(damon_test_set_filters_default_reject),
++	KUNIT_CASE(damon_test_apply_min_nr_regions),
  	{},
  };
  
-diff --git a/mm/damon/vaddr.c b/mm/damon/vaddr.c
-index 4e3430d4191d1..400247d96eecc 100644
---- a/mm/damon/vaddr.c
-+++ b/mm/damon/vaddr.c
-@@ -53,52 +53,6 @@ static struct mm_struct *damon_get_mm(struct damon_target *t)
- 	return mm;
- }
- 
--/*
-- * Functions for the initial monitoring target regions construction
-- */
--
--/*
-- * Size-evenly split a region into 'nr_pieces' small regions
-- *
-- * Returns 0 on success, or negative error code otherwise.
-- */
--static int damon_va_evenly_split_region(struct damon_target *t,
--		struct damon_region *r, unsigned int nr_pieces)
--{
--	unsigned long sz_orig, sz_piece, orig_end;
--	struct damon_region *n = NULL, *next;
--	unsigned long start;
--	unsigned int i;
--
--	if (!r || !nr_pieces)
--		return -EINVAL;
--
--	if (nr_pieces == 1)
--		return 0;
--
--	orig_end = r->ar.end;
--	sz_orig = damon_sz_region(r);
--	sz_piece = ALIGN_DOWN(sz_orig / nr_pieces, DAMON_MIN_REGION_SZ);
--
--	if (!sz_piece)
--		return -EINVAL;
--
--	r->ar.end = r->ar.start + sz_piece;
--	next = damon_next_region(r);
--	for (start = r->ar.end, i = 1; i < nr_pieces; start += sz_piece, i++) {
--		n = damon_new_region(start, start + sz_piece);
--		if (!n)
--			return -ENOMEM;
--		damon_insert_region(n, r, next, t);
--		r = n;
--	}
--	/* complement last region for possible rounding error */
--	if (n)
--		n->ar.end = orig_end;
--
--	return 0;
--}
--
- static unsigned long sz_range(struct damon_addr_range *r)
- {
- 	return r->end - r->start;
-@@ -240,10 +194,8 @@ static void __damon_va_init_regions(struct damon_ctx *ctx,
- 				     struct damon_target *t)
- {
- 	struct damon_target *ti;
--	struct damon_region *r;
- 	struct damon_addr_range regions[3];
--	unsigned long sz = 0, nr_pieces;
--	int i, tidx = 0;
-+	int tidx = 0;
- 
- 	if (damon_va_three_regions(t, regions)) {
- 		damon_for_each_target(ti, ctx) {
-@@ -255,25 +207,7 @@ static void __damon_va_init_regions(struct damon_ctx *ctx,
- 		return;
- 	}
- 
--	for (i = 0; i < 3; i++)
--		sz += regions[i].end - regions[i].start;
--	if (ctx->attrs.min_nr_regions)
--		sz /= ctx->attrs.min_nr_regions;
--	if (sz < DAMON_MIN_REGION_SZ)
--		sz = DAMON_MIN_REGION_SZ;
--
--	/* Set the initial three regions of the target */
--	for (i = 0; i < 3; i++) {
--		r = damon_new_region(regions[i].start, regions[i].end);
--		if (!r) {
--			pr_err("%d'th init region creation failed\n", i);
--			return;
--		}
--		damon_add_region(r, t);
--
--		nr_pieces = (regions[i].end - regions[i].start) / sz;
--		damon_va_evenly_split_region(t, r, nr_pieces);
--	}
-+	damon_set_regions(t, regions, 3, DAMON_MIN_REGION_SZ);
- }
- 
- /* Initialize '->regions_list' of every target (task) */
 -- 
 2.47.3
