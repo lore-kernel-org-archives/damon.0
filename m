@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71BDA3093B8
-	for <damon@lists.linux.dev>; Thu, 19 Feb 2026 06:49:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6006134D91F;
+	Fri, 20 Feb 2026 15:13:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771483797; cv=none; b=uXX3p+4W1D4QXgpk9Z5exguMH7twNIu2G/URBl5BKsox6Z7awpDJvEFayAIxmk5jte1RUjhz4yw6pHHtffKjenToG1//NFguNy11y6Lo0XCFGzLY2IsEAAodYyPEt+nmLPlRrg2iV+2ej2W+feam7F5DTa8xzeKIjpZGshzCN/4=
+	t=1771600389; cv=none; b=VNxwZFgDn4RpMHaScVbN31k+vCXxoTNXWALUASfJmnm4ybxkhcOZKB4zG234EJKeFtZDapisPu6BfBJFqqgaSlcx4nTDyQLvHMhknQp17+5AhycuuPPofMIPuKyJ4a8wRviJX1DS5u66LNaoQVqPxGbKb0xl96iTvT6kk38syHA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771483797; c=relaxed/simple;
-	bh=No5q+KFAFL0adk6o24BBnPD16KgW29QFMqaGZlXnjzY=;
+	s=arc-20240116; t=1771600389; c=relaxed/simple;
+	bh=bxc8WQnT+E88+rul66mNDSnJZSPkzlLofI8XEyaYAa4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=n8VDwgJ3sW9lrFM/g3DdRyu2muHoZF68B293EtQQP5UsDWfi2x2+ZWYGpAvQrPRYLSmL0Sd6Zer+d1SclfGNW37Nn1IxcQAjluDiWrbCrh5lwN3tj7scP7JKhdHibg6ob59KficRxIvX8g/FVAK3elYdihfGn455DcVamc09DoU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OADoDxNx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=D5nVO+P/mP+rtfdbBn/b5civGo7uCjSljAILKBKZmAU8mFOVxfkQlaAq1LS4/NqWCB74WBa1N0kJXi5e9k/a31TAQg5LHpmZZAMMoAleZLBe0rCqqounvO97omBQQUNyo4QBFiuYnYerr7Kgi4oBKtauD1nfmPRK5hTSNJDbEJM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Y2Zz/QGq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OADoDxNx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2010C2BC86;
-	Thu, 19 Feb 2026 06:49:56 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Y2Zz/QGq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD94FC116C6;
+	Fri, 20 Feb 2026 15:13:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771483797;
-	bh=No5q+KFAFL0adk6o24BBnPD16KgW29QFMqaGZlXnjzY=;
+	s=k20201202; t=1771600389;
+	bh=bxc8WQnT+E88+rul66mNDSnJZSPkzlLofI8XEyaYAa4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OADoDxNxPAhgAGUfBr6V3qG9YF2C8AIukY/+0fl3JPmcP3xmwfOjUqn1uTcqAOPHx
-	 3g63u36le2+nAnCiFdpyl2BV4ecC3v5Qvx8GcDMET9FefqKyVlGyHetUQWycwUXZ2u
-	 sWlEbQC5UdW/IM1BRs34RfHjyiKuJnRaDBuHe0iUZJTLnzZJBmJ9Q0BGXxzsvETj05
-	 HsymEhQppEwIcDaAUByjdnMNFpHMRewpDQwiGSUjkLkH0PfghmTjw0X3Cyagtxw4P6
-	 iqBdpY+seVXE/xvQfc3tKEdNyneZGQEBLQDI5kAdXiVrOnmmtngzbjh7aMDm9/1XgH
-	 8SuHxXn703c2A==
+	b=Y2Zz/QGqB+9T41rAe3ishgh1PkcnDNXsjFBUbEQ+fYuxFle4s9oQ+fg/g5V/a0WV+
+	 DVhU9fny1+YX9LhRAUkel2oaDOjDazbHFhSrj7cg+VeCT78zrW9beN15K3VTOJGfkW
+	 zKU8CYOaoPuaLPWSQmZfeVoDSumX3+WiGQMAiQaN5kLC36SeTTB19Qtp5Ko/ddKdb/
+	 wW5sBhFPg+fcTgkOqbn+arKymDBuz0Ix/pWcC3O7/8VymRy4Dfg1WLv8+Xfph4S229
+	 /6DIJ1MPH6w8B4Gp/bKUo/jNilheMG1tp5ZuqKyz67XlqoYWsf9QdtAzBIxkhzlpcW
+	 GU2Mt2Kukw4nA==
 From: SeongJae Park <sj@kernel.org>
-To: Akinobu Mita <akinobu.mita@gmail.com>
-Cc: SeongJae Park <sj@kernel.org>,
-	damon@lists.linux.dev
-Subject: Re: [RFC PATCH 0/4] mm/damon: introduce perf event based access check
-Date: Wed, 18 Feb 2026 22:49:48 -0800
-Message-ID: <20260219064950.69068-1-sj@kernel.org>
+To: SeongJae Park <sj@kernel.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>,
+	damon@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	linux-mm@kvack.org,
+	Akinobu Mita <akinobu.mita@gmail.com>
+Subject: Re: [RFC PATCH 1/3] mm/damon/core: split regions for min_nr_regions at beginning
+Date: Fri, 20 Feb 2026 07:13:01 -0800
+Message-ID: <20260220151301.58159-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <CAC5umyhNBtcF=O6x3aaQG4uMaSSkzs-kw1E79PHrd_rBLiUeFA@mail.gmail.com>
+In-Reply-To: <20260217000400.69056-2-sj@kernel.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -42,82 +45,157 @@ List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On Thu, 19 Feb 2026 15:28:24 +0900 Akinobu Mita <akinobu.mita@gmail.com> wrote:
+On Mon, 16 Feb 2026 16:03:56 -0800 SeongJae Park <sj@kernel.org> wrote:
 
-> 2026年2月19日(木) 0:40 SeongJae Park <sj@kernel.org>:
-> >
-> > On Wed, 18 Feb 2026 17:20:04 +0900 Akinobu Mita <akinobu.mita@gmail.com> wrote:
-> >
-> > > 2026年2月18日(水) 0:15 SeongJae Park <sj@kernel.org>:
-> > > >
-> > > > On Tue, 17 Feb 2026 22:32:43 +0900 Akinobu Mita <akinobu.mita@gmail.com> wrote:
-> > > >
-> > > > > 2026年2月17日(火) 9:13 SeongJae Park <sj@kernel.org>:
-> > [...]
-> > > > > > I just posted an RFC patch series [1] for this.  I will drop RFC tag after the
-> > > > > > current merge window is finished.  Please let me know if you find something
-> > > > > > wrong there!
-> > > > > >
-> > > > > > [1] https://lore.kernel.org/20260217000400.69056-1-sj@kernel.org
-> > > > >
-> > > > > Thank you for posting the patch series.
-> > > > >
-> > > > > I tried it and found that patch 2/3 made things worse than before in terms of
-> > > > > monitoring at page size granularity.
-> > > >
-> > > > Thank you for sharing the test results!
-> > > >
-> > > > > This is because, in my evaluation, new
-> > > > > target processes are added without stopping kdamond, so processes added later
-> > > > > are not initially monitored at page size granularity.
-> > > >
-> > > > Nice catch.  But, the min_nr_regions based region split of vaddr was triggered
-> > > > by damon_va_init(), which is called before the kdamond_fn()'s main loop.  How
-> > > > the regions were split before the patch?  Probably I'm missing something.
-> > > > Could you please clarify?
-> > >
-> > > Before applying PATCH 2/3 ("mm/damon/vaddr: do not split regions for
-> > > min_nr_regions"), the damon regions of processes newly added to the monitoring
-> > > targets after kdamond started were split by damon_va_evenly_split_region().
-> >
-> > Thank you for adding this explanation.  But, damon_va_evenly_split_region() is
-> > called by only __damon_va_init_regions(), which is again called by only
-> > damon_va_init().  And damon_va_init() is called from kdamond_fn(), only at the
-> > beginning, before starting the main loop.  If you add new monitoring targets
-> > after kdamond started and therefore the damon_va_init() is called,
-> > damon_va_init() cannot be called again.  So damon_va_evenly_split_region() is
-> > also not called.  I confirmed this using damo like below:
-> >
-> >     $ sudo damo start --target_pid $$ --monitoring_intervals 1s 5s 10s
-> >     $ sudo damo tune --target_pid $$ --target_pid $other_process_pid \
-> >             --monitoring_intervals 1s 5s 10s \
-> >             --monitoring_nr_regions_range 20 1000
-> >
-> > While running the command, I monitor the number of regions of targets using
-> > damon:damon_aggregated trace event, and confirmed the initial region is evenly
-> > split, but the new monitoring target regions that added by the second command
-> > is not evenly split from the beginning.
-> >
-> > Am I missing something?
+> DAMON core layer respects the min_nr_regions parameter by setting the
+> maximum size of each region as total monitoring region size divided by
+> the parameter value.  And the limit is applied by preventing merge of
+> regions that result in a region larger than the maximum size.
 > 
-> Your explanation is correct.
-> It was only my own internal changes that were affecting it (calling ops.init()
-> from damon_commit_ctx()).
+> It does nothing for the beginning state.  That's because the users can
+> set the initial monitoring regions as they want.  That is, if the users
+> really care about the min_nr_regions, they are supposed to set the
+> initial monitoring regions to have more than min_nr_regions regions.
 > 
-> https://lore.kernel.org/damon/20260123021014.26915-2-akinobu.mita@gmail.com/
-
-Makes sense, thank you for clarifying this!
-
+> When 'min_nr_regions' is high, such initial setup is difficult.  Even in
+> the case, DAMON will eventually make more than min_nr_regions regions,
+> but it will take time.  If the aggregation interval is long, the delay
+> could be problematic.  There was actually a report [1] of the case.
 > 
-> So the current patch series hasn't made things worse. Sorry for the mistake.
+> Split regions larger than the size at the beginning of the kdamond main
+> loop, to fix the problem.  This means the behavior is slightly changed.
+> That is, the initial monitoring regions that the user set ain't be
+> strictly respected, in terms of the number of the regions.  It is
+> difficult to imagine a use case that actually depends on the behavior,
+> though, so this change should be fine.
+> 
+> Note that the size limit is aligned by damon_ctx->min_region_sz and
+> cannot be zero.  That is, if min_nr_region is larger than the total size
+> of monitoring regions divided by ->min_region_sz, that cannot be
+> respected.
+> 
+> [1] https://lore.kernel.org/CAC5umyjmJE9SBqjbetZZecpY54bHpn2AvCGNv3aF6J=1cfoPXQ@mail.gmail.com
+> 
+> Signed-off-by: SeongJae Park <sj@kernel.org>
+> ---
+>  mm/damon/core.c | 39 +++++++++++++++++++++++++++++++++++----
+>  1 file changed, 35 insertions(+), 4 deletions(-)
+> 
+> diff --git a/mm/damon/core.c b/mm/damon/core.c
+> index 8e4cf71e2a3ed..fd1b2cbfe2c80 100644
+> --- a/mm/damon/core.c
+> +++ b/mm/damon/core.c
+> @@ -1316,6 +1316,40 @@ static unsigned long damon_region_sz_limit(struct damon_ctx *ctx)
+>  	return sz;
+>  }
+>  
+> +static void damon_split_region_at(struct damon_target *t,
+> +				  struct damon_region *r, unsigned long sz_r);
+> +
+> +/*
+> + * damon_apply_min_nr_regions() - Make effect of min_nr_regions parameter.
+> + * @ctx:	monitoring context.
+> + *
+> + * This function implement min_nr_regions (minimum number of damon_region
+> + * objects in the given monitoring context) behavior.  It first calculates
+> + * maximum size of each region for enforcing the min_nr_regions as total size
+> + * of the regions divided by the min_nr_regions.  After that, this function
+> + * splits regions to ensure all regions are equal to or smaller than the size
+> + * limit.  Finally, this function returns the maximum size limit.
+> + *
+> + * Returns: maximum size of each region for convincing min_nr_regions.
+> + */
+> +static unsigned long damon_apply_min_nr_regions(struct damon_ctx *ctx)
+> +{
+> +	unsigned long max_region_sz = damon_region_sz_limit(ctx);
+> +	struct damon_target *t;
+> +	struct damon_region *r, *next;
+> +
+> +	max_region_sz = ALIGN(max_region_sz, ctx->min_region_sz);
+> +	damon_for_each_target(t, ctx) {
+> +		damon_for_each_region_safe(r, next, t) {
+> +			while (damon_sz_region(r) > max_region_sz) {
+> +				damon_split_region_at(t, r, max_region_sz);
+> +				r = damon_next_region(r);
+> +			}
+> +		}
+> +	}
+> +	return max_region_sz;
+> +}
+> +
+>  static int kdamond_fn(void *data);
+>  
+>  /*
+> @@ -1672,9 +1706,6 @@ static void kdamond_tune_intervals(struct damon_ctx *c)
+>  	damon_set_attrs(c, &new_attrs);
+>  }
+>  
+> -static void damon_split_region_at(struct damon_target *t,
+> -				  struct damon_region *r, unsigned long sz_r);
+> -
+>  static bool __damos_valid_target(struct damon_region *r, struct damos *s)
+>  {
+>  	unsigned long sz;
+> @@ -2778,7 +2809,7 @@ static int kdamond_fn(void *data)
+>  	if (!ctx->regions_score_histogram)
+>  		goto done;
+>  
+> -	sz_limit = damon_region_sz_limit(ctx);
+> +	sz_limit = damon_apply_min_nr_regions(ctx);
+>  
+>  	while (!kdamond_need_stop(ctx)) {
+>  		/*
 
-Glad to hear that.  I will post the series without RFC after the current merge
-window.  I will also try to make the planned followup for respecting the
-min_nr_regions for the online-added targets and updated min_nr_regions before
-the next merge window.
+As the commit message is saying, and Akinobu pointed out [1], this patch is
+incomplete.  It doesn't cover the online updates of monitoring regions and
+min_nr_regions.  I was planning to solve this case first and continu works for
+the online updates.  The followup work was taking time more than I expected,
+mainly because I wanted to do that in an efficient way.  That is,
+damon_apply_min_nr_regions() iterates regions twice.  I wanted to reduce that.
+But now I realize maybe I was thinking too much.
+
+Just calling damon_apply_min_nr_regions() after kdamond_merge_regions() like
+below should work in a not that inefficient way.  I believe it is not that
+inefficient because it will be executed only in aggregation interval.  We are
+doing the region iterations multiple times per sampling interval, which is 1/20
+of the aggregation interval by default and smaller portion of the aggregation
+interval in experimental setups, anyway.
+
+'''
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -3371,10 +3371,13 @@ static int kdamond_fn(void *data)
+                        max_nr_accesses = ctx->ops.check_accesses(ctx);
+
+                if (time_after_eq(ctx->passed_sample_intervals,
+-                                       next_aggregation_sis))
++                                       next_aggregation_sis)) {
+                        kdamond_merge_regions(ctx,
+                                        max_nr_accesses / 10,
+                                        sz_limit);
++                       /* online updates might be made */
++                       sz_limit = damon_apply_min_nr_regions(ctx);
++               }
+
+                /*
+                 * do kdamond_call() and kdamond_apply_schemes() after
+@@ -3434,7 +3437,6 @@ static int kdamond_fn(void *data)
+                                sample_interval;
+                        if (ctx->ops.update)
+                                ctx->ops.update(ctx);
+-                       sz_limit = damon_region_sz_limit(ctx);
+                }
+        }
+ done:
+'''
+
+If nobodys finds some problems on this, I will post RFC v2 of this after
+squashing the above diff into this patch, probably within this weekend.
+
+
+[1] https://lore.kernel.org/CAC5umygPq8+FQWTG73-QPOKHT1P5=N2+qFkrRfZAkL_7G=gQXQ@mail.gmail.com
 
 
 Thanks,
