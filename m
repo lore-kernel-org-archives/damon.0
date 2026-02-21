@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FF24322B88;
-	Sat, 21 Feb 2026 19:36:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47FDF3246F8;
+	Sat, 21 Feb 2026 19:36:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771702597; cv=none; b=QMe2BR1BUJjN9HEHv0RKEAwEwlGyY1SXITCogvq+OmEfR8KaI/1jokk6g7PVq1QmyQ9yEA64UW4F59EEiaJE3g7mSbvv103YESR2lcW/B+BEg/b16fB9s/jnnyDghOlJc6hteB1ZXyM0sA5/wuu02IcaB108zJSfes8aGKVkfzw=
+	t=1771702597; cv=none; b=bAzmBccHVH+fiU2ndD0rKOmG9kaxtYqcnPvquOVXn+iscbRtj/5DhqT3c3zaf58sErtU+WlWwel3McFJNxQqfOM5fRFcvMhtnb93Kkn6DwFAwdxhBUBNK2aqdkpnO/1+MKTOxMt3MxfjI9WtzVN0vYGqfAZj4mtgiN1dt00Op9Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1771702597; c=relaxed/simple;
-	bh=h+yGkK1mUlydQHBhuSmFBiMNXZJ33nd1yZsz+jGXjHM=;
+	bh=yfRhExNso4AJw0G3Gu/sbFcwdK0et66BbTZ7++AzIBc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CfIHSsiCcK4o39qbikB1p83LcC6/Cgywj+ungocx/KidaCn2rphDXZYUMXdxERnKES0v/hnN8vJ/QHqMDHrcM99xnUmL3fRRzgB7Yf0KgsQJWE6ojo9MD9Aa5CuJVxR+WtbE1SWA4G6dkRBJKSJXMZAFZk0habeEhdvUGXWFjxY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jYxEcmN7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TaMkoXJa26LF8CjNV0P22SMkylzohsL+0V15H7l1kmuSpDaV9d7QyJZk9ZEYIT8M2HoUsx5X14PX2lM9wi4QM5bRvbjtgWUs/Q77Xg7EH33BTvf1IMTPYSIJ7RpPWZBmzji2WutRD9aWD4jRN2ClnnkovI3yObtp3Mkdbp3LH2U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GB4ZFNP8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jYxEcmN7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00F74C19422;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GB4ZFNP8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C15AC4CEF7;
 	Sat, 21 Feb 2026 19:36:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771702597;
-	bh=h+yGkK1mUlydQHBhuSmFBiMNXZJ33nd1yZsz+jGXjHM=;
+	s=k20201202; t=1771702596;
+	bh=yfRhExNso4AJw0G3Gu/sbFcwdK0et66BbTZ7++AzIBc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jYxEcmN7X9Ujj0uCpoyQ+P9KlPERhlBrT8vThzywUA+fvZazJSadEOpAf+Mx1YQqk
-	 tLTyJvlbFeH6MMW3i6Y+hS2b7mR4ctodUZgKEz+VrHJREQbtwwfFoQ5lemocCmkabK
-	 i/B7G38wQxpfe0fN/bBpxj8azjo6TSTWMlJ8LeOr6Y16LeyDpsNIrMRhKy1lawea+m
-	 CbuLuK8r2KU1aKXx0uXERmHwbP1vyiDSe9UytRMgVTvumT8y6kr0gQJhzEx6tt9VAX
-	 ELTT48NWJSiY2BqbxQQiNb/xXmfAIwiqn2GXS2fIUYxOAI9miNARy/yu3Owi8LHxOw
-	 7doRlHA82ZnMg==
+	b=GB4ZFNP86ucw+3iCZiFXKFSKc+7g7gQXYBizUVaM6G8Pj5spY5ST9Ekt2IMMeJPSv
+	 ujn4pxCagJ8hVsjzpmdB5AZwSv+BwpeYomGyngaJVAhKPUhDJd8kO9Ki1uLpkUDxmU
+	 jgl3T2QbmIMMnMw4xG63UgEC6QJojN5Yp4J9vzqz5oR2FZuTREgMJy+sa4+Lq1V81D
+	 gBAQD03RWTC+cT/HNkoiWnHNWyY2vmsi+oSCpTobkdBgmdM+q3o3A8r/A4dYmrLOl0
+	 rHTj1f43HloJtzgTWOzPQc/ryMrkIP9wNBcf1HzwTyMTO6Y2fbGo5LqWaGMOFuIlcJ
+	 1ESR5NKOJQC5g==
 From: SeongJae Park <sj@kernel.org>
 To: 
 Cc: SeongJae Park <sj@kernel.org>,
@@ -33,9 +33,9 @@ Cc: SeongJae Park <sj@kernel.org>,
 	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH 08/10] mm/damon/core: add damon_reset_aggregated() debug_sanity check
-Date: Sat, 21 Feb 2026 11:36:25 -0800
-Message-ID: <20260221193629.19332-9-sj@kernel.org>
+Subject: [RFC PATCH 07/10] mm/damon/core: add damon_split_region_at() debug_sanity check
+Date: Sat, 21 Feb 2026 11:36:24 -0800
+Message-ID: <20260221193629.19332-8-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260221193629.19332-1-sj@kernel.org>
 References: <20260221193629.19332-1-sj@kernel.org>
@@ -47,57 +47,50 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-At time of damon_reset_aggregated(), aggregation of the interval should
-be completed, and hence nr_accesses and nr_accesses_bp should match.  I
-found a few bugs caused it to be broken in the past, from online
-parameters update and complicated nr_accesses handling changes.  Add a
-sanity check for that under CONFIG_DAMON_DEBUG_SANITY.
+damon_split_region_at() should be called with the correct address to
+split on.  Add a sanity check for that under CONFIG_DAMON_DEBUG_SANITY.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- mm/damon/core.c | 23 +++++++++++++++++++++++
- 1 file changed, 23 insertions(+)
+ mm/damon/core.c | 19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
 
 diff --git a/mm/damon/core.c b/mm/damon/core.c
-index 16f7994903d6d..4efe732e76c69 100644
+index 94be598cafef1..16f7994903d6d 100644
 --- a/mm/damon/core.c
 +++ b/mm/damon/core.c
-@@ -1681,6 +1681,28 @@ static void damon_warn_fix_nr_accesses_corruption(struct damon_region *r)
- 	r->nr_accesses_bp = r->nr_accesses * 10000;
+@@ -2629,6 +2629,23 @@ static void kdamond_merge_regions(struct damon_ctx *c, unsigned int threshold,
+ 			threshold / 2 < max_thres);
  }
  
 +#ifdef CONFIG_DAMON_DEBUG_SANITY
-+static void damon_verify_reset_aggregated(struct damon_region *r,
-+		struct damon_ctx *c)
++static void damon_verify_split_region_at(struct damon_region *r,
++		unsigned long sz_r)
 +{
-+	if (r->nr_accesses_bp == r->last_nr_accesses * 10000)
++	if (sz_r > 0 && sz_r < damon_sz_region(r))
 +		return;
-+	pr_err("reset time invalid region found!\n");
-+	pr_err("nr_accesses_bp %u last_nr_acceses %u\n",
-+			r->nr_accesses_bp, r->last_nr_accesses);
-+	pr_err("passed_sis %lu next_aggregation_sis %lu\n",
-+			c->passed_sample_intervals,
-+			c->next_aggregation_sis);
++	pr_err("damon_split_region() call with r %lu-%lu (%lu), sz_r %lu\n",
++			r->ar.start, r->ar.end, damon_sz_region(r), sz_r);
 +	WARN_ONCE();
 +}
 +#else
-+static void damon_verify_reset_aggregated(struct damon_region *r,
-+		struct damon_ctx *c)
++static void damon_verify_split_region_at(struct damon_region *r,
++		unsigned long sz_r)
 +{
 +}
 +#endif
 +
-+
  /*
-  * Reset the aggregated monitoring results ('nr_accesses' of each region).
-  */
-@@ -1697,6 +1719,7 @@ static void kdamond_reset_aggregated(struct damon_ctx *c)
- 			damon_warn_fix_nr_accesses_corruption(r);
- 			r->last_nr_accesses = r->nr_accesses;
- 			r->nr_accesses = 0;
-+			damon_verify_reset_aggregated(r, c);
- 		}
- 		ti++;
- 	}
+  * Split a region in two
+  *
+@@ -2640,6 +2657,8 @@ static void damon_split_region_at(struct damon_target *t,
+ {
+ 	struct damon_region *new;
+ 
++	damon_verify_split_region_at(r, sz_r);
++
+ 	new = damon_new_region(r->ar.start + sz_r, r->ar.end);
+ 	if (!new)
+ 		return;
 -- 
 2.47.3
