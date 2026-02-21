@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D3193101DB;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DF7E314A83;
 	Sat, 21 Feb 2026 19:36:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771702595; cv=none; b=eR9WyngRmGVshMlt4JRH0fSw0ucHhuyZMA8qPkqd2jIbeF2amrNfHs6DU5yX/SNHPuPRkHlHe2HFbdT7fQ6AlOp7ID9We0O23uaJLlfM3O8Eky0vX1XGFF+XidIoCPjse5RLTevtd4w6Cs3ozewB7LpY1bSbJsl6FpR+9nqmvvs=
+	t=1771702595; cv=none; b=jMpNntIrQIB+uh/UB1AAT/hyVkcjRzSFJTF1lrnLDAJppFSkZDXYFGk+JyiWeC835lRMxcraeY/nYWEOrhY56EXPLyzRYUUHzm88EqL4Wzt+SqOpdW9WHEXx/i59X0onNmH9OsTm6vacw0ZGgTptRr3r1kHMkBMrT/GhG3ptFuY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1771702595; c=relaxed/simple;
-	bh=l038CwXEsRXfQGW1aiTP2FYS/HRgWbBchKOVGaSDEes=;
+	bh=I8vgGzFmn9eOAxp25MVWasYsGVVIm8Br+R7YY0e17Wg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JUd/e8pL/9BzZNTq9vaRgZASPYSBN1FUtxHsr5jOj4y8KFgk5oh6vO2G7oXzeUUmYnp9XtsrbUf/0ZMHEDVLkHU5uvQIA3KWjYaYyJ/sKvHoKzSBjI8Y00MvLbv/bo+Kpzemr5nAbWwfXj3DgHzFxblfmJRn06zTyEoKduG5CXk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=celEuxFU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mfTJak7NRV7VxzInpwOXuSTqq753ysWt0fL8rB7BXKNqespLT9B9KtnRAJ3M5jkhCBUwn08FCb1TX65Avh/Vbi6XlmcGVVIuyZ/hpuhq2egrlyoATfH1fhnyqWO9DM3ZjfbMu5uGFiHyn7KAEexhvNLBN/DSxR139LK7REDu+Io=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=k+72ZuX/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="celEuxFU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C92CEC2BC87;
-	Sat, 21 Feb 2026 19:36:34 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="k+72ZuX/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10AF2C2BC9E;
+	Sat, 21 Feb 2026 19:36:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771702594;
-	bh=l038CwXEsRXfQGW1aiTP2FYS/HRgWbBchKOVGaSDEes=;
+	s=k20201202; t=1771702595;
+	bh=I8vgGzFmn9eOAxp25MVWasYsGVVIm8Br+R7YY0e17Wg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=celEuxFUEJPGHRlpjOEuVXuEbu7+3pNdX2nDOFCvfoCvNKM5OJI51+jQbxLSzLPfs
-	 tlN7VD99W/tL/MUmtrjJGG59xgAvzUz62Vy6YWPOBVQMZxq5swA3XfsBwhrNqpuvDG
-	 pH5T7u3psglNSpdCk+S3mDI73aW3FdpwAR0fvr7wrTZOV6vww35173qbdJ4AFGZMpK
-	 AWlpT/wQUeDu+DVw15l7sHpUJgt0lndxke4bG/uSiLYBxGjPQHbPiyYCc3f7ZsoyVI
-	 f/tX82f7XvG9/W22w6egNzvnHXXth2le5XTYK/cU8a5/1307TRhUGNJQJ4mXM6m2RH
-	 JVpEfl5Z9OMhg==
+	b=k+72ZuX/URzHsMuAN+fknl+2ID4qfoFDQn3AZe8rUqgJu5ygA/+FDLFEpgXnoBds+
+	 J2Uf9ypx2huS+b6oURZLEquamH70DT70inxL8Wszswem0BkIrwPjbwVXhFnnP8h2NJ
+	 uqTI/kCmCFOd0xwr5CF4JbHUUCJX1z5YI9cSAE39G9RgDnPWhbBqQRTE60DrGcyC6j
+	 bIdQxBe+P09rlDSLGaprGs6UmENL/MhYNxVsl2+VG0StOzDK0nZO9CHruaz/Ybi09b
+	 EOLzZignmqx3ExNAaewSGm/3kx4guwjE/qZBdFU6Qvws+hwOcbrQ2D+rII4qq8Y1E2
+	 eDtlfGIfpHYkg==
 From: SeongJae Park <sj@kernel.org>
 To: 
 Cc: SeongJae Park <sj@kernel.org>,
@@ -33,9 +33,9 @@ Cc: SeongJae Park <sj@kernel.org>,
 	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH 02/10] mm/damon/core: add damon_new_region() debug_sanity check
-Date: Sat, 21 Feb 2026 11:36:19 -0800
-Message-ID: <20260221193629.19332-3-sj@kernel.org>
+Subject: [RFC PATCH 03/10] mm/damon/core: add damon_del_region() debug_sanity check
+Date: Sat, 21 Feb 2026 11:36:20 -0800
+Message-ID: <20260221193629.19332-4-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260221193629.19332-1-sj@kernel.org>
 References: <20260221193629.19332-1-sj@kernel.org>
@@ -47,49 +47,43 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-damon_new_region() is supposed to be called with only valid address
-range arguments.  Do the check under DAMON_DEBUG_SANITY.
+damon_del_region() should be called for targets that have one or more
+regions.  Add a sanity check for that under CONFIG_DAMON_DEBUG_SANITY.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- mm/damon/core.c | 18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
+ mm/damon/core.c | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
 diff --git a/mm/damon/core.c b/mm/damon/core.c
-index 602b85ef23597..a7f5748c1fe17 100644
+index a7f5748c1fe17..7e03c3af03694 100644
 --- a/mm/damon/core.c
 +++ b/mm/damon/core.c
-@@ -109,6 +109,22 @@ int damon_select_ops(struct damon_ctx *ctx, enum damon_ops_id id)
- 	return err;
+@@ -158,8 +158,25 @@ void damon_add_region(struct damon_region *r, struct damon_target *t)
+ 	t->nr_regions++;
  }
  
 +#ifdef CONFIG_DAMON_DEBUG_SANITY
-+static void damon_verify_new_region(unsigned long start, unsigned long end)
++static void damon_verify_del_region(struct damon_target *t)
 +{
-+
-+	if (start < end)
++	if (t->nr_regions > 0)
 +		return;
-+	pr_err("damon_new_region() s called with start %lu >= end %lu!\n",
-+			start, end);
++	pr_err("damon_del_region() called while t->nr_regions <= 0 (%u)\n",
++			t->nr_regions);
 +	WARN_ONCE();
 +}
 +#else
-+static void damon_verify_new_region(unsigned long start, unsigned long end)
++static void damon_verify_del_region(struct damon_target *t)
 +{
 +}
 +#endif
 +
- /*
-  * Construct a damon_region struct
-  *
-@@ -122,6 +138,8 @@ struct damon_region *damon_new_region(unsigned long start, unsigned long end)
- 	if (!region)
- 		return NULL;
- 
-+	damon_verify_new_region(start, end);
+ static void damon_del_region(struct damon_region *r, struct damon_target *t)
+ {
++	damon_verify_del_region(t);
 +
- 	region->ar.start = start;
- 	region->ar.end = end;
- 	region->nr_accesses = 0;
+ 	list_del(&r->list);
+ 	t->nr_regions--;
+ }
 -- 
 2.47.3
