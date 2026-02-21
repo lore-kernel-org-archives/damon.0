@@ -1,41 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47FDF3246F8;
-	Sat, 21 Feb 2026 19:36:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CD37325716;
+	Sat, 21 Feb 2026 19:36:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771702597; cv=none; b=bAzmBccHVH+fiU2ndD0rKOmG9kaxtYqcnPvquOVXn+iscbRtj/5DhqT3c3zaf58sErtU+WlWwel3McFJNxQqfOM5fRFcvMhtnb93Kkn6DwFAwdxhBUBNK2aqdkpnO/1+MKTOxMt3MxfjI9WtzVN0vYGqfAZj4mtgiN1dt00Op9Q=
+	t=1771702597; cv=none; b=o/amRd2tbDkniJVK8k26rUfmyRQXxLvSYVsCqsd3EBExE4RIecMiWVjzOjkQ9f3YgOS7DYKmPqgxjtlXxSUHnyPf9g8vDP/SXkmLFTZfNSBo82s3Y6BJITNhRD5bTMeS96SZRv9kvFMAtNPrg5fwQ098HHmWc4zXIG0s/wljIG4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1771702597; c=relaxed/simple;
-	bh=yfRhExNso4AJw0G3Gu/sbFcwdK0et66BbTZ7++AzIBc=;
+	bh=BLMf6S2CwC1uRw1Za6T26Ewe+0K+xw3rETEPypk9tzs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TaMkoXJa26LF8CjNV0P22SMkylzohsL+0V15H7l1kmuSpDaV9d7QyJZk9ZEYIT8M2HoUsx5X14PX2lM9wi4QM5bRvbjtgWUs/Q77Xg7EH33BTvf1IMTPYSIJ7RpPWZBmzji2WutRD9aWD4jRN2ClnnkovI3yObtp3Mkdbp3LH2U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GB4ZFNP8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NUbR3tBX0qv3K130MByw3439CqjXd0fA5fQT1mbsA7Mlr1YvKT53BeK71KTPPlmSdfjGf2i3fZhQQRECOuGJCtMr/xEg5j+gA0lkFNpM1aqJW4HJzK+uOOLMbTIvylpC5YjOHM1why+DL3jDDw8tNN6XkNMYBNSyx66YKupgRdg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=C9t+9Jz2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GB4ZFNP8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C15AC4CEF7;
-	Sat, 21 Feb 2026 19:36:36 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="C9t+9Jz2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33CC1C2BC86;
+	Sat, 21 Feb 2026 19:36:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771702596;
-	bh=yfRhExNso4AJw0G3Gu/sbFcwdK0et66BbTZ7++AzIBc=;
+	s=k20201202; t=1771702597;
+	bh=BLMf6S2CwC1uRw1Za6T26Ewe+0K+xw3rETEPypk9tzs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GB4ZFNP86ucw+3iCZiFXKFSKc+7g7gQXYBizUVaM6G8Pj5spY5ST9Ekt2IMMeJPSv
-	 ujn4pxCagJ8hVsjzpmdB5AZwSv+BwpeYomGyngaJVAhKPUhDJd8kO9Ki1uLpkUDxmU
-	 jgl3T2QbmIMMnMw4xG63UgEC6QJojN5Yp4J9vzqz5oR2FZuTREgMJy+sa4+Lq1V81D
-	 gBAQD03RWTC+cT/HNkoiWnHNWyY2vmsi+oSCpTobkdBgmdM+q3o3A8r/A4dYmrLOl0
-	 rHTj1f43HloJtzgTWOzPQc/ryMrkIP9wNBcf1HzwTyMTO6Y2fbGo5LqWaGMOFuIlcJ
-	 1ESR5NKOJQC5g==
+	b=C9t+9Jz2hPriFjK93TVr0kL3267n6+R42N2n8VOHwQv5agnOpvqATVqVnAs6mYeJm
+	 +jZ4j4ch1N3NYgkCQDXyClUwsO7Pc8NzeLulg0ok3FhJmvecX/JCvcbAl10foHRcuB
+	 wLWPSfzEKGFv51WI3SPLtLH1z+U8nZX/2vPST3mDPKjOOAhNB/jBsZhuvJFz3q/4SW
+	 q1fGqkjXmcnDd+yGMIWKed55s7RyH8fKJvHntiEQtHC3L3GrwQG4kQjKAoU5pwvi2a
+	 c3diqLvXjRbg/Cvnp0m79+SFhrEe43XikHTdiz1L516/jdlbYWtmPA93R3Yn77Jg/Q
+	 lCDWB2zdWQ64A==
 From: SeongJae Park <sj@kernel.org>
 To: 
 Cc: SeongJae Park <sj@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
+	Brendan Higgins <brendan.higgins@linux.dev>,
+	David Gow <davidgow@google.com>,
 	damon@lists.linux.dev,
+	kunit-dev@googlegroups.com,
 	linux-kernel@vger.kernel.org,
+	linux-kselftest@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH 07/10] mm/damon/core: add damon_split_region_at() debug_sanity check
-Date: Sat, 21 Feb 2026 11:36:24 -0800
-Message-ID: <20260221193629.19332-8-sj@kernel.org>
+Subject: [RFC PATCH 09/10] mm/damon/tests/.kunitconifg: enable DAMON_DEBUG_SANITY
+Date: Sat, 21 Feb 2026 11:36:26 -0800
+Message-ID: <20260221193629.19332-10-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260221193629.19332-1-sj@kernel.org>
 References: <20260221193629.19332-1-sj@kernel.org>
@@ -47,50 +51,25 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-damon_split_region_at() should be called with the correct address to
-split on.  Add a sanity check for that under CONFIG_DAMON_DEBUG_SANITY.
+CONFIG_DAMON_DEBUG_SANITY is recommended for DAMON development and test
+setups.  Enable it on the default configurations for DAMON kunit test
+run.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- mm/damon/core.c | 19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
+ mm/damon/tests/.kunitconfig | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index 94be598cafef1..16f7994903d6d 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -2629,6 +2629,23 @@ static void kdamond_merge_regions(struct damon_ctx *c, unsigned int threshold,
- 			threshold / 2 < max_thres);
- }
- 
-+#ifdef CONFIG_DAMON_DEBUG_SANITY
-+static void damon_verify_split_region_at(struct damon_region *r,
-+		unsigned long sz_r)
-+{
-+	if (sz_r > 0 && sz_r < damon_sz_region(r))
-+		return;
-+	pr_err("damon_split_region() call with r %lu-%lu (%lu), sz_r %lu\n",
-+			r->ar.start, r->ar.end, damon_sz_region(r), sz_r);
-+	WARN_ONCE();
-+}
-+#else
-+static void damon_verify_split_region_at(struct damon_region *r,
-+		unsigned long sz_r)
-+{
-+}
-+#endif
+diff --git a/mm/damon/tests/.kunitconfig b/mm/damon/tests/.kunitconfig
+index 36a450f57b581..144d27e6ecc5c 100644
+--- a/mm/damon/tests/.kunitconfig
++++ b/mm/damon/tests/.kunitconfig
+@@ -13,3 +13,6 @@ CONFIG_DAMON_VADDR_KUNIT_TEST=y
+ CONFIG_SYSFS=y
+ CONFIG_DAMON_SYSFS=y
+ CONFIG_DAMON_SYSFS_KUNIT_TEST=y
 +
- /*
-  * Split a region in two
-  *
-@@ -2640,6 +2657,8 @@ static void damon_split_region_at(struct damon_target *t,
- {
- 	struct damon_region *new;
- 
-+	damon_verify_split_region_at(r, sz_r);
-+
- 	new = damon_new_region(r->ar.start + sz_r, r->ar.end);
- 	if (!new)
- 		return;
++# enable DAMON_DEBUG_SANITY to catch any bug
++CONFIG_DAMON_DEBUG_SANITY=y
 -- 
 2.47.3
