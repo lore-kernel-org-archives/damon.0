@@ -1,64 +1,64 @@
-Received: from mail-qt1-f180.google.com (mail-qt1-f180.google.com [209.85.160.180])
+Received: from mail-qt1-f172.google.com (mail-qt1-f172.google.com [209.85.160.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C58CB274B4D
-	for <damon@lists.linux.dev>; Sun, 22 Feb 2026 08:50:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4F262777F3
+	for <damon@lists.linux.dev>; Sun, 22 Feb 2026 08:50:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771750237; cv=none; b=f9CRvrTxSQQL3x5t29jGMfSrJUwuzeGFZmDrKzHveEJ9Nydin/kUAKOF/xk8Qegltp8CNj43oQiigsLFdlDJf86wcEKXycPkVgun33d4aoML9w2QvbQgo3v5xlVWzKcTrMvp8QnMN45KQoX67iJhEqUs+gVPK+J5DjGV1wetrtE=
+	t=1771750241; cv=none; b=SUTrdk6yBTBEIYxoJSpsfAkyDk+zjhC+ZdyLhlZTOpob1O2BwwkmMEjkGLl2S47Y2XCSOBNh8rf/jIYQfu6HY7fZmpkaZXWXi+aP9h323irgorj9BntZwMKQM5h/kIgvEHTwIImmGmnbiapPIJ0xyyxeBA5lSbjpQbd1K4N9V5Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771750237; c=relaxed/simple;
-	bh=BD1MVTGwTR55TmPK5/rBN1KO8hZFn4MwwvbhIkc9tdY=;
+	s=arc-20240116; t=1771750241; c=relaxed/simple;
+	bh=L39OSoun5mIdNUdUOii/YFUFnjn5985tCIlOqzIkR14=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JG8Nh+B9bXfBF9uqQFhlrXrC4YuTUveeFFJ7+RhXuRYYEdAJxvaf6JBqj1GnWJ07hQRm2a8defmqzdRX1YZ5sUqTUDMhFCkKigIMWvY3EKjByR9wlJG3QhUEHJ7KRTJ/SLapHzm2qhPIDs0q1HpPDI5g51yCJpvcIeZJ5k9lgBA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gourry.net; spf=pass smtp.mailfrom=gourry.net; dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.b=ma5wNYpL; arc=none smtp.client-ip=209.85.160.180
+	 MIME-Version; b=BgOe8RaOUjjh7GJAZhlRrFLHBA1LYhf9Lwz+rVbRst5cp5gs26NMpzlcte/7oXNqfgIRX3ZfkxbaOPSGxBsAurUWzZLQYAbPfYrrImqI9HPiNxJx4V36UfTw78PDBlfA5JGwdpQx3qa0+j48qMooYS6DVX+7yqJoUWcVOHRW+Xw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gourry.net; spf=pass smtp.mailfrom=gourry.net; dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.b=ZzGaD6Hm; arc=none smtp.client-ip=209.85.160.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gourry.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gourry.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.b="ma5wNYpL"
-Received: by mail-qt1-f180.google.com with SMTP id d75a77b69052e-506a6cf8242so28982871cf.1
-        for <damon@lists.linux.dev>; Sun, 22 Feb 2026 00:50:34 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.b="ZzGaD6Hm"
+Received: by mail-qt1-f172.google.com with SMTP id d75a77b69052e-5069ad750b7so30025531cf.2
+        for <damon@lists.linux.dev>; Sun, 22 Feb 2026 00:50:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gourry.net; s=google; t=1771750234; x=1772355034; darn=lists.linux.dev;
+        d=gourry.net; s=google; t=1771750237; x=1772355037; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=lYiMdgFVvusXEx98vFRcNZk0pTiGBH9Jq4UQYwtGtaw=;
-        b=ma5wNYpL6936qy6MYm9UrI8G4Zi03GvlrXH53o+3MQWCMkPrrxQTT4NXN47+uf3dym
-         tslJ5gNEJdDx+yoTf7/bHIy4W6v/w9Jsx+FZ1KCb1ZLQB6OECd2pG+h/W+xasXSOjm8P
-         ntKIEuwuh9R7CQgdwjZjYTqvMwJYnIw/rgwBiXlw8JCpzRnk3r7YWaefeSS7sVy6Fjne
-         6YnmL3gfq9pDcm6jW3rJQ2O/aEGD98EhaFKXDI74F2zFnM5dx1IBn6ejoIjVb9aclmzr
-         gbQ1+r8YHBChgkpLA+2ElHtmb0aL9uIhlfgsNMhsx1SGru9+cgDYRjYhg5NRp+yD7Tfd
-         unMg==
+        bh=SA1eNtOuG/uqMtPYaXXL4O8NEWGMm6Tbd8ozL7DNrg8=;
+        b=ZzGaD6HmPao6ZJruvPWItXAOcDavYzLditEYq/X2FqKwTfzBwlJ7/ZBA0JBYMbn9Za
+         5WSS59HFT77yWhwi1IEKb0cTCTHvKgBcuHvCQVI1Igy5Sbr+kcAJWQ0cqjLAVMax4j+e
+         2DiauRF4iDlr1Y000ZRRZX0UxCA+s23kthW8Uo1sJdDq1SibiYXiIJQGP1kldexbqZIV
+         LQAicjAlNkw9HpMeV/+pKWH4PFIEy305iXP1F0Nl1j6+kDqCtXiwOZC3fWTTaMX9lSJJ
+         ls4LIlmJ7NJ35x2MJso/ok8FWPryF2J6aYUxCH7HlOlZNCUBxX9T6DTq94qshezkz3Pq
+         hnBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771750234; x=1772355034;
+        d=1e100.net; s=20230601; t=1771750237; x=1772355037;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=lYiMdgFVvusXEx98vFRcNZk0pTiGBH9Jq4UQYwtGtaw=;
-        b=ClU2CFCF5c0dmqDJMnEPsxGlz/eFtaLHYoyRbnHiq1Ko2+Q1mHgo1lq3vW7xkRYsi+
-         w2qy+dogL5FQn9/larOj5jHAMFJ7AygpsJWnhEGCC8Hnlf0WWt8xqeBjHmO6Jfc7fy3r
-         hs7DNzE1ornZOR5tns1qn7MIo+Ips2Gb2B6EiPrQsbnn8x0QfKcudLLXm6nlUO2nbk5n
-         nPrg8ztxjIV/hpAIGOz1JgZSj7fkDh15+xrAJBSkcXn03U9fsBI4IS+iFmLWz7rW1FhP
-         Vd9QgRHU9GGY8VyqE1J80Bwn6/nzkd2/uAScbdVhzpEENcUt11OE1EAbLmjRulISwzBM
-         /EQw==
-X-Forwarded-Encrypted: i=1; AJvYcCWUTCpBzAfkvsfijjVLo5j4DZTqa/Iw6m/i8Y8aawC5qGD2qjDE/BJJXZbC7URmf29Q99ZyGA==@lists.linux.dev
-X-Gm-Message-State: AOJu0YwjDMs0aWj4aX3rhR2scNqWSpz+UXVrt19Ww26ioivn+lxANpD3
-	PlXmtSdXr/82jZa+BEXJ6T+4G/KsRJbdpAStNobYO5gXUjLubHHSq8oaLmEOrTUpWT4=
-X-Gm-Gg: AZuq6aIq/BqqDwNYfkp9RjrYuRyEvxJAWm02Z8x1KujFLrLKHBaAG/qkK5YmTrAbUJk
-	uMEgdyX5kT6IQEDt1ysenhQqMxL/XxvrrW0P4jy5SIHJ+p5Iaz6mWBRfCXze7u5Zy+3ZMaEiDXV
-	1CInutWcAgz17t/GqfMrsJs0SaXy6+zdhcsqpCkjk6NVNFk0Af+M58GMNFch4vmlP8PFE9TGOyA
-	U7f+ku3IGRaq+DuFaRmlrl5rnW7G4tnCm24CG3vj3N+9fnwpZbbaXYvhmPaBRBkZQLnox4/rkN6
-	nPKwM2An95pSjkIQE4v4OzsiQGq/P1Fby+Jr60yaSP21LA6M9+wYs1bW/E3yEVA8qkpGRqUUl9F
-	xfmPbOsgUz5QHBmObfxMUvVGD9xYb+PBhqPFTzn++ENfnJcGkfo+eFfeZAelbQn+LJJ7N1/y68u
-	6CNMgau6Oi/3mXmMif3upemqjZIFzwYlDbYxcAU3Camo8en5Qj4quF8MsJxIzdj+e2zzfUVTY/Q
-	S4Bwn2hTCCHVD8=
-X-Received: by 2002:ac8:5711:0:b0:506:21ff:af13 with SMTP id d75a77b69052e-5070bba24cemr71385411cf.1.1771750233590;
-        Sun, 22 Feb 2026 00:50:33 -0800 (PST)
+        bh=SA1eNtOuG/uqMtPYaXXL4O8NEWGMm6Tbd8ozL7DNrg8=;
+        b=dReUmgD9mhpbJO/eIBFJSKprZQjOVdSdPgN4UMlL0uZNSK/cBLDGy4rLwZYjc0M6BE
+         ONk+MnQLlrmFfQ3njFbBo/o1mUgjlPhxaN7dyveckY3Lr7MDp1xqmvdLFijkk9r7epZ4
+         aDaMEh8wgHV8mPVPo/hPxpf1L5OqEFjjIbM0vbP79AQTAdRomS06UfhyXwDa4SMCnIJe
+         fXr85YoW1mSjvU3QRY4hzXJ2cpIn2laQjwmXk0XApGMSh3fs1AWe7IXEGHq5JWZ9U4NI
+         G9+TOHFk3spSdgOfnuNwPn6cWlVE9ACnN0nAwZJlaUrozCCO3BdxbxYrDGwQEi8jyY8e
+         NSlw==
+X-Forwarded-Encrypted: i=1; AJvYcCX795UtpU1USZSx7UqMe1lEPXZ5WYhvsYN8o/9fW0Q5TW6HjP3/2MoCuG89uZzOqSJVaRANBg==@lists.linux.dev
+X-Gm-Message-State: AOJu0Yx8zZojzwJ4w3aB6WKS5HHILow+uzU92ll/shGEp7/qKHf4xOzE
+	74KbvmaEMPrQCVOfXTgGxkw3uyh4fRMjDXFJ2LifTbKJUGhv42HTy2vxmJyRTdpJ/yc=
+X-Gm-Gg: AZuq6aLozvLa74ygQ3WDqczk7b4F4vsz7w55xsN4IN7Gq4S/T/k5kxI3Y8JYCWyUHXH
+	I017Ia6lNEYNXikE1aJPYVwF4kP/1OSSjgitnniQR3rppnsfqTK5DmCWc9DsP4jvPytxpHp2+Z+
+	0cdkPAI2xCxQr3OW+MqY88880J4pLTVIsyKI4oHxBx8uQsRWhvVqliSRy6to3mbp/bE9lpPyqTK
+	OmYD0fYOZ9xC6q/VXicRI5R5jrgBEQX5LiC5HrQHiB3BYsTMCwSoTpcm925U29JKEzR984Y1Rxv
+	VEj8QCcEq+Fp+xvk/7VodLNVwxZkZoVRzhwuWaFq8dof8RxdnSjMTRqX8OAcYj3KqOXdxw1UC6d
+	jh+PGlbA2/xUrPnx1+GsToP64YmvIHjpY/udT7QJ2ZSq23W3CBGppdK3+tWdbX0D8kRk/L/Q58N
+	W/5VapH6KpguBKv2nWTv8xocv20NEmoq9TstUXgurbjnCn7I2WkxW9huRuoR7teN6uiJylNYpC0
+	gMJWW36x8ldpSQ=
+X-Received: by 2002:ac8:7c55:0:b0:501:3b8c:7d72 with SMTP id d75a77b69052e-5070bbdb9e4mr72387751cf.27.1771750237141;
+        Sun, 22 Feb 2026 00:50:37 -0800 (PST)
 Received: from gourry-fedora-PF4VCD3F.lan (pool-96-255-20-138.washdc.ftas.verizon.net. [96.255.20.138])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-5070d53f0fcsm38640631cf.9.2026.02.22.00.50.31
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-5070d53f0fcsm38640631cf.9.2026.02.22.00.50.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 22 Feb 2026 00:50:33 -0800 (PST)
+        Sun, 22 Feb 2026 00:50:36 -0800 (PST)
 From: Gregory Price <gourry@gourry.net>
 To: lsf-pc@lists.linux-foundation.org
 Cc: linux-kernel@vger.kernel.org,
@@ -134,9 +134,9 @@ Cc: linux-kernel@vger.kernel.org,
 	bhe@redhat.com,
 	zhengqi.arch@bytedance.com,
 	terry.bowman@amd.com
-Subject: [RFC PATCH v4 26/27] cxl: add cxl_mempolicy sample PCI driver
-Date: Sun, 22 Feb 2026 03:48:41 -0500
-Message-ID: <20260222084842.1824063-27-gourry@gourry.net>
+Subject: [RFC PATCH v4 27/27] cxl: add cxl_compression PCI driver
+Date: Sun, 22 Feb 2026 03:48:42 -0500
+Message-ID: <20260222084842.1824063-28-gourry@gourry.net>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260222084842.1824063-1-gourry@gourry.net>
 References: <20260222084842.1824063-1-gourry@gourry.net>
@@ -148,194 +148,941 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Add a sample CXL type-3 driver that registers device memory as
-private-node NUMA memory reachable only via explicit mempolicy
-(set_mempolicy / mbind).
+Add a generic CXL type-3 driver for compressed memory controllers.
+
+The driver provides an alternative PCI binding that converts CXL
+RAM regions to private-node sysram and registers them with the
+CRAM subsystem for transparent demotion/promotion.
 
 Probe flow:
-  1. Call cxl_pci_type3_probe_init() for standard CXL device setup
-  2. Look for pre-committed RAM regions; if none exist, create one
-     using cxl_get_hpa_freespace() + cxl_request_dpa() +
-     cxl_create_region()
-  3. Convert the region to sysram via devm_cxl_add_sysram() with
-     private=true and MMOP_ONLINE_MOVABLE
-  4. Register node_private_ops with NP_OPS_MIGRATION | NP_OPS_MEMPOLICY
-     so the node is excluded from default allocations
+  1. cxl_pci_type3_probe_init() for standard CXL device setup
+  2. Discover/convert auto-RAM regions or create a RAM region
+  3. Convert to private-node sysram via devm_cxl_add_sysram()
+  4. Register with CRAM via cram_register_private_node()
 
-The migrate_to callback uses alloc_migration_target() with
-__GFP_THISNODE | __GFP_PRIVATE to keep pages on the target node.
+Page flush pipeline:
+  When a CRAM folio is freed, the CRAM free_folio   callback buffers
+  it into a per-CPU RCU-protected flush buffer to offload the operation.
 
-Move struct migration_target_control from mm/internal.h to
-include/linux/migrate.h so the driver can use alloc_migration_target()
-without depending on mm-internal headers.
+  A periodic kthread swaps the per-CPU buffers under RCU, then sends
+  batched Sanitize-Zero commands so the device can zero pages.
+
+  A flush_record bitmap tracks in-flight pages to avoid re-buffering on
+  the second free_folio entry after folio_put().
+
+  Overflow from full buffers is handled by a per-CPU workqueue fallback.
+
+Watermark interrupts:
+  MSI-X vector 12 - delivers "Low" watermark interrupts
+  MSI-X vector 13 - delivers "High" watermark interrupts
+  This adjusts CRAM pressure:
+	Low  - increases pressure.
+  	High - reduces pressure.
+
+  A dynamic watermark mode cycles through four phases with
+  progressively tighter thresholds.
+
+  Static watermark mode sets pressure 0 or MAX respectively.
+
+Teardown ordering:
+  pre_teardown  - cram_unregister + retry-loop memory offline
+  post_teardown - kthread stop, drain all flush buffers via CCI
 
 Usage:
    echo $PCI_DEV > /sys/bus/pci/drivers/cxl_pci/unbind
-   echo $PCI_DEV > /sys/bus/pci/drivers/cxl_mempolicy/bind
+   echo $PCI_DEV > /sys/bus/pci/drivers/cxl_compression/bind
 
 Signed-off-by: Gregory Price <gourry@gourry.net>
 ---
- drivers/cxl/Kconfig                           |   2 +
- drivers/cxl/Makefile                          |   2 +
- drivers/cxl/type3_drivers/Kconfig             |   2 +
- drivers/cxl/type3_drivers/Makefile            |   2 +
- .../cxl/type3_drivers/cxl_mempolicy/Kconfig   |  16 +
- .../cxl/type3_drivers/cxl_mempolicy/Makefile  |   4 +
- .../type3_drivers/cxl_mempolicy/mempolicy.c   | 297 ++++++++++++++++++
- include/linux/migrate.h                       |   7 +-
- mm/internal.h                                 |   7 -
- 9 files changed, 331 insertions(+), 8 deletions(-)
- create mode 100644 drivers/cxl/type3_drivers/Kconfig
- create mode 100644 drivers/cxl/type3_drivers/Makefile
- create mode 100644 drivers/cxl/type3_drivers/cxl_mempolicy/Kconfig
- create mode 100644 drivers/cxl/type3_drivers/cxl_mempolicy/Makefile
- create mode 100644 drivers/cxl/type3_drivers/cxl_mempolicy/mempolicy.c
+ drivers/cxl/type3_drivers/Kconfig             |    1 +
+ drivers/cxl/type3_drivers/Makefile            |    1 +
+ .../cxl/type3_drivers/cxl_compression/Kconfig |   20 +
+ .../type3_drivers/cxl_compression/Makefile    |    4 +
+ .../cxl_compression/compression.c             | 1025 +++++++++++++++++
+ 5 files changed, 1051 insertions(+)
+ create mode 100644 drivers/cxl/type3_drivers/cxl_compression/Kconfig
+ create mode 100644 drivers/cxl/type3_drivers/cxl_compression/Makefile
+ create mode 100644 drivers/cxl/type3_drivers/cxl_compression/compression.c
 
-diff --git a/drivers/cxl/Kconfig b/drivers/cxl/Kconfig
-index f99aa7274d12..1648cdeaa0c9 100644
---- a/drivers/cxl/Kconfig
-+++ b/drivers/cxl/Kconfig
-@@ -278,4 +278,6 @@ config CXL_ATL
- 	depends on CXL_REGION
- 	depends on ACPI_PRMT && AMD_NB
- 
-+source "drivers/cxl/type3_drivers/Kconfig"
-+
- endif
-diff --git a/drivers/cxl/Makefile b/drivers/cxl/Makefile
-index 2caa90fa4bf2..94d2b2233bf8 100644
---- a/drivers/cxl/Makefile
-+++ b/drivers/cxl/Makefile
-@@ -19,3 +19,5 @@ cxl_acpi-y := acpi.o
- cxl_pmem-y := pmem.o security.o
- cxl_mem-y := mem.o
- cxl_pci-y := pci.o
-+
-+obj-y += type3_drivers/
 diff --git a/drivers/cxl/type3_drivers/Kconfig b/drivers/cxl/type3_drivers/Kconfig
-new file mode 100644
-index 000000000000..369b21763856
---- /dev/null
+index 369b21763856..98f73e46730e 100644
+--- a/drivers/cxl/type3_drivers/Kconfig
 +++ b/drivers/cxl/type3_drivers/Kconfig
-@@ -0,0 +1,2 @@
-+# SPDX-License-Identifier: GPL-2.0
-+source "drivers/cxl/type3_drivers/cxl_mempolicy/Kconfig"
+@@ -1,2 +1,3 @@
+ # SPDX-License-Identifier: GPL-2.0
+ source "drivers/cxl/type3_drivers/cxl_mempolicy/Kconfig"
++source "drivers/cxl/type3_drivers/cxl_compression/Kconfig"
 diff --git a/drivers/cxl/type3_drivers/Makefile b/drivers/cxl/type3_drivers/Makefile
-new file mode 100644
-index 000000000000..2b82265ff118
---- /dev/null
+index 2b82265ff118..f5b0766d92af 100644
+--- a/drivers/cxl/type3_drivers/Makefile
 +++ b/drivers/cxl/type3_drivers/Makefile
-@@ -0,0 +1,2 @@
-+# SPDX-License-Identifier: GPL-2.0
-+obj-$(CONFIG_CXL_MEMPOLICY) += cxl_mempolicy/
-diff --git a/drivers/cxl/type3_drivers/cxl_mempolicy/Kconfig b/drivers/cxl/type3_drivers/cxl_mempolicy/Kconfig
+@@ -1,2 +1,3 @@
+ # SPDX-License-Identifier: GPL-2.0
+ obj-$(CONFIG_CXL_MEMPOLICY) += cxl_mempolicy/
++obj-$(CONFIG_CXL_COMPRESSION) += cxl_compression/
+diff --git a/drivers/cxl/type3_drivers/cxl_compression/Kconfig b/drivers/cxl/type3_drivers/cxl_compression/Kconfig
 new file mode 100644
-index 000000000000..3c45da237b9f
+index 000000000000..8c891a48b000
 --- /dev/null
-+++ b/drivers/cxl/type3_drivers/cxl_mempolicy/Kconfig
-@@ -0,0 +1,16 @@
-+config CXL_MEMPOLICY
-+	tristate "CXL Private Memory with Mempolicy Support"
++++ b/drivers/cxl/type3_drivers/cxl_compression/Kconfig
+@@ -0,0 +1,20 @@
++config CXL_COMPRESSION
++	tristate "CXL Compression Memory Driver"
 +	depends on CXL_PCI
 +	depends on CXL_REGION
-+	depends on NUMA
-+	depends on MIGRATION
++	depends on CRAM
 +	help
-+	  Minimal driver for CXL memory devices that registers memory as
-+	  N_MEMORY_PRIVATE with mempolicy support.  The memory is isolated
-+	  from default allocations and can only be reached via explicit
-+	  mempolicy (set_mempolicy or mbind).
++	  This driver provides an alternative PCI binding for CXL memory
++	  devices with compressed memory support. It converts CXL RAM
++	  regions to sysram for direct memory hotplug and registers with
++	  the CRAM subsystem for transparent compression.
 +
-+	  No compression, no PTE controls, the memory behaves like normal
-+	  DRAM but is excluded from fallback allocations.
++	  Page reclamation uses the standard CXL Media Operations Zero
++	  command (opcode 0x4402). If the device does not support it,
++	  the driver falls back to inline CPU zeroing.
++
++	  Usage: First unbind the device from cxl_pci, then bind to
++	  cxl_compression. The driver will initialize the CXL device and
++	  convert any RAM regions to use direct memory hotplug via sysram.
 +
 +	  If unsure say 'n'.
-diff --git a/drivers/cxl/type3_drivers/cxl_mempolicy/Makefile b/drivers/cxl/type3_drivers/cxl_mempolicy/Makefile
+diff --git a/drivers/cxl/type3_drivers/cxl_compression/Makefile b/drivers/cxl/type3_drivers/cxl_compression/Makefile
 new file mode 100644
-index 000000000000..dfb58fc88ad9
+index 000000000000..46f34809bf74
 --- /dev/null
-+++ b/drivers/cxl/type3_drivers/cxl_mempolicy/Makefile
++++ b/drivers/cxl/type3_drivers/cxl_compression/Makefile
 @@ -0,0 +1,4 @@
 +# SPDX-License-Identifier: GPL-2.0
-+obj-$(CONFIG_CXL_MEMPOLICY) += cxl_mempolicy.o
-+cxl_mempolicy-y := mempolicy.o
++obj-$(CONFIG_CXL_COMPRESSION) += cxl_compression.o
++cxl_compression-y := compression.o
 +ccflags-y += -I$(srctree)/drivers/cxl
-diff --git a/drivers/cxl/type3_drivers/cxl_mempolicy/mempolicy.c b/drivers/cxl/type3_drivers/cxl_mempolicy/mempolicy.c
+diff --git a/drivers/cxl/type3_drivers/cxl_compression/compression.c b/drivers/cxl/type3_drivers/cxl_compression/compression.c
 new file mode 100644
-index 000000000000..1c19818eb268
+index 000000000000..e4c8b62227e2
 --- /dev/null
-+++ b/drivers/cxl/type3_drivers/cxl_mempolicy/mempolicy.c
-@@ -0,0 +1,297 @@
++++ b/drivers/cxl/type3_drivers/cxl_compression/compression.c
+@@ -0,0 +1,1025 @@
 +// SPDX-License-Identifier: GPL-2.0-only
 +/* Copyright(c) 2026 Meta Platforms, Inc. All rights reserved. */
 +/*
-+ * CXL Mempolicy Driver
++ * CXL Compression Driver
 + *
-+ * Minimal driver for CXL memory devices that registers memory as
-+ * N_MEMORY_PRIVATE with mempolicy support but no PTE controls.  The
-+ * memory behaves like normal DRAM but is isolated from default allocations,
-+ * it can only be reached via explicit mempolicy (set_mempolicy/mbind).
++ * This driver provides an alternative binding for CXL memory devices that
++ * converts all associated RAM regions to sysram_regions for direct memory
++ * hotplug, bypassing the standard dax region path.
++ *
++ * Page reclamation uses the standard CXL Media Operations Zero command
++ * (opcode 0x4402, class 0x01, subclass 0x01).  Watermark interrupts
++ * are delivered via separate MSI-X vectors (12 for lthresh, 13 for
++ * hthresh), injected externally via QMP.
 + *
 + * Usage:
-+ *   1. Unbind device from cxl_pci:
++ *   1. Device initially binds to cxl_pci at boot
++ *   2. Unbind from cxl_pci:
 + *        echo $PCI_DEV > /sys/bus/pci/drivers/cxl_pci/unbind
-+ *   2. Bind to cxl_mempolicy:
-+ *        echo $PCI_DEV > /sys/bus/pci/drivers/cxl_mempolicy/bind
++ *   3. Bind to cxl_compression:
++ *        echo $PCI_DEV > /sys/bus/pci/drivers/cxl_compression/bind
 + */
 +
++#include <linux/unaligned.h>
++#include <linux/io-64-nonatomic-lo-hi.h>
 +#include <linux/module.h>
++#include <linux/delay.h>
++#include <linux/sizes.h>
++#include <linux/mutex.h>
++#include <linux/list.h>
 +#include <linux/pci.h>
++#include <linux/io.h>
++#include <linux/interrupt.h>
++#include <linux/bitmap.h>
++#include <linux/highmem.h>
++#include <linux/workqueue.h>
++#include <linux/kthread.h>
++#include <linux/rcupdate.h>
++#include <linux/percpu.h>
++#include <linux/sched.h>
++#include <linux/cram.h>
++#include <linux/memory_hotplug.h>
 +#include <linux/xarray.h>
-+#include <linux/node_private.h>
-+#include <linux/migrate.h>
 +#include <cxl/mailbox.h>
 +#include "cxlmem.h"
 +#include "cxl.h"
 +
-+struct cxl_mempolicy_ctx {
-+	struct cxl_region *cxlr;
-+	struct cxl_endpoint_decoder *cxled;
++/*
++ * Per-device compression context lookup.
++ *
++ * pci_set_drvdata() MUST store cxlds because mbox_to_cxlds() uses
++ * dev_get_drvdata() to recover the cxl_dev_state from the mailbox host
++ * device.  Storing anything else in pci drvdata breaks every CXL mailbox
++ * command.  Use an xarray keyed by pci_dev pointer so that multiple
++ * devices can bind concurrently without colliding.
++ */
++static DEFINE_XARRAY(comp_ctx_xa);
++
++static struct cxl_compression_ctx *pdev_to_comp_ctx(struct pci_dev *pdev)
++{
++	return xa_load(&comp_ctx_xa, (unsigned long)pdev);
++}
++
++#define CXL_MEDIA_OP_OPCODE		0x4402
++#define CXL_MEDIA_OP_CLASS_SANITIZE	0x01
++#define CXL_MEDIA_OP_SUBC_ZERO		0x01
++
++struct cxl_dpa_range {
++	__le64 starting_dpa;
++	__le64 length;
++} __packed;
++
++struct cxl_media_op_input {
++	u8 media_operation_class;
++	u8 media_operation_subclass;
++	__le16 reserved;
++	__le32 dpa_range_count;
++	struct cxl_dpa_range ranges[];
++} __packed;
++
++#define CXL_CT3_MSIX_LTHRESH		12
++#define CXL_CT3_MSIX_HTHRESH		13
++#define CXL_CT3_MSIX_VECTOR_NR		14
++#define CXL_FLUSH_INTERVAL_DEFAULT_MS	1000
++
++static unsigned int flush_buf_size;
++module_param(flush_buf_size, uint, 0444);
++MODULE_PARM_DESC(flush_buf_size,
++		 "Max DPA ranges per media ops CCI command (0 = use hw max)");
++
++static unsigned int flush_interval_ms = CXL_FLUSH_INTERVAL_DEFAULT_MS;
++module_param(flush_interval_ms, uint, 0644);
++MODULE_PARM_DESC(flush_interval_ms,
++		 "Flush worker interval in ms (default 1000)");
++
++struct cxl_flush_buf {
++	unsigned int count;
++	unsigned int max;			/* max ranges per command */
++	struct cxl_media_op_input *cmd;		/* pre-allocated CCI payload */
++	struct folio **folios;			/* parallel folio tracking */
++};
++
++struct cxl_flush_ctx;
++
++struct cxl_pcpu_flush {
++	struct cxl_flush_buf __rcu *active;	/* callback writes here */
++	struct cxl_flush_buf *overflow_spare;	/* spare for overflow work */
++	struct work_struct overflow_work;	/* per-CPU overflow flush */
++	struct cxl_flush_ctx *ctx;		/* backpointer */
++};
++
++/**
++ * struct cxl_flush_ctx - Per-region flush context
++ * @flush_record: two-level bitmap, 1 bit per 4KB page, tracks in-flight ops
++ * @flush_record_pages: number of pages in the flush_record array
++ * @nr_pages: total number of 4KB pages in the region
++ * @base_pfn: starting PFN of the region (for DPA offset calculation)
++ * @buf_max: max DPA ranges per CCI command
++ * @media_ops_supported: true if device supports media operations zero
++ * @pcpu: per-CPU flush state
++ * @kthread_spares: array[nr_cpu_ids] of spare buffers for the kthread
++ * @flush_thread: round-robin kthread
++ * @mbox: pointer to CXL mailbox for sending CCI commands
++ * @dev: device for logging
++ * @nid: NUMA node of the private region
++ */
++struct cxl_flush_ctx {
++	unsigned long	**flush_record;
++	unsigned int	 flush_record_pages;
++	unsigned long	 nr_pages;
++	unsigned long	 base_pfn;
++	unsigned int	 buf_max;
++	bool		 media_ops_supported;
++	struct cxl_pcpu_flush __percpu *pcpu;
++	struct cxl_flush_buf **kthread_spares;
++	struct task_struct *flush_thread;
++	struct cxl_mailbox *mbox;
++	struct device	*dev;
++	int		 nid;
++};
++
++/* Bits per page-sized bitmap chunk */
++#define FLUSH_RECORD_BITS_PER_PAGE	(PAGE_SIZE * BITS_PER_BYTE)
++#define FLUSH_RECORD_SHIFT		(PAGE_SHIFT + 3)
++
++static unsigned long **flush_record_alloc(unsigned long nr_bits,
++					  unsigned int *nr_pages_out)
++{
++	unsigned int nr_pages = DIV_ROUND_UP(nr_bits, FLUSH_RECORD_BITS_PER_PAGE);
++	unsigned long **pages;
++	unsigned int i;
++
++	pages = kcalloc(nr_pages, sizeof(*pages), GFP_KERNEL);
++	if (!pages)
++		return NULL;
++
++	for (i = 0; i < nr_pages; i++) {
++		pages[i] = (unsigned long *)get_zeroed_page(GFP_KERNEL);
++		if (!pages[i])
++			goto err;
++	}
++
++	*nr_pages_out = nr_pages;
++	return pages;
++
++err:
++	while (i--)
++		free_page((unsigned long)pages[i]);
++	kfree(pages);
++	return NULL;
++}
++
++static void flush_record_free(unsigned long **pages, unsigned int nr_pages)
++{
++	unsigned int i;
++
++	if (!pages)
++		return;
++
++	for (i = 0; i < nr_pages; i++)
++		free_page((unsigned long)pages[i]);
++	kfree(pages);
++}
++
++static inline bool flush_record_test_and_clear(unsigned long **pages,
++					       unsigned long idx)
++{
++	return test_and_clear_bit(idx & (FLUSH_RECORD_BITS_PER_PAGE - 1),
++				  pages[idx >> FLUSH_RECORD_SHIFT]);
++}
++
++static inline void flush_record_set(unsigned long **pages, unsigned long idx)
++{
++	set_bit(idx & (FLUSH_RECORD_BITS_PER_PAGE - 1),
++		pages[idx >> FLUSH_RECORD_SHIFT]);
++}
++
++static struct cxl_flush_buf *cxl_flush_buf_alloc(unsigned int max, int nid)
++{
++	struct cxl_flush_buf *buf;
++
++	buf = kzalloc_node(sizeof(*buf), GFP_KERNEL, nid);
++	if (!buf)
++		return NULL;
++
++	buf->max = max;
++	buf->cmd = kvzalloc_node(struct_size(buf->cmd, ranges, max),
++				 GFP_KERNEL, nid);
++	if (!buf->cmd)
++		goto err_cmd;
++
++	buf->folios = kcalloc_node(max, sizeof(struct folio *),
++				   GFP_KERNEL, nid);
++	if (!buf->folios)
++		goto err_folios;
++
++	return buf;
++
++err_folios:
++	kvfree(buf->cmd);
++err_cmd:
++	kfree(buf);
++	return NULL;
++}
++
++static void cxl_flush_buf_free(struct cxl_flush_buf *buf)
++{
++	if (!buf)
++		return;
++	kvfree(buf->cmd);
++	kfree(buf->folios);
++	kfree(buf);
++}
++
++static inline void cxl_flush_buf_reset(struct cxl_flush_buf *buf)
++{
++	buf->count = 0;
++}
++
++static void cxl_flush_buf_send(struct cxl_flush_ctx *ctx,
++			       struct cxl_flush_buf *buf)
++{
++	struct cxl_mbox_cmd mbox_cmd;
++	unsigned int count = buf->count;
++	unsigned int i;
++	int rc;
++
++	if (count == 0)
++		return;
++
++	if (!ctx->media_ops_supported) {
++		/* No device support, zero all folios inline */
++		for (i = 0; i < count; i++)
++			folio_zero_range(buf->folios[i], 0,
++					 folio_size(buf->folios[i]));
++		goto release;
++	}
++
++	buf->cmd->media_operation_class = CXL_MEDIA_OP_CLASS_SANITIZE;
++	buf->cmd->media_operation_subclass = CXL_MEDIA_OP_SUBC_ZERO;
++	buf->cmd->reserved = 0;
++	buf->cmd->dpa_range_count = cpu_to_le32(count);
++
++	mbox_cmd = (struct cxl_mbox_cmd) {
++		.opcode = CXL_MEDIA_OP_OPCODE,
++		.payload_in = buf->cmd,
++		.size_in = struct_size(buf->cmd, ranges, count),
++		.poll_interval_ms = 1000,
++		.poll_count = 30,
++	};
++
++	rc = cxl_internal_send_cmd(ctx->mbox, &mbox_cmd);
++	if (rc) {
++		dev_warn(ctx->dev,
++			 "media ops zero CCI command failed: %d\n", rc);
++
++		/* Zero all folios inline on failure */
++		for (i = 0; i < count; i++)
++			folio_zero_range(buf->folios[i], 0,
++					 folio_size(buf->folios[i]));
++	}
++
++release:
++	for (i = 0; i < count; i++)
++		folio_put(buf->folios[i]);
++
++	cxl_flush_buf_reset(buf);
++}
++
++static int cxl_compression_flush_cb(struct folio *folio, void *private)
++{
++	struct cxl_flush_ctx *ctx = private;
++	unsigned long pfn = folio_pfn(folio);
++	unsigned long idx = pfn - ctx->base_pfn;
++	unsigned long nr = folio_nr_pages(folio);
++	struct cxl_pcpu_flush *pcpu;
++	struct cxl_flush_buf *buf;
++	unsigned long flags;
++	unsigned int pos;
++
++	/* Case (a): flush record bit set, resolution from our media op */
++	if (flush_record_test_and_clear(ctx->flush_record, idx))
++		return 0;
++
++	dev_dbg_ratelimited(ctx->dev,
++			     "flush_cb: folio pfn=%lx order=%u idx=%lu cpu=%d\n",
++			     pfn, folio_order(folio), idx,
++			     raw_smp_processor_id());
++
++	local_irq_save(flags);
++	rcu_read_lock();
++
++	pcpu = this_cpu_ptr(ctx->pcpu);
++	buf = rcu_dereference(pcpu->active);
++
++	if (unlikely(!buf || buf->count >= buf->max)) {
++		rcu_read_unlock();
++		local_irq_restore(flags);
++		if (buf)
++			schedule_work_on(raw_smp_processor_id(),
++					 &pcpu->overflow_work);
++		return 2;
++	}
++
++	/* Case (b): write DPA range directly into pre-formatted CCI buffer */
++	folio_get(folio);
++	flush_record_set(ctx->flush_record, idx);
++
++	pos = buf->count;
++	buf->folios[pos] = folio;
++	buf->cmd->ranges[pos].starting_dpa = cpu_to_le64((u64)idx * PAGE_SIZE);
++	buf->cmd->ranges[pos].length = cpu_to_le64((u64)nr * PAGE_SIZE);
++	buf->count = pos + 1;
++
++	rcu_read_unlock();
++	local_irq_restore(flags);
++
++	return 1;
++}
++
++static int cxl_flush_kthread_fn(void *data)
++{
++	struct cxl_flush_ctx *ctx = data;
++	struct cxl_flush_buf *dirty;
++	struct cxl_pcpu_flush *pcpu;
++	int cpu;
++	bool any_dirty;
++
++	while (!kthread_should_stop()) {
++		any_dirty = false;
++
++		/* Phase 1: Swap all per-CPU buffers */
++		for_each_possible_cpu(cpu) {
++			struct cxl_flush_buf *spare = ctx->kthread_spares[cpu];
++
++			if (!spare)
++				continue;
++
++			pcpu = per_cpu_ptr(ctx->pcpu, cpu);
++			cxl_flush_buf_reset(spare);
++			dirty = rcu_replace_pointer(pcpu->active, spare, true);
++			ctx->kthread_spares[cpu] = dirty;
++
++			if (dirty && dirty->count > 0) {
++				dev_dbg(ctx->dev,
++					 "flush_kthread: cpu=%d has %u dirty ranges\n",
++					 cpu, dirty->count);
++				any_dirty = true;
++			}
++		}
++
++		if (!any_dirty)
++			goto sleep;
++
++		/* Phase 2: Single synchronize_rcu for all swaps */
++		synchronize_rcu();
++
++		/* Phase 3: Send CCI commands for dirty buffers */
++		for_each_possible_cpu(cpu) {
++			dirty = ctx->kthread_spares[cpu];
++			if (dirty && dirty->count > 0)
++				cxl_flush_buf_send(ctx, dirty);
++			/* dirty is now clean, stays as kthread_spares[cpu] */
++		}
++
++sleep:
++		schedule_timeout_interruptible(
++			msecs_to_jiffies(flush_interval_ms));
++	}
++
++	return 0;
++}
++
++static void cxl_flush_overflow_work(struct work_struct *work)
++{
++	struct cxl_pcpu_flush *pcpu =
++		container_of(work, struct cxl_pcpu_flush, overflow_work);
++	struct cxl_flush_ctx *ctx = pcpu->ctx;
++	struct cxl_flush_buf *dirty, *spare;
++	unsigned long flags;
++
++	dev_dbg(ctx->dev, "flush_overflow: cpu=%d buffer full, flushing\n",
++		 raw_smp_processor_id());
++
++	spare = pcpu->overflow_spare;
++	if (!spare)
++		return;
++
++	cxl_flush_buf_reset(spare);
++
++	local_irq_save(flags);
++	dirty = rcu_replace_pointer(pcpu->active, spare, true);
++	local_irq_restore(flags);
++
++	pcpu->overflow_spare = dirty;
++
++	synchronize_rcu();
++	cxl_flush_buf_send(ctx, dirty);
++}
++
++struct cxl_teardown_ctx {
++	struct cxl_flush_ctx *flush_ctx;
++	struct cxl_sysram *sysram;
 +	int nid;
 +};
 +
-+static DEFINE_XARRAY(ctx_xa);
-+
-+static struct cxl_mempolicy_ctx *memdev_to_ctx(struct cxl_memdev *cxlmd)
++static void cxl_compression_pre_teardown(void *data)
 +{
-+	struct pci_dev *pdev = to_pci_dev(cxlmd->dev.parent);
++	struct cxl_teardown_ctx *tctx = data;
 +
-+	return xa_load(&ctx_xa, (unsigned long)pdev);
++	if (!tctx->flush_ctx)
++		return;
++
++	/*
++	 * Unregister the CRAM node before memory goes offline.
++	 * node_private_clear_ops requires the node_private to still
++	 * exist, which is destroyed during memory removal.
++	 */
++	cram_unregister_private_node(tctx->nid);
++
++	/*
++	 * Offline and remove CXL memory with retry.  CXL compressed
++	 * memory may have pages pinned by in-flight flush operations;
++	 * keep retrying until they complete.  Once done, sysram->res
++	 * is NULL so the devm sysram_unregister action that follows
++	 * will skip the hotplug removal.
++	 */
++	if (tctx->sysram) {
++		int rc, retries = 0;
++
++		while (true) {
++			rc = cxl_sysram_offline_and_remove(tctx->sysram);
++			if (!rc)
++				break;
++			if (++retries > 60) {
++				pr_err("cxl_compression: memory offline failed after %d retries, giving up\n",
++				       retries);
++				break;
++			}
++			pr_info("cxl_compression: memory offline failed (%d), retrying...\n",
++				rc);
++			msleep(1000);
++		}
++	}
 +}
 +
-+static int cxl_mempolicy_migrate_to(struct list_head *folios, int nid,
-+				    enum migrate_mode mode,
-+				    enum migrate_reason reason,
-+				    unsigned int *nr_succeeded)
++static void cxl_compression_post_teardown(void *data)
 +{
-+	struct migration_target_control mtc = {
-+		.nid = nid,
-+		.gfp_mask = GFP_HIGHUSER_MOVABLE | __GFP_THISNODE |
-+			    __GFP_PRIVATE,
-+		.reason = reason,
-+	};
++	struct cxl_teardown_ctx *tctx = data;
++	struct cxl_flush_ctx *ctx = tctx->flush_ctx;
++	struct cxl_pcpu_flush *pcpu;
++	struct cxl_flush_buf *buf;
++	int cpu;
 +
-+	return migrate_pages(folios, alloc_migration_target, NULL,
-+			     (unsigned long)&mtc, mode, reason, nr_succeeded);
++	if (!ctx)
++		return;
++
++	/* cram_unregister_private_node already called in pre_teardown */
++
++	if (ctx->flush_thread) {
++		kthread_stop(ctx->flush_thread);
++		ctx->flush_thread = NULL;
++	}
++
++	for_each_possible_cpu(cpu) {
++		pcpu = per_cpu_ptr(ctx->pcpu, cpu);
++		cancel_work_sync(&pcpu->overflow_work);
++	}
++
++	for_each_possible_cpu(cpu) {
++		pcpu = per_cpu_ptr(ctx->pcpu, cpu);
++
++		buf = rcu_dereference_raw(pcpu->active);
++		if (buf && buf->count > 0)
++			cxl_flush_buf_send(ctx, buf);
++
++		if (pcpu->overflow_spare && pcpu->overflow_spare->count > 0)
++			cxl_flush_buf_send(ctx, pcpu->overflow_spare);
++
++		if (ctx->kthread_spares && ctx->kthread_spares[cpu]) {
++			buf = ctx->kthread_spares[cpu];
++			if (buf->count > 0)
++				cxl_flush_buf_send(ctx, buf);
++		}
++	}
++
++	for_each_possible_cpu(cpu) {
++		pcpu = per_cpu_ptr(ctx->pcpu, cpu);
++
++		buf = rcu_dereference_raw(pcpu->active);
++		cxl_flush_buf_free(buf);
++
++		cxl_flush_buf_free(pcpu->overflow_spare);
++
++		if (ctx->kthread_spares)
++			cxl_flush_buf_free(ctx->kthread_spares[cpu]);
++	}
++
++	kfree(ctx->kthread_spares);
++	free_percpu(ctx->pcpu);
++	flush_record_free(ctx->flush_record, ctx->flush_record_pages);
 +}
 +
-+static void cxl_mempolicy_folio_migrate(struct folio *src, struct folio *dst)
-+{
-+}
-+
-+static const struct node_private_ops cxl_mempolicy_ops = {
-+	.migrate_to	= cxl_mempolicy_migrate_to,
-+	.folio_migrate	= cxl_mempolicy_folio_migrate,
-+	.flags = NP_OPS_MIGRATION | NP_OPS_MEMPOLICY,
++/**
++ * struct cxl_compression_ctx - Per-device context for compression driver
++ * @mbox: CXL mailbox for issuing CCI commands
++ * @pdev: PCI device
++ * @flush_ctx: Flush context for deferred page reclamation
++ * @tctx: Teardown context for devm actions
++ * @sysram: Sysram device for offline+remove in remove path
++ * @nid: NUMA node ID, NUMA_NO_NODE if unset
++ * @cxlmd: The memdev associated with this context
++ * @cxlr: Region created by this driver (NULL if pre-existing)
++ * @cxled: Endpoint decoder with DPA allocated by this driver
++ * @regions_converted: Number of regions successfully converted
++ * @media_ops_supported: Device supports media operations zero (0x4402)
++ */
++struct cxl_compression_ctx {
++	struct cxl_mailbox *mbox;
++	struct pci_dev *pdev;
++	struct cxl_flush_ctx *flush_ctx;
++	struct cxl_teardown_ctx *tctx;
++	struct cxl_sysram *sysram;
++	int nid;
++	struct cxl_memdev *cxlmd;
++	struct cxl_region *cxlr;
++	struct cxl_endpoint_decoder *cxled;
++	int regions_converted;
++	bool media_ops_supported;
 +};
++
++/*
++ * Probe whether the device supports Media Operations Zero (0x4402).
++ * Send a zero-count command, a conforming device returns SUCCESS,
++ * a device that doesn't support it returns UNSUPPORTED (-ENXIO).
++ */
++static bool cxl_probe_media_ops_zero(struct cxl_mailbox *mbox,
++				     struct device *dev)
++{
++	struct cxl_media_op_input probe = {
++		.media_operation_class = CXL_MEDIA_OP_CLASS_SANITIZE,
++		.media_operation_subclass = CXL_MEDIA_OP_SUBC_ZERO,
++		.dpa_range_count = 0,
++	};
++	struct cxl_mbox_cmd cmd = {
++		.opcode = CXL_MEDIA_OP_OPCODE,
++		.payload_in = &probe,
++		.size_in = sizeof(probe),
++	};
++	int rc;
++
++	rc = cxl_internal_send_cmd(mbox, &cmd);
++	if (rc) {
++		dev_info(dev,
++			 "media operations zero not supported (rc=%d), using inline zeroing\n",
++			 rc);
++		return false;
++	}
++
++	dev_info(dev, "media operations zero (0x4402) supported\n");
++	return true;
++}
++
++struct cxl_compression_wm_ctx {
++	struct device *dev;
++	int nid;
++};
++
++static irqreturn_t cxl_compression_lthresh_irq(int irq, void *data)
++{
++	struct cxl_compression_wm_ctx *wm = data;
++
++	dev_info(wm->dev, "lthresh watermark: pressuring node %d\n", wm->nid);
++	cram_set_pressure(wm->nid, CRAM_PRESSURE_MAX);
++	return IRQ_HANDLED;
++}
++
++static irqreturn_t cxl_compression_hthresh_irq(int irq, void *data)
++{
++	struct cxl_compression_wm_ctx *wm = data;
++
++	dev_info(wm->dev, "hthresh watermark: resuming node %d\n", wm->nid);
++	cram_set_pressure(wm->nid, 0);
++	return IRQ_HANDLED;
++}
++
++static int convert_region_to_sysram(struct cxl_region *cxlr,
++				    struct pci_dev *pdev)
++{
++	struct cxl_compression_ctx *comp_ctx = pdev_to_comp_ctx(pdev);
++	struct device *dev = cxl_region_dev(cxlr);
++	struct cxl_compression_wm_ctx *wm_ctx;
++	struct cxl_teardown_ctx *tctx;
++	struct cxl_flush_ctx *flush_ctx;
++	struct cxl_pcpu_flush *pcpu;
++	resource_size_t region_start, region_size;
++	struct range hpa_range;
++	int nid;
++	int irq;
++	int cpu;
++	int rc;
++
++	if (cxl_region_mode(cxlr) != CXL_PARTMODE_RAM) {
++		dev_dbg(dev, "skipping non-RAM region (mode=%d)\n",
++			cxl_region_mode(cxlr));
++		return 0;
++	}
++
++	dev_info(dev, "converting region to sysram\n");
++
++	rc = devm_cxl_add_sysram(cxlr, true, MMOP_ONLINE_MOVABLE);
++	if (rc) {
++		dev_err(dev, "failed to add sysram region: %d\n", rc);
++		return rc;
++	}
++
++	tctx = devm_kzalloc(dev, sizeof(*tctx), GFP_KERNEL);
++	if (!tctx)
++		return -ENOMEM;
++
++	rc = devm_add_action_or_reset(dev, cxl_compression_post_teardown, tctx);
++	if (rc)
++		return rc;
++
++	/* Find the sysram child device for pre_teardown */
++	comp_ctx->sysram = cxl_region_find_sysram(cxlr);
++	if (comp_ctx->sysram)
++		tctx->sysram = comp_ctx->sysram;
++
++	rc = cxl_get_region_range(cxlr, &hpa_range);
++	if (rc) {
++		dev_err(dev, "failed to get region range: %d\n", rc);
++		return rc;
++	}
++
++	nid = phys_to_target_node(hpa_range.start);
++	if (nid == NUMA_NO_NODE)
++		nid = memory_add_physaddr_to_nid(hpa_range.start);
++
++	region_start = hpa_range.start;
++	region_size = range_len(&hpa_range);
++
++	flush_ctx = devm_kzalloc(dev, sizeof(*flush_ctx), GFP_KERNEL);
++	if (!flush_ctx)
++		return -ENOMEM;
++
++	flush_ctx->base_pfn = PHYS_PFN(region_start);
++	flush_ctx->nr_pages = region_size >> PAGE_SHIFT;
++	flush_ctx->flush_record = flush_record_alloc(flush_ctx->nr_pages,
++						     &flush_ctx->flush_record_pages);
++	if (!flush_ctx->flush_record)
++		return -ENOMEM;
++
++	flush_ctx->mbox = comp_ctx->mbox;
++	flush_ctx->dev = dev;
++	flush_ctx->nid = nid;
++	flush_ctx->media_ops_supported = comp_ctx->media_ops_supported;
++
++	/*
++	 * Cap buffer at max DPA ranges that fit in one CCI payload.
++	 * Header is 8 bytes (struct cxl_media_op_input), each range
++	 * is 16 bytes (struct cxl_dpa_range).  The module parameter
++	 * flush_buf_size can further limit this (0 = use hw max).
++	 */
++	flush_ctx->buf_max = (flush_ctx->mbox->payload_size -
++			      sizeof(struct cxl_media_op_input)) /
++			     sizeof(struct cxl_dpa_range);
++	if (flush_buf_size && flush_buf_size < flush_ctx->buf_max)
++		flush_ctx->buf_max = flush_buf_size;
++	if (flush_ctx->buf_max == 0)
++		flush_ctx->buf_max = 1;
++
++	dev_info(dev,
++		 "flush buffer: %u DPA ranges per command (payload %zu bytes, media_ops %s)\n",
++		 flush_ctx->buf_max, flush_ctx->mbox->payload_size,
++		 flush_ctx->media_ops_supported ? "yes" : "no");
++
++	flush_ctx->pcpu = alloc_percpu(struct cxl_pcpu_flush);
++	if (!flush_ctx->pcpu)
++		return -ENOMEM;
++
++	flush_ctx->kthread_spares = kcalloc(nr_cpu_ids,
++					    sizeof(struct cxl_flush_buf *),
++					    GFP_KERNEL);
++	if (!flush_ctx->kthread_spares)
++		goto err_pcpu_init;
++
++	for_each_possible_cpu(cpu) {
++		struct cxl_flush_buf *active_buf, *overflow_buf, *spare_buf;
++
++		active_buf = cxl_flush_buf_alloc(flush_ctx->buf_max, nid);
++		if (!active_buf)
++			goto err_pcpu_init;
++
++		overflow_buf = cxl_flush_buf_alloc(flush_ctx->buf_max, nid);
++		if (!overflow_buf) {
++			cxl_flush_buf_free(active_buf);
++			goto err_pcpu_init;
++		}
++
++		spare_buf = cxl_flush_buf_alloc(flush_ctx->buf_max, nid);
++		if (!spare_buf) {
++			cxl_flush_buf_free(active_buf);
++			cxl_flush_buf_free(overflow_buf);
++			goto err_pcpu_init;
++		}
++
++		pcpu = per_cpu_ptr(flush_ctx->pcpu, cpu);
++		pcpu->ctx = flush_ctx;
++		rcu_assign_pointer(pcpu->active, active_buf);
++		pcpu->overflow_spare = overflow_buf;
++		INIT_WORK(&pcpu->overflow_work, cxl_flush_overflow_work);
++
++		flush_ctx->kthread_spares[cpu] = spare_buf;
++	}
++
++	flush_ctx->flush_thread = kthread_create_on_node(
++		cxl_flush_kthread_fn, flush_ctx, nid, "cxl-flush/%d", nid);
++	if (IS_ERR(flush_ctx->flush_thread)) {
++		rc = PTR_ERR(flush_ctx->flush_thread);
++		flush_ctx->flush_thread = NULL;
++		goto err_pcpu_init;
++	}
++	wake_up_process(flush_ctx->flush_thread);
++
++	rc = cram_register_private_node(nid, cxlr,
++					cxl_compression_flush_cb, flush_ctx);
++	if (rc) {
++		dev_err(dev, "failed to register cram node %d: %d\n", nid, rc);
++		goto err_pcpu_init;
++	}
++
++	tctx->flush_ctx = flush_ctx;
++	tctx->nid = nid;
++
++	rc = devm_add_action_or_reset(dev, cxl_compression_pre_teardown, tctx);
++	if (rc)
++		return rc;
++
++	comp_ctx->flush_ctx = flush_ctx;
++	comp_ctx->tctx = tctx;
++	comp_ctx->nid = nid;
++
++	/*
++	 * Register watermark IRQ handlers on &pdev->dev for
++	 * MSI-X vector 12 (lthresh) and vector 13 (hthresh).
++	 */
++	wm_ctx = devm_kzalloc(&pdev->dev, sizeof(*wm_ctx), GFP_KERNEL);
++	if (!wm_ctx)
++		return -ENOMEM;
++
++	wm_ctx->dev = &pdev->dev;
++	wm_ctx->nid = nid;
++
++	irq = pci_irq_vector(pdev, CXL_CT3_MSIX_LTHRESH);
++	if (irq >= 0) {
++		rc = devm_request_threaded_irq(&pdev->dev, irq, NULL,
++					       cxl_compression_lthresh_irq,
++					       IRQF_ONESHOT,
++					       "cxl-lthresh", wm_ctx);
++		if (rc)
++			dev_warn(&pdev->dev,
++				 "failed to register lthresh IRQ: %d\n", rc);
++	}
++
++	irq = pci_irq_vector(pdev, CXL_CT3_MSIX_HTHRESH);
++	if (irq >= 0) {
++		rc = devm_request_threaded_irq(&pdev->dev, irq, NULL,
++					       cxl_compression_hthresh_irq,
++					       IRQF_ONESHOT,
++					       "cxl-hthresh", wm_ctx);
++		if (rc)
++			dev_warn(&pdev->dev,
++				 "failed to register hthresh IRQ: %d\n", rc);
++	}
++
++	return 0;
++
++err_pcpu_init:
++	if (flush_ctx->flush_thread)
++		kthread_stop(flush_ctx->flush_thread);
++	for_each_possible_cpu(cpu) {
++		struct cxl_flush_buf *buf;
++
++		pcpu = per_cpu_ptr(flush_ctx->pcpu, cpu);
++
++		buf = rcu_dereference_raw(pcpu->active);
++		cxl_flush_buf_free(buf);
++
++		cxl_flush_buf_free(pcpu->overflow_spare);
++
++		if (flush_ctx->kthread_spares)
++			cxl_flush_buf_free(flush_ctx->kthread_spares[cpu]);
++	}
++	kfree(flush_ctx->kthread_spares);
++	free_percpu(flush_ctx->pcpu);
++	flush_record_free(flush_ctx->flush_record, flush_ctx->flush_record_pages);
++	return rc ? rc : -ENOMEM;
++}
 +
 +static struct cxl_region *create_ram_region(struct cxl_memdev *cxlmd)
 +{
-+	struct cxl_mempolicy_ctx *ctx = memdev_to_ctx(cxlmd);
 +	struct cxl_root_decoder *cxlrd;
 +	struct cxl_endpoint_decoder *cxled;
 +	struct cxl_region *cxlr;
@@ -349,8 +1096,7 @@ index 000000000000..1c19818eb268
 +
 +	ram_size = ALIGN_DOWN(ram_size, SZ_256M);
 +	if (ram_size == 0) {
-+		dev_info(&cxlmd->dev,
-+			 "RAM capacity too small (< 256M)\n");
++		dev_info(&cxlmd->dev, "RAM capacity too small (< 256M)\n");
 +		return ERR_PTR(-ENOSPC);
 +	}
 +
@@ -381,224 +1127,166 @@ index 000000000000..1c19818eb268
 +		return cxlr;
 +	}
 +
-+	ctx->cxled = cxled;
 +	dev_info(&cxlmd->dev, "created region %s\n",
 +		 dev_name(cxl_region_dev(cxlr)));
++	pdev_to_comp_ctx(to_pci_dev(cxlmd->dev.parent))->cxled = cxled;
 +	return cxlr;
 +}
 +
-+static int setup_private_node(struct cxl_memdev *cxlmd,
-+			      struct cxl_region *cxlr)
++static int cxl_compression_attach_probe(struct cxl_memdev *cxlmd)
 +{
-+	struct cxl_mempolicy_ctx *ctx = memdev_to_ctx(cxlmd);
-+	struct range hpa_range;
-+	int rc;
-+
-+	device_release_driver(cxl_region_dev(cxlr));
-+
-+	rc = devm_cxl_add_sysram(cxlr, true, MMOP_ONLINE_MOVABLE);
-+	if (rc) {
-+		dev_err(cxl_region_dev(cxlr),
-+			"failed to add sysram: %d\n", rc);
-+		if (device_attach(cxl_region_dev(cxlr)) < 0)
-+			dev_warn(cxl_region_dev(cxlr),
-+				 "failed to re-attach driver\n");
-+		return rc;
-+	}
-+
-+	rc = cxl_get_region_range(cxlr, &hpa_range);
-+	if (rc) {
-+		dev_err(cxl_region_dev(cxlr),
-+			"failed to get region range: %d\n", rc);
-+		return rc;
-+	}
-+
-+	ctx->nid = phys_to_target_node(hpa_range.start);
-+	if (ctx->nid == NUMA_NO_NODE)
-+		ctx->nid = memory_add_physaddr_to_nid(hpa_range.start);
-+
-+	rc = node_private_set_ops(ctx->nid, &cxl_mempolicy_ops);
-+	if (rc) {
-+		dev_err(cxl_region_dev(cxlr),
-+			"failed to set ops on node %d: %d\n", ctx->nid, rc);
-+		ctx->nid = NUMA_NO_NODE;
-+		return rc;
-+	}
-+
-+	dev_info(&cxlmd->dev,
-+		 "node %d registered as private mempolicy memory\n", ctx->nid);
-+	return 0;
-+}
-+
-+static int cxl_mempolicy_attach_probe(struct cxl_memdev *cxlmd)
-+{
++	struct pci_dev *pdev = to_pci_dev(cxlmd->dev.parent);
++	struct cxl_compression_ctx *comp_ctx = pdev_to_comp_ctx(pdev);
 +	struct cxl_region *regions[8];
 +	struct cxl_region *cxlr;
-+	int nr, i;
++	int nr, i, converted = 0, errors = 0;
 +	int rc;
 +
-+	dev_info(&cxlmd->dev,
-+		 "cxl_mempolicy attach: looking for regions\n");
++	comp_ctx->cxlmd = cxlmd;
++	comp_ctx->mbox = &cxlmd->cxlds->cxl_mbox;
 +
-+	/* Phase 1: look for pre-committed RAM regions */
++	/* Probe device for media operations zero support */
++	comp_ctx->media_ops_supported =
++		cxl_probe_media_ops_zero(comp_ctx->mbox,
++					 &cxlmd->dev);
++
++	dev_info(&cxlmd->dev, "compression attach: looking for regions\n");
++
 +	nr = cxl_get_committed_regions(cxlmd, regions, ARRAY_SIZE(regions));
 +	for (i = 0; i < nr; i++) {
-+		if (cxl_region_mode(regions[i]) != CXL_PARTMODE_RAM) {
-+			put_device(cxl_region_dev(regions[i]));
-+			continue;
++		if (cxl_region_mode(regions[i]) == CXL_PARTMODE_RAM) {
++			rc = convert_region_to_sysram(regions[i], pdev);
++			if (rc)
++				errors++;
++			else
++				converted++;
 +		}
-+
-+		cxlr = regions[i];
-+		rc = setup_private_node(cxlmd, cxlr);
-+		put_device(cxl_region_dev(cxlr));
-+		if (rc == 0) {
-+			/* Release remaining region references */
-+			for (i++; i < nr; i++)
-+				put_device(cxl_region_dev(regions[i]));
-+			return 0;
-+		}
++		put_device(cxl_region_dev(regions[i]));
 +	}
 +
-+	/* Phase 2: no committed regions, create one */
-+	dev_info(&cxlmd->dev,
-+		 "no existing regions, creating RAM region\n");
++	if (converted > 0) {
++		dev_info(&cxlmd->dev,
++			 "converted %d regions to sysram (%d errors)\n",
++			 converted, errors);
++		return errors ? -EIO : 0;
++	}
++
++	dev_info(&cxlmd->dev, "no existing regions, creating RAM region\n");
 +
 +	cxlr = create_ram_region(cxlmd);
 +	if (IS_ERR(cxlr)) {
 +		rc = PTR_ERR(cxlr);
 +		if (rc == -ENODEV) {
 +			dev_info(&cxlmd->dev,
-+				 "no RAM capacity: %d\n", rc);
++				 "could not create RAM region: %d\n", rc);
 +			return 0;
 +		}
 +		return rc;
 +	}
 +
-+	rc = setup_private_node(cxlmd, cxlr);
++	rc = convert_region_to_sysram(cxlr, pdev);
 +	if (rc) {
 +		dev_err(&cxlmd->dev,
-+			"failed to setup private node: %d\n", rc);
++			"failed to convert region to sysram: %d\n", rc);
 +		return rc;
 +	}
 +
-+	/* Only take ownership of regions we created (Phase 2) */
-+	memdev_to_ctx(cxlmd)->cxlr = cxlr;
++	comp_ctx->cxlr = cxlr;
++
++	dev_info(&cxlmd->dev, "created and converted region %s to sysram\n",
++		 dev_name(cxl_region_dev(cxlr)));
 +
 +	return 0;
 +}
 +
-+static const struct cxl_memdev_attach cxl_mempolicy_attach = {
-+	.probe = cxl_mempolicy_attach_probe,
++static const struct cxl_memdev_attach cxl_compression_attach = {
++	.probe = cxl_compression_attach_probe,
 +};
 +
-+static int cxl_mempolicy_probe(struct pci_dev *pdev,
-+			       const struct pci_device_id *id)
++static int cxl_compression_probe(struct pci_dev *pdev,
++				 const struct pci_device_id *id)
 +{
-+	struct cxl_mempolicy_ctx *ctx;
++	struct cxl_compression_ctx *comp_ctx;
 +	struct cxl_memdev *cxlmd;
 +	int rc;
 +
-+	dev_info(&pdev->dev, "cxl_mempolicy: probing device\n");
++	dev_info(&pdev->dev, "cxl_compression: probing device\n");
 +
-+	ctx = devm_kzalloc(&pdev->dev, sizeof(*ctx), GFP_KERNEL);
-+	if (!ctx)
++	comp_ctx = devm_kzalloc(&pdev->dev, sizeof(*comp_ctx), GFP_KERNEL);
++	if (!comp_ctx)
 +		return -ENOMEM;
-+	ctx->nid = NUMA_NO_NODE;
++	comp_ctx->nid = NUMA_NO_NODE;
++	comp_ctx->pdev = pdev;
 +
-+	rc = xa_insert(&ctx_xa, (unsigned long)pdev, ctx, GFP_KERNEL);
++	rc = xa_insert(&comp_ctx_xa, (unsigned long)pdev, comp_ctx, GFP_KERNEL);
 +	if (rc)
 +		return rc;
 +
-+	cxlmd = cxl_pci_type3_probe_init(pdev, &cxl_mempolicy_attach);
++	cxlmd = cxl_pci_type3_probe_init(pdev, &cxl_compression_attach);
 +	if (IS_ERR(cxlmd)) {
-+		xa_erase(&ctx_xa, (unsigned long)pdev);
++		xa_erase(&comp_ctx_xa, (unsigned long)pdev);
 +		return PTR_ERR(cxlmd);
 +	}
 +
-+	dev_info(&pdev->dev, "cxl_mempolicy: probe complete\n");
++	comp_ctx->cxlmd = cxlmd;
++	comp_ctx->mbox = &cxlmd->cxlds->cxl_mbox;
++
++	dev_info(&pdev->dev, "cxl_compression: probe complete\n");
 +	return 0;
 +}
 +
-+static void cxl_mempolicy_remove(struct pci_dev *pdev)
++static void cxl_compression_remove(struct pci_dev *pdev)
 +{
-+	struct cxl_mempolicy_ctx *ctx = xa_erase(&ctx_xa, (unsigned long)pdev);
++	struct cxl_compression_ctx *comp_ctx = xa_erase(&comp_ctx_xa,
++							(unsigned long)pdev);
 +
-+	dev_info(&pdev->dev, "cxl_mempolicy: removing device\n");
++	dev_info(&pdev->dev, "cxl_compression: removing device\n");
 +
-+	if (!ctx)
++	if (!comp_ctx || comp_ctx->nid == NUMA_NO_NODE)
 +		return;
 +
-+	if (ctx->nid != NUMA_NO_NODE)
-+		WARN_ON(node_private_clear_ops(ctx->nid, &cxl_mempolicy_ops));
-+
-+	if (ctx->cxlr) {
-+		cxl_destroy_region(ctx->cxlr);
-+		ctx->cxlr = NULL;
++	/*
++	 * Destroy the region, devm actions on the region device handle teardown
++	 * in registration-reverse order:
++	 *   1. pre_teardown:  cram_unregister + retry-forever memory offline
++	 *   2. sysram_unregister: device_unregister (sysram->res is NULL
++	 *      after pre_teardown, so cxl_sysram_release skips hotplug)
++	 *   3. post_teardown: kthread stop, flush cleanup
++	 *
++	 * PCI MMIO is still live so CCI commands in post_teardown work.
++	 */
++	if (comp_ctx->cxlr) {
++		cxl_destroy_region(comp_ctx->cxlr);
++		comp_ctx->cxlr = NULL;
 +	}
 +
-+	if (ctx->cxled) {
-+		cxl_dpa_free(ctx->cxled);
-+		ctx->cxled = NULL;
++	if (comp_ctx->cxled) {
++		cxl_dpa_free(comp_ctx->cxled);
++		comp_ctx->cxled = NULL;
 +	}
 +}
 +
-+static const struct pci_device_id cxl_mempolicy_pci_tbl[] = {
++static const struct pci_device_id cxl_compression_pci_tbl[] = {
 +	{ PCI_DEVICE(PCI_VENDOR_ID_INTEL, 0x0d93) },
-+	{ },
++	{ /* terminate list */ },
 +};
-+MODULE_DEVICE_TABLE(pci, cxl_mempolicy_pci_tbl);
++MODULE_DEVICE_TABLE(pci, cxl_compression_pci_tbl);
 +
-+static struct pci_driver cxl_mempolicy_driver = {
++static struct pci_driver cxl_compression_driver = {
 +	.name		= KBUILD_MODNAME,
-+	.id_table	= cxl_mempolicy_pci_tbl,
-+	.probe		= cxl_mempolicy_probe,
-+	.remove		= cxl_mempolicy_remove,
++	.id_table	= cxl_compression_pci_tbl,
++	.probe		= cxl_compression_probe,
++	.remove		= cxl_compression_remove,
 +	.driver	= {
 +		.probe_type	= PROBE_PREFER_ASYNCHRONOUS,
 +	},
 +};
 +
-+module_pci_driver(cxl_mempolicy_driver);
++module_pci_driver(cxl_compression_driver);
 +
-+MODULE_DESCRIPTION("CXL: Private Memory with Mempolicy Support");
++MODULE_DESCRIPTION("CXL: Compression Memory Driver with SysRAM regions");
 +MODULE_LICENSE("GPL v2");
 +MODULE_IMPORT_NS("CXL");
-diff --git a/include/linux/migrate.h b/include/linux/migrate.h
-index 7b2da3875ff2..1f9fb61f3932 100644
---- a/include/linux/migrate.h
-+++ b/include/linux/migrate.h
-@@ -10,7 +10,12 @@
- typedef struct folio *new_folio_t(struct folio *folio, unsigned long private);
- typedef void free_folio_t(struct folio *folio, unsigned long private);
- 
--struct migration_target_control;
-+struct migration_target_control {
-+	int nid;		/* preferred node id */
-+	nodemask_t *nmask;
-+	gfp_t gfp_mask;
-+	enum migrate_reason reason;
-+};
- 
- /**
-  * struct movable_operations - Driver page migration
-diff --git a/mm/internal.h b/mm/internal.h
-index 64467ca774f1..85cd11189854 100644
---- a/mm/internal.h
-+++ b/mm/internal.h
-@@ -1352,13 +1352,6 @@ extern const struct trace_print_flags gfpflag_names[];
- 
- void setup_zone_pageset(struct zone *zone);
- 
--struct migration_target_control {
--	int nid;		/* preferred node id */
--	nodemask_t *nmask;
--	gfp_t gfp_mask;
--	enum migrate_reason reason;
--};
--
- /*
-  * mm/filemap.c
-  */
 -- 
 2.53.0
 
