@@ -1,64 +1,64 @@
-Received: from mail-qt1-f177.google.com (mail-qt1-f177.google.com [209.85.160.177])
+Received: from mail-qt1-f196.google.com (mail-qt1-f196.google.com [209.85.160.196])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38B221F4CA9
-	for <damon@lists.linux.dev>; Sun, 22 Feb 2026 08:50:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D3ED26E6F3
+	for <damon@lists.linux.dev>; Sun, 22 Feb 2026 08:50:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.196
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771750225; cv=none; b=DhIfZEJfVNnX3BytznDB9u+RP6jKeY7HFwyBwWUicv0RG+zNPu77jNln2rX8v3bu8CIuPvdvTfOIo3692a0xV7IqVtFIlI0kWludcVJwU38ao1DbdSEkGuYhg6P2LiEd3fYXZn6/mBCBgR1SyJa/bft9xL8tXIQRinEE0hQM8Us=
+	t=1771750228; cv=none; b=Ot+MD80iJqvgMHRk3cVcHuRc0v77UHG9sc1TxfDZPrr+gk/4FQU1WIf9Chf7OafKgUB/cxrLpObI29uufy+BMo1oR2KqcFfkSmhARH4Ymd82GjZLwm0/HEqpphFzUU/52rwzx4JUdzUTxXKWajMSsqgu1zFxbVvg2dkUhmjYytA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771750225; c=relaxed/simple;
-	bh=zs0qPPz1cXLwzykOWwAs3OVPMWhIFtepSRt4f1NIIrw=;
+	s=arc-20240116; t=1771750228; c=relaxed/simple;
+	bh=JnJNkHEvCv17WoTFgUj+wKr875IXZ3E8taOLw+Qh4no=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z4EJ89KZ+aEvaSmF0GOVJG9g06vBG7t6FsYs/r2PM+3o/B2C1ecW6z3fDSzj4zLYV//ptnAKZZKA6bQdoqEmtHm7x7BfId8H8s0SWXJZYxmiSsDjjuPTMCe4KrGmKvL/+K/Xmj0opE+5XQIRVJLZDxTl5M4dRsulgXkXIJearn0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gourry.net; spf=pass smtp.mailfrom=gourry.net; dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.b=Zg6/eitI; arc=none smtp.client-ip=209.85.160.177
+	 MIME-Version; b=SKr7emV1SqOsUfo/6CsUWf8Hrp72Le4gDBhiLyRdXcGkkEsYr9+K/4lR8bz00TFMdPB35JSbmamt+p74U3bVxokP4j8WkVPD7Erov3bZ7fd4QrXfunaUxvL0a8vXu2JfuPrT02HwzRfZ/2QMFg036oRJ/UjH0RwxbKteH3cwHM0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gourry.net; spf=pass smtp.mailfrom=gourry.net; dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.b=YTG+Ysq2; arc=none smtp.client-ip=209.85.160.196
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gourry.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gourry.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.b="Zg6/eitI"
-Received: by mail-qt1-f177.google.com with SMTP id d75a77b69052e-506a93ba42dso38128461cf.1
-        for <damon@lists.linux.dev>; Sun, 22 Feb 2026 00:50:23 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.b="YTG+Ysq2"
+Received: by mail-qt1-f196.google.com with SMTP id d75a77b69052e-506a321cc53so38885991cf.3
+        for <damon@lists.linux.dev>; Sun, 22 Feb 2026 00:50:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gourry.net; s=google; t=1771750222; x=1772355022; darn=lists.linux.dev;
+        d=gourry.net; s=google; t=1771750226; x=1772355026; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=VTSr2egiGZrzh+7+ZlbqD5qhC+A1cnXWqtUesRojnlw=;
-        b=Zg6/eitI8KV7w1twvHH5xSm4Kbl1H8oGDm7bNS1pCyUjtWv9BJk/PGWcjzv/M8KZ/l
-         3MBR5FRFt5RCOH/OVixSqciJO2Oxq45GjK/e5++aOselNM+5DfZvwKFHarlgWqwu7J0x
-         N/t083WXCJn5tLQBm7QO3AmRYreSMKWByjY76Hp8WZWXS8jHOWZwE77s1Y3F7iE06L05
-         kC9kUoJzJbrDmoEXbrji6+DzoOxoy+KyJTrhSwrZ0j0SCKAGbKsQuoVGdZXR7RCpr5xi
-         gFhW3T5p8UlOvcaM5M4L5XEyER5x7AfuuY0QCSyoLLhnjlmD7kifAOdCb1dUePdVVZq5
-         et6w==
+        bh=EGuT6RhCP5I7NLb1YN0up3Sr68HZnKNB2ZvPCLs8MH8=;
+        b=YTG+Ysq2MgaSc86iDMXfUZVzwVXxmy4DlRv6FroB3khlIt+ZgkIzyD4NjNM8uMkmIM
+         AQtOgEShQvZiEvWNaGjVrkUz1v8mzT8Dl7KKJUuJYeo37Erow6ona03bzmoLRGsIY2Hc
+         oiOPqB1n1qfHhf3EcMFwgziYwvFi20vmUVOMrFLYyDS/Q6CCUt8ajLPMMaX/2kKEbPkX
+         pZOcgYPEIRBBhJl5Tb5HNnnRUQnc1kgwEoC1GYMrFHrhY8Ancs0ka0rjbSILo6NPcQwb
+         eewESmGmw8uRJy8h6+uTSWocYS5ltI4HX0yfsc4/yARcYZHOz4O6P4bm+vDgXq03VPCg
+         v1hA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771750222; x=1772355022;
+        d=1e100.net; s=20230601; t=1771750226; x=1772355026;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=VTSr2egiGZrzh+7+ZlbqD5qhC+A1cnXWqtUesRojnlw=;
-        b=SGbJVJhm0nICRiPFYz2TNrCfrd0OMT0rbGWuDjgk4rVQhXWRbySSdpTKjRLETPZPmH
-         ytAXnjei0/4NpwszWcehY4muDZGfxcyppVMuJNRb+bs23dRcxuPSWV2SE97dENziBtN8
-         gGZ5HyDyFz4ovWEsXUoTBUdMZzLlikZE0YQWJirU5dXUUv7ONRKyov1OkXRto+R3Kysp
-         YjYyxTPsUAc+WvsSKvSWtaYZa5tepPGjszm7KBUanuncvEbL3W28lwMSq46WpmeYLCj+
-         cPXMcBTcrTVgIhV8VkbmntARsogsOohUSwQQmo77oQ7T+5e8Z8Uwpv7QjxYfVgLHt09b
-         QxNw==
-X-Forwarded-Encrypted: i=1; AJvYcCWnwH6hvSPyYED6/hq5EBpOtKlOvijfi73GoNGVYQvx8cI9j1sy3tCdGMME0tzaWglGsuvs6Q==@lists.linux.dev
-X-Gm-Message-State: AOJu0YwTJOvOz5uQmF/rQGZtEDXXjmE7WSMrMKAzI86FHXBh43qDj65z
-	iCPqGwkNvSp5u6ISV8De1QARi84raiU1NACSrWlJDzxM3L9khyjmnQtNBZAZ94JLEcc=
-X-Gm-Gg: AZuq6aIh4xPrb16qdezGQljQubdTl5hu42A0fZ+UZs4RDesur/vl3TVGlI9nC3yK5nN
-	8dnN31pdTkzl+8Oohoqvyh2sgSsVpqqPxyyWAT4Y8RuBI0Z0eKozobro3W2xR9CeIx3Cyh5RQbO
-	3G5iN/umQ5rgfBJp207C+xB2Z3OJbhdVvX1A9Usy/MqwzUXKSvhXr8NCCba5V5VW/1l3jfEmzCH
-	dTbu9AzDw4AVRSPxTWq67u4xzhAX26cqWhU7HkLzyVi+TAdbovgJFlTtxn3agQJE7lg85J+X5fc
-	uthftFA59yQuWjkD1WvpnJdjLJk8lekO0INXZQsIEWBoO8pjTju4lp7EhO6NX4zmHfPT/H5Sg7e
-	QNEOchZgHYmek9c6zpIzPiHzDJYbzC+YIo+xgqtmwh37fF6AdBrOH6pXVU0vdbTvdoQGF6+DL6w
-	jNZk1o+2jom+gQMfh++gR4neh8AuT550Ni2EGw0VHG4G+mI8F1kuKzDiF6bTi1qQu+utRTbrbMc
-	0JcQKp8HAZta3U=
-X-Received: by 2002:a05:622a:96:b0:506:bc9c:e140 with SMTP id d75a77b69052e-5070bcfa5d8mr76045201cf.71.1771750221945;
-        Sun, 22 Feb 2026 00:50:21 -0800 (PST)
+        bh=EGuT6RhCP5I7NLb1YN0up3Sr68HZnKNB2ZvPCLs8MH8=;
+        b=CNQpk3M7uaZhYgdF1Ok7w+1r2E2CATfS30lfUB53zgwy8bDe4Tc4oE9CdfzXpO5MoG
+         nluwdeIKz3otcWtPVPK5ZE2klG5RaDXPvBeLD52plCffHILHD5KLNwm+9pZmjr7Ye0Iu
+         71tRZQZuKDg5EFDVvA9G7pTGapqfm3MCWldiduYP1w1Hb3lpLxa8YzkDvafGdZp8kyNF
+         YFRSUYS1TsrR+MyXo2Hv77/3Qkyg+k99eEl3FEDUnIK5KEN931fXI2oesZu6ISoMpDNS
+         wdm1gQEUEpAhgJonckDVkPDvKjUcI0Clvh30Yhl+fNLcToyELA4QjdgNINB4h/45Z2fk
+         sYBw==
+X-Forwarded-Encrypted: i=1; AJvYcCVg73thbHQbonPCHEmRnlDyr0SvrzOcTJ0Qfhg+s2WJFWsYjuY7ZmjeEK41bXxdnABYPbV/UQ==@lists.linux.dev
+X-Gm-Message-State: AOJu0Yy1Z1GwDyeifsRlimIlRZdSrSyfJUfzf1j8I0tl5GQq5gNQO2ZW
+	us0D/nxph7j/pv+/28XA1Lely42gKJWhzy9YXPJ9urFUSPcCjcq4eETp44jWi6ku4VE=
+X-Gm-Gg: AZuq6aJp+GusdQWUBkfRxX5OnDDdu6gI+5djOlZCBs9u3ulepD+WwNeTQdvowbal+O7
+	Xk/T56Zs3ohgMjwTOlwsejR/lcwA8zxd1ZWPyXKeHPxtzXo2kjKkgujRFqF4ErjiL1eqURExn+O
+	wXA1vbcFVEOLe6cX6wmPHaf+yR+iWo0zancAQIuBwFkH3Pe8/dpVDiu7II8oC4Dkj0sRJCrE5bW
+	vPhBCwVD9C8/DQ0sJMBqjpkJ4iZ+HapjEW3wYXW+xuMK0mO593pBPiywIV6G3d4KOTaY4gvm/9N
+	BGyg1jZVHoisBd27JaQIGR3w7rgvGxxQMc46kf25J5Khcn3BTxa/O8KGkPAW5RNZbayrtm1KJEJ
+	XgTpeIF8qu9O2H2yYWODsGjRfuj5gMtJF5WufbcgkVGCqGHA+QwsU4rpw+mwk930gxBh3kWO9+O
+	unsIl8yT7HUNnhPEluXi4woXZXq8eq9jhC+WHwez7ONuPDFUarhRCB7kL0AI5rn/Udzcw8lm2hJ
+	G+GHpHtBxW7ZfV8wMJ/0oQ+cw==
+X-Received: by 2002:ac8:5f8a:0:b0:4ed:b94c:774a with SMTP id d75a77b69052e-5070bba6830mr70961981cf.5.1771750225498;
+        Sun, 22 Feb 2026 00:50:25 -0800 (PST)
 Received: from gourry-fedora-PF4VCD3F.lan (pool-96-255-20-138.washdc.ftas.verizon.net. [96.255.20.138])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-5070d53f0fcsm38640631cf.9.2026.02.22.00.50.19
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-5070d53f0fcsm38640631cf.9.2026.02.22.00.50.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 22 Feb 2026 00:50:21 -0800 (PST)
+        Sun, 22 Feb 2026 00:50:25 -0800 (PST)
 From: Gregory Price <gourry@gourry.net>
 To: lsf-pc@lists.linux-foundation.org
 Cc: linux-kernel@vger.kernel.org,
@@ -134,9 +134,9 @@ Cc: linux-kernel@vger.kernel.org,
 	bhe@redhat.com,
 	zhengqi.arch@bytedance.com,
 	terry.bowman@amd.com
-Subject: [RFC PATCH v4 23/27] mm/cram: add compressed ram memory management subsystem
-Date: Sun, 22 Feb 2026 03:48:38 -0500
-Message-ID: <20260222084842.1824063-24-gourry@gourry.net>
+Subject: [RFC PATCH v4 24/27] cxl/core: Add cxl_sysram region type
+Date: Sun, 22 Feb 2026 03:48:39 -0500
+Message-ID: <20260222084842.1824063-25-gourry@gourry.net>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260222084842.1824063-1-gourry@gourry.net>
 References: <20260222084842.1824063-1-gourry@gourry.net>
@@ -148,667 +148,542 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Add the CRAM (Compressed RAM) subsystem that manages folios demoted
-to N_MEMORY_PRIVATE nodes via the standard kernel LRU.
+Add the CXL sysram region for direct memory hotplug of CXL RAM regions.
 
-We limit entry into CRAM by demotion in to provide devices a way for
-drivers to close access - which allows the system to stabiliz under
-memory pressure (the device can run out of real memory when compression
-ratios drop too far).
+This region eliminates the intermediate dax_region/dax device layer by
+directly performing memory hotplug operations.
 
-We utilize write-protect to prevent unbounded writes to compressed
-memory pages, which may cause run-away compression ratio loss without
-a reliable way to prevent the degenerate case (cascading poisons).
+Key features:
+- Supports memory tier integration for proper NUMA placement
+- Uses the CXL_SYSRAM_ONLINE_* Kconfig options for default online type
+- Automatically hotplugs memory on probe if online type is configured
+- Will be extended to support private memory nodes in the future
 
-CRAM provides the bridge between the mm/ private node infrastructure
-and compressed memory hardware.  Folios are aged by kswapd on the
-private node and reclaimed to swap when the device signals pressure.
-
-Write faults trigger promotion back to regular DRAM via the
-ops->handle_fault callback.
-
-Device pressure is communicated via watermark_boost on the private
-node's zone.
-
-CRAM registers node_private_ops with:
-  - handle_fault:   promotes folio back to DRAM on write
-  - migrate_to:     custom demotion to the CRAM node
-  - folio_migrate:  (no-op)
-  - free_folio:     zeroes pages on free to scrub stale data
-  - reclaim_policy: provides mayswap/writeback/boost overrides
-  - flags: NP_OPS_MIGRATION | NP_OPS_DEMOTION |
-	   NP_OPS_NUMA_BALANCING | NP_OPS_PROTECT_WRITE
-           NP_OPS_RECLAIM
+The driver registers a sysram_regionN device as a child of the CXL
+region, managing the memory hotplug lifecycle through device add/remove.
 
 Signed-off-by: Gregory Price <gourry@gourry.net>
 ---
- include/linux/cram.h |  66 ++++++
- mm/Kconfig           |  10 +
- mm/Makefile          |   1 +
- mm/cram.c            | 508 +++++++++++++++++++++++++++++++++++++++++++
- 4 files changed, 585 insertions(+)
- create mode 100644 include/linux/cram.h
- create mode 100644 mm/cram.c
+ drivers/cxl/core/Makefile        |   1 +
+ drivers/cxl/core/core.h          |   4 +
+ drivers/cxl/core/port.c          |   2 +
+ drivers/cxl/core/region_sysram.c | 351 +++++++++++++++++++++++++++++++
+ drivers/cxl/cxl.h                |  48 +++++
+ 5 files changed, 406 insertions(+)
+ create mode 100644 drivers/cxl/core/region_sysram.c
 
-diff --git a/include/linux/cram.h b/include/linux/cram.h
+diff --git a/drivers/cxl/core/Makefile b/drivers/cxl/core/Makefile
+index d3ec8aea64c5..d7ce52c50810 100644
+--- a/drivers/cxl/core/Makefile
++++ b/drivers/cxl/core/Makefile
+@@ -18,6 +18,7 @@ cxl_core-$(CONFIG_TRACING) += trace.o
+ cxl_core-$(CONFIG_CXL_REGION) += region.o
+ cxl_core-$(CONFIG_CXL_REGION) += region_dax.o
+ cxl_core-$(CONFIG_CXL_REGION) += region_pmem.o
++cxl_core-$(CONFIG_CXL_REGION) += region_sysram.o
+ cxl_core-$(CONFIG_CXL_MCE) += mce.o
+ cxl_core-$(CONFIG_CXL_FEATURES) += features.o
+ cxl_core-$(CONFIG_CXL_EDAC_MEM_FEATURES) += edac.o
+diff --git a/drivers/cxl/core/core.h b/drivers/cxl/core/core.h
+index 6e1f695fd155..973bbcae43f7 100644
+--- a/drivers/cxl/core/core.h
++++ b/drivers/cxl/core/core.h
+@@ -35,6 +35,7 @@ extern struct device_attribute dev_attr_delete_region;
+ extern struct device_attribute dev_attr_region;
+ extern const struct device_type cxl_pmem_region_type;
+ extern const struct device_type cxl_dax_region_type;
++extern const struct device_type cxl_sysram_type;
+ extern const struct device_type cxl_region_type;
+ 
+ int cxl_decoder_detach(struct cxl_region *cxlr,
+@@ -46,6 +47,7 @@ int cxl_decoder_detach(struct cxl_region *cxlr,
+ #define SET_CXL_REGION_ATTR(x) (&dev_attr_##x.attr),
+ #define CXL_PMEM_REGION_TYPE(x) (&cxl_pmem_region_type)
+ #define CXL_DAX_REGION_TYPE(x) (&cxl_dax_region_type)
++#define CXL_SYSRAM_TYPE(x) (&cxl_sysram_type)
+ int cxl_region_init(void);
+ void cxl_region_exit(void);
+ int cxl_get_poison_by_endpoint(struct cxl_port *port);
+@@ -54,6 +56,7 @@ u64 cxl_dpa_to_hpa(struct cxl_region *cxlr, const struct cxl_memdev *cxlmd,
+ 		   u64 dpa);
+ int devm_cxl_add_dax_region(struct cxl_region *cxlr, enum dax_driver_type);
+ int devm_cxl_add_pmem_region(struct cxl_region *cxlr);
++int devm_cxl_add_sysram(struct cxl_region *cxlr, enum mmop online_type);
+ 
+ #else
+ static inline u64 cxl_dpa_to_hpa(struct cxl_region *cxlr,
+@@ -88,6 +91,7 @@ static inline void cxl_region_exit(void)
+ #define SET_CXL_REGION_ATTR(x)
+ #define CXL_PMEM_REGION_TYPE(x) NULL
+ #define CXL_DAX_REGION_TYPE(x) NULL
++#define CXL_SYSRAM_TYPE(x) NULL
+ #endif
+ 
+ struct cxl_send_command;
+diff --git a/drivers/cxl/core/port.c b/drivers/cxl/core/port.c
+index 5c82e6f32572..d6e82b3c2b64 100644
+--- a/drivers/cxl/core/port.c
++++ b/drivers/cxl/core/port.c
+@@ -66,6 +66,8 @@ static int cxl_device_id(const struct device *dev)
+ 		return CXL_DEVICE_PMEM_REGION;
+ 	if (dev->type == CXL_DAX_REGION_TYPE())
+ 		return CXL_DEVICE_DAX_REGION;
++	if (dev->type == CXL_SYSRAM_TYPE())
++		return CXL_DEVICE_SYSRAM;
+ 	if (is_cxl_port(dev)) {
+ 		if (is_cxl_root(to_cxl_port(dev)))
+ 			return CXL_DEVICE_ROOT;
+diff --git a/drivers/cxl/core/region_sysram.c b/drivers/cxl/core/region_sysram.c
 new file mode 100644
-index 000000000000..a3c10362fd4f
+index 000000000000..47a415deb352
 --- /dev/null
-+++ b/include/linux/cram.h
-@@ -0,0 +1,66 @@
-+/* SPDX-License-Identifier: GPL-2.0 */
-+#ifndef _LINUX_CRAM_H
-+#define _LINUX_CRAM_H
++++ b/drivers/cxl/core/region_sysram.c
+@@ -0,0 +1,351 @@
++// SPDX-License-Identifier: GPL-2.0-only
++/* Copyright(c) 2026 Meta Platforms, Inc. All rights reserved. */
++/*
++ * CXL Sysram Region - Direct memory hotplug for CXL RAM regions
++ *
++ * This interface directly performs memory hotplug for CXL RAM regions,
++ * eliminating the indirection through DAX.
++ */
 +
-+#include <linux/mm_types.h>
++#include <linux/memory_hotplug.h>
++#include <linux/memory-tiers.h>
++#include <linux/memory.h>
++#include <linux/device.h>
++#include <linux/slab.h>
++#include <linux/mm.h>
++#include <cxlmem.h>
++#include <cxl.h>
++#include "core.h"
 +
-+struct folio;
-+struct list_head;
-+struct vm_fault;
-+
-+#define CRAM_PRESSURE_MAX	1000
++static const char *sysram_res_name = "System RAM (CXL)";
 +
 +/**
-+ * cram_flush_cb_t - Driver callback invoked when a folio on a private node
-+ *                   is freed (refcount reaches zero).
-+ * @folio: the folio being freed
-+ * @private: opaque driver data passed at registration
++ * cxl_region_find_sysram - Find the sysram device associated with a region
++ * @cxlr: The CXL region
 + *
-+ * Return:
-+ *   0: Flush resolved -- page should return to buddy allocator (e.g., flush
-+ *      record bit was set, meaning this free is from our own flush resolution)
-+ *   1: Page deferred -- driver took a reference, page will be flushed later.
-+ *      Do NOT return to buddy allocator.
-+ *   2: Buffer full -- caller should zero the page and return to buddy.
++ * Finds and returns the sysram child device of a CXL region.
++ * The caller must release the device reference with put_device()
++ * when done with the returned pointer.
++ *
++ * Return: Pointer to cxl_sysram, or NULL if not found
 + */
-+typedef int (*cram_flush_cb_t)(struct folio *folio, void *private);
-+
-+#ifdef CONFIG_CRAM
-+
-+int cram_register_private_node(int nid, void *owner,
-+			       cram_flush_cb_t flush_cb, void *flush_data);
-+int cram_unregister_private_node(int nid);
-+int cram_unpurge(int nid);
-+void cram_set_pressure(int nid, unsigned int pressure);
-+void cram_clear_pressure(int nid);
-+
-+#else /* !CONFIG_CRAM */
-+
-+static inline int cram_register_private_node(int nid, void *owner,
-+					     cram_flush_cb_t flush_cb,
-+					     void *flush_data)
++struct cxl_sysram *cxl_region_find_sysram(struct cxl_region *cxlr)
 +{
-+	return -ENODEV;
-+}
++	struct cxl_sysram *sysram;
++	struct device *sdev;
++	char sname[32];
 +
-+static inline int cram_unregister_private_node(int nid)
-+{
-+	return -ENODEV;
-+}
-+
-+static inline int cram_unpurge(int nid)
-+{
-+	return -ENODEV;
-+}
-+
-+static inline void cram_set_pressure(int nid, unsigned int pressure)
-+{
-+}
-+
-+static inline void cram_clear_pressure(int nid)
-+{
-+}
-+
-+#endif /* CONFIG_CRAM */
-+
-+#endif /* _LINUX_CRAM_H */
-diff --git a/mm/Kconfig b/mm/Kconfig
-index bd0ea5454af8..054462b954d8 100644
---- a/mm/Kconfig
-+++ b/mm/Kconfig
-@@ -662,6 +662,16 @@ config MIGRATION
- config DEVICE_MIGRATION
- 	def_bool MIGRATION && ZONE_DEVICE
- 
-+config CRAM
-+	bool "Compressed RAM - private node memory management"
-+	depends on NUMA
-+	depends on MIGRATION
-+	depends on MEMORY_HOTPLUG
-+	help
-+	  Enables management of N_MEMORY_PRIVATE nodes for compressed RAM
-+	  and similar use cases. Provides demotion, promotion, and lifecycle
-+	  management for private memory nodes.
-+
- config ARCH_ENABLE_HUGEPAGE_MIGRATION
- 	bool
- 
-diff --git a/mm/Makefile b/mm/Makefile
-index 2d0570a16e5b..0e1421512643 100644
---- a/mm/Makefile
-+++ b/mm/Makefile
-@@ -98,6 +98,7 @@ obj-$(CONFIG_MEMTEST)		+= memtest.o
- obj-$(CONFIG_MIGRATION) += migrate.o
- obj-$(CONFIG_NUMA) += memory-tiers.o
- obj-$(CONFIG_DEVICE_MIGRATION) += migrate_device.o
-+obj-$(CONFIG_CRAM) += cram.o
- obj-$(CONFIG_TRANSPARENT_HUGEPAGE) += huge_memory.o khugepaged.o
- obj-$(CONFIG_PAGE_COUNTER) += page_counter.o
- obj-$(CONFIG_LIVEUPDATE) += memfd_luo.o
-diff --git a/mm/cram.c b/mm/cram.c
-new file mode 100644
-index 000000000000..6709e61f5b9d
---- /dev/null
-+++ b/mm/cram.c
-@@ -0,0 +1,508 @@
-+// SPDX-License-Identifier: GPL-2.0
-+/*
-+ * mm/cram.c - Compressed RAM / private node memory management
-+ *
-+ * Copyright 2026 Meta Technologies Inc.
-+ *   Author: Gregory Price <gourry@gourry.net>
-+ *
-+ * Manages folios demoted to N_MEMORY_PRIVATE nodes via the standard kernel
-+ * LRU.  Folios are aged by kswapd on the private node and reclaimed to swap
-+ * (demotion is suppressed for private nodes).  Write faults trigger promotion
-+ * back to regular DRAM via the ops->handle_fault callback.
-+ *
-+ * All reclaim/demotion uses the standard vmscan infrastructure. Device pressure
-+ * is communicated via watermark_boost on the private node's zone.
-+ */
-+
-+#include <linux/atomic.h>
-+#include <linux/cpuset.h>
-+#include <linux/cram.h>
-+#include <linux/errno.h>
-+#include <linux/gfp.h>
-+#include <linux/jiffies.h>
-+#include <linux/highmem.h>
-+#include <linux/memory-tiers.h>
-+#include <linux/list.h>
-+#include <linux/migrate.h>
-+#include <linux/mm.h>
-+#include <linux/huge_mm.h>
-+#include <linux/mmzone.h>
-+#include <linux/mutex.h>
-+#include <linux/nodemask.h>
-+#include <linux/node_private.h>
-+#include <linux/pagemap.h>
-+#include <linux/rcupdate.h>
-+#include <linux/refcount.h>
-+#include <linux/swap.h>
-+
-+#include "internal.h"
-+
-+struct cram_node {
-+	void		*owner;
-+	bool		purged;		/* node is being torn down */
-+	unsigned int	pressure;
-+	refcount_t	refcount;
-+	cram_flush_cb_t	flush_cb;	/* optional driver flush callback */
-+	void		*flush_data;	/* opaque data for flush_cb */
-+};
-+
-+static struct cram_node *cram_nodes[MAX_NUMNODES];
-+static DEFINE_MUTEX(cram_mutex);
-+
-+static inline bool cram_valid_nid(int nid)
-+{
-+	return nid >= 0 && nid < MAX_NUMNODES;
-+}
-+
-+static inline struct cram_node *get_cram_node(int nid)
-+{
-+	struct cram_node *cn;
-+
-+	if (!cram_valid_nid(nid))
++	snprintf(sname, sizeof(sname), "sysram_region%d", cxlr->id);
++	sdev = device_find_child_by_name(&cxlr->dev, sname);
++	if (!sdev)
 +		return NULL;
 +
-+	rcu_read_lock();
-+	cn = rcu_dereference(cram_nodes[nid]);
-+	if (cn && !refcount_inc_not_zero(&cn->refcount))
-+		cn = NULL;
-+	rcu_read_unlock();
-+
-+	return cn;
++	sysram = to_cxl_sysram(sdev);
++	return sysram;
 +}
++EXPORT_SYMBOL_NS_GPL(cxl_region_find_sysram, "CXL");
 +
-+static inline void put_cram_node(struct cram_node *cn)
++static int sysram_get_numa_node(struct cxl_region *cxlr)
 +{
-+	if (cn)
-+		refcount_dec(&cn->refcount);
-+}
-+
-+static void cram_zero_folio(struct folio *folio)
-+{
-+	unsigned int i, nr = folio_nr_pages(folio);
-+
-+	if (want_init_on_free())
-+		return;
-+
-+	for (i = 0; i < nr; i++)
-+		clear_highpage(folio_page(folio, i));
-+}
-+
-+static bool cram_free_folio_cb(struct folio *folio)
-+{
-+	int nid = folio_nid(folio);
-+	struct cram_node *cn;
-+	int ret;
-+
-+	cn = get_cram_node(nid);
-+	if (!cn)
-+		goto zero_and_free;
-+
-+	if (!cn->flush_cb)
-+		goto zero_and_free_put;
-+
-+	ret = cn->flush_cb(folio, cn->flush_data);
-+	put_cram_node(cn);
-+
-+	switch (ret) {
-+	case 0:
-+		/* Flush resolved: return to buddy (already zeroed by device) */
-+		return false;
-+	case 1:
-+		/* Deferred: driver holds a ref, do not free to buddy */
-+		return true;
-+	case 2:
-+	default:
-+		/* Buffer full or unknown: zero locally, return to buddy */
-+		goto zero_and_free;
-+	}
-+
-+zero_and_free_put:
-+	put_cram_node(cn);
-+zero_and_free:
-+	cram_zero_folio(folio);
-+	return false;
-+}
-+
-+static struct folio *alloc_cram_folio(struct folio *src, unsigned long private)
-+{
-+	int nid = (int)private;
-+	unsigned int order = folio_order(src);
-+	gfp_t gfp = GFP_PRIVATE | __GFP_KSWAPD_RECLAIM |
-+		     __GFP_HIGHMEM | __GFP_MOVABLE |
-+		     __GFP_NOWARN | __GFP_NORETRY;
-+
-+	/* Stop allocating if backpressure fired mid-batch */
-+	if (node_private_migration_blocked(nid))
-+		return NULL;
-+
-+	if (order)
-+		gfp |= __GFP_COMP;
-+
-+	return __folio_alloc_node(gfp, order, nid);
-+}
-+
-+static void cram_put_new_folio(struct folio *folio, unsigned long private)
-+{
-+	cram_zero_folio(folio);
-+	folio_put(folio);
-+}
-+
-+/*
-+ * Allocate a DRAM folio for promotion out of a private node.
-+ *
-+ * Unlike alloc_migration_target(), this does NOT strip __GFP_RECLAIM for
-+ * large folios, the generic helper does that because THP allocations are
-+ * opportunistic, but promotion from a private node is mandatory: the page
-+ * MUST move to DRAM or the process cannot make forward progress.
-+ *
-+ * __GFP_RETRY_MAYFAIL tells the allocator to try hard (multiple reclaim
-+ * rounds, wait for writeback) before giving up.
-+ */
-+static struct folio *alloc_cram_promote_folio(struct folio *src,
-+					      unsigned long private)
-+{
-+	int nid = (int)private;
-+	unsigned int order = folio_order(src);
-+	gfp_t gfp = GFP_HIGHUSER_MOVABLE | __GFP_RETRY_MAYFAIL;
-+
-+	if (order)
-+		gfp |= __GFP_COMP;
-+
-+	return __folio_alloc(gfp, order, nid, NULL);
-+}
-+
-+static int cram_migrate_to(struct list_head *demote_folios, int to_nid,
-+			   enum migrate_mode mode,
-+			   enum migrate_reason reason,
-+			   unsigned int *nr_succeeded)
-+{
-+	struct cram_node *cn;
-+	unsigned int nr_success = 0;
-+	int ret = 0;
-+
-+	cn = get_cram_node(to_nid);
-+	if (!cn)
-+		return -ENODEV;
-+
-+	if (cn->purged) {
-+		ret = -ENODEV;
-+		goto out;
-+	}
-+
-+	/* Block new demotions at maximum pressure */
-+	if (READ_ONCE(cn->pressure) >= CRAM_PRESSURE_MAX) {
-+		ret = -ENOSPC;
-+		goto out;
-+	}
-+
-+	ret = migrate_pages(demote_folios, alloc_cram_folio, cram_put_new_folio,
-+			    (unsigned long)to_nid, mode, reason,
-+			    &nr_success);
-+
-+	/*
-+	 * migrate_folio_move() calls folio_add_lru() for each migrated
-+	 * folio, but that only adds the folio to a per-CPU batch, 
-+	 * PG_lru is not set until the batch is drained.  Drain now so
-+	 * that cram_fault() can isolate these folios immediately.
-+	 *
-+	 * Use lru_add_drain_all() because migrate_pages() may process
-+	 * folios across CPUs, and the local drain might miss batches
-+	 * filled on other CPUs.
-+	 */
-+	if (nr_success)
-+		lru_add_drain_all();
-+out:
-+	put_cram_node(cn);
-+	if (nr_succeeded)
-+		*nr_succeeded = nr_success;
-+	return ret;
-+}
-+
-+static void cram_release_ptl(struct vm_fault *vmf, enum pgtable_level level)
-+{
-+	if (level == PGTABLE_LEVEL_PTE)
-+		pte_unmap_unlock(vmf->pte, vmf->ptl);
-+	else
-+		spin_unlock(vmf->ptl);
-+}
-+
-+static vm_fault_t cram_fault(struct folio *folio, struct vm_fault *vmf,
-+			     enum pgtable_level level)
-+{
-+	struct folio *f, *f2;
-+	struct cram_node *cn;
-+	unsigned int nr_succeeded = 0;
++	struct cxl_region_params *p = &cxlr->params;
 +	int nid;
-+	LIST_HEAD(folios);
 +
-+	nid = folio_nid(folio);
++	nid = phys_to_target_node(p->res->start);
++	if (nid == NUMA_NO_NODE)
++		nid = memory_add_physaddr_to_nid(p->res->start);
 +
-+	cn = get_cram_node(nid);
-+	if (!cn) {
-+		cram_release_ptl(vmf, level);
-+		return 0;
-+	}
++	return nid;
++}
 +
-+	/*
-+	 * Isolate from LRU while holding PTL.  This serializes against
-+	 * other CPUs faulting on the same folio: only one CPU can clear
-+	 * PG_lru under the PTL, and it proceeds to migration.  Other
-+	 * CPUs find the folio already isolated and bail out, preventing
-+	 * the refcount pile-up that causes migrate_pages() to fail with
-+	 * -EAGAIN.
-+	 *
-+	 * No explicit folio_get() is needed: the page table entry holds
-+	 * a reference (we still hold PTL), and folio_isolate_lru() takes
-+	 * its own reference.  This matches do_numa_page()'s pattern.
-+	 *
-+	 * PG_lru should already be set: cram_migrate_to() drains per-CPU
-+	 * LRU batches after migration, and the failure path below
-+	 * drains after putback.
-+	 */
-+	if (!folio_isolate_lru(folio)) {
-+		put_cram_node(cn);
-+		cram_release_ptl(vmf, level);
-+		cond_resched();
-+		return 0;
-+	}
++static int sysram_hotplug_add(struct cxl_sysram *sysram, enum mmop online_type)
++{
++	struct resource *res;
++	mhp_t mhp_flags;
++	int rc;
 +
-+	/* Folio isolated, release PTL, proceed to migration */
-+	cram_release_ptl(vmf, level);
++	if (sysram->res)
++		return -EBUSY;
 +
-+	node_stat_mod_folio(folio,
-+			    NR_ISOLATED_ANON + folio_is_file_lru(folio),
-+			    folio_nr_pages(folio));
-+	list_add(&folio->lru, &folios);
++	res = request_mem_region(sysram->hpa_range.start,
++				 range_len(&sysram->hpa_range),
++				 sysram->res_name);
++	if (!res)
++		return -EBUSY;
 +
-+	migrate_pages(&folios, alloc_cram_promote_folio, NULL,
-+		      (unsigned long)numa_node_id(),
-+		      MIGRATE_SYNC, MR_NUMA_MISPLACED, &nr_succeeded);
-+
-+	/* Put failed folios back on LRU; retry on next fault */
-+	list_for_each_entry_safe(f, f2, &folios, lru) {
-+		list_del(&f->lru);
-+		node_stat_mod_folio(f,
-+				    NR_ISOLATED_ANON + folio_is_file_lru(f),
-+				    -folio_nr_pages(f));
-+		folio_putback_lru(f);
-+	}
++	sysram->res = res;
 +
 +	/*
-+	 * If migration failed, folio_putback_lru() batched the folio
-+	 * into this CPU's per-CPU LRU cache (PG_lru not yet set).
-+	 * Drain now so the folio is immediately visible on the LRU,
-+	 * the next fault can then isolate it without an IPI storm
-+	 * via lru_add_drain_all().
-+	 *
-+	 * Return VM_FAULT_RETRY after releasing the fault lock so the
-+	 * arch handler retries from scratch.  Without this, returning 0
-+	 * causes a tight livelock: the process immediately re-faults on
-+	 * the same write-protected entry, alloc fails again, and
-+	 * VM_FAULT_OOM eventually leaks out through a stale path.
-+	 * VM_FAULT_RETRY gives the system breathing room to reclaim.
++	 * Set flags appropriate for System RAM. Leave ..._BUSY clear
++	 * so that add_memory() can add a child resource.
 +	 */
-+	if (!nr_succeeded) {
-+		lru_add_drain();
-+		cond_resched();
-+		put_cram_node(cn);
-+		release_fault_lock(vmf);
-+		return VM_FAULT_RETRY;
++	res->flags = IORESOURCE_SYSTEM_RAM;
++
++	mhp_flags = MHP_NID_IS_MGID;
++
++	/*
++	 * Ensure that future kexec'd kernels will not treat
++	 * this as RAM automatically.
++	 */
++	rc = __add_memory_driver_managed(sysram->mgid,
++					 sysram->hpa_range.start,
++					 range_len(&sysram->hpa_range),
++					 sysram_res_name, mhp_flags,
++					 online_type);
++	if (rc) {
++		remove_resource(res);
++		kfree(res);
++		sysram->res = NULL;
++		return rc;
 +	}
 +
-+	cond_resched();
-+	put_cram_node(cn);
 +	return 0;
 +}
 +
-+static void cram_folio_migrate(struct folio *src, struct folio *dst)
++static int sysram_hotplug_remove(struct cxl_sysram *sysram)
 +{
++	int rc;
++
++	if (!sysram->res)
++		return 0;
++
++	rc = offline_and_remove_memory(sysram->hpa_range.start,
++				       range_len(&sysram->hpa_range));
++	if (rc)
++		return rc;
++
++	if (sysram->res) {
++		remove_resource(sysram->res);
++		kfree(sysram->res);
++		sysram->res = NULL;
++	}
++
++	return 0;
 +}
 +
-+static void cram_reclaim_policy(int nid, struct node_reclaim_policy *policy)
++int cxl_sysram_offline_and_remove(struct cxl_sysram *sysram)
 +{
-+	policy->may_swap = true;
-+	policy->may_writepage = true;
-+	policy->managed_watermarks = true;
++	return sysram_hotplug_remove(sysram);
++}
++EXPORT_SYMBOL_NS_GPL(cxl_sysram_offline_and_remove, "CXL");
++
++static void cxl_sysram_release(struct device *dev)
++{
++	struct cxl_sysram *sysram = to_cxl_sysram(dev);
++
++	if (sysram->res)
++		sysram_hotplug_remove(sysram);
++
++	kfree(sysram->res_name);
++
++	if (sysram->mgid >= 0)
++		memory_group_unregister(sysram->mgid);
++
++	if (sysram->mtype)
++		clear_node_memory_type(sysram->numa_node, sysram->mtype);
++
++	kfree(sysram);
 +}
 +
-+static vm_fault_t cram_handle_fault(struct folio *folio, struct vm_fault *vmf,
-+				    enum pgtable_level level)
++static ssize_t hotplug_store(struct device *dev,
++			     struct device_attribute *attr,
++			     const char *buf, size_t len)
 +{
-+	return cram_fault(folio, vmf, level);
-+}
++	struct cxl_sysram *sysram = to_cxl_sysram(dev);
++	int online_type, rc;
 +
-+static const struct node_private_ops cram_ops = {
-+	.handle_fault		= cram_handle_fault,
-+	.migrate_to		= cram_migrate_to,
-+	.folio_migrate		= cram_folio_migrate,
-+	.free_folio		= cram_free_folio_cb,
-+	.reclaim_policy		= cram_reclaim_policy,
-+	.flags			= NP_OPS_MIGRATION | NP_OPS_DEMOTION |
-+				  NP_OPS_NUMA_BALANCING | NP_OPS_PROTECT_WRITE |
-+				  NP_OPS_RECLAIM,
++	online_type = mhp_online_type_from_str(buf);
++	if (online_type < 0)
++		return online_type;
++
++	if (online_type == MMOP_OFFLINE)
++		rc = sysram_hotplug_remove(sysram);
++	else
++		rc = sysram_hotplug_add(sysram, online_type);
++
++	if (rc)
++		dev_warn(dev, "hotplug %s failed: %d\n",
++			 online_type == MMOP_OFFLINE ? "offline" : "online", rc);
++
++	return rc ? rc : len;
++}
++static DEVICE_ATTR_WO(hotplug);
++
++static struct attribute *cxl_sysram_attrs[] = {
++	&dev_attr_hotplug.attr,
++	NULL
 +};
 +
-+int cram_register_private_node(int nid, void *owner,
-+			       cram_flush_cb_t flush_cb, void *flush_data)
++static const struct attribute_group cxl_sysram_attribute_group = {
++	.attrs = cxl_sysram_attrs,
++};
++
++static const struct attribute_group *cxl_sysram_attribute_groups[] = {
++	&cxl_base_attribute_group,
++	&cxl_sysram_attribute_group,
++	NULL
++};
++
++const struct device_type cxl_sysram_type = {
++	.name = "cxl_sysram",
++	.release = cxl_sysram_release,
++	.groups = cxl_sysram_attribute_groups,
++};
++
++static bool is_cxl_sysram(struct device *dev)
 +{
-+	struct cram_node *cn;
-+	int ret;
++	return dev->type == &cxl_sysram_type;
++}
 +
-+	if (!node_state(nid, N_MEMORY_PRIVATE))
-+		return -EINVAL;
++struct cxl_sysram *to_cxl_sysram(struct device *dev)
++{
++	if (dev_WARN_ONCE(dev, !is_cxl_sysram(dev),
++			  "not a cxl_sysram device\n"))
++		return NULL;
++	return container_of(dev, struct cxl_sysram, dev);
++}
++EXPORT_SYMBOL_NS_GPL(to_cxl_sysram, "CXL");
 +
-+	mutex_lock(&cram_mutex);
++struct device *cxl_sysram_dev(struct cxl_sysram *sysram)
++{
++	return &sysram->dev;
++}
++EXPORT_SYMBOL_NS_GPL(cxl_sysram_dev, "CXL");
 +
-+	cn = cram_nodes[nid];
-+	if (cn) {
-+		if (cn->owner != owner) {
-+			mutex_unlock(&cram_mutex);
-+			return -EBUSY;
-+		}
-+		mutex_unlock(&cram_mutex);
-+		return 0;
++static struct lock_class_key cxl_sysram_key;
++
++static enum mmop cxl_sysram_get_default_online_type(void)
++{
++	if (IS_ENABLED(CONFIG_CXL_SYSRAM_ONLINE_TYPE_SYSTEM_DEFAULT))
++		return mhp_get_default_online_type();
++	if (IS_ENABLED(CONFIG_CXL_SYSRAM_ONLINE_TYPE_MOVABLE))
++		return MMOP_ONLINE_MOVABLE;
++	if (IS_ENABLED(CONFIG_CXL_SYSRAM_ONLINE_TYPE_NORMAL))
++		return MMOP_ONLINE;
++	return MMOP_OFFLINE;
++}
++
++static struct cxl_sysram *cxl_sysram_alloc(struct cxl_region *cxlr)
++{
++	struct cxl_sysram *sysram __free(kfree) = NULL;
++	struct device *dev;
++
++	sysram = kzalloc(sizeof(*sysram), GFP_KERNEL);
++	if (!sysram)
++		return ERR_PTR(-ENOMEM);
++
++	sysram->online_type = cxl_sysram_get_default_online_type();
++	sysram->last_hotplug_cmd = MMOP_OFFLINE;
++	sysram->numa_node = -1;
++	sysram->mgid = -1;
++
++	dev = &sysram->dev;
++	sysram->cxlr = cxlr;
++	device_initialize(dev);
++	lockdep_set_class(&dev->mutex, &cxl_sysram_key);
++	device_set_pm_not_required(dev);
++	dev->parent = &cxlr->dev;
++	dev->bus = &cxl_bus_type;
++	dev->type = &cxl_sysram_type;
++
++	return_ptr(sysram);
++}
++
++static void sysram_unregister(void *_sysram)
++{
++	struct cxl_sysram *sysram = _sysram;
++
++	device_unregister(&sysram->dev);
++}
++
++int devm_cxl_add_sysram(struct cxl_region *cxlr, enum mmop online_type)
++{
++	struct cxl_sysram *sysram __free(put_cxl_sysram) = NULL;
++	struct memory_dev_type *mtype;
++	struct range hpa_range;
++	struct device *dev;
++	int adist = MEMTIER_DEFAULT_LOWTIER_ADISTANCE;
++	int numa_node;
++	int rc;
++
++	rc = cxl_region_get_hpa_range(cxlr, &hpa_range);
++	if (rc)
++		return rc;
++
++	hpa_range = memory_block_align_range(&hpa_range);
++	if (hpa_range.start >= hpa_range.end) {
++		dev_warn(&cxlr->dev, "region too small after alignment\n");
++		return -ENOSPC;
 +	}
 +
-+	cn = kzalloc(sizeof(*cn), GFP_KERNEL);
-+	if (!cn) {
-+		mutex_unlock(&cram_mutex);
++	sysram = cxl_sysram_alloc(cxlr);
++	if (IS_ERR(sysram))
++		return PTR_ERR(sysram);
++
++	sysram->hpa_range = hpa_range;
++
++	sysram->res_name = kasprintf(GFP_KERNEL, "cxl_sysram%d", cxlr->id);
++	if (!sysram->res_name)
 +		return -ENOMEM;
-+	}
 +
-+	cn->owner = owner;
-+	cn->pressure = 0;
-+	cn->flush_cb = flush_cb;
-+	cn->flush_data = flush_data;
-+	refcount_set(&cn->refcount, 1);
++	/* Override default online type if caller specified one */
++	if (online_type >= 0)
++		sysram->online_type = online_type;
 +
-+	ret = node_private_set_ops(nid, &cram_ops);
-+	if (ret) {
-+		mutex_unlock(&cram_mutex);
-+		kfree(cn);
-+		return ret;
-+	}
++	dev = &sysram->dev;
 +
-+	rcu_assign_pointer(cram_nodes[nid], cn);
++	rc = dev_set_name(dev, "sysram_region%d", cxlr->id);
++	if (rc)
++		return rc;
 +
-+	/* Start kswapd on the private node for LRU aging and reclaim */
-+	kswapd_run(nid);
-+
-+	mutex_unlock(&cram_mutex);
-+
-+	/* Now that ops->migrate_to is set, refresh demotion targets */
-+	memory_tier_refresh_demotion();
-+	return 0;
-+}
-+EXPORT_SYMBOL_GPL(cram_register_private_node);
-+
-+int cram_unregister_private_node(int nid)
-+{
-+	struct cram_node *cn;
-+
-+	if (!cram_valid_nid(nid))
++	/* Setup memory tier before adding device */
++	numa_node = sysram_get_numa_node(cxlr);
++	if (numa_node < 0) {
++		dev_warn(&cxlr->dev, "rejecting region with invalid node: %d\n",
++			 numa_node);
 +		return -EINVAL;
++	}
++	sysram->numa_node = numa_node;
 +
-+	mutex_lock(&cram_mutex);
++	mt_calc_adistance(numa_node, &adist);
++	mtype = mt_get_memory_type(adist);
++	if (IS_ERR(mtype))
++		return PTR_ERR(mtype);
++	sysram->mtype = mtype;
 +
-+	cn = cram_nodes[nid];
-+	if (!cn) {
-+		mutex_unlock(&cram_mutex);
-+		return -ENODEV;
++	init_node_memory_type(numa_node, mtype);
++
++	/* Register memory group for this region */
++	rc = memory_group_register_static(numa_node,
++					  PFN_UP(range_len(&hpa_range)));
++	if (rc < 0)
++		return rc;
++	sysram->mgid = rc;
++
++	rc = device_add(dev);
++	if (rc)
++		return rc;
++
++	dev_dbg(&cxlr->dev, "%s: register %s\n", dev_name(dev->parent),
++		dev_name(dev));
++
++	/*
++	 * Dynamic capacity regions (DCD) will have memory added later.
++	 * For static RAM regions, hotplug the entire range now.
++	 */
++	if (cxlr->mode != CXL_PARTMODE_RAM)
++		goto out;
++
++	/* If default online_type is a valid online mode, immediately hotplug */
++	if (sysram->online_type > MMOP_OFFLINE) {
++		rc = sysram_hotplug_add(sysram, sysram->online_type);
++		if (rc)
++			dev_warn(dev, "hotplug failed: %d\n", rc);
++		else
++			sysram->last_hotplug_cmd = sysram->online_type;
 +	}
 +
-+	kswapd_stop(nid);
-+
-+	WARN_ON(node_private_clear_ops(nid, &cram_ops));
-+	rcu_assign_pointer(cram_nodes[nid], NULL);
-+	mutex_unlock(&cram_mutex);
-+
-+	/* ops->migrate_to cleared, refresh demotion targets */
-+	memory_tier_refresh_demotion();
-+
-+	synchronize_rcu();
-+	while (!refcount_dec_if_one(&cn->refcount))
-+		cond_resched();
-+	kfree(cn);
-+	return 0;
++out:
++	return devm_add_action_or_reset(&cxlr->dev, sysram_unregister,
++					no_free_ptr(sysram));
 +}
-+EXPORT_SYMBOL_GPL(cram_unregister_private_node);
++EXPORT_SYMBOL_NS_GPL(devm_cxl_add_sysram, "CXL");
+diff --git a/drivers/cxl/cxl.h b/drivers/cxl/cxl.h
+index f899f240f229..8e8342fd4fde 100644
+--- a/drivers/cxl/cxl.h
++++ b/drivers/cxl/cxl.h
+@@ -607,6 +607,34 @@ struct cxl_dax_region {
+ 	enum dax_driver_type dax_driver;
+ };
+ 
++/**
++ * struct cxl_sysram - CXL SysRAM region for system memory hotplug
++ * @dev: device for this sysram
++ * @cxlr: parent cxl_region
++ * @online_type: Default memory online type for new hotplug ops (MMOP_* value)
++ * @last_hotplug_cmd: Last hotplug command submitted (MMOP_* value)
++ * @hpa_range: Host physical address range for the region
++ * @res_name: Resource name for the memory region
++ * @res: Memory resource (set when hotplugged)
++ * @mgid: Memory group id
++ * @mtype: Memory tier type
++ * @numa_node: NUMA node for this memory
++ *
++ * Device that directly performs memory hotplug for CXL RAM regions.
++ */
++struct cxl_sysram {
++	struct device dev;
++	struct cxl_region *cxlr;
++	enum mmop online_type;
++	int last_hotplug_cmd;
++	struct range hpa_range;
++	const char *res_name;
++	struct resource *res;
++	int mgid;
++	struct memory_dev_type *mtype;
++	int numa_node;
++};
 +
-+int cram_unpurge(int nid)
+ /**
+  * struct cxl_port - logical collection of upstream port devices and
+  *		     downstream port devices to construct a CXL memory
+@@ -807,6 +835,7 @@ DEFINE_FREE(put_cxl_port, struct cxl_port *, if (!IS_ERR_OR_NULL(_T)) put_device
+ DEFINE_FREE(put_cxl_root_decoder, struct cxl_root_decoder *, if (!IS_ERR_OR_NULL(_T)) put_device(&_T->cxlsd.cxld.dev))
+ DEFINE_FREE(put_cxl_region, struct cxl_region *, if (!IS_ERR_OR_NULL(_T)) put_device(&_T->dev))
+ DEFINE_FREE(put_cxl_dax_region, struct cxl_dax_region *, if (!IS_ERR_OR_NULL(_T)) put_device(&_T->dev))
++DEFINE_FREE(put_cxl_sysram, struct cxl_sysram *, if (!IS_ERR_OR_NULL(_T)) put_device(&_T->dev))
+ 
+ int devm_cxl_enumerate_ports(struct cxl_memdev *cxlmd);
+ void cxl_bus_rescan(void);
+@@ -889,6 +918,7 @@ void cxl_destroy_region(struct cxl_region *cxlr);
+ struct device *cxl_region_dev(struct cxl_region *cxlr);
+ enum cxl_partition_mode cxl_region_mode(struct cxl_region *cxlr);
+ int cxl_get_region_range(struct cxl_region *cxlr, struct range *range);
++struct cxl_sysram *cxl_region_find_sysram(struct cxl_region *cxlr);
+ int cxl_get_committed_regions(struct cxl_memdev *cxlmd,
+ 			      struct cxl_region **regions, int max_regions);
+ struct cxl_region *cxl_create_region(struct cxl_root_decoder *cxlrd,
+@@ -936,6 +966,7 @@ void cxl_driver_unregister(struct cxl_driver *cxl_drv);
+ #define CXL_DEVICE_PMEM_REGION		7
+ #define CXL_DEVICE_DAX_REGION		8
+ #define CXL_DEVICE_PMU			9
++#define CXL_DEVICE_SYSRAM		10
+ 
+ #define MODULE_ALIAS_CXL(type) MODULE_ALIAS("cxl:t" __stringify(type) "*")
+ #define CXL_MODALIAS_FMT "cxl:t%d"
+@@ -954,6 +985,10 @@ bool is_cxl_pmem_region(struct device *dev);
+ struct cxl_pmem_region *to_cxl_pmem_region(struct device *dev);
+ int cxl_add_to_region(struct cxl_endpoint_decoder *cxled);
+ struct cxl_dax_region *to_cxl_dax_region(struct device *dev);
++struct cxl_sysram *to_cxl_sysram(struct device *dev);
++struct device *cxl_sysram_dev(struct cxl_sysram *sysram);
++int devm_cxl_add_sysram(struct cxl_region *cxlr, enum mmop online_type);
++int cxl_sysram_offline_and_remove(struct cxl_sysram *sysram);
+ u64 cxl_port_get_spa_cache_alias(struct cxl_port *endpoint, u64 spa);
+ #else
+ static inline bool is_cxl_pmem_region(struct device *dev)
+@@ -972,6 +1007,19 @@ static inline struct cxl_dax_region *to_cxl_dax_region(struct device *dev)
+ {
+ 	return NULL;
+ }
++static inline struct cxl_sysram *to_cxl_sysram(struct device *dev)
 +{
-+	struct cram_node *cn;
-+
-+	if (!cram_valid_nid(nid))
-+		return -EINVAL;
-+
-+	mutex_lock(&cram_mutex);
-+
-+	cn = cram_nodes[nid];
-+	if (!cn) {
-+		mutex_unlock(&cram_mutex);
-+		return -ENODEV;
-+	}
-+
-+	cn->purged = false;
-+
-+	mutex_unlock(&cram_mutex);
-+	return 0;
++	return NULL;
 +}
-+EXPORT_SYMBOL_GPL(cram_unpurge);
-+
-+void cram_set_pressure(int nid, unsigned int pressure)
++static inline int devm_cxl_add_sysram(struct cxl_region *cxlr,
++				      enum mmop online_type)
 +{
-+	struct cram_node *cn;
-+	struct node_private *np;
-+	struct zone *zone;
-+	unsigned long managed, boost;
-+
-+	cn = get_cram_node(nid);
-+	if (!cn)
-+		return;
-+
-+	if (pressure > CRAM_PRESSURE_MAX)
-+		pressure = CRAM_PRESSURE_MAX;
-+
-+	WRITE_ONCE(cn->pressure, pressure);
-+
-+	rcu_read_lock();
-+	np = rcu_dereference(NODE_DATA(nid)->node_private);
-+	/* Block demotions only at maximum pressure */
-+	if (np)
-+		WRITE_ONCE(np->migration_blocked,
-+			   pressure >= CRAM_PRESSURE_MAX);
-+	rcu_read_unlock();
-+
-+	zone = NULL;
-+	for (int i = 0; i < MAX_NR_ZONES; i++) {
-+		struct zone *z = &NODE_DATA(nid)->node_zones[i];
-+
-+		if (zone_managed_pages(z) > 0) {
-+			zone = z;
-+			break;
-+		}
-+	}
-+	if (!zone) {
-+		put_cram_node(cn);
-+		return;
-+	}
-+	managed = zone_managed_pages(zone);
-+
-+	/* Boost proportional to pressure. 0:no boost, 1000:full managed */
-+	boost = (managed * (unsigned long)pressure) / CRAM_PRESSURE_MAX;
-+	WRITE_ONCE(zone->watermark_boost, boost);
-+
-+	if (boost) {
-+		set_bit(ZONE_BOOSTED_WATERMARK, &zone->flags);
-+		wakeup_kswapd(zone, GFP_KERNEL, 0, ZONE_MOVABLE);
-+	}
-+
-+	put_cram_node(cn);
++	return -ENXIO;
 +}
-+EXPORT_SYMBOL_GPL(cram_set_pressure);
-+
-+void cram_clear_pressure(int nid)
++static inline int cxl_sysram_offline_and_remove(struct cxl_sysram *sysram)
 +{
-+	cram_set_pressure(nid, 0);
++	return -ENXIO;
 +}
-+EXPORT_SYMBOL_GPL(cram_clear_pressure);
+ static inline u64 cxl_port_get_spa_cache_alias(struct cxl_port *endpoint,
+ 					       u64 spa)
+ {
 -- 
 2.53.0
 
