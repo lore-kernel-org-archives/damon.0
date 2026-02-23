@@ -1,309 +1,169 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F17E1E531;
-	Sun, 22 Feb 2026 21:01:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1855A34AAEA;
+	Mon, 23 Feb 2026 08:08:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771794070; cv=none; b=WuXDUqHspk7tqbpEVfO/DnEBW2q8xas48wnyruSXPbD4YXKuduyyecy3BiKQuEcXXKXO0zxK2CupiqJqyZTVzdVR9i9WHikw6l8Gudtjgg5F/jxd0cE+EVCwvOj10uzDTQpuh1n/jatfQ68G7W++8EzDnScKwisQxyY/qruWSdA=
+	t=1771834127; cv=none; b=YJNFo2wQrj/7T/L1e24n33J6k+WaMmHyJhKRXxpME/YIZII6jLXocnL5R/qeruo1rCWsRuJwyPWi6CPfu+XT99QsAZDMkywumKkkYFuxidApiXqugYdMQZi2D5s41V+u77Rmh2BT1ZCnIjcNNy6cw3Fl/BL0dRuwfsEIgBTGsEA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771794070; c=relaxed/simple;
-	bh=9dgpyCU7wBH5PiWPlWORpFRzmJ+0P/zw9AKC0VdVIy4=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=ShIuXiRZMpfW8wuoFASoKU3ZkJ8YoQ/pz7HQuwWQJmbdP0yu890+yDI9aFL/RRxbPVMUc46jKcaUXilPQoeYBZ1RLJ1fGGF3BGtwZk3mMNkrJJqKb+kirFWJzS8oejIPLnw5sM2ofNkR4xTNhE8lqzV1XIeyyIa8wTx+qL2HODg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=b3BHLLtH; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1771834127; c=relaxed/simple;
+	bh=C0LVkrERSBDXQ6ejDtm+umP0yicPpm2CRhoJWRWE03w=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=flfFvtN7u08JSCtzYsGpfU4PIzf7SoNHDjHPsEdVD1vL0sCcWjC/qfcr3DTF2DVxcX+9SBxapU2kYDA3BXOAaSQP5dDTGyiBv5sv8P0UXD/DJ+74ZLiu529DeE7QO7vhPPQfsgenLU+putdsLoCv1Q0nmAXvYF5dcFwMHkiCuV8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=np2MV9DU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="b3BHLLtH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8482C116D0;
-	Sun, 22 Feb 2026 21:01:09 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="np2MV9DU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74A34C116C6;
+	Mon, 23 Feb 2026 08:08:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771794069;
-	bh=9dgpyCU7wBH5PiWPlWORpFRzmJ+0P/zw9AKC0VdVIy4=;
-	h=From:To:Cc:Subject:Date:From;
-	b=b3BHLLtHdoAHRS264ll9CbmqPJT1gNzcglRsv7rq45LwnrTrOBUzhC0bLDgSWMit5
-	 QYuZWyIoULVi8VFIlnSY5C1ez1z2AV2XP/PlVBHfg4lhqkOosdeRzsb31hQHEcyl/O
-	 Sk/7NR8b46Yb7uKTIPH1ea2AaO+Ly1oEunqbolSDqKZBR+TCH22OLGqXsnLVgIc3bN
-	 qvHIURwWzM5Yh6M4w9XNzu4wiQbxF2rGXOgKBgn+wCBh+Yx4YOH4vtBWnBL796iWD/
-	 rmhJgqvDT+tDHbwTxsVOs/P/iKF1knFu+qiW4KPvRp7hgQZ3Ydz5PsCnGW3WPEsyoo
-	 /z4pbxTbc28Kg==
-From: SeongJae Park <sj@kernel.org>
-To: damon@lists.linux.dev
-Cc: SeongJae Park <sj@kernel.org>,
-	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org
-Subject: DAMON Yearly Retrospect (2025)
-Date: Sun, 22 Feb 2026 13:01:01 -0800
-Message-ID: <20260222210102.153347-1-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
+	s=k20201202; t=1771834126;
+	bh=C0LVkrERSBDXQ6ejDtm+umP0yicPpm2CRhoJWRWE03w=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=np2MV9DUO+iActLJHksc9npBnrHu1EqRZMU3Z09S3skooyf15ZzLXA67f+43IjVmZ
+	 3OaI+dzW/DV1b52C0vZpSz/KBBJcj78JrMXHN5xGNc+nPW5enV0zx9nxBPQtmMdM5X
+	 o5gTYDLYLJv7Z0+6Mm8wkqwNe3vyv7ien7W8LIP6ypiI8SOqSTt/fe8V5Ujj7A4OVc
+	 J93XB5OF8pe0xnZCiMhlxe9oaYlWfx9ivj+3TPHqrtMc8G9GLpKrd/u9X/wc6uamG1
+	 mK/41ghiYV7fe9Lpbyqp2bEf4Wd36UftYPeot6M2p2oWaSLSFTfQWhFkEShVeeYaYI
+	 nWGTbBD0fN54A==
+Date: Mon, 23 Feb 2026 00:08:44 -0800
+From: Namhyung Kim <namhyung@kernel.org>
+To: SeongJae Park <sj@kernel.org>
+Cc: Akinobu Mita <akinobu.mita@gmail.com>, damon@lists.linux.dev,
+	linux-perf-users@vger.kernel.org
+Subject: Re: [RFC PATCH 0/4] mm/damon: introduce perf event based access check
+Message-ID: <aZwLDAxf9eP0lPdD@z2>
+References: <20260124023917.78649-1-sj@kernel.org>
+ <20260124024804.78869-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260124024804.78869-1-sj@kernel.org>
 
 Hello,
 
+On Fri, Jan 23, 2026 at 06:48:03PM -0800, SeongJae Park wrote:
+> Cc-ing linux-perf-users@ for any comment from perf people, about the use of
+> perf event from DAMON.
 
-It is a bit late, but let me share my retrospect of DAMON development for 2025,
-before my memory goes away.  The yearly retrospects for 2022 [1], 2023 [2] and
-2024 [3] are also available.
+Sorry for the long delay.
 
-Summary
-=======
+> 
+> On Fri, 23 Jan 2026 18:39:20 SeongJae Park <sj@kernel.org> wrote:
+> 
+> > On Fri, 23 Jan 2026 11:10:10 +0900 Akinobu Mita <akinobu.mita@gmail.com> wrote:
+> > 
+> > > DAMON currently only provides PTE accessed-bit based access check, this
+> > > patch series adds a new perf event based access check.
+> > 
+> > Very interesting patch series.  Thank you for sharing this Akinobu!
+> > 
+> > I only took a glance on the patches, but my understanding is that this series
+> > modifies DAMON to be able to enable perf events of PERF_SAMPLE_ADDR type, and
+> > utilize the sampled perf events in the perf events buffer as the source of
+> > DAMON's access checks.  In more detail, I understand enabling PERF_SAMPLE_ADDR
+> > type perf events makes the perf events buffer filled with memory access event
+> > information with the access destination address.  The event will be sampled
+> > based on time (e.g., one access event per X milliseconds).  And probably that
+> > sample data could include more information includign the CPU and the process
+> > that executing the sampled access?  Please correct me if I'm wrong and add more
+> > details I'm missing, as my understanding of perf event is very poor.
 
-2025 was the busiest year for DAMON development of its history.  33 people made
-390 commits for DAMON in 2025.  Those numbers are 65 % and 157 % increase from
-those of 2024.  Before 2025, 2022 was the busiest year that 32 people made 210
-commits for DAMON.
+I'm afraid you need to deal with PMU hardware details.  For example
+PERF_SAMPLE_ADDR may not be available depends on events or sometimes it
+may not have valid values in some samples like on AMD IBS.  Also hybrid
+CPUs may not have same events on both CPUs.
 
-Contributions from Meta except myself (observabilities for hugepages and LRU),
-Micron (access-aware runtime memory interleaving for CXL memory), Huawei (arm32
-LPAE support), SK hynix (memory tiering related fixes) and individuals
-(important fixes and refactoring) were impressive and notable.
+Maybe it's better to fix which event you want to use on each CPU
+architecture.
 
-Major motivations that led DAMON development in 2025 were self-tuning,
-system/fleet observability and memory tiering.
+> > 
+> > And one quick question.  Can this work on virtual machines?  I'm asking this
+> > question the for following reason.  I'm actuaally working on a similar project
+> > that extends DAMON for page fault based access events sampling [1].  The
+> > project aims to use page fault event rather than other h/w features such as AMD
+> > IBS or Intel PEBS, because my understanding is that such h/w features are not
+> > available on virtual machines.
 
-Events
-======
+KVM supports PMU virtualization.  But the existing vPMU support has a
+lot of overhead.  Recently mediated vPMU patchset was added so you can
+try that instead.  You'll need to pass appropriate options to qemu.
 
-There were many events in 2025.  Introducing only a few notable ones.  A more
-exhaustive list of events is also available at DAMON project site [4].
-
-Adoptions
----------
-
-In April, OpenSuse kernels build-enabled [5] DAMON.
-
-In June, DAMON was build-enabled on mainline by default [6], and reverted [7]
-by Linus Torvalds.
-
-In October, DAMON module for system/fleet-wide access monitoring (DAMON_STAT)
-has build-enabled [8] on Debian kernels.
-
-DAMON Feature Releases
-----------------------
-
-Many DAMON features have developed and landed on the mainline in 2025.  Listing
-only a few of those that stands out to me.  A more exhaustive list of features is
-available on DAMON user-space tool's DAMON features list [9].
-
-In February, Linux 6.14-rc1 was released, with page level monitoring [10]
-feature.
-
-In April, Linux 6.15-rc1 was released.  Usama and Naht from Meta contributed
-huge pages [11] and LRU pages [12] monitoring/operation extensions.  The
-release also introduced the monitoring intervals goal auto-tuning [13], which
-made DAMON just work.
-
-In June, Linux 6.16-rc1 was released, with DAMON's memory tiering automation
-support [14].  The feature is not only for memory tiering but general per-NUMA
-utilization based access-aware system operations automation, though.
-
-In August, Linux 6.17-rc1 was released.  In this release, Bijan and Ravi from
-Micron contributed access-aware runtime memory interleaving features [15] for
-their CXL memory tiering solution.  A module for fleet-wide access monitoring
-(DAMON_STAT) [16] is also introduced.
-
-In October, Linux 6.18-rc1 was released.  In this release, Quanmin from Huawei
-contributed [17] arm32 Large Physical Address Extension support.  Yueyang Pan
-from Meta contributed [18] huge pages observability on virtual address space.
-
-In December, Linux 6.19-rc1 was released.  In this release, per-node per-memcg
-memory utilization based DAMOS automation [19] is introduced.  Motivation of
-the feature was per-cgroup memory tiering.
-
-Presentations
--------------
-
-2025 was an interesting year in terms of presentation, since I found two
-presentations from someone other than myself that introduced DAMON use cases.
-
-In October, Asier from Huawei presented a DAMON use case for THP [20] at
-OSSummit EU in August.
-
-In November, Ravi from Micron presented a DAMON use case for CXL memory tiering
-aiming both latency and bandwidth improvements [21] at Linux Memory Hotness and
-Promotion meeting.
-
-I also led some sessions at conferences in 2025.
-
-In February, I presented DAMON in whole, at FOSDEM [22].
-
-In March, I led two sessions discussing DAMON development status and future
-at LSF/MM/BPF [23].
-
-In June, I introduced DAMON's new intervals autotuning feature [24] at
-OSSummit NA.
-
-In September, I introduced DAMON's monitoring mechanism and usage [25] at Kernel
-Recipes.
-
-In December, I led two DAMON discussion sessions [26,27] and one presentation
-[28] at LPC special-purpose memory micro-conference, system monitoring
-micro-conference, and refereed track, respectively.
-
-Statistics
-==========
-
-Like previous yearly retrospects, I ran my script [29] to see DAMON development
-statistics as below.  In 2025, 33 people made 390 commits for DAMON.  Huge
-appreciation to all grateful contributors.
-
-    $ ./lazybox/version_control/authors.py ./linux --skip_merge_commits \
-            --linux_subsystems DAMON --year 2025
-    1. SeongJae Park <sj@kernel.org>: 310 commits
-    2. Quanmin Yan <yanquanmin1@huawei.com>: 10 commits
-    3. Bijan Tabatabai <bijantabatab@micron.com>: 10 commits
-    4. Enze Li <lienze@kylinos.cn>: 8 commits
-    5. Sang-Heon Jeon <ekffu200098@gmail.com>: 8 commits
-    6. Honggyu Kim <honggyu.kim@sk.com>: 6 commits
-    7. Usama Arif <usamaarif642@gmail.com>: 6 commits
-    8. Akinobu Mita <akinobu.mita@gmail.com>: 3 commits
-    9. Yueyang Pan <pyyjason@gmail.com>: 2 commits
-    10. Yunjeong Mun <yunjeong.mun@sk.com>: 2 commits
-    11. Nhat Pham <nphamcs@gmail.com>: 2 commits
-    12. David Hildenbrand <david@redhat.com>: 2 commits
-    13. Arnd Bergmann <arnd@arndb.de>: 1 commits
-    14. Dan Carpenter <dan.carpenter@linaro.org>: 1 commits
-    15. Lorenzo Stoakes <lorenzo.stoakes@oracle.com>: 1 commits
-    16. Balbir Singh <balbirs@nvidia.com>: 1 commits
-    17. Swaraj Gaikwad <swarajgaikwad1925@gmail.com>: 1 commits
-    18. Lokesh Gidra <lokeshgidra@google.com>: 1 commits
-    19. jianyun.gao <jianyungao89@gmail.com>: 1 commits
-    20. Alexandre Ghiti <alexghiti@rivosinc.com>: 1 commits
-    21. Qianfeng Rong <rongqianfeng@vivo.com>: 1 commits
-    22. Stanislav Fort <stanislav.fort@aisle.com>: 1 commits
-    23. Bjorn Helgaas <bhelgaas@google.com>: 1 commits
-    24. Nathan Gao <zcgao@amazon.com>: 1 commits
-    25. Linus Torvalds <torvalds@linux-foundation.org>: 1 commits
-    26. Thushara.M.S <thusharms@gmail.com>: 1 commits
-    27. Su Hui <suhui@nfschina.com>: 1 commits
-    28. Taotao Chen <chentaotao@didiglobal.com>: 1 commits
-    29. Seongjun Kim <bus710@gmail.com>: 1 commits
-    30. Marcelo Moreira <marcelomoreira1905@gmail.com>: 1 commits
-    # 33 authors, 390 commits in total
-
-It is a dramatic increase of the amount from that of 2024.  In 2024, 20 people
-made 157 commits.  So 65 % increase of developers, and 148 % increase of
-commits.
-
-2025 was not just busier than 2024.  It was the busiest year in DAMON's
-history.  The stats for the whole history of DAMON are as below.
-
-    $ ./lazybox/version_control/authors.py ./linux --skip_merge_commits \
-            --linux_subsystems DAMON --year 2024
-    [...]
-    # 20 authors, 157 commits in total
-
-    $ ./lazybox/version_control/authors.py ./linux --skip_merge_commits \
-            --linux_subsystems DAMON --year 2023
-    [...]
-    # 25 authors, 180 commits in total
-
-    $ ./lazybox/version_control/authors.py ./linux --skip_merge_commits \
-            --linux_subsystems DAMON --year 2022
-    [...]
-    # 32 authors, 210 commits in total
-
-    $ ./lazybox/version_control/authors.py ./linux --skip_merge_commits \
-            --linux_subsystems DAMON --year 2021
-    [...]
-    # 11 authors, 75 commits in total
-
-2022 was the busiest year where 32 developers made 210 commits.  Compared to
-the year, the increase of the number of developers (3.12 %) is trivial.  But the
-increase of the number of commits (85.71 %) is still impressive.
-
-Again, huge appreciation to all grateful developers!
-
-DAMON User-space Tool
----------------------
-
-Development of the DAMON user-space tool was also busier than 2024.  12 people
-made 1,309 commits in 2025.  In 2024, 8 people made 1,031 commits.  Note that
-the 2024 statistic counts me twice.  Again, huge appreciation to all
-grateful developers!
-
-    $ ./lazybox/version_control/authors.py ./damo --year 2025
-    1. SeongJae Park <sj@kernel.org>: 1291 commits
-    2. Bijan Tabatabai <bijantabatab@micron.com>: 3 commits
-    3. Usama Arif <usamaarif642@gmail.com>: 3 commits
-    4. Andrew Paniakin <apanyaki@amazon.com>: 2 commits
-    5. Bijan Tabatabai <btabatabai@wisc.edu>: 2 commits
-    6. Wu Cheng Han <hank20010209@gmail.com>: 2 commits
-    7. Michel Lind <salimma@fedoraproject.org>: 1 commits
-    8. SeungSu Baek <ssbaek@korea.ac.kr>: 1 commits
-    9. Bijan Tabatabai <bijan311@gmail.com>: 1 commits
-    10. Nhat Pham <nphamcs@gmail.com>: 1 commits
-    11. wangchuanguo <wangchuanguo@inspur.com>: 1 commits
-    12. Akinobu Mita <akinobu.mita@gmail.com>: 1 commits
-    # 12 authors, 1309 commits in total
-
-    $ ./lazybox/version_control/authors.py ./damo --year 2024
-    1. SeongJae Park <sj@kernel.org>: 753 commits
-    2. SeongJae Park <sj38.park@gmail.com>: 264 commits
-    3. Mithun Veluri <velurimithun38@gmail.com>: 4 commits
-    4. Honggyu Kim <honggyu.kim@sk.com>: 3 commits
-    5. m8 <umusasadik@gmail.com>: 2 commits
-    6. Yunjeong Mun <yunjeong.mun@sk.com>: 2 commits
-    7. Akinobu Mita <akinobu.mita@gmail.com>: 1 commits
-    8. Alex Rusuf <yorha.op@gmail.com>: 1 commits
-    9. Piyush Thange <pthange19@gmail.com>: 1 commits
-    # 9 authors, 1031 commits in total
-
-Paper Citations
----------------
-
-I published two academic papers introducing DAMON in 2019 [14] and 2022 [15].
-The number of citations for the two papers continued its exponential increase,
-as below.
-
-    2019-published paper: 10 (2024) -> 18 (2025)
-    2022-published paper: 7  (2024) -> 14 (2025)
-
-Conclusion
-==========
-
-So, 2025 was the busiest year of DAMON development in its history.  That was
-motivated by automation, observability, and memory tiering needs.  Meta,
-Micron, Huawei, SK hynix and individuals made the major selfish ;) and grateful
-contributions.
-
-References
-==========
-
-[1] 2022 retro: https://lore.kernel.org/20221229171209.162356-1-sj@kernel.org/
-[2] 2023 retro: https://lore.kernel.org/20231231222250.140364-1-sj@kernel.org/
-[3] 2024 retro: https://lore.kernel.org/20260216210625.68098-1-sj@kernel.org/
-[4] 2025 DAMON news: https://damonitor.github.io/posts/damon_news/#2025
-[5] OpenSUSE DAMON enable news: https://social.kernel.org/notice/AtQ94OoroZhOGuGuAq
-[6] DAMON enablement: https://lore.kernel.org/all/20250610173228.49109-1-sj@kernel.org/
-[7] DAMON enablement revert: https://git.kernel.org/torvalds/c/aef17cb3d3c438540
-[8] DAMON_STAT enablement on Debian: https://salsa.debian.org/kernel-team/linux/-/merge_requests/1616
-[9] 2025 DAMON features list: https://github.com/damonitor/damo/blob/next/src/_damon_features.py#L235
-[10] page-level monitoring: https://git.kernel.org/torvalds/c/626ffabe67c2359f3
-[11] hugepage monitoring: https://git.kernel.org/torvalds/c/0431c42622612a96cce
-[12] LRU-active monitoring: https://git.kernel.org/torvalds/c/3b23a44f1f1967415
-[13] intervals autotune: https://git.kernel.org/torvalds/c/1eb3471bf5749ff3769e
-[14] memory tiering automation: https://git.kernel.org/torvalds/c/0e1c773b501f3
-[15] memory interleaving: https://git.kernel.org/torvalds/c/a2c24eae5a15f79673e
-[16] damon_stat: https://git.kernel.org/torvalds/c/369c415e60732b7c8ed333688915
-[17] arm32 lpae: https://git.kernel.org/torvalds/c/09a616cbb371e6b843e536f00e38
-[18] hugepage on vaddr: https://git.kernel.org/torvalds/c/408b299a62ec207fa5f21
-[19] memcg tiering: https://git.kernel.org/torvalds/c/d3946c5f4c1c5db63532eb433
-[20] THP use case at OSSummit EU: https://sched.co/25Vrh
-[21] Ravi at hotness meeting: https://lore.kernel.org/all/d952a84f-332e-8f7a-4816-2c1cbd8f5b00@google.com/
-[22] Talk at FOSDEM: https://archive.fosdem.org/2025/schedule/event/fosdem-2025-4396-damon-kernel-subsystem-for-data-access-monitoring-and-access-aware-system-operations/
-[23] Sessions at LSF/MM/BPF: https://lwn.net/Articles/1016525/
-[24] Talk at OSSummit NA: https://ossna2024.sched.com/event/1aBOg
-[25] Talk at Kernel Recipes: https://kernel-recipes.org/en/2025/schedule/overcoming-observer-effects-in-memory-management-with-damon/
-[26] Session1 at LPC: https://lpc.events/event/19/contributions/2066/
-[27] Session2 at LPC: https://lpc.events/event/19/contributions/2059/
-[28] Talk at LPC: https://lpc.events/event/19/contributions/2075/
-[29] authors.py: https://github.com/sjp38/lazybox/blob/master/version_control/authors.py
-
+https://lore.kernel.org/lkml/20251206001720.468579-1-seanjc@google.com/
 
 Thanks,
-SJ
+Namhyung
+
+> > 
+> > > 
+> > > Since perf event-based access checks do not require modifying the PTE
+> > > accessed-bit for pages representing each damon region, this patch series
+> > > also includes a feature that allows you to set upper and lower limits on
+> > > the damon region size to enable access checks with finer granularity.
+> > 
+> > I was also thinking about extending DAMON with AMD IBS or Intel PEBS like h/w
+> > features for this kind of sub-page granularity access monitoring.  So this
+> > makes sense to me, and sounds useful!
+> > 
+> > > 
+> > > Using these features also requires modifications to damo, but these are
+> > > not included in this patch series and are currently under development in
+> > > the following branch:
+> > > 
+> > > https://github.com/mita/damo/tree/damo-perf-for-v3.1.0
+> > > 
+> > > Any feedback or advice on the patch set would be greatly appreciated.
+> > > 
+> > > Akinobu Mita (4):
+> > >   mm/damon/core: add common code for perf event based access check
+> > >   mm/damon/vaddr: support perf event based access check
+> > >   mm/damon/paddr: support perf event based access check
+> > 
+> > I find your patches are introducing new infra code for this extension.  It
+> > seems bit specialized for perf event only, though.  I'm concerned if future
+> > extension for another access check primitives cannot reuse the infra.
+> > 
+> > My DAMON extension project [1] is for page fault based access monitoring, but
+> > it also introduces a framework for general multiple access sampling primitives.
+> > I'm wondering if perf event based extension can be implemented using the
+> > general acces ssampling primitives infra code, and if you already considered
+> > that but found it is not feasible.
+> > 
+> > >   mm/damon: allow user to set min and max size of region
+> > 
+> > The min size setup makes sense.  I understand the max size is for disabling the
+> > regions adjustment (merge/split) mechanism.  IOW, for fixed granularity
+> > monitoring.  Users can do that by setting min_nr_regions and max_nr_regions
+> > same [2], though.  So, max size setting seems not really needed.
+> > 
+> > Again, great RFC patch series, thank you for sharing!  I'm looking forward to
+> > your answers to above high level questions and comments.
+> > 
+> > > 
+> > >  .../ABI/testing/sysfs-kernel-mm-damon         |  11 +
+> > >  include/linux/damon.h                         |  42 +-
+> > >  mm/damon/core.c                               | 202 ++++-
+> > >  mm/damon/ops-common.h                         |  39 +
+> > >  mm/damon/paddr.c                              | 106 ++-
+> > >  mm/damon/sysfs.c                              | 402 +++++++++-
+> > >  mm/damon/tests/core-kunit.h                   |   2 +-
+> > >  mm/damon/tests/sysfs-kunit.h                  |   2 +
+> > >  mm/damon/tests/vaddr-kunit.h                  |   7 +-
+> > >  mm/damon/vaddr.c                              | 690 ++++++++++++++++--
+> > >  10 files changed, 1425 insertions(+), 78 deletions(-)
+> > > 
+> > > -- 
+> > > 2.43.0
+> > 
+> > [1] https://lore.kernel.org/damon/20251208062943.68824-1-sj@kernel.org/
+> > [2] https://origin.kernel.org/doc/html/latest/mm/damon/faq.html#can-i-simply-monitor-page-granularity
+> > 
+> > 
+> > Thanks,
+> > SJ
+> > 
