@@ -1,72 +1,71 @@
-Received: from mail-qk1-f182.google.com (mail-qk1-f182.google.com [209.85.222.182])
+Received: from mail-qv1-f43.google.com (mail-qv1-f43.google.com [209.85.219.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E8132566E9
-	for <damon@lists.linux.dev>; Mon, 23 Feb 2026 14:55:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C35D43090C1
+	for <damon@lists.linux.dev>; Mon, 23 Feb 2026 16:08:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771858509; cv=none; b=ch3i1qP8Tp5KAPalJ1+f9UTT1A73w6xJ+00WHSqQ0FZUeOlFsoRUngmFgfA9jvGaW1CJ+5zIlSkpHTg6/nJj4SX2VJuPYypmLMplnNbr7NDVhkX2SXpziN6ynPVjGZVUdUO32oteBlMxHQ9BAejhGnhvv+PPWZyO0E1ZqDIpMqk=
+	t=1771862924; cv=none; b=mbx1stnP4NFHf1UjvVs3x59033Q4xFsmMZXv+Rqw2jGlxoffh4+mgTk15pGpTDdoOh0npt9b5272DWb/0TxFr0RFYeMl8szn2r1kOmniVECMRt0KnC6n6FV0Hx/qN3DckRucy3mJP9djSC2MiCJ4PGDeq8lH3jKZz8Exbx4osEc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771858509; c=relaxed/simple;
-	bh=EwLgLwdt857/iVMGq6pQA6+6jmF6tAKLgAXdu3hsyrE=;
+	s=arc-20240116; t=1771862924; c=relaxed/simple;
+	bh=EnsbfZuxC9RIxnGqfBuxuj/9JrH+GEm1z2N32vhH5LU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=K8W62AazpGR9fwum0AeYy/aUgfvn4SK7cMV9uf08+kLSzDFuWy/Q6dYQQcxMkiMuadOze9apcUiPTZMtX1MNT8DTwX3qpQVPuzyqOj+m4G033xMBNH9R6Pk/tfqpWgDPUSmEq2anfN03/W8pdNgTW98NdfvUpHyfePFOjCU6pxg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gourry.net; spf=pass smtp.mailfrom=gourry.net; dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.b=tcQTeDvj; arc=none smtp.client-ip=209.85.222.182
+	 Content-Type:Content-Disposition:In-Reply-To; b=Du6L/06LbHnTCuFUml56k36w1dr5gsd6FbhR9U01JV8md93uW/euYv6zwZpD9qwV/ZuGq3/IByQvHx4qX/kI1Hnh9pOM06AsTSt16pr8EEW+uesZuaG2zxKAk7NZ3sOuFWepHwBqCCsrg4YY1HP+DfZsK4TOyZQaKmAuYwU75TQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gourry.net; spf=pass smtp.mailfrom=gourry.net; dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.b=r8so0Xgm; arc=none smtp.client-ip=209.85.219.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gourry.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gourry.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.b="tcQTeDvj"
-Received: by mail-qk1-f182.google.com with SMTP id af79cd13be357-8cb3a8494c5so416117585a.2
-        for <damon@lists.linux.dev>; Mon, 23 Feb 2026 06:55:07 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.b="r8so0Xgm"
+Received: by mail-qv1-f43.google.com with SMTP id 6a1803df08f44-896ff127650so76294446d6.3
+        for <damon@lists.linux.dev>; Mon, 23 Feb 2026 08:08:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gourry.net; s=google; t=1771858507; x=1772463307; darn=lists.linux.dev;
+        d=gourry.net; s=google; t=1771862921; x=1772467721; darn=lists.linux.dev;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=qpjmdBXuQUotNZnT57UveTMGt/2pk8eLf+dmkyC2/50=;
-        b=tcQTeDvjGOyao6+gT5OKcir3sx+glOJd1EtRsol4OLzJkAd0mKeB/YV2ObNvc8YgoZ
-         Fd96xK1qTKquvIsuVUY0NFh8fUA0ZpOK5RTv9A1S2DfX75A/c0LFEmYSJsB6gmXp89xx
-         hvDSQot1QXFlBXqMmfEXlUcP/I0N5WSTMfKdXdb1L/Orgg3lCbMUinVs4n4+dw6fDmCk
-         fT9Eat9Yvlbf9p92LNwdV4mKGKGbCEoztMBayC3gWrDYi7fXIttLBCXPAEo2EK7Cdnnp
-         Ffe7mwEi7vaF5LWB0N7mzszmakDkIYg3Bxq8UtqHaKBLAr9Y8hdZxwnguT7otoeIidec
-         rpjg==
+        bh=hp6xyKYDxr6lXYQA9JHTZDh6ckgrNYb0tSD8kTJSDxQ=;
+        b=r8so0XgmKQIR0u05XHMEp8TlVv1/UkU7e2H0f6+RWE9ptW3xk4HVC4oi4izLwEhaHM
+         2IdlHdDCTi03UoZ9Sx8+6w1yVcGOs3ZxnvKVhfBPZpkvCaFQ2nVRnoNq3fhk4jB48/nK
+         wihfCoV7iP+iPx4J+Z8H7ERndjWWoPUPHSwPSWtdB7y9a91KUCwoBmKNt+LftYUpFHpW
+         FR4+IcwFa/6wHy5Hb7BwsmaIRw13eEu3MDdHW4z6D/WT9Xe9dsgsL+gCUXEY7HKKT12v
+         pqhGM25MfHYv0Dd7C/VbA6mFhMHLXRh30Wsd2TEU3/smFerOav99yOVuHv6V3hVG3jzi
+         L06w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771858507; x=1772463307;
+        d=1e100.net; s=20230601; t=1771862921; x=1772467721;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=qpjmdBXuQUotNZnT57UveTMGt/2pk8eLf+dmkyC2/50=;
-        b=K+nJOuV449QMRSbe/2lAHXi6E7S5MOxBFHnBqpaCFn+zYEuLBCIVVMGTNIbPALKRvb
-         5SFu5br7ogKaWhI5VBDfkJG776ppF6oaxWdfXaS+B+4DW7vGQsNOTGZcMXQaU8hxKjG3
-         CAdW5jjwfEbyB+vDSGDX0G3OZIuwUpy9LQxcMbMqtfbGVG2yFIyllvS7Wp5N17pSvzv0
-         hDLx3binH1LxWrCBUKgaEen4I9jYiMCM3guLa6nJobzfXxxa/N/PPSxE54trmE+3ocXX
-         +3lckvlScLNebMTcj7zo98UPa43NwDXqQ8x9Df2YpR8ZJZoNR/EGC/NlRkvl/tZhpYDD
-         jJXw==
-X-Forwarded-Encrypted: i=1; AJvYcCVZtIGgGZtV5XXnSX+PLG8wsl8+sk1vroGe1PGPANEX3sIXWK+tHbZefhmoB2NS00F45/BeqA==@lists.linux.dev
-X-Gm-Message-State: AOJu0YwjDczVxwHqLRDyUnwVEq13loG0+evYICFYrq6syZdnrEkDGgwT
-	5/4UYDW6ks0Xvxorvs+b++bhv/qjott1N3hTSnlzY+xbp+0tmnl/tYbUIgRswk/CJ3c=
-X-Gm-Gg: AZuq6aK2jIiRgvP3i8PIcMY2p0PIubuoiJ21B8vZ557jzXkUtucz7BkyQZKvfeMdfoE
-	Cpppnkfx/1WC8ZzFR9q2R0v1RVOfNl/niRviHh652hKkj4904PWfycuRfSWV73FNDNQRbmZfOnv
-	MvVA1TCounjU3v+vtlkSsCqKD3tHeLKzHXHCmkiCbDmHTOI5q5hdfzni/EMML6xKPjLyxQr9hzQ
-	cRlQggN6vYOBPORQBlaGEhpiP+nn0qrkYo7iP9irKuYqIKBXxMffsDz9qN6Hn4J/1TTgPZM8efe
-	ua5t9cr7534HRFdk/CXC5uY0Q5ob2m6sDUjTdQ8KAK22iassMBB9X/TjpPKKgSzAflmHjJuhWCT
-	r5aWZEx0svmL712xIf1QRKaPJ9017Cvq/8LVnrG5DouYhAklRwDkp+e6e+R3l0vkAZOxucm/9Rs
-	zcHb2KQTawxMRYO2DElHT7OgIzWmOJM1CkMAuLbgU5kjWI3/dI4+I3XMUxjNIkHHzUG6WQf1LZ6
-	b/Be4Ruvw==
-X-Received: by 2002:a05:620a:1a18:b0:8cb:3288:6777 with SMTP id af79cd13be357-8cb8ca0e16fmr993255985a.28.1771858506861;
-        Mon, 23 Feb 2026 06:55:06 -0800 (PST)
+        bh=hp6xyKYDxr6lXYQA9JHTZDh6ckgrNYb0tSD8kTJSDxQ=;
+        b=TWM9yz8AAhA5ar8KywdUzTOx2rPU9NdPsQC63p2PvivoYyUCVEdnzitrBNAL9Ua9jJ
+         MuNlnOD9/1ilRO1AwBEF/FWNA8pl3fn2czcsMAOTk/IhlQAQ10lOJ39HYLPxMMKbLwSe
+         0kE2dbzynK6LC6oPpig/xxoCRwpsoO+AnsfTmjN3L64dGDThknFuiZ344Rgpa37t4Sey
+         yLH5T6EqlWmLkGgKe6vkFklHF51HHrXRe16AxnQ7BrnvPuqxAKM8tE6Hcf78OnQbSl3t
+         G9XLFG3cxqR1l/bmjkZXXHqGbqaKT4OqCYQvMcobMW8tcrnl+XKi30aK9FhRRNoXmxAu
+         Q5XA==
+X-Forwarded-Encrypted: i=1; AJvYcCVNHGDiTdxN+LStxlbTDCqjGM0XIbf5Vj2ztlpgLXqXZr8BG7E2sqa3FsWhGjYx3Qw/BmFObA==@lists.linux.dev
+X-Gm-Message-State: AOJu0Yx4MHQFVuz8WQGuZnJpG4Q3DZgqAbWxwuqk7e5sLSupsI31m66V
+	ucz/NpP3kVqn1+sGG0ZIdXe5QcinoRQHRJuDV79u5B4li8s7thx0ZYk8d76ESCPknrk=
+X-Gm-Gg: AZuq6aJvLavc9e8hJOgHDjeJ+JHV1K4goCYo7pXobN6JJuvY9kSq3cYeyM0xPmM98ek
+	3bhsepjOKFN5rlsWkpTBxtzf0zmxoQskNeljcET0XSYKdQcIAm106zJh/WigoSB9k+Uc18GE4op
+	legKcHAtONQxaDcC4laA/u4saquN9yrvfWFjdg0t4awqnGOJTRpyy3viC0V9L4K0/crRkhyOwD1
+	NsoASGlqV6bm7Ad/t/hPYjbbzcD23zCYx8yv8sk5YpqwqnylnvvLzd+7DOnwCl6z3hB0NbrLbDE
+	TZ9Gef+7f+B7Wr1vkY5T7dEonQO5xtACdYHQ+zxZELwGEyxMZWEVGAgyaltBftC2A46ESmsv/uj
+	XiZdKxckuNRlh6rZDdLuHlPzSVxKh6IvP/vPdYYtgqfeh4zLN8ZVK6WqKFK1DVo8L9tvdJ/PaGJ
+	VrC/pm4F5Mk5fpKqZdpa/9Scknb9TWv0FGjHWVEvncPvqxIXdKZUu+Fv3/xE/lmjRyZWM4tXWbI
+	MSiy0tdx8P3TyXR8aDD
+X-Received: by 2002:a05:622a:1922:b0:4f3:5835:e946 with SMTP id d75a77b69052e-5070bca9868mr136790871cf.55.1771862921369;
+        Mon, 23 Feb 2026 08:08:41 -0800 (PST)
 Received: from gourry-fedora-PF4VCD3F (pool-96-255-20-138.washdc.ftas.verizon.net. [96.255.20.138])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-8cb8d0ebcd0sm845419885a.28.2026.02.23.06.54.57
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-5070d54000fsm71259831cf.10.2026.02.23.08.08.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 Feb 2026 06:55:06 -0800 (PST)
-Date: Mon, 23 Feb 2026 09:54:55 -0500
+        Mon, 23 Feb 2026 08:08:40 -0800 (PST)
+Date: Mon, 23 Feb 2026 11:08:38 -0500
 From: Gregory Price <gourry@gourry.net>
 To: "David Hildenbrand (Arm)" <david@kernel.org>
-Cc: lsf-pc@lists.linux-foundation.org, linux-kernel@vger.kernel.org,
-	linux-cxl@vger.kernel.org, cgroups@vger.kernel.org,
-	linux-mm@kvack.org, linux-trace-kernel@vger.kernel.org,
-	damon@lists.linux.dev, kernel-team@meta.com,
-	gregkh@linuxfoundation.org, rafael@kernel.org, dakr@kernel.org,
-	dave@stgolabs.net, jonathan.cameron@huawei.com,
+Cc: linux-kernel@vger.kernel.org, linux-cxl@vger.kernel.org,
+	cgroups@vger.kernel.org, linux-mm@kvack.org,
+	linux-trace-kernel@vger.kernel.org, damon@lists.linux.dev,
+	kernel-team@meta.com, gregkh@linuxfoundation.org, rafael@kernel.org,
+	dakr@kernel.org, dave@stgolabs.net, jonathan.cameron@huawei.com,
 	dave.jiang@intel.com, alison.schofield@intel.com,
 	vishal.l.verma@intel.com, ira.weiny@intel.com,
 	dan.j.williams@intel.com, longman@redhat.com,
@@ -90,9 +89,10 @@ Cc: lsf-pc@lists.linux-foundation.org, linux-kernel@vger.kernel.org,
 	bhe@redhat.com, zhengqi.arch@bytedance.com, terry.bowman@amd.com
 Subject: Re: [LSF/MM/BPF TOPIC][RFC PATCH v4 00/27] Private Memory Nodes (w/
  Compressed RAM)
-Message-ID: <aZxqP7J1kOClQUPQ@gourry-fedora-PF4VCD3F>
+Message-ID: <aZx7hsVNU0XOCCiG@gourry-fedora-PF4VCD3F>
 References: <20260222084842.1824063-1-gourry@gourry.net>
  <c10400db-2259-4465-a07e-19d0691101a4@kernel.org>
+ <aZxqP7J1kOClQUPQ@gourry-fedora-PF4VCD3F>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -101,77 +101,32 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <c10400db-2259-4465-a07e-19d0691101a4@kernel.org>
+In-Reply-To: <aZxqP7J1kOClQUPQ@gourry-fedora-PF4VCD3F>
 
-On Mon, Feb 23, 2026 at 02:07:15PM +0100, David Hildenbrand (Arm) wrote:
+On Mon, Feb 23, 2026 at 09:54:55AM -0500, Gregory Price wrote:
+> On Mon, Feb 23, 2026 at 02:07:15PM +0100, David Hildenbrand (Arm) wrote:
 > > 
-> > Gregory Price (27):
-> >    numa: introduce N_MEMORY_PRIVATE node state
-> >    mm,cpuset: gate allocations from N_MEMORY_PRIVATE behind __GFP_PRIVATE
-> >    mm/page_alloc: add numa_zone_allowed() and wire it up
-> >    mm/page_alloc: Add private node handling to build_zonelists
-> >    mm: introduce folio_is_private_managed() unified predicate
-> >    mm/mlock: skip mlock for managed-memory folios
-> >    mm/madvise: skip madvise for managed-memory folios
-> >    mm/ksm: skip KSM for managed-memory folios
-> >    mm/khugepaged: skip private node folios when trying to collapse.
-> >    mm/swap: add free_folio callback for folio release cleanup
-> >    mm/huge_memory.c: add private node folio split notification callback
-> >    mm/migrate: NP_OPS_MIGRATION - support private node user migration
-> >    mm/mempolicy: NP_OPS_MEMPOLICY - support private node mempolicy
-> >    mm/memory-tiers: NP_OPS_DEMOTION - support private node demotion
-> >    mm/mprotect: NP_OPS_PROTECT_WRITE - gate PTE/PMD write-upgrades
+> > I'm concerned about adding more special-casing (similar to what we already
+> > added for ZONE_DEVICE) all over the place.
+> > 
+> > Like the whole folio_managed_() stuff in mprotect.c
+> > 
+> > Having that said, sounds like a reasonable topic to discuss.
+> > 
 > 
-> I'm concerned about adding more special-casing (similar to what we already
-> added for ZONE_DEVICE) all over the place.
-> 
-> Like the whole folio_managed_() stuff in mprotect.c
-> 
-> Having that said, sounds like a reasonable topic to discuss.
+> Another option would be to add the hook to vma_wants_writenotify()
+> instead of the page table code - and mask MM_CP_TRY_CHANGE_WRITABLE.
 > 
 
-It's a valid concern - and is why I tried to re-use as many of the
-zone_device hooks as possible.  It does not seem zone_device has quite
-the same semantics for a case like this, so I had to make something new.
+scratch all this - existing hooks exist for exactly this purpose:
 
-DEVICE_COHERENT injects a temporary swap entry to allow the device to do
-a large atomic operation - then the page table is restored and the CPU
-is free to change entries as it pleases.
+	can_change_[pte|pmd]_writable()
 
-Another option would be to add the hook to vma_wants_writenotify()
-instead of the page table code - and mask MM_CP_TRY_CHANGE_WRITABLE.
+Surprised I missed this.
 
-This would require adding a vma flag - or maybe a count of protected /
-device pages.
+I can clean this up to remove it from the page table walks.
 
-int mprotect_fixup() {
-    ...
-    if (vma_wants_manual_pte_write_upgrade(vma))
-        mm_cp_flags |= MM_CP_TRY_CHANGE_WRITABLE;
-}
-
-bool vma_wants_writenotify(struct vm_area_struct *vma, pgprot_t vm_page_prot)
-{
-    if (vma->managed_wrprotect)
-        return true;
-}
-
-That would localize the change in folio_managed_fixup_migration_pte() :
-
-static inline pte_t folio_managed_fixup_migration_pte(struct page *new,
-                                                      pte_t pte,
-                                                      pte_t old_pte,
-                                                      struct vm_area_struct *vma)
-{
-    ...
-    } else if (folio_managed_wrprotect(page_folio(new))) {
-        pte = pte_wrprotect(pte);
-+       atomic_inc(&vma->managed_wrprotect);
-    }
-    return pte;
-}
-
-This would cover both the huge_memory.c and mprotect, and maybe that's
-just generally cleaner? I can try that to see if it actually works.
+Still valid to question whether we want this, but at least the hook
+lives with other write-protect hooks now.
 
 ~Gregory
