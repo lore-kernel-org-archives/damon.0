@@ -1,169 +1,224 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f194.google.com (mail-pf1-f194.google.com [209.85.210.194])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1855A34AAEA;
-	Mon, 23 Feb 2026 08:08:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAD6016F288
+	for <damon@lists.linux.dev>; Mon, 23 Feb 2026 12:32:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.194
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771834127; cv=none; b=YJNFo2wQrj/7T/L1e24n33J6k+WaMmHyJhKRXxpME/YIZII6jLXocnL5R/qeruo1rCWsRuJwyPWi6CPfu+XT99QsAZDMkywumKkkYFuxidApiXqugYdMQZi2D5s41V+u77Rmh2BT1ZCnIjcNNy6cw3Fl/BL0dRuwfsEIgBTGsEA=
+	t=1771849971; cv=none; b=IlpIom4dkhhicYIsex9/u83oSJP2VgUboCdIRC4SmbVSqok4d5knH3UwM3tK4ozK8H0BVmjSwOVtR4ZtWRRzJHh4h+jlgiaan8Nl30i1t8pTgFGZiXC6cs6k3KIA0d/OzgrBTNJA7UsSe60SgzIvZgRvkGNcMWfALTldCQ02lpE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771834127; c=relaxed/simple;
-	bh=C0LVkrERSBDXQ6ejDtm+umP0yicPpm2CRhoJWRWE03w=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=flfFvtN7u08JSCtzYsGpfU4PIzf7SoNHDjHPsEdVD1vL0sCcWjC/qfcr3DTF2DVxcX+9SBxapU2kYDA3BXOAaSQP5dDTGyiBv5sv8P0UXD/DJ+74ZLiu529DeE7QO7vhPPQfsgenLU+putdsLoCv1Q0nmAXvYF5dcFwMHkiCuV8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=np2MV9DU; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1771849971; c=relaxed/simple;
+	bh=/hjWTF7tNqiQ5Nwhak3xS55/6KhpCzuSKrhD8waOpgM=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=c0h+qJGRwqbh+yn+EiYMFe2sgL4OL80oM37yJ0RpYT0pYhgEAuO9FXf74WRG6nO7ORhRLcOvX1QJYRY8xArU9s8f2yKAVIKqTyGom00cYgzUw54QcC3+NJ+ueGkOCnEbspjIIyNrNKCdhtcGW8kCZdPcbbydlTSK+yuNiW8Ew8I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aDnxizBs; arc=none smtp.client-ip=209.85.210.194
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="np2MV9DU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74A34C116C6;
-	Mon, 23 Feb 2026 08:08:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771834126;
-	bh=C0LVkrERSBDXQ6ejDtm+umP0yicPpm2CRhoJWRWE03w=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=np2MV9DUO+iActLJHksc9npBnrHu1EqRZMU3Z09S3skooyf15ZzLXA67f+43IjVmZ
-	 3OaI+dzW/DV1b52C0vZpSz/KBBJcj78JrMXHN5xGNc+nPW5enV0zx9nxBPQtmMdM5X
-	 o5gTYDLYLJv7Z0+6Mm8wkqwNe3vyv7ien7W8LIP6ypiI8SOqSTt/fe8V5Ujj7A4OVc
-	 J93XB5OF8pe0xnZCiMhlxe9oaYlWfx9ivj+3TPHqrtMc8G9GLpKrd/u9X/wc6uamG1
-	 mK/41ghiYV7fe9Lpbyqp2bEf4Wd36UftYPeot6M2p2oWaSLSFTfQWhFkEShVeeYaYI
-	 nWGTbBD0fN54A==
-Date: Mon, 23 Feb 2026 00:08:44 -0800
-From: Namhyung Kim <namhyung@kernel.org>
-To: SeongJae Park <sj@kernel.org>
-Cc: Akinobu Mita <akinobu.mita@gmail.com>, damon@lists.linux.dev,
-	linux-perf-users@vger.kernel.org
-Subject: Re: [RFC PATCH 0/4] mm/damon: introduce perf event based access check
-Message-ID: <aZwLDAxf9eP0lPdD@z2>
-References: <20260124023917.78649-1-sj@kernel.org>
- <20260124024804.78869-1-sj@kernel.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aDnxizBs"
+Received: by mail-pf1-f194.google.com with SMTP id d2e1a72fcca58-823210d1d8eso2331218b3a.1
+        for <damon@lists.linux.dev>; Mon, 23 Feb 2026 04:32:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1771849968; x=1772454768; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=XWeTUTocNncqBZlX9GEiXOVVLoIbjlo/yvE3a+/Ll3A=;
+        b=aDnxizBsztYID3Iqf5wRrEFHi+dtwuXhv0GJnqEenQREVPK4MG+F0vznuIKIPC3QEo
+         cKgXIXTnI6z8ZR6gwcbO9BEjR/SKcQHlZNdsgtqnfubn4x+VUWqy4CoafO1m+7n0/TIv
+         HQTgf/2YC3d7oDTjZ4q2I+tzAk5NHFyS95Ed22Kmyf6qQoxO7afPOyD1DDQc64abWy9h
+         dSPEwkAfh0Fl0VBAqHzj8m044rM5SXEQQ7gcgxJUF2YW89LoE0nMTk6w6v5hpYCw9/nM
+         j6iu1ZmwuqiMxOtJA9TI+FMcl+zeKYgZI+Y5w++zgHFcAAW1s/kGsts7plivYJHAdUnN
+         Xv0Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1771849968; x=1772454768;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=XWeTUTocNncqBZlX9GEiXOVVLoIbjlo/yvE3a+/Ll3A=;
+        b=eFhtD98otf4QKqwwXWKTVJAdPecN6nLVgLblmP5Y02nxqKChAckMlsYrOkN/QZ7d06
+         /lrSeudGeUqulvDR2S8vvXewhMCSNwTASG5s2tGGqE4a8LPzo36UiG3iSVu1fl9f5mH5
+         F9TEXQLeQ8wAxyf6K0kt+aqutG/Lmg1cNVa0xhyyHr+JuFlCkjtwcc/Vufbjg9wDrsKG
+         W0dI7wOsOhUQ+K0BV/2itv+Ki3l72KHypHlJ7Mp/x2IxTLAm+aYxBYwOFTijg7KqyRm/
+         G6kNoA83j80C6hGBwiYOZ8XAIG7yHtqKMpCYtcMxjuq/yjG3aBVpFbWb1r30y+9IYwcS
+         Mepw==
+X-Forwarded-Encrypted: i=1; AJvYcCXgNW5TG5m/OxuT4tksiFXCxhcCE6LYam2S19BZlklTSyQkcidba6PWeWiN/6ZeDWH9wYu+eA==@lists.linux.dev
+X-Gm-Message-State: AOJu0YxbK4T4XB2IAJmw4oF+wtbJLq9E/f6AwhZYtaKIRXadlkLIYh64
+	2rvU3vyRe8giFaqqouSdn6+xgm0A/Triv1rm27mAsrM60EdcIzizjaA=
+X-Gm-Gg: AZuq6aIjrX7/7Akx1iklg0H6n+KobwyXBd3aKtgcHtGLttgqX3op+gABsw2hpFz6JMu
+	KSSKfNSDpcRKaQds+CIR2vs+6is0cg5ckwQWX2tIexfiFhNdMqf9qI4URn3emPg+/WzTa2oNM8s
+	aPh9jxvAyCeA+L+xMfwMNyRl9D154ONGRh4mZyAGGNDy5GBze4llpKR01BrQXxfJrVKujm2A0Pq
+	DMW3eIMie5z6tG0W5pgpYzLMAac26QkGxvbPnoEnNpeO/6y1+ns/gxSTLdlUjftldY42MJf1949
+	kWqZFxZ1RzHRWHqo474wRM59/EPHwgFHVokdgdh+1iANJkh32HDcHZ1IVxUtY9zlK5DiRxlcTzc
+	V2WfNushX5+PIYlOhBhb28Q+WzvCLzywTH/zTCIEVoT0q/lXXQg9axU25/NjEx0wkOcqJBKqoJ7
+	u4h3VYMtwwfx2tugvvXlXsfLmRR3mX6k+Uxp1mrkWs1YUF3lAuOtjlIvI=
+X-Received: by 2002:a05:6a21:6b12:b0:334:96ed:7a75 with SMTP id adf61e73a8af0-39545ed4a53mr7607282637.24.1771849968248;
+        Mon, 23 Feb 2026 04:32:48 -0800 (PST)
+Received: from LAPTOP-FDBL0TVI.localdomain ([49.37.157.71])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c70b71a73e1sm7454739a12.13.2026.02.23.04.32.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 23 Feb 2026 04:32:47 -0800 (PST)
+From: Ravi Jonnalagadda <ravis.opensrc@gmail.com>
+To: sj@kernel.org,
+	damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org,
+	linux-doc@vger.kernel.org
+Cc: akpm@linux-foundation.org,
+	corbet@lwn.net,
+	bijan311@gmail.com,
+	ajayjoshi@micron.com,
+	honggyu.kim@sk.com,
+	yunjeong.mun@sk.com,
+	Ravi Jonnalagadda <ravis.opensrc@gmail.com>
+Subject: [RFC PATCH v3 0/4] mm/damon: Introduce node_eligible_mem_bp and node_ineligible_mem_bp Quota Goal Metrics
+Date: Mon, 23 Feb 2026 12:32:28 +0000
+Message-ID: <20260223123232.12851-1-ravis.opensrc@gmail.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260124024804.78869-1-sj@kernel.org>
+Content-Transfer-Encoding: 8bit
 
-Hello,
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Fri, Jan 23, 2026 at 06:48:03PM -0800, SeongJae Park wrote:
-> Cc-ing linux-perf-users@ for any comment from perf people, about the use of
-> perf event from DAMON.
+This series introduces two new DAMON quota goal metrics for controlling
+memory migration in heterogeneous memory systems (e.g., DRAM and CXL
+memory tiering) using physical address (PA) mode monitoring.
 
-Sorry for the long delay.
+v2: https://lore.kernel.org/linux-mm/20260129215814.1618-1-ravis.opensrc@gmail.com/
 
-> 
-> On Fri, 23 Jan 2026 18:39:20 SeongJae Park <sj@kernel.org> wrote:
-> 
-> > On Fri, 23 Jan 2026 11:10:10 +0900 Akinobu Mita <akinobu.mita@gmail.com> wrote:
-> > 
-> > > DAMON currently only provides PTE accessed-bit based access check, this
-> > > patch series adds a new perf event based access check.
-> > 
-> > Very interesting patch series.  Thank you for sharing this Akinobu!
-> > 
-> > I only took a glance on the patches, but my understanding is that this series
-> > modifies DAMON to be able to enable perf events of PERF_SAMPLE_ADDR type, and
-> > utilize the sampled perf events in the perf events buffer as the source of
-> > DAMON's access checks.  In more detail, I understand enabling PERF_SAMPLE_ADDR
-> > type perf events makes the perf events buffer filled with memory access event
-> > information with the access destination address.  The event will be sampled
-> > based on time (e.g., one access event per X milliseconds).  And probably that
-> > sample data could include more information includign the CPU and the process
-> > that executing the sampled access?  Please correct me if I'm wrong and add more
-> > details I'm missing, as my understanding of perf event is very poor.
+Changes since v2:
+=================
 
-I'm afraid you need to deal with PMU hardware details.  For example
-PERF_SAMPLE_ADDR may not be available depends on events or sometimes it
-may not have valid values in some samples like on AMD IBS.  Also hybrid
-CPUs may not have same events on both CPUs.
+- Split single metric into two complementary metrics:
+  * node_eligible_mem_bp: hot memory present ON the specified node
+  * node_ineligible_mem_bp: hot memory NOT on the specified node.
+  This enables both PUSH and PULL schemes to work together.
 
-Maybe it's better to fix which event you want to use on each CPU
-architecture.
+- Added PA-mode detection lag compensation cache (see dedicated section
+  below for design details).
 
-> > 
-> > And one quick question.  Can this work on virtual machines?  I'm asking this
-> > question the for following reason.  I'm actuaally working on a similar project
-> > that extends DAMON for page fault based access events sampling [1].  The
-> > project aims to use page fault event rather than other h/w features such as AMD
-> > IBS or Intel PEBS, because my understanding is that such h/w features are not
-> > available on virtual machines.
+- Added fix for esz=0 quota bypass that allowed unlimited migration when
+  goal was achieved.
 
-KVM supports PMU virtualization.  But the existing vPMU support has a
-lot of overhead.  Recently mediated vPMU patchset was added so you can
-try that instead.  You'll need to pass appropriate options to qemu.
+- Added fix for goal_tuner sysfs setting being ignored due to
+  damon_new_scheme() always defaulting to CONSIST.
 
-https://lore.kernel.org/lkml/20251206001720.468579-1-seanjc@google.com/
+- Rebased on SJ's damon/next branch which includes the TEMPORAL goal
+  tuner required for these metrics.
 
-Thanks,
-Namhyung
+Background and Motivation
+=========================
 
-> > 
-> > > 
-> > > Since perf event-based access checks do not require modifying the PTE
-> > > accessed-bit for pages representing each damon region, this patch series
-> > > also includes a feature that allows you to set upper and lower limits on
-> > > the damon region size to enable access checks with finer granularity.
-> > 
-> > I was also thinking about extending DAMON with AMD IBS or Intel PEBS like h/w
-> > features for this kind of sub-page granularity access monitoring.  So this
-> > makes sense to me, and sounds useful!
-> > 
-> > > 
-> > > Using these features also requires modifications to damo, but these are
-> > > not included in this patch series and are currently under development in
-> > > the following branch:
-> > > 
-> > > https://github.com/mita/damo/tree/damo-perf-for-v3.1.0
-> > > 
-> > > Any feedback or advice on the patch set would be greatly appreciated.
-> > > 
-> > > Akinobu Mita (4):
-> > >   mm/damon/core: add common code for perf event based access check
-> > >   mm/damon/vaddr: support perf event based access check
-> > >   mm/damon/paddr: support perf event based access check
-> > 
-> > I find your patches are introducing new infra code for this extension.  It
-> > seems bit specialized for perf event only, though.  I'm concerned if future
-> > extension for another access check primitives cannot reuse the infra.
-> > 
-> > My DAMON extension project [1] is for page fault based access monitoring, but
-> > it also introduces a framework for general multiple access sampling primitives.
-> > I'm wondering if perf event based extension can be implemented using the
-> > general acces ssampling primitives infra code, and if you already considered
-> > that but found it is not feasible.
-> > 
-> > >   mm/damon: allow user to set min and max size of region
-> > 
-> > The min size setup makes sense.  I understand the max size is for disabling the
-> > regions adjustment (merge/split) mechanism.  IOW, for fixed granularity
-> > monitoring.  Users can do that by setting min_nr_regions and max_nr_regions
-> > same [2], though.  So, max size setting seems not really needed.
-> > 
-> > Again, great RFC patch series, thank you for sharing!  I'm looking forward to
-> > your answers to above high level questions and comments.
-> > 
-> > > 
-> > >  .../ABI/testing/sysfs-kernel-mm-damon         |  11 +
-> > >  include/linux/damon.h                         |  42 +-
-> > >  mm/damon/core.c                               | 202 ++++-
-> > >  mm/damon/ops-common.h                         |  39 +
-> > >  mm/damon/paddr.c                              | 106 ++-
-> > >  mm/damon/sysfs.c                              | 402 +++++++++-
-> > >  mm/damon/tests/core-kunit.h                   |   2 +-
-> > >  mm/damon/tests/sysfs-kunit.h                  |   2 +
-> > >  mm/damon/tests/vaddr-kunit.h                  |   7 +-
-> > >  mm/damon/vaddr.c                              | 690 ++++++++++++++++--
-> > >  10 files changed, 1425 insertions(+), 78 deletions(-)
-> > > 
-> > > -- 
-> > > 2.43.0
-> > 
-> > [1] https://lore.kernel.org/damon/20251208062943.68824-1-sj@kernel.org/
-> > [2] https://origin.kernel.org/doc/html/latest/mm/damon/faq.html#can-i-simply-monitor-page-granularity
-> > 
-> > 
-> > Thanks,
-> > SJ
-> > 
+In heterogeneous memory systems, controlling hot memory distribution
+across NUMA nodes is essential for performance optimization. This series
+enables system wide hot page distribution with target-state goals like
+"maintain 30% of hot memory on CXL" using PA-mode DAMON schemes.
+
+Two-Scheme Setup for Hot Page Distribution
+==========================================
+
+For maintaining 30% of hot memory on CXL (node 1):
+
+    PUSH scheme (DRAM->CXL): migrate_hot from node 0 -> node 1
+      goal: node_eligible_mem_bp, nid=1, target=3000
+      Activates when node 1 has less than 30% hot memory
+
+    PULL scheme (CXL->DRAM): migrate_hot from node 1 -> node 0
+      goal: node_ineligible_mem_bp, nid=1, target=7000
+      Activates when node 1 has more than 30% hot memory
+
+Both schemes use the TEMPORAL goal tuner which sets esz to maximum when
+under goal and zero when achieved. Together they converge to equilibrium
+at the target distribution.
+
+What These Metrics Do
+=====================
+
+node_eligible_mem_bp measures:
+    effective_hot_bytes_on_node / total_hot_bytes * 10000
+
+node_ineligible_mem_bp measures:
+    (total_hot_bytes - effective_hot_bytes_on_node) / total_hot_bytes * 10000
+
+The metrics are complementary: eligible_bp + ineligible_bp = 10000 bp.
+
+PA-Mode Detection Lag and Cache Design
+======================================
+
+In PA-mode, when pages are migrated:
+1. Source node detection drops immediately (pages are gone)
+2. Target node detection increases slowly (new addresses need sampling)
+
+This asymmetry causes temporary underestimation of hot memory on the
+target node. Without compensation, the system keeps migrating even after
+reaching the goal.
+
+The cache addresses this by remembering how much was recently migrated.
+When calculating effective hot memory:
+- Source node: reduce detected amount by recent migrations out
+- Target node: boost detected amount by recent migrations in
+
+The cache uses a rolling window to track migrations over time, and
+expires after a configurable timeout (default 10s) when no migration
+activity occurs. It also detects when its baseline becomes stale due
+to new hot memory appearing in the workload.
+
+Dependencies
+============
+
+This series is based on SJ's damon/next branch which includes:
+
+- mm/damon/core: introduce damos_quota_goal_tuner [1]
+- mm/damon/core: set quota-score histogram with core filters [2]
+- mm/damon: always respect min_nr_regions from the beginning [3]
+- mm/damon/core: disallow non-power of two min_region_sz [4]
+
+[1] https://lore.kernel.org/linux-mm/20260212062314.69961-1-sj@kernel.org/
+[2] https://lore.kernel.org/linux-mm/20260131194145.66286-1-sj@kernel.org/
+[3] https://lore.kernel.org/linux-mm/20260217000400.69056-1-sj@kernel.org/
+[4] https://lore.kernel.org/linux-mm/20260214214124.87689-1-sj@kernel.org/
+
+Patch Organization
+==================
+
+1. mm/damon/sysfs: set goal_tuner after scheme creation
+    - Fixes goal_tuner initialization order in sysfs scheme creation
+
+2. mm/damon: fix esz=0 quota bypass allowing unlimited migration
+    - Ensures esz=0 stops migration rather than bypassing quota entirely
+
+3. mm/damon: add node_eligible_mem_bp and node_ineligible_mem_bp goal metrics
+    - Adds the two complementary metrics for hot memory distribution control
+
+4. mm/damon: add PA-mode cache for eligible memory detection lag
+    - Implements rolling window cache to compensate for PA-mode detection lag
+    - Adds configurable cache timeout via sysfs
+
+Testing Status
+==============
+
+Functionally tested on a two-node heterogeneous memory system (DRAM + CXL)
+with PUSH+PULL scheme configuration.
+
+This is an RFC and feedback on the design is appreciated.
+
+Ravi Jonnalagadda (4):
+  mm/damon/sysfs: set goal_tuner after scheme creation
+  mm/damon: fix esz=0 quota bypass allowing unlimited migration
+  mm/damon: add node_eligible_mem_bp and node_ineligible_mem_bp goal
+    metrics
+  mm/damon: add PA-mode cache for eligible memory detection lag
+
+ include/linux/damon.h    |  51 ++++
+ mm/damon/core.c          | 496 +++++++++++++++++++++++++++++++++++++--
+ mm/damon/sysfs-schemes.c |  43 ++++
+ 3 files changed, 576 insertions(+), 14 deletions(-)
+
+-- 
+2.43.0
+
