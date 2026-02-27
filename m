@@ -1,151 +1,138 @@
-Received: from mail-qt1-f178.google.com (mail-qt1-f178.google.com [209.85.160.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEA923A7849
-	for <damon@lists.linux.dev>; Thu, 26 Feb 2026 22:49:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BDC226E6F9;
+	Fri, 27 Feb 2026 01:56:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772146160; cv=none; b=l2wU1aSPFGzlvT1gyA+oHjZvG2cfk9BQBu4HtWiqUXWwOHb+EqyfUw22AraqhnYgafRbvOjb2Sr7mfJtXw53B1Ee8aN0YAXzYDgSvmaFROvMb6UK43imJyuR82RHyxphSE69ElBmOnA/8PmmVIeoTEVVLuRYsiaWx35HlmsV3tU=
+	t=1772157375; cv=none; b=I85vvJMBNRqSJ5u3o3XsrN7pWo6s2fqK4VlhE7FQulMj/UvvL+Qurp6+Caqgb3Li9zpkl3slJKq1KhcfO9+zxRgaWEt5yXkmoQkJXpAFspz7j/kXw8cOm4tDk1EQV82BiqiQ9fVGjX+b/A5wsOHsQDbilPy8pZlgR90/WOoiXAs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772146160; c=relaxed/simple;
-	bh=9XJprUJHH+fYbJ7JRjThngQYjlckG3iYgJf41aqrPaU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=KLAYffIjxfmDQ6Oj2kcWwrSrHfboWWcmkhTEjKwWGw06qxkTftrb0jUlsvYbhOaMyO+PvVifYzKVDKjTmXlfH2qOfTYH+7+afYCjFp+aAbezcVANnBRzKyIlLtz5/geJBG1rP7F2ePo2Lcy/G6+ESPypNzaxyrtu8KhpE89mIbw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gourry.net; spf=pass smtp.mailfrom=gourry.net; dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.b=TiS0+2aE; arc=none smtp.client-ip=209.85.160.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gourry.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gourry.net
+	s=arc-20240116; t=1772157375; c=relaxed/simple;
+	bh=+3NGDKoPMiK/X0YvkLCsM35GibtNp1pBwm8kbF/eqpE=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=KRRFmpn7/iBhW0KjYBpi66H2oJAZEETlDmdA21fblErowK42qxwpf3jQYMS6u9RE8/+C2PKNagMXv6i5Kfx8sfFcO59HZadLULmi/M9sU/ZoGHltSijLdRY1+F4W8OkDtIlePiD4jviDlMsKMOmM+0Nu/4I63e0Bmxp1swVIroQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cA43YzXx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.b="TiS0+2aE"
-Received: by mail-qt1-f178.google.com with SMTP id d75a77b69052e-506bad34f51so11029191cf.2
-        for <damon@lists.linux.dev>; Thu, 26 Feb 2026 14:49:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gourry.net; s=google; t=1772146158; x=1772750958; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=oYDaj+HYxxwd2SoII0inXN8E5ab2WhHpXFva2vqM1nA=;
-        b=TiS0+2aEpiVShNseEpQBSKSL6lYefR0SxGedDeLOsDzQmKi4fuN1XLaQhKjzMoAFY8
-         qqQx5GRWeHosiluNvP+wujFEGna8D2pRgV9ufoea+1pkKr6Vehit92/QNjXC+Pt9uWio
-         Aurcz+5WdKcujOrIpq0E/KnlXJM8a1+/JiF+dAW5VePB8rHtjcz8l8IOtIk+b8Fysck3
-         EB120PUE7H0eusD3FLe7N0P7GXeEHho6Du5CVBlKLAzCLjDTCbgjJ2IdX6fxEpGLijSC
-         9PPRYhIN45Ky28zAPGyBQczK3XiYLk+ghVJlL9USI6IGGynuGXDpOmTW6KQwvIaCttA9
-         D/oA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772146158; x=1772750958;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=oYDaj+HYxxwd2SoII0inXN8E5ab2WhHpXFva2vqM1nA=;
-        b=Lf+iCRbA4vA8OaBzRfv8Z2HEL8IYkUFZuupyTQgO/MI4PaaJSPOrORQY7tHEfRX+xB
-         Y4GhXaNrL12YsnkFSKMf1PwCxjyca64HFaSjTJKVpd2/vMNZ79U8MN9Su/e3E/6lSsEO
-         gPLIJPfl6vuzAeTVRQCy6dBENoTUfRVJCKhPMnnC4416yaDpXCEXJwWcXNZDMHty5+mz
-         MfWcL3TVvO2baa0H9+fT+wXkFFuIn6UYrhFcOzTDoANlO1wZdRQEa4whoLaL2+jD3dUB
-         TFMJxsHk6enMlU91Z1M4SFv/1mgAaHh6BKgfLOZLNiL+4p5fejNwTnDRALJoTdOjesTT
-         kwuA==
-X-Forwarded-Encrypted: i=1; AJvYcCX3j/3hFkhTsTZSsNsJ4jeQa6bQRsLposMlSQ/g88pE7yuRjdtdFXKxC/aO10rMTrendGPjfQ==@lists.linux.dev
-X-Gm-Message-State: AOJu0YzO4e82KLLVd8oNGdqD79BcF1sfnyXCn58fEs4J6TFXVOXRLaD1
-	rQaWVAtjBdyKoGoFdHKXkeQDGQW0HNSe7bS5OVBbqAdqFPGvc49lfdJxUBgNvWOcEyQ=
-X-Gm-Gg: ATEYQzziV7cRZEIgNXitbAEi0oifd903nlPDRRmU3SyFO6nnmnYKMNnjR1ewl9VT5dE
-	7GY6k138hiGPTxtEy24lf9sdsB3+i0NjwJQk4WmE+QRC/6l/1XZHH6E0LKsT0QyigRKF5rhZ3SZ
-	if3f20PovtMkhyqh7mz0jniTjhm4qEIqsDvpFR6j+FGdUZpxNI/5og/YS8Tea1fmjVNj3Lp+6mW
-	cyz2WlsPTvdSsrqK3P0usc42yix+XQK6TBOW0ibkrZ5zu0AJfi/s2Z75Y9F40yeGyaVS4cSY6Z7
-	JNHt9N1IpXq2reXteZrAIZthXsX3k9b4PSLumJEnlvyy0RL1YSvaE75+rd1+DFyLds1nYKJnRdG
-	YikBmiZAiJOYB/kAtLsNMRpcX+XnK25wJYGU9fbw5lC4hGZup0hJ9rowUeIyVi5K7+AWXYGoxlt
-	lc4mLYn8scf6EQyBU0JkqW4qPULx6xjtDU9W7p3XcCSXjPmSc8Q24HMSQbeeWcLQm1Da8FcNYM9
-	3AbTrJeCg==
-X-Received: by 2002:a05:622a:1984:b0:502:a100:4054 with SMTP id d75a77b69052e-507528c1f89mr8534231cf.23.1772146157581;
-        Thu, 26 Feb 2026 14:49:17 -0800 (PST)
-Received: from gourry-fedora-PF4VCD3F (pool-96-255-20-138.washdc.ftas.verizon.net. [96.255.20.138])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-899c7159b72sm29449326d6.7.2026.02.26.14.49.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 26 Feb 2026 14:49:17 -0800 (PST)
-Date: Thu, 26 Feb 2026 17:49:14 -0500
-From: Gregory Price <gourry@gourry.net>
-To: Alistair Popple <apopple@nvidia.com>
-Cc: lsf-pc@lists.linux-foundation.org, linux-kernel@vger.kernel.org,
-	linux-cxl@vger.kernel.org, cgroups@vger.kernel.org,
-	linux-mm@kvack.org, linux-trace-kernel@vger.kernel.org,
-	damon@lists.linux.dev, kernel-team@meta.com,
-	gregkh@linuxfoundation.org, rafael@kernel.org, dakr@kernel.org,
-	dave@stgolabs.net, jonathan.cameron@huawei.com,
-	dave.jiang@intel.com, alison.schofield@intel.com,
-	vishal.l.verma@intel.com, ira.weiny@intel.com,
-	dan.j.williams@intel.com, longman@redhat.com,
-	akpm@linux-foundation.org, david@kernel.org,
-	lorenzo.stoakes@oracle.com, Liam.Howlett@oracle.com, vbabka@suse.cz,
-	rppt@kernel.org, surenb@google.com, mhocko@suse.com,
-	osalvador@suse.de, ziy@nvidia.com, matthew.brost@intel.com,
-	joshua.hahnjy@gmail.com, rakie.kim@sk.com, byungchul@sk.com,
-	ying.huang@linux.alibaba.com, axelrasmussen@google.com,
-	yuanchu@google.com, weixugc@google.com, yury.norov@gmail.com,
-	linux@rasmusvillemoes.dk, mhiramat@kernel.org,
-	mathieu.desnoyers@efficios.com, tj@kernel.org, hannes@cmpxchg.org,
-	mkoutny@suse.com, jackmanb@google.com, sj@kernel.org,
-	baolin.wang@linux.alibaba.com, npache@redhat.com,
-	ryan.roberts@arm.com, dev.jain@arm.com, baohua@kernel.org,
-	lance.yang@linux.dev, muchun.song@linux.dev, xu.xin16@zte.com.cn,
-	chengming.zhou@linux.dev, jannh@google.com, linmiaohe@huawei.com,
-	nao.horiguchi@gmail.com, pfalcato@suse.de, rientjes@google.com,
-	shakeel.butt@linux.dev, riel@surriel.com, harry.yoo@oracle.com,
-	cl@gentwo.org, roman.gushchin@linux.dev, chrisl@kernel.org,
-	kasong@tencent.com, shikemeng@huaweicloud.com, nphamcs@gmail.com,
-	bhe@redhat.com, zhengqi.arch@bytedance.com, terry.bowman@amd.com
-Subject: Re: [LSF/MM/BPF TOPIC][RFC PATCH v4 00/27] Private Memory Nodes (w/
- Compressed RAM)
-Message-ID: <aaDN6ocubzGUz6zc@gourry-fedora-PF4VCD3F>
-References: <20260222084842.1824063-1-gourry@gourry.net>
- <fzy6f6dpv3oq3ksr2mkst7pz3daeb3buhuvdvcw4633pcl7h6u@mxjgiwpg5acv>
- <aZ3BEn_73Rk8Fn7L@gourry-fedora-PF4VCD3F>
- <a6izpi2wlqro72erhbvxhlx2lwdnae7my3ghfs6t33ivtixo4h@bi2u4x6qv7ul>
- <aZ_gALm7aE3d4IcP@gourry-fedora-PF4VCD3F>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cA43YzXx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 192D2C116C6;
+	Fri, 27 Feb 2026 01:56:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1772157375;
+	bh=+3NGDKoPMiK/X0YvkLCsM35GibtNp1pBwm8kbF/eqpE=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=cA43YzXx1Zbyf6taFSYkJjbamE5B1SW4NRtDdrh8qnAh3n3p3O+0AOhfY2n++5AYU
+	 x9xJE8hLU4E4VsSZTQh6RuQCQcgbLuRJV88XcU1/VPedUoIw92IKNlTrJ1Mg7zeKP3
+	 SwWt+oYVHIb6sHxGNQ69xiPCTyMNZMp/sGIrk4+czh3nSy/owVjHSNm99yOCrvLep2
+	 LE8gkuHSbl9ZU3hLg2WSguA6XEJEbPf1emlin9lQpwtZ6SDsc5rm3Xa+h6BsDwsjYZ
+	 XO3BA85sHXswgkZKwedIkxGiYQ1EAcieNXeoI9Qg6f7KScpqOdMSwSSl2eZqafkkjm
+	 wMkmsOk5FP9lw==
+From: SeongJae Park <sj@kernel.org>
+To: SeongJae Park <sj@kernel.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>,
+	damon@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	linux-mm@kvack.org,
+	Ravi Jonnalagadda <ravis.opensrc@gmail.com>
+Subject: Re: [RFC PATCH 1/5] mm/damon/core: introduce damos_quota_goal_tuner
+Date: Thu, 26 Feb 2026 17:56:13 -0800
+Message-ID: <20260227015613.91346-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260212062314.69961-2-sj@kernel.org>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aZ_gALm7aE3d4IcP@gourry-fedora-PF4VCD3F>
+Content-Transfer-Encoding: 8bit
 
-On Thu, Feb 26, 2026 at 12:54:08AM -0500, Gregory Price wrote:
-> On Thu, Feb 26, 2026 at 02:27:24PM +1100, Alistair Popple wrote:
+On Wed, 11 Feb 2026 22:23:08 -0800 SeongJae Park <sj@kernel.org> wrote:
+
+> Currently DAMOS quota goal feature utilizes a single feedback loop based
+> algorithm for automatic tuning of the effective quota.  It is proven to
+> be useful on dynamic environments that operate systems with only
+> kernels.  But, no one fits all, and we got multiple reports [1,2] of
+> cases that the algorithm is not optimum.
 > 
-> > > If NUMA is the interface we want, then NODE_DATA is the right direction
-> > > regardless of struct page's future or what zone it lives in.
-> > > 
-> > > There's no reason to keep per-page pgmap w/ device-to-node mappings.
-> > 
-> > In reality I suspect that's already the case today. I'm not sure we need
-> > per-page pgmap.
-> >
+> Introduce a new field of 'struct damos_quotas', namely 'goal_tuner'.  It
+> specifies what tuning algorithm the given scheme should use, and allows
+> DAMON API callers to set it as they want.  Nonetheless, this commit does
+> not introduce a new tuning algorithm but only the interface.  This
+> commit hence makes no behavioral change.  A new algorithm will be added
+> by the following commit.
 > 
-> Probably, and maybe there's a good argument for stealing 80-90% of the
-> common surface here, shunting ZONE_DEVICE to use this instead of pgmap
-> before we go all the way to private nodes.
+> [1] https://lore.kernel.org/CALa+Y17__d=ZsM1yX+MXx0ozVdsXnFqF4p0g+kATEitrWyZFfg@mail.gmail.com
+> [2] https://lore.kernel.org/20260204022537.814-1-yunjeong.mun@sk.com
 > 
+> Signed-off-by: SeongJae Park <sj@kernel.org>
+> ---
+>  include/linux/damon.h | 9 +++++++++
+>  mm/damon/core.c       | 4 +++-
+>  2 files changed, 12 insertions(+), 1 deletion(-)
+> 
+> diff --git a/include/linux/damon.h b/include/linux/damon.h
+> index a4fea23da8576..25345b5f821b9 100644
+> --- a/include/linux/damon.h
+> +++ b/include/linux/damon.h
+> @@ -213,6 +213,14 @@ struct damos_quota_goal {
+>  	struct list_head list;
+>  };
+>  
+> +/**
+> + * enum damos_quota_goal_tuner - Goal-based quota tuning logic.
+> + * @DAMOS_QUOTA_GOAL_TUNER_CONSIST:	Aim long term consistent quota.
+> + */
+> +enum damos_quota_goal_tuner {
+> +	DAMOS_QUOTA_GOAL_TUNER_CONSIST,
+> +};
+> +
+>  /**
+>   * struct damos_quota - Controls the aggressiveness of the given scheme.
+>   * @reset_interval:	Charge reset interval in milliseconds.
+> @@ -260,6 +268,7 @@ struct damos_quota {
+>  	unsigned long ms;
+>  	unsigned long sz;
+>  	struct list_head goals;
+> +	enum damos_quota_goal_tuner goal_tuner;
+>  	unsigned long esz;
+>  
+>  	unsigned int weight_sz;
+> diff --git a/mm/damon/core.c b/mm/damon/core.c
+> index 0ff190ed8a599..1c126d910fe62 100644
+> --- a/mm/damon/core.c
+> +++ b/mm/damon/core.c
+> @@ -405,8 +405,9 @@ struct damos *damon_new_scheme(struct damos_access_pattern *pattern,
+>  	INIT_LIST_HEAD(&scheme->list);
+>  
+>  	scheme->quota = *(damos_quota_init(quota));
+> -	/* quota.goals should be separately set by caller */
+> +	/* quota.goals and .goal_tuner should be separately set by caller */
+>  	INIT_LIST_HEAD(&scheme->quota.goals);
+> +	scheme->quota.goal_tuner = DAMOS_QUOTA_GOAL_TUNER_CONSIST;
 
-Out of curiosity i went digging through existing users, and it seems
-like the average driver has 1-8 discrete pgmaps, with Nouveau being an
-outliar that does ad-hoc registering in 256MB chunks, with the relevant
-annoyance being the percpu_ref it uses to track lifetime of the pgmap,
-and the fact that they can be non-contiguous.
+Ravi found this is resetting tuner setup in damon_sysfs_add_quota_score() in
+sysfs-schemes.c.  As a result, users were unable to use goal_tuner feature.
+Ravi further suggested a fix that sets the goal_tuner after damon_new_scheme(),
+as suggested here.
 
-tl;dr here:  a 1-to-1 mapping of node-to-pgmap isn't realistic for most
-existing ZONE_DEVICE users, meaning a 1-op lookup (page->pgmap) turns
-into a multi-op pointer chase on and range comparison.
+I was thinking that's the right fix assuming the comment is right.  I was also
+thinking I entirely forgot setting the goal_tuner field in sysfs-schemes.c.
+But I now find I didn't entirely forget it, as the third patch of this series
+does set it on the quota struct that is passed to damon_new_scheme().  However
+I was stupidly forgetting the fact that damon_new_scheme() overwrites the
+field, and I asked callers to set it after the call.
 
-Not sure that turns out well for anyone (only on ZONE_DEVICE / managed
-node users, all traditional nodes still have a simple pgdat or page->flag
-lookup to check membership).
+Now I think the above initialization and the instruction on the comment is just
+wrong.  There is no reason to refuse the caller-set value in the parameter
+struct.  Rather, it only confuses callers.
 
-There's an argument for trying to do this just for the sake of getting
-pgmap out of struct page/folio, but this only deals with the problem on
-NUMA systems.
+I will fix the issue by simply dropping the above diff.
 
-For non-numa systems the pgmap still probably ends up in folio_ext
-(assuming we get there), but even that might not be sufficient get LRU
-back.  Might need Willy's opinion here.
-
-~Gregory
+[1] https://lore.kernel.org/20260223123232.12851-2-ravis.opensrc@gmail.com
 
 
+Thanks,
+SJ
+
+[...]
