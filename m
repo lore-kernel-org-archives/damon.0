@@ -1,43 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B19C035B654;
-	Fri, 27 Feb 2026 17:06:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EA933F12DC;
+	Sat, 28 Feb 2026 17:42:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772211986; cv=none; b=Z27bto7nQnpX/xVwQZXFpeWUKe24JaN0fNk0p07Jpyb0QUYxV+bQrpWEJHQHWldiuO46NaoNrcshP1ALQv0DjiAk3SrMFRhiBH3wAKKhDWKsDjk94IqSVMVHBeDBMXAklJAGdQFyIZQA/vuizwn4z5Yrrs9Q5b5RgA8FITm0XJI=
+	t=1772300536; cv=none; b=sbzvXypunQ+nKGC55ekHZsVlH2J+TKl/HueEdHfzz4eptxU4wCWoj8MAq1GS63/+Jb/6Dx4RXFP/KXooaT7uV6LZ6X3xKTmkEWNJ6kZhSQhyP300ju7kgHNr/GQQ7A7+PoKRxYIu7ViotFW4bvUlBVviOD6eqZSLkgONP8ENKcY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772211986; c=relaxed/simple;
-	bh=EeZ+QAmF0j4P/k4LQPdqDuMHHoYstNMm27xxHRcBl/Y=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gGoVBP/+42V1Iqd9qLrajNZxq49z1/rQ0YSHSAYSzeFMisRpH0T27xkqQTmZ5KY0PHHjyke+kV2SaAEcTEazB++l2I5ciLDV3W3UaaBjfKsIMSSAN/ODkYrxA2XmD81enEHbGCnrBW4Xhqtcs/QJHYn/qvFw4wUOX2Z5GhtC0io=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fgptjBRm; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1772300536; c=relaxed/simple;
+	bh=wojLBurTdVIocTYrUG+SckAORkviSrPRVTgmvgwchPQ=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=shl+tgGdrbRfpJFKBizRXFeCoaX8V1NthkyINrm/CRqkudrTwjJNm2uo9sPeGUhkO/d+D/YWxf/Pv53sQSeLGyVV8+Fa5ISEHKCXUIxCvir7USvXvN+A26vgycUmV3zT30d/bBfnjPZpJ0UWEH5KMWT4E/JoTF2ibmLemd2pWB8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UhIVkNU2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fgptjBRm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72172C19423;
-	Fri, 27 Feb 2026 17:06:26 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UhIVkNU2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 271E3C116D0;
+	Sat, 28 Feb 2026 17:42:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772211986;
-	bh=EeZ+QAmF0j4P/k4LQPdqDuMHHoYstNMm27xxHRcBl/Y=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fgptjBRm4ELmKVqbod2XvHf1gYBZCs5fClM/pLy1A/EUAPKghBJC27tEuwq2Vb6if
-	 BMPy5BBpHEOWjK0061UZGSNAiUdtBQNPdJLot6SI1GR7ltT0OnDnsyNUXFpoQodlNR
-	 ZYqCiktpzVdzIzTDY1rLV2hspvAzKNSOAHWO1oftCqJzdPxZSRMtI3lKCmmEGFeQJA
-	 VDua+i6UZ1ce+SlvhgZ2/E1uv8boXuQESZ848R4nDMS4ZlHqGrdHjcoVry4KN94ee8
-	 pZOgT63rOXfsqYAdV+R+0ur+QBeDI3cYSY+qG6yS/GrnubY0u/+U3PkvUCRTKOcOpE
-	 E6Jg6N8a05CtQ==
+	s=k20201202; t=1772300536;
+	bh=wojLBurTdVIocTYrUG+SckAORkviSrPRVTgmvgwchPQ=;
+	h=From:To:Cc:Subject:Date:From;
+	b=UhIVkNU2kb6XM1y94sNzc09rbebeZn2OIiFwW5C7n/NQhg5yuMYAcIzAsdgxkhuyt
+	 ASC4u3o7MRzENnyn4Ip9OkR5vMjxMDchyIVa735Y8mBivSImwHMNNOiYhvCArFSxA+
+	 OiB6nm7O7ThP0u/doHJsqzovYjc2U3bEe0T8wwOJ2ZGfmEaDe6h5pFoe0x1EyT3Hl1
+	 CoKf2t28OfMSl1oqX8gNcIpwDswjH7wl9sCkmXXOCJ6z0BU6tgk7zE9TVJK0XNfRov
+	 ktNJf4CatgswoMv987lCkQkXttThGJBvpPyMalvHvfSMhDu24JK5t8XgTCMbTs8vgu
+	 /fyIf671Rl8Mg==
 From: SeongJae Park <sj@kernel.org>
-To: Andrew Morton <akpm@linux-foundation.org>
+To: damon@lists.linux.dev
 Cc: SeongJae Park <sj@kernel.org>,
-	damon@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org
-Subject: [PATCH 2/2] mm/damon/core: do non-safe region walk on kdamond_apply_schemes()
-Date: Fri, 27 Feb 2026 09:06:21 -0800
-Message-ID: <20260227170623.95384-3-sj@kernel.org>
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org
+Subject: DAMON Beer/Coffee/Tea chat reminder for the week of 2026-03-02
+Date: Sat, 28 Feb 2026 09:42:13 -0800
+Message-ID: <20260228174214.91429-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260227170623.95384-1-sj@kernel.org>
-References: <20260227170623.95384-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -46,96 +42,40 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-kdamond_apply_schemes() is using damon_for_each_region_safe(), which is
-safe for deallocation of the region inside the loop.  However, the loop
-internal logic does not deallocate regions.  Hence it is only wasting
-the next pointer.  Also, it causes a problem.
+Hello,
 
-When an address filter is applied, and there is a region that intersects
-with the filter, the filter splits the region on the filter boundary.
-The intention is to let DAMOS apply action to only filtered-in address
-ranges.  However, it is using damon_for_each_region_safe(), which sets
-the next region before the execution of the iteration.  Hence, the
-region that split and now will be next to the previous region, is simply
-ignored.  As a result, DAMOS applies the action to target regions
-bit slower than expected, when the address filter is used.  Shouldn't be
-a big problem but definitely better to be fixed.
-damos_skip_charged_region() was working around the issue using a double
-pointer hack.
 
-Use damon_for_each_region(), which is safe for this use case.  And drop
-the work around in damos_skip_charged_region().
+This is yet another reminder of upcoming DAMON Beer/Coffee/Tea chats
+(https://docs.google.com/document/d/1v43Kcj3ly4CYqmAkMaZzLiM2GEnWfgdGbZAH3mi2vpM/edit?usp=sharing)
+for the week of 2026-03-02.
 
-Signed-off-by: SeongJae Park <sj@kernel.org>
----
- mm/damon/core.c | 22 +++++++++++-----------
- 1 file changed, 11 insertions(+), 11 deletions(-)
+As usual, we have two time slots for meetings in the week.
 
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index 419d6953783e5..dcf7027637550 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -1715,17 +1715,18 @@ static bool damos_valid_target(struct damon_ctx *c, struct damon_region *r,
-  * This function checks if a given region should be skipped or not for the
-  * reason.  If only the starting part of the region has previously charged,
-  * this function splits the region into two so that the second one covers the
-- * area that not charged in the previous charge widnow and saves the second
-- * region in *rp and returns false, so that the caller can apply DAMON action
-- * to the second one.
-+ * area that not charged in the previous charge widnow, and return true.  The
-+ * caller can see the second one on the next iteration of the region walk.
-+ * Note that this means the caller should use damon_for_each_region() instead
-+ * of damon_for_each_region_safe().  If damon_for_each_region_safe() is used,
-+ * the second region will just be ignored.
-  *
-- * Return: true if the region should be entirely skipped, false otherwise.
-+ * Return: true if the region should be skipped, false otherwise.
-  */
- static bool damos_skip_charged_region(struct damon_target *t,
--		struct damon_region **rp, struct damos *s,
-+		struct damon_region *r, struct damos *s,
- 		unsigned long min_region_sz)
- {
--	struct damon_region *r = *rp;
- 	struct damos_quota *quota = &s->quota;
- 	unsigned long sz_to_skip;
- 
-@@ -1752,8 +1753,7 @@ static bool damos_skip_charged_region(struct damon_target *t,
- 				sz_to_skip = min_region_sz;
- 			}
- 			damon_split_region_at(t, r, sz_to_skip);
--			r = damon_next_region(r);
--			*rp = r;
-+			return true;
- 		}
- 		quota->charge_target_from = NULL;
- 		quota->charge_addr_from = 0;
-@@ -2012,7 +2012,7 @@ static void damon_do_apply_schemes(struct damon_ctx *c,
- 		if (quota->esz && quota->charged_sz >= quota->esz)
- 			continue;
- 
--		if (damos_skip_charged_region(t, &r, s, c->min_region_sz))
-+		if (damos_skip_charged_region(t, r, s, c->min_region_sz))
- 			continue;
- 
- 		if (s->max_nr_snapshots &&
-@@ -2355,7 +2355,7 @@ static void damos_trace_stat(struct damon_ctx *c, struct damos *s)
- static void kdamond_apply_schemes(struct damon_ctx *c)
- {
- 	struct damon_target *t;
--	struct damon_region *r, *next_r;
-+	struct damon_region *r;
- 	struct damos *s;
- 	unsigned long sample_interval = c->attrs.sample_interval ?
- 		c->attrs.sample_interval : 1;
-@@ -2381,7 +2381,7 @@ static void kdamond_apply_schemes(struct damon_ctx *c)
- 		if (c->ops.target_valid && c->ops.target_valid(t) == false)
- 			continue;
- 
--		damon_for_each_region_safe(r, next_r, t)
-+		damon_for_each_region(r, t)
- 			damon_do_apply_schemes(c, t, r);
- 	}
- 
--- 
-2.47.3
+Next time slots including six virtual-only ones are as below.
+
+2026-03-02 (Mon) 18:00 PT (not yet reserved)
+2026-03-04 (Wed) 09:30 PT (not yet reserved)
+2026-03-16 (Mon) 18:00 PT (not yet reserved)
+2026-03-18 (Wed) 09:30 PT (not yet reserved)
+2026-03-30 (Mon) 18:00 PT (not yet reserved)
+2026-04-01 (Wed) 09:30 PT (not yet reserved)
+
+Please reach out to me (sj@kernel.org or whatever) to reserve the
+not-yet-reserved time slots for your topics.  The reservation is made in a
+First-Come First-Served way, and I will send a Google Meet link to
+reservation-confirmed attendees.
+
+Please note that other time slots are also available on demands.
+
+Shared Calendar
+---------------
+
+You can get the schedule via this shared Google Calendar:
+https://calendar.google.com/calendar/u/0?cid=ZDIwOTA4YTMxNjc2MDQ3NTIyMmUzYTM5ZmQyM2U4NDA0ZGIwZjBiYmJlZGQxNDM0MmY4ZTRjOTE0NjdhZDRiY0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t
+
+You can also get the past and upcoming schedules via
+https://docs.google.com/document/d/1v43Kcj3ly4CYqmAkMaZzLiM2GEnWfgdGbZAH3mi2vpM/edit?usp=sharing
+
+
+Thanks,
+SJ
