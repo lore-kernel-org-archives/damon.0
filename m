@@ -1,41 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D18933A701;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 903A833ADB2;
 	Sun,  1 Mar 2026 17:43:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772387013; cv=none; b=sadSp2X0yjF72NJZEkUUJH9niiBuBCgYsLjP0ycvBSVFA+seuvPck1E5umslmkBLdPGl62ir8zHZGqPiWW3wMyKhiESYv2agTXhsg6D2X0O3Yv4Vnd/SLEqfKYolmCkfaZ3qoaXNtGsv3dXhX245FbLhtRAEOvXV34wlT4un3Pc=
+	t=1772387013; cv=none; b=NbnUzlbGSrjM3FmKiL40U4sRUUSR6MCGcu6JMGU186aR6WbzEAU6HUl22GMkttU2riY6FOk89vNnuvO6BxEoPHQQafs2yeQIlBbJZbxV8ph0F+IHPFI/zp56Vxp40eH95eKCcOd4jzxxZczQ/yq6y1WcD3V8IThAzubpT6b2bDw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772387013; c=relaxed/simple;
-	bh=7QL/RYpMYPTB1eC/p0ZRS1BwtD3YKWYXznWIGxGADnA=;
+	bh=BLMf6S2CwC1uRw1Za6T26Ewe+0K+xw3rETEPypk9tzs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gOWOdtZQT4JwuwnPwSCnIIdQNGcuQ42Ij4UXVYzuaemLIw8oYUvLe8rwane/c3i9ugGr56zTc19Xs8les7CCORGCPnyCxcO9byC6P9xFwii4D5Y85aWmDok+2xO24IuX5rOnuQHKEBJSsv1mbfOXNIsdR/mBLZg73w8/oLq3x94=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=R7kM60CE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Y3c0vk0PHvzb/j0KBEF/LBugy9R+G+kkvFajZnsCI0TMtx0/fesniiSz3nqzwdcAu/tu095iNUvSNmLO18kMl7JWrMg7scOwPV7Rg1d+4j6Bu1UVTyJT1pEwpI90BCM3/hH91ieNUkq/6AYThbIOORW33YcdW+TYEF0laR8naOA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Iflq3Brx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="R7kM60CE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0281DC2BC86;
-	Sun,  1 Mar 2026 17:43:32 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Iflq3Brx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38375C116C6;
+	Sun,  1 Mar 2026 17:43:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1772387013;
-	bh=7QL/RYpMYPTB1eC/p0ZRS1BwtD3YKWYXznWIGxGADnA=;
+	bh=BLMf6S2CwC1uRw1Za6T26Ewe+0K+xw3rETEPypk9tzs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R7kM60CEmDaEzNJTLTipUMV58oimjOz6LLzz56XC7mxaW9NAFTZrX1ECyv31z3LXx
-	 47QuYTMJoYczO1ndrolzeKIUlFl5c7SpKgDLHOpUdGVDfNudPok6f6Pll/t/j5V5Vl
-	 Vhj50I5tC1d4Ph1ByHi5QzSbBI4I67LFXQ5/yTCee35voA5bJIynLeJ091CjVU8DZ4
-	 +pQEWpJ4115VEYgzKJiSf9O1oFwdMSyIXtoPLpYWIiYawScj8l0SOJaZbvVmxJWQKL
-	 4rMRRDxAzOtSWOmJDHNvSdLVkMtMRRdPoQhh/PMuJzNED+Q9286s2vTCNVnWvOAfrO
-	 NGGRBLLU8Ju/w==
+	b=Iflq3Brxo9v9e0Mfqjesq+hY3p90YdnXS535vlVbTEuioLgceNNQroRt+5JdpDq6L
+	 Mmghe8B56xb1WbGO/NbtDHcSjbRwWS+mzeibZ2o7xiuAHmgjqj5qCJLx45kZdDcmY5
+	 ixbsWkUoWAjromzZ4wqUmoTquiPG8GExSrHuPhv0bFo0J2sp0fUuqfNzGuJHnRA6xl
+	 qJcdKkelnJlqOVMgVcto0VlfV4ojGDKwoAFrBiESTZo88u+7ENpj/qis9uMyTIxMJH
+	 fOh5L38XoIlbFD9+PxBX8EvEynktGKPY/5+pyAbyeAGzrEyANA2lid5KpVESKkbOoK
+	 ZrrMGRSn36O2A==
 From: SeongJae Park <sj@kernel.org>
 To: 
 Cc: SeongJae Park <sj@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
+	Brendan Higgins <brendan.higgins@linux.dev>,
+	David Gow <davidgow@google.com>,
 	damon@lists.linux.dev,
+	kunit-dev@googlegroups.com,
 	linux-kernel@vger.kernel.org,
+	linux-kselftest@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH v2 08/10] mm/damon/core: add damon_reset_aggregated() debug_sanity check
-Date: Sun,  1 Mar 2026 09:43:23 -0800
-Message-ID: <20260301174327.76849-9-sj@kernel.org>
+Subject: [RFC PATCH v2 09/10] mm/damon/tests/.kunitconifg: enable DAMON_DEBUG_SANITY
+Date: Sun,  1 Mar 2026 09:43:24 -0800
+Message-ID: <20260301174327.76849-10-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260301174327.76849-1-sj@kernel.org>
 References: <20260301174327.76849-1-sj@kernel.org>
@@ -47,52 +51,25 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-At time of damon_reset_aggregated(), aggregation of the interval should
-be completed, and hence nr_accesses and nr_accesses_bp should match.  I
-found a few bugs caused it to be broken in the past, from online
-parameters update and complicated nr_accesses handling changes.  Add a
-sanity check for that under CONFIG_DAMON_DEBUG_SANITY.
+CONFIG_DAMON_DEBUG_SANITY is recommended for DAMON development and test
+setups.  Enable it on the default configurations for DAMON kunit test
+run.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- mm/damon/core.c | 18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
+ mm/damon/tests/.kunitconfig | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index be2300cf3aeae..e8c44541754f7 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -1666,6 +1666,23 @@ static void damon_warn_fix_nr_accesses_corruption(struct damon_region *r)
- 	r->nr_accesses_bp = r->nr_accesses * 10000;
- }
- 
-+#ifdef CONFIG_DAMON_DEBUG_SANITY
-+static void damon_verify_reset_aggregated(struct damon_region *r,
-+		struct damon_ctx *c)
-+{
-+	WARN_ONCE(r->nr_accesses_bp != r->last_nr_accesses * 10000,
-+			"nr_accesses_bp %u last_nr_accesses %u sis %lu %lu\n",
-+			r->nr_accesses_bp, r->last_nr_accesses,
-+			c->passed_sample_intervals, c->next_aggregation_sis);
-+}
-+#else
-+static void damon_verify_reset_aggregated(struct damon_region *r,
-+		struct damon_ctx *c)
-+{
-+}
-+#endif
+diff --git a/mm/damon/tests/.kunitconfig b/mm/damon/tests/.kunitconfig
+index 36a450f57b581..144d27e6ecc5c 100644
+--- a/mm/damon/tests/.kunitconfig
++++ b/mm/damon/tests/.kunitconfig
+@@ -13,3 +13,6 @@ CONFIG_DAMON_VADDR_KUNIT_TEST=y
+ CONFIG_SYSFS=y
+ CONFIG_DAMON_SYSFS=y
+ CONFIG_DAMON_SYSFS_KUNIT_TEST=y
 +
-+
- /*
-  * Reset the aggregated monitoring results ('nr_accesses' of each region).
-  */
-@@ -1682,6 +1699,7 @@ static void kdamond_reset_aggregated(struct damon_ctx *c)
- 			damon_warn_fix_nr_accesses_corruption(r);
- 			r->last_nr_accesses = r->nr_accesses;
- 			r->nr_accesses = 0;
-+			damon_verify_reset_aggregated(r, c);
- 		}
- 		ti++;
- 	}
++# enable DAMON_DEBUG_SANITY to catch any bug
++CONFIG_DAMON_DEBUG_SANITY=y
 -- 
 2.47.3
