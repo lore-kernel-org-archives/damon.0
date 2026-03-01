@@ -1,43 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 609D5202F71;
-	Sun,  1 Mar 2026 16:42:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFA132C0F6F;
+	Sun,  1 Mar 2026 17:43:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772383353; cv=none; b=jZuqTp8rybdaGiekG3MHxVPlYt2MsUCe7FHhac5kabbXd+T2f+JkkYtSTBMB5rywRdcXdWGEtOaIhGx/wgnmen81EH8cAeuby9O3qJ82df1AARXcBujHiBOh8VnaFWln6FfktPFRoZjJziOdkXEKYRed4iz09RExoi4Z9vtkqWk=
+	t=1772387011; cv=none; b=Lz2YEJcoT/Mhmi0FC5EXO9OP3jEalCEUqM5J8OcuT6OpsBpXxC3P0w8IUVcSqZQxWRGqvXPQZKKoALt/rHFwFXq+FRmuGIQC65VoOEztTBRfFwtzBTfOcDsUKRooW2d33BH69RYw6KxtytwyJ/dSewIR0O7guhDmIMmR6P9SnVo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772383353; c=relaxed/simple;
-	bh=2gPoW7S6UrtEjGc6IJ81tfoCTpZblLaI9E7KswG3ITU=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rgUsxo220hk8uXLUYl+JSHNQEHgI9QX40lBS5vgWAUobUaSnHu0IFZauxjrSe9nWiwAlAm6LR1eWXdHzzm1Fj4jYaRbEA+OMJp/ePTyPfHtx9hhxjxQU6Qj+g5pBV2cEKRTTAd5i3QinG7MUb/AGavivp0WJB5E/DTJjCgwO4fc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Wnd70n6j; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1772387011; c=relaxed/simple;
+	bh=+CwkXbOh/Fg6OBVe8JUapRvY8ZYQMp73JI7BMgt63xE=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=D4J3kKF64AmKyGqHqf7qp1aINbdN7d9ipJH2pA9hwBmRIqDauVKQQAegYygnT3lF7epITVzo+tqjRGBIL9yqQsRyyWG0RcgPo34pYHYXxdWCg5OPvt6qbku71fjzu3qU7IR+avxHFjA9B3NJkg0j6UhpHNnA+d7DgJgHgjTTJ/Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HMQeBh/5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Wnd70n6j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBF7DC116C6;
-	Sun,  1 Mar 2026 16:42:32 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HMQeBh/5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24F4AC116C6;
+	Sun,  1 Mar 2026 17:43:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772383353;
-	bh=2gPoW7S6UrtEjGc6IJ81tfoCTpZblLaI9E7KswG3ITU=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Wnd70n6jiT0ymJ3bZwNy8tt0sM37n3DbyG9rBZ7/nDH0Xx01Rpu9ecDXBPcQrSwQH
-	 8+pui6ei6kTqKPaMFYKOjbUVLcf7AzzlJ5ysP3ASBSfbP+Gz093exPm/ch2k/UxPxJ
-	 UiasMVnDPx2N6m64OSFAX6ympGAKUGikcLoaQ4z9/gvU5DfhE8o3ycHdfoDwI4xsYC
-	 EiL+G1gUgq4z3/meX3wghqQzPqdkAQMBgGZNIUoVqzgsLqhBHYkyU9D48mgDUm0VkJ
-	 UG5+O4WQza1TH/DTcTOjq+OE+Uo7j6lALf/9RF/MrPDF84xeyqhNBzX5Gh2EAmvRct
-	 RExOjJqdBLWLg==
+	s=k20201202; t=1772387011;
+	bh=+CwkXbOh/Fg6OBVe8JUapRvY8ZYQMp73JI7BMgt63xE=;
+	h=From:To:Cc:Subject:Date:From;
+	b=HMQeBh/5DjKrwDG2HtHsTqzr3oTuh45Xn+J8cyc9lI0TmzjP/N1s9r/nywlh347yi
+	 h4lgUeq8iGAUN8KILGk3q8JeiFVMJvw3CoLHKwLh3M67Ozwhites3cKQRJhuqbciyR
+	 oz8VJ+LY0XSpTl+9LoxSPCjOS6Hk6a+/aaGiNqk4d760PDAI0fBOnm2ta4hcYLCW8S
+	 sK6Wmcsv5kXDzGefzFlR+tl5H61dsAna9Cv76OjegaRMdTCJnSGTcqK6Pc8QYApWSJ
+	 vsBGFlnwDmGFpy02IyztVzOK47cx5aTJgA34hARbxROOvjMzf61urrTP2WCHvhwOV/
+	 5pAlC4YTWud2A==
 From: SeongJae Park <sj@kernel.org>
-To: SeongJae Park <sj@kernel.org>
-Cc: Andrew Morton <akpm@linux-foundation.org>,
+To: 
+Cc: SeongJae Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Brendan Higgins <brendan.higgins@linux.dev>,
+	David Gow <davidgow@google.com>,
+	Shuah Khan <shuah@kernel.org>,
 	damon@lists.linux.dev,
+	kunit-dev@googlegroups.com,
 	linux-kernel@vger.kernel.org,
+	linux-kselftest@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: Re: [RFC PATCH 06/10] mm/damon/core: add damon_merge_regions_of() debug_sanity check
-Date: Sun,  1 Mar 2026 08:42:25 -0800
-Message-ID: <20260301164226.93108-1-sj@kernel.org>
+Subject: [RFC PATCH v2 00/10] mm/damon: add optional debugging-purpose sanity checks
+Date: Sun,  1 Mar 2026 09:43:15 -0800
+Message-ID: <20260301174327.76849-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260221193629.19332-7-sj@kernel.org>
-References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -46,62 +49,57 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Sat, 21 Feb 2026 11:36:23 -0800 SeongJae Park <sj@kernel.org> wrote:
+DAMON code has a few assumptions that can be critical if violated.
+Validating the assumptions in code can be useful at finding such
+critical bugs.  I was actually adding some such additional sanity checks
+in my personal tree, and those were useful at finding bugs that I made
+during the development of new patches.  We also found [1] sometimes the
+assumptions are misunderstood.  The validation can work as good
+documentation for such cases.
 
-> damon_merge_regions_of() should be called only after aggregation is
-> finished and therefore each region's nr_accesses and nr_accesses_bp
-> match.  There were bugs that broke the assumption, during development of
-> online DAMON parameter updates and monitoring results handling changes.
-> Add a sanity check for that under CONFIG_DAMON_DEBUG_SANITY.
-> 
-> Signed-off-by: SeongJae Park <sj@kernel.org>
-> ---
->  mm/damon/core.c | 18 ++++++++++++++++++
->  1 file changed, 18 insertions(+)
-> 
-> diff --git a/mm/damon/core.c b/mm/damon/core.c
-> index 291a847a8c9bb..94be598cafef1 100644
-> --- a/mm/damon/core.c
-> +++ b/mm/damon/core.c
-> @@ -2545,6 +2545,22 @@ static void damon_merge_two_regions(struct damon_target *t,
->  	damon_destroy_region(r, t);
->  }
->  
-> +#ifdef CONFIG_DAMON_DEBUG_SANITY
-> +static void damon_verify_merge_regions_of(struct damon_region *r)
-> +{
-> +	if (r->nr_accesses == r->nr_accesses_bp / 10000)
-> +		return;
-> +	pr_err("nr_accesses (%u) != nr_accesses_bp (%u)\n",
-> +			r->nr_accesses, r->nr_accesses_bp);
-> +	WARN_ONCE();
-> +}
-> +#else
-> +static void damon_verify_merge_regions_of(struct damon_region *r)
-> +{
-> +}
-> +#endif
-> +
-> +
->  /*
->   * Merge adjacent regions having similar access frequencies
->   *
-> @@ -2565,6 +2581,8 @@ static void damon_merge_regions_of(struct damon_target *t, unsigned int thres,
->  		else
->  			r->age++;
->  
-> +		damon_verify_merge_regions_of(r);
-> +
+Add some of such debugging purpose sanity checks.  Because those
+additional checks can impose more overhead, make those only optional via
+new config, CONFIG_DAMON_DEBUG_SANITY, that is recommended for only
+development and test setups.  And as recommended, enable it for DAMON
+kunit tests and selftests.
 
-This verification doesn't need to be here, after the above 'age' updates.  I'll
-move this to the beginning of this scope in the next spin.
+Note that the verification only WARN_ON() for each of the insanity.  The
+developer or tester may better to set panic_on_oops together, like
+damon-tests/corr did [2].
 
->  		if (prev && prev->ar.end == r->ar.start &&
->  		    abs(prev->nr_accesses - r->nr_accesses) <= thres &&
->  		    damon_sz_region(prev) + damon_sz_region(r) <= sz_limit)
-> -- 
-> 2.47.3
+[1] https://lore.kernel.org/20251231070029.79682-1-sj@kernel.org
+[2] https://github.com/damonitor/damon-tests/commit/a80fbee55e272f151b4e5809ee85898aea33e6ff
+
+Changes from RFC v1
+(https://lore.kernel.org/20260221193629.19332-1-sj@kernel.org)
+- Fix WARN_ON() failure on kunit UML build
+- Fix Wformat-zero-length issue
+  (https://lore.kernel.org/oe-kbuild-all/202602221352.odZW8x1R-lkp@intel.com/)
+- Rebase to latest mm-new
+- Make warning message less verbose
+- Use WARN_ONCE() condition
+- Do the verification asap
+- Minor cleanups
+
+SeongJae Park (10):
+  mm/damon: add CONFIG_DAMON_DEBUG_SANITY
+  mm/damon/core: add damon_new_region() debug_sanity check
+  mm/damon/core: add damon_del_region() debug_sanity check
+  mm/damon/core: add damon_nr_regions() debug_sanity check
+  mm/damon/core: add damon_merge_two_regions() debug_sanity check
+  mm/damon/core: add damon_merge_regions_of() debug_sanity check
+  mm/damon/core: add damon_split_region_at() debug_sanity check
+  mm/damon/core: add damon_reset_aggregated() debug_sanity check
+  mm/damon/tests/.kunitconifg: enable DAMON_DEBUG_SANITY
+  selftests/damon/config: enable DAMON_DEBUG_SANITY
+
+ mm/damon/Kconfig                     |  11 +++
+ mm/damon/core.c                      | 109 +++++++++++++++++++++++++++
+ mm/damon/tests/.kunitconfig          |   3 +
+ tools/testing/selftests/damon/config |   1 +
+ 4 files changed, 124 insertions(+)
 
 
-Thanks,
-SJ
+base-commit: b511f483f5fc7e85ad60679181503f16937feb6e
+-- 
+2.47.3
