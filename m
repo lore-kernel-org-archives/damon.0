@@ -1,43 +1,55 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 584422EAB61;
-	Wed,  4 Mar 2026 14:51:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A6AC341ADD;
+	Wed,  4 Mar 2026 15:03:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772635902; cv=none; b=duwd5byU8Dbk3bJvQDuAiUsNz9pD9XUIwvhFdg4jVAIBk7ESQ55yTL4dUY9Jv3HObL2WThnA5pJswuREmS2oiRh8zAQwDLQLvno+e70uomiZG30UKTVArWsJz+ipHGo65NviE7GWy5TFFWKbwhfg11zPnNZksfUA8aK0pNF2pnw=
+	t=1772636615; cv=none; b=V2TwnQHoDjQoQaOKnxt5dyKXlMEtL9ux8agK/wu0UqNnKU/oDwqcvm90MRmLvsc1KFnm1u56dVXvklJr+n+jZWAD9ehsOYoSQ9arTfvRESQr5XQig3ESOysagU7ygTHF0dwZW6buIvKtcf2D/nyHeCrtcdXUE73Db6nu2OCZleA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772635902; c=relaxed/simple;
-	bh=AXcGOV3rxB0t3xLwBtUstDgx4cx8kG184IK+T6OhDic=;
+	s=arc-20240116; t=1772636615; c=relaxed/simple;
+	bh=mE040friD/D8vUlGR6SF6lCV5t9rYG9oPgW77/JY5bw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=My5Lws1Rz6jMDwnnIR8MMouvqwqn4v17frjKqGYuL33EIa+4NMCCY93WdAN71PLeIkmLnk0/g+E9z1INj+32juZWdHDT1zsR/uR0L52GsieTM6JfNEY5e5/lYZN7p7pVuLUxKnZNipB0J+4qrEouIesETniAlBxd8P+lO/pVmMw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AcvONXz6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qr9pN6nIcMdTCTr13xT9w/XlHm0ozhnbjJpOgYLP0X7fY/TmHVNoD9MY6/QTETSJc3vzo+wU1szn5soyqPl/ET2gMtrmPqMx4i4LRIpsE6GUnL9eZkeEyyJ2255+J/8wTsoy1QKGn2lora7Fetpyiyvmr7fLqczrZ9THj34HNPc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GJAqghuQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AcvONXz6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE61FC19423;
-	Wed,  4 Mar 2026 14:51:41 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GJAqghuQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CAB9C4CEF7;
+	Wed,  4 Mar 2026 15:03:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772635902;
-	bh=AXcGOV3rxB0t3xLwBtUstDgx4cx8kG184IK+T6OhDic=;
+	s=k20201202; t=1772636614;
+	bh=mE040friD/D8vUlGR6SF6lCV5t9rYG9oPgW77/JY5bw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AcvONXz6T5whljb9Qjj+WgDoNq1cZjnLZS2qowLy0d71QtwIsMlIkiqZUzllY+Ql2
-	 e3/shG0jjz6LnHB1A4NskTc5n7opsjWQEi3x5U1LStETOPymKX4Mx+OzR9njBKuqPA
-	 cEQQkOtvo7YkFK8cIZdGN1wfWIOKVGSq8X5sgVLUqekkQHKLCiIQFg0yZEsOLYbekZ
-	 IiGVDf/lsTPCFKbWI+lFm6+Vw0YgkpBNuBlrOKEscdr6XHH9wqF9tNeEyGUYIPgBra
-	 Ow4r7YNnAewNV1aYTd7WBIthl0oRMjzsqPLNcPM8dPcaKiqSc+uIdHwxDyRDfMtuEu
-	 9RDdAGyWBBhHA==
+	b=GJAqghuQ0TJn+SKiqRfKLM05J6MzDxoz3ubM1FnAUsKVkhZKV/rlhFG8jkc6FrLBQ
+	 rVBxbihRWUo+j/hmjHxVYVU/PyIyG/lsNEyi1T4yWbleHpa1RJct0xyZ6VqTsKK8xM
+	 /NtKB1W0z4N67tvUK8suaSegffaOU3yBHYGtuqI4f4x8DlVzQMT3CIUf0Ww7n3e5qo
+	 MBLukmLDkYuLAHHCsdj3dHmTa0uHdqgjPUJ2K8JZjrHxGstCpXGlDftEIXBE8oNTF+
+	 PAxbThpYqfTUBZSw03Qz2N96iHdBeWUf8bAfHtWR5YO8fcTq2VRcP/pD1gUKbq/05h
+	 GcbgPiA8Z63jQ==
 From: SeongJae Park <sj@kernel.org>
 To: Gutierrez Asier <gutierrez.asier@huawei-partners.com>
 Cc: SeongJae Park <sj@kernel.org>,
+	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
+	David Hildenbrand <david@kernel.org>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Shuah Khan <shuah@kernel.org>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@kernel.org>,
 	damon@lists.linux.dev,
+	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
+	linux-kselftest@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: Re: [RFC PATCH v2 02/10] mm/damon/core: allow quota goals set zero effective size quota
-Date: Wed,  4 Mar 2026 06:51:39 -0800
-Message-ID: <20260304145140.172293-1-sj@kernel.org>
+Subject: Re: [RFC PATCH v2 00/10] mm/damon: support multiple goal-based quota tuning algorithms
+Date: Wed,  4 Mar 2026 07:03:26 -0800
+Message-ID: <20260304150327.172442-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <abdb1acc-5f88-483f-af49-45276ab66ff0@huawei-partners.com>
+In-Reply-To: <3c9449c1-95c7-4770-8e06-1ee50e263db8@huawei-partners.com>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -47,119 +59,67 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Wed, 4 Mar 2026 13:18:16 +0300 Gutierrez Asier <gutierrez.asier@huawei-partners.com> wrote:
+On Wed, 4 Mar 2026 13:15:29 +0300 Gutierrez Asier <gutierrez.asier@huawei-partners.com> wrote:
 
+> Hi SeongJae!
 > 
+> Nice idea for dynamic environments.
+
+Thank you :)
+
 > 
 > On 3/4/2026 7:41 AM, SeongJae Park wrote:
+> > Aim-oriented DAMOS quota auto-tuning uses a single tuning algorithm.
+> > The algorithm is designed to find a quota value that should be
+> > consistently kept for achieving the aimed goal for long term.  It is
+> > useful and reliable at automatically operating systems that have dynamic
+> > environments in the long term.
+> > 
+> > As always, however, no single algorithm fits all.  When the environment
+> > has static characteristics or there are control towers in not only the
+> > kernel space but also the user space, the algorithm shows some
+> > limitations.  In such environments, users want kernel work in a more
+> > short term deterministic way.  Actually there were at least two reports
+> > [1,2] of such cases.
+> > 
+> > Extend DAMOS quotas goal to support multiple quota tuning algorithms
+> > that users can select.  Keep the current algorithm as the default one,
+> > to not break the old users.  Also give it a name, "consist", as it is
+> > designed to "consistently" apply the DAMOS action.  And introduce a new
+> > tuning algorithm, namely "temporal".  It is designed to apply the DAMOS
+> > action only temporally, in a deterministic way.  In more detail, as long
+> > as the goal is under-achieved, it uses the maximum quota available.
+> > Once the goal is over-achieved, it sets the quota zero.
 > 
-> I find the name of this function confusing. The function doesn't
-> actually set anything. Maybe better damos_quota_is_set()
-> > +/*
-> > + * damos_quota_set() - Return if the given quota is actually set.
-> > + * @quota:	The quota to check.
-> > + *
-> > + * Returns true if the quota is set, false otherwise.
-> > + */
-> > +static bool damos_quota_set(struct damos_quota *quota)
-> > +{
-> > +	return quota->esz || quota->sz || quota->ms ||
-> > +		!damos_quota_goals_empty(quota);
-> > +}
-> > +
+> I'm not sure "temporal" is the best name for this type of behaviour.
 
-Thank you for the nice suggestion, I agree your points and like the suggested
-name!
+I agree there could be a better name.
 
-Andrew, if you pick this patch to mm-new for more reviews, could you please add
-below attaching fixup together?
+> 
+> How about "by_score?". For example, "damos_goal_tune_esz_bp_by_score" and
+> DAMOS_QUOTA_GOAL_TUNER_BY_SCORE.
+
+And thank you for the suggestion!
+
+But... I don't think "by_score" is much better, because all tuners are assumed
+to, and actually do the tuning of the quota based on the score.  Or, maybe you
+mean it makes non-zero quota only until the score becomes the goal?  That makes
+sense, but again, in a sense, that's same for "consistent" tuner.
+
+Naming is difficult...
+
+I was also thinking about a few more names, but my conclusion after the self
+discussion was that some of ambitious names are inevitable here.  Otherwise,
+the name will be too long.  I therefore picked the shortest and simplest ones
+on my list, which at least contrasts the current two tuners.  I agree that
+could still be difficult to understand.  But as long as there is a good
+documentation, I think difficult-to-understnd names that encourage users to
+read the document is ok and might even be better in some cases.
+
+I'm of course open to other suggestions.
 
 
 Thanks,
 SJ
 
 [...]
-=== >8 ===
-From 9599524cc5e5bbe8263c847b6f20f0aa919b3853 Mon Sep 17 00:00:00 2001
-From: SeongJae Park <sj@kernel.org>
-Date: Wed, 4 Mar 2026 06:46:55 -0800
-Subject: [PATCH] mm/damon/core: rename damos_quota_set() to
- damos_quota_is_set()
-
-damos_quota_set() can be confused as a sort of setter function.  Rename.
-
-Suggested-by: Gutierrez Asier <gutierrez.asier@huawei-partners.com>
-Signed-off-by: SeongJae Park <sj@kernel.org>
----
- mm/damon/core.c | 16 +++++++++-------
- 1 file changed, 9 insertions(+), 7 deletions(-)
-
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index d657b87dd99e8..c58430a4cd6ef 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -1788,12 +1788,12 @@ static bool __damos_valid_target(struct damon_region *r, struct damos *s)
- }
- 
- /*
-- * damos_quota_set() - Return if the given quota is actually set.
-+ * damos_quota_is_set() - Return if the given quota is actually set.
-  * @quota:	The quota to check.
-  *
-  * Returns true if the quota is set, false otherwise.
-  */
--static bool damos_quota_set(struct damos_quota *quota)
-+static bool damos_quota_is_set(struct damos_quota *quota)
- {
- 	return quota->esz || quota->sz || quota->ms ||
- 		!damos_quota_goals_empty(quota);
-@@ -1804,7 +1804,7 @@ static bool damos_valid_target(struct damon_ctx *c, struct damon_region *r,
- {
- 	bool ret = __damos_valid_target(r, s);
- 
--	if (!ret || !damos_quota_set(&s->quota) || !c->ops.get_scheme_score)
-+	if (!ret || !damos_quota_is_set(&s->quota) || !c->ops.get_scheme_score)
- 		return ret;
- 
- 	return c->ops.get_scheme_score(c, r, s) >= s->quota.min_score;
-@@ -2074,7 +2074,7 @@ static void damos_apply_scheme(struct damon_ctx *c, struct damon_target *t,
- 	}
- 
- 	if (c->ops.apply_scheme) {
--		if (damos_quota_set(quota) &&
-+		if (damos_quota_is_set(quota) &&
- 				quota->charged_sz + sz > quota->esz) {
- 			sz = ALIGN_DOWN(quota->esz - quota->charged_sz,
- 					c->min_region_sz);
-@@ -2094,7 +2094,7 @@ static void damos_apply_scheme(struct damon_ctx *c, struct damon_target *t,
- 		quota->total_charged_ns += timespec64_to_ns(&end) -
- 			timespec64_to_ns(&begin);
- 		quota->charged_sz += sz;
--		if (damos_quota_set(quota) &&
-+		if (damos_quota_is_set(quota) &&
- 				quota->charged_sz >= quota->esz) {
- 			quota->charge_target_from = t;
- 			quota->charge_addr_from = r->ar.end + 1;
-@@ -2123,7 +2123,8 @@ static void damon_do_apply_schemes(struct damon_ctx *c,
- 			continue;
- 
- 		/* Check the quota */
--		if (damos_quota_set(quota) && quota->charged_sz >= quota->esz)
-+		if (damos_quota_is_set(quota) &&
-+				quota->charged_sz >= quota->esz)
- 			continue;
- 
- 		if (damos_skip_charged_region(t, r, s, c->min_region_sz))
-@@ -2408,7 +2409,8 @@ static void damos_adjust_quota(struct damon_ctx *c, struct damos *s)
- 	/* New charge window starts */
- 	if (time_after_eq(jiffies, quota->charged_from +
- 				msecs_to_jiffies(quota->reset_interval))) {
--		if (damos_quota_set(quota) && quota->charged_sz >= quota->esz)
-+		if (damos_quota_is_set(quota) &&
-+				quota->charged_sz >= quota->esz)
- 			s->stat.qt_exceeds++;
- 		quota->total_charged_sz += quota->charged_sz;
- 		quota->charged_from = jiffies;
--- 
-2.47.3
-
