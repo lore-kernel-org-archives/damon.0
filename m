@@ -1,249 +1,164 @@
-Received: from mail-qk1-f172.google.com (mail-qk1-f172.google.com [209.85.222.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53773349B0A
-	for <damon@lists.linux.dev>; Tue,  3 Mar 2026 20:36:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C2A31DEFE9;
+	Wed,  4 Mar 2026 04:41:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772570184; cv=none; b=IiMtGXV7UceHQ0LFY3c6zeb5ZfSE7QTaI9PfYrbGd/m9g/8zk9zOkOfzs3CQqnIRGUhi+iFfY7g+nhJfvruBx0Z/xl9vxOj1X7aiubM1jIYl8et7etq5bQY6q3iDkHIhqkHAnIB1KW0shILYy0mBgWvJM5J3xFmyJ+m2lRSSoak=
+	t=1772599288; cv=none; b=YFTGXetLiEoyJ64Ie12tsI9PyKEJ8/X3JIx4ZidcAof/OQiL6t8VQ2JhdHh5QicQ3J/Q+INO4/u0WBBc3z8Q1Seu382i8oMWhDQpr0qWWpK+5Zk7+bRxIWXNVtsmbBBYuMoKsC/D2TKuzotK8v6BVxDpNAAtByRIdulLqqDbz2M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772570184; c=relaxed/simple;
-	bh=0WXiDpchtAH8bVqvBLab1zkx9xLMSEgnhOTNf0nXPyc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ADzIJaaaxTmwI1tppUEOU/VIrtHAsYGSd9TVDUS0pwSKOKriu24SIMet96rLf6ZjAq0GUTbzQy8s+6dJaBKoV5KvFaZcdaLoZERdS/kCPhuthL41WTpeMG8lf3aewNuI137lQO4dEQ/7+po6/i6wiR3U50TGBDeHUY6n1fu2rcg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gourry.net; spf=pass smtp.mailfrom=gourry.net; dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.b=T7aeHh3x; arc=none smtp.client-ip=209.85.222.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gourry.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gourry.net
+	s=arc-20240116; t=1772599288; c=relaxed/simple;
+	bh=QuJFb/rFJcLkJTaWE+LU8ObndCC324KIqzke1jWKe1U=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=sM8VTHEbf+++7eZA1spEfO2i9wBFQOOSjDKT/DRmaS7zq7JNx6wpKdDpDqRtZ5NyQcJfZVnCTEKtlTooVuzhSmbMmYVzEe5OBTZrgFOfHToS3b5aj28txsZjp25YsR6vLvAoew2e3ID13+Z1Zr2ytLBUtVp28nlNH9ZQn6sjJuE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OaYTmdTU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.b="T7aeHh3x"
-Received: by mail-qk1-f172.google.com with SMTP id af79cd13be357-8c9f6b78ca4so806359885a.0
-        for <damon@lists.linux.dev>; Tue, 03 Mar 2026 12:36:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gourry.net; s=google; t=1772570182; x=1773174982; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=HSMo5+Ht+OJv6fxlprT7RhyGGgmGe3zydeGluTTF1Sk=;
-        b=T7aeHh3xH8rG3TyTz5ydxHn/Irv67ZHbdpva/b/OEDmukTB1mymSTxF/3XLf3Q2CdY
-         q39kkd/LVy94/69rAcZTb1YcbHAUl2AewesbrAZkff11Otr0TPWK8WZ1/nS+7iGGKhUJ
-         m7PpjZxqbZ5NMMJm+D60v9bT7Sr3rhROMDjMCwSYrmmjCqhsQVhIYEjCL8c4MuNQUQac
-         yI0qFJ2fT7do/1YHKjd3gvs0l+TB23WilM9d3ncLmaY5yCDThzUJjT9LQEI3LnyjsxQU
-         zARU0tz6PY7KLnrLuXyElQr5DOiiV9vGaJ8x+5sRz2zz+1lt+DFSFZNOnt0LFueEBNL+
-         Eruw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772570182; x=1773174982;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=HSMo5+Ht+OJv6fxlprT7RhyGGgmGe3zydeGluTTF1Sk=;
-        b=mwvaRogM4EL2V81di2ulhn1GLGQy3lpM5yYvekZMnPRJW4KJen1MsCZ1oV4FTskD+D
-         nUVFlKAbtynRD4mZEH5NbqzRgXvIJeY8LbbO1OCeHOlXQkvtxs6pilEsfS8OOJeWEA1+
-         WiJklNP2eA8b79a8TpcWz0ASMKdOLN1AtIZrgKLjnhB2efUBIGHYdskHgY8l6kQK2xLx
-         ZmMaP9X3TdwQ+g3DcsyrAu6sgQJoqoYQhhvi4ZgkXTqCoVSX3ZGhL0Hq2kx212kDZlaT
-         XQjsJyUdIP62JdNw3w8jk0gztjkViNKV1cdi1+6HG29Ew3fnt/iZNtygQV4rkohfzqm9
-         qkjQ==
-X-Forwarded-Encrypted: i=1; AJvYcCU5ELBv6Iq61CSuN57TdW4rl4QWJb5K8tTnDeIw3AAnv16BhAJyRdApVfzGqY5Z0kqhVCAOFA==@lists.linux.dev
-X-Gm-Message-State: AOJu0YzThfsPpMCUaJP2P0UucVebNlZB8Lw92kus8cwnGIK/Cf2svJa6
-	DNCEhFvdNZQsNpdHN/DwsnUUqxOtqpVhZlulF05CQemu1ubz2WCZ7kwhqw5rbD8E1Lg=
-X-Gm-Gg: ATEYQzyaiQITYrwdvTD3piJDkedr3m4dXIN9wz/9k/ophTmquxCOsWDgcSkOGmhHwI0
-	2J+UyT9Syy2K8bu+RMNcnDAdKuQ8pvF8JBWiVm4sxZxhplU7qk8T9+BNFpVeNKWC5KYF06USWBx
-	MLUKmx+0vrRE53MkUZC+JxTjxJeE0lmvfO4Yijh/HyZ68UHY6Qfb5EMSWJkGx66zG1KddmwI/s5
-	nNDn7yE0Uip9HVZ0B+yNt7SyI+TFjt4SNcv7tVlgAqeXIznoeDzaKf51g39+VPCpCXGj1k22wt5
-	DxGoYtCTICRwb12YkAQiO1/gZaglTpa0N9HICSMlzLXpTorQUk4GW7ZG/8dAs+xdn4PrZYjGP1C
-	VpPL6vfFbq2r41Yw18C3Wwep20atiooE4B1L0zcPRAFdC1EdADs2hOKH6ng+7dlM7HH+T3XzQsX
-	01HtuDUfPq0eKJLKFIg8eFJRbiCh3ZohELWPX3JwaKW3Cl1w+bSNOPH9/IsQsnTLzSNzJ134Yhw
-	TNob5Xwsg==
-X-Received: by 2002:a05:620a:4720:b0:8cb:5442:d539 with SMTP id af79cd13be357-8cbc8dc28b1mr2313709285a.2.1772570182058;
-        Tue, 03 Mar 2026 12:36:22 -0800 (PST)
-Received: from gourry-fedora-PF4VCD3F (pool-96-255-20-138.washdc.ftas.verizon.net. [96.255.20.138])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-899e89bf39bsm79243066d6.18.2026.03.03.12.36.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Mar 2026 12:36:20 -0800 (PST)
-Date: Tue, 3 Mar 2026 15:36:17 -0500
-From: Gregory Price <gourry@gourry.net>
-To: Alistair Popple <apopple@nvidia.com>
-Cc: lsf-pc@lists.linux-foundation.org, linux-kernel@vger.kernel.org,
-	linux-cxl@vger.kernel.org, cgroups@vger.kernel.org,
-	linux-mm@kvack.org, linux-trace-kernel@vger.kernel.org,
-	damon@lists.linux.dev, kernel-team@meta.com,
-	gregkh@linuxfoundation.org, rafael@kernel.org, dakr@kernel.org,
-	dave@stgolabs.net, jonathan.cameron@huawei.com,
-	dave.jiang@intel.com, alison.schofield@intel.com,
-	vishal.l.verma@intel.com, ira.weiny@intel.com,
-	dan.j.williams@intel.com, longman@redhat.com,
-	akpm@linux-foundation.org, david@kernel.org,
-	lorenzo.stoakes@oracle.com, Liam.Howlett@oracle.com, vbabka@suse.cz,
-	rppt@kernel.org, surenb@google.com, mhocko@suse.com,
-	osalvador@suse.de, ziy@nvidia.com, matthew.brost@intel.com,
-	joshua.hahnjy@gmail.com, rakie.kim@sk.com, byungchul@sk.com,
-	ying.huang@linux.alibaba.com, axelrasmussen@google.com,
-	yuanchu@google.com, weixugc@google.com, yury.norov@gmail.com,
-	linux@rasmusvillemoes.dk, mhiramat@kernel.org,
-	mathieu.desnoyers@efficios.com, tj@kernel.org, hannes@cmpxchg.org,
-	mkoutny@suse.com, jackmanb@google.com, sj@kernel.org,
-	baolin.wang@linux.alibaba.com, npache@redhat.com,
-	ryan.roberts@arm.com, dev.jain@arm.com, baohua@kernel.org,
-	lance.yang@linux.dev, muchun.song@linux.dev, xu.xin16@zte.com.cn,
-	chengming.zhou@linux.dev, jannh@google.com, linmiaohe@huawei.com,
-	nao.horiguchi@gmail.com, pfalcato@suse.de, rientjes@google.com,
-	shakeel.butt@linux.dev, riel@surriel.com, harry.yoo@oracle.com,
-	cl@gentwo.org, roman.gushchin@linux.dev, chrisl@kernel.org,
-	kasong@tencent.com, shikemeng@huaweicloud.com, nphamcs@gmail.com,
-	bhe@redhat.com, zhengqi.arch@bytedance.com, terry.bowman@amd.com
-Subject: Re: [LSF/MM/BPF TOPIC][RFC PATCH v4 00/27] Private Memory Nodes (w/
- Compressed RAM)
-Message-ID: <aadGQXXpayvFOZpy@gourry-fedora-PF4VCD3F>
-References: <20260222084842.1824063-1-gourry@gourry.net>
- <fzy6f6dpv3oq3ksr2mkst7pz3daeb3buhuvdvcw4633pcl7h6u@mxjgiwpg5acv>
- <aZ3BEn_73Rk8Fn7L@gourry-fedora-PF4VCD3F>
- <a6izpi2wlqro72erhbvxhlx2lwdnae7my3ghfs6t33ivtixo4h@bi2u4x6qv7ul>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OaYTmdTU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 847B8C19423;
+	Wed,  4 Mar 2026 04:41:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1772599287;
+	bh=QuJFb/rFJcLkJTaWE+LU8ObndCC324KIqzke1jWKe1U=;
+	h=From:To:Cc:Subject:Date:From;
+	b=OaYTmdTUhz6YdoeoglHASzmk9ymccLLodxEiNkLIpitj+mI4JhGw8p9k1WO3hLMqd
+	 7k1oVSXl9i1mOF2nR9DOO/2c9MlrqoL2lxqm8VHOaZ2Opos9LXLLlDZKE38RMSmdoP
+	 utOPFgwzG+5wRS9ZgnzcXStwQwea1xkHyIxRS4eow2UZ5LO7sgc0nBoRZAqlXGEPL1
+	 NS38O9REMTpSx1QOkh73zJ/8h/avHG2Pi6X+Am4sjOChBPIoSmV6A7T4V2GP4To//L
+	 fYfgyIQWPTCeTE+VLfEKseyOoyjL5kVxlZILWhQZ0zS5i3UR+ncT64Kq81q68u4FdX
+	 Du+ToqMVcQwsg==
+From: SeongJae Park <sj@kernel.org>
+To: 
+Cc: SeongJae Park <sj@kernel.org>,
+	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	David Hildenbrand <david@kernel.org>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Shuah Khan <shuah@kernel.org>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	damon@lists.linux.dev,
+	linux-doc@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-kselftest@vger.kernel.org,
+	linux-mm@kvack.org
+Subject: [RFC PATCH v2 00/10] mm/damon: support multiple goal-based quota tuning algorithms
+Date: Tue,  3 Mar 2026 20:41:09 -0800
+Message-ID: <20260304044122.79394-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <a6izpi2wlqro72erhbvxhlx2lwdnae7my3ghfs6t33ivtixo4h@bi2u4x6qv7ul>
+Content-Transfer-Encoding: 8bit
 
-On Thu, Feb 26, 2026 at 02:27:24PM +1100, Alistair Popple wrote:
-> On 2026-02-25 at 02:17 +1100, Gregory Price <gourry@gourry.net> wrote...
-> > 
-> > If your service only allocates movable pages - your ZONE_NORMAL is
-> > effectively ZONE_MOVABLE.  
-> 
-> This is interesting - it sounds like the conclusion of this is ZONE_* is just a
-> bad abstraction and should be replaced with something else maybe some like this?
-> 
-> And FWIW I'm not tied to the ZONE_DEVICE as being a good abstraction, it's just
-> what we seem to have today for determing page types. It almost sounds like what
-> we want is just a bunch of hooks that can be associated with a range of pages,
-> and then you just get rid of ZONE_DEVICE and instead install hooks appropriate
-> for each page a driver manages. I have to think more about that though, this
-> is just what popped into my head when you start saying ZONE_MOVABLE could also
-> disappear :-)
-> 
-... snip ...
-> > 
-> > You don't have to squint because it was deliberate :]
-> 
-> Nice.
-> 
+Aim-oriented DAMOS quota auto-tuning uses a single tuning algorithm.
+The algorithm is designed to find a quota value that should be
+consistently kept for achieving the aimed goal for long term.  It is
+useful and reliable at automatically operating systems that have dynamic
+environments in the long term.
 
-I've had some time to chew on this a bit more.
+As always, however, no single algorithm fits all.  When the environment
+has static characteristics or there are control towers in not only the
+kernel space but also the user space, the algorithm shows some
+limitations.  In such environments, users want kernel work in a more
+short term deterministic way.  Actually there were at least two reports
+[1,2] of such cases.
 
-Adding a node-scope `struct dev_pagemap` produces some interesting
-(arguably useful / valuable) effects.
+Extend DAMOS quotas goal to support multiple quota tuning algorithms
+that users can select.  Keep the current algorithm as the default one,
+to not break the old users.  Also give it a name, "consist", as it is
+designed to "consistently" apply the DAMOS action.  And introduce a new
+tuning algorithm, namely "temporal".  It is designed to apply the DAMOS
+action only temporally, in a deterministic way.  In more detail, as long
+as the goal is under-achieved, it uses the maximum quota available.
+Once the goal is over-achieved, it sets the quota zero.
 
-The invariant would be clamping the entire node to ZONE_DEVICE
-(more on this below).
+Tests
+=====
 
-So if we think about it this way - we could just view this whole thing
-as another variant of ZONE_DEVICE - but without needing the memremap
-infrastructure (you can use normal hotplug to achieve it).
+I confirmed the feature is working as expected using the latest version
+of DAMON user-space tool, like below.
 
+    $ # start DAMOS for reclaiming memory aiming 30% free memory
+    $ sudo ./damo/damo start --damos_action pageout \
+            --damos_quota_goal_tuner temporal \
+            --damos_quota_goal node_mem_free_bp 30% 0 \
+            --damos_quota_interval 1s \
+            --damos_quota_space 100M
 
+Note that >=3.1.8 version of DAMON user-space tool supports this feature
+(--damos_quota_goal_tuner).  As expected, DAMOS stops reclaiming memory
+as soon as the goal amount of free memory is made.  When 'consist' tuner
+is used, the reclamation was continued even after the goal amount of
+free memory is made, resulting in more than goal amount of free memory,
+as expected.
 
-0. pgdat->private becomes pgdat->dev_pagemap
-   N_MEMORY_PRIVATE -> N_MEMORY_DEVICE ?
+Patch Sequence
+==============
 
-   As a start, do a direct conversion, and use the existing
-   infrastructure.   then expand hooks as needed (and as-is reasonable)
+First four patches implement the features.  Patch 1 extends core API to
+allow multiple tuners and make the current tuner as the default and only
+available tuner, namely 'consist'.  Patch 2 allows future tuners setting
+zero effective quota.  Patch 3 introduces the second tuner, namely
+'temporal'.  Patch 4 further extends DAMON sysfs API to let users use
+that.
 
-   Some of the `struct dev_pagemap {}` fields become dead at the node
-   scope, but this is a plumbing issue.
+Three following patches (patches 5-7) update design, usage, and ABI
+documents, respectively.
 
-   There's already an similar split between the dev_pagemap and the ops
-   structure, so it might map very cleanly.
+Final three patches (patches 8-10) are for adding selftests.  The eighth
+and the ninth patches extend the testing-purpose DAMON sysfs control
+helper and DAMON status dumping tool to support the newly added feature.
+The tenth patch extends the existing online commit test to cover the new
+feature.
 
+References
+==========
 
-1. "Clamping the entire node to ZONE_DEVICE"
+[1] https://lore.kernel.org/CALa+Y17__d=ZsM1yX+MXx0ozVdsXnFqF4p0g+kATEitrWyZFfg@mail.gmail.com
+[2] https://lore.kernel.org/20260204022537.814-1-yunjeong.mun@sk.com
 
-   When we do this, the *actual* ZONE becomes completely irrelevant.
-   The allocation path is entirely controlled, so you might actually end
-   up freeing up the folio flags that track the zone:
+Changelog
+=========
 
-   static inline enum zone_type memdesc_zonenum(memdesc_flags_t flags)
-   {
-        ASSERT_EXCLUSIVE_BITS(flags.f, ZONES_MASK << ZONES_PGSHIFT);
-        return (flags.f >> ZONES_PGSHIFT) & ZONES_MASK;
-   }
+Changes from RFC v1
+(https://lore.kernel.org/20260212062314.69961-1-sj@kernel.org)
+- Add selftest for goal_tuner commitment.
+- Set goal tuner inside damon_new_scheme().
+- Allow zero size effective size quota.
+- Update the ABI document.
+- Wordsmith change descriptions.
 
-   becomes:
+SeongJae Park (10):
+  mm/damon/core: introduce damos_quota_goal_tuner
+  mm/damon/core: allow quota goals set zero effective size quota
+  mm/damon/core: introduce DAMOS_QUOTA_GOAL_TUNER_TEMPORAL
+  mm/damon/sysfs-schemes: implement quotas->goal_tuner file
+  Docs/mm/damon/design: document the goal-based quota tuner selections
+  Docs/admin-guide/mm/damon/usage: document goal_tuner sysfs file
+  Docs/ABI/damon: update for goal_tuner
+  selftests/damon/_damon_sysfs: support goal_tuner setup
+  selftests/damon/drgn_dump_damon_status: support quota goal_tuner
+    dumping
+  selftests/damon/sysfs.py: test goal_tuner commit
 
-   folio_is_zone_device(folio) {
-       return node_is_device_node(folio_nid(folio)) || 
-              memdesc_is_zone_device(folio->flags);
-   }
-
-   Kind of an interesting.  You still need these flags for traditional
-   ZONE_DEVICE, so you can't evict it completely, but you can start to
-   see a path here.
-
-
-2. One dev_pagemap per node or multiple w/ pagemap range searching
-
-   Checking membership is always cheap: 
-
-        node_is_device_node()
-
-   Getting ops can be cheap if 1:1 mappings exists:
-
-       pgdat->device_ops->callback()
-
-   Or may be expensive if range-based matching is required:
-
-      node_device_op(folio, ...) {
-         ops = node_ops_lookup(folio); /* pfn-range binary search */
-	 ops->callback(folio, ...)
-      }
-
-      pgmap already has an embedded range:
-
-      struct dev_pagemap {
-        ...
-        int nr_range;
-        union {
-            struct range range;
-            DECLARE_FLEX_ARRAY(struct range, ranges);
-        };
-      };
-
-   Example: Nouveau, registers hundreds of pgmap instances that it
-            uses to recover driver contexts for that specific folio.
-	    
-	    This would not scale well.
-
-	    But most other drivers register between 1-8.  That might.
-
-   That means this might actually be an effective way to evict pgmap
-   from struct folio / struct page.  (Not making this a requirement or
-   saying it's reasonable, just an interesting observation).
+ .../ABI/testing/sysfs-kernel-mm-damon         |  6 ++
+ Documentation/admin-guide/mm/damon/usage.rst  | 16 +++--
+ Documentation/mm/damon/design.rst             | 12 ++++
+ include/linux/damon.h                         | 11 ++++
+ mm/damon/core.c                               | 60 +++++++++++++++----
+ mm/damon/sysfs-schemes.c                      | 58 ++++++++++++++++++
+ tools/testing/selftests/damon/_damon_sysfs.py | 12 +++-
+ .../selftests/damon/drgn_dump_damon_status.py |  1 +
+ tools/testing/selftests/damon/sysfs.py        |  7 +++
+ 9 files changed, 166 insertions(+), 17 deletions(-)
 
 
-3. Some existing drivers with 1 pgmap per driver instance instantly get
-   the folio->lru field back - even if they continue to use ZONE_DEVICE.
-
-   At least 3 drivers use page->zone_device_data as a page freelist
-   rather than actual per-page data.  Those drivers could just start
-   using folio/page->lru instead.
-
-   Some store actual per-page zone_device_data that would prevent this,
-   but from poking around it seems like it might be feasible.
-
-   Some use the pgmap as a container_of() argument to get driver
-   context, may or may not be supportable out of the box, but it seemed
-   like mild refactoring might get them back the use of folio->lru.
-
-   None of this is required, the goal is explicitly not disrupting any
-   current users of ZONE_DEVICE.
-
-
-Just some additional food for thought.
-
-As-designed now, this would only apply to NUMA systems, meaning you
-can't fully evict pgmap from struct page/folio --- but you could
-imagine a world where in non-numa mode we even register a separate
-pglist_data specifically for device memory even w/o NUMA.
-
-~Gregory 
+base-commit: bbba4ca6322dd5c4f66fe31b1b374f77a8d2b2e5
+-- 
+2.47.3
