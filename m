@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A218637F757;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D488337F8A2;
 	Wed,  4 Mar 2026 04:41:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772599288; cv=none; b=sEUd0JwwE31ZEaaLg6YiTVxVFp4/8Q4vjKVtCa6yun5Gtq4XT4tlR3Moy6ycNI+7ndNCBf2m8lxgb0aqejgK/cu3+xxPZOF+NTqVRPGwwJNTSC1LIeSgCIhBEdlXmrhxsgS26RCxLlHHorX6sghZT0at9uhEFDKZgIU2ysUS8gY=
+	t=1772599288; cv=none; b=SawYouLy3FBY2i51BJGOmI6TvTF36GK8n3KIfgGWFhuO1Ue8S42ifi0ub3ZxwuUXZtYOGtZcs2Om+6GQEFTg8o+B+rOXe7QfL0Q4uC9RzQa62H0HufcswyGXEehvYvA3gYTAUnYjr6SCBEZy58MLtkgxWlPG0sJ+5sadPif+FIw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772599288; c=relaxed/simple;
-	bh=QHI34cc7GPySMrww748vR+nu09NVGXEeGECMJAgm4jE=;
+	bh=Cz0dujDOIX0D2wsuyXTUh/TXx2EbdEyN7109tlsNnZY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Wxug4uFpNQu/3z7D9nAn9QNRlbNm/xOcJ3PxJqncgSNk1Y1Huk6EuUnbA1jo+C2hoGxchVniJi/cJchMbXE4aE38Hl1z+BEegcFD1MSvh5VUkZmpBl4w0aIzKEoLEHK47UuoxjfemgBkYdD9RCX61gJb+GVTYNON7aUFd+z2K18=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ONaNs8x3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=F9/Uftb6npp65qIj4MC0idNl4Xh1FCGkVLDIf3iDj/OaKnMhKrV9ZT70erI7qgRtaMdHCI6z8AQvTMDGQlNezoTw0ey6KPBKSBCICRaQiTbJ10RZ7tfx6h+SQnoZF8NGs417ARxnVFdm7vJ54R8lhF5OxXVuLDbTxygplEgsl8Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SqDXw3W0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ONaNs8x3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71A9DC2BCB2;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SqDXw3W0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2304C19423;
 	Wed,  4 Mar 2026 04:41:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1772599288;
-	bh=QHI34cc7GPySMrww748vR+nu09NVGXEeGECMJAgm4jE=;
+	bh=Cz0dujDOIX0D2wsuyXTUh/TXx2EbdEyN7109tlsNnZY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ONaNs8x3vsqddIqGapimPOCja1sezVwIF4WxYgGdeYG+NG8zNawDZImfrPTY1JbJU
-	 c5rP/KE86iJpVugDN4qKf2PpnLakeN9DMIQYM5y34jAMIeJU6Jk3wyGjVvT+wdoQH0
-	 0kk37hPC8zooX3XBqPFDSu2mhFlVB6R4Mr7ShghG1BYSf/zg2iA1sBRm7uEiEBHchX
-	 oWbrEQkHf+6d7s35Q2Ikq411qCiGPUQUZo24RZUaihUxQepoxp6yOjSQUUDUjjVV0F
-	 AdfAcI3hUTaFZn1vX+QBKqiCkZ02m+l9oUTqVFf66WJjvNlTA5c+7EQc7ywxTLg/Uo
-	 NRngNd4otMCiw==
+	b=SqDXw3W0NvWmeE+6mfw9826vhRUL+IYxvIT1g0hxflbTAQReC+zO17jRTJ/k70Dw3
+	 vIRctIxYEcOgvqYKEfJgr8acdwqdA/k0jP7gAKpqj78BMscunzq3qn0HMZnI4/ACn/
+	 9tuw20Eu7Zc0qIW8++W2aPzr0vqpQz9wG4M6rTHtjc78w4NcxJ2qW/HD9PrmSlJOkh
+	 A4XoU/8/mehdTuAjY3mcl2cyb7JUKzoc7kLZrhFMTDvfQMkotsldejxe4TNjwFo+Bh
+	 sQEUw4ZzMWlJqgFzX0chsvmojPt1qCpe4drrTBuAUri9CKDo3GayIeTM5u03R3hsGa
+	 PN3VTPBFtzKXA==
 From: SeongJae Park <sj@kernel.org>
 To: 
 Cc: SeongJae Park <sj@kernel.org>,
@@ -33,9 +33,9 @@ Cc: SeongJae Park <sj@kernel.org>,
 	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH v2 03/10] mm/damon/core: introduce DAMOS_QUOTA_GOAL_TUNER_TEMPORAL
-Date: Tue,  3 Mar 2026 20:41:12 -0800
-Message-ID: <20260304044122.79394-4-sj@kernel.org>
+Subject: [RFC PATCH v2 04/10] mm/damon/sysfs-schemes: implement quotas->goal_tuner file
+Date: Tue,  3 Mar 2026 20:41:13 -0800
+Message-ID: <20260304044122.79394-5-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260304044122.79394-1-sj@kernel.org>
 References: <20260304044122.79394-1-sj@kernel.org>
@@ -47,81 +47,111 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Introduce a new goal-based DAMOS quota auto-tuning algorithm, namely
-DAMOS_QUOTA_GOAL_TUNER_TEMPORAL (temporal in short).  The algorithm aims
-to trigger the DAMOS action only for a temporal time, to achieve the
-goal as soon as possible.  For the temporal period, it uses as much
-quota as allowed.  Once the goal is achieved, it sets the quota zero, so
-effectively makes the scheme be deactivated.
+Add a new DAMON sysfs interface file, namely 'goal_tuner' under the
+DAMOS quotas directory.  It is connected to the damos_quota->goal_tuner
+field.  Users can therefore select their favorite goal-based quotas
+tuning algorithm by writing the name of the tuner to the file.  Reading
+the file returns the name of the currently selected tuner.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- include/linux/damon.h |  2 ++
- mm/damon/core.c       | 29 ++++++++++++++++++++++++-----
- 2 files changed, 26 insertions(+), 5 deletions(-)
+ mm/damon/sysfs-schemes.c | 58 ++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 58 insertions(+)
 
-diff --git a/include/linux/damon.h b/include/linux/damon.h
-index 63f1e3fdd3866..c4095b34f7929 100644
---- a/include/linux/damon.h
-+++ b/include/linux/damon.h
-@@ -216,9 +216,11 @@ struct damos_quota_goal {
- /**
-  * enum damos_quota_goal_tuner - Goal-based quota tuning logic.
-  * @DAMOS_QUOTA_GOAL_TUNER_CONSIST:	Aim long term consistent quota.
-+ * @DAMOS_QUOTA_GOAL_TUNER_TEMPORAL:	Aim zero quota asap.
-  */
- enum damos_quota_goal_tuner {
- 	DAMOS_QUOTA_GOAL_TUNER_CONSIST,
-+	DAMOS_QUOTA_GOAL_TUNER_TEMPORAL,
+diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
+index 3a0782e576fab..5186966dafb35 100644
+--- a/mm/damon/sysfs-schemes.c
++++ b/mm/damon/sysfs-schemes.c
+@@ -1488,6 +1488,7 @@ struct damon_sysfs_quotas {
+ 	unsigned long sz;
+ 	unsigned long reset_interval_ms;
+ 	unsigned long effective_sz;	/* Effective size quota in bytes */
++	enum damos_quota_goal_tuner goal_tuner;
  };
  
- /**
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index d657b87dd99e8..51401d35f1b6b 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -2337,6 +2337,26 @@ static unsigned long damos_quota_score(struct damos_quota *quota)
- 	return highest_score;
+ static struct damon_sysfs_quotas *damon_sysfs_quotas_alloc(void)
+@@ -1610,6 +1611,58 @@ static ssize_t effective_bytes_show(struct kobject *kobj,
+ 	return sysfs_emit(buf, "%lu\n", quotas->effective_sz);
  }
  
-+static void damos_goal_tune_esz_bp_consist(struct damos_quota *quota)
-+{
-+	unsigned long score = damos_quota_score(quota);
++struct damos_sysfs_qgoal_tuner_name {
++	enum damos_quota_goal_tuner tuner;
++	char *name;
++};
 +
-+	quota->esz_bp = damon_feed_loop_next_input(
-+			max(quota->esz_bp, 10000UL), score);
++static struct damos_sysfs_qgoal_tuner_name damos_sysfs_qgoal_tuner_names[] = {
++	{
++		.tuner = DAMOS_QUOTA_GOAL_TUNER_CONSIST,
++		.name = "consist",
++	},
++	{
++		.tuner = DAMOS_QUOTA_GOAL_TUNER_TEMPORAL,
++		.name = "temporal",
++	},
++};
++
++static ssize_t goal_tuner_show(struct kobject *kobj,
++		struct kobj_attribute *attr, char *buf)
++{
++	struct damon_sysfs_quotas *quotas = container_of(kobj,
++			struct damon_sysfs_quotas, kobj);
++	int i;
++
++	for (i = 0; i < ARRAY_SIZE(damos_sysfs_qgoal_tuner_names); i++) {
++		struct damos_sysfs_qgoal_tuner_name *tuner_name;
++
++		tuner_name = &damos_sysfs_qgoal_tuner_names[i];
++		if (tuner_name->tuner == quotas->goal_tuner)
++			return sysfs_emit(buf, "%s\n", tuner_name->name);
++	}
++	return -EINVAL;
 +}
 +
-+static void damos_goal_tune_esz_bp_temporal(struct damos_quota *quota)
++static ssize_t goal_tuner_store(struct kobject *kobj,
++		struct kobj_attribute *attr, const char *buf, size_t count)
 +{
-+	unsigned long score = damos_quota_score(quota);
++	struct damon_sysfs_quotas *quotas = container_of(kobj,
++			struct damon_sysfs_quotas, kobj);
++	int i;
 +
-+	if (score >= 10000)
-+		quota->esz_bp = 0;
-+	else if (quota->sz)
-+		quota->esz_bp = quota->sz * 10000;
-+	else
-+		quota->esz_bp = ULONG_MAX;
++	for (i = 0; i < ARRAY_SIZE(damos_sysfs_qgoal_tuner_names); i++) {
++		struct damos_sysfs_qgoal_tuner_name *tuner_name;
++
++		tuner_name = &damos_sysfs_qgoal_tuner_names[i];
++		if (sysfs_streq(buf, tuner_name->name)) {
++			quotas->goal_tuner = tuner_name->tuner;
++			return count;
++		}
++	}
++	return -EINVAL;
 +}
 +
- /*
-  * Called only if quota->ms, or quota->sz are set, or quota->goals is not empty
-  */
-@@ -2351,11 +2371,10 @@ static void damos_set_effective_quota(struct damos_quota *quota)
- 	}
+ static void damon_sysfs_quotas_release(struct kobject *kobj)
+ {
+ 	kfree(container_of(kobj, struct damon_sysfs_quotas, kobj));
+@@ -1627,11 +1680,15 @@ static struct kobj_attribute damon_sysfs_quotas_reset_interval_ms_attr =
+ static struct kobj_attribute damon_sysfs_quotas_effective_bytes_attr =
+ 		__ATTR_RO_MODE(effective_bytes, 0400);
  
- 	if (!list_empty(&quota->goals)) {
--		unsigned long score = damos_quota_score(quota);
--
--		quota->esz_bp = damon_feed_loop_next_input(
--				max(quota->esz_bp, 10000UL),
--				score);
-+		if (quota->goal_tuner == DAMOS_QUOTA_GOAL_TUNER_CONSIST)
-+			damos_goal_tune_esz_bp_consist(quota);
-+		else if (quota->goal_tuner == DAMOS_QUOTA_GOAL_TUNER_TEMPORAL)
-+			damos_goal_tune_esz_bp_temporal(quota);
- 		esz = quota->esz_bp / 10000;
- 	}
- 
++static struct kobj_attribute damon_sysfs_quotas_goal_tuner_attr =
++		__ATTR_RW_MODE(goal_tuner, 0600);
++
+ static struct attribute *damon_sysfs_quotas_attrs[] = {
+ 	&damon_sysfs_quotas_ms_attr.attr,
+ 	&damon_sysfs_quotas_sz_attr.attr,
+ 	&damon_sysfs_quotas_reset_interval_ms_attr.attr,
+ 	&damon_sysfs_quotas_effective_bytes_attr.attr,
++	&damon_sysfs_quotas_goal_tuner_attr.attr,
+ 	NULL,
+ };
+ ATTRIBUTE_GROUPS(damon_sysfs_quotas);
+@@ -2718,6 +2775,7 @@ static struct damos *damon_sysfs_mk_scheme(
+ 		.weight_sz = sysfs_weights->sz,
+ 		.weight_nr_accesses = sysfs_weights->nr_accesses,
+ 		.weight_age = sysfs_weights->age,
++		.goal_tuner = sysfs_quotas->goal_tuner,
+ 	};
+ 	struct damos_watermarks wmarks = {
+ 		.metric = sysfs_wmarks->metric,
 -- 
 2.47.3
