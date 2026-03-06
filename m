@@ -1,90 +1,108 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AED026ED40
-	for <damon@lists.linux.dev>; Thu,  5 Mar 2026 05:41:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B37C3CB2FD;
+	Fri,  6 Mar 2026 15:29:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772689317; cv=none; b=HEXKqEh/MVuGDAhRso53UMN1xhyoFBEHD7fr9h9FYxd28v9IF9i20LcYpyiru3GfiBsFl1o0O3o1bB1osLC+MdEE3W7uxzeg9FBcdxy6eW5pprjtqA4+KoU4ZgFowpduU0KWiDrtNo9OkUfEQm6XyNUjoNtNTB6emRGVMOYg8HU=
+	t=1772810962; cv=none; b=X1XkuFA1+PWtICVyGJAk0qo5LKT55hmII/o4iJbRdK4tMrYmp1hwaLaPPQCxnoREDwwrCl+onHJIOB/E0AcYBxT1CiW2FampsaluYAyyWkZVYJ56xsYZFJxC1aNsRtjjNuLevuFWFZwLwOmUn4MSpPltkAeKWiIC4j+j2EDfhVo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772689317; c=relaxed/simple;
-	bh=DgFlkEpd+Giz7azYI3aH8In1nj1m0hihXdXV1v5sNvg=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=rD6CQ25FW3xd2Ozo2ZYE8ies03srg+ID6gu+L0TynvdpG/FjhgQNV++ozbjUhB5zeGmLvoF7NQJgLwqrJXtCwAShYOJ0uhYZ33FV3Td7ReByMDnBLX92vEv8crC+aOKECrlhfMqtJ1O5bhXtD73mgq3qZrpZiv0k19cwTk//WHw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sKE2+GFz; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1772810962; c=relaxed/simple;
+	bh=E14iF6Uxk2Oavef0L2q6s8ESqXWplXDEpDkb4fZORcU=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=EkNdljZ0lfd9exsVoJXduRR1ddaYtYOMOqXbB7ScKHunle62QCRubNYg9/ZtZB6TWcGvvaaOr5TZGsYY1rpr+yht6/RYmFP5gkywNZvUDS6S8VZHxXRP12e24kFFeBYbHgAryJY3i1R8rs7kX4EWMFV8GR3OsOVUhuf9ANaBw9I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Qgi/yg6Y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sKE2+GFz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91A3DC116C6;
-	Thu,  5 Mar 2026 05:41:56 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Qgi/yg6Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4954C4CEF7;
+	Fri,  6 Mar 2026 15:29:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772689316;
-	bh=DgFlkEpd+Giz7azYI3aH8In1nj1m0hihXdXV1v5sNvg=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sKE2+GFzGngud+gQkocJpXpqBvNwgVq1jzEcGVFdqB1KZH9SrWmb37OCM8LYPv6Wi
-	 548W+kyO43sr5fx2RCqHXIbYJ3LfW3JbdrlaEQjJyfCDGG0VAqwcsz16kFk0DvSq7a
-	 oLT/SfVr3oxItuJ+Wx25WZkVoL3Jd9pyp8o4KS8NoQ6n/1mJ2XPsVyrCzJ5ImzXYSh
-	 MSMjPsJoyrDuhA0P6OnsknQr1FtElium5b+DZX1JYhB3/t13jSkR9cqFyFagVmTah1
-	 /oE406NMM5+ulhq9Jt/OQE7Qj4OIHbEq1d9T+X4V+Tdn0amF/Tga8HznPpVC8tWVxg
-	 iph12gwOfa+vg==
+	s=k20201202; t=1772810962;
+	bh=E14iF6Uxk2Oavef0L2q6s8ESqXWplXDEpDkb4fZORcU=;
+	h=From:To:Cc:Subject:Date:From;
+	b=Qgi/yg6YyYTyLiY4iliYNCvbDyAsX7fmBjIJZtx3q6lXMGKGskn3AusoHZEoAo7Xq
+	 WVm6qfAtTEYZVoRsGKb3glk4HeyjbZeW7bf02n2Ffszbi6+LTEZ6Nu9cwn3YWgTxIj
+	 qFnNxsocQ+IamtHf0XxvtietST9EMuZZgelM3gEz+Wu1Ndh3xeLRa3WuhAaSBuGMBS
+	 aNtfTvEbkLyma6YdoX9qaxaWhMh4Iu23gu+P1VGJ4Dd9r9YeMJ8kmCVpLG1bVxYief
+	 BpioUcuHSy29+erlfpl5jSLLv56UPXQ12/NaPCBq3/Rb6wIjrPQeM/f/NvjUMC3hfw
+	 CCNXnK7ZiZuPQ==
 From: SeongJae Park <sj@kernel.org>
-To: SeongJae Park <sj@kernel.org>
-Cc: Quanmin Yan <yanquanmin1@huawei.com>,
-	akpm@linux-foundation.org,
+To: Andrew Morton <akpm@linux-foundation.org>
+Cc: SeongJae Park <sj@kernel.org>,
+	Brendan Higgins <brendan.higgins@linux.dev>,
+	David Gow <davidgow@google.com>,
+	Shuah Khan <shuah@kernel.org>,
 	damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	enze.li@gmx.com,
-	sunnanyong@huawei.com,
-	Enze Li <lienze@kylinos.cn>
-Subject: Re: [PATCH] mm/damon: unify address range representation with damon_addr_range
-Date: Wed,  4 Mar 2026 21:41:46 -0800
-Message-ID: <20260305054148.83837-1-sj@kernel.org>
+	kunit-dev@googlegroups.com,
+	linux-kernel@vger.kernel.org,
+	linux-kselftest@vger.kernel.org,
+	linux-mm@kvack.org
+Subject: [PATCH 00/10] mm/damon: add optional debugging-purpose sanity checks
+Date: Fri,  6 Mar 2026 07:29:03 -0800
+Message-ID: <20260306152914.86303-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260131015643.79158-1-sj@kernel.org>
-References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On Fri, 30 Jan 2026 17:56:41 -0800 SeongJae Park <sj@kernel.org> wrote:
+DAMON code has a few assumptions that can be critical if violated.
+Validating the assumptions in code can be useful at finding such
+critical bugs.  I was actually adding some such additional sanity checks
+in my personal tree, and those were useful at finding bugs that I made
+during the development of new patches.  We also found [1] sometimes the
+assumptions are misunderstood.  The validation can work as good
+documentation for such cases.
 
-> On Thu, 29 Jan 2026 19:38:45 -0800 SeongJae Park <sj@kernel.org> wrote:
-> 
-> > Hello Quanmin,
-> > 
-> > On Fri, 30 Jan 2026 11:07:08 +0800 Quanmin Yan <yanquanmin1@huawei.com> wrote:
-> [...]
-> > > Actually, DAMON only actively searches for the biggest System RAM
-> > > address when the user does not set a monitoring region. In this case,
-> > > we always reset addr_unit to 1, which essentially restricts DAMON’s
-> > > monitorable address range to 0–UL. Therefore, the described situation
-> > > does not occur. For details, please refer to commit [1].
-> > 
-> > Again, you are correct.  There is no user scenario that can trigger the
-> > problematic situation in the real world.  Nevertheless, assigning
-> > 'resource_size_t' value to 'unsigned long' storage makes no sense, so I'm
-> > calling such things a bug.  Not impacting user world, but still a bug is a bug.
-> 
-> I was arguing it as a bug even though ABI users cannot trigger the overflow,
-> since damon_set_region_biggest_system_ram_default() is exposed to DAMON API
-> callers, and I was thinking a future caller of the function could trigger the
-> problem.  But I now realize the API function is safe from any call, since
-> damon_find_biggest_system_ram() is avoiding the case, by setting 'end'
-> parameter of walk_system_ram_res() as 'ULONG_MAX'.  Maybe it is not really
-> appropriate to call it a bug.
-> 
-> That said, I now think this as a room to improve for the readability of the
-> code.
+Add some of such debugging purpose sanity checks.  Because those
+additional checks can impose more overhead, make those only optional via
+new config, CONFIG_DAMON_DEBUG_SANITY, that is recommended for only
+development and test setups.  And as recommended, enable it for DAMON
+kunit tests and selftests.
 
-So, I sent an RFC patch for this:
-https://lore.kernel.org/20260305053918.83786-1-sj@kernel.org
+Note that the verification only WARN_ON() for each of the insanity.  The
+developer or tester may better to set panic_on_oops together, like
+damon-tests/corr did [2].
+
+[1] https://lore.kernel.org/20251231070029.79682-1-sj@kernel.org
+[2] https://github.com/damonitor/damon-tests/commit/a80fbee55e272f151b4e5809ee85898aea33e6ff
+
+Changes from RFC v2
+(https://lore.kernel.org/20260301174327.76849-1-sj@kernel.org)
+- Rebase to latest mm-new
+
+Changes from RFC v1
+(https://lore.kernel.org/20260221193629.19332-1-sj@kernel.org)
+- Fix WARN_ON() failure on kunit UML build
+- Fix Wformat-zero-length issue
+  (https://lore.kernel.org/oe-kbuild-all/202602221352.odZW8x1R-lkp@intel.com/)
+- Rebase to latest mm-new
+- Make warning message less verbose
+- Use WARN_ONCE() condition
+- Do the verification asap
+- Minor cleanups
+
+SeongJae Park (10):
+  mm/damon: add CONFIG_DAMON_DEBUG_SANITY
+  mm/damon/core: add damon_new_region() debug_sanity check
+  mm/damon/core: add damon_del_region() debug_sanity check
+  mm/damon/core: add damon_nr_regions() debug_sanity check
+  mm/damon/core: add damon_merge_two_regions() debug_sanity check
+  mm/damon/core: add damon_merge_regions_of() debug_sanity check
+  mm/damon/core: add damon_split_region_at() debug_sanity check
+  mm/damon/core: add damon_reset_aggregated() debug_sanity check
+  mm/damon/tests/.kunitconifg: enable DAMON_DEBUG_SANITY
+  selftests/damon/config: enable DAMON_DEBUG_SANITY
+
+ mm/damon/Kconfig                     |  11 +++
+ mm/damon/core.c                      | 109 +++++++++++++++++++++++++++
+ mm/damon/tests/.kunitconfig          |   3 +
+ tools/testing/selftests/damon/config |   1 +
+ 4 files changed, 124 insertions(+)
 
 
-Thanks,
-SJ
-
-[...]
+base-commit: b2de0f05a00142f219d8f6e96b22c8f19fe0446f
+-- 
+2.47.3
