@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 220293A6F05;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4736F3A782E;
 	Sat,  7 Mar 2026 19:54:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772913248; cv=none; b=QJTJxj43BMP/Qk+nVR8aoEGgogBj8SSbHzH/77CLLetTUA5lz1DQSJyIxa8kVCNjdmCHHAMOHUo4TRwC1+FJmKoZaO5zABEeci+zlnO0KKM3OONyjOnIdQuHXgXo254E5pyxFr+RjTCP3VxDM60lLk0AWQfQHa0SMKAHXjzkgDw=
+	t=1772913248; cv=none; b=chHKvt9H+c12dDiTLl5E5Dzy9I+NS5p8dB214+dLVja++F4JDtNhvsmxnxw7PZ+odIeQHYrC/PPdXCZf73Rb/LRwIPNGenmR3AWN6Q9VpsxTm+GIfUNiWloBrWQiE9UhefcaVcZr5lP13xzrldhMKKZlccL/+k3Y6vOkfXO2cKk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772913248; c=relaxed/simple;
-	bh=lhgKVHeTPuqy/SKtOJv2TodL0/GOZKE7UoJkbwMyV80=;
+	bh=B5+v4ahllGQlugFTnl7kA++eThswGO++aezsc7tYPRE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Mqk2SXWTXbGDJqWD8+pLU4UOFl/QQjYhhvP8rXb8M9qstujIXSXe9pWx3JUHewgjmwO3tW54GRoRw8tGJdcbtYQhms+r0B9RMrjZFi+pv6a6VIG764pHMbcFLLFeusoB5cREZgsxLRkQvtG6uPBOjgCnCrADSeW1G6P6scqx3Zk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OdleRt+2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Hnwxadf6OfS3SYDrNbE/nB7zYdZrzPDo2V9UpXJ2chuAXGq7RGin0PYIkmOnVzrrfUR76LBzX6vxVQlyY5Cnuzb0BixEmZfnEOnNERuCPdi4OUPV1Ga/o8+aSjgGQTjvInE2HuLPjNdmx4vpdZoOGXtnD9eino30ZFXX66HBXAc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BrjNkbKT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OdleRt+2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0E28C19423;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BrjNkbKT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03937C2BC87;
 	Sat,  7 Mar 2026 19:54:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772913247;
-	bh=lhgKVHeTPuqy/SKtOJv2TodL0/GOZKE7UoJkbwMyV80=;
+	s=k20201202; t=1772913248;
+	bh=B5+v4ahllGQlugFTnl7kA++eThswGO++aezsc7tYPRE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OdleRt+2SbvKj/v0G3elyQ10jHVItn2AczI/Bu7TjjQMtbuBMreodArxjoL/tC52l
-	 u31lNGbXHtoNLuMoeZAtrQ240j8obE4QTZmqokndT/qIr8LTjU1CLKq7idcKXt3QZ1
-	 LKDjImG4K8W2yxL5GElLV/FBdI4GM6aQY5cUtCFrgNjMIMlU1w/MKNLwq7rJoC1zrO
-	 B60M7MK1uy5OpA4DDGnNuvzm8Rp8KCfmWwLc62fcghBYaqPkEAfwAzquzOhNI/MIUn
-	 ffeackEVTkbp4zXkeXeOFDh7hI2xgpX0+GyJl9gISJ78uMcxMb95SXRlIdx95+/08Y
-	 f8YCJGAzvbHPQ==
+	b=BrjNkbKTdGzq+yhUwe5axGBJFPzytHOMQFxyeAh0qSdkRKr0X4KexLPHlVpSXlAW1
+	 MNDZfm/0LjewDrAXXM+OawQCbXuLMTUzYXbFUlxXgFuhjU5lIN+rbkac8HawPOJeAe
+	 j3cj2CQbZYUdrE3qihZeHzkQEu+PxWJl9+Dp8zQWJpi8QsQuvhq533W6iI7lO08wX2
+	 QfccwoG0XrzSWFd+FaAJkRme+NbCw4B7fTLVNesAwZmN8LbMiSJmAZJZ1+xlOZNHLG
+	 ytGu37IMAkzbL2ijIsUyofz5pJyhr7k2bxsh638k6gQOXMuuKc/xoOgQeoxhDmRIwX
+	 aIWMzn5k066aA==
 From: SeongJae Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SeongJae Park <sj@kernel.org>,
 	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [PATCH 3/7] mm/damon/core: clarify damon_set_attrs() usages
-Date: Sat,  7 Mar 2026 11:53:51 -0800
-Message-ID: <20260307195356.203753-4-sj@kernel.org>
+Subject: [PATCH 4/7] mm/damon: document non-zero length damon_region assumption
+Date: Sat,  7 Mar 2026 11:53:52 -0800
+Message-ID: <20260307195356.203753-5-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260307195356.203753-1-sj@kernel.org>
 References: <20260307195356.203753-1-sj@kernel.org>
@@ -46,38 +46,29 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-damon_set_attrs() is called for multiple purposes from multiple places.
-Calling it in an unsafe context can make DAMON internal state polluted
-and results in unexpected behaviors.  Clarify when it is safe, and where
-it is being called.
+DAMON regions are assumed to always be non-zero length.  There was a
+confusion [1] about it, probably due to lack of the documentation.
+Document it.
+
+[1] https://lore.kernel.org/20251231070029.79682-1-sj@kernel.org/
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- mm/damon/core.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ include/linux/damon.h | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index 4e931f7380477..7f74982535aca 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -751,8 +751,16 @@ static bool damon_valid_intervals_goal(struct damon_attrs *attrs)
-  * @ctx:		monitoring context
-  * @attrs:		monitoring attributes
+diff --git a/include/linux/damon.h b/include/linux/damon.h
+index 9a88cf8d152d8..6bd71546f7b20 100644
+--- a/include/linux/damon.h
++++ b/include/linux/damon.h
+@@ -55,6 +55,8 @@ struct damon_size_range {
+  * @list:		List head for siblings.
+  * @age:		Age of this region.
   *
-- * This function should be called while the kdamond is not running, an access
-- * check results aggregation is not ongoing (e.g., from damon_call().
-+ * This function updates monitoring results and next monitoring/damos operation
-+ * schedules.  Because those are periodically updated by kdamond, this should
-+ * be called from a safe contexts.  Such contexts include damon_ctx setup time
-+ * while the kdamond is not yet started, and inside of kdamond_fn().
++ * For any use case, @ar should be non-zero positive size.
 + *
-+ * In detail, all DAMON API callers directly call this function for initial
-+ * setup of damon_ctx before calling damon_start().  Some of the API callers
-+ * also indirectly call this function via damon_call() -> damon_commit() for
-+ * online parameters updates.  Finally, kdamond_fn() itself use this for
-+ * applying auto-tuned monitoring intervals.
-  *
-  * Every time interval is in micro-seconds.
-  *
+  * @nr_accesses is reset to zero for every &damon_attrs->aggr_interval and be
+  * increased for every &damon_attrs->sample_interval if an access to the region
+  * during the last sampling interval is found.  The update of this field should
 -- 
 2.47.3
