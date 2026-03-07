@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9EF33A7855;
-	Sat,  7 Mar 2026 19:54:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C77D3A7F6C;
+	Sat,  7 Mar 2026 19:54:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772913248; cv=none; b=grXQ5SDKIBplFjn8ayYZlcTgVmeTlq2JbnYvVcovLz/tTVsifxdoM1eeMSVTpSH0piYdWWXD1nZ6QZgbyFsOyqLZcOyM+haM4pN6+DT05a4i9IgjYBVv6x5yPATZ0MdqkyDOiCWyFonLWA1gN8XSpyN5RYFq/ZTkgDYZ5o1bp+s=
+	t=1772913249; cv=none; b=uv7YgIAloHyjIhKXQ+gM9Ef5Xj0C8WbxIr+vjN4EG+QvPWcUmp/bYpxc85uwUneXSPjONLLe5BRaop9CCRpLJpUW6AfVa+f9kfULxL3RY/bLcdplYfPlK7Hqn72oiZihIgWHgKnie72uBxfxl2/hgqOStRp3Wh02LOFUvqE5vng=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772913248; c=relaxed/simple;
-	bh=gLiv+pNotyPVa+VV/9QXIoANdJw8lI0sD1zcvN05ExA=;
+	s=arc-20240116; t=1772913249; c=relaxed/simple;
+	bh=aXU5Q1Q+3FzifQR8qcbWlvPD8SNvGBDeL5AQyGi3NNY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LVNHOnUAhX1GOSFeLgqbZg3m3X36GtmgmjmN/phr+frMk9r91kDj0rVhw13tHVZYw0Kt4F/MuXuozxCwYkjxExsmz5kLD28PFFVwPt6IW+aHbU6o2RWMYKE7Masl+BFezKdNKnUNQuuve9wv5G284fTBJvvOfIqR6eJ9Q45czAQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=m2QCmobp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=l7/epfGRVzp/ZRsDXAxsktROO8m2U/bEpefv70w5FpUURnFaV4pnFGX/jfCHW7B3VKj2ZBFqmHQ8WhIjq8zbGu0Pft/FkbSKfeIUVKe/0cKRqcgM2aSjCfREgXmuWI7GXFbCmU/tYNW1M2FxTgcjICKiIcdqU/S85nMLCyjEwpk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FSOiYs1b; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="m2QCmobp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39B7BC2BC9E;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FSOiYs1b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7B39C4AF10;
 	Sat,  7 Mar 2026 19:54:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772913248;
-	bh=gLiv+pNotyPVa+VV/9QXIoANdJw8lI0sD1zcvN05ExA=;
+	s=k20201202; t=1772913249;
+	bh=aXU5Q1Q+3FzifQR8qcbWlvPD8SNvGBDeL5AQyGi3NNY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m2QCmobpyIIHTNmOdBlq/087P28EA10hWT0WVhLHTwQ+diKNGEGwjcBnW/xlDvg3X
-	 xeQcSDw+fDTq5VDVDtT8/frS9C+p1jdjmBrfN7SuBNVSoCf7tfxN0yCoJ0NynEVTx2
-	 5BGYOl0P0lxD/vOe1gxfWpHXO7uoeS+L2DTD8DukjshY0vJYqbY3DPBBuU/2GVDGSw
-	 YNInUZn4JASMbrYuB1ucXx2lb2OdRhoabXpweEnxkRxJJ4yQNhUUoe17ZwuSXPZIOH
-	 +TsEkO53u8XEPwuYiXu/XeV0UJI5ht/pChFzCFXYDOXEsdNcadhkxEP0fCdDBSOHpt
-	 U+YkFFtTlyY7w==
+	b=FSOiYs1b2B/+nNgtIR8T1MYGu38lIX3TFEhAazL66ct1GCypCUfspGzVQbYE/HhCM
+	 210DDt3yYiTv0sasfiK0pv62AHXnD1Mig/VY7E+ZHdh1DDAwyG4iPiXtragubZU6U+
+	 2WBYCtG1FzeiQlBddfdwmOEiAmQJAhmTgBzcL6a/cCxI/dweD3ed5dLrJS/qgDWE7L
+	 uA5fMuqQLjpt1hbDvQroNeVfEJn+R8iMcTpe0bZKLLU5iR3UX4jlOcNukNqe2wqO0P
+	 3hw6VVXPsf1WfFd6//Ig+4bJeeHuWA2K4GGZuW4VXGnHDgIpF+dRN+ZrMg7rs5ZyGy
+	 6QIEZEpiZkjPg==
 From: SeongJae Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SeongJae Park <sj@kernel.org>,
@@ -41,11 +41,10 @@ Cc: SeongJae Park <sj@kernel.org>,
 	damon@lists.linux.dev,
 	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org,
-	wang lian <lianux.mm@gmail.com>
-Subject: [PATCH 5/7] Docs/admin-guide/mm/damn/lru_sort: fix intervals autotune parameter name
-Date: Sat,  7 Mar 2026 11:53:53 -0800
-Message-ID: <20260307195356.203753-6-sj@kernel.org>
+	linux-mm@kvack.org
+Subject: [PATCH 6/7] Docs/mm/damon/maintainer-profile: use flexible review cadence
+Date: Sat,  7 Mar 2026 11:53:54 -0800
+Message-ID: <20260307195356.203753-7-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260307195356.203753-1-sj@kernel.org>
 References: <20260307195356.203753-1-sj@kernel.org>
@@ -57,28 +56,33 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The section name should be the same as the parameter name.  Fix it.
+The document mentions the maitainer is working in the usual 9-5 fashion.
+The maintainer nowadays prefers working in a more flexible way.  Update
+the document to avoid contributors having a wrong time expectation.
 
-Fixes: ed581147a417 ("Docs/admin-guide/mm/damon/lru_sort: document intervals autotuning")
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- Documentation/admin-guide/mm/damon/lru_sort.rst | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ Documentation/mm/damon/maintainer-profile.rst | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/Documentation/admin-guide/mm/damon/lru_sort.rst b/Documentation/admin-guide/mm/damon/lru_sort.rst
-index 20a8378d5a946..73980bacc3a02 100644
---- a/Documentation/admin-guide/mm/damon/lru_sort.rst
-+++ b/Documentation/admin-guide/mm/damon/lru_sort.rst
-@@ -91,8 +91,8 @@ increases and decreases the effective level of the quota aiming the LRU
+diff --git a/Documentation/mm/damon/maintainer-profile.rst b/Documentation/mm/damon/maintainer-profile.rst
+index 41b1d73b9bd7b..bcb9798a27a86 100644
+--- a/Documentation/mm/damon/maintainer-profile.rst
++++ b/Documentation/mm/damon/maintainer-profile.rst
+@@ -63,10 +63,10 @@ management subsystem maintainer.
+ Review cadence
+ --------------
  
- Disabled by default.
+-The DAMON maintainer does the work on the usual work hour (09:00 to 17:00,
+-Mon-Fri) in PT (Pacific Time).  The response to patches will occasionally be
+-slow.  Do not hesitate to send a ping if you have not heard back within a week
+-of sending a patch.
++The DAMON maintainer usually work in a flexible way, except early morning in PT
++(Pacific Time).  The response to patches will occasionally be slow.  Do not
++hesitate to send a ping if you have not heard back within a week of sending a
++patch.
  
--Auto-tune monitoring intervals
--------------------------------
-+autotune_monitoring_intervals
-+-----------------------------
- 
- If this parameter is set as ``Y``, DAMON_LRU_SORT automatically tunes DAMON's
- sampling and aggregation intervals.  The auto-tuning aims to capture meaningful
+ Mailing tool
+ ------------
 -- 
 2.47.3
