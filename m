@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62DB72F8BD3;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62E3231A807;
 	Sat,  7 Mar 2026 19:49:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772912963; cv=none; b=d6WFNFhdBvo/LDx0oXlDkYwSrQHaSvQjs1dv2muYkC6+36aBvygVxsfsBYTuEilGraForxaSiA7XO+NWl+EDkA5I3SFpuQcHBrvzBT0JNxhgq/6NDxV7zQWQKwcsUZWdOkuYpUpy/u2X7ayw0cdj2H9mw0+52L9kskU44/NkN9w=
+	t=1772912963; cv=none; b=tUoAkICSeKS6Dp94h6emQ1azvkyr1JRCU+zEQovBRrzaoW2rS0LVBpNGi4vfpcnRNK+e7OILP6PLAHCvYcW4b64iHUpkEC1pr4TsFU5iPOVqbtPNFNU56YEawykgR/2h3X6dvkWk8KZjVCJ6x9fkJAb5y3Vcx6CBO7JimbUIf1I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772912963; c=relaxed/simple;
-	bh=AJMBL1nNdjGC0+4eccv0L3v64yl/CaBJKvNB19kiMwM=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oXV0nfG4Aqh44Un7M1YXj6SCfvXzC5GP03ENrTiVWyygT9bH5kLWGdaCEtyoWKo5m/IvEY5rfvsJfK1WXTNPhWJ3S5HYTg9iU8PFh4hjFfv2dWoyevgZEBJ29sFJ2Iu1XrQXKaS8xN6XXb+BvOlNpZ9f5Xiat/s5dLxaq8BvEnk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=emdN8l1G; arc=none smtp.client-ip=10.30.226.201
+	bh=9pXTMLXjPeeFkiBWY7aejojzZtQ8QdVsGRxu/ihcY/A=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=o7aj4OT8xuzRM/ExYhpkso7JcmR+pgwjuWGUCihW0PNS6yIIDTzBmTPL6yosr5m3xC9GQBqiThG/UyMjcL38w8+AcAaijQ8ZDJAW3XqOehBEsiEGgPZv2jwXsKcNK6nZnpQRNv0wPiOWULNKSPC19THtTgScDlRnesmYJTjFApA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mJLaaKcq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="emdN8l1G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B4B9C19423;
-	Sat,  7 Mar 2026 19:49:23 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mJLaaKcq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDB6FC19422;
+	Sat,  7 Mar 2026 19:49:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772912963;
-	bh=AJMBL1nNdjGC0+4eccv0L3v64yl/CaBJKvNB19kiMwM=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=emdN8l1GafabJYJm9JIqEG+XGtuLJmZKKmtcfgcPtSLlJwl65IknEczw+BGHKkE/i
-	 gNKs0q8kTJbvvKKfgQ2VHnrurATgBPeQ9Ys//vKQ532fgcAcXBmdmxWLGmvcs5kJeN
-	 PTLCyp0A/gVhqjpQ/mPNgPzNM0PpGZm+cl5G+mPa/Kw29iM/nrB/xwYKjwZJNXG6Ns
-	 vfduOaGcQsNkVXYH9EHqDiRgoJHt5Tq05LJzhSv4X62Gv+65AdUKVwf1q78S1zhqTM
-	 fdUjhx+9llwZ3aBJshEaW0b/tlrixr77+w2e1Ais95/95ovQP6Zvq03tZV4n6FdBDT
-	 d/3lAanMSBL9Q==
+	s=k20201202; t=1772912962;
+	bh=9pXTMLXjPeeFkiBWY7aejojzZtQ8QdVsGRxu/ihcY/A=;
+	h=From:To:Cc:Subject:Date:From;
+	b=mJLaaKcqz3I+ylDK18HnDKnTzi8E8VRfiEqPevc//dx16NYIyrYSuLrpEknUCR97q
+	 /l1qu964FXZyddPds7Hio28N7Hrz2xf74z8hA6sQt9kpiQMuwz0cKPbpkZwgqf0r1k
+	 88Emmeal2z2CL+rosZ0+pn2kDbiee8xvmw9FBZWmTrv/1dASoTYz5MSmIpgpursKSN
+	 sX+/OZ67VXMh26RerPVQ6tlsCzRbAVr4BLAtMTAWNSZTGOyCC+owue+7VlCtTS2SIU
+	 G1SCP1FTBTwkCp2/7wjEGquAFT1aYRBZTt0I5z12TE3/BLj1vAGkqO0SFRMnzXnd4R
+	 543Ua6chf5stA==
 From: SeongJae Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SeongJae Park <sj@kernel.org>,
 	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [PATCH 1/3] mm/damon/core: remove damos_set_next_apply_sis() duplicates
-Date: Sat,  7 Mar 2026 11:49:12 -0800
-Message-ID: <20260307194915.203169-2-sj@kernel.org>
+Subject: [PATCH 0/3] mm/damon/core: make passed_sample_intervals comparisons overflow-safe
+Date: Sat,  7 Mar 2026 11:49:11 -0800
+Message-ID: <20260307194915.203169-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260307194915.203169-1-sj@kernel.org>
-References: <20260307194915.203169-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -46,56 +43,63 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-There is a function for damos->next_apply_sis setup.  But some places
-are open-coding it.  Consistently use the helper.
+DAMON accounts time using its own jiffies-like time counter, namely
+damon_ctx->passed_sample_intervals.  The counter is incremented on each
+iteration of kdamond_fn() main loop, which sleeps at least one sample
+interval.  Hence the name is like that.
 
-Signed-off-by: SeongJae Park <sj@kernel.org>
----
- mm/damon/core.c | 11 ++---------
- 1 file changed, 2 insertions(+), 9 deletions(-)
+DAMON has time-periodic operations including monitoring results
+aggregation and DAMOS action application.  DAMON sets the next time to
+do each of such operations in the passed_sample_intervals unit.  And it
+does the operation when the counter becomes the same to or larger than
+the pre-set values, and update the next time for the operation.  Note
+that the operation is done not only when the values exactly match but
+also when the time is passed, because the values can be updated for
+online-committed DAMON parameters.
 
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index e8c44541754f7..c4c30824465ee 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -2450,8 +2450,6 @@ static void kdamond_apply_schemes(struct damon_ctx *c)
- 	struct damon_target *t;
- 	struct damon_region *r;
- 	struct damos *s;
--	unsigned long sample_interval = c->attrs.sample_interval ?
--		c->attrs.sample_interval : 1;
- 	bool has_schemes_to_apply = false;
- 
- 	damon_for_each_scheme(s, c) {
-@@ -2482,9 +2480,7 @@ static void kdamond_apply_schemes(struct damon_ctx *c)
- 		if (c->passed_sample_intervals < s->next_apply_sis)
- 			continue;
- 		damos_walk_complete(c, s);
--		s->next_apply_sis = c->passed_sample_intervals +
--			(s->apply_interval_us ? s->apply_interval_us :
--			 c->attrs.aggr_interval) / sample_interval;
-+		damos_set_next_apply_sis(s, c);
- 		s->last_applied = NULL;
- 		damos_trace_stat(c, s);
- 	}
-@@ -2858,7 +2854,6 @@ static void kdamond_init_ctx(struct damon_ctx *ctx)
- {
- 	unsigned long sample_interval = ctx->attrs.sample_interval ?
- 		ctx->attrs.sample_interval : 1;
--	unsigned long apply_interval;
- 	struct damos *scheme;
- 
- 	ctx->passed_sample_intervals = 0;
-@@ -2869,9 +2864,7 @@ static void kdamond_init_ctx(struct damon_ctx *ctx)
- 		ctx->attrs.intervals_goal.aggrs;
- 
- 	damon_for_each_scheme(scheme, ctx) {
--		apply_interval = scheme->apply_interval_us ?
--			scheme->apply_interval_us : ctx->attrs.aggr_interval;
--		scheme->next_apply_sis = apply_interval / sample_interval;
-+		damos_set_next_apply_sis(scheme, ctx);
- 		damos_set_filters_default_reject(scheme);
- 	}
- }
+The counter is 'unsigned long' type, and the comparison is done using
+normal comparison operators.  It is not safe from overflows.  This can
+cause rare and limited but odd situations.
+
+Let's suppose there is an operation that should be executed every 20
+sampling intervals, and the passed_sample_intervals value for next
+execution of the operation is ULONG_MAX - 3.  Once the
+passed_sample_intervals reaches ULONG_MAX - 3, the operation will be
+executed, and the next time value for doing the operation becomes 17
+(ULONG_MAX - 3 + 20), since overflow happens.  In the next iteration of
+the kdamond_fn() main loop, passed_sample_intervals is larger than the
+next operation time value, so the operation will be executed again.  It
+will continue executing the operation for each iteration, until the
+passed_sample_intervals also overflows.
+
+Note that this will not be common and problematic in the real world.
+The sampling interval, which takes for each passed_sample_intervals
+increment, is 5 ms by default.  And it is usually [auto-]tuned for
+hundreds of milliseconds.  That means it takes about 248 days or 4,971
+days to have the overflow on 32 bit machines when the sampling interval
+is 5 ms and 100 ms, respectively (1<<32 * sampling_interval_in_seconds /
+3600 / 24).  On 64 bit machines, the numbers become 2924712086.77536 and
+58494241735.5072 years.  So the real user impact is negligible.  But
+still this is better to be fixed as long as the fix is simple and
+efficient.
+
+Fix this by simply replacing the overflow-unsafe native comparison
+operators with the existing overflow-safe time comparison helpers.
+
+The first patch only cleans up the next DAMOS action application time
+setup for consistency and reduced code.  The second and the third
+patches update DAMOS action application time setup and rest,
+respectively.
+
+SeongJae Park (3):
+  mm/damon/core: remove damos_set_next_apply_sis() duplicates
+  mm/damon/core: use time_before() for next_apply_sis
+  mm/damon/core: use time_after_eq() in kdamond_fn()
+
+ mm/damon/core.c | 31 ++++++++++++++-----------------
+ 1 file changed, 14 insertions(+), 17 deletions(-)
+
+
+base-commit: 4ef41fd88e37fcdc1751edd9bc57403dba2742a3
 -- 
 2.47.3
