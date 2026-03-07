@@ -1,54 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 118652741B6;
-	Sat,  7 Mar 2026 00:33:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E7B528B7EA;
+	Sat,  7 Mar 2026 02:40:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772843620; cv=none; b=aGiPPooz0Y648KRtivXQWx9Lm2xNDSBpJgVzQDGSmlXECR3wchqFO+xbt6FcajbxBrCtKiszciM2QbCLZi8qtCSWyegy/Pq2eXIFxC/VqUgVvQ2EXgS58S48iRNic2Vh35dOOh1OsfTTF3+ISZqdyTsFPGoB0UQNejgJSoF1HfU=
+	t=1772851240; cv=none; b=j3cz4n+e2CHFD5xXvea0iLhXoanSQQeTs6fPr8R3fY9iByZW3LSIAhAvIdqy9FHXfVZSZV8MIEg4mF8f1NIgKcxbWRIjGDbnqfSMCzjVeb0ZEzoi5sS8TO8H24zyKuarQBbSc8PHunM4FTJxcnP7q6y7n3HuL5vYDyOF3imFRwc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772843620; c=relaxed/simple;
-	bh=emm5hofz+4Swmt0IujrmOwV5BydfZR5A4wBWzsREwNI=;
+	s=arc-20240116; t=1772851240; c=relaxed/simple;
+	bh=VqI2kIRTJXcSdhafyI+w1IVbVYZZCzcxRnZsSstOUaU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NiyBfVwcpDcQPrkDi+XKoe7apNYs5dj3IJU8fPm0pzL2LJHRGU0vPTSpjQLZFHdcF1MmKRU1oJCLJ/B0cLvzc+zcyOsw66t6K0Syzh17lk6dXeRzCBfuzh2/kd43SphmrUN6YH/iKfkI3a02OjADnVDmv7fG8ohD2y+2Xhctvto=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=atyXmy4N; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ncFhBGt9nr5xoAJcbvJYf1n1PlDBSpmi2GBLbZNj+2zwebG0pD18ScMpwrrVu8DmeMzLT+QOvK8JolUx7ZWVt2mVfZ0fKSRwB1Z8reuBcsW6gh4pkH/5bS6lI68Zs15CgrMmdIHZiRe1MrcThmY+tqISo32gL7O8FCAVISmWgTs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ferhLrld; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="atyXmy4N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6810C2BCAF;
-	Sat,  7 Mar 2026 00:33:32 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ferhLrld"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70760C4CEF7;
+	Sat,  7 Mar 2026 02:40:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772843619;
-	bh=emm5hofz+4Swmt0IujrmOwV5BydfZR5A4wBWzsREwNI=;
+	s=k20201202; t=1772851239;
+	bh=VqI2kIRTJXcSdhafyI+w1IVbVYZZCzcxRnZsSstOUaU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=atyXmy4N/F7bDXE1BJs9nOpPUHx+0VJvLqlE0iC00MsdHhG6oCx8pC2fmzP6ykVie
-	 3vjMuecaXqFp+iJh4o2hWaYmGOsyUT2MdEJcQ4nnq7dsFcsqbt9v+sbl6R1e5ajWrT
-	 d3NXF5yFDdsLUHAMb+oeq+8hS6Q3FubDmYxtdgwWhixTe/mfJTC4vrETEFRmLEHxTw
-	 L4IMNam3MBXp1YYx+yRAfTjRPiUajPcrwy2Pt2aaqll3w2KJ9HSidSrYJwUgPtQM0k
-	 +n58JrPxPXYWdxZ1liRwyft8KpXK0VLk7MPruZ0ljENifrHPNrtwrHO5M8KR/sH7Xf
-	 1Cl2f/YYPys2Q==
+	b=ferhLrld/gwQTRzDxSeIPiI1QMqpGlVrfPKpRtvO9Fz6qOa+gECS+KwgNbIeZZnbV
+	 AO/5+XWo+JNgl5udjLqov9bg4iLOfFDnnbrGKIi0IUUaSnm9pvJWLqKQCn4n4Hn+6j
+	 /+qh4e34uEzetoXDwT+clGAoobCzDga4Iynfj+GfREluKfs0Gm4tcllqmgYGuXSnOD
+	 6SVAyCv7X6J42O0zgXpMm74LSEDRFa6ZuYkW3z2eeY4rvoIPGZi4hDxDEu90LVBZE9
+	 6EKtFVjoUgRZdWA5DWu25knB+E54cs+ECjHckKgI3VLx3+8+3PQQSo2bddFh7523rL
+	 K7pQzSoBtOzSw==
 From: SeongJae Park <sj@kernel.org>
 To: SeongJae Park <sj@kernel.org>
-Cc: "Liam R. Howlett" <Liam.Howlett@oracle.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	David Hildenbrand <david@kernel.org>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	Michal Hocko <mhocko@suse.com>,
-	Mike Rapoport <rppt@kernel.org>,
-	Shuah Khan <shuah@kernel.org>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Vlastimil Babka <vbabka@kernel.org>,
+Cc: Andrew Morton <akpm@linux-foundation.org>,
 	damon@lists.linux.dev,
-	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	linux-kselftest@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: Re: [RFC PATCH v2 00/10] mm/damon: support multiple goal-based quota tuning algorithms
-Date: Fri,  6 Mar 2026 16:33:20 -0800
-Message-ID: <20260307003321.109390-1-sj@kernel.org>
+Subject: Re: [RFC PATCH v2 01/10] mm/damon/core: introduce damos_quota_goal_tuner
+Date: Fri,  6 Mar 2026 18:40:31 -0800
+Message-ID: <20260307024032.86777-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260304044122.79394-1-sj@kernel.org>
+In-Reply-To: <20260304044122.79394-2-sj@kernel.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -58,146 +46,46 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Tue,  3 Mar 2026 20:41:09 -0800 SeongJae Park <sj@kernel.org> wrote:
+On Tue,  3 Mar 2026 20:41:10 -0800 SeongJae Park <sj@kernel.org> wrote:
 
-> Aim-oriented DAMOS quota auto-tuning uses a single tuning algorithm.
-> The algorithm is designed to find a quota value that should be
-> consistently kept for achieving the aimed goal for long term.  It is
-> useful and reliable at automatically operating systems that have dynamic
-> environments in the long term.
+> Currently DAMOS quota goal feature utilizes a single feedback loop based
+> algorithm for automatic tuning of the effective quota.  It is useful in
+> dynamic environments that operate systems with only kernels in the long
+> term.  But, no one fits all.  It is not very easy to control in
+> environments having more controlled characteristics and user-space
+> control towers.  We actually got multiple reports [1,2] of use cases
+> that the algorithm is not optimal.
 > 
-> As always, however, no single algorithm fits all.  When the environment
-> has static characteristics or there are control towers in not only the
-> kernel space but also the user space, the algorithm shows some
-> limitations.  In such environments, users want kernel work in a more
-> short term deterministic way.  Actually there were at least two reports
-> [1,2] of such cases.
-> 
-> Extend DAMOS quotas goal to support multiple quota tuning algorithms
-> that users can select.  Keep the current algorithm as the default one,
-> to not break the old users.  Also give it a name, "consist", as it is
-> designed to "consistently" apply the DAMOS action.  And introduce a new
-> tuning algorithm, namely "temporal".  It is designed to apply the DAMOS
-> action only temporally, in a deterministic way.  In more detail, as long
-> as the goal is under-achieved, it uses the maximum quota available.
-> Once the goal is over-achieved, it sets the quota zero.
-> 
-> Tests
-> =====
-> 
-> I confirmed the feature is working as expected using the latest version
-> of DAMON user-space tool, like below.
-> 
->     $ # start DAMOS for reclaiming memory aiming 30% free memory
->     $ sudo ./damo/damo start --damos_action pageout \
->             --damos_quota_goal_tuner temporal \
->             --damos_quota_goal node_mem_free_bp 30% 0 \
->             --damos_quota_interval 1s \
->             --damos_quota_space 100M
-> 
-> Note that >=3.1.8 version of DAMON user-space tool supports this feature
-> (--damos_quota_goal_tuner).  As expected, DAMOS stops reclaiming memory
-> as soon as the goal amount of free memory is made.  When 'consist' tuner
-> is used, the reclamation was continued even after the goal amount of
-> free memory is made, resulting in more than goal amount of free memory,
-> as expected.
-> 
-> Patch Sequence
-> ==============
-> 
-> First four patches implement the features.  Patch 1 extends core API to
-> allow multiple tuners and make the current tuner as the default and only
-> available tuner, namely 'consist'.  Patch 2 allows future tuners setting
-> zero effective quota.  Patch 3 introduces the second tuner, namely
-> 'temporal'.  Patch 4 further extends DAMON sysfs API to let users use
-> that.
-> 
-> Three following patches (patches 5-7) update design, usage, and ABI
-> documents, respectively.
-> 
-> Final three patches (patches 8-10) are for adding selftests.  The eighth
-> and the ninth patches extend the testing-purpose DAMON sysfs control
-> helper and DAMON status dumping tool to support the newly added feature.
-> The tenth patch extends the existing online commit test to cover the new
-> feature.
-> 
-> References
-> ==========
+> Introduce a new field of 'struct damos_quotas', namely 'goal_tuner'.  It
+> specifies what tuning algorithm the given scheme should use, and allows
+> DAMON API callers to set it as they want.  Nonetheless, this commit
+> introduces no new tuning algorithm but only the interface.  This commit
+> hence makes no behavioral change.  A new algorithm will be added by the
+> following commit.
 > 
 > [1] https://lore.kernel.org/CALa+Y17__d=ZsM1yX+MXx0ozVdsXnFqF4p0g+kATEitrWyZFfg@mail.gmail.com
 > [2] https://lore.kernel.org/20260204022537.814-1-yunjeong.mun@sk.com
 > 
-> Changelog
-> =========
-> 
-> Changes from RFC v1
-> (https://lore.kernel.org/20260212062314.69961-1-sj@kernel.org)
-> - Add selftest for goal_tuner commitment.
-> - Set goal tuner inside damon_new_scheme().
-> - Allow zero size effective size quota.
-> - Update the ABI document.
-> - Wordsmith change descriptions.
-> 
-> SeongJae Park (10):
->   mm/damon/core: introduce damos_quota_goal_tuner
->   mm/damon/core: allow quota goals set zero effective size quota
->   mm/damon/core: introduce DAMOS_QUOTA_GOAL_TUNER_TEMPORAL
->   mm/damon/sysfs-schemes: implement quotas->goal_tuner file
->   Docs/mm/damon/design: document the goal-based quota tuner selections
->   Docs/admin-guide/mm/damon/usage: document goal_tuner sysfs file
->   Docs/ABI/damon: update for goal_tuner
->   selftests/damon/_damon_sysfs: support goal_tuner setup
->   selftests/damon/drgn_dump_damon_status: support quota goal_tuner
->     dumping
->   selftests/damon/sysfs.py: test goal_tuner commit
+> Signed-off-by: SeongJae Park <sj@kernel.org>
+> ---
+[...]
+> --- a/include/linux/damon.h
+> +++ b/include/linux/damon.h
+[...]
+>  /**
+>   * struct damos_quota - Controls the aggressiveness of the given scheme.
+>   * @reset_interval:	Charge reset interval in milliseconds.
+> @@ -260,6 +268,7 @@ struct damos_quota {
+>  	unsigned long ms;
+>  	unsigned long sz;
+>  	struct list_head goals;
+> +	enum damos_quota_goal_tuner goal_tuner;
 
-Maybe it is better to add a kunit test for the goal_tuner online commit, like
-below.  I will add it to the next spin of this series.
+And the above change is not updating the kernel-doc comment of this struct.
+I'll add that in the next spin.
 
 
 Thanks,
 SJ
 
 [...]
-=== >8 ===
-From 15d87f41d0d960e3c337899629cf4e05d09dc042 Mon Sep 17 00:00:00 2001
-From: SeongJae Park <sj@kernel.org>
-Date: Fri, 6 Mar 2026 16:27:45 -0800
-Subject: [PATCH] mm/damon/tests/core-kunit: test goal_tuner commit
-
-Signed-off-by: SeongJae Park <sj@kernel.org>
----
- mm/damon/tests/core-kunit.h | 3 +++
- 1 file changed, 3 insertions(+)
-
-diff --git a/mm/damon/tests/core-kunit.h b/mm/damon/tests/core-kunit.h
-index d759314df00d8..28e5de749db04 100644
---- a/mm/damon/tests/core-kunit.h
-+++ b/mm/damon/tests/core-kunit.h
-@@ -791,6 +791,7 @@ static void damos_test_commit_quota(struct kunit *test)
- 		.reset_interval = 1,
- 		.ms = 2,
- 		.sz = 3,
-+		.goal_tuner = DAMOS_QUOTA_GOAL_TUNER_CONSIST,
- 		.weight_sz = 4,
- 		.weight_nr_accesses = 5,
- 		.weight_age = 6,
-@@ -799,6 +800,7 @@ static void damos_test_commit_quota(struct kunit *test)
- 		.reset_interval = 7,
- 		.ms = 8,
- 		.sz = 9,
-+		.goal_tuner = DAMOS_QUOTA_GOAL_TUNER_TEMPORAL,
- 		.weight_sz = 10,
- 		.weight_nr_accesses = 11,
- 		.weight_age = 12,
-@@ -812,6 +814,7 @@ static void damos_test_commit_quota(struct kunit *test)
- 	KUNIT_EXPECT_EQ(test, dst.reset_interval, src.reset_interval);
- 	KUNIT_EXPECT_EQ(test, dst.ms, src.ms);
- 	KUNIT_EXPECT_EQ(test, dst.sz, src.sz);
-+	KUNIT_EXPECT_EQ(test, dst.goal_tuner, src.goal_tuner);
- 	KUNIT_EXPECT_EQ(test, dst.weight_sz, src.weight_sz);
- 	KUNIT_EXPECT_EQ(test, dst.weight_nr_accesses, src.weight_nr_accesses);
- 	KUNIT_EXPECT_EQ(test, dst.weight_age, src.weight_age);
--- 
-2.47.3
-
