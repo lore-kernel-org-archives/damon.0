@@ -1,102 +1,89 @@
-Received: from mail-yx1-f48.google.com (mail-yx1-f48.google.com [74.125.224.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C61524B28
-	for <damon@lists.linux.dev>; Sun,  8 Mar 2026 03:05:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.48
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772939122; cv=pass; b=O8uutjkcKCK8ygMWrC5iPTNkXYbldEqRs3zE2Uy8aooeZwDYCI/SvzwQMn71xtBx6U2k90SMftfPyG+6Tf9IWY9AsMkt70npxdrCkiargVJs5trNIyqS1fVH72272yQE31Wf7ppwzWEdIZmqEBSHV8PpaXnh+fufa+6/V3X11g8=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772939122; c=relaxed/simple;
-	bh=XqVF/p+ImAQye2fndI2NjUpZzhPeVdmdlRhtFwnS3FM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=GWYse+jW/HF7ww50jbui/vr9IO6cOShIR+0lCV15jcdGxrRYDmG9biYt1juQwii2mFWfEvlFmimYKK0NjI3I+bVaEumn85ODo3yLffUUg03dpWbXeX68kMJ38PhPZ7g7aZM/fSTWrMeIjuj6LNO9wv3C4LkibozPSMKdCMLMxa0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MNYxPgCh; arc=pass smtp.client-ip=74.125.224.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C1153321AA;
+	Sun,  8 Mar 2026 17:14:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1772990093; cv=none; b=OJAQI+dTe31LFYj+BVzM/Ml13yczbaYbFw3pAXmFZLnJjLaeqlu1K2I10XipbUI7RDMiOosf/f0Li2jktKZLfEEEVaxF4pGqp/PSN/P5AEsMiF3Sv0q/Y9PbE7sRKg6pdSWUhnxPwgGtbMeKAWI+p2gu0l8KnTXq2xoldEp0Uxo=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1772990093; c=relaxed/simple;
+	bh=NsIXoAOOSLI/fYoLQQwnCT+h9QgwJEsfGMfdhiysuoU=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=Bviws2zBLpugD92xY5O7/HS4MaCAou3HSAUb1+zA4Z/mCNuzSczJnFnKvMXDNQ3yOStw93O0XOM0QhbLz4U57v/o7sV2UXIEeTjKI1s8GJs7+TnxaQvZiZp+nLfUAimxZvN8oY5gdhjtbK80HH01bvEYFd9wXsC6AoupWhAFyOA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GdeSW8Zz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MNYxPgCh"
-Received: by mail-yx1-f48.google.com with SMTP id 956f58d0204a3-64cb577e79cso11212466d50.0
-        for <damon@lists.linux.dev>; Sat, 07 Mar 2026 19:05:20 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772939120; cv=none;
-        d=google.com; s=arc-20240605;
-        b=Dc0zXHAvKQsDvrY4cFokPubNHUXGdFCKz3SakzWx8egYFNI/qPvCTo59HMAK/PAyPB
-         8alDfWgF7uC6m/KQXFmWXHOWnqMf0LYqAC3fYbD3nI2AeoYnOpcT+TU4vWasxbDdbBfB
-         dHSrvM2gBfHEOpQvGnhUKiBh8Q6xfIxWUeHvVHZQKAI1dzELsUQKVDiNWL0BTA0qtQ4r
-         hyxtkK3vLZ93IgseHRU3Vxjlmdj/9UNiTGs7ZfqaUKbXydjT/m7jL6c1ihRHafFFR8Bg
-         RAAf+M13Zv8rWlkWkULZhA6INc1iBb7f9/yejJw+NVoyYnG37YqzYmVL2Djwvd/gYRbl
-         nXTg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=XqVF/p+ImAQye2fndI2NjUpZzhPeVdmdlRhtFwnS3FM=;
-        fh=aaQ7HIlFw5KssijUnXYCa77DDl1vq0hc0iV0GaDejQU=;
-        b=kq0+Oa2rAibv+Sjq/SrbSvcLraMpG96WkXrpGapgozx4J2jY0yX6ZX29EG/kkdkTvd
-         ATbeA3x6cE8MjbzUnBxB/sJPZ68sVL9Y6DV7BdOLs1J2/TeWKFlSLWyXzn121z+WUM87
-         g31YNAdRc4C42gTa8npCyW8Px0XMV8z9mIo0uhYbQPvFm0B1m7veUSgsIp/zFnZg3kNY
-         ISFNQloNzfhvNe+/KCAsogT7N07dRgmqDKqkSCDpZGa3wFB+FBj9lNBr3wag7tH9cYl+
-         x93Pz/Cg+lly33k47BBjMUm96ObVgdhgW4okRUYi0gNkJdQQfhjhsS3whEyRULE00Du2
-         jLAQ==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772939120; x=1773543920; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=XqVF/p+ImAQye2fndI2NjUpZzhPeVdmdlRhtFwnS3FM=;
-        b=MNYxPgCh0ueElFFRHxn8uPn9nvIFUosZvYkX3lGDV/s5J0gr2id03ZHe0wr9RyBf0b
-         OPPt2n+w/Li+IAkODVEfk79csiStk8Nn/iZNSL0rd1Ab0ip4lT551pEKX/qqBj1T4VaC
-         RbJyGLViDfuEqk5Vy4vKvaFJYzWF+S//iBWcmUshtaOuviLieG91VQttoQ+9mmh8FbD6
-         LVtqoE9D6TDI5s/v0wy/XSqCWyRObisFpPfQlpitFbtcRy9f7XDcbYNHz66Pt0ka5Gus
-         wFkAicqEQtl8m1QMWL6C6fcUm0wxy8nMuH7d6XozRoyyGbVZd+ZsPwIhWMWMKel/Khlh
-         GJTA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772939120; x=1773543920;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=XqVF/p+ImAQye2fndI2NjUpZzhPeVdmdlRhtFwnS3FM=;
-        b=RXsOkIkVfGV6VuHnSgN2EREJo/F3iMvWoHrLxan6HEO8qgYjIGDTG/xSPBr1B85qFp
-         /dVkL6kB5AFAy0WiGqq4On29CGrKatfNFky3zoL1k1JB0oiYFUrDKDn+orkrqtDAkVuE
-         k9RVsQCWVZA6RNG9H3gbbC+bYOORwicHfbxxNnW9id3ZYIprmUXpIOD3LmnxXIOQNsva
-         d2DxTJF2HDZaZ8nOAiPRFjg5qQmvAPqBzEYsPIwcg/t9UrRQzKI+5N5Uux9kOpWjHlWw
-         3O861eUVbCWxa+RmHFCgeY1lgQCDLOk7ZFOX3qdocbsEMCy9U0XH2eQfQMtQrObjaz16
-         9EhQ==
-X-Gm-Message-State: AOJu0YyMDl2I+CNkYiSrvpzQWOO7OGt8hasGalW6izdAhjzVRd4C2TG5
-	C7NZYhX9yed+y6JK4DbcMb0zMBdxvZSaw2odxoC2vYSVTtz7gBYQkz58f5kX9Evxzt3+KRfPZcU
-	AoOhgOGMacmEUqyvAqXmzxdc+dSDBQq4=
-X-Gm-Gg: ATEYQzy8BFbRFhIDDQueSVu2NA5JgN3sND7ZaqaKJzXZLUH0rrktxtP2xQ1nu01jW5+
-	vmvCJQ7aHiO6aCGBSxGDR46y3YzgbrhfxCIKKfVQLQPyc4eS1bon/XJBFuL/F/7fW0N0ku4/8RD
-	FwL8PEmgYcFerXqcueizFLXPHylO7Q7PkdR6Dkyht+hzBuORwcteMJpioTDxnDXDYIyT5G5HTcr
-	VvNFSfS8sSn9kngUV6rohO48RV/REdc13oYr7Us9k7mMzLmpC9Svc51q+oJPQWj0TmqvV2RAPqk
-	j88rWY3Mp/pPQZYrpGnqMSIdkIQuiiY97LqJdxvu9w==
-X-Received: by 2002:a05:690e:205f:b0:64c:a0eb:c4b5 with SMTP id
- 956f58d0204a3-64d14293d66mr5095532d50.52.1772939119973; Sat, 07 Mar 2026
- 19:05:19 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GdeSW8Zz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F8FCC116C6;
+	Sun,  8 Mar 2026 17:14:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1772990093;
+	bh=NsIXoAOOSLI/fYoLQQwnCT+h9QgwJEsfGMfdhiysuoU=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=GdeSW8ZzWUEW3QYLAZlkfyA/QfALGgQfa6yUd2CjMEJMA5UwByybMJFMCFAxN8d0e
+	 DAHGlkk6XdCV6VGxo0tYUtRD0/231v6sZ7v+dxMM53eNTcvSWD9Nhx4m2ymdRjMbDA
+	 A0QhxjFjT4mGaz3tRh3nMKcbHf6tVtyHtMEIttubdx01pqGsRnjegV+rYU4KO9sA8Q
+	 zkYt0YLlonazo0fkh0ke+qLsBhhiwRLtl0jPd+2c0tUJI07g3xZbvPSBDmkgex3b1Y
+	 rLsUYJQRCbzltXz3ZcZG8EKzPoex0V86ZHYdcpetPtqMN8NcQMEhK4xITw8lEnfQmK
+	 FCwyT0aU0n2PA==
+From: SeongJae Park <sj@kernel.org>
+To: Aether <aethernet65535@gmail.com>
+Cc: SeongJae Park <sj@kernel.org>,
+	damon@lists.linux.dev,
+	linux-doc@vger.kernel.org
+Subject: Re: [PATCH] Documentation/mm/damon: fix typo in index.rst
+Date: Sun,  8 Mar 2026 10:14:31 -0700
+Message-ID: <20260308171432.209411-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <CAPLv50pFasDAnFMX8OgXjo2Nrn8rGhUgm1=K5aOeVyKf57Z3BQ@mail.gmail.com>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260308021811.41199-1-aethernet65535@gmail.com>
-In-Reply-To: <20260308021811.41199-1-aethernet65535@gmail.com>
-From: Aether <aethernet65535@gmail.com>
-Date: Sun, 8 Mar 2026 11:05:09 +0800
-X-Gm-Features: AaiRm52I6jeA7gxZoERyr5HYwntXkI-cPR1yC_IGGfyUOLCoDxZg9DJSDG__lis
-Message-ID: <CAPLv50pFasDAnFMX8OgXjo2Nrn8rGhUgm1=K5aOeVyKf57Z3BQ@mail.gmail.com>
-Subject: Re: [PATCH] Documentation/mm/damon: fix typo in index.rst
-To: SeongJae Park <sj@kernel.org>
-Cc: damon@lists.linux.dev, linux-doc@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 
-Hi SeongJae,
+Hi Liew Rui Yan,
 
-I just noticed that you already submitted the same fix for the type in
-Documentation/mm/damon/index.rst. Sorry for the duplicate!
+On Sun, 8 Mar 2026 11:05:09 +0800 Aether <aethernet65535@gmail.com> wrote:
 
-I'll make sure to search the mailing list first next time before submitting a
-patch. Thanks for the quick fix, and thanks for maintaining DAMON!
+> Hi SeongJae,
+> 
+> I just noticed that you already submitted the same fix for the type in
+> Documentation/mm/damon/index.rst.
 
-Best regards,
-Liew Rui Yan
+Yes, I unfortunately sent [1] it a few hours before your posting.
+
+> Sorry for the duplicate!
+
+No worry, this kind of duplication is very common in our real life!  I'm rather
+sorry that I wasted your time by posting my patch too late.
+
+> 
+> I'll make sure to search the mailing list first next time before submitting a
+> patch.
+
+Such searching would be exhausting.  Please feel free to just send patches.  I
+can help handling such duplications :)
+
+Nonetheless, if you really want to avoid this kind of duplication, checking
+damon/next tree [2] before starting your work could be a good practice.  The
+tree contains all DAMON patches that aimed to be mainlined in near future.
+Note that the tree also contains patches that not aim to be mainlined in near
+future.  If you get any question about the tree, please feel free to reach out
+to me.
+
+> Thanks for the quick fix, and thanks for maintaining DAMON!
+
+My greatest pleasure!
+
+[1] https://lore.kernel.org/20260307195356.203753-8-sj@kernel.org
+[2] https://origin.kernel.org/doc/html/latest/mm/damon/maintainer-profile.html#scm-trees
+
+
+Thanks,
+SJ
+
+[...]
