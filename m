@@ -1,69 +1,73 @@
-Received: from mail-pf1-f174.google.com (mail-pf1-f174.google.com [209.85.210.174])
+Received: from mail-pf1-f176.google.com (mail-pf1-f176.google.com [209.85.210.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35034175A5
-	for <damon@lists.linux.dev>; Mon,  9 Mar 2026 01:00:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CF4B221F39
+	for <damon@lists.linux.dev>; Mon,  9 Mar 2026 01:00:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773018034; cv=none; b=sm/FE7MerL06Qg7fpufl9k0W9RjPSXnDRXXeCd3mZxX/6Yqa2NTGs5xvtQZL/+dVO8m6gRt7f94oUKLba2lLz9MQfCG5OSWPammP0qdIJyaMyaJeRI/sXxfQMhSpTNDFYLh+hrWfgkxCrJFDpCugo82CXfIk/jlofkPx868H09A=
+	t=1773018035; cv=none; b=XwTu8NxoqELLMUlskO7qlbfSJMypb9h2X6ijdKqM/VZ/ZwSA9QnXEyxv93uZTp/CT9Ne3rE4Wu2BYWE806kFW/J+giHcG/upg/ZEPAaFmirOQbx22xzB0r7JG0ecoG6hUEirMayunIk037yb2CIv9Tfkun9HF4k26K2VPhhJnhc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773018034; c=relaxed/simple;
-	bh=xXlTjxsjzpWoKY1/3S9+MsmoSzPZRCZxPsG/1f6Vnf4=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=rvuPFeWon/e5CbDe0rfhjXKTyFJ1AZsBambNBxEQSY2z7rrdmglRR3hUzU4mxP6WWCBDKNAStjBaQqVC4cqlVKv2J5hg3ht5gzWT/AaRGVq29cbrgPOXWTl+mDpiSUnHFMcYxy34iRyaQ7u6vArkJxUWYiZ5l9FdjLkxjn3yJLo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=J73M/ALU; arc=none smtp.client-ip=209.85.210.174
+	s=arc-20240116; t=1773018035; c=relaxed/simple;
+	bh=CBq1WzY+CfbSlt/zpeDKPph0ZRMfd7TiyTs16daTZEU=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=Di/Dv+eIYUdHkvZ5XK7Myj43Q0thrXSzE8luR0/k+KGj+Oab9mFTgPoejun1Y8Jujra+o931oY2zdbFTEVkzVrlVJgBrnNv6svU6pM7ZTtZ+t610WszDiX7zOx2tS9lBiRy8P8z5t/d6PXCQTrTr+gNGH6k/iMifu2r91aokphg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JA5uAtbJ; arc=none smtp.client-ip=209.85.210.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="J73M/ALU"
-Received: by mail-pf1-f174.google.com with SMTP id d2e1a72fcca58-82989744ee0so2965719b3a.2
-        for <damon@lists.linux.dev>; Sun, 08 Mar 2026 18:00:33 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JA5uAtbJ"
+Received: by mail-pf1-f176.google.com with SMTP id d2e1a72fcca58-82990763921so3358039b3a.1
+        for <damon@lists.linux.dev>; Sun, 08 Mar 2026 18:00:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773018032; x=1773622832; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=Npg7zsgmfHY86YOcXFkvoWsvRPot99dvgJ+7QRwG2Gs=;
-        b=J73M/ALU8CWfBtCEVTzhuXsAKsWb8MQME+mJVm3Hbdf1KI1/31Mvnt50FdlzQ2iDeg
-         JzxFRGU2dW59/ACXWaWPOP10xnNmW3rebk6n673JHo3lRfUhbRhG9eJPvkNjWxz0EIzu
-         bcSzOwWeuAy4lCF6Hps4Nu3YdXONjD0c1USfKvt3W2tKzn/wsVCEnZ6fB7gc0x6Bi1TW
-         vq2j14TolAe03nVHRz1W3ANI+oGf3BmY6IhSKigfOhZxMbRvSbSPye2lidqbwkHG24xS
-         4AnNTlRGbopepVNzoW3nOEFWzzQ+scJuXh8aAeNeorUJfOmWfoCpXy3b0YjNDLbiTFtp
-         Ymow==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1773018032; x=1773622832;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1773018033; x=1773622833; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Npg7zsgmfHY86YOcXFkvoWsvRPot99dvgJ+7QRwG2Gs=;
-        b=iS+PD5qUg/WSnGpJylup86MNNc/3PykxKV+S6C5EHutt3JdltNqcqTxUDo3P6IFf3d
-         hHr88UgWDqFk4F0Zxdh+yVV4+8f6l7OHpfj2MnKciYzumBFGoz6n/Idlab2TnqYTSV3D
-         5hX4cRhKIEPehvnGQIQqH3Ua9i0tsWLpwcCjI7xNjL4qlHsjhz7vdQ1k89ke9cUNsTOk
-         iGsN/9AGnU7wU0rNrs/Kf6OEcNFgB5aSZulHCKL+7Wrdz/eF305uSz93LRE8DzW2t+jM
-         ic0ce4VVyyzH9SdvwVtBuq47Sv8tUca+UD3byg2ia+ZiIzcwfuFg+9JfTk1jMhV/PdfN
-         xaqw==
-X-Gm-Message-State: AOJu0YxLYWWctMmy+D5usPq80FVSBnQi+sCq1bYGEn18dI6D/mhdxgVv
-	ImgJ37CPRRDxgFcNQX6KdK4CTW2mOHjAdeiqurWPS/Y7VFmgtT28YG6meGj9ig==
-X-Gm-Gg: ATEYQzygYTU7yGkDn4LHqfRzAd1TigEuaH66/bWHfzhWarN86WUQfc4VdbBXH7Z3kwy
-	KmbckWqvS+Hi+0S4RKc6+z5duO4lgaNTYI6DRxj38nyhbQPZ9hs9RQRVLSrntEozE9ugl/5alPi
-	WaCjJbSzzi8FQRs+NC8UVBTflkV/cC5Jq/P5jsbso+mp5rO9L1QKI/dw48ZWtcGSWMaqEpBd5V9
-	f2NdS/F/nqErqtcuHT3ra1VLuCb2ujv3QVKRB2YUAs1a6vkQsDCdn0OtpsMTZdRhS/hwjd4tX8e
-	AejnTyouh91vpHf8oCttDoM7ScQ6B8KwVscBal/G/Rb3NwuAurZnsccs3WPNJsK4YPV01bOSQl4
-	NrAfopu2jX4RzxR896QuVc/fKNwXptP3aodmQxEpjtcKWbP6JuaRyP3cWvaHaFCykdwM/Ihkw6L
-	Oozpv4sI4i/H8gD0HcEfMETSUOynU5t9YtKo7Myg==
-X-Received: by 2002:a05:6a00:a21e:b0:7f1:4:66b with SMTP id d2e1a72fcca58-829a2f5a6d8mr8061973b3a.44.1773018032173;
-        Sun, 08 Mar 2026 18:00:32 -0700 (PDT)
+        bh=Pn/2guCKRAgRRAybhopaktEdBkVkt8okldP3ZxdUvNk=;
+        b=JA5uAtbJoQXeSeE+RIMmnmfOuQr/5WyOrgt24oEaqU+yO/P8ACM5FRfhgYUK0OZlVd
+         oaoiWypZnrm+M1+fOHNPwtn7MfFxBHVXSpAEL2THwVcNucdNNjMpifBOSebH26YwslwP
+         w5RuiynzzW1HifgzECLSCODtwXO07VsEdRc3/8cat5tdP1QJsnOn2n1bDOxpPsZY4tKj
+         xsi/7TjeINN1OPK3X29hXSBIXDj6KEPs1eMKaDLRvyapfQxq0ScpL6SqnkVk2eNnZZu+
+         rcIQt8VZ88TJqJwcg4EMMnpjxLbaTd/UHX9rx7XY5oMdBw8+4QwxsllpDjCdvV4PPOvH
+         Vo0A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1773018033; x=1773622833;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=Pn/2guCKRAgRRAybhopaktEdBkVkt8okldP3ZxdUvNk=;
+        b=PHT1oHqchpk7g0uBWDBwwJBh6NijmwSGdCws1aa9NQEXTOUTfQ+OhRd+8AxnF4dtMU
+         v8TCllcMpfYctROA5JW7rT9jgPWU/Ml6ZBemB72RO3/MXupOeej662ZSaGcNKOoctChP
+         kQPDsLxQcEb21JDslNKDiZsJ4MXPqaMaKW3Jbt4w9Kijv7UBU0GXS4inru5w9yLJvvMy
+         pSNY0M1ltHuKb9UXVYS8HXhyo/lnXDx0xGVbnhuqDcXBq/weDM6lRRuBJzGGwGXjoQJM
+         zqZftksJ4U5d3Ys7Ju1lLfnLXne2t57BiN4tXo/KdC8WrPYwBLs9Zwh9MP/pg8WXOfS0
+         109w==
+X-Gm-Message-State: AOJu0YywGEtKDzmNJrjsr5ztL1b/rjYOtZ8fRLbooMi6lCeq3MsYP5QR
+	+2c1Xj/qWblKWngzKo3eokN1b+5D24p16KYgJvAavE+G/oZLlKvlQbYX7kb0eg==
+X-Gm-Gg: ATEYQzyfrMZNl3NYPpoJbAaxc3kUF83hG5Y1xJ19VbcAuiSn/3M5f118d6Oxb8A80RM
+	pbTZcnrgCisP1lCbN5tLhrDGrMQG/PGke09VFRagXjcIOuISIWL96Nymmbv+JZWBLQ8/9gTVZal
+	b4tEIVgXASFniuTUCbx34LXNt/misE7uLxBIIZNlFm9nPjRQ4SyQBxUPL3C+pNb7UkY5C2JMwkz
+	iM+FpDNzjBqX5TzgHBC7yUQOkAbSklmmaSTQ+QWVUwoy1Uh8WhVmSnIKHNCKfp6LmY+OxDT//yT
+	/LoLIq00JHMsFHAlHb6ZIhYXKgPp/Mf4GWb92/PiQo9ShZFzStWC1kMp/qPXH8wQYlDrdb7PLYO
+	I2oN2bnCrMW99Wit28QBBaVJA401X3DdgsG6znV6iq9cwd6FXXlhH4KDK/FZBPey+/57Tx98DaO
+	IqTMgegb7b3z8m8cQM4i4fpWgxd8u7/omGyM5yZQ==
+X-Received: by 2002:a05:6a00:2e1f:b0:824:a20f:17a4 with SMTP id d2e1a72fcca58-829a30e41a7mr8391334b3a.64.1773018033494;
+        Sun, 08 Mar 2026 18:00:33 -0700 (PDT)
 Received: from localhost.localdomain ([240f:34:212d:1:35e4:35af:8d0d:ad4c])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-829a4635d62sm8468794b3a.5.2026.03.08.18.00.30
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-829a4635d62sm8468794b3a.5.2026.03.08.18.00.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 08 Mar 2026 18:00:31 -0700 (PDT)
+        Sun, 08 Mar 2026 18:00:33 -0700 (PDT)
 From: Akinobu Mita <akinobu.mita@gmail.com>
 To: damon@lists.linux.dev
 Cc: linux-perf-users@vger.kernel.org,
 	sj@kernel.org,
 	akinobu.mita@gmail.com
-Subject: [RFC PATCH v2 0/6] mm/damon: introduce perf event based access check
-Date: Mon,  9 Mar 2026 10:00:03 +0900
-Message-ID: <20260309010009.11639-1-akinobu.mita@gmail.com>
+Subject: [RFC PATCH v2 1/6] mm/damon: reintroduce damon_operations->cleanup()
+Date: Mon,  9 Mar 2026 10:00:04 +0900
+Message-ID: <20260309010009.11639-2-akinobu.mita@gmail.com>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260309010009.11639-1-akinobu.mita@gmail.com>
+References: <20260309010009.11639-1-akinobu.mita@gmail.com>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -72,60 +76,83 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-DAMON currently only provides PTE accessed-bit based access check, this
-patch series adds a new perf event based access check.
+Commit 50962b16c0d6 ("mm/damon: remove damon_operations->cleanup()")
+removed damon_operations->cleanup(). However in order to support perf
+event based access checks for physical and virtual address space
+monitoring, damon_operations->cleanup() is required to release
+perf events created by damon_operations->init().
+---
+ include/linux/damon.h | 3 +++
+ mm/damon/core.c       | 2 ++
+ mm/damon/paddr.c      | 1 +
+ mm/damon/vaddr.c      | 1 +
+ 4 files changed, 7 insertions(+)
 
-Since perf event-based access checks do not require modifying the PTE
-accessed-bit for pages representing each damon region, it reduces the
-overhead of monitoring at a fixed granularity of the page size.
-Furthermore, this patch series also includes a feature that allows you
-to set a minimum region size for each target, enabling you to monitor
-at any fixed size greater than the page size for each target.
-
-Using these features also requires modifications to damo, but these are
-not included in this patch series and are currently under development in
-the following branch:
-
-* https://github.com/mita/damo/tree/damo-perf-for-v3.1.8
-
-Any feedback or advice on the patch set would be greatly appreciated.
-
-* v2
-- reintroduce damon_operations->cleanup()
-- introduce struct damon_access_report
-- use struct damon_access_report instead of introducing struct
-  damon_perf_record
-- remove maximum region size setting
-
-* v1
-- https://lore.kernel.org/damon/20260123021014.26915-1-akinobu.mita@gmail.com/T/
-
-* TODO
-- Currently, it is possible to unintentionally specify a perf_event
-  that cannot obtain either PERF_SAMPLE_ADDR or PERF_SAMPLE_PHYS_ADDR
-- Check if it works in a virtual environment using vPMU
-
-Akinobu Mita (6):
-  mm/damon: reintroduce damon_operations->cleanup()
-  mm/damon/core: introduce struct damon_access_report
-  mm/damon/core: add common code for perf event based access check
-  mm/damon/vaddr: support perf event based access check
-  mm/damon/paddr: support perf event based access check
-  mm/damon: allow user to set min size of region
-
- .../ABI/testing/sysfs-kernel-mm-damon         |  10 +
- include/linux/damon.h                         |  63 ++
- mm/damon/core.c                               |  77 ++-
- mm/damon/ops-common.h                         |  39 ++
- mm/damon/paddr.c                              | 105 ++-
- mm/damon/sysfs-common.c                       |  11 +
- mm/damon/sysfs-common.h                       |   1 +
- mm/damon/sysfs.c                              | 399 ++++++++++-
- mm/damon/tests/sysfs-kunit.h                  |   2 +
- mm/damon/tests/vaddr-kunit.h                  |   5 +-
- mm/damon/vaddr.c                              | 654 +++++++++++++++++-
- 11 files changed, 1332 insertions(+), 34 deletions(-)
-
+diff --git a/include/linux/damon.h b/include/linux/damon.h
+index a4fea23da857..49d2983af4a8 100644
+--- a/include/linux/damon.h
++++ b/include/linux/damon.h
+@@ -607,6 +607,7 @@ enum damon_ops_id {
+  * @apply_scheme:		Apply a DAMON-based operation scheme.
+  * @target_valid:		Determine if the target is valid.
+  * @cleanup_target:		Clean up each target before deallocation.
++ * @cleanup:			Clean up the context.
+  *
+  * DAMON can be extended for various address spaces and usages.  For this,
+  * users should register the low level operations for their target address
+@@ -639,6 +640,7 @@ enum damon_ops_id {
+  * @target_valid should check whether the target is still valid for the
+  * monitoring.
+  * @cleanup_target is called before the target will be deallocated.
++ * @cleanup is called from @kdamond just before its termination.
+  */
+ struct damon_operations {
+ 	enum damon_ops_id id;
+@@ -654,6 +656,7 @@ struct damon_operations {
+ 			struct damos *scheme, unsigned long *sz_filter_passed);
+ 	bool (*target_valid)(struct damon_target *t);
+ 	void (*cleanup_target)(struct damon_target *t);
++	void (*cleanup)(struct damon_ctx *context);
+ };
+ 
+ /*
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index adfc52fee9dc..d0d9659658bd 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -2841,6 +2841,8 @@ static int kdamond_fn(void *data)
+ done:
+ 	damon_destroy_targets(ctx);
+ 
++	if (ctx->ops.cleanup)
++		ctx->ops.cleanup(ctx);
+ 	kfree(ctx->regions_score_histogram);
+ 	kdamond_call(ctx, true);
+ 	damos_walk_cancel(ctx);
+diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
+index 9bfe48826840..4c2c935d82d6 100644
+--- a/mm/damon/paddr.c
++++ b/mm/damon/paddr.c
+@@ -373,6 +373,7 @@ static int __init damon_pa_initcall(void)
+ 		.prepare_access_checks = damon_pa_prepare_access_checks,
+ 		.check_accesses = damon_pa_check_accesses,
+ 		.target_valid = NULL,
++		.cleanup = NULL,
+ 		.apply_scheme = damon_pa_apply_scheme,
+ 		.get_scheme_score = damon_pa_scheme_score,
+ 	};
+diff --git a/mm/damon/vaddr.c b/mm/damon/vaddr.c
+index 729b7ffd3565..8a58aa912112 100644
+--- a/mm/damon/vaddr.c
++++ b/mm/damon/vaddr.c
+@@ -1013,6 +1013,7 @@ static int __init damon_va_initcall(void)
+ 		.check_accesses = damon_va_check_accesses,
+ 		.target_valid = damon_va_target_valid,
+ 		.cleanup_target = damon_va_cleanup_target,
++		.cleanup = NULL,
+ 		.apply_scheme = damon_va_apply_scheme,
+ 		.get_scheme_score = damon_va_scheme_score,
+ 	};
 -- 
 2.43.0
 
