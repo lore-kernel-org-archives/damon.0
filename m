@@ -1,90 +1,80 @@
-Received: from mail-dl1-f41.google.com (mail-dl1-f41.google.com [74.125.82.41])
+Received: from mail-dy1-f169.google.com (mail-dy1-f169.google.com [74.125.82.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 909FF13AA2F
-	for <damon@lists.linux.dev>; Mon,  9 Mar 2026 02:28:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A88B326158B
+	for <damon@lists.linux.dev>; Mon,  9 Mar 2026 02:34:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773023314; cv=none; b=hvnCCyePBLZMiv2fHmln4zaHT0LRRvlKzsRa53HK6Eeb/7GXvbfpD+gwJT8piCbDYecjDdRTeb+tZdSmbmgARA6DQQzZwIvdL+iH2CI8aUpS/qaS/osm1rdUmTsjRmIZaQDrGNEG8YlB25RhNXR+bp+MUSAEwD/3CyrWtK0YisU=
+	t=1773023689; cv=none; b=DgkBVJSQ6Y/StgyyGNVeKhs1p40UF9moCHpJdqsylJ3zgRZx3oD0ubEGzake3aE6/e2pqa/1slEpm7fuEql5Ky5raK8P85IKC6ypXA4amMRtgPKbjWcBi0LZDfrjFkknVuAwSzI3wosgR8zklXmeajq7xiQTX0wZeApN+TyWlyI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773023314; c=relaxed/simple;
-	bh=0PnHXD/eeR2S7L31MiPzD6lKHnVR5jRoYM2/It/mKp4=;
+	s=arc-20240116; t=1773023689; c=relaxed/simple;
+	bh=/eGV/1xbIJhwm6XIn7cfQH/SY3x1TXbIwB1K2JCBqls=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A2zTW5GL0j5FSqoad1F0qES5xEnhw21xH3usAcHWs8IZTWEDWwkzX+T+C+XuGkUjKYfTUsbmqjkWvObrF65pZa9Xh1pSYuldeZvXOEKeIMmmilk3b7AdEQH6kRCpwL7TvcBdSvDXJhgHUXQHAXlYuaG5yXs0u01MdV1ZLyTW45A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eh5FQmks; arc=none smtp.client-ip=74.125.82.41
+	 MIME-Version; b=mg5URuOLa7HbFbzCzsD9lohm8AWoxVMWD6kNs5LnylUrkmJK7q3CBl8Z8LLvcN6tFhZc7bB+u/89pPUqQ5G4yyRaJs3rKhEJD3/3+0A0fsb1CsZo/50Nxfyit8uvr/nEACelUh/2fzEprqxjvlf7dw6/Jk05+ZU7XWiqVu+5fig=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cmDbQIEz; arc=none smtp.client-ip=74.125.82.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eh5FQmks"
-Received: by mail-dl1-f41.google.com with SMTP id a92af1059eb24-1279eced0b9so10086929c88.0
-        for <damon@lists.linux.dev>; Sun, 08 Mar 2026 19:28:32 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cmDbQIEz"
+Received: by mail-dy1-f169.google.com with SMTP id 5a478bee46e88-2bd9a485bd6so6636605eec.1
+        for <damon@lists.linux.dev>; Sun, 08 Mar 2026 19:34:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773023312; x=1773628112; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1773023687; x=1773628487; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Ps1Hfv9yWFYK/K2noVGj+dmwqc5tyuYyDUSGFJyxTPQ=;
-        b=eh5FQmksLCY76GLpShqLzKHUOuyLwLRWBTdVeIKLndaFaRsV4wia0WASlzyI0zPbsR
-         f/2xz9l3kzeGN/Sb9mMN58zZZwsdHcjXj4cWKqjCM32vnnqE9yaHQ2TjcD5ohPVog8lp
-         8Pdrm+qgjSKRgR3rIPFCt+LaQdNInGu/8zgS8992DdC2g5WP72FIr0om9pLJMTU4yA26
-         YSPUEayx45BaOLOa9b3tqLI3qxfxP++HG8T6JAE0Y6ElLPc+JyuCG30eGRCywcNF5sGV
-         23gJw0SJ0AsLlbNPjo5lplOeDkCqeUaplbZ9Vket9Z3oFZ89iRzKnzVdE74ea96u8tsQ
-         BM1A==
+        bh=rEBd1cs2oe7i2LMTBttxBgMKfH6i4xUsDVFq4wSxJlE=;
+        b=cmDbQIEzdWmKeHborZJ8IENbrDmrLfBZPTm1S/qHzzIXg1nqYBuE3azgKFeOygWEoe
+         aCIAmsHsFjyJMbVqo0ptdnp30JUNSKD43LCOVWTYbeU97hljJxKg7d2CyWkJaWH0gS+w
+         W0sktpgkrrJMBA+MB14eCq8MYfj+LR/NJMCp2bQBWO7tqKQuTf54DAh7dymbAyaptoiS
+         GhEoqlV4+egfLcTlGDtv36sYNEySK5ldgPJ5uHRoYqwdeVbmrB8A3b58QZSUcvBQPIfu
+         CG7stRJuO976ACgLB7i450wWh5uWOHXxzNAQYyDY5tupgYhlCYedH8I9orihHVcdL2LY
+         ddww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1773023312; x=1773628112;
+        d=1e100.net; s=20230601; t=1773023687; x=1773628487;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=Ps1Hfv9yWFYK/K2noVGj+dmwqc5tyuYyDUSGFJyxTPQ=;
-        b=sweBP3bVkenvyPwNlQEMlJtjAn10qLTuvyF1zaOLAZBhKC9z9jmwv2eHazL56Ap/Tt
-         kPvZuTDcl6mg5/I7YL48DOLSgRjcAcdTvi9MpuAv/5UIV3RvgFM2t0CbnNJNJ+9CqhTg
-         40Yg+p+/7nsmcnv67ffQDhc+/pC5jOMQwfw22kDwgAa8k9sSVAE1vkIA2sD4kHiSjQEY
-         LwW4tKaakXCuBjBaP2z/ShgxqrDt3SbVkbc//CjV4B/7MhbEifB+4dEharcfuSkAkoJX
-         CMFsx0nsUa7puffDtprUwM7BVEl0R78XX5h/TCmFjQMSXckDfNhOXRmW5Tw6k0AQ1/f0
-         zc0Q==
-X-Forwarded-Encrypted: i=1; AJvYcCU0fuv1Slq9BFx89K2LwH9/TbsSXAafU5STtWc05JEIRIDEbXCeYOugFjFJA/FbTq1PXc4I2Q==@lists.linux.dev
-X-Gm-Message-State: AOJu0YzvWSq2MgY2dC6psv9z3bVaApq0nhprHx4eAIhUh9cfY7NyPxKy
-	NHT+f67wzP87W4kTdU/tVQ7qd+q2e6B1q4o278/cDY/B08qTrF8JMTsl
-X-Gm-Gg: ATEYQzyA9fUVQixNvKBCtMY3Z3D16C7/A1aq545/acTnigSD1QGHScEHDR8FmOmRTpw
-	QgU1PjVDc23md/hKTiGO091ATKm/0R06NDdNYEtmWVreKnlUNm5UP4vXNbdGeL57NV03tzrqud4
-	59w6RmsxZ7DULIGz/rHxB6/STmB3fCj1oVDrMwanK6zK7NDv/olfnhZj0enrm9NcMuNSa4Ztl2A
-	wbfoR9hTzhxQ9ovJ6PvANqdhNMH3ai53bEksamTC/IBPrNt0IhgcP6CPaNtKc4MxCAmNst7AcpS
-	rzcTvHYWMT4goyYw8wUS/Ql87Td/NUxlItyQ3DBquCy6Wdlp1p8MHcLSt54BwxrIQDlLMuIIH8c
-	/BmJqOrGk6+wkm512nB5N3Yitbf9MLcb1n9qg51r1ZIOMtX1uevOFvfdo36pjxwpCFWIlMSFw7c
-	PZtZoyg/f8RQnIvuL7QNEquUBtq3LZEyhz2ug=
-X-Received: by 2002:a05:7022:4186:b0:128:d5bd:3572 with SMTP id a92af1059eb24-128d5bd39b3mr713023c88.31.1773023311637;
-        Sun, 08 Mar 2026 19:28:31 -0700 (PDT)
+        bh=rEBd1cs2oe7i2LMTBttxBgMKfH6i4xUsDVFq4wSxJlE=;
+        b=lYYpR9atSuOc3Sdwr/os8cAl4SIDz5qJr81TEyjJrFHXCXstkfo3mqy5ovUMOv5sU0
+         Mau2bZgGz/KNNP5wgoh8hrUc43WipwBtL3/W++8szbCjMsNQGyDtSVOdmCXO0HyaDiN4
+         fmdPO7r3hVF31tPVQ/E82rgtY9fHSBkWmNPzVJZyPc+2nIhxuSMeoEHjZm+jMMSaZP0b
+         UldZLtJ+V9PV/2GaTnrKb5thL+EkyGq6CNTKE0HHqDMsu5gEk5+VHv0VInZYeIk3stnM
+         wmfSFyl8oqc3h8wgrXEHTHH1+nW7J1Q+pcEVy5BHzuLjBH2HWYoL7cp7nkairVs759T3
+         xqXQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUlvbLOxP8WytNGxXU85l6lA0nUAbIr5jBW1r0Y/1G+TCKxO2YW4scZnEoqND7gFrg/PXxu3A==@lists.linux.dev
+X-Gm-Message-State: AOJu0Yz1A+gFZCldKEN5LI9SrL5Uv+nritDu4xUr2SY/EqjZUsg29lHI
+	0zB/FoVG9ljJW1GAPJla6uziyJu0uVvkAIh3gylNSagdBAjOt/C8PaIW
+X-Gm-Gg: ATEYQzzBukuhwS9SaLu4EnnDRfkPmrIsoRIweL/zf/Excbk9tPqQu6H2YSbRHKVnBSi
+	MafFlmsSp9W4qnLkga2OHa/jqjz/6MX8QxoThUxnnrUQ844evqmop247JK7YaDTfrildaa/2Q3w
+	iNKfxzEGZmDKwBAODitKYtTGTw0JwsZk0iNiRyQ6ZudlbtiQaRdDkiW9RhqvQboQwGL1iQgUak2
+	BsapzZD2aMTKVyCQjhS0CW+8Wb219yOTcokdoeiR+GdK2OqSBb3q7qsaIvKITF/ZEHDLFfmbXJV
+	bihXenudaGXCbEm5ELdTWlY9m2ravIk0JXt5S9I4qw3gAIXWdRs12iSPwlRf3PZeQ63XFMXrq24
+	trBUCB0ujE+03JFrJHoeb05xZzwkBzxPJHdqIju0IjHTDfi/zWM79JxXex1rv2sr5re6OWyP169
+	zkegsg3rDMMZtS1k3i4WLy3McMLPmuM654dUU=
+X-Received: by 2002:a05:7301:3d1a:b0:2be:fe8:8aff with SMTP id 5a478bee46e88-2be4e03b3ebmr4076299eec.18.1773023686622;
+        Sun, 08 Mar 2026 19:34:46 -0700 (PDT)
 Received: from localhost.localdomain ([104.28.165.128])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-128c3d5a85dsm6728418c88.3.2026.03.08.19.28.25
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2be4f80cc1dsm7076193eec.3.2026.03.08.19.34.42
         (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Sun, 08 Mar 2026 19:28:31 -0700 (PDT)
+        Sun, 08 Mar 2026 19:34:46 -0700 (PDT)
 From: wang lian <lianux.mm@gmail.com>
 To: sj@kernel.org
-Cc: Liam.Howlett@oracle.com,
-	akpm@linux-foundation.org,
+Cc: akpm@linux-foundation.org,
 	brendan.higgins@linux.dev,
-	corbet@lwn.net,
 	damon@lists.linux.dev,
-	david@kernel.org,
 	davidgow@google.com,
 	kunit-dev@googlegroups.com,
-	lianux.mm@gmail.com,
-	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	linux-kselftest@vger.kernel.org,
 	linux-mm@kvack.org,
-	ljs@kernel.org,
-	mhocko@suse.com,
-	rppt@kernel.org,
-	skhan@linuxfoundation.org,
-	surenb@google.com,
-	vbabka@kernel.org
-Subject: Re: [PATCH 0/7] mm/damon: improve/fixup/update ratio calculation, test and documentation
-Date: Mon,  9 Mar 2026 10:27:59 +0800
-Message-ID: <20260309022759.9010-1-lianux.mm@gmail.com>
+	wang lian <lianux.mm@gmail.com>
+Subject: Re: [PATCH 2/7] mm/damon/tests/core-kunit: add a test for damon_is_last_region()
+Date: Mon,  9 Mar 2026 10:34:06 +0800
+Message-ID: <20260309023406.9784-1-lianux.mm@gmail.com>
 X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20260307195356.203753-1-sj@kernel.org>
-References: <20260307195356.203753-1-sj@kernel.org>
+In-Reply-To: <20260307195356.203753-3-sj@kernel.org>
+References: <20260307195356.203753-3-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -93,22 +83,26 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-> Yet another batch of misc/minor improvements and fixups.  Use
-> mult_frac() instead of the worse open-coding for rate calculations
-> (patch 1).  Add a test for a previously found and fixed bug (patch 2).
-> Improve and update comments and documentations for easier code review
-> and up-to-date information (patches 3-6).  Finally, fix an obvious typo
-> (patch 7).
+> There was a bug [1] in damon_is_last_region().  Add a kunit test to not
+> reintroduce the bug.
+
+> [1] https://lore.kernel.org/20260114152049.99727-1-sj@kernel.org/
+
+> Signed-off-by: SeongJae Park <sj@kernel.org>
 
 Hi SeongJae,
 
-Thanks for the patches and the CC!
+I've been following the previous discussion regarding the bug in
+damon_is_last_region() where the arguments of list_is_last() were
+accidentally swapped.
 
-I've reviewed the entire series and conducted functional testing on my arm64 environment (native VM). 
-All 28 KUnit tests passed successfully, including
-the newly added damon_test_is_last_region.
+I have verified this patch by running the KUnit tests on my arm64 native
+environment. The damon_test_is_last_region test case passed as expected,
+confirming that the fix is robust and the regression is effectively
+prevented.
 
-Acked-by: wang lian <lianux.mm@gmail.com>
+Tested-by: wang lian <lianux.mm@gmail.com>
+Reviewed-by: wang lian <lianux.mm@gmail.com>
 --
 Best Regards,
 wang lian
