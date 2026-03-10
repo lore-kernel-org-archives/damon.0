@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AC7630BB9D;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6D5A2E9730;
 	Tue, 10 Mar 2026 01:05:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773104740; cv=none; b=jxtM2xTXqFqpaOVjmsWdTWQ0NZkoqxVOMiQ8yB2mnoygwILngQMv0/j80RW/uSeeJXGNRq16fxhKcnNb55SB2mYz51bFQNysZ6MXFCDXW5jf9iiAti0F5vLrTXQz9fFJ1EyrDHR2b6/ILXpXK9PGfAqZ9+Uu/gyYt4Py2KgvBeI=
+	t=1773104740; cv=none; b=rqFP4bRs5SBTo8foGATfrHTaiEYOWM1G3bTgO4JTe4EZagfLtgiRzjshsimpBnC2zQ8Mwhw6brTsPjQgpUHhHbkmQ4wmI+JNTdRMs6RPC1PfG2YfzFOrXmy7lSdEW4iktwWiJGJO/jUcXwIRVU/vif08+TzErai6bvYzsNPbw9w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1773104740; c=relaxed/simple;
-	bh=yTvCo+JXdygWDppuMY59cBuy+ffz+XijY5gZYAbrrfU=;
+	bh=8g5RM84PzzTOH9XhkrAPhPyfvWGkJhpn6rsV5ukGTjU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EaTfY7jy5pe9yW5KvypM65mYymvbf9hJJVe5vIeBLYWZmC0hc1VOfovlc3iqVvzMT8e/IgMhLZUVF1Up2L+W4B8SO9jmWbKff/1gDAIRaF/MlPykGviT3nPf5VlXT++rYpOpkxaWk5lVnU40sDiEq8wQ9U/csrdG13eiKGwwbxw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IfiM1MsN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=KiZu7cSZJi3QJuQz+X/8konwTMf3zpPeqpgBub8PSv95m2f1omxP5VXS7IUStz17AbUh2aG1x/2iX5hmh9OgUQmr3p3weGGISbiyhWaHCH7PbgT7zYt0hs6P4qqsXW6UPJUGvnTVIf7kYJ21BNdOFm2rr6j7k8qcPU5K9p6oO1Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gBwjHDJb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IfiM1MsN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B00F9C2BCAF;
-	Tue, 10 Mar 2026 01:05:39 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gBwjHDJb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21F16C2BCB0;
+	Tue, 10 Mar 2026 01:05:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1773104740;
-	bh=yTvCo+JXdygWDppuMY59cBuy+ffz+XijY5gZYAbrrfU=;
+	bh=8g5RM84PzzTOH9XhkrAPhPyfvWGkJhpn6rsV5ukGTjU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IfiM1MsNSmm3WEADxWNf29ZgMu+jsFkfxsa2a2ZOxtfqhMDKNeD4ymTphfOlK8ULi
-	 Gpmws3E34ovE+lMw5Jgqouj5gpLzn6WB3zijl+7gt0TWPOFXyY67xN0S07TzsULSrU
-	 cPb1hp7ctCr8nL5HcRsvnTojy3TyNihgWh/Lqvod+yWvM/9Z2XwkqBcPHoOG9Vqm5d
-	 dIdKAu5t9IBBqdnBVxMlE6Y4DQ/kVWYimUhqdXZT47ksdqKjTTp3FtttOtWBA7ds2j
-	 4ycyG6DGB76YlDz+ureGMT/9Yfd71uJ40L3SmuZRl8JP48I3UjH0GIOeGotkXbA5Ce
-	 YZ508Oi6fPOTA==
+	b=gBwjHDJb5FNMs4+6fg//+BneuH8gokx0udvi/q2s3S9GwqombT+uPVubEw41mquHE
+	 UuxckTAdvSweLAQLwEUFz5Ryfw6r0J3YtrYe6dR3C9GSzp1EbGMaTIBNtKUS90y/wa
+	 /X4w8R210/TNxc1imAGaUtgPWt4VkMELhjnNx+spUf/N0CWxP5mez3pGE7o63VHpsx
+	 TQRXaUY2jRdnYMoNYStNFqNCI2bRb5vQteR3qBhrUoHXnQdoh/CK8yY7lnAaJy2PAn
+	 p1G9XxX2JdLXPjRQoFBxyurqvS9jXtpTn+gXn4EhdDl5cLfyWweNFv1TOEY7c7iHM/
+	 3/l4Cc3Avg+NA==
 From: SeongJae Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SeongJae Park <sj@kernel.org>,
@@ -42,9 +42,9 @@ Cc: SeongJae Park <sj@kernel.org>,
 	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [PATCH 05/11] Docs/mm/damon/design: document the goal-based quota tuner selections
-Date: Mon,  9 Mar 2026 18:05:21 -0700
-Message-ID: <20260310010529.91162-6-sj@kernel.org>
+Subject: [PATCH 06/11] Docs/admin-guide/mm/damon/usage: document goal_tuner sysfs file
+Date: Mon,  9 Mar 2026 18:05:22 -0700
+Message-ID: <20260310010529.91162-7-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260310010529.91162-1-sj@kernel.org>
 References: <20260310010529.91162-1-sj@kernel.org>
@@ -54,38 +54,57 @@ List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Update the design document for the newly added goal-based quota tuner
-selection feature.
+Update the DAMON usage document for the new sysfs file for the goal
+based quota auto-tuning algorithm selection.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- Documentation/mm/damon/design.rst | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ Documentation/admin-guide/mm/damon/usage.rst | 16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
-diff --git a/Documentation/mm/damon/design.rst b/Documentation/mm/damon/design.rst
-index ac795f30519c5..29fff20b3c2a9 100644
---- a/Documentation/mm/damon/design.rst
-+++ b/Documentation/mm/damon/design.rst
-@@ -566,6 +566,18 @@ aggressiveness (the quota) of the corresponding scheme.  For example, if DAMOS
- is under achieving the goal, DAMOS automatically increases the quota.  If DAMOS
- is over achieving the goal, it decreases the quota.
+diff --git a/Documentation/admin-guide/mm/damon/usage.rst b/Documentation/admin-guide/mm/damon/usage.rst
+index b0f3969b6b3b1..534e1199cf091 100644
+--- a/Documentation/admin-guide/mm/damon/usage.rst
++++ b/Documentation/admin-guide/mm/damon/usage.rst
+@@ -83,7 +83,7 @@ comma (",").
+     │ │ │ │ │ │ │ │ sz/min,max
+     │ │ │ │ │ │ │ │ nr_accesses/min,max
+     │ │ │ │ │ │ │ │ age/min,max
+-    │ │ │ │ │ │ │ :ref:`quotas <sysfs_quotas>`/ms,bytes,reset_interval_ms,effective_bytes
++    │ │ │ │ │ │ │ :ref:`quotas <sysfs_quotas>`/ms,bytes,reset_interval_ms,effective_bytes,goal_tuner
+     │ │ │ │ │ │ │ │ weights/sz_permil,nr_accesses_permil,age_permil
+     │ │ │ │ │ │ │ │ :ref:`goals <sysfs_schemes_quota_goals>`/nr_goals
+     │ │ │ │ │ │ │ │ │ 0/target_metric,target_value,current_value,nid,path
+@@ -377,9 +377,9 @@ schemes/<N>/quotas/
+ The directory for the :ref:`quotas <damon_design_damos_quotas>` of the given
+ DAMON-based operation scheme.
  
-+There are two such tuning algorithms that users can select as they need.
+-Under ``quotas`` directory, four files (``ms``, ``bytes``,
+-``reset_interval_ms``, ``effective_bytes``) and two directories (``weights`` and
+-``goals``) exist.
++Under ``quotas`` directory, five files (``ms``, ``bytes``,
++``reset_interval_ms``, ``effective_bytes`` and ``goal_tuner``) and two
++directories (``weights`` and ``goals``) exist.
+ 
+ You can set the ``time quota`` in milliseconds, ``size quota`` in bytes, and
+ ``reset interval`` in milliseconds by writing the values to the three files,
+@@ -390,6 +390,14 @@ apply the action to only up to ``bytes`` bytes of memory regions within the
+ quota limits unless at least one :ref:`goal <sysfs_schemes_quota_goals>` is
+ set.
+ 
++You can set the goal-based effective quota auto-tuning algorithm to use, by
++writing the algorithm name to ``goal_tuner`` file.  Reading the file returns
++the currently selected tuner algorithm.  Refer to the design documentation of
++:ref:`automatic quota tuning goals <damon_design_damos_quotas_auto_tuning>` for
++the background design of the feature and the name of the selectable algorithms.
++Refer to :ref:`goals directory <sysfs_schemes_quota_goals>` for the goals
++setup.
 +
-+- ``consist``: A proportional feedback loop based algorithm.  Tries to find an
-+  optimum quota that should be consistently kept, to keep achieving the goal.
-+  Useful for kernel-only operation on dynamic and long-running environments.
-+  This is the default selection.  If unsure, use this.
-+- ``temporal``: More straightforward algorithm.  Tries to achieve the goal as
-+  fast as possible, using maximum allowed quota, but only for a temporal short
-+  time.  When the quota is under-achieved, this algorithm keeps tuning quota to
-+  a maximum allowed one.  Once the quota is [over]-achieved, this sets the
-+  quota zero.  Useful for deterministic control required environments.
-+
- The goal can be specified with five parameters, namely ``target_metric``,
- ``target_value``, ``current_value``, ``nid`` and ``path``.  The auto-tuning
- mechanism tries to make ``current_value`` of ``target_metric`` be same to
+ The time quota is internally transformed to a size quota.  Between the
+ transformed size quota and user-specified size quota, smaller one is applied.
+ Based on the user-specified :ref:`goal <sysfs_schemes_quota_goals>`, the
 -- 
 2.47.3
