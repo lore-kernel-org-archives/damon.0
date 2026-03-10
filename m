@@ -1,160 +1,177 @@
-Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50E7937BE8F
-	for <damon@lists.linux.dev>; Mon,  9 Mar 2026 15:20:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.214.174
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773069606; cv=pass; b=aBQHtmBAvOf08t4SQ9wEAvoDYxb0qpTOyb2PrZ5ArZBOU0EtQg06fo1t9gxCSReuwUPVvyzOM8osFbqGFE/tUfb+sBlfmkg9S+uFHeEdIWO0yQLjkL81sbLvgdwY5jtAKb9RYKmUclgGFRY2JjJ3P+I3SBIyNXPdMXCXvgm+Vj4=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773069606; c=relaxed/simple;
-	bh=z6L5lDT6iJVMzgmGHw8+z2qnP+1bKb5wssYVFGZee60=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=d4IZnuSulZBNfAojn+XUW0yeDSW0mPlU0fZO2UiDMquj1rXe4nIjOFPJdwnaa+X2s5r30/4WYHRNcNKRKn1rDYj5bmYlI6oHKpcDjo4IVbDUR2ZqHvW/INVJsmLQIaJDFp6I7iIAdWJKqgCqWkdO+nOtHAfg7RgFGPOuhMMGFa0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=VNyDp/L5; arc=pass smtp.client-ip=209.85.214.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F5383090C6;
+	Tue, 10 Mar 2026 01:05:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1773104739; cv=none; b=TeiRwWBAQ6p2iqmvaTBAE8F7HtZebchbsiHOhuoCmhzg78wAxSVB64/iNZ4gBYxBIa4ut4dP+EMEHCVHKRTK9sAJFNwaFPKhxp4noX2A6/kVjZHMGj2NvBif8BKkX1mStyUwW4BJ4/BBaZTuXV1zlp/qrmzgmz3unECbbIob8Dk=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1773104739; c=relaxed/simple;
+	bh=fBp4nXBnDNZJmCsR8X2jOaOiWLrxo+bveGhLd1RBkFs=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=XGxP8c/BrznAeVuNr0l2tMoXteU6lkrZVkdXZvpC0P1f4Bh70UsqeAMKND8jPod+JYsqMZq598N/5va0ep/3yC+BI7USn1h8C2vdpPBrq//QqWyH75v70s65nPqOayx/Tyv5T41eZGrA6TV+7ukm+arivpHVThc/RT85f2/u7iI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iXPCHjCa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="VNyDp/L5"
-Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-2ae523d54d2so146325ad.1
-        for <damon@lists.linux.dev>; Mon, 09 Mar 2026 08:20:05 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773069604; cv=none;
-        d=google.com; s=arc-20240605;
-        b=Q3nv5FlxDMz3kdBl7mlctjOhppHDRUBZ7gCJkB65dwgATj7UJk6e0ldu+JzG5FnAu8
-         9FaN0WpYvDAC00A5IHOqx+xtnOemdHyF7wvc8XJAtUb1hey+7f4AyJXl5Ub0UVcOHuh8
-         953PbikUAaiP1D7WdOgH/qYIXBkzR+ZIS050Ap28BkUGaMZyMjAwrebOWbm+yTcfwZKV
-         URm0+Cx1v0GSIVf+rAoKPqBos4hpbCJFIYJOdgcsYkKIgt/aXzxDfQf8s3T2IvcE8v80
-         8d0ZW25KoN39VyWi2ZFpjPlwlEIrDV5latwyM88GjuNAzYEI9L7NY1EVubS7LqnMJbOg
-         WLtg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=YCwgn/LGLbOqI0PyvUZQbnycgUxHpuGNhHts7H9S6JI=;
-        fh=Qn5HXEqNjJtg0nPfSMW39DW7VbZmUwNfyOaEMo3+uC8=;
-        b=Sdtw+QdDPWD8jbm0uVP+4g4JCTpL4zAzgsaq+Vq8oC0ZExG5GIg4KPesiZUWLD9zpk
-         lBrCpyCb/+/Xu3P+On8uSLuG9bqGYLiBcwwLTYrhmqv9KTgIu6J5nQm3TEBOf2R9nTud
-         55KA0GMUL4e5DgefUa2apapOdxG50zW5sjsRh9MKQZxzmG5Sb0hQxDGEBc0lM41QQgtp
-         HKzOjro5EeCjLA2m9sCLuN/U2ua2AbKDFVyyUBz0C6pvEILHltd+Uy2fCD2xwLxtIMJ2
-         LIAiYIddG6eUpng+bQnUzdrI3N02eD+wrOQn6eoQUfCNccKKBjWILD4xrSRIe+Tf98WH
-         RzFg==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1773069604; x=1773674404; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=YCwgn/LGLbOqI0PyvUZQbnycgUxHpuGNhHts7H9S6JI=;
-        b=VNyDp/L5dPQzuQF6/jQC8v6e+FKaWUCXglTeqLkC6Y4b1uFF+MGezYS+3hnH8U8CbK
-         9cvpBlz/b80eBWrXcyvZeWA65YigIUQheWNuUAA7M3LmmVMyf7nJxWszXOy9J+SChuCf
-         eIEkn0NV6BAP0X2ikCXXdW+0zjTqQ16v4KRohfvFMeNiGSLsBiyTWB+moJzDKPbqnAcF
-         mSlc/jr7r782DcvwyUHCE2nXlJjsqFSsDyebOx/Wsk8/AvMwyeefnrDmFis4HhycL82V
-         syP9fyKBxNvZbJqpPgXY3JgCHUFFmQsPgyj+uitVVb0m8sHkFxMHzBvfJYKELHZuorsQ
-         uTfA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1773069604; x=1773674404;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=YCwgn/LGLbOqI0PyvUZQbnycgUxHpuGNhHts7H9S6JI=;
-        b=BG/nTy6XyHe7lMoITSOZXBvdQBPDCYndwNVPjNibmxQuLlP5cv//2XTzG4CkwBOx9J
-         bDs42eOmBFC9NgAiugLYiPqoUUAMazBF0X3hBnGPG7IDJXNkMSTp+bBQj5dtNL5xKCWb
-         LduXisq2+3jUgnXU7mwi/iyPtNN+/GZViVG8xHkdXLo/O+VgZ2uShVQgwnBXbUHumJqu
-         vNp5H/HA0tYLuQAsSamI+9eSqL80uQk7ALk5AqxjaZd6RHPno+r1vGjGGAitTsgPe62z
-         CS3egRerzClL8KKi3GiR09l+tY8iyRyDwrZBhdnP4ihPLkLqUPm5hT5Teq3usVw8YJ2X
-         zm3w==
-X-Gm-Message-State: AOJu0YzdBkVlNM0QlN+V4uRZe7sE+gOFkL8vnWFBXb89ZC58141JwKCJ
-	FIaLgu4AD3S9cfPzawIBILRIsNbqX2ZFzye/1cBxD/xD4XUNAvPsCnTCzTBRekR/HMCUeQPcbwk
-	GGqewPkDi91VenMn2t/V/uGOV3/4M3tNhQYLfd/Hm
-X-Gm-Gg: ATEYQzwCXitRue2mGOschH58IjF4uyhhtdPfOje+GLOHp4MSHwyJi3hFArrtHeYuyXZ
-	GBzCKXkG/1XKRuRvhnhlDhRg7Om3TGvbhuxVgYwUoupZsgCKDuAwwGvOKW0Lw+300FQwxx2meO5
-	ehX5l7nqgaKEoI4Lf1utbtAdxjOQGkBXDHpgQkrL76zd9tLG1KdsQvpakxIJpVUTqdwT3J08ICE
-	JKAzI7L2J2n1oStsahY2C3ua75x00xjxh6+vXnWEwMygpGQUTyUrXbXAibA1Ek981O7TU238igL
-	UDfJILzcP3UmKlwNy8FK1G3q3LYvgBklfO0QKA==
-X-Received: by 2002:a17:902:c94b:b0:2ae:57e6:616a with SMTP id
- d9443c01a7336-2ae8acf04ecmr4622815ad.2.1773069604098; Mon, 09 Mar 2026
- 08:20:04 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iXPCHjCa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41162C19423;
+	Tue, 10 Mar 2026 01:05:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1773104738;
+	bh=fBp4nXBnDNZJmCsR8X2jOaOiWLrxo+bveGhLd1RBkFs=;
+	h=From:To:Cc:Subject:Date:From;
+	b=iXPCHjCa5+tLyFlskpunswITojbf48yGauAKjSbwFrj62NuwQiBkl5ab9daUrxklP
+	 2X1kd/0JilV1ueLI43Cv3BNm+lGeIOKI3FsKo+hLmzRv0+rM7pXUuSFtugeRf4Y2XF
+	 OfmiZaQUxNBk3V8oxq46BlDhc+ZS5pgjtIn33e2pCJvRl/+Hj4BwzQwlz2mfXL6VCl
+	 PUPmYRTT1V0XWOiDVoCVpP6ochcinMteWy/bdAVjdNsjhvta4zKM9/fYSufHuldPHh
+	 /q7NqJVglcvPurW43Ktog1jrUjKonybv1CsYGG+D+z+ZbI1pLVHZB9jAzmxxrmirN0
+	 N6JT/TQUN7c9A==
+From: SeongJae Park <sj@kernel.org>
+To: Andrew Morton <akpm@linux-foundation.org>
+Cc: SeongJae Park <sj@kernel.org>,
+	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
+	Brendan Higgins <brendan.higgins@linux.dev>,
+	David Gow <davidgow@google.com>,
+	David Hildenbrand <david@kernel.org>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Shuah Khan <shuah@kernel.org>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	damon@lists.linux.dev,
+	kunit-dev@googlegroups.com,
+	linux-doc@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-kselftest@vger.kernel.org,
+	linux-mm@kvack.org
+Subject: [PATCH 00/11] mm/damon: support multiple goal-based quota tuning algorithms
+Date: Mon,  9 Mar 2026 18:05:16 -0700
+Message-ID: <20260310010529.91162-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260309010009.11639-1-akinobu.mita@gmail.com> <20260309010009.11639-3-akinobu.mita@gmail.com>
-In-Reply-To: <20260309010009.11639-3-akinobu.mita@gmail.com>
-From: Ian Rogers <irogers@google.com>
-Date: Mon, 9 Mar 2026 08:19:53 -0700
-X-Gm-Features: AaiRm53lVlx387A0SrY6zRXv10i_r0OBQERaDBdoHzQAntDt8AQ7OB52dy8QI14
-Message-ID: <CAP-5=fUPWNzFvsA0T3xJdGa1uQ2QgnZyphWys6AeFZNE54WXLQ@mail.gmail.com>
-Subject: Re: [RFC PATCH v2 2/6] mm/damon/core: introduce struct damon_access_report
-To: Akinobu Mita <akinobu.mita@gmail.com>
-Cc: damon@lists.linux.dev, linux-perf-users@vger.kernel.org, sj@kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Sun, Mar 8, 2026 at 6:00=E2=80=AFPM Akinobu Mita <akinobu.mita@gmail.com=
-> wrote:
->
-> The struct damon_access_report is borrowed from SeongJae Park's
-> DAMON extension project [1].
->
-> [1] https://lore.kernel.org/linux-mm/20251208062943.68824-6-sj@kernel.org=
-/T/
-> ---
->  include/linux/damon.h | 24 ++++++++++++++++++++++++
->  1 file changed, 24 insertions(+)
->
-> diff --git a/include/linux/damon.h b/include/linux/damon.h
-> index 49d2983af4a8..5f2870ae02ba 100644
-> --- a/include/linux/damon.h
-> +++ b/include/linux/damon.h
-> @@ -110,6 +110,30 @@ struct damon_target {
->         bool obsolete;
->  };
->
-> +/**
-> + * struct damon_access_report - Represent single acces report informatio=
-n.
+Aim-oriented DAMOS quota auto-tuning uses a single tuning algorithm.
+The algorithm is designed to find a quota value that should be
+consistently kept for achieving the aimed goal for long term.  It is
+useful and reliable at automatically operating systems that have dynamic
+environments in the long term.
 
-nit: typo s/acces/access/
+As always, however, no single algorithm fits all.  When the environment
+has static characteristics or there are control towers in not only the
+kernel space but also the user space, the algorithm shows some
+limitations.  In such environments, users want kernel work in a more
+short term deterministic way.  Actually there were at least two reports
+[1,2] of such cases.
 
-> + * @paddr:             Start physical address of the accessed address ra=
-nge.
-> + * @vaddr:             Start virtual address of the accessed address ran=
-ge.
-> + * @size:              The size of the accessed address range.
-> + * @cpu:               The id of the CPU that made the access.
-> + * @tid:               The task id of the task that made the access.
-> + * @is_write:          Whether the access is write.
-> + *
-> + * Any DAMON API callers that notified access events can report the info=
-rmation
-> + * to DAMON using damon_report_access().  This struct contains the repor=
-ting
-> + * infomration.  Refer to damon_report_access() for more details.
+Extend DAMOS quotas goal to support multiple quota tuning algorithms
+that users can select.  Keep the current algorithm as the default one,
+to not break the old users.  Also give it a name, "consist", as it is
+designed to "consistently" apply the DAMOS action.  And introduce a new
+tuning algorithm, namely "temporal".  It is designed to apply the DAMOS
+action only temporally, in a deterministic way.  In more detail, as long
+as the goal is under-achieved, it uses the maximum quota available.
+Once the goal is over-achieved, it sets the quota zero.
 
-nit: typo s/infomration/information/
+Tests
+=====
 
-Thanks,
-Ian
+I confirmed the feature is working as expected using the latest version
+of DAMON user-space tool, like below.
 
-> + */
-> +struct damon_access_report {
-> +       unsigned long paddr;
-> +       unsigned long vaddr;
-> +       unsigned long size;
-> +       unsigned int cpu;
-> +       pid_t tid;
-> +       bool is_write;
-> +/* private: */
-> +       unsigned long report_jiffies;   /* when this report is made */
-> +};
-> +
->  /**
->   * enum damos_action - Represents an action of a Data Access Monitoring-=
-based
->   * Operation Scheme.
-> --
-> 2.43.0
->
->
+    $ # start DAMOS for reclaiming memory aiming 30% free memory
+    $ sudo ./damo/damo start --damos_action pageout \
+            --damos_quota_goal_tuner temporal \
+            --damos_quota_goal node_mem_free_bp 30% 0 \
+            --damos_quota_interval 1s \
+            --damos_quota_space 100M
+
+Note that >=3.1.8 version of DAMON user-space tool supports this feature
+(--damos_quota_goal_tuner).  As expected, DAMOS stops reclaiming memory
+as soon as the goal amount of free memory is made.  When 'consist' tuner
+is used, the reclamation was continued even after the goal amount of
+free memory is made, resulting in more than goal amount of free memory,
+as expected.
+
+Patch Sequence
+==============
+
+First four patches implement the features.  Patch 1 extends core API to
+allow multiple tuners and make the current tuner as the default and only
+available tuner, namely 'consist'.  Patch 2 allows future tuners setting
+zero effective quota.  Patch 3 introduces the second tuner, namely
+'temporal'.  Patch 4 further extends DAMON sysfs API to let users use
+that.
+
+Three following patches (patches 5-7) update design, usage, and ABI
+documents, respectively.
+
+Final four patches (patches 8-11) are for adding tests.  The eighth
+patch (patch 8) extends the kunit test for online parameters commit for
+validating the goal_tuner.  The ninth and the tenth patches (patches
+9-10) extend the testing-purpose DAMON sysfs control helper and DAMON
+status dumping tool to support the newly added feature.  The final
+eleventh one (patch 11) extends the existing online commit selftest to
+cover the new feature.
+
+References
+==========
+
+[1] https://lore.kernel.org/CALa+Y17__d=ZsM1yX+MXx0ozVdsXnFqF4p0g+kATEitrWyZFfg@mail.gmail.com
+[2] https://lore.kernel.org/20260204022537.814-1-yunjeong.mun@sk.com
+
+Changelog
+=========
+
+Changes from RFC v2
+(https://lore.kernel.org/20260304044122.79394-1-sj@kernel.org)
+- Rename damos_quota_set() to damos_quota_is_set().
+- Drop unnecessary ->goal_tuner set on damos_new_quota().
+- Add kunit test.
+- Add goal_tuenr kernel-doc comment.
+
+Changes from RFC v1
+(https://lore.kernel.org/20260212062314.69961-1-sj@kernel.org)
+- Add selftest for goal_tuner commitment.
+- Set goal tuner inside damon_new_scheme().
+- Allow zero size effective size quota.
+- Update the ABI document.
+- Wordsmith change descriptions.
+
+SeongJae Park (11):
+  mm/damon/core: introduce damos_quota_goal_tuner
+  mm/damon/core: allow quota goals set zero effective size quota
+  mm/damon/core: introduce DAMOS_QUOTA_GOAL_TUNER_TEMPORAL
+  mm/damon/sysfs-schemes: implement quotas->goal_tuner file
+  Docs/mm/damon/design: document the goal-based quota tuner selections
+  Docs/admin-guide/mm/damon/usage: document goal_tuner sysfs file
+  Docs/ABI/damon: update for goal_tuner
+  mm/damon/tests/core-kunit: test goal_tuner commit
+  selftests/damon/_damon_sysfs: support goal_tuner setup
+  selftests/damon/drgn_dump_damon_status: support quota goal_tuner
+    dumping
+  selftests/damon/sysfs.py: test goal_tuner commit
+
+ .../ABI/testing/sysfs-kernel-mm-damon         |  6 ++
+ Documentation/admin-guide/mm/damon/usage.rst  | 16 +++--
+ Documentation/mm/damon/design.rst             | 12 ++++
+ include/linux/damon.h                         | 12 ++++
+ mm/damon/core.c                               | 61 ++++++++++++++++---
+ mm/damon/sysfs-schemes.c                      | 58 ++++++++++++++++++
+ mm/damon/tests/core-kunit.h                   |  3 +
+ tools/testing/selftests/damon/_damon_sysfs.py | 12 +++-
+ .../selftests/damon/drgn_dump_damon_status.py |  1 +
+ tools/testing/selftests/damon/sysfs.py        |  7 +++
+ 10 files changed, 171 insertions(+), 17 deletions(-)
+
+
+base-commit: 65dad07b05cbdda486d599772f908f1df45dd306
+-- 
+2.47.3
