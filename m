@@ -1,40 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC8D530AD00;
-	Tue, 10 Mar 2026 01:05:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AC7630BB9D;
+	Tue, 10 Mar 2026 01:05:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773104740; cv=none; b=WuPhNRbMM/xAFiQMNllPhORwMe2aDJnJ21HysbBELoJv4pqabbKSUDXrNaIyzE/Zs8jb0k8w0djBZpLrB6Wv2OHWbbvP/21sv8AfO3hWbZWdJk56DY7CL1j1p1OaU+SO1yBjONdiT1NzXO2p2NpTGHUsLiU882I9Fm40r/+/hpY=
+	t=1773104740; cv=none; b=jxtM2xTXqFqpaOVjmsWdTWQ0NZkoqxVOMiQ8yB2mnoygwILngQMv0/j80RW/uSeeJXGNRq16fxhKcnNb55SB2mYz51bFQNysZ6MXFCDXW5jf9iiAti0F5vLrTXQz9fFJ1EyrDHR2b6/ILXpXK9PGfAqZ9+Uu/gyYt4Py2KgvBeI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1773104740; c=relaxed/simple;
-	bh=Cz0dujDOIX0D2wsuyXTUh/TXx2EbdEyN7109tlsNnZY=;
+	bh=yTvCo+JXdygWDppuMY59cBuy+ffz+XijY5gZYAbrrfU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eSUf9BKbpExJ0PribonukySXfsgdqvJ0AJUFa7w0Zp1wFfwNIuYHzLYV+2OIrt4dWEwY/+kf9snXC7vq3cvjOayeY6OL8GfgAzmGSV5Nlz/Epq79AEoclvz09cqPem5XWEKxctSlKtjWMW5hy4zLSGiqnG97sqSqxiHg8Tt0NqY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=S5bB3l/0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EaTfY7jy5pe9yW5KvypM65mYymvbf9hJJVe5vIeBLYWZmC0hc1VOfovlc3iqVvzMT8e/IgMhLZUVF1Up2L+W4B8SO9jmWbKff/1gDAIRaF/MlPykGviT3nPf5VlXT++rYpOpkxaWk5lVnU40sDiEq8wQ9U/csrdG13eiKGwwbxw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IfiM1MsN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="S5bB3l/0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77363C2BC9E;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IfiM1MsN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B00F9C2BCAF;
 	Tue, 10 Mar 2026 01:05:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773104739;
-	bh=Cz0dujDOIX0D2wsuyXTUh/TXx2EbdEyN7109tlsNnZY=;
+	s=k20201202; t=1773104740;
+	bh=yTvCo+JXdygWDppuMY59cBuy+ffz+XijY5gZYAbrrfU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S5bB3l/0m9unxgS+qkS3UArseKP+wJiPVsVgupZfgOXPIWS3SRaTfVl9OfC9cNRd9
-	 xrbuMZ43D8y28CXYotQMm7UEFYOeKknNxMDlcRfmRD2a1+U0tV3YCoIatMxuPvWSfZ
-	 +Iyl1X696Tp2nHJKrekAyoVU22CWvKLjBt4ymYZqhGtMBOUkPMTLOGywU1dqimhLMZ
-	 vJb5ZvaoAUlBdYk/r5UEgE8s6njfCjk42hAYFOZ7Hcoj/JQL1HB8X4P3VvxHbt1g11
-	 lnHcC5vg4w4PABYPOsDO3U5fUn/Djl4KlJcOdPzQsmIvVfI3I8n/D9koGvnFG4jYnU
-	 FFYvUkTMcI3GQ==
+	b=IfiM1MsNSmm3WEADxWNf29ZgMu+jsFkfxsa2a2ZOxtfqhMDKNeD4ymTphfOlK8ULi
+	 Gpmws3E34ovE+lMw5Jgqouj5gpLzn6WB3zijl+7gt0TWPOFXyY67xN0S07TzsULSrU
+	 cPb1hp7ctCr8nL5HcRsvnTojy3TyNihgWh/Lqvod+yWvM/9Z2XwkqBcPHoOG9Vqm5d
+	 dIdKAu5t9IBBqdnBVxMlE6Y4DQ/kVWYimUhqdXZT47ksdqKjTTp3FtttOtWBA7ds2j
+	 4ycyG6DGB76YlDz+ureGMT/9Yfd71uJ40L3SmuZRl8JP48I3UjH0GIOeGotkXbA5Ce
+	 YZ508Oi6fPOTA==
 From: SeongJae Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SeongJae Park <sj@kernel.org>,
+	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
+	David Hildenbrand <david@kernel.org>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@kernel.org>,
 	damon@lists.linux.dev,
+	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [PATCH 04/11] mm/damon/sysfs-schemes: implement quotas->goal_tuner file
-Date: Mon,  9 Mar 2026 18:05:20 -0700
-Message-ID: <20260310010529.91162-5-sj@kernel.org>
+Subject: [PATCH 05/11] Docs/mm/damon/design: document the goal-based quota tuner selections
+Date: Mon,  9 Mar 2026 18:05:21 -0700
+Message-ID: <20260310010529.91162-6-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260310010529.91162-1-sj@kernel.org>
 References: <20260310010529.91162-1-sj@kernel.org>
@@ -46,111 +56,36 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Add a new DAMON sysfs interface file, namely 'goal_tuner' under the
-DAMOS quotas directory.  It is connected to the damos_quota->goal_tuner
-field.  Users can therefore select their favorite goal-based quotas
-tuning algorithm by writing the name of the tuner to the file.  Reading
-the file returns the name of the currently selected tuner.
+Update the design document for the newly added goal-based quota tuner
+selection feature.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- mm/damon/sysfs-schemes.c | 58 ++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 58 insertions(+)
+ Documentation/mm/damon/design.rst | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
-index 3a0782e576fab..5186966dafb35 100644
---- a/mm/damon/sysfs-schemes.c
-+++ b/mm/damon/sysfs-schemes.c
-@@ -1488,6 +1488,7 @@ struct damon_sysfs_quotas {
- 	unsigned long sz;
- 	unsigned long reset_interval_ms;
- 	unsigned long effective_sz;	/* Effective size quota in bytes */
-+	enum damos_quota_goal_tuner goal_tuner;
- };
+diff --git a/Documentation/mm/damon/design.rst b/Documentation/mm/damon/design.rst
+index ac795f30519c5..29fff20b3c2a9 100644
+--- a/Documentation/mm/damon/design.rst
++++ b/Documentation/mm/damon/design.rst
+@@ -566,6 +566,18 @@ aggressiveness (the quota) of the corresponding scheme.  For example, if DAMOS
+ is under achieving the goal, DAMOS automatically increases the quota.  If DAMOS
+ is over achieving the goal, it decreases the quota.
  
- static struct damon_sysfs_quotas *damon_sysfs_quotas_alloc(void)
-@@ -1610,6 +1611,58 @@ static ssize_t effective_bytes_show(struct kobject *kobj,
- 	return sysfs_emit(buf, "%lu\n", quotas->effective_sz);
- }
- 
-+struct damos_sysfs_qgoal_tuner_name {
-+	enum damos_quota_goal_tuner tuner;
-+	char *name;
-+};
++There are two such tuning algorithms that users can select as they need.
 +
-+static struct damos_sysfs_qgoal_tuner_name damos_sysfs_qgoal_tuner_names[] = {
-+	{
-+		.tuner = DAMOS_QUOTA_GOAL_TUNER_CONSIST,
-+		.name = "consist",
-+	},
-+	{
-+		.tuner = DAMOS_QUOTA_GOAL_TUNER_TEMPORAL,
-+		.name = "temporal",
-+	},
-+};
++- ``consist``: A proportional feedback loop based algorithm.  Tries to find an
++  optimum quota that should be consistently kept, to keep achieving the goal.
++  Useful for kernel-only operation on dynamic and long-running environments.
++  This is the default selection.  If unsure, use this.
++- ``temporal``: More straightforward algorithm.  Tries to achieve the goal as
++  fast as possible, using maximum allowed quota, but only for a temporal short
++  time.  When the quota is under-achieved, this algorithm keeps tuning quota to
++  a maximum allowed one.  Once the quota is [over]-achieved, this sets the
++  quota zero.  Useful for deterministic control required environments.
 +
-+static ssize_t goal_tuner_show(struct kobject *kobj,
-+		struct kobj_attribute *attr, char *buf)
-+{
-+	struct damon_sysfs_quotas *quotas = container_of(kobj,
-+			struct damon_sysfs_quotas, kobj);
-+	int i;
-+
-+	for (i = 0; i < ARRAY_SIZE(damos_sysfs_qgoal_tuner_names); i++) {
-+		struct damos_sysfs_qgoal_tuner_name *tuner_name;
-+
-+		tuner_name = &damos_sysfs_qgoal_tuner_names[i];
-+		if (tuner_name->tuner == quotas->goal_tuner)
-+			return sysfs_emit(buf, "%s\n", tuner_name->name);
-+	}
-+	return -EINVAL;
-+}
-+
-+static ssize_t goal_tuner_store(struct kobject *kobj,
-+		struct kobj_attribute *attr, const char *buf, size_t count)
-+{
-+	struct damon_sysfs_quotas *quotas = container_of(kobj,
-+			struct damon_sysfs_quotas, kobj);
-+	int i;
-+
-+	for (i = 0; i < ARRAY_SIZE(damos_sysfs_qgoal_tuner_names); i++) {
-+		struct damos_sysfs_qgoal_tuner_name *tuner_name;
-+
-+		tuner_name = &damos_sysfs_qgoal_tuner_names[i];
-+		if (sysfs_streq(buf, tuner_name->name)) {
-+			quotas->goal_tuner = tuner_name->tuner;
-+			return count;
-+		}
-+	}
-+	return -EINVAL;
-+}
-+
- static void damon_sysfs_quotas_release(struct kobject *kobj)
- {
- 	kfree(container_of(kobj, struct damon_sysfs_quotas, kobj));
-@@ -1627,11 +1680,15 @@ static struct kobj_attribute damon_sysfs_quotas_reset_interval_ms_attr =
- static struct kobj_attribute damon_sysfs_quotas_effective_bytes_attr =
- 		__ATTR_RO_MODE(effective_bytes, 0400);
- 
-+static struct kobj_attribute damon_sysfs_quotas_goal_tuner_attr =
-+		__ATTR_RW_MODE(goal_tuner, 0600);
-+
- static struct attribute *damon_sysfs_quotas_attrs[] = {
- 	&damon_sysfs_quotas_ms_attr.attr,
- 	&damon_sysfs_quotas_sz_attr.attr,
- 	&damon_sysfs_quotas_reset_interval_ms_attr.attr,
- 	&damon_sysfs_quotas_effective_bytes_attr.attr,
-+	&damon_sysfs_quotas_goal_tuner_attr.attr,
- 	NULL,
- };
- ATTRIBUTE_GROUPS(damon_sysfs_quotas);
-@@ -2718,6 +2775,7 @@ static struct damos *damon_sysfs_mk_scheme(
- 		.weight_sz = sysfs_weights->sz,
- 		.weight_nr_accesses = sysfs_weights->nr_accesses,
- 		.weight_age = sysfs_weights->age,
-+		.goal_tuner = sysfs_quotas->goal_tuner,
- 	};
- 	struct damos_watermarks wmarks = {
- 		.metric = sysfs_wmarks->metric,
+ The goal can be specified with five parameters, namely ``target_metric``,
+ ``target_value``, ``current_value``, ``nid`` and ``path``.  The auto-tuning
+ mechanism tries to make ``current_value`` of ``target_metric`` be same to
 -- 
 2.47.3
