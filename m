@@ -1,24 +1,25 @@
 Received: from frasgout.his.huawei.com (frasgout.his.huawei.com [185.176.79.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E1F73BED7A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E3D63BF690
 	for <damon@lists.linux.dev>; Tue, 10 Mar 2026 16:25:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.176.79.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773159939; cv=none; b=hWCSOEjVh2m3lalT0lo/hjt88vft7jNSgMx3LM05gY97jipyL0JCo+9+w6NfaJmaQqBrvIn2xH5r40P98PQxwD7iQnyORLE1LZ1YvNnOFYbZKbuB6addk66Gb4tjGxFLm+3QF/5xxzYZZW2zf83ofdyKyG4ZODgHOLrjg3zkOCU=
+	t=1773159939; cv=none; b=tR+1SKMBNLrfdFCV6jdQvZR+Vqs06dbl1X6ankPnf+ko5nIpgQnBrC2jO5p+IflB6OvQhLsN17XhWbzkTwLGOT4p0aw4F2XIgHrjbM4+jY7rVBr9eMbJqEOjH/pDufzdNTEDzj06Xs7xM+Zsnfxlsx96WUvJVn4ENZPKAN7Uc3w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1773159939; c=relaxed/simple;
-	bh=NPmqrWUNP/Ios/o+cZrrqozk3FgzvNzdlTubO3Mx8ic=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=cLFEReUPebOxLKQXe741zujEKj0SIF1AtEmSexuOP2RcDpRq94nd+IXvIEddIbx8fomt5LSD2mkOI36uJjDi8Ok5l/SL1VHV/uAKTjS1W1sxeNy6re3C4DjQtMpotYHa6pgPYT0dr1Ow0Hh/8FsEatNxdK0G1u4LssBb06O5wE0=
+	bh=IXH2O5agTgh9CJ1mRB/AuCT8El7x5dwINlrV7qaZ+5c=;
+	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=Xm9VfXRLgx+FbT6PEFOtDV5dLBqwf6vRCl3Fe2mwSNQg+k+ykJrTg10rcAIy38usNVmr1qz1dbC1l28W5zK/0qL/iAuIPJ4ucQ+kCQ4R3EglqXViXKSLkHlV94ln0g7UmlJ1e+SQvmadFhClYXo76Z36xxpjFbgt5zUjZJtx590=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei-partners.com; spf=pass smtp.mailfrom=huawei-partners.com; arc=none smtp.client-ip=185.176.79.56
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei-partners.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei-partners.com
 Received: from mail.maildlp.com (unknown [172.18.224.83])
-	by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4fVfPM6plZzHnGgg;
-	Wed, 11 Mar 2026 00:25:27 +0800 (CST)
+	by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4fVfNd1dkxzJ467N;
+	Wed, 11 Mar 2026 00:24:49 +0800 (CST)
 Received: from mscpeml500003.china.huawei.com (unknown [7.188.49.51])
-	by mail.maildlp.com (Postfix) with ESMTPS id EE06D40086;
-	Wed, 11 Mar 2026 00:25:33 +0800 (CST)
+	by mail.maildlp.com (Postfix) with ESMTPS id 0F59840086;
+	Wed, 11 Mar 2026 00:25:34 +0800 (CST)
 Received: from mscphis01197.huawei.com (10.123.65.218) by
  mscpeml500003.china.huawei.com (7.188.49.51) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
@@ -29,10 +30,12 @@ To: <gutierrez.asier@huawei-partners.com>, <artem.kuzin@huawei.com>,
 	<yanquanmin1@huawei.com>, <zuoze1@huawei.com>, <damon@lists.linux.dev>,
 	<sj@kernel.org>, <akpm@linux-foundation.org>, <linux-mm@kvack.org>,
 	<linux-kernel@vger.kernel.org>
-Subject: [RFC PATCH v2 0/4] mm/damon: Support hot application detections
-Date: Tue, 10 Mar 2026 16:24:16 +0000
-Message-ID: <20260310162420.4180562-1-gutierrez.asier@huawei-partners.com>
+Subject: [RFC PATCH v2 1/4] mm/damon: Generic context creation for modules
+Date: Tue, 10 Mar 2026 16:24:17 +0000
+Message-ID: <20260310162420.4180562-2-gutierrez.asier@huawei-partners.com>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260310162420.4180562-1-gutierrez.asier@huawei-partners.com>
+References: <20260310162420.4180562-1-gutierrez.asier@huawei-partners.com>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -46,76 +49,100 @@ X-ClientProxiedBy: mscpeml500004.china.huawei.com (7.188.26.250) To
 
 From: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
 
-Overview
-----------
+It is more elegant to have a generic version of new context creation
+which receives the mode as a parameter.
 
-This patch set introduces a new dynamic mechanism for detecting hot applications
-and hot regions in those applications.
+Signed-off-by: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
+Co-developed-by: Anatoly Stepanov <stepanov.anatoly@huawei.com>
+---
+ mm/damon/lru_sort.c       | 5 +++--
+ mm/damon/modules-common.c | 6 +++---
+ mm/damon/modules-common.h | 4 ++--
+ mm/damon/reclaim.c        | 5 +++--
+ 4 files changed, 11 insertions(+), 9 deletions(-)
 
-Motivation
------------
-
-Since TLB is a bottleneck for many systems, a way to optimize TLB misses (or
-hits) is to use huge pages. Unfortunately, using "always" in THP leads to memory
-fragmentation and memory waste. For this reason, most application guides and
-system administrators suggest to disable THP.
-
-
-Solution
------------
-
-A new Linux kernel module that uses DAMON to detect hot regions and collapse
-those regions into huge pages. The user supplies a set of PIDs using a module
-parameter, and then, the module launches a new kdamond thread to monitor each
-of the tasks.
-
-In each kdamond, we start with a high min_access value. Our goal is to find the
-"maximum" min_access value at which point the DAMON action is applied. In each
-cycle, if no action is applied, we lower the min_access.
-
-Regarding the action, we introduce a new action: DAMOS_COLLAPSE. This allows us
-collapse synchronously and avoid polluting khugepaged and other parts of the MM
-subsystem with DAMON stuff. DAMOS_HUGEPAGE eventually calls hugepage_madvise,
-which needs the correct vm_flags_t set.
-
-
------------
-Changes in v2:
-- Previously there was a mechanism to automatically detect hot applications.
-  Based on SeongJae Park's feedback [1], this was removed from the module, leaving
-  it entirely to the user space.
-- All allocations now use kzalloc_obj.
-- Since the user space provides now the list of pids to monitor, a commit_input
-  parameter is added to allow changing the pids while the module runs.
-- Renamed the module from dynamic_hugepages to hugepages
-
-[1]: https://lore.kernel.org/all/20260211150902.70066-1-sj@kernel.org/
-
-Asier Gutierrez (4):
-  Damon_modules_new_paddr_ctx_target. This works  only for physical
-    contexts. In case of virtual addresses, we should  duplicate the
-    code.
-  Support for huge pages collapse, which will be used by
-    dynamic_hugepages module.
-  This new module launches a new kdamond thread for each of them. The
-    purpose is to detect hot regions in a given list of tasks and
-    collapse them into huge pages.
-  DAMON_HOT_HUGEPAGE documentation
-
- .../admin-guide/mm/damon/hugepage.rst (new)   | 186 ++++++++
- include/linux/damon.h                         |   1 +
- mm/damon/Kconfig                              |   7 +
- mm/damon/Makefile                             |   1 +
- mm/damon/hugepage.c (new)                     | 441 ++++++++++++++++++
- mm/damon/lru_sort.c                           |   5 +-
- mm/damon/modules-common.c                     |   6 +-
- mm/damon/modules-common.h                     |   4 +-
- mm/damon/reclaim.c                            |   5 +-
- mm/damon/vaddr.c                              |   3 +
- 10 files changed, 650 insertions(+), 9 deletions(-)
- create mode 100644 Documentation/admin-guide/mm/damon/hugepage.rst
- create mode 100644 mm/damon/hugepage.c
-
+diff --git a/mm/damon/lru_sort.c b/mm/damon/lru_sort.c
+index 7bc5c0b2aea3..143ee0b21da6 100644
+--- a/mm/damon/lru_sort.c
++++ b/mm/damon/lru_sort.c
+@@ -287,7 +287,8 @@ static int damon_lru_sort_apply_parameters(void)
+ 	unsigned int hot_thres, cold_thres;
+ 	int err;
+ 
+-	err = damon_modules_new_paddr_ctx_target(&param_ctx, &param_target);
++	err = damon_modules_new_ctx_target(&param_ctx, &param_target,
++				DAMON_OPS_PADDR);
+ 	if (err)
+ 		return err;
+ 
+@@ -479,7 +480,7 @@ static int __init damon_lru_sort_init(void)
+ 		err = -ENOMEM;
+ 		goto out;
+ 	}
+-	err = damon_modules_new_paddr_ctx_target(&ctx, &target);
++	err = damon_modules_new_ctx_target(&ctx, &target, DAMON_OPS_PADDR);
+ 	if (err)
+ 		goto out;
+ 
+diff --git a/mm/damon/modules-common.c b/mm/damon/modules-common.c
+index 86d58f8c4f63..ae50b2fa3a86 100644
+--- a/mm/damon/modules-common.c
++++ b/mm/damon/modules-common.c
+@@ -14,8 +14,8 @@
+  * @ctxp:	Pointer to save the point to the newly created context
+  * @targetp:	Pointer to save the point to the newly created target
+  */
+-int damon_modules_new_paddr_ctx_target(struct damon_ctx **ctxp,
+-		struct damon_target **targetp)
++int damon_modules_new_ctx_target(struct damon_ctx **ctxp,
++		struct damon_target **targetp, enum damon_ops_id mode)
+ {
+ 	struct damon_ctx *ctx;
+ 	struct damon_target *target;
+@@ -24,7 +24,7 @@ int damon_modules_new_paddr_ctx_target(struct damon_ctx **ctxp,
+ 	if (!ctx)
+ 		return -ENOMEM;
+ 
+-	if (damon_select_ops(ctx, DAMON_OPS_PADDR)) {
++	if (damon_select_ops(ctx, mode)) {
+ 		damon_destroy_ctx(ctx);
+ 		return -EINVAL;
+ 	}
+diff --git a/mm/damon/modules-common.h b/mm/damon/modules-common.h
+index f103ad556368..379b49c6a617 100644
+--- a/mm/damon/modules-common.h
++++ b/mm/damon/modules-common.h
+@@ -45,5 +45,5 @@
+ 	module_param_named(nr_##qt_exceed_name, stat.qt_exceeds, ulong,	\
+ 			0400);
+ 
+-int damon_modules_new_paddr_ctx_target(struct damon_ctx **ctxp,
+-		struct damon_target **targetp);
++int damon_modules_new_ctx_target(struct damon_ctx **ctxp,
++		struct damon_target **targetp, enum damon_ops_id mode);
+diff --git a/mm/damon/reclaim.c b/mm/damon/reclaim.c
+index 43d76f5bed44..24786a58683a 100644
+--- a/mm/damon/reclaim.c
++++ b/mm/damon/reclaim.c
+@@ -197,7 +197,8 @@ static int damon_reclaim_apply_parameters(void)
+ 	struct damos_filter *filter;
+ 	int err;
+ 
+-	err = damon_modules_new_paddr_ctx_target(&param_ctx, &param_target);
++	err = damon_modules_new_ctx_target(&param_ctx, &param_target,
++				DAMON_OPS_PADDR);
+ 	if (err)
+ 		return err;
+ 
+@@ -381,7 +382,7 @@ static int __init damon_reclaim_init(void)
+ 		err = -ENOMEM;
+ 		goto out;
+ 	}
+-	err = damon_modules_new_paddr_ctx_target(&ctx, &target);
++	err = damon_modules_new_ctx_target(&ctx, &target, DAMON_OPS_PADDR);
+ 	if (err)
+ 		goto out;
+ 
 -- 
 2.43.0
 
