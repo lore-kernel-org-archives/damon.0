@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 915C03290C9;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9153A29B764;
 	Wed, 11 Mar 2026 05:29:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773206971; cv=none; b=dI6fbn9UvDThn3KOdGOeYR/Pi6UJtzy7lw5EtTL5HpaFAJmu8Z2v9ILvSCuCinZmKfydNKsp0H+EapgjuQbAN0wW1p9iQGotEOAuM9kFz0h0wlBUOT6+n/QJEV4DtKHBqlpgW6LafotpDPul3i7RgS2Nd3WgHcY/l7R+tL/WK6U=
+	t=1773206971; cv=none; b=fS+tt1bfirYXy+nLjUrOgVMuEMu+2q8f3HWaZS5jqCSVXuAVwc/yWOvbvzgYkIXruTxhiiBVmSTxEOkmpJYJk8GVImTjamHQU/oAp1zASNUo54BAYIZAkn6jXA7Ic11RxotVyz1O0ntHvK7d9Ewkx6x7tqH9nVzkmHaYmxdCYR4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1773206971; c=relaxed/simple;
-	bh=7cYdKplDL21iIsxLZsDyZKirI/10a9vKJC4T+MgvDTg=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FHqMW709qmkSnrwBvscxvUVjJz2/4GDv2h0d0ExhHZods/VR+5jFPQiPkIdaUhsbHAPnwEJx2zhb3ugn8f+JTU5ZucZ7SJPs0eoji4xaST+jXebOwo6Zuir/APYXJNcQN4uZPKcl4zjNGUfzqUR+O8lbL4G2Al87i5h6hIJzBLY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JWw+fn4S; arc=none smtp.client-ip=10.30.226.201
+	bh=MsnD34og9TPgOPIjlBEppgUcQgWLwRdH7Kj1yj820Oc=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Lbf6Y+eE+Z+CuizjyALdw/3ZZP7YtYoGZnU66TrHkG7St4jgQv3sDKeyA+5Nuqn+ysnzJDXWB7ab+8cWWCwg3GEP7GQfjpV8aAFA9vImRcZS5E2LImWlAiIH8E3fmb4y1ceeAdXSIJvO079zdjrp3DyWsrwDiyQhKCwn0a7fUxE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=s1ECR/9t; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JWw+fn4S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B62CC2BCAF;
-	Wed, 11 Mar 2026 05:29:31 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="s1ECR/9t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEF7CC4CEF7;
+	Wed, 11 Mar 2026 05:29:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1773206971;
-	bh=7cYdKplDL21iIsxLZsDyZKirI/10a9vKJC4T+MgvDTg=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JWw+fn4SeVXEJyK2LlrMabr7MCW8ceh7oXjafpjdByQY6fgdPUa+Au9wo5OyE8FaG
-	 u0njAgR7wJl/LdCtj6lXrOH5pM4iis3sXjoRuFy5lxWTqhF65RgKVC1qClZL88/Qj/
-	 OLPv8oxEwwHcv5ki7k9mjBRR15mtR7yMh7LqojsZxaE/rXxnf6I9a+9QSW4xwmkvWw
-	 hie/G4BUkhn2jGp8Omc/x5lzoo9JKEf4I53UNbxcxVfjb16d+5NVxh6PNV2sJq0hRt
-	 HAze4P+5OHWMX4Ojp70CVdfK9iIY+nUX0H/5ZDhKrfkAbNfopx92OhAVzj9sIeEAC+
-	 iMJts6isaoOag==
+	bh=MsnD34og9TPgOPIjlBEppgUcQgWLwRdH7Kj1yj820Oc=;
+	h=From:To:Cc:Subject:Date:From;
+	b=s1ECR/9t3rMYltdpRky5k4tc5oi0AN31gSxiMHV1z5ZEZ26Xx2H0XdUiOunVwNmPu
+	 sNxYd8F4VK4ukwHspGVYDQ2cf5gZ+3026sLj9xy5Dvgh8YIg+XSoPZ0BSCGWxZ8VCd
+	 Mr92YciAtrqdr3Wuizf469sMc+u7//DVnRf4emCHMSdmlt9m6RD/u9W0owd5HBUfYg
+	 FXN7y62KbjqnoY8/pJhbP1lmGzgcspQXN+M0JNVhM2NcbCJJMBCj4jr4qj2Hji+Htu
+	 4TlH4JmPy8GD+nVtKBvPralqe1WeI/UFIR2/YzFjBV4n9soJlSpAP5gam+3x7T2O7T
+	 XwVOuw/DaGNNA==
 From: SeongJae Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SeongJae Park <sj@kernel.org>,
@@ -33,12 +32,10 @@ Cc: SeongJae Park <sj@kernel.org>,
 	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [PATCH 1/5] mm/damon/core: fix wrong end address assignment on walk_system_ram()
-Date: Tue, 10 Mar 2026 22:29:22 -0700
-Message-ID: <20260311052927.93921-2-sj@kernel.org>
+Subject: [PATCH 0/5] mm/damon: support addr_unit on default monitoring targets for modules
+Date: Tue, 10 Mar 2026 22:29:21 -0700
+Message-ID: <20260311052927.93921-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260311052927.93921-1-sj@kernel.org>
-References: <20260311052927.93921-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -47,38 +44,50 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-'struct damon_addr_range' and 'struct resource' represent different
-types of address ranges.  'damon_addr_range' is for end-open ranges
-([start, end)).  'resource' is for fully-closed ranges ([start, end]).
-But walk_system_ram() is assigning resource->end to
-damon_addr_range->end without the inclusiveness adjustment.  As a
-result, the function returns an address range that is missing the last
-one byte.
+DAMON_RECLAIM and DAMON_LRU_SORT support 'addr_unit' parameters only
+when the monitoring target address range is explicitly set.  This was
+intentional for making the initial 'addr_unit' support change small.
+Now 'addr_unit' support is being quite stabilized.  Having the corner
+case of the support is only making the code inconsistent with implicit
+rules.  The inconsistency makes it easy to confuse [1] readers.  After
+all, there is no real reason to keep 'addr_unit' support incomplete.
+Add the support for the case to improve the readability and more
+completely support 'addr_unit'.
 
-The function is being used to find and set the biggest system ram as the
-default monitoring target for DAMON_RECLAIM and DAMON_LRU_SORT.  Missing
-the last byte of the big range shouldn't be a real problem for the real
-use cases.  That said, the loss is definitely an unintended behavior.
-Do the correct adjustment.
+This series is constructed with five patches.  The first one (patch 1)
+fixes a small bug that mistakenly assigns inclusive end address to open
+end address, which was found from this work.  The second and third ones
+(patches 2 and 3) extend the default monitoring target setting functions
+in the core layer one by one, to support the 'addr_unit' while making no
+visible changes.  The final two patches (patches 4 and 5) update
+DAMON_RECLAIM and DAMON_LRU_SORT to support 'addr_unit' for the default
+monitoring target address ranges, by passing the user input to the core
+functions.
 
-Fixes: 43b0536cb471 ("mm/damon: introduce DAMON-based Reclamation (DAMON_RECLAIM)")
-Signed-off-by: SeongJae Park <sj@kernel.org>
----
- mm/damon/core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+[1] https://lore.kernel.org/20260131015643.79158-1-sj@kernel.org
 
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index 2e36024d99506..3925720a172a6 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -3060,7 +3060,7 @@ static int walk_system_ram(struct resource *res, void *arg)
- 
- 	if (a->end - a->start < resource_size(res)) {
- 		a->start = res->start;
--		a->end = res->end;
-+		a->end = res->end + 1;
- 	}
- 	return 0;
- }
+Changes from RFC
+(https://lore.kernel.org/20260305053918.83786-1-sj@kernel.org)
+- Rebase to latest mm-new.
+- Wordsmith commit messages.
+
+SeongJae Park (5):
+  mm/damon/core: fix wrong end address assignment on walk_system_ram()
+  mm/damon/core: support addr_unit on damon_find_biggest_system_ram()
+  mm/damon/core: receive addr_unit on
+    damon_set_region_biggest_system_ram_default()
+  mm/damon/reclaim: respect addr_unit on default monitoring region setup
+  mm/damon/lru_sort: respect addr_unit on default monitoring region
+    setup
+
+ include/linux/damon.h |  1 +
+ mm/damon/core.c       | 36 +++++++++++++++++++++++++-----------
+ mm/damon/lru_sort.c   |  7 +------
+ mm/damon/reclaim.c    |  7 +------
+ mm/damon/stat.c       |  2 +-
+ 5 files changed, 29 insertions(+), 24 deletions(-)
+
+
+base-commit: 31ae3f4d2741372ab511aeefc5e6898d12971fcd
 -- 
 2.47.3
