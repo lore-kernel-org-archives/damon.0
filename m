@@ -1,49 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06BAE32C92D;
-	Wed, 11 Mar 2026 05:07:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 915C03290C9;
+	Wed, 11 Mar 2026 05:29:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773205629; cv=none; b=TcsloQXqjzNlfnSurGQGc/Bx8/gVqy15mMeYGLuihZvJ18mD6NDGAVTcZ3eWLaSnd7ngPTnweSgeqGtX6lQ7pOdkjj0vfK/b9SGUv6VOBiCG/BbbeeTXrjBWA707AJk7Ba3D0YHRYqG3WrE1PRcCXHVQIZHF+i7EdYSNgrPZAt4=
+	t=1773206971; cv=none; b=dI6fbn9UvDThn3KOdGOeYR/Pi6UJtzy7lw5EtTL5HpaFAJmu8Z2v9ILvSCuCinZmKfydNKsp0H+EapgjuQbAN0wW1p9iQGotEOAuM9kFz0h0wlBUOT6+n/QJEV4DtKHBqlpgW6LafotpDPul3i7RgS2Nd3WgHcY/l7R+tL/WK6U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773205629; c=relaxed/simple;
-	bh=faeJo8ihjOE+9bWVu9ZNPRNm5sUDD91envks+mZlquc=;
+	s=arc-20240116; t=1773206971; c=relaxed/simple;
+	bh=7cYdKplDL21iIsxLZsDyZKirI/10a9vKJC4T+MgvDTg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rxgPsro42LBXksNqPahoZztpQlCzAjtWuJRSEB0hTwXyYqfxagrzSlTZWHAtqd4LVH3wBpN+fTxghIGn2WKJmpM4B8MwYmP6oaVIwPgtyUv2vb/R1T4mx5NtYOXWLwhWDEmHyF5umwO0PTncdXooeJEIEGXxwqstcPTh4eVI8Ig=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eUxX34tx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FHqMW709qmkSnrwBvscxvUVjJz2/4GDv2h0d0ExhHZods/VR+5jFPQiPkIdaUhsbHAPnwEJx2zhb3ugn8f+JTU5ZucZ7SJPs0eoji4xaST+jXebOwo6Zuir/APYXJNcQN4uZPKcl4zjNGUfzqUR+O8lbL4G2Al87i5h6hIJzBLY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JWw+fn4S; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eUxX34tx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D134C2BCAF;
-	Wed, 11 Mar 2026 05:07:08 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JWw+fn4S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B62CC2BCAF;
+	Wed, 11 Mar 2026 05:29:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773205628;
-	bh=faeJo8ihjOE+9bWVu9ZNPRNm5sUDD91envks+mZlquc=;
+	s=k20201202; t=1773206971;
+	bh=7cYdKplDL21iIsxLZsDyZKirI/10a9vKJC4T+MgvDTg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eUxX34txTmCrHmBEwuTeX0N2rpfmmyw7vSLIbdrfUhGHvYen2D3nlcS7kHTAZ+Z1A
-	 GUFkyVbUUwu3tXLqv5QAjs/Zijsc5DaUaNNvLfjcYosEsaISjSmVLClWXpnTpRSnw7
-	 fZKd8Aa8LuIi8kIqa+W7gvj0FsVAUZFU02Va6nH3QdUmeOLtSYYLt3bsJjgvre/vtM
-	 l+zQyxgPnnJ2yF+ez78OhMgdEGGLgJpt4XWDgZ+kmrA+uZBSWWluYswLOlLG8Brf2I
-	 Ckgs9c7qbaQzBIUPCc+rBUvKRVa/94GOOmwyDspxn19WoMIjJt0OpSsvMQWf0HsERP
-	 Ju27I8kYUStAQ==
+	b=JWw+fn4SeVXEJyK2LlrMabr7MCW8ceh7oXjafpjdByQY6fgdPUa+Au9wo5OyE8FaG
+	 u0njAgR7wJl/LdCtj6lXrOH5pM4iis3sXjoRuFy5lxWTqhF65RgKVC1qClZL88/Qj/
+	 OLPv8oxEwwHcv5ki7k9mjBRR15mtR7yMh7LqojsZxaE/rXxnf6I9a+9QSW4xwmkvWw
+	 hie/G4BUkhn2jGp8Omc/x5lzoo9JKEf4I53UNbxcxVfjb16d+5NVxh6PNV2sJq0hRt
+	 HAze4P+5OHWMX4Ojp70CVdfK9iIY+nUX0H/5ZDhKrfkAbNfopx92OhAVzj9sIeEAC+
+	 iMJts6isaoOag==
 From: SeongJae Park <sj@kernel.org>
-To: gutierrez.asier@huawei-partners.com
+To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SeongJae Park <sj@kernel.org>,
-	artem.kuzin@huawei.com,
-	stepanov.anatoly@huawei.com,
-	wangkefeng.wang@huawei.com,
-	yanquanmin1@huawei.com,
-	zuoze1@huawei.com,
+	Yang Yingliang <yangyingliang@huawei.com>,
 	damon@lists.linux.dev,
-	akpm@linux-foundation.org,
-	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [RFC PATCH v2 0/4] mm/damon: Support hot application detections
-Date: Tue, 10 Mar 2026 22:07:00 -0700
-Message-ID: <20260311050701.91686-1-sj@kernel.org>
+	linux-kernel@vger.kernel.org,
+	linux-mm@kvack.org
+Subject: [PATCH 1/5] mm/damon/core: fix wrong end address assignment on walk_system_ram()
+Date: Tue, 10 Mar 2026 22:29:22 -0700
+Message-ID: <20260311052927.93921-2-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260310162420.4180562-1-gutierrez.asier@huawei-partners.com>
-References: 
+In-Reply-To: <20260311052927.93921-1-sj@kernel.org>
+References: <20260311052927.93921-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -52,161 +47,38 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hello Asier,
+'struct damon_addr_range' and 'struct resource' represent different
+types of address ranges.  'damon_addr_range' is for end-open ranges
+([start, end)).  'resource' is for fully-closed ranges ([start, end]).
+But walk_system_ram() is assigning resource->end to
+damon_addr_range->end without the inclusiveness adjustment.  As a
+result, the function returns an address range that is missing the last
+one byte.
 
+The function is being used to find and set the biggest system ram as the
+default monitoring target for DAMON_RECLAIM and DAMON_LRU_SORT.  Missing
+the last byte of the big range shouldn't be a real problem for the real
+use cases.  That said, the loss is definitely an unintended behavior.
+Do the correct adjustment.
 
-Thank you for continuing this work!
+Fixes: 43b0536cb471 ("mm/damon: introduce DAMON-based Reclamation (DAMON_RECLAIM)")
+Signed-off-by: SeongJae Park <sj@kernel.org>
+---
+ mm/damon/core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-On Tue, 10 Mar 2026 16:24:16 +0000 <gutierrez.asier@huawei-partners.com> wrote:
-
-> From: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
-> 
-> Overview
-> ----------
-
-Let's make the legnth of the subject and the length of the underline same.
-
-> 
-> This patch set introduces a new dynamic mechanism for detecting hot applications
-> and hot regions in those applications.
-
-Seems now you offload the hot applications detection to the user space.  If I'm
-not wrong, you should remove "hot applications and" on the above sentence.
-
-> 
-> Motivation
-> -----------
-> 
-> Since TLB is a bottleneck for many systems, a way to optimize TLB misses (or
-> hits) is to use huge pages. Unfortunately, using "always" in THP leads to memory
-> fragmentation and memory waste. For this reason, most application guides and
-> system administrators suggest to disable THP.
-> 
-> 
-> Solution
-> -----------
-> 
-> A new Linux kernel module that uses DAMON to detect hot regions and collapse
-> those regions into huge pages. The user supplies a set of PIDs using a module
-> parameter,
-
-This sounds reasonable to me.
-
-> and then, the module launches a new kdamond thread to monitor each
-> of the tasks.
-> 
-> In each kdamond, we start with a high min_access value. Our goal is to find the
-> "maximum" min_access value at which point the DAMON action is applied. In each
-> cycle, if no action is applied, we lower the min_access.
-
-So, this patch series introduces a sort of auto-tuning of the hugepages
-collapse hotness threshold, that implemented in the new module.
-
-We already have a sort of DAMOS auto-tuning feature, namely goal-based DAMOS
-quota auto-tuning [1].  Have you considered using that?  Of course, it might
-not be able to be used as is.  Some extensions, e.g., introduction of new goal
-metric, may be needed.
-
-Yet another approach would be implementing the auto-tuning in the user-space.
-Because DAMON parameters can be updated online, updating the min_access from
-the user space should be doable?  Given the fact the module anyway require
-user-space control for feeding the list of applications to apply access-aware
-huge pages collapsing, I find no problem at user space driven auto-tuning.
-
-If the goal-based DAMOS quota auto-tuning or the user-space based auto-tuning
-are feasible, all the controls can be done using DAMON sysfs interface.
-Introduction of the new kernel module might not really be needed in the case.
-
-We have DAMON modules in addition to DAMON sysfs interface for users who want
-to use DAMON for a given specific use case with only minimum or near-zero
-user-space control.  In this case, because it is already aimed to ask the
-user-space to feed the list of applications to apply DAMOS-based hugepages
-collapsing, it seems a new module is not really needed, to me.
-
-But I guess your use case might have some special restrictions that really
-require use of the module instead of offloading the auto-tuning to the
-user-space or DAMON core.  Is that the case?  If so, can you share more details
-about it?
-
-> 
-> Regarding the action, we introduce a new action: DAMOS_COLLAPSE. This allows us
-> collapse synchronously and avoid polluting khugepaged and other parts of the MM
-> subsystem with DAMON stuff. DAMOS_HUGEPAGE eventually calls hugepage_madvise,
-> which needs the correct vm_flags_t set.
-
-This makes sense to me.  I expect DAMOS_COLLAPSE to have some advantages over
-DAMOS_HUGEPAGE for some use cases, similar to MADV_COLLAPSE vs MADV_HUGEPAGE.
-
-From my perspective, this patch series is introducing three things.
-1) hugepage collapsing hotness threshold auto-tuning, 2) the module for running
-the auto-tuning, and 3) DAMOS_COLLAPSE.  To me, it is unclear if the first two
-changes are really needed.  I will wait your answer.
-
-Meanwhile, the third change seems reasonable and not necessarily need to be
-blocked for the other two changes.  I think separating the third change from
-this patch series and upstreaming it first could also be a path forward.
-Because the change is simple and sound, convincing me would be easy.  I'd be
-convinced if at least some reasonable test results can be shown.  I'm not
-saying we should drop the other two changes.  We can keep discussing those in
-parallel.  Rather, upstreaming the third change first could help finding real
-benefits of the other two changes, since the testing will be easier.  The
-decision is up to Asier, of course.  I'm just sharing my two cents.
-
-> 
-> 
-> -----------
-> Changes in v2:
-
-Let's keep calling this "RFC" here.  When you drop the "RFC" tag, this might
-confuse some people.
-
-Also, when you add a changelog of a patch, adding a link to the previous
-version [2] can help reviewing.
-
-> - Previously there was a mechanism to automatically detect hot applications.
->   Based on SeongJae Park's feedback [1], this was removed from the module, leaving
->   it entirely to the user space.
-> - All allocations now use kzalloc_obj.
-> - Since the user space provides now the list of pids to monitor, a commit_input
->   parameter is added to allow changing the pids while the module runs.
-> - Renamed the module from dynamic_hugepages to hugepages
-
-Thank you for doing this, Asier.
-
-> 
-> [1]: https://lore.kernel.org/all/20260211150902.70066-1-sj@kernel.org/
-> 
-> Asier Gutierrez (4):
->   Damon_modules_new_paddr_ctx_target. This works  only for physical
->     contexts. In case of virtual addresses, we should  duplicate the
->     code.
->   Support for huge pages collapse, which will be used by
->     dynamic_hugepages module.
->   This new module launches a new kdamond thread for each of them. The
->     purpose is to detect hot regions in a given list of tasks and
->     collapse them into huge pages.
->   DAMON_HOT_HUGEPAGE documentation
-> 
->  .../admin-guide/mm/damon/hugepage.rst (new)   | 186 ++++++++
->  include/linux/damon.h                         |   1 +
->  mm/damon/Kconfig                              |   7 +
->  mm/damon/Makefile                             |   1 +
->  mm/damon/hugepage.c (new)                     | 441 ++++++++++++++++++
->  mm/damon/lru_sort.c                           |   5 +-
->  mm/damon/modules-common.c                     |   6 +-
->  mm/damon/modules-common.h                     |   4 +-
->  mm/damon/reclaim.c                            |   5 +-
->  mm/damon/vaddr.c                              |   3 +
->  10 files changed, 650 insertions(+), 9 deletions(-)
->  create mode 100644 Documentation/admin-guide/mm/damon/hugepage.rst
->  create mode 100644 mm/damon/hugepage.c
-> 
-> -- 
-> 2.43.0
-
-[1] https://origin.kernel.org/doc/html/latest/mm/damon/design.html#aim-oriented-feedback-driven-auto-tuning
-[2] https://docs.kernel.org/process/submitting-patches.html#commentary
-
-
-Thanks,
-SJ
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index 2e36024d99506..3925720a172a6 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -3060,7 +3060,7 @@ static int walk_system_ram(struct resource *res, void *arg)
+ 
+ 	if (a->end - a->start < resource_size(res)) {
+ 		a->start = res->start;
+-		a->end = res->end;
++		a->end = res->end + 1;
+ 	}
+ 	return 0;
+ }
+-- 
+2.47.3
