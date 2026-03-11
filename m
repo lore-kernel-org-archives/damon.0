@@ -1,31 +1,31 @@
 Received: from frasgout.his.huawei.com (frasgout.his.huawei.com [185.176.79.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1936C234984
-	for <damon@lists.linux.dev>; Wed, 11 Mar 2026 13:10:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE6E62E4257
+	for <damon@lists.linux.dev>; Wed, 11 Mar 2026 13:11:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.176.79.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773234623; cv=none; b=eVRzGa5oDuK7QlmTEUTbqx4dGIfTQ81GBB1PI6L5nhBPoD8bee6ZRmLR7aElps45XgDxVLZbyaPozhxryGkRSZyPfLnhXQMpAiNQTwElk8DrIPOlt7MrB+eVCqBfsRsVySVktbuZKQykIPLP2DjgvEkbFnl9Aj3tDWjylDuiwLU=
+	t=1773234678; cv=none; b=rn58yLhZ0kr6lUPhKKCfUaEEl03BX4sJpaVZ9v4ovTUCwYVyJW2EOSIX565OmaSlkziWshaU99GnMZj9LlDZea/0ar4i0OrkKQL0/RCK+FPB6Gc61oKiBaLLXJP0rJJ5bqgTkraLbmORUg4N71ponUH01R5ddpBO6w4z4fLzjmU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773234623; c=relaxed/simple;
-	bh=jIpyGIsoDG1lT3TfEg7FFWUaB6UwY+KVWFGPdQhSK4k=;
+	s=arc-20240116; t=1773234678; c=relaxed/simple;
+	bh=R4WSLec3kNaoCTi/RDjqiyY0W6wWpnHoxb7mZ0ae5gs=;
 	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=nBjz04HQNXZi8MOry9hSOLwEEwJ5BLPpRIzXg+LZqGU6gFWdK5xX0XhjFk5kE3SCV85dTzRnrCLxGUeokWIonK4ndMSNte8If11DegiKQ4qFiaYlmZUKXMUvP6ZTpiZGbhBI8yV/RCjVUWXiUNUDS9aYIF/mfrcqayp6bXjM/tg=
+	 In-Reply-To:Content-Type; b=OdYJixQKKQzeUe66iW1om3+4hkOT22Blrmk8s9rNenAif1dkDX85m6EPgNXRQQeGIcmF/Lo2VsDoP65E2wrwGwY5JI2XVlDMhd7pUuf5TFY7HgTXUT/46k1cAA129QiIHci0iBjB3FFFs2Y0+6lW9O1DNYiNBlEJV5RD9ZgUmZ0=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei-partners.com; spf=pass smtp.mailfrom=huawei-partners.com; arc=none smtp.client-ip=185.176.79.56
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei-partners.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei-partners.com
-Received: from mail.maildlp.com (unknown [172.18.224.150])
-	by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4fWB1c3Kw7zHnGcW;
-	Wed, 11 Mar 2026 21:10:12 +0800 (CST)
+Received: from mail.maildlp.com (unknown [172.18.224.83])
+	by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4fWB1v2vZKzJ46Yd;
+	Wed, 11 Mar 2026 21:10:27 +0800 (CST)
 Received: from mscpeml500003.china.huawei.com (unknown [7.188.49.51])
-	by mail.maildlp.com (Postfix) with ESMTPS id 2F04F4056E;
-	Wed, 11 Mar 2026 21:10:20 +0800 (CST)
+	by mail.maildlp.com (Postfix) with ESMTPS id A1FA440086;
+	Wed, 11 Mar 2026 21:11:13 +0800 (CST)
 Received: from [10.123.123.154] (10.123.123.154) by
  mscpeml500003.china.huawei.com (7.188.49.51) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.11; Wed, 11 Mar 2026 16:10:19 +0300
-Message-ID: <013c9fcd-bdeb-4508-8495-9ce9cd65b578@huawei-partners.com>
-Date: Wed, 11 Mar 2026 16:10:19 +0300
+ 15.2.1544.11; Wed, 11 Mar 2026 16:11:13 +0300
+Message-ID: <0c3068da-4dcb-4bc7-a762-2f529cb5abc2@huawei-partners.com>
+Date: Wed, 11 Mar 2026 16:11:12 +0300
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -33,16 +33,17 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v2 1/4] mm/damon: Generic context creation for modules
+Subject: Re: [RFC PATCH v2 2/4] mm/damon: Support for synchrounous huge pages
+ collapse
 To: SeongJae Park <sj@kernel.org>
 CC: <artem.kuzin@huawei.com>, <stepanov.anatoly@huawei.com>,
 	<wangkefeng.wang@huawei.com>, <yanquanmin1@huawei.com>, <zuoze1@huawei.com>,
 	<damon@lists.linux.dev>, <akpm@linux-foundation.org>, <linux-mm@kvack.org>,
 	<linux-kernel@vger.kernel.org>
-References: <20260311005759.90440-1-sj@kernel.org>
+References: <20260311010222.90548-1-sj@kernel.org>
 Content-Language: en-US
 From: Gutierrez Asier <gutierrez.asier@huawei-partners.com>
-In-Reply-To: <20260311005759.90440-1-sj@kernel.org>
+In-Reply-To: <20260311010222.90548-1-sj@kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
 X-ClientProxiedBy: mscpeml500003.china.huawei.com (7.188.49.51) To
@@ -50,137 +51,67 @@ X-ClientProxiedBy: mscpeml500003.china.huawei.com (7.188.49.51) To
 
 
 
-On 3/11/2026 3:57 AM, SeongJae Park wrote:
-> On Tue, 10 Mar 2026 16:24:17 +0000 <gutierrez.asier@huawei-partners.com> wrote:
+On 3/11/2026 4:02 AM, SeongJae Park wrote:
+> On Tue, 10 Mar 2026 16:24:18 +0000 <gutierrez.asier@huawei-partners.com> wrote:
 > 
 >> From: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
->>
->> It is more elegant to have a generic version of new context creation
->> which receives the mode as a parameter.
+> 
+> Please add more descriptions of the change, including the motivation.
+> 
+> I assume the motivation is similar to MADV_COLLAPSE that aims to make
+> synchronous and therefore faster huge page collapsing impacts copared to
+> MADV_HUGEPAGE?  It would be nice to make it clear here.  Also, if my assumption
+> is not wrong, adding a test results showing the benefit of DAMOS_COLLAPSE over
+> DAMOS_HUGEPAGE here would be nice.
+
+You are right. I will make it more clear in the cover letter for the next
+version.
+
+> 
 >>
 >> Signed-off-by: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
 >> Co-developed-by: Anatoly Stepanov <stepanov.anatoly@huawei.com>
 >> ---
->>  mm/damon/lru_sort.c       | 5 +++--
->>  mm/damon/modules-common.c | 6 +++---
->>  mm/damon/modules-common.h | 4 ++--
->>  mm/damon/reclaim.c        | 5 +++--
->>  4 files changed, 11 insertions(+), 9 deletions(-)
+>>  include/linux/damon.h | 1 +
+>>  mm/damon/vaddr.c      | 3 +++
+>>  2 files changed, 4 insertions(+)
 >>
->> diff --git a/mm/damon/lru_sort.c b/mm/damon/lru_sort.c
->> index 7bc5c0b2aea3..143ee0b21da6 100644
->> --- a/mm/damon/lru_sort.c
->> +++ b/mm/damon/lru_sort.c
->> @@ -287,7 +287,8 @@ static int damon_lru_sort_apply_parameters(void)
->>  	unsigned int hot_thres, cold_thres;
->>  	int err;
->>  
->> -	err = damon_modules_new_paddr_ctx_target(&param_ctx, &param_target);
->> +	err = damon_modules_new_ctx_target(&param_ctx, &param_target,
->> +				DAMON_OPS_PADDR);
-> 
-> I like the name of the function is becoming shorter.  But I'm not happy with
-> the fact the resulting calling code becomes longer.
-> 
-> I understand you are doing this extension because you want a version of the
-> function for vaddr.  What about introducing another dedicated function, say,
-> damon_modules_new_vaddr_ctx_target() ?
-> 
-> And you can avoid duplicates between damon_modules_new_{p,v}addr_ctx_target()
-> by implementing internal function, say, damon_modules_new_ctx_target() that
-> receives the damon_ops_id.  And damon_modules_new_{P,v}addr_ctx_target() will
-> just wrappers of damon_modules_new_ctx_target().
-
-Sure, I will do it.
-
-Since this is some generic code not related to the module I am working on,
-maybe I can move this to a different patch set that we can upstream. What do
-you think?
-
-> 
->>  	if (err)
->>  		return err;
->>  
->> @@ -479,7 +480,7 @@ static int __init damon_lru_sort_init(void)
->>  		err = -ENOMEM;
->>  		goto out;
->>  	}
->> -	err = damon_modules_new_paddr_ctx_target(&ctx, &target);
->> +	err = damon_modules_new_ctx_target(&ctx, &target, DAMON_OPS_PADDR);
-> 
-> Ditto.
-> 
->>  	if (err)
->>  		goto out;
->>  
->> diff --git a/mm/damon/modules-common.c b/mm/damon/modules-common.c
->> index 86d58f8c4f63..ae50b2fa3a86 100644
->> --- a/mm/damon/modules-common.c
->> +++ b/mm/damon/modules-common.c
->> @@ -14,8 +14,8 @@
->>   * @ctxp:	Pointer to save the point to the newly created context
->>   * @targetp:	Pointer to save the point to the newly created target
->>   */
->> -int damon_modules_new_paddr_ctx_target(struct damon_ctx **ctxp,
->> -		struct damon_target **targetp)
->> +int damon_modules_new_ctx_target(struct damon_ctx **ctxp,
->> +		struct damon_target **targetp, enum damon_ops_id mode)
-> 
-> Nit.  I'd suggest 'ops_id' as the parameter name, instead of 'mode'.
-> 
->>  {
->>  	struct damon_ctx *ctx;
->>  	struct damon_target *target;
->> @@ -24,7 +24,7 @@ int damon_modules_new_paddr_ctx_target(struct damon_ctx **ctxp,
->>  	if (!ctx)
->>  		return -ENOMEM;
->>  
->> -	if (damon_select_ops(ctx, DAMON_OPS_PADDR)) {
->> +	if (damon_select_ops(ctx, mode)) {
->>  		damon_destroy_ctx(ctx);
->>  		return -EINVAL;
->>  	}
->> diff --git a/mm/damon/modules-common.h b/mm/damon/modules-common.h
->> index f103ad556368..379b49c6a617 100644
->> --- a/mm/damon/modules-common.h
->> +++ b/mm/damon/modules-common.h
->> @@ -45,5 +45,5 @@
->>  	module_param_named(nr_##qt_exceed_name, stat.qt_exceeds, ulong,	\
->>  			0400);
->>  
->> -int damon_modules_new_paddr_ctx_target(struct damon_ctx **ctxp,
->> -		struct damon_target **targetp);
->> +int damon_modules_new_ctx_target(struct damon_ctx **ctxp,
->> +		struct damon_target **targetp, enum damon_ops_id mode);
->> diff --git a/mm/damon/reclaim.c b/mm/damon/reclaim.c
->> index 43d76f5bed44..24786a58683a 100644
->> --- a/mm/damon/reclaim.c
->> +++ b/mm/damon/reclaim.c
->> @@ -197,7 +197,8 @@ static int damon_reclaim_apply_parameters(void)
->>  	struct damos_filter *filter;
->>  	int err;
->>  
->> -	err = damon_modules_new_paddr_ctx_target(&param_ctx, &param_target);
->> +	err = damon_modules_new_ctx_target(&param_ctx, &param_target,
->> +				DAMON_OPS_PADDR);
->>  	if (err)
->>  		return err;
->>  
->> @@ -381,7 +382,7 @@ static int __init damon_reclaim_init(void)
->>  		err = -ENOMEM;
->>  		goto out;
->>  	}
->> -	err = damon_modules_new_paddr_ctx_target(&ctx, &target);
->> +	err = damon_modules_new_ctx_target(&ctx, &target, DAMON_OPS_PADDR);
->>  	if (err)
->>  		goto out;
->>  
+>> diff --git a/include/linux/damon.h b/include/linux/damon.h
+>> index a4fea23da857..a9cf17b9e8fa 100644
+>> --- a/include/linux/damon.h
+>> +++ b/include/linux/damon.h
+>> @@ -142,6 +142,7 @@ enum damos_action {
+>>  	DAMOS_LRU_DEPRIO,
+>>  	DAMOS_MIGRATE_HOT,
+>>  	DAMOS_MIGRATE_COLD,
+>> +	DAMOS_COLLAPSE,
+>>  	DAMOS_STAT,		/* Do nothing but only record the stat */
+>>  	NR_DAMOS_ACTIONS,
+>>  };
+>> diff --git a/mm/damon/vaddr.c b/mm/damon/vaddr.c
+>> index 729b7ffd3565..36791a9a1094 100644
+>> --- a/mm/damon/vaddr.c
+>> +++ b/mm/damon/vaddr.c
+>> @@ -969,6 +969,9 @@ static unsigned long damon_va_apply_scheme(struct damon_ctx *ctx,
+>>  	case DAMOS_NOHUGEPAGE:
+>>  		madv_action = MADV_NOHUGEPAGE;
+>>  		break;
+>> +	case DAMOS_COLLAPSE:
+>> +		madv_action = MADV_COLLAPSE;
+>> +		break;
+>>  	case DAMOS_MIGRATE_HOT:
+>>  	case DAMOS_MIGRATE_COLD:
+>>  		return damos_va_migrate(t, r, scheme, sz_filter_passed);
 >> -- 
 >> 2.43.0
+> 
+> The code looks good to me.
 > 
 > 
 > Thanks,
 > SJ
+> 
+> [...]
 > 
 
 -- 
