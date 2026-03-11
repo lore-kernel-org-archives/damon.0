@@ -1,31 +1,31 @@
 Received: from frasgout.his.huawei.com (frasgout.his.huawei.com [185.176.79.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE6E62E4257
-	for <damon@lists.linux.dev>; Wed, 11 Mar 2026 13:11:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82B9B31E84F
+	for <damon@lists.linux.dev>; Wed, 11 Mar 2026 13:45:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.176.79.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773234678; cv=none; b=rn58yLhZ0kr6lUPhKKCfUaEEl03BX4sJpaVZ9v4ovTUCwYVyJW2EOSIX565OmaSlkziWshaU99GnMZj9LlDZea/0ar4i0OrkKQL0/RCK+FPB6Gc61oKiBaLLXJP0rJJ5bqgTkraLbmORUg4N71ponUH01R5ddpBO6w4z4fLzjmU=
+	t=1773236714; cv=none; b=aEcUSJbFp4WQ7i19BHv/GfLFeMRANRndfLTF8rOOItyQl1nvEt1F5c5ZqOyAY4J3EexHBhIH7MMwo+FJyH4FMArsIzh04vLgkbv5Ht66Zt+zLpevy23PIYZT8+HOTgGHRWGledDprORP0hSk3ySQdwLd7vr+FQk+oXL0HhaDXO0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773234678; c=relaxed/simple;
-	bh=R4WSLec3kNaoCTi/RDjqiyY0W6wWpnHoxb7mZ0ae5gs=;
+	s=arc-20240116; t=1773236714; c=relaxed/simple;
+	bh=7dBcoWzUD8odK/p8BefWjzW6hexnxhgzm7N6ycJFaoI=;
 	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=OdYJixQKKQzeUe66iW1om3+4hkOT22Blrmk8s9rNenAif1dkDX85m6EPgNXRQQeGIcmF/Lo2VsDoP65E2wrwGwY5JI2XVlDMhd7pUuf5TFY7HgTXUT/46k1cAA129QiIHci0iBjB3FFFs2Y0+6lW9O1DNYiNBlEJV5RD9ZgUmZ0=
+	 In-Reply-To:Content-Type; b=APwES/lCn6+GvKTSXg0whudG4iaDAbUjeohvq8KPvjInUtiPFRnLNa2ylau/YY3sQBoQictv4iaJMQSo/OQE/BxF7cn74bC1zeSt6o0nWTd8VNpa7ZPaFsnl7FPYszKkRVJTBuvgvwvUD+dwxmpGJbAZIaC/INqHi5Drgq5x5R8=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei-partners.com; spf=pass smtp.mailfrom=huawei-partners.com; arc=none smtp.client-ip=185.176.79.56
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei-partners.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei-partners.com
 Received: from mail.maildlp.com (unknown [172.18.224.83])
-	by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4fWB1v2vZKzJ46Yd;
-	Wed, 11 Mar 2026 21:10:27 +0800 (CST)
+	by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4fWBnl37nczHnGh7;
+	Wed, 11 Mar 2026 21:44:59 +0800 (CST)
 Received: from mscpeml500003.china.huawei.com (unknown [7.188.49.51])
-	by mail.maildlp.com (Postfix) with ESMTPS id A1FA440086;
-	Wed, 11 Mar 2026 21:11:13 +0800 (CST)
+	by mail.maildlp.com (Postfix) with ESMTPS id 319F640569;
+	Wed, 11 Mar 2026 21:45:07 +0800 (CST)
 Received: from [10.123.123.154] (10.123.123.154) by
  mscpeml500003.china.huawei.com (7.188.49.51) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.11; Wed, 11 Mar 2026 16:11:13 +0300
-Message-ID: <0c3068da-4dcb-4bc7-a762-2f529cb5abc2@huawei-partners.com>
-Date: Wed, 11 Mar 2026 16:11:12 +0300
+ 15.2.1544.11; Wed, 11 Mar 2026 16:45:06 +0300
+Message-ID: <2895abe3-96f7-4428-8161-a8223ec758b7@huawei-partners.com>
+Date: Wed, 11 Mar 2026 16:45:06 +0300
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -33,85 +33,657 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v2 2/4] mm/damon: Support for synchrounous huge pages
- collapse
+Subject: Re: [RFC PATCH v2 3/4] mm/damon: New module with hot application
+ detection
 To: SeongJae Park <sj@kernel.org>
 CC: <artem.kuzin@huawei.com>, <stepanov.anatoly@huawei.com>,
 	<wangkefeng.wang@huawei.com>, <yanquanmin1@huawei.com>, <zuoze1@huawei.com>,
 	<damon@lists.linux.dev>, <akpm@linux-foundation.org>, <linux-mm@kvack.org>,
 	<linux-kernel@vger.kernel.org>
-References: <20260311010222.90548-1-sj@kernel.org>
+References: <20260311041114.91406-1-sj@kernel.org>
 Content-Language: en-US
 From: Gutierrez Asier <gutierrez.asier@huawei-partners.com>
-In-Reply-To: <20260311010222.90548-1-sj@kernel.org>
+In-Reply-To: <20260311041114.91406-1-sj@kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: mscpeml500003.china.huawei.com (7.188.49.51) To
+X-ClientProxiedBy: mscpeml100003.china.huawei.com (10.199.174.67) To
  mscpeml500003.china.huawei.com (7.188.49.51)
 
 
 
-On 3/11/2026 4:02 AM, SeongJae Park wrote:
-> On Tue, 10 Mar 2026 16:24:18 +0000 <gutierrez.asier@huawei-partners.com> wrote:
+On 3/11/2026 7:11 AM, SeongJae Park wrote:
+> On Tue, 10 Mar 2026 16:24:19 +0000 <gutierrez.asier@huawei-partners.com> wrote:
 > 
 >> From: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
 > 
-> Please add more descriptions of the change, including the motivation.
-> 
-> I assume the motivation is similar to MADV_COLLAPSE that aims to make
-> synchronous and therefore faster huge page collapsing impacts copared to
-> MADV_HUGEPAGE?  It would be nice to make it clear here.  Also, if my assumption
-> is not wrong, adding a test results showing the benefit of DAMOS_COLLAPSE over
-> DAMOS_HUGEPAGE here would be nice.
+> I'd like to discuss about this in a high level, but I'd like to do that on the
+> cover letter.  To this patch, I'm therefore adding comments for only details
+> that stand out immeadiately to me.
 
-You are right. I will make it more clear in the cover letter for the next
-version.
+I will update the cover letter to add more details for the next version.
+
+>>
+>> 1. It first launches a new kthread called damon_dynamic. This thread
+>> will behave as a supervisor, launching new kdamond threads for all
+>> the processes we want to montiored. The tasks are sorted
+>> by utime delta. For the top N tasks, a new kdamond thread will be
+>> launched.
+> 
+> If I read the cover letter and the code of this patch correctly, seems the last
+> two sentences of the above paragraph is outdated.  Please correct me if I'm
+> wrong.
+
+Correct, I forgot to delete it.
 
 > 
+>> Applications which turn cold will have their kdamond
+>> stopped.
+>>
+>> The processes are supplied by the monitored_pids parameter. When the
+>> module is enabled, it will go through all the monitored_pids, start
+>> the supervisor and a new kdamond thread for each of the tasks. This
+>> tasks can be modified and applied using the commit_input parameters.
+>> In that case, we will stop any kdamond thread for tasks that are not
+>> going to be monitored anymore, and start a new kdamond thread for each
+>> new task to be monitored. For tasks that were monitored before and are
+>> still monitored after commiting a new monitored_pids list, kdamond
+>> threads are left intact.
+>>
+>> 2. Initially we don't know the min_access for each of the task. We
+>> want to find the highest min_access when collapses start happening.
+>> For that we have an initial threashold of 90, which we will lower
+>> until a collpase occurs.
 >>
 >> Signed-off-by: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
 >> Co-developed-by: Anatoly Stepanov <stepanov.anatoly@huawei.com>
 >> ---
->>  include/linux/damon.h | 1 +
->>  mm/damon/vaddr.c      | 3 +++
->>  2 files changed, 4 insertions(+)
+>>  mm/damon/Kconfig          |   7 +
+>>  mm/damon/Makefile         |   1 +
+>>  mm/damon/hugepage.c (new) | 441 ++++++++++++++++++++++++++++++++++++++
+>>  3 files changed, 449 insertions(+)
 >>
->> diff --git a/include/linux/damon.h b/include/linux/damon.h
->> index a4fea23da857..a9cf17b9e8fa 100644
->> --- a/include/linux/damon.h
->> +++ b/include/linux/damon.h
->> @@ -142,6 +142,7 @@ enum damos_action {
->>  	DAMOS_LRU_DEPRIO,
->>  	DAMOS_MIGRATE_HOT,
->>  	DAMOS_MIGRATE_COLD,
->> +	DAMOS_COLLAPSE,
->>  	DAMOS_STAT,		/* Do nothing but only record the stat */
->>  	NR_DAMOS_ACTIONS,
->>  };
->> diff --git a/mm/damon/vaddr.c b/mm/damon/vaddr.c
->> index 729b7ffd3565..36791a9a1094 100644
->> --- a/mm/damon/vaddr.c
->> +++ b/mm/damon/vaddr.c
->> @@ -969,6 +969,9 @@ static unsigned long damon_va_apply_scheme(struct damon_ctx *ctx,
->>  	case DAMOS_NOHUGEPAGE:
->>  		madv_action = MADV_NOHUGEPAGE;
->>  		break;
->> +	case DAMOS_COLLAPSE:
->> +		madv_action = MADV_COLLAPSE;
->> +		break;
->>  	case DAMOS_MIGRATE_HOT:
->>  	case DAMOS_MIGRATE_COLD:
->>  		return damos_va_migrate(t, r, scheme, sz_filter_passed);
+>> diff --git a/mm/damon/Kconfig b/mm/damon/Kconfig
+>> index 8c868f7035fc..2355aacb6d12 100644
+>> --- a/mm/damon/Kconfig
+>> +++ b/mm/damon/Kconfig
+>> @@ -110,4 +110,11 @@ config DAMON_STAT_ENABLED_DEFAULT
+>>  	  Whether to enable DAMON_STAT by default.  Users can disable it in
+>>  	  boot or runtime using its 'enabled' parameter.
+>>  
+>> +config DAMON_HOT_HUGEPAGE
+> 
+> I'd suggest renaming to DAMON_HUGEPAGE.
+
+OK
+
+> 
+>> +	bool "Build DAMON-based collapse of hot regions (DAMON_HOT_HUGEPAGES)"
+>> +	depends on DAMON_VADDR
+>> +	help
+>> +	 Collapse hot region into huge pages. Hot regions are determined by
+>> +	 DAMON-based sampling
+>> +
+>>  endmenu
+>> diff --git a/mm/damon/Makefile b/mm/damon/Makefile
+>> index d8d6bf5f8bff..ac3afbc81cc7 100644
+>> --- a/mm/damon/Makefile
+>> +++ b/mm/damon/Makefile
+>> @@ -7,3 +7,4 @@ obj-$(CONFIG_DAMON_SYSFS)	+= sysfs-common.o sysfs-schemes.o sysfs.o
+>>  obj-$(CONFIG_DAMON_RECLAIM)	+= modules-common.o reclaim.o
+>>  obj-$(CONFIG_DAMON_LRU_SORT)	+= modules-common.o lru_sort.o
+>>  obj-$(CONFIG_DAMON_STAT)	+= modules-common.o stat.o
+>> +obj-$(CONFIG_DAMON_HOT_HUGEPAGE)	+= modules-common.o hugepage.o
+>> diff --git a/mm/damon/hugepage.c b/mm/damon/hugepage.c
+>> new file mode 100644
+>> index 000000000000..ccd31c48d391
+>> --- /dev/null
+>> +++ b/mm/damon/hugepage.c
+>> @@ -0,0 +1,441 @@
+>> +// SPDX-License-Identifier: GPL-2.0
+>> +/*
+>> + * Copyright (C) 2026 HUAWEI, Inc.
+>> + *             https://www.huawei.com
+>> + *
+>> + * Author: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
+>> + */
+>> +
+>> +#define pr_fmt(fmt) "damon-hugepage: " fmt
+>> +
+>> +#include <linux/damon.h>
+>> +#include <linux/kstrtox.h>
+>> +#include <linux/module.h>
+>> +
+>> +#include "modules-common.h"
+>> +
+>> +#ifdef MODULE_PARAM_PREFIX
+>> +#undef MODULE_PARAM_PREFIX
+>> +#endif
+>> +#define MODULE_PARAM_PREFIX "damon_hugepage."
+>> +
+>> +#define MAX_MONITORED_PIDS 100
+>> +#define HIGHEST_MIN_ACCESS 90
+>> +#define HIGH_ACC_THRESHOLD 50
+>> +#define MID_ACC_THRESHOLD 15
+>> +#define LOW_ACC_THRESHOLD 2
+> 
+> On your setup where the sampling interval is 5ms and the aggregation interval
+> is 100ms, nr_accesses of each DAMON region can be up to only 20.  So above
+> thresholds may better to be lowered.
+> 
+>> +
+>> +static struct task_struct *monitor_thread;
+>> +
+>> +struct mutex enable_disable_lock;
+>> +
+>> +/*
+>> + * Enable or disable DAMON_HUGEPAGE.
+>> + *
+>> + * You can enable DAMON_HUGEPAGE by setting the value of this parameter
+>> + * as ``Y``. Setting it as ``N`` disables DAMON_HOT_HUGEPAGE.  Note that
+>> + * DAMON_HOT_HUGEPAGE could do no real monitoring and reclamation due to the
+> 
+> s/DAMON_HOT_HUGEPAGE/DAMON_HUGEPAGE/ ?
+
+I will change it.
+
+> 
+>> + * watermarks-based activation condition.  Refer to below descriptions for the
+>> + * watermarks parameter for this.
+> 
+> On RFC v1 discussion [1], you mentioned you will update this comment.  But I
+> find no change?
+
+I will add links to future discuessions.
+
+> 
+>> + */
+>> +static bool enabled __read_mostly;
+>> +
+>> +/*
+>> + * Make DAMON_HUGEPAGE reads the input parameters again, except ``enabled``.
+>> + *
+>> + * Input parameters that updated while DAMON_HUGEPAGE is running are not applied
+>> + * by default.  Once this parameter is set as ``Y``, DAMON_HUGEPAGE reads values
+>> + * of parametrs except ``enabled`` again.  Once the re-reading is done, this
+>> + * parameter is set as ``N``.  If invalid parameters are found while the
+>> + * re-reading, DAMON_HUGEPAGE will be disabled.
+>> + */
+>> +static bool commit_inputs __read_mostly;
+>> +module_param(commit_inputs, bool, 0600);
+>> +
+>> +/*
+>> + * DAMON_HUGEPAGE monitoring period in microseconds.
+>> + * 5000000 = 5s
+>> + */
+>> +static unsigned long monitor_period __read_mostly = 5000000;
+>> +module_param(monitor_period, ulong, 0600);
+>> +
+>> +static long monitored_pids[MAX_MONITORED_PIDS];
+>> +static int num_monitored_pids;
+>> +module_param_array(monitored_pids, long, &num_monitored_pids, 0600);
+>> +
+>> +static struct damos_quota damon_hugepage_quota = {
+>> +	/* use up to 10 ms time, reclaim up to 128 MiB per 1 sec by default */
+>> +	.ms = 10,
+>> +	.sz = 0,
+>> +	.reset_interval = 1000,
+>> +	/* Within the quota, page out older regions first. */
+>> +	.weight_sz = 0,
+>> +	.weight_nr_accesses = 0,
+>> +	.weight_age = 1
+> 
+> You may want to prioritize hot memory region under the quota.  If so, you would
+> need to set weight_nr_acceses to non-zero.
+> 
+>> +};
+>> +DEFINE_DAMON_MODULES_DAMOS_TIME_QUOTA(damon_hugepage_quota);
+>> +
+>> +static struct damos_watermarks damon_hugepage_wmarks = {
+>> +	.metric = DAMOS_WMARK_FREE_MEM_RATE,
+>> +	.interval = 5000000, /* 5 seconds */
+>> +	.high = 900, /* 90 percent */
+>> +	.mid = 800, /* 80 percent */
+>> +	.low = 50, /* 5 percent */
+>> +};
+>> +DEFINE_DAMON_MODULES_WMARKS_PARAMS(damon_hugepage_wmarks);
+> 
+> In the RFC v1 discussion, you also mentioned you will remove the above, but
+> seems it is forgotten?
+> 
+> Also, my understadning of your reply on the previous discussion was that you
+> don't really want to use watermarks in this module, and therefore you want to
+> remove it.  Am I correct?  If I'm not, maybe I'm still not understanding the
+> intention of the watermarks.  Can you please enlighten me?
+
+Since I refactored heavily the previous code, I forgot to delete this bit.
+I will remove it now.
+
+>> +
+>> +static struct damon_attrs damon_hugepage_mon_attrs = {
+>> +	.sample_interval = 5000, /* 5 ms */
+>> +	.aggr_interval = 100000, /* 100 ms */
+>> +	.ops_update_interval = 0,
+> 
+> Is ops_update_interval = 0 really your intention?
+
+I didn't think about it. I will set it to 60 seconds, as in other modules.
+
+> 
+>> +	.min_nr_regions = 10,
+>> +	.max_nr_regions = 1000,
+>> +};
+>> +DEFINE_DAMON_MODULES_MON_ATTRS_PARAMS(damon_hugepage_mon_attrs);
+>> +
+>> +struct hugepage_task {
+>> +	struct damon_ctx *ctx;
+>> +	int pid;
+>> +	struct damon_target *target;
+>> +	struct damon_call_control call_control;
+>> +	struct list_head list;
+>> +};
+>> +
+>> +static struct damos *damon_hugepage_new_scheme(int min_access,
+>> +						   enum damos_action action)
+>> +{
+>> +	struct damos_access_pattern pattern = {
+>> +		/* Find regions having PAGE_SIZE or larger size */
+> 
+> s/PAGE_SIZE/PMD_SIZE/ ?
+> 
+>> +		.min_sz_region = PMD_SIZE,
+>> +		.max_sz_region = ULONG_MAX,
+>> +		/* and not accessed at all */
+> 
+> Seems the above comment should be updated.
+> 
+>> +		.min_nr_accesses = min_access,
+>> +		.max_nr_accesses = 100,
+> 
+> Because you set sampling interval 5ms and aggregatin interval 100ms,
+> nr_accesses of each DAMON region can be up to only 20 (100ms / 5ms).
+> max_nr_accesses may better to be 20 to clarifyt that.
+> 
+>> +		/* for min_age or more micro-seconds */
+>> +		.min_age_region = 0,
+>> +		.max_age_region = UINT_MAX,
+>> +	};
+>> +
+>> +	return damon_new_scheme(
+>> +		&pattern,
+>> +		/* synchrounous partial collapse as soon as found */
+>> +		action, 0,
+>> +		/* under the quota. */
+>> +		&damon_hugepage_quota,
+>> +		/* (De)activate this according to the watermarks. */
+>> +		&damon_hugepage_wmarks, NUMA_NO_NODE);
+> 
+> Again, I'm not sure if you really want to use watermarks, and if so, what is
+> the intention.
+
+Right, I will remove this code.
+
+>> +}
+>> +
+>> +static int damon_hugepage_apply_parameters(
+>> +				struct hugepage_task *monitored_task,
+>> +				int min_access,
+>> +				enum damos_action action)
+>> +{
+>> +	struct damos *scheme;
+>> +	struct damon_ctx *param_ctx;
+>> +	struct damon_target *param_target;
+>> +	struct damos_filter *filter;
+>> +	int err;
+>> +	struct pid *spid;
+>> +
+>> +	err = damon_modules_new_ctx_target(&param_ctx, &param_target,
+>> +					   DAMON_OPS_VADDR);
+>> +	if (err)
+>> +		return err;
+> 
+> You should deallocate param_ctx before returning the error.
+
+Not sure about this. As far as I know, damon_modules_new_paddr_ctx_target
+will destroy the context in case there is an error. In fact, reclaim and 
+lru_sort modules just return error when damon_modules_new_paddr_ctx_target
+fails, no cleanup used.
+
+> 
+>> +
+>> +	spid = find_get_pid(monitored_task->pid);
+>> +	if (!spid)
+>> +		return err;
+> 
+> Again, please deallocate param_ctx before returning the error.
+
+OK
+
+> 
+>> +
+>> +	param_target->pid = spid;
+>> +
+>> +	err = damon_set_attrs(param_ctx, &damon_hugepage_mon_attrs);
+>> +	if (err)
+>> +		goto out;
+>> +
+>> +	err = -ENOMEM;
+>> +	scheme = damon_hugepage_new_scheme(min_access, action);
+>> +	if (!scheme)
+>> +		goto out;
+>> +
+>> +	damon_set_schemes(param_ctx, &scheme, 1);
+>> +
+>> +	filter = damos_new_filter(DAMOS_FILTER_TYPE_ANON, true, false);
+>> +	if (!filter)
+>> +		goto out;
+>> +	damos_add_filter(scheme, filter);
+> 
+> What's the intention of the above filter?
+
+Also, I will remove it.
+
+>> +
+>> +	err = damon_commit_ctx(monitored_task->ctx, param_ctx);
+>> +out:
+>> +	damon_destroy_ctx(param_ctx);
+>> +	return err;
+>> +}
+>> +
+>> +static int damon_hugepage_damon_call_fn(void *arg)
+>> +{
+>> +	struct hugepage_task *monitored_task = arg;
+>> +	struct damon_ctx *ctx = monitored_task->ctx;
+>> +	struct damos *scheme;
+>> +	int err = 0;
+>> +	int min_access;
+>> +	struct damos_stat stat;
+>> +
+>> +	damon_for_each_scheme(scheme, ctx)
+>> +		stat = scheme->stat;
+>> +	scheme = list_first_entry(&ctx->schemes, struct damos, list);
+>> +
+>> +	if (ctx->passed_sample_intervals < scheme->next_apply_sis)
+>> +		return err;
+>> +
+>> +	if (stat.nr_applied)
+>> +		return err;
+>> +
+>> +	min_access = scheme->pattern.min_nr_accesses;
+>> +
+>> +	if (min_access > HIGH_ACC_THRESHOLD) {
+>> +		min_access = min_access - 10;
+>> +		err = damon_hugepage_apply_parameters(
+>> +			monitored_task, min_access, DAMOS_COLLAPSE);
+>> +	} else if (min_access > MID_ACC_THRESHOLD) {
+>> +		min_access = min_access - 5;
+>> +		err = damon_hugepage_apply_parameters(
+>> +			monitored_task, min_access, DAMOS_COLLAPSE);
+>> +	} else if (min_access > LOW_ACC_THRESHOLD) {
+>> +		min_access = min_access - 1;
+>> +		err = damon_hugepage_apply_parameters(
+>> +			monitored_task, min_access, DAMOS_COLLAPSE);
+>> +	}
+>> +	return err;
+>> +}
+>> +
+>> +static int damon_hugepage_init_task(struct hugepage_task *monitored_task)
+>> +{
+>> +	int err = 0;
+>> +	struct damon_ctx *ctx = monitored_task->ctx;
+>> +	struct damon_target *target = monitored_task->target;
+>> +	struct pid *spid;
+>> +
+>> +	if (!ctx || !target)
+>> +		damon_modules_new_ctx_target(&ctx, &target, DAMON_OPS_VADDR);
+>> +
+>> +	if (damon_is_running(ctx))
+>> +		return 0;
+>> +
+>> +	spid = find_get_pid(monitored_task->pid);
+>> +	if (!spid)
+>> +		return err;
+>> +
+>> +	target->pid = spid;
+>> +
+>> +	monitored_task->call_control.fn = damon_hugepage_damon_call_fn;
+>> +	monitored_task->call_control.repeat = true;
+>> +	monitored_task->call_control.data = monitored_task;
+>> +
+>> +	struct damos *scheme = damon_hugepage_new_scheme(
+>> +			HIGHEST_MIN_ACCESS, DAMOS_COLLAPSE);
+>> +	if (!scheme)
+>> +		return -ENOMEM;
+>> +
+>> +	damon_set_schemes(ctx, &scheme, 1);
+>> +
+>> +	monitored_task->ctx = ctx;
+>> +	err = damon_start(&monitored_task->ctx, 1, false);
+>> +	if (err)
+>> +		return err;
+>> +
+>> +	return damon_call(monitored_task->ctx, &monitored_task->call_control);
+>> +}
+>> +
+>> +static int add_monitored_task(int pid, struct list_head *task_monitor)
+>> +{
+>> +	struct hugepage_task *new_hugepage_task;
+>> +	int err;
+>> +
+>> +	new_hugepage_task = kzalloc_obj(*new_hugepage_task);
+>> +	if (!new_hugepage_task)
+>> +		return -ENOMEM;
+>> +
+>> +	new_hugepage_task->pid = pid;
+>> +	INIT_LIST_HEAD(&new_hugepage_task->list);
+>> +	err = damon_hugepage_init_task(new_hugepage_task);
+>> +	if (err)
+>> +		return err;
+>> +	list_add(&new_hugepage_task->list, task_monitor);
+>> +	return 0;
+>> +}
+>> +
+>> +static int damon_hugepage_handle_commit_inputs(
+>> +		struct list_head *monitored_tasks)
+>> +{
+>> +	int i = 0;
+>> +	int err = 0;
+>> +	bool found;
+>> +	struct hugepage_task *monitored_task, *tmp;
+>> +
+>> +	if (!commit_inputs)
+>> +		return 0;
+>> +
+>> +	while (i < MAX_MONITORED_PIDS) {
+>> +		if (!monitored_pids[i])
+>> +			break;
+>> +
+>> +		found = false;
+>> +
+>> +		rcu_read_lock();
+>> +		if (!find_vpid(monitored_pids[i])) {
+>> +			rcu_read_unlock();
+>> +			continue;
+>> +		}
+>> +
+>> +		rcu_read_unlock();
+>> +
+>> +		list_for_each_entry_safe(monitored_task, tmp, monitored_tasks, list) {
+> 
+> Please wrap lines for the 80 columns limit.
+
+Interesting, when check it, i was less than 80 columns. Even if I copy this line
+and paste it into any text editor, I still get less than 80 characters.
+
+> 
+>> +			if (monitored_task->pid == monitored_pids[i]) {
+>> +				list_move(&monitored_task->list, monitored_tasks);
+>> +				found = true;
+>> +				break;
+>> +			}
+>> +		}
+>> +		if (!found) {
+>> +			err = add_monitored_task(monitored_pids[i], monitored_tasks);
+>> +			/* Skip failed tasks */
+>> +			if (err)
+>> +				continue;
+>> +		}
+>> +		i++;
+>> +	}
+>> +
+>> +	i = 0;
+>> +	list_for_each_entry_safe(monitored_task, tmp, monitored_tasks, list) {
+>> +		i++;
+>> +		if (i <= num_monitored_pids)
+>> +			continue;
+>> +
+>> +		err = damon_stop(&monitored_task->ctx, 1);
+>> +		damon_destroy_ctx(monitored_task->ctx);
+>> +		list_del(&monitored_task->list);
+>> +		kfree(monitored_task);
+>> +	}
+>> +
+>> +	commit_inputs = false;
+>> +	return err;
+>> +}
+>> +
+>> +static int damon_manager_monitor_thread(void *data)
+>> +{
+>> +	int err = 0;
+>> +	int i;
+>> +	struct hugepage_task *entry, *tmp;
+>> +
+>> +	LIST_HEAD(monitored_tasks);
+>> +
+>> +	for (i = 0; i < MAX_MONITORED_PIDS; i++) {
+>> +		if (!monitored_pids[i])
+>> +			break;
+>> +
+>> +		rcu_read_lock();
+>> +		if (!find_vpid(monitored_pids[i])) {
+>> +			rcu_read_unlock();
+>> +			continue;
+>> +		}
+>> +		rcu_read_unlock();
+>> +
+>> +		add_monitored_task(monitored_pids[i], &monitored_tasks);
+>> +	}
+>> +
+>> +
+>> +	while (!kthread_should_stop()) {
+>> +		schedule_timeout_idle(usecs_to_jiffies(monitor_period));
+>> +		err = damon_hugepage_handle_commit_inputs(&monitored_tasks);
+>> +		if (err)
+>> +			break;
+>> +	}
+>> +
+>> +	list_for_each_entry_safe(entry, tmp, &monitored_tasks, list) {
+>> +		err = damon_stop(&entry->ctx, 1);
+>> +		damon_destroy_ctx(entry->ctx);
+>> +	}
+>> +
+>> +	for (int i = 0; i < MAX_MONITORED_PIDS;) {
+> 
+> You can just resue i after initializing here, instead of defining it again.
+
+Again, left overs from the previous refactor. My bad.
+
+> 
+>> +		monitored_pids[i] = 0;
+>> +		i++;
+>> +	}
+>> +	return err;
+>> +}
+>> +
+>> +static int damon_hugepage_start_monitor_thread(void)
+>> +{
+>> +	num_monitored_pids = 0;
+>> +	monitor_thread = kthread_create(damon_manager_monitor_thread, NULL,
+>> +				 "damon_dynamic");
+>> +
+>> +	if (IS_ERR(monitor_thread))
+>> +		return PTR_ERR(monitor_thread);
+>> +
+>> +	wake_up_process(monitor_thread);
+>> +	return 0;
+>> +}
+>> +
+>> +static int damon_hugepage_turn(bool on)
+>> +{
+>> +	int err = 0;
+>> +
+>> +	mutex_lock(&enable_disable_lock);
+>> +	if (!on) {
+>> +		if (monitor_thread) {
+>> +			kthread_stop(monitor_thread);
+>> +			monitor_thread = NULL;
+>> +		}
+>> +		goto out;
+>> +	}
+>> +	err = damon_hugepage_start_monitor_thread();
+>> +out:
+>> +	mutex_unlock(&enable_disable_lock);
+>> +	return err;
+>> +}
+>> +
+>> +static int damon_hugepage_enabled_store(const char *val,
+>> +				const struct kernel_param *kp)
+>> +{
+>> +	bool is_enabled = enabled;
+>> +	bool enable;
+>> +	int err;
+>> +
+>> +	err = kstrtobool(val, &enable);
+>> +	if (err)
+>> +		return err;
+>> +
+>> +	if (is_enabled == enable)
+>> +		return 0;
+>> +
+>> +	err = damon_hugepage_turn(enable);
+>> +	if (err)
+>> +		return err;
+>> +
+>> +	enabled = enable;
+>> +	return err;
+>> +}
+>> +
+>> +static const struct kernel_param_ops enabled_param_ops = {
+>> +	.set = damon_hugepage_enabled_store,
+>> +	.get = param_get_bool,
+>> +};
+>> +
+>> +module_param_cb(enabled, &enabled_param_ops, &enabled, 0600);
+>> +MODULE_PARM_DESC(enabled,
+>> +	"Enable or disable DAMON_DYNAMIC_HUGEPAGES (default: disabled)");
+> 
+> s/DYNAMIC_// ?
+
+OK
+
+> 
+>> +
+>> +static int __init damon_hugepage_init(void)
+>> +{
+>> +	int err;
+>> +
+>> +	/* 'enabled' has set before this function, probably via command line */
+>> +	if (enabled)
+>> +		err = damon_hugepage_turn(true);
+>> +
+>> +	if (err && enabled)
+>> +		enabled = false;
+>> +	return err;
+>> +}
+>> +
+>> +module_init(damon_hugepage_init);
 >> -- 
 >> 2.43.0
 > 
-> The code looks good to me.
+> [1] https://lore.kernel.org/00aa6914-8e52-49a2-9875-588efc096c5e@huawei-partners.com
 > 
 > 
 > Thanks,
 > SJ
-> 
-> [...]
 > 
 
 -- 
