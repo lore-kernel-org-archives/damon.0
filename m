@@ -1,41 +1,42 @@
-Received: from frasgout.his.huawei.com (frasgout.his.huawei.com [185.176.79.56])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E4CE3C0634
-	for <damon@lists.linux.dev>; Tue, 10 Mar 2026 16:25:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.176.79.56
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B1031DD877;
+	Wed, 11 Mar 2026 00:51:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773159939; cv=none; b=SXgs6k+Szu6RkFt5gg3J2avuI+LdOLcdySnnJp0hbu8Ag2i5RxsN0OedgSc3b2JX6ZrvZV4cSLColAkbWyPNox4qnctgh/ViwyVI6o0YGkFMKsEAn7IyT7unwZzAf35dzcKz1h4VNRfHmTsVjqesWOKzF1iZp1rY8E0brXZdv2s=
+	t=1773190301; cv=none; b=gdubz78O4BHW6RVqTNBH0mP/wwWar6ukyIWSZVTqEVbPQP4Pt/vy/l2s/d2/lN2sJjKe66q5Oh4L0afkYCcJUzenudzugBkT/13a68iYEQNnasjVgy+dTsyKiUpReYRnrRP4Gs+MarwAoZlU4vE/J65nNCvWwoOdZvbtYe2fHp4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773159939; c=relaxed/simple;
-	bh=HqsAeC9EO8Mv3nmO/29GvCXOg2xFbDpa1HG7aIOnmHs=;
-	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=V/JmExvq5hkLQrsncsnDe0kubY/hoQaoIclpvZJRX0/jhGG5UFmleiMcGq8N7CxVnes3uZxmyqFbqEXge7pc6XoUDOJScIoDB5Dak35CrK+d+yh7GbkI0Pu/V7MaWdIB8aJBHJpwLBk9SLsJ4Ltv/VyqqY5ScKpubOc0Fmdlv4A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei-partners.com; spf=pass smtp.mailfrom=huawei-partners.com; arc=none smtp.client-ip=185.176.79.56
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei-partners.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei-partners.com
-Received: from mail.maildlp.com (unknown [172.18.224.150])
-	by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4fVfNd5FYPzJ467L;
-	Wed, 11 Mar 2026 00:24:49 +0800 (CST)
-Received: from mscpeml500003.china.huawei.com (unknown [7.188.49.51])
-	by mail.maildlp.com (Postfix) with ESMTPS id 8AF044056B;
-	Wed, 11 Mar 2026 00:25:34 +0800 (CST)
-Received: from mscphis01197.huawei.com (10.123.65.218) by
- mscpeml500003.china.huawei.com (7.188.49.51) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.11; Tue, 10 Mar 2026 19:25:34 +0300
-From: <gutierrez.asier@huawei-partners.com>
-To: <gutierrez.asier@huawei-partners.com>, <artem.kuzin@huawei.com>,
-	<stepanov.anatoly@huawei.com>, <wangkefeng.wang@huawei.com>,
-	<yanquanmin1@huawei.com>, <zuoze1@huawei.com>, <damon@lists.linux.dev>,
-	<sj@kernel.org>, <akpm@linux-foundation.org>, <linux-mm@kvack.org>,
-	<linux-kernel@vger.kernel.org>
-Subject: [RFC PATCH v2 4/4] DAMON_HOT_HUGEPAGE documentation
-Date: Tue, 10 Mar 2026 16:24:20 +0000
-Message-ID: <20260310162420.4180562-5-gutierrez.asier@huawei-partners.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260310162420.4180562-1-gutierrez.asier@huawei-partners.com>
-References: <20260310162420.4180562-1-gutierrez.asier@huawei-partners.com>
+	s=arc-20240116; t=1773190301; c=relaxed/simple;
+	bh=cDxvgkx6tl3e7lZvIv3KCaXNgG249qNutfn/S+qhgFI=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=WvQl8F22JUaaUqg7c4tbXbRxwufQxf+XM7KO+8VTf2+1coEzjvlwYt9Dn5yPGu5+sLIQEqIB4GutHPq6ywR+i/M3pNQRM2TDu90l5NJE+haUCdmhKxvbhgs2GAkMf6GLGo0GSrrOOyqr2VAe23vC8TgLikNMX4LtzJKnofzppFc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=quHwNFcj; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="quHwNFcj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EF20C19423;
+	Wed, 11 Mar 2026 00:51:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1773190300;
+	bh=cDxvgkx6tl3e7lZvIv3KCaXNgG249qNutfn/S+qhgFI=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=quHwNFcjm9RQ3g3rqorYfmuFz2SZ6W4bnE4NqkAYUDvCrdmNYDEzRS0hVcLXRUEXp
+	 zbCWwRFrRzxwTeTWLfCCji263N50vlYkCQgBSQzrDPOaz7BdQhSxrzL8W9TqZRueWF
+	 XaGRFqTo6P7wScMPP/HYWiCWLxjVg88srGOOYGlipyHii0wxzr0opvrXh1lxf+n3m2
+	 6nroMV5gxSYeBhecXxnqM2MS37zE62oJqFDUhobcepYMBq+RdrYlFqpW668kwO5vAg
+	 yu+CkbRsjCvOHVPk9jUtzEmBz+cBZjwY26SeYTOsM3p0nu5qiXtiTTk3e/gyLRT+8F
+	 ab2iaqmOWwEow==
+From: SeongJae Park <sj@kernel.org>
+To: Akinobu Mita <akinobu.mita@gmail.com>
+Cc: SeongJae Park <sj@kernel.org>,
+	damon@lists.linux.dev,
+	linux-perf-users@vger.kernel.org
+Subject: Re: [RFC PATCH v2 0/6] mm/damon: introduce perf event based access check
+Date: Tue, 10 Mar 2026 17:51:31 -0700
+Message-ID: <20260311005132.90285-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260309010009.11639-1-akinobu.mita@gmail.com>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -43,213 +44,200 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: mscpeml500004.china.huawei.com (7.188.26.250) To
- mscpeml500003.china.huawei.com (7.188.49.51)
 
-From: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
+On Mon,  9 Mar 2026 10:00:03 +0900 Akinobu Mita <akinobu.mita@gmail.com> wrote:
 
-Documentation for hugepage DAMON module.
+> DAMON currently only provides PTE accessed-bit based access check, this
+> patch series adds a new perf event based access check.
+> 
+> Since perf event-based access checks do not require modifying the PTE
+> accessed-bit for pages representing each damon region, it reduces the
+> overhead of monitoring at a fixed granularity of the page size.
 
-Signed-off-by: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
-Co-developed-by: Anatoly Stepanov <stepanov.anatoly@huawei.com>
----
- .../admin-guide/mm/damon/hugepage.rst (new)   | 186 ++++++++++++++++++
- 1 file changed, 186 insertions(+)
+Based on my understanding of this patch sereis that I was enlightened from the
+conversation with you on the RFC v1 and kind comments from perf community, I
+agree to the points of this patch series.  Extending DAMON with h/w features
+like AMD IBS and Intel PEBS is what multiple people shown interests.  I believe
+it can benefit multiple users.
 
-diff --git a/Documentation/admin-guide/mm/damon/hugepage.rst b/Documentation/admin-guide/mm/damon/hugepage.rst
-new file mode 100644
-index 000000000000..a7b20a670824
---- /dev/null
-+++ b/Documentation/admin-guide/mm/damon/hugepage.rst
-@@ -0,0 +1,186 @@
-+.. SPDX-License-Identifier: GPL-2.0
-+
-+=========================================
-+DAMON-based Huge Pages Collapsing
-+=========================================
-+
-+
-+DAMON-based dynamic hugepages collapsing (DAMON_HOT_HUGEPAGE) is a kernel module
-+that monitors a number of tasks simultaneously. The hot regions are collapsed
-+into huge pages.
-+
-+Where Hot Region Huge Pages Collapsing is Required?
-+================================================
-+
-+As main memory availability increases, the number of TLB entries does not
-+increase proportionally. This adds more pressure to TLB. Huge pages are a
-+solution. However, since turning on transparent huge pages globally may lead to
-+fragmentation and memory waste, it is usually turned off.
-+
-+This module allows to automatically detect hot regions and collapse VMA that are
-+hot.
-+
-+How It Works?
-+=============
-+
-+DAMON_HOT_HUGEPAGE spawns a new kthread which will monitor the applications in
-+the system. The monitor thread will calculate the moving average of the sum of
-+utimes of all the threads for all the processes. Then, pick the top three and
-+launch a damon process to monitor the hot regions in those tasks.
-+
-+Since we don't know the minaccess number in advance, we set it to 90 initially,
-+and we keep decreasing that minaccess until a collapse happens.
-+
-+If a task turns cold, the monitor thread will detect it (it will not fall in the
-+top three hot tasks), and stop the damon thread for that task.
-+
-+Interface: Module Parameters
-+============================
-+
-+To use this feature, you should first ensure your system is running on a kernel
-+that is built with CONFIG_DAMON_HOT_HUGEPAGE=y.
-+
-+To let sysadmins enable or disable it and tune for the given system,
-+DAMON_HOT_HUGEPAGE utilizes module parameters. That is, you can put
-+damon_dynamic_hotpages.<parameter>=<value> on the kernel boot command line or
-+write proper values to /sys/module/damon_dynamic_hotpages/parameters/<parameter>
-+files.
-+
-+Below are the description of each parameter.
-+
-+enabled
-+-------
-+
-+Enable or disable DAMON_HOT_HUGEPAGE.
-+
-+You can enable DAMON_HOT_HUGEPAGE by setting the value of this parameter as Y.
-+Setting it as N disables DAMON_HOT_HUGEPAGE. Note that, although
-+DAMON_HOT_HUGEPAGE monitors the system and starts damon threads, those threads
-+could do no real monitoring due to the watermarks-based activation condition.
-+Refer to below descriptions for the watermarks parameter for this.
-+
-+quota_ms
-+--------
-+
-+Limit of time for collapsing memory regions in milliseconds.
-+
-+DAMON_HOT_HUGEPAGE tries to use only up to this time within a time window
-+(quota_reset_interval_ms) for trying memory collapse. This can be used for
-+limiting CPU consumption of DAMONHOT_HUGEPAGE. If the value is zero, the limit
-+is disabled.
-+
-+10 ms by default.
-+
-+quota_reset_interval_ms
-+-----------------------
-+
-+The time quota charge reset interval in milliseconds.
-+
-+The charge reset interval for the quota of time (quota_ms). That is,
-+DAMON_HOT_HUGEPAGE does not collapse memory for more than quota_ms milliseconds
-+or quotasz bytes within quota_reset_interval_ms milliseconds.
-+
-+1 second by default.
-+
-+wmarks_interval
-+---------------
-+
-+The watermarks check time interval in microseconds.
-+
-+Minimal time to wait before checking the watermarks, when DAMON_HOT_HUGEPAGE is
-+enabled but inactive due to its watermarks rule. 5 seconds by default.
-+
-+wmarks_high
-+-----------
-+
-+Free memory rate (per thousand) for the high watermark.
-+
-+If free memory of the system in bytes per thousand bytes is higher than this,
-+DAMON_HOT_HUGEPAGE becomes inactive, so it does nothing but periodically checks
-+the watermarks. 200 (20%) by default.
-+
-+wmarks_mid
-+----------
-+
-+Free memory rate (per thousand) for the middle watermark.
-+
-+If free memory of the system in bytes per thousand bytes is between this and the
-+low watermark, DAMON_HOT_HUGEPAGE becomes active, so starts the monitoring and
-+the memory collapsing. 150 (15%) by default.
-+
-+wmarks_low
-+----------
-+
-+Free memory rate (per thousand) for the low watermark.
-+
-+If free memory of the system in bytes per thousand bytes is lower than this,
-+DAMON_HOT_HUGEPAGE becomes inactive, so it does nothing but periodically checks
-+the watermarks. 50 (5%) by default.
-+
-+sample_interval
-+---------------
-+
-+Sampling interval for the monitoring in microseconds.
-+
-+The sampling interval of DAMON for the cold memory monitoring. Please refer to
-+the DAMON documentation (:doc:usage) for more detail. 5ms by default.
-+
-+aggr_interval
-+-------------
-+
-+Aggregation interval for the monitoring in microseconds.
-+
-+The aggregation interval of DAMON for the cold memory monitoring. Please refer
-+to the DAMON documentation (:doc:usage) for more detail. 100ms by default.
-+
-+min_nr_regions
-+--------------
-+
-+Minimum number of monitoring regions.
-+
-+The minimal number of monitoring regions of DAMON for the cold memory
-+monitoring. This can be used to set lower-bound of the monitoring quality. But,
-+setting this too high could result in increased monitoring overhead. Please
-+refer to the DAMON documentation (:doc:usage) for more detail. 10 by default.
-+
-+max_nr_regions
-+--------------
-+
-+Maximum number of monitoring regions.
-+
-+The maximum number of monitoring regions of DAMON for the cold memory
-+monitoring. This can be used to set upper-bound of the monitoring overhead.
-+However, setting this too low could result in bad monitoring quality. Please
-+refer to the DAMON documentation (:doc:usage) for more detail. 1000 by defaults.
-+
-+monitored_pids
-+--------------
-+
-+List of the tasks that are being actively monitored by DAMON threads.
-+
-+commit_inputs
-+-------------
-+
-+Make DAMON_HOT_HUGEPAGE reads the input parameters again, except ``enabled``.
-+
-+Input parameters that updated while DAMON_HOT_HUGEPAGE is running are not
-+applied by default. Once this parameter is set as ``Y``, DAMON_HOT_HUGEPAGE
-+reads values of parametrs except ``enabled`` again. Once the re-reading is done,
-+this parameter is set as ``N``.  If invalid parameters are found while the
-+re-reading, DAMON_HOT_HUGEPAGE will be disabled.
-+
-+Example
-+=======
-+Below runtime example commands make DAMON_HOT_HUGEPAGE to find memory regions in
-+the 3 tasks. It also asks DAMON_HOT_HUGEPAGE to do nothing if the system's free
-+memory rate is more than 50%, but start the real works if it becomes lower than
-+40%.
-+
-+    # cd /sys/module/damon_dynamic_hotpages/parameters/
-+    # echo 3811,10123,12111 > monitored_pids
-+    # echo 10 > quota_ms
-+    # echo 1000 > quota_reset_interval_ms
-+    # echo 500 > wmarks_high
-+    # echo 400 > wmarks_mid
-+    # echo 200 > wmarks_low
-+    # echo Y > enabled
-\ No newline at end of file
--- 
-2.43.0
+I hope this work to be continued until it is landed on the mainline, and I will
+be happy to help.  Probably not exactly in the current shape, though.  I think
+this is still in an early stage.  And for the reason, I will comment on only
+high level things here, rather than diving deep into each patch.
 
+> Furthermore, this patch series also includes a feature that allows you
+> to set a minimum region size for each target, enabling you to monitor
+> at any fixed size greater than the page size for each target.
+
+I'm not very sure if this is really required to be a part of this series.  Can
+you further share more details about what is the benefit of this feeature, and
+if it should be coupled with this patch series?  It would be great if you can
+share some test results proving the arguments.
+
+If this is really beneficial but there is no reason to couple with this series,
+I think merging this separately first or later could also be an option.
+
+> 
+> Using these features also requires modifications to damo, but these are
+> not included in this patch series and are currently under development in
+> the following branch:
+> 
+> * https://github.com/mita/damo/tree/damo-perf-for-v3.1.8
+
+Sounds good.  No rush, but also feel free to send patches or PRs for this.  It
+is common to support DAMON features on DAMON user-space tool even before the
+DAMON features are merged into the mainline.
+
+> 
+> Any feedback or advice on the patch set would be greatly appreciated.
+> 
+> * v2
+
+Let's keep using "RFC" here.
+
+> - reintroduce damon_operations->cleanup()
+> - introduce struct damon_access_report
+> - use struct damon_access_report instead of introducing struct
+>   damon_perf_record
+
+Thank you for doing this.  I hope using not only the struct but the underlying
+infrastructure, though.  Let me comment this more detail below.
+
+> - remove maximum region size setting
+> 
+> * v1
+
+Ditto.  Let's keep using "RFC".
+
+> - https://lore.kernel.org/damon/20260123021014.26915-1-akinobu.mita@gmail.com/T/
+
+Thank you for sharing the link.  This is helpful for me at reviewing.
+
+> 
+> * TODO
+> - Currently, it is possible to unintentionally specify a perf_event
+>   that cannot obtain either PERF_SAMPLE_ADDR or PERF_SAMPLE_PHYS_ADDR
+> - Check if it works in a virtual environment using vPMU
+
+The above two TODOs make sense to me.
+
+I'd like to request below things as main TODOs.
+
+First, I hope the benefit of this change is described in more detail.  The
+current description mentions it is more lightweight since it doesn't need to
+update the accessed bit.  But, PMU-based monitoring should also have its own
+additional work.  It would be nice if you can describe what additional works
+for PMU-based monitoring induce, and why it is generally lower than that of
+access bit modification.
+
+Having a more clear motivation, or expected use case would be nice.  You don't
+neeed to share real details of your use case.  You can anonymize sensitive
+things if needed.  But giving a reasonable and realistic use case will be nice
+to understand where this can really be beneficial.
+
+Sharing a test results showing the benefit will also be very nice.  It doesn't
+need to be huge real world test, but some reasonable amount of data that
+collected on a realistic test setup could be very helpful.
+
+Second, I hope this patch series to reuse the DAMON primitives extension
+infrastructure if possible, to reduce possible future duplications.  I'll add
+more details about this below.
+
+> 
+> Akinobu Mita (6):
+>   mm/damon: reintroduce damon_operations->cleanup()
+
+Thank you for doing this :)
+
+>   mm/damon/core: introduce struct damon_access_report
+
+Again, thank you for doing this.  I understand this is an answer to my previous
+question to the RFC v1 of this series.  I was asking if you considered the
+infrastructure part of my page faults based DAMON extension series, and you
+borrowed the main data structure of the series here.  But, I hope us to reuse
+more of the code, since it is more generic from my point of view.
+
+>   mm/damon/core: add common code for perf event based access check
+
+This patch is introducing a few of sysfs files under DAMON sysfs context
+directory, namely 'perf_events/' and its underlying files.  The files is for
+registering perf events for the access monitoring.  I don't dislike the basic
+concept, but concerned if it is too specific for only perf events and therefore
+cannot be easily extended in future.
+
+The faults-based DAMON extension patch series [1] implements files for similar
+but more general concept.  It defines a concept called sampling primitives.  It
+is the low level primitives for access check.  It could be access bit checking,
+page fault event, or something new, like perf events.  It adds
+monitoring_attrs/sample/primitives/ sysfs directory, which can be used for
+selecting what primitives the user wants to use.  I think perf events can be
+defined as another access check primitive, and the sysfs files can be added
+under here.
+
+I was also bit concerned at the fact that the filees are effectively exposing
+perf_event_attr struct.  That is, I was concerning about stability of the
+struct.  I now see it is a part of linux user api, so I assume it is a stable
+api.  Could you please confirm this?  Also, adding more clarification about
+that fact on the patch would be nice.
+
+>   mm/damon/vaddr: support perf event based access check
+>   mm/damon/paddr: support perf event based access check
+
+My understanding of the above two patches is like below.
+
+1. The perf event samples are added to a circular buffer whenever it is
+   generated.
+2. At the end of each sampling interval, the ops reads each sample in the
+   buffer, find a matching DAMON region for the sample, and updte the
+   'nr_accesses' of the region.
+
+For this, this patch series implements the circular buffer for storing samples,
+and xarrays for finding the matching DAMON region for a given sample.
+
+The page fault based DAMON extension patch series is doing something similar.
+The first patch of the series implements the buffer for storing access samples.
+I think the perf event samples can be stored here.
+
+The seventh patch of the series implements the logic for finding the matching
+DAMON region for each of the samples in the samples buffer, and update the
+'nr_accesses' of the DAMON region.
+
+Because the page fault based extension's infrastructure is quite general for
+any future types of the primitives, I think it would be nice to reuse it.
+
+The infrastructure is quite simple and not optimized for performance.  But
+optimizations can be made later.  I'm more interested in the long term
+maintenance of the interface.  And I think the page fault based extension's
+infrastructure is easier for long term maintenance.  Of course I might be
+biased.  Please let me know what you think.
+
+If it helps and if you don't mind, maybe I can try to implement this series on
+the page fault based infrastructure and share it as another RFC patch series.
+
+>   mm/damon: allow user to set min size of region
+
+As I mentioned abovely, I'm not sure if this is really need to be coupled with
+this entire series.
+
+> 
+>  .../ABI/testing/sysfs-kernel-mm-damon         |  10 +
+>  include/linux/damon.h                         |  63 ++
+>  mm/damon/core.c                               |  77 ++-
+>  mm/damon/ops-common.h                         |  39 ++
+>  mm/damon/paddr.c                              | 105 ++-
+>  mm/damon/sysfs-common.c                       |  11 +
+>  mm/damon/sysfs-common.h                       |   1 +
+>  mm/damon/sysfs.c                              | 399 ++++++++++-
+>  mm/damon/tests/sysfs-kunit.h                  |   2 +
+>  mm/damon/tests/vaddr-kunit.h                  |   5 +-
+>  mm/damon/vaddr.c                              | 654 +++++++++++++++++-
+>  11 files changed, 1332 insertions(+), 34 deletions(-)
+> 
+> -- 
+> 2.43.0
+
+[1] https://lore.kernel.org/20251208062943.68824-1-sj@kernel.org/
+
+
+Thanks,
+SJ
