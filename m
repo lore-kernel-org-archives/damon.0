@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CCD5192590;
-	Wed, 11 Mar 2026 14:15:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05487366563;
+	Wed, 11 Mar 2026 14:18:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773238542; cv=none; b=SqKq+VWYC5jpbL8vCfK3w5uwPeTM0OcuvwEJBveOB+h8/ySzUcNipTd+EIDBd1o1EV496vQUVnC8OHuHl2B5RGjssRmPbZhKeAtc9Lvi3pnC1G6ay/tEODsBdrb9blAdMtC8XYW8v5V0XEF8I5feSdZHpZWtUiM3mc1uErrsJEo=
+	t=1773238683; cv=none; b=ft3Kl2gzo/70DBvbJ5WVcTaxK0xk95zXworwcl+d/mXSOY9slpk/gj9gu4V3Fm890fz73Xbh0CKJ/EIAGiKJLLdXq/aabhEnAR9102InrRBP9EHYmDaXx/J4WlYBRgjwb7N8YLaSVCALs+D0CHErq/dVLLwfGJGwsvxJulPYP64=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773238542; c=relaxed/simple;
-	bh=gJf2hT1zxwV0L7MQvy0u3llLuP0G7FBCE3sa8wyOois=;
+	s=arc-20240116; t=1773238683; c=relaxed/simple;
+	bh=thMAcRBBlSWiPQMxkurkltMdIsa+zjOuygZaQbtIy1s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jMNyM0HVl6RNBuOly/JwszkE7GYKOYEIm2e/ggm1zFiXipoaq0Yv2gkMe0zI8mFl7L2TPQpqwOI53gjWLxzMZL44/fzjYpCayZJcKXLtz5lip/+j0qoDhjGdIaMHnAnk59hOLBYdpLSqJDVrm4UGMljM8emoyuLYFKH+ICqgqh4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=n3DndFFE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=p0O/YmOylgdUCLCfmROh2lq/9L3d3+y+Wd4EOa6XJrrmeKc2fPFAFGhXBkwuTFlEoNc4XdNHgzLofSlKfRZNf/oyXpcFjxiN73I8DBzOqoW47U6uCMNPnRDh/p980eZXm22sfHGNuHddOhSIkV917Z/rwgTCVcZmfbRKSR553cw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aJcweLKm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="n3DndFFE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0ECB3C4CEF7;
-	Wed, 11 Mar 2026 14:15:42 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aJcweLKm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C25EC4CEF7;
+	Wed, 11 Mar 2026 14:18:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773238542;
-	bh=gJf2hT1zxwV0L7MQvy0u3llLuP0G7FBCE3sa8wyOois=;
+	s=k20201202; t=1773238682;
+	bh=thMAcRBBlSWiPQMxkurkltMdIsa+zjOuygZaQbtIy1s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n3DndFFE9UkffnsBBonl96rB5qoX1Z3uyeu5Mj3TI2ljDgv3/9fzJ89O/jXyrvw1p
-	 UkszehXje7Of9U7WRDkWoq885wyPcFnnN6v/CkwRAMuS7HehWQq7eWkySs3TvKCD+1
-	 B9cJIeCm603PxlOK17q5MhQiPnrqQL9qwVFPWm2t9EuoyC+GTTUc89bJZ9go7RkbFq
-	 yZdianXHsN0JOaeOBsx9vqASMrYEQuXHS/FprXofvqFCaL/8J9G1SRdgMxQFzDMhdX
-	 wdurVrXQesYNuBEgARJr6+oQVEh4UzIG06lBd3KpADdGkJKryfMuh1PHogzbm7ncOH
-	 CDiZfZfU2bGRA==
+	b=aJcweLKm9pp8NQp9VuqHN9g8KhPIAgSKYkkfrCK91Dse76Jy5LNRsMJfgggHjy0WJ
+	 n+GgtNlQX1XEejWmDfSv4eh5QAFpi4qDOdZgkNn01QVPdoFDAc1K9wx5kBji1fRo1d
+	 zDe10WErzLLJjshSAEyqrIcJVt57pk7/pHxMJk0JnJ+69U44Uw7Q1oSM6fPCb/dlUo
+	 /Og7UF/JioKTYZ3ynhkxgylF0e631eLBsIeWimgQytJWU5CGOEcvuCLC2Mt1ETLSoF
+	 kN9hZihzKQlvGBFKRqJiSs6zCWZPbBx8I2mTPKzPr5PhV3hrIqOQUci0OCL3YBhHrd
+	 qV0POmeC7KNxA==
 From: SeongJae Park <sj@kernel.org>
 To: Gutierrez Asier <gutierrez.asier@huawei-partners.com>
 Cc: SeongJae Park <sj@kernel.org>,
@@ -38,11 +38,11 @@ Cc: SeongJae Park <sj@kernel.org>,
 	akpm@linux-foundation.org,
 	linux-mm@kvack.org,
 	linux-kernel@vger.kernel.org
-Subject: Re: [RFC PATCH v2 1/4] mm/damon: Generic context creation for modules
-Date: Wed, 11 Mar 2026 07:15:32 -0700
-Message-ID: <20260311141533.96435-1-sj@kernel.org>
+Subject: Re: [RFC PATCH v2 2/4] mm/damon: Support for synchrounous huge pages collapse
+Date: Wed, 11 Mar 2026 07:17:53 -0700
+Message-ID: <20260311141753.96543-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <013c9fcd-bdeb-4508-8495-9ce9cd65b578@huawei-partners.com>
+In-Reply-To: <0c3068da-4dcb-4bc7-a762-2f529cb5abc2@huawei-partners.com>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -52,61 +52,28 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Wed, 11 Mar 2026 16:10:19 +0300 Gutierrez Asier <gutierrez.asier@huawei-partners.com> wrote:
+On Wed, 11 Mar 2026 16:11:12 +0300 Gutierrez Asier <gutierrez.asier@huawei-partners.com> wrote:
 
 > 
 > 
-> On 3/11/2026 3:57 AM, SeongJae Park wrote:
-> > On Tue, 10 Mar 2026 16:24:17 +0000 <gutierrez.asier@huawei-partners.com> wrote:
+> On 3/11/2026 4:02 AM, SeongJae Park wrote:
+> > On Tue, 10 Mar 2026 16:24:18 +0000 <gutierrez.asier@huawei-partners.com> wrote:
 > > 
 > >> From: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
-> >>
-> >> It is more elegant to have a generic version of new context creation
-> >> which receives the mode as a parameter.
-> >>
-> >> Signed-off-by: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
-> >> Co-developed-by: Anatoly Stepanov <stepanov.anatoly@huawei.com>
-> >> ---
-> >>  mm/damon/lru_sort.c       | 5 +++--
-> >>  mm/damon/modules-common.c | 6 +++---
-> >>  mm/damon/modules-common.h | 4 ++--
-> >>  mm/damon/reclaim.c        | 5 +++--
-> >>  4 files changed, 11 insertions(+), 9 deletions(-)
-> >>
-> >> diff --git a/mm/damon/lru_sort.c b/mm/damon/lru_sort.c
-> >> index 7bc5c0b2aea3..143ee0b21da6 100644
-> >> --- a/mm/damon/lru_sort.c
-> >> +++ b/mm/damon/lru_sort.c
-> >> @@ -287,7 +287,8 @@ static int damon_lru_sort_apply_parameters(void)
-> >>  	unsigned int hot_thres, cold_thres;
-> >>  	int err;
-> >>  
-> >> -	err = damon_modules_new_paddr_ctx_target(&param_ctx, &param_target);
-> >> +	err = damon_modules_new_ctx_target(&param_ctx, &param_target,
-> >> +				DAMON_OPS_PADDR);
 > > 
-> > I like the name of the function is becoming shorter.  But I'm not happy with
-> > the fact the resulting calling code becomes longer.
+> > Please add more descriptions of the change, including the motivation.
 > > 
-> > I understand you are doing this extension because you want a version of the
-> > function for vaddr.  What about introducing another dedicated function, say,
-> > damon_modules_new_vaddr_ctx_target() ?
-> > 
-> > And you can avoid duplicates between damon_modules_new_{p,v}addr_ctx_target()
-> > by implementing internal function, say, damon_modules_new_ctx_target() that
-> > receives the damon_ops_id.  And damon_modules_new_{P,v}addr_ctx_target() will
-> > just wrappers of damon_modules_new_ctx_target().
+> > I assume the motivation is similar to MADV_COLLAPSE that aims to make
+> > synchronous and therefore faster huge page collapsing impacts copared to
+> > MADV_HUGEPAGE?  It would be nice to make it clear here.  Also, if my assumption
+> > is not wrong, adding a test results showing the benefit of DAMOS_COLLAPSE over
+> > DAMOS_HUGEPAGE here would be nice.
 > 
-> Sure, I will do it.
+> You are right. I will make it more clear in the cover letter for the next
+> version.
 
-Thanks for accepting my suggestion.
-
-> 
-> Since this is some generic code not related to the module I am working on,
-> maybe I can move this to a different patch set that we can upstream. What do
-> you think?
-
-Please feel free to do so :)
+Sounds good.  But please add a brief commit message in addition to the subject
+here, too.  Some people complains blank commit message looks odd.
 
 
 Thanks,
