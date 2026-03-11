@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7872631E828;
-	Wed, 11 Mar 2026 14:32:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E31F3C944E;
+	Wed, 11 Mar 2026 14:39:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773239534; cv=none; b=pTpXM31zOCEOniN7CMVWSS5JspivjEvjRO+Lh+jEbwwDN+4HryPVHsl2b3E8l+xOkVN+aN5fuc1Qza8oUXnvaMPoKWsxydwnvS/l7merS89yFTNGRevL4/M8orVMuua+eNpL5HMx+SV8OsEuxDjD9NOJlGMZf9A/CEmwQacrsH4=
+	t=1773239962; cv=none; b=dGQkSIfRWr9FxdwX1WmqodFbGhzQJV5kzqGJpcKoR6WJ0QwMnFnIcGM7JBDTTcT2QA5sIw0o+QTkCJBoxRD+mo3ipZm6H9n2PFJGU5Pkf8qG+XFUuKK+Ee3AsBBEFqerD1ZDo7dEPCXpaq8yXDX/YsqIHkePN8PCJo2xeJRnH9Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773239534; c=relaxed/simple;
-	bh=pAJnkE02U++SCDFnIRPdCudeLD7FWR/QDkiyqw4OeSQ=;
+	s=arc-20240116; t=1773239962; c=relaxed/simple;
+	bh=NJ10AZXdscg+DvMqnyYzr0It1WL0JuhQV8FD7xqijPs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pXIKKA7rG0XIgouYjWzg9YZcc3d8a685ZltUyd/Ky9JEQ5ezqy9mHHW8DlTzdYtLaiD9p4/dShXHjNxUVWtks15NRf1g98kR36mREa0XmO9dGNQBhdb6fHCrH9No+BbUBTvcY5LeZu8bdo3LyiBAhtxDRGcskrbtyDc4fH3lRtc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JSfKl12r; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=U9u76iEQ1TUHdrvbfpuQSplVdxqm7iUR/JSMszae1GXTHeSnIfMLEkKL7AFDbwjfh/8kLrVGdoZG4g+7MGOi3CDe7ju+VilMlfrwc+l2Lvqq+8Hd9ryriP30EmEG1D4brktm67rhUEGmYHKnaFSiOk4xm8ITso0Bs4HiHlDVrjk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LT2IU5HN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JSfKl12r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4F0BC4CEF7;
-	Wed, 11 Mar 2026 14:32:13 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LT2IU5HN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C26ABC4CEF7;
+	Wed, 11 Mar 2026 14:39:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773239534;
-	bh=pAJnkE02U++SCDFnIRPdCudeLD7FWR/QDkiyqw4OeSQ=;
+	s=k20201202; t=1773239962;
+	bh=NJ10AZXdscg+DvMqnyYzr0It1WL0JuhQV8FD7xqijPs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JSfKl12rdKbyzdw1l2LDF1qw+RCEx1P7A0VJCwSeMZCBQ2nTD6Ioi5s/X1yCFhzCU
-	 w7eboHQt3W5KjRMKLg71cjf6SKm8scbu084kgMTy2WFSERKVFJy+eKbnhjTgm0CoFi
-	 fD4DF0liz/vqTD6ul4ZEH1FwCcS7+6DBtZ20uo4LtlNCG8msLiJmBBDu3Cjwf27VKS
-	 1pT64VOzVvi8Gy1eSJ8sF8tKg0bK+DxmPRlwKdLptvma0DP9zyv+1Ztd+4uml24JEB
-	 CksE6mSFSDJhYXK0HSGB3GyZ/2TUEHS1esNFUgEcTsVInI/62LCSR1jVe9E8SwjaZ8
-	 ESrGnH5op5clw==
+	b=LT2IU5HNWxB0iJ9LuNGYfyn0SEQ15nR4YpdC9Swgnko7sYltMJyqQ00h5IO0OnX3w
+	 httHIieCaSHUABplizTeBVYaHellks5Rqr0UrYpFiMAgvWA5sQUIovsx1bEsKUuCFc
+	 zepKlIOgdIPkU+S0gO64kMVMzNLTavCytAnoqpeye8ANKiclih2r8wIF7XHvb/pE5L
+	 20Z1s0unzplcxO5ABRZH5WyjR93reDTgeIpd9l6kHQXZQSvNgFQw0teErwsKaTHSep
+	 0i0mZKTHeRpoTka4EQQ8pNUdofPmuInPebfnmcd02gmrKku+fCdzsTCjfD4YsnNJFX
+	 v4ZzV6uQrObLQ==
 From: SeongJae Park <sj@kernel.org>
 To: Gutierrez Asier <gutierrez.asier@huawei-partners.com>
 Cc: SeongJae Park <sj@kernel.org>,
@@ -38,11 +38,11 @@ Cc: SeongJae Park <sj@kernel.org>,
 	akpm@linux-foundation.org,
 	linux-mm@kvack.org,
 	linux-kernel@vger.kernel.org
-Subject: Re: [RFC PATCH v2 3/4] mm/damon: New module with hot application detection
-Date: Wed, 11 Mar 2026 07:32:06 -0700
-Message-ID: <20260311143207.96707-1-sj@kernel.org>
+Subject: Re: [RFC PATCH v2 0/4] mm/damon: Support hot application detections
+Date: Wed, 11 Mar 2026 07:39:12 -0700
+Message-ID: <20260311143912.96834-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <2895abe3-96f7-4428-8161-a8223ec758b7@huawei-partners.com>
+In-Reply-To: <577a2b92-3507-400c-acbd-32c914d374b7@huawei-partners.com>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -52,110 +52,142 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Wed, 11 Mar 2026 16:45:06 +0300 Gutierrez Asier <gutierrez.asier@huawei-partners.com> wrote:
+On Wed, 11 Mar 2026 16:08:56 +0300 Gutierrez Asier <gutierrez.asier@huawei-partners.com> wrote:
 
+> Hi SeongJae,
 > 
-> 
-> On 3/11/2026 7:11 AM, SeongJae Park wrote:
-> > On Tue, 10 Mar 2026 16:24:19 +0000 <gutierrez.asier@huawei-partners.com> wrote:
+> On 3/11/2026 8:07 AM, SeongJae Park wrote:
+> > Hello Asier,
+> > 
+> > 
+> > Thank you for continuing this work!
+> > 
+> > On Tue, 10 Mar 2026 16:24:16 +0000 <gutierrez.asier@huawei-partners.com> wrote:
 > > 
 > >> From: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
+> >>
+> >> Overview
+> >> ----------
 > > 
-> > I'd like to discuss about this in a high level, but I'd like to do that on the
-> > cover letter.  To this patch, I'm therefore adding comments for only details
-> > that stand out immeadiately to me.
+> > Let's make the legnth of the subject and the length of the underline same.
+> > 
+> >>
+> >> This patch set introduces a new dynamic mechanism for detecting hot applications
+> >> and hot regions in those applications.
+> > 
+> > Seems now you offload the hot applications detection to the user space.  If I'm
+> > not wrong, you should remove "hot applications and" on the above sentence.
 > 
-> I will update the cover letter to add more details for the next version.
+> You're right. I was not sure whether changing the RFC subject was right or not.
+> I will change it for the next RFC version.
+
+It's fine to change the subject.  Please feel free to do so in the next version
+:)
+
 > 
 > >>
-> >> 1. It first launches a new kthread called damon_dynamic. This thread
-> >> will behave as a supervisor, launching new kdamond threads for all
-> >> the processes we want to montiored. The tasks are sorted
-> >> by utime delta. For the top N tasks, a new kdamond thread will be
-> >> launched.
+> >> Motivation
+> >> -----------
+> >>
+> >> Since TLB is a bottleneck for many systems, a way to optimize TLB misses (or
+> >> hits) is to use huge pages. Unfortunately, using "always" in THP leads to memory
+> >> fragmentation and memory waste. For this reason, most application guides and
+> >> system administrators suggest to disable THP.
+> >>
+> >>
+> >> Solution
+> >> -----------
+> >>
+> >> A new Linux kernel module that uses DAMON to detect hot regions and collapse
+> >> those regions into huge pages. The user supplies a set of PIDs using a module
+> >> parameter,
 > > 
-> > If I read the cover letter and the code of this patch correctly, seems the last
-> > two sentences of the above paragraph is outdated.  Please correct me if I'm
-> > wrong.
-> 
-> Correct, I forgot to delete it.
-
-Thank you for confirming that, and accepting my suggestions below.  Most of
-your answers to my comments make sense, so I'm cutting most of the part except
-places where I want to clarify my points or answer your questions below.
-
-[...]
-> >> +};
-> >> +DEFINE_DAMON_MODULES_DAMOS_TIME_QUOTA(damon_hugepage_quota);
-> >> +
-> >> +static struct damos_watermarks damon_hugepage_wmarks = {
-> >> +	.metric = DAMOS_WMARK_FREE_MEM_RATE,
-> >> +	.interval = 5000000, /* 5 seconds */
-> >> +	.high = 900, /* 90 percent */
-> >> +	.mid = 800, /* 80 percent */
-> >> +	.low = 50, /* 5 percent */
-> >> +};
-> >> +DEFINE_DAMON_MODULES_WMARKS_PARAMS(damon_hugepage_wmarks);
+> > This sounds reasonable to me.
 > > 
-> > In the RFC v1 discussion, you also mentioned you will remove the above, but
-> > seems it is forgotten?
+> >> and then, the module launches a new kdamond thread to monitor each
+> >> of the tasks.
+> >>
+> >> In each kdamond, we start with a high min_access value. Our goal is to find the
+> >> "maximum" min_access value at which point the DAMON action is applied. In each
+> >> cycle, if no action is applied, we lower the min_access.
 > > 
-> > Also, my understadning of your reply on the previous discussion was that you
-> > don't really want to use watermarks in this module, and therefore you want to
-> > remove it.  Am I correct?  If I'm not, maybe I'm still not understanding the
-> > intention of the watermarks.  Can you please enlighten me?
-> 
-> Since I refactored heavily the previous code, I forgot to delete this bit.
-> I will remove it now.
-
-Thank you for clarifying this :)
-
-> 
-> >> +
-> >> +static struct damon_attrs damon_hugepage_mon_attrs = {
-> >> +	.sample_interval = 5000, /* 5 ms */
-> >> +	.aggr_interval = 100000, /* 100 ms */
-> >> +	.ops_update_interval = 0,
+> > So, this patch series introduces a sort of auto-tuning of the hugepages
+> > collapse hotness threshold, that implemented in the new module.
 > > 
-> > Is ops_update_interval = 0 really your intention?
-> 
-> I didn't think about it. I will set it to 60 seconds, as in other modules.
-
-Sounds good.
-
-When 'vaddr' operation set is used, for every ops_update_interval, 'vaddr'
-updates monitoring target regions boundary to cover all virtual address
-mappings.  If it is '0', it will do the update on every iteration of the
-kdamond main loop.  It can result in unnecessary overhead.  So I was asking the
-above question.  Setting it to 60 seconds sounds good to me.
-
-[...]
-> >> +	err = damon_modules_new_ctx_target(&param_ctx, &param_target,
-> >> +					   DAMON_OPS_VADDR);
-> >> +	if (err)
-> >> +		return err;
+> > We already have a sort of DAMOS auto-tuning feature, namely goal-based DAMOS
+> > quota auto-tuning [1].  Have you considered using that?  Of course, it might
+> > not be able to be used as is.  Some extensions, e.g., introduction of new goal
+> > metric, may be needed.
 > > 
-> > You should deallocate param_ctx before returning the error.
-> 
-> Not sure about this. As far as I know, damon_modules_new_paddr_ctx_target
-> will destroy the context in case there is an error. In fact, reclaim and 
-> lru_sort modules just return error when damon_modules_new_paddr_ctx_target
-> fails, no cleanup used.
-
-You're correct, I was trying to comment only below, but somehow confused the
-place.  Sorry for the confusion.
-
-[...]
-> >> +
-> >> +		list_for_each_entry_safe(monitored_task, tmp, monitored_tasks, list) {
+> > Yet another approach would be implementing the auto-tuning in the user-space.
+> > Because DAMON parameters can be updated online, updating the min_access from
+> > the user space should be doable?  Given the fact the module anyway require
+> > user-space control for feeding the list of applications to apply access-aware
+> > huge pages collapsing, I find no problem at user space driven auto-tuning.
 > > 
-> > Please wrap lines for the 80 columns limit.
+> > If the goal-based DAMOS quota auto-tuning or the user-space based auto-tuning
+> > are feasible, all the controls can be done using DAMON sysfs interface.
+> > Introduction of the new kernel module might not really be needed in the case.
+> > 
+> > We have DAMON modules in addition to DAMON sysfs interface for users who want
+> > to use DAMON for a given specific use case with only minimum or near-zero
+> > user-space control.  In this case, because it is already aimed to ask the
+> > user-space to feed the list of applications to apply DAMOS-based hugepages
+> > collapsing, it seems a new module is not really needed, to me.
+> > 
+> > But I guess your use case might have some special restrictions that really
+> > require use of the module instead of offloading the auto-tuning to the
+> > user-space or DAMON core.  Is that the case?  If so, can you share more details
+> > about it?
 > 
-> Interesting, when check it, i was less than 80 columns. Even if I copy this line
-> and paste it into any text editor, I still get less than 80 characters.
+> I haven't figured out how I can use goal autotune to change the min_access.
 
-Oh, you must be correct.  Maybe my mailing tool was showing it incorrectly.
-Please keep it as is if it doesn't exceed 80 columns.
+Indeed, it is not a very straightforward feature.
+
+> Your suggestion about moving this to the user space sound good.
+
+If it works for you, maybe that is best for you :)
+
+> 
+> The idea was to stop lowering the min_access as soon as collapses occur,
+> since we don't want to lower so much that we start collapsing regions that
+> are not very hot.
+> 
+> Maybe you can suggest a better way to do it. Maybe with autotuning.
+
+I will add more detailed suggestion soon, by tomorrow or a day after.
+
+> 
+> > 
+> >>
+> >> Regarding the action, we introduce a new action: DAMOS_COLLAPSE. This allows us
+> >> collapse synchronously and avoid polluting khugepaged and other parts of the MM
+> >> subsystem with DAMON stuff. DAMOS_HUGEPAGE eventually calls hugepage_madvise,
+> >> which needs the correct vm_flags_t set.
+> > 
+> > This makes sense to me.  I expect DAMOS_COLLAPSE to have some advantages over
+> > DAMOS_HUGEPAGE for some use cases, similar to MADV_COLLAPSE vs MADV_HUGEPAGE.
+> > 
+> > From my perspective, this patch series is introducing three things.
+> > 1) hugepage collapsing hotness threshold auto-tuning, 2) the module for running
+> > the auto-tuning, and 3) DAMOS_COLLAPSE.  To me, it is unclear if the first two
+> > changes are really needed.  I will wait your answer.
+
+Please answer the above questions when you get a chance.
+
+> > 
+> > Meanwhile, the third change seems reasonable and not necessarily need to be
+> > blocked for the other two changes.  I think separating the third change from
+> > this patch series and upstreaming it first could also be a path forward.
+> > Because the change is simple and sound, convincing me would be easy.  I'd be
+> > convinced if at least some reasonable test results can be shown.  I'm not
+> > saying we should drop the other two changes.  We can keep discussing those in
+> > parallel.  Rather, upstreaming the third change first could help finding real
+> > benefits of the other two changes, since the testing will be easier.  The
+> > decision is up to Asier, of course.  I'm just sharing my two cents.
+
+I'm also curious what you think about this.
+
 
 Thanks,
 SJ
