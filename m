@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8BB53B3885
-	for <damon@lists.linux.dev>; Fri, 13 Mar 2026 14:48:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8446D392C4A
+	for <damon@lists.linux.dev>; Fri, 13 Mar 2026 14:52:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773413292; cv=none; b=N0AY57nx7yQLRt4i0j5US7SGLTd8AWaoh1C6KPXrmPNo56Vu3RQ+PADIaDjOzPCKayNuGwYGmgYJ275/me5Xr8l7+nd3aBE9xBJudEA1Uzp+UufAa2s1LKOYHLZZGFe1wAaRfVFIBLsUCVa6Z4elGTgi1hJMBUxxTgPccrH2H84=
+	t=1773413574; cv=none; b=WvEdGnmO6prngBHoFIprmeIw+KqalZHTcZur4EqUdQ84ruR+4iPb3GbqtrJA5Pp8WB9RAXgPbRdcl9WuByeyMVESvLVIZkESEdCQt7QzdilxbDALQRq3pTKARdEVyvN9Iv9sBi8JWPSsB83I/ReeBeQpurFwcJk9qZzScOX9Dvg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773413292; c=relaxed/simple;
-	bh=CUmFsU2G+NBF4oI24RS3s7BTKOpnDvSejeSWKgDW6y4=;
+	s=arc-20240116; t=1773413574; c=relaxed/simple;
+	bh=9+tBGf+6qW8cNORLO7JXvI2gClOkixsr6NngHAxnwk8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jfWkCXmI72WBKF9jfjfYPey28uo5a9RdZ9z9Cv6QrvkxvkKprc83vf76LkV3NHU8hdIbNOFrlTOw4YoTLqLtZ5Y31Z1HKSsNOHpwDCp3HaN+lcbgBoTzl7yz9xK1fxbEKvPdKuQ+bjfAnBJ3/9ZFLszOrkmwxnT2WmxOtX2Kh/I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mcEG7Lcp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ae0+bIC0DWEmR4uxw+WVGhQaDRezLviaMkNN4tWnE2fc0zCF/EXWL6Du2APjUDUJtrNxpt2CgHrt8K+GUR5rvjKLisStAkqS7Kqv/3mdw9nq4a66G2qjTt1bQEcRNjm7h8Jhj2OgefF0IyyLw428STBd8vtD1s0Csn7rYapfN1E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=le0W763n; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mcEG7Lcp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B3F6C19421;
-	Fri, 13 Mar 2026 14:48:12 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="le0W763n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05CD6C19421;
+	Fri, 13 Mar 2026 14:52:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773413292;
-	bh=CUmFsU2G+NBF4oI24RS3s7BTKOpnDvSejeSWKgDW6y4=;
+	s=k20201202; t=1773413574;
+	bh=9+tBGf+6qW8cNORLO7JXvI2gClOkixsr6NngHAxnwk8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mcEG7Lcp5gbPg7QvViC5EM6NsfYIuaxOUVfI6Ps3cHxNmGUwjmVW0vmwXVrcxSX1c
-	 k9eJFrOtZpnUwXvNEdk5OR3TcnuXF/XQRGhZsWpYFsF6dw6XSOgeYh6gGnPLsXuFbF
-	 ldFhrgJeG7g3+0+ph4r5UH8uBIv1YqrhdRa8DSPtZwV6aUoIU5DHtv6wbty6etPhNJ
-	 LdZ09iDzyZQPp5LldQUhcWrUvofNB8MygeeWEVq3LYI4K5wRZ9NRW0j59uD0Xid350
-	 60dnn0ImFOKBVWBm28RoH8aHJhz/fove5WgZ/Cenm8NUeQAyYFRVVLSe+pDoGc4pEq
-	 tKVIpb4ey6gAA==
+	b=le0W763nuZ3pgJhbKOvzX0P0kwTYcR2NhqSh6SPGWMp8Wl0f4PTOagjwDs+W3lUrq
+	 qAe88u12T/megxzTjVQdzcF1kwg7fRZq/rVZdneVsmNKlRdIxLhAjlzMGDyBd646Cx
+	 LHhEzfbANCIl3KXDttBDCDx508LcKSVJ7erwFQT9guUY/B0Kkto69BEmvBo3NB3FSH
+	 TwMNH7l5bke7YUuYv5x7MC1NVyYXoYEngCv5DVTJVXUKZTtrvtsSGWtzvwzSNy2DIj
+	 f+cFJh4GJ4LcRLK2kgSuidajFvPF1sf3Jb1501butKP6XDOWedVnv5J0GLiY1CY9l1
+	 uLBHTpys4umNQ==
 From: SeongJae Park <sj@kernel.org>
 To: Liew Rui Yan <aethernet65535@gmail.com>
 Cc: SeongJae Park <sj@kernel.org>,
 	damon@lists.linux.dev,
 	linux-mm@kvack.org
 Subject: Re: [Question] mm/damon: conflict between DAMON_STAT and DAMON_LRU_SORT?
-Date: Fri, 13 Mar 2026 07:48:08 -0700
-Message-ID: <20260313144809.46527-1-sj@kernel.org>
+Date: Fri, 13 Mar 2026 07:52:46 -0700
+Message-ID: <20260313145247.46643-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260313111702.38667-1-aethernet65535@gmail.com>
 References: 
@@ -62,7 +62,7 @@ work.  For now, this is the expected behavior.
 > this limitation be documented?
 
 Good point!  Yes, it would be better to be documented.
-
+ 
 > 
 > Reproduction
 > ============
@@ -78,10 +78,15 @@ Good point!  Yes, it would be better to be documented.
 > 
 > Result:
 >   bash: echo: write error: Device or resource busy
+
+Thank you for sharing this detailed steps.
+
 > 
 > Workaround:
 >   Disable CONFIG_DAMON_STAT_ENABLED_DEFAULT, or disable damon_stat at runtime
 >   before enabling damon_lru_sort.
+
+Makes sense.  Indeed, DAMON tests use [2] this kind of workaround.
 > 
 > Questions
 > =========
@@ -109,6 +114,7 @@ Would you mind sending a patch for that?
 I agree.
 
 [1] DAMON-X in https://lore.kernel.org/20260307210250.204245-1-sj@kernel.org
+[2] https://github.com/damonitor/damon-tests/blob/master/corr/run.sh#L62
 
 
 Thanks,
