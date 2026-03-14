@@ -1,70 +1,38 @@
-Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from frasgout.his.huawei.com (frasgout.his.huawei.com [185.176.79.56])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 319E51D5CC6
-	for <damon@lists.linux.dev>; Sat, 14 Mar 2026 09:21:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DD6B70818
+	for <damon@lists.linux.dev>; Sat, 14 Mar 2026 09:39:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.176.79.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773480114; cv=none; b=TjV621hqpKt92vdYfyyehCY/kiE6ovrOOcVsE1GZblFsrzaCJiDtFZDj9fArNQzSxYz+FTdGqzO+TL6NizW3So3BghomCqpwyVz0Spy/y7o+v8aoBjkmp0Uba5d6Tt+07iGO9ZjcTJKO1VUgkPgFhXbR2bFVWa+MTdJEjkY9Lis=
+	t=1773481182; cv=none; b=DI9MVU/U7joSacxSP3TtQ/fCj/KDiiL5Fhw3WJy9y6nugp3sioA4ISN6Y/Rp4WF+FVDsZCDePQAkjo9MYfIZ0DDJCkS/MIcCkjKBh1inwPJwgWgAqX3KFS8vsYyakFsHBUK4ZwR4yd5uHEsxsNtaMIGJiHhd1C+SA09wzYojIB0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773480114; c=relaxed/simple;
-	bh=mShEPgqQ4gwpWXszIVcZwkGp+DapTpAMp+A7Ak/Pw/E=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=mUJVOtwhZqVuJWzNwaZp5cXBQzjuDPVxKHk+2V59Cex4CLKu5yN8k0lu8/+YQYJ/k8FM+eSZElXL33lYKhozcrrOk77ztXG1OFhm4erh42s1s4khb6dXHdltgLck4I7kYpqgVyj2RctGfD0XRjMlTBE97y3Ida2mtQ0fSRzRSLQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PXrLvmHs; arc=none smtp.client-ip=209.85.214.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PXrLvmHs"
-Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-2ae3a2f6007so22376055ad.2
-        for <damon@lists.linux.dev>; Sat, 14 Mar 2026 02:21:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773480112; x=1774084912; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=r8UyqgPfbZdaAqDYqS1YD/8TcYT8kvUB1s3GvokTCwQ=;
-        b=PXrLvmHsk+H3064ddT1EKSmQ8kkVv9E33uCcHOZiKj388PEC71V/W2+GoeJ0XEpBH+
-         vvh13Ywa6kesqVZpkQJ1ZpTKEoU93mos2vX03fsIlNSBr7XXATnU5XNM7zAcIVL4cO/9
-         FqCFf/r6KznARdBPcq/8QkyOvyKHhbhv4yhiyMuNp6cW/lKLmYo8OB8WiYXzHs2TFwND
-         g4h6L2lrkVDQzST7bbE3Qi8qo5DsX0IioD+BwAH2ZYs0eRVoXNAukW2ldpxGqwmmsl0P
-         VgZRC8rQc1Lzz7IeXHpQ+OW+zkoiCG3CR56rDif9LbD0TaYBx/uIEDxPVfHuQBG1QHxA
-         aHuw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1773480112; x=1774084912;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=r8UyqgPfbZdaAqDYqS1YD/8TcYT8kvUB1s3GvokTCwQ=;
-        b=BXzS78luDuRDQ9koXxPsDj+wWlb2ucJw/xI7Ea7bYUMTgPYyfv4WLbNWGuFRutKyXx
-         mIvNRnAXTP1/mZzFQqJn7rfsP9mD7RWEfnqnOWpTlnCNve29CXGmr3NUfJSMGyJpFXKb
-         kTZsoLXtUuYnv9t/c0bj9q08zbQlwMiVLd/x6M23ZgjfwpOMCmcZeNjNFExbhFBypBw6
-         paSYNa5U2mqE+jya+7U3aC4kT/2DPAN38RUKvV4vZitugQkoyRgP88ZD+R5W8Wml5vJP
-         ez52jaRn7wcN0FG1sbrfLXnh9z3BAnS1I7iBXCd4gRgVbMNbbe4iomVItiAdFEKW5Pkq
-         NnSA==
-X-Gm-Message-State: AOJu0YyrR4i3XQ2YnpqHDcPhuma30XV1mFC/C3i4RG1yj+fiOCDp0nvK
-	TrUjGqN2R22ar75sAOx8M1KDMvewLF7J29opzNLzJyjGPPgORjAQom4o
-X-Gm-Gg: ATEYQzw+oGICKklbSV5tJnANwguLNYgdR1UkOSrvrLGWeDjnmu9qcjxgzNd9UwsqZ73
-	Phx8n+JCYrT5xp+gBvCCv7bz1MUnYOWzVVuXqlJPQSlcqAMmXwbbbkkvkGijxCUHJAngx7EiRnm
-	L5CZ9Z2wHxhyUS4AwOFLAWP2tViRBugE9WEsQsHc6m5+115KdrEdzYUhhkiWWjSZ3cE87MoNlgt
-	6GNWqVBu3PHu5Dkvm3CXsK+bms8429c1i3VOXkgf+hMsKKVm5eCpOvtnlNdRnOCHF8P7/tDdhJX
-	dr5Sh3jEHAoRnzXrT45PvWWaotkFucSPJyOOccBSNSrYPoi+lrI9w7YiA6L/y2zRioR+K6PTyTS
-	geDtCLMm0b/KEIz9zeyka+KwTcvl1I8yvGKhIMdhbsF2uAIJmGZ41oTGknVk6+sQYafJS3XrvpP
-	lwlq4BCn5viPK1FmIfaAem5pz810Sbnh3jwk+9KT6Gi32z5hIL0c4vUr1F1D5u3w==
-X-Received: by 2002:a17:902:db05:b0:2ae:5eee:7a5 with SMTP id d9443c01a7336-2aeca9a9d72mr69364795ad.12.1773480112336;
-        Sat, 14 Mar 2026 02:21:52 -0700 (PDT)
-Received: from celestia.taila51cc2.ts.net ([2402:1980:89d:b6e6:2613:d00e:127b:1c64])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2aece62c4f9sm47907385ad.38.2026.03.14.02.21.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 14 Mar 2026 02:21:52 -0700 (PDT)
-From: Liew Rui Yan <aethernet65535@gmail.com>
-To: sj@kernel.org
-Cc: damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	linux-doc@vger.kernel.org,
-	Liew Rui Yan <aethernet65535@gmail.com>
-Subject: [PATCH] Docs/mm/damon: document exclusivity of special-purpose modules
-Date: Sat, 14 Mar 2026 17:20:22 +0800
-Message-ID: <20260314092145.7496-1-aethernet65535@gmail.com>
-X-Mailer: git-send-email 2.53.0
+	s=arc-20240116; t=1773481182; c=relaxed/simple;
+	bh=Up7hD+JyVHRK+jkqaDkcGkfzqvkM0V0Yb7aXOhPageA=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=dTlF8ZD/eK/1jglgf3eUM4cBLbznLfzz4sCk0LvvBDKcCPJqVJLT6qwnBWhHJHUfjpiCPJwgBcp6ntQzZ9fcz/zrcDhfXQVl/yyV8kIkSH7xRTs3dXsIdkvGGVl6sEThh80qWeAF96+pmqYrKYxp4qvY6CNrJTZCIvrLUY9XGHc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei-partners.com; spf=pass smtp.mailfrom=huawei-partners.com; arc=none smtp.client-ip=185.176.79.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei-partners.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei-partners.com
+Received: from mail.maildlp.com (unknown [172.18.224.83])
+	by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4fXxB74vcVzJ46ZK;
+	Sat, 14 Mar 2026 17:38:39 +0800 (CST)
+Received: from mscpeml500003.china.huawei.com (unknown [7.188.49.51])
+	by mail.maildlp.com (Postfix) with ESMTPS id 9BCE940086;
+	Sat, 14 Mar 2026 17:39:30 +0800 (CST)
+Received: from mscphis01197.huawei.com (10.123.65.218) by
+ mscpeml500003.china.huawei.com (7.188.49.51) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.11; Sat, 14 Mar 2026 12:39:29 +0300
+From: <gutierrez.asier@huawei-partners.com>
+To: <gutierrez.asier@huawei-partners.com>, <artem.kuzin@huawei.com>,
+	<stepanov.anatoly@huawei.com>, <wangkefeng.wang@huawei.com>,
+	<yanquanmin1@huawei.com>, <zuoze1@huawei.com>, <damon@lists.linux.dev>,
+	<sj@kernel.org>, <akpm@linux-foundation.org>, <linux-mm@kvack.org>,
+	<linux-kernel@vger.kernel.org>
+Subject: [PATCH v1] mm/damon: guard THP-specific DAMOS actions with CONFIG_TRANSPARENT_HUGEPAGE
+Date: Sat, 14 Mar 2026 09:38:12 +0000
+Message-ID: <20260314093813.1359737-1-gutierrez.asier@huawei-partners.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -72,97 +40,97 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: mscpeml500003.china.huawei.com (7.188.49.51) To
+ mscpeml500003.china.huawei.com (7.188.49.51)
 
-Add a section in design.rst to explain that DAMON special-purpose kernel
-modules (LRU_SORT, RECLAIM, STAT) run in an exclusive manner and return
--EBUSY if another is already running.
+From: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
 
-Update lru_sort.rst, reclaim.rst and stat.rst by adding cross-references
-to this exclusivity rule at the end of their respective Example
-sections.
+MADV_HUGEPAGE and MADV_NOHUGEPAGE are guarded and they are not
+available when compiling the kernel without TRANSPARENT_HUGEPAGE
+option. Therefore, DAMOS_HUGEPAGE and DAMOS_NOHUGEPAGE shouldn't be
+available to the user either.
 
-While at it, fix a Sphinx syntax error in the "contents" directive in
-design.rst (missing space after :depth:) that prevents the table of
-contents from being rendered on docs.kernel.org.
-
-Signed-off-by: Liew Rui Yan <aethernet65535@gmail.com>
-Link: https://lore.kernel.org/damon/20260314002119.79742-1-sj@kernel.org/T/#t
+Signed-off-by: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
 ---
- Documentation/admin-guide/mm/damon/lru_sort.rst | 5 +++++
- Documentation/admin-guide/mm/damon/reclaim.rst  | 5 +++++
- Documentation/admin-guide/mm/damon/stat.rst     | 5 +++++
- Documentation/mm/damon/design.rst               | 6 +++++-
- 4 files changed, 20 insertions(+), 1 deletion(-)
+ Documentation/mm/damon/design.rst | 6 ++++--
+ include/linux/damon.h             | 2 ++
+ mm/damon/sysfs-schemes.c          | 2 ++
+ mm/damon/vaddr.c                  | 2 ++
+ 4 files changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/admin-guide/mm/damon/lru_sort.rst b/Documentation/admin-guide/mm/damon/lru_sort.rst
-index 06a46812a728..0198dfe87f4d 100644
---- a/Documentation/admin-guide/mm/damon/lru_sort.rst
-+++ b/Documentation/admin-guide/mm/damon/lru_sort.rst
-@@ -353,3 +353,8 @@ the LRU-list based page granularity reclamation. ::
-     # echo 400 > wmarks_mid
-     # echo 200 > wmarks_low
-     # echo Y > enabled
-+
-+Note that this module (damon_lru_sort) cannot run simultaneously with other
-+DAMON-based special-purpose modules.  Refer to :ref:`DAMON design special
-+purpose modules exclusivity <damon_design_special_purpose_modules_exclusivity>`
-+for more details.
-diff --git a/Documentation/admin-guide/mm/damon/reclaim.rst b/Documentation/admin-guide/mm/damon/reclaim.rst
-index c5b4d8a1b001..a37ce6fdff05 100644
---- a/Documentation/admin-guide/mm/damon/reclaim.rst
-+++ b/Documentation/admin-guide/mm/damon/reclaim.rst
-@@ -331,6 +331,11 @@ granularity reclamation. ::
-     # echo 200 > wmarks_low
-     # echo Y > enabled
- 
-+Note that this module (damon_reclaim) cannot run simultaneously with other
-+DAMON-based special-purpose modules.  Refer to :ref:`DAMON design special
-+purpose modules exclusivity <damon_design_special_purpose_modules_exclusivity>`
-+for more details.
-+
- .. [1] https://research.google/pubs/pub48551/
- .. [2] https://lwn.net/Articles/787611/
- .. [3] Documentation/mm/free_page_reporting.rst
-diff --git a/Documentation/admin-guide/mm/damon/stat.rst b/Documentation/admin-guide/mm/damon/stat.rst
-index 468c122c4259..46c5dd96aa2e 100644
---- a/Documentation/admin-guide/mm/damon/stat.rst
-+++ b/Documentation/admin-guide/mm/damon/stat.rst
-@@ -45,6 +45,11 @@ You can enable DAMON_STAT by setting the value of this parameter as ``Y``.
- Setting it as ``N`` disables DAMON_STAT.  The default value is set by
- ``CONFIG_DAMON_STAT_ENABLED_DEFAULT`` build config option.
- 
-+Note that this module (damon_stat) cannot run simultaneously with other
-+DAMON-based special-purpose modules.  Refer to :ref:`DAMON design special
-+purpose modules exclusivity <damon_design_special_purpose_modules_exclusivity>`
-+for more details.
-+
- .. _damon_stat_aggr_interval_us:
- 
- aggr_interval_us
 diff --git a/Documentation/mm/damon/design.rst b/Documentation/mm/damon/design.rst
-index 0a3b77ec458f..3694c541e65a 100644
+index 29fff20b3c2a..207219ee10d4 100644
 --- a/Documentation/mm/damon/design.rst
 +++ b/Documentation/mm/damon/design.rst
-@@ -5,7 +5,7 @@ Design
- ======
- 
- .. contents:: :local:
--   :depth:2
-+   :depth: 2
- 
- .. _damon_design_execution_model_and_data_structures:
- 
-@@ -960,6 +960,10 @@ more detail, please read the usage documents for those
- (:doc:`/admin-guide/mm/damon/stat`, :doc:`/admin-guide/mm/damon/reclaim` and
- :doc:`/admin-guide/mm/damon/lru_sort`).
- 
-+.. _damon_design_special_purpose_modules_exclusivity:
-+
-+Note that these modules currently run in an exclusive manner.  If one of those
-+is already running, others will return ``-EBUSY`` upon start requests.
- 
- Sample DAMON Modules
- --------------------
+@@ -460,9 +460,11 @@ that supports each action are as below.
+  - ``pageout``: Reclaim the region.
+    Supported by ``vaddr``, ``fvaddr`` and ``paddr`` operations set.
+  - ``hugepage``: Call ``madvise()`` for the region with ``MADV_HUGEPAGE``.
+-   Supported by ``vaddr`` and ``fvaddr`` operations set.
++   Supported by ``vaddr`` and ``fvaddr`` operations set when
++   TRANSPARENT_HUGEPAGE is enabled.
+  - ``nohugepage``: Call ``madvise()`` for the region with ``MADV_NOHUGEPAGE``.
+-   Supported by ``vaddr`` and ``fvaddr`` operations set.
++   Supported by ``vaddr`` and ``fvaddr`` operations set when
++   TRANSPARENT_HUGEPAGE is enabled.
+  - ``lru_prio``: Prioritize the region on its LRU lists.
+    Supported by ``paddr`` operations set.
+  - ``lru_deprio``: Deprioritize the region on its LRU lists.
+diff --git a/include/linux/damon.h b/include/linux/damon.h
+index 3a441fbca170..b3fcbe84b5d7 100644
+--- a/include/linux/damon.h
++++ b/include/linux/damon.h
+@@ -138,8 +138,10 @@ enum damos_action {
+ 	DAMOS_WILLNEED,
+ 	DAMOS_COLD,
+ 	DAMOS_PAGEOUT,
++#ifdef CONFIG_TRANSPARENT_HUGEPAGE
+ 	DAMOS_HUGEPAGE,
+ 	DAMOS_NOHUGEPAGE,
++#endif
+ 	DAMOS_LRU_PRIO,
+ 	DAMOS_LRU_DEPRIO,
+ 	DAMOS_MIGRATE_HOT,
+diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
+index 5186966dafb3..05e57c7ca2b6 100644
+--- a/mm/damon/sysfs-schemes.c
++++ b/mm/damon/sysfs-schemes.c
+@@ -2033,6 +2033,7 @@ static struct damos_sysfs_action_name damos_sysfs_action_names[] = {
+ 		.action = DAMOS_PAGEOUT,
+ 		.name = "pageout",
+ 	},
++#ifdef CONFIG_TRANSPARENT_HUGEPAGE
+ 	{
+ 		.action = DAMOS_HUGEPAGE,
+ 		.name = "hugepage",
+@@ -2041,6 +2042,7 @@ static struct damos_sysfs_action_name damos_sysfs_action_names[] = {
+ 		.action = DAMOS_NOHUGEPAGE,
+ 		.name = "nohugepage",
+ 	},
++#endif
+ 	{
+ 		.action = DAMOS_LRU_PRIO,
+ 		.name = "lru_prio",
+diff --git a/mm/damon/vaddr.c b/mm/damon/vaddr.c
+index b069dbc7e3d2..19c488660027 100644
+--- a/mm/damon/vaddr.c
++++ b/mm/damon/vaddr.c
+@@ -897,12 +897,14 @@ static unsigned long damon_va_apply_scheme(struct damon_ctx *ctx,
+ 	case DAMOS_PAGEOUT:
+ 		madv_action = MADV_PAGEOUT;
+ 		break;
++#ifdef CONFIG_TRANSPARENT_HUGEPAGE
+ 	case DAMOS_HUGEPAGE:
+ 		madv_action = MADV_HUGEPAGE;
+ 		break;
+ 	case DAMOS_NOHUGEPAGE:
+ 		madv_action = MADV_NOHUGEPAGE;
+ 		break;
++#endif
+ 	case DAMOS_MIGRATE_HOT:
+ 	case DAMOS_MIGRATE_COLD:
+ 		return damos_va_migrate(t, r, scheme, sz_filter_passed);
 -- 
-2.53.0
+2.43.0
 
