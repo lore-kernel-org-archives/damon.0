@@ -1,115 +1,168 @@
-Received: from mail-yx1-f42.google.com (mail-yx1-f42.google.com [74.125.224.42])
+Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D4421CDFD5
-	for <damon@lists.linux.dev>; Sat, 14 Mar 2026 02:36:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.42
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773455768; cv=pass; b=qpib48qBnnxndy1Dlle3aInunUktibxYk5XkkppLECcXnalNldr6S9BrXpYvdrVCz6dpErYtl8Fo2c6xDCCoYVpTMWtQf2k2AVDlH0pKrQvcX32wUFd98AWh12Cl29QD7fhOZVqNEWisxAubR0uhzdLoUDRJ8qbeAfZad7IMOFA=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773455768; c=relaxed/simple;
-	bh=OL+TN8sx56UvS//efnLpyc78WNqM58VR7Q01VEqB9lk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=svmBx6MjK6ka/R/qTGUKoZ8tbhpPhMQkOerHSAuCr2boUj4JVykib0QfWD1CKlrbzx+/MiT1a93SBEVkcfuyhxedcgHyD5ryt0WzLuMiSKkpvFYuLXLoLjXqzHWJ+Bi0YIEu+cx4ZFiXPXtgqfXUlkcRdSzRXbRWabVhg2aXoKA=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UiAcLoZ7; arc=pass smtp.client-ip=74.125.224.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 319E51D5CC6
+	for <damon@lists.linux.dev>; Sat, 14 Mar 2026 09:21:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.180
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1773480114; cv=none; b=TjV621hqpKt92vdYfyyehCY/kiE6ovrOOcVsE1GZblFsrzaCJiDtFZDj9fArNQzSxYz+FTdGqzO+TL6NizW3So3BghomCqpwyVz0Spy/y7o+v8aoBjkmp0Uba5d6Tt+07iGO9ZjcTJKO1VUgkPgFhXbR2bFVWa+MTdJEjkY9Lis=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1773480114; c=relaxed/simple;
+	bh=mShEPgqQ4gwpWXszIVcZwkGp+DapTpAMp+A7Ak/Pw/E=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=mUJVOtwhZqVuJWzNwaZp5cXBQzjuDPVxKHk+2V59Cex4CLKu5yN8k0lu8/+YQYJ/k8FM+eSZElXL33lYKhozcrrOk77ztXG1OFhm4erh42s1s4khb6dXHdltgLck4I7kYpqgVyj2RctGfD0XRjMlTBE97y3Ida2mtQ0fSRzRSLQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PXrLvmHs; arc=none smtp.client-ip=209.85.214.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UiAcLoZ7"
-Received: by mail-yx1-f42.google.com with SMTP id 956f58d0204a3-64c31ca77b4so3022844d50.2
-        for <damon@lists.linux.dev>; Fri, 13 Mar 2026 19:36:07 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773455766; cv=none;
-        d=google.com; s=arc-20240605;
-        b=cAAb13pRyRIwJV+PgH4bTnr/MxcNmKfF3jmeib0qzEiwhaciy8UKxD1uayzEpGPKCu
-         0MgLSXPEis6ewSF0HQp1GFIvF49NI2FpJqDO2WQR/PrPNjUxodCS9KZ4zW+z73VCnjO4
-         MWOU0cgRek8a8QMRlXvJzX4NXZDC3mzX+PygplPtne/yHp9qqrmnXb52Udd5sAPiCf+P
-         ANmXg5JMlynfsHtRPzSA1X/I0kPsvRgxPQZ05dC5poe94kfRDyULQugN5QYFk038AYYL
-         4wbuHzlcs5Pd4U9SpxxehqTl+uguk9Uol1h/l4lY1/RFGKyMlaJGCW/N64vv4hWQ31Yo
-         IUjg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=cO20WwNIzRxyw30z6OHFbWFRxuc4T5ngZ3OGaMZkebE=;
-        fh=vziSB+WFnBJEbC6uotzntTmEbm9N2V7SxyGgG0BHRZ8=;
-        b=aBX/Xsw0c7IrR5y+vfmQgNzoEYt/iJ6k40M4RLWQfJZFmRInJ1CW9aKQORuSY+dRyS
-         KzL6gHuV9zobFSIPIOQ4eO8SqA1B98yHubICIeKGqYOuZav8yDUTrpth2/xnHbHQKki8
-         qgUtEErDPEXALnca9SYxMQjaos7WqcZ6HsOewwQRRx/rilwZ30H9E7VbGVU+MTGG1Eh9
-         xTD7juadfFtbE3KDBDKkbXG6bZU6oVP/hbVE8ByUbfDuJnFCZMPwWFmrEYyc48xDokwC
-         WFv8C2EUlXWR/WDeVZIsHPwDWrbWYEi3oNRB4VB0g+D1mJML7IpF8pEoZj47h3e5VFex
-         wKlg==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PXrLvmHs"
+Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-2ae3a2f6007so22376055ad.2
+        for <damon@lists.linux.dev>; Sat, 14 Mar 2026 02:21:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773455766; x=1774060566; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=cO20WwNIzRxyw30z6OHFbWFRxuc4T5ngZ3OGaMZkebE=;
-        b=UiAcLoZ7h3k9SO+1etW7gaqiDlXDxaaiEQ9VkX+oGlEsEY++0hE7LQ9HikuGT8I9nA
-         WU8dxFLj0njkLnLt/E+3vs46V+s92f4z4UlZ4l6LC6OQkAFTxmm4quh2yFKdLKSZjZIE
-         8PTOr/IV6v3MgYH5ywcLLWjg0KNbGmZP+PNPLu05iEfj3rV5DhZ6MrS/rm/iz5kcZ0zV
-         CQpaun2YUDlkWkhDXLvzoRIpPLdWpljstvAWTjPlKHa5KIvGdkro2uOKUtzWwfSsHKq+
-         KTzMmWAHAdIjj1jeHI12qlifwbvKUkRjdK9giYvOcY3oWNg6BcAqRt1vv7Eg6ucM8wS5
-         gmiQ==
+        d=gmail.com; s=20230601; t=1773480112; x=1774084912; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=r8UyqgPfbZdaAqDYqS1YD/8TcYT8kvUB1s3GvokTCwQ=;
+        b=PXrLvmHsk+H3064ddT1EKSmQ8kkVv9E33uCcHOZiKj388PEC71V/W2+GoeJ0XEpBH+
+         vvh13Ywa6kesqVZpkQJ1ZpTKEoU93mos2vX03fsIlNSBr7XXATnU5XNM7zAcIVL4cO/9
+         FqCFf/r6KznARdBPcq/8QkyOvyKHhbhv4yhiyMuNp6cW/lKLmYo8OB8WiYXzHs2TFwND
+         g4h6L2lrkVDQzST7bbE3Qi8qo5DsX0IioD+BwAH2ZYs0eRVoXNAukW2ldpxGqwmmsl0P
+         VgZRC8rQc1Lzz7IeXHpQ+OW+zkoiCG3CR56rDif9LbD0TaYBx/uIEDxPVfHuQBG1QHxA
+         aHuw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1773455766; x=1774060566;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=cO20WwNIzRxyw30z6OHFbWFRxuc4T5ngZ3OGaMZkebE=;
-        b=mEI97y5uMeAjdjqcjgP9YmlT4VwmpzM8HuD9iPBrjq5DMo641XLPgny/pPufJ/7yEC
-         X1H79qrhWuUtTitOl2bTpBxSDOIMrkHwfA8YUimYOJaoA4Bi8TiobR8l57xQm1p+G0E2
-         2Z7bcJGZogN342bCudCgE3XBzDZoBpdGNVubAjFP8RZiymEExijKrB5YGSIBVqGnn2Fy
-         N0H5ry598Fi80T1W3pBvb8K2oiGro5PMzPCEtTx9hBSb1pZ3nI4QOsb6WjTsw3h+oNud
-         UAubIvAWuouHYB0QhBWqwyr1LOu+c1woXIfDWsUlu6ZzpVK22UArb4iEM8bCL0+g8gJh
-         C73w==
-X-Forwarded-Encrypted: i=1; AJvYcCXf1mqt5+7SkwxXVoBckdyY78GKTs2bl07vv/6cHPMp3m1t9dOLVIQw8bpPtrhQYaD3x91onw==@lists.linux.dev
-X-Gm-Message-State: AOJu0YydhXha9T1xjFyRhnfkbKTVU5P2Ee8FNW3vNs/+L6sMwrQh2wrz
-	cIHw3z+6p125zWseR/hOIeoSohG18l7tQLVivyLhvoGZq793yG0I58z518+DqpMoH4ha0zABp+o
-	JYwSoyV4EaGs2z37n5zVaa+HgrKvuL5hQfKl6Vmo=
-X-Gm-Gg: ATEYQzxvCiRKlyzHw18REVO5U9+lDNGnTYT7J5Gk+UNKUchM7Z78HzqEGMUWOv5cSEc
-	g34UU02Bz0Ij7bWHY2umuwW3PSwelzzd8OMyn1JRY9mQo6kh3ws7GjslN9/m90u7/SFetY2dclZ
-	05uEG45Fj/y49q+QRUP16tLiRsl9ixw/2d1PJibZgt7t0nBYsRulkvGEi5Fbyv1uyYNIx04lugW
-	KOv2SPgQfyFo9dPvVyrBlo5j4mJaM64wDgajKeG2KOnuvhlQgZobO1jCWCrNAj4B6bW5vGJDjJs
-	JF6Yl8EplP6XVjWvaz/QGIbXpbifmXKgnnVrj5OW
-X-Received: by 2002:a53:eccf:0:b0:64a:d2bb:9072 with SMTP id
- 956f58d0204a3-64e63073fe2mr4556761d50.53.1773455766429; Fri, 13 Mar 2026
- 19:36:06 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1773480112; x=1774084912;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=r8UyqgPfbZdaAqDYqS1YD/8TcYT8kvUB1s3GvokTCwQ=;
+        b=BXzS78luDuRDQ9koXxPsDj+wWlb2ucJw/xI7Ea7bYUMTgPYyfv4WLbNWGuFRutKyXx
+         mIvNRnAXTP1/mZzFQqJn7rfsP9mD7RWEfnqnOWpTlnCNve29CXGmr3NUfJSMGyJpFXKb
+         kTZsoLXtUuYnv9t/c0bj9q08zbQlwMiVLd/x6M23ZgjfwpOMCmcZeNjNFExbhFBypBw6
+         paSYNa5U2mqE+jya+7U3aC4kT/2DPAN38RUKvV4vZitugQkoyRgP88ZD+R5W8Wml5vJP
+         ez52jaRn7wcN0FG1sbrfLXnh9z3BAnS1I7iBXCd4gRgVbMNbbe4iomVItiAdFEKW5Pkq
+         NnSA==
+X-Gm-Message-State: AOJu0YyrR4i3XQ2YnpqHDcPhuma30XV1mFC/C3i4RG1yj+fiOCDp0nvK
+	TrUjGqN2R22ar75sAOx8M1KDMvewLF7J29opzNLzJyjGPPgORjAQom4o
+X-Gm-Gg: ATEYQzw+oGICKklbSV5tJnANwguLNYgdR1UkOSrvrLGWeDjnmu9qcjxgzNd9UwsqZ73
+	Phx8n+JCYrT5xp+gBvCCv7bz1MUnYOWzVVuXqlJPQSlcqAMmXwbbbkkvkGijxCUHJAngx7EiRnm
+	L5CZ9Z2wHxhyUS4AwOFLAWP2tViRBugE9WEsQsHc6m5+115KdrEdzYUhhkiWWjSZ3cE87MoNlgt
+	6GNWqVBu3PHu5Dkvm3CXsK+bms8429c1i3VOXkgf+hMsKKVm5eCpOvtnlNdRnOCHF8P7/tDdhJX
+	dr5Sh3jEHAoRnzXrT45PvWWaotkFucSPJyOOccBSNSrYPoi+lrI9w7YiA6L/y2zRioR+K6PTyTS
+	geDtCLMm0b/KEIz9zeyka+KwTcvl1I8yvGKhIMdhbsF2uAIJmGZ41oTGknVk6+sQYafJS3XrvpP
+	lwlq4BCn5viPK1FmIfaAem5pz810Sbnh3jwk+9KT6Gi32z5hIL0c4vUr1F1D5u3w==
+X-Received: by 2002:a17:902:db05:b0:2ae:5eee:7a5 with SMTP id d9443c01a7336-2aeca9a9d72mr69364795ad.12.1773480112336;
+        Sat, 14 Mar 2026 02:21:52 -0700 (PDT)
+Received: from celestia.taila51cc2.ts.net ([2402:1980:89d:b6e6:2613:d00e:127b:1c64])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2aece62c4f9sm47907385ad.38.2026.03.14.02.21.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 14 Mar 2026 02:21:52 -0700 (PDT)
+From: Liew Rui Yan <aethernet65535@gmail.com>
+To: sj@kernel.org
+Cc: damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	linux-doc@vger.kernel.org,
+	Liew Rui Yan <aethernet65535@gmail.com>
+Subject: [PATCH] Docs/mm/damon: document exclusivity of special-purpose modules
+Date: Sat, 14 Mar 2026 17:20:22 +0800
+Message-ID: <20260314092145.7496-1-aethernet65535@gmail.com>
+X-Mailer: git-send-email 2.53.0
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260313110953.37465-1-aethernet65535@gmail.com> <20260314005131.80825-1-sj@kernel.org>
-In-Reply-To: <20260314005131.80825-1-sj@kernel.org>
-From: Liew Rui Yan <aethernet65535@gmail.com>
-Date: Sat, 14 Mar 2026 10:35:55 +0800
-X-Gm-Features: AaiRm50L5vc_CKwcot5sByL67vJTvKzPCCNWbVkzvFACfjuR90YpGehqhao9hbo
-Message-ID: <CAPLv50pktuzn7s9zW8E+36Oinjj7HfGhD5YdOaC6hNE2+OBL=g@mail.gmail.com>
-Subject: Re: [DAMON][Question] DAMON_STAT and DAMON_LRU_SORT module parameter conflict?
-To: SeongJae Park <sj@kernel.org>
-Cc: linux-mm@kvack.org, damon@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Sat, Mar 14, 2026 at 8:51=E2=80=AFAM SeongJae Park <sj@kernel.org> wrote=
-:
->
-> Seems this is a duplicate of another similar question [1].  I believe our
-> discussion on the thread answers this.
->
+Add a section in design.rst to explain that DAMON special-purpose kernel
+modules (LRU_SORT, RECLAIM, STAT) run in an exclusive manner and return
+-EBUSY if another is already running.
 
-Hi SeongJae,
+Update lru_sort.rst, reclaim.rst and stat.rst by adding cross-references
+to this exclusivity rule at the end of their respective Example
+sections.
 
-Thanks for pointing it out. You're right, this is a duplicate.
+While at it, fix a Sphinx syntax error in the "contents" directive in
+design.rst (missing space after :depth:) that prevents the table of
+contents from being rendered on docs.kernel.org.
 
-This was my first version, but I resent it because I realized I had the
-wrong CC list (I typed damon@list.linux.dev, missing a 's') and it
-didn't show up on lore.kernel.org immediately, which led me to believe
-the first attempt had failed.
+Signed-off-by: Liew Rui Yan <aethernet65535@gmail.com>
+Link: https://lore.kernel.org/damon/20260314002119.79742-1-sj@kernel.org/T/#t
+---
+ Documentation/admin-guide/mm/damon/lru_sort.rst | 5 +++++
+ Documentation/admin-guide/mm/damon/reclaim.rst  | 5 +++++
+ Documentation/admin-guide/mm/damon/stat.rst     | 5 +++++
+ Documentation/mm/damon/design.rst               | 6 +++++-
+ 4 files changed, 20 insertions(+), 1 deletion(-)
 
-Sorry for the noise.
+diff --git a/Documentation/admin-guide/mm/damon/lru_sort.rst b/Documentation/admin-guide/mm/damon/lru_sort.rst
+index 06a46812a728..0198dfe87f4d 100644
+--- a/Documentation/admin-guide/mm/damon/lru_sort.rst
++++ b/Documentation/admin-guide/mm/damon/lru_sort.rst
+@@ -353,3 +353,8 @@ the LRU-list based page granularity reclamation. ::
+     # echo 400 > wmarks_mid
+     # echo 200 > wmarks_low
+     # echo Y > enabled
++
++Note that this module (damon_lru_sort) cannot run simultaneously with other
++DAMON-based special-purpose modules.  Refer to :ref:`DAMON design special
++purpose modules exclusivity <damon_design_special_purpose_modules_exclusivity>`
++for more details.
+diff --git a/Documentation/admin-guide/mm/damon/reclaim.rst b/Documentation/admin-guide/mm/damon/reclaim.rst
+index c5b4d8a1b001..a37ce6fdff05 100644
+--- a/Documentation/admin-guide/mm/damon/reclaim.rst
++++ b/Documentation/admin-guide/mm/damon/reclaim.rst
+@@ -331,6 +331,11 @@ granularity reclamation. ::
+     # echo 200 > wmarks_low
+     # echo Y > enabled
+ 
++Note that this module (damon_reclaim) cannot run simultaneously with other
++DAMON-based special-purpose modules.  Refer to :ref:`DAMON design special
++purpose modules exclusivity <damon_design_special_purpose_modules_exclusivity>`
++for more details.
++
+ .. [1] https://research.google/pubs/pub48551/
+ .. [2] https://lwn.net/Articles/787611/
+ .. [3] Documentation/mm/free_page_reporting.rst
+diff --git a/Documentation/admin-guide/mm/damon/stat.rst b/Documentation/admin-guide/mm/damon/stat.rst
+index 468c122c4259..46c5dd96aa2e 100644
+--- a/Documentation/admin-guide/mm/damon/stat.rst
++++ b/Documentation/admin-guide/mm/damon/stat.rst
+@@ -45,6 +45,11 @@ You can enable DAMON_STAT by setting the value of this parameter as ``Y``.
+ Setting it as ``N`` disables DAMON_STAT.  The default value is set by
+ ``CONFIG_DAMON_STAT_ENABLED_DEFAULT`` build config option.
+ 
++Note that this module (damon_stat) cannot run simultaneously with other
++DAMON-based special-purpose modules.  Refer to :ref:`DAMON design special
++purpose modules exclusivity <damon_design_special_purpose_modules_exclusivity>`
++for more details.
++
+ .. _damon_stat_aggr_interval_us:
+ 
+ aggr_interval_us
+diff --git a/Documentation/mm/damon/design.rst b/Documentation/mm/damon/design.rst
+index 0a3b77ec458f..3694c541e65a 100644
+--- a/Documentation/mm/damon/design.rst
++++ b/Documentation/mm/damon/design.rst
+@@ -5,7 +5,7 @@ Design
+ ======
+ 
+ .. contents:: :local:
+-   :depth:2
++   :depth: 2
+ 
+ .. _damon_design_execution_model_and_data_structures:
+ 
+@@ -960,6 +960,10 @@ more detail, please read the usage documents for those
+ (:doc:`/admin-guide/mm/damon/stat`, :doc:`/admin-guide/mm/damon/reclaim` and
+ :doc:`/admin-guide/mm/damon/lru_sort`).
+ 
++.. _damon_design_special_purpose_modules_exclusivity:
++
++Note that these modules currently run in an exclusive manner.  If one of those
++is already running, others will return ``-EBUSY`` upon start requests.
+ 
+ Sample DAMON Modules
+ --------------------
+-- 
+2.53.0
 
-Best regards,
-Liew Rui Yan
