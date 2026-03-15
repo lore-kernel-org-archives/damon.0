@@ -1,40 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF3AE37C912;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E01FC37C91E;
 	Sun, 15 Mar 2026 21:00:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773608424; cv=none; b=huQgaqQM05ntxMB+gVkcyWddxigwIRgLyRdnW1HYaVWjqlyWEUpzUQ5tUENC9oq1MVhyj0tlP2Zmv6AxfY1VAsZf5rWR0yUtFdVHrt/YQqNG7lDE0Tut6U9NfqGpe0f8MDtEmQ6bWCIPEyfz/mrzhgYoxJH0g3SiIen1yD7kyPA=
+	t=1773608425; cv=none; b=W7fy0zmH+NPlAePQmLwWEpm9rHFJ8LeA5KUn3cWWV/KwGGMvm8b+IFEqjzCcgZw9p7xHBNevQ9dKpyW8PR4xWjY3XZZJiD3FI6ym2fn1S/dCh4tN9aDWGYojvtQRIpOTpCaUIggkWuSrVkNglmMnC/Qkie9Yle3KHJp+cpMfTPk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773608424; c=relaxed/simple;
-	bh=acrZio7SwTIWWe0wc5YY1SpE9hMTqgCgT01pPcG9A6s=;
+	s=arc-20240116; t=1773608425; c=relaxed/simple;
+	bh=K+t0IBDIG7HXVVaXmRTS++wFYmoNTkKzAJmGYrkNPTI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=njTT4kYlzYw6KPwpl/w/bzoC28fZpZRMz9FFiAHp5I+FpI0babbUARxqKQ/R6l09gGB+EtxJcZ6qDF27vAWoAI8cvikno77u9pPVXAmgKofU/l7G/VmA0qW/S06PoLciBXh6Mb9WBHdJUkP6V1XtdZOQ9F4qYOuvLJsD6U07MKQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PEzKpWx+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=b29lRpXzYB4FoyesQcUS1jdhR1eevlxHmWCiLSZcihUf6KKlK7QAo8BOQdANrBuIKmRFrH6eyeIe7ZGIAvTH0NCsPIlH4FRYjCWyyuCDAs8CIiQDwAUEeS9NfZTUIe2T1DYJJVbStXtd56nw5CjYJQcNeIay/E2xKxz/TLliqiQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mv9sn8r3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PEzKpWx+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A99EC2BCB1;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mv9sn8r3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B2CEC2BC9E;
 	Sun, 15 Mar 2026 21:00:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1773608424;
-	bh=acrZio7SwTIWWe0wc5YY1SpE9hMTqgCgT01pPcG9A6s=;
+	bh=K+t0IBDIG7HXVVaXmRTS++wFYmoNTkKzAJmGYrkNPTI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PEzKpWx+0qOPhCqTs6Tmujac6Z1+jtupZdJO1eipchDkTNY+FsLgjYSiesZhbPdQA
-	 0XI5hq5goiqMBqEYDk5NF+MNK5070vyCbw5UTYRvfPfl4cAeh7+PL2dMdy4zOe4stB
-	 BMmRVa6UA/xcNFBFHZ/DSAEbpxZZooS/xb2TInqKQF2o8e8QKulRbIDHlwYlwGkYkp
-	 GKLJdWXHIam9TV6vwwI55dqA/zxZrugc89uQ1kSd+2r1JZduUFzX2r6Gf03bSRVF+N
-	 7Km61cD1WWFSCvH8YmzK74Bcq3PGuV7VruLuJOM8NDa2Q/sdg3cE0zGgE2spihnrTb
-	 8SQMDfYmVCX4Q==
+	b=mv9sn8r3K6vky9qU7ER4NsTzi7rEvDXGZEa6QWEd4OKBB1TTtjpYCawkrwKSAuv8/
+	 p61zmi1755sjHSRP8epCQfX4zq/4TWiLEdK3ufEZrAyA+Ktr8HCquMI0ia3AIApZd0
+	 mqZ/42zV0zSCVAIh9K3NrBn6DsW91ZNzkKhmiVSMYVFXp2KTZvtLgvl/pCrnrPVGRI
+	 7o2OuvjsXG1x9s0TJyvlosUrJMn/+6Bx40388X+JQvmP2jkRcvAwLTOyRwU/GDP6w7
+	 SyeB8jGkZdtCIUQCNAnuVwoo6/bRIIZo97YZU6UFESzzBfIkWenOe5Qa6Yccz8JUiz
+	 rW7O7QFJSZ6TQ==
 From: SeongJae Park <sj@kernel.org>
 To: 
 Cc: SeongJae Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Brendan Higgins <brendan.higgins@linux.dev>,
+	David Gow <davidgow@google.com>,
 	damon@lists.linux.dev,
+	kunit-dev@googlegroups.com,
 	linux-kernel@vger.kernel.org,
+	linux-kselftest@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH 05/10] Docs/ABI/damon: update for pause sysfs file
-Date: Sun, 15 Mar 2026 14:00:04 -0700
-Message-ID: <20260315210012.94846-6-sj@kernel.org>
+Subject: [RFC PATCH 06/10] mm/damon/tests/core-kunit: test pause commitment
+Date: Sun, 15 Mar 2026 14:00:05 -0700
+Message-ID: <20260315210012.94846-7-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260315210012.94846-1-sj@kernel.org>
 References: <20260315210012.94846-1-sj@kernel.org>
@@ -46,31 +51,28 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Update DAMON ABI document for the DAMON context execution pause/resume
-feature.
+Add a kunit test for commitment of damon_ctx->pause parameter that can
+be done using damon_commit_ctx().
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- Documentation/ABI/testing/sysfs-kernel-mm-damon | 7 +++++++
- 1 file changed, 7 insertions(+)
+ mm/damon/tests/core-kunit.h | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/Documentation/ABI/testing/sysfs-kernel-mm-damon b/Documentation/ABI/testing/sysfs-kernel-mm-damon
-index 2424237ebb105..7059f540940f0 100644
---- a/Documentation/ABI/testing/sysfs-kernel-mm-damon
-+++ b/Documentation/ABI/testing/sysfs-kernel-mm-damon
-@@ -84,6 +84,13 @@ Description:	Writing an integer to this file sets the 'address unit'
- 		parameter of the given operations set of the context.  Reading
- 		the file returns the last-written 'address unit' value.
- 
-+What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/pause
-+Date:		Mar 2026
-+Contact:	SeongJae Park <sj@kernel.org>
-+Description:	Writing a boolean keyword to this file sets the 'pause' request
-+		parameter for the context.  Reading the file returns the
-+		last-written 'pause' value.
-+
- What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/monitoring_attrs/intervals/sample_us
- Date:		Mar 2022
- Contact:	SeongJae Park <sj@kernel.org>
+diff --git a/mm/damon/tests/core-kunit.h b/mm/damon/tests/core-kunit.h
+index 9e5904c2beeb2..0030f682b23b7 100644
+--- a/mm/damon/tests/core-kunit.h
++++ b/mm/damon/tests/core-kunit.h
+@@ -1077,6 +1077,10 @@ static void damon_test_commit_ctx(struct kunit *test)
+ 	KUNIT_EXPECT_EQ(test, damon_commit_ctx(dst, src), 0);
+ 	src->min_region_sz = 4095;
+ 	KUNIT_EXPECT_EQ(test, damon_commit_ctx(dst, src), -EINVAL);
++	src->min_region_sz = 4096;
++	src->pause = true;
++	KUNIT_EXPECT_EQ(test, damon_commit_ctx(dst, src), 0);
++	KUNIT_EXPECT_TRUE(test, dst->pause);
+ 	damon_destroy_ctx(src);
+ 	damon_destroy_ctx(dst);
+ }
 -- 
 2.47.3
