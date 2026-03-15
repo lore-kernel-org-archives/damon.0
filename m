@@ -1,44 +1,56 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFB001EFFB7;
-	Sun, 15 Mar 2026 19:17:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4005A1DF254;
+	Sun, 15 Mar 2026 21:00:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773602269; cv=none; b=CCjKG78mgYk3I1aNxfW89W0i0Y1Wb7IDjKr+LIhTli78NYC49RHnxa3lLjsPhLr7E5zHxIztaoNjyJRaxpRxrELjve6nnzU4j5vdaNezbbh8iBkGfe0EvjXChUwmhq/SNWxaYhP2af0Rj3x7XOloyOjSBlY6scgeNXdnSVieNMM=
+	t=1773608423; cv=none; b=KsY2eB5QqvzmHYW8NmR/U55IOWMqCqDp8WgK6mRpAX5HKA+Lwl0Lq2NKFLvC084nc0quZbvW68d6K/4oMPkPflEN3wVkT6ZqBQ348Iws/beg1XiZS1MkSIy46uNUQErThDB160boHEg7/o4whR2qkrZtds95uM2ZBH65Gm12AIE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773602269; c=relaxed/simple;
-	bh=lnmezolbS9hPqh6D5aE6eJP3t19p6P+GRKf1MW+dOjo=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b/bsIezgPaHHBAywHeRbHKQIwH4xy4V5swMsTSURkvd5m0PNb26MH2waIQXqHWqQ71I0tu02ax0r+kE3lY9RwYql2ExXYjY7eNMlAcd9ihocD0i6bjltt+4WsPZ8+ueg+Rosf22OAxcQ5fFONvUPByarVeedOtto7ja9E1ZWAHg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZL/9PmUt; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1773608423; c=relaxed/simple;
+	bh=XnIOlQqQj664a9OSr2rVhvLZUQiwYMWAxdX1C8eCcLc=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=l3qKL9pxgiiK2+vb9L8uKHuG1RoVaphc/J0JaanmmofBCOVrMa2cL+RilapIaUkPPm49rlQ7Kn4uF1lMFoz/WBy1wUWCpmwFIm5nnd75a3rHqe8woBF+RejYlip5b9SpgfnlO6HQPKXUzpU4+qX+QU69RlXKauc4J1tPijVYWTU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pylHVRuK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZL/9PmUt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85299C4CEF7;
-	Sun, 15 Mar 2026 19:17:48 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pylHVRuK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99E0DC4CEF7;
+	Sun, 15 Mar 2026 21:00:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773602268;
-	bh=lnmezolbS9hPqh6D5aE6eJP3t19p6P+GRKf1MW+dOjo=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZL/9PmUtoKntf0zCvjFDx8vgOM00T8LuhM3lw7fxsGtBty+RhVV6BFVhTn5CbwLW6
-	 GNEkIFHzn8YIVi/EM8H5c+YTbMT6n81G/7v+Q8glLjiEDd2mPBYPrMXzDUUXTtk1EL
-	 VlGaPoF3xHbrKkYQxsQjTobxdeQYmvVZXCsugB6HrJA4cSLA4O3KT/X6L85mBgDF9m
-	 UG7UU8oqHu3HcYAxNLsLB2J6PMXEiTDoJHzXMnmmW8rcisnMlfWwoM/HDOxYN2wyxI
-	 yTrh2nn3Iopxrokme22Re8eTwOPlRiHRhx4wVCSIXrm8BDftTskZM61yJVgxGdAOSq
-	 rhkDx5DiQ12yA==
+	s=k20201202; t=1773608423;
+	bh=XnIOlQqQj664a9OSr2rVhvLZUQiwYMWAxdX1C8eCcLc=;
+	h=From:To:Cc:Subject:Date:From;
+	b=pylHVRuKIp2RySkn/vjGtU/jKV1EUrVmO8HhjUb40IJr6XYVS6+PqAWYKKzNda/8O
+	 y184DIjBgJEjfd5/R9qy+uV826AOyPG/T2NO+e3YcEU4PuVF7A5L0v1S8m/7bEKOFb
+	 42qorg8HwSp+7e/4tT1DVBuZCUEAdVHeodEZZFd+CwGxxRbGGsLOqQztzRe1qz09GZ
+	 /ChjDeMNDtuJowFl1rtPt3dGO9wUJ8gvg3tJOFoj8VPEjGhyE3rxNT77b4O/b9smkF
+	 1rgPFaP0/9+0jTeOg+fasWgnxj7lDeB/7UoMmF8bjcXwAUINz7mmgy382fgs1VOxUa
+	 s+7qj+322iGbg==
 From: SeongJae Park <sj@kernel.org>
-To: SeongJae Park <sj@kernel.org>
-Cc: Andrew Morton <akpm@linux-foundation.org>,
-	"# 6 . 17 . x" <stable@vger.kernel.org>,
+To: 
+Cc: SeongJae Park <sj@kernel.org>,
+	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Brendan Higgins <brendan.higgins@linux.dev>,
+	David Gow <davidgow@google.com>,
+	David Hildenbrand <david@kernel.org>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Shuah Khan <shuah@kernel.org>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@kernel.org>,
 	damon@lists.linux.dev,
+	kunit-dev@googlegroups.com,
+	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
+	linux-kselftest@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: Re: [PATCH v2] mm/damon/stat: monitor all System RAM resources
-Date: Sun, 15 Mar 2026 12:17:40 -0700
-Message-ID: <20260315191741.88931-1-sj@kernel.org>
+Subject: [RFC PATCH 00/10] mm/damon: let DAMON be paused and resumed
+Date: Sun, 15 Mar 2026 13:59:59 -0700
+Message-ID: <20260315210012.94846-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260315162717.80870-1-sj@kernel.org>
-References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -47,56 +59,111 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Sun, 15 Mar 2026 09:27:15 -0700 SeongJae Park <sj@kernel.org> wrote:
+DAMON utilizes a few mechanisms that enhance itself over time. Adaptive
+regions adjustment, goal-based DAMOS quota auto-tuning and monitoring
+intervals auto-tuning like self-training mechanisms are such examples.
+It also adds access frequency stability information (age) to the
+monitoring results, which makes it enhanced over time.
 
-> DAMON_STAT usage document (Documentation/admin-guide/mm/damon/stat.rst)
-> says it monitors the system's entire physical memory.  But, it is
-> monitoring only the biggest System RAM resource of the system.  When
-> there are multiple System RAM resources, this results in monitoring only
-> an unexpectedly small fraction of the physical memory.  For example,
-> suppose the system has a 500 GiB System RAM, 10 MiB non-System RAM, and
-> 500 GiB System RAM resources in order on the physical address space.
-> DAMON_STAT will monitor only the first 500 GiB System RAM.  This
-> situation is particularly common on NUMA systems.
-> 
-> Select a physical address range that covers all System RAM areas of the
-> system, to fix this issue and make it work as documented.
+Sometimes users have to stop DAMON.  In this case, DAMON internal state
+that enhanced over the time of the last execution simply goes away.
+Restarted DAMON have to train itself and enhance its output from the
+scratch.  This makes DAMON less useful in such cases.  Introducing three
+such use cases below.
 
-sashiko.dev adds [1] below comment:
+Investigation of DAMON.  It is best to do the investigation online,
+especially when it is a production environment.  DAMON therefore
+provides features for such online investigations, including DAMOS stats,
+monitoring result snapshot exposure, and multiple tracepoints.  When
+those are insufficient, and there are additional clues that could be
+interfered by DAMON, users have to temporarily stop DAMON to collect the
+additional clues.  It is not very useful since many of DAMON internal
+clues are gone when DAMON is stopped.  The loss of the monitoring
+results that improved over time is also problematic, especially in
+production environments.
 
-'''
-Does this single bounding box incorrectly include unpopulated address gaps
-between discrete System RAM resources?
+Monitoring of workloads that have different user-known phases.  For
+example, in Android, applications are known to have very different
+access patterns and behaviors when they are running on the foreground
+and the background.  It can therefore be useful to separate monitoring
+of apps based on whether they are running on the foreground and on the
+background.  Having two DAMON threads per application that paused and
+resumed for the apps foreground/background switches can be useful for
+the purpose.  But such pause/resume of the execution is not supported.
 
-On systems with non-contiguous physical memory, such as NUMA architectures,
-there can be massive physical address gaps between memory nodes. By coalescing
-all resources into a single addr_range and passing nr_ranges = 1 to
-damon_set_regions(), DAMON treats these unpopulated gaps as part of the
-monitored memory.
+Tests of DAMON.  A few DAMON selftests are using drgn to dump the
+internal DAMON status.  The tests show if the dumped status is the same
+as what the test code expected.  Because DAMON keeps running and
+modifying its internal status, there are chances of data races that can
+cause false test results.  Stopping DAMON can avoid the race.  But,
+since the internal state of DAMON is dropped, the test coverage will be
+limited.
 
-This appears to artificially inflate total_sz in
-damon_stat_set_idletime_percentiles(), where the gap could completely
-dominate the distribution and skew the percentiles to report that nearly
-100% of memory is permanently idle.
+Let DAMON execution be paused and resumed without loss of the internal
+state, to overhaul the limitations.  For this, introduce a new DAMON
+context parameter, namely 'pause'.  API callers can update it while the
+context is running, using the online parameters update functions
+(damon_commit_ctx() and damon_call()).  Once it is set, kdamond_fn()
+main loop will do only limited works excluding the monitoring and DAMOS
+works, while sleeping sampling intervals per the work.  The limited
+works include handling of the online parameters update.  Hence users can
+unset the 'pause' parameter again.  Once it is unset, kdamond_fn() main
+loop will do all the work again (resumed).  Under the paused state, it
+also does stop condition checks and handling of it, so that paused DAMON
+can also be stopped if needed.  Expose the feature to the user space via
+DAMON sysfs interface.  Also, update existing drgn-based tests to test
+and use the feature.
 
-Could this also wildly inflate estimated_memory_bandwidth in
-damon_stat_set_estimated_memory_bandwidth() if an adaptive DAMON region
-bridges valid RAM and a physical gap? The size (r->ar.end - r->ar.start)
-would be massively inflated and multiplied by nr_accesses.
+Tests
+=====
 
-Would it be better to collect all discrete System RAM resources into an
-array of struct damon_addr_range and pass them to damon_set_regions() using
-the actual number of ranges?
-'''
+I confirmed the feature functionality using real time tracing ('perf
+trace' or 'trace-cmd stream') of damon:damon_aggregated DAMON
+tracepoint.  By pausing and resuming the DAMON execution, I was able to
+see the trace stops and continued as expected.  Note that the pause
+feature support is added to DAMON user-space tool (damo) after v3.1.9.
+Users can use '--pause_ctx' command line option of damo for that, and I
+actually used it for my test.  The extended drgn-based selftests are
+also testing a part of the functionality.
 
-My answer is no.  It is an intended behavior and no negative impact is
-expected.  I think the reason is in the patch description.  If any human needs
-more clarifications about this, please let me know.
+Patches Sequence
+================
 
-[1] https://sashiko.dev/#/patchset/20260315162717.80870-1-sj@kernel.org
+Patch 1 introduces the new core API for the pause feature.  Patch 2
+extend DAMON sysfs interface for the new parameter.  Patches 3-5 update
+design, usage and ABI documents for the new sysfs file, respectively.
+The following five patches are for tests.  Patch 6 implements a new
+kunit test for the pause parameter online commitment.  Patches 7 and 8
+extend DAMON selftest helpers to support the new feature.  Patch 9
+extends selftest to test the commitment of the feature.  Finally, patch
+10 updates existing selftest to be safe from the race condition using
+the pause/resume feature.
+
+SeongJae Park (10):
+  mm/damon/core: introduce damon_ctx->paused
+  mm/damon/sysfs: add pause file under context dir
+  Docs/mm/damon/design: update for context pause/resume feature
+  Docs/admin-guide/mm/damon/usage: update for pause file
+  Docs/ABI/damon: update for pause sysfs file
+  mm/damon/tests/core-kunit: test pause commitment
+  selftests/damon/_damon_sysfs: support pause file staging
+  selftests/damon/drgn_dump_damon_status: dump pause
+  selftests/damon/sysfs.py: check pause on assert_ctx_committed()
+  selftets/damon/sysfs.py: pause DAMON before dumping status
+
+ .../ABI/testing/sysfs-kernel-mm-damon         |  7 +++++
+ Documentation/admin-guide/mm/damon/usage.rst  | 12 +++++---
+ Documentation/mm/damon/design.rst             |  7 +++++
+ include/linux/damon.h                         |  2 ++
+ mm/damon/core.c                               |  8 +++++
+ mm/damon/sysfs.c                              | 30 +++++++++++++++++++
+ mm/damon/tests/core-kunit.h                   |  4 +++
+ tools/testing/selftests/damon/_damon_sysfs.py | 10 ++++++-
+ .../selftests/damon/drgn_dump_damon_status.py |  1 +
+ tools/testing/selftests/damon/sysfs.py        | 28 +++++++++++++++++
+ 10 files changed, 104 insertions(+), 5 deletions(-)
 
 
-Thanks,
-SJ
-
-[...]
+base-commit: 027cb70b08db6e3df632c49a8c7590ea830f7a96
+-- 
+2.47.3
