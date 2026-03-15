@@ -1,101 +1,148 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 402407260D;
-	Sun, 15 Mar 2026 00:26:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8874F36C0A5;
+	Sun, 15 Mar 2026 16:27:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773534372; cv=none; b=QWWqPoy6Xxqb3KlqEYVgK2TwCWQ4Bs8oMmnE0qnznANM6cD3QyqT2YqcoQE7zmlW0zDV8Mqvc+JaaV+0tGqXSc770cB7944c29wryXWyvD9L++VyxMCwPXUZOMjxocc7pizi0x9jGCYhEdlGzx9iGV/GEBCnuZjIFRBNFmpcK8A=
+	t=1773592046; cv=none; b=qMwJM6ZrauE1g+p29Vvh3pggKnypSzDQhjYfq5BODPBmqdvDXY4+8QWVcrT6B2sZLwSPhaIOtvPp5fFeHqda4U39mfqaLw9IQcvpeIRyY5BlxCalzn+4MzU45/CO7STZUtaVHO9/7Qt6wk78/Nauz8voKTqffBi6fdTed3SqnTo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773534372; c=relaxed/simple;
-	bh=1sCvwrjbj+DjAx2QZdG6F13Pd2u4zTGhs2VeFPdIUyw=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=KzQideqaSXwGgZp560IWmJthMbm+hrdx7i+lOMSCL185JjnQbbnJbRqif5ogB1DGOqCb5ETCxDmIo8wf0dCBfarrilnwucqihRH7MXlOSjXLhNKOMo0XEU1irv5rUCbu/r96UvB87R+ZsP85Q7kEU0qnZUxmUBimRbNArILMiW0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aOm9hRGv; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1773592046; c=relaxed/simple;
+	bh=tcDHnHCQtRIlyRPX5ixjq3/dMmHGb3WsrPaGYv6W6Qg=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=bYw61ZMJUb1O+VreAMDylikJoFo45o5IhXLDqFRgVIu2UUiUZSkAv+RayYJgHgo+/AFQo6DlJd4+HawcA2uyLVBM1uDuuudQu5ymC0mDTp0pxn4kNvj9J4sUw/3On6/Dto0+Tt1J0GKIZfJ00EXcfzMzsvIIxVpm8VTnCEmyESg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TO2iYOBY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aOm9hRGv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD42DC116C6;
-	Sun, 15 Mar 2026 00:26:11 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TO2iYOBY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D85EC4CEF7;
+	Sun, 15 Mar 2026 16:27:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773534371;
-	bh=1sCvwrjbj+DjAx2QZdG6F13Pd2u4zTGhs2VeFPdIUyw=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aOm9hRGvVEJ/WNi1KJenyI8c+au+LcuSvcap9xpnOUs46n6Hzn3yMxewe9y/3RmuU
-	 6vnJU7/9uTJS4ivQW1jxW6ZsGFsfMh9RBupLtXlRb6UcaHdlG9Xuu4VX8yRunm7G+a
-	 WtzcPVgys/b1pAmUj/VhQTMiKsY4omLF0QvPvXTWw90t5wFlf7aiaZ3u1tff+/g60k
-	 jT7C8VD26WID+hxbBGorJpPzPR8O12Ksp+DZP/vvImFAyCRxO9pND+THdVavTiCpXk
-	 3Bi2t6dtzTGbDaO+Lil7VVpob1/29tSDen70kCxvZRYDqAYe0zh8pPyTeh5N6v7SvH
-	 183AbuCSj2NPA==
+	s=k20201202; t=1773592046;
+	bh=tcDHnHCQtRIlyRPX5ixjq3/dMmHGb3WsrPaGYv6W6Qg=;
+	h=From:To:Cc:Subject:Date:From;
+	b=TO2iYOBYXd9YTDOZ+wRNqysoS7zh+UAqoGhPHNJ8rX46Jyk0TOVb7ww+QnfV+7i5u
+	 k2QJ7+YkUP2rqREu2BVlNRwq0pwD/bAQAroYAxLH6q/UxCOufoPaf99xtfE5TafSW/
+	 zBYHMhniMVx8ZxYkx3oXQufylMwBEgACCOQIaDqoO+MIP2Mc4ENMdBF7z47P+1YUh5
+	 Lr0KLO0JyOV+wmANZaX7XK/Iu3zaSumy62RxOTFe4iOVnn2dPagoG8FLTekr94Tj5d
+	 umRgydpqkAoo6g25CIUpTCskVHR0hEV8ny+E6JqOa9+VgnvYHX/3EGiXtwAKa5Fgsg
+	 Brusw26ggm6qA==
 From: SeongJae Park <sj@kernel.org>
-To: Liew Rui Yan <aethernet65535@gmail.com>
+To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SeongJae Park <sj@kernel.org>,
+	"# 6 . 17 . x" <stable@vger.kernel.org>,
 	damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	linux-doc@vger.kernel.org
-Subject: Re: [PATCH] Docs/mm/damon: document exclusivity of special-purpose modules
-Date: Sat, 14 Mar 2026 17:26:06 -0700
-Message-ID: <20260315002608.77292-1-sj@kernel.org>
+	linux-kernel@vger.kernel.org,
+	linux-mm@kvack.org
+Subject: [PATCH v2] mm/damon/stat: monitor all System RAM resources
+Date: Sun, 15 Mar 2026 09:27:15 -0700
+Message-ID: <20260315162717.80870-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <CAPLv50rMiS+PBFh6BQ1f1XZAJu=1hMOaSx6ySQgeHxAY=i1mQA@mail.gmail.com>
-References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On Sun, 15 Mar 2026 04:37:34 +0800 Liew Rui Yan <aethernet65535@gmail.com> wrote:
+DAMON_STAT usage document (Documentation/admin-guide/mm/damon/stat.rst)
+says it monitors the system's entire physical memory.  But, it is
+monitoring only the biggest System RAM resource of the system.  When
+there are multiple System RAM resources, this results in monitoring only
+an unexpectedly small fraction of the physical memory.  For example,
+suppose the system has a 500 GiB System RAM, 10 MiB non-System RAM, and
+500 GiB System RAM resources in order on the physical address space.
+DAMON_STAT will monitor only the first 500 GiB System RAM.  This
+situation is particularly common on NUMA systems.
 
-> On Sun, Mar 15, 2026 at 12:25 AM SeongJae Park <sj@kernel.org> wrote:
-> >
-> > Hello Liew,
-> >
-> Hello SeongJae,
-> 
-> >
-> > And thank you for fixing this!  But, the broken "contents" directive is added
-> > by a commit on damon/next tree [1] that not yet planned to be upstreamed.  That
-> > is, seems this patch is based on damon/next tree.  As a result, this patch
-> > cannot be cleanly applied on mm-new.  We prefer making patches based on mm-new
-> > unless there is a reason.
-> >
-> Okay, I will make sure to follow this in my future submissions.
-> 
-> > >
-> > > Signed-off-by: Liew Rui Yan <aethernet65535@gmail.com>
-> > > Link: https://lore.kernel.org/damon/20260314002119.79742-1-sj@kernel.org/T/#t
-> >
-> > I think it would be nice to give a context about the link.
-> >
-> That makes perfect sense.
-> 
-> >
-> > Reviewed-by: SeongJae Park <sj@kernel.org>
-> >
-> Thank you again, this marks my first contribution to Linux, and I truly
-> appreciate your guidance!
+Select a physical address range that covers all System RAM areas of the
+system, to fix this issue and make it work as documented.
 
-It's my honor to help your first contribution! :)
+Fixes: 369c415e6073 ("mm/damon: introduce DAMON_STAT module")
+Cc: <stable@vger.kernel.org> # 6.17.x
+Signed-off-by: SeongJae Park <sj@kernel.org>
+---
+Changes from v1
+(https://lore.kernel.org/20260313044449.4038-1-sj@kernel.org)
+- Fix wrong argument for damon_set_regions().
 
-> 
-> >
-> > Assuming you agree to my above suggestions, I added this patch to the top area
-> > of damon/next after dropping the "contents" directive fix and adding a simple
-> > sentence describing the context of the link.  The change made to this patch for
-> > that is as below.  If you don't mind, I will post it as v2 of this patch by
-> > tomorrow morning in Pacific Time.  Please let me know if you have any comments
-> > about the plan.
-> >
-> The plan sounds great to me. Thank you for taking care of the v2
-> submission!
+ mm/damon/stat.c | 51 ++++++++++++++++++++++++++++++++++++++++++++++---
+ 1 file changed, 48 insertions(+), 3 deletions(-)
 
-Great, I may post it tomorrow morning.
+diff --git a/mm/damon/stat.c b/mm/damon/stat.c
+index f9a2028483b05..c5af8ad4bcb65 100644
+--- a/mm/damon/stat.c
++++ b/mm/damon/stat.c
+@@ -145,12 +145,57 @@ static int damon_stat_damon_call_fn(void *data)
+ 	return 0;
+ }
+ 
++struct damon_stat_system_ram_range_walk_arg {
++	bool walked;
++	struct resource res;
++};
++
++static int damon_stat_system_ram_walk_fn(struct resource *res, void *arg)
++{
++	struct damon_stat_system_ram_range_walk_arg *a = arg;
++
++	if (!a->walked) {
++		a->walked = true;
++		a->res.start = res->start;
++	}
++	a->res.end = res->end;
++	return 0;
++}
++
++static unsigned long damon_stat_res_to_core_addr(resource_size_t ra,
++		unsigned long addr_unit)
++{
++	/*
++	 * Use div_u64() for avoiding linking errors related with __udivdi3,
++	 * __aeabi_uldivmod, or similar problems.  This should also improve the
++	 * performance optimization (read div_u64() comment for the detail).
++	 */
++	if (sizeof(ra) == 8 && sizeof(addr_unit) == 4)
++		return div_u64(ra, addr_unit);
++	return ra / addr_unit;
++}
++
++static int damon_stat_set_monitoring_region(struct damon_target *t,
++		unsigned long addr_unit, unsigned long min_region_sz)
++{
++	struct damon_addr_range addr_range;
++	struct damon_stat_system_ram_range_walk_arg arg = {};
++
++	walk_system_ram_res(0, -1, &arg, damon_stat_system_ram_walk_fn);
++	if (!arg.walked)
++		return -EINVAL;
++	addr_range.start = damon_stat_res_to_core_addr(
++			arg.res.start, addr_unit);
++	addr_range.end = damon_stat_res_to_core_addr(
++			arg.res.end + 1, addr_unit);
++	return damon_set_regions(t, &addr_range, 1, min_region_sz);
++}
++
+ static struct damon_ctx *damon_stat_build_ctx(void)
+ {
+ 	struct damon_ctx *ctx;
+ 	struct damon_attrs attrs;
+ 	struct damon_target *target;
+-	unsigned long start = 0, end = 0;
+ 
+ 	ctx = damon_new_ctx();
+ 	if (!ctx)
+@@ -180,8 +225,8 @@ static struct damon_ctx *damon_stat_build_ctx(void)
+ 	if (!target)
+ 		goto free_out;
+ 	damon_add_target(ctx, target);
+-	if (damon_set_region_biggest_system_ram_default(target, &start, &end,
+-				ctx->addr_unit, ctx->min_region_sz))
++	if (damon_stat_set_monitoring_region(target, ctx->addr_unit,
++				ctx->min_region_sz))
+ 		goto free_out;
+ 	return ctx;
+ free_out:
 
-
-Thanks,
-SJ
-
-[...]
+base-commit: 209f54c1171365f1d942b89554808acce71aadb4
+-- 
+2.47.3
