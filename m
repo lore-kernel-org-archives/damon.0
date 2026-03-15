@@ -1,51 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63BF82C028B;
-	Sun, 15 Mar 2026 16:29:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFB001EFFB7;
+	Sun, 15 Mar 2026 19:17:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773592195; cv=none; b=XdoVrnClvC6bnhBXzww4jjS3TZVYKLzRKfIOGkbZ4zRnagJ0xrEEuXPg/AVPbsuVGGSq5uqCUddLzKWBalnGo5hUkwdkGnu3F2ESDxSjYVvM5FAWEW/ynmM/DM3EIK+xtvelT2zHXaDftkZ231jXqm5GIb8iSRgYibtUkYLs9nc=
+	t=1773602269; cv=none; b=CCjKG78mgYk3I1aNxfW89W0i0Y1Wb7IDjKr+LIhTli78NYC49RHnxa3lLjsPhLr7E5zHxIztaoNjyJRaxpRxrELjve6nnzU4j5vdaNezbbh8iBkGfe0EvjXChUwmhq/SNWxaYhP2af0Rj3x7XOloyOjSBlY6scgeNXdnSVieNMM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773592195; c=relaxed/simple;
-	bh=He08VfqZZvy0NJ509H07nj7EMEVUJY5kq1pTp0TKxWA=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=ZWdcDWE+f0I1zaqPJJMJQkgQq77EwuHgo/RoMVnIcmpPzBbyDkFqV6WUM7n5RVrMLCy0nmfPo1/WNDTwT8cDWyaao1UgYX8e9g93qC/cqfBhvqGXsYOFwjXohwQoqnpMUsMdEKzWNt+bpC+K/45q2lkrXQV8LY6egNtMzHBGnA8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aKnWgzUV; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1773602269; c=relaxed/simple;
+	bh=lnmezolbS9hPqh6D5aE6eJP3t19p6P+GRKf1MW+dOjo=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=b/bsIezgPaHHBAywHeRbHKQIwH4xy4V5swMsTSURkvd5m0PNb26MH2waIQXqHWqQ71I0tu02ax0r+kE3lY9RwYql2ExXYjY7eNMlAcd9ihocD0i6bjltt+4WsPZ8+ueg+Rosf22OAxcQ5fFONvUPByarVeedOtto7ja9E1ZWAHg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZL/9PmUt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aKnWgzUV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5E74C4CEF7;
-	Sun, 15 Mar 2026 16:29:54 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZL/9PmUt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85299C4CEF7;
+	Sun, 15 Mar 2026 19:17:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773592195;
-	bh=He08VfqZZvy0NJ509H07nj7EMEVUJY5kq1pTp0TKxWA=;
-	h=From:To:Cc:Subject:Date:From;
-	b=aKnWgzUV17mDG+vFpiOFZ65eycBdJF5NNE+shq3yAFhbHt8ZEjn7kjA0Px4mpBDtg
-	 0qjfRv6u93OiWE3Zoi/TF6/q4VrccEp/6sWNKFqx4+mXvSp9K4h6OuOWgXm2iEmhCr
-	 G2s17qR0f40sP0541owodaqkDPxKVVXKjziWwTM1KKaPQ2Y+gYb9jlfT5/Z1y4ot7m
-	 ZsgBv6SKSQhAkTjgvgdH+atfi59phLmudaP+1nFuXGI8W9g6nfv6pUVMkeGUpBsR4w
-	 AlqGwhiFrQEFrZio1LKNvkaWeLtTKIzr3NLJbsDkK1YLg/12/6IkWWIutuN6eNKgF6
-	 EKRAmXmDhgmZg==
+	s=k20201202; t=1773602268;
+	bh=lnmezolbS9hPqh6D5aE6eJP3t19p6P+GRKf1MW+dOjo=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=ZL/9PmUtoKntf0zCvjFDx8vgOM00T8LuhM3lw7fxsGtBty+RhVV6BFVhTn5CbwLW6
+	 GNEkIFHzn8YIVi/EM8H5c+YTbMT6n81G/7v+Q8glLjiEDd2mPBYPrMXzDUUXTtk1EL
+	 VlGaPoF3xHbrKkYQxsQjTobxdeQYmvVZXCsugB6HrJA4cSLA4O3KT/X6L85mBgDF9m
+	 UG7UU8oqHu3HcYAxNLsLB2J6PMXEiTDoJHzXMnmmW8rcisnMlfWwoM/HDOxYN2wyxI
+	 yTrh2nn3Iopxrokme22Re8eTwOPlRiHRhx4wVCSIXrm8BDftTskZM61yJVgxGdAOSq
+	 rhkDx5DiQ12yA==
 From: SeongJae Park <sj@kernel.org>
-To: Andrew Morton <akpm@linux-foundation.org>
-Cc: Liew Rui Yan <aethernet65535@gmail.com>,
-	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
-	David Hildenbrand <david@kernel.org>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	Michal Hocko <mhocko@suse.com>,
-	Mike Rapoport <rppt@kernel.org>,
-	SeongJae Park <sj@kernel.org>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Vlastimil Babka <vbabka@kernel.org>,
+To: SeongJae Park <sj@kernel.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>,
+	"# 6 . 17 . x" <stable@vger.kernel.org>,
 	damon@lists.linux.dev,
-	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [PATCH v2] Docs/mm/damon: document exclusivity of special-purpose modules
-Date: Sun, 15 Mar 2026 09:29:44 -0700
-Message-ID: <20260315162945.80994-1-sj@kernel.org>
+Subject: Re: [PATCH v2] mm/damon/stat: monitor all System RAM resources
+Date: Sun, 15 Mar 2026 12:17:40 -0700
+Message-ID: <20260315191741.88931-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260315162717.80870-1-sj@kernel.org>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -54,97 +47,56 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-From: Liew Rui Yan <aethernet65535@gmail.com>
+On Sun, 15 Mar 2026 09:27:15 -0700 SeongJae Park <sj@kernel.org> wrote:
 
-Add a section in design.rst to explain that DAMON special-purpose kernel
-modules (LRU_SORT, RECLAIM, STAT) run in an exclusive manner and return
--EBUSY if another is already running.
+> DAMON_STAT usage document (Documentation/admin-guide/mm/damon/stat.rst)
+> says it monitors the system's entire physical memory.  But, it is
+> monitoring only the biggest System RAM resource of the system.  When
+> there are multiple System RAM resources, this results in monitoring only
+> an unexpectedly small fraction of the physical memory.  For example,
+> suppose the system has a 500 GiB System RAM, 10 MiB non-System RAM, and
+> 500 GiB System RAM resources in order on the physical address space.
+> DAMON_STAT will monitor only the first 500 GiB System RAM.  This
+> situation is particularly common on NUMA systems.
+> 
+> Select a physical address range that covers all System RAM areas of the
+> system, to fix this issue and make it work as documented.
 
-Update lru_sort.rst, reclaim.rst and stat.rst by adding cross-references
-to this exclusivity rule at the end of their respective Example
-sections.
+sashiko.dev adds [1] below comment:
 
-This change is motivated from another discussion [1].
+'''
+Does this single bounding box incorrectly include unpopulated address gaps
+between discrete System RAM resources?
 
-[1] https://lore.kernel.org/damon/20260314002119.79742-1-sj@kernel.org/T/#t
+On systems with non-contiguous physical memory, such as NUMA architectures,
+there can be massive physical address gaps between memory nodes. By coalescing
+all resources into a single addr_range and passing nr_ranges = 1 to
+damon_set_regions(), DAMON treats these unpopulated gaps as part of the
+monitored memory.
+
+This appears to artificially inflate total_sz in
+damon_stat_set_idletime_percentiles(), where the gap could completely
+dominate the distribution and skew the percentiles to report that nearly
+100% of memory is permanently idle.
+
+Could this also wildly inflate estimated_memory_bandwidth in
+damon_stat_set_estimated_memory_bandwidth() if an adaptive DAMON region
+bridges valid RAM and a physical gap? The size (r->ar.end - r->ar.start)
+would be massively inflated and multiplied by nr_accesses.
+
+Would it be better to collect all discrete System RAM resources into an
+array of struct damon_addr_range and pass them to damon_set_regions() using
+the actual number of ranges?
+'''
+
+My answer is no.  It is an intended behavior and no negative impact is
+expected.  I think the reason is in the patch description.  If any human needs
+more clarifications about this, please let me know.
+
+[1] https://sashiko.dev/#/patchset/20260315162717.80870-1-sj@kernel.org
 
 
-Signed-off-by: Liew Rui Yan <aethernet65535@gmail.com>
-Reviewed-by: SeongJae Park <sj@kernel.org>
-Signed-off-by: SeongJae Park <sj@kernel.org>
----
-Change from v1
-(https://lore.kernel.org/20260314092145.7496-1-aethernet65535@gmail.com)
-- Drop contents directive fix
-- Reword description
+Thanks,
+SJ
 
- Documentation/admin-guide/mm/damon/lru_sort.rst | 5 +++++
- Documentation/admin-guide/mm/damon/reclaim.rst  | 5 +++++
- Documentation/admin-guide/mm/damon/stat.rst     | 5 +++++
- Documentation/mm/damon/design.rst               | 4 ++++
- 4 files changed, 19 insertions(+)
-
-diff --git a/Documentation/admin-guide/mm/damon/lru_sort.rst b/Documentation/admin-guide/mm/damon/lru_sort.rst
-index 73980bacc3a02..56690646cf398 100644
---- a/Documentation/admin-guide/mm/damon/lru_sort.rst
-+++ b/Documentation/admin-guide/mm/damon/lru_sort.rst
-@@ -351,3 +351,8 @@ the LRU-list based page granularity reclamation. ::
-     # echo 400 > wmarks_mid
-     # echo 200 > wmarks_low
-     # echo Y > enabled
-+
-+Note that this module (damon_lru_sort) cannot run simultaneously with other
-+DAMON-based special-purpose modules.  Refer to :ref:`DAMON design special
-+purpose modules exclusivity <damon_design_special_purpose_modules_exclusivity>`
-+for more details.
-diff --git a/Documentation/admin-guide/mm/damon/reclaim.rst b/Documentation/admin-guide/mm/damon/reclaim.rst
-index 552a7786b0829..6f580f637134a 100644
---- a/Documentation/admin-guide/mm/damon/reclaim.rst
-+++ b/Documentation/admin-guide/mm/damon/reclaim.rst
-@@ -318,6 +318,11 @@ granularity reclamation. ::
-     # echo 200 > wmarks_low
-     # echo Y > enabled
- 
-+Note that this module (damon_reclaim) cannot run simultaneously with other
-+DAMON-based special-purpose modules.  Refer to :ref:`DAMON design special
-+purpose modules exclusivity <damon_design_special_purpose_modules_exclusivity>`
-+for more details.
-+
- .. [1] https://research.google/pubs/pub48551/
- .. [2] https://lwn.net/Articles/787611/
- .. [3] Documentation/mm/free_page_reporting.rst
-diff --git a/Documentation/admin-guide/mm/damon/stat.rst b/Documentation/admin-guide/mm/damon/stat.rst
-index e5a5a2c4f803a..c4b14daeb2dd6 100644
---- a/Documentation/admin-guide/mm/damon/stat.rst
-+++ b/Documentation/admin-guide/mm/damon/stat.rst
-@@ -45,6 +45,11 @@ You can enable DAMON_STAT by setting the value of this parameter as ``Y``.
- Setting it as ``N`` disables DAMON_STAT.  The default value is set by
- ``CONFIG_DAMON_STAT_ENABLED_DEFAULT`` build config option.
- 
-+Note that this module (damon_stat) cannot run simultaneously with other
-+DAMON-based special-purpose modules.  Refer to :ref:`DAMON design special
-+purpose modules exclusivity <damon_design_special_purpose_modules_exclusivity>`
-+for more details.
-+
- .. _damon_stat_aggr_interval_us:
- 
- aggr_interval_us
-diff --git a/Documentation/mm/damon/design.rst b/Documentation/mm/damon/design.rst
-index 29fff20b3c2a9..dc37402c0fee9 100644
---- a/Documentation/mm/damon/design.rst
-+++ b/Documentation/mm/damon/design.rst
-@@ -853,6 +853,10 @@ more detail, please read the usage documents for those
- (:doc:`/admin-guide/mm/damon/stat`, :doc:`/admin-guide/mm/damon/reclaim` and
- :doc:`/admin-guide/mm/damon/lru_sort`).
- 
-+.. _damon_design_special_purpose_modules_exclusivity:
-+
-+Note that these modules currently run in an exclusive manner.  If one of those
-+is already running, others will return ``-EBUSY`` upon start requests.
- 
- Sample DAMON Modules
- --------------------
-
-base-commit: 1e6fb24fdfceeb8dfa1a97a0270e4aeffa0a6d6d
--- 
-2.47.3
+[...]
