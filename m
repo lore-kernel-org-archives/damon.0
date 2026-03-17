@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01D6D244661;
-	Tue, 17 Mar 2026 04:34:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E179637F012;
+	Tue, 17 Mar 2026 05:36:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773722077; cv=none; b=o1Anq7SPE/SGWrZjv44QLoW/Uw+vDq+86liKZDE6GjMovan5y7RbEB6VyOlzmqLfTkN5gy4p8A7zeMad2D7bNGNoFeNqTKp8V+oJnkie5Blrnjj/vdK10Kp7jo/ph6BVapw8zgvFe3Ed5IvbwjqTMrCMJBjAtnGnKc4vJKRH7HY=
+	t=1773725794; cv=none; b=N/NQ0HKHiaBlqB7ezLydiJCtvBio6if/iQD4362Co2Mh7SVitSwIgGE9zIi8lkcCyxFw4/FxN5RGF0x/g94IJqRKmT1DfNPtcYPo/waGPVFmGvB0r2cf1oRn8H3cDZD4D2sTbqxZQKlgZ6FBBf/1SeEzWgVSyfVfqXlP1CtLSq4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773722077; c=relaxed/simple;
-	bh=0/0VFLYKi+mk4PVpGHBEzM2TEEJ2Vb1grQB/KFxONgE=;
+	s=arc-20240116; t=1773725794; c=relaxed/simple;
+	bh=/21WQ/IOtHu4dvnXgF2/nu4A18vGdKJxEcpXgHCCKGU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E2FXcyLbeOdw46mV0pv1RpDQy3jPoOeGVk2t77M7JmhHKnVTK2GC0VEze77Gq+tCdA10pz1OJeT81/5knfvpf8lYynA+2kJ0GvZnuKsXG7ao4srNCqL4nBcbkKSCrQQHZF9sre8JkTAaZVyZrIcMrm8ais224yYX0T9wR6mZ1JU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=na+iKJmX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=N9QC5ZxmVmiUKOqaEQjZbnMt6xx8bKq0eDk+2hXlOyzCKIs0LfdXMHL6qC/qaBCWzdGmjQUohyiL+YYovLwNwUksahRe0otoD8IqGYGdK9JlM9Sf+sS4FqOfNmFrGBnZNV+xodKj4Z+8XPAVFA0VMKo4BzJBzZyXXf8oLuJnR9g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=A841uQKU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="na+iKJmX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D9E5C4CEF7;
-	Tue, 17 Mar 2026 04:34:36 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="A841uQKU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F5A7C4CEF7;
+	Tue, 17 Mar 2026 05:36:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773722076;
-	bh=0/0VFLYKi+mk4PVpGHBEzM2TEEJ2Vb1grQB/KFxONgE=;
+	s=k20201202; t=1773725793;
+	bh=/21WQ/IOtHu4dvnXgF2/nu4A18vGdKJxEcpXgHCCKGU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=na+iKJmXbh0gkpBBkASt2VVz4NPNOAYTNe5xFQuv+bfr57NqS2qN+EWjUgYG8bKJd
-	 D+86JTxRGDLvR19RtV6VyfEXf7bhrUXfywiyOkSy+E+acOEkk32T4r2x0AbXJDmOs/
-	 rffpgkrUnASX6V2RDvFBhs/EVrD1a4a6P7RdL51Z/fOq3q/IE6FbtnQ+qF8/urXAs8
-	 9nZ65ha6IFkbY8Q7seCJn7rNud/NKIvnKcHU62ht2KBGqm9M3PlTnFWcJcuFyvzgh2
-	 2DJI0fpg8vj3dZNCnY/0eMVn5Kk9mnNoL7eaEYnui4ET/sSGpkIgRPlJGpYS3mLxGj
-	 FJ8JotwxdKV0g==
+	b=A841uQKUOfqgjvLaPC0o8iVD3qLdenC2SHF2SBaJEZiRlJ+edfKAGybSXd4hMKI7G
+	 GRi7lY7658ozFWQWFXC2Ue5g4vGpDybr1of1ClBghi9RV3JTQzcukZEQnPDsElDt3R
+	 5YLPiXL6V91zmefZNpbZcz1wwofiOqDUSLNruYWZNMAB6X2vEDMuGQQQzBw5v8QlbZ
+	 W65ihHvHH70srQ/eFmdtvhCkaGjSBPKpWS3v1bAJ3JkDC1NRpXMDIPgN17y5ouNwlQ
+	 fJRzfMm0YfWFx3+STjKA48vqkuKfv3vtOWssYhtbAlRru0OAeVq7PqZbIbH9de8dvo
+	 MAtSIYcvKnqhA==
 From: SeongJae Park <sj@kernel.org>
 To: SeongJae Park <sj@kernel.org>
-Cc: Shuah Khan <shuah@kernel.org>,
+Cc: Andrew Morton <akpm@linux-foundation.org>,
+	"# 6 . 17 . x" <stable@vger.kernel.org>,
 	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
-	linux-kselftest@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: Re: [RFC PATCH 10/10] selftets/damon/sysfs.py: pause DAMON before dumping status
-Date: Mon, 16 Mar 2026 21:34:28 -0700
-Message-ID: <20260317043429.1057-1-sj@kernel.org>
+Subject: Re: [PATCH v3] mm/damon/stat: monitor all System RAM resources
+Date: Mon, 16 Mar 2026 22:36:30 -0700
+Message-ID: <20260317053631.87907-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260315210012.94846-11-sj@kernel.org>
+In-Reply-To: <20260316235118.873-1-sj@kernel.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -47,139 +47,181 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Sun, 15 Mar 2026 14:00:09 -0700 SeongJae Park <sj@kernel.org> wrote:
+TL; DR: sashiko.dev found a problem in this patch.  Andrew, could you please
+add the attached fixup, or let me know if you prefer v4?
 
-> The sysfs.py test commits DAMON parameters, dump the internal DAMON
-> state, and show if the parameters are committed as expected using the
-> dumped state.  While the dumping is ongoing, DAMON is alive.  It can
-> make internal changes including addition and removal of regions.  It can
-> therefore make a race that can result in false test results.  Pause
-> DAMON execution during the state dumping to avoid such races.
+sashiko.dev added [1] comments.  Quoting the comments with ': ' line prefix,
+and replying to it in line below.
+
+On Mon, 16 Mar 2026 16:51:17 -0700 SeongJae Park <sj@kernel.org> wrote:
+
+> DAMON_STAT usage document (Documentation/admin-guide/mm/damon/stat.rst)
+> says it monitors the system's entire physical memory.  But, it is
+> monitoring only the biggest System RAM resource of the system.  When
+> there are multiple System RAM resources, this results in monitoring only
+> an unexpectedly small fraction of the physical memory.  For example,
+> suppose the system has a 500 GiB System RAM, 10 MiB non-System RAM, and
+> 500 GiB System RAM resources in order on the physical address space.
+> DAMON_STAT will monitor only the first 500 GiB System RAM.  This
+> situation is particularly common on NUMA systems.
 > 
+> Select a physical address range that covers all System RAM areas of the
+> system, to fix this issue and make it work as documented.
+> 
+> Fixes: 369c415e6073 ("mm/damon: introduce DAMON_STAT module")
+> Cc: <stable@vger.kernel.org> # 6.17.x
 > Signed-off-by: SeongJae Park <sj@kernel.org>
 > ---
->  tools/testing/selftests/damon/sysfs.py | 27 ++++++++++++++++++++++++++
->  1 file changed, 27 insertions(+)
+> Changes from v2
+> (https://lore.kernel.org/20260315162717.80870-1-sj@kernel.org)
+> - Rebase to mm-hotfixes-unstable
+> Changes from v1
+> (https://lore.kernel.org/20260313044449.4038-1-sj@kernel.org)
+> - Fix wrong argument for damon_set_regions().
 > 
-> diff --git a/tools/testing/selftests/damon/sysfs.py b/tools/testing/selftests/damon/sysfs.py
-> index e6d34ba05893f..a1a29f1a7c27b 100755
-> --- a/tools/testing/selftests/damon/sysfs.py
-> +++ b/tools/testing/selftests/damon/sysfs.py
-> @@ -193,18 +193,44 @@ def assert_ctx_committed(ctx, dump):
->      assert_true(dump['pause'] == ctx.pause, 'pause', dump)
+>  mm/damon/stat.c | 51 ++++++++++++++++++++++++++++++++++++++++++++++---
+>  1 file changed, 48 insertions(+), 3 deletions(-)
+> 
+> diff --git a/mm/damon/stat.c b/mm/damon/stat.c
+> index 25fb44ccf99d0..c5af8ad4bcb65 100644
+> --- a/mm/damon/stat.c
+> +++ b/mm/damon/stat.c
+> @@ -145,12 +145,57 @@ static int damon_stat_damon_call_fn(void *data)
+>  	return 0;
+>  }
 >  
->  def assert_ctxs_committed(kdamonds):
-> +    paused_for_dump = False
-> +    if kdamonds.kdamonds[0].contexts[0].pause is False:
-> +        kdamonds.kdamonds[0].contexts[0].pause = True
+> +struct damon_stat_system_ram_range_walk_arg {
+> +	bool walked;
+> +	struct resource res;
+> +};
+> +
+> +static int damon_stat_system_ram_walk_fn(struct resource *res, void *arg)
+> +{
+> +	struct damon_stat_system_ram_range_walk_arg *a = arg;
+> +
+> +	if (!a->walked) {
+> +		a->walked = true;
+> +		a->res.start = res->start;
+> +	}
+> +	a->res.end = res->end;
+> +	return 0;
+> +}
 
-Quoting sashiko.dev comments [1] with ': ' prefix below.
-
-: Does this code only pause the first context? The validation loop below
-: iterates over all contexts in the kdamond, so if there are multiple
-: contexts, will the others remain unpaused and vulnerable to the race
-: condition during the state dump?
-
-There is no real caller of this function that uses multiple contexts.  So there
-is no real problem.  That said, I think this code will be better to take care
-of such case that might happen in the future.
-
-I will therefore add below change to the next version of this patch.
-
-'''
---- a/tools/testing/selftests/damon/sysfs.py
-+++ b/tools/testing/selftests/damon/sysfs.py
-@@ -196,15 +196,17 @@ def assert_ctx_committed(ctx, dump):
-     assert_true(dump['pause'] == ctx.pause, 'pause', dump)
-
- def assert_ctxs_committed(kdamonds):
--    paused_for_dump = False
--    if kdamonds.kdamonds[0].contexts[0].pause is False:
--        kdamonds.kdamonds[0].contexts[0].pause = True
--        err = kdamonds.kdamonds[0].commit()
--        if err is not None:
--            print('pause fail (%s)' % err)
--            kdamonds.stop()
--            exit(1)
--        paused_for_dump = True
-+    ctxs_paused_for_dump = []
-+    for kd in kdamonds.kdamonds:
-+        for ctx in kd.contexts:
-+            if ctx.pause is False:
-+                ctx.pause = True
-+                err = kd.commit()
-+                if err is not None:
-+                    print('pause fail (%s)' % err)
-+                    kdamonds.stop()
-+                    exit(1)
-+                ctxs_paused_for_dump.append(ctx)
-
-     status, err = dump_damon_status_dict(kdamonds.kdamonds[0].pid)
-     if err is not None:
-@@ -212,17 +214,17 @@ def assert_ctxs_committed(kdamonds):
-         kdamonds.stop()
-         exit(1)
-
--    if paused_for_dump:
--        # resume
--        kdamonds.kdamonds[0].contexts[0].pause = False
--        err = kdamonds.kdamonds[0].commit()
--        if err is not None:
--            print('resume fail (%s)' % err)
--            kdamonds.stop()
--            exit(1)
--
--        # restore for comparison
--        kdamonds.kdamonds[0].contexts[0].pause = True
-+    for kd in kdamonds.kdamonds:
-+        for ctx in kd.contexts:
-+            if ctx in ctxs_paused_for_dump:
-+                ctx.pause = False
-+                err = kd.commit()
-+                if err is not None:
-+                    print('resume fail (%s)' % err)
-+                    kdamonds.stop()
-+                    exit(1)
-+                # restore for comparison
-+                ctx.pause = True
-
-     ctxs = kdamonds.kdamonds[0].contexts
-     dump = status['contexts']
-@@ -230,9 +232,11 @@ def assert_ctxs_committed(kdamonds):
-     for idx, ctx in enumerate(ctxs):
-         assert_ctx_committed(ctx, dump[idx])
-
--    if paused_for_dump:
--        # restore for the caller
--        kdamonds.kdamonds[0].contexts[0].pause = False
-+    # restore for the caller
-+    for kd in kdamonds.kdamonds:
-+        for ctx in kd.contexts:
-+            if ctx in ctxs_paused_for_dump:
-+                ctx.pause = False
-
- def main():
-     global kdamonds
-'''
-
-> +        err = kdamonds.kdamonds[0].commit()
-
-: Does calling commit() here inadvertently mask test failures by forcing the
-: entire Python object state to the kernel right before reading the status?
+: Does creating a single bounding box from the start of the first RAM resource
+: to the end of the last one force DAMON to monitor massive unpopulated
+: physical memory gaps?
 : 
-: For example, if a test marks a target obsolete, commits it, and deletes
-: the target from the Python list to verify if the kernel autonomously
-: removed it, this commit() would explicitly push the target's deletion to
-: the kernel, potentially bypassing the test's purpose.
+: On NUMA systems, memory nodes are often separated by large holes. Passing
+: this single large range to damon_set_regions() might spread max_nr_regions
+: over these holes, which could dilute the accuracy of the memory bandwidth
+: statistics since sampling non-RAM addresses yields zero accesses.
+: 
+: Would it be better to dynamically allocate an array of struct
+: damon_addr_range covering only valid System RAM boundaries and pass the
+: multiple ranges to damon_set_regions() using the nr_ranges parameter?
 
-No.  Callers that could have such problem should call this function after
-pausing the context on their own.  That's what the target obsolete test case is
-doing.
+Yes, it can force DAMON to monitor massive unpopulated phyiscal memory gaps.
+But, because DAMON utilizes its adaptive regions adjustment mechanism, the
+overhead will be negligible.  This is an intended behavior.
 
-[1] https://sashiko.dev/#/patchset/20260315210012.94846-11-sj@kernel.org
+> +
+> +static unsigned long damon_stat_res_to_core_addr(resource_size_t ra,
+> +		unsigned long addr_unit)
+> +{
+> +	/*
+> +	 * Use div_u64() for avoiding linking errors related with __udivdi3,
+> +	 * __aeabi_uldivmod, or similar problems.  This should also improve the
+> +	 * performance optimization (read div_u64() comment for the detail).
+> +	 */
+> +	if (sizeof(ra) == 8 && sizeof(addr_unit) == 4)
+> +		return div_u64(ra, addr_unit);
+> +	return ra / addr_unit;
+> +}
+
+: Could this silently truncate physical addresses above 4GB on 32-bit systems
+: with PAE enabled?
+: 
+: The function walk_system_ram_res() scans the 64-bit physical address space,
+: and resource_size_t can be a 64-bit integer, accurately holding addresses
+: above 4GB. However, this function returns an unsigned long, and DAMON's
+: struct damon_addr_range uses unsigned long for its boundaries.
+: 
+: Since damon_stat uses an addr_unit of 1, any 64-bit physical address might
+: be truncated to 32 bits when returned. This could create an inverted region
+: where the truncated end becomes smaller than start, breaking the
+: damon_set_regions() initialization and causing out-of-bounds memory accesses.
+
+This is correct, and the consequence is problematic.
+
+> +
+> +static int damon_stat_set_monitoring_region(struct damon_target *t,
+> +		unsigned long addr_unit, unsigned long min_region_sz)
+> +{
+> +	struct damon_addr_range addr_range;
+> +	struct damon_stat_system_ram_range_walk_arg arg = {};
+> +
+> +	walk_system_ram_res(0, -1, &arg, damon_stat_system_ram_walk_fn);
+> +	if (!arg.walked)
+> +		return -EINVAL;
+> +	addr_range.start = damon_stat_res_to_core_addr(
+> +			arg.res.start, addr_unit);
+> +	addr_range.end = damon_stat_res_to_core_addr(
+> +			arg.res.end + 1, addr_unit);
+
+
+: Is it possible for arg.res.end + 1 to overflow here?
+: 
+: On 32-bit architectures without PAE, resource_size_t is a 32-bit unsigned
+: integer. If physical RAM extends to the very top of the 32-bit address
+: space, arg.res.end will be 0xFFFFFFFF.
+: 
+: Adding 1 to this value triggers an integer overflow, resulting in 0, which
+: is then assigned to addr_range.end. Passing a region with a start greater
+: than 0 and an end of 0 to damon_set_regions() creates a structurally invalid
+: inverted region, which might corrupt subsequent DAMON calculations and
+: sampling operations.
+
+Again, this is correct, and the consequence is problematic.
+
+We can avoid the problematic consequence by checking if addr_range is valid,
+and return an error if not.  Below attaching fixup patch is implementing it.
+Andrew, could you please add the fixup patch?  Pleae let me know if you prefer
+v4.
 
 
 Thanks,
 SJ
 
 [...]
+=== >8 ===
+From e1fd7cf6469977cf1a58ee98b977eec53219ffc2 Mon Sep 17 00:00:00 2001
+From: SeongJae Park <sj@kernel.org>
+Date: Mon, 16 Mar 2026 22:11:22 -0700
+Subject: [PATCH] mm/damon/stat: return error if monitoring target region is
+ invalid
+
+On 32bit systems with LPAE, the end address might be overflowed or
+truncated, resulting in invalid range (the end address is equal or
+smaller than the start address).  Return an error for the case.
+
+Signed-off-by: SeongJae Park <sj@kernel.org>
+---
+ mm/damon/stat.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/mm/damon/stat.c b/mm/damon/stat.c
+index c5af8ad4bcb65..cf2c5a541eeea 100644
+--- a/mm/damon/stat.c
++++ b/mm/damon/stat.c
+@@ -188,6 +188,8 @@ static int damon_stat_set_monitoring_region(struct damon_target *t,
+ 			arg.res.start, addr_unit);
+ 	addr_range.end = damon_stat_res_to_core_addr(
+ 			arg.res.end + 1, addr_unit);
++	if (addr_range.end <= addr_range.start)
++		return -EINVAL;
+ 	return damon_set_regions(t, &addr_range, 1, min_region_sz);
+ }
+ 
+-- 
+2.47.3
+
