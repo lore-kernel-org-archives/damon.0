@@ -1,177 +1,202 @@
-Received: from mail-pg1-f169.google.com (mail-pg1-f169.google.com [209.85.215.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out-172.mta0.migadu.com (out-172.mta0.migadu.com [91.218.175.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA0922D7DDC
-	for <damon@lists.linux.dev>; Wed, 18 Mar 2026 15:37:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18399306486
+	for <damon@lists.linux.dev>; Wed, 18 Mar 2026 18:43:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773848258; cv=none; b=JPPZhTIF6jOKc060Ir0b6Pl6BqGBsJHb5LtxtZgohYEgfC8gvVrQ0XnfdeDbWrq6rkHroj0tVZkoWDwW8sBbLZajA/LkG9CbKIm3wtv7Q8LeBMni3CLx9szHQ/4TGbhR3Z36957Fe+73B2NAxDSmMSY5ZYeGMZZ0001lC4o5c9s=
+	t=1773859414; cv=none; b=bSdu9gELrCiieTl+OryPb3c4RrkykORQ41rm+tvGRMPQMs4rdIPBpwvNuEMFUhqjePtoY8tmDKWbtQYozGr4bwxzGkpOC0ff1R7+Pra9Chy9uAAh1+sk3qHw0RIvRkqC5TqF35ARI6Pb0hTohLNt2KDAGWxi95HyDdHAkH/aa50=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773848258; c=relaxed/simple;
-	bh=VN95ODXSgCxty+f7OkOfGM9DDrHTk6ukQz1XNYN3i6o=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=OSpBFvfCYvgI7zsvpEadyNLqptLOkkIWkDVh5rBuJlSwujDIQ8LIsWa5YHP+K8WXfr0SecbJxJxW7eIK4UiDCnQkKzx/aMcrayHiZhc1q14ZA0FJR9HEHuIpkExg+4XtZgzCud91OVVhAsGFZm2Ac8vslFd+A8RpxI2Dd7hpl28=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ggPv7tCq; arc=none smtp.client-ip=209.85.215.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1773859414; c=relaxed/simple;
+	bh=N5/gNC5jEdmJTXnYyiKutbrf0R9pR2HX7NMkcL602uk=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=oGflxfuR8SqS8OFnXYlXD+fDaqTMkXxJ+umRqVIYb5fRKL1TUyyjTpE7MPJd6yJWSHD1/xJ8ynH7s7Ag/hrFfHP+C06xi9/GvEt1HRdn+yUANFMVAFEr7HPYvKHV4/7FFdJBV/RypfQYNxdCeFsH3ahhde/bARpu2MNRuwZubOE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=sZYFZbqw; arc=none smtp.client-ip=91.218.175.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ggPv7tCq"
-Received: by mail-pg1-f169.google.com with SMTP id 41be03b00d2f7-c73e9e4cdf7so2453598a12.2
-        for <damon@lists.linux.dev>; Wed, 18 Mar 2026 08:37:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773848254; x=1774453054; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=tflDPbUGjZZhe/6e51jUzBoNjciN30vErFCN5iuJYMw=;
-        b=ggPv7tCqvSYFPxQbRtQOpMcD2gQxjnKwFj+uprq9L6Kl9WaUfaEgULPLsutohh4QWg
-         kDO58VmqS+YpfrUmcbppPxSHycRH7Pjjxw9OAckMZ6a2LCksXOqxuKKBjRaUdQkljbRA
-         OLcNFvcGI41lmYeVWuZ9UCHi7t3/SfvwxtPz6tYPRTsbiMys+bWcKlTXV7cL5m4riwhZ
-         8hDQ3OKwW4N5FdQdi8if/KaApTyWewUweBYCLxFPIDIb8LK7R2dLFtbTq6wp7XCveFR+
-         BJm/mZQZfpSfYtAh8qYsQZwLX8QTKS181EwdOCx4qGe/191e8Xw9AAmpq/ciTEPpumg9
-         JhJw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1773848254; x=1774453054;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=tflDPbUGjZZhe/6e51jUzBoNjciN30vErFCN5iuJYMw=;
-        b=nYkapLVoXObyFyy8wzMm/lcLb+nLfflARzpa4WNRe93prH19oWydD3KyqJrSeO1JY6
-         Thw6Y1sBWG81OQiBwkoD5rvlLFMcTHF306TROsarlZ2KPcFqjgg8/1mNG2577jK7hnLT
-         xFoOH1L1gxNBP/b809rDZx05+uqAw1M3XmvN1KUSEqR1PKvFO0WAf46So2uFH3+y8HXE
-         S1DmeI7d5i7bQmIJPMPaLZkKpFpifAh/xKtJfS41UCWkcSNODnjO3WLKzrPH2sahb2BF
-         /ryfSEQiRDaklW6h9A5c+0B5LMuD5i81VSQutOCvjNyRNfdsZ0AuO0bILMZ2jx9KlT3r
-         NAeA==
-X-Gm-Message-State: AOJu0YxyaoKpjuEZ96SdFs3+GCQ4UNNaf3oAjWvV7N5a+tiDndhmd7g9
-	NbkzCZXk0h8aUYZN/oBnWwMyHubTicTc9Y6nKzd+sxjqRdH/5vkuXqLE
-X-Gm-Gg: ATEYQzwJR/SH0jKU12/OFmIfdqaieZpKGa1btcTjp7pEFdIbFVwpEq6YQMHiTgCoguj
-	jsPtR3oRvCRYwJi5r724N2Hj1p3g6OVfnTTAniWhl4XbkToHDxMvyqR7U8mM+lnOz5oV597qt8C
-	v0IFvS1rhK7XkhEZU6alsoYFXf8fxKorqDG/V47i6+4FBS/uaAlADpXlz+gq4a1xc4EV+0x2P7l
-	x3tGRzY94G2DfC8fYrM9awdbykbWywKZHDNEikGmW5tY7U7AFPiP6BN+UhKj135e+cyqVRRDJoA
-	CGJM+Ibec9J29+J9pWTEOeM28SjxXvLWQ7M7dGCewNIk7faWUDQk7LvObt3TEFjkFdW6AqMTC+t
-	6HhJdg+QF5po60wGVHeieVEd8jEJK0/3EHponMxCVYzqsklp+MgZ7OHSAygJcupafGFCZuqvzVR
-	0Fki7kKCNluCA+NRvopK4PtfeTNq0=
-X-Received: by 2002:a17:903:18b:b0:2ae:504c:ae8a with SMTP id d9443c01a7336-2b06e3262bamr37279345ad.16.1773848253777;
-        Wed, 18 Mar 2026 08:37:33 -0700 (PDT)
-Received: from celestia ([2402:1980:898b:301c:d085:a35:99e7:ffec])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2b06e60493asm30693865ad.59.2026.03.18.08.37.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Mar 2026 08:37:33 -0700 (PDT)
-From: Liew Rui Yan <aethernet65535@gmail.com>
-To: sj@kernel.org
-Cc: damon@lists.linux.dev,
-	linux-mm@kvack.org
-Subject: [Question] mm/damon: min_nr_regions constraint and inconsistent error handling
-Date: Wed, 18 Mar 2026 23:37:31 +0800
-Message-ID: <20260318153731.97470-1-aethernet65535@gmail.com>
-X-Mailer: git-send-email 2.53.0
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="sZYFZbqw"
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1773859411;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=LLuwZyVPb4DIfD3OwJqRPWzOEte8XfXwj623so/hWSk=;
+	b=sZYFZbqw0NFkNJJs4h3OW3sfT/5b0k2n6B54JA+VmkAtCnifOKDKcrnDlxA3titJxcQFZi
+	QnmI0psOEfGeUZwf7/v9fA+3rF6PZBf3VOF8jkjmI945YbtLl/eWQWDFhAKuenisXL1yn9
+	DhF6FUr5PR0jXzPxj+HEbjlIp17SOZw=
+From: Roman Gushchin <roman.gushchin@linux.dev>
+To: SeongJae Park <sj@kernel.org>
+Cc: linux-kernel <linux-kernel@vger.kernel.org>,  Andrew Morton
+ <akpm@linux-foundation.org>,  Theodore Ts'o <tytso@mit.edu>,  Guenter
+ Roeck <linux@roeck-us.net>,  Konstantin Ryabitsev
+ <konstantin@linuxfoundation.org>,  Chris Mason <clm@meta.com>,
+  elkin@google.com,  Christian Brauner <brauner@kernel.org>,  Dmitry Vyukov
+ <dvyukov@google.com>,  Sasha Levin <sashal@kernel.org>,  Shakeel Butt
+ <shakeel.butt@linux.dev>,  Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+  Sean Christopherson <seanjc@google.com>,  Ian Rogers
+ <irogers@google.com>,  damon@lists.linux.dev
+Subject: Re: Introduce Sashiko (agentic review of Linux kernel changes)
+In-Reply-To: <20260318150051.93173-1-sj@kernel.org> (SeongJae Park's message
+	of "Wed, 18 Mar 2026 08:00:50 -0700")
+References: <20260318150051.93173-1-sj@kernel.org>
+Date: Wed, 18 Mar 2026 11:43:24 -0700
+Message-ID: <87eclhugfn.fsf@linux.dev>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Migadu-Flow: FLOW_OUT
 
-Hi SeongJae,
+SeongJae Park <sj@kernel.org> writes:
 
-TL;DR
-=====
-1. Why does DAMON require min_nr_regions >= 3? Is there a technical
-   rationale?
-2. Could we improve error reporting when sysfs parameter validation
-   fails? Or document it?
-3. [Bug?] DAMON_LRU_SORT doesn't disable itself when commit_inputs fails,
-   contrary to documentation.
+> Hello Roman,
+>
+> On Tue, 17 Mar 2026 15:31:11 +0000 Roman Gushchin <roman.gushchin@linux.dev> wrote:
+>
+>> Hello,
+>> 
+>> I'm happy to share something my colleagues and I have been working on
+>> for the last several months:
+>> Sashiko - an agentic system for Linux kernel changes.
+>> 
+>> First, Sashiko is available as a service at:
+>>   * https://sashiko.dev
+>
+> Great work.  Thank you!
+>
+> There are many similar tools but this is the first free web service I know.
+> I'm still feeling uncomfortable or not prepared for running some AI tools on my
+> own.  Therefore I was only waiting for some nice people sharing their AI review
+> results (some people including Chris Mason did, and it was really helpful,
+> thanks again), or the arrival of this kind of public and just working service.
+> This feels like the chat-gpt moment to me.
 
-Details below. Happy to help with patches if helpful.
+Thank you!
 
-Details
-=======
+>> 
+>> It reviews all patches sent to LKML and several other Linux kernel
+>> mailing lists using the Gemini 3.1 Pro model.
+>> 
+>> I want to thank my employer, Google, for providing the ML compute
+>> resources and infrastructure for making this project real.
+>> 
+>> Sashiko is written in Rust from scratch, mostly using Gemini CLI. It's
+>> fully self-contained and does not rely on any CLI coding tools. It
+>> supports various LLMs (at this moment mostly tested with Gemini
+>> Pro/Flash and slightly with Claude).
+>> 
+>> And finally it's fully open-source:
+>>   * https://github.com/sashiko-dev/sashiko
+>
+> Awesome.  I'm still feeling uncomfortable or not prepared to running some AI
+> tools on my own.  But I will try to find ways to contribute.
+>
+>> 
+>> It's licensed under the Apache-2.0 License, and the ownership of the
+>> project was transferred to the Linux Foundation. Contributions are
+>> really welcome using DCO.
+>> 
+>> Sashiko is based on a set of open-source prompts initially developed by
+>> Chris Mason:
+>>   * https://github.com/masoncl/review-prompts/
+>
+> Kudos to Chris!
+>
+>> 
+>> But Sashiko leverages a different multi-stage review protocol, which
+>> somewhat mimics the human review process and forces the LLM to look at
+>> the proposed change from different angles.
+>> 
+>> In my measurement, Sashiko was able to find 53% of bugs based
+>> on a completely unfiltered set of 1,000 recent upstream issues using
+>> "Fixes:" tags (using Gemini 3.1 Pro). Some might say that 53% is not
+>> that impressive, but 100% of these issues were missed by human reviewers.
+>> Also, many of these issues (like tricky build failures, performance
+>> problems, etc) are very hard/impossible to spot from reviewing the code,
+>> so arguably 100% is not reachable. We started with low 30's a couple of
+>> months ago; better models and improvements in the review protocol and
+>> subsystem prompts pushed it to low 50's. With better LLMs and collective
+>> effort on prompts we can push even further.
+>> 
+>> Measuring false positives is much harder, but based on manual reviews of
+>> reviews, it's pretty good: it's rarely dead wrong, but sometimes it can
+>> nitpick or find too many low-value issues. In many cases, it can be
+>> improved with prompt engineering.
+>> 
+>> * What's next?
+>> 
+>> This is our first version and it's obviously not perfect. There is a
+>> long list of fixes and improvements to make. Please, don't expect it to
+>> be 100% reliable, even though we'll try hard to keep it up and running.
+>> Please use github issues or email me any bug reports and feature
+>> requests, or send PR's.
+>> 
+>> As of now, Sashiko only provides a web interface;
+>> however, Konstantin Ryabitsev is already adding sashiko.dev support to b4,
+>> and SeongJae Park is adding support to hkml.
+>> That was really fast, thank you!
+>
+> hkml support was available owing to Sashiko providing the decent API, and b4's
+> use of it is open source.  Kudos to Sashiko team and Konstantin.  I'm planning
+> to make more integration into hkml, for my workflow and based on other hkml
+> user feedback.
 
-1. Error feedback for min_nr_regions validation
------------------------------------------------
+Thank you for doing this!
 
-While configuring DAMON_LRU_SORT via sysfs, I noticed that setting
-'min_nr_regions' to a value < 3 (e.g., 1) succeeds at write time, but
-the error only appears later when writing 'Y' to the 'enabled' file,
-which returns -EINVAL.
+>> 
+>> We're working on adding an email interface to Sashiko, and soon Sashiko
+>> will be able to send out reviews over email - similar to what the bpf
+>> subsystem already has. It will be opt-in by subsystem and will have options
+>> to CC only the author of the patch, maintainers, volunteers, or send a
+>> fully public reply. If you're a maintainer and have a strong preference
+>> to get reviews over email, please let me know.
+>
+> I, as the maintainer of DAMON subsystem (damon@lists.linux.dev), do have a
+> strong preference to get reviews over email for all patches that sent to the
+> mailing list.  I'm already manually doing that.  I'm planning to extend hkml
+> for doing this easier.  It would be nice and efficient if Sashiko can do this
+> on its own.
 
-Since multiple parameters (intervals, watermarks, etc.) are often
-configured together, a generic -EINVAL at enablement makes it difficult
-to identify which specific parameter violated constraints.
+Noted. I'll enable it as soon as we'll have it.
 
-Code reference: mm/damon/core.c:damon_set_attrs()
+>
+>> 
+>> We also desperately need better benchmarks, especially when it comes to
+>> false positives. Having a decent vetted set of officially perfect
+>> commits can help with this.
+>
+> I'm also curious if there is a public channel for giving feedback about the
+> reviews.  As you mentioned above, Sashiko sometimes says something that is not
+> technically correct.  I'm wondering if there is a way to let Sashiko knows such
+> things for improvement.
 
-    if (attrs->min_nr_regions < 3)
-        return -EINVAL;
+As of now, I suggest using Github issues. Later on, you could simple
+reply to Sashiko's emails.
 
-Question:
-1. What is the design rationale for requiring min_nr_regions >= 3? (eg.,
-   algorithmic requirements, sampling accuracy, etc.)
-2. Would it be acceptable to improve user feedback? For example:
-   - Document this lower bound explicitly in
-     Documentation/admin-guide/mm/damon/lru_sort.rst
-   - Add pr_warn()/pr_debug() in damon_set_attrs() to log which
-     parameter failed validation and why
+But also realistically I likely won't be able to look into every single
+false positive, so I'd really appreciate some initial analysis: e.g. if
+there is a common pattern or a number of similar reviews with the same
+problem.
 
-I believe clearer errors or document would make DAMON tuning more
-intuitive for sysadmins and developers.
+>> 
+>> Finally, some subsystems have a good prompts coverage and some don't. It
+>> doesn't have to be lengthy documentation (and it might actually be
+>> counter-productive), but having a small list of things to look at - some
+>> high-level concepts which are hard to grasp from the code, etc. - can
+>> help a lot with both bug discovery and false positives.
+>
+> I found there is no prompt for DAMON.  I'm still convinced with Sashiko's
+> current review, and have no idea for DAMON-custom prompts.  So that's fine for
+> now.  I will consider adding something if I get some idea, though.
 
----
+My suggestion is to read through a number of DAMON-specific reviews and
+see if there are any common patterns of false positives or missed
+errors. Once you have a feeling like "Damn, Sashiko doesn't really
+understand X about the DAMON!" then you put it into the prompt.
 
-2. Potential inconsistency in DAMON_LRU_SORT error handling
------------------------------------------------------------
-
-The documentation [1] states:
-> "If invalid parameters are found while the re-reading, DAMON_LRU_SORT
- will be disabled."
-
-However, testing on v7.0-rc4 shows that when commit_inputs fails (e.g.,
-due to min_nr_regions < 3):
-- The 'enabled' parameter remains 'Y'
-- The kdamond thread continues running
-
-This behavior may confuse users who expect the module to safely disable
-itself upon configuration errors. Should commit_inputs failures trigger
-an explicit disable (enabled=N)?
-
-Reproduction steps:
--------------------
-VM: virtme-ng 1.40 (x86_64)
-Kernel: v7.0-rc4
-
-    cd /sys/module/damon_lru_sort/parameters
-    cat enabled 
-    N
-
-    # Initial setup - works fine
-    echo 65535 > max_nr_regions 
-    echo 3 > min_nr_regions 
-    echo Y > enabled 
-    cat kdamond_pid 
-    91
-
-    # Observed behavior:
-    echo 1 > min_nr_regions 
-    echo Y > commit_inputs 
-    cat kdamond_pid 
-    91
-    cat enabled 
-    Y
-
-    # [kdamond.0] still alive
-    ps aux | rg "kdamond"
-    root        91  0.0  0.0      0     0 ?        I    22:03   0:00 [kdamond.0]
-
-If this is confirmed as unintended behavior, I'd be glad to help
-investigate and submit a fix.
-
----
-
-Thanks for your time reviewing this!
-
-Best regards,
-Rui Yan
-
-[1] https://docs.kernel.org/admin-guide/mm/damon/lru_sort.html
-
-[...]
+Thanks!
