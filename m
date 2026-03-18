@@ -1,42 +1,57 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40BD83C1996;
-	Tue, 17 Mar 2026 14:47:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDDF4DDA9;
+	Wed, 18 Mar 2026 00:52:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773758848; cv=none; b=F+0RzmIyXU2YLnHqMhOEI9eo9WxhZC1sV8OcWezIEGhAXoyWObFWlcdJ2txu/JRQLCr2TmvadYL/nSEf5hsh2936DSQdjG77N/cqgzyq0H6V3MKyeeZH/ZqIIg2FXCcaMjDrKd8flInqtPfGKj9ca3uTDJlWs/wmZ49nrIn5SDk=
+	t=1773795148; cv=none; b=o774yOa9zr/mZ64k2AUt8Ji3ijsKypZSuur293RJd9PzOPRwo0T46qqsBdUs7ldIGBORlelA5rTqTVx3nWyWTSkpWVuzHMwP33Wz7HoWdL+LGgcyNt5S2Bzt9sUXHh51LnpsQEuGUIGFbbG77m/uwQJYmRqjcb48bgQGU0klPU0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773758848; c=relaxed/simple;
-	bh=2ceXF7k1cz+eNiwIK9YtDL8+tk9HAHG9agGbAGaVGg0=;
+	s=arc-20240116; t=1773795148; c=relaxed/simple;
+	bh=EwAMtwt5gp44/cRaugvoB1jqQt36RleL4zmzMKF101c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aUZtXE/jHKBuD5HLj4qwTXlPBPZxpyEOD9jmt9Qo8M6Zp4mT3H9BkX4MO5cxvSNJAwkLHSVdNsSXT1J4wzDs/ceLVIK8Uce0Wm2JwFJd7U376QM+NBpa7SrvaTwoZt8Vws58B3iSfOPgTQZ/QgBgUyC0eQhmVQShqRXd89g6xt0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZDq37969; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WB+GbehqriVx7OH73UOkvTaz0rvlX/K0BWrCLG4oBqP1ZUs02gjfTUxFfJWK7doVYJATmFfsjhiTaINLq298E/npGMkO8uBB/v1/43Juv287oFn6DTzANnSVaHMT28UM3uY7qQ/383LBrzRRLbjnBtWOV54t0CLEZuezkGSA1bM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lAKqgwQC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZDq37969"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 107F4C4CEF7;
-	Tue, 17 Mar 2026 14:47:28 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lAKqgwQC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF577C4CEF7;
+	Wed, 18 Mar 2026 00:52:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773758848;
-	bh=2ceXF7k1cz+eNiwIK9YtDL8+tk9HAHG9agGbAGaVGg0=;
+	s=k20201202; t=1773795148;
+	bh=EwAMtwt5gp44/cRaugvoB1jqQt36RleL4zmzMKF101c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZDq37969ypAziqaAbBH+62/kfGuMDApezgt/9hRQLBa7ZwNhS+YeD7L8SItHdwu3U
-	 EOEQF5ufrv51nIsUGFg6wFRphmBw4pmh+OWiShTo6Schi7yiimtok2F18vh+Tgn2fA
-	 HeO4MEUcyVCUd7Ly/F3hhW5l2lwh5Pud2QOJtoQVbkQRxkKt4BFVd34vBj6vtNz/6C
-	 sPgRBanJkw61FfXGycTXjtOwN7DteVEr3edS4adxl4xCgq6xnffQv9aBQ0D8HydX+Z
-	 z7ToxdHjl/7GD+R+07URdiT9xIUxISPBGxTdWPfNbR85DUnM+YyTAidiZQN7gkWFNC
-	 4t7r2t5XVjIvw==
+	b=lAKqgwQCiql7vHn4tad5fLGdaN1AsZupyTJyl98S3O7o54/BKNCj+bQeYwiKWfcc/
+	 gW32378aRxo0QxLNONKEbBLyceRXu9nyZqULTpo0AMeHkjwXVSZTD4+iZqU1o7Kx4N
+	 NIONmUVo492qxWnaSwZOtGN2K7m4xFbmXjwPsJB5ltxvPkh6/UtLQfM7ruZoLOPgXJ
+	 q10+Qd0pgPSMhJGsCk7UZAKlUJlz/hw89MTYH0whJ6hhZJz1p+lXSn1juA3/B78kBh
+	 QS8q9QZLp6DPgweubphSZQEXgIt5yCi2pKmyltQDaVn1hunFlbeDGNjxeOoEd1kQlm
+	 JG7g7O4q9Ovzg==
 From: SeongJae Park <sj@kernel.org>
-To: SeongJae Park <sj@kernel.org>
-Cc: Andrew Morton <akpm@linux-foundation.org>,
+To: Gutierrez Asier <gutierrez.asier@huawei-partners.com>
+Cc: SeongJae Park <sj@kernel.org>,
+	artem.kuzin@huawei.com,
+	stepanov.anatoly@huawei.com,
+	wangkefeng.wang@huawei.com,
+	yanquanmin1@huawei.com,
+	zuoze1@huawei.com,
 	damon@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org
-Subject: Re: [PATCH 2/5] mm/damon/core: support addr_unit on damon_find_biggest_system_ram()
-Date: Tue, 17 Mar 2026 07:47:24 -0700
-Message-ID: <20260317144725.88524-1-sj@kernel.org>
+	akpm@linux-foundation.org,
+	ljs@kernel.org,
+	Liam.Howlett@oracle.com,
+	vbabka@kernel.org,
+	rppt@kernel.org,
+	surenb@google.com,
+	mhocko@suse.com,
+	corbet@lwn.net,
+	skhan@linuxfoundation.org,
+	linux-doc@vger.kernel.org,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [RFC PATCH v2 1/1] mm/damon: support MADV_COLLAPSE via DAMOS_COLLAPSE scheme action
+Date: Tue, 17 Mar 2026 17:52:25 -0700
+Message-ID: <20260318005226.132181-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260311052927.93921-3-sj@kernel.org>
+In-Reply-To: <247cd41f-e703-4480-9de3-a8708bb3d9ee@huawei-partners.com>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -46,132 +61,137 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Tue, 10 Mar 2026 22:29:23 -0700 SeongJae Park <sj@kernel.org> wrote:
+On Tue, 17 Mar 2026 09:52:09 +0300 Gutierrez Asier <gutierrez.asier@huawei-partners.com> wrote:
 
-> damon_find_biggest_system_ram() sets an 'unsigned long' variable with
-> 'resource_size_t' value.  This is fundamentally wrong.  On environments
-> such as ARM 32 bit machines having LPAE (Large Physical Address
-> Extensions), which DAMON supports, the size of 'unsigned long' may be
-> smaller than that of 'resource_size_t'.  It is safe, though, since we
-> restrict the walk to be done only up to ULONG_MAX.
+> Hi SJ,
 > 
-> DAMON supports the address size gap using 'addr_unit'.  We didn't add
-> the support to the function, just to make the initial support change
-> small.  Now the support is reasonably settled.  This kind of gap is only
-> making the code inconsistent and easy to be confused.  Add the support
-> of 'addr_unit' to the function, by letting callers pass the 'addr_unit'
-> and handling it in the function.  All callers are passing 'addr_unit' 1,
-> though, to keep the old behavior.
-> 
-> Signed-off-by: SeongJae Park <sj@kernel.org>
-> ---
->  mm/damon/core.c | 33 +++++++++++++++++++++++----------
->  1 file changed, 23 insertions(+), 10 deletions(-)
-> 
-> diff --git a/mm/damon/core.c b/mm/damon/core.c
-> index 3925720a172a6..aee61bf991baa 100644
-> --- a/mm/damon/core.c
-> +++ b/mm/damon/core.c
-> @@ -3056,31 +3056,44 @@ static int kdamond_fn(void *data)
->  
->  static int walk_system_ram(struct resource *res, void *arg)
->  {
-> -	struct damon_addr_range *a = arg;
-> +	struct resource *a = arg;
->  
-> -	if (a->end - a->start < resource_size(res)) {
-> +	if (resource_size(a) < resource_size(res)) {
->  		a->start = res->start;
-> -		a->end = res->end + 1;
-> +		a->end = res->end;
->  	}
->  	return 0;
->  }
->  
-> +static unsigned long damon_res_to_core_addr(resource_size_t ra,
-> +		unsigned long addr_unit)
-> +{
-> +	/*
-> +	 * Use div_u64() for avoiding linking errors related with __udivdi3,
-> +	 * __aeabi_uldivmod, or similar problems.  This should also improve the
-> +	 * performance optimization (read div_u64() comment for the detail).
-> +	 */
-> +	if (sizeof(ra) == 8 && sizeof(addr_unit) == 4)
-> +		return div_u64(ra, addr_unit);
-> +	return ra / addr_unit;
-> +}
-> +
->  /*
->   * Find biggest 'System RAM' resource and store its start and end address in
->   * @start and @end, respectively.  If no System RAM is found, returns false.
->   */
->  static bool damon_find_biggest_system_ram(unsigned long *start,
-> -						unsigned long *end)
-> +		unsigned long *end, unsigned long addr_unit)
->  
->  {
-> -	struct damon_addr_range arg = {};
-> +	struct resource res = {};
->  
-> -	walk_system_ram_res(0, ULONG_MAX, &arg, walk_system_ram);
-> -	if (arg.end <= arg.start)
-> +	walk_system_ram_res(0, -1, &res, walk_system_ram);
-> +	if (res.end < res.start)
->  		return false;
->  
-> -	*start = arg.start;
-> -	*end = arg.end;
-> +	*start = damon_res_to_core_addr(res.start, addr_unit);
-> +	*end = damon_res_to_core_addr(res.end + 1, addr_unit);
->  	return true;
+> First of all, I just noticed that this was sent as v2 RFC, while
+> it should be v1. Bear in mind that the next series will also be
+> v2.
 
-On 32 bit systems having PAE (>4 GiB physical memory address space), above
-start and end address could be overflowed, resulting in making an invalid
-address range (end <= start).  The range validity should be tested here, like
-below attaching fixup patch.
+No worry :)
 
-Andrew, could you please add the fixup patch?
+> 
+> On 3/17/2026 3:32 AM, SeongJae Park wrote:
+> > Hello Asier,
+> > 
+> > On Mon, 16 Mar 2026 18:38:05 +0000 <gutierrez.asier@huawei-partners.com> wrote:
+> > 
+> >> From: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
+> >>
+> >> This patch set introces a new action: DAMOS_COLLAPSE.
+> >>
+> >> For DAMOS_HUGEPAGE and DAMOS_NOHUGEPAGE to work, khugepaged should be
+> >> working, since it relies on hugepage_madvise to add a new slot. This
+> >> slot should be picked up by khugepaged and eventually collapse (or
+> >> not, if we are using DAMOS_NOHUGEPAGE) the pages. If THP is not
+> >> enabled, khugepaged will not be working, and therefore no collapse
+> >> will happen.
+> >>
+> >> DAMOS_COLLAPSE eventually calls madvise_collapse, which will collapse
+> >> the address range synchronously.
+> >>
+> >> This new action may be required to support autotuning with hugepage as
+> >> a goal.
+> > 
+> > Above all makes sense.  Thank you for posting this patch.
+> > 
+> > Do you have some test results that you can also share together?  It would be
+> > nice if it can demonstrate the benefit of DAMOS_COLLAPSE over DAMOS_HUGEPAGE.
+> I will run some tests and benchmarks.
+
+Looking forward to.
+
+> > 
+> >>
+> >> [1] https://lore.kernel.org/lkml/20260314165156.86647-1-sj@kernel.org/
+> > 
+> > Seems the above link is just added by a mistake?  If not, please clarify.
+> Yes, it looks like I copied the wrong link.
+> >>
+> >> Signed-off-by: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
+> >> Reviewed-by: SeongJae Park <sj@kernel.org>
+> >> ---
+> >>  Documentation/mm/damon/design.rst | 4 ++++
+> >>  include/linux/damon.h             | 1 +
+> >>  mm/damon/sysfs-schemes.c          | 4 ++++
+> >>  mm/damon/vaddr.c                  | 3 +++
+> >>  4 files changed, 12 insertions(+)
+> > [...]
+> >> diff --git a/include/linux/damon.h b/include/linux/damon.h
+> >> index 3a441fbca170..6720dc70c487 100644
+> >> --- a/include/linux/damon.h
+> >> +++ b/include/linux/damon.h
+> >> @@ -140,6 +140,7 @@ enum damos_action {
+> >>  	DAMOS_PAGEOUT,
+> >>  	DAMOS_HUGEPAGE,
+> >>  	DAMOS_NOHUGEPAGE,
+> >> +	DAMOS_COLLAPSE,
+> >>  	DAMOS_LRU_PRIO,
+> >>  	DAMOS_LRU_DEPRIO,
+> >>  	DAMOS_MIGRATE_HOT,
+> > 
+> > sashiko.dev adds [1] below comments.  Let me also add my comments in line.
+> > 
+> > : This isn't a bug, but should a kernel-doc entry for @DAMOS_COLLAPSE be added
+> > : to the comment block above this enum?
+> > 
+> > Makes sense.  'make htmldocs' may complain otherwise.  Asier, could you please
+> > add the kernel-doc comment for DAMOS_COLLAPSE in the next spin?
+> OK, I will split this patch into 2: one with the code and the other one with
+> the documentation.
+
+Does the 'documentation' mean the change for 'design.rst'?  Or, the kernel-doc
+comment?  If that's the former case (separating 'design.rst' side change as
+another patch), that's completely good for me.
+
+If that's the latter case (separating kernel-doc comment addition as another
+patch), that will make the commit trigger document build error, and the error
+will be fixed only after the followup commit is applied.  Please ensure keeping
+'damon.h' side changes as a single patch, and therefore no warning or breaks in
+the middle of the patch series is introduced (and later fixed).
+
+> > : 
+> > : Also, does inserting DAMOS_COLLAPSE here shift the integer values of the
+> > : subsequent enum entries like DAMOS_STAT?
+> > : 
+> > : The DAMON sysfs selftest script (tools/testing/selftests/damon/sysfs.py) uses
+> > : a hardcoded dictionary action_val to map string names to their integer enum
+> > : values.
+> > : 
+> > : If the enum values shift, the test's assertion:
+> > : 
+> > : assert_true(dump['action'] == action_val[scheme.action])
+> > : 
+> > : might fail when checking the struct memory via drgn. Could the python test
+> > : dictionary be updated to reflect the new values, or could the new action be
+> > : added at the end of the enum list?
+> > 
+> > There is no test that uses DAMOS actions that defined after DAMOS_NOHUGEPAGE,
+> > so no real test will break.  But this is a good point.  It would be better to
+> > update the hard-coded value together.  Asier, could you also update the
+> > 'action_val' dict of assert_scheme_committed() function in
+> > tools/testing/selftets/damon/sysfs.py for the updated enum value in the next
+> > version?
+> OK, I will do it.
+
+Thank you :)
+
+> > 
+> > [1] https://sashiko.dev/#/patchset/20260316183805.2090297-1-gutierrez.asier@huawei-partners.com
+> > 
+> > 
+> > Thanks,
+> > SJ
+> > 
+> > [...]
+> > 
+> Thanks for the feedback.
+
+My pleasure.
 
 
 Thanks,
 SJ
 
 [...]
-=== >8 ===
-From d5654a6cce8a21ae100625ed54c0885556f89645 Mon Sep 17 00:00:00 2001
-From: SeongJae Park <sj@kernel.org>
-Date: Mon, 16 Mar 2026 23:32:48 -0700
-Subject: [PATCH] mm/damon/core: verify found biggest system ram
-
-On 32 bit systems having PAE (>4 GiB physical memory address sapce), the
-final start and end address could overflow, resulting in returning an
-invalid address range.  Verify the returning region.  Also remove the
-resource validation after walk_system_ram_res(), since the validation
-means not a lot.
-
-Signed-off-by: SeongJae Park <sj@kernel.org>
----
- mm/damon/core.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
-
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index f9854aedc42d1..339325e1096bc 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -3089,11 +3089,10 @@ static bool damon_find_biggest_system_ram(unsigned long *start,
- 	struct resource res = {};
- 
- 	walk_system_ram_res(0, -1, &res, walk_system_ram);
--	if (res.end < res.start)
--		return false;
--
- 	*start = damon_res_to_core_addr(res.start, addr_unit);
- 	*end = damon_res_to_core_addr(res.end + 1, addr_unit);
-+	if (*end <= *start)
-+		return false;
- 	return true;
- }
- 
--- 
-2.47.3
-
