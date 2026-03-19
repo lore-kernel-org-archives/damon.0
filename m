@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ADAB39B975;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A627E39BFED;
 	Thu, 19 Mar 2026 05:22:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773897729; cv=none; b=hmS6yVGu7u+P7uRAV8sXqp7fzQYnVkexEf32ZCNbjmK2eHmEFP2KOvz/ayufpnKyQALzy5KkmkJzHTbdNDJVw3KAnsdVqajAcVS3Tzg+jd1bjAFkuWVm0coBICpfaT1SwZg8w9RIRqQ1I7sNCk/eHIo841GAfs37e5gnhaYhKmo=
+	t=1773897729; cv=none; b=U5/RgD8N+rbzdh56VA4h6eMgyoVhdLBcoFOqpcRqlRMjdb7cMHAnkL5stzhPfLFgGOZsL/gsr/YoRUWHTIEtF2Ba08IAUrn/DxF3Js5xIO/ejDdjyyMOh/0IbfBsfdFR7uD4kW4RAM6BZox41B4Nbz670x3ELj6qrQfUiidp94o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1773897729; c=relaxed/simple;
-	bh=9O26QoN+V9tNeSexEgjKx5Rwm+ySmwIIy3Pdsz7ovf4=;
+	bh=O/0+EEFKC+kJrViTx1hpFrUcUp3ITetgY1I7Ly2ASvo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VP5n++L7rm4iO0wI8F9AH6o0ccKLIzEN4Xbe1rIyqlPaacFefQiSSiYLol9yV2/eMUuH8ccEWWLTImC/IKZOAACEXoam0kUtuaJTqpd8nbtX5IWrbghA3owuSVDe+skO4pB1P56G9Q/YwYgi8jtYrXmfObCu4CxIqb8xMY1sELo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Q2TPMNRk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aN5qIyO9gLf/BHPtqRzpkJM4Y5fojo3meTzF6j57r2+iiFDpJQsch6bAl42hHqVvGhpeZ9qoVP+ZlrDJq/fdF0cbU5n53lJH5k54v2qCch3WgJjiQXWe049AmNAksdzXsK3CBPGKHE9aQLL/TL6Zi1ZoDTfOMeh6n6wzseolSFc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JkAeejlL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Q2TPMNRk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 340DFC2BCB3;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JkAeejlL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B41DC2BCB7;
 	Thu, 19 Mar 2026 05:22:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1773897729;
-	bh=9O26QoN+V9tNeSexEgjKx5Rwm+ySmwIIy3Pdsz7ovf4=;
+	bh=O/0+EEFKC+kJrViTx1hpFrUcUp3ITetgY1I7Ly2ASvo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q2TPMNRk3SQFvWn3IXoQNGAZczLvJpdEKEPh13gBFvXGyQ4+SPzZNesS6RWSv7CfQ
-	 ALMgqHWpyRzbGS3qEFMk6VvM7JhXGGU6inqSSIyo1UUsg10kiSws/FyB9tcwg/huiB
-	 eAJhSr9CyB/jZNeEFwNFP623LpBtAo5HRD4+ZZzRkgoEWsKb7t2WPZPc8JOwdklpvt
-	 AyqLSKccVf6ewktCkY2KfAE3aFOd5ys2HNRihi7vG38hkzS4nhfevXvUxcu9B6LYEp
-	 u/WjZEgxjAs7+JzwztOKWXkzHt3wRQN9yb+tVPNBuFkxTbU11DKoVTSpDD1+nBz0rN
-	 5HOi9MMGNdbWQ==
+	b=JkAeejlLb2INZGMTagXHPmD0+O8ZKjh5Fd/EXV1aG2pLl/g6jZPq1Mrvo6C3VVz3j
+	 Dtoq9xah3y+18e9JrM6ZFUsBbhxCivwTPWNWIF6kjZM7na4WuYT1sGb30QQFU1uk5b
+	 1DP7vpyqeTlB91DbbkaQNDCOtT28PYNWqaoS2ZomHCPkaUKmsTteNIEgMeHcK9NXj4
+	 ONRxfJTwwUpw92w/suTNZEna0WTn3Bwso985LWfWJCHIr3HwOSSUcPlYaUd9vdHEo9
+	 F+rKzY9X/L7ayyFot0FhpuPsVyQfRUw1eWZp6UczBsqqJJAoicDXrOanc3624URkSY
+	 4hLVq2xQdY0Sw==
 From: SeongJae Park <sj@kernel.org>
 To: 
 Cc: SeongJae Park <sj@kernel.org>,
@@ -34,9 +34,9 @@ Cc: SeongJae Park <sj@kernel.org>,
 	linux-kernel@vger.kernel.org,
 	linux-kselftest@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH v2 08/10] selftests/damon/drgn_dump_damon_status: dump pause
-Date: Wed, 18 Mar 2026 22:21:51 -0700
-Message-ID: <20260319052157.99433-9-sj@kernel.org>
+Subject: [RFC PATCH v2 09/10] selftests/damon/sysfs.py: check pause on assert_ctx_committed()
+Date: Wed, 18 Mar 2026 22:21:52 -0700
+Message-ID: <20260319052157.99433-10-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260319052157.99433-1-sj@kernel.org>
 References: <20260319052157.99433-1-sj@kernel.org>
@@ -48,25 +48,25 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-drgn_dump_damon_status is not dumping the damon_ctx->pause parameter
-value, so it cannot be tested.  Dump it for future tests.
+Extend sysfs.py tests to confirm damon_ctx->pause can be set using the
+pause sysfs file.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- tools/testing/selftests/damon/drgn_dump_damon_status.py | 1 +
+ tools/testing/selftests/damon/sysfs.py | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/tools/testing/selftests/damon/drgn_dump_damon_status.py b/tools/testing/selftests/damon/drgn_dump_damon_status.py
-index af99b07a4f565..5b90eb8e7ef88 100755
---- a/tools/testing/selftests/damon/drgn_dump_damon_status.py
-+++ b/tools/testing/selftests/damon/drgn_dump_damon_status.py
-@@ -200,6 +200,7 @@ def damon_ctx_to_dict(ctx):
-         ['attrs', attrs_to_dict],
-         ['adaptive_targets', targets_to_list],
-         ['schemes', schemes_to_list],
-+        ['pause', bool],
-         ])
+diff --git a/tools/testing/selftests/damon/sysfs.py b/tools/testing/selftests/damon/sysfs.py
+index 3aa5c91548a53..e6d34ba05893f 100755
+--- a/tools/testing/selftests/damon/sysfs.py
++++ b/tools/testing/selftests/damon/sysfs.py
+@@ -190,6 +190,7 @@ def assert_ctx_committed(ctx, dump):
+     assert_monitoring_attrs_committed(ctx.monitoring_attrs, dump['attrs'])
+     assert_monitoring_targets_committed(ctx.targets, dump['adaptive_targets'])
+     assert_schemes_committed(ctx.schemes, dump['schemes'])
++    assert_true(dump['pause'] == ctx.pause, 'pause', dump)
  
- def main():
+ def assert_ctxs_committed(kdamonds):
+     status, err = dump_damon_status_dict(kdamonds.kdamonds[0].pid)
 -- 
 2.47.3
