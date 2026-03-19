@@ -1,45 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E84AF39C00F;
-	Thu, 19 Mar 2026 05:22:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9789346E5A;
+	Thu, 19 Mar 2026 06:29:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773897730; cv=none; b=AKtGZkbeaZjPqEM8xXKs6xVOL5G+/Gy300yR9Flolu+/kVGz1Ktbz1XkEA53fB41AohAgN0RpLsJkqLJZquEn1+mYsaKJ9qmzQ+W6ztS30VGyVLFT4Jdvq1aesPtXL5EFaIYKUf6JdEFRXHwuA7hOG245A8/w+Dkls6QMd35hu0=
+	t=1773901759; cv=none; b=W2Eqb3GGQZUvTRDmvQQF77DWgUWkVieQ0RYW1urZNT4zRK9dXc0EZ8ZCx/qduyhnYaqzq2eK0R+Ztw2ruxVI6rtSpYvGjTWK9+K2e+EuJIyAmzxsGpcZYfwNrGewK7pJYX6hf8alX7hN/I8M0kn9ewAA0wmUYBbOrZuTLOu8ri4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773897730; c=relaxed/simple;
-	bh=gKzlHjNwVy7/eu8xZ7uHLGZKBMO4b6mmZ9XNI0j6RLc=;
+	s=arc-20240116; t=1773901759; c=relaxed/simple;
+	bh=f8KRoUgEZ6BfqFTgvZjmWr9krDqWtElmbj+tt3G8zZk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rwsQ6qdwMeGJe59WLnBHCX0mF1Ba3UxdrroKiPlv901wZd10PQG64HOwOU2aRSdEzXnf7ZNyzOUcZ/8Nxti9YcnPqVSKxniAqvXTxKxeyTt6P3EaviYTGJXy9Xh66P8QTKYmU8/DMvZR/ZuoWi5gQCD0zVXw89rCPduq2NgySGI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eLE1gPG+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=H8DFU9SKUImx5f5qSl2ptFycl1uvonFh69IcwNTYKlPmKsacRsg/zRnaminaT17qQzvBBn8+CqyOd2XngBfpsJL+W8AS4oNSlTlSHEowSIXx3yPyJS5OhJwkC86yAlIh4DaRFAYosBSAjrGx1S5wNROeOk0W8Po5lqBrGXtac9w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Lsdtv1wN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eLE1gPG+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA2B2C2BCB1;
-	Thu, 19 Mar 2026 05:22:09 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Lsdtv1wN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6978BC19425;
+	Thu, 19 Mar 2026 06:29:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773897729;
-	bh=gKzlHjNwVy7/eu8xZ7uHLGZKBMO4b6mmZ9XNI0j6RLc=;
+	s=k20201202; t=1773901758;
+	bh=f8KRoUgEZ6BfqFTgvZjmWr9krDqWtElmbj+tt3G8zZk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eLE1gPG+Hya7//RWaiPAEKxtepx386lQ0Cm8RdvkucYG+iOXOFeZPuszuRWKmhmqY
-	 Hlxm5qQmMgd/Efqo63G8l2SuLp2Bxr4GnzCPV7S+DNGqdG8Q89JJ+QMbBAMNdzoeIK
-	 OzXL+h+ya25rpojtJ7Hg/DmBKzOkdSFMuw7s2gKefp9JqRLIUXm7mTtbh2QiioYEka
-	 4gWS9afrhZHM7PFTk3oiT+rnkAAeDLRe6Ix7R7uS3YviH0REcZaLVT1Z/Ug7VkjHEa
-	 01/5O4fI4zM/Io7soEAT3UH61w2LoEMW0vljBhU7MvbGN30cHB29E8t3vNMLgsG97M
-	 tr4+UyLCjhRDg==
+	b=Lsdtv1wNjXhyKRk5gYZ/88+Ukqgyuq3m6W3FNTVwgHS1dyfIaKNZf98lFTfkwaxLK
+	 6csCbEEXLVDO0PWcsLXZPY9JhOTNI/bh5snNTbKxDpaGhzG08DzQno6rU36EEDpV5q
+	 +hNeRxypDsuUzzYfdsaJnqk93JYOIWLJASMnEYR9j8yO/s+2S7w7l7p4lcU5+pYORK
+	 mFdhqpa7vabmZ2FeCayGdmEjhVMPrXKunisL/hnJHr//tAMoh6vQom5IEdbH/nwVIZ
+	 dfRDNHBTd1j+qRrwkAfGbIChHDZYmDQ1TIuBi1nn98ilbFLxeddh0ymyoTJ55jjrXr
+	 6HKB+scj9PZHg==
 From: SeongJae Park <sj@kernel.org>
-To: 
-Cc: SeongJae Park <sj@kernel.org>,
-	Shuah Khan <shuah@kernel.org>,
+To: SeongJae Park <sj@kernel.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>,
 	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
-	linux-kselftest@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH v2 10/10] selftets/damon/sysfs.py: pause DAMON before dumping status
-Date: Wed, 18 Mar 2026 22:21:53 -0700
-Message-ID: <20260319052157.99433-11-sj@kernel.org>
+Subject: Re: [RFC PATCH v2 01/10] mm/damon/core: introduce damon_ctx->paused
+Date: Wed, 18 Mar 2026 23:29:10 -0700
+Message-ID: <20260319062911.77252-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260319052157.99433-1-sj@kernel.org>
-References: <20260319052157.99433-1-sj@kernel.org>
+In-Reply-To: <20260319052157.99433-2-sj@kernel.org>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -48,78 +46,46 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The sysfs.py test commits DAMON parameters, dump the internal DAMON
-state, and show if the parameters are committed as expected using the
-dumped state.  While the dumping is ongoing, DAMON is alive.  It can
-make internal changes including addition and removal of regions.  It can
-therefore make a race that can result in false test results.  Pause
-DAMON execution during the state dumping to avoid such races.
+On Wed, 18 Mar 2026 22:21:44 -0700 SeongJae Park <sj@kernel.org> wrote:
 
-Signed-off-by: SeongJae Park <sj@kernel.org>
----
- tools/testing/selftests/damon/sysfs.py | 31 ++++++++++++++++++++++++++
- 1 file changed, 31 insertions(+)
+> DAMON supports only start and stop of the execution.  When it is
+> stopped, its internal data that it self-trained goes away.  It will be
+> useful if the execution can be paused and resumed with the previous
+> self-trained data.
+> 
+> Introduce per-context API parameter, 'paused', for the purpose.  The
+> parameter can be set and unset while DAMON is running and paused, using
+> the online parameters commit helper functions (damon_commit_ctx() and
+> damon_call()).  Once 'paused' is set, the kdamond_fn() main loop does
+> only limited works with sampling interval sleep during the works.  The
+> limited works include the handling of the online parameters update, so
+> that users can unset the 'pause' and resume the execution when they
+> want.  It also keep checking DAMON stop conditions and handling of it,
+> so that DAMON can be stopped while paused if needed.
+> 
+> Signed-off-by: SeongJae Park <sj@kernel.org>
+> ---
+>  include/linux/damon.h | 2 ++
+>  mm/damon/core.c       | 9 +++++++++
+>  2 files changed, 11 insertions(+)
+> 
+> diff --git a/include/linux/damon.h b/include/linux/damon.h
+> index 3a441fbca170d..421e51eff3bd2 100644
+> --- a/include/linux/damon.h
+> +++ b/include/linux/damon.h
+> @@ -811,6 +811,8 @@ struct damon_ctx {
+>  	 * intervals tuning
+>  	 */
+>  	unsigned long next_intervals_tune_sis;
+> +	/* pause kdamond main loop */
+> +	bool pause;
 
-diff --git a/tools/testing/selftests/damon/sysfs.py b/tools/testing/selftests/damon/sysfs.py
-index e6d34ba05893f..704729c7a318e 100755
---- a/tools/testing/selftests/damon/sysfs.py
-+++ b/tools/testing/selftests/damon/sysfs.py
-@@ -193,18 +193,48 @@ def assert_ctx_committed(ctx, dump):
-     assert_true(dump['pause'] == ctx.pause, 'pause', dump)
- 
- def assert_ctxs_committed(kdamonds):
-+    ctxs_paused_for_dump = []
-+    for kd in kdamonds.kdamonds:
-+        for ctx in kd.contexts:
-+            if ctx.pause is False:
-+                ctx.pause = True
-+                err = kd.commit()
-+                if err is not None:
-+                    print('pause fail (%s)' % err)
-+                    kdamonds.stop()
-+                    exit(1)
-+                ctxs_paused_for_dump.append(ctx)
-+
-     status, err = dump_damon_status_dict(kdamonds.kdamonds[0].pid)
-     if err is not None:
-         print(err)
-         kdamonds.stop()
-         exit(1)
- 
-+    for kd in kdamonds.kdamonds:
-+        for ctx in kd.contexts:
-+            if ctx in ctxs_paused_for_dump:
-+                ctx.pause = False
-+                err = kd.commit()
-+                if err is not None:
-+                    print('resume fail (%s)' % err)
-+                    kdamonds.stop()
-+                    exit(1)
-+                # restore for comparison
-+                ctx.pause = True
-+
-     ctxs = kdamonds.kdamonds[0].contexts
-     dump = status['contexts']
-     assert_true(len(ctxs) == len(dump), 'ctxs length', dump)
-     for idx, ctx in enumerate(ctxs):
-         assert_ctx_committed(ctx, dump[idx])
- 
-+    # restore for the caller
-+    for kd in kdamonds.kdamonds:
-+        for ctx in kd.contexts:
-+            if ctx in ctxs_paused_for_dump:
-+                ctx.pause = False
-+
- def main():
-     kdamonds = _damon_sysfs.Kdamonds(
-             [_damon_sysfs.Kdamond(
-@@ -302,6 +332,7 @@ def main():
-         print('kdamond start failed: %s' % err)
-         exit(1)
-     kdamonds.kdamonds[0].contexts[0].targets[1].obsolete = True
-+    kdamonds.kdamonds[0].contexts[0].pause = True
-     kdamonds.kdamonds[0].commit()
-     del kdamonds.kdamonds[0].contexts[0].targets[1]
-     assert_ctxs_committed(kdamonds)
--- 
-2.47.3
+This field will be directly set by an API caller.  But this diff is defining
+this field in the private fields section.  I will change this to be defined in
+the public fields section, and add the kernel-doc comment, in the next version.
+
+
+Thanks,
+SJ
+
+[...]
