@@ -1,28 +1,28 @@
 Received: from sender-of-o55.zoho.eu (sender-of-o55.zoho.eu [136.143.169.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 630BD3EFD21
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6302E3EFD20
 	for <damon@lists.linux.dev>; Thu, 19 Mar 2026 15:57:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.169.55
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773935872; cv=pass; b=aXHK/FHxE3mn8oV19R7qWTAZpeC0+EvBbr0vo9zav/aJ/I3zv2WdPhlaaXpO5y90jA48D4BuYSgkBNAd7ycFfuWRWOyyxHQTqVQzoPHbzfCWUewLAfG40tplMlSoRBffuFI2HVzYeHoM1O8M5wOLvO4LkdFpiEKQWqDW8vYLV+Q=
+	t=1773935872; cv=pass; b=F+eEcRkg8DPvow2J0RfQczqRpOAD5ta1CWxnUDknzcUGYmyA7tMjSOETF4XaNLIQmGIcTTyrxw18HnINpCZ5J3KWkLthNQ+8ypmxb+fDJ6bwvbllvmCuj9N4uOlpl9CK6ddeFdAxyaRiTz0UUTvNFp/MZ1nThztGRd0fU4QmaBk=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1773935872; c=relaxed/simple;
-	bh=xRmcDZvQqgD5v1yHwnP54SSUG7hojGDE1sN5Iyg9fy4=;
+	bh=47Ps4uc1aNE8vYAe60YuDpBgoZTPi8UZ64vuMeXP3YU=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=OhO3X7sC2SLq2twTYS7RNPEW3ZcwWpFM6mKx/Ug0y8RomOXJM1Ue3e4XPAsu2m8TWKdIjpPZE1vdll2HMwfVk93m7Dcj+nX1jhVBu5Omryl3Qk+xZ+dPadjY17oELBdLUlQhbKyT7ggd9BcyZp+W71+QM8kk5LwMVDwLGVmbDPY=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=objecting.org; spf=pass smtp.mailfrom=objecting.org; dkim=pass (1024-bit key) header.d=objecting.org header.i=objecting@objecting.org header.b=JVCDBSfA; arc=pass smtp.client-ip=136.143.169.55
+	 MIME-Version; b=AoCMR46qoIxZaJ4PhG4VnFtHKIhsOAH2EkKrT5W9QbLTvGSlfi2KwTaD4HGPyVNdhRK2DNlI8m9rS0/563aMUy90Goe+3IG+YdXiDbmv7QRqPdUloz64NghKgdJmZPPU3ny3gOwdJ3V05+76GcP8yJ31FFrLlwXebosqYXv4TbA=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=objecting.org; spf=pass smtp.mailfrom=objecting.org; dkim=pass (1024-bit key) header.d=objecting.org header.i=objecting@objecting.org header.b=jziCpude; arc=pass smtp.client-ip=136.143.169.55
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=objecting.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=objecting.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=objecting.org header.i=objecting@objecting.org header.b="JVCDBSfA"
+	dkim=pass (1024-bit key) header.d=objecting.org header.i=objecting@objecting.org header.b="jziCpude"
 ARC-Seal: i=1; a=rsa-sha256; t=1773935866; cv=none; 
 	d=zohomail.eu; s=zohoarc; 
-	b=GRatP3d9VlCUG70BsMCn+vXrEYY6ePXsuhRMhOrtaHeJIxDIlpbqqpV0uEeToDuih4Z/C2Eposf22r0wYxK1QAwO7fT5m6FFh8gETb10RzqRlx//aUszSy+VCgu7jUfc17GjK5x3hRTQPNC04Z0gAr+BSUe5pWw8EIdVqHRKDm0=
+	b=cZWR/Rkxj1mC+DXgVZG57Be1vldOsmajFeB0+WgVBbAWDLVaEyJUWS0DssGHHobkV9JlaC9yQZMWmCEKGNcWNvSH8xbtdsIZ7kOi7oXEBQMtvJcKYTydh6nr25mQUNGwzAaw7+/uYT94NMGQO08X/kepJtyDARH+8uqjjPlHVKo=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.eu; s=zohoarc; 
 	t=1773935866; h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=v5AmYxxKHBGd/h651de89e6e2kJ78xirvBMwkGyS3mk=; 
-	b=HLXvfFaBe1yN5XE8N/YilHHHLadNleS6Uyg7HhD3F6XuN6C5QdDu7g+wQvI2lTHsu/3V7NY92+6CDJFYDuzNkCuYQcTdXuoPp8syzgUzQSAx1X98o6hcvfXP3/nAjtBbN3BD8Qu11EasO+hIxexkIqfCVxhIX/nNevmi2E4VguI=
+	bh=VCdnk7LCAdQl2Oinq44p2WouG2Ln6vJSbhR4GoqiOIc=; 
+	b=FpY9eFVneWtMNhwTt6wg/IjSOUw9LAVw7w2LP5frop0WtrtvhVW1APRu6QcLEZNZgFB60nQvfGy6qEG1M7ReqtYcbkupjKnT23hvijoWc8TdMK9eXx7a+rxiO7glkQYICGGFnaS5j31doVRRzGK2ctk/QgqwujH96ahDPH0YSU8=
 ARC-Authentication-Results: i=1; mx.zohomail.eu;
 	dkim=pass  header.i=objecting.org;
 	spf=pass  smtp.mailfrom=objecting@objecting.org;
@@ -30,12 +30,12 @@ ARC-Authentication-Results: i=1; mx.zohomail.eu;
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1773935866;
 	s=zmail; d=objecting.org; i=objecting@objecting.org;
 	h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-Id:Message-Id:In-Reply-To:References:MIME-Version:Content-Transfer-Encoding:Reply-To;
-	bh=v5AmYxxKHBGd/h651de89e6e2kJ78xirvBMwkGyS3mk=;
-	b=JVCDBSfAiVHrSuC+3mrtKDb3s9WsLv/TB2XPrVOzeSSN3bIjQNnhGKx5KA8DEjE9
-	MVazrdud5+ssU3Zsg9+mL8v/DxLSY/f0/X5BOfijQpY77Z0fG1V/ZrPr/F5Mgy/QgiH
-	sASkwAYOBZ5TfTuBGSjxvLw+et6CioUMv4f3IV9Y=
-Received: by mx.zoho.eu with SMTPS id 1773935864833351.06425221152233;
-	Thu, 19 Mar 2026 16:57:44 +0100 (CET)
+	bh=VCdnk7LCAdQl2Oinq44p2WouG2Ln6vJSbhR4GoqiOIc=;
+	b=jziCpudeDNVDmPyr3561UEvWdaVDVwTSd95V9uGmdiN1TUKpqm+em7I5nGHSKs3g
+	fF40Zk/ylVrPhxFQ6vJwZzd8A7iuGK/uT0TCMvDULjT98mBA39e8wG7ZfidoAJonY3d
+	aDy0amaHOZSDFGU9bCZ+zWvyKBW3o8zILKvv1ORE=
+Received: by mx.zoho.eu with SMTPS id 1773935865996405.19165630086957;
+	Thu, 19 Mar 2026 16:57:45 +0100 (CET)
 From: Josh Law <objecting@objecting.org>
 To: sj@kernel.org,
 	akpm@linux-foundation.org
@@ -43,9 +43,9 @@ Cc: damon@lists.linux.dev,
 	linux-mm@kvack.org,
 	linux-kernel@vger.kernel.org,
 	Josh Law <objecting@objecting.org>
-Subject: [PATCH 1/4] mm/damon/sysfs: fix param_ctx leak on damon_sysfs_new_test_ctx() failure
-Date: Thu, 19 Mar 2026 15:57:39 +0000
-Message-Id: <20260319155742.186627-2-objecting@objecting.org>
+Subject: [PATCH 3/4] mm/damon/sysfs: check contexts->nr in update_schemes_tried_regions
+Date: Thu, 19 Mar 2026 15:57:41 +0000
+Message-Id: <20260319155742.186627-4-objecting@objecting.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260319155742.186627-1-objecting@objecting.org>
 References: <20260319155742.186627-1-objecting@objecting.org>
@@ -58,31 +58,30 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-ZohoMailClient: External
 
-When damon_sysfs_new_test_ctx() fails in damon_sysfs_commit_input(),
-param_ctx is leaked because the early return skips the cleanup at the
-out label. Destroy param_ctx before returning.
+damon_sysfs_update_schemes_tried_regions() and its callback
+damon_sysfs_schemes_tried_regions_upd_one() access contexts_arr[0]
+without verifying nr_contexts >= 1. This can NULL deref if damon_ctx is
+non-NULL (preserved after stop) but nr_contexts has been set to 0. Add
+the missing check.
 
 Signed-off-by: Josh Law <objecting@objecting.org>
 ---
- mm/damon/sysfs.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ mm/damon/sysfs.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
 diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
-index 576d1ddd736b..b573b9d60784 100644
+index 36ad2e8956c9..ddcdc4e35b27 100644
 --- a/mm/damon/sysfs.c
 +++ b/mm/damon/sysfs.c
-@@ -1524,8 +1524,10 @@ static int damon_sysfs_commit_input(void *data)
- 	if (IS_ERR(param_ctx))
- 		return PTR_ERR(param_ctx);
- 	test_ctx = damon_sysfs_new_test_ctx(kdamond->damon_ctx);
--	if (!test_ctx)
-+	if (!test_ctx) {
-+		damon_destroy_ctx(param_ctx);
- 		return -ENOMEM;
-+	}
- 	err = damon_commit_ctx(test_ctx, param_ctx);
- 	if (err)
- 		goto out;
+@@ -1731,6 +1731,8 @@ static int damon_sysfs_update_schemes_tried_regions(
+ 
+ 	if (!ctx)
+ 		return -EINVAL;
++	if (sysfs_kdamond->contexts->nr != 1)
++		return -EINVAL;
+ 
+ 	damon_sysfs_schemes_clear_regions(
+ 			sysfs_kdamond->contexts->contexts_arr[0]->schemes);
 -- 
 2.34.1
 
