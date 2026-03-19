@@ -1,159 +1,154 @@
-Received: from mail-pj1-f42.google.com (mail-pj1-f42.google.com [209.85.216.42])
+Received: from mail-qk1-f169.google.com (mail-qk1-f169.google.com [209.85.222.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71AF521CC5A
-	for <damon@lists.linux.dev>; Thu, 19 Mar 2026 08:36:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 592D73803CE
+	for <damon@lists.linux.dev>; Thu, 19 Mar 2026 14:30:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773909408; cv=none; b=mkZwGrk/45IZ/RT5DA5KNmXREEBW99dup5MmKk+2VnGCYA4HaoBoSqmhk3RkGesqK76Q6pphI/2el7OvnAKN8p2ZvgYSSmaJWbcjuQ4vRjxqANvlRheoq8OKUjFzsOiqXF5m5Wcyb1vBm+IDDMTCo+WfieBMhZEdoTE5u9NWh34=
+	t=1773930603; cv=none; b=hO+bn5vawJCivZ8+a5vtaQaAz2PGuHjr5VvOrUyr8l+5pOQ1bg14SF+tZfRgWlV9wjfXCJ3+coCSW3CgAZH2WNj9INmv4MEuc9Bm1zB5UN6SQwzdmwrpvb6HgRiYlL5GPdbDP3Hn57kucJwAh/pV+YR5FQb29xPbz1c/LKe1tWk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773909408; c=relaxed/simple;
-	bh=oYqRFVlngihEUTVmTogP2RPUetAon3C5zF366GdZOj4=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sL2uDJU8Ig7C5V452iB3/bveh4uYtcQEK6RAQPOK/JUoHRSQM9tXwEwh9A/y/CKSTHUGrmQC/wjxINPpbxh8eIMDP7wtThM2qO8XKP48LkqJJ2J0Jx0iXChqUbeymXboo7JjxFHzW2e2l4j5lC6Ph/Co6oB6468xAOiuGq+FkwA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WecN9BV/; arc=none smtp.client-ip=209.85.216.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1773930603; c=relaxed/simple;
+	bh=BArAqxuNOMZmZ3DFzVkEiSDUW/6K7+Jdphve/CIcCPA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ZYCmg7rJcPO+C7HBjp78crU9OQG1hkekZLtHgN/uGppcWLEzmWuE5rVCRPttUNJ5qCfYqg+1aPTlbxD2W7raUfSqsbnPM1940PSi6SbGFQr9DzMNJn/kNs2LBMzapnPpBPGw1zV/9ZEcHAHhmAPFdNQHcjfkbtQ1pXsRzgxtNCQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gourry.net; spf=pass smtp.mailfrom=gourry.net; dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.b=cQJOoNJU; arc=none smtp.client-ip=209.85.222.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gourry.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gourry.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WecN9BV/"
-Received: by mail-pj1-f42.google.com with SMTP id 98e67ed59e1d1-35bb9070644so397247a91.2
-        for <damon@lists.linux.dev>; Thu, 19 Mar 2026 01:36:47 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.b="cQJOoNJU"
+Received: by mail-qk1-f169.google.com with SMTP id af79cd13be357-8cfbbdbaf3cso88039185a.0
+        for <damon@lists.linux.dev>; Thu, 19 Mar 2026 07:30:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773909406; x=1774514206; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=IwV7GqDEI38/m1BvpkV5+1r1843ywx8ur1qd4Lt12Bc=;
-        b=WecN9BV/EpYST0+cwEQoIyw1PvC9cvleAaRFgpAx3wwzzF/RL3ajcK9Hk9KEtkwGpY
-         jUpxbBcMuavSnZiLrA6CvledXj5S2uDWhOpCGpJPNsFW39xFX4bZUYZ5SdTw989dp3aZ
-         kmvPF5VZquwVYXtWefWkdn9DDlicfQBRdmeE0ebjlWMNOPYlYIUWu2tEWR4sCvfTXZyQ
-         ByOUI0/P5el7c3c8HyKASggQbCv8f4nQ0K0gXxYMcLoUqTAXSrf1IvlU/Kjf4jIbCskZ
-         K85sBM62rJsbhFM5Hg37lvJxuhd6/0g8Y1Ak9RwFrHDDVepC8S+eTSrpXTdAaH+ydxwD
-         j/mA==
+        d=gourry.net; s=google; t=1773930601; x=1774535401; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=MZ62zRGDMh84ev+ADivtxhXkIe87cWoaQL4WKudvzqg=;
+        b=cQJOoNJUSVvfVL6IP6AsZ9q6WJ/fn2KkIx7gjYvkymiyHMKyGCDFLVD1l5ePkNZ554
+         ZhbqoW7P+YV4BzCQnkcaqJ9bfd5kPmVGFRNuVH7SLVW1B6KOD/lIZIs/O+R0G3FrEQV1
+         d/VYdlEE/DAvmSvy7fWTJnN2fBbGbFL8GZnh3VroSIOKcD85bG/QyOD9Or6CWpb3p5fN
+         Vgj77U1SZ/1Uli1tmlmshDQNkoxQlEnfYFRTHgB8PL1U0ea3tTrmXWC1hTF3IQubUFYu
+         q36SMhIEHGqcGYhSGP3FrnEuZ9wdmjFuItG9lrWLs5mUVxiYJKFsZpSopP3S37RF4cfP
+         RulA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1773909406; x=1774514206;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=IwV7GqDEI38/m1BvpkV5+1r1843ywx8ur1qd4Lt12Bc=;
-        b=YSRZ6zM4ftutmyfkUI/2X1MCjuImiiTPxsy5yX46D/q2LfXtXVn9oT93SC1ZAa1S/1
-         MAZMRjwSlmZnlA15bqx9rAJ4/2ySn6sv4dgT1JNgoeNYe8XbhG5AOcZ7vS5f8BZmaUX+
-         jGIH8rZykCe6HijDjgBlTNik9VlcovpdY+8/HswaczJyX6Yk+3VjOu39CnR7JLR52eMZ
-         ymqx2e60CPF8v+NXB4OqJ97MIIxYcLWRbvoFZmxiQDmOmok0XNetih9IjjNX3gq31Lf9
-         5TE3JgTECPLsFw8BAC3LQGLWrghMnAEEhu4ISperP69kzYuK97ALZvO7zH3B5N7Y/iP6
-         1GZw==
-X-Forwarded-Encrypted: i=1; AJvYcCXCJw+HEC6KCH9TlsIomMfB/dCipuB1NIDn7Eiu5ueLEf8npAVP2yST8xcEagzmHfkRcW2ukg==@lists.linux.dev
-X-Gm-Message-State: AOJu0YyPsZ7AcXOyFijeD+IuLC7ZKyqgEEfmWMRM9aOfc5JoOk4acCXD
-	r8YiSJ9Y7voV5AEQhktNwpHuEXmkP5u4MOuhRVzAUMinkRisiJayobag
-X-Gm-Gg: ATEYQzzUwY7nCJukhZ4TNvfX80wFinaLRPkuyDS4Pba7dpnLFAwsrjLKcX2VsTg+DTn
-	hobN3pBBZJhj0LwGbX2+JT/vgieuikGvRmoZu7Bui5Sk9Ln16f2Fe80sJ5x1UsvvOOux/9J8Iaz
-	xGW6oE5seNwFtOm4ocuh6c/y+3ETflN47BeL6Wkedog702YKzNsQPJgYmxdCnvnqTiFtU7597Qr
-	BhgTr29vBcRlQ0EOgkf9CMNvn+4+mRC40u5v92w7LliAY3jgUMg9MF0STMeamUDXVstMuC2pbt3
-	DtrLzG/xpgTOMUE3Bn9k5kKzHnTL+CJaGwIWYqLOsZjunc2l5vhC43NhKWan6xfqxr3opKEh9wq
-	XnXYJkdGqn6mUEFFBaGpWSYFcaxuu/QJWyxQbu6a9kTPcpPKWEsJSpcn/K2iQfEmxg+1VUxykQC
-	i+CCCQYiULQWp4W+2rMPMgoF0LI8O9S7/poWVWq5umne7xbOieSyI=
-X-Received: by 2002:a17:90b:5350:b0:35b:9c97:3d18 with SMTP id 98e67ed59e1d1-35bb9e514c5mr5668061a91.12.1773909406429;
-        Thu, 19 Mar 2026 01:36:46 -0700 (PDT)
-Received: from celestia.taila51cc2.ts.net ([2402:1980:898b:301c:d085:a35:99e7:ffec])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-35bbae5e19asm1695794a91.7.2026.03.19.01.36.44
+        d=1e100.net; s=20251104; t=1773930601; x=1774535401;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=MZ62zRGDMh84ev+ADivtxhXkIe87cWoaQL4WKudvzqg=;
+        b=lkXT1r3913gqPIn42tiwzprCwgOAnFa3McQ6QS/oj+JP36RIvIT+LUhXI1hB1Do3PC
+         H+Pv9kaRgrlaVhjQwey+ik2CHbZjmGKIloo6dhBHaSlmaahRHhsIGbbWFVXpoVarNVp1
+         7KLl648PJDOHB4Q9ZXcaI13dKQKRtJT84Ah3yDp+FDHIziHxtfjzmlUlOhaUSVDXRK+d
+         0VRr4woUP1//VMIa6q5y6tYxs3Xf11R2zIA2/SdG0HhbZL0ZH6li2Ms4197RDUCY60g+
+         wEPjKz5pauga50J8vXYKdUG/eaxyq3bKD15OMlZmQZ0QUO0BMg7kSoVRgAOGh1pdK5mx
+         SNjw==
+X-Forwarded-Encrypted: i=1; AJvYcCXIL59JE1cRN5RZr+9TRMuRKUgdH0u4HHBebA9TTgFAtUQnk6m7gL91PmVGyWvwlouixxoubw==@lists.linux.dev
+X-Gm-Message-State: AOJu0YzbkHfmkPy7UNbSuE1911wQHRziAmxAO9lf3zqxQlNetEekg+ih
+	am5mDnuJlEaCZe1VIuTe2aRiUtLGFb6W6bzvJfiF0DZtb8i0KEBB/12gUHqufZFrE0I=
+X-Gm-Gg: ATEYQzypyAANAAgK2wLPag4cXO1PeVHeq46mSfQXxJ/jUbvtr+ll5/z6onHPXx7W/4L
+	TAfYTG8XZWVV8GfZhINemHqzP00XuzCvuCAGr5NmAaZH6IUvKK5+fmsu4IQ3h4uYGxal/Ml+zVA
+	t1FsToF4lW+m25DFkcx4bSBb2W2sWr1KBQ+ZR/xLLNoaDiqmB13QLx0MQEAACPZCfA+i2JUujOy
+	B6NjmnrYsQtgsA22pkSNJ3Bo+/zq36xeJqjjDaCgYHyOs3EiHnkm01xl4IUdKON4wD2XQwBee/4
+	C0gVbDNtgrmeA4tKZ0kTGTeghu/NXRxF/SHYaXxlxRO5iFNkTXuiGNYwAW9mNs+AB8fBn4RlmOh
+	kVxEb2kL3wSp9MnJGVlnRrtvTOV8t/Ne6mtKyxcM5PSG9afvXnzHFROdApT26J/BcgglvEtOMya
+	/77wYk/u3ppWdGeT9sWVWN9fFznbag4UjtVr/Qa7pTDjunTzrVM4Zdi67Fg9g/1+rMWvriS9UOh
+	jOXJbuFaQ==
+X-Received: by 2002:a05:620a:1a21:b0:8cd:b024:114d with SMTP id af79cd13be357-8cfb9ea6bb2mr485207585a.40.1773930600903;
+        Thu, 19 Mar 2026 07:30:00 -0700 (PDT)
+Received: from gourry-fedora-PF4VCD3F (pool-96-255-20-138.washdc.ftas.verizon.net. [96.255.20.138])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-8cfc25f0340sm87627185a.1.2026.03.19.07.29.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 Mar 2026 01:36:45 -0700 (PDT)
-From: Liew Rui Yan <aethernet65535@gmail.com>
-To: sj@kernel.org
-Cc: aethernet65535@gmail.com,
-	damon@lists.linux.dev,
-	linux-mm@kvack.org
-Subject: Re: [Question] mm/damon: min_nr_regions constraint and inconsistent error handling
-Date: Thu, 19 Mar 2026 16:36:39 +0800
-Message-ID: <20260319083639.36440-1-aethernet65535@gmail.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260319014624.97146-1-sj@kernel.org>
-References: <20260319014624.97146-1-sj@kernel.org>
+        Thu, 19 Mar 2026 07:30:00 -0700 (PDT)
+Date: Thu, 19 Mar 2026 10:29:57 -0400
+From: Gregory Price <gourry@gourry.net>
+To: "David Hildenbrand (Arm)" <david@kernel.org>
+Cc: linux-kernel@vger.kernel.org, linux-cxl@vger.kernel.org,
+	cgroups@vger.kernel.org, linux-mm@kvack.org,
+	linux-trace-kernel@vger.kernel.org, damon@lists.linux.dev,
+	kernel-team@meta.com, gregkh@linuxfoundation.org, rafael@kernel.org,
+	dakr@kernel.org, dave@stgolabs.net, jonathan.cameron@huawei.com,
+	dave.jiang@intel.com, alison.schofield@intel.com,
+	vishal.l.verma@intel.com, ira.weiny@intel.com,
+	dan.j.williams@intel.com, longman@redhat.com,
+	akpm@linux-foundation.org, lorenzo.stoakes@oracle.com,
+	Liam.Howlett@oracle.com, vbabka@suse.cz, rppt@kernel.org,
+	surenb@google.com, mhocko@suse.com, osalvador@suse.de,
+	ziy@nvidia.com, matthew.brost@intel.com, joshua.hahnjy@gmail.com,
+	rakie.kim@sk.com, byungchul@sk.com, ying.huang@linux.alibaba.com,
+	apopple@nvidia.com, axelrasmussen@google.com, yuanchu@google.com,
+	weixugc@google.com, yury.norov@gmail.com, linux@rasmusvillemoes.dk,
+	mhiramat@kernel.org, mathieu.desnoyers@efficios.com, tj@kernel.org,
+	hannes@cmpxchg.org, mkoutny@suse.com, jackmanb@google.com,
+	sj@kernel.org, baolin.wang@linux.alibaba.com, npache@redhat.com,
+	ryan.roberts@arm.com, dev.jain@arm.com, baohua@kernel.org,
+	lance.yang@linux.dev, muchun.song@linux.dev, xu.xin16@zte.com.cn,
+	chengming.zhou@linux.dev, jannh@google.com, linmiaohe@huawei.com,
+	nao.horiguchi@gmail.com, pfalcato@suse.de, rientjes@google.com,
+	shakeel.butt@linux.dev, riel@surriel.com, harry.yoo@oracle.com,
+	cl@gentwo.org, roman.gushchin@linux.dev, chrisl@kernel.org,
+	kasong@tencent.com, shikemeng@huaweicloud.com, nphamcs@gmail.com,
+	bhe@redhat.com, zhengqi.arch@bytedance.com, terry.bowman@amd.com
+Subject: Re: [LSF/MM/BPF TOPIC][RFC PATCH v4 00/27] Private Memory Nodes (w/
+ Compressed RAM)
+Message-ID: <abwIZd7FNPj5YYXQ@gourry-fedora-PF4VCD3F>
+References: <20260222084842.1824063-1-gourry@gourry.net>
+ <c10400db-2259-4465-a07e-19d0691101a4@kernel.org>
+ <aZxqP7J1kOClQUPQ@gourry-fedora-PF4VCD3F>
+ <aZx7hsVNU0XOCCiG@gourry-fedora-PF4VCD3F>
+ <049d056b-844b-4480-b90e-bf4c850fc70e@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <049d056b-844b-4480-b90e-bf4c850fc70e@kernel.org>
 
-On Thu, Mar 19, 2026 at 9:46 AM SeongJae Park <sj@kernel.org> wrote:
+On Tue, Mar 17, 2026 at 02:05:53PM +0100, David Hildenbrand (Arm) wrote:
+> On 2/23/26 17:08, Gregory Price wrote:
+> > On Mon, Feb 23, 2026 at 09:54:55AM -0500, Gregory Price wrote:
+> >> On Mon, Feb 23, 2026 at 02:07:15PM +0100, David Hildenbrand (Arm) wrote:
+> >>>
+> >>> I'm concerned about adding more special-casing (similar to what we already
+> >>> added for ZONE_DEVICE) all over the place.
+> >>>
+> >>> Like the whole folio_managed_() stuff in mprotect.c
+> >>>
+> >>> Having that said, sounds like a reasonable topic to discuss.
+> >>>
+> >>
+> >> Another option would be to add the hook to vma_wants_writenotify()
+> >> instead of the page table code - and mask MM_CP_TRY_CHANGE_WRITABLE.
+> >>
+> > 
+> > scratch all this - existing hooks exist for exactly this purpose:
+> > 
+> > 	can_change_[pte|pmd]_writable()
+> > 
+> > Surprised I missed this.
+> > 
+> > I can clean this up to remove it from the page table walks.
+> 
+> Sorry for the late reply -- sounds like we can handle this cleaner.
+> 
+> But I am wondering: why is this even required?
+> 
+> Is it just for "Services that intercept write faults (e.g., for
+> promotion tracking) need PTEs to stay read-only"
+> 
+> But that promotion tracking sounds like some orthogonal work to me. What
+> am I missing that this is required in this patch set? (is it just for
+> the special compressed RAM bits?)
+> 
 
-> Hi Liew,
+Yes, this was specific to the compressed ram bits - it allows for a
+service to control where/when writes to the device can happen.  In this
+case, I've limited writes to just the demotion step. (Although I have
+since realized i need to not allow file-backed memory to be demoted).
 
-Hi SeongJae,
+There may be a better way to do this, but also it may very well be the
+case that such a hook is just a bridge too far and isn't wanted. I think
+this debate is warranted.
 
-> The initial version of DAMON was supporting only 'vaddr' operation set.  And
-> 'vaddr' is designed to have at least three regions, for the two large unmapped
-> areas on normal virtual address spaces.  Hence we enforced min_nr_regions to be
-> three or larger.
-
-Thanks for your explanation! It makes perfect sense.
-
-> Yes, I think this is a nice idea.  Maybe adding a comment on damon_set_attrs(),
-> or additional sentences to 'Monitoring' section of design.rst [2] would be
-> appropriate.
-
-Agreed. I will try to figure out which method is better, and I might
-send out a patch in the near future.
-
-> I'd like to be cautious about adding logging, as it might be a spam.  I'd
-> prefer making it documented well.  Then, users could find what is wrong.
-
-I see. I understand your concern about log spam, I will focus on
-documentation.
-
-> I believe the above command should returned an error.  If not, please let me
-> know.
-
-I re-tested it on v7.0-rc4 and it did NOT return any error when writing
-'Y' to 'commit_inputs' with an invalid 'min_nr_regions=1'.
-
-This might be unintended. Here is the full log of my session:
-
-    [root@virtme-ng x86_64]# cd /sys/module/damon_lru_sort/parameters/
-    [root@virtme-ng parameters]# cat enabled 
-    N
-    [root@virtme-ng parameters]# echo 65535 > max_nr_regions
-    [root@virtme-ng parameters]# echo 3 > min_nr_regions 
-    [root@virtme-ng parameters]# echo Y > enabled 
-    [root@virtme-ng parameters]# cat kdamond_pid 
-    89
-    [root@virtme-ng parameters]# echo 1 > min_nr_regions 
-    [root@virtme-ng parameters]# echo Y > commit_inputs 
-    [root@virtme-ng parameters]# cat kdamond_pid 
-    89
-    [root@virtme-ng parameters]# cat enabled 
-    Y
-    [root@virtme-ng parameters]# ps aux | rg "kdamond" | rg -v "rg"
-    root        89  0.0  0.0      0     0 ?        I    10:15   0:00 [kdamond.0]
-
-> Also, if you know users who depend on the old behavior and therefore hoping the
-> old behavior back, please let me know.
-
-I don't know of anyone who depends on the old behavior.
-I am a student exploring the kernel (DAMON) as a hobby, so my
-perspective is limited to individual research rather than large-scale
-production environments. However, the current behavior (staying alive
-with valid params) feels much more sensible to me. But it should return
-an error when 'commit_inputs=Y'.
-
----
-
-Plan
-====
-Based on our discussion, my current plan is to:
-1. Document the 'min_nr_regions' constraint in admin-guide.
-2. Add the design rationale for the "at least 3 regions" rule in
-   design.rst.
-3. Remove the outdated sentences claiming DAMON will disable itself on
-   invalid parameters input.
-4. Investigate and try to fix the missing error return for
-   'commit_inputs'.
-
-Does this plan cover everything you'd expect?
-
-Best regards,
-Rui Yan
-
-[...]
+~Gregory
