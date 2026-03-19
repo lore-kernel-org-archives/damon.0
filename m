@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0B2E397E99;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0BC1397E9A;
 	Thu, 19 Mar 2026 05:22:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773897727; cv=none; b=jDYSTbQvMtNUd98lObGIzyurVsrgAJGdKVDhqExqrN5o38lTmyGE6/Gn1DtkKB0DIfrfOHjbkJ+717gMpRhjoZ1l941ybH8AXk+Jnwky6CDmI8oxURUi9ASmzDdAJaQJWNitYRPIBhisyELJb1q73uHFcF7Fqqdkx1yzAuJZgAs=
+	t=1773897727; cv=none; b=tDsVvY4QX8ab26mQNMXFNsLFOD9feGXiqduBmpZCo4Qhwj/2lrYUoOC5i9Y0WzYaYqrq+XPgb+OGO+JfzZ+4vlXcIQ93PU+02CsW1gNU8TlpRN0fX4NfIRMpJFtMtc5Rfje7wM2U2JmEw6nK8RI1WcusE1hUuOh0B241xTWuamw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1773897727; c=relaxed/simple;
-	bh=MqEq3gnpER/1i109FUnzNmYJCrHCG/6rdnfY8eFpkpg=;
+	bh=/zdFcK8+rlUNIicMSIFp9XoXm7KV0c/o3PoVHHBf0RU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H2vGwqnkqGa/nZ42hRLP9JhIFAsk4rboeoZHl/7w9UDFs/86qlJFc4DtoACjeIX62yONOnPs4j9dMCHQMnyzngXG34tlnVe6+fk2GpRFPR5lHQkBLtpwt91UehoN1OTcBIdvE3Ljh9HBh6yFUoeGjEh2Owt6F/I2/cYis3V5FzY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=R3xmC6P6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ncDN1oWR/HOorDfNHajulCIe6u12Qv0pKHQ1lf+o0Hwioa0se4AmsYGvKNgLNdJVqFqar4UJf+sYK/SApPewRVnrM8z+X3ej3jsdLje7mH6bwacKedcMqJR0A18BM9gtc7zedp3uMXKVYaXpwWP+RggyAL+J6e5V/SiaU3LBrzM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NBhtADEU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="R3xmC6P6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 751ACC2BCB0;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NBhtADEU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41ED6C2BCB1;
 	Thu, 19 Mar 2026 05:22:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1773897727;
-	bh=MqEq3gnpER/1i109FUnzNmYJCrHCG/6rdnfY8eFpkpg=;
+	bh=/zdFcK8+rlUNIicMSIFp9XoXm7KV0c/o3PoVHHBf0RU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R3xmC6P6OTHd+Fs+mCFy/jqh14jFnG3Fl4q5rjQ2c2rio5VNHnB87XL87/U51kLyb
-	 nFxYMDbfULAUqYw2HCA0U5ebdHOsRLEGimnW1d3dRsf0aQvqJKcmjXTsWzbyC0UdZL
-	 ldsFPoY6Vnvy4iSeU99JIFEyvIHPWWcNQFSR7Ggl5DrON5/LtpuxRE8s5isI+kj2O4
-	 ev/yAh9ObnSHMXiFlOGBHnC7Byd1MmL4+Bad4KiO1KiR+tfqXBufseSbcauIon5KD5
-	 yWruBU376m3NO9oWFKi5nzwtHZxkEll6vXNu65GvcUTYv6ZomuH5sqP1XCqr134E6l
-	 bUvoUggz7NKWg==
+	b=NBhtADEUlW8MOKFTIYt/NyE7RkdX0oRjJ8zOtIIzeBYu0JQ6bRJEuy1aioKza4eb+
+	 k/Agmpa+S3JyPFK6znbuyKEI5o75f4ScDOltix4MAQ+jeXprd3I5zRa27nXEu7hcad
+	 jeJqto51aWv0IBSLgJ/1x4/VuF+Qc3IyrhB4kxWF6wdqp6+0hoICu34PlOZBcJL5rY
+	 CZzoq/6vE4vM/Cy7jpMKT0PdOnNru/88LsRL9LjpwpVky8CTd5nKNyT4UEOmPzL89i
+	 OxbTkAICViJcf19mlTBTrAWG2n59dPBYIJYP3cPsJ6MzRm8swXL3GGzKuQOHanwEiR
+	 0xL2PBh3FzVtg==
 From: SeongJae Park <sj@kernel.org>
 To: 
 Cc: SeongJae Park <sj@kernel.org>,
@@ -33,9 +33,9 @@ Cc: SeongJae Park <sj@kernel.org>,
 	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH v2 02/10] mm/damon/sysfs: add pause file under context dir
-Date: Wed, 18 Mar 2026 22:21:45 -0700
-Message-ID: <20260319052157.99433-3-sj@kernel.org>
+Subject: [RFC PATCH v2 01/10] mm/damon/core: introduce damon_ctx->paused
+Date: Wed, 18 Mar 2026 22:21:44 -0700
+Message-ID: <20260319052157.99433-2-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260319052157.99433-1-sj@kernel.org>
 References: <20260319052157.99433-1-sj@kernel.org>
@@ -47,88 +47,66 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Add pause DAMON sysfs file under the context directory.  It exposes the
-damon_ctx->pause API parameter to the users so that they can use the
-pause/resume feature.
+DAMON supports only start and stop of the execution.  When it is
+stopped, its internal data that it self-trained goes away.  It will be
+useful if the execution can be paused and resumed with the previous
+self-trained data.
+
+Introduce per-context API parameter, 'paused', for the purpose.  The
+parameter can be set and unset while DAMON is running and paused, using
+the online parameters commit helper functions (damon_commit_ctx() and
+damon_call()).  Once 'paused' is set, the kdamond_fn() main loop does
+only limited works with sampling interval sleep during the works.  The
+limited works include the handling of the online parameters update, so
+that users can unset the 'pause' and resume the execution when they
+want.  It also keep checking DAMON stop conditions and handling of it,
+so that DAMON can be stopped while paused if needed.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- mm/damon/sysfs.c | 31 +++++++++++++++++++++++++++++++
- 1 file changed, 31 insertions(+)
+ include/linux/damon.h | 2 ++
+ mm/damon/core.c       | 9 +++++++++
+ 2 files changed, 11 insertions(+)
 
-diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
-index 576d1ddd736bf..7bd42dd8c4a73 100644
---- a/mm/damon/sysfs.c
-+++ b/mm/damon/sysfs.c
-@@ -866,6 +866,7 @@ struct damon_sysfs_context {
- 	struct damon_sysfs_attrs *attrs;
- 	struct damon_sysfs_targets *targets;
- 	struct damon_sysfs_schemes *schemes;
+diff --git a/include/linux/damon.h b/include/linux/damon.h
+index 3a441fbca170d..421e51eff3bd2 100644
+--- a/include/linux/damon.h
++++ b/include/linux/damon.h
+@@ -811,6 +811,8 @@ struct damon_ctx {
+ 	 * intervals tuning
+ 	 */
+ 	unsigned long next_intervals_tune_sis;
++	/* pause kdamond main loop */
 +	bool pause;
- };
- 
- static struct damon_sysfs_context *damon_sysfs_context_alloc(
-@@ -878,6 +879,7 @@ static struct damon_sysfs_context *damon_sysfs_context_alloc(
- 	context->kobj = (struct kobject){};
- 	context->ops_id = ops_id;
- 	context->addr_unit = 1;
-+	context->pause = false;
- 	return context;
- }
- 
-@@ -1053,6 +1055,30 @@ static ssize_t addr_unit_store(struct kobject *kobj,
- 	return count;
- }
- 
-+static ssize_t pause_show(struct kobject *kobj, struct kobj_attribute *attr,
-+		char *buf)
-+{
-+	struct damon_sysfs_context *context = container_of(kobj,
-+			struct damon_sysfs_context, kobj);
-+
-+	return sysfs_emit(buf, "%c\n", context->pause ? 'Y' : 'N');
-+}
-+
-+static ssize_t pause_store(struct kobject *kobj, struct kobj_attribute *attr,
-+		const char *buf, size_t count)
-+{
-+	struct damon_sysfs_context *context = container_of(kobj,
-+			struct damon_sysfs_context, kobj);
-+	bool pause;
-+	int err = kstrtobool(buf, &pause);
-+
-+	if (err)
-+		return err;
-+	context->pause = pause;
-+	return count;
-+}
-+
-+
- static void damon_sysfs_context_release(struct kobject *kobj)
- {
- 	kfree(container_of(kobj, struct damon_sysfs_context, kobj));
-@@ -1067,10 +1093,14 @@ static struct kobj_attribute damon_sysfs_context_operations_attr =
- static struct kobj_attribute damon_sysfs_context_addr_unit_attr =
- 		__ATTR_RW_MODE(addr_unit, 0600);
- 
-+static struct kobj_attribute damon_sysfs_context_pause_attr =
-+		__ATTR_RW_MODE(pause, 0600);
-+
- static struct attribute *damon_sysfs_context_attrs[] = {
- 	&damon_sysfs_context_avail_operations_attr.attr,
- 	&damon_sysfs_context_operations_attr.attr,
- 	&damon_sysfs_context_addr_unit_attr.attr,
-+	&damon_sysfs_context_pause_attr.attr,
- 	NULL,
- };
- ATTRIBUTE_GROUPS(damon_sysfs_context);
-@@ -1470,6 +1500,7 @@ static int damon_sysfs_apply_inputs(struct damon_ctx *ctx,
- 	if (sys_ctx->ops_id == DAMON_OPS_PADDR)
- 		ctx->min_region_sz = max(
- 				DAMON_MIN_REGION_SZ / sys_ctx->addr_unit, 1);
-+	ctx->pause = sys_ctx->pause;
- 	err = damon_sysfs_set_attrs(ctx, sys_ctx->attrs);
- 	if (err)
- 		return err;
+ 	/* for waiting until the execution of the kdamond_fn is started */
+ 	struct completion kdamond_started;
+ 	/* for scheme quotas prioritization */
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index 339325e1096bc..0b6cb63d64d0e 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -1331,6 +1331,7 @@ int damon_commit_ctx(struct damon_ctx *dst, struct damon_ctx *src)
+ 		if (err)
+ 			return err;
+ 	}
++	dst->pause = src->pause;
+ 	dst->ops = src->ops;
+ 	dst->addr_unit = src->addr_unit;
+ 	dst->min_region_sz = src->min_region_sz;
+@@ -2978,6 +2979,14 @@ static int kdamond_fn(void *data)
+ 		 * kdamond_merge_regions() if possible, to reduce overhead
+ 		 */
+ 		kdamond_call(ctx, false);
++		while (ctx->pause) {
++			if (kdamond_need_stop(ctx))
++				goto done;
++			kdamond_usleep(ctx->attrs.sample_interval);
++			/* allow caller unset pause via damon_call() */
++			kdamond_call(ctx, false);
++			damos_walk_cancel(ctx);
++		}
+ 		if (!list_empty(&ctx->schemes))
+ 			kdamond_apply_schemes(ctx);
+ 		else
 -- 
 2.47.3
