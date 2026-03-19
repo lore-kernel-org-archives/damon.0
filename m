@@ -1,154 +1,157 @@
-Received: from mail-qk1-f169.google.com (mail-qk1-f169.google.com [209.85.222.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 592D73803CE
-	for <damon@lists.linux.dev>; Thu, 19 Mar 2026 14:30:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AAD5F9C0;
+	Thu, 19 Mar 2026 14:31:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773930603; cv=none; b=hO+bn5vawJCivZ8+a5vtaQaAz2PGuHjr5VvOrUyr8l+5pOQ1bg14SF+tZfRgWlV9wjfXCJ3+coCSW3CgAZH2WNj9INmv4MEuc9Bm1zB5UN6SQwzdmwrpvb6HgRiYlL5GPdbDP3Hn57kucJwAh/pV+YR5FQb29xPbz1c/LKe1tWk=
+	t=1773930683; cv=none; b=i09DZ8vD94nRpb8MlDDqPpnxXuVrXJUxxYhZJtX4PdQOQIh7wXhoaIqyTEplD+awXFm3JrTmTAqp2ttqTHZt3SQ+STd5ajTcuxkxxWpoMIDk9GaUtp4HK3lxqqw03MaRMyvdWc8JXVizi6yEhxqXJjo/6M0JoCE1LDMOacgOZDQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773930603; c=relaxed/simple;
-	bh=BArAqxuNOMZmZ3DFzVkEiSDUW/6K7+Jdphve/CIcCPA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ZYCmg7rJcPO+C7HBjp78crU9OQG1hkekZLtHgN/uGppcWLEzmWuE5rVCRPttUNJ5qCfYqg+1aPTlbxD2W7raUfSqsbnPM1940PSi6SbGFQr9DzMNJn/kNs2LBMzapnPpBPGw1zV/9ZEcHAHhmAPFdNQHcjfkbtQ1pXsRzgxtNCQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gourry.net; spf=pass smtp.mailfrom=gourry.net; dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.b=cQJOoNJU; arc=none smtp.client-ip=209.85.222.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gourry.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gourry.net
+	s=arc-20240116; t=1773930683; c=relaxed/simple;
+	bh=h5Aa5pRSR7eKNJFLVE6Af15Uj6701Id7RhmHu3jhLXU=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=rrMUoaiwHs5gWwujsPDA/ov3JsNDmrMS70MpVffOER6rtzkTkVmJFYb19Yywr4LlT/4o3Q/e4VhrRNcsZ/k8iUVD9zKwFIZJuCmhYE6kI9XuErx9eLE9xODl9GF9aNFxMmb1fUXoBnEazFBJm1a/i6vWLV3Zczjga5XiEjTFJXs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cbkoqjlB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.b="cQJOoNJU"
-Received: by mail-qk1-f169.google.com with SMTP id af79cd13be357-8cfbbdbaf3cso88039185a.0
-        for <damon@lists.linux.dev>; Thu, 19 Mar 2026 07:30:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gourry.net; s=google; t=1773930601; x=1774535401; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=MZ62zRGDMh84ev+ADivtxhXkIe87cWoaQL4WKudvzqg=;
-        b=cQJOoNJUSVvfVL6IP6AsZ9q6WJ/fn2KkIx7gjYvkymiyHMKyGCDFLVD1l5ePkNZ554
-         ZhbqoW7P+YV4BzCQnkcaqJ9bfd5kPmVGFRNuVH7SLVW1B6KOD/lIZIs/O+R0G3FrEQV1
-         d/VYdlEE/DAvmSvy7fWTJnN2fBbGbFL8GZnh3VroSIOKcD85bG/QyOD9Or6CWpb3p5fN
-         Vgj77U1SZ/1Uli1tmlmshDQNkoxQlEnfYFRTHgB8PL1U0ea3tTrmXWC1hTF3IQubUFYu
-         q36SMhIEHGqcGYhSGP3FrnEuZ9wdmjFuItG9lrWLs5mUVxiYJKFsZpSopP3S37RF4cfP
-         RulA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1773930601; x=1774535401;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=MZ62zRGDMh84ev+ADivtxhXkIe87cWoaQL4WKudvzqg=;
-        b=lkXT1r3913gqPIn42tiwzprCwgOAnFa3McQ6QS/oj+JP36RIvIT+LUhXI1hB1Do3PC
-         H+Pv9kaRgrlaVhjQwey+ik2CHbZjmGKIloo6dhBHaSlmaahRHhsIGbbWFVXpoVarNVp1
-         7KLl648PJDOHB4Q9ZXcaI13dKQKRtJT84Ah3yDp+FDHIziHxtfjzmlUlOhaUSVDXRK+d
-         0VRr4woUP1//VMIa6q5y6tYxs3Xf11R2zIA2/SdG0HhbZL0ZH6li2Ms4197RDUCY60g+
-         wEPjKz5pauga50J8vXYKdUG/eaxyq3bKD15OMlZmQZ0QUO0BMg7kSoVRgAOGh1pdK5mx
-         SNjw==
-X-Forwarded-Encrypted: i=1; AJvYcCXIL59JE1cRN5RZr+9TRMuRKUgdH0u4HHBebA9TTgFAtUQnk6m7gL91PmVGyWvwlouixxoubw==@lists.linux.dev
-X-Gm-Message-State: AOJu0YzbkHfmkPy7UNbSuE1911wQHRziAmxAO9lf3zqxQlNetEekg+ih
-	am5mDnuJlEaCZe1VIuTe2aRiUtLGFb6W6bzvJfiF0DZtb8i0KEBB/12gUHqufZFrE0I=
-X-Gm-Gg: ATEYQzypyAANAAgK2wLPag4cXO1PeVHeq46mSfQXxJ/jUbvtr+ll5/z6onHPXx7W/4L
-	TAfYTG8XZWVV8GfZhINemHqzP00XuzCvuCAGr5NmAaZH6IUvKK5+fmsu4IQ3h4uYGxal/Ml+zVA
-	t1FsToF4lW+m25DFkcx4bSBb2W2sWr1KBQ+ZR/xLLNoaDiqmB13QLx0MQEAACPZCfA+i2JUujOy
-	B6NjmnrYsQtgsA22pkSNJ3Bo+/zq36xeJqjjDaCgYHyOs3EiHnkm01xl4IUdKON4wD2XQwBee/4
-	C0gVbDNtgrmeA4tKZ0kTGTeghu/NXRxF/SHYaXxlxRO5iFNkTXuiGNYwAW9mNs+AB8fBn4RlmOh
-	kVxEb2kL3wSp9MnJGVlnRrtvTOV8t/Ne6mtKyxcM5PSG9afvXnzHFROdApT26J/BcgglvEtOMya
-	/77wYk/u3ppWdGeT9sWVWN9fFznbag4UjtVr/Qa7pTDjunTzrVM4Zdi67Fg9g/1+rMWvriS9UOh
-	jOXJbuFaQ==
-X-Received: by 2002:a05:620a:1a21:b0:8cd:b024:114d with SMTP id af79cd13be357-8cfb9ea6bb2mr485207585a.40.1773930600903;
-        Thu, 19 Mar 2026 07:30:00 -0700 (PDT)
-Received: from gourry-fedora-PF4VCD3F (pool-96-255-20-138.washdc.ftas.verizon.net. [96.255.20.138])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-8cfc25f0340sm87627185a.1.2026.03.19.07.29.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 Mar 2026 07:30:00 -0700 (PDT)
-Date: Thu, 19 Mar 2026 10:29:57 -0400
-From: Gregory Price <gourry@gourry.net>
-To: "David Hildenbrand (Arm)" <david@kernel.org>
-Cc: linux-kernel@vger.kernel.org, linux-cxl@vger.kernel.org,
-	cgroups@vger.kernel.org, linux-mm@kvack.org,
-	linux-trace-kernel@vger.kernel.org, damon@lists.linux.dev,
-	kernel-team@meta.com, gregkh@linuxfoundation.org, rafael@kernel.org,
-	dakr@kernel.org, dave@stgolabs.net, jonathan.cameron@huawei.com,
-	dave.jiang@intel.com, alison.schofield@intel.com,
-	vishal.l.verma@intel.com, ira.weiny@intel.com,
-	dan.j.williams@intel.com, longman@redhat.com,
-	akpm@linux-foundation.org, lorenzo.stoakes@oracle.com,
-	Liam.Howlett@oracle.com, vbabka@suse.cz, rppt@kernel.org,
-	surenb@google.com, mhocko@suse.com, osalvador@suse.de,
-	ziy@nvidia.com, matthew.brost@intel.com, joshua.hahnjy@gmail.com,
-	rakie.kim@sk.com, byungchul@sk.com, ying.huang@linux.alibaba.com,
-	apopple@nvidia.com, axelrasmussen@google.com, yuanchu@google.com,
-	weixugc@google.com, yury.norov@gmail.com, linux@rasmusvillemoes.dk,
-	mhiramat@kernel.org, mathieu.desnoyers@efficios.com, tj@kernel.org,
-	hannes@cmpxchg.org, mkoutny@suse.com, jackmanb@google.com,
-	sj@kernel.org, baolin.wang@linux.alibaba.com, npache@redhat.com,
-	ryan.roberts@arm.com, dev.jain@arm.com, baohua@kernel.org,
-	lance.yang@linux.dev, muchun.song@linux.dev, xu.xin16@zte.com.cn,
-	chengming.zhou@linux.dev, jannh@google.com, linmiaohe@huawei.com,
-	nao.horiguchi@gmail.com, pfalcato@suse.de, rientjes@google.com,
-	shakeel.butt@linux.dev, riel@surriel.com, harry.yoo@oracle.com,
-	cl@gentwo.org, roman.gushchin@linux.dev, chrisl@kernel.org,
-	kasong@tencent.com, shikemeng@huaweicloud.com, nphamcs@gmail.com,
-	bhe@redhat.com, zhengqi.arch@bytedance.com, terry.bowman@amd.com
-Subject: Re: [LSF/MM/BPF TOPIC][RFC PATCH v4 00/27] Private Memory Nodes (w/
- Compressed RAM)
-Message-ID: <abwIZd7FNPj5YYXQ@gourry-fedora-PF4VCD3F>
-References: <20260222084842.1824063-1-gourry@gourry.net>
- <c10400db-2259-4465-a07e-19d0691101a4@kernel.org>
- <aZxqP7J1kOClQUPQ@gourry-fedora-PF4VCD3F>
- <aZx7hsVNU0XOCCiG@gourry-fedora-PF4VCD3F>
- <049d056b-844b-4480-b90e-bf4c850fc70e@kernel.org>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cbkoqjlB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E13EEC19424;
+	Thu, 19 Mar 2026 14:31:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1773930683;
+	bh=h5Aa5pRSR7eKNJFLVE6Af15Uj6701Id7RhmHu3jhLXU=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=cbkoqjlBACSHhUzBH9DGqtKAeX+2K/xHxxe01kPTQVUJNF2ik9tbfXUyaRlZAqmWc
+	 j4qgcpRUnYEAprDTsczHdpo2OxjRjywi1UIzoAlk3NmS0oggdV0O8EDLV8LyVtSSdU
+	 m/3xmLXWUzHjX0sP2GXpyviT9wA/M5NlIWnYyljQNK+Mxt5mc4neynaNv1cXpJlMzH
+	 y5MsTQkMkGlAe3fDO5eG9xYLXGKjpl4AN6ubRLFlg1IaU2Qy3/BnRlf6aL2jQ0HcYx
+	 sWC0kv8D2LThrvuoQfPpFs/dmAcfNBIeG0GIr6C3Hq7+3iEUOHxl+768Fd1E36HI/z
+	 XC3ciJEzo+hlA==
+From: SeongJae Park <sj@kernel.org>
+To: Josh Law <objecting@objecting.org>
+Cc: SeongJae Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] mm/damon/core: document damos_commit_dests() failure semantics
+Date: Thu, 19 Mar 2026 07:31:14 -0700
+Message-ID: <20260319143116.82849-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260319071332.114595-1-objecting@objecting.org>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <049d056b-844b-4480-b90e-bf4c850fc70e@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Tue, Mar 17, 2026 at 02:05:53PM +0100, David Hildenbrand (Arm) wrote:
-> On 2/23/26 17:08, Gregory Price wrote:
-> > On Mon, Feb 23, 2026 at 09:54:55AM -0500, Gregory Price wrote:
-> >> On Mon, Feb 23, 2026 at 02:07:15PM +0100, David Hildenbrand (Arm) wrote:
-> >>>
-> >>> I'm concerned about adding more special-casing (similar to what we already
-> >>> added for ZONE_DEVICE) all over the place.
-> >>>
-> >>> Like the whole folio_managed_() stuff in mprotect.c
-> >>>
-> >>> Having that said, sounds like a reasonable topic to discuss.
-> >>>
-> >>
-> >> Another option would be to add the hook to vma_wants_writenotify()
-> >> instead of the page table code - and mask MM_CP_TRY_CHANGE_WRITABLE.
-> >>
-> > 
-> > scratch all this - existing hooks exist for exactly this purpose:
-> > 
-> > 	can_change_[pte|pmd]_writable()
-> > 
-> > Surprised I missed this.
-> > 
-> > I can clean this up to remove it from the page table walks.
-> 
-> Sorry for the late reply -- sounds like we can handle this cleaner.
-> 
-> But I am wondering: why is this even required?
-> 
-> Is it just for "Services that intercept write faults (e.g., for
-> promotion tracking) need PTEs to stay read-only"
-> 
-> But that promotion tracking sounds like some orthogonal work to me. What
-> am I missing that this is required in this patch set? (is it just for
-> the special compressed RAM bits?)
-> 
+Hello Josh,
 
-Yes, this was specific to the compressed ram bits - it allows for a
-service to control where/when writes to the device can happen.  In this
-case, I've limited writes to just the demotion step. (Although I have
-since realized i need to not allow file-backed memory to be demoted).
+On Thu, 19 Mar 2026 07:13:32 +0000 Josh Law <objecting@objecting.org> wrote:
 
-There may be a better way to do this, but also it may very well be the
-case that such a hook is just a bridge too far and isn't wanted. I think
-this debate is warranted.
+> Add a kernel-doc comment to damos_commit_dests() documenting its
+> allocation failure contract: on -ENOMEM, the destination structure is
+> left in a partially torn-down state that is safe to deallocate via
+> damon_destroy_scheme(), but must not be reused for further commits.
 
-~Gregory
+Nice patch.  We intentionally do not use kernel-doc comment for static
+functions, to not encourage API document readers use the non-public functions.
+We still use kernel-doc like comment for static functions, to help developers.
+That is, starting the comment with '/*' instead of '/**'.  Maybe 'damon_call()'
+is an example.
+
+> 
+> This was unclear from the code alone and led to a separate patch
+> attempting to reset nr_dests on failure.
+
+Good point.  Adding a link [1] would be nice.
+
+> Make the intended usage
+> explicit so future readers do not repeat the confusion.
+> 
+> Signed-off-by: Josh Law <objecting@objecting.org>
+
+Other than the above trivial things,
+
+Reviewed-by: SeongJae Park <sj@kernel.org>
+
+I added this patch to my tree, after addressing my above comments.  If you
+don't mind, I will post it tomorrow as a v2, for mm.git inclusion.  If you have
+different opinions to my comments or you prefer to post v2 on your own, please
+feel free to do so :)
+
+> ---
+>  mm/damon/core.c | 17 +++++++++++++++++
+>  1 file changed, 17 insertions(+)
+> 
+> diff --git a/mm/damon/core.c b/mm/damon/core.c
+> index e233eb84a2d5..c884bb31c9b8 100644
+> --- a/mm/damon/core.c
+> +++ b/mm/damon/core.c
+> @@ -1054,6 +1054,23 @@ static void damos_set_filters_default_reject(struct damos *s)
+>  		damos_filters_default_reject(&s->ops_filters);
+>  }
+>  
+> +/**
+> + * damos_commit_dests() - Copy migration destinations from @src to @dst.
+> + * @dst:	Destination structure to update.
+> + * @src:	Source structure to copy from.
+> + *
+> + * If the number of destinations has changed, the old arrays in @dst are freed
+> + * and new ones are allocated.  On success, @dst contains a full copy of
+> + * @src's arrays and count.
+> + *
+> + * On allocation failure, @dst is left in a partially torn-down state: its
+> + * arrays may be NULL and @nr_dests may not reflect the actual allocation
+> + * sizes.  The structure remains safe to deallocate via damon_destroy_scheme(),
+> + * but callers must not reuse @dst for further commits — it should be
+> + * discarded.
+> + *
+> + * Return: 0 on success, -ENOMEM on allocation failure.
+> + */
+>  static int damos_commit_dests(struct damos_migrate_dests *dst,
+>  		struct damos_migrate_dests *src)
+>  {
+> -- 
+> 2.34.1
+
+And Sashiko comment [2].  TL; DR: Good finding.  We aware the issue and working
+on the fix.  Nonetheless, that's out of the scope of this patch.
+
+: Does leaving dst in a torn-down state cause a NULL pointer dereference in
+: the background kdamond thread?
+: 
+: If damon_commit_ctx() fails during damos_commit_dests(), the sysfs update
+: aborts. However, the broken scheme remains active in kdamond->damon_ctx
+: because damon_commit_schemes() does not remove or destroy dst_scheme on
+: error.
+: 
+: When the background thread calls kdamond_apply_schemes() and invokes
+: damos_va_migrate_dests_add(), it iterates based on the unmodified nr_dests:
+: 
+:     for (i = 0; i < dests->nr_dests; i++)
+:         weight_total += dests->weight_arr[i];
+: 
+: Since weight_arr is NULL but nr_dests retains its old non-zero value, will
+: this unconditionally dereference the NULL pointer? It appears the previous
+: patch attempting to reset nr_dests on failure might be necessary to prevent
+: this crash.
+
+
+Nice catch.  We actually figured out [3] this issue from the discussion on
+Josh's previous patch that motivated this one.  And I'm working on it.  Because
+the issue is arguably orthogonal to this patch, I think this patch is good to
+go.
+
+[1] https://lore.kernel.org/20260318214939.36100-1-objecting@objecting.org
+[2] review url: https://sashiko.dev/#/patchset/20260319071332.114595-1-objecting@objecting.org
+[3] https://lore.kernel.org/20260319043309.97966-1-sj@kernel.org
+
+
+Thanks,
+SJ
+
+[...]
