@@ -1,229 +1,97 @@
-Received: from sender-of-o57.zoho.eu (sender-of-o57.zoho.eu [136.143.169.57])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DAEA301704
-	for <damon@lists.linux.dev>; Fri, 20 Mar 2026 15:15:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.169.57
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774019748; cv=pass; b=G2DK4LuqTWPUiPUUxhzycQpQPL/9R7Y6xfrd3GPQeeBfmR8WR+Jl2/2C2+WigyhTQBPE8xVoZfK/c3HFhCG+sAj8jFVsVymVKBgevjn4fcJcg4XhLYCSh9b8CyJU10Aj0im4TpPH0hEnIu9uBCfBiEHCil3Y90lBqM2z8f4l6KU=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774019748; c=relaxed/simple;
-	bh=k9QMKRTZCHbMS+5BvOoFr2WFf3TJGGcVMCIhJrYIPzo=;
-	h=Date:From:To:CC:Subject:In-Reply-To:References:Message-ID:
-	 MIME-Version:Content-Type; b=gPnU9Suywe022YJHz4b1XByc7f8bxnlEKeQOEYTrOEu3glckOvxQWiuJZPkceCKNXn1H1ntWLCNAYSrJAghcMevSeGQZWnEx75BSy9bYmk0S7GPDClUnHU5eIKzcjcj8Uyr/pN4KLBS12Os3Z3swwdOsi+7S32cfDe8mMPIs1P0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=objecting.org; spf=pass smtp.mailfrom=objecting.org; dkim=pass (1024-bit key) header.d=objecting.org header.i=objecting@objecting.org header.b=YlBD0JrE; arc=pass smtp.client-ip=136.143.169.57
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=objecting.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=objecting.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BF713B2FD4;
+	Fri, 20 Mar 2026 15:17:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1774019857; cv=none; b=Ufe3RVllwxMG+gBDOnireHm4wggBgi3B0WVZoqEgW0Y5X2CJKXjiMHviEqLWEX6Qhk9nS8MxfiLAaq9gOPObPB04nOvdsbc99YRIoYXqyY8+4YJnXd9dCK7pb73Og+GPSjEoSD+OD/RQyw9MBb+CoHx8AJ0WbG9zXYjTNL0zmuo=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1774019857; c=relaxed/simple;
+	bh=grkTVeJT4rKD+G/1Q+egwehQigyFRB+VPVj+azdo7e0=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=ZPepaTnHOs0xpSjqR1BhAI9kjoR7B8j4nlfP2AZ0mL5IP4vVShP4aiDjmpMVKIt+hiVJnyKb7gqW5g6pLQATGf7KhqWqtM+GJ7CFQnYurfESYiWNYUTTOOULrcHqxQwEi1CKE+HgPLOkdUxVlnYkF7sad3dfRIbfYyj6d6pnWTA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sAZHewiW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=objecting.org header.i=objecting@objecting.org header.b="YlBD0JrE"
-ARC-Seal: i=1; a=rsa-sha256; t=1774019742; cv=none; 
-	d=zohomail.eu; s=zohoarc; 
-	b=jI0rj2fx+zrHYx7AJcLDpMawOsI9Ht5Bkv4AgQZfVyIHbjXBKwb/Ow77g5FLiojVmWw7EM3HVa/sI/1Ye2z0poWiPNsV8HbDOPmUelvkRjw3QFIbx0U8SH6CEP2k2G2+K2u6j8nz3wg6BsptzHm3FIOfyQ4GN+H8QZpMQ7l3kao=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.eu; s=zohoarc; 
-	t=1774019742; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=WZoIGVlxoqgpVwZ++hA+mPWqVSD5mS9s8EZM+kwCgTs=; 
-	b=Rbh6t5u7MzJUSab3rDCaWAzB2ygceu4QcwnaW+O7yzkNFhfISnQY6XqNC0mr/EP2uuj6oQlrRtUgTFXH0J/X0ciLbXr5AWA6XCLlzKgiIvcJkc8v0Atx1w6WgUPjuLvvBwKlNQ2fXa5Z6AqY6XtN/B/OEZnVO/eWNIA0f32h8WM=
-ARC-Authentication-Results: i=1; mx.zohomail.eu;
-	dkim=pass  header.i=objecting.org;
-	spf=pass  smtp.mailfrom=objecting@objecting.org;
-	dmarc=pass header.from=<objecting@objecting.org>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1774019742;
-	s=zmail; d=objecting.org; i=objecting@objecting.org;
-	h=Date:Date:From:From:To:To:CC:Subject:Subject:In-Reply-To:References:Message-ID:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To:Cc;
-	bh=WZoIGVlxoqgpVwZ++hA+mPWqVSD5mS9s8EZM+kwCgTs=;
-	b=YlBD0JrEdze4SqlLpmbsPbnVW3QhDIdBcSuVU+He6U2UnmwPt6B5ODJ2yjDVa3pV
-	Ky1/M4bNqzcpb8i12HN+ACiMNzRULLcC4i1NVgkEw7UncwHasw6qvEyIVIbXQIDs/Tp
-	9RjSIpYKOH/VrOTn3pwgQ1zecwW3uo8RXcTlVKJY=
-Received: by mx.zoho.eu with SMTPS id 1774019740177737.6191439933341;
-	Fri, 20 Mar 2026 16:15:40 +0100 (CET)
-Date: Fri, 20 Mar 2026 15:14:54 +0000
-From: Josh Law <objecting@objecting.org>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sAZHewiW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D489C4CEF7;
+	Fri, 20 Mar 2026 15:17:36 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1774019856;
+	bh=grkTVeJT4rKD+G/1Q+egwehQigyFRB+VPVj+azdo7e0=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=sAZHewiWExVTt/zyFbzLIdCJD/bpTcUx3fFXkZjbR6wKEsW7ip/YwFCzNC3CwykXJ
+	 w5UpXWdWe93cL6g+gJP9CVwYzxK8GOTOvJ3lF6Wf0AI99wfokjkUr4VCd2AJBtj7AD
+	 pa5VlsXzi8qcT9RN/YdnAypXmVremhTxo3nY7+Ttpxh1U/0D3oBJUqjmUzn2ju/SAl
+	 6YEffy743Q1F9GS390x2hrnmTUIitsfIoIPLHulvQOHVVDK8kDbIn6CoF0Pfx8KynQ
+	 iVY/NTMjmlGIlL3O8xkQBxLmSg5GkZSjX0JEmvcvLlPOD9x/FCx97QX8Gu/v4cDPrQ
+	 hQJlnR4iloMjQ==
+From: SeongJae Park <sj@kernel.org>
 To: SeongJae Park <sj@kernel.org>
-CC: akpm@linux-foundation.org, damon@lists.linux.dev, linux-mm@kvack.org,
- linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_2/4=5D_mm/damon/sysfs=3A_check_cont?=
- =?US-ASCII?Q?exts-=3Enr_before_clear=5Fschemes=5Ftried=5Fregions?=
-User-Agent: Thunderbird for Android
-In-Reply-To: <20260320144741.91848-1-sj@kernel.org>
-References:  <20260320144741.91848-1-sj@kernel.org>
-Message-ID: <C65E16CA-8D81-4B88-96EA-59DB554494A0@objecting.org>
+Cc: "Liam R. Howlett" <Liam.Howlett@oracle.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	David Hildenbrand <david@kernel.org>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	damon@lists.linux.dev,
+	linux-doc@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-mm@kvack.org
+Subject: Re: [RFC PATCH v2 03/10] Docs/mm/damon/design: update for context pause/resume feature
+Date: Fri, 20 Mar 2026 08:17:28 -0700
+Message-ID: <20260320151729.99156-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260319052157.99433-4-sj@kernel.org>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-ZohoMailClient: External
+Content-Transfer-Encoding: 8bit
+
+On Wed, 18 Mar 2026 22:21:46 -0700 SeongJae Park <sj@kernel.org> wrote:
+
+> Update DAMON design document for the context execution pause/resume
+> feature.
+> 
+> Signed-off-by: SeongJae Park <sj@kernel.org>
+> ---
+>  Documentation/mm/damon/design.rst | 7 +++++++
+>  1 file changed, 7 insertions(+)
+> 
+> diff --git a/Documentation/mm/damon/design.rst b/Documentation/mm/damon/design.rst
+> index 838b14d225193..e2e4fe3fb3986 100644
+> --- a/Documentation/mm/damon/design.rst
+> +++ b/Documentation/mm/damon/design.rst
+> @@ -19,6 +19,13 @@ types of monitoring.
+>  To know how user-space can do the configurations and start/stop DAMON, refer to
+>  :ref:`DAMON sysfs interface <sysfs_interface>` documentation.
+>  
+> +Users can also request each context execution to be paused and resumed.  When
+> +it is paused, the kdamond does nothing but only online parameters updates
+> +including resume request handling.
+
+Sashiko comment
+(https://sashiko.dev/#/patchset/20260319052157.99433-4-sj@kernel.org) below.
+
+: This isn't a bug, but the phrasing "does nothing but only online parameters
+: updates" is a bit awkward. Could this be reworded for clarity, perhaps to
+: something like "does nothing other than apply online parameter updates"?
+
+I pretty sure Sashiko is more English fluent than I.  But, shouldn't
+'s/apply/applying/' ?  I will update the sentence to "When it is paused, the
+kdamond does nothing other than applying online parameter update" in the next
+revision.
 
 
+Thanks,
+SJ
 
-On 20 March 2026 14:47:40 GMT, SeongJae Park <sj@kernel=2Eorg> wrote:
->On Fri, 20 Mar 2026 07:06:48 +0000 Josh Law <objecting@objecting=2Eorg> w=
-rote:
->
->>=20
->>=20
->> On 20 March 2026 02:13:17 GMT, SeongJae Park <sj@kernel=2Eorg> wrote:
->> >On Thu, 19 Mar 2026 15:57:40 +0000 Josh Law <objecting@objecting=2Eorg=
-> wrote:
->> >
->> >> The CLEAR_SCHEMES_TRIED_REGIONS command accesses contexts_arr[0]
->> >> without verifying nr_contexts >=3D 1, causing a NULL pointer derefer=
-ence
->> >> when no context is configured=2E Add the missing check=2E
->> >
->> >Nice catch, thank you!
->> >
->> >Privileged users can trigger this using DAMON sysfs interface=2E  E=2E=
-g=2E,
->> >
->> >    # cd /sys/kernel/mm/damon/admin/kdamonds/
->> >    # echo 1 > nr_kdamonds
->> >    # echo clear_schemes_tried_regions > state
->> >    killed
->> >    # dmesg
->> >    [=2E=2E=2E]
->> >    [63541=2E377604] BUG: kernel NULL pointer dereference, address: 00=
-00000000000000
->> >    [=2E=2E=2E]
->> >
->> >Privileged users can do anything even worse than this, but they might =
-also do
->> >this by a mistake=2E
->> >
->> >So this deserves Fixes: and Cc stable=2E
->> >
->> >>
->> >> Signed-off-by: Josh Law <objecting@objecting=2Eorg>
->> >> ---
->> >>  mm/damon/sysfs=2Ec | 2 ++
->> >>  1 file changed, 2 insertions(+)
->> >>
->> >> diff --git a/mm/damon/sysfs=2Ec b/mm/damon/sysfs=2Ec
->> >> index b573b9d60784=2E=2E36ad2e8956c9 100644
->> >> --- a/mm/damon/sysfs=2Ec
->> >> +++ b/mm/damon/sysfs=2Ec
->> >> @@ -1769,6 +1769,8 @@ static int damon_sysfs_handle_cmd(enum damon_s=
-ysfs_cmd cmd,
->> >>       case DAMON_SYSFS_CMD_UPDATE_SCHEMES_TRIED_REGIONS:
->> >>               return damon_sysfs_update_schemes_tried_regions(kdamon=
-d, false);
->> >>       case DAMON_SYSFS_CMD_CLEAR_SCHEMES_TRIED_REGIONS:
->> >> +             if (kdamond->contexts->nr !=3D 1)
->> >> +                     return -EINVAL;
->> >>               return damon_sysfs_schemes_clear_regions(
->> >>                       kdamond->contexts->contexts_arr[0]->schemes);
->> >>       case DAMON_SYSFS_CMD_UPDATE_SCHEMES_EFFECTIVE_QUOTAS:
->> >> --
->> >> 2=2E34=2E1
->> >
->> >So this patch looks good as an individual fix for the individual bug, =
-but=2E=2E=2E
->> >
->> >Sashiko commented=2E
->> >
->> ># review url: https://sashiko=2Edev/#/patchset/20260319155742=2E186627=
--3-objecting@objecting=2Eorg
->> >
->> >: Does this missing check also affect other manual commands?
->> >:
->> >: If a user writes UPDATE_SCHEMES_STATS, UPDATE_SCHEMES_EFFECTIVE_QUOT=
-AS,
->> >: or UPDATE_TUNED_INTERVALS to the state file after setting nr_context=
-s
->> >: to 0, damon_sysfs_handle_cmd() queues the corresponding callback via
->> >: damon_sysfs_damon_call()=2E
->> >:
->> >: When the kdamond thread executes the callback, it appears functions =
-like
->> >: damon_sysfs_upd_schemes_stats() access contexts_arr[0] without verif=
-ying
->> >: contexts->nr:
->> >:
->> >: static int damon_sysfs_upd_schemes_stats(void *data)
->> >: {
->> >:         struct damon_sysfs_kdamond *kdamond =3D data;
->> >:         struct damon_ctx *ctx =3D kdamond->damon_ctx;
->> >:
->> >:         damon_sysfs_schemes_update_stats(
->> >:                         kdamond->contexts->contexts_arr[0]->schemes,=
- ctx);
->> >:         return 0;
->> >: }
->> >:
->> >: Could this result in a similar NULL pointer dereference if these com=
-mands
->> >: are triggered while no context is configured?
->> >
->> >Sashiko is correct=2E  Privileged users can trigger the issues like be=
-low=2E
->> >
->> ># damo start
->> ># cd /sys/kernel/mm/damon/admin/kdamonds/0
->> ># echo 0 > contexts/nr_contexts
->> ># echo update_schemes_stats > state
->> ># echo update_schemes_effective_quotas > state
->> ># echo update_tuned_intervals > state
->> >
->> >Not necessarily blocker of this patch, but seems all the issues are in=
- a same
->> >category=2E  The third patch of this series is also fixing one of the =
-category
->> >bugs=2E  How about fixing all at once by checking kdamond->contexts->n=
-r at the
->> >beginning of damon_sysfs_handle_cmd(), like below?
->> >
->> >--- a/mm/damon/sysfs=2Ec
->> >+++ b/mm/damon/sysfs=2Ec
->> >@@ -2404,6 +2404,9 @@ static int damon_sysfs_update_schemes_tried_regi=
-ons(
->> > static int damon_sysfs_handle_cmd(enum damon_sysfs_cmd cmd,
->> >                struct damon_sysfs_kdamond *kdamond)
->> > {
->> >+       if (cmd !=3D DAMON_SYSFS_CMD_OFF && kdamond->contexts->nr !=3D=
- 1)
->> >+               return -EINVAL;
->> >+
->> >        switch (cmd) {
->> >        case DAMON_SYSFS_CMD_ON:
->> >                return damon_sysfs_turn_damon_on(kdamond);
->> >
->> >If we pick this, Fixes: would be deserve to the oldest buggy commit th=
-at
->> >introduced the first bug of this category=2E  It is indeed quite old=
-=2E
->> >
->> >Fixes: 0ac32b8affb5 ("mm/damon/sysfs: support DAMOS stats")
->> >Cc: <stable@vger=2Ekernel=2Eorg> # 5=2E18=2Ex
->> >
->> >
->> >Thanks,
->> >SJ
->>=20
->>=20
->>=20
->> Hello, did you give Reviewed by you? Or not=2E=2E
->
->Are you meaning Reviewed-by: tag?  If so, no, not yet=2E  I want to get y=
-our
->answer to above question first=2E  Could you please answer?
->
->
->Thanks,
->SJ
->
->[=2E=2E=2E]
-
-
-Well, two is in the same catagory=2E But seperate fixes may be best=2E  Be=
-cause patch 3 dont call that function, so it may be screwy, i mean, if you =
-want me to=2E Ill guard it=2E But its a bit on the hacky side
-
-
-V/R
-
-
-Josh Law
+[...]
