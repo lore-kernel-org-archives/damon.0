@@ -1,202 +1,164 @@
-Received: from sender-of-o57.zoho.eu (sender-of-o57.zoho.eu [136.143.169.57])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A560355F56
-	for <damon@lists.linux.dev>; Fri, 20 Mar 2026 07:07:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.169.57
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773990422; cv=pass; b=iLVYJhw/OstULWyD/5ChlePdPyYEserIi/wIVdwASBn0fukCQP+oORte9QQqXxtdWVjnZh9yVirtlaygQZ7VuRKqNCYnvuUUWjXsDULzEZepXAhEt3Trwo9CgQVDYnF+qI4E+1UmI748e0Cmea+biKRGT8NK0dlfGytxklw/ork=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773990422; c=relaxed/simple;
-	bh=Y2/1U6ee1g2tI+ylgxSX4ipvzpcTSO0ejo/jam+TzfI=;
-	h=Date:From:To:CC:Subject:In-Reply-To:References:Message-ID:
-	 MIME-Version:Content-Type; b=cT8zmwOPUEHMnaEXUOHjQFATRC3+Lq/JZ65r3kgtRwqLakrXJJsWm9ZFLjaPaTdBFVdE02DX2jCUfIgePVoQPUgCysZTF6drX/0TQXN2Wzlr1WbpPLRa5UeiXeqSlce6OygLDCxHzJG3jIIpjspjkAkWlBEdEJv0v9k4zOdJdX0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=objecting.org; spf=pass smtp.mailfrom=objecting.org; dkim=pass (1024-bit key) header.d=objecting.org header.i=objecting@objecting.org header.b=NOt+Fn1o; arc=pass smtp.client-ip=136.143.169.57
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=objecting.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=objecting.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98B61359A9B
+	for <damon@lists.linux.dev>; Fri, 20 Mar 2026 07:24:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.177
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1773991484; cv=none; b=brspRMTZZC1Hzk9kZxy3+G7cuyXBYAtbUhT6SVu3DcbetIRGqGFjSzibuP5sFztHciwMbU6SCvnKLADVzICRTghi1ZTCiS7uzi7nMgQ/tbU4UXhxlDQITVsrpTyxv76EFKtMXbTglo1t9R54EcHJx6rrx82ptEx29wyEaFUly68=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1773991484; c=relaxed/simple;
+	bh=nmTnACRxUk3zBwf1Cu9Ng7P0+M5l9cG5blBtzVimXBc=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=CmkHV7HigBmPT92J9bhOv4w8hUYvhnCGiAUh7iru3/ENQojCko2OTlvSp5lqEQdWVHnYQMH9Z6hkzDDLCpN6iXLPRwF+MHkPBugKOCJaO1DKlYTiUgsGe+g8yawReRyM7HBPln3wy0ay/BLA+xwocNE7L2WxUzcT5bCRYRgfyKU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nb/dxPN2; arc=none smtp.client-ip=209.85.214.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=objecting.org header.i=objecting@objecting.org header.b="NOt+Fn1o"
-ARC-Seal: i=1; a=rsa-sha256; t=1773990410; cv=none; 
-	d=zohomail.eu; s=zohoarc; 
-	b=k5CguAlxOCS5xMApFoTv9ZuoSWHIB+mQjjSdXJIZ1gd55C3xW8Y0QVjukOmN/Ee4tWKV1aWCHfFMhDFdLF8JGWeQN8F1N4WmmjE6830Upv33kPQuVhhGqVXjW6Vh1g9NdzrfwFB+hpRSJ/xJo7Tk8Ea8aS4/uRzV+jPDHxrLY8g=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.eu; s=zohoarc; 
-	t=1773990410; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=Z8oK5RCe9uCIwAhJ1Bo5VEmx8tjlc5XR8v7u8F6fzXM=; 
-	b=hmrmdKrFf1z4EBOrKhyNvWubCIeqLqhyyRGhK0/fZ5fjHii6weFmUzg4tMkq9M/RUALNCm+C4NvGPvZBumVqePXQXleOsvF1ZAwWjXkicCiv5/vgo9yPD9CMbTC9FvvpVeuFQTQ9wl9yua53MHaGtdlNxdfVX4efVRI3zpxIb90=
-ARC-Authentication-Results: i=1; mx.zohomail.eu;
-	dkim=pass  header.i=objecting.org;
-	spf=pass  smtp.mailfrom=objecting@objecting.org;
-	dmarc=pass header.from=<objecting@objecting.org>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1773990410;
-	s=zmail; d=objecting.org; i=objecting@objecting.org;
-	h=Date:Date:From:From:To:To:CC:Subject:Subject:In-Reply-To:References:Message-ID:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To:Cc;
-	bh=Z8oK5RCe9uCIwAhJ1Bo5VEmx8tjlc5XR8v7u8F6fzXM=;
-	b=NOt+Fn1oBhfhfW0ws0Q/WT60QDumBxumtZ5mJgAmUPXFd+jl3VYpDLB7E43xA9A5
-	PHVwB8tL6XM4pmT2uV19RFRay6orZV9X3dZlmh/Y+eJx4pxLaZ9V1NN4rMQRktHj24R
-	wWO2XkAGYi+nFigDnR87WEKdyGUUNW58QU69MbSw=
-Received: by mx.zoho.eu with SMTPS id 1773990408143822.1742080429242;
-	Fri, 20 Mar 2026 08:06:48 +0100 (CET)
-Date: Fri, 20 Mar 2026 07:06:48 +0000
-From: Josh Law <objecting@objecting.org>
-To: SeongJae Park <sj@kernel.org>
-CC: akpm@linux-foundation.org, damon@lists.linux.dev, linux-mm@kvack.org,
- linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_2/4=5D_mm/damon/sysfs=3A_check_cont?=
- =?US-ASCII?Q?exts-=3Enr_before_clear=5Fschemes=5Ftried=5Fregions?=
-User-Agent: Thunderbird for Android
-In-Reply-To: <20260320021318.1117-1-sj@kernel.org>
-References:  <20260320021318.1117-1-sj@kernel.org>
-Message-ID: <8F30B2A1-240C-43D3-B756-20E327F5BCF3@objecting.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nb/dxPN2"
+Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-2aecefc7503so11088235ad.1
+        for <damon@lists.linux.dev>; Fri, 20 Mar 2026 00:24:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1773991483; x=1774596283; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=j3oO0H+IHOvckZ4fHjT6ZGAeH2S4hcY0XM+PwetfF5I=;
+        b=nb/dxPN2xZb3lEYd/3PoMm+eQ3mPwGNLP10C7m01K+irevysaPUeGBnP26ENBY0CFG
+         8VrS/8KPCqATUs6eQPs30MgCb6Ibv0OhjCIWgs36VaOJAK5grESIL1O9s5sOF/gOPyLx
+         BodHyxX4fiJtKRWw8yM3nWrlS4AP4/5sHEMdHrDy2DQVlqFacEgsXb5ff9+zwpHE2b90
+         4tVCUvcAEziEGlS5OjH/bOiYpouebnWuqnywVEKXrsQ0V/TeVMx49Bg6fbQJ9xHHJlEf
+         60Qpo/jRA15QnXS/R+re6ItpS9uRgOK4e5SxIVDSFrZRBdvlc0em1LioGnEayz0RnfJ7
+         FDJg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1773991483; x=1774596283;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=j3oO0H+IHOvckZ4fHjT6ZGAeH2S4hcY0XM+PwetfF5I=;
+        b=Ma9dwq/o72hwuIwEgMtAyMuwIP3Eml750r3m+8/C6zYE4C4N0TWsY5R9iloDE55eBX
+         TEyyoeDpmWhRLrLyGD1z1UCSw+tousEmG1XnJUVDS1qMf4xJk3YR4RyksG8mlIKWzsE+
+         tfnFPYxjXnIecSeX7GftF1xKjYOC14DKRXCgZyugjKQS8PO6WlW4whBptzqfmpM8wD0s
+         fNEtVgdU6I8vDDwkS7cqX1qjxyeDCXUySl97IThHtgj9G67/VwszvoaHj6q8H43Ds3RE
+         Jdd6mOc9Mxug/YwGIUslrTH7iP884YRKOmEWcuK6au5rmWtEXnsfCTfuceudp0/RFCnI
+         qJIA==
+X-Gm-Message-State: AOJu0Yyqf/ahraOwj3lRaJVhjLphflwn5J0PITfJH/fZ2KVdHq6QTzm7
+	yAj9/nOetyWV/IXdqKw/xu/ERlSPz8WhKOz7N6aFEKGnjIull7z045ckX4F9QzJn
+X-Gm-Gg: ATEYQzyzuv0WmZkWZojFp2a4D/BL8Xb66AnwzgY+obKcycYV9ja96gFh9A1sUpIjF3Y
+	sFP3MZ3t9UzKFLL7+gaXXjndwXkGhvdlgkNQbh0qj7zJ/xCJIBMRYEvdCV9d5yGIyfEIo6clz+S
+	8f5WmfNFer4j+2W+MY2ulVdnTLujno+bCjZegjShp7zcGO9w34cavSzW5WjCK+iotiKgX97edhx
+	xa/dYRYgUAHzSJxCLLHFv/gTE4NoXi264kcGWy0QWoLkr4U16Ja1H7hz16EVEOY8dqIXmZU4bKn
+	yBK6B7+tWtl56WTCVjZnvyIzjox+BC+Yg9O1f1b+6iqDrQGL+54kfQ03gIXAARY01jeCbtXp/CM
+	0+rzLxIHAZOipFlQTlLF2g6F0tDueEnCX1jr4zqUClCvKLBRatZA2B6O/Bq8aHZx0yR04NJf77n
+	3jkkkQJ5vuD/z/NBh3VO5/hAS4Bvc=
+X-Received: by 2002:a17:902:f549:b0:2ab:230d:2d96 with SMTP id d9443c01a7336-2b0826c6909mr22728955ad.11.1773991482819;
+        Fri, 20 Mar 2026 00:24:42 -0700 (PDT)
+Received: from celestia ([2402:1980:898b:301c:d085:a35:99e7:ffec])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2b083516908sm17542935ad.1.2026.03.20.00.24.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 20 Mar 2026 00:24:42 -0700 (PDT)
+From: Liew Rui Yan <aethernet65535@gmail.com>
+To: sj@kernel.org
+Cc: damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	Liew Rui Yan <aethernet65535@gmail.com>
+Subject: [RFC PATCH] mm/damon/ops-common: optimize damon_hot_score()  using fls()
+Date: Fri, 20 Mar 2026 15:24:31 +0800
+Message-ID: <20260320072431.248235-1-aethernet65535@gmail.com>
+X-Mailer: git-send-email 2.53.0
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-ZohoMailClient: External
+Content-Transfer-Encoding: 8bit
 
+The current implementation of damon_hot_score() uses a manual for-loop
+to calculate the value of 'age_in_log'. This can be efficiently replaced
+by the fls().
 
+In a simulated performance test with 10,000,000 iterations, this
+optimization showed a significant reduction in latency:
+- Average Latency: Reduced from ~9ns to ~1ns.
+- P99 Latency: Reduced from ~60ns to ~41ns.
+- Throughput: The loop-based version mostly fell into the 40-50ns range,
+  while the fls-based version shifted significantly towards the 20-39ns
+  range in the test environment.
 
-On 20 March 2026 02:13:17 GMT, SeongJae Park <sj@kernel=2Eorg> wrote:
->On Thu, 19 Mar 2026 15:57:40 +0000 Josh Law <objecting@objecting=2Eorg> w=
-rote:
->
->> The CLEAR_SCHEMES_TRIED_REGIONS command accesses contexts_arr[0]
->> without verifying nr_contexts >=3D 1, causing a NULL pointer dereferenc=
-e
->> when no context is configured=2E Add the missing check=2E
->
->Nice catch, thank you!
->
->Privileged users can trigger this using DAMON sysfs interface=2E  E=2Eg=
-=2E,
->
->    # cd /sys/kernel/mm/damon/admin/kdamonds/
->    # echo 1 > nr_kdamonds
->    # echo clear_schemes_tried_regions > state
->    killed
->    # dmesg
->    [=2E=2E=2E]
->    [63541=2E377604] BUG: kernel NULL pointer dereference, address: 00000=
-00000000000
->    [=2E=2E=2E]
->
->Privileged users can do anything even worse than this, but they might als=
-o do
->this by a mistake=2E
->
->So this deserves Fixes: and Cc stable=2E
->
->>
->> Signed-off-by: Josh Law <objecting@objecting=2Eorg>
->> ---
->>  mm/damon/sysfs=2Ec | 2 ++
->>  1 file changed, 2 insertions(+)
->>
->> diff --git a/mm/damon/sysfs=2Ec b/mm/damon/sysfs=2Ec
->> index b573b9d60784=2E=2E36ad2e8956c9 100644
->> --- a/mm/damon/sysfs=2Ec
->> +++ b/mm/damon/sysfs=2Ec
->> @@ -1769,6 +1769,8 @@ static int damon_sysfs_handle_cmd(enum damon_sysf=
-s_cmd cmd,
->>       case DAMON_SYSFS_CMD_UPDATE_SCHEMES_TRIED_REGIONS:
->>               return damon_sysfs_update_schemes_tried_regions(kdamond, =
-false);
->>       case DAMON_SYSFS_CMD_CLEAR_SCHEMES_TRIED_REGIONS:
->> +             if (kdamond->contexts->nr !=3D 1)
->> +                     return -EINVAL;
->>               return damon_sysfs_schemes_clear_regions(
->>                       kdamond->contexts->contexts_arr[0]->schemes);
->>       case DAMON_SYSFS_CMD_UPDATE_SCHEMES_EFFECTIVE_QUOTAS:
->> --
->> 2=2E34=2E1
->
->So this patch looks good as an individual fix for the individual bug, but=
-=2E=2E=2E
->
->Sashiko commented=2E
->
-># review url: https://sashiko=2Edev/#/patchset/20260319155742=2E186627-3-=
-objecting@objecting=2Eorg
->
->: Does this missing check also affect other manual commands?
->:
->: If a user writes UPDATE_SCHEMES_STATS, UPDATE_SCHEMES_EFFECTIVE_QUOTAS,
->: or UPDATE_TUNED_INTERVALS to the state file after setting nr_contexts
->: to 0, damon_sysfs_handle_cmd() queues the corresponding callback via
->: damon_sysfs_damon_call()=2E
->:
->: When the kdamond thread executes the callback, it appears functions lik=
-e
->: damon_sysfs_upd_schemes_stats() access contexts_arr[0] without verifyin=
-g
->: contexts->nr:
->:
->: static int damon_sysfs_upd_schemes_stats(void *data)
->: {
->:         struct damon_sysfs_kdamond *kdamond =3D data;
->:         struct damon_ctx *ctx =3D kdamond->damon_ctx;
->:
->:         damon_sysfs_schemes_update_stats(
->:                         kdamond->contexts->contexts_arr[0]->schemes, ct=
-x);
->:         return 0;
->: }
->:
->: Could this result in a similar NULL pointer dereference if these comman=
-ds
->: are triggered while no context is configured?
->
->Sashiko is correct=2E  Privileged users can trigger the issues like below=
-=2E
->
-># damo start
-># cd /sys/kernel/mm/damon/admin/kdamonds/0
-># echo 0 > contexts/nr_contexts
-># echo update_schemes_stats > state
-># echo update_schemes_effective_quotas > state
-># echo update_tuned_intervals > state
->
->Not necessarily blocker of this patch, but seems all the issues are in a =
-same
->category=2E  The third patch of this series is also fixing one of the cat=
-egory
->bugs=2E  How about fixing all at once by checking kdamond->contexts->nr a=
-t the
->beginning of damon_sysfs_handle_cmd(), like below?
->
->--- a/mm/damon/sysfs=2Ec
->+++ b/mm/damon/sysfs=2Ec
->@@ -2404,6 +2404,9 @@ static int damon_sysfs_update_schemes_tried_regions=
-(
-> static int damon_sysfs_handle_cmd(enum damon_sysfs_cmd cmd,
->                struct damon_sysfs_kdamond *kdamond)
-> {
->+       if (cmd !=3D DAMON_SYSFS_CMD_OFF && kdamond->contexts->nr !=3D 1)
->+               return -EINVAL;
->+
->        switch (cmd) {
->        case DAMON_SYSFS_CMD_ON:
->                return damon_sysfs_turn_damon_on(kdamond);
->
->If we pick this, Fixes: would be deserve to the oldest buggy commit that
->introduced the first bug of this category=2E  It is indeed quite old=2E
->
->Fixes: 0ac32b8affb5 ("mm/damon/sysfs: support DAMOS stats")
->Cc: <stable@vger=2Ekernel=2Eorg> # 5=2E18=2Ex
->
->
->Thanks,
->SJ
+Although these results are based on a simulated kernel module test
+environment [1], they indicate a clear instruction-level optimization.
 
+[1] https://github.com/aethernet65535/damon-hot-score-fls-optimize/blob/master/test-kernel-module/fls.c
 
+Signed-off-by: Liew Rui Yan <aethernet65535@gmail.com>
+---
+Note on testing methodology:
+I attempted to measure the performance directly within the kernel using
+bpftrace, perf, and ktime inside damon_hot_score(). However, the results
+were highly unstable (ktime), and in some cases (perf/bpftrace) the
+function was difficult to trace reliably (likely due to my own tracing
+limitations).
 
-Hello, did you give Reviewed by you? Or not=2E=2E
+Despite the instability of in-kernel ktime measurements, one thing
+remained consistent: the fls-based version significantly improves the
+"long tail" latency compared to the for-loop.
 
-V/R
+Test results from the simulated module:
+- fls-based:
+    DAMON Perf Test: Starting 10000000 iterations
+    =============================================
+     Total Iterations : 10000000
+     Average Latency  : 1 ns
+     P95 Latency      : 40 ns
+     P99 Latency      : 41 ns
+    ---------------------------------------------
+     Range (ns)      | Count    | Percent
+    ---------------------------------------------
+     20-39           | 3522000  |   35%
+     40-59           | 6478000  |   64%
+     60-79           | 0        |    0%
+    =============================================
 
+- for-loop:
+    DAMON Perf Test: Starting 10000000 iterations
+    =============================================
+     Total Iterations : 10000000
+     Average Latency  : 9 ns
+     P95 Latency      : 51 ns
+     P99 Latency      : 60 ns
+    ---------------------------------------------
+     Range (ns)      | Count    | Percent
+    ---------------------------------------------
+     20-39           | 0        |    0%
+     40-59           | 9894000  |   98%
+     60-79           | 98000    |    0%
+    =============================================
 
-Josh Law
+Full raw benchmark results can be found at [2].
+
+If anyone could suggest a more robust way to profile this specific
+function within live DAMON context, I would greatly appreciate the
+guidance.
+
+[2] https://github.com/aethernet65535/damon-hot-score-fls-optimize/tree/master/result-raw
+
+ mm/damon/ops-common.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
+
+diff --git a/mm/damon/ops-common.c b/mm/damon/ops-common.c
+index 8c6d613425c1..0294de61a23a 100644
+--- a/mm/damon/ops-common.c
++++ b/mm/damon/ops-common.c
+@@ -117,9 +117,7 @@ int damon_hot_score(struct damon_ctx *c, struct damon_region *r,
+ 		damon_max_nr_accesses(&c->attrs);
+ 
+ 	age_in_sec = (unsigned long)r->age * c->attrs.aggr_interval / 1000000;
+-	for (age_in_log = 0; age_in_log < DAMON_MAX_AGE_IN_LOG && age_in_sec;
+-			age_in_log++, age_in_sec >>= 1)
+-		;
++	age_in_log = min_t(int, fls(age_in_sec), DAMON_MAX_AGE_IN_LOG);
+ 
+ 	/* If frequency is 0, higher age means it's colder */
+ 	if (freq_subscore == 0)
+-- 
+2.53.0
+
