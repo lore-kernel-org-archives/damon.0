@@ -1,43 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9936E383C7C;
-	Fri, 20 Mar 2026 14:45:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DABF03C5DC2;
+	Fri, 20 Mar 2026 14:47:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774017933; cv=none; b=M71b9hBfzqLjWy239k8O5Dfo5B4SL8u3+bhB1UfcUR9I83hyFcM8W5MMbVAkZuypsj7k4XLIIjNsBIWEnvgahQL1Bn4OSpwLWhXHCLE41xDKy970ZE0ZQXQZpA8YP9hqF1Nt8K/MVAUhCoESot6LJpd9CzcyggjN32nEig/jYVM=
+	t=1774018062; cv=none; b=ktuQxtlZEOI0eebT79MQZO75sjEEEEw7/owidkKAY8UKDaBD8OMwKbSemmtZP+hJ/ODKnfvMyUgOksR7oYLDTpdO+mxpNAQyufdSnlxyPZXi9oUcmFfuzI7Y5oiuCderqjs1II1a4nsiJMV0Ibmhy/msFLMX0lItZaqhwvhUGW4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774017933; c=relaxed/simple;
-	bh=myZR/UnlE+SI0oy9BRK0X+Y9scyat+qDRsNLHUTyFWg=;
+	s=arc-20240116; t=1774018062; c=relaxed/simple;
+	bh=xJo2T4vc+YcK0Zp0uhjPMvQz9+xZATwcssrwN2pYBAA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J81MqJ4pjzT00J8syCggWX19rY8SG0T8VdIm+AJVR6FrpPHBfR9cQpnlYVboR7mHUlgiePI0zldY0z7Ilr+mUkoLOdck4WWO79L8tFBc8+K0k8zpg8e1bmy2Oroswj4OYOmMSztY8hONvTb0Q1MFlE04gUdYPNOITKmM8N9LsdA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Unnq69Ql; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SnT/Iqn+C+a7B//cQM6vTjqPjg19113Vun63N/J1Nhsp6wfTyl0FCoqW2lkpoXSZjEyzFMXJ9ouZmgXSCBNsvVunNXNe3scOzz1z4RJavk4RrxBzXdWO+Zg7oRuC6QwJv6jbgNELhHu/ic2IQOiy3uHEIT1WzuKXY+cwuPXf4iE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UnBL06xQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Unnq69Ql"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2451FC4CEF7;
-	Fri, 20 Mar 2026 14:45:33 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UnBL06xQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C7B8C4CEF7;
+	Fri, 20 Mar 2026 14:47:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1774017933;
-	bh=myZR/UnlE+SI0oy9BRK0X+Y9scyat+qDRsNLHUTyFWg=;
+	s=k20201202; t=1774018062;
+	bh=xJo2T4vc+YcK0Zp0uhjPMvQz9+xZATwcssrwN2pYBAA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Unnq69QlXqH2oNBMdgOndbbuJ58+x6JSFqTk9uQ5zb89qOF3njkhcNNjP9kWH+4ld
-	 ER+pquzrTBUyXfL0XtbdK23k4XZTfLw24qqTlJVWB3tqgpoju6RRUjjCqibSy59Rv+
-	 RoyH+sof7UukWsTxLUa0g7CCu7l2aq28AjIYyWoiIyI78nl0f0/Hyj0i4rYd5ytL/K
-	 DBzQhCHFIaHNo7MZgs+d5R6PTQDNd5Bh2Zn/G1sG439Lt2cAnZjXSOXc/eGI0DbhWw
-	 Pjy+kLZcHDB/+ij0Cba1zBo7wMa+UDIViAFIYfDbWPmw87NL7A/gBWJcz/wzjFkelD
-	 UIJFloVOLqhqw==
+	b=UnBL06xQzPc5XvlnrVn4NDvd8X+YFlTc/+xOq8Y+z/xBCzb4FFIy7PGInTy12pQGz
+	 RfWdT6uiyt921qgEvimwLWKgRxVkX2SXGctJ93xh7hlfoILxeer9vvh+x3+Lobt/r7
+	 v61g4JwXjHVsyRXefeaOtLHXGfKpvxDV95pKgrXvOgwvvNNHasnXdoa6RewHVaoLiT
+	 F9JjfVfnCKwjkHAK4dIKdxhWc6P6qZkrG7jMb6ix3GpK0YFnktSyGbQFCqe1OSdKhi
+	 sbVeGWBWdlQg5wpm+MQNKllgT4ZPmc6E5Bii7xz7UBX47nFQVfkMrCFElumW+CQl6H
+	 5gh1uFWBtiCBg==
 From: SeongJae Park <sj@kernel.org>
-To: Liew Rui Yan <aethernet65535@gmail.com>
+To: Josh Law <objecting@objecting.org>
 Cc: SeongJae Park <sj@kernel.org>,
-	linux-mm@kvack.org,
+	akpm@linux-foundation.org,
 	damon@lists.linux.dev,
-	linux-doc@vger.kernel.org,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: Re: [PATCH] Docs/mm/damon: document min_nr_regions constraint and rationale
-Date: Fri, 20 Mar 2026 07:45:29 -0700
-Message-ID: <20260320144530.91737-1-sj@kernel.org>
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org,
+	stable@vger.kernel.org
+Subject: Re: [PATCH 2/4] mm/damon/sysfs: check contexts->nr before clear_schemes_tried_regions
+Date: Fri, 20 Mar 2026 07:47:40 -0700
+Message-ID: <20260320144741.91848-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260320052428.213230-1-aethernet65535@gmail.com>
+In-Reply-To: <8F30B2A1-240C-43D3-B756-20E327F5BCF3@objecting.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -47,35 +48,130 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hello Liew,
+On Fri, 20 Mar 2026 07:06:48 +0000 Josh Law <objecting@objecting.org> wrote:
 
+> 
+> 
+> On 20 March 2026 02:13:17 GMT, SeongJae Park <sj@kernel.org> wrote:
+> >On Thu, 19 Mar 2026 15:57:40 +0000 Josh Law <objecting@objecting.org> wrote:
+> >
+> >> The CLEAR_SCHEMES_TRIED_REGIONS command accesses contexts_arr[0]
+> >> without verifying nr_contexts >= 1, causing a NULL pointer dereference
+> >> when no context is configured. Add the missing check.
+> >
+> >Nice catch, thank you!
+> >
+> >Privileged users can trigger this using DAMON sysfs interface.  E.g.,
+> >
+> >    # cd /sys/kernel/mm/damon/admin/kdamonds/
+> >    # echo 1 > nr_kdamonds
+> >    # echo clear_schemes_tried_regions > state
+> >    killed
+> >    # dmesg
+> >    [...]
+> >    [63541.377604] BUG: kernel NULL pointer dereference, address: 0000000000000000
+> >    [...]
+> >
+> >Privileged users can do anything even worse than this, but they might also do
+> >this by a mistake.
+> >
+> >So this deserves Fixes: and Cc stable.
+> >
+> >>
+> >> Signed-off-by: Josh Law <objecting@objecting.org>
+> >> ---
+> >>  mm/damon/sysfs.c | 2 ++
+> >>  1 file changed, 2 insertions(+)
+> >>
+> >> diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
+> >> index b573b9d60784..36ad2e8956c9 100644
+> >> --- a/mm/damon/sysfs.c
+> >> +++ b/mm/damon/sysfs.c
+> >> @@ -1769,6 +1769,8 @@ static int damon_sysfs_handle_cmd(enum damon_sysfs_cmd cmd,
+> >>       case DAMON_SYSFS_CMD_UPDATE_SCHEMES_TRIED_REGIONS:
+> >>               return damon_sysfs_update_schemes_tried_regions(kdamond, false);
+> >>       case DAMON_SYSFS_CMD_CLEAR_SCHEMES_TRIED_REGIONS:
+> >> +             if (kdamond->contexts->nr != 1)
+> >> +                     return -EINVAL;
+> >>               return damon_sysfs_schemes_clear_regions(
+> >>                       kdamond->contexts->contexts_arr[0]->schemes);
+> >>       case DAMON_SYSFS_CMD_UPDATE_SCHEMES_EFFECTIVE_QUOTAS:
+> >> --
+> >> 2.34.1
+> >
+> >So this patch looks good as an individual fix for the individual bug, but...
+> >
+> >Sashiko commented.
+> >
+> ># review url: https://sashiko.dev/#/patchset/20260319155742.186627-3-objecting@objecting.org
+> >
+> >: Does this missing check also affect other manual commands?
+> >:
+> >: If a user writes UPDATE_SCHEMES_STATS, UPDATE_SCHEMES_EFFECTIVE_QUOTAS,
+> >: or UPDATE_TUNED_INTERVALS to the state file after setting nr_contexts
+> >: to 0, damon_sysfs_handle_cmd() queues the corresponding callback via
+> >: damon_sysfs_damon_call().
+> >:
+> >: When the kdamond thread executes the callback, it appears functions like
+> >: damon_sysfs_upd_schemes_stats() access contexts_arr[0] without verifying
+> >: contexts->nr:
+> >:
+> >: static int damon_sysfs_upd_schemes_stats(void *data)
+> >: {
+> >:         struct damon_sysfs_kdamond *kdamond = data;
+> >:         struct damon_ctx *ctx = kdamond->damon_ctx;
+> >:
+> >:         damon_sysfs_schemes_update_stats(
+> >:                         kdamond->contexts->contexts_arr[0]->schemes, ctx);
+> >:         return 0;
+> >: }
+> >:
+> >: Could this result in a similar NULL pointer dereference if these commands
+> >: are triggered while no context is configured?
+> >
+> >Sashiko is correct.  Privileged users can trigger the issues like below.
+> >
+> ># damo start
+> ># cd /sys/kernel/mm/damon/admin/kdamonds/0
+> ># echo 0 > contexts/nr_contexts
+> ># echo update_schemes_stats > state
+> ># echo update_schemes_effective_quotas > state
+> ># echo update_tuned_intervals > state
+> >
+> >Not necessarily blocker of this patch, but seems all the issues are in a same
+> >category.  The third patch of this series is also fixing one of the category
+> >bugs.  How about fixing all at once by checking kdamond->contexts->nr at the
+> >beginning of damon_sysfs_handle_cmd(), like below?
+> >
+> >--- a/mm/damon/sysfs.c
+> >+++ b/mm/damon/sysfs.c
+> >@@ -2404,6 +2404,9 @@ static int damon_sysfs_update_schemes_tried_regions(
+> > static int damon_sysfs_handle_cmd(enum damon_sysfs_cmd cmd,
+> >                struct damon_sysfs_kdamond *kdamond)
+> > {
+> >+       if (cmd != DAMON_SYSFS_CMD_OFF && kdamond->contexts->nr != 1)
+> >+               return -EINVAL;
+> >+
+> >        switch (cmd) {
+> >        case DAMON_SYSFS_CMD_ON:
+> >                return damon_sysfs_turn_damon_on(kdamond);
+> >
+> >If we pick this, Fixes: would be deserve to the oldest buggy commit that
+> >introduced the first bug of this category.  It is indeed quite old.
+> >
+> >Fixes: 0ac32b8affb5 ("mm/damon/sysfs: support DAMOS stats")
+> >Cc: <stable@vger.kernel.org> # 5.18.x
+> >
+> >
+> >Thanks,
+> >SJ
+> 
+> 
+> 
+> Hello, did you give Reviewed by you? Or not..
 
-Thank you for this patch!
-
-On Fri, 20 Mar 2026 13:24:28 +0800 Liew Rui Yan <aethernet65535@gmail.com> wrote:
-
-> The current DAMON implementation requires 'min_nr_regions' to be at
-> least 3. However, this constraint is not explicitly documented in the
-> admin-guide documents, nor is its design rationale explained in the
-> design document.
-> 
-> Add a section in design.rst to explain the rationale: the virtual
-> address space monitoring design needs to handle at least three regions
-> to accommodate two large unmapped areas. While this is specific to
-> 'vaddr', DAMON currently enforces it across all operation sets for
-> consistency.
-> 
-> Also update reclaim.rst and lru_sort.rst by adding cross-references to
-> this constraint within their respective 'min_nr_regions' parameter
-> description sections, ensuring users are aware of the lower bound.
-> 
-> This change is motivated from a recent discussion [1].
-> 
-> [1] https://lore.kernel.org/damon/20260319151528.86490-1-sj@kernel.org/T/#t
-> 
-> Signed-off-by: Liew Rui Yan <aethernet65535@gmail.com>
-
-Reviewed-by: SeongJae Park <sj@kernel.org>
+Are you meaning Reviewed-by: tag?  If so, no, not yet.  I want to get your
+answer to above question first.  Could you please answer?
 
 
 Thanks,
