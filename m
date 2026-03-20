@@ -1,55 +1,79 @@
-Received: from sender-of-o57.zoho.eu (sender-of-o57.zoho.eu [136.143.169.57])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yx1-f66.google.com (mail-yx1-f66.google.com [74.125.224.66])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4143326B755
-	for <damon@lists.linux.dev>; Fri, 20 Mar 2026 16:36:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.169.57
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774024569; cv=pass; b=KoPpEktKjcALei32rnGZCZ2HIkOQlWKco6DGvTTtujf7XMIsO/6ghZwZs43fHO6mMC1uXctiA9IU+GHNMFAbtl/4j+E0fhYWX9qpT9rPiXUyFQFmQJgk+y4lPzSUNu7rkn3qefJHtkWZpzWzAiRX9B0dtl45EEOvkBt3YNM5a8U=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774024569; c=relaxed/simple;
-	bh=cgiBTMTJREfr9NZlbEJek9bHXIpKX6CcaXj/YeMtBG8=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=KhdwsUrNfoG4rrPbLom3KyCYQwEUCFZPE8Jpsf1AMDNp0vp1hgKgbgikogaCi6yq47Pw6R1G6nFGA6Hz95Xf2+ZiVQGgISQVEhZ1D1f3Kn1MBuIADpAWucrw+q88q2hdNvXxR3xLbP4nj7dIzlTg6YZtq0gjBJR1qwY2G7nsbxk=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=objecting.org; spf=pass smtp.mailfrom=objecting.org; dkim=pass (1024-bit key) header.d=objecting.org header.i=objecting@objecting.org header.b=XWOS+2BX; arc=pass smtp.client-ip=136.143.169.57
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=objecting.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=objecting.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 577893264F2
+	for <damon@lists.linux.dev>; Fri, 20 Mar 2026 19:05:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.66
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1774033502; cv=none; b=B8Jyi02Cg0BmEA5bO1qFl1L5tSAwMt+5nsbzm0fn8i43XY5t32VmtUFjoEv/fm/hrhyNT6RSWMV8sqSa1bYsLgZzLAISeecv8kis1L0CZxdn/KR81WVI/TdRMdjiF3grdZV2/sFXW2D1wVapzV+kiikHWPz/MdhLyiFkjlxUnJY=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1774033502; c=relaxed/simple;
+	bh=38WZSCo5lv+k+5ZznusrVk4MfUht3WxQ2DgEfRCxPzM=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=DfutUjTsygXUn8GA2ABIYRop41kzVPrPOp1F01TeA6N99YiZd8ev7qDCpHFEFE4iPW05od4rtRwPO3QAtgsmU89bFsPnQZKgDddx7vs0iAx+jZDz4+jijp5zw5kY/WHjDh88Fbkrm92EtyBiYLWD53cJim3Nvz1UGod8DHebCq4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Y0A3OHK3; arc=none smtp.client-ip=74.125.224.66
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=objecting.org header.i=objecting@objecting.org header.b="XWOS+2BX"
-ARC-Seal: i=1; a=rsa-sha256; t=1774024565; cv=none; 
-	d=zohomail.eu; s=zohoarc; 
-	b=fbWEpYSnPQTKtwmxLGF8DiucdelmuuJUj9/4VuCbp+XgAewF4l+1KCKx8Fkzv67o8Ls8PTpkl+9z2CAXKZGm1TAoYBA3N8M8wHT+0RZUcXZR057gnHceIDQPGFL9qVdsja79K47phyi4xWEzAn5d5oxH41liILMxCkpScjDqh3Q=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.eu; s=zohoarc; 
-	t=1774024565; h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=ZOAuFTk2fYZ7Opzh+m6bCHOI9jrLB+RqVBg8xOebPgo=; 
-	b=Q2yYD6NbDrV08oAoO5q/ZU7Dfusf9m7lEJVhMZZ1xji9eC29XTJjQJfMAGaGEWcpeO5khPUxAsvSUnBZ+S/L2LcTip3c1W/DVmhGcOOqOMucd6suqFkr5fHOzsp6S2jy2YfSXwq9lfitGHNvNcD0NjUeyje/fFA389pukhH0pCI=
-ARC-Authentication-Results: i=1; mx.zohomail.eu;
-	dkim=pass  header.i=objecting.org;
-	spf=pass  smtp.mailfrom=objecting@objecting.org;
-	dmarc=pass header.from=<objecting@objecting.org>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1774024565;
-	s=zmail; d=objecting.org; i=objecting@objecting.org;
-	h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-Id:Message-Id:In-Reply-To:References:MIME-Version:Content-Transfer-Encoding:Reply-To;
-	bh=ZOAuFTk2fYZ7Opzh+m6bCHOI9jrLB+RqVBg8xOebPgo=;
-	b=XWOS+2BXKdlYAbPn9t42aq7nKVQnYSzg/WNvGmRcVR50uBMfSETecgYHhS0XdSN6
-	80u4Ki2v/rnDLWAfENyt73PNk+yOi41535uTwU78G+HpMfkZ7SPF0B6MzofZu3DGI/S
-	Ur2DmBgXu9eWcivL358u1yZOF621JYGDkormrTOo=
-Received: by mx.zoho.eu with SMTPS id 1774024562740540.8427781838304;
-	Fri, 20 Mar 2026 17:36:02 +0100 (CET)
-From: Josh Law <objecting@objecting.org>
-To: SeongJae Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Cc: damon@lists.linux.dev,
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Y0A3OHK3"
+Received: by mail-yx1-f66.google.com with SMTP id 956f58d0204a3-64c9a6d7f81so898293d50.3
+        for <damon@lists.linux.dev>; Fri, 20 Mar 2026 12:05:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1774033499; x=1774638299; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=hrbpczjmQlWdU+8xGkQY54294j65e0aZRYcB8uO4mU0=;
+        b=Y0A3OHK3iD5qBufSN8IP4gMRM2KpuEJgax7GLgJ+63aAj7zSQXZtv+4YMdbKo9OImm
+         FHqsyFVR119/zLnRKLUWWjUVv3vg9xKcQg0eO5I11Dcuob2b+Lvh0Z7DowJX0V3p/w1h
+         1tWVRVi2yya84Qms55wfImH99Gle1elTG/9j6MNC6gFRkUq1PtzSo2jIylBLzdxXRYde
+         sSDzLeK8z3kvXmGrAatc/IVkuzNUBihj4pCNy6zgA1ub16RJg5ynQSRvwYPBAc0CRdcT
+         aHjEHUBLnYGXtrNTGYLYUToVu9dJIl3G8CXf02Tmf2ZLByU5Put/SIwOGEYplZEaZ6BG
+         xLsw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1774033499; x=1774638299;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=hrbpczjmQlWdU+8xGkQY54294j65e0aZRYcB8uO4mU0=;
+        b=QoD0AFcK2S/2pi7GHWRVaMXx7es+1Nuy+9K3hsmFg+bEruq6/mKkUR7sBzp4CoNTD8
+         kDJwNFw1SA5ft8dOpl+guIoXrmOtADcOqZEpf5FOVgladqGLu6eweDK49Wd2LVvGO/9o
+         weoLxPcQgSM7Z+qfOcTgZ3aXhdRx/UMv6lHX3ndetzzIJuoNPcgKVU+wzVPvkFRb6GAA
+         Wrtl0ECQaBa3ZAUYqYI5ny142J5SdkjBggs1EEDsrA+KYnaji8OQFb9mY5Nuqp0y7uQX
+         lihk7GWydxlIXmkQPeWCseTdhydwE1HB6G34d45wHW41Urw476C0QbYjPw+ogQKJuPSz
+         8rSg==
+X-Forwarded-Encrypted: i=1; AJvYcCXqz+Gw/lucvh4/CxqJdaOZv8UyDCDDheMJ34FnM9z/pRrR7m7TC2EnULR8NTFm5cwVkp3PIg==@lists.linux.dev
+X-Gm-Message-State: AOJu0YxnRGu05ic2JbT/jcaal7fTChOM3KZujxT1nvBZRSY8tEZEo41C
+	IeQxeRiHhZ2gE0VU+O/cbiP0w4BnCYmAlhc/Vwwq7FPafmyoL1NL5XE=
+X-Gm-Gg: ATEYQzyo16LVo/yLgqXL06yNK7qQ3W/nhvaMLfacwxmNiaywMthu6WIt/dN5UFW6xPo
+	fXl+8B6XcAz5jFPnCe8WuZxU4KfnPQzrVA2LdT7gMemYGgCtyP+LCT5JCGGhlJwuRbJjiMoQpXd
+	iqukjMBFmtidwOwqN+0FI6eEFMmlIixI930gL3IfmQ+ZdFW57ehF80bju6nXCyWBZMcedp/bQ70
+	cRm0yTMDm9TCpJ2j6EsdE2rLAC9qpvbeGW9HOXdypVFrEnSEBnVgmbP6mxg8gbpvOm735h94DI5
+	7j7arjrCFSsLopiyToHmdpFBJnXvBE2sb9EhFcPZPp7KSh+JiKPBfm02C7HkXPewR9r1l1kgTDs
+	fYdOZ4sa7MJNY5wdxYMRAzIhE3ehk/Ur7rvHnp3175CjLERHAjInvml747Rv0dNLhCtdAUvp36e
+	twOT+LVRAw4VaeGEvKpr+uKaW0PtcO1SGJRlpHPfpUO+xgZ2ZkAU2YacYQCPdwhxNqJ/qz4k/RN
+	Q==
+X-Received: by 2002:a05:690e:16e4:b0:649:e501:21a6 with SMTP id 956f58d0204a3-64eaa6b8bdbmr3383035d50.16.1774033499004;
+        Fri, 20 Mar 2026 12:04:59 -0700 (PDT)
+Received: from localhost (23-116-43-216.lightspeed.sntcca.sbcglobal.net. [23.116.43.216])
+        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-64eabecf140sm1983409d50.17.2026.03.20.12.04.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 20 Mar 2026 12:04:58 -0700 (PDT)
+From: Ravi Jonnalagadda <ravis.opensrc@gmail.com>
+To: sj@kernel.org,
+	damon@lists.linux.dev,
 	linux-mm@kvack.org,
 	linux-kernel@vger.kernel.org,
-	Josh Law <objecting@objecting.org>,
-	stable@vger.kernel.org
-Subject: [PATCH v2 3/3] mm/damon/sysfs: check contexts->nr in repeat_call_fn
-Date: Fri, 20 Mar 2026 16:35:59 +0000
-Message-Id: <20260320163559.178101-3-objecting@objecting.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260320163559.178101-1-objecting@objecting.org>
-References: <20260320163559.178101-1-objecting@objecting.org>
+	linux-doc@vger.kernel.org
+Cc: akpm@linux-foundation.org,
+	corbet@lwn.net,
+	bijan311@gmail.com,
+	ajayjoshi@micron.com,
+	honggyu.kim@sk.com,
+	yunjeong.mun@sk.com,
+	ravis.opensrc@gmail.com
+Subject: [RFC PATCH v4 0/1] mm/damon: add node_eligible_mem_bp and node_ineligible_mem_bp goal metrics
+Date: Fri, 20 Mar 2026 12:04:52 -0700
+Message-ID: <20260320190453.1430-1-ravis.opensrc@gmail.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -57,40 +81,99 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-ZohoMailClient: External
 
-damon_sysfs_repeat_call_fn() calls damon_sysfs_upd_tuned_intervals(),
-damon_sysfs_upd_schemes_stats(), and
-damon_sysfs_upd_schemes_effective_quotas() without checking
-contexts->nr.  If nr_contexts is set to 0 via sysfs while DAMON is
-running, these functions dereference contexts_arr[0] and cause a NULL
-pointer dereference.  Add the missing check.
+This patch introduces two new DAMON quota goal metrics for controlling
+memory distribution in heterogeneous memory systems (e.g., DRAM and CXL
+memory tiering) using physical address (PA) mode monitoring.
 
-Fixes: d809a7c64ba8 ("mm/damon/sysfs: implement refresh_ms file internal work")
-Cc: <stable@vger.kernel.org> # 6.17.x
-Signed-off-by: Josh Law <objecting@objecting.org>
-Reviewed-by: SeongJae Park <sj@kernel.org>
----
- mm/damon/sysfs.c | 3 +++
- 1 file changed, 3 insertions(+)
+v3: https://lore.kernel.org/linux-mm/20260223123232.12851-1-ravis.opensrc@gmail.com/
 
-diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
-index ddc30586c0e6..6a44a2f3d8fc 100644
---- a/mm/damon/sysfs.c
-+++ b/mm/damon/sysfs.c
-@@ -1620,9 +1620,12 @@ static int damon_sysfs_repeat_call_fn(void *data)
- 
- 	if (!mutex_trylock(&damon_sysfs_lock))
- 		return 0;
-+	if (sysfs_kdamond->contexts->nr != 1)
-+		goto out;
- 	damon_sysfs_upd_tuned_intervals(sysfs_kdamond);
- 	damon_sysfs_upd_schemes_stats(sysfs_kdamond);
- 	damon_sysfs_upd_schemes_effective_quotas(sysfs_kdamond);
-+out:
- 	mutex_unlock(&damon_sysfs_lock);
- 	return 0;
- }
+Changes since v3:
+=================
+
+- The first two patches from v3 (goal_tuner initialization fix and
+  esz=0 quota bypass fix) are now in damon/next. This submission
+  contains only the core metrics patch, rebased on top of those fixes.
+
+- Simplified implementation: removed per-node eligible_bytes array, now
+  iterates scheme-eligible regions directly for each goal evaluation.
+
+- Handle regions crossing node boundaries: uses damon_get_folio() to
+  determine actual NUMA node placement of each folio rather than
+  assuming uniform node placement within a region.
+
+- Pass scheme pointer directly to metric calculation functions, avoiding
+  container_of() derivation from quota pointer.
+
+- Fixed 80-column wrapping issues.
+
+Background and Motivation
+=========================
+
+In heterogeneous memory systems, controlling memory distribution across
+NUMA nodes is essential for performance optimization. This patch enables
+system-wide page distribution with target-state goals like "maintain 30%
+of scheme-eligible memory on CXL" using PA-mode DAMON schemes.
+
+What These Metrics Measure
+==========================
+
+node_eligible_mem_bp:
+    scheme_eligible_bytes_on_node / total_scheme_eligible_bytes * 10000
+
+node_ineligible_mem_bp:
+    (total - scheme_eligible_bytes_on_node) / total * 10000
+
+The metrics are complementary: eligible_bp + ineligible_bp = 10000 bp.
+
+Two-Scheme Setup for Hot Page Distribution
+==========================================
+
+For maintaining 30% of hot memory on CXL (node 1):
+
+    PUSH scheme: migrate_hot from node 0 -> node 1
+      goal: node_ineligible_mem_bp, nid=0, target=3000
+      "Push hot pages out until 30% of hot memory is NOT on DRAM"
+
+    PULL scheme: migrate_hot from node 1 -> node 0
+      goal: node_eligible_mem_bp, nid=0, target=7000
+      "Pull hot pages back until 70% of hot memory IS on DRAM"
+
+The complementary goals create a feedback loop that converges to the
+target distribution.
+
+Dependencies
+============
+
+This patch is based on SJ's damon/next branch which includes the
+TEMPORAL goal tuner required for these metrics.
+
+Testing Results
+===============
+
+Functionally tested on a two-node heterogeneous memory system with DRAM
+(node 0) and CXL memory (node 1). Used PUSH+PULL scheme configuration
+with migrate_hot action to maintain a target hot memory ratio between
+the two tiers.
+
+With the TEMPORAL goal tuner, the system converges quickly to the target
+distribution. The tuner drives esz to maximum when under goal and to
+zero once the goal is met, forming a simple on/off feedback loop that
+stabilizes at the desired ratio.
+
+With the CONSIST tuner, the scheme still converges but more slowly, as
+it migrates and then throttles itself based on quota feedback. The time
+to reach the goal varies depending on workload intensity.
+
+Ravi Jonnalagadda (1):
+  mm/damon: add node_eligible_mem_bp and node_ineligible_mem_bp goal
+    metrics
+
+ include/linux/damon.h    |   6 ++
+ mm/damon/core.c          | 158 ++++++++++++++++++++++++++++++++++++---
+ mm/damon/sysfs-schemes.c |  12 +++
+ 3 files changed, 164 insertions(+), 12 deletions(-)
+
 -- 
-2.34.1
+2.43.0
 
