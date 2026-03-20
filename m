@@ -1,97 +1,202 @@
-Received: from mail-pg1-f175.google.com (mail-pg1-f175.google.com [209.85.215.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from sender-of-o57.zoho.eu (sender-of-o57.zoho.eu [136.143.169.57])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB5163016EE
-	for <damon@lists.linux.dev>; Fri, 20 Mar 2026 05:41:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.175
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773985317; cv=none; b=dv2yWSMJSxwk/ATxdlY5Pk8qHm2Hleotkf8sV9xX2l++gomUebJu1ZYAdfIZFETRMcF71FVo42v4yJ3xvMmHhyt6RFbH7xaTP93p9wQicRFOT63AajYT4SvlVY2NKmF1P3R+jpO0CdGiCl7+/VoJcToqJtH1qlelkQeSDoC8tPA=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773985317; c=relaxed/simple;
-	bh=BGYrJ0QxuzHFARnTiEidMOinf4xSTXUjL5SK4rWgNlg=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HI5KJQzFOnP+uuCS6M3ua8bzAD3XOCulJoM2SPMU4oJXj89PHDK+WC/T9C4qCDWZ5MIhgQGa6G+iPI0tQ3V4eSZgZQ9lv+hryGpV4YWL74dbFB7fVmQAx5myw+ooN04YCUV5kweaXIYrgRhu0uU3mMrsC6jgV/+aZOnqj9r0KDQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gSGxMOK9; arc=none smtp.client-ip=209.85.215.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A560355F56
+	for <damon@lists.linux.dev>; Fri, 20 Mar 2026 07:07:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.169.57
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1773990422; cv=pass; b=iLVYJhw/OstULWyD/5ChlePdPyYEserIi/wIVdwASBn0fukCQP+oORte9QQqXxtdWVjnZh9yVirtlaygQZ7VuRKqNCYnvuUUWjXsDULzEZepXAhEt3Trwo9CgQVDYnF+qI4E+1UmI748e0Cmea+biKRGT8NK0dlfGytxklw/ork=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1773990422; c=relaxed/simple;
+	bh=Y2/1U6ee1g2tI+ylgxSX4ipvzpcTSO0ejo/jam+TzfI=;
+	h=Date:From:To:CC:Subject:In-Reply-To:References:Message-ID:
+	 MIME-Version:Content-Type; b=cT8zmwOPUEHMnaEXUOHjQFATRC3+Lq/JZ65r3kgtRwqLakrXJJsWm9ZFLjaPaTdBFVdE02DX2jCUfIgePVoQPUgCysZTF6drX/0TQXN2Wzlr1WbpPLRa5UeiXeqSlce6OygLDCxHzJG3jIIpjspjkAkWlBEdEJv0v9k4zOdJdX0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=objecting.org; spf=pass smtp.mailfrom=objecting.org; dkim=pass (1024-bit key) header.d=objecting.org header.i=objecting@objecting.org header.b=NOt+Fn1o; arc=pass smtp.client-ip=136.143.169.57
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=objecting.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=objecting.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gSGxMOK9"
-Received: by mail-pg1-f175.google.com with SMTP id 41be03b00d2f7-c74280e3468so91751a12.3
-        for <damon@lists.linux.dev>; Thu, 19 Mar 2026 22:41:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773985316; x=1774590116; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=BGYrJ0QxuzHFARnTiEidMOinf4xSTXUjL5SK4rWgNlg=;
-        b=gSGxMOK9hhd07n1j3X6EjlsaDON2k49a6Cpdt/pwzRK7hk+qj/G0jM72z030b/Fc9J
-         ORy/0G5AujSO/6lQX3ngzo91gwxH+YWMfJIq289SWmLLQyz/CmGiXT5Ys+lBbUISp7JI
-         x4biSFixs2NprgRU/mqedQDPX5rFquXwKkFSWUApVk2Ph07WppACgQC3KjA6FgMXGsF/
-         AXqjia7/tTpigOULfIFkzEwq6+ofErZT7vTNUoC4HLF5zb60AQoGzziRuT5oN2VMD+nV
-         P+HnDF3MOKP5uR8mKhU8ugLIm1miVrT4tCOs5vrRPKkkNPhuCtqvwjAm5TPDbSK3lldA
-         n4BQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1773985316; x=1774590116;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=BGYrJ0QxuzHFARnTiEidMOinf4xSTXUjL5SK4rWgNlg=;
-        b=ooD0d5HQEdBtJ3gzC0oaleHierS05rpFZRJceKJgYsebvwwCfuvRKWvOU3Vd3kUJ9l
-         c7L2ogrI/HfQfSt3Le7jolJXlxica+YeD0V9rve257dDrkZhVu4ezZhmcGdlFjgFFIyB
-         AMfateGj2TsIwNdkHvfSrDLvokX9kRQ6tPTiTonlVrC0M5RIJgMtXlLR014z1E6gIsmV
-         LakErtTf6x5oWqOEM8PoCI9p1K2P3Ms8f1aGgGkBPiLRUtimYGtOS9bZ41uZGQs2G6wo
-         ps3knR6GddWVZD2HsMh30gTOziJ6bKWI5IxXQRIIBEmedBJDnz0qhBStFKbujDYl5IlP
-         6azQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWmwP7SUu/AjaT4m/Rw/V3lkb83fbwzIM/lKC9iVGFALIf0Vl+QtipVHOc/7+3f3PcQnOOrfw==@lists.linux.dev
-X-Gm-Message-State: AOJu0YxwDBEL+vlCnzccPkvaY8OxMd6magnYCcYKZAvZz+MZ+40B/Y8j
-	B5Z71J+GMB3jykFjd8t6CGaSOBNgFI9zBVe4y8UDSvkx27Z6jupVGOKS
-X-Gm-Gg: ATEYQzyvXYslOwo7mt8Ud/ulKMXHrAsyCckKnOqiJ+fhOkwD4GMaKRw1ihTlao53HoU
-	mU7y8WLgITAHnBfAu0sFzMx22lNUVsqW3ldB84COsoNE3fu8dIKcHcceGMtW5kHWfG5SPzaf8HQ
-	FbUUlGpbqa8pUC3KPp46fKpVsr3CrjxZKnQAOtkYpUdo9uCMy2P5QwrD9Kz5uNE6xVqNsnNERM6
-	bUMdgGeeoH2n74pGNRhf9XBvzqL/nAWqf16g9O9/jy1Ye4gegTnOUi39pF3QSk1uEpxi7kPPu04
-	kmeT+ez2LW/CaOv7NNxxMt9el7A+gXtQSN9e6ipjY+qvZzMGpyO2ZpAqVrXeGzNxJwto49wa+sm
-	ZW3o76XUuJ9Y8VzbviVB5AeJMWSZDvt1YpkRIsvUbWqLxCZeexG6KU9FgfexqFqRKUHY61whV3+
-	dTD4l6y2S9Ivk9+Zp6uFFaKroM1/1wNSee9oMgoQeCiVZ/nbRmpMQ=
-X-Received: by 2002:a05:6300:8b0f:b0:39b:c0b5:b0eb with SMTP id adf61e73a8af0-39bcec38ef1mr1624946637.67.1773985316235;
-        Thu, 19 Mar 2026 22:41:56 -0700 (PDT)
-Received: from celestia.taila51cc2.ts.net ([2402:1980:898b:301c:d085:a35:99e7:ffec])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c74443cc9edsm852792a12.23.2026.03.19.22.41.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 Mar 2026 22:41:55 -0700 (PDT)
-From: Liew Rui Yan <aethernet65535@gmail.com>
-To: sj@kernel.org
-Cc: aethernet65535@gmail.com,
-	damon@lists.linux.dev,
-	linux-doc@vger.kernel.org,
-	linux-mm@kvack.org
-Subject: Re: [PATCH] Docs/mm/damon: document min_nr_regions constraint and rationale
-Date: Fri, 20 Mar 2026 13:41:45 +0800
-Message-ID: <20260320054145.213945-1-aethernet65535@gmail.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260320052428.213230-1-aethernet65535@gmail.com>
-References: <20260320052428.213230-1-aethernet65535@gmail.com>
+	dkim=pass (1024-bit key) header.d=objecting.org header.i=objecting@objecting.org header.b="NOt+Fn1o"
+ARC-Seal: i=1; a=rsa-sha256; t=1773990410; cv=none; 
+	d=zohomail.eu; s=zohoarc; 
+	b=k5CguAlxOCS5xMApFoTv9ZuoSWHIB+mQjjSdXJIZ1gd55C3xW8Y0QVjukOmN/Ee4tWKV1aWCHfFMhDFdLF8JGWeQN8F1N4WmmjE6830Upv33kPQuVhhGqVXjW6Vh1g9NdzrfwFB+hpRSJ/xJo7Tk8Ea8aS4/uRzV+jPDHxrLY8g=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.eu; s=zohoarc; 
+	t=1773990410; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=Z8oK5RCe9uCIwAhJ1Bo5VEmx8tjlc5XR8v7u8F6fzXM=; 
+	b=hmrmdKrFf1z4EBOrKhyNvWubCIeqLqhyyRGhK0/fZ5fjHii6weFmUzg4tMkq9M/RUALNCm+C4NvGPvZBumVqePXQXleOsvF1ZAwWjXkicCiv5/vgo9yPD9CMbTC9FvvpVeuFQTQ9wl9yua53MHaGtdlNxdfVX4efVRI3zpxIb90=
+ARC-Authentication-Results: i=1; mx.zohomail.eu;
+	dkim=pass  header.i=objecting.org;
+	spf=pass  smtp.mailfrom=objecting@objecting.org;
+	dmarc=pass header.from=<objecting@objecting.org>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1773990410;
+	s=zmail; d=objecting.org; i=objecting@objecting.org;
+	h=Date:Date:From:From:To:To:CC:Subject:Subject:In-Reply-To:References:Message-ID:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To:Cc;
+	bh=Z8oK5RCe9uCIwAhJ1Bo5VEmx8tjlc5XR8v7u8F6fzXM=;
+	b=NOt+Fn1oBhfhfW0ws0Q/WT60QDumBxumtZ5mJgAmUPXFd+jl3VYpDLB7E43xA9A5
+	PHVwB8tL6XM4pmT2uV19RFRay6orZV9X3dZlmh/Y+eJx4pxLaZ9V1NN4rMQRktHj24R
+	wWO2XkAGYi+nFigDnR87WEKdyGUUNW58QU69MbSw=
+Received: by mx.zoho.eu with SMTPS id 1773990408143822.1742080429242;
+	Fri, 20 Mar 2026 08:06:48 +0100 (CET)
+Date: Fri, 20 Mar 2026 07:06:48 +0000
+From: Josh Law <objecting@objecting.org>
+To: SeongJae Park <sj@kernel.org>
+CC: akpm@linux-foundation.org, damon@lists.linux.dev, linux-mm@kvack.org,
+ linux-kernel@vger.kernel.org, stable@vger.kernel.org
+Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_2/4=5D_mm/damon/sysfs=3A_check_cont?=
+ =?US-ASCII?Q?exts-=3Enr_before_clear=5Fschemes=5Ftried=5Fregions?=
+User-Agent: Thunderbird for Android
+In-Reply-To: <20260320021318.1117-1-sj@kernel.org>
+References:  <20260320021318.1117-1-sj@kernel.org>
+Message-ID: <8F30B2A1-240C-43D3-B756-20E327F5BCF3@objecting.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-ZohoMailClient: External
 
-Hi SeongJae,
 
-I'm sorry for the noise; please ignore my previous reply. I accidentally
-sent the commit message instead of my intended message.
 
-What I wanted to ask is regarding tasks 3 and 4 from our earlier plan
-[1]: should I wait to start both of them later? Or is it only task 3
-that needs to wait until your fix is merged or abandoned?
+On 20 March 2026 02:13:17 GMT, SeongJae Park <sj@kernel=2Eorg> wrote:
+>On Thu, 19 Mar 2026 15:57:40 +0000 Josh Law <objecting@objecting=2Eorg> w=
+rote:
+>
+>> The CLEAR_SCHEMES_TRIED_REGIONS command accesses contexts_arr[0]
+>> without verifying nr_contexts >=3D 1, causing a NULL pointer dereferenc=
+e
+>> when no context is configured=2E Add the missing check=2E
+>
+>Nice catch, thank you!
+>
+>Privileged users can trigger this using DAMON sysfs interface=2E  E=2Eg=
+=2E,
+>
+>    # cd /sys/kernel/mm/damon/admin/kdamonds/
+>    # echo 1 > nr_kdamonds
+>    # echo clear_schemes_tried_regions > state
+>    killed
+>    # dmesg
+>    [=2E=2E=2E]
+>    [63541=2E377604] BUG: kernel NULL pointer dereference, address: 00000=
+00000000000
+>    [=2E=2E=2E]
+>
+>Privileged users can do anything even worse than this, but they might als=
+o do
+>this by a mistake=2E
+>
+>So this deserves Fixes: and Cc stable=2E
+>
+>>
+>> Signed-off-by: Josh Law <objecting@objecting=2Eorg>
+>> ---
+>>  mm/damon/sysfs=2Ec | 2 ++
+>>  1 file changed, 2 insertions(+)
+>>
+>> diff --git a/mm/damon/sysfs=2Ec b/mm/damon/sysfs=2Ec
+>> index b573b9d60784=2E=2E36ad2e8956c9 100644
+>> --- a/mm/damon/sysfs=2Ec
+>> +++ b/mm/damon/sysfs=2Ec
+>> @@ -1769,6 +1769,8 @@ static int damon_sysfs_handle_cmd(enum damon_sysf=
+s_cmd cmd,
+>>       case DAMON_SYSFS_CMD_UPDATE_SCHEMES_TRIED_REGIONS:
+>>               return damon_sysfs_update_schemes_tried_regions(kdamond, =
+false);
+>>       case DAMON_SYSFS_CMD_CLEAR_SCHEMES_TRIED_REGIONS:
+>> +             if (kdamond->contexts->nr !=3D 1)
+>> +                     return -EINVAL;
+>>               return damon_sysfs_schemes_clear_regions(
+>>                       kdamond->contexts->contexts_arr[0]->schemes);
+>>       case DAMON_SYSFS_CMD_UPDATE_SCHEMES_EFFECTIVE_QUOTAS:
+>> --
+>> 2=2E34=2E1
+>
+>So this patch looks good as an individual fix for the individual bug, but=
+=2E=2E=2E
+>
+>Sashiko commented=2E
+>
+># review url: https://sashiko=2Edev/#/patchset/20260319155742=2E186627-3-=
+objecting@objecting=2Eorg
+>
+>: Does this missing check also affect other manual commands?
+>:
+>: If a user writes UPDATE_SCHEMES_STATS, UPDATE_SCHEMES_EFFECTIVE_QUOTAS,
+>: or UPDATE_TUNED_INTERVALS to the state file after setting nr_contexts
+>: to 0, damon_sysfs_handle_cmd() queues the corresponding callback via
+>: damon_sysfs_damon_call()=2E
+>:
+>: When the kdamond thread executes the callback, it appears functions lik=
+e
+>: damon_sysfs_upd_schemes_stats() access contexts_arr[0] without verifyin=
+g
+>: contexts->nr:
+>:
+>: static int damon_sysfs_upd_schemes_stats(void *data)
+>: {
+>:         struct damon_sysfs_kdamond *kdamond =3D data;
+>:         struct damon_ctx *ctx =3D kdamond->damon_ctx;
+>:
+>:         damon_sysfs_schemes_update_stats(
+>:                         kdamond->contexts->contexts_arr[0]->schemes, ct=
+x);
+>:         return 0;
+>: }
+>:
+>: Could this result in a similar NULL pointer dereference if these comman=
+ds
+>: are triggered while no context is configured?
+>
+>Sashiko is correct=2E  Privileged users can trigger the issues like below=
+=2E
+>
+># damo start
+># cd /sys/kernel/mm/damon/admin/kdamonds/0
+># echo 0 > contexts/nr_contexts
+># echo update_schemes_stats > state
+># echo update_schemes_effective_quotas > state
+># echo update_tuned_intervals > state
+>
+>Not necessarily blocker of this patch, but seems all the issues are in a =
+same
+>category=2E  The third patch of this series is also fixing one of the cat=
+egory
+>bugs=2E  How about fixing all at once by checking kdamond->contexts->nr a=
+t the
+>beginning of damon_sysfs_handle_cmd(), like below?
+>
+>--- a/mm/damon/sysfs=2Ec
+>+++ b/mm/damon/sysfs=2Ec
+>@@ -2404,6 +2404,9 @@ static int damon_sysfs_update_schemes_tried_regions=
+(
+> static int damon_sysfs_handle_cmd(enum damon_sysfs_cmd cmd,
+>                struct damon_sysfs_kdamond *kdamond)
+> {
+>+       if (cmd !=3D DAMON_SYSFS_CMD_OFF && kdamond->contexts->nr !=3D 1)
+>+               return -EINVAL;
+>+
+>        switch (cmd) {
+>        case DAMON_SYSFS_CMD_ON:
+>                return damon_sysfs_turn_damon_on(kdamond);
+>
+>If we pick this, Fixes: would be deserve to the oldest buggy commit that
+>introduced the first bug of this category=2E  It is indeed quite old=2E
+>
+>Fixes: 0ac32b8affb5 ("mm/damon/sysfs: support DAMOS stats")
+>Cc: <stable@vger=2Ekernel=2Eorg> # 5=2E18=2Ex
+>
+>
+>Thanks,
+>SJ
 
-Also, I'm preparing to post an RFC patch for 'damon_hot_score'
-optimization soon. It aims to provide a significant performance
-improvement.
 
-[1] https://lore.kernel.org/damon/20260319151528.86490-1-sj@kernel.org/T/#t
 
-Best regards,
-Rui Yan
+Hello, did you give Reviewed by you? Or not=2E=2E
+
+V/R
+
+
+Josh Law
