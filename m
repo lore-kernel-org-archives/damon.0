@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E11230F95F;
-	Fri, 20 Mar 2026 02:15:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6BF21C2AA;
+	Fri, 20 Mar 2026 02:29:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773972911; cv=none; b=jo/9WPHPUb7fCHChTFDV+tTEI9lMBedF3AUdBOyfxGOTtOm1wiIuGyNWZ6DpvXFEzAOEB6NSwjLTE0qduXyGhJ0Qk+W4RPh1FJSYGXyb3zY9Y3b0RS51rlBW0iCEOqjb92mw8zGgkeYLrbjSITDPI8OxmLqFlSpxMf1p9V6y68g=
+	t=1773973744; cv=none; b=kqG2hO7mGg3JXE5o2y2ILhTjhf1o61O6f/kAWEgvlpHv4Wusnx8qU+tXbjdP2qK7bQlZ1pFOxmFr2mKarx1X6M9SVxdxZrCSTSNSKfTErqqkjNUoeuCQQm+omoPfOgOpJj7Db5UH2tXg0h2cjGu11EMrvKQ5y0mBZAi2W/XE6Gk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773972911; c=relaxed/simple;
-	bh=nj91OD/B3CaoGL5ifggk12G98qexNB5Stq57IP49ow8=;
+	s=arc-20240116; t=1773973744; c=relaxed/simple;
+	bh=tpGT9HIxfVro2qvhVyVnekgS2KunpsS2ClCk/o5mBAo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BITXdM7xvmX5by+lOayuY1FsN7hrBxHQzuV9Vaka9dm76BBWS4dQmIzJnFBj+rMdplolgHkeEaunvPjlCouh1wOWuU+MP0qpQqXbJ7Aq7IUCKSB0l41Aw6vWqldCeH48cOn9Rezcwiiet/uhqUfuimPw6AvRGtT0vw2IaxIH1MY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AAo3I+oZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XyId7N05CR1nRqfjWd2cp/UL0UYazPNwRUXhXniBoG5hlJ/XJ4w8sRBa0/SvH0Kjm7ycCAMOnDBiQRnUjoovI9d+iLxqcWkBI8/QR24/mopHnehkNN7D/6JKI1H9HjaXUKgqs+uLvrS8R6AdXJUgH7xqWWSmRHwN5FUtPooNiFA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aGF5eAg5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AAo3I+oZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FB85C19424;
-	Fri, 20 Mar 2026 02:15:10 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aGF5eAg5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4827AC19424;
+	Fri, 20 Mar 2026 02:29:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773972910;
-	bh=nj91OD/B3CaoGL5ifggk12G98qexNB5Stq57IP49ow8=;
+	s=k20201202; t=1773973744;
+	bh=tpGT9HIxfVro2qvhVyVnekgS2KunpsS2ClCk/o5mBAo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AAo3I+oZMyMgowz7lNyCkY/wqU57k/nnBs3kw9VYAnH9pQgm3VQMuoFsKfxXemz+s
-	 NIvzZOtGWwqsPwDFdj8n7r3sMFPrn1Qr+LVXyaZcNAGSbA8U+sFWoNfZF0zLVe10vE
-	 BhT4Sk59E8YgWH4sRiokHiN4fvoOfe94Yi5sGkDzcyFZKuvlgpypvTr2Hie06fJYA1
-	 4p0lPIh7SdYKjMnA6P7gStFCS6itCfXiVHud/OlPr4F/wk+kLdgWFmBcVreQHO+vb5
-	 gVnO+I1lXRVjH+7WqvzO/umATDqc9elbphM7G1fQSrM74th5pQabkS5GqY34CQY2vi
-	 XRl7oolIitQNQ==
+	b=aGF5eAg51gxaSCwv03t28Y1RWmgpy1R7a0mHkHkusJwftawbe4qhBII3q10sQsiUd
+	 8jad/EPLHnZ3WYpHCx5YMmSUaaVewlWiEbKsDPaw511sEWCvKXjl6LsZUsEJwmPHYg
+	 FJqAzlT4pI+ZRNGR4sJWlymKvqwLrWAbq6E+81Ej/U7B5P3gOyYfZ/iwqGxJGYcZHe
+	 rX161w6PBiLmOErh5qR97eFiN845YdWWfp1fT1sMpgtZ2TMTj+jXV18QwAymwRm++t
+	 iDaTYA6AXcgaU4fDbif9fQ0F2V57SjwCzGn6u4iCLlviHL0QDxmol7bhJWQy11Mo5r
+	 BWVvtXuXtVNRw==
 From: SeongJae Park <sj@kernel.org>
 To: Josh Law <objecting@objecting.org>
 Cc: SeongJae Park <sj@kernel.org>,
@@ -33,11 +33,11 @@ Cc: SeongJae Park <sj@kernel.org>,
 	damon@lists.linux.dev,
 	linux-mm@kvack.org,
 	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 3/4] mm/damon/sysfs: check contexts->nr in update_schemes_tried_regions
-Date: Thu, 19 Mar 2026 19:15:01 -0700
-Message-ID: <20260320021502.1218-1-sj@kernel.org>
+Subject: Re: [PATCH 1/2] mm/damon/reclaim: reject non-power-of-2 addr_unit
+Date: Thu, 19 Mar 2026 19:29:01 -0700
+Message-ID: <20260320022902.1415-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260319155742.186627-4-objecting@objecting.org>
+In-Reply-To: <20260319161620.189392-2-objecting@objecting.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -47,35 +47,79 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Thu, 19 Mar 2026 15:57:41 +0000 Josh Law <objecting@objecting.org> wrote:
+On Thu, 19 Mar 2026 16:16:19 +0000 Josh Law <objecting@objecting.org> wrote:
 
-> damon_sysfs_update_schemes_tried_regions() and its callback
-> damon_sysfs_schemes_tried_regions_upd_one() access contexts_arr[0]
-> without verifying nr_contexts >= 1. This can NULL deref if damon_ctx is
-> non-NULL (preserved after stop) but nr_contexts has been set to 0. Add
-> the missing check.
+> DAMON_MIN_REGION_SZ / addr_unit is used as min_region_sz, which is
+> passed to ALIGN() and ALIGN_DOWN() in core.c. These macros require
+> power-of-2 alignment. When addr_unit is not a power of 2 (e.g., 3),
+> the division produces a non-power-of-2 min_region_sz, causing silent
+> undefined behavior in ALIGN before damon_commit_ctx() gets a chance
+> to reject it.
 
-Nice catch.  This can be triggered by privileged users.
+But the non-power-of-2 min_region_sz makes no effect or be used anywhere unless
+damon_commit_ctx() is completed without the rejection.  So this is not a real
+issue?  Am I missing something?
 
-    # cd /sys/kernel/mm/damon/admin/kdamonds/
-    # echo 1 > nr_kdamonds
-    # echo 1 > contexts/nr_contexts
-    # echo on > state
-    # echo off > state
-    # echo 0 > contexts/nr_contexts
-    # echo update_schemes_tried_regions > state
-    # dmesg
-    [...]
-    [  222.362338] BUG: kernel NULL pointer dereference, address: 0000000000000000
-    [...]
+> 
+> Validate that addr_unit is a power of 2 in the store function so the
+> user gets immediate -EINVAL feedback instead of a silent failure.
+> 
+> Signed-off-by: Josh Law <objecting@objecting.org>
+> ---
+>  mm/damon/reclaim.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 
-Weird sequence of commands, but even privileged users can make mistakes.  So I
-think this deserves Fixes: and Cc: stable.
+And, I'm adding Sashiko comment with my comments in line.
 
-But, this is just another instance of a class of bugs that I mentioned on the
-reply to the second patch of this series.  I'd suggest fixing all bugs of the
-class with single fix, as I also mentioned on the second patch thread.  Let's
-discuss on the thread.
+# review url: https://sashiko.dev/#/patchset/20260319161620.189392-2-objecting@objecting.org
+
+> 
+> diff --git a/mm/damon/reclaim.c b/mm/damon/reclaim.c
+> index 43d76f5bed44..9b55df304e51 100644
+> --- a/mm/damon/reclaim.c
+> +++ b/mm/damon/reclaim.c
+> @@ -321,7 +321,7 @@ static int damon_reclaim_addr_unit_store(const char *val,
+>  
+>  	if (err)
+>  		return err;
+> -	if (!input_addr_unit)
+> +	if (!input_addr_unit || !is_power_of_2(input_addr_unit))
+>  		return -EINVAL;
+
+: This isn't a bug, but should <linux/log2.h> be explicitly included for the
+: is_power_of_2() macro to avoid relying on implicit transitive includes?
+
+Unless it causes a build error, I'd say no.
+
+: 
+: Does this same undefined behavior still exist in other DAMON interfaces?
+: Looking at damon_lru_sort_addr_unit_store() in mm/damon/lru_sort.c and
+: addr_unit_store() in mm/damon/sysfs.c, they appear to still only check
+: (!input_addr_unit). Could a user writing a non-power-of-2 value to the
+: lru_sort module parameters or sysfs interfaces successfully bypass validation
+: and produce a malformed min_region_sz?
+
+Josh already mentioned similar fix may needed on DAMON_LRU_SORT.  I am doubting
+if this is a real issue, though, as mentioned above.
+
+>  
+>  	addr_unit = input_addr_unit;
+
+: Since addr_unit is a global variable updated here without locks, could there
+: be a race condition when it is read during parameter application?
+: 
+: For instance, in damon_reclaim_apply_parameters() and
+: damon_lru_sort_apply_parameters(), addr_unit is read twice sequentially:
+: 
+:     param_ctx->addr_unit = addr_unit;
+:     param_ctx->min_region_sz = max(DAMON_MIN_REGION_SZ / addr_unit, 1);
+: 
+: If a concurrent write updates addr_unit between these two loads (e.g., from 2
+: to 4096), could the context's addr_unit get 2 while min_region_sz gets 1,
+: creating a mismatched configuration state? Should READ_ONCE() be used to
+: securely cache the global state into a local variable?
+
+Agree.  Nonetheless, orthogonal to this patch.  I will work on this.
 
 
 Thanks,
