@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6BF21C2AA;
-	Fri, 20 Mar 2026 02:29:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 771521AA1D2;
+	Fri, 20 Mar 2026 02:48:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773973744; cv=none; b=kqG2hO7mGg3JXE5o2y2ILhTjhf1o61O6f/kAWEgvlpHv4Wusnx8qU+tXbjdP2qK7bQlZ1pFOxmFr2mKarx1X6M9SVxdxZrCSTSNSKfTErqqkjNUoeuCQQm+omoPfOgOpJj7Db5UH2tXg0h2cjGu11EMrvKQ5y0mBZAi2W/XE6Gk=
+	t=1773974896; cv=none; b=UippSSp+SXn8ob5v7JHMvmRjNxG0Cnq5PFHlibWQNYAjvUWPNH5nuq6YWBbUrItubUoXbISLBAkyJQFongLm5LvMLRw0c7Gf43Sx5Q1fgbaj9SfrGH5UlFmlLt9pyfW/bi4R4vv0wyL49iH8WrGAPhuvpP1hLARSFVY4oNNgzos=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773973744; c=relaxed/simple;
-	bh=tpGT9HIxfVro2qvhVyVnekgS2KunpsS2ClCk/o5mBAo=;
+	s=arc-20240116; t=1773974896; c=relaxed/simple;
+	bh=/MJZfpkxLYSLTMw4fqVA5bUBJsT3txP8IPH/KELwiHA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XyId7N05CR1nRqfjWd2cp/UL0UYazPNwRUXhXniBoG5hlJ/XJ4w8sRBa0/SvH0Kjm7ycCAMOnDBiQRnUjoovI9d+iLxqcWkBI8/QR24/mopHnehkNN7D/6JKI1H9HjaXUKgqs+uLvrS8R6AdXJUgH7xqWWSmRHwN5FUtPooNiFA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aGF5eAg5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UdXOwUf493q7OQISSuf1SPVoaYoBky586QY0J2mCx5xBkvTe+4u6MykLNJa/GGWW/Mod6znpqXx/W2OBWhi579Di8pchDGR5JnhP/bqeiCngPJGST2TNgmhda60+az4nAdErmtjoiJwcDE7sm1+olautnKPrHBkYRrX79xZyyqU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=G89sXyH2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aGF5eAg5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4827AC19424;
-	Fri, 20 Mar 2026 02:29:04 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="G89sXyH2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F40ACC19425;
+	Fri, 20 Mar 2026 02:48:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773973744;
-	bh=tpGT9HIxfVro2qvhVyVnekgS2KunpsS2ClCk/o5mBAo=;
+	s=k20201202; t=1773974896;
+	bh=/MJZfpkxLYSLTMw4fqVA5bUBJsT3txP8IPH/KELwiHA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aGF5eAg51gxaSCwv03t28Y1RWmgpy1R7a0mHkHkusJwftawbe4qhBII3q10sQsiUd
-	 8jad/EPLHnZ3WYpHCx5YMmSUaaVewlWiEbKsDPaw511sEWCvKXjl6LsZUsEJwmPHYg
-	 FJqAzlT4pI+ZRNGR4sJWlymKvqwLrWAbq6E+81Ej/U7B5P3gOyYfZ/iwqGxJGYcZHe
-	 rX161w6PBiLmOErh5qR97eFiN845YdWWfp1fT1sMpgtZ2TMTj+jXV18QwAymwRm++t
-	 iDaTYA6AXcgaU4fDbif9fQ0F2V57SjwCzGn6u4iCLlviHL0QDxmol7bhJWQy11Mo5r
-	 BWVvtXuXtVNRw==
+	b=G89sXyH2fDZVtSEe3H+47YIQSJXtr8wIa23HCK5ebn/1zfTX0RypRyrkcpga9Qnvd
+	 R6eibAaBpV0yUuru4tddKxWNRXmANQZW5/mR80XMZju8EZ3hmVpgJmCbOKYz4WjYry
+	 WQF9pEvwp1CpJqfa8lHq/y7y6XUn1uUTZyXh29/CZgiXBMEhg5tnT/H3W9NH0dGsKW
+	 jYUv0LQqd13BxAd86okQORVbgGKHG0Lg5qlDZ2NEpRYW+HPlFp76GCoE0xYhcAaoDB
+	 Gbv2JdLj4MbK0srj1EZB3iMxBfvPDHeComtOzFW31PGiOUH+LFnO8qDzrf1wtJktKY
+	 TjAwQABq/0A2A==
 From: SeongJae Park <sj@kernel.org>
 To: Josh Law <objecting@objecting.org>
 Cc: SeongJae Park <sj@kernel.org>,
@@ -33,11 +33,11 @@ Cc: SeongJae Park <sj@kernel.org>,
 	damon@lists.linux.dev,
 	linux-mm@kvack.org,
 	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/2] mm/damon/reclaim: reject non-power-of-2 addr_unit
-Date: Thu, 19 Mar 2026 19:29:01 -0700
-Message-ID: <20260320022902.1415-1-sj@kernel.org>
+Subject: Re: [PATCH 2/2] mm/damon/reclaim: fix min_age_region truncation from unsigned long to unsigned int
+Date: Thu, 19 Mar 2026 19:48:13 -0700
+Message-ID: <20260320024814.1922-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260319161620.189392-2-objecting@objecting.org>
+In-Reply-To: <20260319161620.189392-3-objecting@objecting.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -47,82 +47,76 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Thu, 19 Mar 2026 16:16:19 +0000 Josh Law <objecting@objecting.org> wrote:
+On Thu, 19 Mar 2026 16:16:20 +0000 Josh Law <objecting@objecting.org> wrote:
 
-> DAMON_MIN_REGION_SZ / addr_unit is used as min_region_sz, which is
-> passed to ALIGN() and ALIGN_DOWN() in core.c. These macros require
-> power-of-2 alignment. When addr_unit is not a power of 2 (e.g., 3),
-> the division produces a non-power-of-2 min_region_sz, causing silent
-> undefined behavior in ALIGN before damon_commit_ctx() gets a chance
-> to reject it.
+> min_age / aggr_interval can exceed UINT_MAX with extreme but valid
+> module parameter values, silently truncating min_age_region and
+> lowering the cold-page age threshold below what the user intended.
+> Clamp the result to UINT_MAX to match the field's type.
 
-But the non-power-of-2 min_region_sz makes no effect or be used anywhere unless
-damon_commit_ctx() is completed without the rejection.  So this is not a real
-issue?  Am I missing something?
+I believe the issue is not making real issue in real life.  But fixing this
+makes the code cleaner to read, so I think this is better to have.  Thank you!
 
-> 
-> Validate that addr_unit is a power of 2 in the store function so the
-> user gets immediate -EINVAL feedback instead of a silent failure.
 > 
 > Signed-off-by: Josh Law <objecting@objecting.org>
+
+Reviewed-by: SeongJae Park <sj@kernel.org>
+
 > ---
->  mm/damon/reclaim.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-
-And, I'm adding Sashiko comment with my comments in line.
-
-# review url: https://sashiko.dev/#/patchset/20260319161620.189392-2-objecting@objecting.org
-
+>  mm/damon/reclaim.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
 > 
 > diff --git a/mm/damon/reclaim.c b/mm/damon/reclaim.c
-> index 43d76f5bed44..9b55df304e51 100644
+> index 9b55df304e51..303c64a56073 100644
 > --- a/mm/damon/reclaim.c
 > +++ b/mm/damon/reclaim.c
-> @@ -321,7 +321,7 @@ static int damon_reclaim_addr_unit_store(const char *val,
->  
->  	if (err)
->  		return err;
-> -	if (!input_addr_unit)
-> +	if (!input_addr_unit || !is_power_of_2(input_addr_unit))
->  		return -EINVAL;
+> @@ -170,8 +170,8 @@ static struct damos *damon_reclaim_new_scheme(void)
+>  		.min_nr_accesses = 0,
+>  		.max_nr_accesses = 0,
+>  		/* for min_age or more micro-seconds */
+> -		.min_age_region = min_age /
+> -			damon_reclaim_mon_attrs.aggr_interval,
+> +		.min_age_region = min_t(unsigned long, min_age /
+> +			damon_reclaim_mon_attrs.aggr_interval, UINT_MAX),
+>  		.max_age_region = UINT_MAX,
+>  	};
 
-: This isn't a bug, but should <linux/log2.h> be explicitly included for the
-: is_power_of_2() macro to avoid relying on implicit transitive includes?
+Sashiko comment.
+# review url: https://sashiko.dev/#/patchset/20260319161620.189392-3-objecting@objecting.org
 
-Unless it causes a build error, I'd say no.
+: Could direct access to damon_reclaim_mon_attrs.aggr_interval result in a
+: division by zero? If a user writes 0 to the module parameter concurrently via
+: sysfs between the validation step and this division, it appears the interval
+: could be zero here.
+
+Makes sense, but orthogonal to this patch.  I will work on this.
 
 : 
-: Does this same undefined behavior still exist in other DAMON interfaces?
-: Looking at damon_lru_sort_addr_unit_store() in mm/damon/lru_sort.c and
-: addr_unit_store() in mm/damon/sysfs.c, they appear to still only check
-: (!input_addr_unit). Could a user writing a non-power-of-2 value to the
-: lru_sort module parameters or sysfs interfaces successfully bypass validation
-: and produce a malformed min_region_sz?
-
-Josh already mentioned similar fix may needed on DAMON_LRU_SORT.  I am doubting
-if this is a real issue, though, as mentioned above.
-
->  
->  	addr_unit = input_addr_unit;
-
-: Since addr_unit is a global variable updated here without locks, could there
-: be a race condition when it is read during parameter application?
+: Also, since both min_age_region and max_age_region are now clamped or set to
+: UINT_MAX, the target matching condition becomes exactly UINT_MAX. In
+: mm/damon/core.c (kdamond_merge_regions), a region's age increments on each
+: interval via r->age++ without bounds checking.
 : 
-: For instance, in damon_reclaim_apply_parameters() and
-: damon_lru_sort_apply_parameters(), addr_unit is read twice sequentially:
-: 
-:     param_ctx->addr_unit = addr_unit;
-:     param_ctx->min_region_sz = max(DAMON_MIN_REGION_SZ / addr_unit, 1);
-: 
-: If a concurrent write updates addr_unit between these two loads (e.g., from 2
-: to 4096), could the context's addr_unit get 2 while min_region_sz gets 1,
-: creating a mismatched configuration state? Should READ_ONCE() be used to
-: securely cache the global state into a local variable?
+: Does this mean a region's age will hit UINT_MAX, match for a single interval,
+: and then wrap around to 0, effectively defeating the "reclaim if older than
+: X" logic?
 
-Agree.  Nonetheless, orthogonal to this patch.  I will work on this.
+Good point.  But such case may be too rare to consider...?  Anyway irrelevant
+to this patch.  I will take more time to think about this.
+
+: 
+: Finally, should similar clamping be applied to other DAMON modules? For
+: example, in mm/damon/lru_sort.c, cold_thres and hot_thres are computed from
+: unsigned long parameters but typed as unsigned int. Similarly, in
+: mm/damon/sysfs-schemes.c, damon_sysfs_mk_scheme assigns unsigned long
+: boundaries to the damos_access_pattern fields, which could also result in
+: silent truncation.
+
+Yes, similar issue may exist in DAMON_LRU_SORT.  But definitely it is
+orthogonal to this patch.  Also, as I mentioned above, I think this change is
+good to have but not really fixing real critical issue.  If a nice person send
+a patch for this, I'd appreciate.
 
 
 Thanks,
 SJ
-
-[...]
