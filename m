@@ -1,44 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAB062DCBE3;
-	Sat, 21 Mar 2026 00:56:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4272140DFB2;
+	Sat, 21 Mar 2026 01:02:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774054591; cv=none; b=r/rkyXih61kDWrWO+BcpR3XAh5lalh7vNt34o6zHI5GG3OisIyPbwP7lnhir6tcgCsOsiT8eTpAbp/2X1zCA9MkEENTLBJDNZCn6A/5FNWXta23QMJqBrW7thSq74ZBOTcZGjoUgjvPDd4Nysu9CcfLyGF/HHxnc6Vwae5+0ybw=
+	t=1774054926; cv=none; b=iCpFidn+bwJpLe+bo5joAU589DVmMPrUq76mNtZK+u5gBNLf1o6AnGpusefqytpdh2ClDqOTKekQnhQgHG7uviGDL1e4MwJcppPwuWUvHNsQT3SIwsQKbClzgVOZ84ZjccErArGoq4p+JOXyJ1NLgAk0gSYSpaNw1R5XJS1CaGY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774054591; c=relaxed/simple;
-	bh=X5LAPF88+rblE8Ugn+wC0BXFx9Vjd5ZwEootGLaNZDA=;
+	s=arc-20240116; t=1774054926; c=relaxed/simple;
+	bh=0yYB8TFfBq7hSyyiDU6/wS7/MxpcVDUgHb7ZxIWACZA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mxkqdX1si7y4AY5QGurmaYaRc0vkMU0om7lt+zrHGO31+B+LabFUbNA6AM0PSxPXQq9oPafk87OXbigahuY8D/tGS5CREcnl7kcpHz7ona1TYeaIYwXkfnkGxKLP9zxPxyZYPg+bnbDBWOZsY7E3CHXTGFudLn16wHus/c+oSRc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=t/WQDoj+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TMNnX82WFXaApxAD3PtBhpKSGsnrWv95KA8d4aNBl69/r+PGAeJ7ypUDBb745hBe2PSnl5p6/uIDRQh9MM1eESphiW6gAzJp5IuiH5UuK37iWz+dG212Vbgp8LPjdB49vkGuI9MGkwsNpLLSJ3ikLx5gfriOQBKbAcXZZ/hCyyE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DMpMpIhY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="t/WQDoj+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39195C4CEF7;
-	Sat, 21 Mar 2026 00:56:31 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DMpMpIhY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DC03C4CEF7;
+	Sat, 21 Mar 2026 01:02:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1774054591;
-	bh=X5LAPF88+rblE8Ugn+wC0BXFx9Vjd5ZwEootGLaNZDA=;
+	s=k20201202; t=1774054925;
+	bh=0yYB8TFfBq7hSyyiDU6/wS7/MxpcVDUgHb7ZxIWACZA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t/WQDoj+g2goXyVhP60iGs5t0CgWyN7V18mpDPFP6D5P2HlOh8dkKjK1BEzDFiVJ/
-	 75NDU9mFh/kOZWiAqvcTTZAQmwT88dvsTmLhl+9vNhUH5PCacQEztEMfCHqUakGkN/
-	 Bmbgp04vjr/yxrQjf1FsuEmJqSn0AmEFLsQKXr80QmIvTxhRsCOIsA26tzVLNy6hAE
-	 OJZjVx8sK6/0nFvDzjdGnOrs1BCVrXHyWdM4jdOyTmtarK3tzrKG7FariCB6PYB0Fc
-	 6g3GASyo1Gvl7aBeZYajLcYE2RTqG+I7bhdZejqGa/fBXX6y/e5UQQcTR2+7KtoZw3
-	 ustmc459kTnyg==
+	b=DMpMpIhY+oJin9kFaNMgEx8u1rCcFnwjvNXXicnucVhUrhHq92rJfctXXDBpMFS6N
+	 wiiKMbngcuEeCcNZIkz76p5WAgzgjnlKFdoG6Jw1qxKegJDCq431XVWWrkml2BJP8t
+	 YAuf+cCK/e1U2bd1CLuyIiB8dmtjHSHIcl8Xiw4F/Izdv3v+63VoRFvgR918XTieVu
+	 /elS6A9JwPTFaHxiQYSq/azAydQg1+N3Of8aLJSibOISuGAYKPtvi29QJe3MYev0S1
+	 czivg0DIhShYu/K9QgeDXNQDUiFAYVCA49XubWxPrZhRUyvBTX8hk1N2jDg3rnuA9l
+	 jkwiy35UJdR2A==
 From: SeongJae Park <sj@kernel.org>
-To: Josh Law <objecting@objecting.org>
-Cc: SeongJae Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
+To: SeongJae Park <sj@kernel.org>
+Cc: Shuah Khan <shuah@kernel.org>,
 	damon@lists.linux.dev,
-	linux-mm@kvack.org,
 	linux-kernel@vger.kernel.org,
-	stable@vger.kernel.org
-Subject: Re: [PATCH v2 2/3] mm/damon/sysfs: check contexts->nr before accessing contexts_arr[0]
-Date: Fri, 20 Mar 2026 17:56:20 -0700
-Message-ID: <20260321005622.81193-1-sj@kernel.org>
+	linux-kselftest@vger.kernel.org,
+	linux-mm@kvack.org
+Subject: Re: [RFC PATCH v2 10/10] selftets/damon/sysfs.py: pause DAMON before dumping status
+Date: Fri, 20 Mar 2026 18:02:00 -0700
+Message-ID: <20260321010201.82092-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260320163559.178101-2-objecting@objecting.org>
+In-Reply-To: <20260320154134.99740-1-sj@kernel.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -48,69 +47,188 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
+On Fri, 20 Mar 2026 08:41:33 -0700 SeongJae Park <sj@kernel.org> wrote:
 
-On Fri, 20 Mar 2026 16:35:58 +0000 Josh Law <objecting@objecting.org> wrote:
+> On Fri, 20 Mar 2026 08:29:39 -0700 SeongJae Park <sj@kernel.org> wrote:
+> 
+> > Adding Sashiko comment
+> > (https://lore.kernel.org/https://sashiko.dev/#/patchset/20260319052157.99433-11-sj@kernel.org)
+> > with ': ' line prefix, and my replies in line.
+> > 
+> > On Wed, 18 Mar 2026 22:21:53 -0700 SeongJae Park <sj@kernel.org> wrote:
+> > 
+> > > The sysfs.py test commits DAMON parameters, dump the internal DAMON
+> > > state, and show if the parameters are committed as expected using the
+> > > dumped state.  While the dumping is ongoing, DAMON is alive.  It can
+> > > make internal changes including addition and removal of regions.  It can
+> > > therefore make a race that can result in false test results.  Pause
+> > > DAMON execution during the state dumping to avoid such races.
+> > > 
+> > > Signed-off-by: SeongJae Park <sj@kernel.org>
+> > > ---
+> > >  tools/testing/selftests/damon/sysfs.py | 31 ++++++++++++++++++++++++++
+> > >  1 file changed, 31 insertions(+)
+> > > 
+> > > diff --git a/tools/testing/selftests/damon/sysfs.py b/tools/testing/selftests/damon/sysfs.py
+> > > index e6d34ba05893f..704729c7a318e 100755
+> > > --- a/tools/testing/selftests/damon/sysfs.py
+> > > +++ b/tools/testing/selftests/damon/sysfs.py
+> > > @@ -193,18 +193,48 @@ def assert_ctx_committed(ctx, dump):
+> > >      assert_true(dump['pause'] == ctx.pause, 'pause', dump)
+> > >  
+> > >  def assert_ctxs_committed(kdamonds):
+> > > +    ctxs_paused_for_dump = []
+> > > +    for kd in kdamonds.kdamonds:
+> > > +        for ctx in kd.contexts:
+> > > +            if ctx.pause is False:
+> > > +                ctx.pause = True
+> > > +                err = kd.commit()
+> > > +                if err is not None:
+> > > +                    print('pause fail (%s)' % err)
+> > > +                    kdamonds.stop()
+> > > +                    exit(1)
+> > > +                ctxs_paused_for_dump.append(ctx)
+> > > +
+> > >      status, err = dump_damon_status_dict(kdamonds.kdamonds[0].pid)
+> > >      if err is not None:
+> > >          print(err)
+> > >          kdamonds.stop()
+> > >          exit(1)
+> > >  
+> > > +    for kd in kdamonds.kdamonds:
+> > > +        for ctx in kd.contexts:
+> > > +            if ctx in ctxs_paused_for_dump:
+> > > +                ctx.pause = False
+> > > +                err = kd.commit()
+> > > +                if err is not None:
+> > > +                    print('resume fail (%s)' % err)
+> > > +                    kdamonds.stop()
+> > > +                    exit(1)
+> > > +                # restore for comparison
+> > > +                ctx.pause = True
+> > 
+> > : If a kdamond contains multiple contexts, does this loop leave earlier contexts
+> > : paused in the kernel?
+> > : 
+> > : Since kd.commit() stages and commits the state of all contexts associated with
+> > : the kdamond, when kd.commit() is called for the second context, the first
+> > : context's local pause attribute is already back to True.
+> > : 
+> > : This would cause kd.commit() to write to sysfs and instruct the kernel to
+> > : pause the first context again. By the end of this loop, only the last context
+> > : in the kdamond would remain unpaused in the kernel.
+> > 
+> > No.  The pause field of the earlier context is set to False, so later
+> > kd.commit() will commit the False 'pause' again.  But this finds a good point.
+> > There is no reason to call kd.commit() for each context.  It is more efficient
+> > to be called for each kdamond., thouth currently we support only one context
+> > per kdamond.  I will update the code so, in the next spin.
+> 
+> I'm wrong, Sashiko is correct.  I missed the last 'ctx.pause = True' in the
+> loop.  I will fix this together, like below:
+> 
+> '''
+> --- a/tools/testing/selftests/damon/sysfs.py
+> +++ b/tools/testing/selftests/damon/sysfs.py
+> @@ -201,16 +201,17 @@ def assert_ctx_committed(ctx, dump):
+> 
+>  def assert_ctxs_committed(kdamonds):
+>      ctxs_paused_for_dump = []
+> +    # pause for safe state dumping
+>      for kd in kdamonds.kdamonds:
+>          for ctx in kd.contexts:
+>              if ctx.pause is False:
+>                  ctx.pause = True
+> -                err = kd.commit()
+> -                if err is not None:
+> -                    print('pause fail (%s)' % err)
+> -                    kdamonds.stop()
+> -                    exit(1)
+>                  ctxs_paused_for_dump.append(ctx)
+> +        err = kd.commit()
+> +        if err is not None:
+> +            print('pause fail (%s)' % err)
+> +            kdamonds.stop()
+> +            exit(1)
+> 
+>      status, err = dump_damon_status_dict(kdamonds.kdamonds[0].pid)
+>      if err is not None:
+> @@ -218,17 +219,19 @@ def assert_ctxs_committed(kdamonds):
+>          kdamonds.stop()
+>          exit(1)
+> 
+> +    # resume contexts paused for safe state dumping
+>      for kd in kdamonds.kdamonds:
+> -        for ctx in kd.contexts:
+> -            if ctx in ctxs_paused_for_dump:
+> -                ctx.pause = False
+> -                err = kd.commit()
+> -                if err is not None:
+> -                    print('resume fail (%s)' % err)
+> -                    kdamonds.stop()
+> -                    exit(1)
+> -                # restore for comparison
+> -                ctx.pause = True
+> +        for ctx in ctxs_paused_for_dump:
+> +            ctx.pause = False
+> +        err = kd.commit()
+> +        if err is not None:
+> +            print('resume fail (%s)' % err)
+> +            kdamonds.stop()
+> +            exit(1)
+> +
+> +    # restore for comparison
+> +    for ctx in ctxs_paused_for_dump:
+> +        ctx.pause = True
+> 
+>      ctxs = kdamonds.kdamonds[0].contexts
+>      dump = status['contexts']
+> '''
 
-> Multiple sysfs command paths dereference contexts_arr[0] without first
-> verifying that nr_contexts >= 1.
-
-Nit.  There is no 'nr_contexts' in the code.  Let's use kdamond->contexts->nr
-or contexts->nr instead.
-
-> A user can set nr_contexts to 0 via
-> sysfs while DAMON is running, causing NULL pointer dereferences.
-
-It would be nice to explain how users can reproducer the issue.  Could you
-please add below to this part of the commit message?
+The above fixup makes the test fails, for the obsolete targets.  The fixup
+needs another fixup, like below.  I will add that to the next spin.
 
 '''
-The issue can be triggered by privileged users like below.
+--- a/tools/testing/selftests/damon/sysfs.py
++++ b/tools/testing/selftests/damon/sysfs.py
+@@ -200,11 +200,12 @@ def assert_ctxs_committed(kdamonds):
+             if ctx.pause is False:
+                 ctx.pause = True
+                 ctxs_paused_for_dump.append(ctx)
+-        err = kd.commit()
+-        if err is not None:
+-            print('pause fail (%s)' % err)
+-            kdamonds.stop()
+-            exit(1)
++        if len(ctxs_paused_for_dump) > 0:
++            err = kd.commit()
++            if err is not None:
++                print('pause fail (%s)' % err)
++                kdamonds.stop()
++                exit(1)
 
-First, start DAMON and make contexts directory empty (kdamond->contexts->nr ==
-0).
+     status, err = dump_damon_status_dict(kdamonds.kdamonds[0].pid)
+     if err is not None:
+@@ -216,11 +217,12 @@ def assert_ctxs_committed(kdamonds):
+     for kd in kdamonds.kdamonds:
+         for ctx in ctxs_paused_for_dump:
+             ctx.pause = False
+-        err = kd.commit()
+-        if err is not None:
+-            print('resume fail (%s)' % err)
+-            kdamonds.stop()
+-            exit(1)
++        if len(ctxs_paused_for_dump) > 0:
++            err = kd.commit()
++            if err is not None:
++                print('resume fail (%s)' % err)
++                kdamonds.stop()
++                exit(1)
 
-    # damo start
-    # cd /sys/kernel/mm/damon/admin/kdamonds/0
-    # echo 0 > contexts/nr_contexts
-
-Then, any of below commands will cause the NULL pointer dereference.
-
-    # echo update_schemes_stats > state
-    # echo update_schemes_tried_regions > state
-    # echo update_schemes_tried_bytes > state
-    # echo update_schemes_effective_quotas > state
-    # echo update_tuned_intervals > state
+     # restore for comparison
+     for ctx in ctxs_paused_for_dump:
 '''
-
->
-> Guard all commands (except OFF) at the entry point of
-> damon_sysfs_handle_cmd().
->
-> Fixes: 0ac32b8affb5 ("mm/damon/sysfs: support DAMOS stats")
-> Cc: <stable@vger.kernel.org>  # 5.18.x
-> Signed-off-by: Josh Law <objecting@objecting.org>
-> Reviewed-by: SeongJae Park <sj@kernel.org>
-
-I suggested [1] this patch.  But I didn't give you 'Revied-by:' tag.  So the
-above Reviewed-by: is not valid.
-
-And this patch looks good to me, so please take my valid Reviewed-by: tag.
-
-Reviewed-by: SeongJae Park <sj@kernel.org>
-
-> ---
-
-From the next time, please add patch version changelog [2] here.
-
-I added this patch into my tree after resolving the trivial things I mentioned
-above.  I will post it as v3 tomorrow, unless Andrew add this to mm.git after
-resolving the trivial things as I mentioned.
-
-[1] https://lore.kernel.org/20260320155115.101025-1-sj@kernel.org
-[2] https://docs.kernel.org/process/submitting-patches.html#commentary
 
 
 Thanks,
 SJ
-
-[...]
