@@ -1,85 +1,131 @@
-Received: from sender-of-o57.zoho.eu (sender-of-o57.zoho.eu [136.143.169.57])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FEF72561A7
-	for <damon@lists.linux.dev>; Sat, 21 Mar 2026 00:08:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.169.57
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774051717; cv=pass; b=HtsHQQmeIC+PYfFbFWK2/5JrG7RQ0RBUGl7Xpg838RieX2IggOQ9W3d1oZIFmxe6ZNpHUk/oAnwEIw6Eui+xfohts6ymg4J2/cx4o0tarK3jZ78JN++Ow+noTkLBzjEi7wtjU5WbfeoNZXgAXFtlzPhNsEsHyMo+h06QT/rdkRo=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774051717; c=relaxed/simple;
-	bh=SFp00vq4JyybMAbM+n/SB4PkqRpGAMby83rbwLEWzc0=;
-	h=Date:From:To:CC:Subject:In-Reply-To:References:Message-ID:
-	 MIME-Version:Content-Type; b=FRcGtvSSn+0Cvi7K3MYM/9EiXdJQVCcTLCVlQNrSMACKEsLkLfunRywhogsTyOyWoUbIW+B8EZu6+1ajRfJHmxk7oZzR3Xwa5aH/4rQUts2VSR8MZjIgHLxaQL17RT6r4QtYuS3Q+dRe8xLcVDm8yVbBOaYCFdjCalCkQHo79hM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=objecting.org; spf=pass smtp.mailfrom=objecting.org; dkim=pass (1024-bit key) header.d=objecting.org header.i=objecting@objecting.org header.b=UFF0HC/H; arc=pass smtp.client-ip=136.143.169.57
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=objecting.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=objecting.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ED2718C02E
+	for <damon@lists.linux.dev>; Sat, 21 Mar 2026 00:23:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1774052593; cv=none; b=NgAVy7BFDbD6hnQ+AfNKw2ezi1aHJQkc5uv+fqAjtdkcf5em7S0tiftyD6+HPE4F1RVDi1pYk7/q10uEkhsmvoO0KnkAHrgQU9jyw52CvoxsswQ8FrXsZ16cqkAQrJvAxU3NeU7F1nYkmk+aMEFvV0cWxr2mWcd4x2HbpuhH2xw=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1774052593; c=relaxed/simple;
+	bh=GOJeUyjjWVogE75PISrYKLd8uFw9FCzsAE2nXsMF4/o=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=hzf1c5H8P2VSXtXKlnmb36q3wCn/HoQ/TzLOTGs3Ym3TUOR0K0C7gJ8M3wRntSxgQrs2fAIUlRNjz7ecGtu0TmVQCml1v+m29K6hMl59EszKmd18DtJVZwuDc0JnffzFfttxjCzsXZ8wmPJW1TQ8uqhNdkPijC70qS4BmJP3arg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=E8YKLdyY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=objecting.org header.i=objecting@objecting.org header.b="UFF0HC/H"
-ARC-Seal: i=1; a=rsa-sha256; t=1774051712; cv=none; 
-	d=zohomail.eu; s=zohoarc; 
-	b=Ot3VSSaZu3w0EJk2kNRqcxvTnv53LkYqqERkISePoWgewkbjZbAwV3h0F+F+2zyIHcUe8XdLO9DK7O+im/Ktl2D8d51WLN1ROhFKwy3lLynJ5tQ3ywwRNMpqTV42JLsWSYbg+FEomTozA2NUoNR++OWHaA7fI8CEZtWMJ1kwJVc=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.eu; s=zohoarc; 
-	t=1774051712; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=pBghYJ/F/Pt0HxiS5MRMUDhDiTzAi0jLjVNvoL6gXyA=; 
-	b=dlUw2tbsGohlZLAfHNQr8yE62OnPQB7Q+BDktR6gZaNFmD/TgTERvxcf6/9AngvudjSElPDlC1BltmoXAqvEs8EtdJLD9VHSmAv/oVIK5xY+ra94dA73UUWF8MR6yglL8VyzxQSD1TSBsCWSkVXFyQClHHXafhukEfbj+nAufuY=
-ARC-Authentication-Results: i=1; mx.zohomail.eu;
-	dkim=pass  header.i=objecting.org;
-	spf=pass  smtp.mailfrom=objecting@objecting.org;
-	dmarc=pass header.from=<objecting@objecting.org>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1774051712;
-	s=zmail; d=objecting.org; i=objecting@objecting.org;
-	h=Date:Date:From:From:To:To:CC:Subject:Subject:In-Reply-To:References:Message-ID:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To:Cc;
-	bh=pBghYJ/F/Pt0HxiS5MRMUDhDiTzAi0jLjVNvoL6gXyA=;
-	b=UFF0HC/Hr4z/DfDIlT35DNLMP6jx54vRe9xKtJZYe049HIW4Ht9JEjtUrwUyGx0b
-	uS9q/yTnXxipvs+OOCfijUZrsVAAowtga3hS6R0ykOSMp51R14d2ifptodqEyWOaket
-	6rhjvNL1gHASnDAcY0NE7ga7zSDaugVPDaUCs5Xw=
-Received: by mx.zoho.eu with SMTPS id 1774051710629882.7436884050414;
-	Sat, 21 Mar 2026 01:08:30 +0100 (CET)
-Date: Sat, 21 Mar 2026 00:08:29 +0000
-From: Josh Law <objecting@objecting.org>
-To: SeongJae Park <sj@kernel.org>
-CC: Andrew Morton <akpm@linux-foundation.org>, damon@lists.linux.dev,
- linux-mm@kvack.org, linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_v2=5D_mm/damon/sysfs=3A_fix_param=5Fct?=
- =?US-ASCII?Q?x_leak_on_damon=5Fsysfs=5Fnew=5Ftest=5Fctx=28=29_failure?=
-User-Agent: Thunderbird for Android
-In-Reply-To: <20260321000255.102944-1-sj@kernel.org>
-References:  <20260321000255.102944-1-sj@kernel.org>
-Message-ID: <6902CC73-84EE-4C1D-9FC6-F54C7C378387@objecting.org>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="E8YKLdyY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EB21C4CEF7;
+	Sat, 21 Mar 2026 00:23:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1774052593;
+	bh=GOJeUyjjWVogE75PISrYKLd8uFw9FCzsAE2nXsMF4/o=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=E8YKLdyYGvJQV4eZNVaBQEK1dDC9jER7ugOH8Bh121qdvztgW1GYCjPUp6nYn/l+J
+	 TsGH5gHnvqJ8+8BsLKPZ1Y4hKQtYexECZth4XtS9F5c2UfpZq1tYpVrUUfEAcaphQU
+	 Q9oEBdj2aP3X1NV0ceoSqAjfxmYc/zwhQ5ioNcKPTXOYxXKAb3+WMm00P1Oh7QaOyY
+	 sd62j/JdsEnhmYP7yv+Tc0Qqnzt+Mm6nwCiK+mVLRQRcxZ3U7P92umQO4xEp+WbVu8
+	 EpcO7mBB3pPQwSAaVVmahkF46nW7uZnSx2v27DS6q1JLqv7mTI0jaBwHLxy0t0VZUz
+	 JCiIR02Cia6fw==
+From: SeongJae Park <sj@kernel.org>
+To: Liew Rui Yan <aethernet65535@gmail.com>
+Cc: SeongJae Park <sj@kernel.org>,
+	damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: Re: [PATCH v2] mm/damon/ops-common: optimize damon_hot_score() using ilog2()
+Date: Fri, 20 Mar 2026 17:23:10 -0700
+Message-ID: <20260321002311.69009-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260320192020.33004-1-aethernet65535@gmail.com>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-ZohoMailClient: External
+Content-Transfer-Encoding: 8bit
+
+Hello Liew,
 
 
+When you send a new version of patches, please send those as new thread, rather
+than as a reply to the previous version.
 
-On 21 March 2026 00:02:54 GMT, SeongJae Park <sj@kernel=2Eorg> wrote:
->Apparently this series is only by a mistake, and therefore a new version =
-[1] is
->posted=2E  So I will skip this series and review the new version=2E  Let =
-me know if
->anything is wrong=2E
->
->[1] https://lore=2Ekernel=2Eorg/20260320163559=2E178101-1-objecting@objec=
-ting=2Eorg
->
->
->Thanks,
->SJ
->
->[=2E=2E=2E]
+On Sat, 21 Mar 2026 03:20:20 +0800 Liew Rui Yan <aethernet65535@gmail.com> wrote:
+
+> The current implementation of damon_hot_score() uses a manual for-loop
+> to calculate the value of 'age_in_log'. This can be efficiently replaced
+> by ilog2(), which is semantically more appropriate for calculating the
+> logarithmic value of age.
+> 
+> In a simulated-kernel-module performance test with 10,000,000 iterations,
+> this optimization showed a significant reduction in latency (average
+> latency reduced from ~12ns to ~1ns).
+> 
+> Test results from the simulated-kernel-module:
+> - ilog2:
+>     DAMON Perf Test: Starting 10000000 iterations
+>     =============================================
+>      Total Iterations : 10000000
+>      Average Latency  : 1 ns
+>      P95 Latency      : 41 ns
+>      P99 Latency      : 41 ns
+>     ---------------------------------------------
+>      Range (ns)      | Count        | Percent
+>     ---------------------------------------------
+>      0-19            | 0            |      0%
+>      20-39           | 2625000      |     26%
+>      40-59           | 7374000      |     73%
+>      60-79           | 0            |      0%
+>      80-99           | 0            |      0%
+>      100+            | 1000         |      0%
+>     =============================================
+> 
+> - for-loop:
+>     DAMON Perf Test: Starting 10000000 iterations
+>     =============================================
+>      Total Iterations : 10000000
+>      Average Latency  : 12 ns
+>      P95 Latency      : 51 ns
+>      P99 Latency      : 60 ns
+>     ---------------------------------------------
+>      Range (ns)      | Count        | Percent
+>     ---------------------------------------------
+>      0-19            | 0            |      0%
+>      20-39           | 0            |      0%
+>      40-59           | 9862000      |     98%
+>      60-79           | 135000       |      1%
+>      80-99           | 1000         |      0%
+>      100+            | 2000         |      0%
+>     =============================================
+
+Nice!
+
+> 
+> Full raw benchmark results can be found at [1].
+> 
+> [1] https://github.com/aethernet65535/damon-hot-score-fls-optimize/tree/master/result-raw
+> 
+> Signed-off-by: Liew Rui Yan <aethernet65535@gmail.com>
+
+Reviewed-by: SeongJae Park <sj@kernel.org>
+
+> ---
+> Changes from v1:
+> - Replace fls() with ilog2() per SeongJae Park's suggestion for better
+>   semantic clarity.
+> - Move performance benchmark results into the commit message and add 
+>   comparison between for-loop and ilog2.
+
+As I mentioned at the beginning, please send new versions as new thread from
+the next time.  And, in the case, consider adding a link to the previous
+versions.
+
+[1] https://docs.kernel.org/process/submitting-patches.html#commentary
 
 
-Only the numbering was wrong, like no 1/3 2/3 etc=2E Im a bit of a perferc=
-tionist so i nitpicked it
+Thanks,
+SJ
 
-V/R
-
-Josh Law
+[...]
