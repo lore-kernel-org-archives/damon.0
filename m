@@ -1,40 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BE7533EAED;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA4CF346E46;
 	Sat, 21 Mar 2026 18:13:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774116833; cv=none; b=RqPcZQKgEVuUPyNSgX+mKaRpNFq5r4Iu32nwlpeNjqZRdTybMrYC6/QKX4TCVLcnremUKk1/k/TWDxT+ZY0ExdUs0eMBQGq10F5uJpgEqWVb99KuhKQbRqbV4A1GKDRj0v7khgG0AcxJZnlySRkQTIqQwm/4EqPjR7bitkx8iJc=
+	t=1774116833; cv=none; b=ccCbkejt+ZEe5EzXv+pNb8jpc2aIRLiTrcOmUL6vWaGSF1nlyEwqifpatxHbjbCDmsNPD8WoccnNNLK3NB9cgLKQ/fOj2HEoXmLlHXbmG3rnQTYM/RlOOYPGUv9C/jsFgxSMQcpWptaY4hxraUuzISpO9ea+daUL0l0BWZaGymg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1774116833; c=relaxed/simple;
-	bh=4uaA+eem3fKB2uPWGLGeH18mf1wXB30aEUf0eMGJT00=;
+	bh=qt20gza/ZGfZPnGlsbY2CkGg3eBlVlFouLw/z7b3qI8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cKuezXB52NWbSZOWv2xr6p4/8pTnAlhmYq5ob1mcq41s8u9jtO11kiNhe64JHslPZdBclGdV6HyXo3gGKn0N7w0TK+/a79Os5svGiVKTLVT/GaGjA/PPwpfPCmRG3Hi3jyDDPZ+1eEcC5RiQbAK/OiGQSF4jSYCm+i2U1c6NWpE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RB/sw3oy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=D2zD+SQuR/FXOqkSpj8R3cwaLvKzSyxDSwKKbULTsxRqxJlIGXuGvi2aYwkjUzaoaGQXAZ5BaYDP3A1NsJpqy6yYIfXSn2AiH10coZlPjgBTru+vffcX3H1OAQNay1twY9uenQZEHoitvch/UrSarC7K5XWMJsccrTiyxaVTFGc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eLNV3slL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RB/sw3oy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B22DC2BCB0;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eLNV3slL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DEB1C2BCAF;
 	Sat, 21 Mar 2026 18:13:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1774116833;
-	bh=4uaA+eem3fKB2uPWGLGeH18mf1wXB30aEUf0eMGJT00=;
+	bh=qt20gza/ZGfZPnGlsbY2CkGg3eBlVlFouLw/z7b3qI8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RB/sw3oyJZzZe3oe/2j/45aVwyCuxSLgJi3y2xBXmpajajlFV/N42xDccH6B0Bics
-	 Utq+GYHtiuQYm+upce6/8fcjzApMvsgXe48QnxS0W2+Z6WqzQoHyhuXmnk5WyH6Spq
-	 nsPOT/XnwG5uzG2gAm9xAU1xXg0n9yNYKvF8OFba9jeqaG+hPb6ZdeuEg80ax++8DG
-	 KFKSqFNzOUpd9qBIM59v+IP/fTKW1AzwEEdQD9F45whiSPJexdhRMaUH3lxAAJpnYL
-	 NP8b7MsG6RhGe5oBzMN1hUUf+nfrIf1N4v62mqVR6UY31boEFpEe8lS3gm33ooKi9V
-	 XPON7qvYMTf2g==
+	b=eLNV3slLgvet31x6TAf1yaL6xK7vDqZMrt7HDDWXeHWUvLdUEwA2lM2Vx1xM23V5K
+	 x/SovoUrbEEIzKL0gMYMb6k8zSXpnCmVqbuzFf+E7FQ0+uW2Z8ekdYF8XHjSIYhu3y
+	 rOqQ3NjyyIKfoGeizMNE8aZ8S8Vmk9sN/Y5+7T6k8BuDmls5fc3JAHNzTFm1S/Raap
+	 fOUSk3DeHGX0n0JH/1Vfu9RG/gIxXrL05fpDPs6SQCftB8qqk7NkmCIE5nIq+V7A7D
+	 uOnOWaNVGl18Z2Ro47DiTelLmvCwxb+YAwu12z6x6vDeSfjpJlbN5BAp500KuOKSKe
+	 Ce1bqpc5b/eaw==
 From: SeongJae Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SeongJae Park <sj@kernel.org>,
+	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
+	David Hildenbrand <david@kernel.org>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@kernel.org>,
 	damon@lists.linux.dev,
+	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [PATCH 02/10] mm/damon/sysfs: add pause file under context dir
-Date: Sat, 21 Mar 2026 11:13:32 -0700
-Message-ID: <20260321181343.93971-3-sj@kernel.org>
+Subject: [PATCH 03/10] Docs/mm/damon/design: update for context pause/resume feature
+Date: Sat, 21 Mar 2026 11:13:33 -0700
+Message-ID: <20260321181343.93971-4-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260321181343.93971-1-sj@kernel.org>
 References: <20260321181343.93971-1-sj@kernel.org>
@@ -46,88 +56,31 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Add pause DAMON sysfs file under the context directory.  It exposes the
-damon_ctx->pause API parameter to the users so that they can use the
-pause/resume feature.
+Update DAMON design document for the context execution pause/resume
+feature.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- mm/damon/sysfs.c | 31 +++++++++++++++++++++++++++++++
- 1 file changed, 31 insertions(+)
+ Documentation/mm/damon/design.rst | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
-index 6a44a2f3d8fc9..51893abd09472 100644
---- a/mm/damon/sysfs.c
-+++ b/mm/damon/sysfs.c
-@@ -866,6 +866,7 @@ struct damon_sysfs_context {
- 	struct damon_sysfs_attrs *attrs;
- 	struct damon_sysfs_targets *targets;
- 	struct damon_sysfs_schemes *schemes;
-+	bool pause;
- };
+diff --git a/Documentation/mm/damon/design.rst b/Documentation/mm/damon/design.rst
+index afc7d52bda2f7..510ec6375178d 100644
+--- a/Documentation/mm/damon/design.rst
++++ b/Documentation/mm/damon/design.rst
+@@ -19,6 +19,13 @@ types of monitoring.
+ To know how user-space can do the configurations and start/stop DAMON, refer to
+ :ref:`DAMON sysfs interface <sysfs_interface>` documentation.
  
- static struct damon_sysfs_context *damon_sysfs_context_alloc(
-@@ -878,6 +879,7 @@ static struct damon_sysfs_context *damon_sysfs_context_alloc(
- 	context->kobj = (struct kobject){};
- 	context->ops_id = ops_id;
- 	context->addr_unit = 1;
-+	context->pause = false;
- 	return context;
- }
++Users can also request each context execution to be paused and resumed.  When
++it is paused, the kdamond does nothing other than applying online parameter
++update.
++
++To know how user-space can pause/resume each context, refer to :ref:`DAMON
++sysfs context <sysfs_context>` usage documentation.
++
  
-@@ -1053,6 +1055,30 @@ static ssize_t addr_unit_store(struct kobject *kobj,
- 	return count;
- }
- 
-+static ssize_t pause_show(struct kobject *kobj, struct kobj_attribute *attr,
-+		char *buf)
-+{
-+	struct damon_sysfs_context *context = container_of(kobj,
-+			struct damon_sysfs_context, kobj);
-+
-+	return sysfs_emit(buf, "%c\n", context->pause ? 'Y' : 'N');
-+}
-+
-+static ssize_t pause_store(struct kobject *kobj, struct kobj_attribute *attr,
-+		const char *buf, size_t count)
-+{
-+	struct damon_sysfs_context *context = container_of(kobj,
-+			struct damon_sysfs_context, kobj);
-+	bool pause;
-+	int err = kstrtobool(buf, &pause);
-+
-+	if (err)
-+		return err;
-+	context->pause = pause;
-+	return count;
-+}
-+
-+
- static void damon_sysfs_context_release(struct kobject *kobj)
- {
- 	kfree(container_of(kobj, struct damon_sysfs_context, kobj));
-@@ -1067,10 +1093,14 @@ static struct kobj_attribute damon_sysfs_context_operations_attr =
- static struct kobj_attribute damon_sysfs_context_addr_unit_attr =
- 		__ATTR_RW_MODE(addr_unit, 0600);
- 
-+static struct kobj_attribute damon_sysfs_context_pause_attr =
-+		__ATTR_RW_MODE(pause, 0600);
-+
- static struct attribute *damon_sysfs_context_attrs[] = {
- 	&damon_sysfs_context_avail_operations_attr.attr,
- 	&damon_sysfs_context_operations_attr.attr,
- 	&damon_sysfs_context_addr_unit_attr.attr,
-+	&damon_sysfs_context_pause_attr.attr,
- 	NULL,
- };
- ATTRIBUTE_GROUPS(damon_sysfs_context);
-@@ -1470,6 +1500,7 @@ static int damon_sysfs_apply_inputs(struct damon_ctx *ctx,
- 	if (sys_ctx->ops_id == DAMON_OPS_PADDR)
- 		ctx->min_region_sz = max(
- 				DAMON_MIN_REGION_SZ / sys_ctx->addr_unit, 1);
-+	ctx->pause = sys_ctx->pause;
- 	err = damon_sysfs_set_attrs(ctx, sys_ctx->attrs);
- 	if (err)
- 		return err;
+ Overall Architecture
+ ====================
 -- 
 2.47.3
