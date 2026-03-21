@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3C0B2F9D82;
-	Sat, 21 Mar 2026 16:54:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A341330C602;
+	Sat, 21 Mar 2026 16:57:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774112075; cv=none; b=hPNVa5tXr+Fu2jbP9LvasoQ924VR0OvuAgIE4WotL0VrUlixuN0KwTuoN6lL+hKaoXUL6t+tgwNpajB/sFyL8GiacE77ZV0zFgxoUGK9YqieXzWAHgSzvoXKwIhOZ/MtwZj4HEX2DAqoQAHWNvuRCoYEY9wSgK3T3u32Hd44EvY=
+	t=1774112269; cv=none; b=u7xwfThb3MQaolDQx2jdlwZK+FHcnNyoEpmsrBnDqR+AocKo3m76njzQLUavmxqch0eBzn1eUAIB//bZnsUzsxIOYWQHINtylt5pT7YFHaIfTPXTUDXjigMSiMVrMB+eMo3hxupCwjwIOSSERfeMtCfELvZKGVcvEjdA5S3Tmq8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774112075; c=relaxed/simple;
-	bh=/hnN+ozliJ6Px8FWlVuRJLimEx5AIwMdAryf0AjKiDo=;
+	s=arc-20240116; t=1774112269; c=relaxed/simple;
+	bh=4so0ChGaWqOM6KdH3LDG9GhHIY2dSUYkn8Ys1l42Dds=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Joz1yEEW8PeJs/6+xtJUcZgGKAvDSpW8yMKBk/zNnNXfFwp59QOf/nQ2pJD4rgUS2GVLzJvB0LtSnjcSIF/wkVHLa+dgObJsu9cw/Vlbs2oRolxM0Ub84tz9y/UTplW7wNn67vEmYMZU8O2ZZQJYgSJhJpfy1Auv9XYe18G0seo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kGjjhQLW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=t826FM0RJDAqY1t50jEe8rqw3bkdiFcxo3nkBhV4M5q4wgKU1aJfLBNatFPHCDX+klEpoNUUf4Rh6l4SVucqtTiZ7uh03YfLLpo2c7B09MucOsshbNzpT26sEglX4U4hvPFSmgybORCjTGrqabZ5Fadlv0GCcu/VkBJBmg+kwf0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OeSB1fvr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kGjjhQLW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 207CAC19421;
-	Sat, 21 Mar 2026 16:54:35 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OeSB1fvr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABF18C19421;
+	Sat, 21 Mar 2026 16:57:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1774112075;
-	bh=/hnN+ozliJ6Px8FWlVuRJLimEx5AIwMdAryf0AjKiDo=;
+	s=k20201202; t=1774112268;
+	bh=4so0ChGaWqOM6KdH3LDG9GhHIY2dSUYkn8Ys1l42Dds=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kGjjhQLWv2jKyxOybLUqwjFrv00W1DecnyBesVTCvLkNokyXcUxyVVKxtKZC1p5fF
-	 1wVSSBOPq1fX9VOjAdncIH4151+mqt3hUbEdpgP1xGRxvNuvALcnSjhL2BKQ4mLTRs
-	 2YGhrvQnqUenHb2g+IjRqQJBvNJMec/L9ia9jvcuuJz6ZEWucBVYgvLUVblQGOEC2q
-	 p6UrKrumJvs+I2tcfOC3QDQOEMwWSB2Zw0IVqpFqNPecAv4iVu0KXeNpIAOHoI1RE9
-	 qtXc2uB2IZ7bLzpe0knYZJLx9sBlNeG7P3Fh2K4GYvTmDnH+yvoKHuZ542QfD0YaJY
-	 TS6HRbt3hjsSw==
+	b=OeSB1fvrhp6SsMGhqRMJAOMTLzXJNLGYF+bx1OoCEcnLdzJeC66W3PkeVARDsWD/M
+	 2aqK3Ky8L7PEyHM8VSKUs6ACAta6xjkC3eg0pQk4r7EY6TTEoNAwAdV3Gi8HDxOrA7
+	 P9vjq3wtbf1Yr5og79mfjFtLylGXe/J+G4s3lebNimpid9CEtjq2toF1nNLkNyIBlK
+	 OwqtCg8Tq+/onv+8vEzwfRqirA8wAqvkGeLFZJ2bYksBtRay1Bk8JVqROuzLmfTBg3
+	 xvsPCwO3SpR24yMQxhLR2GUtPAXbsFJsirm1xMI0lnw+svYVG/uKS2ZuVDyqfEJYJ6
+	 MNIL99OPYGVSw==
 From: SeongJae Park <sj@kernel.org>
 To: Ravi Jonnalagadda <ravis.opensrc@gmail.com>
 Cc: SeongJae Park <sj@kernel.org>,
@@ -39,11 +39,11 @@ Cc: SeongJae Park <sj@kernel.org>,
 	ajayjoshi@micron.com,
 	honggyu.kim@sk.com,
 	yunjeong.mun@sk.com
-Subject: Re: [RFC PATCH v4 1/1] mm/damon: add node_eligible_mem_bp and node_ineligible_mem_bp goal metrics
-Date: Sat, 21 Mar 2026 09:54:24 -0700
-Message-ID: <20260321165425.84273-1-sj@kernel.org>
+Subject: Re: [RFC PATCH v4 0/1] mm/damon: add node_eligible_mem_bp and node_ineligible_mem_bp goal metrics
+Date: Sat, 21 Mar 2026 09:57:45 -0700
+Message-ID: <20260321165746.84394-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260320190453.1430-2-ravis.opensrc@gmail.com>
+In-Reply-To: <20260320190453.1430-1-ravis.opensrc@gmail.com>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -53,76 +53,144 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Fri, 20 Mar 2026 12:04:53 -0700 Ravi Jonnalagadda <ravis.opensrc@gmail.com> wrote:
+Hello Ravi,
 
-> Add new quota goal metrics for memory tiering that track scheme-eligible
-> memory distribution across NUMA nodes:
-> 
-> - DAMOS_QUOTA_NODE_ELIGIBLE_MEM_BP: ratio of eligible memory on a node
-> - DAMOS_QUOTA_NODE_INELIGIBLE_MEM_BP: ratio of eligible memory NOT on
->   a node
 
-The description for the second metric should be "ratio of ineligible memory on
-a node".
+Thank you for this patch!  TL; DR: Other than trivial things I commented below
+and to the patch, I believe it is time to drop the RFC tag, and work on merging
+this.
+
+On Fri, 20 Mar 2026 12:04:52 -0700 Ravi Jonnalagadda <ravis.opensrc@gmail.com> wrote:
+
+> This patch introduces two new DAMON quota goal metrics for controlling
+
+s/DAMON/DAMOS/ ?
+
+> memory distribution in heterogeneous memory systems (e.g., DRAM and CXL
+> memory tiering) using physical address (PA) mode monitoring.
+> 
+> v3: https://lore.kernel.org/linux-mm/20260223123232.12851-1-ravis.opensrc@gmail.com/
+
+The above link would better to be put on 'Chage since v3' section below.
 
 > 
-> These complementary metrics enable push-pull migration schemes that
-> maintain a target memory distribution across different NUMA nodes
-> representing different memory tiers, based on access patterns defined
-> by each scheme.
+> Changes since v3:
+> =================
 > 
-> The metrics iterate scheme-eligible regions and use damon_get_folio()
-> to determine NUMA node placement of each folio, calculating the ratio
-> of eligible memory on the specified node versus total eligible memory.
-> 
-> Suggested-by: SeongJae Park <sj@kernel.org>
-> Signed-off-by: Ravi Jonnalagadda <ravis.opensrc@gmail.com>
-> ---
->  include/linux/damon.h    |   6 ++
->  mm/damon/core.c          | 158 ++++++++++++++++++++++++++++++++++++---
->  mm/damon/sysfs-schemes.c |  12 +++
->  3 files changed, 164 insertions(+), 12 deletions(-)
-> 
-> diff --git a/include/linux/damon.h b/include/linux/damon.h
-> index b1d8fd88a0fc..490918804f85 100644
-> --- a/include/linux/damon.h
-> +++ b/include/linux/damon.h
-> @@ -193,6 +193,10 @@ enum damos_action {
->   * @DAMOS_QUOTA_NODE_MEMCG_FREE_BP:	MemFree ratio of a node for a cgroup.
->   * @DAMOS_QUOTA_ACTIVE_MEM_BP:		Active to total LRU memory ratio.
->   * @DAMOS_QUOTA_INACTIVE_MEM_BP:	Inactive to total LRU memory ratio.
-> + * @DAMOS_QUOTA_NODE_ELIGIBLE_MEM_BP:	Scheme-eligible memory ratio of a
-> + *					node.
-> + * @DAMOS_QUOTA_NODE_INELIGIBLE_MEM_BP:	Scheme-ineligible memory ratio of a
-> + *					node.
->   * @NR_DAMOS_QUOTA_GOAL_METRICS:	Number of DAMOS quota goal metrics.
->   *
->   * Metrics equal to larger than @NR_DAMOS_QUOTA_GOAL_METRICS are unsupported.
-> @@ -206,6 +210,8 @@ enum damos_quota_goal_metric {
->  	DAMOS_QUOTA_NODE_MEMCG_FREE_BP,
->  	DAMOS_QUOTA_ACTIVE_MEM_BP,
->  	DAMOS_QUOTA_INACTIVE_MEM_BP,
-> +	DAMOS_QUOTA_NODE_ELIGIBLE_MEM_BP,
-> +	DAMOS_QUOTA_NODE_INELIGIBLE_MEM_BP,
->  	NR_DAMOS_QUOTA_GOAL_METRICS,
->  };
->  
-> diff --git a/mm/damon/core.c b/mm/damon/core.c
-> index b9e12865622c..3e0ac65e34a0 100644
-> --- a/mm/damon/core.c
-> +++ b/mm/damon/core.c
-> @@ -17,6 +17,8 @@
->  #include <linux/string.h>
->  #include <linux/string_choices.h>
->  
-> +#include "ops-common.h"
-> +
+> - The first two patches from v3 (goal_tuner initialization fix and
+>   esz=0 quota bypass fix) are now in damon/next. This submission
 
-I don't find a reason to include this, and I'd like to avoid including that in
-core.c unless it is really necessary.  Could you please remove this?
+It is not also in mm-unstable :)
 
-Below looks all good for RFC level code to move on to the next stage (dropping
-RFC tag). :)
+>   contains only the core metrics patch, rebased on top of those fixes.
+> 
+> - Simplified implementation: removed per-node eligible_bytes array, now
+>   iterates scheme-eligible regions directly for each goal evaluation.
+> 
+> - Handle regions crossing node boundaries: uses damon_get_folio() to
+>   determine actual NUMA node placement of each folio rather than
+>   assuming uniform node placement within a region.
+> 
+> - Pass scheme pointer directly to metric calculation functions, avoiding
+>   container_of() derivation from quota pointer.
+> 
+> - Fixed 80-column wrapping issues.
+
+Thank you for addressing all my comments!
+
+> 
+> Background and Motivation
+> =========================
+> 
+> In heterogeneous memory systems, controlling memory distribution across
+> NUMA nodes is essential for performance optimization. This patch enables
+> system-wide page distribution with target-state goals like "maintain 30%
+> of scheme-eligible memory on CXL" using PA-mode DAMON schemes.
+> 
+> What These Metrics Measure
+> ==========================
+> 
+> node_eligible_mem_bp:
+>     scheme_eligible_bytes_on_node / total_scheme_eligible_bytes * 10000
+> 
+> node_ineligible_mem_bp:
+>     (total - scheme_eligible_bytes_on_node) / total * 10000
+> 
+> The metrics are complementary: eligible_bp + ineligible_bp = 10000 bp.
+> 
+> Two-Scheme Setup for Hot Page Distribution
+> ==========================================
+> 
+> For maintaining 30% of hot memory on CXL (node 1):
+
+I think it could help easy reading if the above sentence also explains
+node 0 is DRAM.  For example,
+
+For maintaining hot memory on DRAM (node 0) and CXL (node 1) in 7:3 ratio:
+
+> 
+>     PUSH scheme: migrate_hot from node 0 -> node 1
+>       goal: node_ineligible_mem_bp, nid=0, target=3000
+>       "Push hot pages out until 30% of hot memory is NOT on DRAM"
+
+Seems the sentence assumes the actor is in DRAM.  It was not very clear to me.
+How about making it clear?  E.g.,
+
+"Move hot pages from DRAM to CXL, if more than 70% of hot data is in DRAM"
+
+> 
+>     PULL scheme: migrate_hot from node 1 -> node 0
+>       goal: node_eligible_mem_bp, nid=0, target=7000
+>       "Pull hot pages back until 70% of hot memory IS on DRAM"
+
+If the above example is good for you, to be consistent with it, how about
+rewording like below?
+
+"Move hot pages from CXL to DRAM, if less than 70% of hot data is in DRAM"
+
+> 
+> The complementary goals create a feedback loop that converges to the
+> target distribution.
+> 
+> Dependencies
+> ============
+> 
+> This patch is based on SJ's damon/next branch which includes the
+> TEMPORAL goal tuner required for these metrics.
+
+Your test might be depend on the feature.  But this patch series itself is not,
+as users could also use it with CONSIST tuner?
+
+Also, as I mentioned above, the feature is now also in mm-unstable tree.
+
+> 
+> Testing Results
+> ===============
+> 
+> Functionally tested on a two-node heterogeneous memory system with DRAM
+> (node 0) and CXL memory (node 1). Used PUSH+PULL scheme configuration
+> with migrate_hot action to maintain a target hot memory ratio between
+> the two tiers.
+> 
+> With the TEMPORAL goal tuner, the system converges quickly to the target
+> distribution. The tuner drives esz to maximum when under goal and to
+> zero once the goal is met, forming a simple on/off feedback loop that
+> stabilizes at the desired ratio.
+> 
+> With the CONSIST tuner, the scheme still converges but more slowly, as
+> it migrates and then throttles itself based on quota feedback. The time
+> to reach the goal varies depending on workload intensity.
+
+Sounds reasonable!
+
+Do you plan to further evaluate some performance metrics?  I'd not strongly
+request that, but it would be very nice if we can have that.
+
+Regardless of your answer to the above question, I think the current code and
+the test is good enough to consider merging this.  I suggest dropping the RFC
+tag from the next spin.
+
+Thank you for doing this, Ravi!
 
 
 Thanks,
