@@ -1,50 +1,44 @@
-Received: from sender-of-o55.zoho.eu (sender-of-o55.zoho.eu [136.143.169.55])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8BC42F3C13
-	for <damon@lists.linux.dev>; Sun, 22 Mar 2026 18:46:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.169.55
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774205217; cv=pass; b=XwP3gbN7pQv/M7OzBdVv2URr4cr42Nj3rC6gJGwvnE85LiL8U4H2q7DpeVAfJ7EBNfDfkvLYPpVAb9eFP6C9EeLhXSv5YzeiWvr0SDLWE+HMJiwZPllAo5G7LrrfvkLQuvWu8luziJqczvqwo/aK1vWRTWbR96n1Hjvo6pJUz4Y=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774205217; c=relaxed/simple;
-	bh=hdRO+VeXZ104nZ4ShRIHd5X2LWE0gjrPBNrcfaopg7Q=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=SD1gT/eDP09c3EhywN0sNWWL6/UxJyqMqwbFJujV1wyhR3kauk16T7Uy/VowUQIbprEK90rdV8tELcNElIFH10dWEvH8yvUnR0VrIx4CswiwHKNprZQulfydTEQ/gBO3drcXU6w6wxL0DjHzwkeMRWwXjc+/D2Hr191HmUUX0nk=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=objecting.org; spf=pass smtp.mailfrom=objecting.org; dkim=pass (1024-bit key) header.d=objecting.org header.i=objecting@objecting.org header.b=Fm9olenF; arc=pass smtp.client-ip=136.143.169.55
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=objecting.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=objecting.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE7F61A2C0B;
+	Sun, 22 Mar 2026 19:26:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1774207608; cv=none; b=t8AZjvgnxZSlaEtC3RlMx/pZxiDdaRxjw3MhaWoz+ILwn/WV7zWNke2rU3U/VoNuwY4cG/icBzCsp1BLl+DQbImGSsAHYaluao9dF5c42Uq6F588YpcOnb1bSSn4rhDYmHFz1POvgcL1dwYr78iCGVUNgBRhyAhi3WbPcJ9eA70=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1774207608; c=relaxed/simple;
+	bh=X2DK8H4FcYtPiwS5iIb457FtPn7QN07ZkhbMOTso2XE=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=cYCpyGQO1iJFNtPVpf3GmYFQTiDslaVIjC4tnnCznBNVp191kbw+iQLkWTCIEMaP0Iq02Npecpm15r8n2DH9Jzc8VnbErRmH9tHIzko92xA5QMNauAn0JQEcpHojX0BkywYtAzKRZPIGwgJ8zreO8LX2sGGj0wyQaGN0uJU7hBY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UiZD1+x/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=objecting.org header.i=objecting@objecting.org header.b="Fm9olenF"
-ARC-Seal: i=1; a=rsa-sha256; t=1774205204; cv=none; 
-	d=zohomail.eu; s=zohoarc; 
-	b=G6qSSUmeIVPvaac9VT8iADN1XJY/eFQyZwhUO5zGkaVe9XzRVMxXjFwY0OE89tJutsUB2th32WiT5mc0zpqXf1Jm0dSmWYW39CqXLDA/Qs/8FCnMepEoYVRJmor+gnghGtreIVgNxpWEPNGv+TnDCKA2RpoDXrC2Z/mkmJRzX50=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.eu; s=zohoarc; 
-	t=1774205204; h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=YQm1d556B3o+NaQlArCokCh5J8Tddej2YfKHsXWYfh0=; 
-	b=JwTiG/l88lM/FDXmHT8xDtTzxsBCUPCMOYX0Ibn1cWBDQL8foSjmEx48H3Nga/fbRRFc/MEaKOlE9vV5WC7ovjPzRtH1ZDsi27xi0s41UnzU9dBzTYaZqNoR4DdNOjw7H71ginb+1RtH88do25Lv8ib9PxKn6OZje2bm73jtiMM=
-ARC-Authentication-Results: i=1; mx.zohomail.eu;
-	dkim=pass  header.i=objecting.org;
-	spf=pass  smtp.mailfrom=objecting@objecting.org;
-	dmarc=pass header.from=<objecting@objecting.org>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1774205204;
-	s=zmail; d=objecting.org; i=objecting@objecting.org;
-	h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-Id:Message-Id:MIME-Version:Content-Transfer-Encoding:Reply-To;
-	bh=YQm1d556B3o+NaQlArCokCh5J8Tddej2YfKHsXWYfh0=;
-	b=Fm9olenFTvPJn4JqOUXMkYAuFW74wBtmXrBLDbQ6iunfj/83UacmwfDlxVc8RZgT
-	aANrejF0QQe3921T8CinmK5DtAAPsT4tlQqUz0dR9z2HCzfh9f9x8urjx5PnBUpZhfJ
-	jMPx/Am5+pR9AFKhItniIr171o9yE1XiULyxDB9E=
-Received: by mx.zoho.eu with SMTPS id 1774205202996255.6842497561811;
-	Sun, 22 Mar 2026 19:46:42 +0100 (CET)
-From: Josh Law <objecting@objecting.org>
-To: sj@kernel.org,
-	akpm@linux-foundation.org
-Cc: damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH 0/2] mm/damon/core: performance optimizations for kdamond hot path
-Date: Sun, 22 Mar 2026 18:46:39 +0000
-Message-Id: <20260322184641.251966-1-objecting@objecting.org>
-X-Mailer: git-send-email 2.34.1
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UiZD1+x/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3ACB1C19424;
+	Sun, 22 Mar 2026 19:26:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1774207608;
+	bh=X2DK8H4FcYtPiwS5iIb457FtPn7QN07ZkhbMOTso2XE=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=UiZD1+x/nVOYnkRO5qYh824b+4jHHTlKk0D8ItIlwe6xN878lJgYIeLdhlrMnIT3m
+	 RMe8k6LPrBU5LA0ckrvSPYCU7l3PIE7ABUVuU9E+B7W5QfGLG/4PSrBhWsAX5RKmSz
+	 o3qrMQvaL/KvVM4jFc1ilhEmqkK7ZzoVpw4QaShx/p4G737WNesAnW8Ck33sV3FP70
+	 r0rKJgsMjEWE+pZ82cUiiKzHemb60reqp8ODiBFS5EtojiM9tQV3ftjA00FTgxfmWI
+	 pcd2OUb9Y10IpYCrlf8IxEwu6RCjnA4fiHL5yMvuu5GOGZpNWlLDkfJqCQidVSnm+A
+	 advWRx6HtLSXw==
+From: SeongJae Park <sj@kernel.org>
+To: SeongJae Park <sj@kernel.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>,
+	"# 6 . 15 . x" <stable@vger.kernel.org>,
+	damon@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	linux-mm@kvack.org
+Subject: Re: [PATCH] mm/damon/core: avoid use of half-online-committed context
+Date: Sun, 22 Mar 2026 12:26:40 -0700
+Message-ID: <20260322192641.87848-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260321021628.78887-1-sj@kernel.org>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -52,37 +46,49 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-ZohoMailClient: External
 
-This patch series provides two performance optimizations for the DAMON
-core, focusing on reducing unnecessary iterations and eliminating
-expensive hardware integer divisions in the hot paths.
+On Fri, 20 Mar 2026 19:16:35 SeongJae Park <sj@kernel.org> wrote:
+[...]
+> By the way, I am also doing monitoring of sashiko.dev for all DAMON patches.
+> It will be much easier once sashiko.dev's email feature is ready, since I
+> already onboarded DAMON for that.
+> 
+> Meanwhile, the monitoring using web browser is somewhat tedious for me, so I
+> just implemented an hkml feature, namely
+> 'hkml patch sashiko_dev --thread_status'.  It receives a message id of a mail,
+> and prints the review status/result of all patches of the thread.
+> 
+> E.g.,
+> 
+>     $ hkml patch sashiko_dev --thread_status 20260319-memory-failure-mf-delayed-fix-rfc-v2-v2-0-92c596402a7a@google.com
+>     - [PATCH RFC v2 1/7] mm: memory_failure: Clarify the MF_DELAYED definition
+>       - Reviewed (Review completed successfully.)
+>     - [PATCH RFC v2 2/7] mm: memory_failure: Allow truncate_error_folio to return MF_DELAYED
+>       - Reviewed (Review completed successfully.)
+>     - [PATCH RFC v2 3/7] mm: shmem: Update shmem handler to the MF_DELAYED definition
+>       - Reviewed (Review completed successfully.)
+>     - [PATCH RFC v2 4/7] mm: memory_failure: Generalize extra_pins handling to all MF_DELAYED cases
+>       - Pending (None)
+>     - [PATCH RFC v2 4/7] mm: memory_failure: Generalize extra_pins handling to all MF_DELAYED cases
+>       - Reviewed (Review completed successfully.)
+>     - [PATCH RFC v2 5/7] mm: selftests: Add shmem memory failure test
+>       - Reviewed (Review completed successfully.)
+>     - [PATCH RFC v2 6/7] KVM: selftests: Add memory failure tests in guest_memfd_test
+>       - Reviewed (Review completed successfully.)
+>     - [PATCH RFC v2 7/7] KVM: selftests: Test guest_memfd behavior with respect to stage 2 page tables
+>       - Reviewed (Review completed successfully.)
+> 
+> I'm planning to implement another feature for formatting and sending the review
+> result and inline comments as emails, probably this weekend.
 
-The first patch inverts the nested loops in kdamond_apply_schemes().
-Previously, it iterated over all regions and then all schemes for each
-region. By iterating over schemes on the outside, we can evaluate
-scheme-level invariants (like activation status and quotas) once per
-scheme and bypass the O(Regions) walk entirely when a scheme is inactive
-or has fulfilled its quota.
+Now the feature is available on 'master' branch of hkml.  I started using it
+since yesterday for DAMON patches, and it works for at least my workflow.  The
+documentation is also updated [1].
 
-The second patch eliminates a hardware integer division in
-damon_max_nr_accesses(), which is called for every region during every
-sample interval. It replaces the division with a read from a cached
-field.
+[1] https://github.com/sjp38/hackermail/blob/test/USAGE.md#forwarding-sashikodev-statuscomments-to-mailing-list
 
-Together, these changes significantly reduce the CPU overhead of DAMON,
-especially when monitoring large numbers of regions or using many
-DAMOS schemes.
 
-Josh Law (2):
-  mm/damon/core: optimize kdamond_apply_schemes() by inverting scheme
-    and region loops
-  mm/damon/core: eliminate hot-path integer division in
-    damon_max_nr_accesses()
+Thanks,
+SJ
 
- include/linux/damon.h |  3 +-
- mm/damon/core.c       | 72 ++++++++++++++++++-------------------------
- 2 files changed, 31 insertions(+), 44 deletions(-)
-
--- 
-2.34.1
+[...]
