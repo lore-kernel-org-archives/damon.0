@@ -1,157 +1,240 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from sender-of-o55.zoho.eu (sender-of-o55.zoho.eu [136.143.169.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B197C40DFC5;
-	Sun, 22 Mar 2026 22:28:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774218534; cv=none; b=hcm99KN41iynx8RyNzGcIXVUcWCa26ElBpHyGIOuZ+A5APCAFxgmDI/F/wG6C8Tpura4f6iirqgKb527Z1LlG75Barnj4R941bUbR41lX85Amx50M2j5KmPxBxwoJH+kxftSEgXC8rD1snWcarroqh3Kyd1/17ULi8ZmoBRn090=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774218534; c=relaxed/simple;
-	bh=kzW9ex6Pn6zhGRYRBf0VzvojUC0+Ma6yBVZIRqEFZgM=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Hf0MHXdOtFO1uJX1nmhRAMrLyqT17y0SkM6jAn05fCpfcF0k/nsXoDaxeJvxFYcw5JpRg2WFDbqIHC1b3L0vIbevGccIhpAGy5kBLklv1CgmolyQi9Y6q+qeqt62pmwWLq+qWK7EvmZFogCsbWHKQYfDdgEmX3SthpRETI/70dk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=J6n5jTaf; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 297042D6401
+	for <damon@lists.linux.dev>; Sun, 22 Mar 2026 22:39:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.169.55
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1774219158; cv=pass; b=LevcpJKgG43ZowFlV9svAAFPE3zuI8zonbrz/+L3gsSlAupsAHVYy/ka1szx1LH6CMLu+SZPDdblwJsTEPshRLiyawnfHiE1N6eRanIEdI3mvJTRD2KEmCD2GW5GZWkYZsDyKgTiivxk/xJhQBidDdRUA24YR9RfaFDb1/C4Upo=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1774219158; c=relaxed/simple;
+	bh=od6KZ3UrQBUeUTybzf4jNx+hxEpnXcF20x3YCtZdbJQ=;
+	h=Date:From:To:CC:Subject:In-Reply-To:References:Message-ID:
+	 MIME-Version:Content-Type; b=JdIVRApDzNDgOUlophl/rnoRZ2nFkckm685xWsA90AX+T2CcNjIC4DQJmHz9tS64NZhQYG55Im4NG8Vn0MQ8EiXJFTIZPyctNNDAznL+Tz1xwXCxKK+43Z5E+/Uc/ajYOt4Rct8ttvEy1PQwnJR/0Dn8rc+ko/qDXlqjaZM+FwE=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=objecting.org; spf=pass smtp.mailfrom=objecting.org; dkim=pass (1024-bit key) header.d=objecting.org header.i=objecting@objecting.org header.b=RVsXarFb; arc=pass smtp.client-ip=136.143.169.55
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=objecting.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=objecting.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="J6n5jTaf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F152C19424;
-	Sun, 22 Mar 2026 22:28:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1774218534;
-	bh=kzW9ex6Pn6zhGRYRBf0VzvojUC0+Ma6yBVZIRqEFZgM=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J6n5jTafHSgCE/WZyy9MLx2HnUUkhFROw6fw3aG4gXqsajLr9q14Oz1zvL+bwDdWX
-	 cTFzWywbkrHGXuwKGCq9rlxskr5ZZ0Uw4r4Nm/TBmvfpPqNFCTTuC7pFVk5uSAzp3A
-	 Opcdadiyw271v1LSD8WETHlUd8wZZuc8ZuAlQT7pUs4qhpjaTmT5FMqxMdr0QYemDt
-	 AZ7ZtLeRp3NuC9RvCHFlgK00WQPvKV4yyr3M1V9QjYpMpOd5sRGsSaTebAj7K1TgOu
-	 l0Q8v8aw6Dzh5zLvRPAjjXm74eaZ/93jlv6GQoCP/SGTB5XPtgdeElQS2ZUkLvA1TN
-	 aWZuaEp8pLpgw==
-From: SeongJae Park <sj@kernel.org>
-To: Josh Law <objecting@objecting.org>
-Cc: SeongJae Park <sj@kernel.org>,
-	akpm@linux-foundation.org,
-	damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/2] mm/damon/core: optimize kdamond_ap =?US-ASCII?Q?ply=5Fschemes=28=29_by_inverting_scheme_and_region_loops?=
-Date: Sun, 22 Mar 2026 15:28:44 -0700
-Message-ID: <20260322222845.89757-1-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <C9B59023-161D-405F-8941-1B0E0B8E1D6B@objecting.org>
-References: 
+	dkim=pass (1024-bit key) header.d=objecting.org header.i=objecting@objecting.org header.b="RVsXarFb"
+ARC-Seal: i=1; a=rsa-sha256; t=1774219153; cv=none; 
+	d=zohomail.eu; s=zohoarc; 
+	b=G9pDd8PfxJI8tQuY+537qK/OfSryAtiAEMxsL6FKwfUYK2h+tmPa81TR55s37edP7ptkCVkL5CXz2lnu1CADy0XPCpc4Ux+5Nb+JgWKrJtAeG4EmTFvv6GjZcIfSCn0hSXpCB7Cjy+FO9HSBDKXPAcLFY04R9U3bipGQWBgtoms=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.eu; s=zohoarc; 
+	t=1774219153; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=7htVmUNWgWhZ4WZhbE/1OPjn0u09igwJQNEcQ7skU9Y=; 
+	b=Jz7PS3SSlCwYgr+2m0HwA8GyrFOZosmHupD+LrhStX4TXH8zPHYXHaV2VBptmyFvitHsiIPF/HoKW53VoZeCoHFjfJdbqzNKL2ZhRWvrnc6rhxef3Xfcf/j+FzZ3nOByUQ7jz+OzZe84TCuFOkhh5LfMUDEaD685F32q/VU26g4=
+ARC-Authentication-Results: i=1; mx.zohomail.eu;
+	dkim=pass  header.i=objecting.org;
+	spf=pass  smtp.mailfrom=objecting@objecting.org;
+	dmarc=pass header.from=<objecting@objecting.org>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1774219153;
+	s=zmail; d=objecting.org; i=objecting@objecting.org;
+	h=Date:Date:From:From:To:To:CC:Subject:Subject:In-Reply-To:References:Message-ID:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To:Cc;
+	bh=7htVmUNWgWhZ4WZhbE/1OPjn0u09igwJQNEcQ7skU9Y=;
+	b=RVsXarFbJ8pUm293gwQoaLVz6ag+yxu/xfCSgp58Ixx0xV6YQZcXOmQoK7A9qX/9
+	Q3fPXQA8NPISbkC2x+mWf54DG/QXch+vrZSuYLEJEbyVF1cTCNnmUglJ4Q4v6oPLEkF
+	KMQmrWLHliIov9VvxaZ1m36NU8yjbVNCstslnN5U=
+Received: by mx.zoho.eu with SMTPS id 1774219152622890.3867755718165;
+	Sun, 22 Mar 2026 23:39:12 +0100 (CET)
+Date: Sun, 22 Mar 2026 22:39:11 +0000
+From: Josh Law <objecting@objecting.org>
+To: SeongJae Park <sj@kernel.org>
+CC: akpm@linux-foundation.org, damon@lists.linux.dev, linux-mm@kvack.org,
+ linux-kernel@vger.kernel.org
+Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_1/2=5D_mm/damon/core=3A_optimize_kdamond=5Fap?=
+ =?US-ASCII?Q?_ply=5Fschemes=28=29_by_inverting_scheme_and_region_loops?=
+User-Agent: Thunderbird for Android
+In-Reply-To: <20260322222845.89757-1-sj@kernel.org>
+References:  <20260322222845.89757-1-sj@kernel.org>
+Message-ID: <FEBF344D-3A99-4360-A286-705260B68704@objecting.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-
-On Sun, 22 Mar 2026 21:59:45 +0000 Josh Law <objecting@objecting.org> wrote:
-
-> 
-> 
-> On 22 March 2026 21:44:18 GMT, SeongJae Park <sj@kernel.org> wrote:
-> >Hello Josh,
-> >
-> >On Sun, 22 Mar 2026 18:46:40 +0000 Josh Law <objecting@objecting.org> wrote:
-> >
-> >> Currently, kdamond_apply_schemes() iterates over all targets, then over all
-> >> regions, and finally calls damon_do_apply_schemes() which iterates over
-> >> all schemes. This nested structure causes scheme-level invariants (such as
-> >> time intervals, activation status, and quota limits) to be evaluated inside
-> >> the innermost loop for every single region.
-> >> 
-> >> If a scheme is inactive, has not reached its apply interval, or has already
-> >> fulfilled its quota (quota->charged_sz >= quota->esz), the kernel still
-> >> needlessly iterates through thousands of regions only to repeatedly
-> >> evaluate these same scheme-level conditions and continue.
-> >> 
-> >> This patch inlines damon_do_apply_schemes() into kdamond_apply_schemes()
-> >> and inverts the loop ordering. It now iterates over schemes on the outside,
-> >> and targets/regions on the inside.
-> >> 
-> >> This allows the code to evaluate scheme-level limits once per scheme.
-> >> If a scheme's quota is met or it is inactive, we completely bypass the
-> >> O(Targets * Regions) inner loop for that scheme. This drastically reduces
-> >> unnecessary branching, cache thrashing, and CPU overhead in the kdamond
-> >> hot path.
-> >
-> >That makes sense in high level.  But, this will make a kind of behavioral
-> >difference that could be user-visible.  I am failing at finding a clear use
-> >case that really depends on the old behavior.  But, still it feels like not a
-> >small change to me.
-> >
-> >So, I'd like to be conservative to this change, unless there are good evidences
-> >showing very clear and impactful real world benefits.  Can you share such
-> >evidences if you have?
-> >
-> >
-> >Thanks,
-> >SJ
-> >
-> >[...]
-> 
-> 
-> My last email:
-> 
-> Hi SeongJae,
-> 
-> I've looked into this further and ran some extra benchmarks on the kdamond hot path to see if the gains were actually meaningful.
-> 
-> The main issue right now is that kdamond spends a lot of time "spinning" through regions even when there's no work to do. For example, if a user has 10,000 regions and a few schemes that have already hit their quotas or are disabled by watermarks, the current code still iterates through every single region just to check those same flags 10,000 times.
-> 
-> In my tests:
-> 
-> Typical setup (10 schemes, 2k regions): ~3.4x faster.
-> 
-> Large scale (10k regions, hitting quotas): ~7x faster.
-> 
-> Idle schemes (watermarks off): ~7x faster.
-
-Thank you for sharing these.  This seems like not a real world workload test
-but some micro-benchmarks for only the code path, though.
-
-In real world DAMOS usages, I think most of time will be spent on applying
-DAMOS action.  Compared to that, I think the time spent for the unnecessary
-iteration will be quite small.
-
-> 
-> 
-> It's also a cache locality win. Right now the CPU has to bounce between different scheme metadata inside the innermost loop for every region. Inverting the loops lets us process one scheme completely, which keeps the hot data in L1/L2 and gives about a 10% gain even when everything is active.
-> 
-> The goal isn't just to shave cycles, but to make DAMON scale better on high-memory systems (512GB+) where the region count is high. This keeps the background "CPU floor" much lower when DAMON is supposed to be idle or throttled.
-
-DAMON does adaptive regions adjustment for such large memory system
-scalability.  I understand some users might dislike the adaptive mechanism and
-stick to a fixed granular monitoring, though.
-
-So I'm not yet convinced to this change as is.
-
-Meanwhile, I'm thinking about a way to make similar optimization without
-changing the behavior.
-
-We already have the first loop of kdamond_apply_schemes() to minimize some of
-the inefficiency that this patch is aiming to optimize out.  Maybe we can
-further optimize the first loop.  For example, modifying the first loop to
-build a list or array that contains schemes that passed the next_apply_sis and
-wmarks.activated test, and make damon_do_apply_schemes() to use the test-passed
-schemes instead of the all schemes in the context.
-
-This will keep the behavior but have a performance gain that similar to what
-this patch is aiming to.  If this can be done with a fairly simple way that can
-justify the maintenance burden, I think that's a way path forward.  But, from
-this point, I realize I want it to be *very* simple, and I have no idea about
-the simple way.
-
-So I wanted to help making this be merged.  But I fail at finding a good path
-forward on my own.
-
-In my humble and frank opinion, finding other place to work on insted of this
-specific code path optimization might be a better use of the time.
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-ZohoMailClient: External
 
 
-Thanks,
-SJ
 
-[...]
+On 22 March 2026 22:28:44 GMT, SeongJae Park <sj@kernel=2Eorg> wrote:
+>On Sun, 22 Mar 2026 21:59:45 +0000 Josh Law <objecting@objecting=2Eorg> w=
+rote:
+>
+>>=20
+>>=20
+>> On 22 March 2026 21:44:18 GMT, SeongJae Park <sj@kernel=2Eorg> wrote:
+>> >Hello Josh,
+>> >
+>> >On Sun, 22 Mar 2026 18:46:40 +0000 Josh Law <objecting@objecting=2Eorg=
+> wrote:
+>> >
+>> >> Currently, kdamond_apply_schemes() iterates over all targets, then o=
+ver all
+>> >> regions, and finally calls damon_do_apply_schemes() which iterates o=
+ver
+>> >> all schemes=2E This nested structure causes scheme-level invariants =
+(such as
+>> >> time intervals, activation status, and quota limits) to be evaluated=
+ inside
+>> >> the innermost loop for every single region=2E
+>> >>=20
+>> >> If a scheme is inactive, has not reached its apply interval, or has =
+already
+>> >> fulfilled its quota (quota->charged_sz >=3D quota->esz), the kernel =
+still
+>> >> needlessly iterates through thousands of regions only to repeatedly
+>> >> evaluate these same scheme-level conditions and continue=2E
+>> >>=20
+>> >> This patch inlines damon_do_apply_schemes() into kdamond_apply_schem=
+es()
+>> >> and inverts the loop ordering=2E It now iterates over schemes on the=
+ outside,
+>> >> and targets/regions on the inside=2E
+>> >>=20
+>> >> This allows the code to evaluate scheme-level limits once per scheme=
+=2E
+>> >> If a scheme's quota is met or it is inactive, we completely bypass t=
+he
+>> >> O(Targets * Regions) inner loop for that scheme=2E This drastically =
+reduces
+>> >> unnecessary branching, cache thrashing, and CPU overhead in the kdam=
+ond
+>> >> hot path=2E
+>> >
+>> >That makes sense in high level=2E  But, this will make a kind of behav=
+ioral
+>> >difference that could be user-visible=2E  I am failing at finding a cl=
+ear use
+>> >case that really depends on the old behavior=2E  But, still it feels l=
+ike not a
+>> >small change to me=2E
+>> >
+>> >So, I'd like to be conservative to this change, unless there are good =
+evidences
+>> >showing very clear and impactful real world benefits=2E  Can you share=
+ such
+>> >evidences if you have?
+>> >
+>> >
+>> >Thanks,
+>> >SJ
+>> >
+>> >[=2E=2E=2E]
+>>=20
+>>=20
+>> My last email:
+>>=20
+>> Hi SeongJae,
+>>=20
+>> I've looked into this further and ran some extra benchmarks on the kdam=
+ond hot path to see if the gains were actually meaningful=2E
+>>=20
+>> The main issue right now is that kdamond spends a lot of time "spinning=
+" through regions even when there's no work to do=2E For example, if a user=
+ has 10,000 regions and a few schemes that have already hit their quotas or=
+ are disabled by watermarks, the current code still iterates through every =
+single region just to check those same flags 10,000 times=2E
+>>=20
+>> In my tests:
+>>=20
+>> Typical setup (10 schemes, 2k regions): ~3=2E4x faster=2E
+>>=20
+>> Large scale (10k regions, hitting quotas): ~7x faster=2E
+>>=20
+>> Idle schemes (watermarks off): ~7x faster=2E
+>
+>Thank you for sharing these=2E  This seems like not a real world workload=
+ test
+>but some micro-benchmarks for only the code path, though=2E
+>
+>In real world DAMOS usages, I think most of time will be spent on applyin=
+g
+>DAMOS action=2E  Compared to that, I think the time spent for the unneces=
+sary
+>iteration will be quite small=2E
+>
+>>=20
+>>=20
+>> It's also a cache locality win=2E Right now the CPU has to bounce betwe=
+en different scheme metadata inside the innermost loop for every region=2E =
+Inverting the loops lets us process one scheme completely, which keeps the =
+hot data in L1/L2 and gives about a 10% gain even when everything is active=
+=2E
+>>=20
+>> The goal isn't just to shave cycles, but to make DAMON scale better on =
+high-memory systems (512GB+) where the region count is high=2E This keeps t=
+he background "CPU floor" much lower when DAMON is supposed to be idle or t=
+hrottled=2E
+>
+>DAMON does adaptive regions adjustment for such large memory system
+>scalability=2E  I understand some users might dislike the adaptive mechan=
+ism and
+>stick to a fixed granular monitoring, though=2E
+>
+>So I'm not yet convinced to this change as is=2E
+>
+>Meanwhile, I'm thinking about a way to make similar optimization without
+>changing the behavior=2E
+>
+>We already have the first loop of kdamond_apply_schemes() to minimize som=
+e of
+>the inefficiency that this patch is aiming to optimize out=2E  Maybe we c=
+an
+>further optimize the first loop=2E  For example, modifying the first loop=
+ to
+>build a list or array that contains schemes that passed the next_apply_si=
+s and
+>wmarks=2Eactivated test, and make damon_do_apply_schemes() to use the tes=
+t-passed
+>schemes instead of the all schemes in the context=2E
+>
+>This will keep the behavior but have a performance gain that similar to w=
+hat
+>this patch is aiming to=2E  If this can be done with a fairly simple way =
+that can
+>justify the maintenance burden, I think that's a way path forward=2E  But=
+, from
+>this point, I realize I want it to be *very* simple, and I have no idea a=
+bout
+>the simple way=2E
+>
+>So I wanted to help making this be merged=2E  But I fail at finding a goo=
+d path
+>forward on my own=2E
+>
+>In my humble and frank opinion, finding other place to work on insted of =
+this
+>specific code path optimization might be a better use of the time=2E
+>
+>
+>Thanks,
+>SJ
+>
+>[=2E=2E=2E]
+
+
+Hi SeongJae,
+=E2=80=8BI understand your concerns regarding the behavioral changes and t=
+he adaptive regions mechanism=2E If the loop inversion is too intrusive for=
+ the current DAMOS semantics, I agree it's better not to force it=2E
+
+=E2=80=8BYour suggestion to optimize the first loop by pre-filtering activ=
+e schemes into a temporary list/array is interesting=2E It would achieve th=
+e O(Targets * Regions) skip for inactive schemes without changing the appli=
+cation order for active ones=2E
+
+=E2=80=8BI'll take a look at whether that can be implemented simply enough=
+ to justify the overhead of managing the temporary list=2E If it looks too =
+complex, I'll move on to other areas as you suggested=2E
+=E2=80=8BThanks for the detailed feedback and the guidance on DAMON's scal=
+ing philosophy=2E
+
+
+=E2=80=8BV/R
+
+
+Josh
