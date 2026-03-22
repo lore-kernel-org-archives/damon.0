@@ -1,226 +1,153 @@
 Received: from sender-of-o55.zoho.eu (sender-of-o55.zoho.eu [136.143.169.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F6562F261C
-	for <damon@lists.linux.dev>; Sun, 22 Mar 2026 22:45:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9253837F74D
+	for <damon@lists.linux.dev>; Sun, 22 Mar 2026 22:56:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.169.55
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774219507; cv=pass; b=SU8aYdG6XlV14W2kIVdSmDFm0v0TICzdobODxkSYb3t+CMUKc8Cn6YIj47adEuTsaV7fFw6qTfUJmHyWBVcRCYKw7C2siVoR6jYuT8BUZ+lda8uA5Uky1c+jPNQI+pnumJ0pJDoOAIDcTNaaPIHzQNSKPcV2mkR4cOJvEO/A7i8=
+	t=1774220195; cv=pass; b=YcajPjMvEfbyM4gey00a0naDYgYUacDVKFq/CCga2PgknOJTwY/m/G9bVaHAJHywgr/DoF1Z/QEUiWXBETgR2hICFgyui0qJLTXN55B2Ybz/mEe8pz/xExMTk3066aRFd9L5r73K6QTA3cWY2cxsDnnc8C2dQqHgYRWbFEQCNuI=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774219507; c=relaxed/simple;
-	bh=bME364F5ZP0U/lDTo1u0eIhkTfzXi5wSGOiotM5R6aM=;
-	h=Date:From:To:CC:Subject:In-Reply-To:References:Message-ID:
-	 MIME-Version:Content-Type; b=FkCMlxfzueEsiWiyqto3lRW3dvQnK33U2h7sGAkGXP7QCqOmUVQy1fKk94s790SBbjB/Hg/dT2YkLPfyjW6sHi7+bfcoByYVTnJXav3AdRc9Dxv4FrFUlQrZ0ZYKZbHR8BvESeeJ8qy2wgTdcTSIFi2AJRuXIeWxGIfvq6PcPpY=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=objecting.org; spf=pass smtp.mailfrom=objecting.org; dkim=pass (1024-bit key) header.d=objecting.org header.i=objecting@objecting.org header.b=Y7uqxCx8; arc=pass smtp.client-ip=136.143.169.55
+	s=arc-20240116; t=1774220195; c=relaxed/simple;
+	bh=MOiID3weL4oa20w4xOggWwVx5XjIa9wj1xFeQ58o9cg=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=Xu0EsJjlG81EJsuD9pJBGW0f3VLY4A/VHnyYJi/JFgMHSCFI9zhXEYGWu6+037MD8EcOXstdgyFxNQUIz86fvbNKzepQqVdWVw9RMp7EQZQrHXNJm5nqvRvpUb2jdDKxH7xg/VAev0QncHoB0ntrgyqOUX7TuypCSVCUzEUfeOU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=objecting.org; spf=pass smtp.mailfrom=objecting.org; dkim=pass (1024-bit key) header.d=objecting.org header.i=objecting@objecting.org header.b=dCS6leci; arc=pass smtp.client-ip=136.143.169.55
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=objecting.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=objecting.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=objecting.org header.i=objecting@objecting.org header.b="Y7uqxCx8"
-ARC-Seal: i=1; a=rsa-sha256; t=1774219502; cv=none; 
+	dkim=pass (1024-bit key) header.d=objecting.org header.i=objecting@objecting.org header.b="dCS6leci"
+ARC-Seal: i=1; a=rsa-sha256; t=1774220190; cv=none; 
 	d=zohomail.eu; s=zohoarc; 
-	b=QKoVkJlMpHEwtYZ08pMA100NBB9F6LqeCOy1twspmfpG9KgZ/zHcM4lquReEfuFvyPdNP4i+AbJ4guC9qjxE8kFIF8TCl25K6phzF0O6wrZYdnEVFcGTPRvpYcDXISu1ZtggKA9KiRCrJHwvK78OpmYpi6FXSx/f1TbMQpq4pnU=
+	b=UigafiQgHsVCVl6vlg+lSi5Wv7Zc4Q43A/4OmBfX4Jo7SDCX+174XDaHuxeLQ8WBWjRFC8iD0TRvM5wNPVNnD1c6U1bMaHlNaV+hiSJWWHlnbKdEKG09WVyid0igDeYyJyJuIl78dIM4bXJR8I0G2ik6RgzxI1F5oN+hHnVEbN8=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.eu; s=zohoarc; 
-	t=1774219502; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=TqU54qz1b0JYXr0irLJYfC/H/ZKCnbSpqU3Ly1SLrCs=; 
-	b=lp+f2JyVgTU5L4mc/GghF8al7CLHDwY4PbsWUwiw0QQyK4o+YV4xpe9sX1QK5FTRF+vVBvvs+PL3WPGRESPn5D1XcCX2cO98L4MLyg+H29gHkzbEodjJSi3sXiMbbTz8tGKPfy/1uxe+JmkJzBlypGZITdXRIjG+rpb8G2lVpiA=
+	t=1774220190; h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=838iRbAcXH2NCU1A1DaV1kt5NP6LjTFkRnUqJYBZUx4=; 
+	b=gh6Egw/LrWqRw58TqEKBHxEis0qD+qrL2vTYdZGGZRcy856DwVsCxZMABF8BP/mPXIWBQePCIuMehWmmP+j5oyni7mPI4aw8LmEk4NaD+V/LO4ov4RrlLN3VyHSDd2wriHCgP0hJcPZvlAjq/l0rXHKhsAYOSvwfRUAbfhLulNw=
 ARC-Authentication-Results: i=1; mx.zohomail.eu;
 	dkim=pass  header.i=objecting.org;
 	spf=pass  smtp.mailfrom=objecting@objecting.org;
 	dmarc=pass header.from=<objecting@objecting.org>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1774219502;
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1774220190;
 	s=zmail; d=objecting.org; i=objecting@objecting.org;
-	h=Date:Date:From:From:To:To:CC:Subject:Subject:In-Reply-To:References:Message-ID:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To:Cc;
-	bh=TqU54qz1b0JYXr0irLJYfC/H/ZKCnbSpqU3Ly1SLrCs=;
-	b=Y7uqxCx8LbE/slePqhzGMesn8pb/JylWe7ylSsLR9ea9ODUZATPd0vn3KNom9NxH
-	NMZ8pePIM1w9bbb2o9wj7m4ZNaoKJs4ep0wCU/cjWfli3OvlnAai3o6OkMJQIr6+waH
-	BYTdunRzA019sLP2tiMP4QwB8cehWwgYgja4VHe4=
-Received: by mx.zoho.eu with SMTPS id 1774219499729489.97665996474313;
-	Sun, 22 Mar 2026 23:44:59 +0100 (CET)
-Date: Sun, 22 Mar 2026 22:44:58 +0000
+	h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-Id:Message-Id:MIME-Version:Content-Transfer-Encoding:Reply-To;
+	bh=838iRbAcXH2NCU1A1DaV1kt5NP6LjTFkRnUqJYBZUx4=;
+	b=dCS6leciad1MsQSVZkgf5sGCoTHkodLVIC4JTCMNFMpTzdimqGWYAIsU/xlEhOBj
+	QL6lg8sJkXGbYX3dofOqUy5opI10hSkILoqNGva2MSQlowfAiKul4t4d5WQwkTE/MRo
+	BwtE64P9v141egHO8Z366nPkD0fmYscyLzomfI/o=
+Received: by mx.zoho.eu with SMTPS id 1774220188445159.7066913354488;
+	Sun, 22 Mar 2026 23:56:28 +0100 (CET)
 From: Josh Law <objecting@objecting.org>
-To: SeongJae Park <sj@kernel.org>
-CC: akpm@linux-foundation.org, damon@lists.linux.dev, linux-mm@kvack.org,
- linux-kernel@vger.kernel.org
-Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_1/2=5D_mm/damon/core=3A_optimize_kdamond=5Fap?=
- =?US-ASCII?Q?_ply=5Fschemes=28=29_by_inverting_scheme_and_region_loops?=
-User-Agent: Thunderbird for Android
-In-Reply-To: <20260322222845.89757-1-sj@kernel.org>
-References:  <20260322222845.89757-1-sj@kernel.org>
-Message-ID: <41251BD0-5796-4600-A75B-3D08A81ADF04@objecting.org>
+To: sj@kernel.org,
+	akpm@linux-foundation.org
+Cc: damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org,
+	Josh Law <objecting@objecting.org>
+Subject: [PATCH] mm/damon/core: optimize kdamond_apply_schemes() with pre-filtered scheme list
+Date: Sun, 22 Mar 2026 22:56:27 +0000
+Message-Id: <20260322225627.263202-1-objecting@objecting.org>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 X-ZohoMailClient: External
 
+Currently, kdamond_apply_schemes() iterates over all targets and regions
+for every scheme in the context, even if the scheme is inactive due to
+watermarks or hasn't reached its next apply interval.
 
+This patch introduces a pre-filtered list of active schemes at the start
+of kdamond_apply_schemes(). By only iterating over schemes that actually
+need to be applied in the current interval, we significantly reduce the
+overhead of the nested target/region loops.
 
-On 22 March 2026 22:28:44 GMT, SeongJae Park <sj@kernel=2Eorg> wrote:
->On Sun, 22 Mar 2026 21:59:45 +0000 Josh Law <objecting@objecting=2Eorg> w=
-rote:
->
->>=20
->>=20
->> On 22 March 2026 21:44:18 GMT, SeongJae Park <sj@kernel=2Eorg> wrote:
->> >Hello Josh,
->> >
->> >On Sun, 22 Mar 2026 18:46:40 +0000 Josh Law <objecting@objecting=2Eorg=
-> wrote:
->> >
->> >> Currently, kdamond_apply_schemes() iterates over all targets, then o=
-ver all
->> >> regions, and finally calls damon_do_apply_schemes() which iterates o=
-ver
->> >> all schemes=2E This nested structure causes scheme-level invariants =
-(such as
->> >> time intervals, activation status, and quota limits) to be evaluated=
- inside
->> >> the innermost loop for every single region=2E
->> >>=20
->> >> If a scheme is inactive, has not reached its apply interval, or has =
-already
->> >> fulfilled its quota (quota->charged_sz >=3D quota->esz), the kernel =
-still
->> >> needlessly iterates through thousands of regions only to repeatedly
->> >> evaluate these same scheme-level conditions and continue=2E
->> >>=20
->> >> This patch inlines damon_do_apply_schemes() into kdamond_apply_schem=
-es()
->> >> and inverts the loop ordering=2E It now iterates over schemes on the=
- outside,
->> >> and targets/regions on the inside=2E
->> >>=20
->> >> This allows the code to evaluate scheme-level limits once per scheme=
-=2E
->> >> If a scheme's quota is met or it is inactive, we completely bypass t=
-he
->> >> O(Targets * Regions) inner loop for that scheme=2E This drastically =
-reduces
->> >> unnecessary branching, cache thrashing, and CPU overhead in the kdam=
-ond
->> >> hot path=2E
->> >
->> >That makes sense in high level=2E  But, this will make a kind of behav=
-ioral
->> >difference that could be user-visible=2E  I am failing at finding a cl=
-ear use
->> >case that really depends on the old behavior=2E  But, still it feels l=
-ike not a
->> >small change to me=2E
->> >
->> >So, I'd like to be conservative to this change, unless there are good =
-evidences
->> >showing very clear and impactful real world benefits=2E  Can you share=
- such
->> >evidences if you have?
->> >
->> >
->> >Thanks,
->> >SJ
->> >
->> >[=2E=2E=2E]
->>=20
->>=20
->> My last email:
->>=20
->> Hi SeongJae,
->>=20
->> I've looked into this further and ran some extra benchmarks on the kdam=
-ond hot path to see if the gains were actually meaningful=2E
->>=20
->> The main issue right now is that kdamond spends a lot of time "spinning=
-" through regions even when there's no work to do=2E For example, if a user=
- has 10,000 regions and a few schemes that have already hit their quotas or=
- are disabled by watermarks, the current code still iterates through every =
-single region just to check those same flags 10,000 times=2E
->>=20
->> In my tests:
->>=20
->> Typical setup (10 schemes, 2k regions): ~3=2E4x faster=2E
->>=20
->> Large scale (10k regions, hitting quotas): ~7x faster=2E
->>=20
->> Idle schemes (watermarks off): ~7x faster=2E
->
->Thank you for sharing these=2E  This seems like not a real world workload=
- test
->but some micro-benchmarks for only the code path, though=2E
->
->In real world DAMOS usages, I think most of time will be spent on applyin=
-g
->DAMOS action=2E  Compared to that, I think the time spent for the unneces=
-sary
->iteration will be quite small=2E
->
->>=20
->>=20
->> It's also a cache locality win=2E Right now the CPU has to bounce betwe=
-en different scheme metadata inside the innermost loop for every region=2E =
-Inverting the loops lets us process one scheme completely, which keeps the =
-hot data in L1/L2 and gives about a 10% gain even when everything is active=
-=2E
->>=20
->> The goal isn't just to shave cycles, but to make DAMON scale better on =
-high-memory systems (512GB+) where the region count is high=2E This keeps t=
-he background "CPU floor" much lower when DAMON is supposed to be idle or t=
-hrottled=2E
->
->DAMON does adaptive regions adjustment for such large memory system
->scalability=2E  I understand some users might dislike the adaptive mechan=
-ism and
->stick to a fixed granular monitoring, though=2E
->
->So I'm not yet convinced to this change as is=2E
->
->Meanwhile, I'm thinking about a way to make similar optimization without
->changing the behavior=2E
->
->We already have the first loop of kdamond_apply_schemes() to minimize som=
-e of
->the inefficiency that this patch is aiming to optimize out=2E  Maybe we c=
-an
->further optimize the first loop=2E  For example, modifying the first loop=
- to
->build a list or array that contains schemes that passed the next_apply_si=
-s and
->wmarks=2Eactivated test, and make damon_do_apply_schemes() to use the tes=
-t-passed
->schemes instead of the all schemes in the context=2E
->
->This will keep the behavior but have a performance gain that similar to w=
-hat
->this patch is aiming to=2E  If this can be done with a fairly simple way =
-that can
->justify the maintenance burden, I think that's a way path forward=2E  But=
-, from
->this point, I realize I want it to be *very* simple, and I have no idea a=
-bout
->the simple way=2E
->
->So I wanted to help making this be merged=2E  But I fail at finding a goo=
-d path
->forward on my own=2E
->
->In my humble and frank opinion, finding other place to work on insted of =
-this
->specific code path optimization might be a better use of the time=2E
->
->
->Thanks,
->SJ
->
->[=2E=2E=2E]
+This optimization maintains the original Target -> Region -> Scheme
+behavior while providing substantial performance gains, especially when
+many schemes are inactive.
 
+Performance Benchmarks (Filtered Array vs Original):
+| Scenario Description      | Speedup |
+|---------------------------|---------|
+| Mostly Inactive (2/10)    |  7.5x   |
+| Half Active (5/10)        |  2.9x   |
+| All Active (10/10)        |  1.3x   |
 
-Also, V2 is out for the other patch you liked
+Signed-off-by: Josh Law <objecting@objecting.org>
+---
+ mm/damon/core.c | 28 +++++++++++++++-------------
+ 1 file changed, 15 insertions(+), 13 deletions(-)
 
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index c884bb31c9b8..3b59e72defd4 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -2114,19 +2114,16 @@ static void damos_apply_scheme(struct damon_ctx *c, struct damon_target *t,
+ 
+ static void damon_do_apply_schemes(struct damon_ctx *c,
+ 				   struct damon_target *t,
+-				   struct damon_region *r)
++				   struct damon_region *r,
++				   struct damos **active_schemes,
++				   int nr_active_schemes)
+ {
+-	struct damos *s;
++	int i;
+ 
+-	damon_for_each_scheme(s, c) {
++	for (i = 0; i < nr_active_schemes; i++) {
++		struct damos *s = active_schemes[i];
+ 		struct damos_quota *quota = &s->quota;
+ 
+-		if (time_before(c->passed_sample_intervals, s->next_apply_sis))
+-			continue;
+-
+-		if (!s->wmarks.activated)
+-			continue;
+-
+ 		/* Check the quota */
+ 		if (quota->esz && quota->charged_sz >= quota->esz)
+ 			continue;
+@@ -2476,7 +2473,8 @@ static void kdamond_apply_schemes(struct damon_ctx *c)
+ 	struct damon_target *t;
+ 	struct damon_region *r;
+ 	struct damos *s;
+-	bool has_schemes_to_apply = false;
++	struct damos *active_schemes[32];
++	int nr_active_schemes = 0;
+ 
+ 	damon_for_each_scheme(s, c) {
+ 		if (time_before(c->passed_sample_intervals, s->next_apply_sis))
+@@ -2485,12 +2483,15 @@ static void kdamond_apply_schemes(struct damon_ctx *c)
+ 		if (!s->wmarks.activated)
+ 			continue;
+ 
+-		has_schemes_to_apply = true;
++		if (nr_active_schemes < ARRAY_SIZE(active_schemes))
++			active_schemes[nr_active_schemes++] = s;
++		else
++			WARN_ONCE(1, "too many schemes to apply");
+ 
+ 		damos_adjust_quota(c, s);
+ 	}
+ 
+-	if (!has_schemes_to_apply)
++	if (!nr_active_schemes)
+ 		return;
+ 
+ 	mutex_lock(&c->walk_control_lock);
+@@ -2499,7 +2500,8 @@ static void kdamond_apply_schemes(struct damon_ctx *c)
+ 			continue;
+ 
+ 		damon_for_each_region(r, t)
+-			damon_do_apply_schemes(c, t, r);
++			damon_do_apply_schemes(c, t, r, active_schemes,
++					       nr_active_schemes);
+ 	}
+ 
+ 	damon_for_each_scheme(s, c) {
+-- 
+2.34.1
 
-V/R
-
-
-Josh Law
