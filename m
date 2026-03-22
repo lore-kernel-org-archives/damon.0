@@ -1,42 +1,42 @@
 Received: from sender-of-o55.zoho.eu (sender-of-o55.zoho.eu [136.143.169.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 297042D6401
-	for <damon@lists.linux.dev>; Sun, 22 Mar 2026 22:39:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F6562F261C
+	for <damon@lists.linux.dev>; Sun, 22 Mar 2026 22:45:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.169.55
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774219158; cv=pass; b=LevcpJKgG43ZowFlV9svAAFPE3zuI8zonbrz/+L3gsSlAupsAHVYy/ka1szx1LH6CMLu+SZPDdblwJsTEPshRLiyawnfHiE1N6eRanIEdI3mvJTRD2KEmCD2GW5GZWkYZsDyKgTiivxk/xJhQBidDdRUA24YR9RfaFDb1/C4Upo=
+	t=1774219507; cv=pass; b=SU8aYdG6XlV14W2kIVdSmDFm0v0TICzdobODxkSYb3t+CMUKc8Cn6YIj47adEuTsaV7fFw6qTfUJmHyWBVcRCYKw7C2siVoR6jYuT8BUZ+lda8uA5Uky1c+jPNQI+pnumJ0pJDoOAIDcTNaaPIHzQNSKPcV2mkR4cOJvEO/A7i8=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774219158; c=relaxed/simple;
-	bh=od6KZ3UrQBUeUTybzf4jNx+hxEpnXcF20x3YCtZdbJQ=;
+	s=arc-20240116; t=1774219507; c=relaxed/simple;
+	bh=bME364F5ZP0U/lDTo1u0eIhkTfzXi5wSGOiotM5R6aM=;
 	h=Date:From:To:CC:Subject:In-Reply-To:References:Message-ID:
-	 MIME-Version:Content-Type; b=JdIVRApDzNDgOUlophl/rnoRZ2nFkckm685xWsA90AX+T2CcNjIC4DQJmHz9tS64NZhQYG55Im4NG8Vn0MQ8EiXJFTIZPyctNNDAznL+Tz1xwXCxKK+43Z5E+/Uc/ajYOt4Rct8ttvEy1PQwnJR/0Dn8rc+ko/qDXlqjaZM+FwE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=objecting.org; spf=pass smtp.mailfrom=objecting.org; dkim=pass (1024-bit key) header.d=objecting.org header.i=objecting@objecting.org header.b=RVsXarFb; arc=pass smtp.client-ip=136.143.169.55
+	 MIME-Version:Content-Type; b=FkCMlxfzueEsiWiyqto3lRW3dvQnK33U2h7sGAkGXP7QCqOmUVQy1fKk94s790SBbjB/Hg/dT2YkLPfyjW6sHi7+bfcoByYVTnJXav3AdRc9Dxv4FrFUlQrZ0ZYKZbHR8BvESeeJ8qy2wgTdcTSIFi2AJRuXIeWxGIfvq6PcPpY=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=objecting.org; spf=pass smtp.mailfrom=objecting.org; dkim=pass (1024-bit key) header.d=objecting.org header.i=objecting@objecting.org header.b=Y7uqxCx8; arc=pass smtp.client-ip=136.143.169.55
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=objecting.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=objecting.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=objecting.org header.i=objecting@objecting.org header.b="RVsXarFb"
-ARC-Seal: i=1; a=rsa-sha256; t=1774219153; cv=none; 
+	dkim=pass (1024-bit key) header.d=objecting.org header.i=objecting@objecting.org header.b="Y7uqxCx8"
+ARC-Seal: i=1; a=rsa-sha256; t=1774219502; cv=none; 
 	d=zohomail.eu; s=zohoarc; 
-	b=G9pDd8PfxJI8tQuY+537qK/OfSryAtiAEMxsL6FKwfUYK2h+tmPa81TR55s37edP7ptkCVkL5CXz2lnu1CADy0XPCpc4Ux+5Nb+JgWKrJtAeG4EmTFvv6GjZcIfSCn0hSXpCB7Cjy+FO9HSBDKXPAcLFY04R9U3bipGQWBgtoms=
+	b=QKoVkJlMpHEwtYZ08pMA100NBB9F6LqeCOy1twspmfpG9KgZ/zHcM4lquReEfuFvyPdNP4i+AbJ4guC9qjxE8kFIF8TCl25K6phzF0O6wrZYdnEVFcGTPRvpYcDXISu1ZtggKA9KiRCrJHwvK78OpmYpi6FXSx/f1TbMQpq4pnU=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.eu; s=zohoarc; 
-	t=1774219153; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=7htVmUNWgWhZ4WZhbE/1OPjn0u09igwJQNEcQ7skU9Y=; 
-	b=Jz7PS3SSlCwYgr+2m0HwA8GyrFOZosmHupD+LrhStX4TXH8zPHYXHaV2VBptmyFvitHsiIPF/HoKW53VoZeCoHFjfJdbqzNKL2ZhRWvrnc6rhxef3Xfcf/j+FzZ3nOByUQ7jz+OzZe84TCuFOkhh5LfMUDEaD685F32q/VU26g4=
+	t=1774219502; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=TqU54qz1b0JYXr0irLJYfC/H/ZKCnbSpqU3Ly1SLrCs=; 
+	b=lp+f2JyVgTU5L4mc/GghF8al7CLHDwY4PbsWUwiw0QQyK4o+YV4xpe9sX1QK5FTRF+vVBvvs+PL3WPGRESPn5D1XcCX2cO98L4MLyg+H29gHkzbEodjJSi3sXiMbbTz8tGKPfy/1uxe+JmkJzBlypGZITdXRIjG+rpb8G2lVpiA=
 ARC-Authentication-Results: i=1; mx.zohomail.eu;
 	dkim=pass  header.i=objecting.org;
 	spf=pass  smtp.mailfrom=objecting@objecting.org;
 	dmarc=pass header.from=<objecting@objecting.org>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1774219153;
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1774219502;
 	s=zmail; d=objecting.org; i=objecting@objecting.org;
 	h=Date:Date:From:From:To:To:CC:Subject:Subject:In-Reply-To:References:Message-ID:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To:Cc;
-	bh=7htVmUNWgWhZ4WZhbE/1OPjn0u09igwJQNEcQ7skU9Y=;
-	b=RVsXarFbJ8pUm293gwQoaLVz6ag+yxu/xfCSgp58Ixx0xV6YQZcXOmQoK7A9qX/9
-	Q3fPXQA8NPISbkC2x+mWf54DG/QXch+vrZSuYLEJEbyVF1cTCNnmUglJ4Q4v6oPLEkF
-	KMQmrWLHliIov9VvxaZ1m36NU8yjbVNCstslnN5U=
-Received: by mx.zoho.eu with SMTPS id 1774219152622890.3867755718165;
-	Sun, 22 Mar 2026 23:39:12 +0100 (CET)
-Date: Sun, 22 Mar 2026 22:39:11 +0000
+	bh=TqU54qz1b0JYXr0irLJYfC/H/ZKCnbSpqU3Ly1SLrCs=;
+	b=Y7uqxCx8LbE/slePqhzGMesn8pb/JylWe7ylSsLR9ea9ODUZATPd0vn3KNom9NxH
+	NMZ8pePIM1w9bbb2o9wj7m4ZNaoKJs4ep0wCU/cjWfli3OvlnAai3o6OkMJQIr6+waH
+	BYTdunRzA019sLP2tiMP4QwB8cehWwgYgja4VHe4=
+Received: by mx.zoho.eu with SMTPS id 1774219499729489.97665996474313;
+	Sun, 22 Mar 2026 23:44:59 +0100 (CET)
+Date: Sun, 22 Mar 2026 22:44:58 +0000
 From: Josh Law <objecting@objecting.org>
 To: SeongJae Park <sj@kernel.org>
 CC: akpm@linux-foundation.org, damon@lists.linux.dev, linux-mm@kvack.org,
@@ -46,7 +46,7 @@ Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_1/2=5D_mm/damon/core=3A_optimize_kdamond=5F
 User-Agent: Thunderbird for Android
 In-Reply-To: <20260322222845.89757-1-sj@kernel.org>
 References:  <20260322222845.89757-1-sj@kernel.org>
-Message-ID: <FEBF344D-3A99-4360-A286-705260B68704@objecting.org>
+Message-ID: <41251BD0-5796-4600-A75B-3D08A81ADF04@objecting.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -217,24 +217,10 @@ this
 >[=2E=2E=2E]
 
 
-Hi SeongJae,
-=E2=80=8BI understand your concerns regarding the behavioral changes and t=
-he adaptive regions mechanism=2E If the loop inversion is too intrusive for=
- the current DAMOS semantics, I agree it's better not to force it=2E
-
-=E2=80=8BYour suggestion to optimize the first loop by pre-filtering activ=
-e schemes into a temporary list/array is interesting=2E It would achieve th=
-e O(Targets * Regions) skip for inactive schemes without changing the appli=
-cation order for active ones=2E
-
-=E2=80=8BI'll take a look at whether that can be implemented simply enough=
- to justify the overhead of managing the temporary list=2E If it looks too =
-complex, I'll move on to other areas as you suggested=2E
-=E2=80=8BThanks for the detailed feedback and the guidance on DAMON's scal=
-ing philosophy=2E
+Also, V2 is out for the other patch you liked
 
 
-=E2=80=8BV/R
+V/R
 
 
-Josh
+Josh Law
