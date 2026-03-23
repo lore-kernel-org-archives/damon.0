@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71DD73B5302;
-	Mon, 23 Mar 2026 14:01:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E67133B27F3;
+	Mon, 23 Mar 2026 14:03:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774274473; cv=none; b=CwMFy434yvI1HJwSeJgeof7d98S90kVwoQg41g2okuOTEf/CyMqWzH2uLiW+Vm0/xDPBOvTphcrHyo2rlYSMZ+I5bPVsMuzYXY/OViyzA8cmc2/fx3IRv/IDY5fOWvzLcIFvtDLJ61weUxE3U8B8mF5eLhAK+ehOTaYsQ9FFl9g=
+	t=1774274594; cv=none; b=j2RW7LqmcNIaQXMMSL/bc6NI4Cw9i+Gs0JMuIT2NYwSWRmllppBhyUm2VEZqRyrx5OrVBsoWd/21yLM+95SRixzcgiPpZyCidoFC8BWjy8sWcvpG4MXxVBrPfOlgVveAmQtd2z4c2U89IOPs1K6yWDyzxVgw9SofZiyWYNGOgkk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774274473; c=relaxed/simple;
-	bh=9BwAZorS39eyV/Clw1DXueMD4DVME5MT6dI5zrJaohE=;
+	s=arc-20240116; t=1774274594; c=relaxed/simple;
+	bh=VicXl/5ReiXQvUG1Yw25HF2u6ax5qMc6rQTZEFWevww=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=nRyvM04NO7nKyIX3+52YrcV7/k8UWdK9IK5vxI6bZjAt5P1MdrxNpZfI3qtKCNOHDGkDkQjOLILKGWPkqDtLu/FUe0LhEw2a8tHrDkiQRF4G8d0rlXcCF85W2AedFHV7ENDXMgBra+Xm+RQ7bxVdhaC5Xr4oPEw5Ng1UxbF+bb4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ArxEKSWf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BSVJTxAVZ3fNrupAmpknVzQZYYsOqIZdXazZ42xkhwodrh2syF1KEIRz6E0fD1HCYTeViCexmdMbcp3Z2yMtbioNzPAF9ioenbOZiME9CpLIskKUup7IJCiVZ0NBPwsxgy6eY8/5/Qp0MqPzlFoF330bxcWl8V7Yp8/lh2INB/k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ta6xGW8e; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ArxEKSWf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2427CC4CEF7;
-	Mon, 23 Mar 2026 14:01:13 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ta6xGW8e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 635E7C2BCB1;
+	Mon, 23 Mar 2026 14:03:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1774274473;
-	bh=9BwAZorS39eyV/Clw1DXueMD4DVME5MT6dI5zrJaohE=;
+	s=k20201202; t=1774274593;
+	bh=VicXl/5ReiXQvUG1Yw25HF2u6ax5qMc6rQTZEFWevww=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ArxEKSWfW0WLc+VbkYVX01vNzz8v12FbchqeuYr1vnlsn1zOJnD/ZJMSAaWEMz05v
-	 +WlJqoJKeiyKbDdoX/ZCXR5dg34bqj2Chbp81L+e3jp2czB8mU/S09dvvujzNTKlru
-	 PTASkdq4ZtVJezJPPKjredm/MavWfkXFUQswvqvX7RmwptzffWMqkl7VRfra0xrem8
-	 udqYEWYMKYFj6sDVSalofeDKgpGXxaoG1t+bAkDIqHbi00vLMRtt9OK2o0qzhLiZaM
-	 5JV/T1FJZI2st1gB0rMDQSY4SEkcA0xq9pkx9wLjk3f8p5P7lLcwgDlcz2v9rKb5Ir
-	 6svipfbqGUx9g==
+	b=Ta6xGW8ei6a8ZWcXE1QDlA7tnZ+WR4SyBBXbJwCt1nlOr0T7AZ630GzhgfEKKuVyH
+	 r5Akukrlq6qXekEeFkiNEFb/iV03ukK/PH78T9jFpBswnnEyTMhHONtimKTmNpBU2S
+	 Iacii8WxXRbVmPPyyEPuRRH6uB7kZqhAgQ5w/fRH4l8iPtPXmUlNh3mUUZObWg1fRG
+	 0v2KpyIOwTdOzYpm5RYDEV5NP3OEteiToOXff+S+nmhZP9x6VZlV/iFX1kjSRohlBU
+	 qN09KysnsWfIZrx8UJnQEClSVwPO5ZOTWDtREAXR8Yy9TUSAt/9xfJ2ugDvoV1NhjI
+	 YNaNIJkIGoyXg==
 From: SeongJae Park <sj@kernel.org>
 To: Josh Law <objecting@objecting.org>
 Cc: SeongJae Park <sj@kernel.org>,
@@ -33,11 +33,11 @@ Cc: SeongJae Park <sj@kernel.org>,
 	damon@lists.linux.dev,
 	linux-mm@kvack.org,
 	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/2] mm/damon/core: optimize kdamond_ap ply_schemes() by inverting scheme and region loops
-Date: Mon, 23 Mar 2026 07:01:04 -0700
-Message-ID: <20260323140106.79746-1-sj@kernel.org>
+Subject: Re: [PATCH v2 0/2] mm/damon/core: Performance optimizations for the kdamond hot path
+Date: Mon, 23 Mar 2026 07:03:05 -0700
+Message-ID: <20260323140306.79853-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <FEBF344D-3A99-4360-A286-705260B68704@objecting.org>
+In-Reply-To: <20260322213631.259212-1-objecting@objecting.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -45,26 +45,51 @@ List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On Sun, 22 Mar 2026 22:39:11 +0000 Josh Law <objecting@objecting.org> wrote:
-[...]
-> Hi SeongJae,
-> ​I understand your concerns regarding the behavioral changes and the adaptive regions mechanism. If the loop inversion is too intrusive for the current DAMOS semantics, I agree it's better not to force it.
-> 
-> ​Your suggestion to optimize the first loop by pre-filtering active schemes into a temporary list/array is interesting. It would achieve the O(Targets * Regions) skip for inactive schemes without changing the application order for active ones.
-> 
-> ​I'll take a look at whether that can be implemented simply enough to justify the overhead of managing the temporary list. If it looks too complex, I'll move on to other areas as you suggested.
+I show you already posted v3 [1] of this series.  So I'm skipping this version.
 
-Sounds good!
-
-> ​Thanks for the detailed feedback and the guidance on DAMON's scaling philosophy.
-
-No worries, I'm glad to help.
+[1] https://lore.kernel.org/20260322214325.260007-1-objecting@objecting.org
 
 
 Thanks,
 SJ
 
-[...]
+On Sun, 22 Mar 2026 21:36:29 +0000 Josh Law <objecting@objecting.org> wrote:
+
+> Hello,
+> 
+> This patch series provides two performance optimizations for the DAMON
+> core, specifically targeting the hot paths in kdamond.
+> 
+> The first patch optimizes kdamond_apply_schemes() by inverting the loop
+> order. By iterating over schemes first and regions second, we can
+> evaluate scheme-level invariants (like activation status and quotas)
+> once per scheme rather than for every single region. This significantly
+> reduces CPU overhead when multiple schemes are present or when quotas
+> are reached.
+> 
+> The second patch eliminates a hardware integer division in
+> damon_max_nr_accesses() by using the pre-cached aggr_samples value.
+> Since this function is called once per region per sampling interval,
+> removing the division provides a measurable reduction in CPU cycles
+> spent in the access rate update path.
+> 
+> Changes from v1:
+> - Use min_t(unsigned long, ...) in damon_max_nr_accesses() to satisfy
+>   checkpatch warnings and improve readability.
+> 
+> Josh Law (2):
+>   mm/damon/core: optimize kdamond_apply_schemes() by inverting scheme
+>     and region loops
+>   mm/damon/core: eliminate hot-path integer division in
+>     damon_max_nr_accesses()
+> 
+>  include/linux/damon.h |  3 +-
+>  mm/damon/core.c       | 68 ++++++++++++++++++-------------------------
+>  2 files changed, 29 insertions(+), 42 deletions(-)
+> 
+> -- 
+> 2.43.0
+
+Sent using hkml (https://github.com/sjp38/hackermail)
