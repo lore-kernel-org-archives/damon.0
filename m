@@ -1,74 +1,74 @@
-Received: from mail-pg1-f179.google.com (mail-pg1-f179.google.com [209.85.215.179])
+Received: from mail-pj1-f47.google.com (mail-pj1-f47.google.com [209.85.216.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C56942DEA62
-	for <damon@lists.linux.dev>; Mon, 23 Mar 2026 18:37:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E3572E11D2
+	for <damon@lists.linux.dev>; Mon, 23 Mar 2026 18:38:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774291049; cv=none; b=Mu+WlIjJirciLW8ogHwnE2Rrnv1ihq5cwQgrNKEHleIDdA/fE1A07S7RzvpiLiF97ea2KTIJn4rQnU7DmMv+hLXzOjw3rKacsGZyTilVsUCpLcLLvNUzzYUC1eswPuXN2IKLpr7ypct+PqDws4a5DiGH7EVCa1tQjqZu6/kpBXE=
+	t=1774291093; cv=none; b=JJ6LCJXjJ7xUgcp9s7lm+ZV+w27/u4P1sdYisuXhrhZcwdsSopB1iRpoO1Uu/sD8ViEEnUWVcYFpBNXYsGm+zqt2XvNT3hCs6ZJ5nkh2w8HFsGazAh2vsj5RMtffNUWZ5/9Gzm4NsGH+1HwzIsTy72DKRw29bYwLi4qcp4lgLq0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774291049; c=relaxed/simple;
-	bh=Ex/GT2UKER81RTsW1dpNnuKNvndUgVcDKydyAgPuOfg=;
+	s=arc-20240116; t=1774291093; c=relaxed/simple;
+	bh=p6ttFEoKwFXvehvDTPRfINYRp8vMaQ6dQxIZKHW+c4A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TX1ZuHUHS+bR4tJoYjLS7HStUK12MlhaS386/OV+jQCLadLr71oyQZXdS+YqRo1j+izdgLCHTIAalsiXpxpBp2+O8upR6WIx/HKLVEv2x+n/ic+lGCOzBBb5sOqephgtYb6H6mb8o5ZGV8UXz9JNPawdmIM53pVw2ZdSdJvhh6c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=tFPRVuRR; arc=none smtp.client-ip=209.85.215.179
+	 MIME-Version; b=m18T83+WR+vD4U2akH7mskvfxneGcUeP7jmPj16ti4Z+pDYb8Oi/NeOA9hTtt3tFcgqrrnopzbUJmBax1Y8t/gXmykArkUEIVtVPAz76IVWFQvXuN1S1eXLX0DOkwgyIXMKxY7DhRVPwUMrJ0jgvjhp4XYJDrhsDrVlr4sf3VrI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=pe9Mdu5c; arc=none smtp.client-ip=209.85.216.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="tFPRVuRR"
-Received: by mail-pg1-f179.google.com with SMTP id 41be03b00d2f7-c73a12af63cso2038766a12.0
-        for <damon@lists.linux.dev>; Mon, 23 Mar 2026 11:37:27 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="pe9Mdu5c"
+Received: by mail-pj1-f47.google.com with SMTP id 98e67ed59e1d1-354a18c48b5so3679853a91.1
+        for <damon@lists.linux.dev>; Mon, 23 Mar 2026 11:38:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1774291047; x=1774895847; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1774291091; x=1774895891; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=bRg2GcmKeOdJcz1z27ZxeccUDfslqg/RH/olku101LI=;
-        b=tFPRVuRR5Y/XAPylZ2t6IwIBeIrl1t1D/SbPR4BsYZTvyaRKxiP7j9DsgQThw6K/g2
-         WdjLDvBPDOHv6yw7vAaMY9iYbJJ/pUyg+nf7IsxfdBIZmkwoPYLfYz6BgeysAzSuVzxs
-         Zw0vYUqwoaKx7b8k/USuAwwGt+6rqsPLetxMoNBF+vHFu8309IODIPU8tBad5Oa9My9j
-         VhFbWeg1MJuEz4VOdjgZdJUdGA3Ei5wQFo9ldcgSmimhMhKIYZsrM0mhLr17tbXrsqyL
-         4k8Afm1TJeKVTMdgGsbuUJaxdsgtqYgzYuEDc6xOt9Tz57s+6raqfgPpY/0iKYdAyzYS
-         CASA==
+        bh=9VpMu8BW02kfasuQLNMIW88lcfKKCHzNKLRC8iN9hLI=;
+        b=pe9Mdu5cRJYiviOr+p/8qWzlAFBnhQJlu52fOxp5vNjESwwvV74zHhhHlUfkyDwjq5
+         7SRwvc18mxII62is0Wi4vI8+p4WMnulFuaghoqycM7N1yXV01/LcpODEils7q9F2cwL6
+         C5Pio1q9dT+lZyn2GMeJaJBLU0FdMeIVnmlKN0vLiFSBBvno8WMWw+b26avgdafWb+jq
+         2HdXISTV4hkqhz9ewHxic8doxDDVkOM7wAhrycGA7RzfnrEVi03aTfbtOjtJvLdd6aka
+         H/ew8K+U5itkqh/B4fCM4NGHC06yRLHtZXWHvas4sern9Vk/R2FCV754CrHCZZwtYEih
+         8/LQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774291047; x=1774895847;
+        d=1e100.net; s=20251104; t=1774291091; x=1774895891;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=bRg2GcmKeOdJcz1z27ZxeccUDfslqg/RH/olku101LI=;
-        b=DP8Vze5YOckoje25kglVo/YMXunach1hu0Wl/hcF1KqKytI3TzaTEkQGKCdlBPk/0M
-         DxNes43a0nQRovTyIRGdPJIIqOZ7CkgvuFx8/c/ClMl14CpYZo7QH2BGgYYrWhTKSJrs
-         6wDvMabVype6rRrzWb7d6rrH0wJP0/VPmIrXVyomv2y/dGuCjriNF1G8AwAbnDTD7EtS
-         CCLpw3lE/yd4wVMIV7igze0SZua1uXrHe+6EElK4iHV5RFdpvPfaF/XpBBppkuhVQGkz
-         7jp4jz5h0Gz8iQ78GSP9kIEOzLxQxffY1nPTAYR4Nz35rDwyIww7iXcTsu8ktKQY88QT
-         +cbw==
-X-Forwarded-Encrypted: i=1; AJvYcCW0ZZ7XDXU/OdOw1e+RntfdTFc3Yko4BO7dYqbluxoNzz3c9Frsp/r8Wjkmur7oVkI7Azhq8g==@lists.linux.dev
-X-Gm-Message-State: AOJu0YxZHgo6JjPhNgMfiWi3YKjL0xKGrrQSZVj2arELEUtbb3+Bhqbx
-	rmaRzMzA5Gd06PRzHjThXsNEhH0PLokodd2UI71OEfNYzww8tsZQEZcI
-X-Gm-Gg: ATEYQzxIKFzxGnLlkmoZsBqOaYGeM+q9muvlQtBm2az3cODSAOuDNtmCrgLR0NMIEIu
-	uYEqWt+wCIyHvEoNp7cqvNU7sC+XknN5gW/RIjQM7JBVZoaxsNPNIafmrgcfDSrAlRB4zyEYl+w
-	E6PWhJIA2CG8t+qrLhj9yWpftPRzJIxBbGluwWyH4/yFmfX2Fb1qoPrp0UCh7zVLKUpCThZE0IV
-	AQjXhbiUSlx2uCruN5pNcXiO9iZw3KIlu56UMuCqUFJaFQPDe4b3X9MOA9eVfddlc+nh7ZmAvzK
-	5v6ofCfq2Yms1iyXzvoHhqn6RwEi/bAHEf/CRgluPCW8RPdU7GykH5O46eyDN9lJFDNC1sDDXTg
-	oN3GC3bhPRURqEwHUHPnWBrinXJMYnTX8QUr16vCgZzhi3YdNglJrDtbH/DawKxV3/pj8/0p42C
-	i5rTp6i5YXqYs9Sh9tTLmWh0hE984=
-X-Received: by 2002:a05:6a21:6da6:b0:39b:a48e:6a77 with SMTP id adf61e73a8af0-39bceb68288mr10367425637.37.1774291046971;
-        Mon, 23 Mar 2026 11:37:26 -0700 (PDT)
+        bh=9VpMu8BW02kfasuQLNMIW88lcfKKCHzNKLRC8iN9hLI=;
+        b=puG4eVi6JelkhXQ5dpKLlhUvH43vHPo9GC5TKrq8QCfCypNbKRGucHi8q2pauFQdi3
+         G9ifAZXUKeo2vmAV4AKpOuMd0C7603zG5yNNFgZysU+50oSprADDuLCHaXJWz/Qf+St4
+         /XqU4SYxIvYtshL3AZHH6gaiaMTJ9T4rb5bOKJrkkvJhMlHYvGjTFCyqEfoY3/clmx+E
+         Qgf5BneB3AI9v9/3NOikefht6oxLDV03yJU4t3dd/u6/NOaKSokL6iHdYen/aJCEnGt5
+         5CwXIK5/SAaEWBalVRHypqQ5CL5JIlppXtNXikvkR8o3DPQQOrJHNV5Ns+4cRFZkFKwm
+         0YRw==
+X-Forwarded-Encrypted: i=1; AJvYcCWEg5mMeOvkMtt/IeA4Ix3X+PP4b7kXyuI9VEb45pTQqpfGV2oC9DGSFixeVPWDRWaRv8TGpQ==@lists.linux.dev
+X-Gm-Message-State: AOJu0YxODsI0Pk9pM2ySadBzcuPBVe93Bk3zyxvwqAYon7PLVegpzjoJ
+	rDfCVKmgzfrjTSNvW8wJARTbIQRdYW9mRX6WsjTZJAwdJWyY5YADM8RZ
+X-Gm-Gg: ATEYQzzsYStAhGkeKAQ03i37Av6Mqq6J394v6ECGMjJFTmdbe5K7PQM2nwFHQItDWy8
+	3W4YyrLU2W/fMk6UExy09H4asLaBtLtD7gz/yMfLsYoA0SryqIVMhrFW5FgHN57M0ecWJIa+H/v
+	gntr3Q9NHfH1ZGNFa8cRPKk3AZmW2WosZmD5HthtYTAxyydnDiObi4CvhCa/llGqJezIbERXJON
+	VoO21Bn8BYvRlKk3Cch31yBwM/OEgXA7JuV0En/mqJSAuIvrVugFGtXHFnYpX1YgLsBluSP72yb
+	srGGaXRI3/v7uPEFttDWCAjeSlcH4IkQT0mzSEdWTHbA6jOoGh9SX6erm9LvHA8aQJuzsvoBwQ6
+	QcPFEompUXpvK92nKd8j/kaz0+pgSEUI+p59Im4VNOCqe5ryKeLZ/UdO7Xppa1Aq3kpRLQPipIC
+	ZzADDgt2mAXO0TWCvDITbyF/pFIX037OU5tpyDLg==
+X-Received: by 2002:a17:90b:3d48:b0:359:8d95:4a4f with SMTP id 98e67ed59e1d1-35bd2d3b8f9mr10302435a91.32.1774291091371;
+        Mon, 23 Mar 2026 11:38:11 -0700 (PDT)
 Received: from celestia ([2402:1980:898b:301c:d085:a35:99e7:ffec])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c74456fbfb0sm8198280a12.29.2026.03.23.11.37.23
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-35c017477eesm23164a91.1.2026.03.23.11.38.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 Mar 2026 11:37:26 -0700 (PDT)
+        Mon, 23 Mar 2026 11:38:11 -0700 (PDT)
 From: Liew Rui Yan <aethernet65535@gmail.com>
 To: sj@kernel.org
 Cc: aethernet65535@gmail.com,
 	damon@lists.linux.dev,
 	linux-mm@kvack.org
 Subject: Re: [RFC v4] mm/damon: add synchronous commit for commit_inputs
-Date: Tue, 24 Mar 2026 02:37:22 +0800
-Message-ID: <20260323183722.42045-1-aethernet65535@gmail.com>
+Date: Tue, 24 Mar 2026 02:37:58 +0800
+Message-ID: <20260323183758.42138-1-aethernet65535@gmail.com>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260323150544.81042-1-sj@kernel.org>
-References: <20260323150544.81042-1-sj@kernel.org>
+In-Reply-To: <20260323151237.81224-1-sj@kernel.org>
+References: <20260323151237.81224-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -77,174 +77,117 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-> > Problem
-> > =======
-> > Writing invalid parameters to sysfs followed by 'commit_inputs=Y' fails
-> > silently (no error returned to shell), because the validation happens
-> > asynchronously in the kdamond.
+> > Hi SeongJae,
 > > 
-> > Solution
-> > ========
-> > To fix this, the commit_inputs_store() callback now uses damon_call() to
-> > synchronously commit parameters in the kdamond thread's safe context.
-> > This ensures that validation errors are returned immediately to
-> > userspace, following the pattern used by DAMON_SYSFS.
+> > Thank you for reviewing this patch. I'd like to address the review from
+> > Sashiko.dev [1] and ask for your guidance on two concerns.
 > > 
-> > Changes
-> > =======
-> > 1. Added commit_inputs_store() and commit_inputs_fn() to commit
-> >    synchronously.
-> > 2. Removed handle_commit_inputs().
+> > > > -static int damon_lru_sort_handle_commit_inputs(void)
+> > > > +static int damon_lru_sort_commit_inputs_fn(void *arg)
+> > > >  {
+> > > > +	return damon_lru_sort_apply_parameters();
+> > > > +}
+> > > > +
+> > > > +static int damon_lru_sort_commit_inputs_store(const char *val,
+> > > > +		const struct kernel_param *kp)
+> > > > +{
+> > > > +	bool yes;
+> > > >  	int err;
+> > > > +	struct damon_call_control control = {
+> > > > +		.fn = damon_lru_sort_commit_inputs_fn,
+> > > > +		.data = ctx,
+> > > > +		.repeat = false,
+> > > > +	};
+> > > >  
+> > > > -	if (!commit_inputs)
+> > > > +	err = kstrtobool(val, &yes);
+> > > > +	if (err)
+> > > > +		return err;
+> > > > +
+> > > > +	if (commit_inputs == yes)
+> > > >  		return 0;
+> > > >  
+> > > > -	err = damon_lru_sort_apply_parameters();
+> > > > +	if (!yes) {
+> > > > +		commit_inputs = false;
+> > > > +		return 0;
+> > > > +	}
+> > > > +
+> > > > +	commit_inputs = yes;
+> > > > +
+> > > > +	/*
+> > > > +	 * Skip damon_call() during early boot or when kdamond is idle
+> > > > +	 * to avoid NULL pointer dereference or unexpected -EINVAL.
+> > > > +	 */
+> > > > +	if (!ctx || !damon_is_running(ctx))
+> > > > +		return 0;
+> > > If kdamond is not running, this returns 0 but leaves commit_inputs set to
+> > > true. When kdamond later starts, will subsequent writes of 'Y' to
+> > > commit_inputs hit the earlier check "if (commit_inputs == yes) return 0;" and
+> > > silently ignore parameter updates until it is manually reset to 'N'?
 > > 
-> > This change is motivated from another discussion [1].
+> > My current thought:
+> > When '!ctx || !damon_is_running(ctx)', we should return -EBUSY instead
+> > of 0, and keep 'commit_inputs' unchanged. This way, userspace
+> > immediately knows the operation cannot proceed, and there is no risk of
+> > stale state.
+> 
+> Yes, I think we should unset commit_inputs in the case as you and sashiko also
+> mentioned.  Maybe it is better to just keep its value always 'false', though.
+> Please read my reply to the patch for more details about why I think so.
+> 
 > > 
-> > [1] https://lore.kernel.org/20260318153731.97470-1-aethernet65535@gmail.com
-> > 
-> > Signed-off-by: Liew Rui Yan <aethernet65535@gmail.com>
-> > ---
-> > Changes from RFC-v3:
-> > - Added checks for 'ctx' and 'damon_is_running()' to prevent NULL
-> >   pointer dereference during early boot. (Found by Sashiko.dev)
+> > But, this means that users can no longer write 'commit_inputs=Y' before
+> > 'enabled=Y'.
 > 
-> I'd prefer archiving sashiko question on the mailing list so that others can
-> also read it without have to visit the web site.  Please consider doing so.
+> Is this a problem?
 
-Sure, that was indeed my oversight. I didn't consider that others might
-not want to open other websites (or that the link might become invalid
-someday). Next time I will try to archive shashiko question on the
-maling list. Thanks for reminding me.
-
-> FYI, because such sharing is not very comfortable for now, I developed new hkml
-> features [1] for helping such sashiko review sharing, and I'm using the
-> feature.  Please fee free to use it if you think it can help you, too.
-> 
-> [1] https://github.com/sjp38/hackermail/blob/master/USAGE.md#sashikodev
-
-I will try this tool.
-
-> > - Removed handle_commit_inputs() and its associated polling logic as
-> >   they have become dead code after moving to the synchronous damon_call()
-> >   approach.
-> > - Ensure the 'commit_inputs' is properly updated.
-> > Link to RFC-v3: https://lore.kernel.org/20260322231522.32700-1-aethernet65535@gmail.com
-> > 
-> > Changes from RFC-v2:
-> > - Removed damon_validate_attrs(), now using damon_commit_ctx() for
-> >   synchronous validation in the kdamond context.
-> > - Following DAMON_SYSFS pattern for synchronous commit via damon_call().
-> > - Link to RFC-v2: https://lore.kernel.org/20260321140926.22163-1-aethernet65535@gmail.com
-> 
-> Thank you for adding the detailed revision changes.
-> 
-> But, please consider waiting about one day before posting a new version, so
-> that we have enough time to discuss on the previous version.  If you find
-> something you want to change on the next version, you can comment that to the
-> current version of the patch and give time for others to comment about the next
-> revision plan if they have any opinion.
-
-Understood. I will post the new version only after careful
-consideration. And when I have a new ideas (of next version), I will
-clearly comment on them.
+No, that's not a problem for me, but I think it might change some user
+behavior, although I don't think anyone relies on that behavior. If
+you're okay with it, then that's great! :>
 
 > > 
-> > Changes from RFC-v1:
-> > - Remove question from commit message area.
-> > - Added synchronous validation for DAMON_RECLAIM.
-> > - Rename damon_valid_attrs() -> damon_validate_attrs().
-> > - Exported a new function damon_validate_attrs() and declared it in
-> >   damon.h.
-> > - Link to RFC-v1: https://lore.kernel.org/20260321002642.22712-1-aethernet65535@gmail.com
+> > > > +
+> > > > +	err = damon_call(ctx, &control);
+> > > The module parameter set operations are protected by the global kernel
+> > > param_lock. If the kdamond thread is currently deactivated by watermarks and
+> > > sleeping for the watermark check interval, could this damon_call() block on
+> > > wait_for_completion() and hold the global param_lock for an unbounded
+> > > duration?
+> 
+> It is bounded to user-set 'wmarks_interval'.  So I guess that's not a real
+> issue?
+
+I also believe that this is true.
+
+> > >
+> > > Also, could there be a race condition here if the kdamond thread is stopping?
+> > >
+> > > If kdamond_fn() flushes pending calls and only afterward sets ctx->kdamond to
+> > > NULL, could damon_call() insert its control into the list precisely in this
+> > > window? This might cause it to perceive the thread as active and block on the
+> > > completion forever, deadlocking the param_lock.
+> 
+> damon_call() handles such cases using damon_call_handle_inactive_ctx().  I hope
+> that could work for this, too.  Liew, could you please double check?
+
+I have read the implementation of this damon_call_handle_inactive_ctx().
+It does seem to avoid that issue.
+
+> > I admit I don't have an elegant solution yet. Here are my current
+> > thought:
 > > 
-> >  mm/damon/lru_sort.c | 49 +++++++++++++++++++++++++++++++++++++++------
-> >  mm/damon/reclaim.c  | 49 +++++++++++++++++++++++++++++++++++++++------
-> >  2 files changed, 86 insertions(+), 12 deletions(-)
-> > 
-> > diff --git a/mm/damon/lru_sort.c b/mm/damon/lru_sort.c
-> > index 554559d72976..37b3c897e822 100644
-> > --- a/mm/damon/lru_sort.c
-> > +++ b/mm/damon/lru_sort.c
-> > @@ -39,7 +39,6 @@ static bool enabled __read_mostly;
-> >   * the re-reading, DAMON_LRU_SORT will be disabled.
-> >   */
-> >  static bool commit_inputs __read_mostly;
-> > -module_param(commit_inputs, bool, 0600);
-> >  
-> >  /*
-> >   * Desired active to [in]active memory ratio in bp (1/10,000).
-> > @@ -349,18 +348,56 @@ static int damon_lru_sort_apply_parameters(void)
-> >  	return err;
-> >  }
-> >  
-> > -static int damon_lru_sort_handle_commit_inputs(void)
-> > +static int damon_lru_sort_commit_inputs_fn(void *arg)
-> >  {
-> > +	return damon_lru_sort_apply_parameters();
-> > +}
-> > +
-> > +static int damon_lru_sort_commit_inputs_store(const char *val,
-> > +		const struct kernel_param *kp)
-> > +{
-> > +	bool yes;
-> >  	int err;
-> > +	struct damon_call_control control = {
-> > +		.fn = damon_lru_sort_commit_inputs_fn,
-> > +		.data = ctx,
-> > +		.repeat = false,
-> > +	};
-> >  
-> > -	if (!commit_inputs)
-> > +	err = kstrtobool(val, &yes);
-> > +	if (err)
-> > +		return err;
+> > Add a timeout to wait_for_completion() (e.g.,
+> > wait_for_completion_timeout()), using 'damos_watermarks.interval' as the
+> > upper bound. This prevents indefinite blocking of 'param_lock', though
+> > it still holds the global lock for up to several seconds.
 > 
-> I was not very sure what 'yes' means.  How about renaming it, say,
-> 'commit_inputs_request' ?
+> Because it is already kind of timed out for user-set 'wmarks_interval', I don't
+> think we need an additional timeout.  Please let me know if I'm missing
+> something.
 
-Indeed, that makes sense, I've now changed the variable name to
-'commit_inputs_request'.
-
-> > +
-> > +	if (commit_inputs == yes)
-> >  		return 0;
-> >  
-> > -	err = damon_lru_sort_apply_parameters();
-> > +	if (!yes) {
-> > +		commit_inputs = false;
-> > +		return 0;
-> > +	}
-> 
-> I'd prefer doing !yes check before 'commit_inputs == yes' check.  That
-> eliminates false request case earlier, make my brain cleaner.
-
-Since 'commit_inputs' always is N, I will remove 'commit_inputs == yes'
-and keep only '!yes'.
-
-> > +
-> > +	commit_inputs = yes;
-> 
-> We will anyway set this 'false' after damon_call().  Before returning this
-> function, users cannot read commit_inputs parameter since this callback is
-> protected by param_lock.  I think we don't need to change commit_inputs value
-> at all?
-
-I think so too!
-
-> > +
-> > +	/*
-> > +	 * Skip damon_call() during early boot or when kdamond is idle
-> > +	 * to avoid NULL pointer dereference or unexpected -EINVAL.
-> > +	 */
-> > +	if (!ctx || !damon_is_running(ctx))
-> > +		return 0;
-> 
-> damon_call() handles !damon_is_running() case.  So I think you should check
-> only !ctx.
-> 
-> Also, this exposes commit_inputs true.  Next 'Y' write to commit_inputs will
-> make no effect?  Again, it seems we shouldn't change commit_inputs at all.
-
-You're absolutely right; I realized this during my code review as well.
-Changing the value of 'commit_inputs' is indeed unnecessary.
+It makes perfect sense. I believe there shouldn't be any problems, since
+both 'enabled' and 'commit_inputs' are protected by param_lock.
 
 Best regards,
 Rui Yan
