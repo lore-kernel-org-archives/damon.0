@@ -1,147 +1,87 @@
-Received: from mout.web.de (mout.web.de [212.227.15.4])
+Received: from sender-of-o57.zoho.eu (sender-of-o57.zoho.eu [136.143.169.57])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7372A35F5F0
-	for <damon@lists.linux.dev>; Mon, 23 Mar 2026 07:29:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.4
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774250977; cv=none; b=TJfUavJdhVnHU3+kNntQi9n1iMDebOxnSscG3M6bUEsDIa5Kq9KGdNP8sik7cywWn8CpZ57jhJrCUwN79M7VERX4QvzYdSby+PsN7d06+heZlMhyPwyKve3M1LuwbmxUCap0vFyvtGkGDoaculE5WZy+yfFckvrSc2uce+S6vr0=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774250977; c=relaxed/simple;
-	bh=OMfdXeN8AuW682Iluc+EJuXACQaUg4XWh33Wt0DHC+g=;
-	h=Message-ID:Date:MIME-Version:To:Cc:References:Subject:From:
-	 In-Reply-To:Content-Type; b=E6C+f3VmTYrwvm/5Kj+AASMV3CUMvx0YcnwQLkzGUfUNIDFPjK86WTD331+N/BmsJJjCeRbze0baJKw4mgstlV+XwA3MOPVWFmK12JdknvcoxwUnvB8Xzw2Fjw45VHkzypzmKALASQBaKh1jHebt7r7LGc0aQGdKp6u95zZBSUU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=markus.elfring@web.de header.b=rhqTGzCT; arc=none smtp.client-ip=212.227.15.4
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D17D2BEC5E
+	for <damon@lists.linux.dev>; Mon, 23 Mar 2026 07:34:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.169.57
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1774251254; cv=pass; b=l25rLcVmQUkhUBnu4NHAYjBiTlnw/bCUn1Q95o4cRrTJaBTQeU/IbvdOR4Pre6BGMF4xv7y2R/7IiBkSTVg7AvZCB0RR1glbnglWk23pBgDrwJ2qpjNjeeigKbZoi9h0n2YUkB9crxnAznl47CIJz3kpSc73BSWL7kNyNCiA+Nk=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1774251254; c=relaxed/simple;
+	bh=N03MwYZKfJyz/jISI55XQbpuxlLeDNyC93LJJN41uQE=;
+	h=Date:From:To:CC:Subject:In-Reply-To:References:Message-ID:
+	 MIME-Version:Content-Type; b=RypO2RPS3DwLuTVzkp+tQ+yGNOb8U4lEOy4HbpWkEc8HqDW0Tf3VkJ9qE9tIXDfHs8UtyAWvQClVrdmWeA+GrwC66dOzf6HUVwaaq57GX9Lk8jPFTK0XFOMhLfNh2bbGq0Z7csr+ttjCci4J+3ztQ+a2HHJUzzaFM/4Ikp62pDI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=objecting.org; spf=pass smtp.mailfrom=objecting.org; dkim=pass (1024-bit key) header.d=objecting.org header.i=objecting@objecting.org header.b=aueLpHc3; arc=pass smtp.client-ip=136.143.169.57
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=objecting.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=objecting.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=markus.elfring@web.de header.b="rhqTGzCT"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1774250951; x=1774855751; i=markus.elfring@web.de;
-	bh=OMfdXeN8AuW682Iluc+EJuXACQaUg4XWh33Wt0DHC+g=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:To:Cc:References:
-	 Subject:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:
-	 cc:content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=rhqTGzCTbHszF4/Vg5ZeHtKoOqVBTBK9FUZ62voWdz5gSa55VZ8e868WqKpRJyVX
-	 hHayHTtfKOYhs4ZhW9Vyuqg/hb0TXGPsDm1W4yLnbl+OTL69NVB9YXS2yS8tBt9oz
-	 jVTnu2C4KhK7ZaVeODCQaQj97vvFlSUwLoo7a1h+06RQTTEV5ym4dkwR0On4JIwDW
-	 U/jT7iS20i8HozFk5swpqLa70SACKOrxwQdAnOFNUIGuELwjbQritQABqQnIdVbQX
-	 CoPY0PaIEWG10Swnpa8H8/NAtn6j54SuNMOsLbIHfLZS2MNATfsYK6Z1qPRuzvPli
-	 bN2vadfLq+ISg60zZA==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from client.hidden.invalid by smtp.web.de (mrweb006
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1MNOVK-1vu3zR29gQ-00YRgc; Mon, 23
- Mar 2026 08:29:11 +0100
-Message-ID: <89ab7e7b-ad61-4881-bceb-781481857d3d@web.de>
-Date: Mon, 23 Mar 2026 08:28:59 +0100
+	dkim=pass (1024-bit key) header.d=objecting.org header.i=objecting@objecting.org header.b="aueLpHc3"
+ARC-Seal: i=1; a=rsa-sha256; t=1774251241; cv=none; 
+	d=zohomail.eu; s=zohoarc; 
+	b=aLUnjvWbgEl7I0JC+aTZBN+fnPPMFfI8i2jdvaFHgh5TwmGuoWcUJl9PraU6SDZucBuH+quJLOxU4R220FB67UjVk5EKVdZ//jJ7oWwI25ucQdZBlKPBGjKsNzqympd2iJWQg5kT1xu6HFVCLSlvhmfy+6xt/lGt9p4ECl6ANdM=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.eu; s=zohoarc; 
+	t=1774251241; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=N03MwYZKfJyz/jISI55XQbpuxlLeDNyC93LJJN41uQE=; 
+	b=UsIXLyFsu3TmM6YipQqXh4PLYMyOlC3w2LFD/AAP12265oYV9Z+/RVYn97TJcSx7wXjaBDwcP2kau/952bfAwxqCebMzM/AVtS/h2R5VuVYvieJYk3HEwvv8rG1mWVXgn11A4AHaBtsB379jY+rOv/AMjy2FWfPPOE0R7x9l/fg=
+ARC-Authentication-Results: i=1; mx.zohomail.eu;
+	dkim=pass  header.i=objecting.org;
+	spf=pass  smtp.mailfrom=objecting@objecting.org;
+	dmarc=pass header.from=<objecting@objecting.org>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1774251241;
+	s=zmail; d=objecting.org; i=objecting@objecting.org;
+	h=Date:Date:From:From:To:To:CC:Subject:Subject:In-Reply-To:References:Message-ID:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To:Cc;
+	bh=N03MwYZKfJyz/jISI55XQbpuxlLeDNyC93LJJN41uQE=;
+	b=aueLpHc313GbcC2+GHpnpX7AB8MaxMKRGWEyBqVAqnnPpOPl3doxlTyG9LAMYlAl
+	J48cJ90xKKPp0YBNUkAxvhIw5825eueORi81Hxh0sBxkVCxZYt1elHLjhnyW1NaKPgA
+	/veyPTzho3WrAo4OferEZ8feGHBtzHo/vdrTJSnc=
+Received: by mx.zoho.eu with SMTPS id 1774251240068390.417387203978;
+	Mon, 23 Mar 2026 08:34:00 +0100 (CET)
+Date: Mon, 23 Mar 2026 07:33:59 +0000
+From: Josh Law <objecting@objecting.org>
+To: Markus Elfring <Markus.Elfring@web.de>, SeongJae Park <sj@kernel.org>,
+ damon@lists.linux.dev, linux-mm@kvack.org,
+ Andrew Morton <akpm@linux-foundation.org>
+CC: linux-kernel@vger.kernel.org, stable@vger.kernel.org
+Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_v3_1/3=5D_mm/damon/sysfs=3A_fix_param=5F?=
+ =?US-ASCII?Q?ctx_leak_on_damon=5Fsysfs=5Fnew=5Ftest=5Fctx=28=29_failure?=
+User-Agent: Thunderbird for Android
+In-Reply-To: <89ab7e7b-ad61-4881-bceb-781481857d3d@web.de>
+References: <20260321175427.86000-2-sj@kernel.org> <89ab7e7b-ad61-4881-bceb-781481857d3d@web.de>
+Message-ID: <BDDAE837-48DD-4FF8-B7E3-AC0030AF5C9F@objecting.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: Josh Law <objecting@objecting.org>, SeongJae Park <sj@kernel.org>,
- damon@lists.linux.dev, linux-mm@kvack.org,
- Andrew Morton <akpm@linux-foundation.org>
-Cc: linux-kernel@vger.kernel.org, stable@vger.kernel.org
-References: <20260321175427.86000-2-sj@kernel.org>
-Subject: Re: [PATCH v3 1/3] mm/damon/sysfs: fix param_ctx leak on
- damon_sysfs_new_test_ctx() failure
-Content-Language: en-GB, de-DE
-From: Markus Elfring <Markus.Elfring@web.de>
-In-Reply-To: <20260321175427.86000-2-sj@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K1:6OJEwpy3qc+Rn+XsWnfXay5amnaHZGwsa846VslKOX9QthrTc5v
- 6Doi0FNpva9WaEc1qztuFCFJ4SGGsF/xlBT6ElQJ22C3HDAO7SkLjojUDqD4GuAsiPYcLPz
- 0wNY8bvO3s9SnrjSp/3fjYSkvM2ZrEyGOcW1NGfmO5uMovoO4dHAVqW1g+pu+HWUub+4fwz
- CXC3uQn/hkZnUrOjnvrSA==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:kdgVpz69ssw=;I55zE1M2dtkv0kJiu9LAnZwmlEv
- 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
- 6tZEpM+C7E4csq1bHyGK
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-ZohoMailClient: External
 
-> When damon_sysfs_new_test_ctx() fails in damon_sysfs_commit_input(),
-> param_ctx is leaked because the early return skips the cleanup at the
-> out label. Destroy param_ctx before returning.
 
-Will it become helpful to use another label accordingly?
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Documentation/process/coding-style.rst?h=v7.0-rc5#n526
-https://elixir.bootlin.com/linux/v7.0-rc4/source/mm/damon/sysfs.c#L1506-L1537
 
-Regards,
-Markus
+On 23 March 2026 07:28:59 GMT, Markus Elfring <Markus=2EElfring@web=2Ede> =
+wrote:
+>> When damon_sysfs_new_test_ctx() fails in damon_sysfs_commit_input(),
+>> param_ctx is leaked because the early return skips the cleanup at the
+>> out label=2E Destroy param_ctx before returning=2E
+>
+>Will it become helpful to use another label accordingly?
+>https://git=2Ekernel=2Eorg/pub/scm/linux/kernel/git/torvalds/linux=2Egit/=
+tree/Documentation/process/coding-style=2Erst?h=3Dv7=2E0-rc5#n526
+>https://elixir=2Ebootlin=2Ecom/linux/v7=2E0-rc4/source/mm/damon/sysfs=2Ec=
+#L1506-L1537
+>
+>Regards,
+>Markus
+
+
+
+Markus these patches are already merged=20
+
+
+V/R
+
+
+Josh Law
