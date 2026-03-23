@@ -1,163 +1,147 @@
-Received: from mail-pj1-f53.google.com (mail-pj1-f53.google.com [209.85.216.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.web.de (mout.web.de [212.227.15.4])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BFDB1F1932
-	for <damon@lists.linux.dev>; Mon, 23 Mar 2026 07:27:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7372A35F5F0
+	for <damon@lists.linux.dev>; Mon, 23 Mar 2026 07:29:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.4
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774250849; cv=none; b=RCuCj1yL6tnzj8OqPw+JcqW+8vqh0EYYlPoAXyO0P/usm1bL26LYezkp0H7J/XeZP2iGnqLMDJBrvayho8F4k/jaRUkrzjF8jlAWiz5pbZK8CvuYOcTcktRtMumMIpi3xGfb70ZJgtYM3wF9WjylZ32yybxQzj3cxJgVK62ubpk=
+	t=1774250977; cv=none; b=TJfUavJdhVnHU3+kNntQi9n1iMDebOxnSscG3M6bUEsDIa5Kq9KGdNP8sik7cywWn8CpZ57jhJrCUwN79M7VERX4QvzYdSby+PsN7d06+heZlMhyPwyKve3M1LuwbmxUCap0vFyvtGkGDoaculE5WZy+yfFckvrSc2uce+S6vr0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774250849; c=relaxed/simple;
-	bh=OJZbVH53yOtBR70L3BOJqu4HUbQCve2BbZnBoqZKE0s=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a103AnGLxd+nlrFgWfvvX2KGiKqZkckz/EmA2XmlMVZWOzUaoEWKWRNKlZ/Uro/6k1nA1L/6mkhaurI7c2KvnqPBmeJC2uAkmdMXiS5u3BhF6kxGbebiIDiOHhuIwKvC5/mOvSw/OZpQgkS8rOZoMCmoAV1IyHWBbKb9wtCWZtE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=a6Yi86mc; arc=none smtp.client-ip=209.85.216.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1774250977; c=relaxed/simple;
+	bh=OMfdXeN8AuW682Iluc+EJuXACQaUg4XWh33Wt0DHC+g=;
+	h=Message-ID:Date:MIME-Version:To:Cc:References:Subject:From:
+	 In-Reply-To:Content-Type; b=E6C+f3VmTYrwvm/5Kj+AASMV3CUMvx0YcnwQLkzGUfUNIDFPjK86WTD331+N/BmsJJjCeRbze0baJKw4mgstlV+XwA3MOPVWFmK12JdknvcoxwUnvB8Xzw2Fjw45VHkzypzmKALASQBaKh1jHebt7r7LGc0aQGdKp6u95zZBSUU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=markus.elfring@web.de header.b=rhqTGzCT; arc=none smtp.client-ip=212.227.15.4
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="a6Yi86mc"
-Received: by mail-pj1-f53.google.com with SMTP id 98e67ed59e1d1-35ba2ae4df3so1777893a91.2
-        for <damon@lists.linux.dev>; Mon, 23 Mar 2026 00:27:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1774250848; x=1774855648; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Ti0opXmGZu97z0kNAXreOapOmgM8GmXul1oRrCViSA8=;
-        b=a6Yi86mc/cpg7FxuhLEZzRP4emOhs+wtUe/MZqH21QxjU4/NPueK6Dpr+xC2/2EsiT
-         /7x16mHcot3yBfgIUFqzAspm4Zf1lfvSx77HSt2Uf+z9lIcT7Kkml1Upf+uIXsyCgKNo
-         LcZxkD0qg76OjH0xt1eSCc1AF44JIDIVbsMg8jBrF9cmJ+J/1HUENM55hA5V7xNE75oK
-         TVsCwr/YS/ag9CknNLaPvFlEIfv/GM09lxJrWY6Blu/qs2e1HxN2WONyRnwgaHxR+OzG
-         nOZ64jcQ9B+mu6/c+D11uD9CHt/x13Se1XhlpDTezPvyfR9M0wE9A4oIGOKHRrP3Lpul
-         AAXA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774250848; x=1774855648;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=Ti0opXmGZu97z0kNAXreOapOmgM8GmXul1oRrCViSA8=;
-        b=BEiVRtWcgKYhs869DJcVeyC57Sv7CSS4Wa2K8/4OrRVLhO0MwYA78Ty8vD2wNHh3AJ
-         a9CY2WLbbIEbYkZ2lxhJ8lsI3JyrjEbU+obhWqchc8dfUMe2BgNFcIPSau2u2C6/EPDo
-         5NgtbEk98QGt5jB3WmzbdDYZJznMK4m2Z2otW2Gb81KBMTgXhn9SEUBf/sAhqAdkve5M
-         jkZ4NA6tenzLNA9XMTVHdlOFl99wrnViBc+e4wX+bL5+2bqIaG2GmupShhapInYTQ0Ns
-         0P4B6vO2rzQXqKPmvy/a/d1aMOJi96zz942mrkOGKPEHLhMBto0THd9fZgBj32ksv4KK
-         WT4Q==
-X-Gm-Message-State: AOJu0Yx2/ecu2nE1MgYCGp1iTtOjv7a/j624foKs9COWIOnbQNJN7YK+
-	4fsvsG7uQqXGxpp+H7edYM7hzheHIxRd4c0M8UQNfM1jW4VmWi4xT7VX
-X-Gm-Gg: ATEYQzxcwzWfUzc0KygSAj/bZv+2vSG1asmyUWK5OSA+eV9GfYaJHZS1F5aLy7qNLjy
-	j6oRErKXeof2Q6eFZYp/Ql5a60eoywG2P77CO53DlfwCb2UJzIoIaULwkTwdmrZCP/0O90Np67v
-	Al0ZFAz1Nv/ZNQZ9QXc49k6oVkQB9nGVHVmYipVD97JAfY4q2SOHVmWn80ogf8OeVKD2IHW94PT
-	FL4UH+PSmubdPgP5BzSCWbFQukRQUdLxd4xJT41c0L1lnIfbmX9No6TAb2jmktf2its/1wspjFF
-	S1sQrMdd8DoHorhjQUDhmcKmEqOwcSIGln9uBSohlLW2cQyWuxJuG2DkDccuJ6CUPl8GXuaK9mD
-	rNtkW2gVvtntdNXUe/EyWPbUuq8hBI9A1yDUjTZCpaJoi8JSlfdqWH1Y+JPlZhPa8asM/+0ZvIB
-	oyZ/Ni7CD/Epin5X4OQGnedpqefjF+GNORJK6sKdvSRsYKMm991co=
-X-Received: by 2002:a17:90b:3b41:b0:35b:92c1:8a39 with SMTP id 98e67ed59e1d1-35bd2c47760mr9223747a91.8.1774250847877;
-        Mon, 23 Mar 2026 00:27:27 -0700 (PDT)
-Received: from celestia.taila51cc2.ts.net ([2402:1980:898b:301c:d085:a35:99e7:ffec])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-35bc60ec3aasm11041077a91.10.2026.03.23.00.27.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 Mar 2026 00:27:27 -0700 (PDT)
-From: Liew Rui Yan <aethernet65535@gmail.com>
-To: sj@kernel.org
-Cc: damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	aethernet65535@gmail.com
-Subject: Re: [RFC v4] mm/damon: add synchronous commit for commit_inputs
-Date: Mon, 23 Mar 2026 15:27:24 +0800
-Message-ID: <20260323072724.15942-1-aethernet65535@gmail.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260323021648.6590-1-aethernet65535@gmail.com>
-References: <20260323021648.6590-1-aethernet65535@gmail.com>
+	dkim=pass (2048-bit key) header.d=web.de header.i=markus.elfring@web.de header.b="rhqTGzCT"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
+	s=s29768273; t=1774250951; x=1774855751; i=markus.elfring@web.de;
+	bh=OMfdXeN8AuW682Iluc+EJuXACQaUg4XWh33Wt0DHC+g=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:To:Cc:References:
+	 Subject:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:
+	 cc:content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=rhqTGzCTbHszF4/Vg5ZeHtKoOqVBTBK9FUZ62voWdz5gSa55VZ8e868WqKpRJyVX
+	 hHayHTtfKOYhs4ZhW9Vyuqg/hb0TXGPsDm1W4yLnbl+OTL69NVB9YXS2yS8tBt9oz
+	 jVTnu2C4KhK7ZaVeODCQaQj97vvFlSUwLoo7a1h+06RQTTEV5ym4dkwR0On4JIwDW
+	 U/jT7iS20i8HozFk5swpqLa70SACKOrxwQdAnOFNUIGuELwjbQritQABqQnIdVbQX
+	 CoPY0PaIEWG10Swnpa8H8/NAtn6j54SuNMOsLbIHfLZS2MNATfsYK6Z1qPRuzvPli
+	 bN2vadfLq+ISg60zZA==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from client.hidden.invalid by smtp.web.de (mrweb006
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1MNOVK-1vu3zR29gQ-00YRgc; Mon, 23
+ Mar 2026 08:29:11 +0100
+Message-ID: <89ab7e7b-ad61-4881-bceb-781481857d3d@web.de>
+Date: Mon, 23 Mar 2026 08:28:59 +0100
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+To: Josh Law <objecting@objecting.org>, SeongJae Park <sj@kernel.org>,
+ damon@lists.linux.dev, linux-mm@kvack.org,
+ Andrew Morton <akpm@linux-foundation.org>
+Cc: linux-kernel@vger.kernel.org, stable@vger.kernel.org
+References: <20260321175427.86000-2-sj@kernel.org>
+Subject: Re: [PATCH v3 1/3] mm/damon/sysfs: fix param_ctx leak on
+ damon_sysfs_new_test_ctx() failure
+Content-Language: en-GB, de-DE
+From: Markus Elfring <Markus.Elfring@web.de>
+In-Reply-To: <20260321175427.86000-2-sj@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K1:6OJEwpy3qc+Rn+XsWnfXay5amnaHZGwsa846VslKOX9QthrTc5v
+ 6Doi0FNpva9WaEc1qztuFCFJ4SGGsF/xlBT6ElQJ22C3HDAO7SkLjojUDqD4GuAsiPYcLPz
+ 0wNY8bvO3s9SnrjSp/3fjYSkvM2ZrEyGOcW1NGfmO5uMovoO4dHAVqW1g+pu+HWUub+4fwz
+ CXC3uQn/hkZnUrOjnvrSA==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:kdgVpz69ssw=;I55zE1M2dtkv0kJiu9LAnZwmlEv
+ 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
+ 6tZEpM+C7E4csq1bHyGK
 
-Hi SeongJae,
+> When damon_sysfs_new_test_ctx() fails in damon_sysfs_commit_input(),
+> param_ctx is leaked because the early return skips the cleanup at the
+> out label. Destroy param_ctx before returning.
 
-Thank you for reviewing this patch. I'd like to address the review from
-Sashiko.dev [1] and ask for your guidance on two concerns.
+Will it become helpful to use another label accordingly?
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Documentation/process/coding-style.rst?h=v7.0-rc5#n526
+https://elixir.bootlin.com/linux/v7.0-rc4/source/mm/damon/sysfs.c#L1506-L1537
 
-> > -static int damon_lru_sort_handle_commit_inputs(void)
-> > +static int damon_lru_sort_commit_inputs_fn(void *arg)
-> >  {
-> > +	return damon_lru_sort_apply_parameters();
-> > +}
-> > +
-> > +static int damon_lru_sort_commit_inputs_store(const char *val,
-> > +		const struct kernel_param *kp)
-> > +{
-> > +	bool yes;
-> >  	int err;
-> > +	struct damon_call_control control = {
-> > +		.fn = damon_lru_sort_commit_inputs_fn,
-> > +		.data = ctx,
-> > +		.repeat = false,
-> > +	};
-> >  
-> > -	if (!commit_inputs)
-> > +	err = kstrtobool(val, &yes);
-> > +	if (err)
-> > +		return err;
-> > +
-> > +	if (commit_inputs == yes)
-> >  		return 0;
-> >  
-> > -	err = damon_lru_sort_apply_parameters();
-> > +	if (!yes) {
-> > +		commit_inputs = false;
-> > +		return 0;
-> > +	}
-> > +
-> > +	commit_inputs = yes;
-> > +
-> > +	/*
-> > +	 * Skip damon_call() during early boot or when kdamond is idle
-> > +	 * to avoid NULL pointer dereference or unexpected -EINVAL.
-> > +	 */
-> > +	if (!ctx || !damon_is_running(ctx))
-> > +		return 0;
-> If kdamond is not running, this returns 0 but leaves commit_inputs set to
-> true. When kdamond later starts, will subsequent writes of 'Y' to
-> commit_inputs hit the earlier check "if (commit_inputs == yes) return 0;" and
-> silently ignore parameter updates until it is manually reset to 'N'?
-
-My current thought:
-When '!ctx || !damon_is_running(ctx)', we should return -EBUSY instead
-of 0, and keep 'commit_inputs' unchanged. This way, userspace
-immediately knows the operation cannot proceed, and there is no risk of
-stale state.
-
-But, this means that users can no longer write 'commit_inputs=Y' before
-'enabled=Y'.
-
-> > +
-> > +	err = damon_call(ctx, &control);
-> The module parameter set operations are protected by the global kernel
-> param_lock. If the kdamond thread is currently deactivated by watermarks and
-> sleeping for the watermark check interval, could this damon_call() block on
-> wait_for_completion() and hold the global param_lock for an unbounded
-> duration?
->
-> Also, could there be a race condition here if the kdamond thread is stopping?
->
-> If kdamond_fn() flushes pending calls and only afterward sets ctx->kdamond to
-> NULL, could damon_call() insert its control into the list precisely in this
-> window? This might cause it to perceive the thread as active and block on the
-> completion forever, deadlocking the param_lock.
-
-I admit I don't have an elegant solution yet. Here are my current
-thought:
-
-Add a timeout to wait_for_completion() (e.g.,
-wait_for_completion_timeout()), using 'damos_watermarks.interval' as the
-upper bound. This prevents indefinite blocking of 'param_lock', though
-it still holds the global lock for up to several seconds.
-
-[1] https://sashiko.dev/#/patchset/20260323021648.6590-1-aethernet65535%40gmail.com
-
-Best regards,
-Rui Yan
+Regards,
+Markus
