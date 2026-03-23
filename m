@@ -1,56 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E76D73806CD;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7778381AE2;
 	Mon, 23 Mar 2026 23:15:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774307743; cv=none; b=uEO8hftqmr7+T5ZJDAT0gFbnzOmQm6Rmddufx8+37lDUGd5GyqgNQZxqItwZnEHpkDTean35NK7+cOT4SpwMMnKZV/NitARagMSDfQmy9bYj8OwMBCD7lS/3y/CGyZm0PE1CEMb0LIOlPbpoedSnM+PS+hge+lh+fc7Xci0IcF8=
+	t=1774307743; cv=none; b=Tvu051IIHPyezemRHgpY552YThN4o9umq+cHu1DT1eypL7c8gVjQgkQ270/zgvYDj6eNyEaH3kIVZkYcVtDft653aLCgQNaWk7X9XEoQenig+L+NPw7uQDWwlgPfsZBTERff7iYEKC17pevqyBbqyM16nWzVMSGWUPkNBPxfHJg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1774307743; c=relaxed/simple;
-	bh=Gs5alGZs5TwDVSh5NRSOYqfl0A+OaN/Sxbc6fkKvCb0=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=rqVQFZTyrR8fyh5xBm+vm1HDE8g3tSDL62LPiueYYRYW6OhTS+Y2y5ALuqiv2qeawPNSVr0xjiHDagDLBlWb167eOYtO/wEvPnXrlpLZhUeBQ2SvlEjAjLI34eZECKvecHOr3jzBlhGjlwkmYWJy+h2voMiPHV0L7NIKBDRnDxw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=n0FHWStb; arc=none smtp.client-ip=10.30.226.201
+	bh=R+OyX+2+xXzYOPMk7hH5cT/Fo0kVRBRvE8hVSDn6Zoc=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=JzXLA3e/EcYTiAKWqPYq+kfCLiQ1W2f+hM/oGXjtX06ifqTu36rgKppDHEwBRMYngjrKnFUsn048hcfaUs1U5P0fPH9o+bT34ziVfTqOOktz22VMplGsmdQ/hLDhQD+aGut75D65u5YqhcGj0xSbAVC9D1jjlBXNo/adY7eVouE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cCv48XIw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="n0FHWStb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41AE7C4CEF7;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cCv48XIw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3770C2BCB4;
 	Mon, 23 Mar 2026 23:15:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1774307742;
-	bh=Gs5alGZs5TwDVSh5NRSOYqfl0A+OaN/Sxbc6fkKvCb0=;
-	h=From:To:Cc:Subject:Date:From;
-	b=n0FHWStbtq/NPrSOJNkA6kb3l8IPMhZ3/Y14XNDrg3Btqt7obF079X/81Vum+1dja
-	 7VFnLLitb1VzESDrhepZN+f3oh+5a48+tQBVwDh2sfCJnTB7vYw9crbd/UE4TWkS1H
-	 5JDMI4wwxp5NmanfJ5Gfmc3rC1TnKqQ+maHk24MTwI+Gvb2hFxuFeEM8w5Pvx1Wk6v
-	 0QeE3RaRjiDSsJ7Qklq7KGwGQQHavjjpP8RsGkkX3MweHpjcNSsATF9gQ8hxNZbF2P
-	 5Pl/TE/P4xBijwdtbXSZfE/Em025hpP30HJgRvZjzhiia7Znyb0zwgomJ4eQHJ/NnU
-	 CnPB0Z3OXvjMQ==
+	bh=R+OyX+2+xXzYOPMk7hH5cT/Fo0kVRBRvE8hVSDn6Zoc=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=cCv48XIwG2VlpoTnqISMydw2TQW4JBJcbUbw+yjZ4YTzn8104rOdhJHZhNTAcj1+q
+	 j/LiMTkFRVcSeEv9EdxiNdCUTQmpJgxxWHyz26hkzY+ZeoEd0IqBp7ddKtGuW5N4tS
+	 BhHlj69mZp0t/YaRMHikJFeUTcMBSTjBhNl6eJlYtafVwas4ARPOr7E0ghwUjlW7Mc
+	 QREBRETQAe2S92uvisW9m7M2RFUoEIqBYOj0AnVb92NRZ7yx6I6fTPlIf+4f1oARIX
+	 8v7sU19F9gup3RsNgg3LFT4Zylaq+ztdvOxKFqyyBCdeaJrKMZwfcNgnLUWs9alNoB
+	 +4QCmXgXaNEcA==
 From: SeongJae Park <sj@kernel.org>
 To: 
 Cc: SeongJae Park <sj@kernel.org>,
-	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Brendan Higgins <brendan.higgins@linux.dev>,
-	David Gow <davidgow@google.com>,
-	David Hildenbrand <david@kernel.org>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	Michal Hocko <mhocko@suse.com>,
-	Mike Rapoport <rppt@kernel.org>,
-	Shuah Khan <shuah@kernel.org>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Vlastimil Babka <vbabka@kernel.org>,
 	damon@lists.linux.dev,
-	kunit-dev@googlegroups.com,
-	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	linux-kselftest@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH v5 00/10] mm/damon: let DAMON be paused and resumed
-Date: Mon, 23 Mar 2026 16:15:25 -0700
-Message-ID: <20260323231538.84452-1-sj@kernel.org>
+Subject: [RFC PATCH v5 01/10] mm/damon/core: introduce damon_ctx->paused
+Date: Mon, 23 Mar 2026 16:15:26 -0700
+Message-ID: <20260323231538.84452-2-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260323231538.84452-1-sj@kernel.org>
+References: <20260323231538.84452-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -59,135 +47,73 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-DAMON utilizes a few mechanisms that enhance itself over time. Adaptive
-regions adjustment, goal-based DAMOS quota auto-tuning and monitoring
-intervals auto-tuning like self-training mechanisms are such examples.
-It also adds access frequency stability information (age) to the
-monitoring results, which makes it enhanced over time.
+DAMON supports only start and stop of the execution.  When it is
+stopped, its internal data that it self-trained goes away.  It will be
+useful if the execution can be paused and resumed with the previous
+self-trained data.
 
-Sometimes users have to stop DAMON.  In this case, DAMON internal state
-that enhanced over the time of the last execution simply goes away.
-Restarted DAMON have to train itself and enhance its output from the
-scratch.  This makes DAMON less useful in such cases.  Introducing three
-such use cases below.
+Introduce per-context API parameter, 'paused', for the purpose.  The
+parameter can be set and unset while DAMON is running and paused, using
+the online parameters commit helper functions (damon_commit_ctx() and
+damon_call()).  Once 'paused' is set, the kdamond_fn() main loop does
+only limited works with sampling interval sleep during the works.  The
+limited works include the handling of the online parameters update, so
+that users can unset the 'pause' and resume the execution when they
+want.  It also keep checking DAMON stop conditions and handling of it,
+so that DAMON can be stopped while paused if needed.
 
-Investigation of DAMON.  It is best to do the investigation online,
-especially when it is a production environment.  DAMON therefore
-provides features for such online investigations, including DAMOS stats,
-monitoring result snapshot exposure, and multiple tracepoints.  When
-those are insufficient, and there are additional clues that could be
-interfered by DAMON, users have to temporarily stop DAMON to collect the
-additional clues.  It is not very useful since many of DAMON internal
-clues are gone when DAMON is stopped.  The loss of the monitoring
-results that improved over time is also problematic, especially in
-production environments.
+Signed-off-by: SeongJae Park <sj@kernel.org>
+---
+ include/linux/damon.h | 2 ++
+ mm/damon/core.c       | 9 +++++++++
+ 2 files changed, 11 insertions(+)
 
-Monitoring of workloads that have different user-known phases.  For
-example, in Android, applications are known to have very different
-access patterns and behaviors when they are running on the foreground
-and the background.  It can therefore be useful to separate monitoring
-of apps based on whether they are running on the foreground and on the
-background.  Having two DAMON threads per application that paused and
-resumed for the apps foreground/background switches can be useful for
-the purpose.  But such pause/resume of the execution is not supported.
-
-Tests of DAMON.  A few DAMON selftests are using drgn to dump the
-internal DAMON status.  The tests show if the dumped status is the same
-as what the test code expected.  Because DAMON keeps running and
-modifying its internal status, there are chances of data races that can
-cause false test results.  Stopping DAMON can avoid the race.  But,
-since the internal state of DAMON is dropped, the test coverage will be
-limited.
-
-Let DAMON execution be paused and resumed without loss of the internal
-state, to overhaul the limitations.  For this, introduce a new DAMON
-context parameter, namely 'pause'.  API callers can update it while the
-context is running, using the online parameters update functions
-(damon_commit_ctx() and damon_call()).  Once it is set, kdamond_fn()
-main loop will do only limited works excluding the monitoring and DAMOS
-works, while sleeping sampling intervals per the work.  The limited
-works include handling of the online parameters update.  Hence users can
-unset the 'pause' parameter again.  Once it is unset, kdamond_fn() main
-loop will do all the work again (resumed).  Under the paused state, it
-also does stop condition checks and handling of it, so that paused DAMON
-can also be stopped if needed.  Expose the feature to the user space via
-DAMON sysfs interface.  Also, update existing drgn-based tests to test
-and use the feature.
-
-Tests
-=====
-
-I confirmed the feature functionality using real time tracing ('perf
-trace' or 'trace-cmd stream') of damon:damon_aggregated DAMON
-tracepoint.  By pausing and resuming the DAMON execution, I was able to
-see the trace stops and continued as expected.  Note that the pause
-feature support is added to DAMON user-space tool (damo) after v3.1.9.
-Users can use '--pause_ctx' command line option of damo for that, and I
-actually used it for my test.  The extended drgn-based selftests are
-also testing a part of the functionality.
-
-Patches Sequence
-================
-
-Patch 1 introduces the new core API for the pause feature.  Patch 2
-extend DAMON sysfs interface for the new parameter.  Patches 3-5 update
-design, usage and ABI documents for the new sysfs file, respectively.
-The following five patches are for tests.  Patch 6 implements a new
-kunit test for the pause parameter online commitment.  Patches 7 and 8
-extend DAMON selftest helpers to support the new feature.  Patch 9
-extends selftest to test the commitment of the feature.  Finally, patch
-10 updates existing selftest to be safe from the race condition using
-the pause/resume feature.
-
-Changelog
-=========
-
-Changes from RFC v4
-(https://lore.kerneel.org/20260322155728.81434-1-sj@kernel.org)
-- Fix typo: selftets.
-- Fix wrong selftests kdamonds resume iteration.
-Changes from v1 (or, RFC v3)
-(https://lore.kernel.org/20260321181343.93971-1-sj@kernel.org)
-- Add RFC tag again.
-- Handle maybe_corrupted inside pause-loop.
-- Reduce unnecessary commits in sysfs.py selftest.
-Changes from RFC v2
-(https://lore.kernel.org/20260319052157.99433-1-sj@kernel.org)
-- Move damon_ctx->pause to public fields section.
-- Wordsmith design doc change.
-- Fix unintended resume of contexts in multiple contexts use case.
-- Rebase to latest mm-new.
-Changes from RFC v1
-(https://lore.kernel.org/20260315210012.94846-1-sj@kernel.org)
-- Continuously cancel new damos_walk() requests when paused.
-- Initialize damon_sysfs_context->pause.
-- Make sysfs.py dump-purpose pausing to work for all contexts.
-
-SeongJae Park (10):
-  mm/damon/core: introduce damon_ctx->paused
-  mm/damon/sysfs: add pause file under context dir
-  Docs/mm/damon/design: update for context pause/resume feature
-  Docs/admin-guide/mm/damon/usage: update for pause file
-  Docs/ABI/damon: update for pause sysfs file
-  mm/damon/tests/core-kunit: test pause commitment
-  selftests/damon/_damon_sysfs: support pause file staging
-  selftests/damon/drgn_dump_damon_status: dump pause
-  selftests/damon/sysfs.py: check pause on assert_ctx_committed()
-  selftests/damon/sysfs.py: pause DAMON before dumping status
-
- .../ABI/testing/sysfs-kernel-mm-damon         |  7 ++++
- Documentation/admin-guide/mm/damon/usage.rst  | 12 ++++--
- Documentation/mm/damon/design.rst             |  7 ++++
- include/linux/damon.h                         |  2 +
- mm/damon/core.c                               |  9 +++++
- mm/damon/sysfs.c                              | 31 +++++++++++++++
- mm/damon/tests/core-kunit.h                   |  4 ++
- tools/testing/selftests/damon/_damon_sysfs.py | 10 ++++-
- .../selftests/damon/drgn_dump_damon_status.py |  1 +
- tools/testing/selftests/damon/sysfs.py        | 39 +++++++++++++++++++
- 10 files changed, 117 insertions(+), 5 deletions(-)
-
-
-base-commit: 4219363684c17e8704b4fd4ceac8940924a94b3d
+diff --git a/include/linux/damon.h b/include/linux/damon.h
+index 04c8a052fcfbe..65c8d5ef510fe 100644
+--- a/include/linux/damon.h
++++ b/include/linux/damon.h
+@@ -787,6 +787,7 @@ struct damon_attrs {
+  * @ops:	Set of monitoring operations for given use cases.
+  * @addr_unit:	Scale factor for core to ops address conversion.
+  * @min_region_sz:	Minimum region size.
++ * @pause:	Pause kdamond main loop.
+  * @adaptive_targets:	Head of monitoring targets (&damon_target) list.
+  * @schemes:		Head of schemes (&damos) list.
+  */
+@@ -838,6 +839,7 @@ struct damon_ctx {
+ 	struct damon_operations ops;
+ 	unsigned long addr_unit;
+ 	unsigned long min_region_sz;
++	bool pause;
+ 
+ 	struct list_head adaptive_targets;
+ 	struct list_head schemes;
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index db6c67e52d2b8..0ab2cfa848e69 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -1349,6 +1349,7 @@ int damon_commit_ctx(struct damon_ctx *dst, struct damon_ctx *src)
+ 		if (err)
+ 			return err;
+ 	}
++	dst->pause = src->pause;
+ 	dst->ops = src->ops;
+ 	dst->addr_unit = src->addr_unit;
+ 	dst->min_region_sz = src->min_region_sz;
+@@ -3003,6 +3004,14 @@ static int kdamond_fn(void *data)
+ 		kdamond_call(ctx, false);
+ 		if (ctx->maybe_corrupted)
+ 			break;
++		while (ctx->pause) {
++			damos_walk_cancel(ctx);
++			kdamond_usleep(ctx->attrs.sample_interval);
++			/* allow caller unset pause via damon_call() */
++			kdamond_call(ctx, false);
++			if (kdamond_need_stop(ctx) || ctx->maybe_corrupted)
++				goto done;
++		}
+ 		if (!list_empty(&ctx->schemes))
+ 			kdamond_apply_schemes(ctx);
+ 		else
 -- 
 2.47.3
