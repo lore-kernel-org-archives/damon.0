@@ -1,23 +1,24 @@
 Received: from frasgout.his.huawei.com (frasgout.his.huawei.com [185.176.79.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42957394461
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 428CE383C7C
 	for <damon@lists.linux.dev>; Mon, 23 Mar 2026 14:58:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.176.79.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774277899; cv=none; b=h0bxAaNdt/JKNTMc/MmHdLwGABWlRhZU+a8hSbS2KALkx8LwROlu639icumutP3KzGV21TqJfg5MAKHj0lv6MWl+es1YafSjrjoX2Ng28WVy3XYFSIur435cJG2l68caAxX/YklPZ2FF0CMP/k00C4czkLZ0XRWaCajod4KE6f4=
+	t=1774277899; cv=none; b=E8jQl5wDnJU+97zmLz4ceur9eWmSsZ25dlyq2a95+/ONlAtiiIXQ1RpevvoG0OEyUcRQJE7UCLtkyoRTYYmErgSinvXcUHm+WB+CA3/9/PW9kCCaDqMGy7C0lZPaZ/8bhoz2zmBFvVSgoDFjSBOCnKkU8auNWvaymLwGYpnXuOc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1774277899; c=relaxed/simple;
-	bh=BKAEJtKN/Id5nY0MZfsNn65CxbC71xBciM9Djd3mE2g=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=b1xRqLY6HPQBo6w/X0sjhLIIA1ppDfXd46oLo5me2ZBIz+QnU14NqrWzohMuibAebvtlxJU7ucuETE2yauonf9Gov8wQlnYPzOODoFoGdssha5+KZ9KAbc6eTgtSG1TY0zohjdaDCI8STu51u4RcIRB8UUF5LZNcwkOmOk/1+yw=
+	bh=ODwIbbCc1NuOGF2Bqmkco9xx4KKTX9qodXSBpnggzMs=;
+	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=QTHYzD9TnjfmPoM8yotlfhVSKo5LW6UENuIUXTLGeusrk+J6SpsBrLtuiieK+VNobzUhj/hFxZz96v27XGIJeCnwEQSyBLmbSksIABTDz/9xMu4uy3SkA3mYMg35UsoaPYR8URXqN/3x1pj6W88Ki3psGnWIov9evo+pYTCRdsI=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei-partners.com; spf=pass smtp.mailfrom=huawei-partners.com; arc=none smtp.client-ip=185.176.79.56
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei-partners.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei-partners.com
 Received: from mail.maildlp.com (unknown [172.18.224.83])
-	by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4ffbrZ6H1QzJ46Dc;
-	Mon, 23 Mar 2026 22:58:06 +0800 (CST)
+	by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4ffbr45g9RzHnGdd;
+	Mon, 23 Mar 2026 22:57:40 +0800 (CST)
 Received: from mscpeml500003.china.huawei.com (unknown [7.188.49.51])
-	by mail.maildlp.com (Postfix) with ESMTPS id 4479340572;
+	by mail.maildlp.com (Postfix) with ESMTPS id 5A78A40573;
 	Mon, 23 Mar 2026 22:58:12 +0800 (CST)
 Received: from mscphis01197.huawei.com (10.123.65.218) by
  mscpeml500003.china.huawei.com (7.188.49.51) with Microsoft SMTP Server
@@ -32,10 +33,12 @@ To: <gutierrez.asier@huawei-partners.com>, <artem.kuzin@huawei.com>,
 	<surenb@google.com>, <mhocko@suse.com>, <corbet@lwn.net>,
 	<skhan@linuxfoundation.org>, <linux-doc@vger.kernel.org>,
 	<linux-mm@kvack.org>, <linux-kernel@vger.kernel.org>
-Subject: [RFC PATCH v1 1/1] This patch set introces a new action: DAMOS_COLLAPSE.
-Date: Mon, 23 Mar 2026 14:56:45 +0000
-Message-ID: <20260323145646.4165053-1-gutierrez.asier@huawei-partners.com>
+Subject: [RFC PATCH v2 1/1] mm/damon: support MADV_COLLAPSE via DAMOS_COLLAPSE scheme action
+Date: Mon, 23 Mar 2026 14:56:46 +0000
+Message-ID: <20260323145646.4165053-2-gutierrez.asier@huawei-partners.com>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260323145646.4165053-1-gutierrez.asier@huawei-partners.com>
+References: <20260323145646.4165053-1-gutierrez.asier@huawei-partners.com>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -48,6 +51,8 @@ X-ClientProxiedBy: mscpeml500003.china.huawei.com (7.188.49.51) To
  mscpeml500003.china.huawei.com (7.188.49.51)
 
 From: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
+
+This patch set introces a new action:  DAMOS_COLLAPSE.
 
 For DAMOS_HUGEPAGE and DAMOS_NOHUGEPAGE to work, khugepaged should be
 working, since it relies on hugepage_madvise to add a new slot. This
@@ -81,7 +86,7 @@ D c: DAMON action collapse
 
 Changes
 ---------
-v1-v2:
+v1 -> v2:
 Added benchmarks
 Added damos_filter_type documentation for new action to fix kernel-doc
 
