@@ -1,117 +1,289 @@
-Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from frasgout.his.huawei.com (frasgout.his.huawei.com [185.176.79.56])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 662E037C0F2
-	for <damon@lists.linux.dev>; Tue, 24 Mar 2026 14:49:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 551DF401A3A
+	for <damon@lists.linux.dev>; Tue, 24 Mar 2026 15:01:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.176.79.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774363759; cv=none; b=skAa5P4j+83KYTYOToyh4Y8dzZsYed1jHV6zlJR3x/8Uwt5cg+PwZwofGgHpRhVyBAPdzIUrEC2nWTZTZaVNQLS6QNhBGATBYG/a4hCz0FRlizG+oOtGKv7yTfykPZbkNlxu6v6RtXIchwfjBfQBNTEmC1bx+1IVEsmAhDtpSjk=
+	t=1774364489; cv=none; b=ZregVAmMprYgzXdFzTzXeujQJONzI1EP4RJxtQ7aJBhyf57xv1quimCFUoMQVcHb7SOCpwiUQEKVmuJeg0jE2FYpmzmBEvt/RX1zEo9C5R29UftC9TwcTx/Yk0yrGvTDWkHOULIKr+22Q7cSgjIzNdszDKFZnmza/CD2I+ZX130=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774363759; c=relaxed/simple;
-	bh=XvSZWxaAXywlzabKR7BIDShF6Tq9Q+3wmC3P9wsxAqE=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=lAoohkjeDmQE3D3Y6vDWj1uAR1zHHSqTAr6gYfxp5whca129ZgrOKNgTivjZl0n1iiKdJCAk4FkxTmUy7dFf9UMliJFgC8ILEKrKq/NlJgkLWkhLNl2sExLhYRLdnlaPkeK5FNnteXeGkV2qsLb/GnOtKVYfb5xub83oLGSWsrw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=doUTNJS3; arc=none smtp.client-ip=209.85.214.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="doUTNJS3"
-Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-2b07069e2efso9139275ad.3
-        for <damon@lists.linux.dev>; Tue, 24 Mar 2026 07:49:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1774363758; x=1774968558; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=gSh9sYTNfvPCviCi4VjGmuUXLd20wXWnwnWNNQiCwBQ=;
-        b=doUTNJS3yAJB1sdr9qWQIGL91AEL95zmTgaVc4dKCjz4lYWDuGdsg1KXa8G6hRMHnM
-         Ofjmrmv8eJgYF+iSifyoIB/G63G5xbJ3YCbhaOwVMcQ8olP9hM9yeYGAJyr4JX04iGK9
-         0lfUKFRUwFuKcm89Wg2+CKB5LL6rhhW8sQTymsXQFwKe0FS+jLT79URISZflvVcEHEf5
-         r3Gm4p4k8LBZi7K6UdMB02m8O3EA8AA+0vcF9IJjOZ0m2cjv26dCWpK+gSh87FGCj+fL
-         f7MNGMvW3SXapgDygOnXCL7hIHKOLLa11w5I1gJLrCTyADyMUmgsanpJeaizjreZsFty
-         zqTA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774363758; x=1774968558;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=gSh9sYTNfvPCviCi4VjGmuUXLd20wXWnwnWNNQiCwBQ=;
-        b=Cvuewne+7nI3Dq/vdyhwFwy+NlJ+sb6dNQsv0NolSUxPkhK0akOjYUUxeEKA6hkHou
-         Ycmvb+XQu//FXqDUHB+2x9YYXjwWR0zFh7FiF/k/nkXTpUbvRB0BOaISWZvF7BLrNgDu
-         tnJ8GR5J+dqyM2+lFZZpiaCStytq7b4/vw7sDiGn8++7M8fI5dKHk3fLgm10Xrb4oFJy
-         n3t2KW+Sdr9rhIow7Yn6V2WMGUA6qascCoMzm2wOTwbhc3Mri8+qsnpCoxr5HrL5nTYi
-         s/2mZo4Rggf9uyMyu0p2+kz/QsCnFAC2q/4pLtc+FpU5MjQAwh/JHzgYRdDDIPB4HttY
-         f6Ew==
-X-Forwarded-Encrypted: i=1; AJvYcCVrvcVTxIJU+ryApY/Q3PypK+OzH9OqFAxB/bw/P4pOSwtFXNMGdUYGRlmKGdgs9b4SXZg2Lw==@lists.linux.dev
-X-Gm-Message-State: AOJu0YwR1Z7kFxqUtAXjnfxMq3t/lNKB4mkHwEZRZ9MBcBij9t7X44j+
-	kIIQcT51YDwqRr+i+4ddUQN/Uo86soMRiZUHHCKseXgqD5BHoVOD7d1X
-X-Gm-Gg: ATEYQzwkny+csHFjoBAfEULdLSBY0zTWSHMykJBq6bPL9RAwR6+4wXbHcRtVpXGrDCG
-	63GjkbqhlCPCUfA8woRJeasgEZBkxODQyZMpubta2G8ss1NbeUkop0o/eOsC640V1MKou6CGp4E
-	D6kCTLArRSxvyW8+e2VV7HOefjUjkP3GPoTFXuC4i5q5wqO+GbrkQcSOGA62cpZ0+vmqA0Qturr
-	yCDhGE5hZBGW31fyGXhxhO0M37+35nJBqIeh274DnhONI1zhBWyusYEtzuKX9nFjux1y+vU0YdZ
-	0b5zWEaFbgTcp3M2G9BBGvx8TMKTZgBiMa3cgljsfIbc5UWLZ1TQ2ZPeMqagqWVYfOM0TRHYBmF
-	jM45OQajGT+6eTN+5yn7/ZMSICfS8e1mfEGAXyx0t0NbqShhqyoJpRFTSoPAaYesUOlqOwISHVm
-	fgHOsPhHgn4WHgpKgfQ7NtwFk=
-X-Received: by 2002:a17:903:32c6:b0:2ae:55eb:f82d with SMTP id d9443c01a7336-2b0826d751dmr162082965ad.1.1774363757621;
-        Tue, 24 Mar 2026 07:49:17 -0700 (PDT)
-Received: from fedora ([2402:7500:a2e:a774:5078:e5c1:bc34:6044])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2b083516ab1sm201252325ad.5.2026.03.24.07.49.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Mar 2026 07:49:16 -0700 (PDT)
-From: Cheng-Han Wu <hank20010209@gmail.com>
-To: sj@kernel.org,
-	corbet@lwn.net,
-	damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	linux-doc@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Cc: skhan@linuxfoundation.org,
-	Cheng-Han Wu <hank20010209@gmail.com>
-Subject: [PATCH] Documentation/admin-guide/mm/damon: fix 'parametrs' typo
-Date: Tue, 24 Mar 2026 22:48:51 +0800
-Message-ID: <20260324144851.12883-1-hank20010209@gmail.com>
-X-Mailer: git-send-email 2.53.0
+	s=arc-20240116; t=1774364489; c=relaxed/simple;
+	bh=o8B83aAFexBuB9SVtvwrqMk3/FAG19DAylI5lbN06WM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=mWRwN5vpjLOYy5DjFOkZ+ovGzgNS67pDF9Vu+R4PW0ZCw3tR0gDztfaiURiE1m6ZIysL0nuyJmqDRp7AoEFIiWaVUgf9wq4xp8f7ltsMZ6vP8lPS4SL/TyJY3GgpRu4RNowluuIQYsecTQPR3tGoNtodLnagGoXV+xgxHjmiaBQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei-partners.com; spf=pass smtp.mailfrom=huawei-partners.com; arc=none smtp.client-ip=185.176.79.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei-partners.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei-partners.com
+Received: from mail.maildlp.com (unknown [172.18.224.150])
+	by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4fgCsG50R3zHnGfl;
+	Tue, 24 Mar 2026 23:00:50 +0800 (CST)
+Received: from mscpeml500003.china.huawei.com (unknown [7.188.49.51])
+	by mail.maildlp.com (Postfix) with ESMTPS id 3EA784056B;
+	Tue, 24 Mar 2026 23:01:24 +0800 (CST)
+Received: from [10.123.123.154] (10.123.123.154) by
+ mscpeml500003.china.huawei.com (7.188.49.51) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.11; Tue, 24 Mar 2026 18:01:23 +0300
+Message-ID: <6a07479d-0ddb-442e-bc1b-027f4c6d3b77@huawei-partners.com>
+Date: Tue, 24 Mar 2026 18:01:23 +0300
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v1 1/1] This patch set introces a new action:
+ DAMOS_COLLAPSE.
+To: SeongJae Park <sj@kernel.org>
+CC: <artem.kuzin@huawei.com>, <stepanov.anatoly@huawei.com>,
+	<wangkefeng.wang@huawei.com>, <yanquanmin1@huawei.com>, <zuoze1@huawei.com>,
+	<damon@lists.linux.dev>, <akpm@linux-foundation.org>, <ljs@kernel.org>,
+	<Liam.Howlett@oracle.com>, <vbabka@kernel.org>, <rppt@kernel.org>,
+	<surenb@google.com>, <mhocko@suse.com>, <corbet@lwn.net>,
+	<skhan@linuxfoundation.org>, <linux-doc@vger.kernel.org>,
+	<linux-mm@kvack.org>, <linux-kernel@vger.kernel.org>
+References: <20260324141257.91322-1-sj@kernel.org>
+Content-Language: en-US
+From: Gutierrez Asier <gutierrez.asier@huawei-partners.com>
+In-Reply-To: <20260324141257.91322-1-sj@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: mscpeml500004.china.huawei.com (7.188.26.250) To
+ mscpeml500003.china.huawei.com (7.188.49.51)
 
-Fix the misspelling of "parametrs" as "parameters" in
-reclaim.rst and lru_sort.rst.
 
-Signed-off-by: Cheng-Han Wu <hank20010209@gmail.com>
----
- Documentation/admin-guide/mm/damon/lru_sort.rst | 2 +-
- Documentation/admin-guide/mm/damon/reclaim.rst  | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/admin-guide/mm/damon/lru_sort.rst b/Documentation/admin-guide/mm/damon/lru_sort.rst
-index 20a8378d5a94..4f6a644be2ff 100644
---- a/Documentation/admin-guide/mm/damon/lru_sort.rst
-+++ b/Documentation/admin-guide/mm/damon/lru_sort.rst
-@@ -75,7 +75,7 @@ Make DAMON_LRU_SORT reads the input parameters again, except ``enabled``.
- 
- Input parameters that updated while DAMON_LRU_SORT is running are not applied
- by default.  Once this parameter is set as ``Y``, DAMON_LRU_SORT reads values
--of parametrs except ``enabled`` again.  Once the re-reading is done, this
-+of parameters except ``enabled`` again.  Once the re-reading is done, this
- parameter is set as ``N``.  If invalid parameters are found while the
- re-reading, DAMON_LRU_SORT will be disabled.
- 
-diff --git a/Documentation/admin-guide/mm/damon/reclaim.rst b/Documentation/admin-guide/mm/damon/reclaim.rst
-index 8eba3da8dcee..1f54a2d270f5 100644
---- a/Documentation/admin-guide/mm/damon/reclaim.rst
-+++ b/Documentation/admin-guide/mm/damon/reclaim.rst
-@@ -67,7 +67,7 @@ Make DAMON_RECLAIM reads the input parameters again, except ``enabled``.
- 
- Input parameters that updated while DAMON_RECLAIM is running are not applied
- by default.  Once this parameter is set as ``Y``, DAMON_RECLAIM reads values
--of parametrs except ``enabled`` again.  Once the re-reading is done, this
-+of parameters except ``enabled`` again.  Once the re-reading is done, this
- parameter is set as ``N``.  If invalid parameters are found while the
- re-reading, DAMON_RECLAIM will be disabled.
- 
+On 3/24/2026 5:12 PM, SeongJae Park wrote:
+> On Tue, 24 Mar 2026 16:57:22 +0300 Gutierrez Asier <gutierrez.asier@huawei-partners.com> wrote:
+> 
+>>
+>>
+>> On 3/24/2026 3:39 AM, SeongJae Park wrote:
+>>> Hello Asier,
+>>>
+>>> On Mon, 23 Mar 2026 14:56:45 +0000 <gutierrez.asier@huawei-partners.com> wrote:
+>>>
+>>>> From: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
+>>>>
+>>>> For DAMOS_HUGEPAGE and DAMOS_NOHUGEPAGE to work, khugepaged should be
+>>>> working, since it relies on hugepage_madvise to add a new slot. This
+>>>> slot should be picked up by khugepaged and eventually collapse (or
+>>>> not, if we are using DAMOS_NOHUGEPAGE) the pages. If THP is not
+>>>> enabled, khugepaged will not be working, and therefore no collapse
+>>>> will happen.
+>>>>
+>>>> DAMOS_COLLAPSE eventually calls madvise_collapse, which will collapse
+>>>> the address range synchronously.
+>>>>
+>>>> This new action may be required to support autotuning with hugepage as
+>>>> a goal[1].
+>>>>
+>>>> [1]: https://lore.kernel.org/damon/20260313000816.79933-1-sj@kernel.org/
+>>>>
+>>>> ---------
+>>>> Benchmarks:
+>>>>
+>>>> T n: THP never
+>>>> T m: THP madvise
+>>>> D h: DAMON action hugepage
+>>>> D c: DAMON action collapse
+>>>>
+>>>> +------------------+----------+----------+----------+
+>>>> |                  | T n, D h | T m, D h | T n, D c |
+>>>> +------------------+----------+----------+----------+
+>>>> | Total memory use | 2.07     | 2.09     | 2.07     |
+>>>> | Huge pages       | 0        | 1.3      | 1.25     |
+>>>> +------------------+----------+----------+----------+
+>>>
+>>> Thank you for sharing the benchmark results!  But, I'm having a hard time to
+>>> understand what this really means.  Could you please further clarify the setup
+>>> of the benchmarks and interpretation of the results?
+>> I will fix the cover in the next version, which I will submit soon.
+>>
+>> I tested the patch in a physical server with MariaDB 10.5. I run
+>> sysbench to load the server.
+>>
+>> I check 3 scenarios:
+>> - DAMON action hugepage for the database task, THP as never
+>> - DAMON action hugepage, THP madvise
+>> - DAMON action collapse, THP never
+>>
+>> I compared the memory consumption, both in overall in the server and
+>> anonymous huge page consumption. The results are in the table
+>>
+>> T n: THP never
+>> T m: THP madvise
+>> D h: DAMON action hugepage
+>> D c: DAMON action collapse
+> 
+> Thank you for sharing the details of the setup, Asier.
+> 
+>>
+>> +------------------+----------+----------+----------+
+>> |                  | T n, D h | T m, D h | T n, D c |
+>> +------------------+----------+----------+----------+
+>> | Total memory use | 2.07     | 2.09     | 2.07     |
+>> | Huge pages       | 0        | 1.3      | 1.25     |
+>> +------------------+----------+----------+----------+
+> 
+> Could you please further share interpretation of the results?  What these
+> results mean?  Does it show some benefit of DAMOS_COLLAPSE?
+
+In the first row is the total memory consumption in GB by the server
+and in the second row the huge page consumption.
+
+What this table shows is that DAMON action "hugepage" doesn't lead
+to any hugepage collapse unless THP is set to madvise. If DAMON
+action is set to "collapse", hugepage collapses happen, even when
+THP is disabled. The memory consumption for DAMON "collapse" is
+slightly lower than with "hugepage", since madvise applies to the
+entire server and other application may request to collapse pages
+through madvise.
+
+Regarding the performance, I saw improvement from no hugepage at all
+to use of hugepages. No significant difference between "hugepage" and 
+"collapse" actions. I will have a look to the logs and publish it a bit
+later.
+
+> Also, how is the performance?  Does it show some difference?
+> 
+>>>
+>>>>
+>>>> Changes
+>>>> ---------
+>>>> v1-v2:
+>>>> Added benchmarks
+>>>> Added damos_filter_type documentation for new action to fix kernel-doc
+>>>
+>>> Please add Changelog on the commentary section [1].  Also, please consider
+>>> adding links to previous versions.
+>>>
+>>>>
+>>>> Signed-off-by: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
+>>>> ---
+>>>>  Documentation/mm/damon/design.rst      |  4 ++++
+>>>>  include/linux/damon.h                  |  2 ++
+>>>>  mm/damon/sysfs-schemes.c               |  4 ++++
+>>>>  mm/damon/vaddr.c                       |  3 +++
+>>>>  tools/testing/selftests/damon/sysfs.py | 11 ++++++-----
+>>>>  5 files changed, 19 insertions(+), 5 deletions(-)
+>>>>
+>>>> diff --git a/Documentation/mm/damon/design.rst b/Documentation/mm/damon/design.rst
+>>>> index 838b14d22519..405142641e55 100644
+>>>> --- a/Documentation/mm/damon/design.rst
+>>>> +++ b/Documentation/mm/damon/design.rst
+>>>> @@ -467,6 +467,10 @@ that supports each action are as below.
+>>>>     Supported by ``vaddr`` and ``fvaddr`` operations set. When
+>>>>     TRANSPARENT_HUGEPAGE is disabled, the application of the action will just
+>>>>     fail.
+>>>> + - ``collapse``: Call ``madvise()`` for the region with ``MADV_COLLAPSE``.
+>>>> +   Supported by ``vaddr`` and ``fvaddr`` operations set. When
+>>>> +   TRANSPARENT_HUGEPAGE is disabled, the application of the action will just
+>>>> +   fail.
+>>>>   - ``lru_prio``: Prioritize the region on its LRU lists.
+>>>>     Supported by ``paddr`` operations set.
+>>>>   - ``lru_deprio``: Deprioritize the region on its LRU lists.
+>>>> diff --git a/include/linux/damon.h b/include/linux/damon.h
+>>>> index d9a3babbafc1..6941113968ec 100644
+>>>> --- a/include/linux/damon.h
+>>>> +++ b/include/linux/damon.h
+>>>> @@ -121,6 +121,7 @@ struct damon_target {
+>>>>   * @DAMOS_PAGEOUT:	Reclaim the region.
+>>>>   * @DAMOS_HUGEPAGE:	Call ``madvise()`` for the region with MADV_HUGEPAGE.
+>>>>   * @DAMOS_NOHUGEPAGE:	Call ``madvise()`` for the region with MADV_NOHUGEPAGE.
+>>>> + * @DAMOS_COLLAPSE:	Call ``madvise()`` for the region with MADV_COLLAPSE.
+>>>>   * @DAMOS_LRU_PRIO:	Prioritize the region on its LRU lists.
+>>>>   * @DAMOS_LRU_DEPRIO:	Deprioritize the region on its LRU lists.
+>>>>   * @DAMOS_MIGRATE_HOT:  Migrate the regions prioritizing warmer regions.
+>>>> @@ -140,6 +141,7 @@ enum damos_action {
+>>>>  	DAMOS_PAGEOUT,
+>>>>  	DAMOS_HUGEPAGE,
+>>>>  	DAMOS_NOHUGEPAGE,
+>>>> +	DAMOS_COLLAPSE,
+>>>>  	DAMOS_LRU_PRIO,
+>>>>  	DAMOS_LRU_DEPRIO,
+>>>>  	DAMOS_MIGRATE_HOT,
+>>>> diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
+>>>> index 5186966dafb3..aa08a8f885fb 100644
+>>>> --- a/mm/damon/sysfs-schemes.c
+>>>> +++ b/mm/damon/sysfs-schemes.c
+>>>> @@ -2041,6 +2041,10 @@ static struct damos_sysfs_action_name damos_sysfs_action_names[] = {
+>>>>  		.action = DAMOS_NOHUGEPAGE,
+>>>>  		.name = "nohugepage",
+>>>>  	},
+>>>> +	{
+>>>> +		.action = DAMOS_COLLAPSE,
+>>>> +		.name = "collapse",
+>>>> +	},
+>>>>  	{
+>>>>  		.action = DAMOS_LRU_PRIO,
+>>>>  		.name = "lru_prio",
+>>>> diff --git a/mm/damon/vaddr.c b/mm/damon/vaddr.c
+>>>> index b069dbc7e3d2..dd5f2d7027ac 100644
+>>>> --- a/mm/damon/vaddr.c
+>>>> +++ b/mm/damon/vaddr.c
+>>>> @@ -903,6 +903,9 @@ static unsigned long damon_va_apply_scheme(struct damon_ctx *ctx,
+>>>>  	case DAMOS_NOHUGEPAGE:
+>>>>  		madv_action = MADV_NOHUGEPAGE;
+>>>>  		break;
+>>>> +	case DAMOS_COLLAPSE:
+>>>> +		madv_action = MADV_COLLAPSE;
+>>>> +		break;
+>>>>  	case DAMOS_MIGRATE_HOT:
+>>>>  	case DAMOS_MIGRATE_COLD:
+>>>>  		return damos_va_migrate(t, r, scheme, sz_filter_passed);
+>>>> diff --git a/tools/testing/selftests/damon/sysfs.py b/tools/testing/selftests/damon/sysfs.py
+>>>> index 3aa5c91548a5..c6476e63f4fb 100755
+>>>> --- a/tools/testing/selftests/damon/sysfs.py
+>>>> +++ b/tools/testing/selftests/damon/sysfs.py
+>>>> @@ -123,11 +123,12 @@ def assert_scheme_committed(scheme, dump):
+>>>>              'pageout': 2,
+>>>>              'hugepage': 3,
+>>>>              'nohugeapge': 4,
+>>>> -            'lru_prio': 5,
+>>>> -            'lru_deprio': 6,
+>>>> -            'migrate_hot': 7,
+>>>> -            'migrate_cold': 8,
+>>>> -            'stat': 9,
+>>>> +            'collapse': 5
+>>>
+>>> Comman is missed?
+>>>
+>>>> +            'lru_prio': 6,
+>>>> +            'lru_deprio': 7,
+>>>> +            'migrate_hot': 8,
+>>>> +            'migrate_cold': 9,
+>>>> +            'stat': 10,
+>>>>              }
+>>>>      assert_true(dump['action'] == action_val[scheme.action], 'action', dump)
+>>>>      assert_true(dump['apply_interval_us'] == scheme. apply_interval_us,
+>>>> -- 
+>>>> 2.43.0
+>>>
+>>> Other than the selftest part, code looks good.  Please consider dropping RFC
+>>> tag from the next spin.  Clarifying more details about the test would be
+>>> helpful, though.
+>>>
+>>> [1] https://docs.kernel.org/process/submitting-patches.html#commentary
+>>>
+>>>
+>>> Thanks,
+>>> SJ
+>>>
+>>
+>> SJ, should I remove the RFC tag for the next version?
+> 
+> If you feel comfortable with it, please do so.
+> 
+> 
+> Thanks,
+> SJ
+> 
+> [...]
+> 
+
 -- 
-2.53.0
+Asier Gutierrez
+Huawei
 
