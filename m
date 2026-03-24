@@ -1,68 +1,136 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from sender-of-o57.zoho.eu (sender-of-o57.zoho.eu [136.143.169.57])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C37D402BAB;
-	Tue, 24 Mar 2026 15:06:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774364780; cv=none; b=Vm7x/wmf03Ksujl2WiahseVhf5ixQmLPCviJ1/woZqti3cada9RT9gtXFIqhgOMVtqliTO2P24+k1u4i/dbhIssHep005Vgv+71FwzoZO7PGpFZg2geXJO3WAkiJ5/wTW+2NCWLbmKM4X/8ciV1T/Kz3MqdrUMoT7hrt9K3Re4o=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774364780; c=relaxed/simple;
-	bh=/Pkl3ERIJblGJmh1debS8MoBSBQPNjNn+kFUL0+4r1I=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RwNcwJWjAXfqmaF2IjGHMmrKguYi2nvlkFq75Gn5Kxnkdmm8NxIvUtC01Bflicx5fEr/1MSygEj6i2U7L2DZLHcpTwRxTvSuDD8i4giGlUyKAqUG/P8JlfmDM6XQKexHfB5XQw0ew+EmD4O31GuZdaAJW1YH5g2pLHdtZnSN1wQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TkoNFeL5; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98AB73FF8A9
+	for <damon@lists.linux.dev>; Tue, 24 Mar 2026 15:23:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.169.57
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1774365828; cv=pass; b=fBiOHuEO3gqLimqUwjLjFD8iCKCWs2QlnxZoTxdaV//GcFQWTxWLAk3Z88SvR/pVgiFs9riwcC3Htb0k1g8vqwDzw6IJ6OiTKNoWyD5Dfv/IV+/y2s8jHcAjGPtiYW+L1NvBwZ/SRiVzmXkjhILaYU3pSojmm6SvRYo6+zs3atA=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1774365828; c=relaxed/simple;
+	bh=VlKJv8dWJlaHJHXMlIE4BSaindyrxVSs1O+vhEZ+g8c=;
+	h=Date:From:To:CC:Subject:In-Reply-To:References:Message-ID:
+	 MIME-Version:Content-Type; b=envdaQ4MaG4zCEVZnLRDodW2RGCKP1ezYIylLZbprzb/R8vksveD23dTbxCKP82NBPTP4oVCYVpHjngGZr7GBd6BGCSPSCHjOHy0Va3I/U3TZkfPJZbNxBsjptCCoSl1BVAude1pwDHUYOEjaOdhflwg7GYPbkGA2LoLAR+nSuA=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=objecting.org; spf=pass smtp.mailfrom=objecting.org; dkim=pass (1024-bit key) header.d=objecting.org header.i=objecting@objecting.org header.b=KolOZT9B; arc=pass smtp.client-ip=136.143.169.57
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=objecting.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=objecting.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TkoNFeL5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9248C19424;
-	Tue, 24 Mar 2026 15:06:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1774364779;
-	bh=/Pkl3ERIJblGJmh1debS8MoBSBQPNjNn+kFUL0+4r1I=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TkoNFeL5OSZwqroED1E3mZnCVF17BldTgUOcIMJ9gcbPiwRAB4EtzOSUIWx5nryXX
-	 qnfZVuEDVag22I/X4naqGRTn4WhV5oFRVNJanjPd4W060FtwUcR3dl011DkPF9Tt+c
-	 hL0zOZ87HnFx7hJx3LqvvPr9X1xUoVL2SuLKrUXvLHezscyhg0uOLL6a99c0FFT9zF
-	 RO6JvKIH2tHPifNhhRx1/HrTHcP+ERf0ytDi7J1OXUgutVwge+GLqJaWNz/zjrIDru
-	 jv6kLSlhu7/0LHDmLNTWRc3HwoULFQvCSxJL4Rcul+qWVMdv6YHFr3jTMcr/zVMrTh
-	 Ll9JYlWQbTBEw==
-From: SeongJae Park <sj@kernel.org>
-To: Cheng-Han Wu <hank20010209@gmail.com>
-Cc: SeongJae Park <sj@kernel.org>,
-	corbet@lwn.net,
-	damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	linux-doc@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	skhan@linuxfoundation.org
-Subject: Re: [PATCH] Documentation/admin-guide/mm/damon: fix 'parametrs' typo
-Date: Tue, 24 Mar 2026 08:06:11 -0700
-Message-ID: <20260324150611.92050-1-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260324144851.12883-1-hank20010209@gmail.com>
-References: 
+	dkim=pass (1024-bit key) header.d=objecting.org header.i=objecting@objecting.org header.b="KolOZT9B"
+ARC-Seal: i=1; a=rsa-sha256; t=1774365816; cv=none; 
+	d=zohomail.eu; s=zohoarc; 
+	b=LXnBElSlmUVOrfZCAPwDY2tQIouurVoPwZUIhJLFLvx2B3n/wAomA5p66z4W5YhRuPPZVlHz1b2xm8/BylsHNnbizEmjsXmqTJQZ77bZhjqQVxk1McAwqWbcmcbQOKhZKVw7V1Qynpczh5krRlc2nHn6CTwSn2cMy7BFusVznAI=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.eu; s=zohoarc; 
+	t=1774365816; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=rQNo5gRq0ttu6AMLBxnpSMS80bStRyQxiFciq1sROUE=; 
+	b=TfZLL0eSC2/ECusdMMCaLHdOD4bcdbxvqD6XIXLloSN3zp9hBkOKTMHLbqRoP4eiOXzk6rTNnIbp8Fe5pvZx2zVZopGgDzXfVHw4c8Z4rQFKKJ5/kJ3nbvMd+JNYQHhNZ/pUbcgh4zICHdG38UszPTyT2bnBFOVYu6TuhJRFaug=
+ARC-Authentication-Results: i=1; mx.zohomail.eu;
+	dkim=pass  header.i=objecting.org;
+	spf=pass  smtp.mailfrom=objecting@objecting.org;
+	dmarc=pass header.from=<objecting@objecting.org>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1774365816;
+	s=zmail; d=objecting.org; i=objecting@objecting.org;
+	h=Date:Date:From:From:To:To:CC:Subject:Subject:In-Reply-To:References:Message-ID:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To:Cc;
+	bh=rQNo5gRq0ttu6AMLBxnpSMS80bStRyQxiFciq1sROUE=;
+	b=KolOZT9BTJENIDtAt4aXF1Erxgz3JzZtMBddJDw2jJpN1qq+rA0c4ZZOb8pDyW03
+	H5pUyxGV/5kEJHj0/pqe/E3bASlrrql7JRLOLl5J+3UPGNoel2NchA5WH9yUKPdNffU
+	Jvtex75qYDkDYeqmV78FOhvrIGNnBQRrZRjh0yfc=
+Received: by mx.zoho.eu with SMTPS id 1774365814980617.8320820549221;
+	Tue, 24 Mar 2026 16:23:34 +0100 (CET)
+Date: Tue, 24 Mar 2026 15:23:32 +0000
+From: Josh Law <objecting@objecting.org>
+To: SeongJae Park <sj@kernel.org>
+CC: Markus Elfring <Markus.Elfring@web.de>, damon@lists.linux.dev,
+ linux-mm@kvack.org, Andrew Morton <akpm@linux-foundation.org>,
+ linux-kernel@vger.kernel.org, stable@vger.kernel.org
+Subject: =?US-ASCII?Q?Re=3A_=5Bv3_1/3=5D_mm/damon/sysfs=3A_fix_param=5Fctx?=
+ =?US-ASCII?Q?_leak_on_damon=5Fsysfs=5Fnew=5Ftest=5Fctx=28=29_failure?=
+User-Agent: Thunderbird for Android
+In-Reply-To: <20260324141537.91434-1-sj@kernel.org>
+References:  <20260324141537.91434-1-sj@kernel.org>
+Message-ID: <7C2341EE-3CBE-42E4-8D2F-341137CC6234@objecting.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-
-On Tue, 24 Mar 2026 22:48:51 +0800 Cheng-Han Wu <hank20010209@gmail.com> wrote:
-
-> Fix the misspelling of "parametrs" as "parameters" in
-> reclaim.rst and lru_sort.rst.
-
-Thank you for finding and fixing these!
-
-> 
-> Signed-off-by: Cheng-Han Wu <hank20010209@gmail.com>
-
-Reviewed-by: SeongJae Park <sj@kernel.org>
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-ZohoMailClient: External
 
 
-Thanks,
-SJ
 
-[...]
+On 24 March 2026 14:15:37 GMT, SeongJae Park <sj@kernel=2Eorg> wrote:
+>On Tue, 24 Mar 2026 07:06:25 +0000 Josh Law <objecting@objecting=2Eorg> w=
+rote:
+>
+>>=20
+>>=20
+>> On 24 March 2026 00:14:59 GMT, SeongJae Park <sj@kernel=2Eorg> wrote:
+>> >On Mon, 23 Mar 2026 16:48:19 +0000 Josh Law <objecting@objecting=2Eorg=
+> wrote:
+>> >[=2E=2E=2E]
+>> >> Also, unconnected to our topic!
+>> >>=20
+>> >>=20
+>> >> I've tried to backport Damon to 4=2E19 (for a personal android thing=
+, and failed! Of course)
+>> >>=20
+>> >> Can I have a bit of help if that's fine with you? The tree is based =
+on GitHub a bit
+>> >
+>> >Sure, I will be happy to help as much as I can without burning myself =
+;)
+>> >
+>> >Seems [1] Alma Linux has backported DAMON on their 4=2E18 kernel=2E  M=
+aybe you can
+>> >try their port first?
+>> >
+>> >Also, what is the oldest kernel that you have to use?  As newer it is,=
+ the
+>> >backporting will be easier=2E  When I was in AWS, I backported DAMON o=
+f v6=2E7 on
+>> >the v5=2E10 based Amazon Linux kernel, and the source is available on =
+GitHub=2E  So
+>> >if you can use 5=2E10 based kernel, using that could also be a good op=
+tion=2E
+>> >
+>> >[1] https://oracle=2Egithub=2Eio/kconfigs/?config=3DUTS_RELEASE&config=
+=3DDAMON
+>> >
+>> >
+>> >Thanks,
+>> >SJ
+>> >
+>> >[=2E=2E=2E]
+>>=20
+>>=20
+>>=20
+>> well android likes using old kernels for some reasons, especially LTS, =
+so 4=2E19=2E=2E
+>
+>Well, but the long term support of 4=2E19 has dead a few years ago=2E  Th=
+e oldest
+>LTS kernel of today is 5=2E10 [1]=2E  I understand some vendors might sti=
+ll use
+>4=2E19 kernel, though=2E  Anyway, let me know if there is anything that I=
+ can help=2E
+>I will try to help=2E
+>
+>[1] https://www=2Ekernel=2Eorg/category/releases=2Ehtml
+>
+>
+>Thanks,
+>SJ
+>
+>[=2E=2E=2E]
+
+
+The device itself is unsupported (Galaxy S20 FE)
+
+I've been working on a kernel for this device for quite a long time=20
+
+V/R
+
+Josh Law
