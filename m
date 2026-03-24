@@ -1,45 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81D775FDA7;
-	Tue, 24 Mar 2026 00:15:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDFAD239567;
+	Tue, 24 Mar 2026 00:25:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774311305; cv=none; b=Pqj9fO6lilJnwpoGCGMAaga7r/YYi7Zzmf1WqJTewIcHXh00FN7h7CJ44tZBqkjMrcK0umUHFFDaWZIrB4QhvdBCUgaGJUHxrNHvS18lorhXyAkYdfGLDhvZcnVFt8c/M6nktlXQK9QTba+ztb4VK7oaGbo5s2gxPOHPF8GLHTA=
+	t=1774311947; cv=none; b=NHqj27Mm9nMydIrSpgkXpmcjmmi6ppLtSuvT9jDcv3yyB23I89M0PxBSfoLBqUfjCk2hD4DarxLKr/yBn6vZELPBGz/7iwZtDwBHBzgB35XutQF90Rr9U9vZdFljRKJ9CdDBSKTJNJRz/rFO7tAlfn8MelK/XFtYH+klP7VAvzE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774311305; c=relaxed/simple;
-	bh=bL5TsY3mZar75uq4cPHULH9KGrxQsAUm5BHcGvhJ0RM=;
+	s=arc-20240116; t=1774311947; c=relaxed/simple;
+	bh=K7+w1Fe9eVXYmmVzI1WINbAfUoX6r6BuzBux9UJ7NPs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pt3c1MZhBq8Ac8lzXWD3B6vmHGgxBqeOS8ajgv1Ko3DGRXnYPYoJuxr3c+Kt3Vr/6YhcHut1NTs6sJdBLwvZN/P7x8d1ynEH+fwXTLlE7GbxXCBu0keS84itFN79Ry7CsNEBzBsGs8l5tmzHzjwBL5pSf1wmLMURX6KmoH74rJk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sFN5xPhV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rfCMfhCF1KhGFYimXas/kpFZzzBg+6DZ0D4wqP/HBtYWMDfwNzVgsBAbUTrxZor60drfuSKSoUwhecs4wYQ57ah5/WopDbF/7MKNkaqAluCnlwYZWRHHGPMf69Ym+NzPUTQwhMT81RhQrRtjGYtZoThbeXaYAEFh/ZlfufZtXW8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mD3ueE6m; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sFN5xPhV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E209FC4CEF7;
-	Tue, 24 Mar 2026 00:15:04 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mD3ueE6m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F9B1C4CEF7;
+	Tue, 24 Mar 2026 00:25:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1774311305;
-	bh=bL5TsY3mZar75uq4cPHULH9KGrxQsAUm5BHcGvhJ0RM=;
+	s=k20201202; t=1774311947;
+	bh=K7+w1Fe9eVXYmmVzI1WINbAfUoX6r6BuzBux9UJ7NPs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sFN5xPhVG4dpXaXm5iu5UF1N4xq5C6EUOpBzXqlbHMjbHJ7lNxLvm9Mf4aInb2HYd
-	 68LkohmqQ3deRRVz1JGYGW691klI6MwF4FD+8QBUB1yDoMxiOSt2nw1K+HhzTIMe4M
-	 2YeywJbauLPzC0pEDfScmvpDf7r3LAovvuP3CqMivbvxcCVyuwB4Viz/2JPoQiMVNq
-	 j86hxvcDO8Mhd9DsJ8Vq75y8hnpYQofWtDcZywr/YlNCUMJ1zGg5ZPVpRKylqBWko4
-	 V1BYUIc/u+8nP3FxhJVwIa3y/ZuXLG/aS23uwkJsZVNh5K85kknu3XECPuveZWK8OS
-	 Bdu30t26WKk8A==
+	b=mD3ueE6mb1Bx2mCTdm6xu/sxfD3MhzSfGAhGevRfyBy5nSd/p7utIBitWgQiSitpJ
+	 7Bqv9dXQjZYmLQzpShhTba0qFCUvYUiCmGwSbJo3JrfPrb0DTziobc2z482XQ/ka8X
+	 jC4w9Han9+xoL1f/aq/skh4N1O64wlLm090GOvWeFIxh20hPHEQbA2fUTsCZPe8ILU
+	 UcvJZ7dhc7JVJdLKImfVFqbPuH0I8vrwBpCvv0lJFCTUCTVPMnWIwBABiw1qxnccR5
+	 FEmo1TMDmans/VWwQiAUYXchVAniYNKyIuGeUFE0NToPHe55fgNpuxd4r41hzQvSA8
+	 nxTJ75J2aHVlg==
 From: SeongJae Park <sj@kernel.org>
-To: Josh Law <objecting@objecting.org>
+To: "Vineeth Pillai (Google)" <vineeth@bitbyteword.org>
 Cc: SeongJae Park <sj@kernel.org>,
-	Markus Elfring <Markus.Elfring@web.de>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	damon@lists.linux.dev,
 	linux-mm@kvack.org,
-	Andrew Morton <akpm@linux-foundation.org>,
 	linux-kernel@vger.kernel.org,
-	stable@vger.kernel.org
-Subject: Re: [v3 1/3] mm/damon/sysfs: fix param_ctx leak on damon_sysfs_new_test_ctx() failure
-Date: Mon, 23 Mar 2026 17:14:59 -0700
-Message-ID: <20260324001500.86247-1-sj@kernel.org>
+	linux-trace-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 18/19] mm: damon: Use trace_call__##name() at guarded tracepoint call sites
+Date: Mon, 23 Mar 2026 17:25:45 -0700
+Message-ID: <20260324002545.86416-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <0E185D9C-311B-47C5-AF28-06F8D1235926@objecting.org>
+In-Reply-To: <20260323160052.17528-19-vineeth@bitbyteword.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -49,26 +50,19 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Mon, 23 Mar 2026 16:48:19 +0000 Josh Law <objecting@objecting.org> wrote:
-[...]
-> Also, unconnected to our topic!
+On Mon, 23 Mar 2026 12:00:37 -0400 "Vineeth Pillai (Google)" <vineeth@bitbyteword.org> wrote:
+
+> Replace trace_damos_stat_after_apply_interval() with
+> trace_call__damos_stat_after_apply_interval() at a site already guarded
+> by an early return when !trace_damos_stat_after_apply_interval_enabled(),
+> avoiding a redundant static_branch_unlikely() re-evaluation inside the
+> tracepoint.
 > 
-> 
-> I've tried to backport Damon to 4.19 (for a personal android thing, and failed! Of course)
-> 
-> Can I have a bit of help if that's fine with you? The tree is based on GitHub a bit
+> Suggested-by: Steven Rostedt <rostedt@goodmis.org>
+> Suggested-by: Peter Zijlstra <peterz@infradead.org>
+> Signed-off-by: Vineeth Pillai (Google) <vineeth@bitbyteword.org>
 
-Sure, I will be happy to help as much as I can without burning myself ;)
-
-Seems [1] Alma Linux has backported DAMON on their 4.18 kernel.  Maybe you can
-try their port first?
-
-Also, what is the oldest kernel that you have to use?  As newer it is, the
-backporting will be easier.  When I was in AWS, I backported DAMON of v6.7 on
-the v5.10 based Amazon Linux kernel, and the source is available on GitHub.  So
-if you can use 5.10 based kernel, using that could also be a good option.
-
-[1] https://oracle.github.io/kconfigs/?config=UTS_RELEASE&config=DAMON
+Reviewed-by: SeongJae Park <sj@kernel.org>
 
 
 Thanks,
