@@ -1,41 +1,41 @@
 Received: from sender-of-o55.zoho.eu (sender-of-o55.zoho.eu [136.143.169.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CABC5371878
-	for <damon@lists.linux.dev>; Wed, 25 Mar 2026 07:38:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FCEF371064
+	for <damon@lists.linux.dev>; Wed, 25 Mar 2026 07:38:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.169.55
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774424292; cv=pass; b=f7g/6fZXS0UgxdJ4KvgC5nIHQ/ekQcNmLajEUuKOG/Q1J51kY1fwOKc7qItWae0puH9ydZjC9I2RrFg0N98t+mbqYjv5wbYjaXWqjz5SG1pZ+hmyFl42LFLohKtenWPp9YUkEc3UoQ8JhoFsFxVJoxEGGDZg+t1eRbfD8kpM0Gw=
+	t=1774424293; cv=pass; b=NR5/e1jSOr56B2PXXLbSp3aqZ3YAbXtKgaQVfdn3DS4KlZqhoka8GnoDxzHsZRFpCVjJs2My8Dt+2M2tIFdeKR/e0RXkBpkQLeijI/p5gFLC62+rz70aS7f/8sfmD8BnHbylQOmC1vqXh9WL9i1ksz7DLuQmGQ9lX5OWcMapGdE=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774424292; c=relaxed/simple;
-	bh=NCpDFdVe9iHnwJZlnOzuHDWnpqfCBtDcOeacFMCNRYw=;
+	s=arc-20240116; t=1774424293; c=relaxed/simple;
+	bh=GxECTmSwkEpJNX80rGnPA6J6Kku114ULrI/ybXv2OSY=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=eIrLcoz9mFJPVWBS4nF9advmihkVLc2Za4UgAOMfRZyyI/aPG5WCp68xWbRatuOMefbUVut0zQgGiL9VpkOnrWIPtC8NJZJ0Bux0hZBIINNetyim20X0VJyjEcDCaesFk1G+hnqr9UyORRVlgxth7QRfWuGDGKARalNOF1MdCl4=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=objecting.org; spf=pass smtp.mailfrom=objecting.org; dkim=pass (1024-bit key) header.d=objecting.org header.i=objecting@objecting.org header.b=fvjLZYLl; arc=pass smtp.client-ip=136.143.169.55
+	 MIME-Version; b=ue1VYzT/3zI8zsTceZBDej59P7onlWCSBD6oAGWeGDaVFCRLiJ/neD+b9nbgqT1tD1uIpkppSTWUuH3C9O53Rndmwn2q2oAi0Wow6jvdnMhlgj/Jkalvx7lFVf5UIGGoG8VGp8Jj3f8s86V6pOrdOc9doQBVzLC2xcYafyIM/Iw=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=objecting.org; spf=pass smtp.mailfrom=objecting.org; dkim=pass (1024-bit key) header.d=objecting.org header.i=objecting@objecting.org header.b=fbVrU3DR; arc=pass smtp.client-ip=136.143.169.55
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=objecting.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=objecting.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=objecting.org header.i=objecting@objecting.org header.b="fvjLZYLl"
-ARC-Seal: i=1; a=rsa-sha256; t=1774424285; cv=none; 
+	dkim=pass (1024-bit key) header.d=objecting.org header.i=objecting@objecting.org header.b="fbVrU3DR"
+ARC-Seal: i=1; a=rsa-sha256; t=1774424286; cv=none; 
 	d=zohomail.eu; s=zohoarc; 
-	b=YUzINS5O5bYJ12stM1hz4afv2mWnJwNouWzE9tsnTZwfsF/eo4twLFV1MLog0ODzKPR+tkmtHU8Eqdhjv9NLRcSkQL22vn66WmaAZsyVvHGANpVynkp+a9M6LyONtyW4WtKdjF7II08qVdSkqU7RBsSxVyZRl/nZG9oO4JPy6qg=
+	b=NRRI2Q0Ohsxx0HZ9KcDp6zyvPHeqLAD8MbQWobJSzSOE/ydMZV6B0Qb3+AagqDJG7LIpkr5uN8OQzmgKYvQCViLx+aKw+J7b2zwBpgXc04XZUhzIj4KEjT5HOaV8AFBaep51L93DnKfxaVfLx2yxaltz/8Fgl4lRqs5jXy6JjS0=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.eu; s=zohoarc; 
-	t=1774424285; h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=UiDWbq+Vesxlf62C23Hm8indkustIaG2EimGmGm7dUo=; 
-	b=NUMZ631GPwwuMUAfMzWO4/FTB8pp6rxMkVrU/dwxVIs6/RB9ipKwBYIa7GX9DREJbgtvN/2YL9P3GJ3Shgwd8ffiswCDVwJSCWmMTtni3WCgMpL/XkCQQ+grEB398DHEGvVfw+V+RVhDuvHGeAAC+WryF5wsMsqckVsowZSHmqw=
+	t=1774424286; h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=JRPi6sx9pUKCMoRSmLUMPuhiHVNdSdGX+Y2fr4B7g8Q=; 
+	b=SQX+2LSyTaGlDmItVIdn4zXuHdyN0Zc1qYVz6nxrZBDa4RPDOpnB9cthjhIwPfAOZfiIZ58X/bncGxiHAsL6vwtq+Aw0mZIrt0m2iseCruRd7pfPmLkaFXh/cIud6y/ltaECDD3CltM4K4GRNFafb2U5lJOuG2hjFjPXqiIk2QA=
 ARC-Authentication-Results: i=1; mx.zohomail.eu;
 	dkim=pass  header.i=objecting.org;
 	spf=pass  smtp.mailfrom=objecting@objecting.org;
 	dmarc=pass header.from=<objecting@objecting.org>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1774424285;
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1774424286;
 	s=zmail; d=objecting.org; i=objecting@objecting.org;
 	h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-Id:Message-Id:In-Reply-To:References:MIME-Version:Content-Transfer-Encoding:Reply-To;
-	bh=UiDWbq+Vesxlf62C23Hm8indkustIaG2EimGmGm7dUo=;
-	b=fvjLZYLlsfhzXVv87/zGnHVe1ANmLrP76ixhW6UGJ7FKpYKZyqll5IHXQKv8WypX
-	U7liFT/wyr8BdcF0vqJU3AjvthuXoTCW0v0JhJ3cuR1T7i7C8VJiJb0RMmTCBQTAlsi
-	ppRTPmPX6USpkm4QEjn3aAYUbGZLrM8N/UxTcA8A=
-Received: by mx.zoho.eu with SMTPS id 1774424282494241.87438479042987;
-	Wed, 25 Mar 2026 08:38:02 +0100 (CET)
+	bh=JRPi6sx9pUKCMoRSmLUMPuhiHVNdSdGX+Y2fr4B7g8Q=;
+	b=fbVrU3DRnQAeHOVx5L/kzLx+I+sP2XwtO95wcyZIj/KNc2wdzzzCtf0wG0AwRb4w
+	nTSNMVqSZCiY9Hs+uWVcQa43JCWn5C6m9NaxPimXQ7Wkm490XcXLdpTdLv3bxhGZe0h
+	F0oplsXpNI44yFRI+ItsWZt+FEEPO9+z66Puic1k=
+Received: by mx.zoho.eu with SMTPS id 1774424283679760.5080198368752;
+	Wed, 25 Mar 2026 08:38:03 +0100 (CET)
 From: Josh Law <objecting@objecting.org>
 To: SeongJae Park <sj@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>
@@ -43,9 +43,9 @@ Cc: damon@lists.linux.dev,
 	linux-mm@kvack.org,
 	linux-kernel@vger.kernel.org,
 	Josh Law <objecting@objecting.org>
-Subject: [PATCH 1/3] mm/damon/core: deduplicate scheme index lookup into helper
-Date: Wed, 25 Mar 2026 07:37:58 +0000
-Message-Id: <20260325073800.141756-2-objecting@objecting.org>
+Subject: [PATCH 3/3] mm/damon/core: move last_nr_regions from static local to damon_ctx
+Date: Wed, 25 Mar 2026 07:38:00 +0000
+Message-Id: <20260325073800.141756-4-objecting@objecting.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260325073800.141756-1-objecting@objecting.org>
 References: <20260325073800.141756-1-objecting@objecting.org>
@@ -58,98 +58,60 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-ZohoMailClient: External
 
-Three functions (damos_apply_scheme, damos_trace_esz, damos_trace_stat)
-contain identical loops walking the schemes list to find a scheme's
-index for tracing.  Extract the common pattern into damon_scheme_idx().
+kdamond_split_regions() uses a function-level static variable to
+remember the previous iteration's region count.  This is shared across
+all kdamond threads, so one kdamond's region count leaks into another's
+splitting decision.  Move the variable into struct damon_ctx so each
+kdamond tracks its own state.
 
 Signed-off-by: Josh Law <objecting@objecting.org>
 ---
- mm/damon/core.c | 41 +++++++++++++++++------------------------
- 1 file changed, 17 insertions(+), 24 deletions(-)
+ include/linux/damon.h | 2 ++
+ mm/damon/core.c       | 5 ++---
+ 2 files changed, 4 insertions(+), 3 deletions(-)
 
+diff --git a/include/linux/damon.h b/include/linux/damon.h
+index 438fe6f3eab4..85fe33ce7be4 100644
+--- a/include/linux/damon.h
++++ b/include/linux/damon.h
+@@ -803,6 +803,8 @@ struct damon_ctx {
+ 	struct completion kdamond_started;
+ 	/* for scheme quotas prioritization */
+ 	unsigned long *regions_score_histogram;
++	/* for kdamond_split_regions() heuristic */
++	unsigned int last_nr_regions;
+ 
+ 	/* lists of &struct damon_call_control */
+ 	struct list_head call_controls;
 diff --git a/mm/damon/core.c b/mm/damon/core.c
-index 6ee421141996..56372e577931 100644
+index 6c1f738e265c..50e8bdeb70dd 100644
 --- a/mm/damon/core.c
 +++ b/mm/damon/core.c
-@@ -2045,6 +2045,19 @@ static void damos_walk_cancel(struct damon_ctx *ctx)
- 	mutex_unlock(&ctx->walk_control_lock);
- }
- 
-+static unsigned int damon_scheme_idx(struct damon_ctx *c, struct damos *s)
-+{
-+	unsigned int idx = 0;
-+	struct damos *siter;
-+
-+	damon_for_each_scheme(siter, c) {
-+		if (siter == s)
-+			break;
-+		idx++;
-+	}
-+	return idx;
-+}
-+
- static void damos_apply_scheme(struct damon_ctx *c, struct damon_target *t,
- 		struct damon_region *r, struct damos *s)
+@@ -2722,7 +2722,6 @@ static void kdamond_split_regions(struct damon_ctx *ctx)
  {
-@@ -2060,7 +2073,6 @@ static void damos_apply_scheme(struct damon_ctx *c, struct damon_target *t,
- 	 * index here.
- 	 */
- 	unsigned int cidx = 0;
--	struct damos *siter;		/* schemes iterator */
- 	unsigned int sidx = 0;
- 	struct damon_target *titer;	/* targets iterator */
- 	unsigned int tidx = 0;
-@@ -2068,11 +2080,7 @@ static void damos_apply_scheme(struct damon_ctx *c, struct damon_target *t,
+ 	struct damon_target *t;
+ 	unsigned int nr_regions = 0;
+-	static unsigned int last_nr_regions;
+ 	int nr_subregions = 2;
  
- 	/* get indices for trace_damos_before_apply() */
- 	if (trace_damos_before_apply_enabled()) {
--		damon_for_each_scheme(siter, c) {
--			if (siter == s)
--				break;
--			sidx++;
--		}
-+		sidx = damon_scheme_idx(c, s);
- 		damon_for_each_target(titer, c) {
- 			if (titer == t)
- 				break;
-@@ -2394,15 +2402,7 @@ static void damos_set_effective_quota(struct damos_quota *quota)
- static void damos_trace_esz(struct damon_ctx *c, struct damos *s,
- 		struct damos_quota *quota)
- {
--	unsigned int cidx = 0, sidx = 0;
--	struct damos *siter;
--
--	damon_for_each_scheme(siter, c) {
--		if (siter == s)
--			break;
--		sidx++;
--	}
--	trace_damos_esz(cidx, sidx, quota->esz);
-+	trace_damos_esz(0, damon_scheme_idx(c, s), quota->esz);
- }
- 
- static void damos_adjust_quota(struct damon_ctx *c, struct damos *s)
-@@ -2469,18 +2469,11 @@ static void damos_adjust_quota(struct damon_ctx *c, struct damos *s)
- 
- static void damos_trace_stat(struct damon_ctx *c, struct damos *s)
- {
--	unsigned int cidx = 0, sidx = 0;
--	struct damos *siter;
--
- 	if (!trace_damos_stat_after_apply_interval_enabled())
+ 	damon_for_each_target(t, ctx)
+@@ -2732,14 +2731,14 @@ static void kdamond_split_regions(struct damon_ctx *ctx)
  		return;
  
--	damon_for_each_scheme(siter, c) {
--		if (siter == s)
--			break;
--		sidx++;
--	}
--	trace_damos_stat_after_apply_interval(cidx, sidx, &s->stat);
-+	trace_damos_stat_after_apply_interval(0, damon_scheme_idx(c, s),
-+					      &s->stat);
+ 	/* Maybe the middle of the region has different access frequency */
+-	if (last_nr_regions == nr_regions &&
++	if (ctx->last_nr_regions == nr_regions &&
+ 			nr_regions < ctx->attrs.max_nr_regions / 3)
+ 		nr_subregions = 3;
+ 
+ 	damon_for_each_target(t, ctx)
+ 		damon_split_regions_of(t, nr_subregions, ctx->min_region_sz);
+ 
+-	last_nr_regions = nr_regions;
++	ctx->last_nr_regions = nr_regions;
  }
  
- static void kdamond_apply_schemes(struct damon_ctx *c)
+ /*
 -- 
 2.34.1
 
