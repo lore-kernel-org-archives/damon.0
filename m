@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 448EF2DCBF4;
-	Wed, 25 Mar 2026 14:37:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35DDE3BE14A;
+	Wed, 25 Mar 2026 14:37:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774449433; cv=none; b=Xz/NY60ucUWJF/u3/bDnozN4rZIrc3JLxKmCFIYttHBvnqJK5tnq8fC4LtcdYdblTgCI7KVu44qR1kOB3ccuuHKAJWewQocW0to6II+FqPtKJK0HBf3+mhHEIXgkgr5aLdX3ZgSrhcUbrHyXgv0DSqYaN/lz/Kppe+cal4ybPCA=
+	t=1774449468; cv=none; b=kK2z8EM+7YoNNCQ2Dn62kgrGmYUiyQA6wvyrR2oRuAD5dU4uWROH+H61zhS0jXVcTD1H7zl3puYXR4k0Y+rlOKBUVuL/zFxiLuv4TrkJQiZl1xDqSP0jPcj6bprRuIIKmwidtgDQ55VfBMWdwsH3kROK9LygF66aYlllMYKXTQM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774449433; c=relaxed/simple;
-	bh=kzxr6iziOgx3cpwmvkHK71eb5tyyGmHmzoyABIfFnL4=;
+	s=arc-20240116; t=1774449468; c=relaxed/simple;
+	bh=k/MsHHjnglulTtuQp2KFJd4JaMLVffpszcrg/qv0xsA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tkNDCK6SYgPCe4Cq6YwTfeuL4eDXQ5OZndX/yHoJtsR48ag7bHcv9R1ok2Fc0ezQjpgvDzl9XwEjOo/lxFC+ng0HKyaBdVFED5GGGreFT1apANKMxIHGqkCXaU7pPUXU7ktVbC060XOWZixjVUOcqYRPeVZLIIdye7hrBDJAa1g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LYB0tzi9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UCyVldMDDhVcdjTMHkzCa82nM0qquUUYPEi2Ty462XUsWAgXsPbRpfc8m8vUTzAgJzL0DWYUN5nyUdnx5LKtDTnFOok9Csux4pp07bIjzOP0V6/DKUk7lOYsFfnBeiyfjCq0xcJ57zRXAvcBoMp+Zttml5y54sABAiOu/B+oFQI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lJ2RtyiZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LYB0tzi9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86E8DC19423;
-	Wed, 25 Mar 2026 14:37:12 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lJ2RtyiZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52D5AC4CEF7;
+	Wed, 25 Mar 2026 14:37:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1774449432;
-	bh=kzxr6iziOgx3cpwmvkHK71eb5tyyGmHmzoyABIfFnL4=;
+	s=k20201202; t=1774449467;
+	bh=k/MsHHjnglulTtuQp2KFJd4JaMLVffpszcrg/qv0xsA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LYB0tzi9A9EK0nHYa8snPTfbcS2M4dvd/Ebaes8OjbTE8Va/XhL6aWUGDlKKtyMc5
-	 jf/N2QSDbliXmUy/uvlQ/VtHICjCcxMk7ON4IuZRuvNW2oq7Ai9m0wQFPiCNXxmMFH
-	 PjwgaGdMrgYgaDVcyLyhd/ihWHECpfIhUN3XPuUSqc8Fj1d2PX2kASOqQ5DUrB9B9x
-	 x/WDCdAmfsfDPV/inMhkqZ606+ml67MGvyq6wjTAMyqZ/cK+nCda6xSUObxA7jNgqV
-	 AUDUrQDzKZpftNi7pEMhA2uXAYW5j1/zXF93MU3h6i2rOllPwnfvORg9Mlf3/3dSS1
-	 9BEiH58rt0hcA==
+	b=lJ2RtyiZOlkU54ojrOOo0w8LrVCduRJ3hDJbsWLSoxu/Fufog6AgrA37CkZa9KLxL
+	 vG3hmLIkaT+2QJZGtKVrUi6Vo+/suROFGdl1D5JppxFxCRGf8wn8ACa/dSorvp70eI
+	 nFB53f9h6gjT9HqjB4O0z4XrJE+toYcVB7LaWL48ZUuf9bQAUglX9EzJM7z20Vnihb
+	 tAeutkdoeXsgRM0IZXjilgrGz3WsrZ0uzB6gRzvffCgD50hiw3J6GHmMPver56JePH
+	 pSGrtrgopsuI3v7Yesw78Oot57pRb0Xnt+UPORYjErqsCimfBUvnKCiYy+4AVChGCV
+	 BvItSvGr35fWQ==
 From: SeongJae Park <sj@kernel.org>
 To: Josh Law <objecting@objecting.org>
 Cc: SeongJae Park <sj@kernel.org>,
@@ -33,9 +33,9 @@ Cc: SeongJae Park <sj@kernel.org>,
 	damon@lists.linux.dev,
 	linux-mm@kvack.org,
 	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] mm/damon/core: validate goal nid before accessing node data
-Date: Wed, 25 Mar 2026 07:37:02 -0700
-Message-ID: <20260325143703.87583-1-sj@kernel.org>
+Subject: Re: (sashiko review) [PATCH] mm/damon/core: validate goal nid before accessing node data
+Date: Wed, 25 Mar 2026 07:37:39 -0700
+Message-ID: <20260325143740.87690-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260325073034.140353-1-objecting@objecting.org>
 References: 
@@ -47,65 +47,77 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Wed, 25 Mar 2026 07:30:34 +0000 Josh Law <objecting@objecting.org> wrote:
+Forwarding Sashiko review for doing discussions via mails.
 
-> damos_get_node_mem_bp() and damos_get_node_memcg_used_bp() pass
-> goal->nid directly to si_meminfo_node() and NODE_DATA() without
-> checking that it refers to a valid, online NUMA node.  Since
-> goal->nid is set from userspace via sysfs with no validation, a
-> negative or out-of-range value causes an out-of-bounds access in
-> NODE_DATA(), and a valid but offline node gives undefined results.
+# review url: https://sashiko.dev/#/patchset/20260325073034.140353-1-objecting@objecting.org
+# start of sashiko.dev inline review
+commit 7e17cbe1dc95a0cd1a1410be38ab6964f78fb15c
+Author: Josh Law <objecting@objecting.org>
 
-Nice catch!
+mm/damon/core: validate goal nid before accessing node data
 
-> 
-> Add bounds and node_online() checks before using the nid.
-> 
-> Fixes: 0e1c773b501f ("mm/damon/core: introduce damos quota goal metrics for memory node utilization")
+This commit adds bounds checking and node_online() validation for the
+goal->nid in the DAMON quota metrics. It prevents out-of-bounds accesses
+to NODE_DATA() when an invalid or offline NUMA node is provided by userspace.
 
-Let's add Cc: stable.
-
-> Signed-off-by: Josh Law <objecting@objecting.org>
-> ---
->  mm/damon/core.c | 8 ++++++++
->  1 file changed, 8 insertions(+)
-> 
 > diff --git a/mm/damon/core.c b/mm/damon/core.c
-> index 59b709f04975..6ee421141996 100644
+> index db6c67e52d2b..81ce27baa1a1 100644
 > --- a/mm/damon/core.c
 > +++ b/mm/damon/core.c
-> @@ -2227,6 +2227,10 @@ static __kernel_ulong_t damos_get_node_mem_bp(
+> @@ -2245,6 +2245,10 @@ static __kernel_ulong_t damos_get_node_mem_bp(
 >  	struct sysinfo i;
 >  	__kernel_ulong_t numerator;
 >  
 > +	if (goal->nid < 0 || goal->nid >= MAX_NUMNODES ||
 > +	    !node_online(goal->nid))
-
-Like damon_migrate_pages(), how about using node_state(goal->nid, N_MEMORY)
-insted of node_online()?
-
 > +		return 0;
 > +
 >  	si_meminfo_node(&i, goal->nid);
 >  	if (goal->metric == DAMOS_QUOTA_NODE_MEM_USED_BP)
 >  		numerator = i.totalram - i.freeram;
-> @@ -2243,6 +2247,10 @@ static unsigned long damos_get_node_memcg_used_bp(
+>  	else	/* DAMOS_QUOTA_NODE_MEM_FREE_BP */
+>  		numerator = i.freeram;
+>  	return mult_frac(numerator, 10000, i.totalram);
+
+Could this cause a division by zero if the node is online but memoryless?
+
+For CPU-only compute nodes or nodes where all memory has been hot-removed,
+node_online(goal->nid) will evaluate to true. When si_meminfo_node() is
+called for these memoryless nodes, it populates the sysinfo struct with
+i.totalram = 0.
+
+The mult_frac() macro unconditionally performs integer division and modulo
+by the third argument, which could trigger a kernel panic when dividing by
+zero.
+
+Would it be safer to check if i.totalram is zero before returning, or use
+node_state(goal->nid, N_MEMORY) instead of node_online()?
+
+[ ... ]
+
+> @@ -2261,6 +2265,10 @@ static unsigned long damos_get_node_memcg_used_bp(
 >  	unsigned long used_pages, numerator;
 >  	struct sysinfo i;
 >  
 > +	if (goal->nid < 0 || goal->nid >= MAX_NUMNODES ||
 > +	    !node_online(goal->nid))
-
-Ditto.
-
 > +		return 0;
 > +
 >  	memcg = mem_cgroup_get_from_id(goal->memcg_id);
->  	if (!memcg) {
->  		if (goal->metric == DAMOS_QUOTA_NODE_MEMCG_USED_BP)
-> -- 
-> 2.34.1
+
+The same division by zero risk exists here when mult_frac() is called at the
+end of this function.
 
 
-Thanks,
-SJ
+# end of sashiko.dev inline review
+# review url: https://sashiko.dev/#/patchset/20260325073034.140353-1-objecting@objecting.org
+#
+# hkml [1] generated a draft of this mail.  It can be regenerated
+# using below command:
+#
+#     hkml patch sashiko_dev --for_forwarding \
+#             20260325073034.140353-1-objecting@objecting.org
+#
+# [1] https://github.com/sjp38/hackermail
+
+Sent using hkml (https://github.com/sjp38/hackermail)
