@@ -1,43 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04B77396D35;
-	Wed, 25 Mar 2026 23:59:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3408145348;
+	Thu, 26 Mar 2026 00:10:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774483172; cv=none; b=Wvrlm9hsHrZyLzwswb28IHuPyImzKXAuGBPv1PK3xuEzh6zQAa+HbssM+FaOmr1T9DLj7mBUbk6lB8vKRA/tYMal7Aru18dbpBNVDo/pJlhnnwgl6ucwECtrarNeQZLW6W7vnEiC3fOyPaxnSpsgEeZ+5RHsxqdatcFQNh69OZU=
+	t=1774483854; cv=none; b=n4/DIHfNf77WSsc+Yd2FqyX/ZNG8VzbYNAbrumSPwa9C5fdM8xJJ3Qunson1ALG7pmPv+ZcajU1E5t4+k4gDy27KdD6O5yeMc64ydq6vuDCC85KCx4WRRXZjovKMKjHpr5YXZqo+Nu4RI2d8lwiiOYBi51GegIeYKuAcGYkYynU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774483172; c=relaxed/simple;
-	bh=Ia+YtXVLsyftT2gQjhtcxVdiFisfZe6MrM3hQLVJS/4=;
+	s=arc-20240116; t=1774483854; c=relaxed/simple;
+	bh=H1uJeJjuVLiW2H0lN6tKp4wmh1kXqFB+xJI6QRzxJ7A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KeNDEVzayQdxYaIXRB16m9G/ktZzXGsZE9gtW3bq/pNbky4MJhBgs7KEXsNHEoZf85R81EaUHsUmPM+UsQgAXED/EmXBku9xe/EhErfGEGy92mm/HeqIydsgGN2BtNbSrnbw4CqKWf3mgD61l69MJO0ordk4vvyDXOO1OmoDCBw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NfI7TnYV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rKFrGG/bdPEYTCVNZjHGLPm1Ryzrib5A7ZOZERn4n2VcN1JIQqCky3mZIzw/E8GA1VDSzI5BTBj60iLPKS2xjohelVgUOcawKOd7KqgrREq8NolNO1cNoWxpCUOZaOR3io5WMx5VoZgqiMXXZVbIhlNVuUVpguT8XfsCU3aJmL4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lRcY8t+M; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NfI7TnYV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C412C4CEF7;
-	Wed, 25 Mar 2026 23:59:31 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lRcY8t+M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8196EC116C6;
+	Thu, 26 Mar 2026 00:10:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1774483171;
-	bh=Ia+YtXVLsyftT2gQjhtcxVdiFisfZe6MrM3hQLVJS/4=;
+	s=k20201202; t=1774483853;
+	bh=H1uJeJjuVLiW2H0lN6tKp4wmh1kXqFB+xJI6QRzxJ7A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NfI7TnYVxBB8YFjdv6ubD4x/YqmK9rNwmFtuovjFyEFXhdVvFVcgXYhB7mengXFVS
-	 CoAnoRdKS75d0n8EMgmV9G/Mnh2KMiCk399SvwoxAkz5DqqB/nxh5AGp+mMQaQMbBR
-	 DYUG+YCkz4hjL+X82HFJFBx5NrfU7ypDn/O+cff1ElCSSTwWGGD5x1bgyn0aCB9e+3
-	 KcXQ6yPCk8+b1PKNsPvkIcmRV43Uhwo416oSo2xlLnwrxnBGon7gbZZKLOC3eWXhkE
-	 HYNf0reHugTzcpz4IroYwtesCkccT6tEqKKLYnTw2AiAL183vrcBbzflrw+gmaVs5L
-	 nS7dZk90Ic8jA==
+	b=lRcY8t+Mgx+XtwOWgVVm+hRYh9cMyMV7cjyfzockwWwAgp/Zq85XQ/qEz/VMgS9Gd
+	 LuMvDYEZmXDs5fEBlWfzGWe/3tyyVm/qUEiQJ42RKmgGpVHVy5oKfxtKgqMCsj+v1L
+	 3w5UJfPz2aWlMhOMLuMdfdU4UPK3SbLP5iJnTafopPhCnE3lDBWYizkAGZ9lZD6WXX
+	 EqPxpzPKHv4SBZ+O3I2uGdDFC04LYYfE6Ni5FbPFYiLQBVwWigjpz+qC2DzvJVhX3h
+	 B0XrfvTx/StXzF2gF/hxjvN3qIU8fZK2HaHOJnB22zvkW/EUMgSn5uLhLEb1Lc8Ynj
+	 N2Zc4Z0QuDwYw==
 From: SeongJae Park <sj@kernel.org>
 To: Josh Law <objecting@objecting.org>
 Cc: SeongJae Park <sj@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	damon@lists.linux.dev,
 	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: (sashiko status) [PATCH] mm/damon/core: deduplicate core and ops filter commit functions
-Date: Wed, 25 Mar 2026 16:59:28 -0700
-Message-ID: <20260325235928.76076-1-sj@kernel.org>
+	linux-kernel@vger.kernel.org,
+	stable@vger.kernel.org
+Subject: Re: (sashiko review) [PATCH v2] mm/damon/core: validate goal nid before accessing node data
+Date: Wed, 25 Mar 2026 17:10:50 -0700
+Message-ID: <20260326001051.76219-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260325204250.254364-1-objecting@objecting.org>
+In-Reply-To: <20260325155221.202700-1-objecting@objecting.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -47,19 +48,82 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Forwarding sashiko.dev review status for this thread.
+Forwarding Sashiko review for doing discussions via mails.
 
-# review url: https://sashiko.dev/#/patchset/20260325204250.254364-1-objecting@objecting.org
+# review url: https://sashiko.dev/#/patchset/20260325155221.202700-1-objecting@objecting.org
+# start of sashiko.dev inline review
+commit 24e25058b8f508495d0b3db33bed16564df7fed4
+Author: Josh Law <objecting@objecting.org>
+Subject: mm/damon/core: validate goal nid before accessing node data
 
-- [PATCH] mm/damon/core: deduplicate core and ops filter commit functions
-  - status: Reviewed
-  - review: No issues found.
+This patch adds bounds and node_state(N_MEMORY) checks before using
+goal->nid from userspace to prevent out-of-bounds access in NODE_DATA().
 
+Cc: stable@vger.kernel.org
+
+> diff --git a/mm/damon/core.c b/mm/damon/core.c
+> index db6c67e52d2b..ed45a7443abe 100644
+> --- a/mm/damon/core.c
+> +++ b/mm/damon/core.c
+> @@ -2245,6 +2245,10 @@ static __kernel_ulong_t damos_get_node_mem_bp(
+>  	struct sysinfo i;
+>  	__kernel_ulong_t numerator;
+>  
+> +	if (goal->nid < 0 || goal->nid >= MAX_NUMNODES ||
+> +	    !node_state(goal->nid, N_MEMORY))
+> +		return 0;
+> +
+
+When goal->nid is invalid or offline, this unconditionally returns 0.
+For the DAMOS_QUOTA_NODE_MEM_FREE_BP metric, wouldn't returning 0 imply
+0% free memory?
+
+Could this cause the DAMON feedback loop to interpret the goal as
+severely under-achieved and drastically increase the scheme's
+aggressiveness?
+
+Should this fallback logic check the metric type and return 10000
+(100% free) for FREE_BP metrics to fail gracefully, mirroring the
+existing fallback logic used when a memory cgroup lookup fails?
+
+>  	si_meminfo_node(&i, goal->nid);
+>  	if (goal->metric == DAMOS_QUOTA_NODE_MEM_USED_BP)
+>  		numerator = i.totalram - i.freeram;
+>  	else	/* DAMOS_QUOTA_NODE_MEM_FREE_BP */
+>  		numerator = i.freeram;
+>  	return mult_frac(numerator, 10000, i.totalram);
+
+While not introduced by this patch, since this function is being
+modified to handle node edge cases, is it possible for a node to have
+N_MEMORY set, but have 0 managed pages? For example, if all of its
+memory is reserved for hugetlb or unmanaged ZONE_DEVICE memory.
+
+If so, si_meminfo_node() would set i.totalram to 0. Would the call
+to mult_frac() then cause a divide-by-zero panic when it evaluates
+x_ / d_ ?
+
+> @@ -2261,6 +2265,10 @@ static unsigned long damos_get_node_memcg_used_bp(
+>  	unsigned long used_pages, numerator;
+>  	struct sysinfo i;
+>  
+> +	if (goal->nid < 0 || goal->nid >= MAX_NUMNODES ||
+> +	    !node_state(goal->nid, N_MEMORY))
+> +		return 0;
+> +
+
+Similar to the function above, returning 0 unconditionally here for
+DAMOS_QUOTA_NODE_MEMCG_FREE_BP might artificially trigger maximum
+reclaim aggressiveness.
+
+
+# end of sashiko.dev inline review
+# review url: https://sashiko.dev/#/patchset/20260325155221.202700-1-objecting@objecting.org
+#
 # hkml [1] generated a draft of this mail.  It can be regenerated
 # using below command:
 #
-#     hkml patch sashiko_dev --thread_status --for_forwarding \
-#             20260325204250.254364-1-objecting@objecting.org
+#     hkml patch sashiko_dev --for_forwarding \
+#             20260325155221.202700-1-objecting@objecting.org
 #
 # [1] https://github.com/sjp38/hackermail
 
