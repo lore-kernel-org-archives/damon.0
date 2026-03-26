@@ -1,340 +1,208 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDA5525785D;
-	Thu, 26 Mar 2026 10:34:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C865B39C011;
+	Thu, 26 Mar 2026 12:12:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774521281; cv=none; b=nh7Qmi7/cGtgSGeurOzrG29TthwiuvWadJYRUNBajqWLWDt1rKNTVAeQCg6D+MXtbm3L/dhr8GNYCoCtXZvqzr/UIIXmfSPnPh8yow4DRv2jKZMnVO0OOYr8K9NHhMvSd83aZwcSJt9nJWS/GY2mTAlNhJ3GLARz1EZu/uGqygg=
+	t=1774527128; cv=none; b=FErwJ5ONr1SvXs8zGXgHAxBhceB4QHD3wiKMlUdQtSSLGama3xuODt/Ke3pZtd5A4waBJ3W6l4d2n62X7xP0VrCmuw3cKQrVEWuyM4VBrd0G/+1KmoE0uX2/ltaValQ0E5UTUxZUtkew4077wa5pP415sE7gR0sDZzN+Aeygx0I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774521281; c=relaxed/simple;
-	bh=KOQYTe1uJbviUnzDjOWn90b2+nt4xQ4qIkhPKvvmViE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=saZGfMHz3ILJg17ZwBwN0d9TmqZvgqAgXPTHB0RiBq6Q+sSM9C9vT1jTdk7wGIJrwjm7PVG77X5918aob/BZUY47uKXUA4l1Z6xup8L7nGsosMg3z+ncrtISappuGwoVFr2Yo7D+IeLMS/+k66XNN+es9zzTv947vyD6FiGXeYg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GA/1mgZF; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1774527128; c=relaxed/simple;
+	bh=GaoPImR0X0ioFmaoaToA4myk9U0YdNsMsVeE2CapRSo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=GqeZUBxkNVIrj1/I/srM/0AaCiNQgLznWautWBfa+zgZcAP3bSa8nqzeqVGFcadqjcYJwVfAzacL+EAGqIrH3whc+UigmA98HHKjB95B913tZm/6Rf8Gw32w9b3HSHQJLRo2qPJ3+a3b+VK9ZOrNEW5anDx51A/jh+o9FYm50zs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=f2NPtvnQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GA/1mgZF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29433C116C6;
-	Thu, 26 Mar 2026 10:34:40 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="f2NPtvnQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAE17C116C6;
+	Thu, 26 Mar 2026 12:12:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1774521281;
-	bh=KOQYTe1uJbviUnzDjOWn90b2+nt4xQ4qIkhPKvvmViE=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=GA/1mgZF+rK0dn4r6X0GwSOY18uvmB8PaDvhdwiSTNozH48e1m1c9MjnZhgVleWm3
-	 S15wyNTi5cKiPMQx+HYv9usZPKACYjA1i6G/QPWew8l8mFjZdL5szw9GT7utkQRBxF
-	 K1O6ZnSnUxlkKGzttC9XSjbCGoc6WMLU6GfzFkf2Kllaeqq5EegLMlCMfTyde6Msod
-	 zW3UVSA6jF0Hoxt5cSnx7k97kk6GzvBZiu77Y0mKlA/GnxSkwkIjuI71U3QLd6ky7c
-	 QuShy/gVxGCo9eRJAIs9/sdQTArDSQjODeaijQPZW7iaNMSmULbwg249Y4xo96KPyZ
-	 12OIOlmpLShjw==
-Date: Thu, 26 Mar 2026 10:34:39 +0000
-From: "Lorenzo Stoakes (Oracle)" <ljs@kernel.org>
-To: Josh Law <objecting@objecting.org>, Josh Law <hlcj1234567@gmail.com>
-Cc: SeongJae Park <sj@kernel.org>, 
-	Andrew Morton <akpm@linux-foundation.org>, damon@lists.linux.dev, linux-mm@kvack.org, 
-	linux-kernel@vger.kernel.org, Linus Torvalds <torvalds@linux-foundation.org>, 
-	Kees Cook <kees@kernel.org>, Greg KH <gregkh@linuxfoundation.org>, 
-	"David Hildenbrand (Arm)" <david@kernel.org>
-Subject: Re: [PATCH] mm/damon: introduce DAMON-based NUMA memory tiering
- module
-Message-ID: <cbd0aafa-bd45-4f4d-a2dd-440473657dba@lucifer.local>
-References: <20260326072737.341964-1-objecting@objecting.org>
+	s=k20201202; t=1774527128;
+	bh=GaoPImR0X0ioFmaoaToA4myk9U0YdNsMsVeE2CapRSo=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=f2NPtvnQXFwqudU1WmHW2/RX98/e5740Zc3kpalBsO0rznuOvLs43E/vF/dsq1Hwp
+	 x82BfDnSCbVj/UE9JJeVqP/ORgTH4WU7w19kl4iWMX8DliLjdUxoYgfSnZf4XzxGnK
+	 wbKD/gF3aC7ajt54ErRFBCKRMqk4OzUAEY+bWR3WFFEztBF4pXXmI+DdTsiuaYt9oL
+	 JnHRoSpoMuAMpr+BtDwkeWwVSZwxlNeG8JQWHNeflLf3xGo2PIVJriGbu0QBGtD7uL
+	 8NertDYo5N3pZCYN/kwygA2m66N7wr5sBQdtAJ/3u1fWGvqAsm0i8SUdYa8J22+1SZ
+	 GKRh8BS2sOIRA==
+Message-ID: <b2cdda38-1007-41a7-a992-de953a088a08@kernel.org>
+Date: Thu, 26 Mar 2026 13:12:03 +0100
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] mm/damon: introduce DAMON-based NUMA memory tiering
+ module
+To: "Lorenzo Stoakes (Oracle)" <ljs@kernel.org>,
+ Josh Law <objecting@objecting.org>, Josh Law <hlcj1234567@gmail.com>
+Cc: SeongJae Park <sj@kernel.org>, Andrew Morton <akpm@linux-foundation.org>,
+ damon@lists.linux.dev, linux-mm@kvack.org, linux-kernel@vger.kernel.org,
+ Linus Torvalds <torvalds@linux-foundation.org>, Kees Cook <kees@kernel.org>,
+ Greg KH <gregkh@linuxfoundation.org>,
+ "David Hildenbrand (Arm)" <david@kernel.org>
+References: <20260326072737.341964-1-objecting@objecting.org>
+ <cbd0aafa-bd45-4f4d-a2dd-440473657dba@lucifer.local>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <cbd0aafa-bd45-4f4d-a2dd-440473657dba@lucifer.local>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260326072737.341964-1-objecting@objecting.org>
 
-+to the other email you've randomly sometimes used
-+cc various possibly relevant people.
+On 26/03/2026 11:34, Lorenzo Stoakes (Oracle) wrote:
+
+Trimming context, I agree with everything said by Lorenzo, very detailed
+analysis.
+
+> ~~~
+> ● Looking at the headers specifically:
+> 
+>   Infrastructure:
+> 
+>   - Mail provider: Zoho EU (zohomail.eu) — a privacy-oriented
+>     EU-jurisdiction mail provider. Easy to set up anonymously.
+> 
+>   - Domain: objecting.org — custom domain, no organizational affiliation,
+>     no accountability chain. Anyone can register this and point MX to Zoho.
+> 
+>   - Authentication: DKIM, SPF, DMARC all pass — but this only proves the
+>     email came from objecting.org's Zoho setup, not who's behind it.
+> 
+>   - X-Mailer: git-send-email 2.34.1 — Ubuntu 22.04 LTS default. One reply
+>     had @ubuntu in the Message-ID, confirming the platform.
+> 
+>   What the headers DON'T provide:
+>   - No corporate or institutional email that ties to a verifiable identity
+>   - No PGP/GPG signature
+>   - No Signed-off-by chain from a known developer vouching for this person
+> 
+>   Supply chain attack assessment:
+> 
+>   This matches the threat model of automated supply chain compromise:
+> 
+>   1. Patches already landed in stable — the bootconfig fixes made it into
+>   6.19.10. The pipeline is working. Whatever is in those patches is now in
+>   production kernels.
+> 
+>   2. Trust-building pattern — the mix of real bug fixes (fd leaks,
+>   unchecked returns, type issues) alongside feature additions (DAMON
+>   tiering module, glob features, debugfs interface) is textbook. The small
+>   fixes build reviewer trust and merge history; the features add attack
+>   surface.
+> 
+>   3. Volume as a weapon — 328 emails in 11 days overwhelms maintainer
+>   review capacity. Maintainers like SeongJae Park (DAMON) and Masami
+>   Hiramatsu (bootconfig) are now spending review cycles on AI-generated
+>   submissions. Even if every patch is rejected, the reviewer's attention is
+>   being consumed.
+> 
+>   4. The DAMON NUMA tiering module is the most concerning submission — 409
+>   lines of new kernel code that runs with kernel privileges, monitors
+>   physical memory access patterns, and migrates pages between NUMA
+>   nodes. If accepted, it's a significant new attack surface delivered as a
+>   single commit from an unverifiable identity.
+> 
+>   5. The feature additions are the real risk — bug fixes are relatively
+>   easy to review (small, focused, verifiable). But glob_validate(),
+>   glob_match_nocase(), the debugfs
+> 
+>   BUG/WARN site lister, and the DAMON tiering module all add new code paths
+>   that are much harder to exhaustively verify.
+> 
+>   Bottom line: Whether the intent is malicious or not, the pattern —
+>   anonymous identity, AI-generated code, industrial volume, patches already
+>   in stable, mixing trust-building fixes with attack-surface-expanding
+>   features — is exactly what an automated supply chain attack on the kernel
+>   looks like. The 2021 University of Minnesota "Hypocrite Commits" incident
+>   was a manual version of this; this appears to be the automated version at
+>   scale.
+> 
+> ~~~
+> 
+> I'm hoping this is some naive attempt to try to 'contribute' to the kernel
+> rather than something more nefarious, but the seemingly sophisticated
+> tooling used makes me wonder otherwise.
+> 
+> In any case I'm deeply concerned by this.
+
+
+This patch also targets NUMA which is quite unpopular setup for
+hobbyist. I don't have any NUMA around me for years... Even my build
+machines are not NUMA. How did you get one as a hobbyist?
+
+Also after looking at the code style in this patch, after "reviews" [1]
+and "acks" [2] (quotes on purpose) this account gave on various patches,
+let's look what was admitted 3 weeks ago:
+
+https://lore.kernel.org/all/f8772114-a495-409b-a590-a9b1d8ed1d41@gmail.com/
+
+> I'm learning this Linux system day by day
+
+So learning or adding serious code for MM for NUMA machines?
+
+> I own this device ...
+
+This is about Xilinx AXIS FIFO which is an FPGA IP core. No way you have
+it. It's not popular, no easy way to get it in common embedded boards.
+
+Even assuming if you have embedded FPGA device and work on it, the jump
+from embedded to NUMA is just stunning.
+
+Answering to reviewers with whatever confirmation they look for is also
+a warning sign of non-trustworthy behavior. Or rather behavior trying to
+get trust.
 
-On Thu, Mar 26, 2026 at 07:27:37AM +0000, Josh Law wrote:
-> Add a new DAMON special-purpose module for NUMA memory tiering.
-> DAMON_TIER monitors physical memory access patterns and migrates hot
-> pages from slow NUMA nodes to fast NUMA nodes (promotion), and cold
-> pages in the opposite direction (demotion).
->
-> The module uses two DAMOS schemes, one for each migration direction,
-> with DAMOS_QUOTA_NODE_MEM_USED_BP and DAMOS_QUOTA_NODE_MEM_FREE_BP
-> quota goals to automatically adjust aggressiveness based on the fast
-> node's utilization.  It also applies YOUNG page filters to avoid
-> migrating pages that have been recently accessed in the wrong direction.
->
-> This is a production-quality version of the samples/damon/mtier.c proof
-> of concept, following the same module_param-based interface pattern
-> as DAMON_RECLAIM and DAMON_LRU_SORT.  It reuses the modules-common.h
-> infrastructure for monitoring attributes, quotas, watermarks, and
-> statistics.
->
-> Module parameters allow configuring:
-> - promote_target_nid / demote_target_nid: the NUMA node pair
-> - promote_target_mem_used_bp / demote_target_mem_free_bp: utilization
->   goals driving quota auto-tuning
-> - Standard DAMON module knobs: monitoring intervals, quotas, watermarks,
->   region bounds, stats, and runtime reconfiguration via commit_inputs
->
-> Signed-off-by: Josh Law <objecting@objecting.org>
+[1]
+https://lore.kernel.org/all/D47F8215-FD08-45ED-AB01-0A5C48CD41DD@objecting.org/
 
-NAK.
+[2]
+https://lore.kernel.org/all/2F84DD09-2880-45E0-AA98-204F10848F85@objecting.org/
 
-And NAK to all future 'contributions' in anything I maintain or have a say
-in.
-
-Your engagement with the community is deeply suspect, you've come out of
-nowhere and are sending dozens and dozens of patches that look very
-strongly like they were LLM-generated.
-
-You've - very early - tried to get a MAINTAINERS entry, you were given
-advice on how to contribute, which you have clearly ignored.
-
-We DO NOT want AI slop.
-
-You very much seem to be either:
-
-- Somebody playing with a bot.
-
-- Somebody trying to farm for kernel stats.
-
-- Or (far more concerning) engaging in an attack on the kernel for
-  nefarious purposes, perhaps a (semi-)automated supply-chain attack?
-
-Your email is highly suspect, you seem to be using an email relay via
-gmail, and I'm pretty convinced you're in violation of our requirements
-about identity:
-
-"It is imperative that all code contributed to the kernel be legitimately
-free software. For that reason, code from contributors without a known
-identity or anonymous contributors will not be accepted"
-
-https://docs.kernel.org/process/1.Intro.html
-
-Also see https://kernel.org/doc/html/latest/process/generated-content.html :
-
-"
-...when making a contribution, be transparent about the origin of content
-in cover letters and changelogs. You can be more transparent by adding
-information like this:
-
-What tools were used?
-
-The input to the tools you used, like the Coccinelle source script.
-
-If code was largely generated from a single or short set of prompts,
-include those prompts. For longer sessions, include a summary of the
-prompts and the nature of resulting assistance.
-
-Which portions of the content were affected by that tool?
-
-How is the submission tested and what tools were used to test the fix?
-
-...
-
-If tools permit you to generate a contribution automatically, expect
-additional scrutiny in proportion to how much of it was generated.
-
-As with the output of any tooling, the result may be incorrect or
-inappropriate. You are expected to understand and to be able to defend
-everything you submit. If you are unable to do so, then do not submit the
-resulting changes.
-
-If you do so anyway, maintainers are entitled to reject your series without
-detailed review.
-"
-
-You are clearly not following _any_ of these guidelines.
-
-To evidence that this is not some wild accusation, I ran this through an
-LLM asking for indicators as to AI:
-
-~~~
-
-● Several signals point to high likelihood of AI generation:
-
-  Strong AI indicators:
-
-  1. "production-quality version" in the commit message — kernel developers
-  don't self-describe patches this way. This is a classic LLM "selling"
-  framing.
-
-  2. Comment uniformity — every module parameter has an
-  identically-structured block comment with the same explanatory depth and
-  cadence. Real developers vary their comment style and skip obvious ones.
-
-  3. Commit message structure — exhaustively lists every feature with
-  perfect bullet formatting. Human kernel commit messages are more
-  conversational and focused on "why", not a feature catalog.
-
-  4. Too clean for a first submission — 409 lines of new module code with
-   zero rough edges, no personal style, no unusual design choices. It reads
-   like a templated synthesis of DAMON_RECLAIM and DAMON_LRU_SORT.
-
-  5. Grammar tell — "aiming a target utilization" in the Kconfig help text
-  (missing "for"). This is characteristic of LLM output that's fluent but
-  occasionally drops prepositions.
-
-  6. Over-commenting — comments explain things that are self-evident from
-  the code (e.g., the promote_target_nid and demote_target_nid comments
-  just restate what the variable name already says, in long form).
-
-  Weaker signals:
-
-  - Unknown author, no prior contribution history I can see
-
-  - The code perfectly follows existing DAMON module patterns without any
-    deviation — exactly what an LLM with context would produce
-
-  - The objecting.org domain is unusual
-
-  Overall: I'd put this at high likelihood (70-80%) of being primarily
-  AI-generated or heavily AI-assisted. The code does use current DAMON APIs
-  correctly, but the writing style throughout is the giveaway — it's
-  uniformly polished in the way LLM output is, without the unevenness that
-  comes from a human writing 400+ lines.
-
-~~~
-
-That's just for this series. I asked it about your contributions overall:
-
-● This is extremely revealing. ~328 emails in 11 days (March 15–26),
-spanning an extraordinary number of unrelated subsystems:
-
-  Patches submitted across:
-
-  - mm/damon — NUMA tiering module, core optimizations, sysfs fixes,
-    reclaim fixes, kdamond scheme filtering
-  - lib/bootconfig — v1 through v8 of a 13–17 patch series
-  - lib/glob — v1 through v4 of an 8-patch series (new features + bug
-    fixes)
-  - lib/vsprintf — 4 bug fixes
-  - lib/base64 — decode fixes
-  - lib/assoc_array — gc fix
-  - lib/bch — signed shift UB fixes
-  - lib/bug — concurrency fix + debugfs interface
-  - lib/string — strlcat rewrite
-  - lib/maple_tree — dead range comparison fix
-  - lib/parser — match_wildcard fix
-  - io_uring — flush deferred completions
-  - block/partitions — seq_buf replacement
-  - ACPI processor idle
-  - signal handling
-  - kunit, iov_iter/kvec, percpu_counter
-
-  Assessment: ~95% probability all contributions are AI-generated. The
-  evidence is overwhelming:
-
-  1. Volume is humanly implausible — ~30 emails/day, 5–10 new patch
-     submissions per day across unrelated subsystems, from a contributor
-     with zero prior history.
-
-  2. Breadth is the strongest signal — no human newcomer simultaneously
-     finds subtle bugs in bootconfig, vsprintf, base64, bch, maple_tree,
-     assoc_array, io_uring, AND writes a new DAMON NUMA tiering
-     module. Each of these requires deep domain-specific knowledge. The
-     pattern is consistent with an LLM being pointed at different source
-     files to systematically find issues.
-
-  3. Bug-finding pattern — the patches cluster around unchecked return
-     values, type mismatches, resource leaks, off-by-ones, signed/unsigned
-     issues. This is exactly what an LLM produces when scanning code for
-     potential problems.
-
-  4. Rapid revision cycling — bootconfig went from v1 to v8 in ~1 day. This
-     matches AI regeneration, not human revision.
-
-  5. Feature additions from a newcomer — glob_match_nocase(),
-     glob_validate(), debugfs BUG/WARN interface, and the DAMON NUMA
-     tiering module are all non-trivial features. A first-time contributor
-     proposing features (not just fixes) across this many subsystems
-     simultaneously is essentially unheard of.
-
-  6. Zero ramp-up — the contribution stream started at full throughput with
-     no learning curve visible.
-
-~~~
-
-So I really feel that you need to account for this - please explain why it
-appears you are spamming the mailing list with entirely LLM-generated crap?
-
-Furthermore, you appear to be using sophisticated privacy-orientated
-tooling, which makes me quite concerned that this _is_ a concerted attack
-on the kernel.
-
-Again, to back this up, here's an LLM's assessment of the headers in your
-email:
-
-~~~
-● Looking at the headers specifically:
-
-  Infrastructure:
-
-  - Mail provider: Zoho EU (zohomail.eu) — a privacy-oriented
-    EU-jurisdiction mail provider. Easy to set up anonymously.
-
-  - Domain: objecting.org — custom domain, no organizational affiliation,
-    no accountability chain. Anyone can register this and point MX to Zoho.
-
-  - Authentication: DKIM, SPF, DMARC all pass — but this only proves the
-    email came from objecting.org's Zoho setup, not who's behind it.
-
-  - X-Mailer: git-send-email 2.34.1 — Ubuntu 22.04 LTS default. One reply
-    had @ubuntu in the Message-ID, confirming the platform.
-
-  What the headers DON'T provide:
-  - No corporate or institutional email that ties to a verifiable identity
-  - No PGP/GPG signature
-  - No Signed-off-by chain from a known developer vouching for this person
-
-  Supply chain attack assessment:
-
-  This matches the threat model of automated supply chain compromise:
-
-  1. Patches already landed in stable — the bootconfig fixes made it into
-  6.19.10. The pipeline is working. Whatever is in those patches is now in
-  production kernels.
-
-  2. Trust-building pattern — the mix of real bug fixes (fd leaks,
-  unchecked returns, type issues) alongside feature additions (DAMON
-  tiering module, glob features, debugfs interface) is textbook. The small
-  fixes build reviewer trust and merge history; the features add attack
-  surface.
-
-  3. Volume as a weapon — 328 emails in 11 days overwhelms maintainer
-  review capacity. Maintainers like SeongJae Park (DAMON) and Masami
-  Hiramatsu (bootconfig) are now spending review cycles on AI-generated
-  submissions. Even if every patch is rejected, the reviewer's attention is
-  being consumed.
-
-  4. The DAMON NUMA tiering module is the most concerning submission — 409
-  lines of new kernel code that runs with kernel privileges, monitors
-  physical memory access patterns, and migrates pages between NUMA
-  nodes. If accepted, it's a significant new attack surface delivered as a
-  single commit from an unverifiable identity.
-
-  5. The feature additions are the real risk — bug fixes are relatively
-  easy to review (small, focused, verifiable). But glob_validate(),
-  glob_match_nocase(), the debugfs
-
-  BUG/WARN site lister, and the DAMON tiering module all add new code paths
-  that are much harder to exhaustively verify.
-
-  Bottom line: Whether the intent is malicious or not, the pattern —
-  anonymous identity, AI-generated code, industrial volume, patches already
-  in stable, mixing trust-building fixes with attack-surface-expanding
-  features — is exactly what an automated supply chain attack on the kernel
-  looks like. The 2021 University of Minnesota "Hypocrite Commits" incident
-  was a manual version of this; this appears to be the automated version at
-  scale.
-
-~~~
-
-I'm hoping this is some naive attempt to try to 'contribute' to the kernel
-rather than something more nefarious, but the seemingly sophisticated
-tooling used makes me wonder otherwise.
-
-In any case I'm deeply concerned by this.
-
-Thanks, Lorenzo
+Best regards,
+Krzysztof
