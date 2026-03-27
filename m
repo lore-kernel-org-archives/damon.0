@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15000366DD5;
-	Fri, 27 Mar 2026 02:20:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 502C31A9FAA;
+	Fri, 27 Mar 2026 03:52:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774578016; cv=none; b=fGdXpWEOVuZN7wHAsWR7J/isUR3Vo7BZNmounTUVIY5pkR9qMCn0YPaXmEdjtwf6N0jMqB0QtZ0OWAXgmfVmFI6DaDxsd/Mu+8u++MLkDnpWTsiYNduGQjHKcait/IN49+xxmEIoVOfHHgUaHV3PuLIA3smxWL0NPo70ILHEPmI=
+	t=1774583572; cv=none; b=fz1rjKrTOBfJ0bfC3PFcCM3ZU/l86fImlJFHAhFHbm3+9eTykmhkbvZUuKys7FcUQgDFu8TgmXf8v9vLsGBYDpYwMA+AV5/L8AUjEkEw1zmJNKaxHZ4t4v62rctFnEZpZJecniuyaaWZXns92ySAtRktuRTTfZ2/j3FoViB6GMM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774578016; c=relaxed/simple;
-	bh=t6YKrGmnU6MgoUyeGbPCbgppVxSefPrhITRIGb7IYOE=;
+	s=arc-20240116; t=1774583572; c=relaxed/simple;
+	bh=wVs7w3jdxXfOD1RlM9zy+o9MlvWJ3DIZG90l7SC8t+M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gOWSY98eOOav72uvGU0S+gvLMHFyJO5nhQPyEw9CvXmPOySSSDSS7dmzHCbQi1amRTKIJkW8wnmvjL83ph1ehD3E5Saf3R4uhBsuOOL8U6uJ8L29M7rnEqpt2xS1C0ThILuR3vvkIB1attq5b2lUsIdkWpOfcJYeIFBdfg2SPM0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uTukcn8d; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Cp5Wk7HDKF4rqR9ebQ8Gqd3zlNefEUiGC/5ggjp+hFvWesWhEFtLveVEqLqrryW4/PVLKm/lrq1p7r70B3JIWid22O9WUjNRJXdNxMfkTIMjdRmtTwlKit3XNl0AgWmZD/xLMafrYVTMf7LaWxSkvrQPESZsencoL8STfETCwR8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AJsUPkFX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uTukcn8d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E6FFC19423;
-	Fri, 27 Mar 2026 02:20:15 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AJsUPkFX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEFB9C19423;
+	Fri, 27 Mar 2026 03:52:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1774578015;
-	bh=t6YKrGmnU6MgoUyeGbPCbgppVxSefPrhITRIGb7IYOE=;
+	s=k20201202; t=1774583572;
+	bh=wVs7w3jdxXfOD1RlM9zy+o9MlvWJ3DIZG90l7SC8t+M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uTukcn8dQ36D/HHne38+LBRSK/7+gdDAwVZFKcv/OKNn8LqRyqd06O+ooPx6t1RNY
-	 FpB20+Q2KTHs9H/Hmfnriw4hQfTuellJe6yJJY32tmhLorS5GW7hBTf4i37nHoEjyL
-	 6CQQp9fsA8N5L4je/6umM8HvN2CfkrPi53a0iGK7dQm0qqImDBNxkJ9cwnKh13DHQI
-	 PtD2mJBH78Cm926mlTEqJVyRRsqRw9AhVdXVBZm0srt2al6zotqnOatAlSL7StgDLt
-	 iVAdvOLqY+MkGPcjd+VeqBiWyz8YBS9gVi31wOiituBRQEgdzIXQBCepMY2hWxBi8/
-	 x6BAZuqYffsAQ==
+	b=AJsUPkFXIjMKbMuUhuV0IJjXQQROMInRb+ewrGDGpmI+hCI2hHd9rGhhamPJARZ27
+	 94NDDsc5EuO3P0vx9qChUGsmOYFYV+nKIjmS1HE0PE9ftLmzytBftW7Y0bT1GoNs9I
+	 mhK/p7RNI07MVnXf1uqOfYI+crZvyN+A+r96K0dkWYoV2yoyW4egCEnVe/3LkVOBbz
+	 UpZ1JmKQnTTf4EQH59hjTneOYBch3xEtE3d6LNWvADJy/xjRxxu1ikFi2K6sEeCix3
+	 icyeF2lGJ1eSei4l6FLZEH+eKNVvdQyxSyFRZLBgL6pdOY1wSn56B9Bbr8fMYLVGG5
+	 VysA9nC3aF7Rg==
 From: SeongJae Park <sj@kernel.org>
 To: SeongJae Park <sj@kernel.org>
 Cc: "# 6 . 14 . x" <stable@vger.kernel.org>,
@@ -33,11 +33,11 @@ Cc: "# 6 . 14 . x" <stable@vger.kernel.org>,
 	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: Re: (sashiko review) [RFC PATCH v2] mm/damon/core: fix damon_call() vs kdamond_fn() exit race deadlock
-Date: Thu, 26 Mar 2026 19:20:13 -0700
-Message-ID: <20260327022014.66567-1-sj@kernel.org>
+Subject: Re: [RFC PATCH v2] mm/damon/core: fix damon_call() vs kdamond_fn() exit race deadlock
+Date: Thu, 26 Mar 2026 20:52:49 -0700
+Message-ID: <20260327035250.67961-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260327021546.66441-1-sj@kernel.org>
+In-Reply-To: <20260327004952.58266-1-sj@kernel.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -47,65 +47,37 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Thu, 26 Mar 2026 19:15:45 -0700 SeongJae Park <sj@kernel.org> wrote:
+On Thu, 26 Mar 2026 17:49:51 -0700 SeongJae Park <sj@kernel.org> wrote:
 
-> Forwarding Sashiko review for doing discussions via mails.
+> When kdamond_fn() main loop is finished, the function cancels all
+> remaining damon_call() requests and unset the damon_ctx->kdamond so that
+> API callers can show the context is terminated.  damon_call() adds the
+> caller's request to the queue first.  After that, it shows if the
+> kdamond of the damon_ctx is still running (damon_ctx->kdamond is set).
+> Only if the kdamond is running, damon_call() starts waiting for the
+> kdamond's handling of the newly added request.
 > 
-> # review url: https://sashiko.dev/#/patchset/20260327004952.58266-1-sj@kernel.org
-> # start of sashiko.dev inline review
-> commit 36b78ee39968830aca3d375219a2cfce73d0d1d0
-> Author: SeongJae Park <sj@kernel.org>
+> The damon_call() requests registration and damon_ctx->kdamond unset are
+> protected by different mutexes, though.  Hence, damon_call() could race
+> with damon_ctx->kdamond unset, and result in deadlocks.
 > 
-> mm/damon/core: fix damon_call() vs kdamond_fn() exit race deadlock
+> For example, let's suppose kdamond successfully finished the
+> damon_call() requests cancelling.  Right after that, damon_call() is
+> called for the context.  It registers the new request, and shows the
+> context is still running, because damon_ctx->kdamond unset is not yet
+> done.  Hence the damon_call() caller starts waiting for the handling of
+> the request.  However, the kdamond is already on the termination steps,
+> so it never handles the new request.  As a result, the damon_call()
+> caller threads infinitely waits.
 > 
-> This commit fixes a race condition between damon_call and the
-> kdamond_fn exit path that could result in a deadlock. It introduces a
-> call_controls_obsolete flag to prevent damon_call from waiting
-> indefinitely for a terminating thread.
-> 
-> Link: https://lore.kernel.org/20260325141956.87144-1-sj@kernel.org
-> 
-> > diff --git a/mm/damon/core.c b/mm/damon/core.c
-> > --- a/mm/damon/core.c
-> > +++ b/mm/damon/core.c
-> 
-> [ ... ]
-> 
-> > @@ -3062,6 +3042,9 @@ static int kdamond_fn(void *data)
-> >  	damon_destroy_targets(ctx);
-> >  
-> >  	kfree(ctx->regions_score_histogram);
-> > +	mutex_lock(&ctx->call_controls_lock);
-> > +	ctx->call_controls_obsolete = true;
-> > +	mutex_unlock(&ctx->call_controls_lock);
-> >  	kdamond_call(ctx, true);
-> >  	damos_walk_cancel(ctx);
-> 
-> Does damos_walk suffer from the same exit race regression that this patch
-> fixes for damon_call?
-> 
-> In kdamond_fn, the thread termination sequence executes damos_walk_cancel
-> and only later sets ctx->kdamond = NULL under the kdamond_lock.
-> 
-> damos_walk appears to use the same pattern as the old damon_call where it
-> registers ctx->walk_control, checks damon_is_running (which verifies
-> ctx->kdamond != NULL), and then unconditionally blocks on wait_for_completion.
-> 
-> If a user triggers a DAMOS walk in the exact window after damos_walk_cancel
-> has finished but before ctx->kdamond = NULL is executed, wouldn't damos_walk
-> successfully register its control and pass the damon_is_running check?
-> 
-> If so, it would then block indefinitely on wait_for_completion because the
-> cancellation phase has already passed and the thread is exiting.
-> 
-> Because damos_walk is invoked via state_store with the global
-> damon_sysfs_lock held, could this infinite wait block the entire DAMON sysfs
-> interface for all users on the system?
+> Fix this by introducing another damon_ctx field, namely
+> call_controls_obsolete.  It is protected by the
+> damon_ctx->call_controls_lock, which protects damon_call() registration.
+> Initialize (unset) it in kdamond_init_ctx()
 
-Yes, and I'm working on it separately, as I also replied [1] to the previous
-version.
-
-[1] https://lore.kernel.org/20260326135146.90670-1-sj@kernel.org
+In this veersion, I updated the initialization to be done in kdamond_fn()
+before the damon_started completion.  But I forgot updating the above sentence.
+I will make the update in the next version.
 
 
 Thanks,
