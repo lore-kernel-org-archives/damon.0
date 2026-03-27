@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6E7D22D7B5
-	for <damon@lists.linux.dev>; Fri, 27 Mar 2026 14:18:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 284BD3F1643;
+	Fri, 27 Mar 2026 14:26:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774621139; cv=none; b=V+MFDXhmvf/EkrmmipLoShvCS0QHSGVE+8bzyPlyUYEyxccfIsdVbfGj3ob/0710p/lvu7YB5idpMz0/5CM9LrZ2feGh5Q/Eg95qn6h89LuiFBteh1KykBIV1A3t7HG3+1/RszTB4MpLLlECdsLs2ob8l+2rK8AOMseG57L7d84=
+	t=1774621569; cv=none; b=o4HNknW7jH6tjrRRojap/ySTFi3I4njHE4JjdxJfgY5x+EKkDK4WvS7LLuHU1IKfHTcTRkEC8nc93tS04KBL+aOZDxrBjnpnTqGCZeDPEI1Fmg1u19us0WLOt+vIp8jrxEReTpA952bJbW6GOEvN7WDeqRNAZCm4PQcUAbVsC9M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774621139; c=relaxed/simple;
-	bh=WO0V06oBGtjE9ScW+EyWlnGevQJTkxKvoZsa7KCDZ4g=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BbX0xnHMasTBD3cV+EVLaa3gfUCB4hCmvrbuXGj1tlF0NCO9LVB+Id8DKaLbgv8HDhUqVh/zWpFxfTdLg3icI55YrwyoDg9Ld+Tdnycii2Uy+YCQ0G85bgD2ik/xTXi72xMwAQMZ9qPkvjRePi7mQFomov15GFYjSU7tnw2+MF8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XLrBsEBg; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1774621569; c=relaxed/simple;
+	bh=d66lxQH+dgjLSvHH2YVQ1SE5I6mwDEHa8Tb0MRJAXn0=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=pg710pjS6lEKuIrKpkIm17AQNoIM5ucEn3XDDtnhEl3hn9kj3hewnvybX+0mFkOosAM4gCozmK2Sbrzdl68/7L5n5JGwDVBS8d68tWOcI0Q7n0zpv7RtIurPGWb8+CQkdOaQUrkryplgiiPxXZp/oQa3mHiAZ0dP1TfrmcbaZ14=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=is4rSzNP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XLrBsEBg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22163C19423;
-	Fri, 27 Mar 2026 14:18:59 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="is4rSzNP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99ABDC19423;
+	Fri, 27 Mar 2026 14:26:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1774621139;
-	bh=WO0V06oBGtjE9ScW+EyWlnGevQJTkxKvoZsa7KCDZ4g=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XLrBsEBg38zlFp7ThZWOUD67yqC7JeCBh0emG5Z9ZDL+O2VQa8hk0dObW+jQaDdnF
-	 Up+pmqQP39kCpQe5uxIJacajFB1dBWqXWt7eIRF3AWqaPoFwS4kWnRBXQ9Q2S43nii
-	 LabEDo1Lj8hD7/Q0tf6JGktauv1EDLO7imU1ohVtBj45xSq1XPP0vBmETu2P7J++q2
-	 DV2eR7ModkjM0KrCx2jKDKVFsHiHV816NqANyd3fmUCe3+q3S1SKE6AzDFxWcv978/
-	 sX6nTqfBHDPNi7jmhi6txz3GPF++rOcrqaSKL9WOnp6I8SRiT771Hgu9dkBLd9reyg
-	 jD9GwhLSVu9FA==
+	s=k20201202; t=1774621568;
+	bh=d66lxQH+dgjLSvHH2YVQ1SE5I6mwDEHa8Tb0MRJAXn0=;
+	h=From:To:Cc:Subject:Date:From;
+	b=is4rSzNPi7o9FVMxVUPZZTobzL57fC6GgLlnwJga61pjmm9tCr5h8Jyfy83rArlzT
+	 EwclD4muTv8KgQf8YeKv1o5/9kYyCIgwCGscfn0CXsXZLQoOyC5Kzzcnx8dZcMaREy
+	 EClRnJs+qonm8x/cOAJvwED53utcN/ZPoyhI+D33YEitCPtDVNFcwkGE/Ll3yP+pFA
+	 caGVR7ly0Y7m9XJfAkWtIwwo1Z/PCtRaJ21ZySYV1SQex4pZK0K02mgdKst8sZSrBy
+	 PB5i42QuZAboo52Yc2TlaLemNNHsl9cIQPTUrU/7JVSivKYWl32+8Sykaa9tbgk30q
+	 hZHVERs3PZmqQ==
 From: SeongJae Park <sj@kernel.org>
-To: Liew Rui Yan <aethernet65535@gmail.com>
+To: 
 Cc: SeongJae Park <sj@kernel.org>,
+	"# 6 . 14 . x" <stable@vger.kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	damon@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: Re: (sashiko review) [RFC v5] mm/damon: add synchronous commit for commit_inputs
-Date: Fri, 27 Mar 2026 07:18:57 -0700
-Message-ID: <20260327141857.4484-1-sj@kernel.org>
+Subject: [RFC PATCH v3 0/2] mm/damon/core: fix damon_call()/damos_walk() vs kdmond exit race
+Date: Fri, 27 Mar 2026 07:26:02 -0700
+Message-ID: <20260327142605.4834-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260327055051.61731-1-aethernet65535@gmail.com>
-References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -45,79 +45,29 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Fri, 27 Mar 2026 13:50:51 +0800 Liew Rui Yan <aethernet65535@gmail.com> wrote:
+damon_call() and damos_walk() can leak memory and/or deadlock when they
+are called while the kdamond is terminating.  Fix those.
 
-> Hi SeongJae,
-> 
-> On Thu, 26 Mar 2026 22:08:22 -0700 SeongJae Park <sj@kernel.org> wrote:
-> 
-> > [...]
-> > > > > I will add a patch in v6 to validate 'addr_unit' in addr_unit_store() to
-> > > > > reject non-power-of-2 inputs immediately.
-> > > > 
-> > > > That's because kdamond_fn() has recently changed to exit the loop if
-> > > > damon_commit_ctx() fails in the loop for any reason.  Refer to commit
-> > > > 26f775a054c3 ("mm/damon/core: avoid use of half-online-committed context") for
-> > > > more details.
-> > > > 
-> > > > Adding the validation in addr_unit_store() would work, but it could be a kind
-> > > > of whack-a-mole game.  I'd prefer doing the validation of all inputs in one
-> > > > place, just before the last damon_commit_ctx() call.  DAMON_SYSFS is doing so,
-> > > > by making a test context and try committing user input to the test context
-> > > > before doing that to the running context.  How about doing so here, too?
-> > > 
-> > > Thank you for the suggestion. I have now added the check
-> > > '!src->addr_unit || ! is_power_of_2(src->addr_unit)' to
-> > > damon_commit_ctx().
-> > 
-> > No, what I'm suggesting is not adding more checks, but reusing the existing
-> > checks in damon_commit_ctx().
-> 
-> I just realized my previous reply might have caused a small
-> misunderstanding. My intention was not to _add_ a new check, but to
-> _move_ the validation to damon_commit_ctx(). So that patch will only
-> modify damon_commit_ctx().
+Changes from RFC v2
+(https://lore.kernel.org/20260327004952.58266-1-sj@kernel.org)
+- Update and wordsmith commit message.
+- Add damos_walk() race fix.
+Changes from RFC v1
+(https://lore.kernel.org/20260326062347.88569-3-sj@kernel.org)
+- Clarify damon_call() call condition.
+- Init call_controls_obsolete before kdamond_started completion.
+- Wordsmith commit message.
+- Split out repeat_call_control leak fix from the series.
 
-I don't really understand what you mean.  I found your patch [1], and still not
-clear.  Let's discuss on the new patch.
+SeongJae Park (2):
+  mm/damon/core: fix damon_call() vs kdamond_fn() exit race deadlock
+  mm/damon/core: fix damos_walk() vs kdamond_fn() exit race deadlock
 
-> 
-> > 
-> > And, now I think bit differently.  Given the purpose of this patch is making
-> > commit_inputs synchronous, I think making more complete validation check is
-> > somewhat that can be done separately.  So my suggestion now is just keeping
-> > this part just as is.
-> 
-> Understood. I will keep this series focused on making 'commit_inputs'
-> synchronous, and prepare the validation for 'addr_unit' as a separate
-> patch later. Thanks for helping me scope this properly.
-
-Yes, let's discuss on the patch.
-
-[1] https://lore.kernel.org/20260327062627.66426-1-aethernet65535@gmail.com
-
-> 
-> > [...]
-> > > > So the issue already exists.  But let's ensure the fix is merged before this
-> > > > patch, since this patch adds another exploitable path that can consequence in
-> > > > whole param_lock deadlock.
-> > > 
-> > > Should I wait for your fix to be merged into damon/next before I post
-> > > the next version?
-> > 
-> > As long as you agree about the mainline merge order, I think you don't need to
-> > wait for my fix.  Please feel free to post next version.
-> > 
-> > FYI, the latest version of my fix is available [1] on the mailing list.
-> > 
-> > [1] https://lore.kernel.org/20260327004952.58266-1-sj@kernel.org
-> 
-> Thank you for your confirmation, and your fix. :>
-
-You're welcome :)
+ include/linux/damon.h |  2 ++
+ mm/damon/core.c       | 66 ++++++++++++++++++-------------------------
+ 2 files changed, 30 insertions(+), 38 deletions(-)
 
 
-Thanks,
-SJ
-
-[...]
+base-commit: 1f03f2e753209de7ef14a675a55453d74c9df5d2
+-- 
+2.47.3
