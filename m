@@ -1,73 +1,73 @@
-Received: from mail-pf1-f176.google.com (mail-pf1-f176.google.com [209.85.210.176])
+Received: from mail-pg1-f172.google.com (mail-pg1-f172.google.com [209.85.215.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43B903C4576
-	for <damon@lists.linux.dev>; Fri, 27 Mar 2026 07:14:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 537B03D1CC0
+	for <damon@lists.linux.dev>; Fri, 27 Mar 2026 08:11:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774595662; cv=none; b=ddDaFOKOFhOFW7uGqWvHOL1rYbO9Bv8xGUhQdIjSxdr77bBXYGdVjELj6fA783cY0OGnfstk2YgklrogxHOZwt0mtCQeWJvLn+gnxqhT3PUP5WTWIyiY/7l7Pjn04OM9aNv8WbwCk+1BQe0Vc0miXyyrZ5cXHPoSyKWI3GF/9SY=
+	t=1774599104; cv=none; b=PBT1AXhtO0rsLdJ9KnoceBkQR6je8DnfkyF4YRnxm4kl0c6SBLRXObr1AZ/YV/3D62mXLfy6kQWA2QHnQNCC+1kJUz91LdUt1QMHd8kIxIPtaujhzjMSjrtc24rxso4kmpFd+lxTJieg6CWqDFiPiHvJO0Jqo2Wtev1UvfLgMo4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774595662; c=relaxed/simple;
-	bh=T5Ir1rZYK3bL6Vcyz+08GQDpvfnKnhYZedwUxLjLbCE=;
+	s=arc-20240116; t=1774599104; c=relaxed/simple;
+	bh=jbmjzb0p2Bl+HveqmuM/op7qChjd3t5dsMsabQgTaj8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pP0hM1Ewvt1AsGMGR6sF3zZU9h5vftR5JKj3ZAaIHV5rCcY54Efrx+kC5OLHYfEehWUxlgTOFdZUue7v5wV+S4FvRsb1+UJULf56rmOST6QPxDpt+3yUZDzP+a4LClIGLPuWkCHtGQHC2ejWXRpZ7LERj88vsA9/SKrL3gVwdGI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lUbitXIt; arc=none smtp.client-ip=209.85.210.176
+	 MIME-Version; b=ZgrCdELExS0txmH2qmXiTiTyC4mR5fAdg7Gp+tQ1mnl7qt6ZtiZkzwkxWH2S0JSSmN1/9Hp6JQswMbyeNOgmu8OWkueI7KAIBprQUUEtqSadRTR6VawzQ964FbYWsOF7hB5hDt2Ib40dxabP58DzGa9pGXKIFcCL1pSfOZicWkw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dI1cHxmb; arc=none smtp.client-ip=209.85.215.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lUbitXIt"
-Received: by mail-pf1-f176.google.com with SMTP id d2e1a72fcca58-82c20b9fb16so831470b3a.0
-        for <damon@lists.linux.dev>; Fri, 27 Mar 2026 00:14:14 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dI1cHxmb"
+Received: by mail-pg1-f172.google.com with SMTP id 41be03b00d2f7-c74f0c3fc16so675503a12.2
+        for <damon@lists.linux.dev>; Fri, 27 Mar 2026 01:11:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1774595654; x=1775200454; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1774599096; x=1775203896; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=OZzuSLhFEjANxlJ2fyZwwyQQ1OfEXmu8TUE3Vg6THPg=;
-        b=lUbitXIt/SqLoa0pWnBlH3g+21SkKNFzSLNFaMNA72yfLBjkkqXObQXAma4QTat2CW
-         aSOXhFosDXwvbnpcm86Kk+X70yoKtVVPppcWwX9tkFrJEWu81YIFFTJ0BfWFRsM3qhg8
-         6A2fk+oHm9zjEegOJN0Vv6rxYYkFWqn+b3wPuI8qFSWVIWibaFWprDSoPiRdXkOWI87h
-         6is4796+jRTrkEqb5IKnyObkkRbmzCUMG8yOn6662VBoRTQJbwooTdNkMAIi6/4r7wu8
-         35NC9cmDpRbg7j6ByPNHYsJyIfhI21LHQD+9DUBUBNtXZmpPcX/OUuh4iO8LGZbiq8kP
-         Q53g==
+        bh=CPhsZJNBjym7EHwKD82OuY+Kr/tp7KmnERPUIythgCU=;
+        b=dI1cHxmbctzfmObCdvGeOfeL6PfzaFkyTZvPVNe28GpmijTs3xoxtiFn60WzrtdlnI
+         my/rY68AfHknrA3N8PQo8zvRy8zsByR8IzdLtOZ/If9wcNMVUL+6fx0kq3hh6XYOx0UE
+         GYsjBx81gQ2lEBq0YYL3Zp3TJLnVp3gADjaji1FY+FAjrIxzJDAvQZcmhVLOaQkfM29G
+         HCMmAeaqSNPr2Xt87Iq9vnJ4EBlkInF+Ob3Brrdw6QBSbMQ4aHLCwnaZ7LhHCpzl4z+p
+         ZWvNq4fvYL1qlp9ghBrL9Dm8irUOEXtJBklKZdrVmKrh+kn9dLQ1ChCWIr/5qVNtAvpR
+         /3SA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774595654; x=1775200454;
+        d=1e100.net; s=20251104; t=1774599096; x=1775203896;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=OZzuSLhFEjANxlJ2fyZwwyQQ1OfEXmu8TUE3Vg6THPg=;
-        b=pyWkAwoBJsF2fzZnabjrsdERS2srsWJ7netdvVXb6JAeuYl9KT/kS8dzEcqB1xvU1l
-         fHLdIQc5GcPV/Zc8ffDaykiEkrrdPkI1wjx85jZMnDnOzwat7nDs4oCKpiOuUQF4gcl2
-         SZBgw1yZ4sv/L8NQA1/5bEIaOr+vdgrY65QKjemURb7tePVp7KwFVw6xMETR7FcGk+Lg
-         413syfOnmOA5wGqFTR/pALuHzxPVkZtxliTPds0xD7qBoTwN2BTbXezoS+kAWYSaIunc
-         21pSizWlr7bJH/yQm7obM+VoMZd+knvnkzqxrgmYSkAclVFzvQG+bMgmcWVidEafDn31
-         FDfw==
-X-Gm-Message-State: AOJu0YykyWUEQT12+K+2BLVGgEejs26KeriP/NxFBMjPOlIBAr0uXwDd
-	wsrqwpiE9AXKkx8EZDGHtkE9de7MMWzM4BqaKm5VbfZAlc2s8eN30Wpy
-X-Gm-Gg: ATEYQzyg4zes4UtHx6DcyDlgp5o/IUGPoasFCLewu+Wdcojop/I4g1YJdL9hdS+CcQS
-	0463tUILNzt8P5rzmWN6mXb+JIVdKYtnp0sD7Jkyh4KyttgBlLf4WFPK7A3T2F+12pGZheda6aI
-	3BsG6rjZpXAb9CItGz9NaKcganx0ySdadEl8Nl1vtiZO/KcsTBp10RHCCLGvCkghUb4BXWdtBmo
-	GUwZKObhiSzTkF14cKqs5u9ay8Lzf4pAYoJsayWWqhsMBZQ7HTIUWIOsDF6RWAjiwTuueBZQPUT
-	eRJFUxwe/+D5veWtgLmNSLlqj92Tl+XHGY1gTqOMyI+VVYN51sS4ARm5J/xwG8HYG63gxpDJ6UT
-	vj3dEXFb6pbD/1vOT/ny/tKRpjLJAwtReSNVXQZYAegfyoDlv6mncbyffC7nRDwXR0yI3VFejEW
-	C2W2p9lpy1MT1vE3dA25MwXD/P7OE=
-X-Received: by 2002:a05:6a00:9084:b0:82a:8aa:cbb6 with SMTP id d2e1a72fcca58-82c9607f50amr1358487b3a.55.1774595653812;
-        Fri, 27 Mar 2026 00:14:13 -0700 (PDT)
+        bh=CPhsZJNBjym7EHwKD82OuY+Kr/tp7KmnERPUIythgCU=;
+        b=YG00hs+h6OSLLx1+Y5eDY2QPI/ySZfP2F3of/Q+li6Gg6XTxlBIeXi7nilTWBeXl/d
+         amVY+V/3wwyqOatGu5uEc9OwLl1bXwzT8vN/6XG3Oy0byI7UUm7rFx8Uc7oChTDsSuPZ
+         SwRa3lnAJobeaA4GpgEbV/8+l1gQV1m22bE4AjZiUPSx3pRa/fD/n9p4Vl/N5N56nLk0
+         mjbw7iyXfIp3ZlQj3lvq0rJeMPGilswfbgUjmyYtCgzqGrgbNpGa09uJtmXCd8jqLk29
+         aJ4G5bmJL1YqXduprtKAF4lXg3g3jGnNs5/sOUnXrmKiLa6Ec0on9kx4DLdz4U7rCrLz
+         /ljg==
+X-Gm-Message-State: AOJu0Yxn5cazphDkTJvoSGchlzTHzgwrpDVEowJgbmXwTYcoo3bnYSW2
+	5Y+34YcVJtQZo4DzOw3EOPrJGqeosvL8YhTfODBeVActpnPSSLsHWAVW
+X-Gm-Gg: ATEYQzyuhkr3/znFipIFWl55B97Gk4UObmOIMEyDXXuxCp4j5VZvJ20Vl3YASJc0T2f
+	z3SMqKf3PAkg2Q+6snOCITMl3jH8IG7N5eiVy2Os29Gefoe1rdfGXqr1l8Xxtu/gD7hcpraBLCa
+	mOgfVyiA5Lr1x9RXQojItUgt5xgkya7ogsThALekZIQPJI5agGwemjzzlzk+gMwtsYcjHc19h3s
+	Pk+aPyzaretPCXXVjHmSfskYelSoKk31QgY2MhwgW+mch/R9JnKDT+kVPMs0Fpb/Df1+O+Fh+mH
+	Uqut6R1EKPxQ8+09kXknjrWMVsx6P0mtlPNSD90X8TsazGN7AnUP8aa9jHQ92pdPAPyjDBkBP94
+	FG3rKbgzDE4HLhnMf/rA9XC3mxjrL161k7qbcSWAjMMl0PXnuEX6TxjjV0t53zvyZFdOOLDN53p
+	SJRnXqfKH9m+pcjBmGW344yUfwzI4=
+X-Received: by 2002:a17:902:d541:b0:2ae:4cb8:484a with SMTP id d9443c01a7336-2b0cdcaa6d7mr18954505ad.17.1774599095798;
+        Fri, 27 Mar 2026 01:11:35 -0700 (PDT)
 Received: from celestia ([2402:1980:898b:301c:d085:a35:99e7:ffec])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-82c7d3c1374sm5208488b3a.44.2026.03.27.00.14.11
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2b0bc8e97f0sm51175195ad.67.2026.03.27.01.11.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 27 Mar 2026 00:14:13 -0700 (PDT)
+        Fri, 27 Mar 2026 01:11:34 -0700 (PDT)
 From: Liew Rui Yan <aethernet65535@gmail.com>
 To: aethernet65535@gmail.com
 Cc: damon@lists.linux.dev,
 	linux-mm@kvack.org,
 	sj@kernel.org
-Subject: Re: (sashiko review) [RFC PATCH v6] mm/damon: add synchronous commit for commit_inputs
-Date: Fri, 27 Mar 2026 15:14:10 +0800
-Message-ID: <20260327071410.73642-1-aethernet65535@gmail.com>
+Subject: Re: (sashiko review) [PATCH] mm/damon: validate addr_unit to be power of 2
+Date: Fri, 27 Mar 2026 16:11:31 +0800
+Message-ID: <20260327081131.80608-1-aethernet65535@gmail.com>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260327070400.71707-1-aethernet65535@gmail.com>
-References: <20260327070400.71707-1-aethernet65535@gmail.com>
+In-Reply-To: <20260327062627.66426-1-aethernet65535@gmail.com>
+References: <20260327062627.66426-1-aethernet65535@gmail.com>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -76,96 +76,53 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-> Forwarding Sashiko review for doing discussions via mails.
-> 
-> # review url: https://sashiko.dev/#/patchset/20260327062558.66392-1-aethernet65535@gmail.com
-> # start of sashiko.dev inline review
-> commit 405545126e8bb145d7fb1fbb4f36016bc1f6c42c
-> Author: Liew Rui Yan <aethernet65535@gmail.com>
-> Date:   Fri Mar 27 06:25:58 2026 +0000
-> 
-> mm/damon: add synchronous commit for commit_inputs
-> 
-> This commit modifies the commit_inputs_store() callback to use damon_call()
-> for synchronously committing parameters in the kdamond thread's context.
-> This change aims to ensure validation errors are returned immediately to
-> userspace.
-> 
-> Link: https://lore.kernel.org/20260318153731.97470-1-aethernet65535@gmail.com
-> 
-> > diff --git a/mm/damon/lru_sort.c b/mm/damon/lru_sort.c
-> > index 554559d72976..453033f3cb3e 100644
-> > --- a/mm/damon/lru_sort.c
-> > +++ b/mm/damon/lru_sort.c
-> 
-> [ ... ]
-> 
-> > @@ -349,18 +348,47 @@ static int damon_lru_sort_apply_parameters(void)
-> >  	return err;
-> >  }
-> >  
-> > -static int damon_lru_sort_handle_commit_inputs(void)
-> > +static int damon_lru_sort_commit_inputs_fn(void *arg)
-> > +{
-> > +	return damon_lru_sort_apply_parameters();
-> > +}
-> > +
-> > +static int damon_lru_sort_commit_inputs_store(const char *val,
-> > +		const struct kernel_param *kp)
-> > +{
-> > +	bool commit_inputs_request;
-> >  	int err;
-> > +	struct damon_call_control control = {
-> > +		.fn = damon_lru_sort_commit_inputs_fn,
-> > +		.repeat = false,
-> > +	};
-> 
-> [ ... ]
-> 
-> > +	err = damon_call(ctx, &control);
-> > +
-> > +	return control.return_code;
-> >  }
-> 
-> If damon_call() fails, for example returning -EINVAL when kdamond is not
-> running, err is set but the error code is never returned or checked.
-> 
-> Will this cause the sysfs write to incorrectly succeed by returning the
-> default control.return_code of 0?
-> 
-> Should it return err if err is non-zero, or control.return_code otherwise?
+Forwarding Sashiko review for doing discussions via mails.
 
-Thank you for reminder. I will add
-'return err ? err : control.return_code' back in next patch.
+# review url: https://sashiko.dev/#/patchset/20260327062627.66426-1-aethernet65535@gmail.com
+# start of sashiko.dev inline review
+commit ceb9522e072d53117ff67157d6f0be7d35919759
+Author: Liew Rui Yan <aethernet65535@gmail.com>
 
-> > diff --git a/mm/damon/reclaim.c b/mm/damon/reclaim.c
-> > index 86da14778658..03e3300ce607 100644
-> > --- a/mm/damon/reclaim.c
-> > +++ b/mm/damon/reclaim.c
-> 
-> [ ... ]
-> 
-> > +static int damon_reclaim_commit_inputs_store(const char *val,
-> > +		const struct kernel_param *kp)
-> > +{
-> > +	bool commit_inputs_request;
-> >  	int err;
-> > +	struct damon_call_control control = {
-> > +		.fn = damon_reclaim_commit_inputs_fn,
-> > +		.repeat = false,
-> > +	};
-> 
-> [ ... ]
-> 
-> > +	err = damon_call(ctx, &control);
-> > +
-> > +	return control.return_code;
-> >  }
-> 
-> Does this function have the same issue where the return value of
-> damon_call() is ignored?
+mm/damon: validate addr_unit to be power of 2
 
-Yes, it have the same issue. Thank you for reminder. :>
+This commit adds a validation check in damon_commit_ctx() to ensure
+addr_unit is a power of 2. This prevents kdamond from exiting
+unexpectedly during parameter application when given invalid inputs.
 
-Best regards,
-Rui Yan
+Link: https://lore.kernel.org/20260325025317.86571-1-sj@kernel.org
+
+> diff --git a/mm/damon/core.c b/mm/damon/core.c
+> index db6c67e52d2b..6bad85a47a79 100644
+> --- a/mm/damon/core.c
+> +++ b/mm/damon/core.c
+
+[ ... ]
+
+> @@ -1330,6 +1330,8 @@ int damon_commit_ctx(struct damon_ctx *dst, struct damon_ctx *src)
+>  	dst->maybe_corrupted = true;
+>  	if (!is_power_of_2(src->min_region_sz))
+>  		return -EINVAL;
+> +	if (!src->addr_unit || !is_power_of_2(src->addr_unit))
+
+This isn't a bug, but is the !src->addr_unit check needed here?
+
+Looking at is_power_of_2(), it already evaluates to false for an input
+of zero, so the compound condition could perhaps be simplified to just
+!is_power_of_2(src->addr_unit).
+
+> +		return -EINVAL;
+>  
+>  	err = damon_commit_schemes(dst, src);
+>  	if (err)
+
+
+# end of sashiko.dev inline review
+# review url: https://sashiko.dev/#/patchset/20260327062627.66426-1-aethernet65535@gmail.com
+#
+# hkml [1] generated a draft of this mail.  It can be regenerated
+# using below command:
+#
+#     hkml patch sashiko_dev --for_forwarding \
+#             20260327062627.66426-1-aethernet65535@gmail.com
+#
+# [1] https://github.com/sjp38/hackermail
