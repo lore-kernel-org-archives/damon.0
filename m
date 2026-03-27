@@ -1,69 +1,73 @@
-Received: from mail-pj1-f46.google.com (mail-pj1-f46.google.com [209.85.216.46])
+Received: from mail-pg1-f175.google.com (mail-pg1-f175.google.com [209.85.215.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 777C239D6C8
-	for <damon@lists.linux.dev>; Fri, 27 Mar 2026 06:26:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41C5237FF55
+	for <damon@lists.linux.dev>; Fri, 27 Mar 2026 06:45:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774592798; cv=none; b=h4NPho4GStOSN1v9RfrJRk42X9xrTOJH97bOwj9iZGC7x1pdT7VhDx4XnAghxNPZueVM4Gs4A0jRAi6knlClsJeFT25oE18ORBgwluuTEEwP49/H8W2CP0gAJj91ymVObdn3uMA07PeABTG37ulYGNMBJxn2glmLnjyEeb26vnI=
+	t=1774593930; cv=none; b=t5tYd66cGWZssnk9SxU0EtbRUKzU+TZrackcWXb3m4xYXV1f7LgH6jgGXJE9DAJipUit8QlnQGZJBuz/qjnEJbvwLnMUEy/rn3MtMf/97okRfLtVKcyC0+bLAcZVBP86PIb3nyPFJXB43eOnL0pcVybL7uqZugm923Yqfg5Ul0A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774592798; c=relaxed/simple;
-	bh=S3rNCZOCe8f88ItUnqifha1d29xLwN/zuDv9CDO/+dM=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=jhTTD3C5dsCefh7XIRPg3V0Yvo25NqnFTV760g6T+OS80f713alAql57ZEruyovkQB6HcHCE3fFdS09mUh3LWFiBLp7SqOkCQu4ecsNAmZvOJsY3Z+DfuzV070ZdRa+t20zVGP7J93wjMcY+RKEhQUbrVvW1C4dgC+qE9A07NpI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aGn8VUov; arc=none smtp.client-ip=209.85.216.46
+	s=arc-20240116; t=1774593930; c=relaxed/simple;
+	bh=BWG+nPPsRXK+2ca7kaKtxwG7BnAy9EQr3/f8t6YfWvo=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=KOT02Y23RYTx2S2OspW/ZR1l33GuzvYOm6FP64fapEtXuX2x9D6i/GCnAaUHrNQ1X+pVb7GsAWgbEImuH7YH5H5mZBRf1mEiD6JGwn1fxpW1QD8AvG/JoI8O5cR6UUo03HmwP9tMjuneUBr/Pr7kXlIa4aCupqOKseLLitU914Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nNtw2RSA; arc=none smtp.client-ip=209.85.215.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aGn8VUov"
-Received: by mail-pj1-f46.google.com with SMTP id 98e67ed59e1d1-35c2fe0d90fso237935a91.1
-        for <damon@lists.linux.dev>; Thu, 26 Mar 2026 23:26:35 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nNtw2RSA"
+Received: by mail-pg1-f175.google.com with SMTP id 41be03b00d2f7-c6e2355739dso773087a12.2
+        for <damon@lists.linux.dev>; Thu, 26 Mar 2026 23:45:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1774592794; x=1775197594; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=UfeL5siJ6xe6Uo5hQEXOS6s+/4tbof4Lxqs1l9wyAMQ=;
-        b=aGn8VUovXSq46mYoUFK6Yo0WAJIWFc5x6szhiqNhh1I8beU7kZeHGqMejqNjyR8QZT
-         lruwEYt5Md4YlbNmzNvO7HmB1gFGhi4KvwCJBoUhuxbugNfOBtyZKD8HFznKhYlkkoM8
-         4ffyoew3WorGSD3RzW1ZFJfX50btEcEweuxYhBjBahzRTuHBakn3vn4xM2iO7nQ0KWwr
-         ZvgoqWDCyMC9lxL1TC+6o45Vs+JjtFV/WHVxp92vkXKSdCOyGFOaLVlP3lU7eaR9YQRN
-         5+9Lf5oCt0Ig03WxPAuiRXekkIhu+Fg2l86xBBD6y0bv6WPpt5XWLPzL+aH3AdnUTt4x
-         B1SQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774592794; x=1775197594;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20251104; t=1774593920; x=1775198720; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=UfeL5siJ6xe6Uo5hQEXOS6s+/4tbof4Lxqs1l9wyAMQ=;
-        b=L/V3esImnbxTSXLMcrybGRhsccFaSi7pu3UeUdUlGTW9VUFyAntH3fincPHhSVpFm5
-         d393OQ4nLJYDH1aUopB98QydLRJm/IFHZ3HDJMJxNNydamIFuOH5PaaqeicRSPPVf2I4
-         PaWZgYp9hlsnOlg5EFBIxMEznE3tHZbbUADtCyGyoxwkqKRtZRdy8s9jKudAW8h3bRX1
-         ImHuAirl5ubrqIQM9kjvSmD8U3Xablfcc9fdvoTqN79fuBEyeq97ze6pVpcJx1cqnf0d
-         EY7jjNFp4Q33Mvco6e1mnxsU8SqFKYXj4+t3yPgGkcQcCfQYFM+epRwF9yDQWKu9FBLu
-         /nQA==
-X-Gm-Message-State: AOJu0YwrqbeXLCvWO+XnV3JBBzLgXvEoGCZd+nuz7EEDP7MhWZxcXexJ
-	rqFo5+vMhr44sMweUB9pgBpFa9hrzWWmgaHxEQeVacTHDwN4F/9wW0L5V9zP9Q==
-X-Gm-Gg: ATEYQzx77Q6HOJKxCh9TiP1bznYsyIOqd8txbydTg4I23/I0Ld03gz4aDLuT1Q6Er5y
-	sPIiVQrjdccPaEJjp6XeF+xppespBIL/Bs147WrArOzyLx1Aztx2UsAabGT7vXMBQJWTBz2H9iB
-	Y0ofsE15AU2D9AUn58++RQpnmST7iKxx1edmI9om/IsmJ+ARkOL5DgL9s26eqcZdEiOLGpxk6Qc
-	eDaVeI1Qf2RZYtrW+w4CAdIgwBm8u71aOFTIh+fv7IL0946yV9DeBNGjKdzbLlO7ism2p2f43Vv
-	Y3C1q12649EQyaz9Y4BA2Nwj4ipLP9czXp8s1wONWL+EHJZG/DJUvm/DwJg1PGv5rgfk2ZH8KmO
-	Zy/C4p6KDij4O851jOKQ64WBySithakFKoAN7SfscVWS6TP3a8xkJ0c2M9N+3IUh0Vxl6J7jje2
-	S5juieDDJibjcW+ieEuTSc2NKnuJSQhQwtwQqmFg==
-X-Received: by 2002:a17:90b:3ec5:b0:359:9016:1e72 with SMTP id 98e67ed59e1d1-35c30076ea8mr1429306a91.19.1774592794262;
-        Thu, 26 Mar 2026 23:26:34 -0700 (PDT)
+        bh=9CZF18FR/wzFPTRFS//7fB0vxgLV+gO2BJewVZGH+2s=;
+        b=nNtw2RSA3/uBnJpM0tz7x3nViRO9StLjFr3w8bYQrDFjHYq9fuNIzvNtwim4CtGodA
+         WkuVuU6gUry4CSfl3fAgu+dizPEUKv0GtJMtMe0CEYTMRjCfs9/i6hGZThRyCgYSDrmM
+         6nda4Pz/SBmiTX4FXKmUTV385wYQZ46st4e2mYxQB7Gl1muqyIMOI1aVVuxYX659jF7s
+         KP5of9ud9s07lIbZvVLXdcpyB/68YWlhAuF9LQIbqJqdYJm9QWSru1l5v68Fc4t0EFdo
+         ylDo3rk8rSVX4yw77zN6xz8jvWspRVTo9RczXTaS9oULnrJRTEmhA0da3YIr60EYEHOg
+         cCMQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1774593920; x=1775198720;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=9CZF18FR/wzFPTRFS//7fB0vxgLV+gO2BJewVZGH+2s=;
+        b=XWB7QHLu6SAvjdQIhRzwZbWP0GhMys/DuHt7tyaLwrCQMIh7cndUy0oxFwhT/4s1Yy
+         08YOOzN5IQ+HfJHGTUeYY/TBXjyGddAftVMmR6gqQkfrHUEQf2k7/wfzA6zlRCO61U4a
+         OdRYRUdFdAAwC8xVOLt+4gauFUL2HY7NWwAwae1orqS7we12Cp2NyNJFMJxOWzfaHH/t
+         2ETSs+lGsSGFqkL59NRLkEk6YMULOT06TyCq/sWfjn8JSkzOblbDGcM8v5624hPuvk/k
+         vKziidVFUcVNhXxkBLYDcYNf6hdtvjh2EmSpHxVIo60CUuYNqPSCAOudT/VJgN6i2ghm
+         v1CQ==
+X-Gm-Message-State: AOJu0YxclUQa23k5g64cf6WFgpggXfBJbq9+VHG+wM/aOFkOdjoDJe+z
+	WbpTZvMLunNjJ7f0QjGk/B16sU8rfcxJ5qVfrVWiPr4aTElXOjEFJkkF
+X-Gm-Gg: ATEYQzyL8VF1AhCvyqfprphHfp7TAN+jpTG8AOW3jTRtHslwZp3KksgXvJti085DpOq
+	18Pfhwf+UZBsPBN4TkOPFX9TM/cL1z0r2ElIGkB5OrqRw2A6vhujMpYZ36koZgDmpjWhzYPPXd7
+	o8XJGzADKhNQhG9ybH1mo67qP32urXkzs5OC8yb/NWRE1lK6MYMKoqZQRXD45l/29btojkKOLRl
+	4+NX6D2bn5QpEux9/wN2tz8wW9yqI8A+fvI8FSZyvJ3FSTnpg7d7DPrA9aG7j5YwzSAHtJWLNDP
+	rY/TXl4RCgCXxvQlQPyGoeBeEuEU3suqvpm7zL3kvfBEtqFvOqjjzdqJHMmurncksytO+a6+t4B
+	sV67YACR0LKsAkQyPYfarOuK+JfgILT+K58GaHJN5kczTshYgXeQxPzcmnjQPcFLcObc0o42rfX
+	7ppDy1tpD+/DRzxoqHjTYiPCdso2s=
+X-Received: by 2002:a17:902:fc47:b0:2b0:6e60:958e with SMTP id d9443c01a7336-2b0cdc1ed78mr15837445ad.7.1774593920106;
+        Thu, 26 Mar 2026 23:45:20 -0700 (PDT)
 Received: from celestia ([2402:1980:898b:301c:d085:a35:99e7:ffec])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-35c22a4ee7esm3533241a91.1.2026.03.26.23.26.31
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2b0bc76ba80sm50595435ad.2.2026.03.26.23.45.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 26 Mar 2026 23:26:33 -0700 (PDT)
+        Thu, 26 Mar 2026 23:45:19 -0700 (PDT)
 From: Liew Rui Yan <aethernet65535@gmail.com>
-To: sj@kernel.org
+To: aethernet65535@gmail.com
 Cc: damon@lists.linux.dev,
 	linux-mm@kvack.org,
-	Liew Rui Yan <aethernet65535@gmail.com>
-Subject: [PATCH] mm/damon: validate addr_unit to be power of 2
-Date: Fri, 27 Mar 2026 14:26:27 +0800
-Message-ID: <20260327062627.66426-1-aethernet65535@gmail.com>
+	sj@kernel.org
+Subject: Re: [PATCH] mm/damon: validate addr_unit to be power of 2
+Date: Fri, 27 Mar 2026 14:45:17 +0800
+Message-ID: <20260327064517.68131-1-aethernet65535@gmail.com>
 X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260327062627.66426-1-aethernet65535@gmail.com>
+References: <20260327062627.66426-1-aethernet65535@gmail.com>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -72,44 +76,27 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Problem
-=======
-The 'addr_unit' must be a power of 2 for correct address alignment
-calculations. Previously, writing a non-power-of-2 value
-(e.g., addr_unit=3) would be accepted by the sysfs store callback, but
-cause kdamond to exit unexpectedly during parameter application, failing
-silently without returning an error to userspace.
+Hi SeongJae,
 
-Solution
-========
-Add an is_power_of_2() check in damon_commit_ctx() to reject invalid
-inputs immediately with -EINVAL. 
+While testing, I noticed that when damon_commit_ctx() returns -EINVAL
+due to an invalid 'addr_unit', the kdamond stops running. I recall you
+mentioned [1] that the kdamond should only stop for "internal error":
 
-When damon_commit_ctx() fails, the kdamond thread terminates as
-designed.
+"
+I found an issue in the current behavior, and just posted a fix.  Assuming the
+fix is merged, the behavior will again be changed.  So, please do this only
+after the fix is merged or completely abandoned.
 
-The issue is found by sashiko [1].
+If the fix is merged, the changed behavior will be something like,
 
-[1] https://lore.kernel.org/20260325025317.86571-1-sj@kernel.org
+"It will continue running with old valid parameters if the parameters are
+wrong.  It will stop running if the parameters update was unable to be
+completed due to internal error."
+"
 
-Signed-off-by: Liew Rui Yan <aethernet65535@gmail.com>
----
- mm/damon/core.c | 2 ++
- 1 file changed, 2 insertions(+)
+Is this termination behavior expected for this case?
 
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index db6c67e52d2b..6bad85a47a79 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -1330,6 +1330,8 @@ int damon_commit_ctx(struct damon_ctx *dst, struct damon_ctx *src)
- 	dst->maybe_corrupted = true;
- 	if (!is_power_of_2(src->min_region_sz))
- 		return -EINVAL;
-+	if (!src->addr_unit || !is_power_of_2(src->addr_unit))
-+		return -EINVAL;
- 
- 	err = damon_commit_schemes(dst, src);
- 	if (err)
--- 
-2.53.0
+[1] https://lore.kernel.org/20260319151528.86490-1-sj@kernel.org
 
+Best regards,
+Rui Yan
