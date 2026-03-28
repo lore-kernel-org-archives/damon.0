@@ -1,74 +1,74 @@
-Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
+Received: from mail-pj1-f54.google.com (mail-pj1-f54.google.com [209.85.216.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 915C0155A5D
-	for <damon@lists.linux.dev>; Sat, 28 Mar 2026 18:08:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E7C93A7853
+	for <damon@lists.linux.dev>; Sat, 28 Mar 2026 18:43:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774721311; cv=none; b=bxhouNZtiFG+Q6qFbDl3l87pJ0/U4tLIjJ4EpJFbmIm5rdATnbR2DY6OtXHshSKfkxciLtwJktoJ0j/LAUc1GqAKPrVlzvStH9JMS4vjbhnmBEEs0aP8z8lKg2xyWE8Hr2INFffMLpnQiWCP1A/UJPrgOeU4gZL4r0q2M1vE6J4=
+	t=1774723407; cv=none; b=JbdIE4Awb2OL5ATtmnDuGaGCnLt8Dv0yioK7ViRlOvmgey9V8dZxheDXkC+uIJ7Kl87TR2MhbQO2IVRWE/3btvsmedugYd832R+LSuE92Up8Pm8v4XHlcIee7R4FzDp4Qcw7qnOuT5qfp9rVPjjqb6spRLlqN1NxWWPHNnLpL8U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774721311; c=relaxed/simple;
-	bh=yWOIgU0byrqD360mpduBSQ1t74eRNrp1ySBTgU64MK8=;
+	s=arc-20240116; t=1774723407; c=relaxed/simple;
+	bh=WHgUvoWefmXQ3BzFXgYvxXxi0gr52c17ry7Ec0jmc5Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bWn+VeNCB+beuWFn+81TgIa/8m19CKwN3pF+Sw6No6EqTYOrRnzRN4bsYu2RtCS3Io1DK30jysRzu4uxyuC0YZrYzTwV4+a68vJBwbuDb+CIVBjT352uHjL8B/BdcMNvphVzHJyaYx6ZXIK/EgC7mhJkdIjXNvuzfNZiObdSXGU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Z1/ifwfW; arc=none smtp.client-ip=209.85.210.180
+	 MIME-Version; b=j538/a5dqJAihYxRsgpBb39QoyXL9HliZL2wT5AcwmXxwCFRv7hPj0ZD6/iRv2mgfOu1Qk3+8n43T/Aw/CZdKsqYymh/+s6kUNpyzoQrUELDSxllhSDWW0/zve/LyPd/aQuz2yFC6q2FV63tuk4E+hLZNoxNFKJRolCszDuMG0E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RupWARWM; arc=none smtp.client-ip=209.85.216.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Z1/ifwfW"
-Received: by mail-pf1-f180.google.com with SMTP id d2e1a72fcca58-82c70e4654eso1364108b3a.2
-        for <damon@lists.linux.dev>; Sat, 28 Mar 2026 11:08:30 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RupWARWM"
+Received: by mail-pj1-f54.google.com with SMTP id 98e67ed59e1d1-35c16db1b53so1730348a91.1
+        for <damon@lists.linux.dev>; Sat, 28 Mar 2026 11:43:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1774721310; x=1775326110; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1774723402; x=1775328202; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=diZhKCC9I7JLNY07BvTldczKweLaMhfWrzg57y8Kyec=;
-        b=Z1/ifwfWDtNPkkzk4IeV416iuUsbAQ/mX0nL26XSTVULOLVhoZlZWzLtSkm4hLri9T
-         39iJB3cZPw9kGfUdTQKgrnk3k7K4tD7R0boICwfOuBipWoSIbfNcKrq8mUz3jXdNC82w
-         aERZBgdAX6lgYYpJuM2zI/Y+Pfz3rdJmslFv/8w+axy5XnFCbaQB4N983GKVVmgdywQZ
-         VoAhwRLwjBUdt6XswnisxEYu8wwUY7UoTqwd+m24HN8MnDXrQPx527lUE4esr+Q/pcw6
-         B0BO6WklNQ+rO0hYGV7CajOrQEwEFY7f/2lY/zwjvOt5iPLo5wd3diuJ8V1J57Kge+r5
-         n6PA==
+        bh=EP2ckNKWBPmkFolP75nur6z6WVdO4BalIzs38VivV8o=;
+        b=RupWARWM9jk+AnZ9dzEZBXSg4KyuoQ7AE8UQiTzzkEQj+h7uu+un+q+ZDbCO/TkmuN
+         Sw1c9CBnbhsxUWqh8U6QdBpzgqW7unAwObpeaym4XemaYaU52nzw279mOjFGiCSwx/a6
+         airxL5tUf6Lj1hH/6YvyhyFGHXL0jYu5YT51csIH5R+0uoc8w7/MFxwudFfqt/0lDcyO
+         lqOvKcyIMsORLW7RPOrX4x/kYrugyglECP8mL7zwwraQtIH6l4ovK086e/jkklG3TUFS
+         c5znnW3VzVCsqjilidZpJLxN0ZaS221AISuDogLhsTJmp0Z2QvzfJ8gZDDf+ZJe0Tchu
+         44pQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774721310; x=1775326110;
+        d=1e100.net; s=20251104; t=1774723402; x=1775328202;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=diZhKCC9I7JLNY07BvTldczKweLaMhfWrzg57y8Kyec=;
-        b=rPz5RIYjwYkU2l91kdc9xzm/T7RsUTkfl2KEuOzr0B55Np9fD5FloUZme63RVaQR4L
-         8B5U3lMLNGODsBXJVEJ7WztGsoGLQ+gUdSzkVA5ge8/lzuSXG+lg7Ykud+dznHgqPCz1
-         y59UPAFfynxFizw6x6mLOERAN3t+OzvaqIN8CwJYDf64Yp2QWNEcZ0OhtCCCFo4VYhjs
-         9dcfzfI9zaCdVxUDm30A4TogxQiUA33VzUwGY6l5CRgfyzjkW5qHm8mSahepWOt2/lpD
-         cAqk7hBkfwRXdWyzqVs9yPWHZjG1UVbTFUEwEQHr/ooP17gA2PV1l3rnwMZfA+VbryaC
-         g+5g==
-X-Forwarded-Encrypted: i=1; AJvYcCU/i82VwBnl/5gQEJs1kOdmTBbmGv7ohAU8ZNVduZZBgOkpXkxapJnina4bbnKG2JYu7PLucQ==@lists.linux.dev
-X-Gm-Message-State: AOJu0YzeBdCruZ1d0dPPCTAe6vrRWSyr4zvb3c6Zfpl7GSEF+Hqw/IuT
-	1bI1fsG2wsiRvxyvpoEZNp8FNne0hgdt0ve4L5qPnH2TLukJbG12J/2T
-X-Gm-Gg: ATEYQzzXBioJnjt8wHjXcsjRp3nRSYpLmo9toS4hNqIttzRNAmGtQqlY4nV6ELKFt35
-	eL1XcDs7PwXOqewxtVWSIBBR3vw8/0X2aM56UUbEaT8Gm+xGg6WWhmh9Z5b1/hnYu5f9o4HDvuW
-	rdg3HGd1u4XpSXnWmWtLUSu0SrC32j7FuTnSoKRVq5zgXg7bouq1TKI58yr0OROZR/3LkK+H+l0
-	YkoHzWhe6/L8zpMaaUyyYKfOaCeukuG7fOY1CWJA/ooTltvpJYir59Do8S1DngY4HUV+RRqAUwO
-	wJmnaUFmDbipe8iFN16iykUUMfDYTfUdoE6V7N7eEse9LaE0fnOz+JB8Hotp0VoTKYSgWjwilBV
-	jxMmC/DPhL6WLpLEbhNQTj/nAIi3/GwTm26ypMNx/qfwOdQ4k4A23/Dyh1mhcnH9122r/A2BRMM
-	TW3SZH1sBpJqcvZACQPst8kYDgWqg=
-X-Received: by 2002:a05:6a00:3405:b0:82c:77cd:50e1 with SMTP id d2e1a72fcca58-82c95e45397mr6087053b3a.20.1774721309733;
-        Sat, 28 Mar 2026 11:08:29 -0700 (PDT)
+        bh=EP2ckNKWBPmkFolP75nur6z6WVdO4BalIzs38VivV8o=;
+        b=Bzg5XVdEYEgbMh4/idZA2r2qw77vxAyIYXLaA6pdVeszGc0M67I6J1LPUw35v0fpAe
+         co0szWYezByisgpTTPO3KCeVY20h+v1t/GZ5Y5xeNXHg841y11pLs/6HxlGuj4xlOZE3
+         8owM1Pe8ygLQ8w41RTUMsgMuyjOv9IoBv8q9xGZdQrQ+9HPHgRrvu9HwE0+DV2TjwkBF
+         KdSJ018YjtqcDZDPRzE8kn5xcPz3QnDhAEGJCp74U36Xeuoj2IPY3svhsN3Cfg9OuNWK
+         qhnnZnRM5TdRUmdqZfTo2ZoadtXbxWD+/TU7O2RlFLCeds+MixiwgDHxQ2OC4XDhclWU
+         eBKg==
+X-Forwarded-Encrypted: i=1; AJvYcCWj92dRdsWJC/ZESu/WR5GdhqdbKAu270vAbqg8BNY1lgdSj4jLlReeTVpAyeFS1Usg6/xx5g==@lists.linux.dev
+X-Gm-Message-State: AOJu0YyQn5760C5nzIyvJXa7m/5PAwYCtpyOlwluxenTGxq97AcxeYMe
+	r94lCbGGjAV4FJwm7cekfKHmz3tWXk7WPwm63KwIXL1h+dyRTB7r/hy6
+X-Gm-Gg: ATEYQzwrOQT2HqlF6AJiTRqBonbkRfqeabBw+vmlwkI0A/XGgKASYhmCY0wTd4Kz80C
+	/dBz1lFDh/V33mqbLIPH9SR+gYH7MPoAUkXA2K5s2eM61My5ikRoTupuYl8QCmqsrnhQKqliB9q
+	osk8iS1stMySr8/eySScwPOKQjYegAihuc0OshtTrVnh9+BXMCUuRcgys8uQmjdPIlKKt/pU6NY
+	4snwMH5k3f1U7ZDrCPefi4eDM3NkZy63MQ/GfRq+jBZd4jfgZF5irViPa42X63DvigsPG9XnKNV
+	52hXgtvND/yilIeaJMZQMA3h8qd9MCNBBnwh9eexcKNdQsnXvsXZvg3xB2/EzAEWxQTvzF3GfxV
+	o9kmDPu52maQsTUKsLKD5Qi8joyhVnapZ+NCkgmTm/Ohhb4vLTB9y8Zj7ruqjwm79E80phz9bt1
+	wJ1ZLiExaG6E9IBpShJFSOzLsqsV0=
+X-Received: by 2002:a17:90a:da8d:b0:35b:e550:e68a with SMTP id 98e67ed59e1d1-35c2ff1be42mr7049890a91.3.1774723401883;
+        Sat, 28 Mar 2026 11:43:21 -0700 (PDT)
 Received: from celestia ([2402:1980:898b:301c:d085:a35:99e7:ffec])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-82ca85d3a71sm2969211b3a.30.2026.03.28.11.08.27
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-35c2ebe2c98sm2617321a91.6.2026.03.28.11.43.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 28 Mar 2026 11:08:29 -0700 (PDT)
+        Sat, 28 Mar 2026 11:43:21 -0700 (PDT)
 From: Liew Rui Yan <aethernet65535@gmail.com>
 To: sj@kernel.org
 Cc: aethernet65535@gmail.com,
 	damon@lists.linux.dev,
 	linux-mm@kvack.org
-Subject: Re: (sashiko review) [PATCH] mm/damon: add synchronous commit for commit_inputs
-Date: Sun, 29 Mar 2026 02:08:27 +0800
-Message-ID: <20260328180827.8136-1-aethernet65535@gmail.com>
+Subject: Re: [PATCH] mm/damon: validate addr_unit to be power of 2
+Date: Sun, 29 Mar 2026 02:43:19 +0800
+Message-ID: <20260328184319.13176-1-aethernet65535@gmail.com>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260328140907.10389-1-sj@kernel.org>
-References: <20260328140907.10389-1-sj@kernel.org>
+In-Reply-To: <20260328180629.55498-1-sj@kernel.org>
+References: <20260328180629.55498-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -77,55 +77,32 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Sat, 28 Mar 2026 07:09:06 -0700 SeongJae Park <sj@kernel.org> wrote:
+> Liew, I suggeted two options before.  But you are skipping providing your
+> opinion to those, and adding yet more options.  That makes me difficult to
+> follow the conversation.  Could you please answer to my suggestions and make a
+> consensus about those, first?
 
-> On Sat, 28 Mar 2026 18:44:50 +0800 Liew Rui Yan <aethernet65535@gmail.com> wrote:
-> >
-> > [...]
-> > > The previous module_param(..., bool) macro used param_ops_bool, which
-> > > includes the KERNEL_PARAM_OPS_FL_NOARG flag. This allows parameters to be
-> > > provided as a standalone flag without an explicit value.
-> > > 
-> > > By omitting this flag here, does providing the parameter without an explicit
-> > > value now produce a parsing error?
-> > 
-> > To be honest, I was not aware of the implications of omitting the NOARG
-> > flag. It was not a deliberate choice on my part.
-> > 
-> > SeongJae, what are your thoughts on this? SHould we stick with the
-> > explicit 'commit_inputs=Y' requirement for the new synchronous behavior,
-> > or should we restore the NOARG compatibility?
-> 
-> Should be a no big deal.  But it would better to keep the compatibility unless
-> it makes things too difficult.  And it seems simple to do.  Could you please do
-> that?
+Apologize if my previous email was unclear. Let me directly address your
+two suggestion.
 
-Sure, I will restore the NOARG compatibility in the next version.
+1. DAMON_SYSFS Type [1]:
+   I fully agree with this. Centralizing the validation in
+   damon_commit_ctx() is the right approach to avoid "whack-a-mole"
+   problem. This is exactly what I am proposing.
 
-> > 
-> > > > +	.set = damon_lru_sort_commit_inputs_store,
-> > > > +	.get = param_get_bool,
-> > > > +};
-> > > 
-> > > The commit_inputs_store function parses the input into a local variable
-> > > commit_inputs_request but never writes to the global commit_inputs variable.
-> > > 
-> > > Because param_get_bool reads the unmodified global commit_inputs variable,
-> > > will sysfs reads of commit_inputs unconditionally return 'N'?
-> > 
-> > This is actually a design choice we discussed [2]. Since 'commit_inputs'
-> > is now a synchronous trigger (or a "button") rather than a persistent
-> > state, it doesn't necessarily need to store the 'Y' value.
-> 
-> I agree to all Liew's opinions.
+2. Adding a simple check on existing validation logic (in callers?) [2]:
+   While this is simpler to implement, I prefer avoiding it for the
+   "whack-a-mole".
 
-Great! Glad we are aligned on the design.
+So, to clarify, I choose your first option (centralized check), and I
+believe my "Option 2" is the simple way to implement it.
 
-> [...]
-> > [1] https://lore.kernel.org/20260327233319.3528-1-sj@kernel.org (Lastest
-> > but may not the last fix)
-> > [2] https://lore.kernel.org/20260323150544.81042-1-sj@kernel.org
-> [...]
+Does ths align with your expectation? If so, I will proceed with this
+approach.
+
+[1] https://lore.kernel.org/20260328132937.9580-1-sj@kernel.org
+[2] https://lore.kernel.org/20260328141323.10540-1-sj@kernel.org
+[3] https://lore.kernel.org/20260328174409.6786-1-aethernet65535@gmail.com
 
 Best regards,
 Rui Yan
