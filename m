@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE9F5249E5
-	for <damon@lists.linux.dev>; Sat, 28 Mar 2026 14:13:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 818C523EAAB;
+	Sat, 28 Mar 2026 16:39:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774707205; cv=none; b=OALoevOzU0GcE1sZ9kKkcJWSORUbXU7l5XIepGYZXgUpSnh4mss41L7nMKbY4bykc4/8l3EiIAlYRstRFXu6TbH8h3/c/2mLLUyvaT6Affpm9ccVIR77AoVUg7vyi/6PjP6iQ+7YBfN8A2iMcpJYQoTILEHUPcNtBcPvy55T48I=
+	t=1774715974; cv=none; b=bjq5S1FLAYRfdPEw+dpAhHLN9DQdv5idNo9EdPgAbu7lu+PjidaFMcBM+5f3Ml84zujpztsltglSyaoCJA1S35dBgFGqcH+jPTJeKfshgPeOuhQfBcQzT2J+fDRdV3H4bAkud5nuV148j/kr1HI+W3DBenysHjw1E31Qzu3ZllU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774707205; c=relaxed/simple;
-	bh=fmCYbzGjhlcCuEkV1MgP++GQDUCnffzSmzBNprCRYt8=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rfBlET27dU8KV5r9efU9p5qA94cjKw7b6LR+O+mjnS8cECQ+p/WOAiv/8bBM3pJi6wg4qaK3v3micPFsxLoJijVMSLAeLRosxjB/c70yCzRFZe+a7ewpMpxsLxW+JHSH7+y87nNQ88+sa1a1Hrjq6cs6uBEV71RYV0RPUDAoMms=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=M3GFE9C6; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1774715974; c=relaxed/simple;
+	bh=0PwI1SI+BDoBCXPBrRWqvfcXP+Y8eEc47YaiUYRUruI=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=bZUk2Qo2Ny6NL9AWPPzchOkz4fRbHA3mDk2yPCfSk6Spjky3koOodrBj/PvwtRJXTVmNzavr2mYP0nh/Kw2prFq0kdesnGYKMMLOHIkY/IHnNOvGLgXJRY9vrKpaNQL7wDs+oQq/NusbeE1pGKul0cKHTiJGnbHbpiL5A6ZHVGw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eIYNftcv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="M3GFE9C6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C51CC4CEF7;
-	Sat, 28 Mar 2026 14:13:25 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eIYNftcv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B971C4CEF7;
+	Sat, 28 Mar 2026 16:39:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1774707205;
-	bh=fmCYbzGjhlcCuEkV1MgP++GQDUCnffzSmzBNprCRYt8=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M3GFE9C6d3w5gL3tGUfmdYYzvBiPWbbkhYEe+CRSAwLByGI7gqlnpT+I7wuZbbHiQ
-	 2KDyY6thwP/IXilJoSukBLgYT11v4rEM0NghycahRJZSfNJmvt+UfUq0cCts+aiDMd
-	 bKnl92G3ieB2wuV8EEpOH1RRz3mv9Spgc0/xs267OA4VAM3qjapoEKyOq5o7ijgvCo
-	 Rv9Yd2Z0HRyJP+8sKmPLJ07KwN3vVeB6dePLW2sjJV/hyUPef1MTtKXVO2+FmpWGzn
-	 xRNSGQm0gmbssCUQmjdz8H67OmGuv/JGr5KWE95V61Szk/GdkF9tXtPt7KXXW41a8p
-	 W+G++FdMVf5TQ==
+	s=k20201202; t=1774715974;
+	bh=0PwI1SI+BDoBCXPBrRWqvfcXP+Y8eEc47YaiUYRUruI=;
+	h=From:To:Cc:Subject:Date:From;
+	b=eIYNftcvj4/Ctr6vTYsINJDWwdgeG9ARYoqiCYAqw8w/O9OPck+HDa45FAtD4/anz
+	 lyebe3WhNSw2Ujhm7UXdF9RzgPWL0a5kmTnEcSazr3lVtFXjAinHX5EpQEe8GlIZO6
+	 5vC9eGR8AD2KUgPOeRMHjWTi1Dn9mXos4Z2nEPdRoTMx8cF8RcNclfHjjHpPvySU+x
+	 NNCruFzN7VoBcW5MUelbNo6jvAsSq8swN5wqXGpN1GobwyRF53R7GFkXeqKeib4h87
+	 uoK3DTxzcigI7DUq4Dm2VINyxUJ0boLq2ujjhSG84sPLidKL+NmYjaluOPjdWNlTnm
+	 dsVBAcrgemEHw==
 From: SeongJae Park <sj@kernel.org>
-To: SeongJae Park <sj@kernel.org>
-Cc: Liew Rui Yan <aethernet65535@gmail.com>,
+To: 
+Cc: SeongJae Park <sj@kernel.org>,
+	"# 5 . 16 . x" <stable@vger.kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	damon@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: Re: [PATCH] mm/damon: validate addr_unit to be power of 2
-Date: Sat, 28 Mar 2026 07:13:23 -0700
-Message-ID: <20260328141323.10540-1-sj@kernel.org>
+Subject: [RFC PATCH] mm/damon/core: use time_in_range() for damos quota window start
+Date: Sat, 28 Mar 2026 09:39:29 -0700
+Message-ID: <20260328163930.47096-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260328132937.9580-1-sj@kernel.org>
-References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -45,45 +45,53 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Sat, 28 Mar 2026 06:29:37 -0700 SeongJae Park <sj@kernel.org> wrote:
+damos_adjust_quota() uses time_after_eq() to show if it is time to start
+a new quota charge window, comparing the current jiffies and the
+scheduled next charge window start time.  If it is, the next charge
+window start time is updated and the new charge window starts.
 
-> On Sat, 28 Mar 2026 10:26:51 +0800 Liew Rui Yan <aethernet65535@gmail.com> wrote:
-> 
-> [...]
-> > Just to make sure I captured the full context, in my earlier follow-ups
-> > [1][2] (in case they got folded in your email client):
-> > 
-> > - Does the current kdamond termination on invalid user input align with
-> >   your design goal mentioned in [3] (stopping only for "internal
-> >   errors")?
-> 
-> No.  I still think it would be better to avoid wrong input-caused termination.
-> But in a simple way.  Also, it would be better to be consistent.
-> 
-> > 
-> > - Would a lightweight fix be acceptable? For example, performing
-> >   validation at the very beginning of damon_commit_ctx(), and returning
-> >   -EINVAL before setting 'maybe_corrupted' to true. Since no
-> >   modifications to 'dst' would have occurred, kdamond could safely
-> >   continue with its old configuration.
-> 
-> I suggested you to try something similar to what DAMON_SYSFS is doing.  But I
-> didn't get your response to the idea yet.  Could you please let me know what do
-> you think about the approach?
+The time check and next window start time update is skipped while the
+scheme is deactivated by the watermarks.  Let's suppose the deactivation
+is kept more than LONG_MAX jiffies (assuming CONFIG_HZ of 250, more than
+99 days in 32 bit systems and more than one billion years in 64 bit
+systems), resulting in having the jiffies larger than the next charge
+window start time + LONG_MAX.  Then, the time_after_eq() call can return
+false until another LONG_MAX jiffies are passed.
 
-I was thinking this one more time.  So you want to ensure DAMON_RECLAIM and
-DAMON_LRU_SORT not passing wrong addr_unit to damon_commit_ctx(), right?  And
-that's required because exisitng inputs validations of DAMON_RECLAIM and
-DAMON_LRU_SORT are not checking that.  Why don't you add the just one more
-check there?
+This means the scheme can continue working after being reactivated by
+the watermarks.  But, soon, the quota will be exceeded and the scheme
+will again effectively stop working until the next charge window starts.
+Because the current charge window is extended to up to LONG_MAX jiffies,
+however, it will look like it stopped unexpectedly and indefinitely,
+from the user's perspective.
 
-I remember I was saying this kind of change would be a kind of whack-a-mole and
-therefore prefer DAMON_SYSFS type damon_commit_ctx() based checking.  But
-that's not a small change.  Just adding yet another simple check on existing
-validation logic should be fine and small.
+Fix this by using !time_in_range() instead.
 
+The issue was discovered [1] by sashiko.
 
-Thanks,
-SJ
+[1] https://lore.kernel.org/20260324040722.57944-1-sj@kernel.org
 
-[...]
+Fixes: ee801b7dd782 ("mm/damon/schemes: activate schemes based on a watermarks mechanism")
+Cc: <stable@vger.kernel.org> # 5.16.x
+Signed-off-by: SeongJae Park <sj@kernel.org>
+---
+ mm/damon/core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index 3298ee8d8f64..19ae388ff1e0 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -2449,7 +2449,7 @@ static void damos_adjust_quota(struct damon_ctx *c, struct damos *s)
+ 	}
+ 
+ 	/* New charge window starts */
+-	if (time_after_eq(jiffies, quota->charged_from +
++	if (!time_in_range(jiffies, quota->charged_from, quota->charged_from +
+ 				msecs_to_jiffies(quota->reset_interval))) {
+ 		if (damos_quota_is_set(quota) &&
+ 				quota->charged_sz >= quota->esz)
+
+base-commit: f16846f15feb80ea9553b860bd0f70d9072101aa
+-- 
+2.47.3
