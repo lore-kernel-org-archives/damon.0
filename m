@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8670AD5A;
-	Sat, 28 Mar 2026 00:42:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33BAC1F3D56;
+	Sat, 28 Mar 2026 00:43:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774658570; cv=none; b=cmpOJBvW4dj+o0YQcq4uzQnzd1heBGMaVzOEUbnCVMLj0Gdj2QPXRJCGXgpyxx9yVcUeVSqeECEq1XkCdYEilqpuLGzVeFef3sCWs1ZFBveCBoV2SNRMPnXZNEHRdG6X8BGeCbepl+aoBOW3S+E+3BuxJ0AmgdpppHg81eR+XjI=
+	t=1774658589; cv=none; b=BAyIW68lYC+GHj91Z9S5z0UGekiZjqEKSsPCVM6E9XvqHxkq0nJ9y3zoQTQ7syijEytkLSXP6sfLbmEK2mZM+Xb29nr2XrEXIb+h7BkUngmsmU5EEempgOAiLFLrhmWnbgf0FlGX7DqKpnwqL16MCvKxH93L9RsFx811Z2NtB6Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774658570; c=relaxed/simple;
-	bh=tHes9tujM299r1urFSferkNbsuKXc5jy+H3o7lTRdJQ=;
+	s=arc-20240116; t=1774658589; c=relaxed/simple;
+	bh=nszuYzVHtkEaRbvCa++z4lm9bFd2Xz8ppbdZso7gZrk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y7gQ1kZfh/CRsQbM2X4NyZEG956gPaK29qzuGMWSJyWflHj++JFMFTyLsRcVpBuF7FhWvuIq7YyDpH4Fdym56DeFtVfSwCrgoF26wS2HFAWIUiFidHUQNsYXZ1dke9EKWbOQXpnC2SLZ8r00wiHHdA+IDSHb9LsTqMuUPp1yc0M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WIQtZgA2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oRAnNnwbVf7G04H51zWCcaL1Xd0jcRU6ZLNIfjt+9z0R4jL90tYTYt0f6TmAIl7D+OA07fv+d6/f8nDHV/dfh2Ie6XYRXgGDwURFS6x4r2R7wk6unPHq5mBYVG9voQn2QMYVPRWlqsINbrBsm5nnxQ8OMvq/rInQeU3Em183XS4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nLYPPoIe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WIQtZgA2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 596C3C19423;
-	Sat, 28 Mar 2026 00:42:50 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nLYPPoIe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF9CBC19423;
+	Sat, 28 Mar 2026 00:43:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1774658570;
-	bh=tHes9tujM299r1urFSferkNbsuKXc5jy+H3o7lTRdJQ=;
+	s=k20201202; t=1774658588;
+	bh=nszuYzVHtkEaRbvCa++z4lm9bFd2Xz8ppbdZso7gZrk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WIQtZgA2OfkDInqDspKtfTq6oZwEBuFw1b2Bb3qBuqJEzI+9tRXVNkRd59vntaQvb
-	 +t304fg1jVcAGb/hg5iIWKI0P13043WPWATwdg/LbXMpnEi6mQq5CAcult9oNJg9fQ
-	 S1nxOHCKtQEKW62Hz6PDfUMLGVefT4kF93T7fp9e7OdCo47Dlfs3xDTmSvcwkq2B/1
-	 TuwPpUrUsHItrlTe0Iw4FEibeCEqLK3Qa9ka+yv2P8IibElytBJ8UrPe8g7ZpGkQAg
-	 OF/Cy5Y0Mal1pyCKx4OPAHI04Psdk1VP61gxd/V6GDQxrH9K1LY7Wtrnaos+1aPn3A
-	 PU29NlSAoHOLQ==
+	b=nLYPPoIezvNwSALO0PIzYbCv4mwhLrtfU0ZcLs8RbBmI8tWh6oEtjv4j5kFBf5SrE
+	 xa9F3Cyek2TDOAkIboUzoKAd3NiVKa15fTmGBbXt7B87GLF7RvcHElhrv4FGyxvkHz
+	 Wa8ZKx7450KkNvLuUL058AI6Xi5SI3+3LTaMiqAgwNsLZmYqd5+ZBQeTrrs80ipvTo
+	 /URNfowSO7WqvCHiML4pewTZga6P+vart/Lam8IIfiAuwmF5WsxP7gDB4ojWrLDh2a
+	 lC2w9HTRK+k1QJyv2PfX5U/VmJ4cc/HSa2rYJQiG7HKm4e09liGXDnQ1RZT/E4M+x8
+	 2jXqHqxKClLxg==
 From: SeongJae Park <sj@kernel.org>
 To: SeongJae Park <sj@kernel.org>
 Cc: Andrew Morton <akpm@linux-foundation.org>,
@@ -33,11 +33,11 @@ Cc: Andrew Morton <akpm@linux-foundation.org>,
 	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: Re: (sashiko status) [PATCH 0/2] mm/damon/core: fix damon_call()/damos_walk() vs kdmond exit race
-Date: Fri, 27 Mar 2026 17:42:48 -0700
-Message-ID: <20260328004249.7135-1-sj@kernel.org>
+Subject: Re: (sashiko review) [PATCH 1/2] mm/damon/core: fix damon_call() vs kdamond_fn() exit race
+Date: Fri, 27 Mar 2026 17:43:06 -0700
+Message-ID: <20260328004307.7244-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260327233319.3528-1-sj@kernel.org>
+In-Reply-To: <20260327233319.3528-2-sj@kernel.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -47,22 +47,79 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Forwarding sashiko.dev review status for this thread.
+Forwarding Sashiko review for doing discussions via mails.
 
-# review url: https://sashiko.dev/#/patchset/20260327233319.3528-1-sj@kernel.org
+# review url: https://sashiko.dev/#/patchset/20260327233319.3528-2-sj@kernel.org
+# start of sashiko.dev inline review
+commit 9cf54c95f0c4bda07c5dbaf4019d0d731f6c58fd
+Author: SeongJae Park <sj@kernel.org>
 
-- [PATCH 1/2] mm/damon/core: fix damon_call() vs kdamond_fn() exit race
-  - status: Reviewed
-  - review: ISSUES MAY FOUND
-- [PATCH 2/2] mm/damon/core: fix damos_walk() vs kdamond_fn() exit race
-  - status: Reviewed
-  - review: No issues found.
+mm/damon/core: fix damon_call() vs kdamond_fn() exit race
 
+This commit introduces a new call_controls_obsolete flag to prevent
+damon_call() from adding requests to a terminating kdamond context.
+It removes the after-registration DAMON context termination check.
+
+Link: https://lore.kernel.org/20260325141956.87144-1-sj@kernel.org
+
+> diff --git a/mm/damon/core.c b/mm/damon/core.c
+> index db6c67e52d2b..9bcda2765ac9 100644
+> --- a/mm/damon/core.c
+> +++ b/mm/damon/core.c
+
+[ ... ]
+
+> @@ -1629,10 +1604,12 @@ int damon_call(struct damon_ctx *ctx, struct damon_call_control *control)
+>  	INIT_LIST_HEAD(&control->list);
+>  
+>  	mutex_lock(&ctx->call_controls_lock);
+> +	if (ctx->call_controls_obsolete) {
+> +		mutex_unlock(&ctx->call_controls_lock);
+> +		return -ECANCELED;
+> +	}
+>  	list_add_tail(&control->list, &ctx->call_controls);
+>  	mutex_unlock(&ctx->call_controls_lock);
+> -	if (!damon_is_running(ctx))
+> -		return damon_call_handle_inactive_ctx(ctx, control);
+>  	if (control->repeat)
+>  		return 0;
+>  	wait_for_completion(&control->completion);
+
+Can this code trigger a use-after-free on control?
+
+This appears to be a pre-existing issue that remains unfixed. If
+kdamond_fn() is terminating, it executes kdamond_call(ctx, true). This
+function removes the request, sets it as canceled, and calls kfree(control)
+if control->dealloc_on_cancel is true.
+
+Since ctx->call_controls_lock is dropped right before the control->repeat
+check:
+
+CPU1 (kdamond_fn)
+kdamond_call(ctx, true)
+    list_del(&control->list);
+    kfree(control);
+
+CPU2 (damon_call)
+    mutex_unlock(&ctx->call_controls_lock);
+    if (control->repeat)
+
+Could kdamond_call() free control before damon_call() evaluates
+control->repeat?
+
+Furthermore, if memory poisoning causes the freed memory to evaluate
+control->repeat as false, would this proceed to call wait_for_completion()
+on the freed memory and cause wait queue corruption?
+
+
+# end of sashiko.dev inline review
+# review url: https://sashiko.dev/#/patchset/20260327233319.3528-2-sj@kernel.org
+#
 # hkml [1] generated a draft of this mail.  It can be regenerated
 # using below command:
 #
-#     hkml patch sashiko_dev --thread_status --for_forwarding \
-#             20260327233319.3528-1-sj@kernel.org
+#     hkml patch sashiko_dev --for_forwarding \
+#             20260327233319.3528-2-sj@kernel.org
 #
 # [1] https://github.com/sjp38/hackermail
 
