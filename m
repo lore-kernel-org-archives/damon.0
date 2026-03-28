@@ -1,53 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D46C12FF69;
-	Sat, 28 Mar 2026 17:51:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF90C313293
+	for <damon@lists.linux.dev>; Sat, 28 Mar 2026 18:06:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774720267; cv=none; b=ha9nbegscTRuxKxg4l41Vg+C9/C5KM5EHPZBmxruzGfiF6sKZachO7j60frWtv1jc0KelEqtFnwxFAelmV6OKNPCUii04L1cO3k//Ozkn2CkWpL/ysyJqGkU7CRV1jzQkv0mj0SRNVwFQ2rIRfVyvoni3P/xaitfizlswnDvhzA=
+	t=1774721190; cv=none; b=f1ZBl9fnKHLzHIg3177QG8bKW5XkxRgTB7UPjXA8Mmo2d3Ucp4XWXWQdtcLlNzu/TsnR31lGXVbyyse0XV+2OTKZ9XHt4XIB+pcDeBKti4+rCPYipgZDmEiH5FvvoQkSx2n3+CzY5DwF84rBJShcBjAZADayriM7eZMw8H1R1w4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774720267; c=relaxed/simple;
-	bh=Lfa/H2VSyV2kIZ9S1jtBoE2PwbJXtQWrEwEFjGo0r/0=;
+	s=arc-20240116; t=1774721190; c=relaxed/simple;
+	bh=bPs9tke7nQbYZIsrIsj71vZ4XdK66k9kLYeKFKb62Zc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OIU0V48Z/iuAFFzw+E081WAQhlctHY+Dsqqn5u33Y8+prV4O1/sROxzrbKkNljHXHv1xiTjwShnT3+aCa+g88xvM1cauUjd7Zgwl0udwh4hvhYywLDU5AdBmzpGrAdbMFvcD2TqoP46dyQANwo4xSdfRWXKCrYCWkMT8QSWMNa4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=liVl73Dd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=U0N5T8gmhIOXH5cgkJ3J4jX+PA5zV8+X3XhX3MdCYnrxPnirD3S871VcMzpQWjwjuwWT0NIpd5iUBRRlbw1W+JC+Vbjsc5A0b0fDIFkokMsPttgBnmae4SODDEADOYz5IsS2KeKxGoZur/RtaISo6CsdliAzMU/0znBClITs6iE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iKkYEKue; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="liVl73Dd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73ABAC4CEF7;
-	Sat, 28 Mar 2026 17:51:06 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iKkYEKue"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 741D6C4CEF7;
+	Sat, 28 Mar 2026 18:06:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1774720266;
-	bh=Lfa/H2VSyV2kIZ9S1jtBoE2PwbJXtQWrEwEFjGo0r/0=;
+	s=k20201202; t=1774721190;
+	bh=bPs9tke7nQbYZIsrIsj71vZ4XdK66k9kLYeKFKb62Zc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=liVl73DdPiG5av1OZtXrG5iyJdLEvA6mkuMEX/etx+kfr4gT6xI3kmjciOK9AV3AL
-	 Qn7bGtOK8dzTVzpimzZyZy/0S+kCI3AInmM585KzSevkam9d63ccrG87l49fi9veQV
-	 LKKeB7ss/q90tEt65vRariDAnBx+1M/Oi9J0XYJRmrIuRHiaUKy/bHOu3QWr+DGWGE
-	 ZiYVNpqHDxaJvsHRM64frCfIQsgME8mxQyw81EmkKHLTi1ZiiGfBFdZqwdWp7tpRbX
-	 6+ypTs9usmT5m4bBJsDj4WpQNDnLuXcSCJfiHcK/CFbnCcEe0yvpwgWF+YmZbDwpJs
-	 rBI3lftOq0wGg==
+	b=iKkYEKueqRXbP8h9DprgeUd+Y2/fbNYkGdLCRPoTjbI0Up69C+1TzXboKuvQ3Lc+n
+	 Bpia6Ytj16VUednqyWu2sBUut0MSPwd/ZSXFQji9OCOHo7w/ta+qA31ZSQFmw28Sga
+	 9A9uLCWMamzTA5UMGt02B/24Zmt3/1aHwLSBdrwjh/SUJEO7TDpuI9+lqHVV/YWvdP
+	 77lg+Dxhc0P8Pb5Uj6pI4RPv6PHJO8mcSgdUq72H5g7D3vqxuwj6eApEifwNxGHOEm
+	 BwI/VM691arleKuiOfOzLeXKeTVQh0TavScAAJsqkPw4fXJx7T/VlR2eXEGV7fSCrO
+	 rQo5ko1+W4xHw==
 From: SeongJae Park <sj@kernel.org>
-To: SeongJae Park <sj@kernel.org>
-Cc: "Liam R. Howlett" <Liam.Howlett@oracle.com>,
-	"# 6 . 0 . x" <stable@vger.kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	David Hildenbrand <david@kernel.org>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	Michal Hocko <mhocko@suse.com>,
-	Mike Rapoport <rppt@kernel.org>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Vlastimil Babka <vbabka@kernel.org>,
+To: Liew Rui Yan <aethernet65535@gmail.com>
+Cc: SeongJae Park <sj@kernel.org>,
 	damon@lists.linux.dev,
-	linux-doc@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: Re: (sashiko review) [RFC PATCH 2/2] Docs/admin-guide/mm/damon/lru_sort: warn commit_inputs vs param updates race
-Date: Sat, 28 Mar 2026 10:51:04 -0700
-Message-ID: <20260328175105.53481-1-sj@kernel.org>
+Subject: Re: [PATCH] mm/damon: validate addr_unit to be power of 2
+Date: Sat, 28 Mar 2026 11:06:28 -0700
+Message-ID: <20260328180629.55498-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260328173504.53129-1-sj@kernel.org>
+In-Reply-To: <20260328174409.6786-1-aethernet65535@gmail.com>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -57,12 +45,81 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Sat, 28 Mar 2026 10:35:04 -0700 SeongJae Park <sj@kernel.org> wrote:
+On Sun, 29 Mar 2026 01:44:09 +0800 Liew Rui Yan <aethernet65535@gmail.com> wrote:
 
-> Forwarding Sashiko review for doing discussions via mails.
+> On Sat, 28 Mar 2026 07:13:23 -0700 SeongJae Park <sj@kernel.org> wrote:
+> 
+> > > On Sat, 28 Mar 2026 10:26:51 +0800 Liew Rui Yan <aethernet65535@gmail.com> wrote:
+> > >
+> > > > [...]
+> > > > - Would a lightweight fix be acceptable? For example, performing
+> > > >   validation at the very beginning of damon_commit_ctx(), and returning
+> > > >   -EINVAL before setting 'maybe_corrupted' to true. Since no
+> > > >   modifications to 'dst' would have occurred, kdamond could safely
+> > > >   continue with its old configuration.
+> > > 
+> > > I suggested you to try something similar to what DAMON_SYSFS is doing.  But I
+> > > didn't get your response to the idea yet.  Could you please let me know what do
+> > > you think about the approach?
+> > 
+> > I was thinking this one more time.  So you want to ensure DAMON_RECLAIM and
+> > DAMON_LRU_SORT not passing wrong addr_unit to damon_commit_ctx(), right?  And
+> > that's required because exisitng inputs validations of DAMON_RECLAIM and
+> > DAMON_LRU_SORT are not checking that.  Why don't you add the just one more
+> > check there?
+> 
+> Apologize for the confusion in my previous explanation. To clarify, my
+> proposal was indeed focused on implementing a lightweight fix directly
+> within damon_commit_ctx(), rather than adding separate checks in
+> DAMON_RECLAIM and DAMON_LRU_SORT.
+> 
+> The goal is to safely handle the context state transition. Specifically,
+> I want to validate inputs before marking the context as potentially
+> corrupted. Here are two approaches to achieve this:
+> 
+> Option 1 - Using a label for cleanup:
+> 
+>     damon_commit_ctx(...)
+>     {
+>         err = 0;
+> 
+>         dst->maybe_corrupted = true;
+>         if (...) {
+>             err = -EINVAL;
+>             goto out_reset;
+>         }
+> 
+>         ... other code ...
+> 
+>     out_reset:
+>         dst->maybe_corrupted = false;
+>         return err;
+>     }
+> 
+> Option 2 - Deferring the 'maybe_corrupted' assignment:
+> 
+>     damon_commit_ctx(...)
+>     {
+>         err = 0;
+> 
+>         if (...)
+>             return -EINVAL;
+> 
+>         /*
+>          * Only mark as pontentially corrupted once
+>          * we start modifying dst.
+>          */
+>         dst->maybe_corrupted = true;
+> 
+>         ... other code ...
+>     }
+> 
+> I think Option 2 is cleaner as it avoids unnecessary state flipping.
 
-All comments are same to that for DAMON_RECLAIM.  Please refer to
-https://lore.kernel.org/20260328174852.53338-1-sj@kernel.org for my response.
+Liew, I suggeted two options before.  But you are skipping providing your
+opinion to those, and adding yet more options.  That makes me difficult to
+follow the conversation.  Could you please answer to my suggestions and make a
+consensus about those, first?
 
 
 Thanks,
