@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34E942874E6
-	for <damon@lists.linux.dev>; Sun, 29 Mar 2026 15:12:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FD6C296BCD
+	for <damon@lists.linux.dev>; Sun, 29 Mar 2026 15:15:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774797141; cv=none; b=L/Ga1KUQbLawg0wiTN8fRxSQ5BiVc0//1C+dwlKueQHd/Wm0dCLkAxc/GrydOJX5s2T3rrRtes6XyRroIXWA14QNGsUczxla4oln+NI6pe8R62AlStobi4xRyPV6zkfB1+xr8vI4LPjkp19wsTQjsrTKwXmo087R4K6FpQvGKF4=
+	t=1774797309; cv=none; b=LC0beM4nRKsudO+XCOzqJXg6niD9KbLIQablh3jYb0ZZXLX9Iewze5iec9OWExaKif0V12UCCtZp24AUIqHQ6eTjxIFL3gXHqmzvoqW5iBvLB2m31lzc8cZF6Rt8M+QdAp9WOcTzsHxI6EYKRPZTmcaMNtnjxs1DPTYWoL/0KIk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774797141; c=relaxed/simple;
-	bh=9hextLtkAfjK6hXZX5ChQd5LrsN03XztqpNRxzi++H0=;
+	s=arc-20240116; t=1774797309; c=relaxed/simple;
+	bh=CVh9eQJNAnqOlDZKN8KfEisM9pB/qcp/6vZJUm8Xpec=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SMCiEZ0YCBT3Z2it+2DEnUjbEIMsnpjJaEdMoRJ87RIVyI/znl99T/Eo5s+jNVdKuV9+9ia1ctmFDcCr8EgGsyhg/oZJvQK8dmmStafo6gExXu1mhDfQPu0YJXc2OSDjX1ANo36V2u162w0N6ej6yQWJG0tmrsEEIrzouLOgZkU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=s4T93kwb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UofEgAP5kPNwPLOtX9HDedMSnfcCcq+8Fd6zh7TfItGu6dPbeqN7YOZEik5Izmz/RUSVFeMFOBBywjzVmmWScFO1htwN9QSkBWnmkDcy3l9gS3em+K2733H2YlyhmZm6uTO4I5nVPhn97U+F2SB2YvZEkEfzLppJIhabk7c5xJs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=B/Ff42A4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="s4T93kwb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00020C116C6;
-	Sun, 29 Mar 2026 15:12:20 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="B/Ff42A4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 083D5C116C6;
+	Sun, 29 Mar 2026 15:15:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1774797141;
-	bh=9hextLtkAfjK6hXZX5ChQd5LrsN03XztqpNRxzi++H0=;
+	s=k20201202; t=1774797309;
+	bh=CVh9eQJNAnqOlDZKN8KfEisM9pB/qcp/6vZJUm8Xpec=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s4T93kwbCo35X+oPgNmpQx/wx5boeQERvcZ+DQfyBj6bYfxXusrxZJXmV8KES8j3e
-	 ZuyQKCObwbUgEcB4zs5MU7ONT5sujNKGwKsy563/x2qGDN04XiwkXA44VHFnWlwc2C
-	 LLjTBlKTLTe2Z9LYTNirgNkeBJ2E8K4ZmJ2w64/RVwWa68331l1jWlsvI2vtqGz8Dt
-	 IKNyrkqatz8iTqpoYhWGy5rQLJpOWR3IMQQpoxDM1Xbyx7UEwxXjILV22XfslUB/0D
-	 IKYBsI3D7zPkIokzMVnR/vX5TJMA3629txKm02Da6RDkX4SviQs8J29F87kbjv9/E2
-	 +4mA/LO6y4pxw==
+	b=B/Ff42A4ZIKPJcEGjqNUtDKRVpWjFBvFHSSM3PBCLgaaGPNwYTKDNhya8aZ6n80Pf
+	 pSiACfyMDrzeVpADIU8G78RnbLIH+2iX6+QRR6oBzgB+Wwv/jPj5c6l6n/dLnm8yxw
+	 zktRv3IErzR7BR/rzRzJc0lx0KMvrQNuWUo1IuVE96Evh1zCw8XnHFzWooV0SYDEKq
+	 KLDWPu+HD1g8nI2JQVuq7yMZKNfQqGu3dgMUcwLp4KODArkKL2TuB4lvwx59iWF7X7
+	 4VMuDXkOWFMkE192gWif5VBibx1j/7UoHSdgO24nGF3giPEy/y+qoBHppmloGioAFj
+	 oEoGxFHSYLoSw==
 From: SeongJae Park <sj@kernel.org>
 To: Liew Rui Yan <aethernet65535@gmail.com>
 Cc: SeongJae Park <sj@kernel.org>,
 	damon@lists.linux.dev,
 	linux-mm@kvack.org
-Subject: Re: [PATCH v2] mm/damon: add synchronous commit for commit_inputs
-Date: Sun, 29 Mar 2026 08:12:18 -0700
-Message-ID: <20260329151219.44003-1-sj@kernel.org>
+Subject: Re: [PATCH] mm/damon: validate addr_unit to be power of 2
+Date: Sun, 29 Mar 2026 08:15:07 -0700
+Message-ID: <20260329151507.44171-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260329075415.36775-1-aethernet65535@gmail.com>
+In-Reply-To: <20260329075107.36402-1-aethernet65535@gmail.com>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -45,38 +45,25 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Sun, 29 Mar 2026 15:54:15 +0800 Liew Rui Yan <aethernet65535@gmail.com> wrote:
+On Sun, 29 Mar 2026 15:51:07 +0800 Liew Rui Yan <aethernet65535@gmail.com> wrote:
+[...]
+> Thank you for the clarification! I may understand your point now.
+> 
+> So, you prefer to keep the fix local to the modules that have the issue
+> (addr_unit_store()), rather than changing the CORE damon_commit_ctx()?
+> 
+> To confirm, are you suggesting something like the first approach [1]?
+> 
+>     if (input_addr_unit < PAGE_SIZE && !is_power_of_2(input_addr_unit))
+>         return -EINVAL;
 
-> Problem
-> =======
-> Writing invalid parameters to sysfs followed by 'commit_inputs=Y' fails
-> silently (no error returned to shell), because the validation happens
-> asynchronously in the kdamond.
-> 
-> Solution
-> ========
-> To fix this, the commit_inputs_store() callback now uses damon_call() to
-> synchronously commit parameters in the kdamond thread's safe context.
-> This ensures that validation errors are returned immediately to
-> userspace, following the pattern used by DAMON_SYSFS.
-> 
-> Changes
-> =======
-> 1. Added commit_inputs_store() and commit_inputs_fn() to commit
->    synchronously.
-> 2. Removed handle_commit_inputs().
-> 
-> This change is motivated from another discussion [1].
-> 
-> [1] https://lore.kernel.org/20260318153731.97470-1-aethernet65535@gmail.com
-> 
-> Signed-off-by: Liew Rui Yan <aethernet65535@gmail.com>
+Yes.  But the real constraint is min_region_sz, so testing it would be more
+simple and effective.  E.g.,
 
-Reviewed-by: SeongJae Park <sj@kernel.org>
-
-Note that mm.git is nearly closed for non-hotfixes until 7.1-rc1 release.  I
-will add this to my tree now, and resubmit for mm.git merge after 7.1-rc1
-release.
+	if (!is_power_of_2(param_ctx->min_region_sz))
+		return -EINVAL;
+> 
+> [1] https://lore.kernel.org/20260325071709.9699-1-aethernet65535@gmail.com
 
 
 Thanks,
