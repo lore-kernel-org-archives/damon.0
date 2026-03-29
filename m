@@ -1,42 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 642E425D1E9
-	for <damon@lists.linux.dev>; Sun, 29 Mar 2026 03:20:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97EC01F91D6;
+	Sun, 29 Mar 2026 04:39:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774754456; cv=none; b=KGg0oocIzfBOlbGRI17FBe+u2pqkmN6lvY6SSqSKQhNaLjVSAnV6QapbRYjLLSfgQAUvHMN59oUD0Y6S6sSqvENNIzM6opEusmJWxXvkGkfDSutpcV6p/LFFsdzxRbvzBHPKOJUpQhRtSpfTxT0AkXvxYfrrqCkOCgxCIqXjStc=
+	t=1774759145; cv=none; b=Eam+E5TDBk2mpQSXlNWOxjTKC0czX25Wtud9FbtfcMLTtjr6ONZOblnq7NfZSgqkMRDw/hGO5AsFWsn8P0M8TbiTurLd04rB/vBeluGXm/2Ch3hKdyuDD1RuZ/O09puub8Yn0oatfEzJAqWYLSwFVsWb5YBIrhpyhkzkD9aBLNQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774754456; c=relaxed/simple;
-	bh=piAqIhYDF/cuSRB4j6MpAtXLnQgECdf1z6Mkz3i4rhQ=;
+	s=arc-20240116; t=1774759145; c=relaxed/simple;
+	bh=EHLWGxW7vsnb0JYbS1TWbmzJf4dzLg0vok6TKbBxOAM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mM8Qa02hi9m9QqKUj7A2eX5/bGAaZSBGE1HyrHU2VDeinlJatWa0uUy8rh7yCPfL+ys70x8kmfUEDkJ/D9N8Sp1HGQsL6czPMBX38bZAll80mNJTmCSfVqgVvQ52t0OdwNZTxzp/59ADDRHTtV6m+xs/SaTsKZVFc/JDoZ/Mgxs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WOrl0YH9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=okJQdnsikSePL1/DE1FTneT4+C/NCgKJA+8xJJt76NGixGEBOLKL1GspFr5OV1hOD5cR/ZdhUR1CT1+szKQ/YXZA4ckCJih0zp8O4VE8yZaFZbW/ugy0jIBxN4gIyP6GYa547bGvTtT/TwTIcmIXd2x8JFe7v3kGlMQA92WTsaA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cRiQBnpb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WOrl0YH9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0284C116C6;
-	Sun, 29 Mar 2026 03:20:55 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cRiQBnpb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4ED03C2BCB2;
+	Sun, 29 Mar 2026 04:39:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1774754456;
-	bh=piAqIhYDF/cuSRB4j6MpAtXLnQgECdf1z6Mkz3i4rhQ=;
+	s=k20201202; t=1774759145;
+	bh=EHLWGxW7vsnb0JYbS1TWbmzJf4dzLg0vok6TKbBxOAM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WOrl0YH99aD5bDVnGy2oGyWYyNFxNwvun/2UQfVFTfNc3d9GiKPzYJWdQv8B0wIHC
-	 uyj82oMyrNQumci0xX/dDa2J25cj94XJw0yfr9qlaKRqwzNgR8uz0fU7xcFEIF6mzs
-	 UyUmGwkmLMkjUI1GXi/uEHxFMDdI8fyoH+6LOM/lQ6+jeuWu4GZskXYb5z2xpQYmzF
-	 lPeUPkFU9ZoCSDzi0h4j9VRHfQdXUy3GTN8kB5qDipStfEjxBjM6e2g+XCMRp7S6l4
-	 wz81eZ/JNH57rzZ5onH/z3jbSjIiSfKA/DMjUsQP6GNLF2HCTCgcKKqglYF3AEwtVR
-	 hQ6AwOW0SY1nw==
+	b=cRiQBnpb3XEA6rAA2mvK45qT/sGo9EjJNFM+Sm+SPUYiEqKvL35//LdstMht86/HP
+	 DLPR+lCWNEoMOkaD8BQJs5tOqjukX8qhEowT/b8epdtLSnHpTVscHbGIuCfwHWy3W7
+	 D9heDL3idd2cC8nXU378P2ejN4NPzWPl9pgzFKI4MTppraMimCoCQWgVqb6jWCUl9a
+	 XPif1dFwd/SWoFae3gIFFnpGLade3TPKuyFVvUoxBtvr8y1J6yP/H/Go0cfLbGbjGc
+	 KGlLq/4ZsGr9wBGXwAyTeUZoOWHLRTx1utPGe54LAxKznfXrv6cRfDupL+EzH5Si+y
+	 8DYVHH6JP/eRQ==
 From: SeongJae Park <sj@kernel.org>
-To: Liew Rui Yan <aethernet65535@gmail.com>
+To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SeongJae Park <sj@kernel.org>,
+	"# 6 . 16 . x" <stable@vger.kernel.org>,
 	damon@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: Re: [PATCH] mm/damon: validate addr_unit to be power of 2
-Date: Sat, 28 Mar 2026 20:20:54 -0700
-Message-ID: <20260329032054.2443-1-sj@kernel.org>
+Subject: [PATCH 1/2] mm/damon/core: validate damos_quota_goal->nid for node_mem_{used,free}_bp
+Date: Sat, 28 Mar 2026 21:38:59 -0700
+Message-ID: <20260329043902.46163-2-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260328184319.13176-1-aethernet65535@gmail.com>
-References: 
+In-Reply-To: <20260329043902.46163-1-sj@kernel.org>
+References: <20260329043902.46163-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -45,58 +47,58 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Sun, 29 Mar 2026 02:43:19 +0800 Liew Rui Yan <aethernet65535@gmail.com> wrote:
+Users can set damos_quota_goal->nid with arbitrary value for
+node_mem_{used,free}_bp.  But DAMON core is using those for
+si_meminfo_node() without the validation of the value.  This can result
+in out of bounds memory access.  The issue can actually triggered using
+DAMON user-space tool (damo), like below.
 
-> > Liew, I suggeted two options before.  But you are skipping providing your
-> > opinion to those, and adding yet more options.  That makes me difficult to
-> > follow the conversation.  Could you please answer to my suggestions and make a
-> > consensus about those, first?
-> 
-> Apologize if my previous email was unclear. Let me directly address your
-> two suggestion.
-> 
-> 1. DAMON_SYSFS Type [1]:
->    I fully agree with this. Centralizing the validation in
->    damon_commit_ctx() is the right approach to avoid "whack-a-mole"
->    problem. This is exactly what I am proposing.
+    $ sudo ./damo start --damos_action stat \
+    	--damos_quota_goal node_mem_used_bp 50% -1 \
+    	--damos_quota_interval 1s
+    $ sudo dmesg
+    [...]
+    [   65.565986] Unable to handle kernel NULL pointer dereference at virtual address 0000000000000098
 
-Thank you for clarifying this.  Thanks to that I can show where you are coming
-from.  You are misunderstanding what I'm suggesting.  I should have explained
-it in more detail.  With this option, I'm not suggesting to update
-damon_copmmit_ctx() but the callers, in a way similar to that for DAMON_SYSFS.
+Fix this issue by adding the validation of the given node.  If an
+invalid node id is given, it returns 0% for used memory ratio, and 100%
+for free memory ratio.
 
-> 
-> 2. Adding a simple check on existing validation logic (in callers?) [2]:
->    While this is simpler to implement, I prefer avoiding it for the
->    "whack-a-mole".
+Fixes: 0e1c773b501f ("mm/damon/core: introduce damos quota goal metrics for memory node utilization")
+Cc: <stable@vger.kernel.org> # 6.16.x
+Signed-off-by: SeongJae Park <sj@kernel.org>
+---
+ mm/damon/core.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-I suggested option 1 as a way to avoid "whack-a-mole".  I didn't suggest
-updting damon_commit_ctx() as the way.
-
-But, the given problem is clear and local.  Validation of addr_unit in
-DAMON_RECLAIM and DAMON_LRU_SORT.  There is no problem in DAMON_SYSFS.  So I'd
-prefer simpler appraoch on local callers that having problem.
-
-In future, we can make centuralized appraoch, in a way somewhat similar to what
-DAMON_SYSFS is doing.  But that's somewhat we can think in future.  For a given
-problem, let's fix it first.
-
-> 
-> So, to clarify, I choose your first option (centralized check), and I
-> believe my "Option 2" is the simple way to implement it.
-> 
-> Does ths align with your expectation? If so, I will proceed with this
-> approach.
-
-So, no, I think we were misunderstanding each other, and I think I understand
-you more now, thanks to your clarification.  Also, please don't hesitate at
-asking more questions to me if any of my suggestion is unclear.
-
-In short, for this given specific issue, I'd prefer the option 2.  Is this
-clear?
-
-
-Thanks,
-SJ
-
-[...]
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index ddabb93f2377..9a848d7647ef 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -2217,12 +2217,24 @@ static inline u64 damos_get_some_mem_psi_total(void)
+ #endif	/* CONFIG_PSI */
+ 
+ #ifdef CONFIG_NUMA
++static bool invalid_mem_node(int nid)
++{
++	return nid < 0 || nid >= MAX_NUMNODES || !node_state(nid, N_MEMORY);
++}
++
+ static __kernel_ulong_t damos_get_node_mem_bp(
+ 		struct damos_quota_goal *goal)
+ {
+ 	struct sysinfo i;
+ 	__kernel_ulong_t numerator;
+ 
++	if (invalid_mem_node(goal->nid)) {
++		if (goal->metric == DAMOS_QUOTA_NODE_MEM_USED_BP)
++			return 0;
++		else	/* DAMOS_QUOTA_NODE_MEM_FREE_BP */
++			return 10000;
++	}
++
+ 	si_meminfo_node(&i, goal->nid);
+ 	if (goal->metric == DAMOS_QUOTA_NODE_MEM_USED_BP)
+ 		numerator = i.totalram - i.freeram;
+-- 
+2.47.3
