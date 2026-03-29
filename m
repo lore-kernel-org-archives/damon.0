@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FC7437998F;
-	Sun, 29 Mar 2026 15:36:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B918262A6;
+	Sun, 29 Mar 2026 15:48:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774798610; cv=none; b=a2ZvD66CtXsLLaB3FW1xFlgYswHYVOfV5O6TsKWy5+GxDkKeoFvAHO37ZDl5l3yA5HuCN4IXk4LTlSIZEXlZ+F0Lpftkki5n9/z3aFAfkRJ8ACSadkcSoPaAveZubY+J545GtAAUhMtPLkBrsAMBNLssNy0bXzLM6OifcXXJiJQ=
+	t=1774799295; cv=none; b=FosOTRZXWYzsUwX6X4DKJn++1BIjD6VeIPAqnULn8ikO1Gn1ClE/h3nlsECXU/aV1ogAWQDI+n6rP0+Ie6gWIRI12H2MVxWfiXMrrPofDbMIQa+T0feS/OveHPUqFvvS20xZNZBpsoA94mIkhJvGbXLWNCuYejRi+jEiwc6PEGE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774798610; c=relaxed/simple;
-	bh=wUEVhZoXsCyGZdr2zQUUKoIVCQrmq8kfzrwZor4bN08=;
+	s=arc-20240116; t=1774799295; c=relaxed/simple;
+	bh=55VTZBw7H4SGXn+vmc4Bbc36KWSHYKT83EK8dDSS/qI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N6aiZ/493+GYR/w6V1vfr9MfiBY0kPWNTAc7ekjdgfYGgCZn8srkH9xmj20I61QQyseIVOmaK9ehdXgpqtbP/BKAmB3yG9oYIADJt7Q3/bnLBITaPhpn5TX6qaGb/vDDtDa4TStsvmYpqsaiTGjizfPQNedRaA8EQkpzhCrttq0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tqmzShbM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LrHs35X6gFj7OqHgNTQMiwVa1WbP87xduVZ4jOlHsXhrEdZYWIvjeMI0wYWWl4+7iFtTOWYTtj327Ma13F7heyIpY7GdBp86HuGr87VdcH2/oQu58ZdnFQLqesaGyYZJw7Bap0Mezg/IqJr25iHJqvVWk9IlZ4hQ4OJ6jDeJsxU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MC2hb9ZN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tqmzShbM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A735CC116C6;
-	Sun, 29 Mar 2026 15:36:49 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MC2hb9ZN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1914AC116C6;
+	Sun, 29 Mar 2026 15:48:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1774798609;
-	bh=wUEVhZoXsCyGZdr2zQUUKoIVCQrmq8kfzrwZor4bN08=;
+	s=k20201202; t=1774799295;
+	bh=55VTZBw7H4SGXn+vmc4Bbc36KWSHYKT83EK8dDSS/qI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tqmzShbM7Qn6aXcqe5+c6k2E0aMzkgs5OaKlOYuCnEhRM/jUzgAiaapNguG2bJzVJ
-	 LBxBoxQZLFWwyxHpC69+nTenFfwmxYsU9MOPRTZMH9Ev4YbIeWxa1IIg3tWWTSrOfY
-	 +GvHaKnvsNdHUCyxUCtm7bQRdkWoSihjfKq2thLNCFM+aq2bNLdRWrfeIqr89J78Ce
-	 TW//quEpKV/nGz2qrTGRcmTyROr0qhpBPdXc/jQJhQQXv5+zTQcfudzxIvJd6ce2GO
-	 j95JxJSq0RKVHEmG7j7o61GGTf39ea24fUBFhabhUile9ikDzHhuUNhZe/Fq3eIO47
-	 JQ2jFIEowUJ2w==
+	b=MC2hb9ZNhG0CXroRC0oawyiUw/ltfcRn1Bq9ZZFlErZLMIE9WDaJ3BrEAo0EdNsS3
+	 8OjI5gEQy+v8UadyoS+gdANYvFuMWIkP+IBcEakK0ieDNXD+/wXkgUxA/IPg0ZiNJC
+	 etx5oIGzqtEj3Cwp1hFEeOloG9sgYr97CuIc/i/FXJ3KHbmLQpNXvmmSrpMphy8up6
+	 SUfAA8pSXub0AczqA/bj2cwABS8uv80/QhSIHFm2nxnvyNYJW0qQ4XWuvnJGaR2iBC
+	 rAnv5nXh/096KLNfOIGUUey0CTEo6PMRxU6EbIpyCmlrzCo3IWR+8zN0MgfOmW0UIC
+	 QvDLpxZ3MAX2A==
 From: SeongJae Park <sj@kernel.org>
 To: SeongJae Park <sj@kernel.org>
 Cc: Andrew Morton <akpm@linux-foundation.org>,
-	"# 6 . 16 . x" <stable@vger.kernel.org>,
+	"# 6 . 19 . x" <stable@vger.kernel.org>,
 	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: Re: (sashiko review) [PATCH 1/2] mm/damon/core: validate damos_quota_goal->nid for node_mem_{used,free}_bp
-Date: Sun, 29 Mar 2026 08:36:47 -0700
-Message-ID: <20260329153648.47235-1-sj@kernel.org>
+Subject: Re: (sashiko review) [PATCH 2/2] mm/damon/core: validate damos_quota_goal->nid for node_memcg_{used,free}_bp
+Date: Sun, 29 Mar 2026 08:48:13 -0700
+Message-ID: <20260329154813.47382-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260329153407.46989-1-sj@kernel.org>
+In-Reply-To: <20260329153425.47097-1-sj@kernel.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -47,66 +47,88 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Sun, 29 Mar 2026 08:34:06 -0700 SeongJae Park <sj@kernel.org> wrote:
+TL; DR: sashiko findings are good points but not directly related to this
+patch.  I will separately work on sashiko's findings.
+
+On Sun, 29 Mar 2026 08:34:24 -0700 SeongJae Park <sj@kernel.org> wrote:
 
 > Forwarding Sashiko review for doing discussions via mails.
 > 
-> # review url: https://sashiko.dev/#/patchset/20260329043902.46163-2-sj@kernel.org
+> # review url: https://sashiko.dev/#/patchset/20260329043902.46163-3-sj@kernel.org
 > # start of sashiko.dev inline review
-> commit 8c40c45c57722526c25cf1114b386d19a693fc2d
+> commit 1ede2d837f5cbf8e8d96fe4c6eab34aeaa071d56
 > Author: SeongJae Park <sj@kernel.org>
 > 
-> mm/damon/core: validate damos_quota_goal->nid for node_mem_{used,free}_bp
+> mm/damon/core: validate damos_quota_goal->nid for node_memcg_{used,free}_bp
 > 
-> This commit adds validation for the node ID in damos_quota_goal to prevent
-> out of bounds memory access when calling si_meminfo_node(). If an invalid
-> node ID is given, it defaults to returning 0% for used memory and 100% for
-> free memory.
+> This commit adds validation for the node id in damos_get_node_memcg_used_bp()
+> to prevent out-of-bounds memory access. If an invalid node id is provided, it
+> now safely returns 0% for used memory and 100% for free memory.
 > 
 > > diff --git a/mm/damon/core.c b/mm/damon/core.c
+> > index 26bdeb658799..c45c62f8449d 100644
 > > --- a/mm/damon/core.c
 > > +++ b/mm/damon/core.c
-> 
-> [ ... ]
-> 
-> >  static __kernel_ulong_t damos_get_node_mem_bp(
-> >  		struct damos_quota_goal *goal)
-> >  {
+> > @@ -2273,6 +2273,13 @@ static unsigned long damos_get_node_memcg_used_bp(
+> >  	unsigned long used_pages, numerator;
 > >  	struct sysinfo i;
-> >  	__kernel_ulong_t numerator;
 > >  
 > > +	if (invalid_mem_node(goal->nid)) {
-> > +		if (goal->metric == DAMOS_QUOTA_NODE_MEM_USED_BP)
+> > +		if (goal->metric == DAMOS_QUOTA_NODE_MEMCG_USED_BP)
 > > +			return 0;
-> > +		else	/* DAMOS_QUOTA_NODE_MEM_FREE_BP */
+> > +		else	/* DAMOS_QUOTA_NODE_MEMCG_FREE_BP */
 > > +			return 10000;
 > > +	}
 > > +
-> >  	si_meminfo_node(&i, goal->nid);
-> >  	if (goal->metric == DAMOS_QUOTA_NODE_MEM_USED_BP)
-> >  		numerator = i.totalram - i.freeram;
-> >  	else	/* DAMOS_QUOTA_NODE_MEM_FREE_BP */
-> >  		numerator = i.freeram;
-> >  	return mult_frac(numerator, 10000, i.totalram);
+> >  	memcg = mem_cgroup_get_from_id(goal->memcg_id);
+> >  	if (!memcg) {
+> >  		if (goal->metric == DAMOS_QUOTA_NODE_MEMCG_USED_BP)
 > 
-> Does this code still risk a divide-by-zero kernel panic if a memory node
-> has zero managed pages?
+> This isn't a bug introduced by this patch, but can the subtraction later in
+> this function underflow?
 > 
-> Even with the new invalid_mem_node() check ensuring node_state(nid, N_MEMORY)
-> is true, a memory node can have present physical pages but zero managed pages
-> if all its memory is reserved early in boot (for example, via memblock_reserve
-> for crash kernels or firmware).
+> damos_get_node_memcg_used_bp() {
+>     ...
+>     else    /* DAMOS_QUOTA_NODE_MEMCG_FREE_BP */
+>         numerator = i.totalram - used_pages;
+>     ...
+> }
 > 
-> In this scenario, si_meminfo_node() sets i.totalram to 0. Since the
-> mult_frac() macro directly evaluates division and modulo, passing
-> i.totalram as 0 will cause a hardware divide-by-zero exception.
-> 
-> Should there be an explicit check for i.totalram == 0 before calling
-> mult_frac() here and in other similar quota functions like
-> damos_get_node_memcg_used_bp()?
+> Since used_pages is fetched locklessly and i.totalram is the global managed
+> pages count, could asynchronous rstat accounting lag or concurrent memory
+> hot-remove operations cause used_pages to transiently exceed i.totalram?
 
-As I mentioned to same previous comment, that's another bug that require
-another patch.  I will work on it with a separate patch.
+As sashiko also mentions, this is not related to this patch.  I will separately
+work on this.
+
+> 
+> Also regarding the end of this function, is it possible for i.totalram to
+> evaluate to 0 here?
+> 
+> damos_get_node_memcg_used_bp() {
+>     ...
+>     return mult_frac(numerator, 10000, i.totalram);
+> }
+> 
+> If a node's memory is entirely reserved or concurrently offlined,
+> si_meminfo_node() might set i.totalram to 0. If that happens, does
+> mult_frac() execute an unchecked division by zero internally?
+
+Again, not related to this patch.  I will separately work on this.
+
+> 
+> Finally, does the mult_frac() macro overflow unsigned long on 32-bit
+> architectures?
+> 
+> The macro evaluates to q * n_ + r * n_ / d_, where r is
+> numerator % i.totalram. On 32-bit systems, r is a 32-bit unsigned long.
+> 
+> For nodes with more than ~1.7GB of RAM (where i.totalram exceeds ~429,496
+> pages), could r * 10000 silently overflow the 32-bit boundary and return a
+> severely truncated value?
+
+Good catch, but again, not related to this patch.  I will separtely work on
+this.
 
 
 Thanks,
