@@ -1,49 +1,54 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from sender-of-o57.zoho.eu (sender-of-o57.zoho.eu [136.143.169.57])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2393837C92A;
-	Mon, 30 Mar 2026 08:16:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774858609; cv=none; b=mzVdaxbpHx1HexZT2J9iW2/XEi4LQTNRORlbzz+Z1FpFggHfez8hjL9R0+0x0iKXD46OBB/qvS0wacKZ9awkwMHa710yrLc8SBNV1PLZUtgAXUv9iPiArNC1g1PN5Dab7p7+Bp8iAwBExkFi3RE96b/n5mcRo3wM77S3v62TMbw=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774858609; c=relaxed/simple;
-	bh=vbZ20lI/lTnXmMVKHlmgZnjtM5fXA9hFVYAAl5EEFNY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=lounpJShfzZSyDVLnQohLmBvIl8gPUXBPQbTQthuamDDM7YvdHspHFdGTPTUiFaLuAe3RVzAFolqE/fV5TJlCh/zvYLSkLPokwAGOx/prw5a7yRMmDz+So6EIh+s/UziMp0zRDAKSxfRcP7Q+uyjevixKsJxgL9CxtIfJpBMlrY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OR55pv+O; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87CA73BE164
+	for <damon@lists.linux.dev>; Mon, 30 Mar 2026 10:14:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.169.57
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1774865699; cv=pass; b=UODTw7P23AdAlx2tDdOwnMrB22Q5u4Q8qFBA/SN17TXXfTrLcGbkKntK78a3F7tDbvNoxA6UolkWTNKxtNKVRuJhfQsog1kRjrTPCPro9Kp7OCTVrqSRfklXz2zwz5uoTbIF2P0ae2wZVjUVNiGuY0notuVvulIW/jTEti0ZPZA=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1774865699; c=relaxed/simple;
+	bh=VFMJ46N9qMdCvcsjoGJqP/bweEV5DGEGreIBFziMe8k=;
+	h=Date:From:To:Cc:Message-ID:In-Reply-To:References:Subject:
+	 MIME-Version:Content-Type; b=j0KIGGC6DT6y55DxIoDRxJglO6jBQZPX5VlgrrMJwUlg8NSTcbUEIA8OjlNf3rKPPE/w6t8OzJYbd73ZNN4vVN1ws+EtxRlzknFp1/ByY59jmauK/g4diwaM1oI6cFHAZyTbNqSeKU85H+qZv7YMJ4XqiCICAxOBGCxdC3eu9Ao=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=objecting.org; spf=pass smtp.mailfrom=objecting.org; dkim=pass (1024-bit key) header.d=objecting.org header.i=objecting@objecting.org header.b=LbTb25hB; arc=pass smtp.client-ip=136.143.169.57
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=objecting.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=objecting.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OR55pv+O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F6B0C2BC9E;
-	Mon, 30 Mar 2026 08:16:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1774858608;
-	bh=vbZ20lI/lTnXmMVKHlmgZnjtM5fXA9hFVYAAl5EEFNY=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=OR55pv+OUASuBEwInMjNm7AP0epARnj4kNF/Qjsgy/zy0ZCkZN5HmDLitL37n6rmo
-	 3tBH/iHaYi30DAsdWmV8onvnj1M0qNdfDpht/bXTE1RR+KSc9qvzKs8L42HFgqRxaG
-	 1V2NPVxx0mpp8oax2dKYjqQaie3Iv+5ePEka3SEsgFEuAgvubJk8PyXDHK8i1bm/Zd
-	 TTDUtpGlLeEp8/PeT5RveHrFuKhBrUj3IIh/z2HIvuH0F7ot8kt664S5eaEGzWbEf5
-	 3Ac46uUdSZ/fYCwF3sKzreHDXHoTXVfXhNlhsl5peqxyBjPV89V9VTC/veSybHa9IN
-	 wx8y+tu+XTmww==
-Message-ID: <25688dbc-cd11-4137-bad4-a215198feee6@kernel.org>
-Date: Mon, 30 Mar 2026 10:16:44 +0200
-Precedence: bulk
-X-Mailing-List: damon@lists.linux.dev
-List-Id: <damon.lists.linux.dev>
-List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
-List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] mm/damon: introduce DAMON-based NUMA memory tiering
- module
-To: Krzysztof Kozlowski <krzk@kernel.org>, Josh Law
- <objecting@objecting.org>, "Lorenzo Stoakes (Oracle)" <ljs@kernel.org>
-Cc: Josh Law <hlcj1234567@gmail.com>, SeongJae Park <sj@kernel.org>,
- Andrew Morton <akpm@linux-foundation.org>, damon@lists.linux.dev,
- linux-mm@kvack.org, linux-kernel@vger.kernel.org,
- Linus Torvalds <torvalds@linux-foundation.org>, Kees Cook <kees@kernel.org>,
- Greg KH <gregkh@linuxfoundation.org>, Christian Brauner <brauner@kernel.org>
+	dkim=pass (1024-bit key) header.d=objecting.org header.i=objecting@objecting.org header.b="LbTb25hB"
+ARC-Seal: i=1; a=rsa-sha256; t=1774865691; cv=none; 
+	d=zohomail.eu; s=zohoarc; 
+	b=BqBNPlsbzpkZ+nAmQue2nRCOWhYiEPqo7AWEzt5CvcaDmEdA9uNaeqyrNf4VU+o3WJ7+BwKWB8wiKPSqhKtfwEHXxupP0qJGmSm84MYPq3cd5E5EFL5yLtQ29/H0odCUL7T4IsIm8lGnMShijCzH8s9Ae8xXqi1Sxhf8CyMg6kE=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.eu; s=zohoarc; 
+	t=1774865691; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=VFMJ46N9qMdCvcsjoGJqP/bweEV5DGEGreIBFziMe8k=; 
+	b=CV2gAapZAm2PUzu9fJF5VwFJi6zo2YJcBvN/sNok7fvgYxoHzszCVXqMnfrP7V6Z5WlfoR2/VDzRX0s9Bkg5uLXxQ8QhkQ11JsKu6BpUXi1h+D0+aJ62lI4mJrXGA41x6sX+8lvp+J+p7ASK3WsDRdZhWmnkl+WasP+cc2Bah5I=
+ARC-Authentication-Results: i=1; mx.zohomail.eu;
+	dkim=pass  header.i=objecting.org;
+	spf=pass  smtp.mailfrom=objecting@objecting.org;
+	dmarc=pass header.from=<objecting@objecting.org>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1774865691;
+	s=zmail; d=objecting.org; i=objecting@objecting.org;
+	h=Date:Date:From:From:To:To:Cc:Cc:Message-ID:In-Reply-To:References:Subject:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+	bh=VFMJ46N9qMdCvcsjoGJqP/bweEV5DGEGreIBFziMe8k=;
+	b=LbTb25hBZBzpC8Z5NKK0i433O5MjyarWBNGLh7xmSmMPfdrIlbw8fKdN+RJ1G+dM
+	W6veJs4XGnVfxhWAnjyPbdpqmsn8CQ52Qhx3RYDHcNF2v0AM/H22G6VMulNp8vRcZtw
+	de1+BwDrIhXgk+92kQHN2VjPe+uOHkiE+0dVWBrQ=
+Received: from mail.zoho.com by mx.zoho.eu
+	with SMTP id 1774865691675946.9053187433396; Mon, 30 Mar 2026 12:14:51 +0200 (CEST)
+Received: from mail.zoho.eu by mx.zoho.eu
+	with SMTP id 1774865691288564.2940483954262; Mon, 30 Mar 2026 12:14:51 +0200 (CEST)
+Date: Mon, 30 Mar 2026 11:14:51 +0100
+From: Herbert <objecting@objecting.org>
+To: <david@kernel.org>
+Cc: <krzk@kernel.org>, <ljs@kernel.org>, <hlcj1234567@gmail.com>,
+	<sj@kernel.org>, <akpm@linux-foundation.org>,
+	<damon@lists.linux.dev>, <linux-mm@kvack.org>,
+	<linux-kernel@vger.kernel.org>, <torvalds@linux-foundation.org>,
+	<kees@kernel.org>, <gregkh@linuxfoundation.org>,
+	<brauner@kernel.org>
+Message-ID: <19d3e3d3297.190bc89f62053.5899613485100180781@objecting.org>
+In-Reply-To: <25688dbc-cd11-4137-bad4-a215198feee6@kernel.org>
 References: <20260326072737.341964-1-objecting@objecting.org>
  <cbd0aafa-bd45-4f4d-a2dd-440473657dba@lucifer.local>
  <b2cdda38-1007-41a7-a992-de953a088a08@kernel.org>
@@ -58,85 +63,86 @@ References: <20260326072737.341964-1-objecting@objecting.org>
  <e5d45f3c-4f46-40d1-bb7a-0a2f930fd7ae@kernel.org>
  <82256A72-42FD-475E-935C-629964FA80E7@objecting.org>
  <11429699-81b4-4c1e-b247-480136fd1faf@kernel.org>
- <6deb290e-b168-4de2-95f8-fc784ed31c27@kernel.org>
-From: "David Hildenbrand (Arm)" <david@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=david@kernel.org; keydata=
- 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
- qIws/H2t
-In-Reply-To: <6deb290e-b168-4de2-95f8-fc784ed31c27@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+ <6deb290e-b168-4de2-95f8-fc784ed31c27@kernel.org> <25688dbc-cd11-4137-bad4-a215198feee6@kernel.org>
+Subject: Re: [PATCH] mm/damon: introduce DAMON-based NUMA memory tiering
+ module
+Precedence: bulk
+X-Mailing-List: damon@lists.linux.dev
+List-Id: <damon.lists.linux.dev>
+List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
+List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Importance: Normal
+User-Agent: Zoho Mail
+X-Mailer: Zoho Mail
 
-On 3/30/26 09:50, Krzysztof Kozlowski wrote:
-> On 30/03/2026 08:27, David Hildenbrand (Arm) wrote:
->> On 3/27/26 16:22, Josh Law wrote:
->>>
->>>
->>>
->>>
->>> Hello david, thanks for being polite about this whole thing!
->>>
->>>
->>> so, you are talking to a real human, i promise you that now
->>
->> That's exactly, what I would say if I were a bot ;)
->>
->> As a first step, fix the line wrapping. The following document was
->> helpful to me in the past:
->>
->> 	Documentation/process/email-clients.rst
-> 
-> Yeah, good luck. Several people asked for that already, like 10 or 20
-> times. Andrew asked that a few times.
-> 
-> And yesterday we got another sloppy posting, so that would be it for
-> having some time off to learn things and take slowly. 3 days after this
-> AI slop which does not even build.
 
-Bot confirmed, I guess :)
--- 
-Cheers,
 
-David
+
+
+
+
+
+
+---- On Mon, 30 Mar 2026 09:16:44 +0100 david@kernel.org wrote ----
+
+
+> On 3/30/26 09:50, Krzysztof Kozlowski wrote:
+> > On 30/03/2026 08:27, David Hildenbrand (Arm) wrote:
+> >> On 3/27/26 16:22, Josh Law wrote:
+> >>>
+> >>>
+> >>>
+> >>>
+> >>> Hello david, thanks for being polite about this whole thing!
+> >>>
+> >>>
+> >>> so, you are talking to a real human, i promise you that now
+> >>
+> >> That's exactly, what I would say if I were a bot ;)
+> >>
+> >> As a first step, fix the line wrapping. The following document was
+> >> helpful to me in the past:
+> >>
+> >> =C2=A0=C2=A0=C2=A0=C2=A0Documentation/process/email-clients.rst
+> >
+> > Yeah, good luck. Several people asked for that already, like 10 or 20
+> > times. Andrew asked that a few times.
+> >
+> > And yesterday we got another sloppy posting, so that would be it for
+> > having some time off to learn things and take slowly. 3 days after this
+> > AI slop which does not even build.
+>
+> Bot confirmed, I guess :)
+> --
+> Cheers,
+>
+> David
+
+
+
+
+
+
+
+
+? That was me learning the ropes, by making a patch to the QCOM subsystem
+
+
+and it was a genuinely "ok" patch.
+
+
+May you please tell me what I did wrong here.
+
+
+
+
+V/R
+
+
+
+
+Josh Law
+
