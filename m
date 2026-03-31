@@ -1,48 +1,55 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C81A35C190;
-	Tue, 31 Mar 2026 01:31:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15574253B42;
+	Tue, 31 Mar 2026 04:34:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774920672; cv=none; b=DSU3qH10uoaDuCxCyc9Lv9Cxu86nDeUELgfF8DpcyQaISwOLfxspXUfsYmnhKIKqUeWNyAQutpXKrFk9guvwpM7gwU8a+YYsWPcW2JtZTM8E+mzd7CcCpj7ARgIHwF+PmSToYi5H+JlZ0J/6EnxyhkjS9jzOzBSEQdG194cI5Tg=
+	t=1774931684; cv=none; b=WYnvW2mnBygHlFHvipW2X6KzIe6owqMOARAGBQQkg/HXarjcpwFc3L3mGcrkcy4HfDvOyfjbLb1P68Y0BiRigy4m2Xg9eQ2I7kPrm1KryJ9YL6XbwrQJpaFDEVk533ZXiDstOdJkGgXZo7cDEdxJln4YOQHPaOHKA7EkMLRaOO4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774920672; c=relaxed/simple;
-	bh=BpCVDVb5hN5kDG6hsr8UXPJLUCxbf+zwL266pUrp/ic=;
+	s=arc-20240116; t=1774931684; c=relaxed/simple;
+	bh=iddzIyo57Gf5sB0Ovre3TYWjXksr2WHRb+oWFdACaHY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nCrPXnqyKlPfodn/O6gOW9qJpxRQeA/XTtSW3PgnQnEg+8BrjIc40aAfrVE6OmWpKb5spMq1wUkHKcgbPoiYZOy3rCtc1BW6Kgt1YZLpVFUN9LL2Ej8Y2fTS8Fo78xFrIGijugLUs8Nml3SK/RorBROz93X7iuFRLWFlABHrX+U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LC7AnM/O; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cbWtJ3U8Ax0Gi4nThWBpYywMzk9ntm6n9nWEXRPMJaaq85tRHc6jS9Ay+AG+dhqznck/htGeW3CFGrnYuTpK3RUJ308ie7tcqfmBAtmK5A3hQkjWoBJrYamyFdY7u1nPej3ys3fNL1LLS86lZcsWsOtFwe3TI/mQvKdKjfVtXPs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=O4rVCzDJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LC7AnM/O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E28AC4CEF7;
-	Tue, 31 Mar 2026 01:31:11 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="O4rVCzDJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF161C19423;
+	Tue, 31 Mar 2026 04:34:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1774920672;
-	bh=BpCVDVb5hN5kDG6hsr8UXPJLUCxbf+zwL266pUrp/ic=;
+	s=k20201202; t=1774931683;
+	bh=iddzIyo57Gf5sB0Ovre3TYWjXksr2WHRb+oWFdACaHY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LC7AnM/OUeEgrcsa8HHEFPqLWP243+Ja97lMHe/+cSbJjhGvEF1WG6XBJZOuPfjiV
-	 uD6UwdovAaHKO6CmDmC2gFBJixhk2NR2iymAN35CLWOtDoLmERdKVzEafzX6ZZx/sz
-	 5k0L8MkFTUQ1kiZISs0Vi3pnm+SRGcSxtSv/TEKHl91kilNuPPnNsM2yBbXDLSdL3S
-	 X1xeulcRWo9CwHIrq6t5F33pe5e6VPBb6Q/B/a4xxevKUnscHl8dlWJ4Xmx32LTx67
-	 E9mSo2MroRe7+c/cqVsP4fEBHMK160SqY0Ou5G2Fuf7B3ipH8bHHfHGOzXjdn5vTum
-	 bevTyWo+SlbvA==
+	b=O4rVCzDJK1ThAOnYIY1hZm0cimOvsWGzC7jzqOQOpp0+6Qj1GjD0Lyl93L4BwFnXl
+	 PPLlzaJgLmyJybeLdOhmLBiuVFnBD/OKEvKZnQztwVaApQ1ZDd6J71rLogh6nltF60
+	 m+ccBJDJf2Ym1vgj6/8djkTkxhjN2BOTSPlO+wRMnRs2flSosMwqCScgxGyyroyztR
+	 0HoUIY1wS0XwOvccFAwoUvXuIck6Ydat5gjLp6e3BIZ8s7JcHhbUdEVKVyzP10TJI2
+	 b7dpVo996xAYbEiFR0vsAy0fqKxrtJKtU15TzihpYJbYXFUOjHJ0qemOvNmexynzy1
+	 o2l7lHEmDa04g==
 From: SeongJae Park <sj@kernel.org>
-To: gutierrez.asier@huawei-partners.com
+To: Greg KH <gregkh@linuxfoundation.org>
 Cc: SeongJae Park <sj@kernel.org>,
-	artem.kuzin@huawei.com,
-	stepanov.anatoly@huawei.com,
-	wangkefeng.wang@huawei.com,
-	yanquanmin1@huawei.com,
-	zuoze1@huawei.com,
+	Andrew Morton <akpm@linux-foundation.org>,
+	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
+	"# 5 . 19 . x" <stable@vger.kernel.org>,
+	David Hildenbrand <david@kernel.org>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@kernel.org>,
 	damon@lists.linux.dev,
-	akpm@linux-foundation.org,
+	linux-doc@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v1 1/1] mm/damon: support MADV_COLLAPSE via DAMOS_COLLAPSE scheme action
-Date: Mon, 30 Mar 2026 18:31:09 -0700
-Message-ID: <20260331013109.66590-1-sj@kernel.org>
+	Roman Gushchin <roman.gushchin@linux.dev>
+Subject: Re: (sashiko status) [PATCH 0/2] Docs/admin-guide/mm/damon: warn commit_inputs vs other params race
+Date: Mon, 30 Mar 2026 21:34:41 -0700
+Message-ID: <20260331043441.67196-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260330145758.2115502-1-gutierrez.asier@huawei-partners.com>
+In-Reply-To: <2026033013-drainage-stylized-43d6@gregkh>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -52,176 +59,99 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hello Asier,
+On Mon, 30 Mar 2026 07:47:54 +0200 Greg KH <gregkh@linuxfoundation.org> wrote:
 
-On Mon, 30 Mar 2026 14:57:58 +0000 <gutierrez.asier@huawei-partners.com> wrote:
-
-> From: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
+> On Sun, Mar 29, 2026 at 12:32:26PM -0700, SeongJae Park wrote:
+> > + Roman for a case he has any opinion about my sashiko usage.
+> > 
+> > Hello Greg,
+> > 
+> > On Sun, 29 Mar 2026 20:05:53 +0200 Greg KH <gregkh@linuxfoundation.org> wrote:
+> > 
+> > > On Sun, Mar 29, 2026 at 08:49:16AM -0700, SeongJae Park wrote:
+> > > > Forwarding sashiko.dev review status for this thread.
+> > > > 
+> > > > # review url: https://sashiko.dev/#/patchset/20260329153052.46657-1-sj@kernel.org
+> > > 
+> > > Why are you doing this?  If we want to see the review, can't we just go
+> > > and look at the tool itself?
+> > 
+> > We can.  But it is bit cumbersome to opening web browser and moving my focus to
+> > there.  Reading everything on the mailing tool is easier for some people like
+> > me.  Like some test bots send reports are replying to patches, or we sometimes
+> > forwarding bugzilla reports to mailing lists in a form of a plain text mail.
 > 
-> This patch set introces a new action:  DAMOS_COLLAPSE.
-> 
-> For DAMOS_HUGEPAGE and DAMOS_NOHUGEPAGE to work, khugepaged should be
-> working, since it relies on hugepage_madvise to add a new slot. This
-> slot should be picked up by khugepaged and eventually collapse (or
-> not, if we are using DAMOS_NOHUGEPAGE) the pages. If THP is not
-> enabled, khugepaged will not be working, and therefore no collapse
-> will happen.
+> Sure, but are you going to now forward all random tool reviews that are
+> run on your subsystem to all of these lists (your distribution cc: is
+> quite large here)?
 
-I should raised this in a previous version, sorry.  But, that is only a half of
-the picture.  That is, khugepaged is not the single THP allocator for
-MADV_HUGEPAGE.  IIUC, MADV_HUGEPAGE-applied region also allocates huge pages in
-page fault time.  According to the man page,
+Obviously not for random tools.  But if there are a few tools that (nearly)
+everyone agrees useful and worthy to integrate with the mailing lists workflow,
+I would like to.
 
-    The kernel will regularly scan the areas marked as huge page  candidates
-    to replace  them with huge pages.  The kernel will also allocate huge pages
-    directly when the region is naturally aligned to the huge page size (see
-    posix_memalign(2)).
-
-I think the description is better to be wordsmithed or clarified.  Maybe just
-pointing the MADV_COLLAPSE intro commit (7d8faaf15545 ("mm/madvise: introduce
-MADV_COLLAPSE sync hugepage collapse")) for the rationale could also be a good
-approach, as the aimed goal of DAMOS_COLLAPSE is not different from
-MADV_COLLAPSE.
-
-> 
-> DAMOS_COLLAPSE eventually calls madvise_collapse, which will collapse
-> the address range synchronously.
-> 
-> This new action may be required to support autotuning with hugepage
-> as a goal[1].
-> 
-> [1]: https://lore.kernel.org/damon/20260313000816.79933-1-sj@kernel.org/
-> 
-> ---------
-> Benchmarks:
-
-I recently heard some tools could think above line as the commentary
-area [1] separation line.  Please use ==== like separator instead.  For
-example,
-
-    Benchmarks
-    ==========
+Now it seems I was much more optimistic that others.
 
 > 
-> Tests were performed in an ARM physical server with MariaDB 10.5 and 
-> sysbench. Read only benchmark was perform with uniform row hitting,
-> which means that all rows will be access with equal probability.
+> > Secondly, I have to share my opinions about the reviews, as many times AI
+> > reviews need human's opinions.  There is no good way to do that on the web ui
+> > of the tool (sashiko) for now, and I think this mail based flow is the best.
 > 
-> T n, D h: THP set to never, DAMON action set to hugepage
-> T m, D h: THP set to madvise, DAMON action set to hugepage
-> T n, D c: THP set to never, DAMON action set to collapse
-> 
-> Memory consumption. Lower is better.
-> 
-> +------------------+----------+----------+----------+
-> |                  | T n, D h | T m, D h | T n, D c |
-> +------------------+----------+----------+----------+
-> | Total memory use | 2.07     | 2.09     | 2.07     |
-> | Huge pages       | 0        | 1.3      | 1.25     |
-> +------------------+----------+----------+----------+
-> 
-> Performance in TPS (Transactions Per Second). Higher is better.
-> 
-> T n, D h: 18324.57
-> T n, D h 18452.69
+> That is assuming that you can fix up the AI reviews, is that happening
+> here?
 
-"T m, D h" ?
+What I mean with the required human opinions for the AI reviews are not
+necessarily only for fixups, but also sharing of reviews that the human and the
+tool are aligned.
 
-> T n, D c: 18432.17
-> 
-> Performance counter
-> 
-> I got the number of L1 D/I TLB accesses and the number a D/I TLB
-> accesses that triggered a page walk. I divided the second by the
-> first to get the percentage of page walkes per TLB access. The
-> lower the better.
-> 
-> +---------------+--------------+--------------+--------------+
-> |               | T n, D h     | T m, D h     | T n, D c     |
-> +---------------+--------------+--------------+--------------+
-> | L1 DTLB       | 127248242753 | 125431020479 | 125327001821 |
-> | L1 ITLB       | 80332558619  | 79346759071  | 79298139590  |
-> | DTLB walk     | 75011087     | 52800418     | 55895794     |
-> | ITLB walk     | 71577076     | 71505137     | 67262140     |
-> | DTLB % misses | 0.058948623  | 0.042095183  | 0.044599961  |
-> | ITLB % misses | 0.089100954  | 0.090117275  | 0.084821839  |
-> +---------------+--------------+--------------+--------------+
-> 
-> - We can see that DAMOS "hugepage" action works only when THP is set
->   to madvise. "collapse" action works even when THP is set to never.
-
-Make sense.
-
-> - Performance for "collapse" action is slightly lower than "hugepage"
->   action and THP madvise.
-
-It would be good to add your theory about from where the difference comes.  I
-suspect that's mainly because "hugepage" setup was allocating more THP?
-
-> - Memory consumption is slighly lower for "collapse" than "hugepage"
->   with THP madvise. This is due to the khugepage collapses all VMAs,
->   while "collapse" action only collapses the VMAs in the hot region.
-
-But you use thp=madvise, not thp=always?  So only hot regions, which
-DAMOS_HUGEPAGE applied, could use THP.  It is same to DAMOS_COLLAPSE use case,
-isn't it?
-
-I'd rather suspect the natural-aligned region huge page allocation of
-DAMOS_HUGEPAGE as a reason of this difference.  That is, DAMOS_HUGEPAGE applied
-regions can allocate hugepages in the fault time, on multiple user threads.
-Meanwhile, DAMOS_COLLAPSE should be executed by the single kdamond (if you
-utilize only single kdamond).  This might resulted in DAMOS_HUGEPAGE allocating
-more huge pages faster than DAMOS_COLLAPSE?
-
-> - There is an improvement in THP utilization when collapse through
->   "hugepage" or "collapse" actions are triggered.
-
-Could you clarify which data point is showing this?  Maybe "Huge pages" /
-"Total memory use" ?  And why?  I again suspect the fault time huge pages
-allocation.
-
-> - "collapse" action is performance synchronously, which means that
->   page collapses happen earlier and more rapidly.
-
-But these test results are not showing it clearly.  Rather, the results is
-saying "hugepage" was able to make more huge pages than "collapse".  Still the
-above sentence makes sense when we say about "collapsing" operations.  But,
-this test is not showing it clearly.  I think we should make it clear the
-limitation of this test.
-
->   This can be
->   useful or not, depending on the scenario.
-> 
-> Collapse action just adds a new option to chose the correct system
-> balance.
-
-That's a fair point.  I believe we also discussed pros and cons of
-MADV_COLLAPSE, and concluded MADV_COLLAPSE is worthy to be added.  For
-DAMOS_COLLAPSE, I don't think we have to do that again.
+But in this case, I was sharing the review results seems incorrect, or doesn't
+need deep dive at least:
+https://lore.kernel.org/20260329163102.58683-1-sj@kernel.org
 
 > 
-> Changes
-> ---------
-> RFC v2 -> v1:
-> Fixed a missing comma in the selftest python stript
-> Added performance benchmarks
+> > And anyway I'm supposed to share at least my review of AI reviews, in mm
+> > community.  If I ignore, I will only make Andrew have to reply asking that.
+> > 
+> > I used to share only my review of the AI reviews as replies, instead of
+> > forwarding AI reviews and then replies to those.  But it was
+> > 1. cumbersome for me (should summarize AI review and then my review; feeling
+> >    doing work twice), and
+> > 2. feeling not optimal at sharing all concerning comments with others.  My
+> >    summary might miss some points of AI review but other reviewers might just
+> >    believe me and don't read the full review due to the additional web browser
+> >    opening work.  Also some other reivewers might kindly review AI reviews
+> >    before I do, and save my (or their) time.
+> > 
+> > Hence I ended up to do this bit odd workflow:  Forwarding the full AI review on
+> > the mailing list first, then reply my responses.
+> > 
+> > > sending it back to all of us feels odd,
+> > 
+> > If this is polluting your inbox and/or distract you, I'm so sorry for that.
+> > Please let me know if this is distracting you.  Maybe I can filtering people
+> > who don't want this kind of replies out of the recipients for the forwarding
+> > mails.  Or, if you have a suggestion about what need to be changed, please let
+> > me know.
 > 
-> RFC v1 -> RFC v2:
-> Added benchmarks
-> Added damos_filter_type documentation for new action to fix kernel-doc
+> It just seemed odd, and might get crazy over time if this happens for
+> all random AI tools that happen to be popping up now, right?
 
-Please put changelog in the commentary area, and consider adding links to the
-previous revisions [1].
+As I also mentioned above, I agree.  And seems in this case I was much more
+optimistic that others, or hallucinated ;)
 
-> 
-> Signed-off-by: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
-> ---
+> If this is
+> the "official" one for -mm, that's fine, but consider the distribution
+> and intended audience a bit please.
 
-Code looks good to me.  Nonetheless I'd hope above commit message and benchmark
-results analysis be more polished and/or clarified.
+Andrew replied this is not such official and recommended action for mm.  I once
+thought this could be the official one for DAMON only.  But in any case, I now
+understand this can look crazy, odd or excessive to some people including those
+that I believe.  I will think about a better way to use this tool, while
+keeping your inputs in my mind.
 
-[1] https://docs.kernel.org/process/submitting-patches.html#commentary
+Thank you so much for sharing your opinions, Greg.
 
 
 Thanks,
 SJ
+
+[...]
