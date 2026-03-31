@@ -1,123 +1,238 @@
-Received: from mail-pj1-f45.google.com (mail-pj1-f45.google.com [209.85.216.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from frasgout.his.huawei.com (frasgout.his.huawei.com [185.176.79.56])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04D403BED28
-	for <damon@lists.linux.dev>; Tue, 31 Mar 2026 07:32:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF74F285CB9
+	for <damon@lists.linux.dev>; Tue, 31 Mar 2026 10:46:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.176.79.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774942355; cv=none; b=WGoc6sq5ZvjwCs1bKQRACe3Tz/4zsj3OfQsX8lyfET51gFz40JAVql++0hrQC8frRqtTvoAhxVh0CRT1nQkLySQhzo2rRVbb5TjMeeCIxvV23aQgekFh6xjODIrEd8fLSxKinBIECDpvPZ4cCtsCjEtX+kfBrJ5drp0Q6wBzb/M=
+	t=1774954021; cv=none; b=e7X3hvpI76EgrPPyYtyBstu46hNNjdM+sMblKyE7FTf32TM2/Rif6Jx2sFNP6m4BNDD6+6Cdx1zd3iRgXhUXNDajROSQGgJkP54Xl1xZS+BWtiDNxoMqkH+oEory7fYfqoL3zLAQ8cvBfnKglN6YseDbLVht41z15jMk21btfmw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774942355; c=relaxed/simple;
-	bh=9B+mMo5Z95RyCd7utySVU9Wi90GnHwMez2op2hh/2jY=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=clhpVhFfRoy9Rk5cJQFU4LTm5REXwWKwL9J1EwBaA8RQ/xyKZ51lLdU4EesyhPCV9JCSnnxj/dVdtFtmXZGzzlc5/U0JBYGQlb6mCoHlG1oXsWNmr/i3qCyYS3UPgXo4dJkCWH7q0J0VK3x0lCqrmOZR2P+ydMuVcuJ7Coyz43Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZvEMcP3P; arc=none smtp.client-ip=209.85.216.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZvEMcP3P"
-Received: by mail-pj1-f45.google.com with SMTP id 98e67ed59e1d1-35d99031e4eso1670654a91.1
-        for <damon@lists.linux.dev>; Tue, 31 Mar 2026 00:32:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1774942353; x=1775547153; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=9lGLRyHekliNWF/e73UsyDVKIPVttJC0CnEap7PKUCs=;
-        b=ZvEMcP3PDvUkt4vgpokxZgLvfcJ2627OgtV5Aq1W+ZgHQHMu4bhpxi0FOEVtpcjabO
-         Vs/gRqKTRW0fKZImeIynOoQeEjlu4X9bpSqcLNM/5TJOPC9rl1XsIArRDC6eJ0OoQzTo
-         YjKr4Yoj4nh/ksOSbyMmhcu/ru/53mVgxS0Jxfb2GHhXMhGehPTuWNIiFL/On6W0UTAz
-         i9iU/IH3KxDljDnw+ZowkHw2XDVr7/nMu0MhjAitcxfc2eqDStpNdl7gkK80+cRk9vt7
-         mZTap4R9xyulcgS9fm2HbILxiMb4yFZjDUPgrmtikQkKVMOEyavhhycM5mIg8wnW7msP
-         nBMw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774942353; x=1775547153;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=9lGLRyHekliNWF/e73UsyDVKIPVttJC0CnEap7PKUCs=;
-        b=i7uiFUnE0qJ7zs0H3Z++lMN6c4uUrXlwqyH4weAZ1mi9W1IuTGBG8bJ3j06ITIBJj6
-         jU0lS33rxSas/k3q2EXe2tZfk66C/1Cfv9O7quX6zUMWHKMTws274D1sHxxPBCLAPcLz
-         86L5hXioLppyQ8Wmt9SJU3oNGz1smSfDHOErKK1D6AkRVSqqckgaYqbepKRrZfzmlZe5
-         gSubW0uy7vSKxpor4JSeYDCaLZ7WjxDRIyqB95cZs1Rk9T1xdCCvjkijnw6lVCH/m98d
-         vql7heG+6gQwyPr1+UMr8jSE0pWuE0isEGlDO4Z9TH6egp9btLWlqkLBe9IjPmv+GniH
-         644A==
-X-Gm-Message-State: AOJu0Yyzx9K7VZnNAjoVp21R0mr6GWjLxMQxyPk2dbEblBL9Sq3Cf2lc
-	W0A2Lgva3f6O4PAvt/XBaqntSH8NysnbJ14isNFd+bgpyGsf7D/BiKYhFh3lFg==
-X-Gm-Gg: ATEYQzwe5RdZ7vgDCfn5g3d605zMiOj2k/CklzeSL2GBxBYxM7l4oHSQuC+gJAWvgE6
-	i6PQLx+CvZHVeuBD1lhtNqAH/nx+ja+hzNwtarBYN+QCbd6A5b8+6cVP/SeUWruHa7guFsEQfaZ
-	tq7v51bpkUzzdAtFk9ySWLOb2jOcwGfdYt5UMmZaZ5/e9tws+roN/nLKElL2Pge9EJsDnwDOl4Z
-	XGrnsZzZ0BXuWWNWotgMHwkpJvd3sI41EM64Qail1LQCP3JmZMqjl/1ql6B5Q85CUMqZdoTWMHB
-	AhXQVxhminuPkIzeLz5S50JQpGHV+rRCLpjAuGzdqHSD+xHnYHi9XUHKUo6USLwIkxij7kPyDKT
-	uIyqL5DT210ISMkmbmf0JnH8ii4C8nJqYagvT4csezWRKvSKLPt0HGas+Iy5WKcDaLAggTE7bDh
-	hwpdgwjkJ04SVP++x2TSedFH79A8EoT+8Ca/LYxxSSuZMKz5khjH0=
-X-Received: by 2002:a17:903:94d:b0:2b2:57df:264d with SMTP id d9443c01a7336-2b257df28acmr50704225ad.33.1774942353119;
-        Tue, 31 Mar 2026 00:32:33 -0700 (PDT)
-Received: from celestia.taila51cc2.ts.net ([2402:1980:898b:301c:d085:a35:99e7:ffec])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2b2427acdb9sm105215045ad.68.2026.03.31.00.32.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 31 Mar 2026 00:32:32 -0700 (PDT)
-From: Liew Rui Yan <aethernet65535@gmail.com>
-To: sj@kernel.org
-Cc: damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	Liew Rui Yan <aethernet65535@gmail.com>
-Subject: [PATCH] mm/damon: validate min_region_size to be power of 2
-Date: Tue, 31 Mar 2026 15:32:31 +0800
-Message-ID: <20260331073231.30060-1-aethernet65535@gmail.com>
-X-Mailer: git-send-email 2.53.0
+	s=arc-20240116; t=1774954021; c=relaxed/simple;
+	bh=Xi1QiwP29dAuX0c1ljD8BbuZY+vfDM67QvSDtiPIF4w=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=LNCOjuUbGzl/S9YxewfZiAZe+kS+S1mRWXqAG48IOOz8El0xtqBEv9G1q2kyWF79gz+gssbLNekEaIebh076b2DGTEJ61TrxQDWgKpIQBkMrN79anD5H1aXx8rkAjOjCMvbU9QGkwiwaUzclS83Uqq/+5uvUoDJHT3zWNUx6sbk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; arc=none smtp.client-ip=185.176.79.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
+Received: from mail.maildlp.com (unknown [172.18.224.83])
+	by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4flPth37RszJ46Cy;
+	Tue, 31 Mar 2026 18:46:36 +0800 (CST)
+Received: from mscpeml500003.china.huawei.com (unknown [7.188.49.51])
+	by mail.maildlp.com (Postfix) with ESMTPS id B9F4E40575;
+	Tue, 31 Mar 2026 18:46:54 +0800 (CST)
+Received: from [10.123.123.226] (10.123.123.226) by
+ mscpeml500003.china.huawei.com (7.188.49.51) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.11; Tue, 31 Mar 2026 13:46:54 +0300
+Message-ID: <15f60a0e-a21b-472a-ae76-8437e9859e15@huawei.com>
+Date: Tue, 31 Mar 2026 13:46:53 +0300
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 1/1] mm/damon: support MADV_COLLAPSE via DAMOS_COLLAPSE
+ scheme action
+To: SeongJae Park <sj@kernel.org>, <gutierrez.asier@huawei-partners.com>
+CC: <artem.kuzin@huawei.com>, <wangkefeng.wang@huawei.com>,
+	<yanquanmin1@huawei.com>, <zuoze1@huawei.com>, <damon@lists.linux.dev>,
+	<akpm@linux-foundation.org>, <linux-mm@kvack.org>,
+	<linux-kernel@vger.kernel.org>
+References: <20260331013109.66590-1-sj@kernel.org>
+Content-Language: en-US
+From: Stepanov Anatoly <stepanov.anatoly@huawei.com>
+In-Reply-To: <20260331013109.66590-1-sj@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: mscpeml100003.china.huawei.com (10.199.174.67) To
+ mscpeml500003.china.huawei.com (7.188.49.51)
 
-Problem
-=======
-damon_commit_ctx() checks if 'min_region_sz' is a power of 2. But if it
-is not, kdamond will terminate unexpectedly due to the user's invalid
-input.
+On 3/31/2026 4:31 AM, SeongJae Park wrote:
+> Hello Asier,
+> 
+> On Mon, 30 Mar 2026 14:57:58 +0000 <gutierrez.asier@huawei-partners.com> wrote:
+> 
+>> From: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
+>>
+>> This patch set introces a new action:  DAMOS_COLLAPSE.
+>>
+>> For DAMOS_HUGEPAGE and DAMOS_NOHUGEPAGE to work, khugepaged should be
+>> working, since it relies on hugepage_madvise to add a new slot. This
+>> slot should be picked up by khugepaged and eventually collapse (or
+>> not, if we are using DAMOS_NOHUGEPAGE) the pages. If THP is not
+>> enabled, khugepaged will not be working, and therefore no collapse
+>> will happen.
+> 
+> I should raised this in a previous version, sorry.  But, that is only a half of
+> the picture.  That is, khugepaged is not the single THP allocator for
+> MADV_HUGEPAGE.  IIUC, MADV_HUGEPAGE-applied region also allocates huge pages in
+> page fault time.  According to the man page,
+> 
+>     The kernel will regularly scan the areas marked as huge page  candidates
+>     to replace  them with huge pages.  The kernel will also allocate huge pages
+>     directly when the region is naturally aligned to the huge page size (see
+>     posix_memalign(2)).
+> 
+I think key difference between DAMOS_HUGEPAGE and DAMOS_COLLAPSE is the granularity.
 
-Solution
-========
-Add the same check to damon_{lru_sort, reclaim}_apply_parameters(), but
-return -EINVAL immediately. This is to prevent user's invalid input
-causing kdamond to terminate unexpectedly.
+In DAMOS_HUGEPAGE case, the granularity is always VMA, even if the hot region is narrow.
+It's true for both page-fault based collapse and khugepaged collapse.
 
-Signed-off-by: Liew Rui Yan <aethernet65535@gmail.com>
----
- mm/damon/lru_sort.c | 3 +++
- mm/damon/reclaim.c  | 3 +++
- 2 files changed, 6 insertions(+)
-
-diff --git a/mm/damon/lru_sort.c b/mm/damon/lru_sort.c
-index 554559d72976..205592194efd 100644
---- a/mm/damon/lru_sort.c
-+++ b/mm/damon/lru_sort.c
-@@ -294,6 +294,9 @@ static int damon_lru_sort_apply_parameters(void)
- 	param_ctx->addr_unit = addr_unit;
- 	param_ctx->min_region_sz = max(DAMON_MIN_REGION_SZ / addr_unit, 1);
+With DAMOS_COLLAPSE we can cover cases, when there's large VMA, for example,
+which contains some hot VA region inside, so we can collapse just that region, not the whole VMA.
  
-+	if (!is_power_of_2(param_ctx->min_region_sz))
-+		return -EINVAL;
-+
- 	if (!damon_lru_sort_mon_attrs.sample_interval) {
- 		err = -EINVAL;
- 		goto out;
-diff --git a/mm/damon/reclaim.c b/mm/damon/reclaim.c
-index 86da14778658..6e29d92670c4 100644
---- a/mm/damon/reclaim.c
-+++ b/mm/damon/reclaim.c
-@@ -204,6 +204,9 @@ static int damon_reclaim_apply_parameters(void)
- 	param_ctx->addr_unit = addr_unit;
- 	param_ctx->min_region_sz = max(DAMON_MIN_REGION_SZ / addr_unit, 1);
- 
-+	if (!is_power_of_2(param_ctx->min_region_sz))
-+		return -EINVAL;
-+
- 	if (!damon_reclaim_mon_attrs.aggr_interval) {
- 		err = -EINVAL;
- 		goto out;
+
+> I think the description is better to be wordsmithed or clarified.  Maybe just
+> pointing the MADV_COLLAPSE intro commit (7d8faaf15545 ("mm/madvise: introduce
+> MADV_COLLAPSE sync hugepage collapse")) for the rationale could also be a good
+> approach, as the aimed goal of DAMOS_COLLAPSE is not different from
+> MADV_COLLAPSE.
+> 
+>>
+>> DAMOS_COLLAPSE eventually calls madvise_collapse, which will collapse
+>> the address range synchronously.
+>>
+>> This new action may be required to support autotuning with hugepage
+>> as a goal[1].
+>>
+>> [1]: https://lore.kernel.org/damon/20260313000816.79933-1-sj@kernel.org/
+>>
+>> ---------
+>> Benchmarks:
+> 
+> I recently heard some tools could think above line as the commentary
+> area [1] separation line.  Please use ==== like separator instead.  For
+> example,
+> 
+>     Benchmarks
+>     ==========
+> 
+>>
+>> Tests were performed in an ARM physical server with MariaDB 10.5 and 
+>> sysbench. Read only benchmark was perform with uniform row hitting,
+>> which means that all rows will be access with equal probability.
+>>
+>> T n, D h: THP set to never, DAMON action set to hugepage
+>> T m, D h: THP set to madvise, DAMON action set to hugepage
+>> T n, D c: THP set to never, DAMON action set to collapse
+>>
+>> Memory consumption. Lower is better.
+>>
+>> +------------------+----------+----------+----------+
+>> |                  | T n, D h | T m, D h | T n, D c |
+>> +------------------+----------+----------+----------+
+>> | Total memory use | 2.07     | 2.09     | 2.07     |
+>> | Huge pages       | 0        | 1.3      | 1.25     |
+>> +------------------+----------+----------+----------+
+>>
+>> Performance in TPS (Transactions Per Second). Higher is better.
+>>
+>> T n, D h: 18324.57
+>> T n, D h 18452.69
+> 
+> "T m, D h" ?
+> 
+>> T n, D c: 18432.17
+>>
+>> Performance counter
+>>
+>> I got the number of L1 D/I TLB accesses and the number a D/I TLB
+>> accesses that triggered a page walk. I divided the second by the
+>> first to get the percentage of page walkes per TLB access. The
+>> lower the better.
+>>
+>> +---------------+--------------+--------------+--------------+
+>> |               | T n, D h     | T m, D h     | T n, D c     |
+>> +---------------+--------------+--------------+--------------+
+>> | L1 DTLB       | 127248242753 | 125431020479 | 125327001821 |
+>> | L1 ITLB       | 80332558619  | 79346759071  | 79298139590  |
+>> | DTLB walk     | 75011087     | 52800418     | 55895794     |
+>> | ITLB walk     | 71577076     | 71505137     | 67262140     |
+>> | DTLB % misses | 0.058948623  | 0.042095183  | 0.044599961  |
+>> | ITLB % misses | 0.089100954  | 0.090117275  | 0.084821839  |
+>> +---------------+--------------+--------------+--------------+
+>>
+>> - We can see that DAMOS "hugepage" action works only when THP is set
+>>   to madvise. "collapse" action works even when THP is set to never.
+> 
+> Make sense.
+> 
+>> - Performance for "collapse" action is slightly lower than "hugepage"
+>>   action and THP madvise.
+> 
+> It would be good to add your theory about from where the difference comes.  I
+> suspect that's mainly because "hugepage" setup was allocating more THP?
+> 
+>> - Memory consumption is slighly lower for "collapse" than "hugepage"
+>>   with THP madvise. This is due to the khugepage collapses all VMAs,
+>>   while "collapse" action only collapses the VMAs in the hot region.
+> 
+> But you use thp=madvise, not thp=always?  So only hot regions, which
+> DAMOS_HUGEPAGE applied, could use THP.  It is same to DAMOS_COLLAPSE use case,
+> isn't it?
+> 
+> I'd rather suspect the natural-aligned region huge page allocation of
+> DAMOS_HUGEPAGE as a reason of this difference.  That is, DAMOS_HUGEPAGE applied
+> regions can allocate hugepages in the fault time, on multiple user threads.
+> Meanwhile, DAMOS_COLLAPSE should be executed by the single kdamond (if you
+> utilize only single kdamond).  This might resulted in DAMOS_HUGEPAGE allocating
+> more huge pages faster than DAMOS_COLLAPSE?
+> 
+>> - There is an improvement in THP utilization when collapse through
+>>   "hugepage" or "collapse" actions are triggered.
+> 
+> Could you clarify which data point is showing this?  Maybe "Huge pages" /
+> "Total memory use" ?  And why?  I again suspect the fault time huge pages
+> allocation.
+> 
+>> - "collapse" action is performance synchronously, which means that
+>>   page collapses happen earlier and more rapidly.
+> 
+> But these test results are not showing it clearly.  Rather, the results is
+> saying "hugepage" was able to make more huge pages than "collapse".  Still the
+> above sentence makes sense when we say about "collapsing" operations.  But,
+> this test is not showing it clearly.  I think we should make it clear the
+> limitation of this test.
+> 
+>>   This can be
+>>   useful or not, depending on the scenario.
+>>
+>> Collapse action just adds a new option to chose the correct system
+>> balance.
+> 
+> That's a fair point.  I believe we also discussed pros and cons of
+> MADV_COLLAPSE, and concluded MADV_COLLAPSE is worthy to be added.  For
+> DAMOS_COLLAPSE, I don't think we have to do that again.
+> 
+>>
+>> Changes
+>> ---------
+>> RFC v2 -> v1:
+>> Fixed a missing comma in the selftest python stript
+>> Added performance benchmarks
+>>
+>> RFC v1 -> RFC v2:
+>> Added benchmarks
+>> Added damos_filter_type documentation for new action to fix kernel-doc
+> 
+> Please put changelog in the commentary area, and consider adding links to the
+> previous revisions [1].
+> 
+>>
+>> Signed-off-by: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
+>> ---
+> 
+> Code looks good to me.  Nonetheless I'd hope above commit message and benchmark
+> results analysis be more polished and/or clarified.
+> 
+> [1] https://docs.kernel.org/process/submitting-patches.html#commentary
+> 
+> 
+> Thanks,
+> SJ
+
+
 -- 
-2.53.0
-
+Anatoly Stepanov, Huawei
