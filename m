@@ -1,55 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A280345CDD;
-	Tue, 31 Mar 2026 04:52:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D28826C3B0
+	for <damon@lists.linux.dev>; Tue, 31 Mar 2026 05:02:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774932768; cv=none; b=ij3Lm/3LjD6R09PbYBq2bXIMuCp9FKExwHa2QXPBFm1e5OCzyteqfap/Fl7bFENvKuHZzzqdxGQQv79tyTsnJHGhv+LWxeq7VB9C1VtlwYfKTraBk6ekmRZ6BH8x1fg3VykUus8JZ5Bzw7e/LngXu3YOj98r1gYzpKpegFAXdu4=
+	t=1774933352; cv=none; b=Epxd3S/1hsn2+PQWEhT1pXnVogDPjftIr4Y4P/XBo0NZZEAV7yHLnaSBOzqV+NCQT0teaJvO51UNGsdpYIGDeSv3XwVq/xSJ80e15MVPoR7q3yy4/sl731m4OdHyLNe205Lw6cd2GgnpxHug2k9G/VEZJWnPGohrjW9OwBGa688=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774932768; c=relaxed/simple;
-	bh=W1sV0gG5y7v5xTcQdkLYhQC8LVNXIot5XhAZDvh9WtE=;
+	s=arc-20240116; t=1774933352; c=relaxed/simple;
+	bh=KMlHZ1xC3+1qBF97/gsnz/xHHgFxmdj8FYcgvWX2MYQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=elKHdslCQCGOYUmbDgBxj2hH+d3ypXbF1eofzTwZR2+bw2SGVNgUBS7vwlXSBMNQYt5Cvg0kob4uk7xINYM9b5BfmmCexyQ7NjfZwjT9h8m8Up+6wTv5hrRzaNsaN4XkbyNsG/SC+sYNKxmTTX5g3mLewnPalbbbsQWJ071Ac8k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TYXXjUYG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=te9ow00MzzHoPllcw0qNUkadUa7vkla8i9sLTE7Oy+WXvVbbx632u4U/gH7YPCLBX32F0M01sxhZqd6mtZG0e1IERiLRhQuJz9PqUX+aOLElp2sO5yhb78QvxOcxrRFw6CZIoFCzXqXi8+7aX+ZQsUn3nyZruDcjbbQunJuKJtU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Sw09ypaH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TYXXjUYG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C421C19423;
-	Tue, 31 Mar 2026 04:52:47 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Sw09ypaH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11309C19423;
+	Tue, 31 Mar 2026 05:02:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1774932768;
-	bh=W1sV0gG5y7v5xTcQdkLYhQC8LVNXIot5XhAZDvh9WtE=;
+	s=k20201202; t=1774933352;
+	bh=KMlHZ1xC3+1qBF97/gsnz/xHHgFxmdj8FYcgvWX2MYQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TYXXjUYGsygiFeTxc15ZdsIJXlkwr86dYuvCilb0aMIDAh38qnVxfos/7uroLY2PU
-	 iWYOMO4QDA3gMPxE2alA8RkBjKU8Oo5jJffsQ9Y8izDZ/UlHADM8T7YHPRBS4AZnfb
-	 SEEM7AJFtW9Y76p0FPK9IOtBohiB6NkBjXpEbjCJgymtOtS8vlmQjlkC8RjYA4l+IV
-	 Qt0l1kNaXWlfLZrcyVKHs5OrJPe9Dt/ziF+OcBeg8MdY9RRH0U/jj2uOWkpPizFeDM
-	 LzzrM+mpWPjqrT8WlBtVvGgCoJgBACt9VQ/vmYFICTi16MmCkuR9me4asjESYAsxDw
-	 9BCXgjPOU1KYg==
+	b=Sw09ypaHWUA8uM4PzgO+K/kuvQSK1dnFg+80G3CCrE5s7bN2Z76wdJlQtgHmuHCRS
+	 X9p/u2b51sG3KZbmBtlpuV/JL8rJHmxQN9F86ZtaPGOxNugjOAesRAhMCgdq5zAMUQ
+	 jO3QBdUBpY/48mUvSRMAoaHliVOwoNSwevRIGiinhm6nuCGonTXuaaolQ8hd9/2Ult
+	 Ab+tyCBs5hrrLwQH1wz1RpSlSzRW2946B3quPDRttOWESCtAmTLEYmuEIU2glu4iGe
+	 7ekvtKHHadgMz8pOfzPCAc8Oo/VGDScvx8DoPQSAQDgyoOAaXE+NZSd/gLC6LdMh6X
+	 lIKg8swQJL0lg==
 From: SeongJae Park <sj@kernel.org>
-To: Andrew Morton <akpm@linux-foundation.org>
+To: Liew Rui Yan <aethernet65535@gmail.com>
 Cc: SeongJae Park <sj@kernel.org>,
-	Greg KH <gregkh@linuxfoundation.org>,
-	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
-	"# 5 . 19 . x" <stable@vger.kernel.org>,
-	David Hildenbrand <david@kernel.org>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	Michal Hocko <mhocko@suse.com>,
-	Mike Rapoport <rppt@kernel.org>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Vlastimil Babka <vbabka@kernel.org>,
 	damon@lists.linux.dev,
-	linux-doc@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org,
-	Roman Gushchin <roman.gushchin@linux.dev>
-Subject: Re: (sashiko status) [PATCH 0/2] Docs/admin-guide/mm/damon: warn commit_inputs vs other params race
-Date: Mon, 30 Mar 2026 21:52:45 -0700
-Message-ID: <20260331045245.67438-1-sj@kernel.org>
+	linux-mm@kvack.org
+Subject: Re: [RFC PATCH] mm/damon: reset thread status parameters upon kdamond termination
+Date: Mon, 30 Mar 2026 22:02:28 -0700
+Message-ID: <20260331050229.67637-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260330142205.e7c7d7b47ec15a634f6eebf4@linux-foundation.org>
+In-Reply-To: <20260330164347.12772-1-aethernet65535@gmail.com>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -59,76 +45,49 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Mon, 30 Mar 2026 14:22:05 -0700 Andrew Morton <akpm@linux-foundation.org> wrote:
+On Tue, 31 Mar 2026 00:43:47 +0800 Liew Rui Yan <aethernet65535@gmail.com> wrote:
 
-> On Sun, 29 Mar 2026 12:32:26 -0700 SeongJae Park <sj@kernel.org> wrote:
-> 
-> > On Sun, 29 Mar 2026 20:05:53 +0200 Greg KH <gregkh@linuxfoundation.org> wrote:
-> > 
-> > > On Sun, Mar 29, 2026 at 08:49:16AM -0700, SeongJae Park wrote:
-> > > > Forwarding sashiko.dev review status for this thread.
-> > > > 
-> > > > # review url: https://sashiko.dev/#/patchset/20260329153052.46657-1-sj@kernel.org
-> > > 
-> > > Why are you doing this?  If we want to see the review, can't we just go
-> > > and look at the tool itself?
-> > 
-> > We can.  But it is bit cumbersome to opening web browser and moving my focus to
-> > there.  Reading everything on the mailing tool is easier for some people like
-> > me.  Like some test bots send reports are replying to patches, or we sometimes
-> > forwarding bugzilla reports to mailing lists in a form of a plain text mail.
-> > 
-> > Secondly, I have to share my opinions about the reviews, as many times AI
-> > reviews need human's opinions.  There is no good way to do that on the web ui
-> > of the tool (sashiko) for now, and I think this mail based flow is the best.
-> 
-> I do agree with Greg that it's all a bit excessive.  Thanks for your
-> your diligence, but perhaps dial it back a bit?  It's OK - we're all
-> trying to figure out how best to utilize this tool.
+> Problem
+> =======
+> kdamond does not actively modify the module's
+> (DAMON_LRU_SORT/DAMON_RECLAIM) 'enabled' and 'kdamond_pid' after
+> exiting. After an unexpected termination, user will still see 'enabled'
+> as 'Y' and 'kdamond_pid' as a value other than -1. Furthermore, user
+> cannot restart the unexpectedly terminated kdamond by executing 'echo
+> Y/N > enabled' again.
 
-Thank you for your kind words, Andrew.  I understand and admit the fact that
-this looks excessive.
+Nice catch!
+
+I guess this can easily reproducible?  Sharing detailed reproduction steps
+would be nice.
 
 > 
-> I view Sashiko as primarily an author tool.  Sometimes I call it
-> checkpatch++.
-
-Thank you for sharing your perspective.  This is helpful at what you want from
-the use of the tool, thank you.
-
-My view of sashiko was a human reviewer that having very odd characteristic and
-cannot answer to my feedback for a reason, but still being useful in many
-cases.  Hence I wanted to help the special reviewer be able to communicate with
-others on the mailing list.  And I was thinking anyway that's what sashiko will
-do, because I saw sending review as mail as one of TODO items for sashiko, from
-the public announcement, and I onboarded DAMON for that.
-
-But apparently not everyone is sharing same view.  My understanding of the TODO
-item in sashiko public announcement may also be biased.  Maybe being a
-subsystem's sole maintainer that looking for a reviewer made such uncautiously
-biased perspectives.
-
-> In a better world, author would be able to sort out
-> Sashiko issues before ever sending out the patchset.  But in this
-> world, a public send is needed to obtain that review.
+> Solution
+> ========
+> Introduce a 'thread_status' structure to link the internal kdamond
+> state with module parameters ('enabled' and 'kdamond_pid').
 > 
-> So what we're presently seeing is author development activity which is
-> unfortunately and inappropriately being conducted on a public list.
+> Specifically:
+> 1. Extend 'struct damon_ctx' to include pointers to the module's
+>    parameters.
+> 2. Initialize these pointers in damon_lru_sort_apply_parameters()
+>    and damon_reclaim_apply_parameters() to point the respective
+>    module variables.
+> 3. Implement damon_update_thread_status() to reset 'enabled' to
+>    false and 'kdamond_pid' to -1 when the kdamond thread finishes.
 
-Makes sense.  Now I understand why you and Roman were discussing having a
-separate mailing list for sharing the reviews via mail as a path forward, and
-I agree that could be a good option.
+This feels too much extension of core API for a problem that can more simply be
+fixed.  Can't we detect the unexpected termination of kdamond from the modules
+and update the paramter values accordingly?
 
-> 
-> Personally, I pay only a little attention to author's Sashiko activity.
-> Just enough to see whether I should pay more attention.  If author
-> says "oops, let me redo" then fine, I'll await the next spin.  If
-> author says "that was all nonsense" then fine, time to take a closer
-> look.
+If we cannot due to a limitation of the DAMON core API, I'd like to extend the
+API for letting the caller detects the unexpected termination.
 
-Makes sense.  I will try to keep sharing necessary information, but for only
-targetted audiences, with less traffic.
+Because this is an RFC and I already have question for the high level
+direction, I will skip code level review.
 
 
 Thanks,
 SJ
+
+[...]
