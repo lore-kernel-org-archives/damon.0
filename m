@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BCCE36EA88;
-	Tue, 31 Mar 2026 05:27:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B668C29E0F6;
+	Tue, 31 Mar 2026 05:28:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774934829; cv=none; b=gFpFqDTLJdqn4MEMrm7EIfqvwqTG4E6XUpfeg/cMqsOQUsNszdpqEoLHxTQHouLDCym4lxTIucj1119pm4VQ6hkTAGAU9GhkOTQsXJrFj2zS9r56DhKMyprKTLTk6pONOHLFIQp0af/+nHibvdOvS9cFwuiTWLG95UFOc9YhtxE=
+	t=1774934920; cv=none; b=McRgphO6FQY0jkDqSMTplremZuDbGy5G6n5NBCFTqxKQa/osfBguG1YCZsQSPvOtSH0xvHsU30s6kLDz/cdyqbWa2j2z77dgOGJNoqEm3882P2p20H2Tl+/qvlW2NEih94Lw9/6DelobRhUenhtGqGrWWRA3TkhVa9RDg+nfObQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774934829; c=relaxed/simple;
-	bh=OUhwl+3SlasF9H3tNYW60V7D8FMSzXnMK2DpCetP1TY=;
+	s=arc-20240116; t=1774934920; c=relaxed/simple;
+	bh=+Bku8QdBzfNE9060qI3hHjAAlgN1XJ+QsUnUMhIfTww=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SoQ55KJdvwTrOXVmyQSo0JqeUQuSzq1Uj3qEVk4uNuXQaaPHARcZwgGfIgl3EZ7gKhCF2Gr9S3DEOqJBslRcMnqyRksCoacZ17YGP5Aik+FjyRzE5vTZutmRgfqkcVrTueKHzN16VXM+O4udF6C44v+qyoDLhMxIhgWzU+XxaTA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=N7kwzDNR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ge+lFwotyysO0mZFt419UPU1IBjtHL5bA0N2oRzuCFZo51cBo0rZvNFjoFaE5p+LN4ithKBUkv4b4bK+tRbR24qQ1wLLoyqdB/Nh5t6xrhnlMkkE/T6CD+/cjgN74WyGC6DA38Yjt9vf/18ibuMP6B1iOVAWG0c+eA0+AE8BuOE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=noCM57/t; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="N7kwzDNR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6082C19423;
-	Tue, 31 Mar 2026 05:27:08 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="noCM57/t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CC79C19423;
+	Tue, 31 Mar 2026 05:28:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1774934828;
-	bh=OUhwl+3SlasF9H3tNYW60V7D8FMSzXnMK2DpCetP1TY=;
+	s=k20201202; t=1774934920;
+	bh=+Bku8QdBzfNE9060qI3hHjAAlgN1XJ+QsUnUMhIfTww=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N7kwzDNR9EjOoUTiUwMBahk+fZSHjJjn2CwxItYa+W9uAGER8ObrC557h/Q+7ha8b
-	 VCdBLEMJUkcpITGDvZNc7a7MB7ki3kzgC+I7c+4JrImnusS9ZkRvNu+jAwB6E68E4c
-	 vkDeb8aipKYR+tktO2WbhAUm3qr/TQnA7jb+VmGD5ZZTWEsLJF/V/0M2BM5DD915S2
-	 QAm6+9Nlwm6UVLgQ67jopExEaILnS3SWmul7/N3yOClU6ZplX5AgcCGUZpwAbrPdXV
-	 RMHnmi5e485ueExn5gSs9NBL4BBouiiHHSqHzPkcqhjX2GuSPXWHZoIL36Q8ZkW/J6
-	 0gu3Zq8QZZTWw==
+	b=noCM57/tC+ZKaAzklJ5CJEevkGW5fC59phSSjgz3d0AoyfXufsF7Q8izXCJiokGBA
+	 GCmsFc0chaZqRqQ2gKVi29T7WQTqi8ndjv7r5Bs2aYuiumyP3Z7KgKGWDyMIWQ5T5+
+	 l5zMFeOPwKDwKaWpUCU2jbGsP7BXtHSgu67GGiuT2P86lpr6eNYSAj7bEpx9jhyYpP
+	 XG45870LupIZUfMHXbtqTK6jBWMUXke6srW+mLTXqIEB8IIzBmga1sIcJadVxEgiti
+	 t8Mf1XMSSzYzXqvjdQskvY6Vc2xtvApCaQr3VvYyhHdClPUyM7P9u7N/xWmdCrcQhl
+	 6bLVBHW+h/qkg==
 From: SeongJae Park <sj@kernel.org>
 To: stable@vger.kernel.org
 Cc: damon@lists.linux.dev,
 	Josh Law <objecting@objecting.org>,
 	SeongJae Park <sj@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.12.y] mm/damon/sysfs: check contexts->nr before accessing contexts_arr[0]
-Date: Mon, 30 Mar 2026 22:27:05 -0700
-Message-ID: <20260331052705.71212-1-sj@kernel.org>
+Subject: [PATCH 6.6.y] mm/damon/sysfs: check contexts->nr before accessing contexts_arr[0]
+Date: Mon, 30 Mar 2026 22:28:38 -0700
+Message-ID: <20260331052838.73914-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <2026033032-savor-relearn-225e@gregkh>
-References: <2026033032-savor-relearn-225e@gregkh>
+In-Reply-To: <2026033036-ecosphere-leggings-7691@gregkh>
+References: <2026033036-ecosphere-leggings-7691@gregkh>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -87,10 +87,10 @@ Signed-off-by: SeongJae Park <sj@kernel.org>
  1 file changed, 3 insertions(+)
 
 diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
-index 7fc44f279f4c..6545ab35be36 100644
+index acb6e57cd9cb..7a410640a0ef 100644
 --- a/mm/damon/sysfs.c
 +++ b/mm/damon/sysfs.c
-@@ -1548,6 +1548,9 @@ static int damon_sysfs_handle_cmd(enum damon_sysfs_cmd cmd,
+@@ -1494,6 +1494,9 @@ static int damon_sysfs_handle_cmd(enum damon_sysfs_cmd cmd,
  {
  	bool need_wait = true;
  
