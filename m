@@ -1,74 +1,69 @@
-Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
+Received: from mail-pj1-f45.google.com (mail-pj1-f45.google.com [209.85.216.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 602651ADC97
-	for <damon@lists.linux.dev>; Tue, 31 Mar 2026 06:58:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04D403BED28
+	for <damon@lists.linux.dev>; Tue, 31 Mar 2026 07:32:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774940318; cv=none; b=ZVI6LAPOuKMPzYToYp4p99XL29FG7jcXrl0dxB7CfotvGNQmU52zf+OzEbagFZlto4itWuGdPFw2UQmDwrznQLQaRxnUSAwbhcud83ozNOg55OS/+TS1PjYIPewmji/kZlginextQGZw7qajUf47CcnuYkonjKLpMKmVOe3RsBM=
+	t=1774942355; cv=none; b=WGoc6sq5ZvjwCs1bKQRACe3Tz/4zsj3OfQsX8lyfET51gFz40JAVql++0hrQC8frRqtTvoAhxVh0CRT1nQkLySQhzo2rRVbb5TjMeeCIxvV23aQgekFh6xjODIrEd8fLSxKinBIECDpvPZ4cCtsCjEtX+kfBrJ5drp0Q6wBzb/M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774940318; c=relaxed/simple;
-	bh=wfktVW9tzgD1rpx5ZAhaURDVY1+Uw4vZBZ65V1+yOlY=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TWy5MTBLupQJ6I0iaQCAkfs0SxOrpYOGgQwjAslY1XlsrY0yj5rEceiBTuU+YPb+jWhO4zdC1xbu/aw4YVpUhzyYcQye20M3g7Mc/WX2vkfq2oV56/Sd1SIrmdubHICtTh9QQlJQAImpaby3qwIgaCSV0kTQv3Y0m5kvuUkl1Lo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=A1bTGdjo; arc=none smtp.client-ip=209.85.214.170
+	s=arc-20240116; t=1774942355; c=relaxed/simple;
+	bh=9B+mMo5Z95RyCd7utySVU9Wi90GnHwMez2op2hh/2jY=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=clhpVhFfRoy9Rk5cJQFU4LTm5REXwWKwL9J1EwBaA8RQ/xyKZ51lLdU4EesyhPCV9JCSnnxj/dVdtFtmXZGzzlc5/U0JBYGQlb6mCoHlG1oXsWNmr/i3qCyYS3UPgXo4dJkCWH7q0J0VK3x0lCqrmOZR2P+ydMuVcuJ7Coyz43Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZvEMcP3P; arc=none smtp.client-ip=209.85.216.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="A1bTGdjo"
-Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-2ad21f437eeso35494125ad.0
-        for <damon@lists.linux.dev>; Mon, 30 Mar 2026 23:58:37 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZvEMcP3P"
+Received: by mail-pj1-f45.google.com with SMTP id 98e67ed59e1d1-35d99031e4eso1670654a91.1
+        for <damon@lists.linux.dev>; Tue, 31 Mar 2026 00:32:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1774940317; x=1775545117; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=2ctn/dnY47VpD6BEY4z1LNAsyn2RLaR5EVemw/F8Cws=;
-        b=A1bTGdjoZhnrLQRu/MBIGpfKrzgFDuR3Zw3iM/kbM6TaAQLtseFW8AebdnIjfZ1dWG
-         4GM4gKohb+Jl8BKWlnKYx2tTED8iLppeKWPv0BpJrSiOGM4QQeAqEHmVu1wpv5Q5JyRe
-         4b3uN/2xj2o84/H02/esSQNulPpSdzo4BiRMrRJUGAWZuonl5Ga1AcsizvP1hdquyBZP
-         KyR0h5QA1ZTLZFfC2B864KjhAfFuuTX1L3s+8A9psta9aPEt+FM/+EufGoE37WS+qV5u
-         GrAk6R656EkWATxtCKm0FwQz10tzRHEdRkr5DPeOdm1vlMvS0Frc85vOdx+WrfT29k9C
-         5l2Q==
+        d=gmail.com; s=20251104; t=1774942353; x=1775547153; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=9lGLRyHekliNWF/e73UsyDVKIPVttJC0CnEap7PKUCs=;
+        b=ZvEMcP3PDvUkt4vgpokxZgLvfcJ2627OgtV5Aq1W+ZgHQHMu4bhpxi0FOEVtpcjabO
+         Vs/gRqKTRW0fKZImeIynOoQeEjlu4X9bpSqcLNM/5TJOPC9rl1XsIArRDC6eJ0OoQzTo
+         YjKr4Yoj4nh/ksOSbyMmhcu/ru/53mVgxS0Jxfb2GHhXMhGehPTuWNIiFL/On6W0UTAz
+         i9iU/IH3KxDljDnw+ZowkHw2XDVr7/nMu0MhjAitcxfc2eqDStpNdl7gkK80+cRk9vt7
+         mZTap4R9xyulcgS9fm2HbILxiMb4yFZjDUPgrmtikQkKVMOEyavhhycM5mIg8wnW7msP
+         nBMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774940317; x=1775545117;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=2ctn/dnY47VpD6BEY4z1LNAsyn2RLaR5EVemw/F8Cws=;
-        b=YpK2iTqt+o1xYFBHfTLddw6w9JiQtZiu9hgmJalf6jiJPulsz+cH843e9Y0o1uQ0aE
-         nIzUx2CsH0chCqN3isRYZcjZ2LDIUbUdRSZvqmFiksbPMDN3FYj4kqxH9+dZwxnPBaLB
-         e3hxhKycjpaQzvHbWq2fV5DLjRpkljZT4lQ37tZB0gjF2KpFf2/xdMpIDZK02GK5VMON
-         OaHaCh2WN0Bz/0mo1oAXyjndBSa02mZ7Z69ICmJVNO6R96uAkRsD1nvVQpHDU2fRkwNH
-         FmAAGsoyM7kG8iClcC9w8Fawn6ONkqWbViyLOBr0I3ZaI0WTffJgIWRmgZXu6i85QSlx
-         XWZw==
-X-Forwarded-Encrypted: i=1; AJvYcCXBL1pWgEf/DSNeVWvIToZQzKO6TQ50ruFgK0AxWVCYx6xFvttmhybDfo6JPl9T1ufi2Zb1lw==@lists.linux.dev
-X-Gm-Message-State: AOJu0YxQUqI2v6OWq/iJGpwdtH3/Pi4FCFHRaXkp8lbTiSrxZ2B7sFlK
-	NZByf1IZWSS9ai1e6moXEl/JsPM4CWv++0/B17zGNmL4jRuFz6fzAiVL
-X-Gm-Gg: ATEYQzzxTmXokW71uEvyPOc852nJBiBr4N9J4ty4gedyG9yWmHgTRKSXeKrrS8NCT5A
-	Lz+Or4msqfFj7PoMblURkuTBWCoTuPfCMhIvkaVsbRHjNMcYwObZ3MFS02VGBYiiiycrLDUIrdb
-	1IM9KPOEeqox+zHUReD3BWPrvCBI/MUSpuUS5Mp1tPPEtYJr2k4q0Jsrv7NtnMjishPzrbf7M6w
-	dt/2URZGhZMqzrkG9pKNRaIRmQ5MbfUBQPE3u1gp88CR/fx1V0ul8cLhv+sYD91BVTpYV5oSD+E
-	/ds6as696k8vdVQo+BH5zII+Ku+OfPF+lDdsMmIymmaJUNfVkI5f9oe+3Qy0aORo/53Jt8Qd5AF
-	HKq3/yxPxjfQo1yyZbh0gaL09K8dGOMguUu988cVf7joJklohSFy/ayneJ/UAe9Y7hhzeJZJnz/
-	2qEEflLlOk9Ayp00SsWcJypDsQF0c+dNxowxYVbhjC/qltiHu8Jcs=
-X-Received: by 2002:a17:903:90b:b0:2b0:b214:3bf0 with SMTP id d9443c01a7336-2b25ef39cd7mr24743905ad.17.1774940316646;
-        Mon, 30 Mar 2026 23:58:36 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1774942353; x=1775547153;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=9lGLRyHekliNWF/e73UsyDVKIPVttJC0CnEap7PKUCs=;
+        b=i7uiFUnE0qJ7zs0H3Z++lMN6c4uUrXlwqyH4weAZ1mi9W1IuTGBG8bJ3j06ITIBJj6
+         jU0lS33rxSas/k3q2EXe2tZfk66C/1Cfv9O7quX6zUMWHKMTws274D1sHxxPBCLAPcLz
+         86L5hXioLppyQ8Wmt9SJU3oNGz1smSfDHOErKK1D6AkRVSqqckgaYqbepKRrZfzmlZe5
+         gSubW0uy7vSKxpor4JSeYDCaLZ7WjxDRIyqB95cZs1Rk9T1xdCCvjkijnw6lVCH/m98d
+         vql7heG+6gQwyPr1+UMr8jSE0pWuE0isEGlDO4Z9TH6egp9btLWlqkLBe9IjPmv+GniH
+         644A==
+X-Gm-Message-State: AOJu0Yyzx9K7VZnNAjoVp21R0mr6GWjLxMQxyPk2dbEblBL9Sq3Cf2lc
+	W0A2Lgva3f6O4PAvt/XBaqntSH8NysnbJ14isNFd+bgpyGsf7D/BiKYhFh3lFg==
+X-Gm-Gg: ATEYQzwe5RdZ7vgDCfn5g3d605zMiOj2k/CklzeSL2GBxBYxM7l4oHSQuC+gJAWvgE6
+	i6PQLx+CvZHVeuBD1lhtNqAH/nx+ja+hzNwtarBYN+QCbd6A5b8+6cVP/SeUWruHa7guFsEQfaZ
+	tq7v51bpkUzzdAtFk9ySWLOb2jOcwGfdYt5UMmZaZ5/e9tws+roN/nLKElL2Pge9EJsDnwDOl4Z
+	XGrnsZzZ0BXuWWNWotgMHwkpJvd3sI41EM64Qail1LQCP3JmZMqjl/1ql6B5Q85CUMqZdoTWMHB
+	AhXQVxhminuPkIzeLz5S50JQpGHV+rRCLpjAuGzdqHSD+xHnYHi9XUHKUo6USLwIkxij7kPyDKT
+	uIyqL5DT210ISMkmbmf0JnH8ii4C8nJqYagvT4csezWRKvSKLPt0HGas+Iy5WKcDaLAggTE7bDh
+	hwpdgwjkJ04SVP++x2TSedFH79A8EoT+8Ca/LYxxSSuZMKz5khjH0=
+X-Received: by 2002:a17:903:94d:b0:2b2:57df:264d with SMTP id d9443c01a7336-2b257df28acmr50704225ad.33.1774942353119;
+        Tue, 31 Mar 2026 00:32:33 -0700 (PDT)
 Received: from celestia.taila51cc2.ts.net ([2402:1980:898b:301c:d085:a35:99e7:ffec])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2b24b02a11esm92674675ad.65.2026.03.30.23.58.34
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2b2427acdb9sm105215045ad.68.2026.03.31.00.32.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 30 Mar 2026 23:58:36 -0700 (PDT)
+        Tue, 31 Mar 2026 00:32:32 -0700 (PDT)
 From: Liew Rui Yan <aethernet65535@gmail.com>
 To: sj@kernel.org
-Cc: aethernet65535@gmail.com,
-	damon@lists.linux.dev,
-	linux-mm@kvack.org
-Subject: Re: [RFC PATCH] mm/damon: reset thread status parameters upon kdamond termination
-Date: Tue, 31 Mar 2026 14:58:36 +0800
-Message-ID: <20260331065836.4364-1-aethernet65535@gmail.com>
+Cc: damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	Liew Rui Yan <aethernet65535@gmail.com>
+Subject: [PATCH] mm/damon: validate min_region_size to be power of 2
+Date: Tue, 31 Mar 2026 15:32:31 +0800
+Message-ID: <20260331073231.30060-1-aethernet65535@gmail.com>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260331050229.67637-1-sj@kernel.org>
-References: <20260331050229.67637-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -77,76 +72,52 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hi SeongJae,
+Problem
+=======
+damon_commit_ctx() checks if 'min_region_sz' is a power of 2. But if it
+is not, kdamond will terminate unexpectedly due to the user's invalid
+input.
 
-On Mon, 30 Mar 2026 22:02:28 -0700 SeongJae Park <sj@kernel.org> wrote:
+Solution
+========
+Add the same check to damon_{lru_sort, reclaim}_apply_parameters(), but
+return -EINVAL immediately. This is to prevent user's invalid input
+causing kdamond to terminate unexpectedly.
 
-> Nice catch!
-> 
-> I guess this can easily reproducible?  Sharing detailed reproduction steps
-> would be nice.
+Signed-off-by: Liew Rui Yan <aethernet65535@gmail.com>
+---
+ mm/damon/lru_sort.c | 3 +++
+ mm/damon/reclaim.c  | 3 +++
+ 2 files changed, 6 insertions(+)
 
-I will include the reproduction steps in the next version.
+diff --git a/mm/damon/lru_sort.c b/mm/damon/lru_sort.c
+index 554559d72976..205592194efd 100644
+--- a/mm/damon/lru_sort.c
++++ b/mm/damon/lru_sort.c
+@@ -294,6 +294,9 @@ static int damon_lru_sort_apply_parameters(void)
+ 	param_ctx->addr_unit = addr_unit;
+ 	param_ctx->min_region_sz = max(DAMON_MIN_REGION_SZ / addr_unit, 1);
+ 
++	if (!is_power_of_2(param_ctx->min_region_sz))
++		return -EINVAL;
++
+ 	if (!damon_lru_sort_mon_attrs.sample_interval) {
+ 		err = -EINVAL;
+ 		goto out;
+diff --git a/mm/damon/reclaim.c b/mm/damon/reclaim.c
+index 86da14778658..6e29d92670c4 100644
+--- a/mm/damon/reclaim.c
++++ b/mm/damon/reclaim.c
+@@ -204,6 +204,9 @@ static int damon_reclaim_apply_parameters(void)
+ 	param_ctx->addr_unit = addr_unit;
+ 	param_ctx->min_region_sz = max(DAMON_MIN_REGION_SZ / addr_unit, 1);
+ 
++	if (!is_power_of_2(param_ctx->min_region_sz))
++		return -EINVAL;
++
+ 	if (!damon_reclaim_mon_attrs.aggr_interval) {
+ 		err = -EINVAL;
+ 		goto out;
+-- 
+2.53.0
 
-> > Solution
-> > ========
-> > Introduce a 'thread_status' structure to link the internal kdamond
-> > state with module parameters ('enabled' and 'kdamond_pid').
-> > 
-> > Specifically:
-> > 1. Extend 'struct damon_ctx' to include pointers to the module's
-> >    parameters.
-> > 2. Initialize these pointers in damon_lru_sort_apply_parameters()
-> >    and damon_reclaim_apply_parameters() to point the respective
-> >    module variables.
-> > 3. Implement damon_update_thread_status() to reset 'enabled' to
-> >    false and 'kdamond_pid' to -1 when the kdamond thread finishes.
-> 
-> This feels too much extension of core API for a problem that can more simply be
-> fixed.  Can't we detect the unexpected termination of kdamond from the modules
-> and update the paramter values accordingly?
-> 
-> If we cannot due to a limitation of the DAMON core API, I'd like to extend the
-> API for letting the caller detects the unexpected termination.
-> 
-> Because this is an RFC and I already have question for the high level
-> direction, I will skip code level review.
-> I agree that the current approach was too heavy as it forced the DAMON
-> Core to directly manipulate module-specific parameters, leading to tight
-> coupling between layers.
-
-To address this, I've brainstormed two alternative directions and would
-love to hear your thoughts:
-
-Option 1: Introduce a generic termination callback
-==================================================
-Add 'void *after_terminate_fn(void*)' and 'void *after_terminate_data'
-to 'struct damon_ctx' or 'struct damon_operations'. While this extends
-the Core API, it provides a clean notification mechanism. When kdamond
-exits for any reason, the module can perform its own cleanup (e.g.,
-resetting 'enabled' and 'kdamond_pid') within its own callback. This
-keeps the core logic decoupled from module parameters.
-
-Option 2: On-demand state correction in the module
-==================================================
-In damon_{lru_sort, reclaim}_enabled_store(), if damon_stop() fails, we
-check is_kdamond_running(). If the kdamond is found to be terminated, we
-forcibly reset 'enabled' and 'kdamond_pid'.
-
-My perspective
---------------
-I personally prefer OPTION-1 because it ensures the sysfs state in
-synchronized actively.
-
-OPTION-2 is simpler and avoids API changes, but it's a "passive" fix
-that only triggers when user atttempts a write operation. User might
-still see inconsistent value until they try to interact with the module.
-
-I value your judgment on which path better aligns with DAMON's long-term
-design philosophy, as your experience with real-world kernel maintenance
-is far beyond mine. :>
-
-Best regards,
-Rui Yan
-
-[...]
