@@ -1,48 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B74152236FD;
-	Wed,  1 Apr 2026 00:59:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCC2526299
+	for <damon@lists.linux.dev>; Wed,  1 Apr 2026 01:01:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775005149; cv=none; b=FS4OaASFCVCckfEJF4lKa6irr+SNei8fuyjIWgr2WlJ1Lr6sMD4FeFhk2n6nQt5tdXeF3DmQ+DgkbQFDGw/MgQ+delUANisf2dvm5eMNcmS6BtstV16rKEzRHywprvIH8Hvhpn0Z9NN8pAAjYve/qGf/PnyRxGZtt85pzFd9I8A=
+	t=1775005319; cv=none; b=ct3nthQwmwBDn6143dPBFZENXaRWgKbjbW2pNNqPYk1NwCzTmoSxnrVGlsMELS+Bbfz+f4SyY2R2/MikTsFczPrrjs0uPaFmKsipVEFw+l5jnIvNkzAf86yKM2Zt9Oy7nHhP0YMwGmGNN7Ub717DcqdQZBX/dD/e9ubNIycgSoI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775005149; c=relaxed/simple;
-	bh=vlrwwARqJyOsWvsUI29VDJAa3DH8Mh38OVXxiNATEv8=;
+	s=arc-20240116; t=1775005319; c=relaxed/simple;
+	bh=jcORolmk2pu3U1KnRXM+xvp+DaiomzAMbEur1rQS6PY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XsUXsiMdt/2IzNX0nTIIeCpZ0tqin6FDi6wPisnpzEshrPAdUbysbvYQqGQm7iA1iwwQJkuRaTQmB/fL8ETog5X6SsIn7MBE1JoeHT6cF310drUPy34TonPxYsKmO0+vUZT2sJS+QLQ7dnq/TK8UFIxSGOjFiijTA0WHNhUmljU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DpfeV6vm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YwWpVDGxGHPIE2ZBQTbaUZFKpzbhFp458QBpxBkX46g7NB+pCc+ZSoiFW/8Jn/ZrBA5oU78JJlQH442n1oKwiCn5m1Ozn4Md86sZx8JvIW3XnUK6ioydbKeKJNuL28PASqduBOjlOsh8bBoZyvwrQTAm1Hz92EbKhP7TPcrkMUg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FZDeVQJw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DpfeV6vm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2C6EC2BCB2;
-	Wed,  1 Apr 2026 00:59:08 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FZDeVQJw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DBDEC19423;
+	Wed,  1 Apr 2026 01:01:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1775005149;
-	bh=vlrwwARqJyOsWvsUI29VDJAa3DH8Mh38OVXxiNATEv8=;
+	s=k20201202; t=1775005319;
+	bh=jcORolmk2pu3U1KnRXM+xvp+DaiomzAMbEur1rQS6PY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DpfeV6vmOJE94JC4YmwmGxhAYT13SF+q9j4PN0LkzexOkXJtKrfyIDylj1mXyh6dA
-	 T+QJlPEe3K96waxCJUkqkcODvzE4Ca2gwyac79tr+DMkwCkHWFYdjDjgn/5Fz7MGW9
-	 8DQEOrGJ9mGfP/gftMTI0F9169kOcNcynWBo9/J3lQnnpPdp1awpJJUs44XsdrX0OX
-	 2OJNzQhsKejzkJKbJ6zJjO5cL4I4ww7HiyIOe53jMmayWT0iYUYjhH77jrr5NcnJp6
-	 NTMgZI/C2YJkw4EhCQpvD9me7KMFxJvIdKvt827ncwxHqtM5PP/bxWZBsptDaGCZKn
-	 vyKpHddEzwVmA==
+	b=FZDeVQJw4GASOjNYX8+ocjkJYyN3ReMmn6javnl04Oau69d7Wl/6H4cvUhTVfwRPx
+	 +BYTI0tkNnsaV0C3QQ9KSj41eUL6LVtnClbc6wipxwdEU3i0GWn4567J8llXXFVBz2
+	 IlXw7OvBoKEArkvIBXWb8GVWxyp5uy0yIVRHcHwXEmc4lTsch74QGTyjIWpw/x0ph1
+	 Hmt7SwgqOytbGavQH8UqtzMcJ03Ihnm/yUZwnPcOFcWIfK2BkAp8XEoeG7njazXdU6
+	 o8PGB4ElirT/dagWyJfTs3TQbzzlwkdy+GZlJllB1DfSsNlInQKYUUb0gN9cdan7/h
+	 bUcqd890l5EIg==
 From: SeongJae Park <sj@kernel.org>
-To: Gutierrez Asier <gutierrez.asier@huawei-partners.com>
+To: Liew Rui Yan <aethernet65535@gmail.com>
 Cc: SeongJae Park <sj@kernel.org>,
-	artem.kuzin@huawei.com,
-	stepanov.anatoly@huawei.com,
-	wangkefeng.wang@huawei.com,
-	yanquanmin1@huawei.com,
-	zuoze1@huawei.com,
 	damon@lists.linux.dev,
-	akpm@linux-foundation.org,
-	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v1 1/1] mm/damon: support MADV_COLLAPSE via DAMOS_COLLAPSE scheme action
-Date: Tue, 31 Mar 2026 17:59:07 -0700
-Message-ID: <20260401005907.86002-1-sj@kernel.org>
+	linux-mm@kvack.org
+Subject: Re: [PATCH] mm/damon: validate min_region_size to be power of 2
+Date: Tue, 31 Mar 2026 18:01:56 -0700
+Message-ID: <20260401010157.86136-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <4fe88a6b-2d9a-455b-9ab0-5ff153e0e88d@huawei-partners.com>
+In-Reply-To: <20260331073231.30060-1-aethernet65535@gmail.com>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -52,29 +45,28 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Tue, 31 Mar 2026 18:15:50 +0300 Gutierrez Asier <gutierrez.asier@huawei-partners.com> wrote:
+On Tue, 31 Mar 2026 15:32:31 +0800 Liew Rui Yan <aethernet65535@gmail.com> wrote:
 
-> Hi SJ,
+> Problem
+> =======
+> damon_commit_ctx() checks if 'min_region_sz' is a power of 2. But if it
+> is not, kdamond will terminate unexpectedly due to the user's invalid
+> input.
 > 
-> On 3/31/2026 4:31 AM, SeongJae Park wrote:
-[...]
-> Thanks for the review.
+> Solution
+> ========
+> Add the same check to damon_{lru_sort, reclaim}_apply_parameters(), but
+> return -EINVAL immediately. This is to prevent user's invalid input
+> causing kdamond to terminate unexpectedly.
 
-Thank you for generously accepting my suggestions and answering questions, too.
-
+Seems sashiko found an issue, and you are preparing the next revision, right?
+Assuming so, I will skip code review of this version.
 > 
-> I will run some more tests today. The test try to hit every row in the database,
-> which may not be realistic. Usually only some parts of the table are really hot.
-> I will change the test to get something closer to a normal distribution on the
-> table hit.
+> Signed-off-by: Liew Rui Yan <aethernet65535@gmail.com>
+> ---
 
-Sounds good.  I wouldn't strongly request more detailed test results for this
-patch, though.  As the idea is solid, just the simple test showing the expected
-behavior is already good for me.  I'm rather bit concerned if you will go down
-to a rabbit hole while doing more tests.
-
-Nonetheless, if you want to make the commit message more complete, I have no
-reason to stop you, either :)
+Weren't there previous versions of this patch?  Could you please add changelog
+here, from the next version?
 
 
 Thanks,
