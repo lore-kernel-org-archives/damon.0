@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 992A322FF22
-	for <damon@lists.linux.dev>; Thu,  2 Apr 2026 00:40:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 315D323A564;
+	Thu,  2 Apr 2026 01:04:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775090429; cv=none; b=jmabbs19EZVHb5Qpy7cYUlBXOwMiplLLco5zMjZPKtRn2unxeuF3opVKvzfNKKOIBzsDu9bx5fQlUA9zWFCOpLnEvVA12wkSr8XXLL76Mll4GfNQ7de4nkr+oCaXmzG01jpIojFLuMtiiSwVjc4NafGBAfvFtm73tqIkkGTiZu0=
+	t=1775091900; cv=none; b=pAkPYY1d1ItXnuUiEE/H0oFFlY02aFUJbFRhL17MP+RDB9yQlOlk+ppJBYC5EI2tbPJ6yfNitDx0i4O+BoXhgB4VlUTeDMrG9gGghUu/uljMTGVP4vU8vqprjrAYKxjZsLxY440dk8I6HqypaEYe9l5WB+nSwOJNWiPTpX725fk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775090429; c=relaxed/simple;
-	bh=JF8+debzMCtcQ9RFsdSB1opffxjgjYKLJ5l4rkKwMYw=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uk+7cMuTV53X9h0PPGzvrScwP2Ygsk3ArTe5t6yxQHqVHTpZUhXB5BzVI2664V25i9DNpCSVeRX+i3nKp/2AtEArXGLekJ87Noa+SAzNjbrw3hHcwCTEn4FvFSRr/Cy20TRNKAgQWySXpJTHoChd6aMag5bSpMwZcYEvZLVlqto=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=raO0q6T+; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1775091900; c=relaxed/simple;
+	bh=e4BniEALtKj2WeE8HlkohnCEv/JIv0ZTg/5k1eKeGFs=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=rEFTRt1fgGkLYsCQSU84vzHDWjBCtL0cth3RChmcNOreez6zQyq9gsKmUYH9Nn2NAfxpAmwixl9w/KZu3E8kwVRIbW5XuCucsd009bnixZyMWcixYerxGxBy7Kn/4TC7s4rWm++h5veUg52LGPdjjcTBZHn23cDEA1HFsWv/m4k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Uav8uHAU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="raO0q6T+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1549C4CEF7;
-	Thu,  2 Apr 2026 00:40:28 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Uav8uHAU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71EF6C4CEF7;
+	Thu,  2 Apr 2026 01:04:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1775090429;
-	bh=JF8+debzMCtcQ9RFsdSB1opffxjgjYKLJ5l4rkKwMYw=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=raO0q6T+cev2ccGk4Aul8Z47OvE3wCTq2XfWf2aSKSUsJqrvGkZSXMyLXkA/VfCtB
-	 zshh84DRoKZF3VxKwMNYT1gvHASfTLdBTX44fkGLBjX3IS40tY9VOp+HryWJPOGMR0
-	 +qB1DLNMr4qH6HaPJSOj3PdQSIfeG+icC2tqPsaZC4v7Hsqs6BdB1AAlLxWg/1hTPW
-	 tAisz9gWShnDDqDoxqxUNDjI5OqR5hAu4pCIuzp5n3siq1g9G42O3JE/4EGlTkItHh
-	 bLdwetdsmUL+9iCQmYaueHjqJRhD/EMUVmr3cLCTIrBtI8eqaL9vkPcboYsYz6vFnL
-	 xOvIi73SwB+6A==
+	s=k20201202; t=1775091899;
+	bh=e4BniEALtKj2WeE8HlkohnCEv/JIv0ZTg/5k1eKeGFs=;
+	h=From:To:Cc:Subject:Date:From;
+	b=Uav8uHAUSjEDjDVXMUiKwNs31B5OATnzuQSyA8oEcn0aYqDpqHpbyOLbjZkaVJp7W
+	 4ipgcuJVp7JB3X+PJBEN+wvCl8XlHt2ZBEF27SqPKTgCoYtJ9p1d60pzyckz1OLvlO
+	 riitWL8qytEMQXMS++cW1eLJ0l0C02N7xNNll80GrCKpASu4Kw3uw01qrTmwT0xyrl
+	 M7YnVBqK6K7i28hyqR2LQ545bhXWDE26MJhpfMReBLH5z8NSmeRVbxHxeSI23jn/zF
+	 VhxfI44jdVyJThMxQMvgUzG/JEGiFVwIvMImTwdBK/M/zwElBlqx8Jj0lzL/40PKNJ
+	 DhrKx26vIuIlQ==
 From: SeongJae Park <sj@kernel.org>
-To: Liew Rui Yan <aethernet65535@gmail.com>
+To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SeongJae Park <sj@kernel.org>,
+	"# 6 . 17 . x" <stable@vger.kernel.org>,
 	damon@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: Re: [RFC PATCH] mm/damon: reset thread status parameters upon kdamond termination
-Date: Wed,  1 Apr 2026 17:40:27 -0700
-Message-ID: <20260402004027.64439-1-sj@kernel.org>
+Subject: [PATCH] mm/damon/stat: deallocate damon_call() failure leaking damon_ctx
+Date: Wed,  1 Apr 2026 18:04:55 -0700
+Message-ID: <20260402010457.66860-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260401082354.12467-1-aethernet65535@gmail.com>
-References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -45,19 +44,40 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Wed,  1 Apr 2026 16:23:54 +0800 Liew Rui Yan <aethernet65535@gmail.com> wrote:
+DAMON_STAT does not deallocate its dynamically allocated damon_ctx
+object when damon_call() is failed.  As a result, the memory is leaked.
+Check the failure and deallocate the damon_ctx object.
 
-> Hi SeongJae,
-> 
-> First of all, I apologize for not completely answering your question,
-> and I will be more careful next time.
+The issue was discovered [1] by sashiko.
 
-No worries, we all make mistakes, or simply have different tastes.  Thank you
-for adding clear answers to my questions and generously accepting my
-suggestions.
+[1] https://lore.kernel.org/20260401012428.86694-1-sj@kernel.org
 
+Fixes: 405f61996d9d ("mm/damon/stat: use damon_call() repeat mode instead of damon_callback")
+Cc: <stable@vger.kernel.org> # 6.17.x
+Signed-off-by: SeongJae Park <sj@kernel.org>
+---
+ mm/damon/stat.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-Thanks,
-SJ
+diff --git a/mm/damon/stat.c b/mm/damon/stat.c
+index 5a742fc157e4..30aeb2c207ec 100644
+--- a/mm/damon/stat.c
++++ b/mm/damon/stat.c
+@@ -257,7 +257,12 @@ static int damon_stat_start(void)
+ 
+ 	damon_stat_last_refresh_jiffies = jiffies;
+ 	call_control.data = damon_stat_context;
+-	return damon_call(damon_stat_context, &call_control);
++	err = damon_call(damon_stat_context, &call_control);
++	if (err) {
++		damon_destroy_ctx(damon_stat_context);
++		damon_stat_context = NULL;
++	}
++	return err;
+ }
+ 
+ static void damon_stat_stop(void)
 
-[...]
+base-commit: 4fd04f750d79667937931314ed64c9d79b0d82ef
+-- 
+2.47.3
