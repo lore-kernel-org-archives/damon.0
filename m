@@ -1,41 +1,51 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81F082517AF;
-	Thu,  2 Apr 2026 15:57:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F5033E92A9;
+	Thu,  2 Apr 2026 15:57:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775145465; cv=none; b=oCFilg3R3FJwGcGPFecOYiLwShJSxX3xo8BKOx27pw3SbPZonVjsBSuFKR3DE6deNfjyEefAQJ7recOYQptd/chmCA+2D57kCkGeY8te6sWZ2WWdM96r38oj5xhwhnWYI7Qs5vXuDym6vukBC3rLjuB7to4HGHOFiQO7gXbAnXM=
+	t=1775145466; cv=none; b=KNc6HkVKc5yMi6pW4wSbqeRtSSrR/g1vEIhkHuFxJst51lzQ1uL87iG40P3p/OLb7ZppThAyIyR3ZKqqiGCgdltbZIDPgS0VUgA9dwbEl4C9QKoppX7KIlxSR3Qi2T3vR7wU4tyZPY2zBmE1HcXORuFna9Z7nVSOxsLJ0SdxeNc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775145465; c=relaxed/simple;
-	bh=Cctzlt5Opg64VMqk24naaGYNSUhmoxomxZXKX5DKxok=;
+	s=arc-20240116; t=1775145466; c=relaxed/simple;
+	bh=NWZnwPLlZwgRijh5GHeOqBVHlZCMjzzOn/iStC0SCqM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fHYjrfH8+hluYvgvQhixnlZMMbvp36sujOaQxSdpCd9qcDehdVufBgDm53d32y6DG+eI56Izo0xkrQZ7nCW6MfogfEYS/pIg3Ek+K8bzFx0HwEaQU4I33ZmGRZZc2xUVLLndJLw74kqPLtacWA7MBvKUItVmJUXqCXgilNHh0Xo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OTULZxMf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=M/e8Wm1EGkORzpjWke6po0sHuEBa5AAm/4euoHQHIrv187H+Q22/mSEZkFTTx40ngYcW0iVmrwMNywsacXNEaRSdL1jJ7GRGxeiOAAmAC1FQ6BTFq/05jE7SK5j4+3k6gOQCmU30ROOrUBxRIHqddF08V1BHRE3qxbF3ojp87wY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TnmIJMVs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OTULZxMf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40D12C2BC9E;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TnmIJMVs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87F29C2BCAF;
 	Thu,  2 Apr 2026 15:57:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1775145465;
-	bh=Cctzlt5Opg64VMqk24naaGYNSUhmoxomxZXKX5DKxok=;
+	s=k20201202; t=1775145466;
+	bh=NWZnwPLlZwgRijh5GHeOqBVHlZCMjzzOn/iStC0SCqM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OTULZxMfEQn9PVoLW7K0LXBdrVffjx1gNhhyW3+NznKze+5HFUHJN2WkiZ88U3gNu
-	 t/SgxHwrWR1J5EwcPtThlgYrTpcB6aFiZzf2uz6ai174I1mMRScq0U6Kk428/R+ycb
-	 8xGIQ9fZHzrp5CNX74ystm9Eam57znEEi0KpgRTTbxvNeijCSWmAGu82ycX0722tat
-	 WHd2SlmWWTTZY5VJRXhWyjecYFMv8uuczxDCFZe1/yYttOXiEgcFOS3ZUc2nU8Yt1Q
-	 aG6vE5JxRAsCOS5eSgfaQJVg98ISJzs04KAwYQdbaz+urTkO0Hm3ZsQBUUC2xpt91i
-	 56cNwutvguOpQ==
+	b=TnmIJMVsupwRCAUIRtEW1A3hNDQOcVCalkG+q6c808nPcowDdO7ca/2WcJ+cqpRKO
+	 HVWT0vNR0H7ScK2iQVAOKXJOuWMefJcVudADsb5Ao+kdqnE5YMsHRZAAPrmSKj9nzB
+	 lmSaxkf/avHo7S/LNoTJtMqSPp/2rW9KlzMkEd1bxuWPrmZjHF31ZYZH62WwubBF3h
+	 t2P34vHoounwhjZioul4dh1PXJwakQ9yGK6j+fO33UR1ZPlL8iz9trO0aIXjxHL//u
+	 MCElcbNYpN63Fqdx19qV31xyn5ivQQnSw78gGkWaMPldV+IwPbeOIRxf05WGFqnwJi
+	 Ypr/jPREyPA3w==
 From: SeongJae Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
-Cc: Liew Rui Yan <aethernet65535@gmail.com>,
+Cc: Cheng-Han Wu <hank20010209@gmail.com>,
+	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
+	David Hildenbrand <david@kernel.org>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Mike Rapoport <rppt@kernel.org>,
 	SeongJae Park <sj@kernel.org>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@kernel.org>,
 	damon@lists.linux.dev,
+	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [PATCH 1/3] mm/damon/ops-common: optimize damon_hot_score() using ilog2()
-Date: Thu,  2 Apr 2026 08:57:28 -0700
-Message-ID: <20260402155733.77050-2-sj@kernel.org>
+Subject: [PATCH 2/3] Docs/admin-guide/mm/damon: fix 'parametrs' typo
+Date: Thu,  2 Apr 2026 08:57:29 -0700
+Message-ID: <20260402155733.77050-3-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260402155733.77050-1-sj@kernel.org>
 References: <20260402155733.77050-1-sj@kernel.org>
@@ -47,94 +57,47 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-From: Liew Rui Yan <aethernet65535@gmail.com>
+From: Cheng-Han Wu <hank20010209@gmail.com>
 
-The current implementation of damon_hot_score() uses a manual for-loop
-to calculate the value of 'age_in_log'. This can be efficiently replaced
-by ilog2(), which is semantically more appropriate for calculating the
-logarithmic value of age.
+Fix the misspelling of "parametrs" as "parameters" in
+reclaim.rst and lru_sort.rst.
 
-In a simulated-kernel-module performance test with 10,000,000 iterations,
-this optimization showed a significant reduction in latency (average
-latency reduced from ~12ns to ~1ns).
-
-Test results from the simulated-kernel-module:
-- ilog2:
-    DAMON Perf Test: Starting 10000000 iterations
-    =============================================
-     Total Iterations : 10000000
-     Average Latency  : 1 ns
-     P95 Latency      : 41 ns
-     P99 Latency      : 41 ns
-    ---------------------------------------------
-     Range (ns)      | Count        | Percent
-    ---------------------------------------------
-     0-19            | 0            |      0%
-     20-39           | 2625000      |     26%
-     40-59           | 7374000      |     73%
-     60-79           | 0            |      0%
-     80-99           | 0            |      0%
-     100+            | 1000         |      0%
-    =============================================
-
-- for-loop:
-    DAMON Perf Test: Starting 10000000 iterations
-    =============================================
-     Total Iterations : 10000000
-     Average Latency  : 12 ns
-     P95 Latency      : 51 ns
-     P99 Latency      : 60 ns
-    ---------------------------------------------
-     Range (ns)      | Count        | Percent
-    ---------------------------------------------
-     0-19            | 0            |      0%
-     20-39           | 0            |      0%
-     40-59           | 9862000      |     98%
-     60-79           | 135000       |      1%
-     80-99           | 1000         |      0%
-     100+            | 2000         |      0%
-    =============================================
-
-Full raw benchmark results can be found at [1].
-
-[1] https://github.com/aethernet65535/damon-hot-score-fls-optimize/tree/master/result-raw
-
-Signed-off-by: Liew Rui Yan <aethernet65535@gmail.com>
-Reviewed-by: SeongJae Park <sj@kernel.org>
+Signed-off-by: Cheng-Han Wu <hank20010209@gmail.com>
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
-Changes from v2
-(https://lore.kernel.org/20260320192020.33004-1-aethernet65535@gmail.com)
-- Rebased to latest mm-new.
-Changes from v1 (actually it was RFC)
-(https://lore.kernel.org/20260320072431.248235-1-aethernet65535@gmail.com)
-- Replace fls() with ilog2() per SeongJae Park's suggestion for better
-  semantic clarity.
-- Move performance benchmark results into the commit message and add
-  comparison between for-loop and ilog2.
+Changes from v1
+(https://lore.kernel.org/20260324144851.12883-1-hank20010209@gmail.com)
+- Rebase to latest mm-new.
 
- mm/damon/ops-common.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ Documentation/admin-guide/mm/damon/lru_sort.rst | 2 +-
+ Documentation/admin-guide/mm/damon/reclaim.rst  | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/mm/damon/ops-common.c b/mm/damon/ops-common.c
-index 8c6d613425c1..3a0ddc3ac719 100644
---- a/mm/damon/ops-common.c
-+++ b/mm/damon/ops-common.c
-@@ -117,9 +117,12 @@ int damon_hot_score(struct damon_ctx *c, struct damon_region *r,
- 		damon_max_nr_accesses(&c->attrs);
+diff --git a/Documentation/admin-guide/mm/damon/lru_sort.rst b/Documentation/admin-guide/mm/damon/lru_sort.rst
+index 14cc6b2db897..25e2f042a383 100644
+--- a/Documentation/admin-guide/mm/damon/lru_sort.rst
++++ b/Documentation/admin-guide/mm/damon/lru_sort.rst
+@@ -75,7 +75,7 @@ Make DAMON_LRU_SORT reads the input parameters again, except ``enabled``.
  
- 	age_in_sec = (unsigned long)r->age * c->attrs.aggr_interval / 1000000;
--	for (age_in_log = 0; age_in_log < DAMON_MAX_AGE_IN_LOG && age_in_sec;
--			age_in_log++, age_in_sec >>= 1)
--		;
-+	if (age_in_sec)
-+		age_in_log = min_t(int, ilog2(age_in_sec) + 1,
-+				DAMON_MAX_AGE_IN_LOG);
-+	else
-+		age_in_log = 0;
-+
+ Input parameters that updated while DAMON_LRU_SORT is running are not applied
+ by default.  Once this parameter is set as ``Y``, DAMON_LRU_SORT reads values
+-of parametrs except ``enabled`` again.  Once the re-reading is done, this
++of parameters except ``enabled`` again.  Once the re-reading is done, this
+ parameter is set as ``N``.  If invalid parameters are found while the
+ re-reading, DAMON_LRU_SORT will be disabled.
  
- 	/* If frequency is 0, higher age means it's colder */
- 	if (freq_subscore == 0)
+diff --git a/Documentation/admin-guide/mm/damon/reclaim.rst b/Documentation/admin-guide/mm/damon/reclaim.rst
+index 2068f1346b9c..17e938c319e3 100644
+--- a/Documentation/admin-guide/mm/damon/reclaim.rst
++++ b/Documentation/admin-guide/mm/damon/reclaim.rst
+@@ -67,7 +67,7 @@ Make DAMON_RECLAIM reads the input parameters again, except ``enabled``.
+ 
+ Input parameters that updated while DAMON_RECLAIM is running are not applied
+ by default.  Once this parameter is set as ``Y``, DAMON_RECLAIM reads values
+-of parametrs except ``enabled`` again.  Once the re-reading is done, this
++of parameters except ``enabled`` again.  Once the re-reading is done, this
+ parameter is set as ``N``.  If invalid parameters are found while the
+ re-reading, DAMON_RECLAIM will be disabled.
+ 
 -- 
 2.47.3
