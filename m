@@ -1,69 +1,73 @@
-Received: from mail-pf1-f170.google.com (mail-pf1-f170.google.com [209.85.210.170])
+Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 031A331F9BD
-	for <damon@lists.linux.dev>; Thu,  2 Apr 2026 05:38:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B2232DEA6B
+	for <damon@lists.linux.dev>; Thu,  2 Apr 2026 07:08:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775108286; cv=none; b=DtGTGEJxLL/KeOXA4YBrwdPnTWTIVQzBQ+bgTeIKBWupy7TUlFTb+qxkHq3b7U92/vIlDV6hLv3fGsNE3Y5QUAF00ye8NpykBe6JjVnR5vWuMrEZF4vorh4nzPID6A9WXzLsdRUMd7RpJSC9olHj1zvZ9UAd/roLx7NN/Degeho=
+	t=1775113736; cv=none; b=UxiIk3YCZwuhB3D7/0LyfGCQxmipC7LZO/6yxGt6KGKaG3+Q7O4PyeKKdpJmD+Zd2UTMKRD/pBJVpHK4TxUqYc4cjbcjIAeiLZBCGm+4auO0rH6MEgyF+eB+Hp40JD6HAPJ6G7SeYkBb1Ttzj1eEYy6jSHvuN9sx0kSDIPmHWII=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775108286; c=relaxed/simple;
-	bh=3wJaBgbvxsxOY5IDdNEMD5IcpLWrFV6g7qSEBD/pztA=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Icn/fZ9YbVTOjh0IdDBNyScZUufbv/AgCSNgX+KJGiMnn/cfltTHkOvJ815iM3H1YWKjucYmVuhSxACRBVvcF0FjgVH6p2qObIhwYZrjl0g7tO9o9eFFesCfjEaHAEWfwVI9qbbJTU8ijbPDYEEJ8RAgK5swUMuPyay8S8iWu8Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=pNoknYH+; arc=none smtp.client-ip=209.85.210.170
+	s=arc-20240116; t=1775113736; c=relaxed/simple;
+	bh=iyHjtoNEHhZyVoW45/z3myeOX1peGCj3SM45rV54Mbk=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=BRLtPblE1Qvvr8VttysqVaOM2WHYIfSJdL7nQ7rQ1gDB9Qm4PY7GPyF65fiZsX+j7jk8HfMqkAR2LKsVE8hH81AeBhD4bTNpck3MR1ZqegnGKmy5COb9quNdLNcQXIBkmxCpBb1kcrxB0WNv5XkwULH9+2uyR2+QxSVMzaT1DmE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZbZui0ST; arc=none smtp.client-ip=209.85.214.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="pNoknYH+"
-Received: by mail-pf1-f170.google.com with SMTP id d2e1a72fcca58-82cf636dac8so219643b3a.3
-        for <damon@lists.linux.dev>; Wed, 01 Apr 2026 22:38:04 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZbZui0ST"
+Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-2ad9f316d68so1956975ad.2
+        for <damon@lists.linux.dev>; Thu, 02 Apr 2026 00:08:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1775108284; x=1775713084; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=wpZU7evQNWPDKH6NxwB4xQqMBTVomSBrqVWkgmSAht4=;
-        b=pNoknYH+mFZwUKwEZ6jGTmYIU0W/UuO6rsAuMCGowqk0ue5cRQnfMAlUIo2SesgUUS
-         yJMwnxOeEpRj35+OndoGR62WT1OmJJipKCPHJbm3AcMd68mAcGgk7KJb0xW4io0/jBog
-         JhbyoVtBorabc0DyPf8JYSR+fMlyfLQZgLl/86R4fUdkbjn0nEizGrTy5IoXxomu2oRW
-         vpAcKug7BCoLYgIzv/ZOAG4tVIhw3TG5Z8FlWBrDr5Tpxfv10oUGhVRBxiwAp9rXhUx2
-         JR68FECJ2vXvzxcKVL9NBcQcLtn217K/V79sDjiyfFGpOB1120RMEGpKLc9wQE+e3xzQ
-         QN/g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775108284; x=1775713084;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20251104; t=1775113734; x=1775718534; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=wpZU7evQNWPDKH6NxwB4xQqMBTVomSBrqVWkgmSAht4=;
-        b=ml75nl+yFLC1KFeBtszcsifQjcVqy7MYv+G86lhgbgLjKs1Ke6kDpZOUq+Xmise099
-         0a2FslFkg6XM9d1ZVwQtv2vDs91aqiP+lITWNY/pSo+bgZzdssP+4hvhPzlRvI4qLSo9
-         Nolgo5YxQsfkC+WOXLxypHYxIbuPjHeaZfYw+iVC3dMniNjx0VvlIikPyGQ5gAq15F9M
-         WshYKZI9zaRV0+xnv+tS+AilzSrl9861c1FO6w1z7adTd25zGzB1/aUakdIPeffJI1yR
-         t0yaeeUBnnQr9XeiwL6qAjB5rt0EBs+SobvdimcIixN4n9c7NuCsfW/3fwHPM1kWUftI
-         wphw==
-X-Gm-Message-State: AOJu0Yze4UBa/Z0dL9+mhACsTe1Xfc7kY1p2mSjsYoltBmp2HAq9fBSC
-	96zh7tiEJg9Nz2rBHXGn3VpHmIjYaHCuIg+XR2idxcUYS2HAkNN74Whi
-X-Gm-Gg: ATEYQzyfp67HiXYLI923IgA42u9EcfXxX478htZVNGDHhzC47RI3nota9SNHWec5IlT
-	MRBXI/Pjs1w4jDG+ZPANcRzH58WtwZdSsn3iwKv3zFqMWABMiI6Rh0DBKqrjWtQk9MctDZfcz1G
-	qaEbFeSEWBs0S2YPLCRQnwBxBgJQd8s5yHa9RX95pOr0e6GLQoJxZmlvXDJX9AHPSvAIAQVays2
-	zjBKT3Kzkq5jFUzX+Ysx/Au+La+ahPC/Q5suyENvK2Gpt1x/0OFz5FALX2wBuiVZI4zd8uKCwdJ
-	k4Xuvv91wjbOJek9rKOL3GWRP8b+6SxA0DMLjdeAVaNdjo6i5NzridQKSSy2doxx/iSIND+CXDv
-	Ei2IxwFhxbmF8J524GFAhBS4x7TsX0Yal0P26R/kE8v31IX5Nj9us0KZA5waYt34xs5D+nNeBKf
-	E59+kHiAHAuCI9wz27yFvf3Wc9SGRuv7tMjY6MS29RVTh55qwPqN8=
-X-Received: by 2002:a05:6a00:2e94:b0:823:12cb:f5d1 with SMTP id d2e1a72fcca58-82ce88ea8ebmr6525320b3a.6.1775108284208;
-        Wed, 01 Apr 2026 22:38:04 -0700 (PDT)
+        bh=pXqVqKsO/44+sf0WqfVuWAIy8twwlZ1ww6xUKeKYgIs=;
+        b=ZbZui0STB9II6LZG3rSwEBs0XZ7wanDoWPf3Wokpky8pSZejpwuAFINIMETLVevUvw
+         ZMOW0ES74yprQzCtwUAjdDTLWXAoAG+1OfOeGP85lmkx4Ts+Dz4lfNwF9Zwd6wIBhcaK
+         PQQ1XLbSYcIOvvllhmlUP2ljQvsGeEiJnNs8qMd1pNSC2gAJf6Eko8mCHlR4BpLTkYoI
+         PKpnQ7gtJ6biy3IsenyKcvNfS2TKayqy0S2hLHMmE6S+N+CF1b3VYLKrJWoEhFKoDsZE
+         9w/+/e4kAMQEexBO4fFFkZrndc0kGd+tjk67WZV1QKQMKpc6ZZRAjWHFMlUkn7uEBiNg
+         3/og==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1775113734; x=1775718534;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=pXqVqKsO/44+sf0WqfVuWAIy8twwlZ1ww6xUKeKYgIs=;
+        b=K9GfRqeISL6xvIqXW8noeQMRcZ072GZdIxmG0+QIJbl++d/dxrmNzF9MpUclgAf5iX
+         0twv8S49zMJJmV7LpSYUCwvabQPxYRRhR6F77uVw1kVi7YwYYyWwxJTuExI0AeZ2YbWU
+         UPt3gUwwC8kAlZswsYP5ZADM9+JgbuB7xEDQTDjvdcUMA8+ITNhtKifSLjTZ0pdNCSZi
+         dQqW0NiMmIPvf7PgwLhW9/77jmVjDyjvJcfQSnZldb50P3qt8YZjLCYQagJOxtcVK+Gq
+         4v7QRqoozpXz8z4ti4Jk08Yje/U543KO9KZ/OEOaVnTjze6Z0MHxw6h4/sTCV2cHw3k1
+         Q0xw==
+X-Gm-Message-State: AOJu0YyaYUYwX3L4lgpoat76hoPdJsvqR/qKZPX/YuKpcIo9LhwlSeRo
+	wtIt+szMEKFAJuA6k7tVtp9J4PexoyvXt3qSetnB3dxYDWRVQrqFy64TeJPxbQ==
+X-Gm-Gg: AeBDiev57JNfyvsqLHjMWOH69HzXf7MdiWtEGuxR8rTfP5yoQ1VoAPuYZzavZH/W33x
+	CRK1jhRFX0B0O2F5wr9pAHMK7z1rCceu0TUl32svF+ZREUn/CXpa4RorwvlH/B9pvfEN4upghua
+	X/EINVKGdH7IR6dy92MPjE3FItRqkVa/AZwpoG4NaDxv6WbKmXpfhm3EC6sL5fr/tLmI2rUciJM
+	Lbxy65GvrzpK0NG+GUdgPqVRE8u4Ogj7fP8GeaILmXCrFRaMv0z2GII7/eLgsSvB6wTOlp5uEvg
+	EX+w+JlegtE0L897uLxRv6DHIt2ncAW5XsZFS5VDrIQ+fI3F0MEeHWDQs6id+Ln/32d516QsU+v
+	hmfO7WF3UKP8i7cjd5UdRpiFF9enU+T/nn40WUAaD8O2o6e+3GKsajpJbsgo7l17J4VsLNvXttR
+	naD3TSTItHFDv0pdpVFIRDGNKep7KsSKc5R7XUNFcCrUIA1kk0HY4=
+X-Received: by 2002:a17:903:2f03:b0:2b2:42f8:1a4b with SMTP id d9443c01a7336-2b269c3f6ffmr63223295ad.27.1775113734366;
+        Thu, 02 Apr 2026 00:08:54 -0700 (PDT)
 Received: from celestia.taila51cc2.ts.net ([2402:1980:898b:301c:d085:a35:99e7:ffec])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-82cf9ca1f28sm1758569b3a.57.2026.04.01.22.38.01
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2b27478cb4fsm20173295ad.29.2026.04.02.00.08.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 01 Apr 2026 22:38:03 -0700 (PDT)
+        Thu, 02 Apr 2026 00:08:54 -0700 (PDT)
 From: Liew Rui Yan <aethernet65535@gmail.com>
-To: sj@kernel.org
+To: aethernet65535@gmail.com,
+	sj@kernel.org
 Cc: damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	Liew Rui Yan <aethernet65535@gmail.com>
-Subject: [PATCH v2] mm/damon: validate min_region_size to be power of 2
-Date: Thu,  2 Apr 2026 13:37:56 +0800
-Message-ID: <20260402053756.26606-1-aethernet65535@gmail.com>
+	linux-mm@kvack.org
+Subject: Re: (sashiko status) [PATCH v2] mm/damon: validate min_region_size to be power of 2
+Date: Thu,  2 Apr 2026 15:08:51 +0800
+Message-ID: <20260402070851.27382-1-aethernet65535@gmail.com>
 X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260402053756.26606-1-aethernet65535@gmail.com>
+References: <20260402053756.26606-1-aethernet65535@gmail.com>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -72,65 +76,14 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Problem
-=======
-damon_commit_ctx() checks if 'min_region_sz' is a power of 2. But if it
-is not, kdamond will terminate unexpectedly due to the user's invalid
-input.
+- [PATCH v2] mm/damon: validate min_region_size to be power of 2
+  - status: Reviewed
+  - review: No issues found.
 
-Solution
-========
-Add the same check to damon_{lru_sort, reclaim}_apply_parameters(), but
-return -EINVAL immediately. This is to prevent user's invalid input
-causing kdamond to terminate unexpectedly.
-
-This patch is a follow-up to the discussion in [1], where we agreed that
-the validation should be done on min_region_sz rather than addr_unit.
-
-[1] https://lore.kernel.org/20260330233343.4083-1-sj@kernel.org
-
-Signed-off-by: Liew Rui Yan <aethernet65535@gmail.com>
----
-Changes from v1:
-- Fix memory leak issue.
-- Link to v1: https://lore.kernel.org/20260331073231.30060-1-aethernet65535@gmail.com
-
- mm/damon/lru_sort.c | 5 +++++
- mm/damon/reclaim.c  | 5 +++++
- 2 files changed, 10 insertions(+)
-
-diff --git a/mm/damon/lru_sort.c b/mm/damon/lru_sort.c
-index 554559d72976..3fd176ef9d9c 100644
---- a/mm/damon/lru_sort.c
-+++ b/mm/damon/lru_sort.c
-@@ -294,6 +294,11 @@ static int damon_lru_sort_apply_parameters(void)
- 	param_ctx->addr_unit = addr_unit;
- 	param_ctx->min_region_sz = max(DAMON_MIN_REGION_SZ / addr_unit, 1);
- 
-+	if (!is_power_of_2(param_ctx->min_region_sz)) {
-+		err = -EINVAL;
-+		goto out;
-+	}
-+
- 	if (!damon_lru_sort_mon_attrs.sample_interval) {
- 		err = -EINVAL;
- 		goto out;
-diff --git a/mm/damon/reclaim.c b/mm/damon/reclaim.c
-index 86da14778658..2747eef5919d 100644
---- a/mm/damon/reclaim.c
-+++ b/mm/damon/reclaim.c
-@@ -204,6 +204,11 @@ static int damon_reclaim_apply_parameters(void)
- 	param_ctx->addr_unit = addr_unit;
- 	param_ctx->min_region_sz = max(DAMON_MIN_REGION_SZ / addr_unit, 1);
- 
-+	if (!is_power_of_2(param_ctx->min_region_sz)) {
-+		err = -EINVAL;
-+		goto out;
-+	}
-+
- 	if (!damon_reclaim_mon_attrs.aggr_interval) {
- 		err = -EINVAL;
- 		goto out;
--- 
-2.53.0
-
+# hkml [1] generated a draft of this mail.  It can be regenerated
+# using below command:
+#
+#     hkml patch sashiko_dev --thread_status --for_forwarding \
+#             20260402053756.26606-1-aethernet65535@gmail.com
+#
+# [1] https://github.com/sjp38/hackermail
