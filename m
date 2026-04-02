@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 315D323A564;
-	Thu,  2 Apr 2026 01:04:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0513E21C9EA;
+	Thu,  2 Apr 2026 01:10:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775091900; cv=none; b=pAkPYY1d1ItXnuUiEE/H0oFFlY02aFUJbFRhL17MP+RDB9yQlOlk+ppJBYC5EI2tbPJ6yfNitDx0i4O+BoXhgB4VlUTeDMrG9gGghUu/uljMTGVP4vU8vqprjrAYKxjZsLxY440dk8I6HqypaEYe9l5WB+nSwOJNWiPTpX725fk=
+	t=1775092245; cv=none; b=mmDnAmoowyLdNFR2VP/46ON6N1pPd5wDjcIncSccwSFUiCcXCikR4fmzbsMUPFLWUG6o5K0WPYjAOciJnNBnl7cYn5wkHpMCggbb0TGIJ816sM7SE1FV8beP8EjpN3XVtqkVNvR1H5SNtxxjqN/TTfuJhJp5ikPT1+jhuxnHtgM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775091900; c=relaxed/simple;
-	bh=e4BniEALtKj2WeE8HlkohnCEv/JIv0ZTg/5k1eKeGFs=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=rEFTRt1fgGkLYsCQSU84vzHDWjBCtL0cth3RChmcNOreez6zQyq9gsKmUYH9Nn2NAfxpAmwixl9w/KZu3E8kwVRIbW5XuCucsd009bnixZyMWcixYerxGxBy7Kn/4TC7s4rWm++h5veUg52LGPdjjcTBZHn23cDEA1HFsWv/m4k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Uav8uHAU; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1775092245; c=relaxed/simple;
+	bh=RBpqhqYUfZvqMnoA+utE1x4KPKxI9AlOpwMFYWzsTxk=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=NXoUZJePZoocAQ20A+uv9GuApKzN21go1vGvILQoXk+MY6pMlN3quNRADJi4cM4IqO6EfX6fJRo7SdQKeELt8PKLLBpMz8xBYXjMFp/q49FE49ZkZno19KEFkcJvLlTF6SCuFSuQ5HzfTCkz16FtmHhbNISNyLB2CnLi8qbrEj0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=meaZjrOh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Uav8uHAU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71EF6C4CEF7;
-	Thu,  2 Apr 2026 01:04:59 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="meaZjrOh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CE64C4CEF7;
+	Thu,  2 Apr 2026 01:10:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1775091899;
-	bh=e4BniEALtKj2WeE8HlkohnCEv/JIv0ZTg/5k1eKeGFs=;
-	h=From:To:Cc:Subject:Date:From;
-	b=Uav8uHAUSjEDjDVXMUiKwNs31B5OATnzuQSyA8oEcn0aYqDpqHpbyOLbjZkaVJp7W
-	 4ipgcuJVp7JB3X+PJBEN+wvCl8XlHt2ZBEF27SqPKTgCoYtJ9p1d60pzyckz1OLvlO
-	 riitWL8qytEMQXMS++cW1eLJ0l0C02N7xNNll80GrCKpASu4Kw3uw01qrTmwT0xyrl
-	 M7YnVBqK6K7i28hyqR2LQ545bhXWDE26MJhpfMReBLH5z8NSmeRVbxHxeSI23jn/zF
-	 VhxfI44jdVyJThMxQMvgUzG/JEGiFVwIvMImTwdBK/M/zwElBlqx8Jj0lzL/40PKNJ
-	 DhrKx26vIuIlQ==
+	s=k20201202; t=1775092244;
+	bh=RBpqhqYUfZvqMnoA+utE1x4KPKxI9AlOpwMFYWzsTxk=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=meaZjrOhfaHbVXagdnwXKdjt8y13+v/FqQJIAbTACpaJYGd+ECjtZh2twMbsV6m3A
+	 dWQvGU7v8LH8IGdYISW0u06wAPhHU8HQrmq76hq4p0sZqG6LdBDOAGAFqJeNy4FtSo
+	 MYC5/u9fkCJd8LDl/XtkNOIazZgn25f9wHFjq+22i3CFyvPzZ0BGWWOdPtkU1wkvIl
+	 +/9GCGQz59s0y5+I11u8gMKwodBbd/rR0dmRK3Y7zLqg6r5vxwMH0zeoK6x+wjhBD+
+	 KIKNe6bo5knI8f2YAWf9TSMHySvpBZlx9b368fLGygqRM1sfyenxCArlAhJXJlqmIa
+	 G4KbEh5kO8wFA==
 From: SeongJae Park <sj@kernel.org>
-To: Andrew Morton <akpm@linux-foundation.org>
-Cc: SeongJae Park <sj@kernel.org>,
-	"# 6 . 17 . x" <stable@vger.kernel.org>,
+To: SeongJae Park <sj@kernel.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>,
 	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [PATCH] mm/damon/stat: deallocate damon_call() failure leaking damon_ctx
-Date: Wed,  1 Apr 2026 18:04:55 -0700
-Message-ID: <20260402010457.66860-1-sj@kernel.org>
+Subject: Re: (sashiko review) [RFC PATCH v5 01/10] mm/damon/core: introduce damon_ctx->paused
+Date: Wed,  1 Apr 2026 18:10:42 -0700
+Message-ID: <20260402011043.67218-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260324040722.57944-1-sj@kernel.org>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -44,40 +46,36 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-DAMON_STAT does not deallocate its dynamically allocated damon_ctx
-object when damon_call() is failed.  As a result, the memory is leaked.
-Check the failure and deallocate the damon_ctx object.
+On Mon, 23 Mar 2026 21:07:21 -0700 SeongJae Park <sj@kernel.org> wrote:
 
-The issue was discovered [1] by sashiko.
+> On Mon, 23 Mar 2026 18:28:00 -0700 SeongJae Park <sj@kernel.org> wrote:
+> 
+> > Forwarding Sashiko review for doing discussions via mails.
+[...]
+> > Additionally, when the context is paused, kdamond_fn remains in this sleep
+> > loop and skips calling damos_adjust_quota(), which means quota->charged_from
+> > is frozen.
+> > 
+> > If the pause lasts for more than LONG_MAX jiffies (e.g., about 24.8 days on
+> > a 32-bit system with HZ=1000), will system jiffies wrap past the half-range
+> > limit of the unsigned long type relative to the frozen timestamp?
+> > 
+> > If this wraparound occurs, time_after_eq(jiffies, quota->charged_from +
+> > interval) would evaluate to false when unpaused. Would this cause the quota
+> > window to not reset for another 24.8 days, accumulating charged_sz and
+> > blocking the scheme from being applied?
+> 
+> That's a wild corner case, but I agree it is better to avoid the problematic
+> case.  I'm still thinking about the good way for that.  Anyway, I will address
+> this in the next spin.
 
-[1] https://lore.kernel.org/20260401012428.86694-1-sj@kernel.org
+The root cause of the issue was introduced before this patch, so I fixed it
+with another hotfix [1].  So next spin of this patch will have no change.
 
-Fixes: 405f61996d9d ("mm/damon/stat: use damon_call() repeat mode instead of damon_callback")
-Cc: <stable@vger.kernel.org> # 6.17.x
-Signed-off-by: SeongJae Park <sj@kernel.org>
----
- mm/damon/stat.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+[1] https://lore.kernel.org/20260329152306.45796-1-sj@kernel.org
 
-diff --git a/mm/damon/stat.c b/mm/damon/stat.c
-index 5a742fc157e4..30aeb2c207ec 100644
---- a/mm/damon/stat.c
-+++ b/mm/damon/stat.c
-@@ -257,7 +257,12 @@ static int damon_stat_start(void)
- 
- 	damon_stat_last_refresh_jiffies = jiffies;
- 	call_control.data = damon_stat_context;
--	return damon_call(damon_stat_context, &call_control);
-+	err = damon_call(damon_stat_context, &call_control);
-+	if (err) {
-+		damon_destroy_ctx(damon_stat_context);
-+		damon_stat_context = NULL;
-+	}
-+	return err;
- }
- 
- static void damon_stat_stop(void)
 
-base-commit: 4fd04f750d79667937931314ed64c9d79b0d82ef
--- 
-2.47.3
+Thanks,
+SJ
+
+[...]
