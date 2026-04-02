@@ -1,50 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7993A19F115;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81F082517AF;
 	Thu,  2 Apr 2026 15:57:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775145465; cv=none; b=IbtuDReCSDHJ8ViGsvTeCE1Co2VzRcp8GEKBNsdHng0i2jpPw/mVwLout8Whhm8yEOcRww4uYHQgYBdayOFZ1AZUOR+n38zS2yie/eTBsrEIOPuXMfKIzeFzS7vmR4N1pjRlWokRWdsbHqz1EKAc+5LH8JCyXUQgWspD6hK22xI=
+	t=1775145465; cv=none; b=oCFilg3R3FJwGcGPFecOYiLwShJSxX3xo8BKOx27pw3SbPZonVjsBSuFKR3DE6deNfjyEefAQJ7recOYQptd/chmCA+2D57kCkGeY8te6sWZ2WWdM96r38oj5xhwhnWYI7Qs5vXuDym6vukBC3rLjuB7to4HGHOFiQO7gXbAnXM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1775145465; c=relaxed/simple;
-	bh=mwE+127Wtx47haHMcKL32qgQUWoqYHGLXcy7Op4nYG4=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=dc+tr7Qe//BTDL4SznvvdCpCs5e84USRL3ZlQTHR2Dd7XcsRSpf2mV+HzziJi0xRHR8zlWZ2NcDRFc+oDPptdHap7205j/QXoHDWq+JlnCxEDsEdZqGqxNZn/xIptcjgqRwUkGE+j51C5VyDUX3EJY83shqIYY2GsvYHQ0j2zuM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pc4H8f/X; arc=none smtp.client-ip=10.30.226.201
+	bh=Cctzlt5Opg64VMqk24naaGYNSUhmoxomxZXKX5DKxok=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=fHYjrfH8+hluYvgvQhixnlZMMbvp36sujOaQxSdpCd9qcDehdVufBgDm53d32y6DG+eI56Izo0xkrQZ7nCW6MfogfEYS/pIg3Ek+K8bzFx0HwEaQU4I33ZmGRZZc2xUVLLndJLw74kqPLtacWA7MBvKUItVmJUXqCXgilNHh0Xo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OTULZxMf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pc4H8f/X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD62BC116C6;
-	Thu,  2 Apr 2026 15:57:44 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OTULZxMf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40D12C2BC9E;
+	Thu,  2 Apr 2026 15:57:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1775145465;
-	bh=mwE+127Wtx47haHMcKL32qgQUWoqYHGLXcy7Op4nYG4=;
-	h=From:To:Cc:Subject:Date:From;
-	b=pc4H8f/XTzomCfYZ59jP3MuLzWi2yBWgSaIqmouyIFvuL2sGNeJF+/2gQuReQs/e3
-	 iTNA6s4/ZcA2Ltrxd0luVTkktrxBGYi3ZjH2FwVGz9PYz9xyzWrppXcmUc+dzfE2Uk
-	 jgfg/UkK4yCANQoszttBaIjrFWbcfWJTHuDV6ZCzOn3iQYdrcjGBql7HWwRsdqNyxw
-	 RCWs+5Eajl0psUVPKMMfiTson2FI69xlEWnFt5V6TRgmpSElwieZ65kBVtNoWkHRtS
-	 kMQ/QO+YmxGyJ3Le/uom4NK0HyxPV75x3F7JIbPMMcJGXgLBviGJUkPegsKKXS9wpF
-	 PpTIlBUANSOMA==
+	bh=Cctzlt5Opg64VMqk24naaGYNSUhmoxomxZXKX5DKxok=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=OTULZxMfEQn9PVoLW7K0LXBdrVffjx1gNhhyW3+NznKze+5HFUHJN2WkiZ88U3gNu
+	 t/SgxHwrWR1J5EwcPtThlgYrTpcB6aFiZzf2uz6ai174I1mMRScq0U6Kk428/R+ycb
+	 8xGIQ9fZHzrp5CNX74ystm9Eam57znEEi0KpgRTTbxvNeijCSWmAGu82ycX0722tat
+	 WHd2SlmWWTTZY5VJRXhWyjecYFMv8uuczxDCFZe1/yYttOXiEgcFOS3ZUc2nU8Yt1Q
+	 aG6vE5JxRAsCOS5eSgfaQJVg98ISJzs04KAwYQdbaz+urTkO0Hm3ZsQBUUC2xpt91i
+	 56cNwutvguOpQ==
 From: SeongJae Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
-Cc: SeongJae Park <sj@kernel.org>,
-	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
-	David Hildenbrand <david@kernel.org>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	Michal Hocko <mhocko@suse.com>,
-	Mike Rapoport <rppt@kernel.org>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Vlastimil Babka <vbabka@kernel.org>,
+Cc: Liew Rui Yan <aethernet65535@gmail.com>,
+	SeongJae Park <sj@kernel.org>,
 	damon@lists.linux.dev,
-	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [PATCH 0/3] mm/damon: non-hotfix reviewed patches in damon/next tree
-Date: Thu,  2 Apr 2026 08:57:27 -0700
-Message-ID: <20260402155733.77050-1-sj@kernel.org>
+Subject: [PATCH 1/3] mm/damon/ops-common: optimize damon_hot_score() using ilog2()
+Date: Thu,  2 Apr 2026 08:57:28 -0700
+Message-ID: <20260402155733.77050-2-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260402155733.77050-1-sj@kernel.org>
+References: <20260402155733.77050-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -53,38 +47,94 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Re-posting non-hotfix DAMON patches that reviewed by DAMON maintainer
-but not yet merged into mm.git.  Those are not urgent, so it should be
-ok to be merged after the next rc1.  This is just a headsup.  I will
-post these again after next rc1, if these are not merged into mm.git by
-then.
+From: Liew Rui Yan <aethernet65535@gmail.com>
 
-The first patch from Liew Rui Yan add a minor performance optimization
-using ilog2() instead of inefficient manual implementation of the
-functionality.
+The current implementation of damon_hot_score() uses a manual for-loop
+to calculate the value of 'age_in_log'. This can be efficiently replaced
+by ilog2(), which is semantically more appropriate for calculating the
+logarithmic value of age.
 
-The second patch from Cheng-Han Wu fixes a minor typo:
-s/parametrs/parameters/.
+In a simulated-kernel-module performance test with 10,000,000 iterations,
+this optimization showed a significant reduction in latency (average
+latency reduced from ~12ns to ~1ns).
 
-The third patch from Liew Rui Yan make commit_inputs operation of
-DAMON_RECLAIM and DAMON_LRU_SORT synchronous to improve the user
-experience.
+Test results from the simulated-kernel-module:
+- ilog2:
+    DAMON Perf Test: Starting 10000000 iterations
+    =============================================
+     Total Iterations : 10000000
+     Average Latency  : 1 ns
+     P95 Latency      : 41 ns
+     P99 Latency      : 41 ns
+    ---------------------------------------------
+     Range (ns)      | Count        | Percent
+    ---------------------------------------------
+     0-19            | 0            |      0%
+     20-39           | 2625000      |     26%
+     40-59           | 7374000      |     73%
+     60-79           | 0            |      0%
+     80-99           | 0            |      0%
+     100+            | 1000         |      0%
+    =============================================
 
-Cheng-Han Wu (1):
-  Docs/admin-guide/mm/damon: fix 'parametrs' typo
+- for-loop:
+    DAMON Perf Test: Starting 10000000 iterations
+    =============================================
+     Total Iterations : 10000000
+     Average Latency  : 12 ns
+     P95 Latency      : 51 ns
+     P99 Latency      : 60 ns
+    ---------------------------------------------
+     Range (ns)      | Count        | Percent
+    ---------------------------------------------
+     0-19            | 0            |      0%
+     20-39           | 0            |      0%
+     40-59           | 9862000      |     98%
+     60-79           | 135000       |      1%
+     80-99           | 1000         |      0%
+     100+            | 2000         |      0%
+    =============================================
 
-Liew Rui Yan (2):
-  mm/damon/ops-common: optimize damon_hot_score() using ilog2()
-  mm/damon: add synchronous commit for commit_inputs
+Full raw benchmark results can be found at [1].
 
- .../admin-guide/mm/damon/lru_sort.rst         |  2 +-
- .../admin-guide/mm/damon/reclaim.rst          |  2 +-
- mm/damon/lru_sort.c                           | 46 ++++++++++++++++---
- mm/damon/ops-common.c                         |  9 ++--
- mm/damon/reclaim.c                            | 46 ++++++++++++++++---
- 5 files changed, 86 insertions(+), 19 deletions(-)
+[1] https://github.com/aethernet65535/damon-hot-score-fls-optimize/tree/master/result-raw
 
+Signed-off-by: Liew Rui Yan <aethernet65535@gmail.com>
+Reviewed-by: SeongJae Park <sj@kernel.org>
+Signed-off-by: SeongJae Park <sj@kernel.org>
+---
+Changes from v2
+(https://lore.kernel.org/20260320192020.33004-1-aethernet65535@gmail.com)
+- Rebased to latest mm-new.
+Changes from v1 (actually it was RFC)
+(https://lore.kernel.org/20260320072431.248235-1-aethernet65535@gmail.com)
+- Replace fls() with ilog2() per SeongJae Park's suggestion for better
+  semantic clarity.
+- Move performance benchmark results into the commit message and add
+  comparison between for-loop and ilog2.
 
-base-commit: 2c5f83f56c4a5ec75db054510007baaa1fbe4ad5
+ mm/damon/ops-common.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
+
+diff --git a/mm/damon/ops-common.c b/mm/damon/ops-common.c
+index 8c6d613425c1..3a0ddc3ac719 100644
+--- a/mm/damon/ops-common.c
++++ b/mm/damon/ops-common.c
+@@ -117,9 +117,12 @@ int damon_hot_score(struct damon_ctx *c, struct damon_region *r,
+ 		damon_max_nr_accesses(&c->attrs);
+ 
+ 	age_in_sec = (unsigned long)r->age * c->attrs.aggr_interval / 1000000;
+-	for (age_in_log = 0; age_in_log < DAMON_MAX_AGE_IN_LOG && age_in_sec;
+-			age_in_log++, age_in_sec >>= 1)
+-		;
++	if (age_in_sec)
++		age_in_log = min_t(int, ilog2(age_in_sec) + 1,
++				DAMON_MAX_AGE_IN_LOG);
++	else
++		age_in_log = 0;
++
+ 
+ 	/* If frequency is 0, higher age means it's colder */
+ 	if (freq_subscore == 0)
 -- 
 2.47.3
