@@ -1,126 +1,114 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63776E56A;
-	Thu,  2 Apr 2026 02:07:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CDA0175A92;
+	Thu,  2 Apr 2026 04:59:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775095667; cv=none; b=oO/45qza2VD23NwI+HCO/Pr4W4zZBluntRtW1CpoqT2tXsJ7VpxhNR5+3iXWNKiJ8Qqy6wb2umYRj4vGcoN9YQA4u0cn+6odn7dh6r1yYJSMcdhJnedAQAboj6GaGRY8+Sz3pvU/Fxuh1LoIkt/kLLcY4s+mmmM6R0dm+assmVY=
+	t=1775105970; cv=none; b=BMP0vJmdRmfhujQFQekbzksK46Y160ulgMMiMarZyspyXL9ng7coG2CJufDk3mgl9caVPfDEvsmAskqxDmX7J+0T9SLoAg7Aq/TC0TCSGq1Tr6FET00pMl0sQ25fNUJXzUncztA/yrOiK2Ipq9xuw6APQRDZGmmi3sWDzbSV16w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775095667; c=relaxed/simple;
-	bh=7fWpk4Gb6mbBCpnHLamijCOUzylF/piEazB2Sm2XryY=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aMr7c8Kvfocxs5PLk57EoLiiBCfjzehf4yYvUFVSQ1fXLqSi+1zbt681DHndoSHUrKIycW/+hWLwJc/ZJbv+SapgWNu/LLaytNUWYlHnBBUV3LoMuLLwS+8DjuRwt2Gi60Y7XhFviWRBm9r8GWvODI9hJ3u2ESbXHIBzpQzL4qQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pSbYePcU; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1775105970; c=relaxed/simple;
+	bh=6b8L0fz6vN2/1FdAdwuuqgyRC2q1kGbwXl4DDedgmOI=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=YEdCLCc77AFILfAfwPlAExJcd3SHPe1WihMOonyjHQCn0AcvQUB/Q01ipCnYUB+t94H4HvPxSg9Lf/IZVJjMD6/6Ip+omvH1fljjW2yGnIcjg5lOcT1L499Xbx1PJda0C11Ha1VpMviu5bx9LAL0VnWGMz0XXAfKcd9nAsNtJyw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GQNSxGvJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pSbYePcU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3AE1C4CEF7;
-	Thu,  2 Apr 2026 02:07:46 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GQNSxGvJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3824C19423;
+	Thu,  2 Apr 2026 04:59:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1775095667;
-	bh=7fWpk4Gb6mbBCpnHLamijCOUzylF/piEazB2Sm2XryY=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pSbYePcUY+Qt+QuSS5KrYUfKigRw7zQGPLR7J2Kldh27J8+A0Vn/ST2v3YvTJ5Pio
-	 JTB96YQ3t4ES/UK//c5Kic324Idu+t5CygT3Yh4FEnsmXWxg8YWPDygSfaIlwjnMJR
-	 Rb5+pE96AgpXfmFgxVkYFb6UCK+G9bPZyTIe5+uJJKmfDKjmq3bxLFgw1sQAtv6GO/
-	 oB921pAGMCysuTxzf0t8dQF01o+vrwHpJCBIbr1DCY6qDc6aE7XfMyam0buLcHxqZw
-	 3RP4hEqME3uL89XZRxeFIPPPC0j2vpBA+DWcquCfRgD8iNvSnxOT4C1QMaUkZNT2ae
-	 cGM/PimH3Sh5g==
+	s=k20201202; t=1775105969;
+	bh=6b8L0fz6vN2/1FdAdwuuqgyRC2q1kGbwXl4DDedgmOI=;
+	h=From:To:Cc:Subject:Date:From;
+	b=GQNSxGvJXNxyEJ8v1iJtxRdhpFpT1UYFKJ2nnOYJl+ulwa6klYQoB6lX5VLEG+JCF
+	 4iGHNsT1VIi/PO83r/d2jEJjs9so9qxp1loeCIPhgDZ5Fcn6FOF4M6Zt5uBSKj5DX2
+	 LDdEXkgxEY7Flg/ZYxqN41UwCVFiOY4w++btd031t1Odw9qIlxV/TP4wzgSAk3Wa50
+	 fVuq9QOr3nyRik1CAnheYNYAHjU3JkiE5g5MtwalsHw0d/Y91Dcf2pwdiCRxmnYdSb
+	 X72Eaifh5mxpADuWsJOClBuFA1CTpt6uBcyCaDLYL5sjLBPpatQko5uXVL9ONmHQRp
+	 75aHoyYgf7eEQ==
 From: SeongJae Park <sj@kernel.org>
-To: SeongJae Park <sj@kernel.org>
-Cc: Andrew Morton <akpm@linux-foundation.org>,
+To: 
+Cc: SeongJae Park <sj@kernel.org>,
 	"# 6 . 17 . x" <stable@vger.kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: Re: (sashiko review) [PATCH] mm/damon/stat: deallocate damon_call() failure leaking damon_ctx
-Date: Wed,  1 Apr 2026 19:07:44 -0700
-Message-ID: <20260402020745.68554-1-sj@kernel.org>
+Subject: [RFC PATCH] mm/damon/stat: deallocate damon_call() failure leaking damon_ctx
+Date: Wed,  1 Apr 2026 21:59:26 -0700
+Message-ID: <20260402045928.71170-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260402010457.66860-1-sj@kernel.org>
-References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Andrew, please drop this patch.  sashiko found an issue, so I will respin.
+damon_stat_start() always allocates the module's damon_ctx object
+(damon_stat_context).  Meanwhile, if damon_call() in the function fails,
+the damon_ctx object is not deallocated.  Hence, if the damon_call() is
+failed, and the user writes Y to “enabled” again, the previously
+allocated damon_ctx object is leaked.
 
-More details below.
+This cannot simply be fixed by deallocating the damon_ctx object when
+damon_call() fails.  That's because damon_call() failure doesn't
+guarantee the kdamond main function, which accesses the damon_ctx
+object, is completely finished.  In other words, if damon_stat_start()
+deallocates the damon_ctx object after damon_call() failure, the
+not-yet-terminated kdamond could access the freed memory
+(use-after-free).
 
-Forwarding Sashiko review in the usual reply format with my inline comments,
-for doing discussions via mails.
+Fix the leak while avoiding the use-after-free by keeping returning
+damon_stat_start() without deallocating the damon_ctx object after
+damon_call() failure, but deallocating it when the function is invoked
+again and the kdamond is completely terminated.  If the kdamond is not
+yet terminated, simply return -EAGAIN, as the kdamond will soon be
+terminated.
 
-> # review url: https://sashiko.dev/#/patchset/20260402010457.66860-1-sj@kernel.org
-> # start of sashiko.dev inline review
-> commit 1d53bb9291d3fde393f37b143e637f0d25b6634e
-> Author: SeongJae Park <sj@kernel.org>
-> 
-> mm/damon/stat: deallocate damon_call() failure leaking damon_ctx
-> 
-> This commit addresses a memory leak by deallocating damon_stat_context if
-> damon_call() fails during stat startup.
-> 
-> Link: https://lore.kernel.org/20260401012428.86694-1-sj@kernel.org
-> 
-> > diff --git a/mm/damon/stat.c b/mm/damon/stat.c
-> > --- a/mm/damon/stat.c
-> > +++ b/mm/damon/stat.c
-> > @@ -257,7 +257,12 @@ static int damon_stat_start(void)
-> >  
-> >  	damon_stat_last_refresh_jiffies = jiffies;
-> >  	call_control.data = damon_stat_context;
-> > -	return damon_call(damon_stat_context, &call_control);
-> > +	err = damon_call(damon_stat_context, &call_control);
-> > +	if (err) {
-> > +		damon_destroy_ctx(damon_stat_context);
-> 
-> Can this cause a use-after-free?
-> 
-> Earlier in damon_stat_start(), damon_start() is called, which creates
-> and starts the kdamond_fn kernel thread. This thread actively uses the
-> damon_stat_context.
-> 
-> If damon_call() fails, the kdamond_fn thread might still be running or
-> in its teardown phase. If we free the context directly using
-> damon_destroy_ctx() before the kthread has fully exited, the kthread
-> might access freed memory.
+The issue was discovered [1] by sashiko.
 
-Nice catch.
+[1] https://lore.kernel.org/20260401012428.86694-1-sj@kernel.org
 
-FYI, I initially thought damon_call() of DAMON_STAT cannot fail, because it
-synchronizes its damon_start()/damon_stop() calls with module parameter
-handling function, and it doesn't update the context internal state, which
-means the damon_ctx->maybe_corrupted cannot be set.  If that's true, this patch
-itself is not needed since the memory leak cannot exist.
+Fixes: 405f61996d9d ("mm/damon/stat: use damon_call() repeat mode instead of damon_callback")
+Cc: <stable@vger.kernel.org> # 6.17.x
+Signed-off-by: SeongJae Park <sj@kernel.org>
+---
+Changes from v1
+(https://lore.kernel.org/20260402010457.66860-1-sj@kernel.org)
+- Avoid use-after-free.
+- Add RFC tag.
 
-But, kdamond can fail for its internal memory allocation failures.
-Specifically, if ctx->region_score_histogram allocation is failed, it will be
-terminated.  So, yes, sashiko is right.  There is a chance.
+ mm/damon/stat.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-> 
-> Should we call damon_stop() here to wait for the thread to safely exit
-> before destroying the context, similar to the teardown sequence in
-> damon_stat_stop()?
+diff --git a/mm/damon/stat.c b/mm/damon/stat.c
+index 5a742fc157e4..99ba346f9e32 100644
+--- a/mm/damon/stat.c
++++ b/mm/damon/stat.c
+@@ -245,6 +245,12 @@ static int damon_stat_start(void)
+ {
+ 	int err;
+ 
++	if (damon_stat_context) {
++		if (damon_is_running(damon_stat_context))
++			return -EAGAIN;
++		damon_destroy_ctx(damon_stat_context);
++	}
++
+ 	damon_stat_context = damon_stat_build_ctx();
+ 	if (!damon_stat_context)
+ 		return -ENOMEM;
+@@ -264,6 +270,7 @@ static void damon_stat_stop(void)
+ {
+ 	damon_stop(&damon_stat_context, 1);
+ 	damon_destroy_ctx(damon_stat_context);
++	damon_stat_context = NULL;
+ }
+ 
+ static int damon_stat_enabled_store(
 
-Seems that is a workable option.  But given the fact that kdamond is already in
-its termination step, it feels odd to me.  I'll take more time to think about.
-
-> 
-> > +		damon_stat_context = NULL;
-> > +	}
-> > +	return err;
-> >  }
-> 
-> 
-> # end of sashiko.dev inline review
-> # review url: https://sashiko.dev/#/patchset/20260402010457.66860-1-sj@kernel.org
-
-
-Thanks,
-SJ
-
-[...]
+base-commit: 4fd04f750d79667937931314ed64c9d79b0d82ef
+-- 
+2.47.3
