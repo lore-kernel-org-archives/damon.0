@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01D1633B6DF;
-	Wed,  1 Apr 2026 19:52:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 992A322FF22
+	for <damon@lists.linux.dev>; Thu,  2 Apr 2026 00:40:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775073135; cv=none; b=ZcVEdUvmtbFUvCANFvth2ECAl9MmqTc9TBY08gFVOYPKZbjpvHtU84vNjZFQ5xSGigfRCjJ8PPimA9iFwfE2cLYAb5qrKbCjp1Htx9n9s99wFozus2QeBah0VLXKI/19006VDiXS2kRlhaUUCHPwvqJSpE4MiSb89y+iTeEXiPY=
+	t=1775090429; cv=none; b=jmabbs19EZVHb5Qpy7cYUlBXOwMiplLLco5zMjZPKtRn2unxeuF3opVKvzfNKKOIBzsDu9bx5fQlUA9zWFCOpLnEvVA12wkSr8XXLL76Mll4GfNQ7de4nkr+oCaXmzG01jpIojFLuMtiiSwVjc4NafGBAfvFtm73tqIkkGTiZu0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775073135; c=relaxed/simple;
-	bh=8td1vtx3iaV4CtFL9W4NINSFT/pfU0MJKyD0q1yzYto=;
+	s=arc-20240116; t=1775090429; c=relaxed/simple;
+	bh=JF8+debzMCtcQ9RFsdSB1opffxjgjYKLJ5l4rkKwMYw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UBJ4Jm4GxKKmu5IoxQ8DOl08S2KqIueWCPBP+VJ2CfLrq1zRtZpxdneYc6si3fHKkgyI1UMWc/z8jINXTlc8T1bpI1hSejZgPXMsPQ3xS3e69NOKhghm7d1X1xXw9t3jlvOz1aWkyBTzNMkPoLDIbfO5xuzclEL25j8/2ABp5x8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iegSTeTG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uk+7cMuTV53X9h0PPGzvrScwP2Ygsk3ArTe5t6yxQHqVHTpZUhXB5BzVI2664V25i9DNpCSVeRX+i3nKp/2AtEArXGLekJ87Noa+SAzNjbrw3hHcwCTEn4FvFSRr/Cy20TRNKAgQWySXpJTHoChd6aMag5bSpMwZcYEvZLVlqto=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=raO0q6T+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iegSTeTG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78DE2C4CEF7;
-	Wed,  1 Apr 2026 19:52:14 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="raO0q6T+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1549C4CEF7;
+	Thu,  2 Apr 2026 00:40:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1775073134;
-	bh=8td1vtx3iaV4CtFL9W4NINSFT/pfU0MJKyD0q1yzYto=;
+	s=k20201202; t=1775090429;
+	bh=JF8+debzMCtcQ9RFsdSB1opffxjgjYKLJ5l4rkKwMYw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iegSTeTGSkpbx6uOdKbaa8PHajPSmamUqAiudCJYUsPCcuLVNjTo1tvyvUvrkCqR3
-	 9PacvUB70x9rntJXq5Z9ygVn9H9cXaigsf7s1ZgTiMMksEM5a8MzCMydoLY6eUbGhK
-	 fS2nDbywhQpw9F4x1B5c3+7wddNV9cJfHP2pe/EVgQF6gsmW29AXa3vnG5chEdzJnZ
-	 UoensbbOEhn8P9X55bLGfG2z96MR9575K2exh8ZmzSznjfCT/BCiGXePnJUhVLS1HP
-	 eB1M3M98fPym2kwn1QaARVC8+Nzt0uokKWzse5O+y4GMtr5TFy3pJJ5InJ+dLJWfJN
-	 7GVqLRLZdRUXA==
+	b=raO0q6T+cev2ccGk4Aul8Z47OvE3wCTq2XfWf2aSKSUsJqrvGkZSXMyLXkA/VfCtB
+	 zshh84DRoKZF3VxKwMNYT1gvHASfTLdBTX44fkGLBjX3IS40tY9VOp+HryWJPOGMR0
+	 +qB1DLNMr4qH6HaPJSOj3PdQSIfeG+icC2tqPsaZC4v7Hsqs6BdB1AAlLxWg/1hTPW
+	 tAisz9gWShnDDqDoxqxUNDjI5OqR5hAu4pCIuzp5n3siq1g9G42O3JE/4EGlTkItHh
+	 bLdwetdsmUL+9iCQmYaueHjqJRhD/EMUVmr3cLCTIrBtI8eqaL9vkPcboYsYz6vFnL
+	 xOvIi73SwB+6A==
 From: SeongJae Park <sj@kernel.org>
-To: Vishal Moola <vishal.moola@gmail.com>
+To: Liew Rui Yan <aethernet65535@gmail.com>
 Cc: SeongJae Park <sj@kernel.org>,
 	damon@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: Re: [PATCH] MAINTAINERS: add sashiko as the first DAMON reviewer
-Date: Wed,  1 Apr 2026 12:52:12 -0700
-Message-ID: <20260401195213.68900-1-sj@kernel.org>
+Subject: Re: [RFC PATCH] mm/damon: reset thread status parameters upon kdamond termination
+Date: Wed,  1 Apr 2026 17:40:27 -0700
+Message-ID: <20260402004027.64439-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <ac1fOrrURjCfQyJY@fedora>
+In-Reply-To: <20260401082354.12467-1-aethernet65535@gmail.com>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -46,39 +45,19 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Wed, 1 Apr 2026 11:08:58 -0700 Vishal Moola <vishal.moola@gmail.com> wrote:
+On Wed,  1 Apr 2026 16:23:54 +0800 Liew Rui Yan <aethernet65535@gmail.com> wrote:
 
-> On Wed, Apr 01, 2026 at 09:26:36AM -0700, SeongJae Park wrote:
-> > sashiko did arguably good jobs at reviewing DAMON patches, for multiple
-> > cases.  "Today" is the greatest day to give sashiko a credit and the
-> > responsibility.  Add sashiko to MAINTAINERS file as a DAMON reviewer.
+> Hi SeongJae,
 > 
-> This is a great idea! Andrew should add it to the MM one too :P
+> First of all, I apologize for not completely answering your question,
+> and I will be more careful next time.
 
-Why not 'THE REST'? ;)
-
-> 
-> > ---
-> >  MAINTAINERS | 1 +
-> >  1 file changed, 1 insertion(+)
-> > 
-> > diff --git a/MAINTAINERS b/MAINTAINERS
-> > index 16874c32e288..42aeaa858531 100644
-> > --- a/MAINTAINERS
-> > +++ b/MAINTAINERS
-> > @@ -7041,6 +7041,7 @@ F:	drivers/platform/x86/dasharo-acpi.c
-> >  
-> >  DAMON
-> >  M:	SeongJae Park <sj@kernel.org>
-> > +R:	sashiko.dev
-> 
-> Maybe we should give it a kernel.org address while we're at it. It would
-> look more in place.
-
-Oh, so that it could use kernel.org infra, right?  Good idea, but asking
-kernel.org address might take too much time.  I will move fast and break things
-by sharing my GPG key with sashiko!
+No worries, we all make mistakes, or simply have different tastes.  Thank you
+for adding clear answers to my questions and generously accepting my
+suggestions.
 
 
 Thanks,
-sj
+SJ
+
+[...]
