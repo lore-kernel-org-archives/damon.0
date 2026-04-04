@@ -1,74 +1,56 @@
-Received: from mail-pj1-f48.google.com (mail-pj1-f48.google.com [209.85.216.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A74F2BF3F3
-	for <damon@lists.linux.dev>; Sat,  4 Apr 2026 09:11:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1521C168BD;
+	Sat,  4 Apr 2026 16:39:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775293883; cv=none; b=X2kQBsEw2BAB5mRl+45wqA30IEOKohMt0Imzg3+IOwtrnNDm+sX+XWvq8vsV/vhN20cDJbRFwq1GKzZ+Lr0pIrBetrwb2m5hoQIVXs8xPPxy2vJ0s9fHH+dyva/pfclzWDj8SXfqxh5tLFASt4FdNStu2RLL15mgzJfLrumY2yw=
+	t=1775320794; cv=none; b=VvsQOFVJALPwE0y+48I9xTxc4g8tcNBHE/SekNSootVxZqxeX8ltypsH/oIOsf+jeqUubz+OG2zw/BVWIcyPJ+efikKazBtnoG0DdTxV/xbxhewGzsHs1Z2rEOyACNYYhFDuzI7VpO5nnKAlNcb95VyMnhpQvfI0dOUwi7K7Ark=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775293883; c=relaxed/simple;
-	bh=tyEHdnMAnapnOelAFAFnr/ShI5H+66xQITD2M1VN8Mo=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DfEKHmYaVlVed2E7e6qenRzqIAf5XR8gLj0lsGbbhs6cb8KXIPisj/tRN1P+tRYgU6sFQOv9jzbsyWbOoFC8m5/hu+OPO1HDbw0g+zaByzWf8HoZSfqeBYR8wxN2xRZ8hWjnzEfkrKX6xlzIlbElKUzeb+KD/AgmVzJ+23kJnHE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZdJegjAT; arc=none smtp.client-ip=209.85.216.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1775320794; c=relaxed/simple;
+	bh=KzxK3rvPiuMB+ti6vCCvi2SSTcuZGc9NqWsNLvX++LY=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=TvbZ2HWDQkYugCbUlkSemuiz2efPbfgoePbFxTMRH7K5ApUi8oNzVeyA39gqbjIZL+ayVunS6nfOC9QcWKAV4N6bVy8N5h8+/hxqA320f4cbMR+4i1U5Laiyu7dLHsMeX+bAmEooP0rtXCWICdXGRbLK3BDSvoyD//A6kt9wYkc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CQCD1ufc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZdJegjAT"
-Received: by mail-pj1-f48.google.com with SMTP id 98e67ed59e1d1-358e3cc5e7eso1283245a91.0
-        for <damon@lists.linux.dev>; Sat, 04 Apr 2026 02:11:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1775293882; x=1775898682; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=/mKCgOtEX6fdxiOnTa/jmRynhm9AIpzYWnO4gPE67L4=;
-        b=ZdJegjATCbRN3PJ8EgFVFrqtwkK5ulBlPlr/Jjn1KgONd3X8H5QfDD/VOLHb5Lhojy
-         7khhK6KnP7EdcoesB77VSrElAx9XfdMLGA7nMCLxD2QYmjOzgkRVC29N+a8keGxLVOU2
-         j1B5vGqTe0qCzM9aNFSDD8dOVe9wEPNyALiTXuhI1jAXoFATVpIjjD4d9UK/I+65w9Zw
-         xy1xRD2riibaxPdUK54W2fEpvTSOpgzda8XwnL0NHNKndONGkpE3GC7Nb6U2O2zJfwog
-         U+KbBJXebydjb/YJER4OlvXyaLeAd+ynXQMNP79VLicXp18Q5GTmF4rCq0A4YYOu4Aq5
-         0pmA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775293882; x=1775898682;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=/mKCgOtEX6fdxiOnTa/jmRynhm9AIpzYWnO4gPE67L4=;
-        b=U0ueq6RsLv98K8aZ4FmCU54AmTzf2SZ3yRItGO1NvdySeETM0EYLGXyWyEyqOteJwS
-         EeJarMWVBp497WiPMhDCcOhybjgBlxMJUKz0KZ1VjDLE/PMUhhrUVDromiDFBQJZs7WC
-         gl2D/fZ9WJQSQOaYfyAl0Z9r9gFMmFVq+k/iQg6XSx8aHWHVj5IqDvPmjCA8IzyehdqP
-         qpiSfBBb2F4nsUh6/KBTQf/9yFKzXlDT20yXzKfLYANSZZDEaYVc5DGjIdokb1f/paNb
-         uWI1ptrEpmp7cUOOGWzCo14hNyqIqdtTIZTAWVm0qNvuyFff9uDTHWIw3MK2w3Rktbl+
-         L57w==
-X-Forwarded-Encrypted: i=1; AJvYcCVZXK5XKTuU/7vCJUFqJStUJcZpqTL2pBc1KYud3tK2m65Wh/se9dn9kb7BtyuTVJnyyXjvGg==@lists.linux.dev
-X-Gm-Message-State: AOJu0Yxreaz75JXA+U3cPDlzrdvotszMuqfw9D0HcXg5gsm5sT7c5pXT
-	qXFIlbFhqdYPXRXNJ+TFSmAsKKAo24VEwAi+yHtgQxLIiahjAHxpmahc
-X-Gm-Gg: AeBDies/v3uWpP4nsDssKTjqXNZPc9HOI8L+V3qAnRHFaY8U8/vGnSQp7miKC43Dtk/
-	DInHPDk8JuQejSpeT7lPdl6L9hVLM9O3IDCBPIwf91uEq4xDPXbNOh40oyjYatTOVrnCDbkqe89
-	a/JBSRAeQlrFnv+OoBxr0E5INwWmcUQMw6DlU0J693cr9UIBY2o6vo95e/65yJotyQwPptYTT0X
-	oo2sosBma+LHlABEPSMxRYRkDlbVciogfjxEhwIQQU5wDc2TcgMfnndeCLEQMxZmukVNvDRjI2I
-	HdxP0YmF9zlzuO0F3rWx+jf58Hw9Fsb0gKZCJydg+rZ8Z1Bkb840zy5ANcbUFdVTCpprvovqAuZ
-	ard2Y5K9ZK5DqAHhipI1H90DvUsqf42eghrUPzztxRWg/DjOsD76T9uKO3hppZpAex9t3PphfT+
-	oPgSlFXEdPNJkvmRUENro00uEQGZW9VTx9bz7CW5s2WZp2RwFM6C8=
-X-Received: by 2002:a17:90b:6cd:b0:35d:9560:3f09 with SMTP id 98e67ed59e1d1-35de69a5c3fmr4674889a91.24.1775293882050;
-        Sat, 04 Apr 2026 02:11:22 -0700 (PDT)
-Received: from celestia.taila51cc2.ts.net ([2402:1980:898b:301c:d085:a35:99e7:ffec])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-35dd35e34f9sm7710233a91.1.2026.04.04.02.11.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 04 Apr 2026 02:11:21 -0700 (PDT)
-From: Liew Rui Yan <aethernet65535@gmail.com>
-To: sj@kernel.org
-Cc: aethernet65535@gmail.com,
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CQCD1ufc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EECAC19421;
+	Sat,  4 Apr 2026 16:39:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1775320794;
+	bh=KzxK3rvPiuMB+ti6vCCvi2SSTcuZGc9NqWsNLvX++LY=;
+	h=From:To:Cc:Subject:Date:From;
+	b=CQCD1ufcoT2sNfl14CV+BXfVwOhjEugdBVoPIwKN3E5OK8jEiEaZWY9oPBq0PPipZ
+	 85wJ26hTX7pThMVAXt2/vTCo7+MHK8M44yrbG437v/cbGihk4JtGZUNGk60kLt/2aF
+	 L6+4q2H+EacWiWLjBYrVdBhf3oTLh2rcI+AZ8zqZ+5TOao/zN4p2VfVXTVvuWApKtX
+	 thxllPbiEy/aUML12ywtSNDnJyHqSfgLJmR00JCFzwmLzUTCyWDY5/hItIhXaP8Rpb
+	 VXIx9Q3ZB5SMmLfeGhOHLe11Hokl1T2tyIi6GPjSLcsxdumnhi95kX7aS3trqmMeOm
+	 LOS6N7rXmKF+Q==
+From: SeongJae Park <sj@kernel.org>
+To: 
+Cc: SeongJae Park <sj@kernel.org>,
+	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Brendan Higgins <brendan.higgins@linux.dev>,
+	David Gow <davidgow@google.com>,
+	David Hildenbrand <david@kernel.org>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Shuah Khan <shuah@kernel.org>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@kernel.org>,
 	damon@lists.linux.dev,
+	kunit-dev@googlegroups.com,
+	linux-doc@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-kselftest@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: Re: [PATCH v3 1/2] mm/damon/lru_sort: validate min_region_size to be power of 2
-Date: Sat,  4 Apr 2026 17:11:22 +0800
-Message-ID: <20260404091122.6255-1-aethernet65535@gmail.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260403161906.65008-1-sj@kernel.org>
-References: <20260403161906.65008-1-sj@kernel.org>
+Subject: [RFC PATCH 0/9] mm/damon: introduce DAMOS failed region quota charge ratio
+Date: Sat,  4 Apr 2026 09:39:30 -0700
+Message-ID: <20260404163943.89278-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -77,55 +59,176 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hi SeongJae,
+TL; DR: Let users set different DAMOS quota charge ratios for DAMOS
+action failed regions, for deterministic and consistent DAMOS action
+progress.
 
-On Fri,  3 Apr 2026 09:19:06 -0700 SeongJae Park <sj@kernel.org> wrote:
+Common Reports: Unexpectedly Slow DAMOS
+=======================================
 
-> As Quanmin also asked, clarifying the unexpected termination would be nice.
+One common issue report that we get from DAMON users is that DAMOS
+action applying progress speed is sometimes much slower than expected.
+And one common root cause is that the DAMOS quota is exceeded by the
+action applying failed memory regions.
 
-I will clarify "unexpected termination" in v4's commit message:
+For example, a group of users tried to run DAMOS-based proactive memory
+reclamation (DAMON_RECLAIM) with 100 MiB per second DAMOS quota.  They
+ran it on a system having no active workload which means all memory of
+the system is cold.  The expectation was that the system will show 100
+MiB per second reclamation until (nearly) all memory is reclaimed. But
+what they found is that the speed is quite inconsistent and sometimes it
+becomes very slower than the expectation, sometimes even no reclamation
+at all for about tens of seconds.  The upper limit of the speed (100 MiB
+per second) was being kept as expected, though.
 
-    "Unexpectedly" here means the kdamond terminates without the user
-    requesting it (e.g., not by wrtting "N" to 'enabled').
+By monitoring the qt_exceeds (number of DAMOS quota exceed events) DAMOS
+stat, we found DAMOS quota is always exceeded when the speed is slow. By
+monitoring sz_tried and sz_applied (the total amount of DAMOS action
+tried memory and succeeded memory) DAMOS stats together, we found the
+reclamation attempts nearly always failed when the speed is slow.
 
-> I remember I suggested adding stable@, but only if you think it deserve.  I'm
-> now not very sure if this deserves Cc-ing stable@.  As I mentioned before,
+DAMOS quota charges DAMOS action tried regions regardless of the
+successfulness of the try.  Hence in the example reported case, there
+was unreclaimable memory spread around the system memory.  Sometimes
+nearly 100 MiB of memory that DAMOS tried to reclaim in the given quota
+interval was reclaimable, and therefore showed nearly 100 MiB per second
+speed.  Sometimes nearly 99 MiB of memory that DAMOS was trying to
+reclaim in the given quota interval was unreclaimable, and therefore
+showing only about 1 MiB per second reclaim speed.
 
-I think this deserves Cc stable@ because:
-- The issue can be triggered by accidental user misconfiguration
-- It causes kdamond termination and hard to recover/restart. Once
-  triggered, kdamond remains in an unusable state, and I have not found
-  a way to recover/restart it through the sysfs interface without a
-  system reboot.
-- The fix is small and low-risk
-- It improves user experience on stable kernels
+We explained it is an expected behavior of the feature rather than a
+bug, as DAMOS quota is there for only the upper-limit of the speed.  The
+users agreed and later reported a huge win from the adoption of
+DAMON_RECLAIM on their products.
 
-But I'm open to dropping it if you think otherwise.
+It is Not a Bug but a Feature; But...
+=====================================
 
-> there are multiple patches to review in parallel (you are also having such
-> multiple patches in the queue).  Please don't expect I will follow full
-> contexts especially when a single person posting multiple patches in parallel
-> every day or two, and bear in mind with me.
-> 
-> Sorry about the limited bandwidth from my side.  You could also simply slow
-> down your pace, though.
+So nothing is broken.  DAMOS quota is working as intended, as the upper
+limit of the speed.  It also provides its behavior observability via
+DAMOS stat.  In the real world production environment that runs long
+term active workloads and matters stability, the speed sometimes being
+slow is not a real problem.
 
-I will try to adjust my pace. I've also noticed that the quality of my
-recent replies/patches hasn't been ideal, and I will try to be less
-rushed in the future. Thank you for your understanding and suggestion.
+But, the non-deterministic behavior is sometimes annoying, especially in
+lab environments.  Even in a realistic production environment, when
+there is a huge amount of DAMOS action unapplicable memory, the speed
+could be problematically slow.  Let's suppose a virtual machines
+provider that setup 99% of the host memory as hugetlb pages that cannot
+be reclaimed, to give it to virtual machines.  Also, when aim-oriented
+DAMOS auto-tuning is applied, this could also make the internal feedback
+loop confused.
 
-> For stable@ Cc-ing patches, more clearly describing the user impact would be
-> nice, and helpful for judging if it deserves that.  Could you please elaborate?
+The intention of the current behavior was that trying DAMOS action to
+regions would anyway impose some overhead, and therefore somehow be
+charged.  But in the real world, the overhead for failed action is much
+lighter than successful action.  Charging those at the same ratio may be
+unfair, or at least suboptimum in some environments.
 
-I will add a "User Impact" section in v4's commit message:
+DAMOS Action Failed Region Quota Charge Ratio
+=============================================
 
-    User Impact
-    ===========
-    Currently, if a user commit an invalid 'addr_unit', kdamond may
-    terminate abruptly. Once terminated, it cannot be easily restarted
-    via sysfs, pontentially requiring a system reboot to restore DAMON
-    functionality. This patch prevent such termination by validating
-    parameters (addr_unit and min_region_sz) early.
+Let users set the charge ratio for the action-failed memory, for more
+optimal and deterministic use of DAMOS.  It allows users to specify the
+numerator and the denominator of the ratio for flexible setup.  For
+example, let's suppose the numerator and the denominator are set to 1
+and 4,096, respectively.  The ratio is 1 / 4,096.  A DAMOS scheme action
+is applied to 5 GiB memory.  For 1 GiB of the memory, the action is
+succeeded.  For the rest (4 GiB), the action is failed.  Then, only 1
+GiB and 1 MiB quota is charged.
 
-Best regards,
-Rui Yan
+The optimal charge ratio will depend on the use case and
+system/workload.  I'd recommend starting from setting the nominator as 1
+and the denominator as PAGE_SIZE and tune based on the results, because
+many DAMOS actions are applied at page level.
+
+Tests
+=====
+
+I tested this feature in the steps below.
+
+1. Allocate 50% of system memory and mlock() it using a test program.
+2. Fill up the page cache to exhaust nearly all free memory.
+3. Start DAMON-based proactive reclamation with 100 MiB/second DAMOS
+   hard-quota.  Auto-tune the DAMOS soft-quota under the hard-quota for
+   achieving 40% free memory of the system with 'temporal' tuner.
+
+For step 1, I run a simple C program that is written by Gemini.  It is
+quite straightforward, so I'm not sharing the code here.
+
+For step 2, I use dd command like below:
+
+   dd if=/dev/zero of=foo bs=1M count=$50_percent_of_system_memory
+
+For step 3, I use the latest version of DAMON user-space tool (damo)
+like below.
+
+    sudo damo start --damos_action pageout \
+            ` # Do the pageout only up to 100 MiB per second ` \
+            --damos_quota_space 100M --damos_quota_interval 1s \
+            ` # Auto-tune the quota below the hard quota aiming` \
+            ` # 40% free memory of the node 0 ` \
+            ` # (entire node of the test system)` \
+            --damos_quota_goal node_mem_free_bp 40% 0 \
+            ` # use temporal tuner, which is easy to understnd ` \
+            --damos_quota_goal_tuner temporal
+
+As expected, the progress of the reclamation is not consistent, because
+the quota is exceeded for the failed reclamation of the unreclaimable
+memory.
+
+I do this again, but with the failed region charge ratio feature.  For
+this, the above 'damo' command is used, after appending command line
+option for setup of the charge ratio like below.  Note that the option
+was added to 'damo' after v3.1.9.
+
+    sudo ./damo start --damos_action pageout \
+            [...]
+            ` # quota-charge only 1/4096 for pageout-failed regions ` \
+            --damos_quota_fail_charge_ratio 1 4096
+
+The progress of the reclamation was nearly 100 MiB per second until the
+goal was achieved, meeting the expectation.
+
+Patches Sequence
+================
+
+Patch 1 implements the feature and exposes it via DAMON core API.
+Patch 2 implements DAMON sysfs ABI for the feature.  Three following
+patches (3-5) document the feature and ABI on design, usage, and ABI
+documents, respectively.  Four patches for testing of the new feature
+follow.  Patch 6 implements a kunit test for the feature.  Patches 7
+and 8 extend DAMON selftest helpers for DAMON sysfs control and internal
+state dumping for adding a new selftest for the feature.  Patch 9
+extends existing DAMON sysfs interface selftest to test the new feature
+using the extended helper scripts.
+
+SeongJae Park (9):
+  mm/damon/core: introduce failed region quota charge ratio
+  mm/damon/sysfs-schemes: implement fail_charge_{num,denom} files
+  Docs/mm/damon/design: document fail_charge_{num,denom}
+  Docs/admin-guide/mm/damon/usage: document fail_charge_{num,denom}
+    files
+  Docs/ABI/damon: document fail_charge_{num,denom}
+  mm/damon/tests/core-kunit: test fail_charge_{num,denom} committing
+  selftets/damon/_damon_sysfs: support failed region quota charge ratio
+  selftests/damon/drgn_dump_damon_status: support failed region quota
+    charge ratio
+  selftets/damon/sysfs.py: test failed region quota charge ratio
+
+ .../ABI/testing/sysfs-kernel-mm-damon         | 12 +++++
+ Documentation/admin-guide/mm/damon/usage.rst  | 18 +++++--
+ Documentation/mm/damon/design.rst             | 21 ++++++++
+ include/linux/damon.h                         |  9 ++++
+ mm/damon/core.c                               |  9 +++-
+ mm/damon/sysfs-schemes.c                      | 54 +++++++++++++++++++
+ mm/damon/tests/core-kunit.h                   |  6 +++
+ tools/testing/selftests/damon/_damon_sysfs.py | 21 +++++++-
+ .../selftests/damon/drgn_dump_damon_status.py |  2 +
+ tools/testing/selftests/damon/sysfs.py        |  6 +++
+ 10 files changed, 151 insertions(+), 7 deletions(-)
+
+
+base-commit: 9e634d6813be2e3d1cb023a0b83619fd2bcdd13b
+-- 
+2.47.3
