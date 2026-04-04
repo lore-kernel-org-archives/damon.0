@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AC5E288AD;
-	Sat,  4 Apr 2026 20:52:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AE53289E13;
+	Sat,  4 Apr 2026 20:58:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775335960; cv=none; b=ZKUKi+JJ5ar8VcFj0r6DM8Ce7rilOdKTv2fXtsFDw8m0feuKIDrfflO80u5QYu2TxYkBWwDaWLRnsXeN8FlqKO2UX/WFm5wDNxAQ0YnclwY4gk6i+/80/DIDZW7OKf8tfJaK6VFDyohlkrHfH5LeGRykJZ9vITV0L0bbzWB+ph8=
+	t=1775336327; cv=none; b=XAijb5yC8teaYvmQNhveIKD3EL8z33dM7vG5eJVK6e3eD1ViyHSzjA6y3cLODJpvtIZt9duPbLF9MZmNUXufZLNeEfYWkT2w/+CzHPT2z8cyXEEprzMrqP7geLgeLcBtE9u3f8tCpdP2D4rOKpSdTWznyiRYHx32beOA0PT0v5w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775335960; c=relaxed/simple;
-	bh=7kjl5Z0GP1aijdZFzpfKWtsCIIOBoEr3kfUnJsk2E94=;
+	s=arc-20240116; t=1775336327; c=relaxed/simple;
+	bh=JjuMIdaMEdHQJUEtMAZ1M1peq0Edg56ahCnVKrCmJWM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B/2xpRD07YCwKrIlI0vEd35qYcp0OR5ZxoGhJhUt5LMK4fcDoeD8HghMYxqcCJzqy+xghws2tJmQJzb5rF3PaGLjsrGexSnZRrJoQn+hf4aN9U7PBE+3otxyPNPb2ri/AJFaKOiEa13gpRtbUhAiDiLP6bfHalqyMlqejqNLba0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=L3RuPKPe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=orNuezki4CsHhgPhSZYJ6GqIiNV1Rq2nETt5ayZHoiGFB8m9fJNzI6CZ08HBVFBJRoFrkDr+gkjoBj+2sFpYJHu7VkI8PRIzoLEfvtzVRmhjnyOgiQmwHfFcn04Z1NKYHFh5AtNlNIFx1Xd156b+8SUyU3MIzCmzNkRuO2XOmYU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DBEMj2I/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="L3RuPKPe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B99F0C19421;
-	Sat,  4 Apr 2026 20:52:39 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DBEMj2I/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2251C19421;
+	Sat,  4 Apr 2026 20:58:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1775335959;
-	bh=7kjl5Z0GP1aijdZFzpfKWtsCIIOBoEr3kfUnJsk2E94=;
+	s=k20201202; t=1775336327;
+	bh=JjuMIdaMEdHQJUEtMAZ1M1peq0Edg56ahCnVKrCmJWM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L3RuPKPekgG2Q5g0yCtbfxBxUqXoJ5xUVdvpsj+/LFLyVlr7U+uhFpmRoyWVpybGU
-	 Cl/cTXJyKftSZS4xo8DiBWBt+y8RKTFW/PwrRfuSRybVgNIaAfOcnyIdtDZOqV9c8b
-	 MH9CSNRULfIQAgCWNoz8mwY6Rks+iEYZ1mdC+osb1DYCKXXnYdrONwig/i7JctBoyo
-	 TwtxH/YicsQyAHPzGgZQhQLJxcmY/8CMfKPbJYF26DU9Akw7smNcGtZEcd8s5Zqo94
-	 Org6Bgqr2jqsRJQfQAEkcbcO8MjcrFurVPfcvxE4kqYv9IcsQns5IHZjSLh9FVqs9F
-	 foFB3xZZ1600A==
+	b=DBEMj2I/xb5UVjhrDP+WtqhL8610rRzEFHBaQ4FiiURHmjaHAGZVcdmKgatJmT7GZ
+	 8LdCLO1tNKZ3IDEcLD11AmZbUR8zQM7joWvk31sVOaRQnXxW0nY0C+nyrbdPlOi0h0
+	 Dw8dOjexIprwCdfLrHlcB3NqzPA31V+p8x79Xg5Ox5Jwq+KhNZyyTHgsa+qpHwqDhG
+	 KlkGxgwGq2P5Hi2fRZJ64JODvz+6j1KMkPDd5w8xKlJqEoRLh6gBC0EXg49EEGIE4L
+	 SMC9MHhd3ckYgqHh+cTK/BHNzI4GNVRrkgAHm8ZGH8+aPTF7g5Ch+wUfRu1dSi/EN+
+	 yaCI/JVKXBcRw==
 From: SeongJae Park <sj@kernel.org>
 To: SeongJae Park <sj@kernel.org>
-Cc: Andrew Morton <akpm@linux-foundation.org>,
-	damon@lists.linux.dev,
+Cc: damon@lists.linux.dev,
+	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: Re: (sashiko review) [RFC PATCH 2/9] mm/damon/sysfs-schemes: implement fail_charge_{num,denom} files
-Date: Sat,  4 Apr 2026 13:52:35 -0700
-Message-ID: <20260404205235.87148-1-sj@kernel.org>
+Subject: Re: (sashiko review) [RFC PATCH 3/9] Docs/mm/damon/design: document fail_charge_{num,denom}
+Date: Sat,  4 Apr 2026 13:58:35 -0700
+Message-ID: <20260404205837.87382-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260404163943.89278-3-sj@kernel.org>
+In-Reply-To: <20260404163943.89278-4-sj@kernel.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -46,97 +46,82 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-sashiko found no real issue for this patch.
+Dropped individual Cc's except myself to reduce unnecessary traffic.  I
+initailly thought it would be good to keep Andrew in the Cc list, but even
+Andrew may not really interested in each sashiko review for RFC patch, so I
+dropped him from the list, too.
+
+sashiko found issues.  I will fix those in the next revision.
 
 Forwarding sashiko review in a reply format with my inline
 comments below, for details of my view and doing discussions
 via mails if needed.
 
-> # review url: https://sashiko.dev/#/patchset/20260404163943.89278-3-sj@kernel.org
+> # review url: https://sashiko.dev/#/patchset/20260404163943.89278-4-sj@kernel.org
 > # start of sashiko.dev inline review
-> commit ee565644ac37e8bfceab5e62746d85906fb91b43
+> commit bab641e86f0e9820b2ac0a7d4ae493d23c4c50f4
 > Author: SeongJae Park <sj@kernel.org>
+> Docs/mm/damon/design: document fail_charge_{num,denom}
 > 
-> mm/damon/sysfs-schemes: implement fail_charge_{num,denom} files
+> This commit updates the DAMON design document to explain the action-failed
+> memory charging ratio. It provides an example of how to calculate the
+> charged memory when an action fails for a portion of a region.
 > 
-> This commit implements the user-space ABI for the DAMOS action failed region
-> quota-charge ratio setup. It adds two new sysfs files under the DAMON sysfs
-> interface for DAMOS quotas, fail_charge_num and fail_charge_denom, which
-> allow reading and setting the numerator and denominator of the failed regions
-> charge ratio.
-> 
-> > diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
-> > index 5186966dafb35..d5bfba79f105f 100644
-> > --- a/mm/damon/sysfs-schemes.c
-> > +++ b/mm/damon/sysfs-schemes.c
-> 
-> [ ... ]
-> 
-> > @@ -1663,6 +1665,48 @@ static ssize_t goal_tuner_store(struct kobject *kobj,
-> >  	return -EINVAL;
-> >  }
+> > diff --git a/Documentation/mm/damon/design.rst b/Documentation/mm/damon/design.rst
+> > index afc7d52bda2f7..01047e8431d17 100644
+> > --- a/Documentation/mm/damon/design.rst
+> > +++ b/Documentation/mm/damon/design.rst
+> > @@ -565,6 +565,27 @@ interface <sysfs_interface>`, refer to :ref:`weights <sysfs_quotas>` part of
+> >  the documentation.
 > >  
-> > +static ssize_t fail_charge_num_show(struct kobject *kobj,
-> > +		struct kobj_attribute *attr, char *buf)
-> > +{
-> > +	struct damon_sysfs_quotas *quotas = container_of(kobj,
-> > +			struct damon_sysfs_quotas, kobj);
+> >  
+> > +.. _damon_design_damos_quotas_failed_memory_charging_ratio:
 > > +
-> > +	return sysfs_emit(buf, "%u\n", quotas->fail_charge_num);
-> > +}
+> > +Action-failed Memory Charging Ratio
+> > +^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 > > +
-> > +static ssize_t fail_charge_num_store(struct kobject *kobj,
-> > +		struct kobj_attribute *attr, const char *buf, size_t count)
-> > +{
-> > +	struct damon_sysfs_quotas *quotas = container_of(kobj,
-> > +			struct damon_sysfs_quotas, kobj);
-> > +	int err = kstrtouint(buf, 0, &quotas->fail_charge_num);
-> > +
-> > +	if (err)
-> > +		return -EINVAL;
+> > +DAMOS action to a given region can fail for sub subsets of the memory of the
 > 
-> Could this lack of upper bounds checking lead to an integer overflow when
-> the scheme is applied in the DAMON core?
-> 
-> If a user provides a large value for fail_charge_num up to UINT_MAX, could the
-> charge calculation in damos_apply_scheme():
-> 
-> (sz - sz_applied) * quota->fail_charge_num / quota->fail_charge_denom
-> 
-> overflow the unsigned long value?
-> 
-> For example, on a 32-bit system, an unapplied region of just 5 MB multiplied
-> by a user-supplied numerator of 1,000 yields over 5 billion, which exceeds
-> the 32-bit maximum limit. On a 64-bit system, a 10 GB region multiplied by
-> 4,000,000,000 would similarly overflow.
-> 
-> When this overflow occurs, does the charged size wrap around to a very small
-> value, causing the DAMOS action quota to be drastically undercharged and
-> bypassing the user-defined limits?
+> This isn't a bug, but should "sub subsets" just be "some subsets" or
+> "subsets"?
 
-That can happen, but shouldn't cause a real problem.  Meanwhile, adding such
-overflow check would make code unnecessarily complicated.  I will keep this as
-is.  If it turns out this causes a real problem, we can consider making this
-better documented or updating the code later, after the report is really made.
+Good eye.  I will fix this in the next revision.
+
+> 
+> > +region.  For example, if the action is ``pageout`` and the region has some
+> > +unreclaimable pages, applying the action to the pages will fail.  The amount of
+> > +system resource that is taken for such failed action applications is usually
+> > +different from that for successful action applications.  For such cases, users
+> > +can set different charging ratio for such failed memory.  The ratio can be
+> > +specified using ``fail_charge_num`` and ``fail_charge_denom`` parameters.  The
+> > +two parameters represent the numerator and denominator of the ratio.
+> > +
+> > +For example, let's suppose a DAMOS action is applied to a region of 1 GiB size.
+> > +The action is successfully applied to only 700 MiB of the region.
+> > +``fail_charge_num`` and ``fail_charge_denom`` are set to ``1`` and ``1024``,
+> > +respectively.  Then only 700 MiB and 300 KiB of size (``700 MiB + 300 MiB * 1 /
+> > +1024``) will be charged.
+> 
+> Is this calculation accurate? Since 1 GiB is 1024 MiB, if 700 MiB are
+> successfully applied, the remaining failed region would be 324 MiB rather
+> than 300 MiB. Does the example intentionally use 1 GiB = 1000 MiB, or should
+> the remaining portion be updated to 324 MiB?
+
+Nice finding.  I will fix this in the next revision.
 
 
 Thanks,
 SJ
 
 > 
-> > +	return count;
-> > +}
-> 
-> [ ... ]
-> 
 > 
 > # end of sashiko.dev inline review
-> # review url: https://sashiko.dev/#/patchset/20260404163943.89278-3-sj@kernel.org
+> # review url: https://sashiko.dev/#/patchset/20260404163943.89278-4-sj@kernel.org
 
 # hkml [1] generated a draft of this mail.  You can regenerate
 # this using below command:
 #
 #     hkml patch sashiko_dev --for_forwarding \
-#             20260404163943.89278-3-sj@kernel.org
+#             20260404163943.89278-4-sj@kernel.org
 #
 # [1] https://github.com/sjp38/hackermail
