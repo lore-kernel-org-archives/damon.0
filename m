@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F58333B970;
-	Sat,  4 Apr 2026 19:53:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52AEA17A30A;
+	Sat,  4 Apr 2026 20:02:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775332419; cv=none; b=eJCXNuQohavTRuDkYnyA5n+Qx4yk8NL7SHaCyZ8eqSd/DO9su9d8mhhNtvdFJ9ytZQsaPfgCsuLUJv3TrzbY1GI4zV9S6qD53ZviJXu2WPCgASt4IACkYxn85EU5CPt3xRS5Ha7hsiegTnwl0U3Bf4NIDZ2eU+mPmQ61LitP06U=
+	t=1775332926; cv=none; b=ItIFJrH5f79QOyjJxeDJGPSl8WrmyKzd9vtOprp+iGS4QyWWmwiRH0h5LbDKY8QgFaRBNaC9XZtSYM+nvOpdbPvo1N3Z8UPR+95NtpTRXl+j2bOSEaeLpTXsemPkfdY5GYXU1mRPuPtHMLGO3lBjGLAYZkIai6sn4diqIPVMZUQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775332419; c=relaxed/simple;
-	bh=KIyQFCexOJ3GWSHEbtzW2pSLEsIiY9S8dv+B7bmaG+0=;
+	s=arc-20240116; t=1775332926; c=relaxed/simple;
+	bh=/JiyVizUMe9wSdqRZWW6fVbbnNxTVMDWZytcmkzNmcU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L3H+oGBk6451VK/X2kQnLBY4M1J1vT22DBIoxMf/A4XVXf5I4RkmBHYw6mP8aeT4nTF3a9QYpO8ZPEU47a9xa+IbiRy2PTd9Wo9R+FY8NF2jhXvAVLqar7DSuKq0IRXjOYyfYA8vUVfuKEEqnX9KFA78hkfP4dcWx5tsFzn0Ums=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OzAhhg4I; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DytGpkCNj79Kk41Udw1LYZ4R/WADtdnzZQbr1ZmDJbXxLUEFpTkIBGZPOT59hTVIq+Oqq+a4wDeVsfgUOH+o/gmTCs8Shz2FeBpi2BHvYgsritC7iMO0x9LVdKo1BCPHa22pl1chd60U1tCfrsw29yi7g4JLSoYYh2wfs72/6kU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lrA5QUGy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OzAhhg4I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4F6AC19421;
-	Sat,  4 Apr 2026 19:53:38 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lrA5QUGy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 560C5C19421;
+	Sat,  4 Apr 2026 20:02:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1775332419;
-	bh=KIyQFCexOJ3GWSHEbtzW2pSLEsIiY9S8dv+B7bmaG+0=;
+	s=k20201202; t=1775332925;
+	bh=/JiyVizUMe9wSdqRZWW6fVbbnNxTVMDWZytcmkzNmcU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OzAhhg4IT4uDD6s1jppMeqlKNBGYOCW4X7Ea1BTUPvxmwMDn6eA6xZMZMQ2tIcddR
-	 8IuMjJvLcBp+uRc9KBkJr8MFK2hx6Crp2yrGY4iH1C1a7oaT+tQE8CQn5PAp7iJdnL
-	 JmJnNoF2/8S9tPNs/RA3lJCnDamB5rotH7ts+gji8lcyXCqLldnaJds/FOsSU2V/+J
-	 jk4vRr8DjruUHrDak/o2Pc5BaPz/n8hlChoFFz85DAt8ZKai5OhHPA40XOFmzGrpuW
-	 AnZQFxRo3gx5814dtAtskWEc3Oab9R3a051pIaRta2ColzDkw07k1krnuuOjKMXxUs
-	 +kvwf2guH77zg==
+	b=lrA5QUGyJQ8bVQcBRmkgwJI7ZwBM9sJNU5eBGGV8qZnyWKaSUSqyBzu6LpN9GvD2U
+	 6PWqlaeorIT4jytNB3eRyedgLHY4vnZ6k6bamJalIPDMDVKAkMXdqMHg8VkCPk0dEQ
+	 qwq2SnCL0oc8kudZeUxGXqaFCTXar2+nndGXZcRnaxRguhK5GF4JD8E9XaMQvYQqZC
+	 EC3Tb2Z2do5VI+617ig9E5WWJc7V2bUnhUoVMAxoyrAwK/SW3I+5+Du2twxoMyWjf9
+	 cXG8+wX5CFQV5LXDpLImwNq0Qy+fCoBrWJbb4+EMp0GEby3i0RtmKpBUCX1He7oBSi
+	 jW3NCs6DwbfUA==
 From: SeongJae Park <sj@kernel.org>
 To: Ravi Jonnalagadda <ravis.opensrc@gmail.com>
 Cc: SeongJae Park <sj@kernel.org>,
@@ -38,12 +38,13 @@ Cc: SeongJae Park <sj@kernel.org>,
 	bijan311@gmail.com,
 	ajayjoshi@micron.com,
 	honggyu.kim@sk.com,
-	yunjeong.mun@sk.com
-Subject: Re: [PATCH v5 0/1] mm/damon: add node_eligible_mem_bp and node_ineligible_mem_bp goal metrics
-Date: Sat,  4 Apr 2026 12:53:29 -0700
-Message-ID: <20260404195330.85809-1-sj@kernel.org>
+	yunjeong.mun@sk.com,
+	kernel test robot <lkp@intel.com>
+Subject: Re: [PATCH v5 1/1] mm/damon: add node_eligible_mem_bp and node_ineligible_mem_bp goal metrics
+Date: Sat,  4 Apr 2026 13:01:57 -0700
+Message-ID: <20260404200158.86020-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260404012215.1539-1-ravis.opensrc@gmail.com>
+In-Reply-To: <20260404012215.1539-2-ravis.opensrc@gmail.com>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -53,51 +54,46 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hello Ravi,
+On Fri,  3 Apr 2026 18:22:15 -0700 Ravi Jonnalagadda <ravis.opensrc@gmail.com> wrote:
 
-
-On Fri,  3 Apr 2026 18:22:14 -0700 Ravi Jonnalagadda <ravis.opensrc@gmail.com> wrote:
-
-> This patch introduces two new DAMOS quota goal metrics for controlling
-> memory distribution in heterogeneous memory systems (e.g., DRAM and CXL
-> memory tiering) using physical address (PA) mode monitoring.
+> Add new quota goal metrics for memory tiering that track scheme-eligible
+> memory distribution across NUMA nodes:
 > 
-> Changes since v4:
-> =================
-> https://lore.kernel.org/linux-mm/20260320190453.1430-1-ravis.opensrc@gmail.com/
+> - DAMOS_QUOTA_NODE_ELIGIBLE_MEM_BP: ratio of eligible memory on a node
+> - DAMOS_QUOTA_NODE_INELIGIBLE_MEM_BP: ratio of ineligible memory on a
+>   node
 > 
-> - Fixed commit message description for DAMOS_QUOTA_NODE_INELIGIBLE_MEM_BP
->   per review feedback
-> - Added clarifying comment for ops-common.h include (for damon_get_folio())
-> - Fixed build error when CONFIG_DAMON_PADDR is disabled by adding
->   #ifdef CONFIG_DAMON_PADDR guards around functions using damon_get_folio()
-> - Dropped RFC tag per maintainer feedback
-
-Thank you for revisioning while addressing my comments on the previous version!
-
+> These complementary metrics enable push-pull migration schemes that
+> maintain a target memory distribution across different NUMA nodes
+> representing different memory tiers, based on access patterns defined
+> by each scheme.
 > 
-> This patch is based on top of damon/next.
-
-Maybe because of this, sashiko was unable to review this.
-
-To my understanding, there is no real reason to make this based on damon/next.
-And I'd like to get sashiko review for this patch.  Could you please rebase
-this to latest mm-new and repost for that?
-
+> The metrics iterate scheme-eligible regions and use damon_get_folio()
+> to determine NUMA node placement of each folio, calculating the ratio
+> of eligible memory on the specified node versus total eligible memory.
 > 
-> Background and Motivation
-> =========================
+> The implementation is guarded by CONFIG_DAMON_PADDR since damon_get_folio()
+> is only available when physical address space monitoring is enabled.
 > 
-> In heterogeneous memory systems, controlling memory distribution across
-> NUMA nodes is essential for performance optimization. This patch enables
-> system-wide page distribution with target-state goals such as "maintain
-> 30% of scheme-eligible memory on CXL" using PA-mode DAMON schemes.
+> Suggested-by: SeongJae Park <sj@kernel.org>
+> Reported-by: kernel test robot <lkp@intel.com>
+> Closes: https://lore.kernel.org/oe-kbuild-all/202603251034.978zcsQ2-lkp@intel.com/
+
+I think you don't need to add the Reported-by: and Closes: for bug that found
+before this patch is merged.  Could you please drop those?
+
+> Signed-off-by: Ravi Jonnalagadda <ravis.opensrc@gmail.com>
+> ---
+>  include/linux/damon.h    |   6 ++
+>  mm/damon/core.c          | 186 ++++++++++++++++++++++++++++++++++++---
+>  mm/damon/sysfs-schemes.c |  12 +++
+>  3 files changed, 190 insertions(+), 14 deletions(-)
 [...]
 
-Other than the lack of the sashiko review, this cover letter looks good to me.
+The code changes look good to me.  But, as I replied to the cover letter, I'd
+like to get sashiko review before giving my Reviewed-by:.  Could you please
+rebase this to the latest mm-new and repost for getting the sashiko review?
 
 
 Thanks,
 SJ
-
-[...]
