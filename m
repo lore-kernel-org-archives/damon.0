@@ -1,56 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EDD1846A;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6F743081D7;
 	Sun,  5 Apr 2026 15:12:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775401957; cv=none; b=YmvgXLiSsm3ab2j13CZlrRBCXP3bZsva3aHViSQeGUi8a7y1178JqfYKoKDTKsDpW7X2NRM2CtS2zlf4CyjMg0hd+Yk1b0ollmdW41emEXNayihxJ9C7na8/Pyezzb5ql1ZS1C2FZ0AO5AIV8XHpPTF/fAxsFl95zxgJyj0MJt8=
+	t=1775401957; cv=none; b=NLQtuPL/BHDIyTiLfS1QzqQnNHJnuc3DB3DGFWeooGJmD80qZ7dlwVVc+JlPKySERZ/SgA+Cnb1WV65DHO01izG2vjQdhVWso1mbJcDF3W8dQTBiLetKEMUSBJVJ6PdYTGjAGBnQff7WAEpm8NioArUZ9zHBULe3QRB/8SYlexk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1775401957; c=relaxed/simple;
-	bh=1iPV7qLbF53jDL90OwyGcHkmehfvKrFrN+lbGpsZkRU=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=L9VrtfGBbaLdGr3H7E78GerfeyfeQqN3Z55XcWve1YZmppA6xrudmITxTODzM5pZbshMUkLB0CAq2ALptP87ZI5XuIp7aNSZ7vHO2a0VKhWKU8u5T7QBkaKQgzRFjofUuH1ZkojomRxvlnIurEiLWN3xx1sb43wulSpVXKD3Gss=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=R3MHsGpG; arc=none smtp.client-ip=10.30.226.201
+	bh=F/M9rB5L2tN6LoRT9CXC/JolkzvZc5e3+oNuxF0asr8=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=W6qOevfblpzigu2YO9QDT3sdiR16CSKmnKc8S0JDcEAjcMr4Q3Y4EJvqRlXPL5/r4nFOhvCTbT4vQ+xnv5a68SpT9blWT02FoK+Wg0JYcprKMsrE2eueiKPSZmXa1VFz4l7r1wcUq8ZkF2jkFOc3SjF3ARL28h7khx0qJDVHh4Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=d1kfa/Ns; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="R3MHsGpG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 450F6C116C6;
-	Sun,  5 Apr 2026 15:12:36 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="d1kfa/Ns"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70A09C2BC9E;
+	Sun,  5 Apr 2026 15:12:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1775401957;
-	bh=1iPV7qLbF53jDL90OwyGcHkmehfvKrFrN+lbGpsZkRU=;
-	h=From:To:Cc:Subject:Date:From;
-	b=R3MHsGpGX+xAPv5VgdeT8gcCjWU+BHimAOJfmMJMMqR/Or8TKdpZ64atSVe8UIA2C
-	 sCAr2S+PVt75/VlPQmKtxQ7BlLRcqQwrqhzCzgpAcpjyOV4kGJ5mDheijDV4ks2ENh
-	 1Fc3feG/MshgOa3817s0DpO7s0BcHAtA/GZMNnQOYAwMyoSpYs8LpRxMz4utci5FMM
-	 O2BSx1uk14RqNvUsoDFvwFkjl2QXDwVdv55VEMskVxBS7yWnydSNfF6HTzU3AF9rjp
-	 JhkIjSK44rd8kUT0xGas4A80mmML0Wf53wkhizu2Tp0vpJ3Vz9tS1qlWrv5fWstf7X
-	 DvtxhX1qvfp8Q==
+	bh=F/M9rB5L2tN6LoRT9CXC/JolkzvZc5e3+oNuxF0asr8=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=d1kfa/Ns3Ym2KfHtxsUwFYe/XWcAKWvFaP2qZzlrKAW3VKX29/wE1s+1eRBZwgNAu
+	 r7cAaseHUVs6+nwPzAeOI4/BCxy+R/appQYmNSr1+6Mkm9d6gNQln3L5ItT+lBuved
+	 aTsRoMCNd4J4nIJ2IwyVBpUUHVacg+kSMvtE+kHAl2W/rX0wtfaJ+Ryq5DB1TL9iS2
+	 ilk7bovc2OPI+8uNSw+BLPv8c10apW7jhgS3e8z4im2+WWBH9HojOFQlNK9YTPFZ4q
+	 uTrcsQMNVjCjNBajSGjZZzIwiesNHE8rWl9Qw7O9AsIw9t9pmk5pUoy5lZ1kzs6ygm
+	 tuKb9ssE8UYOA==
 From: SeongJae Park <sj@kernel.org>
 To: 
 Cc: SeongJae Park <sj@kernel.org>,
-	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Brendan Higgins <brendan.higgins@linux.dev>,
-	David Gow <davidgow@davidgow.net>,
-	David Hildenbrand <david@kernel.org>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	Michal Hocko <mhocko@suse.com>,
-	Mike Rapoport <rppt@kernel.org>,
-	Shuah Khan <shuah@kernel.org>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Vlastimil Babka <vbabka@kernel.org>,
 	damon@lists.linux.dev,
-	kunit-dev@googlegroups.com,
-	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	linux-kselftest@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH v2 0/9] mm/damon: introduce DAMOS failed region quota charge ratio
-Date: Sun,  5 Apr 2026 08:12:18 -0700
-Message-ID: <20260405151232.102690-1-sj@kernel.org>
+Subject: [RFC PATCH v2 2/9] mm/damon/sysfs-schemes: implement fail_charge_{num,denom} files
+Date: Sun,  5 Apr 2026 08:12:20 -0700
+Message-ID: <20260405151232.102690-3-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260405151232.102690-1-sj@kernel.org>
+References: <20260405151232.102690-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -59,185 +47,108 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-TL; DR: Let users set different DAMOS quota charge ratios for DAMOS
-action failed regions, for deterministic and consistent DAMOS action
-progress.
+Implement the user-space ABI for the DAMOS action failed region
+quota-charge ratio setup.  For this, add two new sysfs files under the
+DAMON sysfs interface for DAMOS quotas.  Names of the files are
+fail_charge_num and fail_charge_denom, and work for reading and setting
+the numerator and denominator of the failed regions charge ratio.
 
-Common Reports: Unexpectedly Slow DAMOS
-=======================================
+Signed-off-by: SeongJae Park <sj@kernel.org>
+---
+ mm/damon/sysfs-schemes.c | 54 ++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 54 insertions(+)
 
-One common issue report that we get from DAMON users is that DAMOS
-action applying progress speed is sometimes much slower than expected.
-And one common root cause is that the DAMOS quota is exceeded by the
-action applying failed memory regions.
-
-For example, a group of users tried to run DAMOS-based proactive memory
-reclamation (DAMON_RECLAIM) with 100 MiB per second DAMOS quota.  They
-ran it on a system having no active workload which means all memory of
-the system is cold.  The expectation was that the system will show 100
-MiB per second reclamation until (nearly) all memory is reclaimed. But
-what they found is that the speed is quite inconsistent and sometimes it
-becomes very slower than the expectation, sometimes even no reclamation
-at all for about tens of seconds.  The upper limit of the speed (100 MiB
-per second) was being kept as expected, though.
-
-By monitoring the qt_exceeds (number of DAMOS quota exceed events) DAMOS
-stat, we found DAMOS quota is always exceeded when the speed is slow. By
-monitoring sz_tried and sz_applied (the total amount of DAMOS action
-tried memory and succeeded memory) DAMOS stats together, we found the
-reclamation attempts nearly always failed when the speed is slow.
-
-DAMOS quota charges DAMOS action tried regions regardless of the
-successfulness of the try.  Hence in the example reported case, there
-was unreclaimable memory spread around the system memory.  Sometimes
-nearly 100 MiB of memory that DAMOS tried to reclaim in the given quota
-interval was reclaimable, and therefore showed nearly 100 MiB per second
-speed.  Sometimes nearly 99 MiB of memory that DAMOS was trying to
-reclaim in the given quota interval was unreclaimable, and therefore
-showing only about 1 MiB per second reclaim speed.
-
-We explained it is an expected behavior of the feature rather than a
-bug, as DAMOS quota is there for only the upper-limit of the speed.  The
-users agreed and later reported a huge win from the adoption of
-DAMON_RECLAIM on their products.
-
-It is Not a Bug but a Feature; But...
-=====================================
-
-So nothing is broken.  DAMOS quota is working as intended, as the upper
-limit of the speed.  It also provides its behavior observability via
-DAMOS stat.  In the real world production environment that runs long
-term active workloads and matters stability, the speed sometimes being
-slow is not a real problem.
-
-But, the non-deterministic behavior is sometimes annoying, especially in
-lab environments.  Even in a realistic production environment, when
-there is a huge amount of DAMOS action unapplicable memory, the speed
-could be problematically slow.  Let's suppose a virtual machines
-provider that setup 99% of the host memory as hugetlb pages that cannot
-be reclaimed, to give it to virtual machines.  Also, when aim-oriented
-DAMOS auto-tuning is applied, this could also make the internal feedback
-loop confused.
-
-The intention of the current behavior was that trying DAMOS action to
-regions would anyway impose some overhead, and therefore somehow be
-charged.  But in the real world, the overhead for failed action is much
-lighter than successful action.  Charging those at the same ratio may be
-unfair, or at least suboptimum in some environments.
-
-DAMOS Action Failed Region Quota Charge Ratio
-=============================================
-
-Let users set the charge ratio for the action-failed memory, for more
-optimal and deterministic use of DAMOS.  It allows users to specify the
-numerator and the denominator of the ratio for flexible setup.  For
-example, let's suppose the numerator and the denominator are set to 1
-and 4,096, respectively.  The ratio is 1 / 4,096.  A DAMOS scheme action
-is applied to 5 GiB memory.  For 1 GiB of the memory, the action is
-succeeded.  For the rest (4 GiB), the action is failed.  Then, only 1
-GiB and 1 MiB quota is charged.
-
-The optimal charge ratio will depend on the use case and
-system/workload.  I'd recommend starting from setting the nominator as 1
-and the denominator as PAGE_SIZE and tune based on the results, because
-many DAMOS actions are applied at page level.
-
-Tests
-=====
-
-I tested this feature in the steps below.
-
-1. Allocate 50% of system memory and mlock() it using a test program.
-2. Fill up the page cache to exhaust nearly all free memory.
-3. Start DAMON-based proactive reclamation with 100 MiB/second DAMOS
-   hard-quota.  Auto-tune the DAMOS soft-quota under the hard-quota for
-   achieving 40% free memory of the system with 'temporal' tuner.
-
-For step 1, I run a simple C program that is written by Gemini.  It is
-quite straightforward, so I'm not sharing the code here.
-
-For step 2, I use dd command like below:
-
-   dd if=/dev/zero of=foo bs=1M count=$50_percent_of_system_memory
-
-For step 3, I use the latest version of DAMON user-space tool (damo)
-like below.
-
-    sudo damo start --damos_action pageout \
-            ` # Do the pageout only up to 100 MiB per second ` \
-            --damos_quota_space 100M --damos_quota_interval 1s \
-            ` # Auto-tune the quota below the hard quota aiming` \
-            ` # 40% free memory of the node 0 ` \
-            ` # (entire node of the test system)` \
-            --damos_quota_goal node_mem_free_bp 40% 0 \
-            ` # use temporal tuner, which is easy to understnd ` \
-            --damos_quota_goal_tuner temporal
-
-As expected, the progress of the reclamation is not consistent, because
-the quota is exceeded for the failed reclamation of the unreclaimable
-memory.
-
-I do this again, but with the failed region charge ratio feature.  For
-this, the above 'damo' command is used, after appending command line
-option for setup of the charge ratio like below.  Note that the option
-was added to 'damo' after v3.1.9.
-
-    sudo ./damo start --damos_action pageout \
-            [...]
-            ` # quota-charge only 1/4096 for pageout-failed regions ` \
-            --damos_quota_fail_charge_ratio 1 4096
-
-The progress of the reclamation was nearly 100 MiB per second until the
-goal was achieved, meeting the expectation.
-
-Patches Sequence
-================
-
-Patch 1 implements the feature and exposes it via DAMON core API.
-Patch 2 implements DAMON sysfs ABI for the feature.  Three following
-patches (3-5) document the feature and ABI on design, usage, and ABI
-documents, respectively.  Four patches for testing of the new feature
-follow.  Patch 6 implements a kunit test for the feature.  Patches 7
-and 8 extend DAMON selftest helpers for DAMON sysfs control and internal
-state dumping for adding a new selftest for the feature.  Patch 9
-extends existing DAMON sysfs interface selftest to test the new feature
-using the extended helper scripts.
-
-Changelog
-=========
-
-Changes from RFC v1
-(https://lore.kernel.org/20260404163943.89278-1-sj@kernel.org)
-- Avoid overflows in charge amount calculation.
-- Fix/wordsmith documentation for grammar, typo, and wrong examples.
-- Improve unit test for more consistent comparison source use.
-
-SeongJae Park (9):
-  mm/damon/core: introduce failed region quota charge ratio
-  mm/damon/sysfs-schemes: implement fail_charge_{num,denom} files
-  Docs/mm/damon/design: document fail_charge_{num,denom}
-  Docs/admin-guide/mm/damon/usage: document fail_charge_{num,denom}
-    files
-  Docs/ABI/damon: document fail_charge_{num,denom}
-  mm/damon/tests/core-kunit: test fail_charge_{num,denom} committing
-  selftets/damon/_damon_sysfs: support failed region quota charge ratio
-  selftests/damon/drgn_dump_damon_status: support failed region quota
-    charge ratio
-  selftets/damon/sysfs.py: test failed region quota charge ratio
-
- .../ABI/testing/sysfs-kernel-mm-damon         | 12 +++++
- Documentation/admin-guide/mm/damon/usage.rst  | 18 +++++--
- Documentation/mm/damon/design.rst             | 21 ++++++++
- include/linux/damon.h                         |  9 ++++
- mm/damon/core.c                               | 21 +++++++-
- mm/damon/sysfs-schemes.c                      | 54 +++++++++++++++++++
- mm/damon/tests/core-kunit.h                   |  6 +++
- tools/testing/selftests/damon/_damon_sysfs.py | 21 +++++++-
- .../selftests/damon/drgn_dump_damon_status.py |  2 +
- tools/testing/selftests/damon/sysfs.py        |  6 +++
- 10 files changed, 163 insertions(+), 7 deletions(-)
-
-
-base-commit: 36eed23041e834175ca57dc38ac0e128808b1abb
+diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
+index 5186966dafb35..d5bfba79f105f 100644
+--- a/mm/damon/sysfs-schemes.c
++++ b/mm/damon/sysfs-schemes.c
+@@ -1489,6 +1489,8 @@ struct damon_sysfs_quotas {
+ 	unsigned long reset_interval_ms;
+ 	unsigned long effective_sz;	/* Effective size quota in bytes */
+ 	enum damos_quota_goal_tuner goal_tuner;
++	unsigned int fail_charge_num;
++	unsigned int fail_charge_denom;
+ };
+ 
+ static struct damon_sysfs_quotas *damon_sysfs_quotas_alloc(void)
+@@ -1663,6 +1665,48 @@ static ssize_t goal_tuner_store(struct kobject *kobj,
+ 	return -EINVAL;
+ }
+ 
++static ssize_t fail_charge_num_show(struct kobject *kobj,
++		struct kobj_attribute *attr, char *buf)
++{
++	struct damon_sysfs_quotas *quotas = container_of(kobj,
++			struct damon_sysfs_quotas, kobj);
++
++	return sysfs_emit(buf, "%u\n", quotas->fail_charge_num);
++}
++
++static ssize_t fail_charge_num_store(struct kobject *kobj,
++		struct kobj_attribute *attr, const char *buf, size_t count)
++{
++	struct damon_sysfs_quotas *quotas = container_of(kobj,
++			struct damon_sysfs_quotas, kobj);
++	int err = kstrtouint(buf, 0, &quotas->fail_charge_num);
++
++	if (err)
++		return -EINVAL;
++	return count;
++}
++
++static ssize_t fail_charge_denom_show(struct kobject *kobj,
++		struct kobj_attribute *attr, char *buf)
++{
++	struct damon_sysfs_quotas *quotas = container_of(kobj,
++			struct damon_sysfs_quotas, kobj);
++
++	return sysfs_emit(buf, "%u\n", quotas->fail_charge_denom);
++}
++
++static ssize_t fail_charge_denom_store(struct kobject *kobj,
++		struct kobj_attribute *attr, const char *buf, size_t count)
++{
++	struct damon_sysfs_quotas *quotas = container_of(kobj,
++			struct damon_sysfs_quotas, kobj);
++	int err = kstrtouint(buf, 0, &quotas->fail_charge_denom);
++
++	if (err)
++		return -EINVAL;
++	return count;
++}
++
+ static void damon_sysfs_quotas_release(struct kobject *kobj)
+ {
+ 	kfree(container_of(kobj, struct damon_sysfs_quotas, kobj));
+@@ -1683,12 +1727,20 @@ static struct kobj_attribute damon_sysfs_quotas_effective_bytes_attr =
+ static struct kobj_attribute damon_sysfs_quotas_goal_tuner_attr =
+ 		__ATTR_RW_MODE(goal_tuner, 0600);
+ 
++static struct kobj_attribute damon_sysfs_quotas_fail_charge_num_attr =
++		__ATTR_RW_MODE(fail_charge_num, 0600);
++
++static struct kobj_attribute damon_sysfs_quotas_fail_charge_denom_attr =
++		__ATTR_RW_MODE(fail_charge_denom, 0600);
++
+ static struct attribute *damon_sysfs_quotas_attrs[] = {
+ 	&damon_sysfs_quotas_ms_attr.attr,
+ 	&damon_sysfs_quotas_sz_attr.attr,
+ 	&damon_sysfs_quotas_reset_interval_ms_attr.attr,
+ 	&damon_sysfs_quotas_effective_bytes_attr.attr,
+ 	&damon_sysfs_quotas_goal_tuner_attr.attr,
++	&damon_sysfs_quotas_fail_charge_num_attr.attr,
++	&damon_sysfs_quotas_fail_charge_denom_attr.attr,
+ 	NULL,
+ };
+ ATTRIBUTE_GROUPS(damon_sysfs_quotas);
+@@ -2776,6 +2828,8 @@ static struct damos *damon_sysfs_mk_scheme(
+ 		.weight_nr_accesses = sysfs_weights->nr_accesses,
+ 		.weight_age = sysfs_weights->age,
+ 		.goal_tuner = sysfs_quotas->goal_tuner,
++		.fail_charge_num = sysfs_quotas->fail_charge_num,
++		.fail_charge_denom = sysfs_quotas->fail_charge_denom,
+ 	};
+ 	struct damos_watermarks wmarks = {
+ 		.metric = sysfs_wmarks->metric,
 -- 
 2.47.3
