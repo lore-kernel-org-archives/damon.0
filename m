@@ -1,62 +1,64 @@
-Received: from mail-yw1-f195.google.com (mail-yw1-f195.google.com [209.85.128.195])
+Received: from mail-yx1-f65.google.com (mail-yx1-f65.google.com [74.125.224.65])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A03A22DCBF4
-	for <damon@lists.linux.dev>; Sun,  5 Apr 2026 18:42:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.195
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B00A52E6CC8
+	for <damon@lists.linux.dev>; Sun,  5 Apr 2026 18:42:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.65
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775414577; cv=none; b=F3bGgm3W4LCUt1XG6B/EHJXloautalY7ep82F+IdBYxbrI9QBOPnmLmx0FSihTujNFJ11gC374WIMQcaNh1AdwhU3OOnlIa+ypxnNUCU8z1lMF0qGeC5UlZRzQpO0V/DSi6u4VEJuVO2PTOCq/BPcwRd+NqUb5MGVsTcLwOXwAM=
+	t=1775414581; cv=none; b=olbkz5bjFwq7f4r8elv4K9wrJVr7STvY0HCPdCZzHKSYhw1zAlm9ZfRMo2fAS5dgYFqMakuHT/5HcS1LSCC4cIo67LoxDRf5tVtzz6NapUsnhxKRjj69EmgCjoVf1kotjf7MqO9XxrCOYxZCA+YtB0bcdKx+nHlIUtSqQonnV4w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775414577; c=relaxed/simple;
-	bh=xfVrnxET8urSIUc3VY+td3Hzf9wgzIwRqvFECeVXMR8=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=nqEguVsT8K4i0+DHFj/yVE0MKRHZUz/ECioWKBahsXf6eqTctXhdRxzR2GgYmh5Fzynq5eUPCBjuISbPpZfno6yIKeW64vEAH36G6YRhxC1GR81t/5Gb3XzjtzZzO5J9nA9IE3OrYw6fapkOVFecxl1Ay0L0Mx87CDD2hEvR324=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ISTLjd7A; arc=none smtp.client-ip=209.85.128.195
+	s=arc-20240116; t=1775414581; c=relaxed/simple;
+	bh=aLKoj5T6Y1Hq/63N0ofOdGla42IB3T21JHaswyIp9sI=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=QP5rgDEKH5MFuoRjuVftBhVgV/czZUZ76YfDJdEa7X39SsXB5OcIy2b/uSK1ltRGHhguAfjUjvAmTUXje2RjzjQHyBekIrdarsrFldHmUldnz+VR8b3NM1tms/QoLTr31VUWc2lzeT4dfzBk1ZhHddsAC2vwfXMCAjVa6KxFKNU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XycwMypG; arc=none smtp.client-ip=74.125.224.65
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ISTLjd7A"
-Received: by mail-yw1-f195.google.com with SMTP id 00721157ae682-79c20063a32so32910127b3.1
-        for <damon@lists.linux.dev>; Sun, 05 Apr 2026 11:42:54 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XycwMypG"
+Received: by mail-yx1-f65.google.com with SMTP id 956f58d0204a3-64ee82e853cso2444313d50.3
+        for <damon@lists.linux.dev>; Sun, 05 Apr 2026 11:42:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1775414574; x=1776019374; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=la/BeibUlIJDCZTiPwSwWhDiM4TsgARxgnUgElwvrao=;
-        b=ISTLjd7AkLWGbStuv2itdfz7tyL+ba/krUfSPaIAaCrmk6PBEQNYDSy3W3BZIxrPg1
-         sILR5HGhShXkbTvpJEmrxvhUt2cZw73K12yUfFwUTuUUsytaE6ZXPSFkbGlrQIfcVoBC
-         lHwNyNHTImkgKX5w1MFJkJcAQrSwKP0OeHCNVydJB4w9+Ihl/GXmlY/G2Qj7s5sqrg65
-         CVo5fq9QKOoaVxtBDkWH5wxP/RtF7Xl0svm/SPP7ij0f/fwDzmh1KEskn2UBPzPMtzzt
-         jfzKzy3OBgc3kyspMm2nbqx0P9DgYzBH8oVtQ2TuvebJQuU+81KnhNmv2B1A1W5FjSLX
-         eorw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775414574; x=1776019374;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20251104; t=1775414578; x=1776019378; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=la/BeibUlIJDCZTiPwSwWhDiM4TsgARxgnUgElwvrao=;
-        b=VlLeBNYF0TPO68t+hWsVafrKxzZ7f3U9T6hBnHJkeNTZf7RCOEKXu91q/YRLPrdOfo
-         CbrHVAQ0tr46lPAHbloCPbSkxmXjmKobiYlIEE1VPIhdTGXRM/J/6lcXcs7cquwVpF1c
-         6lq6Gb3tyBKZOXi88NxT6Hp5CvOODIK7sAG4iSaM/+OvCD641qQN6guKRysMAXpVs2Rl
-         nzPMxzV5xiz8SC/8H8cwT3ROCfGLz7dhNtQUapP2/auzmbxFtW0FHPv0L57vn7B2p9Lm
-         07NFPKGy03oab+AjWUgq5E8N3pxTJeADcc31UGwW5Yk7Vt9s+uUvTF3S7oowPJ6Lr0oe
-         6BvA==
-X-Forwarded-Encrypted: i=1; AJvYcCX65M0JgceyPOkLyjiWG5O2kT5l+3Fd3Licqi04WV4CWANie5nlQjaS3Ij4xBoRFPi4wZMozg==@lists.linux.dev
-X-Gm-Message-State: AOJu0Yx1CiUvH2wUgipn6ofTfXH9wkRN2dexGHmWg6vQ+ZK2BgVqSSlS
-	k3UU6I50M6YtSJYOEaMq4NWWwHuUfcXC7qo7mFTjTQYlWbQtI4aGWDI=
-X-Gm-Gg: AeBDieshqsylYB8mYKBRUMONwx8PvWaFBgiLJnrkxvtUMMsrjccHS5n/3Gz8Kgssdcg
-	itRPzntuVXufsG+YmcmCErs4g4APkAvycc9ZpgkN3+KqRZsSq8I9t5nk4dTeFB9VZDz7n3mDgHg
-	GxGEL4iI86x+tn8htK036CLS8tsvpWJXpJ+qiRaeau/oylazoSW1/mwOU7l0qxDCiwSLB0yPE5X
-	PLodoipjuTqlVnIt4MkZeK4v6XDb3CRRPjcyH5a4r2H9jgmigdWc9jfb+HZTLlZh/OevmIK+IoU
-	ROm3UL9XDwvi/b6CqVaG0Gyv2XEUSNTPtmVtxFunKtNLoH75X4ujLUOu8k0y9vEMrGMqIFqKTVk
-	xgDQgUdXaZgD5ARo+nlf2+1fg8aD2SEgg9hu6J8O7n2PxO3GbmIXjxBYBFpuSjQTy2gs/Pm9bUO
-	tANiakbDxge6nSkL65xddnvIkDBfTKBoBgHBDxw7vGFCstbU+f8rFcvlEbeitrNguNxDYpJ4cnU
+        bh=UEKRNySrl5bfNR25LuvdIM9mAYLQZGQHO8FJc6GF6Vs=;
+        b=XycwMypGld89K/4eEkIiabHDrMDPraHqm3/EWHX/4Bu0+BqG6evoP3NU0KPi5kq3D3
+         fi5OGITsxfE0IVkjbVe4QX/bPJBV4DFbjZZ2xsqhuaJTTWTF7doL/9v5WzfMErDj4DOa
+         RNHu7holiesJBTnzIOwNqOy+9duOSOFcvHrWxLPB42Q4VUmQqYI5q+LZI2VeFDTjYzV4
+         U9PbQSAFgW2FP3nNnyq4DEl2mtfxIbiDUF/KY4VpI2CjVGoLsjwWIggGswRE4VOLSusv
+         xhHOza3EHCAbmgDjG5d29B8AjV+YzdmlPieFCrWK6A0DmHVX4UcEGyPlv/tWzHovnRs9
+         uw9g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1775414578; x=1776019378;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=UEKRNySrl5bfNR25LuvdIM9mAYLQZGQHO8FJc6GF6Vs=;
+        b=NDghM4uf6kDpDiZVDUkMm2eGKE28p8a90g2bzgW0I8EzZ4cAp6D0teuWZg3i0Zt6HL
+         YWi31qEeO19zIU4NMedR2YqdNgmNcfy2IsZMpvk6FbV2C1CPxty1Whh2IG6oqRWBck1d
+         oI0sWcFaWqTgQh4vpmN7xH4dF201xmCWohlP86wsYST4x7YDBj5vP2/PNrvgRkprcyhA
+         XqTitlAN6DhBEDRfV7JOPjkj7FhjtWdx/zkjYYIE9rNB8k7jHSS31WbQZoltO5z45aXs
+         0uw3vZ9eRziZtuhrMyoh4QdkXka8Wz1PtSeJxslN2d54ZlchFmYRjbyROLiVL0HH2/Jl
+         qUlw==
+X-Forwarded-Encrypted: i=1; AJvYcCUTVRgQiDhzsuPk2fuEaGxR2WlDDHkjZsYGrULxzX81D6Z2V0ANBs5wf8pBb0NnbOdEtEcJYg==@lists.linux.dev
+X-Gm-Message-State: AOJu0YwFfXJ7Wzq7QJfkSQcE8/j3y5yeOLYSUmdJAHMwMWGqkdzKMPg/
+	ljGtWziTL7YffisFP22n6Dauqdcv68961DtYL3UNwA7xbnAiNf7uCi4=
+X-Gm-Gg: AeBDietT+LSyXqGd01uwd+JvIgdgaq5z/Q9tC7d21Y1BTmCVCELIUNMRQzC/craKInW
+	TSKuJWV03sOli6jeksE/x1c8tTN0YtnK2vc9/B8RkOvQKsVS8ouM+Yo4CS1HVGP6aeOGAEJEtAe
+	1/B0JcGmNOj9629vR5N2mHUn6iUYXX5Vkc6RirhH+3wOci1u5yU1vMrCc7yKczhWi8OBULFeGD3
+	InbOPekjBVzg1TuYk3cvSWSXSSap96ahnCTX0Tyn+vBMUxtfgpxBwABkuAMR4hQz9y8m09WRvka
+	vQQNfnjvO59RslkdYtguP5ySzWfXclZIHB8rEesXZG/UJagpMo4iALp/BDQZYbUmQ2Dd2O0DsCX
+	e7gh9ObyThVB/vwq1hkI3yuPi+9VpKmygFxcHLIerOrBuN+AoLxmkGhhXTJ/7Loi6DSjXYGWtwX
+	UduiR9A2odNmKUUOUxqK84KfTHUMasPL6PyygF5JC/7TuHq+ZYd3zm/aoQUjC/3mXEuN4cynZzB
 	g==
-X-Received: by 2002:a05:690c:1e:b0:798:c633:d13b with SMTP id 00721157ae682-7a4e17512c2mr81212917b3.24.1775414573586;
-        Sun, 05 Apr 2026 11:42:53 -0700 (PDT)
+X-Received: by 2002:a05:690e:440d:b0:649:bbf4:121b with SMTP id 956f58d0204a3-650486bf82emr7496002d50.2.1775414577596;
+        Sun, 05 Apr 2026 11:42:57 -0700 (PDT)
 Received: from localhost (23-116-43-216.lightspeed.sntcca.sbcglobal.net. [23.116.43.216])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-7a36e42fd37sm44685627b3.1.2026.04.05.11.42.52
+        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-6503a9d8c2fsm4963299d50.20.2026.04.05.11.42.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 05 Apr 2026 11:42:52 -0700 (PDT)
+        Sun, 05 Apr 2026 11:42:57 -0700 (PDT)
 From: Ravi Jonnalagadda <ravis.opensrc@gmail.com>
 To: sj@kernel.org,
 	damon@lists.linux.dev,
@@ -70,10 +72,12 @@ Cc: akpm@linux-foundation.org,
 	honggyu.kim@sk.com,
 	yunjeong.mun@sk.com,
 	ravis.opensrc@gmail.com
-Subject: [PATCH v6 0/1] mm/damon: add node_eligible_mem_bp and node_ineligible_mem_bp goal metrics
-Date: Sun,  5 Apr 2026 11:42:46 -0700
-Message-ID: <20260405184247.2690-1-ravis.opensrc@gmail.com>
+Subject: [PATCH v6 1/1] mm/damon: add node_eligible_mem_bp and node_ineligible_mem_bp goal metrics
+Date: Sun,  5 Apr 2026 11:42:47 -0700
+Message-ID: <20260405184247.2690-2-ravis.opensrc@gmail.com>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260405184247.2690-1-ravis.opensrc@gmail.com>
+References: <20260405184247.2690-1-ravis.opensrc@gmail.com>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -82,96 +86,369 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Changes since v5:
-=================
-https://lore.kernel.org/linux-mm/20260404012215.1539-1-ravis.opensrc@gmail.com/
+Add new quota goal metrics for memory tiering that track scheme-eligible
+memory distribution across NUMA nodes:
 
-- Rebased onto mm-new instead of damon/next for sashiko review
-- Removed Reported-by/Closes tags per maintainer feedback (not needed
-  for bugs found before merge)
+- DAMOS_QUOTA_NODE_ELIGIBLE_MEM_BP: ratio of eligible memory on a node
+- DAMOS_QUOTA_NODE_INELIGIBLE_MEM_BP: ratio of ineligible memory on a
+  node
 
-Changes since v4:
-=================
-https://lore.kernel.org/linux-mm/20260320190453.1430-1-ravis.opensrc@gmail.com/
+These complementary metrics enable push-pull migration schemes that
+maintain a target memory distribution across different NUMA nodes
+representing different memory tiers, based on access patterns defined
+by each scheme.
 
-- Fixed commit message description for DAMOS_QUOTA_NODE_INELIGIBLE_MEM_BP
-  per review feedback
-- Added clarifying comment for ops-common.h include (for damon_get_folio())
-- Fixed build error when CONFIG_DAMON_PADDR is disabled by adding
-  #ifdef CONFIG_DAMON_PADDR guards around functions using damon_get_folio()
-- Dropped RFC tag per maintainer feedback
+The metrics iterate scheme-eligible regions and use damon_get_folio()
+to determine NUMA node placement of each folio, calculating the ratio
+of eligible memory on the specified node versus total eligible memory.
 
-This patch is based on top of mm-new.
+The implementation is guarded by CONFIG_DAMON_PADDR since damon_get_folio()
+is only available when physical address space monitoring is enabled.
 
-Background and Motivation
-=========================
-
-In heterogeneous memory systems, controlling memory distribution across
-NUMA nodes is essential for performance optimization. This patch enables
-system-wide page distribution with target-state goals such as "maintain
-30% of scheme-eligible memory on CXL" using PA-mode DAMON schemes.
-
-What These Metrics Measure
-==========================
-
-node_eligible_mem_bp:
-    scheme_eligible_bytes_on_node / total_scheme_eligible_bytes * 10000
-
-node_ineligible_mem_bp:
-    (total - scheme_eligible_bytes_on_node) / total * 10000
-
-These metrics are complementary: eligible_bp + ineligible_bp = 10000 bp.
-
-Two-Scheme Setup for Hot Page Distribution
-==========================================
-
-For maintaining hot memory on DRAM (node 0) and CXL (node 1) in a 7:3
-ratio:
-
-    PUSH scheme: migrate_hot from node 0 -> node 1
-      goal: node_ineligible_mem_bp, nid=0, target=3000
-      "Move hot pages from DRAM to CXL if more than 70% of hot data is
-       in DRAM"
-
-    PULL scheme: migrate_hot from node 1 -> node 0
-      goal: node_eligible_mem_bp, nid=0, target=7000
-      "Move hot pages from CXL to DRAM if less than 70% of hot data is
-       in DRAM"
-
-The complementary goals create a feedback loop that converges to the
-target distribution.
-
-Testing Results
-===============
-
-Functionally tested on a two-node heterogeneous memory system with DRAM
-(node 0) and CXL memory (node 1). A PUSH+PULL scheme configuration using
-migrate_hot actions was used to reach a target hot memory ratio between
-the two tiers. Testing used the TEMPORAL goal tuner available in
-damon/next and mm-unstable.
-
-With the TEMPORAL tuner, the system converges quickly to the target
-distribution. The tuner drives esz to maximum when under goal and to
-zero once the goal is met, forming a simple on/off feedback loop that
-stabilizes at the desired ratio.
-
-With the CONSIST tuner, the scheme still converges but more slowly, as
-it migrates and then throttles itself based on quota feedback. The time
-to reach the goal varies depending on workload intensity.
-
-Note: These metrics work with both TEMPORAL and CONSIST goal tuners.
-
-Ravi Jonnalagadda (1):
-  mm/damon: add node_eligible_mem_bp and node_ineligible_mem_bp goal
-    metrics
-
+Suggested-by: SeongJae Park <sj@kernel.org>
+Signed-off-by: Ravi Jonnalagadda <ravis.opensrc@gmail.com>
+---
  include/linux/damon.h    |   6 ++
  mm/damon/core.c          | 188 ++++++++++++++++++++++++++++++++++++---
  mm/damon/sysfs-schemes.c |  12 +++
  3 files changed, 192 insertions(+), 14 deletions(-)
 
-
-base-commit: b47b4fa4c232ee36aae58630e9d6520e35d33f3a
+diff --git a/include/linux/damon.h b/include/linux/damon.h
+index f2cdb7c3f5e6..a268f44beabf 100644
+--- a/include/linux/damon.h
++++ b/include/linux/damon.h
+@@ -159,6 +159,10 @@ enum damos_action {
+  * @DAMOS_QUOTA_NODE_MEMCG_FREE_BP:	MemFree ratio of a node for a cgroup.
+  * @DAMOS_QUOTA_ACTIVE_MEM_BP:		Active to total LRU memory ratio.
+  * @DAMOS_QUOTA_INACTIVE_MEM_BP:	Inactive to total LRU memory ratio.
++ * @DAMOS_QUOTA_NODE_ELIGIBLE_MEM_BP:	Scheme-eligible memory ratio of a
++ *					node.
++ * @DAMOS_QUOTA_NODE_INELIGIBLE_MEM_BP:	Scheme-ineligible memory ratio of a
++ *					node.
+  * @NR_DAMOS_QUOTA_GOAL_METRICS:	Number of DAMOS quota goal metrics.
+  *
+  * Metrics equal to larger than @NR_DAMOS_QUOTA_GOAL_METRICS are unsupported.
+@@ -172,6 +176,8 @@ enum damos_quota_goal_metric {
+ 	DAMOS_QUOTA_NODE_MEMCG_FREE_BP,
+ 	DAMOS_QUOTA_ACTIVE_MEM_BP,
+ 	DAMOS_QUOTA_INACTIVE_MEM_BP,
++	DAMOS_QUOTA_NODE_ELIGIBLE_MEM_BP,
++	DAMOS_QUOTA_NODE_INELIGIBLE_MEM_BP,
+ 	NR_DAMOS_QUOTA_GOAL_METRICS,
+ };
+ 
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index 3bc7a2bbfe7d..bac810f740c3 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -17,6 +17,9 @@
+ #include <linux/string.h>
+ #include <linux/string_choices.h>
+ 
++/* for damon_get_folio() used by node eligible memory metrics */
++#include "ops-common.h"
++
+ #define CREATE_TRACE_POINTS
+ #include <trace/events/damon.h>
+ 
+@@ -2282,7 +2285,136 @@ static unsigned long damos_get_node_memcg_used_bp(
+ 		numerator = i.totalram - used_pages;
+ 	return mult_frac(numerator, 10000, i.totalram);
+ }
+-#else
++
++#ifdef CONFIG_DAMON_PADDR
++/*
++ * damos_calc_eligible_bytes() - Calculate raw eligible bytes per node.
++ * @c:		The DAMON context.
++ * @s:		The scheme.
++ * @nid:	The target NUMA node id.
++ * @total:	Output for total eligible bytes across all nodes.
++ *
++ * Iterates through each folio in eligible regions to accurately determine
++ * which node the memory resides on. Returns eligible bytes on the specified
++ * node and sets *total to the sum across all nodes.
++ *
++ * Note: This function requires damon_get_folio() from ops-common.c, which is
++ * only available when CONFIG_DAMON_PADDR or CONFIG_DAMON_VADDR is enabled.
++ */
++static unsigned long damos_calc_eligible_bytes(struct damon_ctx *c,
++		struct damos *s, int nid, unsigned long *total)
++{
++	struct damon_target *t;
++	struct damon_region *r;
++	unsigned long total_eligible = 0;
++	unsigned long node_eligible = 0;
++
++	damon_for_each_target(t, c) {
++		damon_for_each_region(r, t) {
++			phys_addr_t addr, end_addr;
++
++			if (!__damos_valid_target(r, s))
++				continue;
++
++			/* Convert from core address units to physical bytes */
++			addr = r->ar.start * c->addr_unit;
++			end_addr = r->ar.end * c->addr_unit;
++			while (addr < end_addr) {
++				struct folio *folio;
++				unsigned long folio_sz, counted;
++
++				folio = damon_get_folio(PHYS_PFN(addr));
++				if (!folio) {
++					addr += PAGE_SIZE;
++					continue;
++				}
++
++				folio_sz = folio_size(folio);
++				/*
++				 * Clip to region boundaries to avoid counting
++				 * bytes outside the region when folio spans
++				 * region boundaries.
++				 */
++				counted = min(folio_sz, (unsigned long)(end_addr - addr));
++				total_eligible += counted;
++				if (folio_nid(folio) == nid)
++					node_eligible += counted;
++
++				addr += folio_sz;
++				folio_put(folio);
++			}
++		}
++	}
++
++	*total = total_eligible;
++	return node_eligible;
++}
++
++/*
++ * damos_get_node_eligible_mem_bp() - Get eligible memory ratio for a node.
++ * @c:		The DAMON context.
++ * @s:		The scheme.
++ * @nid:	The target NUMA node id.
++ *
++ * Calculates scheme-eligible bytes on the specified node and returns the
++ * ratio in basis points (0-10000) relative to total eligible bytes across
++ * all nodes.
++ */
++static unsigned long damos_get_node_eligible_mem_bp(struct damon_ctx *c,
++		struct damos *s, int nid)
++{
++	unsigned long total_eligible = 0;
++	unsigned long node_eligible = 0;
++
++	if (nid < 0 || nid >= MAX_NUMNODES || !node_online(nid))
++		return 0;
++
++	node_eligible = damos_calc_eligible_bytes(c, s, nid, &total_eligible);
++
++	if (!total_eligible)
++		return 0;
++
++	return mult_frac(node_eligible, 10000, total_eligible);
++}
++
++static unsigned long damos_get_node_ineligible_mem_bp(struct damon_ctx *c,
++		struct damos *s, int nid)
++{
++	unsigned long total_eligible = 0;
++	unsigned long node_eligible;
++
++	if (nid < 0 || nid >= MAX_NUMNODES || !node_online(nid))
++		return 0;
++
++	node_eligible = damos_calc_eligible_bytes(c, s, nid, &total_eligible);
++
++	/* No eligible memory anywhere - ratio is undefined, return 0 */
++	if (!total_eligible)
++		return 0;
++
++	/* Compute ineligible ratio directly: 10000 - eligible_bp */
++	return 10000 - mult_frac(node_eligible, 10000, total_eligible);
++}
++#else /* CONFIG_DAMON_PADDR */
++/*
++ * Stub functions when CONFIG_DAMON_PADDR is disabled.
++ * The node_eligible/ineligible metrics require physical address operations
++ * to iterate folios, which are only available with PA-mode DAMON.
++ */
++static unsigned long damos_get_node_eligible_mem_bp(struct damon_ctx *c,
++		struct damos *s, int nid)
++{
++	return 0;
++}
++
++static unsigned long damos_get_node_ineligible_mem_bp(struct damon_ctx *c,
++		struct damos *s, int nid)
++{
++	return 0;
++}
++#endif /* CONFIG_DAMON_PADDR */
++
++#else /* CONFIG_NUMA */
+ static __kernel_ulong_t damos_get_node_mem_bp(
+ 		struct damos_quota_goal *goal)
+ {
+@@ -2294,7 +2426,19 @@ static unsigned long damos_get_node_memcg_used_bp(
+ {
+ 	return 0;
+ }
+-#endif
++
++static unsigned long damos_get_node_eligible_mem_bp(struct damon_ctx *c,
++		struct damos *s, int nid)
++{
++	return 0;
++}
++
++static unsigned long damos_get_node_ineligible_mem_bp(struct damon_ctx *c,
++		struct damos *s, int nid)
++{
++	return 0;
++}
++#endif /* CONFIG_NUMA */
+ 
+ /*
+  * Returns LRU-active or inactive memory to total LRU memory size ratio.
+@@ -2314,7 +2458,8 @@ static unsigned int damos_get_in_active_mem_bp(bool active_ratio)
+ 	return mult_frac(inactive, 10000, total);
+ }
+ 
+-static void damos_set_quota_goal_current_value(struct damos_quota_goal *goal)
++static void damos_set_quota_goal_current_value(struct damon_ctx *c,
++		struct damos *s, struct damos_quota_goal *goal)
+ {
+ 	u64 now_psi_total;
+ 
+@@ -2340,19 +2485,28 @@ static void damos_set_quota_goal_current_value(struct damos_quota_goal *goal)
+ 		goal->current_value = damos_get_in_active_mem_bp(
+ 				goal->metric == DAMOS_QUOTA_ACTIVE_MEM_BP);
+ 		break;
++	case DAMOS_QUOTA_NODE_ELIGIBLE_MEM_BP:
++		goal->current_value = damos_get_node_eligible_mem_bp(c, s,
++				goal->nid);
++		break;
++	case DAMOS_QUOTA_NODE_INELIGIBLE_MEM_BP:
++		goal->current_value = damos_get_node_ineligible_mem_bp(c, s,
++				goal->nid);
++		break;
+ 	default:
+ 		break;
+ 	}
+ }
+ 
+ /* Return the highest score since it makes schemes least aggressive */
+-static unsigned long damos_quota_score(struct damos_quota *quota)
++static unsigned long damos_quota_score(struct damon_ctx *c, struct damos *s)
+ {
++	struct damos_quota *quota = &s->quota;
+ 	struct damos_quota_goal *goal;
+ 	unsigned long highest_score = 0;
+ 
+ 	damos_for_each_quota_goal(goal, quota) {
+-		damos_set_quota_goal_current_value(goal);
++		damos_set_quota_goal_current_value(c, s, goal);
+ 		highest_score = max(highest_score,
+ 				mult_frac(goal->current_value, 10000,
+ 					goal->target_value));
+@@ -2361,17 +2515,20 @@ static unsigned long damos_quota_score(struct damos_quota *quota)
+ 	return highest_score;
+ }
+ 
+-static void damos_goal_tune_esz_bp_consist(struct damos_quota *quota)
++static void damos_goal_tune_esz_bp_consist(struct damon_ctx *c, struct damos *s)
+ {
+-	unsigned long score = damos_quota_score(quota);
++	struct damos_quota *quota = &s->quota;
++	unsigned long score = damos_quota_score(c, s);
+ 
+ 	quota->esz_bp = damon_feed_loop_next_input(
+ 			max(quota->esz_bp, 10000UL), score);
+ }
+ 
+-static void damos_goal_tune_esz_bp_temporal(struct damos_quota *quota)
++static void damos_goal_tune_esz_bp_temporal(struct damon_ctx *c,
++		struct damos *s)
+ {
+-	unsigned long score = damos_quota_score(quota);
++	struct damos_quota *quota = &s->quota;
++	unsigned long score = damos_quota_score(c, s);
+ 
+ 	if (score >= 10000)
+ 		quota->esz_bp = 0;
+@@ -2384,8 +2541,9 @@ static void damos_goal_tune_esz_bp_temporal(struct damos_quota *quota)
+ /*
+  * Called only if quota->ms, or quota->sz are set, or quota->goals is not empty
+  */
+-static void damos_set_effective_quota(struct damos_quota *quota)
++static void damos_set_effective_quota(struct damon_ctx *c, struct damos *s)
+ {
++	struct damos_quota *quota = &s->quota;
+ 	unsigned long throughput;
+ 	unsigned long esz = ULONG_MAX;
+ 
+@@ -2396,9 +2554,9 @@ static void damos_set_effective_quota(struct damos_quota *quota)
+ 
+ 	if (!list_empty(&quota->goals)) {
+ 		if (quota->goal_tuner == DAMOS_QUOTA_GOAL_TUNER_CONSIST)
+-			damos_goal_tune_esz_bp_consist(quota);
++			damos_goal_tune_esz_bp_consist(c, s);
+ 		else if (quota->goal_tuner == DAMOS_QUOTA_GOAL_TUNER_TEMPORAL)
+-			damos_goal_tune_esz_bp_temporal(quota);
++			damos_goal_tune_esz_bp_temporal(c, s);
+ 		esz = quota->esz_bp / 10000;
+ 	}
+ 
+@@ -2445,7 +2603,9 @@ static void damos_adjust_quota(struct damon_ctx *c, struct damos *s)
+ 	/* First charge window */
+ 	if (!quota->total_charged_sz && !quota->charged_from) {
+ 		quota->charged_from = jiffies;
+-		damos_set_effective_quota(quota);
++		damos_set_effective_quota(c, s);
++		if (trace_damos_esz_enabled())
++			damos_trace_esz(c, s, quota);
+ 	}
+ 
+ 	/* New charge window starts */
+@@ -2460,7 +2620,7 @@ static void damos_adjust_quota(struct damon_ctx *c, struct damos *s)
+ 		quota->charged_sz = 0;
+ 		if (trace_damos_esz_enabled())
+ 			cached_esz = quota->esz;
+-		damos_set_effective_quota(quota);
++		damos_set_effective_quota(c, s);
+ 		if (trace_damos_esz_enabled() && quota->esz != cached_esz)
+ 			damos_trace_esz(c, s, quota);
+ 	}
+diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
+index 5186966dafb3..aade681b4868 100644
+--- a/mm/damon/sysfs-schemes.c
++++ b/mm/damon/sysfs-schemes.c
+@@ -1084,6 +1084,14 @@ struct damos_sysfs_qgoal_metric_name damos_sysfs_qgoal_metric_names[] = {
+ 		.metric = DAMOS_QUOTA_INACTIVE_MEM_BP,
+ 		.name = "inactive_mem_bp",
+ 	},
++	{
++		.metric = DAMOS_QUOTA_NODE_ELIGIBLE_MEM_BP,
++		.name = "node_eligible_mem_bp",
++	},
++	{
++		.metric = DAMOS_QUOTA_NODE_INELIGIBLE_MEM_BP,
++		.name = "node_ineligible_mem_bp",
++	},
+ };
+ 
+ static ssize_t target_metric_show(struct kobject *kobj,
+@@ -2655,6 +2663,10 @@ static int damos_sysfs_add_quota_score(
+ 		case DAMOS_QUOTA_NODE_MEM_FREE_BP:
+ 			goal->nid = sysfs_goal->nid;
+ 			break;
++		case DAMOS_QUOTA_NODE_ELIGIBLE_MEM_BP:
++		case DAMOS_QUOTA_NODE_INELIGIBLE_MEM_BP:
++			goal->nid = sysfs_goal->nid;
++			break;
+ 		case DAMOS_QUOTA_NODE_MEMCG_USED_BP:
+ 		case DAMOS_QUOTA_NODE_MEMCG_FREE_BP:
+ 			err = damon_sysfs_memcg_path_to_id(
 -- 
 2.43.0
 
