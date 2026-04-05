@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCC48322527;
-	Sun,  5 Apr 2026 19:34:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B7E12D73B6;
+	Sun,  5 Apr 2026 19:41:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775417690; cv=none; b=GZZrSGhkysSFFb51VkmS6jI++02sjM+BHCb4rSA1JpYvSE66Z5DHgjUnfarvhhB1qDmM4wh6GDzZMu/WlkQIoa9Y/y6iIpVWgmQS1u/YW0AM10q/4K9MbrCtQ83CkRXZz+2CajSyqtA/2mYU+x8yoqKwrVnIsacLO93cpgKC+Rk=
+	t=1775418064; cv=none; b=bwaH3mByIC1b9aEH94zb+eJtN9zeH07n/6phYtIoPZY/VK51/N0K7C9V/Ks8/yuyl5vOQobG6u1kYEDtBvdMXnCvNjCISHS1iF0ad+bghLB07XcKhSIfOeOCFBatgK00i3zta8rLE0aHXNbKRMekvPoVvYcv9oTLArb8kj+rFYo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775417690; c=relaxed/simple;
-	bh=/fECXG9ZqJc3oNxKEN0/I4QGArOiiZWi2ZzFXVLlCxY=;
+	s=arc-20240116; t=1775418064; c=relaxed/simple;
+	bh=DGaCv3yuy1SMBsA/JWL/C7jzP/beOyE7rUQqr+dAcS0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DJ4T5hEUBx9g/yn29/BAO73HEQQdiivXx9+TXDhV/s1B9w8N1S2Z5VjT9PMqT+eJwmrFGZ+Hnwwg+hrkHClgXmRcVMjiO/T4aPcdoWOsJSkWCvipx/onWf1pLS0lCKkwTVXwDdfizZVwI1iqU8yZqTUVZv7LT437EMUVHvCb270=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hVCFfRMq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gsmWlXyOZy9kX/62Ta/rnTGw/CsI0DYCmje8ZssWWNiNW4y1f029q/QTa2EiyrGKVTy8vxcCgiyCyf3IHrbIZl+6OfGQhkYkiKC8qYmEsupDzb9iesMNONcZChbGV2PPncR5BTQPerYzWf8CSa8MB5NygsgK+EkaPMpvscpChzs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OrLDzWmF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hVCFfRMq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A251C116C6;
-	Sun,  5 Apr 2026 19:34:48 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OrLDzWmF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 002D5C116C6;
+	Sun,  5 Apr 2026 19:41:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1775417689;
-	bh=/fECXG9ZqJc3oNxKEN0/I4QGArOiiZWi2ZzFXVLlCxY=;
+	s=k20201202; t=1775418064;
+	bh=DGaCv3yuy1SMBsA/JWL/C7jzP/beOyE7rUQqr+dAcS0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hVCFfRMqh+BmLtZVTBRUNQ4utPUU/7ZQhftpX/nZWdxjrENl275FkHIY8afZ7rWK6
-	 93k2TTtiKOokm9nHGy3GlvFW7lCjMxjhaHAyOXITgKYBS3ie40n9g8Dis7CaysFIKP
-	 rMhtJWDsc2Hwm08Gaf0YYwjJuUmqpHqRvGT3fHU1+T+0CboLLswbTIiJ6ahqNPz+d0
-	 8mGnYjNW/WuYvmxYrR716spSN/YBciK2341Bc4hgRVDGLrGEIGUWk+WjAL9gBaxJv5
-	 LJ8ufGFZ9tivD7H8j/SYo42pjqY3HeWk96QYY0cA5oGEJjz0uTOyNw4M9hfwJ6yn54
-	 wDfWJgsymaHJQ==
+	b=OrLDzWmFqW41w3HexDrBup9TywlrR389YD3EJvobttbQ1v0kL17sxLfTw9N8VXVEz
+	 CNw6FaphRVyf87J5G8uaV3SR3jeGB+sB1A/VFTcOElrL4BZdAUVa1Gr9gpqQTBwW/r
+	 s2zv76GQRGJ6Mn09f9dgQHzYlKpkXmUf/s93WdBe1tO2eXATXBRfuqd+8QrcGH3zH5
+	 9sbZJGjZbNVy+a6A59I5W/ZFpFvu8RsQmA0e6uhVCdO+h49c3oVb1lWbda+UU2ormN
+	 Yz4396S0dCyuEwE+y6ow47mug94l1vsdUr+CtiHTlsROOtfCIBh78xzQoNONnTpD8J
+	 tqHR8olvoAUbg==
 From: SeongJae Park <sj@kernel.org>
 To: SeongJae Park <sj@kernel.org>
-Cc: damon@lists.linux.dev,
-	linux-doc@vger.kernel.org,
+Cc: Shuah Khan <shuah@kernel.org>,
+	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
+	linux-kselftest@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: Re: (sashiko review) [RFC PATCH v2 3/9] Docs/mm/damon/design: document fail_charge_{num,denom}
-Date: Sun,  5 Apr 2026 12:34:41 -0700
-Message-ID: <20260405193441.110298-1-sj@kernel.org>
+Subject: Re: (sashiko review) [RFC PATCH v2 7/9] selftets/damon/_damon_sysfs: support failed region quota charge ratio
+Date: Sun,  5 Apr 2026 12:40:56 -0700
+Message-ID: <20260405194057.110507-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260405151232.102690-4-sj@kernel.org>
+In-Reply-To: <20260405151232.102690-8-sj@kernel.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -46,74 +47,62 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-TL; DR: sashiko gave me a sounds-good suggestion.  I will make a change on the
-next revision of this patch.
+TL; DR: sashiko found a typo and a false positive issue.  I will fix the typo
+in the next revision of this patch.
 
-Forwarding full sashiko review in a reply format with my inline
-comments below, for sharing details of my view and doing
-followup discussions via mails if needed.
+Forwarding full sashiko review in a reply format with my 
+inline comments below, for sharing details of my view and
+doing followup discussions via mails if needed.
 
-> # review url: https://sashiko.dev/#/patchset/20260405151232.102690-4-sj@kernel.org
+> # review url: https://sashiko.dev/#/patchset/20260405151232.102690-8-sj@kernel.org
 > # start of sashiko.dev inline review
-> commit c4d090b9bc99178548ec06da52d6f75e0b392a34
+> commit 47cf42ea4e5f609d65881ae5f8f8491bb884a8bf
 > Author: SeongJae Park <sj@kernel.org>
 > 
-> Docs/mm/damon/design: document fail_charge_{num,denom}
+> selftets/damon/_damon_sysfs: support failed region quota charge ratio
 > 
-> Update the DAMON design document to describe the new fail_charge_num and
-> fail_charge_denom parameters. These parameters configure the DAMOS action
-> failed region quota charge ratio.
+> This commit extends the _damon_sysfs.py selftests utility to support the
+> new DAMOS action failed regions quota charge ratio feature.
 > 
-> > diff --git a/Documentation/mm/damon/design.rst b/Documentation/mm/damon/design.rst
-> > index afc7d52bda2f7..8a8b04b5e8537 100644
-> > --- a/Documentation/mm/damon/design.rst
-> > +++ b/Documentation/mm/damon/design.rst
-> > @@ -565,6 +565,27 @@ interface <sysfs_interface>`, refer to :ref:`weights <sysfs_quotas>` part of
-> >  the documentation.
-> >  
-> >  
-> > +.. _damon_design_damos_quotas_failed_memory_charging_ratio:
-> > +
-> > +Action-failed Memory Charging Ratio
-> > +^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-> > +
-> > +DAMOS action to a given region can fail for some subsets of the memory of the
-> > +region.  For example, if the action is ``pageout`` and the region has some
-> > +unreclaimable pages, applying the action to the pages will fail.  The amount of
-> > +system resource that is taken for such failed action applications is usually
-> > +different from that for successful action applications.  For such cases, users
-> > +can set different charging ratio for such failed memory.  The ratio can be
-> > +specified using ``fail_charge_num`` and ``fail_charge_denom`` parameters.  The
-> > +two parameters represent the numerator and denominator of the ratio.
+> > selftets/damon/_damon_sysfs: support failed region quota charge ratio
 > 
-> Should this documentation include the fallback and default behavior when
-> fail_charge_denom is set to 0?
-> 
-> Looking at the core kernel implementation in
-> mm/damon/core.c:damos_charge_quota(), the code checks for
-> !quota->fail_charge_denom and falls back to charging the entire region size to
-> avoid a division-by-zero error.
-> 
-> Additionally, since struct damon_sysfs_quotas is allocated using kzalloc(),
-> fail_charge_denom is 0 by default. Would it be helpful to explain this default
-> 0 state and the resulting fallback behavior here?
+> This isn't a bug, but there is a typo (selftets) in the subject line.
 
-Good suggestion, I will add that.
+Good eye, I will fix it in the next revision.
 
 > 
-> > +
-> > +For example, let's suppose a DAMOS action is applied to a region of 1,000 MiB
-> > +size.  The action is successfully applied to only 700 MiB of the region.
-> > +``fail_charge_num`` and ``fail_charge_denom`` are set to ``1`` and ``1024``,
-> > +respectively.  Then only 700 MiB and 300 KiB of size (``700 MiB + 300 MiB * 1 /
-> > +1024``) will be charged.
-> > +
-> 
+> > diff --git a/tools/testing/selftests/damon/_damon_sysfs.py b/tools/testing/selftests/damon/_damon_sysfs.py
+> > index 2b4df655d9fd0..0f13512fa5e6d 100644
+> > --- a/tools/testing/selftests/damon/_damon_sysfs.py
+> > +++ b/tools/testing/selftests/damon/_damon_sysfs.py
 > [ ... ]
+> > @@ -132,14 +132,17 @@ class DamosQuota:
+> [ ... ]
+> >      def __init__(self, sz=0, ms=0, goals=None, goal_tuner='consist',
+> > -                 reset_interval_ms=0, weight_sz_permil=0,
+> > -                 weight_nr_accesses_permil=0, weight_age_permil=0):
+> > +                 reset_interval_ms=0, fail_charge_num=0, fail_charge_denom=0,
+> > +                 weight_sz_permil=0, weight_nr_accesses_permil=0,
+> > +                 weight_age_permil=0):
+> 
+> Will inserting fail_charge_num and fail_charge_denom before the weight
+> parameters cause issues for any existing code that passes arguments
+> positionally?
+> 
+> Any scripts or in-flight patches instantiating DamosQuota using positional
+> arguments for the weight parameters might silently assign those values to
+> the new charge ratio variables instead. 
+> 
+> Could these optional parameters be added to the end of the argument list to
+> avoid altering the existing positional signature?
+
+No.  There is no existing code that calls DAmosQuota() with positional
+arguments.  Hence no change to this patch is needed.
+
 > 
 > 
 > # end of sashiko.dev inline review
-> # review url: https://sashiko.dev/#/patchset/20260405151232.102690-4-sj@kernel.org
+> # review url: https://sashiko.dev/#/patchset/20260405151232.102690-8-sj@kernel.org
 
 
 Thanks,
@@ -123,6 +112,6 @@ SJ
 # this using below command:
 #
 #     hkml patch sashiko_dev --for_forwarding \
-#             20260405151232.102690-4-sj@kernel.org
+#             20260405151232.102690-8-sj@kernel.org
 #
 # [1] https://github.com/sjp38/hackermail
