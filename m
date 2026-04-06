@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE62C18B0A
-	for <damon@lists.linux.dev>; Mon,  6 Apr 2026 15:50:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 472C93314B7;
+	Mon,  6 Apr 2026 15:57:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775490652; cv=none; b=TeVg9qy5ha23ArkRzQI//YqicfGLHoY+mQuoFJF2f3OlBZcCGbpo259/CZ2qlGakroElgKHwp7jxkmsVy9dGWxLN6lrHOsG73KN/Uf7ML8sqKGTQvfoecqJpP+Cnjqv06q1WzMNlJAqTz29lVLtIektpJJ6B6TNRn+Uvbc9YAls=
+	t=1775491070; cv=none; b=ZW9chsxYBDnLETbjJ/RqICA2f09C2cv94OYceqfoQC+EoxfQA8KG9oeQTjNjAaPDC6XpnhHngBvygm3yZD0hwFx8l+bF/B+tnFi4g6rO47XhJ8BEkbaGWznemRMJKPH7t2YqxZfkOQbZgtrqrEtHQswze0RUuMtNrojTK2IOSxM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775490652; c=relaxed/simple;
-	bh=tjMRSF1p4+VSnXJtffjcLVXFwq9VwyFQ1AbNrZCxpj0=;
+	s=arc-20240116; t=1775491070; c=relaxed/simple;
+	bh=NCB1kgwid+pok6sSzkYM/5mK7H+v09Z6Ios74HEuHEA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FXxA1CpUrDzpNqIQkjXu12MBedcd7XqYv0/cq0Z4iboIiVD0h+ztAvHHWlAF1sWDyMkuh1kdVe+XOpGPas0uawVDxQgqnI9q4RDikNWUZQg1SfCrT/xeCrkH8bx7c9JUkbcDKsdS7dtqXVq+jnOA3YY88DbkFHay4UOuICH3Wog=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CJBaMjfo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=exGiWx4vAL61cR3oOCPI1zfKLpadmyVSjXCTbARka9++qIN7J3ZXjkjgSWHqX2eVnp+SO/SuaXyaMS0mwdcmB0Ii9/W7B8ttRy7EqRb7tw9e7Hz5nEhFm/mRTZ/0r5WDBnfeTKa9+OBLNFDAkVrgcPxwuBwVmgW4RzZ/Jb0agrc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QP9Fuyij; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CJBaMjfo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38976C4CEF7;
-	Mon,  6 Apr 2026 15:50:52 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QP9Fuyij"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6C33C19421;
+	Mon,  6 Apr 2026 15:57:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1775490652;
-	bh=tjMRSF1p4+VSnXJtffjcLVXFwq9VwyFQ1AbNrZCxpj0=;
+	s=k20201202; t=1775491070;
+	bh=NCB1kgwid+pok6sSzkYM/5mK7H+v09Z6Ios74HEuHEA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CJBaMjfodQ2EPymXCu+99Y9+PfziY+f4YLesTvmbV6Guo3XSepQ61uSoyXce528aU
-	 aJ0/Nhj9oJJBzdOeCIE2CET/bCGPSO43qdw0eiYNz9YRxVMg0WTYFKZWqQOaaVL3kp
-	 TorbCtfAKwTUzdZ97w9yWKumN0uS/MQU2B/YDAR4cXjQaiFBWN3H0nE0k0XtVFIJ6x
-	 oWx31gPtoK/Jny6zsSdRTHYUnpzbBIhk9oNiFoblLsb2ruId5aK8BdxpNG66sJi3sd
-	 /uYldeun5FU5DVwpAGHFqA+k6H5HZFZ0IWjk1r5TF1ZrhL0U/GPdm1Xv+EquTz6rSh
-	 xrlk9L7+QQv5Q==
+	b=QP9FuyijbcXPqLMKmRvw16mvM5ODOoL5M9/xJSRoUpw3CWq7gw1jbKVXgBnswfxa6
+	 5TXJBSLlRdwKir6iuahHu+/5H7XkWYDhQ7LvZATpRykI3uS3pxLNULdiIZ2l6U4ZpL
+	 /qAX6xLL2U/dWf5OGT/N1NH8t4WpeeS1jbZczHYWEEROv126R7s0g+LAjP04560Vh7
+	 hILkS2Gs/mN8QmUBXUhQXvVmoxi712JjtMDXvfZ5/hz+xCnDvjNy5H2FLjDmPgTO8D
+	 fr+aXyULN/4XHMyedsoXyN0oWClo/yemqFPUGB23xaXcZ43Y4pgaQLio1CIafPEfX4
+	 sKTi0VJ53iAXw==
 From: SeongJae Park <sj@kernel.org>
-To: Liew Rui Yan <aethernet65535@gmail.com>
-Cc: SeongJae Park <sj@kernel.org>,
+To: SeongJae Park <sj@kernel.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>,
 	damon@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: Re: [PATCH v3 1/2] mm/damon/lru_sort: validate min_region_size to be power of 2
-Date: Mon,  6 Apr 2026 08:50:50 -0700
-Message-ID: <20260406155050.47762-1-sj@kernel.org>
+Subject: Re: (sashiko review) [RFC PATCH] mm/damon/core: avoid time-quota permanently disabling scheme
+Date: Mon,  6 Apr 2026 08:57:48 -0700
+Message-ID: <20260406155748.47893-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260406094116.13164-1-aethernet65535@gmail.com>
+In-Reply-To: <20260405225440.76827-1-sj@kernel.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -45,75 +46,88 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Mon,  6 Apr 2026 17:41:16 +0800 Liew Rui Yan <aethernet65535@gmail.com> wrote:
+TL; DR: sashiko found no issue in this patch.  I will repost this patch after
+dropping RFC, soon.
 
-> On Sat,  4 Apr 2026 13:30:43 -0700 SeongJae Park <sj@kernel.org> wrote:
-> 
-> > On Sat,  4 Apr 2026 17:11:22 +0800 Liew Rui Yan <aethernet65535@gmail.com> wrote:
-> > 
-> > > [...]
-> > > I think this deserves Cc stable@ because:
-> > > - The issue can be triggered by accidental user misconfiguration
-> > > - It causes kdamond termination and hard to recover/restart. Once
-> > >   triggered, kdamond remains in an unusable state, and I have not found
-> > >   a way to recover/restart it through the sysfs interface without a
-> > >   system reboot.
-> > > - The fix is small and low-risk
-> > > - It improves user experience on stable kernels
-> > 
-> > Thank you for elaborating this.  I now think this deserves Cc-ing stable@.
-> 
-> Thank you for agreeing to Cc stable@.
-> 
-> > Let's make sure the user impact is clearly documented on the commit message.
-> > Also, the code change itself and the current commit message is not clearly
-> > explaining how the real problem (DAMON cannot be restarted) can happen.  Please
-> > add the description in the next revision.
-> 
-> I will add an explanation of why DAMON cannot be restarted in the next
-> revision.
-> 
-> > [...]
-> > 
-> > > 
-> > > > For stable@ Cc-ing patches, more clearly describing the user impact would be
-> > > > nice, and helpful for judging if it deserves that.  Could you please elaborate?
-> > > 
-> > > I will add a "User Impact" section in v4's commit message:
-> > 
-> > Yes, please add this kind of message that make clear what is the user impact.
-> > 
-> > > 
-> > >     User Impact
-> > >     ===========
-> > >     Currently, if a user commit an invalid 'addr_unit', kdamond may
-> > >     terminate abruptly. Once terminated, it cannot be easily restarted
-> > >     via sysfs, pontentially requiring a system reboot to restore DAMON
-> > >     functionality. This patch prevent such termination by validating
-> > >     parameters (addr_unit and min_region_sz) early.
-> > 
-> > You mentioned it cannot be restarted above.  The above message sounds like
-> > there is a way to restart it via sysfs, though it is not easy.  Please make it
-> > clear and consistent.  As I also requested above, please add the internal
-> > mechanism of how that makes restart unable.  This itself doesn't explain it.
-> 
-> Thank you for your correction. I will make the description clear and
-> consistent, and also explain the internal mechanism 
-> (the 'maybe_corrupted' flag and why writing to 'enabled' cannot recover
-> it).
+Forwarding sashiko review in a reply format with my inline
+comments below, for details of my view and doing discussions
+via mails if needed.
 
-Sounds all good :)
+> # review url: https://sashiko.dev/#/patchset/20260405225440.76827-1-sj@kernel.org
+> # start of sashiko.dev inline review
+> commit 93dc55170095d9a174cb626df2cde4fe5e49b9a6
+> Author: SeongJae Park <sj@kernel.org>
+> 
+> mm/damon/core: avoid time-quota permanently disabling scheme
+> 
+> When a DAMOS scheme throughput is very slow, the time quota can make the
+> effective size quota smaller than the minimum region size. This causes
+> the action to be skipped, freezing the effective size quota updates.
+> This patch sets the time quota-modified effective size quota to be at
+> least min_region_sz.
+> 
+> Link: https://lore.kernel.org/20260405192504.110014-1-sj@kernel.org
+> 
+> > diff --git a/mm/damon/core.c b/mm/damon/core.c
+> > index 3bc7a2bbfe7de..12544c60531d3 100644
+> > --- a/mm/damon/core.c
+> > +++ b/mm/damon/core.c
+> 
+> [ ... ]
+> 
+> > @@ -2409,6 +2410,7 @@ static void damos_set_effective_quota(struct damos_quota *quota)
+> >  		else
+> >  			throughput = PAGE_SIZE * 1024;
+> >  		esz = min(throughput * quota->ms, esz);
+> > +		esz = max(ctx->min_region_sz, esz);
+> 
+> Does this minimum region size bound incorrectly override DAMOS quota goals?
+> 
+> In damos_set_effective_quota(), esz is first initialized based on
+> quota->goals. The goal tuner can legitimately reduce esz below
+> ctx->min_region_sz (for example, to 0) to completely pause the scheme if
+> the system is over-achieving its target limits.
+> 
+> Because the max() operates on the combined esz instead of just the time
+> quota component, it artificially inflates the quota back up to
+> ctx->min_region_sz. This forces the scheme to process at least one region
+> per charge window, overriding the goal tuner's request to pause the scheme.
+> 
+> If quota->ms is 0, this block is bypassed and the goal is properly
+> respected, leading to inconsistent behavior depending on whether a time
+> quota is configured.
+
+That's correct, and it is an intended behavior.
+
+It's true that it is bit inconsistent.  But I don't think that will cause any
+real issue, since the difference is quite minimal (min_region_sz quota).
 
 > 
-> Note: 
-> Please excuse my slower responses in the coming weeks, as I have
-> upcoming exams. I will be most active and able to follow up during
-> weekend (Friday/Saturday).
+> Could the lower bound be applied exclusively to the calculated time quota
+> before it is combined with the goal-based quota?
+> 
+> For example:
+> 
+> unsigned long time_esz = max(throughput * quota->ms, ctx->min_region_sz);
+> esz = min(time_esz, esz);
 
-No worries, take your time :)
+Maybe we can later improve the behavior by doing the time quota based esz setup
+before goals based setup.  But that's not good for stable kernels hotfix in my
+opinion, so it is out of the scope of this patch.
+
+> 
+> 
+> # end of sashiko.dev inline review
+> # review url: https://sashiko.dev/#/patchset/20260405225440.76827-1-sj@kernel.org
 
 
 Thanks,
 SJ
 
-[...]
+# hkml [1] generated a draft of this mail.  You can regenerate
+# this using below command:
+#
+#     hkml patch sashiko_dev --for_forwarding \
+#             20260405225440.76827-1-sj@kernel.org
+#
+# [1] https://github.com/sjp38/hackermail
