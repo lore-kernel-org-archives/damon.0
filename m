@@ -1,221 +1,136 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A654632;
-	Tue,  7 Apr 2026 00:13:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CE823DBA0;
+	Tue,  7 Apr 2026 00:32:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775520799; cv=none; b=LoCBknDY0DAaNkv9RNQsABgKk1/g1dirJvXCWtCk68Va8HQ/lljcx94V7JClkhhNuqMAwFkc8GT4OWFacBN/lqefZnR1oUbrw3VZfAD/S1AJAmSHNYEw5N4fiTMVSrjEsfFgycQyNkOzL8OHNkrSlnTckUSvATPBDW9hKoiXvHU=
+	t=1775521922; cv=none; b=qlgFl57fniRxrUUjMKQl9B5yKDcUUOLL786zCCY9RBaG8m6ZtrpPNEnFm3kHTRfUWRUlDVzUATWinmayr0F5eWqPQH85QKGzPk7pMn+xK6vJDe06qg4iXU6mFK/Vj8p1mHJpZTL1c6pWUyKECr3n9FNhj+BdjMzHG+2in73HTl0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775520799; c=relaxed/simple;
-	bh=BGK91Zud1kj/tvt7oieAdbvvJZc26dEc8R4BMeClsPQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=VNweija9rczgWBXQJLbg/rv0mbmc9LdYYsbNP7t5taylVIO69gIZsGhGgbfS9Qy45B4WBuvA9lfZbT5q2YhdDep7xvjGz0rBB5j4wOgVo6pvt9mBv8/acfFeCzgfXrRsLkWamqVy3Sdfa3bsQluo4RnYBqdb4fnRo6j6+DhRbeI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Tm6l9d4j; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1775521922; c=relaxed/simple;
+	bh=e6PdU+sFU0K01P//31v0gwLstVAfukUiXGSZ4qXfxgs=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=qGqQ9F4qEE5jB1FMM0dI+2yOhWU5DC4hxO26iQJ6ueOY3dNRDU5fdLU9TPOo5mRnKATcp3QrOSK6S9brNcfzXY+dVrRWrf0zvyB1LNeLMuSgBNnZnPe9ndY/45Cr42UW7bJsGkPJ9iQ70vBSPEptwGP/BELAbUApIuOtbl/thPc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=K8OxJqNe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Tm6l9d4j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68043C4CEF7;
-	Tue,  7 Apr 2026 00:13:18 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="K8OxJqNe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B655AC4CEF7;
+	Tue,  7 Apr 2026 00:32:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1775520798;
-	bh=BGK91Zud1kj/tvt7oieAdbvvJZc26dEc8R4BMeClsPQ=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Tm6l9d4jQGiEtsxOMCMp//3292RFdMDB9vsyy6kw4WZSXcXUtHVOWBnL8S6YHCyh0
-	 vW/zwlr/O/+PpP2TNA/v6zkE8Zl5TwoTpy1q4zJ4dZVcNyeVdAVI2CC/nfvCEh1JBg
-	 MME4m0eAbWKFMzapwCXTk+fvMtRbhTYPCwzh3Uk+S395vQnLRybEZ689TYeSAgOT2W
-	 X0JHiM+PFMIAc4E+JUkzmWwKSz2upRMgSrtxKFHTab8qyyU/zBdgif44TAihuFJHFD
-	 Ofg7ChEtq4Fnq0SLQ5FBs5C9qMUzxsSzTNPNpnuFFpRs1z39tZcofKb19K/xh08Ttl
-	 dDeuk3T4oQzpw==
+	s=k20201202; t=1775521922;
+	bh=e6PdU+sFU0K01P//31v0gwLstVAfukUiXGSZ4qXfxgs=;
+	h=From:To:Cc:Subject:Date:From;
+	b=K8OxJqNeSgov7VyfXY9BqhmgY42pYdzKPlHslDeqPUxlwNM/TjVJaGqePKlGmJ4Av
+	 UfaTpT9bxMeoRe5e3nlVBkK3ijzjw0sDqaBXQPyKqB23y45VAnuLvBmMMOVWxjjjQS
+	 5ds7sx1dXy+TfLi4gIw/WcZVqT8g0OPcrbLsl2VggE7gQUH5OxTXJas/Mp+AFBGCEV
+	 okZ+PnW7XR/SMhrz2nqp0QQEHTSP0QJ90bqEvC/qpax2mwegf7KFBK7+svdNfl/7eQ
+	 yVO8q27a6iXz27ioCEzC5Op0xLKJ0n0QSEqWRc5UxhIgqUrJyf3CrO0q/Yw5rp8Bas
+	 8g1a+bPRuytIw==
 From: SeongJae Park <sj@kernel.org>
-To: Ravi Jonnalagadda <ravis.opensrc@gmail.com>
+To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SeongJae Park <sj@kernel.org>,
+	"# 5 . 16 . x" <stable@vger.kernel.org>,
 	damon@lists.linux.dev,
-	linux-mm@kvack.org,
 	linux-kernel@vger.kernel.org,
-	linux-doc@vger.kernel.org,
-	akpm@linux-foundation.org,
-	corbet@lwn.net,
-	bijan311@gmail.com,
-	ajayjoshi@micron.com,
-	honggyu.kim@sk.com,
-	yunjeong.mun@sk.com
-Subject: Re: (sashiko review) [PATCH v6 1/1] mm/damon: add node_eligible_mem_bp and node_ineligible_mem_bp goal metrics
-Date: Mon,  6 Apr 2026 17:13:08 -0700
-Message-ID: <20260407001310.78557-1-sj@kernel.org>
+	linux-mm@kvack.org
+Subject: [PATCH] mm/damon/core: disallow time-quota setting zero esz
+Date: Mon,  6 Apr 2026 17:31:52 -0700
+Message-ID: <20260407003153.79589-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <CALa+Y14oWqu5+DbkENy7GgBjc=dCbFTaoOCr1i4=9CN-ZNRgEA@mail.gmail.com>
-References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On Mon, 6 Apr 2026 12:47:56 -0700 Ravi Jonnalagadda <ravis.opensrc@gmail.com> wrote:
+When the throughput of a DAMOS scheme is very slow, DAMOS time quota can
+make the effective size quota smaller than damon_ctx->min_region_sz.  In
+the case, damos_apply_scheme() will skip applying the action, because
+the action is tried at region level, which requires >=min_region_sz
+size.  That is, the quota is effectively exceeded for the quota charge
+window.
 
-> On Sun, Apr 5, 2026 at 3:45 PM SeongJae Park <sj@kernel.org> wrote:
-> >
-> >
-> > Ravi, thank you for reposting this patch after the rebase.  This time sashiko
-> > was able to review this, and found good points including things that deserve
-> > another revision of this patch.
-> >
-> > Forwarding full sashiko review in a reply format with my inline comments below,
-> > for sharing details of my view and doing followup discussions via mails.  Ravi,
-> > could you please reply?
-> >
-> 
-> Thanks SJ, providing your comments on top of sashiko's review is very helpful.
+Because no action will be applied, the total_charged_sz and
+total_charged_ns are also not updated.  damos_set_effective_quota() will
+try to update the effective size quota before starting the next charge
+window.  However, because the total_charged_sz and total_charged_ns have
+not updated, the throughput and effective size quota are also not
+changed.  Since effective size quota can only be decreased, other
+effective size quota update factors including DAMOS quota goals and size
+quota cannot make any change, either.
 
-I'm glad to hear that it is working for you :)
+As a result, the scheme is unexpectedly deactivated until the user
+notices and mitigates the situation.  The users can mitigate this
+situation by changing the time quota online or re-install the scheme.
+While the mitigation is somewhat straightforward, finding the situation
+would be challenging, because DAMON is not providing good
+observabilities for that.  Even if such observability is provided, doing
+the additional monitoring and the mitigation is somewhat cumbersome and
+not aligned to the intention of the time quota.  The time quota was
+intended to help reduce the user's administration overhead.
 
-[...]
-> > > +static unsigned long damos_calc_eligible_bytes(struct damon_ctx *c,
-> > > > +           struct damos *s, int nid, unsigned long *total)
-> > > > +{
-[...]
-> > > > +                           struct folio *folio;
-> > > > +                           unsigned long folio_sz, counted;
-> > > > +
-> > > > +                           folio = damon_get_folio(PHYS_PFN(addr));
-> > >
-> > > What happens if this metric is assigned to a DAMON context configured for
-> > > virtual address space monitoring? If the context uses DAMON_OPS_VADDR,
-> > > passing a user-space virtual address to PHYS_PFN() might cause invalid
-> > > memory accesses or out-of-bounds page struct reads. Should this code
-> > > explicitly verify the operations type first?
-> >
-> > Good finding.  We intend to support only paddr ops.  But there is no guard for
-> > using this on vaddr ops configuration.  Ravi, could we add underlying ops
-> > check?  I think damon_commit_ctx() is a good place to add that.  The check
-> > could be something like below?
-> >
-> 
-> I plan to add the ops type check directly in the metric functions
-> (damos_get_node_eligible_mem_bp and its counterpart) rather than in
-> damon_commit_ctx(). The functions will return 0 early
-> if c->ops.id != DAMON_OPS_PADDR.
-> 
-> That said, if you prefer the damon_commit_ctx() validation approach to
-> reject the configuration outright, I can implement it that way instead.
-> Please let me know your preference.
+Fix the problem by setting time quota-modified effective size quota be
+at least min_region_sz always.
 
-I'd prefer damon_commit_ctx() validation approach since it would give users
-more clear message of the failure.
+The issue was discovered [1] by sashiko.
 
-> 
-> > '''
-> > --- a/mm/damon/core.c
-> > +++ b/mm/damon/core.c
-> > @@ -1515,10 +1515,23 @@ static int damon_commit_sample_control(
-> >  int damon_commit_ctx(struct damon_ctx *dst, struct damon_ctx *src)
-> >  {
-> >         int err;
-> > +       struct damos *scheme;
-> > +       struct damos_quota_goal *goal;
-> >
-> >         dst->maybe_corrupted = true;
-> >         if (!is_power_of_2(src->min_region_sz))
-> >                 return -EINVAL;
-> > +       if (src->ops.id != DAMON_OPS_PADDR) {
-> > +               damon_for_each_scheme(scheme, src) {
-> > +                       damos_for_each_quota_goal(goal, &scheme->quota) {
-> > +                               switch (goal->metric) {
-> > +                               case DAMOS_QUOTA_NODE_ELIGIBLE_MEM_BP:
-> > +                               case DAMOS_QUOTA_NODE_INELIGIBLE_MEMPBP:
-> > +                                       return -EINVAL;
-> > +                               }
-> > +                       }
-> > +               }
-> > +       }
-> >
-> >         err = damon_commit_schemes(dst, src);
-> >         if (err)
-> > '''
-[...]
-> > > > +   /* Compute ineligible ratio directly: 10000 - eligible_bp */
-> > > > +   return 10000 - mult_frac(node_eligible, 10000, total_eligible);
-> > > > +}
-> > >
-> > > Does this return value match the documented metric? The formula computes the
-> > > percentage of the system's eligible memory located on other NUMA nodes,
-> > > rather than the amount of actual ineligible (filtered out) memory residing
-> > > on the target node. Could this semantic mismatch cause confusion when
-> > > configuring quota policies?
-> >
-> > Nice catch.  The name and the documentation are confusing.  We actually
-> > confused a few times in previous revisions, and I'm again confused now.  IIUC,
-> > the current implementation is the intended and right one for the given use
-> > case, though.  If my understanding is correct, how about renaming
-> > DAMOS_QUOTA_NODE_INELIGIBLE_MEM_BP to
-> > DAMOS_QUOTA_NODE_ELIGIBLE_MEM_BP_COMPLEMENT, and updating the documentation
-> > together?  Ravi, what do you think?
-> >
-> 
-> Agreed, the current name is confusing. How about
-> DAMOS_QUOTA_NODE_ELIGIBLE_MEM_BP_OFFNODE?
-> 
-> The rationale is that this metric measures "eligible memory that is off
-> this node" (i.e., on other nodes).
-> 
->  I think "offnode" conveys the physical meaning more directly than "complement".
-> That said, I'm happy to go with "complement" if you prefer.
-> both are clearer than "ineligible".
+[1] https://lore.kernel.org/20260405192504.110014-1-sj@kernel.org
 
-Thank you for the nice suggestion.  I like "offnode" term.  But I think having
-"node" twice on the name is not really efficient for people who print code on
-papers.  What about DAMOS_QUOTA_OFFNODE_ELIGIBLE_MEM_BP?
+Fixes: 1cd243030059 ("mm/damon/schemes: implement time quota")
+Cc: <stable@vger.kernel.org> # 5.16.x
+Signed-off-by: SeongJae Park <sj@kernel.org>
+---
+Changes from RFC
+(https://lore.kernel.org/20260405225440.76827-1-sj@kernel.org)
+- Drop RFC tag.
+- Rebase to latest mm-hotfixes-unstable.
+- Slight wordsmithing of the subject.
 
-But...  Maybe more importantly...  Now I realize this means that
-offnode_eligible_mem_bp with target nid 0 is just same to node_eligible_mem_bp
-with target nid 1, on your test setup.  Maybe we don't really need
-offnode_eligible_mem_bp?  That is, your test setup could be like below.
+ mm/damon/core.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-'''
-For maintaining hot memory on DRAM (node 0) and CXL (node 1) in a 7:3
-ratio:
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index 3e1890d64d067..3703f62a876b3 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -2228,7 +2228,8 @@ static unsigned long damos_quota_score(struct damos_quota *quota)
+ /*
+  * Called only if quota->ms, or quota->sz are set, or quota->goals is not empty
+  */
+-static void damos_set_effective_quota(struct damos_quota *quota)
++static void damos_set_effective_quota(struct damos_quota *quota,
++		struct damon_ctx *ctx)
+ {
+ 	unsigned long throughput;
+ 	unsigned long esz = ULONG_MAX;
+@@ -2254,6 +2255,7 @@ static void damos_set_effective_quota(struct damos_quota *quota)
+ 		else
+ 			throughput = PAGE_SIZE * 1024;
+ 		esz = min(throughput * quota->ms, esz);
++		esz = max(ctx->min_region_sz, esz);
+ 	}
+ 
+ 	if (quota->sz && quota->sz < esz)
+@@ -2290,7 +2292,7 @@ static void damos_adjust_quota(struct damon_ctx *c, struct damos *s)
+ 	/* First charge window */
+ 	if (!quota->total_charged_sz && !quota->charged_from) {
+ 		quota->charged_from = jiffies;
+-		damos_set_effective_quota(quota);
++		damos_set_effective_quota(quota, c);
+ 	}
+ 
+ 	/* New charge window starts */
+@@ -2303,7 +2305,7 @@ static void damos_adjust_quota(struct damon_ctx *c, struct damos *s)
+ 		quota->charged_sz = 0;
+ 		if (trace_damos_esz_enabled())
+ 			cached_esz = quota->esz;
+-		damos_set_effective_quota(quota);
++		damos_set_effective_quota(quota, c);
+ 		if (trace_damos_esz_enabled() && quota->esz != cached_esz)
+ 			damos_trace_esz(c, s, quota);
+ 	}
 
-    PUSH scheme: migrate_hot from node 0 -> node 1
-      goal: node_eligible_mem_bp, nid=1, target=3000
-      "Move hot pages from DRAM to CXL if less thatn 30% of hot data is
-       in CXL"
-
-    PULL scheme: migrate_hot from node 1 -> node 0
-      goal: node_eligible_mem_bp, nid=0, target=7000
-      "Move hot pages from CXL to DRAM if less than 70% of hot data is
-       in DRAM"
-'''
-
-And the schemes are more easy to read and understand for me.  This seems even
-straightforward to scale for >2 nodes.  For example, if we want hot memory
-distribution of 5:3:2 to nodes 0:1:2,
-
-	Two schemes for migrating hot pages out of node 0
-	- migrate_hot from node 0 -> node 1
-	  - goal: node_eligible_mem_bp, nid=1, target=3000
-	- migrate_hot from node 0 -> node 2
-	  - goal: node_eligible_mem_bp, nid=2, target=2000
-
-	Two schemes for migrating hot pages out of node 1
-	- migrate_hot from node 1 -> node 0
-	  - goal: node_eligible_mem_bp, nid=0, target=5000
-	- migrate_hot from node 1 -> node 2
-	  - goal: node_eligible_mem_bp, nid=2, target=2000
-
-	Two schemes for migrating hot pages out of node 2
-	- migrate_hot from node 2 -> node 0
-	  - goal: node_eligible_mem_bp, nid=0, target=5000
-	- migrate_hot from node 2 -> node 1
-	  - goal: node_eligible_mem_bp, nid=1, target=3000
-
-Do you think this makes sense?  If it makes sense and works for your use case,
-what about dropping the offnode goal type?
-
-
-Thanks,
-SJ
-
-[...]
+base-commit: 7c554c59e5a8142c2aea9fd11afbb0fae8876244
+-- 
+2.47.3
