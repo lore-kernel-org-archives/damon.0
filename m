@@ -1,95 +1,71 @@
-Received: from canpmsgout04.his.huawei.com (canpmsgout04.his.huawei.com [113.46.200.219])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2281139DBFB
-	for <damon@lists.linux.dev>; Wed,  8 Apr 2026 08:12:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=113.46.200.219
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C930D2F39B4;
+	Wed,  8 Apr 2026 13:54:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775635980; cv=none; b=okh39ARmIMOjJrBg4Vpm1xvmbZtBpmC447XpCxRvFmeaWdOw1SaJhmFXYJREY/UCjnEEl4XEQrQ/3ng+gywSmru9qYV9hp5evNsq6f0Y/ckV0L+0tBBPdMe9stHqP3cyV3YKf4nJVpgMqY1Wqkqj2/tElxDPoOfNaEhLXljmLJ4=
+	t=1775656490; cv=none; b=KjDb1w7+m8OX79QqjvYhCZRBPLissOqGxP7PvDJEqYkBSNDz8BlpZz/FxtvYEisvs5YnJuXx2sV4BfqLxb/DZMFPQi03Mf0eRqV1KALIAeszHlVGkd4+wGLXAOZbCR0qImrkjurhTxpTYNbQDqCNIRf0EQM3OqxBLqYwChRVCGM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775635980; c=relaxed/simple;
-	bh=PYXPwETbLUM3DB7HrG4AVDBKhlqeg7uj+L89amm6MYQ=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=D9yHrzqBDXDMSMVzTZhXZN/y821kmZnuALrvvb0EN7VmXhfS++GuEW7/PP/jUqL2pUITqjAjvwz0NrwpWko85ZBfnie+WIqbZd0clfbTDO4PzaHY+MoEMmTXcTj5qdrStU/NAJSSD/LK1voM30g69sQfGkdGQRXvGHyiql1eUDc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b=d4CwHB7T; arc=none smtp.client-ip=113.46.200.219
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
+	s=arc-20240116; t=1775656490; c=relaxed/simple;
+	bh=ROsaxkUmsK9dQT8Wi+iwtU1tPZYRdlLs0Vtp0MHNi/s=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=L6288KqpalfCZJ9PoNcwrmhLUNLSKhlV+ErqXJDi5w5FvCN//8cCXPzq+TGMvlWPfwhXs8K2HwVieqs+xw3o6DdlG6ZzmcRLNjQ9jaOBFIq4mzk1kjlOwNHEhKuGF8s+rtIGBANAVDyvFfjdLYpHKxs+JFKELZnncvKCb3rqg4c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QRa67WlT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b="d4CwHB7T"
-dkim-signature: v=1; a=rsa-sha256; d=huawei.com; s=dkim;
-	c=relaxed/relaxed; q=dns/txt;
-	h=From;
-	bh=D4Dc8j1nfmErNosxziXn1qD0pEKNNpyJIdOEd8MGydE=;
-	b=d4CwHB7T/BfpIiJ9dxUhjmmqhh85oduzMsFRGGSxQM14aLEvKGDhQbZtHwo9cdM7+OPCEiQo1
-	BOeFiMsk35DS4SbTbDvGo8RdKJ7naiTIWHP8+Z8wiGU7UcVctaObnlUVr/gZK9yzV3URSaJ0ESc
-	RXhfXzEu/dnJZJKe4GacfEc=
-Received: from mail.maildlp.com (unknown [172.19.162.197])
-	by canpmsgout04.his.huawei.com (SkyGuard) with ESMTPS id 4frFyM02KHz1prLc;
-	Wed,  8 Apr 2026 16:06:35 +0800 (CST)
-Received: from dggpemf500012.china.huawei.com (unknown [7.185.36.8])
-	by mail.maildlp.com (Postfix) with ESMTPS id D59DE40576;
-	Wed,  8 Apr 2026 16:12:51 +0800 (CST)
-Received: from huawei.com (10.50.87.63) by dggpemf500012.china.huawei.com
- (7.185.36.8) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.11; Wed, 8 Apr
- 2026 16:12:51 +0800
-From: Lin Ruifeng <linruifeng4@huawei.com>
-To: <sj@kernel.org>, <akpm@linux-foundation.org>, <chenjun102@huawei.com>,
-	<tongtiangen@huawei.com>
-CC: <damon@lists.linux.dev>, <linux-mm@kvack.org>,
-	<linux-kernel@vger.kernel.org>
-Subject: [PATCH] mm/damon: support freeze kdamond
-Date: Wed, 8 Apr 2026 16:06:52 +0800
-Message-ID: <20260408080652.1745410-1-linruifeng4@huawei.com>
-X-Mailer: git-send-email 2.43.0
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QRa67WlT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01B89C19421;
+	Wed,  8 Apr 2026 13:54:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1775656490;
+	bh=ROsaxkUmsK9dQT8Wi+iwtU1tPZYRdlLs0Vtp0MHNi/s=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=QRa67WlTM5SuiVWoEOlaqi06yAIr+JapoBgqqErFeWIq66QdFKiC+C784fxuuzHvd
+	 HCeLxllrOAR62N7GZEYynFMLkxyIarc+6APAOml+UoJPiugNPy9WZVmbMaMmgp9yFc
+	 I2x/YXVZQvPEpB6xgU3YbHTvl5U309py8okXl+l9bLc61l7M64uzbA7/nNTaHvSlTd
+	 qmTsf70+/7ka/96rvClfbcrFVy090CAETx0FoQws3OxoPWtFchQ3EGpSrMNH+E1U2o
+	 GagdUFNtJ8uwaOK5rqX354Ybp5N1P1NfjuBf7Os417JnMR+iOhoK4ggBHtZdSeFDom
+	 grp94QcXnoyVw==
+From: SeongJae Park <sj@kernel.org>
+To: Ravi Jonnalagadda <ravis.opensrc@gmail.com>
+Cc: SeongJae Park <sj@kernel.org>,
+	damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org,
+	linux-doc@vger.kernel.org,
+	akpm@linux-foundation.org,
+	corbet@lwn.net,
+	bijan311@gmail.com,
+	ajayjoshi@micron.com,
+	honggyu.kim@sk.com,
+	yunjeong.mun@sk.com
+Subject: Re: (sashiko review) [PATCH v6 1/1] mm/damon: add node_eligible_mem_bp and node_ineligible_mem_bp goal metrics
+Date: Wed,  8 Apr 2026 06:54:32 -0700
+Message-ID: <20260408135440.88978-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <CALa+Y17YnrOe=UXWBMKJ1U6seKJuauDqAdTDYo1cCYnrP_vSFg@mail.gmail.com>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: kwepems200001.china.huawei.com (7.221.188.67) To
- dggpemf500012.china.huawei.com (7.185.36.8)
 
-During suspend and resume, the data monitored by kdamond is
-no longer meaningful. Meanwhile, since kdamond may involve
-I/O operations, it is necessary to freeze it.
+On Tue, 7 Apr 2026 19:33:43 -0700 Ravi Jonnalagadda <ravis.opensrc@gmail.com> wrote:
 
-Signed-off-by: Lin Ruifeng <linruifeng4@huawei.com>
----
- mm/damon/core.c | 4 ++++
- 1 file changed, 4 insertions(+)
+> On Tue, Apr 7, 2026 at 9:05 AM SeongJae Park <sj@kernel.org> wrote:
+[...]
+> Yes SJ. I think we can make it work with single goal now that the
+> below commit is part of mainline. will give it a try and post an
+> update.
 
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index 3e1890d64d06..5cd1f0aed66b 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -16,6 +16,7 @@
- #include <linux/slab.h>
- #include <linux/string.h>
- #include <linux/string_choices.h>
-+#include <linux/freezer.h>
- 
- #define CREATE_TRACE_POINTS
- #include <trace/events/damon.h>
-@@ -2753,6 +2754,7 @@ static int kdamond_fn(void *data)
- 
- 	complete(&ctx->kdamond_started);
- 	kdamond_init_ctx(ctx);
-+	set_freezable();
- 
- 	if (ctx->ops.init)
- 		ctx->ops.init(ctx);
-@@ -2774,6 +2776,8 @@ static int kdamond_fn(void *data)
- 		unsigned long next_ops_update_sis = ctx->next_ops_update_sis;
- 		unsigned long sample_interval = ctx->attrs.sample_interval;
- 
-+		try_to_freeze();
-+
- 		if (kdamond_wait_activation(ctx))
- 			break;
- 
--- 
-2.43.0
+Sounds good, please don't hesitate asking any questions.
 
+
+Thanks,
+SJ
+
+[...]
