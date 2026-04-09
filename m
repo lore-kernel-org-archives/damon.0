@@ -1,177 +1,169 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from canpmsgout10.his.huawei.com (canpmsgout10.his.huawei.com [113.46.200.225])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EDE729430;
-	Thu,  9 Apr 2026 00:00:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C26223101B8
+	for <damon@lists.linux.dev>; Thu,  9 Apr 2026 07:20:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=113.46.200.225
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775692845; cv=none; b=Vf5nCfWqJ+c7ia1qtN2ZW6anUcu3ExLVOGkoZS5TbY5ifEH3wuQB8rQGJO8NtIn9OqScM6ppLFEOCv5lwOMjVX9DIOmHOsJ5Oq3q2m0rMw+BIcmfojKQDSm4nOdF1Co2EUiHuT+fL0oIu5+ptLtA+8WAIHtS1OxvxHCuotoC6aw=
+	t=1775719232; cv=none; b=YTX9nvSX5qseo4IjD+pQEAGGOhpwv7wmFC9PhbZtAgUFZvQOFiEd+BQHRn2gE27hL/DU9takkMztwoBusaopllJFihUSkfIEb8Npc1hxE1mvYTGAWIMZjBZ0lipwo32UkOe1hsBCkug1WZ86gMGdZlcU3Kl4XGs20uNGQW0dSgQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775692845; c=relaxed/simple;
-	bh=qppp/68yL1FBDErK+oJASXFD51sGuVpQH4bDIkn6sd4=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=smevstitVsCeoP16fd7gGX3jq/p35SX3h1pXfLbP8cM2Ij26qTlNtobaLO9MRh4JAoLyjxj0mfO6U3p1ynQFdyJxOZo0Hxje+/idLS0vsPseC1fVK5WkKePD70yurwa0LtYJK/9Ovh0SoQVXqKLMwLyCGLXctvVOwRbXOL06pDo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=n04EEiiR; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1775719232; c=relaxed/simple;
+	bh=mCb6vAH1hf5nZVjjoPlD588myyubEctjoXr1Inp3H78=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=X8SdB1UEI682j9123GYgI5xzRBGX2FQaSE2Jhqzein5Cg5REqeTe/dK092+Q33QGTISbXiVNIHOalDlwVQCB5z1F+pu0GiQnYO8ua7mryn2TGQsx7allLUJXDVTAppemJlZ5zKwI3p/mrhCB16KMSj2OlGxCVKDWLO8GktpLEyQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b=NZacqqes; arc=none smtp.client-ip=113.46.200.225
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="n04EEiiR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CA1AC19421;
-	Thu,  9 Apr 2026 00:00:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1775692844;
-	bh=qppp/68yL1FBDErK+oJASXFD51sGuVpQH4bDIkn6sd4=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n04EEiiRelmZ/SxG+FaURhv7uQcCIcGYP3/75s3NiC605Ngr69+aovYWbEwoH9NL1
-	 yv4Xr9QeT2jBYiIIqk79Yj0PnEAaxmenTnicD0vVUJ2E/G1o+Q4HBV9EDvj+xAe4mC
-	 LQRPF2G7satvRydNnV6IU0kpjz7z7my+VTNB/wVx8dt09yzYgiH+kH8S4o9koNhf1R
-	 sK6YGvl4jitOVXt+b8jQQkEIWVLf9RiD+LM6JfkTNkKzwDaZ+GIe53rlkRPlku+kcl
-	 2Fcy18YfoqTtqaHCs/Xj9Dn30F9fwUr1a8fhf9wszeQXe0h4dv/DoWtiqApmxw22Pb
-	 6q4tylb2cHW9A==
-From: SeongJae Park <sj@kernel.org>
-To: Bijan Tabatabai <bijan311@gmail.com>
-Cc: SeongJae Park <sj@kernel.org>,
-	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Brendan Higgins <brendan.higgins@linux.dev>,
-	David Gow <davidgow@davidgow.net>,
-	David Hildenbrand <david@kernel.org>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	Michal Hocko <mhocko@suse.com>,
-	Mike Rapoport <rppt@kernel.org>,
-	Shuah Khan <shuah@kernel.org>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	damon@lists.linux.dev,
-	kunit-dev@googlegroups.com,
-	linux-doc@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-kselftest@vger.kernel.org,
-	linux-mm@kvack.org
-Subject: Re: [RFC PATCH v3 00/10] mm/damon: introduce DAMOS failed region quota charge ratio
-Date: Wed,  8 Apr 2026 17:00:34 -0700
-Message-ID: <20260409000035.93742-1-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260408165001.8473-1-bijan311@gmail.com>
-References: 
+	dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b="NZacqqes"
+dkim-signature: v=1; a=rsa-sha256; d=huawei.com; s=dkim;
+	c=relaxed/relaxed; q=dns/txt;
+	h=From;
+	bh=HYqV+HwLz8zoQmcesOVkUB8rczTiyU8XEXIOxFTDGIQ=;
+	b=NZacqqesoAM96BvKsOd69w6m/mAYUmCK3ZsL3LnBBOnlXU92taxpSQbQNf8qn49FPweyzAxJJ
+	eCPJPEJumr3lVd7XwYN9jgdT/P5npYGHgabtpK1WAJS/q87XzQ5hM8JfMUFlKGn/Befd+qNfWca
+	864bCtUxzjAkJQ2ugl7JCoE=
+Received: from mail.maildlp.com (unknown [172.19.163.127])
+	by canpmsgout10.his.huawei.com (SkyGuard) with ESMTPS id 4frrlN1KPMz1K9D3;
+	Thu,  9 Apr 2026 15:14:08 +0800 (CST)
+Received: from dggpemf500012.china.huawei.com (unknown [7.185.36.8])
+	by mail.maildlp.com (Postfix) with ESMTPS id 8BA4B402AB;
+	Thu,  9 Apr 2026 15:20:20 +0800 (CST)
+Received: from [10.174.177.52] (10.174.177.52) by
+ dggpemf500012.china.huawei.com (7.185.36.8) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.11; Thu, 9 Apr 2026 15:20:19 +0800
+Message-ID: <1b340c6e-4e21-42c3-a1b1-d07813b8b8b7@huawei.com>
+Date: Thu, 9 Apr 2026 15:20:10 +0800
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] mm/damon: support freeze kdamond
+To: SeongJae Park <sj@kernel.org>
+CC: <akpm@linux-foundation.org>, <chenjun102@huawei.com>,
+	<tongtiangen@huawei.com>, <damon@lists.linux.dev>, <linux-mm@kvack.org>,
+	<linux-kernel@vger.kernel.org>
+References: <20260408140708.89729-1-sj@kernel.org>
+From: "linruifeng (A)" <linruifeng4@huawei.com>
+In-Reply-To: <20260408140708.89729-1-sj@kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: kwepems100001.china.huawei.com (7.221.188.238) To
+ dggpemf500012.china.huawei.com (7.185.36.8)
 
-On Wed,  8 Apr 2026 11:48:27 -0500 Bijan Tabatabai <bijan311@gmail.com> wrote:
+Hello SJ，
 
-> On Mon,  6 Apr 2026 18:05:22 -0700 SeongJae Park <sj@kernel.org> wrote:
-> 
-> Hi SJ,
-> 
-> > TL; DR: Let users set different DAMOS quota charge ratios for DAMOS
-> > action failed regions, for deterministic and consistent DAMOS action
-> > progress.
-> > 
-> > Common Reports: Unexpectedly Slow DAMOS
-> > =======================================
-> > 
-> > One common issue report that we get from DAMON users is that DAMOS
-> > action applying progress speed is sometimes much slower than expected.
-> > And one common root cause is that the DAMOS quota is exceeded by the
-> > action applying failed memory regions.
-> > 
-> > For example, a group of users tried to run DAMOS-based proactive memory
-> > reclamation (DAMON_RECLAIM) with 100 MiB per second DAMOS quota.  They
-> > ran it on a system having no active workload which means all memory of
-> > the system is cold.  The expectation was that the system will show 100
-> > MiB per second reclamation until (nearly) all memory is reclaimed. But
-> > what they found is that the speed is quite inconsistent and sometimes it
-> > becomes very slower than the expectation, sometimes even no reclamation
-> > at all for about tens of seconds.  The upper limit of the speed (100 MiB
-> > per second) was being kept as expected, though.
-> > 
-> > By monitoring the qt_exceeds (number of DAMOS quota exceed events) DAMOS
-> > stat, we found DAMOS quota is always exceeded when the speed is slow. By
-> > monitoring sz_tried and sz_applied (the total amount of DAMOS action
-> > tried memory and succeeded memory) DAMOS stats together, we found the
-> > reclamation attempts nearly always failed when the speed is slow.
-> > 
-> > DAMOS quota charges DAMOS action tried regions regardless of the
-> > successfulness of the try.  Hence in the example reported case, there
-> > was unreclaimable memory spread around the system memory.  Sometimes
-> > nearly 100 MiB of memory that DAMOS tried to reclaim in the given quota
-> > interval was reclaimable, and therefore showed nearly 100 MiB per second
-> > speed.  Sometimes nearly 99 MiB of memory that DAMOS was trying to
-> > reclaim in the given quota interval was unreclaimable, and therefore
-> > showing only about 1 MiB per second reclaim speed.
-> > 
-> > We explained it is an expected behavior of the feature rather than a
-> > bug, as DAMOS quota is there for only the upper-limit of the speed.  The
-> > users agreed and later reported a huge win from the adoption of
-> > DAMON_RECLAIM on their products.
-> 
-> Thanks for this series. This is a problem I have come across and am looking
-> forward to seeing this land.
+Thank you for your reply. Based on my current knowledge, I think this can be
+described from three aspects:
 
-Thank you for acknowledging.  I'm hoping this to land on 7.2-rc1.
+1、kdamond monitors physical/virtual addresses and performs certain 
+actions based
+on the monitoring results to improve system/process efficiency. When the 
+system
+undergoes suspend/resume, most user-space processes are in a suspended 
+state.
+kdamond may therefore perform operations such as PAGEOUT / 
+MADV_NOHUGEPAGE, but
+these are not true data monitoring results. This may cause changes in 
+the efficiency
+of certain processes after system resume. Therefore, I believe that 
+continuing to
+run kdamond during suspend is meaningless and may even have negative 
+effects.
 
-[...]
-> > DAMOS Action Failed Region Quota Charge Ratio
-> > =============================================
-> > 
-> > Let users set the charge ratio for the action-failed memory, for more
-> > optimal and deterministic use of DAMOS.  It allows users to specify the
-> > numerator and the denominator of the ratio for flexible setup.  For
-> > example, let's suppose the numerator and the denominator are set to 1
-> > and 4,096, respectively.  The ratio is 1 / 4,096.  A DAMOS scheme action
-> > is applied to 5 GiB memory.  For 1 GiB of the memory, the action is
-> > succeeded.  For the rest (4 GiB), the action is failed.  Then, only 1
-> > GiB and 1 MiB quota is charged.
-> > 
-> > The optimal charge ratio will depend on the use case and
-> > system/workload.  I'd recommend starting from setting the nominator as 1
-> > and the denominator as PAGE_SIZE and tune based on the results, because
-> > many DAMOS actions are applied at page level.
-> 
-> This makes sense, but the quota is also considered when setting the minimum
-> allowable score in damos_adjust_quota(), which, to my understanding, assumes
-> that all of the all of a region's data will by applied. If an action fails for
-> a significant amount of the memory, a lower score than what was calculated in
-> damos_adjust_quota() could be valid. If that's the case, the scheme would be
-> applied to fewer regions than strictly necessary.
+2、When performing hibernate, most of the used memory in the system is 
+swapped out to
+disk. When memory is large, this is time-consuming. If kdamond does not 
+sleep, it may
+affect hibernate efficiency.
 
-Good point, you are right.
+3、As discussed in [1]: "The principal reason is to prevent filesystems 
+from being damaged
+after hibernation. At the moment we have no simple means of 
+checkpointing filesystems, so if
+there are any modifications made to filesystem data and/or metadata on 
+disks, we cannot bring
+them back to the state from before the modifications. At the same time 
+each hibernation image
+contains some filesystem-related information that must be consistent 
+with the state of the on
+disk data and metadata after the system memory state has been restored 
+from the image (otherwise
+the filesystems will be damaged in a nasty way, usually making them 
+almost impossible to repair).
+We therefore freeze tasks that might cause the on-disk filesystems' data 
+and metadata to be modified
+after the hibernation image has been created and before the system is 
+finally powered off. The majority
+of these are user space processes, but if any of the kernel threads may 
+cause something like this to
+happen, they have to be freezable." During suspend/resume, processes 
+involving I/O operations should
+be frozen.
 
-> 
-> As you mention above, this is not a correctness issue because the quota only
-> guarantees an upper limit on the amount of data the scheme is applied to.
+Based on the above reasons, I believe it is reasonable to support 
+freezing kdamond. If there are any
+errors in my thinking, please point them out.
 
-I agree.
+Thans,
+Lin Ruifeng
 
-> Additionally, it may very well be true that what I listed above would not be
-> very noticeable in practice.
-
-I guess it is hopefully true, for following reason.
-
-The score for each region is calculated as a weigted sum of the access
-frequency and the age of the region.  To avoid DAMOS action is repeatedly
-applied to only a few regions, we reset age of regions after a DAMOS action is
-applied to the region, regardless of the action failure.  So, periodically the
-score of the regions having the action unapplicable region will get low, make
-no big impact to the minimum score threshold calculation.
-
-But real data could say something different.  I will be happy to be proven
-wrong my real data. :)
-
-> I just thought this was worth pointing out as
-> something to think about.
-
-Indeed.  Thank you for pointing out.  Nonetheless this is not a new issue that
-introduced by this patch series.  And the impact is not clear at the moment.  I
-will be happy to revisit this in parallel to this patch series.
-
-
-Thanks,
-SJ
-
-[...]
+在 2026/4/8 22:07, SeongJae Park 写道:
+> Hello Lin,
+>
+>
+> Thank you for sharing this patch.
+>
+> On Wed, 8 Apr 2026 16:06:52 +0800 Lin Ruifeng <linruifeng4@huawei.com> wrote:
+>
+>> During suspend and resume, the data monitored by kdamond is
+>> no longer meaningful. Meanwhile, since kdamond may involve
+>> I/O operations, it is necessary to freeze it.
+> I'm not used to PM freezer, and maybe because of that, I'm not fully
+> understanding the motivation of this patch.  Could you please elaborate the
+> existing problem and how this patch is fixing or improving it?
+>
+>
+> Thanks,
+> SJ
+>
+>> Signed-off-by: Lin Ruifeng <linruifeng4@huawei.com>
+>> ---
+>>   mm/damon/core.c | 4 ++++
+>>   1 file changed, 4 insertions(+)
+>>
+>> diff --git a/mm/damon/core.c b/mm/damon/core.c
+>> index 3e1890d64d06..5cd1f0aed66b 100644
+>> --- a/mm/damon/core.c
+>> +++ b/mm/damon/core.c
+>> @@ -16,6 +16,7 @@
+>>   #include <linux/slab.h>
+>>   #include <linux/string.h>
+>>   #include <linux/string_choices.h>
+>> +#include <linux/freezer.h>
+>>   
+>>   #define CREATE_TRACE_POINTS
+>>   #include <trace/events/damon.h>
+>> @@ -2753,6 +2754,7 @@ static int kdamond_fn(void *data)
+>>   
+>>   	complete(&ctx->kdamond_started);
+>>   	kdamond_init_ctx(ctx);
+>> +	set_freezable();
+>>   
+>>   	if (ctx->ops.init)
+>>   		ctx->ops.init(ctx);
+>> @@ -2774,6 +2776,8 @@ static int kdamond_fn(void *data)
+>>   		unsigned long next_ops_update_sis = ctx->next_ops_update_sis;
+>>   		unsigned long sample_interval = ctx->attrs.sample_interval;
+>>   
+>> +		try_to_freeze();
+>> +
+>>   		if (kdamond_wait_activation(ctx))
+>>   			break;
+>>   
+>> -- 
+>> 2.43.0
