@@ -1,51 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC4193D332E;
-	Fri, 10 Apr 2026 14:20:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEBBA3CFF4C;
+	Fri, 10 Apr 2026 14:20:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775830846; cv=none; b=GvRnR1gpjZrFkq7K00Ro7XDNC5tW46clBfGoy9wqJ+Cl1uo2ctHekMtwv/jiHovIRhJXwwI7voxXT80X8F2d3vNSsEX0lJEC7x30C4EcFpEvPDzbXOFsUc9kyR7YWf9erdufDo+udLfAh414zD/AudbbNGZNmwr8hZtIjas8uMk=
+	t=1775830847; cv=none; b=HCAxbkXCh88ZvKBjp5T8PQPfe85ygoDGTO2q4OZOJawaLNpK0QvsLYC8/iy1x5Lpv2OY8NmEzN12F7APKCSYFvOgGYqJQ4/+YczNX0brmuwXDJ6cmpvs31pGxr65QTEuolHg3cnLaPgXauGgxkLuOVJ9MxThO6E1bc+EDwKqqX4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775830846; c=relaxed/simple;
-	bh=x42u0yyujS0MNNJ5zIzlJ5WzcqjchBB5xjDhcoIlpNo=;
+	s=arc-20240116; t=1775830847; c=relaxed/simple;
+	bh=WgiRHi50zFvHwjFSQiNfyV/FQHY8WOkdhFM9Jv3jqj0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UR2CZ/oagHScJ1UiPJUkYlgzpwItaJTG7eWat9lA6kxAy9xki8pfsS6TcytYYcBf9iRlyaKtKOtPNRGH/W+b3MjJ7UWqkSvcYNdlx4ylWDrRo0FUXp6BW18zg0tS2oTQAWV1ipLSpRE4WtEqL4/GCEIgvPNi9IvZ1nH2GLvBXG0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AK4nbONb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gLZxWaUkn67wFxg9njN+CRQMbqaOQS+u8KWiVXNs/j6MMufBh6aQ7bhlJ986pll9UghRNFOV0D2RuP7i028BjYauaduqabvO1Xd/BIaZ15+oKjcoEus3te/iYV4aWjqosQ1USMM6AfVOkDiobLGOBddDz2ooDcXofPZSjLOKI2k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Z4/gqIUK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AK4nbONb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 013D8C2BC87;
-	Fri, 10 Apr 2026 14:20:45 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Z4/gqIUK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56FCDC2BCB4;
+	Fri, 10 Apr 2026 14:20:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1775830846;
-	bh=x42u0yyujS0MNNJ5zIzlJ5WzcqjchBB5xjDhcoIlpNo=;
+	s=k20201202; t=1775830847;
+	bh=WgiRHi50zFvHwjFSQiNfyV/FQHY8WOkdhFM9Jv3jqj0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AK4nbONbQb0eDIAbPTFWIGS7EmMnpU8NyFvBqyYlR77VQbb4whGmlf2GTSs/eoioc
-	 8GmVmKGNwLdqZzBQSJk+/Wo03tVz09ZqiyzRTw4xe0LzyRqHx48YSUl86C1Kkr0/d0
-	 hvDULEf8n/qQMEk6X/ob+4cfVK8MimyqHgv2ZsW2Vg1vezVGyZx3RGajYE023NwZVS
-	 cc45eDOjjlG0EyBughQXD8UDMT3TN7YxPBIKukMdx796lochqj8tSJ88nGpbeb10S3
-	 Esxyh1Kqi+T5hodbvor0MwQa9aTj65SNu7376Nj8Bl1cSI9fnV7vtjwGrdjfeXdqRE
-	 TuvlKRz29LSVQ==
+	b=Z4/gqIUKxFf4YuHCdqto6uMxZfyyhS3umIa9Iz44XQ05dv1Xg0RTuCESmCGxkwMY6
+	 mRdg7hZoUXHRhOjZnzjU6Z9QxK+JqhGEF5R/4LEtv1xJzEr32A2Y5MkmLKk0cp/7cW
+	 ivKp6RzzkDYLSTgwGWA5U4/kx5udT2/S5QuOm6rFt0TSUil1oZwojytp2HVl9siz8q
+	 F4nf9HHv1BVMdUf7IcMAo6/8twZzDlN54T8JeCNGd8horj2976LWFra/rZP6N7UMNJ
+	 MRx/t7LHwtKVIzzsQKrqsD7K+9gOh4MTYfp0ehGWB2+mFRhtyiGupZ5UBB9zqVmzZs
+	 qNkBFJUrTHdvA==
 From: SeongJae Park <sj@kernel.org>
 To: 
 Cc: SeongJae Park <sj@kernel.org>,
-	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	David Hildenbrand <david@kernel.org>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	Michal Hocko <mhocko@suse.com>,
-	Mike Rapoport <rppt@kernel.org>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Vlastimil Babka <vbabka@kernel.org>,
 	damon@lists.linux.dev,
-	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH v5 05/11] Docs/mm/damon/design: document fail_charge_{num,denom}
-Date: Fri, 10 Apr 2026 07:20:26 -0700
-Message-ID: <20260410142034.83798-6-sj@kernel.org>
+Subject: [RFC PATCH v5 07/11] Docs/ABI/damon: document fail_charge_{num,denom}
+Date: Fri, 10 Apr 2026 07:20:28 -0700
+Message-ID: <20260410142034.83798-8-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260410142034.83798-1-sj@kernel.org>
 References: <20260410142034.83798-1-sj@kernel.org>
@@ -57,46 +46,36 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Update DAMON design document for the DAMOS action failed region quota
-charge ratio.
+Update DAMON ABI document for the DAMOS action failed regions quota
+charge ratio control sysfs files.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- Documentation/mm/damon/design.rst | 22 ++++++++++++++++++++++
- 1 file changed, 22 insertions(+)
+ Documentation/ABI/testing/sysfs-kernel-mm-damon | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/Documentation/mm/damon/design.rst b/Documentation/mm/damon/design.rst
-index 622d24e35961e..fa7392b5a331d 100644
---- a/Documentation/mm/damon/design.rst
-+++ b/Documentation/mm/damon/design.rst
-@@ -576,6 +576,28 @@ interface <sysfs_interface>`, refer to :ref:`weights <sysfs_quotas>` part of
- the documentation.
+diff --git a/Documentation/ABI/testing/sysfs-kernel-mm-damon b/Documentation/ABI/testing/sysfs-kernel-mm-damon
+index 7059f540940f0..971c22e34e722 100644
+--- a/Documentation/ABI/testing/sysfs-kernel-mm-damon
++++ b/Documentation/ABI/testing/sysfs-kernel-mm-damon
+@@ -329,6 +329,18 @@ Contact:	SeongJae Park <sj@kernel.org>
+ Description:	Writing to and reading from this file sets and gets the
+ 		goal-based effective quota auto-tuning algorithm to use.
  
- 
-+.. _damon_design_damos_quotas_failed_memory_charging_ratio:
++What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/schemes/<S>/quotas/fail_charge_num
++Date:		Mar 2026
++Contact:	SeongJae Park <sj@kernel.org>
++Description:	Writing to and reading from this file sets and gets the
++		action-failed memory quota charging ratio numerator.
 +
-+Action-failed Memory Charging Ratio
-+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
++What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/schemes/<S>/quotas/fail_charge_denom
++Date:		Mar 2026
++Contact:	SeongJae Park <sj@kernel.org>
++Description:	Writing to and reading from this file sets and gets the
++		action-failed memory quota charging ratio denominator.
 +
-+DAMOS action to a given region can fail for some subsets of the memory of the
-+region.  For example, if the action is ``pageout`` and the region has some
-+unreclaimable pages, applying the action to the pages will fail.  The amount of
-+system resource that is taken for such failed action applications is usually
-+different from that for successful action applications.  For such cases, users
-+can set different charging ratio for such failed memory.  The ratio can be
-+specified using ``fail_charge_num`` and ``fail_charge_denom`` parameters.  The
-+two parameters represent the numerator and denominator of the ratio.  The
-+feature is enabled only if ``fail_charge_denom`` is not zero.
-+
-+For example, let's suppose a DAMOS action is applied to a region of 1,000 MiB
-+size.  The action is successfully applied to only 700 MiB of the region.
-+``fail_charge_num`` and ``fail_charge_denom`` are set to ``1`` and ``1024``,
-+respectively.  Then only 700 MiB and 300 KiB of size (``700 MiB + 300 MiB * 1 /
-+1024``) will be charged.
-+
-+
- .. _damon_design_damos_quotas_auto_tuning:
- 
- Aim-oriented Feedback-driven Auto-tuning
+ What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/schemes/<S>/quotas/weights/sz_permil
+ Date:		Mar 2022
+ Contact:	SeongJae Park <sj@kernel.org>
 -- 
 2.47.3
