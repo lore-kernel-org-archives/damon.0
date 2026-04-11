@@ -1,136 +1,113 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAA0D1862;
-	Sat, 11 Apr 2026 18:06:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A98D9271468;
+	Sat, 11 Apr 2026 18:27:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.137.202.133
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775930762; cv=none; b=KOJwWGF6f6BeYWPUqctIuwm7PGLsp4eM9z9XKyDa1OGZvnZlfr4S9U4MoU1plE5zsOHA1bsN+euUgS5txHdiCr69rJNxP5hZWj/87ctZTkTBUDsO4C5ZQKhVtFS98XW/qTkeZ7CgXZpBmNcG1Ev1Q3CIaStPbj5hBsgBrT7IH2E=
+	t=1775932042; cv=none; b=omsKJFXvkEkTp5btPu43CRBSP+1qZ1DAsEUOFM88Q8J4g13vg7j2okdFXwF8K380GK1JX49MP9WCDHOzJwMplvfsDOxUUrh5ulsWegoRffE9qRginaNshIOqFMjc1IXxNXLnFWoFkctW4tBvopmqI3sY2SF7Z99ZJMABgPXECb0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775930762; c=relaxed/simple;
-	bh=FT5470fpgMWYmiUdJN7K/tRS99P7K/kQlx5yLr3uiUE=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bcs+ZY/tuEH00WAWepN5kY/UYS1kwVokItpH19ax9pICkKHv/xS8auRmIXBy9vNqFF7gM2ZEddAhR1R3/lBMRL6SAONsULcELlesulrNXfAT38gHMLYfTlqj0y3e1XkY+ngBIWyMNh6uqoOjSNBhPVqLIpmO8JT/AkxpmW5+WEs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qvAePOSa; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1775932042; c=relaxed/simple;
+	bh=vqg3CJlZVe+TUMFiJkNpsyF486VMgdcyj05ctLPLOTE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=bhlYEBQaRYDNfNWr9fxTO/SZUAaJeac4lTH79yuTgB2wK18VB2ASCXr3viUmachSVKOEPq0FbfxaW9cf/Ws/cXtmkZV/3YyAGE7TjuXkz3z5XiQVSxF4crGydJBygzFpUYiV/ryEtArgbe+UxD0KefvtXc+iJzTtHLMiUaoqRNE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org; spf=none smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=mlw4RIO2; arc=none smtp.client-ip=198.137.202.133
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=infradead.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qvAePOSa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CEF0C2BCAF;
-	Sat, 11 Apr 2026 18:06:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1775930762;
-	bh=FT5470fpgMWYmiUdJN7K/tRS99P7K/kQlx5yLr3uiUE=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qvAePOSajJF1TiS2/hX5RCRKWZ3UQj7Krxe/PiLtBGhgTSYX8dGLuHkqd/EaFuDsr
-	 7cdgBrGkU2ATWj23WrZlvBE1nPrrZD4BYHoMPtmMopRPeKO/Bt0vF/Q5Bmu7jizQ1Q
-	 zfgQmNuORckDYMJFS8FTCG4CC08xHBh+Ek8nqb3DsJxsKWEfJhmzcNA574CyhWLSw1
-	 Rx+7p54UNIrejfHuz6c+U+WG2me8TbfRkIVlOMRQ8pew4MUMmJ/5XszM1shtOP5Mng
-	 6u6VRGscPpNODROlrA/ZgQUqosex25eo0av9z4jAz/1Dhs8eJKZ/T0n7/hpkbuHK4X
-	 68iHa0ia7kPpg==
-From: SeongJae Park <sj@kernel.org>
-To: SeongJae Park <sj@kernel.org>
-Cc: damon@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org
-Subject: Re: (sashiko review) [RFC PATCH v5.1 03/11] mm/damon/core: introduce failed region quota charge ratio
-Date: Sat, 11 Apr 2026 11:05:49 -0700
-Message-ID: <20260411180549.79857-1-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260411164908.77189-4-sj@kernel.org>
-References: 
+	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="mlw4RIO2"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=bombadil.20210309; h=Content-Transfer-Encoding:
+	Content-Type:In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:
+	Message-ID:Sender:Reply-To:Content-ID:Content-Description;
+	bh=hItD8FmmH44C7lkQPshN1XFwsXbgSGscwro6+HDM6k8=; b=mlw4RIO2HlunldMU4GbKe5InnS
+	kC48TU3cesNz1Md0KbUMo+2ThkJ3PrC5OuZgjbKNwITaGeJOFg/Il5kDexKIcQpECcXCqM7aUW4Rc
+	SXLKiNxCmDfBVpnsDYd0zDtlTdqxQFLGN4AgzpTXWE/jxeMBemYMTbUqXq2k+9tYVwaYAJHc1qBLK
+	ZxURLiinIc1aa8r8llkTEeyqO/TMvm73C8mDtMbEn3Q8YgnTWO9NDxA1+LEGqGbhAV8JFUWj7LzW/
+	T3cL1TcK5y8mKzMInEjqhWjmYFZ8/lqPu+ZaJekzI97Tm9i50/n8XNv4T7Fna7zeD3B442eodG5oF
+	hlMnPQXQ==;
+Received: from [50.53.43.113] (helo=[192.168.254.34])
+	by bombadil.infradead.org with esmtpsa (Exim 4.98.2 #2 (Red Hat Linux))
+	id 1wBd34-0000000DiEo-47E8;
+	Sat, 11 Apr 2026 18:27:15 +0000
+Message-ID: <20aa1471-5257-4913-ae46-7b40ca0aa128@infradead.org>
+Date: Sat, 11 Apr 2026 11:27:14 -0700
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-
-TL; DR: sashiko found no blocker for this patch.
-
-Forwarding full sashiko review in a reply format with my inline comments below,
-for sharing details of my view and doing followup discussions via mails if
-needed.
-
-> # review url: https://sashiko.dev/#/patchset/20260411164908.77189-4-sj@kernel.org
-> # start of sashiko.dev inline review
-> commit cb228850cc3bb33cac86cdc674c79e2557af28a8
-> Author: SeongJae Park <sj@kernel.org>
-> 
-> mm/damon/core: introduce failed region quota charge ratio
-> 
-> This commit introduces a DAMON core API to set the charge ratio for
-> action-failed memory. It allows API callers to specify the ratio flexibly
-> using a numerator and denominator to avoid charging failed memory the same
-> as successfully applied memory.
-> 
-> > diff --git a/mm/damon/core.c b/mm/damon/core.c
-> > index d04a107df7cfa..3398faeaa4350 100644
-> > --- a/mm/damon/core.c
-> > +++ b/mm/damon/core.c
-> 
-> [ ... ]
-> 
-> > @@ -2041,6 +2043,23 @@ static void damos_walk_cancel(struct damon_ctx *ctx)
-> >  	mutex_unlock(&ctx->walk_control_lock);
-> >  }
-> >  
-> > +static void damos_charge_quota(struct damos_quota *quota,
-> > +		unsigned long sz_region, unsigned long sz_applied)
-> > +{
-> > +	/*
-> > +	 * sz_applied could be bigger than sz_region, depending on ops
-> > +	 * implementation of the action, e.g., damos_pa_pageout().  Charge only
-> > +	 * the region size in the case.
-> > +	 */
-> > +	if (!quota->fail_charge_denom || sz_applied > sz_region)
-> > +		quota->charged_sz += sz_region;
-> > +	else
-> > +		quota->charged_sz += sz_applied + mult_frac(
-> > +				(sz_region - sz_applied),
-> > +				quota->fail_charge_num,
-> > +				quota->fail_charge_denom);
-> 
-> Could the mult_frac() calculation silently overflow here?
-> 
-> The fail_charge_num and fail_charge_denom variables are user-controlled
-> unsigned int parameters without bounds checking. The mult_frac(x, numer, denom)
-> macro evaluates as quot * numer + (rem * numer) / denom, using the type of x,
-> which is unsigned long in this case.
-> 
-> On a 32-bit architecture, if a user configures a fine-grained ratio like
-> 1000000 / 1000000, the remainder could be up to 999999. The intermediate
-> calculation for rem * numer would evaluate to nearly 10^12, which overflows
-> the 32-bit limit.
-> 
-> Similarly, on 64-bit architectures, setting fail_charge_num to a very
-> large value like UINT_MAX could cause the quot * numer operation to exceed
-> the 64-bit limit for large memory regions.
-> 
-> If an overflow occurs, it would severely under-account the charged size,
-> breaking the quota enforcement in damos_quota_is_full() and allowing the
-> scheme to silently bypass its configured action limits.
-> 
-> Does this code need bounds checking for the numerator and denominator, or
-> should it use a safer math helper to prevent the quota bypass?
-
-Same sashiko question to the previous patch.  My answer is also same.  I will
-keep this as is in favor of simplicity.
-
-> 
-> > +}
-> 
-> 
-> # end of sashiko.dev inline review
-> # review url: https://sashiko.dev/#/patchset/20260411164908.77189-4-sj@kernel.org
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] Docs/mm/damon/maintainer-profile: add AI review usage
+ guideline
+To: SeongJae Park <sj@kernel.org>, Andrew Morton <akpm@linux-foundation.org>
+Cc: "Liam R. Howlett" <Liam.Howlett@oracle.com>,
+ David Hildenbrand <david@kernel.org>, Jonathan Corbet <corbet@lwn.net>,
+ Lorenzo Stoakes <ljs@kernel.org>, Michal Hocko <mhocko@suse.com>,
+ Mike Rapoport <rppt@kernel.org>, Shuah Khan <skhan@linuxfoundation.org>,
+ Suren Baghdasaryan <surenb@google.com>, Vlastimil Babka <vbabka@kernel.org>,
+ damon@lists.linux.dev, linux-doc@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-mm@kvack.org
+References: <20260411174906.79491-1-sj@kernel.org>
+Content-Language: en-US
+From: Randy Dunlap <rdunlap@infradead.org>
+In-Reply-To: <20260411174906.79491-1-sj@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
 
-Thanks,
-SJ
 
-# hkml [1] generated a draft of this mail.  You can regenerate
-# this using below command:
-#
-#     hkml patch sashiko_dev --for_forwarding \
-#             20260411164908.77189-4-sj@kernel.org
-#
-# [1] https://github.com/sjp38/hackermail
+On 4/11/26 10:49 AM, SeongJae Park wrote:
+> DAMON is opted-in for DAMON patches scanning [1] and email delivery [2].
+> Clarify how that could be used on DAMON maintainer profile.
+> 
+> [1] https://github.com/sashiko-dev/sashiko/commit/ad9f4a98f958
+> [2] https://github.com/sashiko-dev/sashiko/commit/b554c7b6e733
+> 
+> Signed-off-by: SeongJae Park <sj@kernel.org>
+> ---
+>  Documentation/mm/damon/maintainer-profile.rst | 21 +++++++++++++++++++
+>  1 file changed, 21 insertions(+)
+> 
+> diff --git a/Documentation/mm/damon/maintainer-profile.rst b/Documentation/mm/damon/maintainer-profile.rst
+> index bcb9798a27a86..5c23b1281c50c 100644
+> --- a/Documentation/mm/damon/maintainer-profile.rst
+> +++ b/Documentation/mm/damon/maintainer-profile.rst
+> @@ -100,3 +100,24 @@ There is also a public Google `calendar
+>  <https://calendar.google.com/calendar/u/0?cid=ZDIwOTA4YTMxNjc2MDQ3NTIyMmUzYTM5ZmQyM2U4NDA0ZGIwZjBiYmJlZGQxNDM0MmY4ZTRjOTE0NjdhZDRiY0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t>`_
+>  that has the events.  Anyone can subscribe to it.  DAMON maintainer will also
+>  provide periodic reminders to the mailing list (damon@lists.linux.dev).
+> +
+> +AI Review
+> +---------
+> +
+> +For patches that are publicly posted to DAMON mailing list
+> +(damon@lists.linux.dev), AI reviews of the patches will be available at
+> +sashiko.dev.  The reviews could also be sent as mails to the author of the
+> +patch.
+> +
+> +Patch authors are encouraged to check the AI reviews and share their opinions.
+> +The sharing could be done as a reply to the mail thread.  Consider reducing the
+> +recipients list for such sharing, since some people are not really interested
+> +in AI reviews.  As a rule of thumb, drop individuals except DAMON maintainer
+> +and stable@vger.kernel.org from the recipients list.
+> +
+> +`hkml` also provides a `feature
+> +<https://github.com/sjp38/hackermail/blob/master/USAGE.md#forwarding-sashikodev-statuscomments-to-mailing-list>`_
+> +for such sharing.  Please feel free to use the feature.
+> +
+> +It is only a non-mandastory recommendation.  DAMON maintainer could also ask
+
+                non-mandatory
+or maybe
+  This is an optional recommendation.
+
+
+> +any question about the AI reviews, though.
+> 
+> base-commit: aeaae01df7d17b5742e22b65b06f666ddea76816
+
+-- 
+~Randy
+
