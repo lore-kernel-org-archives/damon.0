@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BC47386456;
-	Sat, 11 Apr 2026 17:56:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1404181334;
+	Sat, 11 Apr 2026 18:03:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775930162; cv=none; b=DTS6RsoWQQ+3aGsIGDQ7m+VZmnE8GzqCQ5Ap4iUwhhLDmVinRBCsXHTTTQq9FsoN+aKz9ElpgdIvywZE764WjKMbX8jQ8cQX5wnKhoSe/fkjYMC7Sj8mdjta94769ijeRB1Oer1MDzufyu6/PPn9qP37m3utSnCGIO8VfNePljM=
+	t=1775930615; cv=none; b=erDMjETpLqU6HUq8dipvkmIS4ll5k2ODimh8J4x4ro2SO6ZRUcC9ap+lMM3w1W9AE0D22pXvAUdjrGxNsop7EyXNHneYic2+79fOW9JInGiuSGYloEdhEbxlW8qSQL3jgDGq7+TP1wGSjMHl/we4EJVEX6NdW2aaApHOaamt4M4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775930162; c=relaxed/simple;
-	bh=Ob5MmNNfLMwvmEBeU1tkxBH6cg05is6h9z9uqPS/UOs=;
+	s=arc-20240116; t=1775930615; c=relaxed/simple;
+	bh=DBCgDKz+lnsk8HdK5nYVKKWSxqPwPqoy8Cf/9pXeUhc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RQOesYaXhxmt3lh9zOH5AQH6anPzGA49+VadwV8yK6IRGDjO1G9Q8ZpnlpUQO6kA17zJqoXAkvhe30QSRgfvSA3/QPPXo8DvCYnG/F9psZwRQAtBaXcAZlWNUtUxGD8RX05eB94pIRWot1bDqzFpcBpZrLyQ5737IAOkuW5gE1s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HMYYvYRa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RzYTdnAFv2N94yjefYY6Uld1mOnJXjIoSq6ppqPQplafkx9AoADiBZ1PqupELXANsg39m8LpS/YvN13evqqo6UsbgKQLImOYJQjkC+1qQ0CnN7iHdOMA5QGqgdbvMvz+LxNyPpMjKZ7YSnuR+9uG8pWM6PPtxz6IFAb/n8fcaX8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KGHlTDeB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HMYYvYRa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91D43C4CEF7;
-	Sat, 11 Apr 2026 17:56:01 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KGHlTDeB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52866C2BCAF;
+	Sat, 11 Apr 2026 18:03:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1775930161;
-	bh=Ob5MmNNfLMwvmEBeU1tkxBH6cg05is6h9z9uqPS/UOs=;
+	s=k20201202; t=1775930615;
+	bh=DBCgDKz+lnsk8HdK5nYVKKWSxqPwPqoy8Cf/9pXeUhc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HMYYvYRaX0oan2/dq1WNCKiOt9pZLbjFf5PmP3Z1DJkXUmGF13NBIBqaOSRFwUJhD
-	 lWVsXRRmOukNNZ58qJ43Nd4F2YBbxRuqPVhA/vuWOBdXGB2vIqvhbP2VicWjiTnz6S
-	 6nq3aA/UDV9FQt0eAFXS5ZKzcF7PuNUc6kEDlRwvVLWHfS0BMSA3i+ZNT+3Dk8crZA
-	 Lks7+mar8gHkE4Thy8YzLgiHbBdw2nLUWNDRph9T5Op0bKGtz7ItJYMNicl5AQ5Ley
-	 6NC6Up66L0uiOlf3W+IV4yY7tAchl1sKKtKIMkz6Pu9C53sEMJAHUonoYJehUIflyA
-	 BV/uCUHSFs8Tg==
+	b=KGHlTDeBJv8aIl5PRXUvhhoIvAfsZz0o1q/g7s8Tokd7fdo6E4hZhA5GTXNulfIOt
+	 addZt98NFQ/M93/VMLKgvVRujpQTkDJHYnteW5eg3583RLJHaHSWv8vCBVERpHeIXP
+	 IACPZ9UXa/VrxQb0O6PlIzZDKoQVPLwb5HsdJomszqlCPFak7WPFjfFd4R9meec29m
+	 FFYTbZw1Han3B6t4FTpPa7d10rN2vI20G8G9dg6QgLcouTuGOIdOZMa6kd3KecBEqG
+	 p7Ieti/WjikUiPEuJuGDqd0pT6nhpOo0G3pexqAH/IvAueN+bJdvBCHuG0xy8MYtRp
+	 oaELcSv906k6Q==
 From: SeongJae Park <sj@kernel.org>
 To: SeongJae Park <sj@kernel.org>
 Cc: damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: Re: (sashiko review) [RFC PATCH v5.1 01/11] mm/damon/core: handle <min_region_sz remaining quota as empty
-Date: Sat, 11 Apr 2026 10:55:53 -0700
-Message-ID: <20260411175554.79572-1-sj@kernel.org>
+Subject: Re: (sashiko review) [RFC PATCH v5.1 02/11] mm/damon/core: merge regions after applying DAMOS schemes
+Date: Sat, 11 Apr 2026 11:03:32 -0700
+Message-ID: <20260411180333.79709-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260411164908.77189-2-sj@kernel.org>
+In-Reply-To: <20260411164908.77189-3-sj@kernel.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -45,78 +45,118 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-TL; DR: no blocker of this patch from sashiko review.
+TL; DR: sashiko found a typo and a fact that I forgot adding a fixup that I
+promised on the previous version.  I will fix those in the next spin.
 
 Forwarding full sashiko review in a reply format with my 
 inline comments below, for sharing details of my view and
 doing followup discussions via mails if needed.
 
-> # review url: https://sashiko.dev/#/patchset/20260411164908.77189-2-sj@kernel.org
+> # review url: https://sashiko.dev/#/patchset/20260411164908.77189-3-sj@kernel.org
 > # start of sashiko.dev inline review
-> commit 2f0a2c02b528b6c75ac3074d06b729bc93bd8589
+> commit 1a56d6af604a3fc86a23180a9619447641294a2f
 > Author: SeongJae Park <sj@kernel.org>
 > 
-> mm/damon/core: handle <min_region_sz remaining quota as empty
+> mm/damon/core: merge regions after applying DAMOS schemes
 > 
-> This commit updates DAMON quota handling to treat a remaining quota of
-> less than min_region_sz as effectively fully charged. This ensures that
-> charge_target_from and charge_addr_from of the quota are updated properly,
-> avoiding applying DAMOS actions too frequently to specific memory areas.
+> This commit introduces a mechanism to merge regions after applying schemes
+> to avoid overhead from regions split during quota-limited scheme application.
 > 
-> > diff --git a/mm/damon/core.c b/mm/damon/core.c
-> > index 12544c60531d3..8dbc365bb8e97 100644
 > > --- a/mm/damon/core.c
 > > +++ b/mm/damon/core.c
 > [ ... ]
-> > @@ -2127,8 +2140,7 @@ static void damon_do_apply_schemes(struct damon_ctx *c,
-> >  			continue;
-> >  
-> >  		/* Check the quota */
-> > -		if (damos_quota_is_set(quota) &&
-> > -				quota->charged_sz >= quota->esz)
-> > +		if (damos_quota_is_full(quota, c->min_region_sz))
-> >  			continue;
+> > +static void damos_apply_target(struct damon_ctx *c, struct damon_target *t)
+> > +{
+> > +	struct damon_region *r;
+> > +
+> > +	damon_for_each_region(r, t) {
 > 
-> With this change, damon_do_apply_schemes() ensures that we only proceed
-> to call damos_apply_scheme() when the remaining quota is at least
-> c->min_region_sz.
+> Is this list iteration pattern safe for long-term maintenance? 
 > 
-> Does this make the if (!sz) check inside damos_apply_scheme() unreachable?
+> This loop uses damon_for_each_region(), which is an unsafe list iterator,
+> but destroys r inside the loop and reassigns r = prev_r to safely continue.
 > 
-> mm/damon/core.c:damos_apply_scheme() {
-> 	...
-> 	if (c->ops.apply_scheme) {
-> 		if (damos_quota_is_set(quota) &&
-> 				quota->charged_sz + sz > quota->esz) {
-> 			sz = ALIGN_DOWN(quota->esz - quota->charged_sz,
-> 					c->min_region_sz);
-> 			if (!sz)
-> 				goto update_stat;
-> 	...
-> }
+> While this works by relying on internal macro expansion mechanics, if a future
+> developer converts this to use damon_for_each_region_safe(), the cached
+> next pointer would be evaluated before damon_do_apply_schemes() potentially
+> splits the region.
 > 
-> Since the remaining quota (quota->esz - quota->charged_sz) is guaranteed to
-> be >= c->min_region_sz when reaching this point, ALIGN_DOWN will always
-> result in sz >= c->min_region_sz.
-> 
-> Could this check and the goto be removed to clean up the dead code?
+> Could this cause the loop to silently skip the newly inserted slices entirely?
 
-Same question was asked on the previous version of this patch.  My answer is
-also same.  This makes sense but better to be done as a separate cleanup work.
+Yes, such mistake could happen in future, and this code could be better written
+for long term maitenance.  But that seems better to be revisited as a future
+cleanup work.
 
+> 
+> > +		struct damon_region *prev_r;
+> > +
+> > +		damon_do_apply_schemes(c, t, r);
+> > +		/*
+> > +		 * damon_do_apply_scheems() could split the region for the
+> 
+> This isn't a bug, but there is a typo in the comment (scheems).
+
+Good eyes!  I will fix this in the next spin.
+
+> 
+> > +		 * quota.  Keeping the new slices is an overhead.  Merge back
+> > +		 * the slices into the previous region if it doesn't lose any
+> > +		 * information.
+> > +		 */
+> > +		if (damon_first_region(t) == r)
+> > +			continue;
+> > +		prev_r = damon_prev_region(r);
+> > +		if (prev_r->ar.end != r->ar.start)
+> > +			continue;
+> > +		if (prev_r->age != r->age)
+> > +			continue;
+> > +		if (prev_r->last_nr_accesses != r->last_nr_accesses)
+> > +			continue;
+> > +		if (prev_r->nr_accesses != r->nr_accesses)
+> > +			continue;
+> > +		prev_r->ar.end = r->ar.end;
+> > +		damon_destroy_region(r, t);
+> > +		r = prev_r;
+> > +	}
+> > +}
+> 
+> The commit message explicitly states the merge operation is made only if it
+> keeps the min_nr_regions constraint. Does this inline merge logic bypass
+> that constraint?
+
+Argh, I forgot adding the fixup [1] to this patch.  I will add that in the next
+version.
+
+> 
+> Earlier in the execution, damon_apply_min_nr_regions() enforces the limit by
+> calculating a size limit and splitting any region larger than this limit into
+> smaller sub-regions. These newly created sub-regions naturally inherit
+> identical age and nr_accesses values from their parent.
+> 
+> When kdamond_apply_schemes() subsequently calls damos_apply_target(), this
+> logic will immediately merge those freshly split regions back together
+> because their age and nr_accesses match, entirely omitting the size limit
+> check. 
+> 
+> Does this unintentionally destroy the spatial monitoring granularity every
+> sample interval?
+> 
+> Additionally, when merging the regions, this code expands prev_r->ar.end and
+> destroys r without accounting for r->nr_accesses_bp.
+> 
+> Since standard functions like damon_merge_two_regions() re-average metrics
+> including nr_accesses_bp, could this inline discard of the fractional
+> nr_accesses_bp tracking result in a slight precision loss, contrary to the
+> commit message's goal of not losing monitoring information?
+
+Yes, that's valid.
 > 
 > 
 > # end of sashiko.dev inline review
-> # review url: https://sashiko.dev/#/patchset/20260411164908.77189-2-sj@kernel.org
+> # review url: https://sashiko.dev/#/patchset/20260411164908.77189-3-sj@kernel.org
+
+[1] https://lore.kernel.org/20260411163340.46397-1-sj@kernel.org
 
 
 Thanks,
 SJ
-
-# hkml [1] generated a draft of this mail.  You can regenerate
-# this using below command:
-#
-#     hkml patch sashiko_dev --for_forwarding \
-#             20260411164908.77189-2-sj@kernel.org
-#
-# [1] https://github.com/sjp38/hackermail
