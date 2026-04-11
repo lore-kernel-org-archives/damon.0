@@ -1,51 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0E9E3BAD8C;
-	Sat, 11 Apr 2026 16:49:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 913083BB9FC;
+	Sat, 11 Apr 2026 16:49:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775926169; cv=none; b=HQeIaDbe2N7s6XUzAmZniVDbMegNZSbISyetNGUj/vLHJ7SR4ilReQNtumzvH+wNiH5sLcT73XS1MLdnv1PtAqQlbu5CnOheAG0Gzz/YUEfCCeBApUEbaUvJ3IxgOlVy+zDTxdWX7YY3Xofad85kPSUo/YOV4NxVfVRPJknc0Hc=
+	t=1775926170; cv=none; b=YN7SgWatO/mYdxy1k0WcwjS3zv8ki1dN28j5XuK30pg7jvCsbObcECikq9Kr656wzHGmuC9gCjmNVJV2HGvwwdNJXHfwjFwEy3mLKXKCtUpuRVA8d/pA/GdBFobQdBzKEcTH+mT3VeuthFHY2GpVhYNX+HwfOuXcjIs++IYoD1o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775926169; c=relaxed/simple;
-	bh=fJkIAWWlo48QPdeJ9YXUoXHCIlYHiM9shoj6TYfrLSQ=;
+	s=arc-20240116; t=1775926170; c=relaxed/simple;
+	bh=oBXW5uIN8lzshHczxlHFHeX8VLmiX/5T2Hz8N+WZ/sY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=gRtmmc8H2zXKTJON3wLMt563FL23o01XcdCTSq2vJkgx4VGaWgfopKM3wKD2fNaXD4SvIogNs+giAwY0K/Kqv36OxAqERnY2g0UNEnAPJYDf8aGGNISZ8D0DN8DIQdq2qlflzceBOhKuSGJchsi5pek1NoTWau1CABZnU2SxvTo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ixGYDx9s; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WoLsLZAk048657aG64mfI3c60ev/OFP2J5d+kXGfdDjIIT/agILJ2XEatQWWR5iD3FyHCYOLsyq0p09T4DISBMJx/P7leW/hh5FqgLb3txWZMW1SDGjy3tjI+lc+jYVL+/XxOpXbFTjSZymJDw8dfssq3aZf0Iy0KHPp1p+FSg0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Wr/Rs6Wy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ixGYDx9s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7698C2BCB0;
-	Sat, 11 Apr 2026 16:49:28 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Wr/Rs6Wy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D239BC2BCAF;
+	Sat, 11 Apr 2026 16:49:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1775926169;
-	bh=fJkIAWWlo48QPdeJ9YXUoXHCIlYHiM9shoj6TYfrLSQ=;
+	s=k20201202; t=1775926170;
+	bh=oBXW5uIN8lzshHczxlHFHeX8VLmiX/5T2Hz8N+WZ/sY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ixGYDx9ssNNPjrfbgiMV4ZJcebZaf3qT0CchkYS2IN72WIq9+MUqVlKZovccRmnWY
-	 z5QpD2VLZkBdhiC6qwoi18cTbL6niw6YRBxIDyx0QovyKzsoLTebnlusSotg6xngIH
-	 uOba8dYTS+Zc0pUzNhgZFU1yb5TfkFGgrtAunm43K8A4vH5VLLK6WOFJA+eo+DqYDA
-	 YZUoVttfjrrwVjWR1y9Ls1t4zvNhxE/IQ1DUgI5EzFw0XBV2eCOqOJnEDN8qyQfdsQ
-	 y9/IiLJnl4RQ5yflbRkt69hhQenTF8EVf0Owarxllwpvmk58od04r+VmrV6o++EN4e
-	 +g/kf8Ov4TBCA==
+	b=Wr/Rs6Wy+rXroP+GBVL0k5zow0g3+j6r+ujZTIX7d4alrHjgcq7ePKfaxbvIth1Wd
+	 /b0H3QJM/ZofHkxD0DoK947y3Mq/wH9VC3ATuuzS2AAO0Ci/aE6imCGqdn9h0YBGfy
+	 kfV9zygQjlbIYKJUqgZx4uX2+tP3qfeQ3LwGb+QnvAcD7sb/rx9y8j/97rVXGzqrWI
+	 XU3wAWiL36y60295RRvfRb+Sa6IZ7L6kE9rnYqbH1LYBY3957lxScHHgWFjOzvb5iU
+	 uTriMLnCjZjcNad//neox0N74cAxazkpsHN3zd3+BzCaiFXcy5VXdOXn1QV6WlBviF
+	 Bo2kmeQq//a1g==
 From: SeongJae Park <sj@kernel.org>
 To: 
 Cc: SeongJae Park <sj@kernel.org>,
-	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	David Hildenbrand <david@kernel.org>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	Michal Hocko <mhocko@suse.com>,
-	Mike Rapoport <rppt@kernel.org>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Vlastimil Babka <vbabka@kernel.org>,
+	Brendan Higgins <brendan.higgins@linux.dev>,
+	David Gow <davidgow@davidgow.net>,
 	damon@lists.linux.dev,
-	linux-doc@vger.kernel.org,
+	kunit-dev@googlegroups.com,
 	linux-kernel@vger.kernel.org,
+	linux-kselftest@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH v5.1 06/11] Docs/admin-guide/mm/damon/usage: document fail_charge_{num,denom} files
-Date: Sat, 11 Apr 2026 09:48:59 -0700
-Message-ID: <20260411164908.77189-7-sj@kernel.org>
+Subject: [RFC PATCH v5.1 08/11] mm/damon/tests/core-kunit: test fail_charge_{num,denom} committing
+Date: Sat, 11 Apr 2026 09:49:01 -0700
+Message-ID: <20260411164908.77189-9-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260411164908.77189-1-sj@kernel.org>
 References: <20260411164908.77189-1-sj@kernel.org>
@@ -55,59 +49,46 @@ List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Update DAMON usage document for the DAMOS action failed regions quota
-charge ratio control sysfs files.
+Extend damos_test_commit_quotas() kunit test to ensure
+damos_commit_quota() handles fail_charge_{num,denom} parameters.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- Documentation/admin-guide/mm/damon/usage.rst | 18 ++++++++++++++----
- 1 file changed, 14 insertions(+), 4 deletions(-)
+ mm/damon/tests/core-kunit.h | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/Documentation/admin-guide/mm/damon/usage.rst b/Documentation/admin-guide/mm/damon/usage.rst
-index bfdb717441f05..d5548e460857c 100644
---- a/Documentation/admin-guide/mm/damon/usage.rst
-+++ b/Documentation/admin-guide/mm/damon/usage.rst
-@@ -84,7 +84,9 @@ comma (",").
-     │ │ │ │ │ │ │ │ sz/min,max
-     │ │ │ │ │ │ │ │ nr_accesses/min,max
-     │ │ │ │ │ │ │ │ age/min,max
--    │ │ │ │ │ │ │ :ref:`quotas <sysfs_quotas>`/ms,bytes,reset_interval_ms,effective_bytes,goal_tuner
-+    │ │ │ │ │ │ │ :ref:`quotas <sysfs_quotas>`/ms,bytes,reset_interval_ms,
-+    │ │ │ │ │ │ │     effective_bytes,goal_tuner,
-+    │ │ │ │ │ │ │     fail_charge_num,fail_charge_denom
-     │ │ │ │ │ │ │ │ weights/sz_permil,nr_accesses_permil,age_permil
-     │ │ │ │ │ │ │ │ :ref:`goals <sysfs_schemes_quota_goals>`/nr_goals
-     │ │ │ │ │ │ │ │ │ 0/target_metric,target_value,current_value,nid,path
-@@ -381,9 +383,10 @@ schemes/<N>/quotas/
- The directory for the :ref:`quotas <damon_design_damos_quotas>` of the given
- DAMON-based operation scheme.
- 
--Under ``quotas`` directory, five files (``ms``, ``bytes``,
--``reset_interval_ms``, ``effective_bytes`` and ``goal_tuner``) and two
--directories (``weights`` and ``goals``) exist.
-+Under ``quotas`` directory, seven files (``ms``, ``bytes``,
-+``reset_interval_ms``, ``effective_bytes``, ``goal_tuner``, ``fail_charge_num``
-+and ``fail_charge_denom``) and two directories (``weights`` and ``goals``)
-+exist.
- 
- You can set the ``time quota`` in milliseconds, ``size quota`` in bytes, and
- ``reset interval`` in milliseconds by writing the values to the three files,
-@@ -402,6 +405,13 @@ the background design of the feature and the name of the selectable algorithms.
- Refer to :ref:`goals directory <sysfs_schemes_quota_goals>` for the goals
- setup.
- 
-+You can set the action-failed memory quota charging ratio by writing the
-+numerator and the denominator for the ratio to ``fail_charge_num`` and
-+``fail_charge_denom`` files, respectively.  Reading those files will return the
-+current set values.  Refer to :ref:`design
-+<damon_design_damos_quotas_failed_memory_charging_ratio>` for more details of
-+the ratio feature.
-+
- The time quota is internally transformed to a size quota.  Between the
- transformed size quota and user-specified size quota, smaller one is applied.
- Based on the user-specified :ref:`goal <sysfs_schemes_quota_goals>`, the
+diff --git a/mm/damon/tests/core-kunit.h b/mm/damon/tests/core-kunit.h
+index 0030f682b23b7..1b23a22ac04c4 100644
+--- a/mm/damon/tests/core-kunit.h
++++ b/mm/damon/tests/core-kunit.h
+@@ -694,6 +694,8 @@ static void damos_test_commit_quota(struct kunit *test)
+ 		.ms = 2,
+ 		.sz = 3,
+ 		.goal_tuner = DAMOS_QUOTA_GOAL_TUNER_CONSIST,
++		.fail_charge_num = 2,
++		.fail_charge_denom = 3,
+ 		.weight_sz = 4,
+ 		.weight_nr_accesses = 5,
+ 		.weight_age = 6,
+@@ -703,6 +705,8 @@ static void damos_test_commit_quota(struct kunit *test)
+ 		.ms = 8,
+ 		.sz = 9,
+ 		.goal_tuner = DAMOS_QUOTA_GOAL_TUNER_TEMPORAL,
++		.fail_charge_num = 1,
++		.fail_charge_denom = 1024,
+ 		.weight_sz = 10,
+ 		.weight_nr_accesses = 11,
+ 		.weight_age = 12,
+@@ -717,6 +721,8 @@ static void damos_test_commit_quota(struct kunit *test)
+ 	KUNIT_EXPECT_EQ(test, dst.ms, src.ms);
+ 	KUNIT_EXPECT_EQ(test, dst.sz, src.sz);
+ 	KUNIT_EXPECT_EQ(test, dst.goal_tuner, src.goal_tuner);
++	KUNIT_EXPECT_EQ(test, dst.fail_charge_num, src.fail_charge_num);
++	KUNIT_EXPECT_EQ(test, dst.fail_charge_denom, src.fail_charge_denom);
+ 	KUNIT_EXPECT_EQ(test, dst.weight_sz, src.weight_sz);
+ 	KUNIT_EXPECT_EQ(test, dst.weight_nr_accesses, src.weight_nr_accesses);
+ 	KUNIT_EXPECT_EQ(test, dst.weight_age, src.weight_age);
 -- 
 2.47.3
