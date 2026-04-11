@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1404181334;
-	Sat, 11 Apr 2026 18:03:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAA0D1862;
+	Sat, 11 Apr 2026 18:06:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775930615; cv=none; b=erDMjETpLqU6HUq8dipvkmIS4ll5k2ODimh8J4x4ro2SO6ZRUcC9ap+lMM3w1W9AE0D22pXvAUdjrGxNsop7EyXNHneYic2+79fOW9JInGiuSGYloEdhEbxlW8qSQL3jgDGq7+TP1wGSjMHl/we4EJVEX6NdW2aaApHOaamt4M4=
+	t=1775930762; cv=none; b=KOJwWGF6f6BeYWPUqctIuwm7PGLsp4eM9z9XKyDa1OGZvnZlfr4S9U4MoU1plE5zsOHA1bsN+euUgS5txHdiCr69rJNxP5hZWj/87ctZTkTBUDsO4C5ZQKhVtFS98XW/qTkeZ7CgXZpBmNcG1Ev1Q3CIaStPbj5hBsgBrT7IH2E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775930615; c=relaxed/simple;
-	bh=DBCgDKz+lnsk8HdK5nYVKKWSxqPwPqoy8Cf/9pXeUhc=;
+	s=arc-20240116; t=1775930762; c=relaxed/simple;
+	bh=FT5470fpgMWYmiUdJN7K/tRS99P7K/kQlx5yLr3uiUE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RzYTdnAFv2N94yjefYY6Uld1mOnJXjIoSq6ppqPQplafkx9AoADiBZ1PqupELXANsg39m8LpS/YvN13evqqo6UsbgKQLImOYJQjkC+1qQ0CnN7iHdOMA5QGqgdbvMvz+LxNyPpMjKZ7YSnuR+9uG8pWM6PPtxz6IFAb/n8fcaX8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KGHlTDeB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bcs+ZY/tuEH00WAWepN5kY/UYS1kwVokItpH19ax9pICkKHv/xS8auRmIXBy9vNqFF7gM2ZEddAhR1R3/lBMRL6SAONsULcELlesulrNXfAT38gHMLYfTlqj0y3e1XkY+ngBIWyMNh6uqoOjSNBhPVqLIpmO8JT/AkxpmW5+WEs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qvAePOSa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KGHlTDeB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52866C2BCAF;
-	Sat, 11 Apr 2026 18:03:35 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qvAePOSa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CEF0C2BCAF;
+	Sat, 11 Apr 2026 18:06:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1775930615;
-	bh=DBCgDKz+lnsk8HdK5nYVKKWSxqPwPqoy8Cf/9pXeUhc=;
+	s=k20201202; t=1775930762;
+	bh=FT5470fpgMWYmiUdJN7K/tRS99P7K/kQlx5yLr3uiUE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KGHlTDeBJv8aIl5PRXUvhhoIvAfsZz0o1q/g7s8Tokd7fdo6E4hZhA5GTXNulfIOt
-	 addZt98NFQ/M93/VMLKgvVRujpQTkDJHYnteW5eg3583RLJHaHSWv8vCBVERpHeIXP
-	 IACPZ9UXa/VrxQb0O6PlIzZDKoQVPLwb5HsdJomszqlCPFak7WPFjfFd4R9meec29m
-	 FFYTbZw1Han3B6t4FTpPa7d10rN2vI20G8G9dg6QgLcouTuGOIdOZMa6kd3KecBEqG
-	 p7Ieti/WjikUiPEuJuGDqd0pT6nhpOo0G3pexqAH/IvAueN+bJdvBCHuG0xy8MYtRp
-	 oaELcSv906k6Q==
+	b=qvAePOSajJF1TiS2/hX5RCRKWZ3UQj7Krxe/PiLtBGhgTSYX8dGLuHkqd/EaFuDsr
+	 7cdgBrGkU2ATWj23WrZlvBE1nPrrZD4BYHoMPtmMopRPeKO/Bt0vF/Q5Bmu7jizQ1Q
+	 zfgQmNuORckDYMJFS8FTCG4CC08xHBh+Ek8nqb3DsJxsKWEfJhmzcNA574CyhWLSw1
+	 Rx+7p54UNIrejfHuz6c+U+WG2me8TbfRkIVlOMRQ8pew4MUMmJ/5XszM1shtOP5Mng
+	 6u6VRGscPpNODROlrA/ZgQUqosex25eo0av9z4jAz/1Dhs8eJKZ/T0n7/hpkbuHK4X
+	 68iHa0ia7kPpg==
 From: SeongJae Park <sj@kernel.org>
 To: SeongJae Park <sj@kernel.org>
 Cc: damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: Re: (sashiko review) [RFC PATCH v5.1 02/11] mm/damon/core: merge regions after applying DAMOS schemes
-Date: Sat, 11 Apr 2026 11:03:32 -0700
-Message-ID: <20260411180333.79709-1-sj@kernel.org>
+Subject: Re: (sashiko review) [RFC PATCH v5.1 03/11] mm/damon/core: introduce failed region quota charge ratio
+Date: Sat, 11 Apr 2026 11:05:49 -0700
+Message-ID: <20260411180549.79857-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260411164908.77189-3-sj@kernel.org>
+In-Reply-To: <20260411164908.77189-4-sj@kernel.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -45,118 +45,92 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-TL; DR: sashiko found a typo and a fact that I forgot adding a fixup that I
-promised on the previous version.  I will fix those in the next spin.
+TL; DR: sashiko found no blocker for this patch.
 
-Forwarding full sashiko review in a reply format with my 
-inline comments below, for sharing details of my view and
-doing followup discussions via mails if needed.
+Forwarding full sashiko review in a reply format with my inline comments below,
+for sharing details of my view and doing followup discussions via mails if
+needed.
 
-> # review url: https://sashiko.dev/#/patchset/20260411164908.77189-3-sj@kernel.org
+> # review url: https://sashiko.dev/#/patchset/20260411164908.77189-4-sj@kernel.org
 > # start of sashiko.dev inline review
-> commit 1a56d6af604a3fc86a23180a9619447641294a2f
+> commit cb228850cc3bb33cac86cdc674c79e2557af28a8
 > Author: SeongJae Park <sj@kernel.org>
 > 
-> mm/damon/core: merge regions after applying DAMOS schemes
+> mm/damon/core: introduce failed region quota charge ratio
 > 
-> This commit introduces a mechanism to merge regions after applying schemes
-> to avoid overhead from regions split during quota-limited scheme application.
+> This commit introduces a DAMON core API to set the charge ratio for
+> action-failed memory. It allows API callers to specify the ratio flexibly
+> using a numerator and denominator to avoid charging failed memory the same
+> as successfully applied memory.
 > 
+> > diff --git a/mm/damon/core.c b/mm/damon/core.c
+> > index d04a107df7cfa..3398faeaa4350 100644
 > > --- a/mm/damon/core.c
 > > +++ b/mm/damon/core.c
+> 
 > [ ... ]
-> > +static void damos_apply_target(struct damon_ctx *c, struct damon_target *t)
+> 
+> > @@ -2041,6 +2043,23 @@ static void damos_walk_cancel(struct damon_ctx *ctx)
+> >  	mutex_unlock(&ctx->walk_control_lock);
+> >  }
+> >  
+> > +static void damos_charge_quota(struct damos_quota *quota,
+> > +		unsigned long sz_region, unsigned long sz_applied)
 > > +{
-> > +	struct damon_region *r;
-> > +
-> > +	damon_for_each_region(r, t) {
+> > +	/*
+> > +	 * sz_applied could be bigger than sz_region, depending on ops
+> > +	 * implementation of the action, e.g., damos_pa_pageout().  Charge only
+> > +	 * the region size in the case.
+> > +	 */
+> > +	if (!quota->fail_charge_denom || sz_applied > sz_region)
+> > +		quota->charged_sz += sz_region;
+> > +	else
+> > +		quota->charged_sz += sz_applied + mult_frac(
+> > +				(sz_region - sz_applied),
+> > +				quota->fail_charge_num,
+> > +				quota->fail_charge_denom);
 > 
-> Is this list iteration pattern safe for long-term maintenance? 
+> Could the mult_frac() calculation silently overflow here?
 > 
-> This loop uses damon_for_each_region(), which is an unsafe list iterator,
-> but destroys r inside the loop and reassigns r = prev_r to safely continue.
+> The fail_charge_num and fail_charge_denom variables are user-controlled
+> unsigned int parameters without bounds checking. The mult_frac(x, numer, denom)
+> macro evaluates as quot * numer + (rem * numer) / denom, using the type of x,
+> which is unsigned long in this case.
 > 
-> While this works by relying on internal macro expansion mechanics, if a future
-> developer converts this to use damon_for_each_region_safe(), the cached
-> next pointer would be evaluated before damon_do_apply_schemes() potentially
-> splits the region.
+> On a 32-bit architecture, if a user configures a fine-grained ratio like
+> 1000000 / 1000000, the remainder could be up to 999999. The intermediate
+> calculation for rem * numer would evaluate to nearly 10^12, which overflows
+> the 32-bit limit.
 > 
-> Could this cause the loop to silently skip the newly inserted slices entirely?
+> Similarly, on 64-bit architectures, setting fail_charge_num to a very
+> large value like UINT_MAX could cause the quot * numer operation to exceed
+> the 64-bit limit for large memory regions.
+> 
+> If an overflow occurs, it would severely under-account the charged size,
+> breaking the quota enforcement in damos_quota_is_full() and allowing the
+> scheme to silently bypass its configured action limits.
+> 
+> Does this code need bounds checking for the numerator and denominator, or
+> should it use a safer math helper to prevent the quota bypass?
 
-Yes, such mistake could happen in future, and this code could be better written
-for long term maitenance.  But that seems better to be revisited as a future
-cleanup work.
+Same sashiko question to the previous patch.  My answer is also same.  I will
+keep this as is in favor of simplicity.
 
 > 
-> > +		struct damon_region *prev_r;
-> > +
-> > +		damon_do_apply_schemes(c, t, r);
-> > +		/*
-> > +		 * damon_do_apply_scheems() could split the region for the
-> 
-> This isn't a bug, but there is a typo in the comment (scheems).
-
-Good eyes!  I will fix this in the next spin.
-
-> 
-> > +		 * quota.  Keeping the new slices is an overhead.  Merge back
-> > +		 * the slices into the previous region if it doesn't lose any
-> > +		 * information.
-> > +		 */
-> > +		if (damon_first_region(t) == r)
-> > +			continue;
-> > +		prev_r = damon_prev_region(r);
-> > +		if (prev_r->ar.end != r->ar.start)
-> > +			continue;
-> > +		if (prev_r->age != r->age)
-> > +			continue;
-> > +		if (prev_r->last_nr_accesses != r->last_nr_accesses)
-> > +			continue;
-> > +		if (prev_r->nr_accesses != r->nr_accesses)
-> > +			continue;
-> > +		prev_r->ar.end = r->ar.end;
-> > +		damon_destroy_region(r, t);
-> > +		r = prev_r;
-> > +	}
 > > +}
-> 
-> The commit message explicitly states the merge operation is made only if it
-> keeps the min_nr_regions constraint. Does this inline merge logic bypass
-> that constraint?
-
-Argh, I forgot adding the fixup [1] to this patch.  I will add that in the next
-version.
-
-> 
-> Earlier in the execution, damon_apply_min_nr_regions() enforces the limit by
-> calculating a size limit and splitting any region larger than this limit into
-> smaller sub-regions. These newly created sub-regions naturally inherit
-> identical age and nr_accesses values from their parent.
-> 
-> When kdamond_apply_schemes() subsequently calls damos_apply_target(), this
-> logic will immediately merge those freshly split regions back together
-> because their age and nr_accesses match, entirely omitting the size limit
-> check. 
-> 
-> Does this unintentionally destroy the spatial monitoring granularity every
-> sample interval?
-> 
-> Additionally, when merging the regions, this code expands prev_r->ar.end and
-> destroys r without accounting for r->nr_accesses_bp.
-> 
-> Since standard functions like damon_merge_two_regions() re-average metrics
-> including nr_accesses_bp, could this inline discard of the fractional
-> nr_accesses_bp tracking result in a slight precision loss, contrary to the
-> commit message's goal of not losing monitoring information?
-
-Yes, that's valid.
 > 
 > 
 > # end of sashiko.dev inline review
-> # review url: https://sashiko.dev/#/patchset/20260411164908.77189-3-sj@kernel.org
-
-[1] https://lore.kernel.org/20260411163340.46397-1-sj@kernel.org
+> # review url: https://sashiko.dev/#/patchset/20260411164908.77189-4-sj@kernel.org
 
 
 Thanks,
 SJ
+
+# hkml [1] generated a draft of this mail.  You can regenerate
+# this using below command:
+#
+#     hkml patch sashiko_dev --for_forwarding \
+#             20260411164908.77189-4-sj@kernel.org
+#
+# [1] https://github.com/sjp38/hackermail
