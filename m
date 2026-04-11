@@ -1,45 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B36823B9D90;
-	Sat, 11 Apr 2026 16:49:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65B033112AD;
+	Sat, 11 Apr 2026 17:09:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775926171; cv=none; b=AMz68Rq1sHdm5SylJtLzWJdzUhoPizzyjLo3sNQ9N7AiDLziUeYyZmFRUYCu6DarsF8ecPIJJXWUi+Q4RHHT4lcb3/bPn4n/W1qbNEzKGHqFashAZ47Umvsdq2Qcbre5VCP/9qn3kicLdXGLcjH2Q/UchdeOH2iXdeqCJbA5qL0=
+	t=1775927364; cv=none; b=ZJ2oKMKWgXP9IQiXfzB+aWRVREhZCr1RRURPuOSWng/aM09mWhJyMtTfN2je5UlY0J3CxnD6VpbUAU1XyWgyOm2mjp66JiqQ3mZREgJun5xw0F5pgiIHK25gTCzVRQKONX9TBSc+WPsEm8qyU+7/3Y/LsNYyLoaOy987PpVkhbI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775926171; c=relaxed/simple;
-	bh=EuOHul4fripHvwsgWhBfbomSmWCRXpHL6QQJMWdANgQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C35DDoKTBaguvKEgTQM2zJpX4kSq6hTV/f0gkaxVuAvXHbRtp8Jw4JpSYyiiy7jr6eNyp2uqRa2CvE9vrJlrbw95EiMPVnKOWrBMnXS/P6iY84ch7an5+3zby5exIGJJsf7WDyijd7jgd/Mo/AyIiFaie9N+JCZjw0F7jN1LdZc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mSRb7Nlj; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1775927364; c=relaxed/simple;
+	bh=mLWm1A+kvhVK3/mJ79ySU/3Nw9GXZUDws6e5yDbdgRc=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=ps5S9hb0unG36QFPCrKnQ6tV0lmhwRI/5+k1Luxz4CunVnaeA68+d97ab2ldc/YtchLDK95t3TGxdj9/nQTqRaFMRk+SP8zViHR4xk+dQ9dsO4N8d7o8eVzNRzdREiCOlwApnZVG/Zc10esH2XSMWQVe0EKWPludPfYawz7jiYo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=beC/cCPW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mSRb7Nlj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC73DC2BCB2;
-	Sat, 11 Apr 2026 16:49:30 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="beC/cCPW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB279C4CEF7;
+	Sat, 11 Apr 2026 17:09:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1775926170;
-	bh=EuOHul4fripHvwsgWhBfbomSmWCRXpHL6QQJMWdANgQ=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mSRb7Nlj0CEuMqdwPiUtYj22j+aidCrKfQCC8QHJuMvsYqksw1GmtpdoD/xP/t0QC
-	 CF1SK210iYJtgmuzwF47hQco2usECeUMcf+yUG8Wk73AoFuHT13Wi49y5BeyqWEDDJ
-	 1I69N0PCOvRgjvZSlZvIDPYBchqKxkw1UBXzZdsQRF/Tq9G6Xvfxo9duVtWnlwdjjB
-	 UPZMEDsBdeV9f7CdPZyszS5Ahiuj7P6L97HMm1gvy70VqQ6tQ6SDrK+/Py7sUEdD9Z
-	 jpTmaXLfZ7PHYkUZh1kB3sysKvnlhthcam0DTrK8AuVeapnowo7VFO72p+lGPtreCU
-	 JoR821Rqic3XA==
+	s=k20201202; t=1775927364;
+	bh=mLWm1A+kvhVK3/mJ79ySU/3Nw9GXZUDws6e5yDbdgRc=;
+	h=From:To:Cc:Subject:Date:From;
+	b=beC/cCPWhkNYz93kjx9/TRl/QFtINiIfjh3GBnQY9pWolAOurYaFLGoNIAfCIyEz0
+	 zaQwaZTTi6BuQLLy4nZ76zf3JQ8P/xoupNdVmthgsSpZrq7COYAuI4R1ISnEWnRI8Q
+	 VaAOhNJ7+mlFnLNErf2/uteH96WwJCwf6wYXJh8oitec3Vbh3NLtVKN0YdPYwNvn2i
+	 z/a+5E9St3KJPI21WRbid8ZwYQbWHHBL76AskZ8UCgl0h1Oj4l3ZUwMp/4P7YNue1U
+	 qo8pfARl7n+pa+01g4i5bLS7PYPUh/SevjWUo9Hw0fN43kSc0fiijvtVUWdYnNJPgu
+	 V2/J+k7t6GEkw==
 From: SeongJae Park <sj@kernel.org>
-To: 
+To: damon@lists.linux.dev
 Cc: SeongJae Park <sj@kernel.org>,
-	Shuah Khan <shuah@kernel.org>,
-	damon@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	linux-kselftest@vger.kernel.org,
-	linux-mm@kvack.org
-Subject: [RFC PATCH v5.1 10/11] selftests/damon/drgn_dump_damon_status: support failed region quota charge ratio
-Date: Sat, 11 Apr 2026 09:49:03 -0700
-Message-ID: <20260411164908.77189-11-sj@kernel.org>
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org
+Subject: DAMON Beer/Coffee/Tea chat reminder for the week of 2026-03-30
+Date: Sat, 11 Apr 2026 10:09:20 -0700
+Message-ID: <20260411170920.77900-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260411164908.77189-1-sj@kernel.org>
-References: <20260411164908.77189-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -48,27 +42,40 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Extend drgn_dump_damon_status.py to dump DAMON internal state for DAMOS
-action failed regions quota charge ratio, to be able to show if the
-internal state for the feature is working, with future DAMON selftests.
+Hello,
 
-Signed-off-by: SeongJae Park <sj@kernel.org>
----
- tools/testing/selftests/damon/drgn_dump_damon_status.py | 2 ++
- 1 file changed, 2 insertions(+)
 
-diff --git a/tools/testing/selftests/damon/drgn_dump_damon_status.py b/tools/testing/selftests/damon/drgn_dump_damon_status.py
-index 5b90eb8e7ef88..972948e6215f1 100755
---- a/tools/testing/selftests/damon/drgn_dump_damon_status.py
-+++ b/tools/testing/selftests/damon/drgn_dump_damon_status.py
-@@ -112,6 +112,8 @@ def damos_quota_to_dict(quota):
-         ['goals', damos_quota_goals_to_list],
-         ['goal_tuner', int],
-         ['esz', int],
-+        ['fail_charge_num', int],
-+        ['fail_charge_denom', int],
-         ['weight_sz', int],
-         ['weight_nr_accesses', int],
-         ['weight_age', int],
--- 
-2.47.3
+This is yet another reminder of upcoming DAMON Beer/Coffee/Tea chats
+(https://docs.google.com/document/d/1v43Kcj3ly4CYqmAkMaZzLiM2GEnWfgdGbZAH3mi2vpM/edit?usp=sharing)
+for the week of 2026-04-13.
+
+As usual, we have two time slots for meetings in the week.
+
+Next time slots including six virtual-only ones are as below.
+
+2026-04-13 (Mon) 18:00 PT (not yet reserved)
+2026-04-15 (Wed) 09:30 PT (not yet reserved)
+2026-04-27 (Mon) 18:00 PT (not yet reserved)
+2026-04-29 (Wed) 09:30 PT (not yet reserved)
+2026-05-11 (Mon) 18:00 PT (not yet reserved)
+2026-05-13 (Wed) 09:30 PT (not yet reserved)
+
+Please reach out to me (sj@kernel.org or whatever) to reserve the
+not-yet-reserved time slots for your topics.  The reservation is made in a
+First-Come First-Served way, and I will send a Google Meet link to
+reservation-confirmed attendees.
+
+Please note that other time slots are also available on demands.
+
+Shared Calendar
+---------------
+
+You can get the schedule via this shared Google Calendar:
+https://calendar.google.com/calendar/u/0?cid=ZDIwOTA4YTMxNjc2MDQ3NTIyMmUzYTM5ZmQyM2U4NDA0ZGIwZjBiYmJlZGQxNDM0MmY4ZTRjOTE0NjdhZDRiY0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t
+
+You can also get the past and upcoming schedules via
+https://docs.google.com/document/d/1v43Kcj3ly4CYqmAkMaZzLiM2GEnWfgdGbZAH3mi2vpM/edit?usp=sharing
+
+
+Thanks,
+SJ
