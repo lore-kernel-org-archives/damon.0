@@ -1,53 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AB483845A2;
-	Sat, 11 Apr 2026 18:51:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9F571FC8;
+	Sat, 11 Apr 2026 21:36:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775933504; cv=none; b=DrXy4ia+hxZeRPJY0UPbVh8QqxQj4nfKylZ/LKs/nd5hsGWnSL7ppCgAR84N7oyjGOlt5uyYktiFXDtSyXbXV2QZWYmcqZ/sqTFRk25Oe//kbQ5GKaBy4RKD1Mx4HBCE8tIPPL+/g31bBjjdKyez+KnCENCHBJbxlPO9BjtRJx0=
+	t=1775943404; cv=none; b=qIc0tFc4DFSD1R/eA+QFHOCGhgaonevEvFzMNMMWuM942kvjtC4QDFoMukkovULUXnFg2YSDBYyHvss1n2vpA7EbyFgz97GdBjF0cze39DGH8uYel/zyMvktThstTGk+6tE4SAqfP64+wbAfNojeUqfboDeE14XAspGfJRZr5k0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775933504; c=relaxed/simple;
-	bh=7DTLn03lS5fHMMRHZwemH8MHnpoXTwRp/xjThTiacFA=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LG8yNVl0QiVcOnzH9tHMkssniayyiEe+h+WbP9j7I0x9WBOGAXMmi289mbre/duYjF2n0JUD16K4IYkxecxFn3w8e7ORYuys0+6Wy47Mv09UxHharUhCGf/CDdWApEyKQBRB/XU2PgBvqshhzFWgvyUbSZnuyuIaD3aAVsUKoKM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AjbiR7UG; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1775943404; c=relaxed/simple;
+	bh=QPyTCBOcvix0CTzcdOfzWMx07raK0kRLMFwQNf37D0Y=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=CkjMT/rYXKRXGb8+9kWWgBZPl8NOZW+qlAs3H55cAhJbdBtO+ebCXRvrCGg99lBiEgcM8mADVdvDsZBHQPGCKF+4FP5ApR5ea47YYCfwxS0/3U+IAj7kyqegrvjQzrON6KhNXgd2j8UUsjcNaC49O49XRbFW109bLPnUs8DTDgw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GG59J4Qu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AjbiR7UG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0EB8C2BCAF;
-	Sat, 11 Apr 2026 18:51:43 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GG59J4Qu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49E15C116C6;
+	Sat, 11 Apr 2026 21:36:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1775933504;
-	bh=7DTLn03lS5fHMMRHZwemH8MHnpoXTwRp/xjThTiacFA=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AjbiR7UG+2oFW3xlBlmFGKjzR6oX1qGZUkBLQvDLpNRpd5rTI4k0QNQmCbO7hdgOh
-	 hnTxa0ZcZBx4gnnirFuBDi0gVMWqFpMpCVPMHyoNUfOMVYXCMjhX1sU/x4bU22xw2A
-	 9s9x/wX+TCrRrapOrZCoSdc4cQswo3T3D1VWORidDzjib81hUeN9OJ06oomTCtch2Z
-	 X/30t1hebjgCO/vEOhJmRfhQnS/Dzo+KMRQawPw8TW9JG7KRuxr/igVo5f35HslsHy
-	 QqKEZPArl2JsVTsegtCZAbJIg0GNkbwilaIwpzeRa1+dxa5I64q3NXJBhYc44WKLvk
-	 xK/UnqrJXASnQ==
+	s=k20201202; t=1775943403;
+	bh=QPyTCBOcvix0CTzcdOfzWMx07raK0kRLMFwQNf37D0Y=;
+	h=From:To:Cc:Subject:Date:From;
+	b=GG59J4QuLV9E77nTCwE5A0NmaXg4XnCb9AHxSdTolltGc5w6hPwUzKtPiGUZt5ttt
+	 WeivEuzp+8KD5CUscFpoGf5ckvEThPb/gBUGdGLiMgL7Aye8xX1BMseiH/8gDjJAL7
+	 zDy0ZiH8NTtyr8QE7NuyvRhS80hHKPE4O5h/SXmkozeit7AdSD2c9Ir1UMDe3+IDMq
+	 mHDYgkRfpYmxv+ax1TmLIuC+SVmwlGaFy+L9GchgfbxzRehhG5988aGS8l6rbOdDuG
+	 MXUj9F4V5oR8b9sDZY357POBMSypneEah9DLjST58YwC/fvkHX7Yk6IoY2TwnT6yPn
+	 hhj7jeZrblGzg==
 From: SeongJae Park <sj@kernel.org>
-To: SeongJae Park <sj@kernel.org>
-Cc: Andrew Morton <akpm@linux-foundation.org>,
-	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
-	David Hildenbrand <david@kernel.org>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	Michal Hocko <mhocko@suse.com>,
-	Mike Rapoport <rppt@kernel.org>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Vlastimil Babka <vbabka@kernel.org>,
+To: Andrew Morton <akpm@linux-foundation.org>
+Cc: SeongJae Park <sj@kernel.org>,
+	"# 6 . 18 . x" <stable@vger.kernel.org>,
+	Quanmin Yan <yanquanmin1@huawei.com>,
 	damon@lists.linux.dev,
-	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: Re: (sashiko review) [PATCH] Docs/mm/damon/maintainer-profile: add AI review usage guideline
-Date: Sat, 11 Apr 2026 11:51:35 -0700
-Message-ID: <20260411185136.82032-1-sj@kernel.org>
+Subject: [PATCH] mm/damon/core: disallow non-power of two min_region_sz on damon_start()
+Date: Sat, 11 Apr 2026 14:36:36 -0700
+Message-ID: <20260411213638.77768-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260411184802.81804-1-sj@kernel.org>
-References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -56,29 +45,42 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Sat, 11 Apr 2026 11:48:01 -0700 SeongJae Park <sj@kernel.org> wrote:
+Commit d8f867fa0825 ("mm/damon: add damon_ctx->min_sz_region")
+introduced a bug that allows unaligned DAMON region address ranges.
+Commit c80f46ac228b ("mm/damon/core: disallow non-power of two
+min_region_sz") fixed it, but only for damon_commit_ctx() use case.
+Still, DAMON sysfs interface can emit non-power of two min_region_sz via
+damon_start().  Fix the path by adding the is_power_of_2() check on
+damon_start().
 
-> # sashiko review suggestions
-> #
-> # 1. Consider reducing recipients.  Maybe the author,
-> #    maintainers, reviewers, and mailing list of the
-> #    direct subsystem and parent susystem mailing lists
-> #    could be a starting point.
-> # 2. Add short summary of your opinion at the beginning.
-> #    For example:
-> #
-> #      TL;DR: sashiko found an issue.  I will respin.
-> #      TL;DR: sashiko found no issue on this patch.
-> #
-> # Please DON'T FORGET removing this comment block before
-> # sending this!
+The issue was discovered by sashiko [1].
 
-I forgot following my self guideline above.  Sorry for the noise.
+[1] https://lore.kernel.org/20260403155530.64647-1-sj@kernel.org
 
-TL; DR: sashiko found an issue that better to be fixed.  I will respin.
+Fixes: d8f867fa0825 ("mm/damon: add damon_ctx->min_sz_region")
+Cc: <stable@vger.kernel.org> # 6.18.x
+Signed-off-by: SeongJae Park <sj@kernel.org>
+---
+ mm/damon/core.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index 3703f62a876b3..c107d74c77e74 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -1368,6 +1368,11 @@ int damon_start(struct damon_ctx **ctxs, int nr_ctxs, bool exclusive)
+ 	int i;
+ 	int err = 0;
+ 
++	for (i = 0; i < nr_ctxs; i++) {
++		if (!is_power_of_2(ctxs[i]->min_region_sz))
++			return -EINVAL;
++	}
++
+ 	mutex_lock(&damon_lock);
+ 	if ((exclusive && nr_running_ctxs) ||
+ 			(!exclusive && running_exclusive_ctxs)) {
 
-Thanks,
-SJ
-
-[...]
+base-commit: 872b6168e577ea326324255fa8b6716a89124680
+-- 
+2.47.3
