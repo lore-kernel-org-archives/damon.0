@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFBF63128B2;
-	Sun, 12 Apr 2026 16:20:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3A643164C3;
+	Sun, 12 Apr 2026 16:20:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776010806; cv=none; b=eqHdR/h+bH+pFfaUKxFFA31nwIMxxCEjBCu208qTf4EZxpS7wWjGPMaTVNk3GQU/3zMlUeASdh3Ns6KTR/vfG2vhxtJiLptdDmybiAnGGSCfZY4A416NJ0NBXuYH4RpKATYw8OySPr+CqK1DsgXSPKn/+5y7vGmUKACPu1j8N+E=
+	t=1776010806; cv=none; b=JDiHohOdYlikO2NcpG7/fA4pNYtfALDABtXDnGUgB4B/7d9RRFKTNpQ2XqoJqGIsWcleabV79bFc6DhNsfn0VjzS6cJw3HIiqQ/2u4/CLv58oB3erBzj56/J1OlFcUkVLE5uCHuf2hRsthMgSvosrH+WBqFmBLhSFyANC02eXgY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1776010806; c=relaxed/simple;
-	bh=EIRB4p0R7OQMpXCAySjtmt5LRqO984ojhpZfxIiXyb0=;
+	bh=EuOHul4fripHvwsgWhBfbomSmWCRXpHL6QQJMWdANgQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VUnP1NqpxOqr+rF0L9DryiR3h/cegJhSLU32HVVPGvFc7y62HdWuwb94mMINlinSxOD3dO60IBCxcnU7TIWweBaJ6QH9mMIeuQysc2/l7+EN545ZlIcZjeKMS/ARWez0ISUQQ9/jRIgvUF0phQ/mQ1DNOFVS+JJf+hGM2bWsL5U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AoaL4d7p; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=T3JMO8g9MAYsnHNqJlb79EPEqd/I+F8VDsvZA7zV2GrjC/mFG7iY2MsOBDMbb3iAcZhyKra9Db7sQ682s5+9UB8ZnBBJElTj3MKnF0Nt/I691f1vWmUdtysWbvVoHv2WZ3XICYf0PHy6GwvTj+e/YMerBxDu0oEs5f86NYKjF4I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Jf+a2hVD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AoaL4d7p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C83EC2BCB4;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Jf+a2hVD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBF2AC32781;
 	Sun, 12 Apr 2026 16:20:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776010805;
-	bh=EIRB4p0R7OQMpXCAySjtmt5LRqO984ojhpZfxIiXyb0=;
+	s=k20201202; t=1776010806;
+	bh=EuOHul4fripHvwsgWhBfbomSmWCRXpHL6QQJMWdANgQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AoaL4d7pmxfMgt9EFFeZzqIPSiLvPK2MG0/aV3/+v8PoP/2jL4y2mn85aok/vAeWS
-	 lUu0fcxy0JU3ldWr3YOHtd2OFM5v5K6Yb7OTnX/kU9eU0/0vaO42Fk9/UmCzb2O93Q
-	 sXxZbMM+xN7z5pu8vzfffpXx6Xjt3suKivPtQzXhpFMlwUaz1zOTkcuPU+3viyCnL0
-	 +Vdfxr8Mz5AaQ9YgLBYxkhybS8lTH0Suds41A7n32kjeVKLmA5uRyq7FifaZMNrnkv
-	 W2q1BeImO185lV+9iFHQnaD9FtHcIe+FCUYtcXbqquPEsLI/JvtNHEK6pmFhyAyl95
-	 jmW5MVuTEI/Zg==
+	b=Jf+a2hVDjrVEvCGNr6lCjPwS4jHq/0cEijEDJBeVzwrnsicQAQFsWzgYDNBLgmpLw
+	 JZFy5ZIuVp3VPwczOeJxiB/R3KbaUqyz+8ST9N3sz2bgpaa75i9EM2A7aQrKlHIQr6
+	 AYLlLkOXB0FJ5pXp2BodwDO6mh2YJjoiadkxZKO05Nty/s/gj8qB1GNI1ebsvrvp6V
+	 4OX1R08hIznpWvvRb4PGnOGI0wpVZ2+gLBdXRjtgj9jAvSuT9zavW+7wc4ZXZhoYHz
+	 4kTWcY5S5MDSm5ELXfLy6CqdfI66M5G8fvLDFY/Sqox9YHPvsGhjYi86YlAD1KJdPg
+	 eEfdVGUwn4Khw==
 From: SeongJae Park <sj@kernel.org>
 To: 
 Cc: SeongJae Park <sj@kernel.org>,
@@ -34,9 +34,9 @@ Cc: SeongJae Park <sj@kernel.org>,
 	linux-kernel@vger.kernel.org,
 	linux-kselftest@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH v5.2 09/11] selftests/damon/_damon_sysfs: support failed region quota charge ratio
-Date: Sun, 12 Apr 2026 09:19:52 -0700
-Message-ID: <20260412161957.82835-10-sj@kernel.org>
+Subject: [RFC PATCH v5.2 10/11] selftests/damon/drgn_dump_damon_status: support failed region quota charge ratio
+Date: Sun, 12 Apr 2026 09:19:53 -0700
+Message-ID: <20260412161957.82835-11-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260412161957.82835-1-sj@kernel.org>
 References: <20260412161957.82835-1-sj@kernel.org>
@@ -48,65 +48,27 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Extend _damon_sysfs.py for DAMOS action failed regions quota charge
-ratio setup, so that we can add kselftest for the new feature.
+Extend drgn_dump_damon_status.py to dump DAMON internal state for DAMOS
+action failed regions quota charge ratio, to be able to show if the
+internal state for the feature is working, with future DAMON selftests.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- tools/testing/selftests/damon/_damon_sysfs.py | 21 +++++++++++++++++--
- 1 file changed, 19 insertions(+), 2 deletions(-)
+ tools/testing/selftests/damon/drgn_dump_damon_status.py | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/tools/testing/selftests/damon/_damon_sysfs.py b/tools/testing/selftests/damon/_damon_sysfs.py
-index 120b96ecbd741..8b12cc0484405 100644
---- a/tools/testing/selftests/damon/_damon_sysfs.py
-+++ b/tools/testing/selftests/damon/_damon_sysfs.py
-@@ -132,14 +132,17 @@ class DamosQuota:
-     goals = None                # quota goals
-     goal_tuner = None           # quota goal tuner
-     reset_interval_ms = None    # quota reset interval
-+    fail_charge_num = None
-+    fail_charge_denom = None
-     weight_sz_permil = None
-     weight_nr_accesses_permil = None
-     weight_age_permil = None
-     scheme = None               # owner scheme
- 
-     def __init__(self, sz=0, ms=0, goals=None, goal_tuner='consist',
--                 reset_interval_ms=0, weight_sz_permil=0,
--                 weight_nr_accesses_permil=0, weight_age_permil=0):
-+                 reset_interval_ms=0, fail_charge_num=0, fail_charge_denom=0,
-+                 weight_sz_permil=0, weight_nr_accesses_permil=0,
-+                 weight_age_permil=0):
-         self.sz = sz
-         self.ms = ms
-         self.reset_interval_ms = reset_interval_ms
-@@ -151,6 +154,8 @@ class DamosQuota:
-         for idx, goal in enumerate(self.goals):
-             goal.idx = idx
-             goal.quota = self
-+        self.fail_charge_num = fail_charge_num
-+        self.fail_charge_denom = fail_charge_denom
- 
-     def sysfs_dir(self):
-         return os.path.join(self.scheme.sysfs_dir(), 'quotas')
-@@ -197,6 +202,18 @@ class DamosQuota:
-                 os.path.join(self.sysfs_dir(), 'goal_tuner'), self.goal_tuner)
-         if err is not None:
-             return err
-+
-+        err = write_file(
-+                os.path.join(self.sysfs_dir(), 'fail_charge_num'),
-+                self.fail_charge_num)
-+        if err is not None:
-+            return err
-+        err = write_file(
-+                os.path.join(self.sysfs_dir(), 'fail_charge_denom'),
-+                self.fail_charge_denom)
-+        if err is not None:
-+            return err
-+
-         return None
- 
- class DamosWatermarks:
+diff --git a/tools/testing/selftests/damon/drgn_dump_damon_status.py b/tools/testing/selftests/damon/drgn_dump_damon_status.py
+index 5b90eb8e7ef88..972948e6215f1 100755
+--- a/tools/testing/selftests/damon/drgn_dump_damon_status.py
++++ b/tools/testing/selftests/damon/drgn_dump_damon_status.py
+@@ -112,6 +112,8 @@ def damos_quota_to_dict(quota):
+         ['goals', damos_quota_goals_to_list],
+         ['goal_tuner', int],
+         ['esz', int],
++        ['fail_charge_num', int],
++        ['fail_charge_denom', int],
+         ['weight_sz', int],
+         ['weight_nr_accesses', int],
+         ['weight_age', int],
 -- 
 2.47.3
