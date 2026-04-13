@@ -1,136 +1,466 @@
-Received: from frasgout.his.huawei.com (frasgout.his.huawei.com [185.176.79.56])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f180.google.com (mail-qk1-f180.google.com [209.85.222.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A5C53469F4
-	for <damon@lists.linux.dev>; Mon, 13 Apr 2026 15:01:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.176.79.56
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18C2931354F
+	for <damon@lists.linux.dev>; Mon, 13 Apr 2026 17:05:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776092494; cv=none; b=UIPi2RPFW8WLlFrg016Ega9iWRSf26eOGSE7LqFV3p6pM5fybbikwkoRJ9uHCgfKqthWMD8C4ghqgZeRHFxo6kHjCBrxRPy14AgCkeqzONf3JQ3OH/kvxbdjHVdVuoalwSFf8O3Q+TdmCM1L/9G5K00hVC0HMk4VsHNyDTBQn+U=
+	t=1776099928; cv=none; b=FRzStAMyvAHEoh8oWtPqsFq4VZRQrWe365/DQb4Z3NMAwaO19BvEcTpOETiFXRIlhZE+1R3vOsgQeiTbQJM+ra2eencsV0vaqNzKgK7pLceOwD/lRJtlyx67tei+T8pzDbMOt/yva3Lc+C3wq4e9D+KdOCgX5xmUVcoLaw3eyt0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776092494; c=relaxed/simple;
-	bh=yPetEIMlup6d7Bq8mbtfi3SnpCzoyyyqfMqQj847JVU=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=CzdDLSV1OZlC+Tzh9q/ejj46HEYRacupbh5oeJAA+KWQFnihdzFA1L8Deroy1nq4ENV/iDNymkBSIxR+0bI58EhepX3SWhgSaXu5NjE21v1qZQUdhvaKrJ8IXse0gJIgcD/KkiaQUsb5R+zTzXeanUO5ATW5e/nab24Ag0dz3Tw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei-partners.com; spf=pass smtp.mailfrom=huawei-partners.com; arc=none smtp.client-ip=185.176.79.56
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei-partners.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei-partners.com
-Received: from mail.maildlp.com (unknown [172.18.224.83])
-	by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4fvVwX3XmBzHnH2m;
-	Mon, 13 Apr 2026 23:01:16 +0800 (CST)
-Received: from mscpeml500003.china.huawei.com (unknown [7.188.49.51])
-	by mail.maildlp.com (Postfix) with ESMTPS id C09974057A;
-	Mon, 13 Apr 2026 23:01:28 +0800 (CST)
-Received: from mscphis01197.huawei.com (10.123.65.218) by
- mscpeml500003.china.huawei.com (7.188.49.51) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.11; Mon, 13 Apr 2026 18:01:28 +0300
-From: <gutierrez.asier@huawei-partners.com>
-To: <gutierrez.asier@huawei-partners.com>, <artem.kuzin@huawei.com>,
-	<stepanov.anatoly@huawei.com>, <wangkefeng.wang@huawei.com>,
-	<yanquanmin1@huawei.com>, <zuoze1@huawei.com>, <damon@lists.linux.dev>,
-	<sj@kernel.org>, <akpm@linux-foundation.org>, <linux-mm@kvack.org>,
-	<linux-kernel@vger.kernel.org>
-Subject: [RFC PATCH v1 1/1] mm/damon: generalize ctx_target creation for damon_ops_id and add vaddr support
-Date: Mon, 13 Apr 2026 14:59:43 +0000
-Message-ID: <20260413145943.512192-1-gutierrez.asier@huawei-partners.com>
-X-Mailer: git-send-email 2.43.0
+	s=arc-20240116; t=1776099928; c=relaxed/simple;
+	bh=hcLFqE89o4G4lNHs7/8QA3yUEN3KSU29+aouzJXcerg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=mBRHh/ZYboCs0GOspPNlnTsiMep58eigxYjIU/XczM2XtSyra2On+x6YULIb7pUAR0t6GAxq//XIDK1l3a4m2fSKtX6HeLhV9hQKzlDf7uOdW/PEhn7/RITD/4a+vamWShCYL5htch8RJoHe6RHZs4DXtLBentjvuFUggabG8UY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gourry.net; spf=pass smtp.mailfrom=gourry.net; dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.b=coNEQGIh; arc=none smtp.client-ip=209.85.222.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gourry.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gourry.net
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.b="coNEQGIh"
+Received: by mail-qk1-f180.google.com with SMTP id af79cd13be357-8cfbfdabf3fso393286785a.3
+        for <damon@lists.linux.dev>; Mon, 13 Apr 2026 10:05:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gourry.net; s=google; t=1776099924; x=1776704724; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=4AKXTVWdZGGDUzDswSpuJJ++/7lCF35yufiWfZYsxfQ=;
+        b=coNEQGIhfQC8djwM4bKBZc89P2JeQK/pnlk/4ewdGTQsZ+TnzQwuiVLpwc5OZ6sWUU
+         qWyK/GkGB9iFkggcErP6Yey1irj/PrQICnHt0sK6VdKVNDn82bDU+p4oFvFyBs2ub6mt
+         TkgeGayIFPflxnJ+s6+i1PDZoCx2QCOzl9p63hGbdySbPwmdMnOi8PL7C8kEVsjEkiGm
+         JpxRJShpbdmarMRkNzy4gadx7ICcopa4UjFlLUWGX6D+fE1sHEGe+ASs5Mos5VR1c1O4
+         qZ3t31Cm+iLfahxcBPs8cl1ThQW+sKf4RoZIQWgOyoshM3zMZnZ0CRj7bVkxb94f7jJB
+         6HQg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1776099924; x=1776704724;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=4AKXTVWdZGGDUzDswSpuJJ++/7lCF35yufiWfZYsxfQ=;
+        b=hEsEmOrQn/VygyaPFnlkhY3+IFuGaUDEJh7Et01VPFRYufBX9Zd2WUtspz/IpMElrX
+         3DDjVvVthYq05bxyZFyR6qAcyPQV72ZC8+j3me7Pk0xNH4KOx7VBupvbRjSuYkQFpbzA
+         aUb4EqnSLMVx/0BFctykDwW0zLtxliRXJkanIydMKCOrDkeHtDuuvXAwoBSeJwXLIiiW
+         JOA3lj+6QuTbHobhJzLZin4zEZr+fpH9Zuk4GQGnOxwZZk1idaLC1crfljdtF2pSgCEQ
+         WK17wnbrCk5z3EJZSuUQVaQtJy/hyQJzdZ2yA8NmRZxTYswMIZXUSMFpa8EubN6KzG2B
+         j1ug==
+X-Forwarded-Encrypted: i=1; AFNElJ/FC7u3X/SzbORCUo3PjIPS0Y7oZLVn/3dPJ5URYrft4NyCaebwhwmiYN1d+cnjBV7c9d6How==@lists.linux.dev
+X-Gm-Message-State: AOJu0Yx6es9+7k7dH3cLu4u4HLyHBqqskQD7jCJ79Czy8ytRAMRTdCRT
+	3z4x35xd0j9CE9qFsU8vg+ysSK2633ISfCoJOCsg7dUQj0Fr8wpwaPr3QUcxM67jj60=
+X-Gm-Gg: AeBDieuqkcsOoBazwl1yUN+eAike4xZJbWtZKBF0AaVR1CdweVaGOxMdkGZ+qdJ5UvN
+	YjfiFr+yT+KaAd4jx72Hn9nVbGhOIp4f9SKF8VHp+5l+GLG3j96NzZC4MPdz1PA6oJ4VlO7FiFf
+	vMBjScEjqE495Gf26PDyOn+oJTqPQ4Ub3BKN/Lff+8m2RPPW7yCcq/bILo6Nz5/qUB+aBu8LiOz
+	shk8hxfw7FCce2VgpE+6XQXWgQp4ED3h/Jl/bzMxAJQOhq1n6YME8/jDtmTn6+Tb0NfptCspLS1
+	FdKM5XdX5J+QTrTnX/nAMHG3OwSmqJ4vTkbtQxCAUkk8Xa4i3/bhWnoQRKxUmY5vGneBgMWmRD9
+	NdvlF8wD6gMoP9XHAtYusEpuVZUmF5KGXz9euMrypr49+leBhY0jr/UjeaOdxTp2mBWGwqd0SYt
+	xOsipef9LQh4ViEifegZH9eWyxYKQENkRzZ9SVOHCgmrBzzjy3N10d6eP7MQgvOGl8UjmFGRShZ
+	JfL6DoVRAeN+I4FoBC/Xio=
+X-Received: by 2002:a05:620a:4688:b0:8da:358a:c481 with SMTP id af79cd13be357-8ddccb293f3mr2047470485a.1.1776099923608;
+        Mon, 13 Apr 2026 10:05:23 -0700 (PDT)
+Received: from gourry-fedora-PF4VCD3F (pool-71-191-243-150.washdc.fios.verizon.net. [71.191.243.150])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-8ddb6562409sm912511185a.17.2026.04.13.10.05.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 13 Apr 2026 10:05:22 -0700 (PDT)
+Date: Mon, 13 Apr 2026 13:05:19 -0400
+From: Gregory Price <gourry@gourry.net>
+To: "David Hildenbrand (Arm)" <david@kernel.org>
+Cc: lsf-pc@lists.linux-foundation.org, linux-kernel@vger.kernel.org,
+	linux-cxl@vger.kernel.org, cgroups@vger.kernel.org,
+	linux-mm@kvack.org, linux-trace-kernel@vger.kernel.org,
+	damon@lists.linux.dev, kernel-team@meta.com,
+	gregkh@linuxfoundation.org, rafael@kernel.org, dakr@kernel.org,
+	dave@stgolabs.net, jonathan.cameron@huawei.com,
+	dave.jiang@intel.com, alison.schofield@intel.com,
+	vishal.l.verma@intel.com, ira.weiny@intel.com,
+	dan.j.williams@intel.com, longman@redhat.com,
+	akpm@linux-foundation.org, lorenzo.stoakes@oracle.com,
+	Liam.Howlett@oracle.com, vbabka@suse.cz, rppt@kernel.org,
+	surenb@google.com, mhocko@suse.com, osalvador@suse.de,
+	ziy@nvidia.com, matthew.brost@intel.com, joshua.hahnjy@gmail.com,
+	rakie.kim@sk.com, byungchul@sk.com, ying.huang@linux.alibaba.com,
+	apopple@nvidia.com, axelrasmussen@google.com, yuanchu@google.com,
+	weixugc@google.com, yury.norov@gmail.com, linux@rasmusvillemoes.dk,
+	mhiramat@kernel.org, mathieu.desnoyers@efficios.com, tj@kernel.org,
+	hannes@cmpxchg.org, mkoutny@suse.com, jackmanb@google.com,
+	sj@kernel.org, baolin.wang@linux.alibaba.com, npache@redhat.com,
+	ryan.roberts@arm.com, dev.jain@arm.com, baohua@kernel.org,
+	lance.yang@linux.dev, muchun.song@linux.dev, xu.xin16@zte.com.cn,
+	chengming.zhou@linux.dev, jannh@google.com, linmiaohe@huawei.com,
+	nao.horiguchi@gmail.com, pfalcato@suse.de, rientjes@google.com,
+	shakeel.butt@linux.dev, riel@surriel.com, harry.yoo@oracle.com,
+	cl@gentwo.org, roman.gushchin@linux.dev, chrisl@kernel.org,
+	kasong@tencent.com, shikemeng@huaweicloud.com, nphamcs@gmail.com,
+	bhe@redhat.com, zhengqi.arch@bytedance.com, terry.bowman@amd.com
+Subject: Re: [LSF/MM/BPF TOPIC][RFC PATCH v4 00/27] Private Memory Nodes (w/
+ Compressed RAM)
+Message-ID: <ad0iT4UWka3gMUpu@gourry-fedora-PF4VCD3F>
+References: <20260222084842.1824063-1-gourry@gourry.net>
+ <3342acb5-8d34-4270-98a2-866b1ff80faf@kernel.org>
+ <abwRu1FNqI3dVyqL@gourry-fedora-PF4VCD3F>
+ <2608a03b-72bb-4033-8e6f-a439502b5573@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: mscpeml100003.china.huawei.com (10.199.174.67) To
- mscpeml500003.china.huawei.com (7.188.49.51)
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <2608a03b-72bb-4033-8e6f-a439502b5573@kernel.org>
 
-From: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
+On Mon, Apr 13, 2026 at 03:11:12PM +0200, David Hildenbrand (Arm) wrote:
+> > Normally cloud-hypervisor VMs with virtio-net can't be subject to KSM
+> > because the entire boot region gets marked shared.  
+> 
+> What exactly do you mean with "mark shared". Do you mean, that "shared
+> memory" is used in the hypervisor for all boot memory?
+> 
 
-This patch adds a new function damon_modules_new_vaddr_ctx_target.
-Since ctx_target creation for vaddr and paddr is almost identical,
-the logic is extracted to a new function,
-damon_modules_new_ctx_target, and vaddr and paddr functions are left
-just as interfaces.
+Sorry, meant MAP_SHARED.  But yes, in some setups the hypervisor simply
+makes a memfd with the entire main memory region MAP_SHARED.
 
-This change was suggested earlier[1] and it is needed to allow
-developers to create DAMON modules that use DAMON_OPS_PADDR targets.
+This is because the virtio-net device / network stack does GFP_KERNEL
+allocations and then pins them on the host to allow zero-copy - so all
+of ZONE_NORMAL is a valid target.
 
-[1]: https://lore.kernel.org/damon/20260311005759.90440-1-sj@kernel.org/
+(At least that's my best understanding of the entire setup).
 
-Signed-off-by: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
-Suggested-by: SeongJae Park <sj@kernel.org>
+> 
+> You mean, in the VM, memory usable by virtio-net can only be consumed
+> from a dedicated physical memory region, and that region would be a
+> separate node?
+>
+
+Correct - it does requires teaching the network stack numa awareness.
+
+I was surprised by how little code this required, though I can't be
+100% sure of its correctness since networking isn't my normal space.
+
+Alternatively you could imagine this as a real device bringing its own
+dedicated networking memory for network buffers, and then telling the
+network start "Hey, prefer this node over normal kernel allocations".
+
+What I'd been hacking on was cobbled together with memfd + SRAT bits to
+bring up a private node statically and then have the device claim it -
+but this is just a proof of concept.  A proper implementation would be
+extending virtio-net to report a dedicated EFI_RESERVED region.
+
+> > 
+> > I see you saw below that one of the extensions is removing the nodes
+> > from the fallback list.  That is part one, but it's insufficient to
+> > prevent complete leakage (someone might iterate over the nodes-possible
+> > list and try migrating memory).
+> 
+> Which code would do that?
+> 
+
+There are many callers of for_each_node() throughout the system.
+
+but one discrete example:
+
+int alloc_shrinker_info(struct mem_cgroup *memcg)
+{
+... snip ...
+  for_each_node(nid) {
+    struct shrinker_info *info = kvzalloc_node(sizeof(*info) + array_size,
+                                               GFP_KERNEL, nid);
+... snip ..
+}
+
+If you disallow fallbacks in this scenario, this allocation always fails.
+
+This partially answers your question about slub fallback allocations,
+there are slab allocations like this that depend on fallbacks (more
+below on this explicitly).
+
+> > Basically the only isolation mechanism we have today is ZONE_DEVICE.
+> > 
+> > Either via mbind and friends, or even just the driver itself managing it
+> > directly via alloc_pages_node() and exposing some userland interface.
+> 
+> Would mbind() work here? I thought mbind() would not suddenly give
+> access to some ZONE_DEVICE memory.
+>
+
+Sorry these were orthogonal thoughts.
+
+1) We don't have such a mechanism. ZONE_DEVICE's preferred mechanism is
+   setting up explicit migrations via migrate_device.c
+
+2) mbind / alloc_pages_node would only work for private nodes.
+
+   Extending ZONE_DEVICE to enable mbind() would be an extreme lift,
+   as the kernel makes a lot of assumptions about folio->lru.
+
+   This is why i went the node route in the first place.
+
+> > 
+> > in the NP_OPS_MIGRATION patch, this gets covered.
+> 
+> Right, but I am not sure if NP_OPS_MIGRATION is really the right
+> approach for that. Have to think about that.
+>
+
+So, OPS is a bit misleading, but it's the closest i came to some
+existing pattern.  OPS does not necessarily need to imply callbacks.
+
+I've been trying to minimize the patch set and I'm starting to think
+the MVP may actually be able to do away with the private_ops structure
+for a basic migration+mempolicy example by simply teaching some services
+(migrate.c, mempolicy.c) how/when to inject __GFP_PRIVATE.
+
+the mempolicy.c patch already does this, but not migrate.c - i haven't
+figured out the right pattern for that yet.
+
+> > 1) as you note, removing it from the default bitmaps, which is actually
+> >    hard.  You can't remove it from the possible-node bitmap, so that
+> >    just seemed non-tractable.
+> 
+> What about making people use a different set of bitmaps here? Quite some
+> work, but maybe that's the right direction given that we'll now treat
+> some nodes differently.
+>
+
+It's an option, although it is fragile.  That means having to police all
+future users of possible-nodes and for_each_node and etc.
+
+I've been err'ing on the side of "not fragile", but i'm open to rework.
+
+> > 
+> > 2) __GFP_THISNODE actually means (among other things) "don't fallback".
+> >    And, in fact, there are some hotplug-time allocations that occur in
+> >    SLAB (pglist_data) that target the private node that *must* fallback
+> >    to successfully allocate for successful kernel operation.
+> 
+> 
+> Can you point me at the code?
+>
+
+There is actually a comment in slub.c that addresses this directly:
+
+static int slab_mem_going_online_callback(int nid)
+{
+... snip ...
+	/*
+	 * XXX: kmem_cache_alloc_node will fallback to other nodes
+	 *      since memory is not yet available from the node that
+	 *      is brought up.
+	 */
+	n = kmem_cache_alloc(kmem_cache_node, GFP_KERNEL);
+... snip ...
+}
+
+Slab basically acknowledges the behavior is required on existing nodes
+and just falls back immediately for the "going online" path.
+
+Other specific calls in the hotplug path:
+
+  mm/sparse.c:           kzalloc_node(size, GFP_KERNEL, nid)
+  mm/sparse-vmemmap.c:   alloc_pages_node(nid, GFP_KERNEL|...)
+  mm/slub.c:             kmalloc_node(sizeof(*barn), GFP_KERNEL, nid)
+
+There are quite a number of callers to kmem_cache_alloc_node() that
+would have to be individually audited.
+
+And some non-slab interfaces examples as well:
+	alloc_shrinker_info
+	alloc_node_nr_active
+
+I've been looking at this for a while, but I'm starting to think trying
+to touch all this surface area is simply too fragile compared to just
+letting normal memory be a fallback for private nodes and adding:
+
+      __GFP_PRIVATE   - unlock's private node, but allow fallback
+#define GFP_PRIVATE   (__GFP_PRIVATE | __GFP_THISNODE) - only this node
+
+__GFP_PRIVATE vs GFP_PRIVATE then is just a matter of use case.
+
+For mbind() it probably makes sense we'd use GFP_PRIVATE - either it
+succeeds or it OOMs.
+
+> > The flexibility is kind of the point :]
+> 
+> Yeah, but it would be interesting which minimal support we would need to
+> just let some special memory be managed by the kernel, allowing mbind()
+> users to use it, but not have any other fallback allocations end up on it.
+> 
+> Something very basic, on which we could build additional functionality.
+> 
+
+I actually have a simplistic CXL driver that does exactly this:
+https://github.com/gourryinverse/linux/blob/072ecf7cbebd9871e76c0b52fd99aa1321405a59/drivers/cxl/type3_drivers/cxl_mempolicy/mempolicy.c#L65
+
+We have to support migration because mbind can migrate on bind if the
+VMA already has memory - but all this means is the migrate interfaces
+are live - not that the kernel actually uses them.
+
+so mbind requires (OPS_MIGRATE | OPS_MEMPOLICY)
+
+All these flags say is:
+   - move_pages() syscalls can accept these nodes
+   - migrate_pages() function calls can accept these nodes
+   - mempolicy.c nodemasks allow the nodes (should restrict to mbind)
+   - vma's with these nodes now inject __GFP_PRIVATE on fault
+
+All other services (reclaim, compaction, khugepaged, etc) do not scan
+these nodes and do not know about __GFP_PRIVATE, so they never see
+private node folios and can't allocate from the node.
+
+In this example, all migrate_to() really does is inject __GFP_THISNODE,
+but I've been thinking about whether we can just do this in migrate.c
+and leave implementing the .ops to a user that requires is.
+
+But otherwise "it just works".
+
+One note here though - OOM conditions and allocation failures are not
+intuitive, especially when THP/non-order-0 allocations are involved.
+
+But that might just mean this minimal setup should only allow order-0
+allocations - which is fiiiiiiiiiiiiiine :P.
+
+-----------------
+
+For basic examples
+
+I've implemented 4 examples to consider building on:
+
+  1) CXL mempolicy driver:
+     https://github.com/gourryinverse/linux/blob/072ecf7cbebd9871e76c0b52fd99aa1321405a59/drivers/cxl/type3_drivers/cxl_mempolicy/mempolicy.c#L65
+
+     As described above
+
+  2) Virtio-net / CXL.mem Network Card
+     (Not published yet)
+
+     This doesn't require any ops at all - the plumbing happens entirely
+     inside the kernel.  I onlined the node with an SRAT hack and no ops
+     structure at all associated with the device (just set node affinity
+     to the pcie_dev and plumbed it through the network stack).
+
+     A proper implementation would have virtio-net register is own
+     reserved memory region and online it during probe.
+  
+  3) Accelerator
+     (Not published yet)
+
+     I have converted an open source but out of tree GPU driver which
+     uses NUMA nodes to use private nodes.  This required:
+            NP_OPS_MIGRATION
+            NP_OPS_MEMPOLICY
+
+     The pattern is very similar to the CXL mempolicy driver, except
+     that the driver had alloc_pages_node() calls that needed to have
+     __GFP_PRIVATE added to ensure allocations landed on the device.
+
+
+  4) CXL Compressed RAM driver:
+     https://github.com/gourryinverse/linux/blob/55c06eb6bced58132d9001e318f2958e8ac80614/mm/cram.c#L340
+     needs pretty much everything - it's "normal memory" with access
+     rules, so the driver isn't really in the management lifecycle.
+
+     In this example - the only way to allocate memory on the node is
+     via demotion.  This allows us to close off the device to new
+     allocations if the hardware reports low memory but the OS percieves
+     the device to still have free memory.
+
+     Which is a cool example:  The driver just sets up the node with
+     certain attributes and then lets the kernel deal with it.
+
+
+I have started compacting the _OPS_* flags related to reclaim into a
+single NP_OPS_RECLAIM flag while testing with this.  Really i've come
+around to thinking many mm/ services need to be taken as a package,
+not fully piecemeal.
+
+The tl;dr: Once you cede some control over to the kernel, you're
+very close to ceding ALL control, but you still get some control
+over how/when allocations on the node can be made.
+
+
+It is important to note that even if we don't expose callbacks, we do
+still need a modicum of node filtering in some places that still use
+for_each_node() (vmscan.c, compaction.c, oom_kill.c, etc).
+
+These are basically all the places ZONE_DEVICE *implicitly* opts itself
+out of by having managed_pages=0.  We have to make those situations
+explicit - but that doesn't mean we need callbacks.
+
+> > 
+> > I would simply state: "That depends on the memory device"
+> 
+> Let's keep it very simple: just some memory that you mbind(), and you
+> only want the mbind() user to make use of that memory.
+> 
+> What would be the minimal set of hooks to guarantee that.
+> 
+
+If you want the mbind contract to stay intact:
+
+   NP_OPS_MIGRATION (mbind can generate migrations)
+   NP_OPS_MEMPOLICY (this just tells mempolicy.c to allow the node)
+
+The set of callbacks required should be exactly 0 (assuming we teach
+migrate.c to inject __GFP_PRIVATE like we have mempolicy.c).
+
+If your device requires some special notification on allocation, free
+or migration to/from you need:
+
+   ops.free_folio(folio)
+   ops.migrate_to(folios, nid, mode, reason, nr_success)
+   ops.migrate_folio(src_folio, dst_folio)
+
+The free path is the tricky one to get right.  You can imagine:
+
+   buf = malloc(...);
+   mbind(buf, private_node);
+   memset(buf, 0x42, ...);
+   ioctl(driver, CHECK_OUT_THIS_DATA, buf); 
+   exit(0);
+
+The task dies and frees the pages back to the buddy - the question is
+whether the 4-5 free_folio paths (put_folio, put_unref_folios, etc) can
+all eat an ops.free_folio() callback to inform the driver the memory has
+been freed.
+
+In practice - this worked on my accelerator and compressed examples, but
+I can't say it's 100% safe in all contexts.  The free path needs more
+scrutiny.
+
+> For example, I assume compaction could just be supported for such
+> memory? Similarly, longterm-pinning.
+> 
+> For some of the other hooks it's rather unclear how they would affect
+> the very simple mbind() rule. What is the effect of demotion or NUMA
+> balancing?
+> 
+> I'm afraid we're making things too complicated here or it might be the
+> wrong abstraction, if i cannot even figure out how to make the simplest
+> use case work.
+> 
+> Maybe I'm wrong :)
+>
+
+Actually, quite the opposite:  None of that should be engaged by
+default.  In our above example:
+
+   OPS_MIGRATION | OPS_MEMPOLICY
+
+All this should say is that migration and mempolicy are supported - not
+that anything in the kernel that uses migration will suddenly operate on
+that memory.
+
+So:  Compaction, Longterm Pin, NUMA balancing, Demotion - etc - all of
+these do not ever operate on this memory by default.  Your device driver
+or service would have to specifically opt-in to those services and must
+be capable of dealing with the implications of that.
+
 ---
- mm/damon/modules-common.c | 31 +++++++++++++++++++++++++++----
- mm/damon/modules-common.h |  3 +++
- 2 files changed, 30 insertions(+), 4 deletions(-)
 
-diff --git a/mm/damon/modules-common.c b/mm/damon/modules-common.c
-index 86d58f8c4f63..fe12d109c87b 100644
---- a/mm/damon/modules-common.c
-+++ b/mm/damon/modules-common.c
-@@ -10,12 +10,13 @@
- #include "modules-common.h"
- 
- /*
-- * Allocate, set, and return a DAMON context for the physical address space.
-+ * Allocate, set, and return a DAMON context.
-  * @ctxp:	Pointer to save the point to the newly created context
-  * @targetp:	Pointer to save the point to the newly created target
-+ * @id:	Set of operations, physical or virtual
-  */
--int damon_modules_new_paddr_ctx_target(struct damon_ctx **ctxp,
--		struct damon_target **targetp)
-+static int damon_modules_new_ctx_target(struct damon_ctx **ctxp,
-+		struct damon_target **targetp, enum damon_ops_id id)
- {
- 	struct damon_ctx *ctx;
- 	struct damon_target *target;
-@@ -24,7 +25,7 @@ int damon_modules_new_paddr_ctx_target(struct damon_ctx **ctxp,
- 	if (!ctx)
- 		return -ENOMEM;
- 
--	if (damon_select_ops(ctx, DAMON_OPS_PADDR)) {
-+	if (damon_select_ops(ctx, id)) {
- 		damon_destroy_ctx(ctx);
- 		return -EINVAL;
- 	}
-@@ -40,3 +41,25 @@ int damon_modules_new_paddr_ctx_target(struct damon_ctx **ctxp,
- 	*targetp = target;
- 	return 0;
- }
-+
-+/*
-+ * Allocate, set, and return a DAMON context for the physical address space.
-+ * @ctxp:	Pointer to save the point to the newly created context
-+ * @targetp:	Pointer to save the point to the newly created target
-+ */
-+int damon_modules_new_paddr_ctx_target(struct damon_ctx **ctxp,
-+		struct damon_target **targetp)
-+{
-+	return damon_modules_new_ctx_target(ctxp, targetp, DAMON_OPS_PADDR);
-+}
-+
-+/*
-+ * Allocate, set, and return a DAMON context for the virtual address space.
-+ * @ctxp:	Pointer to save the point to the newly created context
-+ * @targetp:	Pointer to save the point to the newly created target
-+ */
-+int damon_modules_new_vaddr_ctx_target(struct damon_ctx **ctxp,
-+		struct damon_target **targetp)
-+{
-+	return damon_modules_new_ctx_target(ctxp, targetp, DAMON_OPS_VADDR);
-+}
-diff --git a/mm/damon/modules-common.h b/mm/damon/modules-common.h
-index f103ad556368..324b9cb4957e 100644
---- a/mm/damon/modules-common.h
-+++ b/mm/damon/modules-common.h
-@@ -47,3 +47,6 @@
- 
- int damon_modules_new_paddr_ctx_target(struct damon_ctx **ctxp,
- 		struct damon_target **targetp);
-+
-+int damon_modules_new_vaddr_ctx_target(struct damon_ctx **ctxp,
-+		struct damon_target **targetp);
--- 
-2.43.0
+kind of neat aside:
 
+You can hotplug private ZONE_NORMAL without NP_OPS_LONGTERMPIN and as
+long as the driver/service controls the type/lifetime of allocations,
+the node can remain hot-unpluggable in the future.
+
+e.g. if the service only ever allocates movable allocations, the lack
+of NP_OPS_LONGTERMPIN prevents those pages from being pinned.  If you
+add NP_OPS_MIGRATION - the attempt to pin will cause migration :]
+
+~Gregory
