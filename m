@@ -1,92 +1,77 @@
-Received: from frasgout.his.huawei.com (frasgout.his.huawei.com [185.176.79.56])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF743396D28
-	for <damon@lists.linux.dev>; Tue, 14 Apr 2026 11:08:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.176.79.56
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47B3C3E8C59;
+	Tue, 14 Apr 2026 23:59:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776164908; cv=none; b=ehe+tZDP+X+3h/z9iAG/EbzDKH/B9Jep2MAaBE4LpEgo09yGaaAY7WqWT3V4LtSu5DFW4fDBiXESZFtXLkSrfLRpDXiZji/b4ExZm0/nGHigozN7StsN0B74BUcoWrBjk/9GIQ2tIDm4V0zd2yNkN1fPy6Sx/OE5BTwzlK4m+1Y=
+	t=1776211163; cv=none; b=tn/Fq7VsZSTVZ+GeSX9p17lrhhiQKbM5ztNwYgIQdkYCziziMnWLS3I61Hq9Kq8io6B7+OmYx2qyDsYcdEiHVQBsmMMd29I2C7DNLiv+AU9ghnHuhxJ99/yMIbdSppaSpL1X/cTQv3t1k/At7xH42IcIMZNoqzeiBjVmAxGFUA4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776164908; c=relaxed/simple;
-	bh=w1EI/5IsvIZb+F/Exu+h+7SitWNsnrwn5ZEYV7wje7E=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=rp2tZIYBecXxY3qKaXuU/qz8md9gSDdkEf1/oKVL/TX6DCoCNGAyeA9579KdgCDMP8zsUNgwEvOXO4f1plIIvvapXNO+Tv0BUTHrvDNat72hWODXSqvoay6RQM0VTs/LyvO26UmTlA4TUN5EWkq6VVNksS/qquDtmIKH71Hq+WE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei-partners.com; spf=pass smtp.mailfrom=huawei-partners.com; arc=none smtp.client-ip=185.176.79.56
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei-partners.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei-partners.com
-Received: from mail.maildlp.com (unknown [172.18.224.83])
-	by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4fw1j46KR5zHnGgW;
-	Tue, 14 Apr 2026 19:08:08 +0800 (CST)
-Received: from mscpeml500003.china.huawei.com (unknown [7.188.49.51])
-	by mail.maildlp.com (Postfix) with ESMTPS id CF6ED40569;
-	Tue, 14 Apr 2026 19:08:22 +0800 (CST)
-Received: from [10.123.123.154] (10.123.123.154) by
- mscpeml500003.china.huawei.com (7.188.49.51) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.11; Tue, 14 Apr 2026 14:08:22 +0300
-Message-ID: <90f923fd-a521-44d8-9d7d-d137b0119002@huawei-partners.com>
-Date: Tue, 14 Apr 2026 14:08:21 +0300
+	s=arc-20240116; t=1776211163; c=relaxed/simple;
+	bh=aT2joNhwB38aP+3ueokcrxLbjs3TuKPM6sz/BJoGywc=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=hNAdWpfXnxV1oJx8siz4hnvA6wnRE4jbFqPyPtE/zg1ZP56fi+9i5ItyGQCtq57Wr+FtJrfpL+AqgRaWLJVVyokQE25+tR+YX6eqIjLTZrm2VWTlxRlpQxIY51Daxh42Azv5jS2+5CZXtDNSquZLDAbHFYxVhY5TiNt7dVnueiE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=t8NiXV9W; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="t8NiXV9W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BD20C19425;
+	Tue, 14 Apr 2026 23:59:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1776211163;
+	bh=aT2joNhwB38aP+3ueokcrxLbjs3TuKPM6sz/BJoGywc=;
+	h=From:To:Cc:Subject:Date:From;
+	b=t8NiXV9W8dHj+xU2joGruNKXvO0/2H8x8+UD6hI61Rbyf0IfGwER4zLs6cs6VuciL
+	 u/OVlHWGPZcLEPhiGrOZslOrHnnfsCS58mAVDqaZ6XTUkQqNKtMfpKRgIi/mHmpPbN
+	 6tw5vX/d0hBBO20SxZ2MXvRjxCZHrmeN0IVcm+qtxc9gB9Yn67wMUUJXGORwFhbkQX
+	 BSuJC6O7F8vOxWVPHzcFMV9wf0K/OnvFOBnIDjQjLKWRAkTytxGmm7sDpA6vt2SG9c
+	 Va57uA3o2dIqPBE2qxgjuxNsIONwJOiJZ8o1DSaLMp9N42r64EGc/wP76M7Dao71SK
+	 x1qOOP52xgZhg==
+From: SeongJae Park <sj@kernel.org>
+To: 
+Cc: SeongJae Park <sj@kernel.org>,
+	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	David Hildenbrand <david@kernel.org>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	damon@lists.linux.dev,
+	linux-doc@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-mm@kvack.org
+Subject: [RFC PATCH v1.1 0/2] mm/damon/stat: add kdamond_pid parameter
+Date: Tue, 14 Apr 2026 16:59:09 -0700
+Message-ID: <20260414235912.98174-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v1 1/1] mm/damon: generalize ctx_target creation for
- damon_ops_id and add vaddr support
-To: SeongJae Park <sj@kernel.org>
-CC: <artem.kuzin@huawei.com>, <stepanov.anatoly@huawei.com>,
-	<wangkefeng.wang@huawei.com>, <yanquanmin1@huawei.com>, <zuoze1@huawei.com>,
-	<damon@lists.linux.dev>, <akpm@linux-foundation.org>, <linux-mm@kvack.org>,
-	<linux-kernel@vger.kernel.org>
-References: <20260414004739.83961-1-sj@kernel.org>
-Content-Language: en-US
-From: Gutierrez Asier <gutierrez.asier@huawei-partners.com>
-In-Reply-To: <20260414004739.83961-1-sj@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: mscpeml500004.china.huawei.com (7.188.26.250) To
- mscpeml500003.china.huawei.com (7.188.49.51)
+Content-Transfer-Encoding: 8bit
 
-Hi SJ,
+DAMON_STAT doesn't provide the pid of its kdamond, unlike DAMON_RECLAIM
+and DAMON_LRU_SORT.  This makes user-space management of DAMON_STAT
+unnecessarily complicated.  Provide the information via a new parameter,
+namely kdamond_pid, and document it.
 
-On 4/14/2026 3:47 AM, SeongJae Park wrote:
-> On Mon, 13 Apr 2026 14:59:43 +0000 <gutierrez.asier@huawei-partners.com> wrote:
-> 
->> From: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
->>
->> This patch adds a new function damon_modules_new_vaddr_ctx_target.
->> Since ctx_target creation for vaddr and paddr is almost identical,
->> the logic is extracted to a new function,
->> damon_modules_new_ctx_target, and vaddr and paddr functions are left
->> just as interfaces.
->>
->> This change was suggested earlier[1] and it is needed to allow
->> developers to create DAMON modules that use DAMON_OPS_PADDR targets.
-> 
-> You mean DAMON_OPS_VADDR?
+Changes from RFC
+- rfc: https://lore.kernel.org/20260414053742.90296-1-sj@kernel.org
+- Fix damon_kdamond_pid() failure handling.
 
-Right, I missed that.
- 
-> And I agree this can be useful if we will make a DAMON module that runs for
-> virtual address spaces.  But we don't add new functions without their callers.
-> So this patch should be submitted only together with the caller of the
-> function.
+SeongJae Park (2):
+  mm/damon/stat: add a parameter for reading kdamond pid
+  Docs/admin-guide/mm/damon/stat: document kdamond_pid parameter
 
-Fair enough. I will carry on working on the module for hugepages autotuning,
-which will use this function. I will resubmit this along with the caller.
+ Documentation/admin-guide/mm/damon/stat.rst |  7 +++++++
+ mm/damon/stat.c                             | 17 +++++++++++++++++
+ 2 files changed, 24 insertions(+)
 
->>
->> [1]: https://lore.kernel.org/damon/20260311005759.90440-1-sj@kernel.org/
-> 
-> 
-> Thanks,
-> SJ
-> 
-> [...]
 
+base-commit: 02784c37a710fa3c8c3e7be4f27a5cfa3356dc00
 -- 
-Asier Gutierrez
-Huawei
-
+2.47.3
