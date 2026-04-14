@@ -1,146 +1,92 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from frasgout.his.huawei.com (frasgout.his.huawei.com [185.176.79.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FE4425332E;
-	Tue, 14 Apr 2026 05:37:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF743396D28
+	for <damon@lists.linux.dev>; Tue, 14 Apr 2026 11:08:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.176.79.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776145070; cv=none; b=MK79gyd8H5bkN2a9oAgBvfWGTjU05lxZyFwOkhyCSA74Ht1byOmXkJeHWaYXRd6lCCdBXAV8okSgB8WmVyXB2IiAf+VypJc/JXAGEmKLwg6DR0tPyHvMhALwUCQBsAlMuT6KHuyO+6D0b2FSe62Da19qlZKkn4d1oxVF6UIN7eM=
+	t=1776164908; cv=none; b=ehe+tZDP+X+3h/z9iAG/EbzDKH/B9Jep2MAaBE4LpEgo09yGaaAY7WqWT3V4LtSu5DFW4fDBiXESZFtXLkSrfLRpDXiZji/b4ExZm0/nGHigozN7StsN0B74BUcoWrBjk/9GIQ2tIDm4V0zd2yNkN1fPy6Sx/OE5BTwzlK4m+1Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776145070; c=relaxed/simple;
-	bh=g/+F/QbX1zjCLTtq9nQIK2PoeggWzfTxbvqrEl/rsxM=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I4ET6gUh2m9L99ovauL3Bi1LnLdvkjYW1imWcrjW52T35Kh7tmd66/nKOdT5PCbhT5LzvR0qZhTzuhxnPxkO9DDOLwPBdFGMZvnjjKMIWJP+QXwpnbR3Xe4mxVteVRrthkhj7ZUTCuJXOuPXDacWKiiCxR+B0LcXB5rvOLWQuWE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Cb3Dh9r+; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Cb3Dh9r+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1C36C19425;
-	Tue, 14 Apr 2026 05:37:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776145069;
-	bh=g/+F/QbX1zjCLTtq9nQIK2PoeggWzfTxbvqrEl/rsxM=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Cb3Dh9r+W+uy0GWfhQUrZrxaP/wXOX1wnE0xZ45BDJcg4E1jKkj5qtaBlLK0/aFrJ
-	 HGafWySSJgu97/7EOWiCQmOKY/d2VSNA1cWk+F5bYINUr60tFtepu6/xKHpPR9cvEb
-	 Ce2lzgr5mileqPUNU/KS/zR+mwFIHiwvaw2JLTuOVroMhsQCTEi+PJlMo2RH7UXmFn
-	 YcB7uP1dxZzLno6nuAUuNHSOuL/xfn2OdFAt5YUyZVgLNLPHdsu+YdoTGHoT27cEeq
-	 SWNBmjxQk2xwWrNjbzYceRL4UvnFSumWeLI8hXfxfwvVQ/jY1wTfz+l3QRsEdi/mQ+
-	 wOBuWqOPt1gww==
-From: SeongJae Park <sj@kernel.org>
-To: SeongJae Park <sj@kernel.org>
-Cc: damon@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org
-Subject: Re: (sashiko review) [RFC PATCH 1/2] mm/damon/stat: add a parameter for reading kdamond pid
-Date: Mon, 13 Apr 2026 22:37:41 -0700
-Message-ID: <20260414053742.90296-1-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260414045002.88110-2-sj@kernel.org>
-References: 
+	s=arc-20240116; t=1776164908; c=relaxed/simple;
+	bh=w1EI/5IsvIZb+F/Exu+h+7SitWNsnrwn5ZEYV7wje7E=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=rp2tZIYBecXxY3qKaXuU/qz8md9gSDdkEf1/oKVL/TX6DCoCNGAyeA9579KdgCDMP8zsUNgwEvOXO4f1plIIvvapXNO+Tv0BUTHrvDNat72hWODXSqvoay6RQM0VTs/LyvO26UmTlA4TUN5EWkq6VVNksS/qquDtmIKH71Hq+WE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei-partners.com; spf=pass smtp.mailfrom=huawei-partners.com; arc=none smtp.client-ip=185.176.79.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei-partners.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei-partners.com
+Received: from mail.maildlp.com (unknown [172.18.224.83])
+	by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4fw1j46KR5zHnGgW;
+	Tue, 14 Apr 2026 19:08:08 +0800 (CST)
+Received: from mscpeml500003.china.huawei.com (unknown [7.188.49.51])
+	by mail.maildlp.com (Postfix) with ESMTPS id CF6ED40569;
+	Tue, 14 Apr 2026 19:08:22 +0800 (CST)
+Received: from [10.123.123.154] (10.123.123.154) by
+ mscpeml500003.china.huawei.com (7.188.49.51) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.11; Tue, 14 Apr 2026 14:08:22 +0300
+Message-ID: <90f923fd-a521-44d8-9d7d-d137b0119002@huawei-partners.com>
+Date: Tue, 14 Apr 2026 14:08:21 +0300
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v1 1/1] mm/damon: generalize ctx_target creation for
+ damon_ops_id and add vaddr support
+To: SeongJae Park <sj@kernel.org>
+CC: <artem.kuzin@huawei.com>, <stepanov.anatoly@huawei.com>,
+	<wangkefeng.wang@huawei.com>, <yanquanmin1@huawei.com>, <zuoze1@huawei.com>,
+	<damon@lists.linux.dev>, <akpm@linux-foundation.org>, <linux-mm@kvack.org>,
+	<linux-kernel@vger.kernel.org>
+References: <20260414004739.83961-1-sj@kernel.org>
+Content-Language: en-US
+From: Gutierrez Asier <gutierrez.asier@huawei-partners.com>
+In-Reply-To: <20260414004739.83961-1-sj@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: mscpeml500004.china.huawei.com (7.188.26.250) To
+ mscpeml500003.china.huawei.com (7.188.49.51)
 
-TL; DR: Sashiko found a bug of this patch; I will fix it in the next revision.
-Sashiko also found one issue in the existing code; I will work on it
-separately.
+Hi SJ,
 
-Forwarding full sashiko review in a reply format with my inline comments below,
-for sharing details of my view and doing followup discussions via mails if
-needed.
-
-> # review url: https://sashiko.dev/#/patchset/20260414045002.88110-2-sj@kernel.org
-> # start of sashiko.dev inline review
-> commit fc6c9ec12df0df57fcce5c90c7a0604cddb1cc78
-> Author: SeongJae Park <sj@kernel.org>
+On 4/14/2026 3:47 AM, SeongJae Park wrote:
+> On Mon, 13 Apr 2026 14:59:43 +0000 <gutierrez.asier@huawei-partners.com> wrote:
 > 
-> mm/damon/stat: add a parameter for reading kdamond pid
+>> From: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
+>>
+>> This patch adds a new function damon_modules_new_vaddr_ctx_target.
+>> Since ctx_target creation for vaddr and paddr is almost identical,
+>> the logic is extracted to a new function,
+>> damon_modules_new_ctx_target, and vaddr and paddr functions are left
+>> just as interfaces.
+>>
+>> This change was suggested earlier[1] and it is needed to allow
+>> developers to create DAMON modules that use DAMON_OPS_PADDR targets.
 > 
-> This commit exposes the PID of the DAMON_STAT kdamond via a new read-only
-> module parameter, kdamond_pid. It intends to set this to -1 when DAMON_STAT
-> is disabled.
-> 
-> > diff --git a/mm/damon/stat.c b/mm/damon/stat.c
-> > index 99ba346f9e325..21fa04d95eeac 100644
-> > --- a/mm/damon/stat.c
-> > +++ b/mm/damon/stat.c
-> [ ... ]
-> > @@ -260,6 +269,9 @@ static int damon_stat_start(void)
-> >  		damon_stat_context = NULL;
-> >  		return err;
-> >  	}
-> > +	kdamond_pid = damon_kdamond_pid(damon_stat_context);
-> > +	if (kdamond_pid < 0)
-> > +		return kdamond_pid;
-> 
-> If damon_kdamond_pid() returns an error code, doesn't this leave the global
-> kdamond_pid set to that negative error code instead of -1?
-> 
-> Also, if we take this early return path, does this code leak the
-> damon_stat_context allocation? The error path just above it correctly
-> calls damon_destroy_ctx(damon_stat_context) and sets it to NULL.
+> You mean DAMON_OPS_VADDR?
 
-Nice catch.  I will fix this like below in the next revision.
+Right, I missed that.
+ 
+> And I agree this can be useful if we will make a DAMON module that runs for
+> virtual address spaces.  But we don't add new functions without their callers.
+> So this patch should be submitted only together with the caller of the
+> function.
 
-'''
---- a/mm/damon/stat.c
-+++ b/mm/damon/stat.c
-@@ -223,8 +223,12 @@ static int damon_stat_start(void)
-                return err;
-        }
-        kdamond_pid = damon_kdamond_pid(damon_stat_context);
--       if (kdamond_pid < 0)
--               return kdamond_pid;
-+       if (kdamond_pid < 0) {
-+               err = kdamond_pid;
-+               kdamond_pid = -1;
-+               damon_destroy_ctx(damon_stat_context);
-+               damon_stat_context = NULL;
-+               return err;
+Fair enough. I will carry on working on the module for hugepages autotuning,
+which will use this function. I will resubmit this along with the caller.
 
-        damon_stat_last_refresh_jiffies = jiffies;
-        call_control.data = damon_stat_context;
-'''
-
-> 
-> >  
-> >  	damon_stat_last_refresh_jiffies = jiffies;
-> >  	call_control.data = damon_stat_context;
-> >  	return damon_call(damon_stat_context, &call_control);
-> >  }
-> 
-> If damon_call() fails here and returns an error, the caller will handle it
-> by setting enabled to false. Does this leave kdamond_pid holding a stale
-> positive PID instead of being reset to -1?
-
-Nice catch, but not this patch's fault.  I will separately work on it.
-
-> 
-> > @@ -269,6 +281,7 @@ static int damon_stat_start(void)
-> >  static void damon_stat_stop(void)
-> >  {
-> >  	damon_stop(&damon_stat_context, 1);
-> > +	kdamond_pid = -1;
-> >  	damon_destroy_ctx(damon_stat_context);
-> >  	damon_stat_context = NULL;
-> >  }
+>>
+>> [1]: https://lore.kernel.org/damon/20260311005759.90440-1-sj@kernel.org/
 > 
 > 
-> # end of sashiko.dev inline review
-> # review url: https://sashiko.dev/#/patchset/20260414045002.88110-2-sj@kernel.org
+> Thanks,
+> SJ
+> 
+> [...]
 
+-- 
+Asier Gutierrez
+Huawei
 
-Thanks,
-SJ
-
-# hkml [1] generated a draft of this mail.  You can regenerate
-# this using below command:
-#
-#     hkml patch sashiko_dev --for_forwarding \
-#             20260414045002.88110-2-sj@kernel.org
-#
-# [1] https://github.com/sjp38/hackermail
