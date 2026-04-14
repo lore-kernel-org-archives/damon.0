@@ -1,41 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D73B19ABC6
-	for <damon@lists.linux.dev>; Tue, 14 Apr 2026 00:39:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11EF9219303;
+	Tue, 14 Apr 2026 00:47:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776127148; cv=none; b=S4P3HtLqCbrUV3Pw1MVzf3bUD9w59ub7vtt97eAQNp338u61JtcSQkd/Po0fsXEMMmjvOox5hK3Fl4rqQXd/vFYfuMKPEvZkferkjLQfj3ZF6JMfZVN+unGO2FijfUO+yHUxwR9hj1huR35ItMxGnxFO4Vpsuk84fdNH4pxFW+4=
+	t=1776127667; cv=none; b=QJYIYUbRevel0ol7RLzSRY5tNQPa7a/3g8AYTmWLl16+12sHwKz6M9oMSZYR8DghKZv1lSdRF+KsOMpIyqvZkufDPjkoenzfj4TdXShEzFLtxcEzTOMDuJjIUpY6Cl3RM3lX2m5RO9HE3EnqXLEVeU5Vx3j8XTim9GxIbBoO2+Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776127148; c=relaxed/simple;
-	bh=0T9EJqjoj0FC1DEZoyXGcf1oSecBxT00S22yS7p28XE=;
+	s=arc-20240116; t=1776127667; c=relaxed/simple;
+	bh=kwCR6jNJyCy5Cp/beB01W/9pSDx/xZgjV5/dwIyldN8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I+O9WkMsBvAxC7aESKl90V1wTNRkJotDkctqYnLu7V9reY9J8k7fY+gYEheCYehE+gUDI4R6Bufd+li9l3T0K/OaJX2K9NMi8My7hezUKPtgcE7VMSR0s9XYLJBjGa3TgqZ0W2Bkaltsa2aL/Rivs3WyQ/BgGQkxiL2lumzkia4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=l79wa0HR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FSKDv01dqrmI+0tXmrFlEMt9TwcskO77fWCv4+iaIxDXyb5JmIxysnp+nW1b5clsaZIqgDslj9Ly4qquxX18GQpvSBuL8sESSggv7seaymgC0w+DJKKonWZEsIJ43huqYgNQrd/zsFLcfhqYyUBgLrGwH633qBIG0b0lEpVjr9k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eFbPd3zO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="l79wa0HR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 343F1C2BCAF;
-	Tue, 14 Apr 2026 00:39:08 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eFbPd3zO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42C89C2BCAF;
+	Tue, 14 Apr 2026 00:47:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776127148;
-	bh=0T9EJqjoj0FC1DEZoyXGcf1oSecBxT00S22yS7p28XE=;
+	s=k20201202; t=1776127666;
+	bh=kwCR6jNJyCy5Cp/beB01W/9pSDx/xZgjV5/dwIyldN8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l79wa0HRrVqmEmDQc9OjOwwXJN8MYyDuMQOz8/K+e+FE3w5+FbiPNd2LXktWrmq6h
-	 W+t5y8WT79vZkAAjWG9PbvXFjezsinJDAhD1MEKIkW2DPU0XFskKdFSIqAbNDjJzf0
-	 RNDu7r+lUrsyGXUfrLg47YWmw4l7HxmRtjD0JSlh/nRwizmmxqX+k6J/jZdSsN5pD+
-	 mzW1mRDpHmuZaFLfemQBvoT5bmGXvApe+dtiPzymj9seDWUjDTEQpFk4PkJ3TQ1ejR
-	 E/2unyzgkq6eiN8qqfxjZl5oIch1srWnKUAfQMel0vIKbKvfcTO8arE2vao7Xjrl9n
-	 wX85iKr0xGTxw==
+	b=eFbPd3zON/QBBLjsaBL9P4bAEnAhFOjdcnQ1A91hGh1Dgrup8rO7XCvvVgB5Rk4Qd
+	 VURnfGuEv9yb9o8FcefA/FAeMjj6vv0nmBYrigQSE0A2mRjpib11zJa7rKsJr3KXBU
+	 k74GIc5CLK9Hc09IePt5XQKVuGwf1dmNJ68rqAQQpsNI2F/cJFGILlt3GZ+vIhSBeL
+	 n6xlOpnR1FZZAfIO7B1Socc3uoPZ5QvuDr5JHieb6HPN5EvQVca1+tvuwZJ6TxmxAT
+	 0Nd8qyZ70fzfOgYeiDIhwCoU0G46U4Fxj9/rNCCns5YwfBUiW2A2nSeOh3V6KNqXLx
+	 4H2I/ATLJOLyw==
 From: SeongJae Park <sj@kernel.org>
-To: Liew Rui Yan <aethernet65535@gmail.com>
+To: gutierrez.asier@huawei-partners.com
 Cc: SeongJae Park <sj@kernel.org>,
+	artem.kuzin@huawei.com,
+	stepanov.anatoly@huawei.com,
+	wangkefeng.wang@huawei.com,
+	yanquanmin1@huawei.com,
+	zuoze1@huawei.com,
 	damon@lists.linux.dev,
-	linux-mm@kvack.org
-Subject: Re: (sashiko review) [PATCH v4 1/2] mm/damon/lru_sort: validate min_region_size to be power of 2
-Date: Mon, 13 Apr 2026 17:39:03 -0700
-Message-ID: <20260414003904.83824-1-sj@kernel.org>
+	akpm@linux-foundation.org,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [RFC PATCH v1 1/1] mm/damon: generalize ctx_target creation for damon_ops_id and add vaddr support
+Date: Mon, 13 Apr 2026 17:47:38 -0700
+Message-ID: <20260414004739.83961-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260413184845.5130-1-aethernet65535@gmail.com>
+In-Reply-To: <20260413145943.512192-1-gutierrez.asier@huawei-partners.com>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -45,64 +52,28 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Tue, 14 Apr 2026 02:48:45 +0800 Liew Rui Yan <aethernet65535@gmail.com> wrote:
+On Mon, 13 Apr 2026 14:59:43 +0000 <gutierrez.asier@huawei-partners.com> wrote:
 
-> On Sun, 12 Apr 2026 14:37:19 -0700 SeongJae Park <sj@kernel.org> wrote:
+> From: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
 > 
-> > Hi Liew,
-> > 
-> > On Mon, 13 Apr 2026 03:04:55 +0800 Liew Rui Yan <aethernet65535@gmail.com> wrote:
-> > 
-> > [...]
-> > > > Next Steps
-> > > > ----------
-> > > > 
-> > > > So, what to do?  Please prioritize series B, if you still willing to do.  It is
-> > > > ok to keep doing series A, but only as the minor user experience improvement.
-> > > > Clearly explain the whole context you are aware of.  Don't Cc stable@ for
-> > > > series A, as it is only an incomplete fix of it.  The fix of the one trigger
-> > > > point is just a side effect.
-> > > 
-> > > Yes, I absolutely want to continue contributing to DAMON.
-> > > 
-> > > I realize most of this confusion came from me misinterpreting your words
-> > > or making assumptions without asking. So this time, I want to be
-> > > explicit:
-> > > 1. I will remove the Cc stable@
-> > 
-> > Please also make the description of the patch clear.
+> This patch adds a new function damon_modules_new_vaddr_ctx_target.
+> Since ctx_target creation for vaddr and paddr is almost identical,
+> the logic is extracted to a new function,
+> damon_modules_new_ctx_target, and vaddr and paddr functions are left
+> just as interfaces.
 > 
-> I've been thinking about what you meant by "make the desciption of the
-> patch clear" for Series A.
-> 
-> Here's my current understanding:
-> 
-> "
-> This patch only fixes the case where kdamond terminates because
-> 'min_region_sz' is not power-of-2. Other causes of unexpected
-> termination (e.g., memory allocation failures) are not fixed by this
-> patch. [Seires B] will address the general problem.
-> "
-> 
-> Is this what you had in mind? Or is there something else you think I
-> should add or change?
+> This change was suggested earlier[1] and it is needed to allow
+> developers to create DAMON modules that use DAMON_OPS_PADDR targets.
 
-To my understanding, you will make series B merged before this one, right?  If
-that's the case, you may not need to add this description at all.  Rather, you
-may better to clarify this is only a minor user experience improvement.
+You mean DAMON_OPS_VADDR?
+
+And I agree this can be useful if we will make a DAMON module that runs for
+virtual address spaces.  But we don't add new functions without their callers.
+So this patch should be submitted only together with the caller of the
+function.
 
 > 
-> > I'd like to avoid delaying series B too long, though.  The bug is not very
-> > critical, but better to be fixed sooner than later.  If you have no enough
-> > capacity, please feel free to hand it over to me.
-> 
-> Yes, I have enough capacity. My exams are not until a couple of weeks
-> later, so I can focus on Series B now.
-> 
-> If my schedule gets too busy later, I will let you know and hand it over
-> as you suggested. Thank you for offering that.
-
-Sounds good.
+> [1]: https://lore.kernel.org/damon/20260311005759.90440-1-sj@kernel.org/
 
 
 Thanks,
