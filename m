@@ -1,51 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B0DF4369A;
-	Wed, 15 Apr 2026 01:20:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41CCD29C325;
+	Wed, 15 Apr 2026 01:20:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776216057; cv=none; b=SvJwnLci+FCYelpi809U49uPgXwMCroX5JBW67XCZjOs03tkUV1XRYJZR48IlSQ5UlZFmde8Y++hH5ELNF1/RUqnP5269UNLe2/ySxYCFqcnblArhBB9VgS1p89tu+S/3CwBwxjYBQSb53cA/GuuZYl0IDxkEI2RW4KN/0T99V8=
+	t=1776216057; cv=none; b=nbnH1GTAjpJuTyRhhxUWOsCACE7a3hLshM+7uHQWqP9OacWPueOa6QX3pRORWVi1LnusyAfV6PmsGy8FOKDh+gy7l5JDg/XGxkrnRsfw6lyj5EV+RwwiKSns7tEbi6WFK/XhINQm+cSxR3Gb8ftsOhU+NE2vncGlQKI+aZ1MapI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1776216057; c=relaxed/simple;
-	bh=/73a6Fauu1hEXPiMbtwap5gMqcffhpJAS00bzrE8afg=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=XgbkUjnSB6ODgfMmYDLEDQEpwN8U1l50oOm5C4vW7n8VIZo5YheDWFyKTvJQf28jfTZTEnkzsSZD24Y6bDiZxT2P4gFz1LlBI9mofCnMkDGtjF9UWb8m0VjlZD6XdAxwxfAlxfr6WMFnWm58XauaAbIlRppo1LbHDJBqotb4kLA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oPy6geJV; arc=none smtp.client-ip=10.30.226.201
+	bh=9rMAkySwPwOzbR0wIgkJ8MpOnAl8M9axmSlqMcxmgDo=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=QVY5a/VQz/giywZVUQLf1TjiL3d5a2eIZAEcdBXnaCLfkyrR2JZdWaL91QPCnZC7Pd6lUwerD+vv6ScnY06f36INKy6wlGC5gqOWQksoENH9OF8OK3tIUne4YMfe8XvTysbsbiyqIO566ujx4fd3hkmKMwoYE9rfD/5ULPnfRTM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aK64Gw2u; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oPy6geJV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FE52C19425;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aK64Gw2u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD95BC4AF0B;
 	Wed, 15 Apr 2026 01:20:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776216056;
-	bh=/73a6Fauu1hEXPiMbtwap5gMqcffhpJAS00bzrE8afg=;
-	h=From:To:Cc:Subject:Date:From;
-	b=oPy6geJV/ZHcgYgvAer8Ya5yKvPgZpm82wb4uqkM8lofq/CbDh6mcjnSalolMex7n
-	 PHC0xCJQn9O/rXx/6JTyW8BG2m3wuB6pOBIUZTvfOJzYqLjyY4WvE5MyEKftMrNw8q
-	 ady5yDxKOulIcFGxzXWt3kVbv+h7G6ejvUeIrwVdXiyyGu6bdtpK7DoshDOLlJtI/A
-	 Yd25okJYBOeZiosBAyEEuSqoiMiUIAUSW+UWxkNneK+yD0wGaVvckUR7+z2Jzc22Qd
-	 sxEsOwtPKL4kZyBon4M5lwIoU9d9mYyst9r382UrADOf/qHsM7cqDM/CObHK0VnnlT
-	 DsN2Lt/LkN22g==
+	s=k20201202; t=1776216057;
+	bh=9rMAkySwPwOzbR0wIgkJ8MpOnAl8M9axmSlqMcxmgDo=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=aK64Gw2ur1hChS7ihUc5Z+ZtOlcOMO6rKxfPpk1x12xYtp19gCrx5YtOmmiBtsPLK
+	 Nqfa/HwiNAbxNJge6BC928eI8Xc+Q58dLxSglm8rjoRI/Q0VzDq5xkrIa/gEO/Ubde
+	 l8XKuPG8BsYipTEhAL6hqA/zB1rIyBUhkdlvhJ1AhokMkEbgtx5lmuI3LG4/jKUq9z
+	 ezcuoQVS0T6tB+Q0hsPVTC2KFJidYWEnPxw3QxLYf5NgjD9Yih2CXxndfAnxqnLd+k
+	 Gd6TIaEhRv86iDjoaTWErgw12wq+oISGaWy/z7ebg5f382XxNZ6wTKYOVlbm0jcSxw
+	 zMZ31oUofRvSQ==
 From: SeongJae Park <sj@kernel.org>
 To: 
 Cc: SeongJae Park <sj@kernel.org>,
-	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	David Hildenbrand <david@kernel.org>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	Michal Hocko <mhocko@suse.com>,
-	Mike Rapoport <rppt@kernel.org>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Vlastimil Babka <vbabka@kernel.org>,
 	damon@lists.linux.dev,
-	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH 0/7] mm/damon/reclaim,lru_sort: monitor all system rams by default
-Date: Tue, 14 Apr 2026 18:20:28 -0700
-Message-ID: <20260415012048.76508-1-sj@kernel.org>
+Subject: [RFC PATCH 1/7] mm/damon: introduce damon_set_region_system_rams_default()
+Date: Tue, 14 Apr 2026 18:20:29 -0700
+Message-ID: <20260415012048.76508-2-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260415012048.76508-1-sj@kernel.org>
+References: <20260415012048.76508-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -54,72 +47,134 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-DAMON_RECLAIM and DAMON_LRU_SORT set the biggest 'System RAM' resource
-of the system as the default monitoring target address range.  The main
-intention behind the design is to minimize the overhead coming from
-monitoring of non-System RAM areas.
+damon_set_region_biggest_system_ram_default() sets the monitoring target
+region as the caller requested.  If the caller didn't specify the
+region, it finds the biggest System RAM of the system and sets it as the
+target region.  When there are more than one considerable size of System
+RAM resources in the system, the default target setup makes no sense.
+Introduce a variant, namely damon_set_region_system_rams_default().  It
+sets a physical address range that covers all System RAM resources as
+the default target region.
 
-This could result in an odd setup when there are multiple discrete
-System RAMs of considerable sizes.  For example, there are System RAMs
-each having 500 GiB size.  In this case, only the first 500 GiB will be
-set as the monitoring region by default.  This is particularly common on
-NUMA systems.  Hence the modules allow users to set the monitoring
-target address range using the module parameters if the default setup
-doesn't work for them.  In other words, the current design trades ease
-of setup for lower overhead.
+Signed-off-by: SeongJae Park <sj@kernel.org>
+---
+ include/linux/damon.h |  5 +++
+ mm/damon/core.c       | 77 ++++++++++++++++++++++++++++++++++++++++---
+ 2 files changed, 77 insertions(+), 5 deletions(-)
 
-However, because DAMON utilizes the sampling based access check and the
-adaptive regions adjustment mechanisms, the overhead from the monitoring
-of non-System RAM areas should be negligible in most setups.  Meanwhile,
-the setup complexity is causing real headaches for users who need to run
-those modules on various types of systems.  That is, the current
-tradeoff is not a good deal.
-
-Set the physical address range that can cover all System RAM areas of
-the system as the default monitoring regions for DAMON_RECLAIM and
-DAMON_LRU_SORT.
-
-Technically speaking, this is changing documented behavior.  However, it
-makes no sense to believe there is a real use case that really depends
-on the old weird default behavior.  If the old default behavior was
-working for them in the reasonable way, this change will only add a
-negligible amount of monitoring overhead.  If it didn't work, the users
-may already be using manual monitoring regions setup, and they will not
-be affected by this change.
-
-Patches Sequence
-================
-
-Patch 1 introduces a new core function that will be used for the new
-default monitoring target region setup.  Patch 2 and 3 update
-DAMON_RECLAIM and DAMON_LRU_SORT to use the new function instead of the
-old one, respectively.  Patch 4 removes the old core function that was
-replaced by the new one, as there is no more user of it.  Patch 5
-updates DAMON_STAT to use the new one instead of its in-house
-nearly-duplicate self implementation of the functionality.  Finally
-patches 6 and 7 update the DAMON_RECLAIM and DAMON_LRU_SORT user
-documentation for the new behaviors, respectively.
-
-SeongJae Park (7):
-  mm/damon: introduce damon_set_region_system_rams_default()
-  mm/damon/reclaim: cover all system rams
-  mm/damon/lru_sort: cover all system rams
-  mm/damon/core: remove damon_set_region_biggest_system_ram_default()
-  mm/damon/stat: use damon_set_region_system_rams_default()
-  Docs/admin-guide/mm/damon/reclaim: update for entire memory monitoring
-  Docs/admin-guide/mm/damon/lru_sort: update for entire memory
-    monitoring
-
- .../admin-guide/mm/damon/lru_sort.rst         |  6 ++-
- .../admin-guide/mm/damon/reclaim.rst          |  6 ++-
- include/linux/damon.h                         |  2 +-
- mm/damon/core.c                               | 49 +++++++++--------
- mm/damon/lru_sort.c                           |  8 +--
- mm/damon/reclaim.c                            | 14 ++---
- mm/damon/stat.c                               | 53 ++-----------------
- 7 files changed, 50 insertions(+), 88 deletions(-)
-
-
-base-commit: 11bcd10460e9446785fc04deb5d175806a00400b
+diff --git a/include/linux/damon.h b/include/linux/damon.h
+index 5fb1dc585658b..c4cdaa01ea530 100644
+--- a/include/linux/damon.h
++++ b/include/linux/damon.h
+@@ -1007,6 +1007,11 @@ int damon_kdamond_pid(struct damon_ctx *ctx);
+ int damon_call(struct damon_ctx *ctx, struct damon_call_control *control);
+ int damos_walk(struct damon_ctx *ctx, struct damos_walk_control *control);
+ 
++int damon_set_region_system_rams_default(struct damon_target *t,
++				unsigned long *start, unsigned long *end,
++				unsigned long addr_unit,
++				unsigned long min_region_sz);
++
+ int damon_set_region_biggest_system_ram_default(struct damon_target *t,
+ 				unsigned long *start, unsigned long *end,
+ 				unsigned long addr_unit,
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index 48633da449104..3cef74ba7f0f4 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -3186,14 +3186,20 @@ static int kdamond_fn(void *data)
+ 	return 0;
+ }
+ 
+-static int walk_system_ram(struct resource *res, void *arg)
++struct damon_system_ram_range_walk_arg {
++	bool walked;
++	struct resource res;
++};
++
++static int damon_system_ram_walk_fn(struct resource *res, void *arg)
+ {
+-	struct resource *a = arg;
++	struct damon_system_ram_range_walk_arg *a = arg;
+ 
+-	if (resource_size(a) < resource_size(res)) {
+-		a->start = res->start;
+-		a->end = res->end;
++	if (!a->walked) {
++		a->walked = true;
++		a->res.start = res->start;
+ 	}
++	a->res.end = res->end;
+ 	return 0;
+ }
+ 
+@@ -3210,6 +3216,67 @@ static unsigned long damon_res_to_core_addr(resource_size_t ra,
+ 	return ra / addr_unit;
+ }
+ 
++static bool damon_find_system_rams_range(unsigned long *start,
++		unsigned long *end, unsigned long addr_unit)
++{
++	struct damon_system_ram_range_walk_arg arg = {};
++
++	walk_system_ram_res(0, -1, &arg, damon_system_ram_walk_fn);
++	if (!arg.walked)
++		return false;
++	*start = damon_res_to_core_addr(arg.res.start, addr_unit);
++	*end = damon_res_to_core_addr(arg.res.end + 1, addr_unit);
++	if (*end <= *start)
++		return false;
++	return true;
++}
++
++/**
++ * damon_set_region_system_rams_default() - Set the region of the given
++ * monitoring target as requested, or to cover all 'System RAM' resources.
++ * @t:		The monitoring target to set the region.
++ * @start:	The pointer to the start address of the region.
++ * @end:	The pointer to the end address of the region.
++ * @addr_unit:	The address unit for the damon_ctx of @t.
++ * @min_region_sz:	Minimum region size.
++ *
++ * This function sets the region of @t as requested by @start and @end.  If the
++ * values of @start and @end are zero, however, this function finds 'System
++ * RAM' resources and sets the region to cover all the resource.  In the latter
++ * case, this function saves the start and the end addresseses of the first and
++ * the last resources in @start and @end, respectively.
++ *
++ * Return: 0 on success, negative error code otherwise.
++ */
++int damon_set_region_system_rams_default(struct damon_target *t,
++			unsigned long *start, unsigned long *end,
++			unsigned long addr_unit, unsigned long min_region_sz)
++{
++	struct damon_addr_range addr_range;
++
++	if (*start > *end)
++		return -EINVAL;
++
++	if (!*start && !*end &&
++		!damon_find_system_rams_range(start, end, addr_unit))
++		return -EINVAL;
++
++	addr_range.start = *start;
++	addr_range.end = *end;
++	return damon_set_regions(t, &addr_range, 1, min_region_sz);
++}
++
++static int walk_system_ram(struct resource *res, void *arg)
++{
++	struct resource *a = arg;
++
++	if (resource_size(a) < resource_size(res)) {
++		a->start = res->start;
++		a->end = res->end;
++	}
++	return 0;
++}
++
+ /*
+  * Find biggest 'System RAM' resource and store its start and end address in
+  * @start and @end, respectively.  If no System RAM is found, returns false.
 -- 
 2.47.3
