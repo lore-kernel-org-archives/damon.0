@@ -1,286 +1,137 @@
-Received: from mail-qt1-f179.google.com (mail-qt1-f179.google.com [209.85.160.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B9CD1FBEA6
-	for <damon@lists.linux.dev>; Thu, 16 Apr 2026 01:25:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F9BC224AF9
+	for <damon@lists.linux.dev>; Thu, 16 Apr 2026 03:35:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776302705; cv=none; b=aXhwGA8svna/Zsa8mncEiNsIGmd0qACHj7KKA9IJ0HJxAEUxmPNs/lqwYRT31Qu9KC301ZwrtgWe9Ig3XEBe61hv+4vZ1t5TSgHMH8ZE0jT1jYkxQLdERLM0HgEj1bN98WJEV8bimqsTAUtqdXaX4SPJorH9ecc9WcZQsXhYLec=
+	t=1776310554; cv=none; b=kANIoa3n5Jtp7JLrU/4NzKZ0M7mMsjKpJDWhJO4uF+L/MgQIBI3F3Zh6ukeUTzqFBnhiOI2tu9LQp4cNMKNtufJ2O2OoGw9g3oUkGimTEPUABI5Ka8lKVKoPq6tMJlwIkea3R4rgxdZmbmqSqVkmjTVv1iF2nHBYOT1XeCuFY3c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776302705; c=relaxed/simple;
-	bh=Fp1CWQFZhoQan9vy0Uw+XPprLq5wH18fTjKWUBYQg18=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Qb6AA/nzOFUEBySA/aiSWFeG+z457PjwuAiDpudczG0N6A5vk6fPUUeoBNaw6R/l2dwyGi6/9+3kLcGRROgqr0LgyGn8eoLKymPS9BRyNXpjH7uKuUE3/Z1ohO6mrMyyT8xB9nY6/QyuK9Fl5SODhFFUft/FL5CZA9GkkCxgvlA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gourry.net; spf=pass smtp.mailfrom=gourry.net; dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.b=BrtCEXJC; arc=none smtp.client-ip=209.85.160.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gourry.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gourry.net
+	s=arc-20240116; t=1776310554; c=relaxed/simple;
+	bh=Gvpuiwv2Vc8R1SqlfaL2jWj2yV+PpcVw312s7u7nI4w=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=ixm2kqyyU9P2YYSeTQdG3JEEdUmHOl1It75jspAMqibNfMXxmOjUI74OU+WMlKRpClOC6N/hitRWQdftBEvbHO+dsgma6V7MGDHg3JNMgaln33MGXGfbYl5fZvFPX9M1D6uezGmV8YouZ8YEoNMSeC0udQDFP6pSwDkL6DkLXU4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bs0nHane; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.b="BrtCEXJC"
-Received: by mail-qt1-f179.google.com with SMTP id d75a77b69052e-50d880e6fbbso2000181cf.0
-        for <damon@lists.linux.dev>; Wed, 15 Apr 2026 18:25:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gourry.net; s=google; t=1776302702; x=1776907502; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=L0GVcI8Mcl8O7u/nlxfa5xhicBajYIQOeBkH2STJXfY=;
-        b=BrtCEXJCa8f1yxw/KcK6DOn6ZtfGZKYK4nRQJBLaL96Njqldo+qb41bSknkMbQ0rFN
-         62LQ+EgDI+8s8bZf8Anvt3KOogI7xXfg4ZPjArbsX2dgcOJ1GeYCpjqfTu9x7rLx+QcP
-         C6GTnqPXlfPU+zuUuELJ1SktsEIj226Q2CWLDMOWu9q/0UJT051LspuORkochYDPzACX
-         hzx5Rm5bn/hAGqZisUnwkjybedI4TiapGszg3ITuvd0/L5mdsnqyARc4FQeLEFsNdCXX
-         JrpBFFYxbFICJlaJqZQPm/mwyyxFlzN+2csnRo0o5NvMij0GSl4co2nZSVKvGsU3Msq/
-         Gf6g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776302702; x=1776907502;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=L0GVcI8Mcl8O7u/nlxfa5xhicBajYIQOeBkH2STJXfY=;
-        b=hR/Cl5b13H1JSSgVjCrdAwNtHN9JnfSvwGJobRuCtp8vG56xC2DBGlBiv3XSYqwCd2
-         iCocC4nfQxeUofoasayBV9gYQNGD5UuA1iq0iSj+elz3e5vAAxyKy5lnR5+Tf9k+rdni
-         c6ZGWzUOcYx/KJYiUpy7n5rL2FabWqcFvC2pq6s0ST7wloQMohSGfx3I5XycuTAS3PnE
-         AZpioh4MczVErVPIdWAndLf0ClgbP13busjB5y5vH6Get7vL43nOOyGje66EsHry6TLp
-         ya08iGeaCUXccdt/BB+DF9fLN5nBQ0ZeurhljszbmhwL0eZuKS53c26pRWvJEN0P+zH6
-         Ub9g==
-X-Forwarded-Encrypted: i=1; AFNElJ9lwkesw1XCNLKmyra5tkP6Z3wVGtl8LwtbB12TAMwQs3AIOXgnLJ5keKfZ5j4PmNkpnyyt5g==@lists.linux.dev
-X-Gm-Message-State: AOJu0YzvxiKJ+7xA1HojyW99ND5EwEkHG3d5BLy9DauRGNwjpzfjjM6g
-	IY0Td09Niy8qJcRyyUHwvTkIKnBMBx0tF3d0VXiKz5xF/NQ+jvhA6ixkaWzvm8qSars=
-X-Gm-Gg: AeBDietr4mEUxm3wpsbXr1mN4kaAu4Wo6PQdwvBiFkgfgJwikfo4e2fvld2AWpi5XvL
-	9ERBl+vT9hzFmJ35r9R0lC/Mrp3X9YlRhkZJ3XhADdkZPXk9IuYOmI3bS9O/+qUtWx80sUI81l7
-	5gTEnTnroXNYWDslA9y0pe0rH9iMZvLkE2hdaWwqba86uMhZN7YF7yQfTuYgPrMtbVJllvfuE36
-	0s4iKXWa/zSg/IN1/xaLjBDd4Qf6f8uP2bpabIj2fDDaxL0BGZQsZV84Vi8kv2CNBbyeG1nZlvl
-	JL5SoJyK9YtXpH316oGPfdGyT/149bNJJoHB5pxeWbUBxkqDgExV7XCfXa08V/cL4isu4q1CABN
-	OcsFKGRpBugfEO64xtGS4f6sMq26g3ysMQzlQgE2HV4EM+7K55CatctZ2K6SLVh0uAPiBkpSV8V
-	YzAizzulI1TBNVtXxDmRTzgm1cXnUYbS7O95tWy0htJX4Ta0mPus1vhOco6acrkeC30uKgtFQcD
-	Qh8CYxmfEjLX3Pwpl94My0=
-X-Received: by 2002:a05:622a:d1c:b0:509:1b5c:fe25 with SMTP id d75a77b69052e-50e24b8e774mr23717671cf.23.1776302702216;
-        Wed, 15 Apr 2026 18:25:02 -0700 (PDT)
-Received: from gourry-fedora-PF4VCD3F (pool-108-28-184-130.washdc.fios.verizon.net. [108.28.184.130])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-50e1adbcf10sm24957831cf.10.2026.04.15.18.24.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Apr 2026 18:25:00 -0700 (PDT)
-Date: Wed, 15 Apr 2026 21:24:56 -0400
-From: Gregory Price <gourry@gourry.net>
-To: Frank van der Linden <fvdl@google.com>
-Cc: "David Hildenbrand (Arm)" <david@kernel.org>,
-	lsf-pc@lists.linux-foundation.org, linux-kernel@vger.kernel.org,
-	linux-cxl@vger.kernel.org, cgroups@vger.kernel.org,
-	linux-mm@kvack.org, linux-trace-kernel@vger.kernel.org,
-	damon@lists.linux.dev, kernel-team@meta.com,
-	gregkh@linuxfoundation.org, rafael@kernel.org, dakr@kernel.org,
-	dave@stgolabs.net, jonathan.cameron@huawei.com,
-	dave.jiang@intel.com, alison.schofield@intel.com,
-	vishal.l.verma@intel.com, ira.weiny@intel.com,
-	dan.j.williams@intel.com, longman@redhat.com,
-	akpm@linux-foundation.org, lorenzo.stoakes@oracle.com,
-	Liam.Howlett@oracle.com, vbabka@suse.cz, rppt@kernel.org,
-	surenb@google.com, mhocko@suse.com, osalvador@suse.de,
-	ziy@nvidia.com, matthew.brost@intel.com, joshua.hahnjy@gmail.com,
-	rakie.kim@sk.com, byungchul@sk.com, ying.huang@linux.alibaba.com,
-	apopple@nvidia.com, axelrasmussen@google.com, yuanchu@google.com,
-	weixugc@google.com, yury.norov@gmail.com, linux@rasmusvillemoes.dk,
-	mhiramat@kernel.org, mathieu.desnoyers@efficios.com, tj@kernel.org,
-	hannes@cmpxchg.org, mkoutny@suse.com, jackmanb@google.com,
-	sj@kernel.org, baolin.wang@linux.alibaba.com, npache@redhat.com,
-	ryan.roberts@arm.com, dev.jain@arm.com, baohua@kernel.org,
-	lance.yang@linux.dev, muchun.song@linux.dev, xu.xin16@zte.com.cn,
-	chengming.zhou@linux.dev, jannh@google.com, linmiaohe@huawei.com,
-	nao.horiguchi@gmail.com, pfalcato@suse.de, rientjes@google.com,
-	shakeel.butt@linux.dev, riel@surriel.com, harry.yoo@oracle.com,
-	cl@gentwo.org, roman.gushchin@linux.dev, chrisl@kernel.org,
-	kasong@tencent.com, shikemeng@huaweicloud.com, nphamcs@gmail.com,
-	bhe@redhat.com, zhengqi.arch@bytedance.com, terry.bowman@amd.com
-Subject: Re: [LSF/MM/BPF TOPIC][RFC PATCH v4 00/27] Private Memory Nodes (w/
- Compressed RAM)
-Message-ID: <aeA6aNDpQ-U5UJCs@gourry-fedora-PF4VCD3F>
-References: <20260222084842.1824063-1-gourry@gourry.net>
- <3342acb5-8d34-4270-98a2-866b1ff80faf@kernel.org>
- <abwRu1FNqI3dVyqL@gourry-fedora-PF4VCD3F>
- <2608a03b-72bb-4033-8e6f-a439502b5573@kernel.org>
- <ad0iT4UWka3gMUpu@gourry-fedora-PF4VCD3F>
- <38cf52d1-32a8-462f-ac6a-8fad9d14c4f0@kernel.org>
- <ad-r7hwIdnvKsrh9@gourry-fedora-PF4VCD3F>
- <CAPTztWajm_JLpp9BjRcX=h72r25ELrXeGkOXVachybBxLJGS=g@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bs0nHane"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB403C19424;
+	Thu, 16 Apr 2026 03:35:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1776310554;
+	bh=Gvpuiwv2Vc8R1SqlfaL2jWj2yV+PpcVw312s7u7nI4w=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=bs0nHanepSdwso8WcNkFSET90Kq/CyEJBGTTKDfn+57TNckFfqcTVLCurTh9EURDY
+	 VVOCv997b68Tpp3/udDHWrCDYWbiPzm53F/SazHcGZZSJzSR7Lfj1zMmY9F7x7vjv7
+	 FHxr9Uh1uSFpYNpRg0i8sudLQvEO2yQKByiXny6aU7zqYGf8hlvSs0wydPArh9Q1qZ
+	 EfJUqPF6ZgCtmkBwLHyilgAHBSv3JeOWL+JkmDgFWwZk0Uxe8klumVYtxHEqFAnSky
+	 /U66rFQQsqNUs5PVQu1DDTUV/io8rHudS9DWsI97JkavLeJzV69Z1pEL170SJ7nJsa
+	 Su6wjxfHQXKVw==
+From: SeongJae Park <sj@kernel.org>
+To: sashiko-bot@kernel.org
+Cc: SeongJae Park <sj@kernel.org>,
+	damon@lists.linux.dev
+Subject: Re: [RFC PATCH v1.2 1/2] mm/damon/stat: add a parameter for reading kdamond pid
+Date: Wed, 15 Apr 2026 20:35:45 -0700
+Message-ID: <20260416033546.87941-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260416005936.7F477C19424@smtp.kernel.org>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAPTztWajm_JLpp9BjRcX=h72r25ELrXeGkOXVachybBxLJGS=g@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Wed, Apr 15, 2026 at 12:47:50PM -0700, Frank van der Linden wrote:
+TL; DR: Sashiko found good point.  I will fix it in the next revision.
+
+On Thu, 16 Apr 2026 00:59:35 +0000 sashiko-bot@kernel.org wrote:
+
+> Sashiko AI review found 1 potential issue(s):
+> - [Medium] Stale `kdamond_pid` exposed to userspace if `damon_call()` fails during startup.
+> --
 > 
-> This has been a really great discussion. I just wanted to add a few
-> points that I think I have mentioned in other forums, but not here.
+> commit 46eb0a4278ccd2dec190db28b78b0766b8865901
+> Author: SeongJae Park <sj@kernel.org>
 > 
-> In essence, this is a discussion about memory properties and the level
-> at which they should be dealt with. Right now there are basically 3
-> levels: pageblocks, zones and nodes. While these levels exist for good
-> reasons, they also sometimes lead to issues. There's duplication of
-> functionality. MIGRATE_CMA and ZONE_MOVABLE both implement the same
-> basic property, but at different levels (attempts have been made to
-> merge them, but it didn't work out).
-
-I have made this observation as well.  ZONEs in particular are a bit
-odd because they're somehow simultaneously too broad and too narrow in
-terms of what they control and what they're used for.
-
-1GB ZONE_MOVABLE HugeTLBFS Pages is an example weird carve-out, because
-the memory is in ZONE_MOVABLE to help make 1GB allocations more
-reliable, but 1GB movable pages were removed from the kernel because
-they're not easily migrated (and therefore may block hot-unplug).
-
-(Thankfully they're back now, so VMs can live on this memory :P)
-
-So you have competing requirements, which suggests zone is the wrong
-abstraction at some level - but it's what we've got.
-
-> There's also memory with clashing
-> properties inhabiting the same data structure: LRUs. Having strictly
-> movable memory on the same LRU as unmovable memory is a mismatch. It
-> leads to the well known problem of reclaim done in the name of an
-> unmovable allocation attempt can be entirely pointless in the face of
-> large amounts of ZONE_MOVABLE or MIGRATE_CMA memory: the anon LRU will
-> be chock full of movable-only pages. Reclaiming them is useless for
-> your allocation, and skipping them leads to locking up the system
-> because you're holding on to the LRU lock a long time.
->
-
-This is an interesting observation that should be solvable.
-
-For example - i'm pretty sure mlock'd pages are on an unevictable LRU
-for exactly this reason (to just skip scanning them during reclaim).
-
-Which is a different pain point I have - since they're still migratable,
-they could be demoted to make room for local hot pages.
-
-> So, looking at having some properties set at the node level makes
-> sense to me even in the non-device case. But perhaps that is out of
-> scope for the initial discussion.
+> mm/damon/stat: add a parameter for reading kdamond pid
 > 
-> One use case that seems like a good match for private nodes is guest
-> memory. Guest memory is special enough to want to allocate / maintain
-> it separately, which is acknowledged by the introduction of
-> guest_memfd.
+> This commit exposes the pid of the DAMON_STAT kdamond via a new read-only
+> module parameter named kdamond_pid, standardizing usage with other DAMON
+> modules.
 > 
-> I'm interested in enabling guest_memfd allocation from private nodes.
-> I've been playing around with setting aside memory at boot, and
-> assigning it to private nodes (one private node per physical NUMA
-> node), and making it available to guest_memfd only. There are issues
-> to be solved there, but the private node abstraction seems to fit
-> well, and provides for useful hooks to manage guest memory.
+> > diff --git a/mm/damon/stat.c b/mm/damon/stat.c
+> > index 99ba346f9e325..4901e9a7c3398 100644
+> > --- a/mm/damon/stat.c
+> > +++ b/mm/damon/stat.c
 > 
-
-I have wondered about this use case, but I haven't really played with
-guest_memfd to know what the implications are here, so it's nice to hear
-someone is looking at this.  It will be nice to hear your input on where
-the abstraction could be better.
-
-> Some properties that I'm interested in for this use case:
+> [ ... ]
 > 
-> 1) is the memory in the direct map or not? Should that be configurable
-> for a private node? I know there are patches right now to remove
-> memory from the direct map for guest_memfd, but what if there was a
-> private node whose memory is not in the direct map by default?
-
-Presuming a page was not in the direct map and it was in the buddy
-(strong assumption here), there's a handful of things that would
-straight up break:
-
-  - init_on_alloc (post_alloc_hook) / __GFP_ZERO (clear_highpage)
-  - init_on_free (free_pages_prepare)
-  - kernel_poison_pages (accesses the page contents)
-  - CONFIG_DEBUG_PAGEALLOC
-
-But... these things seem eminently skippable based on a node attribute.
-
-I think this could be done, but there is added concern about spewing
-an ever increasing numbers of hooks throughout mm/ as the number of
-attributes increase.
-
-But in this case I think the contract would require that an NP_OPS_NOMAP
-would have to be mutually exclusive with all other node attributes (too
-many places that touch the mapping, it would be too fragile).
-
-There's a few catches here though
-
-  1) you lose the ability to zero out the page after allocation, so
-     whatever is in the memory already is going into the guest.
-
-     That seems problematic for a variety of reasons.
-
-     I guess you can use kmap_local_page?
-     But then why not just unmap after allocation?
-
-     If never mapping is a hard requirement, if that memory lives on
-     a device with a sanitize function, you maybe could massage kernel
-     free-page-reporting to offload the zeroing without having the
-     kernel map it - as long as you can take a delay after free before
-     the page becomes available again.
-
-  2) the current mempolicy guest_memfd patches would not apply because
-     I can't see how OPS_MEMPOLICY & OPS_NOMAP co-exist.  A user program
-     could call mbind(nomap_node) on a random VMA - and there would be
-     kernel OOPS everywhere.
-
-     That would just mean pre-setting the node backing for all
-     guest_memfd VMAs, rather than using mbind().
-
-Something like (cribbing from the memfd code with absolutely no
-context, so there's a pile of assumptions being made here)
-
-  struct kvm_create_guest_memfd {
-        __u64 size;
-        __u64 flags;
-        __s32 numa_node;  /* Set at creation */
-        __u32 pad;
-        __u64 reserved[5];
-  };
-
-  #define GUEST_MEMFD_FLAG_NUMA_NODE    (1ULL << 2)
-
-  if (gmem->flags & GUEST_MEMFD_FLAG_NUMA_NODE)
-      folio = __folio_alloc(gfp | __GFP_PRIVATE, order,
-                            gmem->numa_node, NULL);
-  else
-      /* existing mempolicy / default path */
-      folio = __filemap_get_folio_mpol(...);
-
-Which may even be preferable to the recently upstreamed pattern.
-
-> 2) Default page size. devdax, a ZONE_DEVICE user, allows for memory
-> setup on hotplug that initializes things with HVO-ed large pages.
-> Could the page size be a property of the node? That would make it easy
-> to hand out larger pages to guests.  Of course, if you use anything
-> but 4k, the argument of 'we can use the general buddy allocator' goes
-> out the window, unless it's made to deal with a per-node base page
-> size.
+> > @@ -260,6 +269,14 @@ static int damon_stat_start(void)
+> >  		damon_stat_context = NULL;
+> >  		return err;
+> >  	}
+> > +	kdamond_pid = damon_kdamond_pid(damon_stat_context);
+> > +	if (kdamond_pid < 0) {
+> > +		err = kdamond_pid;
+> > +		kdamond_pid = -1;
+> > +		damon_destroy_ctx(damon_stat_context);
+> > +		damon_stat_context = NULL;
+> > +		return err;
+> > +	}
+> >  
+> >  	damon_stat_last_refresh_jiffies = jiffies;
+> >  	call_control.data = damon_stat_context;
 > 
+> If damon_call() fails right after this and returns an error,
+> damon_stat_start() will pass that error back to its caller and the module
+> will revert to a disabled state.
+> 
+> Does this leave a stale kdamond_pid exposed to userspace? The newly added
+> documentation states: "If DAMON_STAT is enabled, this becomes the PID of
+> the worker thread. Else, -1." Since the initialization fails, the module
+> remains disabled, but kdamond_pid isn't reset to -1 on this error path.
 
-Per-node page sizes are probably a bridge too far, that's seems like
-a change that would echo through most of the buddy infrastructure, not
-just a few hooks to prevent certain interactions.
+Nice catch.  I will do the kdamond_pid setup after damon_call() success, like
+below.  Also, I will remove the damon_stat_context deallocation and unset when
+damon_kdamond_pid() failure, because it will be deallocated when
+damon_stat_start() is called again.  The change will look like below:
 
-However, I also don't think this is a requirement.
+--- a/mm/damon/stat.c
++++ b/mm/damon/stat.c
+@@ -222,18 +222,19 @@ static int damon_stat_start(void)
+                damon_stat_context = NULL;
+                return err;
+        }
++
++       damon_stat_last_refresh_jiffies = jiffies;
++       call_control.data = damon_stat_context;
++       err = damon_call(damon_stat_context, &call_control);
++       if (err)
++               return err;
++
+        kdamond_pid = damon_kdamond_pid(damon_stat_context);
+        if (kdamond_pid < 0) {
+                err = kdamond_pid;
+                kdamond_pid = -1;
+-               damon_destroy_ctx(damon_stat_context);
+-               damon_stat_context = NULL;
+                return err;
+        }
+-
+-       damon_stat_last_refresh_jiffies = jiffies;
+-       call_control.data = damon_stat_context;
+-       return damon_call(damon_stat_context, &call_control);
+ }
 
-I know there is some work to try to raise the max page order to allow
-THP to support 1GB huge pages - if max size is a concern, there's hope.
+ static void damon_stat_stop(void)
 
-On fragmentation though...
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260416002149.87090-1-sj@kernel.org?part=1
 
-If the consumer of a private node only ever allocates a specific order
-(order-9) - the buddy never fragments smaller than that (it maybe
-spends time coalescing for no value, but it'll never fragment smaller).
 
-So is the concern here that you want to guarantee a minimum page size
-to deal with the fragmentation problem on normal general-purpose nodes,
-or do you want to guarantee a minimum page size because you can't limit
-the allocations to be of a base order?
-
-i.e.: is limiting guest_memfd allocations on a private node to a single
-order (or a minimum order? 2MB?) a feasible option?  (Pretend i know
-very little about the guest_memfd specific memory management code).
-
-~Gregory
+Thanks,
+SJ
