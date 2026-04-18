@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2477312826
-	for <damon@lists.linux.dev>; Sat, 18 Apr 2026 23:29:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F5D329AAF3
+	for <damon@lists.linux.dev>; Sat, 18 Apr 2026 23:51:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776554973; cv=none; b=Z0hAWIjOgdlf8LNf7I7oXeSQC29Ul09CBLkBZNwsD5iBy2kyXOyHieKTnhisqhP6TL5BywMpetiIew//lqWikaQNIHieXW7LYSnv2VD1Dr7oBTeuYhAhP5uSf28slJscsRDLbq1Nszb8k5feoEoD1Qm5Yw89olRD6bSxcR+QDas=
+	t=1776556316; cv=none; b=dMv3QgTftth0inOktYBfkBSO8Z9aKVnF77bc3+QF4kKOo2nn68WkKY+hv9FhlBnBB97Srgfpg2ep3WMlReRX0xnp6ggRicGKgr2328YTb5wGYNJvIoIdSrX68CnAmhkFnYqjw8Qx0HKqxy/akRRPgPHgLnj5sfT1yKJwehg7zN0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776554973; c=relaxed/simple;
-	bh=oNzH10sCRl70NtiX4DnM+Qr4qcP9/DSeGwMU/5/N2y8=;
+	s=arc-20240116; t=1776556316; c=relaxed/simple;
+	bh=9ZfP1jaCa+/+rApD2p+yCR8QbSGY4/s/s5+uMRDFaTs=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=i/f5sPdJOYXx648lrmNHY1VobonVyZ7ZxmOOqiHFnStknFG1DpxBuXcWsNjmhPcMkBnQ2VcOlqL5k9fUZbIwYhS12Y7MiFYUYKqMC/Ah7gta9KZiw6CI8PoAZJBjFAcmicXVH9RsKlcB9o+pzteJ1ckhMc5ficmpKgiNNUECKEs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sMLDJNBA; arc=none smtp.client-ip=10.30.226.201
+	 Message-Id; b=Rve5D9XwFhMDbjg3RW/F0tuIoln58qNHBufo1gEnns6Hs09OkdpL/JpRMH7s/PsEmw8iDKZDRjyDfp2yrBP9wrrxrElIz6DO2OsTphQof8rPFxD8sxTkXnLme033qssRY2e34/EtBR/ODmQErBesroj5IRzrEzD/X3zBZ4wv0ms=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=T/iHhooY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sMLDJNBA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CE8CC19424;
-	Sat, 18 Apr 2026 23:29:32 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="T/iHhooY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4953C19424;
+	Sat, 18 Apr 2026 23:51:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776554972;
-	bh=oNzH10sCRl70NtiX4DnM+Qr4qcP9/DSeGwMU/5/N2y8=;
+	s=k20201202; t=1776556315;
+	bh=9ZfP1jaCa+/+rApD2p+yCR8QbSGY4/s/s5+uMRDFaTs=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date:From;
-	b=sMLDJNBAKLOjVx7qxinEMKmoGmr/NdH3XkPx7vb0L+dwbHKuoxG2361wzAhaHMv6e
-	 exWl+FPjUT/XpRzB9ul29BSy7vJiid5Q3L4lrHzYAlzJU9GSOwyyWOYmMraHPn8wMA
-	 tpWTCoxQHkNsnpeOaDq1we+LXtGYjrqHz0wkQ+9UeFNk4NoHd1jQ+ZP1BPQkNGJsUR
-	 Mumbmaet5jdgXhL/1t5amf8PyRkjbZOl9OgFZ/47qXUScove8amicCT1g5GNskbCVP
-	 ei2Y4NILjNRSlM7nLPWOEUSuO2QNVVYk3Uso792mCxkov50HXJfF1bz3L5jD3bY18Z
-	 5cqsBpMfrq1cw==
+	b=T/iHhooYRcEEU0j+6ZWh8gOxIPFdNIt8On3v+lUuTPPr9MtuirTQFXEgxVngwtniq
+	 m2mYJ8JISJttInPmVkTyS/xqVWuUWwAGPTRK/mpQhGSmOrVGFfUEJEmYOedUGbzATK
+	 uOzqxVhAACcah6SAcfoqiFvw/bSFB2j+4QgVcLQzY2ei81dSjkb5Ggv/fyS4zd7GSX
+	 qPyEpgmeZUIGlERU7Jzohv+JRjIpwoyQ+9sR0qUA/E6OFPNmzKE1ZNI2dp+LLwOQ2W
+	 IHKSOVOopnkpoGm4/YzaXWZVlX36a+IbTuZc5Af5iMHwiwmzbCkxdVYin7cwPr6Pbe
+	 f87HvP2e0gSVg==
 From: sashiko-bot@kernel.org
-Subject: Re: [RFC PATCH v2.1 2/3] mm/damon/lru_sort: detect and use fresh
- enabled and kdamond_pid values
+Subject: Re: [RFC PATCH v2.1 3/3] mm/damon/stat: detect and use fresh
+ enabled value
 Reply-To: sashiko@lists.linux.dev
 To: "SeongJae Park" <sj@kernel.org>
 Cc: damon@lists.linux.dev
-In-Reply-To: <20260418222758.39795-3-sj@kernel.org>
-References: <20260418222758.39795-3-sj@kernel.org>
+In-Reply-To: <20260418222758.39795-4-sj@kernel.org>
+References: <20260418222758.39795-4-sj@kernel.org>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Sat, 18 Apr 2026 23:29:31 +0000
-Message-Id: <20260418232932.5CE8CC19424@smtp.kernel.org>
+Date: Sat, 18 Apr 2026 23:51:55 +0000
+Message-Id: <20260418235155.A4953C19424@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -45,84 +45,90 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 
 Sashiko AI review found 1 potential issue(s):
-- [High] Writing to the `enabled` sysfs parameter causes a kernel panic if =
-the module failed to initialize during boot.
+- [High] Bypassing damon_stat_stop() and overwriting damon_stat_context cau=
+ses a memory leak when explicitly disabling or restarting a kdamond thread =
+that stopped internally.
 --
 
-commit fa970a77d3fa7186f23394f3a1cfedc7ae08380c
+commit b9703c85b8e9f48ea8dc673102aa2ecc0e1ac448
 Author: SeongJae Park <sj@kernel.org>
-Subject: mm/damon/lru_sort: detect and use fresh enabled and kdamond_pid va=
-lues
+mm/damon/stat: detect and use fresh enabled value
 
-This commit updates the module to dynamically query the running status for
-the enabled and kdamond_pid parameters. This avoids stale parameter values
-if the kdamond daemon stops due to unintentional events like allocation
-failures.
+This commit dynamically detects the status of kdamond instead of relying on
+the saved parameter value to avoid showing stale data when the daemon stops
+internally.
 
-Cc: <stable@vger.kernel.org> # 6.0.x
+Link: https://lore.kernel.org/20260416040602.88665-1-sj@kernel.org
 
-> diff --git a/mm/damon/lru_sort.c b/mm/damon/lru_sort.c
-> index 554559d729760..8494040b1ee48 100644
-> --- a/mm/damon/lru_sort.c
-> +++ b/mm/damon/lru_sort.c
+> diff --git a/mm/damon/stat.c b/mm/damon/stat.c
+> index 99ba346f9e325..3951b762cbddf 100644
+> --- a/mm/damon/stat.c
+> +++ b/mm/damon/stat.c
 
 [ ... ]
 
-> @@ -430,42 +414,83 @@ module_param_cb(addr_unit, &addr_unit_param_ops, &a=
-ddr_unit, 0600);
-
-[ ... ]
-
->  static int damon_lru_sort_enabled_store(const char *val,
->  		const struct kernel_param *kp)
+> @@ -273,17 +276,23 @@ static void damon_stat_stop(void)
+>  	damon_stat_context =3D NULL;
+>  }
+> =20
+> +static bool damon_stat_enabled(void)
+> +{
+> +	if (!damon_stat_context)
+> +		return false;
+> +	return damon_is_running(damon_stat_context);
+> +}
+> +
+>  static int damon_stat_enabled_store(
+>  		const char *val, const struct kernel_param *kp)
 >  {
 > -	bool is_enabled =3D enabled;
-> -	bool enable;
 >  	int err;
 > =20
-> -	err =3D kstrtobool(val, &enable);
-> +	err =3D kstrtobool(val, &enabled);
+>  	err =3D kstrtobool(val, &enabled);
 >  	if (err)
 >  		return err;
 > =20
-> -	if (is_enabled =3D=3D enable)
-> +	if (damon_lru_sort_enabled() =3D=3D enabled)
+> -	if (is_enabled =3D=3D enabled)
+> +	if (damon_stat_enabled() =3D=3D enabled)
+>  		return 0;
+
+Does this early return cause a memory leak if kdamond stops internally?
+
+If kdamond stops internally, damon_is_running() will return false, causing
+damon_stat_enabled() to also return false. However, damon_stat_context
+remains allocated.
+
+If a user subsequently writes 'N' to the enabled parameter to clean up,
+damon_stat_enabled() =3D=3D enabled evaluates to false =3D=3D false. This t=
+riggers
+the early return here, bypassing damon_stat_stop() which would have
+called damon_destroy_ctx(damon_stat_context) to free the memory.
+
+Similarly, if a user writes 'Y' to restart the module, damon_stat_start()
+will be called. Looking at damon_stat_start(), it allocates a new context
+by calling damon_stat_build_ctx() and overwrites the damon_stat_context
+pointer without freeing the previous one.
+
+Can this leak the context in both scenarios?
+
+> =20
+>  	if (!damon_initialized())
+> @@ -293,16 +302,17 @@ static int damon_stat_enabled_store(
+>  		 */
 >  		return 0;
 > =20
->  	/* Called before init function.  The function will handle this. */
->  	if (!damon_initialized())
-> -		goto set_param_out;
-> +		return 0;
-> =20
-> -	err =3D damon_lru_sort_turn(enable);
-> -	if (err)
+> -	if (enabled) {
+> -		err =3D damon_stat_start();
+> -		if (err)
+> -			enabled =3D false;
 > -		return err;
-> +	return damon_lru_sort_turn(enabled);
-
-Could writing to this parameter cause a kernel panic if the module failed to
-initialize during boot?
-
-If damon_lru_sort_init() fails, the static ctx variable remains NULL. Becau=
-se
-the sysfs parameters are registered early, they remain exposed and writable
-even after an initialization failure.
-
-Writing true to the enabled parameter bypasses the damon_initialized() check
-since it only checks the core DAMON cache, not this module's ctx.
-
-Execution would then follow this path:
-
-damon_lru_sort_enabled_store()
-  damon_lru_sort_turn(true)
-    damon_lru_sort_apply_parameters()
-      damon_commit_ctx(ctx, param_ctx)
-
-Since ctx is NULL, wouldn't damon_commit_ctx() crash when it tries to
-dereference it? Should there be an explicit check for !ctx before attempting
-to apply parameters or turn on the feature?
-
-> +}
+> -	}
+> +	if (enabled)
+> +		return damon_stat_start();
+>  	damon_stat_stop();
+>  	return 0;
+>  }
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260418222758.3979=
-5-1-sj@kernel.org?part=3D2
+5-1-sj@kernel.org?part=3D3
