@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C66A32DC791
-	for <damon@lists.linux.dev>; Sat, 18 Apr 2026 15:14:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39481142E83
+	for <damon@lists.linux.dev>; Sat, 18 Apr 2026 15:37:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776525281; cv=none; b=EBO9m8xARZoiMJ53uVZTgEuQZzpFNPKCfZ20aH0AOggkn6jcKWPk0OWhcyLe4ACPv82ujKSTVVWTOvul4fjJy41D+Y8DKad0KnUpBRqsnRDb9ca34WIMnhwL8hSbk913uaNEgrq3C6EloxPktVYvYhqQKpS/zakzSZ+6RrwD2nM=
+	t=1776526625; cv=none; b=W3piNTjN2IV+pWqc3XK4aA4KlHO+aGrHozPJ+yr4xEffJyw2I9PaQRshsy/O9GIPWDPvAhOnqcMra8qdQB7nfydyzsal9s3YIc0xMg4JbV6E7tXTUzfpHhdxPzePMnTWlL5yEi/KBzwSi/lThD2fEyuAutI6DvD6s1UzQjEg/ac=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776525281; c=relaxed/simple;
-	bh=i9ZPojtKJTOBSVd8ECgd2ywsHFh0DMwOGHYKCayP5+o=;
+	s=arc-20240116; t=1776526625; c=relaxed/simple;
+	bh=tC+J4W6RtwR2t3yNcRxiFt905cB4YuFvO9IfB2DSEI0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UN5qxil1Hri/IiXO88vW6sfzPP6JSFPwqfMZ3ctbJbKsHq6Tjb426oUr6B0Qw4Z6c+cyEZwJ1LPu+MaRaDPQuwFkea532flRIHqwnis4rMqMVdRgFyYhRyMaoQolngL2/dIt2UsakGdA12aA6zFFPlltpw7ttAscbEns2fS6MI8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EFD74qGm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KoSNzmr38CBp5KjCbQwlFNL+383xULq4QHNMdMSrGDa/iWm+pRgmQmeKwsd5QiBRm8jMYeAxzntT0r5E3Mna5U7PK36pbUHpKocCWxnFjjdratgwNSlB3usyfINrEcNVhJ6tGy8odRNJtAV9ELo3MgaA/WQkZrigrDtPUz7D5f8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TkeZcxFy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EFD74qGm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B158C2BCB4;
-	Sat, 18 Apr 2026 15:14:41 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TkeZcxFy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0C53C19424;
+	Sat, 18 Apr 2026 15:37:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776525281;
-	bh=i9ZPojtKJTOBSVd8ECgd2ywsHFh0DMwOGHYKCayP5+o=;
+	s=k20201202; t=1776526624;
+	bh=tC+J4W6RtwR2t3yNcRxiFt905cB4YuFvO9IfB2DSEI0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EFD74qGm5C/bOFIizVjyVYdB2/Z8B2r+1TRZ+1N225S+44+AOjJgPkXQKR5sC2rgs
-	 pUKA2+p/4HZxyPwwG0hAXVG8OYkBlNE1eX/MpeGaEaBkMkqnoGDOU7HyY92uPlidjN
-	 hVL8ibPMUnlJ4nZwGYcbubgJkS8Eh8ErmHggB0+8nnPQPaFSYdc8DGxHyl902HREiH
-	 langCdlK3i4sNOw1BYCNK6A+v1EY49V5BYGOIxUbobTmKlHDjQZiAwWvscCf9a/aP6
-	 kHF7qgF2zpnMp6weubvpQ30Q4jqtmy1xzqwNHbedm1jtvSt6tvnj2MHik0Q70yIuyB
-	 KBMtIzC+ygAjA==
+	b=TkeZcxFy7sqSwbmr7xCNmnUXXqf+7UI9MX9jd577/QgnUT5SkGMFXCdZB0cdQQ+8s
+	 LLs/DetL0Ph+lG8hEdnMDl4AQDiUNTEsgehohS5iQYo7s5izG4jz4J6RBxwkjURnGv
+	 ygc1pgcraZxTw/WVICmr1VspGvaia522pOsnW0TTXGBYtFBJr0BcmGdjAmeDXBRT1q
+	 BWCA4TKhSWfjDBwuZ4IOtxV+Ok6zQ3iR8CDU2kmoa9L0L/pNEQcbChTpj4U5SIlykt
+	 5fwL2P1ikAae5gqdDxpoj8q0lEIN1V97cng/qC8deNNcrA0PYceuufE8fO0QZdyn25
+	 oE9RPdEaXxVSw==
 From: SeongJae Park <sj@kernel.org>
 To: sashiko-bot@kernel.org
 Cc: SeongJae Park <sj@kernel.org>,
 	damon@lists.linux.dev
-Subject: Re: [RFC PATCH v2 1/3] mm/damon/reclaim: detect and use fresh enabled and kdamond_pid values
-Date: Sat, 18 Apr 2026 08:14:37 -0700
-Message-ID: <20260418151438.787-1-sj@kernel.org>
+Subject: Re: [RFC PATCH v2 2/3] mm/damon/lru_sort: detect and use fresh enabled and kdamond_pid values
+Date: Sat, 18 Apr 2026 08:36:55 -0700
+Message-ID: <20260418153656.834-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260418045715.EAF7EC2BCB5@smtp.kernel.org>
+In-Reply-To: <20260418053059.E80C6C2BCB0@smtp.kernel.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -44,111 +44,145 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Sat, 18 Apr 2026 04:57:15 +0000 sashiko-bot@kernel.org wrote:
+On Sat, 18 Apr 2026 05:30:59 +0000 sashiko-bot@kernel.org wrote:
 
-> Sashiko AI review found 1 potential issue(s):
-> - [Medium] Command-line override for the 'enabled' parameter is broken: passing 'enabled=N' after 'enabled=Y' fails to disable the module.
+> Sashiko AI review found 3 potential issue(s):
+> - [Critical] Missing `.set` callback in `kdamond_pid_param_ops` will cause a kernel panic if the parameter is passed at boot or via modprobe.
+
+I will fix this in the next revision.
+
+> - [High] Loading the module with `enabled=Y` causes a NULL pointer dereference on `ctx`.
+> - [High] Concurrent calls to `damon_lru_sort_turn()` lack locking, leading to list corruption and kernel panics.
+
+Above two are valid points but not caused by this patch.  I will separately
+work for those.
+
 > --
 > 
-> commit 6f46639cc34c6ddcbecc0aba915988dff8f651de
+> commit 905c8d84b8daa6d4ddb6fc214e81e98101608d53
 > Author: SeongJae Park <sj@kernel.org>
 > 
-> mm/damon/reclaim: detect and use fresh enabled and kdamond_pid values
+> mm/damon/lru_sort: detect and use fresh enabled and kdamond_pid values
 > 
-> This commit updates DAMON_RECLAIM to dynamically query the running status
-> of kdamond instead of relying on cached parameter values. This ensures
-> that when kdamond stops unexpectedly, the enabled and kdamond_pid parameters
-> reflect the correct state.
+> This commit updates DAMON_LRU_SORT to dynamically check the running status
+> of kdamond instead of relying on cached parameter values. This ensures the
+> status correctly reflects when kdamond stops due to events other than
+> explicit user requests.
 > 
-> > diff --git a/mm/damon/reclaim.c b/mm/damon/reclaim.c
-> > index 86da147786583..46660c8d4d422 100644
-> > --- a/mm/damon/reclaim.c
-> > +++ b/mm/damon/reclaim.c
+> > diff --git a/mm/damon/lru_sort.c b/mm/damon/lru_sort.c
+> > index 554559d729760..d284cb336b662 100644
+> > --- a/mm/damon/lru_sort.c
+> > +++ b/mm/damon/lru_sort.c
+> [ ... ]
+> > @@ -386,12 +377,8 @@ static int damon_lru_sort_turn(bool on)
+> >  {
+> >  	int err;
+> >  
+> > -	if (!on) {
+> > -		err = damon_stop(&ctx, 1);
+> > -		if (!err)
+> > -			kdamond_pid = -1;
+> > -		return err;
+> > -	}
+> > +	if (!on)
+> > +		return damon_stop(&ctx, 1);
+> 
+> Could concurrent calls to this function lead to list corruption? 
+> 
+> If a user writes 'Y' to the enabled parameter via sysfs at the same
+> time damon_lru_sort_init() calls damon_lru_sort_turn(true) during module
+> initialization, damon_commit_ctx() might concurrently modify ctx->schemes
+> and ctx->targets without internal locking.
+
+Hmm, good finding.  But the race existis even before this patch.  I will
+separately work on this.
+
 > 
 > [ ... ]
-> 
-> > @@ -332,10 +316,16 @@ module_param_cb(addr_unit, &addr_unit_param_ops, &addr_unit, 0600);
+> > @@ -430,10 +414,16 @@ module_param_cb(addr_unit, &addr_unit_param_ops, &addr_unit, 0600);
 > >  MODULE_PARM_DESC(addr_unit,
-> >  	"Scale factor for DAMON_RECLAIM to ops address conversion (default: 1)");
+> >  	"Scale factor for DAMON_LRU_SORT to ops address conversion (default: 1)");
 > >  
-> > +static bool damon_reclaim_enabled(void)
+> > +static bool damon_lru_sort_enabled(void)
 > > +{
 > > +	if (!ctx)
 > > +		return false;
 > > +	return damon_is_running(ctx);
 > > +}
 > > +
-> >  static int damon_reclaim_enabled_store(const char *val,
+> >  static int damon_lru_sort_enabled_store(const char *val,
 > >  		const struct kernel_param *kp)
 > >  {
 > > -	bool is_enabled = enabled;
 > >  	bool enable;
 > >  	int err;
-> >  
-> > @@ -343,7 +333,7 @@ static int damon_reclaim_enabled_store(const char *val,
-> >  	if (err)
-> >  		return err;
-> >  
-> > -	if (is_enabled == enable)
-> > +	if (damon_reclaim_enabled() == enable)
-> >  		return 0;
 > 
-> Does changing this check break kernel command-line overrides during boot?
+> Is it possible to hit a NULL pointer dereference on ctx when loading the
+> module with enabled=Y? 
 > 
-> During early boot when command-line parameters are parsed, ctx is not yet
-> allocated, so damon_reclaim_enabled() unconditionally returns false.
-> 
-> If a system has damon_reclaim.enabled=Y in the boot parameters and an
-> administrator appends damon_reclaim.enabled=N to override it, the first
-> evaluation correctly sets the internal enabled flag to true.
-> 
-> However, when the second parameter (N) is processed, enable is false.
-> Since damon_reclaim_enabled() also returns false, the condition matches
-> and the function returns 0 immediately. The internal enabled variable is
-> never updated to false, causing the module to start unexpectedly when
-> damon_reclaim_init() runs.
-> 
-> Should this keep checking the internal enabled variable during early boot?
+> If the DAMON core is already initialized (e.g. built-in), damon_initialized()
+> would return true, bypassing the early exit in this function. This could
+> lead to calling damon_lru_sort_turn(true) before damon_lru_sort_init() has
+> run, causing damon_commit_ctx() to operate on a NULL ctx pointer.
 
-I don't think such override is common, but I also think there is no harm at
-making the old behavior be kept.  I will address this like below, in the next
-revision.
+Hmm, good finding.  This is a race of a type that is same to the above one.
+And again the race exists even before this patch.  I will separately work on
+this.
+
+> 
+> [ ... ]
+> > +static const struct kernel_param_ops kdamond_pid_param_ops = {
+> > +	.get = damon_lru_sort_kdamond_pid_load,
+> > +};
+> > +
+> > +/*
+> > + * PID of the DAMON thread
+> > + *
+> > + * If DAMON_LRU_SORT is enabled, this becomes the PID of the worker thread.
+> > + * Else, -1.
+> > + */
+> > +module_param_cb(kdamond_pid, &kdamond_pid_param_ops, NULL, 0400);
+> 
+> Does this cause a NULL pointer dereference if the parameter is passed at
+> boot or via modprobe?
+> 
+> The kernel parameter parsing code in parse_one() doesn't check if .set is
+> NULL before invoking it:
+> 
+>     err = params[i].ops->set(val, &params[i]);
+> 
+> A dummy .set function returning an error might be needed to prevent a NULL
+> pointer dereference when parsing command line arguments.
+
+Good point.  I will fix this in the next revision like below.
 
 '''
 --- a/mm/damon/reclaim.c
 +++ b/mm/damon/reclaim.c
-@@ -381,27 +381,20 @@ static bool damon_reclaim_enabled(void)
- static int damon_reclaim_enabled_store(const char *val,
+@@ -412,6 +412,16 @@ module_param_cb(enabled, &enabled_param_ops, &enabled, 0600);
+ MODULE_PARM_DESC(enabled,
+        "Enable or disable DAMON_RECLAIM (default: disabled)");
+
++static int damon_reclaim_kdamond_pid_store(const char *val,
++               const struct kernel_param *kp)
++{
++       /*
++        * kdamond_pid is read-only, but kernel command line could write it.
++        * Do nothing here.
++        */
++       return 0;
++}
++
+ static int damon_reclaim_kdamond_pid_load(char *buffer,
                 const struct kernel_param *kp)
  {
--       bool enable;
-        int err;
-
--       err = kstrtobool(val, &enable);
-+       err = kstrtobool(val, &enabled);
-        if (err)
-                return err;
-
--       if (damon_reclaim_enabled() == enable)
-+       if (damon_reclaim_enabled() == enabled)
-                return 0;
-
-        /* Called before init function.  The function will handle this. */
-        if (!damon_initialized())
--               goto set_param_out;
--
--       err = damon_reclaim_turn(enable);
--       if (err)
--               return err;
-+               return 0;
-
--set_param_out:
--       enabled = enable;
--       return err;
-+       return damon_reclaim_turn(enabled);
+@@ -426,6 +436,7 @@ static int damon_reclaim_kdamond_pid_load(char *buffer,
  }
 
- static int damon_reclaim_enabled_load(char *buffer,
+ static const struct kernel_param_ops kdamond_pid_param_ops = {
++       .set = damon_reclaim_kdamond_pid_store,
+        .get = damon_reclaim_kdamond_pid_load,
+ };
 '''
 
 
