@@ -1,108 +1,158 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9693D23183B
-	for <damon@lists.linux.dev>; Sat, 18 Apr 2026 05:54:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C66A32DC791
+	for <damon@lists.linux.dev>; Sat, 18 Apr 2026 15:14:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776491657; cv=none; b=jewjpehmGFy1ofxkBgvFDSQ+Gth7wTEFQLVuC77cijqbZzGa6I4rZUqlAHEB+Bmen633XHgnC+A2AhpOegkCHIKRI81z2abgkRMrxSWqgzphKghuQNwd1SncsTMrtjwMRh/0lSFrCyigxyFOG8xD6lToqORaekt5p4d0gxAu5Xk=
+	t=1776525281; cv=none; b=EBO9m8xARZoiMJ53uVZTgEuQZzpFNPKCfZ20aH0AOggkn6jcKWPk0OWhcyLe4ACPv82ujKSTVVWTOvul4fjJy41D+Y8DKad0KnUpBRqsnRDb9ca34WIMnhwL8hSbk913uaNEgrq3C6EloxPktVYvYhqQKpS/zakzSZ+6RrwD2nM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776491657; c=relaxed/simple;
-	bh=o56ZBDFDXhXWLoxG7wvLElaBW7F0/EoBAJdytdQiDtc=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=i6ymJ42mwqsS75ELbhCx4BoqvciyZawn2qjggeUnirBkpEdmLLM+CVAUxO4Ta2PE5tWv8uF46VbFo+6kqaTR/txxSeERJ2hsAZ3OUWsHvEdniVhEghxYNj5gcykOjyXS0Nyaul3a+TLsK+iI5VlCYRazWv6EY/9Xmx0MzMgGSDU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dbojrf8L; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1776525281; c=relaxed/simple;
+	bh=i9ZPojtKJTOBSVd8ECgd2ywsHFh0DMwOGHYKCayP5+o=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=UN5qxil1Hri/IiXO88vW6sfzPP6JSFPwqfMZ3ctbJbKsHq6Tjb426oUr6B0Qw4Z6c+cyEZwJ1LPu+MaRaDPQuwFkea532flRIHqwnis4rMqMVdRgFyYhRyMaoQolngL2/dIt2UsakGdA12aA6zFFPlltpw7ttAscbEns2fS6MI8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EFD74qGm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dbojrf8L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1399AC19424;
-	Sat, 18 Apr 2026 05:54:17 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EFD74qGm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B158C2BCB4;
+	Sat, 18 Apr 2026 15:14:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776491657;
-	bh=o56ZBDFDXhXWLoxG7wvLElaBW7F0/EoBAJdytdQiDtc=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date:From;
-	b=dbojrf8LiusXGThVNwGJVRv5vDISKTxFiDlznQNM5zztj8ZHokW6kiSm1STAVz7WA
-	 rgEAriXVHu53exGHET96OcGPAV0unvpWmHCe4l4Xn5FIcnwkfsnCZgzR8E7CWcSIeU
-	 sc3FEc1/83Ex0+zeiN4hfBAF9JXfY1UO1Bd/eRipfSdIGCHVVd4S3ySJDJ1J5bMswI
-	 so/kipCyC6fogciK/ZbyZm0rDrPbIgWIt5mtJ/DCHHsl30gD8EEXQXih3CWNEBVsHJ
-	 7fbjRCx1cbuDL2Ow7nQu5Gd7ssSG40Z7D5MH6e1K6HQ8+DWmou4jUvHu8+M0BaQizm
-	 bNWopP5wWL3qw==
-From: sashiko-bot@kernel.org
-Subject: Re: [RFC PATCH v2 3/3] mm/damon/stat: detect and use fresh enabled
- value
-Reply-To: sashiko@lists.linux.dev
-To: "SeongJae Park" <sj@kernel.org>
-Cc: damon@lists.linux.dev
-In-Reply-To: <20260418014439.6353-4-sj@kernel.org>
-References: <20260418014439.6353-4-sj@kernel.org>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Sat, 18 Apr 2026 05:54:16 +0000
-Message-Id: <20260418055417.1399AC19424@smtp.kernel.org>
+	s=k20201202; t=1776525281;
+	bh=i9ZPojtKJTOBSVd8ECgd2ywsHFh0DMwOGHYKCayP5+o=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=EFD74qGm5C/bOFIizVjyVYdB2/Z8B2r+1TRZ+1N225S+44+AOjJgPkXQKR5sC2rgs
+	 pUKA2+p/4HZxyPwwG0hAXVG8OYkBlNE1eX/MpeGaEaBkMkqnoGDOU7HyY92uPlidjN
+	 hVL8ibPMUnlJ4nZwGYcbubgJkS8Eh8ErmHggB0+8nnPQPaFSYdc8DGxHyl902HREiH
+	 langCdlK3i4sNOw1BYCNK6A+v1EY49V5BYGOIxUbobTmKlHDjQZiAwWvscCf9a/aP6
+	 kHF7qgF2zpnMp6weubvpQ30Q4jqtmy1xzqwNHbedm1jtvSt6tvnj2MHik0Q70yIuyB
+	 KBMtIzC+ygAjA==
+From: SeongJae Park <sj@kernel.org>
+To: sashiko-bot@kernel.org
+Cc: SeongJae Park <sj@kernel.org>,
+	damon@lists.linux.dev
+Subject: Re: [RFC PATCH v2 1/3] mm/damon/reclaim: detect and use fresh enabled and kdamond_pid values
+Date: Sat, 18 Apr 2026 08:14:37 -0700
+Message-ID: <20260418151438.787-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260418045715.EAF7EC2BCB5@smtp.kernel.org>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-Sashiko AI review found 1 potential issue(s):
-- [Medium] Leaking damon_stat_context when explicitly disabling DAMON_STAT =
-after an unexpected kdamond termination.
---
+On Sat, 18 Apr 2026 04:57:15 +0000 sashiko-bot@kernel.org wrote:
 
-commit 4bf999258ec2f00a1ac02dbd77ac9f923e38bd2f
-Author: SeongJae Park <sj@kernel.org>
+> Sashiko AI review found 1 potential issue(s):
+> - [Medium] Command-line override for the 'enabled' parameter is broken: passing 'enabled=N' after 'enabled=Y' fails to disable the module.
+> --
+> 
+> commit 6f46639cc34c6ddcbecc0aba915988dff8f651de
+> Author: SeongJae Park <sj@kernel.org>
+> 
+> mm/damon/reclaim: detect and use fresh enabled and kdamond_pid values
+> 
+> This commit updates DAMON_RECLAIM to dynamically query the running status
+> of kdamond instead of relying on cached parameter values. This ensures
+> that when kdamond stops unexpectedly, the enabled and kdamond_pid parameters
+> reflect the correct state.
+> 
+> > diff --git a/mm/damon/reclaim.c b/mm/damon/reclaim.c
+> > index 86da147786583..46660c8d4d422 100644
+> > --- a/mm/damon/reclaim.c
+> > +++ b/mm/damon/reclaim.c
+> 
+> [ ... ]
+> 
+> > @@ -332,10 +316,16 @@ module_param_cb(addr_unit, &addr_unit_param_ops, &addr_unit, 0600);
+> >  MODULE_PARM_DESC(addr_unit,
+> >  	"Scale factor for DAMON_RECLAIM to ops address conversion (default: 1)");
+> >  
+> > +static bool damon_reclaim_enabled(void)
+> > +{
+> > +	if (!ctx)
+> > +		return false;
+> > +	return damon_is_running(ctx);
+> > +}
+> > +
+> >  static int damon_reclaim_enabled_store(const char *val,
+> >  		const struct kernel_param *kp)
+> >  {
+> > -	bool is_enabled = enabled;
+> >  	bool enable;
+> >  	int err;
+> >  
+> > @@ -343,7 +333,7 @@ static int damon_reclaim_enabled_store(const char *val,
+> >  	if (err)
+> >  		return err;
+> >  
+> > -	if (is_enabled == enable)
+> > +	if (damon_reclaim_enabled() == enable)
+> >  		return 0;
+> 
+> Does changing this check break kernel command-line overrides during boot?
+> 
+> During early boot when command-line parameters are parsed, ctx is not yet
+> allocated, so damon_reclaim_enabled() unconditionally returns false.
+> 
+> If a system has damon_reclaim.enabled=Y in the boot parameters and an
+> administrator appends damon_reclaim.enabled=N to override it, the first
+> evaluation correctly sets the internal enabled flag to true.
+> 
+> However, when the second parameter (N) is processed, enable is false.
+> Since damon_reclaim_enabled() also returns false, the condition matches
+> and the function returns 0 immediately. The internal enabled variable is
+> never updated to false, causing the module to start unexpectedly when
+> damon_reclaim_init() runs.
+> 
+> Should this keep checking the internal enabled variable during early boot?
 
-mm/damon/stat: detect and use fresh enabled value
+I don't think such override is common, but I also think there is no harm at
+making the old behavior be kept.  I will address this like below, in the next
+revision.
 
-This commit modifies DAMON_STAT to dynamically check the kdamond status
-when the enabled parameter is requested, rather than relying on a cached
-parameter value. This ensures users do not see stale values if kdamond
-stops unexpectedly.
+'''
+--- a/mm/damon/reclaim.c
++++ b/mm/damon/reclaim.c
+@@ -381,27 +381,20 @@ static bool damon_reclaim_enabled(void)
+ static int damon_reclaim_enabled_store(const char *val,
+                const struct kernel_param *kp)
+ {
+-       bool enable;
+        int err;
 
-> diff --git a/mm/damon/stat.c b/mm/damon/stat.c
-> index 99ba346f9e325..3951b762cbddf 100644
-> --- a/mm/damon/stat.c
-> +++ b/mm/damon/stat.c
-[ ... ]
-> @@ -273,17 +276,23 @@ static void damon_stat_stop(void)
->  	damon_stat_context =3D NULL;
->  }
-> =20
-> +static bool damon_stat_enabled(void)
-> +{
-> +	if (!damon_stat_context)
-> +		return false;
-> +	return damon_is_running(damon_stat_context);
-> +}
-> +
->  static int damon_stat_enabled_store(
->  		const char *val, const struct kernel_param *kp)
->  {
-> -	bool is_enabled =3D enabled;
->  	int err;
-> =20
->  	err =3D kstrtobool(val, &enabled);
->  	if (err)
->  		return err;
-> =20
-> -	if (is_enabled =3D=3D enabled)
-> +	if (damon_stat_enabled() =3D=3D enabled)
->  		return 0;
+-       err = kstrtobool(val, &enable);
++       err = kstrtobool(val, &enabled);
+        if (err)
+                return err;
 
-Could this leak damon_stat_context if the kdamond thread stops unexpectedly?
+-       if (damon_reclaim_enabled() == enable)
++       if (damon_reclaim_enabled() == enabled)
+                return 0;
 
-If kdamond terminates due to an internal failure,
-damon_is_running(damon_stat_context) returns false, making
-damon_stat_enabled() also return false.
+        /* Called before init function.  The function will handle this. */
+        if (!damon_initialized())
+-               goto set_param_out;
+-
+-       err = damon_reclaim_turn(enable);
+-       if (err)
+-               return err;
++               return 0;
 
-If a user then explicitly disables DAMON_STAT by writing 'N' to the enabled
-parameter, both damon_stat_enabled() and enabled would be false. This causes
-the function to return 0 early, bypassing the call to damon_stat_stop().
+-set_param_out:
+-       enabled = enable;
+-       return err;
++       return damon_reclaim_turn(enabled);
+ }
 
-Since damon_stat_stop() is the function responsible for invoking
-damon_destroy_ctx() and setting damon_stat_context to NULL, does this bypass
-leave the context structure allocated?
+ static int damon_reclaim_enabled_load(char *buffer,
+'''
 
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260418014439.6353=
--1-sj@kernel.org?part=3D3
+
+Thanks,
+SJ
+
+[...]
