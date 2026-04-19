@@ -1,156 +1,146 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D779327B4F7;
-	Sun, 19 Apr 2026 16:10:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DB0213D503
+	for <damon@lists.linux.dev>; Sun, 19 Apr 2026 16:48:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776615012; cv=none; b=F6ySKGFv7hXpoTVs+ORS2FEaxqsBvV1IJfKJC1QbMRUEOaahfoX1dCAwd0smhwaGBKGuNgD3sTkEpScSJnoeAZwsUGQ2NCCq26Ph0AhTtYJXiqPtZs46MeKypFRvKK9GQHn8Hl9RnvlF0EBDOqmpcFWPuihq0RiFYbCAxR2f/Fo=
+	t=1776617329; cv=none; b=tWiMMn1mAlOQtyw+ARNU3eQjm79vgv69Vh7uqcD9ntJwz8stYDlBmq2B0HFTFzjRYDJLhaqRL3F0UOH4Os6ThTs553knJN6DXUoSa+w5XPstKRHsSoThZFUAnhA1QWF6eM95ItrnFUs7pNWrWTwiTDQb6/ubHodZV9h1vgt9SP0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776615012; c=relaxed/simple;
-	bh=rIOaDq/KHXQ6SzD1AFFL4LR91YKZhChannZeLdJ236k=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mWQoDR12VEDacLUivlLQ5wZj0dPCXU28tnGf2ZZqct8OegENC7QwSS1L2IN0Pse9ZOj8XrjzGQADWIB+zBwiN/7J3XD+/nBMjrEoxaW04ajLVYYmjCiiRYuAVYkYcYgrqK+1MnRjyH9s1UoER8l2Xr3Z3N4ZqzOMHLaanAUXta8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=V/F6L+rD; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1776617329; c=relaxed/simple;
+	bh=ewv+eD2RygO547e2azVlnZiwek3Se2sd/i6LdLb2hig=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=upz5uSE596GvzOBe4VVx2EuWZ+yYpBNucJA3/emiHJuxl67mgWxVd1p/JNGNhgK2ZMrA0Tper1wdlhr0YrBA6sHhNjaRdZYclvZeYxsmQ5pP85//7h1sxZzfHvQ1FaFE9przs86TmlWqCainQ/FkTFolDxAvC2BmWfe8kuprlc0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=K3jh1XFp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="V/F6L+rD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77892C2BCAF;
-	Sun, 19 Apr 2026 16:10:12 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="K3jh1XFp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 766D9C2BCAF;
+	Sun, 19 Apr 2026 16:48:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776615012;
-	bh=rIOaDq/KHXQ6SzD1AFFL4LR91YKZhChannZeLdJ236k=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V/F6L+rDzvl2gUnTte2b1pXCBREgpl8MSm54iG5JOxUR3qhDYp4bkHkWohjIP26Bj
-	 gSXNwAalq2hNRlHvoczkAPcqlnAag25yct3Iw6HNGwmO+DCvugOlhNHBJXNyG7mznt
-	 EkOEYKjikzKIa8pruVhZ83xlrwezSNFEX6QBMqA58EwheInlFegTK67SZ4hlu1EV6e
-	 XlAu5Wy8FR/PfGfp/1FCgtlcuqWuB8UegsnP/htRYLRNg6qu2iurV9pjqyzHBxQ13u
-	 gicTsL+a6Eda6RLU2Xe770O28vHYBEj+nDDTt9GiLHXvjfNrM9AX6E1JRy8HXqzYZ1
-	 ZfLPTuCFXFPlQ==
-From: SeongJae Park <sj@kernel.org>
-To: Andrew Morton <akpm@linux-foundation.org>
-Cc: SeongJae Park <sj@kernel.org>,
-	"# 6 . 17 . x" <stable@vger.kernel.org>,
-	damon@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org
-Subject: [PATCH v3 3/3] mm/damon/stat: detect and use fresh enabled value
-Date: Sun, 19 Apr 2026 09:10:02 -0700
-Message-ID: <20260419161003.79176-4-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260419161003.79176-1-sj@kernel.org>
-References: <20260419161003.79176-1-sj@kernel.org>
+	s=k20201202; t=1776617328;
+	bh=ewv+eD2RygO547e2azVlnZiwek3Se2sd/i6LdLb2hig=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date:From;
+	b=K3jh1XFpDVFsc81y6g1DWDKnw865dWeZiB8v6j+Wg0I43gaFKZ90JWkcoePjTOxKB
+	 bymO2QbqaV1v50px2ycThc6IL6m8IxX1KgstQYc1n9idFzhT0vu5NZNHQf8X6l2ffU
+	 3+l73TYSzLEyt+Q6iyWpLrUqH1n0mq0xnNMU+ivyEUkm08CoAvYlQBUSvAuP367Uex
+	 3vmPp9ND5Vk/E4vJWqVrrx5m2hB/WoLiPFZYaCpzgOwMnCTCkqsccSEw9Vw23ouPsk
+	 kXq22k326jr6BrTOvWPpEDpRauadVyH4AUo8RF0bJm6+AjQ/nue7HxhKmM7rHJTNBd
+	 IS4yH0JO3eDbg==
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH v3 1/3] mm/damon/reclaim: detect and use fresh enabled
+ and kdamond_pid values
+Reply-To: sashiko@lists.linux.dev
+To: "SeongJae Park" <sj@kernel.org>
+Cc: damon@lists.linux.dev
+In-Reply-To: <20260419161003.79176-2-sj@kernel.org>
+References: <20260419161003.79176-2-sj@kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Sun, 19 Apr 2026 16:48:47 +0000
+Message-Id: <20260419164848.766D9C2BCAF@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-DAMON_STAT updates 'enabled' parameter value, which represents the
-running status of its kdamond, when the user explicitly requests
-start/stop of the kdamond.  The kdamond can, however, be stopped even if
-the user explicitly requested the stop, if ctx->regions_score_histogram
-allocation failure at beginning of the execution of the kdamond.  Hence,
-if the kdamond is stopped by the allocation failure, the value of the
-parameter can be stale.
+Sashiko AI review found 1 potential issue(s):
+- [High] Writing to the `enabled` sysfs parameter can cause a NULL pointer =
+dereference if `damon_reclaim_init()` failed during boot.
+--
 
-Users could show the stale value and be confused.  The problem will only
-rarely happen in real and common setups because the allocation is
-arguably too small to fail.  Also, unlike the similar bugs that are now
-fixed in DAMON_RECLAIM and DAMON_LRU_SORT, kdamond can be restarted in
-this case, because DAMON_STAT force-updates the enabled parameter value
-for user inputs.  The bug is a bug, though.
+commit d88cdacb9c44c0e85a70a745ea16a47c24b53355
+Author: SeongJae Park <sj@kernel.org>
 
-The issue stems from the fact that there are multiple events that can
-change the status, and following all the events is challenging.
-Dynamically detect and use the fresh status for the parameters when
-those are requested.
+mm/damon/reclaim: detect and use fresh enabled and kdamond_pid values
 
-The issue was dicovered [1] by Sashiko.
+This commit fixes an issue where the 'enabled' and 'kdamond_pid' parameter
+values can become stale if the kdamond thread stops unintentionally. It
+updates the parameter accessors to dynamically detect and return the fresh
+status from the DAMON context.
 
-[1] https://lore.kernel.org/20260416040602.88665-1-sj@kernel.org
+Cc: <stable@vger.kernel.org> # 5.19.x
 
-Fixes: 369c415e6073 ("mm/damon: introduce DAMON_STAT module")
-Cc: <stable@vger.kernel.org> # 6.17.x
-Signed-off-by: SeongJae Park <sj@kernel.org>
----
- mm/damon/stat.c | 30 ++++++++++++++++++++----------
- 1 file changed, 20 insertions(+), 10 deletions(-)
+> diff --git a/mm/damon/reclaim.c b/mm/damon/reclaim.c
+> index 86da147786583..fe7fce26cf6ce 100644
+> --- a/mm/damon/reclaim.c
+> +++ b/mm/damon/reclaim.c
 
-diff --git a/mm/damon/stat.c b/mm/damon/stat.c
-index 99ba346f9e325..3951b762cbddf 100644
---- a/mm/damon/stat.c
-+++ b/mm/damon/stat.c
-@@ -19,14 +19,17 @@
- static int damon_stat_enabled_store(
- 		const char *val, const struct kernel_param *kp);
- 
-+static int damon_stat_enabled_load(char *buffer,
-+		const struct kernel_param *kp);
-+
- static const struct kernel_param_ops enabled_param_ops = {
- 	.set = damon_stat_enabled_store,
--	.get = param_get_bool,
-+	.get = damon_stat_enabled_load,
- };
- 
- static bool enabled __read_mostly = IS_ENABLED(
- 	CONFIG_DAMON_STAT_ENABLED_DEFAULT);
--module_param_cb(enabled, &enabled_param_ops, &enabled, 0600);
-+module_param_cb(enabled, &enabled_param_ops, NULL, 0600);
- MODULE_PARM_DESC(enabled, "Enable of disable DAMON_STAT");
- 
- static unsigned long estimated_memory_bandwidth __read_mostly;
-@@ -273,17 +276,23 @@ static void damon_stat_stop(void)
- 	damon_stat_context = NULL;
- }
- 
-+static bool damon_stat_enabled(void)
-+{
-+	if (!damon_stat_context)
-+		return false;
-+	return damon_is_running(damon_stat_context);
-+}
-+
- static int damon_stat_enabled_store(
- 		const char *val, const struct kernel_param *kp)
- {
--	bool is_enabled = enabled;
- 	int err;
- 
- 	err = kstrtobool(val, &enabled);
- 	if (err)
- 		return err;
- 
--	if (is_enabled == enabled)
-+	if (damon_stat_enabled() == enabled)
- 		return 0;
- 
- 	if (!damon_initialized())
-@@ -293,16 +302,17 @@ static int damon_stat_enabled_store(
- 		 */
- 		return 0;
- 
--	if (enabled) {
--		err = damon_stat_start();
--		if (err)
--			enabled = false;
--		return err;
--	}
-+	if (enabled)
-+		return damon_stat_start();
- 	damon_stat_stop();
- 	return 0;
- }
- 
-+static int damon_stat_enabled_load(char *buffer, const struct kernel_param *kp)
-+{
-+	return sprintf(buffer, "%c\n", damon_stat_enabled() ? 'Y' : 'N');
-+}
-+
- static int __init damon_stat_init(void)
- {
- 	int err = 0;
--- 
-2.47.3
+[ ... ]
+
+> @@ -332,42 +316,83 @@ module_param_cb(addr_unit, &addr_unit_param_ops, &a=
+ddr_unit, 0600);
+>  MODULE_PARM_DESC(addr_unit,
+>  	"Scale factor for DAMON_RECLAIM to ops address conversion (default: 1)"=
+);
+> =20
+> +static bool damon_reclaim_enabled(void)
+> +{
+> +	if (!ctx)
+> +		return false;
+> +	return damon_is_running(ctx);
+> +}
+> +
+>  static int damon_reclaim_enabled_store(const char *val,
+>  		const struct kernel_param *kp)
+>  {
+> -	bool is_enabled =3D enabled;
+> -	bool enable;
+>  	int err;
+> =20
+> -	err =3D kstrtobool(val, &enable);
+> +	err =3D kstrtobool(val, &enabled);
+>  	if (err)
+>  		return err;
+> =20
+> -	if (is_enabled =3D=3D enable)
+> +	if (damon_reclaim_enabled() =3D=3D enabled)
+>  		return 0;
+> =20
+>  	/* Called before init function.  The function will handle this. */
+>  	if (!damon_initialized())
+> -		goto set_param_out;
+> +		return 0;
+> =20
+> -	err =3D damon_reclaim_turn(enable);
+> -	if (err)
+> -		return err;
+> +	return damon_reclaim_turn(enabled);
+
+Can this result in a NULL pointer dereference if damon_reclaim_init() fails
+during boot?
+
+This issue existed previously and appears to still be present. If the init
+function fails (for example, due to a memory allocation failure), the global
+ctx pointer remains NULL.
+
+If a user later writes 'Y' to the enabled sysfs parameter, the following
+sequence seems possible:
+
+damon_reclaim_enabled_store()
+    damon_reclaim_enabled() returns false because ctx is NULL
+    damon_initialized() returns true because the core framework initialized
+    damon_reclaim_turn(true)
+        damon_reclaim_apply_parameters()
+            damon_commit_ctx(ctx, param_ctx)
+
+And then inside damon_commit_ctx():
+
+int damon_commit_ctx(struct damon_ctx *dst, struct damon_ctx *src)
+{
+    ...
+    dst->maybe_corrupted =3D true;
+    ...
+}
+
+Since dst is the global ctx pointer, could this crash the system if a
+local user writes to the sysfs parameter when ctx was never allocated?
+
+> -set_param_out:
+> -	enabled =3D enable;
+> -	return err;
+> +}
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260419161003.7917=
+6-1-sj@kernel.org?part=3D1
