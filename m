@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1074B40DFC2
-	for <damon@lists.linux.dev>; Sun, 19 Apr 2026 01:50:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A75140DFC2
+	for <damon@lists.linux.dev>; Sun, 19 Apr 2026 01:52:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776563406; cv=none; b=eM2yLNO9qp56gSFXLzWcK2iqKjzYDmCYY7AmMTXDSSV4Tgf9JGzho3pMFkO/eht5kguTyXbysoqH8nhxpfh/qFxzQQkoB6VyeweoI+6T9wKarN1ZW7ZI79BC+2GeSph7N/LHWF1I83/O45B4/2yFWskjo//UNyxYYYe9y1gfY/w=
+	t=1776563530; cv=none; b=Df5HRkLgO8C1Bmv0q3uaruzYoxsSe4EdYCYxdjqO0DkAsljW6fcmDNxu0NK378DZA3+yYSPA4wT/exPs4nGe0DKjLaJvG7dsz1VBGqqJzvQqw5krKxv1dzfskJX/ClK42oW8fd/Ni5Eo2S/1IA9UlDYpZeMpbo8vrgS50BG8+eg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776563406; c=relaxed/simple;
-	bh=PdltAUMgpRRwGEPqHHmGrxGzTgYY6sulnbYO49IyA0U=;
+	s=arc-20240116; t=1776563530; c=relaxed/simple;
+	bh=0qQTslq8Aa+XNzsGYllN5MCMiDFkeh95gidE05tSWjw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y2PyKJ1bquSFaO3pMAAFIduY2uQWL6hmTLbT7SU4wl9rRgyw1ZTydu/UYoH47BioEzFCGgnhjJuid2Gh9fJueckzQvx7noK7Wn5zZSmueKAWOU7U6SFZSfI1Uf11JNFO6wYEcvnht0l1SqoxyNgZ9PMGPgttWfqsQbYtnFmkOgM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tR9UpRx2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cKGnLcrI4ByB4vkUOCrZGstn6xtxkcyH8dHkhHfgYHqhIyvOun9GaZCu0LRCeSm7h/0FSQFZjfx8wveI/VG3GioFULWgiIV+lscYLv9/gw9tx+r48czfbevEJUjTf8zaZmIDOtuoE+vozpaZ9HC39ut7XpOsa01nmyou22Oo78E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gaNabmCz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tR9UpRx2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86597C19424;
-	Sun, 19 Apr 2026 01:50:05 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gaNabmCz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06818C19424;
+	Sun, 19 Apr 2026 01:52:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776563405;
-	bh=PdltAUMgpRRwGEPqHHmGrxGzTgYY6sulnbYO49IyA0U=;
+	s=k20201202; t=1776563530;
+	bh=0qQTslq8Aa+XNzsGYllN5MCMiDFkeh95gidE05tSWjw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tR9UpRx2sX/+FpjIk0dhjR3uZIL8PTJu4836bUuTnxZEBUWNqhtah8iOr112o6dNQ
-	 42hcYqjt7wZKRbMP35C5ldRfteLXh5+zBo1pKp3VrbJNiGL7fgh/e9eC6gLoU6U2ni
-	 3u2VSxUBMDq5swtIprNQovzoVgRziZwoj9Ka8cRVk7Ac1hqSv2/MNiufsjqYgeG59u
-	 CP+UACx/Qy1VC45MUhzitibWvxkwVuwZcoFu6AcgliwwDnwAOo7dP03Kouy/h/D8h1
-	 Nn6dOxJQkB3pKxCruVlDRjTTaktndPmfwENNO2X+LC0drBz+HaSljl26yFZuJlrhKk
-	 OV/rEu3c6xOgA==
+	b=gaNabmCzJn4mAtJefpCaVGM6+fnj3kF5LwF1G1vImtUfk7CVc13lAR52g505wwtNR
+	 dyeflNuMUXr74W99Y0X4Fx9yqxv2hgpeoaEa0lb70QqVnvS+mgeWrriP2QRqgbXDh9
+	 2J6UyP7RGi8dMhCr7e14/jifgAQ/ds2386LjlJKrRUK+AsJSNl8f2mZk8S8W9Mw8gC
+	 YrV2b43miQMp8PLQGcDVb9aZIMVX1EmRvwhEjMDavBsJMK8WxedgiPfxJSAFpFw601
+	 2yYckzjPgN5f6S2O0jpxA0ka4CU2eZ7T75T45dvOQJAs7E8C4rOdq6YBJb9fm6TSip
+	 cbJn8hmvrHRNw==
 From: SeongJae Park <sj@kernel.org>
 To: sashiko-bot@kernel.org
 Cc: SeongJae Park <sj@kernel.org>,
 	damon@lists.linux.dev
-Subject: Re: [RFC PATCH v2.1 2/3] mm/damon/lru_sort: detect and use fresh enabled and kdamond_pid values
-Date: Sat, 18 Apr 2026 18:49:53 -0700
-Message-ID: <20260419014954.991-1-sj@kernel.org>
+Subject: Re: [RFC PATCH v2.1 3/3] mm/damon/stat: detect and use fresh enabled value
+Date: Sat, 18 Apr 2026 18:52:00 -0700
+Message-ID: <20260419015200.1120-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260418232932.5CE8CC19424@smtp.kernel.org>
+In-Reply-To: <20260418235155.A4953C19424@smtp.kernel.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -44,15 +44,14 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-TL; DR: no blocker for this patch.
-
-On Sat, 18 Apr 2026 23:29:31 +0000 sashiko-bot@kernel.org wrote:
+On Sat, 18 Apr 2026 23:51:55 +0000 sashiko-bot@kernel.org wrote:
 
 > Sashiko AI review found 1 potential issue(s):
-> - [High] Writing to the `enabled` sysfs parameter causes a kernel panic if the module failed to initialize during boot.
+> - [High] Bypassing damon_stat_stop() and overwriting damon_stat_context causes a memory leak when explicitly disabling or restarting a kdamond thread that stopped internally.
 
-Good finding, but the bug is not caused by this patch.  I will separately work
-on the bug.
+That's wrong.  Refer to my previous reply [1] for more details.
+
+[1] https://lore.kernel.org/20260417000308.58975-1-sj@kernel.org
 
 
 Thanks,
