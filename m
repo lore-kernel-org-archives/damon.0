@@ -1,62 +1,124 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0FE32C0303
-	for <damon@lists.linux.dev>; Sun, 19 Apr 2026 16:52:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55F4B276050
+	for <damon@lists.linux.dev>; Sun, 19 Apr 2026 17:28:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776617545; cv=none; b=YkK9jkkMvSzJm7N2/RjZ3EmEIolIWVpAyR8lNbKcwfelkx0pUR4SQhyLdG3ZY3p0zuFz4PXGHQsaMlpSw0LWFeglTktHgPebHizJDWqudfVuVd8glfcJNAWys98yU69lYjc3sdbREMDy+oLYuzKKl99zSHRC2iqFrFEMcsXNe3A=
+	t=1776619698; cv=none; b=n6ptDjsQqXXGtip4HYBAGDkdte25tMCFfhcLOjtApZMdQNJasCVCWVoUrl10C4bc0L83BnBr1QAgQkcnC/nflzP4JqrCSeZWmAXM8qhGWYhbwhPnLPUzA/9UdWFrECpchtElY57GkPT2tTkrTQK8R986Pxa/jOcam6jssuA/AAw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776617545; c=relaxed/simple;
-	bh=D7Ml06y6DExhFwezyZUEL4UmfrQ7mAEj2waVHFEWfUA=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UIkNod40CNB/W3TaDgXB5UDNw5QHDngLDPdl01P1l8X5CBkouTarAY/zn+0Sg6JNFOdg2oFMMapolUq8DFiKbo3d16lHHsfb9JtkNAQrJoUUgbbWD8cP43GwmpvSq1YUHrSHZ+sQfMNDSqWtIawL8849II7bYN1/Ig/yi4Bwrd4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XcgNOhI3; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1776619698; c=relaxed/simple;
+	bh=dDDMhB0T+b14QbVkhl1OB9ovfy0i4rHpnH+2qe+1L8E=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=T733MzJ4XX8eypxntkRBOIy129sX0FXc/knjSnG+pYC9mBCHVczTdZb/t6FApJD0L2mVmm3YGMowxny8pdv32izOCaPWUJQ2PvGgPUCJYwh2A4OnwHqIgUusRcA35jlvZU1x5i063VH/dO/MmqEfxtjGDbJ9PLlHQnMhQPSt4PY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dkIdxtmj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XcgNOhI3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D345C2BCAF;
-	Sun, 19 Apr 2026 16:52:25 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dkIdxtmj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2FA2C2BCAF;
+	Sun, 19 Apr 2026 17:28:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776617545;
-	bh=D7Ml06y6DExhFwezyZUEL4UmfrQ7mAEj2waVHFEWfUA=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XcgNOhI3zWPFtG4URNbPsz7tXbMgKyWDVtr1/1PVD+wbC/fmVYYdpsHYiTDQ8emef
-	 1oD0J8KS6PUatr0v6+ygTC/Nf/iLNDi6OI00lrEq5QewsBFvf4vfKYvmNfmH1bir6c
-	 vxiR5uqgj3Tv5RviXvJH329wK+aRD7S9VqmJBEIPD/6NIoH8+4G3kpfBgjZIOO4R4p
-	 yWtGZyPec9sf6ey992dSnd6QQsfTBIVG3YbP12dpXny1HAD7FXYJ7EOJBdyirsdW4V
-	 XRYp8DgItScVV9+I/tEWFignDKAVrnT112MUBAXwktduOADI1GFsWpwif2rK0zzQVg
-	 ok+8KdhvHLqtw==
-From: SeongJae Park <sj@kernel.org>
-To: sashiko-bot@kernel.org
-Cc: SeongJae Park <sj@kernel.org>,
-	damon@lists.linux.dev,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: Re: [PATCH v3 1/3] mm/damon/reclaim: detect and use fresh enabled and kdamond_pid values
-Date: Sun, 19 Apr 2026 09:52:21 -0700
-Message-ID: <20260419165222.79948-1-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260419164848.766D9C2BCAF@smtp.kernel.org>
-References: 
+	s=k20201202; t=1776619698;
+	bh=dDDMhB0T+b14QbVkhl1OB9ovfy0i4rHpnH+2qe+1L8E=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date:From;
+	b=dkIdxtmjsqXJoIsXLp0CGsoGKTVaEviPskw1Vzq+hpz5Ogvd+JW0zfqh6qjnXuZlB
+	 HseNmxwH74m6g5g7sULmxqNfPLFzokecRmFPLRw2CtsLmS7wQdD/SyOUjInmrtwdVz
+	 50xXLTkbcBYdFA1uycoBgVci4eEfVJBv1AZHxW8j+ImGwhaHd2/z5YSLl0yAyrPAyk
+	 r3XULSet0NY/A4E+qZ20OngmlrYOsd0qHGX4Wnaa1Eresem19xyF1GOAfRR2ztjz9F
+	 TdcSAq+bF5QmB1dDeAA1GvkeS95w/VOlD87iB3Q5urY/WnSIGM7tArJOvHee2iWe70
+	 4IEtrjVbk9TEA==
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH v3 2/3] mm/damon/lru_sort: detect and use fresh enabled
+ and kdamond_pid values
+Reply-To: sashiko@lists.linux.dev
+To: "SeongJae Park" <sj@kernel.org>
+Cc: damon@lists.linux.dev
+In-Reply-To: <20260419161003.79176-3-sj@kernel.org>
+References: <20260419161003.79176-3-sj@kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Sun, 19 Apr 2026 17:28:17 +0000
+Message-Id: <20260419172817.E2FA2C2BCAF@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-On Sun, 19 Apr 2026 16:48:47 +0000 sashiko-bot@kernel.org wrote:
+Sashiko AI review found 1 potential issue(s):
+- [High] Loading the module with the `enabled=3DY` parameter causes a NULL =
+pointer dereference.
+--
 
-> Sashiko AI review found 1 potential issue(s):
-> - [High] Writing to the `enabled` sysfs parameter can cause a NULL pointer dereference if `damon_reclaim_init()` failed during boot.
+commit e25c111d55f5d7c99165dbc8b59a5261d640ada5
+Author: SeongJae Park <sj@kernel.org>
+mm/damon/lru_sort: detect and use fresh enabled and kdamond_pid values
 
-As I replied [1] on the previous version, it is not caused by this patch.  I'm
-separately working on it.
+This commit updates DAMON_LRU_SORT to dynamically detect and use the
+current running status of the kdamond thread for the enabled and
+kdamond_pid parameters. This prevents users from seeing stale values or
+being unable to restart kdamond if it stops due to unintentional events.
 
-[1] https://lore.kernel.org/20260419014800.877-1-sj@kernel.org
+> diff --git a/mm/damon/lru_sort.c b/mm/damon/lru_sort.c
+> index 554559d729760..8494040b1ee48 100644
+> --- a/mm/damon/lru_sort.c
+> +++ b/mm/damon/lru_sort.c
 
+[ ... ]
 
-Thanks,
-SJ
+>  static int damon_lru_sort_enabled_store(const char *val,
+>  		const struct kernel_param *kp)
+>  {
+> -	bool is_enabled =3D enabled;
+> -	bool enable;
+>  	int err;
+> =20
+> -	err =3D kstrtobool(val, &enable);
+> +	err =3D kstrtobool(val, &enabled);
+>  	if (err)
+>  		return err;
+> =20
+> -	if (is_enabled =3D=3D enable)
+> +	if (damon_lru_sort_enabled() =3D=3D enabled)
+>  		return 0;
+> =20
+>  	/* Called before init function.  The function will handle this. */
+>  	if (!damon_initialized())
+> -		goto set_param_out;
+> +		return 0;
+> =20
+> -	err =3D damon_lru_sort_turn(enable);
+> -	if (err)
+> -		return err;
+> +	return damon_lru_sort_turn(enabled);
+> +}
 
-[...]
+This isn't a bug introduced by this patch, but does this code cause a NULL
+pointer dereference if the module is dynamically loaded with enabled=3DY?
+
+When the module is loaded as a dynamically loadable module with the
+enabled=3DY parameter, the kernel's module loader parses the parameters
+before damon_lru_sort_init() runs.
+
+This invokes damon_lru_sort_enabled_store(). Because damon_core (a module
+dependency) is already loaded, damon_initialized() evaluates to true,
+bypassing the safety guard.
+
+The function proceeds to call damon_lru_sort_turn(true), which eventually
+calls damon_lru_sort_apply_parameters(). This invokes:
+
+    damon_commit_ctx(ctx, param_ctx);
+
+At this point, the global ctx pointer is still NULL because it is only
+allocated later in damon_lru_sort_init(). damon_commit_ctx() unconditionally
+dereferences the pointer:
+
+    dst->maybe_corrupted =3D true;
+
+causing a direct NULL pointer dereference and a kernel panic.
+
+Should this check use !ctx instead of !damon_initialized() to properly
+defer execution to the init function?
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260419161003.7917=
+6-1-sj@kernel.org?part=3D2
