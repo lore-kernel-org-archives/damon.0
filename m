@@ -1,196 +1,346 @@
-Received: from mail-qk1-f176.google.com (mail-qk1-f176.google.com [209.85.222.176])
+Received: from mail-pj1-f51.google.com (mail-pj1-f51.google.com [209.85.216.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8910937EFEE
-	for <damon@lists.linux.dev>; Mon, 20 Apr 2026 02:56:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0115238947F
+	for <damon@lists.linux.dev>; Mon, 20 Apr 2026 08:53:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776653787; cv=none; b=aSLRQdTdlsvrAUBKZycP1VDcUN6FK/ADpP8zqiOYHWAcNl3GtFRtSRCfANPSHdsy+KimOEDzfxe9u1/NSKO88gBJPc4jco47PndMz7aTOT3ZzGI0kChbkwbTRRPTf2yKfbgcEK//V7O07rWlPW9Q7Dd5M4tMbeCGuCU/KE0MOCk=
+	t=1776675217; cv=none; b=tFkcJkjF0pDAu3TYVzKW3jkmKu0cJDrJGGTbcK9ePSnubJ66AywBhK1NJqZIfJAWVI0CU5xV+R7xX6CvDEpyuFF8xOLs405/HgZcn//8+HZFpA5BKaF15RS2JKwDniKONBDlhNmcMivSTqqOPzeihrxdjB21Bpg6rlN1VbjESXo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776653787; c=relaxed/simple;
-	bh=Gy7C5LgAy0+dNJVh3a/spG3LUsjag46Tvhe61CPzqjQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OrZVNCpOw4JvkAjPQOBFD/QhH88CZo4BWg5lo7AtjbTsWRZsUixD6p0NncfOtL5LagRt6Y8IiDkbpuHC0tvb3/FZM+O+sohQz1Np5sqtDYPAqnORfhSUms6uVGmtqrSsRrDFhW5w+tKhAJtml59pQKLwJNZrdTN/vyMr49M+g30=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gourry.net; spf=pass smtp.mailfrom=gourry.net; dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.b=Oa4G3Rm/; arc=none smtp.client-ip=209.85.222.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gourry.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gourry.net
+	s=arc-20240116; t=1776675217; c=relaxed/simple;
+	bh=SmmZJtzy83jxfpGrvSpT8LlluquI6EwIT4m4JdL0Fls=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=OYI26YlUfwBLltUsmHT5ingOJRDoiv2T4+g28HkkzWAbLYI4/hIdCFR3CNBlOGdjCflSeGe3qwFi01rf6QrG0sYLX2GAiBOkEnPG0MOJE+ml6CbtPne4y/ixwvpq1cJYa02QwnmmB5zmivpm2Bq3KxgzGPc6t7xqBx/6aI7ZjxE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZOcQmLhq; arc=none smtp.client-ip=209.85.216.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.b="Oa4G3Rm/"
-Received: by mail-qk1-f176.google.com with SMTP id af79cd13be357-8cbb6d5f780so238487185a.1
-        for <damon@lists.linux.dev>; Sun, 19 Apr 2026 19:56:25 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZOcQmLhq"
+Received: by mail-pj1-f51.google.com with SMTP id 98e67ed59e1d1-35d9f68d011so1755196a91.2
+        for <damon@lists.linux.dev>; Mon, 20 Apr 2026 01:53:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gourry.net; s=google; t=1776653784; x=1777258584; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=tugQt2aIOJgoqj0Ob37lQ1a1TrVKhZ7jSIgjv7qjxfc=;
-        b=Oa4G3Rm/XIA4erZ4YPfaXpf1i7DAhv5+SoY6b9+D7sQMquUy+K4+2FtsZ044pUiHeQ
-         cLrRGNSeuN/d5visTD0WoEORRfhhoeLIjYMwRPFkWUYnbsbOj5iEjbqdCzDIs1sXNVaw
-         cItZGhFUjTUhgBxJcbXOeGQNuV8PzLV3QazQK4ud3Y0qpGVmepsXDrudXfc09IDdGhKz
-         9kXSHBEWflz6lYkPd9D/MsVdljJYiqydBZi+Ybg5J5QvB+1E8mdiBfEfYt6puRnSCUOq
-         D4poDtjO0FRpCKrAvXPdBKNrOCr65LCCtqk2i4TS3ZWWQIeUWYF8ws4WEDTTrnPXPr58
-         KbtA==
+        d=gmail.com; s=20251104; t=1776675215; x=1777280015; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=PjUw1MUTmp5dgmDDe13bezBVb5C7PS10Nn9b4igxUf0=;
+        b=ZOcQmLhqgjPKLMmGm0031HaBg/z6xPfzKS884sVU5c1aHOpvuCPEW2x26GkSELOP/9
+         +xrGsYjkgnQxKNizIP2A6RALpXcP14/u32u8tili4cEOJXnT2CHiElm24I90RJn2OYI7
+         l6AlBn8P8AWpCyLrGSjtU7FwAkIpCOCxq3bif+8w6DWgHvt8OLOXqzygj8vhv5YB8Mtx
+         Lqjtj5Y+5UB+oXjsHCfnjlxqPOv8GczMt4WvFOs69ebD7zhfXvxT6hsNlakXMALCyPf1
+         d5NYfnVj9aYy39GBGj8mPj0OChvT7RIWTDDlEi/XF+/R4J3bFvdR3zwHxgPZDZ2nnOLs
+         O7Jg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776653784; x=1777258584;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=tugQt2aIOJgoqj0Ob37lQ1a1TrVKhZ7jSIgjv7qjxfc=;
-        b=OyFcJRmNEzm/XjBn++xCXE4SWe67Sd8hz1oFdG5h/5sNt2fdz2f+ZEteypqo40q27w
-         thWJVVRbCX8cB5vFAtChSyNe6pB+56EHSZhP0TWcFgvzfxwzlKjqk+3t3aCZYZO+jKLd
-         cinqb7HkJtwskm1tRjY4usl47ra7FaRdgTLlIhhn0UNdE4zIiSvmjRLIM6xcquZFGidL
-         zhYMUzRnLILQK6YVq/08b5mPzVf2U285IzNTQ2LRtf5u78ATB465sNowp/4wwPAz1g+6
-         KUHW5a/qHaycoczKdJl3PKCFURMzQCB2Ntk8L2T7K/03UqC0u27pQ4+VfTEQRCfKJ0+E
-         /KSg==
-X-Forwarded-Encrypted: i=1; AFNElJ9RDd/uwBXwMkUgNWxo8U5ZM5RB9r7P1uRhttmMmLu3v/WRdNq0yuqHExTrv8Orxt9cjuhHIQ==@lists.linux.dev
-X-Gm-Message-State: AOJu0Yz594v24WtpeisyNIc3g2f5+z+GSiAw2AxJTuFtJUYk+4ZqlGh1
-	HNX2DYnXAL1Bge037WNNcTw4Bsgo0UyzlpoKpoaCqsldnexCeqS2ciC9vnwTVRitfsc=
-X-Gm-Gg: AeBDieuAdNc2Bra+wtIuGQemlABlTNqCVqhqdgD1ZiODGTAwtHNQXfHC2d10Y4O7aec
-	+XyTVNh181qDBfXVS/wQ0rF2UmaxRsQNuCwZgXRUJueY0Uge90pllSuiGQlnco9h8HfewVetH5L
-	muTYZns4Y4+cnt/FDOSj6/KaYiYYS4zlXvQoWZESIjYv68m0HDAme1Q0hZy6frYi683+wFQ8ofi
-	S2/JQKN2xDG2UPq8Sw9I9ZPz1GZ5sBurP8wt9KeK5fflN8A4bwLq7Ii/MEZZdl7ar2JdJum7GXa
-	2yaQ1c3kLyf00igTTbBD9JbhBkC3/LxNEldDwuybkJEZOMmUsUQViT86pO62pArWKaCinjn1/th
-	+IKWNzfXGaQzM9y5rr/bDkrNWik1ke1GOgBzT7OMEyTJK5XtRY8e3sHUSfVwXDITPcvBFvigesr
-	eU1oZo6u+G7EZV57AWxRycZt8kMvzrCJ8tqL/2ydB28DpP8e0B7tFztNOt+rHEpg3LKRECjjtjs
-	W5/HvSMUSk2NFTmvvb0Qh8=
-X-Received: by 2002:a05:620a:a2c3:10b0:8e8:bedd:14b2 with SMTP id af79cd13be357-8e8bedd1701mr799144185a.43.1776653784400;
-        Sun, 19 Apr 2026 19:56:24 -0700 (PDT)
-Received: from gourry-fedora-PF4VCD3F (pool-108-28-184-223.washdc.fios.verizon.net. [108.28.184.223])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-8e7d5fe9638sm706089185a.1.2026.04.19.19.56.22
+        d=1e100.net; s=20251104; t=1776675215; x=1777280015;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=PjUw1MUTmp5dgmDDe13bezBVb5C7PS10Nn9b4igxUf0=;
+        b=FeEyQ0Hgw1089DLdXFwK5Q81LbxfS+yjdWciMSwKvPse8R5bwKFi4LLlk6XgGnkb/D
+         FY+NWK4kjR7JmnQ6u1lr5lo7oc8PS2N90lA5CBuhRxUHJ4iK2NrKv2SP1JOFY7oni5I6
+         +sTOgShwbV0KAQEocMuX5mOKljOz5b0PWdFwHcqnMEwww08wYTMqPU9IOM5OZOwC71q7
+         I9rYMu3IWxIAWSmETn0RrsTWY2Rva18nohMS8pZCCT1zwAcWo5GlSqWjUqspDd9A0Oyz
+         bSLgzwMUdB2I37m1geFMozCXGFac6bo/RpnHMwX0exx7Jx4fvWrHcnKqnIHPr02BqPNP
+         LtyA==
+X-Forwarded-Encrypted: i=1; AFNElJ8nhRhLYlOm6QMV7kvlJSBe4isldgM8QDjbcizpf5lNvDdWp+4sMc+vvLh5bWei9KTrpE0ikw==@lists.linux.dev
+X-Gm-Message-State: AOJu0YyDACsKNAeVzYsDaaOZZhntLA2f/fBmnN1IbPvYsPYvom7Op0g3
+	8U4LvFvlv4Lo1DWhotAhz4yjicF4W7yd5ms4NZgMPUERxQh/pt5Ey6Xa
+X-Gm-Gg: AeBDievROdjkJtjQrU3pd2rPX/qxdfVnKUqImzISEZ5E38N11kNN+ICuVmO7FsqLMyZ
+	zkVKngjvhUwC7LKvOj9DwCkOSfNGOj6kXTV0dVqBynJK4EXXPMC6da4UxILKQPVUe/ySKli0brF
+	bEgArMPBqNAHAvfmmsA22DDQmp+uGPJiVen3dFVQmV+sp/leXmSZOyVileuOcTx43DFXCoIxfNF
+	QcxwimbJ9LULOMkChz7lkGPcl9a7QVxlQaCMnth53LBzX+Ynj10/Ryh2HO5Drqo2WHp6weFaYXs
+	CxQQmVQCPTnNaB1tG+sHGMe4lDFvpk/xFhI2+BSRfxmv/AH6qBcmxOLi8oBfx7nnddVn23qRFLp
+	bQgRFdDAH5LavW2q5jyo0QHOzPf7Vr94a5/tC0ko+aGsNnVreTKLHCHWY0CjMQ5VtVS6lFI1XU5
+	vTxKu2r2mHhA419k0lYKW+/SEoUGPFb9CfE7v2d44wVnXlWlsb5k90N/ePy5A6
+X-Received: by 2002:a17:90b:2f83:b0:35f:b313:84ca with SMTP id 98e67ed59e1d1-361404aef96mr13393211a91.27.1776675215093;
+        Mon, 20 Apr 2026 01:53:35 -0700 (PDT)
+Received: from localhost.localdomain ([14.218.34.206])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-36141990bb6sm10104820a91.17.2026.04.20.01.53.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 19 Apr 2026 19:56:23 -0700 (PDT)
-Date: Sun, 19 Apr 2026 22:56:20 -0400
-From: Gregory Price <gourry@gourry.net>
-To: "David Hildenbrand (Arm)" <david@kernel.org>
-Cc: lsf-pc@lists.linux-foundation.org, linux-kernel@vger.kernel.org,
-	linux-cxl@vger.kernel.org, cgroups@vger.kernel.org,
-	linux-mm@kvack.org, linux-trace-kernel@vger.kernel.org,
-	damon@lists.linux.dev, kernel-team@meta.com,
-	gregkh@linuxfoundation.org, rafael@kernel.org, dakr@kernel.org,
-	dave@stgolabs.net, jonathan.cameron@huawei.com,
-	dave.jiang@intel.com, alison.schofield@intel.com,
-	vishal.l.verma@intel.com, ira.weiny@intel.com,
-	dan.j.williams@intel.com, longman@redhat.com,
-	akpm@linux-foundation.org, lorenzo.stoakes@oracle.com,
-	Liam.Howlett@oracle.com, vbabka@suse.cz, rppt@kernel.org,
-	surenb@google.com, mhocko@suse.com, osalvador@suse.de,
-	ziy@nvidia.com, matthew.brost@intel.com, joshua.hahnjy@gmail.com,
-	rakie.kim@sk.com, byungchul@sk.com, ying.huang@linux.alibaba.com,
-	apopple@nvidia.com, axelrasmussen@google.com, yuanchu@google.com,
-	weixugc@google.com, yury.norov@gmail.com, linux@rasmusvillemoes.dk,
-	mhiramat@kernel.org, mathieu.desnoyers@efficios.com, tj@kernel.org,
-	hannes@cmpxchg.org, mkoutny@suse.com, jackmanb@google.com,
-	sj@kernel.org, baolin.wang@linux.alibaba.com, npache@redhat.com,
-	ryan.roberts@arm.com, dev.jain@arm.com, baohua@kernel.org,
-	lance.yang@linux.dev, muchun.song@linux.dev, xu.xin16@zte.com.cn,
-	chengming.zhou@linux.dev, jannh@google.com, linmiaohe@huawei.com,
-	nao.horiguchi@gmail.com, pfalcato@suse.de, rientjes@google.com,
-	shakeel.butt@linux.dev, riel@surriel.com, harry.yoo@oracle.com,
-	cl@gentwo.org, roman.gushchin@linux.dev, chrisl@kernel.org,
-	kasong@tencent.com, shikemeng@huaweicloud.com, nphamcs@gmail.com,
-	bhe@redhat.com, zhengqi.arch@bytedance.com, terry.bowman@amd.com
-Subject: Re: [LSF/MM/BPF TOPIC][RFC PATCH v4 00/27] Private Memory Nodes (w/
- Compressed RAM)
-Message-ID: <aeWV1CvP9ImZ3eEG@gourry-fedora-PF4VCD3F>
-References: <20260222084842.1824063-1-gourry@gourry.net>
- <3342acb5-8d34-4270-98a2-866b1ff80faf@kernel.org>
- <abwRu1FNqI3dVyqL@gourry-fedora-PF4VCD3F>
- <2608a03b-72bb-4033-8e6f-a439502b5573@kernel.org>
- <ad0iT4UWka3gMUpu@gourry-fedora-PF4VCD3F>
- <38cf52d1-32a8-462f-ac6a-8fad9d14c4f0@kernel.org>
- <ad-r7hwIdnvKsrh9@gourry-fedora-PF4VCD3F>
- <46837cea-5d90-49d8-be67-7306e0e89aa3@kernel.org>
+        Mon, 20 Apr 2026 01:53:34 -0700 (PDT)
+From: Junxi Qian <qjx1298677004@gmail.com>
+To: linux-mm@kvack.org
+Cc: sj@kernel.org,
+	akpm@linux-foundation.org,
+	damon@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH] mm/damon/sysfs-schemes: fix use-after-free on memcg_path and goal path
+Date: Mon, 20 Apr 2026 16:53:32 +0800
+Message-Id: <20260420085332.178473-1-qjx1298677004@gmail.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <46837cea-5d90-49d8-be67-7306e0e89aa3@kernel.org>
+Content-Transfer-Encoding: 8bit
 
-On Fri, Apr 17, 2026 at 11:37:36AM +0200, David Hildenbrand (Arm) wrote:
-> On 4/15/26 17:17, Gregory Price wrote:
-> 
-> >> Needs a second thought regarding fallback logic I raised above.
-> >>
-> >> What I think would have to be audited is the usage of __GFP_THISNODE by
-> >> kernel allocations, where we would not actually want to allocate from
-> >> this private node.
-> >>
-> > 
-> > This is fair, and I a re-visit is absolutely warranted.
-> > 
-> > Re-examining the quick audit from my last response suggests - I should
-> > never have seen leakage in those cases, but the fallbacks are needed.
-> > 
-> > So yes, this all requires a second look (and a third, and a ninth).
-> > 
-> > I'm not married to __GFP_PRIVATE, but it has been reliable for me.
-> 
-> Yes, we should carefully describe which semantics we want to achieve, to
-> then figure out how we could achieve them.
-> 
+memcg_path_store() and path_store() free and replace their respective
+string pointers without holding damon_sysfs_lock. This creates a race
+with the kdamond thread, which reads these pointers in
+damon_sysfs_add_scheme_filters() and damos_sysfs_add_quota_score()
+via damon_call() during a "commit" operation.
 
-Ah, I finally dug up my notes on this.
+The race window is as follows:
+  Thread A (commit):  holds damon_sysfs_lock, triggers damon_call()
+  kdamond thread:     reads sysfs_filter->memcg_path in
+                      damon_sysfs_memcg_path_to_id()
+  Thread B (sysfs):   calls memcg_path_store() WITHOUT lock,
+                      kfree(filter->memcg_path), replaces pointer
 
-If we overload __GFP_THISNODE - then we have to audit all gfp_mask's
-with THISNODE against the use of any of the following *forever*:
+Since Thread B does not hold damon_sysfs_lock, the kdamond thread can
+observe a freed pointer, resulting in a use-after-free when
+damon_sysfs_memcg_path_eq() dereferences it for string comparison.
 
-#define node_online_map         node_states[N_ONLINE]
-#define node_possible_map       node_states[N_POSSIBLE]
-#define for_each_node(node)        for_each_node_state(node, N_POSSIBLE)
-#define for_each_online_node(node) for_each_node_state(node, N_ONLINE)
+KASAN reports the following on v7.0.0-rc5 with CONFIG_KASAN=y:
 
-  or
+  ==================================================================
+  BUG: KASAN: double-free in memcg_path_store+0x6e/0xc0
 
-cgroup.cpuset.mems_allowed / mems_effective
+  Free of addr ffff888100a086c0 by task exp/149
 
+  CPU: 1 UID: 0 PID: 149 Comm: exp Not tainted 7.0.0-rc5-gd38efd7c139a #18 PREEMPT(lazy)
+  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
+  Call Trace:
+   <TASK>
+   dump_stack_lvl+0x55/0x70
+   print_report+0xcb/0x5d0
+   kasan_report_invalid_free+0x94/0xc0
+   check_slab_allocation+0xde/0x110
+   kfree+0x114/0x3b0
+   memcg_path_store+0x6e/0xc0
+   kernfs_fop_write_iter+0x2fc/0x490
+   vfs_write+0x8e1/0xcc0
+   ksys_write+0xee/0x1c0
+   do_syscall_64+0xfc/0x580
+   entry_SYSCALL_64_after_hwframe+0x77/0x7f
+   </TASK>
 
-Anyone that attempts to do:
+  Allocated by task 147 on cpu 0 at 12.364295s:
+   kasan_save_stack+0x24/0x50
+   kasan_save_track+0x17/0x60
+   __kasan_kmalloc+0x7f/0x90
+   __kmalloc_noprof+0x191/0x490
+   memcg_path_store+0x32/0xc0
+   kernfs_fop_write_iter+0x2fc/0x490
+   vfs_write+0x8e1/0xcc0
+   ksys_write+0xee/0x1c0
 
-    for_each_online_node(node):
-        buf = alloc_pages_node(node, __GFP_THISNODE, NULL)
+  Freed by task 150 on cpu 0 at 13.373810s:
+   kasan_save_stack+0x24/0x50
+   kasan_save_track+0x17/0x60
+   kasan_save_free_info+0x3b/0x60
+   __kasan_slab_free+0x43/0x70
+   kfree+0x137/0x3b0
+   memcg_path_store+0x6e/0xc0
+   kernfs_fop_write_iter+0x2fc/0x490
+   vfs_write+0x8e1/0xcc0
+   ksys_write+0xee/0x1c0
 
-*will* get incidental access to private node memory, and it won't be
-obvious to existing tooling that this should be considered a bug.
+  The buggy address belongs to the object at ffff888100a086c0
+   which belongs to the cache kmalloc-8 of size 8
+  ==================================================================
 
+Fix this by holding damon_sysfs_lock while swapping the path pointer
+in both memcg_path_store() and path_store(). The actual kfree() is
+moved outside the lock since the old pointer is no longer reachable
+once replaced.
 
-rate of occurance in the current code:
------------------
-node_online_map       -  21 instances
-node_possible_map     -  25 instances
-for_each_node         -  346 instances
-for_each_online_node  -  67 instances
-GFP_THISNODE          -  58 instances
-(notes don't have mems_allowed/mems_effective instances)
+Fixes: 490a43d07f16 ("mm/damon/sysfs-schemes: free old damon_sysfs_scheme_filter->memcg_path on write")
+Signed-off-by: Junxi Qian <qjx1298677004@gmail.com>
+---
+#define _GNU_SOURCE
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+#include <fcntl.h>
+#include <pthread.h>
+#include <errno.h>
+#include <sys/stat.h>
 
+#define DAMON_BASE "/sys/kernel/mm/damon/admin"
 
-But it's not always going to be obvious - since nodemasks and gfp_masks
-get passed around as variables all throughout the kernel.
+static volatile int stop;
+static char memcg_path_file[1024], state_file[1024];
+static char real_memcg_path[512] = "/";
+static int num_extra_cgroups = 200;
+static char cgroup_base[256];
 
-I ultimately determined that auditing this in-tree is already a fools
-errand - and suggesting we try to validate this never occurs for all
-future code moving forward is just not realistic in any sense.
+static int write_str(const char *path, const char *val) {
+    int fd = open(path, O_WRONLY);
+    if (fd < 0) return -errno;
+    ssize_t r = write(fd, val, strlen(val));
+    int e = errno; close(fd);
+    return r > 0 ? 0 : -e;
+}
 
-I could not come up with a way to remove private nodes from
-node_online/possible_map - and private nodes must be added to
-cpuset.mems_allowed to allow cpuset control (otherwise all userland
-access is blanket denied).
+static int create_extra_cgroups(void) {
+    struct stat st; char path[512]; int created = 0;
+    if (stat("/sys/fs/cgroup/cgroup.controllers", &st) == 0)
+        strncpy(cgroup_base, "/sys/fs/cgroup", sizeof(cgroup_base));
+    else if (stat("/sys/fs/cgroup/memory", &st) == 0)
+        strncpy(cgroup_base, "/sys/fs/cgroup/memory", sizeof(cgroup_base));
+    else return 0;
+    for (int i = 0; i < num_extra_cgroups; i++) {
+        snprintf(path, sizeof(path), "%s/damon_poc_%d", cgroup_base, i);
+        if (mkdir(path, 0755) == 0) created++;
+    }
+    if (created > 0)
+        snprintf(real_memcg_path, sizeof(real_memcg_path),
+                 "%s/damon_poc_0", cgroup_base);
+    return created;
+}
 
-So I moved back to __GFP_PRIVATE.
+static void cleanup_extra_cgroups(void) {
+    char path[512];
+    if (!cgroup_base[0]) return;
+    for (int i = 0; i < num_extra_cgroups; i++) {
+        snprintf(path, sizeof(path), "%s/damon_poc_%d", cgroup_base, i);
+        rmdir(path);
+    }
+}
 
-=== TL;DR:
+static void *path_writer(void *arg) {
+    long tid = (long)arg; int i = 0; char buf[512];
+    while (!stop) {
+        switch (i % 4) {
+        case 0: snprintf(buf,sizeof(buf),"%s",real_memcg_path); break;
+        case 1: snprintf(buf,sizeof(buf),
+                    "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX_%d_%ld",i,tid); break;
+        case 2: snprintf(buf,sizeof(buf),"YYYYYYYYYYYYYY_%d",i); break;
+        case 3: snprintf(buf,sizeof(buf),"Z_%d",i); break;
+        }
+        write_str(memcg_path_file, buf); i++;
+    }
+    return NULL;
+}
 
-The core premise of private nodes is isolation first.
+static void *committer(void *arg) {
+    while (!stop) {
+        if (write_str(state_file, "commit") == 0) usleep(10);
+    }
+    return NULL;
+}
 
-So we want this code:
+static int setup_damon(void) {
+    char path[1024]; int err;
+    snprintf(path,sizeof(path),"%s/kdamonds/nr_kdamonds",DAMON_BASE);
+    write_str(path,"1");
+    snprintf(path,sizeof(path),
+             "%s/kdamonds/0/contexts/nr_contexts",DAMON_BASE);
+    write_str(path,"1");
+    snprintf(path,sizeof(path),
+             "%s/kdamonds/0/contexts/0/operations",DAMON_BASE);
+    if (write_str(path,"paddr")) {
+        write_str(path,"vaddr");
+        snprintf(path,sizeof(path),
+            "%s/kdamonds/0/contexts/0/targets/nr_targets",DAMON_BASE);
+        write_str(path,"1");
+        char pid[32]; snprintf(pid,sizeof(pid),"%d",getpid());
+        snprintf(path,sizeof(path),
+            "%s/kdamonds/0/contexts/0/targets/0/pid_target",DAMON_BASE);
+        write_str(path,pid);
+    }
+    snprintf(path,sizeof(path),
+        "%s/kdamonds/0/contexts/0/schemes/nr_schemes",DAMON_BASE);
+    write_str(path,"1");
+    snprintf(path,sizeof(path),
+        "%s/kdamonds/0/contexts/0/schemes/0/action",DAMON_BASE);
+    write_str(path,"stat");
+    snprintf(state_file,sizeof(state_file),
+             "%s/kdamonds/0/state",DAMON_BASE);
+    if ((err = write_str(state_file,"on"))) return err;
+    snprintf(path,sizeof(path),
+        "%s/kdamonds/0/contexts/0/schemes/0/filters/nr_filters",DAMON_BASE);
+    write_str(path,"1");
+    snprintf(path,sizeof(path),
+        "%s/kdamonds/0/contexts/0/schemes/0/filters/0/type",DAMON_BASE);
+    write_str(path,"memcg");
+    snprintf(memcg_path_file,sizeof(memcg_path_file),
+        "%s/kdamonds/0/contexts/0/schemes/0/filters/0/memcg_path",
+        DAMON_BASE);
+    write_str(memcg_path_file, real_memcg_path);
+    return 0;
+}
 
-   for node in cpuset.mems_allowed / online_map
-       buf = alloc_pages_node(node, __GFP_THISNODE, NULL)
+int main(int argc, char *argv[]) {
+    int duration = 60, n_writers = 4;
+    if (argc > 1) duration = atoi(argv[1]);
+    if (argc > 2) num_extra_cgroups = atoi(argv[2]);
+    if (getuid()) { fprintf(stderr,"Need root\n"); return 1; }
+    create_extra_cgroups();
+    if (setup_damon()) { cleanup_extra_cgroups(); return 1; }
+    sleep(1);
+    pthread_t w[8], c;
+    for (int i = 0; i < n_writers; i++)
+        pthread_create(&w[i],NULL,path_writer,(void*)(long)i);
+    pthread_create(&c,NULL,committer,NULL);
+    sleep(duration);
+    stop = 1;
+    for (int i = 0; i < n_writers; i++) pthread_join(w[i],NULL);
+    pthread_join(c,NULL);
+    write_str(state_file,"off");
+    cleanup_extra_cgroups();
+    printf("Check: dmesg | grep -A20 'BUG: KASAN'\n");
+}
 
-To explicitly fail - so that the caller knows they can't use these
-masks this way anymore (it was already potentially a bug, but could
-have been masked if all online nodes had memory).
+---
 
-~Gregory
+ mm/damon/sysfs-schemes.c | 22 ++++++++++++++++------
+ 1 file changed, 16 insertions(+), 6 deletions(-)
+
+diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
+index 5186966da..005cfecb1 100644
+--- a/mm/damon/sysfs-schemes.c
++++ b/mm/damon/sysfs-schemes.c
+@@ -543,15 +543,20 @@ static ssize_t memcg_path_store(struct kobject *kobj,
+ {
+ 	struct damon_sysfs_scheme_filter *filter = container_of(kobj,
+ 			struct damon_sysfs_scheme_filter, kobj);
+-	char *path = kmalloc_array(size_add(count, 1), sizeof(*path),
+-				   GFP_KERNEL);
++	char *path, *old;
+ 
++	path = kmalloc_array(size_add(count, 1), sizeof(*path), GFP_KERNEL);
+ 	if (!path)
+ 		return -ENOMEM;
+ 
+ 	strscpy(path, buf, count + 1);
+-	kfree(filter->memcg_path);
++
++	mutex_lock(&damon_sysfs_lock);
++	old = filter->memcg_path;
+ 	filter->memcg_path = path;
++	mutex_unlock(&damon_sysfs_lock);
++
++	kfree(old);
+ 	return count;
+ }
+ 
+@@ -1196,15 +1201,20 @@ static ssize_t path_store(struct kobject *kobj,
+ {
+ 	struct damos_sysfs_quota_goal *goal = container_of(kobj,
+ 			struct damos_sysfs_quota_goal, kobj);
+-	char *path = kmalloc_array(size_add(count, 1), sizeof(*path),
+-				   GFP_KERNEL);
++	char *path, *old;
+ 
++	path = kmalloc_array(size_add(count, 1), sizeof(*path), GFP_KERNEL);
+ 	if (!path)
+ 		return -ENOMEM;
+ 
+ 	strscpy(path, buf, count + 1);
+-	kfree(goal->path);
++
++	mutex_lock(&damon_sysfs_lock);
++	old = goal->path;
+ 	goal->path = path;
++	mutex_unlock(&damon_sysfs_lock);
++
++	kfree(old);
+ 	return count;
+ }
+ 
+-- 
+2.34.1
+
