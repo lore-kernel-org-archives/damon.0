@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 607C926ACC;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0D43231836;
 	Tue, 21 Apr 2026 04:49:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776746985; cv=none; b=A0fxDs8K9NobYc6w4rQiQXVYWfxsuGVTB6PdMIUzfZ1/D9OQbosSfcAnNvug+yAWF6XWhErQEkMhfx6hqFEFzlsniXhneDEgh3n9HD4cwaI4GFkuJ4erqHwmixbK4mDOMd6vy6IgqIJ2KEe4P3AJzcyqcU28vuiQDpi5YKFnMEI=
+	t=1776746985; cv=none; b=Hq2VG5ChnaUf8fKKVt1CqDkh1q8a74IvUyRmyt5Fy/QQXlPumz4S4Bu7XTHfb3gaKD/58V5TrbTVJCagP7HB3OfHD7Ch4SnbzY4YCyHXnOakwzifBRf7yeb1nFrJqmN1Gx/OIYh8Z5+1RxH9Xyjbrg81BtJbHzTE37SdOXBH6A4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1776746985; c=relaxed/simple;
-	bh=/7YRpBxxWTP/yjaBm581Uag7GQgE9REjtg9mq3Bzdu0=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=YlK40RLUpi6sU6fNr5I8a8Usz1PbMc791Lbb0ar/y/N/dDyAg10vffYub0l3+EEp+7dU3HdjRI80h/+q0eQkTms6gboy7vGrgMD4zhdGENXUwgKYoCpvqJrJdkTT4JsniCR15yMBprYOZk4oaMebPCfhAxRYDr2WPu5v9ktIk2c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EoN5bv5m; arc=none smtp.client-ip=10.30.226.201
+	bh=ka4gbLZs99fExMD1yc1xEuZ3x1da439G/UiyCjNMmiQ=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=goy/5zpH21yEsuv8ucMBLnlykPtn2Q7QPPiUC5mwUg1QNi6hY1KFlYREOylgvtQE7AnC8ebocYT3oV/3Olz+mXUoRszXCpKPgdYGNuuZeUlrT8g9rDOzdMyb+FymJEQ+gHIx1bEP8o8Ym2Xlv5ZTBuMpDjsQIFIfYkyXBO7tecY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VxAXPIWx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EoN5bv5m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B859C2BCB0;
-	Tue, 21 Apr 2026 04:49:44 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VxAXPIWx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19FB8C2BCB5;
+	Tue, 21 Apr 2026 04:49:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776746984;
-	bh=/7YRpBxxWTP/yjaBm581Uag7GQgE9REjtg9mq3Bzdu0=;
-	h=From:To:Cc:Subject:Date:From;
-	b=EoN5bv5mUda9H8D5jj2fFWRQOwMnf8esdfIh7gyJvr8yMm0hrLkf1Gymu75Lokq4M
-	 4+SLnIbx8uI/5yYZNaNVouMMkY/AiMghZP4WdTxQhUPT3ObKE13O1CV7xO+CT2bkKy
-	 WDhee5ZJzSv90lINkuWv+Vrqzj/tgePq1FrofnDmYzd0WU4sDfkwSMdqYegBM7S9IU
-	 G5zP47aGFi2FG0weTTZUQ6dJh46E1/3F4OiHXs5DOi/OdblmbGkKSujXSvZRlHKyxt
-	 YpBur7z98ZI1iHohsM2NEqOzvRg1rkLaYBkYSJxTWEGpArfAK9VEGt024w/QZSyT5L
-	 YGTT200D9vKMg==
+	s=k20201202; t=1776746985;
+	bh=ka4gbLZs99fExMD1yc1xEuZ3x1da439G/UiyCjNMmiQ=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=VxAXPIWxB31Jk6/Qmby4wm0jEL0HHoppbsPaygsvseRuCttTk7XJFZPTDRTfu/968
+	 sVgGpFssrD5yjsRi1eEs/w2v4V+0904KUXmvohuEvax8kBK9jjs9+Q8IwWCa8iCbaz
+	 uyUHho97AL/Gs0H4FpKrOFHa9lQ13/tdcX2Lu8mTn5yl3EbU2s5PTj3yez608G8l4m
+	 U3m6/LootpFAl/x1f84gJgMI8L+y1dB60kzpCjHDMAsw/9XamrkvuqtQg/ZtN4pGG1
+	 gUCE3ZK30H/owzyhL1i/hpPrMvow3RJBJ9Uls6iGb18KKEuxjDNlkjI8zZlpTu9ab4
+	 vyrcMRQs2AZkw==
 From: SeongJae Park <sj@kernel.org>
 To: 
 Cc: SeongJae Park <sj@kernel.org>,
@@ -42,10 +43,12 @@ Cc: SeongJae Park <sj@kernel.org>,
 	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH 0/2] mm/damon/sysfs: document filters/ directory as deprecated
-Date: Mon, 20 Apr 2026 21:49:25 -0700
-Message-ID: <20260421044928.141388-1-sj@kernel.org>
+Subject: [RFC PATCH 1/2] Docs/admin-guide/mm/damon/usage: mark scheme filters sysfs dir as deprecated
+Date: Mon, 20 Apr 2026 21:49:26 -0700
+Message-ID: <20260421044928.141388-2-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260421044928.141388-1-sj@kernel.org>
+References: <20260421044928.141388-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -54,39 +57,34 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Commit ab71d2d30121 ("mm/damon/sysfs-schemes: let
-damon_sysfs_scheme_set_filters() be used for different named
-directories") introduced alternatives of 'filters' directory, namely
-core_filters/ and 'ops_filters/ directories.  Now the alternatives are
-well stabilized and ready for all users.  All filters/ directory use
-cases are expected to be able to be migrated to the alternatives.  An
-LTS kernel having the alternatives, namely 6.18.y, is also released.
-Existence of filters/ directory is only confusing.
+The alternatives of 'filters/' directory, namely 'core_filters/' and
+'ops_filters/', can fully support all the features 'filters/' directory
+can do, and provide better user experience.   Having 'filters/'
+directory is only confusing to users.  Announce it as deprecated on the
+usage document.
 
-It would be better not immediately removing the directory, though.
-There could be users that need time before migrating to the
-alternatives. There might be unexpected use cases that the alternatives
-cannot support.  Doing the deprecation step by step across multiple
-years like DAMON debugfs deprecation would be safer.  Start the
-deprecation changes by announcing the deprecation on the documents.
+Signed-off-by: SeongJae Park <sj@kernel.org>
+---
+ Documentation/admin-guide/mm/damon/usage.rst | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-Every year, one more action for completely removing the directory will
-be followed, like DAMON debugfs deprecation did.  Following yearly
-actions are currently expected.  In 2027, deprecation warning kernel
-messages will be printed once, for use of filters/ directory.  In 2028,
-filters/ directory will be renamed to filters_DEPRECATED/.  In 2029,
-filters_DEPRECATED/ directory will be removed.
-
-SeongJae Park (2):
-  Docs/admin-guide/mm/damon/usage: mark scheme filters sysfs dir as
-    deprecated
-  Docs/ABI/damon: mark schemes/<S>/filters/ deprecated
-
- .../ABI/testing/sysfs-kernel-mm-damon         | 62 ++++++++++---------
- Documentation/admin-guide/mm/damon/usage.rst  |  7 ++-
- 2 files changed, 38 insertions(+), 31 deletions(-)
-
-
-base-commit: 68f9cad2eca9a05a70ec47a90f2ae97aa2363a9c
+diff --git a/Documentation/admin-guide/mm/damon/usage.rst b/Documentation/admin-guide/mm/damon/usage.rst
+index d5548e460857c..918c14a8e852b 100644
+--- a/Documentation/admin-guide/mm/damon/usage.rst
++++ b/Documentation/admin-guide/mm/damon/usage.rst
+@@ -486,9 +486,10 @@ layers.  Filters that requested by ``core_filters`` and ``ops_filters`` will be
+ installed before those of ``filters``.  All three directories have same files.
+ 
+ Use of ``filters`` directory can make expecting evaluation orders of given
+-filters with the files under directory bit confusing.  Users are hence
+-recommended to use ``core_filters`` and ``ops_filters`` directories.  The
+-``filters`` directory could be deprecated in future.
++filters with the files under directory bit confusing.  For the reason,
++``filters`` directory is deprecated.  It is still functioning, but it will be
++broken and eventually removed in near future.  Users should use
++``core_filters`` and ``ops_filters`` directories instead.
+ 
+ In the beginning, the directory has only one file, ``nr_filters``.  Writing a
+ number (``N``) to the file creates the number of child directories named ``0``
 -- 
 2.47.3
