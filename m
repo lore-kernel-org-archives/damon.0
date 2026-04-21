@@ -1,127 +1,235 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 953AA3A16A9
-	for <damon@lists.linux.dev>; Mon, 20 Apr 2026 18:31:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFCDF1991D4;
+	Tue, 21 Apr 2026 01:20:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776709906; cv=none; b=dXUW0pJCqaFRtZaJIbGC50lTvLUe5sBw+IUDfJ2b6gF1vfl0q2ASpUU1uKqOgUXYU+uPP6hNlbPiR1AptLuYJmVW9PifbCuu5Qmm2P6hylnVV4yZosuw/S7Hi6c2Ua1le+EfL0bsTJ8jm42o6aXIHcOr0+rxzq+P+mR4XQYfXVg=
+	t=1776734438; cv=none; b=kP4JK1cmh9nsK3Aq7TouVdA5nBG4SWw877rrFR0QzJAO4DpyaLRSpnw9HxFP/IT+vUTIGEzPW4ZmlPCkz3Ph0LQ/x2kQf7LERga8CWMDyDP8a7Y3tKHxMmLrCMN4P623s8mQcb+vSr66qg0eHF2egfiRYyj4VzdGndM0b3Rp92w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776709906; c=relaxed/simple;
-	bh=zfCBQ6+z745p9odlNPzzi8bZ4QQ+RdgS/k56q4m6Hwg=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=ROtFIEfWPTmqVetbD0jtEXRtB3I8VAJD+FfvL7dI6C3jvtagzSfXMK9w3zyO3ZIhx3+1J8+zNeYDwDGlE/zqe6ypHG/ENnJeh1PPO67vKWFZV075rWtSdg3C77Ko+mIEburXQE3h4bQU6PxcgGEXp2i6OVpF5/lwnVCWIitmqbc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KBfzOzqP; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1776734438; c=relaxed/simple;
+	bh=kFjPHjdqXPh1vzTeTNAYLlOo6NQK1J4F1ZAd2Ygq2Ms=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=C8TOCsrqtKd2c/rgwGw0eJLNBmZ+5WTc6fdbsnGj9boCyY0U1TXniVgPIBu4iOpmD4tknLNrAH5y8ebH7oinweYYVDK9OD3468Vj+m5nGL+3KleKYEOuEPKxpIBu0A76R+OJcE+FNakbFAcRvlWGGXSxMCxNXW9DjeB4K/zcItg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=r0NYO6Qg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KBfzOzqP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DA7AC2BCB0;
-	Mon, 20 Apr 2026 18:31:46 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="r0NYO6Qg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F46EC2BCB3;
+	Tue, 21 Apr 2026 01:20:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776709906;
-	bh=zfCBQ6+z745p9odlNPzzi8bZ4QQ+RdgS/k56q4m6Hwg=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date:From;
-	b=KBfzOzqPS0oPma1Fp8DRqHU4SPhw5CI8kZaR402GeZxPowYUy40dSds5MeYtu5K/a
-	 GNSivQ3eXoQPHBNERcGHw1W6GFvj4wc5NS5/OP8wcBDXH28DLu6+3dz5kvSIHRBVZf
-	 DDx4D5Go8daV0hp7pZHaXMPYGoMQYuy/K9FItdcJ36baQQUlRbcXubrDJ9ylGH2pPA
-	 3caltwq5xTXULPh+SMYfL7+W1zd7rZZJIc+yOsMoAKMrzmcDytpNHyCx41kRhjSvpF
-	 6w7WGalYCH0Re4aOtynVXLhaYD/Ezl2NdpVS9vFopwyeKMelDvq+hNtYKZ1IMiqB51
-	 dflqOOHcm7oeA==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v2] mm/damon/sysfs-schemes: fix use-after-free on
- memcg_path and goal path
-Reply-To: sashiko@lists.linux.dev
-To: "Junxi Qian" <qjx1298677004@gmail.com>
-Cc: damon@lists.linux.dev
+	s=k20201202; t=1776734437;
+	bh=kFjPHjdqXPh1vzTeTNAYLlOo6NQK1J4F1ZAd2Ygq2Ms=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=r0NYO6QgOQnz7w0hGW6fe+snBccFuqDWJoNXEh5XR3kO9qkpDi240W2SQeqIiWg7n
+	 VxSvuCD3UHDRTxvB9HlEISY1HtCjI8EKNHdWnN4nhBGWax3+i7Oh2fpFLAoFxL1I/F
+	 WFzcldkI++wq3fxJp0UXiujq1YwUhbt7YTAa7bpKr6JUfNncHcwKv/R/iHsroFU0Rp
+	 on1bUR8C9SU6AfcPxOOCt5eTaQT1zaioluBPSDg+iWQVAahgq+Vnw+TeJISnj0zmAp
+	 L1mE3xskQMApGmmc/1iFqbGOh5s3YqHnPBw5LJzmeTvutQtvch5ASKwEp3N3dFq2KS
+	 dG9qLfd0NQeXA==
+From: SeongJae Park <sj@kernel.org>
+To: Junxi Qian <qjx1298677004@gmail.com>
+Cc: SeongJae Park <sj@kernel.org>,
+	linux-mm@kvack.org,
+	akpm@linux-foundation.org,
+	damon@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2] mm/damon/sysfs-schemes: fix use-after-free on memcg_path and goal path
+Date: Mon, 20 Apr 2026 18:20:27 -0700
+Message-ID: <20260421012028.67143-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260420125405.362137-1-qjx1298677004@gmail.com>
-References: <20260420125405.362137-1-qjx1298677004@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Mon, 20 Apr 2026 18:31:45 +0000
-Message-Id: <20260420183146.0DA7AC2BCB0@smtp.kernel.org>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-Sashiko AI review found 1 potential issue(s):
-- [High] Using `mutex_lock(&damon_sysfs_lock)` in sysfs `.show` and `.store=
-` callbacks introduces a classic ABBA deadlock against concurrent directory=
- removal.
---
+Hello Junxi,
 
-commit 01b23742d072b6f9a33d05db48195e9adf5cf0a9
-Author: Junxi Qian <qjx1298677004@gmail.com>
 
-mm/damon/sysfs-schemes: fix use-after-free on memcg_path and goal path
+When you send a new version of a patch, please send it as a new mail with
+changes log [1], rather than as a reply to the old version.
 
-This commit wraps the string pointer reads and writes in memcg_path_show(),
-memcg_path_store(), path_show(), and path_store() with damon_sysfs_lock
-to prevent use-after-free bugs when racing with the kdamond thread.
+On Mon, 20 Apr 2026 20:54:05 +0800 Junxi Qian <qjx1298677004@gmail.com> wrote:
 
+> memcg_path_store() and path_store() free and replace their respective
+> string pointers without holding damon_sysfs_lock. This creates a race
+> with the kdamond thread, which reads these pointers in
+> damon_sysfs_add_scheme_filters() and damos_sysfs_add_quota_score()
+> via damon_call() during a "commit" operation.
+> 
+> The race window is as follows:
+>   Thread A (commit):  holds damon_sysfs_lock, triggers damon_call()
+>   kdamond thread:     reads sysfs_filter->memcg_path in
+>                       damon_sysfs_memcg_path_to_id()
+>   Thread B (sysfs):   calls memcg_path_store() WITHOUT lock,
+>                       kfree(filter->memcg_path), replaces pointer
+> 
+> Since Thread B does not hold damon_sysfs_lock, the kdamond thread can
+> observe a freed pointer, resulting in a use-after-free when
+> damon_sysfs_memcg_path_eq() dereferences it for string comparison.
+
+Thank you for finding and sharing this bug!
+> 
+> Similarly, memcg_path_show() and path_show() read the string pointers
+> without holding the lock, so a concurrent store can free the string
+> just before sysfs_emit() dereferences it, causing a use-after-free.
+
+Is this correct?  Isn't sysfs prohibiting such concurrent read/write using
+kernfs_open_file->mutex?  Were you able to trigger this?
+
+> 
+> KASAN reports the following on v7.0.0-rc5 with CONFIG_KASAN=y:
+> 
+>   ==================================================================
+>   BUG: KASAN: double-free in memcg_path_store+0x6e/0xc0
+> 
+>   Free of addr ffff888100a086c0 by task exp/149
+> 
+>   CPU: 1 UID: 0 PID: 149 Comm: exp Not tainted 7.0.0-rc5-gd38efd7c139a #18 PREEMPT(lazy)
+>   Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
+>   Call Trace:
+>    <TASK>
+>    dump_stack_lvl+0x55/0x70
+>    print_report+0xcb/0x5d0
+>    kasan_report_invalid_free+0x94/0xc0
+>    check_slab_allocation+0xde/0x110
+>    kfree+0x114/0x3b0
+>    memcg_path_store+0x6e/0xc0
+>    kernfs_fop_write_iter+0x2fc/0x490
+>    vfs_write+0x8e1/0xcc0
+>    ksys_write+0xee/0x1c0
+>    do_syscall_64+0xfc/0x580
+>    entry_SYSCALL_64_after_hwframe+0x77/0x7f
+>    </TASK>
+> 
+>   Allocated by task 147 on cpu 0 at 12.364295s:
+>    kasan_save_stack+0x24/0x50
+>    kasan_save_track+0x17/0x60
+>    __kasan_kmalloc+0x7f/0x90
+>    __kmalloc_noprof+0x191/0x490
+>    memcg_path_store+0x32/0xc0
+>    kernfs_fop_write_iter+0x2fc/0x490
+>    vfs_write+0x8e1/0xcc0
+>    ksys_write+0xee/0x1c0
+> 
+>   Freed by task 150 on cpu 0 at 13.373810s:
+>    kasan_save_stack+0x24/0x50
+>    kasan_save_track+0x17/0x60
+>    kasan_save_free_info+0x3b/0x60
+>    __kasan_slab_free+0x43/0x70
+>    kfree+0x137/0x3b0
+>    memcg_path_store+0x6e/0xc0
+>    kernfs_fop_write_iter+0x2fc/0x490
+>    vfs_write+0x8e1/0xcc0
+>    ksys_write+0xee/0x1c0
+> 
+>   The buggy address belongs to the object at ffff888100a086c0
+>    which belongs to the cache kmalloc-8 of size 8
+>   ==================================================================
+> 
+> Fix this by holding damon_sysfs_lock while swapping the path pointer
+> in both memcg_path_store() and path_store(),
+
+I'd like to avoid use of the lock in long term.  But this sounds good and
+simple for hotfixes.
+
+> and while reading the
+> path pointer in memcg_path_show() and path_show().
+
+As I commented above, I'm not sure if this is really needed.
+
+> The actual kfree()
+> is moved outside the lock since the old pointer is no longer reachable
+> once replaced.
+> 
+> Fixes: 490a43d07f16 ("mm/damon/sysfs-schemes: free old damon_sysfs_scheme_filter->memcg_path on write")
+
+I think this deserves Cc-ing stable@.
+
+Also, this patch is fixing two bugs.  For making backport of the fixes easy,
+could we split this patch into two patches, one for memcg_path_{show,store}(),
+and the other one for path_{show,store}()?
+
+> Signed-off-by: Junxi Qian <qjx1298677004@gmail.com>
+> 
+> ---
+> Changes in v2:
+> - Also protect memcg_path_show() and path_show() with damon_sysfs_lock,
+>   since sysfs show and store callbacks can run concurrently and a
+>   lockless read in show can race with the kfree in store. (Sashiko AI)
+
+As I abovely commented, I'm not sure that Sashiko comment is correct.
+
+> 
+>  mm/damon/sysfs-schemes.c | 36 ++++++++++++++++++++++++++++--------
+>  1 file changed, 28 insertions(+), 8 deletions(-)
+> 
 > diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
-> index 5186966dafb35..1a890e2a4eb9c 100644
+> index 5186966da..1a890e2a4 100644
 > --- a/mm/damon/sysfs-schemes.c
 > +++ b/mm/damon/sysfs-schemes.c
 > @@ -533,9 +533,14 @@ static ssize_t memcg_path_show(struct kobject *kobj,
 >  {
->  	struct damon_sysfs_scheme_filter *filter =3D container_of(kobj,
+>  	struct damon_sysfs_scheme_filter *filter = container_of(kobj,
 >  			struct damon_sysfs_scheme_filter, kobj);
 > +	ssize_t len;
-> =20
+>  
 > -	return sysfs_emit(buf, "%s\n",
 > +	mutex_lock(&damon_sysfs_lock);
 
-Could this introduce an ABBA deadlock against concurrent directory removal?
+I read Sashiko is commenting [2] about possible ABBA deadlock, and suggesting
+mutex_trylock().  I think that makes sense.  damon_sysfs_lock is always only
+mutex_trylock()-ed for the reason.
 
-When a user reads a sysfs file, kernfs acquires an active reference
-(s_active) before executing the show callback, which now blocks
-unconditionally on damon_sysfs_lock.
-
-If another thread simultaneously writes to a file that removes directories
-(like nr_filters_store), it will acquire damon_sysfs_lock and call
-kobject_put(). The teardown path then invokes kernfs_drain(), which
-synchronously waits for s_active to drop.
-
-This leaves the teardown thread holding the lock and waiting for s_active,
-while the read thread holds s_active and waits for the lock.
-
-Should this use mutex_trylock(&damon_sysfs_lock) and return -EBUSY on
-failure, similar to other sysfs callbacks in this subsystem?
-
-> +	len =3D sysfs_emit(buf, "%s\n",
+> +	len = sysfs_emit(buf, "%s\n",
 >  			filter->memcg_path ? filter->memcg_path : "");
 > +	mutex_unlock(&damon_sysfs_lock);
 > +
 > +	return len;
 >  }
-> =20
+
+And I'm unsure if this change for memcg_path_show() is really needed.
+
+>  
 >  static ssize_t memcg_path_store(struct kobject *kobj,
-> @@ -543,15 +548,20 @@ static ssize_t memcg_path_store(struct kobject *kob=
-j,
+> @@ -543,15 +548,20 @@ static ssize_t memcg_path_store(struct kobject *kobj,
 >  {
->  	struct damon_sysfs_scheme_filter *filter =3D container_of(kobj,
+>  	struct damon_sysfs_scheme_filter *filter = container_of(kobj,
 >  			struct damon_sysfs_scheme_filter, kobj);
-> -	char *path =3D kmalloc_array(size_add(count, 1), sizeof(*path),
+> -	char *path = kmalloc_array(size_add(count, 1), sizeof(*path),
 > -				   GFP_KERNEL);
 > +	char *path, *old;
-> =20
-> +	path =3D kmalloc_array(size_add(count, 1), sizeof(*path), GFP_KERNEL);
+>  
+> +	path = kmalloc_array(size_add(count, 1), sizeof(*path), GFP_KERNEL);
 >  	if (!path)
 >  		return -ENOMEM;
-> =20
+>  
 >  	strscpy(path, buf, count + 1);
 > -	kfree(filter->memcg_path);
 > +
 > +	mutex_lock(&damon_sysfs_lock);
 
-Does this face the same deadlock risk as the show function?=20
+Let's use mutex_trylock().
 
-If converted to mutex_trylock(), would we need to free the newly allocated
-path buffer before returning -EBUSY?
+> +	old = filter->memcg_path;
+>  	filter->memcg_path = path;
+> +	mutex_unlock(&damon_sysfs_lock);
+> +
+> +	kfree(old);
+>  	return count;
+>  }
 
-[ ... ]
+Same comments for path_show() and path_store() changes.
 
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260420125405.3621=
-37-1-qjx1298677004@gmail.com?part=3D1
+[1] https://docs.kernel.org/process/submitting-patches.html#commentary
+[2] https://lore.kernel.org/20260420183146.0DA7AC2BCB0@smtp.kernel.org
+
+
+Thanks,
+SJ
+
+[...]
