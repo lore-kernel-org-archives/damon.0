@@ -1,43 +1,51 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DC7C26CE05;
-	Tue, 21 Apr 2026 03:56:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 607C926ACC;
+	Tue, 21 Apr 2026 04:49:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776743791; cv=none; b=BKvuUV5NADnHNFQEvpl+aEG10NKtovF14D3OFc+rPGEpPhnxWlictWHnyc7WNuOx5B5w7gSx2Q7H0Xmt9AupL6AJU7zGq4ZgK29dEhi7f3jfE2rnRUS+pUVBOfqrhd9hC0ubxlu3tYIzvw9vnzebQQpuUC5h0TGfqinvmpgzVnE=
+	t=1776746985; cv=none; b=A0fxDs8K9NobYc6w4rQiQXVYWfxsuGVTB6PdMIUzfZ1/D9OQbosSfcAnNvug+yAWF6XWhErQEkMhfx6hqFEFzlsniXhneDEgh3n9HD4cwaI4GFkuJ4erqHwmixbK4mDOMd6vy6IgqIJ2KEe4P3AJzcyqcU28vuiQDpi5YKFnMEI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776743791; c=relaxed/simple;
-	bh=AhqzqmCA4tx3rY6a7rv8WzDeP5oJmLfeTUm+EWQccPw=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h9XhRb148gKO7oDbNbsnoR3FAnywUJFc6RtXhw/eauJzIJ6bnadEjALSpMfS5TEgtPxjpvaYFdF78Q4VxFfSm1jWrLSlqCEEyKkOCMkeLIKd4wGnP/Ml6leMcRL/Ei5djW2tncGC+vB5g596GilVPD0G3KoMVPQOQaIgRUtEkEc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XLdRLh/P; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1776746985; c=relaxed/simple;
+	bh=/7YRpBxxWTP/yjaBm581Uag7GQgE9REjtg9mq3Bzdu0=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=YlK40RLUpi6sU6fNr5I8a8Usz1PbMc791Lbb0ar/y/N/dDyAg10vffYub0l3+EEp+7dU3HdjRI80h/+q0eQkTms6gboy7vGrgMD4zhdGENXUwgKYoCpvqJrJdkTT4JsniCR15yMBprYOZk4oaMebPCfhAxRYDr2WPu5v9ktIk2c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EoN5bv5m; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XLdRLh/P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89A85C2BCB3;
-	Tue, 21 Apr 2026 03:56:30 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EoN5bv5m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B859C2BCB0;
+	Tue, 21 Apr 2026 04:49:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776743790;
-	bh=AhqzqmCA4tx3rY6a7rv8WzDeP5oJmLfeTUm+EWQccPw=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XLdRLh/PbmOu+fnOxQqqxD9BYXr3mFvmG7MNCfPArKkT3qY761v3Jke4S0PuLu1J+
-	 DLiLj/fcfmoTlIyzl5P0MAZwxM42GBcEcxYrynLGHJx8Z4K/c/RJC0HOdzXKE2fgIU
-	 og5MF2KhyxQg+9aAX+SVk6y7Ww2LEgN61o876DZm1vA0gbdhrFXO4hS+IB3UiA5g2B
-	 s2rdRBSF89sWYMEL75qTkvkAbON6Vt4aFQEU46wLiXIBi9WN9yLv1aGaFwuNpqwiG6
-	 9DVDme0kaWiU0n/HGPWUFffIKxzz6GHR39zmAB75+qeYYgRG3PMEkuF/sXlC8OenHY
-	 v7JSm4a9+jT2g==
+	s=k20201202; t=1776746984;
+	bh=/7YRpBxxWTP/yjaBm581Uag7GQgE9REjtg9mq3Bzdu0=;
+	h=From:To:Cc:Subject:Date:From;
+	b=EoN5bv5mUda9H8D5jj2fFWRQOwMnf8esdfIh7gyJvr8yMm0hrLkf1Gymu75Lokq4M
+	 4+SLnIbx8uI/5yYZNaNVouMMkY/AiMghZP4WdTxQhUPT3ObKE13O1CV7xO+CT2bkKy
+	 WDhee5ZJzSv90lINkuWv+Vrqzj/tgePq1FrofnDmYzd0WU4sDfkwSMdqYegBM7S9IU
+	 G5zP47aGFi2FG0weTTZUQ6dJh46E1/3F4OiHXs5DOi/OdblmbGkKSujXSvZRlHKyxt
+	 YpBur7z98ZI1iHohsM2NEqOzvRg1rkLaYBkYSJxTWEGpArfAK9VEGt024w/QZSyT5L
+	 YGTT200D9vKMg==
 From: SeongJae Park <sj@kernel.org>
-To: kernel test robot <lkp@intel.com>
+To: 
 Cc: SeongJae Park <sj@kernel.org>,
-	llvm@lists.linux.dev,
-	oe-kbuild-all@lists.linux.dev,
-	damon@lists.linux.dev
-Subject: Re: [sj:damon/next 156/181] mm/damon/paddr.c:195:7: warning: variable 'matched' is used uninitialized whenever 'if' condition is false
-Date: Mon, 20 Apr 2026 20:56:20 -0700
-Message-ID: <20260421035620.138367-1-sj@kernel.org>
+	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	David Hildenbrand <david@kernel.org>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	damon@lists.linux.dev,
+	linux-doc@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-mm@kvack.org
+Subject: [RFC PATCH 0/2] mm/damon/sysfs: document filters/ directory as deprecated
+Date: Mon, 20 Apr 2026 21:49:25 -0700
+Message-ID: <20260421044928.141388-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <202604210331.wdB3yt0y-lkp@intel.com>
-References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -46,74 +54,39 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Tue, 21 Apr 2026 03:16:29 +0800 kernel test robot <lkp@intel.com> wrote:
+Commit ab71d2d30121 ("mm/damon/sysfs-schemes: let
+damon_sysfs_scheme_set_filters() be used for different named
+directories") introduced alternatives of 'filters' directory, namely
+core_filters/ and 'ops_filters/ directories.  Now the alternatives are
+well stabilized and ready for all users.  All filters/ directory use
+cases are expected to be able to be migrated to the alternatives.  An
+LTS kernel having the alternatives, namely 6.18.y, is also released.
+Existence of filters/ directory is only confusing.
 
-> tree:   https://git.kernel.org/pub/scm/linux/kernel/git/sj/linux.git damon/next
-> head:   ecd4906478687820c088904becbcf3c80ded7d81
-> commit: 8c863600a03e3066ce88bf8db48953176befa4c4 [156/181] mm/damon/paddr: do data_attr filtering
-> config: loongarch-allmodconfig (https://download.01.org/0day-ci/archive/20260421/202604210331.wdB3yt0y-lkp@intel.com/config)
-> compiler: clang version 19.1.7 (https://github.com/llvm/llvm-project cd708029e0b2869e80abe31ddb175f7c35361f90)
-> reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20260421/202604210331.wdB3yt0y-lkp@intel.com/reproduce)
-> 
-> If you fix the issue in a separate patch/commit (i.e. not just a new version of
-> the same patch/commit), kindly add following tags
-> | Reported-by: kernel test robot <lkp@intel.com>
-> | Closes: https://lore.kernel.org/oe-kbuild-all/202604210331.wdB3yt0y-lkp@intel.com/
-> 
-> All warnings (new ones prefixed by >>):
-> 
-> >> mm/damon/paddr.c:195:7: warning: variable 'matched' is used uninitialized whenever 'if' condition is false [-Wsometimes-uninitialized]
->      195 |                 if (f->type == DAMON_FILTER_TYPE_ANON) {
->          |                     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
->    mm/damon/paddr.c:203:7: note: uninitialized use occurs here
->      203 |                 if (matched)
->          |                     ^~~~~~~
->    mm/damon/paddr.c:195:3: note: remove the 'if' if its condition is always true
->      195 |                 if (f->type == DAMON_FILTER_TYPE_ANON) {
->          |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
->    mm/damon/paddr.c:193:15: note: initialize the variable 'matched' to silence this warning
->      193 |                 bool matched;
->          |                             ^
->          |                              = 0
->    1 warning generated.
+It would be better not immediately removing the directory, though.
+There could be users that need time before migrating to the
+alternatives. There might be unexpected use cases that the alternatives
+cannot support.  Doing the deprecation step by step across multiple
+years like DAMON debugfs deprecation would be safer.  Start the
+deprecation changes by announcing the deprecation on the documents.
 
-Thank you for this report!  I just pushed below as a fix to damon/next.
+Every year, one more action for completely removing the directory will
+be followed, like DAMON debugfs deprecation did.  Following yearly
+actions are currently expected.  In 2027, deprecation warning kernel
+messages will be printed once, for use of filters/ directory.  In 2028,
+filters/ directory will be renamed to filters_DEPRECATED/.  In 2029,
+filters_DEPRECATED/ directory will be removed.
 
-'''
-Author: SeongJae Park <sj@kernel.org>
-Date:   Mon Apr 20 20:52:35 2026 -0700
+SeongJae Park (2):
+  Docs/admin-guide/mm/damon/usage: mark scheme filters sysfs dir as
+    deprecated
+  Docs/ABI/damon: mark schemes/<S>/filters/ deprecated
 
-    mm/damon/paddr: initialize 'matched' in damon_pa_tests_pass()
-
-    Reported-by: kernel test robot <lkp@intel.com>
-    Closes: https://lore.kernel.org/oe-kbuild-all/202604210331.wdB3yt0y-lkp@intel.com/
-    Signed-off-by: SeongJae Park <sj@kernel.org>
-
-diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
-index 4788abce08a50..8d49c3e944cfe 100644
---- a/mm/damon/paddr.c
-+++ b/mm/damon/paddr.c
-@@ -190,14 +190,12 @@ static bool damon_pa_tests_pass(phys_addr_t pa, struct damon_counter *c)
-        bool default_pass = true;
-
-        damon_for_each_test(t, c) {
--               bool matched;
-+               bool matched = false;
-
-                if (t->type == DAMON_TEST_TYPE_ANON) {
-                        struct folio *folio = damon_get_folio(PHYS_PFN(pa));
-
--                       if (!folio)
--                               matched = false;
--                       else
-+                       if (folio)
-                                matched = folio_test_anon(folio);
-                }
-                if (matched)
-'''
+ .../ABI/testing/sysfs-kernel-mm-damon         | 62 ++++++++++---------
+ Documentation/admin-guide/mm/damon/usage.rst  |  7 ++-
+ 2 files changed, 38 insertions(+), 31 deletions(-)
 
 
-Thanks,
-SJ
-
-[...]
+base-commit: 68f9cad2eca9a05a70ec47a90f2ae97aa2363a9c
+-- 
+2.47.3
