@@ -1,44 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A6871A6815;
-	Wed, 22 Apr 2026 04:35:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66A5934E765;
+	Wed, 22 Apr 2026 14:35:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776832520; cv=none; b=XkqBM0QePM3FhftHrdS7+PsKnwLwhBLjhnek679awbzAceI2myxIxDm457AZKgbKlS64vVDi6+E4ojWqanuHDIoVZFpf+n9KHVF+Xyb7JP9OaYB4TW+n0pOxa6AYtptyc6H/60UNUHHXTjIs+gCj1any3tlU+jCTEFDbzqBS1A8=
+	t=1776868508; cv=none; b=oukhpLuiss4eP0vLxfH6fZ4bixqQcJQEeLBlsAUMiFRd6d/QaK6F2e/zcyaJIApc//WWWUuOQ4pUeixUz8N6UVhSltJhmKlGjBT25wMBg23ytgLVdjlHJNS/2H+mbpRA3YF0eIxZbhptWLLqXin1JKlSd0NG9Bs3On7/FipC2ng=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776832520; c=relaxed/simple;
-	bh=h7aRfzS42EkElr2GaVorlivQS4yQtChao6czjfMEwyQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Sy65Nx8vxjlNOH3Wkt1vDLA3CsT4tbm7VAWXZJjmq9dN7hQfapw40tUCHlGQm3Sooij337ztbOMxmV6WtgIT4vqC6gGf9VUA+fdNR9CbW+DJMFdZd+KRJkXncYXGYj5xSxZKHRBKQX8/HHroN2ZwWSht5CRViVR1n+mlPmkRLJQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=P7iEnDsY; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1776868508; c=relaxed/simple;
+	bh=bi6XcGwk5Sb2RtrCfQVAavSWJYWkUYMGONOn/G5G6lQ=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=snM+LEnQQtINofC+WuSb5VS6/o7z8B7DHFfJx/UhmagsSH8vO4gzQ5Jyln8Xb4bgDClSxmVrTwGErOADWmQSOPKzdwbfcsJS3a0M3m+RNEsyvDOx8ZVwlIN3Z1M02N6pb3hafflgMC5gqHVjq6/TGnOL5iH6cEdFBAWbpCSeLhg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=j72L0/mI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="P7iEnDsY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71BF2C19425;
-	Wed, 22 Apr 2026 04:35:19 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="j72L0/mI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF38AC19425;
+	Wed, 22 Apr 2026 14:35:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776832519;
-	bh=h7aRfzS42EkElr2GaVorlivQS4yQtChao6czjfMEwyQ=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P7iEnDsY5RMSecQ3rEatP4xUzPb3pPMYWcFK5FCe4RN7KROzBL4cqfOK3p7jZ11/4
-	 mnLufX3fl7Aa49dvZQiCvypuvlb3kg66ac68fvgh3rw+PM0aAE4moMGuDNVkIEJ5wn
-	 SKpC+va594fXdXnwu36qGNe0G9QI9+5ZmnbCSZyIXbQJ6S6KAF1fRCm8e7cosExI2x
-	 HWBH0uftBp8YOvSfTsdmpWIZdYwu/SJqwYKoGpQ82smB0dKiC/Cnsqv4sF3CaDSQvx
-	 c7RXLWmTJXcJd4diCTWhjUZAokEbHOEc5jerjNHTXTbKpQum7GPkg9nKPiKLhDOHsi
-	 UiEJdv7fitWsA==
+	s=k20201202; t=1776868507;
+	bh=bi6XcGwk5Sb2RtrCfQVAavSWJYWkUYMGONOn/G5G6lQ=;
+	h=From:To:Cc:Subject:Date:From;
+	b=j72L0/mI2RW3vfdJ3HLLEjpK4h7FpsFh8HwcMuZLZue/4Y0Cv4hPqIJj5chF6p6kl
+	 ZtW4fD+t1j7RLaCGfaS70ssc3fatz7PyJmxkCI3GfwFCuzuABpraWCWok8W6DHYKvS
+	 xNjBEnfGwrqj+kalLhz5RV/PwmF7mGW/gGDAsOkR/2X6Xig5XxOoSe4mNXgL7rt8Vh
+	 SCNboo+cs9bGVI9o6p59CkZnSJF8MIUVTKENZvP+z5J3dYDxCSZMbyW4UNWL2zVRHy
+	 fk2VU/adTpaNWVfA7jc2STqEyg/GIeiomUnEUMlxZ3m3pDanwjtsABT8GEucSKnYrD
+	 zE9O5RefrPS6A==
 From: SeongJae Park <sj@kernel.org>
-To: junxi qian <qjx1298677004@gmail.com>
+To: 
 Cc: SeongJae Park <sj@kernel.org>,
-	akpm@linux-foundation.org,
+	"# 6 . 16 . x" <stable@vger.kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: Re: [PATCH] mm/damon/sysfs-schemes: fix use-after-free on memcg_path and goal path
-Date: Tue, 21 Apr 2026 21:35:09 -0700
-Message-ID: <20260422043509.66755-1-sj@kernel.org>
+Subject: [RFC PATCH 0/2] mm/damon/sysfs-schemes: fix use-after-free for [memcg_]path
+Date: Wed, 22 Apr 2026 07:34:59 -0700
+Message-ID: <20260422143503.71357-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <CAAkLyHRCUS7=YEQRrLyRXX5X10pHDGA1e2gnKQsLvGkcqUy2Ng@mail.gmail.com>
-References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -47,22 +45,18 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Wed, 22 Apr 2026 12:31:43 +0800 junxi qian <qjx1298677004@gmail.com> wrote:
+Reads of 'path' and 'memcg_path' files in DAMON sysfs interface could
+race with their writes, results in use-after-free.  Fix those.
 
-> Hi SJ,
-> 
-> Thank you for the suggestion and for offering to help.
+SeongJae Park (2):
+  mm/damon/sysfs-schemes: protect memcg_path kfree() with
+    damon_sysfs_lock
+  mm/damon/sysfs-schemes: protect path kfree() with damon_sysfs_lock
 
-My pleasure!
-
-> 
-> It would be great if you could finish the remaining work. Please feel
-> free to add my Co-developed-by: and Signed-off-by: tags.
-
-Ok, I will.
+ mm/damon/sysfs-schemes.c | 24 ++++++++++++++++++++++--
+ 1 file changed, 22 insertions(+), 2 deletions(-)
 
 
-Thanks,
-SJ
-
-[...]
+base-commit: 0d45806f3a75bf53e59475b0e56be324f650ab09
+-- 
+2.47.3
