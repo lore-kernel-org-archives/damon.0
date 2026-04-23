@@ -1,173 +1,189 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 387143C9EF3;
-	Thu, 23 Apr 2026 03:22:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51B13244687;
+	Thu, 23 Apr 2026 04:34:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776914565; cv=none; b=mwJoUpQj4pYSC1h6rN5LbwXzgLLg83PI+bLirmpr+3ojmZt48maVdN3SOPTN1TCDzuJtLWVV02De3CnubbfZUTJFWuhIuHIJh9dJk+3MxNRg1X78KRB5rRQjr2vLYMmfCatHihKlSXYa0r65DPQgj6scyLJxsx3NxNcT4pZ0w7k=
+	t=1776918845; cv=none; b=G7ONXpUhxfOGovI5OVCS8x4LL2zLdCtHYQNwUhc9ZDYKRi1KVuE77l6NHE6ybFOHNa7n7tUaZQA/3PbLHPruNFwB0/S46b/RpCM1CGNlsqtQ+rW/9yVn8EfLMMmHPIXLgBjPWW/mELQw8KWMkpQ4sb7HAjsV3tDLIs/O82RD3hk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776914565; c=relaxed/simple;
-	bh=mdJX/SO1arXSe054zEYwAAoCyUcwJEguEE+GmJ1wXR8=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=pPXXBogYjJW0N0tQHUVyNZFqrEAOOC5UkKaisJPWC6cZ8n2WcN98kdzz+wA93heQUW9YyX2OkLWZdP2GvapSo6Ws/wirpWuorAYBTa8MDJK9S3XQAIMWCwilqTI99B71bkaMNb5x5uVW24nSavY4opkjtzcx/qoT1TOQLN73pQs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eaZ7VX6X; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1776918845; c=relaxed/simple;
+	bh=iD0H50adZDwGWXLJOO4CRJlKJwS0xbiIeb45xY3Tau4=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=QK79O1UKtupyW92QgU2Iim0loOvC6p1cbjztKPVSxdAc1wA6RrGUqqevShLVNhsraJe4ItCHsx0/+Nt6YRrhZUuUkByu8CH2NITBxW4yvgyPGV6KwVBgk9C3keEpHlLsnlChTG+0qVHrhUg/jKbNHy5BOa7gnMMohbxPGq5DGvs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tlEJS9I7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eaZ7VX6X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD69FC2BCB2;
-	Thu, 23 Apr 2026 03:22:44 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tlEJS9I7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B44B8C2BCB2;
+	Thu, 23 Apr 2026 04:34:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776914564;
-	bh=mdJX/SO1arXSe054zEYwAAoCyUcwJEguEE+GmJ1wXR8=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date:From;
-	b=eaZ7VX6XdkJoesTjD75W5qYMhDWUvU+YzhL0pYJwOjVDUY0MIlvP9v4SjQffD8C/u
-	 I+GTkHOxE6KAccPQpWDrdOvQc1lXUevSmaNfUO8ueIby9cK/BAv3caFAVN/lsmxsC0
-	 pheZYyQa6v7Zrkv7uqv34o3DG14n1d6S3QWhZqek42fBBtxQ8DogVdpccWOY/6s7pk
-	 a0AYFNkgOL2oZub5ReNKZTZnEiFOOu7k6BWJMpfC+ZaGWuK4RQIq3uMoM9avCWvK73
-	 Py3mUca7N6cUhGxx+rsy6zXgRY3ZAsSx36W7T46mV1vYOnGeWHvz9Y8Rpf8lWyHMwB
-	 v5iwS+oULAEhw==
-From: sashiko-bot@kernel.org
-Subject: Re: [RFC PATCH v3 4/4] mm/damon/paddr: support perf event based
- access check
-Reply-To: sashiko@lists.linux.dev
-To: "Akinobu Mita" <akinobu.mita@gmail.com>
-Cc: damon@lists.linux.dev, linux-perf-users@vger.kernel.org
-In-Reply-To: <20260423004211.7037-5-akinobu.mita@gmail.com>
-References: <20260423004211.7037-5-akinobu.mita@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Thu, 23 Apr 2026 03:22:44 +0000
-Message-Id: <20260423032244.BD69FC2BCB2@smtp.kernel.org>
+	s=k20201202; t=1776918844;
+	bh=iD0H50adZDwGWXLJOO4CRJlKJwS0xbiIeb45xY3Tau4=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=tlEJS9I76/d5S2u83ylwBcaesc3cu6tiYqfB7pPrpZTXt1s+j2eu8AB/RqNvtIKbC
+	 u5/nna2CvUh1YhUBfAV8690S+1/gvwFTFUkLO6hjJFHZgTxTa8Xkf5UT5en7izBuVj
+	 mnUyARcMAfn4GHe43KzHXbc8VniGpftk1KRakXwoM3lI1auMcqh8CH6UMNrMjXwKma
+	 ffegpqgNyTdQudgbvi3Ue9Xko2qOdZkRFsklgM5bmjsraf14HZmU7D0ptlFIuKqlLZ
+	 wM6h9LZZwLiNZicXcqgC2daWH4IocOndJALq8HislwpY86/I64sqRDY+NxAC09/oJR
+	 kW7r8RCjq6t5g==
+From: SeongJae Park <sj@kernel.org>
+To: Akinobu Mita <akinobu.mita@gmail.com>
+Cc: SeongJae Park <sj@kernel.org>,
+	damon@lists.linux.dev,
+	linux-perf-users@vger.kernel.org
+Subject: Re: [RFC PATCH v3 0/4] mm/damon: introduce perf event based access check
+Date: Wed, 22 Apr 2026 21:34:02 -0700
+Message-ID: <20260423043402.92389-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260423004211.7037-1-akinobu.mita@gmail.com>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-Sashiko AI review found 6 potential issue(s):
-- [High] Severe Performance Regression and Soft Lockups via O(N) Memory Ite=
-ration
-- [High] Address Scale Mismatch Breaking Access Reporting (`ctx->addr_unit`=
- ignored)
-- [High] Infinite Loop and Kernel Hang via Integer Overflow on 32-bit
-- [High] XArray Index Truncation Corrupting PAE Physical Addresses
-- [Medium] Silent Failure due to Missing `PERF_SAMPLE_PHYS_ADDR` Validation
-- [Low] Unused Local Variable `tidx`
---
+Hello Akinobu,
 
-commit 0cc4cc53289c7273fbdf7b96674ce9315f78cdfb
-Author: Akinobu Mita <akinobu.mita@gmail.com>
+On Thu, 23 Apr 2026 09:42:06 +0900 Akinobu Mita <akinobu.mita@gmail.com> wrote:
 
-mm/damon/paddr: support perf event based access check
+> DAMON currently only provides PTE accessed-bit based access check, this
+> patch series adds a new perf event based access check.
+> 
+> Since perf event-based access checks do not require modifying the PTE
+> accessed-bit for pages representing each damon region, it reduces the
+> overhead of monitoring at a fixed granularity of the page size.
 
-This commit adds perf event based access checks for physical address space
-monitoring. It implements support similar to the virtual address space
-monitoring, relying on PERF_SAMPLE_PHYS_ADDR to obtain the data source
-address.
+As I also commented to the previous version, the high level idea makes sense to
+me.  I think this can be useful.
 
-> mm/damon/paddr: support perf event based access check
-[ ... ]
-> However, for perf events that can be specified with physical address
-> spaces monitoring, the data source address corresponding to the sample
-> must be obtainable as a physical address.  In other words,
-> PERF_SAMPLE_DATA_SRC and PERF_SAMPLE_PHYS_ADDR must be specifiable in
-> perf_event_attr.sample_type.
+Also as I commented to the previous version, I understand the page level
+monitoring overhead reduction is the main purpose of this patch, and it makes
+sense to me.  Nonetheless, I like this mainly because the perf event could
+provide more detailed information including from which CPU/thread the access is
+made, and whether the access is for read/write, to my understanding.  Please
+let me know if my understanding is wrong.
 
-Is there validation in the code to enforce this requirement? If a user or
-the framework fails to set the sample_phys_addr attribute, the perf
-subsystem might fail to populate the physical address and default to 0.
-Could this silently process invalid samples and record all accesses at
-physical address 0?
+> 
+> Here is a method and its results for comparing access checks using
+> existing access bits and new perf events.
+[...]
+> Using accessed bit, prepare_access_checks takes 7 seconds and
+> check_accesses takes 5 seconds.
+[...]
+> Using perf event, prepare_access_checks takes 0.01 seconds and
+> check_accesses takes 2.6 seconds.
 
-[ ... ]
-> diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
-> index 5cdcc5037cbc1..97df21281fb13 100644
-> --- a/mm/damon/paddr.c
-> +++ b/mm/damon/paddr.c
-[ ... ]
-> @@ -363,6 +363,47 @@ static int damon_pa_scheme_score(struct damon_ctx *c=
-ontext,
->  	return DAMOS_MAX_SCORE;
->  }
-> =20
-> +#ifdef CONFIG_PERF_EVENTS
-> +
-> +void damon_pa_perf_check_accesses(struct damon_ctx *ctx, struct damon_pe=
-rf_event *event)
-> +{
-> +	struct damon_perf *perf =3D event->priv;
-> +	struct damon_target *t;
-> +	unsigned int tidx =3D 0;
+Thank you so much for sharing these great test results with the detailed setup
+description!
 
-Is tidx needed here? It is incremented at the end of the loop but never
-read, which might trigger an unused-but-set-variable compiler warning.
+> ```
+> $ sudo $HOME/damo/damo stop
+> $ sudo $HOME/damo/damo start --ops vaddr \
+> 	--perf_event 5000 0 0x4 0x1cd 0x1f 0 \
+> 	--monitoring_intervals 5s 60s 300s \
+> 	--monitoring_nr_regions_range 1000000000 1000000000 \
+> 	--target_pid $(cat /tmp/memcached.pid)
+[...]
+> Note: damo's --perf_event option
+> 
+> Using these features also requires modifications to damo, but these
+> are not included in this patch series and are currently under
+> development in the following branch:
+> 
+> * https://github.com/mita/damo/tree/damo-perf-for-v3.2.2
 
-> +
-> +	if (!perf)
-> +		return;
-> +
-> +	damon_paddr_histogram_init(&perf->paddr_histogram);
-> +
-> +	damon_perf_populate_paddr_histogram(ctx, event);
-> +
-> +	damon_for_each_target(t, ctx) {
-> +		struct damon_region *r;
-> +
-> +		damon_for_each_region(r, t) {
-> +			unsigned long addr;
-> +
-> +			if (r->access_reported)
-> +				continue;
-> +
-> +			for (addr =3D r->ar.start; addr < r->ar.end; addr +=3D PAGE_SIZE) {
+Thank you for sharing this, too!
 
-Does this directly use the core address as a physical byte address?
+> 
+> The option newly added to damo for perf event-based access check has the
+> following format:
+> 
+> `--perf_event <sample freq> <sample phys addr> <type> <config> <config1> <config2>`
 
-DAMON scales physical addresses down using ctx->addr_unit, meaning
-r->ar.start and r->ar.end hold these scaled core addresses. If
-ctx->addr_unit is greater than 1 (e.g., PAGE_SIZE), r->ar.start is actually
-a Page Frame Number. Incrementing a PFN by PAGE_SIZE would skip large
-blocks of memory per iteration. Should the code convert core addresses to
-physical addresses using damon_pa_phys_addr() first?
+I think we may need to discuss more for final interface.  But I think that
+could be done later, after the kerenl ABI is fixed.
 
-Could this increment overflow on 32-bit architectures? If a physical memory
-region ends near ULONG_MAX, addr +=3D PAGE_SIZE might wrap around to 0. This
-would keep the addr < r->ar.end condition true indefinitely, causing an
-unkillable infinite loop.
+> 
+> - `sample freq`: A higher frequency improves access accuracy, but also
+>   increases overhead.
+> - `sample phys addr`: specify 0 for vaddr and 1 for paddr.
+> - The remaining type, config, config1, and config2 settings can be found
+>   as follows:
 
-Additionally, does this loop iterate over every single page in the region?
-Since DAMON regions can be extremely large, iterating over millions of
-pages and performing a synchronous XArray lookup for each one without
-yielding via cond_resched() could heavily saturate the CPU and stall RCU
-grace periods.
+The values look bit human-unfriendly.  I wonder if we could use more
+human-friendly values, e.g., 'cpu' for type,
+'mem_trans_retired.load_latency_gt_1024' for config, etc.  Not necessarily we
+need to fix this right now.  Let's keep discussing.
 
-> +				if (damon_paddr_histogram_count(&perf->paddr_histogram,
-> +									addr & PAGE_MASK)) {
+> 
+> Run `perf mem record -vv` to obtain the log, and then find the part in
+> the log where `perf_event_open` was executed successfully.
+> ```
+> $ sudo perf mem record -vv echo > /tmp/perf-mem-record.log 2>&1
+> $ cat /tmp/perf-mem-record.log
+> ...
+> perf_event_attr:
+>   type                             4 (cpu)
+>   size                             144
+>   config                           0x1cd (mem_trans_retired.load_latency_gt_1024)
+[...]
+> ...
+> ```
+> 
+> The values for `type` and `config` are taken from this output.
+> Use the values of `config1` and `config2` if they are included in the log;
+> otherwise, set them to 0.
 
-Does the underlying XArray implementation safely handle 64-bit physical
-addresses on 32-bit systems?
+The above information will also be very useful for early testers of this patch
+series including myself.  Thank you for sharing.
 
-The perf subsystem records the access address as a 64-bit u64 paddr, but
-the XArray API uses unsigned long for its indices. On systems using PAE to
-access more than 4GB of RAM, passing a 64-bit raw byte address to the
-XArray could truncate the upper 32 bits, causing physical addresses above
-4GB to alias with lower addresses. Would using Page Frame Numbers as XArray
-indices instead of raw byte addresses avoid this?
+> 
+> Any feedback or advice on the patch set would be greatly appreciated.
 
-> +					damon_update_region_access_rate(r, true, &ctx->attrs);
-> +					r->access_reported =3D true;
-> +					break;
-> +				}
-> +			}
-> +		}
-> +		tidx++;
-> +	}
-> +
-> +	damon_paddr_histogram_destroy(&perf->paddr_histogram);
-> +}
-> +
-> +#endif /* CONFIG_PERF_EVENTS */
+Again, I like the high level concept of this patch series.  I definitely want
+this to be merged.  Nonetheless, not exactly as it is right now.  I think we
+should spend enough time for the user interface design.  I hope the final
+interface is long-term maintainable and easy to extend.
 
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260423004211.7037=
--1-akinobu.mita@gmail.com?part=3D4
+> 
+> * RFC v3
+> - drop "reintroduce damon_operations->cleanup()" as no longer needed
+> - drop "allow user to set min size of region" (will be sent separately)
+> - add tgid to struct damon_access_report and use it instead of tid
+> - set perf_event_attr.precise_ip to 2
+> - prepare for the transition to report-based monitoring
+> - switch to use access_reported in struct damon_region
+> - switch to use sample/primitives/perf_events sysfs directory
+
+Thank you for doing this revisioning.
+
+For the user interface and also internal interface, I suggested to consider
+reusing those for page fault events based per-CPUs/threads/reads/writes
+monitoring DAMON extension patch series in our previous discussion.  I think
+this version is following the right direction much more than the previous
+version.
+
+But, nowadays I'm thinking about a new user interface for the
+per-CPUs/threads/reads/writes monitoring that can easily also extended for perf
+event based monitoring and for not only access monitoring but general and
+multiple data attributes monitoring.
+
+It is still under the development and I'm planning to share a very early RFC
+version of that by LSFMMBPF.  I will try to add my idea about how this perf
+event based monitoring could also implemented by reusing the interface on the
+early RFC version.
+
+Could we wait until the early RFC version is published, review my idea about
+how this perf event based monitoring could reuse it, and continue discussions
+about the next steps of this patch series?
+
+[1] https://lore.kernel.org/20251208062943.68824-1-sj@kernel.org/
+
+
+Thanks,
+SJ
+
+[...]
