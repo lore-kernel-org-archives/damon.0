@@ -1,81 +1,109 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 562001E98EF;
-	Thu, 23 Apr 2026 01:13:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EBAA219303;
+	Thu, 23 Apr 2026 01:22:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776906807; cv=none; b=exT5yZf0nRYS3dfHd8fKMot83WwBJotR6s2bYzMBbHRpjZVDK11FJRtINXps4h4S4gfZZI+zeQGQu49BWiRtUgW8g/lOYhjNm9+zww7xhLay0kC71NOamvtPajNtEzl2WJDNe7Dzlsh8KI2GapqmjvSwHPvDlaIUYugLqbmDI2g=
+	t=1776907321; cv=none; b=cJTLsfmyr+2kt2C8m6kSSgdE/228E1pOIMagm828GYYfELdWLhu2YADmDsshUfr4JFuEW5mOWrPWa3scJRVUmp5o2GG8mCfjXChRa52TsdMAiXNuJnpB3pPIUQJ6NAqqFelhoYUQNK+blsY0A60q+2AOylvqfIK+Twi3vFbnetQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776906807; c=relaxed/simple;
-	bh=9PlMEv0oWcsxNV7gLe9VCQFtma4kLf2XofnBhTskP5Y=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=nSqTAnkgknkmuG5D/WlexLdOTW07Qaziiymn6fJmuC4w32SerVPxIAeReC24aQ4h9Ehe76R4UgHevKkqRlnd6EyVqUzI6JoVcoKaLnB3uSQLSKaL0vkXFwQ6RyVPQYVoDlu1dtab/wp1jC13yxrNXPNR0VzUN6Io/CXUDSERPLM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fxvJ3rFp; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1776907321; c=relaxed/simple;
+	bh=EnCedkb3XVDzVcvu88jL0boWfgFwhTeskY/8A0Dc0t8=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=MjYT/w40f7eE2MKit/rJgL/TboFVB5yg23mV6q4y/iCVvKp4nqXwG+EKUP2GVQ6HZ44zS98zaW9lkvLVzDiWJ7FgtUPobuHmpbWF+BcPqifFMTYdL3Egr+nev0NYWT4leNtbyOFeZWJ8ZvesXNwuy+oTTFZwXO/BXLHlPmLUWjs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rArPaMxG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fxvJ3rFp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0DF5C19425;
-	Thu, 23 Apr 2026 01:13:26 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rArPaMxG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 955F7C2BCB2;
+	Thu, 23 Apr 2026 01:22:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776906807;
-	bh=9PlMEv0oWcsxNV7gLe9VCQFtma4kLf2XofnBhTskP5Y=;
-	h=From:To:Cc:Subject:Date:From;
-	b=fxvJ3rFpRZEP/uYy2ouXLhPPyRpvamrDwiryvCxHFlVTyR9GhOo6MnAhVqkMLH39X
-	 JjIvph9JqkPz1CgqOj4NjJtTO/MDJLHZPGIRwx8Pyc4QB6T61t6T1SQPJk3yMtaj5u
-	 GqzxoJ0GL+Dfni1BJSrzHOl/Z6z62ma0xS91taABFe9kImfNUBGZEy9o+E7WPyhkMV
-	 jYt6LLMkntzrHM5RvDKn6EdoFF3Jq0s/fcwRgfIXMUsbBjY4i8fkD5EQcF3HWje/V3
-	 EQ8b/4yTpuH8whviWcUH00VcgDYyS2TYXIemc085u8Nn1IGm1X1P29JMs+flwAj0eD
-	 jWZa63uIUe0GQ==
-From: SeongJae Park <sj@kernel.org>
-To: damon@lists.linux.dev
-Cc: SeongJae Park <sj@kernel.org>,
-	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org
-Subject: DAMON Beer/Coffee/Tea chat reminder for the week of 2026-04-27
-Date: Wed, 22 Apr 2026 18:13:18 -0700
-Message-ID: <20260423011319.32122-1-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
+	s=k20201202; t=1776907320;
+	bh=EnCedkb3XVDzVcvu88jL0boWfgFwhTeskY/8A0Dc0t8=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date:From;
+	b=rArPaMxGAc2U4eTAMO3jWoRf4LeT2bd9MnEBOITAcLo8eq6m1tpFiG0C5yjQ+EaNi
+	 8cjy4a08fEu3Ps9FPUXXmlNUsC34i+MK0+JiP+GXHAoxdeHKSwUslDaf81YOwwjDKH
+	 XwGYXOo9smbyQ1SQpXJIk33tREaDGK3PJfgVc76i4g/l9fNG7b8ZjAmhJOXgZ6pswb
+	 E5P8nXF87R0gTFKQSxsNejOh6tGPPIGtUr6d6dlwcWa5iUCC74SlqKhLYIEgvMQ83F
+	 /Qci6t4CL4P+V+UlxzGSJ0c1BevsfkvX9OZEkvMrUQRjiL++0KjlR8xH4So2+Km6hK
+	 +3Yx+PUZMM9Cg==
+From: sashiko-bot@kernel.org
+Subject: Re: [RFC PATCH v3 1/4] mm/damon/core: add code borrowed from
+ report-based monitoring work
+Reply-To: sashiko@lists.linux.dev
+To: "Akinobu Mita" <akinobu.mita@gmail.com>
+Cc: damon@lists.linux.dev, linux-perf-users@vger.kernel.org
+In-Reply-To: <20260423004211.7037-2-akinobu.mita@gmail.com>
+References: <20260423004211.7037-2-akinobu.mita@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Thu, 23 Apr 2026 01:21:59 +0000
+Message-Id: <20260423012200.955F7C2BCB2@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-Hello,
+Sashiko AI review found 2 potential issue(s):
+- [Medium] Stack bloat / stack overflow risk from `cpumask_t` allocation on=
+ the stack.
+- [Medium] Data race and potential torn reads from lockless assignment of `=
+cpumask_t`.
+--
 
+commit 9c32a9c6100e762865883bc9bf4b2272ccb6dedb
+Author: Akinobu Mita <akinobu.mita@gmail.com>
 
-This is yet another reminder of upcoming DAMON Beer/Coffee/Tea chats
-(https://docs.google.com/document/d/1v43Kcj3ly4CYqmAkMaZzLiM2GEnWfgdGbZAH3mi2vpM/edit?usp=sharing)
-for the week of 2026-04-27.
+mm/damon/core: add code borrowed from report-based monitoring work
+   =20
+This commit borrows code from the report-based monitoring infrastructure
+to support perf event-based monitoring. It brings in struct
+damon_access_report, an access_reported field in damon_region, and the
+sample/primitives sysfs directory structure.
+   =20
+Link: https://lore.kernel.org/linux-mm/20251208062943.68824-6-sj@kernel.org=
+/T/
 
-As usual, we have two time slots for meetings in the week.
+> diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
+> index eefa959aa30ae..c19556f2af3bb 100644
+> --- a/mm/damon/sysfs.c
+> +++ b/mm/damon/sysfs.c
+[ ... ]
+> +static ssize_t cpumask_store(struct kobject *kobj, struct kobj_attribute=
+ *attr,
+> +		const char *buf, size_t count)
+> +{
+> +	struct damon_sysfs_sample_filter *filter =3D container_of(kobj,
+> +			struct damon_sysfs_sample_filter, kobj);
+> +	cpumask_t cpumask;
 
-Next time slots including six virtual-only ones are as below.
+Is it safe to allocate cpumask_t on the stack here?
 
-2026-04-27 (Mon) 18:00 PT (not yet reserved)
-2026-04-29 (Wed) 09:30 PT (not yet reserved)
-2026-05-11 (Mon) 18:00 PT (not yet reserved)
-2026-05-13 (Wed) 09:30 PT (not yet reserved)
-2026-05-25 (Mon) 18:00 PT (not yet reserved)
-2026-05-27 (Wed) 09:30 PT (not yet reserved)
+The size of cpumask_t scales with CONFIG_NR_CPUS. On systems with a large
+number of CPUs, this could consume a significant amount of the kernel stack
+and potentially risk a stack overflow. Should this use alloc_cpumask_var()
+instead to dynamically allocate the temporary mask?
 
-Please reach out to me (sj@kernel.org or whatever) to reserve the
-not-yet-reserved time slots for your topics.  The reservation is made in a
-First-Come First-Served way, and I will send a Google Meet link to
-reservation-confirmed attendees.
+> +	int err =3D cpulist_parse(buf, &cpumask);
+> +
+> +	if (err)
+> +		return err;
+> +	filter->cpumask =3D cpumask;
 
-Please note that other time slots are also available on demands.
+Can this lockless assignment cause a data race or torn reads?
 
-Shared Calendar
----------------
+Because cpumask_t can be larger than a single word, this assignment may
+compile into a non-atomic multi-word copy like memcpy(). If a concurrent
+sysfs read in cpumask_show() or a DAMON commit operation accesses
+filter->cpumask while this copy is ongoing, could it read a partially
+updated, torn mask?
 
-You can get the schedule via this shared Google Calendar:
-https://calendar.google.com/calendar/u/0?cid=ZDIwOTA4YTMxNjc2MDQ3NTIyMmUzYTM5ZmQyM2U4NDA0ZGIwZjBiYmJlZGQxNDM0MmY4ZTRjOTE0NjdhZDRiY0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t
+Should this be protected by explicit synchronization, such as
+damon_sysfs_lock?
 
-You can also get the past and upcoming schedules via
-https://docs.google.com/document/d/1v43Kcj3ly4CYqmAkMaZzLiM2GEnWfgdGbZAH3mi2vpM/edit?usp=sharing
+> +	return count;
+> +}
 
-
-Thanks,
-SJ
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260423004211.7037=
+-1-akinobu.mita@gmail.com?part=3D1
