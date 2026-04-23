@@ -1,213 +1,360 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1046D1F3BAC;
-	Thu, 23 Apr 2026 01:58:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B03993C0624;
+	Thu, 23 Apr 2026 02:48:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776909505; cv=none; b=XK/l/YpvGEX9R6vqj9sKcnF0vtcDG/Hfus26/P1rGoudEO+D9duguIhppqzo3iqz8U6UJyb4nX+a5w9fuV49SlxD6rjYl3EHh7TUZ3Yu3NndOyAPpIfP0qtN0Mdr4PcAb4CyRdnd0jVNCFzZxaRcP6R9pOonT+iYxINuCvlxzB8=
+	t=1776912507; cv=none; b=apuwV56Pi3WpeFsgnN3oSvMnresx/Q+I4oS154ERIIUupQAlj6a2G9mD2XqDOmIZcPrnE6pKLRkWdEMhr6jETE1e3vbbjUpkRpr2lFw2oR3yvazk9AQ8RjWHmX7IKEkxtONoaDnMe+obJu+StoCXlsU9eiW9GwmzScFY2y5l2Gc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776909505; c=relaxed/simple;
-	bh=7qjVSZ0y4uK92gP1+iWZIbutBMCD1ZuX8IfQRVeuMcA=;
+	s=arc-20240116; t=1776912507; c=relaxed/simple;
+	bh=9yIVu6g6M2EL/rmu+h4SZZ1y0X+O8GibxnzxFEVi6yc=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=ZZFWs229CKCLX+oGDcosjV6OCbX8d24xh9vv35CG1ZJkkG+wqZLHwvwI+6J47NGi9E4OOI4d1y2EaA79FyG7pd++ANxIlNNBwJkTq9q8mP0zb8zXg6zZYTYzsPHWTEH0rrClN8qZJgnBcLFQrs7NvQ/2H9YhYNGXyzgLLuCjr64=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qYXFXZHt; arc=none smtp.client-ip=10.30.226.201
+	 Message-Id; b=MPhzdplGT3Z6fD77jRDuU6Ij9eyeXUWo8GTXqCjFLQBA0TSOO3Ep/KrctIe2g+lppE++qhSsveLGIMp5KVwuCZF01Hx7rC3zZRzJyMpMNChy///2RAtpqJ/Qp9VwTCW8Qsp3cBDW+Szsp4eybVjMZeQhaY2xP8qLYxCxpZESfrk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fh42QE6v; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qYXFXZHt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81098C19425;
-	Thu, 23 Apr 2026 01:58:24 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fh42QE6v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 498B1C19425;
+	Thu, 23 Apr 2026 02:48:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776909504;
-	bh=7qjVSZ0y4uK92gP1+iWZIbutBMCD1ZuX8IfQRVeuMcA=;
+	s=k20201202; t=1776912507;
+	bh=9yIVu6g6M2EL/rmu+h4SZZ1y0X+O8GibxnzxFEVi6yc=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date:From;
-	b=qYXFXZHt9BIJGmlM8yS6HZJZegeIcTuWzgKcuUHTPK61SwiOe1u81Y60UCAavNTcN
-	 EZXWfI/BkrJhzuy6JaUmB5Zpyn0ofKyRRvXdiqtzcUWPAqNrM3ZExlCauLOzqIGJlM
-	 EubceICP5U4qKblcM55gl3k72da0dlgsf0Zq7CeihzJSuSwvfSyGmM6b6KmzVclcUx
-	 0Lb8TXRNp/Nma+y+j2/b4EJt+aM2MtjYdihMeWBZJw/ggsuRfZE3ngedV/f5fpxs9j
-	 /nFNOA8GdHPYsJd9vciXNxxRQA0EKFsLcmyVLsdvM5fsQo7h7YMQKwHhOAKFXzffpW
-	 zO7UMxc7kgRwQ==
+	b=fh42QE6vZ8jeEadoIu+cCyQfBPyh2DroeqM3NbPErsz37rjl2gXpTfCBhqRq+H3V3
+	 BZMNLZpxIpFU/lRTFYoSdwx92n8AJ4JOPRKy7JpYJW5OHbITJk7BeDKJa4TCvkKPHx
+	 2vzJnCZLa/JHEPFjWkxufkOurHET4b84GIvIlSB4JshsP7XuMXhqfHjO0Lleww1aYH
+	 +GsxMdt70iideANgtVib8TgBU5eS3z10xE5Bb+xAt21NrGZG3SI/N6MIa1q/WBUl0l
+	 jij3KJzDcX+/OxrpU3MS9HQY+8YfpOy0p9bW3IvqrLK5OWc/QePftZBfgzx6FcFonq
+	 XbQGqb1OlGkZA==
 From: sashiko-bot@kernel.org
-Subject: Re: [RFC PATCH v3 2/4] mm/damon/core: add common code for perf
- event based access check
+Subject: Re: [RFC PATCH v3 3/4] mm/damon/vaddr: support perf event based
+ access check
 Reply-To: sashiko@lists.linux.dev
 To: "Akinobu Mita" <akinobu.mita@gmail.com>
 Cc: damon@lists.linux.dev, linux-perf-users@vger.kernel.org
-In-Reply-To: <20260423004211.7037-3-akinobu.mita@gmail.com>
-References: <20260423004211.7037-3-akinobu.mita@gmail.com>
+In-Reply-To: <20260423004211.7037-4-akinobu.mita@gmail.com>
+References: <20260423004211.7037-4-akinobu.mita@gmail.com>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Thu, 23 Apr 2026 01:58:23 +0000
-Message-Id: <20260423015824.81098C19425@smtp.kernel.org>
+Date: Thu, 23 Apr 2026 02:48:26 +0000
+Message-Id: <20260423024827.498B1C19425@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 
-Sashiko AI review found 3 potential issue(s):
-- [High] Memory leak in `damon_perf_init()` when `perf_event_create_kernel_=
-counter()` fails with `-ENODEV` for all CPUs.
-- [Medium] Unnecessary `PERF_SAMPLE_WEIGHT_STRUCT` flag in perf event attri=
-butes arbitrarily restricts hardware compatibility.
-- [Low] Linker error when `CONFIG_DAMON_VADDR=3Dn` but `CONFIG_PERF_EVENTS=
-=3Dy`.
+Sashiko AI review found 13 potential issue(s):
+- [Critical] Compilation Failure: Use of undefined API `kmalloc_obj()`.
+- [Critical] Compilation Failure: Non-existent field `sample_phys_addr` in =
+`perf_event_attr`.
+- [Critical] Compilation Failure: Typo in the `CONFIG_HUGETLB_PAGE` fallbac=
+k macro.
+- [High] Deadlock Risk: Recursive acquisition of `mmap_read_lock`.
+- [High] Infinite Loop: Returning `ACTION_AGAIN` on `pte_offset_map_lock()`=
+ failure.
+- [High] Memory Leak: `damon_vaddr_histogram_per_target` structs are never =
+freed.
+- [High] Memory Leak: Dynamically allocated `buffer->reports` arrays are or=
+phaned.
+- [High] Memory Leak: Orphaned `perf` structs when the `kdamond` thread is =
+restarted.
+- [High] Data Truncation: 64-bit physical addresses are silently truncated =
+when used as xarray indices on 32-bit platforms.
+- [High] Logic Error: Unbounded perf events for physical memory targets (`D=
+AMON_OPS_PADDR`).
+- [High] Logic Error: Invalid PFN extraction from non-present PMD migration=
+ entries.
+- [High] Severe Performance Flaw: Full page table walks per sampling interv=
+al.
+- [High] Severe Performance Flaw: O(N) iteration by `PAGE_SIZE` over massiv=
+e virtual memory regions.
 --
 
-commit 97617fb5ae7981867a46207cd14a68c3cbb4813d
+commit 04697c66c594dde51627f9cdaf4c7d11b08fe1fe
 Author: Akinobu Mita <akinobu.mita@gmail.com>
 
-mm/damon/core: add common code for perf event based access check
+mm/damon/vaddr: support perf event based access check
 
-This commit creates the necessary infrastructure (structure definitions,
-functions, sysfs interfaces) to support perf event based access checks
-for both physical and virtual address space monitoring.
+This commit introduces a mechanism to use perf events for virtual and
+physical address space monitoring in DAMON. It buffers perf samples during
+the sampling interval and generates a histogram of memory accesses. During
+the access check phase, this histogram is used to update the access counts
+for each monitoring target region.
 
 > diff --git a/mm/damon/core.c b/mm/damon/core.c
-> index a52b2962aa22a..220b105482daa 100644
 > --- a/mm/damon/core.c
 > +++ b/mm/damon/core.c
-[ ... ]
-> @@ -2933,6 +2990,7 @@ static void kdamond_init_ctx(struct damon_ctx *ctx)
->  	unsigned long sample_interval =3D ctx->attrs.sample_interval ?
->  		ctx->attrs.sample_interval : 1;
->  	struct damos *scheme;
-> +	struct damon_perf_event *event, *next;
-> =20
->  	ctx->passed_sample_intervals =3D 0;
->  	ctx->next_aggregation_sis =3D ctx->attrs.aggr_interval / sample_interva=
-l;
-> @@ -2945,6 +3003,15 @@ static void kdamond_init_ctx(struct damon_ctx *ctx)
->  		damos_set_next_apply_sis(scheme, ctx);
->  		damos_set_filters_default_reject(scheme);
+> @@ -3014,6 +3014,40 @@ static void kdamond_init_ctx(struct damon_ctx *ctx)
 >  	}
-> +
-> +	list_for_each_entry_safe(event, next, &ctx->perf_events, list) {
-> +		int err =3D damon_perf_init(ctx, event);
-
-If the kernel is configured with CONFIG_DAMON_VADDR=3Dn and
-CONFIG_PERF_EVENTS=3Dy, will this cause a linker error? The function
-damon_perf_init() is defined in mm/damon/vaddr.c, which would not be
-compiled in that configuration.
-
-> +
-> +		if (err) {
-> +			list_del(&event->list);
-> +			kfree(event);
-> +		}
-> +	}
 >  }
-> =20
->  /*
+
+When the kdamond thread begins, kdamond_init_ctx() unconditionally initiali=
+zes
+the perf events. If a user stops and restarts the thread via sysfs, does th=
+is
+leak the previous allocations? Calling damon_perf_init() again would alloca=
+te
+new perf structures, hardware counters, and per-CPU buffers, permanently
+leaking the previous ones.
+
+> +static void kdamond_prepare_perf_event_report(struct damon_ctx *ctx)
+> +{
+> +	struct damon_perf_event *event;
+> +
+> +	list_for_each_entry(event, &ctx->perf_events, list)
+> +		damon_perf_prepare_access_checks(ctx, event);
+> +}
+> +
+> +static unsigned int kdamond_check_perf_event_reported_accesses(struct da=
+mon_ctx *ctx)
+> +{
+> +	struct damon_target *t;
+> +	struct damon_perf_event *event;
+> +	unsigned int max_nr_accesses =3D 0;
+> +
+> +	if (damon_target_has_pid(ctx)) {
+> +		list_for_each_entry(event, &ctx->perf_events, list)
+> +			damon_va_perf_check_accesses(ctx, event);
+> +	}
+
+For physical memory targets (which have no PIDs), the processing code inside
+this if block is skipped. However, kdamond_prepare_perf_event_report()
+unconditionally enables perf events. Does this leave perf events permanently
+enabled and continuously firing for physical memory targets?
+
+[ ... ]
 > diff --git a/mm/damon/vaddr.c b/mm/damon/vaddr.c
-> index b069dbc7e3d25..1534372e7637c 100644
 > --- a/mm/damon/vaddr.c
 > +++ b/mm/damon/vaddr.c
 [ ... ]
-> @@ -936,6 +939,161 @@ static int damon_va_scheme_score(struct damon_ctx *=
-context,
->  	return DAMOS_MAX_SCORE;
->  }
-> =20
-> +#ifdef CONFIG_PERF_EVENTS
-[ ... ]
-> +int damon_perf_init(struct damon_ctx *ctx, struct damon_perf_event *even=
-t)
+> +static void damon_vaddr_histogram_add(struct damon_vaddr_histogram *hist=
+ogram, u32 pid,
+> +						u64 vaddr)
 > +{
-> +	struct damon_perf *perf;
-> +	struct perf_event_attr attr =3D {
-> +		.type =3D PERF_TYPE_RAW,
-> +		.size =3D sizeof(attr),
-> +		.type =3D event->attr.type,
-> +		.config =3D event->attr.config,
-> +		.config1 =3D event->attr.config1,
-> +		.config2 =3D event->attr.config2,
-> +		.sample_freq =3D event->attr.sample_freq,
-> +		.freq =3D 1,
-> +		.sample_type =3D PERF_SAMPLE_TIME | PERF_SAMPLE_ADDR |
-> +			PERF_SAMPLE_PERIOD | PERF_SAMPLE_DATA_SRC |
-> +			(event->attr.sample_phys_addr ? PERF_SAMPLE_PHYS_ADDR : 0) |
-> +			PERF_SAMPLE_WEIGHT_STRUCT,
+> +	struct damon_vaddr_histogram_per_target *target;
+> +	unsigned long nr_accesses;
+> +
+> +	while (!(target =3D xa_load(&histogram->targets, pid))) {
+> +		target =3D kmalloc_obj(*target);
 
-Does this configuration need to include PERF_SAMPLE_WEIGHT_STRUCT?
+Can this code compile? There is no kmalloc_obj() macro or function in the
+Linux kernel. A standard kmalloc() could be used instead:
 
-The overflow handler damon_perf_overflow() doesn't appear to read any
-weight metrics from the sample data. If the underlying hardware PMU does
-not support extended weight sampling, could this cause
-perf_event_create_kernel_counter() to return -EINVAL and unnecessarily
-reject the configuration?
+target =3D kmalloc(sizeof(*target), GFP_KERNEL);
 
-> +		.precise_ip =3D 2,
-> +		.pinned =3D 1,
-> +		.disabled =3D 1,
-> +	};
-> +	int cpu;
-> +	int err =3D -ENOMEM;
-> +	bool found =3D false;
+[ ... ]
+> +static void damon_vaddr_histogram_destroy(struct damon_vaddr_histogram *=
+histogram)
+> +{
+> +	unsigned long index;
+> +	struct damon_vaddr_histogram_per_target *target;
 > +
-> +	perf =3D kzalloc_obj(*perf);
-> +	if (!perf)
-> +		return -ENOMEM;
-> +
-> +	perf->event =3D alloc_percpu(typeof(*perf->event));
-> +	if (!perf->event)
-> +		goto free_percpu;
-> +
-> +	perf->buffer =3D alloc_percpu(typeof(*perf->buffer));
-> +	if (!perf->buffer)
-> +		goto free_percpu;
-> +
-> +	for_each_possible_cpu(cpu) {
-> +		struct perf_event *perf_event;
-> +		struct damon_perf_buffer *buffer =3D per_cpu_ptr(perf->buffer, cpu);
-> +
-> +		perf_event =3D perf_event_create_kernel_counter(&attr, cpu, NULL,
-> +				damon_perf_overflow, event);
-> +		if (IS_ERR(perf_event)) {
-> +			err =3D PTR_ERR(perf_event);
-> +			if (err =3D=3D -ENODEV)
-> +				continue;
-> +			pr_err("perf event create on CPU %d failed with %d\n", cpu, err);
-> +			goto free_for_each_cpu;
-> +		}
-> +		found =3D true;
-> +		*per_cpu_ptr(perf->event, cpu) =3D perf_event;
-> +
-> +		buffer->size =3D DAMON_PERF_INIT_RECORDS;
-> +		buffer->reports =3D kvcalloc_node(buffer->size, sizeof(buffer->reports=
-[0]),
-> +						GFP_KERNEL, cpu_to_node(cpu));
-> +		if (!buffer->reports)
-> +			goto free_for_each_cpu;
-> +	}
-> +	event->priv =3D perf;
-> +
-> +	return found ? 0 : -ENODEV;
+> +	xa_for_each(&histogram->targets, index, target)
+> +		xa_destroy(&target->accesses);
 
-If perf_event_create_kernel_counter() returns -ENODEV for all possible CPUs,
-the found flag remains false, and this returns -ENODEV.
+Does this code leak the damon_vaddr_histogram_per_target structure? The nes=
+ted
+accesses xarray is destroyed via xa_destroy(), but the target struct itself=
+ is
+not freed with kfree().
 
-Since the caller will receive a non-zero error code and free the event
-wrapper without calling damon_perf_cleanup(), does this leak the memory
-allocated for perf, perf->event, and perf->buffer?
-
-> +
-> +free_for_each_cpu:
-> +	for_each_possible_cpu(cpu) {
-> +		struct perf_event *perf_event =3D per_cpu(*perf->event, cpu);
-> +		struct damon_perf_buffer *buffer =3D per_cpu_ptr(perf->buffer, cpu);
-> +
-> +		if (perf_event)
-> +			perf_event_release_kernel(perf_event);
-> +		kvfree(buffer->reports);
-> +	}
-> +free_percpu:
-> +	free_percpu(perf->event);
-> +	free_percpu(perf->buffer);
-> +	kfree(perf);
-> +
-> +	return err;
+> +	xa_destroy(&histogram->targets);
 > +}
+[ ... ]
+> +static void damon_va_perf_check_accesses_by_vaddr(struct damon_ctx *ctx,
+> +		struct damon_perf_event *event)
+> +{
+[ ... ]
+> +		if ((count =3D=3D buffer->size - 1) && (buffer->size < DAMON_PERF_MAX_=
+RECORDS)) {
+> +			void *new_reports =3D kvcalloc_node(buffer->size * 2,
+> +					sizeof(buffer->reports[0]), GFP_KERNEL,
+> +					cpu_to_node(cpu));
+
+Are these dynamically allocated buffer->reports arrays freed during cleanup?
+When perf monitoring stops, damon_perf_cleanup() frees the top-level per-CPU
+pointer wrapper but appears to orphan these inner reports arrays.
+
+[ ... ]
+> +	damon_for_each_target(t, ctx) {
+> +		struct damon_region *r;
+> +		u32 pid =3D pid_nr(t->pid);
+> +
+> +		damon_for_each_region(r, t) {
+> +			unsigned long addr;
+> +
+> +			if (r->access_reported)
+> +				continue;
+> +
+> +			for (addr =3D r->ar.start; addr < r->ar.end; addr +=3D PAGE_SIZE) {
+
+Can this loop stall the kernel thread? Since DAMON regions can merge to
+encompass hundreds of gigabytes, iterating from r->ar.start to r->ar.end by
+PAGE_SIZE could result in hundreds of millions of iterations per interval.
+Could this logic iterate over the populated xarray entries instead?
+
+> +				if (damon_vaddr_histogram_count(&perf->vaddr_histogram, pid,
+> +									addr & PAGE_MASK)) {
+> +					damon_update_region_access_rate(r, true, &ctx->attrs);
+> +					r->access_reported =3D true;
+> +					break;
+> +				}
+> +			}
+> +		}
+> +		tidx++;
+> +	}
+[ ... ]
+> +static void damon_va_perf_check_accesses_by_paddr(struct damon_ctx *ctx,
+> +		struct damon_perf_event *event)
+> +{
+[ ... ]
+> +	damon_for_each_target(t, ctx) {
+> +		struct damon_region *r;
+> +		struct mm_struct *mm =3D damon_get_mm(t);
+> +
+> +		if (!mm)
+> +			continue;
+> +
+> +		mmap_read_lock(mm);
+> +		damon_for_each_region(r, t) {
+> +			struct damon_paddr_walk walk_private =3D {
+> +				.histogram =3D &perf->paddr_histogram,
+> +				.accessed =3D false,
+> +			};
+> +
+> +			if (r->access_reported)
+> +				continue;
+> +
+> +			walk_page_range(mm, r->ar.start, r->ar.end, &damon_paddr_ops,
+> +					&walk_private);
+
+Can this sequence cause a recursive read lock deadlock? The mmap_read_lock =
+is
+acquired directly, but damon_paddr_ops is configured with
+.walk_lock =3D PGWALK_RDLOCK, which instructs the page walker to also acqui=
+re
+the mmap_read_lock. If a writer is pending, the second read lock will block
+and self-deadlock.
+
+Is it too expensive to call walk_page_range() across the target's entire
+mapped virtual memory space on every sampling interval? For large memory
+footprints, walking millions of page table entries every few milliseconds
+could create severe CPU overhead and defeat the adaptive sampling design.
+
+> +			if (walk_private.accessed) {
+> +				damon_update_region_access_rate(r, true, &ctx->attrs);
+> +				r->access_reported =3D true;
+> +			}
+> +		}
+> +		mmap_read_unlock(mm);
+> +		mmput(mm);
+> +		tidx++;
+> +	}
+> +
+> +	damon_paddr_histogram_destroy(&perf->paddr_histogram);
+> +}
+> +
+> +void damon_va_perf_check_accesses(struct damon_ctx *ctx, struct damon_pe=
+rf_event *event)
+> +{
+> +	if (event->attr.sample_phys_addr)
+
+Does struct perf_event_attr contain a sample_phys_addr field? Physical
+address sampling is typically requested by setting the PERF_SAMPLE_PHYS_ADDR
+flag in the sample_type bitmask.
+
+> +		return damon_va_perf_check_accesses_by_paddr(ctx, event);
+> +	else
+> +		return damon_va_perf_check_accesses_by_vaddr(ctx, event);
+> +}
+[ ... ]
+> +static void damon_paddr_histogram_add(struct damon_paddr_histogram *hist=
+ogram,
+> +						u64 paddr)
+> +{
+> +	unsigned long nr_accesses;
+> +
+> +	nr_accesses =3D xa_to_value(xa_load(&histogram->accesses, paddr));
+> +	xa_store(&histogram->accesses, paddr, xa_mk_value(nr_accesses + 1), GFP=
+_KERNEL);
+
+Can this silently truncate physical addresses on 32-bit platforms? The paddr
+argument is a u64, but it is passed directly as the index to xa_load() and
+xa_store(), which take an unsigned long. On 32-bit systems with PAE/LPAE,
+this will drop the upper 32 bits. Could the physical address be shifted by
+PAGE_SHIFT to store the PFN instead?
+
+> +}
+[ ... ]
+> +static int damon_paddr_pmd_entry(pmd_t *pmd, unsigned long addr,
+> +		unsigned long next, struct mm_walk *walk)
+> +{
+> +	pte_t *pte;
+> +	spinlock_t *ptl;
+> +	struct damon_paddr_walk *paddr_walk =3D walk->private;
+> +
+> +	ptl =3D pmd_trans_huge_lock(pmd, walk->vma);
+> +	if (ptl) {
+> +		pmd_t pmde =3D pmdp_get(pmd);
+> +
+> +		if (pmd_present(pmde)) {
+> +			for (; addr < next && !paddr_walk->accessed; addr +=3D PAGE_SIZE) {
+> +				u64 frame =3D pmd_pfn(pmde) +
+
+Can pmd_present() evaluate to true for non-present leaf entries like migrat=
+ion
+entries? Extracting the PFN via pmd_pfn() on a migration entry would treat
+swap offset metadata as a physical address, resulting in invalid calculatio=
+ns.
+Does this code need to verify the PMD is a valid THP first?
+
+> +					((addr & ~HPAGE_PMD_MASK) >> PAGE_SHIFT);
+> +
+> +				if (damon_paddr_histogram_count(paddr_walk->histogram,
+> +						PFN_PHYS(frame))) {
+> +					paddr_walk->accessed =3D true;
+> +					break;
+> +				}
+> +			}
+> +		}
+> +		spin_unlock(ptl);
+> +		return paddr_walk->accessed ? 1 : 0;
+> +	}
+> +
+> +	pte =3D pte_offset_map_lock(walk->mm, pmd, addr, &ptl);
+> +	if (!pte) {
+> +		walk->action =3D ACTION_AGAIN;
+> +		return 0;
+
+Will setting walk->action =3D ACTION_AGAIN on a pte_offset_map_lock() failu=
+re
+cause an infinite loop? Migration entries cause this lock to return NULL
+non-transiently, meaning the page walker will continually retry the exact s=
+ame
+PMD without making progress. Returning 0 without ACTION_AGAIN skips it
+gracefully.
+
+> +	}
+[ ... ]
+> +#ifdef CONFIG_HUGETLB_PAGE
+> +static int damon_paddr_hugetlb_entry(pte_t *pte, unsigned long hmask,
+[ ... ]
+> +	return paddr_walk->accessed ? 1 : 0;
+> +}
+> +#else
+> +#define damon_perf_hugetlb_entry NULL
+> +#endif /* CONFIG_HUGETLB_PAGE */
+> +
+> +static const struct mm_walk_ops damon_paddr_ops =3D {
+> +	.pmd_entry =3D damon_paddr_pmd_entry,
+> +	.hugetlb_entry =3D damon_paddr_hugetlb_entry,
+
+Does this cause a compilation failure when CONFIG_HUGETLB_PAGE is disabled?
+The fallback macro is defined as damon_perf_hugetlb_entry, but the struct
+initializes .hugetlb_entry with damon_paddr_hugetlb_entry, leaving it
+undeclared.
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260423004211.7037=
--1-akinobu.mita@gmail.com?part=3D2
+-1-akinobu.mita@gmail.com?part=3D3
