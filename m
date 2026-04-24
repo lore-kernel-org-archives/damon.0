@@ -1,315 +1,284 @@
-Received: from out-187.mta1.migadu.com (out-187.mta1.migadu.com [95.215.58.187])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f52.google.com (mail-qv1-f52.google.com [209.85.219.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22D30239E9A
-	for <damon@lists.linux.dev>; Fri, 24 Apr 2026 02:30:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.187
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776997816; cv=none; b=OEzk7ZH0SfPWUa0OWBAM1UXh7yTMddh/10ESyC6CZHIT2CvwIjRGYcrMIjlNkGL2XNdMxcEebspEM11pQ/ElT+B5gFQvND3OinD09a3CryJW7XWkqvD/zRzN8Y8hk6+suXnCcB96TXxHzjZA3+glEVGmtfmZqvGKjb1QgZjA8y0=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776997816; c=relaxed/simple;
-	bh=zgCzKWx4+JepXHWimtLmoZQPmZLfpc3mUvLfICxpSyc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=O/kT+Hb8S280V0T8HSduD76+RAcVgMieUhfdlmoWNSBAan0JCQ1s4r3KT1a9ouUzqRWDXR2p24UwB6iIY8w4jqsZOxYlyKv6mx44BgRGT3qeLSSWZoyTxMTxTbYQyaaswnf7WAN+izUxJrNzfdwOkYJeD9VQPepvOfeIvY8FY0w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=YIdZCov6; arc=none smtp.client-ip=95.215.58.187
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 339F2336EE9
+	for <damon@lists.linux.dev>; Fri, 24 Apr 2026 03:27:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.219.52
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1777001240; cv=pass; b=aPKhQ0u5I0M7JA3VheFlZYSMGDdhDTjwTbb0CQ6dIsJdQuUcA/XMTl2PacRNOmcQzDAQqpwIjOMRPNnoGTEVHt218wJ0cERTWACkxo9ur+yEhDhCTC7XfJtPDTAiIBoI/gNFokc8sJhzZSdd3lSs4FZ/9N5Q3aUIDtANolMLPfA=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1777001240; c=relaxed/simple;
+	bh=JY0AqOhyqcXdZ5HpuP5ETFWQFJ1T9SXrF1EFm6rzc2Q=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=gZ6D8J/Va+21ve8frAO6kR/zx8Qf6We0sJCryXo5p36LK/a2jaMEWzDqR/TJylsumw+Il/JjCqEsYVsqL+qrnLQcXry9voneE9nZXfKaCtCiGXXsGBeAX5eiKXblY58HGR1RUJOz/iw73k4DAOhA4ihJxorhtfqmjVtyqg2bK64=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=e1sYLgx+; arc=pass smtp.client-ip=209.85.219.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="YIdZCov6"
-Message-ID: <eb215ae6-bead-47ef-9c3a-3f4c80d39361@linux.dev>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1776997812;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=tTzVObsTgjPyebBtAz0CydyHn0WqV/3sHEsRDFpTpG8=;
-	b=YIdZCov6euTzkkQemuooEt8m5udPXFPoCJVGnqEJ5Lroxn6vbEG9eoAizO8MV/U6ATEf5a
-	vPwUr4vT7AVOae13PmFcw5kpbgdLBN60OL5kY7IzUfUa2J+i4KZzoCx1Ts74AHtIF5nnW7
-	iLV+5t7CvvWhH+IIfeQYLGFYgPO7vSc=
-Date: Fri, 24 Apr 2026 10:29:58 +0800
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="e1sYLgx+"
+Received: by mail-qv1-f52.google.com with SMTP id 6a1803df08f44-8b038a00370so59834676d6.1
+        for <damon@lists.linux.dev>; Thu, 23 Apr 2026 20:27:19 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1777001238; cv=none;
+        d=google.com; s=arc-20240605;
+        b=gFvFzQlaMyR+3vIdZT1uu1B6Ft0e4RJc0mDpR7M86fH60DcTWd1mn88BN0L7YbDaz9
+         GFlcMoU9fRJEXUwW3AWaf2Scp82h2YZ64RGkQaxY/xhHIs6DlUvFcwKxdmkYYx+TSlpw
+         02k++rG0VME7k6xkMRJnYreiVJqXMqtQeJz9VY2qoSQZnHwj2xx7R/1stq4iCT95JOoQ
+         A2zlknTRFTpg8+CiT1zHxO2q2UDYibFhwJ4AqlBPXvDUtMkZKWOPBSgRKzBzE1CuB2Z/
+         SctGL51gCChpHacsdoQm+p8URk9i5KDep1JoCPd7aedaGP455/NWiq3NvHNTVnlzLfLc
+         +luQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=7RUPTeQTQGi0BjE0UmfwkRC6wWtA9Ja3PP3yApVpgPI=;
+        fh=Mf9DINRRmhThOYETEReLQX7AM1T+ry1aGtACQzu4Fyc=;
+        b=ElrFSAOifd4avL/655PitXKJqyuKcZXdCcP4CUnMpwTdaecQv1LA7Kig5+fpsTXV17
+         yxk0HMLbdfjgNL6QqkozjDONbXW1PnWQR81xe9bLAFLNmEdwrsWaz/HcnIeLoa3Eu887
+         Wb7hftDNPHYynoF0FMKZXNENfhaRU4QUVrUpCNlsB8uyuIt6DJ6UVaZe2HeHp8nnujWM
+         CoNVr1f8fFWpbFglLShTGaJe41cKwLd3QwCFFY5ijVo1BBn7YAIsZIZ5AaP5qh9hRHRZ
+         Y53bOJR9Ktq4WkkWtObCWfUB+F7qsbSnywByYovqUXWKFvk52lWANoKNiYhUMysqd4ti
+         2IHg==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1777001238; x=1777606038; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=7RUPTeQTQGi0BjE0UmfwkRC6wWtA9Ja3PP3yApVpgPI=;
+        b=e1sYLgx+Ws6HjEIKwrL0ui6a59/tAVkH2+VMz4qfgU1bn1Bfji1v511bg0wJO7CjeS
+         unNV79tK+kc098ypEWQKEBbO5rVP8obAoz+jSYC8baYI/b4mYgrkrseL3OtbXCIYh8ea
+         q2s+B+X7EL9TBdnqjGqYyDgUm4fEMSg6+P4cXTosfXsBsxfPpWLGQfY/aSWwTmTz+TZC
+         Gt5xTbaqtZxf7uVEHd1qpyI9wmMUlSgmsuRB4cVmWnab0r34U9FguMUhh2S6/pbWRldM
+         tm1iMSvOhj+L23ED8NHGZ1ZA3b+brVHY2VMiIEDru5WoO8UvJhT2Tj9SwZ0B44HjzPiq
+         Pmtw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1777001238; x=1777606038;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=7RUPTeQTQGi0BjE0UmfwkRC6wWtA9Ja3PP3yApVpgPI=;
+        b=q+mxCUU3EqtEUMCyKLXP5ZpSuyH9NJ9AtDcxh6UXWDzh7WeVvel0Y41jRvsqBkvy4e
+         NLmb4XzVGivbUxbQEiFaODz9st8ePvsrGay/tZB/pfVUPoK1PGs4HnpNcZ2B8h+zYBHG
+         T7a28gx6AilxikJFBUJeIMmMa2hTXY5k9Tf3GzXuSMKwVRJdBZKrFKmBamxPwLbHdYpf
+         5KuKA+m5xy1/xxaCym8D5EtuqwYmMghrOlk32LPA8+wjUnl8wGO5+e109hICjPEkBNw8
+         1FPPJhSxUC0XnwPZ9U3TtpDsrHXvPfIz1D6p2aEFaTzGuWn7cPeb+UE3i+76MkynP2kG
+         X4mQ==
+X-Gm-Message-State: AOJu0Yx3LNCR4jRRtg8cZaQp3il1Lpi2ATCnAJ2+26/Uda0ztm/GDRKA
+	gvSC1U+SFu7Pottu62PzkyPfwvXyITZ0ksSMgkN5JLHBbUcy+xqEvUZMWRN0Fz2HlirLxIPkzgE
+	Qn8IrHOaVixuFcDFw4Jmt0BYGgVuXT1c=
+X-Gm-Gg: AeBDietbSm56lB01jXTjbFyBjD0cRrdEiSNYeKWkkMB/tU9QhVAQv9+kGBHxb1NSD7g
+	Lv6KNU51xF+K7Qy4m84xV2Xz7Y6rHs0U45QKVz3B66S2NxePhJbP+oSwqB2komyR7M5xJz3f7yw
+	vCARbTkgKkDx9MJ1wYePT8bkKyXEI6jC2xnMPVHwDOGCoCPEaThtEHvx0DCK6vGEaHzoQuZNbxF
+	47mIT9QVf4q0Cug4cX1HKE/80SXQVQt5bvALqEUh94Y1f4L7h/cUimcQIkvPnKW76sHJxCFk+QD
+	FUZRz8P3ummDVshINC9gKcfibUkfRKvQVImXtmk+O3Q=
+X-Received: by 2002:a05:6214:d67:b0:8ac:a6bd:503b with SMTP id
+ 6a1803df08f44-8b028037183mr472986456d6.15.1777001238015; Thu, 23 Apr 2026
+ 20:27:18 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Subject: Re: [PATCH 1/2] mm/damon: introduce damon_rand_fast() for per-ctx
- PRNG
+References: <20260423004211.7037-1-akinobu.mita@gmail.com> <20260423043402.92389-1-sj@kernel.org>
+In-Reply-To: <20260423043402.92389-1-sj@kernel.org>
+From: Akinobu Mita <akinobu.mita@gmail.com>
+Date: Fri, 24 Apr 2026 12:27:07 +0900
+X-Gm-Features: AQROBzBx5d3KUTNito_bNnI17aarN3ECdM6A_J0f8yYwS-I7ROvlPbglOPzJMxU
+Message-ID: <CAC5umyiikHr4doYKW5Gy4uv6M0_HbBZUSd9kM+L+kCrKYKEuXw@mail.gmail.com>
+Subject: Re: [RFC PATCH v3 0/4] mm/damon: introduce perf event based access check
 To: SeongJae Park <sj@kernel.org>
-Cc: damon@lists.linux.dev, Jiayuan Chen <jiayuan.chen@shopee.com>,
- Andrew Morton <akpm@linux-foundation.org>, linux-mm@kvack.org,
- linux-kernel@vger.kernel.org
-References: <20260424013621.983-1-sj@kernel.org>
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: Jiayuan Chen <jiayuan.chen@linux.dev>
-In-Reply-To: <20260424013621.983-1-sj@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Migadu-Flow: FLOW_OUT
+Cc: damon@lists.linux.dev, linux-perf-users@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hello SJ,
+Hello SeongJae,
 
-Thank you for the review.
-
-On 4/24/26 9:36 AM, SeongJae Park wrote:
-> Hello Jiayuan,
+2026=E5=B9=B44=E6=9C=8823=E6=97=A5(=E6=9C=A8) 13:34 SeongJae Park <sj@kerne=
+l.org>:
 >
+> Hello Akinobu,
 >
-> Thank you for sharing this patch with us!
+> On Thu, 23 Apr 2026 09:42:06 +0900 Akinobu Mita <akinobu.mita@gmail.com> =
+wrote:
 >
-> On Thu, 23 Apr 2026 20:23:36 +0800 Jiayuan Chen <jiayuan.chen@linux.dev> wrote:
+> > DAMON currently only provides PTE accessed-bit based access check, this
+> > patch series adds a new perf event based access check.
+> >
+> > Since perf event-based access checks do not require modifying the PTE
+> > accessed-bit for pages representing each damon region, it reduces the
+> > overhead of monitoring at a fixed granularity of the page size.
 >
->> From: Jiayuan Chen <jiayuan.chen@shopee.com>
->>
->> damon_rand() on the sampling_addr hot path calls get_random_u32_below(),
->> which takes a local_lock_irqsave() around a per-CPU batched entropy pool
->> and periodically refills it with ChaCha20.  On workloads with large
->> nr_regions (20k+), this shows up as a large fraction of kdamond CPU
->> time: the lock_acquire / local_lock pair plus __get_random_u32_below()
->> dominate perf profiles.
-> Could you please share more details about the use case?  I'm particularly
-> curious how you ended up setting 'nr_regiions' that high, while the upper limit
-> of nr_regions is set to 1,0000 by default.
-
-We use DAMON paddr on a 2 TiB host for per-cgroup hot/cold page
-classification.  Target cgroups can be as small as 1-2% of total
-memory (tens of GiB).
-
-With the default max_nr_regions=1000, each region covers ~2 GiB on
-average, which is often larger than the entire target cgroup.
-Adaptive split cannot carve out cgroup-homogeneous regions in that
-regime: each region's nr_accesses averages the (small) cgroup
-fraction with the surrounding non-cgroup pages, and the cgroup's
-access signal gets washed out.
-
-Raising max_nr_regions to 10k-20k gives the adaptive split enough
-spatial resolution that cgroup-majority regions can form at cgroup
-boundaries (allocations have enough physical locality in practice for
-this to work -- THP, per-node allocation, etc.).  At that region
-count, damon_rand() starts showing up at the top of kdamond profiles,
-which is what motivated this patch.
-
-
-> I know some people worry if the limit is too low and it could result in poor
-> monitoring accuracy.  Therefore we developed [1] monitoring intervals
-> auto-tuning.  From multiple tests on real environment it showed somewhat
-> convincing results, and therefore I nowadays suggest DAMON users to try that if
-> they didn't try.
+> As I also commented to the previous version, the high level idea makes se=
+nse to
+> me.  I think this can be useful.
 >
-> I'm bit concerned if this is over-engineering.  It would be helpful to know if
-> it is, if you could share the more detailed use case.
+> Also as I commented to the previous version, I understand the page level
+> monitoring overhead reduction is the main purpose of this patch, and it m=
+akes
+> sense to me.  Nonetheless, I like this mainly because the perf event coul=
+d
+> provide more detailed information including from which CPU/thread the acc=
+ess is
+> made, and whether the access is for read/write, to my understanding.  Ple=
+ase
+> let me know if my understanding is wrong.
 
+That's correct.
+Once the integration into your new monitoring infrastructure is
+complete, those things will become possible.
 
-Thanks for pointing to intervals auto-tuning - we do use it.  But it
-
-trades sampling frequency against monitoring overhead; it cannot
-change the spatial resolution.  With N=1000 regions on a 2 TiB host,
-a 20 GiB cgroup cannot be resolved no matter how we tune sample_us /
-aggr_us, because the region boundary itself averages cgroup and
-
-non-cgroup pages together.
-
-So raising max_nr_regions and making the per-region overhead cheap
-are complementary to interval auto-tuning, not redundant with it.
-
->> Introduce damon_rand_fast(), which uses a lockless lfsr113 generator
->> (struct rnd_state) held per damon_ctx and seeded from get_random_u64()
->> in damon_new_ctx().  kdamond is the sole consumer of a given ctx, so no
->> synchronization is required.  Range mapping uses Lemire's
->> (u64)rnd * span >> 32 to avoid a 64-bit division; residual bias is
->> bounded by span / 2^32, negligible for statistical sampling.
->>
->> The new helper is intended for the sampling-address hot path only.
->> damon_rand() is kept for call sites that run outside the kdamond loop
->> and/or have no ctx available (damon_split_regions_of(), kunit tests).
->>
->> Convert the two hot callers:
->>
->>    - __damon_pa_prepare_access_check()
->>    - __damon_va_prepare_access_check()
->>
->> lfsr113 is a linear PRNG and MUST NOT be used for anything
->> security-sensitive.  DAMON's sampling_addr is not exposed to userspace
->> and is only consumed as a probe point for PTE accessed-bit sampling, so
->> a non-cryptographic PRNG is appropriate here.
->>
->> Tested with paddr monitoring and max_nr_regions=20000: kdamond CPU
->> usage reduced from ~72% to ~50% of one core.
->>
->> Cc: Jiayuan Chen <jiayuan.chen@linux.dev>
->> Signed-off-by: Jiayuan Chen <jiayuan.chen@shopee.com>
->> ---
->>   include/linux/damon.h | 28 ++++++++++++++++++++++++++++
->>   mm/damon/core.c       |  2 ++
->>   mm/damon/paddr.c      | 10 +++++-----
->>   mm/damon/vaddr.c      |  9 +++++----
->>   4 files changed, 40 insertions(+), 9 deletions(-)
->>
->> diff --git a/include/linux/damon.h b/include/linux/damon.h
->> index f2cdb7c3f5e6..0afdc08119c8 100644
->> --- a/include/linux/damon.h
->> +++ b/include/linux/damon.h
->> @@ -10,6 +10,7 @@
->>   
->>   #include <linux/memcontrol.h>
->>   #include <linux/mutex.h>
->> +#include <linux/prandom.h>
->>   #include <linux/time64.h>
->>   #include <linux/types.h>
->>   #include <linux/random.h>
->> @@ -843,8 +844,35 @@ struct damon_ctx {
->>   
->>   	struct list_head adaptive_targets;
->>   	struct list_head schemes;
->> +
->> +	/*
->> +	 * Per-ctx lockless PRNG state for damon_rand_fast(). Seeded from
->> +	 * get_random_u64() in damon_new_ctx(). Owned exclusively by the
->> +	 * kdamond thread of this ctx, so no locking is required.
->> +	 */
->> +	struct rnd_state rnd_state;
->>   };
->>   
->> +/*
->> + * damon_rand_fast - per-ctx PRNG variant of damon_rand() for hot paths.
->> + *
->> + * Uses the lockless lfsr113 state kept in @ctx->rnd_state. Safe because
->> + * kdamond is the single consumer of a given ctx, so no synchronization
->> + * is required. Quality is sufficient for statistical sampling; do NOT
->> + * use for any security-sensitive randomness.
->> + *
->> + * Range mapping uses Lemire's (u64)rnd * span >> 32 to avoid a division;
->> + * bias is bounded by span / 2^32, negligible for DAMON.
->> + */
->> +static inline unsigned long damon_rand_fast(struct damon_ctx *ctx,
->> +					    unsigned long l, unsigned long r)
->> +{
->> +	u32 rnd = prandom_u32_state(&ctx->rnd_state);
->> +	u32 span = (u32)(r - l);
->> +
->> +	return l + (unsigned long)(((u64)rnd * span) >> 32);
->> +}
-> As Sashiko pointed out [2], we may better to return 'unsigned long' from this
-> function.  Can this algorithm be extended for that?
-
-Sashiko is correct that (u32)(r - l) truncates spans greater than 4 GiB.
-
-This is a pre-existing limitation of damon_rand() itself, which
-passes r - l to get_random_u32_below() (a u32 parameter) and
-truncates the same way.  My patch makes that truncation
-explicit but does not introduce a new bug.
-
-We can restrict the region size when config or just allow spans greater 
-than 4G.
-
-static inline unsigned long damon_rand_fast(struct damon_ctx *ctx,
-               unsigned long l, unsigned long r)
-{
-       unsigned long span = r - l;
-       u64 rnd;
-
-       if (likely(span <= U32_MAX)) {
-               rnd = prandom_u32_state(&ctx->rnd_state);
-               return l + (unsigned long)((rnd * span) >> 32);
-       }
-       rnd = ((u64)prandom_u32_state(&ctx->rnd_state) << 32) |
-             prandom_u32_state(&ctx->rnd_state);
-
-       // same as 'l + (unsigned long)((rnd * span) >> 32);'
-       return l + mul_u64_u64_shr(rnd, span, 64);
-}
-
-
->> +
->>   static inline struct damon_region *damon_next_region(struct damon_region *r)
->>   {
->>   	return container_of(r->list.next, struct damon_region, list);
->> diff --git a/mm/damon/core.c b/mm/damon/core.c
->> index 3dbbbfdeff71..c3779c674601 100644
->> --- a/mm/damon/core.c
->> +++ b/mm/damon/core.c
->> @@ -607,6 +607,8 @@ struct damon_ctx *damon_new_ctx(void)
->>   	INIT_LIST_HEAD(&ctx->adaptive_targets);
->>   	INIT_LIST_HEAD(&ctx->schemes);
->>   
->> +	prandom_seed_state(&ctx->rnd_state, get_random_u64());
->> +
->>   	return ctx;
->>   }
->>   
->> diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
->> index 5cdcc5037cbc..b5e1197f2ba2 100644
->> --- a/mm/damon/paddr.c
->> +++ b/mm/damon/paddr.c
->> @@ -48,12 +48,12 @@ static void damon_pa_mkold(phys_addr_t paddr)
->>   	folio_put(folio);
->>   }
->>   
->> -static void __damon_pa_prepare_access_check(struct damon_region *r,
->> -		unsigned long addr_unit)
->> +static void __damon_pa_prepare_access_check(struct damon_ctx *ctx,
->> +					    struct damon_region *r)
-> Let's keep 'r' on the first line, and update the second line without indent
-> change.
+> >
+> > Here is a method and its results for comparing access checks using
+> > existing access bits and new perf events.
+> [...]
+> > Using accessed bit, prepare_access_checks takes 7 seconds and
+> > check_accesses takes 5 seconds.
+> [...]
+> > Using perf event, prepare_access_checks takes 0.01 seconds and
+> > check_accesses takes 2.6 seconds.
 >
-Thanks
->>   {
->> -	r->sampling_addr = damon_rand(r->ar.start, r->ar.end);
->> +	r->sampling_addr = damon_rand_fast(ctx, r->ar.start, r->ar.end);
->>   
->> -	damon_pa_mkold(damon_pa_phys_addr(r->sampling_addr, addr_unit));
->> +	damon_pa_mkold(damon_pa_phys_addr(r->sampling_addr, ctx->addr_unit));
->>   }
->>   
->>   static void damon_pa_prepare_access_checks(struct damon_ctx *ctx)
->> @@ -63,7 +63,7 @@ static void damon_pa_prepare_access_checks(struct damon_ctx *ctx)
->>   
->>   	damon_for_each_target(t, ctx) {
->>   		damon_for_each_region(r, t)
->> -			__damon_pa_prepare_access_check(r, ctx->addr_unit);
->> +			__damon_pa_prepare_access_check(ctx, r);
->>   	}
->>   }
->>   
->> diff --git a/mm/damon/vaddr.c b/mm/damon/vaddr.c
->> index b069dbc7e3d2..6cf06ffdf880 100644
->> --- a/mm/damon/vaddr.c
->> +++ b/mm/damon/vaddr.c
->> @@ -332,10 +332,11 @@ static void damon_va_mkold(struct mm_struct *mm, unsigned long addr)
->>    * Functions for the access checking of the regions
->>    */
->>   
->> -static void __damon_va_prepare_access_check(struct mm_struct *mm,
->> -					struct damon_region *r)
->> +static void __damon_va_prepare_access_check(struct damon_ctx *ctx,
->> +					    struct mm_struct *mm,
->> +					    struct damon_region *r)
-> Let's keep the first line and the the indentation as were, and add 'ctx'
-> argument to the end.
+> Thank you so much for sharing these great test results with the detailed =
+setup
+> description!
 >
->>   {
->> -	r->sampling_addr = damon_rand(r->ar.start, r->ar.end);
->> +	r->sampling_addr = damon_rand_fast(ctx, r->ar.start, r->ar.end);
->>   
->>   	damon_va_mkold(mm, r->sampling_addr);
->>   }
->> @@ -351,7 +352,7 @@ static void damon_va_prepare_access_checks(struct damon_ctx *ctx)
->>   		if (!mm)
->>   			continue;
->>   		damon_for_each_region(r, t)
->> -			__damon_va_prepare_access_check(mm, r);
->> +			__damon_va_prepare_access_check(ctx, mm, r);
->>   		mmput(mm);
->>   	}
->>   }
->> -- 
->> 2.43.0
->>
->>
-> [1] https://lkml.kernel.org/r/20250303221726.484227-1-sj@kernel.org
-> [2] https://lore.kernel.org/20260423190841.821E4C2BCAF@smtp.kernel.org
+> > ```
+> > $ sudo $HOME/damo/damo stop
+> > $ sudo $HOME/damo/damo start --ops vaddr \
+> >       --perf_event 5000 0 0x4 0x1cd 0x1f 0 \
+> >       --monitoring_intervals 5s 60s 300s \
+> >       --monitoring_nr_regions_range 1000000000 1000000000 \
+> >       --target_pid $(cat /tmp/memcached.pid)
+> [...]
+> > Note: damo's --perf_event option
+> >
+> > Using these features also requires modifications to damo, but these
+> > are not included in this patch series and are currently under
+> > development in the following branch:
+> >
+> > * https://github.com/mita/damo/tree/damo-perf-for-v3.2.2
+>
+> Thank you for sharing this, too!
+>
+> >
+> > The option newly added to damo for perf event-based access check has th=
+e
+> > following format:
+> >
+> > `--perf_event <sample freq> <sample phys addr> <type> <config> <config1=
+> <config2>`
+>
+> I think we may need to discuss more for final interface.  But I think tha=
+t
+> could be done later, after the kerenl ABI is fixed.
+
+My current patch introduces a set of kernel ABIs (.../perf_events/<P>/*),
+and if I want to control another field in the perf_event_attr,
+I would have to add a new ABI. This would be a significant
+maintenance cost.
+
+Instead, I would like to provide a single bin file where the
+perf_event_attr I want to set is written as binary.
+
+> >
+> > - `sample freq`: A higher frequency improves access accuracy, but also
+> >   increases overhead.
+> > - `sample phys addr`: specify 0 for vaddr and 1 for paddr.
+> > - The remaining type, config, config1, and config2 settings can be foun=
+d
+> >   as follows:
+>
+> The values look bit human-unfriendly.  I wonder if we could use more
+> human-friendly values, e.g., 'cpu' for type,
+> 'mem_trans_retired.load_latency_gt_1024' for config, etc.  Not necessaril=
+y we
+> need to fix this right now.  Let's keep discussing.
+
+I'd like to do it that way. These processes can be handled better
+from user space than from within the kernel, so I'd like to achieve
+this from damo with the help of the perf tool and library.
+
+> >
+> > Run `perf mem record -vv` to obtain the log, and then find the part in
+> > the log where `perf_event_open` was executed successfully.
+> > ```
+> > $ sudo perf mem record -vv echo > /tmp/perf-mem-record.log 2>&1
+> > $ cat /tmp/perf-mem-record.log
+> > ...
+> > perf_event_attr:
+> >   type                             4 (cpu)
+> >   size                             144
+> >   config                           0x1cd (mem_trans_retired.load_latenc=
+y_gt_1024)
+> [...]
+> > ...
+> > ```
+> >
+> > The values for `type` and `config` are taken from this output.
+> > Use the values of `config1` and `config2` if they are included in the l=
+og;
+> > otherwise, set them to 0.
+>
+> The above information will also be very useful for early testers of this =
+patch
+> series including myself.  Thank you for sharing.
+>
+> >
+> > Any feedback or advice on the patch set would be greatly appreciated.
+>
+> Again, I like the high level concept of this patch series.  I definitely =
+want
+> this to be merged.  Nonetheless, not exactly as it is right now.  I think=
+ we
+> should spend enough time for the user interface design.  I hope the final
+> interface is long-term maintainable and easy to extend.
+>
+> >
+> > * RFC v3
+> > - drop "reintroduce damon_operations->cleanup()" as no longer needed
+> > - drop "allow user to set min size of region" (will be sent separately)
+> > - add tgid to struct damon_access_report and use it instead of tid
+> > - set perf_event_attr.precise_ip to 2
+> > - prepare for the transition to report-based monitoring
+> > - switch to use access_reported in struct damon_region
+> > - switch to use sample/primitives/perf_events sysfs directory
+>
+> Thank you for doing this revisioning.
+>
+> For the user interface and also internal interface, I suggested to consid=
+er
+> reusing those for page fault events based per-CPUs/threads/reads/writes
+> monitoring DAMON extension patch series in our previous discussion.  I th=
+ink
+> this version is following the right direction much more than the previous
+> version.
+>
+> But, nowadays I'm thinking about a new user interface for the
+> per-CPUs/threads/reads/writes monitoring that can easily also extended fo=
+r perf
+> event based monitoring and for not only access monitoring but general and
+> multiple data attributes monitoring.
+>
+> It is still under the development and I'm planning to share a very early =
+RFC
+> version of that by LSFMMBPF.  I will try to add my idea about how this pe=
+rf
+> event based monitoring could also implemented by reusing the interface on=
+ the
+> early RFC version.
+>
+> Could we wait until the early RFC version is published, review my idea ab=
+out
+> how this perf event based monitoring could reuse it, and continue discuss=
+ions
+> about the next steps of this patch series?
+
+That sounds good. I'd definitely like to check it out.
+
+> [1] https://lore.kernel.org/20251208062943.68824-1-sj@kernel.org/
 >
 >
 > Thanks,
 > SJ
+>
+> [...]
