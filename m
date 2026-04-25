@@ -1,247 +1,319 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from out-186.mta1.migadu.com (out-186.mta1.migadu.com [95.215.58.186])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE0F1208D0
-	for <damon@lists.linux.dev>; Sat, 25 Apr 2026 00:45:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3734E56A
+	for <damon@lists.linux.dev>; Sat, 25 Apr 2026 03:36:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.186
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777077942; cv=none; b=JI/ZXUyIClsoY7oYR5/aa528asFoRvsV7NiWPfc9zaC8bcUPKYNLiXrjAkxS79SdlYtFHJNaBA+3oET/y9Srd53OhYzhbj7PZvBpQ0yO15+2tqG9B9t2DyD9Jyix3S4UBbyraPgoQALjZGrp0UDF3X2/tPgQ6y9sFoabxRSKAlA=
+	t=1777088185; cv=none; b=QdVH8T+Y/52/F7F8s8/yzbvOcOcP01p30bnVKEwslhl0yWQgMsQ1m5ujM0vSVSi57H1acSoNDNtI0Shd0D4kVwjw3Ec2Wt/AnNU7/NlTGc55IqckjmjHtyFgXCyF2/lzO/vEtEB5sFk19RHq/bND+SXwKX/zxqaBHvT+GwAko9Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777077942; c=relaxed/simple;
-	bh=tZQhIfUl8XCGhS1FrdczdDkLm8ia3G0qbumr0/l1sig=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=J/ZSw9/5ELX9A7z1MDsgSGn3H9x01fPSpVJbpI3oPNnXzMtz6tNQW3HzKeJD1XhKaRhsHTQ+XTm35Wi4VgUwmlHrVQgwSEBC4wTlRA4yUv7KXCNAq8S9kovDIjrHLev2dzQmecoMGyKZms3THU/2uM0esoqM8dHaEKyY6eG+E3M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=d22jWo9D; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1777088185; c=relaxed/simple;
+	bh=5ZOjCFfDOc78SuGjkmjkE9f6pimG5WfJeOAuriU4wEc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=dil53JgvjCUySRuj4ZJzgHyWCQrUr11mTFYA+OOk0vwZQSlM292GzXSZiE0WyaryyebGSG9gTq2wuiHK4tXCRwTs20an2c3m2OVNwbhARMHMJeeoyiCYE3KC85wNicJUS9wNjPlS0PLl6ZsIEzf3giwuKkCRB5m74dhA5VpnX7c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=w07JOZy0; arc=none smtp.client-ip=95.215.58.186
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="d22jWo9D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3224FC19425;
-	Sat, 25 Apr 2026 00:45:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777077942;
-	bh=tZQhIfUl8XCGhS1FrdczdDkLm8ia3G0qbumr0/l1sig=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d22jWo9DBp02JGOzrcCA+nW/fZG7iIHhvqa4LrOImCsLLvqOvfCYTa2Cn9hjM0dIY
-	 IoOrM/EAF8D3SH8qhBnS1adDp0p98FgkQQpNsgZAMcRSg2mkaKAmUKUHXFSA5Keq+K
-	 El5cQV7mr7cd+XLANNV+j+1Bf2B60Sm5qHH5dHhyDei/zlfnQ1Uqbl5vgyU/5bydr/
-	 WEECEEdi/SIbU3r81tW2PmebR5DC1u8N3o7hQzPfZ7gNIvnfQ1zxTQNzjWhqebNFb3
-	 TH8TUCJQOUJ4osfQZRAY01qFuSB5hN4dO2rJPh+uaKlhBZqh4UQg0MFV14vSGJQPkd
-	 Tvf8SYYL+nH2g==
-From: SeongJae Park <sj@kernel.org>
-To: sashiko-bot@kernel.org
-Cc: SeongJae Park <sj@kernel.org>,
-	"Ravi Jonnalagadda" <ravis.opensrc@gmail.com>,
-	damon@lists.linux.dev
-Subject: Re: [PATCH v7] mm/damon: add node_eligible_mem_bp goal metric
-Date: Fri, 24 Apr 2026 17:45:31 -0700
-Message-ID: <20260425004534.85531-1-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260424205908.CF949C2BCB8@smtp.kernel.org>
-References: 
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="w07JOZy0"
+Message-ID: <a322f827-ea39-4bfe-9c13-fa798b22e3ae@linux.dev>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1777088181;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=xXmM/hPKz9yiHnE92clfV8q4cx6V4udJ07l8RlViXO4=;
+	b=w07JOZy0Rw8q7q18Twjp6yUHZ14Cvuxc/YOdioM3r+7rSO/94cDQa9jtB4xUDoT4kuvOem
+	mB+YFj2dG2Pr843HKh177sSFBLMReoS4UKxadBLMy0c315wkwWzDf/DvnvPvtMRLz86vZ5
+	0q52NMwqnxAV5/SlgdavUAOJyKTMmig=
+Date: Sat, 25 Apr 2026 11:36:02 +0800
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Subject: Re: [PATCH 1/2] mm/damon: introduce damon_rand_fast() for per-ctx
+ PRNG
+To: SeongJae Park <sj@kernel.org>
+Cc: damon@lists.linux.dev, Jiayuan Chen <jiayuan.chen@shopee.com>,
+ Andrew Morton <akpm@linux-foundation.org>, linux-mm@kvack.org,
+ linux-kernel@vger.kernel.org
+References: <20260424151138.4692-1-sj@kernel.org>
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Jiayuan Chen <jiayuan.chen@linux.dev>
+In-Reply-To: <20260424151138.4692-1-sj@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-
-On Fri, 24 Apr 2026 20:59:07 +0000 sashiko-bot@kernel.org wrote:
-
-> Sashiko AI review found 4 potential issue(s):
-> - [High] Integer Truncation and Arithmetic Overflow on 32-bit Architectures
-
-No real problem.
-
-> - [High] CPU Soft Lockups due to Unbounded Physical Address Iteration
-
-Unlikely.
-
-> - [Medium] Missing Core Filters Evaluation Causes Eligible Memory Over-counting
-
-This is intentional.
-
-> - [Medium] Unaligned Address Advancement Truncates Exact Overlap Calculation
-
-I agree to Sashiko.
-
-> --
-> 
-> commit d92efd581a7b3318becfa32765dc87547acb91c6
-> Author: Ravi Jonnalagadda <ravis.opensrc@gmail.com>
-> Subject: mm/damon: add node_eligible_mem_bp goal metric
-> 
-> This commit introduces a new metric node_eligible_mem_bp for DAMON schemes
-> to control memory distribution across NUMA nodes based on the ratio of
-> scheme-eligible memory. It calculates physical bytes per node using PADDR
-> ops and integrates with the DAMOS quota goal system.
-> 
-> > diff --git a/mm/damon/core.c b/mm/damon/core.c
-> > index 3dbbbfdeff719f..4ac8052052613d 100644
-> > --- a/mm/damon/core.c
-> > +++ b/mm/damon/core.c
-> 
-> [ ... ]
-> 
-> > @@ -2287,7 +2305,112 @@ static unsigned long damos_get_node_memcg_used_bp(
-> >  		numerator = i.totalram - used_pages;
-> >  	return mult_frac(numerator, 10000, i.totalram);
-> >  }
-> > -#else
-> > +
-> > +#ifdef CONFIG_DAMON_PADDR
-> > +/*
-> > + * damos_calc_eligible_bytes() - Calculate raw eligible bytes per node.
-> > + * @c:		The DAMON context.
-> > + * @s:		The scheme.
-> > + * @nid:	The target NUMA node id.
-> > + * @total:	Output for total eligible bytes across all nodes.
-> > + *
-> > + * Iterates through each folio in eligible regions to accurately determine
-> > + * which node the memory resides on. Returns eligible bytes on the specified
-> > + * node and sets *total to the sum across all nodes.
-> > + *
-> > + * Note: This function requires damon_get_folio() from ops-common.c, which is
-> > + * only available when CONFIG_DAMON_PADDR is enabled. It also requires the
-> > + * context to be using PADDR operations for meaningful results.
-> > + */
-> > +static phys_addr_t damos_calc_eligible_bytes(struct damon_ctx *c,
-> > +		struct damos *s, int nid, phys_addr_t *total)
-> > +{
-> > +	struct damon_target *t;
-> > +	struct damon_region *r;
-> > +	phys_addr_t total_eligible = 0;
-> > +	phys_addr_t node_eligible = 0;
-> > +
-> > +	damon_for_each_target(t, c) {
-> > +		damon_for_each_region(r, t) {
-> > +			phys_addr_t addr, end_addr;
-> > +
-> > +			if (!__damos_valid_target(r, s))
-> > +				continue;
-> 
-> Does this overcount eligible memory by skipping core filters?
-> 
-> The quota adjustment logic uses damos_core_filter_out() to exclude explicitly
-> filtered regions, but it appears this calculation only checks
-> __damos_valid_target(). Should damos_core_filter_out() be evaluated here as 
-> well?
-
-This is an intentional behavior as we discussed [1] on the previous version.
-
-> 
-> > +
-> > +			/* Convert from core address units to physical bytes */
-> > +			addr = (phys_addr_t)r->ar.start * c->addr_unit;
-> > +			end_addr = (phys_addr_t)r->ar.end * c->addr_unit;
-> > +			while (addr < end_addr) {
-> > +				struct folio *folio;
-> > +				phys_addr_t folio_start, folio_end;
-> > +				phys_addr_t overlap_start, overlap_end;
-> > +				phys_addr_t counted;
-> > +
-> > +				folio = damon_get_folio(PHYS_PFN(addr));
-> > +				if (!folio) {
-> > +					addr += PAGE_SIZE;
-> > +					continue;
-> > +				}
-> 
-> If addr is unaligned, does adding PAGE_SIZE preserve the unaligned offset and
-> cause under-counting on the next valid folio?
-> 
-> If an unaligned fallback happens, the address might skip past a valid page
-> boundary instead of aligning to it. When advancing the address without a
-> valid folio, would it be better to align it to the next page boundary?
-
-Makes sense.  I suggested to use PAGE_ALING_DOWN() on the reply to the patch.
-
-> 
-> > +
-> > +				/*
-> > +				 * Calculate exact overlap between the region
-> > +				 * [addr, end_addr) and the folio range.
-> > +				 * The folio may start before addr if addr is
-> > +				 * in the middle of a large folio.
-> > +				 */
-> 
-> [ ... ]
-> 
-> > +				if (overlap_end > overlap_start) {
-> > +					counted = overlap_end - overlap_start;
-> > +					total_eligible += counted;
-> > +					if (folio_nid(folio) = nid)
-> > +						node_eligible += counted;
-> > +				}
-> > +
-> > +				/* Advance past the entire folio */
-> > +				addr = folio_end;
-> > +				folio_put(folio);
-> > +			}
-> > +			cond_resched();
-> > +		}
-> > +	}
-> 
-> Could this cause CPU soft lockups for very large regions?
-> 
-> Since the while loop can iterate millions of times for large memory regions,
-> should cond_resched() be placed inside the while loop instead of outside it?
-
-Not likely.  Users could set min_nr_regions to control the maximum size of each
-region.  We might be able to make this more robust, but seems not a blocker of
-this patch in my opinion.
-
-> 
-> > +
-> > +	*total = total_eligible;
-> > +	return node_eligible;
-> > +}
-> > +
-> > +static unsigned long damos_get_node_eligible_mem_bp(struct damon_ctx *c,
-> > +		struct damos *s, int nid)
-> > +{
-> > +	phys_addr_t total_eligible = 0;
-> > +	phys_addr_t node_eligible;
-> > +
-> > +	if (c->ops.id != DAMON_OPS_PADDR)
-> > +		return 0;
-> > +
-> > +	if (nid < 0 || nid >= MAX_NUMNODES || !node_online(nid))
-> > +		return 0;
-> > +
-> > +	node_eligible = damos_calc_eligible_bytes(c, s, nid, &total_eligible);
-> > +
-> > +	if (!total_eligible)
-> > +		return 0;
-> > +
-> > +	return mult_frac((unsigned long)node_eligible, 10000,
-> > +			(unsigned long)total_eligible);
-> > +}
-> 
-> Can this cast cause truncation and overflow on 32-bit architectures? 
-> 
-> Both node_eligible and total_eligible are phys_addr_t, which are 64-bit on
-> PAE systems, but unsigned long is 32-bit.
-> 
-> If total_eligible is an exact multiple of 4GB, it would cast to 0 and trigger
-> a divide-by-zero panic in mult_frac(). Additionally, mult_frac() multiplies
-> by 10000 using 32-bit math, which might overflow for values larger than
-> roughly 429 KB.
-> 
-> Should this use 64-bit division or shift the byte sizes down to page counts
-> before calculating the fraction?
-
-Too much overflow concern in my opinion.  The overflow makes no real critical
-problem.  Let's keep this as is for now.
-
-> 
-> [ ... ]
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260424203448.5040-1-ravis.opensrc@gmail.com?part=1
-> 
-
-[1] https://lore.kernel.org/20260405224550.76218-1-sj@kernel.org
+X-Migadu-Flow: FLOW_OUT
 
 
-Thanks,
-SJ
+On 4/24/26 11:11 PM, SeongJae Park wrote:
+> On Fri, 24 Apr 2026 10:29:58 +0800 Jiayuan Chen <jiayuan.chen@linux.dev> wrote:
+>
+>> Hello SJ,
+>>
+>> Thank you for the review.
+>>
+>> On 4/24/26 9:36 AM, SeongJae Park wrote:
+>>> Hello Jiayuan,
+>>>
+>>>
+>>> Thank you for sharing this patch with us!
+>>>
+>>> On Thu, 23 Apr 2026 20:23:36 +0800 Jiayuan Chen <jiayuan.chen@linux.dev> wrote:
+>>>
+>>>> From: Jiayuan Chen <jiayuan.chen@shopee.com>
+>>>>
+>>>> damon_rand() on the sampling_addr hot path calls get_random_u32_below(),
+>>>> which takes a local_lock_irqsave() around a per-CPU batched entropy pool
+>>>> and periodically refills it with ChaCha20.  On workloads with large
+>>>> nr_regions (20k+), this shows up as a large fraction of kdamond CPU
+>>>> time: the lock_acquire / local_lock pair plus __get_random_u32_below()
+>>>> dominate perf profiles.
+>>> Could you please share more details about the use case?  I'm particularly
+>>> curious how you ended up setting 'nr_regiions' that high, while the upper limit
+>>> of nr_regions is set to 1,0000 by default.
+>> We use DAMON paddr on a 2 TiB host for per-cgroup hot/cold page
+>> classification.  Target cgroups can be as small as 1-2% of total
+>> memory (tens of GiB).
+> Thank you for sharing this detail!
+>
+> Could you further share me what do you do with the hot/cold information?  We
+> found some people want to use DAMON for proactive cold pages reclamation but
+> they watned to use it for only file-backed pages, and therefore developed page
+> level DAMOS filter.  In a similar way, if we know your detailed use case, we
+> might be able to serve you better by finding not well advertised features, or
+> developing a new features.
+>
+
+Hello SJ,
+
+Thanks.
+
+Use case: mixed-workload Kubernetes host (latency-sensitive + batch
+pods on the same machine).  We need continuous per-pod cold/hot
+signal for two things -- k8s scheduling decisions (which pod can
+give up memory under host pressure) and sizing the eventual
+reclamation through memory.reclaim.  Both anon and file pages
+matter (swap is configured); reclamation itself goes through
+mainline.  What we add is the per-pod cold attribution feeding the
+scheduler.
+
+DAMON_RECLAIM alone doesn't fit -- it is reclaim-only with
+aggregate stats, while we need continuous per-pod visibility even
+when reclamation isn't firing.
+
+Let me re-frame the region-size point, since I don't think I
+explained it well last time.  We are NOT trying to make region
+size match cgroup size; you're right that pages are scattered and
+that mapping doesn't work.  The high nr_regions is so that DAMON's
+adaptive split has enough resolution to identify cold sub-areas of
+physical memory at all -- regardless of cgroup.  With ~2 GiB
+default regions on a 2 TiB host, a small pod's pages are averaged
+with thousands of non-pod pages in the same region, and the
+region never reaches nr_accesses=0 even when the pod is genuinely
+idle.  The cold signal is gone before any cgroup attribution
+happens.  Cgroup attribution itself is done at sample granularity
+(folio_memcg per sampled page), not at region granularity -- the
+regions just need to be fine enough that there *is* a cold signal
+to attribute.
+
+>> With the default max_nr_regions=1000, each region covers ~2 GiB on
+>> average, which is often larger than the entire target cgroup.
+>> Adaptive split cannot carve out cgroup-homogeneous regions in that
+>> regime: each region's nr_accesses averages the (small) cgroup
+>> fraction with the surrounding non-cgroup pages, and the cgroup's
+>> access signal gets washed out.
+> But, pages of cgroups would be scattered around on the physical address space.
+> So even if DAMON finds a hot or cold region on physical address space that
+> having a size smaller than a cgroup's memory, it is hard to say if it is for a
+> specific cgroup.  How do you know if the region is for which cgroup?  Do you
+> have a way to make sure pages of same cgroup are gathered on the physical
+> address space?  If not, I'm not sure how ensuring size of region to be equal or
+> smaller than each cgroup size helps you.
+>
+> We are supporting page level monitoring [1] for such cgroup-aware use case.
+> Are you using it?  But again, if you use it, I'm not sure why you need to
+> ensure DAMON region size smaller than the cgroup size.
+This is also why DAMOS memcg filters do not bypass the
+nr_regions constraint -- the scheme's access-pattern matcher
+operates on the already-averaged region, so by the time any
+filter sees pages the signal is already lost.  Whatever
+attribution mechanism we use afterwards (custom callback, memcg
+filter, page-level reporting), the region count needs to be high
+enough first.
+> Fyi, I'm also working [2] on making the cgroup-aware monitoring much more
+> lightweight.
+
+
+Looking forward to it -- hopefully it'll cover our case. 😁
+
+
+>> Raising max_nr_regions to 10k-20k gives the adaptive split enough
+>> spatial resolution that cgroup-majority regions can form at cgroup
+>> boundaries (allocations have enough physical locality in practice for
+>> this to work -- THP, per-node allocation, etc.).  At that region
+>> count, damon_rand() starts showing up at the top of kdamond profiles,
+>> which is what motivated this patch.
+> Thank you for sharing how this patch has developed.  I'm still curious if there
+> is yet more ways to make DAMON better for your use case.  But this patch makes
+> sense in general to me.
+>
+>>
+>>> I know some people worry if the limit is too low and it could result in poor
+>>> monitoring accuracy.  Therefore we developed [1] monitoring intervals
+>>> auto-tuning.  From multiple tests on real environment it showed somewhat
+>>> convincing results, and therefore I nowadays suggest DAMON users to try that if
+>>> they didn't try.
+>>>
+>>> I'm bit concerned if this is over-engineering.  It would be helpful to know if
+>>> it is, if you could share the more detailed use case.
+>>
+>> Thanks for pointing to intervals auto-tuning - we do use it.  But it
+>>
+>> trades sampling frequency against monitoring overhead; it cannot
+>> change the spatial resolution.  With N=1000 regions on a 2 TiB host,
+>> a 20 GiB cgroup cannot be resolved no matter how we tune sample_us /
+>> aggr_us, because the region boundary itself averages cgroup and
+>>
+>> non-cgroup pages together.
+>>
+>> So raising max_nr_regions and making the per-region overhead cheap
+>> are complementary to interval auto-tuning, not redundant with it.
+> Makes sense.  I'm still not sure how it helps for cgroup.  But, if you do want
+> it and if it helps you, you are of course ok to use it in your way, and I will
+> help you. :)
+>
+[...]
+>> Sashiko is correct that (u32)(r - l) truncates spans greater than 4 GiB.
+>>
+>> This is a pre-existing limitation of damon_rand() itself, which
+>> passes r - l to get_random_u32_below() (a u32 parameter) and
+>> truncates the same way.  My patch makes that truncation
+>> explicit but does not introduce a new bug.
+> You are 100% correct and I agree.  Thank you for making this clear.  I should
+> also mentioned and underlined this in my previous reply, but I forgot it.
+>
+> So I think this patch is ok to be merged as is (after addressing my nit trivial
+> comments about coding styles), but we may still want to fix it in future.  So I
+damon_rand() is now only called by damon_split_regions_of() with
+the constant range (1, 10).  may by we can rename it to
+damon_rand_u32() to make the u32 constraint explicit in the API
+name; that closes out the truncation concern at the legacy helper
+without needing a separate series.
+> was wondering if such future fix for this new, shiny and efficient function is
+> easy.
+
+
+Will do.
+
+v2 is a single patch with the style fixes (drop 'likely', 'r' on the 
+first line for paddr.c, ctx at the end for
+
+vaddr.c) and 64-bit handling:
+
+       static inline unsigned long damon_rand_fast(struct damon_ctx *ctx,
+                       unsigned long l, unsigned long r)
+       {
+               unsigned long span = r - l;
+               u64 rnd;
+
+               if (span <= U32_MAX) {
+                       rnd = prandom_u32_state(&ctx->rnd_state);
+                       return l + (unsigned long)((rnd * span) >> 32);
+               }
+               rnd = ((u64)prandom_u32_state(&ctx->rnd_state) << 32) |
+                     prandom_u32_state(&ctx->rnd_state);
+               return l + mul_u64_u64_shr(rnd, span, 64);
+       }
+
+I will also drop Prefetch patch.
+
+>> We can restrict the region size when config or just allow spans greater
+>> than 4G.
+>>
+>> static inline unsigned long damon_rand_fast(struct damon_ctx *ctx,
+>>                 unsigned long l, unsigned long r)
+>> {
+>>         unsigned long span = r - l;
+>>         u64 rnd;
+>>
+>>         if (likely(span <= U32_MAX)) {
+> I think we could drop 'likely' and hope compiler or hardware branch prediction
+> to be smart enough.
+>
+>>                 rnd = prandom_u32_state(&ctx->rnd_state);
+>>                 return l + (unsigned long)((rnd * span) >> 32);
+>>         }
+>>         rnd = ((u64)prandom_u32_state(&ctx->rnd_state) << 32) |
+>>               prandom_u32_state(&ctx->rnd_state);
+>>
+>>         // same as 'l + (unsigned long)((rnd * span) >> 32);'
+>>         return l + mul_u64_u64_shr(rnd, span, 64);
+> Makes sense to me.
+>
+>> }
+>>
+>>
+>>>> +
+>>>>    static inline struct damon_region *damon_next_region(struct damon_region *r)
+>>>>    {
+>>>>    	return container_of(r->list.next, struct damon_region, list);
+>>>> diff --git a/mm/damon/core.c b/mm/damon/core.c
+>>>> index 3dbbbfdeff71..c3779c674601 100644
+>>>> --- a/mm/damon/core.c
+>>>> +++ b/mm/damon/core.c
+>>>> @@ -607,6 +607,8 @@ struct damon_ctx *damon_new_ctx(void)
+>>>>    	INIT_LIST_HEAD(&ctx->adaptive_targets);
+>>>>    	INIT_LIST_HEAD(&ctx->schemes);
+>>>>    
+>>>> +	prandom_seed_state(&ctx->rnd_state, get_random_u64());
+>>>> +
+>>>>    	return ctx;
+>>>>    }
+>>>>    
+>>>> diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
+>>>> index 5cdcc5037cbc..b5e1197f2ba2 100644
+>>>> --- a/mm/damon/paddr.c
+>>>> +++ b/mm/damon/paddr.c
+>>>> @@ -48,12 +48,12 @@ static void damon_pa_mkold(phys_addr_t paddr)
+>>>>    	folio_put(folio);
+>>>>    }
+>>>>    
+>>>> -static void __damon_pa_prepare_access_check(struct damon_region *r,
+>>>> -		unsigned long addr_unit)
+>>>> +static void __damon_pa_prepare_access_check(struct damon_ctx *ctx,
+>>>> +					    struct damon_region *r)
+>>> Let's keep 'r' on the first line, and update the second line without indent
+>>> change.
+>>>
+>> Thanks
+> You're welcome :)
+>
+> So I'm still unsure if this is the only single and best way for your use case.
+> I'd like to further discuss your use case and find more way to help it if you
+> are also interested.  So, I'd like to continue the conversation.
+>
+> Regardless of it, though, I think this patch is good enough to be merged for
+> general use case, though it require above trivial style changes.  I wouldn't
+> strongly request you to solve the >4GiB region issue together, but it would be
+> nice to be added from the beginning.  It's up to your choice.
+>
+> I'm also waiting for your answer to the second patch of this series.  I'm still
+> bit skeptical about it, though.  To my simple brain, it feels introducing too
+> much complexity.  I feel like making this damon_rand() optimization patch
+> merged first and keep discussing your use case and the second patch later might
+> be a path forward.  If you agree, please feel free to post a new version of
+> this patch.
+>
+>
+> [1] https://github.com/damonitor/damo/blob/next/USAGE.md#damo-report-access-page-level-properties-based-access-monitoring
+> [2] https://lore.kernel.org/linux-mm/20260307210250.204245-1-sj@kernel.org/
+>
+>
+> Thanks,
+> SJ
+>
+> [...]
