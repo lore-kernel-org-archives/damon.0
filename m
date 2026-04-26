@@ -1,41 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A06AD2441A6
-	for <damon@lists.linux.dev>; Sun, 26 Apr 2026 17:09:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E724926B764;
+	Sun, 26 Apr 2026 17:19:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777223345; cv=none; b=RcSYkOZXkGKyfVLPxw3/+VfemLy47YnT8qEy5sFpIWpFWvlBs42eW4MiO4NvPdBxuMJOygbAR/3RdYk3pwjMcPLiAer48l8xIw4460u7sQF8u8XhrBgygGLnBZ+u0ZLqqHxu7OS2QHKjAgNFK4XA2l3hIn2ErVaxHeIq4YINDIU=
+	t=1777223991; cv=none; b=oh9hDHBcZxCEYDdsKDgdYU0xPZVN5e/gtU/1dMWq6JnOOEpCSQc0hqZvYK6IqPkv4t6jAynPRQFXuZWaasXGe7Xe/3cnb5a1chugVYH/yExpoPeD/71RNHSUDUpEojKzEy8Fy5tcUcYtq6d5Qt48wUQPsmIyGJ8O0JVVY7/IILw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777223345; c=relaxed/simple;
-	bh=2ci3J7kWyvLKPO5+/5oqqswGoUeecWW/VVuBsG/iqEY=;
+	s=arc-20240116; t=1777223991; c=relaxed/simple;
+	bh=lG1Berrhw8hjbikGqYFQyztxo7nbWehNH0Od6lNtYYc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=jQ2xEUMwznxqZ90nNGepOFYhtxcYWJH1eZWY1FUti/vusZiBHwsjBwDZuN/Ll7sGxacSwRsu54SbBcVmA7FlUOzAo2nb+9x2EtufXetYvug6RqB4t7naWZLr5GmKuyZ+G1A0wleH/AzLNDeFXMkppJkjxKU6mV0oEzCqMPcHKm8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JKegCJB5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kr+OUQEgexKtGfUZ+pn9dktvTChS//RmQuXbhrEEQKE9wE92Fd7EEiFQpqbjdq62q0QJUnC7T60RLh5q3RcUxcJf3GLoejr/GOA7f9KcplfrtML3ENcsoy0eihiewSAL1blHTH/wDT0RtiDYT5Att0GXfYDxiNah85WG08Qi/M0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eFoY0CZr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JKegCJB5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11DC5C2BCAF;
-	Sun, 26 Apr 2026 17:09:05 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eFoY0CZr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52D22C2BCAF;
+	Sun, 26 Apr 2026 17:19:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777223345;
-	bh=2ci3J7kWyvLKPO5+/5oqqswGoUeecWW/VVuBsG/iqEY=;
+	s=k20201202; t=1777223990;
+	bh=lG1Berrhw8hjbikGqYFQyztxo7nbWehNH0Od6lNtYYc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JKegCJB5TT1jHpPynCwCKr1M23eOjOUeLW1ECVxkSQ1Pi/MwqXG+p6CybSzmBjitV
-	 IgAbyOXF5IERXVrAPRXlSGCW11BXPDYJl0go02mYcI0FcuIStTIBexuca/vXwoF7sU
-	 OpHuUEQwpubX/M2akqoSpKPkoy8hulfqRHcQtFogwZntqFqPvmiWDUDjYrHN2h1pxO
-	 Bv/m5hv4pWLdeyIdm5Z/KbG+eCal1wheLVGio7KD+68OdYkSiYVAlTI+b93eaeZBeK
-	 W1vgF/TIblq96bXn9pCNar50jIzE5innrDw8EcYhgHET/E2l0vjN2emz+5uauFXW6v
-	 zJ03N3BITLndA==
+	b=eFoY0CZr8kKoqAnhi+7eySYA2quK4t4kPOsEwhfU6iP+W8C5Pn6/xu+vVDwI8ldkX
+	 9aa/g64vL/kSvXd5zqupofYMCl9Cq+jX4eIiZ2mKTEupYa/U5ir5mdvqX2IcNa6rsv
+	 4Ht9AxiGHQKUlFHjrdPXvZOPE8z2W5E3bIXtw77zZ1g5cW1pXpbUeA+NBcd2kjM+R7
+	 Q54O2vdV2XVc41XZfIk8GfGT1RPnZNsgdShFPsddRkTlInvCp1MbWU2D6/DP6vI4HY
+	 54KGfsA5wrgRYXdSvSILQw33qE1QsbQ20RBVuUpp3gCFrbshhDHc/U8kii6m7DWJEx
+	 +x6OILNks7EQg==
 From: SeongJae Park <sj@kernel.org>
-To: sashiko-bot@kernel.org
+To: Ravi Jonnalagadda <ravis.opensrc@gmail.com>
 Cc: SeongJae Park <sj@kernel.org>,
-	"Ravi Jonnalagadda" <ravis.opensrc@gmail.com>,
-	damon@lists.linux.dev
+	damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org,
+	linux-doc@vger.kernel.org,
+	akpm@linux-foundation.org,
+	corbet@lwn.net,
+	bijan311@gmail.com,
+	ajayjoshi@micron.com,
+	honggyu.kim@sk.com,
+	yunjeong.mun@sk.com
 Subject: Re: [PATCH v8] mm/damon: add node_eligible_mem_bp goal metric
-Date: Sun, 26 Apr 2026 10:08:56 -0700
-Message-ID: <20260426170858.85836-1-sj@kernel.org>
+Date: Sun, 26 Apr 2026 10:19:40 -0700
+Message-ID: <20260426171941.86007-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260426005341.B393EC2BCB0@smtp.kernel.org>
+In-Reply-To: <20260426003245.2687-1-ravis.opensrc@gmail.com>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -43,156 +51,177 @@ List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On Sun, 26 Apr 2026 00:53:41 +0000 sashiko-bot@kernel.org wrote:
+On Sat, 25 Apr 2026 17:32:45 -0700 Ravi Jonnalagadda <ravis.opensrc@gmail.com> wrote:
 
-> Sashiko AI review found 4 potential issue(s):
-> - [High] Casting phys_addr_t to unsigned long causes truncation and potential divide-by-zero on 32-bit systems
-
-This is a new and good finding.  Ravi, could we fix this?
-
-> - [High] Missing cond_resched() inside the PFN-scanning loop leads to CPU soft lockups
-
-Unlikely.
-
-> - [High] Synchronous O(N) full-memory scanning defeats DAMON's bounded-overhead design
-
-Intentded design.
-
-> - [Medium] damos_calc_eligible_bytes() skips core filters, corrupting the metric calculation
-
-Intended design.
-
-> --
+> Background and Motivation
+> =========================
 > 
-> commit efcd6d55e5292f8b5cd0c6202c9d95000e99dc4c
-> Author: Ravi Jonnalagadda <ravis.opensrc@gmail.com>
+> In heterogeneous memory systems, controlling memory distribution across
+> NUMA nodes is essential for performance optimization. This patch enables
+> system-wide page distribution with target-state goals such as "maintain
+> 60% of scheme-eligible memory on DRAM" using PA-mode DAMON schemes.
 > 
-> mm/damon: add node_eligible_mem_bp goal metric
+> Rather than using absolute thresholds, this metric tracks the ratio of
+> memory that matches each scheme's access pattern filters on a target
+> node, enabling the quota system to automatically adjust migration
+> aggressiveness to maintain the desired distribution.
 > 
-> This commit introduces a new quota goal metric, DAMOS_QUOTA_NODE_ELIGIBLE_MEM_BP,
-> to track the ratio of scheme-eligible memory on a specific NUMA node. It
-> implements calculation functions that iterate over eligible regions and examine
-> the NUMA node of each folio.
+> What This Metric Measures
+> =========================
 > 
-> > diff --git a/mm/damon/core.c b/mm/damon/core.c
-> > index 3dbbbfdeff71..a9303a8c4384 100644
-> > --- a/mm/damon/core.c
-> > +++ b/mm/damon/core.c
-> [ ... ]
-> > @@ -2287,7 +2306,112 @@ static unsigned long damos_get_node_memcg_used_bp(
-> [ ... ]
-> > +static phys_addr_t damos_calc_eligible_bytes(struct damon_ctx *c,
-> > +		struct damos *s, int nid, phys_addr_t *total)
-> > +{
-> > +	struct damon_target *t;
-> > +	struct damon_region *r;
-> > +	phys_addr_t total_eligible = 0;
-> > +	phys_addr_t node_eligible = 0;
-> > +
-> > +	damon_for_each_target(t, c) {
-> > +		damon_for_each_region(r, t) {
-> > +			phys_addr_t addr, end_addr;
-> > +
-> > +			if (!__damos_valid_target(r, s))
-> > +				continue;
+> node_eligible_mem_bp:
+>     scheme_eligible_bytes_on_node / total_scheme_eligible_bytes * 10000
 > 
-> Does this also need to check damos_core_filter_out(c, t, r, s)? By skipping
-> the core filters, the eligible bytes calculation might erroneously include
-> memory that the scheme is explicitly configured to ignore.
+> Two-Scheme Setup for Hot Page Distribution
+> ==========================================
+> 
+> For maintaining 60% of hot memory on DRAM (node 0) and 40% on CXL
+> (node 1):
+> 
+>     PULL scheme: migrate_hot to node 0
+>       goal: node_eligible_mem_bp, nid=0, target=6000
+>       addr filter: node 1 address range (only migrate FROM CXL)
+>       "Move hot pages to DRAM if less than 60% of hot data is in DRAM"
+> 
+>     PUSH scheme: migrate_hot to node 1
+>       goal: node_eligible_mem_bp, nid=1, target=4000
+>       addr filter: node 0 address range (only migrate FROM DRAM)
+>       "Move hot pages to CXL if less than 40% of hot data is in CXL"
+> 
+> Each scheme independently measures its own eligible memory and adjusts
+> its quota to achieve its target ratio. The schemes work in concert
+> through DAMON's unified monitoring context, with the quota autotuner
+> balancing their relative aggressiveness.
+> 
+> Implementation Details
+> ======================
+> 
+> The implementation adds a new quota goal metric type
+> DAMOS_QUOTA_NODE_ELIGIBLE_MEM_BP to the existing DAMOS quota goal
+> framework. When this metric is configured for a scheme:
+> 
+> 1. During each quota adjustment cycle, damos_get_node_eligible_mem_bp()
+>    is called to calculate the current memory distribution.
+> 
+> 2. The function iterates through all regions that match the scheme's
+>    access pattern (via __damos_valid_target()) and calculates:
+>    - Total eligible bytes across all nodes
+>    - Eligible bytes specifically on the target node (goal->nid)
+> 
+> 3. For each eligible region, damos_calc_eligible_bytes() walks through
+>    the physical address range, using damon_get_folio() to look up
+>    each folio and determine its NUMA node via folio_nid().
+> 
+> 4. Large folios are handled by calculating the exact overlap between
+>    the region boundaries and folio boundaries, ensuring accurate
+>    byte counts even when regions partially span folios.
+> 
+> 5. The ratio (node_eligible / total_eligible * 10000) is returned
+>    as basis points, which the quota autotuner uses to adjust the
+>    scheme's effective quota size (esz).
+> 
+> The implementation requires CONFIG_DAMON_PADDR since damon_get_folio()
+> is only available for physical address space monitoring.
+> 
+> Testing Results
+> ===============
+> 
+> Functionally tested on a two-node heterogeneous memory system with DRAM
+> (node 0) and CXL memory (node 1). A PUSH+PULL scheme configuration using
+> migrate_hot actions was used to reach a target hot memory ratio between
+> the two tiers.
+> 
+> With the TEMPORAL tuner, the system converges quickly to the target
+> distribution. The tuner drives esz to maximum when under goal and to
+> zero once the goal is met, forming a simple on/off feedback loop that
+> stabilizes at the desired ratio.
+> 
+> With the CONSIST tuner, the scheme still converges but more slowly, as
+> it migrates and then throttles itself based on quota feedback. The time
+> to reach the goal varies depending on workload intensity.
+> 
+> Note: This metric works with both TEMPORAL and CONSIST goal tuners.
+> 
+> Suggested-by: SeongJae Park <sj@kernel.org>
+> Signed-off-by: Ravi Jonnalagadda <ravis.opensrc@gmail.com>
 
-As previously answered, this is an intended design.
+Assuming below two minor things are addressed,
 
-> 
-> > +
-> > +			/* Convert from core address units to physical bytes */
-> > +			addr = (phys_addr_t)r->ar.start * c->addr_unit;
-> > +			end_addr = (phys_addr_t)r->ar.end * c->addr_unit;
-> > +			while (addr < end_addr) {
-> 
-> Since DAMON is designed to provide low, constant-overhead memory monitoring via
-> region-based tracking, does performing a synchronous PFN-to-folio lookup for
-> every physical page across all eligible regions break this bounded-overhead
-> contract?
+Reviewed-by: SeongJae Park <sj@kernel.org>
 
-The bounded onverhead is only for monitoring part.  It is not promised for
-DAMOS.
+[...]
+> +static unsigned long damos_get_node_eligible_mem_bp(struct damon_ctx *c,
+> +		struct damos *s, int nid)
+> +{
+> +	phys_addr_t total_eligible = 0;
+> +	phys_addr_t node_eligible;
+> +
+> +	if (c->ops.id != DAMON_OPS_PADDR)
+> +		return 0;
+> +
+> +	if (nid < 0 || nid >= MAX_NUMNODES || !node_online(nid))
+> +		return 0;
+> +
+> +	node_eligible = damos_calc_eligible_bytes(c, s, nid, &total_eligible);
+> +
+> +	if (!total_eligible)
+> +		return 0;
+> +
+> +	return mult_frac((unsigned long)node_eligible, 10000,
+> +			(unsigned long)total_eligible);
 
-> 
-> Because this function is called on every quota reset interval, scanning
-> potentially gigabytes of memory might introduce severe latency spikes and CPU
-> overhead.
+Sashiko found [1] total_eligible after the casting could be zero on 32bit
+system, resulting in divide-by-zero.  As I also replied to Sashiko review,
+could you please fix this?  It seems we can simply remove the castings.
 
-So no problem.
+[...]
+> @@ -2389,9 +2528,9 @@ static void damos_goal_tune_esz_bp_temporal(struct damos_quota *quota)
+>  /*
+>   * Called only if quota->ms, or quota->sz are set, or quota->goals is not empty
+>   */
+> -static void damos_set_effective_quota(struct damos_quota *quota,
+> -		struct damon_ctx *ctx)
+> +static void damos_set_effective_quota(struct damon_ctx *c, struct damos *s)
 
-> 
-> Additionally, since DAMON regions can cover extremely large areas of memory,
-> should cond_resched() be called inside this inner while loop rather than
-> outside it? Iterating through millions of pages without yielding might trigger
-> RCU stalls and soft lockups.
+Sorry for finding this late.  Could we keep the dmon_ctx parameter name?
+Otherwise, we introduce unnecessary change below.
 
-Unlikely.  We could improve this when such issue really happens and is
-reported.
+If the mult_frac() divide-by-zero is not a real issue, I wouldn't insist this
+change.  But, if we will make a new version, let's do this together.
 
-> 
-> > +				struct folio *folio;
-> > +				phys_addr_t folio_start, folio_end;
-> > +				phys_addr_t overlap_start, overlap_end;
-> > +				phys_addr_t counted;
-> > +
-> > +				folio = damon_get_folio(PHYS_PFN(addr));
-> [ ... ]
-> > +
-> > +				/* Advance past the entire folio */
-> > +				addr = folio_end;
-> > +				folio_put(folio);
-> > +			}
-> > +			cond_resched();
-> > +		}
-> > +	}
-> > +
-> > +	*total = total_eligible;
-> > +	return node_eligible;
-> > +}
-> > +
-> > +static unsigned long damos_get_node_eligible_mem_bp(struct damon_ctx *c,
-> > +		struct damos *s, int nid)
-> > +{
-> > +	phys_addr_t total_eligible = 0;
-> > +	phys_addr_t node_eligible;
-> > +
-> > +	if (c->ops.id != DAMON_OPS_PADDR)
-> > +		return 0;
-> > +
-> > +	if (nid < 0 || nid >= MAX_NUMNODES || !node_online(nid))
-> > +		return 0;
-> > +
-> > +	node_eligible = damos_calc_eligible_bytes(c, s, nid, &total_eligible);
-> > +
-> > +	if (!total_eligible)
-> > +		return 0;
-> > +
-> > +	return mult_frac((unsigned long)node_eligible, 10000,
-> > +			(unsigned long)total_eligible);
-> 
-> Can casting total_eligible from phys_addr_t to unsigned long cause a
-> divide-by-zero on 32-bit systems?
-> 
-> On 32-bit architectures with PAE, phys_addr_t is 64-bit while unsigned long
-> is only 32-bit. If the total eligible memory is exactly a multiple of 4GB,
-> the 64-bit value passes the if (!total_eligible) check, but the truncated
-> 32-bit value passed as the divisor to mult_frac() evaluates to 0, which
-> would trigger a kernel panic.
+>  {
+> +	struct damos_quota *quota = &s->quota;
+>  	unsigned long throughput;
+>  	unsigned long esz = ULONG_MAX;
+>  
+> @@ -2402,9 +2541,9 @@ static void damos_set_effective_quota(struct damos_quota *quota,
+>  
+>  	if (!list_empty(&quota->goals)) {
+>  		if (quota->goal_tuner == DAMOS_QUOTA_GOAL_TUNER_CONSIST)
+> -			damos_goal_tune_esz_bp_consist(quota);
+> +			damos_goal_tune_esz_bp_consist(c, s);
+>  		else if (quota->goal_tuner == DAMOS_QUOTA_GOAL_TUNER_TEMPORAL)
+> -			damos_goal_tune_esz_bp_temporal(quota);
+> +			damos_goal_tune_esz_bp_temporal(c, s);
+>  		esz = quota->esz_bp / 10000;
+>  	}
+>  
+> @@ -2415,7 +2554,7 @@ static void damos_set_effective_quota(struct damos_quota *quota,
+>  		else
+>  			throughput = PAGE_SIZE * 1024;
+>  		esz = min(throughput * quota->ms, esz);
+> -		esz = max(ctx->min_region_sz, esz);
+> +		esz = max(c->min_region_sz, esz);
 
-Good finding.  Ravi, could we fix this?  Maybe we can simply remove the
-casting?
+Above change is unnecessarily introduced.  Could we keep the old damon_ctx
+parameter name?
 
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260426003245.2687-1-ravis.opensrc@gmail.com?part=1
+[1] https://lore.kernel.org/20260426005341.B393EC2BCB0@smtp.kernel.org
 
 
 Thanks,
 SJ
+
+[...]
