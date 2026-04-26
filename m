@@ -1,49 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 989B12459CF;
-	Sun, 26 Apr 2026 23:03:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBD40155C82
+	for <damon@lists.linux.dev>; Sun, 26 Apr 2026 23:08:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777244612; cv=none; b=UfxxWrRRtp4FdXjTFdoGACCYvKXBo+s2GdeV9P/TLJuLXuWXtxyZRPudtkF2n6M3ZUq4xzCnWBo4AIj+SnxlyTjnyVRaiOWMYiHehZAmaAxIRZ3mGWFgPDz3Kby/tzd7ofPvuMX6CTJU0wZ2treqL2qoyBBSUmXRbI07T3p/pAA=
+	t=1777244937; cv=none; b=OPXApofb6YNG40+rhtSaSjVtIkUJBSu3OjF9T5bjDB2blGCLlcQQ+nwncn+LsTMxhvnaKakRxOOV5QIJnE6vEibO9tMQZ+gqjA6slJHG125aZas7sxMNlj2XRCrklDXJMcTR5W/NL669YIhqcOR+EWr9NuYqXsHK4nH5DKUXI70=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777244612; c=relaxed/simple;
-	bh=Pssmh29rua0G3vOV364oBo0PTZnVdOappMtfzOGeM9o=;
+	s=arc-20240116; t=1777244937; c=relaxed/simple;
+	bh=VTklXfli6AFS86blPQg1TvRJfrbpLuB1dOVS0CQ4mbc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DNmuuqRk2MvNDvCS5TbE7nPGEb3TLH/+3BsjsikTaAB6cK8BUszYqYrgTUjsfU/KIcSCS/O59LvJyd3CvF2DDLtDdJIREMJ8zpaO7ftOCj59DSVi0FmbdR2kPDhIVF8S2dc7aYRigfStXMHaq6BjBbcl6/L/aJBjARAbL6FzyF4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YlJWjHgt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HPLl/OjWuxfeQamS/PJ+zao5/65KawXclp7AsWWYg84SMzFNhCnqSwwrdNksmW7wdy7uxYEFKvtOzpw++k5J3OEEbu3J2cMc2hg8yn9CBCgbxxOg4CkgCOmm5fuO7QVjUznCmX7Ff1mggrdF3zSG4J+A/MU+DBd9WwtBz7SlMAU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SJ3fN5T2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YlJWjHgt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3CB1C2BCAF;
-	Sun, 26 Apr 2026 23:03:31 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SJ3fN5T2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BE07C2BCAF;
+	Sun, 26 Apr 2026 23:08:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777244612;
-	bh=Pssmh29rua0G3vOV364oBo0PTZnVdOappMtfzOGeM9o=;
+	s=k20201202; t=1777244937;
+	bh=VTklXfli6AFS86blPQg1TvRJfrbpLuB1dOVS0CQ4mbc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YlJWjHgty3V7f+TFjCTTSoMO9eVq3QxibsfL3USNcWt+m+mQAw0V8oHOQzF0NPdmx
-	 E2JVEskMw3+0fcgpc/QzkABNkw7Oc7NFMr9C3iSy25Mb2/V1YLUIvv3NlhnEJlNQWA
-	 zDfMnJxeNCWoPFUfrmoF6v/dyU7TuuXs4Abuq6u+GH8gtF1qivbcte7fnARGBTkAQd
-	 Y5YxBmUkfsRFqdtGX3hLjg5ED4NV8p0RinkPlujKnO3XOJf7G6kmudkV9GuvdR20Va
-	 1XlX14eFJWaUwyp4+9Ib6VuwoXDZPyevcvENziMot7yITaYyKgpl34QUguPdS3oqvI
-	 HWV0rdIX11X3w==
+	b=SJ3fN5T2l2shc8PAeydP4ViYC6g+AqOM9bXtMpYErw2eUxw7i9dcDAtxMtO64Eqgl
+	 nPdAqISQpIx45QWZX0DAiakHcxGLcS9x5q3rD4rDk1e2NWkAMC8uam2q0erEeNYU6k
+	 sUEybCiaHjkmrK3v7OJzRAH89HrBiUm9kcQRBIyTMHi0xerzxADeUKATLB0CihXxWb
+	 mzjQN7m2h8m+WMmlf4x2ne90ouNo07gHJ3ZWtBVoLd2uLIfcE1dm0bfUwHGWaNiz9D
+	 c7GBo/Dywp6dgNOthplPY4PlDuiGqy5dco+UGCOopLFbKqM0IuNfJJ0bv0NhdZyslB
+	 j56NoSqqqs87Q==
 From: SeongJae Park <sj@kernel.org>
-To: Ravi Jonnalagadda <ravis.opensrc@gmail.com>
+To: sashiko-bot@kernel.org
 Cc: SeongJae Park <sj@kernel.org>,
-	damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org,
-	linux-doc@vger.kernel.org,
-	akpm@linux-foundation.org,
-	corbet@lwn.net,
-	bijan311@gmail.com,
-	ajayjoshi@micron.com,
-	honggyu.kim@sk.com,
-	yunjeong.mun@sk.com
+	"Ravi Jonnalagadda" <ravis.opensrc@gmail.com>,
+	damon@lists.linux.dev
 Subject: Re: [PATCH v9] mm/damon: add node_eligible_mem_bp goal metric
-Date: Sun, 26 Apr 2026 16:03:21 -0700
-Message-ID: <20260426230322.106206-1-sj@kernel.org>
+Date: Sun, 26 Apr 2026 16:08:44 -0700
+Message-ID: <20260426230845.106371-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260426213859.1835-1-ravis.opensrc@gmail.com>
+In-Reply-To: <20260426220409.95B26C2BCAF@smtp.kernel.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -53,86 +45,58 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
+On Sun, 26 Apr 2026 22:04:08 +0000 sashiko-bot@kernel.org wrote:
+
+> Sashiko AI review found 4 potential issue(s):
+> - [High] Missing `cond_resched()` inside the inner address-scanning loop causes CPU soft lockups.
+
+Unlikely.
+
+> - [High] Direct use of `mult_frac()` with 64-bit `phys_addr_t` causes a linker error on 32-bit architectures with PAE.
+
+Good finding.  Read below for detailed answer.
+
+> - [High] Integer overflow in `mult_frac()` on 32-bit systems without PAE leads to incorrect metric calculations.
+
+No real issue.
+
+> - [High] Unbounded O(N) page-by-page memory scan in quota evaluation breaks DAMON's low-overhead design.
+
+Intended behavior.
+
 [...]
-> Changes since v8:
-> =================
-> https://lore.kernel.org/linux-mm/20260426003245.2687-1-ravis.opensrc@gmail.com/
+> > +static unsigned long damos_get_node_eligible_mem_bp(struct damon_ctx *c,
+> > +		struct damos *s, int nid)
+> > +{
+> > +	phys_addr_t total_eligible = 0;
+> > +	phys_addr_t node_eligible;
+> > +
+> > +	if (c->ops.id != DAMON_OPS_PADDR)
+> > +		return 0;
+> > +
+> > +	if (nid < 0 || nid >= MAX_NUMNODES || !node_online(nid))
+> > +		return 0;
+> > +
+> > +	node_eligible = damos_calc_eligible_bytes(c, s, nid, &total_eligible);
+> > +
+> > +	if (!total_eligible)
+> > +		return 0;
+> > +
+> > +	return mult_frac(node_eligible, 10000, total_eligible);
 > 
-> - Removed unnecessary casts in mult_frac() call to fix potential
->   divide-by-zero on 32-bit PAE systems (Sashiko/SJ review)
-> - Kept original parameter name 'ctx' in damos_set_effective_quota()
->   to avoid unnecessary diff (SJ review)
-[...]
-> +static unsigned long damos_get_node_eligible_mem_bp(struct damon_ctx *c,
-> +		struct damos *s, int nid)
-> +{
-> +	phys_addr_t total_eligible = 0;
-> +	phys_addr_t node_eligible;
-> +
-> +	if (c->ops.id != DAMON_OPS_PADDR)
-> +		return 0;
-> +
-> +	if (nid < 0 || nid >= MAX_NUMNODES || !node_online(nid))
-> +		return 0;
-> +
-> +	node_eligible = damos_calc_eligible_bytes(c, s, nid, &total_eligible);
-> +
-> +	if (!total_eligible)
-> +		return 0;
-> +
-> +	return mult_frac(node_eligible, 10000, total_eligible);
-> +}
+> Can this cause a linker error on 32-bit architectures with PAE?
+> 
+> On 32-bit systems with CONFIG_PHYS_ADDR_T_64BIT enabled, phys_addr_t is a
+> 64-bit integer. The mult_frac() macro performs native division using the
+> type of its arguments. Since the kernel does not link 64-bit division
+> routines (__udivdi3) on 32-bit platforms, this will cause a build failure.
 
-Sashiko found [1] this can cause __udivdi3 linking issue on 32bit machine with
-CONFIG_PHYS_ADDR_T_64BIT.  Seems that is correct to me.  I believe below
-attaching fixup can fix it?
+Heh, good finding.  I suggested a fixup on my reply [1] to the patch.
 
-Ravi, if my fixup looks good to you, could you please post another version
-(say, v9.1) for another Sashiko review round?
-
-[1] https://lore.kernel.org/20260426220409.95B26C2BCAF@smtp.kernel.org
+[1] https://lore.kernel.org/20260426230322.106206-1-sj@kernel.org
 
 
 Thanks,
 SJ
 
 [...]
-
-=== >8 ===
-From 828ddfdfa3a996efc4620919a3cc77d55088c466 Mon Sep 17 00:00:00 2001
-From: SeongJae Park <sj@kernel.org>
-Date: Sun, 26 Apr 2026 15:54:48 -0700
-Subject: [PATCH] mm/damon/core: avoid __udivdi3 linking issue
-
-On 32bit machines having PHYS_ADDR_T_64BIT, mult_frac() with phys_addr_t
-will cause __udivdi3 linking issue.  Cast values to 'unsigned long'
-before calling mult_frac().  This could cause divide-by-zero if the
-denominator becomes zero by casting.  Avoid it by checking the zero case
-with the casted value.
-
-Signed-off-by: SeongJae Park <sj@kernel.org>
----
- mm/damon/core.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
-
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index 0ea747d487465..aec43314fc4a9 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -2921,10 +2921,11 @@ static unsigned long damos_get_node_eligible_mem_bp(struct damon_ctx *c,
-
-        node_eligible = damos_calc_eligible_bytes(c, s, nid, &total_eligible);
-
--       if (!total_eligible)
-+       if (!(unsigned long)total_eligible)
-                return 0;
-
--       return mult_frac(node_eligible, 10000, total_eligible);
-+       return mult_frac((unsigned long)node_eligible, 10000,
-+                       (unsigned long)total_eligible);
- }
- #else /* CONFIG_DAMON_PADDR */
- static unsigned long damos_get_node_eligible_mem_bp(struct damon_ctx *c,
---
-2.47.3
-
