@@ -1,208 +1,198 @@
-Received: from out-174.mta0.migadu.com (out-174.mta0.migadu.com [91.218.175.174])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63FB170830
-	for <damon@lists.linux.dev>; Sun, 26 Apr 2026 05:50:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A06AD2441A6
+	for <damon@lists.linux.dev>; Sun, 26 Apr 2026 17:09:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777182654; cv=none; b=b310xsgJU36u7duVNKI9YXAhmfLGjHNdkCbFBOX3pBUe+AXo2mBoruyu7UA+Y3AvYDtpinnGdVXCaRKCKCsOVM7HGzQrEg6GsRbgG3QMHybiNDsx4Iwv2Vn+JN2/4gFQdz0IVYL2oPhCxwRoPrF4OO97dDahUDIb6XxyV3S1bi4=
+	t=1777223345; cv=none; b=RcSYkOZXkGKyfVLPxw3/+VfemLy47YnT8qEy5sFpIWpFWvlBs42eW4MiO4NvPdBxuMJOygbAR/3RdYk3pwjMcPLiAer48l8xIw4460u7sQF8u8XhrBgygGLnBZ+u0ZLqqHxu7OS2QHKjAgNFK4XA2l3hIn2ErVaxHeIq4YINDIU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777182654; c=relaxed/simple;
-	bh=XdXGW0dw3VBAKYx646YdibczdkRZM76STOOz6Wtjvbk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=CEcdawadyAZjWEELNAjGUsHsQwYPNHuUGDhMOPO1AZq9xoDMs4uCq+FD9RB/0Q9NPgqPbn9sB9m6yBs5y9OYDPeh7BsFgN9VMrehLnMtqWWY6U/iKi0nsNLaEc5FO3ZKUMRedhAw+Az70rScZJKnRoB75vKCFqM1bNcyhAtyUs0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=IN3MqOO0; arc=none smtp.client-ip=91.218.175.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1777223345; c=relaxed/simple;
+	bh=2ci3J7kWyvLKPO5+/5oqqswGoUeecWW/VVuBsG/iqEY=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=jQ2xEUMwznxqZ90nNGepOFYhtxcYWJH1eZWY1FUti/vusZiBHwsjBwDZuN/Ll7sGxacSwRsu54SbBcVmA7FlUOzAo2nb+9x2EtufXetYvug6RqB4t7naWZLr5GmKuyZ+G1A0wleH/AzLNDeFXMkppJkjxKU6mV0oEzCqMPcHKm8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JKegCJB5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="IN3MqOO0"
-Message-ID: <afcbb502-b91e-47d7-8fb7-2e4e237928c5@linux.dev>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1777182650;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=kb3H3rW7NU0018MqykYuVnLzoeob+L0x69+WsyTVnFM=;
-	b=IN3MqOO0OIu0sinrtIqVJ/fapkg2iQtX4L3/rRf1a6f7UyNvfE0ng4j1Z8h7CnbiXQjW8X
-	8+XO4kBSapxKPwrhWuzA23e3hj3pRXYqBt8/Px6APNy/MlTySOKvzwtm6RQYbCF72pzE6A
-	iW83IMo8dGYan6p2m/TbubarYmY62C0=
-Date: Sun, 26 Apr 2026 13:50:42 +0800
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JKegCJB5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11DC5C2BCAF;
+	Sun, 26 Apr 2026 17:09:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1777223345;
+	bh=2ci3J7kWyvLKPO5+/5oqqswGoUeecWW/VVuBsG/iqEY=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=JKegCJB5TT1jHpPynCwCKr1M23eOjOUeLW1ECVxkSQ1Pi/MwqXG+p6CybSzmBjitV
+	 IgAbyOXF5IERXVrAPRXlSGCW11BXPDYJl0go02mYcI0FcuIStTIBexuca/vXwoF7sU
+	 OpHuUEQwpubX/M2akqoSpKPkoy8hulfqRHcQtFogwZntqFqPvmiWDUDjYrHN2h1pxO
+	 Bv/m5hv4pWLdeyIdm5Z/KbG+eCal1wheLVGio7KD+68OdYkSiYVAlTI+b93eaeZBeK
+	 W1vgF/TIblq96bXn9pCNar50jIzE5innrDw8EcYhgHET/E2l0vjN2emz+5uauFXW6v
+	 zJ03N3BITLndA==
+From: SeongJae Park <sj@kernel.org>
+To: sashiko-bot@kernel.org
+Cc: SeongJae Park <sj@kernel.org>,
+	"Ravi Jonnalagadda" <ravis.opensrc@gmail.com>,
+	damon@lists.linux.dev
+Subject: Re: [PATCH v8] mm/damon: add node_eligible_mem_bp goal metric
+Date: Sun, 26 Apr 2026 10:08:56 -0700
+Message-ID: <20260426170858.85836-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260426005341.B393EC2BCB0@smtp.kernel.org>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Subject: Re: [PATCH 1/2] mm/damon: introduce damon_rand_fast() for per-ctx
- PRNG
-To: SeongJae Park <sj@kernel.org>
-Cc: damon@lists.linux.dev, Jiayuan Chen <jiayuan.chen@shopee.com>,
- Andrew Morton <akpm@linux-foundation.org>, linux-mm@kvack.org,
- linux-kernel@vger.kernel.org
-References: <20260425155953.89674-1-sj@kernel.org>
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: Jiayuan Chen <jiayuan.chen@linux.dev>
-In-Reply-To: <20260425155953.89674-1-sj@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Migadu-Flow: FLOW_OUT
+
+On Sun, 26 Apr 2026 00:53:41 +0000 sashiko-bot@kernel.org wrote:
+
+> Sashiko AI review found 4 potential issue(s):
+> - [High] Casting phys_addr_t to unsigned long causes truncation and potential divide-by-zero on 32-bit systems
+
+This is a new and good finding.  Ravi, could we fix this?
+
+> - [High] Missing cond_resched() inside the PFN-scanning loop leads to CPU soft lockups
+
+Unlikely.
+
+> - [High] Synchronous O(N) full-memory scanning defeats DAMON's bounded-overhead design
+
+Intentded design.
+
+> - [Medium] damos_calc_eligible_bytes() skips core filters, corrupting the metric calculation
+
+Intended design.
+
+> --
+> 
+> commit efcd6d55e5292f8b5cd0c6202c9d95000e99dc4c
+> Author: Ravi Jonnalagadda <ravis.opensrc@gmail.com>
+> 
+> mm/damon: add node_eligible_mem_bp goal metric
+> 
+> This commit introduces a new quota goal metric, DAMOS_QUOTA_NODE_ELIGIBLE_MEM_BP,
+> to track the ratio of scheme-eligible memory on a specific NUMA node. It
+> implements calculation functions that iterate over eligible regions and examine
+> the NUMA node of each folio.
+> 
+> > diff --git a/mm/damon/core.c b/mm/damon/core.c
+> > index 3dbbbfdeff71..a9303a8c4384 100644
+> > --- a/mm/damon/core.c
+> > +++ b/mm/damon/core.c
+> [ ... ]
+> > @@ -2287,7 +2306,112 @@ static unsigned long damos_get_node_memcg_used_bp(
+> [ ... ]
+> > +static phys_addr_t damos_calc_eligible_bytes(struct damon_ctx *c,
+> > +		struct damos *s, int nid, phys_addr_t *total)
+> > +{
+> > +	struct damon_target *t;
+> > +	struct damon_region *r;
+> > +	phys_addr_t total_eligible = 0;
+> > +	phys_addr_t node_eligible = 0;
+> > +
+> > +	damon_for_each_target(t, c) {
+> > +		damon_for_each_region(r, t) {
+> > +			phys_addr_t addr, end_addr;
+> > +
+> > +			if (!__damos_valid_target(r, s))
+> > +				continue;
+> 
+> Does this also need to check damos_core_filter_out(c, t, r, s)? By skipping
+> the core filters, the eligible bytes calculation might erroneously include
+> memory that the scheme is explicitly configured to ignore.
+
+As previously answered, this is an intended design.
+
+> 
+> > +
+> > +			/* Convert from core address units to physical bytes */
+> > +			addr = (phys_addr_t)r->ar.start * c->addr_unit;
+> > +			end_addr = (phys_addr_t)r->ar.end * c->addr_unit;
+> > +			while (addr < end_addr) {
+> 
+> Since DAMON is designed to provide low, constant-overhead memory monitoring via
+> region-based tracking, does performing a synchronous PFN-to-folio lookup for
+> every physical page across all eligible regions break this bounded-overhead
+> contract?
+
+The bounded onverhead is only for monitoring part.  It is not promised for
+DAMOS.
+
+> 
+> Because this function is called on every quota reset interval, scanning
+> potentially gigabytes of memory might introduce severe latency spikes and CPU
+> overhead.
+
+So no problem.
+
+> 
+> Additionally, since DAMON regions can cover extremely large areas of memory,
+> should cond_resched() be called inside this inner while loop rather than
+> outside it? Iterating through millions of pages without yielding might trigger
+> RCU stalls and soft lockups.
+
+Unlikely.  We could improve this when such issue really happens and is
+reported.
+
+> 
+> > +				struct folio *folio;
+> > +				phys_addr_t folio_start, folio_end;
+> > +				phys_addr_t overlap_start, overlap_end;
+> > +				phys_addr_t counted;
+> > +
+> > +				folio = damon_get_folio(PHYS_PFN(addr));
+> [ ... ]
+> > +
+> > +				/* Advance past the entire folio */
+> > +				addr = folio_end;
+> > +				folio_put(folio);
+> > +			}
+> > +			cond_resched();
+> > +		}
+> > +	}
+> > +
+> > +	*total = total_eligible;
+> > +	return node_eligible;
+> > +}
+> > +
+> > +static unsigned long damos_get_node_eligible_mem_bp(struct damon_ctx *c,
+> > +		struct damos *s, int nid)
+> > +{
+> > +	phys_addr_t total_eligible = 0;
+> > +	phys_addr_t node_eligible;
+> > +
+> > +	if (c->ops.id != DAMON_OPS_PADDR)
+> > +		return 0;
+> > +
+> > +	if (nid < 0 || nid >= MAX_NUMNODES || !node_online(nid))
+> > +		return 0;
+> > +
+> > +	node_eligible = damos_calc_eligible_bytes(c, s, nid, &total_eligible);
+> > +
+> > +	if (!total_eligible)
+> > +		return 0;
+> > +
+> > +	return mult_frac((unsigned long)node_eligible, 10000,
+> > +			(unsigned long)total_eligible);
+> 
+> Can casting total_eligible from phys_addr_t to unsigned long cause a
+> divide-by-zero on 32-bit systems?
+> 
+> On 32-bit architectures with PAE, phys_addr_t is 64-bit while unsigned long
+> is only 32-bit. If the total eligible memory is exactly a multiple of 4GB,
+> the 64-bit value passes the if (!total_eligible) check, but the truncated
+> 32-bit value passed as the divisor to mult_frac() evaluates to 0, which
+> would trigger a kernel panic.
+
+Good finding.  Ravi, could we fix this?  Maybe we can simply remove the
+casting?
+
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260426003245.2687-1-ravis.opensrc@gmail.com?part=1
 
 
-Hello SJ
-
-Thanks.
-
-On 4/25/26 11:59 PM, SeongJae Park wrote:
-> On Sat, 25 Apr 2026 11:36:02 +0800 Jiayuan Chen <jiayuan.chen@linux.dev> wrote:
->
->> On 4/24/26 11:11 PM, SeongJae Park wrote:
-[...]
->> With ~2 GiB
->> default regions on a 2 TiB host, a small pod's pages are averaged
->> with thousands of non-pod pages in the same region, and the
->> region never reaches nr_accesses=0 even when the pod is genuinely
->> idle.
-> But, the adaptive regions adjustment mechanism dynamically change size of
-> regions, down to 4 KiB.  If the small pod's page is really cold while its
-> surrounding pages are not, DAMON should down-size the region to capture only
-> the page and show you nr_accesses=0.
->
-
-Looking at kdamond_split_regions() / kdamond_merge_regions():
-the per-region floor is 4 KiB, but the *total* count is
-hard-capped at max_nr_regions, and split itself is blind --
-it picks the cut position via damon_rand(1, 10) without looking
-at access patterns.  What keeps a split in place is the next
-merge cycle finding the two halves have visibly different
-nr_accesses; if a small cgroup's signal is averaged with
-surrounding host pages on both sides of the random cut, the
-halves look identical and merge folds them back.  For a 1%
-cgroup on a 2 TiB host with max_nr_regions=1000, the
-split-merge loop never converges to cgroup-aligned regions --
-random cuts almost always land in "99% host + 1% cgroup"
-mixtures.  Raising the cap gives the random splitter enough
-attempts that some cuts happen to land on physically-clustered
-cgroup pages (THP, NUMA-local allocations) and stick.  That's
-why the cap matters in practice, not the 4 KiB floor.
-
->> The cold signal is gone before any cgroup attribution
->> happens.  Cgroup attribution itself is done at sample granularity
->> (folio_memcg per sampled page), not at region granularity -- the
->> regions just need to be fine enough that there *is* a cold signal
->> to attribute.
-> Could you please share more details about what is the cgroup attribution, and
-> how it is done?  I guess that is the way to map DAMON's monitoring regions to
-> each cgroup to determine if each cgroup is hot or cold.  I'm unsure how it is
-> really be done.
-
-
-We sample physical pages within DAMON regions, look up
-folio_memcg() per sampled page to find the owning memcg, and
-accumulate cold bytes per memcg.  Userspace reads the per-cgroup
-result and sizes memory.reclaim per pod.  Conceptually similar
-to the page-level monitoring you pointed me at -- we'll evaluate
-whether [1] / [2] can replace this path.
-
->>>> With the default max_nr_regions=1000, each region covers ~2 GiB on
->>>> average, which is often larger than the entire target cgroup.
->>>> Adaptive split cannot carve out cgroup-homogeneous regions in that
->>>> regime: each region's nr_accesses averages the (small) cgroup
->>>> fraction with the surrounding non-cgroup pages, and the cgroup's
->>>> access signal gets washed out.
->>> But, pages of cgroups would be scattered around on the physical address space.
->>> So even if DAMON finds a hot or cold region on physical address space that
->>> having a size smaller than a cgroup's memory, it is hard to say if it is for a
->>> specific cgroup.  How do you know if the region is for which cgroup?  Do you
->>> have a way to make sure pages of same cgroup are gathered on the physical
->>> address space?  If not, I'm not sure how ensuring size of region to be equal or
->>> smaller than each cgroup size helps you.
->>>
->>> We are supporting page level monitoring [1] for such cgroup-aware use case.
->>> Are you using it?  But again, if you use it, I'm not sure why you need to
->>> ensure DAMON region size smaller than the cgroup size.
->> This is also why DAMOS memcg filters do not bypass the
->> nr_regions constraint -- the scheme's access-pattern matcher
->> operates on the already-averaged region, so by the time any
->> filter sees pages the signal is already lost.  Whatever
->> attribution mechanism we use afterwards (custom callback, memcg
->> filter, page-level reporting), the region count needs to be high
->> enough first.
-> But, I'm not understanding why the regions adjustment mechanism cannot work
-> here.  Your answer to my above question will be helpful.
->
->>> Fyi, I'm also working [2] on making the cgroup-aware monitoring much more
->>> lightweight.
->>
->> Looking forward to it -- hopefully it'll cover our case. 😁
-> I hope so, too! :)
->
->>
->>>> Raising max_nr_regions to 10k-20k gives the adaptive split enough
->>>> spatial resolution that cgroup-majority regions can form at cgroup
->>>> boundaries (allocations have enough physical locality in practice for
->>>> this to work -- THP, per-node allocation, etc.).  At that region
->>>> count, damon_rand() starts showing up at the top of kdamond profiles,
->>>> which is what motivated this patch.
->>> Thank you for sharing how this patch has developed.  I'm still curious if there
->>> is yet more ways to make DAMON better for your use case.  But this patch makes
->>> sense in general to me.
->>>
->>>>> I know some people worry if the limit is too low and it could result in poor
->>>>> monitoring accuracy.  Therefore we developed [1] monitoring intervals
->>>>> auto-tuning.  From multiple tests on real environment it showed somewhat
->>>>> convincing results, and therefore I nowadays suggest DAMON users to try that if
->>>>> they didn't try.
->>>>>
->>>>> I'm bit concerned if this is over-engineering.  It would be helpful to know if
->>>>> it is, if you could share the more detailed use case.
->>>> Thanks for pointing to intervals auto-tuning - we do use it.  But it
->>>>
->>>> trades sampling frequency against monitoring overhead; it cannot
->>>> change the spatial resolution.  With N=1000 regions on a 2 TiB host,
->>>> a 20 GiB cgroup cannot be resolved no matter how we tune sample_us /
->>>> aggr_us, because the region boundary itself averages cgroup and
->>>>
->>>> non-cgroup pages together.
->>>>
->>>> So raising max_nr_regions and making the per-region overhead cheap
->>>> are complementary to interval auto-tuning, not redundant with it.
->>> Makes sense.  I'm still not sure how it helps for cgroup.  But, if you do want
->>> it and if it helps you, you are of course ok to use it in your way, and I will
->>> help you. :)
->>>
->> [...]
->>>> Sashiko is correct that (u32)(r - l) truncates spans greater than 4 GiB.
->>>>
->>>> This is a pre-existing limitation of damon_rand() itself, which
->>>> passes r - l to get_random_u32_below() (a u32 parameter) and
->>>> truncates the same way.  My patch makes that truncation
->>>> explicit but does not introduce a new bug.
->>> You are 100% correct and I agree.  Thank you for making this clear.  I should
->>> also mentioned and underlined this in my previous reply, but I forgot it.
->>>
->>> So I think this patch is ok to be merged as is (after addressing my nit trivial
->>> comments about coding styles), but we may still want to fix it in future.  So I
->> damon_rand() is now only called by damon_split_regions_of() with
->> the constant range (1, 10).  may by we can rename it to
->> damon_rand_u32() to make the u32 constraint explicit in the API
->> name; that closes out the truncation concern at the legacy helper
->> without needing a separate series.
-> Good point.  I'm wondering if we have a reason to keep using damon_rand() at
-> all.  I find no such reason.  If you also find no real reason, how about simply
-> removing existing damon_rand() and renaming damon_rand_fast() to damon_rand()?
->
-
-Good idea.  v2 will remove the legacy helper, rename
-damon_rand_fast() to damon_rand(), and plumb ctx into
-damon_split_regions_of() for the new signature.
-
->>> was wondering if such future fix for this new, shiny and efficient function is
->>> easy.
->>
-[...]
-
-
-Thanks!
-
-
+Thanks,
+SJ
