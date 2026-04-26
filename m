@@ -1,54 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AB193242B5;
-	Sun, 26 Apr 2026 20:52:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDCF426CE05;
+	Sun, 26 Apr 2026 21:20:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777236762; cv=none; b=ELxN5H9712qGq3cl05Ej/QhhrH4dgavodG4K26MmgxzeLzfMZNowoiC+QSxAqyrKHv3/JzEbYbRWwHQ3Qbd9BC1WAeXkiT3Q37RPQ8863hwQH7jmtQ4rGXXGSL04cXqV4bFjEUvUujfJrXtstbLVVUAHVoQ+7r8OeLWAe4cDDAA=
+	t=1777238457; cv=none; b=V1fCc+S6REMpf4RWvd7YUwq+ShHv4bxTNO8EC55sxqVb577mATGQDNL+bO5yVYiuAAlCsP/Us1Oq12ex4K/KIjMl5Y0JYNX8KX9qJgg+0Wk7ZOSQZuRqX06b5UFsRBwjiZH1+Otun9RejmmJHBwE7/o4hNUi0Z5FgsWadYlIE6I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777236762; c=relaxed/simple;
-	bh=jWZtEYC4wpgJ869rcJBTeYX65E0OwiGQ6QxZ8akF1Bo=;
+	s=arc-20240116; t=1777238457; c=relaxed/simple;
+	bh=Wz5ssFeDipE2282eBjMZgUbsO+8T8am3ncG6haNgKQQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=FYKRlDzKpQcfBKy2hFy96D5RDwlyo3BmjLG4nNJ0VPU4FN92rcVQbKZJlp0LLD/rBl0zgmYW2Q30m8bQFybbVE0WrNN+LCuGcYhU3ZM4r7CEFupaRm/+nyCbmS+4w73ssEsBwGnzhg2bbjkuy0OjBXMZctlCORNw+AUnk8LPZK4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Wik89Mgn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Rth2/47Y1LlFX78voK9pr1faGP7hNStUsTORoTharX4wcU3yscWkwBCGCXQ05gks4o9PnWkdqPqDOryeeskCV+cCAZZ9nv9I2XHxTNG4Nx79KEonlnvdLuEWyyESHyNKEAPmqz+1xyYznNKGdtVvkoC+Ms4PlmbYhxrZssCVJ5E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ek/IbZsW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Wik89Mgn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8609FC2BCB6;
-	Sun, 26 Apr 2026 20:52:41 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ek/IbZsW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 646C4C2BCAF;
+	Sun, 26 Apr 2026 21:20:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777236762;
-	bh=jWZtEYC4wpgJ869rcJBTeYX65E0OwiGQ6QxZ8akF1Bo=;
+	s=k20201202; t=1777238456;
+	bh=Wz5ssFeDipE2282eBjMZgUbsO+8T8am3ncG6haNgKQQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Wik89Mgnzr4HtAStJRJvoasrrOnWhUE5QGd6dU6Xxi8DeHbnuTzMW8ljVuivcZ89w
-	 PY7vZ8SEXqIwgbJE7wgwxeBfRI4yVyYCqYE2phydAfUfXpUykiihIt5fpXQ0RptNFp
-	 FqVAi9KnoKTd0z7oAGpdeOa9LiAyrrXZI4kmUDrR8BPq7CXTrTN5msGUX7jPX+2R6z
-	 t574ji7UaEa1EGRijZoxd5rbN+lyxQzgD/85Q7SYTgpME/Wv+go7g6IWVb6jAwuQOC
-	 2gz3d8yID0Ml8SiBFwVIkcvnalDJtg8QE7ghiuv742aYgwV85wcL4vqxV9LCNXcqsz
-	 t5dpBRMwjIwNQ==
+	b=ek/IbZsWHpMkkbz2xUXuGrJKeeaqhkrx80Jz1sHt9i++pjqXaNW8UXQ8r48EfwpWn
+	 hZT5bKjdRmARcao+LCkpEjHLY2s20TEt+D3jOxFfZY6hz5CcFwJKAA+ZMl4/vEUnfn
+	 P8Dqlgnb4RlTqWI4gD95XaJX7CjcPnAXQGkxJI+dqF0j4H1ZoiN+whzSjw4kmDu+mX
+	 /M7P0JiwbLDKsR23kvpeEz5qB6fNtWX/kYzZTXW8hy3mW7ynNwv7Ki5AyXYxhcIZP7
+	 4YzFmaRdqvIy6MIqzaTuH47KLUioKaMfXk7H9EkNIu9X9StGjXrsgmsL7A15yYtcZs
+	 ws1i7KeGAjiRA==
 From: SeongJae Park <sj@kernel.org>
-To: 
-Cc: SeongJae Park <sj@kernel.org>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	David Hildenbrand <david@kernel.org>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	Michal Hocko <mhocko@suse.com>,
-	Mike Rapoport <rppt@kernel.org>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Vlastimil Babka <vbabka@kernel.org>,
+To: SeongJae Park <sj@kernel.org>
+Cc: lsf-pc@lists.linux-foundation.org,
+	linux-mm@kvack.org,
 	damon@lists.linux.dev,
-	linux-doc@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org
-Subject: [RFC PATCH 19/19] Docs/admin-guide/mm/damon/usage: document data attributes monitoring
-Date: Sun, 26 Apr 2026 13:52:20 -0700
-Message-ID: <20260426205222.93895-20-sj@kernel.org>
+	linux-kernel@vger.kernel.org
+Subject: Re: [LSF/MM/BPF TOPIC] DAMON Updates: Tiering, Pagel Level Monitoring and DAMON-X
+Date: Sun, 26 Apr 2026 14:20:45 -0700
+Message-ID: <20260426212048.94069-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260426205222.93895-1-sj@kernel.org>
-References: <20260426205222.93895-1-sj@kernel.org>
+In-Reply-To: <20260307210250.204245-1-sj@kernel.org>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -58,110 +47,148 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Update DAMON usage document for the newly added data attributes
-monitoring feature.
+On Sat,  7 Mar 2026 13:02:48 -0800 SeongJae Park <sj@kernel.org> wrote:
 
-Signed-off-by: SeongJae Park <sj@kernel.org>
----
- Documentation/admin-guide/mm/damon/usage.rst | 44 ++++++++++++++++----
- Documentation/mm/damon/design.rst            |  2 +
- 2 files changed, 39 insertions(+), 7 deletions(-)
+> Hello,
+> 
+> 
+> In the last year LSF/MM/BPF, I shared [1] updates of the status and future
+> plans on DAMON development.  Feedbacks were very helpful.  I'd like to share
+> new updates and gather more feedback on LSF/MM/BPF 2026.
 
-diff --git a/Documentation/admin-guide/mm/damon/usage.rst b/Documentation/admin-guide/mm/damon/usage.rst
-index 11c75a598393c..397820ac8bbb0 100644
---- a/Documentation/admin-guide/mm/damon/usage.rst
-+++ b/Documentation/admin-guide/mm/damon/usage.rst
-@@ -72,6 +72,11 @@ comma (",").
-     │ │ │ │ │ │ intervals/sample_us,aggr_us,update_us
-     │ │ │ │ │ │ │ intervals_goal/access_bp,aggrs,min_sample_us,max_sample_us
-     │ │ │ │ │ │ nr_regions/min,max
-+    │ │ │ │ │ │ :ref:`probes <damon_usage_sysfs_probes>`/nr_probes
-+    │ │ │ │ │ │ │ 0/filters/nr_filters
-+    │ │ │ │ │ │ │ │ │ 0/type,matching,allow
-+    │ │ │ │ │ │ │ │ │ ...
-+    │ │ │ │ │ │ │ │ ...
-     │ │ │ │ │ :ref:`targets <sysfs_targets>`/nr_targets
-     │ │ │ │ │ │ :ref:`0 <sysfs_target>`/pid_target,obsolete_target
-     │ │ │ │ │ │ │ :ref:`regions <sysfs_regions>`/nr_regions
-@@ -97,7 +102,8 @@ comma (",").
-     │ │ │ │ │ │ │ │ 0/id,weight
-     │ │ │ │ │ │ │ :ref:`stats <sysfs_schemes_stats>`/nr_tried,sz_tried,nr_applied,sz_applied,sz_ops_filter_passed,qt_exceeds,nr_snapshots,max_nr_snapshots
-     │ │ │ │ │ │ │ :ref:`tried_regions <sysfs_schemes_tried_regions>`/total_bytes
--    │ │ │ │ │ │ │ │ 0/start,end,nr_accesses,age,sz_filter_passed
-+    │ │ │ │ │ │ │ │ 0/start,end,nr_accesses,age,sz_filter_passed,
-+    │ │ │ │ │ │ │ │     probe_hits
-     │ │ │ │ │ │ │ │ ...
-     │ │ │ │ │ │ ...
-     │ │ │ │ ...
-@@ -227,8 +233,8 @@ contexts/<N>/monitoring_attrs/
- 
- Files for specifying attributes of the monitoring including required quality
- and efficiency of the monitoring are in ``monitoring_attrs`` directory.
--Specifically, two directories, ``intervals`` and ``nr_regions`` exist in this
--directory.
-+Specifically, two directories, ``intervals``, ``nr_regions`` and ``probes``
-+exist in this directory.
- 
- Under ``intervals`` directory, three files for DAMON's sampling interval
- (``sample_us``), aggregation interval (``aggr_us``), and update interval
-@@ -262,6 +268,27 @@ tuning-applied current values of the two intervals can be read from the
- ``sample_us`` and ``aggr_us`` files after writing ``update_tuned_intervals`` to
- the ``state`` file.
- 
-+.. _damon_usage_sysfs_probes:
-+
-+contexts/<N>/monitoring_attrs/probes/
-+-------------------------------------
-+
-+A directory for registering :ref:`data attributes monitoring
-+<damon_design_data_attrs_monitoring>` probes.
-+
-+In the beginning, this directory has only one file, ``nr_probes``.  Writing a
-+number (``N``) to the file creates the number of child directories named ``0``
-+to ``N-1``.  Each directory represents each monitoring probe.
-+
-+In each probe directory, one directory, ``filters`` exist.  The directory
-+contains files for installingt filters for the probe, that is used to determine
-+the data attribute for the probe.
-+
-+In the beginning, ``filters`` directory has only one file, ``nr_filters``.
-+Writing a number (``N``) to the file creates the number of child directories
-+named ``0`` to ``N-1``.  Each directory represents each filter and work in a
-+way similar to that for :ref:`DAMOS filter <sysfs_filters>`.
-+
- .. _sysfs_targets:
- 
- contexts/<N>/targets/
-@@ -614,10 +641,13 @@ set the ``access pattern`` as their interested pattern that they want to query.
- tried_regions/<N>/
- ------------------
- 
--In each region directory, you will find five files (``start``, ``end``,
--``nr_accesses``, ``age``, and ``sz_filter_passed``).  Reading the files will
--show the properties of the region that corresponding DAMON-based operation
--scheme ``action`` has tried to be applied.
-+In each region directory, you will find six files (``start``, ``end``,
-+``nr_accesses``, ``age``, ``sz_filter_passed`` and ``probe_hits``).  Reading
-+the files will show the properties of the region that corresponding DAMON-based
-+operation scheme ``action`` has tried to be applied.
-+
-+Reading ``probe_hists`` shows the number of data attributes monitoring
-+probe-hit positive samples of the region.
- 
- Example
- ~~~~~~~
-diff --git a/Documentation/mm/damon/design.rst b/Documentation/mm/damon/design.rst
-index bada2010ad1ca..2b68a1880a4a1 100644
---- a/Documentation/mm/damon/design.rst
-+++ b/Documentation/mm/damon/design.rst
-@@ -276,6 +276,8 @@ interval``, DAMON checks if the region's size and access frequency
- (``nr_accesses``) has significantly changed.  If so, the counter is reset to
- zero.  Otherwise, the counter is increased.
- 
-+.. _damon_design_data_attrs_monitoring:
-+
- Data Attributes Monitoring
- ~~~~~~~~~~~~~~~~~~~~~~~~~~
- 
--- 
-2.47.3
+As this topic is scheduled [1] for the conference (kudos to the conference
+committes!) and the day is approaching, I'm sharing a few updtes.
+
+> 
+> Major topics to discuss in the session include but not limited to below three
+> topics.  Of course, some changes could be made.
+> 
+> Followups on work items that we discussed on last LSF/MM/BPF
+> ------------------------------------------------------------
+> 
+> DAMOS auto-tuning based memory tiering.  I worked on a more flexible evaluation
+> setup for it.  I also upstreamed another DAMON extension that makes memory
+> cgroup-aware memory tiering available.  An unnamed user confirmed positive test
+> results of the auto-tuning based tiering.  Meanwhile other users including
+> people from SK hynix and Micron are continuing development of their own memory
+> tiering approaches and showing good achievements.  Because basic evaluation of
+> my approach is done, I'm not actively working on this now, but working in a
+> support mode for this.  I will share more details about this and discuss if
+> something need to be revisited or if there are anything that DAMON can help for
+> memory tiering.
+
+Ravi from Micron is continuing their work [2], and now it is nearly ready to be
+landed.  This is only a part of the topics I want to discuss on the session,
+though.
+
+> 
+> Page level monitoring.  The feature, which accounts the number of pages in each
+> DAMON region of user-interested type (e.g., hugepage, LRU list-position,
+> belonging cgroup) has successfully upstreamed after the LSF/MM/BPF 2025.
+> Because it imposes high overhead on large systems, a lightweight version of it
+> was shared as a future work.  Unfortunately not much visible progress for it
+> has been made so far.  Some progress on the design is made, though.  Briefly
+> speaking, the idea is sampling the types of pages in each DAMON region.
+> Implementation wise, users will be able to set the types of their interests,
+> and DAMON will provide the counts of the samples of the interested types, in
+> addition to the access frequency counter (nr_accesses). I'd like to share the
+> design and get feedback.  Hopefully RFC ideas or patch series will be shared
+> before the conference to help discussions.
+
+I was able to make some progress and just posted [2] the RFC patch series.
+Conference driven development works! :)
+
+> 
+> FYI, in future, the counters of interests could be extended to do the DAMON
+> region merge/split based on not only access frequency but one of the
+> user-defined interests.  Then DAMON might pivot from Data Access MONitor to
+> Data Associativity MONitor.  It’s just somewhat possible and sounds funny for
+> now.  I find no real use case of that.
+
+I now think this is the right way to go.  This can also make page faults and
+PMU events based mointoring like access check primitives addition easier to do.
+I added more details about this on the 'Future Works: Long Term' section of the
+cover letter of the RFC patch series [1].
+
+> 
+> New Project
+> -----------
+> 
+> DAMON-X.  In Crusoe, which is a neocloud company that I’m now working for, we
+> want to utilize DAMON for both memory efficiency and observability.  More
+> specifically, we want to show the memory idle time percentiles, and run memory
+> PSI-driven proactive memory reclamation.  The straightforward way would be
+> doing that via DAMON sysfs interface, or DAMON user-space tool.  It requires
+> some user-space programming, though.  I want the kernel to just work.  A way
+> for that would be running DAMON modules that were developed for the purposes,
+> namely DAMON_STAT and DASMON_RECLAIM.  But DAMON modules run in an exclusive
+> manner, so we cannot run those in parallel.  The exclusiveness is required to
+> avoid interference between DAMON worker threads (kdamond) for different
+> modules.
+> 
+> I plan to let DAMON modules share kdamonds to let them run in parallel without
+> interference.  The shared kdamond would be able to run on the system from the
+> beginning or on demand, and directly attach/detach DAMON applications like
+> DAMON_STAT, DAMON_RECLAIM, and future ones for NUMA-aware page migrations etc.
+> It will work with a very minimum number of knobs in nearly automated way, but I
+> plan to also extend the DAMON sysfs interface for more flexible and manual
+> control of it for experiments and investigations.  With my humble naming sense,
+> I’m currently calling it "DAMON Enabled Computer System", or DAMON-X in short.
+> Actually this is a followup of what I shared in LPC 2024 kernel mm
+> micro-conference, as a long-term DAMON project for the kernel that just works.
+> I want to share Crusoe's desired use case, problems, and design of the
+> currently planned solution during the session and get feedback.  Hopefully RFC
+> ideas or patch series will be shared before the conference to help discussions.
+
+I was unable to make much progress on this.  As we still have one week, I will
+try to share a detailed RFC idea at least, before the conference.
+
+> 
+> More Topics Out of This Session
+> -------------------------------
+> 
+> There are two more DAMON-related development works that are ongoing, that I
+> want to discuss in LSF/MM/BPF.  Because I think those cannot be discussed in
+> single session with the above three topics due to the limit of the time, I
+> proposed separate sessions for them.
+
+The two topics are also scheduled [1] for the conference.  We will have one
+hour session for all three topics.  Appreciate the conference committees for
+their works!
+
+> The two topics are "production level
+> access-aware THP [3]"
+
+Asier from Huawei made DAMOS_COLLAPSE [4].  I will repost it after 7.1-rc1, and
+hopefully it will be merged into mm-new by the conference.  This is only a part
+of the topics I want to discuss on the session, though.
+
+> and "per-CPUs/threads/reads/writes data access monitoring
+> [4]".
+
+The page level monitoring RFC patch series [3] is now also considered to be the
+foundation for the interface of this work.
+
+Akinobu continued thier PMU based mointoring work [5] and I now think that
+could be a viable option for some of users including Crusoe, if page fault
+based monitoring is rejected or delayed too long.
+
+> 
+> 
+> 
+> [1] https://lore.kernel.org/all/20250102222317.48760-1-sj@kernel.org/
+> [2] https://lpc.events/event/18/contributions/1768/
+> [3] https://lore.kernel.org/20260211050729.69719-1-sj@kernel.org
+> [4] https://lore.kernel.org/20260218054320.4570-1-sj@kernel.org
+
+[1] https://docs.google.com/spreadsheets/d/1mGEdDrWskp7Ua91jGXzquQGinorcD58DAVXhOiRp2Gg/edit?gid=1852749899#gid=1852749899
+[2] https://lore.kernel.org/20260426003245.2687-1-ravis.opensrc@gmail.com
+[3] https://lore.kernel.org/20260426205222.93895-1-sj@kernel.org
+[4] https://lore.kernel.org/20260409150128.1566835-1-gutierrez.asier@huawei-partners.com
+[5] https://lore.kernel.org/20260423004211.7037-1-akinobu.mita@gmail.com
+
+
+Thanks,
+SJ
+
+[...]
