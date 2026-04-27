@@ -1,153 +1,126 @@
-Received: from mailout1.samsung.com (mailout1.samsung.com [203.254.224.24])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 586573BD246
-	for <damon@lists.linux.dev>; Mon, 27 Apr 2026 13:43:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=203.254.224.24
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49941192D8A
+	for <damon@lists.linux.dev>; Mon, 27 Apr 2026 14:19:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777297388; cv=none; b=hNtnomqRbSfZFvhGdI3bzptu3ZdSv5mY950hKMcHXa4YXSmh7yUn/d+t+dKDAhiCVsBJaKwzwxmeyjxnkhmULbDgI8VfoIafiOk52yeCVy9XbsTXgoVLs/pcX7noIM6IcbvBTwMQbGSMtGJ0spdx0+Rw2s8zHJQ/NKT80RHz4Po=
+	t=1777299545; cv=none; b=jhkk4/pZpYGvXHx8N4vXRUF1aedeoJzO/22QxlvRRh64CZvj1oaD0pzfb+O9QB+Yxm+De2l6ISxNeba8t15wYj6g9Jz0+rUjZZTbFWmqZuhebZFBgDJpRU5A3BHbF0j5FesAkuuTu2BXdKu7K58X5Vzb/DUjcbXTrwHC2c8j6zw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777297388; c=relaxed/simple;
-	bh=HYpZWzyqAIY0fKVdx1G8AWuk4ggGTSoGNuwwIO5d2iQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:In-Reply-To:
-	 Content-Type:References; b=EliIs7/DDKxv2jgUAhkKr4kJ5DbqZcdCSZhyQTbewPCX6JUeJS7Ne5L1Nmfz7Pv8Wf0KPj97WHXdRfQu4UOjUKXSHBxOcW2gGH2ME5Algq+Jjm4sd/fv1t+qM7EZaEY7/dF3g+eg2R/K59816ZwPZTLyLAooSpE8pmcITMh0Nfw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com; spf=pass smtp.mailfrom=samsung.com; dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b=oTje4ElN; arc=none smtp.client-ip=203.254.224.24
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=samsung.com
+	s=arc-20240116; t=1777299545; c=relaxed/simple;
+	bh=Z8uPFvUofYxjWjPDYMYgoiiaNfjDwiNKad/v6wutxnY=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=FSwxH3NlD1Hm//6WRHCYs+gSE+BIgxw9hmzTA+8nwGT3npIWW7T08ihDsxVidToQLcwrKomOwz/b+FAffjxuXqtKmOBXIz5nVdpNt6c1nRUYJLUUAzDu/ALVlKUE5TCLSkGYvDif9M9yn0urIszkCnvjg8DaWq+QB79M6NX/3OQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=R4uBGS08; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b="oTje4ElN"
-Received: from epcas5p1.samsung.com (unknown [182.195.41.39])
-	by mailout1.samsung.com (KnoxPortal) with ESMTP id 20260427134302epoutp0196401e6a027f43e9f7a2a8e4ec37def5~qOo2fjOBb1175011750epoutp01L;
-	Mon, 27 Apr 2026 13:43:02 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.samsung.com 20260427134302epoutp0196401e6a027f43e9f7a2a8e4ec37def5~qOo2fjOBb1175011750epoutp01L
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-	s=mail20170921; t=1777297383;
-	bh=HYpZWzyqAIY0fKVdx1G8AWuk4ggGTSoGNuwwIO5d2iQ=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=oTje4ElNm4xecU1VG1Jrx86EY3Gpl1Vu+7Eg8igCfRDmuEWp0LdNN4Ssf0cEWBOKp
-	 03qrQy7Mwh4wQ/opBqnoORCUo1z8aoZlbY7D0/ViobxGIRXTFLcHW7dWyX9aTsl2N3
-	 Eh24v5hHa9Vb0gAdrDBssQHqG7CW+ElPnJnUatLc=
-Received: from epsnrtp03.localdomain (unknown [182.195.42.155]) by
-	epcas5p2.samsung.com (KnoxPortal) with ESMTPS id
-	20260427134302epcas5p214d5e003586bc14fd5c926391fd2af9c~qOo16jVbi1491214912epcas5p24;
-	Mon, 27 Apr 2026 13:43:02 +0000 (GMT)
-Received: from epcpadp2new (unknown [182.195.40.142]) by
-	epsnrtp03.localdomain (Postfix) with ESMTP id 4g44Wp1ZR3z3hhT3; Mon, 27 Apr
-	2026 13:43:02 +0000 (GMT)
-Received: from epsmtip2.samsung.com (unknown [182.195.34.31]) by
-	epcas5p1.samsung.com (KnoxPortal) with ESMTPA id
-	20260427123800epcas5p1e1a2fed257091b31e2e6c3a7d1b0c2b0~qNwDrt8ay0098400984epcas5p1l;
-	Mon, 27 Apr 2026 12:38:00 +0000 (GMT)
-Received: from green245.gost (unknown [107.99.41.245]) by
-	epsmtip2.samsung.com (KnoxPortal) with ESMTPA id
-	20260427123748epsmtip257b0d1b83f2086e0e46dbf256b9f1ff0~qNv5BJqIr2057720577epsmtip23;
-	Mon, 27 Apr 2026 12:37:48 +0000 (GMT)
-Date: Mon, 27 Apr 2026 18:02:57 +0530
-From: Arun George <arun.george@samsung.com>
-To: Gregory Price <gourry@gourry.net>
-Cc: lsf-pc@lists.linux-foundation.org, linux-kernel@vger.kernel.org,
-	linux-cxl@vger.kernel.org, cgroups@vger.kernel.org, linux-mm@kvack.org,
-	linux-trace-kernel@vger.kernel.org, damon@lists.linux.dev,
-	kernel-team@meta.com, gregkh@linuxfoundation.org, rafael@kernel.org,
-	dakr@kernel.org, dave@stgolabs.net, jonathan.cameron@huawei.com,
-	dave.jiang@intel.com, alison.schofield@intel.com, vishal.l.verma@intel.com,
-	ira.weiny@intel.com, dan.j.williams@intel.com, longman@redhat.com,
-	akpm@linux-foundation.org, david@kernel.org, lorenzo.stoakes@oracle.com,
-	Liam.Howlett@oracle.com, vbabka@suse.cz, rppt@kernel.org, surenb@google.com,
-	mhocko@suse.com, osalvador@suse.de, ziy@nvidia.com, matthew.brost@intel.com,
-	joshua.hahnjy@gmail.com, rakie.kim@sk.com, byungchul@sk.com,
-	ying.huang@linux.alibaba.com, apopple@nvidia.com, axelrasmussen@google.com,
-	yuanchu@google.com, weixugc@google.com, yury.norov@gmail.com,
-	linux@rasmusvillemoes.dk, mhiramat@kernel.org,
-	mathieu.desnoyers@efficios.com, tj@kernel.org, hannes@cmpxchg.org,
-	mkoutny@suse.com, jackmanb@google.com, sj@kernel.org,
-	baolin.wang@linux.alibaba.com, npache@redhat.com, ryan.roberts@arm.com,
-	dev.jain@arm.com, baohua@kernel.org, lance.yang@linux.dev,
-	muchun.song@linux.dev, xu.xin16@zte.com.cn, chengming.zhou@linux.dev,
-	jannh@google.com, linmiaohe@huawei.com, nao.horiguchi@gmail.com,
-	pfalcato@suse.de, rientjes@google.com, shakeel.butt@linux.dev,
-	riel@surriel.com, harry.yoo@oracle.com, cl@gentwo.org,
-	roman.gushchin@linux.dev, chrisl@kernel.org, kasong@tencent.com,
-	shikemeng@huaweicloud.com, nphamcs@gmail.com, bhe@redhat.com,
-	zhengqi.arch@bytedance.com, terry.bowman@amd.com, gost.dev@samsung.com,
-	arungeorge05@gmail.com, cpgs@samsung.com
-Subject: Re: [LSF/MM/BPF TOPIC][RFC PATCH v4 00/27] Private Memory Nodes (w/
- Compressed RAM)
-Message-ID: <1983025922.01777297382206.JavaMail.epsvc@epcpadp2new>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="R4uBGS08"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D346C19425;
+	Mon, 27 Apr 2026 14:19:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1777299545;
+	bh=Z8uPFvUofYxjWjPDYMYgoiiaNfjDwiNKad/v6wutxnY=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=R4uBGS08pAkDtu6gg6sQuWtzN+qEN8RRpypDpGLg6dbGHFCDV68ajuV2aFMH3B4fr
+	 1kdbWeloJPDluB0bCmH0+glYZL2ePBsLPAuzJKg8OhTfbddgQflYU/n/1ZRNKXHom4
+	 jmqDnH41QmPpsI+Dzi+JKQvzra5yRf3/09+XQCHGvOok1dSLXGjiAR0t2AeiW2JbDZ
+	 Bpi9wwtSptOXhoTOEnYy5AWH8XK48NIcmE2fl5E9Swhvx8V/k+38TGjzAK4jQcBp5v
+	 iQWb6Hd+PjAwXMTlnruF1JjCQ4GjpQiIe2TP06at3EiLALrbpuKEGQcOV2Sl8oHDcE
+	 BOPqNwMS2+AGg==
+From: SeongJae Park <sj@kernel.org>
+To: sashiko-bot@kernel.org
+Cc: SeongJae Park <sj@kernel.org>,
+	damon@lists.linux.dev
+Subject: Re: [PATCH v2 1/4] mm/damon/ops-common: optimize damon_hot_score() using ilog2()
+Date: Mon, 27 Apr 2026 07:18:46 -0700
+Message-ID: <20260427141848.111385-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260426232811.618BFC2BCAF@smtp.kernel.org>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-In-Reply-To: <20260222084842.1824063-1-gourry@gourry.net>
-X-CMS-MailID: 20260427123800epcas5p1e1a2fed257091b31e2e6c3a7d1b0c2b0
-X-Msg-Generator: CA
-Content-Type: multipart/mixed;
-	boundary="----lGFk.c4Zo19QZrlL9e6EpsCdvlY3lrbI5T.6445u7ei3FFQQ=_4f40_"
-CMS-TYPE: 105P
-X-CPGSPASS: Y
-X-Hop-Count: 3
-X-CMS-RootMailID: 20260427123800epcas5p1e1a2fed257091b31e2e6c3a7d1b0c2b0
-References: <20260222084842.1824063-1-gourry@gourry.net>
-	<CGME20260427123800epcas5p1e1a2fed257091b31e2e6c3a7d1b0c2b0@epcas5p1.samsung.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-------lGFk.c4Zo19QZrlL9e6EpsCdvlY3lrbI5T.6445u7ei3FFQQ=_4f40_
-Content-Type: text/plain; charset="utf-8"; format="flowed"
-Content-Disposition: inline
+On Sun, 26 Apr 2026 23:28:10 +0000 sashiko-bot@kernel.org wrote:
 
-On 22/02/26 03:48AM, Gregory Price wrote:
->Topic type: MM
->
->Presenter: Gregory Price <gourry@gourry.net>
->
->This series introduces N_MEMORY_PRIVATE, a NUMA node state for memory
->managed by the buddy allocator but excluded from normal allocations.
->
->I present it with an end-to-end Compressed RAM service (mm/cram.c)
->that would otherwise not be possible (or would be considerably more
->difficult, be device-specific, and add to the ZONE_DEVICE boondoggle).
->
->
->TL;DR
->===
->
-Appreciate the work as we also chase the same problem statement.
-A few queries please.
+> Sashiko AI review found 3 potential issue(s):
+> - [High] Arithmetic overflow on 32-bit architectures during `age_in_sec` calculation.
+> - [Low] The logic using `ilog2()` with a zero-check branch can be simplified by directly using `fls()`.
+> - [Low] Unnecessary double blank line introduced.
+> --
+> 
+> commit c096ebdf3dd6d7a6e783e2ac65dec1740282929f
+> Author: Liew Rui Yan <aethernet65535@gmail.com>
+> 
+>     mm/damon/ops-common: optimize damon_hot_score() using ilog2()
+> 
+> This commit replaces the manual for-loop used to calculate age_in_log
+> in damon_hot_score() with the ilog2() function. This optimization aims to
+> significantly reduce the latency of the hotness score calculation.
+> 
+> > diff --git a/mm/damon/ops-common.c b/mm/damon/ops-common.c
+> > index 8c6d613425c1..3a0ddc3ac719 100644
+> > --- a/mm/damon/ops-common.c
+> > +++ b/mm/damon/ops-common.c
+> > @@ -117,9 +117,12 @@ int damon_hot_score(struct damon_ctx *c, struct damon_region *r,
+> >  		damon_max_nr_accesses(&c->attrs);
+> >  
+> >  	age_in_sec = (unsigned long)r->age * c->attrs.aggr_interval / 1000000;
+> 
+> This isn't a bug in your patch, but does the multiplication of
+> (unsigned long)r->age * c->attrs.aggr_interval overflow on 32-bit
+> architectures?
+> 
+> Since both variables evaluate as 32-bit types on 32-bit architectures,
+> if aggr_interval is 1,000,000 (1 second), the multiplication will wrap
+> around when r->age exceeds 4294. This wrap-around could result in a very
+> small age_in_sec value for extremely cold regions, causing them to be
+> falsely evaluated as young and hot.
+> 
+> Should this calculation be cast to a 64-bit integer prior to multiplication,
+> perhaps using div_u64()?
 
-I see the current support relies on read-only mappings which might
-limit the performance. Any particular workload you are targeting with
-this (which can tolerate this latency)?
+Good point, but as Sashiko also notes, not a blocker of this patch.  I will add
+a todo item for thinking more on this.
 
-Any deployments you think of where the goal is a capacity expansion
-with a compromise in performance?
+> 
+> > -	for (age_in_log = 0; age_in_log < DAMON_MAX_AGE_IN_LOG && age_in_sec;
+> > -			age_in_log++, age_in_sec >>= 1)
+> > -		;
+> > +	if (age_in_sec)
+> > +		age_in_log = min_t(int, ilog2(age_in_sec) + 1,
+> > +				DAMON_MAX_AGE_IN_LOG);
+> > +	else
+> > +		age_in_log = 0;
+> 
+> Instead of using ilog2() with a zero-check branch, could this be simplified
+> by directly using fls()?
+> 
+> The fls() function safely returns 0 when the value is 0 and correctly
+> calculates the 1-based log2 value for positive numbers, allowing this
+> branch to be removed entirely while preserving the exact mathematical
+> result.
 
-On the device side, are you targeting beyond compressed RAM like
-devices such as memory with NAND etc.?
+We believe ilog2() is easier to read.
 
-The TL;DR talked about mmap/mbind way of user space allocation from
-the private node. But the allocation is controlled by GFP flag
-N_MEMORY_PRIVATE. Does the user space path of allocation set this
-flag along the way?
+> 
+> > +
+> >  
+> >  	/* If frequency is 0, higher age means it's colder */
+> 
+> This isn't a bug, but an extra blank line appears to be introduced here,
+> creating two consecutive blank lines.
 
-And I believe the bear-proof cage might work in the normal scenarios,
-but may not work for all. We might not be able to rely on the control
-path (backpressure) fully. The control path could go slow, slower and
-even die as well. Should the device respond with something like
-'bus error' if the host tries to write when it is not capable of
-taking any more writes?
+Good cactch.  As this is a quite minor issue, I will ask Andrew to fix this.
 
-Are there any workloads (VM?) where this 'bus error'or similar error
-could be an OK / recoverable scenario?
-
-This is assuming that checking with the device on every operation
-(whether it is safe to write or not) could be slow.
-
---- Arun George
-
-------lGFk.c4Zo19QZrlL9e6EpsCdvlY3lrbI5T.6445u7ei3FFQQ=_4f40_
-Content-Type: text/plain; charset="utf-8"
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260426231619.107231-1-sj@kernel.org?part=1
 
 
-------lGFk.c4Zo19QZrlL9e6EpsCdvlY3lrbI5T.6445u7ei3FFQQ=_4f40_--
-
+Thanks,
+SJ
