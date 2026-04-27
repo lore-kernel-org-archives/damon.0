@@ -1,49 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2C683A9D8B;
-	Mon, 27 Apr 2026 14:49:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F5973845AA
+	for <damon@lists.linux.dev>; Mon, 27 Apr 2026 14:53:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777301365; cv=none; b=k1yaMvrwTcgBaa18dCfWoxfx6wptxgrsY/gWWgNVZh7NzwHFRRH0607CvrFLJXJ4uhtjV05cwUNutUZtXNP/nYvygOQMckYKSi6p8FGuQI4p8dGlLBE4NYuvjzsCROYwTHLT20cqye/BjHis42Yu/NqS2NnvcvydBFezT3V5lh4=
+	t=1777301619; cv=none; b=QLbxIMl7BSi7YJKjRad5dL4rQ66JfbFxscdMikX/ugSjezV5IhDu5KlyP2MxA0trUgSX6dkA91fhavG2D5bicd4Di/UiRH4cJbz29/95SfiySM5lMRov95tevMLZp4/96zjCLWkKfIyokXtbxnMXPp3eM5xcxo+OGay8cKgGoGA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777301365; c=relaxed/simple;
-	bh=Pie6H9kqpjFwLcPtbrm+7WML7Q1A98k1SS00JCWV22g=;
+	s=arc-20240116; t=1777301619; c=relaxed/simple;
+	bh=8gy4dB8X3pomLm+5r7inaMEDKI2U49MnSWlF+NjuoLw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IxnnwlU6khcadKJTA/3yq+Qmho7mW9miki8NwU259a03SXEXce7+JTUZprwJCEUBBJyuv5oudHEhhOHtjIvy4dVnHHnldxdXT0asjCcrcUIRWsQOC0JYgnKu2hVIJy18zhpGV4HIGWdDRUaxPeMADJFLR03ZTfHeMv5UAyqdzHA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SYMuM5TF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HdZ7+k4JgIpilV4OcArAJXts1tE14yNKsOefGK7G/JXcQk1bGfacJ67IXpT/sem8FNg7Cx7FyH8nBGKMbMkLpRKBfzZnXXcGpxefINeIaFX69RSKvdQ0LmhPchz64h4cf+jWLTU1ImQAoxZmKWnL6IuZQpnpwZzv0suQWALGrWo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DD+/akJX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SYMuM5TF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F271AC19425;
-	Mon, 27 Apr 2026 14:49:24 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DD+/akJX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95401C19425;
+	Mon, 27 Apr 2026 14:53:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777301365;
-	bh=Pie6H9kqpjFwLcPtbrm+7WML7Q1A98k1SS00JCWV22g=;
+	s=k20201202; t=1777301618;
+	bh=8gy4dB8X3pomLm+5r7inaMEDKI2U49MnSWlF+NjuoLw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SYMuM5TFKXTJ6aCxcFBt93wMfV9JuHwsLvhTYblz2FPcqf2pCbAtc6mF0vovH3sRO
-	 d97a2kliIigXgAOmBV1dSVNdDki1NFxWsNx+br6CEN+P0r+v05nmfz2D1jm/qwqN/g
-	 Bka0Kb68aOjHfApRXOEcOhdBIJihZW1JaIew4Lt438T6le8Qz1kfzUcvtCaTxYwAU0
-	 i6PZdY9fgU9hnZZkI2JA4uFJ+ubmpwm87J26kiNfT6gqVD9x6RetS80mVUpbgZPr5I
-	 2fPEig6U/gMRQ0xU/ImslkSjgwwSG0pjh+EhuI0QsemcInFfMjxs4kSHuJvBwFqozo
-	 g22bxt4NjwXeg==
+	b=DD+/akJX/V4+gsnJIpCSnCLLsp7TpfqDUNUpSQekmtf6KBY2+HmWAkX6wRhi/mcVX
+	 Ddu3VwitGdh2OrxbsG/XJTvBBl/mubOwR1IhVnWAxmOQwf82fZ6OlEdksCMi+1JCBJ
+	 o/4uugjvfRezSKkvyAtUZoEDSesoPF4hV9dzCYcyudms6F3x1jTMb+deNp6v6hrdxA
+	 hTdm91qoFjeE8sYuMrVqYygpigzJbb56VPhbBpjJ13lm+1IbI8TTV2nXobbHuP/I3C
+	 VAT45wAXWVWJq+YsPHyKrG9oVWB1SHmL58k/wfUVEYm4cO9qeW+8rG78Lionl2CyH4
+	 Rpm3edPb39niA==
 From: SeongJae Park <sj@kernel.org>
-To: Ravi Jonnalagadda <ravis.opensrc@gmail.com>
+To: sashiko-bot@kernel.org
 Cc: SeongJae Park <sj@kernel.org>,
-	damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org,
-	linux-doc@vger.kernel.org,
-	akpm@linux-foundation.org,
-	corbet@lwn.net,
-	bijan311@gmail.com,
-	ajayjoshi@micron.com,
-	honggyu.kim@sk.com,
-	yunjeong.mun@sk.com
+	"Ravi Jonnalagadda" <ravis.opensrc@gmail.com>,
+	damon@lists.linux.dev
 Subject: Re: [PATCH v9.1] mm/damon: add node_eligible_mem_bp goal metric
-Date: Mon, 27 Apr 2026 07:49:13 -0700
-Message-ID: <20260427144914.112106-1-sj@kernel.org>
+Date: Mon, 27 Apr 2026 07:53:30 -0700
+Message-ID: <20260427145331.112239-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260427010209.843-1-ravis.opensrc@gmail.com>
+In-Reply-To: <20260427012429.D25C2C2BCAF@smtp.kernel.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -53,62 +45,61 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Sun, 26 Apr 2026 18:02:09 -0700 Ravi Jonnalagadda <ravis.opensrc@gmail.com> wrote:
-[...]
-> +static phys_addr_t damos_calc_eligible_bytes(struct damon_ctx *c,
-> +		struct damos *s, int nid, phys_addr_t *total)
-> +{
-> +	struct damon_target *t;
-> +	struct damon_region *r;
-> +	phys_addr_t total_eligible = 0;
-> +	phys_addr_t node_eligible = 0;
-> +
-> +	damon_for_each_target(t, c) {
-> +		damon_for_each_region(r, t) {
-> +			phys_addr_t addr, end_addr;
-> +
-> +			if (!__damos_valid_target(r, s))
-> +				continue;
-> +
-> +			/* Convert from core address units to physical bytes */
-> +			addr = (phys_addr_t)r->ar.start * c->addr_unit;
-> +			end_addr = (phys_addr_t)r->ar.end * c->addr_unit;
-> +			while (addr < end_addr) {
-> +				struct folio *folio;
-> +				phys_addr_t folio_start, folio_end;
-> +				phys_addr_t overlap_start, overlap_end;
-> +				phys_addr_t counted;
-> +
-> +				folio = damon_get_folio(PHYS_PFN(addr));
-> +				if (!folio) {
-> +					addr = PAGE_ALIGN_DOWN(addr + PAGE_SIZE);
-> +					continue;
-> +				}
+On Mon, 27 Apr 2026 01:24:29 +0000 sashiko-bot@kernel.org wrote:
 
-Sashiko found this could result in an infinite loop if 'addr + PAGE_SIZE'
-overflows.  The probability is quite low, but could we fix this?  Maybe like
-below?
+> Sashiko AI review found 3 potential issue(s):
+> - [High] Data truncation and arithmetic overflow in metric calculation on 32-bit systems.
+> - [High] Missing `cond_resched()` inside the inner PFN-walking loop causes CPU soft lockups.
 
-'''
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -2349,7 +2349,10 @@ static phys_addr_t damos_calc_eligible_bytes(struct damon_ctx *c,
+Not new Sashiko findings.  Above two issues are not real problems or better to
+see if the issue can really happen.  I explained detailed reason on previous
+Sashiko reviews.
 
-                                folio = damon_get_folio(PHYS_PFN(addr));
-                                if (!folio) {
--                                       addr = PAGE_ALIGN_DOWN(addr + PAGE_SIZE);
-+                                       addr = PAGE_ALIGN_DOWN(addr +
-+                                                       PAGE_SIZE);
-+                                       if (!addr)
-+                                               break;
-                                        continue;
-                                }
-'''
+> - [High] Address advancement logic is vulnerable to wrap-around infinite loops.
 
-Ravi, could you please post one more version (maybe v9.2) with the abive fix if
-it looks good to you?
+This is a new and good finding.  I asked a fix on my reply to the patch.
 
-[1] https://lore.kernel.org/20260427012429.D25C2C2BCAF@smtp.kernel.org
+> --
+> 
+> commit 10100659661304515a414f3a15324e8278667f42
+> Author: Ravi Jonnalagadda <ravis.opensrc@gmail.com>
+> 
+> mm/damon: add node_eligible_mem_bp goal metric
+> 
+> This commit introduces the DAMOS_QUOTA_NODE_ELIGIBLE_MEM_BP goal metric to
+> track the ratio of scheme-eligible memory on a specific NUMA node, allowing
+> the quota autotuner to adjust based on spatial memory distribution.
+> 
+> > diff --git a/mm/damon/core.c b/mm/damon/core.c
+> > index 3dbbbfdeff71..22d6eb3a974d 100644
+> > --- a/mm/damon/core.c
+> > +++ b/mm/damon/core.c
+> [ ... ]
+> > +static phys_addr_t damos_calc_eligible_bytes(struct damon_ctx *c,
+> > +		struct damos *s, int nid, phys_addr_t *total)
+> > +{
+> [ ... ]
+> > +			/* Convert from core address units to physical bytes */
+> > +			addr = (phys_addr_t)r->ar.start * c->addr_unit;
+> > +			end_addr = (phys_addr_t)r->ar.end * c->addr_unit;
+> > +			while (addr < end_addr) {
+> > +				struct folio *folio;
+> > +				phys_addr_t folio_start, folio_end;
+> > +				phys_addr_t overlap_start, overlap_end;
+> > +				phys_addr_t counted;
+> > +
+> > +				folio = damon_get_folio(PHYS_PFN(addr));
+> > +				if (!folio) {
+> > +					addr = PAGE_ALIGN_DOWN(addr + PAGE_SIZE);
+> 
+> If a DAMON region extends to the upper boundary of the physical address space,
+> could addr + PAGE_SIZE overflow and wrap around to 0?
+> 
+> If addr wraps to 0, addr < end_addr would remain true, which might cause an
+> unrecoverable infinite loop.
+
+Good finding.  I asked another version for fix of this, on my reply to the
+original patch.
 
 
 Thanks,
