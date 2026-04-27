@@ -1,123 +1,153 @@
-Received: from frasgout.his.huawei.com (frasgout.his.huawei.com [185.176.79.56])
+Received: from mailout1.samsung.com (mailout1.samsung.com [203.254.224.24])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E34973C4574
-	for <damon@lists.linux.dev>; Mon, 27 Apr 2026 13:25:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.176.79.56
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 586573BD246
+	for <damon@lists.linux.dev>; Mon, 27 Apr 2026 13:43:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=203.254.224.24
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777296316; cv=none; b=ulfsyFNsH5dr+wOpreeHqndP/rKUkWrjaQdTsobz7uStSD+X0vnOYzmTewq2Ah4alvFXbiELQO9K30tPy29I4MJZ0mZaRmF87ympaL7bK2NnfmSjtCrmY5HuUbXnHLuXe6AlFgTAlkiTehJc/8FvxAegsZRn3G1PqBWm/qfgQV8=
+	t=1777297388; cv=none; b=hNtnomqRbSfZFvhGdI3bzptu3ZdSv5mY950hKMcHXa4YXSmh7yUn/d+t+dKDAhiCVsBJaKwzwxmeyjxnkhmULbDgI8VfoIafiOk52yeCVy9XbsTXgoVLs/pcX7noIM6IcbvBTwMQbGSMtGJ0spdx0+Rw2s8zHJQ/NKT80RHz4Po=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777296316; c=relaxed/simple;
-	bh=Y2ZuKwVCb06b78qiGd/LMC1INxWQJCTKgEsLUlKgmXM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=qB+WbevCDe+wB/kO4iLbLPHUv5WD1dHcZrhlL4k8aCIERMoZHjHDMNwsej3V3MzagwYoBs2d4TkAKHM+TBXG4rSo/iRUF4Fszo6MFb/OMqVviB7C3XCfvlsPVQDv/6YKsTcWlgFaBD4VG5iXTSynjbFYOfIn7SYQ19D8C2M7EWQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei-partners.com; spf=pass smtp.mailfrom=huawei-partners.com; arc=none smtp.client-ip=185.176.79.56
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei-partners.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei-partners.com
-Received: from mail.maildlp.com (unknown [172.18.224.107])
-	by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4g447B6cf0zJ46XJ;
-	Mon, 27 Apr 2026 21:25:10 +0800 (CST)
-Received: from mscpeml500003.china.huawei.com (unknown [7.188.49.51])
-	by mail.maildlp.com (Postfix) with ESMTPS id 3ED494058C;
-	Mon, 27 Apr 2026 21:25:13 +0800 (CST)
-Received: from [10.123.123.154] (10.123.123.154) by
- mscpeml500003.china.huawei.com (7.188.49.51) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.11; Mon, 27 Apr 2026 16:25:12 +0300
-Message-ID: <d08d7ffd-8d51-474d-bf57-887e09cf1b05@huawei-partners.com>
-Date: Mon, 27 Apr 2026 16:25:12 +0300
+	s=arc-20240116; t=1777297388; c=relaxed/simple;
+	bh=HYpZWzyqAIY0fKVdx1G8AWuk4ggGTSoGNuwwIO5d2iQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:In-Reply-To:
+	 Content-Type:References; b=EliIs7/DDKxv2jgUAhkKr4kJ5DbqZcdCSZhyQTbewPCX6JUeJS7Ne5L1Nmfz7Pv8Wf0KPj97WHXdRfQu4UOjUKXSHBxOcW2gGH2ME5Algq+Jjm4sd/fv1t+qM7EZaEY7/dF3g+eg2R/K59816ZwPZTLyLAooSpE8pmcITMh0Nfw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com; spf=pass smtp.mailfrom=samsung.com; dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b=oTje4ElN; arc=none smtp.client-ip=203.254.224.24
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=samsung.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b="oTje4ElN"
+Received: from epcas5p1.samsung.com (unknown [182.195.41.39])
+	by mailout1.samsung.com (KnoxPortal) with ESMTP id 20260427134302epoutp0196401e6a027f43e9f7a2a8e4ec37def5~qOo2fjOBb1175011750epoutp01L;
+	Mon, 27 Apr 2026 13:43:02 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.samsung.com 20260427134302epoutp0196401e6a027f43e9f7a2a8e4ec37def5~qOo2fjOBb1175011750epoutp01L
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+	s=mail20170921; t=1777297383;
+	bh=HYpZWzyqAIY0fKVdx1G8AWuk4ggGTSoGNuwwIO5d2iQ=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=oTje4ElNm4xecU1VG1Jrx86EY3Gpl1Vu+7Eg8igCfRDmuEWp0LdNN4Ssf0cEWBOKp
+	 03qrQy7Mwh4wQ/opBqnoORCUo1z8aoZlbY7D0/ViobxGIRXTFLcHW7dWyX9aTsl2N3
+	 Eh24v5hHa9Vb0gAdrDBssQHqG7CW+ElPnJnUatLc=
+Received: from epsnrtp03.localdomain (unknown [182.195.42.155]) by
+	epcas5p2.samsung.com (KnoxPortal) with ESMTPS id
+	20260427134302epcas5p214d5e003586bc14fd5c926391fd2af9c~qOo16jVbi1491214912epcas5p24;
+	Mon, 27 Apr 2026 13:43:02 +0000 (GMT)
+Received: from epcpadp2new (unknown [182.195.40.142]) by
+	epsnrtp03.localdomain (Postfix) with ESMTP id 4g44Wp1ZR3z3hhT3; Mon, 27 Apr
+	2026 13:43:02 +0000 (GMT)
+Received: from epsmtip2.samsung.com (unknown [182.195.34.31]) by
+	epcas5p1.samsung.com (KnoxPortal) with ESMTPA id
+	20260427123800epcas5p1e1a2fed257091b31e2e6c3a7d1b0c2b0~qNwDrt8ay0098400984epcas5p1l;
+	Mon, 27 Apr 2026 12:38:00 +0000 (GMT)
+Received: from green245.gost (unknown [107.99.41.245]) by
+	epsmtip2.samsung.com (KnoxPortal) with ESMTPA id
+	20260427123748epsmtip257b0d1b83f2086e0e46dbf256b9f1ff0~qNv5BJqIr2057720577epsmtip23;
+	Mon, 27 Apr 2026 12:37:48 +0000 (GMT)
+Date: Mon, 27 Apr 2026 18:02:57 +0530
+From: Arun George <arun.george@samsung.com>
+To: Gregory Price <gourry@gourry.net>
+Cc: lsf-pc@lists.linux-foundation.org, linux-kernel@vger.kernel.org,
+	linux-cxl@vger.kernel.org, cgroups@vger.kernel.org, linux-mm@kvack.org,
+	linux-trace-kernel@vger.kernel.org, damon@lists.linux.dev,
+	kernel-team@meta.com, gregkh@linuxfoundation.org, rafael@kernel.org,
+	dakr@kernel.org, dave@stgolabs.net, jonathan.cameron@huawei.com,
+	dave.jiang@intel.com, alison.schofield@intel.com, vishal.l.verma@intel.com,
+	ira.weiny@intel.com, dan.j.williams@intel.com, longman@redhat.com,
+	akpm@linux-foundation.org, david@kernel.org, lorenzo.stoakes@oracle.com,
+	Liam.Howlett@oracle.com, vbabka@suse.cz, rppt@kernel.org, surenb@google.com,
+	mhocko@suse.com, osalvador@suse.de, ziy@nvidia.com, matthew.brost@intel.com,
+	joshua.hahnjy@gmail.com, rakie.kim@sk.com, byungchul@sk.com,
+	ying.huang@linux.alibaba.com, apopple@nvidia.com, axelrasmussen@google.com,
+	yuanchu@google.com, weixugc@google.com, yury.norov@gmail.com,
+	linux@rasmusvillemoes.dk, mhiramat@kernel.org,
+	mathieu.desnoyers@efficios.com, tj@kernel.org, hannes@cmpxchg.org,
+	mkoutny@suse.com, jackmanb@google.com, sj@kernel.org,
+	baolin.wang@linux.alibaba.com, npache@redhat.com, ryan.roberts@arm.com,
+	dev.jain@arm.com, baohua@kernel.org, lance.yang@linux.dev,
+	muchun.song@linux.dev, xu.xin16@zte.com.cn, chengming.zhou@linux.dev,
+	jannh@google.com, linmiaohe@huawei.com, nao.horiguchi@gmail.com,
+	pfalcato@suse.de, rientjes@google.com, shakeel.butt@linux.dev,
+	riel@surriel.com, harry.yoo@oracle.com, cl@gentwo.org,
+	roman.gushchin@linux.dev, chrisl@kernel.org, kasong@tencent.com,
+	shikemeng@huaweicloud.com, nphamcs@gmail.com, bhe@redhat.com,
+	zhengqi.arch@bytedance.com, terry.bowman@amd.com, gost.dev@samsung.com,
+	arungeorge05@gmail.com, cpgs@samsung.com
+Subject: Re: [LSF/MM/BPF TOPIC][RFC PATCH v4 00/27] Private Memory Nodes (w/
+ Compressed RAM)
+Message-ID: <1983025922.01777297382206.JavaMail.epsvc@epcpadp2new>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 14/19] mm/damon/sysfs: setup probes on DAMON core API
- parameters
-To: SeongJae Park <sj@kernel.org>
-CC: Andrew Morton <akpm@linux-foundation.org>, <damon@lists.linux.dev>,
-	<linux-kernel@vger.kernel.org>, <linux-mm@kvack.org>
-References: <20260426205222.93895-1-sj@kernel.org>
- <20260426205222.93895-15-sj@kernel.org>
-Content-Language: en-US
-From: Gutierrez Asier <gutierrez.asier@huawei-partners.com>
-In-Reply-To: <20260426205222.93895-15-sj@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: mscpeml500004.china.huawei.com (7.188.26.250) To
- mscpeml500003.china.huawei.com (7.188.49.51)
+In-Reply-To: <20260222084842.1824063-1-gourry@gourry.net>
+X-CMS-MailID: 20260427123800epcas5p1e1a2fed257091b31e2e6c3a7d1b0c2b0
+X-Msg-Generator: CA
+Content-Type: multipart/mixed;
+	boundary="----lGFk.c4Zo19QZrlL9e6EpsCdvlY3lrbI5T.6445u7ei3FFQQ=_4f40_"
+CMS-TYPE: 105P
+X-CPGSPASS: Y
+X-Hop-Count: 3
+X-CMS-RootMailID: 20260427123800epcas5p1e1a2fed257091b31e2e6c3a7d1b0c2b0
+References: <20260222084842.1824063-1-gourry@gourry.net>
+	<CGME20260427123800epcas5p1e1a2fed257091b31e2e6c3a7d1b0c2b0@epcas5p1.samsung.com>
+
+------lGFk.c4Zo19QZrlL9e6EpsCdvlY3lrbI5T.6445u7ei3FFQQ=_4f40_
+Content-Type: text/plain; charset="utf-8"; format="flowed"
+Content-Disposition: inline
+
+On 22/02/26 03:48AM, Gregory Price wrote:
+>Topic type: MM
+>
+>Presenter: Gregory Price <gourry@gourry.net>
+>
+>This series introduces N_MEMORY_PRIVATE, a NUMA node state for memory
+>managed by the buddy allocator but excluded from normal allocations.
+>
+>I present it with an end-to-end Compressed RAM service (mm/cram.c)
+>that would otherwise not be possible (or would be considerably more
+>difficult, be device-specific, and add to the ZONE_DEVICE boondoggle).
+>
+>
+>TL;DR
+>===
+>
+Appreciate the work as we also chase the same problem statement.
+A few queries please.
+
+I see the current support relies on read-only mappings which might
+limit the performance. Any particular workload you are targeting with
+this (which can tolerate this latency)?
+
+Any deployments you think of where the goal is a capacity expansion
+with a compromise in performance?
+
+On the device side, are you targeting beyond compressed RAM like
+devices such as memory with NAND etc.?
+
+The TL;DR talked about mmap/mbind way of user space allocation from
+the private node. But the allocation is controlled by GFP flag
+N_MEMORY_PRIVATE. Does the user space path of allocation set this
+flag along the way?
+
+And I believe the bear-proof cage might work in the normal scenarios,
+but may not work for all. We might not be able to rely on the control
+path (backpressure) fully. The control path could go slow, slower and
+even die as well. Should the device respond with something like
+'bus error' if the host tries to write when it is not capable of
+taking any more writes?
+
+Are there any workloads (VM?) where this 'bus error'or similar error
+could be an OK / recoverable scenario?
+
+This is assuming that checking with the device on every operation
+(whether it is safe to write or not) could be slow.
+
+--- Arun George
+
+------lGFk.c4Zo19QZrlL9e6EpsCdvlY3lrbI5T.6445u7ei3FFQQ=_4f40_
+Content-Type: text/plain; charset="utf-8"
 
 
-
-On 4/26/2026 11:52 PM, SeongJae Park wrote:
-> Add user-installed data probes to DAMON core API parameters, so that
-> user inputs for data probes are passed to DAMON core.
-> 
-> Signed-off-by: SeongJae Park <sj@kernel.org>
-> ---
->  mm/damon/sysfs.c | 37 +++++++++++++++++++++++++++++++++++++
->  1 file changed, 37 insertions(+)
-> 
-> diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
-> index 2e0b7eca6bcbf..8007961295d3d 100644
-> --- a/mm/damon/sysfs.c
-> +++ b/mm/damon/sysfs.c
-> @@ -1855,6 +1855,40 @@ static int damon_sysfs_set_attrs(struct damon_ctx *ctx,
->  	return damon_set_attrs(ctx, &attrs);
->  }
->  
-> +static int damon_sysfs_set_probes(struct damon_ctx *ctx,
-> +		struct damon_sysfs_probes *sys_probes)
-> +{
-> +	int i;
-> +
-> +	for (i = 0; i < sys_probes->nr; i++) {
-> +		struct damon_sysfs_filters *sys_filters =
-> +			sys_probes->probes_arr[i]->filters;
-> +		struct damon_probe *c;
-> +		int j;
-> +
-> +		if (!sys_filters)
-> +			continue;
-> +		c = damon_new_probe();
-> +		if (!c)
-> +			return -ENOMEM;
-> +		damon_add_probe(ctx, c);
-> +
-> +		for (j = 0; j < sys_filters->nr; j++) {
-> +			struct damon_sysfs_filter *sys_filter =
-> +				sys_filters->filters_arr[j];
-> +			struct damon_filter *t;
-Move the declaration of these two variables to the top of the
-function.
-> +
-> +			t = damon_new_filter(sys_filter->type,
-> +					sys_filter->matching,
-> +					sys_filter->allow);
-> +			if (!t)
-> +				return -ENOMEM;
-> +			damon_add_filter(c, t);
-> +		}
-> +	}
-> +	return 0;
-> +}
-> +
->  static int damon_sysfs_set_regions(struct damon_target *t,
->  		struct damon_sysfs_regions *sysfs_regions,
->  		unsigned long min_region_sz)
-> @@ -1967,6 +2001,9 @@ static int damon_sysfs_apply_inputs(struct damon_ctx *ctx,
->  				DAMON_MIN_REGION_SZ / sys_ctx->addr_unit, 1);
->  	ctx->pause = sys_ctx->pause;
->  	err = damon_sysfs_set_attrs(ctx, sys_ctx->attrs);
-> +	if (err)
-> +		return err;
-> +	err = damon_sysfs_set_probes(ctx, sys_ctx->attrs->probes);
->  	if (err)
->  		return err;
->  	err = damon_sysfs_add_targets(ctx, sys_ctx->targets);
-
--- 
-Asier Gutierrez
-Huawei
+------lGFk.c4Zo19QZrlL9e6EpsCdvlY3lrbI5T.6445u7ei3FFQQ=_4f40_--
 
