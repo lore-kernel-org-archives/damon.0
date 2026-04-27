@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9ADA37B019
-	for <damon@lists.linux.dev>; Mon, 27 Apr 2026 14:58:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EBC432A3EC;
+	Mon, 27 Apr 2026 15:10:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777301913; cv=none; b=BzKXoeP0fJ2iikRM7f9vvrTA4FPXagDPnyAu+r79TkmqlZ5pZej5aFmSNuEvG6b0RYuw0fcpAUvcO8N1L5qgla2iJqIASpb7CkHXuKdzjAwLFAXi7UiqH/NaclbqXx6Zu30y+TC1fHVnHfiGowmkCsBrm2HwzGF8ggOQHA0EICc=
+	t=1777302601; cv=none; b=L+KU8m3WbGgEWUl9ZRtdbm5pF9lsLFdySiDHajTyj/Y2zzIZ/h9E1CT702GkgsEXCrNb47pY19Jx7P40kuyxRyec31WpVBRmQdvXDrYZXDNx37dfin4eFeCwJc596gDjkywTcndW5qbaBiululbqQ12tMOOol7r2vOCOfl3U7eA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777301913; c=relaxed/simple;
-	bh=Dy6HDY5f7i/fK0l5asW9+Y4z3Dq4AYkK2eqcnRQ1GzQ=;
+	s=arc-20240116; t=1777302601; c=relaxed/simple;
+	bh=D3bN09nuD0jE5rvlzrltFtSzKt2ZOU/RkqRJSMh1fBY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FG2JNYTGgZQjFOvc77v3wHdVvBGXfUBna5iEZXnfuXsLc3/aeJuZnu1DXnt3L/PLoVzI+wZSQArjMheeAS1HddIxZogMutX/7FzMtDcWSAMjqi5lBYxaFuOqR5On4dAIwhrz2SdA06eGjqp0d/ObEBmtpKC8w1c7VRKluUbZW9o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qwB+cApx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UDeG5YS7KjHNdJZN+KsL+IOzXN9MipjmmPSLqn4+rTMjsN+r+mAYMGfwuX3EqmQeaDPegEI9AtBGmaot3KlckOrroa8HhclgMqeXOY4RICDFt6Y4ulEFM2Np32N+rdPc8MeGH3KPLfyGJ46v00yJZEgdWFZWkHut3lmWkIjgVAg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nyy0b6B9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qwB+cApx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C7A5C19425;
-	Mon, 27 Apr 2026 14:58:33 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nyy0b6B9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78193C19425;
+	Mon, 27 Apr 2026 15:10:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777301913;
-	bh=Dy6HDY5f7i/fK0l5asW9+Y4z3Dq4AYkK2eqcnRQ1GzQ=;
+	s=k20201202; t=1777302600;
+	bh=D3bN09nuD0jE5rvlzrltFtSzKt2ZOU/RkqRJSMh1fBY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qwB+cApxCOJB5Y8V+A9hl7/J9YJw/Uii8qzic8q1aOEfyIbSQdJ0orkY+vs7xn2Kd
-	 I5bPWcQ7WkoD5jnjwawvUpicpQFXTTJXKJLjH4eS3dkuiZtn8HXoChiJPN/Ztb1yfe
-	 OEqQuckyGYRz9HwDFWzwGP1/0Ljc25Up7cUahic0/R5EkIkCSJCiAhcI8pbN4I7YuZ
-	 DFhSqEFtdDzXX6MTcHAhDYQoOn+zVMHNxonAlamkXyRiarZ49AzzUYw096H03SbGQC
-	 +2Rs1e8sbfV0vGuTFjYUTNynkr6PkDV2gInZ+sP2/i8kly+UteM4VxaZRq+KOqXELj
-	 Dj4dJM8HVKuuw==
+	b=nyy0b6B9VE/dfGuew3dmPZtuzjUfaVeza2re4ZfVt33Oo2kBsgR7UQ+bpAfGTKxs8
+	 K8qOtDgeJVmUBEy+xvqt8im4BrW8YcERDFCgCyFnrFZ9w0RjP+ykTnY4g3r1R8PDJf
+	 pQ3pEvlP/hD3el2phaSsXfoyTf1rkBzMmC7iZ4xBx3Yoxbwzf9fbsW4UuOv/k97WHF
+	 4f1TBnd1crDamBOoN0vaLN8iNOaY7PrvVfOmDuLW1+I/pP+4jM/ST/ZGhZgTfUL52X
+	 RvXvV911e58lxaNCRfBFJdHgWEvND1y7SMbJ76Un/LYD3aUlGqXynnQ8BHlXEX7bYt
+	 V4ixAnzZ9AqGA==
 From: SeongJae Park <sj@kernel.org>
 To: SeongJae Park <sj@kernel.org>
-Cc: sashiko-bot@kernel.org,
-	"Ravi Jonnalagadda" <ravis.opensrc@gmail.com>,
-	damon@lists.linux.dev
-Subject: [PATCH for-sashiko] mm/damon/core: (fixup) break calc_eligible_bytes() loop if addr overflows
-Date: Mon, 27 Apr 2026 07:58:30 -0700
-Message-ID: <20260427145831.112393-1-sj@kernel.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>,
+	Liew Rui Yan <aethernet65535@gmail.com>,
+	damon@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	linux-mm@kvack.org
+Subject: Re: [PATCH v2 1/4] mm/damon/ops-common: optimize damon_hot_score() using ilog2()
+Date: Mon, 27 Apr 2026 08:09:57 -0700
+Message-ID: <20260427150958.113205-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260427145331.112239-1-sj@kernel.org>
+In-Reply-To: <20260426231619.107231-2-sj@kernel.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -45,37 +47,67 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-As Sashiko pointed out, it could result in infinite loop.  Check the
-overflow and break the loop in the case.
+On Sun, 26 Apr 2026 16:16:14 -0700 SeongJae Park <sj@kernel.org> wrote:
 
-Also, wrap the addr setup line to keep the 80 columns limit.
+> From: Liew Rui Yan <aethernet65535@gmail.com>
+[...]
+> --- a/mm/damon/ops-common.c
+> +++ b/mm/damon/ops-common.c
+> @@ -117,9 +117,12 @@ int damon_hot_score(struct damon_ctx *c, struct damon_region *r,
+>  		damon_max_nr_accesses(&c->attrs);
+>  
+>  	age_in_sec = (unsigned long)r->age * c->attrs.aggr_interval / 1000000;
+> -	for (age_in_log = 0; age_in_log < DAMON_MAX_AGE_IN_LOG && age_in_sec;
+> -			age_in_log++, age_in_sec >>= 1)
+> -		;
+> +	if (age_in_sec)
+> +		age_in_log = min_t(int, ilog2(age_in_sec) + 1,
+> +				DAMON_MAX_AGE_IN_LOG);
+> +	else
+> +		age_in_log = 0;
+> +
+>  
+>  	/* If frequency is 0, higher age means it's colder */
+>  	if (freq_subscore == 0)
+
+Sashiko found this patch is introducing two blank lines.  Andrew, I saw you
+already added this to mm-new.  Could you please add below attaching fixup?  If
+you prefer reposting this patch, please let me know.
+
+
+Thanks,
+SJ
+
+[...]
+=== >8 ===
+From 1d97945a7c35463d3757df985cf3545bf9d5ed9c Mon Sep 17 00:00:00 2001
+From: SeongJae Park <sj@kernel.org>
+Date: Mon, 27 Apr 2026 08:05:09 -0700
+Subject: [PATCH] mm/damon/ops-common: (fixup) remove unnecessary blank line
+
+Two blank lines are unnecessary.
+
+The issue was discovered [1] by Sashiko.
+
+[1] https://lore.kernel.org/20260426232811.618BFC2BCAF@smtp.kernel.org
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
-NOTE:
-Writing entire patches for minor Sashiko finding is tiresome.  This is an
-experimental posting of fixup patch, wishing Sashiko to review this kind of
-incremental fixup.
----
- mm/damon/core.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ mm/damon/ops-common.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index 22d6eb3a974d4..9a4220174a61a 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -2349,7 +2349,10 @@ static phys_addr_t damos_calc_eligible_bytes(struct damon_ctx *c,
+diff --git a/mm/damon/ops-common.c b/mm/damon/ops-common.c
+index 3a0ddc3ac7196..b2ce817f33c53 100644
+--- a/mm/damon/ops-common.c
++++ b/mm/damon/ops-common.c
+@@ -123,7 +123,6 @@ int damon_hot_score(struct damon_ctx *c, struct damon_region *r,
+ 	else
+ 		age_in_log = 0;
  
- 				folio = damon_get_folio(PHYS_PFN(addr));
- 				if (!folio) {
--					addr = PAGE_ALIGN_DOWN(addr + PAGE_SIZE);
-+					addr = PAGE_ALIGN_DOWN(addr +
-+							PAGE_SIZE);
-+					if (!addr)
-+						break;
- 					continue;
- 				}
- 
+-
+ 	/* If frequency is 0, higher age means it's colder */
+ 	if (freq_subscore == 0)
+ 		age_in_log *= -1;
 -- 
 2.47.3
 
