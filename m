@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D47F3368A3;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3C6A3382CF;
 	Mon, 27 Apr 2026 15:12:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777302763; cv=none; b=rM6wkt8q32zo25JaeWJwhKiDhxY2BaXvceeuLRStg5ggLwpHKdJcPFk7DSei8It6nuUrwRDRDNtc88IOkoKYXmzQ1byktpcHaaCQhFc9Xp2kMc2zjemjddO3IuXO8kdh0KHjwaF8NyC0/0/lDeJfa+htJItYBY2JesRDufkVuJM=
+	t=1777302764; cv=none; b=IRHdgShZFr/uSzRWeLVZQc3z0ZQQlBLtSOdo9UXHyaQxeCHdngFeoM7OlICBFkSuGMFasgbG6I78+1hkxLfHSRxotyiVJt35sw7KQmj55lGejrdEXG8ezfQoC+y/CvVDn7HJQja+L1X7W0AyoocS2eoajIfKjkOm05M6n0q8Y8k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777302763; c=relaxed/simple;
-	bh=TJXeffpmshBn5e3s77gk9ewA/YmV5afqYkZ0L4RsmNM=;
+	s=arc-20240116; t=1777302764; c=relaxed/simple;
+	bh=9O26QoN+V9tNeSexEgjKx5Rwm+ySmwIIy3Pdsz7ovf4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EaBszkZJwPmGKJiAZrRptFAobEL0r/WBIiM1wQOgfGiOJuVWVX0O5m55wooNYqqobkBYfg5N4AtWk5lwNs0TeKBFCbqAwW/AsjKpZbb5DHlL8H8rheLbwzRGdMBlb1ZvNn7BuSUwotkRQkzdDPeSsqldze7GOgadmlLeJ6Bk/X8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qIxHwC7j; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HnDpnstpaDE3HlQ+JfB55CjVDOOM9Lp2hmRV7GzvwygF6NiaohBfce/dgkuLtmUYRjolcSZ3h9Cgc+yidBx6RYKmP4+/KKBYS9fzbKi7LmSKeVqmk/ZIgD0fwjFR1BRkS8EakvM07bMx6xPVlrS57NFZmVCo2gjRnmQ19ATJIog=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GHvaeA9B; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qIxHwC7j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F1F2C19425;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GHvaeA9B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DB30C2BCB7;
 	Mon, 27 Apr 2026 15:12:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1777302763;
-	bh=TJXeffpmshBn5e3s77gk9ewA/YmV5afqYkZ0L4RsmNM=;
+	bh=9O26QoN+V9tNeSexEgjKx5Rwm+ySmwIIy3Pdsz7ovf4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qIxHwC7jpSTJLYHo4UAK3o1BQt0TxmjOyiTaW/8vKTIqO1Fi36gO4inEtqu7OvaYL
-	 ea5lnGOmDsGrFslRP0dMXV6FS1c1TSBJEPDDYJ1fvVlFB8hEYiZhE/W0o+38XaNpNp
-	 AWv+FPlqmqABpRiVtWo/UYn4na6zdhN4vAhUZMi7xmslSJCpilxtXYvteLPqpoB7LW
-	 DtRukm/NtPKKGOueXTUC+nDuEjwiPKrU1MOnubP19Zrrfwczwuc/1L4NhDbv9FZ0o/
-	 HMH7+YqNp6fOIiHpP2q1NRZAYnTDK0SciY5aOW5MpRkwrgQqE1B+0rDukd5x776b/Q
-	 D0bXUjxFLJRjA==
+	b=GHvaeA9B29EOfNwhZ2BklSXm4t/Hcqa3SiTUb2DUOZDFGSxRDTO6B7qmoBVRub2Ve
+	 O0HzutMREEg6GOFwc0InVJ4mlzGmbxWNwybN/i5sFNh9wWa5PSqIuBiUiUApIeQQdz
+	 NZF5YN36/bPjjd5NttoNMCbxS88s2WUmdm3P91MzNlr/mMOFth39DNGPpnFjC1dR7f
+	 7CuKeGpOaylKpV11mk2LwNVJRALqRuhdlAUpVKkMyEb6PaqbTLaOHei8Dg8PvLTYhw
+	 hRIoESfZzSpHRUwj3Nl2DMgbzC2rdZjwm7ncKz3Y1MNPYp2MRfQ9GOc1gsyvSvjIWc
+	 Aj4ogr0+dgIIw==
 From: SeongJae Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SeongJae Park <sj@kernel.org>,
@@ -34,9 +34,9 @@ Cc: SeongJae Park <sj@kernel.org>,
 	linux-kernel@vger.kernel.org,
 	linux-kselftest@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [PATCH v2 07/10] selftests/damon/_damon_sysfs: support pause file staging
-Date: Mon, 27 Apr 2026 08:12:26 -0700
-Message-ID: <20260427151231.113429-8-sj@kernel.org>
+Subject: [PATCH v2 08/10] selftests/damon/drgn_dump_damon_status: dump pause
+Date: Mon, 27 Apr 2026 08:12:27 -0700
+Message-ID: <20260427151231.113429-9-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260427151231.113429-1-sj@kernel.org>
 References: <20260427151231.113429-1-sj@kernel.org>
@@ -48,52 +48,25 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-DAMON test-purpose sysfs interface control Python module, _damon_sysfs,
-is not supporting the newly added pause file.  Add the support of the
-file, for future test and use of the feature.
+drgn_dump_damon_status is not dumping the damon_ctx->pause parameter
+value, so it cannot be tested.  Dump it for future tests.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- tools/testing/selftests/damon/_damon_sysfs.py | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ tools/testing/selftests/damon/drgn_dump_damon_status.py | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/tools/testing/selftests/damon/_damon_sysfs.py b/tools/testing/selftests/damon/_damon_sysfs.py
-index 2b4df655d9fd0..120b96ecbd741 100644
---- a/tools/testing/selftests/damon/_damon_sysfs.py
-+++ b/tools/testing/selftests/damon/_damon_sysfs.py
-@@ -604,10 +604,11 @@ class DamonCtx:
-     targets = None
-     schemes = None
-     kdamond = None
-+    pause = None
-     idx = None
+diff --git a/tools/testing/selftests/damon/drgn_dump_damon_status.py b/tools/testing/selftests/damon/drgn_dump_damon_status.py
+index af99b07a4f565..5b90eb8e7ef88 100755
+--- a/tools/testing/selftests/damon/drgn_dump_damon_status.py
++++ b/tools/testing/selftests/damon/drgn_dump_damon_status.py
+@@ -200,6 +200,7 @@ def damon_ctx_to_dict(ctx):
+         ['attrs', attrs_to_dict],
+         ['adaptive_targets', targets_to_list],
+         ['schemes', schemes_to_list],
++        ['pause', bool],
+         ])
  
-     def __init__(self, ops='paddr', monitoring_attrs=DamonAttrs(), targets=[],
--            schemes=[]):
-+            schemes=[], pause=False):
-         self.ops = ops
-         self.monitoring_attrs = monitoring_attrs
-         self.monitoring_attrs.context = self
-@@ -622,6 +623,8 @@ class DamonCtx:
-             scheme.idx = idx
-             scheme.context = self
- 
-+        self.pause=pause
-+
-     def sysfs_dir(self):
-         return os.path.join(self.kdamond.sysfs_dir(), 'contexts',
-                 '%d' % self.idx)
-@@ -662,6 +665,11 @@ class DamonCtx:
-             err = scheme.stage()
-             if err is not None:
-                 return err
-+
-+        err = write_file(os.path.join(self.sysfs_dir(), 'pause'), self.pause)
-+        if err is not None:
-+            return err
-+
-         return None
- 
- class Kdamond:
+ def main():
 -- 
 2.47.3
