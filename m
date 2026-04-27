@@ -1,113 +1,195 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB27F2D12EE
-	for <damon@lists.linux.dev>; Sun, 26 Apr 2026 23:28:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B05E4171AF
+	for <damon@lists.linux.dev>; Mon, 27 Apr 2026 00:00:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777246092; cv=none; b=WttRIZHwWSA+proVcXMTMjIp5e4ofr7vltT6pPoP0li02HUcNV73Du57veUqFE5NTB0InqjMTwL07khEDPw3rGO3aJikFB2sLzZrBcmxOcXUmqeu2Y3AfkV9tHBUXAbQYpAJphzL9TiubemIxT0GuCEJ1oZ5Ze8XVQVKMafOgSc=
+	t=1777248012; cv=none; b=aV6a6lyXNgj8csYTFeecb3k07s9Uo/wLv156Y16mzmHU5+RWuN9rPPAN1YzBRPYIE52eTJQHYDrWoYqBTj9WeP+rpphPjt5qdeT+jlkWH/yt2dMGbTTtyGypNM8CWRJDxh30xW3g7EZkuAxpnZ4JQAPIw//dR01rgE7BcVRyK88=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777246092; c=relaxed/simple;
-	bh=wofQx/yGxuBVEEA2YCxVE6Aotg1dwq+RBfk4+WB5Zas=;
+	s=arc-20240116; t=1777248012; c=relaxed/simple;
+	bh=tT/Ze44QBlKBc3tY7OXBEfmW287aZPD/LkRNLsv7I/Y=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=iZlFY4ujb/OR2wM1K28rHFsjfzemFnDdFIFOj6WbTS9dZjDbEH6sUDgm8sXa7Z1C9EdjVLPYtncHmimq91h7Ezy5Af7OwmT4h70gUZsDaA4zpltMZDPfpJu8+X1aBCaWQ547vijkkPxzKuWN/RZyo0/SCf2vtZG7myQEWERWpJE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uSPGmt8Z; arc=none smtp.client-ip=10.30.226.201
+	 Message-Id; b=GbVXeLZURr398cevbe6Bl9yqCGXKsFld0bnpc70HLLHlqswFOFelicUIhrlFRYznPCg7zEldGvThhiIncRNyQJeKwAna5xHQPWBTXkjo/xdY+CmQqeiBT3khw3uB34hbaVvbpNib7g8POPCqbeV+1zGINqZdKVh7hzNDTRdFr3c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aWENdj4m; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uSPGmt8Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 618BFC2BCAF;
-	Sun, 26 Apr 2026 23:28:11 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aWENdj4m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E772C2BCAF;
+	Mon, 27 Apr 2026 00:00:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777246091;
-	bh=wofQx/yGxuBVEEA2YCxVE6Aotg1dwq+RBfk4+WB5Zas=;
+	s=k20201202; t=1777248012;
+	bh=tT/Ze44QBlKBc3tY7OXBEfmW287aZPD/LkRNLsv7I/Y=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date:From;
-	b=uSPGmt8ZDNoMJDUSh6pjmrNtulkXdo692g9VxojaPptOZ03BOS76ajB6+B62QS48Q
-	 9lgZIOflx1LCurZvXT0UBMECVTqzWlUX773fEJe7kU0yssKhGacxBgCHuh+I/NLUh1
-	 q+kWU0ruvTVBd2BZhIK6ae3lT0ucnFMB4XQmO0h5+2pcUNfMbh2KNzQ7ek2VfG9zzP
-	 Fhyfa/yk/DaAr7uTztkKU74w98id2mxwkpFWlCOd7BZVycVbi6UDgRNn28zx/TF6tY
-	 TgFZXEbvveSPE5nrh6dbZfigcQLClY2LLm03UEDQdsWkacIYYoAmkKsRndL2Zsz7Ay
-	 tQh2fuhBZglBQ==
+	b=aWENdj4mO1FlJJbojWaAMIgST4zHVaNLIquuLAbbwmBO7bkZLBB3pFjFwpRCcE/wI
+	 TpVHr3nvYZT1qyuRTg5nAZ0iIBa+MFhmxvjH8xtDB1WurMdIEAfgAzutyApECmu+n9
+	 IQTYFQtiQLVZ/NcUY7cU498fAvW43rC2BkBcTBqDJEUtczgfVOZAXXsJJjq7cTIfrw
+	 zavY74Vqg8FXwR9XS0tj25wHey04PsPWcjNT2DZkgJ9b0dDzb4ELC6sWyJSqWczNk4
+	 S1QsjXtebhdWAd/eGTfpRlMMcVgY5XyejnQNl00eoZF4PYk5IpZ4H0MR1srUiGg+xI
+	 olLbqjX9XYwZQ==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v2 1/4] mm/damon/ops-common: optimize damon_hot_score()
- using ilog2()
+Subject: Re: [PATCH v2 3/4] mm/damon: add synchronous commit for
+ commit_inputs
 Reply-To: sashiko@lists.linux.dev
 To: "SeongJae Park" <sj@kernel.org>
 Cc: damon@lists.linux.dev
-In-Reply-To: <20260426231619.107231-2-sj@kernel.org>
-References: <20260426231619.107231-2-sj@kernel.org>
+In-Reply-To: <20260426231619.107231-4-sj@kernel.org>
+References: <20260426231619.107231-4-sj@kernel.org>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Sun, 26 Apr 2026 23:28:10 +0000
-Message-Id: <20260426232811.618BFC2BCAF@smtp.kernel.org>
+Date: Mon, 27 Apr 2026 00:00:11 +0000
+Message-Id: <20260427000012.7E772C2BCAF@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 
-Sashiko AI review found 3 potential issue(s):
-- [High] Arithmetic overflow on 32-bit architectures during `age_in_sec` ca=
-lculation.
-- [Low] The logic using `ilog2()` with a zero-check branch can be simplifie=
-d by directly using `fls()`.
-- [Low] Unnecessary double blank line introduced.
+Sashiko AI review found 1 potential issue(s):
+- [High] Writing to the `commit_inputs` sysfs parameter before the DAMON wo=
+rker thread (`kdamond`) is started causes the writing task to hang indefini=
+tely in an unkillable D-state.
 --
 
-commit c096ebdf3dd6d7a6e783e2ac65dec1740282929f
+commit 43a70e5ab295c21c0b94eddd32d886c9d0eba3fa
 Author: Liew Rui Yan <aethernet65535@gmail.com>
 
-    mm/damon/ops-common: optimize damon_hot_score() using ilog2()
+mm/damon: add synchronous commit for commit_inputs
 
-This commit replaces the manual for-loop used to calculate age_in_log
-in damon_hot_score() with the ilog2() function. This optimization aims to
-significantly reduce the latency of the hotness score calculation.
+This commit changes the commit_inputs_store() callback to use damon_call()
+to synchronously commit parameters in the kdamond thread's safe context.
+This ensures validation errors are returned immediately to userspace.
 
-> diff --git a/mm/damon/ops-common.c b/mm/damon/ops-common.c
-> index 8c6d613425c1..3a0ddc3ac719 100644
-> --- a/mm/damon/ops-common.c
-> +++ b/mm/damon/ops-common.c
-> @@ -117,9 +117,12 @@ int damon_hot_score(struct damon_ctx *c, struct damo=
-n_region *r,
->  		damon_max_nr_accesses(&c->attrs);
+Link: https://lore.kernel.org/20260318153731.97470-1-aethernet65535@gmail.c=
+om
+
+> diff --git a/mm/damon/lru_sort.c b/mm/damon/lru_sort.c
+> index 554559d72976..641af42cc2d1 100644
+> --- a/mm/damon/lru_sort.c
+> +++ b/mm/damon/lru_sort.c
+
+[ ... ]
+
+> @@ -349,18 +348,51 @@ static int damon_lru_sort_apply_parameters(void)
+>  	return err;
+>  }
 > =20
->  	age_in_sec =3D (unsigned long)r->age * c->attrs.aggr_interval / 1000000;
+> -static int damon_lru_sort_handle_commit_inputs(void)
+> +static int damon_lru_sort_commit_inputs_fn(void *arg)
+>  {
+> +	return damon_lru_sort_apply_parameters();
+> +}
+> +
+> +static int damon_lru_sort_commit_inputs_store(const char *val,
+> +					      const struct kernel_param *kp)
+> +{
+> +	bool commit_inputs_request;
+>  	int err;
+> +	struct damon_call_control control =3D {
+> +		.fn =3D damon_lru_sort_commit_inputs_fn,
+> +	};
+> =20
+> -	if (!commit_inputs)
+> +	if (!val) {
+> +		commit_inputs_request =3D true;
+> +	} else {
+> +		err =3D kstrtobool(val, &commit_inputs_request);
+> +		if (err)
+> +			return err;
+> +	}
+> =20
+> +	if (!commit_inputs_request)
+>  		return 0;
+> =20
+> -	err =3D damon_lru_sort_apply_parameters();
+> -	commit_inputs =3D false;
+> -	return err;
+> +	/*
+> +	 * Skip damon_call() if ctx is not initialized to avoid
+> +	 * NULL pointer dereference.
+> +	 */
+> +	if (!ctx)
+> +		return -EINVAL;
+> +
+> +	err =3D damon_call(ctx, &control);
 
-This isn't a bug in your patch, but does the multiplication of
-(unsigned long)r->age * c->attrs.aggr_interval overflow on 32-bit
-architectures?
+If the module has not yet been enabled (e.g., enabled=3DN) and the kdamond
+thread is not running, does this call to damon_call() block indefinitely?
 
-Since both variables evaluate as 32-bit types on 32-bit architectures,
-if aggr_interval is 1,000,000 (1 second), the multiplication will wrap
-around when r->age exceeds 4294. This wrap-around could result in a very
-small age_in_sec value for extremely cold regions, causing them to be
-falsely evaluated as young and hot.
+Since ctx is allocated during initialization, the ctx pointer is not NULL.
+damon_call() then queues the control request and calls wait_for_completion(=
+).
 
-Should this calculation be cast to a 64-bit integer prior to multiplication,
-perhaps using div_u64()?
+Without the background thread running to process the queue and signal
+completion, it seems the sysfs writer task is placed into an unkillable
+D-state forever.
 
-> -	for (age_in_log =3D 0; age_in_log < DAMON_MAX_AGE_IN_LOG && age_in_sec;
-> -			age_in_log++, age_in_sec >>=3D 1)
-> -		;
-> +	if (age_in_sec)
-> +		age_in_log =3D min_t(int, ilog2(age_in_sec) + 1,
-> +				DAMON_MAX_AGE_IN_LOG);
-> +	else
-> +		age_in_log =3D 0;
-
-Instead of using ilog2() with a zero-check branch, could this be simplified
-by directly using fls()?
-
-The fls() function safely returns 0 when the value is 0 and correctly
-calculates the 1-based log2 value for positive numbers, allowing this
-branch to be removed entirely while preserving the exact mathematical
-result.
+The damon_call() documentation indicates it should only be called after
+damon_start() has succeeded, otherwise it could fall into an indefinite wai=
+t.
 
 > +
-> =20
->  	/* If frequency is 0, higher age means it's colder */
+> +	return err ? err : control.return_code;
+>  }
 
-This isn't a bug, but an extra blank line appears to be introduced here,
-creating two consecutive blank lines.
+[ ... ]
+
+> diff --git a/mm/damon/reclaim.c b/mm/damon/reclaim.c
+> index 86da14778658..4fc4a54b5e54 100644
+> --- a/mm/damon/reclaim.c
+> +++ b/mm/damon/reclaim.c
+
+[ ... ]
+
+> @@ -255,18 +254,51 @@ static int damon_reclaim_apply_parameters(void)
+>  	return err;
+>  }
+> =20
+> -static int damon_reclaim_handle_commit_inputs(void)
+> +static int damon_reclaim_commit_inputs_fn(void *arg)
+>  {
+> +	return damon_reclaim_apply_parameters();
+> +}
+> +
+> +static int damon_reclaim_commit_inputs_store(const char *val,
+> +					     const struct kernel_param *kp)
+> +{
+> +	bool commit_inputs_request;
+>  	int err;
+> +	struct damon_call_control control =3D {
+> +		.fn =3D damon_reclaim_commit_inputs_fn,
+> +	};
+> =20
+> -	if (!commit_inputs)
+> +	if (!val) {
+> +		commit_inputs_request =3D true;
+> +	} else {
+> +		err =3D kstrtobool(val, &commit_inputs_request);
+> +		if (err)
+> +			return err;
+> +	}
+> +
+> +	if (!commit_inputs_request)
+>  		return 0;
+> =20
+> -	err =3D damon_reclaim_apply_parameters();
+> -	commit_inputs =3D false;
+> -	return err;
+> +	/*
+> +	 * Skip damon_call() if ctx is not initialized to avoid
+> +	 * NULL pointer dereference.
+> +	 */
+> +	if (!ctx)
+> +		return -EINVAL;
+> +
+> +	err =3D damon_call(ctx, &control);
+
+Could this exhibit the same hang as in damon_lru_sort.c? If the worker
+thread has not been started, does writing to commit_inputs block forever?
+
+> +
+> +	return err ? err : control.return_code;
+>  }
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260426231619.1072=
-31-1-sj@kernel.org?part=3D1
+31-1-sj@kernel.org?part=3D3
