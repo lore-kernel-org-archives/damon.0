@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49941192D8A
-	for <damon@lists.linux.dev>; Mon, 27 Apr 2026 14:19:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F833299A87
+	for <damon@lists.linux.dev>; Mon, 27 Apr 2026 14:30:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777299545; cv=none; b=jhkk4/pZpYGvXHx8N4vXRUF1aedeoJzO/22QxlvRRh64CZvj1oaD0pzfb+O9QB+Yxm+De2l6ISxNeba8t15wYj6g9Jz0+rUjZZTbFWmqZuhebZFBgDJpRU5A3BHbF0j5FesAkuuTu2BXdKu7K58X5Vzb/DUjcbXTrwHC2c8j6zw=
+	t=1777300259; cv=none; b=LRHtVdSTdqLZJC3NnNyX4Jgz1wie9ruTqV/S8Nc0aFRyGXKaIUfHxhhviirsCXf+fp8clVNfjTKNTLgfdlGfY5FTOhPC1Vo6c2CIqiMKd1a+VP894+kJwf5dcSU+6Qs/sR0BeXV+AEhadUZO3KTlEq2ml2UY9uTEJTDWBe+W7SY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777299545; c=relaxed/simple;
-	bh=Z8uPFvUofYxjWjPDYMYgoiiaNfjDwiNKad/v6wutxnY=;
+	s=arc-20240116; t=1777300259; c=relaxed/simple;
+	bh=8iB33DOJ6ZAUrX7ZB0jXOvBhu22ArFtsuUC5dd5xzH4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=FSwxH3NlD1Hm//6WRHCYs+gSE+BIgxw9hmzTA+8nwGT3npIWW7T08ihDsxVidToQLcwrKomOwz/b+FAffjxuXqtKmOBXIz5nVdpNt6c1nRUYJLUUAzDu/ALVlKUE5TCLSkGYvDif9M9yn0urIszkCnvjg8DaWq+QB79M6NX/3OQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=R4uBGS08; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=fZIS3v1KTpdOEwCBNwdvN6ZyTKhY4XCliSF2SDDD0V9q9Zwv0d6ae86m+buIP6sqNRmYzdXlK65y8tNYopGLG7wn4Ts9j/dpYqHg/jzPwEoShVER/3roV8uDyQf+MnBPZ9RMlancx74Wo9RKaC7hQxzEiY0bd+qngifU41qjtHM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mz0lyHQg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="R4uBGS08"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D346C19425;
-	Mon, 27 Apr 2026 14:19:04 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mz0lyHQg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20093C2BCB4;
+	Mon, 27 Apr 2026 14:30:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777299545;
-	bh=Z8uPFvUofYxjWjPDYMYgoiiaNfjDwiNKad/v6wutxnY=;
+	s=k20201202; t=1777300259;
+	bh=8iB33DOJ6ZAUrX7ZB0jXOvBhu22ArFtsuUC5dd5xzH4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R4uBGS08pAkDtu6gg6sQuWtzN+qEN8RRpypDpGLg6dbGHFCDV68ajuV2aFMH3B4fr
-	 1kdbWeloJPDluB0bCmH0+glYZL2ePBsLPAuzJKg8OhTfbddgQflYU/n/1ZRNKXHom4
-	 jmqDnH41QmPpsI+Dzi+JKQvzra5yRf3/09+XQCHGvOok1dSLXGjiAR0t2AeiW2JbDZ
-	 Bpi9wwtSptOXhoTOEnYy5AWH8XK48NIcmE2fl5E9Swhvx8V/k+38TGjzAK4jQcBp5v
-	 iQWb6Hd+PjAwXMTlnruF1JjCQ4GjpQiIe2TP06at3EiLALrbpuKEGQcOV2Sl8oHDcE
-	 BOPqNwMS2+AGg==
+	b=mz0lyHQgpN9X/eW+YHjS7Q+Yfx5l0MYh7zYnPr5eh4z5no1QSkDtptQJb1m4omzwL
+	 ENdDrVmmqQxfWamFt5mzhMweI5kx0JhzBU31pU2yabAbxLj0xjwGeexZ1CPB1l4cR9
+	 XdE1FESrL8KL1K+UNx5JJ1RoZJBd6HKLUurZSRQrs/VvaIGl+wJJWzIkJQ2kUCkfh3
+	 VvNzMdhkAAMinZzudYtP4HWW925SX3+KKcOWzZuoqEnoB69GPJyF5W6KBGyuvIXuym
+	 gdS/Xfly3AF8Ox6Zcw2szgDSKhrEqxdYcRApp7Eemi0dqOivXkkgJApueICKkK/7T8
+	 L8l1efWLh7aUQ==
 From: SeongJae Park <sj@kernel.org>
 To: sashiko-bot@kernel.org
 Cc: SeongJae Park <sj@kernel.org>,
 	damon@lists.linux.dev
-Subject: Re: [PATCH v2 1/4] mm/damon/ops-common: optimize damon_hot_score() using ilog2()
-Date: Mon, 27 Apr 2026 07:18:46 -0700
-Message-ID: <20260427141848.111385-1-sj@kernel.org>
+Subject: Re: [PATCH v2 3/4] mm/damon: add synchronous commit for commit_inputs
+Date: Mon, 27 Apr 2026 07:30:50 -0700
+Message-ID: <20260427143052.111666-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260426232811.618BFC2BCAF@smtp.kernel.org>
+In-Reply-To: <20260427000012.7E772C2BCAF@smtp.kernel.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -45,82 +45,167 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On Sun, 26 Apr 2026 23:28:10 +0000 sashiko-bot@kernel.org wrote:
+On Mon, 27 Apr 2026 00:00:11 +0000 sashiko-bot@kernel.org wrote:
 
-> Sashiko AI review found 3 potential issue(s):
-> - [High] Arithmetic overflow on 32-bit architectures during `age_in_sec` calculation.
-> - [Low] The logic using `ilog2()` with a zero-check branch can be simplified by directly using `fls()`.
-> - [Low] Unnecessary double blank line introduced.
+> Sashiko AI review found 1 potential issue(s):
+> - [High] Writing to the `commit_inputs` sysfs parameter before the DAMON worker thread (`kdamond`) is started causes the writing task to hang indefinitely in an unkillable D-state.
+
+I think this is wrong.
+
 > --
 > 
-> commit c096ebdf3dd6d7a6e783e2ac65dec1740282929f
+> commit 43a70e5ab295c21c0b94eddd32d886c9d0eba3fa
 > Author: Liew Rui Yan <aethernet65535@gmail.com>
 > 
->     mm/damon/ops-common: optimize damon_hot_score() using ilog2()
+> mm/damon: add synchronous commit for commit_inputs
 > 
-> This commit replaces the manual for-loop used to calculate age_in_log
-> in damon_hot_score() with the ilog2() function. This optimization aims to
-> significantly reduce the latency of the hotness score calculation.
+> This commit changes the commit_inputs_store() callback to use damon_call()
+> to synchronously commit parameters in the kdamond thread's safe context.
+> This ensures validation errors are returned immediately to userspace.
 > 
-> > diff --git a/mm/damon/ops-common.c b/mm/damon/ops-common.c
-> > index 8c6d613425c1..3a0ddc3ac719 100644
-> > --- a/mm/damon/ops-common.c
-> > +++ b/mm/damon/ops-common.c
-> > @@ -117,9 +117,12 @@ int damon_hot_score(struct damon_ctx *c, struct damon_region *r,
-> >  		damon_max_nr_accesses(&c->attrs);
+> Link: https://lore.kernel.org/20260318153731.97470-1-aethernet65535@gmail.com
+> 
+> > diff --git a/mm/damon/lru_sort.c b/mm/damon/lru_sort.c
+> > index 554559d72976..641af42cc2d1 100644
+> > --- a/mm/damon/lru_sort.c
+> > +++ b/mm/damon/lru_sort.c
+> 
+> [ ... ]
+> 
+> > @@ -349,18 +348,51 @@ static int damon_lru_sort_apply_parameters(void)
+> >  	return err;
+> >  }
 > >  
-> >  	age_in_sec = (unsigned long)r->age * c->attrs.aggr_interval / 1000000;
+> > -static int damon_lru_sort_handle_commit_inputs(void)
+> > +static int damon_lru_sort_commit_inputs_fn(void *arg)
+> >  {
+> > +	return damon_lru_sort_apply_parameters();
+> > +}
+> > +
+> > +static int damon_lru_sort_commit_inputs_store(const char *val,
+> > +					      const struct kernel_param *kp)
+> > +{
+> > +	bool commit_inputs_request;
+> >  	int err;
+> > +	struct damon_call_control control = {
+> > +		.fn = damon_lru_sort_commit_inputs_fn,
+> > +	};
+> >  
+> > -	if (!commit_inputs)
+> > +	if (!val) {
+> > +		commit_inputs_request = true;
+> > +	} else {
+> > +		err = kstrtobool(val, &commit_inputs_request);
+> > +		if (err)
+> > +			return err;
+> > +	}
+> >  
+> > +	if (!commit_inputs_request)
+> >  		return 0;
+> >  
+> > -	err = damon_lru_sort_apply_parameters();
+> > -	commit_inputs = false;
+> > -	return err;
+> > +	/*
+> > +	 * Skip damon_call() if ctx is not initialized to avoid
+> > +	 * NULL pointer dereference.
+> > +	 */
+> > +	if (!ctx)
+> > +		return -EINVAL;
+> > +
+> > +	err = damon_call(ctx, &control);
 > 
-> This isn't a bug in your patch, but does the multiplication of
-> (unsigned long)r->age * c->attrs.aggr_interval overflow on 32-bit
-> architectures?
+> If the module has not yet been enabled (e.g., enabled=N) and the kdamond
+> thread is not running, does this call to damon_call() block indefinitely?
 > 
-> Since both variables evaluate as 32-bit types on 32-bit architectures,
-> if aggr_interval is 1,000,000 (1 second), the multiplication will wrap
-> around when r->age exceeds 4294. This wrap-around could result in a very
-> small age_in_sec value for extremely cold regions, causing them to be
-> falsely evaluated as young and hot.
+> Since ctx is allocated during initialization, the ctx pointer is not NULL.
+> damon_call() then queues the control request and calls wait_for_completion().
 > 
-> Should this calculation be cast to a 64-bit integer prior to multiplication,
-> perhaps using div_u64()?
+> Without the background thread running to process the queue and signal
+> completion, it seems the sysfs writer task is placed into an unkillable
+> D-state forever.
 
-Good point, but as Sashiko also notes, not a blocker of this patch.  I will add
-a todo item for thinking more on this.
+No.  ctx is initialized to NULL because it is static.  Once it is set,
+kdamond_fn() is started.  If user stops kdamond by writing N to enabled,
+ctx->call_controls_obsolete is set.  If user further writes Y to commit_inputs
+for invoking damon_call(), it will return -ECANCELED due to
+ctx->call_controls_obsolete.
 
 > 
-> > -	for (age_in_log = 0; age_in_log < DAMON_MAX_AGE_IN_LOG && age_in_sec;
-> > -			age_in_log++, age_in_sec >>= 1)
-> > -		;
-> > +	if (age_in_sec)
-> > +		age_in_log = min_t(int, ilog2(age_in_sec) + 1,
-> > +				DAMON_MAX_AGE_IN_LOG);
-> > +	else
-> > +		age_in_log = 0;
-> 
-> Instead of using ilog2() with a zero-check branch, could this be simplified
-> by directly using fls()?
-> 
-> The fls() function safely returns 0 when the value is 0 and correctly
-> calculates the 1-based log2 value for positive numbers, allowing this
-> branch to be removed entirely while preserving the exact mathematical
-> result.
+> The damon_call() documentation indicates it should only be called after
+> damon_start() has succeeded, otherwise it could fall into an indefinite wait.
 
-We believe ilog2() is easier to read.
+Yes, and that's excluded here since the module is not calling damon_call() for
+NULL ctx.
 
 > 
 > > +
-> >  
-> >  	/* If frequency is 0, higher age means it's colder */
+> > +	return err ? err : control.return_code;
+> >  }
 > 
-> This isn't a bug, but an extra blank line appears to be introduced here,
-> creating two consecutive blank lines.
+> [ ... ]
+> 
+> > diff --git a/mm/damon/reclaim.c b/mm/damon/reclaim.c
+> > index 86da14778658..4fc4a54b5e54 100644
+> > --- a/mm/damon/reclaim.c
+> > +++ b/mm/damon/reclaim.c
+> 
+> [ ... ]
+> 
+> > @@ -255,18 +254,51 @@ static int damon_reclaim_apply_parameters(void)
+> >  	return err;
+> >  }
+> >  
+> > -static int damon_reclaim_handle_commit_inputs(void)
+> > +static int damon_reclaim_commit_inputs_fn(void *arg)
+> >  {
+> > +	return damon_reclaim_apply_parameters();
+> > +}
+> > +
+> > +static int damon_reclaim_commit_inputs_store(const char *val,
+> > +					     const struct kernel_param *kp)
+> > +{
+> > +	bool commit_inputs_request;
+> >  	int err;
+> > +	struct damon_call_control control = {
+> > +		.fn = damon_reclaim_commit_inputs_fn,
+> > +	};
+> >  
+> > -	if (!commit_inputs)
+> > +	if (!val) {
+> > +		commit_inputs_request = true;
+> > +	} else {
+> > +		err = kstrtobool(val, &commit_inputs_request);
+> > +		if (err)
+> > +			return err;
+> > +	}
+> > +
+> > +	if (!commit_inputs_request)
+> >  		return 0;
+> >  
+> > -	err = damon_reclaim_apply_parameters();
+> > -	commit_inputs = false;
+> > -	return err;
+> > +	/*
+> > +	 * Skip damon_call() if ctx is not initialized to avoid
+> > +	 * NULL pointer dereference.
+> > +	 */
+> > +	if (!ctx)
+> > +		return -EINVAL;
+> > +
+> > +	err = damon_call(ctx, &control);
+> 
+> Could this exhibit the same hang as in damon_lru_sort.c? If the worker
+> thread has not been started, does writing to commit_inputs block forever?
 
-Good cactch.  As this is a quite minor issue, I will ask Andrew to fix this.
+Same to the above reply, no.
 
+> 
+> > +
+> > +	return err ? err : control.return_code;
+> >  }
 > 
 > -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260426231619.107231-1-sj@kernel.org?part=1
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260426231619.107231-1-sj@kernel.org?part=3
 
-
-Thanks,
-SJ
+Sent using hkml (https://github.com/sjp38/hackermail)
