@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9597B332ECB;
-	Mon, 27 Apr 2026 15:12:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B69C3346AF;
+	Mon, 27 Apr 2026 15:12:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777302761; cv=none; b=o0XGodtl6+FfG+nAa5hEIOkD9wFhyXpf8WWI5ol7rHOxxXgZrWQL3YRbXXl8xz+FUbjMh1FkC0JJshnD0Ljyi8Xp+LmK1+iLTczBZH9Was1EUOKerq2GkyhMK681yVkXOEnO9wAGA3otM2ABZVx9mqquKOojwYbWnksBRRvmYTc=
+	t=1777302762; cv=none; b=Tz958GkeM37LumQSGsw8AaXYC/6VfQyN7oEOIwbaso6H2V4E38/+hgeqwQylAOOGyJjqikGlHtdROzI49p/Lsq5n0W8EXB1YZHZRWvzb58lidzfPmzxxKYYgdDjeGI2Izcols6V3VQ0oiQ245/aBUO5XZGhsErbJJHG6kwO+Kks=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777302761; c=relaxed/simple;
-	bh=cefZkLteoGUCWc4MRoifuuAEqrfO3tIQ452Q0kCEVdc=;
+	s=arc-20240116; t=1777302762; c=relaxed/simple;
+	bh=O8n0uNGYuU+EcM7S/clzxsj2TzvWbNFjQtjX/Z2/CrA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eitN1inJWHwH35SYdOGLbLYDhq+gQQcRCcOGgXC9urkZveM/anQfXImuDky28Leo/WYBk9uYIkuTSf4xODTWgkz87yFoKk9TIQT7k40yyjvBnW2P/KNAT/BpaDmUAoGPnfBDn+Hl3FaSjqNmy1jNLwF6sf2FA6FNRp0+eAFAZuw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=njaiG58w; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=H/J8TXKUyRAhSuqsg78Iqw04/bIf6IJfDXWAPgkR+Ud+mtG6DPff5IfxR7rMk8M8nmV0Ok0dGHyzzjS7QfsBN8ZKQWcsel0fJcMStZXt8fBJmbOxr72zspS0LocmS0FtHeSH5yXBZoVwXdttXI0AOEpnZHKWBa3x+GJkkcy9RmI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gv4wDjq8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="njaiG58w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7C19C19425;
-	Mon, 27 Apr 2026 15:12:40 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gv4wDjq8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A77CC2BCC4;
+	Mon, 27 Apr 2026 15:12:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777302761;
-	bh=cefZkLteoGUCWc4MRoifuuAEqrfO3tIQ452Q0kCEVdc=;
+	s=k20201202; t=1777302762;
+	bh=O8n0uNGYuU+EcM7S/clzxsj2TzvWbNFjQtjX/Z2/CrA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=njaiG58wjsoDLEqvI2yOa/BxJ00RrwagWompIzbxHgrQ58S+/Bsnq2TIQK+l7yvjm
-	 1iuSJc3qvdzX/n1j+GgrTOsHCUrlV8VhnNjgsojSBdOkg8jjbK2bSGYCtHgXOzSrI6
-	 A0umOBQDdD/THIPDnwDAd5v4yh7TaR5S4AkibyBJ/kKWY71cFeD7DTfgnUNI4QxkRu
-	 RY4JyOYgROABt/a8OU3yOKMocI/3TZHv8ZAsfyYys1SW1lrA3e9cXM1ezBnVvfmGsx
-	 4Vr5PRf4PYjssXCFEkjOcgKTzKONXW8wgVv811rASHZlOjrTIWBuuVOUgpL+Sbq2c7
-	 ZVKXX7m3WX56w==
+	b=gv4wDjq8pC8MRYUp9YxDIQ9gWsfPychqKhZZqC5yjyusZ6ff9VMKcopk44UjgHSF6
+	 mBCIXP78F9f2D7tsQVdhGGPTRaa/iOMW3SZfLCvJyoopRxkoltdEG16ODitiwn8qI8
+	 BrhwdyUyT+otrpYI9SUcTRtOFQ74srhH8d8tB7DCuR2JdcU4/pxF+ly3HDWSketLZs
+	 lHbPouUda6elQAGc49DFl1f7oE6mbs2pAHv7wBB9jKpBCXmo6fD+rUiIzPAtSxkaPV
+	 qfyffWXOuvTaWY6L40CekFRFO4BdLMMnj/fLugA4VmYfdgFSJh3YsU7sjynUwQm3iz
+	 4KP0klz1+ZQHA==
 From: SeongJae Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SeongJae Park <sj@kernel.org>,
@@ -42,9 +42,9 @@ Cc: SeongJae Park <sj@kernel.org>,
 	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [PATCH v2 03/10] Docs/mm/damon/design: update for context pause/resume feature
-Date: Mon, 27 Apr 2026 08:12:22 -0700
-Message-ID: <20260427151231.113429-4-sj@kernel.org>
+Subject: [PATCH v2 04/10] Docs/admin-guide/mm/damon/usage: update for pause file
+Date: Mon, 27 Apr 2026 08:12:23 -0700
+Message-ID: <20260427151231.113429-5-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260427151231.113429-1-sj@kernel.org>
 References: <20260427151231.113429-1-sj@kernel.org>
@@ -54,33 +54,53 @@ List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Update DAMON design document for the context execution pause/resume
+Update DAMON usage document for the DAMON context execution pause/resume
 feature.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- Documentation/mm/damon/design.rst | 7 +++++++
- 1 file changed, 7 insertions(+)
+ Documentation/admin-guide/mm/damon/usage.rst | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/Documentation/mm/damon/design.rst b/Documentation/mm/damon/design.rst
-index 365e068a8dbe4..622d24e35961e 100644
---- a/Documentation/mm/damon/design.rst
-+++ b/Documentation/mm/damon/design.rst
-@@ -19,6 +19,13 @@ types of monitoring.
- To know how user-space can do the configurations and start/stop DAMON, refer to
- :ref:`DAMON sysfs interface <sysfs_interface>` documentation.
+diff --git a/Documentation/admin-guide/mm/damon/usage.rst b/Documentation/admin-guide/mm/damon/usage.rst
+index 534e1199cf091..bfdb717441f05 100644
+--- a/Documentation/admin-guide/mm/damon/usage.rst
++++ b/Documentation/admin-guide/mm/damon/usage.rst
+@@ -66,7 +66,8 @@ comma (",").
+     │ :ref:`kdamonds <sysfs_kdamonds>`/nr_kdamonds
+     │ │ :ref:`0 <sysfs_kdamond>`/state,pid,refresh_ms
+     │ │ │ :ref:`contexts <sysfs_contexts>`/nr_contexts
+-    │ │ │ │ :ref:`0 <sysfs_context>`/avail_operations,operations,addr_unit
++    │ │ │ │ :ref:`0 <sysfs_context>`/avail_operations,operations,addr_unit,
++    │ │ │ │   pause
+     │ │ │ │ │ :ref:`monitoring_attrs <sysfs_monitoring_attrs>`/
+     │ │ │ │ │ │ intervals/sample_us,aggr_us,update_us
+     │ │ │ │ │ │ │ intervals_goal/access_bp,aggrs,min_sample_us,max_sample_us
+@@ -194,9 +195,9 @@ details).  At the moment, only one context per kdamond is supported, so only
+ contexts/<N>/
+ -------------
  
-+Users can also request each context execution to be paused and resumed.  When
-+it is paused, the kdamond does nothing other than applying online parameter
-+update.
-+
-+To know how user-space can pause/resume each context, refer to :ref:`DAMON
-+sysfs context <sysfs_context>` usage documentation.
-+
+-In each context directory, three files (``avail_operations``, ``operations``
+-and ``addr_unit``) and three directories (``monitoring_attrs``, ``targets``,
+-and ``schemes``) exist.
++In each context directory, four files (``avail_operations``, ``operations``,
++``addr_unit`` and ``pause``) and three directories (``monitoring_attrs``,
++``targets``, and ``schemes``) exist.
  
- Overall Architecture
- ====================
+ DAMON supports multiple types of :ref:`monitoring operations
+ <damon_design_configurable_operations_set>`, including those for virtual address
+@@ -214,6 +215,9 @@ reading from the ``operations`` file.
+ ``addr_unit`` file is for setting and getting the :ref:`address unit
+ <damon_design_addr_unit>` parameter of the operations set.
+ 
++``pause`` file is for setting and getting the :ref:`pause request
++<damon_design_execution_model_and_data_structures>` parameter of the context.
++
+ .. _sysfs_monitoring_attrs:
+ 
+ contexts/<N>/monitoring_attrs/
 -- 
 2.47.3
