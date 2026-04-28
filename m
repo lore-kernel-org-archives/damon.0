@@ -1,40 +1,59 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33D911A683B
-	for <damon@lists.linux.dev>; Tue, 28 Apr 2026 00:22:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4A6E175A72;
+	Tue, 28 Apr 2026 00:33:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777335775; cv=none; b=M36XcpOHfJHyYPyUIPgoaW4f+UK3yKzDVCTW3OmvY9mKyYnARKqg5wXRImZTgFvpowXU2gUXX5jnbGAPTQwR3++8ceEAMLb/XcfQe5dIXYOAO/RFu2ozhlbUoSjNkJFQ95Et7qMxbHtrN9pV1s91bVh6DA6tGa5IeZeIZaZmPVw=
+	t=1777336401; cv=none; b=Et8tvOnyK40fYz4pWqqYUffZAQF3TIxb2Xaq7re+hUDRHpDeWiwy6VScFtxVu/9z6xpYt5L2gKCQJmQ5A1u+FuVqelFVgKnwndgiTVDyOlOCpQDlR1eY26rYo9Flfr5uLQREHskgsyqcRkbRbUj9uTZB7xezhX3Er06kiQNf5ns=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777335775; c=relaxed/simple;
-	bh=YBd0ErdcH7TGGI0VTJokjtWZKRAfFb5eB4OLx4C+5kU=;
+	s=arc-20240116; t=1777336401; c=relaxed/simple;
+	bh=ZcdrUd8JxPkWJLg3gCpjoRkvfIkDc4Y0TOh/l4kL4Cw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kh7Uj2SGndsvqzgDrChhCL4laLFcabAzWRxzCzkECBmvBPQ5FfAUBlPFOmICHiPbl64xB3PUHtD5670o8Csm3jnw0PPrILLm8VPbbpjZvyZwEcnnDIK9HcZbo2m44BnjhTnNFMI3Zi98Tk5GTBNaM1roZ4weEoxcUQAIIOESwG4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TS2aUBQQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=o1NtvtDd3AVHr/QVBrRGZlPFGrAlR0lvae/7pbVbIK6qcEKrfN1aPIh4ZmjFJuC/JlUOnRjEQodE9P/RDpznFOCj4z5znJn2m9gqmt8/gnERi1HcDtRWN/zFUi1rYaMB7zANB5osRY/72NmQNjMNBPk3Eb4DRqgmG67sgZOlgm0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=W3jmgxmj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TS2aUBQQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FCDFC19425;
-	Tue, 28 Apr 2026 00:22:54 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="W3jmgxmj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF5E4C19425;
+	Tue, 28 Apr 2026 00:33:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777335774;
-	bh=YBd0ErdcH7TGGI0VTJokjtWZKRAfFb5eB4OLx4C+5kU=;
+	s=k20201202; t=1777336401;
+	bh=ZcdrUd8JxPkWJLg3gCpjoRkvfIkDc4Y0TOh/l4kL4Cw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TS2aUBQQAH/zUgrn168LTCODhdp4lQI0lY+HWjE4wTd20MNo1vECxk8RxvBHrVrKC
-	 Yy+F26kg9XcBayuzKaJ/c3/2qqKb1QdEHWL9xtozv3pbe5NONOAq2XDrt/6L22Tg+Y
-	 zsfalbTrqhU0Ovlk7I/O9QA4JMbbSRAjNicaSpqhJnW3wURkFdDx8gnOJOLZjEMNHO
-	 S2mvhvwgBnc11MmWLgn+HOFGeySJ9P2Z8dLYylXq37v+ulhJMJfcA3hHCoJVD+fetm
-	 G8XzDfFxJel7sgep7kuOVfz/HxASrSj9tfFz2YmyIxGEG/ncm2K14aFM71/FwnAwa9
-	 y8v/qzDFB7U3A==
+	b=W3jmgxmjb5NsMB8nfzuMsp69890MkKukIXm/8fmi/oAu9/3CXkSuiXwt6PDYr0gZf
+	 7fZ75Myat0x/3+Qgzk5m718sTFdDuSv+vQKMSlrXX5rtosbKcHZ6p66XoWH0KBNQz4
+	 Mx39vjSDGQkzTkbLelRE2IvPFwZDZWQJIeJFo5tGEF0DcqEXfNVppjoXLU8wUk41Qj
+	 IN1Hynk2iSKbZyrz7+rbQsGOv960XvAHG1pEJ5lXeNUa2ObV+UdIF0g6P1mzkSBRqa
+	 2a0VvJrHZenwNu8kYf5JBAb+BaCTYppN0dzLpVPwU8MXCysmCUsbsFdTIdwW4YtxWf
+	 YgwsXKhj6cm4A==
 From: SeongJae Park <sj@kernel.org>
-To: sashiko-bot@kernel.org
+To: Gutierrez Asier <gutierrez.asier@huawei-partners.com>
 Cc: SeongJae Park <sj@kernel.org>,
-	damon@lists.linux.dev
-Subject: Re: [PATCH v2 10/10] selftests/damon/sysfs.py: pause DAMON before dumping status
-Date: Mon, 27 Apr 2026 17:22:45 -0700
-Message-ID: <20260428002246.112905-1-sj@kernel.org>
+	"Liam R. Howlett" <liam@infradead.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	David Hildenbrand <david@kernel.org>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Michal Hocko <mhocko@suse.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Shuah Khan <shuah@kernel.org>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	damon@lists.linux.dev,
+	linux-doc@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-kselftest@vger.kernel.org,
+	linux-mm@kvack.org,
+	linux-trace-kernel@vger.kernel.org
+Subject: Re: [RFC PATCH 00/19] mm/damon: introduce data attributes monitoring
+Date: Mon, 27 Apr 2026 17:33:11 -0700
+Message-ID: <20260428003312.113061-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260427210420.12AEDC2BCB6@smtp.kernel.org>
+In-Reply-To: <14036b07-413e-4dcd-a363-e7f834d85da3@huawei-partners.com>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -44,75 +63,48 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Mon, 27 Apr 2026 21:04:19 +0000 sashiko-bot@kernel.org wrote:
+On Mon, 27 Apr 2026 16:16:07 +0300 Gutierrez Asier <gutierrez.asier@huawei-partners.com> wrote:
 
-> Sashiko AI review found 1 potential issue(s):
-> - [Medium] Mutating the state before assertion bypasses the verification of the original `pause` state.
+> Hi SeonJae,
+> 
+> On 4/26/2026 11:52 PM, SeongJae Park wrote:
+> > TL; DR
+> > ======
+> > 
+> > Extend DAMON for monitoring general data attributes other than accesses.
+> > This is for enabling light-weight page type (e.g., belonging cgroup)
+> > aware monitoring in short term.  In long term, this will help extending
+> > DAMON for multiple access events capture primitives (e.g., page faults
+> > and PMU) and eventually pivotting DAMON to a "Data Attributes Monitoring
+> > and Operations eNgine" in long term.
+> 
+> Very interesting. Looking forward to seeing this in upstream.
 
-Not a blocker of this patch in my opinion.  Please read below for more details.
+Thank you!
 
-> --
-> 
-> commit 2c32bc147a1cb335e85629e00bb0efe1bbb44638
-> Author: SeongJae Park <sj@kernel.org>
-> 
-> selftests/damon/sysfs.py: pause DAMON before dumping status
-> 
-> This commit updates the DAMON sysfs selftest to pause DAMON execution
-> during state dumping. It attempts to prevent race conditions where DAMON
-> could add or remove regions while the dump is ongoing.
-> 
-> > diff --git a/tools/testing/selftests/damon/sysfs.py b/tools/testing/selftests/damon/sysfs.py
-> > index e6d34ba05893..b8d6e0f8fd90 100755
-> > --- a/tools/testing/selftests/damon/sysfs.py
-> > +++ b/tools/testing/selftests/damon/sysfs.py
-> > @@ -193,18 +193,55 @@ def assert_ctx_committed(ctx, dump):
-> >      assert_true(dump['pause'] = ctx.pause, 'pause', dump)
-> >  
-> >  def assert_ctxs_committed(kdamonds):
-> > +    ctxs_paused_for_dump = []
-> > +    kdamonds_paused_for_dump = []
-> > +    # pause for safe state dumping
-> > +    for kd in kdamonds.kdamonds:
-> > +        for ctx in kd.contexts:
-> > +            if ctx.pause is False:
-> > +                ctx.pause = True
-> > +                ctxs_paused_for_dump.append(ctx)
-> > +                if not kd in kdamonds_paused_for_dump:
-> > +                    kdamonds_paused_for_dump.append(kd)
-> > +        if kd in kdamonds_paused_for_dump:
-> > +            err = kd.commit()
-> 
-> [ ... ]
-> 
-> > +    # restore for comparison
-> > +    for ctx in ctxs_paused_for_dump:
-> > +        ctx.pause = True
-> > +
-> >      ctxs = kdamonds.kdamonds[0].contexts
-> >      dump = status['contexts']
-> >      assert_true(len(ctxs) = len(dump), 'ctxs length', dump)
-> >      for idx, ctx in enumerate(ctxs):
-> >          assert_ctx_committed(ctx, dump[idx])
-> 
-> Does this bypass the verification of the original pause state?
-> 
-> By temporarily pausing the DAMON context and committing this new state
-> before dumping the sysfs status, the test overwrites the actual pause state
-> in the kernel. Then, setting the Python object's ctx.pause to True for
-> comparison means the test always compares True against True for the pause
-> parameter.
-> 
-> Because of this, the test seems fundamentally incapable of verifying
-> whether a pause = False configuration was ever correctly committed to the
-> kernel prior to calling assert_ctxs_committed().
+[...]
+> My main concern is about potential pollution of sysfs. DAMON is already
+> complex to set up, with a lot of knobs. Adding more configuration options
+> may make admin's job more complex.
 
-This is an intended behavior as I explained in a previous version.  We are
-using pause for testing.  Testing something that being used for testing with
-the test itself is complicated.  It would be good to have a test for the
-feature for the test itself in a way, but not necessarily by the test the
-feature is helping for.  We have at least pause parameter commit kunit.  So I
-think this is not a blocker of this patch.
+You are right, ther are a lot of knobs for DAMON.  Nevertheless, each knob is
+simple and independent, so easy to scale.  We also provide user-space tool for
+users who still want to use DAMON in highly customized way, and DAMON modules
+for users who want common purpose usage of DAMON with minimum tunable knobs.
+
+I believe the beginning part of DAMON usage document [2] is explaining this
+point.
+
+FWIW, I'm also working on DAMON-X [1] for making the modules based appraoch
+just works for more use cases.
+
+> 
+> Do you plan to support this extension in damo user space?
+
+Yes, I will!
+
+[1] https://lore.kernel.org/linux-mm/20260307210250.204245-1-sj@kernel.org/
+[2] Documentation/admin-guide/mm/damon/usage.rst
 
 
 Thanks,
