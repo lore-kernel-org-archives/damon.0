@@ -1,84 +1,125 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2DA630C372;
-	Tue, 28 Apr 2026 01:34:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FA562DAFBB
+	for <damon@lists.linux.dev>; Tue, 28 Apr 2026 01:54:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777340075; cv=none; b=IW9vPr/G5EBgbiWoR+zACZd8/wPU2UVuM55JXpPwBR2/P4LPmi2WOVbEjd7TpHqKKmHk8JgQMDLcIchNyY1Z/IbFj2HxP/jQN+xHmb98y48jdFK0izgfEvonV5nydXlIifjihuWcHzzTxKKb2TNj6rqWPXP3X6WglIlzmaxakNs=
+	t=1777341277; cv=none; b=Ci2T6uQUryy/vycGjMtJMD22ewp/Z7K3bL5JrMOLWP7hW++FXKajOEM8HQwD2xr/Z7Xxhlpdj4wUWEcl/uju9g7NFE6+Qe/MUDeSo5nOIt0imMCsN4tXxGX7R3cIlPCJKvJtwE7ySGeKJb7VqPBLOAGiAweP29GBpu3OLiMdCHY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777340075; c=relaxed/simple;
-	bh=t5zJdXrSXfUqeg8E0cFC/+8XELPbXvEetq+3G/tXFao=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d1AbmmqR6SluVyyxUDMkw/JosF7sd31mPZBNtMxthhdEupxDZ95VlUy5ID3DhVhKWfLAvTqjNJaCtCN9ydkkJPeTlK6XpoHBguW8kQlDEP9z8c5dVSe/wDFAW5fodAD00KQxVbCoeeTD4h/cE6Ln4LhhkXlWYVujz672nCiGvDk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Q4mrjTaJ; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1777341277; c=relaxed/simple;
+	bh=gv5BAZE7mPy8V0OCQnX9KKc1BvFM7meEz1MP7BMYFFM=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=FPH75r7k667gpMspJnVxaP1alStr8xch8xN9PLFFUzRg4S9MOJqPOO5MOj1/IjWXRxnp+xBQ8ZdlYniY5rKcVLuL/vqf7dPpmE9bJ3QJoGwhwMhB0cyE0uWrugqevPTnmPjMD96SJTOt12sqIMYKHraFgKghIhnoMUpa1w9ELtE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=E4Hfu+WZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Q4mrjTaJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FFA3C2BCB4;
-	Tue, 28 Apr 2026 01:34:34 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="E4Hfu+WZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D935C19425;
+	Tue, 28 Apr 2026 01:54:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777340074;
-	bh=t5zJdXrSXfUqeg8E0cFC/+8XELPbXvEetq+3G/tXFao=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q4mrjTaJBTN0LzIRNCZj7pwECqk7KOMJnhlOtYO97I5PT+9fPxsDE/ysqobr7nWJ0
-	 qbXfihTA4bcntw0PWuME1t4oJHc8ORBXew391Z/AL0oCpDDFjY9ugusHUixJlT4woj
-	 Rq7joVjF+dQ3mWhvML7nPXUTEvV/geWePDQm3CE+BcTeAD1b5AI722A1C+U0scEf+M
-	 gVcTladCAVdvf/ESfw60+Z5TtgwPgb6ZX9tB1ZQKHOvqVXvPHtM5ge88lxwn/ZZPvX
-	 YYHgHh8hjxVSEKzmVn/B3IV+yfXjify48hbRUvnTdd6j6kgiWf4jWG8dgbDR32C28G
-	 sb6qtS5S+kRWw==
-From: SeongJae Park <sj@kernel.org>
-To: Andrew Morton <akpm@linux-foundation.org>
-Cc: SeongJae Park <sj@kernel.org>,
-	Shuah Khan <shuah@kernel.org>,
-	damon@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	linux-kselftest@vger.kernel.org,
-	linux-mm@kvack.org
-Subject: [PATCH 11/11] selftests/damon/sysfs.py: test failed region quota charge ratio
-Date: Mon, 27 Apr 2026 18:34:00 -0700
-Message-ID: <20260428013402.115171-12-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260428013402.115171-1-sj@kernel.org>
-References: <20260428013402.115171-1-sj@kernel.org>
+	s=k20201202; t=1777341276;
+	bh=gv5BAZE7mPy8V0OCQnX9KKc1BvFM7meEz1MP7BMYFFM=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date:From;
+	b=E4Hfu+WZfj0t8FkQWbvSr9O1iaJpLtcUVWxtUW52twoas007SrPPk81oE1DU6I6RR
+	 YmMl+plfCd+5dY3AWnLq21jfHM09luKdaxsiXlfkwaWN4PGomXupsjb/Cb5OWBEtPa
+	 0Aa/AeukII+5F2VpyOuA8nzuldrMLczNVBsg9lkc2zp2ZNcRShP8eLVNDqGnrtB4BW
+	 JhMHDoz1YZr1um7cGbR0d08c6Q1O+sgKHT3lw190FyyDMAt5eyxfuWisONoRXZ5zbw
+	 sV6WFRp2CMEF4t2eM9ZWEiMVFHX7X2TU1I7tRUO1+AZtgzmz0+L2uNRFiJSwIajhuo
+	 ocbOKujkkZV/g==
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH 04/11] mm/damon/sysfs-schemes: implement
+ fail_charge_{num,denom} files
+Reply-To: sashiko@lists.linux.dev
+To: "SeongJae Park" <sj@kernel.org>
+Cc: damon@lists.linux.dev
+In-Reply-To: <20260428013402.115171-5-sj@kernel.org>
+References: <20260428013402.115171-5-sj@kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Tue, 28 Apr 2026 01:54:35 +0000
+Message-Id: <20260428015436.8D935C19425@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-Extend sysfs.py DAMON selftest to setup DAMOS action failed region quota
-charge ratio and assert the setup is made into DAMON internal state.
+Sashiko AI review found 1 potential issue(s):
+- [Medium] The sysfs store functions for `fail_charge_num` and `fail_charge=
+_denom` do not validate or bound the ratio, leading to potential integer ov=
+erflow in the core quota tracking logic.
+--
 
-Signed-off-by: SeongJae Park <sj@kernel.org>
----
- tools/testing/selftests/damon/sysfs.py | 6 ++++++
- 1 file changed, 6 insertions(+)
+commit 43a135a4abb7954bcb255ae58b1aa323b2447477
+Author: SeongJae Park <sj@kernel.org>
 
-diff --git a/tools/testing/selftests/damon/sysfs.py b/tools/testing/selftests/damon/sysfs.py
-index 387286dc449d5..cd4d82c852113 100755
---- a/tools/testing/selftests/damon/sysfs.py
-+++ b/tools/testing/selftests/damon/sysfs.py
-@@ -73,6 +73,10 @@ def assert_quota_committed(quota, dump):
-             }
-     assert_true(dump['goal_tuner'] == tuner_val[quota.goal_tuner],
-                 'goal_tuner', dump)
-+    assert_true(dump['fail_charge_num'] == quota.fail_charge_num,
-+                'fail_charge_num', dump)
-+    assert_true(dump['fail_charge_denom'] == quota.fail_charge_denom,
-+                'fail_charge_denom', dump)
-     assert_true(dump['weight_sz'] == quota.weight_sz_permil, 'weight_sz', dump)
-     assert_true(dump['weight_nr_accesses'] == quota.weight_nr_accesses_permil,
-                 'weight_nr_accesses', dump)
-@@ -278,6 +282,8 @@ def main():
-                         nid=1)],
-                     goal_tuner='temporal',
-                     reset_interval_ms=1500,
-+                    fail_charge_num=1,
-+                    fail_charge_denom=4096,
-                     weight_sz_permil=20,
-                     weight_nr_accesses_permil=200,
-                     weight_age_permil=1000),
--- 
-2.47.3
+mm/damon/sysfs-schemes: implement fail_charge_{num,denom} files
+
+This commit implements the user-space ABI for the DAMOS action failed region
+quota-charge ratio setup. It adds sysfs files for fail_charge_num and
+fail_charge_denom to allow reading and setting the numerator and
+denominator of the failed regions charge ratio.
+
+> diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
+> index 04746cbb3327..dee1f5788bea 100644
+> --- a/mm/damon/sysfs-schemes.c
+> +++ b/mm/damon/sysfs-schemes.c
+[ ... ]
+> +static ssize_t fail_charge_num_store(struct kobject *kobj,
+> +		struct kobj_attribute *attr, const char *buf, size_t count)
+> +{
+> +	struct damon_sysfs_quotas *quotas =3D container_of(kobj,
+> +			struct damon_sysfs_quotas, kobj);
+> +	int err =3D kstrtouint(buf, 0, &quotas->fail_charge_num);
+> +
+> +	if (err)
+> +		return -EINVAL;
+> +	return count;
+> +}
+
+Can this unbounded input lead to an integer overflow in the core quota
+tracking logic?
+
+The values read via kstrtouint() are unconstrained up to UINT_MAX. Later, in
+damos_charge_quota(), these values are passed to:
+
+mult_frac(sz_region - sz_applied, quota->fail_charge_num,
+          quota->fail_charge_denom)
+
+If the region size in bytes is large (for example, a single DAMON region of
+10 GB) and the numerator is set near UINT_MAX, their product could exceed
+ULONG_MAX. For instance, 10GB * UINT_MAX is roughly 40 * 10^18, which is
+larger than ULONG_MAX's 18.4 * 10^18.
+
+Could this cause an overflow that wraps around to an anomalously small valu=
+e,
+effectively bypassing the administrator's configured quota limits?
+
+> +
+> +static ssize_t fail_charge_denom_show(struct kobject *kobj,
+> +		struct kobj_attribute *attr, char *buf)
+> +{
+> +	struct damon_sysfs_quotas *quotas =3D container_of(kobj,
+> +			struct damon_sysfs_quotas, kobj);
+> +
+> +	return sysfs_emit(buf, "%u\n", quotas->fail_charge_denom);
+> +}
+> +
+> +static ssize_t fail_charge_denom_store(struct kobject *kobj,
+> +		struct kobj_attribute *attr, const char *buf, size_t count)
+> +{
+> +	struct damon_sysfs_quotas *quotas =3D container_of(kobj,
+> +			struct damon_sysfs_quotas, kobj);
+> +	int err =3D kstrtouint(buf, 0, &quotas->fail_charge_denom);
+> +
+> +	if (err)
+> +		return -EINVAL;
+> +	return count;
+> +}
+
+Does the fail_charge_denom input also require bounding to prevent the same
+overflow issues when passed into the quota tracking logic?
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260428013402.1151=
+71-1-sj@kernel.org?part=3D4
