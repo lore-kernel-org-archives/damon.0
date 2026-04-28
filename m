@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B94718EFD1
-	for <damon@lists.linux.dev>; Tue, 28 Apr 2026 03:41:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5334640DFD7
+	for <damon@lists.linux.dev>; Tue, 28 Apr 2026 03:58:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777347707; cv=none; b=CxL6CcPMDpGUCmcYh+FAzDOMvQ9iGYTumiZhqMPhTd2381ksrt77frYJ7YK5UEsttGdmo/hmAiY/PzIkaedn9uKbVTw1C1ivVmlBDxwPIrX4RibxmmoQP8mOq/ib+2GFTgv4+0XoCUwqLQjTG0YIRUSm3owrtGTaeVmTpI6p8B8=
+	t=1777348684; cv=none; b=YH5LeWHJcgo8/wUKJPI+rbdq1aAmWjekRkRyOtXRBV/9n6t69bBIIeTmSZ7seXie+3HwgiRKUabiZXCvbZQvUkpcqtJq4zJT/vCscjly2g21+ulPjjKN7RwtDy1B+5m9f4nmZV1h9teiohKTGIBskEYt5hOdEsQ7dqZDgnGBH8w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777347707; c=relaxed/simple;
-	bh=Dij4XgmfDRy06awHHr6amKWqxdctBDKG7Rrl3QcK/vc=;
+	s=arc-20240116; t=1777348684; c=relaxed/simple;
+	bh=LZXWkrSOWPKnByw1e47lka23jslz4Run1/onV9jU3+U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qpc1g8b9OIonFtZrvzYSXgElrWqEEpPPJOofXRTeSALJh3m0M/FItSyAeY9b1X1jNz41+5DY81EzTc5fsGwG/mX7XqqpZtwg8FnTwj7v5ZccTI0NCoLICKW0YA4yBCarag3ZhEB26E07m+ldk2eFTXsN3Wdne6GImDZgYePDsDs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tD+nwwDT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Bw4CsgXoR1/dS7xPzyFEwXq+L1lBTIupb/+g2pZV8WJzcYJHM79g1AZ6Qpa2FlO248zkhM85zocorMw5C+RSVkgUYTnh9mf9wdDg9zbGDDMX8tvg61Xr3KqFs+DkxdciacYmAcmWs3jVCeNFMG+yIY3JXinUu1gORSJNXa38Vyc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qLX3Iv+A; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tD+nwwDT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DE33C2BCAF;
-	Tue, 28 Apr 2026 03:41:46 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qLX3Iv+A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B65E6C2BCAF;
+	Tue, 28 Apr 2026 03:58:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777347706;
-	bh=Dij4XgmfDRy06awHHr6amKWqxdctBDKG7Rrl3QcK/vc=;
+	s=k20201202; t=1777348683;
+	bh=LZXWkrSOWPKnByw1e47lka23jslz4Run1/onV9jU3+U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tD+nwwDTiN882DwirJQMoQLfa9yQipZbklRirl8zqDKeEMMrn/ZiRk9phY4ZCwldv
-	 IKH1x1aQvoxZI9713CxIwa0ck9ObUr4j6Mj1NBMLT4YSVXOWl/Le7gl19WQkJ2wgtA
-	 aSOqDLcPr4DeQKuUaVxgiqUkjDGuqsDJ279iqGLfm+6V9FL60qqIrzHKtZ7eEsJxfU
-	 1D6ef59iXGCOJzD5PF8Tr1F2wh1uafTqRuuXz63qxiRrcGPxbnm09jArgU9r9zi9ab
-	 Tk9r52yXCnC0xCsJBeORBDxHGm4uGw9cQAvwWwLUoXxCMB8nChoDYeF3eVHTAawCwA
-	 0GcYQj92LLgEw==
+	b=qLX3Iv+AJ2Y4Qvmrbv5XILKylrB9O3x02pZfhKJH3MD6D6hSrExsyHpooGYTIYoqu
+	 Ws2hdIzE6PwktwuHQ9wJGDk9jCUF6amL/GfYeTTT+xOkBYUvmD7VHTRKp9nVC9gsNl
+	 i40krKK19CcvtpUQGh141wXR/iNIHX2TvZHMggsYTIwXWN7EzAC5HCB8Qj8FfkIZtv
+	 68Taev2MDUUCMTlFCG9760bqEdCxmk9JtXiFFClC3BfT+Ml3vWkLBeGzugqwX2bbYD
+	 GMi9liDl2j9d0tSTO8nwiVHff7JrhWmCtXMSLsh1yfjklERLtID6MZHFEbxklKMS92
+	 NEIJixo5b4fvg==
 From: SeongJae Park <sj@kernel.org>
 To: sashiko-bot@kernel.org
 Cc: SeongJae Park <sj@kernel.org>,
+	"Ravi Jonnalagadda" <ravis.opensrc@gmail.com>,
 	damon@lists.linux.dev
-Subject: Re: [PATCH 04/11] mm/damon/sysfs-schemes: implement fail_charge_{num,denom} files
-Date: Mon, 27 Apr 2026 20:41:38 -0700
-Message-ID: <20260428034139.115984-1-sj@kernel.org>
+Subject: Re: [PATCH v9.2] mm/damon: add node_eligible_mem_bp goal metric
+Date: Mon, 27 Apr 2026 20:57:53 -0700
+Message-ID: <20260428035754.116202-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260428015436.8D935C19425@smtp.kernel.org>
+In-Reply-To: <20260428032542.98E37C2BCAF@smtp.kernel.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -44,89 +45,141 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Tue, 28 Apr 2026 01:54:35 +0000 sashiko-bot@kernel.org wrote:
+On Tue, 28 Apr 2026 03:25:42 +0000 sashiko-bot@kernel.org wrote:
 
-> Sashiko AI review found 1 potential issue(s):
-> - [Medium] The sysfs store functions for `fail_charge_num` and `fail_charge_denom` do not validate or bound the ratio, leading to potential integer overflow in the core quota tracking logic.
+> Sashiko AI review found 4 potential issue(s):
+> - [High] Missing `cond_resched()` inside the inner PFN-scanning loop causes CPU soft lockups.
+> - [High] Casting 64-bit `phys_addr_t` to 32-bit `unsigned long` causes massive quota calculation errors on 32-bit PAE systems.
+> - [High] Physical address wraparound of `folio_end` causes an infinite loop and system hang.
+> - [High] Pre-existing `VM_BUG_ON` in speculative folio access within `damon_get_folio()`.
 
-No blocker.  Please read below for more details.
+I find none of above as a blocker of this patch.  Please read below for more
+details.
 
 > --
 > 
-> commit 43a135a4abb7954bcb255ae58b1aa323b2447477
-> Author: SeongJae Park <sj@kernel.org>
+> commit 377bf0664129c87741fa640c563456b379c8a816
+> Author: Ravi Jonnalagadda <ravis.opensrc@gmail.com>
 > 
-> mm/damon/sysfs-schemes: implement fail_charge_{num,denom} files
+> mm/damon: add node_eligible_mem_bp goal metric
 > 
-> This commit implements the user-space ABI for the DAMOS action failed region
-> quota-charge ratio setup. It adds sysfs files for fail_charge_num and
-> fail_charge_denom to allow reading and setting the numerator and
-> denominator of the failed regions charge ratio.
+> This patch enables system-wide page distribution with target-state goals
+> using PA-mode DAMON schemes. It tracks the ratio of scheme-eligible memory
+> on a target node to adjust migration aggressiveness. The implementation
+> calculates the current memory distribution across regions that match the
+> scheme's access pattern.
 > 
-> > diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
-> > index 04746cbb3327..dee1f5788bea 100644
-> > --- a/mm/damon/sysfs-schemes.c
-> > +++ b/mm/damon/sysfs-schemes.c
+> > diff --git a/mm/damon/core.c b/mm/damon/core.c
+> > index 3dbbbfdeff71..9a4220174a61 100644
+> > --- a/mm/damon/core.c
+> > +++ b/mm/damon/core.c
 > [ ... ]
-> > +static ssize_t fail_charge_num_store(struct kobject *kobj,
-> > +		struct kobj_attribute *attr, const char *buf, size_t count)
-> > +{
-> > +	struct damon_sysfs_quotas *quotas = container_of(kobj,
-> > +			struct damon_sysfs_quotas, kobj);
-> > +	int err = kstrtouint(buf, 0, &quotas->fail_charge_num);
+> > @@ -2287,7 +2306,115 @@ static unsigned long damos_get_node_memcg_used_bp(
+> [ ... ]
+> > +			while (addr < end_addr) {
+> > +				struct folio *folio;
+> > +				phys_addr_t folio_start, folio_end;
+> > +				phys_addr_t overlap_start, overlap_end;
+> > +				phys_addr_t counted;
 > > +
-> > +	if (err)
-> > +		return -EINVAL;
-> > +	return count;
-> > +}
+> > +				folio = damon_get_folio(PHYS_PFN(addr));
 > 
-> Can this unbounded input lead to an integer overflow in the core quota
-> tracking logic?
-> 
-> The values read via kstrtouint() are unconstrained up to UINT_MAX. Later, in
-> damos_charge_quota(), these values are passed to:
-> 
-> mult_frac(sz_region - sz_applied, quota->fail_charge_num,
->           quota->fail_charge_denom)
-> 
-> If the region size in bytes is large (for example, a single DAMON region of
-> 10 GB) and the numerator is set near UINT_MAX, their product could exceed
-> ULONG_MAX. For instance, 10GB * UINT_MAX is roughly 40 * 10^18, which is
-> larger than ULONG_MAX's 18.4 * 10^18.
-> 
-> Could this cause an overflow that wraps around to an anomalously small value,
-> effectively bypassing the administrator's configured quota limits?
+> Since this code heavily invokes damon_get_folio() in a new PFN scanner, could
+> the speculative folio access inside damon_get_folio() trigger a VM_BUG_ON? If
+> damon_get_folio() tests folio_test_lru() before acquiring a reference with
+> folio_try_get(), the page could be concurrently split or reallocated as a tail
+> page.
 
-Yes, and the real world use case ain't set such extreme input.  Even if the
-overflow happens, the impact is minor.
+I'm not sure what VM_BUG_ON() Sashiko is saying about.  Even if Sashiko is
+correct, seems Sashiko argues the issue is inside damon_get_folio(), which is
+not modified by this patch.  So this is not a blocker of this patch.
 
 > 
+> > +				if (!folio) {
+> > +					addr = PAGE_ALIGN_DOWN(addr +
+> > +							PAGE_SIZE);
+> > +					if (!addr)
+> > +						break;
+> > +					continue;
+> > +				}
 > > +
-> > +static ssize_t fail_charge_denom_show(struct kobject *kobj,
-> > +		struct kobj_attribute *attr, char *buf)
-> > +{
-> > +	struct damon_sysfs_quotas *quotas = container_of(kobj,
-> > +			struct damon_sysfs_quotas, kobj);
+> > +				/*
+> > +				 * Calculate exact overlap between the region
+> > +				 * [addr, end_addr) and the folio range.
+> > +				 * The folio may start before addr if addr is
+> > +				 * in the middle of a large folio.
+> > +				 */
+> > +				folio_start = PFN_PHYS(folio_pfn(folio));
+> > +				folio_end = folio_start + folio_size(folio);
 > > +
-> > +	return sysfs_emit(buf, "%u\n", quotas->fail_charge_denom);
-> > +}
+> > +				overlap_start = max(addr, folio_start);
+> > +				overlap_end = min(end_addr, folio_end);
 > > +
-> > +static ssize_t fail_charge_denom_store(struct kobject *kobj,
-> > +		struct kobj_attribute *attr, const char *buf, size_t count)
-> > +{
-> > +	struct damon_sysfs_quotas *quotas = container_of(kobj,
-> > +			struct damon_sysfs_quotas, kobj);
-> > +	int err = kstrtouint(buf, 0, &quotas->fail_charge_denom);
+> > +				if (overlap_end > overlap_start) {
+> > +					counted = overlap_end - overlap_start;
+> > +					total_eligible += counted;
+> > +					if (folio_nid(folio) == nid)
+> > +						node_eligible += counted;
+> > +				}
 > > +
-> > +	if (err)
-> > +		return -EINVAL;
-> > +	return count;
-> > +}
+> > +				/* Advance past the entire folio */
+> > +				addr = folio_end;
 > 
-> Does the fail_charge_denom input also require bounding to prevent the same
-> overflow issues when passed into the quota tracking logic?
+> If a folio is located at the very end of the physical address space, could
+> folio_end wrap around to 0? If addr becomes 0, could it cause an infinite
+> loop since addr < end_addr would remain true?
 
-My opinion is same to the above one.
+The folio is a valid one, so should located on a valid physical address range.
+And to my understanding, no real world machine allows 2**64 - 1 address.  So
+this should be no blocker of this patch.
+
+> 
+> > +				folio_put(folio);
+> > +			}
+> > +			cond_resched();
+> 
+> Could scanning a large DAMON region without yielding the CPU in the inner loop
+> cause soft lockups? Moving the cond_resched() inside the while loop would
+> prevent it from monopolizing the processor.
+
+As replied on previous versions, this is unlikely to happen.  We can revisit if
+this really causes such issue.
+
+> 
+> > +		}
+> > +	}
+> > +
+> > +	*total = total_eligible;
+> > +	return node_eligible;
+> > +}
+> > +
+> > +static unsigned long damos_get_node_eligible_mem_bp(struct damon_ctx *c,
+> > +		struct damos *s, int nid)
+> > +{
+> > +	phys_addr_t total_eligible = 0;
+> > +	phys_addr_t node_eligible;
+> > +
+> > +	if (c->ops.id != DAMON_OPS_PADDR)
+> > +		return 0;
+> > +
+> > +	if (nid < 0 || nid >= MAX_NUMNODES || !node_online(nid))
+> > +		return 0;
+> > +
+> > +	node_eligible = damos_calc_eligible_bytes(c, s, nid, &total_eligible);
+> > +
+> > +	if (!(unsigned long)total_eligible)
+> > +		return 0;
+> > +
+> > +	return mult_frac((unsigned long)node_eligible, 10000,
+> > +			(unsigned long)total_eligible);
+> 
+> Does casting these phys_addr_t variables to unsigned long cause truncation
+> errors on 32-bit PAE systems where physical addresses are 64-bit? For
+> example, if the eligible memory size exceeds 4GB, the truncation could
+> corrupt the ratio metrics and break the quota autotuner. Would converting
+> byte counts to page counts before casting avoid this?
+
+As replied on previous versions, the user impact is trivial.  No blocker.
 
 
 Thanks,
