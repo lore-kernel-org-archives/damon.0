@@ -1,227 +1,159 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mailout4.samsung.com (mailout4.samsung.com [203.254.224.34])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 312B03A7589;
-	Wed, 29 Apr 2026 08:00:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E877F3B8BD9
+	for <damon@lists.linux.dev>; Wed, 29 Apr 2026 09:30:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=203.254.224.34
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777449652; cv=none; b=KqcNNVyUUf2PNQIPEYSgNpDJUiYGAS6OgKX/0Xblm4kQdA+aJqqC1F53ZHWMryIdW3zxks0Nq2XF7eUN7tscNmZ/eulhtxBhOg9A+0XEEsm4tpqPsgSp3MNrutR1LzNXgFTkqdXHMhh76sy/TzM+S25ettpY1VpA6IS+m3e+vBo=
+	t=1777455016; cv=none; b=vDa10ohuUrZZdeDpGoaBqGsTb4eJEnjNQpSgXFfLY0yIum7KsEb6jmHiPbh6b09/rmEWt4NSSZRNNHHRYvfGRnN+frj1i8Kv/BEgwZzzGKC4GThv5NUzp4LJhArY4hL/QQ3PbKAthBUIGAgF2Rj3HKQibhNc0VOmUBe+uYf4Uiw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777449652; c=relaxed/simple;
-	bh=wGqI5lwhbVgS0EHJvqVvbyIsSIKfumQFIlGxt5gv5ko=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=IJ1aY+JaXguOtjmYOrmWIvUVr0yhKTbJGyAjyQnQcdJhM8o928EdLVAy37yVmrPlrkPW61cBhe8A7hrfSEd4FyheLEK06T4ihjkXSxmAwxzuieePkJ93Lz0CKm4V2oVsmguJfEb+ORt4JUBQ5hb0BboVp3WRX8iD37TrCsgG9dM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HIOJ+xwC; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1777455016; c=relaxed/simple;
+	bh=yy8oNEAoS/uzpxt3v8eVFMCgeKKpmjXxjvuY7Wbunjs=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:In-Reply-To:
+	 Content-Type:References; b=p2m0JRLmaTqZITpYVRZ0ZAaumXYpFk9Acz/HM6tCyqpPpY8ZJnKAp7XM4tvcQMGtYCw5rOw09eVoUNYDEIE6RnwEPdIAyCP6ofETwzt6xu8xjdXW//tlohTAtSpks4CWKYI5VpJ6jj9KdTAcWGRyo6olDqAWWF4u5M22qxgJIiI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com; spf=pass smtp.mailfrom=samsung.com; dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b=f4Jz3rp4; arc=none smtp.client-ip=203.254.224.34
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=samsung.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HIOJ+xwC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D571C19425;
-	Wed, 29 Apr 2026 08:00:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777449651;
-	bh=wGqI5lwhbVgS0EHJvqVvbyIsSIKfumQFIlGxt5gv5ko=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=HIOJ+xwCDMRcMYaHTLMVjvLv/kUNOsvkFsVOmlHE+o4yynxfOFRU8YJ55DfFcax77
-	 zQpZWBTAHEXPXUWiy5jtKBjDNaCUp8y/tuwzduLlmyBIlDJZNl98Q7I1IwS4C7edhB
-	 31kY4oUJQ9sj7ot/bzwG4J5gkCUKhGhiZT8l1/jkYo6OL78+WUP/gDp4gJX+duYF0z
-	 W24us/qWUI2qalmtPv9Q2REDF79ZZYwZsihCI7fYlxJaUbX192YG8EJ+PYEc6ABTVJ
-	 fGgY9NfvKt2bTM0vac3ugEGcCIV74d0dRmfWFml2cePNe7u44twZCNS4A2/VsFBz0X
-	 uey44tAzltHYQ==
-Date: Wed, 29 Apr 2026 01:00:50 -0700
-From: Namhyung Kim <namhyung@kernel.org>
-To: Akinobu Mita <akinobu.mita@gmail.com>
-Cc: SeongJae Park <sj@kernel.org>, damon@lists.linux.dev,
-	linux-perf-users@vger.kernel.org
-Subject: Re: [RFC PATCH v3 0/4] mm/damon: introduce perf event based access
- check
-Message-ID: <afG6sg3juuJrDEbO@z2>
-References: <CAC5umyiikHr4doYKW5Gy4uv6M0_HbBZUSd9kM+L+kCrKYKEuXw@mail.gmail.com>
- <20260424233136.6716-1-sj@kernel.org>
- <CAC5umyjcFm-iw31kgYP0Z61z7N=vMzkZKsvGZpYmNwNw3R_gHw@mail.gmail.com>
+	dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b="f4Jz3rp4"
+Received: from epcas5p4.samsung.com (unknown [182.195.41.42])
+	by mailout4.samsung.com (KnoxPortal) with ESMTP id 20260429093002epoutp0459abb6078236d1b7922c976b1042db95~qyehotRtY1912719127epoutp04T;
+	Wed, 29 Apr 2026 09:30:02 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout4.samsung.com 20260429093002epoutp0459abb6078236d1b7922c976b1042db95~qyehotRtY1912719127epoutp04T
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+	s=mail20170921; t=1777455003;
+	bh=l2sErW9ifuxlN4x+Sne0CeYYbEJKHpiCBGf6vhcU2Jk=;
+	h=Date:From:Subject:To:Cc:In-Reply-To:References:From;
+	b=f4Jz3rp4k+M6bC+6TqlXloRnoElu8gbjEIiUIua1QviqkO+4RxEinkUKYJCggf8Hd
+	 FVrvtEGPb/OllLUxDO4vDE05M+R+UKBx6SqInb9CWkL+WMtxaQmXCaDix7f3d++h7o
+	 yAcy3bhNxsmOBqM5dvxXy58dF4C26cPcMyLnfNPE=
+Received: from epsnrtp03.localdomain (unknown [182.195.42.155]) by
+	epcas5p4.samsung.com (KnoxPortal) with ESMTPS id
+	20260429093002epcas5p409aa78c4d55a86cef067895205a1b2d5~qyehWqKUG3126931269epcas5p4T;
+	Wed, 29 Apr 2026 09:30:02 +0000 (GMT)
+Received: from epcpadp1new (unknown [182.195.40.141]) by
+	epsnrtp03.localdomain (Postfix) with ESMTP id 4g5Bpy4N4Rz3hhT9; Wed, 29 Apr
+	2026 09:30:02 +0000 (GMT)
+Received: from epsmtip2.samsung.com (unknown [182.195.34.31]) by
+	epcas5p3.samsung.com (KnoxPortal) with ESMTPA id
+	20260429061641epcas5p3c2d6063ba101e347c36ccfa050174482~qv1tDSpkV0853808538epcas5p3d;
+	Wed, 29 Apr 2026 06:16:41 +0000 (GMT)
+Received: from [107.122.10.65] (unknown [107.122.10.65]) by
+	epsmtip2.samsung.com (KnoxPortal) with ESMTPA id
+	20260429061628epsmtip20cd5b871612ade998c9aaa11fb84dd9a~qv1gikvBb1891418914epsmtip2w;
+	Wed, 29 Apr 2026 06:16:28 +0000 (GMT)
+Message-ID: <1891546521.01777455002601.JavaMail.epsvc@epcpadp1new>
+Date: Wed, 29 Apr 2026 11:45:26 +0530
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAC5umyjcFm-iw31kgYP0Z61z7N=vMzkZKsvGZpYmNwNw3R_gHw@mail.gmail.com>
+User-Agent: Mozilla Thunderbird
+From: Arun George/Arun George <arun.george@samsung.com>
+Subject: Re: [LSF/MM/BPF TOPIC][RFC PATCH v4 00/27] Private Memory Nodes (w/
+ Compressed RAM)
+To: Gregory Price <gourry@gourry.net>
+Cc: lsf-pc@lists.linux-foundation.org, linux-kernel@vger.kernel.org,
+	linux-cxl@vger.kernel.org, cgroups@vger.kernel.org, linux-mm@kvack.org,
+	linux-trace-kernel@vger.kernel.org, damon@lists.linux.dev,
+	kernel-team@meta.com, gregkh@linuxfoundation.org, rafael@kernel.org,
+	dakr@kernel.org, dave@stgolabs.net, jonathan.cameron@huawei.com,
+	dave.jiang@intel.com, alison.schofield@intel.com, vishal.l.verma@intel.com,
+	ira.weiny@intel.com, dan.j.williams@intel.com, longman@redhat.com,
+	akpm@linux-foundation.org, david@kernel.org, lorenzo.stoakes@oracle.com,
+	Liam.Howlett@oracle.com, vbabka@suse.cz, rppt@kernel.org, surenb@google.com,
+	mhocko@suse.com, osalvador@suse.de, ziy@nvidia.com, matthew.brost@intel.com,
+	joshua.hahnjy@gmail.com, rakie.kim@sk.com, byungchul@sk.com,
+	ying.huang@linux.alibaba.com, apopple@nvidia.com, axelrasmussen@google.com,
+	yuanchu@google.com, weixugc@google.com, yury.norov@gmail.com,
+	linux@rasmusvillemoes.dk, mhiramat@kernel.org,
+	mathieu.desnoyers@efficios.com, tj@kernel.org, hannes@cmpxchg.org,
+	mkoutny@suse.com, jackmanb@google.com, sj@kernel.org,
+	baolin.wang@linux.alibaba.com, npache@redhat.com, ryan.roberts@arm.com,
+	dev.jain@arm.com, baohua@kernel.org, lance.yang@linux.dev,
+	muchun.song@linux.dev, xu.xin16@zte.com.cn, chengming.zhou@linux.dev,
+	jannh@google.com, linmiaohe@huawei.com, nao.horiguchi@gmail.com,
+	pfalcato@suse.de, rientjes@google.com, shakeel.butt@linux.dev,
+	riel@surriel.com, harry.yoo@oracle.com, cl@gentwo.org,
+	roman.gushchin@linux.dev, chrisl@kernel.org, kasong@tencent.com,
+	shikemeng@huaweicloud.com, nphamcs@gmail.com, bhe@redhat.com,
+	zhengqi.arch@bytedance.com, terry.bowman@amd.com, gost.dev@samsung.com,
+	arungeorge05@gmail.com, cpgs@samsung.com
+Content-Language: en-US
+In-Reply-To: <ae_i9IlIndumJWN3@gourry-fedora-PF4VCD3F>
+Content-Transfer-Encoding: 7bit
+X-CMS-MailID: 20260429061641epcas5p3c2d6063ba101e347c36ccfa050174482
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+CMS-TYPE: 105P
+X-CPGSPASS: Y
+X-Hop-Count: 3
+X-CMS-RootMailID: 20260427123800epcas5p1e1a2fed257091b31e2e6c3a7d1b0c2b0
+References: <20260222084842.1824063-1-gourry@gourry.net>
+	<CGME20260427123800epcas5p1e1a2fed257091b31e2e6c3a7d1b0c2b0@epcas5p1.samsung.com>
+	<1983025922.01777297382206.JavaMail.epsvc@epcpadp2new>
+	<ae_i9IlIndumJWN3@gourry-fedora-PF4VCD3F>
 
-Hello,
+On 28-04-2026 03:58 am, Gregory Price wrote:
+> On Mon, Apr 27, 2026 at 06:02:57PM +0530, Arun George wrote:
+>>
+>> Any particular workload you are targeting with
+>> this (which can tolerate this latency)?
+>>
+>> Any deployments you think of where the goal is a capacity expansion
+>> with a compromise in performance?
+>>
+> Primary use cases for us are any workload that benefits from zswap -
+> which is many, many (many, many [many, many]) workloads.
+> 
+A curious question please. If the primary use case is swap, can't we 
+handle this problem statement by re-using the zsmalloc allocation classes?
 
-On Sat, Apr 25, 2026 at 09:33:07PM +0900, Akinobu Mita wrote:
-> 2026年4月25日(土) 8:31 SeongJae Park <sj@kernel.org>:
-> >
-> > On Fri, 24 Apr 2026 12:27:07 +0900 Akinobu Mita <akinobu.mita@gmail.com> wrote:
-> >
-> > > Hello SeongJae,
-> > >
-> > > 2026年4月23日(木) 13:34 SeongJae Park <sj@kernel.org>:
-> > > >
-> > > > Hello Akinobu,
-> > > >
-> > > > On Thu, 23 Apr 2026 09:42:06 +0900 Akinobu Mita <akinobu.mita@gmail.com> wrote:
-> > > >
-> > > > > DAMON currently only provides PTE accessed-bit based access check, this
-> > > > > patch series adds a new perf event based access check.
-> > > > >
-> > > > > Since perf event-based access checks do not require modifying the PTE
-> > > > > accessed-bit for pages representing each damon region, it reduces the
-> > > > > overhead of monitoring at a fixed granularity of the page size.
-> > > >
-> > > > As I also commented to the previous version, the high level idea makes sense to
-> > > > me.  I think this can be useful.
-> > > >
-> > > > Also as I commented to the previous version, I understand the page level
-> > > > monitoring overhead reduction is the main purpose of this patch, and it makes
-> > > > sense to me.  Nonetheless, I like this mainly because the perf event could
-> > > > provide more detailed information including from which CPU/thread the access is
-> > > > made, and whether the access is for read/write, to my understanding.  Please
-> > > > let me know if my understanding is wrong.
-> > >
-> > > That's correct.
-> > > Once the integration into your new monitoring infrastructure is
-> > > complete, those things will become possible.
-> >
-> > Thank you for confirming!
-> >
-> > >
-> > > > >
-> > > > > Here is a method and its results for comparing access checks using
-> > > > > existing access bits and new perf events.
-> > > > [...]
-> > > > > Using accessed bit, prepare_access_checks takes 7 seconds and
-> > > > > check_accesses takes 5 seconds.
-> > > > [...]
-> > > > > Using perf event, prepare_access_checks takes 0.01 seconds and
-> > > > > check_accesses takes 2.6 seconds.
-> > > >
-> > > > Thank you so much for sharing these great test results with the detailed setup
-> > > > description!
-> > > >
-> > > > > ```
-> > > > > $ sudo $HOME/damo/damo stop
-> > > > > $ sudo $HOME/damo/damo start --ops vaddr \
-> > > > >       --perf_event 5000 0 0x4 0x1cd 0x1f 0 \
-> > > > >       --monitoring_intervals 5s 60s 300s \
-> > > > >       --monitoring_nr_regions_range 1000000000 1000000000 \
-> > > > >       --target_pid $(cat /tmp/memcached.pid)
-> > > > [...]
-> > > > > Note: damo's --perf_event option
-> > > > >
-> > > > > Using these features also requires modifications to damo, but these
-> > > > > are not included in this patch series and are currently under
-> > > > > development in the following branch:
-> > > > >
-> > > > > * https://github.com/mita/damo/tree/damo-perf-for-v3.2.2
-> > > >
-> > > > Thank you for sharing this, too!
-> > > >
-> > > > >
-> > > > > The option newly added to damo for perf event-based access check has the
-> > > > > following format:
-> > > > >
-> > > > > `--perf_event <sample freq> <sample phys addr> <type> <config> <config1> <config2>`
-> > > >
-> > > > I think we may need to discuss more for final interface.  But I think that
-> > > > could be done later, after the kerenl ABI is fixed.
-> > >
-> > > My current patch introduces a set of kernel ABIs (.../perf_events/<P>/*),
-> > > and if I want to control another field in the perf_event_attr,
-> > > I would have to add a new ABI. This would be a significant
-> > > maintenance cost.
-> > >
-> > > Instead, I would like to provide a single bin file where the
-> > > perf_event_attr I want to set is written as binary.
-> >
-> > I'd prefer having single file per parameter, as sysfs is designed for.  It
-> > allows keeping the input format simple and therefore easy to maintain and
-> > extend.  Of course, we should carefult at adding new parameters, though.
-> 
-> Another idea from Namhyung Kim [1] is to fix the events
-> specified by the CPU architecture being executed.
-> 
-> Of course, we would want to control a limited number of
-> parameters, such as sample_freq.
-> 
-> [1] https://lore.kernel.org/damon/aZwLDAxf9eP0lPdD@z2/
-> 
-> > >
-> > > > >
-> > > > > - `sample freq`: A higher frequency improves access accuracy, but also
-> > > > >   increases overhead.
-> > > > > - `sample phys addr`: specify 0 for vaddr and 1 for paddr.
-> > > > > - The remaining type, config, config1, and config2 settings can be found
-> > > > >   as follows:
-> > > >
-> > > > The values look bit human-unfriendly.  I wonder if we could use more
-> > > > human-friendly values, e.g., 'cpu' for type,
-> > > > 'mem_trans_retired.load_latency_gt_1024' for config, etc.  Not necessarily we
-> > > > need to fix this right now.  Let's keep discussing.
-> > >
-> > > I'd like to do it that way. These processes can be handled better
-> > > from user space than from within the kernel, so I'd like to achieve
-> > > this from damo with the help of the perf tool and library.
-> >
-> > Does existing perf event ABI also take that approach?  If so, I think that is
-> > fine.
-> 
-> On Intel CPUs, you can read the mem-loads and/or mem-stores
-> files as follows to find the value that should be set to
-> perf_event_attr:
-> 
-> $ cat /sys/bus/event_source/devices/cpu/events/mem-loads
-> event=0xcd,umask=0x1,ldlat=3
-> 
-> You can find out which bit field of which member of
-> perf_event_attr should be used to set these values from the
-> corresponding files in the format directory.
-> 
-> $ cat /sys/bus/event_source/devices/cpu/format/{event,umask,ldlat}
-> config:0-7
-> config:8-15
-> config1:0-15
-> 
-> This conversion from symbolic event name to values that should
-> be set in perf_event_attr can be done, for example, as shown below,
-> so I think it should be implemented using perf in some way.
-> 
-> import perf
-> 
-> if __name__ == '__main__':
->     evlist = perf.parse_events("mem-loads")
->     for evsel in evlist:
->         print(f"{evsel}: type={evsel.type} config={evsel.config}")
+A separate size class can be reserved for non-compressed pages in 
+zsmalloc. And this interface could be used by zswap, zram etc. (We have 
+been using this implementation for testing btw.). This does not require 
+additional book-keeping or buddy allocator.
 
-It'd be great if we could have something like this.  Currently we have
-libperf (in C) in tools/lib/perf but it doesn't have the parser yet.
+But that approach will not give a generic solution and not available for 
+user-land anyway!
+>> And I believe the bear-proof cage might work in the normal scenarios,
+>> but may not work for all.
+> 
+> If it can't work for all workloads, then it's likely not general purpose
+> enough to find core kernel support and should seek to use the existing
+> interfaces (DAX and friends).
+> 
+I agree. That is a good point.
 
-Anyway there are vendor-contributed event/metric description in JSON
-under tools/perf/pmu-events/arch directory.  You may extract the event
-encoding from the JSON and convert it using the sysfs format info.
+> 
+> You need two controls over compressed RAM for it to be reliable:
+> 
+>    - Allocation control (acquiring new struct page to write to)
+>    - Write-control (preventing new writes to compressed pages)
+> 
+> Private nodes provide the allocation control.
+> 
+> A read-only mapping, and guarantee that only memory that can reach
+> the device is userland memory - is the only way to control the cpu
+> writes from the OS perspective.
+> 
+So write-control part need to handled in the specific back end driver of 
+private pages while the allocation control is a generic front-end sort 
+of, right? (Ex: zswap cram back end for compressed devices case.)>
+> In the next version of the RFC i'll demonstrate cram.c as a new swap
+> backend that allows for read-only mappings to be soft-faulted in,
+> migration on write, isolation to ANON memory, and some optional
+> settings that allow a device or administrator a "writable budget"
+> which allows some number of pages to be made writable without migration.
 
-On Alderlake, the 'mem_trans_retired.load_latency_gt_1024' is defined
-like below:
-
-tools/perf/pmu-events/arch/x86/alderlake/memory.json +128
-
-    {
-        "BriefDescription": "Counts randomly selected loads when the latency from first dispatch to completion is greater than 1024 cycles.",
-        "Counter": "1,2,3,4,5,6,7",
-        "Data_LA": "1",
-        "EventCode": "0xcd",
-        "EventName": "MEM_TRANS_RETIRED.LOAD_LATENCY_GT_1024",
-        "MSRIndex": "0x3F6",
-        "MSRValue": "0x400",
-        "PublicDescription": "Counts randomly selected loads when the latency from first dispatch to completion is greater than 1024 cycles.  Reported latency may be longer than just the memory latency.",
-        "SampleAfterValue": "53",
-        "UMask": "0x1",
-        "Unit": "cpu_core"
-    },
-
-I think MSRValue is for attr.config1.
-
-Thanks,
-Namhyung
+Great! I believe "writable budget" could be an interesting idea which 
+can solve the 'bus error' sort of scenarios due to device not capable of 
+taking any more writes. The write budget could be replenished using the 
+control path and writes will not go ahead without the budget available, 
+right?>
+> ~Gregory
+> 
+~Arun George
 
