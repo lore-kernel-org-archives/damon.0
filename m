@@ -1,161 +1,105 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0CF3154425
-	for <damon@lists.linux.dev>; Wed, 29 Apr 2026 05:41:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B878A15539A
+	for <damon@lists.linux.dev>; Wed, 29 Apr 2026 06:03:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777441303; cv=none; b=irwQjnWsOLiBx1Kl4bK8PygxOB/WqIt7jN2TxJ7qo9B+b00f3qDH7fAHGVB3D212r42T7Ak99CpxmEvs8XQyWkHrsC1QthO3ojzaa7ZWQQM9swgap4+q+EKl8rvuHy+hZVe76PyPjNytFGtLQP7fsJJPD3GuaDhryJMM6BvFN94=
+	t=1777442594; cv=none; b=OGFagjeajgr677rJKFGkye1eqtsrTohR9XMkhpfaaz/ZAXKYdo441mbEtospwz5zKJIHQV63s4n+O8DukpDuM5nUVqt1nNpfRmdqSsImaUSoyfKDgI7ISPJlcPoZvY9pXBJ5RxVL06UzBZj3YG2rf7h9C4tYkpLmMQ0HPLGY6FU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777441303; c=relaxed/simple;
-	bh=LmZgz+NDbQcsO8X5k/AgOcKCYhmb1oJSGC4Wri+UGSs=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nLAnNdxYJNN5fQ6ppyDH7tYl0d7qJZ3K+fCozs+8GOkGvx1e3UlN5WEC+XxyiP4vsiRo1bm5q9jlXhKnzWzSHwRfyqQqq8KwTrsd693rbDepqc6w1hAJQ0zyJjiBrwhgvdGNcwjbJIpk3wsgjfaFK0hhGdZgWgRYph0xw7bETdw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kdsm/o90; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1777442594; c=relaxed/simple;
+	bh=+QO6yhg/oT5Vm3uFcS5AqyuDmaJMeuRdB48mk/nPA2s=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=ujc0t87kOxeJ3Mc2RdvZc/srbujpK5DchuqrYs+igmLCIyMjzyrZmrCmv8Sh6W+syxqyE8VccRTrKtXV74AUaq4S9F75VM6vpLP/MiUBgHDJh1nofNJYLpRBjFFzUIrTWLJSy6Q3e3HGi0An58E8fPp9myV3ZNWGvFf+4/DmdHU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lEvo8Nus; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kdsm/o90"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13008C19425;
-	Wed, 29 Apr 2026 05:41:42 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lEvo8Nus"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49EE6C19425;
+	Wed, 29 Apr 2026 06:03:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777441303;
-	bh=LmZgz+NDbQcsO8X5k/AgOcKCYhmb1oJSGC4Wri+UGSs=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kdsm/o90ptqXhMJnWqIgOgEvJvtycg43xPgRlAlWHm3rmoYYzwataODvxLrh2VHBz
-	 4cvcne0YSfZfVBc+nWPIUkRZGpNLrQVN4eKFRGmh5U9ckSumCEGwi0wCD9zCcaaAPW
-	 vwfLqGFl6rFKOFxd84xsnKtX3Q1M9ww8zQDqLKGvyeu72VLmeDZXXDa4YH7GYJd/UQ
-	 /rtvTS0EYidjdegqKMnsU099XcDQgFx45IoTKXH7x1kjh8s7+AT4uakRMl3IeBaoBU
-	 rTJ7UAS0J2SzIwqpjTr2aMMn9qAZWZaKIoWQxqoxd8I7XRyZgrbcH69hqpN98mP83V
-	 NNnp73RaAwMPg==
-From: SeongJae Park <sj@kernel.org>
-To: sashiko-bot@kernel.org
-Cc: SeongJae Park <sj@kernel.org>,
-	damon@lists.linux.dev
-Subject: Re: [PATCH 2/7] mm/damon/reclaim: cover all system rams
-Date: Tue, 28 Apr 2026 22:41:35 -0700
-Message-ID: <20260429054135.91515-1-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260429052317.4BE6BC19425@smtp.kernel.org>
-References: 
+	s=k20201202; t=1777442594;
+	bh=+QO6yhg/oT5Vm3uFcS5AqyuDmaJMeuRdB48mk/nPA2s=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date:From;
+	b=lEvo8NusyrRtrJ1f2zPCMWRwkHZZL7BtXoU2XG7NfmQWkrNOF5nYOVdsnWmF16Qkg
+	 CTumPjrHB9qOHzNPFe63/0byin02LJfZBm7h9yHb1B2rOhS3kQDDI+VFRAHqvDVc3Y
+	 19+La+SPsrxXVyX6tmlRfxg+65oEx9trh7HMAt+V4dt9sE2hNiYf0WrKgAwlSHghwZ
+	 Pzf8eBjDe+bV//aPkHvjoizei1nq4wvNNWhx8yOjno4w7/AfRwO45xvOBIEfmfDlR7
+	 HnGnPf62whBf1Q7nvSceL7YI70uX/VqHxAk0vVvKn3CP2iAtNvVasmM/wWYjyZCtv8
+	 h4s/1vRWHXNBw==
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH 3/7] mm/damon/lru_sort: cover all system rams
+Reply-To: sashiko@lists.linux.dev
+To: "SeongJae Park" <sj@kernel.org>
+Cc: damon@lists.linux.dev
+In-Reply-To: <20260429041232.90257-4-sj@kernel.org>
+References: <20260429041232.90257-4-sj@kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Wed, 29 Apr 2026 06:03:13 +0000
+Message-Id: <20260429060314.49EE6C19425@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-On Wed, 29 Apr 2026 05:23:16 +0000 sashiko-bot@kernel.org wrote:
+Thank you for your contribution! Sashiko AI review found 1 potential issue(=
+s) to consider:
+- [High] Single bounding box for sparse memory layouts causes soft lockups =
+and algorithmic failure
+--
 
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [High] Massive single DAMON region spanning physical address holes causes CPU soft lockups and quota starvation.
-> - [High] Time-of-Check to Time-of-Use (TOCTOU) vulnerability in damon_set_region_system_rams_default() leads to infinite loop and OOM panic.
+commit 692650636f4214ec9c2fa1c5d7fd43fe3bf049fe
+Author: SeongJae Park <sj@kernel.org>
 
-No blocker of this patch in my opinion.  Pleae read below for more details.
+mm/damon/lru_sort: cover all system rams
 
-> --
-> 
-> commit 179df0c96a01c49e5644b5cc1a9154fb63368993
-> Author: SeongJae Park <sj@kernel.org>
-> 
-> mm/damon/reclaim: cover all system rams
-> 
-> This commit changes DAMON_RECLAIM to monitor the entire system RAM by
-> default, rather than just the biggest System RAM region, to cover all
-> available memory.
-> 
-> > diff --git a/mm/damon/reclaim.c b/mm/damon/reclaim.c
-> > index b330ff169590..a60ee800d63e 100644
-> > --- a/mm/damon/reclaim.c
-> > +++ b/mm/damon/reclaim.c
-> 
-> [ ... ]
-> 
-> > @@ -232,11 +234,9 @@ static int damon_reclaim_apply_parameters(void)
-> >  		damos_add_filter(scheme, filter);
-> >  	}
-> >  
-> > -	err = damon_set_region_biggest_system_ram_default(param_target,
-> > -					&monitor_region_start,
-> > -					&monitor_region_end,
-> > -					param_ctx->addr_unit,
-> > -					param_ctx->min_region_sz);
-> > +	err = damon_set_region_system_rams_default(param_target,
-> > +			&monitor_region_start, &monitor_region_end,
-> > +			param_ctx->addr_unit, param_ctx->min_region_sz);
-> 
-> Can monitor_region_start and monitor_region_end be modified concurrently
-> via sysfs module parameters while this code is executing?
+This commit changes the default monitoring region from the biggest System R=
+AM
+resource to a single region that spans all system RAMs. This is intended to
+cover the entire physical memory instead of just the largest block.
 
-No.
+> diff --git a/mm/damon/lru_sort.c b/mm/damon/lru_sort.c
+> index 7569e471160a..2eb559d913b6 100644
+> --- a/mm/damon/lru_sort.c
+> +++ b/mm/damon/lru_sort.c
 
-The function can be invoked in three places.
+[ ... ]
 
-1. damon_reclaim_init()
-2. enabled parameter write callback
-3. commit_inputs parameter write callback
+> @@ -326,7 +328,7 @@ static int damon_lru_sort_apply_parameters(void)
+>  	if (err)
+>  		goto out;
+> =20
+> -	err =3D damon_set_region_biggest_system_ram_default(param_target,
+> +	err =3D damon_set_region_system_rams_default(param_target,
+>  					&monitor_region_start,
+>  					&monitor_region_end,
+>  					param_ctx->addr_unit,
 
-Because init function is called before users can write to sysfs, path 1 cannot
-race with paths 2 and 3.  Because parameter write callbacks are protected by
-kernel_param_lock, paths 2 and 3 cannot race each other.
+Could this lead to a regression on systems with sparse memory layouts?
 
-> 
-> Looking at damon_set_region_system_rams_default(), the pointers are
-> dereferenced multiple times:
-> 
-> mm/damon/core.c:damon_set_region_system_rams_default() {
-> 	if (*start > *end)
-> 		return -EINVAL;
-> 
-> 	if (!*start && !*end &&
-> 		!damon_find_system_rams_range(start, end, addr_unit))
-> 		return -EINVAL;
-> 
-> 	addr_range.start = *start;
-> 	addr_range.end = *end;
-> 	return damon_set_regions(t, &addr_range, 1, min_region_sz);
-> }
-> 
-> If a concurrent sysfs write alters the values between the initial check and
-> the subsequent assignment, could this result in an inverted range where start
-> is greater than end?
-> 
-> If an inverted range is passed to damon_set_regions(), the size calculation
-> (end - start) could underflow to a massive value. When the thread later
-> executes damon_apply_min_nr_regions(), it might enter an infinite loop trying
-> to split the underflowed region, endlessly allocating damon_region objects.
+When creating a single bounding box from the first to the last physical
+address, systems with sparse memory like CXL or distant NUMA nodes could end
+up with a region containing terabytes of unpopulated physical address space.
 
-So, such an issue cannot happen.
+Will this cause soft lockups during DAMOS operations?
 
-> 
-> Additionally, could damon_find_system_rams_range() create a single bounding
-> box that spans massive unpopulated physical address holes on sparse memory
-> systems?
-> 
-> Since DAMON applies schemes by linearly looping over the region page-by-page,
-> would spinning over terabytes of holes without calling cond_resched() cause
-> CPU soft lockups?
+If a scheme like PAGEOUT iterates linearly over this massive region in
+PAGE_SIZE increments, iterating over these large memory holes might stall t=
+he
+CPU and trigger the watchdog, since cond_resched() is typically placed after
+the loop.
 
-Answered on RFC.  To repeat, operations for the holes should be lightweight
-enough, since we will just see it is hole and move to next page.  Users can
-manually set the monitoring regions.
+Does this also cause an algorithmic regression with the sampling probabilit=
+y?
 
-> 
-> Furthermore, because these holes are never accessed, they might perfectly match
-> PAGEOUT schemes. Could the massive region size (including holes) be incorrectly
-> charged against the reclaim quota, instantly depleting it and preventing actual
-> RAM from being reclaimed?
+DAMON's adaptive logic merges adjacent regions with identical access
+frequencies. Since memory holes report 0 accesses, they might be aggressive=
+ly
+merged with interspersed RAM into maximum-sized regions. Because sampling
+selects a single random address per region, the probability of actually
+sampling the populated RAM might drop to near zero.
 
-Also answered on RFC.  Users can manually set the regions for this kind of
-extremem corner case.
-
-> 
-> Would it be better to dynamically populate multiple regions (one for each
-> RAM block) instead of using a single bounding box?
-
-I answered this on the review to the first patch of this series.
-
-
-Thanks,
-SJ
-
-[...]
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260429041232.9025=
+7-1-sj@kernel.org?part=3D3
