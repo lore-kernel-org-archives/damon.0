@@ -1,50 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4541374E64;
-	Wed, 29 Apr 2026 15:03:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9028B27EFE9;
+	Wed, 29 Apr 2026 15:03:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777475000; cv=none; b=Z0RuSMGSUuv6S3xnAuD8C083e42Uzxs8hGyZEThp2zJTnpNOiuLpu1dF6ehNX6XU6BcpyfiW0l6AWh0kiIy2up1qZM22t/v56uEHtSygej5EnMGDfbInfQhLsBycPaTRYpkVdW1F1iz13FY/0NkAMZnqSoTQvywUB1pcgnorU4s=
+	t=1777475001; cv=none; b=QzEwGWQrq6kPM/biFPa8+1xW1Qi8tcGNI1i5AhK4CathCu3ov/GDqOytCDK9HHarDFmgFYONohQQTAaC9urrMXQsbi3oQN0YcdVciPbX5hrjv9ZLgIq7J+LTjVcwtybUADP1ty3JsONhsn8h6GELDq5jGlLJXH7DJjajT6aOOMI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777475000; c=relaxed/simple;
-	bh=hwZE1VaC9my0yzv0JuSOC0k//zHBRpDQJ1UQwVx4nB4=;
+	s=arc-20240116; t=1777475001; c=relaxed/simple;
+	bh=58RqIGxjkE+DGlcSy5aHIfF8jnvuEdtFZZsL+mLllnk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=baCSlvJ47pep4pcWbNQzkgpsuhj0Gq7pK2iIt4c0CWB6yBFi9EIyMuWVcw9MG0+NmHYevojynR4LCzJP22zKxdMbevgf/kF7f+qDJ6y4R1r2sPLnmhCa5VVbBIqFPZG2x0Am0Bw1IzZA+s8vWHDwOsb3SdwPiZ4jGfhXGcn0mdU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=F8xNUb+Y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XCj+84AF0kWyT7zxJdiLXguV0QYexYn4yLYeaDHB+i42dwR3IqAUhgiJ42sRJ/Z84dDrzPlhsjvTIVdPUi3uHqJA+aRjtanq5DtAi76tbzS5V2FoBrOdXPTEQ7yASj3B/H0g48KlZw9de1UoRPbuq42k2BM1/RukAnpKaHTjgnc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KPAseCjg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="F8xNUb+Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2479AC2BCC6;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KPAseCjg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD45CC2BCB8;
 	Wed, 29 Apr 2026 15:03:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777475000;
-	bh=hwZE1VaC9my0yzv0JuSOC0k//zHBRpDQJ1UQwVx4nB4=;
+	s=k20201202; t=1777475001;
+	bh=58RqIGxjkE+DGlcSy5aHIfF8jnvuEdtFZZsL+mLllnk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F8xNUb+YUYwuFHOi1x9/UCnAPYXxKp48CpW28C9yujsX82Ka0wjmMHm+EppqL76yf
-	 +v8DRvdA2oetUWow0RTVbe1boIy5sNReql+Q6fYkstrihFAw8HckBL6E7mdLbNuBy8
-	 yY1KoZqGy+SFQpn2SY+whT5ZLLWtzx9qZlhWr0+98rbQo1PqFDLpOmtalD7GbUx6Nx
-	 QZiBlrO64F3Pz9x9FvDBMY4rsAL6jE5SogjqtSEWWqAd0D/G3V4a1T3Nq6iyr/bA3o
-	 9WCzhZJHKktSNvm2PEpsvnPnVbyAHVQx8VnI48bprUe3Yczp5elMEoCNROKFhMxUcc
-	 JqHqGzEmobUfQ==
+	b=KPAseCjg/GflYBqZYScNCegotJmor53iPafezKOPzjzu+ktkbKlTbH8y/NRcUl1ZW
+	 eatzswkn4KKfFGcmkzITmBwDpVrrkjNHBuES1alBIG/PU66rIiS/IY1XlYnQe5i0V0
+	 qMwN5Dd7zqZl1JRyNdoaKb9asKLhH+doerwF5nPm2zR3cK+FOKh3TUfN/mUg7oGadx
+	 rvRGP4n0XY2uoIc+lX1sOeBvvJRfOKX7BHd0kLntALhxohmQge45f6a86J/bsgoN3g
+	 8UECIEGU9930Io2H7zmc0ebsSJnRCK7wEiatFGrNE7OZA6+s6K4BmIwRdHFUZo9wip
+	 xtJiQZXQnPSGg==
 From: SeongJae Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SeongJae Park <sj@kernel.org>,
 	"Liam R. Howlett" <liam@infradead.org>,
 	David Hildenbrand <david@kernel.org>,
-	Jonathan Corbet <corbet@lwn.net>,
 	Lorenzo Stoakes <ljs@kernel.org>,
 	Michal Hocko <mhocko@suse.com>,
 	Mike Rapoport <rppt@kernel.org>,
-	Shuah Khan <skhan@linuxfoundation.org>,
 	Suren Baghdasaryan <surenb@google.com>,
 	Vlastimil Babka <vbabka@kernel.org>,
 	damon@lists.linux.dev,
-	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [PATCH 1/2] Docs/admin-guide/mm/damon/usage: mark scheme filters sysfs dir as deprecated
-Date: Wed, 29 Apr 2026 08:03:05 -0700
-Message-ID: <20260429150309.82282-2-sj@kernel.org>
+Subject: [PATCH 2/2] Docs/ABI/damon: mark schemes/<S>/filters/ deprecated
+Date: Wed, 29 Apr 2026 08:03:06 -0700
+Message-ID: <20260429150309.82282-3-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260429150309.82282-1-sj@kernel.org>
 References: <20260429150309.82282-1-sj@kernel.org>
@@ -56,35 +53,147 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The alternatives of 'filters/' directory, namely 'core_filters/' and
-'ops_filters/', can fully support all the features 'filters/' directory
-can do, and provide better user experience.   Having 'filters/'
-directory is only confusing to users.  Announce it as deprecated on the
-usage document.
+Now the 'filters/' directory is deprecated.  Update ABI document to also
+announce the fact.  Also update the descriptions of the files to be
+based on 'core_filter/' directory, to make the old descriptions ready to
+be removed when the time arrives.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- Documentation/admin-guide/mm/damon/usage.rst | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ .../ABI/testing/sysfs-kernel-mm-damon         | 62 ++++++++++---------
+ 1 file changed, 34 insertions(+), 28 deletions(-)
 
-diff --git a/Documentation/admin-guide/mm/damon/usage.rst b/Documentation/admin-guide/mm/damon/usage.rst
-index d5548e460857c..11c75a598393c 100644
---- a/Documentation/admin-guide/mm/damon/usage.rst
-+++ b/Documentation/admin-guide/mm/damon/usage.rst
-@@ -485,10 +485,10 @@ directory can be used for installing filters regardless of their handled
- layers.  Filters that requested by ``core_filters`` and ``ops_filters`` will be
- installed before those of ``filters``.  All three directories have same files.
+diff --git a/Documentation/ABI/testing/sysfs-kernel-mm-damon b/Documentation/ABI/testing/sysfs-kernel-mm-damon
+index 971c22e34e722..ee29d4e204ffa 100644
+--- a/Documentation/ABI/testing/sysfs-kernel-mm-damon
++++ b/Documentation/ABI/testing/sysfs-kernel-mm-damon
+@@ -396,15 +396,20 @@ Contact:	SeongJae Park <sj@kernel.org>
+ Description:	Writing to and reading from this file sets and gets the low
+ 		watermark of the scheme in permil.
  
--Use of ``filters`` directory can make expecting evaluation orders of given
--filters with the files under directory bit confusing.  Users are hence
--recommended to use ``core_filters`` and ``ops_filters`` directories.  The
--``filters`` directory could be deprecated in future.
-+Use of ``filters`` directory can make filters evaluation orders confusing to
-+expect.  For this reason, ``filters`` directory is deprecated.  It is still
-+functioning, but is scheduled for removal in the near future.  Users should use
-+``core_filters`` and ``ops_filters`` directories instead.
+-What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/schemes/<S>/filters/nr_filters
+-Date:		Dec 2022
++What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/schemes/<S>/core_filters
++Date:		Feb 2025
++Contact:	SeongJae Park <sj@kernel.org>
++Description:	Directory for DAMON core layer-handled DAMOS filters.
++
++What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/schemes/<S>/core_filters/nr_filters
++Date:		Feb 2025
+ Contact:	SeongJae Park <sj@kernel.org>
+ Description:	Writing a number 'N' to this file creates the number of
+ 		directories for setting filters of the scheme named '0' to
+-		'N-1' under the filters/ directory.
++		'N-1' under the core_filters/ directory.
  
- In the beginning, the directory has only one file, ``nr_filters``.  Writing a
- number (``N``) to the file creates the number of child directories named ``0``
+-What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/schemes/<S>/filters/<F>/type
+-Date:		Dec 2022
++What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/schemes/<S>/core_filters/<F>/type
++Date:		Feb 2025
+ Contact:	SeongJae Park <sj@kernel.org>
+ Description:	Writing to and reading from this file sets and gets the type of
+ 		the memory of the interest.  'anon' for anonymous pages,
+@@ -412,77 +417,78 @@ Description:	Writing to and reading from this file sets and gets the type of
+ 		'addr' for address range (an open-ended interval), or 'target'
+ 		for DAMON monitoring target can be written and read.
+ 
+-What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/schemes/<S>/filters/<F>/memcg_path
+-Date:		Dec 2022
++What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/schemes/<S>/core_filters/<F>/memcg_path
++Date:		Feb 2025
+ Contact:	SeongJae Park <sj@kernel.org>
+ Description:	If 'memcg' is written to the 'type' file, writing to and
+ 		reading from this file sets and gets the path to the memory
+ 		cgroup of the interest.
+ 
+-What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/schemes/<S>/filters/<F>/addr_start
+-Date:		Jul 2023
++What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/schemes/<S>/core_filters/<F>/addr_start
++Date:		Feb 2025
+ Contact:	SeongJae Park <sj@kernel.org>
+ Description:	If 'addr' is written to the 'type' file, writing to or reading
+ 		from this file sets or gets the start address of the address
+ 		range for the filter.
+ 
+-What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/schemes/<S>/filters/<F>/addr_end
+-Date:		Jul 2023
++What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/schemes/<S>/core_filters/<F>/addr_end
++Date:		Feb 2025
+ Contact:	SeongJae Park <sj@kernel.org>
+ Description:	If 'addr' is written to the 'type' file, writing to or reading
+ 		from this file sets or gets the end address of the address
+ 		range for the filter.
+ 
+-What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/schemes/<S>/filters/<F>/min
++What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/schemes/<S>/core_filters/<F>/min
+ Date:		Feb 2025
+ Contact:	SeongJae Park <sj@kernel.org>
+ Description:	If 'hugepage_size' is written to the 'type' file, writing to
+ 		or reading from this file sets or gets the minimum size of the
+ 		hugepage for the filter.
+ 
+-What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/schemes/<S>/filters/<F>/max
++What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/schemes/<S>/core_filters/<F>/max
+ Date:		Feb 2025
+ Contact:	SeongJae Park <sj@kernel.org>
+ Description:	If 'hugepage_size' is written to the 'type' file, writing to
+ 		or reading from this file sets or gets the maximum size of the
+ 		hugepage for the filter.
+ 
+-What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/schemes/<S>/filters/<F>/target_idx
+-Date:		Dec 2022
++What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/schemes/<S>/core_filters/<F>/target_idx
++Date:		Feb 2025
+ Contact:	SeongJae Park <sj@kernel.org>
+ Description:	If 'target' is written to the 'type' file, writing to or
+ 		reading from this file sets or gets the index of the DAMON
+ 		monitoring target of the interest.
+ 
+-What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/schemes/<S>/filters/<F>/matching
+-Date:		Dec 2022
++What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/schemes/<S>/core_filters/<F>/matching
++Date:		Feb 2025
+ Contact:	SeongJae Park <sj@kernel.org>
+ Description:	Writing 'Y' or 'N' to this file sets whether the filter is for
+ 		the memory of the 'type', or all except the 'type'.
+ 
+-What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/schemes/<S>/filters/<F>/allow
+-Date:		Jan 2025
++What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/schemes/<S>/core_filters/<F>/allow
++Date:		Feb 2025
+ Contact:	SeongJae Park <sj@kernel.org>
+ Description:	Writing 'Y' or 'N' to this file sets whether to allow or reject
+ 		applying the scheme's action to the memory that satisfies the
+ 		'type' and the 'matching' of the directory.
+ 
+-What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/schemes/<S>/core_filters
+-Date:		Feb 2025
+-Contact:	SeongJae Park <sj@kernel.org>
+-Description:	Directory for DAMON core layer-handled DAMOS filters.  Files
+-		under this directory works same to those of
+-		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/schemes/<S>/filters
+-		directory.
+-
+ What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/schemes/<S>/ops_filters
+ Date:		Feb 2025
+ Contact:	SeongJae Park <sj@kernel.org>
+ Description:	Directory for DAMON operations set layer-handled DAMOS filters.
+ 		Files under this directory works same to those of
+-		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/schemes/<S>/filters
++		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/schemes/<S>/core_filters
+ 		directory.
+ 
++What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/schemes/<S>/filters
++Date:		Dec 2022
++Contact:	SeongJae Park <sj@kernel.org>
++Description:	Directory for DAMOS filters.  Files under this directory works
++		same to those of
++		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/schemes/<S>/{core,ops}_filters
++		directory.  This is deprecated.  Use the core_filters and
++		ops_filters instead.
++
+ What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/schemes/<S>/dests/nr_dests
+ Date:		Jul 2025
+ Contact:	SeongJae Park <sj@kernel.org>
 -- 
 2.47.3
