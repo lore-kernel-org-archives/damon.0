@@ -1,110 +1,84 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CCFC240611
-	for <damon@lists.linux.dev>; Wed, 29 Apr 2026 06:06:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BA0133985
+	for <damon@lists.linux.dev>; Wed, 29 Apr 2026 07:02:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777442774; cv=none; b=jbXubhO1vnzGP2sp/A7AJfng2QLmvwNWojMaByyrz+oebblI9bjHhLTVnNU5nR2Pu79CEmPp0wjdFZiIbt44CV6bixxHOAPTbYAUUZHIEl4oIrM8tv/KovI5jqtbAg74CF7SSL98CofSRw4BLOSCJQJiAebp1PYNqCZc7/YJ76o=
+	t=1777446122; cv=none; b=Uwf3vAe8VdJGPOYUTUyX26L5WwiUSk1s6rj4krCt1jwgmYtr+ZXHE+m35J5xdoSeUxmqZsRoDD+HFFi7YFLOYyVkSN6hty8uPXQQYWsZXok+obshikhZvUmyu6qokpbIM3GBHBosAEQG3dywQhYFtA7sCp7r0lw8kFA/Ms4vBUo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777442774; c=relaxed/simple;
-	bh=SGN8VMFqZsTQaBftQ8gPXNHVnMp2aNTdp7MHtvfZ2aQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KgWGUTK8Yvbbz03ZJVTccNE++5S9OGGLiBkGs6+MaOURes22A1pOhgZs552kI4hUet/6TxmT7xOeytQQ9PjGeCvhPte9jnmVIWUnFKDnBBm0xd5BRZvO1wiEYsLitRe7sbzMf/B7VDaS9waW5OURVZ+uaWYI3HoMMUGp5uTnXl0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VV5G4Nn7; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1777446122; c=relaxed/simple;
+	bh=yxbWgYCgRWzdDhmOtW7FQDNcl7xainP+avnXeyzHsrU=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=oU65z5ieCtGF1PZiQejRgqoGtE/s8CRK1CgKzva/OiWAXjhYSkHWIVyO4qEQnKiksX/B5XnS9EE8lADGpqN7bzKqKW4vHivi4nmCo8Fr2EmDnSPSzJ5TQYrsfMwDSVw/qREX+0eNBA8WiWEOBC8s2QK3TYkuNUfckbnCDm+To88=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BRurCdf3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VV5G4Nn7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8BF2C19425;
-	Wed, 29 Apr 2026 06:06:13 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BRurCdf3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6B80C2BCB3;
+	Wed, 29 Apr 2026 07:02:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777442774;
-	bh=SGN8VMFqZsTQaBftQ8gPXNHVnMp2aNTdp7MHtvfZ2aQ=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VV5G4Nn7VsIJBIVeGCI5jeJmzPDI8ep2vNJIASTVF3taxssaFvBQohH8o/NyQpZVL
-	 YbTYB21TIy/9HuB0kWXjsFgYDn/BPWHpFOswyuXsNg/+57vbhLEAqHeE539fowE215
-	 ohRJAOy4VUNO1ofgBkhQLGR9pJ+32zcVthQPvBiVTKq0XfKXfaBZ7dYjhzjJil+Nd5
-	 BuTrGm5tFzWGRDd/NnEMkVY7Iumohdk8RcR2ASiWlxhSGmU03DOewSDbvgdzIhAwXE
-	 dwrU/tOsSN4+nMrMLwJGbFNxgOG3LeZAK89GaeLV0waFyO+JCpJP3vtGvrIF8bL5pC
-	 xW0mQ2FUc4szw==
-From: SeongJae Park <sj@kernel.org>
-To: sashiko-bot@kernel.org
-Cc: SeongJae Park <sj@kernel.org>,
-	damon@lists.linux.dev
-Subject: Re: [PATCH 3/7] mm/damon/lru_sort: cover all system rams
-Date: Tue, 28 Apr 2026 23:06:10 -0700
-Message-ID: <20260429060610.91915-1-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260429060314.49EE6C19425@smtp.kernel.org>
-References: 
+	s=k20201202; t=1777446121;
+	bh=yxbWgYCgRWzdDhmOtW7FQDNcl7xainP+avnXeyzHsrU=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date:From;
+	b=BRurCdf3x/5XZxXAo09vS66jOxYWw1bMu5Jr2jgzxxSKbrrJnJ3IrBKnAHAxbWtZg
+	 v1vD0408lWELFjatz2T/+Qsc10SjqpGYIB5yyJXY5qZKq5KC4mWzoRToQziGrMmkjE
+	 ATrJLN0sT+6IKlcZtaVdBSQ5V0V8bN7daT6QrznNtGFusshhi9CKdOQKxR7C1hu4iM
+	 agOp60h2B0JdcLj4bq4us8+eZhGTYlEKTv3m7cA35iVWA0STNUDKE0gjRxihPg7Ick
+	 9jlVVFuT8Z6x+4pmQT+os5gsMmGPGO2fakfCgq+f/sMwOqCv19ewlT2NrshPBefjX1
+	 N4/NnCQtutufQ==
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH 6/7] Docs/admin-guide/mm/damon/reclaim: update for
+ entire memory monitoring
+Reply-To: sashiko@lists.linux.dev
+To: "SeongJae Park" <sj@kernel.org>
+Cc: damon@lists.linux.dev
+In-Reply-To: <20260429041232.90257-7-sj@kernel.org>
+References: <20260429041232.90257-7-sj@kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Wed, 29 Apr 2026 07:02:01 +0000
+Message-Id: <20260429070201.A6B80C2BCB3@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-On Wed, 29 Apr 2026 06:03:13 +0000 sashiko-bot@kernel.org wrote:
+Thank you for your contribution! Sashiko AI review found 1 potential issue(=
+s) to consider:
+- [Low] The commit updates the English documentation for DAMON_RECLAIM but =
+fails to update the corresponding translated documents.
+--
 
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] Single bounding box for sparse memory layouts causes soft lockups and algorithmic failure
+commit 0775463e5909bcac92ff21d728b9a1b112304371
+Author: SeongJae Park <sj@kernel.org>
 
-Not a real issue in my opinion.  Please read below for more details.
+Docs/admin-guide/mm/damon/reclaim: update for entire memory monitoring
 
-> --
-> 
-> commit 692650636f4214ec9c2fa1c5d7fd43fe3bf049fe
-> Author: SeongJae Park <sj@kernel.org>
-> 
-> mm/damon/lru_sort: cover all system rams
-> 
-> This commit changes the default monitoring region from the biggest System RAM
-> resource to a single region that spans all system RAMs. This is intended to
-> cover the entire physical memory instead of just the largest block.
-> 
-> > diff --git a/mm/damon/lru_sort.c b/mm/damon/lru_sort.c
-> > index 7569e471160a..2eb559d913b6 100644
-> > --- a/mm/damon/lru_sort.c
-> > +++ b/mm/damon/lru_sort.c
-> 
-> [ ... ]
-> 
-> > @@ -326,7 +328,7 @@ static int damon_lru_sort_apply_parameters(void)
-> >  	if (err)
-> >  		goto out;
-> >  
-> > -	err = damon_set_region_biggest_system_ram_default(param_target,
-> > +	err = damon_set_region_system_rams_default(param_target,
-> >  					&monitor_region_start,
-> >  					&monitor_region_end,
-> >  					param_ctx->addr_unit,
-> 
-> Could this lead to a regression on systems with sparse memory layouts?
-> 
-> When creating a single bounding box from the first to the last physical
-> address, systems with sparse memory like CXL or distant NUMA nodes could end
-> up with a region containing terabytes of unpopulated physical address space.
-> 
-> Will this cause soft lockups during DAMOS operations?
-> 
-> If a scheme like PAGEOUT iterates linearly over this massive region in
-> PAGE_SIZE increments, iterating over these large memory holes might stall the
-> CPU and trigger the watchdog, since cond_resched() is typically placed after
-> the loop.
-> 
-> Does this also cause an algorithmic regression with the sampling probability?
-> 
-> DAMON's adaptive logic merges adjacent regions with identical access
-> frequencies. Since memory holes report 0 accesses, they might be aggressively
-> merged with interspersed RAM into maximum-sized regions. Because sampling
-> selects a single random address per region, the probability of actually
-> sampling the populated RAM might drop to near zero.
+This commit updates the DAMON_RECLAIM usage document to reflect the new
+default monitoring target region selection, which now spans the system's
+entire physical memory instead of just the biggest System RAM region.
 
-Exactly same question to the one for the second patch of this series.  My
-answer to it is also samely applied here.  Not a real issue.
+> diff --git a/Documentation/admin-guide/mm/damon/reclaim.rst b/Documentati=
+on/admin-guide/mm/damon/reclaim.rst
+> index 01a34c215b66..57ab8b187650 100644
+> --- a/Documentation/admin-guide/mm/damon/reclaim.rst
+> +++ b/Documentation/admin-guide/mm/damon/reclaim.rst
+> @@ -229,7 +229,8 @@ Start of target memory region in physical address.
+> =20
+>  The start physical address of memory region that DAMON_RECLAIM will do w=
+ork
+>  against.  That is, DAMON_RECLAIM will find cold memory regions in this r=
+egion
+> -and reclaims.  By default, biggest System RAM is used as the region.
+> +and reclaims.  By default, the system's entire physical memory is used a=
+s the
+> +region.
 
+Should the corresponding zh_CN and zh_TW translations be updated alongside
+this to keep them in sync? The translated documents currently still state
+that the biggest System RAM is used by default.
 
-Thanks,
-SJ
-
-[...]
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260429041232.9025=
+7-1-sj@kernel.org?part=3D6
