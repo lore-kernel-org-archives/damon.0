@@ -1,51 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B2BF2417D1;
-	Thu, 30 Apr 2026 14:20:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 410D73F0759;
+	Thu, 30 Apr 2026 14:20:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777558824; cv=none; b=CM/CFraJ01ZA3dhjIKRYNuu5+ywuUEGwQ1uK1JwuUNILGb23lVVQv4YVk3CbEvxWYtmgh4qq2QVR4iPdXOZnQ54fe3yn73RZynDZPOHyIth8f01ObPDti3ovp6t/dHpdEjQQtRcTMhVNJ6MexIcCviAgamT+gb0DUb9VjR9UzyM=
+	t=1777558824; cv=none; b=CLK570ElFx+sklP1a7pn1xX+ikM+jL4JQ7+OKi02YV+NwEgHyobElBQtlbsLmcJpymETqBL/IJyMH+Wz5l8+o04dJYOkgfM9QamCZqFEYpEW9IUkvV2tJpFsvuIURJ6CCZaO8Zau9rflZsrqQwUSGZ2tzT4u3HHdrsOvItoBCj0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1777558824; c=relaxed/simple;
-	bh=E5B83sxytNbrJA03BcZbM7JWpgeC4uEKhNZhIPTXLRo=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=A72s2RqKd/dr0fXuLXoejQ7RUxdjN8Nkx2bft9qSy9XZagY6bHs98RVkgD1JbfCigheLN7bgIgsKDL3WlNHnFjCDXNYElPR1pMWfmtO8zWfFCVthyB1QoqninK3Jw64J6n4BCVuc0a3Ls06JQjG3TM9EaFMwC1iscavQn30LCtc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LRbEIf6a; arc=none smtp.client-ip=10.30.226.201
+	bh=Ru1qRcWk4w4e46Ipw1oHgndub0LRIDQasZkRB/XPXiA=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=jNtZUwIxpZazIdShebsCDOUshrCsOoHvI9tQMzwgIfqgksx77aIf7qTafPf6ZTkA6xTzy1VfX6kEnezVgQ96DU2IFjmA6eV2o3BJxaW27w9QiSE9WccNe7Q0UZbDaK30vMMojKlW12Aqq9H40B2X/V5gyaJUAIQcQx3Le4sosQ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oKqYLUQ/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LRbEIf6a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3BA0C2BCB3;
-	Thu, 30 Apr 2026 14:20:22 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oKqYLUQ/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0D63C2BCB8;
+	Thu, 30 Apr 2026 14:20:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777558823;
-	bh=E5B83sxytNbrJA03BcZbM7JWpgeC4uEKhNZhIPTXLRo=;
-	h=From:To:Cc:Subject:Date:From;
-	b=LRbEIf6awF9GrzQHSCeFiaYvy903gtqCV+HgwbkqOFZFGvxD5x08gJMRWOXLpDYRn
-	 +Yz4K8zuyUyChAVgciqoQcZMzmelqRfTaY1f5ihkMCZ25HWjbbnRQ9gzUBiWUJ/pfY
-	 r5ssQwLNjYyDDGtGXPLJyNetUgtKKtBmP5MXb9WFCU6ciJgHJFnlBlz4LkZDPhfiHL
-	 y5hyqeXIGEVl/UKhsca8NuW5PRaJrtPg7AKtlXcxM+7/mrWImKt7+/jjaiRsR0ZW9M
-	 K1w8vIoiNdjvvYqJWF/lnEgbwCQ5Gp4cEP2QdwZR1NCdGlu/LeK+ljBfP0f0DspW1N
-	 jSBEZeNZE4m7w==
+	s=k20201202; t=1777558824;
+	bh=Ru1qRcWk4w4e46Ipw1oHgndub0LRIDQasZkRB/XPXiA=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=oKqYLUQ/2B+XygqyB+m1N2X5McbAhh+Xb9n1h5sVjlovsA6Tq9Eqv411ck53zDMAq
+	 lkOUX3/km1VfYrZPQWd2y7kU0v8bh1CLUNBFaUHxzCmp+u8lTjuzeFK3yWsmNI8Um9
+	 Ah+7q39huMiGgUmZHiMSdXB7d1CsEAiozKM6LhPd6kd+kaQIGMlp+bqHK7kIbK/oVl
+	 puM7lORos6+xfOugj8fmbHkYUZdnO1OaGuCuzFuy098fMu/OsTq+15giAGCcMdQCkM
+	 2K7WKBEwcKQaqh8XYlmy6rFDx2GkLiIAWWv3BkX4aRlMkXvKRBap+yd9yJmeuVQ91M
+	 dAIdSPIOTlY/g==
 From: SeongJae Park <sj@kernel.org>
 To: 
 Cc: SeongJae Park <sj@kernel.org>,
-	"Liam R. Howlett" <liam@infradead.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	David Hildenbrand <david@kernel.org>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	Michal Hocko <mhocko@suse.com>,
-	Mike Rapoport <rppt@kernel.org>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Vlastimil Babka <vbabka@kernel.org>,
 	damon@lists.linux.dev,
-	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH v2.1 0/2] mm/damon/stat: add kdamond_pid parameter
-Date: Thu, 30 Apr 2026 07:20:08 -0700
-Message-ID: <20260430142013.80993-1-sj@kernel.org>
+Subject: [RFC PATCH v2.1 1/2] mm/damon/stat: add a parameter for reading kdamond pid
+Date: Thu, 30 Apr 2026 07:20:09 -0700
+Message-ID: <20260430142013.80993-2-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260430142013.80993-1-sj@kernel.org>
+References: <20260430142013.80993-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -54,33 +47,68 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-DAMON_STAT doesn't provide the pid of its kdamond, unlike DAMON_RECLAIM
-and DAMON_LRU_SORT.  This makes user-space management of DAMON_STAT
-unnecessarily complicated.  Provide the information via a new parameter,
-namely kdamond_pid, and document it.
+Knowing the pid of the kdamonds can help user-space management including
+monitoring of DAMON's system resource consumption.  To make it easier,
+DAMON_SYSFS, DAMON_RECLAIM and DAMON_LRU_SORT provide the pid
+information.  DAMON_STAT is not providing it, though.  Expose the pid of
+DAMON_STAT kdamond via a new read-only module parameter, namely
+kdamond_pid.  This also makes DAMON modules usage more standardized,
+because DAMON_RECLAIM and DAMON_LRU_SORT also provide the information
+via their read-only parameters of the same name.
 
-Changes from RFC v2
-- v2: https://lore.kernel.org/20260425203309.108879-1-sj@kernel.org
-- Rebase to latest mm-new.
-Changes from RFC v1.2
-- rfc v1.2: https://lore.kernel.org/20260416002149.87090-1-sj@kernel.org
-- Detect and use fresh kdamond pid.
-Changes from RFC v1.1
-- rfc v1.1: https://lore.kernel.org/20260414235912.98174-1-sj@kernel.org
-- Close the parentheses of error handling block.
-Changes from RFC
-- rfc: https://lore.kernel.org/20260414053742.90296-1-sj@kernel.org
-- Fix damon_kdamond_pid() failure handling.
+Signed-off-by: SeongJae Park <sj@kernel.org>
+---
+ mm/damon/stat.c | 38 ++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 38 insertions(+)
 
-SeongJae Park (2):
-  mm/damon/stat: add a parameter for reading kdamond pid
-  Docs/admin-guide/mm/damon/stat: document kdamond_pid parameter
-
- Documentation/admin-guide/mm/damon/stat.rst |  7 ++++
- mm/damon/stat.c                             | 38 +++++++++++++++++++++
- 2 files changed, 45 insertions(+)
-
-
-base-commit: b8e00b62c650b2aa471195f663301118fde889c2
+diff --git a/mm/damon/stat.c b/mm/damon/stat.c
+index f4d3203e92639..37964683839d0 100644
+--- a/mm/damon/stat.c
++++ b/mm/damon/stat.c
+@@ -266,6 +266,44 @@ static int damon_stat_enabled_load(char *buffer, const struct kernel_param *kp)
+ 	return sprintf(buffer, "%c\n", damon_stat_enabled() ? 'Y' : 'N');
+ }
+ 
++static int damon_stat_kdamond_pid_store(
++		const char *val, const struct kernel_param *kp)
++{
++	/*
++	 * kdamond_pid is read-only, but kernel command line could write it.
++	 * Do nothing here.
++	 */
++	return 0;
++}
++
++static int damon_stat_kdamond_pid_load(
++		char *buffer, const struct kernel_param *kp)
++{
++	int pid;
++
++	if (!damon_stat_context) {
++		pid = -1;
++	} else {
++		pid = damon_kdamond_pid(damon_stat_context);
++		if (pid < 1)
++			pid = -1;
++	}
++	return sprintf(buffer, "%d\n", pid);
++}
++
++static const struct kernel_param_ops kdamond_pid_param_ops = {
++	.set = damon_stat_kdamond_pid_store,
++	.get = damon_stat_kdamond_pid_load,
++};
++
++/*
++ * PID of the DAMON thread
++ *
++ * If DAMON_STAT is enabled, this becomes the PID of the worker thread.
++ * Else, -1.
++ */
++module_param_cb(kdamond_pid, &kdamond_pid_param_ops, NULL, 0400);
++
+ static int __init damon_stat_init(void)
+ {
+ 	int err = 0;
 -- 
 2.47.3
