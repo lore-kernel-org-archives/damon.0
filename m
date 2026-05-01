@@ -1,129 +1,151 @@
-Received: from frasgout.his.huawei.com (frasgout.his.huawei.com [185.176.79.56])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86223287503;
-	Thu, 30 Apr 2026 20:06:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.176.79.56
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A0B11624C5;
+	Fri,  1 May 2026 00:41:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777579599; cv=none; b=Yr7wOPAzbj9HE1oicJVtvBMOMA2fDTWgNOSembtlL6wZ6B1BjF09aQQsPSy7WuNuXMpT0S3HMcDLP6h7dtb86LzDJiSWpEWB4bFpTA2R5j6sIz2gOAOlQ3kQ2E3o9IjZHeTm+IAh2axdQsEMtP/jU7B7oi/4It1wq6y7toUH1us=
+	t=1777596112; cv=none; b=nO9quUg3T9JgxVs/H6iafBvnDqpFWkWQyyLWIN2rl2yU7MQFCXGoUighueWXUYZJNCbArbjQwMwpgQ2gimca0NBy1q8DJ+50/wLdyT4mA0Gq07N3F1VzqU2wev/fYB9rb/lj2+Boa6FN5MFirvVaYWi2dG/nn+0nPcWH7fqJsPU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777579599; c=relaxed/simple;
-	bh=zNoxBTCburXCS9d/AdmfHkXW0p2pj234d135Sizl9mg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=rRXoKNRGM7+bp31uzp17QWfOZAGrx9U1KZ3Pe0fH+Zd77i1vvwNiaCE/OO0hKJihEIRjCfPMKnMSoCHavkhdIs/DjQK43mUPAyiCrrtZjrFt3JERlIaDVGUPg6pfFz3ob6vYcL6ahLqo13BjzhbES+kxpMaZxfmGH2S84Z9u42Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei-partners.com; spf=pass smtp.mailfrom=huawei-partners.com; arc=none smtp.client-ip=185.176.79.56
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei-partners.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei-partners.com
-Received: from mail.maildlp.com (unknown [172.18.224.83])
-	by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4g64t31MWhzHnGcs;
-	Fri,  1 May 2026 04:05:47 +0800 (CST)
-Received: from mscpeml500003.china.huawei.com (unknown [7.188.49.51])
-	by mail.maildlp.com (Postfix) with ESMTPS id 8ECE740569;
-	Fri,  1 May 2026 04:06:33 +0800 (CST)
-Received: from [10.123.123.154] (10.123.123.154) by
- mscpeml500003.china.huawei.com (7.188.49.51) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.11; Thu, 30 Apr 2026 23:06:32 +0300
-Message-ID: <532603f1-4fb9-4821-ae32-cce3284c8398@huawei-partners.com>
-Date: Thu, 30 Apr 2026 23:06:32 +0300
+	s=arc-20240116; t=1777596112; c=relaxed/simple;
+	bh=gn0A/IMKl276FIB3LENO7HJggCV5JRxz4pjAVumVjKY=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=DZbY2vm4mk6+sxs3Iu7OVN3Y5F1r8mMzetA+xlbZOoxMm3ZxM4i0sL4UfK8PROyY2EV8+7PSqVbatZHUL4caDpaCSuL2sj+3Q8ZxzFqvEHvf1r1F245K+ScF/Vldjd2MSkak5KBq7WgrLQfeGf+cH32kTPb+HAUmO+kx/0ii34c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NB3hWGTV; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NB3hWGTV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51811C2BCB3;
+	Fri,  1 May 2026 00:41:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1777596111;
+	bh=gn0A/IMKl276FIB3LENO7HJggCV5JRxz4pjAVumVjKY=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=NB3hWGTVp+q+Ls8LF2zgKA0MlM4bGXU7nMaJM6O3ArU64jgTi1jiHz3GZ5E7Jn64D
+	 dkYqhYipn/xBf3qVqdHzaTRs4iAlIqHlAAK775YR+PGqA7RYqknYzQYh13xCYf9XuL
+	 fct6AWzEVT6U/bxWE4v0LkAG9CCQuCYzkl9r0zU0qutKc6MY/zU1QUWUG+wo6h0CTr
+	 tfch0E8+oV5M3zSiFIGAgsrwti6fed0LIz1eAba3TudNKgIVB4PNxajerSZbx5NtLq
+	 LTaI0WV1IfrDqKLTD4PzocZT0x7si2hdcYU0edRP7Cs95m73NnoOlpHE6N8f1RixPB
+	 DGZzGKacK26Sw==
+From: SeongJae Park <sj@kernel.org>
+To: gutierrez.asier@huawei-partners.com
+Cc: SeongJae Park <sj@kernel.org>,
+	artem.kuzin@huawei.com,
+	stepanov.anatoly@huawei.com,
+	wangkefeng.wang@huawei.com,
+	yanquanmin1@huawei.com,
+	zuoze1@huawei.com,
+	damon@lists.linux.dev,
+	akpm@linux-foundation.org,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [RFC PATCH v1 0/4] mm/damon: Introduce a huge page collapsing mechanism using auto tuning
+Date: Thu, 30 Apr 2026 17:41:47 -0700
+Message-ID: <20260501004148.78873-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260430134139.2446417-1-gutierrez.asier@huawei-partners.com>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v1 2/4] mm/damon: Introduce DAMOS_QUOTA_HUGEPAGE auto
- tuning
-To: <sashiko@lists.linux.dev>
-CC: <damon@lists.linux.dev>
-References: <20260430134139.2446417-3-gutierrez.asier@huawei-partners.com>
- <20260430143108.8EEFCC2BCB3@smtp.kernel.org>
-Content-Language: en-US
-From: Gutierrez Asier <gutierrez.asier@huawei-partners.com>
-In-Reply-To: <20260430143108.8EEFCC2BCB3@smtp.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: mscpeml500004.china.huawei.com (7.188.26.250) To
- mscpeml500003.china.huawei.com (7.188.49.51)
+Content-Transfer-Encoding: 8bit
+
+Hello Asier,
+
+On Thu, 30 Apr 2026 13:41:35 +0000 <gutierrez.asier@huawei-partners.com> wrote:
+
+> From: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
+> 
+> Overview
+> ================
+
+Let's align the length of underline with the text.
+
+> 
+> This patch set introduces a new autotuning which allows to collapse
+> hot regions into hugepages.
+> 
+> Motivation
+> ================
+> 
+> Since TLB is a bottleneck for many systems, a way to optimize TLB
+> misses (or hits) is to use huge pages. Unfortunately, using "always"
+> in THP leads to memory fragmentation and memory waste. For this reason,
+> most application guides and system administrators suggest to disable THP.
+
+I think the motivation should further explain why existing DAMOS features
+(access pattern-based targetting and quota auto-tuning with existing quota
+goals) are insufficient.  If that makes the text too long, I think the
+explanation for well-known THP benefit and problems can be reduced or skipped.
+
+> 
+> Solution
+> ================
+> 
+> A new autotuning quota goal[1], damos_get_used_hugepage_mem_bp, is
+> introduced, which checks the huge page consumption to total anonymous
+> memory consumption. This new quota mechanism reuses current autotuning
+> architecture.
+
+The idea makes sense to me.
+
+The name sounds bit redundant, though.  How about DAMOS_QUOTA_HUGEPAGE_BP for
+the enum, and hugeapge_bp for sysfs input?
+
+> 
+> A new module is introduced to demonstrate the use of huge pages
+> collapse autotuning. The module launches a kdamond thread for a 
+> certain task provided by the user through monitored_pid module argument.
+
+If it is only for demonstration, I think it is more fit to be a sample module
+(placed under samples/damon/).
+
+> 
+> This module also has a user autotuning knob which allows the user to
+> adjust the aggressiveness of page collapsing.
+> 
+> Benchmarks
+> ================
+> In progress, will add them in the next RFC series.
+
+Looking forward to!
+
+I may request not that much test results for the quota goal.  If the module is
+not just a sample but for a real world use case, I may hope somewhat reasonable
+test resulsts.
+
+> 
+> TODO
+> ================
+> 
+> - Since DAMOS_COLLAPSE is not in upstream and this is just a
+>   RFC, I have used DAMOS_HUGEPAGE instead. This will change
+>   to DAMOS_COLLAPSE in future series.
+
+It is now in mm-new and it is recommended to use it as a baseline for DAMON
+patches.  So please feel free to use DAMOS_COLLAPSE from the next version,
+unless there is a reason to worry if DAMOS_COLLAPSE will be dropped from
+mm-new.
+
+> 
+> Patches Sequence
+> ================
+> Patch 1 -> damon_modules_new_vaddr_ctx_target
+> Patch 2 -> Introduce DAMOS_QUOTA_HUGEPAGE and autotuning
+> Patch 3 -> Module that demonstrates how to use DAMOS_QUOTA_HUGEPAGE
+>            and the new VADDR ctx creation
+> Patch 4 -> Documentation
+> 
+> [1] https://lore.kernel.org/e67f05ad-dbb9-45e6-ba30-b167a99ac67d@huawei-partners.com
+
+Adding more context about what this link is would be nice.  I can find the link
+marker from the above text, but I was unable to expect what this is without
+opening the link.
 
 
+Thanks,
+SJ
 
-On 4/30/2026 5:31 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [Critical] Divide-by-zero panic in damos_get_used_hugepage_mem_bp() when no anonymous memory is mapped.
-> - [Medium] Missing sysfs string mapping for DAMOS_QUOTA_HUGEPAGE renders the metric unconfigurable via userspace.
-> --
-> 
-> commit 46bdbb5e7c05e4c06aea38af1c50ac5407f8b9c3
-> Author: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
-> 
-> mm/damon: Introduce DAMOS_QUOTA_HUGEPAGE auto tuning
-> 
-> Introduce DAMOS_QUOTA_HUGEPAGE auto tuning Add a new DAMOS quota goal
-> metric to measure the amount of huge page consumption to total anonymous
-> memory consumption ratio.
-> 
->> diff --git a/include/linux/damon.h b/include/linux/damon.h
->> index 143d024fec845..ee937b3892c68 100644
->> --- a/include/linux/damon.h
->> +++ b/include/linux/damon.h
->> @@ -174,6 +174,7 @@ enum damos_quota_goal_metric {
->>  	DAMOS_QUOTA_NODE_MEMCG_FREE_BP,
->>  	DAMOS_QUOTA_ACTIVE_MEM_BP,
->>  	DAMOS_QUOTA_INACTIVE_MEM_BP,
->> +	DAMOS_QUOTA_HUGEPAGE,
-> 
-> Is there a missing update to the string mapping array in sysfs for this new
-> metric?
-Good catch. I will fix it in the next version.
-> 
-> If damos_sysfs_qgoal_metric_names in mm/damon/sysfs-schemes.c isn't updated
-> to include DAMOS_QUOTA_HUGEPAGE, wouldn't configuring this metric from
-> userspace fail and return -EINVAL?
-> 
->>  	NR_DAMOS_QUOTA_GOAL_METRICS,
->>  };
-> 
-> [ ... ]
-> 
->> diff --git a/mm/damon/core.c b/mm/damon/core.c
->> index 1af84e0ac1dd4..63cbf30288d53 100644
->> --- a/mm/damon/core.c
->> +++ b/mm/damon/core.c
-> 
-> [ ... ]
-> 
->> @@ -2320,6 +2320,18 @@ static unsigned int damos_get_in_active_mem_bp(bool active_ratio)
->>  	return mult_frac(inactive, 10000, total);
->>  }
->>  
->> +/*
->> + * Returns anon hugepage memory to total anon memory use ratio.
->> + */
->> +static unsigned int damos_get_used_hugepage_mem_bp(void)
->> +{
->> +	unsigned long used_hugepages, total_used;
->> +
->> +	used_hugepages = global_node_page_state(NR_ANON_THPS);
->> +	total_used = global_node_page_state(NR_ANON_MAPPED);
->> +	return mult_frac(used_hugepages, 10000, total_used);
-> 
-> Can total_used be zero here?
-> 
-> If there is no anonymous memory mapped in the system (for example, right
-> after boot or on a system running purely file-backed workloads), total_used
-> would evaluate to 0.
-> 
-> Since mult_frac() directly performs division and modulo without
-> zero-checking the denominator, wouldn't passing 0 as total_used trigger a
-> divide-by-zero exception and crash the kernel?
->
-No, the number of anonymous memory mapped in the system is always
-greater than 0.
- 
-
--- 
-Asier Gutierrez
-Huawei
-
+[...]
