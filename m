@@ -1,73 +1,41 @@
-Received: from mail-pf1-f177.google.com (mail-pf1-f177.google.com [209.85.210.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA37919D065
-	for <damon@lists.linux.dev>; Fri,  1 May 2026 01:37:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07B9040DFC5
+	for <damon@lists.linux.dev>; Fri,  1 May 2026 01:50:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777599465; cv=none; b=NUkZur4L8LL8UKbvAX0Qwr8zANgHXQtmLTRBLU5HjrO7z4DRBqBg4QKvOCs4OhtU4lL3iBqGh++rD6LDjQjSHVvulV0T6gVq8bPJoqMjinxDbB9euShf1Z8t6z+tVqzdJbtDAWCY0l+KgCjI4LoIgoAwYOCKG8PC0TXuDNR6NS8=
+	t=1777600216; cv=none; b=pLUwlv5EfCQGvcZG4yfip+g1YjDJa3mx+KrUuy0xtMyWpUTp51qKXC6OHF+6Gm6lXIOpmF1WcWOK3CoVEE8U4fhzTrTfN+4SjjaZXNsxCm8aurfDnFhq2Qy46WApycSrgPMJPamkQV8UDyMn4FWh0C16KG8Zhze7YAvcEqua6ls=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777599465; c=relaxed/simple;
-	bh=Er05+V/fanvnA6KfIhAgi8Aag4/2PjQt1YEztxTMAEk=;
+	s=arc-20240116; t=1777600216; c=relaxed/simple;
+	bh=ItFxB/JshjMWy8jSpcV12KG+66or8idz9o4RrYbmT64=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ctpczKBK1/FxKy9/RFSEVbMlwWhTSIl8pv5r5lMqFHi0ce2y8EDzuXClV8pBUZtV/lMGsPE+hWXcliRdmGYtDNvbwH0qHeRjTdz4gAxpaY1PKI13pEphy5+CiJgBACIanF2Jnj/Ayk71XAJ01zflRFFHubmxygFedCk9WmHTrLM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lBuhrgdT; arc=none smtp.client-ip=209.85.210.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 MIME-Version; b=s2uApCDrEj9yHnybjgR7UY2zpY6StrM4oOmAuloNGsxyg9f5s90IWQI2ccl0wqcVHMtR7fninZ6LR4ANwfL/rajWpgMnUVDa5A+7h9HCVTIj/wkFtgCKNNsv/fC1inXJJ3aPGX3CZHckAN17+MzvWb/K9rDsox6XeuWKkt2mhVE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jXlnMuOE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lBuhrgdT"
-Received: by mail-pf1-f177.google.com with SMTP id d2e1a72fcca58-824c9da9928so773193b3a.3
-        for <damon@lists.linux.dev>; Thu, 30 Apr 2026 18:37:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1777599463; x=1778204263; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=tXkZizzlIjDaETBBA0ZOQ5z2LGXYcLfPd8nsRMFv+WU=;
-        b=lBuhrgdTDrrPAiuLxT9uUvbsXhsedRYHYbrL1kiqnF00XNNPow+ww+vp1N7P31zhge
-         wsbHU/58lSt3CnEZbAQzOZ7np7s5R5RpheYIGoNLgSMVAGhe/26a6Aul0YI2ExZ3ntsZ
-         FjiiNeWDMlZipA3f9aABFsmnMiVmVf5ZjFeW2ESjAjxIQLWgIJmtLRXWXp/emaiIxkkR
-         iKHljYwvcMyW5H2rSFl91v6mCPFzLrei+PXYK9mKB8qdbPUSmkixPLx6JJollayJ2wV/
-         +Vk7ZUG59eLfz3txE92lGm2KKQataM3cmsg75BwO5OoETcVchgmlcUkHsgQqaNULKiGT
-         jvYg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1777599463; x=1778204263;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=tXkZizzlIjDaETBBA0ZOQ5z2LGXYcLfPd8nsRMFv+WU=;
-        b=s/vdxDc82q83lIuB34K71zYgKyVAN00jz5Pf6deNLi6nHu3cb0L1R8TMSBTr27uu+4
-         yW1el4emcJgtcm7ekR/t2o4y4eTo6nvVxglrZUZHmUJ6WTCc8lRo6+zxEiReboHGOAV9
-         sokqBhsBEQsQhYdOX0L+UzY9Kviu+HV++rXqNSgfP3+osKSp10PcoZDYEAp3bHlLRpfu
-         VJCMOGsxD6IYAZ6JpHBhIRsQEjeCgdpyeMZdG17j30C1tPk7KkUOUd4gNJ4xzDbQEsYY
-         Yn66y8eFHVeOChRiFM1UCI03rCVRYmoddZnHIVWUN3aoAuZoqfXWfFe6M8+7DwUTBczf
-         lPGA==
-X-Gm-Message-State: AOJu0Yyd/nQUf/ayMr91llSnTlIvVbx3gd8QrQns3Fg4JgtbpfsLD4Vb
-	8WWdJPyRDB/NEuG86b93u3xl6C1d6SDylvWDfTdbhoHwdfZP3gBpO0OW
-X-Gm-Gg: AeBDietxPU6ul5F63AewsR4+XFTq45C6bgSYffLJVloDwj7AtrQKCKkG4aaojLTbZBA
-	UULFCcP82jHBURNwczVRetO4Pgzy3WQijC0CZCXUqRmHGaI+tKLKSgUIbrNeR7c+0NTOsxxuPyf
-	Ld2lTLyXfsfgQPJIyvAUI6wxPr1bU99ecgtRybHh7QKZXfqsjCNdFMhZSJE3o0ggOsIx/vXo8ne
-	MPJ6IOnuQloDUWvqZR5kM61TmamABICXZjXiY18+kS1yeowazJMzUr9nCGTpmFNH7Cq1B4dS7df
-	2pQIZhlIZYYENOD4JhpBexunz4gfNP8BhX61CiWOfSmEGYkMsU8Ae5sxbL7irgMdPulvvfUfA/c
-	RRJryXq540O4FXOUiCFh2VMLRGCBrdNcDl+T2Ju1tc8TS5mRGzD3ddRVVQQphHxxqOSIwcMf510
-	im5K/g+7YYHH+FfbTbYOrqZxXNdKkW+x8wTxjLqH/gMOxSMW4pPrmviVeDGdzv
-X-Received: by 2002:a05:6a00:330b:b0:82f:6a64:deac with SMTP id d2e1a72fcca58-834fe1bf650mr6747969b3a.28.1777599463184;
-        Thu, 30 Apr 2026 18:37:43 -0700 (PDT)
-Received: from celestia.taila51cc2.ts.net ([2402:1980:8f3:e8d0:1478:fdf:dfb3:daec])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-83515b02935sm956318b3a.41.2026.04.30.18.37.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 30 Apr 2026 18:37:42 -0700 (PDT)
-From: Liew Rui Yan <aethernet65535@gmail.com>
-To: SeongJae Park <sj@kernel.org>
-Cc: damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	Liew Rui Yan <aethernet65535@gmail.com>
-Subject: [PATCH v5 2/2] mm/damon/reclaim: validate min_region_size to be power of 2
-Date: Fri,  1 May 2026 09:37:50 +0800
-Message-ID: <20260501013750.71704-3-aethernet65535@gmail.com>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260501013750.71704-1-aethernet65535@gmail.com>
-References: <20260501013750.71704-1-aethernet65535@gmail.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jXlnMuOE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81B5BC2BCB3;
+	Fri,  1 May 2026 01:50:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1777600215;
+	bh=ItFxB/JshjMWy8jSpcV12KG+66or8idz9o4RrYbmT64=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=jXlnMuOEuuexgok2rd+HZk/PYyk/3R3c0tk1rzhoIVvTboarJoLT8NwuxZ5pOGtko
+	 lDOp7KbCjNRfaKLZiMUSRTWtVJf86PxebC0X8OZglAfXhvTivQ63P00mkIeX7gsTk6
+	 NSFhlkwaCAsxfPfvJAsApfCLSXc/aKVlQeRD0bxyv+DYguoOPoZn36GPf4txLLczGF
+	 qaePsw03cn6pYVvlwsSZ8R6Z/gBzHTVjxvsGeND9pZKfJwsxHt/xE6jY7FlK+kX93i
+	 dYJdFSHMkwHdK5uGxIj4k6mT5B7nD+XIIpAE/iB7OnHmehTjzm5se0bxgQwOTlzyeg
+	 f6ugj8rYfMb+Q==
+From: SeongJae Park <sj@kernel.org>
+To: sashiko-bot@kernel.org
+Cc: SeongJae Park <sj@kernel.org>,
+	damon@lists.linux.dev
+Subject: Re: [PATCH 1/2] mm/damon/reclaim: add autotune_monitoring_intervals parameter
+Date: Thu, 30 Apr 2026 18:50:07 -0700
+Message-ID: <20260501015008.82886-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260501013044.7DC96C2BCB3@smtp.kernel.org>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -76,52 +44,96 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Problem
-=======
-When a user sets an invalid 'addr_unit' (e.g., 3) via DAMON_RECLAIM,
-'min_region_sz' becomes a non-power-of-2 value. While damon_commit_ctx()
-correctly detects this and returns -EINVAL, it sets the
-'maybe_corrupted' flag during this process.
+On Fri, 01 May 2026 01:30:43 +0000 sashiko-bot@kernel.org wrote:
 
-This flag causes the running kdamond to terminate. While the termination
-is a safety measure, it is suboptimal in this case because the error is
-just a simple invalid input from the user, which shouldn't neccessitate
-stopping the kdamond.
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] Validation check on `damon_reclaim_mon_attrs.aggr_interval` prematurely rejects configurations when autotuning is enabled, and exposes a TOCTOU divide-by-zero panic.
 
-Reproduction
-============
-1. Enable DAMON_RECLAIM
-2. Set addr_unit=3
-3. Commit inputs via 'commit_inputs'
-4. Observe kdamond termination
+No blocker for this patch is found.  Plese read below for more details.
 
-Solution
-========
-Add an early validation in damon_reclaim_apply_parameters() to check
-'min_region_sz' before any state change occurs. If it is non-power-of-2,
-return -EINVAL immediately, preventing 'maybe_corrupted' from being set.
+> --
+> 
+> commit 34f815f9177f234892c1b9608e13d2fc0957697e
+> Author: SeongJae Park <sj@kernel.org>
+> 
+> mm/damon/reclaim: add autotune_monitoring_intervals parameter
+> 
+> This commit adds a module parameter for utilizing DAMON's auto-tuning
+> feature with suggested default setups. When enabled, this feature
+> overrides manually entered monitoring intervals to capture a meaningful
+> amount of access events per snapshot.
+> 
+> > diff --git a/mm/damon/reclaim.c b/mm/damon/reclaim.c
+> > index a60ee800d63e9..7126d47fb8b2f 100644
+> > --- a/mm/damon/reclaim.c
+> > +++ b/mm/damon/reclaim.c
+> 
+> [ ... ]
+> 
+> > @@ -201,12 +215,21 @@ static int damon_reclaim_apply_parameters(void)
+> >  		goto out;
+> >  	}
+> >  
+> > -	err = damon_set_attrs(param_ctx, &damon_reclaim_mon_attrs);
+> > +	attrs = damon_reclaim_mon_attrs;
+> > +	if (autotune_monitoring_intervals) {
+> > +		attrs.sample_interval = 5000;
+> > +		attrs.aggr_interval = 100000;
+> > +		attrs.intervals_goal.access_bp = 40;
+> > +		attrs.intervals_goal.aggrs = 3;
+> > +		attrs.intervals_goal.min_sample_us = 5000;
+> > +		attrs.intervals_goal.max_sample_us = 10 * 1000 * 1000;
+> > +	}
+> 
+> In the existing code just above this diff, there is a validation check:
+> 
+>     if (!damon_reclaim_mon_attrs.aggr_interval) {
+>         err = -EINVAL;
+>         goto out;
+>     }
+> 
+> If autotune_monitoring_intervals is enabled, could this check prematurely
+> reject the configuration if damon_reclaim_mon_attrs.aggr_interval is 0?
+> The auto-tuning override happens right below the check.
 
-Signed-off-by: Liew Rui Yan <aethernet65535@gmail.com>
----
- mm/damon/reclaim.c | 5 +++++
- 1 file changed, 5 insertions(+)
+Yes, and this is a behavior that consistent to that of DAMON_LRU_SORT.  I
+didn't really intentionally designed this behavior but I find no problem at
+this.  Zero aggregation interval is invalid.  Just keeping it as invalid even
+if autotune is enabled sounds natural to me.
 
-diff --git a/mm/damon/reclaim.c b/mm/damon/reclaim.c
-index 86da14778658..2747eef5919d 100644
---- a/mm/damon/reclaim.c
-+++ b/mm/damon/reclaim.c
-@@ -204,6 +204,11 @@ static int damon_reclaim_apply_parameters(void)
- 	param_ctx->addr_unit = addr_unit;
- 	param_ctx->min_region_sz = max(DAMON_MIN_REGION_SZ / addr_unit, 1);
- 
-+	if (!is_power_of_2(param_ctx->min_region_sz)) {
-+		err = -EINVAL;
-+		goto out;
-+	}
-+
- 	if (!damon_reclaim_mon_attrs.aggr_interval) {
- 		err = -EINVAL;
- 		goto out;
--- 
-2.53.0
+> 
+> Additionally, because this check evaluates the global module parameter
+> directly instead of a local copy, could a concurrent sysfs write cause a
+> divide-by-zero panic? 
+> 
+> If a user sets the global interval to 0 right after this check passes:
+> 
+>     if (!damon_reclaim_mon_attrs.aggr_interval) {
+>         // passes
+>     }
+>     
+>     // concurrent sysfs write sets damon_reclaim_mon_attrs.aggr_interval = 0
+>     
+>     attrs = damon_reclaim_mon_attrs;
+> 
+> If autotune_monitoring_intervals is false, attrs.aggr_interval becomes 0
+> and is passed to damon_reclaim_new_scheme(), which performs:
+> 
+>     .min_age_region = min_age / aggr_interval,
+> 
+> Would moving this check to evaluate the local attrs.aggr_interval after
+> the auto-tuning block prevent both of these scenarios?
 
+No.
+
+First of all, this patch is doing nothing for the code.
+
+And damon_reclaim_apply_parameters() does not race against itself, since it
+works synchronous to the parameters update, and the parameter updates are
+protected by kernel_param_lock.
+
+
+Thanks,
+SJ
+
+[...]
