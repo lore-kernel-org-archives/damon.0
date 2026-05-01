@@ -1,106 +1,97 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B26A23EAAD;
-	Fri,  1 May 2026 01:56:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17AB91D89EF
+	for <damon@lists.linux.dev>; Fri,  1 May 2026 02:16:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777600569; cv=none; b=PN1vzj/1JjW+cPayweTpJQr5jTqj8c8T0FOFijaJsXvTANh+nf//O4+GgPb8NO3IlZ5C6UzwoldSGdG2BZjhv6YGGnxVDYU7EL5EM4AAZoc7fwJqYYyq2RPEDZXf2SAIo5oB1/2VhzpBkYKZf0ll0bnN9o4aHkeL0t/jKJTi5XA=
+	t=1777601804; cv=none; b=BeBsQAM2GNSLRjltviPHJahL191boLncznYmXYPoeD4TUvHJl3Lo7J5JoCrucnwCkg7NFqO8COCnBrkALRonn066fzegchvOWL4SnvaFJIG4fSElE6PZqFSX3rhqDlZVTYl80R7h5kb/R1COHciCHN14CDy6SqZ5zt9MNR5M3SI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777600569; c=relaxed/simple;
-	bh=qzviNm8rnhp1c0NC3tvj7ydyyrxohLehCvxK6danluE=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MQm2L3gDEoWcZtbY1YLvwzyay93KHlwa8L7wVB26XpgySdvBvTzeI4T828Nxcrenm1PRPY/ZMT67w+IJ2hy/3uAu2UJLNNAIm/2FwJCj1P8RYJqv6huL3rT8hG21MHMTNfuYWgp+PQYny3dC0JVvIdwunTnwdaapsnKgOHHHjRM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SFjIjmRL; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1777601804; c=relaxed/simple;
+	bh=gGbv3TbBD1/UpHqzudAgpCU7q4zWCM/aRWeZS6O93Zs=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=jV3mK6UGM0ZOcsJqfanWj0XqAAcxD8+9i/a3UwsfML5hZEfncaK9Web2avdv4hhA+qYdavb3IdncDVe+RtvkFWG3tzXvcoDAlTfNKzpIgTPSpav4bVvDYuBEvmPyG5ed5+8ZTyCQNevI0GhphoEfoe5r7OEWr+nRDizsnACo7lk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IsV8g+Xc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SFjIjmRL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21DEBC2BCB3;
-	Fri,  1 May 2026 01:56:08 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IsV8g+Xc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CBAFC2BCB3;
+	Fri,  1 May 2026 02:16:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777600568;
-	bh=qzviNm8rnhp1c0NC3tvj7ydyyrxohLehCvxK6danluE=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SFjIjmRLHJwtVZaHIAzcwOOFWelAi76TY8UEznldmWeAh+LSB2QMEyWImvw1GhK49
-	 jUnJjSMDGpR8zaZkSNB/YMvABpAj6pJRjUt4uR5T0QdyYaWsBHKSFXpwjDF+OWJdcq
-	 NdEGrMZU9DS0eC7wsE8RwU2R9VLoqqM46MYuMLwrpkt69iKQR0CAXZHBZRirUVery0
-	 P+bjyt07fat5KFz1lQlbYSMzvJg4o8tQgq8U4AQUgDBofrvv3qtykX9LwH1Dt03opA
-	 ndFFQSZvm/9qJTnIdPXQ9+gSLKByzr5tMFxSE5+hjJ0IRLEWT7mixx2gB1ldj0grK6
-	 MhnTEY9TNtcJw==
-From: SeongJae Park <sj@kernel.org>
-To: SeongJae Park <sj@kernel.org>
-Cc: Andrew Morton <akpm@linux-foundation.org>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Brendan Higgins <brendan.higgins@linux.dev>,
-	David Gow <davidgow@davidgow.net>,
-	David Hildenbrand <david@kernel.org>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	Michal Hocko <mhocko@suse.com>,
-	Mike Rapoport <rppt@kernel.org>,
-	Shuah Khan <shuah@kernel.org>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	damon@lists.linux.dev,
-	kunit-dev@googlegroups.com,
-	linux-doc@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-kselftest@vger.kernel.org,
-	linux-mm@kvack.org
-Subject: Re: [PATCH 00/11] mm/damon: introduce DAMOS failed region quota charge ratio
-Date: Thu, 30 Apr 2026 18:56:04 -0700
-Message-ID: <20260501015604.83041-1-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260428152424.125760-1-sj@kernel.org>
-References: 
+	s=k20201202; t=1777601803;
+	bh=gGbv3TbBD1/UpHqzudAgpCU7q4zWCM/aRWeZS6O93Zs=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date:From;
+	b=IsV8g+XcTFeCeM5iFFwamTgbOg4mDGKm2xL+sr//BUIaUmZRPA3tAjL0tZD45rljQ
+	 59x8vVI+JYeZaE3ePahhzst4rIU6pP4ITRxcDHZXqaOEdHRzbvy2o/azWZHdU+pvJC
+	 LaJPNGYMbdc+9mNXhikcsa091cvQrwjXfqu06TyYBScAYGL+ShMwAMQWDyyqcSD2ph
+	 b8DE8Igq+ULrHNy3URp5eMnhwY/VPp5Dc+N2ZE9YQipgohfMKJcIcTXa0ST8IshS1C
+	 Kwuzh7Dk4yPFSxfrczTgfayD5rm7d8IMU3MfmsdOi90+DA9sW1t4jzsj7PLQkmzLmE
+	 juP/5hTEXkxqA==
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH v5 1/2] mm/damon/lru_sort: validate min_region_size to
+ be power of 2
+Reply-To: sashiko@lists.linux.dev
+To: "Liew Rui Yan" <aethernet65535@gmail.com>
+Cc: damon@lists.linux.dev
+In-Reply-To: <20260501013750.71704-2-aethernet65535@gmail.com>
+References: <20260501013750.71704-2-aethernet65535@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Fri, 01 May 2026 02:16:43 +0000
+Message-Id: <20260501021643.9CBAFC2BCB3@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-On Tue, 28 Apr 2026 08:24:24 -0700 SeongJae Park <sj@kernel.org> wrote:
+Thank you for your contribution! Sashiko AI review found 1 potential issue(=
+s) to consider:
+- [High] A Time-of-Check to Time-of-Use (TOCTOU) race condition exists betw=
+een the validation of `damon_lru_sort_mon_attrs.sample_interval` and its su=
+bsequent use, leading to a division-by-zero kernel panic.
+--
 
-> Hello Andrew,
-> 
-> On Tue, 28 Apr 2026 07:48:37 -0700 Andrew Morton <akpm@linux-foundation.org> wrote:
-> 
-> > On Mon, 27 Apr 2026 18:33:49 -0700 SeongJae Park <sj@kernel.org> wrote:
-> > 
-> > > TL; DR: Let users set different DAMOS quota charge ratios for DAMOS
-> > > action failed regions, for deterministic and consistent DAMOS action
-> > > progress.
-> > 
-> > Add, thanks.
-> > 
-> > As mentioned provately, Sashiko claims to have found things which it
-> > didn't see in the RFC.
-> > 
-> > 	https://sashiko.dev/#/patchset/20260428013402.115171-1-sj@kernel.org
-> 
-> TL; DR: I find no blocker for this patch series from the Sashiko reviews.
-> 
-> Now sashiko replies its reviews for DAMON patches to authors and
-> damon@lists.linux.dev.  So I replied [1,2,3] my review of the reviews to those
-> on damon@lists.linux.dev mailing list.  As I mentioned on the TL;DR, I find no
-> blocker for this series.
-> 
-> And I think you didn't see those because those are sent to only authors and
-> damon@lists.linux.dev.
-> 
-> I nowadays reply-all to original recipients only if Sashiko found a blocker.  I
-> will also add short notice for non-RFC patches if Sashiko found zero issue.
+commit 27c4642b5b420a4c1731c9385273b591e05b5b4c
+Author: Liew Rui Yan <aethernet65535@gmail.com>
 
-... Now I think the short notice is only redundant and silly, as the full
-review is available on damon@ list and the one who primarily interested in
-(Andrew) understands that.  I feel like the short-notice reply-all only
-increase unnecessary traffic and my redundant typing.  I will not do the short
-notice broadcasting, unless someone makes a diffeernt voice.
+mm/damon/lru_sort: validate min_region_size to be power of 2
 
+This commit adds early validation for the min_region_sz parameter to ensure
+it is a power of 2. It prevents kdamond from incorrectly terminating with
+the maybe_corrupted flag when a user simply sets an invalid addr_unit.
 
-Thanks,
-SJ
+> diff --git a/mm/damon/lru_sort.c b/mm/damon/lru_sort.c
+> index 2eb559d913b62..eca88ed941b32 100644
+> --- a/mm/damon/lru_sort.c
+> +++ b/mm/damon/lru_sort.c
+> @@ -286,6 +286,11 @@ static int damon_lru_sort_apply_parameters(void)
+>  	param_ctx->addr_unit =3D addr_unit;
+>  	param_ctx->min_region_sz =3D max(DAMON_MIN_REGION_SZ / addr_unit, 1);
+> =20
+> +	if (!is_power_of_2(param_ctx->min_region_sz)) {
+> +		err =3D -EINVAL;
+> +		goto out;
+> +	}
+> +
+>  	if (!damon_lru_sort_mon_attrs.sample_interval) {
 
-[...]
+This isn't a regression introduced by this patch, but can a time-of-check
+to time-of-use (TOCTOU) race condition happen here?
+
+Because damon_lru_sort_mon_attrs is exposed as a module parameter, it can
+be modified concurrently. If a user concurrently writes 0 to sample_interval
+immediately after this check passes, the local attrs struct would copy the
+new zero value:
+
+    attrs =3D damon_lru_sort_mon_attrs;
+
+Later in the function, damon_max_nr_accesses(&attrs) evaluates
+attrs.aggr_interval / attrs.sample_interval. Since sample_interval would
+be 0, could this trigger a divide-by-zero exception?
+
+>  		err =3D -EINVAL;
+>  		goto out;
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260501013750.7170=
+4-1-aethernet65535@gmail.com?part=3D1
