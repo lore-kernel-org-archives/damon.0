@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 278C73D7D9C;
-	Mon,  4 May 2026 12:58:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A53E13D7D81;
+	Mon,  4 May 2026 13:01:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777899493; cv=none; b=N6O1MEbBnjSkNOmScqz5vAtWEt6hqAx2N6Kq/6m1VUk8IWjQ+zEYb1nlQg+gU5UlRFdhNpJOAHqBs6/f7zV/BRu/RdTppKY8Kd7sJXWn2s0NUyY5V3sTsDCEY2Tbt3UOw0O7SXGjKEZK/cZMfOfgOhYw+pSIkN37E6sPYKn9sqM=
+	t=1777899692; cv=none; b=jJrNJSNWOIq+zF/h9lmg3qSPT2XtZBv3Ezd2sbjqgJgR9SGx9FNBdbOa9n9OtO0G2TcaaAJYk7++ZPCmU2KcNAH6nst0cy/VzZ5ShwiNcqrJsg+krWELDa7g/zHpJcWPJ1zJU2N40Efsq6Od9ajiEKcJRr4jL+xj7lb+gciGSlA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777899493; c=relaxed/simple;
-	bh=hFqhrxF8s/Yh9chH/dy/Ycf8OTqE6yq7s15QJcar3PU=;
+	s=arc-20240116; t=1777899692; c=relaxed/simple;
+	bh=nTH/jh+aMsNh+hB0C7srTxHmVfep+EcwrErDFCqKYPc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PsCpQRnh2fNsmSPevyC72yB7y9BFcKPdyGsiKuzZ74Jz17bkYfOrmUVDfIgmrFzHh1L1PpEfhXXsM/YgI8rExJInnCdPY1+M4g/Q4eYevIecjUXIa/jIeKLdgDXAZueni7inW84S4HWGW7BuKRZyhmpSgkC7VwwlxqRTyKMnkYE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=T/2I+jQb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fI4VykyhKjTDwdCl8XXTf0Xu6bapOdJn56a5rHFqzRet5KfW79iSVIB/PKNcm2OFYah5jZ0M/IVo23EAwP9mQansut2F/2qDtyY49pUaA4FaFXH5fLyEfjRAo2fRxeHbsDbgkzyKN/s46YNE8lJO9JI8FKkeaJxWcWFfgYoAWXA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SbqyNkNK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="T/2I+jQb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2D18C2BCB8;
-	Mon,  4 May 2026 12:58:11 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SbqyNkNK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C808C2BCB8;
+	Mon,  4 May 2026 13:01:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777899492;
-	bh=hFqhrxF8s/Yh9chH/dy/Ycf8OTqE6yq7s15QJcar3PU=;
+	s=k20201202; t=1777899692;
+	bh=nTH/jh+aMsNh+hB0C7srTxHmVfep+EcwrErDFCqKYPc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T/2I+jQbnObPHIz+Edt2/iUAX8d9nV7yELIDBGjf/6/WiO6N2IWa1/8yUEPuP8GIx
-	 Kb4f2nOX/TBpzUt9TRnItvEinDnVCAP+iq0923FNamEEKPUbF62rwCsifYNjY0xx6j
-	 ljshnQLHNkMXj1/MC4cIWn1ux8l8ICOFynIcGWrIpxYxSeJvDjJHc/vq2YDrrdnEnW
-	 GQgfmnaK2tCxA4Cq4WqKZkZLL8tGvFi7OnkpFVLCAYakrEOnRckiXYHl8NPBXio1eY
-	 zrRqskhpjwx0JmPCCod1jUxV/LIIUSSP4NMHuPkzalm75ibgJD36cfO+ATV1AqRg7L
-	 K6qF+A3Hjmi4A==
+	b=SbqyNkNKXPwvVgfuCwU6joOD07BRQsc+mfLiTrtj94/3EPU+CyGsVw49NgJbl5vEa
+	 SZQxnFlED9STU3m9gKzRTdOdX2MBPqfAT2aUTBkiykgfZmNfC7P6lNbgG97hGXDwC+
+	 em5+PRBLpUqCc7CSL8qrhHXEK/GB1q11zCIakFYv4bn9Pn9YZX8nhf8CBggJ+lA+LL
+	 mXN4Dhofv7LwczG7vGoKOHOb0vUjRPaiqTh+jgJ5+NcfE+ROMGMauQisC+BP+8sEjr
+	 6rELGDw4yM50gAGzzcPdoGBNP+69RJ7n3QV9Xob85dbFLg4tOYgKqVckNGFlbGWVU9
+	 DdkvI5sfZD4mQ==
 From: SeongJae Park <sj@kernel.org>
 To: stable@vger.kernel.org
 Cc: damon@lists.linux.dev,
 	SeongJae Park <sj@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1.y] mm/damon/core: disallow time-quota setting zero esz
-Date: Mon,  4 May 2026 05:58:08 -0700
-Message-ID: <20260504125808.22145-1-sj@kernel.org>
+Subject: [PATCH 6.18.y] mm/damon/core: disallow time-quota setting zero esz
+Date: Mon,  4 May 2026 06:01:27 -0700
+Message-ID: <20260504130127.25364-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <2026050324-shed-cultivate-ed89@gregkh>
-References: <2026050324-shed-cultivate-ed89@gregkh>
+In-Reply-To: <2026050306-june-passerby-c0a0@gregkh>
+References: <2026050306-june-passerby-c0a0@gregkh>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -84,21 +84,49 @@ Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 (cherry picked from commit 8bbde987c2b84f80da0853f739f0a920386f8b99)
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- mm/damon/core.c | 1 +
- 1 file changed, 1 insertion(+)
+ mm/damon/core.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
 diff --git a/mm/damon/core.c b/mm/damon/core.c
-index ab5c351b276c..94f8450f6e84 100644
+index 87b6c9c2d647..952cc770edf7 100644
 --- a/mm/damon/core.c
 +++ b/mm/damon/core.c
-@@ -802,6 +802,7 @@ static void damos_set_effective_quota(struct damos_quota *quota)
- 	else
- 		throughput = PAGE_SIZE * 1024;
- 	esz = throughput * quota->ms;
-+	esz = max(DAMON_MIN_REGION, esz);
+@@ -2124,7 +2124,8 @@ static unsigned long damos_quota_score(struct damos_quota *quota)
+ /*
+  * Called only if quota->ms, or quota->sz are set, or quota->goals is not empty
+  */
+-static void damos_set_effective_quota(struct damos_quota *quota)
++static void damos_set_effective_quota(struct damos_quota *quota,
++		struct damon_ctx *ctx)
+ {
+ 	unsigned long throughput;
+ 	unsigned long esz = ULONG_MAX;
+@@ -2150,6 +2151,7 @@ static void damos_set_effective_quota(struct damos_quota *quota)
+ 		else
+ 			throughput = PAGE_SIZE * 1024;
+ 		esz = min(throughput * quota->ms, esz);
++		esz = max(DAMON_MIN_REGION, esz);
+ 	}
  
  	if (quota->sz && quota->sz < esz)
- 		esz = quota->sz;
+@@ -2186,7 +2188,7 @@ static void damos_adjust_quota(struct damon_ctx *c, struct damos *s)
+ 	/* First charge window */
+ 	if (!quota->total_charged_sz && !quota->charged_from) {
+ 		quota->charged_from = jiffies;
+-		damos_set_effective_quota(quota);
++		damos_set_effective_quota(quota, c);
+ 	}
+ 
+ 	/* New charge window starts */
+@@ -2199,7 +2201,7 @@ static void damos_adjust_quota(struct damon_ctx *c, struct damos *s)
+ 		quota->charged_sz = 0;
+ 		if (trace_damos_esz_enabled())
+ 			cached_esz = quota->esz;
+-		damos_set_effective_quota(quota);
++		damos_set_effective_quota(quota, c);
+ 		if (trace_damos_esz_enabled() && quota->esz != cached_esz)
+ 			damos_trace_esz(c, s, quota);
+ 	}
 -- 
 2.47.3
 
