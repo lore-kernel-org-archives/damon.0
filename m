@@ -1,49 +1,31 @@
-Received: from mailout2.samsung.com (mailout2.samsung.com [203.254.224.25])
+Received: from frasgout.his.huawei.com (frasgout.his.huawei.com [185.176.79.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FA0A3D1CDF
-	for <damon@lists.linux.dev>; Mon,  4 May 2026 13:38:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=203.254.224.25
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25C023DE424
+	for <damon@lists.linux.dev>; Mon,  4 May 2026 13:52:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.176.79.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777901894; cv=none; b=pnOV9SUmLcJFWxgKnyLxFrmfvzOXZnFHxoiyUWjnZx2mBAA7S3owJGRpWGcxOs++l5GpQRaVozWferPH5VMVSL3uxdl13UEaC12Ol3P47GS3glt3C0id7SpMwhbGMBBy+nRdVJsvP9Sct35n94Ot1A2pCzIA1Yi32k0XlzoL59M=
+	t=1777902773; cv=none; b=DwzQLokw6U/Y4tmhewpnJsl1sv12pe3/AasWLJDcWfq+Ie4bE6dLLcNlHVnqN9xclxC20e0b6vW91te9cy8/8RkD/3bLYdmcNo9vd4rIF0zX6gsGVLTaVAGsKAccgsseULMIPhQI2EbGWTY4dcZLSTT62j7YjlX+QhEJ7xzWWC8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777901894; c=relaxed/simple;
-	bh=yxSm6/vu3IyP3srDroK/mn0D3idiK2xCmju19Wy9HrI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:From:In-Reply-To:
-	 Content-Type:References; b=XbNHjD3S/18u1QCUzqm7OWB/YJZg9iloQiU7Vru56Q1+xq38vmkkp92Kzn+SGsj+LascW79fwp3mP5v68D7NF7vh86pf9QTlk1qtcuxdTO6apEO72KWI53zaHds8FbT7SW8NJ/Z6+0kLWTCi+uVL+OSYqh3TTz6EaymerfZS7rw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com; spf=pass smtp.mailfrom=samsung.com; dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b=nmZ8O9mw; arc=none smtp.client-ip=203.254.224.25
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=samsung.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b="nmZ8O9mw"
-Received: from epcas5p2.samsung.com (unknown [182.195.41.40])
-	by mailout2.samsung.com (KnoxPortal) with ESMTP id 20260504133802epoutp02b4fe67eaaad6b60cdae9efe8d85f925e~sYFeNTetM0577405774epoutp02e;
-	Mon,  4 May 2026 13:38:02 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.samsung.com 20260504133802epoutp02b4fe67eaaad6b60cdae9efe8d85f925e~sYFeNTetM0577405774epoutp02e
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-	s=mail20170921; t=1777901882;
-	bh=K5X6546rG8Q7CDMgHYe0dMLLoA8JVhsjJIJ+l/s2c4Y=;
-	h=Date:Subject:To:Cc:From:In-Reply-To:References:From;
-	b=nmZ8O9mwkiw6Qc3oNT26vkjmnNlI2wukd5FwCDzd9H7xY8AuXai7IIgT3MUN5KTvU
-	 zuWhH4yfS4vIWtH7ZZm3cCd5duET+79RK+Yll2CLppi9ZAF+JaB3VR+AtIpQLJzfYp
-	 kuHf8nA1xhwKYRz7MOqFl4cYZJ66wHOLsJP//U40=
-Received: from epsnrtp02.localdomain (unknown [182.195.42.154]) by
-	epcas5p2.samsung.com (KnoxPortal) with ESMTPS id
-	20260504133801epcas5p2868c041e3779e42e6e5fde3d36dba3a3~sYFd4KT8O2899328993epcas5p29;
-	Mon,  4 May 2026 13:38:01 +0000 (GMT)
-Received: from epcpadp2new (unknown [182.195.40.142]) by
-	epsnrtp02.localdomain (Postfix) with ESMTP id 4g8N4n4bV1z2SSKX; Mon,  4 May
-	2026 13:38:01 +0000 (GMT)
-Received: from epsmtip2.samsung.com (unknown [182.195.34.31]) by
-	epcas5p2.samsung.com (KnoxPortal) with ESMTPA id
-	20260504130907epcas5p29c41fc288662c37cd8ad7241772a53f8~sXsPFsdos2990329903epcas5p2Z;
-	Mon,  4 May 2026 13:09:07 +0000 (GMT)
-Received: from [107.122.10.65] (unknown [107.122.10.65]) by
-	epsmtip2.samsung.com (KnoxPortal) with ESMTPA id
-	20260504130855epsmtip2f74fac9944e13b661bd91b5d97d7c8d2~sXsD4QdS72669726697epsmtip2P;
-	Mon,  4 May 2026 13:08:55 +0000 (GMT)
-Message-ID: <1891546521.01777901881625.JavaMail.epsvc@epcpadp2new>
-Date: Mon, 4 May 2026 18:38:54 +0530
+	s=arc-20240116; t=1777902773; c=relaxed/simple;
+	bh=cm2zwqx6hUsVELYl12wsgn/9Nrr6WcZjgIxSRDK5XRA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=N8DvDBjo6Kpr/V74s8gVKz7n9RLd2OFjcPel3OjFy+tan90kwK3xZLc0XiUrDCrSL2wRCtsfNifsTxi3wgaq3Y4r1QgLU4rB/NhkJHLs2IWi6QvjP7+21TE9E4w32nlXWIg1d5p0cTRMrJ6DbtCQWFxXgNSBJ61Q0fr3zEDGZu0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei-partners.com; spf=pass smtp.mailfrom=huawei-partners.com; arc=none smtp.client-ip=185.176.79.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei-partners.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei-partners.com
+Received: from mail.maildlp.com (unknown [172.18.224.150])
+	by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4g8NNZ2MJyzHnH2l;
+	Mon,  4 May 2026 21:51:42 +0800 (CST)
+Received: from mscpeml500003.china.huawei.com (unknown [7.188.49.51])
+	by mail.maildlp.com (Postfix) with ESMTPS id 21B2640570;
+	Mon,  4 May 2026 21:52:36 +0800 (CST)
+Received: from [10.123.123.154] (10.123.123.154) by
+ mscpeml500003.china.huawei.com (7.188.49.51) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.11; Mon, 4 May 2026 16:52:02 +0300
+Message-ID: <2446b1e8-2b9a-4621-bbb3-ccec0f1aa604@huawei-partners.com>
+Date: Mon, 4 May 2026 16:52:01 +0300
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -51,122 +33,128 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [LSF/MM/BPF TOPIC][RFC PATCH v4 00/27] Private Memory Nodes (w/
- Compressed RAM)
-To: Gregory Price <gourry@gourry.net>
-Cc: lsf-pc@lists.linux-foundation.org, linux-kernel@vger.kernel.org,
-	linux-cxl@vger.kernel.org, cgroups@vger.kernel.org, linux-mm@kvack.org,
-	linux-trace-kernel@vger.kernel.org, damon@lists.linux.dev,
-	kernel-team@meta.com, gregkh@linuxfoundation.org, rafael@kernel.org,
-	dakr@kernel.org, dave@stgolabs.net, jonathan.cameron@huawei.com,
-	dave.jiang@intel.com, alison.schofield@intel.com, vishal.l.verma@intel.com,
-	ira.weiny@intel.com, longman@redhat.com, akpm@linux-foundation.org,
-	david@kernel.org, lorenzo.stoakes@oracle.com, Liam.Howlett@oracle.com,
-	vbabka@suse.cz, rppt@kernel.org, surenb@google.com, mhocko@suse.com,
-	osalvador@suse.de, ziy@nvidia.com, matthew.brost@intel.com,
-	joshua.hahnjy@gmail.com, rakie.kim@sk.com, byungchul@sk.com,
-	ying.huang@linux.alibaba.com, apopple@nvidia.com, axelrasmussen@google.com,
-	yuanchu@google.com, weixugc@google.com, yury.norov@gmail.com,
-	linux@rasmusvillemoes.dk, mhiramat@kernel.org,
-	mathieu.desnoyers@efficios.com, tj@kernel.org, hannes@cmpxchg.org,
-	mkoutny@suse.com, jackmanb@google.com, sj@kernel.org,
-	baolin.wang@linux.alibaba.com, npache@redhat.com, ryan.roberts@arm.com,
-	dev.jain@arm.com, baohua@kernel.org, lance.yang@linux.dev,
-	muchun.song@linux.dev, xu.xin16@zte.com.cn, chengming.zhou@linux.dev,
-	jannh@google.com, linmiaohe@huawei.com, nao.horiguchi@gmail.com,
-	pfalcato@suse.de, rientjes@google.com, shakeel.butt@linux.dev,
-	riel@surriel.com, harry.yoo@oracle.com, cl@gentwo.org,
-	roman.gushchin@linux.dev, chrisl@kernel.org, kasong@tencent.com,
-	shikemeng@huaweicloud.com, nphamcs@gmail.com, bhe@redhat.com,
-	zhengqi.arch@bytedance.com, terry.bowman@amd.com, gost.dev@samsung.com,
-	arungeorge05@gmail.com, cpgs@samsung.com
+Subject: Re: [RFC PATCH v1 0/4] mm/damon: Introduce a huge page collapsing
+ mechanism using auto tuning
+To: SeongJae Park <sj@kernel.org>
+CC: <artem.kuzin@huawei.com>, <stepanov.anatoly@huawei.com>,
+	<wangkefeng.wang@huawei.com>, <yanquanmin1@huawei.com>, <zuoze1@huawei.com>,
+	<damon@lists.linux.dev>, <akpm@linux-foundation.org>, <linux-mm@kvack.org>,
+	<linux-kernel@vger.kernel.org>
+References: <20260501004148.78873-1-sj@kernel.org>
 Content-Language: en-US
-From: Arun George/Arun George <arun.george@samsung.com>
-In-Reply-To: <afIKxG5mJZE6QgpR@gourry-fedora-PF4VCD3F>
+From: Gutierrez Asier <gutierrez.asier@huawei-partners.com>
+In-Reply-To: <20260501004148.78873-1-sj@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
-X-CMS-MailID: 20260504130907epcas5p29c41fc288662c37cd8ad7241772a53f8
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-CMS-TYPE: 105P
-X-CPGSPASS: Y
-X-Hop-Count: 3
-X-CMS-RootMailID: 20260427123800epcas5p1e1a2fed257091b31e2e6c3a7d1b0c2b0
-References: <20260222084842.1824063-1-gourry@gourry.net>
-	<CGME20260427123800epcas5p1e1a2fed257091b31e2e6c3a7d1b0c2b0@epcas5p1.samsung.com>
-	<1983025922.01777297382206.JavaMail.epsvc@epcpadp2new>
-	<ae_i9IlIndumJWN3@gourry-fedora-PF4VCD3F>
-	<1891546521.01777455002601.JavaMail.epsvc@epcpadp1new>
-	<afIKxG5mJZE6QgpR@gourry-fedora-PF4VCD3F>
+X-ClientProxiedBy: mscpeml500004.china.huawei.com (7.188.26.250) To
+ mscpeml500003.china.huawei.com (7.188.49.51)
 
-On 29-04-2026 07:12 pm, Gregory Price wrote:
+On 5/1/2026 3:41 AM, SeongJae Park wrote:
+> Hello Asier,
+Hi, sorry for the delayed answer.
+> 
+> On Thu, 30 Apr 2026 13:41:35 +0000 <gutierrez.asier@huawei-partners.com> wrote:
+> 
+>> From: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
 >>
->> Great! I believe "writable budget" could be an interesting idea which
->> can solve the 'bus error' sort of scenarios due to device not capable of
->> taking any more writes. The write budget could be replenished using the
->> control path and writes will not go ahead without the budget available,
->> right?>
+>> Overview
+>> ================
+> 
+> Let's align the length of underline with the text.
+> 
 >>
+>> This patch set introduces a new autotuning which allows to collapse
+>> hot regions into hugepages.
+>>
+>> Motivation
+>> ================
+>>
+>> Since TLB is a bottleneck for many systems, a way to optimize TLB
+>> misses (or hits) is to use huge pages. Unfortunately, using "always"
+>> in THP leads to memory fragmentation and memory waste. For this reason,
+>> most application guides and system administrators suggest to disable THP.
 > 
-> Write budget is simple
+> I think the motivation should further explain why existing DAMOS features
+> (access pattern-based targetting and quota auto-tuning with existing quota
+> goals) are insufficient.  If that makes the text too long, I think the
+> explanation for well-known THP benefit and problems can be reduced or skipped.
+OK, I will elaborate it in further series.
 > 
-> budget=1  (up to 1 page can be writable
->     1) swap 1 page ->  cram alloc 1 page, put VSWAP_CRAM in PTE
->     2) read-fault  ->  cram upgrades VSWAP_CRAM to R/O PTE
->     3) write-fault ->
->        a) if (writable_cnt < budget) { budget++; mkwrite(pte); }
->        b) else:  normal swap semantic -> promote to normal memory
+>>
+>> Solution
+>> ================
+>>
+>> A new autotuning quota goal[1], damos_get_used_hugepage_mem_bp, is
+>> introduced, which checks the huge page consumption to total anonymous
+>> memory consumption. This new quota mechanism reuses current autotuning
+>> architecture.
 > 
-> Meanwhile - use ballooning and a simple shrinker to dynamically size the
-> region to respond to real compression ratio.
+> The idea makes sense to me.
+> 
+> The name sounds bit redundant, though.  How about DAMOS_QUOTA_HUGEPAGE_BP for
+> the enum, and hugeapge_bp for sysfs input?
+Agree. In fact, DAMOS_QUOTA_HUGEPAGE_BP would make sense to keep it
+consistent with the quota naming.
+> 
+>>
+>> A new module is introduced to demonstrate the use of huge pages
+>> collapse autotuning. The module launches a kdamond thread for a 
+>> certain task provided by the user through monitored_pid module argument.
+> 
+> If it is only for demonstration, I think it is more fit to be a sample module
+> (placed under samples/damon/).
+We are testing this in a bare metal MySQL server. Maybe the description
+was not the most accurate.
+>>
+>> This module also has a user autotuning knob which allows the user to
+>> adjust the aggressiveness of page collapsing.
+>>
+>> Benchmarks
+>> ================
+>> In progress, will add them in the next RFC series.
+> 
+> Looking forward to!
+> 
+> I may request not that much test results for the quota goal.  If the module is
+> not just a sample but for a real world use case, I may hope somewhat reasonable
+> test resulsts.
+OK, will do it.
+>>
+>> TODO
+>> ================
+>>
+>> - Since DAMOS_COLLAPSE is not in upstream and this is just a
+>>   RFC, I have used DAMOS_HUGEPAGE instead. This will change
+>>   to DAMOS_COLLAPSE in future series.
+> 
+> It is now in mm-new and it is recommended to use it as a baseline for DAMON
+> patches.  So please feel free to use DAMOS_COLLAPSE from the next version,
+> unless there is a reason to worry if DAMOS_COLLAPSE will be dropped from
+> mm-new.
+Thanks.
+>>
+>> Patches Sequence
+>> ================
+>> Patch 1 -> damon_modules_new_vaddr_ctx_target
+>> Patch 2 -> Introduce DAMOS_QUOTA_HUGEPAGE and autotuning
+>> Patch 3 -> Module that demonstrates how to use DAMOS_QUOTA_HUGEPAGE
+>>            and the new VADDR ctx creation
+>> Patch 4 -> Documentation
+>>
+>> [1] https://lore.kernel.org/e67f05ad-dbb9-45e6-ba30-b167a99ac67d@huawei-partners.com
+> 
+> Adding more context about what this link is would be nice.  I can find the link
+> marker from the above text, but I was unable to expect what this is without
+> opening the link.
 > 
 > 
-> All said an done - you get something close to zswap but with R/O
-> mappings for all entries, and optional R/W-mappings for administrators
-> who know something about their workload and can afford to take the risk
-> of some amount of capacity being written to uncontended in exchange for
-> performance.
+> Thanks,
+> SJ
 > 
-> The writable-budget is a risk-dial:  How much do you trust your workload
-> to now spew un/poorly-compressible memory?  The write-budget is a direct
-> measure of that. (so take P99.99999 compression ratios, and you can make
-> a good chunk of that writable).
+> [...]
 > 
-> ~Gregory
-> 
-> 
-I believe we are converging. Agree to most points you mentioned.
 
-I see this problem statement can be solved by 'write-control + write 
-budget' approach similar to what you have described, whether we take 
-swap path or not.
-
-But I see this 'write budget' (budget in terms of number of write 
-operations that can be handled by the device, not capacity) to be 
-provided by the device in control plane; not by the workloads in the host.
-
-The budget can be communicated by the device in the device control plane 
-periodically (to be handled in the specific cram back-end driver; may be 
-interpreting the device back-pressure indications into a write budget 
-value). Even if the control plane breaks down, the host does not run 
-into issues except that it will not write further.
-
-I assume you see this value coming from the workloads. This might be a 
-place where I have a different opinion.
-
-There are multiple advantages of this value coming from the device:
-
-  1) We can modulate the write budget depending on the actual 
-compressibility in the device (and so workloads data). We don't have to 
-do estimation based on the workloads.
-
-  2) We don't have to do the capacity modulation - as in ballooning or 
-shrinker.
-
-  3) Even if the control path is broken, host can write only till the 
-available 'write budget'; so it won't get into 'bus error' situations.
-
-~Arun George
-
-
-
+-- 
+Asier Gutierrez
+Huawei
 
