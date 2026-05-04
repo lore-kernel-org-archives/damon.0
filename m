@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B3093B6BF5;
-	Mon,  4 May 2026 12:52:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6279F333730;
+	Mon,  4 May 2026 12:55:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777899148; cv=none; b=uIp0begIhiIarEmfSe5R5le/Nzr/UeKvcXm6Yd0LX6sacHQ8hJ8Op6nC/EPepfzmxcEP6skw14by11brNydEtGlo3L1XlJ2UhwjC/vEA6XK0EpLRnWNP1g1nn6Kyet+otcFqDnjc2eo7YFmkRLYP5ACjm23uw4C9xI3QCOyNMPE=
+	t=1777899334; cv=none; b=i3vtcwBBrf2kXGRScjUllpxeY/zPZ72PyXbqohlRiD4PRfnmVvNiFBjZngWaFJABHT842Mo958O5SjY1KWKipahmO/7owyJAwyFVtt8qk59IVdeUHCagwwK703ywOH0c1VSEvCPO9av1mhHE4LLCJM42c5rvgnAAOfwz2v9iSbE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777899148; c=relaxed/simple;
-	bh=4UagUZ8wRB0GvAntGaBzkSiwV6j2AGcjkb7wsKZZLwQ=;
+	s=arc-20240116; t=1777899334; c=relaxed/simple;
+	bh=DTiN/YJ2gy/qPq7dFsTVkyc1CuyNNDCRaXA9TmkPcqE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a5/Kst4Nq2fqTln+gmEt7f23Rp+sZPJgVel598Ot9+tlpxsEw9PhlX1Noyndf7UVgR66OwmM1LCWWph+I4vRD1xnRb9aJcft5PzBi8e3ibpwD7XvW9RpOyGbcQwvcjtl/1GZfy6EktmHKy76R/FnsAcgh5bhi3O1ApoCsrnaLFo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oYq6dJlJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ol0h4tMIE8KeE9uBCugR2X/oeoyhtZbU8PAhifbJyJj/iUxj8KKQ2/80xW93kdDCv+AcSXlNjg2yCFgEmoT25uq9GsN7JYW90oi5hjzJpIceDMk3GzfUVMnuqN5+BrNbJwlG+Lyo0olriuuJzbNu2w6ocd6TVMxRU4FGgyQPNT0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Yon7LmOV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oYq6dJlJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54D0BC2BCB8;
-	Mon,  4 May 2026 12:52:27 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Yon7LmOV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA096C2BCB8;
+	Mon,  4 May 2026 12:55:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777899148;
-	bh=4UagUZ8wRB0GvAntGaBzkSiwV6j2AGcjkb7wsKZZLwQ=;
+	s=k20201202; t=1777899334;
+	bh=DTiN/YJ2gy/qPq7dFsTVkyc1CuyNNDCRaXA9TmkPcqE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oYq6dJlJuQFEiy+Zc4UhQOB1sYDkGSPps0iHDmUe9Y3xt+GXOtkXCtqqwdOkog3AW
-	 5urSVqWe7/zacO+IfqXHj2OT2qB199QLhnxcXwwxC0bd6k5gjvf2gPuMKwZn2fob15
-	 bJ1DRuZoYsnt+Ldn4OhlnvUYVBvQex0KQ4tLp/oqIb+ZtxfllX4g/jvRGaN7gdHJv+
-	 Z8Od2a28BzwXyJ7qYVZNrKBMk+kd8WJUlxi6eREfiXgMz3hsELXF7a2tiMLfQJtDqq
-	 90J04Yr+HNw04kToN2Zrd/gG+2TVsEwFdfqFvoOVi12l4kGeYd8q7GFfBp01QQOoRT
-	 BpBSoqXVMUqwQ==
+	b=Yon7LmOVDVI2BJDKa61uKQnUmSLG3HkPqqx74S+A5yNu6nnMMgU6QSBBuKkWrTXRp
+	 yZxBIYJTNJJ7JLfXMXhu3T/RmQrJ6+ZNV9xVjXxwLw3JvM45/5znQRWOWA8gwKt1kl
+	 ZcjMhKc5NOFhaV0/E3M5F78fQ4cORZXVMT9MAkMKNg9GGmWzleeJXMssBKKSoVA+TD
+	 Bpmo2sYkdquq+MteXNpbT9Xd0C5azVzgY8gd8SWoQ4719pEvYwC/BIDSvfxr9zHox+
+	 Jf5fFXNTNhnuZS81TS+QRN3MlCMu5ypX2fyyCDa0fbXTpn//hwXGwMh5FO0RqFGfeg
+	 BI1JBO+JwhNqQ==
 From: SeongJae Park <sj@kernel.org>
 To: stable@vger.kernel.org
 Cc: damon@lists.linux.dev,
 	SeongJae Park <sj@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.12.y] mm/damon/core: disallow time-quota setting zero esz
-Date: Mon,  4 May 2026 05:52:20 -0700
-Message-ID: <20260504125220.15509-1-sj@kernel.org>
+Subject: [PATCH 6.6.y] mm/damon/core: disallow time-quota setting zero esz
+Date: Mon,  4 May 2026 05:55:29 -0700
+Message-ID: <20260504125529.18220-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <2026050313-giddy-quizzical-4cc1@gregkh>
-References: <2026050313-giddy-quizzical-4cc1@gregkh>
+In-Reply-To: <2026050319-verbally-voltage-207f@gregkh>
+References: <2026050319-verbally-voltage-207f@gregkh>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -88,17 +88,17 @@ Signed-off-by: SeongJae Park <sj@kernel.org>
  1 file changed, 1 insertion(+)
 
 diff --git a/mm/damon/core.c b/mm/damon/core.c
-index ed2b75023181..69f8244324b3 100644
+index 48747236c21c..12c2e584659a 100644
 --- a/mm/damon/core.c
 +++ b/mm/damon/core.c
-@@ -1577,6 +1577,7 @@ static void damos_set_effective_quota(struct damos_quota *quota)
- 			esz = min(throughput * quota->ms, esz);
- 		else
- 			esz = throughput * quota->ms;
-+		esz = max(DAMON_MIN_REGION, esz);
- 	}
+@@ -1026,6 +1026,7 @@ static void damos_set_effective_quota(struct damos_quota *quota)
+ 	else
+ 		throughput = PAGE_SIZE * 1024;
+ 	esz = throughput * quota->ms;
++	esz = max(DAMON_MIN_REGION, esz);
  
  	if (quota->sz && quota->sz < esz)
+ 		esz = quota->sz;
 -- 
 2.47.3
 
