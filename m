@@ -1,43 +1,41 @@
-Received: from out-177.mta1.migadu.com (out-177.mta1.migadu.com [95.215.58.177])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D53943C06A
-	for <damon@lists.linux.dev>; Tue,  5 May 2026 14:52:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE7A848094D
+	for <damon@lists.linux.dev>; Tue,  5 May 2026 15:00:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777992760; cv=none; b=hNJBWxEBtL9zRQQV/SZaBE8mlR4FCfY5nHJVhE72SSkitixX1irZiIERrWYkWB3CEzO+lweoiesUlB0uHwRy+w7oaO25ZyEn8sNs/VMa9cjSDZCkmfu6K0YWYWhM30beLFH+M+mu4Ub85nhSf1UVvU2AmbhdNEoL8YlJsB4iUDs=
+	t=1777993216; cv=none; b=L16RJOrHJcuT00jFH1KttAA3SvTG7vfmMgkwCCI6rX9xqvroLPQ3s+YhihvpfiJYvoN0k+V+KDBOCLX9JaBpZRHPv9FyfcXcSnl2/FO3TfuJ6LWWPIaOAfeoQC/WZOp4Z3yECD7CpjsRZU6q1cURSkBPMSkYmciCMfVxGoxiy/k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777992760; c=relaxed/simple;
-	bh=yNXOdUDLO4fg5W13NGnMaQeUqhD0iBODAze/rf4hDRc=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=je/bLgEaeFp7TaVQmX2sXqrgclVf51h6b9Anog7ac1IxgVSnzEMZJBmMkNFaSTKjtbyYBN3AYaZrguauguJtt/ZI5i2NcT0Iz1V9IBVyEhCfm/BSMTmUZ4rqPY/YRduYULOKNpYSxYiQ6Y8m/7S7QynEZ+ePk/91TPtYSzQKLfY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=eEwWLdGj; arc=none smtp.client-ip=95.215.58.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1777993216; c=relaxed/simple;
+	bh=BZtWcFg1Tvsaq4gSNlFAUnttdIjwgkp0plWzZaR5Srg=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=I0Pdvj3CfZIT9hlH1hNdL+zPUNwUsFlYzZ9cZxZdVvhn59xJL9GeaxI8dFvpI6Zzw1W6VFoRmAxHJPwgkWxInB1fQ90RYrWM+xesiItnSsk/Op6p6aMNNf9BqGH2HHYbSyn1hulqQoZ6wKGd2I7RvAB5V9QwW9FGGmcVZjjmhAg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kI/YiKVx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="eEwWLdGj"
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1777992756;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=/qYbOqwzvJhVN5qobkl6zlo7YylDwVXFMPy6LUei4rk=;
-	b=eEwWLdGjA6Z2uHnNOosl4OQMRmYt/g5NPLqtLe2Xk7Ahw96kBv41+N5b+vAPshGPjgisWP
-	aohj/qoj/b5X26CbDYxrtzlHbGXXAiHK7VIcXM7xDlF2vAMYslYopPP05d9gRMWtJ5za3h
-	G6UDo7tZoCyLB2I4Eda3SPXYtR5NfIU=
-From: Jiayuan Chen <jiayuan.chen@linux.dev>
-To: damon@lists.linux.dev
-Cc: Jiayuan Chen <jiayuan.chen@shopee.com>,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	SeongJae Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Shu Anzai <shu17az@gmail.com>,
-	Quanmin Yan <yanquanmin1@huawei.com>,
-	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH v2] mm/damon: replace damon_rand() with a per-ctx lockless PRNG
-Date: Tue,  5 May 2026 22:52:06 +0800
-Message-ID: <20260505145212.108644-1-jiayuan.chen@linux.dev>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kI/YiKVx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 604EAC2BCB4;
+	Tue,  5 May 2026 15:00:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1777993216;
+	bh=BZtWcFg1Tvsaq4gSNlFAUnttdIjwgkp0plWzZaR5Srg=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=kI/YiKVxEFpklK3I1aB/a0tDs+xz/VVn3Kln8yJ2mX5lp/LqZ1SNZhBTNEeNSV0UK
+	 9cPstX5g4CGPxLBTO8AX/hOx84i33dWJ0kCJMslQAl4Wi0erU9LJESTy6WWApcDl6+
+	 WBqnwAPKVlpJYY3uZcPI0yhB0MZe60bHXtlROc5x2LK3/Cu8ihy/QdbWDSEasGtTZP
+	 csKWymO0hGdTb/WJSueAmNAMCaph5phu7Ol0X1DfnviTOogbwOkrF73niSw1Ykx8ZV
+	 2e2bJ09yR7mbCv8R1Tnab8OS+O/huzJY+TXua3Wx83p8HSa5ZTQTmmX4cLhvPOleSo
+	 lvXA7pZbtBlZw==
+From: SeongJae Park <sj@kernel.org>
+To: sashiko-bot@kernel.org
+Cc: SeongJae Park <sj@kernel.org>,
+	damon@lists.linux.dev
+Subject: Re: [PATCH 6.1.y] mm/damon/core: disallow time-quota setting zero esz
+Date: Tue,  5 May 2026 08:00:12 -0700
+Message-ID: <20260505150012.29007-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260504181048.E3BE2C2BCB8@smtp.kernel.org>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -45,283 +43,92 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Migadu-Flow: FLOW_OUT
 
-From: Jiayuan Chen <jiayuan.chen@shopee.com>
+On Mon, 04 May 2026 18:10:48 +0000 sashiko-bot@kernel.org wrote:
 
-damon_rand() on the sampling_addr hot path called
-get_random_u32_below(), which takes a local_lock_irqsave() around a
-per-CPU batched entropy pool and periodically refills it with
-ChaCha20.  At elevated nr_regions counts (20k+), the lock_acquire /
-local_lock pair plus __get_random_u32_below() dominate kdamond perf
-profiles.
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [High] Unmitigated integer overflow in the `throughput` calculation permanently breaks time quotas.
+> - [High] Incorrect initialization of `charged_from` completely bypasses quotas for the first 5 minutes of system boot.
 
-Replace the helper with a lockless lfsr113 generator (struct rnd_state)
-held per damon_ctx and seeded from get_random_u64() in damon_new_ctx().
-kdamond is the single consumer of a given ctx, so no synchronization
-is required.  Range mapping uses Lemire's (u64)rnd * span >> 32 on the
-fast path; for spans larger than U32_MAX (only reachable on 64-bit) the
-slow path combines two u32 outputs and uses mul_u64_u64_shr() at 64-bit
-width.  On 32-bit the slow path is dead code and gets eliminated by
-the compiler.
+No real issues for this patch.
 
-The new helper takes a ctx parameter; damon_split_regions_of() and
-the kunit tests that call it directly are updated accordingly.
+> --
+> 
+> commit 558d8bfd17c7ba00954bbbf18a4eb2783d713b59
+> Author: SeongJae Park <sj@kernel.org>
+> mm/damon/core: disallow time-quota setting zero esz
+> 
+> This commit addresses an issue where DAMOS time quotas could make the
+> effective size quota smaller than the minimum region size. By forcing
+> the effective size quota to be at least DAMON_MIN_REGION, it prevents
+> schemes from being unexpectedly deactivated.
+> 
+> Link: https://lore.kernel.org/20260407003153.79589-1-sj@kernel.org
+> Link: https://lore.kernel.org/20260405192504.110014-1-sj@kernel.org [1]
+> 
+> > diff --git a/mm/damon/core.c b/mm/damon/core.c
+> > index ab5c351b276ce..94f8450f6e843 100644
+> > --- a/mm/damon/core.c
+> > +++ b/mm/damon/core.c
+> > @@ -802,6 +802,7 @@ static void damos_set_effective_quota(struct damos_quota *quota)
+> >  	else
+> >  		throughput = PAGE_SIZE * 1024;
+> >  	esz = throughput * quota->ms;
+> > +	esz = max(DAMON_MIN_REGION, esz);
+> 
+> Can the throughput calculation overflow here?
+> 
+> Looking at damos_set_effective_quota() before this change, throughput is
+> calculated using:
+> 
+>     throughput = quota->total_charged_sz * 1000000 / quota->total_charged_ns;
+> 
+> Both total_charged_sz and total_charged_ns accumulate indefinitely over the
+> scheme's lifetime. The intermediate multiplication by 1000000 is performed
+> in unsigned long precision.
+> 
+> Could this overflow after a large amount of memory is processed? For
+> instance, it could wrap around after around 18.4 TB on 64-bit systems, or
+> just 4KB on 32-bit systems where unsigned long is 32-bit.
+> 
+> When the multiplication wraps around, the numerator becomes artificially
+> small, causing the computed throughput to collapse to near-zero. While
+> clamping esz to DAMON_MIN_REGION prevents total deactivation, does the
+> overflow permanently trap the scheme into processing exactly one minimal
+> region per charge window?
 
-lfsr113 is a linear PRNG and MUST NOT be used for anything
-security-sensitive.  DAMON's sampling_addr is not exposed to userspace
-and is only consumed as a probe point for PTE accessed-bit sampling,
-so a non-cryptographic PRNG is appropriate here.
+Good catch.  But not this patch's fault.  On 32bit, use of addr_unit would
+mitigate the issue so that reasonable amount of progress can be made.  Also,
+the impact should not be significant.
 
-Tested with paddr monitoring and max_nr_regions=20000: kdamond CPU
-usage reduced from ~72% to ~50% of one core.
+> 
+> Also related to the effective size quota updates, is there a regression
+> during early system boot?
+> 
+> Looking at damos_quota_init_priv(), quota->charged_from is initialized
+> to 0 rather than the current jiffies.
+> 
+> In kdamond_apply_schemes(), the charge window only starts when:
+> 
+>     time_after_eq(jiffies, quota->charged_from + interval)
+> 
+> Because jiffies starts at INITIAL_JIFFIES (which casts to a negative long,
+> typically -300*HZ), does time_after_eq() fail for the first 5 minutes of
+> system uptime?
+> 
+> During this 5-minute period, damos_set_effective_quota() would never be
+> invoked, leaving quota->esz at its default initialized value of 0.
+> 
+> Because quota->esz == 0 is treated as no limit by the scheme application
+> checks, do early-boot schemes (like damon_reclaim) run entirely
+> unthrottled for the first 5 minutes, completely ignoring user-configured
+> CPU and size quotas?
 
-Link: https://lore.kernel.org/damon/20260426173346.86238-1-sj@kernel.org/T/#m4f1fd74112728f83a41511e394e8c3fef703039c
-Cc: Jiayuan Chen <jiayuan.chen@linux.dev>
-Signed-off-by: Jiayuan Chen <jiayuan.chen@shopee.com>
----
- include/linux/damon.h       | 27 +++++++++++++++++++++------
- mm/damon/core.c             | 12 ++++++++----
- mm/damon/paddr.c            |  8 ++++----
- mm/damon/tests/core-kunit.h | 28 ++++++++++++++++++++++------
- mm/damon/vaddr.c            |  7 ++++---
- 5 files changed, 59 insertions(+), 23 deletions(-)
+We initialize charged_from as jiffies for every charge window, on
+damos_adjust_quota().  So the issue shouldn't exist.
 
-diff --git a/include/linux/damon.h b/include/linux/damon.h
-index f2cdb7c3f5e6..e16012a7f41a 100644
---- a/include/linux/damon.h
-+++ b/include/linux/damon.h
-@@ -8,8 +8,10 @@
- #ifndef _DAMON_H_
- #define _DAMON_H_
- 
-+#include <linux/math64.h>
- #include <linux/memcontrol.h>
- #include <linux/mutex.h>
-+#include <linux/prandom.h>
- #include <linux/time64.h>
- #include <linux/types.h>
- #include <linux/random.h>
-@@ -19,12 +21,6 @@
- /* Max priority score for DAMON-based operation schemes */
- #define DAMOS_MAX_SCORE		(99)
- 
--/* Get a random number in [l, r) */
--static inline unsigned long damon_rand(unsigned long l, unsigned long r)
--{
--	return l + get_random_u32_below(r - l);
--}
--
- /**
-  * struct damon_addr_range - Represents an address region of [@start, @end).
-  * @start:	Start address of the region (inclusive).
-@@ -843,8 +839,27 @@ struct damon_ctx {
- 
- 	struct list_head adaptive_targets;
- 	struct list_head schemes;
-+
-+	/* Per-ctx PRNG state for damon_rand(); kdamond is the sole consumer. */
-+	struct rnd_state rnd_state;
- };
- 
-+/* Get a random number in [@l, @r) using @ctx's lockless PRNG. */
-+static inline unsigned long damon_rand(struct damon_ctx *ctx,
-+				       unsigned long l, unsigned long r)
-+{
-+	unsigned long span = r - l;
-+	u64 rnd;
-+
-+	if (span <= U32_MAX) {
-+		rnd = prandom_u32_state(&ctx->rnd_state);
-+		return l + (unsigned long)((rnd * span) >> 32);
-+	}
-+	rnd = ((u64)prandom_u32_state(&ctx->rnd_state) << 32) |
-+	      prandom_u32_state(&ctx->rnd_state);
-+	return l + mul_u64_u64_shr(rnd, span, 64);
-+}
-+
- static inline struct damon_region *damon_next_region(struct damon_region *r)
- {
- 	return container_of(r->list.next, struct damon_region, list);
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index 3dbbbfdeff71..cbbb35a72b18 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -607,6 +607,8 @@ struct damon_ctx *damon_new_ctx(void)
- 	INIT_LIST_HEAD(&ctx->adaptive_targets);
- 	INIT_LIST_HEAD(&ctx->schemes);
- 
-+	prandom_seed_state(&ctx->rnd_state, get_random_u64());
-+
- 	return ctx;
- }
- 
-@@ -2715,8 +2717,9 @@ static void damon_split_region_at(struct damon_target *t,
- }
- 
- /* Split every region in the given target into 'nr_subs' regions */
--static void damon_split_regions_of(struct damon_target *t, int nr_subs,
--				  unsigned long min_region_sz)
-+static void damon_split_regions_of(struct damon_ctx *ctx,
-+				   struct damon_target *t, int nr_subs,
-+				   unsigned long min_region_sz)
- {
- 	struct damon_region *r, *next;
- 	unsigned long sz_region, sz_sub = 0;
-@@ -2731,7 +2734,7 @@ static void damon_split_regions_of(struct damon_target *t, int nr_subs,
- 			 * Randomly select size of left sub-region to be at
- 			 * least 10 percent and at most 90% of original region
- 			 */
--			sz_sub = ALIGN_DOWN(damon_rand(1, 10) *
-+			sz_sub = ALIGN_DOWN(damon_rand(ctx, 1, 10) *
- 					sz_region / 10, min_region_sz);
- 			/* Do not allow blank region */
- 			if (sz_sub == 0 || sz_sub >= sz_region)
-@@ -2772,7 +2775,8 @@ static void kdamond_split_regions(struct damon_ctx *ctx)
- 		nr_subregions = 3;
- 
- 	damon_for_each_target(t, ctx)
--		damon_split_regions_of(t, nr_subregions, ctx->min_region_sz);
-+		damon_split_regions_of(ctx, t, nr_subregions,
-+				       ctx->min_region_sz);
- 
- 	last_nr_regions = nr_regions;
- }
-diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
-index 5cdcc5037cbc..c4738cd5e221 100644
---- a/mm/damon/paddr.c
-+++ b/mm/damon/paddr.c
-@@ -49,11 +49,11 @@ static void damon_pa_mkold(phys_addr_t paddr)
- }
- 
- static void __damon_pa_prepare_access_check(struct damon_region *r,
--		unsigned long addr_unit)
-+		struct damon_ctx *ctx)
- {
--	r->sampling_addr = damon_rand(r->ar.start, r->ar.end);
-+	r->sampling_addr = damon_rand(ctx, r->ar.start, r->ar.end);
- 
--	damon_pa_mkold(damon_pa_phys_addr(r->sampling_addr, addr_unit));
-+	damon_pa_mkold(damon_pa_phys_addr(r->sampling_addr, ctx->addr_unit));
- }
- 
- static void damon_pa_prepare_access_checks(struct damon_ctx *ctx)
-@@ -63,7 +63,7 @@ static void damon_pa_prepare_access_checks(struct damon_ctx *ctx)
- 
- 	damon_for_each_target(t, ctx) {
- 		damon_for_each_region(r, t)
--			__damon_pa_prepare_access_check(r, ctx->addr_unit);
-+			__damon_pa_prepare_access_check(r, ctx);
- 	}
- }
- 
-diff --git a/mm/damon/tests/core-kunit.h b/mm/damon/tests/core-kunit.h
-index 9e5904c2beeb..ee0a58eeb25c 100644
---- a/mm/damon/tests/core-kunit.h
-+++ b/mm/damon/tests/core-kunit.h
-@@ -273,54 +273,70 @@ static void damon_test_merge_regions_of(struct kunit *test)
- 
- static void damon_test_split_regions_of(struct kunit *test)
- {
-+	struct damon_ctx *c;
- 	struct damon_target *t;
- 	struct damon_region *r;
- 	unsigned long sa[] = {0, 300, 500};
- 	unsigned long ea[] = {220, 400, 700};
- 	int i;
- 
-+	c = damon_new_ctx();
-+	if (!c)
-+		kunit_skip(test, "ctx alloc fail");
-+
- 	t = damon_new_target();
--	if (!t)
-+	if (!t) {
-+		damon_destroy_ctx(c);
- 		kunit_skip(test, "target alloc fail");
-+	}
- 	r = damon_new_region(0, 22);
- 	if (!r) {
- 		damon_free_target(t);
-+		damon_destroy_ctx(c);
- 		kunit_skip(test, "region alloc fail");
- 	}
- 	damon_add_region(r, t);
--	damon_split_regions_of(t, 2, 1);
-+	damon_split_regions_of(c, t, 2, 1);
- 	KUNIT_EXPECT_LE(test, damon_nr_regions(t), 2u);
- 	damon_free_target(t);
- 
- 	t = damon_new_target();
--	if (!t)
-+	if (!t) {
-+		damon_destroy_ctx(c);
- 		kunit_skip(test, "second target alloc fail");
-+	}
- 	r = damon_new_region(0, 220);
- 	if (!r) {
- 		damon_free_target(t);
-+		damon_destroy_ctx(c);
- 		kunit_skip(test, "second region alloc fail");
- 	}
- 	damon_add_region(r, t);
--	damon_split_regions_of(t, 4, 1);
-+	damon_split_regions_of(c, t, 4, 1);
- 	KUNIT_EXPECT_LE(test, damon_nr_regions(t), 4u);
- 	damon_free_target(t);
- 
- 	t = damon_new_target();
--	if (!t)
-+	if (!t) {
-+		damon_destroy_ctx(c);
- 		kunit_skip(test, "third target alloc fail");
-+	}
- 	for (i = 0; i < ARRAY_SIZE(sa); i++) {
- 		r = damon_new_region(sa[i], ea[i]);
- 		if (!r) {
- 			damon_free_target(t);
-+			damon_destroy_ctx(c);
- 			kunit_skip(test, "region alloc fail");
- 		}
- 		damon_add_region(r, t);
- 	}
--	damon_split_regions_of(t, 4, 5);
-+	damon_split_regions_of(c, t, 4, 5);
- 	KUNIT_EXPECT_LE(test, damon_nr_regions(t), 12u);
- 	damon_for_each_region(r, t)
- 		KUNIT_EXPECT_GE(test, damon_sz_region(r) % 5ul, 0ul);
- 	damon_free_target(t);
-+
-+	damon_destroy_ctx(c);
- }
- 
- static void damon_test_ops_registration(struct kunit *test)
-diff --git a/mm/damon/vaddr.c b/mm/damon/vaddr.c
-index b069dbc7e3d2..2e936f04de3d 100644
---- a/mm/damon/vaddr.c
-+++ b/mm/damon/vaddr.c
-@@ -333,9 +333,10 @@ static void damon_va_mkold(struct mm_struct *mm, unsigned long addr)
-  */
- 
- static void __damon_va_prepare_access_check(struct mm_struct *mm,
--					struct damon_region *r)
-+					struct damon_region *r,
-+					struct damon_ctx *ctx)
- {
--	r->sampling_addr = damon_rand(r->ar.start, r->ar.end);
-+	r->sampling_addr = damon_rand(ctx, r->ar.start, r->ar.end);
- 
- 	damon_va_mkold(mm, r->sampling_addr);
- }
-@@ -351,7 +352,7 @@ static void damon_va_prepare_access_checks(struct damon_ctx *ctx)
- 		if (!mm)
- 			continue;
- 		damon_for_each_region(r, t)
--			__damon_va_prepare_access_check(mm, r);
-+			__damon_va_prepare_access_check(mm, r, ctx);
- 		mmput(mm);
- 	}
- }
--- 
-2.43.0
 
+Thanks,
+SJ
+
+[...]
