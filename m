@@ -1,124 +1,133 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ED584949FF;
-	Wed,  6 May 2026 16:50:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C96E54611D7;
+	Wed,  6 May 2026 16:52:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778086204; cv=none; b=cITbw/TqBISK7CgKtUOwqbz2btJoztWFFkGmotXnjwl0iBYqyrJEaQJ9XUl82rK/P57xZ2rXQn7H/Hoiv7QQHFqkK0qhYJg4f7PC+g/pN6QD6r0MGzpBnqJo3elcU5yCXix2iMAY7yDgfjw+hvDm5+74ipx559NJUEA/j/LMT7s=
+	t=1778086336; cv=none; b=PDteNDrYbwqzsYTJmg2pOTvBbdqxQOns87m8brqIrRsrMiQ9H0DH7XQP9jOwuBvbvrr53XyUd1S8TWLkabl8lMnC+Dru+tVmVHyJe7/DqM3RVtNJnZroqfU9ba2DekZbe0ZXAdcQFWaDL4CHctiUmTzlSfutonGt+BkQg8qARvQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778086204; c=relaxed/simple;
-	bh=rHRcuoR5P9wwMkW6JidPfr71QvOcoQjlr6X4lJXWa+g=;
+	s=arc-20240116; t=1778086336; c=relaxed/simple;
+	bh=K4nQjgFaUsBDIegmqcpvVuKsj3WgCgpJNwE0AFKSpc4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Q2vhXY4RfbdZ0bK22IhDGA/sUGJrgU/uXFoIpTHe9Ee5P2ZiRefiyQ7OJX4PeEhGurZCXhXUqFTVRKR3zgxKlgYYgn6Ta4liYys+lZeXzWJIUtD9YRYghOe4/wYh42JLwHZeyVV7ZCQKVGmsjcUHCe/XX5vkeWFlq1Km0Hfd/Ds=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NPpp1J5C; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jsTCcVDrp8i06Wx52299RVxOfgt6Y/UmFNELXhlxDm5NmwFj1+wpwA6rKTfY8ncHSXlrg/ON5I1IqjvOaFUuk233D63iBwKpKFxtzdJ0k3KJL4xBrn71AiHLsPx7N6aLOjgteyJv4/Uq4AycqUVN+SO1Uq/wBStQitmYDBDXZUs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SyTJK0lY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NPpp1J5C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D411C2BCB0;
-	Wed,  6 May 2026 16:50:02 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SyTJK0lY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23E72C2BCB0;
+	Wed,  6 May 2026 16:52:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778086203;
-	bh=rHRcuoR5P9wwMkW6JidPfr71QvOcoQjlr6X4lJXWa+g=;
+	s=k20201202; t=1778086336;
+	bh=K4nQjgFaUsBDIegmqcpvVuKsj3WgCgpJNwE0AFKSpc4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NPpp1J5CI6zlHedNz/l8F/E/WEGdV58B3syJ4s0yMtK8J38ICYEVJ8f5tcseFuYpv
-	 Jdgy1CpE0AfqqK1gjmyaJjlJh0Y8cKGqkq8eF9cV6F/JC6F1QrRRxuyZXFDINVVifC
-	 MZm8axQMp2dSSDiyFoVvlPeATJWQzK7hHo7aVFZ/ReEn4XdE7KDceUpz2djvaankCf
-	 2200tlytNEge8I51Ni56YOgzeHPUmN120pyOZKQFvfF7kfIDLXSH8IaRYn104KpRC3
-	 fQUAnCMR14y7FX3g1m5le1vM3SS7W1qVL2Oi/KBcYuniMbyHGY9oxyFz6JyCqglTiU
-	 IxmQPBQqnv1MA==
+	b=SyTJK0lYQaenyRf6/TjqQSMzW8XUW7iG7+RbSFVeyhPTMjlHi5jtfPZaj5adKJKHX
+	 5y3vrVLk8zqzX0Uv5fM1hJYoM28xQqOuzGTUaAX8RHPnbhjQR2ANi+nWQnffDcvbDC
+	 XKyMIPb0OQbhtagaiYw0H3Y2eMZRsVB39IfKsxbsg+LD0ClAKo/9+41csmMVPq8ese
+	 5Uo8V1zsRwZU6bleDeJ49rz1Ntd7UlonwKUW1qRQ3L5L6OXt7f1MZLGCTNyXCY/xgL
+	 8fhAOSs0tC6TYBOOviDTG0LO6eynT1Bdz8cTOPQnwy6kiwPLqygz6Ds62KO7eUS+4V
+	 T1Pqf/iJp/dDw==
 From: SeongJae Park <sj@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	sashiko-bot@kernel.org
-Cc: SeongJae Park <sj@kernel.org>,
-	stable@vger.kernel.org,
-	damon@lists.linux.dev
-Subject: Re: [PATCH 6.18.y] mm/damon/core: disallow time-quota setting zero esz
-Date: Wed,  6 May 2026 09:49:58 -0700
-Message-ID: <20260506164959.10212-1-sj@kernel.org>
+To: stable@vger.kernel.org
+Cc: damon@lists.linux.dev,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	SeongJae Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.18.y v2] mm/damon/core: disallow time-quota setting zero esz
+Date: Wed,  6 May 2026 09:52:11 -0700
+Message-ID: <20260506165211.10410-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260504170607.529EBC2BCB8@smtp.kernel.org>
-References: 
+In-Reply-To: <20260506164959.10212-1-sj@kernel.org>
+References: <20260506164959.10212-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-TL; DR: This patch is broken, please drop.  I will send v2 soon, as a reply to
-this.  Please read below for details.
+When the throughput of a DAMOS scheme is very slow, DAMOS time quota can
+make the effective size quota smaller than damon_ctx->min_region_sz.  In
+the case, damos_apply_scheme() will skip applying the action, because the
+action is tried at region level, which requires >=min_region_sz size.
+That is, the quota is effectively exceeded for the quota charge window.
 
-On Mon, 04 May 2026 17:06:06 +0000 sashiko-bot@kernel.org wrote:
+Because no action will be applied, the total_charged_sz and
+total_charged_ns are also not updated.  damos_set_effective_quota() will
+try to update the effective size quota before starting the next charge
+window.  However, because the total_charged_sz and total_charged_ns have
+not updated, the throughput and effective size quota are also not changed.
+Since effective size quota can only be decreased, other effective size
+quota update factors including DAMOS quota goals and size quota cannot
+make any change, either.
 
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] The newly added `ctx` parameter in `damos_set_effective_quota()` is unused, and the function incorrectly uses the `DAMON_MIN_REGION` macro instead of `ctx->min_sz_region`.
-> --
-> 
-> commit 8afd735e4c663dcbcca090e71f37ad10c37c705a
-> Author: SeongJae Park <sj@kernel.org>
-> 
-> mm/damon/core: disallow time-quota setting zero esz
-> 
-> When DAMOS scheme throughput is very slow, the time quota can make the
-> effective size quota smaller than the context's minimum region size, causing
-> actions to be skipped. This commit attempts to fix the problem by ensuring
-> the effective size quota is at least the minimum region size.
-> 
-> Link: https://lore.kernel.org/20260407003153.79589-1-sj@kernel.org
-> Link: https://lore.kernel.org/20260405192504.110014-1-sj@kernel.org [1]
-> 
-> > diff --git a/mm/damon/core.c b/mm/damon/core.c
-> > --- a/mm/damon/core.c
-> > +++ b/mm/damon/core.c
-> > @@ -2124,7 +2124,8 @@ static unsigned long damos_quota_score(struct damos_quota *quota)
-> >  /*
-> >   * Called only if quota->ms, or quota->sz are set, or quota->goals is not empty
-> >   */
-> > -static void damos_set_effective_quota(struct damos_quota *quota)
-> > +static void damos_set_effective_quota(struct damos_quota *quota,
-> > +		struct damon_ctx *ctx)
-> >  {
-> >  	unsigned long throughput;
-> >  	unsigned long esz = ULONG_MAX;
-> 
-> [ ... ]
-> 
-> > @@ -2150,6 +2151,7 @@ static void damos_set_effective_quota(struct damos_quota *quota)
-> >  		else
-> >  			throughput = PAGE_SIZE * 1024;
-> >  		esz = min(throughput * quota->ms, esz);
-> > +		esz = max(DAMON_MIN_REGION, esz);
-> 
-> Should this be using ctx->min_sz_region instead of DAMON_MIN_REGION?
-> 
-> The commit message mentions bounding the effective size quota to
-> damon_ctx->min_region_sz, and the ctx parameter was successfully added
-> to the function signature. 
-> 
-> However, the ctx parameter is left unused here and the macro is used as a
-> hardcoded bound instead. Since ctx->min_sz_region can be dynamically
-> configured, can the effective size quota still fall below it with this
-> implementation?
+As a result, the scheme is unexpectedly deactivated until the user notices
+and mitigates the situation.  The users can mitigate this situation by
+changing the time quota online or re-install the scheme.  While the
+mitigation is somewhat straightforward, finding the situation would be
+challenging, because DAMON is not providing good observabilities for that.
+Even if such observability is provided, doing the additional monitoring
+and the mitigation is somewhat cumbersome and not aligned to the intention
+of the time quota.  The time quota was intended to help reduce the user's
+administration overhead.
 
-Correct.  Cherry-picking the original commit was causing build issue since the
-upstream commit is renamed field (min_region_sz).  When fixing the build issue
-I mistakenly assumed the field itslef is not yet introduced to 6.18 and using
-DAMON_MIN_REGION.  It should use the field that not yet renamed
-(min_sz_region), as Sashiko pointed out.
+Fix the problem by setting time quota-modified effective size quota be at
+least min_region_sz always.
 
-Greg, please drop this.  I will send a v2 soon, as a reply to this mail.
+The issue was discovered [1] by sashiko.
 
-> 
-> >  	}
-> >  
-> >  	if (quota->sz && quota->sz < esz)
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260504130127.25364-1-sj@kernel.org?part=1
-> 
+Link: https://lore.kernel.org/20260407003153.79589-1-sj@kernel.org
+Link: https://lore.kernel.org/20260405192504.110014-1-sj@kernel.org [1]
+Fixes: 1cd243030059 ("mm/damon/schemes: implement time quota")
+Signed-off-by: SeongJae Park <sj@kernel.org>
+Cc: <stable@vger.kernel.org> # 5.16.x
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+(cherry picked from commit 8bbde987c2b84f80da0853f739f0a920386f8b99)
+Signed-off-by: SeongJae Park <sj@kernel.org>
+---
+ mm/damon/core.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index 87b6c9c2d647..feec1b0c2bab 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -2124,7 +2124,8 @@ static unsigned long damos_quota_score(struct damos_quota *quota)
+ /*
+  * Called only if quota->ms, or quota->sz are set, or quota->goals is not empty
+  */
+-static void damos_set_effective_quota(struct damos_quota *quota)
++static void damos_set_effective_quota(struct damos_quota *quota,
++		struct damon_ctx *ctx)
+ {
+ 	unsigned long throughput;
+ 	unsigned long esz = ULONG_MAX;
+@@ -2150,6 +2151,7 @@ static void damos_set_effective_quota(struct damos_quota *quota)
+ 		else
+ 			throughput = PAGE_SIZE * 1024;
+ 		esz = min(throughput * quota->ms, esz);
++		esz = max(ctx->min_sz_region, esz);
+ 	}
+ 
+ 	if (quota->sz && quota->sz < esz)
+@@ -2186,7 +2188,7 @@ static void damos_adjust_quota(struct damon_ctx *c, struct damos *s)
+ 	/* First charge window */
+ 	if (!quota->total_charged_sz && !quota->charged_from) {
+ 		quota->charged_from = jiffies;
+-		damos_set_effective_quota(quota);
++		damos_set_effective_quota(quota, c);
+ 	}
+ 
+ 	/* New charge window starts */
+@@ -2199,7 +2201,7 @@ static void damos_adjust_quota(struct damon_ctx *c, struct damos *s)
+ 		quota->charged_sz = 0;
+ 		if (trace_damos_esz_enabled())
+ 			cached_esz = quota->esz;
+-		damos_set_effective_quota(quota);
++		damos_set_effective_quota(quota, c);
+ 		if (trace_damos_esz_enabled() && quota->esz != cached_esz)
+ 			damos_trace_esz(c, s, quota);
+ 	}
+-- 
+2.47.3
 
-Thanks,
-SJ
