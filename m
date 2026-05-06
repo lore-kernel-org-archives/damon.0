@@ -1,115 +1,305 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from out-172.mta1.migadu.com (out-172.mta1.migadu.com [95.215.58.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86FAF347516
-	for <damon@lists.linux.dev>; Wed,  6 May 2026 20:40:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 062B72F12B3
+	for <damon@lists.linux.dev>; Wed,  6 May 2026 23:41:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778100046; cv=none; b=JH/RsKPIicQk00FzknCUtuqqOyHYBF+NqMOZBpkGRJ4QifLXE3kF3d11jWvxaGXnQs2UB9VJKo64YZb9CDYqRDZVqhHM4HLtX/oKsbSqOF1PE5kIIaXW3EfdbQB5a5Rl/uOvNgKXZeA8jBm1HbL/H+GaUH9k6GLTMqPRkKi6ykE=
+	t=1778110892; cv=none; b=DpL4/SvgAwm7cHRIfrgitJS8KPG84NS+ClR4DCF/I/pV7m+2H6qEkxgRHQJXsUcUTTSF1/ilWdHu8zRp85mnI+5ntSceWipwRlvzcWU/NDqrEq8Rwn8iG3EVIE3evLcgy8N8V3nUtuzi/iIFK1+TMDhpdrYxjckS7GVccUJdnmc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778100046; c=relaxed/simple;
-	bh=1pxr5K78ZjRa9BxzqhoKuzPUViadJ/IdXUJ74skQGco=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=AGJpOIZcm5BdSrqS9lJPQd177+JT99/KKkxqT/wXngdG7gaQ87Ix9GEF6eEqfeegfSiiR6YringkWOupi52J45Y4UkuGg3kdEDoFkZudcCJtRlBK/Vh6/qcDa8pSto2FRlO1R1gNsLXtm7sFC9C4ZFsbO+iuUdxEntChfFkskNI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tLvzilJM; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1778110892; c=relaxed/simple;
+	bh=Z+zBaej/FyigjTpwQiVFttZWIC02vE9TUPUWpcRfUyg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=CBDtpBItD2RteqZGsOruxmK6pBU62pyz/gTWJgPvgwlK55o4n+7kFNCKHEh6kTs8/v+UotxPRDKdYwQAhtx8C27DfPQ6gQuXHgJK9yeYSIOXXqdT3FRnQm0GwE75sh2ijE1oOYjdcpdqLyzp101uhsRhw+dUItH86Ukt8k/0L1M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=lfDG9GYN; arc=none smtp.client-ip=95.215.58.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tLvzilJM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0C53C2BCB0;
-	Wed,  6 May 2026 20:40:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778100046;
-	bh=1pxr5K78ZjRa9BxzqhoKuzPUViadJ/IdXUJ74skQGco=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date:From;
-	b=tLvzilJMxbmoPavACuZPesNZBtFPh7Y9UHN/I3SEMn+aqFnTg6IJpjDwpe/3FGKQW
-	 BBvuUFW8HfIZjWrw1coJ/KlbAuxGW5mpNo7BVCxEimdmoeM4sj24GgsVsZ26CpDUhc
-	 wuGb0natnH0QgQmV1aWSv7GKzGFJ2kgI3wAwOpfSzkXoDtbfK6zicPetgtooawsu+u
-	 dxJ7MUA/UaeMXroN+79vjnhCUmu3UPKyN+Djkx/76RHx8IH68ida6Gg5FsBLJLycgi
-	 3Cq8aPry1CeHgx8PnoHB0L7/oOI4I69E2GbxEDfdKJ4AdLs7DHYMwNm/e6xRhlbOZu
-	 hJ2qwsd7A23yw==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH 6.18.y v2] mm/damon/core: disallow time-quota setting
- zero esz
-Reply-To: sashiko@lists.linux.dev
-To: "SeongJae Park" <sj@kernel.org>
-Cc: damon@lists.linux.dev
-In-Reply-To: <20260506165211.10410-1-sj@kernel.org>
-References: <20260506165211.10410-1-sj@kernel.org>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Wed, 06 May 2026 20:40:45 +0000
-Message-Id: <20260506204045.F0C53C2BCB0@smtp.kernel.org>
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="lfDG9GYN"
+Message-ID: <d053e344-7643-4504-b766-a04f2b4a6569@linux.dev>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1778110886;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=omVYK4AEUjq1NlglCNUDwEXuCT4cUd1OTwfgXBB1ZSY=;
+	b=lfDG9GYNsBLSSa6BBxZLdmHXeWhCEXgQa0PcMxEdMKqaf44VfYzoj51TdMh5CLlgL/pHl9
+	70zeg195xegmAVMnIUB/5/C8LzpYJy0JTa7/SPMYsOScxHKkap+zBlFJm2yfqHRqjLQunk
+	2f86OH0VHxznwzNhWWkyszxSrfL+JDw=
+Date: Thu, 7 May 2026 07:41:11 +0800
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Subject: Re: [PATCH v2] mm/damon: replace damon_rand() with a per-ctx lockless
+ PRNG
+To: SeongJae Park <sj@kernel.org>
+Cc: damon@lists.linux.dev, Jiayuan Chen <jiayuan.chen@shopee.com>,
+ Andrew Morton <akpm@linux-foundation.org>, Shu Anzai <shu17az@gmail.com>,
+ Quanmin Yan <yanquanmin1@huawei.com>, linux-mm@kvack.org,
+ linux-kernel@vger.kernel.org
+References: <20260506163701.6288-1-sj@kernel.org>
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Jiayuan Chen <jiayuan.chen@linux.dev>
+In-Reply-To: <20260506163701.6288-1-sj@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Migadu-Flow: FLOW_OUT
 
-Thank you for your contribution! Sashiko AI review found 1 potential issue(=
-s) to consider:
-- [High] Incomplete fix: DAMOS scheme can still unexpectedly deactivate if =
-using quota goals without a time quota.
---
+Hello SJ,
 
-commit ce7d104c8087fff14fb782b89848659312c204fa
-Author: SeongJae Park <sj@kernel.org>
-Subject: mm/damon/core: disallow time-quota setting zero esz
 
-This commit addresses an issue where DAMOS time quota can reduce the
-effective size quota below the minimum region size. This causes no actions
-to be applied, unexpectedly deactivating the scheme. The fix enforces a
-lower bound of min_sz_region on the effective size quota when a time quota
-is used.
+On 5/7/26 12:37 AM, SeongJae Park wrote:
+> Hello Jiayuan,
+>
+>
+> Thank you for posting this second version!
+>
+> On Tue,  5 May 2026 22:52:06 +0800 Jiayuan Chen <jiayuan.chen@linux.dev> wrote:
+>
+>> From: Jiayuan Chen <jiayuan.chen@shopee.com>
+>>
+>> damon_rand() on the sampling_addr hot path called
+>> get_random_u32_below(), which takes a local_lock_irqsave() around a
+>> per-CPU batched entropy pool and periodically refills it with
+>> ChaCha20.  At elevated nr_regions counts (20k+), the lock_acquire /
+>> local_lock pair plus __get_random_u32_below() dominate kdamond perf
+>> profiles.
+>>
+>> Replace the helper with a lockless lfsr113 generator (struct rnd_state)
+>> held per damon_ctx and seeded from get_random_u64() in damon_new_ctx().
+>> kdamond is the single consumer of a given ctx, so no synchronization
+>> is required.  Range mapping uses Lemire's (u64)rnd * span >> 32 on the
+>> fast path;
+> Could we add some links to the algorithm?  I found a blog [1] from Google and
+> guessing that is what you're saying, but I'm not really sure since I failed at
+> finding time to thoroughtly read it.
 
-Link: https://lore.kernel.org/20260407003153.79589-1-sj@kernel.org
-Link: https://lore.kernel.org/20260405192504.110014-1-sj@kernel.org [1]
 
-> diff --git a/mm/damon/core.c b/mm/damon/core.c
-> index 87b6c9c2d6471..feec1b0c2babe 100644
-> --- a/mm/damon/core.c
-> +++ b/mm/damon/core.c
-[ ... ]
-> @@ -2150,6 +2151,7 @@ static void damos_set_effective_quota(struct damos_=
-quota *quota)
->  		else
->  			throughput =3D PAGE_SIZE * 1024;
->  		esz =3D min(throughput * quota->ms, esz);
-> +		esz =3D max(ctx->min_sz_region, esz);
->  	}
-> =20
->  	if (quota->sz && quota->sz < esz)
 
-Could this still leave a case where the scheme is unexpectedly deactivated
-if quota goals are used without a time quota?
+The link covers a related family of techniques, but I don't
+think we need an external reference.  The pattern is just the
+multiply-shift fast path that the kernel already uses in
+__get_random_u32_below() (drivers/char/random.c) -- (u64)rnd *
+span >> 32 -- which the existing comment there calls "traditional
+reciprocal multiplication". Of course I can add simple comment like
 
-If a scheme is configured with quota goals (!list_empty(&quota->goals)) but
-no time quota (quota->ms =3D=3D 0), the bounds check added here inside the
-if (quota->ms) block is bypassed.
+"traditional reciprocal multiplication, similar as get_random_u32_below()"
 
-When the system metric over-achieves, the feedback loop in
-damon_feed_loop_next_input() can limit quota->esz_bp to its minimum of
-10000, which evaluates to an esz of 1:
+>> for spans larger than U32_MAX (only reachable on 64-bit) the
+>> slow path combines two u32 outputs and uses mul_u64_u64_shr() at 64-bit
+>> width.  On 32-bit the slow path is dead code and gets eliminated by
+>> the compiler.
+>>
+>> The new helper takes a ctx parameter; damon_split_regions_of() and
+>> the kunit tests that call it directly are updated accordingly.
+>>
+>> lfsr113 is a linear PRNG and MUST NOT be used for anything
+>> security-sensitive.  DAMON's sampling_addr is not exposed to userspace
+>> and is only consumed as a probe point for PTE accessed-bit sampling,
+>> so a non-cryptographic PRNG is appropriate here.
+>>
+>> Tested with paddr monitoring and max_nr_regions=20000: kdamond CPU
+>> usage reduced from ~72% to ~50% of one core.
+>>
+>> Link: https://lore.kernel.org/damon/20260426173346.86238-1-sj@kernel.org/T/#m4f1fd74112728f83a41511e394e8c3fef703039c
+> Why are you adding the above link?  It would be good to add description of the
+> link on the commit message.
+>
+> Other than that, commit message looks good to me.
 
-	if (!list_empty(&quota->goals)) {
-		unsigned long score =3D damos_quota_score(quota);
+Will move it to the patch changelog (after ---) instead of the
+commit message
 
-		quota->esz_bp =3D damon_feed_loop_next_input(
-				max(quota->esz_bp, 10000UL),
-				score);
-		esz =3D quota->esz_bp / 10000;
-	}
 
-During scheme application, damos_apply_scheme() calculates the size using
-ALIGN_DOWN(1 - 0, ctx->min_sz_region). Since min_sz_region is typically
-PAGE_SIZE, this evaluates to 0 and the action is skipped entirely.
+>> Cc: Jiayuan Chen <jiayuan.chen@linux.dev>
+>> Signed-off-by: Jiayuan Chen <jiayuan.chen@shopee.com>
+>> ---
+>>   include/linux/damon.h       | 27 +++++++++++++++++++++------
+>>   mm/damon/core.c             | 12 ++++++++----
+>>   mm/damon/paddr.c            |  8 ++++----
+>>   mm/damon/tests/core-kunit.h | 28 ++++++++++++++++++++++------
+>>   mm/damon/vaddr.c            |  7 ++++---
+>>   5 files changed, 59 insertions(+), 23 deletions(-)
+>>
+>> diff --git a/include/linux/damon.h b/include/linux/damon.h
+>> index f2cdb7c3f5e6..e16012a7f41a 100644
+>> --- a/include/linux/damon.h
+>> +++ b/include/linux/damon.h
+>> @@ -8,8 +8,10 @@
+>>   #ifndef _DAMON_H_
+>>   #define _DAMON_H_
+>>   
+>> +#include <linux/math64.h>
+>>   #include <linux/memcontrol.h>
+>>   #include <linux/mutex.h>
+>> +#include <linux/prandom.h>
+>>   #include <linux/time64.h>
+>>   #include <linux/types.h>
+>>   #include <linux/random.h>
+> Maybe we can remove random.h?
 
-Because the feedback loop increases esz_bp multiplicatively, it would take
-multiple charge windows for esz to grow from 1 back to min_sz_region after
-the score drops. During this period, the scheme applies 0 actions despite
-the score indicating they are needed.
+Right !
 
-Should the max(ctx->min_sz_region, esz) bound be applied outside the
-if (quota->ms) block to ensure any auto-tuned esz is properly bounded?
 
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260506165211.1041=
-0-1-sj@kernel.org?part=3D1
+>> @@ -19,12 +21,6 @@
+>>   /* Max priority score for DAMON-based operation schemes */
+>>   #define DAMOS_MAX_SCORE		(99)
+>>   
+>> -/* Get a random number in [l, r) */
+>> -static inline unsigned long damon_rand(unsigned long l, unsigned long r)
+>> -{
+>> -	return l + get_random_u32_below(r - l);
+>> -}
+>> -
+>>   /**
+>>    * struct damon_addr_range - Represents an address region of [@start, @end).
+>>    * @start:	Start address of the region (inclusive).
+>> @@ -843,8 +839,27 @@ struct damon_ctx {
+>>   
+>>   	struct list_head adaptive_targets;
+>>   	struct list_head schemes;
+>> +
+>> +	/* Per-ctx PRNG state for damon_rand(); kdamond is the sole consumer. */
+>> +	struct rnd_state rnd_state;
+>>   };
+>>   
+>> +/* Get a random number in [@l, @r) using @ctx's lockless PRNG. */
+>> +static inline unsigned long damon_rand(struct damon_ctx *ctx,
+>> +				       unsigned long l, unsigned long r)
+>> +{
+>> +	unsigned long span = r - l;
+>> +	u64 rnd;
+>> +
+>> +	if (span <= U32_MAX) {
+>> +		rnd = prandom_u32_state(&ctx->rnd_state);
+>> +		return l + (unsigned long)((rnd * span) >> 32);
+>> +	}
+>> +	rnd = ((u64)prandom_u32_state(&ctx->rnd_state) << 32) |
+>> +	      prandom_u32_state(&ctx->rnd_state);
+>> +	return l + mul_u64_u64_shr(rnd, span, 64);
+>> +}
+>> +
+> I was unable to find time to thoroughly read the link I found, or understand
+> the algorithm with only the code, so tested by myself like below.
+>
+> '''
+> $ cat ./foo.c
+> #include <stdio.h>
+> #include <stdbool.h>
+> #include <stdlib.h>
+> #include <stdint.h>
+>
+> int main(int argc, char *argv[])
+> {
+>          unsigned long span;
+>          int i;
+>
+>          if (argc != 2) {
+>                  printf("Usge: %s <span>\n", argv[0]);
+>                  return -1;
+>          }
+>          span = atoi(argv[1]);
+>
+>          for (i = 0; i < 1000; i++) {
+>                  uint64_t rnd = rand();
+>
+>                  printf("%lu\n", (uint64_t)((rnd * span) >> 32));
+>          }
+>          return 0;
+> }
+> $ gcc ./foo.c
+> $ ./a.out 10 | sort -n | uniq --count
+>      195 0
+>      194 1
+>      188 2
+>      223 3
+>      200 4
+> '''
+>
+> So I expected the program to generate number 0-9 randomly with similar
+> proportions.  But it is generating only numbers 0-4.  I confirmed doubling
+> 'span' value makes it work in my expected way.  Should we do that here, too?
+
+
+
+I wrote a kmod to verify.  The helper is a verbatim copy of
+damon_rand() from the patch:
+
+   static inline unsigned long damon_rand_test(struct rnd_state *state,
+                                               unsigned long l, unsigned 
+long r)
+   {
+           unsigned long span = r - l;
+           u64 rnd;
+
+           if (span <= U32_MAX) {
+                   rnd = prandom_u32_state(state);
+                   return l + (unsigned long)((rnd * span) >> 32);
+           }
+           rnd = ((u64)prandom_u32_state(state) << 32) |
+                 prandom_u32_state(state);
+           return l + mul_u64_u64_shr(rnd, span, 64);
+   }
+
+   static int __init damon_rand_test_init(void)
+   {
+           struct rnd_state state;
+           unsigned long counts[SPAN] = {0};
+           unsigned long i, v;
+           int j;
+
+           prandom_seed_state(&state, get_random_u64());
+
+           for (i = 0; i < ITERATIONS; i++) {
+                   v = damon_rand_test(&state, 0, SPAN);
+                   if (v >= SPAN) {
+                           pr_err("out of range: %lu\n", v);
+                           return -EINVAL;
+                   }
+                   counts[v]++;
+           }
+
+           pr_info("damon_rand_test: span=%lu iterations=%lu\n",
+                   SPAN, ITERATIONS);
+           for (j = 0; j < SPAN; j++)
+                   pr_info("damon_rand_test:   %d -> %lu\n", j, counts[j]);
+
+           return 0;
+   }
+
+dmesg output (span=10, 1000 iterations):
+
+   damon_rand_test: span=10 iterations=1000
+   damon_rand_test:   0 -> 99
+   damon_rand_test:   1 -> 107
+   damon_rand_test:   2 -> 79
+   damon_rand_test:   3 -> 94
+   damon_rand_test:   4 -> 97
+   damon_rand_test:   5 -> 97
+   damon_rand_test:   6 -> 94
+   damon_rand_test:   7 -> 100
+   damon_rand_test:   8 -> 114
+   damon_rand_test:   9 -> 119
+
+All 10 buckets get hits, roughly uniform.
+
+Looking into the usrspace test program, the issue is that libc rand()
+returns a value in [0, RAND_MAX].  On glibc RAND_MAX is
+2^31 - 1 (not 2^32 - 1), so the upper bit is missing and
+the multiply-shift only fills the lower half of the output
+range.  prandom_u32_state() returns a full u32 in [0, 2^32),
+so the in-kernel formula behaves correctly without doubling.
+
+> [...]
+>
+> Other than above, code changes look good to me.
+>
+> [1] https://lemire.me/blog/2024/08/17/faster-random-integer-generation-with-batching/
+>
+>
+> Thanks,
+> SJ
