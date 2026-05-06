@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C96E54611D7;
-	Wed,  6 May 2026 16:52:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C3FB4968F4
+	for <damon@lists.linux.dev>; Wed,  6 May 2026 16:59:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778086336; cv=none; b=PDteNDrYbwqzsYTJmg2pOTvBbdqxQOns87m8brqIrRsrMiQ9H0DH7XQP9jOwuBvbvrr53XyUd1S8TWLkabl8lMnC+Dru+tVmVHyJe7/DqM3RVtNJnZroqfU9ba2DekZbe0ZXAdcQFWaDL4CHctiUmTzlSfutonGt+BkQg8qARvQ=
+	t=1778086755; cv=none; b=S/brAiEYNkor4adsQujsSwP2US/saGVcQ+VAQlFzzGlFUawG/3UjXgijMRLyFocGlOl4Eq0cK7yUzh0NBbEr+xLAfru+vWRFjMEcL0vHBxaSCDGaCDEKgZD6hV7RsSPrTLLxc3EJg9S/WFGRm3Js7zAiCNDBsZ9xNB4fEgYJ0lU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778086336; c=relaxed/simple;
-	bh=K4nQjgFaUsBDIegmqcpvVuKsj3WgCgpJNwE0AFKSpc4=;
+	s=arc-20240116; t=1778086755; c=relaxed/simple;
+	bh=5QJhHKKhw5tUQJL73Mu9EmRj9Ess6xJQuctQNikIp0I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jsTCcVDrp8i06Wx52299RVxOfgt6Y/UmFNELXhlxDm5NmwFj1+wpwA6rKTfY8ncHSXlrg/ON5I1IqjvOaFUuk233D63iBwKpKFxtzdJ0k3KJL4xBrn71AiHLsPx7N6aLOjgteyJv4/Uq4AycqUVN+SO1Uq/wBStQitmYDBDXZUs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SyTJK0lY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YnlDM9qRT0F7ucnuf0Ue8GBVh2eD9jUPAzq3gTsDbNoeWN8vuPce7Q9Xk/15fpb9v+xGgFXl+Jtl/uNcEGlmLWzcHneHiGE1AZAjG7O6UB/CyRm5BmCh07meGRL46mQ+/E6VGy/8NqAuZZGtrGO/1YcPHpxu2KBJlPbO2i+8OVc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ovST5b9Y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SyTJK0lY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23E72C2BCB0;
-	Wed,  6 May 2026 16:52:14 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ovST5b9Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49371C2BCB0;
+	Wed,  6 May 2026 16:59:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778086336;
-	bh=K4nQjgFaUsBDIegmqcpvVuKsj3WgCgpJNwE0AFKSpc4=;
+	s=k20201202; t=1778086754;
+	bh=5QJhHKKhw5tUQJL73Mu9EmRj9Ess6xJQuctQNikIp0I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SyTJK0lYQaenyRf6/TjqQSMzW8XUW7iG7+RbSFVeyhPTMjlHi5jtfPZaj5adKJKHX
-	 5y3vrVLk8zqzX0Uv5fM1hJYoM28xQqOuzGTUaAX8RHPnbhjQR2ANi+nWQnffDcvbDC
-	 XKyMIPb0OQbhtagaiYw0H3Y2eMZRsVB39IfKsxbsg+LD0ClAKo/9+41csmMVPq8ese
-	 5Uo8V1zsRwZU6bleDeJ49rz1Ntd7UlonwKUW1qRQ3L5L6OXt7f1MZLGCTNyXCY/xgL
-	 8fhAOSs0tC6TYBOOviDTG0LO6eynT1Bdz8cTOPQnwy6kiwPLqygz6Ds62KO7eUS+4V
-	 T1Pqf/iJp/dDw==
+	b=ovST5b9YIjetMpYZsYDTtAZZTYwn7xEz02HxjrK3rWrQ6rndYoipqwnMdXQ2VDtKO
+	 cHUnyWHNeiUSRpOQqJTiUgopUJUdJTlbtEaKZ0mj+Ur9GtjMLxLYqtMxYBnvZ0lyxw
+	 JqcTWNcREzU7fqGJ9U+d/s926hVkyTILZlEWbFGsvzGiAZ2A3P3qoqrvEuAiGoGpiO
+	 FX7ZzV8PttRu3jrG76IrIEBB0ina0VTPp6JOFpYEwZUpmD+DehqFJc3nOfaN5oEqTh
+	 G5fon3sUi+/DRr+aGqZ+cpydVXfLtNDfN20jTEvp8cH7R+2Y7ZEPVLEOphQyteOECM
+	 2MxKgGhQnkHzg==
 From: SeongJae Park <sj@kernel.org>
-To: stable@vger.kernel.org
-Cc: damon@lists.linux.dev,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	SeongJae Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.18.y v2] mm/damon/core: disallow time-quota setting zero esz
-Date: Wed,  6 May 2026 09:52:11 -0700
-Message-ID: <20260506165211.10410-1-sj@kernel.org>
+To: sashiko-bot@kernel.org
+Cc: SeongJae Park <sj@kernel.org>,
+	damon@lists.linux.dev
+Subject: Re: [PATCH 6.12.y] mm/damon/core: disallow time-quota setting zero esz
+Date: Wed,  6 May 2026 09:59:10 -0700
+Message-ID: <20260506165910.10452-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260506164959.10212-1-sj@kernel.org>
-References: <20260506164959.10212-1-sj@kernel.org>
+In-Reply-To: <20260504180216.17E4AC2BCB8@smtp.kernel.org>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -46,88 +44,89 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-When the throughput of a DAMOS scheme is very slow, DAMOS time quota can
-make the effective size quota smaller than damon_ctx->min_region_sz.  In
-the case, damos_apply_scheme() will skip applying the action, because the
-action is tried at region level, which requires >=min_region_sz size.
-That is, the quota is effectively exceeded for the quota charge window.
+On Mon, 04 May 2026 18:02:15 +0000 sashiko-bot@kernel.org wrote:
 
-Because no action will be applied, the total_charged_sz and
-total_charged_ns are also not updated.  damos_set_effective_quota() will
-try to update the effective size quota before starting the next charge
-window.  However, because the total_charged_sz and total_charged_ns have
-not updated, the throughput and effective size quota are also not changed.
-Since effective size quota can only be decreased, other effective size
-quota update factors including DAMOS quota goals and size quota cannot
-make any change, either.
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [High] The patch masks a severe pre-existing integer overflow in the time quota throughput calculation, which permanently throttles the scheme instead of fixing the root cause.
+> - [Medium] The patch forces the effective size quota to be at least DAMON_MIN_REGION when a time quota is configured, breaking the ability of quota goals to intentionally pause the scheme.
 
-As a result, the scheme is unexpectedly deactivated until the user notices
-and mitigates the situation.  The users can mitigate this situation by
-changing the time quota online or re-install the scheme.  While the
-mitigation is somewhat straightforward, finding the situation would be
-challenging, because DAMON is not providing good observabilities for that.
-Even if such observability is provided, doing the additional monitoring
-and the mitigation is somewhat cumbersome and not aligned to the intention
-of the time quota.  The time quota was intended to help reduce the user's
-administration overhead.
+No issue for this patch.  Please read below for more details.
 
-Fix the problem by setting time quota-modified effective size quota be at
-least min_region_sz always.
+> --
+> 
+> commit 648433abd4b11fd3f4a77018e7e47105abac1ce7
+> Author: SeongJae Park <sj@kernel.org>
+> 
+> mm/damon/core: disallow time-quota setting zero esz
+> 
+> When the throughput of a DAMOS scheme is very slow, the DAMOS time quota can
+> make the effective size quota smaller than the minimum region size, preventing
+> actions from being applied. This commit fixes the issue by setting the time
+> quota-modified effective size quota to at least DAMON_MIN_REGION.
+> 
+> Link: https://lore.kernel.org/20260407003153.79589-1-sj@kernel.org
+> Link: https://lore.kernel.org/20260405192504.110014-1-sj@kernel.org [1]
+> 
+> > diff --git a/mm/damon/core.c b/mm/damon/core.c
+> > index ed2b750231810..69f8244324b36 100644
+> > --- a/mm/damon/core.c
+> > +++ b/mm/damon/core.c
+> > @@ -1577,6 +1577,7 @@ static void damos_set_effective_quota(struct damos_quota *quota)
+> >  			esz = min(throughput * quota->ms, esz);
+> >  		else
+> >  			esz = throughput * quota->ms;
+> > +		esz = max(DAMON_MIN_REGION, esz);
+> 
+> Does this cause a regression by breaking the ability of quota goals to
+> intentionally pause the scheme?
+> 
+> If a dynamic quota goal determines that actions should be paused and requests
+> an esz smaller than DAMON_MIN_REGION, this max() macro forcibly overrides it
+> and bumps the quota back to DAMON_MIN_REGION.
+> 
+> This causes the scheme to process at least 1 page per charge window instead
+> of fully pausing.
+> 
+> Could the max() boundary be applied exclusively to the throughput-derived quota
+> before it is min()'ed with the goal-derived quota?
 
-The issue was discovered [1] by sashiko.
+No, this should be fine.  This is not a very technically intended behavior, but
+letting DAMOS process one page per interval only when time quota is set should
+make no real issue.  Let's keep this behavior.
 
-Link: https://lore.kernel.org/20260407003153.79589-1-sj@kernel.org
-Link: https://lore.kernel.org/20260405192504.110014-1-sj@kernel.org [1]
-Fixes: 1cd243030059 ("mm/damon/schemes: implement time quota")
-Signed-off-by: SeongJae Park <sj@kernel.org>
-Cc: <stable@vger.kernel.org> # 5.16.x
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-(cherry picked from commit 8bbde987c2b84f80da0853f739f0a920386f8b99)
-Signed-off-by: SeongJae Park <sj@kernel.org>
----
- mm/damon/core.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+> 
+> Additionally, does this code mask a pre-existing integer overflow regression
+> in the throughput calculation?
+> 
+> Looking earlier in damos_set_effective_quota():
+> 
+> 	if (quota->total_charged_ns)
+> 		throughput = quota->total_charged_sz * 1000000 /
+> 			quota->total_charged_ns;
+> 
+> Because total_charged_sz and total_charged_ns are continuously accumulated
+> over the scheme's lifetime, total_charged_sz * 1000000 will overflow an
+> unsigned long on 64-bit systems after processing around 18.4 TB of memory.
+> 
+> When the numerator overflows, it wraps modulo 2^64 while total_charged_ns
+> continues to grow. This causes the calculated throughput to collapse to
+> near-zero.
+> 
+> Also, on 32-bit systems, total_charged_ns stores nanoseconds and overflows
+> a 32-bit unsigned long after 4.29 seconds of accumulated action time, causing
+> erratic throughput calculations.
+> 
+> By clamping the output to DAMON_MIN_REGION here, the patch seems to permanently
+> throttle the scheme to process exactly 1 page per charge window once the
+> overflow occurs, rather than fixing the underlying throughput collapse.
 
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index 87b6c9c2d647..feec1b0c2bab 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -2124,7 +2124,8 @@ static unsigned long damos_quota_score(struct damos_quota *quota)
- /*
-  * Called only if quota->ms, or quota->sz are set, or quota->goals is not empty
-  */
--static void damos_set_effective_quota(struct damos_quota *quota)
-+static void damos_set_effective_quota(struct damos_quota *quota,
-+		struct damon_ctx *ctx)
- {
- 	unsigned long throughput;
- 	unsigned long esz = ULONG_MAX;
-@@ -2150,6 +2151,7 @@ static void damos_set_effective_quota(struct damos_quota *quota)
- 		else
- 			throughput = PAGE_SIZE * 1024;
- 		esz = min(throughput * quota->ms, esz);
-+		esz = max(ctx->min_sz_region, esz);
- 	}
- 
- 	if (quota->sz && quota->sz < esz)
-@@ -2186,7 +2188,7 @@ static void damos_adjust_quota(struct damon_ctx *c, struct damos *s)
- 	/* First charge window */
- 	if (!quota->total_charged_sz && !quota->charged_from) {
- 		quota->charged_from = jiffies;
--		damos_set_effective_quota(quota);
-+		damos_set_effective_quota(quota, c);
- 	}
- 
- 	/* New charge window starts */
-@@ -2199,7 +2201,7 @@ static void damos_adjust_quota(struct damon_ctx *c, struct damos *s)
- 		quota->charged_sz = 0;
- 		if (trace_damos_esz_enabled())
- 			cached_esz = quota->esz;
--		damos_set_effective_quota(quota);
-+		damos_set_effective_quota(quota, c);
- 		if (trace_damos_esz_enabled() && quota->esz != cached_esz)
- 			damos_trace_esz(c, s, quota);
- 	}
--- 
-2.47.3
+Good catch, but not this patch's fault.  Refer to my previous answer [1] to a
+similar Sashiko question.
 
+[1] https://lore.kernel.org/20260505150012.29007-1-sj@kernel.org
+
+
+Thanks,
+SJ
+
+[...]
