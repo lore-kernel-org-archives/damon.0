@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B48C3290C3
-	for <damon@lists.linux.dev>; Thu,  7 May 2026 08:12:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFE1E3876D7;
+	Thu,  7 May 2026 08:28:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778141527; cv=none; b=rw5WWAHt3v+Cj8P9E9lsExdI+6q4DT4MlAK7E6mjsXtMQxOHt6QP2PYNwPHA8ZmML1qZ+wGOcnNjtGEIG8frV3Hr3URZlq+aHe1fyu0rWO2nAbsXcJXo7knxqxUJPhu2iW2l0CsDmrRs1Y4PemX9hRzpKWzUjEETAX2VkIjDx74=
+	t=1778142519; cv=none; b=BDH6iQ6Q7xhJKAQNPsOZs4sxSfN/uzkGd47A8l2QYIerTCFq2tDBAQuHy2txcSnCMit/yhsg3dI9JneHGH94u8Q6B0WIHd/SRRIGehPrYEW/a6MPJKzwdlmsLHlmQsRqMsnEZ0h8KoaGe0orQLxyugdlQu5H9giL4vcqnKQM2Jg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778141527; c=relaxed/simple;
-	bh=gaKQvJqox00dOkW34bSlircv/Eumfp1//0SDIQ4FrZw=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OakEnozik8YOJsZAJqd+B4gPE+ylxfqiLClFcPuolsevQYRJiwbCqzmdBlL7dmsHCTtpArXt/WPlsjhRFXPlZ89NQCb04sFwtoAZ8pjYBH9AfQZv7o4bJJ4zKxeySs3xsdupr+xtZVhSu1ACKWszcymnzO0dqMXpj1h2mRv1B8Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=F7oAd4NQ; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1778142519; c=relaxed/simple;
+	bh=xqpklrbR7ieOioYxjh3NJq3SfZb9K3qd09ghWsrlIVs=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Sf1IPchxBPZ1k8tR70y7KlaaP75pQs5AOONg9scTV1ayvUiyVqUxk0PdTiXTlF2kX2svxoS2OURGSSBoHt4u7835p11AFFg1Jrrv6qtC+MoqnrUsKdWzXPKPL0jO+9AwituIkzqoNdmud3gT58Wi+DyBBhS6nK8b3vXuRSdO2Uk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GiI/PiTn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="F7oAd4NQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8D75C2BCB8;
-	Thu,  7 May 2026 08:12:05 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GiI/PiTn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7AAEC2BCB8;
+	Thu,  7 May 2026 08:28:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778141526;
-	bh=gaKQvJqox00dOkW34bSlircv/Eumfp1//0SDIQ4FrZw=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F7oAd4NQKQhEKuGgjLTcMONJd07wFHq+5gmv+weADNhqG5WNJ/ELvgtf4Lert5kbg
-	 5Vle/wEKSSwuMcSe0tfIB+ZcGm9GeZPIeuaOwXMCynBo7GkrvlGyCL0WfdCXLMs8uE
-	 oh2MC1yS5hFDjXwu35UL2x922qznTX9u3Ec+A8GVhWj6rtyK98l6FoLTGlAhlRQs7Q
-	 Tyr5cD+fw/ye8874q6oxXict7sr+NfiOb8qf1b9XUThauH1MAIHVqv0FLnfpiQ2E1U
-	 lVz191qQrxx5JgvLEdeOo63XPwSuqv0ieCqjfrHTrs6/jZrvFiqAmI0fpYjha/fPXj
-	 q0o7L3YQVJayg==
+	s=k20201202; t=1778142519;
+	bh=xqpklrbR7ieOioYxjh3NJq3SfZb9K3qd09ghWsrlIVs=;
+	h=From:To:Cc:Subject:Date:From;
+	b=GiI/PiTnczInMT0qlaXy8HZLF9uhsvAR8n9NhWOlmwQ+7XLrc1TCmlcn0zBF14cOB
+	 IsmXOonkLVHJhjvvOD1iUMn9FtqSRQ3Vi4ZJ75xLhlB3XdvaprO6rxfqm1MGy4inE4
+	 9SKVt4RRQPWdFerd6z5uGbGqW2VbJtqkNggnuziQR1NA/hQ+NPoHJlR95HrYpRuxLV
+	 Mxh2uTqIo6+u4mLGZ1X9CKVcOJzhgBZU4LKftR+vS8L+Bs70Qnuz7+erAe/1oUVjW7
+	 F85KcBnH2vtk2P0QFZNNpBm5RtuoqVYppJkEScEvlMoVTnGoF2W1BBKezYg3cGTIyt
+	 s+zqLLRAHCVWw==
 From: SeongJae Park <sj@kernel.org>
-To: sashiko-bot@kernel.org
+To: damon@lists.linux.dev
 Cc: SeongJae Park <sj@kernel.org>,
-	damon@lists.linux.dev
-Subject: Re: [PATCH 6.18.y v2] mm/damon/core: disallow time-quota setting zero esz
-Date: Thu,  7 May 2026 01:12:02 -0700
-Message-ID: <20260507081202.11547-1-sj@kernel.org>
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org
+Subject: DAMON Beer/Coffee/Tea chat reminder for the week of 2026-05-11
+Date: Thu,  7 May 2026 01:28:34 -0700
+Message-ID: <20260507082834.12043-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260506204045.F0C53C2BCB0@smtp.kernel.org>
-References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -44,81 +42,40 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Wed, 06 May 2026 20:40:45 +0000 sashiko-bot@kernel.org wrote:
+Hello,
 
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] Incomplete fix: DAMOS scheme can still unexpectedly deactivate if using quota goals without a time quota.
 
-No valid issue.  Read below for details, please.
+This is yet another reminder of upcoming DAMON Beer/Coffee/Tea chats
+(https://docs.google.com/document/d/1v43Kcj3ly4CYqmAkMaZzLiM2GEnWfgdGbZAH3mi2vpM/edit?usp=sharing)
+for the week of 2026-05-11.
 
-> --
-> 
-> commit ce7d104c8087fff14fb782b89848659312c204fa
-> Author: SeongJae Park <sj@kernel.org>
-> Subject: mm/damon/core: disallow time-quota setting zero esz
-> 
-> This commit addresses an issue where DAMOS time quota can reduce the
-> effective size quota below the minimum region size. This causes no actions
-> to be applied, unexpectedly deactivating the scheme. The fix enforces a
-> lower bound of min_sz_region on the effective size quota when a time quota
-> is used.
-> 
-> Link: https://lore.kernel.org/20260407003153.79589-1-sj@kernel.org
-> Link: https://lore.kernel.org/20260405192504.110014-1-sj@kernel.org [1]
-> 
-> > diff --git a/mm/damon/core.c b/mm/damon/core.c
-> > index 87b6c9c2d6471..feec1b0c2babe 100644
-> > --- a/mm/damon/core.c
-> > +++ b/mm/damon/core.c
-> [ ... ]
-> > @@ -2150,6 +2151,7 @@ static void damos_set_effective_quota(struct damos_quota *quota)
-> >  		else
-> >  			throughput = PAGE_SIZE * 1024;
-> >  		esz = min(throughput * quota->ms, esz);
-> > +		esz = max(ctx->min_sz_region, esz);
-> >  	}
-> >  
-> >  	if (quota->sz && quota->sz < esz)
-> 
-> Could this still leave a case where the scheme is unexpectedly deactivated
-> if quota goals are used without a time quota?
-> 
-> If a scheme is configured with quota goals (!list_empty(&quota->goals)) but
-> no time quota (quota->ms == 0), the bounds check added here inside the
-> if (quota->ms) block is bypassed.
-> 
-> When the system metric over-achieves, the feedback loop in
-> damon_feed_loop_next_input() can limit quota->esz_bp to its minimum of
-> 10000, which evaluates to an esz of 1:
-> 
-> 	if (!list_empty(&quota->goals)) {
-> 		unsigned long score = damos_quota_score(quota);
-> 
-> 		quota->esz_bp = damon_feed_loop_next_input(
-> 				max(quota->esz_bp, 10000UL),
-> 				score);
-> 		esz = quota->esz_bp / 10000;
-> 	}
-> 
-> During scheme application, damos_apply_scheme() calculates the size using
-> ALIGN_DOWN(1 - 0, ctx->min_sz_region). Since min_sz_region is typically
-> PAGE_SIZE, this evaluates to 0 and the action is skipped entirely.
-> 
-> Because the feedback loop increases esz_bp multiplicatively, it would take
-> multiple charge windows for esz to grow from 1 back to min_sz_region after
-> the score drops. During this period, the scheme applies 0 actions despite
-> the score indicating they are needed.
+As usual, we have two time slots for meetings in the week.
 
-Yes, and this is the intended behavior.
+Next time slots including six virtual-only ones are as below.
 
-> 
-> Should the max(ctx->min_sz_region, esz) bound be applied outside the
-> if (quota->ms) block to ensure any auto-tuned esz is properly bounded?
+2026-05-11 (Mon) 18:00 PT (not yet reserved)
+2026-05-13 (Wed) 09:30 PT (not yet reserved)
+2026-05-25 (Mon) 18:00 PT (not yet reserved)
+2026-05-27 (Wed) 09:30 PT (not yet reserved)
+2026-06-08 (Mon) 18:00 PT (not yet reserved)
+2026-06-10 (Wed) 09:30 PT (not yet reserved)
 
-Because it is an intended behavior, no.
+Please reach out to me (sj@kernel.org or whatever) to reserve the
+not-yet-reserved time slots for your topics.  The reservation is made in a
+First-Come First-Served way, and I will send a Google Meet link to
+reservation-confirmed attendees.
+
+Please note that other time slots are also available on demands.
+
+Shared Calendar
+---------------
+
+You can get the schedule via this shared Google Calendar:
+https://calendar.google.com/calendar/u/0?cid=ZDIwOTA4YTMxNjc2MDQ3NTIyMmUzYTM5ZmQyM2U4NDA0ZGIwZjBiYmJlZGQxNDM0MmY4ZTRjOTE0NjdhZDRiY0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t
+
+You can also get the past and upcoming schedules via
+https://docs.google.com/document/d/1v43Kcj3ly4CYqmAkMaZzLiM2GEnWfgdGbZAH3mi2vpM/edit?usp=sharing
 
 
 Thanks,
 SJ
-
-[...]
