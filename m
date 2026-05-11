@@ -1,45 +1,72 @@
-Received: from canpmsgout10.his.huawei.com (canpmsgout10.his.huawei.com [113.46.200.225])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f45.google.com (mail-pj1-f45.google.com [209.85.216.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCD4E2D5922
-	for <damon@lists.linux.dev>; Mon, 11 May 2026 13:25:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=113.46.200.225
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8DD24C900F
+	for <damon@lists.linux.dev>; Mon, 11 May 2026 19:12:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778505959; cv=none; b=SJ7sAdnAqtve8Bgmh1mRaIIsflxrZaNyDwbwlBJNW2Vh9N3AR8fmHpKCaSefpsbUL+HKQWrp67RG4TwsZJZvJN++lwJu8ggJ9sIA9rNiQhP8OYXSmgCOb6SfgL7X5w2pBFGAoWTi778Mf3Prv6YZuKVVpUR2Coaz4qGo/4fnT3w=
+	t=1778526760; cv=none; b=IhCLLN5FM80x5di9krVr5KiE0dXbs3AqIHPSN4JyMWSExchjuqkWMlZoxabnCF5MRusesxMV5pzWIeE1nDQxRL9pXdp3XpBa6iDqCUa1I437Wtpr3C5dTMKESD++YJg9eQGTWao44cgWE2fPmYCSOGa7f/A0V4dbNkq+o/Uedpo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778505959; c=relaxed/simple;
-	bh=FcK6kCrjuo+SI9svb8HPfQ6QC+mBcgb42YzBc27KFDE=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=oIw5BEBvyuQXw2FpX6WdxrKYTo9kpPqG1XvRs28ZlpVa0Viy8iqy1mLxYDg1//QR+4OvYohKTrEJC+z13yExpj6JgYp5MGEzbhDBBCglj0MGyYraKAOVwsXPIVnddKMHugXISCAxZDSNtn/lNYRrLebedqv8eRkee87DTdlh4v8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b=ZGnz7jRA; arc=none smtp.client-ip=113.46.200.225
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
+	s=arc-20240116; t=1778526760; c=relaxed/simple;
+	bh=HMPkYA8vLk6BW/UOOQJOOgFaU8+AU+9MI2MmkTJJ3xY=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=U3OpvAPqlngw2YXpmcqZrUhoBZkberojW520Z33o91VO2Gy/e9bz+QUKqjiRdnaIvf+Odq75TXoXeGV1x2jJMPb6oJzLOocSz3CTNNhnG7rUfOLsqsvXe+mKPJBmm9UVBrFSnmUcC1xnq8VoN2Z8ioHu+2HOE4a2C3VEb5Ts7Lo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=pdchHRKO; arc=none smtp.client-ip=209.85.216.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b="ZGnz7jRA"
-dkim-signature: v=1; a=rsa-sha256; d=huawei.com; s=dkim;
-	c=relaxed/relaxed; q=dns/txt;
-	h=From;
-	bh=QCqNSdBVodDtZaVxA5hMlC2tXqXUhPFm0dsq5zYMjWc=;
-	b=ZGnz7jRAAPTlzzb9fRVcj7ipY9Wg8r5E6Ik/bn6mk4XiHWwIBtmCj92D1b9p7wxEhbmaBA2HU
-	094ZWjG7qyhduk0e5KvNJTTBtxF3Ccw9G6J7W2Jz5bTvt3rzzFfp9UtC03CpGSk+EgkiEHJ2G+Y
-	sGJ2lDK71bZKV/Mb2d63Wik=
-Received: from mail.maildlp.com (unknown [172.19.163.127])
-	by canpmsgout10.his.huawei.com (SkyGuard) with ESMTPS id 4gDgJm2Lfkz1K96p;
-	Mon, 11 May 2026 21:18:16 +0800 (CST)
-Received: from dggpemf100008.china.huawei.com (unknown [7.185.36.138])
-	by mail.maildlp.com (Postfix) with ESMTPS id E857A40572;
-	Mon, 11 May 2026 21:25:50 +0800 (CST)
-Received: from localhost.localdomain (10.50.87.83) by
- dggpemf100008.china.huawei.com (7.185.36.138) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.11; Mon, 11 May 2026 21:25:50 +0800
-From: Kefeng Wang <wangkefeng.wang@huawei.com>
-To: SeongJae Park <sj@kernel.org>, Andrew Morton <akpm@linux-foundation.org>
-CC: <damon@lists.linux.dev>, <linux-mm@kvack.org>, <sunnanyong@huawei.com>,
-	Kefeng Wang <wangkefeng.wang@huawei.com>
-Subject: [PATCH] mm/damon/vaddr: attempt per-vma lock during page table walk
-Date: Mon, 11 May 2026 21:25:46 +0800
-Message-ID: <20260511132546.1973270-1-wangkefeng.wang@huawei.com>
-X-Mailer: git-send-email 2.27.0
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="pdchHRKO"
+Received: by mail-pj1-f45.google.com with SMTP id 98e67ed59e1d1-367cbac9cb1so2609183a91.3
+        for <damon@lists.linux.dev>; Mon, 11 May 2026 12:12:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1778526758; x=1779131558; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=xArGq1W9dDFcfzmBReyO33DGfNzj4pxhNHfsKRuBCvQ=;
+        b=pdchHRKOKSH+mBHBR4AR1aPNy1yEMkh1yvdGewUTgmM5BI8sFBs9V6k6uerMdIbUX+
+         cljq0YYORzb4TUGP6Upi7g2AI/TMx+nIbzG0ZCD9Wsnadb/u+Lh8oGfQLeCBGgxAHfVx
+         dOTZ0H1ggwsM2oSXAg5gByE9FAXKG6KZYL/3gsXKVZd/JP1xyWnDy4tCSXTbGfpIeG6S
+         irA7ob8pJkrswL8p+GIbf3GCejvysvV2nnSjeQpnXiXJ8DjQcRz4wXJ7Ya4YAFayV3mF
+         qxtos7ikE8hFDmu8N8ahGwMYTHiFMN6M43DbyK6nYEGfys5Sq34GJZwJM2dK2hnDv4Wi
+         uY+g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1778526758; x=1779131558;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=xArGq1W9dDFcfzmBReyO33DGfNzj4pxhNHfsKRuBCvQ=;
+        b=mh4Kw/jmBuDl2kSoBa6CUxoSgPmoC5X6B5/+8CzyWZWkjt9CD9rRKV7Nc22GiuLbJ/
+         jQyYGi0rvxo+vn3ooA5Un+E+LrrkrGy4Ioy+uCPBLQPDj4xqdLD8YEpv42CSW3wvccnE
+         acwr3ifk+baTBMlkWQOi+vHWet/O2M4s9aa75llmAzn96YLth+Dl/NdvZD9DAH7SsJPA
+         fDsh53QvxcupjbYvUCgcSt4A9HRPFrC9+9IpdU4CLYH4hVlBOWm5ZuU0p2CKgpiFTyun
+         PGAv5YEwmvzMg2l/VOjIfFgo9VnQamDj7bc9+i7vpCeIEwlY+zOORi8U4D6iBlZKbnao
+         QPsA==
+X-Forwarded-Encrypted: i=1; AFNElJ8E0CGxQjq8dInCV87opN9PabQ1kCGXVAd76U/e9MsB9Y/gBP9bAjJtqEMl4L+YCkZ1ztE+Mw==@lists.linux.dev
+X-Gm-Message-State: AOJu0YwgPbG3hvEak1+UaTpkoC2S7GYH+MUNVJaSJJhu5EaXapsk0Oxc
+	mzfgjQs0eL2xHnadTxbo/XTqd/z3J1/MqMmjrBhNs+yu387djqQnpfNn
+X-Gm-Gg: Acq92OELEJR3YqrvbzhUTCnwwgavtFiRM2kNaf98XS0FhsPkMl1B57DerPCLtcLd5fa
+	kY+eLoQaFV+0pSUmpMhpQRjx/g+vMx7B3s5O+jbZMwC2nLYzD2SB8Y5v6J1ZICfPq/ISU+nhifB
+	1ST9VWhQGXUpRUbyRhxCHd0Gb/gi+TEzZ4mZdZnrV4yFXeeQM9+6qbKijYsWhcncdkBd9n83jPI
+	lJkoOkA/GdMMfEcu24jf/1HhlIy6atsTQyKbszoin9PWMokJYx74hdPFMmp3TEFcUV52bw0ugrq
+	8IDFNUmCjITbn9bO/zhUxvIi7cZMDlGetHAurzJYAaSkC5+QBf15wHt2V9s9YS+xBWGaoIy0KXq
+	BdV1j95THHxYujKABXuq4G+QvgIrT7uTV7i9WpFu8+YG6kQ3lqP35DMUD2impucrQHFquQL1XDM
+	RCGCWS/PHk39Hcc+jaLgf/jEDEDwR6RA==
+X-Received: by 2002:a17:90b:2248:b0:35f:b348:63e with SMTP id 98e67ed59e1d1-365abbe373cmr27047114a91.9.1778526758140;
+        Mon, 11 May 2026 12:12:38 -0700 (PDT)
+Received: from vini ([2401:4900:8fc8:73c6:dda6:576b:fa0d:f68e])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-367d629f3b5sm8686184a91.8.2026.05.11.12.12.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 11 May 2026 12:12:37 -0700 (PDT)
+From: Vineet Agarwal <agarwal.vineet2006@gmail.com>
+To: sj@kernel.org
+Cc: akpm@linux-foundation.org,
+	damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org,
+	Vineet Agarwal <agarwal.vineet2006@gmail.com>
+Subject: [RFC PATCH] mm/damon/sysfs-schemes: fix double increment of nr_regions
+Date: Tue, 12 May 2026 00:42:15 +0530
+Message-ID: <20260511191218.98881-1-agarwal.vineet2006@gmail.com>
+X-Mailer: git-send-email 2.54.0
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -47,156 +74,37 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: kwepems200002.china.huawei.com (7.221.188.68) To
- dggpemf100008.china.huawei.com (7.185.36.138)
 
-Currently, DAMON virtual address operations use mmap_read_lock
-during page table walks, which can cause unnecessary contention
-under high concurrency.
+damos_sysfs_populate_region_dir() increments
+sysfs_regions->nr_regions twice when adding a new region:
+once explicitly before kobject_init_and_add(), and once
+again through the post-increment used for the kobject name.
 
-Introduce damon_va_walk_page_range() to first attempt acquiring a
-per-vma lock. If the VMA is found and the range is fully contained
-within it, the page table walk proceeds with the per-vma lock
-instead of mmap_read_lock.
+As a result, nr_regions no longer matches the actual
+number of live regions, and region directory names skip
+numbers (1, 3, 5, ...).
 
-This optimization is particularly effective for damon_va_young()
-and damon_va_mkold(), which are frequently called and typically
-operate within a single VMA.
+Use the already incremented value for naming instead of
+incrementing nr_regions a second time.
 
-Signed-off-by: Kefeng Wang <wangkefeng.wang@huawei.com>
+Signed-off-by: Vineet Agarwal <agarwal.vineet2006@gmail.com>
 ---
- mm/damon/vaddr.c | 66 +++++++++++++++++++++++++++++-------------------
- 1 file changed, 40 insertions(+), 26 deletions(-)
+ mm/damon/sysfs-schemes.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/mm/damon/vaddr.c b/mm/damon/vaddr.c
-index dd5f2d7027ac..cd6c0c5f3655 100644
---- a/mm/damon/vaddr.c
-+++ b/mm/damon/vaddr.c
-@@ -237,6 +237,32 @@ static void damon_va_update(struct damon_ctx *ctx)
+diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
+index 622c3799db87..5d966ac86419 100644
+--- a/mm/damon/sysfs-schemes.c
++++ b/mm/damon/sysfs-schemes.c
+@@ -2998,7 +2998,7 @@ void damos_sysfs_populate_region_dir(struct damon_sysfs_schemes *sysfs_schemes,
+ 	if (kobject_init_and_add(&region->kobj,
+ 				&damon_sysfs_scheme_region_ktype,
+ 				&sysfs_regions->kobj, "%d",
+-				sysfs_regions->nr_regions++)) {
++				sysfs_regions->nr_regions)) {
+ 		kobject_put(&region->kobj);
  	}
  }
- 
-+static void damon_va_walk_page_range(struct mm_struct *mm, unsigned long start,
-+		unsigned long end, struct mm_walk_ops *ops, void *private)
-+{
-+	struct vm_area_struct *vma;
-+
-+	vma = lock_vma_under_rcu(mm, start);
-+	if (!vma)
-+		goto lock_mmap;
-+
-+	if (end > vma->vm_end) {
-+		vma_end_read(vma);
-+		goto lock_mmap;
-+	}
-+
-+	ops->walk_lock = PGWALK_VMA_RDLOCK_VERIFY;
-+	walk_page_range_vma(vma, start, end, ops, private);
-+	vma_end_read(vma);
-+	return;
-+
-+lock_mmap:
-+	mmap_read_lock(mm);
-+	ops->walk_lock = PGWALK_RDLOCK;
-+	walk_page_range(mm, start, end, ops, private);
-+	mmap_read_unlock(mm);
-+}
-+
- static int damon_mkold_pmd_entry(pmd_t *pmd, unsigned long addr,
- 		unsigned long next, struct mm_walk *walk)
- {
-@@ -315,17 +341,14 @@ static int damon_mkold_hugetlb_entry(pte_t *pte, unsigned long hmask,
- #define damon_mkold_hugetlb_entry NULL
- #endif /* CONFIG_HUGETLB_PAGE */
- 
--static const struct mm_walk_ops damon_mkold_ops = {
--	.pmd_entry = damon_mkold_pmd_entry,
--	.hugetlb_entry = damon_mkold_hugetlb_entry,
--	.walk_lock = PGWALK_RDLOCK,
--};
--
- static void damon_va_mkold(struct mm_struct *mm, unsigned long addr)
- {
--	mmap_read_lock(mm);
--	walk_page_range(mm, addr, addr + 1, &damon_mkold_ops, NULL);
--	mmap_read_unlock(mm);
-+	struct mm_walk_ops damon_mkold_ops = {
-+		.pmd_entry = damon_mkold_pmd_entry,
-+		.hugetlb_entry = damon_mkold_hugetlb_entry,
-+	};
-+
-+	damon_va_walk_page_range(mm, addr, addr + 1, &damon_mkold_ops, NULL);
- }
- 
- /*
-@@ -444,12 +467,6 @@ static int damon_young_hugetlb_entry(pte_t *pte, unsigned long hmask,
- #define damon_young_hugetlb_entry NULL
- #endif /* CONFIG_HUGETLB_PAGE */
- 
--static const struct mm_walk_ops damon_young_ops = {
--	.pmd_entry = damon_young_pmd_entry,
--	.hugetlb_entry = damon_young_hugetlb_entry,
--	.walk_lock = PGWALK_RDLOCK,
--};
--
- static bool damon_va_young(struct mm_struct *mm, unsigned long addr,
- 		unsigned long *folio_sz)
- {
-@@ -458,9 +475,12 @@ static bool damon_va_young(struct mm_struct *mm, unsigned long addr,
- 		.young = false,
- 	};
- 
--	mmap_read_lock(mm);
--	walk_page_range(mm, addr, addr + 1, &damon_young_ops, &arg);
--	mmap_read_unlock(mm);
-+	struct mm_walk_ops damon_young_ops = {
-+		.pmd_entry = damon_young_pmd_entry,
-+		.hugetlb_entry = damon_young_hugetlb_entry,
-+	};
-+
-+	damon_va_walk_page_range(mm, addr, addr + 1, &damon_young_ops, &arg);
- 	return arg.young;
- }
- 
-@@ -749,7 +769,6 @@ static unsigned long damos_va_migrate(struct damon_target *target,
- 	struct mm_walk_ops walk_ops = {
- 		.pmd_entry = damos_va_migrate_pmd_entry,
- 		.pte_entry = NULL,
--		.walk_lock = PGWALK_RDLOCK,
- 	};
- 
- 	use_target_nid = dests->nr_dests == 0;
-@@ -767,9 +786,7 @@ static unsigned long damos_va_migrate(struct damon_target *target,
- 	if (!mm)
- 		goto free_lists;
- 
--	mmap_read_lock(mm);
--	walk_page_range(mm, r->ar.start, r->ar.end, &walk_ops, &priv);
--	mmap_read_unlock(mm);
-+	damon_va_walk_page_range(mm, r->ar.start, r->ar.end, &walk_ops, &priv);
- 	mmput(mm);
- 
- 	for (int i = 0; i < nr_dests; i++) {
-@@ -861,7 +878,6 @@ static unsigned long damos_va_stat(struct damon_target *target,
- 	struct mm_struct *mm;
- 	struct mm_walk_ops walk_ops = {
- 		.pmd_entry = damos_va_stat_pmd_entry,
--		.walk_lock = PGWALK_RDLOCK,
- 	};
- 
- 	priv.scheme = s;
-@@ -874,9 +890,7 @@ static unsigned long damos_va_stat(struct damon_target *target,
- 	if (!mm)
- 		return 0;
- 
--	mmap_read_lock(mm);
--	walk_page_range(mm, r->ar.start, r->ar.end, &walk_ops, &priv);
--	mmap_read_unlock(mm);
-+	damon_va_walk_page_range(mm, r->ar.start, r->ar.end, &walk_ops, &priv);
- 	mmput(mm);
- 	return 0;
- }
 -- 
-2.27.0
+2.54.0
 
