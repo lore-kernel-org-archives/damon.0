@@ -1,45 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75C1E3C5835;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0E1F3C585F;
 	Tue, 12 May 2026 14:37:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778596624; cv=none; b=FT3OzWTQGIjzslA12iJQ9Yv5LnLm7t5SrfxOpB1Ktmvk0KeXbOe50iWK+XCrlXlPGKpKrh0qInGronpLKZu1urS+JmKJWH4zOlZMJHGEKFjDpLmigitGYUhEtq0LjpiPbOBeJK/skDU+7Qw7tPCGfoA5FSKXeNojMSd0GvHbEig=
+	t=1778596625; cv=none; b=J9ijE1NHsqGZ5ZKLbVGB0GQgNn473V99j8/Ag+C3zFEPPKDrsBoI9d6Cr0fY+2Yc8q243DJnBTZBwXjVh8qfQNTsyXWXMKleGBGgvXPHGEkoDmmHbNphtd5dr1fm7kLqRKPxinODgfXKUcTDng6E0CSiUjag+Gu1KXeiV0pL/0U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778596624; c=relaxed/simple;
-	bh=kbCsWU0mjnq37gAs52jkDtzKMzPSB8TXwCEtlj7DRH8=;
+	s=arc-20240116; t=1778596625; c=relaxed/simple;
+	bh=EauBIBzKjl6rFCRlEGSo/s6NrgLL9HoVh8TIqUsq9vs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MfIbdf//rwY5ZDvhqPgYsHZi1qe0XbYAaIGt3f46ipO9/zqLUeqrVPddjdC3AHsN+bzCQ7l9rG7EDNQhqFyffetcbS6TNbmGJc+n6GLJLJ0637eCx6lFuyfDYxV98QgTzIDnXz0dkNXt+E8jRqfZxKXtU6fUiDXYU/t/g+iELiM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=spSgCZBl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=e7B2HFG3J2/cgks2nwRf2K/vQ59f0iMwk810ss7/HG1CVf4dWeXD7/1vJWlGOr5OyBzZqazglo8aqGdu01C5UEwMAmWm/KoYYUa/LWmYUmiOVETcNX4EB4+OlE3NNHXom15c28F0WlwnJLvwSLsyfpQCKX1byyV6uYXDc8pDmys=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mFJZVSu0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="spSgCZBl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF347C2BCF7;
-	Tue, 12 May 2026 14:37:03 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mFJZVSu0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 833EAC2BCF5;
+	Tue, 12 May 2026 14:37:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1778596624;
-	bh=kbCsWU0mjnq37gAs52jkDtzKMzPSB8TXwCEtlj7DRH8=;
+	bh=EauBIBzKjl6rFCRlEGSo/s6NrgLL9HoVh8TIqUsq9vs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=spSgCZBlv4Hw/H2wyZrkqs9weh8VNtljwJlInhjXMHp673abph/08TnrZHosupZl5
-	 HRXgvXApLzfbzFhDrDX+TT6poh+nVz7hMM/IpOkO2h690KQqsPfJ+xoKDUB1Yf3uqI
-	 zuU3zFXMDtcn1WU6O17k7dy3Liz3xcCFiiACcUWoPzZvf6arPSEkYuIQVQrq6NY0D/
-	 5IbhcHhGzsb3QZv4BzpIPxPc4dORLDFo8kW066JPz9i08qlhJSObnhefma5HAVFVT/
-	 iFbVG60r0Dznc2myihg9RO1m/LiOJRBvM+iuN69Kn5nMqxiwlYiJBJ0zZWSmxGU0ip
-	 F1rH8Cj/gsphw==
+	b=mFJZVSu0GDYBqvaQBc63EdHHe5GXKyEp9CdmpKL/PB+nApIyvzw5Akctb1w/Xy8r6
+	 7A9I+VMxFFCc0HCWCPzxBkxT+ypJbAyd4C4ZM2OCw2974pDynugyPPuJ4E2xk7kTSG
+	 JPBfu/WULl77WKdP98o29HR/uQE+xif1sDGa5YgSC4+LeH3mPsLs/Z6QbNKcjxcDOI
+	 zHVpnKzLQiCdkOMkoAJSmasVHliI9sSOhwng+UzFBfctZl0fK9isp6uFl5fZRiiKNd
+	 9yxSrrGvUv5g/zH/+oOAcths8s6xjXowv+QZPKAbDdcCb/ngDOkzJyotlfts3w0aJf
+	 VgYJAXwCRY6Cg==
 From: SeongJae Park <sj@kernel.org>
 To: 
 Cc: SeongJae Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
+	Shuah Khan <shuah@kernel.org>,
 	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org,
-	linux-trace-kernel@vger.kernel.org
-Subject: [RFC PATCH v2 18/28] mm/damon: trace probe_hits
-Date: Tue, 12 May 2026 07:36:33 -0700
-Message-ID: <20260512143645.113201-19-sj@kernel.org>
+	linux-kselftest@vger.kernel.org,
+	linux-mm@kvack.org
+Subject: [RFC PATCH v2 19/28] selftests/damon/sysfs.sh: test probes dir
+Date: Tue, 12 May 2026 07:36:34 -0700
+Message-ID: <20260512143645.113201-20-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260512143645.113201-1-sj@kernel.org>
 References: <20260512143645.113201-1-sj@kernel.org>
@@ -51,86 +48,76 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Introduce a new tracepoint for exposing the per-region per-probe
-positive sample count via tracefs.
+Add simple existence tests for data probes sysfs directories and files.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- include/trace/events/damon.h | 36 ++++++++++++++++++++++++++++++++++++
- mm/damon/core.c              |  7 +++++++
- 2 files changed, 43 insertions(+)
+ tools/testing/selftests/damon/sysfs.sh | 48 ++++++++++++++++++++++++++
+ 1 file changed, 48 insertions(+)
 
-diff --git a/include/trace/events/damon.h b/include/trace/events/damon.h
-index 7e25f4469b81b..d7b94c7640217 100644
---- a/include/trace/events/damon.h
-+++ b/include/trace/events/damon.h
-@@ -130,6 +130,42 @@ TRACE_EVENT(damon_monitor_intervals_tune,
- 	TP_printk("sample_us=%lu", __entry->sample_us)
- );
+diff --git a/tools/testing/selftests/damon/sysfs.sh b/tools/testing/selftests/damon/sysfs.sh
+index 83e3b7f63d81c..1ac3e2ce8e448 100755
+--- a/tools/testing/selftests/damon/sysfs.sh
++++ b/tools/testing/selftests/damon/sysfs.sh
+@@ -291,11 +291,59 @@ test_intervals()
+ 	ensure_file "$intervals_dir/update_us" "exist" "600"
+ }
  
-+TRACE_EVENT(damon_aggregated_v2,
++test_damon_filter()
++{
++	damon_filter_dir=$1
++	ensure_file "$damon_filter_dir/type" "exist" "600"
++	ensure_write_succ "$damon_filter_dir/type" "anon" "valid input"
++	ensure_write_fail "$damon_filter_dir/type" "foo" "invalid input"
++	ensure_file "$damon_filter_dir/matching" "exist" "600"
++	ensure_file "$damon_filter_dir/allow" "exist" "600"
++}
 +
-+	TP_PROTO(unsigned int target_id, struct damon_region *r,
-+		unsigned int nr_regions, unsigned int nr_probes),
++test_damon_filters()
++{
++	filters_dir=$1
++	ensure_dir "$filters_dir" "exist"
++	ensure_file "$filters_dir/nr_filters" "exist" "600"
++	ensure_write_succ  "$filters_dir/nr_filters" "1" "valid input"
++	test_damon_filter "$filters_dir/0"
 +
-+	TP_ARGS(target_id, r, nr_regions, nr_probes),
++	ensure_write_succ  "$filters_dir/nr_filters" "2" "valid input"
++	test_damon_filter "$filters_dir/0"
++	test_damon_filter "$filters_dir/1"
 +
-+	TP_STRUCT__entry(
-+		__field(unsigned long, target_id)
-+		__field(unsigned long, start)
-+		__field(unsigned long, end)
-+		__field(unsigned int, nr_regions)
-+		__field(unsigned int, nr_accesses)
-+		__field(unsigned int, age)
-+		__dynamic_array(unsigned char, probe_hits, nr_probes)
-+	),
++	ensure_write_succ "$filters_dir/nr_filters" "0" "valid input"
++	ensure_dir "$filters_dir/0" "not_exist"
++	ensure_dir "$filters_dir/1" "not_exist"
++}
 +
-+	TP_fast_assign(
-+		__entry->target_id = target_id;
-+		__entry->start = r->ar.start;
-+		__entry->end = r->ar.end;
-+		__entry->nr_regions = nr_regions;
-+		__entry->nr_accesses = r->nr_accesses;
-+		__entry->age = r->age;
-+		memcpy(__get_dynamic_array(probe_hits), r->probe_hits,
-+			sizeof(*r->probe_hits) * nr_probes);
-+	),
++test_probe()
++{
++	probe_dir=$1
++	ensure_dir "$probe_dir" "exist"
++	test_damon_filters "$probe_dir/filters"
++}
 +
-+	TP_printk("target_id=%lu nr_regions=%u %lu-%lu: %u %u probe_hits=%s",
-+			__entry->target_id, __entry->nr_regions,
-+			__entry->start, __entry->end,
-+			__entry->nr_accesses, __entry->age,
-+			__print_hex(__get_dynamic_array(probe_hits),
-+				__get_dynamic_array_len(probe_hits)))
-+);
++test_probes()
++{
++	probes_dir=$1
++	ensure_dir "$probes_dir" "exist"
++	ensure_file "$probes_dir/nr_probes" "exist" "600"
 +
- TRACE_EVENT(damon_aggregated,
- 
- 	TP_PROTO(unsigned int target_id, struct damon_region *r,
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index fe6c789f2cecb..14b15c9876516 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -1905,6 +1905,11 @@ static void kdamond_reset_aggregated(struct damon_ctx *c)
++	ensure_write_succ "$probes_dir/nr_probes" "1" "valid input"
++	test_probe "$probes_dir/0"
++
++	ensure_write_succ "$probes_dir/nr_probes" "0" "valid input"
++	ensure_dir "$probes_dir/0" "not_exist"
++}
++
+ test_monitoring_attrs()
  {
- 	struct damon_target *t;
- 	unsigned int ti = 0;	/* target's index */
-+	unsigned int nr_probes = 0;
-+	struct damon_probe *probe;
-+
-+	damon_for_each_probe(probe, c)
-+		nr_probes++;
+ 	monitoring_attrs_dir=$1
+ 	ensure_dir "$monitoring_attrs_dir" "exist"
+ 	test_intervals "$monitoring_attrs_dir/intervals"
++	test_probes "$monitoring_attrs_dir/probes"
+ 	test_range "$monitoring_attrs_dir/nr_regions"
+ }
  
- 	damon_for_each_target(t, c) {
- 		struct damon_region *r;
-@@ -1913,6 +1918,8 @@ static void kdamond_reset_aggregated(struct damon_ctx *c)
- 			int i;
- 
- 			trace_damon_aggregated(ti, r, damon_nr_regions(t));
-+			trace_damon_aggregated_v2(ti, r, damon_nr_regions(t),
-+					nr_probes);
- 			damon_warn_fix_nr_accesses_corruption(r);
- 			r->last_nr_accesses = r->nr_accesses;
- 			r->nr_accesses = 0;
 -- 
 2.47.3
