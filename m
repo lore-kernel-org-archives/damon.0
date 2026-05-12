@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 728CF1DDC2B;
-	Tue, 12 May 2026 00:45:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F349E13635E
+	for <damon@lists.linux.dev>; Tue, 12 May 2026 01:31:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778546747; cv=none; b=j+KHRDeh9ZHvFJMeyj4o6s9wLSSNecigoG/QIq+sGlDBX2NonccTie6lOHsnClZAMDAx90TVCXHZUqcvNt9PA9XDx2WhfpGlEGcBwrapQiGBBKl2qIxJcNv9DcER+Lp2Sooofp1n5Bri/u9F3NfdYhlpi3pH3tYHg76StkN12Lw=
+	t=1778549480; cv=none; b=LaPf3Fp5ZHro5/KzoIKMC0smKElVff2naJEPVyIAcKPCYPG76vHmIdZAdKZzKCVZHXVV72X1OM+JMYebuRAjLnqSSvX9IY+lsYLKuMiXkea8kSQfeublrkeCqlhVTc5em2SHH7GVZCtjd40GqlCtiwgomhGj9EEHyrzvZU1T6tM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778546747; c=relaxed/simple;
-	bh=l0rOYVdVwkAQa2ds+z/L0NfyKVSciLpCRPIyVzLiN+I=;
+	s=arc-20240116; t=1778549480; c=relaxed/simple;
+	bh=LwUaYMXJHdUhH6+TL9aRCB1P0uKI2mUXjW0mb49u3oM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nqv74lq4J7rrGRy0x6Rg7tVutW+5MWtlTjzEQyI16Q5jJ77df0G5OxNxQxqbbvL2PrM5ik2Dtk4lHSgEI/5tp8qMSmSdFungTtbeK6WrFbbiuwoEqoaY6EJJ0gLWw7PaY5MXyIsbrBFDnqXvA3/SX/mzbYfD/Z1plGoF627C+UQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=J8fOvIZl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Njgd47dRl6qfefbvc4L/+qd3tq80g1I1AiO74W6IonKo+sRxPYymxmvGuvS6dWcRrqMHl6FuXR8L9dJEhFwrCh/6f0QYiHo8s4zJjF0SkxVFHIPkOKrbsyBEoBi4exnTTRmC7Bn7amUmZH5G7InrlDknSbexW0dn+tUfsmy2bbU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bUFTzikz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="J8fOvIZl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB6CAC2BCF5;
-	Tue, 12 May 2026 00:45:46 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bUFTzikz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5664DC2BCB0;
+	Tue, 12 May 2026 01:31:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778546747;
-	bh=l0rOYVdVwkAQa2ds+z/L0NfyKVSciLpCRPIyVzLiN+I=;
+	s=k20201202; t=1778549479;
+	bh=LwUaYMXJHdUhH6+TL9aRCB1P0uKI2mUXjW0mb49u3oM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J8fOvIZlT5vtfNXyCi83liTZNBbnECVYhGQO0pdwan7M5kkoDNF6vzpa2PmrMK6m1
-	 t+Gb/qkpEfi7z56lBXQh2Ofo/K9Ozt4iNqJ/zzTW6BZan5CZ/DHfUJ09mGzPOB6Ert
-	 CdFGjuSG7CgSXgRQhdvdNz/ooaWqJWNJtQlv3tLFqbzx5j+Gwiz0EmBGQpvllLNcOi
-	 sJX+l4A8vLsN8x77YrEz5cxRAx75nvNTXLlgh7KhRF6cHQOvD0tXt7Lz3xxs1wI7wD
-	 If+dtdVccBkuuqg5r+d0BkqJZm5GSMewlhprbW9eKYOlIx0UyymFlneLID4AeVyNll
-	 DCiYNuF33cdHw==
+	b=bUFTzikzItrtUlko3n6C3LvCjx/JvnCMWkKLdlem/PpTyZE/FGS+Nq2o5AY3rDAaa
+	 NgBo0S5Ih821wBlAQ5L4oaL5YIDF1i6kg4l2I/3K1EDCatj7I95X6A/FAo2ubM3hoH
+	 CbD/zhbR7PNelKLBIPEFyzZ8Rgylqp0pK+eTMB768ZxsTNRDM9pubG2GRDg6d9juRP
+	 IhZmXgQDFj4ojcYW1b68Z7OBPjVZ5fNKM//OTGpvLcRWVkScwvFxVJ7SR/A+vqKA67
+	 B1n8xt2jxqKbMtUYsOhRjeFjcivub1YFVotx3p8udVAqMOLeR66IuhxYW7nDYShuSu
+	 KpeJ2ZZvtoZAg==
 From: SeongJae Park <sj@kernel.org>
-To: Vineet Agarwal <agarwal.vineet2006@gmail.com>
+To: Kefeng Wang <wangkefeng.wang@huawei.com>
 Cc: SeongJae Park <sj@kernel.org>,
-	akpm@linux-foundation.org,
+	Andrew Morton <akpm@linux-foundation.org>,
 	damon@lists.linux.dev,
 	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [RFC PATCH] mm/damon/sysfs-schemes: fix double increment of nr_regions
-Date: Mon, 11 May 2026 17:45:37 -0700
-Message-ID: <20260512004538.1005-1-sj@kernel.org>
+	sunnanyong@huawei.com
+Subject: Re: [PATCH] mm/damon/vaddr: attempt per-vma lock during page table walk
+Date: Mon, 11 May 2026 18:31:15 -0700
+Message-ID: <20260512013116.80435-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260511191218.98881-1-agarwal.vineet2006@gmail.com>
+In-Reply-To: <20260511132546.1973270-1-wangkefeng.wang@huawei.com>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -47,65 +47,28 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Tue, 12 May 2026 00:42:15 +0530 Vineet Agarwal <agarwal.vineet2006@gmail.com> wrote:
+On Mon, 11 May 2026 21:25:46 +0800 Kefeng Wang <wangkefeng.wang@huawei.com> wrote:
 
-> damos_sysfs_populate_region_dir() increments
-> sysfs_regions->nr_regions twice when adding a new region:
-> once explicitly before kobject_init_and_add(), and once
-> again through the post-increment used for the kobject name.
+> Currently, DAMON virtual address operations use mmap_read_lock
+> during page table walks, which can cause unnecessary contention
+> under high concurrency.
+> 
+> Introduce damon_va_walk_page_range() to first attempt acquiring a
+> per-vma lock. If the VMA is found and the range is fully contained
+> within it, the page table walk proceeds with the per-vma lock
+> instead of mmap_read_lock.
+> 
+> This optimization is particularly effective for damon_va_young()
+> and damon_va_mkold(), which are frequently called and typically
+> operate within a single VMA.
 
-Nice catch!
+Makes sense.  Do you have some measurements?
 
 > 
-> As a result, nr_regions no longer matches the actual
-> number of live regions,
+> Signed-off-by: Kefeng Wang <wangkefeng.wang@huawei.com>
 
-Nonetheless, this is not causing real issues.  The the nr_regions is not
-exposed to the user space.  Similar data structures in the file use arrays for
-managing sub-directories and use the number field as the size of the array.  If
-that's the case for these region directory data, the code might allocating
-more-than-needed memory or having some problems.  But luckily region
-directories are managed using linked list.  I find no real problems here.
-
-> and region directory names skip
-> numbers (1, 3, 5, ...).
-
-This is also not causing any real issue.  This could arguably make users
-confused.  But still user space could work with this in a reasonable way, by
-sorting the regions based on the index and/or the address of regions.  Actually
-DAMON user-space tool is handling this.  That's why I didn't realize this issue
-by myself.  We recommend human beings to use tools rather than directly
-interacting with the sysfs interface.
-
-The admin usage document is also not giving wrong assumptions about the names.
-It only says the names will be integers starting from 0.  The real names start
-from 1, but arguably that doesn't break something, becuase the document doesn't
-say there will be directory of name '0'...?  
-
-> 
-> Use the already incremented value for naming instead of
-> incrementing nr_regions a second time.
-
-So, there is no real problems.  Please let me know if I'm missing something.
-
-But it is also super clear that this is not an intended behavior but a bug.
-That needs to be fixed unless it causes unnecessary overhead.  Meanwhile, this
-fix is simple and nice.
-
-So, nice finding and fix!  Thank you for sharing, Vineet!
-
-> 
-> Signed-off-by: Vineet Agarwal <agarwal.vineet2006@gmail.com>
-
-Seems the current behavior has started since commit 66178e4ec30a
-("mm/damon/sysfs: use damos_walk() for update_schemes_tried_{bytes,regions}").
-I think it might deserve 'Fixes:' tag if someone claims, but Cc: stable@ may
-not really needed because this is not causing any real user issue, as I
-mentioned above.
-
-So, this looks good to me.  Vineet, is there anything that you want to sort out
-before dropping the RFC tag?  If not, please feel free to post this again
-without the RFC tag.
+Looks good to me.  Nonetheless, because I'm not familiar with per-vma locking,
+I'd like to wait for Sashiko review.
 
 
 Thanks,
