@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F349E13635E
-	for <damon@lists.linux.dev>; Tue, 12 May 2026 01:31:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A75CA226D18
+	for <damon@lists.linux.dev>; Tue, 12 May 2026 03:36:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778549480; cv=none; b=LaPf3Fp5ZHro5/KzoIKMC0smKElVff2naJEPVyIAcKPCYPG76vHmIdZAdKZzKCVZHXVV72X1OM+JMYebuRAjLnqSSvX9IY+lsYLKuMiXkea8kSQfeublrkeCqlhVTc5em2SHH7GVZCtjd40GqlCtiwgomhGj9EEHyrzvZU1T6tM=
+	t=1778556998; cv=none; b=u7o5FOpY6pAm1yc5FgMNPRBNTbZ/BNfaOaqNTuOT6jbHMswg8OEHNNTUsNg0HzAGnvo5ZmyHQv9uivWfdTOv/CCs8zFfYoYwtVOBXw/5USrvxgL3pjEEchmgTh5CprgSgs/KMCMVNJhTAboIMClf1IDFGWhXt+FiA2/T6EbsftI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778549480; c=relaxed/simple;
-	bh=LwUaYMXJHdUhH6+TL9aRCB1P0uKI2mUXjW0mb49u3oM=;
+	s=arc-20240116; t=1778556998; c=relaxed/simple;
+	bh=nBacPl1IDyKDaFSd7EUOB0zxBS7q9hwDQXTfwXout78=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Njgd47dRl6qfefbvc4L/+qd3tq80g1I1AiO74W6IonKo+sRxPYymxmvGuvS6dWcRrqMHl6FuXR8L9dJEhFwrCh/6f0QYiHo8s4zJjF0SkxVFHIPkOKrbsyBEoBi4exnTTRmC7Bn7amUmZH5G7InrlDknSbexW0dn+tUfsmy2bbU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bUFTzikz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ahA/NSt8BZ99QuYGrrf8dQx2Ci8SfVW0IPtPSK7xNLGIP+yJgbBfhYSn0It+QISga4c9uTHJEnw7i9XQsrLF46hpSHrYlQF9LZiwEhNTzeLMMpiVW52JV7l0h5MnQto8e9ddctdSGV4uLFT3YwbDXnvtGgOTCWGtPRP2YqFisWA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pZDXYucW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bUFTzikz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5664DC2BCB0;
-	Tue, 12 May 2026 01:31:19 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pZDXYucW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E911C2BCB0;
+	Tue, 12 May 2026 03:36:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778549479;
-	bh=LwUaYMXJHdUhH6+TL9aRCB1P0uKI2mUXjW0mb49u3oM=;
+	s=k20201202; t=1778556998;
+	bh=nBacPl1IDyKDaFSd7EUOB0zxBS7q9hwDQXTfwXout78=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bUFTzikzItrtUlko3n6C3LvCjx/JvnCMWkKLdlem/PpTyZE/FGS+Nq2o5AY3rDAaa
-	 NgBo0S5Ih821wBlAQ5L4oaL5YIDF1i6kg4l2I/3K1EDCatj7I95X6A/FAo2ubM3hoH
-	 CbD/zhbR7PNelKLBIPEFyzZ8Rgylqp0pK+eTMB768ZxsTNRDM9pubG2GRDg6d9juRP
-	 IhZmXgQDFj4ojcYW1b68Z7OBPjVZ5fNKM//OTGpvLcRWVkScwvFxVJ7SR/A+vqKA67
-	 B1n8xt2jxqKbMtUYsOhRjeFjcivub1YFVotx3p8udVAqMOLeR66IuhxYW7nDYShuSu
-	 KpeJ2ZZvtoZAg==
+	b=pZDXYucWv1jr6Rg7S8pHZ32pWuwoeCEZ2A9gv61rRHiPXEoggk4ealHA1WnH6c77o
+	 bVIYPcoBognsU4yzqjKQbVA6yKgsu5Q+dozHqNViaF9Ae5YcFABykWb93FuxeDCbmP
+	 LwyvSxReD3lVfDwR278P42nZbEEvmksNb/vWvPnoWN28xrHtqdSMrKhLYngqAXgMWv
+	 Dri8lVeygOg2jcxvMds8oGei5E4/NWJSEt9VoMLrUiaU66baeTt/KPomea1YM5gRJA
+	 unIYNwnkSrPDY7eXEjzsld1RvloOqCcBh4P4GeeJhw0G8kuXz3yseJTVjGPFbEKD1t
+	 hYxoBgHzp1MHw==
 From: SeongJae Park <sj@kernel.org>
-To: Kefeng Wang <wangkefeng.wang@huawei.com>
+To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SeongJae Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Liew Rui Yan <aethernet65535@gmail.com>,
 	damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	sunnanyong@huawei.com
-Subject: Re: [PATCH] mm/damon/vaddr: attempt per-vma lock during page table walk
-Date: Mon, 11 May 2026 18:31:15 -0700
-Message-ID: <20260512013116.80435-1-sj@kernel.org>
+	linux-mm@kvack.org
+Subject: Re: [PATCH v5 0/2] mm/damon: validate min_region_size to be power of 2
+Date: Mon, 11 May 2026 20:36:29 -0700
+Message-ID: <20260512033630.39793-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260511132546.1973270-1-wangkefeng.wang@huawei.com>
+In-Reply-To: <20260501013750.71704-1-aethernet65535@gmail.com>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -47,28 +46,32 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Mon, 11 May 2026 21:25:46 +0800 Kefeng Wang <wangkefeng.wang@huawei.com> wrote:
+Hi Andrew,
 
-> Currently, DAMON virtual address operations use mmap_read_lock
-> during page table walks, which can cause unnecessary contention
-> under high concurrency.
+On Fri,  1 May 2026 09:37:48 +0800 Liew Rui Yan <aethernet65535@gmail.com> wrote:
+
+> Problem
+> =======
+> When a user sets an invalid 'addr_unit' (e.g., 3) via DAMON_LRU_SORT or
+> DAMON_RECLAIM, 'min_region_sz' becomes a non-power-of-2 value. While
+> damon_commit_ctx() correctly detects this and returns -EINVAL, it sets
+> the 'maybe_corrupted' flag during this process.
 > 
-> Introduce damon_va_walk_page_range() to first attempt acquiring a
-> per-vma lock. If the VMA is found and the range is fully contained
-> within it, the page table walk proceeds with the per-vma lock
-> instead of mmap_read_lock.
+> This flag causes the running kdamond to terminate. While the termination
+> is a safety measure, it is suboptimal in this case because the error is
+> just a simple invalid input from the user, which shouldn't neccessitate
+> stopping the kdamond.
 > 
-> This optimization is particularly effective for damon_va_young()
-> and damon_va_mkold(), which are frequently called and typically
-> operate within a single VMA.
+> Solution
+> ========
+> Add an early validation in damon_lru_sort_apply_parameters() and
+> damon_reclaim_apply_parameters() to check 'min_region_sz' before any
+> state change occurs. If it is non-power-of-2, return -EINVAL immediately,
+> preventing 'maybe_corrupted' from being set.
 
-Makes sense.  Do you have some measurements?
 
-> 
-> Signed-off-by: Kefeng Wang <wangkefeng.wang@huawei.com>
-
-Looks good to me.  Nonetheless, because I'm not familiar with per-vma locking,
-I'd like to wait for Sashiko review.
+I think this series is good to go in my opinion.  Could you please add this
+series into mm.git?
 
 
 Thanks,
