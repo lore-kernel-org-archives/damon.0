@@ -1,87 +1,120 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 770442F8E81;
-	Tue, 12 May 2026 04:53:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19E3831A570
+	for <damon@lists.linux.dev>; Tue, 12 May 2026 05:26:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778561638; cv=none; b=dEO9Idt/Ib4eB/o6CXvhrPtMLSO9Uh1MBk8Csm+LYH7eSGFuzA/XtWzBl7U8VC33xONKVi3W5nhuqZih0eoPc3FEDumdjtPXTuB0n+gyhDu3RWTOexhiqk9KPYAd76EmFT68BEMif2MxiSqoGmb2J5WMsHPzqrKqZYiOFosRgJU=
+	t=1778563589; cv=none; b=W2Ve+yRrS69vAjAnxWNEkDNrRkUGNmy2KRQK63QQKe7B8f57m2So668XrsMDBOO+rYHuzvBWOqKjjrIiXCZju/RVHtnqsSthIM3RYILGuzjXmTAdqSkMpTru5zkWrAM76NbYRnSc5FN1gp6iXtPxp47BHlQQPRJIaEYkMthGNeA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778561638; c=relaxed/simple;
-	bh=v+BC38I/J+s7NNS8QzT926dbnk44scOJwG+CMFw9hVg=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s4YtyfV+RDbMUVNvQ8mYNEsLi/prK61WGfl2lJveYu5HKZ2VgIwGxiJtnOOizH3ZEXUUxFf4rGUtGAGUMLWgCONsLSd2P6VSPpzQiPeZffx+rbUZXu8kijLcrEVc8cOCIXTbWN4EErkt/Qmam8OY5Kighb/hQV3rWHUQd+QUP48=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=vRDMdSHV; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1778563589; c=relaxed/simple;
+	bh=pcbupYAETdnFjWjwjxUjICtPffkhWfaFK1CPb8oSsoU=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=PnbtfIKDQ5K00hRGiqkvs2QGFrUFsFfRR+U+KVJynaRuXldRXDRnEfJA8/HXBbb94GPUQCF/dm6u82xpkp7/vDv0u6vxwUy2oS54fP2ncVueUtCuQtoIi8jEN6WpsqciG4qcc5t9zzNhDsg9hKe7t2hFK7M100DBttq8DTnWGJ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GAZ8gW/Z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="vRDMdSHV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA61AC2BCB0;
-	Tue, 12 May 2026 04:53:57 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GAZ8gW/Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83798C2BCC7;
+	Tue, 12 May 2026 05:26:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778561638;
-	bh=v+BC38I/J+s7NNS8QzT926dbnk44scOJwG+CMFw9hVg=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vRDMdSHV66Ov5XGS84oFpqOnMVcpPTfnD0gsKq/cMSsxb2BnHcuCSCKDH6344QrUQ
-	 8+3i/oKcRrQZZfca/Yq5cxEO0LemHDl8yqavnrLJZbTqmUpLIGx/Xh4HDwQdeEAyo2
-	 w23VZkpsHJbpCE1nNrBDQ12xvUGJjlJkjlHMAw6OylLYG4pENkJKrDfjDo0Yy2n5Ez
-	 X+bJtqNj6Hj1ygySzcpa1TAFt4+cxWzN9xlUW6lMSIPRn8R4DiE52woxd+QFQGUyr6
-	 9NobtMNZEYVlB08a7IEzy4oZMFjxtxxDqYSbNlRyhaB858jtALLMXwoxduc31xhL/T
-	 emYO+o+Xp4FwQ==
-From: SeongJae Park <sj@kernel.org>
-To: Vineet Agarwal <agarwal.vineet2006@gmail.com>
-Cc: SeongJae Park <sj@kernel.org>,
-	akpm@linux-foundation.org,
-	damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] mm/damon/sysfs-schemes: fix double increment of nr_regions
-Date: Mon, 11 May 2026 21:53:47 -0700
-Message-ID: <20260512045347.102434-1-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260512041157.109845-1-agarwal.vineet2006@gmail.com>
-References: 
+	s=k20201202; t=1778563588;
+	bh=pcbupYAETdnFjWjwjxUjICtPffkhWfaFK1CPb8oSsoU=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date:From;
+	b=GAZ8gW/ZMyrDzLhBWAqy8rv9sr/KP5gH/L96kjnY1jmT/e0KCvPEKP2E8wTJEhWw0
+	 4BR1ch1UGIm+3QApswDs3GJAXMrsuH+YjwagQj2QXWDP8AgNFIyNBMEZqbVVufPH97
+	 A5iUxCN2Qg8jib8oYagO3DOz0yeB/VW+KF8CBv37BEnj7AHRdH8lzi2ljCeC0PGBfZ
+	 uJJl1dHrs7isajKt0p4DTPjVSJxeiYwa7sP6TzLBZZfTCUESGG8+esvwMus/P+FElX
+	 4qhf4JqY3lt129rBAiQie/V9XTBcfdsErKCtq/NlO/LgsEMxR4dhVESY+5gQXckD7V
+	 1nYnicrpIHNKg==
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH] mm/damon/vaddr: attempt per-vma lock during page table
+ walk
+Reply-To: sashiko@lists.linux.dev
+To: "Kefeng Wang" <wangkefeng.wang@huawei.com>
+Cc: damon@lists.linux.dev
+In-Reply-To: <20260511132546.1973270-1-wangkefeng.wang@huawei.com>
+References: <20260511132546.1973270-1-wangkefeng.wang@huawei.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Tue, 12 May 2026 05:26:28 +0000
+Message-Id: <20260512052628.83798C2BCC7@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-On Tue, 12 May 2026 09:41:57 +0530 Vineet Agarwal <agarwal.vineet2006@gmail.com> wrote:
+Thank you for your contribution! Sashiko AI review found 1 potential issue(=
+s) to consider:
+- [Medium] Inconsistent VMA Filtering (VM_PFNMAP) in damon_va_walk_page_ran=
+ge()
+--
 
-> damos_sysfs_populate_region_dir() increments
-> sysfs_regions->nr_regions twice when adding a new region:
-> once explicitly before kobject_init_and_add(), and once
-> again through the post-increment used for the kobject name.
-> 
-> As a result, nr_regions no longer matches the actual
-> number of live regions, and region directory names skip
-> numbers (1, 3, 5, ...).
-> 
-> Use the already incremented value for naming instead of
-> incrementing nr_regions a second time.
-> 
-> Fixes: 66178e4ec30a ("mm/damon/sysfs: use damos_walk() for update_schemes_tried_{bytes,regions}")
+commit b5bde92b4c2b28a90660c48f50de91cd04010328
+Author: Kefeng Wang <wangkefeng.wang@huawei.com>
 
-FYI we decided [1] not to Cc stable@ because the bug is not making meaningful
-real user issues.  The above Fixes: is only for people who seek more contexts
-about from when the bug was introduced.
+mm/damon/vaddr: attempt per-vma lock during page table walk
 
-> Signed-off-by: Vineet Agarwal <agarwal.vineet2006@gmail.com>
+This commit introduces damon_va_walk_page_range() to optimize DAMON's
+virtual address page table walks. It attempts to acquire a per-VMA lock
+and proceeds with walk_page_range_vma() if the range is contained within
+a single VMA, falling back to the mmap_read_lock and walk_page_range()
+otherwise.
 
-Reviewed-by: SeongJae Park <sj@kernel.org>
+> diff --git a/mm/damon/vaddr.c b/mm/damon/vaddr.c
+> index 1b0ebe3b6951e..eed2ae132a589 100644
+> --- a/mm/damon/vaddr.c
+> +++ b/mm/damon/vaddr.c
+> @@ -237,6 +237,32 @@ static void damon_va_update(struct damon_ctx *ctx)
+>  	}
+>  }
+> =20
+> +static void damon_va_walk_page_range(struct mm_struct *mm, unsigned long=
+ start,
+> +		unsigned long end, struct mm_walk_ops *ops, void *private)
+> +{
+> +	struct vm_area_struct *vma;
+> +
+> +	vma =3D lock_vma_under_rcu(mm, start);
+> +	if (!vma)
+> +		goto lock_mmap;
+> +
+> +	if (end > vma->vm_end) {
+> +		vma_end_read(vma);
+> +		goto lock_mmap;
+> +	}
+> +
+> +	ops->walk_lock =3D PGWALK_VMA_RDLOCK_VERIFY;
+> +	walk_page_range_vma(vma, start, end, ops, private);
+> +	vma_end_read(vma);
+> +	return;
+> +
+> +lock_mmap:
+> +	mmap_read_lock(mm);
+> +	ops->walk_lock =3D PGWALK_RDLOCK;
+> +	walk_page_range(mm, start, end, ops, private);
+> +	mmap_read_unlock(mm);
+> +}
 
-> ---
+Does this code handle VMAs with the VM_PFNMAP flag inconsistently?
 
-From the next time, please consider adding patch changelog [2] here, with link
-to previous revision.  To my understanding, this revision has no change from
-the previous revision [1] except dropping the RFC tag.
+In the fallback path using walk_page_range(), the page walker calls
+walk_page_test(), which skips VM_PFNMAP VMAs by default since the DAMON
+operations structures do not provide a test_walk callback.
 
-[1] https://lore.kernel.org/20260511191218.98881-1-agarwal.vineet2006@gmail.com
-[2] https://docs.kernel.org/process/submitting-patches.html#commentary
+However, the fast path uses walk_page_range_vma(), which bypasses
+walk_page_test() entirely and directly walks the page range.=20
 
+This means that if a queried address range is fully contained within a sing=
+le
+VM_PFNMAP VMA, the page tables will be walked via the fast path. But if the
+same VMA is part of a larger range, the mmap lock fallback is triggered and
+the VMA is properly skipped.
 
-Thanks,
-SJ
+Can this lead to DAMON improperly modifying PTEs on raw PFN device mappings,
+such as clearing the young bit in damon_mkold_pmd_entry(), when taking the
+fast path?
 
-[...]
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260511132546.1973=
+270-1-wangkefeng.wang@huawei.com?part=3D1
