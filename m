@@ -1,120 +1,124 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from canpmsgout03.his.huawei.com (canpmsgout03.his.huawei.com [113.46.200.218])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19E3831A570
-	for <damon@lists.linux.dev>; Tue, 12 May 2026 05:26:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 021073A05EB
+	for <damon@lists.linux.dev>; Tue, 12 May 2026 13:59:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=113.46.200.218
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778563589; cv=none; b=W2Ve+yRrS69vAjAnxWNEkDNrRkUGNmy2KRQK63QQKe7B8f57m2So668XrsMDBOO+rYHuzvBWOqKjjrIiXCZju/RVHtnqsSthIM3RYILGuzjXmTAdqSkMpTru5zkWrAM76NbYRnSc5FN1gp6iXtPxp47BHlQQPRJIaEYkMthGNeA=
+	t=1778594380; cv=none; b=udCjSNzcUk9aifSriRYysV7cpQEH4ZDF293dLr0N60ISkgGy7oop8T+f1fRF65po8qr+D+a6biyNQLFf1Hutto5HaXPvFizetsQMet+tX4JwGzMQVOJ7puLlvuto6e6CgAEeXyPcPoPwpwzLlE6baLniG9E0B+rfi2Y4jXpc/rY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778563589; c=relaxed/simple;
-	bh=pcbupYAETdnFjWjwjxUjICtPffkhWfaFK1CPb8oSsoU=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=PnbtfIKDQ5K00hRGiqkvs2QGFrUFsFfRR+U+KVJynaRuXldRXDRnEfJA8/HXBbb94GPUQCF/dm6u82xpkp7/vDv0u6vxwUy2oS54fP2ncVueUtCuQtoIi8jEN6WpsqciG4qcc5t9zzNhDsg9hKe7t2hFK7M100DBttq8DTnWGJ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GAZ8gW/Z; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1778594380; c=relaxed/simple;
+	bh=6rwi5Oyq1EeQUFIxFWOFOXFySDtgPAJDCKpAx1QkZkU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=B/uvmJp5RuR/uz87oMdadOAkH/dkfGbwQpDSwI9xCud2vaN0373rbc3CX8YVtOxRQVseLoRGVie6M72R6OsO7b/J32mbrBnLP51O81T9HLzsCAMyneii3L6iyvHhYfLk+f1tpV5Fk1uVXDCCWQCCQI+ym45MZhktD0vTzXeBFNk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b=BZh00c5k; arc=none smtp.client-ip=113.46.200.218
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GAZ8gW/Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83798C2BCC7;
-	Tue, 12 May 2026 05:26:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778563588;
-	bh=pcbupYAETdnFjWjwjxUjICtPffkhWfaFK1CPb8oSsoU=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date:From;
-	b=GAZ8gW/ZMyrDzLhBWAqy8rv9sr/KP5gH/L96kjnY1jmT/e0KCvPEKP2E8wTJEhWw0
-	 4BR1ch1UGIm+3QApswDs3GJAXMrsuH+YjwagQj2QXWDP8AgNFIyNBMEZqbVVufPH97
-	 A5iUxCN2Qg8jib8oYagO3DOz0yeB/VW+KF8CBv37BEnj7AHRdH8lzi2ljCeC0PGBfZ
-	 uJJl1dHrs7isajKt0p4DTPjVSJxeiYwa7sP6TzLBZZfTCUESGG8+esvwMus/P+FElX
-	 4qhf4JqY3lt129rBAiQie/V9XTBcfdsErKCtq/NlO/LgsEMxR4dhVESY+5gQXckD7V
-	 1nYnicrpIHNKg==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH] mm/damon/vaddr: attempt per-vma lock during page table
- walk
-Reply-To: sashiko@lists.linux.dev
-To: "Kefeng Wang" <wangkefeng.wang@huawei.com>
-Cc: damon@lists.linux.dev
-In-Reply-To: <20260511132546.1973270-1-wangkefeng.wang@huawei.com>
-References: <20260511132546.1973270-1-wangkefeng.wang@huawei.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Tue, 12 May 2026 05:26:28 +0000
-Message-Id: <20260512052628.83798C2BCC7@smtp.kernel.org>
+	dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b="BZh00c5k"
+dkim-signature: v=1; a=rsa-sha256; d=huawei.com; s=dkim;
+	c=relaxed/relaxed; q=dns/txt;
+	h=From;
+	bh=xjBHpnrtr7TLQ5ApPzHZqIHU3mdRNFOc4hxIvr8BBVw=;
+	b=BZh00c5kQpek7iEJf+pa1l7R5vnaN0BHDZahQdoGUW2q8mJtx42R7I4CAjy3+YKGirlEmmH4I
+	tem5nRl57aI+6No+0FGmkRDT2Q7zyI58mNmxRswVrE7OvmwTpw3DweyoNcdDsX0xTZX6f876k1N
+	sEeCR90d1G6g1/V8mZfCZK0=
+Received: from mail.maildlp.com (unknown [172.19.163.0])
+	by canpmsgout03.his.huawei.com (SkyGuard) with ESMTPS id 4gFJ1n0nHnzpStD;
+	Tue, 12 May 2026 21:52:29 +0800 (CST)
+Received: from dggpemf100008.china.huawei.com (unknown [7.185.36.138])
+	by mail.maildlp.com (Postfix) with ESMTPS id 2D04D40561;
+	Tue, 12 May 2026 21:59:29 +0800 (CST)
+Received: from [10.174.177.243] (10.174.177.243) by
+ dggpemf100008.china.huawei.com (7.185.36.138) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.11; Tue, 12 May 2026 21:59:28 +0800
+Message-ID: <618380f2-ea7b-4855-9dc5-d655dc30d5a7@huawei.com>
+Date: Tue, 12 May 2026 21:59:26 +0800
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] mm/damon/vaddr: attempt per-vma lock during page table
+ walk
+To: SeongJae Park <sj@kernel.org>
+CC: Andrew Morton <akpm@linux-foundation.org>, <damon@lists.linux.dev>,
+	<linux-mm@kvack.org>, <sunnanyong@huawei.com>
+References: <20260512013116.80435-1-sj@kernel.org>
+Content-Language: en-US
+From: Kefeng Wang <wangkefeng.wang@huawei.com>
+In-Reply-To: <20260512013116.80435-1-sj@kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: kwepems100001.china.huawei.com (7.221.188.238) To
+ dggpemf100008.china.huawei.com (7.185.36.138)
 
-Thank you for your contribution! Sashiko AI review found 1 potential issue(=
-s) to consider:
-- [Medium] Inconsistent VMA Filtering (VM_PFNMAP) in damon_va_walk_page_ran=
-ge()
---
 
-commit b5bde92b4c2b28a90660c48f50de91cd04010328
-Author: Kefeng Wang <wangkefeng.wang@huawei.com>
 
-mm/damon/vaddr: attempt per-vma lock during page table walk
+On 5/12/2026 9:31 AM, SeongJae Park wrote:
+> On Mon, 11 May 2026 21:25:46 +0800 Kefeng Wang <wangkefeng.wang@huawei.com> wrote:
+> 
+>> Currently, DAMON virtual address operations use mmap_read_lock
+>> during page table walks, which can cause unnecessary contention
+>> under high concurrency.
+>>
+>> Introduce damon_va_walk_page_range() to first attempt acquiring a
+>> per-vma lock. If the VMA is found and the range is fully contained
+>> within it, the page table walk proceeds with the per-vma lock
+>> instead of mmap_read_lock.
+>>
+>> This optimization is particularly effective for damon_va_young()
+>> and damon_va_mkold(), which are frequently called and typically
+>> operate within a single VMA.
+> 
+> Makes sense.  Do you have some measurements?
 
-This commit introduces damon_va_walk_page_range() to optimize DAMON's
-virtual address page table walks. It attempts to acquire a per-VMA lock
-and proceeds with walk_page_range_vma() if the range is contained within
-a single VMA, falling back to the mmap_read_lock and walk_page_range()
-otherwise.
+In fact, I do not have performance-related tests.
 
-> diff --git a/mm/damon/vaddr.c b/mm/damon/vaddr.c
-> index 1b0ebe3b6951e..eed2ae132a589 100644
-> --- a/mm/damon/vaddr.c
-> +++ b/mm/damon/vaddr.c
-> @@ -237,6 +237,32 @@ static void damon_va_update(struct damon_ctx *ctx)
->  	}
->  }
-> =20
-> +static void damon_va_walk_page_range(struct mm_struct *mm, unsigned long=
- start,
-> +		unsigned long end, struct mm_walk_ops *ops, void *private)
-> +{
-> +	struct vm_area_struct *vma;
-> +
-> +	vma =3D lock_vma_under_rcu(mm, start);
-> +	if (!vma)
-> +		goto lock_mmap;
-> +
-> +	if (end > vma->vm_end) {
-> +		vma_end_read(vma);
-> +		goto lock_mmap;
-> +	}
-> +
-> +	ops->walk_lock =3D PGWALK_VMA_RDLOCK_VERIFY;
-> +	walk_page_range_vma(vma, start, end, ops, private);
-> +	vma_end_read(vma);
-> +	return;
-> +
-> +lock_mmap:
-> +	mmap_read_lock(mm);
-> +	ops->walk_lock =3D PGWALK_RDLOCK;
-> +	walk_page_range(mm, start, end, ops, private);
-> +	mmap_read_unlock(mm);
-> +}
+> 
+>>
+>> Signed-off-by: Kefeng Wang <wangkefeng.wang@huawei.com>
+> 
+> Looks good to me.  Nonetheless, because I'm not familiar with per-vma locking,
+> I'd like to wait for Sashiko review.
+> 
 
-Does this code handle VMAs with the VM_PFNMAP flag inconsistently?
+Sashiko review reports a issue about handling VMAs with the VM_PFNMAP
+flag inconsistently[1]，We indeed do not need to handle the vma of
+VM_PFNMAP for damon, so a quick fix is as follows,
 
-In the fallback path using walk_page_range(), the page walker calls
-walk_page_test(), which skips VM_PFNMAP VMAs by default since the DAMON
-operations structures do not provide a test_walk callback.
+diff --git a/mm/damon/vaddr.c b/mm/damon/vaddr.c
+index eed2ae132a58..d27147603564 100644
+--- a/mm/damon/vaddr.c
++++ b/mm/damon/vaddr.c
+@@ -251,8 +251,11 @@ static void damon_va_walk_page_range(struct 
+mm_struct *mm, unsigned long start,
+                 goto lock_mmap;
+         }
 
-However, the fast path uses walk_page_range_vma(), which bypasses
-walk_page_test() entirely and directly walks the page range.=20
+-       ops->walk_lock = PGWALK_VMA_RDLOCK_VERIFY;
+-       walk_page_range_vma(vma, start, end, ops, private);
++       if (!(vma->vm_flags & VM_PFNMAP)) {
++               ops->walk_lock = PGWALK_VMA_RDLOCK_VERIFY;
++               walk_page_range_vma(vma, start, end, ops, private);
++       }
++
+         vma_end_read(vma);
+         return;
 
-This means that if a queried address range is fully contained within a sing=
-le
-VM_PFNMAP VMA, the page tables will be walked via the fast path. But if the
-same VMA is part of a larger range, the mmap lock fallback is triggered and
-the VMA is properly skipped.
+Any more comments?
 
-Can this lead to DAMON improperly modifying PTEs on raw PFN device mappings,
-such as clearing the young bit in damon_mkold_pmd_entry(), when taking the
-fast path?
+Thanks.
 
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260511132546.1973=
-270-1-wangkefeng.wang@huawei.com?part=3D1
+[1] 
+https://sashiko.dev/#/patchset/20260511132546.1973270-1-wangkefeng.wang@huawei.com?part=1
+> 
+> Thanks,
+> SJ
+> 
+> [...]
+> 
+
