@@ -1,209 +1,112 @@
-Received: from canpmsgout05.his.huawei.com (canpmsgout05.his.huawei.com [113.46.200.220])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28D78377000
-	for <damon@lists.linux.dev>; Tue, 12 May 2026 15:15:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=113.46.200.220
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 239E31C68F
+	for <damon@lists.linux.dev>; Wed, 13 May 2026 00:08:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778598938; cv=none; b=iQQEbCUtKJx4f75kM1FClsx+lgTMbzAg2e22A79f15SX/Dl9ohRcineKdmnxliDXtC0acuTsaO2e4aBckHO4I1+4LnxyZcotdOVwlikJPXR2TOnoYQ5HYNYvAAYBqXfSkmCTc9FtGokYeFCnSIxa8nZ2PxfObXRHiG/XJFgE34M=
+	t=1778630919; cv=none; b=ioUXs0J1a9pnyTmYfR0btdswo+6OomoNgh5a5wwKI3D1gOP/evgAR4Mwz+sgFKzEFpZ204f5jbDiHnj79x8x5UTcdvw3LtUkC7AjMeRINrqgeeLznE4jD2NETbeQ5hNcJIXsA3UzNscnrIuN5XDBRZMVpWpOIy3I5dTuJdnDLcw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778598938; c=relaxed/simple;
-	bh=9fFuFRGYnUI/E2vbkiO++VJHW4XHJ6ez8pB+7fO9Zik=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=AXSelBevtoLhPjDeaH+X2TzVluliYp6UGy/Lo+3oUDzwoxj0KraLS7QL8qoBkCRnzCTFC2hBlXdjwA/FDCz7bTYEqD7IkBnOQPd+MBD3hcU0U/b5b6l7PdOa/092MXShF2TCch41AkF5WzPF7C1eeq4s+1R0qY08zQGje7XZVnI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b=WpousURH; arc=none smtp.client-ip=113.46.200.220
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
+	s=arc-20240116; t=1778630919; c=relaxed/simple;
+	bh=nrSkNPMWq0pkaJWvhzVWv2wddLHviZpAS7H/C0PsIVg=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=sMPVoYG/Zl6xPV0wi4qLWKLUrIbHDdeHnBjyc0V97zRVTv6gSpf3VQlwoHj/QLT89LsIk55Fzvua5hAPQTP2isn9tk7c93j/kGZnoid14tntDirE+tvCgfACQoEUBCuKnaZYC/NwHaEWwmXu6GmfOxS5/crlRc8SGuvDCwPJoiU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qpZGZVS/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b="WpousURH"
-dkim-signature: v=1; a=rsa-sha256; d=huawei.com; s=dkim;
-	c=relaxed/relaxed; q=dns/txt;
-	h=From;
-	bh=U2xsWflxLokFAJktyTCaR8iB2eeILFp1cGamAg2ZdJo=;
-	b=WpousURHqs5YNQK6mXUiWj2yIRrturD8aV/Cm3BphM6a/Mem+OaPGe8ZsgPlDf3tYFz5/6FLc
-	4WQxlIk7b3fm2Ucn+JySn+SgwW9oRlCr/Pe85z7nuCtaNWdjoI7xgoB/VZwyiHXqMjW9yh9N/S9
-	61pOJ2C1o6xNQD8lsdt30r4=
-Received: from mail.maildlp.com (unknown [172.19.162.140])
-	by canpmsgout05.his.huawei.com (SkyGuard) with ESMTPS id 4gFKjH2Y4xz12LFQ;
-	Tue, 12 May 2026 23:08:19 +0800 (CST)
-Received: from dggpemf100008.china.huawei.com (unknown [7.185.36.138])
-	by mail.maildlp.com (Postfix) with ESMTPS id 06F08201E9;
-	Tue, 12 May 2026 23:15:25 +0800 (CST)
-Received: from localhost.localdomain (10.50.87.83) by
- dggpemf100008.china.huawei.com (7.185.36.138) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.11; Tue, 12 May 2026 23:15:24 +0800
-From: Kefeng Wang <wangkefeng.wang@huawei.com>
-To: SeongJae Park <sj@kernel.org>, Andrew Morton <akpm@linux-foundation.org>
-CC: <damon@lists.linux.dev>, <linux-mm@kvack.org>, <sunnanyong@huawei.com>,
-	Kefeng Wang <wangkefeng.wang@huawei.com>
-Subject: [PATCH v2] mm/damon/vaddr: attempt per-vma lock during page table walk
-Date: Tue, 12 May 2026 23:15:23 +0800
-Message-ID: <20260512151523.2092638-1-wangkefeng.wang@huawei.com>
-X-Mailer: git-send-email 2.27.0
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qpZGZVS/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0CFFC2BCB0;
+	Wed, 13 May 2026 00:08:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1778630919;
+	bh=nrSkNPMWq0pkaJWvhzVWv2wddLHviZpAS7H/C0PsIVg=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date:From;
+	b=qpZGZVS/cSuQcupjyf7n4vrpQwf+vQMVN1VkTAlXASkQGJdKTTqaSwDdHVb4v8iKS
+	 o61rBK34NFrK37E+p1sE50gDFxI9niI0/pIZcUpOCFhlVTn+vvvb8JEtOHjnz+YoA8
+	 eW+1wqpdzO+SJTBshPZ0uwonN6V89YDKEatWgcykO8Ez8HvtMmJJAKhe97EJnuLQo7
+	 YDP6v2pOWVb2O1OighppVxC6iSlIiAxCS9UDEKtqk5AzgSkz3Q6MHNzE10PjOL2zau
+	 xRpK6mVKjCJ7I7kFnI8xZj0vMt4aQs7eevkBnhjo/O31He8yxm0LJ4ZO7PWy08vYcV
+	 3ktE7Gs+DFiIQ==
+From: sashiko-bot@kernel.org
+Subject: Re: [RFC PATCH] mm/damon/sysfs-schemes: fix double increment of
+ nr_regions
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "Vineet Agarwal" <agarwal.vineet2006@gmail.com>
+Cc: damon@lists.linux.dev
+In-Reply-To: <20260511191218.98881-1-agarwal.vineet2006@gmail.com>
+References: <20260511191218.98881-1-agarwal.vineet2006@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Wed, 13 May 2026 00:08:38 +0000
+Message-Id: <20260513000838.D0CFFC2BCB0@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: kwepems100001.china.huawei.com (7.221.188.238) To
- dggpemf100008.china.huawei.com (7.185.36.138)
 
-Currently, DAMON virtual address operations use mmap_read_lock
-during page table walks, which can cause unnecessary contention
-under high concurrency.
+Thank you for your contribution! Sashiko AI review found 3 potential issue(=
+s) to consider:
+- [Critical] The patch fails to restore the documented 0-indexed ABI, leavi=
+ng region directory names 1-indexed.
+- [Critical] Pre-existing: Use-After-Free and list corruption due to synchr=
+onous `kobject_put()` assumption.
+- [Medium] Unbalanced `nr_regions` increment on `kobject_init_and_add()` fa=
+ilure causes a permanent state leak.
+--
 
-Introduce damon_va_walk_page_range() to first attempt acquiring a
-per-vma lock. If the VMA is found and the range is fully contained
-within it, the page table walk proceeds with the per-vma lock
-instead of mmap_read_lock.
+commit 66d182db7d03e02c982ddd51e0ba311b2642559b
+Author: Vineet Agarwal <agarwal.vineet2006@gmail.com>
 
-This optimization is particularly effective for damon_va_young()
-and damon_va_mkold(), which are frequently called and typically
-operate within a single VMA.
+mm/damon/sysfs-schemes: fix double increment of nr_regions
 
-Signed-off-by: Kefeng Wang <wangkefeng.wang@huawei.com>
----
-v2: avoid handling VMAs with the VM_PFNMAP for per-vma path, found by
-    Sashiko review.
-v1: https://lore.kernel.org/linux-mm/20260511132546.1973270-1-wangkefeng.wang@huawei.com/
+This commit changes damos_sysfs_populate_region_dir() to use the already
+incremented value of nr_regions for naming new region directories,
+preventing the skipping of directory numbers.
 
- mm/damon/vaddr.c | 69 ++++++++++++++++++++++++++++++------------------
- 1 file changed, 43 insertions(+), 26 deletions(-)
+> diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
+> index 622c3799db87b..5d966ac864193 100644
+> --- a/mm/damon/sysfs-schemes.c
+> +++ b/mm/damon/sysfs-schemes.c
+> @@ -2998,7 +2998,7 @@ void damos_sysfs_populate_region_dir(struct damon_s=
+ysfs_schemes *sysfs_schemes,
+>  	if (kobject_init_and_add(&region->kobj,
+>  				&damon_sysfs_scheme_region_ktype,
+>  				&sysfs_regions->kobj, "%d",
+> -				sysfs_regions->nr_regions++)) {
+> +				sysfs_regions->nr_regions)) {
 
-diff --git a/mm/damon/vaddr.c b/mm/damon/vaddr.c
-index 1b0ebe3b6951..d27147603564 100644
---- a/mm/damon/vaddr.c
-+++ b/mm/damon/vaddr.c
-@@ -237,6 +237,35 @@ static void damon_va_update(struct damon_ctx *ctx)
- 	}
- }
- 
-+static void damon_va_walk_page_range(struct mm_struct *mm, unsigned long start,
-+		unsigned long end, struct mm_walk_ops *ops, void *private)
-+{
-+	struct vm_area_struct *vma;
-+
-+	vma = lock_vma_under_rcu(mm, start);
-+	if (!vma)
-+		goto lock_mmap;
-+
-+	if (end > vma->vm_end) {
-+		vma_end_read(vma);
-+		goto lock_mmap;
-+	}
-+
-+	if (!(vma->vm_flags & VM_PFNMAP)) {
-+		ops->walk_lock = PGWALK_VMA_RDLOCK_VERIFY;
-+		walk_page_range_vma(vma, start, end, ops, private);
-+	}
-+
-+	vma_end_read(vma);
-+	return;
-+
-+lock_mmap:
-+	mmap_read_lock(mm);
-+	ops->walk_lock = PGWALK_RDLOCK;
-+	walk_page_range(mm, start, end, ops, private);
-+	mmap_read_unlock(mm);
-+}
-+
- static int damon_mkold_pmd_entry(pmd_t *pmd, unsigned long addr,
- 		unsigned long next, struct mm_walk *walk)
- {
-@@ -315,17 +344,14 @@ static int damon_mkold_hugetlb_entry(pte_t *pte, unsigned long hmask,
- #define damon_mkold_hugetlb_entry NULL
- #endif /* CONFIG_HUGETLB_PAGE */
- 
--static const struct mm_walk_ops damon_mkold_ops = {
--	.pmd_entry = damon_mkold_pmd_entry,
--	.hugetlb_entry = damon_mkold_hugetlb_entry,
--	.walk_lock = PGWALK_RDLOCK,
--};
--
- static void damon_va_mkold(struct mm_struct *mm, unsigned long addr)
- {
--	mmap_read_lock(mm);
--	walk_page_range(mm, addr, addr + 1, &damon_mkold_ops, NULL);
--	mmap_read_unlock(mm);
-+	struct mm_walk_ops damon_mkold_ops = {
-+		.pmd_entry = damon_mkold_pmd_entry,
-+		.hugetlb_entry = damon_mkold_hugetlb_entry,
-+	};
-+
-+	damon_va_walk_page_range(mm, addr, addr + 1, &damon_mkold_ops, NULL);
- }
- 
- /*
-@@ -445,12 +471,6 @@ static int damon_young_hugetlb_entry(pte_t *pte, unsigned long hmask,
- #define damon_young_hugetlb_entry NULL
- #endif /* CONFIG_HUGETLB_PAGE */
- 
--static const struct mm_walk_ops damon_young_ops = {
--	.pmd_entry = damon_young_pmd_entry,
--	.hugetlb_entry = damon_young_hugetlb_entry,
--	.walk_lock = PGWALK_RDLOCK,
--};
--
- static bool damon_va_young(struct mm_struct *mm, unsigned long addr,
- 		unsigned long *folio_sz)
- {
-@@ -459,9 +479,12 @@ static bool damon_va_young(struct mm_struct *mm, unsigned long addr,
- 		.young = false,
- 	};
- 
--	mmap_read_lock(mm);
--	walk_page_range(mm, addr, addr + 1, &damon_young_ops, &arg);
--	mmap_read_unlock(mm);
-+	struct mm_walk_ops damon_young_ops = {
-+		.pmd_entry = damon_young_pmd_entry,
-+		.hugetlb_entry = damon_young_hugetlb_entry,
-+	};
-+
-+	damon_va_walk_page_range(mm, addr, addr + 1, &damon_young_ops, &arg);
- 	return arg.young;
- }
- 
-@@ -750,7 +773,6 @@ static unsigned long damos_va_migrate(struct damon_target *target,
- 	struct mm_walk_ops walk_ops = {
- 		.pmd_entry = damos_va_migrate_pmd_entry,
- 		.pte_entry = NULL,
--		.walk_lock = PGWALK_RDLOCK,
- 	};
- 
- 	use_target_nid = dests->nr_dests == 0;
-@@ -768,9 +790,7 @@ static unsigned long damos_va_migrate(struct damon_target *target,
- 	if (!mm)
- 		goto free_lists;
- 
--	mmap_read_lock(mm);
--	walk_page_range(mm, r->ar.start, r->ar.end, &walk_ops, &priv);
--	mmap_read_unlock(mm);
-+	damon_va_walk_page_range(mm, r->ar.start, r->ar.end, &walk_ops, &priv);
- 	mmput(mm);
- 
- 	for (int i = 0; i < nr_dests; i++) {
-@@ -862,7 +882,6 @@ static unsigned long damos_va_stat(struct damon_target *target,
- 	struct mm_struct *mm;
- 	struct mm_walk_ops walk_ops = {
- 		.pmd_entry = damos_va_stat_pmd_entry,
--		.walk_lock = PGWALK_RDLOCK,
- 	};
- 
- 	priv.scheme = s;
-@@ -875,9 +894,7 @@ static unsigned long damos_va_stat(struct damon_target *target,
- 	if (!mm)
- 		return 0;
- 
--	mmap_read_lock(mm);
--	walk_page_range(mm, r->ar.start, r->ar.end, &walk_ops, &priv);
--	mmap_read_unlock(mm);
-+	damon_va_walk_page_range(mm, r->ar.start, r->ar.end, &walk_ops, &priv);
- 	mmput(mm);
- 	return 0;
- }
--- 
-2.27.0
+Does this change the ABI from 0-indexed to 1-indexed? Since nr_regions is
+incremented just before kobject_init_and_add(), the first directory will be
+formatted with the value "1". The kernel documentation indicates these
+directories should start from 0.
 
+>  		kobject_put(&region->kobj);
+
+If kobject_init_and_add() fails here, we call kobject_put(&region->kobj) but
+do not decrement sysfs_regions->nr_regions. Will this permanently inflate t=
+he
+counter and cause subsequent directory names to skip numbers, since
+damon_sysfs_scheme_regions_rm_dirs() decrements the counter based on the
+remaining successfully added elements in the list?
+
+There might also be a pre-existing issue with the region list lifecycle. If
+damon_sysfs_scheme_regions_rm_dirs() iterates regions_list and calls
+kobject_put() on each region's kobj, does it assume the kobject release
+function will synchronously remove the region from the list?
+
+If the release is delayed, for instance by external sysfs references or
+CONFIG_DEBUG_KOBJECT_RELEASE, the object could remain on regions_list. If
+damos_sysfs_populate_region_dir() then concurrently adds to regions_list
+with list_add_tail(), could the delayed release race and cause list
+corruption?
+
+Could a subsequent call to damon_sysfs_scheme_regions_rm_dirs() traverse
+freed list nodes and call kobject_put() on zero-refcount objects if the
+release hasn't completed?
+
+>  	}
+>  }
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260511191218.9888=
+1-1-agarwal.vineet2006@gmail.com?part=3D1
