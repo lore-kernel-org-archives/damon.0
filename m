@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 423AA3630A4;
-	Wed, 13 May 2026 04:59:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4E7639D6FD;
+	Wed, 13 May 2026 05:05:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778648351; cv=none; b=e2tfpwAmZLjS7CdHK6LW0DQVd94EpAJRzvpTmG7EaLuZSYbNeOvjfXfM2ANSouUUorw+UQ4yxWvA+w8eSTQ2ngBRSKIx0P9xjsSrXjAsU2a9RFT+WTR1zTTE+z78LZnq1wTdyZw2T4xo5rm2H9lmYhc9mRa17Sb6KuOhE60kjhY=
+	t=1778648712; cv=none; b=kVmhvPFxKUOpxqF2ejNWxJhv/Y+FuDWebR5cNjfLfN/datvG86d+mQ3I2yz3rZg95rFQNVUdnID+sgeihEz/9FJufxHLO+xOV9K7usUJcJtQ4DrhCEEBm6wX9/CmR2z7BjoAlhjVhLFZ8yftffeLzxrTsKCw7iB3Ocq2URStts0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778648351; c=relaxed/simple;
-	bh=yITepPkjgF6pxqmkdnbYSefqkFmOST5wosed1/iqef8=;
+	s=arc-20240116; t=1778648712; c=relaxed/simple;
+	bh=KvXZQmW0LsqEWFm1C1I47QuY02g2RND7AXmxV2MoG3Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GdAK9Gdq9RSXRtVE45w8Y8X9ClcQwX3xB6AE9ov3QAorwtWg/DSW04U7vQKyfcWiH/QXnukvCGWgQOGzndbNufiTll3t+EzB0kgIcFg5HLL50NEEqCvj/+2U+YtSZRqtQuEsCInj3HjhvLGOW2Dq4oDsax/UenOVHY6JBhvQsdc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NeuXLMGv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sI1ueb8mDq2aOExLeElJONOnGPw8c1CgIyIX5LUZGBCriedJp73/73kALfNXFJADwDAXcyMRSR1vPkXB4fAw2rOM7ZafGB5pL7hZ86qAgJxt+7mphm7y19SIJzIraJFPcazq3L00Hc1OQJ3XAnK23nPou03ZY5QGzD+aoSxyppY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=S6aI71sV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NeuXLMGv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E09D7C2BCB7;
-	Wed, 13 May 2026 04:59:10 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="S6aI71sV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0EFFC2BCC7;
+	Wed, 13 May 2026 05:05:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778648351;
-	bh=yITepPkjgF6pxqmkdnbYSefqkFmOST5wosed1/iqef8=;
+	s=k20201202; t=1778648712;
+	bh=KvXZQmW0LsqEWFm1C1I47QuY02g2RND7AXmxV2MoG3Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NeuXLMGvYzx+TtdmaP8vTU9Me0sWtcPmN9LNY94AyHwGEYxDAuxM8KRRQuRjbxb0/
-	 bg1QvTNufffZBNLWs+nQA+vwBS2hhe/JUXGuJRO1A09y/jVdMi7DOuDhVwaNTdTxHR
-	 D9EnUVl9J4v27JbkfIvkgg5ielmKjX/3PqhYdVOXA1Aw/nw6zIrbQFwUV8xoOdSp8D
-	 AWEe1LIQ2td+vSmqSRWx/9S/S916zhouTENjJibBMXErTxJxjd/VgZw3nezASLNRSb
-	 AbpBEYWzwlMuJWqIe9iLqpm4GwwhPJVNlmgoo6l8XQYR8yfNvbJLiJrAQfUOgtkWW1
-	 vFRDJ+1+f0KeA==
+	b=S6aI71sVJrLLhYG5jrRdKt77hqTe8ATtMsWccAk545NB/VSNudKeML+jyrnN6CAGm
+	 RA90pr8DZrheW9WJWlJWWRL0KcUn2wZVybO39ZOT3vBqxcbqp06LgNI8X7iynIPAIT
+	 FIO8olz+OpQk6MP3h0eoHXm/Go0WuxtAslwzkGqkxIrZ31s/9TuVSyIFTUUSmcO3zG
+	 CP0/ln83ig7ivJd+QchDlNUK9CmO623Dpmxp2f1siqkdjShboPtAMH7ZuU+zKKt2Qa
+	 rE25gg6/77ZANAfMHxEypuij5zXUDJZyfIJWYHOnoCrIOoJjsEmIXA+jIAHRCUt3ra
+	 B2u8G5Hwb3FmQ==
 From: SeongJae Park <sj@kernel.org>
 To: stable@vger.kernel.org
 Cc: SeongJae Park <sj@kernel.org>,
 	damon@lists.linux.dev,
 	Liew Rui Yan <aethernet65535@gmail.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6.y] mm/damon/reclaim: detect and use fresh enabled and kdamond_pid values
-Date: Tue, 12 May 2026 21:58:54 -0700
-Message-ID: <20260513045858.204442-1-sj@kernel.org>
+Subject: [PATCH 6.1.y] mm/damon/reclaim: detect and use fresh enabled and kdamond_pid values
+Date: Tue, 12 May 2026 22:05:00 -0700
+Message-ID: <20260513050501.216835-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <2026051256-ribcage-celtic-33be@gregkh>
-References: <2026051256-ribcage-celtic-33be@gregkh>
+In-Reply-To: <2026051257-daytime-precise-afd3@gregkh>
+References: <2026051257-daytime-precise-afd3@gregkh>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -141,19 +141,19 @@ Signed-off-by: SeongJae Park <sj@kernel.org>
 This depends on other two backported patches [1,2].  Please apply this
 after those.
 
-[1] https://lore.kernel.org/20260513041117.154407-1-sj@kernel.org
-[2] https://lore.kernel.org/20260513041117.154407-2-sj@kernel.org
+[1] https://lore.kernel.org/20260513043039.173237-1-sj@kernel.org
+[2] https://lore.kernel.org/20260513043039.173237-2-sj@kernel.org
 
- mm/damon/reclaim.c | 88 +++++++++++++++++++++++++++++-----------------
- 1 file changed, 56 insertions(+), 32 deletions(-)
+ mm/damon/reclaim.c | 74 +++++++++++++++++++++++++++++++++-------------
+ 1 file changed, 53 insertions(+), 21 deletions(-)
 
 diff --git a/mm/damon/reclaim.c b/mm/damon/reclaim.c
-index 586daa2cefe4f..e264f202714eb 100644
+index 7952a0b7f409d..dc435aefd44f5 100644
 --- a/mm/damon/reclaim.c
 +++ b/mm/damon/reclaim.c
-@@ -107,15 +107,6 @@ module_param(monitor_region_end, ulong, 0600);
- static bool skip_anon __read_mostly;
- module_param(skip_anon, bool, 0600);
+@@ -100,15 +100,6 @@ module_param(monitor_region_start, ulong, 0600);
+ static unsigned long monitor_region_end __read_mostly;
+ module_param(monitor_region_end, ulong, 0600);
  
 -/*
 - * PID of the DAMON thread
@@ -167,7 +167,7 @@ index 586daa2cefe4f..e264f202714eb 100644
  static struct damos_stat damon_reclaim_stat;
  DEFINE_DAMON_MODULES_DAMOS_STATS_PARAMS(damon_reclaim_stat,
  		reclaim_tried_regions, reclaimed_regions, quota_exceeds);
-@@ -203,60 +194,93 @@ static int damon_reclaim_turn(bool on)
+@@ -184,22 +175,14 @@ static int damon_reclaim_turn(bool on)
  {
  	int err;
  
@@ -190,51 +190,33 @@ index 586daa2cefe4f..e264f202714eb 100644
 -	kdamond_pid = ctx->kdamond->pid;
 -	return 0;
 +	return damon_start(&ctx, 1, true);
-+}
-+
+ }
+ 
+ static struct delayed_work damon_reclaim_timer;
+@@ -220,6 +203,13 @@ static DECLARE_DELAYED_WORK(damon_reclaim_timer, damon_reclaim_timer_fn);
+ 
+ static bool damon_reclaim_initialized;
+ 
 +static bool damon_reclaim_enabled(void)
 +{
 +	if (!ctx)
 +		return false;
 +	return damon_is_running(ctx);
- }
- 
++}
++
  static int damon_reclaim_enabled_store(const char *val,
  		const struct kernel_param *kp)
  {
--	bool is_enabled = enabled;
--	bool enable;
- 	int err;
+@@ -236,15 +226,57 @@ static int damon_reclaim_enabled_store(const char *val,
+ 	return 0;
+ }
  
--	err = kstrtobool(val, &enable);
-+	err = kstrtobool(val, &enabled);
- 	if (err)
- 		return err;
- 
--	if (is_enabled == enable)
-+	if (damon_reclaim_enabled() == enabled)
- 		return 0;
- 
- 	/* Called before init function.  The function will handle this. */
- 	if (!ctx)
--		goto set_param_out;
-+		return 0;
- 
--	err = damon_reclaim_turn(enable);
--	if (err)
--		return err;
-+	return damon_reclaim_turn(enabled);
-+}
- 
--set_param_out:
--	enabled = enable;
--	return err;
 +static int damon_reclaim_enabled_load(char *buffer,
 +		const struct kernel_param *kp)
 +{
 +	return sprintf(buffer, "%c\n", damon_reclaim_enabled() ? 'Y' : 'N');
- }
- 
++}
++
  static const struct kernel_param_ops enabled_param_ops = {
  	.set = damon_reclaim_enabled_store,
 -	.get = param_get_bool,
