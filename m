@@ -1,307 +1,126 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B73DE368D53;
-	Wed, 13 May 2026 04:11:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00EBD1991D4
+	for <damon@lists.linux.dev>; Wed, 13 May 2026 04:21:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778645490; cv=none; b=CF0w1+CwLY0j75kArKcQNKoetnxZ1iw/H8BjAghoWk1oqiIjOLy4EAIJyzlFDtql8hCbGKMoKYRCYmkxqo2d2H0176tfVzZ1o5fhTsVImKxuTCaGk9gsZ2n3ayLhT5BgRu63FdkKAcl2Tls6QQ4h67aUZsBLsAeI9t/tCa8xUlc=
+	t=1778646115; cv=none; b=Emed33DMR3WBMmQe9/cMskQEDk3gSllM5g5nYyACdQ7mqgXPGHBIj+h0Apby0oh/rG8dyi4P2ahvq0x47Biy3Dh2UwnipWa9jVpe1prql21RKam+A9+dG3mImGBxYrQ0lQ1W25rKtVdXeaNkCHu8tJc/fCxYCe4DcpLeg9AlY0w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778645490; c=relaxed/simple;
-	bh=jkE+denMPIGY0/bOaGAfnj9fHctFwnd7buqrH7fhs0g=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fypOYspL3OgM9KWAr6KWL+/gQYZ91SRo7KY2Jx+eLyDPHC7aZWFQkDDnfit+ZTvGFda6D9Ohv6nQ6dL+U9gSMgffkkxlLm+1FBNQtfQAi0kL+AoHlV6YPXV9ourXv6pN1fBA4aBD9Bj8kovyYkGhNhsEwGEZiLakT3/uhEVvx4w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Vg2XLQt2; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1778646115; c=relaxed/simple;
+	bh=rsMC4+0UIJxi5oe16Q7TeYZBrtpGFVW7LzFqFb3Rz7M=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=Ob0izkSLKO6Lvf0sL9r+OILGSvJEJk46lJIJGYBfKJ0254wNbFk+YtF9/8HvitMUIOlv82hBYZUR9ZyMkCNjfdA/AgZTTalsVxpMcWUgxdckT+wu1t+lt+sR5VWMx6Bo0kgoNjTRwn8pqRiGViU+MPzZ9I8H8BIIC87LMLEEcwI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EbFbYNe+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Vg2XLQt2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C97AC2BCC9;
-	Wed, 13 May 2026 04:11:30 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EbFbYNe+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73E09C2BCB7;
+	Wed, 13 May 2026 04:21:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778645490;
-	bh=jkE+denMPIGY0/bOaGAfnj9fHctFwnd7buqrH7fhs0g=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Vg2XLQt2ZcukyT960rNVLMaoEQlp3cYZ/c2UE56hgKdLijb64EO7yFTmVwCBl1P5h
-	 VDRrXYzBrxUdxHuBtdEK19MBEP4bbprDO8X2soeTtcP/xMT3XE2wFbsYf/76vHQnZu
-	 asLkO/qOMpQ2aPErWMcI6juf62ypygNLogD8SIqtDDngHBIo88fdcExu5WDVOSonf9
-	 7kg0cZkNmT10nSXdt+xSEluRijeLNfUaSzg8DAQrAtkuwcj1Jvqfn6263/8EjPJz9W
-	 8cCWGV189TJ8S8ANRm8Y5veZniHJ2p9kxbZ5IfjvaBi8ba7LrH2hjKWlKPc8KoIQz6
-	 McZT1n52QFtxQ==
-From: SeongJae Park <sj@kernel.org>
-To: stable@vger.kernel.org
-Cc: SeongJae Park <sj@kernel.org>,
-	damon@lists.linux.dev,
-	Liew Rui Yan <aethernet65535@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6.y 2/2] mm/damon/lru_sort: detect and use fresh enabled and kdamond_pid values
-Date: Tue, 12 May 2026 21:11:14 -0700
-Message-ID: <20260513041117.154407-2-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <2026051242-gusto-earful-5086@gregkh>
-References: <2026051242-gusto-earful-5086@gregkh>
+	s=k20201202; t=1778646114;
+	bh=rsMC4+0UIJxi5oe16Q7TeYZBrtpGFVW7LzFqFb3Rz7M=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date:From;
+	b=EbFbYNe+Ns4TOhuRtbphKagI4rhqyTnDor1X4hzBtCwbX0pVBADSaluUMvoYLLZoP
+	 rEIxkrSCVxH+0cV8NpwHzyIQBe+Z5Gt6t4DR70+qTDmeQ+9Mj6G1GcTJtMGTE1YH9m
+	 ZbDyZ7GOUK8RZInwx83va3DphuMBDCDMqlgq/FgnIQYOW5PlSFgXBhliQ3GPcGaD+W
+	 vmfK3eGLyiFli+VUHmPiJ2K5EvsIwnDD64+Uf1kSSXaDV5Ih5cuSnp32KXLwKpZlEJ
+	 YlKu4mRbkPvVwdXwpgVR3UhaCl9yfzGU2SWiA/FmADyqTxflDZaNJmYMhmrvB4tgB+
+	 UpwJHPeKpgHEQ==
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH] mm/damon/sysfs-schemes: fix double increment of
+ nr_regions
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "Vineet Agarwal" <agarwal.vineet2006@gmail.com>
+Cc: damon@lists.linux.dev
+In-Reply-To: <20260512041157.109845-1-agarwal.vineet2006@gmail.com>
+References: <20260512041157.109845-1-agarwal.vineet2006@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Wed, 13 May 2026 04:21:54 +0000
+Message-Id: <20260513042154.73E09C2BCB7@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-DAMON_LRU_SORT updates 'enabled' and 'kdamond_pid' parameter values, which
-represents the running status of its kdamond, when the user explicitly
-requests start/stop of the kdamond.  The kdamond can, however, be stopped
-in events other than the explicit user request in the following three
-events.
+Thank you for your contribution! Sashiko AI review found 3 potential issue(=
+s) to consider:
+- [High] Incomplete fix leaves nr_regions counter permanently leaking on th=
+e error path.
+- [High] List corruption and Double Free due to lockless list manipulation =
+in kobject release.
+- [Medium] Region directory naming preserves an unintended 1-based indexing=
+ regression.
+--
 
-1. ctx->regions_score_histogram allocation failure at beginning of the
-   execution,
-2. damon_commit_ctx() failure due to invalid user input, and
-3. damon_commit_ctx() failure due to its internal allocation failures.
+commit 8f7ffd21263a0409418cf4d88e9b7e2d7a90117e
+Author: Vineet Agarwal <agarwal.vineet2006@gmail.com>
 
-Hence, if the kdamond is stopped by the above three events, the values of
-the status parameters can be stale.  Users could show the stale values and
-be confused.  This is already bad, but the real consequence is worse.
-DAMON_LRU_SORT avoids unnecessary damon_start() and damon_stop() calls
-based on the 'enabled' parameter value.  And the update of 'enabled'
-parameter value depends on the damon_start() and damon_stop() call
-results.  Hence, once the kdamond has stopped by the unintentional events,
-the user cannot restart the kdamond before the system reboot.  For
-example, the issue can be reproduced via below steps.
+mm/damon/sysfs-schemes: fix double increment of nr_regions
 
-    # cd /sys/module/damon_lru_sort/parameters
-    #
-    # # start DAMON_LRU_SORT
-    # echo Y > enabled
-    # ps -ef | grep kdamond
-    root         806       2  0 17:53 ?        00:00:00 [kdamond.0]
-    root         808     803  0 17:53 pts/4    00:00:00 grep kdamond
-    #
-    # # commit wrong input to stop kdamond withou explicit stop request
-    # echo 3 > addr_unit
-    # echo Y > commit_inputs
-    bash: echo: write error: Invalid argument
-    #
-    # # confirm kdamond is stopped
-    # ps -ef | grep kdamond
-    root         811     803  0 17:53 pts/4    00:00:00 grep kdamond
-    #
-    # # users casn now show stable status
-    # cat enabled
-    Y
-    # cat kdamond_pid
-    806
-    #
-    # # even after fixing the wrong parameter,
-    # # kdamond cannot be restarted.
-    # echo 1 > addr_unit
-    # echo Y > enabled
-    # ps -ef | grep kdamond
-    root         815     803  0 17:54 pts/4    00:00:00 grep kdamond
+This commit attempts to fix a double increment of nr_regions when populating
+region directories. It removes the post-increment from the
+kobject_init_and_add call, relying instead on the earlier increment of
+sysfs_regions->nr_regions.
 
-The problem will only rarely happen in real and common setups for the
-following reasons.  The allocation failures are unlikely in such setups
-since those allocations are arguably too small to fail.  Also sane users
-on real production environments may not commit wrong input parameters.
-But once it happens, the consequence is quite bad.  And the bug is a bug.
+> diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
+> index 622c3799db87b..5d966ac864193 100644
+> --- a/mm/damon/sysfs-schemes.c
+> +++ b/mm/damon/sysfs-schemes.c
+> @@ -2998,7 +2998,7 @@ void damos_sysfs_populate_region_dir(struct damon_s=
+ysfs_schemes *sysfs_schemes,
+>  	if (kobject_init_and_add(&region->kobj,
+>  				&damon_sysfs_scheme_region_ktype,
+>  				&sysfs_regions->kobj, "%d",
+> -				sysfs_regions->nr_regions++)) {
+> +				sysfs_regions->nr_regions)) {
+>  		kobject_put(&region->kobj);
+>  	}
+>  }
 
-The issue stems from the fact that there are multiple events that can
-change the status, and following all the events is challenging.
-Dynamically detect and use the fresh status for the parameters when those
-are requested.
+Does this error path leak the counter?
 
-Link: https://lore.kernel.org/20260419161003.79176-3-sj@kernel.org
-Fixes: 40e983cca927 ("mm/damon: introduce DAMON-based LRU-lists Sorting")
-Co-developed-by: Liew Rui Yan <aethernet65535@gmail.com>
-Signed-off-by: Liew Rui Yan <aethernet65535@gmail.com>
-Signed-off-by: SeongJae Park <sj@kernel.org>
-Cc: <stable@vger.kernel.org> # 6.0.x
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-(cherry picked from commit b98b7ff6025ae82570d4915e083f0cbd8d48b3cf)
-Signed-off-by: SeongJae Park <sj@kernel.org>
-(port parts of 42b7491af14c ("mm/damon/core: introduce damon_call()")
-and d2b5be741a50 ("mm/damon/sysfs: use DAMON core API
-damon_is_running()") for damon_is_running() dependency)
----
- include/linux/damon.h |  1 +
- mm/damon/core.c       | 16 ++++++++
- mm/damon/lru_sort.c   | 88 +++++++++++++++++++++++++++----------------
- 3 files changed, 73 insertions(+), 32 deletions(-)
+If kobject_init_and_add() fails, kobject_put() triggers
+damon_sysfs_scheme_region_release() to delete the region from the list and
+free it. However, sysfs_regions->nr_regions has already been incremented
+prior to this call and is never decremented on this error path. Because the
+cleanup function damon_sysfs_scheme_regions_rm_dirs() only decrements the
+counter for items remaining in the list, the counter permanently leaks. Aft=
+er
+an error, subsequent directory names will skip numbers and drift indefinite=
+ly.
 
-diff --git a/include/linux/damon.h b/include/linux/damon.h
-index 4b787a0f21b40..8d88ac52a72d1 100644
---- a/include/linux/damon.h
-+++ b/include/linux/damon.h
-@@ -677,6 +677,7 @@ static inline unsigned int damon_max_nr_accesses(const struct damon_attrs *attrs
- 
- int damon_start(struct damon_ctx **ctxs, int nr_ctxs, bool exclusive);
- int damon_stop(struct damon_ctx **ctxs, int nr_ctxs);
-+bool damon_is_running(struct damon_ctx *ctx);
- int damon_kdamond_pid(struct damon_ctx *ctx);
- 
- int damon_set_region_biggest_system_ram_default(struct damon_target *t,
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index 488f66a0d309c..da564d10445c8 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -762,6 +762,22 @@ int damon_stop(struct damon_ctx **ctxs, int nr_ctxs)
- 	return err;
- }
- 
-+/**
-+ * damon_is_running() - Returns if a given DAMON context is running.
-+ * @ctx:	The DAMON context to see if running.
-+ *
-+ * Return: true if @ctx is running, false otherwise.
-+ */
-+bool damon_is_running(struct damon_ctx *ctx)
-+{
-+	bool running;
-+
-+	mutex_lock(&ctx->kdamond_lock);
-+	running = ctx->kdamond != NULL;
-+	mutex_unlock(&ctx->kdamond_lock);
-+	return running;
-+}
-+
- /**
-  * damon_kdamond_pid() - Return pid of a given DAMON context's worker thread.
-  * @ctx:	The DAMON context of the question.
-diff --git a/mm/damon/lru_sort.c b/mm/damon/lru_sort.c
-index b4032538b22cf..6797bb24a307f 100644
---- a/mm/damon/lru_sort.c
-+++ b/mm/damon/lru_sort.c
-@@ -111,15 +111,6 @@ module_param(monitor_region_start, ulong, 0600);
- static unsigned long monitor_region_end __read_mostly;
- module_param(monitor_region_end, ulong, 0600);
- 
--/*
-- * PID of the DAMON thread
-- *
-- * If DAMON_LRU_SORT is enabled, this becomes the PID of the worker thread.
-- * Else, -1.
-- */
--static int kdamond_pid __read_mostly = -1;
--module_param(kdamond_pid, int, 0400);
--
- static struct damos_stat damon_lru_sort_hot_stat;
- DEFINE_DAMON_MODULES_DAMOS_STATS_PARAMS(damon_lru_sort_hot_stat,
- 		lru_sort_tried_hot_regions, lru_sorted_hot_regions,
-@@ -249,60 +240,93 @@ static int damon_lru_sort_turn(bool on)
- {
- 	int err;
- 
--	if (!on) {
--		err = damon_stop(&ctx, 1);
--		if (!err)
--			kdamond_pid = -1;
--		return err;
--	}
-+	if (!on)
-+		return damon_stop(&ctx, 1);
- 
- 	err = damon_lru_sort_apply_parameters();
- 	if (err)
- 		return err;
- 
--	err = damon_start(&ctx, 1, true);
--	if (err)
--		return err;
--	kdamond_pid = ctx->kdamond->pid;
--	return 0;
-+	return damon_start(&ctx, 1, true);
-+}
-+
-+static bool damon_lru_sort_enabled(void)
-+{
-+	if (!ctx)
-+		return false;
-+	return damon_is_running(ctx);
- }
- 
- static int damon_lru_sort_enabled_store(const char *val,
- 		const struct kernel_param *kp)
- {
--	bool is_enabled = enabled;
--	bool enable;
- 	int err;
- 
--	err = kstrtobool(val, &enable);
-+	err = kstrtobool(val, &enabled);
- 	if (err)
- 		return err;
- 
--	if (is_enabled == enable)
-+	if (damon_lru_sort_enabled() == enabled)
- 		return 0;
- 
- 	/* Called before init function.  The function will handle this. */
- 	if (!ctx)
--		goto set_param_out;
-+		return 0;
- 
--	err = damon_lru_sort_turn(enable);
--	if (err)
--		return err;
-+	return damon_lru_sort_turn(enabled);
-+}
- 
--set_param_out:
--	enabled = enable;
--	return err;
-+static int damon_lru_sort_enabled_load(char *buffer,
-+		const struct kernel_param *kp)
-+{
-+	return sprintf(buffer, "%c\n", damon_lru_sort_enabled() ? 'Y' : 'N');
- }
- 
- static const struct kernel_param_ops enabled_param_ops = {
- 	.set = damon_lru_sort_enabled_store,
--	.get = param_get_bool,
-+	.get = damon_lru_sort_enabled_load,
- };
- 
- module_param_cb(enabled, &enabled_param_ops, &enabled, 0600);
- MODULE_PARM_DESC(enabled,
- 	"Enable or disable DAMON_LRU_SORT (default: disabled)");
- 
-+static int damon_lru_sort_kdamond_pid_store(const char *val,
-+		const struct kernel_param *kp)
-+{
-+	/*
-+	 * kdamond_pid is read-only, but kernel command line could write it.
-+	 * Do nothing here.
-+	 */
-+	return 0;
-+}
-+
-+static int damon_lru_sort_kdamond_pid_load(char *buffer,
-+		const struct kernel_param *kp)
-+{
-+	int kdamond_pid = -1;
-+
-+	if (ctx) {
-+		kdamond_pid = damon_kdamond_pid(ctx);
-+		if (kdamond_pid < 0)
-+			kdamond_pid = -1;
-+	}
-+	return sprintf(buffer, "%d\n", kdamond_pid);
-+}
-+
-+static const struct kernel_param_ops kdamond_pid_param_ops = {
-+	.set = damon_lru_sort_kdamond_pid_store,
-+	.get = damon_lru_sort_kdamond_pid_load,
-+};
-+
-+/*
-+ * PID of the DAMON thread
-+ *
-+ * If DAMON_LRU_SORT is enabled, this becomes the PID of the worker thread.
-+ * Else, -1.
-+ */
-+module_param_cb(kdamond_pid, &kdamond_pid_param_ops, NULL, 0400);
-+
- static int damon_lru_sort_handle_commit_inputs(void)
- {
- 	int err;
--- 
-2.47.3
+Also, does this preserve an unintended 1-based indexing regression?
 
+Prior to commit 66178e4ec30a, region directories were 0-indexed. By passing
+the already-incremented sysfs_regions->nr_regions to kobject_init_and_add(),
+the first region directory is named 1. This violates standard DAMON sysfs
+array conventions where targets, schemes, and filters all start at 0,
+potentially breaking user space tools.
+
+Should the code pass the unincremented sysfs_regions->nr_regions to
+kobject_init_and_add() and only increment it on the success path?
+
+Finally, this isn't a bug in this patch, but does the kobject release path
+have a lockless list manipulation issue that can cause a double-free?
+
+The function damon_sysfs_scheme_region_release() calls list_del(&region->li=
+st)
+without holding damon_sysfs_lock. If kobject_release() is delayed (for
+example, when CONFIG_DEBUG_KOBJECT_RELEASE is enabled), the region remains
+linked in sysfs_regions->regions_list after
+damon_sysfs_scheme_regions_rm_dirs() has called kobject_put() on it.
+
+If a subsequent command like update_schemes_tried_regions executes while the
+region is awaiting delayed release, damon_sysfs_scheme_regions_rm_dirs() wi=
+ll
+traverse the list and call kobject_put() a second time on the same
+zero-refcount object. Furthermore, when the delayed release finally execute=
+s,
+list_del() will run concurrently with other list operations without locks,
+resulting in list corruption.
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260512041157.1098=
+45-1-agarwal.vineet2006@gmail.com?part=3D1
