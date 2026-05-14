@@ -1,41 +1,51 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 462EE41325D;
-	Thu, 14 May 2026 14:09:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8442A423148;
+	Thu, 14 May 2026 14:09:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778767768; cv=none; b=t+TbQxfLFC+iM3GGVnfdyE933DhPNFLrP3MVKykTorXn7JR61wYz8gPEkESXWD1bvKsKOKxq2tSEDlqfrE3wgfSZ+rTXs2qCRS15ELbNfNhSB4JbizEtBiOyXAbaLSM99Jm1PL1RpJcEqFxVgFHBSYfchPF1tPVbfKW0ermKrkA=
+	t=1778767769; cv=none; b=CpaO3LaBa5JAodGvZaJ8JvZqM0cSIhqVeRIzMqsBNzJucTCAQjrfrly3Cqs+dL9dXLK5aBgZWBLJ2hl2KXvM/G1++rBNDXfTfUvSiBDa8a/27cNupSVM3JW5BAhK9lVGLymnBQiwlF74T66i7pONfCWyVbe7cG13sRp0bqLoDVo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778767768; c=relaxed/simple;
-	bh=NHAL5y/oPITnJCCLIJLmLCX0+940gzkr79MzQKjKl28=;
+	s=arc-20240116; t=1778767769; c=relaxed/simple;
+	bh=QiZyClLpM+jtGeAv4uUzZ2zYrmnjLH6QxsmmjjG7o5M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DcgzpjtLKmDEMPwSlmFRqNMfjQCOroRVuAJMe8o/JbdXYGRtPo5NwxxOdSxfUEeJSIUlERdyk7OUtpOfJQ+/ALJ6r4hoCsJqA5aX89sprgXf5rJlVdJotYrIqEQf9137/p28f65HOd9lDXyINH4rq+KfTOebCil3+pIIBNqwkbM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=u7v85GB5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=VrM6ZTW05Hl6cn8xmBKMpbkkI9qZA3c3q4GZDmBjnaJ0KSeFHjM7lrsZonr5gj8HKBU8U67UrQxVFWSODqkqk/iEJBFS/S+M4Y56RfZtWfTBtqd11hoO5UbXY3ZiiUjGCLn+7aUWggA/mDGQQtnzS05ouxLTlS7wC3BZG0mQ3yU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sDBNJdUJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="u7v85GB5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A624EC2BCB3;
-	Thu, 14 May 2026 14:09:27 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sDBNJdUJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A461BC2BCC7;
+	Thu, 14 May 2026 14:09:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778767767;
-	bh=NHAL5y/oPITnJCCLIJLmLCX0+940gzkr79MzQKjKl28=;
+	s=k20201202; t=1778767769;
+	bh=QiZyClLpM+jtGeAv4uUzZ2zYrmnjLH6QxsmmjjG7o5M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u7v85GB5adthVl0Gzie0AX6da+Fxt8P/DCoN9neudTZb+yxQ/k+RMBSxkQlNUv3w1
-	 gxB0tSOZPXZStHkyYJWswniAz1Os2fR7d3ULJmPBNNHJa4vaAqtaX/pgAxnkDLExQm
-	 0Ur3FtzZVU6A859QoDLWVJiIXGIM+p/zXjPT22zXvWizh2OhFWPIyQT2K5y3DwWnhu
-	 ShlqvtgbxSEDmZc0Pr6wCo1Z9sc/8YRK03ieQA5lvnosV3EDw5VwY+R8wptDPXyTfH
-	 4xePfda9d3AiV2TJPPOB7qihIJq+BOrpG2xqs3b9+Qgc/N0gjMqPN5Kj9ssakivPn5
-	 5W1kH5HXPvOOw==
+	b=sDBNJdUJQvuDbJbFCDy15+8/UKoJbIsU7vPDhbY3Fan+17yfUQNE3SkOIxk38e9J1
+	 0kxRuOXNwUuyXoHJFmVxzw/zDQXVT1d3oESt1vgWRRIpyn9Y3/3byNxcIDwyKM2x+b
+	 hgHAtDk6fY6uJceFx0Bob5PC9ltFeYH6wyXMff+dX0OyuNC4Igq8IvtyNcE827V+n2
+	 dvPi9uGHpKfW48z49oaOdccZ3kgtMCbod7LsEfpJ4UKHJK2pkR+YDzRzZ2GApTV/Xp
+	 ZWsyvWKBkpOTarFi6qF3TEyvJp0KS6qo2hACH4t59BqpBo4WYQo2Fw0pMs294Fj2hF
+	 W4Gr2ZuuJzAPw==
 From: SeongJae Park <sj@kernel.org>
 To: 
 Cc: SeongJae Park <sj@kernel.org>,
+	"Liam R. Howlett" <liam@infradead.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
+	David Hildenbrand <david@kernel.org>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@kernel.org>,
 	damon@lists.linux.dev,
+	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH v2.1 26/28] mm/damon/sysfs: setup damon_filter->memcg_id from path
-Date: Thu, 14 May 2026 07:08:59 -0700
-Message-ID: <20260514140904.119781-27-sj@kernel.org>
+Subject: [RFC PATCH v2.1 28/28] Docs/admin-guide/mm/damon/usage: update for memcg damon filter
+Date: Thu, 14 May 2026 07:09:01 -0700
+Message-ID: <20260514140904.119781-29-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260514140904.119781-1-sj@kernel.org>
 References: <20260514140904.119781-1-sj@kernel.org>
@@ -45,64 +55,40 @@ List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Find and set the memcg_id for damon_filter from the user-passed memory
-cgroup path when updating the DAMON input parameters.
+Update DAMON usage document for the newly added belonging memory cgroup
+attribute monitoring feature.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- include/linux/damon.h |  1 +
- mm/damon/core.c       |  2 +-
- mm/damon/sysfs.c      | 11 +++++++++++
- 3 files changed, 13 insertions(+), 1 deletion(-)
+ Documentation/admin-guide/mm/damon/usage.rst | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/include/linux/damon.h b/include/linux/damon.h
-index 3dec0947b93f0..6935cc3ea00ab 100644
---- a/include/linux/damon.h
-+++ b/include/linux/damon.h
-@@ -1004,6 +1004,7 @@ static inline unsigned long damon_sz_region(struct damon_region *r)
- struct damon_filter *damon_new_filter(enum damon_filter_type type,
- 		bool matching, bool allow);
- void damon_add_filter(struct damon_probe *probe, struct damon_filter *f);
-+void damon_destroy_filter(struct damon_filter *f);
+diff --git a/Documentation/admin-guide/mm/damon/usage.rst b/Documentation/admin-guide/mm/damon/usage.rst
+index 465bcdf89b182..84741b4cd1877 100644
+--- a/Documentation/admin-guide/mm/damon/usage.rst
++++ b/Documentation/admin-guide/mm/damon/usage.rst
+@@ -74,7 +74,7 @@ comma (",").
+     │ │ │ │ │ │ nr_regions/min,max
+     │ │ │ │ │ │ :ref:`probes <damon_usage_sysfs_probes>`/nr_probes
+     │ │ │ │ │ │ │ 0/filters/nr_filters
+-    │ │ │ │ │ │ │ │ │ 0/type,matching,allow
++    │ │ │ │ │ │ │ │ │ 0/type,matching,allow,path
+     │ │ │ │ │ │ │ │ │ ...
+     │ │ │ │ │ │ │ │ ...
+     │ │ │ │ │ :ref:`targets <sysfs_targets>`/nr_targets
+@@ -289,7 +289,9 @@ the data attribute for the probe.
+ In the beginning, ``filters`` directory has only one file, ``nr_filters``.
+ Writing a number (``N``) to the file creates the number of child directories
+ named ``0`` to ``N-1``.  Each directory represents each filter and work in a
+-way similar to that for :ref:`DAMOS filter <sysfs_filters>`.
++way similar to that for :ref:`DAMOS filter <sysfs_filters>`.  When the filter
++``type`` is ``memcg``, ``path`` file works the role of ``memcg_path`` for
++:ref:`DAMOS filter <sysfs_filters>`.
  
- struct damon_probe *damon_new_probe(void);
- void damon_add_probe(struct damon_ctx *ctx, struct damon_probe *probe);
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index 32c371c98a884..d74c58874f74c 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -143,7 +143,7 @@ static void damon_free_filter(struct damon_filter *f)
- 	kfree(f);
- }
+ .. _sysfs_targets:
  
--static void damon_destroy_filter(struct damon_filter *f)
-+void damon_destroy_filter(struct damon_filter *f)
- {
- 	damon_del_filter(f);
- 	damon_free_filter(f);
-diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
-index 2b68e1a7de451..0b7b0ef345cc8 100644
---- a/mm/damon/sysfs.c
-+++ b/mm/damon/sysfs.c
-@@ -1927,6 +1927,17 @@ static int damon_sysfs_set_probes(struct damon_ctx *ctx,
- 					sys_filter->allow);
- 			if (!filter)
- 				return -ENOMEM;
-+			if (filter->type == DAMON_FILTER_TYPE_MEMCG) {
-+				int err;
-+
-+				err = damon_sysfs_memcg_path_to_id(
-+						sys_filter->path,
-+						&filter->memcg_id);
-+				if (err) {
-+					damon_destroy_filter(filter);
-+					return err;
-+				}
-+			}
- 			damon_add_filter(c, filter);
- 		}
- 	}
 -- 
 2.47.3
