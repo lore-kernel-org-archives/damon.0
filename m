@@ -1,94 +1,98 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8442A423148;
-	Thu, 14 May 2026 14:09:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1009140B6EB;
+	Thu, 14 May 2026 14:41:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778767769; cv=none; b=CpaO3LaBa5JAodGvZaJ8JvZqM0cSIhqVeRIzMqsBNzJucTCAQjrfrly3Cqs+dL9dXLK5aBgZWBLJ2hl2KXvM/G1++rBNDXfTfUvSiBDa8a/27cNupSVM3JW5BAhK9lVGLymnBQiwlF74T66i7pONfCWyVbe7cG13sRp0bqLoDVo=
+	t=1778769690; cv=none; b=B0xx5W1OcmbzXR26+LUoQjUxWFflJX/mCBtpCRvMVr/CcFUlSzZPHwlNf9dxYtZfkE+51UdaQm+E3vEOKsrw8VfbO1KgD+KRzzewhu0+RRz0pFSmILd7RUkmJIJ3tbRAe9fm/2wOxaqQ1U067uXmb/Yalnls+uwZvspmIRb7Dtw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778767769; c=relaxed/simple;
-	bh=QiZyClLpM+jtGeAv4uUzZ2zYrmnjLH6QxsmmjjG7o5M=;
+	s=arc-20240116; t=1778769690; c=relaxed/simple;
+	bh=KtWX1a5+HImqtCKe3Jka4nlb3lpWuqaCAeSX6uYt13w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=VrM6ZTW05Hl6cn8xmBKMpbkkI9qZA3c3q4GZDmBjnaJ0KSeFHjM7lrsZonr5gj8HKBU8U67UrQxVFWSODqkqk/iEJBFS/S+M4Y56RfZtWfTBtqd11hoO5UbXY3ZiiUjGCLn+7aUWggA/mDGQQtnzS05ouxLTlS7wC3BZG0mQ3yU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sDBNJdUJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=J6pRYcU0goxOdhkeepAR/TnfLQQmS/l3ipRI3OWFrcUWAoFaLp13GQf0ysc7HxfKKsKYOa/tZd0nTAAeODN9XpeK4UvA0V7EydXgPwxyZ2DSJslN+6sT7C9KwQkQU+UOiJlUXIWhjvkm+FH4F5fVZ3GHILq/bvi+CZokasakcEk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AUIJYMgR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sDBNJdUJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A461BC2BCC7;
-	Thu, 14 May 2026 14:09:28 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AUIJYMgR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79155C2BCB3;
+	Thu, 14 May 2026 14:41:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778767769;
-	bh=QiZyClLpM+jtGeAv4uUzZ2zYrmnjLH6QxsmmjjG7o5M=;
+	s=k20201202; t=1778769689;
+	bh=KtWX1a5+HImqtCKe3Jka4nlb3lpWuqaCAeSX6uYt13w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sDBNJdUJQvuDbJbFCDy15+8/UKoJbIsU7vPDhbY3Fan+17yfUQNE3SkOIxk38e9J1
-	 0kxRuOXNwUuyXoHJFmVxzw/zDQXVT1d3oESt1vgWRRIpyn9Y3/3byNxcIDwyKM2x+b
-	 hgHAtDk6fY6uJceFx0Bob5PC9ltFeYH6wyXMff+dX0OyuNC4Igq8IvtyNcE827V+n2
-	 dvPi9uGHpKfW48z49oaOdccZ3kgtMCbod7LsEfpJ4UKHJK2pkR+YDzRzZ2GApTV/Xp
-	 ZWsyvWKBkpOTarFi6qF3TEyvJp0KS6qo2hACH4t59BqpBo4WYQo2Fw0pMs294Fj2hF
-	 W4Gr2ZuuJzAPw==
+	b=AUIJYMgRENypM1B0KnhPeo2fSIQOWNzFRHuzth1o0hjdQA0KJSsOloaIHlceXG1cd
+	 0FeCoDfOxFzwzwoz9gBJlKBMPZsDEZQbsTlifpxbo1/2/x4c9IKjx5VlyEctNKPxsf
+	 xT5z+vmnv1y6EylFxPV6b0TzEdiZRWELw9+Ve6R/nJp6guyiVuoZu1SOe7RYNR9WnP
+	 ArwJB3OzlvX5FMFg/LVfmfLgwECtJZNLxuy3BLlrnTo02+pwOJm/Naspzha/qiWMed
+	 TM4Z3m114XLlG/0Ks+pI5F292WUcMqSMQknraHNkiKoa5mhCBIOyvDy5w3+BYSR7uy
+	 jRKk8hC8RllnA==
 From: SeongJae Park <sj@kernel.org>
-To: 
+To: niecheng <niecheng1@uniontech.com>
 Cc: SeongJae Park <sj@kernel.org>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	David Hildenbrand <david@kernel.org>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	Michal Hocko <mhocko@suse.com>,
-	Mike Rapoport <rppt@kernel.org>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Vlastimil Babka <vbabka@kernel.org>,
+	akpm@linux-foundation.org,
 	damon@lists.linux.dev,
-	linux-doc@vger.kernel.org,
+	linux-mm@kvack.org,
 	linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org
-Subject: [RFC PATCH v2.1 28/28] Docs/admin-guide/mm/damon/usage: update for memcg damon filter
-Date: Thu, 14 May 2026 07:09:01 -0700
-Message-ID: <20260514140904.119781-29-sj@kernel.org>
+	kernel@uniontech.com
+Subject: Re: [PATCH] mm/damon/core: recalculate intervals tuning deadline on attrs update
+Date: Thu, 14 May 2026 07:41:02 -0700
+Message-ID: <20260514144102.120203-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260514140904.119781-1-sj@kernel.org>
-References: <20260514140904.119781-1-sj@kernel.org>
+In-Reply-To: <7946CE4E0773AEF7+20260514074846.3258908-1-niecheng1@uniontech.com>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Update DAMON usage document for the newly added belonging memory cgroup
-attribute monitoring feature.
+Hello Nicheng,
 
-Signed-off-by: SeongJae Park <sj@kernel.org>
----
- Documentation/admin-guide/mm/damon/usage.rst | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+On Thu, 14 May 2026 15:48:46 +0800 niecheng <niecheng1@uniontech.com> wrote:
 
-diff --git a/Documentation/admin-guide/mm/damon/usage.rst b/Documentation/admin-guide/mm/damon/usage.rst
-index 465bcdf89b182..84741b4cd1877 100644
---- a/Documentation/admin-guide/mm/damon/usage.rst
-+++ b/Documentation/admin-guide/mm/damon/usage.rst
-@@ -74,7 +74,7 @@ comma (",").
-     │ │ │ │ │ │ nr_regions/min,max
-     │ │ │ │ │ │ :ref:`probes <damon_usage_sysfs_probes>`/nr_probes
-     │ │ │ │ │ │ │ 0/filters/nr_filters
--    │ │ │ │ │ │ │ │ │ 0/type,matching,allow
-+    │ │ │ │ │ │ │ │ │ 0/type,matching,allow,path
-     │ │ │ │ │ │ │ │ │ ...
-     │ │ │ │ │ │ │ │ ...
-     │ │ │ │ │ :ref:`targets <sysfs_targets>`/nr_targets
-@@ -289,7 +289,9 @@ the data attribute for the probe.
- In the beginning, ``filters`` directory has only one file, ``nr_filters``.
- Writing a number (``N``) to the file creates the number of child directories
- named ``0`` to ``N-1``.  Each directory represents each filter and work in a
--way similar to that for :ref:`DAMOS filter <sysfs_filters>`.
-+way similar to that for :ref:`DAMOS filter <sysfs_filters>`.  When the filter
-+``type`` is ``memcg``, ``path`` file works the role of ``memcg_path`` for
-+:ref:`DAMOS filter <sysfs_filters>`.
- 
- .. _sysfs_targets:
- 
--- 
-2.47.3
+> damon_set_attrs() refreshes next_aggregation_sis and
+> next_ops_update_sis for online monitoring attribute updates, but it
+> does not refresh next_intervals_tune_sis.
+> 
+> Because of that, enabling intervals auto-tuning via an online attrs
+> commit can leave next_intervals_tune_sis stale.  If a context starts
+> with intervals_goal.aggrs == 0 and later updates attrs online to set it
+> non-zero, kdamond_fn() can treat the tuning deadline as already expired
+> and tune the intervals earlier than intended.
+> 
+> This has been possible since the intervals auto-tuning feature was
+> introduced, because that commit initialized the deadline at kdamond
+> start but did not refresh it on later attrs updates.
+
+Good finding, thank you for sharing this!
+
+But, the next_interval_tune_sis will be updated based on the updated
+aggregation and sampling intervals, just before the next intervals tuning is
+made.
+
+In detail, the code flow of the kdamond_fn() main loop is like below:
+
+- call kdamond_call()
+  - call damon_set_attrs()
+    - update aggregation and sampling intervals
+- if passed_ample_intervals >= next_intervals_tune_sis:
+  - update next_intervals_tune_sis with updated aggregation and sampling
+    intervals
+  - call kdamond_tune_intervals()
+
+So, the old next_intervals_tune_sis will be used only once.  I agree not
+everyone will think it is the best behavior.  But seems ok to me.  I'd like to
+keep the current code in favor of less complexity.  What do you think?
+
+Nevertheless, apparently the code can better be documented.  Maybe it is worthy
+to add a comment about this.  For example, maybe it is better to add a comment
+saying "next_intervals_tune_sis will be updated inside kdamond_fn()" on the
+damon_set_attrs().  If you'd like to, please feel free to post such a patch.
+
+
+Thanks,
+SJ
+
+[...]
