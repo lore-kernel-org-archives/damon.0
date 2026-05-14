@@ -1,105 +1,148 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7C68322C88
-	for <damon@lists.linux.dev>; Thu, 14 May 2026 01:51:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0354C1F03D9
+	for <damon@lists.linux.dev>; Thu, 14 May 2026 01:56:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778723473; cv=none; b=i3Lur8jMYv6/53HRTb9Q11utHt2f8Lzamtg0TRpi+jQuRVCvKVDjqa4GNF4UNJ2tIcvbV98Af/dq8anJqOTvkgSyVw64qZ4zc0sEykQBS1XGGEfq42Xt79AHIdGys++1n80LPkQnfNQ71wjveo2bY9CJ3UAp6TcbpvRm4dB+3rw=
+	t=1778723781; cv=none; b=ZywQHrqCv+YmUQD7j3k4+t3AfzdSasaD0s0zsl2EGkMGXexLWhQh6weW4j9AlBZcijv0qnTUh/T3SwNvcC1WDAm5Vv1XlYeA4xReBS9XwUOd13CBb+B4B0kNmIcLWslZXnzBRShaY70JmbneOuwHjKDUjC0b7xlRru+DaXhp2no=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778723473; c=relaxed/simple;
-	bh=7+RERo0xWMaLLJFcvYZj6Lf9liM5jjgi7yIJVLn44XY=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=WFX98maSHJ6OII+5UMMx+05M6a32LfhrfimgQ1gaF33gecpOf7SKJC/fqF9VOtJmuaLeq0Zm0fhmFyQxxwaZSUq7qd91B0xNCqCMnNhRvDczRz+LTxwX9WI/CfmX4bbDNKnGJL1nP8mgummk4LuGXv2JjoeWYBqNdUGac8B+EPY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RNWZ9A6O; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1778723781; c=relaxed/simple;
+	bh=vp53Y2wZtkeXzmpD/R5GyUpDYYT4lk+f7b4w37LNqTQ=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=W9l968HP1l0ZyhM/Mq0Y/kGWqLcxt7bqWT8kFo3YcgTuDuaVmo95kvzb84NgFmyCwVM7EOu8EYSbFykZE60PCz2rm7/uD8eRcZFRlhrFSEht4bFKkD9nyAmNPsu8R3XKMXanMprJH03J8tMfyHnSrASTEGh6+EmzFkwFMntVCDc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JcMcHhzP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RNWZ9A6O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15357C19425;
-	Thu, 14 May 2026 01:51:13 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JcMcHhzP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBD3FC19425;
+	Thu, 14 May 2026 01:56:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778723473;
-	bh=7+RERo0xWMaLLJFcvYZj6Lf9liM5jjgi7yIJVLn44XY=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RNWZ9A6OWv368WP3tzxRRroWWVEiaYgw4eHuSmikYOmF4tVFp/SoS8XCyje5I5nIs
-	 789JoGNU0V8EKaQJspkPGMUwCV+J9/qjesUSO40JKgvxKxK/2cITtfThvjrt3UmtLq
-	 RqvRLdTXIP6EOTrHWIIgmt7nsFnYCkg8tdu1r7zJbgNv77g9wu2dZwvKjz4czpuIDy
-	 OUTiN8la+BwKKmKZDnwbihr9TS0/IgNoaEt3r+DOtiR9cDLkGepZKlHqngZYH9fP8C
-	 efzukO32T3nV/0ktO2JyD2oiPPZBEaTI9xPXqvlSdHl/hdaFxwo3DT8WMRRHVcOwW6
-	 javYwD/iq7GeA==
-From: SeongJae Park <sj@kernel.org>
-To: sashiko-bot@kernel.org
-Cc: SeongJae Park <sj@kernel.org>,
-	"Kefeng Wang" <wangkefeng.wang@huawei.com>,
-	damon@lists.linux.dev,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: Re: [PATCH v2] mm/damon/vaddr: attempt per-vma lock during page table walk
-Date: Wed, 13 May 2026 18:50:52 -0700
-Message-ID: <20260514015053.149396-1-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260513225204.4157FC19425@smtp.kernel.org>
-References: 
+	s=k20201202; t=1778723780;
+	bh=vp53Y2wZtkeXzmpD/R5GyUpDYYT4lk+f7b4w37LNqTQ=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date:From;
+	b=JcMcHhzP/aK161Il0ljNanmYnXYvRNgTq+3zJ6ohUDPe/i1ZYm7y52fQmrKF4GGHV
+	 H50GBvWOwX9ArEHatSxNWm/s/gzeC5pTOBZep4Voc4CQbenPTMnDcrlLpw7cVbB+Fs
+	 bADZMREZ8JlHisBr9aCVtKXhh8JEkzG8gHxNyCx9wrpz5cuKubeE3GcLwbWt2Ryg55
+	 mjEBXX84W6UFc4UETxHy4Aoqz7TKYAraa8e7u3iv9Cs6XYwquL2Q3nj4BDmGVZDs+S
+	 0lGvaFGFySH8/gA1SaSpJAvj6xdzlFvlSRCanqjBsLWtBF/QJn2N7NsJBv6Td2UioS
+	 vTz1SxarwKo3w==
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH 6.18.y 2/2] mm/damon/lru_sort: detect and use fresh
+ enabled and kdamond_pid values
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "SeongJae Park" <sj@kernel.org>
+Cc: damon@lists.linux.dev
+In-Reply-To: <20260513034229.131258-2-sj@kernel.org>
+References: <20260513034229.131258-2-sj@kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Thu, 14 May 2026 01:56:20 +0000
+Message-Id: <20260514015620.BBD3FC19425@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
 
-On Wed, 13 May 2026 22:52:03 +0000 sashiko-bot@kernel.org wrote:
+Thank you for your contribution! Sashiko AI review found 1 potential issue(=
+s) to consider:
+- [High] NULL pointer dereference in damon_lru_sort_enabled_store if module=
+ initialization fails.
+--
 
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] `damos_va_migrate_pmd_entry` and `damos_va_stat_pmd_entry` incorrectly advance iteration by the full folio size, skipping unrelated PTEs for mTHP.
-> --
-> 
-> commit 25c04a646a951de8c86c5c718af6cfc459b7b5e0
-> Author: Kefeng Wang <wangkefeng.wang@huawei.com>
-> 
-> mm/damon/vaddr: attempt per-vma lock during page table walk
-> 
-> Currently, DAMON virtual address operations use mmap_read_lock
-> during page table walks, which can cause unnecessary contention
-> under high concurrency.
-> 
-> > diff --git a/mm/damon/vaddr.c b/mm/damon/vaddr.c
-> > index 1b0ebe3b6951e..d271476035641 100644
-> > --- a/mm/damon/vaddr.c
-> > +++ b/mm/damon/vaddr.c
-> [ ... ]
-> > @@ -750,7 +773,6 @@ static unsigned long damos_va_migrate(struct damon_target *target,
-> >  	struct mm_walk_ops walk_ops = {
-> >  		.pmd_entry = damos_va_migrate_pmd_entry,
-> >  		.pte_entry = NULL,
-> > -		.walk_lock = PGWALK_RDLOCK,
-> >  	};
-> 
-> This isn't a regression from this patch,
+commit 1c4b8a292830197d1c3c21bb2ed871fd37b99120
+Author: SeongJae Park <sj@kernel.org>
 
-Yes, no blocker for this patch.
+mm/damon/lru_sort: detect and use fresh enabled and kdamond_pid values
 
-> but there appears to be a pre-existing
-> issue in damos_va_migrate_pmd_entry() and damos_va_stat_pmd_entry() when
-> handling large folios.
-> 
-> In the PTE iteration loops, when a large folio is found, the code sets
-> nr = folio_nr_pages(folio) and updates pte += nr and addr += nr * PAGE_SIZE.
-> 
-> Could this skip unrelated PTEs if the iteration started on a tail page of this
-> folio (e.g., halfway into an mTHP)?
-> 
-> Advancing by the full folio size could overshoot the end of the folio and skip
-> unrelated PTEs mapped immediately after it within the same PMD.
-> 
-> Would it be better to subtract the offset within the folio to safely skip only
-> the remaining pages of the current folio?
+This patch updates DAMON_LRU_SORT to dynamically detect and use the fresh
+status for the enabled and kdamond_pid parameters when requested. This
+avoids stale parameter values if kdamond is stopped unintentionally.
 
-The user impact should be minor, but makes sense.  I will work on this.
+Link: https://lore.kernel.org/20260419161003.79176-3-sj@kernel.org
 
+> diff --git a/mm/damon/lru_sort.c b/mm/damon/lru_sort.c
+> index 42b9a656f9ded..0c2274fefd763 100644
+> --- a/mm/damon/lru_sort.c
+> +++ b/mm/damon/lru_sort.c
 
-Thanks,
-SJ
+[ ... ]
 
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260512151523.2092638-1-wangkefeng.wang@huawei.com?part=1
+> @@ -330,42 +316,83 @@ module_param_cb(addr_unit, &addr_unit_param_ops, &a=
+ddr_unit, 0600);
+>  MODULE_PARM_DESC(addr_unit,
+>  	"Scale factor for DAMON_LRU_SORT to ops address conversion (default: 1)=
+");
+> =20
+> +static bool damon_lru_sort_enabled(void)
+> +{
+> +	if (!ctx)
+> +		return false;
+> +	return damon_is_running(ctx);
+> +}
+> +
+>  static int damon_lru_sort_enabled_store(const char *val,
+>  		const struct kernel_param *kp)
+>  {
+> -	bool is_enabled =3D enabled;
+> -	bool enable;
+>  	int err;
+> =20
+> -	err =3D kstrtobool(val, &enable);
+> +	err =3D kstrtobool(val, &enabled);
+>  	if (err)
+>  		return err;
+> =20
+> -	if (is_enabled =3D=3D enable)
+> +	if (damon_lru_sort_enabled() =3D=3D enabled)
+>  		return 0;
+> =20
+>  	/* Called before init function.  The function will handle this. */
+>  	if (!damon_initialized())
+> -		goto set_param_out;
+> +		return 0;
+> =20
+> -	err =3D damon_lru_sort_turn(enable);
+> -	if (err)
+> -		return err;
+> +	return damon_lru_sort_turn(enabled);
+
+Can this result in a NULL pointer dereference if the module initialization
+fails?
+
+If damon_lru_sort_init() fails during boot (for instance, due to memory
+allocation failure), ctx remains NULL. Since CONFIG_DAMON_LRU_SORT
+parameters are registered as built-in module parameters, writing 'Y' to
+/sys/module/damon_lru_sort/parameters/enabled will invoke
+damon_lru_sort_enabled_store().
+
+In this scenario:
+- damon_lru_sort_enabled() safely returns false (due to !ctx).
+- The damon_lru_sort_enabled() =3D=3D enabled check is bypassed (false !=3D=
+ true).
+- damon_initialized() returns true (since the DAMON core initialized).
+- damon_lru_sort_turn(true) is executed.
+
+This leads to damon_lru_sort_apply_parameters() calling
+damon_commit_ctx(ctx, param_ctx), which unconditionally dereferences the
+NULL ctx, leading to a kernel panic.
+
+Should there be an explicit if (!ctx) check in
+damon_lru_sort_enabled_store() to prevent this, similar to how it was
+added to the read paths?
+
+While this vulnerability is not strictly introduced by this patch, the patch
+misses the opportunity to fix it while addressing ctx nullability in the
+read paths. The same vulnerability also appears to be present in sibling
+modules mm/damon/reclaim.c and mm/damon/stat.c.
+
+> +}
+> =20
+> -set_param_out:
+> -	enabled =3D enable;
+> -	return err;
+> -}
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/2026051240-quickly-=
+effective-c901@gregkh?part=3D2
