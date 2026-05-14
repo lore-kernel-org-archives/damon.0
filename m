@@ -1,69 +1,86 @@
-Received: from relay.hostedemail.com (smtprelay0016.hostedemail.com [216.40.44.16])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F27EE1EFF8D
-	for <damon@lists.linux.dev>; Thu, 14 May 2026 00:32:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=216.40.44.16
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D00B31A053
+	for <damon@lists.linux.dev>; Thu, 14 May 2026 01:39:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778718758; cv=none; b=TF65KKsDogEp1GbrxzrVXz/4aYNGp2gwwO3rtEZM6lLczMlyhgs9iy6NCwYIOQlmp4SzS3m5kdUCUOghyLhe56ceOZnSfO2v3ojsavEks//ln6zyL2pPV+d8WEy3EW+E1SyF1T8bmhwezwreNVxrpa+cxYQ+mEDl5Na69Iq4eoo=
+	t=1778722764; cv=none; b=fca2MeQILKyLJVbQPb21eErD/bd9WOxClqTtQas16Gib8FhSq3NJjNamOKsYAy9MBp82clROwSTA/LpSF7CpzwUIdQMAcL3I+aqkvdFngs7wry9NNCtkHaZGeWMPGJbC2bbxpVVFpgyDLSHrRO1Sm+8kG09DfgXmCGAyqXaTuzA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778718758; c=relaxed/simple;
-	bh=MlheWmyjXEB6BHVgMjFxsi+UzAGS8IB1SAGTwLQSJg0=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=WTy/mE6qQLBYU9siwBOFw0HSK2/Z3K8Fd497yIMwkC9SEFveTmS8sbLgMhAyFG9pHDwhBvMmAi+ZcFrLiWu/NIb0aH73DaZtdVA8JwYmSfVI4hC2m8TO+bKBfTrqAbLhD0B91o+v7DNYBiqee55JAdQNY2/CFsXiIux8HSWjxE8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=goodmis.org; spf=pass smtp.mailfrom=goodmis.org; arc=none smtp.client-ip=216.40.44.16
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=goodmis.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=goodmis.org
-Received: from omf02.hostedemail.com (lb01a-stub [10.200.18.249])
-	by unirelay01.hostedemail.com (Postfix) with ESMTP id 94A191C11E9;
-	Thu, 14 May 2026 00:32:35 +0000 (UTC)
-Received: from [HIDDEN] (Authenticated sender: rostedt@goodmis.org) by omf02.hostedemail.com (Postfix) with ESMTPA id 796CC80012;
-	Thu, 14 May 2026 00:32:33 +0000 (UTC)
-Date: Wed, 13 May 2026 20:32:37 -0400
-From: Steven Rostedt <rostedt@goodmis.org>
-To: SeongJae Park <sj@kernel.org>
-Cc: Andrew Morton <akpm@linux-foundation.org>, Masami Hiramatsu
- <mhiramat@kernel.org>, Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
- damon@lists.linux.dev, linux-kernel@vger.kernel.org, linux-mm@kvack.org,
- linux-trace-kernel@vger.kernel.org
-Subject: Re: [RFC PATCH v2 18/28] mm/damon: trace probe_hits
-Message-ID: <20260513203237.3b1b3286@gandalf.local.home>
-In-Reply-To: <20260514000611.147809-1-sj@kernel.org>
-References: <20260513140732.2320c563@gandalf.local.home>
-	<20260514000611.147809-1-sj@kernel.org>
-X-Mailer: Claws Mail 3.20.0git84 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
+	s=arc-20240116; t=1778722764; c=relaxed/simple;
+	bh=DBad2DZ//DthS4EItJjd6MowoY0YFq4oOycgX5SF3+w=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=Dx3dPfbvOqct1FB98kVC3W3oPoyn0iY5I+uibi2TvoZjYPCYTWY2oQj/eRcahAziydcIV1QQZq4UqOB0+LLf4VmpwTc4tgFf4fhfLYtW/WXIlJbaWDJ92seq73EIpIXaHYWLY6EbsOnmYGYrv0vEjaFBIWgSgfW8ibqopWI16RY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KgZJaHmB; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KgZJaHmB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20D23C19425;
+	Thu, 14 May 2026 01:39:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1778722764;
+	bh=DBad2DZ//DthS4EItJjd6MowoY0YFq4oOycgX5SF3+w=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date:From;
+	b=KgZJaHmBZQpW4GHZUR6Ikkgm/g331RMLdqJihqkRxeM02SfUG7hLPqWAidKIOo+if
+	 BySC00Wva5vGo/GkPEdZIoA86F44Taz8eWR2f/vVZnvrXL60swjPq90/r72Tkbi9II
+	 /lmp9WrKvpN92uo8viYO12+vUcZb1/kAoZK2Hv9l23ljUrvVClrYi1vgQzf+oczkuu
+	 +3nCL/947AsrDbin57FaktmbjHrjKaWRLXAjyiMLsKYTx8MDuRBh+XjtlDs4WN1lwm
+	 Sw6XySRpu0bahhcNdhUPAtyU6GcuGTACMPLaBqzTNUsm19Mk/CbD2T9eLUOQAr9Vms
+	 l6JtRbLO9/sZQ==
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH 6.1.y 1/2] mm/damon/core: implement damon_kdamond_pid()
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "SeongJae Park" <sj@kernel.org>
+Cc: damon@lists.linux.dev
+In-Reply-To: <20260513043039.173237-1-sj@kernel.org>
+References: <20260513043039.173237-1-sj@kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Thu, 14 May 2026 01:39:23 +0000
+Message-Id: <20260514013924.20D23C19425@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-X-Rspamd-Queue-Id: 796CC80012
-X-Stat-Signature: a8bs8djjyouc63otxh8x4mur35woi7mp
-X-Rspamd-Server: rspamout01
-X-Session-Marker: 726F737465647440676F6F646D69732E6F7267
-X-Session-ID: U2FsdGVkX19Drorz1uVBPoiFEF9d3VmNbUHBoYhgttA=
-X-HE-Tag: 1778718753-409660
-X-HE-Meta: U2FsdGVkX19Fgcfxj6eEgZI8dKFbLpf3CMGSFuh5fZTv07YYNZP9ski4yfmKIMbsARMuVUCfLSrPQXuwW9Jt7Au1AA0c1h/ZIBB4uQTIbG98QG3Ee73ZN1eDgDn/Z1EyKwocs/O1qW/KmP75roahgjgWdjydR/Nq+Z1z04eg6gqXBFLrEYRjZUvG3Pm6HN3j2gVo5MUsmJwsTtmtymnYa9FKJdnMwdS/D28AEhzR7aMDtUFszLxgd6LgUHk6Uhxrh39GzCorwekrxYt9Os2wku+Kg+jKYmeB40a0G1XyurZOZcs5k4W+8mXsNNtsIxm74kVhvQl97Cf7dIbVv4GRIdHXpgJ+TTSr
 
-On Wed, 13 May 2026 17:06:10 -0700
-SeongJae Park <sj@kernel.org> wrote:
+Thank you for your contribution! Sashiko AI review found 1 potential issue(=
+s) to consider:
+- [Medium] The commit message references a non-existent function `damon_is_=
+running()` and makes inaccurate claims about the current state of API calle=
+rs.
+--
 
-> Btw, if you don't mind, may I ask your opinion about the name having '_v2'
-> suffix?  I chose that as an RFC phase temporal name that doesn't break the
-> compatibility, planning to give it a better name later.  But I start feeling
-> just extending the original one might be another option because tracepoints are
-> not strict stable ABI to my understanding, and the change of the TP_prink
-> format should be simple enough (append the probe_hits= part) that the user
-> space could reasonably deal with.
+commit 79a54a37fc83e2191edada566d0eb1ab79303fd8
+Author: SeongJae Park <sj@kernel.org>
 
-It's only a stable ABI if some useful userspace tooling depends on it.
-Otherwise, feel free to change.
+mm/damon/core: implement damon_kdamond_pid()
 
-Nothing really should be parsing the TP_printk() format part as it is
-really inefficient to do so. That's why I created libtraceevent and
-libtracefs to do the parsing of the raw data for you.
+This commit hides the kdamond and kdamond_lock fields from DAMON API callers
+by implementing a new damon_kdamond_pid() function to retrieve the worker
+thread's PID.
 
--- Steve
+Link: https://lkml.kernel.org/r/20260115152047.68415-1-sj@kernel.org
+Link: https://lkml.kernel.org/r/20260115152047.68415-2-sj@kernel.org
+
+> For the first use case, a dedicated API function, namely
+> 'damon_is_running()' is provided, and all DAMON API callers are using the
+> function for the use case.
+
+Is damon_is_running() actually present in the codebase at this point?
+
+The commit message states that damon_is_running() is provided and all API
+callers are using it, but it appears this function does not exist in the
+codebase at the time of this commit. It seems to only be introduced in the
+subsequent patch "mm/damon/lru_sort: detect and use fresh enabled and
+kdamond_pid values" as a backported dependency.
+
+Furthermore, API callers like mm/damon/sysfs.c (via
+damon_sysfs_ctx_running()) still directly check ctx->kdamond !=3D NULL under
+kdamond_lock.
+
+Could this description be inaccurate, perhaps due to patches being applied
+out of order during a backport?
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/2026051243-crevice-=
+spool-75d8@gregkh?part=3D1
