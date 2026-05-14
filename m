@@ -1,81 +1,88 @@
-Received: from out-188.mta0.migadu.com (out-188.mta0.migadu.com [91.218.175.188])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A31A7390990
-	for <damon@lists.linux.dev>; Thu, 14 May 2026 22:28:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.188
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 073B9D531;
+	Thu, 14 May 2026 23:45:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778797692; cv=none; b=Jc6vg31YoGoYMHTlWPSrpstV51nSiNRxRve+BPr+Z7SM+PvyMyWQAKokQqmPS5g6SNl/V+n3N2vHS0jjgumg3uNijgi3q/1C0m1gUuBbrYZfviHwFPvlbfSW5dfXjzCi7J0qGPXKG6UbqLpj3jXbz5OzB2Lo8HYK/+wCLUWW0+k=
+	t=1778802357; cv=none; b=HuGepWg9h9b6RedmP86O+0Bmm6AFcPB35hFOALkg6L7muudzetvG/fker4ndzkVO4GOwe/apMoWWkl8Wce1y4h6T1qQ5QFsYe8AtPvm68Vz4Tq7Q1kqU/V+mN3u4BqP4tbvOKIRlKEqxzI1lZyk5dT5xT6oBIujnb5y+PGy4Yqo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778797692; c=relaxed/simple;
-	bh=yocSHA6mtMitwpJgEJ++nHtgXbYW8U5lSR1gVEr0FGU=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=dZr2WSm1cmnjMMKoxjo0qabOGmCb/kjj2x98BFNjQ16UpQARrIaartYSKnAOjx8aJWbwU/hIHeZeJJWgwmwQ2+07fUVJe9COOI2sHYFXCer7R4wZAK1JC82NPppxH6HMEAkqhokBVN9Clsx4v2sSDppWy2bTCTRDwCKdV1OOSUw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=d/s13rNg; arc=none smtp.client-ip=91.218.175.188
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1778802357; c=relaxed/simple;
+	bh=bsHRd/vwPkavOuwpmuRZxnPcYjM2v93dFITdwXzhbuA=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=AVbDqP7QJHGrza7OKIsqDsRpysTC/iP7mEVqK8L7vSetQC/CkfEjtlieKDs79MquaDz40CUGRIdhPLwhDeWOquAp2TqOKcV0vUB+QpQ0fWZO93I3sV1vrtvWpf6GmSXXpcYTSc7FsbKe7rsk7L3sV6KfmlhqGtvk5h3ml8s5DOc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RedXKoAv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="d/s13rNg"
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1778797678;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=35+aOLZYCJOIgr3hdyL+9n448Kqo/As9pT7sb3XObfQ=;
-	b=d/s13rNggnjd7bnd4CNJqRtLbTaO+0gieeY5kpQZngzdcmR1TskTLgD3Ucf5ekWo57Gwpm
-	E2S5xDhJeZfKxHB9ItTdqZZ37GZ81Ox6YxVLwnr2KCMXtaMuRmjjmuRZEQoFntltMMC9cT
-	I53KeCqCM74QEfkWtMwtsOOFfBcxUjc=
-From: Roman Gushchin <roman.gushchin@linux.dev>
-To: SeongJae Park <sj@kernel.org>
-Cc: sashiko@lists.linux.dev,  damon@lists.linux.dev
-Subject: Re: When Sashiko updates baselines?
-In-Reply-To: <20260514205555.51653-1-sj@kernel.org> (SeongJae Park's message
-	of "Thu, 14 May 2026 13:55:55 -0700")
-References: <20260514205555.51653-1-sj@kernel.org>
-Date: Thu, 14 May 2026 22:27:53 +0000
-Message-ID: <7ia4pl2x62za.fsf@castle.c.googlers.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RedXKoAv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83479C2BCB3;
+	Thu, 14 May 2026 23:45:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1778802356;
+	bh=bsHRd/vwPkavOuwpmuRZxnPcYjM2v93dFITdwXzhbuA=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=RedXKoAvi8JZueyphlsZY/3r+qSX8OBulmGj2OvNmTJl0Guu49m0dw12EaEmP+/Bl
+	 jzQ3eR/yz8IzZKawJNDOgt8GGUI5XVg3t4MffMaS2amLkfJNL1mvcdAbkH6QkuGEX6
+	 aPLIrEa3vUIW2uF3IGFWsXFGcM4SJj4enGEXwdaMfxbAqEJvk0M7/xfQMMog0rtaxP
+	 x0rE/A/aUyEItcBFmyPQha+0mkNzhiGmEZ6VIgWhQSMmVqgD4nmS8Y7bL8wbvzT1CI
+	 r1E4FiflOgA/1RbL1O/IylOUx735eCnuXKxXiE+MINFbm5bqjaYOMrhkHvR+oKH5o2
+	 9RxqkyxQjItZA==
+From: SeongJae Park <sj@kernel.org>
+To: niecheng <niecheng1@uniontech.com>
+Cc: SeongJae Park <sj@kernel.org>,
+	akpm@linux-foundation.org,
+	damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org,
+	kernel@uniontech.com
+Subject: Re: [PATCH] mm/damon/core: clarify next_intervals_tune_sis update path
+Date: Thu, 14 May 2026 16:45:09 -0700
+Message-ID: <20260514234510.123948-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <D3B0C1F5BB6ADCE4+20260514163751.3399513-1-niecheng1@uniontech.com>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Migadu-Flow: FLOW_OUT
+Content-Transfer-Encoding: 8bit
 
-SeongJae Park <sj@kernel.org> writes:
-
-> Hello,
->
->
-> I posted my patch series [1] after rebasing to the latest mm-new
-> (0cec77cfd5314c0b3b03530abe1a4b32e991f639).  And Sashiko smartly tried to apply
-> it on the mm-new, but an older version of the mm-new
-> (7505bb13a9bb1f214310915ccc06643119fdafc9), and therefore failed [2].
->
-> I could rebase my series on the older version of mm-new and repost, but
-> wondering if Sashiko will use the lateset mm-new for the new version and fail
-> again.  Is there a way to predict what baseline Sashiko will use, or give a
-> hint [3]?
-
-Hey SJ!
-
-Sashiko is periodically fetching from remote repositories, but not on
-every patch (that would put too much load on kernel.org). There is some
-heuristic in place, but it sounds like it's not perfect.
-
-I'll take a look.
-
-Thanks
+Hello nicheng,
 
 
+On Fri, 15 May 2026 00:37:51 +0800 niecheng <niecheng1@uniontech.com> wrote:
 
->
-> [1] https://sashiko.dev/#/patchset/20260514140904.119781-1-sj%40kernel.org
-> [2] https://sashiko.dev/#/log/baseline/20264/2
-> [3] https://lore.kernel.org/sashiko/20260426204746.93567-1-sj@kernel.org/
->
->
-> Thanks,
-> SJ
+> damon_set_attrs() updates next_aggregation_sis and
+> next_ops_update_sis for online attrs updates, but it does not update
+> next_intervals_tune_sis there.
+> 
+> This can look like a missing update when reading damon_set_attrs()
+> alone, while next_intervals_tune_sis is actually updated in
+> kdamond_fn().
+> 
+> Add a short comment to make this explicit.
+
+Thank you for making the code easier to read!
+
+> 
+> Suggested-by: SeongJae Park <sj@kernel.org>
+> Link: https://lore.kernel.org/linux-mm/20260514144102.120203-1-sj@kernel.org/
+
+So this is a second version of the patch on the above link, right?  From the
+next time, please add the version on the subject prefix, e.g., [PATCH v2].
+Also, from the next time,please post a new version of patches as new thread,
+rather than a reply to the previous version, with the revision changelog with
+the link to the previous version [1] on the commentary area.
+
+> Signed-off-by: niecheng <niecheng1@uniontech.com>
+
+Reviewed-by: SeongJae Park <sj@kernel.org>
+
+[1] https://docs.kernel.org/process/submitting-patches.html#commentary
+
+
+Thanks,
+SJ
+
+[...]
