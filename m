@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B8B940DFC5;
-	Thu, 14 May 2026 14:09:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B69340B6D8;
+	Thu, 14 May 2026 14:09:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778767766; cv=none; b=bt3TDB5x2KOM6iM23+xdTWqJQaMc5jZCtmhYfnSKWY+trzHnTMheB8dzsFoemaTQiRbzf1Ucto95rbLuOWEzWcEGR9CE6G8S0a0ukKLnWwCMegt4exepuge29AXa3G7hkuYNPA+iMpQvJJMicHossVL+/gHkFbMU4BKfZDn1sVs=
+	t=1778767765; cv=none; b=MplFENTaJmXlMioc7Yyuu3vpbYHFgYuhtCzxWwwsI63xA6KkH8fnPgeOaRml5HmttIf9IrRwnEak6ECl4ztNBFi5z7zlS9njIbzTFLa2qFii+Pava+eBTtWDr4wg0YhfavU357o4dnbh5AdVXA6wGgaWC7sJ1qaF4raPbScGwHg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778767766; c=relaxed/simple;
-	bh=XvoG0MYMyxeuNZgWYp28nddVB/e95qmsBgzm52k8D4A=;
+	s=arc-20240116; t=1778767765; c=relaxed/simple;
+	bh=cN6FA2fDmcwC+JRPicLwVTnBJQclCA8SmpykqguB6yE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=kstyeet5rXm0O3l25/HsKEcg/bRCpE5skJOL3SZYwEs0zGOIFh36z24QWUzWX3SPrY7tciCevyZUZ3PFSwXCNdG83txO8zDpiGAlwihxTMPeFIb/SBsgN+JgZjK8YpDRk1gN8xmBfY1PIzqWIhf2Knh5Yu/0d8xECj2TQ0WSamQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Iu01nMOn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nxcZzbM9QtC5b1OU4Xy6pRMD3loVU6JbWhaVjxQJ4cl/Pd5I86fmUznXr3dym0R5/agxa+pqhm5/aUQhfT8ED5ssc6UJJn6wxUplQ6wiZWsiQdTN4lyCreR1jCuxWQMABpoy3b9nS2yQP4d+8kecV6aD9zE9QynuFCrHPca0YPY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RF/nIHl+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Iu01nMOn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4C33C2BD04;
-	Thu, 14 May 2026 14:09:25 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RF/nIHl+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA831C2BCF7;
+	Thu, 14 May 2026 14:09:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778767766;
-	bh=XvoG0MYMyxeuNZgWYp28nddVB/e95qmsBgzm52k8D4A=;
+	s=k20201202; t=1778767765;
+	bh=cN6FA2fDmcwC+JRPicLwVTnBJQclCA8SmpykqguB6yE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Iu01nMOnmpfA5MmMgSvcn9aGsNoxY732dFaYOALOJgILxY9cR6Lx1UgBM9IseimKv
-	 o3IOrgPMhWdalNFQsilhjPyytVb8/o/BUZgbcvMOTQYXZ0eDP9eVpAZxqAFaL8hegF
-	 ait6tfT1WxwffU8P5kyVSKqleiQRUtBkU0WtM9kmPQ1XgrPuLh3OgFAgxJBsZyCzNH
-	 AbPmKv9RSiflHisDqvQearGJBIlgfQhBkjarupw+Azy+UaZJ2/GlR4n0jFX/+R8wh1
-	 8VzdPa+xXydRDVMkVM+NYgb0S+BxxcCSBZygtPmSFOxjvan9u9TPbSxF3dKyCm+AdA
-	 EwebqLqWxkl4Q==
+	b=RF/nIHl+xd7P/vWAHiQA+OmQT8Lpqd24rkXlzlEP90So6PU5fT5u/TFY+j8jZSBZN
+	 WX9K56+F3S+JHfKAKD7OtN2E5NqNMn11xTZynFLRTOLZvPdz76Zpho68y9iPEIcj0K
+	 dDFnLzWU/cuzN4PltomnYSPhEb1rITh7I8zjUgbsm3/A8P/kVFpZAWQ8NPN5d7Jk/l
+	 9mw4wKt9TiyCwqTBasPmoEC9aW+4+9nt7e43dTjQVtvLXWe+Zs8N6Rjq4VV25cgEE9
+	 2ETPd3PfmqHCCn4YW/MV653AOsH5tdjniv6aOklfsB+U8tO0vUyJMP9ydwfx0p36Lz
+	 QgdEZV6oSxNrQ==
 From: SeongJae Park <sj@kernel.org>
 To: 
 Cc: SeongJae Park <sj@kernel.org>,
@@ -43,9 +43,9 @@ Cc: SeongJae Park <sj@kernel.org>,
 	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH v2.1 21/28] Docs/admin-guide/mm/damon/usage: document data attributes monitoring
-Date: Thu, 14 May 2026 07:08:54 -0700
-Message-ID: <20260514140904.119781-22-sj@kernel.org>
+Subject: [RFC PATCH v2.1 20/28] Docs/mm/damon/design: document data attributes monitoring
+Date: Thu, 14 May 2026 07:08:53 -0700
+Message-ID: <20260514140904.119781-21-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260514140904.119781-1-sj@kernel.org>
 References: <20260514140904.119781-1-sj@kernel.org>
@@ -55,115 +55,63 @@ List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Update DAMON usage document for the newly added data attributes
-monitoring feature.
+Update DAMON design document for newly added data attributes monitoring
+feature.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- Documentation/admin-guide/mm/damon/usage.rst | 46 +++++++++++++++++---
- Documentation/mm/damon/design.rst            |  2 +
- 2 files changed, 41 insertions(+), 7 deletions(-)
+ Documentation/mm/damon/design.rst | 37 +++++++++++++++++++++++++++++++
+ 1 file changed, 37 insertions(+)
 
-diff --git a/Documentation/admin-guide/mm/damon/usage.rst b/Documentation/admin-guide/mm/damon/usage.rst
-index 11c75a598393c..465bcdf89b182 100644
---- a/Documentation/admin-guide/mm/damon/usage.rst
-+++ b/Documentation/admin-guide/mm/damon/usage.rst
-@@ -72,6 +72,11 @@ comma (",").
-     │ │ │ │ │ │ intervals/sample_us,aggr_us,update_us
-     │ │ │ │ │ │ │ intervals_goal/access_bp,aggrs,min_sample_us,max_sample_us
-     │ │ │ │ │ │ nr_regions/min,max
-+    │ │ │ │ │ │ :ref:`probes <damon_usage_sysfs_probes>`/nr_probes
-+    │ │ │ │ │ │ │ 0/filters/nr_filters
-+    │ │ │ │ │ │ │ │ │ 0/type,matching,allow
-+    │ │ │ │ │ │ │ │ │ ...
-+    │ │ │ │ │ │ │ │ ...
-     │ │ │ │ │ :ref:`targets <sysfs_targets>`/nr_targets
-     │ │ │ │ │ │ :ref:`0 <sysfs_target>`/pid_target,obsolete_target
-     │ │ │ │ │ │ │ :ref:`regions <sysfs_regions>`/nr_regions
-@@ -97,7 +102,10 @@ comma (",").
-     │ │ │ │ │ │ │ │ 0/id,weight
-     │ │ │ │ │ │ │ :ref:`stats <sysfs_schemes_stats>`/nr_tried,sz_tried,nr_applied,sz_applied,sz_ops_filter_passed,qt_exceeds,nr_snapshots,max_nr_snapshots
-     │ │ │ │ │ │ │ :ref:`tried_regions <sysfs_schemes_tried_regions>`/total_bytes
--    │ │ │ │ │ │ │ │ 0/start,end,nr_accesses,age,sz_filter_passed
-+    │ │ │ │ │ │ │ │ 0/start,end,nr_accesses,age,sz_filter_passed,
-+    │ │ │ │ │ │ │ │ │ probes
-+    │ │ │ │ │ │ │ │ │ │ 0/hits
-+    │ │ │ │ │ │ │ │ │ │ ...
-     │ │ │ │ │ │ │ │ ...
-     │ │ │ │ │ │ ...
-     │ │ │ │ ...
-@@ -227,8 +235,8 @@ contexts/<N>/monitoring_attrs/
- 
- Files for specifying attributes of the monitoring including required quality
- and efficiency of the monitoring are in ``monitoring_attrs`` directory.
--Specifically, two directories, ``intervals`` and ``nr_regions`` exist in this
--directory.
-+Specifically, two directories, ``intervals``, ``nr_regions`` and ``probes``
-+exist in this directory.
- 
- Under ``intervals`` directory, three files for DAMON's sampling interval
- (``sample_us``), aggregation interval (``aggr_us``), and update interval
-@@ -262,6 +270,27 @@ tuning-applied current values of the two intervals can be read from the
- ``sample_us`` and ``aggr_us`` files after writing ``update_tuned_intervals`` to
- the ``state`` file.
- 
-+.. _damon_usage_sysfs_probes:
-+
-+contexts/<N>/monitoring_attrs/probes/
-+-------------------------------------
-+
-+A directory for registering :ref:`data attributes monitoring
-+<damon_design_data_attrs_monitoring>` probes.
-+
-+In the beginning, this directory has only one file, ``nr_probes``.  Writing a
-+number (``N``) to the file creates the number of child directories named ``0``
-+to ``N-1``.  Each directory represents each monitoring probe.
-+
-+In each probe directory, one directory, ``filters`` exist.  The directory
-+contains files for installingt filters for the probe, that is used to determine
-+the data attribute for the probe.
-+
-+In the beginning, ``filters`` directory has only one file, ``nr_filters``.
-+Writing a number (``N``) to the file creates the number of child directories
-+named ``0`` to ``N-1``.  Each directory represents each filter and work in a
-+way similar to that for :ref:`DAMOS filter <sysfs_filters>`.
-+
- .. _sysfs_targets:
- 
- contexts/<N>/targets/
-@@ -614,10 +643,13 @@ set the ``access pattern`` as their interested pattern that they want to query.
- tried_regions/<N>/
- ------------------
- 
--In each region directory, you will find five files (``start``, ``end``,
--``nr_accesses``, ``age``, and ``sz_filter_passed``).  Reading the files will
--show the properties of the region that corresponding DAMON-based operation
--scheme ``action`` has tried to be applied.
-+In each region directory, you will find six files (``start``, ``end``,
-+``nr_accesses``, ``age``, ``sz_filter_passed`` and ``probe_hits``).  Reading
-+the files will show the properties of the region that corresponding DAMON-based
-+operation scheme ``action`` has tried to be applied.
-+
-+Reading ``probe_hists`` shows the number of data attributes monitoring
-+probe-hit positive samples of the region.
- 
- Example
- ~~~~~~~
 diff --git a/Documentation/mm/damon/design.rst b/Documentation/mm/damon/design.rst
-index 6731c3102d0ff..887b45cbeb716 100644
+index fa7392b5a331d..6731c3102d0ff 100644
 --- a/Documentation/mm/damon/design.rst
 +++ b/Documentation/mm/damon/design.rst
-@@ -276,6 +276,8 @@ interval``, DAMON checks if the region's size and access frequency
+@@ -276,6 +276,43 @@ interval``, DAMON checks if the region's size and access frequency
  (``nr_accesses``) has significantly changed.  If so, the counter is reset to
  zero.  Otherwise, the counter is increased.
  
-+.. _damon_design_data_attrs_monitoring:
++Data Attributes Monitoring
++~~~~~~~~~~~~~~~~~~~~~~~~~~
 +
- Data Attributes Monitoring
- ~~~~~~~~~~~~~~~~~~~~~~~~~~
++Data access pattern is only one type of data attributes.  In some use cases,
++users need to know more data attributes information.  For example, users may
++need to know how much of a given hot or cold memory region is backed by
++anonymous pages, or belong to a specific cgroup.  For such use case, data
++attributes monitoring feature is provided.
++
++Using the feature, users can register data attributes of their interest to the
++DAMON :ref:`context <damon_design_execution_model_and_data_structures>`.  The
++registration is made by specifying a probe per attribute.  Each of the probe
++specifies a rule to determine if a given memory region has the related
++attribute.  The rule is constructed with multiple filters.  The filters work
++same to :ref:`DAMOS filters <damon_design_damos_filters>` except the supported
++filter types.  Currently only ``anon`` filter type is supported for data
++attributes monitoring.
++
++If such probes are registered, DAMON executes the probes for each region's
++sampling memory when it does the access :ref:`sampling
++<damon_design_region_based_sampling>`.  The number of samples that identified
++as having the data attribute (hitting the probe) per :ref:`aggregation interval
++<damon_design_monitoring>` is accounted in a per-region per-probe counter.
++Users can therefore know how much of a given DAMON region has a specific data
++attribute by reading the per-region per-probe probe hits counter after each
++aggregation interval.
++
++This is a sampling based mechanism.  Hence, it is lightweight but the output
++may include some measurement errors.  The output should be used with good
++understanding of statistics.
++
++Another way to do this for higher accuracy is using :ref:`DAMOS filter
++<damon_design_damos_filters>` with ``stat`` :ref:`action
++<damon_design_damos_action>` and ``sz_ops_filter_passed`` :ref:`stat
++<damon_design_damos_stat>`.  This approach provides the data attributes
++information in page level.  But, because it is operated in page level, the
++overhead is proportional to the size of the memory.
  
+ Dynamic Target Space Updates Handling
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 -- 
 2.47.3
