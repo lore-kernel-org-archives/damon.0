@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88F9A402BA3;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2BD33FF892;
 	Thu, 14 May 2026 14:09:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778767762; cv=none; b=XIDzpjcUQHq5g4Uim5lSYCWtWrW7x4gy0Os4I8c4JrDFsVrXG3JkCFyPmAz5Qnu4d4o0aaYBhDRM/wuYjnsYCdxMw7Wds6Tw75i2cdn/4Yxth1w7vGBRAtf8KmX5NnW9Sapju5xgwoocMAsp8vrhzFoZi+WGAEhWLVaos0Z1J5U=
+	t=1778767762; cv=none; b=YUfHYacs7H6z8vzMIGsR9G1Zp9COgbFe433RhGQfTqrou1uvqy9buVU3gNhOQgl/5B0HqLBGZNnjxpzT0Q9NjIcQ7nkiiTtUB7a6WRwGAB5+nBJBx+CDRXKIW/CKIuz+m0dtH6VIK4BC4RkGfg+vRSpUtvdwLBVWAc4prw15sPU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1778767762; c=relaxed/simple;
-	bh=1X/9elsFEwb1GaGkMj7npSZAXZWCxyW00t9PKZHBG7M=;
+	bh=xxAnM/x521/ipQQKxInfDno6KUEv3MR4zVVk+LBGBIk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nrlbwQNi0TVx8CZ7RhKQgAP2eBpYWLrz5yP5kSf6DfmFha+hBbCy3gZYTt7DE2s9mLLBco6Ort+IHmsk9sFto62reAxq/PXKuB5oaB0yoO/E1Ra2/KxrtLnE4lEC2qtOBDGNQlh25SThL8Je+koiA2d8qA4GTZ5RcWn1itfBndI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NwcUFGlq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QIAI0QnyEiqU9Ef1nN9bM/j9LX6XTaCue2TjSRxsAGUC72iITXnMhIQ0Y6iNocWgTEQM7PsKHqyVJXemji/XL7Qsu/J1jGtpP2ssJ1dVpqTEt20oBS/WXzyXq7uOvHCGZ27BVU7vLFACwOL6jZAkmvSSZgUIJLfTt+3yOZnecOE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PtrY6V/n; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NwcUFGlq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB51AC2BCC9;
-	Thu, 14 May 2026 14:09:21 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PtrY6V/n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55B8BC2BCF6;
+	Thu, 14 May 2026 14:09:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778767761;
-	bh=1X/9elsFEwb1GaGkMj7npSZAXZWCxyW00t9PKZHBG7M=;
+	s=k20201202; t=1778767762;
+	bh=xxAnM/x521/ipQQKxInfDno6KUEv3MR4zVVk+LBGBIk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NwcUFGlqryDv+Q9M4b8hX7Oi1fYRpiej+2W7dpKn824hAro6cx/vFWe43FKa70dCD
-	 BElJLdPJQRXzNCGRLqrdl6wyBZ5UOewx7XIualHe5/0gieI23uGcMsUtjy2DV+0tsG
-	 /zqblc/nvivcXbQpTfXFJo4yJ2tj/w21kVKDI9BMzjwWi+QyaV7ZLkF+MuueBiFwOR
-	 +Jqc66Ry0TTBu/ZfcTF9m/v8it08OVlGmHt/N5LpUp6f1/2ENNXPZOp7xy/v1DN/Ox
-	 IW1x/NEJxZHZ2G4YhUMhCL8NQR5wFFgl39e7saTWPQVKQX2anT3Okm/6d3neVdlzL4
-	 oFY9D9pv1nIyQ==
+	b=PtrY6V/nk9nMrEMw11QgSISVE9eYaBsF2lYv5NkmWqcunA0Tif6ZrmbYPzwxoqwaF
+	 yXsn+QvTIiAbSNRjoeYtxUioZRa9jrtRiX65j9Tks7vLvEGU/eGY0hCYtZat2V1RB/
+	 yGZ8/9w9Po5lIjDycFGA8OHNsfojy+uT9+n8+i2SBg189AIHBt+gK6EoeSt9xaSH8O
+	 iVzX9/pF+2SjoQ3zM/AntmvnijAnftp89NwbvT2zdlkiR8z0GRRApPKC6geldmTU85
+	 IEU3PrQMlW9Bl9BEaNJVy+16sYzHqS/i5hv7WnxpFIkzWDC72cdiAqZSyhKMFXE635
+	 p4voqvA6UjbgA==
 From: SeongJae Park <sj@kernel.org>
 To: 
 Cc: SeongJae Park <sj@kernel.org>,
@@ -33,9 +33,9 @@ Cc: SeongJae Park <sj@kernel.org>,
 	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH v2.1 11/28] mm/damon/sysfs: implement filters directory
-Date: Thu, 14 May 2026 07:08:44 -0700
-Message-ID: <20260514140904.119781-12-sj@kernel.org>
+Subject: [RFC PATCH v2.1 13/28] mm/damon/sysfs: implement filter dir files
+Date: Thu, 14 May 2026 07:08:46 -0700
+Message-ID: <20260514140904.119781-14-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260514140904.119781-1-sj@kernel.org>
 References: <20260514140904.119781-1-sj@kernel.org>
@@ -47,116 +47,153 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Implement a directory for letting users to install data probe filters.
+Implement sysfs files under the data probe filter directory for letting
+users to configure each filter.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- mm/damon/sysfs.c | 65 +++++++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 64 insertions(+), 1 deletion(-)
+ mm/damon/sysfs.c | 114 +++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 114 insertions(+)
 
 diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
-index fac4e37aa2851..250208d3de21b 100644
+index 25487a0268cbe..ed7bb734a236b 100644
 --- a/mm/damon/sysfs.c
 +++ b/mm/damon/sysfs.c
-@@ -747,12 +747,42 @@ static const struct kobj_type damon_sysfs_intervals_ktype = {
- 	.default_groups = damon_sysfs_intervals_groups,
- };
+@@ -753,6 +753,9 @@ static const struct kobj_type damon_sysfs_intervals_ktype = {
  
-+/*
-+ * filters directory
-+ */
-+
-+struct damon_sysfs_filters {
-+	struct kobject kobj;
-+};
-+
-+static struct damon_sysfs_filters *damon_sysfs_filters_alloc(void)
-+{
-+	return kzalloc_obj(struct damon_sysfs_filters);
-+}
-+
-+static void damon_sysfs_filters_release(struct kobject *kobj)
-+{
-+	kfree(container_of(kobj, struct damon_sysfs_filters, kobj));
-+}
-+
-+static struct attribute *damon_sysfs_filters_attrs[] = {
-+	NULL,
-+};
-+ATTRIBUTE_GROUPS(damon_sysfs_filters);
-+
-+static const struct kobj_type damon_sysfs_filters_ktype = {
-+	.release = damon_sysfs_filters_release,
-+	.sysfs_ops = &kobj_sysfs_ops,
-+	.default_groups = damon_sysfs_filters_groups,
-+};
-+
- /*
-  * probe directory
-  */
- 
- struct damon_sysfs_probe {
+ struct damon_sysfs_filter {
  	struct kobject kobj;
-+	struct damon_sysfs_filters *filters;
++	enum damon_filter_type type;
++	bool matching;
++	bool allow;
  };
  
- static struct damon_sysfs_probe *damon_sysfs_probe_alloc(void)
-@@ -760,6 +790,30 @@ static struct damon_sysfs_probe *damon_sysfs_probe_alloc(void)
- 	return kzalloc_obj(struct damon_sysfs_probe);
+ static struct damon_sysfs_filter *damon_sysfs_filter_alloc(void)
+@@ -760,6 +763,105 @@ static struct damon_sysfs_filter *damon_sysfs_filter_alloc(void)
+ 	return kzalloc_obj(struct damon_sysfs_filter);
  }
  
-+static int damon_sysfs_probe_add_dirs(struct damon_sysfs_probe *attr)
++struct damon_sysfs_filter_type_name {
++	enum damon_filter_type type;
++	char *name;
++};
++
++static const struct damon_sysfs_filter_type_name
++damon_sysfs_filter_type_names[] = {
++	{
++		.type = DAMON_FILTER_TYPE_ANON,
++		.name = "anon",
++	},
++};
++
++static ssize_t type_show(struct kobject *kobj,
++		struct kobj_attribute *attr, char *buf)
 +{
-+	struct damon_sysfs_filters *filters;
-+	int err;
++	struct damon_sysfs_filter *filter = container_of(kobj,
++			struct damon_sysfs_filter, kobj);
++	int i;
 +
-+	filters = damon_sysfs_filters_alloc();
-+	if (!filters)
-+		return -ENOMEM;
-+	attr->filters = filters;
++	for (i = 0; i < ARRAY_SIZE(damon_sysfs_filter_type_names); i++) {
++		const struct damon_sysfs_filter_type_name *type_name;
 +
-+	err = kobject_init_and_add(&filters->kobj, &damon_sysfs_filters_ktype,
-+			&attr->kobj, "filters");
-+	if (err) {
-+		kobject_put(&filters->kobj);
-+		attr->filters = NULL;
++		type_name = &damon_sysfs_filter_type_names[i];
++		if (type_name->type == filter->type)
++			return sysfs_emit(buf, "%s\n", type_name->name);
 +	}
-+	return err;
++	return -EINVAL;
 +}
 +
-+static void damon_sysfs_probe_rm_dirs(struct damon_sysfs_probe *attr)
++static ssize_t type_store(struct kobject *kobj,
++		struct kobj_attribute *attr, const char *buf, size_t count)
 +{
-+	kobject_put(&attr->filters->kobj);
-+}
++	struct damon_sysfs_filter *filter = container_of(kobj,
++			struct damon_sysfs_filter, kobj);
++	ssize_t ret = -EINVAL;
++	int i;
 +
- static void damon_sysfs_probe_release(struct kobject *kobj)
- {
- 	kfree(container_of(kobj, struct damon_sysfs_probe, kobj));
-@@ -797,8 +851,10 @@ static void damon_sysfs_probes_rm_dirs(
- 	struct damon_sysfs_probe **probes_arr = probes->probes_arr;
- 	int i;
- 
--	for (i = 0; i < probes->nr; i++)
-+	for (i = 0; i < probes->nr; i++) {
-+		damon_sysfs_probe_rm_dirs(probes_arr[i]);
- 		kobject_put(&probes_arr[i]->kobj);
-+	}
- 	probes->nr = 0;
- 	kfree(probes_arr);
- 	probes->probes_arr = NULL;
-@@ -836,6 +892,13 @@ static int damon_sysfs_probes_add_dirs(
- 			return err;
- 		}
- 
-+		err = damon_sysfs_probe_add_dirs(probe);
-+		if (err) {
-+			kobject_put(&probe->kobj);
-+			damon_sysfs_probes_rm_dirs(probes);
-+			return err;
++	for (i = 0; i < ARRAY_SIZE(damon_sysfs_filter_type_names); i++) {
++		const struct damon_sysfs_filter_type_name *type_name;
++
++		type_name = &damon_sysfs_filter_type_names[i];
++		if (sysfs_streq(buf, type_name->name)) {
++			filter->type = type_name->type;
++			ret = count;
++			break;
 +		}
++	}
++	return ret;
++}
 +
- 		probes_arr[i] = probe;
- 		probes->nr++;
- 	}
++static ssize_t matching_show(struct kobject *kobj,
++		struct kobj_attribute *attr, char *buf)
++{
++	struct damon_sysfs_filter *filter = container_of(kobj,
++			struct damon_sysfs_filter, kobj);
++
++	return sysfs_emit(buf, "%c\n", filter->matching ? 'Y' : 'N');
++}
++
++static ssize_t matching_store(struct kobject *kobj,
++		struct kobj_attribute *attr, const char *buf, size_t count)
++{
++	struct damon_sysfs_filter *filter = container_of(kobj,
++			struct damon_sysfs_filter, kobj);
++	bool matching;
++	int err = kstrtobool(buf, &matching);
++
++	if (err)
++		return err;
++
++	filter->matching = matching;
++	return count;
++}
++
++static ssize_t allow_show(struct kobject *kobj,
++		struct kobj_attribute *attr, char *buf)
++{
++	struct damon_sysfs_filter *filter = container_of(kobj,
++			struct damon_sysfs_filter, kobj);
++
++	return sysfs_emit(buf, "%c\n", filter->allow ? 'Y' : 'N');
++}
++
++static ssize_t allow_store(struct kobject *kobj,
++		struct kobj_attribute *attr, const char *buf, size_t count)
++{
++	struct damon_sysfs_filter *filter = container_of(kobj,
++			struct damon_sysfs_filter, kobj);
++	bool allow;
++	int err = kstrtobool(buf, &allow);
++
++	if (err)
++		return err;
++
++	filter->allow = allow;
++	return count;
++}
++
+ static void damon_sysfs_filter_release(struct kobject *kobj)
+ {
+ 	struct damon_sysfs_filter *filter = container_of(kobj,
+@@ -768,7 +870,19 @@ static void damon_sysfs_filter_release(struct kobject *kobj)
+ 	kfree(filter);
+ }
+ 
++static struct kobj_attribute damon_sysfs_filter_type_attr =
++		__ATTR_RW_MODE(type, 0600);
++
++static struct kobj_attribute damon_sysfs_filter_matching_attr =
++		__ATTR_RW_MODE(matching, 0600);
++
++static struct kobj_attribute damon_sysfs_filter_allow_attr =
++		__ATTR_RW_MODE(allow, 0600);
++
+ static struct attribute *damon_sysfs_filter_attrs[] = {
++	&damon_sysfs_filter_type_attr.attr,
++	&damon_sysfs_filter_matching_attr.attr,
++	&damon_sysfs_filter_allow_attr.attr,
+ 	NULL,
+ };
+ ATTRIBUTE_GROUPS(damon_sysfs_filter);
 -- 
 2.47.3
