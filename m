@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 991EB3290B8
-	for <damon@lists.linux.dev>; Thu, 14 May 2026 02:01:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8EF73F413A
+	for <damon@lists.linux.dev>; Thu, 14 May 2026 02:02:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778724106; cv=none; b=f49L9tgkql8d1ZWOJWY/OdDQYJDgTuGeuE1VKD9KlAh8IXO0wMEm7JvcyvUNqmyve+CYRdRVAPTjWT440ahxLTfOYAVASnqmg0BJSA0aSoACca1WAWadnEBlAZlaLY2gnVbSuylGEyag95a3/CV7zZaF3RMWGs4y4tWMO8lX0To=
+	t=1778724162; cv=none; b=s/7/puA2uCB8FiNPH+Slre2t2zlIORpCVsjDr1nzqDLuXrgEkum9DgRDI2IGZwttVlK/GmczZMTJh++ZRJksUwGMxHfl+IWIv9m0hQ/wVGpniE4WtNv1jMxJ7Q5ecHhW5sBDbvL+tNI1fw0bO4trYIQ/AU8A1BsUwI/F1iZEaO4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778724106; c=relaxed/simple;
-	bh=fDJCV9QXcvvQ9zmOHOsOnRs/Mc04u1ne/nUEF+VzgNM=;
+	s=arc-20240116; t=1778724162; c=relaxed/simple;
+	bh=1ea6Rsof7QEwcyM0QlomCsm90eMFSV5d/sZolerh9Bo=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=p26PfqBOoPSJd4uYs2tC8WFVAe1a2FNaPEdDvu0smUhdGuSIyXd8+jemuML8ABiNtuoyiBTEZtTLm2m8+u5J3P4TTtiARoTnaTuDh+Nx6lToS6U/MfHCybyXFHhgZEMhvZB83mg9yTkgWdp+dEjgGYxFyTJOW/pweOArwxgSpcA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GOP/Kh3M; arc=none smtp.client-ip=10.30.226.201
+	 Message-Id; b=o4QIbm6Moz3Up+20kWjzs5/HbcTCpNkYm5usLsyNiYwdErwpiw8feAUF4gygd63vGlFjhHNs4NVN4bYiaO7D6/k3CBx2bRWS45EF4rgwrQKnLSdWooGXkA9wFadJaQTFei5wIWcIfB1iaf+WIxGUbO6bb7QsmjsdCLeig6KX0D0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Wiv5VIPS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GOP/Kh3M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FA32C19425;
-	Thu, 14 May 2026 02:01:46 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Wiv5VIPS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CD8FC19425;
+	Thu, 14 May 2026 02:02:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778724106;
-	bh=fDJCV9QXcvvQ9zmOHOsOnRs/Mc04u1ne/nUEF+VzgNM=;
+	s=k20201202; t=1778724162;
+	bh=1ea6Rsof7QEwcyM0QlomCsm90eMFSV5d/sZolerh9Bo=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date:From;
-	b=GOP/Kh3MMy0jlnZlc16+K+cbMxp6ZNAIC7lvLyU/ZlZy6P4/tvmPeTs5OkgRY6TTk
-	 5ZwJbKuGV2YMpcC7SkU5Ws1BkdsgirDonpYmxM7Su+khDDzV7YS199YjXTyVZNBG/Q
-	 MOf/1MJ6zM3dhvFl2C7cWYI8e0lDni45Zrhb3HAWtX5FE83YUWuG+BKCfRFjdQzSEb
-	 1eKyFEWg0imxxrCyYBBytWjl+12Im2n00dXbL/B4jiuzwBqZF31gZ4avDemiUMDedT
-	 gZH71Fk4xHJGrRRpLD21LmrdMbSztGSpdXy6XXlQ+/662ndT4bkk5yIDWm+RKiImFI
-	 277VEU3Ae4n1w==
+	b=Wiv5VIPSYx3ihzB7rIm3pkFfjE/1HIL1MbiqFyToNvLPMSmPHLd5+6zefAODjjszw
+	 r8WjkL1TNCFLfZEFfPGyyKQwNjt3DSVAYLggcigBK47/4HDqsLfmq7OzboFbLH6II4
+	 73hT/OdEr366K3JU/ceaKUiID0t8yDxLiivEJkExGaCDmlJyBSxO68PpsMbcw/ZfJC
+	 /002i93e1wvT3TXw8D8YNC/e9xr973TckTofuYJMggVuTw8e+LpwDgu/5ptyX+cuBD
+	 0DAA4vm1+zrQjJLb/ns5tXL5184rtNS3YGP5Ztm1/cWwa4v9KJrPNzM4besI4LzAua
+	 /VTcTYvsey+/Q==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH 6.1.y 2/2] mm/damon/lru_sort: detect and use fresh
- enabled and kdamond_pid values
+Subject: Re: [PATCH 6.18.y] mm/damon/reclaim: detect and use fresh enabled
+ and kdamond_pid values
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "SeongJae Park" <sj@kernel.org>
 Cc: damon@lists.linux.dev
-In-Reply-To: <20260513043039.173237-2-sj@kernel.org>
-References: <20260513043039.173237-2-sj@kernel.org>
+In-Reply-To: <20260513043902.183499-1-sj@kernel.org>
+References: <20260513043902.183499-1-sj@kernel.org>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Thu, 14 May 2026 02:01:45 +0000
-Message-Id: <20260514020146.4FA32C19425@smtp.kernel.org>
+Date: Thu, 14 May 2026 02:02:41 +0000
+Message-Id: <20260514020242.5CD8FC19425@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -46,106 +46,110 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 
 Thank you for your contribution! Sashiko AI review found 2 potential issue(=
 s) to consider:
-- [High] The patch completely fails to fix the restart issue, leaving the s=
-tate machine deadlocked.
-- [High] Use-After-Free when reading sysfs parameters if module initializat=
-ion fails.
+- [High] Writing to the `enabled` sysfs parameter triggers a NULL pointer d=
+ereference if the module's initialization failed.
+- [Low] The commit introduces a call to an undefined function `damon_kdamon=
+d_pid()`, causing a build failure.
 --
 
-commit 975a161fef47e6bccc8ce6810404c2d8be4ff338
+commit 45d783d4b3fd23532d7c6b975b70fda3e5324f1b
 Author: SeongJae Park <sj@kernel.org>
-Subject: mm/damon/lru_sort: detect and use fresh enabled and kdamond_pid va=
-lues
+mm/damon/reclaim: detect and use fresh enabled and kdamond_pid values
 
-This commit updates the DAMON_LRU_SORT module to dynamically detect and rep=
-ort
-the fresh status of enabled and kdamond_pid parameters. It attempts to addr=
-ess
-an issue where unintentional kdamond stoppages leave the system in a stale
-state, preventing users from restarting the daemon. By directly calling
-damon_is_running() and damon_kdamond_pid(), the system aims to provide
-accurate runtime information to sysfs readers.
+This commit modifies the DAMON reclaim module to dynamically detect and use
+the fresh running status of kdamond when parameters are requested. This
+prevents stale cached statuses from being shown to users when kdamond stops
+unexpectedly.
 
-Link: https://lore.kernel.org/20260419161003.79176-3-sj@kernel.org
+Link: https://lore.kernel.org/20260419161003.79176-1-sj@kernel.org
+Link: https://lore.kernel.org/20260419161003.79176-2-sj@kernel.org
 
-> diff --git a/mm/damon/lru_sort.c b/mm/damon/lru_sort.c
-> index 61311800abc98..70cdc7425cdd3 100644
-> --- a/mm/damon/lru_sort.c
-> +++ b/mm/damon/lru_sort.c
+> diff --git a/mm/damon/reclaim.c b/mm/damon/reclaim.c
+> index 7ba3d0f9a19ac..9446e7a1b476f 100644
+> --- a/mm/damon/reclaim.c
+> +++ b/mm/damon/reclaim.c
 
 [ ... ]
 
-> @@ -285,6 +268,13 @@ static DECLARE_DELAYED_WORK(damon_lru_sort_timer, da=
-mon_lru_sort_timer_fn);
+> @@ -334,42 +320,83 @@ module_param_cb(addr_unit, &addr_unit_param_ops, &a=
+ddr_unit, 0600);
+>  MODULE_PARM_DESC(addr_unit,
+>  	"Scale factor for DAMON_RECLAIM to ops address conversion (default: 1)"=
+);
 > =20
->  static bool damon_lru_sort_initialized;
-> =20
-> +static bool damon_lru_sort_enabled(void)
+> +static bool damon_reclaim_enabled(void)
 > +{
 > +	if (!ctx)
 > +		return false;
 > +	return damon_is_running(ctx);
 > +}
+> +
+>  static int damon_reclaim_enabled_store(const char *val,
+>  		const struct kernel_param *kp)
+>  {
+> -	bool is_enabled =3D enabled;
+> -	bool enable;
+>  	int err;
+> =20
+> -	err =3D kstrtobool(val, &enable);
+> +	err =3D kstrtobool(val, &enabled);
+>  	if (err)
+>  		return err;
+> =20
+> -	if (is_enabled =3D=3D enable)
+> +	if (damon_reclaim_enabled() =3D=3D enabled)
+>  		return 0;
+> =20
+>  	/* Called before init function.  The function will handle this. */
+>  	if (!damon_initialized())
+> -		goto set_param_out;
+> +		return 0;
+> =20
+> -	err =3D damon_reclaim_turn(enable);
+> -	if (err)
+> -		return err;
+> +	return damon_reclaim_turn(enabled);
+> +}
 
-Is it possible for this to cause a use-after-free if module initialization
-fails?
+If module initialization fails during boot, for example due to an allocation
+failure in damon_modules_new_paddr_ctx_target(), the global ctx pointer will
+remain NULL. Because damon_reclaim is built-in, its sysfs parameters are
+still exposed.
 
-If damon_lru_sort_init() encounters an error (for example, damon_select_ops=
-()
-fails), it calls damon_destroy_ctx(ctx) to free the context. However, the
-global static ctx pointer is not set to NULL.
+If a user subsequently writes to the enabled parameter,
+damon_reclaim_enabled_store() will see that damon_initialized() is true
+because the global cache is initialized, and it will call
+damon_reclaim_turn().
 
-Since DAMON_LRU_SORT is a built-in module, its module parameters are exposed
-in sysfs early during boot. If a user reads the sysfs parameters after an i=
-nit
-failure, the dangling ctx pointer would pass the check here, leading to
-damon_is_running() dereferencing it:
+This unconditionally passes the NULL ctx pointer to either damon_stop() or
+damon_reclaim_apply_parameters(), which eventually calls damon_commit_ctx().
 
-mm/damon/core.c:damon_is_running()
-    mutex_lock(&ctx->kdamond_lock);
+Could this cause a NULL pointer dereference when accessing the uninitialized
+ctx pointer?
 
 [ ... ]
 
-> @@ -301,15 +291,57 @@ static int damon_lru_sort_enabled_store(const char =
-*val,
->  	return 0;
->  }
-> =20
-> +static int damon_lru_sort_enabled_load(char *buffer,
+> +static int damon_reclaim_kdamond_pid_load(char *buffer,
 > +		const struct kernel_param *kp)
 > +{
-> +	return sprintf(buffer, "%c\n", damon_lru_sort_enabled() ? 'Y' : 'N');
-> +}
+> +	int kdamond_pid =3D -1;
 > +
->  static const struct kernel_param_ops enabled_param_ops =3D {
->  	.set =3D damon_lru_sort_enabled_store,
-> -	.get =3D param_get_bool,
-> +	.get =3D damon_lru_sort_enabled_load,
->  };
+> +	if (ctx) {
+> +		kdamond_pid =3D damon_kdamond_pid(ctx);
 
-Does this change actually fix the restart issue, or does it leave the state
-machine deadlocked?
+Is the function damon_kdamond_pid() defined anywhere in the tree?
 
-If kdamond stops unintentionally, the internal enabled and last_enabled
-variables remain true. When the user tries to restart it by writing 'Y' to =
-the
-sysfs enabled parameter, the underlying boolean value remains true. The wor=
-ker
-skips the restart because last_enabled =3D=3D now_enabled.
+It appears this function is called here but might be missing, which would
+cause an implicit declaration and linker error. Could a prerequisite patch =
+be
+missing from this cherry-pick?
 
-If the user tries to reset the state by writing 'N',
-damon_lru_sort_turn(false) calls damon_stop() which returns an error because
-the daemon is already stopped. Because of this error, the worker executes
-enabled =3D last_enabled, reverting enabled back to true:
-
-mm/damon/lru_sort.c:damon_lru_sort_timer_fn()
-    if (!damon_lru_sort_turn(now_enabled))
-        last_enabled =3D now_enabled;
-    else
-        enabled =3D last_enabled;
-
-It seems the subsystem still cannot be restarted without a reboot.
+> +		if (kdamond_pid < 0)
+> +			kdamond_pid =3D -1;
+> +	}
+> +	return sprintf(buffer, "%d\n", kdamond_pid);
+> +}
 
 --=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/2026051243-crevice-=
-spool-75d8@gregkh?part=3D2
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260513043902.1834=
+99-1-sj@kernel.org?part=3D1
