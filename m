@@ -1,132 +1,200 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A5571EEA3C
-	for <damon@lists.linux.dev>; Thu, 14 May 2026 02:17:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E6971EEA3C
+	for <damon@lists.linux.dev>; Thu, 14 May 2026 02:18:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778725046; cv=none; b=klUdb4+FJJsOo+8zakpYPm34Jw+SCayvTUzInsRWEt/r5/I8Gs/qQtMwEBWa623koY3n/hKaqqu4L18Q+HWlVPwgzJnHU1C8PTfwE7OZYeM65DlypgWOCz0YGc8FHNInyE2CPmd/wxtQJdqkg+BRI1fMFvyxiPGLI3tzmHldYP0=
+	t=1778725119; cv=none; b=eihC4agnf/HtF7cmfd8zCwcQbqYV+9d9GnwG+LKZOj7hnbs/ykhLqsIVB/fBNusa1iHtd3PDzEIN2FE8Ohy04jLV3rMSMaQtvqjS8yAP+3dMpZzN/ETb04+gXp9ODanFXf8aDBSk/nY0dkmi6OY9F860urBUFlJgdhnz3Tx73V8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778725046; c=relaxed/simple;
-	bh=Gbbb9rwZriCTSJqISObuUqTDZR27meln9U90fO7tcwk=;
+	s=arc-20240116; t=1778725119; c=relaxed/simple;
+	bh=k2OhEQ/7vWVG897CN05MQsWM7SG34jRo3iWMhHRL6ro=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=Y4sqDrbcLxCo6E4B2vcpp+bwo0nZylluC8B/89r5FBkevmeJjuKt/bS3ODFH4UMi+AQUYCeEzK9wZfpHruVhmxhXsrHE+DiT2HS8Gb8YJmlRu8ko96ikQwSDw+qSYhUEel8oqqOIjZ+BsxD74YY8N5nYI8uht+VrZ2JNCTogD5M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WwoNo5gH; arc=none smtp.client-ip=10.30.226.201
+	 Message-Id; b=JpsEJQrAtFugWjfnsMogi0jlsMLELVQexLXA0guByL9FUlGZWd09oB66aHZLKJk99JImuUS1MxDVv+geoHOseWNsDgfM8sVcgRDIqH40U1koPd8ZVy83r6JlVm7OdAQ/IXVrojezW3Qia0XeJxk08lzji2JT3A6XULw3KhxvmEo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PiacCyuD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WwoNo5gH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2801FC19425;
-	Thu, 14 May 2026 02:17:25 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PiacCyuD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3997C19425;
+	Thu, 14 May 2026 02:18:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778725045;
-	bh=Gbbb9rwZriCTSJqISObuUqTDZR27meln9U90fO7tcwk=;
+	s=k20201202; t=1778725118;
+	bh=k2OhEQ/7vWVG897CN05MQsWM7SG34jRo3iWMhHRL6ro=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date:From;
-	b=WwoNo5gHBTktokaeumLlDDenz9dW5bvYXdzeJ2yfuESqPXK3W11YuvNM13IgwcAcA
-	 a9VNdZ0yudKcDV2jtGyBXh/hUSyOkuoZoZP2aQHZnjQfEDLVvd/9aGMhyucseujjuS
-	 9HevWLz08JRnAn5zXCKPO1+vo18paaZsm+Oz2x7zJSZykYv0qA101cFp8sQBWh1w3I
-	 nGyDVw1Hs3EjsGBQr4ipWFHCIKJTwo+k6N782xklVaGTM8g6U7TOTFlhR/6dRX2Xof
-	 HMFBwBq0b7SioMsG2G+iJRuxx+VtMh67FECqV5w6gsNeBVQFAtnOTGKOgP3t8AWXye
-	 fAKgpUYC8/0Tw==
+	b=PiacCyuDa2qxeeFPAopSfBCDFr8Sprb1AlDAaSOwkO0uZHhEp/6zvE0CkzLfgKljc
+	 hJTofIjJ7pJW5D/Bl2rv/Ux1SbxJ973Bp4+PoTz2LMJk5sr5iCcsF5bHdp5/Qh0BaP
+	 zTFNfHDghRTY/Ge7a+C4uwXrzbyNadVhVJS5yVx+NwLOa2C4ZfcRltzWc4qwNuCyST
+	 3nJy1YnlPjgfASwevyLz8ULSm2g2FWeeo4a2mIOgmUN9ERrN866RzK3uQJhUklmQAi
+	 EvanPSaY0mZo3JqILBAFGckt7gFs69LDRYyRj8dh2rtaDkkGYJjbLnK9jLMzHlkp2U
+	 s4mYDdaYLfnnQ==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH 6.1.y] mm/damon/reclaim: detect and use fresh enabled
+Subject: Re: [PATCH 6.12.y] mm/damon/reclaim: detect and use fresh enabled
  and kdamond_pid values
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "SeongJae Park" <sj@kernel.org>
 Cc: damon@lists.linux.dev
-In-Reply-To: <20260513050501.216835-1-sj@kernel.org>
-References: <20260513050501.216835-1-sj@kernel.org>
+In-Reply-To: <20260513045238.194161-1-sj@kernel.org>
+References: <20260513045238.194161-1-sj@kernel.org>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Thu, 14 May 2026 02:17:24 +0000
-Message-Id: <20260514021725.2801FC19425@smtp.kernel.org>
+Date: Thu, 14 May 2026 02:18:36 +0000
+Message-Id: <20260514021838.B3997C19425@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 
-Thank you for your contribution! Sashiko AI review found 2 potential issue(=
+Thank you for your contribution! Sashiko AI review found 3 potential issue(=
 s) to consider:
-- [High] The patch fails to fix the state machine deadlock that prevents kd=
-amond from restarting, leaving the bug described in the commit message unre=
-solved.
-- [Low] The patch introduces calls to undefined functions `damon_is_running=
-()` and `damon_kdamond_pid()`, causing a build failure.
+- [High] A race condition during module initialization allows userspace to =
+trigger a use-after-free kernel panic via the `enabled` sysfs parameter.
+- [High] `damon_reclaim_apply_parameters()` incorrectly applies schemes and=
+ attributes to the global `ctx` instead of `param_ctx`, causing them to be =
+destroyed by `damon_commit_ctx()`.
+- [Low] The patch introduces calls to undeclared functions `damon_is_runnin=
+g()` and `damon_kdamond_pid()`, causing a build failure.
 --
 
-commit de09cefa1bba6b569eff518a49dbc5fb07b59452
+commit e5b3e77c68d72139966a3f423a04c39c6310ef66
 Author: SeongJae Park <sj@kernel.org>
 
 mm/damon/reclaim: detect and use fresh enabled and kdamond_pid values
 
-This patch updates DAMON_RECLAIM to dynamically detect the status of the
-enabled and kdamond_pid parameters. It aims to prevent users from seeing
-stale status values and being unable to restart the kdamond thread when
-it stops unintentionally.
+This commit updates DAMON_RECLAIM to dynamically detect and use the fresh
+running status and process id for the enabled and kdamond_pid parameters.
+It avoids caching the status, which can become stale when the thread stops
+unexpectedly.
 
 Link: https://lore.kernel.org/20260419161003.79176-1-sj@kernel.org
 Link: https://lore.kernel.org/20260419161003.79176-2-sj@kernel.org
 
->     For example, the issue can be reproduced via below steps.
-[ ... ]
->     # # even after fixing the wrong parameter,
->     # # kdamond cannot be restarted.
->     # echo 1 > addr_unit
->     # echo Y > enabled
->     # ps -ef | grep kdamond
->     root         815     803  0 17:54 pts/4    00:00:00 grep kdamond
-
-Does this patch actually resolve the restart issue described here?=20
-
-Looking at damon_reclaim_timer_fn(), the state machine still appears to
-deadlock if kdamond stops unintentionally:
-
-	now_enabled =3D enabled;
-	if (last_enabled !=3D now_enabled) {
-		if (!damon_reclaim_turn(now_enabled))
-			last_enabled =3D now_enabled;
-		else
-			enabled =3D last_enabled;
-	}
-
-When kdamond dies, the global enabled and static last_enabled variables
-remain true.
-
-If a user writes 'Y' to enabled, the timer sees last_enabled =3D=3D now_ena=
-bled
-(true =3D=3D true) and exits without restarting kdamond.
-
-If a user writes 'N' to enabled, the timer calls damon_reclaim_turn(false),
-which invokes damon_stop(). Since the thread is already dead, damon_stop()
-returns -EPERM. The timer misinterprets this as a failure to stop and
-executes enabled =3D last_enabled, reverting enabled back to true.=20
-
-Could this leave the state machine permanently deadlocked?
-
 > diff --git a/mm/damon/reclaim.c b/mm/damon/reclaim.c
-> index 7952a0b7f409d..dc435aefd44f5 100644
+> index 65842e6854fd1..9df096218beb7 100644
 > --- a/mm/damon/reclaim.c
 > +++ b/mm/damon/reclaim.c
-[ ... ]
-> @@ -220,6 +203,13 @@ static DECLARE_DELAYED_WORK(damon_reclaim_timer, dam=
-on_reclaim_timer_fn);
+> @@ -247,60 +238,93 @@ static int damon_reclaim_turn(bool on)
+>  {
+>  	int err;
 > =20
->  static bool damon_reclaim_initialized;
+> -	if (!on) {
+> -		err =3D damon_stop(&ctx, 1);
+> -		if (!err)
+> -			kdamond_pid =3D -1;
+> -		return err;
+> -	}
+> +	if (!on)
+> +		return damon_stop(&ctx, 1);
 > =20
+>  	err =3D damon_reclaim_apply_parameters();
+
+Does damon_reclaim_apply_parameters() correctly configure the scheme?
+
+Looking at its implementation in mm/damon/reclaim.c:
+
+    err =3D damon_modules_new_paddr_ctx_target(&param_ctx, &param_target);
+    ...
+    err =3D damon_set_attrs(ctx, &damon_reclaim_mon_attrs);
+    ...
+    scheme =3D damon_reclaim_new_scheme();
+    ...
+    damon_set_schemes(ctx, &scheme, 1);
+    ...
+    err =3D damon_commit_ctx(ctx, param_ctx);
+
+It seems damon_set_attrs() and damon_set_schemes() are called on the global
+ctx rather than param_ctx.
+
+Since param_ctx has zero schemes when damon_commit_ctx(ctx, param_ctx) is
+called, will this aggressively destroy the schemes that were just added to
+ctx, leaving DAMON_RECLAIM non-functional?
+
+>  	if (err)
+>  		return err;
+> =20
+> -	err =3D damon_start(&ctx, 1, true);
+> -	if (err)
+> -		return err;
+> -	kdamond_pid =3D ctx->kdamond->pid;
+> -	return 0;
+> +	return damon_start(&ctx, 1, true);
+> +}
+> +
 > +static bool damon_reclaim_enabled(void)
 > +{
 > +	if (!ctx)
 > +		return false;
 > +	return damon_is_running(ctx);
+> +}
 
-Are damon_is_running() and damon_kdamond_pid() defined anywhere in the tree?
+Does this code compile?
 
-They don't appear to be declared in include/linux/damon.h or defined in
-mm/damon/core.c.
+It appears that damon_is_running() was introduced in a newer kernel version.
+Because this is a cherry-pick, are we missing a prerequisite refactoring
+patch that provides this function?
 
-Could this patch depend on prerequisite patches that might be missing?
-Without them, this causes implicit function declaration errors and
-unresolved symbol linker errors.
+> =20
+>  static int damon_reclaim_enabled_store(const char *val,
+>  		const struct kernel_param *kp)
+>  {
+> -	bool is_enabled =3D enabled;
+> -	bool enable;
+>  	int err;
+> =20
+> -	err =3D kstrtobool(val, &enable);
+> +	err =3D kstrtobool(val, &enabled);
+>  	if (err)
+>  		return err;
+> =20
+> -	if (is_enabled =3D=3D enable)
+> +	if (damon_reclaim_enabled() =3D=3D enabled)
+>  		return 0;
+> =20
+>  	/* Called before init function.  The function will handle this. */
+>  	if (!ctx)
+> -		goto set_param_out;
+> +		return 0;
+> =20
+> -	err =3D damon_reclaim_turn(enable);
+> -	if (err)
+> -		return err;
+> +	return damon_reclaim_turn(enabled);
+> +}
+
+Is there a race condition between module initialization and this sysfs
+parameter store?
+
+The sysfs file for enabled is exposed to userspace by load_module() before
+damon_reclaim_init() completes. damon_reclaim_init() allocates ctx early.
+
+If userspace writes to enabled after ctx is allocated but before
+initialization finishes, this function will start the kdamond thread.
+
+When damon_reclaim_init() resumes, it will see enabled is true and attempt =
+to
+start the thread again, resulting in -EBUSY.
+
+If initialization fails and the module memory is freed, could the
+already-running kdamond thread execute unmapped memory and cause a
+use-after-free regression?
+
+[ ... ]
+
+> +static int damon_reclaim_kdamond_pid_load(char *buffer,
+> +		const struct kernel_param *kp)
+> +{
+> +	int kdamond_pid =3D -1;
+> +
+> +	if (ctx) {
+> +		kdamond_pid =3D damon_kdamond_pid(ctx);
+> +		if (kdamond_pid < 0)
+> +			kdamond_pid =3D -1;
+> +	}
+> +	return sprintf(buffer, "%d\n", kdamond_pid);
+> +}
+
+Likewise, is damon_kdamond_pid() available in this kernel tree, or will this
+result in an implicit function declaration error?
 
 --=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260513050501.2168=
-35-1-sj@kernel.org?part=3D1
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260513045238.1941=
+61-1-sj@kernel.org?part=3D1
