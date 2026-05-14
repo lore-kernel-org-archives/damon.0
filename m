@@ -1,166 +1,69 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from relay.hostedemail.com (smtprelay0016.hostedemail.com [216.40.44.16])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A47AFC0A;
-	Thu, 14 May 2026 00:06:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F27EE1EFF8D
+	for <damon@lists.linux.dev>; Thu, 14 May 2026 00:32:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=216.40.44.16
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778717220; cv=none; b=fg+Uyurz3UDcdxesOY/iIZAk+wTDxLuSIcdM39U2oF/8RzLam+2G1yfrReawifkR4ZZOf/sOSGVWRo1Bs+y/HpB8okhLhIV0C/uokGY1K486j62xAtPsXLeUW+9+G2zBRZYBzVpcQSZZX2tRShgdMDkbeYLDso16/4qRE2NY+vA=
+	t=1778718758; cv=none; b=TF65KKsDogEp1GbrxzrVXz/4aYNGp2gwwO3rtEZM6lLczMlyhgs9iy6NCwYIOQlmp4SzS3m5kdUCUOghyLhe56ceOZnSfO2v3ojsavEks//ln6zyL2pPV+d8WEy3EW+E1SyF1T8bmhwezwreNVxrpa+cxYQ+mEDl5Na69Iq4eoo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778717220; c=relaxed/simple;
-	bh=DWVNCpyyXtijugIs1t5TkZJG/znt8BoX/RA4gIbC7nk=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m5FS+59/1sVbDsgC3kJpV33BHCJYkmkIfSmGWvnOSI9aMwOdoLRQHnxx6hr+JdNw1Td96v7MOS/jS887Stkg8xPZi0gIYgbtlQ5EpC/0MMs81qJcM3Qz376r356LvbY68STKgQq94xelFo0asms+R8ApfoYMNQBAzZff4CxJdBw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oBq66Qra; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oBq66Qra"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F26F3C19425;
-	Thu, 14 May 2026 00:06:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778717219;
-	bh=DWVNCpyyXtijugIs1t5TkZJG/znt8BoX/RA4gIbC7nk=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oBq66QraZzrbe5XdmdxhQXuV+x3xo87BOW5PwtTKnsZF5cZjBT0Dd0aFJPNxPc91s
-	 HnbIdR4iAlzocR04Pr3jLgM58xMltMZP+RpCHN6PbkgGrH3sXkzeZ/yu3c6RRYXV9E
-	 4o3PzZ/ctIr4yvs8dr2G+6YBOQ71cpUX3lJyvtyvl7Dk07z1t1wvXMk+85sdOYnATN
-	 0u1pFzfC3HsWEpEY7yWC/DgtPoXPcPdqunQznk4hbuKEFPY9oMPlvLJx8d53BxuNWk
-	 G2gyml0sZhOVP430eoyy6YawFbmTOlLMVd15w+pDwZjS80uK1tcHexVqpkFVpqasbr
-	 BE9FwtRXq4R1w==
-From: SeongJae Park <sj@kernel.org>
-To: Steven Rostedt <rostedt@goodmis.org>
-Cc: SeongJae Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	damon@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org,
-	linux-trace-kernel@vger.kernel.org
+	s=arc-20240116; t=1778718758; c=relaxed/simple;
+	bh=MlheWmyjXEB6BHVgMjFxsi+UzAGS8IB1SAGTwLQSJg0=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=WTy/mE6qQLBYU9siwBOFw0HSK2/Z3K8Fd497yIMwkC9SEFveTmS8sbLgMhAyFG9pHDwhBvMmAi+ZcFrLiWu/NIb0aH73DaZtdVA8JwYmSfVI4hC2m8TO+bKBfTrqAbLhD0B91o+v7DNYBiqee55JAdQNY2/CFsXiIux8HSWjxE8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=goodmis.org; spf=pass smtp.mailfrom=goodmis.org; arc=none smtp.client-ip=216.40.44.16
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=goodmis.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=goodmis.org
+Received: from omf02.hostedemail.com (lb01a-stub [10.200.18.249])
+	by unirelay01.hostedemail.com (Postfix) with ESMTP id 94A191C11E9;
+	Thu, 14 May 2026 00:32:35 +0000 (UTC)
+Received: from [HIDDEN] (Authenticated sender: rostedt@goodmis.org) by omf02.hostedemail.com (Postfix) with ESMTPA id 796CC80012;
+	Thu, 14 May 2026 00:32:33 +0000 (UTC)
+Date: Wed, 13 May 2026 20:32:37 -0400
+From: Steven Rostedt <rostedt@goodmis.org>
+To: SeongJae Park <sj@kernel.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>, Masami Hiramatsu
+ <mhiramat@kernel.org>, Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+ damon@lists.linux.dev, linux-kernel@vger.kernel.org, linux-mm@kvack.org,
+ linux-trace-kernel@vger.kernel.org
 Subject: Re: [RFC PATCH v2 18/28] mm/damon: trace probe_hits
-Date: Wed, 13 May 2026 17:06:10 -0700
-Message-ID: <20260514000611.147809-1-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260513140732.2320c563@gandalf.local.home>
-References: 
+Message-ID: <20260513203237.3b1b3286@gandalf.local.home>
+In-Reply-To: <20260514000611.147809-1-sj@kernel.org>
+References: <20260513140732.2320c563@gandalf.local.home>
+	<20260514000611.147809-1-sj@kernel.org>
+X-Mailer: Claws Mail 3.20.0git84 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+X-Rspamd-Queue-Id: 796CC80012
+X-Stat-Signature: a8bs8djjyouc63otxh8x4mur35woi7mp
+X-Rspamd-Server: rspamout01
+X-Session-Marker: 726F737465647440676F6F646D69732E6F7267
+X-Session-ID: U2FsdGVkX19Drorz1uVBPoiFEF9d3VmNbUHBoYhgttA=
+X-HE-Tag: 1778718753-409660
+X-HE-Meta: U2FsdGVkX19Fgcfxj6eEgZI8dKFbLpf3CMGSFuh5fZTv07YYNZP9ski4yfmKIMbsARMuVUCfLSrPQXuwW9Jt7Au1AA0c1h/ZIBB4uQTIbG98QG3Ee73ZN1eDgDn/Z1EyKwocs/O1qW/KmP75roahgjgWdjydR/Nq+Z1z04eg6gqXBFLrEYRjZUvG3Pm6HN3j2gVo5MUsmJwsTtmtymnYa9FKJdnMwdS/D28AEhzR7aMDtUFszLxgd6LgUHk6Uhxrh39GzCorwekrxYt9Os2wku+Kg+jKYmeB40a0G1XyurZOZcs5k4W+8mXsNNtsIxm74kVhvQl97Cf7dIbVv4GRIdHXpgJ+TTSr
 
-On Wed, 13 May 2026 14:07:32 -0400 Steven Rostedt <rostedt@goodmis.org> wrote:
+On Wed, 13 May 2026 17:06:10 -0700
+SeongJae Park <sj@kernel.org> wrote:
 
-> On Tue, 12 May 2026 07:36:33 -0700
-> SeongJae Park <sj@kernel.org> wrote:
-> 
-> > Introduce a new tracepoint for exposing the per-region per-probe
-> > positive sample count via tracefs.
-> > 
-> > Signed-off-by: SeongJae Park <sj@kernel.org>
-> > ---
-> >  include/trace/events/damon.h | 36 ++++++++++++++++++++++++++++++++++++
-> >  mm/damon/core.c              |  7 +++++++
-> >  2 files changed, 43 insertions(+)
-> > 
-> > diff --git a/include/trace/events/damon.h b/include/trace/events/damon.h
-> > index 7e25f4469b81b..d7b94c7640217 100644
-> > --- a/include/trace/events/damon.h
-> > +++ b/include/trace/events/damon.h
-> > @@ -130,6 +130,42 @@ TRACE_EVENT(damon_monitor_intervals_tune,
-> >  	TP_printk("sample_us=%lu", __entry->sample_us)
-> >  );
-> >  
-> > +TRACE_EVENT(damon_aggregated_v2,
-> > +
-> > +	TP_PROTO(unsigned int target_id, struct damon_region *r,
-> > +		unsigned int nr_regions, unsigned int nr_probes),
-> > +
-> > +	TP_ARGS(target_id, r, nr_regions, nr_probes),
-> > +
-> > +	TP_STRUCT__entry(
-> > +		__field(unsigned long, target_id)
-> > +		__field(unsigned long, start)
-> > +		__field(unsigned long, end)
-> > +		__field(unsigned int, nr_regions)
-> > +		__field(unsigned int, nr_accesses)
-> > +		__field(unsigned int, age)
-> > +		__dynamic_array(unsigned char, probe_hits, nr_probes)
-> > +	),
-> > +
-> > +	TP_fast_assign(
-> > +		__entry->target_id = target_id;
-> > +		__entry->start = r->ar.start;
-> > +		__entry->end = r->ar.end;
-> > +		__entry->nr_regions = nr_regions;
-> > +		__entry->nr_accesses = r->nr_accesses;
-> > +		__entry->age = r->age;
-> > +		memcpy(__get_dynamic_array(probe_hits), r->probe_hits,
-> > +			sizeof(*r->probe_hits) * nr_probes);
-> > +	),
-> > +
-> > +	TP_printk("target_id=%lu nr_regions=%u %lu-%lu: %u %u probe_hits=%s",
-> > +			__entry->target_id, __entry->nr_regions,
-> > +			__entry->start, __entry->end,
-> > +			__entry->nr_accesses, __entry->age,
-> > +			__print_hex(__get_dynamic_array(probe_hits),
-> > +				__get_dynamic_array_len(probe_hits)))
-> > +);
-> > +
-> >  TRACE_EVENT(damon_aggregated,
-> >  
-> >  	TP_PROTO(unsigned int target_id, struct damon_region *r,
-> > diff --git a/mm/damon/core.c b/mm/damon/core.c
-> > index fe6c789f2cecb..14b15c9876516 100644
-> > --- a/mm/damon/core.c
-> > +++ b/mm/damon/core.c
-> > @@ -1905,6 +1905,11 @@ static void kdamond_reset_aggregated(struct damon_ctx *c)
-> >  {
-> >  	struct damon_target *t;
-> >  	unsigned int ti = 0;	/* target's index */
-> > +	unsigned int nr_probes = 0;
-> > +	struct damon_probe *probe;
-> > +
-> > +	damon_for_each_probe(probe, c)
-> > +		nr_probes++;
-> 
-> Is the above logic needed when the tracepoint isn't enabled? If not, then you could add:
-> 
-> 	if (trace_damon_aggregated_v2_enabled()) {
-> 		damon_for_each_probe(probe, c)
-> 			nr_probes++;
-> 	}
-> 
-> And change the tracepoint to be a conditional tracepoint:
-> 
-> TRACE_EVENT_CONDITION(damon_aggregated_v2,
-> 
-> 	TP_PROTO(..),
-> 
-> 	TP_ARGS(..),
-> 
-> 	TP_CONDITION(nr_probes > 0),
-> 
-> 	[..]
-> 
-> And then the tracepoint is only triggered if nr_probes is greater than zero
-> (to handle races between the tracepoint being enabled in between the above
-> check and where it triggers).
+> Btw, if you don't mind, may I ask your opinion about the name having '_v2'
+> suffix?  I chose that as an RFC phase temporal name that doesn't break the
+> compatibility, planning to give it a better name later.  But I start feeling
+> just extending the original one might be another option because tracepoints are
+> not strict stable ABI to my understanding, and the change of the TP_prink
+> format should be simple enough (append the probe_hits= part) that the user
+> space could reasonably deal with.
 
-It is not needed when the tracepoint isn't enabled.  I will follow your
-suggestion in the next revision.  Thank you for the nice suggestion, Steven!
+It's only a stable ABI if some useful userspace tooling depends on it.
+Otherwise, feel free to change.
 
-Btw, if you don't mind, may I ask your opinion about the name having '_v2'
-suffix?  I chose that as an RFC phase temporal name that doesn't break the
-compatibility, planning to give it a better name later.  But I start feeling
-just extending the original one might be another option because tracepoints are
-not strict stable ABI to my understanding, and the change of the TP_prink
-format should be simple enough (append the probe_hits= part) that the user
-space could reasonably deal with.
+Nothing really should be parsing the TP_printk() format part as it is
+really inefficient to do so. That's why I created libtraceevent and
+libtracefs to do the parsing of the raw data for you.
 
-
-Thanks,
-SJ
-
-[...]
+-- Steve
