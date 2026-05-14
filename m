@@ -1,95 +1,151 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C657117736
-	for <damon@lists.linux.dev>; Thu, 14 May 2026 02:01:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 991EB3290B8
+	for <damon@lists.linux.dev>; Thu, 14 May 2026 02:01:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778724067; cv=none; b=H0W7eUdHQReuKX2q9Ldf9ttJvSZJel2GNXeuBQWXuzUtt5rQwMQwGd+vIjf7lHasPQ/PXUhW7e5v+/1Vllwa9Kh5RxyCbxAKcgZ/0NzxjDfh2sQzgVLFRDkaDU9WDK/6ZU8GcpFIpHIDJ9i1ze8YgQTQgIcrCRzmfm1nscLJ9XM=
+	t=1778724106; cv=none; b=f49L9tgkql8d1ZWOJWY/OdDQYJDgTuGeuE1VKD9KlAh8IXO0wMEm7JvcyvUNqmyve+CYRdRVAPTjWT440ahxLTfOYAVASnqmg0BJSA0aSoACca1WAWadnEBlAZlaLY2gnVbSuylGEyag95a3/CV7zZaF3RMWGs4y4tWMO8lX0To=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778724067; c=relaxed/simple;
-	bh=PVPkU3ne7pVBIY+H4ldRtFU0h2eXvyRq9QB2pPm3898=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LGnrvYjxYXuINgyMi4WSIu1T4BQvaiyn+NtKoM/YMkB6aEWzwPMUcwKEDdiS09reZyWnZpsCdBOA6TrdDiMNVhE1LzHP/Gab/UtNiwU8ckZ9nb07IfxgOJobVdq5zRLdm/wHmiWof6o3cc/+G7vC3GbsUxmWzYQmI64DR3kGX7I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FUTMkvAk; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1778724106; c=relaxed/simple;
+	bh=fDJCV9QXcvvQ9zmOHOsOnRs/Mc04u1ne/nUEF+VzgNM=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=p26PfqBOoPSJd4uYs2tC8WFVAe1a2FNaPEdDvu0smUhdGuSIyXd8+jemuML8ABiNtuoyiBTEZtTLm2m8+u5J3P4TTtiARoTnaTuDh+Nx6lToS6U/MfHCybyXFHhgZEMhvZB83mg9yTkgWdp+dEjgGYxFyTJOW/pweOArwxgSpcA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GOP/Kh3M; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FUTMkvAk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B4CBC19425;
-	Thu, 14 May 2026 02:01:07 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GOP/Kh3M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FA32C19425;
+	Thu, 14 May 2026 02:01:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778724067;
-	bh=PVPkU3ne7pVBIY+H4ldRtFU0h2eXvyRq9QB2pPm3898=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FUTMkvAkpNWwVjP1QFFbLfKc2TIJxLZJTkFQ4CsNt8ZPIzoQIsvzERPUuIfHudzKc
-	 JLk+T8i9wQGmSBCNhHM6GSWZihh6JU/g7OeBlHm9dJJ9YBVaI/nvZA1oKqFAXIR1Fq
-	 Xmb0h0hrxlyzJQP+LmvFzu1nMUVKxVys1qo+QR03joB68UU1ICbAohRy+cC+jXwMWV
-	 UlyWh5XMjgWf3d9XPv+2bljVkf1g/vAE2q4EPsVJabNH0/ZTX26+b8GPGwoYCCNYBJ
-	 cy3Lwt++lbCFiMq3nOaSaDGrUQuHIYrLmSZkBcN2V5O/ZLlNCsxz0VAwC9LVr2TI3U
-	 xOSXwe7ntqerw==
-From: SeongJae Park <sj@kernel.org>
-To: Kefeng Wang <wangkefeng.wang@huawei.com>
-Cc: SeongJae Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	sunnanyong@huawei.com
-Subject: Re: [PATCH v2] mm/damon/vaddr: attempt per-vma lock during page table walk
-Date: Wed, 13 May 2026 19:00:58 -0700
-Message-ID: <20260514020059.149541-1-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260512151523.2092638-1-wangkefeng.wang@huawei.com>
-References: 
+	s=k20201202; t=1778724106;
+	bh=fDJCV9QXcvvQ9zmOHOsOnRs/Mc04u1ne/nUEF+VzgNM=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date:From;
+	b=GOP/Kh3MMy0jlnZlc16+K+cbMxp6ZNAIC7lvLyU/ZlZy6P4/tvmPeTs5OkgRY6TTk
+	 5ZwJbKuGV2YMpcC7SkU5Ws1BkdsgirDonpYmxM7Su+khDDzV7YS199YjXTyVZNBG/Q
+	 MOf/1MJ6zM3dhvFl2C7cWYI8e0lDni45Zrhb3HAWtX5FE83YUWuG+BKCfRFjdQzSEb
+	 1eKyFEWg0imxxrCyYBBytWjl+12Im2n00dXbL/B4jiuzwBqZF31gZ4avDemiUMDedT
+	 gZH71Fk4xHJGrRRpLD21LmrdMbSztGSpdXy6XXlQ+/662ndT4bkk5yIDWm+RKiImFI
+	 277VEU3Ae4n1w==
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH 6.1.y 2/2] mm/damon/lru_sort: detect and use fresh
+ enabled and kdamond_pid values
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "SeongJae Park" <sj@kernel.org>
+Cc: damon@lists.linux.dev
+In-Reply-To: <20260513043039.173237-2-sj@kernel.org>
+References: <20260513043039.173237-2-sj@kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Thu, 14 May 2026 02:01:45 +0000
+Message-Id: <20260514020146.4FA32C19425@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-On Tue, 12 May 2026 23:15:23 +0800 Kefeng Wang <wangkefeng.wang@huawei.com> wrote:
+Thank you for your contribution! Sashiko AI review found 2 potential issue(=
+s) to consider:
+- [High] The patch completely fails to fix the restart issue, leaving the s=
+tate machine deadlocked.
+- [High] Use-After-Free when reading sysfs parameters if module initializat=
+ion fails.
+--
 
-> Currently, DAMON virtual address operations use mmap_read_lock
-> during page table walks, which can cause unnecessary contention
-> under high concurrency.
-> 
-> Introduce damon_va_walk_page_range() to first attempt acquiring a
-> per-vma lock. If the VMA is found and the range is fully contained
-> within it, the page table walk proceeds with the per-vma lock
-> instead of mmap_read_lock.
-> 
-> This optimization is particularly effective for damon_va_young()
-> and damon_va_mkold(), which are frequently called and typically
-> operate within a single VMA.
+commit 975a161fef47e6bccc8ce6810404c2d8be4ff338
+Author: SeongJae Park <sj@kernel.org>
+Subject: mm/damon/lru_sort: detect and use fresh enabled and kdamond_pid va=
+lues
 
-Maybe this is not only making DAMON faster, but avoid DAMON blocking others.
+This commit updates the DAMON_LRU_SORT module to dynamically detect and rep=
+ort
+the fresh status of enabled and kdamond_pid parameters. It attempts to addr=
+ess
+an issue where unintentional kdamond stoppages leave the system in a stale
+state, preventing users from restarting the daemon. By directly calling
+damon_is_running() and damon_kdamond_pid(), the system aims to provide
+accurate runtime information to sysfs readers.
 
-And because we don't have performance measurements, how about making this
-sentence less assertive?  E.g., "This optimization is particularly expected to
-be effective for ..."
+Link: https://lore.kernel.org/20260419161003.79176-3-sj@kernel.org
 
-I guess Andrew could make the adjustment when he picks this into mm.git.  If
-not I will repost this with the trivial change if you don't mind.
+> diff --git a/mm/damon/lru_sort.c b/mm/damon/lru_sort.c
+> index 61311800abc98..70cdc7425cdd3 100644
+> --- a/mm/damon/lru_sort.c
+> +++ b/mm/damon/lru_sort.c
 
-> 
-> Signed-off-by: Kefeng Wang <wangkefeng.wang@huawei.com>
+[ ... ]
 
-Reviewed-by: SeongJae Park <sj@kernel.org>
+> @@ -285,6 +268,13 @@ static DECLARE_DELAYED_WORK(damon_lru_sort_timer, da=
+mon_lru_sort_timer_fn);
+> =20
+>  static bool damon_lru_sort_initialized;
+> =20
+> +static bool damon_lru_sort_enabled(void)
+> +{
+> +	if (!ctx)
+> +		return false;
+> +	return damon_is_running(ctx);
+> +}
 
-> ---
-> v2: avoid handling VMAs with the VM_PFNMAP for per-vma path, found by
->     Sashiko review.
+Is it possible for this to cause a use-after-free if module initialization
+fails?
 
-This patch helped Sashiko finding [1] yet another DAMON bug (impact is minor
-imho).  The bug is orthogonal to this patch so there is no blocker for this
-patch.
+If damon_lru_sort_init() encounters an error (for example, damon_select_ops=
+()
+fails), it calls damon_destroy_ctx(ctx) to free the context. However, the
+global static ctx pointer is not set to NULL.
 
-> v1: https://lore.kernel.org/linux-mm/20260511132546.1973270-1-wangkefeng.wang@huawei.com/
+Since DAMON_LRU_SORT is a built-in module, its module parameters are exposed
+in sysfs early during boot. If a user reads the sysfs parameters after an i=
+nit
+failure, the dangling ctx pointer would pass the check here, leading to
+damon_is_running() dereferencing it:
 
-[1] https://lore.kernel.org/20260514015053.149396-1-sj@kernel.org
+mm/damon/core.c:damon_is_running()
+    mutex_lock(&ctx->kdamond_lock);
 
+[ ... ]
 
-Thanks,
-SJ
+> @@ -301,15 +291,57 @@ static int damon_lru_sort_enabled_store(const char =
+*val,
+>  	return 0;
+>  }
+> =20
+> +static int damon_lru_sort_enabled_load(char *buffer,
+> +		const struct kernel_param *kp)
+> +{
+> +	return sprintf(buffer, "%c\n", damon_lru_sort_enabled() ? 'Y' : 'N');
+> +}
+> +
+>  static const struct kernel_param_ops enabled_param_ops =3D {
+>  	.set =3D damon_lru_sort_enabled_store,
+> -	.get =3D param_get_bool,
+> +	.get =3D damon_lru_sort_enabled_load,
+>  };
 
-[...]
+Does this change actually fix the restart issue, or does it leave the state
+machine deadlocked?
+
+If kdamond stops unintentionally, the internal enabled and last_enabled
+variables remain true. When the user tries to restart it by writing 'Y' to =
+the
+sysfs enabled parameter, the underlying boolean value remains true. The wor=
+ker
+skips the restart because last_enabled =3D=3D now_enabled.
+
+If the user tries to reset the state by writing 'N',
+damon_lru_sort_turn(false) calls damon_stop() which returns an error because
+the daemon is already stopped. Because of this error, the worker executes
+enabled =3D last_enabled, reverting enabled back to true:
+
+mm/damon/lru_sort.c:damon_lru_sort_timer_fn()
+    if (!damon_lru_sort_turn(now_enabled))
+        last_enabled =3D now_enabled;
+    else
+        enabled =3D last_enabled;
+
+It seems the subsystem still cannot be restarted without a reboot.
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/2026051243-crevice-=
+spool-75d8@gregkh?part=3D2
