@@ -1,176 +1,147 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BD73351C31
-	for <damon@lists.linux.dev>; Fri, 15 May 2026 01:27:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D144192D8A
+	for <damon@lists.linux.dev>; Fri, 15 May 2026 01:29:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778808436; cv=none; b=fZ4kYl4gsaDTcg29lzKP4kJChatwGr/k1uiAxet9OZGq/X8AGSQ93wXE4Tgj2LTZD3/qkzJ4LQHJbxLpjd9y9LQHTJh7Wuwb++C6cTD1KALdczwEO+qbD67yqwDb23oCR0HEe84e0xTx0e/AYB8aL6g3xHhIYxzQr8CgrbK48lk=
+	t=1778808574; cv=none; b=Elsx1Ev/sD1ngkClc6h2ai+ofnb3FSduhoSsJeZMXOD0nGHS4liYC5isL/ayZNXHR4T253iVbKAmPzpj5Pu3/XgqumM4cQhZSg1/6bD5+9nPCitA/OPLdh3NmGvCio+E1fXAidLKhPqaKZBdVhkIZob6nxIpj462yUSBsSYp6as=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778808436; c=relaxed/simple;
-	bh=8fBA83owMJzMJyhurvvEaxERG6SYlSPS0p6unXh7zoo=;
+	s=arc-20240116; t=1778808574; c=relaxed/simple;
+	bh=HFfM7sTUQy8WdnLIu5A/48CxncL7LJQxGb8RNXakIcY=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=nq9wv4NcFBUvEyDQauzeCYnICow4p0mw1FeVF5smVx1KmSg8SoMDJEKZLN91ZX14YMzjGTiq8gxHwSFjkyC8HdCdtBxaYeyEnSlPO9DzRjPqXvBeGt6xNqkJHNZEufW3ITKijaeSgE1aq8Pe/FwYZtWDEQjXreigANb5FhSzV84=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=q+Hr2FOY; arc=none smtp.client-ip=10.30.226.201
+	 Message-Id; b=JVR7mYakT1IENr35+CFMdDdsySgZw1fZgVvRpJhWRQWyfV7+LM6FosgyZfBpxfZRYwqfm1pxklJlNXpuH5bDT9+f8zKZ+BG2dRNKg6HLJEFxVumH7AiHB3fPBXz0pZRP1TSRSdXlzVB3S8JidGYC1xdY24/P4+I0Abod1JUz7Wk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=A3MIEFBL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="q+Hr2FOY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D161EC2BCC6;
-	Fri, 15 May 2026 01:27:15 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="A3MIEFBL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAEECC2BCB3;
+	Fri, 15 May 2026 01:29:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778808435;
-	bh=8fBA83owMJzMJyhurvvEaxERG6SYlSPS0p6unXh7zoo=;
+	s=k20201202; t=1778808574;
+	bh=HFfM7sTUQy8WdnLIu5A/48CxncL7LJQxGb8RNXakIcY=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date:From;
-	b=q+Hr2FOYC35ukfEf3dJHoxwDjOEGZW0tMlRg3Vnjhbjd12+be3GKrDx1ydJJOcf61
-	 1T1YjWo+Pa0773hHStXvs+EoQtmer9o0HT/S3/2WaF3b/Vdi8F3mBTlpxVxCU47RE7
-	 jeG1DmYUJTsvdj/ajEOMMP6PY8e0igzXXFW+tkWxRsVe8XlCKR3DesSX8S7wMtq3QH
-	 Ex39OLOv+rqh52Sxhb2/tm2E0+MAXlhvsat1wZGKPq7rp1b6LlKOH5ZqQmPRnKmnum
-	 VW0SWfo/OGkWzVfVcAovEiiL+GeX/xfZu6X8s2RYRye0lbNW01mnBCaaeVrRo6hr/d
-	 94wB0mR0YO1Vg==
+	b=A3MIEFBLb0XgOHRdX2du5bNhK2oUBPI+minjier2Xyjs3zyGgucchh9Gne4nt/m7u
+	 RFFWdV6g4/VZAIie0Fr+fs4WVr2Av41gdp37sni1pgN6TghUMVlMjYqvFBttNVySPv
+	 NUQa+uWOgdGfz11OLCYf5MQOIexdjVgUGOv7/X5BJ9SbSjPr2WIbj3HLVqno3KBApo
+	 IgGbkh2AZpahSab2yhyGN6EWWYft6twRr7XWMfzFHL9FbcggXrDZwY7JLtVqqD6IAL
+	 Z0jJyA7M836pXc/Ya8MdL8EWc3kqs3V7tJJKE6o7sYxw0o/7yGJtSLOOJaJpWLORA4
+	 Je4V4VFvM1srQ==
 From: sashiko-bot@kernel.org
-Subject: Re: [RFC PATCH v2.2 15/28] mm/damon/sysfs-schemes: implement
- tried_regions/<r>/probes/
+Subject: Re: [RFC PATCH v2.2 08/28] mm/damon/paddr: support data attributes
+ monitoring
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "SeongJae Park" <sj@kernel.org>
 Cc: damon@lists.linux.dev
-In-Reply-To: <20260515004433.128933-16-sj@kernel.org>
-References: <20260515004433.128933-16-sj@kernel.org>
+In-Reply-To: <20260515004433.128933-9-sj@kernel.org>
+References: <20260515004433.128933-9-sj@kernel.org>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Fri, 15 May 2026 01:27:15 +0000
-Message-Id: <20260515012715.D161EC2BCC6@smtp.kernel.org>
+Date: Fri, 15 May 2026 01:29:33 +0000
+Message-Id: <20260515012933.EAEECC2BCB3@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 
-Thank you for your contribution! Sashiko AI review found 4 potential issue(=
+Thank you for your contribution! Sashiko AI review found 3 potential issue(=
 s) to consider:
-- [Critical] Use-After-Free and Double-Put of kobjects due to delayed relea=
-se
-- [High] Lockless list corruption in delayed kobject release
-- [High] State variables (`nr_regions`, `total_bytes`) leak on error paths
-- [Medium] Undefined Behavior from unvalidated pointer arithmetic on NULL
+- [High] Flawed and order-dependent filter fallback logic in damon_pa_filte=
+r_pass().
+- [Medium] The probe_hits counters can silently overflow and wrap around.
+- [Medium] Redundant folio lookups and reference count operations for each =
+probe.
 --
 
-commit 2a0f4a006e3babc368de4c2d048d4ec6e1aec966
+commit dd2c6385be410e674ab72a5dd4ff210f2f41dd48
 Author: SeongJae Park <sj@kernel.org>
 
-mm/damon/sysfs-schemes: implement tried_regions/<r>/probes/
+mm/damon/paddr: support data attributes monitoring
 
-This commit adds a probes/ sysfs directory under DAMOS tried regions to
-show per-region probe hit counts.
+This commit implements and registers the apply_probes callback to
+support data attributes monitoring in the paddr operations.
 
-> diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
-> index 245d63808411a..0bca89217b8fa 100644
-> --- a/mm/damon/sysfs-schemes.c
-> +++ b/mm/damon/sysfs-schemes.c
+> diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
+> index 5cdcc5037cbc1..493bcca8ff104 100644
+> --- a/mm/damon/paddr.c
+> +++ b/mm/damon/paddr.c
 [ ... ]
-> @@ -34,10 +61,36 @@ static struct damon_sysfs_scheme_region *damon_sysfs_=
-scheme_region_alloc(
->  	sysfs_region->ar =3D region->ar;
->  	sysfs_region->nr_accesses =3D region->nr_accesses_bp / 10000;
->  	sysfs_region->age =3D region->age;
-> +	sysfs_region->probes =3D NULL;
->  	INIT_LIST_HEAD(&sysfs_region->list);
->  	return sysfs_region;
+> @@ -120,6 +120,67 @@ static unsigned int damon_pa_check_accesses(struct d=
+amon_ctx *ctx)
+>  	return max_nr_accesses;
 >  }
 > =20
-> +static int damos_sysfs_region_add_dirs(
-> +		struct damon_sysfs_scheme_region *region)
+[ ... ]
+> +static bool damon_pa_filter_pass(phys_addr_t pa, struct damon_probe *p)
 > +{
-> +	struct damos_sysfs_probes *probes =3D damos_sysfs_probes_alloc();
-> +	int err;
+> +	struct damon_filter *f;
+> +	struct folio *folio;
+> +	bool pass =3D true;
 > +
-> +	if (!probes)
-> +		return -ENOMEM;
-> +	err =3D kobject_init_and_add(&probes->kobj, &damos_sysfs_probes_ktype,
-> +			&region->kobj, "probes");
-> +	if (err) {
-> +		kobject_put(&probes->kobj);
-> +		return err;
+> +	folio =3D damon_get_folio(PHYS_PFN(pa));
+> +	damon_for_each_filter(f, p) {
+> +		if (damon_pa_filter_match(f, folio)) {
+> +			pass =3D f->allow;
+> +			break;
+> +		}
+> +		pass =3D !f->allow;
+
+If no filters match the folio, does this logic make the final fallback
+decision entirely dependent on the allow boolean of the last filter in the
+list?
+
+Reordering the filters could silently invert the fallback behavior for
+non-matching folios.
+
 > +	}
-> +
-> +	region->probes =3D probes;
-> +	return 0;
+> +	if (folio)
+> +		folio_put(folio);
+> +	return pass;
 > +}
 > +
-> +static void damos_sysfs_region_rm_dirs(
-> +		struct damon_sysfs_scheme_region *region)
+> +static void damon_pa_apply_probes(struct damon_ctx *ctx)
 > +{
-> +	kobject_put(&region->probes->kobj);
+> +	struct damon_target *t;
+> +	struct damon_region *r;
+> +	struct damon_probe *p;
+> +
+> +	damon_for_each_target(t, ctx) {
+> +		damon_for_each_region(r, t) {
+> +			int i =3D 0;
+> +
+> +			damon_for_each_probe(p, ctx) {
+> +				phys_addr_t pa;
+> +
+> +				pa =3D damon_pa_phys_addr(r->sampling_addr,
+> +						ctx->addr_unit);
+> +				if (damon_pa_filter_pass(pa, p))
 
-If damos_sysfs_region_add_dirs() fails, region->probes remains NULL.
-If damos_sysfs_region_rm_dirs() is subsequently called on this region,
-will &region->probes->kobj evaluate the address of a member of a NULL point=
-er?
+Does this redundantly repeat expensive folio lookups and reference count
+operations for each probe?
 
-While this evaluates to a NULL pointer because kobj is at offset 0, is it
-safe to rely on this undefined behavior, or should there be an
-if (!region->probes) check?
+The physical address calculation and folio lookup in damon_pa_filter_pass()
+are executed inside the probe loop, meaning they will be repeated for the
+exact same physical address if multiple probes exist.
 
+Could the folio lookup be hoisted outside the probe loop to avoid unnecessa=
+ry
+overhead?
+
+> +					r->probe_hits[i]++;
+
+Could this counter silently overflow and wrap around?
+
+r->probe_hits[i] is defined as an unsigned char in struct damon_region.
+If the aggregation interval is configured to be thousands of times larger t=
+han
+the sample interval, this 8-bit counter might easily overflow.
+
+> +				i++;
+> +			}
+> +		}
+> +	}
 > +}
-> +
->  static ssize_t start_show(struct kobject *kobj, struct kobj_attribute *a=
-ttr,
->  		char *buf)
->  {
-> @@ -165,6 +218,7 @@ static void damon_sysfs_scheme_regions_rm_dirs(
-> =20
->  	list_for_each_entry_safe(r, next, &regions->regions_list, list) {
->  		/* release function deletes it from the list */
-> +		damos_sysfs_region_rm_dirs(r);
->  		kobject_put(&r->kobj);
-
-If the kobject release is delayed (e.g. because userspace holds a sysfs file
-open in the region directory, or CONFIG_DEBUG_KOBJECT_RELEASE is enabled),
-the region remains on the regions_list.
-
-If a user consecutively writes to the sysfs state file to clear regions,
-damon_sysfs_scheme_regions_rm_dirs() will iterate over the same region agai=
-n.
-
-Will this call kobject_put(&region->probes->kobj) a second time on the
-already-freed probes kobject, triggering a use-after-free and refcount
-underflow?
-
-Should region->probes be set to NULL after the put to avoid this?
-
-Also, regarding the list management, this isn't a regression introduced her=
-e,
-but the comment mentions the release function deletes it from the list. If
-kobject release runs asynchronously in a worker thread, can the release
-function list_del() run concurrently while this loop iterates the list,
-silently corrupting the doubly-linked list?
-
->  		regions->nr_regions--;
->  	}
-> @@ -2932,9 +2986,14 @@ void damos_sysfs_populate_region_dir(struct damon_=
-sysfs_schemes *sysfs_schemes,
->  	if (kobject_init_and_add(&region->kobj,
->  				&damon_sysfs_scheme_region_ktype,
->  				&sysfs_regions->kobj, "%d",
-> -				sysfs_regions->nr_regions++)) {
-> -		kobject_put(&region->kobj);
-> -	}
-> +				sysfs_regions->nr_regions++))
-> +		goto out;
-> +	if (damos_sysfs_region_add_dirs(region))
-> +		goto out;
-> +	return;
-> +
-> +out:
-> +	kobject_put(&region->kobj);
-
-Earlier in this function, sysfs_regions->total_bytes is increased, and
-sysfs_regions->nr_regions is incremented.
-
-If damos_sysfs_region_add_dirs() fails and the code jumps to the out label,
-these state variables are not reverted. Since
-damon_sysfs_scheme_regions_rm_dirs() only decrements nr_regions by 1 per
-region in the list, do these counters permanently drift, causing accounting
-issues?
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260515004433.1289=
-33-1-sj@kernel.org?part=3D15
+33-1-sj@kernel.org?part=3D8
