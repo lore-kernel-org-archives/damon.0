@@ -1,51 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ECFB36DA1B;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 875962F6577;
 	Fri, 15 May 2026 00:44:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778805897; cv=none; b=GR+FrC0NH5KNIKC0ime6VjjS3XAVREGD/ebyhWC9b1tMEdnhTVzyqqxHnKrq3qDokE7fly7gsKlrueI+HXIVMHMUktkYCTfVrOjrOLcXS+jL2XPFWxSvBTBRKhLRljPSnr5nv+RaTgJCklNf50+8RpXd8Q/SVZvjoRF848SIf0s=
+	t=1778805897; cv=none; b=BFOZO6GwEmcUElJjWxQ4z04q25rNh4YkKucy+m9Ba4Zf9cPOpFEiZ/xeDHvk8numaeGoBj/A020QKw3oUm8vWHnw/9+oLjEbObIdyQXR07cEhfJ5LQyPhnJpAq8BLsQTOI8VnNnTi+H+j+LTDo73wRIYl9bNH1llJH56NmJA9X8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1778805897; c=relaxed/simple;
-	bh=OPFhEPDzos0mBFBwhii/0BwgZM31nZ+rfuFNwzzIAKM=;
+	bh=QS528f5qGHKkLem/jUjppq70/JVfZ3peF0nYrxU0kzc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FTDNIQmPyRXB9KLK3oE4VA+Mt1g+XBkiOAT0HbdjnprV2Pt3IlDp/2485xr9kkpL8+g6MykAtoeVJJdBl/JcM1Gwa6cVOD+dyvvO5OrPZjGpPpQmRzHuvIdX6k7U6cy818PYfqoHYzA31zld8mtHzaN8sjwVcRP37X/70BeGnpw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ohlBmz1q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=A2GlHnq/KQaSTRxpIt6nBQDgLMrWkgVYN//nNrpgaHVHCsCMoZLh8EZ0n7oeeqLy5NZKi+ZtB6OgscoEA17cOkiZ9iYIorleY5dlIxx3fS/HNFL5e79wL9lYewGwLtvg7uA1hl3xmTgnkKQPNSgkqpVQnF+mmmkxLpSHRGy/rKw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HDPdurHS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ohlBmz1q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E130C2BCC6;
-	Fri, 15 May 2026 00:44:54 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HDPdurHS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35D18C2BCB3;
+	Fri, 15 May 2026 00:44:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778805895;
-	bh=OPFhEPDzos0mBFBwhii/0BwgZM31nZ+rfuFNwzzIAKM=;
+	s=k20201202; t=1778805897;
+	bh=QS528f5qGHKkLem/jUjppq70/JVfZ3peF0nYrxU0kzc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ohlBmz1qbNNoMP9c5FxOa8/YODHQ5n0SA+R8HRu7GjSSZ1xpCFzWncDcwlqH46mTP
-	 6h5EolLHb5duvzp9CnhnedTkjwgXpKGg7giStJFccWVuaYgOdSt/QVYkw32ynp+mhx
-	 YES2bCwdVnBCef1Kl5RJtqEkWj/CbVYniOLeqqTe6sh1aFOb5y1PItrnWvgsDPznSC
-	 a5y30OTM5iucG438qFNqCWyQ4tN/1RJVeNIThviv4jUuIzJO05nGH2TDeHHfC7T13f
-	 Uuo/VrsEt99FXY3vT6c0o9R695YedJ5qkBP+iYs+1fmAqCGsHMC6K6KJksyKDV7cIQ
-	 mLPaqTjPqmhpg==
+	b=HDPdurHSjutJ362yDbz+dXhc8XJvA4E1AtHqu09JI4XdGIRN9ZWztD2nZ4Do5zCfD
+	 Aoz0SHMxTikFe2G6L6jLLT0t3UgbPSAgeJMBglHAew+CbVPpgeUEc7D6GLDUOH4JaG
+	 +e0kmFtH9kfc/WSG1dBmX3m26ZRLYntLGzDanoKmMwZ/PhbVQ59FM7qKwvIh1ieuTG
+	 2k7zsypQeT5P2u9mbjzTX0vMx7k8rP965f2CiedpCFgWkv534jkGwKy0gNUBh0/Vmb
+	 fA7YY9ahYAwOEkIpHkrAMzPLyoVDNHDGqHQ0mW/qfQIHjoc5Kb5ySnP3Ko2omUMmNq
+	 44D8y9cMjqezQ==
 From: SeongJae Park <sj@kernel.org>
 To: 
 Cc: SeongJae Park <sj@kernel.org>,
-	"Liam R. Howlett" <liam@infradead.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	David Hildenbrand <david@kernel.org>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	Michal Hocko <mhocko@suse.com>,
-	Mike Rapoport <rppt@kernel.org>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Vlastimil Babka <vbabka@kernel.org>,
 	damon@lists.linux.dev,
-	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH v2.2 20/28] Docs/mm/damon/design: document data attributes monitoring
-Date: Thu, 14 May 2026 17:44:21 -0700
-Message-ID: <20260515004433.128933-21-sj@kernel.org>
+Subject: [RFC PATCH v2.2 24/28] mm/damon/sysfs: add filters/<F>/path file
+Date: Thu, 14 May 2026 17:44:25 -0700
+Message-ID: <20260515004433.128933-25-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260515004433.128933-1-sj@kernel.org>
 References: <20260515004433.128933-1-sj@kernel.org>
@@ -57,61 +47,101 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Update DAMON design document for newly added data attributes monitoring
-feature.
+Introduce a new DAMON sysfs file for letting users setup the target
+memory cgroup of the belonging memory cgroup attribute monitoring.  The
+file is named 'filter', located under the probe filter directory.  Users
+can set the target memory cgroup by writing the path to the memory
+cgroup from the cgroup mount point to the file.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- Documentation/mm/damon/design.rst | 37 +++++++++++++++++++++++++++++++
- 1 file changed, 37 insertions(+)
+ mm/damon/sysfs.c | 44 ++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 44 insertions(+)
 
-diff --git a/Documentation/mm/damon/design.rst b/Documentation/mm/damon/design.rst
-index afc7d52bda2f7..aa08c899a3e5b 100644
---- a/Documentation/mm/damon/design.rst
-+++ b/Documentation/mm/damon/design.rst
-@@ -269,6 +269,43 @@ interval``, DAMON checks if the region's size and access frequency
- (``nr_accesses``) has significantly changed.  If so, the counter is reset to
- zero.  Otherwise, the counter is increased.
+diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
+index c2c172aeae149..21f89f2976ca5 100644
+--- a/mm/damon/sysfs.c
++++ b/mm/damon/sysfs.c
+@@ -756,6 +756,7 @@ struct damon_sysfs_filter {
+ 	enum damon_filter_type type;
+ 	bool matching;
+ 	bool allow;
++	char *path;
+ };
  
-+Data Attributes Monitoring
-+~~~~~~~~~~~~~~~~~~~~~~~~~~
-+
-+Data access pattern is only one type of data attributes.  In some use cases,
-+users need to know more data attributes information.  For example, users may
-+need to know how much of a given hot or cold memory region is backed by
-+anonymous pages, or belong to a specific cgroup.  For such use case, data
-+attributes monitoring feature is provided.
-+
-+Using the feature, users can register data attributes of their interest to the
-+DAMON :ref:`context <damon_design_execution_model_and_data_structures>`.  The
-+registration is made by specifying a probe per attribute.  Each of the probe
-+specifies a rule to determine if a given memory region has the related
-+attribute.  The rule is constructed with multiple filters.  The filters work
-+same to :ref:`DAMOS filters <damon_design_damos_filters>` except the supported
-+filter types.  Currently only ``anon`` filter type is supported for data
-+attributes monitoring.
-+
-+If such probes are registered, DAMON executes the probes for each region's
-+sampling memory when it does the access :ref:`sampling
-+<damon_design_region_based_sampling>`.  The number of samples that identified
-+as having the data attribute (hitting the probe) per :ref:`aggregation interval
-+<damon_design_monitoring>` is accounted in a per-region per-probe counter.
-+Users can therefore know how much of a given DAMON region has a specific data
-+attribute by reading the per-region per-probe probe hits counter after each
-+aggregation interval.
-+
-+This is a sampling based mechanism.  Hence, it is lightweight but the output
-+may include some measurement errors.  The output should be used with good
-+understanding of statistics.
-+
-+Another way to do this for higher accuracy is using :ref:`DAMOS filter
-+<damon_design_damos_filters>` with ``stat`` :ref:`action
-+<damon_design_damos_action>` and ``sz_ops_filter_passed`` :ref:`stat
-+<damon_design_damos_stat>`.  This approach provides the data attributes
-+information in page level.  But, because it is operated in page level, the
-+overhead is proportional to the size of the memory.
+ static struct damon_sysfs_filter *damon_sysfs_filter_alloc(void)
+@@ -774,6 +775,10 @@ damon_sysfs_filter_type_names[] = {
+ 		.type = DAMON_FILTER_TYPE_ANON,
+ 		.name = "anon",
+ 	},
++	{
++		.type = DAMON_FILTER_TYPE_MEMCG,
++		.name = "memcg",
++	},
+ };
  
- Dynamic Target Space Updates Handling
- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ static ssize_t type_show(struct kobject *kobj,
+@@ -862,11 +867,46 @@ static ssize_t allow_store(struct kobject *kobj,
+ 	return count;
+ }
+ 
++static ssize_t path_show(struct kobject *kobj,
++		struct kobj_attribute *attr, char *buf)
++{
++	struct damon_sysfs_filter *filter = container_of(kobj,
++			struct damon_sysfs_filter, kobj);
++	int len;
++
++	if (!mutex_trylock(&damon_sysfs_lock))
++		return -EBUSY;
++	len = sysfs_emit(buf, "%s\n", filter->path ? filter->path : "");
++	mutex_unlock(&damon_sysfs_lock);
++	return len;
++}
++
++static ssize_t path_store(struct kobject *kobj,
++		struct kobj_attribute *attr, const char *buf, size_t count)
++{
++	struct damon_sysfs_filter *filter = container_of(kobj,
++			struct damon_sysfs_filter, kobj);
++	char *path = kmalloc_objs(*path, size_add(count, 1));
++
++	if (!path)
++		return -ENOMEM;
++	strscpy(path, buf, size_add(count, 1));
++	if (!mutex_trylock(&damon_sysfs_lock)) {
++		kfree(path);
++		return -EBUSY;
++	}
++	kfree(filter->path);
++	filter->path = path;
++	mutex_unlock(&damon_sysfs_lock);
++	return count;
++}
++
+ static void damon_sysfs_filter_release(struct kobject *kobj)
+ {
+ 	struct damon_sysfs_filter *filter = container_of(kobj,
+ 			struct damon_sysfs_filter, kobj);
+ 
++	kfree(filter->path);
+ 	kfree(filter);
+ }
+ 
+@@ -879,10 +919,14 @@ static struct kobj_attribute damon_sysfs_filter_matching_attr =
+ static struct kobj_attribute damon_sysfs_filter_allow_attr =
+ 		__ATTR_RW_MODE(allow, 0600);
+ 
++static struct kobj_attribute damon_sysfs_filter_path_attr =
++		__ATTR_RW_MODE(path, 0600);
++
+ static struct attribute *damon_sysfs_filter_attrs[] = {
+ 	&damon_sysfs_filter_type_attr.attr,
+ 	&damon_sysfs_filter_matching_attr.attr,
+ 	&damon_sysfs_filter_allow_attr.attr,
++	&damon_sysfs_filter_path_attr.attr,
+ 	NULL,
+ };
+ ATTRIBUTE_GROUPS(damon_sysfs_filter);
 -- 
 2.47.3
