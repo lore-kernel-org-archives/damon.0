@@ -1,45 +1,51 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDD1A36BCF5;
-	Fri, 15 May 2026 00:44:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E37936C582;
+	Fri, 15 May 2026 00:44:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778805896; cv=none; b=fQRwNnq5Bx04l/Ho/JJqm+SsWmdCqEC4WH4oP2Ed4trFK6yIT51kr8gmW064j2sWOnIfnGDKNG9i2L2+SRcR6Hgnnivw6FyfBDHLn5izaMrk2a9OTepIR1WsxGGB5l53r+trvbi0OHQMtUIjcvu0kAR1H6IrWG4CDG1a5BlZlqg=
+	t=1778805896; cv=none; b=p0JEVhdy05E3XTfSKkId6WsuSpFgBqUSYvXhYh1yAX7jkTCWXdiNwYjL3nllI4MEfzuH9fnkLGfBidLCxUqfr8tgrwwO5usCC09kpuz8ej6kmP0Y+Yt1sve3K2MF47EzRSSi46ExL6+5PXUTN2a39Y3xvqhVt7831neszCp03X8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1778805896; c=relaxed/simple;
-	bh=O6Hl0Mh7Nxw8m7P+hZlG7JicrW7ipkVD+m8lBYL3rME=;
+	bh=tDul/IalxWnHQ0Ddp/WnfpzD8FisANNYVxxNG1upWBM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pgLlEohmWhrPeYZIXKLuKS2OJDHjUmSyU8+1Un7NyO3lQYCDvt8+KXnF4uYLn+9/YPgLERF328BnIzM4//+3NzXGzpMBaAT79LYMTayVv0sjk6197PDtMv4pvnYmf1iUojnAqLXTUL9hEhKp/EQOO405AgEmgBKehEf5FRzxwpk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Jwg9Kxxy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=QMg/LWU5p1zgcc+ys5Ejia66EIlhW+wr2oLffWrvCMLvL8JaD1pDXf2UkIEOsjZ9Mg/8Prr4xHkirrf5EOISCWUUtKJeGhu9znNd/Gk4ivMTw7t6RJMCwc192ui2+zFPqNZu6QU+BMojoZTVp1xfz3wLiNF0vkXYWErjVwTaxN4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pfdVnQ/D; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Jwg9Kxxy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7233AC2BCB3;
-	Fri, 15 May 2026 00:44:53 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pfdVnQ/D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E6DDC2BCC7;
+	Fri, 15 May 2026 00:44:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778805893;
-	bh=O6Hl0Mh7Nxw8m7P+hZlG7JicrW7ipkVD+m8lBYL3rME=;
+	s=k20201202; t=1778805896;
+	bh=tDul/IalxWnHQ0Ddp/WnfpzD8FisANNYVxxNG1upWBM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Jwg9Kxxyp5SiFWyPel8l0mDAk7ys3Acb2RUOzTSm9Zbjp0NCywgHIm0e71oWxPoOa
-	 /MR06AYDIZMsnHne9/DRPkuwuIKS+i1bAOFv9boEKqLPy+p65t0GVhg3QCMY6bZxcr
-	 mvtkEB4O3u42wydFD1ryEEzGi9t/fEMeJ9yEittT+Klo7hbpWqmqo1zJiiyijvFHT9
-	 IzsP4ozltwnkSolKLVlg15pg88U+q7O/a9VSFFL+A3aAKbcpPF8QzbrR/leL44Rhm7
-	 MmIIX+8XH/RXkeUSV1+Iwp5VNeAiiOGhU2MmEItoI98Mt56V5TULNeFXQujxRlbA5a
-	 qoTB6HGcFM/lg==
+	b=pfdVnQ/DZlAwuHtdmFvz0ZaTBe8L6X+r92BtXxeeR5GRL3pjLZJV34yDp8B+97TU3
+	 eoWv+zoOCcTe0lDZMTGdtJNzC1NGejzvKDznmGOhVEBhrGO8wK9x3Ez7NqevrUqq8F
+	 pmGvIEoDGs143WIzK4SQLkpn6Ar2u+rX/ri4KlIvkQjYr8YCWndhSEQgPVWBQzTx4I
+	 1GXv5fv02z/x0uiTOuAq9/o7dN2gMFQgU5D42FvCok4S6zA7ryJJr2B9mf+D1qEyZG
+	 2qtQ09OqQAuy5n0gd8p4ZFVttoA7jvizLcpnDfkrtS7wem9cvbgJC03mWxBKa0+gqp
+	 yux89H/ThgJDQ==
 From: SeongJae Park <sj@kernel.org>
 To: 
 Cc: SeongJae Park <sj@kernel.org>,
+	"Liam R. Howlett" <liam@infradead.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
+	David Hildenbrand <david@kernel.org>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@kernel.org>,
 	damon@lists.linux.dev,
+	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org,
-	linux-trace-kernel@vger.kernel.org
-Subject: [RFC PATCH v2.2 18/28] mm/damon: trace probe_hits
-Date: Thu, 14 May 2026 17:44:19 -0700
-Message-ID: <20260515004433.128933-19-sj@kernel.org>
+	linux-mm@kvack.org
+Subject: [RFC PATCH v2.2 21/28] Docs/admin-guide/mm/damon/usage: document data attributes monitoring
+Date: Thu, 14 May 2026 17:44:22 -0700
+Message-ID: <20260515004433.128933-22-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260515004433.128933-1-sj@kernel.org>
 References: <20260515004433.128933-1-sj@kernel.org>
@@ -49,92 +55,115 @@ List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Introduce a new tracepoint for exposing the per-region per-probe
-positive sample count via tracefs.
+Update DAMON usage document for the newly added data attributes
+monitoring feature.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- include/trace/events/damon.h | 38 ++++++++++++++++++++++++++++++++++++
- mm/damon/core.c              |  9 +++++++++
- 2 files changed, 47 insertions(+)
+ Documentation/admin-guide/mm/damon/usage.rst | 46 +++++++++++++++++---
+ Documentation/mm/damon/design.rst            |  2 +
+ 2 files changed, 41 insertions(+), 7 deletions(-)
 
-diff --git a/include/trace/events/damon.h b/include/trace/events/damon.h
-index 24fc402ab3c85..ec1e317923fd3 100644
---- a/include/trace/events/damon.h
-+++ b/include/trace/events/damon.h
-@@ -130,6 +130,44 @@ TRACE_EVENT(damon_monitor_intervals_tune,
- 	TP_printk("sample_us=%lu", __entry->sample_us)
- );
+diff --git a/Documentation/admin-guide/mm/damon/usage.rst b/Documentation/admin-guide/mm/damon/usage.rst
+index 534e1199cf091..44224da62533e 100644
+--- a/Documentation/admin-guide/mm/damon/usage.rst
++++ b/Documentation/admin-guide/mm/damon/usage.rst
+@@ -71,6 +71,11 @@ comma (",").
+     │ │ │ │ │ │ intervals/sample_us,aggr_us,update_us
+     │ │ │ │ │ │ │ intervals_goal/access_bp,aggrs,min_sample_us,max_sample_us
+     │ │ │ │ │ │ nr_regions/min,max
++    │ │ │ │ │ │ :ref:`probes <damon_usage_sysfs_probes>`/nr_probes
++    │ │ │ │ │ │ │ 0/filters/nr_filters
++    │ │ │ │ │ │ │ │ │ 0/type,matching,allow
++    │ │ │ │ │ │ │ │ │ ...
++    │ │ │ │ │ │ │ │ ...
+     │ │ │ │ │ :ref:`targets <sysfs_targets>`/nr_targets
+     │ │ │ │ │ │ :ref:`0 <sysfs_target>`/pid_target,obsolete_target
+     │ │ │ │ │ │ │ :ref:`regions <sysfs_regions>`/nr_regions
+@@ -94,7 +99,10 @@ comma (",").
+     │ │ │ │ │ │ │ │ 0/id,weight
+     │ │ │ │ │ │ │ :ref:`stats <sysfs_schemes_stats>`/nr_tried,sz_tried,nr_applied,sz_applied,sz_ops_filter_passed,qt_exceeds,nr_snapshots,max_nr_snapshots
+     │ │ │ │ │ │ │ :ref:`tried_regions <sysfs_schemes_tried_regions>`/total_bytes
+-    │ │ │ │ │ │ │ │ 0/start,end,nr_accesses,age,sz_filter_passed
++    │ │ │ │ │ │ │ │ 0/start,end,nr_accesses,age,sz_filter_passed,
++    │ │ │ │ │ │ │ │ │ probes
++    │ │ │ │ │ │ │ │ │ │ 0/hits
++    │ │ │ │ │ │ │ │ │ │ ...
+     │ │ │ │ │ │ │ │ ...
+     │ │ │ │ │ │ ...
+     │ │ │ │ ...
+@@ -221,8 +229,8 @@ contexts/<N>/monitoring_attrs/
  
-+TRACE_EVENT_CONDITION(damon_aggregated_v2,
-+
-+	TP_PROTO(unsigned int target_id, struct damon_region *r,
-+		unsigned int nr_regions, unsigned int nr_probes),
-+
-+	TP_ARGS(target_id, r, nr_regions, nr_probes),
-+
-+	TP_CONDITION(nr_probes > 0),
-+
-+	TP_STRUCT__entry(
-+		__field(unsigned long, target_id)
-+		__field(unsigned long, start)
-+		__field(unsigned long, end)
-+		__field(unsigned int, nr_regions)
-+		__field(unsigned int, nr_accesses)
-+		__field(unsigned int, age)
-+		__dynamic_array(unsigned char, probe_hits, nr_probes)
-+	),
-+
-+	TP_fast_assign(
-+		__entry->target_id = target_id;
-+		__entry->start = r->ar.start;
-+		__entry->end = r->ar.end;
-+		__entry->nr_regions = nr_regions;
-+		__entry->nr_accesses = r->nr_accesses;
-+		__entry->age = r->age;
-+		memcpy(__get_dynamic_array(probe_hits), r->probe_hits,
-+			sizeof(*r->probe_hits) * nr_probes);
-+	),
-+
-+	TP_printk("target_id=%lu nr_regions=%u %lu-%lu: %u %u probe_hits=%s",
-+			__entry->target_id, __entry->nr_regions,
-+			__entry->start, __entry->end,
-+			__entry->nr_accesses, __entry->age,
-+			__print_hex(__get_dynamic_array(probe_hits),
-+				__get_dynamic_array_len(probe_hits)))
-+);
-+
- TRACE_EVENT(damon_aggregated,
+ Files for specifying attributes of the monitoring including required quality
+ and efficiency of the monitoring are in ``monitoring_attrs`` directory.
+-Specifically, two directories, ``intervals`` and ``nr_regions`` exist in this
+-directory.
++Specifically, two directories, ``intervals``, ``nr_regions`` and ``probes``
++exist in this directory.
  
- 	TP_PROTO(unsigned int target_id, struct damon_region *r,
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index 1c9d2fb69f98d..ab8ac9ec8450d 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -1881,6 +1881,13 @@ static void kdamond_reset_aggregated(struct damon_ctx *c)
- {
- 	struct damon_target *t;
- 	unsigned int ti = 0;	/* target's index */
-+	unsigned int nr_probes = 0;
-+	struct damon_probe *probe;
+ Under ``intervals`` directory, three files for DAMON's sampling interval
+ (``sample_us``), aggregation interval (``aggr_us``), and update interval
+@@ -256,6 +264,27 @@ tuning-applied current values of the two intervals can be read from the
+ ``sample_us`` and ``aggr_us`` files after writing ``update_tuned_intervals`` to
+ the ``state`` file.
+ 
++.. _damon_usage_sysfs_probes:
 +
-+	if (trace_damon_aggregated_v2_enabled()) {
-+		damon_for_each_probe(probe, c)
-+			nr_probes++;
-+	}
++contexts/<N>/monitoring_attrs/probes/
++-------------------------------------
++
++A directory for registering :ref:`data attributes monitoring
++<damon_design_data_attrs_monitoring>` probes.
++
++In the beginning, this directory has only one file, ``nr_probes``.  Writing a
++number (``N``) to the file creates the number of child directories named ``0``
++to ``N-1``.  Each directory represents each monitoring probe.
++
++In each probe directory, one directory, ``filters`` exist.  The directory
++contains files for installingt filters for the probe, that is used to determine
++the data attribute for the probe.
++
++In the beginning, ``filters`` directory has only one file, ``nr_filters``.
++Writing a number (``N``) to the file creates the number of child directories
++named ``0`` to ``N-1``.  Each directory represents each filter and work in a
++way similar to that for :ref:`DAMOS filter <sysfs_filters>`.
++
+ .. _sysfs_targets:
  
- 	damon_for_each_target(t, c) {
- 		struct damon_region *r;
-@@ -1889,6 +1896,8 @@ static void kdamond_reset_aggregated(struct damon_ctx *c)
- 			int i;
+ contexts/<N>/targets/
+@@ -600,10 +629,13 @@ set the ``access pattern`` as their interested pattern that they want to query.
+ tried_regions/<N>/
+ ------------------
  
- 			trace_damon_aggregated(ti, r, damon_nr_regions(t));
-+			trace_damon_aggregated_v2(ti, r, damon_nr_regions(t),
-+					nr_probes);
- 			damon_warn_fix_nr_accesses_corruption(r);
- 			r->last_nr_accesses = r->nr_accesses;
- 			r->nr_accesses = 0;
+-In each region directory, you will find five files (``start``, ``end``,
+-``nr_accesses``, ``age``, and ``sz_filter_passed``).  Reading the files will
+-show the properties of the region that corresponding DAMON-based operation
+-scheme ``action`` has tried to be applied.
++In each region directory, you will find six files (``start``, ``end``,
++``nr_accesses``, ``age``, ``sz_filter_passed`` and ``probe_hits``).  Reading
++the files will show the properties of the region that corresponding DAMON-based
++operation scheme ``action`` has tried to be applied.
++
++Reading ``probe_hists`` shows the number of data attributes monitoring
++probe-hit positive samples of the region.
+ 
+ Example
+ ~~~~~~~
+diff --git a/Documentation/mm/damon/design.rst b/Documentation/mm/damon/design.rst
+index aa08c899a3e5b..85d668e929194 100644
+--- a/Documentation/mm/damon/design.rst
++++ b/Documentation/mm/damon/design.rst
+@@ -269,6 +269,8 @@ interval``, DAMON checks if the region's size and access frequency
+ (``nr_accesses``) has significantly changed.  If so, the counter is reset to
+ zero.  Otherwise, the counter is increased.
+ 
++.. _damon_design_data_attrs_monitoring:
++
+ Data Attributes Monitoring
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 
 -- 
 2.47.3
