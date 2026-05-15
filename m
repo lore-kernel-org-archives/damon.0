@@ -1,85 +1,110 @@
-Received: from smtpbgbr1.qq.com (smtpbgbr1.qq.com [54.207.19.206])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A4221DE8BE
-	for <damon@lists.linux.dev>; Fri, 15 May 2026 01:18:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.207.19.206
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D96AC22538F
+	for <damon@lists.linux.dev>; Fri, 15 May 2026 01:22:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778807935; cv=none; b=rULV3iDb9QuFGfigQib8gJGL2bOiYfcTsufi0mcbl+1KAAq0AAIvZnsfiH4iX7nExp9rFurRw6txlL2exd7zjwY8dJDVjsVfQtSPlTZHRN2sW3BB11Uq4DZhGayWampoFIfx4CCgc7u8wkmE8c8S2iJ/3DtyO/rfWzak79y5HDo=
+	t=1778808142; cv=none; b=KaMGVJQOG/NmA75RIytc68PORPHct0OtivhMSu4KkeSEuvWJ4o8gvMix3M7quovqR5HwaVqRealgZhsoSJBCzzkU+lXO6ZmFUJTSnGr0Yvpy3THTFI9fK/D16uk+igdB9XgN5FVQ9Pgbq6A1I4z9ee22KDQk4ZU6u3kcqoUGyro=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778807935; c=relaxed/simple;
-	bh=WlIgxv2WOkhd9BA7qgEROukyQZLnqCDxFPXBnBgpkxk=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Cn/5YuS6rSsNz1oq6zm760it4Wp5f2gJLlNC3QlVUY6dIB9/LkSYCj0B6gl49NvE0yOMFJA0/N58UOB1ME4SN6/Pxa4sQxK5w631T8U8VehokHQUvjOpbMtH5gcZtC1zTys7WXFYo+aieo14YoHy1tWCRta3fXo2gFTt1sg5ZRo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=uniontech.com; spf=pass smtp.mailfrom=uniontech.com; dkim=pass (1024-bit key) header.d=uniontech.com header.i=@uniontech.com header.b=E7OZSQaC; arc=none smtp.client-ip=54.207.19.206
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=uniontech.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=uniontech.com
+	s=arc-20240116; t=1778808142; c=relaxed/simple;
+	bh=8jRzXMOc1ZS3trzIlQ2vvzNbsDKd2UFt87l7638nlIc=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=OBtWLS/XKDyXhc2AqbtBzWVQzIWTA9AZcOY+W41nYG+WiuXeubcRt02ppK/vv0CBZOBx+Ff0vMt8fXprm5N9wMYwF+XcmHdWpVV6f4oT96cR/rCS4SgDXJc3hfquTxoihK8ytKJ1YMQm0dG4wmpzcVmoGKkEqXaKSDyn4d/Ep2Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FnfTUYP3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=uniontech.com header.i=@uniontech.com header.b="E7OZSQaC"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=uniontech.com;
-	s=onoh2408; t=1778807889;
-	bh=WlIgxv2WOkhd9BA7qgEROukyQZLnqCDxFPXBnBgpkxk=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version;
-	b=E7OZSQaCZ82ptg971hBAahqjlK8pUNsszyziGpr/+lB4YwfFE1ZgRaXGcHerlK20U
-	 AmXxpJosUPSBEh4tuIG3huvI9KOMLvI82doXQY4Sc4am8q1HXriK7niTk1li3keHwg
-	 pw6tlMQT1FpRSslPSVmhwOPheNESXLDqID6xNpqQ=
-X-QQ-mid: esmtpgz11t1778807875tf5d1f439
-X-QQ-Originating-IP: 4enGO/YdavgA2rkJqVQxpQ6Y3+iWq8buDIolvawtqy8=
-Received: from PEN1097 ( [61.183.83.60])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Fri, 15 May 2026 09:17:43 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 1
-X-BIZMAIL-ID: 17802444263812327698
-EX-QQ-RecipientCnt: 7
-From: niecheng <niecheng1@uniontech.com>
-To: sj@kernel.org
-Cc: akpm@linux-foundation.org,
-	damon@lists.linux.dev,
-	kernel@uniontech.com,
-	linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org,
-	niecheng1@uniontech.com
-Subject: Re: [PATCH] mm/damon/core: clarify next_intervals_tune_sis update path
-Date: Fri, 15 May 2026 09:17:43 +0800
-Message-ID: <60CB7FE07929DFDE+20260515011743.3476164-1-niecheng1@uniontech.com>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20260514234510.123948-1-sj@kernel.org>
-References: <20260514234510.123948-1-sj@kernel.org>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FnfTUYP3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72F47C2BCB3;
+	Fri, 15 May 2026 01:22:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1778808142;
+	bh=8jRzXMOc1ZS3trzIlQ2vvzNbsDKd2UFt87l7638nlIc=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date:From;
+	b=FnfTUYP3tUP0hGiU1uu6hc0BSk99XpdCE3DWT23n60v9zuNtGVoPkVUnw6SNpWs5/
+	 y4yXYQFQaiveBbcp7+ef/FIu3bIOLFYCpYUtQNv+k7cT4sn6IMq+J6rsor4e+YSq7q
+	 yCe7LlNwBcFHfLQTEeFPrwWMgPe+Fvuf+rrnDjLSCNy6b0UivA1eRdghNN0UQx41KY
+	 x3/08djaq5xQdxdS75rlz1dTn6vzSY37r6Hv4IMybOZpb7GHGt+SgKTmbcDIejzmnu
+	 JmGVjZljJMX5/OIyLPg7x6Raq92kxbVhPzAeQ3ra+v7MtzsPJGafziypTEa3jm60qm
+	 Axsc/pWGYxy3A==
+From: sashiko-bot@kernel.org
+Subject: Re: [RFC PATCH v2.2 22/28] mm/damon/core: introduce
+ DAMON_FILTER_TYPE_MEMCG
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "SeongJae Park" <sj@kernel.org>
+Cc: damon@lists.linux.dev
+In-Reply-To: <20260515004433.128933-23-sj@kernel.org>
+References: <20260515004433.128933-23-sj@kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Fri, 15 May 2026 01:22:21 +0000
+Message-Id: <20260515012222.72F47C2BCB3@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-QQ-SENDSIZE: 520
-Feedback-ID: esmtpgz:uniontech.com:qybglogicsvrsz:qybglogicsvrsz4b-0
-X-QQ-XMAILINFO: ODmRr9XAsEUIewZAytL2fcXlbW5VEZcrNMx3fazS9SD2LXSNGVPSKwCu
-	D+4SrxJ1OTObGfekBvo+kiYqE1D/kTC3o02OOy2J9GwJO1UKEALkWem1e2mnsYq3nf3eXeX
-	bwvBuWlAxMIckPICH4SLDq6m1tg6OG4hzoSaRsLbuBSIpUkWUUw3fUpZfpYBk7DceGFTtTt
-	VNAx4gRGEx+Ud0meNAl6r/m18FWzt9BE8vbsQ0dOowPpptS2uUk97EGK6XTGGVGb9ZwcTFd
-	N8s8u9pCezGmF1yFXT6sSOqizYbNXttCOooMKVq9hB54I0pTEqtbeKmiT8BQCrNp43iYk9x
-	dS02AtS4f8lVZZYgE4jjUjqDxUnGynq5PfOc6JNy5APfaF8omlKOILplsa18PcpUhc24d3M
-	CuvXOoHqEkU8bgIQCrpObMWMRRGv87vPF2B2KihM++IurIjjxxSPf4N1LlNesRHeOZYkZDB
-	0oW7Po4KomXjxGjKP6f5KBgUaudeM/7PeJk0dsASb8YCagx6CH1ScUkz8vjYJL7WLE1QWkW
-	wQsxJTV+zg4sGMhmaQPA1Yb1h4VlGU8qvJsypsipmWgGHuIDCe++6CEXK8bIexu7OphlnsT
-	f3Ymlfk8QpRsx+xwb8cA6TcewUoUXLvWEBIhQtbIBvQkR0Yvb7lvJPJmJUu3IKWdr/PMTAS
-	QO2QvPtWWqkUqbB/gVjtrQaydtTHXB4GEJ2xGdcFXVPWx1jcHyZprFZkiVExGp4hHmC+rKS
-	XE6+0HxCqwjRrrA26fcgGTBuruiEXsygaGTbgDP0Am/k7y2lrDVx0wXiqBT76Yqe3C4L922
-	+/9/6HXVDSdjhw370Ytqvaf4ya5gdGjZBLx3F67x17uLP356TZ57NC4q+Np+puNCT/u/Awq
-	xMsyfOSH0mSvqziLixKYGnaekRiIGFI+dNAw0S4Uy3DbhO/J0oRAq3wL9v0Gs8l6xm2escL
-	RbDhVQ2VZsmufUynPUVEg0t5JHEWEhZbOD3mlP0L+yprgAdnte6Lod3JB8GAxCaNVxdh0sE
-	84KNKw1XEw/1ak32F1LP10SqDf+ungtAFeV4wCE9zccbRwFXIf
-X-QQ-XMRINFO: MPJ6Tf5t3I/ylTmHUqvI8+Wpn+Gzalws3A==
-X-QQ-RECHKSPAM: 0
 
-Hi SJ,
+Thank you for your contribution! Sashiko AI review found 1 potential issue(=
+s) to consider:
+- [High] Newly appended DAMON filters in `damon_commit_filters()` fail to c=
+opy the `memcg_id` field, leaving it uninitialized.
+--
 
-Understood.
+commit 01e48275cc904a624a318c3fbc6c7313978207ef
+Author: SeongJae Park <sj@kernel.org>
 
-I will follow that from the next time.
+mm/damon/core: introduce DAMON_FILTER_TYPE_MEMCG
 
-Thanks,
-Niecheng
+This commit introduces a new DAMON filter type, DAMON_FILTER_TYPE_MEMCG,
+which allows monitoring and filtering based on specific memory cgroups.
 
+> diff --git a/mm/damon/core.c b/mm/damon/core.c
+> index ab8ac9ec8450d..2d4a63dcc47fe 100644
+> --- a/mm/damon/core.c
+> +++ b/mm/damon/core.c
+> @@ -1422,6 +1422,13 @@ static void damon_commit_filter(struct damon_filte=
+r *dst,
+>  	dst->type =3D src->type;
+>  	dst->matching =3D src->matching;
+>  	dst->allow =3D src->allow;
+> +	switch (dst->type) {
+> +	case DAMON_FILTER_TYPE_MEMCG:
+> +		dst->memcg_id =3D src->memcg_id;
+> +		break;
+> +	default:
+> +		break;
+> +	}
+>  }
+> =20
+>  static int damon_commit_filters(struct damon_probe *dst,
+
+When new filters are appended during probe synchronization, does the
+memcg_id field remain uninitialized?
+
+Looking at damon_commit_filters() which immediately follows this function,
+it creates new filters for any remaining source filters:
+
+static int damon_commit_filters(...)
+{
+...
+	damon_for_each_filter_safe(src_filter, next, src) {
+		if (j++ < i)
+			continue;
+
+		new_filter =3D damon_new_filter(src_filter->type,
+				src_filter->matching, src_filter->allow);
+		if (!new_filter)
+			return -ENOMEM;
+		damon_add_filter(dst, new_filter);
+	}
+...
+}
+
+Since damon_new_filter() only initializes the type, matching, and allow
+fields, and memcg_id is not manually copied here like it is in
+damon_commit_filter(), could this leave the newly appended filter's
+memcg_id with uninitialized memory?
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260515004433.1289=
+33-1-sj@kernel.org?part=3D22
