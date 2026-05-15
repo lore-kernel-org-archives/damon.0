@@ -1,87 +1,119 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14CDF279DCA
-	for <damon@lists.linux.dev>; Fri, 15 May 2026 01:08:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2DA8346FC3
+	for <damon@lists.linux.dev>; Fri, 15 May 2026 01:14:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778807296; cv=none; b=fexixkcwOe/FQD6wqjK34V1T69JkC9hdNKddPVuwbSf5pB2Zp4HaB+tqfUnUNwNjvu4djBjXHEJt3CLDvSOgPWwwiEH4g/AASNV/+ENAOgcNgjh01YH4EKxM9RcQpWucAwWGn6CetVYd0YdBez0Flag8J5BCCqa6aCg2yQQ3xA8=
+	t=1778807655; cv=none; b=XByrycJm7ubkCGj/PsVcNzFF18BDOGoBSNqwWnkUjhOlzr88guknV/s4A1DNPlwoxiUIsiRAWDKXT6M+StOwYN2pZMtUnMJHpaeRXpHC3OJr1qMz9NCpdOpHetUggJyfq8dyBggVXhPXR/b/JCj2wNUjObYyjT4rXtYgZZrAW+E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778807296; c=relaxed/simple;
-	bh=2AU9VYrfUrZ9Jn1A9fKRpit2OcYPeUx0HdyADfuzmqI=;
+	s=arc-20240116; t=1778807655; c=relaxed/simple;
+	bh=XvwS9kdNuN1gbSajZ/hiqbv3RQ+vvnQcgDFKkiiOVyw=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=sdHB6g7XXA5qjQgk0VwUxWwByjEAhZhCmtC0lgQnudcaHbO/1oXzP+Ttk/4rm3jpRGEIdTwDmnJRR0N/PbCKUMYtB7eWVitibZUzq9bXV7sq2vYN7K7o0F9ehfMwfDoFumWwt8pPlXe9whbHPryO/TSa9jq3m/aZUajndClyMDs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Sc5JkqWY; arc=none smtp.client-ip=10.30.226.201
+	 Message-Id; b=RJWjh2C0TzhYnjbyRiktD+ajDTZnNhIp13zjxbqUTI7ZIdkkdKb0ZkX0piopLtrgXqS6KFZWrPwlE7dWCqqkKXXMVreoW99VRkuaLPreA6CrETIWg4Z+w/mc5/JeuYmFcK0oUK7/PEYdmVuHnBgrCqR/u+lAv3XcAEHXQBNKGf0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=onl+z+jB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Sc5JkqWY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6358C2BCB3;
-	Fri, 15 May 2026 01:08:15 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="onl+z+jB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BAA4C2BCB3;
+	Fri, 15 May 2026 01:14:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778807295;
-	bh=2AU9VYrfUrZ9Jn1A9fKRpit2OcYPeUx0HdyADfuzmqI=;
+	s=k20201202; t=1778807654;
+	bh=XvwS9kdNuN1gbSajZ/hiqbv3RQ+vvnQcgDFKkiiOVyw=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date:From;
-	b=Sc5JkqWYpG2lYOoKQ1n3+jHkDfZxVnOijFMtxq6sA9V55cdMhwg4EsKTJWtN7ySA3
-	 0mNJoUXttxBY0y70MygH9oLQTC1sCeSfuDSaDlY9pqmsJKnIZ787aF6bANXjLy31zl
-	 WXIVX+mJUO6+9Gyy1cufOXqzeFr5rjPji3DA7SOlXJfOGRTlJfkPTa0mei3D8XWL0i
-	 g2mxLRE8CsDVqco3VoBZEsEcP/lMFU/an0fK2TJNXE/fB0wrE8jl7B1uq8byLJzw3w
-	 GrHl5bjAI1AvDDFEMJnCFn0caCYUEiYeBSEWMuMLNuP73camARuBO6aUUA/ooWys6v
-	 FijgV2icliXig==
+	b=onl+z+jBb00C7SJ8hsFA6HjADp1Lb/PlqwYo4IkA0SqdryzQcyFPN4EBc73Ve06Ve
+	 Z6674ud8v1cjH2eptRYzd4KVSbsm7ZWGQDYhmbnqw5/y0KmEYMxhEPImxUa/B9TdB6
+	 oWJJ7jpi1t3Tz8VqiwolXsJAVjhQ3sLDiIyVB8NpJxQbXuPbEcSc0DhsXAfW3dYSm+
+	 O4aYHf/bvxDNSy+X1jkzTKt8mLaB3eWE8SyFWKKE3RJMwTBKWkx5qUfSzb7w5fcmxe
+	 gRkWJCZ2Cf83sRjnXefUWm9vt3PukeBX5HrP+WAczf7lKDJz/qWxX9ogdyWGmO6V4G
+	 nhh++4ZV49DTQ==
 From: sashiko-bot@kernel.org
-Subject: Re: [RFC PATCH v2.2 10/28] mm/damon/sysfs: implement probe dir
+Subject: Re: [RFC PATCH v2.2 03/28] mm/damon/core: introduce damon_filter
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "SeongJae Park" <sj@kernel.org>
 Cc: damon@lists.linux.dev
-In-Reply-To: <20260515004433.128933-11-sj@kernel.org>
-References: <20260515004433.128933-11-sj@kernel.org>
+In-Reply-To: <20260515004433.128933-4-sj@kernel.org>
+References: <20260515004433.128933-4-sj@kernel.org>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Fri, 15 May 2026 01:08:15 +0000
-Message-Id: <20260515010815.C6358C2BCB3@smtp.kernel.org>
+Date: Fri, 15 May 2026 01:14:13 +0000
+Message-Id: <20260515011414.6BAA4C2BCB3@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 
-Thank you for your contribution! Sashiko AI review found 1 potential issue(=
+Thank you for your contribution! Sashiko AI review found 2 potential issue(=
 s) to consider:
-- [Low] The newly introduced kobj_type structure 'damon_sysfs_probe_ktype' =
-is missing the 'static' keyword.
+- [Low] Unsafe macro definitions for `damon_for_each_filter` and `damon_for=
+_each_filter_safe`.
+- [Low] Typo in the kernel-doc block for `struct damon_filter`.
 --
 
-commit 6edcbcf176b612eae059c59f709c455cff251235
+commit 483481d8b5710ceb3aa6769a6360b2dc2305434c
 Author: SeongJae Park <sj@kernel.org>
+mm/damon/core: introduce damon_filter
 
-mm/damon/sysfs: implement probe dir
+This commit defines a new struct damon_filter and embeds it into
+struct damon_probe for monitoring purposes. It also implements essential
+handling and helpers such as filter allocation, addition, and freeing.
 
-This commit implements a sysfs directory to let users install individual
-data probes.
-
-> diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
-> index 5f3b253f50ebf..c028e4b1281e6 100644
-> --- a/mm/damon/sysfs.c
-> +++ b/mm/damon/sysfs.c
-
+> diff --git a/include/linux/damon.h b/include/linux/damon.h
+> index 3ba5a31b51769..9c2576f103767 100644
+> --- a/include/linux/damon.h
+> +++ b/include/linux/damon.h
 [ ... ]
-
-> +static struct attribute *damon_sysfs_probe_attrs[] =3D {
-> +	NULL,
+> @@ -721,12 +721,38 @@ struct damon_intervals_goal {
+>  	unsigned long max_sample_us;
+>  };
+> =20
+> +/**
+> + * enum damon_filter_type - Type of &struct damon_filter
+> + *
+> + * @DAMON_FILTER_TYPE_ANON:	Anonymous pages.
+> + */
+> +enum damon_filter_type {
+> +	DAMON_FILTER_TYPE_ANON,
 > +};
-> +ATTRIBUTE_GROUPS(damon_sysfs_probe);
 > +
-> +const struct kobj_type damon_sysfs_probe_ktype =3D {
+> +/**
+> + * struct damon_filter - DAMON region filter for &struct damon_probe.
+> + *
+> + * @type:	Type of the region.
+> + * @matcing:	Whether this filter is for the type-matching ones.
 
-This isn't a bug, but should damon_sysfs_probe_ktype be marked as static?
+This isn't a bug, but there's a typo in the kernel-doc block here.
+@matcing: should be @matching: to match the struct member name. This could
+trigger kernel-doc warnings during compilation.
 
-It appears to only be used locally within this file, and omitting the
-static keyword will needlessly expose the symbol globally and might
-trigger warnings from static analysis tools.
-
-> +	.release =3D damon_sysfs_probe_release,
-> +	.sysfs_ops =3D &kobj_sysfs_ops,
-> +	.default_groups =3D damon_sysfs_probe_groups,
+> + * @allow:	Whether the @type-@matching ones should pass this filter.
+> + * @list:	Siblings list.
+> + */
+> +struct damon_filter {
+> +	enum damon_filter_type type;
+> +	bool matching;
+> +	bool allow;
+> +	struct list_head list;
 > +};
+[ ... ]
+> @@ -880,6 +906,12 @@ static inline unsigned long damon_sz_region(struct d=
+amon_region *r)
+>  	return r->ar.end - r->ar.start;
+>  }
+> =20
+> +#define damon_for_each_filter(f, p) \
+> +	list_for_each_entry(f, &p->filters, list)
+> +
+> +#define damon_for_each_filter_safe(f, next, p) \
+> +	list_for_each_entry_safe(f, next, &p->filters, list)
+
+Is it possible this could cause operator precedence issues if a complex
+expression or cast is passed for p?
+
+It might be safer to wrap the macro argument p in parentheses, like
+&(p)->filters, to avoid potential evaluation errors and compilation
+failures in the future.
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260515004433.1289=
-33-1-sj@kernel.org?part=3D10
+33-1-sj@kernel.org?part=3D3
