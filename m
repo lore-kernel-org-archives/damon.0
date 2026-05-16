@@ -1,161 +1,144 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97A9A2C0F81
-	for <damon@lists.linux.dev>; Sat, 16 May 2026 23:36:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4B36361DDC
+	for <damon@lists.linux.dev>; Sat, 16 May 2026 23:55:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778974588; cv=none; b=WYiCp7WGm+fdUfRnwUpyRakE068pqayEeiGE7CKWSC1t0oXTeihhPMXaRGJrzh9J3TW/PNU04D4bS19v3ms4iGfUvfDgbaOR/ErQ4ott7JUWS5poYJDvhE9umhE9+SRLqJbYgXJyKqzUfXL3Fp7+8TqSgjjKA2sov3qBOjIhtpg=
+	t=1778975745; cv=none; b=CgURrFqiCRmoYF0tLN5Tu62WxmQtsWBCU5e2qYap7kUweNd1nLd80r7/kC1kTxUYaJ1DLmAj34qKdbKOIxnUSeNe0xY6mcsU2eQlnS6f7D6dHp8IwbBv/jk5sIqyI6IUPu1JJAL2M5zdxX5lfKhnpOxnILJrkbvcgNv5RwrD2P0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778974588; c=relaxed/simple;
-	bh=vqviVsSE4yqHnbaMHjx+C7PJSm81b815OSdqrYBQFbI=;
+	s=arc-20240116; t=1778975745; c=relaxed/simple;
+	bh=w0EZNXOxshgWMf6EP3KNkHG1SkhDoynRKamAfFwwpaY=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=uy/lvc3k2haGSCmLcsMzl65NpKMIn6T44CTyv3yea3kEynr4UfrhqDGnBOk4wD2E8W6rvc3hfAJg4CgM4h6Hv/fbisGbF6ZZA4j7vkZjiW2T4p9V3a7wFZxXHHDtYsUBcP8GhETDZjczkbVPXvy3IcwQIxgaPBLsvjadqDHKI20=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Fnmpfc7U; arc=none smtp.client-ip=10.30.226.201
+	 Message-Id; b=qBQveAl10CNs2Q6vH/8YXixgri0VnKcNCCtOkxnUCUGCOo+ddo8WmuQrvz7UGxrg9yqGxcrECMKLa3XDtDoAgk+fYZ/5HhB/x4pecpB9Ez8DSiV4SAZXPamFXEXvx5IKXjGNrL1TN5kYVl4pfFLkYmgvJBPqR9bMtyAdYJk4CWM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OHuHPOV4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Fnmpfc7U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54E2AC19425;
-	Sat, 16 May 2026 23:36:28 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OHuHPOV4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18B71C2BCB7;
+	Sat, 16 May 2026 23:55:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778974588;
-	bh=vqviVsSE4yqHnbaMHjx+C7PJSm81b815OSdqrYBQFbI=;
+	s=k20201202; t=1778975745;
+	bh=w0EZNXOxshgWMf6EP3KNkHG1SkhDoynRKamAfFwwpaY=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date:From;
-	b=Fnmpfc7Ubp3+4cN/cnZEir76YwIbVvFSenpNz82JA9axFgPh2TH08el/qYgGZXJeL
-	 BrYDBJ2jixZEUBe5oUeqvaZyhBlw5rJtHPsMeWpaIJTmBOEfvk34wKAvVmctnyTXMF
-	 lfCraZt7kGC7gJR3U2hftxRV1j2oYDBHLrvl7mNoKTFQSEGMIuuZJrtD5ZHgJQZhVW
-	 Wog02XnWOuVEBqmuHjsIiFvhneVTbGvFNENMfPZjpSC62DbzWUZg6DlyhPZBZMg0Gp
-	 OSwfJxQB/Mn9ZWgzkz3LwAjz8irl3FCpFB0vHk4rl0fniB2e/7AKbCzC1Th1CiA0v2
-	 scDHXCjc0FEtA==
+	b=OHuHPOV4xmgPyR2GzJT12WBu/muoyDDkq1TZWQmdNX9vEvBV+Aml9J70CQiQRJ2QM
+	 rWhpSDfQp+moATvfln/0axDVB+3dB0D5sUqmVbxDzvZWCQxVhUdRALxUYY6y9VPYkE
+	 4Ps2PPr0+EyovSvw4vexoysstOJD+N/9SrIIDIQPbeItVbobnWdkxmLi2EirIqBLXf
+	 knD7xNez3rTBOsxdZpNfBEyvnZj15AjpH30ttHMlRGvV2vgLuuZ/dQwhdCKcjzOQUv
+	 28/r5dhcE6uY/BaE1LSrYT7XXzzK2v5h5c2MtPtasO53Kv1GKJ4yUCU8KdoLlpQ5bc
+	 WXvrMZ7pHZbVQ==
 From: sashiko-bot@kernel.org
-Subject: Re: [RFC PATCH 4/5] mm/damon/paddr: skip free pageblocks in
- migration walk
+Subject: Re: [RFC PATCH 5/5] mm/damon/paddr: add time budget to migration
+ page walk
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Ravi Jonnalagadda" <ravis.opensrc@gmail.com>
 Cc: damon@lists.linux.dev
-In-Reply-To: <20260516210357.2247-5-ravis.opensrc@gmail.com>
-References: <20260516210357.2247-5-ravis.opensrc@gmail.com>
+In-Reply-To: <20260516210357.2247-6-ravis.opensrc@gmail.com>
+References: <20260516210357.2247-6-ravis.opensrc@gmail.com>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Sat, 16 May 2026 23:36:27 +0000
-Message-Id: <20260516233628.54E2AC19425@smtp.kernel.org>
+Date: Sat, 16 May 2026 23:55:44 +0000
+Message-Id: <20260516235545.18B71C2BCB7@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 
-Thank you for your contribution! Sashiko AI review found 5 potential issue(=
+Thank you for your contribution! Sashiko AI review found 4 potential issue(=
 s) to consider:
-- [High] Calling `PageBuddy()` on a tail page triggers a kernel panic.
-- [High] Unsafe address advancement skips valid memory when starting from a=
-n unaligned offset within a folio.
-- [High] Speculative access of folio flags on an unreferenced folio risks `=
-VM_BUG_ON_FOLIO`.
-- [Medium] The optimization fails to skip buddy blocks larger than `pageblo=
-ck_order` efficiently.
-- [Medium] Skipping an entire pageblock when `pfn_to_online_page()` returns=
- NULL misses valid memory.
+- [High] The amortized time budget check can be permanently bypassed due to=
+ variable PFN strides and loop continues.
+- [High] Early termination causes permanent starvation for the tail end of =
+large DAMON regions.
+- [High] The time budget targets the wrong phase, failing to cap the actual=
+ latency spike of the migration.
+- [High] PFN advancement after folio conversion permanently misaligns the s=
+can.
 --
 
-commit 66e620b27c62d5fcd72a28187d8b381c33d31172
+commit 87860cbf6b4be5f161140aa9a1f9b7d0461955ba
 Author: Ravi Jonnalagadda <ravis.opensrc@gmail.com>
-Subject: mm/damon/paddr: skip free pageblocks in migration walk
 
-This patch optimizes DAMON physical memory walks on sparse address spaces
-by checking if a pageblock is entirely free or offline, skipping the entire
-block to reduce kdamond tick time.
+mm/damon/paddr: add time budget to migration page walk
+
+This patch adds a 100ms wall-clock time budget to damon_pa_migrate() to
+prevent long migration walks from causing high scheduling latencies. The
+time check is amortized by checking ktime_get() every 4096 pages.
 
 > diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
-> index c4738cd5e221e..e844c990987b9 100644
+> index e844c990987b9..a2565287bc10f 100644
 > --- a/mm/damon/paddr.c
 > +++ b/mm/damon/paddr.c
-> @@ -258,13 +258,32 @@ static unsigned long damon_pa_migrate(struct damon_=
-region *r,
->  		unsigned long addr_unit, struct damos *s,
->  		unsigned long *sz_filter_passed)
->  {
-> -	phys_addr_t addr, applied;
-> +	phys_addr_t addr, end, applied;
->  	LIST_HEAD(folio_list);
->  	struct folio *folio =3D NULL;
-> +	unsigned long pfn;
+[ ... ]
+> @@ -283,6 +293,11 @@ static unsigned long damon_pa_migrate(struct damon_r=
+egion *r,
+>  			}
+>  		}
 > =20
->  	addr =3D damon_pa_phys_addr(r->ar.start, addr_unit);
-> -	while (addr < damon_pa_phys_addr(r->ar.end, addr_unit)) {
-> -		folio =3D damon_get_folio(PHYS_PFN(addr));
-> +	end =3D damon_pa_phys_addr(r->ar.end, addr_unit);
-> +	while (addr < end) {
-> +		pfn =3D PHYS_PFN(addr);
-> +
-> +		/* Skip pageblocks that are entirely free. */
-> +		if (IS_ALIGNED(pfn, pageblock_nr_pages)) {
-> +			struct page *page =3D pfn_to_online_page(pfn);
-> +
-> +			if (!page) {
-> +				addr +=3D pageblock_nr_pages * PAGE_SIZE;
-> +				continue;
-> +			}
+> +		/* Time budget: keep kdamond responsive on long migration walks. */
+> +		if (!(pfn & DAMON_PA_MIGRATE_TIME_CHECK_MASK) &&
+> +		    ktime_after(ktime_get(), deadline))
+> +			break;
 
-If a memory hole is smaller than a pageblock, can skipping the entire
-pageblock miss valid, online pages in the remainder of the block?
+Can this time check be permanently bypassed?
 
-> +			if (PageBuddy(page) &&
-> +			    buddy_order_unsafe(page) >=3D pageblock_order) {
-> +				addr +=3D pageblock_nr_pages * PAGE_SIZE;
-> +				continue;
-> +			}
+If pfn advances by variable strides, such as when addr +=3D folio_size(foli=
+o)
+adds a multi-page stride that jumps over the 4096-page boundary, the exact
+match !(pfn & DAMON_PA_MIGRATE_TIME_CHECK_MASK) is missed, skipping the
+check for the entire next 4096-page cycle.
 
-Does this code risk a kernel panic when calling PageBuddy() on a tail page?
+Additionally, if pfn does land exactly on a multiple of 4096, but the
+pageblock is skipped via the continue statement just above this block:
 
-If a pageblock-aligned PFN points to a tail page of a larger compound page
-(such as a 1GB HugeTLB page), PageBuddy() would trigger a VM_BUG_ON_PGFLAGS
-due to the PF_NO_TAIL policy.
+        if (!page) {
+            addr +=3D pageblock_nr_pages * PAGE_SIZE;
+            continue;
+        }
 
-Also, if a free buddy block is larger than pageblock_order, does the
-optimization fall back to stepping by PAGE_SIZE?
+the loop advances and leaps over the time check.
 
-The first pageblock is skipped, but on the next iteration, pfn points to the
-start of the second pageblock, which is a tail page of the large buddy bloc=
-k.
-Because the PG_buddy flag is only set on the head page, PageBuddy(page) will
-evaluate to false.
+If the loop terminates early here, is there a mechanism to save the PFN
+where the scan aborted?
 
-> +		}
-> +
-> +		folio =3D damon_get_folio(pfn);
+Since the DAMON core is unaware of this internal early return, the next time
+the scheme applies to this region, it appears it will restart the walk from
+the very beginning of the region.
 
-This isn't a bug introduced by this patch, but does damon_get_folio()
-speculatively access folio flags before acquiring a reference?
+Could this result in a permanent livelock for large regions, where memory
+beyond the 100ms scan horizon is never reached or migrated?
 
-mm/damon/ops-common.c:damon_get_folio() {
-    ...
-    if (!folio_test_lru(folio) || !folio_try_get(folio))
-        return NULL;
-    ...
-}
+>  		folio =3D damon_get_folio(pfn);
+>  		if (damon_pa_invalid_damos_folio(folio, s)) {
+[ ... ]
+>  		if (!folio_isolate_lru(folio))
+>  			goto put_folio;
+>  		list_add(&folio->lru, &folio_list);
+>  put_folio:
+>  		addr +=3D folio_size(folio);
 
-If the page is concurrently freed and reallocated as a tail page of a new
-compound page, calling folio_test_lru() before folio_try_get() risks a
-VM_BUG_ON_FOLIO.
+This wasn't introduced by this patch, but does the address advancement
+correctly handle tail pages?
 
-Additionally, this wasn't introduced by this patch, but can the physical
-address advancement skip valid memory when starting from an unaligned offse=
-t?
+Since the region start addr might not be folio-aligned, if it falls within
+a tail page of a large folio, does adding the total folio_size(folio)
+overshoot the end of the current folio and skip the head page of the next
+folio?
 
-If damon_pa_migrate() starts at an unaligned offset within a large folio, p=
-fn
-points to a tail page, and damon_get_folio() resolves this to the head foli=
-o.
-The loop then unconditionally advances by the full folio size:
+>  		folio_put(folio);
+>  	}
+>  	applied =3D damon_migrate_pages(&folio_list, s->target_nid);
 
-    put_folio:
-        addr +=3D folio_size(folio);
-        folio_put(folio);
+Does the time budget cap the actual latency spike of the migration?
 
-Adding the total folio size to an unaligned starting offset would push addr
-past the actual end of the folio, skipping pages in the subsequent memory
-region.
+The 100ms budget limits the fast folio isolation phase. The loop can isolate
+gigabytes of memory within 100ms. Once the deadline is reached, all
+collected folios are passed to damon_migrate_pages().
+
+Could migrating this massive batch, which requires memory allocation and
+page copying, take seconds to complete in a single blocking call and fail
+to keep the migration responsive?
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260516210357.2247=
--1-ravis.opensrc@gmail.com?part=3D4
+-1-ravis.opensrc@gmail.com?part=3D5
