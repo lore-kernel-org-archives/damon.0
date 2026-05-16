@@ -1,108 +1,157 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DA551F30A4
-	for <damon@lists.linux.dev>; Sat, 16 May 2026 21:39:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1B941F30A4
+	for <damon@lists.linux.dev>; Sat, 16 May 2026 21:47:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778967599; cv=none; b=rMuWHZLP+fgry+i2PRcaQgXED8AOSXm3a171gmrr3F9AB9jKDprrRe04Ed3IyXgMatoPBlar2lpXGFMLWNltyPi/uRHAHu5FAXetD3TSChY7yFFB3jrT4wsj9C0d/SuamX7vYV5kvypwRmfZoH+xlCkkPsUdsP4hHYtcjJwub6g=
+	t=1778968024; cv=none; b=hKISLLttqqt4wDXhiTT2+9CKLrC/nQG7tr/oo4RrwBry0ScQpuXlath/DGUYvgTnMeXu6UkLd+PMB6Xnfs0npWYjIbsQP4dUkXm5PzDtuPrMFYjoFLGXtz+NmLKFsHMKCGvJTgR4ksrK4WvCTwwYuECQmbWTrBLzNHi9+2vHqtU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778967599; c=relaxed/simple;
-	bh=8M7FBkzeEvVGrdZboACcChb/w9/kbmU3nPn8A5RPRuU=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=SoW2hC96zoxYzQOu9Ur3wexgIdTMrxFg56G38oCZrH9aKNJk/Zeu93ETUBXuEC7eRVka2r2wGNdVQi5Ui9dXkjQvHqSrZoheefil8So5/r1u4C8YCpf+dnoFd7jTRTXe/KOxXfIO0HpmoML6A571Kf3HDZQNDfGgqyYi1Dj/I2g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=b3NuzT0N; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1778968024; c=relaxed/simple;
+	bh=6bxbA0df3MkrYVobA03478kxkDZHetZ+INLZ0WHV/OE=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=aBKLDRSM8zuTGr8tPFmrql5lAj+3L3p8tDOW+ENoAJ2VRYPFVVDRzy3+juGVLsdyYdL8KZY0yHYiLnGbFxXJSzqamWk9KgG4uIkRL+8s3CEknJJ4qudgEdhYqZZpass8XrWWlFr+hb0iONYhO1MN+PEIUCsEPAFj7tqaH+Mga4Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QRjR7+e9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="b3NuzT0N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28859C19425;
-	Sat, 16 May 2026 21:39:59 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QRjR7+e9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D37CC19425;
+	Sat, 16 May 2026 21:47:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778967599;
-	bh=8M7FBkzeEvVGrdZboACcChb/w9/kbmU3nPn8A5RPRuU=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date:From;
-	b=b3NuzT0NwRE+L3/Zh8+boh/eVky8jqsg1f3YmfHzpMRFH37uA18ZmHOHgZsSVeWWL
-	 oX6seqwMc65MPYb8zCjo5KvvLQt4BChM696k7Gx/v/JkX7Pqxc69KGW6y8mNOeDTwy
-	 dpn9edwie5+VKL4Dc2uGBcM6VwfItbZyo4O0cV9LBMkkgX2tznmEC3Km9Ub0wyI7gA
-	 54B8lLBFRlL/wHCdeHJ8MO8y1noBYtJIi8XGaoxxmkQuu+RP5/qBys0P4iAaq6lwCZ
-	 4LYDpGb6m18wlCMvtmtnbgEy9xwSdaEyNW59qL28/PXR3baK/TlnLf2GbqBnL2zDim
-	 qFw56rTgSElMQ==
-From: sashiko-bot@kernel.org
-Subject: Re: [RFC PATCH] mm/damon/sysfs-schemes: delete tried region in
- regions_rmdirs()
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "SeongJae Park" <sj@kernel.org>
-Cc: damon@lists.linux.dev
-In-Reply-To: <20260516211436.1883-1-sj@kernel.org>
-References: <20260516211436.1883-1-sj@kernel.org>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Sat, 16 May 2026 21:39:58 +0000
-Message-Id: <20260516213959.28859C19425@smtp.kernel.org>
+	s=k20201202; t=1778968024;
+	bh=6bxbA0df3MkrYVobA03478kxkDZHetZ+INLZ0WHV/OE=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=QRjR7+e9wuK5q/ucHygr8cr+pAfSj+IfaCitPtgc2pbc3TXdPcoZ9+rnFLk6bt1rO
+	 OS90wVfW8ddlIaxfaAvJc4mpZooxjR4kBLgFdS5qyqA/zWSOChEcKhtVtOPcvt56CR
+	 tr1+gQ7iLGJIYxfJCILZE1EySdmafz9kPm17zfaSLc41MJ3+qlLp5C8jYiXPC/oSi5
+	 rzwUBm7gHdynnsfs3GnlM0naS3i7OaJ19vTQc7z1LpfIbtNtRuN09ng3wlbZ9/YHhn
+	 oC2tsnwmrqZfXHzin42/jRVCurbEPPy6ORbDUPXJVHXPYh5wQe+bjbdIwETCK4VZ83
+	 N3eDqLzZcgxwQ==
+From: SeongJae Park <sj@kernel.org>
+To: sashiko-bot@kernel.org
+Cc: SeongJae Park <sj@kernel.org>,
+	damon@lists.linux.dev
+Subject: Re: [RFC PATCH v3 08/28] mm/damon/paddr: support data attributes monitoring
+Date: Sat, 16 May 2026 14:46:21 -0700
+Message-ID: <20260516214622.3227-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260516190531.F268CC19425@smtp.kernel.org>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Thank you for your contribution! Sashiko AI review found 1 potential issue(=
-s) to consider:
-- [High] Moving `list_del()` out of the kobject release callback causes a U=
-se-After-Free when `kobject_init_and_add()` fails in `damos_sysfs_populate_=
-region_dir()`.
---
+On Sat, 16 May 2026 19:05:31 +0000 sashiko-bot@kernel.org wrote:
 
-commit 97136b36d31f71cb6972114db84fe86abd95246f
-Author: SeongJae Park <sj@kernel.org>
-Subject: mm/damon/sysfs-schemes: delete tried region in regions_rmdirs()
+> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+> - [High] Brittle filter evaluation logic in `damon_pa_filter_pass()` causes unpredictable default fallback behavior.
+> - [High] Silent integer overflow of `r->probe_hits[i]` due to an 8-bit limit.
+> - [High] Costly page lookups and folio refcount operations are unconditionally performed even when no probes are configured.
+> --
+> 
+> commit 3ac6d88b44843f7304cd50448ef416c14428371c
+> Author: SeongJae Park <sj@kernel.org>
+> 
+> mm/damon/paddr: support data attributes monitoring
+> 
+> This commit implements the apply_probes() callback for physical address
+> space monitoring in DAMON. It introduces filter evaluation and applies
+> probe hits to region statistics.
+> 
+> diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
+> --- a/mm/damon/paddr.c
+> +++ b/mm/damon/paddr.c
+> 
+> [ ... ]
+> 
+> > +static bool damon_pa_filter_pass(phys_addr_t pa, struct folio *folio,
+> > +		struct damon_probe *p)
+> > +{
+> > +	struct damon_filter *f;
+> > +	bool pass = true;
+> > +
+> > +	damon_for_each_filter(f, p) {
+> > +		if (damon_pa_filter_match(f, folio)) {
+> > +			pass = f->allow;
+> > +			break;
+> > +		}
+> > +		pass = !f->allow;
+> > +	}
+> > +	return pass;
+> > +}
+> 
+> If a folio does not match any of the filters, the loop continues and pass
+> is repeatedly updated to the inverted allow flag of each evaluated filter.
+> 
+> When the loop finishes, the final returned result is purely the inverted
+> allow flag of the last filter in the list.
+> 
+> Is this arbitrary fallback logic intentional?
 
-DAMON sysfs maintains the DAMOS tried region directory objects via a
-linked list. When the user requests refresh of the directories, DAMON
-sysfs removes all the region directories first, and then generate
-updated regions directory on the empty space. Deletion of the container
-region object from the linked list is now done inside the removal function
-instead of the kobj release callback.
+Yes, intentional [1].
 
-[1] https://lore.kernel.org/20260513011920.119183-1-sj@kernel.org
+> 
+> [ ... ]
+> 
+> > +static void damon_pa_apply_probes(struct damon_ctx *ctx)
+> > +{
+> > +	struct damon_target *t;
+> > +	struct damon_region *r;
+> > +	struct damon_probe *p;
+> > +
+> > +	damon_for_each_target(t, ctx) {
+> > +		damon_for_each_region(r, t) {
+> > +			int i = 0;
+> > +			phys_addr_t pa;
+> > +			struct folio *folio;
+> > +
+> > +			pa = damon_pa_phys_addr(r->sampling_addr,
+> > +					ctx->addr_unit);
+> > +			folio = damon_get_folio(PHYS_PFN(pa));
+> 
+> Because damon_pa_apply_probes() executes unconditionally on every sampling
+> interval, damon_get_folio() and folio_put() will be called globally across
+> all regions even if the user has not configured any probes.
+> 
+> Could we add an early return or check if ctx->probes is empty before
+> performing these expensive atomic refcount operations on the hot path?
 
-> diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
-> index 622c3799db87b..aefeb5d22fb7d 100644
-> --- a/mm/damon/sysfs-schemes.c
-> +++ b/mm/damon/sysfs-schemes.c
-> @@ -88,7 +88,6 @@ static void damon_sysfs_scheme_region_release(struct ko=
-bject *kobj)
->  	struct damon_sysfs_scheme_region *region =3D container_of(kobj,
->  			struct damon_sysfs_scheme_region, kobj);
-> =20
-> -	list_del(&region->list);
->  	kfree(region);
->  }
+The user can set the maximum number of regions, and this is arguably not a hot
+path.  So no blocker.
 
-Does removing list_del() here cause a use-after-free if kobject_init_and_ad=
-d()
-fails in damos_sysfs_populate_region_dir()?
+> 
+> > +			damon_for_each_probe(p, ctx) {
+> > +				if (damon_pa_filter_pass(pa, folio, p))
+> > +					r->probe_hits[i]++;
+> 
+> The r->probe_hits[i] counter is declared as an unsigned char in
+> struct damon_region, which has a maximum value of 255.
+> 
+> Since the number of samples per DAMON aggregation interval is configurable
+> and can easily exceed 255 in standard use cases, won't this counter
+> silently wrap around to 0 and corrupt the monitoring statistics?
 
-If kobject_init_and_add() fails, the error path drops the reference:
+No blocker [2].
 
-mm/damon/sysfs-schemes.c:damos_sysfs_populate_region_dir() {
-    ...
-	list_add_tail(&region->list, &sysfs_regions->regions_list);
-	sysfs_regions->nr_regions++;
-	if (kobject_init_and_add(&region->kobj,
-				&damon_sysfs_scheme_region_ktype,
-				&sysfs_regions->kobj, "%d",
-				sysfs_regions->nr_regions++)) {
-		kobject_put(&region->kobj);
-	}
-    ...
-}
+> 
+> > +				i++;
+> > +			}
+> > +			if (folio)
+> > +				folio_put(folio);
+> > +		}
+> > +	}
+> > +}
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260516183712.81393-1-sj@kernel.org?part=8
 
-Because region is added to the list before kobject_init_and_add(), dropping
-the reference will free the region, but it remains in regions_list since
-the release callback no longer unlinks it.
+[1] https://lore.kernel.org/20260516005632.144711-1-sj@kernel.org
+[2] https://lore.kernel.org/20260516003559.141476-1-sj@kernel.org
 
-Should we add an explicit list_del(&region->list) in the error path of
-damos_sysfs_populate_region_dir() to prevent list corruption?
 
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260516211436.1883=
--1-sj@kernel.org?part=3D1
+Thanks,
+SJ
