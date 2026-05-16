@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87E2036D9E7;
-	Sat, 16 May 2026 18:37:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4222335DA46;
+	Sat, 16 May 2026 18:37:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778956655; cv=none; b=m/wA7umv9BtFHgcsUMw6D2Tj4ubt8uxpQuu+iiguSFtw7RcOBpNDcM9GuhpvAnZ4k8yyMMWa82qoGxL027qc6uPN1kFHq1P7zfTRZTGFOSspwqfRQhlBOXGcwVP2EOwVgLM2iEgBpeaVxbDazRV3zHN6X8rLaI2CjdxsODpny/o=
+	t=1778956658; cv=none; b=Le+fhX3UkTL/14KJrfsUP+uuSBz9mk9qgcOLOONM8xbKWkGeNXnlfvZxnN2xCYJhOcM6MLxMNpo8XVdvbW5jLqGKZJBPCMdeiuqPoaFPo0QWVJLGW+viVYeMl062hQSwEvTF6qJLhgpE9TRCRetyJE2MM9AP4ai5gPtqkNitl6s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778956655; c=relaxed/simple;
-	bh=bkzOsZ+u9cB/tv1smaMAlVTUS7NBHktW+3LSKT4hgrM=;
+	s=arc-20240116; t=1778956658; c=relaxed/simple;
+	bh=2ezmr596RCMSl8GJn5iaP7SQwY6FO5nwtQYKenA48Qw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bx9KN4UGlbG09PHySFuj5W76asVUr1WYh4MDAIFY7JZNuHh5ejb7JSQt2D2YJn7HB51bKcyjKkLr+qOGPEqe8XjIYLz6ryZc+2l19NK22rE9Nju8adeD85qFYMrNBE/VOt6OjqDeiBl3j6zu8YLrzfosbK/64dkX+5PxOIwaVs8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IUF2xE1J; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=rBT0uUb2b0cZ2NU96x0/PcCIk+KFZn/0FZS1Rj7ojYIkLEXA2cMOc+faXKQ9xu6v/RklEHlo5Ca3KnsJPa4m364JNe7wTqPNZgDZhETd5xvwfKzHpV20bf5VNlDZAONnnFVBnB/4WLgUCa+c+XPlrE7GyS+vmW163Ap9UVrNgmY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AEvgDpTH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IUF2xE1J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D551DC19425;
-	Sat, 16 May 2026 18:37:34 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AEvgDpTH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9452BC2BCF6;
+	Sat, 16 May 2026 18:37:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778956655;
-	bh=bkzOsZ+u9cB/tv1smaMAlVTUS7NBHktW+3LSKT4hgrM=;
+	s=k20201202; t=1778956656;
+	bh=2ezmr596RCMSl8GJn5iaP7SQwY6FO5nwtQYKenA48Qw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IUF2xE1Jg2MnEobOyg9RnlkwjukUdD4EnA9yERTUFrZ8ALkhO7gMOR+01OI5A71jP
-	 CH8937r40nphJCVvEoLEQzEXfCkoew1Yow9xncb4OwdKn9LSdQdTWK/RoYeqYSMER1
-	 Wco1YQh0RUzwWWApRfhR3nux8PRMIlHIB8w/8/c7hMAYt2MTBy/Sej/XpvP7JNX7ZK
-	 VGVgLL4f5ddtcmAXHZzo3mmuljNSU4jLY/vtQCaUF+YW8Ie2lBzIkZMihQ95PVooYY
-	 QjPDHggOMP2F1wBQnbHRpeJj9CCdnygY5brVxCgfo6pZEWay4qG0ZRLVG3nS5o9zOl
-	 z8Nta5ezLLx6g==
+	b=AEvgDpTH3zyWW+YN6W72epS0dus/LicSC/g6uHpwevrjqMsjmJXObfl863R2HHT9b
+	 miL3e7k5t/sewh13qlcBGSUdM2CapWSO4SChKv4AcOSbEyDyIdH5JKtV/+1RHjfruC
+	 78nXdWXqDQ6PTM3vnR3rKdXxX29VNXbLZJB9YIDY1u8DHv+gNhskr8DYgyCk13nS6O
+	 eWXFjn6jAXDtZThwLCd9hgqLtMK3y3o4NjjXyGG6/ynmbJ7a9dC97rN83TqX+jUIjb
+	 OMYfwxFxxDrkuwE1tSgqslrSBMQSago0ixpzXe8ExzKa5bNWIIDK+MrleBvkAKAgBx
+	 MeQSe21SJFK5g==
 From: SeongJae Park <sj@kernel.org>
 To: 
 Cc: SeongJae Park <sj@kernel.org>,
@@ -43,9 +43,9 @@ Cc: SeongJae Park <sj@kernel.org>,
 	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH v3 27/28] Docs/mm/damon/design: update for memcg damon filter
-Date: Sat, 16 May 2026 11:37:08 -0700
-Message-ID: <20260516183712.81393-28-sj@kernel.org>
+Subject: [RFC PATCH v3 28/28] Docs/admin-guide/mm/damon/usage: update for memcg damon filter
+Date: Sat, 16 May 2026 11:37:09 -0700
+Message-ID: <20260516183712.81393-29-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260516183712.81393-1-sj@kernel.org>
 References: <20260516183712.81393-1-sj@kernel.org>
@@ -55,30 +55,40 @@ List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Update DAMON design document for the newly added belonging memory cgroup
+Update DAMON usage document for the newly added belonging memory cgroup
 attribute monitoring feature.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- Documentation/mm/damon/design.rst | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ Documentation/admin-guide/mm/damon/usage.rst | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/mm/damon/design.rst b/Documentation/mm/damon/design.rst
-index 85d668e929194..8a2d68cbcefca 100644
---- a/Documentation/mm/damon/design.rst
-+++ b/Documentation/mm/damon/design.rst
-@@ -286,8 +286,8 @@ registration is made by specifying a probe per attribute.  Each of the probe
- specifies a rule to determine if a given memory region has the related
- attribute.  The rule is constructed with multiple filters.  The filters work
- same to :ref:`DAMOS filters <damon_design_damos_filters>` except the supported
--filter types.  Currently only ``anon`` filter type is supported for data
--attributes monitoring.
-+filter types.  Currently only ``anon`` and ``memcg`` filter types are supported
-+for data attributes monitoring.
+diff --git a/Documentation/admin-guide/mm/damon/usage.rst b/Documentation/admin-guide/mm/damon/usage.rst
+index 7b6074a1666f3..b4584c0e4cd72 100644
+--- a/Documentation/admin-guide/mm/damon/usage.rst
++++ b/Documentation/admin-guide/mm/damon/usage.rst
+@@ -73,7 +73,7 @@ comma (",").
+     │ │ │ │ │ │ nr_regions/min,max
+     │ │ │ │ │ │ :ref:`probes <damon_usage_sysfs_probes>`/nr_probes
+     │ │ │ │ │ │ │ 0/filters/nr_filters
+-    │ │ │ │ │ │ │ │ 0/type,matching,allow
++    │ │ │ │ │ │ │ │ 0/type,matching,allow,path
+     │ │ │ │ │ │ │ │ ...
+     │ │ │ │ │ │ │ ...
+     │ │ │ │ │ :ref:`targets <sysfs_targets>`/nr_targets
+@@ -283,7 +283,9 @@ the data attribute for the probe.
+ In the beginning, ``filters`` directory has only one file, ``nr_filters``.
+ Writing a number (``N``) to the file creates the number of child directories
+ named ``0`` to ``N-1``.  Each directory represents each filter and works in a
+-way similar to that for :ref:`DAMOS filter <sysfs_filters>`.
++way similar to that for :ref:`DAMOS filter <sysfs_filters>`.  When the filter
++``type`` is ``memcg``, ``path`` file works the role of ``memcg_path`` for
++:ref:`DAMOS filter <sysfs_filters>`.
  
- If such probes are registered, DAMON executes the probes for each region's
- sampling memory when it does the access :ref:`sampling
+ .. _sysfs_targets:
+ 
 -- 
 2.47.3
