@@ -1,40 +1,58 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47D0E2236F7
-	for <damon@lists.linux.dev>; Sat, 16 May 2026 21:58:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87CC7405C48;
+	Sat, 16 May 2026 22:04:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778968707; cv=none; b=YAMqfon7zvIlELtybC4nU2MxO8uSNOekmQk6bRH8PrvzecYIsiqXiK8bQd6fCjK5FCyxbwEGhs620dKAwCWnouKwICh4Jg3vmoJdeLUno1vCslBxHFj1XqGdK9ZMEg6XPhz2xVOXLMXcJuQDPFl800h734YFSGjkMZVchVdAQ9U=
+	t=1778969054; cv=none; b=KRmGNmdufCRY4Vr6GzfFtItyaiW/ldYdCQNBMV6vlFV5fQjDwaTITwfXUCb5iey174K2M1XFvhMgO5KY3hED9BiTSV7MEYDIf+nv2Ncp+i7nx6MrH/pG6vI/SlRXiyXEHi7OCLL+bH+tzwo8Lo7W90g6sZFD2Rn0hEiT2lFWaQQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778968707; c=relaxed/simple;
-	bh=P0MYaJ+ScdBrFPR7hVmj0u/XLYkXruwzFIZjjRrIWgc=;
+	s=arc-20240116; t=1778969054; c=relaxed/simple;
+	bh=jqUJDOVFPnUp4elyBS4bsFweoUttqEpYWejG0EQ9Hc4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=mIu7yzrcCLxST0bLJwUn0Adk7kPUYvG5b8kxf9GSu6yp7br7Bqt/RrRl1+gPwO4OXgyAc/fZl+iPY5l3B4b2A10JKjJIiS8MjRW5EYmB8lre2za/hSXSjBBYf2rd2tsiWelePFtZMxUeSHaMvhwYQWMJG9SrD4MrMroRjdiqyO8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MMEr5UHc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aBvVwmFe77HS8Ep2/ajjwPQ9lbmCznu/UbbGyC3uoiFrPCO4KlNuq1J4NEu8dxPwEbnYRDA1OLS8jhUqMCZW/5cUVXAWGQwiU7gvqJlZ3SLuH5kqAJmWrBS2UNuomFq+hVWtVkllJRSTSZ6mw/VaV+Ufk2TpaXXDMZPK6DbUcZU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aXDo6/EH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MMEr5UHc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26193C19425;
-	Sat, 16 May 2026 21:58:26 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aXDo6/EH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5B7FC19425;
+	Sat, 16 May 2026 22:04:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778968706;
-	bh=P0MYaJ+ScdBrFPR7hVmj0u/XLYkXruwzFIZjjRrIWgc=;
+	s=k20201202; t=1778969054;
+	bh=jqUJDOVFPnUp4elyBS4bsFweoUttqEpYWejG0EQ9Hc4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MMEr5UHcJGFTYqxvsqcVvW3QV6KG1khgbn67tZvf9PuC8k8x56oG8GJKbQcJKVxVr
-	 ReU25szgndA949OILzeBhjoXL610GmQwYvmihLvGivkHMN6A+r7DHvDXIUn8X3ErQ5
-	 PmJiL3cMnVLv7BQ0Vov/Trjmy13NSNboy4ELV7H4PkMrgSipKsdcSk83Z7WJJ0uoot
-	 XKR9GrC7xynuJ1un+aevl4HnPg32eDfRTeC37mONV7u5w0BaUN1kyFDRQZUaKf66xh
-	 11lCnxstHvINAI6HxPiqkpLnTcWyDKLhSaRdjs7DgfYYfFCn13LOqNXLJsdvyfQPjj
-	 57gsWik67EHQA==
+	b=aXDo6/EHMP7g5zKEG7iKB4Qxz3Lrf3sdPP5zBHOr7Y3UUAL8c43gxrU6tilYE41jC
+	 PGIS05HaNt1c1lq39JLyLx7tr1fsaS4GxvX28m0svfsyH9NkRtxbHqZnAN8y5Ve3t1
+	 HlD0mwOVEvoKTnYOYUqnHiTCC+xpylEd3rKQU7sdj576eo3TbikY88DaTTWQBv5MdH
+	 oO6dwlxNN9jdO0fV8UGwzCWG9H++dAOoL5njpZ+OE6h0xY4GsC2lsx+bEuFrG4EGnu
+	 TbM/kd4xFvBR4mbObgv9kexhyiyLNK9QLPvIdM+TO/4qNFO+ScKXoKfXEPvyKzpDpH
+	 o7jpPzwCY6BKA==
 From: SeongJae Park <sj@kernel.org>
-To: sashiko-bot@kernel.org
-Cc: SeongJae Park <sj@kernel.org>,
-	damon@lists.linux.dev
-Subject: Re: [RFC PATCH v3 28/28] Docs/admin-guide/mm/damon/usage: update for memcg damon filter
-Date: Sat, 16 May 2026 14:57:42 -0700
-Message-ID: <20260516215743.3654-1-sj@kernel.org>
+To: SeongJae Park <sj@kernel.org>
+Cc: "Liam R. Howlett" <liam@infradead.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	David Hildenbrand <david@kernel.org>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Michal Hocko <mhocko@suse.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Shuah Khan <shuah@kernel.org>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	damon@lists.linux.dev,
+	linux-doc@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-kselftest@vger.kernel.org,
+	linux-mm@kvack.org,
+	linux-trace-kernel@vger.kernel.org
+Subject: Re: [RFC PATCH v3 00/28] mm/damon: introduce data attributes monitoring
+Date: Sat, 16 May 2026 15:03:16 -0700
+Message-ID: <20260516220317.4300-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260516190932.1B49AC19425@smtp.kernel.org>
+In-Reply-To: <20260516183712.81393-1-sj@kernel.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -42,64 +60,28 @@ List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On Sat, 16 May 2026 19:09:31 +0000 sashiko-bot@kernel.org wrote:
+On Sat, 16 May 2026 11:36:41 -0700 SeongJae Park <sj@kernel.org> wrote:
 
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [Medium] Inconsistent sysfs UAPI naming for identical memcg filter concepts ('path' vs 'memcg_path').
-> - [Low] Awkward and non-standard grammar in the documentation.
-> --
+> TL; DR
+> ======
 > 
-> commit eca4a8cfbb76f7f5c4df18fb3c84beeef902be91
-> Author: SeongJae Park <sj@kernel.org>
-> 
-> Docs/admin-guide/mm/damon/usage: update for memcg damon filter
-> 
-> Update DAMON usage document for the newly added belonging memory cgroup
-> attribute monitoring feature.
-> 
-> > diff --git a/Documentation/admin-guide/mm/damon/usage.rst b/Documentation/admin-guide/mm/damon/usage.rst
-> > index 7b6074a1666f3..b4584c0e4cd72 100644
-> > --- a/Documentation/admin-guide/mm/damon/usage.rst
-> > +++ b/Documentation/admin-guide/mm/damon/usage.rst
-> 
-> [ ... ]
-> 
-> > @@ -283,7 +283,9 @@ the data attribute for the probe.
-> >  In the beginning, ``filters`` directory has only one file, ``nr_filters``.
-> >  Writing a number (``N``) to the file creates the number of child directories
-> >  named ``0`` to ``N-1``.  Each directory represents each filter and works in a
-> > -way similar to that for :ref:`DAMOS filter <sysfs_filters>`.
-> > +way similar to that for :ref:`DAMOS filter <sysfs_filters>`.  When the filter
-> > +``type`` is ``memcg``, ``path`` file works the role of ``memcg_path`` for
->                                       ^^^^^^^^^^^^^^^^^^
-> 
-> This isn't a bug, but this phrasing is non-standard. Would it be clearer
-> to use "acts as" or "serves the same role as"?
+> Extend DAMON for monitoring general data attributes other than accesses.
+> The short term motivation is lightweight page type (e.g., belonging
+> cgroup) aware monitoring.  In long term, this will help extending DAMON
+> for multiple access events capture primitives (e.g., page faults and
+> PMU) and eventually pivotting DAMON to a "Data Attributes Monitoring and
+> Operations eNgine" in long term.
 
-Good catch, I will update the next version to use "acts as".
+Sashiko found [1] no blocker for this version but a nice document wordsmithing
+idea.  Unless I get other opinions, I will drop RFC tag from the next version
+of this series.
 
-> 
-> Also, does exposing this as "path" instead of "memcg_path" create an
-> inconsistent sysfs UAPI?
-> 
-> DAMOS memcg filters use "memcg_path" for the exact same concept. Could the
-> underlying kernel implementation rename "path" to "memcg_path" before the
-> interface is finalized to keep the naming consistent?
-
-No, I'm here to avoid such thing.
-
-> 
-> > +:ref:`DAMOS filter <sysfs_filters>`.
-> >  
-> >  .. _sysfs_targets:
-> >
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260516183712.81393-1-sj@kernel.org?part=28
+[1] https://lore.kernel.org/damon/20260516185032.82261-1-sj@kernel.org/
 
 
 Thanks,
 SJ
+
+[...]
