@@ -1,142 +1,100 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8B6835AC09
-	for <damon@lists.linux.dev>; Sat, 16 May 2026 19:05:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D1AE405C31
+	for <damon@lists.linux.dev>; Sat, 16 May 2026 19:09:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778958333; cv=none; b=RfMBdsVE0JgDa35X+xf9UDToxP5xpTb6StvwszvzWWtWpZ4k0+MVwh2SNlzbMGviQ+h0CQbfrxL6RuwnrK0/CqitPW5RtKAHbBqvR5pOyu/ad8AWjg2cdtjf2H80hkCtGB3FcqTh98i2r3KoMHD6j30ltr65pk/lvQJWb24SukI=
+	t=1778958572; cv=none; b=u8DcRt1CitPGdlyYljUE8WIwX4EwiLjYssDWm2MKLKV32GG9M+kt3bTjHKhFFIn+hjEoPNtEPsqGJogDnTdfQeqm5U3i0XyAuuh3AbSxJI3X3TSay43KKd61xhdyn6HUgUIUzqPqG9htVkN3m4fuXMQZ4d3wENV7Urp2ND+ch5o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778958333; c=relaxed/simple;
-	bh=p2MO8uIN7O4mOVMt26HbDISW1k6emmMxFkKX8WKtvd0=;
+	s=arc-20240116; t=1778958572; c=relaxed/simple;
+	bh=C1v98Yk2VkQZTwOsE9sm5B0GeXO9zDfC7F8/1oGfTmc=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=lBYtH+8fyFT7CbNio2z8c5E+1yOYuJjL3v4GXwqByLHwJnbFfv6CMMif5PYMIkMmzI9vxCO+kHHgkgNgYcG11CK7deK1AEV1IHFAFuaYriAsp3g+vdW5X+fhMNgzbL7sfUgWrSDLUibsby0Xq1Rp0LiLZv3APk6GQ4eLD8mWgxA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=k+/8tBh9; arc=none smtp.client-ip=10.30.226.201
+	 Message-Id; b=d/PP3tA1lPzZXYdHgKGU/Z987gsJYJANBy09iYGadPsnnDbtKkyZygKtBmX0jLKaNlxP+VzfcJWLscTi++ZWiYwH8YaCocZWNPJO6SV0zr0tyV/1bWHwYPVO26A5klhtmQL+8KNce9j3O36CbfuuXBU1b8vjFc3gADZkgOA9Ssg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=s/7FbTqw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="k+/8tBh9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F268CC19425;
-	Sat, 16 May 2026 19:05:31 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="s/7FbTqw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B49AC19425;
+	Sat, 16 May 2026 19:09:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778958332;
-	bh=p2MO8uIN7O4mOVMt26HbDISW1k6emmMxFkKX8WKtvd0=;
+	s=k20201202; t=1778958572;
+	bh=C1v98Yk2VkQZTwOsE9sm5B0GeXO9zDfC7F8/1oGfTmc=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date:From;
-	b=k+/8tBh90yVM8v05CRIyLsJgkDH7ryWR/juTDWy3/xp1ml8GrZ8n039WTkfFSXDei
-	 i4B8j/VXB5/fUe3BdRYLsqVR2aT/dLoY0TEpF7LZfVlDDT9UfWi9WXqrSkN6MCAM45
-	 XYtoQJYGettacg3yLRClZmjpaiJ/MAmlGUX71gkX3ClOTrE/h8xZpjClQ0opNkD4a0
-	 WSzzuHoDabS9w9R/hu1F9NJPReFWOYVWg7th9e0a5xKmxWR4w4uc947RtfEiHIFe8N
-	 GrfyowXgOPoOcE0fwHX1I9FBUkkgOMjI1TmXqlNy+LA9HxDioehDVkvuipzQF2OjFI
-	 DQP8uKHHsmv9g==
+	b=s/7FbTqwHlh67WyCcUstjwqhEQvfWD8d3TBBHY7uxRbkKxgwl+FcBUO0tdptWKZUJ
+	 /55WcFwlVeI3wqzBrmhNCBD/XdM6cRUSD/evhd9l2nSLFbJp9NIRpARD8fl32W1Sfw
+	 AMCjP9U738PuB+/a9GKpVlPw86grL2J+Eat5fjyAn6OgeefFZGlrUY5eWSfxwF+XRk
+	 NXzIfREc1YwDkAhvP+yrxiixEWkkwyvcOpCuAff/KQKRPrCsouOIGhxW78NINROiw1
+	 hJfJnFd/0HDnhvgGO8/THM5vYipDDqui9NigHFwwGx1cRBamThhTGhrWU0cL9VFwgu
+	 HJFz2c0KIBfwQ==
 From: sashiko-bot@kernel.org
-Subject: Re: [RFC PATCH v3 08/28] mm/damon/paddr: support data attributes
- monitoring
+Subject: Re: [RFC PATCH v3 28/28] Docs/admin-guide/mm/damon/usage: update
+ for memcg damon filter
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "SeongJae Park" <sj@kernel.org>
 Cc: damon@lists.linux.dev
-In-Reply-To: <20260516183712.81393-9-sj@kernel.org>
-References: <20260516183712.81393-9-sj@kernel.org>
+In-Reply-To: <20260516183712.81393-29-sj@kernel.org>
+References: <20260516183712.81393-29-sj@kernel.org>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Sat, 16 May 2026 19:05:31 +0000
-Message-Id: <20260516190531.F268CC19425@smtp.kernel.org>
+Date: Sat, 16 May 2026 19:09:31 +0000
+Message-Id: <20260516190932.1B49AC19425@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 
-Thank you for your contribution! Sashiko AI review found 3 potential issue(=
+Thank you for your contribution! Sashiko AI review found 2 potential issue(=
 s) to consider:
-- [High] Brittle filter evaluation logic in `damon_pa_filter_pass()` causes=
- unpredictable default fallback behavior.
-- [High] Silent integer overflow of `r->probe_hits[i]` due to an 8-bit limi=
-t.
-- [High] Costly page lookups and folio refcount operations are unconditiona=
-lly performed even when no probes are configured.
+- [Medium] Inconsistent sysfs UAPI naming for identical memcg filter concep=
+ts ('path' vs 'memcg_path').
+- [Low] Awkward and non-standard grammar in the documentation.
 --
 
-commit 3ac6d88b44843f7304cd50448ef416c14428371c
+commit eca4a8cfbb76f7f5c4df18fb3c84beeef902be91
 Author: SeongJae Park <sj@kernel.org>
 
-mm/damon/paddr: support data attributes monitoring
+Docs/admin-guide/mm/damon/usage: update for memcg damon filter
 
-This commit implements the apply_probes() callback for physical address
-space monitoring in DAMON. It introduces filter evaluation and applies
-probe hits to region statistics.
+Update DAMON usage document for the newly added belonging memory cgroup
+attribute monitoring feature.
 
-diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
---- a/mm/damon/paddr.c
-+++ b/mm/damon/paddr.c
-
-[ ... ]
-
-> +static bool damon_pa_filter_pass(phys_addr_t pa, struct folio *folio,
-> +		struct damon_probe *p)
-> +{
-> +	struct damon_filter *f;
-> +	bool pass =3D true;
-> +
-> +	damon_for_each_filter(f, p) {
-> +		if (damon_pa_filter_match(f, folio)) {
-> +			pass =3D f->allow;
-> +			break;
-> +		}
-> +		pass =3D !f->allow;
-> +	}
-> +	return pass;
-> +}
-
-If a folio does not match any of the filters, the loop continues and pass
-is repeatedly updated to the inverted allow flag of each evaluated filter.
-
-When the loop finishes, the final returned result is purely the inverted
-allow flag of the last filter in the list.
-
-Is this arbitrary fallback logic intentional?
+> diff --git a/Documentation/admin-guide/mm/damon/usage.rst b/Documentation=
+/admin-guide/mm/damon/usage.rst
+> index 7b6074a1666f3..b4584c0e4cd72 100644
+> --- a/Documentation/admin-guide/mm/damon/usage.rst
+> +++ b/Documentation/admin-guide/mm/damon/usage.rst
 
 [ ... ]
 
-> +static void damon_pa_apply_probes(struct damon_ctx *ctx)
-> +{
-> +	struct damon_target *t;
-> +	struct damon_region *r;
-> +	struct damon_probe *p;
-> +
-> +	damon_for_each_target(t, ctx) {
-> +		damon_for_each_region(r, t) {
-> +			int i =3D 0;
-> +			phys_addr_t pa;
-> +			struct folio *folio;
-> +
-> +			pa =3D damon_pa_phys_addr(r->sampling_addr,
-> +					ctx->addr_unit);
-> +			folio =3D damon_get_folio(PHYS_PFN(pa));
+> @@ -283,7 +283,9 @@ the data attribute for the probe.
+>  In the beginning, ``filters`` directory has only one file, ``nr_filters`=
+`.
+>  Writing a number (``N``) to the file creates the number of child directo=
+ries
+>  named ``0`` to ``N-1``.  Each directory represents each filter and works=
+ in a
+> -way similar to that for :ref:`DAMOS filter <sysfs_filters>`.
+> +way similar to that for :ref:`DAMOS filter <sysfs_filters>`.  When the f=
+ilter
+> +``type`` is ``memcg``, ``path`` file works the role of ``memcg_path`` for
+                                      ^^^^^^^^^^^^^^^^^^
 
-Because damon_pa_apply_probes() executes unconditionally on every sampling
-interval, damon_get_folio() and folio_put() will be called globally across
-all regions even if the user has not configured any probes.
+This isn't a bug, but this phrasing is non-standard. Would it be clearer
+to use "acts as" or "serves the same role as"?
 
-Could we add an early return or check if ctx->probes is empty before
-performing these expensive atomic refcount operations on the hot path?
+Also, does exposing this as "path" instead of "memcg_path" create an
+inconsistent sysfs UAPI?
 
-> +			damon_for_each_probe(p, ctx) {
-> +				if (damon_pa_filter_pass(pa, folio, p))
-> +					r->probe_hits[i]++;
+DAMOS memcg filters use "memcg_path" for the exact same concept. Could the
+underlying kernel implementation rename "path" to "memcg_path" before the
+interface is finalized to keep the naming consistent?
 
-The r->probe_hits[i] counter is declared as an unsigned char in
-struct damon_region, which has a maximum value of 255.
-
-Since the number of samples per DAMON aggregation interval is configurable
-and can easily exceed 255 in standard use cases, won't this counter
-silently wrap around to 0 and corrupt the monitoring statistics?
-
-> +				i++;
-> +			}
-> +			if (folio)
-> +				folio_put(folio);
-> +		}
-> +	}
-> +}
+> +:ref:`DAMOS filter <sysfs_filters>`.
+> =20
+>  .. _sysfs_targets:
+>
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260516183712.8139=
-3-1-sj@kernel.org?part=3D8
+3-1-sj@kernel.org?part=3D28
