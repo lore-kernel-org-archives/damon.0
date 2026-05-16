@@ -1,154 +1,105 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from outbound.mr.icloud.com (mr-2005e-snip4-8.eps.apple.com [57.103.71.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68A1E35E1C8
-	for <damon@lists.linux.dev>; Sat, 16 May 2026 22:55:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67EDA3932EF
+	for <damon@lists.linux.dev>; Sat, 16 May 2026 23:14:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=57.103.71.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778972129; cv=none; b=JJNkVwqm4bZsd5PN1i7HU8Gr70Vb+yHQytcxn1804wQGvOBOb7T6azimcQtNcBJ0qTh2JCpQlWDX7fdU15CBeNIt/Ug+WM2kbmVonq22Fa9TcvjpWv8M9INDlVT6BmcolBLF/N55x6bke4Wcg05YK974twXQ9ob2UcRmVuwkh7U=
+	t=1778973283; cv=none; b=d3t808fHCZfa2ykUTgWr+y2mnyFjhj4lONXRHuWHh0WC8RPqcUebw7j6bEoSZuIHz2+9FNMngn9qtWKIvnXWWezAfO37aFUUlCoYiht3MXrvROdnfVlnbqhMuzr6irr+CjBpyKsrPdMqpQcsp2OKQ4lxRYWKZkEaeq3JvpW62Kk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778972129; c=relaxed/simple;
-	bh=e6rm8sxGCYiKlEuMZa/Q7yEW1gr+v1psSaxxlSj5aRQ=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=IKh44ul67/giUfXMSc40MKBuq03YeYrd9wvIU2FcUXINVrG48tS4rB25yENRzM3k1lu39TFTVg0R/3rNcd6UPuyNOmWM71RDs1zRUuY1Iye5UjRbS6ARZXyv7wZp36BQpju73HE4fZ7JQHm3q4xwoBFA1fMZA2dIkYWOFwaV5v4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AFJFergS; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1778973283; c=relaxed/simple;
+	bh=L/JTUTY0j5GARu9gVX6D1m0HdMb+0VJudBrgr89NJy8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=sZJcz3w/3ey7vY27PVylyqWPJ0KDmc6ry+5xZTVlg+VrOfy8U2neJLzfQGJLqnLJqORZvOTNZH4OJLPQwmTEVH3AK7gzUORf+GOgH8i4Rk3UGw5p1dUtiTZTYLTRnr2uNcg26E4h/MQQrLO9C+sKu4U7+hjMILRQhmqpEmDc3qc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=icloud.com; spf=pass smtp.mailfrom=icloud.com; dkim=pass (2048-bit key) header.d=icloud.com header.i=@icloud.com header.b=yMeRoyrm; arc=none smtp.client-ip=57.103.71.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=icloud.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=icloud.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AFJFergS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAF04C19425;
-	Sat, 16 May 2026 22:55:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778972128;
-	bh=e6rm8sxGCYiKlEuMZa/Q7yEW1gr+v1psSaxxlSj5aRQ=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date:From;
-	b=AFJFergSPqFY7wnAJ7a7Goi72S+IQXlfzsU9s1f2XHUxe4bx4osEm0PjnnGCgSLNj
-	 9JdtXmTXlElgQFcrpQlmxbmVJWJU0GNj8eTmjBbCSx43sFMuoSDhZl0xS98sSmq/03
-	 dkfnxNyekwhPIEVTcyWn3Ij5dW5mN/AjjPbMTsP4thRABw5gBsQra20umrfv78ibur
-	 mXFA9W5P+HI6S/FvcxQLYfwq+4lp0iy+Mb02kL2FGEEcGZvGqRYn1XRUtZwfESImvs
-	 Tq4BiJDhYBuxZCgpYBmb5D8cPZBFgjFH2Hbau///Ad8rgXLoEsv8SvcNu/d0gjqRBr
-	 5+AjzD3T0FNRw==
-From: sashiko-bot@kernel.org
-Subject: Re: [RFC PATCH 2/5] mm/damon/core: cap effective quota size to
- total monitored memory
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Ravi Jonnalagadda" <ravis.opensrc@gmail.com>
-Cc: damon@lists.linux.dev
-In-Reply-To: <20260516210357.2247-3-ravis.opensrc@gmail.com>
-References: <20260516210357.2247-3-ravis.opensrc@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Sat, 16 May 2026 22:55:28 +0000
-Message-Id: <20260516225528.BAF04C19425@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=icloud.com header.i=@icloud.com header.b="yMeRoyrm"
+Received: from outbound.mr.icloud.com (unknown [127.0.0.2])
+	by p00-icloudmta-asmtp-us-west-2a-20-percent-0 (Postfix) with ESMTPS id E96FD180014F;
+	Sat, 16 May 2026 23:14:40 +0000 (UTC)
+X-ICL-Out-Info: HUtFAUMEWwJACUgATUQeDx5WFlZNRAJCTQhKBUMDRQBBCFYBWANLVxQEG1sIUhhXE1gTVl8OXQIwUBtfAkIPHBNWFRMLU1ZRGFwdQAhUClkVC0EFXXcCURxWDVdDVARfUEsbDlwCS1oVVRcOAkIfUB9MFldDWhkcGVoUXBhTRVEfVFhDGUVWaUELTx1dGVscQmRYVwkKAlEcVg1XQ1QEX1BUEVdQC1JXEQpJAl0BRgtDXEweWVQJUF1bTQULGg9XR1obVgsFXwQVXzhaDlsERxQXG1wACUtGCUkdDgRUB10FXQ==
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=icloud.com; s=1a1hai; t=1778973281; x=1781565281; bh=/zVePlSPbB8tZaMeUqvI5r7tySGsEW1UJvhXgOHkLv8=; h=Message-ID:Date:MIME-Version:Subject:To:From:Content-Type:x-icloud-hme; b=yMeRoyrmKaBhjYKor1AW72OHUCOd+ptW0mkDPf04aBLfg/B1SSbV77JJB7mK0CEZhgokRf/xylM2NW6cGi4ktDRx9f59Kq4oE5XOIW5jLY+Z4xKuQlY+SToBkrBtSAxpd3iG8EYmqS7oL7ldnQoIc4u1jzLtwtWxyv59KLcI+8oTGS4RC+MA2e7GmDZ+jVX0I4v9wk8xgbr6NPZneK2ESRA0mmyXZbLbagJXt+H4no+MLUESCGzT+DX1ppi6YocxtX/IEBiEj54DhnU0JYoO/3j3sPETdsGrEFvKTPtk4St873tCP3L+/6rt+3qMYGpmwGEZpucur7AWbOwNuhAOig==
+Received: from [192.168.1.33] (unknown [17.57.152.38])
+	by p00-icloudmta-asmtp-us-west-2a-20-percent-0 (Postfix) with ESMTPSA id 788201800146;
+	Sat, 16 May 2026 23:14:37 +0000 (UTC)
+Message-ID: <9ea31106-93e4-4cbb-b56f-de7ccef246ef@icloud.com>
+Date: Sun, 17 May 2026 08:14:35 +0900
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] docs: fix typos in design.rst
+To: SeongJae Park <sj@kernel.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>,
+ David Hildenbrand <david@kernel.org>, Lorenzo Stoakes <ljs@kernel.org>,
+ "Liam R. Howlett" <liam@infradead.org>, Vlastimil Babka <vbabka@kernel.org>,
+ Mike Rapoport <rppt@kernel.org>, Suren Baghdasaryan <surenb@google.com>,
+ Michal Hocko <mhocko@suse.com>, Jonathan Corbet <corbet@lwn.net>,
+ Shuah Khan <skhan@linuxfoundation.org>, damon@lists.linux.dev,
+ linux-mm@kvack.org, linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20260516170847.146524-1-sj@kernel.org>
+Content-Language: en-US
+From: Cheesecake <cheesecake2960@icloud.com>
+In-Reply-To: <20260516170847.146524-1-sj@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-ORIG-GUID: pixu_aVUBLdvevj9Cz3LevPRO61nP8sx
+X-Authority-Info-Out: v=2.4 cv=bcFmkePB c=1 sm=1 tr=0 ts=6a08fa61
+ cx=c_apl:c_pps:t_out a=9OgfyREA4BUYbbCgc0Y0oA==:117
+ a=9OgfyREA4BUYbbCgc0Y0oA==:17 a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10
+ a=x7bEGLp0ZPQA:10 a=sIGCgqHK338A:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=VwQbUJbxAAAA:8 a=v3ZZPjhaAAAA:8 a=JORHhQuN_TVeFzD3vIAA:9 a=QEXdDO2ut3YA:10
+ a=zY0JdQc1-4EAyPf5TuXT:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTE2MDIzNyBTYWx0ZWRfXzpv8BHIlWj63
+ 3jfaMPHcz/h7PH3Pu0ibIXpZvtyeE/o0A5D3rC+YmTWAkqiP0Lwrr1jxy8xTs3sHZzxzdKvFG3a
+ CbovpU3V2hljm3X7DQHlePJeDkmfFARTS5sK9NYNEm0sT6UlUTtJsodikIO1SxVVdHbvX1H5in3
+ kXlO1cB+RO1MKA/HiE1tff6ScgNqzVhDPmR2h2MluZ90NDjb21/W0gt3rMtatB/kkLfABTqcual
+ 1n+MBnFD+AwBi76GHZ4W3Tvn5Bf2AtSjzv0ZgqfnN7vdhCjFNf801vgFZCPWHiappA4wX0xQYKv
+ 2lvzZVJQBeM30lG8NiqaNIIrjAhRLeIb60yz81KvGv5pNR8Mr4HvrvB2CUXwcQ=
+X-Proofpoint-GUID: pixu_aVUBLdvevj9Cz3LevPRO61nP8sx
 
-Thank you for your contribution! Sashiko AI review found 4 potential issue(=
-s) to consider:
-- [High] The safety cap limits the effective quota output (`esz`), but fail=
-s to cap the tuner's internal state (`quota->esz_bp`), leading to severe in=
-tegral windup.
-- [High] Accumulating the total monitored size into an `unsigned long` over=
-flows on 32-bit architectures, permanently crippling the scheme quota.
-- [High] Applying the safety cap can forcefully reduce the effective quota =
-below `min_region_sz`, resulting in permanent scheme starvation for small t=
-argets.
-- [Medium] The safety cap is completely bypassed for statically sized quota=
-s due to an early return, causing inconsistent API behavior.
---
 
-commit afc20f6b1154f371b12a0f1f9ad37023b5bba0ef
-Author: Ravi Jonnalagadda <ravis.opensrc@gmail.com>
-Subject: mm/damon/core: cap effective quota size to total monitored memory
+On 2026/05/17 2:08, SeongJae Park wrote:
+> Hello Cheesecake,
+>
+> Thank you for this patch!
+>
+> For the consistency, let's use 'Docs/mm/damon/design:' as the prefix of the
+> subject.  E.g., Docs/mm/damon/design: fix three typos
+>
+> On Sat, 16 May 2026 18:35:37 +0900 Cheesecake <cheesecake2960@icloud.com> wrote:
+>
+>> L140: "unsinged" -> "unsigned"
+>> L371: "sampleing" -> "sampling"
+>> L387: "multipled" -> "multiplied"
+> Thank you for finding and fixing these!
+>
+>> Signed-off-by: Cheesecake <cheesecake2960@icloud.com>
+> Is Cheesecake your real name or known identity?  We don't allow anonymous
+> contributions [1], and mm community prefer to use real names.
+>
+> [...]
+>
+> The file changes look good.
+>
+> Could you please send v2 of this patch with changed subject and the name (if
+> Cheesecake is not your real name or known identity)?
+>
+> [1] https://docs.kernel.org/process/submitting-patches.html#developer-s-certificate-of-origin-1-1
+>
+>
+> Thanks,
+> SJ
 
-This commit introduces a safety cap on the effective quota size computed by
-the DAMOS quota goal tuner to prevent it from exceeding the total monitored
-memory.
+Thanks for pointing that out.
 
-> diff --git a/mm/damon/core.c b/mm/damon/core.c
-> --- a/mm/damon/core.c
-> +++ b/mm/damon/core.c
+I accidentally sent this patch using an anonymous address/name.
+I'll resend it properly later.
 
-[ ... ]
+Thank you for your time.
 
-> @@ -2614,6 +2614,19 @@ static void damos_goal_tune_esz_bp_temporal(struct=
- damon_ctx *c,
->  		quota->esz_bp =3D ULONG_MAX;
->  }
-> =20
-> +/* Sum of all monitored region sizes across all targets in @ctx. */
-> +static unsigned long damon_ctx_total_monitored_sz(struct damon_ctx *ctx)
-> +{
-> +	struct damon_target *t;
-> +	struct damon_region *r;
-> +	unsigned long total =3D 0;
-> +
-> +	damon_for_each_target(t, ctx)
-> +		damon_for_each_region(r, t)
-> +			total +=3D damon_sz_region(r);
-
-Could the total variable overflow on 32-bit architectures? Since a single
-DAMON context can monitor multiple processes, the combined virtual memory s=
-ize
-might exceed 4 GiB. Would it be safer to use u64 to accumulate the total si=
-zes
-and avoid wrapping?
-
-> +	return total;
-> +}
-> +
-
-[ ... ]
-
-> @@ -2621,6 +2634,7 @@ static void damos_set_effective_quota(struct damon_=
-ctx *ctx, struct damos *s)
->  {
->  	struct damos_quota *quota =3D &s->quota;
->  	unsigned long throughput;
-> +	unsigned long total_sz;
->  	unsigned long esz =3D ULONG_MAX;
-> =20
->  	if (!quota->ms && list_empty(&quota->goals)) {
->  		quota->esz =3D quota->sz;
->  		return;
->  	}
-
-The commit message mentions this is a final bound after all other quota
-calculations. If a purely static size quota is configured with no time limit
-and no tuning goals, the early return here bypasses the new safety cap. Is
-this intended behavior, or should the static quota also be constrained by
-total_sz?
-
-> @@ -2649,6 +2663,11 @@ static void damos_set_effective_quota(struct damon=
-_ctx *ctx, struct damos *s)
->  	if (quota->sz && quota->sz < esz)
->  		esz =3D quota->sz;
-> =20
-> +	/* Safety cap: never migrate more than total monitored memory */
-> +	total_sz =3D damon_ctx_total_monitored_sz(ctx);
-> +	if (total_sz && esz > total_sz)
-> +		esz =3D total_sz;
-> +
-
-Can this cap force the effective quota below the minimum region size? If
-total_sz happens to be smaller than ctx->min_region_sz, applying this cap at
-the very end would make esz smaller than min_region_sz. If that occurs, will
-operations layer checks like esz - charged_sz < min_region_sz always evalua=
-te
-to true and permanently starve the scheme?
-
-Does the goal tuner's internal state also need to be bounded here? While the
-effective output esz is capped, quota->esz_bp remains untouched.
-
-If a workload consistently misses its tuning goal, quota->esz_bp might
-exponentially increase until it hits ULONG_MAX. Once the workload behavior
-changes, could the wound-up state take a prolonged time to decay back down
-below the physical limit, leaving the scheme unresponsive during recovery?
-
->  	quota->esz =3D esz;
->  }
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260516210357.2247=
--1-ravis.opensrc@gmail.com?part=3D2
