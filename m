@@ -1,62 +1,64 @@
-Received: from mail-yw1-f193.google.com (mail-yw1-f193.google.com [209.85.128.193])
+Received: from mail-yw1-f195.google.com (mail-yw1-f195.google.com [209.85.128.195])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4060379EF7
-	for <damon@lists.linux.dev>; Sat, 16 May 2026 21:04:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.193
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23D3037C0FA
+	for <damon@lists.linux.dev>; Sat, 16 May 2026 21:04:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.195
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778965444; cv=none; b=IKrHljiyClxJQKBBxJyNtnVkQDHYrDG0xFSNNpIU1BGvYxLE2Yn/mtEjcurpLfO2ud7NRBmBOCu0Lcq324BOmVxOH99132XegF79dNRM5l+wjw1L+I+XW43eIHdoWBdnPxV7luugkmvyjZ80MbkEsAZCzrlRMgDw/jcE3pd07hA=
+	t=1778965446; cv=none; b=saC5dKwNNAd9fIefC2U87W284rENuRXHO4uj2SLUAJKBBjMHZXjLLV2Xgcr7VQyiDgMT8PwooKq5WknGJyLLF4R7gBE5v2Jq7MxLaIllmF34tgcaz6wST/FJ01LNx15Y947/CrnwESc8VtPN9bNJUH2Dia39Zx7nKAtDtjpK/Gk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778965444; c=relaxed/simple;
-	bh=JnBv0xQzTOMlPkAuQK4QJmqgQKl7ST4anVP64Y/xlXc=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=WGZdbHfLnQ66dsf/UPhc+bN3WVPcgubtHtnqVGe5DBzqUawzdo8UznAyehDUympbZHU+e+1iXb+zb2WVcX5HWezhdn3M5qD+IN2AZbjaKbS8IL2ioPAD00q6rwN+dXGMsmqHXYvVdabTUi2pAJqk7HaJ6K+nCMbb+ID/eqQOJH4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ByuxPf3o; arc=none smtp.client-ip=209.85.128.193
+	s=arc-20240116; t=1778965446; c=relaxed/simple;
+	bh=9ehoVGHCch2YDXFpAgGWGiRbcBZMIbDp0HeIrubwg+g=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=IuwW2/De281P1ElNwk3yQuUdXL5NIvqdouN9CwD9MaRmkZt0px97HqnL5/WoFEHZ+O9JNjB3LMKZf6CqmgDztns81AYic8FHd7oTq409479M3zCKLqE0rlkFCAfBslDU15qRxXoAxlo87ex7CyclU+PP2OFLSqXPTKkhMhOVjJU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RQ76nsq+; arc=none smtp.client-ip=209.85.128.195
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ByuxPf3o"
-Received: by mail-yw1-f193.google.com with SMTP id 00721157ae682-7bf0b1a47b1so5240797b3.0
-        for <damon@lists.linux.dev>; Sat, 16 May 2026 14:04:02 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RQ76nsq+"
+Received: by mail-yw1-f195.google.com with SMTP id 00721157ae682-7c5d8f45465so4687267b3.1
+        for <damon@lists.linux.dev>; Sat, 16 May 2026 14:04:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1778965442; x=1779570242; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=9yKlsY6+9+MZ7mU7SmEl9YWbtOg8xFpSDNXLhXZWgGQ=;
-        b=ByuxPf3oUvxLHDH857+V3N5mUXZt9LLBv1GikuhomxsFdk70USYRtieo3QUNMOKxe+
-         xHQFQYjpAIV0nQEFppVHrAfxUsdWUnwnr/cE/XiYr/lnH800IQr55N54icWqIhiSCaaR
-         +65V5aVkh7e4T0k3BV7VEBMGYg6yNhSQIhicqoBCqWUdRokQbv7wbcGX1hziAqD1Wbj5
-         dUt9bmoRPOPp0jOu8Lv5JwKYgWrU44rkvaH9quHW5V1m7DPPR0gGy1g00TtVDVhX6Jx6
-         y1E8/pBmfJeHanWQJn6jCBtEURHp4KQhHPlL0dPS9kU+5A/KChOJfHhZP3njCjICqQZS
-         DJcg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778965442; x=1779570242;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20251104; t=1778965444; x=1779570244; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=9yKlsY6+9+MZ7mU7SmEl9YWbtOg8xFpSDNXLhXZWgGQ=;
-        b=V57PKVdIWFqAYFdJ62yJCK7a10VGQrSoTVYgBp6f7XObYLMVIa+BKg051KrhzEjzzA
-         D3qTr/8SsHS5nSD6K3WeKJ1upY1pGU6DKBNZ5tsjsQBJ4LlkqH7q0AYiP5RuOtXM59lr
-         Mw5mrmOeL35SUNY2bad8pIzo3TZgTBcTy/UwEq/QkY+yILbn6GtGfa9xc9aSMcihE7o8
-         xIpfJHW67gBeCkunq1Z1azHQlouUWXByjtX3Dyy03ebGwy5BVzRAS3UooSbT9nv1ibbM
-         bByjbyTIDTE6hYteP3DW94bIzYSF5rYHPn8z4H8S+8Rn0t83jU7FDXef58AgSWn+lDrD
-         lP5Q==
-X-Forwarded-Encrypted: i=1; AFNElJ/n7MpgIiRuRv3/ywc/osqK1iir9YYENJhUo9t5rDiRr0YDvxjkRZzmNV97tRiUC36TSJ9i1A==@lists.linux.dev
-X-Gm-Message-State: AOJu0YzHu7z2ywMS82IbFWodZ6NuiAfF5sYO7+G2Dfky0pb2InUsvbXR
-	OIs14TU8RZ3Ti3BxkYC3JUOf9xF4XS1oQrZrGw+ZEzvCsE2JYC8PlKU=
-X-Gm-Gg: Acq92OGSgcgumyXpDktsez4zH4FNkU5fxwo9d5mKzpdBDLTShWEdV0ZifHJ1cXskIDv
-	jDuLjhEysQm3hnyJrQo+IbqNi5Y8aicIvD55ibMuOELPcT3Qn3L90y8/MDiGB4MfArAAI3NNS8i
-	/zBJzRbYhb5ZXqOA6SsDUVYMnrQdwRKFHwCZkV6ub/l5mnwkEIrpMUEwGdxhlDHA/oR6UVbkUsz
-	AwAD7LEafiAoKvmDdNkQ+09DCr4h64V/9viWDlBdeJQXjXz7cTLiTvmrFbs5o7AuUxAjAp3hwCD
-	vrQL4YyCGUx7lqVLnnQ3AZGT6T9s+/MGLaobc2G1NC5ZrPCCYaIjHkEOoJNe5mgHWSYkjybWS0G
-	gEIdMgMLMbyQeK7mFDAU1BKS8R6oNrUaM/abkvy6GeBD6MKASiivelsWcCazQP6rLIML3kBjsOg
-	YD4IeDZHQ38BUPfKqWkeri1F2MTqfJnwTGMG43nYn9fD2wqWb2VvjsI+D19L9pI3xnYEVQ94lSM
-	jjlAknu5iZ7
-X-Received: by 2002:a05:690c:6d84:b0:7bd:7b55:ebe1 with SMTP id 00721157ae682-7c959f80c19mr97174407b3.1.1778965441933;
-        Sat, 16 May 2026 14:04:01 -0700 (PDT)
+        bh=BHb6DjRXqj9xDQrypI0jK8ctMTDK6O2uioTTtx6jNrM=;
+        b=RQ76nsq+wdDjjXqVUXo6QzAA3XKH0jNK9YT2KEshXed9sfvjq3alZL1igh9tZ7Wqax
+         mgSaVg6Ky/9+NHIrWdliH/L3MCFC+meRiSJ7QNi6IkvkNRDRQ2HO3/oLZz9plsjEF9FO
+         CzoKCzzaAj7GLL7yhwYNsxRZOtL/vfs9QRoivzCb9AjcNSBs66ncglSJ/CKnXia9WFMG
+         mW1P94BURR9kAjOyJpNKLepVl9U3UD3RwDI0HIKkykgdjojMNOgLJPI9dA279lBwrA2n
+         TqdfGSWP8JVc3KW2L3wZ8asVW+mcE+yimdp3USuDnfuxk+ewRMdrGXKW6IIRWMbK7DeU
+         gKIA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1778965444; x=1779570244;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=BHb6DjRXqj9xDQrypI0jK8ctMTDK6O2uioTTtx6jNrM=;
+        b=hRxj868wHt7eHgWEtMe6TEOei6nmuZiwH2d292uksQeWDYo7L/9pvajXtfiOm98Q2s
+         68uo/vU8kFe2l1t+HMYDpfSBI5EF70+VVfP63jGME/yND8K0s4VMTwh2nVMG9ddWSSS3
+         yQigH6QAaYOedHa6QcaLTTGK3EX6Ol2Mde1UyXLNJ3LDnFj2dK9eDI5s2pr/FbiYCNhQ
+         MbrfKuuW9Cr+pyS/23+UGLlEQKghlvQrHfNmo3ZS8aJ3X5bWFBYDuH2R8UcMFD1NWsJZ
+         keOD8/ROVWd04DVZzK8H5nrvgE2aR1tougl9iadCQOlvBf6t8Iuxwpx2irgI1uNUiT1t
+         uRJw==
+X-Forwarded-Encrypted: i=1; AFNElJ8zWI2Q6gWxa8Nfpg6SNDgYOgNN/jWHRVGBBzqJktdJGOBSkap6RbA6P4QS1GNf+VVx1g1yTQ==@lists.linux.dev
+X-Gm-Message-State: AOJu0YwOw79SL0hEFtuSSn0Lvqe4QDB6Pbr1NwQ1aIu9/dq8I/gMF56f
+	uM5lSyqlkHhM3cqYBpLb98s5aHHYaICwsZuXqg/khCqnx1eGc7WH+sw=
+X-Gm-Gg: Acq92OFT5AFYvuIaj32g0en1c65TK7fAiBvAEIRjfiPKwZc4PWCpwigdzgAABILGeYD
+	wRImdMLk3a+orEmUyGXW5+uZ4vm3g/UEIudawrMvx69k73ITtN1G7VBf9JSmR5l8p9+qRz61sUE
+	FhFaeZqriFsAzx2TXIVJXwkyMbwkYelsv/R4I19W0nzM9xesP1aM+T8YDOJj1MlGizkJokqKQnP
+	gn8ppDJ2aESJpa8R+OF8SlJf1nyT2LEbNWvfUs1fN9fPBhCOTS78vo1IOgW4isonWufPqtTulGt
+	IdJrxZDLINSiOJ6Aft0RNCD6srSbSsbu8N0NpfxqgcmCAGawBZTrfsVLuWpi+jxURn2Q8RrNUnO
+	92AcbGB612OJ+xsiP5b+ZnqyPfWxh43H93gYafkAwMGn7xiz4bCYadwaeIJD2xafynzxr2rIiBN
+	LtzKRiGxiMhRl/VnvNeJsqvvNK/GfGLA6DOKi4cYxL/qMN/zoVi0FLz80Mn6wPSCYQxhRjTUwSl
+	g==
+X-Received: by 2002:a05:690c:c4fa:b0:7b8:1b67:2571 with SMTP id 00721157ae682-7c95d1da54fmr102587527b3.42.1778965444167;
+        Sat, 16 May 2026 14:04:04 -0700 (PDT)
 Received: from localhost (23-116-43-216.lightspeed.sntcca.sbcglobal.net. [23.116.43.216])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-7c7f5e89bd4sm48605287b3.49.2026.05.16.14.04.00
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-7c7f54c29ddsm48585327b3.34.2026.05.16.14.04.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 16 May 2026 14:04:01 -0700 (PDT)
+        Sat, 16 May 2026 14:04:03 -0700 (PDT)
 From: Ravi Jonnalagadda <ravis.opensrc@gmail.com>
 To: sj@kernel.org,
 	damon@lists.linux.dev,
@@ -70,10 +72,12 @@ Cc: akpm@linux-foundation.org,
 	honggyu.kim@sk.com,
 	yunjeong.mun@sk.com,
 	ravis.opensrc@gmail.com
-Subject: [RFC PATCH 0/5] mm/damon: DAMOS quota controller and paddr migration walk fixes
-Date: Sat, 16 May 2026 14:03:52 -0700
-Message-ID: <20260516210357.2247-1-ravis.opensrc@gmail.com>
+Subject: [RFC PATCH 1/5] mm/damon/core: fix nr_accesses_bp underflow in damon_moving_sum
+Date: Sat, 16 May 2026 14:03:53 -0700
+Message-ID: <20260516210357.2247-2-ravis.opensrc@gmail.com>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260516210357.2247-1-ravis.opensrc@gmail.com>
+References: <20260516210357.2247-1-ravis.opensrc@gmail.com>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -82,126 +86,35 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Guard against unsigned integer underflow when nomvsum/len_window
+exceeds mvsum.  When that subtraction wraps, the moving sum returns a
+near-ULONG_MAX value and corrupts nr_accesses_bp.
 
-Hi,
+If subtrahend > mvsum, return new_value: this clamps the moving-sum
+estimate to the current observation rather than wrapping.
 
-This series carries five fixes for the DAMOS quota controller and the
-paddr migration walk.  All five were surfaced during closed-loop tiering
-testing on a heterogeneous-memory system (DRAM + CXL on a separate
-NUMA node), but each fix is in code paths that benefit any caller --
-not scoped to closed-loop tiering or to any specific goal metric.
+Signed-off-by: Ravi Jonnalagadda <ravis.opensrc@gmail.com>
+---
+ mm/damon/core.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-Test envelope: AMD EPYC dual-socket host with CXL.mem on a separate
-NUMA node, two-scheme migrate_hot PULL+PUSH setup driven by
-node_eligible_mem_bp (now in linux-next)[1].
-
-What each patch does
-====================
-
-Patch 1 - mm/damon/core: fix nr_accesses_bp underflow in damon_moving_sum
-
-  damon_moving_sum() can underflow when a region's access rate drops
-  to zero faster than the moving-sum window length.  The internal
-  accumulator subtracts an outgoing sample without a lower bound,
-  producing a sentinel-large nr_accesses_bp that mis-classifies a
-  cold region as hot.  Affects every DAMOS scheme, since
-  nr_accesses_bp is used on every access-rate update for every
-  region regardless of which scheme or goal metric is active.
-
-Patch 2 - mm/damon/core: cap effective quota size to total monitored memory
-
-  The DAMOS quota tuner can compute an effective size (esz) larger
-  than the total monitored memory, because the tuner integrates over
-  cumulative deltas without bounding by the actual workload size.
-  Once esz exceeds total monitored memory the per-tick "remaining
-  quota" arithmetic stops being meaningful: any scheme can apply to
-  the entire monitored space and "remaining" stays positive
-  indefinitely.  Cap esz at total monitored memory so the controller
-  remains within physically realisable bounds.  Tuner-shape and
-  goal-metric agnostic.
-
-Patch 3 - mm/damon/core: floor effective quota size at minimum region size
-
-  Symmetric to patch 2: the tuner can also compute esz < min_region_sz,
-  causing schemes to attempt zero-byte migrations for many ticks before
-  the tuner ramps esz back up.  Observed under the CONSIST tuner with
-  a node_eligible_mem_bp goal: ftrace traced esz stuck at 1 byte for
-  96 seconds before the first region was tried; the first acted-on
-  region appeared at t=113s when esz crossed the min_region_sz
-  threshold.  Floor esz at min_region_sz so schemes always have at
-  least one region's worth of quota when the tuner asks them to act.
-
-Patch 4 - mm/damon/paddr: skip free pageblocks in migration walk
-
-  damon_pa_migrate() walks every 4KB PFN in a region.  On
-  sparsely-populated lower-tier extents (e.g., a 549GB CXL region
-  with only ~8GB populated), this is ~144M PFN iterations per scheme
-  tick at ~40ns each = ~5.6 seconds of walk per tick.  Use
-  pageblock-level free-page detection to skip unpopulated runs of
-  pages: only enter the per-page loop for pageblocks that contain at
-  least one allocated page.  This brings the walk to
-  O(region_size / pageblock_size) skip-check cost plus
-  O(populated_pages) per-page work.  On x86 pageblocks are 2MB, so
-  the same 549GB/8GB example becomes ~281K pageblock skip-checks
-  (microseconds total) plus ~2M per-page visits for the populated
-  pages -- ~80ms expected.  Helps any migrate_hot/migrate_cold scheme
-  on paddr ops, regardless of what drives them.
-
-Patch 5 - mm/damon/paddr: add time budget to migration page walk
-
-  Densely populated regions (e.g., a busy DRAM range where most
-  pageblocks contain at least one allocated page) can still consume
-  full ticks even with patch 4 applied.  Add a 100ms wall-clock
-  budget with a ktime_get() check every 4096 pages walked
-  (~16MB worth).  When the budget expires before reaching the end of
-  a region, kdamond returns control; subsequent ticks re-walk the
-  region from the start.  Folios already on the target node are
-  dropped at migration time, so re-walks only re-do collection work,
-  not the migrate itself.  Together with the per-scheme quota cap,
-  per-tick work is bounded and the workload converges over multiple
-  ticks for dense regions.
-
-  Worst-case migration walk contribution to a tick is bounded at
-  100ms per scheme regardless of region size or population density,
-  preserving kdamond's ability to service other DAMOS schemes and
-  user-space sysfs operations during heavy migration phases.
-
-
-Testing context
-===============
-
-  Hardware:  AMD EPYC dual-socket, CXL.mem on a separate NUMA node.
-  Workload: 32GB hot working set across DRAM and CXL nodes.
-  DAMON config: paddr ops, two migrate_hot schemes (PULL CXL->DRAM,
-                PUSH DRAM->CXL) with complementary address filters,
-                node_eligible_mem_bp goal per scheme, temporal
-                quota tuner, 1s reset interval.
-
-Each fix in this series was reproduced under the above setup, then
-verified via ftrace and per-scheme stats after the fix landed.
-
-References
-==========
-
-[1] mm/damon: add node_eligible_mem_bp goal metric
-https://lore.kernel.org/damon/20260428030520.701-1-ravis.opensrc@gmail.com/
-
-Ravi Jonnalagadda (5):
-  mm/damon/core: fix nr_accesses_bp underflow in damon_moving_sum
-  mm/damon/core: cap effective quota size to total monitored memory
-  mm/damon/core: floor effective quota size at minimum region size
-  mm/damon/paddr: skip free pageblocks in migration walk
-  mm/damon/paddr: add time budget to migration page walk
-
- mm/damon/core.c  | 29 ++++++++++++++++++++++++++++-
- mm/damon/paddr.c | 40 +++++++++++++++++++++++++++++++++++++---
- 2 files changed, 65 insertions(+), 4 deletions(-)
-
-
-base-commit: 0cec77cfd5314c0b3b03530abe1a4b32e991f639
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index 3a8725e400c6b..9975f3d9ebfe9 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -3449,7 +3449,11 @@ int damon_set_region_system_rams_default(struct damon_target *t,
+ static unsigned int damon_moving_sum(unsigned int mvsum, unsigned int nomvsum,
+ 		unsigned int len_window, unsigned int new_value)
+ {
+-	return mvsum - nomvsum / len_window + new_value;
++	unsigned int subtrahend = nomvsum / len_window;
++
++	if (subtrahend > mvsum)
++		return new_value;
++	return mvsum - subtrahend + new_value;
+ }
+ 
+ /**
 -- 
 2.43.0
 
