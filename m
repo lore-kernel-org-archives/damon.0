@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B97E025B0A7
-	for <damon@lists.linux.dev>; Sat, 16 May 2026 21:27:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 856E1347FC4
+	for <damon@lists.linux.dev>; Sat, 16 May 2026 21:33:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778966841; cv=none; b=fqEHd3HbtF/Rl3TKMaYKbJwsjPr7XDboGKh/GTVwWWfoDdbxxBv3KAubEslbyY8oMiUiriWkikILbzsq1ZDjk9yR0xyjHLs0usZulyfcmJDRfDqvp+z3Q8G5XzOl/Hit8UfNIZ0GP5fu6hSMqoAGwik+t462Wsetpj2JRD3XGlk=
+	t=1778967223; cv=none; b=nhlMGP4wJOOnKY/+vwCS1JwjboUOAfjjdKxHid9k45YgkATIkA3ty7y/NvSqagRVYqsU6efvHWU2XNKCU4uPL2aZMIamJ59OSbZnIDHWA4zdn0vjGcMDqnL8m9cZg5kNt6t3JfIaAE9wYaR4brEZfKfHMzcscWNd8el6BFQkh3M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778966841; c=relaxed/simple;
-	bh=6m/Ag61uLduK+g5aAUT+xR3avsPOTtmhD8K1PtKyJlE=;
+	s=arc-20240116; t=1778967223; c=relaxed/simple;
+	bh=pD5He9C2mKKqb/QX0WFzqPTfdXtrKaoSi5bBs4Odj7s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SBfmBPrO9Fp5smxmUqLvpySSwnydSKRjTGL2PeRElgl/ll+tCg0AQm1IMaLGEU6eCE9e0kout2CdqWuY5x1tMObKR92QeBsI5Pgc0Yb3qNjOYGUXy4qRJtzKb9IdHEHhrgYdil/BrKciYUqIgG4io0W7SWweFGqbZN53BkI2pfE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EFXS7Lfj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=G9eB0lFfikWrAqUmWpvgwtUtlLrtX0rIHJDrvLaI8pwiWngg1GIuLqv+miLKS0irl1LX1/Fwl2h2GGO7PXcnS/vK2rheeLb/+eX3DuW8jeT1b7puCnkjT4MrNVgOzfe0XL5DsrR9rdLMMponcunrqf23yzjQZr6TwUiJ3ag7hr4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ta801Qlh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EFXS7Lfj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A31D2C19425;
-	Sat, 16 May 2026 21:27:17 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ta801Qlh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83C41C19425;
+	Sat, 16 May 2026 21:33:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778966841;
-	bh=6m/Ag61uLduK+g5aAUT+xR3avsPOTtmhD8K1PtKyJlE=;
+	s=k20201202; t=1778967223;
+	bh=pD5He9C2mKKqb/QX0WFzqPTfdXtrKaoSi5bBs4Odj7s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EFXS7LfjcPyQLKHfAjZ/2ASCLAwHyxRXb9zYezJX34t/sx7Jb0XEdGKT/Fdj2pHKt
-	 DqhkOrGynkmZMT6Wq//krzVVhelZH8SASOZtAsykRyioAYxEMuJ5oAL/9ZiN065Zy6
-	 DzluP9sTQHoXReINlZ2TxK3I7uqqTD4K3MSPWOo+cr4sSj5VqrWAE8r9uMzTO6HL2z
-	 viiXRZw08sOmMqjrgUFeMQ2EvWlQvDIVCBFYoySqGtI0mf2TQ/PC0VS1sejZADPjrj
-	 uKhvJF3mKiAk1829R0zADta+DCAQxH81VhDQksEkxlcYa3TAgAiSGuVMfBVYnFi1Ez
-	 pYzew4hNpyVtw==
+	b=ta801QlhB6U/r4vI2Oi7Mbt3oe9PCSAiM9EaMj0fAQ45GRdx/EfxzEzrAqCW9RVLg
+	 twiOHaN3J3Wt0zqR+UkPui+8lzz5mpYEc6Ug6rKVRFWc0LiUPPLNSkPp6N/4QBACRa
+	 hM+QILa12SghFLYRVdV6AvLxXgHH3zO6TJECSS0zJRSd0KKOTVaKqLXmb2fx1iFhEK
+	 MWkP1RYF/JQ9FdSurQQ6NjIiR23qypIeq3jHPoE/aMWsmI3qxTJvMlNr8rCRPn/Hd9
+	 +FsWBl6Yh7soj8J2biXpHDmhc/zDQBJ3s8t2XSTWtkxwzxltNXWlkhnE1s8QWQlo0v
+	 LcS4i1ebWXSXw==
 From: SeongJae Park <sj@kernel.org>
 To: sashiko-bot@kernel.org
 Cc: SeongJae Park <sj@kernel.org>,
 	damon@lists.linux.dev
-Subject: Re: [RFC PATCH v3 05/28] mm/damon/core: introduce damon_region->probe_hits
-Date: Sat, 16 May 2026 14:26:34 -0700
-Message-ID: <20260516212634.2945-1-sj@kernel.org>
+Subject: Re: [RFC PATCH v3 07/28] mm/damon/core: do data attributes monitoring
+Date: Sat, 16 May 2026 14:33:27 -0700
+Message-ID: <20260516213329.3083-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260516185436.1ECEFC19425@smtp.kernel.org>
+In-Reply-To: <20260516190011.77604C19425@smtp.kernel.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -42,88 +42,119 @@ List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On Sat, 16 May 2026 18:54:35 +0000 sashiko-bot@kernel.org wrote:
+On Sat, 16 May 2026 19:00:10 +0000 sashiko-bot@kernel.org wrote:
 
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [High] Data type overflow of `probe_hits` array due to 8-bit `unsigned char` limit.
-> - [High] Integer overflow in `probe_hits` weighted average calculation on 32-bit systems.
+> Thank you for your contribution! Sashiko AI review found 4 potential issue(s) to consider:
+> - [High] The `probe_hits` array counters can silently overflow, yielding corrupted monitoring results.
+> - [High] DAMON dynamically merges regions based strictly on `nr_accesses`, which corrupts the spatial granularity of `probe_hits`.
+> - [High] If DAMON is run without `check_accesses`, all regions will be aggressively merged up to `sz_limit`, neutralizing data attribute monitoring.
+> - [High] Size-weighted average calculations for `probe_hits` overflow `unsigned long` on 32-bit systems.
 > --
 > 
-> commit b34f3f1254d83e9491235fb4e8e097729be04e60
+> commit 55dcc5294b4ee96c9d7e5a24e9dcdb0d798c401d
 > Author: SeongJae Park <sj@kernel.org>
 > 
-> mm/damon/core: introduce damon_region->probe_hits
+> mm/damon/core: do data attributes monitoring
 > 
-> This commit adds a probe_hits array to the damon_region structure to track
-> the number of positive samples per region for each probe. It limits the
-> number of probes to a fixed maximum for a simpler implementation.
+> Implement the data attributes monitoring execution.  Update kdamond to
+> invoke the probes application callback, and reset the aggregated number
+> of per-region per-probe positive samples for every aggregation interval.
 > 
-> > diff --git a/include/linux/damon.h b/include/linux/damon.h
-> > index 32005b8b1f8cd..9e70239e5305f 100644
-> > --- a/include/linux/damon.h
-> > +++ b/include/linux/damon.h
-> [ ... ]
-> > @@ -80,6 +83,7 @@ struct damon_region {
-> >  	unsigned long sampling_addr;
-> >  	unsigned int nr_accesses;
-> >  	unsigned int nr_accesses_bp;
-> > +	unsigned char probe_hits[DAMON_MAX_PROBES];
-> 
-> Does probe_hits need a wider type to prevent wrapping around?
-> 
-> Since the number of samples in an aggregation interval is determined by
-> aggr_interval / sample_interval, user-configurable values could cause the
-> sample count to exceed the 8-bit limit of unsigned char (255). This might
-> lead to silently wrapped monitoring statistics.
-
-Yes, but such configurations may be rare, so no blocker.
-For more details, please read my previous reply [1] for same question.
-
-> 
-> >  	struct list_head list;
-> >  
-> >  	unsigned int age;
-> [ ... ]
 > > diff --git a/mm/damon/core.c b/mm/damon/core.c
-> > index 15f2795a1156f..e5667660b4cd9 100644
+> > index e5667660b4cd9..dde3c8d8fef89 100644
 > > --- a/mm/damon/core.c
 > > +++ b/mm/damon/core.c
-> [ ... ]
-> > @@ -2754,12 +2757,17 @@ static void damon_merge_two_regions(struct damon_target *t,
-> >  		struct damon_region *l, struct damon_region *r)
-> >  {
-> >  	unsigned long sz_l = damon_sz_region(l), sz_r = damon_sz_region(r);
-> > +	int i;
+> > @@ -1886,10 +1886,14 @@ static void kdamond_reset_aggregated(struct damon_ctx *c)
+> >  		struct damon_region *r;
 > >  
-> >  	l->nr_accesses = (l->nr_accesses * sz_l + r->nr_accesses * sz_r) /
-> >  			(sz_l + sz_r);
-> >  	l->nr_accesses_bp = l->nr_accesses * 10000;
-> >  	l->age = (l->age * sz_l + r->age * sz_r) / (sz_l + sz_r);
-> >  	l->ar.end = r->ar.end;
-> > +	/* todo: do this for only installed probes */
-> > +	for (i = 0; i < DAMON_MAX_PROBES; i++)
-> > +		l->probe_hits[i] = (l->probe_hits[i] * sz_l + r->probe_hits[i]
-> > +				* sz_r) / (sz_l + sz_r);
+> >  		damon_for_each_region(r, t) {
+> > +			int i;
+> > +
+> >  			trace_damon_aggregated(ti, r, damon_nr_regions(t));
+> >  			damon_warn_fix_nr_accesses_corruption(r);
+> >  			r->last_nr_accesses = r->nr_accesses;
+> >  			r->nr_accesses = 0;
+> > +			for (i = 0; i < DAMON_MAX_PROBES; i++)
+> > +				r->probe_hits[i] = 0;
 > 
-> Could this weighted average calculation overflow on 32-bit architectures?
+> Can probe_hits overflow here?
 > 
-> Both sz_l and sz_r are unsigned long, which is 32 bits on 32-bit systems.
-> If a region size is large (e.g., > 16.8MB) and probe_hits is up to 255,
-> multiplying them can exceed the 32-bit limit and wrap around, corrupting
-> the monitoring statistics.
+> The probe_hits array is defined as unsigned char, which has a maximum value
+> of 255.
 > 
-> It appears the nr_accesses calculation just above this has the exact same
-> flaw, and this patch propagates it to the new probe_hits array.
+> The number of samples per interval is user-configurable and can legitimately
+> exceed 255 (e.g., a 1000ms aggregation with a 1ms sample interval yields 1000
+> samples).
+> 
+> If a probe matches continuously under such configurations, could the counter
+> silently overflow and wrap around, corrupting the monitoring results?
 
-On 32bit systems, users could use the addr_unit to avoid this kind of issues.
-So no blocker.
+No blocker, as I previously explained [1].
+
+> 
+> >  			damon_verify_reset_aggregated(r, c);
+> >  		}
+> >  		ti++;
+> > @@ -3179,6 +3183,8 @@ static int kdamond_fn(void *data)
+> >  
+> >  		if (ctx->ops.check_accesses)
+> >  			max_nr_accesses = ctx->ops.check_accesses(ctx);
+> > +		if (ctx->ops.apply_probes)
+> > +			ctx->ops.apply_probes(ctx);
+> 
+> If DAMON is configured strictly for data attribute monitoring where
+> check_accesses is NULL but apply_probes is set, max_nr_accesses and all
+> regional nr_accesses persistently evaluate to 0.
+> 
+> Will this cause all adjacent regions to have a calculated difference
+> threshold of 0, resulting in all regions merging indiscriminately up to
+> sz_limit during the subsequent kdamond_merge_regions() call?
+> 
+> Additionally, damon_merge_regions_of() merges adjacent regions by evaluating
+> only nr_accesses:
+> 
+> abs(prev->nr_accesses - r->nr_accesses) <= thres
+> 
+> Since this merge condition ignores probe_hits, could two contiguous regions
+> with identical access frequencies but vastly different data attributes be
+> incorrectly merged?
+
+Correct, and that's the intended behavior.  Data attributes are just additional
+information.  Data access pattern, specifically nr_accesses, is the primary
+information that drives region splits and merges.  I'm planning to let users
+set the primary information in future, though.
+
+> 
+> Does calculating the size-weighted average for probe_hits risk overflowing on
+> 32-bit systems?
+> 
+> When damon_merge_two_regions() calculates averages using:
+> 
+> (metric * sz_l + metric * sz_r) / (sz_l + sz_r)
+> 
+> Both sz_l and sz_r are evaluated in bytes as unsigned long. On 32-bit
+> systems where ULONG_MAX is roughly 4 GB, a 200 MB region with 25 probe_hits
+> yields an intermediate product of 5,000,000,000.
+> 
+> Does this silently overflow the 32-bit unsigned long and corrupt the region
+> metrics?
+
+I previously answered [1] this.  32-bit arch users could use addr_unit to avoid
+this issue.
+
+> 
+> >  
+> >  		if (time_after_eq(ctx->passed_sample_intervals,
+> >  					next_aggregation_sis)) {
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260516183712.81393-1-sj@kernel.org?part=7
 
 [1] https://lore.kernel.org/20260516003559.141476-1-sj@kernel.org
 
 
 Thanks,
 SJ
-
-[...]
