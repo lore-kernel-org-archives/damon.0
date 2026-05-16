@@ -1,41 +1,51 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A71FF35DA46;
-	Sat, 16 May 2026 18:37:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 410BF33E368;
+	Sat, 16 May 2026 18:37:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778956652; cv=none; b=T9T9SVyozooOTSEBsH48lHn+7MEBbLzrMXC7MDSWXlBr/tyWHQS2CdQy6KHcTGamVNZka8qnvQz+2C7MwatoCIiek9C3yP27Nos9MmF+L+Pac6jaPm0Ne6+umlGDsSf4YQCazzU7VUfQzIpAecK3fYy1+kymQ3YxypILZrFAE7g=
+	t=1778956653; cv=none; b=UpzMsH1NrBGlw8e03LVZ4uo66iSQb4l+q2uQwebyzSl1WSnqMxHR9X7TyTsH/sx9YftTgbKaE3jVN3449+JO7SXgzMWc3xUvELVkjSMhrSJLgsEzwqwA+i2phaXUM9oidxxrg5dSIv9k64kCzr5zmwFYcfI2Bd4n4RQLWoS/c3k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778956652; c=relaxed/simple;
-	bh=Q1zGK+j0zRxUsiCpVVG1d65SmG54MWL9Bnun2Pc3YCE=;
+	s=arc-20240116; t=1778956653; c=relaxed/simple;
+	bh=jMwAnu4yT3RRMK4ipWWfT8kscfFZqP8KMamyoxvugWU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=olmsRtg9QT1CmzojHY6x2JGyG/CwaHYkpDkvOorYPzIFwiXdk9C3APRD4I2EPW9/ZElg9/g49UXV44qYWZBGgU3XjojYnH8RGuemV8zk0fuLr702qyvggC6IdzsN3DSAKyQ+x0B+VSi8AvsxJ0VUscRPcrWzngIgEAeWQLqi6cU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dgk4pAO0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=kkEf2v53uVe05Qmio5cjBfdwm31FFTlSerzsqrj8OfnWHU8SNvNEe/Hm8CT2V/tajuiMZ01hQoPAV5+H6/ba1EzvQprhF/S2H8w41VDiySHfvVIgSO0+xnyEKqcMQd1uRPNUd4Ymeq2NYecTILzut+Gea74ZPjhznQ5MDyCKLhk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=U3NGrnmz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dgk4pAO0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E24A1C2BCC9;
-	Sat, 16 May 2026 18:37:29 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="U3NGrnmz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BC85C2BCF7;
+	Sat, 16 May 2026 18:37:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778956650;
-	bh=Q1zGK+j0zRxUsiCpVVG1d65SmG54MWL9Bnun2Pc3YCE=;
+	s=k20201202; t=1778956652;
+	bh=jMwAnu4yT3RRMK4ipWWfT8kscfFZqP8KMamyoxvugWU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dgk4pAO0Tio/zVHiiJjeEDVPmohekNsu4jCaZFUkcKxwAiGeUCS1LpoSmZ4K20a6A
-	 vpmNETg0uEdXEsXiYlnkL+rrO6MuwEEZEG4jxUJgynoP1fuPD4ECVSuLHD47nKUg/i
-	 4r7I8zlWfuN+xrAOVIFRsQcAVIabQ+5JNmdR8lNdtbj9nmj9dyy9o4hnPMa1T0Z7wP
-	 p9BAHwg8XMp2Q+P76ecbC8o6P4ozTkETV3F8vOF8PeWPCJaqCROYFU2Hkz+sRP8jQ+
-	 sFEE8JOlEp7M2bVfgGzRI2KV9wHL/Q4mVsmINqp9bD+8ztFv+SnoLd9vpHnXUmhdPb
-	 jhkec0cKpP9yw==
+	b=U3NGrnmzTBKZP3uPO5ftowoJ2YeL8zy04LqawTayW5hWW5YxiDbdxqND/k8dkap/N
+	 y2ZVvxmupRBs74Bb7n4VpHOS5MPEtb0J/xW/ZaxW6oxsgifreh47SOcNaMM0V0HjYj
+	 HjJMtZC7XoQ4URHYuTOwsTJWT7SOAJfF/oJHojwj2x56rh6YDoXHUhMaJsOPJA8yDP
+	 6U9H7CSbFcrdVPKjchnvXuGw3dcZjUkRAwmdgsxTVZQoGPLc9TfM6uD/3tyAoN91Fj
+	 862jeQ3szKe9LTTK8o2/V6zaLoZNiSIIwJxo1HTpJJlwqNAP6wVEPBsozmn7X+v4eY
+	 Nq4NOrxL4bpkg==
 From: SeongJae Park <sj@kernel.org>
 To: 
 Cc: SeongJae Park <sj@kernel.org>,
+	"Liam R. Howlett" <liam@infradead.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
+	David Hildenbrand <david@kernel.org>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@kernel.org>,
 	damon@lists.linux.dev,
+	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH v3 16/28] mm/damon/sysfs-schemes: implement probe dir
-Date: Sat, 16 May 2026 11:36:57 -0700
-Message-ID: <20260516183712.81393-17-sj@kernel.org>
+Subject: [RFC PATCH v3 21/28] Docs/admin-guide/mm/damon/usage: document data attributes monitoring
+Date: Sat, 16 May 2026 11:37:02 -0700
+Message-ID: <20260516183712.81393-22-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260516183712.81393-1-sj@kernel.org>
 References: <20260516183712.81393-1-sj@kernel.org>
@@ -45,169 +55,116 @@ List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Implement sysfs directory for showing per-probe hits count of each
-region.
+Update DAMON usage document for the newly added data attributes
+monitoring feature.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- mm/damon/sysfs-schemes.c | 101 ++++++++++++++++++++++++++++++++++++---
- 1 file changed, 95 insertions(+), 6 deletions(-)
+ Documentation/admin-guide/mm/damon/usage.rst | 44 ++++++++++++++++++--
+ Documentation/mm/damon/design.rst            |  2 +
+ 2 files changed, 43 insertions(+), 3 deletions(-)
 
-diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
-index 8998df5bdc5c8..c8123c62bbd48 100644
---- a/mm/damon/sysfs-schemes.c
-+++ b/mm/damon/sysfs-schemes.c
-@@ -10,12 +10,40 @@
+diff --git a/Documentation/admin-guide/mm/damon/usage.rst b/Documentation/admin-guide/mm/damon/usage.rst
+index 534e1199cf091..7b6074a1666f3 100644
+--- a/Documentation/admin-guide/mm/damon/usage.rst
++++ b/Documentation/admin-guide/mm/damon/usage.rst
+@@ -71,6 +71,11 @@ comma (",").
+     │ │ │ │ │ │ intervals/sample_us,aggr_us,update_us
+     │ │ │ │ │ │ │ intervals_goal/access_bp,aggrs,min_sample_us,max_sample_us
+     │ │ │ │ │ │ nr_regions/min,max
++    │ │ │ │ │ │ :ref:`probes <damon_usage_sysfs_probes>`/nr_probes
++    │ │ │ │ │ │ │ 0/filters/nr_filters
++    │ │ │ │ │ │ │ │ 0/type,matching,allow
++    │ │ │ │ │ │ │ │ ...
++    │ │ │ │ │ │ │ ...
+     │ │ │ │ │ :ref:`targets <sysfs_targets>`/nr_targets
+     │ │ │ │ │ │ :ref:`0 <sysfs_target>`/pid_target,obsolete_target
+     │ │ │ │ │ │ │ :ref:`regions <sysfs_regions>`/nr_regions
+@@ -95,6 +100,9 @@ comma (",").
+     │ │ │ │ │ │ │ :ref:`stats <sysfs_schemes_stats>`/nr_tried,sz_tried,nr_applied,sz_applied,sz_ops_filter_passed,qt_exceeds,nr_snapshots,max_nr_snapshots
+     │ │ │ │ │ │ │ :ref:`tried_regions <sysfs_schemes_tried_regions>`/total_bytes
+     │ │ │ │ │ │ │ │ 0/start,end,nr_accesses,age,sz_filter_passed
++    │ │ │ │ │ │ │ │ │ probes
++    │ │ │ │ │ │ │ │ │ │ 0/hits
++    │ │ │ │ │ │ │ │ │ │ ...
+     │ │ │ │ │ │ │ │ ...
+     │ │ │ │ │ │ ...
+     │ │ │ │ ...
+@@ -221,8 +229,8 @@ contexts/<N>/monitoring_attrs/
  
- #include "sysfs-common.h"
+ Files for specifying attributes of the monitoring including required quality
+ and efficiency of the monitoring are in ``monitoring_attrs`` directory.
+-Specifically, two directories, ``intervals`` and ``nr_regions`` exist in this
+-directory.
++Specifically, three directories, ``intervals``, ``nr_regions`` and ``probes``
++exist in this directory.
  
-+/*
-+ * probe directory
-+ */
-+
-+struct damos_sysfs_probe {
-+	struct kobject kobj;
-+};
-+
-+static struct damos_sysfs_probe *damos_sysfs_probe_alloc(void)
-+{
-+	return kzalloc_obj(struct damos_sysfs_probe);
-+}
-+
-+static void damos_sysfs_probe_release(struct kobject *kobj)
-+{
-+	struct damos_sysfs_probe *probe = container_of(kobj,
-+			struct damos_sysfs_probe, kobj);
-+
-+	kfree(probe);
-+}
-+
-+static const struct kobj_type damos_sysfs_probe_ktype = {
-+	.release = damos_sysfs_probe_release,
-+	.sysfs_ops = &kobj_sysfs_ops,
-+};
-+
- /*
-  * probes directory
-  */
+ Under ``intervals`` directory, three files for DAMON's sampling interval
+ (``sample_us``), aggregation interval (``aggr_us``), and update interval
+@@ -256,6 +264,27 @@ tuning-applied current values of the two intervals can be read from the
+ ``sample_us`` and ``aggr_us`` files after writing ``update_tuned_intervals`` to
+ the ``state`` file.
  
- struct damos_sysfs_probes {
- 	struct kobject kobj;
-+	struct damos_sysfs_probe **probes_arr;
-+	int nr;
- };
++.. _damon_usage_sysfs_probes:
++
++contexts/<N>/monitoring_attrs/probes/
++-------------------------------------
++
++A directory for registering :ref:`data attributes monitoring
++<damon_design_data_attrs_monitoring>` probes.
++
++In the beginning, this directory has only one file, ``nr_probes``.  Writing a
++number (``N``) to the file creates the number of child directories named ``0``
++to ``N-1``.  Each directory represents each monitoring probe.
++
++In each probe directory, one directory, ``filters`` exists.  The directory
++contains files for installing filters for the probe, that is used to determine
++the data attribute for the probe.
++
++In the beginning, ``filters`` directory has only one file, ``nr_filters``.
++Writing a number (``N``) to the file creates the number of child directories
++named ``0`` to ``N-1``.  Each directory represents each filter and works in a
++way similar to that for :ref:`DAMOS filter <sysfs_filters>`.
++
+ .. _sysfs_targets:
  
- static struct damos_sysfs_probes *damos_sysfs_probes_alloc(void)
-@@ -23,6 +51,60 @@ static struct damos_sysfs_probes *damos_sysfs_probes_alloc(void)
- 	return kzalloc_obj(struct damos_sysfs_probes);
- }
+ contexts/<N>/targets/
+@@ -601,10 +630,19 @@ tried_regions/<N>/
+ ------------------
  
-+static void damos_sysfs_probes_rm_dirs(struct damos_sysfs_probes *probes)
-+{
-+	struct damos_sysfs_probe **probes_arr = probes->probes_arr;
-+	int i;
-+
-+	for (i = 0; i < probes->nr; i++)
-+		kobject_put(&probes_arr[i]->kobj);
-+	probes->nr = 0;
-+	kfree(probes_arr);
-+	probes->probes_arr = NULL;
-+}
-+
-+static int damos_sysfs_probes_add_dirs(struct damos_sysfs_probes *probes,
-+		struct damon_ctx *ctx)
-+{
-+	struct damon_probe *probe;
-+	struct damos_sysfs_probe **probes_arr;
-+	int i = 0;
-+
-+	damon_for_each_probe(probe, ctx)
-+		i++;
-+
-+	if (!i)
-+		return 0;
-+
-+	probes_arr = kmalloc_objs(*probes_arr, i);
-+	if (!probes_arr)
-+		return -ENOMEM;
-+	probes->probes_arr = probes_arr;
-+
-+	i = 0;
-+	damon_for_each_probe(probe, ctx) {
-+		struct damos_sysfs_probe *sys_probe;
-+		int err;
-+
-+		sys_probe = damos_sysfs_probe_alloc();
-+		if (!sys_probe) {
-+			damos_sysfs_probes_rm_dirs(probes);
-+			return -ENOMEM;
-+		}
-+		err = kobject_init_and_add(&sys_probe->kobj,
-+				&damos_sysfs_probe_ktype, &probes->kobj, "%d",
-+				i);
-+		if (err) {
-+			kobject_put(&sys_probe->kobj);
-+			damos_sysfs_probes_rm_dirs(probes);
-+			return err;
-+		}
-+		probes_arr[i++] = sys_probe;
-+		probes->nr++;
-+	}
-+	return 0;
-+}
-+
- static void damos_sysfs_probes_release(struct kobject *kobj)
- {
- 	struct damos_sysfs_probes *probes = container_of(kobj,
-@@ -67,7 +149,8 @@ static struct damon_sysfs_scheme_region *damon_sysfs_scheme_region_alloc(
- }
+ In each region directory, you will find five files (``start``, ``end``,
+-``nr_accesses``, ``age``, and ``sz_filter_passed``).  Reading the files will
++``nr_accesses``, ``age`` and ``sz_filter_passed``).  Reading the files will
+ show the properties of the region that corresponding DAMON-based operation
+ scheme ``action`` has tried to be applied.
  
- static int damos_sysfs_region_add_dirs(
--		struct damon_sysfs_scheme_region *region)
-+		struct damon_sysfs_scheme_region *region,
-+		struct damon_ctx *ctx)
- {
- 	struct damos_sysfs_probes *probes = damos_sysfs_probes_alloc();
- 	int err;
-@@ -76,18 +159,24 @@ static int damos_sysfs_region_add_dirs(
- 		return -ENOMEM;
- 	err = kobject_init_and_add(&probes->kobj, &damos_sysfs_probes_ktype,
- 			&region->kobj, "probes");
--	if (err) {
--		kobject_put(&probes->kobj);
--		return err;
--	}
-+	if (err)
-+		goto fail;
-+	err = damos_sysfs_probes_add_dirs(probes, ctx);
-+	if (err)
-+		goto fail;
- 
- 	region->probes = probes;
- 	return 0;
++tried_regions/<N>/probes/
++-------------------------
 +
-+fail:
-+	kobject_put(&probes->kobj);
-+	return err;
- }
++In each region directory, one directory (``probes``) also exists.  In the
++directory, subdirectories named ``0`` to ``N-1`` exists.  ``N`` is the number
++of installed probes.  In each number-named directory, a file (``hits``) exist.
++Reading the file shows the number of data attributes monitoring probe-hit
++positive samples of the region.
++
+ Example
+ ~~~~~~~
  
- static void damos_sysfs_region_rm_dirs(
- 		struct damon_sysfs_scheme_region *region)
- {
-+	damos_sysfs_probes_rm_dirs(region->probes);
- 	kobject_put(&region->probes->kobj);
- }
+diff --git a/Documentation/mm/damon/design.rst b/Documentation/mm/damon/design.rst
+index aa08c899a3e5b..85d668e929194 100644
+--- a/Documentation/mm/damon/design.rst
++++ b/Documentation/mm/damon/design.rst
+@@ -269,6 +269,8 @@ interval``, DAMON checks if the region's size and access frequency
+ (``nr_accesses``) has significantly changed.  If so, the counter is reset to
+ zero.  Otherwise, the counter is increased.
  
-@@ -2986,7 +3075,7 @@ void damos_sysfs_populate_region_dir(struct damon_sysfs_schemes *sysfs_schemes,
- 				&sysfs_regions->kobj, "%d",
- 				sysfs_regions->nr_regions++))
- 		goto out;
--	if (damos_sysfs_region_add_dirs(region))
-+	if (damos_sysfs_region_add_dirs(region, ctx))
- 		goto out;
++.. _damon_design_data_attrs_monitoring:
++
+ Data Attributes Monitoring
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~
  
- 	list_add_tail(&region->list, &sysfs_regions->regions_list);
 -- 
 2.47.3
