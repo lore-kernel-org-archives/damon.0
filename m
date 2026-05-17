@@ -1,40 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D77B305672
-	for <damon@lists.linux.dev>; Sun, 17 May 2026 20:58:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 838611F4176;
+	Sun, 17 May 2026 23:38:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779051515; cv=none; b=K/kLLsMEBKUxcCd4yITPVJJNSLMAmuk58f2r6lupXb3qWx0h3T9+evXkBpqgtE4DtK8uC5dZkOylnPyPy56Vey2WtTLcCpjxsmJhHYRpQr9oqnD9oM0uPOGQmgMHPzkpdYBspBSK9R4l6fV1Gm3Yaavl5QlwKlmK25AvjzFnm04=
+	t=1779061084; cv=none; b=ZqL3bolNiMk8CawQFP7nnbwYTXAI9riNIMvnTxYR5TsASWIG1aowQDF45txev7NgoqVoC5oY+cE/N244eAmyhBIfvORgDTmFhWuP85VzvfaYB/7+sylHxTEJKB6lMgqsk1qrzGJzPWJZaRrOXiCrNnCpmczmugrlYkkRk1mcxK0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779051515; c=relaxed/simple;
-	bh=7rE/MAFE5pbqBil+terujO0QdpjvYWmjeILCUTD5w6M=;
+	s=arc-20240116; t=1779061084; c=relaxed/simple;
+	bh=ECiqAt9xoPWZmUznHtBSPzT0B3FSpo2D0BKG4KeiTuA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=p91rdavJ3RfVi0yYXdPrpPms0Pom+BSOjZGEJDITxxWVJu37gSIEPaHyjp2qtlUFZNHnUmiW5eacf+CnYkZgUsWFzEM34BjAJYW0H7BN5ZlMEZYtHczxA/+/6uU6j2WRQ6kQFCqVwsZjX4b4ZpZo0w2fXvgIm/Il17CWdybR4ZI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Tfncnkf1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ApXjPAU45SbW9uBHQyYcjCVwE5XgcCty3MBhtmN3V9v+2Od489lJFgvCIzA8V1VKa3nzSlc+YKS/SDccsU2A+ifGdetmAi4cyYsBMNlQILMdIwuIkTGNo7mJjPnwEfu08Tp3b/z39mxQiLh92flQ3Fzy+Ixz5r4sVLA1/P00oOI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bQTWjja0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Tfncnkf1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1569CC2BCB8;
-	Sun, 17 May 2026 20:58:35 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bQTWjja0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B52B2C2BCB0;
+	Sun, 17 May 2026 23:38:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1779051515;
-	bh=7rE/MAFE5pbqBil+terujO0QdpjvYWmjeILCUTD5w6M=;
+	s=k20201202; t=1779061084;
+	bh=ECiqAt9xoPWZmUznHtBSPzT0B3FSpo2D0BKG4KeiTuA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Tfncnkf1Z5Xi3ZE5ZdtT94t3OUKHSNGEugrLzlOmJoV3FOWCrQ884pinhK/Thu121
-	 CVpyx2LSddYfTvAF6MH/WMh2RgMx/csW0IBkRgpcj3WQ2ujHDPQdcvs9tICDPQpZBw
-	 XLkhODr+41lbhDcQJ1HurkCjkDCS/na6phsM7g/Ea3M3aWLxhuf5ENZMP+xQoRzajs
-	 1HIR9IhUCDCqVkVbFuSeWCQQN+pIT+bjiFXrpGTiiBL7y0+RjqPAOgt/rAUaYHohwB
-	 Lddq4tuFiYdhURqlonA4Nb/KoJ+89jKSbHeqhY1S1pqGqRYdD93HWXs4yhMAh3+fxy
-	 ZBhwesmWUuwBw==
+	b=bQTWjja0ecUoGO/loHB3HhbJeqUM/pZzgcF12hl02M8frXScwwP2R3fvZfIrbkdwF
+	 iDUW4Zb6oB41e7IHxI/Dn/5z8SBIh4UbpdiqYefz6C6paU/SYs24GavAgv1VLBUNdR
+	 oBtM6BuMdWrvCUnD3zisuSWe6UVPhuZGazjx442tV+WPOGfTpmgzSSQRUKKLdRVsgd
+	 QDZhxIwKaV8756gBdX3zfqMQZIdieIHC80nQlZmHRlM0mx0yNLSOp580WbcXit53sG
+	 S9eMmLoK37dsUh/u5pDZMQXS3/PnXylV2NEhW/zbS7jjFEUlqq8f6WemOC5SkdmDcc
+	 UnTqcXvNjeWTw==
 From: SeongJae Park <sj@kernel.org>
-To: sashiko-bot@kernel.org
+To: Ravi Jonnalagadda <ravis.opensrc@gmail.com>
 Cc: SeongJae Park <sj@kernel.org>,
-	damon@lists.linux.dev
-Subject: Re: [RFC PATCH v2.1] mm/damon/sysfs-schemes: delete tried region in regions_rmdirs()
-Date: Sun, 17 May 2026 13:58:26 -0700
-Message-ID: <20260517205828.6204-1-sj@kernel.org>
+	damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org,
+	linux-doc@vger.kernel.org,
+	akpm@linux-foundation.org,
+	corbet@lwn.net,
+	bijan311@gmail.com,
+	ajayjoshi@micron.com,
+	honggyu.kim@sk.com,
+	yunjeong.mun@sk.com
+Subject: Re: [RFC PATCH 4/5] mm/damon/paddr: skip free pageblocks in migration walk
+Date: Sun, 17 May 2026 16:37:55 -0700
+Message-ID: <20260517233756.89097-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260517182750.8F52FC2BCB8@smtp.kernel.org>
+In-Reply-To: <20260516210357.2247-5-ravis.opensrc@gmail.com>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -42,100 +51,55 @@ List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On Sun, 17 May 2026 18:27:49 +0000 sashiko-bot@kernel.org wrote:
+On Sat, 16 May 2026 14:03:56 -0700 Ravi Jonnalagadda <ravis.opensrc@gmail.com> wrote:
 
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [High] Moving the `sz_filter_passed` assignment to after `kobject_init_and_add()` exposes uninitialized kernel heap memory to user space.
-> - [High] Relying solely on `kobject_put()` to remove directories from sysfs leaves directories visible if references are held.
-> --
-> 
-> commit eda0f7269f695739057cee7bd02d81742d566163
-> Author: SeongJae Park <sj@kernel.org>
-> 
-> mm/damon/sysfs-schemes: delete tried region in regions_rmdirs()
-> 
-> This commit updates DAMON sysfs to remove region objects from the linked list
-> immediately before decrementing the kobject reference count to prevent
-> use-after-free races. It also modifies region population to only add the
-> region to the list after a successful kobject initialization.
-> 
-> Link: https://lore.kernel.org/20260513011920.119183-1-sj@kernel.org
-> 
-> > diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
-> > --- a/mm/damon/sysfs-schemes.c
-> > +++ b/mm/damon/sysfs-schemes.c
-> > @@ -163,7 +163,7 @@ static void damon_sysfs_scheme_regions_rm_dirs(
-> >  	struct damon_sysfs_scheme_region *r, *next;
-> >  
-> >  	list_for_each_entry_safe(r, next, &regions->regions_list, list) {
-> > -		/* release function deletes it from the list */
-> > +		list_del(&r->list);
-> >  		kobject_put(&r->kobj);
-> 
-> This is not a new regression, but does relying solely on kobject_put() to
-> remove directories from sysfs leave them visible if references are still
-> held?
-> 
-> If an elevated reference count exists, such as a process having an open file
-> descriptor to a sysfs attribute, the kobject is not immediately released and
-> kobject_del() is delayed.
-> 
-> Could this leave the old region directory accessible in sysfs indefinitely,
-> causing stale directories to accumulate alongside new ones? Should
-> kobject_del(&r->kobj) be called explicitly before kobject_put() to cleanly
-> and synchronously remove the directory?
+> damon_pa_migrate() walks every PFN in a region linearly, calling
+> damon_get_folio() for each one.  On sparse physical address spaces
+> (e.g., CXL-attached memory), a single DAMON region can span hundreds
+> of gigabytes where most memory is free and sitting in the buddy
+> allocator.  Most page lookups are fruitless and dominate kdamond
+> tick time.
 
-Makes sense, I will work on this.  Not a blocker of this patch, as Sashiko also
-mentioned, though.
+On sparse address spaces, the problem would be large DAMON regions of offlined
+memory.  The large DAMON regions that nearly all freed memory is another
+problem that doesn't require the sparse address spaces.  If I'm not wrong, the
+above paragraph could better clarified in my opinion.
 
 > 
-> >  		regions->nr_regions--;
-> >  	}
+> Check at pageblock boundaries (2MB on x86_64) whether the block is
+> entirely free.  If the first page of a pageblock is a buddy page at
+> pageblock_order or higher, the entire block is free and can be
+> skipped.
+> Similarly skip pageblocks where pfn_to_online_page() returns
+> NULL.
 > 
-> [ ... ]
+> This reduces the iteration from O(region_sz / PAGE_SIZE) to
+> O(region_sz / pageblock_sz) + O(populated_pages).
 > 
-> > @@ -2925,15 +2925,16 @@ void damos_sysfs_populate_region_dir(struct damon_sysfs_schemes *sysfs_schemes,
-> >  	region = damon_sysfs_scheme_region_alloc(r);
-> >  	if (!region)
-> >  		return;
-> > -	region->sz_filter_passed = sz_filter_passed;
-> > -	list_add_tail(&region->list, &sysfs_regions->regions_list);
-> > -	sysfs_regions->nr_regions++;
-> >  	if (kobject_init_and_add(&region->kobj,
-> >  				&damon_sysfs_scheme_region_ktype,
-> >  				&sysfs_regions->kobj, "%d",
-> >  				sysfs_regions->nr_regions++)) {
-> >  		kobject_put(&region->kobj);
-> > +		return;
-> >  	}
-> > +	region->sz_filter_passed = sz_filter_passed;
-> 
-> Could moving the sz_filter_passed assignment after kobject_init_and_add()
-> expose uninitialized memory to user space?
-> 
-> If the region object is allocated without zeroing the memory, calling
-> kobject_init_and_add() makes the region's kobject immediately visible in
-> sysfs.
-> 
-> If a concurrent read to the sz_filter_passed sysfs attribute occurs during
-> this window, could it read the field without locking and leak uninitialized
-> kernel heap memory to user space? Should the assignment occur before the
-> kobject is registered?
+> buddy_order_unsafe() is used without zone->lock.  A transient false
+> positive (block becomes non-free between the PageBuddy and order
+> checks) costs at most one tick of missed candidates on that block;
+> the next tick re-scans.  No correctness consequence as DAMON walks
+> are best-effort.
 
-Good finding.  I will set sz_filter_passed before kobject_init_and_add() in the
-next version.
+I was initially thinking this is a good and reasonable optimization approach.
+But on the second thought I get below questions.
 
-> 
-> > +	list_add_tail(&region->list, &sysfs_regions->regions_list);
-> > +	sysfs_regions->nr_regions++;
-> >  }
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260517175915.3352-1-sj@kernel.org?part=1
+For large offlined memory space problem, couldn't we simply tune DAMON's
+monitoring regions boundary to ignore the holes?
+
+For large free memory area, is it reasonable to assume such situations?  In
+production, users will try to utilize as much memory of the system as possible.
+Then, wouldn't there be such problematically large free memory area?
+
+Could you please enlighten me?
+
+I will hold digging deep until this high level questions are answered.
 
 
 Thanks,
 SJ
+
+[...]
