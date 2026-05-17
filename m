@@ -1,30 +1,29 @@
-Received: from outbound.st.icloud.com (p-east2-cluster5-host6-snip4-5.eps.apple.com [57.103.79.98])
+Received: from outbound.st.icloud.com (p-east2-cluster2-host1-snip4-10.eps.apple.com [57.103.78.13])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0F091AA797
-	for <damon@lists.linux.dev>; Sun, 17 May 2026 01:02:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=57.103.79.98
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FA1A4502F
+	for <damon@lists.linux.dev>; Sun, 17 May 2026 07:35:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=57.103.78.13
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778979752; cv=none; b=FDcEKBee3eWWg/hMjvLmLJc63+kx/n0voh7yT281fd7PonBTwu3MjzZq4IR0LJZbtM78Vf50IqEzS+gJekFxB3oGlbhth2jziQPw1VFqSULN1CkD7q3IgEL3Vw4EJTEMtH5Y9u7bmjosz6I5chrEUuVWyQigsHfoh1kj3CaljRg=
+	t=1779003305; cv=none; b=hQFdU9swdz+v4lXxC38XmlcpneLNmgqyg+6nYbUUaZq+jrC3dbRRZGC6PjRTkfinhqQHF9N6PtBxJ1mOxUCgrO9mJa4+/3ApZTACEB4DGidjZqI7+qMxVmPpjE6SUnrhMdT93Zmt61gQGJy2cVtjmDGN1TO/pe9vXxs5m2jL9mk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778979752; c=relaxed/simple;
+	s=arc-20240116; t=1779003305; c=relaxed/simple;
 	bh=QtHMk6BEzWZrpTUCQwXKVSHqPCVL7aj+to4MhpXuRFY=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CZG+Aeb2wD13RUvwzN9lxskWt58f9TelGznyt6lRNVn8qh+JMpUUJ/ToicKMsxfMxKPK6S1KjFfbhh+zGS04vqItLZEDpqzCUBPc1KJM9TTXdN+g+kWfYhGWwtaBx3gmLcOWLF0Syc6+0M4YXXpRNO17TGIW+QOXN+0VKaNyXgg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=icloud.com; spf=pass smtp.mailfrom=icloud.com; dkim=pass (2048-bit key) header.d=icloud.com header.i=@icloud.com header.b=Bgdpwqtn; arc=none smtp.client-ip=57.103.79.98
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=rk8Sn7dqBJTY+81hm55JlgeLccHCXme7VgO66dCf84dLRHwtXBkVRgnrMrsurQJ5C4M0Mw1apUlOsOUM2pisO88dQ/geZxHKNnV4sdIVEMq6xAe6DrHAQloIqMfB/wYUe5/EvHZ5AMlgiztQeDlap/d2v5ho3wXksJHo/tN61I8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=icloud.com; spf=pass smtp.mailfrom=icloud.com; dkim=pass (2048-bit key) header.d=icloud.com header.i=@icloud.com header.b=G7vjuzU/; arc=none smtp.client-ip=57.103.78.13
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=icloud.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=icloud.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=icloud.com header.i=@icloud.com header.b="Bgdpwqtn"
+	dkim=pass (2048-bit key) header.d=icloud.com header.i=@icloud.com header.b="G7vjuzU/"
 Received: from outbound.st.icloud.com (unknown [127.0.0.2])
-	by p00-icloudmta-asmtp-us-east-1a-100-percent-9 (Postfix) with ESMTPS id AFB2D18000A8;
-	Sun, 17 May 2026 01:02:26 +0000 (UTC)
-X-ICL-Out-Info: HUtFAUMEWwJACUgBTUQeDx5WFlZNRAJCTQhKBUMDRQBBCFYBWANLVxQEC0AFBlgARnkRUAFYHlZeWhdeTVEPDwNKEAJeBV1yGVoUXBhTRVEfVFhBDgpaBFBRHV8CCgRHBFsXRgNTRUEEFxFQAVgeVl5aF15NRx9ATWJJAVoZWxxAF0puTVMPDxlaFFwYU0VRH1RYXgRTVg5CCUoFXQJaBUAISAFdBUUDRAtKCkAGRkEDUUkAXwErWxNVF0YJGQhdHQdYRxRHDg8ZWhRcGFM=
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=icloud.com; s=1a1hai; t=1778979750; x=1781571750; bh=KZvJZ6sA8BqOCSFmfh6e6tNl4NE226dSLmvr6UFm2Fs=; h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme; b=BgdpwqtnKYIDnhy/U6B5W2QGX4O4En3K+2N/ptpstJ9QR2KL20o4zhKCEcHDDOWeNmfzc1jcUUQbksdWNDcctuBhc/1oC9gaZO6HnrfleWNSPC08au8jg2c0RAznwSHFu8nWNzsJl23jD01Cb8tfWDQ8IaPalCMICe714P3SLAlatNWJ/a3bpNxQCwsS7O7k+FgK07S/lq0+XzRFiMcerlWSjMeN3LtiQQvg1XzVOY0/ZH6H4S2PfsbSXxkzcBufJ+hyJZhzzAB4+Q6CQ+37wCeD+MjZs3ExbdNczo45LOtBDEufv5g6/hSJDxtViHPQuspfG0Imyu3zTlMnls1b/g==
+	by p00-icloudmta-asmtp-us-east-1a-100-percent-1 (Postfix) with ESMTPS id 4709618000CF;
+	Sun, 17 May 2026 07:35:01 +0000 (UTC)
+X-ICL-Out-Info: HUtFAUMEWwJACUgBTUQeDx5WFlZNRAJCTQhKBUMDRQBBCFYBWANLVxQEC0AFBlgARnkRUAFYHlZeWhdeTVEPDwNKEAJeBV1yGVoUXBhTRVEfVFhBDgpaBFBRHV8CCgRHBFsXRgNTRUEEFxFQAVgeVl5aF15NRx9ATWJJAVoZWxxAF0puTVMPDxlaFFwYU0VRH1RYXgRTVg5CCUoFXQJaBUAOSwdeBEUBQAhNHlwaGEEYCEsBW3cCURxWDVdDVARfThkMSh1SVlsTVRdGCQ==
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=icloud.com; s=1a1hai; t=1779003302; x=1781595302; bh=KZvJZ6sA8BqOCSFmfh6e6tNl4NE226dSLmvr6UFm2Fs=; h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme; b=G7vjuzU/6HgOQQbCiaECZ8pNmlTN7KCrEhYqEDWRlK0Ot63PM2g+8ygdPBS7NH0K8CdBAgH1AJ0uCw6ys9Xk3qPvZn9O1Yi/IDYx4mJf8w+IncikiKMJ28/uoRPvmrP8sHRIZojpzuO1uymIW3/YAQmj+U+gbnMbCJCin29pjG3VQtNYWd0oFQ/9dGg3fMTaycOJTJQDzNRPk0E83TrcQAvoBtVR5xQMQEe6d3M3zsFAHswvQ5miKjXSkN7iRu2G9/cQp/H7Fp17GTkFT2MNfpFmzOCRXJKshS7CNWWxqrSYrlKSw+Bja8NGcTcr67psiw5M0CKZYi3UYRNcpATaUw==
 mail-alias-created-date: 1778972301885
 Received: from localhost.localdomain (unknown [17.42.251.67])
-	by p00-icloudmta-asmtp-us-east-1a-100-percent-9 (Postfix) with ESMTPSA id 698EF1800146;
-	Sun, 17 May 2026 01:02:22 +0000 (UTC)
+	by p00-icloudmta-asmtp-us-east-1a-100-percent-1 (Postfix) with ESMTPSA id 428301800302;
+	Sun, 17 May 2026 07:34:57 +0000 (UTC)
 From: Sakurai Shun <ssh1326@icloud.com>
 To: SeongJae Park <sj@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
@@ -42,12 +41,10 @@ Cc: Sakurai Shun <ssh1326@icloud.com>,
 	linux-mm@kvack.org,
 	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH v2] docs: fix typos in design.rst
-Date: Sun, 17 May 2026 10:02:00 +0900
-Message-ID: <20260517010202.14229-1-ssh1326@icloud.com>
+Subject: [PATCH v2 RESEND] design: fix typos in design.rst
+Date: Sun, 17 May 2026 16:34:26 +0900
+Message-ID: <20260517073433.3015-1-ssh1326@icloud.com>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260516170847.146524-1-sj@kernel.org>
-References: <20260516170847.146524-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -55,19 +52,19 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: RzyQ07uK6sRGQGqmE1AXpUZWNipFyCnm
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTE3MDAwOCBTYWx0ZWRfXzqH9oquXREoN
- b6SLt0Bu5KTSDylCqPBHENuyxbEeAOCmvboxbMvwF7N6gDbdYKLlWZ5l9R4U8eos9mr3silBiN7
- Ctt5ZQyeAOCqQOvgVGp11q/UAUbGI7liXXE8W/gKDmONyUEvtQvg2aF5Rtrr0GQS0JmNaKqwV5e
- tBtKH7GyHe3l6ZKMc2F6qARVnJJQkIGMIa7Emp6AFiukuTp44l1glfMpNCVg5/KJEctveAeFlBW
- 16POtcNZ3VTX7e5UDz5cppqobq7lVii58G8E+NoC++z8U303YZtkrlssVyG1xyRub9sngD1e5FE
- D7RTMP7gRHA6vAwzMW+fOyDIKCe9HwIHjr7UnarWhfu2euM0wibFvHRY7dmimY=
-X-Authority-Info-Out: v=2.4 cv=FssIPmrq c=1 sm=1 tr=0 ts=6a0913a4
+X-Proofpoint-ORIG-GUID: Gu3jiF3L1FKapOQU1W16M9Hnzjx67DJx
+X-Proofpoint-GUID: Gu3jiF3L1FKapOQU1W16M9Hnzjx67DJx
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTE3MDA3OCBTYWx0ZWRfX5a2mqMHFYyPe
+ JbrDuHWXfmYopx6ty+qt2kqc0lvIlqxSjkZWfcAXImEmj6aPHQvEDfHTyCRtlMrPfcmXnlea8z8
+ HXmoi80TEs/9nLOYAL0U4DPXU9zQsg9bkmzK9s00OlBkRIPfc6QT7+kGRcttv/LWUgPHfXQERQP
+ qY78tEuS2fk5I+KXGozOM7zzo4iN+mYbdk1d/kOq5GUW8Jy8gwjGmh4bJP4sJDtS+b4P4dGFOg0
+ tKrfqng0qAwrpfXyO8dYQp+jjxt/eFP18EptuuDMXVP1HO5+WuBItdxt71BMjIo+t+eTCTA196I
+ ygawgfNXbvEc5NyWjEEctDFGG28eyYAcaCAzeYGsojHvpKISvHoj1sg9Vxz5xM=
+X-Authority-Info-Out: v=2.4 cv=Wtgm8Nfv c=1 sm=1 tr=0 ts=6a096fa5
  cx=c_apl:c_pps:t_out a=YrL12D//S6tul8v/L+6tKg==:117
  a=YrL12D//S6tul8v/L+6tKg==:17 a=NGcC8JguVDcA:10 a=x7bEGLp0ZPQA:10
  a=ZxuoajvSgW0A:10 a=VkNPw1HP01LnGYTKEx00:22 a=v3ZZPjhaAAAA:8
- a=_08Xcmskz7rbIMj_RqsA:9 a=IxSG75etxsVYPPdR13TJ:22 a=STymlzgejnUetJ8yQWeq:22
-X-Proofpoint-ORIG-GUID: RzyQ07uK6sRGQGqmE1AXpUZWNipFyCnm
+ a=_08Xcmskz7rbIMj_RqsA:9 a=IxSG75etxsVYPPdR13TJ:22 a=lOdrInXjANxufYs0I0OZ:22
 X-Apple-Category-Label: MjE0Nzk4NjU5NzY6JGNhdGVnb3J5JF9QZXJzb25hbCw=
 
 L140: "unsinged" -> "unsigned"
