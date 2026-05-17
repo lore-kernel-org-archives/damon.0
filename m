@@ -1,80 +1,139 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE5B68287E;
-	Sun, 17 May 2026 08:45:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD0383BE645;
+	Sun, 17 May 2026 17:26:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779007535; cv=none; b=ZiPiYuyGReiAfucE+6xxb3uEvaeNQe5WPKJBvNYRI5LaVIv8s0cVRrQdO0hXwZuOS8PunxjzP7/Dm6m0CykavKIhB7YDjotcjmKFfJ/T4n0r40XOIm2aHkCJmRsEiKRAeOddeqPl6ESNWRerakpKAozDYrsMDDhU0UuBx63vXLE=
+	t=1779038790; cv=none; b=CJERXr/fU9s6uQP58pCuOA99qyHAKS1COxaj4u1l1Glpd29H/o788xtRL2Jy185RFqhfn4tnKaAqpuvQMZI0SAZ9nIKN5WPt8pKDeJPz0yfoLiBry6sW0fMXPU7SnUlv0lGocE8iJe6BXHfBsRSo/BH090uSFt+AEP41mVcXGE0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779007535; c=relaxed/simple;
-	bh=LVzeahNDHZ1WvAmPSQ8GPJ8xKeGAguvAQRUr2DznCm0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=J3CxnOEBAzHONvQGa3TFr07iI6nxaguBzu9Xs9XJtGfN/qTDmEwWQ4Xp/TItT7MNFS8HyDvVEtdcgLQm4ZXKAqQcbvVds/iLmpxKSjXaKnPE6hG6+Wf1MwopKtbBXIT7GPAvqqTUq5Oyx/ZcHsu8zw7aAiEY7XmQq1g35mDsJJo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GaCdPL4f; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1779038790; c=relaxed/simple;
+	bh=uSmhrok23qhHp/UuKR5PcZR4/GmFUZQCLIknry70ibk=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=JfnB1mcnP2vojCSfFHHjzyW5QM1AaAS7ZowIa5g3cK14P244PqbZ/6C/E5GbgbFcGaCPebN/jjbXtXw1gR54paGzgJWI0RNE5B9U3xqqpybIM5kRSjEYXM9pNr3yvBv+gdQptK+ECyU3zSBSLmIrRd2oF/18GL5dsPGpLH9HHWs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZqUikQcW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GaCdPL4f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67EB8C2BCC9;
-	Sun, 17 May 2026 08:45:30 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZqUikQcW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F86DC2BCB0;
+	Sun, 17 May 2026 17:26:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1779007535;
-	bh=LVzeahNDHZ1WvAmPSQ8GPJ8xKeGAguvAQRUr2DznCm0=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=GaCdPL4fOfAkwVPsyjkMALDCbw2efJ9jdDmWVk6urIWoAhsRIpVsbYQcYBxwmwZ1Z
-	 ofKhSjKK7d2I6+NtrQxKNccw8MlYhKWdmtyW7vW+cpdKxWCV9YCI/dErQEiDSinBF+
-	 cuSbEXZd6WkNvLuQkf5SkDUVzozx83ZSP73oOrmtjz2+jmi14cz8QU2/GP7h7v92Xz
-	 hvyU/GXrUf1hpT6HHRAVY6Dvx1bgORLRJWJL+kQLWeeED/FvHWK94EZlWsQ784hZ+8
-	 OM2rCDE4V8yPdYxugG36yJb8Xf3kvCdoeZ+zFErIMKyxvlc2hyWkPjpNA+RCvEjwPq
-	 WO3HEVNTXABVQ==
-Date: Sun, 17 May 2026 11:45:26 +0300
-From: Mike Rapoport <rppt@kernel.org>
-To: Sakurai Shun <ssh1326@icloud.com>
+	s=k20201202; t=1779038790;
+	bh=uSmhrok23qhHp/UuKR5PcZR4/GmFUZQCLIknry70ibk=;
+	h=From:To:Cc:Subject:Date:From;
+	b=ZqUikQcW9Evjr7yatHBQHdM3uw52R38uUb2fVpt+MrdYfo6kq2QMD2JriXVJBsQGL
+	 RJge6mPFr6oFhn1WRoqOfYuN7jDjvfOq/bW4atI+sFaPa5Bc8lkuQDmtLu+mnreJyK
+	 jRPDOiZfoyMrf079tRQ0dXet/yk9Kq0WrJlb5jPX7pO6yZ/Zhs12tB7SlsAQk+2JWq
+	 xvVbykHyrTwobwMdsrodM6AShwRWHERnOBLqgRO5rCQBzJelvWjIA6rJ1w/rWEe/Xy
+	 LCN68rn/qhHye2VrgQKYGhNT14q7nx6tSJhlzmki3hhScpglOQXXEw7ytWwrrwOns4
+	 6wbm2jlOlfxLw==
+From: SeongJae Park <sj@kernel.org>
+To: 
 Cc: SeongJae Park <sj@kernel.org>,
+	"# 6 . 2 . x" <stable@vger.kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	David Hildenbrand <david@kernel.org>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Michal Hocko <mhocko@suse.com>, Jonathan Corbet <corbet@lwn.net>,
-	Shuah Khan <skhan@linuxfoundation.org>, damon@lists.linux.dev,
-	linux-mm@kvack.org, linux-doc@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 RESEND] design: fix typos in design.rst
-Message-ID: <agmAJnMaRyyd-MEc@kernel.org>
-References: <20260517073433.3015-1-ssh1326@icloud.com>
+	damon@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	linux-mm@kvack.org
+Subject: [RFC PATCH v2] mm/damon/sysfs-schemes: delete tried region in regions_rmdirs()
+Date: Sun, 17 May 2026 10:26:21 -0700
+Message-ID: <20260517172624.888-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260517073433.3015-1-ssh1326@icloud.com>
+Content-Transfer-Encoding: 8bit
 
-Hi,
+DAMON sysfs maintains the DAMOS tried region directory objects via a
+linked list.  When the user requests refresh of the directories, DAMON
+sysfs removes all the region directories first, and then generate
+updated regions directory on the empty space.  The removal function
+(damon_sysfs_scheme_regions_rm_dirs()) only puts the kobj objects.
+Deletion of the container region object from the linked list is done
+inside the kobj release callback function.
 
-On Sun, May 17, 2026 at 04:34:26PM +0900, Sakurai Shun wrote:
-> Subject: [PATCH v2 RESEND] design: fix typos in design.rst
+If somehow the callback invocation is delayed, the list will contain
+regions list that gonna be freed.  If the updated region directories
+creation is started in this situation, the list can be corrupted and
+use-after-free can happen.
 
-Please use more descriptive prefix next time, like SJ suggested
-Docs/mm/damon/design
+Because the kobj objects are managed by only DAMON sysfs, the issue
+cannot happen in normal situation.  But, such delays can be made on
+kernels that built with CONFIG_DEBUG_KOBJECT_RELEASE.  On the kernel,
+the issue can indeed be reproduced like below.
 
-"design" is too vague and gives zero clues about what subsystem it is.
+    # damo start --damos_action stat
+    # cd /sys/kernel/mm/damon/admin/kdamonds/0/
+    # for i in {1..10}; do echo update_schemes_tried_regions > state; done
+    # dmesg | grep underflow
+    [   89.296152] refcount_t: underflow; use-after-free.
 
-> L140: "unsinged" -> "unsigned"
-> L371: "sampleing" -> "sampling"
-> L387: "multipled" -> "multiplied"
-> 
-> Signed-off-by: Sakurai Shun <ssh1326@icloud.com>
+Fix the issue by removing the region object from the list when
+decrementing the reference count.
 
-Acked-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
+Also update damos_sysfs_populate_region_dir() to add the region object
+to the list only after the kobject_init_and_add() is success, so that
+fail of kobject_init_and_add() is not leaving the deallocated object on
+the list.
 
-> ---
->  Documentation/mm/damon/design.rst | 6 +++---
->  1 file changed, 3 insertions(+), 3 deletions(-)
+The issue was discovered [1] by Sashiko.
 
+[1] https://lore.kernel.org/20260513011920.119183-1-sj@kernel.org
+
+Fixes: 9277d0367ba1 ("mm/damon/sysfs-schemes: implement scheme region directory")
+Cc: <stable@vger.kernel.org> # 6.2.x
+Signed-off-by: SeongJae Park <sj@kernel.org>
+---
+Changes from RFC
+- RFC: https://lore.kernel.org/20260516211436.1883-1-sj@kernel.org
+- Add region to the list after kobject_init_and_add() success.
+
+ mm/damon/sysfs-schemes.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
+index 5d966ac864193..b625f616f57e7 100644
+--- a/mm/damon/sysfs-schemes.c
++++ b/mm/damon/sysfs-schemes.c
+@@ -88,7 +88,6 @@ static void damon_sysfs_scheme_region_release(struct kobject *kobj)
+ 	struct damon_sysfs_scheme_region *region = container_of(kobj,
+ 			struct damon_sysfs_scheme_region, kobj);
+ 
+-	list_del(&region->list);
+ 	kfree(region);
+ }
+ 
+@@ -164,7 +163,7 @@ static void damon_sysfs_scheme_regions_rm_dirs(
+ 	struct damon_sysfs_scheme_region *r, *next;
+ 
+ 	list_for_each_entry_safe(r, next, &regions->regions_list, list) {
+-		/* release function deletes it from the list */
++		list_del(&r->list);
+ 		kobject_put(&r->kobj);
+ 		regions->nr_regions--;
+ 	}
+@@ -2992,15 +2991,16 @@ void damos_sysfs_populate_region_dir(struct damon_sysfs_schemes *sysfs_schemes,
+ 	region = damon_sysfs_scheme_region_alloc(r);
+ 	if (!region)
+ 		return;
+-	region->sz_filter_passed = sz_filter_passed;
+-	list_add_tail(&region->list, &sysfs_regions->regions_list);
+-	sysfs_regions->nr_regions++;
+ 	if (kobject_init_and_add(&region->kobj,
+ 				&damon_sysfs_scheme_region_ktype,
+ 				&sysfs_regions->kobj, "%d",
+ 				sysfs_regions->nr_regions)) {
+ 		kobject_put(&region->kobj);
++		return;
+ 	}
++	region->sz_filter_passed = sz_filter_passed;
++	list_add_tail(&region->list, &sysfs_regions->regions_list);
++	sysfs_regions->nr_regions++;
+ }
+ 
+ int damon_sysfs_schemes_clear_regions(
+
+base-commit: 950de73f0f8bb17fc322e8f9ec09a5fbb4a72ed8
 -- 
-Sincerely yours,
-Mike.
+2.47.3
