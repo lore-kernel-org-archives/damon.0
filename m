@@ -1,63 +1,63 @@
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
+Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0A9E38CFED
-	for <damon@lists.linux.dev>; Mon, 18 May 2026 19:12:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3011038F95A
+	for <damon@lists.linux.dev>; Mon, 18 May 2026 19:12:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779131545; cv=none; b=dC8ar6woDjU2ox9/w/5VAfXxOUNFyKlSgsV3poaTam6M81ZCFsS+S3mheRqxF2p2iNhwGrUHZIPeezeMiP6NNbreFRmuwwhXsHCAHWimDb+Zfhh6G/aSqt2oKNbVYidojTuBjAUPqMZv3afQfYRw9a/mMrresMKyCFshrA3oA2E=
+	t=1779131549; cv=none; b=Kbm7oCQOjbrBcaKC+Keowz0OXpvfjrA+NOWHrDsvGpLeWJd5luEJEwrohu9K3NaqSje+jXfa8hq34VlQmszR9InikrGwmTjWWwEesPoh/UQ1YnqEcTSkEmMNujF/hS9KuyptUwdJ3TI1pPN0cSDlS5dCI2D9wh29FcH85WwHaac=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779131545; c=relaxed/simple;
-	bh=+bngKoav4oRmKQXZqqtZhaGF91NFZUI89frNRe71ujg=;
+	s=arc-20240116; t=1779131549; c=relaxed/simple;
+	bh=rrpVVM/TXd2iBehI82iGkh/E/IqrUjKfYzsy7IZjmKk=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=uaYFL007w6nzmhP7hB0X9S1gr0PT2eccUhr3Vch3Q/SwziwQ2+49pU+A355tKl7y0dt2y4Zi0XC+/4WfmNB3LXqtj9ZYGciBYqlBLlaUNtEOOaFC9qlhLkIc2rxiSFeTAe8qFiTgR3Y9QWiVXP7oVUgElS6OVw90ZsbDZ3JifVQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NDATv5Qe; arc=none smtp.client-ip=209.85.128.51
+	 MIME-Version; b=diJGHx+E5XlC4ZY3gfByNUnELLtffsOLxZ1DcrI6kjFRNSHmQ/emX/1XJ1SVyHXIG5ki5kGtAsH5yyy+kdSPtIL4YEZ8vI80B2Wg5mztJfUZLgmmwOpe+dxzEU0nJxohlwRgpDNwuXJT89ykf800SdHZUzagSiM+HunSzXArBdA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TxYgMWfQ; arc=none smtp.client-ip=209.85.221.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NDATv5Qe"
-Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-488e1a8ac40so27549375e9.2
-        for <damon@lists.linux.dev>; Mon, 18 May 2026 12:12:23 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TxYgMWfQ"
+Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-45e6a4d0be0so1047680f8f.1
+        for <damon@lists.linux.dev>; Mon, 18 May 2026 12:12:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1779131542; x=1779736342; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1779131547; x=1779736347; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=SInUWKhqXZ7NxtmtUcTjuIifSi8+lTWwUFzMJGjUoRA=;
-        b=NDATv5Qe8crXO2u589pOwJgMmm0VRWhZ+GnyQiObzatcRJN+B4waVGyrMgdDtVifRd
-         MaIColtadcCkn7DCVSChZ4EL/C+8lzRsfu6STQb+5Udr++F325Xdx47AE5Tgdqu7qoIT
-         UXC8teA1DnJSTlovXvuOPQ0gMgEVnM/n/52H7CFSpNtly+mIta0Qyh6m9bPEoH3zAxVh
-         r2+83ysGwBUcXA5Hk7TjeatJmcB1yBLAW80tzfpQkdxbpwihu9fZ6ymWsp0IKnXQNbqV
-         DD8jDZXsxmNP2sAnwCPcWgj9g/CtKvcHq2Am8RVqRYJ1XGE2iwoY2h3ay6sl0tfhdsiJ
-         5pKQ==
+        bh=yBC6NBfwX3+M9N5z8/EgZVcnEG4Grml2tle9vPR+gqU=;
+        b=TxYgMWfQTpYayOATMmcKR6yp2MhwcOw15YiwGb6Y7ankF4ydff4xJxryo+U2jI6Smn
+         VN/Xm6BfQ22urC6oxGG9ivWqb4HxCfQTINRdn8faaGndY287bZhXYl9x7ePst7dXwDyd
+         BiBqZbmnLbRYTFZxMMFA+DN+PmBG8jgLgDSwQaE/P6X715gBvQ6pzAZNOFP2f+zQDA9W
+         TpJI1GZ7V18kBU+kfgFWiLhb4t0oG7dRX4Nf1vTqEP1XWwNwXMMwCgwQ6GU9jCJzskUt
+         rrD+43+JzsaeOXlU0x+0H7IO1+RxL3YBrIAQg6YNC1WYdVJnkKkoGtHUiRhB65kkk/Vt
+         2law==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779131542; x=1779736342;
+        d=1e100.net; s=20251104; t=1779131547; x=1779736347;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=SInUWKhqXZ7NxtmtUcTjuIifSi8+lTWwUFzMJGjUoRA=;
-        b=Jc53qzA8GuFgCD2iqtmi91ekUfI4maGSVgUzKpW2gT8Q5e5fPWZgLjonuxt8m0mjcd
-         DX2IPUXyyS1xVKaPSGMTtxRm+zps/UYXgrhBsfQliZavrvwkVeddWpOLUP5OLEKJ7xys
-         wGsb7vn0Ur3xLWVWXgnAlpMfrNXJXfI1B5oMODngI2tWsXqJFKqtzdtp3UTSbFcgho4C
-         PLMmRGpTumWq4t30IrtBfZ2DMhMZ5jCnC4ehvX6ZTJ5j5agSR2dD+ueItP6vnrEOr7aU
-         3ubiOG3LK3uP2dfZ/M5Q6rgL/aNIeJ4GLkrU8GCCmmdpdyiyyuK6tO6C0xas6h8izDGi
-         /mQg==
-X-Forwarded-Encrypted: i=1; AFNElJ/pXjgn7bApmJUe6HEQgNSJ/lnMLNd/hSYrcu6QIEwizt0psY1UArIeYAgPHlziYwjnxhLaOw==@lists.linux.dev
-X-Gm-Message-State: AOJu0YyebU+3/N/udBL+htd6He327QSLHqIgT7O9ViFqqAvJOlDF9XDL
-	fL4Em87X2yOBEGHK+88lVctQXb3zNUAxprLrLPAQIj6K3jjNenP5VsV4
-X-Gm-Gg: Acq92OG/GBOlDx3ap/xnhRbXyWsNT6ki8bCWEW2rUvFKLOK7IvG7iAMRJpvmts9rX51
-	iyQ3fG1v+XqtalXU3E6fzFMXsTnlTpSe9F9Zr4mFL8WO5/soHnWC6A2ftZ9wtJiiAG4zISp4DTq
-	1tRuf/knjKnI5Y4L2ThCGHuGTuG9a/xquui7Gvdkoqpb3epi0ffrz9MQR7/9fQ6B7DLCoeAHsqk
-	uVhIhhT2eMYEyU1omAN2CAlyw0JYvM6JVO7yjZi5ATa7+ewCWjJzLaWRcCQbEo+5S4gzzyxUIs9
-	UGks/Yf5yh48ycgTPwiOsw6cRzKqbPW5R9fxigTyiq3vs4Qbbhkr4Fu/X5s5n4BIfzyYX05NuR1
-	Da1pcrGeNGnb+iyZfSUKaMZ2YnLj68cmk9ytFeEux+3qegdLRX40ypX7yF0CEu/Xku6a2yRgX+X
-	p9g3CA1LxhcLDPLRU1leqsJcA8UnaMNCUeaWwOA1Sr4IRrU5IqIBs=
-X-Received: by 2002:a05:600c:4e47:b0:48e:707f:cdfd with SMTP id 5b1f17b1804b1-48fe60e54f4mr274314295e9.2.1779131542277;
-        Mon, 18 May 2026 12:12:22 -0700 (PDT)
+        bh=yBC6NBfwX3+M9N5z8/EgZVcnEG4Grml2tle9vPR+gqU=;
+        b=mIcQrk0Nb/jvga7/1yiaiV3DPeEsjwZoIpP60YtiAblb6ByMlCXjEuIiRlG1BUdI5C
+         T6tKdsZkv7OGHnPpABDMsE9BxfgrB228iZufnBOSH06dFaCxtKElexoXCHM+HC0wu9fG
+         RBcT5t2Rz/2U2N/Nxl7eDtuP/4shFCiynFhN+nQ5t5uA3SyljGOXi7eEv9jZpXC+g1bz
+         zhmduo/7awM6OzH+cKM3h3NsmUNU8M3YBlAMytmGqYfPBttSHr8uj5UEl1eFApmadNT6
+         w3wIGBll4sXcRzbFltpgxvakx/99pw/Aw0Kv+m4NNLrnVxlnsoulvrMltJvpzLsCMszy
+         lwsA==
+X-Forwarded-Encrypted: i=1; AFNElJ89k86DzMybtJRTYktJKbb6GEt1MC4BoUSFwVfVK0NUpPUg69RxsdEzylUUReWGQqoFsvMDHg==@lists.linux.dev
+X-Gm-Message-State: AOJu0Yx++a07brkVvqLB/+jwxP7qM59yqolBmjuYb6+1RkFV/NVPuRGA
+	X4JY3N/Z18Oc16dlnhaso8giH6uF8NVd6QRCEfax7Ve7VnozNeG9IUdX
+X-Gm-Gg: Acq92OGZ3zOLxZ5FzAf10tJCid+BrKF1QAdp9IJy2qD3rcbIBx22LbP9S9TIP8ubraq
+	PFQ4mC4h2v64eUR1AFCioO5HJp4sLq3/ptywa1y7CHYGSH8x0UdX82mLy0p3r0s2ay7fBSFFAEF
+	Y4l2CyEH6utYcWQW8AuoX0SnzqLY2shqqgEnixDSGM8jHMHBUePeOuyzEocAwdkPLPwdTJjL/IR
+	pe8d3r+AZXU8ZcSRZP+kGY4HjlrNpK95HtZuV4IrQ8yF/jhvFB0/sYSEWUoAnAdeTRmJ/ZxGTLL
+	HpSdS+bqRw7J36M822M+KmB367qjwObeyS/v2akMw711mGrpaRd/xeyO4QjYBLdlBkmylC9xAXw
+	zm15rtn4gCDUmC7nSufGOitKvS3HObPV9NG7qZ1LtmeEd6zYH0R53dj/k5rDlyYHVy3v6ePC079
+	oGjgNHOlGjObK3zLrjcAVrLonGZUSIWsM//j0g0rOgGR+AU9Ff0/U=
+X-Received: by 2002:a5d:5885:0:b0:43c:f7e5:817b with SMTP id ffacd0b85a97d-45e5c5cc2b5mr26469781f8f.19.1779131546344;
+        Mon, 18 May 2026 12:12:26 -0700 (PDT)
 Received: from mshcherba-RedmiBook-16.. ([188.163.115.207])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-45da15a6454sm40043167f8f.34.2026.05.18.12.12.20
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-45da15a6454sm40043167f8f.34.2026.05.18.12.12.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 18 May 2026 12:12:22 -0700 (PDT)
+        Mon, 18 May 2026 12:12:26 -0700 (PDT)
 From: Maksym Shcherba <mshcherba2000@gmail.com>
 X-Google-Original-From: Maksym Shcherba <maksym.shcherba@lnu.edu.ua>
 To: sj@kernel.org,
@@ -77,9 +77,9 @@ Cc: david@kernel.org,
 	linux-doc@vger.kernel.org,
 	linux-kselftest@vger.kernel.org,
 	Maksym Shcherba <maksym.shcherba@lnu.edu.ua>
-Subject: [PATCH 4/6] Docs/admin-guide/mm/damon/usage: document update_schemes_quota_goals sysfs command
-Date: Mon, 18 May 2026 22:09:30 +0300
-Message-Id: <20260518190932.42270-4-maksym.shcherba@lnu.edu.ua>
+Subject: [PATCH 5/6] selftests/damon/_damon_sysfs: support update_schemes_quota_goals
+Date: Mon, 18 May 2026 22:09:31 +0300
+Message-Id: <20260518190932.42270-5-maksym.shcherba@lnu.edu.ua>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260518190932.42270-1-maksym.shcherba@lnu.edu.ua>
 References: <20260518190932.42270-1-maksym.shcherba@lnu.edu.ua>
@@ -91,43 +91,42 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Update the DAMON sysfs usage document to describe the newly
-added update_schemes_quota_goals command, which allows users to read the
-current values of the quota goals after explicitly triggering an update.
+Add update_schemes_quota_goals() method to the Kdamond class in
+_damon_sysfs.py, which writes 'update_schemes_quota_goals' to the state
+file and reads back the current_value of each quota goal.
 
 Assisted-by: Antigravity:Gemini-3.1-Pro
 Signed-off-by: Maksym Shcherba <maksym.shcherba@lnu.edu.ua>
 ---
- Documentation/admin-guide/mm/damon/usage.rst | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ tools/testing/selftests/damon/_damon_sysfs.py | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-diff --git a/Documentation/admin-guide/mm/damon/usage.rst b/Documentation/admin-guide/mm/damon/usage.rst
-index 11c75a598393..097d8ebe960b 100644
---- a/Documentation/admin-guide/mm/damon/usage.rst
-+++ b/Documentation/admin-guide/mm/damon/usage.rst
-@@ -167,6 +167,9 @@ Users can write below commands for the kdamond to the ``state`` file.
- - ``update_schemes_effective_quotas``: Update the contents of
-   ``effective_bytes`` files for each DAMON-based operation scheme of the
-   kdamond.  For more details, refer to :ref:`quotas directory <sysfs_quotas>`.
-+- ``update_schemes_quota_goals``: Update the contents of ``current_value`` files
-+  for each DAMON-based operation scheme quota goal of the kdamond.  For more
-+  details, refer to :ref:`goals directory <sysfs_schemes_quota_goals>`.
+diff --git a/tools/testing/selftests/damon/_damon_sysfs.py b/tools/testing/selftests/damon/_damon_sysfs.py
+index 8b12cc048440..27cd94683f6d 100644
+--- a/tools/testing/selftests/damon/_damon_sysfs.py
++++ b/tools/testing/selftests/damon/_damon_sysfs.py
+@@ -806,6 +806,21 @@ class Kdamond:
+                     goal.effective_bytes = int(content)
+         return None
  
- If the state is ``on``, reading ``pid`` shows the pid of the kdamond thread.
- 
-@@ -448,7 +451,11 @@ get the five parameters for the quota auto-tuning goals that specified on the
- :ref:`design doc <damon_design_damos_quotas_auto_tuning>` by writing to and
- reading from each of the files.  Note that users should further write
- ``commit_schemes_quota_goals`` to the ``state`` file of the :ref:`kdamond
--directory <sysfs_kdamond>` to pass the feedback to DAMON.
-+directory <sysfs_kdamond>` to pass the feedback to DAMON.  The
-+``current_value`` file is not updated in real time, so users should ask DAMON
-+sysfs interface to periodically update it using ``refresh_ms``, or do a one time
-+update by writing a special keyword, ``update_schemes_quota_goals`` to the
-+relevant ``kdamonds/<N>/state`` file.
- 
- .. _sysfs_watermarks:
- 
++    def update_schemes_quota_goals(self):
++        err = write_file(os.path.join(self.sysfs_dir(), 'state'),
++                         'update_schemes_quota_goals')
++        if err is not None:
++            return err
++        for context in self.contexts:
++            for scheme in context.schemes:
++                for goal in scheme.quota.goals:
++                    content, err = read_file(
++                            os.path.join(goal.sysfs_dir(), 'current_value'))
++                    if err is not None:
++                        return err
++                    goal.current_value = int(content)
++        return None
++
+     def commit(self):
+         nr_contexts_file = os.path.join(self.sysfs_dir(),
+                 'contexts', 'nr_contexts')
 -- 
 2.43.0
 
