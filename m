@@ -1,93 +1,92 @@
-Received: from mail-dl1-f65.google.com (mail-dl1-f65.google.com [74.125.82.65])
+Received: from mail-dy1-f196.google.com (mail-dy1-f196.google.com [74.125.82.196])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5C463A3E73
-	for <damon@lists.linux.dev>; Mon, 18 May 2026 05:22:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.65
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAA973B9DAB
+	for <damon@lists.linux.dev>; Mon, 18 May 2026 05:39:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.196
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779081777; cv=pass; b=Lq6hBySg5kyMdwfc6e+iodtvAKLpL5kQrLMWfRhEGSkAbEFN/93fXWiyVpnjLy/w6WyeqTDqyG9yMfkKthGrNvQI+FfB1546QBR4NAac31HZm7XLOCTRILrpXLFLsn9Og15HgPP7uhjqyskXQ4VFaLms0WXT/mLqo2P1Zbd67Os=
+	t=1779082754; cv=pass; b=BiuOWPG0vbn+Q4q30DtnYTrPFwt1SjBfusG/09Es73rRn18abnS+2rK9/yAhMvSk5sziNZT8KsQjPdwNiM8Ri7wLUofY1peZS2jYv5S5q9ePdOJ2aWT3oyXjG/xR76bPZY6MmuFi3NG3k6Rw9gyG3jql8hSim5WQwmi2s9WozT4=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779081777; c=relaxed/simple;
-	bh=4VXYNdBtz6O86chKmpEl3yDwemKRGMRk/kOMzAwANWU=;
+	s=arc-20240116; t=1779082754; c=relaxed/simple;
+	bh=ZU9zcwa/1oA+08JxSkZueqLN2CpJd+9cjTLHgOB8s8s=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=dwuXqUWBiDFJCdSofyIHkP8XXDBu8Zs/Q+zlu4ft7WufgIgPAFQhoqMGxA06h8CudYUBanBccWPgpiuy4GWFAfS2b99pYOjNS2DsPR2qYHgsYwUFRnwpY0DLcVNeMIIspZ6vTWn64G9V53TWrfreRuXs78qNyNpgbFE3Js1lYKo=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WiaxRlsC; arc=pass smtp.client-ip=74.125.82.65
+	 To:Cc:Content-Type; b=VSiMNWRxlBZOwHoaILVss1VE3K6kQaENJlm2bs0KwJsNaMv4y4LvEeIUUJG4z8cUdewVU2u6lrFJsEuDLrlnBDg1hpFVq8ejdW8HPe7a7gQMIi1VaVjQPOo5HdncutP7cABMILH9S+0VgvxbLFPDZ+Gvs85nqxwpkwnDKKVW/Yo=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ObUkcW3p; arc=pass smtp.client-ip=74.125.82.196
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WiaxRlsC"
-Received: by mail-dl1-f65.google.com with SMTP id a92af1059eb24-1331e851faaso773134c88.1
-        for <damon@lists.linux.dev>; Sun, 17 May 2026 22:22:49 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779081765; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ObUkcW3p"
+Received: by mail-dy1-f196.google.com with SMTP id 5a478bee46e88-2c156c4a9efso2168641eec.1
+        for <damon@lists.linux.dev>; Sun, 17 May 2026 22:39:06 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1779082744; cv=none;
         d=google.com; s=arc-20240605;
-        b=QLlo4KEkEI+b6BAZYBR31Lu5KijOk8hnKyaqwJx6BYQpDlqv5Bg7Lqa5SAvxj/DgPE
-         9vvz1AA0SAbCjE7N4GYvmiNg/Rdg1tnFmXpMbc3CewpWvzP+Oj5LWYznlLIXg+4MuBUj
-         0wdWzL1rEWkANPVnkWiQ1HM/vxt9cVTjD8CW+v75Wl8hF/ixRjduGcO7gtE8XOXyBZCm
-         xfKRSiuEkZ4jZ2W2ItZyJs5BM6IFuLY7qJEGhZaZePruHERLmUdolN2EpbfXHRrbHNkX
-         jcPrWFqLph8BdeHjnFUS3oVMXR9NotdFf39rMvRZDhntJXl7+Q1swX/G8B0rFqE7wqLg
-         cUlg==
+        b=DrfBhCs30BHplitYPsUSx8BOsESNfEVTmKqKO4PJzyeIgWPUWoPUGGgJRWdnHRLZ1S
+         BokRG/LaLDSc1JMjQdY/7ABIrxgqY9Ys7oszArleMZtR/EFoftt4k8ZQzVRvycqbt5e6
+         GRqUOnPlUMw4gTPYrREa/oxIm2q+WwOli42m7QbzsbY3t6E1q2/Wv2kRrBwAlN+METBf
+         0nnBKohBMwj1PQchKF9K6Zv/UjiSWFY7bM0PWESG9SqqomVNqLhWuCxv0E4VwlioITU/
+         gJwu3ktQ7pnWs8oWu5k0Sn8IO6ES2TgtfRdDWw4zPYaFOWWBCED2xcTNL1HIo1HpqP+Q
+         Apyw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=tVrmc1+PV/eXO19oXbXbSS9nJEY6DfKgzD6K9F2BhAc=;
+        bh=YLIcqWTVpJE5E6ocMJoFGIXQYdlOWCw+6fTR5Kv3lQU=;
         fh=g3VMvJQux/HSLIVicncr24svuVPzuNK+KAx5AQfJAks=;
-        b=jRbeisFQTvcZOse6qU9HPq7QrWTIA6EYoaIBVvpDZo4fYysCVoDHXd7G79zphKCEWW
-         w6VZSsH1hKCbuw8Ys4pXXmfrMbja1CrTWvE59EXhE2aJugKruxbO5pCebOhdNLNdEpco
-         BUqyqyqNvnP088DtVRerKe0kselOpm2hdTLceYA1gQitujJqER+QFPDKMoVzXB3QQQMV
-         W6aePbJ6KVOcZYeGuEw65YkALda+4uFRfH75yPG4jGsELbnKX3s1WiilK+sHnxpSxxxQ
-         TUOuOfmiGG6UqvtiQSl53h/c3MqArVCT70A/8kKnPwo62yBOEeEhwHcZ+3k5vnNrSyOs
-         QYGQ==;
+        b=OPJTjX5nvHCqWxqRsTbe4M5CJpZ/CGxwDZpjwFrVf3z5sv8iWL/PGv5PcG/3Bdqt3k
+         3OlSaKAn1K7EMfUhlNTeI/fhOSMBrsdznl6eEPQ21oRhvvMrCd3D78mnlOZCtNZLY9zz
+         B5AJLW3RU/igRrTSkJ6C2RoELofGX90IoMCYDLyi1X9CpvWtIB2jLGg9U1dJopl+oisE
+         KbjTFQR0IGDDu16oi0SniGDQDThbgHVvBGkFw627S1v7SmUQvNbvnJGDKZpQE3NrWcCw
+         Q57Clo4ityMgga4PCQ481IvPC9EuTMwMcMZzNFseaFGct695D45ZZAa8fsarOdWdEUHr
+         vf5w==;
         darn=lists.linux.dev
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1779081765; x=1779686565; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1779082744; x=1779687544; darn=lists.linux.dev;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=tVrmc1+PV/eXO19oXbXbSS9nJEY6DfKgzD6K9F2BhAc=;
-        b=WiaxRlsCuka759ZzewXgsmkpkNFNI1ks8L9VLg/dYBCRJkDLDsCjXzVxAbZRyQ8Iby
-         sjHwnXvWbYSduzbqlIeYFvlop9CCdFRNwBRwql+q5syJhbJp/cs8aKcxRKoZv3isTMy3
-         CQPik6cSEJt0pvtUCiz8a4sL5Qtcme7UpydFI6lN6ca0sQ13T+MitZG2r4Q8KTT/RVNy
-         56+DhA5xSOFomTvYT/1qljo0RswmvyXmc6HCXpcUZtxi5QF08SJMaDquXPn+5WEPHPiV
-         cLSkXXkhrhpyl/wWD8q9FFaFGg3NMp0crDkIMueEKsXy8g2AOYFN+4UE5W9xxLVxqfau
-         HpFw==
+        bh=YLIcqWTVpJE5E6ocMJoFGIXQYdlOWCw+6fTR5Kv3lQU=;
+        b=ObUkcW3pYKiMuxPnnIGfXa334FUD52k0f1IQXDUEnlv/sEuD48dkV1LVLCN9T92Z7s
+         OLzo53g7ibn23O3lMbAlmmI+xF3BZ63iipR3O0OUc16s5l0Jz6F9lkbRyLDQozNeQXMk
+         fTCbsAPYkcohH4DEY28Q5N9NKq+sNCLhBdYdpfHOuhNT6ccqJ80slGBiNm3APuV4DUIw
+         6cGjmRQRUaCJEzEmp4VjrB6PjAY4G0f29LRUc2TCAd4/zZh9Dl81m6+hbc7Q44IOCuHl
+         9LLfAidyoYqmph60tDH6m9OFC+w0u9BbE4d7dUrJkPpm5kxucTt+ntl6H6JPgtZheF05
+         mwIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779081765; x=1779686565;
+        d=1e100.net; s=20251104; t=1779082744; x=1779687544;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=tVrmc1+PV/eXO19oXbXbSS9nJEY6DfKgzD6K9F2BhAc=;
-        b=rAifmg4NlomZu/kBax37IQMQujj3YLV5UmPlj0tNIYnx3YndaEx9MsR3tn8xfuK03z
-         HQ7TeIDT7W+uffS8AHFxWL8KzGayHtY0W457RwzmgQ3beUNZ+5XVzljfZLm7cBqXc7AN
-         rFb0d/h2aZdu0y4znL5Ty19wDdk0kVBwzunmOT5zlpyQ+kbqtoI9L4HLKpCT6XS+k6qZ
-         fI347J+gDci6HxVuuJHSSMAUFjcoyVyFYrDgWW8PowcO7LVn5ar5OQry2a+b+NvddxNJ
-         KzKNcNMbt9HfiALQr1hiItRzcDiFtJeZ0V5o9x7paH7uRFj9gqJisXDCz0vXkPEScMUw
-         wAig==
-X-Gm-Message-State: AOJu0Yxo00YodsO30+3qi/oDL7nXwQMnS6Yrt4CvUV83IyEb/qFf74Fz
-	a0a8B/P+jQ8zYfjh0ffKrPsvpNkXfY5VJOss1rI4PP+GArxI7wVggUujihNbJZKx4L0jEuhd1eh
-	/e5wXoI/pAF2ardLVDSwYXETwiFpTkA==
-X-Gm-Gg: Acq92OH8puqhmQkAaWt/EHUbwSOAplfTC6wSIk09TTwwAfI+1zE9H9FJyi91Sw3WsTm
-	D4vm3A3l97d+CLi5nKTCKdXAFDmX6ZNNuotVEHBU4fg7iZmp+Wp/diuPhrd4zj1b5YbQPau9Nue
-	m1bT3tsNcidrfOACCMtNNXEc7nVV8VKPFkR6bkW9yKSuwhVWLGSFCi2ZUpSk9i7aHv3jp1Ofa9x
-	ieHj3SpEdk6nZ/uj0Rd9mAGphMa2Oi0m5gl0nSPp1/UOPNZuxJXm2EjJQnIW5FeLMeDQCx4dQEx
-	ScOfUkY=
-X-Received: by 2002:a05:7022:301:b0:12a:6d05:3938 with SMTP id
- a92af1059eb24-134ffc6a83fmr5895472c88.7.1779081765523; Sun, 17 May 2026
- 22:22:45 -0700 (PDT)
+        bh=YLIcqWTVpJE5E6ocMJoFGIXQYdlOWCw+6fTR5Kv3lQU=;
+        b=BPx8C0HVHe+ceam56GfI0qUUJSKYveLKkxgA7LOw4Np7reAWC7P2gEE6GsAj8Y0xyy
+         h+7jNR6h7bBTKMQJ7DuvkBygLHPHXnTP4h/JXj/M/rgxtGeg5dwgXdZq+fQoCZg9oZIX
+         ho11W/GlsQv56vXr/u3hi9ja5bP52X5uUNG/nuB8b++fpoPnH64rNtv6IP0VZ4i+phKS
+         NNCCs8LJxwBoP13xqeeSHk3QKgDgevfn7N6AvmwCnkTOCjNJjGCBAI8kQo27Bi7AnbW6
+         rkznls1natS3HGVMlH5it0kiiCa/TY1VS052ee5Lk8dpf/XwSm3xoJ8g2FPwT8Mo6kAY
+         CpNw==
+X-Gm-Message-State: AOJu0YxwacoQH3tCsRRbfO+xZH1f9xOoMDlqRTZhyWW8skaEfd5RKpvC
+	H5JZxadHMBDFXdaMc22Fx04E/5W5IQ4yTTZe9ieDX0Vtj283pyNZ4vcZv8tWQ/6iLgflkFWAfAX
+	GX0vLLbVfky5VjhrJeJbwENl0TxZAhw==
+X-Gm-Gg: Acq92OFG5vKHYVy1VI/Xm5+zkJh3bJgPq2gM/rE3WGxpMLm6sEjFxKVrWgtSE0ywXEA
+	7iUMv7ZfOSHIizA18Tpp3wl9VzBdO9vo+h8pqG6EsGSgLvJ/juMlS92iOfxWBABkar4t2pRAwaM
+	dIrRnP4DcX5kSmaAnQw9hTedjAHLa6iHocOUjpG5cX2v1mw+JrJssKafGa28Hjme+rs7oO4ie4S
+	/u0Cgii/sapOTTHNuiJwzJ0nKge0snzxzd8g2BzU64MaoiQNHHhsPGAx+NL7zlh8oErm46vVMob
+	AL7AON+BnaIBCtQLwA==
+X-Received: by 2002:a05:7022:f9a:b0:132:5d31:dcb4 with SMTP id
+ a92af1059eb24-1350483cd3bmr5446081c88.23.1779082744288; Sun, 17 May 2026
+ 22:39:04 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260516210357.2247-3-ravis.opensrc@gmail.com> <20260517183658.4510-1-sj@kernel.org>
-In-Reply-To: <20260517183658.4510-1-sj@kernel.org>
+References: <20260516210357.2247-5-ravis.opensrc@gmail.com> <20260517233756.89097-1-sj@kernel.org>
+In-Reply-To: <20260517233756.89097-1-sj@kernel.org>
 From: Ravi Jonnalagadda <ravis.opensrc@gmail.com>
-Date: Sun, 17 May 2026 22:22:34 -0700
-X-Gm-Features: AVHnY4LE0W1Cr7WTCe0QcWx8Sq82GcO7UNuwTXn-H1Hzh7EXFfcqQ3AqG5J0WCk
-Message-ID: <CALa+Y14PXA_anNdvJCzx4RfKoKj6hNmEG39KUvMALtOBznprkw@mail.gmail.com>
-Subject: Re: [RFC PATCH 2/5] mm/damon/core: cap effective quota size to total
- monitored memory
+Date: Sun, 17 May 2026 22:38:51 -0700
+X-Gm-Features: AVHnY4K2ub7Wht5Qs4RyrHgIQ9aprUqnUTmA2ZoG_aUhnEoirB9aJCACF4FE6fU
+Message-ID: <CALa+Y17nudor22aJvakfos3UegPgEG1M8N7cJPAxWX0Ca=MvfA@mail.gmail.com>
+Subject: Re: [RFC PATCH 4/5] mm/damon/paddr: skip free pageblocks in migration walk
 To: SeongJae Park <sj@kernel.org>
 Cc: damon@lists.linux.dev, linux-mm@kvack.org, linux-kernel@vger.kernel.org, 
 	linux-doc@vger.kernel.org, akpm@linux-foundation.org, corbet@lwn.net, 
@@ -96,65 +95,100 @@ Cc: damon@lists.linux.dev, linux-mm@kvack.org, linux-kernel@vger.kernel.org,
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Sun, May 17, 2026 at 11:37=E2=80=AFAM SeongJae Park <sj@kernel.org> wrot=
-e:
+On Sun, May 17, 2026 at 4:38=E2=80=AFPM SeongJae Park <sj@kernel.org> wrote=
+:
 >
-> Hello Ravi,
->
-> On Sat, 16 May 2026 14:03:54 -0700 Ravi Jonnalagadda <ravis.opensrc@gmail=
+> On Sat, 16 May 2026 14:03:56 -0700 Ravi Jonnalagadda <ravis.opensrc@gmail=
 .com> wrote:
 >
-> > The DAMOS quota goal tuner can compute an effective size (esz) larger
-> > than the total monitored memory because it integrates over cumulative
-> > deltas without bounding by the actual workload size.  Once esz exceeds
-> > total monitored memory, the per-tick "remaining quota" arithmetic
-> > stops being meaningful: any scheme can apply to the entire monitored
-> > space and "remaining" stays positive indefinitely.
+> > damon_pa_migrate() walks every PFN in a region linearly, calling
+> > damon_get_folio() for each one.  On sparse physical address spaces
+> > (e.g., CXL-attached memory), a single DAMON region can span hundreds
+> > of gigabytes where most memory is free and sitting in the buddy
+> > allocator.  Most page lookups are fruitless and dominate kdamond
+> > tick time.
 >
-> Nice finding!
+> On sparse address spaces, the problem would be large DAMON regions of off=
+lined
+> memory.  The large DAMON regions that nearly all freed memory is another
+> problem that doesn't require the sparse address spaces.  If I'm not wrong=
+, the
+> above paragraph could better clarified in my opinion.
 >
 > >
-> > Cap esz to the total size of all currently monitored regions as a
-> > final bound after all other quota calculations.  Add
-> > damon_ctx_total_monitored_sz() helper that sums region sizes across
-> > all targets.
+> > Check at pageblock boundaries (2MB on x86_64) whether the block is
+> > entirely free.  If the first page of a pageblock is a buddy page at
+> > pageblock_order or higher, the entire block is free and can be
+> > skipped.
+> > Similarly skip pageblocks where pfn_to_online_page() returns
+> > NULL.
+> >
+> > This reduces the iteration from O(region_sz / PAGE_SIZE) to
+> > O(region_sz / pageblock_sz) + O(populated_pages).
+> >
+> > buddy_order_unsafe() is used without zone->lock.  A transient false
+> > positive (block becomes non-free between the PageBuddy and order
+> > checks) costs at most one tick of missed candidates on that block;
+> > the next tick re-scans.  No correctness consequence as DAMON walks
+> > are best-effort.
 >
-> You could also make an arbitrary cap by setting the static size quota.  T=
-hat
-> is, if there are not only quota goal but also the size quota and/or time =
-quota,
-> and the different types of quotas disagree about the real quota, DAMOS us=
-es
-> smallest quota.  You could read damos_set_effective_quota() code and kern=
-el-doc
-> comment of 'struct damos_quota' for more details.
+> I was initially thinking this is a good and reasonable optimization appro=
+ach.
+> But on the second thought I get below questions.
 >
-> So you could apply the total monitoring region size cap by setting the si=
-ze
-> quota of the total monitoring region size.  Could that work for you?
+> For large offlined memory space problem, couldn't we simply tune DAMON's
+> monitoring regions boundary to ignore the holes?
 >
-> Adding the total monitoring region size cap makes sense to me, and I thin=
-k that
-> will make user experience better.  But, if the size quota based cap works=
-, that
-> could also be handled on user space in an easier and even a betetr way.  =
-If so,
-> I'd prefer the direction, to reduce kernel code complexity.  What do you =
-think?
+> For large free memory area, is it reasonable to assume such situations?  =
+In
+> production, users will try to utilize as much memory of the system as pos=
+sible.
+> Then, wouldn't there be such problematically large free memory area?
+>
+> Could you please enlighten me?
+>
 
-Hello SJ,
+Hi SJ,
 
-Agreed.  quota->sz combined with the smallest-quota-wins rule in
-damos_set_effective_quota does express this cap from userspace
-without kernel changes, and keeping the kernel side clean is the
-right call.
+You're right on the first point.  For static offlined memory
+holes (memory hotplug gaps, partial socket population, etc.) the
+right answer is configuring the monitoring region boundaries to
+exclude them upfront, not making the walk skip them at runtime.
+The changelog is clearer if I narrow the patch to the free-but-
+online case.
 
-If the UX argument carries weight later, I'm happy to respin v2
-with sashiko fixes addressed.
+On the free-online case: I agree large free memory areas are
+not the steady state on a fully-utilized system.  The cases I
+had in mind are more limited:
+
+   - A workload using a small part of a much larger range, with
+      the rest left as headroom (e.g. 64 GB used of a 512 GB
+      range).
+
+  - Shared tiers where workloads are allocated and freed on their own
+    timelines.  Any single piece of free memory doesn't last
+    long, but on a busy system there's typically a meaningful
+    free fraction in the range at any point -- especially on a
+    slower tier, where workloads prefer faster memory first
+    when it's available.
+
+The patch as written is a narrow optimization for those cases:
+the pageblock-aligned check is one extra read per
+pageblock_nr_pages PFNs (about 1 per 512 on x86_64), so it's
+effectively a no-op when the region is fully populated.
+
+If you don't see those workloads as warranting the change, I'm
+happy to drop the patch.  If the framing is the issue more than
+the change itself, I can respin a v2 with:
+
+  - the changelog narrowed to the free-but-online case (no
+    offlined-memory framing);
+  - any suggestions from you on sashiko's review comments.
 
 Thanks,
 Ravi
 
+> I will hold digging deep until this high level questions are answered.
 >
 >
 > Thanks,
