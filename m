@@ -1,41 +1,84 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99922275B1A;
-	Mon, 18 May 2026 15:26:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47FBF38F255
+	for <damon@lists.linux.dev>; Mon, 18 May 2026 19:12:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779117963; cv=none; b=BDNX+2nOqlGyI+QiOsgkKsg0WL1+60i7RYFgQPvvrS46YDJ5KG/r3sdsKTasZoM51pO64XcSafmGnbVlNVIhh2FdahDA5tv2TZ8bUCgpOkgq17KauioU8wyCsYQrZEPzCkDAvwhMsRQ6lVyDggrzwhfaT473rMNwuqK/lwfR1eI=
+	t=1779131524; cv=none; b=GczFO7RAF7FtPGbj2TvD+eDeIABJGe8gL0Depe/BZbTmnjlbViR0hocbBgIy/2jY+0yh0IYc0h9RKtId0mjrddXNxh+GWY6RQcMqVF4pu9P4R3lvar5I6vUepW/hubvrG6fEsmgBc+EX0gum4ukCllb+B9OvpE/SaCD0u5+WbdM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779117963; c=relaxed/simple;
-	bh=cwdjynvPa/H+eNZ07FnU5IjYqj8QXiHrUvyf6S8ZfXI=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=qvgpEo+l/2leVFROW3bM43BbPe6GnqQ0HbCYzuBVUB7JLqe2tFyqfzQr0yc3OeV7vLcHe0/CqwTiYFxvCPzbirMoY51yUzGKgfNvapZaY30YiSHCUcbIp8HZP64s99y9+qePshQeUZKeC0pEPccpCj1aBhP9DDUUpNW2a6xnRkM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=l2vrtLzk; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1779131524; c=relaxed/simple;
+	bh=SYNaiWE+6z74HiqRR6DYEYa5dSi13wZDsECVnOFu4jw=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=IxqGR0B/rDVd/012/iTWMxF8npefrDoN8rk4GuaSi0KS0nVo2Pnx094XFQ4bv+ZZQmFBGKfbB/HVWvqQ7mEvEs4qtmbiOxdJ9cMpIK6b8CXTiuYNfIJB34OE0SyK9QwXy3hyyJAlhbddYo2JdKyGuw2OpgpjrrOaOu/jyxON8qM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cdsBPR/k; arc=none smtp.client-ip=209.85.128.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="l2vrtLzk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17FD0C2BCB7;
-	Mon, 18 May 2026 15:26:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1779117963;
-	bh=cwdjynvPa/H+eNZ07FnU5IjYqj8QXiHrUvyf6S8ZfXI=;
-	h=From:To:Cc:Subject:Date:From;
-	b=l2vrtLzkQKTZLSS+Q7GJsPDheHmirfH6zjVp0KuGNVGgwip7T0QS9ISK4lCLw/bJN
-	 4eGoHgF2y7o/XkcEa3GPR68F4g8dzCEfkTxUTpdnSZG0bw5Jvbe+HjDUCJNCHIU248
-	 eX59WGC66e08i3G86+ms04Jp7zI0Q/bsTViFXMSBEcn4XFON6bKoO7gQNayHWGBRgs
-	 OJi2BDRh4DxtLWhtP6+RsDJk/niTXzYa/vqn4AhtozcsJ0iE+k+N6E0niI2MskHzXp
-	 adleg7gnnE/ANdHVmJCstv1IiME4m+u+evm+WHEEFUDkRz0XsjURrXYGedW0uUM6sM
-	 UQO/5Tce9aNqg==
-From: SeongJae Park <sj@kernel.org>
-To: Andrew Morton <akpm@linux-foundation.org>
-Cc: SeongJae Park <sj@kernel.org>,
-	"# 6 . 2 . x" <stable@vger.kernel.org>,
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cdsBPR/k"
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-48a3e9862f0so15542105e9.1
+        for <damon@lists.linux.dev>; Mon, 18 May 2026 12:12:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1779131520; x=1779736320; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=HdgjcDSkJV3GKfKlbUQSZ57rr2po/MRqPRPN+0UqD+s=;
+        b=cdsBPR/kFYhTgJ2ZnfZNZP5faKO6Nyye+47e2g8mCXFd9fpnEAVXuI57bjnxUNCFmS
+         cfG6mKN83wN8+eXp40ECCe5+XsgM8kaLXExNy/ezFpoox5GKKTMw704kA3j0rDozs7xQ
+         kyJ8RxD64vO/Ix46v4d/Saqq73awusfzynArIYfrxLFEJF9AWGF7+wYn7YaK6kGgQvHQ
+         3zptnHMM4HwR168VzjCYAINAOrTSUDurCyHZEFgABVFTZWTOA93Udq6rVFYNsyt24RX2
+         EtRt9gOtSrynx28ocfAonTWHShXbUFIKwi6pjQUmxALvsU433rf5rhUaTXeAZUzl5nMU
+         XlCQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1779131521; x=1779736321;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=HdgjcDSkJV3GKfKlbUQSZ57rr2po/MRqPRPN+0UqD+s=;
+        b=d1Z+a+qa2yq4wZf98q48rmnqVTGFqeBH1F8wd1Y0QZ27vUu+uxaR31nEkJAZJjKW+p
+         RuM4fjyRXmw5QoO5mGS4jEihO04sg3te+r7ZeDw/nEF3QGTygIDNHiF+MHdmuzVT8rFB
+         epauRowLO68MLoYv4CZ1rSwwJ2poKclc8QmYIs0gqIcLpM8CuwhNbc4NLCQKWuDyVt05
+         bLfCQdgKpyqs29MNP5zI3TJh51ghVVTIu5yvvPat2CSHX46/TzyaiSxRhQNUVcaLO4uu
+         8wID9tCfKRvBg+fwHy1wFpqQC1ykmjlW8hnRGYtW5Uen5JW/E+iCe2r4vFJiLvKO0Hrc
+         s9oA==
+X-Forwarded-Encrypted: i=1; AFNElJ/iX93ZoxDg3DHXkXNb5wu+tDDnVZx2b18PZrD31cjxtEDoA9GtYVwhSyWR+S6do+2wjvku7w==@lists.linux.dev
+X-Gm-Message-State: AOJu0YzBE4JRKa11No80BmInICXhqAQBDuaL1K1oDaFN8fRISAolr1Gz
+	CO0sDlBd7TkmTkeFDAM+oz6XicJ54F3DMcNJRrT3Y8TxVFvwnQDm4tkg
+X-Gm-Gg: Acq92OGLmscJVxv9xWMP0zA3fVk/w3gr8coreBSzmBwFKAJBmyER/IxjIOod3BcwFFK
+	sdwHv9TuwXxZ6e6nkRcqWpGGe5g1NY7cCffxZu7wX9ijVVQTfiS630W0FmOCh3wd/dYE77YUVh0
+	z/MWsTBtMDzoGiBkOxfID8ztLQ+kOO8gDhUXUey5n3RamsExBrvF6TvGJTl0Y6UmzWevrs0ZCfW
+	KmdMfXuWmE3liXltb2POaWa0GnzG+lTosM800saDfPzTre7+qG132K5T71Sjw3Zw6bGoAy1iQlc
+	TRgx1ys9zatlJWZDdCPUZJ9hP00dXO88JF5auFfLEb4rlaRcKJ0IJJyPK0zpI2VPS4MkWTm6WVh
+	dQ3hIrwhIbkg8WReyGCyICyixvUimL9vLkIlxzFg5lPQi98awdw274bB8ywysbNa4T02vn3/I2e
+	qrPCfAaMVCxyJMpM8yFpnNGOYqEVt52bBLuwSCJhv9OsSGNjaMGGk=
+X-Received: by 2002:a05:600d:644f:10b0:48e:9134:6ae7 with SMTP id 5b1f17b1804b1-48fd62d9be0mr228420795e9.0.1779131520505;
+        Mon, 18 May 2026 12:12:00 -0700 (PDT)
+Received: from mshcherba-RedmiBook-16.. ([188.163.115.207])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-45da15a6454sm40043167f8f.34.2026.05.18.12.11.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 18 May 2026 12:12:00 -0700 (PDT)
+From: Maksym Shcherba <mshcherba2000@gmail.com>
+X-Google-Original-From: Maksym Shcherba <maksym.shcherba@lnu.edu.ua>
+To: sj@kernel.org,
+	akpm@linux-foundation.org
+Cc: david@kernel.org,
+	ljs@kernel.org,
+	liam@infradead.org,
+	vbabka@kernel.org,
+	rppt@kernel.org,
+	surenb@google.com,
+	mhocko@suse.com,
+	corbet@lwn.net,
+	skhan@linuxfoundation.org,
 	damon@lists.linux.dev,
+	linux-mm@kvack.org,
 	linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org
-Subject: [PATCH] mm/damon/sysfs-schemes: delete tried region in regions_rmdirs()
-Date: Mon, 18 May 2026 08:25:58 -0700
-Message-ID: <20260518152559.93038-1-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
+	linux-doc@vger.kernel.org,
+	linux-kselftest@vger.kernel.org,
+	Maksym Shcherba <maksym.shcherba@lnu.edu.ua>
+Subject: [PATCH 1/6] mm/damon: fix missing parens in macro arguments
+Date: Mon, 18 May 2026 22:09:27 +0300
+Message-Id: <20260518190932.42270-1-maksym.shcherba@lnu.edu.ua>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -44,103 +87,53 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-DAMON sysfs maintains the DAMOS tried region directory objects via a
-linked list.  When the user requests refresh of the directories, DAMON
-sysfs removes all the region directories first, and then generate
-updated regions directory on the empty space.  The removal function
-(damon_sysfs_scheme_regions_rm_dirs()) only puts the kobj objects.
-Deletion of the container region object from the linked list is done
-inside the kobj release callback function.
+The DAMON iterator macros do not wrap their pointer arguments with
+parentheses. This can cause build failures when the argument is a
+complex expression due to operator precedence issues.
 
-If somehow the callback invocation is delayed, the list will contain
-regions list that gonna be freed.  If the updated region directories
-creation is started in this situation, the list can be corrupted and
-use-after-free can happen.
+Add missing parentheses around the arguments in the following macros
+to prevent potential build failures:
+- damon_for_each_region()
+- damon_for_each_region_from()
+- damon_for_each_region_safe()
+- damos_for_each_quota_goal()
 
-Because the kobj objects are managed by only DAMON sysfs, the issue
-cannot happen in normal situation.  But, such delays can be made on
-kernels that built with CONFIG_DEBUG_KOBJECT_RELEASE.  On the kernel,
-the issue can indeed be reproduced like below.
-
-    # damo start --damos_action stat
-    # cd /sys/kernel/mm/damon/admin/kdamonds/0/
-    # for i in {1..10}; do echo update_schemes_tried_regions > state; done
-    # dmesg | grep underflow
-    [   89.296152] refcount_t: underflow; use-after-free.
-
-Fix the issue by removing the region object from the list when
-decrementing the reference count.
-
-Also update damos_sysfs_populate_region_dir() to add the region object
-to the list only after the kobject_init_and_add() is success, so that
-fail of kobject_init_and_add() is not leaving the deallocated object on
-the list.
-
-The issue was discovered [1] by Sashiko.
-
-[1] https://lore.kernel.org/20260513011920.119183-1-sj@kernel.org
-
-Fixes: 9277d0367ba1 ("mm/damon/sysfs-schemes: implement scheme region directory")
-Cc: <stable@vger.kernel.org> # 6.2.x
-Signed-off-by: SeongJae Park <sj@kernel.org>
+Assisted-by: Antigravity:Gemini-3.1-Pro
+Signed-off-by: Maksym Shcherba <maksym.shcherba@lnu.edu.ua>
 ---
-Changes from RFC v2.2
-- RFC v2.2: https://lore.kernel.org/20260518014520.88424-1-sj@kernel.org
-- Drop RFC tag.
-- Rebase to mm-new.
-Changes from RFC v2.1
-- RFC v2.1: https://lore.kernel.org/20260517175915.3352-1-sj@kernel.org
-- Set sz_filter_passed before kobject_init_add().
-Changes from RFC v2
-- RFC v2: https://lore.kernel.org/20260517172624.888-1-sj@kernel.org
-- Rebase to mm-stable (7.1-rc3) for Sashiko review.
-Changes from RFC
-- RFC: https://lore.kernel.org/20260516211436.1883-1-sj@kernel.org
-- Add region to the list after kobject_init_and_add() success.
-
- mm/damon/sysfs-schemes.c | 8 ++++----
+ include/linux/damon.h | 8 ++++----
  1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
-index 5d966ac864193..0d3021db0b99b 100644
---- a/mm/damon/sysfs-schemes.c
-+++ b/mm/damon/sysfs-schemes.c
-@@ -88,7 +88,6 @@ static void damon_sysfs_scheme_region_release(struct kobject *kobj)
- 	struct damon_sysfs_scheme_region *region = container_of(kobj,
- 			struct damon_sysfs_scheme_region, kobj);
+diff --git a/include/linux/damon.h b/include/linux/damon.h
+index 4d4f031bcb45..32f2318ac77f 100644
+--- a/include/linux/damon.h
++++ b/include/linux/damon.h
+@@ -902,13 +902,13 @@ static inline unsigned long damon_sz_region(struct damon_region *r)
  
--	list_del(&region->list);
- 	kfree(region);
- }
  
-@@ -164,7 +163,7 @@ static void damon_sysfs_scheme_regions_rm_dirs(
- 	struct damon_sysfs_scheme_region *r, *next;
+ #define damon_for_each_region(r, t) \
+-	list_for_each_entry(r, &t->regions_list, list)
++	list_for_each_entry(r, &(t)->regions_list, list)
  
- 	list_for_each_entry_safe(r, next, &regions->regions_list, list) {
--		/* release function deletes it from the list */
-+		list_del(&r->list);
- 		kobject_put(&r->kobj);
- 		regions->nr_regions--;
- 	}
-@@ -2993,14 +2992,15 @@ void damos_sysfs_populate_region_dir(struct damon_sysfs_schemes *sysfs_schemes,
- 	if (!region)
- 		return;
- 	region->sz_filter_passed = sz_filter_passed;
--	list_add_tail(&region->list, &sysfs_regions->regions_list);
--	sysfs_regions->nr_regions++;
- 	if (kobject_init_and_add(&region->kobj,
- 				&damon_sysfs_scheme_region_ktype,
- 				&sysfs_regions->kobj, "%d",
- 				sysfs_regions->nr_regions)) {
- 		kobject_put(&region->kobj);
-+		return;
- 	}
-+	list_add_tail(&region->list, &sysfs_regions->regions_list);
-+	sysfs_regions->nr_regions++;
- }
+ #define damon_for_each_region_from(r, t) \
+-	list_for_each_entry_from(r, &t->regions_list, list)
++	list_for_each_entry_from(r, &(t)->regions_list, list)
  
- int damon_sysfs_schemes_clear_regions(
-
-base-commit: 011caa6d782382337b598a92aefe3c5db5ed8c0e
+ #define damon_for_each_region_safe(r, next, t) \
+-	list_for_each_entry_safe(r, next, &t->regions_list, list)
++	list_for_each_entry_safe(r, next, &(t)->regions_list, list)
+ 
+ #define damon_for_each_target(t, ctx) \
+ 	list_for_each_entry(t, &(ctx)->adaptive_targets, list)
+@@ -923,7 +923,7 @@ static inline unsigned long damon_sz_region(struct damon_region *r)
+ 	list_for_each_entry_safe(s, next, &(ctx)->schemes, list)
+ 
+ #define damos_for_each_quota_goal(goal, quota) \
+-	list_for_each_entry(goal, &quota->goals, list)
++	list_for_each_entry(goal, &(quota)->goals, list)
+ 
+ #define damos_for_each_quota_goal_safe(goal, next, quota) \
+ 	list_for_each_entry_safe(goal, next, &(quota)->goals, list)
 -- 
-2.47.3
+2.43.0
+
