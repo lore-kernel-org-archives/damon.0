@@ -1,111 +1,78 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 729DD155757;
-	Tue, 19 May 2026 00:38:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 392CB2580D7;
+	Tue, 19 May 2026 00:54:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779151106; cv=none; b=cuNCoSdKo+3Pz8uaqStN6lz0AKiFFn3veIQJMM0eIdRpzoYLn8w+sruX7gqu/sBL1Obrm8fMxs3na9lceyqxW5Zb1ji9SCEyga+2imb6ETHJ3XXUeICDVJva1dZ/ZU6M9evIVUSaMhZUXcJNl/0AIchfSQNpBN4IfjK31n2rF5E=
+	t=1779152096; cv=none; b=Ljn1SBc198HabTnJc90eU7BDJFwEdO3HfUWxJTFEnzTiHjVP3CN9VCDyrAnMvhbQMs3kRSQP0nfvXW4YjaAujHgjb4W21rPPOsMLl/O+pzx6C7xkgYgOqikNKXWAZ7iN/NAYVzUHgrWYnCVKDhF8oQHEt2Spakf+j/ZtCEOixiU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779151106; c=relaxed/simple;
-	bh=dLXATdWeDSOf90S8HMR8NRXCMaR+PI2JbsB1ZSuiKQo=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=QlgEQW8TZXZq7sSEIwvIORnvQP4CIoHnMnmvUBKzsUdN/fTWXYBHu6/9wvpxORxcRBrCIk1DTH5azySxwQdhbSw/hwshaOF3rVr3SIE/9Rclhc8pwblSCPkHmXNvFutZNrloFpCNV27K+3CXPSknbfL92QhOBo4x5hDhPnK+W14=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sqAq29rG; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1779152096; c=relaxed/simple;
+	bh=rjK+kkOfq8osA8oY6NXr+4d4KyeVsosRN8eq39UvKYg=;
+	h=Date:From:To:Cc:Subject:Message-Id:In-Reply-To:References:
+	 Mime-Version:Content-Type; b=V8f6DBj6woCgfyziQVqlAUJoTczKRVNGXlfJv8TEJxhR57cTgk0HuRRTEHwBBOpcJdgVv57b2rmTDPTUWrw7ym8bQELZ7juuXQAL/HlN7Y8JcDCBQA8mB+7OUIgv2RrbcmaAVsRzFSiNOJb5K5pGuLdNsyAssscpipI7qioZ0bM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linux-foundation.org header.i=@linux-foundation.org header.b=vK5R7wNW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sqAq29rG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9515CC2BCB7;
-	Tue, 19 May 2026 00:38:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1779151106;
-	bh=dLXATdWeDSOf90S8HMR8NRXCMaR+PI2JbsB1ZSuiKQo=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sqAq29rGfrXDj64i1THzbhpWcgmaVJOwLO9wc/4a8BCKsDImTd4wp5jCszDqZ+weH
-	 cEIKFmCQjenJQPRhLk3MQ9/QZkk5AE6SaJ8FY4qTgp6pszrgwApBGd4XJ4Ose5YnsP
-	 Kmt9I16Bv2sAn+I4esI4WBDSVfUq2FwQGNodak6o1e1BO99E1fwoNr6TLj5eE07UDe
-	 iSUjYL1fhoBcFxZnI3VPgUbciizHm4vBLWI4qmn+PW31pukvDt4cTUq2eWH1TwGyrA
-	 zSrCwzjgIhyztmmXP2fX/Guv7kTrG9eOYXxVx8F4ByLjUJzRNftBgqOdzjYpNz4vyU
-	 be3unufwToIVw==
-From: SeongJae Park <sj@kernel.org>
-To: Ravi Jonnalagadda <ravis.opensrc@gmail.com>
-Cc: SeongJae Park <sj@kernel.org>,
-	damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org,
-	linux-doc@vger.kernel.org,
-	akpm@linux-foundation.org,
-	corbet@lwn.net,
-	bijan311@gmail.com,
-	ajayjoshi@micron.com,
-	honggyu.kim@sk.com,
-	yunjeong.mun@sk.com
-Subject: Re: [RFC PATCH 2/5] mm/damon/core: cap effective quota size to total monitored memory
-Date: Mon, 18 May 2026 17:38:16 -0700
-Message-ID: <20260519003818.99779-1-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <CALa+Y14PXA_anNdvJCzx4RfKoKj6hNmEG39KUvMALtOBznprkw@mail.gmail.com>
-References: 
+	dkim=pass (1024-bit key) header.d=linux-foundation.org header.i=@linux-foundation.org header.b="vK5R7wNW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70072C2BCB7;
+	Tue, 19 May 2026 00:54:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linux-foundation.org;
+	s=korg; t=1779152096;
+	bh=rjK+kkOfq8osA8oY6NXr+4d4KyeVsosRN8eq39UvKYg=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=vK5R7wNWdyEsDjzjeRvL9vOaPwLXy7ax6Zxw3caXnzB5E8TsIepJzz/Il/kSIGVUC
+	 sfszVBboFtw7yIBMCrWn3ezkcoqZGFJFh2OFlcHNuPGyX/vmKwFntLlLQh6/S+eRvq
+	 b7qAcfAcU/jRgIdb9kPwUMSoFBtmUmUHoJSrsDkA=
+Date: Mon, 18 May 2026 17:54:54 -0700
+From: Andrew Morton <akpm@linux-foundation.org>
+To: SeongJae Park <sj@kernel.org>
+Cc: "Liam R. Howlett" <liam@infradead.org>, David Hildenbrand
+ <david@kernel.org>, Jonathan Corbet <corbet@lwn.net>, Lorenzo Stoakes
+ <ljs@kernel.org>, Masami Hiramatsu <mhiramat@kernel.org>, Mathieu Desnoyers
+ <mathieu.desnoyers@efficios.com>, Michal Hocko <mhocko@suse.com>, Mike
+ Rapoport <rppt@kernel.org>, Shuah Khan <shuah@kernel.org>, Shuah Khan
+ <skhan@linuxfoundation.org>, Steven Rostedt <rostedt@goodmis.org>, Suren
+ Baghdasaryan <surenb@google.com>, Vlastimil Babka <vbabka@kernel.org>,
+ damon@lists.linux.dev, linux-doc@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-kselftest@vger.kernel.org,
+ linux-mm@kvack.org, linux-trace-kernel@vger.kernel.org
+Subject: Re: [PATCH 00/28] mm/damon: introduce data attributes monitoring
+Message-Id: <20260518175454.d968f11139f64c3b8d93a5c3@linux-foundation.org>
+In-Reply-To: <20260518234119.97569-1-sj@kernel.org>
+References: <20260518234119.97569-1-sj@kernel.org>
+X-Mailer: Sylpheed 3.8.0beta1 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
-On Sun, 17 May 2026 22:22:34 -0700 Ravi Jonnalagadda <ravis.opensrc@gmail.com> wrote:
+On Mon, 18 May 2026 16:40:48 -0700 SeongJae Park <sj@kernel.org> wrote:
 
-> On Sun, May 17, 2026 at 11:37 AM SeongJae Park <sj@kernel.org> wrote:
-> >
-> > Hello Ravi,
-> >
-> > On Sat, 16 May 2026 14:03:54 -0700 Ravi Jonnalagadda <ravis.opensrc@gmail.com> wrote:
-> >
-> > > The DAMOS quota goal tuner can compute an effective size (esz) larger
-> > > than the total monitored memory because it integrates over cumulative
-> > > deltas without bounding by the actual workload size.  Once esz exceeds
-> > > total monitored memory, the per-tick "remaining quota" arithmetic
-> > > stops being meaningful: any scheme can apply to the entire monitored
-> > > space and "remaining" stays positive indefinitely.
-> >
-> > Nice finding!
-> >
-> > >
-> > > Cap esz to the total size of all currently monitored regions as a
-> > > final bound after all other quota calculations.  Add
-> > > damon_ctx_total_monitored_sz() helper that sums region sizes across
-> > > all targets.
-> >
-> > You could also make an arbitrary cap by setting the static size quota.  That
-> > is, if there are not only quota goal but also the size quota and/or time quota,
-> > and the different types of quotas disagree about the real quota, DAMOS uses
-> > smallest quota.  You could read damos_set_effective_quota() code and kernel-doc
-> > comment of 'struct damos_quota' for more details.
-> >
-> > So you could apply the total monitoring region size cap by setting the size
-> > quota of the total monitoring region size.  Could that work for you?
-> >
-> > Adding the total monitoring region size cap makes sense to me, and I think that
-> > will make user experience better.  But, if the size quota based cap works, that
-> > could also be handled on user space in an easier and even a betetr way.  If so,
-> > I'd prefer the direction, to reduce kernel code complexity.  What do you think?
+> TL; DR
+> ======
 > 
-> Hello SJ,
+> Extend DAMON for monitoring general data attributes other than accesses.
+> The short term motivation is lightweight page type (e.g., belonging
+> cgroup) aware monitoring.  In long term, this will help extending DAMON
+> for multiple access events capture primitives (e.g., page faults and
+> PMU) and eventually pivotting DAMON to a "Data Attributes Monitoring and
+> Operations eNgine" in long term.
+
+Added, thanks.
+
+> Plan for Dropping RFC tag
+> =========================
 > 
-> Agreed.  quota->sz combined with the smallest-quota-wins rule in
-> damos_set_effective_quota does express this cap from userspace
-> without kernel changes, and keeping the kernel side clean is the
-> right call.
+> Making changes for feedback from myself, humans and Sashiko should be
+> the major remaining work.
 > 
-> If the UX argument carries weight later, I'm happy to respin v2
-> with sashiko fixes addressed.
+> I'm currently hoping to drop the RFC tag by 7.2-rc1.
+> 
 
-Makes sense.  I find no change on the weight for now.  If someone else
-including myself or you in the future claims again, we could revisit.
+I removed this section.
 
 
-Thanks,
-SJ
-
-[...]
