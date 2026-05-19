@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72CBD2BCF46;
-	Tue, 19 May 2026 01:14:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBBE72417D9;
+	Tue, 19 May 2026 01:28:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779153287; cv=none; b=bQLWvE9b7FW2aYI5xevhdUdyr1GXLTbPoUaMD8UyEVfrsLetBcDRLGxgi6LctxX6jQx0wWxXZsFRy4e462jHWE9eeGN2tZ8V3DSBoWc78IVlDDbwAAXhrKis+G1iHUae8fTMru5kfkveIwcXEECDVj0g2HumT9yyk3VD2oHY/JA=
+	t=1779154080; cv=none; b=WZepUURmh8Vt6/YKlzAiM14BlASA4We0BReSrCk2uuAXOKS4WDN+Bu1XVfMr9GQrhHIqVMtlIiI/upUnn1J8rXGmUTyGPObfTCz+Z4+yoZuhHAuwNdSs9S8uYcmflQmCoAAVi5ZKInJO5MWc5FpfLW4v6q2IUT4I11qTbMlF3Ac=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779153287; c=relaxed/simple;
-	bh=2kljYz959akpWYYVv87a7PKBDFfGelUMKZ7YiyHZVXA=;
+	s=arc-20240116; t=1779154080; c=relaxed/simple;
+	bh=DjXNCz7wjkPFz2WXiAKd8+VZo5X/xiI3NVF+wDWE2s4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Tb+o8gPP0EZRSbXFaU51Cpx0I7OvdwWkeZUmOJeJCQF10aNzCXfXijBWtRxu684jvt12JRhEUTwlLaND6XN08isdubkdqvNQ5ILgygvx9Czs0Rncq2CZETOtNvOYg91gJi+//sArT0F4UkWz4fHL39zMxgbUBoUaAC4GDCAGR0c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pWilHvQP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=hpnfj5qFmX/wtXICv7FXCkvp1c3Ayh2FxWDM9Ra4chjWEsKgv4jDz1dRWAANXwjvTqdxwAWnCDx3njUeDjEEvpYVkF0nIihlliUeTeIDQt1yOqAoXuB2TH+HTqjg622dkrnShxFXlV4elIWrgqwr6nMq1ywGQzIoRgNu3NOA8qA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=m9HtO594; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pWilHvQP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99DD6C2BCB7;
-	Tue, 19 May 2026 01:14:46 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="m9HtO594"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B273CC2BD05;
+	Tue, 19 May 2026 01:27:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1779153287;
-	bh=2kljYz959akpWYYVv87a7PKBDFfGelUMKZ7YiyHZVXA=;
+	s=k20201202; t=1779154080;
+	bh=DjXNCz7wjkPFz2WXiAKd8+VZo5X/xiI3NVF+wDWE2s4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pWilHvQPZZd7DeQWwFDL3B4sTRguYaw7ISYSe0UQ0fYUO4eJke5tPz64CcMo3G2J6
-	 +wnwTk6xFCEThHHyMi4f6QMI27THb57EWnbonfpK2XsqJBdW1I3Ugeazh8Lo0drZDD
-	 2Ahmm/UqczhgdP1cDp6262zavReH9qJ5DxDtn2zhNP8U/yxW+PsiDvZBc6v0ojukp6
-	 dWQJ4GbQoPLGangb7/vvH/nvpHjDw0urB8TVWWRfpI3A6+IiPUG7Cqfr5n1M9tf/5y
-	 xIQ3wSXcEeLz3jTPyzyPuQkJIB7haF7JWAJc3vswiHlSLNcDPYxsVFTK7r287W595C
-	 raaFcnwN+N1RA==
+	b=m9HtO594Zbm3HLKn9aIlj+5m+ubOP15FeC9sHw6SxJZQKm9yr70dhyJUTPgJqllOB
+	 s0Cf/hIqoPRQ5JzUNxly+jkmbaM9FFV1W3It0w0BVqAeyWvomKHflfuMmO8OcbwIcR
+	 wMM4yevotJSHREc5k0fpb0g3L69qAFXY/E8q5BE2XmFWDeYaQ/mUa9aGblCtbp4PnK
+	 IJuhS+vGUh3T95sXpT6Hmskqw36v3qinWorYh1mBT9Na3/f7UDEtB/5iByd6oWTchn
+	 e1mK0WtwJTjKvX2CBfWYevBx+ypsrRaL9iUf4D9rSGBM+9EbLYZORoS+9kyiuBRXK8
+	 y8HqZUM2VuBVg==
 From: SeongJae Park <sj@kernel.org>
 To: Ravi Jonnalagadda <ravis.opensrc@gmail.com>
 Cc: SeongJae Park <sj@kernel.org>,
@@ -39,11 +39,11 @@ Cc: SeongJae Park <sj@kernel.org>,
 	ajayjoshi@micron.com,
 	honggyu.kim@sk.com,
 	yunjeong.mun@sk.com
-Subject: Re: [RFC PATCH 4/5] mm/damon/paddr: skip free pageblocks in migration walk
-Date: Mon, 18 May 2026 18:14:28 -0700
-Message-ID: <20260519011429.100021-1-sj@kernel.org>
+Subject: Re: [RFC PATCH 5/5] mm/damon/paddr: add time budget to migration page walk
+Date: Mon, 18 May 2026 18:27:50 -0700
+Message-ID: <20260519012752.100188-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <CALa+Y17nudor22aJvakfos3UegPgEG1M8N7cJPAxWX0Ca=MvfA@mail.gmail.com>
+In-Reply-To: <CALa+Y17XTzjAK5ZyKAKZLN1cAE-+c+2DgqpmuHGWgjUAZMgkFg@mail.gmail.com>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -54,125 +54,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On Sun, 17 May 2026 22:38:51 -0700 Ravi Jonnalagadda <ravis.opensrc@gmail.com> wrote:
+On Sun, 17 May 2026 22:54:18 -0700 Ravi Jonnalagadda <ravis.opensrc@gmail.com> wrote:
 
-> On Sun, May 17, 2026 at 4:38 PM SeongJae Park <sj@kernel.org> wrote:
+> On Sun, May 17, 2026 at 4:43 PM SeongJae Park <sj@kernel.org> wrote:
 > >
-> > On Sat, 16 May 2026 14:03:56 -0700 Ravi Jonnalagadda <ravis.opensrc@gmail.com> wrote:
+> > On Sat, 16 May 2026 14:03:57 -0700 Ravi Jonnalagadda <ravis.opensrc@gmail.com> wrote:
 > >
-> > > damon_pa_migrate() walks every PFN in a region linearly, calling
-> > > damon_get_folio() for each one.  On sparse physical address spaces
-> > > (e.g., CXL-attached memory), a single DAMON region can span hundreds
-> > > of gigabytes where most memory is free and sitting in the buddy
-> > > allocator.  Most page lookups are fruitless and dominate kdamond
-> > > tick time.
+> > > On populated physical address ranges the pageblock skip optimization
+> > > alone is insufficient — most pageblocks contain at least one allocated
+> > > page, so the walk still iterates millions of PFNs.
 > >
-> > On sparse address spaces, the problem would be large DAMON regions of offlined
-> > memory.  The large DAMON regions that nearly all freed memory is another
-> > problem that doesn't require the sparse address spaces.  If I'm not wrong, the
-> > above paragraph could better clarified in my opinion.
+> > So my questions to the fourth patch of this series are also applied here,
+> > especially about the assumption of systems having most memory free.  I will
+> > hold digging deep here until the high level discussion is completed.
 > >
-> > >
-> > > Check at pageblock boundaries (2MB on x86_64) whether the block is
-> > > entirely free.  If the first page of a pageblock is a buddy page at
-> > > pageblock_order or higher, the entire block is free and can be
-> > > skipped.
-> > > Similarly skip pageblocks where pfn_to_online_page() returns
-> > > NULL.
-> > >
-> > > This reduces the iteration from O(region_sz / PAGE_SIZE) to
-> > > O(region_sz / pageblock_sz) + O(populated_pages).
-> > >
-> > > buddy_order_unsafe() is used without zone->lock.  A transient false
-> > > positive (block becomes non-free between the PageBuddy and order
-> > > checks) costs at most one tick of missed candidates on that block;
-> > > the next tick re-scans.  No correctness consequence as DAMON walks
-> > > are best-effort.
-> >
-> > I was initially thinking this is a good and reasonable optimization approach.
-> > But on the second thought I get below questions.
-> >
-> > For large offlined memory space problem, couldn't we simply tune DAMON's
-> > monitoring regions boundary to ignore the holes?
-> >
-> > For large free memory area, is it reasonable to assume such situations?  In
-> > production, users will try to utilize as much memory of the system as possible.
-> > Then, wouldn't there be such problematically large free memory area?
-> >
-> > Could you please enlighten me?
-> >
+> Hello SJ,
 > 
-> Hi SJ,
+> Stepping back to look at this with fresh eyes, I think this
+> patch is in the same bucket as patches 1 and 3 (full background
+> on the patch 3 thread): it came out of the same parallel debug
+> effort, where I was seeing long walks during the startup
+> transient on a multi-hundred-GB monitored target -- before
+> kdamond_split_regions() and damon_apply_min_nr_regions() had
+> trimmed the initial regions down -- and was unsure whether
+> those long walks were contributing to the NMI-side
+> responsiveness issues I was chasing.
 > 
-> You're right on the first point.  For static offlined memory
-> holes (memory hotplug gaps, partial socket population, etc.) the
-> right answer is configuring the monitoring region boundaries to
-> exclude them upfront, not making the walk skip them at runtime.
-> The changelog is clearer if I narrow the patch to the free-but-
-> online case.
-
-Thank you for clarifying, Ravi.
-
+> Once the actual NMI problem was fixed and the per-region work
+> in steady state is bounded by DAMON's region splitting (and by
+> the scheme's quota when one is set), the per-call cost in
+> damon_pa_migrate() is already small enough that the budget
+> isn't doing useful work.  cond_resched() after damon_migrate_pages()
+> covers the preemption case.
 > 
-> On the free-online case: I agree large free memory areas are
-> not the steady state on a fully-utilized system.  The cases I
-> had in mind are more limited:
-> 
->    - A workload using a small part of a much larger range, with
->       the rest left as headroom (e.g. 64 GB used of a 512 GB
->       range).
+> If a real workload later shows a per-region walk long
+> enough to matter, I'll re-evaluate then with concrete numbers.
 
-Why would the user have that large amount of headroom?
+Sounds good!
 
-> 
->   - Shared tiers where workloads are allocated and freed on their own
->     timelines.  Any single piece of free memory doesn't last
->     long, but on a busy system there's typically a meaningful
->     free fraction in the range at any point -- especially on a
->     slower tier, where workloads prefer faster memory first
->     when it's available.
+FYI, many parts of DAMON are designed assuming it will be used on production
+environments that have long-running workload and prefer stability.  It helps
+making good results in long run, but also make it difficult to understand it in
+short term, especially on lab environments.
 
-I agree there could be reasonable amount of free memory.  But, I'm still not
-feeling difficult to know would that be big enough to cause the issue in DAMOS.
-
-> 
-> The patch as written is a narrow optimization for those cases:
-> the pageblock-aligned check is one extra read per
-> pageblock_nr_pages PFNs (about 1 per 512 on x86_64), so it's
-> effectively a no-op when the region is fully populated.
-> 
-> If you don't see those workloads as warranting the change, I'm
-> happy to drop the patch.  If the framing is the issue more than
-> the change itself, I can respin a v2 with:
-> 
->   - the changelog narrowed to the free-but-online case (no
->     offlined-memory framing);
->   - any suggestions from you on sashiko's review comments.
-
-I think your arguments make sense in general.  But I'm still not quite sure
-what is the realistic size of the problem, so difficult to judge.  Having a
-clearer and detailed use case and backing data would be nice.
-
-I also got a little and trivial concern for this approach.  DAMOS quota system
-assumes the cost of applying DAMOS action will be proportional to the size of
-memory it is applied for.  After this patch is applied, the cost will depend on
-amount of free or offline memory in the memory.  It might make users difficult
-to predict the overhead of DAMOS.  I might be too picky and hallucinated, but
-to be honest I'm not feeling 100% comfortable with this change.
-
-For long term, we are working on extending DAMON for general data attributes
-monitoring.  I pretty sure you also aware of that.  The v1 [1] is just added to
-mm-new for more testing.  It is currently supporting anon page and belinging
-memory cgroup attributes.  I'm planning to extend that a lot.  In future, DAMOS
-might be able to target and filter memory based on the attributes monitoring
-results.  Then, we may be able to extend it for monitoring online or freeness
-of the memory and ask DAMOS to filter out or de-prioritize memory regions
-having high proportion of free or offline memory.
-
-So, long story short, I'd suggest to revisit this after a clear use case and
-real problem is found, unless we have it right now.
-
-[1] https://lore.kernel.org/20260518234119.97569-1-sj@kernel.org
+I learned that by grateful users including you, and therefore recently
+developed the multiple quota tuning logics and failed regions charge ratio.  I
+feel like such DAMON limitation has contributed to this case to confuse you.
+Sorry if that was the case, and please feel free to share your pain points and
+improvement ideas.  Every user's use case including yours does matter!
 
 
 Thanks,
