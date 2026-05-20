@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95F933DD518
-	for <damon@lists.linux.dev>; Wed, 20 May 2026 13:59:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1177C3E834F
+	for <damon@lists.linux.dev>; Wed, 20 May 2026 14:04:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779285569; cv=none; b=U+qtSNEA2Gykf28ZVAdXZwJoTIQyP8sL+7+W15ZF77QrAD3k8D+jJjinIHDXxtVW4CU4GlUWuuWgdN6Va6fsaL5BmI/OWsV77fo08tRyvWk9drUdzpotxk84iVY6mLtr62BoWEUOXlpZoFschY8vUgxfgUCk0R/jVnnMCc1DHPk=
+	t=1779285898; cv=none; b=ME8mTkHHW0I5cCMXgVkZEGbutB9U6fV4t4MzoBFlNIvGtmlwiOma+kI/G5GkxoZSN8l3HRKDRqPdJugy6USGmXLD7RiP/0bAkse+zmo0DS86KVlCecpTiOI8JB8jvDmojUvCp+jKAGKb7jgp4Xn2BL1ITt24MHJZI2DRs0vdOz4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779285569; c=relaxed/simple;
-	bh=N3ctNneRlMheeWS382ye+y4Z2LWD5sZgMxvF/0QVlJ8=;
+	s=arc-20240116; t=1779285898; c=relaxed/simple;
+	bh=36JjRBsGaD0LaD0JrqGoGZ7Nu0vCfIbfl9jfbCEeROk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=lUJ2Dfmpxj554x02Lo0Rxb7L3c/BkXNq7Ey0EbcR0weMBBu29Y/3hsZ1vqo2sPt+ZxO5grYtOQm3Z6Wvr3l8V2YoXyQu/MPecHcODz59vuUfBgVWoASUKNRN7/rxCM+T3EJfruYVjcOFbHa6aKFulY5xgZzvtE/1Mwg4K1MR2DM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PivYSqqA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=iMavqpuiewD+oyCW9wxYuljX35OIwtO4IWzG+MP1SJFeiJ6GP45KNO3LhqP0scnIxXEXWSrxPxZNHfVlnyFMLPtj2cTSpHaV8HcyjIYBLZH/WcW4sky+4dw1glDHwYXakPw4nsG2f2TysujHxHhC6Xb9Qf9ieMgSJSwiRh8U7R4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Jza7z2JB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PivYSqqA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45C6C1F000E9;
-	Wed, 20 May 2026 13:59:26 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Jza7z2JB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AB181F000E9;
+	Wed, 20 May 2026 14:04:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1779285568;
-	bh=J/MX4U1SUawlR8ob/zt7SgP27ZqoRqS/XnjDXi0IjVk=;
+	s=k20260515; t=1779285896;
+	bh=wN2mVCP8TMkOZiTt11E4JmIQL9CD3q3WrSzD+0TMhYI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PivYSqqAVI2YXCN69XFi3TAehYIk+QxX5VG0TvBZaeza7cnUH5FpU9+cgIdkg6Cqk
-	 Rtyq6B+OFa4LArOSI+gTjoZ8CXc4duWa4H+iE1Pqhz65zU+JHekQcBH7DfblPucj+6
-	 F5Age2KW2O4FE8d2Eu1JWfoH+TRmA7dtjNIQBn+B8dhjlF4iTdOuX7z792NTAxslTs
-	 5tFClpP0gIlfs+vfr+To1lD7CkYIUcme3j2rLLWx8aWdfsCdDiC6HXnNVAGzEcsqap
-	 jSQaSNRNIa0XPRmAKEcsB7e9+dDKFvFDZsW8VuCDEV2AzF+I9zdBustjQEI73UaA1F
-	 GNtwkePsLSW5A==
+	b=Jza7z2JBa8CsJPhYbreyCxVn4xXhw1E2Pfkie53unjISAoLjAZ68j++YVo2SWEB1p
+	 muWPUBsKEyC7OSWeBc3oc134iWLX7vaS4e8nmHdCsx2nqSf3/tm5JC8hVSspBIbY2n
+	 glNwPJnIuVdKwO6+ZUNaglbzgGm5dTETTKQrjTs3m/xnY/EFJhi5ZHoQtTQ0wRhW3M
+	 l5cGsj1vy55RTIpwygxcQ4StzSixCp9jZ/ownqMYbXOYShtUrHX06gsN77xI0vi/KM
+	 u7rEBpIvNSFLjArvMLUj9ul4Ww+O7mQ9nHZ5hdUTWtCHGffNJD2HsdCnFNuXnr2zRW
+	 F18cnqlf8h2jg==
 From: SeongJae Park <sj@kernel.org>
 To: sashiko-bot@kernel.org
 Cc: SeongJae Park <sj@kernel.org>,
 	damon@lists.linux.dev
 Subject: Re: [RFC PATCH 08/14] mm/damon/core: add kdamond_call() debug_sanity check
-Date: Wed, 20 May 2026 06:58:59 -0700
-Message-ID: <20260520135902.169663-1-sj@kernel.org>
+Date: Wed, 20 May 2026 07:04:33 -0700
+Message-ID: <20260520140435.169811-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260520065300.A51591F00893@smtp.kernel.org>
 References: 
@@ -96,8 +96,8 @@ On Wed, 20 May 2026 06:52:52 +0000 sashiko-bot@kernel.org wrote:
 > encountered, and because it uses WARN_ONCE, prevent any actual regressions
 > where start > end from being reported?
 
-Nice catch.  start == end is also invalid because we disallow empty regions.  I
-will update it to start >= end in the next version.
+Good catch.  start == end should also trigger warning though, because DAMON
+disallows empty regions.  I will fix this in the next revision.
 
 > 
 > > +			WARN_ONCE(prev_r && prev_r->ar.end > r->ar.start,
