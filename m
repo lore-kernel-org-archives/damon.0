@@ -1,56 +1,42 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBF473AFD01;
-	Tue, 19 May 2026 15:08:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BF0E15E8B;
+	Wed, 20 May 2026 00:59:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779203329; cv=none; b=ZO1+kRMIEnUFYXZ1+vdVFgdprs5aS2DcMy+YNfAfJPOltfzrhZUdZP+oeGCsWuTqL3YJhEuHruERYYs13u60UcVSRQhDA8keKpnWtA+fVluEZWdBytS0pLoVe6WBNurJTu8z99kb4b2423vv5wpfHJ7y6XxNpQm60mzR9FcqEOI=
+	t=1779238793; cv=none; b=qGG3+8uJEsMPK+WI4/jyWXCO7GJbbatQQv3cTeML/51NHfzjQltm9J6zjAkJXc0sXEaF5PZQJ+vC7O/ifR7+roZD+RD97P7XXN7PcAUcpkbYTe70dp0D3yuPxM5Mabx0KAA87XAPzuLiSvOsO+b0aZinDidbIzKBvomyOPpkurg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779203329; c=relaxed/simple;
-	bh=FV3bnHAWG6JDwG0vOhj0R9ovh5EwMNT07xgca6IrsjQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XgvbbqVuBvciRGTXNhUJ8o8ozeI1kGPfdXHMy6RD5zAaFqP8NdG6989a/XULJ9e3Oy2PLE3B7dcQYZ7AMzp0RTWRvY2Jd6yF2jb09gxxgBHsVyk9FGOB6f8Ai94qATun4UUYX6W+pAS2GE4Ustt9gQESZGMfmvTowr3gDcL3hwo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OxFFM0MU; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1779238793; c=relaxed/simple;
+	bh=smDlNMdLuBBikPaqQTQClw/0iBPZA3/HEYBGeCsm1sc=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=mQJgVid9QNWapRr+2NEpLKmUcfvEd3plxWbW7k1Wgz8hcvvWXruf5HCmiIb8FjWM19YBEK+hP3pnWUNndjjOT2Y/nc5f5gQtQ9K6z6r7a19Khti53Pq/0VxuPlngVe6rcENJpvDtvbDJ6xclj8kFuk0nhDixn9OsbvX9falMebs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ega+ZfpQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OxFFM0MU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00C42C2BCB3;
-	Tue, 19 May 2026 15:08:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1779203329;
-	bh=FV3bnHAWG6JDwG0vOhj0R9ovh5EwMNT07xgca6IrsjQ=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OxFFM0MUdtG1/OomlH1wMHjesjiBoIXpggoVovV6Q2YPLfYRV7l/whvmgtymdZ38S
-	 GL9JouK6vRu6x7woFSDvJUCPSS+FdkAFnRKZaGZ3PdcYHoWRzYCwIfM/X8DIoyFB4j
-	 mi2ZrlnIX2WKexq9YtYTIC2l9RBEekmXzkMXLQVLT4j+gx/Eyfn39xsZhTcoVE8gwe
-	 VM7qrlaDqPKuyKXB7U4fvB54AuqXNLgcAP/ghlyAXH/JA9Nei7uRREUwoWB/dSqTBs
-	 vSAxLPbI3GfB+L14zWH/kLR888VQCgrrFHQs8G5CGQnSEWjqDDW3BREPyLQ6qexZ6E
-	 sNRPwsL5eUy7w==
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ega+ZfpQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 827371F000E9;
+	Wed, 20 May 2026 00:59:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1779238791;
+	bh=W+4vFlL4g0qhHATf1HFjGQrVj6nKXRbt1c5SFAqy/QQ=;
+	h=From:To:Cc:Subject:Date;
+	b=ega+ZfpQ4LhyPbpOUZx7SWPWfcdiT84ClE8sciQGPWYEH0lNt+E1xgwAEX9m1DpS9
+	 tJrAUjxmUn0/NOPeoP1zihiB6chH4SAxl0Bj57rIQayVHMOITsgq+BGaUB/s/MGGfj
+	 5JkPujhA9dksFfPu4hZ2q5BOExwHLQR6Xzcl9t5xHdUdjBdxMxt/exedy+iILvMxTz
+	 WftBCoHQK60Pebt1NFgmCUEb+WNf63bh4LXty3ngjyFraQkTASsl/4e9zpAcHZPukH
+	 hJzx+y0iqcpqQq5iuO3iv2/MnQ55HvoGCfNheK/I2nEWMIfAU9GObaVOz38UX2U3pn
+	 dZolO+NeT+mkA==
 From: SeongJae Park <sj@kernel.org>
-To: Maksym Shcherba <mshcherba2000@gmail.com>
+To: 
 Cc: SeongJae Park <sj@kernel.org>,
-	Maksym Shcherba <maksym.shcherba@lnu.edu.ua>,
-	akpm@linux-foundation.org,
-	david@kernel.org,
-	ljs@kernel.org,
-	liam@infradead.org,
-	vbabka@kernel.org,
-	rppt@kernel.org,
-	surenb@google.com,
-	mhocko@suse.com,
-	corbet@lwn.net,
-	skhan@linuxfoundation.org,
+	"# 6 . 17 . x" <stable@vger.kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	damon@lists.linux.dev,
-	linux-mm@kvack.org,
 	linux-kernel@vger.kernel.org,
-	linux-doc@vger.kernel.org,
-	linux-kselftest@vger.kernel.org
-Subject: Re: [PATCH 2/6] mm/damon/sysfs: implement update_schemes_quota_goals command
-Date: Tue, 19 May 2026 08:08:21 -0700
-Message-ID: <20260519150822.92326-1-sj@kernel.org>
+	linux-mm@kvack.org
+Subject: [RFC PATCH] mm/damon/core: trace esz at first setup
+Date: Tue, 19 May 2026 17:59:38 -0700
+Message-ID: <20260520005940.92003-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260519073352.16587-1-maksym.shcherba@lnu.edu.ua>
-References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -59,64 +45,54 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Tue, 19 May 2026 10:33:52 +0300 Maksym Shcherba <mshcherba2000@gmail.com> wrote:
+DAMON traces effective size quota from the second update, only if a
+change has been made by the update.  Tracing only changed updates was an
+intentional decision to avoid unnecessary same value tracing.  Always
+skipping the first value is just an unintended mistake.
 
-> On Mon, 18 May 2026 17:17:02 -0700 SeongJae Park <sj@kernel.org> wrote:
-> 
-> > On Mon, 18 May 2026 22:09:28 +0300 Maksym Shcherba <mshcherba2000@gmail.com> wrote:
-> > 
-> > > Add the logic to copy the current_value from the internal
-> > > damos_quota_goal structure to the damos_sysfs_quota_goal sysfs structure.
-> > > Introduce the DAMON_SYSFS_CMD_UPDATE_SCHEMES_QUOTA_GOALS command
-> > > and integrate it with the sysfs interface via the 'state' file.
-> > 
-> > Could you please further elaborate why you think this change is needed?  What
-> > is the expected use case and benefit?
-> >
-> 
-> Hi SJ,
-> 
-> The documentation (`Documentation/admin-guide/mm/damon/usage.rst`)
-> states that users can read the `current_value` file. However, the
-> kernel currently never updates this value in sysfs, preventing users
-> from reading the actual metrics.
-> 
-> This patch series implements the missing logic to align the code
-> with the documentation.
+The mistake makes the tracepoint based investigation incomplete, because
+the first effective size quota is never traced.  It is not a big issue
+when the 'consist' quota tuner is used, because it keeps changing the
+quota in the usual setup.
 
-Thank you for clarifying, Maksym.
+However, when the 'temporal' tuner is used, the quota value is not
+changed before the goal achievement status is completely changed.  For
+example, if the DAMOS scheme is started with an under-achieved goal, the
+quota is set to the maximum value, and kept the same value until the
+goal is achieved.  Because DAMON skips the first value, the user cannot
+know what effective quota the current scheme is using.  Only after the
+goal is achieved, the effective quota is changed to zero, and traced.
 
-> 
-> If the design intent was to intentionally keep `current_value`
-> internal and not expose it via sysfs, then the documentation is
-> incorrect. Let me know if that's the case, and I will send a v2
-> that drops the code changes and only fixes the documentation.
+Unconditionally trace the initial quota value to fix this problem.
 
-Yes, the documentation is incorrect.  It was written in the way due to
-following history.  The DAMOS quota auto-tuning feature was initially developed
-with oly 'user_input' target metric type.  In the case, 'current_value' is set
-by users.  Hence reading the file was returning the last user-input value.
-That is, as the documentation is also saying, it is returning the 'parameter'
-(user input) value.  It is not designed for exposing the internal state.
+Note that the 'temporal' quota tuner was introduced by commit
+af738a6a00c1 ("mm/damon/core: introduce
+DAMOS_QUOTA_GOAL_TUNER_TEMPORAL"), which was added to 7.1-rc1.  But even
+with the 'consist' quota tuner, the tracing is unintentionally
+incomplete. Hence this commit marks the introduction of the trace event
+as the broken commit.
 
-Later we extended the feature to let DAMOS self-fetch the current value.  The
-fact that the ``current_value`` is for reading and writing the parameter (user
-input) value, and therefore reading it doesn't return the internal set value,
-should be further clarified, but I forgot doing that.
+Fixes: a86d695193bf ("mm/damon: add trace event for effective size quota")
+Cc: <stable@vger.kernel.org> # 6.17.x
+Signed-off-by: SeongJae Park <sj@kernel.org>
+---
+ mm/damon/core.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-So, yes, if the current behavior is not making problem, let's update the
-documentation.  I'll wait for your v2 :)
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index 68b3b4bbc8fc9..0267faf216b95 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -2886,6 +2886,8 @@ static void damos_adjust_quota(struct damon_ctx *c, struct damos *s)
+ 	if (!quota->total_charged_sz && !quota->charged_from) {
+ 		quota->charged_from = jiffies;
+ 		damos_set_effective_quota(c, s);
++		if (trace_damos_esz_enabled())
++			damos_trace_esz(c, s, quota);
+ 	}
+ 
+ 	/* New charge window starts */
 
-> 
-> (Apologies for missing the cover letter where this should have
-> been explained, this is my first patch submission).
-
-No worries, we continuously mistake and learn from each other in the
-DAMON/mm/linux community!  Welcome to the community, and I'm looking forward to
-your v2!
-
-
-Thanks,
-SJ
-
-[...]
+base-commit: abe8c076ff4a1283d77c1c5cb7b975723314aec9
+-- 
+2.47.3
