@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1177C3E834F
-	for <damon@lists.linux.dev>; Wed, 20 May 2026 14:04:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D8863E6385
+	for <damon@lists.linux.dev>; Wed, 20 May 2026 14:08:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779285898; cv=none; b=ME8mTkHHW0I5cCMXgVkZEGbutB9U6fV4t4MzoBFlNIvGtmlwiOma+kI/G5GkxoZSN8l3HRKDRqPdJugy6USGmXLD7RiP/0bAkse+zmo0DS86KVlCecpTiOI8JB8jvDmojUvCp+jKAGKb7jgp4Xn2BL1ITt24MHJZI2DRs0vdOz4=
+	t=1779286125; cv=none; b=ARJ8GBTLPx6zPh9sAXWmoo36Uf3PinRkIfvihy/aKpDE7HDjryBJMsF2eWJGWfNANi9ezJPdf8Do+Nlh6KnqhzqatWd9xTq3AneoqSjUS9VkqK2jCVgd/0VikJgS4bzqz+BDRbW3+9EJbYvK4ISWqQlac/D/1TgSwnt3bcV/TC4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779285898; c=relaxed/simple;
-	bh=36JjRBsGaD0LaD0JrqGoGZ7Nu0vCfIbfl9jfbCEeROk=;
+	s=arc-20240116; t=1779286125; c=relaxed/simple;
+	bh=lQurJqAbQI3hRer1x8KrYTkBL/ZV2E+R9BKIrmY2tWY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=iMavqpuiewD+oyCW9wxYuljX35OIwtO4IWzG+MP1SJFeiJ6GP45KNO3LhqP0scnIxXEXWSrxPxZNHfVlnyFMLPtj2cTSpHaV8HcyjIYBLZH/WcW4sky+4dw1glDHwYXakPw4nsG2f2TysujHxHhC6Xb9Qf9ieMgSJSwiRh8U7R4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Jza7z2JB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=ih1yXCuUUHN31RAV1CWFhdFzV1QrPamVVEqF4kz3qYxvZQxjZiD0lRFIeIbjxUvxc4AAvF0++6hohcFkLUgssUaTQ6crpxKxC6LEHCCerDCsUqUlKSjT1HdlOSFd2oqW64hzcWHhNQQ1/BeaYrOLuPeAXeAlott573VHchTTUdc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KI+XBG6c; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Jza7z2JB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AB181F000E9;
-	Wed, 20 May 2026 14:04:49 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KI+XBG6c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8C381F000E9;
+	Wed, 20 May 2026 14:08:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1779285896;
-	bh=wN2mVCP8TMkOZiTt11E4JmIQL9CD3q3WrSzD+0TMhYI=;
+	s=k20260515; t=1779286123;
+	bh=yYZDPXtG2OnMivizJb8zw8yXPrUKVqw3fL+muPFo2cM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Jza7z2JBa8CsJPhYbreyCxVn4xXhw1E2Pfkie53unjISAoLjAZ68j++YVo2SWEB1p
-	 muWPUBsKEyC7OSWeBc3oc134iWLX7vaS4e8nmHdCsx2nqSf3/tm5JC8hVSspBIbY2n
-	 glNwPJnIuVdKwO6+ZUNaglbzgGm5dTETTKQrjTs3m/xnY/EFJhi5ZHoQtTQ0wRhW3M
-	 l5cGsj1vy55RTIpwygxcQ4StzSixCp9jZ/ownqMYbXOYShtUrHX06gsN77xI0vi/KM
-	 u7rEBpIvNSFLjArvMLUj9ul4Ww+O7mQ9nHZ5hdUTWtCHGffNJD2HsdCnFNuXnr2zRW
-	 F18cnqlf8h2jg==
+	b=KI+XBG6cJIveOCL0T4eciKNqWG6NTaUrOwj4uCSzAbWwllIsWrNKHDNVxe+V2HmqL
+	 b0545mFCAO5P6n72knydnl41l/qwPHnNO1KzAy0Sd7jLKpNG6WhQWrDjN831y1ghkQ
+	 6znojas4XL7DJa9j1dB8OwNnqQszDiFUK0Tu6qP6rN4Mim0a++UAt88s9z8/WiXPar
+	 FnPsEOHcI+09jHRBE/E5Lv+r7mLwVaOSD8lF4N82NvXRx7wkLutY4++7Mp0zUHEDbd
+	 /dEq9t79ZyC1KMm+aXD1WAK4dfbntWJtFgJu2I15doE8g3JYAwqILtj7Cru/qFuOIU
+	 sXzr54bTDFT1Q==
 From: SeongJae Park <sj@kernel.org>
 To: sashiko-bot@kernel.org
 Cc: SeongJae Park <sj@kernel.org>,
 	damon@lists.linux.dev
-Subject: Re: [RFC PATCH 08/14] mm/damon/core: add kdamond_call() debug_sanity check
-Date: Wed, 20 May 2026 07:04:33 -0700
-Message-ID: <20260520140435.169811-1-sj@kernel.org>
+Subject: Re: [RFC PATCH 13/14] selftests/damon/sysfs.sh: test addr_unit file existence
+Date: Wed, 20 May 2026 07:08:17 -0700
+Message-ID: <20260520140819.169963-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260520065300.A51591F00893@smtp.kernel.org>
+In-Reply-To: <20260520064157.4F94F1F000E9@smtp.kernel.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -45,72 +45,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On Wed, 20 May 2026 06:52:52 +0000 sashiko-bot@kernel.org wrote:
+On Wed, 20 May 2026 06:41:56 +0000 sashiko-bot@kernel.org wrote:
 
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] The sanity check for region bounds in `damon_verify_ctx` uses an inverted condition, causing it to falsely trigger a kernel warning on all valid regions and fail to catch invalid ones.
+> - [Medium] The newly added test for the `addr_unit` sysfs file incorrectly passes 'exit' instead of 'exist' to `ensure_file()`, causing the test check to be silently skipped.
 > --
 > 
-> commit 7d803208aef5bc4f95dd9c37657de5b62618e8e6
+> commit a9bc6162fe06c0405081aeb68c3f5e9a54287e20
 > Author: SeongJae Park <sj@kernel.org>
 > 
-> mm/damon/core: add kdamond_call() debug_sanity check
+> selftests/damon/sysfs.sh: test addr_unit file existence
 > 
-> This commit introduces a debug sanity check for the DAMON context state
-> before handling damon_call_control objects in kdamond_call(). The check
-> verifies region boundaries, overlaps, and the total region count under
-> CONFIG_DAMON_DEBUG_SANITY.
+> This commit adds a test to verify the existence of the addr_unit sysfs
+> file in the DAMON selftests.
 > 
-> > diff --git a/mm/damon/core.c b/mm/damon/core.c
-> > --- a/mm/damon/core.c
-> > +++ b/mm/damon/core.c
+> > diff --git a/tools/testing/selftests/damon/sysfs.sh b/tools/testing/selftests/damon/sysfs.sh
+> > index b3418214ed358..1e10881afabb6 100755
+> > --- a/tools/testing/selftests/damon/sysfs.sh
+> > +++ b/tools/testing/selftests/damon/sysfs.sh
+> > @@ -365,6 +365,7 @@ test_context()
+> >  	ensure_dir "$context_dir" "exist"
+> >  	ensure_file "$context_dir/avail_operations" "exit" 400
+> >  	ensure_file "$context_dir/operations" "exist" 600
+> > +	ensure_file "$context_dir/addr_unit" "exit" 600
 > 
-> [ ... ]
+> [Severity: Medium]
+> Is "exit" a typo for "exist" in this new test?
 > 
-> > @@ -3326,6 +3326,37 @@ static void kdamond_usleep(unsigned long usecs)
-> >  		usleep_range_idle(usecs, usecs + 1);
-> >  }
-> >  
-> > +#ifdef CONFIG_DAMON_DEBUG_SANITY
-> > +static void damon_verify_ctx(struct damon_ctx *c)
-> > +{
-> > +	struct damon_target *t;
-> > +	struct damon_region *r;
-> > +
-> > +	damon_for_each_target(t, c) {
-> > +		struct damon_region *prev_r = NULL;
-> > +		unsigned int nr_regions = 0;
-> > +
-> > +		damon_for_each_region(r, t) {
-> > +			WARN_ONCE(r->ar.start <= r->ar.end,
-> > +					"region start (%lu) <= end (%lu)\n",
-> > +					r->ar.start, r->ar.end);
-> 
-> [Severity: High]
-> Should this condition be inverted? WARN_ONCE triggers when the condition
-> evaluates to true. Since a valid memory region typically has a start address
-> strictly less than its end address, this evaluates to true for normal
-> regions.
-> 
-> Could this trigger a spurious warning on the very first valid region
-> encountered, and because it uses WARN_ONCE, prevent any actual regressions
-> where start > end from being reported?
+> If ensure_file() expects "exist" or "not_exist" as its second argument,
+> passing "exit" might cause the function to return immediately without
+> performing any file existence or permission checks, which would silently
+> skip the intended test coverage.
 
-Good catch.  start == end should also trigger warning though, because DAMON
-disallows empty regions.  I will fix this in the next revision.
+Good catch.  The ensure_file() expects "not_exist" or anything else for the
+second argument, so this test is working as intended.  But definitely "exit" is
+a typo.  I will fix this in the next revision.
 
 > 
-> > +			WARN_ONCE(prev_r && prev_r->ar.end > r->ar.start,
-> > +					"region overlap (%lu > %lu)\n",
-> > +					prev_r->ar.end, r->ar.start);
-> > +			prev_r = r;
-> > +			nr_regions++;
-> > +		}
-> 
-> [ ... ]
+> >  	test_monitoring_attrs "$context_dir/monitoring_attrs"
+> >  	test_targets "$context_dir/targets"
+> >  	test_schemes "$context_dir/schemes"
 > 
 > -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260520062858.167011-1-sj@kernel.org?part=8
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260520062858.167011-1-sj@kernel.org?part=13
 
 
 Thanks,
