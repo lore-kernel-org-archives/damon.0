@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C129377563;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4614375F83;
 	Wed, 20 May 2026 06:29:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779258554; cv=none; b=GXnSBAp5Pf3ZPWMZfxZ7+CoSiy3kn+EN4mj7gT5/2o7QQFiyits0DDEzoz0VNUYT0LjVWbB9YVc4YUI5Xeo/Y8vYhy/8r2guLbiAePchYgn/TPeiJRtVNAJuTERehpxsRKZbXytCFk3ZGYzXABjXrzKwPa6+jy+qdqFTP7uK+ws=
+	t=1779258554; cv=none; b=hLWztzqgcBxLhwHSrwe+p12DRbhR0DGXqOLD49IGzrXFUpNRpf40xxJBRTwWDuzPwzL4hfNm+YcxjoyQlQibFFlrU4pyZigzHkYO6z7oG6AzDB+AD9UqjArqNgnP0Wbok/susb756sOBPlQYooCgDKrosixNkuF419Vr90eyUxI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1779258554; c=relaxed/simple;
-	bh=oKcvWEBB+phUNHkRtIwUr8T3SKEiRgFEfEgx4EAVppU=;
+	bh=X9OlJ2prAobDVbk0Vv6nVK2KxF0mht3x911wZZmZP5Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Lrvi/dp/RYbWiWG76rVeN01FEF0EPE5jgCZrruHMwgd92hW+BWpL5nRZTTu+nBfL48S1hp/taGh8n2NZi5k6cO1IEXT5/GIUHVgBXDo7VcV9rwcOgEQ7J7EndJsSeLJnTJEoi4E9ZBm5vA8VY4x1cHo4GbZzh1tNdYilapK//Bg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PgZ50JOe; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=brHtxalTY5DpsNBfkJMBLkss5hTcqzpcDUbt6bSxd3deMrl/ai42SazvDrAyz3gBoJRSRRr3/Q244pfm4unp41qlzIfsDTmkfop2uzJtX5xDPzKWXgOe6FCM6UZzyNOFrP82IjK2uTw6jSsO+6chC2oho+S/gJ26nUgMf9Aoc/I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XHnW23o/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PgZ50JOe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 213B11F00899;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XHnW23o/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A1261F00894;
 	Wed, 20 May 2026 06:29:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
 	s=k20260515; t=1779258552;
-	bh=c7A3rUBWM/Djhjjd8QeXCkcV9IZlc4S1Vf3PBEQN5+Y=;
+	bh=+/Povz79d87HbdJqBmb3Cot0viqAd/5mMxq8n9ZgbLI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PgZ50JOeLiEuksmomVn2DwKHg94AZjDsM/IsCr3VtY03zr36FdeD4Q/LXTinb6HwO
-	 2/UwulH0bEXThMrdWXxhdIEmGBkmM2BrBHTt0wtzro7wEi9WOLmcpSxwM3s2yEos3P
-	 bK+QfuctqcaejPwfxNm1Q1HHisvTvFFPnB+Pu+PiJPcSLp0TTCOPhzm+9P0++/bRAQ
-	 MjqesEPk9hsm7j5cP3Mnc+BDyznNJ/KtIdzfhuiFeFlju3zg+ZYw4WxdSlaQ2xgLjE
-	 wjgRakEo8MdiRY9Fbb3oU+giBP6faVa6tBkluW8oO2rP+gcog2pP9lVpg9GrY7cR+u
-	 oCj2LRGqgMb8g==
+	b=XHnW23o/qxj5i4iQoUcRFLWQa0b+Ptv0FCVoUHWJtZu2O+Gx5TfdLSpApc9T2X05c
+	 U7WTn784SJKdNBo7qO6EQAhnT65bROORu5FGAcWtVVDpICGyV5RDJdOfY5u8EO6Qi8
+	 aMzO22HYiLZOYXhAd5lFITuUDHWCMW9Loo/IYW5Wwz5UF2dxVSovCg6NA1CRZZcLQL
+	 U5UfFMb2KHOFECwGoBOIGEUvQQe6GkjuLMB2pJvnjdchxaSJBzo4+jnJIcwmyQnCW8
+	 jh9u+aRd8v2828E7XHVq8mQK+Q5FDY9HR/xFFIxwTuV5FNqsyyMYS9JpXWA9lFXXJ7
+	 YXJSQiDoBeFVA==
 From: SeongJae Park <sj@kernel.org>
 To: 
 Cc: SeongJae Park <sj@kernel.org>,
@@ -34,9 +34,9 @@ Cc: SeongJae Park <sj@kernel.org>,
 	linux-kernel@vger.kernel.org,
 	linux-kselftest@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH 13/14] selftests/damon/sysfs.sh: test addr_unit file existence
-Date: Tue, 19 May 2026 23:28:45 -0700
-Message-ID: <20260520062858.167011-14-sj@kernel.org>
+Subject: [RFC PATCH 14/14] selftests/damon/sysfs.sh: test pause file existence
+Date: Tue, 19 May 2026 23:28:46 -0700
+Message-ID: <20260520062858.167011-15-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260520062858.167011-1-sj@kernel.org>
 References: <20260520062858.167011-1-sj@kernel.org>
@@ -48,8 +48,8 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-sysfs.sh DAMON selftest is not testing the existence of addr_unit sysfs
-file.  Add the test.
+sysfs.sh DAMON selftest is not testing the existence of the 'pause'
+sysfs file.  Add the test.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
@@ -57,14 +57,14 @@ Signed-off-by: SeongJae Park <sj@kernel.org>
  1 file changed, 1 insertion(+)
 
 diff --git a/tools/testing/selftests/damon/sysfs.sh b/tools/testing/selftests/damon/sysfs.sh
-index b3418214ed358..1e10881afabb6 100755
+index 1e10881afabb6..ae002dd3c0797 100755
 --- a/tools/testing/selftests/damon/sysfs.sh
 +++ b/tools/testing/selftests/damon/sysfs.sh
-@@ -365,6 +365,7 @@ test_context()
- 	ensure_dir "$context_dir" "exist"
+@@ -366,6 +366,7 @@ test_context()
  	ensure_file "$context_dir/avail_operations" "exit" 400
  	ensure_file "$context_dir/operations" "exist" 600
-+	ensure_file "$context_dir/addr_unit" "exit" 600
+ 	ensure_file "$context_dir/addr_unit" "exit" 600
++	ensure_file "$context_dir/pause" "exit" 600
  	test_monitoring_attrs "$context_dir/monitoring_attrs"
  	test_targets "$context_dir/targets"
  	test_schemes "$context_dir/schemes"
