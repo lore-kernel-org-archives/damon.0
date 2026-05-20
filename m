@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBFD12BE03B
-	for <damon@lists.linux.dev>; Wed, 20 May 2026 13:54:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95F933DD518
+	for <damon@lists.linux.dev>; Wed, 20 May 2026 13:59:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779285284; cv=none; b=l9L/QZ4ByR4ciLJyl+xk4rlrIg2w8q9JnrT9SESzUVZg8kGtOki6dRw6TiHAFGqtUzhLMP25pHShkR3Hpmf7tdrjjg5mJlFPKyVpGQVegVaCGh7PvkrPjH2uNamrOdTpvTP/xbN1TZxf9jJDp+SCuUCeSNEqOrLx7dEnnggp7bE=
+	t=1779285569; cv=none; b=U+qtSNEA2Gykf28ZVAdXZwJoTIQyP8sL+7+W15ZF77QrAD3k8D+jJjinIHDXxtVW4CU4GlUWuuWgdN6Va6fsaL5BmI/OWsV77fo08tRyvWk9drUdzpotxk84iVY6mLtr62BoWEUOXlpZoFschY8vUgxfgUCk0R/jVnnMCc1DHPk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779285284; c=relaxed/simple;
-	bh=QB4YqFtFs8JIOViMl4LI8Ivkp6gRqr0gJQU2mkTxgaY=;
+	s=arc-20240116; t=1779285569; c=relaxed/simple;
+	bh=N3ctNneRlMheeWS382ye+y4Z2LWD5sZgMxvF/0QVlJ8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ZDx/i96EwQJmobUYfgxzVZFDTdK6ZPAYcjEjC7Um2HgR/jWmo4+a4Whf94r5sRcgX4GAr4nuYk2oR9jqRKvtYDvdoxgGuVRjvTg4wkL+NW8iULyYBzhY+wPQRuDpRmZ93iG/ZgpbT7m/CstvG+TCtUEa65o5C3nxZEBgTVeORmE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kOqWKYXr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=lUJ2Dfmpxj554x02Lo0Rxb7L3c/BkXNq7Ey0EbcR0weMBBu29Y/3hsZ1vqo2sPt+ZxO5grYtOQm3Z6Wvr3l8V2YoXyQu/MPecHcODz59vuUfBgVWoASUKNRN7/rxCM+T3EJfruYVjcOFbHa6aKFulY5xgZzvtE/1Mwg4K1MR2DM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PivYSqqA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kOqWKYXr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9AFD1F000E9;
-	Wed, 20 May 2026 13:54:37 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PivYSqqA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45C6C1F000E9;
+	Wed, 20 May 2026 13:59:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1779285282;
-	bh=xHMQ3Noyab8sb/9m6XjQKRRneT+w8N9thfvrAXYytHY=;
+	s=k20260515; t=1779285568;
+	bh=J/MX4U1SUawlR8ob/zt7SgP27ZqoRqS/XnjDXi0IjVk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kOqWKYXrxXh2J98rkJpZ/HYMxKpAj3hJQAgmnWnn49ko+3xRGJGoQGHKE0KO2plKp
-	 K00mcGVYz9ILWv1rFPRuG/VGjwmxhjNzvyJ+235B9WoR2twivgKHoBgEt5m6UcWTDF
-	 lqyI25CI2lhju5sDoHOh55mysQJI7HyqwvsY2Lz8D2UhUd1p4g0nJjUZBP7zrwpJDy
-	 Oni3fefXeJ6Wl6S/iVSyzO+LGJFmkW4Ce5R+QMYgBLe6ehYwxpyxL2FUJRYleSoEYL
-	 xr6cE95a+FnnPrUS5rApQZqYK27cUToa7XuWWllxsROPQPbPCjGv9zR+d9TAMUwRo2
-	 JlIXSRimrkKMw==
+	b=PivYSqqAVI2YXCN69XFi3TAehYIk+QxX5VG0TvBZaeza7cnUH5FpU9+cgIdkg6Cqk
+	 Rtyq6B+OFa4LArOSI+gTjoZ8CXc4duWa4H+iE1Pqhz65zU+JHekQcBH7DfblPucj+6
+	 F5Age2KW2O4FE8d2Eu1JWfoH+TRmA7dtjNIQBn+B8dhjlF4iTdOuX7z792NTAxslTs
+	 5tFClpP0gIlfs+vfr+To1lD7CkYIUcme3j2rLLWx8aWdfsCdDiC6HXnNVAGzEcsqap
+	 jSQaSNRNIa0XPRmAKEcsB7e9+dDKFvFDZsW8VuCDEV2AzF+I9zdBustjQEI73UaA1F
+	 GNtwkePsLSW5A==
 From: SeongJae Park <sj@kernel.org>
 To: sashiko-bot@kernel.org
 Cc: SeongJae Park <sj@kernel.org>,
 	damon@lists.linux.dev
-Subject: Re: [RFC PATCH 04/14] mm/damon/tests/vaddr-kunit: replace damon_add_region() with damon_set_regions()
-Date: Wed, 20 May 2026 06:53:57 -0700
-Message-ID: <20260520135358.169417-1-sj@kernel.org>
+Subject: Re: [RFC PATCH 08/14] mm/damon/core: add kdamond_call() debug_sanity check
+Date: Wed, 20 May 2026 06:58:59 -0700
+Message-ID: <20260520135902.169663-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260520063841.7C04C1F000E9@smtp.kernel.org>
+In-Reply-To: <20260520065300.A51591F00893@smtp.kernel.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -45,83 +45,72 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On Wed, 20 May 2026 06:38:41 +0000 sashiko-bot@kernel.org wrote:
+On Wed, 20 May 2026 06:52:52 +0000 sashiko-bot@kernel.org wrote:
 
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [Medium] The dynamically allocated `ranges` array is never freed, resulting in a memory leak.
-> - [Medium] The return value of `damon_set_regions()` is ignored, which can lead to a NULL pointer dereference if memory allocation fails.
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] The sanity check for region bounds in `damon_verify_ctx` uses an inverted condition, causing it to falsely trigger a kernel warning on all valid regions and fail to catch invalid ones.
 > --
 > 
-> commit 178b94e956635731d61e076b1aa09699c5f9b686
+> commit 7d803208aef5bc4f95dd9c37657de5b62618e8e6
 > Author: SeongJae Park <sj@kernel.org>
 > 
-> mm/damon/tests/vaddr-kunit: replace damon_add_region() with damon_set_regions()
+> mm/damon/core: add kdamond_call() debug_sanity check
 > 
-> This commit updates the DAMON vaddr unit tests to use damon_set_regions()
-> for setting up target region boundaries. This replaces the manual setup
-> loop that previously used damon_add_region().
+> This commit introduces a debug sanity check for the DAMON context state
+> before handling damon_call_control objects in kdamond_call(). The check
+> verifies region boundaries, overlaps, and the total region count under
+> CONFIG_DAMON_DEBUG_SANITY.
 > 
-> > diff --git a/mm/damon/tests/vaddr-kunit.h b/mm/damon/tests/vaddr-kunit.h
-> > index 98e734d77d517..23be9c3be75fa 100644
-> > --- a/mm/damon/tests/vaddr-kunit.h
-> > +++ b/mm/damon/tests/vaddr-kunit.h
+> > diff --git a/mm/damon/core.c b/mm/damon/core.c
+> > --- a/mm/damon/core.c
+> > +++ b/mm/damon/core.c
+> 
 > [ ... ]
-> > @@ -132,20 +132,24 @@ static void damon_do_test_apply_three_regions(struct kunit *test,
-> >  				unsigned long *expected, int nr_expected)
-> >  {
-> >  	struct damon_target *t;
-> > +	struct damon_addr_range *ranges;
-> >  	struct damon_region *r;
-> >  	int i;
+> 
+> > @@ -3326,6 +3326,37 @@ static void kdamond_usleep(unsigned long usecs)
+> >  		usleep_range_idle(usecs, usecs + 1);
+> >  }
 > >  
-> >  	t = damon_new_target();
-> >  	if (!t)
-> >  		kunit_skip(test, "target alloc fail");
+> > +#ifdef CONFIG_DAMON_DEBUG_SANITY
+> > +static void damon_verify_ctx(struct damon_ctx *c)
+> > +{
+> > +	struct damon_target *t;
+> > +	struct damon_region *r;
 > > +
-> > +	ranges = kmalloc_array(nr_regions / 2, sizeof(*ranges), GFP_KERNEL);
-> > +	if (!ranges) {
-> > +		damon_destroy_target(t, NULL);
-> > +		kunit_skip(test, "ranges alloc fail");
-> > +	}
-> >  	for (i = 0; i < nr_regions / 2; i++) {
-> > -		r = damon_new_region(regions[i * 2], regions[i * 2 + 1]);
-> > -		if (!r) {
-> > -			damon_destroy_target(t, NULL);
-> > -			kunit_skip(test, "region alloc fail");
-> > -		}
-> > -		damon_add_region(r, t);
-> > +		ranges[i].start = regions[i * 2];
-> > +		ranges[i].end = regions[i * 2 + 1];
-> >  	}
-> > +	damon_set_regions(t, ranges, nr_regions / 2, DAMON_MIN_REGION_SZ);
+> > +	damon_for_each_target(t, c) {
+> > +		struct damon_region *prev_r = NULL;
+> > +		unsigned int nr_regions = 0;
+> > +
+> > +		damon_for_each_region(r, t) {
+> > +			WARN_ONCE(r->ar.start <= r->ar.end,
+> > +					"region start (%lu) <= end (%lu)\n",
+> > +					r->ar.start, r->ar.end);
 > 
-> [Severity: Medium]
-> Is it safe to ignore the return value of damon_set_regions() here?
+> [Severity: High]
+> Should this condition be inverted? WARN_ONCE triggers when the condition
+> evaluates to true. Since a valid memory region typically has a start address
+> strictly less than its end address, this evaluates to true for normal
+> regions.
 > 
-> If damon_set_regions() encounters an allocation failure, it returns -ENOMEM,
-> leaving the target with fewer regions than intended. Could this lead to a
-> NULL pointer dereference in the subsequent test code if it attempts to access
-> regions that failed to allocate?
+> Could this trigger a spurious warning on the very first valid region
+> encountered, and because it uses WARN_ONCE, prevent any actual regressions
+> where start > end from being reported?
 
-Nice catch.  I will check the results and skip in the case of failure.
+Nice catch.  start == end is also invalid because we disallow empty regions.  I
+will update it to start >= end in the next version.
 
 > 
-> [Severity: Medium]
-> Does this code leak the ranges array?
+> > +			WARN_ONCE(prev_r && prev_r->ar.end > r->ar.start,
+> > +					"region overlap (%lu > %lu)\n",
+> > +					prev_r->ar.end, r->ar.start);
+> > +			prev_r = r;
+> > +			nr_regions++;
+> > +		}
 > 
-> It appears ranges is dynamically allocated via kmalloc_array() but is never
-> freed before the function returns, and damon_set_regions() does not take
-> ownership of this memory.
-
-Good finding.  I will free it.
-
-> 
-> >  
-> >  	damon_set_regions(t, three_regions, 3, DAMON_MIN_REGION_SZ);
-> >
+> [ ... ]
 > 
 > -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260520062858.167011-1-sj@kernel.org?part=4
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260520062858.167011-1-sj@kernel.org?part=8
 
 
 Thanks,
