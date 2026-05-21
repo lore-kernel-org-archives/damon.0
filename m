@@ -1,103 +1,102 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from out-171.mta0.migadu.com (out-171.mta0.migadu.com [91.218.175.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB45F37C0E6
-	for <damon@lists.linux.dev>; Thu, 21 May 2026 04:19:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBA2733DEE1
+	for <damon@lists.linux.dev>; Thu, 21 May 2026 04:52:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779337204; cv=none; b=h5C48nCmeBqbLoc9aXKxUp5qeoJTRxfePLQMKotI2iRCryxq56mgh4PRGUQqj/xwWr6Yjc6BuzAJZvWNZYNJAkV8TbOBejTyUnn+LT+wI04PpzjLQ5itCGjsbM6VuIk7zntZWzi7LP30gJ5zEqgoaWjdp0x6T2eYqy89rCuOUSc=
+	t=1779339177; cv=none; b=qSt739Xq0ISeL4tPOA+J3lXPzHhOWPnm4sk1uxM3FLHpYgGrpFtvZqnYmv3R1UMfnTyVLGedurY4/HIv8RohUliSUW2xidpQINDZeOTAoMM/dTmf2Y5E+rkA4ATnl0d8bj8Bw+NxW91yStTbRUq4GeUlj3Z4y5oIg3helqFAejE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779337204; c=relaxed/simple;
-	bh=oD0kH2MpCBTaVX2Jsu9CmJygqGDwGfHtL0Bwp4ag8eo=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=KKeQDd/hvyeM1gW7eINNqrdTuLMSUbMcr/R813qyAmKIT3XDb3uOManzgw0GIGh6b5qIfXO/vO0DZDeIkPGZUVpYJnNSQhKoLjz9cWOEL80F0IMGHg2fQqcdcy5fJbx3GSUG/WxJ9WsbQk/klN/YG/T07pk3GEEd0fECl2LKam0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VXcwzgwe; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1779339177; c=relaxed/simple;
+	bh=At5+/hD8qVKWYJiNzJI2ynYKgPThmBmsWkv2hNPvzs0=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=JNZqsqUxsnbEI2GWgFe9ZWs7CnQSkjV0Z4kPdu0luhKewItAX5Hy6HL7+tKNSgcIJ/OcBl3mxvSjL8QyyFtbEXvMmYJkryIyBVpipd5S5mdMCBxNgsMj4pluZsxZ/eQGO2qsuLG4GQsbPX1eSoNkGiu7uOFCvveYO8FrGruaQPk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=uARqszmD; arc=none smtp.client-ip=91.218.175.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VXcwzgwe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E5AF1F000E9;
-	Thu, 21 May 2026 04:19:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1779337189;
-	bh=MvR74wjVZVOnnQgvhgbGjHlrVqUllYiHTB0Jhs1JgUg=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=VXcwzgwenz8W2+KOp2RJ1hZ3mgIiYwdil5I24egpOSexXUEa6m+wAft1+PjRIgmoZ
-	 KKGPgutXtmyFVGAPK2zj+qtbZb7gZ4ESj89dpTd/an+OmcRHw9iAQk4gu35XyJ+cBs
-	 xEtPG9zEA4sExFgkKqtEvJWJIiypjgkhkkoQU0BNAG0IbGGQlg2Ba4rJ5RSEPqrbVf
-	 s90Ym9/TWdX3/IqAvDg5ebyKMVPXo869/GGT3/zn7naXBMomoC7adQ61M1BrDJFkhM
-	 GPaudxrK8vGpDNVI8kGqZLddJZpLWQ2a1Aloyu8OAlOpEwqF6JH2hWOyXnnDKtwm9U
-	 Cu9BamxQSYVbQ==
-From: sashiko-bot@kernel.org
-Subject: Re: [RFC PATCH v1.1 02/14] mm/damon/core: do not use region out of
- a loop in damon_set_regions()
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "SeongJae Park" <sj@kernel.org>
-Cc: damon@lists.linux.dev
-In-Reply-To: <20260521035349.87565-3-sj@kernel.org>
-References: <20260521035349.87565-3-sj@kernel.org>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Thu, 21 May 2026 04:19:49 +0000
-Message-Id: <20260521041949.9E5AF1F000E9@smtp.kernel.org>
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="uARqszmD"
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1779339172;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=N7qfxh/zfMOAlXTKCwcPQJBPsWRq4EyvbHE/YRBH0T8=;
+	b=uARqszmDfkqT1jfFDWvswzOrjg5aZWiOcyLKMsZb86BzRZynvJdgn61Eez2N9NDFgZHj2B
+	TIzgkZy5eO0Y+tthvD3YJwx+8+YWEUogOBXkfAlvp5o6qeyVp4Pqwoq7pwy2AKWqqzgOxy
+	8ga6myNIfl4HRMLojD2HcmOEn5tn5tg=
+From: Jiayuan Chen <jiayuan.chen@linux.dev>
+To: damon@lists.linux.dev
+Cc: Jiayuan Chen <jiayuan.chen@linux.dev>,
+	SeongJae Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Shu Anzai <shu17az@gmail.com>,
+	Jiayuan Chen <jiayuan.chen@shopee.com>,
+	Quanmin Yan <yanquanmin1@huawei.com>,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH 0/2] mm/damon/core: detect internal variation above max_nr_regions/2
+Date: Thu, 21 May 2026 12:52:22 +0800
+Message-ID: <20260521045236.115749-1-jiayuan.chen@linux.dev>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Migadu-Flow: FLOW_OUT
 
-Thank you for your contribution! Sashiko AI review found 1 potential issue(=
-s) to consider:
+kdamond_split_regions() bails out early when nr_regions is already
+above max_nr_regions / 2.  A large region that picks up new internal
+variation after that point never gets split, so we lose visibility
+into its hot/cold structure.
 
-Pre-existing issues:
-- [High] Integer overflow in ALIGN() can result in region with ar.end =3D 0
---
+We hit this with damon-paddr on hugepage workloads and damon-vaddr
+on processes that mmap a large anonymous range.
 
-commit d65dcd33c6063ed27bd90da3803c482628ebbc88
-Author: SeongJae Park <sj@kernel.org>
+On our production tree we added a current_nr_regions counter (no
+good upstream home for it yet, so it's not in this series).  We saw
+nr_regions never getting close to max_nr_regions, and the picture of
+the access pattern was too coarse.
 
-mm/damon/core: do not use region out of a loop in damon_set_regions()
+Example with max_nr_regions == 1500.  A target ends up with 799
+small hot/cold regions plus one big region (an earlier merge
+collapsed a uniformly-accessed range into a single piece):
 
-This commit cleans up damon_set_regions() to explicitly track if a region
-should be inserted before another, avoiding reliance on undocumented
-iterator behavior. No behavioral changes are intended.
+H:hot
+C:cold
 
-> diff --git a/mm/damon/core.c b/mm/damon/core.c
-> index d0bdf6e01dff8..669fd13776ea2 100644
-> --- a/mm/damon/core.c
-> +++ b/mm/damon/core.c
+      r1     r2     r3                 r800
+    HHHHHH|CCCCCC|HHHHHH|...|HHHHHH..........................|
 
-[ ... ]
+    nr_regions = 800  >  max_nr_regions / 2 = 750
 
-> @@ -394,7 +397,11 @@ int damon_set_regions(struct damon_target *t, struct=
- damon_addr_range *ranges,
->  					ALIGN(range->end, min_region_sz));
+Now a cold subarea shows up inside r800:
 
-[Severity: High]
-This is a pre-existing issue, but can this ALIGN() macro overflow if
-userspace provides ULONG_MAX as the region end via the sysfs interface?
+      r1     r2     r3                 r800
+    HHHHHH|CCCCCC|HHHHHH|...|HHHHHH........CCCCCC.............|
 
-If range->end is ULONG_MAX and min_region_sz is 4096, the ALIGN() macro
-would evaluate to 0, resulting in a region where ar.end is 0.
+The small regions can't merge with each other (their access counts
+differ), so budget never frees up.  r800 can't be split because
+nr_regions > max_nr_regions / 2 returns early.  The cold subarea
+stays invisible.
 
-When damon_sz_region() subsequently calculates the size using
-r->ar.end - r->ar.start, the unsigned arithmetic would underflow to a
-massive size.
+Patch 1 lets this path still split regions that just changed
+(age == 0), up to whatever budget is left under max_nr_regions.
+If a split turns out useless, the next merge cycle undoes it.
 
-This could cause the while (damon_sz_region(r) > max_region_sz) loop in
-damon_apply_min_nr_regions() to iterate nearly endlessly, allocating new
-regions until memory is exhausted.
+Patch 2 adds a KUnit test for the case where nr_regions is already
+above max_nr_regions / 2.
 
->  			if (!newr)
->  				return -ENOMEM;
-> -			damon_insert_region(newr, damon_prev_region(r), r, t);
-> +			if (insert_before_r)
-> +				damon_insert_region(newr, damon_prev_region(r),
-> +						r, t);
-> +			else
-> +				damon_add_region(newr, t);
->  		} else {
->  			/* resize intersecting regions to fit in this range */
->  			first->ar.start =3D ALIGN_DOWN(range->start,
+Jiayuan Chen (2):
+  mm/damon/core: split age==0 regions when nr_regions exceeds max/2
+  mm/damon/tests/core-kunit: test split above max_nr_regions/2
 
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260521035349.8756=
-5-1-sj@kernel.org?part=3D2
+ mm/damon/core.c             | 68 ++++++++++++++++++++++++++++-------
+ mm/damon/tests/core-kunit.h | 70 +++++++++++++++++++++++++++++++++++++
+ 2 files changed, 126 insertions(+), 12 deletions(-)
+
+-- 
+2.43.0
+
