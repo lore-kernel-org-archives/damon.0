@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD03C3EF673;
-	Thu, 21 May 2026 14:34:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68430407CD7;
+	Thu, 21 May 2026 14:34:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779374080; cv=none; b=I8xlEbtMJ0mz5fYS2AnBD0IpWSBuZ+PyuURzRtY/LD/OKYMSPSmMbVA+3buguyNkyFC21x71C4sOi20yCXS01r4wDyeQboeApMWpCTgDSMR1eKvERwYzqSXSLhO8YrjlPNY/hbCH57m1cMAaEwLJFzgsJfY1ehylNMkGFq8iFmY=
+	t=1779374081; cv=none; b=cyYGo5W/aJUQMSuUccQDPTSRu1WCOmZbbxNiWDWTNSVenSn0VFYmkjnwevzZNFw2nBb8Q6r71sBtfIDAUaJJqRekHM8HqINXBlvBrgpRAbZA7lfzahoPAQAnEp4aapx5eidluQlLx9G2B6LkcvKj0SatT1dJbQFxAMguWweW+Gk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779374080; c=relaxed/simple;
-	bh=HU4D50xUEXGTjEy1hYAKL14nhun18f8ZSclPBfAPuZs=;
+	s=arc-20240116; t=1779374081; c=relaxed/simple;
+	bh=U3R/VpB5fsj2Kzc8E2SVAl/KkIrkOZVOd6iQ6EUqjEk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t/HEKXLSI+4pumRDXaVNvE8tEZ6QfsYdZfPv3qgN3UW1sYZLgQbtoV3AFab+7BOcSFGfHu5r6ltk4pMPRRxM4T3yF+cCodwdn47PCAbatU69QX+10oHbZi2Rqt+L3MJhifzB1g/kKA4zq2fykIHT7NF1Fk3dyclKM+6AjBBWRCE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RQJ0siWs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YrHcRubdpdPa83RlU8LmFzTap0wFuygQQ8ZCOl6IQYgcqreJQTFvpqKvYF2wmG9j9LhsG2447lDimgeMVsZCOAbfG3KqtJmvMmaIyQNg44TAw31vkVCcr9cVqxgjqeEFjTE0tmI+/7xW7/zD4rb3CNtTfyMnzDBn9IDpIUd3tS0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jOgQlyu0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RQJ0siWs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 554841F00A3C;
-	Thu, 21 May 2026 14:34:38 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jOgQlyu0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1902C1F00ADE;
+	Thu, 21 May 2026 14:34:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1779374078;
-	bh=CRNoWJlEPylYeAv7EKMrmhsVza1n4tj76p/bqvx4fJA=;
+	s=k20260515; t=1779374079;
+	bh=lFIspApNE5pg+37NC/h+0JPjyuQa8BCwW93puC6WNUA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RQJ0siWssrYWvg/DGI5+vQwOu7nENn2+wcgZV/fjpbB4EuWj7PszjrEKwKbU3ibkT
-	 /bvopnQnWIleF5nL8HOX0wGPRdtLSo0Vw05get+n+DV6yA9blh8EAIeBX2hXh8jGxw
-	 P/Xi2iu9sgB0QpTZYh1ci1g6TD36vQD+bgR4l4Jol5dNKr4bDXLhbStD3lUGtGozMk
-	 aCKFQ6LiqlYE3BA3j55pXTcmPmkikxvTfJzoq9hzX4vDk5DdImd+IO/w6FcSQZpK05
-	 bHp+C1uYYFKRVasUmlTn9z2WPo73H73W+ASKXakuNWieK9buVSsw4+383suNdFwWFo
-	 BdtXduN5bN1tA==
+	b=jOgQlyu0BYsrKxDGlx0PvO7DdBjbvN7CW5DtqEpZxMUx2Gcdtqam12jT6ss4J0h1C
+	 y+R0+IWciA5VKq9J9KKjc0DwF2nzueOQhyBWFK7hqYBgy6ezzPOvvnFle30C7lkEoa
+	 lEoZPAZFl+V5dSxi33GHp9x3NMsj76wu1qXq4t3oh6r5pHRpznDfPy+Bq09lYzd8cQ
+	 bWEnmKmOn+lIY3dtRmU/g/jopxQUMyxiWkmSTu7x8nVoLmuup+GRvb5z8FYImMKHKk
+	 Fi+QGPU4BNnF7VaXbzeTdRUyL7uLfCSPhnElHpOU6zEx+HqQ2kQG5jZlpwMnhDqpvW
+	 u0YLb3ENq/SCw==
 From: SeongJae Park <sj@kernel.org>
 To: 
 Cc: SeongJae Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH v1.2 03/14] samples/damon/mtier: replace damon_add_region() with damon_set_regions()
-Date: Thu, 21 May 2026 07:34:13 -0700
-Message-ID: <20260521143428.83157-4-sj@kernel.org>
+Subject: [RFC PATCH v1.2 05/14] mm/damon/core: hide damon_add_region()
+Date: Thu, 21 May 2026 07:34:15 -0700
+Message-ID: <20260521143428.83157-6-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260521143428.83157-1-sj@kernel.org>
 References: <20260521143428.83157-1-sj@kernel.org>
@@ -46,51 +47,40 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-mtier DAMON sample module and DAMON virtual address operation set
-(vaddr) unit tests are using damon_add_region() for setup of DAMON
-monitoring target region boundaries setup.  But, damon_set_regions() is
-designed for exactly the purpose.  All other DAMON API callers use the
-function for the purpose.  Replace damon_add_region() usage in mtier
-sample module with damon_set_regions(), for unifying the use case and
-reducing the maintenance cost.
+damon_add_region() is being used by only DAMON core, but exposed to
+DAMON API callers.  Exposing something that is not really being used by
+others will only increase the maintenance cost.  Hide it.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- samples/damon/mtier.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ include/linux/damon.h | 1 -
+ mm/damon/core.c       | 2 +-
+ 2 files changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/samples/damon/mtier.c b/samples/damon/mtier.c
-index 775838a23d935..eb1143de8df17 100644
---- a/samples/damon/mtier.c
-+++ b/samples/damon/mtier.c
-@@ -75,11 +75,11 @@ static struct damon_ctx *damon_sample_mtier_build_ctx(bool promote)
- 	struct damon_ctx *ctx;
- 	struct damon_attrs attrs;
- 	struct damon_target *target;
--	struct damon_region *region;
- 	struct damos *scheme;
- 	struct damos_quota_goal *quota_goal;
- 	struct damos_filter *filter;
- 	struct region_range addr;
-+	struct damon_addr_range range;
- 	int ret;
+diff --git a/include/linux/damon.h b/include/linux/damon.h
+index 4014fd0d463cb..b9370c1779cba 100644
+--- a/include/linux/damon.h
++++ b/include/linux/damon.h
+@@ -1024,7 +1024,6 @@ static inline void damon_insert_region(struct damon_region *r,
+ 	t->nr_regions++;
+ }
  
- 	ctx = damon_new_ctx();
-@@ -120,10 +120,12 @@ static struct damon_ctx *damon_sample_mtier_build_ctx(bool promote)
- 		addr.end = promote ? node1_end_addr : node0_end_addr;
- 	}
+-void damon_add_region(struct damon_region *r, struct damon_target *t);
+ void damon_destroy_region(struct damon_region *r, struct damon_target *t);
+ int damon_set_regions(struct damon_target *t, struct damon_addr_range *ranges,
+ 		unsigned int nr_ranges, unsigned long min_region_sz);
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index e8cf3632115e5..7d1de6ff54eba 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -250,7 +250,7 @@ struct damon_region *damon_new_region(unsigned long start, unsigned long end)
+ 	return region;
+ }
  
--	region = damon_new_region(addr.start, addr.end);
--	if (!region)
-+	range.start = addr.start;
-+	range.end = addr.end;
-+
-+	ret = damon_set_regions(target, &range, 1, DAMON_MIN_REGION_SZ);
-+	if (ret)
- 		goto free_out;
--	damon_add_region(region, target);
- 
- 	scheme = damon_new_scheme(
- 			/* access pattern */
+-void damon_add_region(struct damon_region *r, struct damon_target *t)
++static void damon_add_region(struct damon_region *r, struct damon_target *t)
+ {
+ 	list_add_tail(&r->list, &t->regions_list);
+ 	t->nr_regions++;
 -- 
 2.47.3
