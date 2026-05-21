@@ -1,147 +1,156 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from OSPPR02CU001.outbound.protection.outlook.com (mail-norwayeastazon11023105.outbound.protection.outlook.com [40.107.159.105])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4AF92F1FF4
-	for <damon@lists.linux.dev>; Thu, 21 May 2026 15:19:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779376770; cv=none; b=Wb8oQuNdQq5XAZlTOZM4KG0K9azdOV51ivK6UmqY+/rPMi7YHgxrQncstOOsy0Fy9UkxkCtS9+53Hs/1s4OjbCS2+J7/RIB5BKYv44AF/btNrzOgSsXfw/eNwY5CtUxeFbj1m7izHGxbwqhztKgMaa5Q300wfPBVNBvEn+5uXto=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779376770; c=relaxed/simple;
-	bh=Evoyel9GNSwKvGEu0dzaLXSBOb2EMBu6HkWYZjRvNyQ=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=d8cTs5xq7j/jlJhjz4uUQ/LqnPXUS9FRu0Jp/v9c/OxxUOeTLUJJJpigwdMyPYCN8J1O4CZcATWGDOaL70uCxxQjpgnyX/MERtImsd2iqO+ONWcIr/I7wpZVGETVcSIV+ArMzIpBSttwmNwLisicewCtK2G2x3XPxn3bHYuJzoQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=c8LqH6EB; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2685E2727F3
+	for <damon@lists.linux.dev>; Thu, 21 May 2026 20:21:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.159.105
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1779394869; cv=fail; b=uSje6QfwasGnnfTAWFuGQ8LnBvZ602qZrfUWByYbYsockxAUhbiaeIACDtB/uoQggjCf66URqKye6dWj1CvKeqRESOHzLASlZSV0iieDLWRl6pMSqYpb8F5T+BIjQ8btSoSJahxl+KU13LH5qITOWPQYxZv7fIeVAesM2S0cv3U=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1779394869; c=relaxed/simple;
+	bh=Fw/7YbBKFralUiU0NSfjYir6y3HWxxFb93fnwxTyvFM=;
+	h=From:To:Cc:Subject:Date:Message-Id:Content-Type:MIME-Version; b=rtwJhj7ERMqpGfRYEZFF9MIUWcAk8zVQhLjUuVmWT8zFPrWIn1IZzDzsYUwBtgUTUslr26T6S0V+w6ORdWZmPwyyf6W/l8jrbGcZnkVoF4QyTZjxK3bUQuR5V6LIBbRTZqptnTVDhiJC2lAo3Jg25D0+mVV19nSgN8fO+cauQ9Q=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lnu.edu.ua; spf=pass smtp.mailfrom=lnu.edu.ua; dkim=pass (1024-bit key) header.d=lnueduua.onmicrosoft.com header.i=@lnueduua.onmicrosoft.com header.b=ILZCcrFj; arc=fail smtp.client-ip=40.107.159.105
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lnu.edu.ua
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lnu.edu.ua
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="c8LqH6EB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C25C1F000E9;
-	Thu, 21 May 2026 15:19:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1779376769;
-	bh=bbsnCpbnjDjZl9bmhCcHgynMvvXk2B2HSkU6FiylJgM=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=c8LqH6EBg2AJ0nI17eBPjad6zlPLovNtf4x3XqxdNQpt29Qf6re70EycZqWm/kfH/
-	 FqZMYGpWuR5yQA09zQ1cAIf5JlzCihD766x8zHqPaYdb82iObZ4bIIQIhDCZK9G8yL
-	 TH4nSo9UIL18ZN18DXOfHBvBqRTYhIqHi6IAjEYEG8li2XVikYX9QY04z48JFAYopV
-	 VHqtHcORweV/r56cml4hd0VLKUTPEZVt9bR/fDY+ZPFZao5mDspGIM6D/pkPWpAhEZ
-	 LvMghJJ4Ta5YNmUKB8mTiWifO47i5TpBFXs6OYVcfIrm3/EIv8Dejk2BA+UpB2eC8X
-	 kvNdrwjKN2g2g==
-From: sashiko-bot@kernel.org
-Subject: Re: [RFC PATCH v1.2 01/14] mm/damon/core: safely handle no region
- case in damon_set_regions()
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "SeongJae Park" <sj@kernel.org>
-Cc: damon@lists.linux.dev
-In-Reply-To: <20260521143428.83157-2-sj@kernel.org>
-References: <20260521143428.83157-2-sj@kernel.org>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Thu, 21 May 2026 15:19:28 +0000
-Message-Id: <20260521151929.5C25C1F000E9@smtp.kernel.org>
+	dkim=pass (1024-bit key) header.d=lnueduua.onmicrosoft.com header.i=@lnueduua.onmicrosoft.com header.b="ILZCcrFj"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=TExmh9L5tm3Yar+OgLUlyvclx9YOvXMyoK64OFEwiSiBufGIy3YyNIHJ7dddSswoo7SFqDFKg/DrJVNzPPgLoG8Te56qXCRhec3x8fJh0eRZLBvefht3o5AuhEhbHHrtWWaiCp9jTA2xhCKwDyfqZvay9OnMaRP+4acMbgQcGdd5LOE5d4f4MahhBJLXQXs6w01Dnzh7EtrxuA2HGiYSfopiuH3qMJLw/BMmovrwq4daYquuybj6oDMBkObUAGluufKxMB2yThID4//naN6Cg6SkieA5VMB4XRW0nqO39eq2tB+cQvyqlWXQUYlPFDcLxl+hDdzDYnv9SZNRRqUICg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=roitmayFMFvcelhRomSWSEmbQVSW2KADKYR8+HT74NU=;
+ b=AtbcSSuZ30hpme4W4edxopAPX7V738TGaVq1kCKIsnL77L+9kxqYhgOL5aObG1fUsYLAZ+aV4QGlpcrsOk7VZa705tD62qN2pkK17Sx7K5fQtwQ1XrrbSn5szFCyYtNKBDZ1tILrb91mAjg0Lu8vW98MkwzQ4EyHKuaY6N7S1bD9OA1A88UTU+iBRxvQLsua2OmU6tV5En5GxHwCZ5htcfJJj6DYi3yu2co+1pDIL0iPuabd0LYPxdFTRqhNJX28YWrolNMY5YivOn7WD7p2F6d7FA8cl6UYFOok00mNPp5mEpkdDVASJirrpKiCvEQGlenVZ5N7PDF86WDqGdJczw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=lnu.edu.ua; dmarc=pass action=none header.from=lnu.edu.ua;
+ dkim=pass header.d=lnu.edu.ua; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=lnueduua.onmicrosoft.com; s=selector2-lnueduua-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=roitmayFMFvcelhRomSWSEmbQVSW2KADKYR8+HT74NU=;
+ b=ILZCcrFj/5M93PBDyNKgCOCzqLii4P7qgMpiou4ekyNEuf3mx7jxbODraE0eDf6uyjCajKEDInAo9yoIOaJIF+uCZXAqGZ4RAogsmJ+ZYrRoJnq1QdKmXs8INEvyn7xnVKehEEnyn+SndKPbbC8ycCbD/W6MHZKDLH4dqC4WJ1M=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=lnu.edu.ua;
+Received: from VI0P190MB2524.EURP190.PROD.OUTLOOK.COM (2603:10a6:800:2ca::9)
+ by VI1P190MB0655.EURP190.PROD.OUTLOOK.COM (2603:10a6:800:128::13) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.48.17; Thu, 21 May
+ 2026 20:21:02 +0000
+Received: from VI0P190MB2524.EURP190.PROD.OUTLOOK.COM
+ ([fe80::b775:39dc:b909:e5d0]) by VI0P190MB2524.EURP190.PROD.OUTLOOK.COM
+ ([fe80::b775:39dc:b909:e5d0%5]) with mapi id 15.21.0048.013; Thu, 21 May 2026
+ 20:21:02 +0000
+From: Maksym Shcherba <maksym.shcherba@lnu.edu.ua>
+To: SeongJae Park <sj@kernel.org>
+Cc: Maksym Shcherba <maksym.shcherba@lnu.edu.ua>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	David Hildenbrand <david@kernel.org>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	damon@lists.linux.dev,
+	linux-doc@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-mm@kvack.org
+Subject: [PATCH v2 0/2] mm/damon: fix macro arguments and clarify quota goals doc
+Date: Thu, 21 May 2026 23:20:18 +0300
+Message-Id: <20260521202020.126500-1-maksym.shcherba@lnu.edu.ua>
+X-Mailer: git-send-email 2.34.1
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: WA2P291CA0021.POLP291.PROD.OUTLOOK.COM
+ (2603:10a6:1d0:1e::29) To VI0P190MB2524.EURP190.PROD.OUTLOOK.COM
+ (2603:10a6:800:2ca::9)
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: VI0P190MB2524:EE_|VI1P190MB0655:EE_
+X-MS-Office365-Filtering-Correlation-Id: cf3a56d8-40f1-40d2-8792-08deb776799e
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|1800799024|366016|786006|19092799006|7416014|376014|52116014|56012099003|18002099003|38350700014|11063799006;
+X-Microsoft-Antispam-Message-Info:
+	cx5oOkNu2eeSnY8Gj9g6TGiYFkcT6wuP4ieidllK+PTA76SEd8ILLZNydRqmKTyLL3hjhmgh5dNDjIzdo4YOeimQjGnsskWFGlnlisAhxSzoVjoWw1WW9e+dSsL52uYSuZAtMz9wsDrQ1Pq1KOOvwuiK0ObIpoO6KMRU5ZTeM+sAIPJXfEe53CS4n/XNYT9HLV91apYBfReL9UUj0YLDLPv5dRy3BqBzSM+qdVf/y5DcgP5eJz0R0wDQbT/YwKqqlglGM6BkFbJNJepxgHhsXvmJh/tnYNZe6iyGpFEwu87XEpPJDgTVkQJze2fFPGj5a9ViYELqBWs5x/evtLqAzk8/0EIfPwFzbcq405z7JWd56pliEJhl3vwLTELc4eaVPg9vgmqOk+yMHwYrxU2yyvtgBqiIEckfYJu8a5P2rTkB0W5A1SxiihvHVF5aErvHyor1/NU4/fnUyefLzZvHremeNYAvWz63QT4/drlZCnCoJsLSpuadhWjVTs2a4a6QVtqOQsaxO0X6CeTEfrkmqiiFoywOt8MGdGoR+y+pw30Em1mYs23oCLOnk1AOgnf+fq2Ys9r2Qrsz0gtmUMqvs+X+9WE5qMRwmx+s7z7a8ammAHNZVjhe618EicSgLHIUO4FhXoEEatUSbL/Spwco+gMislspTH33yyuQL0J5woHIGEfjFlLsnimtCh7YSnv+zGsS85ESIILMKr2+JSK9dfCP/k6Q4mIyw3fT+vbFLrraJop5kQAbrXGqpjssJ0Yv
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:VI0P190MB2524.EURP190.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(786006)(19092799006)(7416014)(376014)(52116014)(56012099003)(18002099003)(38350700014)(11063799006);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?uXdRmYYVdkoDEbnTJDEjfTVIsOf5wZ8+gouMoRIbxQElg2Ph4OyqS9g51PTk?=
+ =?us-ascii?Q?U8MzlBRmMBLhb4wTq9F9rOoC+uvC6vx/MuIjqjye86DdlwcIDyEIkVz5+7np?=
+ =?us-ascii?Q?4cCsukSynPZvW825ii41RhR3KCvl6FXomSid7pZcmXKAfqQNiAgAP7IxFJ9s?=
+ =?us-ascii?Q?Il3CrbwJJJ/mHSwceHg2+0C9YqNLCBOduCtAiHqjkgYmYSUkIrgioVS1+wrI?=
+ =?us-ascii?Q?rUTAPthyim+yKkKiNfl/MVxX1FHbS8zsDiI3m5+fdpOXiicRjyRqMNn6e7ig?=
+ =?us-ascii?Q?S29xJApbnXwEG6iquDyZLF2uHuL9W+S7/G3nZJPPY7Ft3djcldzX6UKi6FHE?=
+ =?us-ascii?Q?t2LOfEp/4InYMPMJ3s/BYSOwe2x5SBgoti/FnIwkifL0+HKdIYytm83EU0kN?=
+ =?us-ascii?Q?z9E1bf9bXJ6PxsnE5TeOqNuQndJiQ+Wf/b3mZI4XIlJPynpNwUJdp5G0K0/n?=
+ =?us-ascii?Q?8akJNOGEBtApT/n/93RVU3V4H/SzpN74I9G5ZgX6nDVYz1CWYKj5rmsy3kb+?=
+ =?us-ascii?Q?dn2Rz7n1bA4JR4f1bTHX7U/XoLhSSYg42mzaZE28lVYt+zD5rHXlenY9CGOd?=
+ =?us-ascii?Q?3aEQ00afzijXu3iffduCF16GL4IgKaxYTHZgfDrlXD51vdRcU9HqNCHZURfa?=
+ =?us-ascii?Q?KJglAMq52jO3Zywpt0SfbjtaiZnH6bYkUlwLJbchL9IYwwNsePTxEYCZr6Gw?=
+ =?us-ascii?Q?Pjn3saZCRnpV/+p7ufRK1QMLIMvVGb7LDwQQ7VxQCqMkBlaWi7R8GO5kAHqa?=
+ =?us-ascii?Q?arMLMLf0UYUoFE9AsmGtX0BJhpVQ7jKXNSRlb2Oh6xWqzol/F36quDD7PeZs?=
+ =?us-ascii?Q?TYb8uS1HOc+5MBQUKdcOETWs/IcJ/Pgj6dTvEnIvBnfjNnuchawUGqU+2uD0?=
+ =?us-ascii?Q?b/6v4DlaBTUqr3xxLuofExApPynmjJU2Qf4aJSf4nIXNlxb2jzEo+GOFdIGa?=
+ =?us-ascii?Q?ZmeDhEPjUIXLishwTYW/fEuuwvMyIiU70dm35qNvSca1bN2v10Lpb7EwoHyb?=
+ =?us-ascii?Q?Vh3bF98mOH5uiFzUZTSVI6II24m1xqNsuzCucxOd+S0A4/Ae7zwI1vylt0E4?=
+ =?us-ascii?Q?tQkKdaXi/WiYHBTdTWoKWYHfmiJKuxqt9AdTPhxMZCYgmfO3wjgzWWElFxjM?=
+ =?us-ascii?Q?K+C6ndCJ8iDOIvkiIYe5gBwOjo1Uy74z/fdOYDwykSB7+qzGcpYgaqYFU/Ar?=
+ =?us-ascii?Q?K7zgIqTGxRarAIFMD5qMNqLNUps0QNvt43E8k9HnE0CCs4bEtibBJARUlMB9?=
+ =?us-ascii?Q?ArGe4QLuZf+bfQ8/l+yg5dBzka2D71YVQXuaDN1FkQRLAsERxEXltERw4tF5?=
+ =?us-ascii?Q?GJBvmlVESDOF00x+rkPQP4OPElf890cfEFZwN8oGlIDKXPt0qtBwKKcwo8Hv?=
+ =?us-ascii?Q?QjVm/qMayIXPW/86mcOO4VBwwh40x9ZLmHqtaxlRWlZME+3rJW92/ote05ZA?=
+ =?us-ascii?Q?bSRJw3+RiHCRofoxaPUeppnvsTufeNBm5XR7eBlRI8o6hQQO8psmL4WLUC1k?=
+ =?us-ascii?Q?TXPzpbWTHtNym6asLzvbMi17YfQKd/MmlJN1OMBiSiwykAbIjtOSyfwN3Jcs?=
+ =?us-ascii?Q?MM3l7tAhi+aLywXGswNkRziKq7xY6YWScNTVu238MB20hD/ULG6b7/jYyDZY?=
+ =?us-ascii?Q?QMXyqFVvOziTQLlDVXjB5TwAzS+dbzjX4dybrYShsQf/fqtL0GGJQQBibAKd?=
+ =?us-ascii?Q?GsrQISLSdQtsF7KzH7lnhEsHXwfKnjKetszEAhBgYiH7DVwH0/DIz7AXw9K8?=
+ =?us-ascii?Q?NRBi2wFjnJTAZThsLuIsIX6TYV5ZPQE=3D?=
+X-OriginatorOrg: lnu.edu.ua
+X-MS-Exchange-CrossTenant-Network-Message-Id: cf3a56d8-40f1-40d2-8792-08deb776799e
+X-MS-Exchange-CrossTenant-AuthSource: VI0P190MB2524.EURP190.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 May 2026 20:21:02.2611
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 70a28522-969b-451f-bdb2-abfea3aaa5bf
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: ppWqNh2swyV4w7wx1R4ifvoGB6sXYf2qJzyyjpkI9ZUCsnNietuy4R7zWvSjav72BKCFf9bZAVJX5d3NX9Nb9Yto/K0iwGzPmWQCrXqW6JI=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: VI1P190MB0655
 
-Thank you for your contribution! Sashiko AI review found 4 potential issue(=
-s) to consider:
+- Patch 1 fixes missing parentheses in DAMON iterator macro arguments to
+  prevent potential build failures.
+- Patch 2 clarifies in the sysfs documentation that the `current_value` of
+  quota goals is only for user input and is not updated by the kernel.
 
-Pre-existing issues:
-- [Critical] The ALIGN() macro can overflow when processing malicious or ov=
-erly large user-provided region 'end' values, creating invalid regions wher=
-e start > end.
-- [High] min_region_sz can be a non-power-of-2 value, which corrupts region=
- boundary calculations when passed to ALIGN() and ALIGN_DOWN().
-- [High] Userspace can maliciously trigger a kernel warning (WARN_ONCE) by =
-providing a region where start =3D=3D end via sysfs.
-- [High] A memory allocation failure during region creation results in a pa=
-rtial state update without a rollback, potentially leaving the running DAMO=
-N context corrupted.
---
+Changes from v1
+- v1: https://lore.kernel.org/r/20260518190932.42270-1-maksym.shcherba@lnu.edu.ua/
+- Drop patches 2, 3, 5, and 6 from v1 (which implemented and documented
+  update_schemes_quota_goals).
+- Clarify `current_value` behavior in the documentation (Patch 2) instead
+  of modifying the sysfs API.
+- Add SeongJae's Reviewed-by tag to the macro bugfix (Patch 1).
+- Fix checkpatch.pl email address mismatch warning.
 
-commit fa588352eaf7b151171cca8c2acb0bb710a71c75
-Author: SeongJae Park <sj@kernel.org>
+Maksym Shcherba (2):
+  mm/damon: fix missing parens in macro arguments
+  Docs/admin-guide/mm/damon/usage: clarify current_value of quota goals
 
-mm/damon/core: safely handle no region case in damon_set_regions()
+ Documentation/admin-guide/mm/damon/usage.rst | 6 ++++--
+ include/linux/damon.h                        | 8 ++++----
+ 2 files changed, 8 insertions(+), 6 deletions(-)
 
-This commit refactors damon_set_regions() to explicitly handle the empty
-region list case without depending on the internal implementation of
-list_first_entry().
 
-> diff --git a/mm/damon/core.c b/mm/damon/core.c
-> index 4e223857a0f99..d0bdf6e01dff8 100644
-> --- a/mm/damon/core.c
-> +++ b/mm/damon/core.c
-> @@ -356,6 +356,19 @@ int damon_set_regions(struct damon_target *t, struct=
- damon_addr_range *ranges,
->  			damon_destroy_region(r, t);
->  	}
-> =20
-> +	if (!damon_nr_regions(t)) {
-> +		for (i =3D 0; i < nr_ranges; i++) {
-> +			r =3D damon_new_region(
-> +					ALIGN_DOWN(ranges[i].start,
-> +						min_region_sz),
-
-[Severity: High]
-This is a pre-existing issue, but can min_region_sz be a non-power-of-2
-value here?
-
-If sys_ctx->addr_unit is set to an arbitrary value via sysfs, min_region_sz
-might not be a power of 2. The ALIGN() and ALIGN_DOWN() macros internally
-perform bitwise AND operations with ~(a - 1), which assumes the alignment
-is a power of 2.
-
-Could passing a non-power-of-2 value truncate arbitrary bits and result in
-misaligned boundaries where start > end?
-
-> +					ALIGN(ranges[i].end, min_region_sz));
-
-[Severity: Critical]
-This is a pre-existing issue, but can ALIGN() overflow when processing
-overly large end values?
-
-If a user passes ULONG_MAX as the region end via sysfs, ALIGN(ULONG_MAX,
-4096) will overflow and wrap around to 0.
-
-Would this result in damon_new_region(start, 0) being called, creating an
-invalid region where start > end, which could underflow the size and cause
-out-of-bounds memory accesses?
-
-[Severity: High]
-This isn't a bug introduced by this patch, but what happens if userspace
-provides a region where start =3D=3D end?
-
-The sysfs interface end_store accepts arbitrary values, and if start =3D=3D=
- end,
-both bypass the start > end validation check. Since ALIGN_DOWN() and ALIGN()
-return identical values for identical inputs, would damon_new_region() be
-invoked with equal start and end arguments, allowing an attacker with sysfs
-access to maliciously trigger a WARN_ONCE(start >=3D end)?
-
-> +			if (!r)
-> +				return -ENOMEM;
-
-[Severity: High]
-This is a pre-existing issue, but does this allocation failure leave the
-DAMON context in a corrupted state?
-
-If damon_new_region() returns NULL due to memory pressure, the function
-immediately returns -ENOMEM without rolling back the regions that were
-already removed or added in the previous loop.
-
-Could this leave the running kdamond thread with a partially modified list
-of regions?
-
-> +			damon_add_region(r, t);
-> +		}
-> +		return 0;
-> +	}
-> +
->  	r =3D damon_first_region(t);
-[ ... ]
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260521143428.8315=
-7-1-sj@kernel.org?part=3D1
+base-commit: 85a7d9e080a3f65869f22c2d50b630462fce332b
+-- 
+2.34.1
