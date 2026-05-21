@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0B912BDC13
-	for <damon@lists.linux.dev>; Thu, 21 May 2026 04:05:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB45F37C0E6
+	for <damon@lists.linux.dev>; Thu, 21 May 2026 04:19:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779336327; cv=none; b=dMHuKbmD0HwmHX3OHSqWaQj02JFNGnb5DXfpjYMt1/bHcu6FoVA0YdVnmM4UMdqSk1GW6Zs8bIdx4PQkZad6I7vXEb2Sv45s01k81j/s8TC6a6KiQnb3Oq57HhIeHO5yNijw608BkDjb/fatJL9ye+HZS9DX8MebHQnvkbWZ+CA=
+	t=1779337204; cv=none; b=h5C48nCmeBqbLoc9aXKxUp5qeoJTRxfePLQMKotI2iRCryxq56mgh4PRGUQqj/xwWr6Yjc6BuzAJZvWNZYNJAkV8TbOBejTyUnn+LT+wI04PpzjLQ5itCGjsbM6VuIk7zntZWzi7LP30gJ5zEqgoaWjdp0x6T2eYqy89rCuOUSc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779336327; c=relaxed/simple;
-	bh=mTQM38nGm7ZKE7EQ/RZRp/a+/SHVPY9ps/Sge9pI+9Y=;
+	s=arc-20240116; t=1779337204; c=relaxed/simple;
+	bh=oD0kH2MpCBTaVX2Jsu9CmJygqGDwGfHtL0Bwp4ag8eo=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=ia1g0RqiTshPKZSIszTbGKtwqFMN42pnqatpBeHVg7XlI/7rcWk5HgkIvKQkvH2FYAXYt3Ar6MO0NgjCIpttrTqrKJ1+/9bIebtUeC0w9B/j6RVh/z6fpQRJ1Y/NQK5stbwgWeBxN8qFVqsKmBADPkaWXO6y7Q1OkqSrO68YDoI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Qxi0o7uV; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=KKeQDd/hvyeM1gW7eINNqrdTuLMSUbMcr/R813qyAmKIT3XDb3uOManzgw0GIGh6b5qIfXO/vO0DZDeIkPGZUVpYJnNSQhKoLjz9cWOEL80F0IMGHg2fQqcdcy5fJbx3GSUG/WxJ9WsbQk/klN/YG/T07pk3GEEd0fECl2LKam0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VXcwzgwe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Qxi0o7uV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 620A81F000E9;
-	Thu, 21 May 2026 04:05:26 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VXcwzgwe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E5AF1F000E9;
+	Thu, 21 May 2026 04:19:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1779336326;
-	bh=8t59k+yfQ+I0yzkp3pN7jJdl4Q5mLTewVyrOu0Jw1L0=;
+	s=k20260515; t=1779337189;
+	bh=MvR74wjVZVOnnQgvhgbGjHlrVqUllYiHTB0Jhs1JgUg=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=Qxi0o7uVGmYK1XJT0MCWzD5XHstBaesoookCljjHGbsxa/J3x4H6gnAj9C6UDOKum
-	 sZPDAhVDnWet8Rs00zwanvgJLmU3wj0Nk/jLvezyYdYqgKoRbzfnTOEvpnxoNuyvga
-	 HApr7vDMdXBTUE6oUyvMPm/tMbpiJ0G0+VY/d0IqukXmFXdgceF+INz3Eco7MF8bVC
-	 3T4BYWPSJRusxrLgbY73uhRSTtNiiGmNNKre7qWqM1icZcpX5pIGyqlp2IPAwgd8He
-	 2nx2b8LXZvplGTSMAVnA9IH8NEhl8KRZA4gVFgHJv07LZuqddePtCV7b4XJRdJIDlR
-	 iD0TQYZO5lQSw==
+	b=VXcwzgwenz8W2+KOp2RJ1hZ3mgIiYwdil5I24egpOSexXUEa6m+wAft1+PjRIgmoZ
+	 KKGPgutXtmyFVGAPK2zj+qtbZb7gZ4ESj89dpTd/an+OmcRHw9iAQk4gu35XyJ+cBs
+	 xEtPG9zEA4sExFgkKqtEvJWJIiypjgkhkkoQU0BNAG0IbGGQlg2Ba4rJ5RSEPqrbVf
+	 s90Ym9/TWdX3/IqAvDg5ebyKMVPXo869/GGT3/zn7naXBMomoC7adQ61M1BrDJFkhM
+	 GPaudxrK8vGpDNVI8kGqZLddJZpLWQ2a1Aloyu8OAlOpEwqF6JH2hWOyXnnDKtwm9U
+	 Cu9BamxQSYVbQ==
 From: sashiko-bot@kernel.org
-Subject: Re: [RFC PATCH v1.1 04/14] mm/damon/tests/vaddr-kunit: replace
- damon_add_region() with damon_set_regions()
+Subject: Re: [RFC PATCH v1.1 02/14] mm/damon/core: do not use region out of
+ a loop in damon_set_regions()
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "SeongJae Park" <sj@kernel.org>
 Cc: damon@lists.linux.dev
-In-Reply-To: <20260521035349.87565-5-sj@kernel.org>
-References: <20260521035349.87565-5-sj@kernel.org>
+In-Reply-To: <20260521035349.87565-3-sj@kernel.org>
+References: <20260521035349.87565-3-sj@kernel.org>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Thu, 21 May 2026 04:05:25 +0000
-Message-Id: <20260521040526.620A81F000E9@smtp.kernel.org>
+Date: Thu, 21 May 2026 04:19:49 +0000
+Message-Id: <20260521041949.9E5AF1F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -46,71 +46,58 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 
 Thank you for your contribution! Sashiko AI review found 1 potential issue(=
 s) to consider:
-- [Medium] Memory leak of the `damon_target` structure and attached regions=
- when `damon_set_regions()` fails.
+
+Pre-existing issues:
+- [High] Integer overflow in ALIGN() can result in region with ar.end =3D 0
 --
 
-commit e0458a31c6f6c7f46d6a9ef3e90d4098d89686fd
+commit d65dcd33c6063ed27bd90da3803c482628ebbc88
 Author: SeongJae Park <sj@kernel.org>
 
-mm/damon/tests/vaddr-kunit: replace damon_add_region() with damon_set_regio=
-ns()
+mm/damon/core: do not use region out of a loop in damon_set_regions()
 
-This commit updates the DAMON virtual address operation set unit tests to
-use damon_set_regions() instead of damon_add_region() for region setup. This
-aligns the tests with how other DAMON API callers set up regions.
+This commit cleans up damon_set_regions() to explicitly track if a region
+should be inserted before another, avoiding reliance on undocumented
+iterator behavior. No behavioral changes are intended.
 
-> diff --git a/mm/damon/tests/vaddr-kunit.h b/mm/damon/tests/vaddr-kunit.h
-> index 98e734d77d517..de30db9b753e5 100644
-> --- a/mm/damon/tests/vaddr-kunit.h
-> +++ b/mm/damon/tests/vaddr-kunit.h
-> @@ -132,22 +132,32 @@ static void damon_do_test_apply_three_regions(struc=
-t kunit *test,
->  				unsigned long *expected, int nr_expected)
->  {
->  	struct damon_target *t;
+> diff --git a/mm/damon/core.c b/mm/damon/core.c
+> index d0bdf6e01dff8..669fd13776ea2 100644
+> --- a/mm/damon/core.c
+> +++ b/mm/damon/core.c
 
 [ ... ]
 
->  	t =3D damon_new_target();
->  	if (!t)
->  		kunit_skip(test, "target alloc fail");
-> +
-> +	ranges =3D kmalloc_array(nr_regions / 2, sizeof(*ranges), GFP_KERNEL);
-> +	if (!ranges) {
-> +		damon_destroy_target(t, NULL);
-> +		kunit_skip(test, "ranges alloc fail");
-> +	}
+> @@ -394,7 +397,11 @@ int damon_set_regions(struct damon_target *t, struct=
+ damon_addr_range *ranges,
+>  					ALIGN(range->end, min_region_sz));
 
-[ ... ]
+[Severity: High]
+This is a pre-existing issue, but can this ALIGN() macro overflow if
+userspace provides ULONG_MAX as the region end via the sysfs interface?
 
-> +	if (damon_set_regions(t, ranges, nr_regions / 2,
-> +				DAMON_MIN_REGION_SZ)) {
-> +		kfree(ranges);
-> +		kunit_skip(test, "damon_set_regions() fail");
+If range->end is ULONG_MAX and min_region_sz is 4096, the ALIGN() macro
+would evaluate to 0, resulting in a region where ar.end is 0.
 
-[Severity: Medium]
-Does this error path leak the damon_target structure and its attached regio=
-ns?
+When damon_sz_region() subsequently calculates the size using
+r->ar.end - r->ar.start, the unsigned arithmetic would underflow to a
+massive size.
 
-Unlike the earlier kmalloc_array() error path which calls
-damon_destroy_target(t, NULL) before skipping, this failure path seems
-to omit the cleanup. Because kunit_skip() aborts test execution via a
-long jump, the target allocated via damon_new_target() wouldn't get freed.
+This could cause the while (damon_sz_region(r) > max_region_sz) loop in
+damon_apply_min_nr_regions() to iterate nearly endlessly, allocating new
+regions until memory is exhausted.
 
->  	}
-> +	kfree(ranges);
-> =20
-> -	damon_set_regions(t, three_regions, 3, DAMON_MIN_REGION_SZ);
-> +	if (damon_set_regions(t, three_regions, 3, DAMON_MIN_REGION_SZ))
-> +		kunit_skip(test, "second damon_set_regions() fail");
-
-[Severity: Medium]
-Could the same memory leak occur here?=20
-
-If the second damon_set_regions() fails, kunit_skip() is called without
-first freeing the target structure.
+>  			if (!newr)
+>  				return -ENOMEM;
+> -			damon_insert_region(newr, damon_prev_region(r), r, t);
+> +			if (insert_before_r)
+> +				damon_insert_region(newr, damon_prev_region(r),
+> +						r, t);
+> +			else
+> +				damon_add_region(newr, t);
+>  		} else {
+>  			/* resize intersecting regions to fit in this range */
+>  			first->ar.start =3D ALIGN_DOWN(range->start,
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260521035349.8756=
-5-1-sj@kernel.org?part=3D4
+5-1-sj@kernel.org?part=3D2
