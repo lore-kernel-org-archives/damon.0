@@ -1,123 +1,111 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B4DC34A3BF
-	for <damon@lists.linux.dev>; Thu, 21 May 2026 05:41:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7918133F8B4
+	for <damon@lists.linux.dev>; Thu, 21 May 2026 06:05:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779342075; cv=none; b=SWWWbjSV1D1QAUaT5jJwP9N1cY4aAXjeH//OdAu66RsWCmfOC1zjfgfcpwPqaarigw5MZ2dspYiqA6SnqmuEE7/Bn2HJhx2jxko/3phh+V0wlEbR/DH8cEg2o1uW9Tc9wQlOIsZJ08NnTRPA+PZQ6kMAGR7oQNqSx9KB+ouXWBQ=
+	t=1779343533; cv=none; b=TlUegSxKlPs5jUblVlabKKNHjOOj/onNzX5PRSMNFSuRGONYxllCv9PzOiSTPNfo9+9cCoXlA25A46AJomLVay27Lly9zqqftZM9YtTIvoO2y7fqVvcpOSahYGTMZseTocKey25hoaH5vV4y4cDnBj9x/yZ/XX2hpvklzR2m9xY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779342075; c=relaxed/simple;
-	bh=u+J4zLP7pg8bp1+A0nXB8EhQtHA6nU4Wms8LHSOC4a4=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=cYjHtbNm09XAI1uyaVsaYalNSkELLnlhGMTKYIPLByglX2gCCa27GBrUg1Etnh8y1AshXgnIjLiEFUvryhZH4tT/D7whAieKmMruexbewjBGNZYhk7OIIQcLzI7bwJGYpv0KgdOmssFv9dfdWenm2tXmvO8ptU2mFxWZH26lWRQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kustyDRS; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1779343533; c=relaxed/simple;
+	bh=7vz3v9RFQrzzb9gzNWw/Rcv5M545TaEvWUqOhc7FXp8=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=qJ5Ym5tZC+FyRWIxoDwbNsy4F38nUfmqU8PTi9BPMo9pfnMvDdOfE/F9zQkfpHrbA8rfc1yLbuHqEui8BjxQsQIDeAOyg+YyASMeSZaDoqKvBsJcntdsBTLrFXu7QBWY0zeBKVsP3p6oXoPLJKul2JHz4cBD9R7H9zpvR7uXD3k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iVYnUnzj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kustyDRS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFDC61F000E9;
-	Thu, 21 May 2026 05:41:13 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iVYnUnzj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBF171F000E9;
+	Thu, 21 May 2026 06:05:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1779342073;
-	bh=rtP1aZAx641NiTBPZqj6X70ERp01e/9U6gbOXEzH2a0=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=kustyDRSs41nz5+VaiO3jSL+H4VFXFYenC0qibxQwRsJWYxVeZnhs8OFm9FIizvOT
-	 jKHUrrUGLm15lV0GB81jSN01WuurRhsQzqJTe4Yt0LzavsmFSYydavMu1botzQWIdV
-	 ZlhZBzc7RNrBNb+ixgXrCp6TrSEf9wAVJKOQGk5hinSUohtV+wINwQteGxJVAB8dk1
-	 7xJMKdqCEmDjdabuZBFTWt9BqgfdPXVo0LHK89x34IL9VTmCJFlpvJ4N6CxoLjGy4J
-	 Js5hAI4pJD8+kebKdDibe7vkrzrJJXA6hjjGnkUGzISvZPjwMjuFK/7yI5EIT6X5IU
-	 +Kf6UdxWaeXdw==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH 2/2] mm/damon/tests/core-kunit: test split above
- max_nr_regions/2
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Jiayuan Chen" <jiayuan.chen@linux.dev>
-Cc: damon@lists.linux.dev
-In-Reply-To: <20260521045236.115749-3-jiayuan.chen@linux.dev>
-References: <20260521045236.115749-3-jiayuan.chen@linux.dev>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Thu, 21 May 2026 05:41:13 +0000
-Message-Id: <20260521054113.AFDC61F000E9@smtp.kernel.org>
+	s=k20260515; t=1779343532;
+	bh=bfv+DA4vVDs7J9DExHAvaspwDkyuX+VZLHU7ekqZ1Bo=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=iVYnUnzjxlrrXkCOcL9lKZ70fl/SEGrTqeBZBNhLYKGx+3CQDUuY9T/3w2gYvYXS8
+	 FN4TjumJSYZeztDcnmfe8Z0neNLQm1oDvO03F1hih8qDBJ5fg3qe6izmbT5GKBje+k
+	 W5p9hgJtoxK7Q2lTlM+kdDkH1zNCMPRsQrex4zMuy/wfsvvocRUhQiatf1RzgKjKKj
+	 pjQpw1iZw5V2CZLxusiv17Ef5NqF4a6vuHGFPHsTtklxSFZ4TX40uSSZFk587WBFgp
+	 Do2QZXmSUCk3Xz+zMdjAT2Zxgfqwe3e4ykca5C1oXaQQPa05oQaNvyo+3O5Y1QJOzC
+	 k3qscoY2tzEiQ==
+From: SeongJae Park <sj@kernel.org>
+To: sashiko-bot@kernel.org
+Cc: SeongJae Park <sj@kernel.org>,
+	damon@lists.linux.dev
+Subject: Re: [RFC PATCH v1.1 02/14] mm/damon/core: do not use region out of a loop in damon_set_regions()
+Date: Wed, 20 May 2026 23:05:22 -0700
+Message-ID: <20260521060523.80684-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260521041949.9E5AF1F000E9@smtp.kernel.org>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-Thank you for your contribution! Sashiko AI review found 1 potential issue(=
-s) to consider:
-- [Medium] The new unit test `damon_test_split_above_half_progresses` fails=
- to effectively test its target logic and introduces architecture-dependent=
- flakiness due to relying on default page sizes.
---
+On Thu, 21 May 2026 04:19:49 +0000 sashiko-bot@kernel.org wrote:
 
-commit 41d857e275ff50ce39c3b59f85362709927d922a
-Author: Jiayuan Chen <jiayuan.chen@shopee.com>
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> 
+> Pre-existing issues:
+> - [High] Integer overflow in ALIGN() can result in region with ar.end = 0
+> --
+> 
+> commit d65dcd33c6063ed27bd90da3803c482628ebbc88
+> Author: SeongJae Park <sj@kernel.org>
+> 
+> mm/damon/core: do not use region out of a loop in damon_set_regions()
+> 
+> This commit cleans up damon_set_regions() to explicitly track if a region
+> should be inserted before another, avoiding reliance on undocumented
+> iterator behavior. No behavioral changes are intended.
+> 
+> > diff --git a/mm/damon/core.c b/mm/damon/core.c
+> > index d0bdf6e01dff8..669fd13776ea2 100644
+> > --- a/mm/damon/core.c
+> > +++ b/mm/damon/core.c
+> 
+> [ ... ]
+> 
+> > @@ -394,7 +397,11 @@ int damon_set_regions(struct damon_target *t, struct damon_addr_range *ranges,
+> >  					ALIGN(range->end, min_region_sz));
+> 
+> [Severity: High]
+> This is a pre-existing issue,
 
-mm/damon/tests/core-kunit: test split above max_nr_regions/2
+So, no blocker of this series.
 
-This commit adds a kunit test to exercise kdamond_split_regions() when the
-total region count is already above max_nr_regions / 2. It asserts that the
-function can still produce new regions without overshooting the maximum
-region limit.
+> but can this ALIGN() macro overflow if
+> userspace provides ULONG_MAX as the region end via the sysfs interface?
 
-> diff --git a/mm/damon/tests/core-kunit.h b/mm/damon/tests/core-kunit.h
-> index 866f716e5760d..c87933c58785b 100644
-> --- a/mm/damon/tests/core-kunit.h
-> +++ b/mm/damon/tests/core-kunit.h
-[ ... ]
-> +static void damon_test_split_above_half_progresses(struct kunit *test)
-> +{
-> +	struct damon_ctx *c;
-> +	struct damon_target *t;
-> +	struct damon_region *r, *big;
-> +	unsigned long start;
-> +	unsigned int nr_before, nr_after, i;
-> +	const unsigned int nr_small =3D 799;
-> +	const unsigned long small_sz =3D 10;
-> +	const unsigned long big_sz =3D 1000000;
-> +
-> +	c =3D damon_new_ctx();
+It is technically possible.  But what sane user would use such input?
 
-[Severity: Medium]
-Does this introduce a test regression on architectures with large page size=
-s?
+> 
+> If range->end is ULONG_MAX and min_region_sz is 4096, the ALIGN() macro
+> would evaluate to 0, resulting in a region where ar.end is 0.
 
-Because damon_new_ctx() sets c->min_region_sz to the default PAGE_SIZE,
-this test might become flaky or fail on architectures with larger pages.
+And it will trigger WARN_ONCE() on multiple verification points in
+CONFIG_DAMON_DEBUG_SANITY enabled kernels.
 
-For example, on architectures with a 256KB page size, the random split math
-could calculate a sub-region size that aligns down to 0, which would skip
-the split. On architectures with 1MB pages, the test would deterministically
-fail because the big region size (1,000,000) is smaller than=20
-2 * min_region_sz.
+> 
+> When damon_sz_region() subsequently calculates the size using
+> r->ar.end - r->ar.start, the unsigned arithmetic would underflow to a
+> massive size.
+> 
+> This could cause the while (damon_sz_region(r) > max_region_sz) loop in
+> damon_apply_min_nr_regions() to iterate nearly endlessly, allocating new
+> regions until memory is exhausted.
 
-Will this cause the KUNIT_EXPECT_GT(test, nr_after, nr_before) assertion
-below to randomly or deterministically fail since no regions will be split?
+If there is a region having end address equal to or smaller than the start
+address, I think not only damon_apply_min_nr_regions() but multiple logics in
+DAMON will behave crazily.  But, as I mentioned at the beginning, it is unclear
+if it is a sane user input that deserve to be supported.  Of course I might
+missing something, but I will revisit this if the first question is answered by
+someone.
 
-[ ... ]
-> +	nr_after =3D damon_nr_regions(t);
-> +	KUNIT_EXPECT_GT(test, nr_after, nr_before);
-> +	KUNIT_EXPECT_LE(test, (unsigned long)nr_after,
-> +			c->attrs.max_nr_regions);
 
-[Severity: Medium]
-Does this test actually exercise the budget constraint logic to ensure the
-region limit isn't overshot?
+Thanks,
+SJ
 
-Since the setup only provides a single splittable "big" region, and
-damon_split_zero_age_regions() skips newly inserted regions during its
-traversal, wouldn't this only ever produce at most 1 new region before
-terminating?
-
-If it can only split once, it seems structurally impossible for the test to
-reach or exceed the remaining budget of 700 regions, which might defeat the
-stated purpose of checking if the function overshoots the limit.
-
-> +
-> +	damon_destroy_ctx(c);
-> +}
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260521045236.1157=
-49-1-jiayuan.chen@linux.dev?part=3D2
+[...]
