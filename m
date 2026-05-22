@@ -1,40 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66A161D5CC9
-	for <damon@lists.linux.dev>; Fri, 22 May 2026 02:16:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 585B720ADF8;
+	Fri, 22 May 2026 02:42:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779416212; cv=none; b=kXdEOlLReOVzedZTdBDt0H+vu6iALTKbBqhcoU1kvnHnPcGHG021PVN82kffTFmpsCraxJMNZU/5P0PymAAvu2oZjlLgQRxN72uKU7CFsuWq0mdD9nzovQvf9kJ1SveIwxBYGdWPcrPfJQMv2BYnhdStwDauAGO68vsFZxgJp2Y=
+	t=1779417758; cv=none; b=qS23+0Ink22CFAk6pOBjRcioT8JZy5wTdkYFKRODQZI9W9jxmuldN3S6yJgrPP/FEx/UZwNN94jiqqJVLAlrckoLTjJPOyHtmg3+rpCfo8mbc6fZHQ2LTr0u/GCxckksJWr75B59HXdbkyITk9YS9I1GXHCLc5PMk86BQRFQxQM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779416212; c=relaxed/simple;
-	bh=hivPe1xeW7A2SO8RYYLqaP+LrTGSZDlCXtTzAEg5C/k=;
+	s=arc-20240116; t=1779417758; c=relaxed/simple;
+	bh=Qj7m5dQ92BHZtfyrERkLS8iAMfCOGOFVVbmhnyzGszo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uPYgDUaUHCC7OGXm03qFvfDWTTIgdaln1pfQIS1qhOiLwLgNj6BAZLkv0vma977kvsDz6x0M3p/q4bHx5T0T44E+Npu7NyHhVvFvxqeD3HbcI+p2Mm52Q77HKpn3XyQxpcprkgMPIDus7/3xqi40jSvoynscHl2km3+qJswHN1U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KxKBhvEl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=UYsblVA8x06aFnZNz4YTOTrCrjSsh/CfegfyCtviB5k9qVwaHz/Xf2yNf/3VprBrVWqP/ocncfipgUsOzXfRNnvwnSBkxtMmOKHCm3QuKlCn2LQy8N3AfiMzliNM1lxepTpo0YBaYWJ+/gftL7oKKfhjKtP/rBVcEMU5Qo8zDWU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=L9O80Nsj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KxKBhvEl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00B2E1F000E9;
-	Fri, 22 May 2026 02:16:50 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="L9O80Nsj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3A911F000E9;
+	Fri, 22 May 2026 02:42:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1779416211;
-	bh=x54Jcat3kL1SPHSo2BGoG5c4FtAjtaXnHfnbt2b5R2g=;
+	s=k20260515; t=1779417757;
+	bh=UfaKm7/ffChZJckI3+fZbp1IlqqOKUAIq6IoYDmzaVs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KxKBhvElMX/J6ynq0987JA6JFJcjQYHKZYke/0o1mo8tExF88c/3C+33p8IE68p75
-	 DBnjw8YqWmE+kIHQs5rS2q2yMXhbnnmVwx7MythcDlKowJPSyEwK2t8ShXfAZv33Sa
-	 Ihw3du41nem7aNEmh3XbfiBoFUPZtMbIE2vS7OUXoumNdBPlKmwLoOD6OndNJ7TNBY
-	 NYZp2FXaeCWvZVDC77zzqEkMxYJ59T5/A+lGQL6GVTQ9EqXPT6cRvLty7gtrdM0phr
-	 yDgWZd1qiiQeUVeO/OoydOOb9NTxJ2P4Czjo6bXKsXeoY/E2iaEMUYgvoLpfVE9Y0q
-	 /nI1pwZGkKzvQ==
+	b=L9O80NsjEeGKhmccQwt1t/+jRv+G3YUBl9ucxh8w4IYjc6ZLDLk8NAHsqnpYeKCHq
+	 Wc7m7hLBHuRnzeVYhK9cALdTwu/kbCN0+KoWvtkq9ywuGneOK2S2ra/jVCLGLMMVfs
+	 d6Fz1884Waxnlnppcn46gthfOeKPCRDk+adi4jAcahF20U3eotYgX6e7S23m2+VkWN
+	 Ug1fJJQmoWIk07kiaC+nXEGFtsVgKOp8fO/OXNt6ki9XJkaGvoZngaQHaLaHged1bg
+	 id4M6ZeqAkoodqwQXPPxRZb+9JNKuvSmi+QFLKkQ7aivP5MCG9cMrOboC/Z2OlzJhM
+	 gBVxZXufJQ2OA==
 From: SeongJae Park <sj@kernel.org>
-To: sashiko-bot@kernel.org
+To: Jiayuan Chen <jiayuan.chen@linux.dev>
 Cc: SeongJae Park <sj@kernel.org>,
-	damon@lists.linux.dev
-Subject: Re: [RFC PATCH v1.2 01/14] mm/damon/core: safely handle no region case in damon_set_regions()
-Date: Thu, 21 May 2026 19:16:42 -0700
-Message-ID: <20260522021642.87089-1-sj@kernel.org>
+	damon@lists.linux.dev,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Shu Anzai <shu17az@gmail.com>,
+	Jiayuan Chen <jiayuan.chen@shopee.com>,
+	Quanmin Yan <yanquanmin1@huawei.com>,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 0/2] mm/damon/core: detect internal variation above max_nr_regions/2
+Date: Thu, 21 May 2026 19:42:26 -0700
+Message-ID: <20260522024228.87328-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260521151929.5C25C1F000E9@smtp.kernel.org>
+In-Reply-To: <26baec2e-bc11-4042-8f61-0b3f7fe1c3b1@linux.dev>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -42,114 +48,164 @@ List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On Thu, 21 May 2026 15:19:28 +0000 sashiko-bot@kernel.org wrote:
+On Thu, 21 May 2026 23:07:11 +0800 Jiayuan Chen <jiayuan.chen@linux.dev> wrote:
 
-> Thank you for your contribution! Sashiko AI review found 4 potential issue(s) to consider:
+> Hi SJ,
 > 
-> Pre-existing issues:
-> - [Critical] The ALIGN() macro can overflow when processing malicious or overly large user-provided region 'end' values, creating invalid regions where start > end.
-> - [High] min_region_sz can be a non-power-of-2 value, which corrupts region boundary calculations when passed to ALIGN() and ALIGN_DOWN().
-> - [High] Userspace can maliciously trigger a kernel warning (WARN_ONCE) by providing a region where start == end via sysfs.
-> - [High] A memory allocation failure during region creation results in a partial state update without a rollback, potentially leaving the running DAMON context corrupted.
+> Thanks for taking a look.  Quick replies inline.
+> 
+> 
+> On 5/21/26 10:30 PM, SeongJae Park wrote:
+> > Hello Jiayuan,
+> >
+> > On Thu, 21 May 2026 12:52:22 +0800 Jiayuan Chen <jiayuan.chen@linux.dev> wrote:
+> >
+> >> kdamond_split_regions() bails out early when nr_regions is already
+> >> above max_nr_regions / 2.  A large region that picks up new internal
+> >> variation after that point never gets split, so we lose visibility
+> >> into its hot/cold structure.
+> >>
+> >> We hit this with damon-paddr on hugepage workloads and damon-vaddr
+> >> on processes that mmap a large anonymous range.
+> >>
+> >> On our production tree we added a current_nr_regions counter (no
+> >> good upstream home for it yet, so it's not in this series).  We saw
+> >> nr_regions never getting close to max_nr_regions, and the picture of
+> >> the access pattern was too coarse.
+> > Is 'current_nr_regions' somewhat showing the number of DAMON regions?  If so,
+> > you could also get the information from nr_regions field of damon_aggregated
+> > tracepoint.  I'm wondering if you considered using that but found a problem
+> > that made you have to implement the internal change.
+> >
+> > I will be happy to help removing such downstream changes.
+> 
+> 
+> Yes, same data as the nr_regions field in damon_aggregated.  The downstream
+> 
+> counter was just for convenience -- easier to cat a sysfs file than to wire
+> 
+> up tracing.  Even the tracepoint covers it, It's cost to much for 
+> Grafana to just get
+> 
+> a metrics by tracepoint.
 
-No one is caused by this patch, so no blocker for this patch.
-
-The last finding seems worthy to separately work for.  I will work on it.
-
-Please read below for more details.
-
-> --
-> 
-> commit fa588352eaf7b151171cca8c2acb0bb710a71c75
-> Author: SeongJae Park <sj@kernel.org>
-> 
-> mm/damon/core: safely handle no region case in damon_set_regions()
-> 
-> This commit refactors damon_set_regions() to explicitly handle the empty
-> region list case without depending on the internal implementation of
-> list_first_entry().
-> 
-> > diff --git a/mm/damon/core.c b/mm/damon/core.c
-> > index 4e223857a0f99..d0bdf6e01dff8 100644
-> > --- a/mm/damon/core.c
-> > +++ b/mm/damon/core.c
-> > @@ -356,6 +356,19 @@ int damon_set_regions(struct damon_target *t, struct damon_addr_range *ranges,
-> >  			damon_destroy_region(r, t);
-> >  	}
-> >  
-> > +	if (!damon_nr_regions(t)) {
-> > +		for (i = 0; i < nr_ranges; i++) {
-> > +			r = damon_new_region(
-> > +					ALIGN_DOWN(ranges[i].start,
-> > +						min_region_sz),
-> 
-> [Severity: High]
-> This is a pre-existing issue, but can min_region_sz be a non-power-of-2
-> value here?
-> 
-> If sys_ctx->addr_unit is set to an arbitrary value via sysfs, min_region_sz
-> might not be a power of 2. The ALIGN() and ALIGN_DOWN() macros internally
-> perform bitwise AND operations with ~(a - 1), which assumes the alignment
-> is a power of 2.
-> 
-> Could passing a non-power-of-2 value truncate arbitrary bits and result in
-> misaligned boundaries where start > end?
-
-DAMON_SYSFS enforces the power of 2 using damon_commit_ctx() based parameter
-validation.  DAMON_RECLAIM and DAMON_LRU_SORT also do the checks in their
-..._apply_parameters() functions.  So this cannot happen.
+Makes sense.  And I think this deserves to be upstreamed.  Some minor
+modifications might be needed to your current implementation, though.  Please
+feel free to send a patch to start the discussion, if you want.
 
 > 
-> > +					ALIGN(ranges[i].end, min_region_sz));
 > 
-> [Severity: Critical]
-> This is a pre-existing issue, but can ALIGN() overflow when processing
-> overly large end values?
+> >> Example with max_nr_regions == 1500.  A target ends up with 799
+> >> small hot/cold regions plus one big region (an earlier merge
+> >> collapsed a uniformly-accessed range into a single piece):
+> >>
+> >> H:hot
+> >> C:cold
+> >>
+> >>        r1     r2     r3                 r800
+> >>      HHHHHH|CCCCCC|HHHHHH|...|HHHHHH..........................|
+> >>
+> >>      nr_regions = 800  >  max_nr_regions / 2 = 750
+> >>
+> >> Now a cold subarea shows up inside r800:
+> >>
+> >>        r1     r2     r3                 r800
+> >>      HHHHHH|CCCCCC|HHHHHH|...|HHHHHH........CCCCCC.............|
+> >>
+> >> The small regions can't merge with each other (their access counts
+> >> differ), so budget never frees up.  r800 can't be split because
+> >> nr_regions > max_nr_regions / 2 returns early.  The cold subarea
+> >> stays invisible.
+> > I agree this corner case could theoretically happen.  But, would the small
+> > regions have the current pattern forever?  On real world systems having dynamic
 > 
-> If a user passes ULONG_MAX as the region end via sysfs, ALIGN(ULONG_MAX,
-> 4096) will overflow and wrap around to 0.
 > 
-> Would this result in damon_new_region(start, 0) being called, creating an
-> invalid region where start > end, which could underflow the size and cause
-> out-of-bounds memory accesses?
+> I agree with the point that this is a corner case. But it's not 
+> transient for us.
 
-As I previously answered [1], that input is unlikely in real use case.
-> 
-> [Severity: High]
-> This isn't a bug introduced by this patch, but what happens if userspace
-> provides a region where start == end?
-> 
-> The sysfs interface end_store accepts arbitrary values, and if start == end,
-> both bypass the start > end validation check. Since ALIGN_DOWN() and ALIGN()
-> return identical values for identical inputs, would damon_new_region() be
-> invoked with equal start and end arguments, allowing an attacker with sysfs
-> access to maliciously trigger a WARN_ONCE(start >= end)?
-
-Again, unlikely input in real use case.  To intentionally to this, the user
-need sysfs write permission.  If a malicious user got the permission, I think
-they can do anything bad?
+Thank you for sharing this nice information.
 
 > 
-> > +			if (!r)
-> > +				return -ENOMEM;
+> On a production setup with max_nr_regions = 20000, nr_regions sits at 
+> 11k-12k
 > 
-> [Severity: High]
-> This is a pre-existing issue, but does this allocation failure leave the
-> DAMON context in a corrupted state?
+> for extended periods. There are occasional bursts (e.g. from offline 
+> pods), then things settle
 > 
-> If damon_new_region() returns NULL due to memory pressure, the function
-> immediately returns -ENOMEM without rolling back the regions that were
-> already removed or added in the previous loop.
-> 
-> Could this leave the running kdamond thread with a partially modified list
-> of regions?
+> back without ever reclaiming the budget.
 
-Yes, and the caller should do damon_destroy_ctx() of the ctx.  And DAMON_SYSFS
-does that, while vaddr doesn't.  I will work on this.
+Could you please clarify a little bit more?  What is the occasional bursts, and
+how offline pods contribute to that?  What "reclaiming the budget" means?
 
-[1] https://lore.kernel.org/20260521060523.80684-1-sj@kernel.org
+Also, do you have some measurements that shows this problem and how much of it
+is removed by this series?
+
+> 
+> 
+> > access pattern, I guess those small regions may not keep the shape forever, and
+> > give chance for the large region to be split.  Am I missing something?
+> >
+> > My theory also implies that this kind of situation could happen at least
+> > sometimes for temporal periods.  In other words, it could happens too
+> > frequently and too long to be problematic.  But, in the case, maybe the user
+> > could mitigate the issue by increasing the max_nr_regions.  I'm curious if you
+> > considered that direction and found a problem that I don't expect for now.
+> >
+> >> Patch 1 lets this path still split regions that just changed
+> >> (age == 0),
+> > Why 'age == 0' means it is a good candidate to split?  Because it means its
+> > access frequency is anyway unstable?  Or are there other reasons?  More
+> > clarification would be helpful.
+> 
+> 
+> Yes, age == 0 means the region's access count drifted past the merge 
+> threshold in
+> the last aggregation -- the strongest signal it just changed internally.
+> Regions with age > 0 are stable; splitting them tends to oscillate (the next
+> merge cycle pulls the halves back together and we waste the budget).
+
+Thank you for confirming this.  Yes, that sounds good approach to me.  But
+because this is a core behavior, I'd like to be careful more than usual.  I
+will spend more time at thinking if I'm missing something, and if this is the
+best approach.  If you have measurements that I asked above and can share, that
+will also be helpful.
+
+> 
+> >
+> >> up to whatever budget is left under max_nr_regions.
+> >> If a split turns out useless, the next merge cycle undoes it.
+> > I'm again curious why the user cannot just increase max_nr_regions.
+> 
+> It works as a workaround, but it isn't free: higher max means more sampling
+> work and more memory,
+
+It would depend on the real number of distinct access patterns.  I understand
+the number is really high on your use case.  Again, if you have measurements
+and could share, that will be very helpful.
+
+> and 20000 is the ceiling we actually want to live
+> with.  Bumping to 30000 just so the splitter has room to make progress
+> between max/2 and max is wasteful -- we don't actually want to spend the
+> resources for 30000 regions.
+
+Makes sense.
+
+> 
+> The real issue isn't budget waste, it's that once nr_regions crosses max/2
+> the splitter has no recovery path -- it returns immediately even when 
+> there's
+> variation worth refining, and merges don't help because the small regions
+> have different access counts.  nr_regions just sits between max/2 and max,
+> and new variation inside a large region goes undetected.  The patch gives
+> that path a way to keep refining within whatever budget remains, instead of
+> asking users to over-provision max.
+
+Yes, I agree.  Nonetheless, as I mentioned above a couple of times, if you have
+and could share measurements that showing how big the problem is and how much
+of it this change can solve will be very helpful.
 
 
 Thanks,
