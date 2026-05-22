@@ -1,214 +1,166 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from mailout4.samsung.com (mailout4.samsung.com [203.254.224.34])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 585B720ADF8;
-	Fri, 22 May 2026 02:42:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B93373D47D9
+	for <damon@lists.linux.dev>; Fri, 22 May 2026 11:38:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=203.254.224.34
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779417758; cv=none; b=qS23+0Ink22CFAk6pOBjRcioT8JZy5wTdkYFKRODQZI9W9jxmuldN3S6yJgrPP/FEx/UZwNN94jiqqJVLAlrckoLTjJPOyHtmg3+rpCfo8mbc6fZHQ2LTr0u/GCxckksJWr75B59HXdbkyITk9YS9I1GXHCLc5PMk86BQRFQxQM=
+	t=1779449893; cv=none; b=UYsAGgS/ofAAL9LXeE90wbO2fZ9ulJ4G3Ib2l9ettUCKQ4dV99eMkx9RvFcSciGERzy0LKY2wnBjSMfb6OxHJfTvcsxo67mZXT4MYIISDQiwOD5Ee6yS94e9zmE7YS9s6WSxewe+7ztLESRJGpP1c0sk9SyKlbmmRoUkwp+uBFY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779417758; c=relaxed/simple;
-	bh=Qj7m5dQ92BHZtfyrERkLS8iAMfCOGOFVVbmhnyzGszo=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=UYsblVA8x06aFnZNz4YTOTrCrjSsh/CfegfyCtviB5k9qVwaHz/Xf2yNf/3VprBrVWqP/ocncfipgUsOzXfRNnvwnSBkxtMmOKHCm3QuKlCn2LQy8N3AfiMzliNM1lxepTpo0YBaYWJ+/gftL7oKKfhjKtP/rBVcEMU5Qo8zDWU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=L9O80Nsj; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1779449893; c=relaxed/simple;
+	bh=8+SVtEunmLO5luTB/woJSREfnnEC/4OY69OYVm8LLR4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:From:In-Reply-To:
+	 Content-Type:References; b=KF0fmiQs3ZIP37GbSzxQsyTzKg8qvXXm6cheqMTM3QeVlKef8oJ5+Iei3gNFHU5zHqwtIugnOTsi1wWJCb2uoRCZp+fGMD0xnPZ7ZXzuoXAZ7QgtBdaRmDVAZ9ge0Mv+k3UYCenIvtGTW/Q3KDhpQo+oaj2LA4kW01SpM0CkVCk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com; spf=pass smtp.mailfrom=samsung.com; dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b=JERPYZtT; arc=none smtp.client-ip=203.254.224.34
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=samsung.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="L9O80Nsj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3A911F000E9;
-	Fri, 22 May 2026 02:42:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1779417757;
-	bh=UfaKm7/ffChZJckI3+fZbp1IlqqOKUAIq6IoYDmzaVs=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=L9O80NsjEeGKhmccQwt1t/+jRv+G3YUBl9ucxh8w4IYjc6ZLDLk8NAHsqnpYeKCHq
-	 Wc7m7hLBHuRnzeVYhK9cALdTwu/kbCN0+KoWvtkq9ywuGneOK2S2ra/jVCLGLMMVfs
-	 d6Fz1884Waxnlnppcn46gthfOeKPCRDk+adi4jAcahF20U3eotYgX6e7S23m2+VkWN
-	 Ug1fJJQmoWIk07kiaC+nXEGFtsVgKOp8fO/OXNt6ki9XJkaGvoZngaQHaLaHged1bg
-	 id4M6ZeqAkoodqwQXPPxRZb+9JNKuvSmi+QFLKkQ7aivP5MCG9cMrOboC/Z2OlzJhM
-	 gBVxZXufJQ2OA==
-From: SeongJae Park <sj@kernel.org>
-To: Jiayuan Chen <jiayuan.chen@linux.dev>
-Cc: SeongJae Park <sj@kernel.org>,
-	damon@lists.linux.dev,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Shu Anzai <shu17az@gmail.com>,
-	Jiayuan Chen <jiayuan.chen@shopee.com>,
-	Quanmin Yan <yanquanmin1@huawei.com>,
-	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 0/2] mm/damon/core: detect internal variation above max_nr_regions/2
-Date: Thu, 21 May 2026 19:42:26 -0700
-Message-ID: <20260522024228.87328-1-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <26baec2e-bc11-4042-8f61-0b3f7fe1c3b1@linux.dev>
-References: 
+	dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b="JERPYZtT"
+Received: from epcas5p2.samsung.com (unknown [182.195.41.40])
+	by mailout4.samsung.com (KnoxPortal) with ESMTP id 20260522113802epoutp047d45dc3660ab4d2cdce57be27d46d659~x4D12kzVZ0577105771epoutp04e;
+	Fri, 22 May 2026 11:38:02 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout4.samsung.com 20260522113802epoutp047d45dc3660ab4d2cdce57be27d46d659~x4D12kzVZ0577105771epoutp04e
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+	s=mail20170921; t=1779449882;
+	bh=X9XR94YHNMocWUFw9punBQGDBFYxc1lt25ZEVZWgtac=;
+	h=Date:Subject:To:Cc:From:In-Reply-To:References:From;
+	b=JERPYZtTU2TlEprNnCJlv0WM7hhtolUmAJHHUSjqwurELxRa/onqsWy1YDtIN+8xj
+	 +MRV/ZDvXNq0x1UISaIT5DzyMNQLc2ARA7V98cZIDNSHBwP9Pl28ac/y9dgft9Nee1
+	 aqj+yfQb92T4awPevYqHuFEft5mQPyEqwKj12DkU=
+Received: from epsnrtp01.localdomain (unknown [182.195.42.153]) by
+	epcas5p3.samsung.com (KnoxPortal) with ESMTPS id
+	20260522113801epcas5p3905b503bc0cfbc37e68be912f3324730~x4D1cklL90648906489epcas5p32;
+	Fri, 22 May 2026 11:38:01 +0000 (GMT)
+Received: from epcpadp2new (unknown [182.195.40.142]) by
+	epsnrtp01.localdomain (Postfix) with ESMTP id 4gMNZ16HSyz6B9m7; Fri, 22 May
+	2026 11:38:01 +0000 (GMT)
+Received: from epsmtip2.samsung.com (unknown [182.195.34.31]) by
+	epcas5p4.samsung.com (KnoxPortal) with ESMTPA id
+	20260522084048epcas5p4778c8dc9ced70300473adfc67f24098c~x1pGJAfr53182831828epcas5p4i;
+	Fri, 22 May 2026 08:40:48 +0000 (GMT)
+Received: from [107.122.10.65] (unknown [107.122.10.65]) by
+	epsmtip2.samsung.com (KnoxPortal) with ESMTPA id
+	20260522084036epsmtip25fbb927d3a064212cc2ad4bc1ee9e926~x1o6sdf2f2396423964epsmtip2V;
+	Fri, 22 May 2026 08:40:35 +0000 (GMT)
+Message-ID: <1891546521.01779449881859.JavaMail.epsvc@epcpadp2new>
+Date: Fri, 22 May 2026 14:10:34 +0530
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [LSF/MM/BPF TOPIC][RFC PATCH v4 00/27] Private Memory Nodes (w/
+ Compressed RAM)
+To: Gregory Price <gourry@gourry.net>
+Cc: lsf-pc@lists.linux-foundation.org, linux-kernel@vger.kernel.org,
+	linux-cxl@vger.kernel.org, cgroups@vger.kernel.org, linux-mm@kvack.org,
+	linux-trace-kernel@vger.kernel.org, damon@lists.linux.dev,
+	kernel-team@meta.com, gregkh@linuxfoundation.org, rafael@kernel.org,
+	dakr@kernel.org, dave@stgolabs.net, dave.jiang@intel.com,
+	alison.schofield@intel.com, vishal.l.verma@intel.com, ira.weiny@intel.com,
+	longman@redhat.com, akpm@linux-foundation.org, david@kernel.org,
+	lorenzo.stoakes@oracle.com, Liam.Howlett@oracle.com, vbabka@suse.cz,
+	rppt@kernel.org, surenb@google.com, mhocko@suse.com, osalvador@suse.de,
+	ziy@nvidia.com, matthew.brost@intel.com, joshua.hahnjy@gmail.com,
+	rakie.kim@sk.com, byungchul@sk.com, ying.huang@linux.alibaba.com,
+	apopple@nvidia.com, axelrasmussen@google.com, yuanchu@google.com,
+	weixugc@google.com, yury.norov@gmail.com, linux@rasmusvillemoes.dk,
+	mhiramat@kernel.org, mathieu.desnoyers@efficios.com, tj@kernel.org,
+	hannes@cmpxchg.org, mkoutny@suse.com, jackmanb@google.com, sj@kernel.org,
+	baolin.wang@linux.alibaba.com, npache@redhat.com, ryan.roberts@arm.com,
+	dev.jain@arm.com, baohua@kernel.org, lance.yang@linux.dev,
+	muchun.song@linux.dev, xu.xin16@zte.com.cn, chengming.zhou@linux.dev,
+	jannh@google.com, linmiaohe@huawei.com, nao.horiguchi@gmail.com,
+	pfalcato@suse.de, rientjes@google.com, shakeel.butt@linux.dev,
+	riel@surriel.com, harry.yoo@oracle.com, cl@gentwo.org,
+	roman.gushchin@linux.dev, chrisl@kernel.org, kasong@tencent.com,
+	shikemeng@huaweicloud.com, nphamcs@gmail.com, bhe@redhat.com,
+	zhengqi.arch@bytedance.com, terry.bowman@amd.com, gost.dev@samsung.com,
+	arungeorge05@gmail.com, cpgs@samsung.com
+Content-Language: en-US
+From: Arun George/Arun George <arun.george@samsung.com>
+In-Reply-To: <afmgJcFUjQLYxkb5@gourry-fedora-PF4VCD3F>
+Content-Transfer-Encoding: 7bit
+X-CMS-MailID: 20260522084048epcas5p4778c8dc9ced70300473adfc67f24098c
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+CMS-TYPE: 105P
+X-CPGSPASS: Y
+X-Hop-Count: 3
+X-CMS-RootMailID: 20260427123800epcas5p1e1a2fed257091b31e2e6c3a7d1b0c2b0
+References: <20260222084842.1824063-1-gourry@gourry.net>
+	<CGME20260427123800epcas5p1e1a2fed257091b31e2e6c3a7d1b0c2b0@epcas5p1.samsung.com>
+	<1983025922.01777297382206.JavaMail.epsvc@epcpadp2new>
+	<ae_i9IlIndumJWN3@gourry-fedora-PF4VCD3F>
+	<1891546521.01777455002601.JavaMail.epsvc@epcpadp1new>
+	<afIKxG5mJZE6QgpR@gourry-fedora-PF4VCD3F>
+	<1891546521.01777901881625.JavaMail.epsvc@epcpadp2new>
+	<afmgJcFUjQLYxkb5@gourry-fedora-PF4VCD3F>
 
-On Thu, 21 May 2026 23:07:11 +0800 Jiayuan Chen <jiayuan.chen@linux.dev> wrote:
+Thanks.
 
-> Hi SJ,
-> 
-> Thanks for taking a look.  Quick replies inline.
-> 
-> 
-> On 5/21/26 10:30 PM, SeongJae Park wrote:
-> > Hello Jiayuan,
-> >
-> > On Thu, 21 May 2026 12:52:22 +0800 Jiayuan Chen <jiayuan.chen@linux.dev> wrote:
-> >
-> >> kdamond_split_regions() bails out early when nr_regions is already
-> >> above max_nr_regions / 2.  A large region that picks up new internal
-> >> variation after that point never gets split, so we lose visibility
-> >> into its hot/cold structure.
-> >>
-> >> We hit this with damon-paddr on hugepage workloads and damon-vaddr
-> >> on processes that mmap a large anonymous range.
-> >>
-> >> On our production tree we added a current_nr_regions counter (no
-> >> good upstream home for it yet, so it's not in this series).  We saw
-> >> nr_regions never getting close to max_nr_regions, and the picture of
-> >> the access pattern was too coarse.
-> > Is 'current_nr_regions' somewhat showing the number of DAMON regions?  If so,
-> > you could also get the information from nr_regions field of damon_aggregated
-> > tracepoint.  I'm wondering if you considered using that but found a problem
-> > that made you have to implement the internal change.
-> >
-> > I will be happy to help removing such downstream changes.
-> 
-> 
-> Yes, same data as the nr_regions field in damon_aggregated.  The downstream
-> 
-> counter was just for convenience -- easier to cat a sysfs file than to wire
-> 
-> up tracing.  Even the tracepoint covers it, It's cost to much for 
-> Grafana to just get
-> 
-> a metrics by tracepoint.
+On 05-05-2026 01:15 pm, Gregory Price wrote:
+> In the scenario i'm talking about, a "write budget" is defined as a
+> number of pages that are allows to be mapped writable in the page
+> tables at any given time.
+> Agree. I was also in the same context.
 
-Makes sense.  And I think this deserves to be upstreamed.  Some minor
-modifications might be needed to your current implementation, though.  Please
-feel free to send a patch to start the discussion, if you want.
+I am trying to bring the device perspective here, and would like to 
+discuss a few corner cases and possible solutions.
 
-> 
-> 
-> >> Example with max_nr_regions == 1500.  A target ends up with 799
-> >> small hot/cold regions plus one big region (an earlier merge
-> >> collapsed a uniformly-accessed range into a single piece):
-> >>
-> >> H:hot
-> >> C:cold
-> >>
-> >>        r1     r2     r3                 r800
-> >>      HHHHHH|CCCCCC|HHHHHH|...|HHHHHH..........................|
-> >>
-> >>      nr_regions = 800  >  max_nr_regions / 2 = 750
-> >>
-> >> Now a cold subarea shows up inside r800:
-> >>
-> >>        r1     r2     r3                 r800
-> >>      HHHHHH|CCCCCC|HHHHHH|...|HHHHHH........CCCCCC.............|
-> >>
-> >> The small regions can't merge with each other (their access counts
-> >> differ), so budget never frees up.  r800 can't be split because
-> >> nr_regions > max_nr_regions / 2 returns early.  The cold subarea
-> >> stays invisible.
-> > I agree this corner case could theoretically happen.  But, would the small
-> > regions have the current pattern forever?  On real world systems having dynamic
-> 
-> 
-> I agree with the point that this is a corner case. But it's not 
-> transient for us.
+As I see, solving the compressed memory problem statement has these 
+aspects mainly:
 
-Thank you for sharing this nice information.
+1) Allocation control: private/managed memory concept.
+2) Write control: write-protected PTEs, write-controlled use cases like 
+ZSWAP
+3) Proactive reclaims: optional methods to ease back-pressure using 
+memory shrinkers, ballooning, kswapd, promotion etc. These methods will 
+be triggered based on notifications/interrupts from the device.
 
-> 
-> On a production setup with max_nr_regions = 20000, nr_regions sits at 
-> 11k-12k
-> 
-> for extended periods. There are occasional bursts (e.g. from offline 
-> pods), then things settle
-> 
-> back without ever reclaiming the budget.
+May be they are not enough to cover some corner cases for cram!
 
-Could you please clarify a little bit more?  What is the occasional bursts, and
-how offline pods contribute to that?  What "reclaiming the budget" means?
+  I believe that this thin-provisioned memory infra is susceptible to 
+'writes-above-media-capacity corner cases' (because of not handling 
+device back-pressure notifications in time) whichever methods we use in 
+the kernel. Even if we use write-controlled methods like ZSWAP and 
+pro-active reclaims, there could be corner cases where the communication 
+with the device could be broken and the write path is not aware of it 
+immediately. Note that OCP spec [1] says the device should mark the 
+memory location as 'poisoned' in 'over-capacity' writes.
 
-Also, do you have some measurements that shows this problem and how much of it
-is removed by this series?
+So I have the following proposals / options for this scenario.
 
-> 
-> 
-> > access pattern, I guess those small regions may not keep the shape forever, and
-> > give chance for the large region to be split.  Am I missing something?
-> >
-> > My theory also implies that this kind of situation could happen at least
-> > sometimes for temporal periods.  In other words, it could happens too
-> > frequently and too long to be problematic.  But, in the case, maybe the user
-> > could mitigate the issue by increasing the max_nr_regions.  I'm curious if you
-> > considered that direction and found a problem that I don't expect for now.
-> >
-> >> Patch 1 lets this path still split regions that just changed
-> >> (age == 0),
-> > Why 'age == 0' means it is a good candidate to split?  Because it means its
-> > access frequency is anyway unstable?  Or are there other reasons?  More
-> > clarification would be helpful.
-> 
-> 
-> Yes, age == 0 means the region's access count drifted past the merge 
-> threshold in
-> the last aggregation -- the strongest signal it just changed internally.
-> Regions with age > 0 are stable; splitting them tends to oscillate (the next
-> merge cycle pulls the halves back together and we waste the budget).
+    Option 1: Poisoned data management - This is about accepting that 
+poisoning of memory locations can happen in much more regular frequency 
+here than regular memories and we need to figure out potential recovery 
+mechanisms in host (not recovery of data; but recovery from the poison 
+situation). But I guess folks will not be okay with it in general, and I 
+am not aware of any workloads where data poisoning is tolerated (may be 
+caching workloads?).
 
-Thank you for confirming this.  Yes, that sounds good approach to me.  But
-because this is a core behavior, I'd like to be careful more than usual.  I
-will spend more time at thinking if I'm missing something, and if this is the
-best approach.  If you have measurements that I asked above and can share, that
-will also be helpful.
+    Option 2 (preferred): Device assisted write budgeting - This is 
+about a device aware / assisted mechanism for the write-controlled 
+use-cases (Ex: ZSWAP) to know the 'safe number of  writes' that can be 
+performed to the device (Or allows to be mapped writable in the page 
+tables). This could be like a 'token bucket' algorithm, where the device 
+provides a 'budget / set of tokens' to the host. And it need to be 
+replenished periodically in the device communication code path; and if 
+the host does not find the token, writes cannot go ahead.
 
-> 
-> >
-> >> up to whatever budget is left under max_nr_regions.
-> >> If a split turns out useless, the next merge cycle undoes it.
-> > I'm again curious why the user cannot just increase max_nr_regions.
-> 
-> It works as a workaround, but it isn't free: higher max means more sampling
-> work and more memory,
+In short, the communication with the device has to be maintained to make 
+pages mapped writable. For MVP, this could be a simple constraint of 
+checking actual device capacity periodically to replenish write-budget 
+for CRAM. For other users of private nodes (GPU memory?), this 
+constraint may not be needed at all.
 
-It would depend on the real number of distinct access patterns.  I understand
-the number is really high on your use case.  Again, if you have measurements
-and could share, that will be very helpful.
+We are planning to send an RFC code which will fit into your CRAM infra 
+to discuss this poison management approach further.
 
-> and 20000 is the ceiling we actually want to live
-> with.  Bumping to 30000 just so the splitter has room to make progress
-> between max/2 and max is wasteful -- we don't actually want to spend the
-> resources for 30000 regions.
+[1]: 
+https://www.opencompute.org/documents/hyperscale-tiered-memory-expander-specification-for-compute-express-link-cxl-1-pdf
 
-Makes sense.
+~Arun George
 
-> 
-> The real issue isn't budget waste, it's that once nr_regions crosses max/2
-> the splitter has no recovery path -- it returns immediately even when 
-> there's
-> variation worth refining, and merges don't help because the small regions
-> have different access counts.  nr_regions just sits between max/2 and max,
-> and new variation inside a large region goes undetected.  The patch gives
-> that path a way to keep refining within whatever budget remains, instead of
-> asking users to over-provision max.
-
-Yes, I agree.  Nonetheless, as I mentioned above a couple of times, if you have
-and could share measurements that showing how big the problem is and how much
-of it this change can solve will be very helpful.
-
-
-Thanks,
-SJ
-
-[...]
