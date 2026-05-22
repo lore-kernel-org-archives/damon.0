@@ -1,166 +1,248 @@
-Received: from mailout4.samsung.com (mailout4.samsung.com [203.254.224.34])
+Received: from frasgout.his.huawei.com (frasgout.his.huawei.com [185.176.79.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B93373D47D9
-	for <damon@lists.linux.dev>; Fri, 22 May 2026 11:38:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=203.254.224.34
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8277840961E
+	for <damon@lists.linux.dev>; Fri, 22 May 2026 14:56:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.176.79.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779449893; cv=none; b=UYsAGgS/ofAAL9LXeE90wbO2fZ9ulJ4G3Ib2l9ettUCKQ4dV99eMkx9RvFcSciGERzy0LKY2wnBjSMfb6OxHJfTvcsxo67mZXT4MYIISDQiwOD5Ee6yS94e9zmE7YS9s6WSxewe+7ztLESRJGpP1c0sk9SyKlbmmRoUkwp+uBFY=
+	t=1779461765; cv=none; b=EpksfzjaBXky2nlydJUUSIjMLkq54tXVkVm/QQGjyh1cqfGSa/LForWxmrhy00ZB+/mWgxoZRdK8iy38vj/2WUAT2cogfkb6Bp74Gvv1xwbYadRG0WMGh/p3BXe95brg5Mo2DD4/KFdk23BW5dJHmtRRq8hQxfX0ei9djd5SF/g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779449893; c=relaxed/simple;
-	bh=8+SVtEunmLO5luTB/woJSREfnnEC/4OY69OYVm8LLR4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:From:In-Reply-To:
-	 Content-Type:References; b=KF0fmiQs3ZIP37GbSzxQsyTzKg8qvXXm6cheqMTM3QeVlKef8oJ5+Iei3gNFHU5zHqwtIugnOTsi1wWJCb2uoRCZp+fGMD0xnPZ7ZXzuoXAZ7QgtBdaRmDVAZ9ge0Mv+k3UYCenIvtGTW/Q3KDhpQo+oaj2LA4kW01SpM0CkVCk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com; spf=pass smtp.mailfrom=samsung.com; dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b=JERPYZtT; arc=none smtp.client-ip=203.254.224.34
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=samsung.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b="JERPYZtT"
-Received: from epcas5p2.samsung.com (unknown [182.195.41.40])
-	by mailout4.samsung.com (KnoxPortal) with ESMTP id 20260522113802epoutp047d45dc3660ab4d2cdce57be27d46d659~x4D12kzVZ0577105771epoutp04e;
-	Fri, 22 May 2026 11:38:02 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout4.samsung.com 20260522113802epoutp047d45dc3660ab4d2cdce57be27d46d659~x4D12kzVZ0577105771epoutp04e
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-	s=mail20170921; t=1779449882;
-	bh=X9XR94YHNMocWUFw9punBQGDBFYxc1lt25ZEVZWgtac=;
-	h=Date:Subject:To:Cc:From:In-Reply-To:References:From;
-	b=JERPYZtTU2TlEprNnCJlv0WM7hhtolUmAJHHUSjqwurELxRa/onqsWy1YDtIN+8xj
-	 +MRV/ZDvXNq0x1UISaIT5DzyMNQLc2ARA7V98cZIDNSHBwP9Pl28ac/y9dgft9Nee1
-	 aqj+yfQb92T4awPevYqHuFEft5mQPyEqwKj12DkU=
-Received: from epsnrtp01.localdomain (unknown [182.195.42.153]) by
-	epcas5p3.samsung.com (KnoxPortal) with ESMTPS id
-	20260522113801epcas5p3905b503bc0cfbc37e68be912f3324730~x4D1cklL90648906489epcas5p32;
-	Fri, 22 May 2026 11:38:01 +0000 (GMT)
-Received: from epcpadp2new (unknown [182.195.40.142]) by
-	epsnrtp01.localdomain (Postfix) with ESMTP id 4gMNZ16HSyz6B9m7; Fri, 22 May
-	2026 11:38:01 +0000 (GMT)
-Received: from epsmtip2.samsung.com (unknown [182.195.34.31]) by
-	epcas5p4.samsung.com (KnoxPortal) with ESMTPA id
-	20260522084048epcas5p4778c8dc9ced70300473adfc67f24098c~x1pGJAfr53182831828epcas5p4i;
-	Fri, 22 May 2026 08:40:48 +0000 (GMT)
-Received: from [107.122.10.65] (unknown [107.122.10.65]) by
-	epsmtip2.samsung.com (KnoxPortal) with ESMTPA id
-	20260522084036epsmtip25fbb927d3a064212cc2ad4bc1ee9e926~x1o6sdf2f2396423964epsmtip2V;
-	Fri, 22 May 2026 08:40:35 +0000 (GMT)
-Message-ID: <1891546521.01779449881859.JavaMail.epsvc@epcpadp2new>
-Date: Fri, 22 May 2026 14:10:34 +0530
+	s=arc-20240116; t=1779461765; c=relaxed/simple;
+	bh=+b8Oh30mK1tk8wOkztzNz5YxXcqL2Bq0s88wUXn3O2E=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=btr2HP1YM49FYQ0jU2p1mVIzkqi7mOOdCPpLZdiILIxO4VPoSwkEqMREJhHVYuwbSi73XLCLbPqz/yuELuAsyLRbPGct/Ecv3FgJE5Wd9ZnM7JV0rCmtL0iHGVtaIRBj5Zu54vRj8kwVMrT6Jd1lDoO+eJYOqFdqMqu3V+dn1Is=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei-partners.com; spf=pass smtp.mailfrom=huawei-partners.com; arc=none smtp.client-ip=185.176.79.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei-partners.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei-partners.com
+Received: from mail.maildlp.com (unknown [172.18.224.83])
+	by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4gMSxV6DGCzJ46DT;
+	Fri, 22 May 2026 22:55:10 +0800 (CST)
+Received: from mscpeml500003.china.huawei.com (unknown [7.188.49.51])
+	by mail.maildlp.com (Postfix) with ESMTPS id 78FDB40575;
+	Fri, 22 May 2026 22:55:54 +0800 (CST)
+Received: from mscphis01197.huawei.com (10.123.65.218) by
+ mscpeml500003.china.huawei.com (7.188.49.51) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.11; Fri, 22 May 2026 17:55:53 +0300
+From: <gutierrez.asier@huawei-partners.com>
+To: <gutierrez.asier@huawei-partners.com>, <artem.kuzin@huawei.com>,
+	<stepanov.anatoly@huawei.com>, <wangkefeng.wang@huawei.com>,
+	<yanquanmin1@huawei.com>, <zuoze1@huawei.com>, <damon@lists.linux.dev>,
+	<sj@kernel.org>, <akpm@linux-foundation.org>, <linux-mm@kvack.org>,
+	<linux-kernel@vger.kernel.org>
+Subject: [RFC PATCH v2 0/4] mm/damon: Introduce a huge page collapsing mechanism using auto tuning
+Date: Fri, 22 May 2026 14:55:14 +0000
+Message-ID: <20260522145518.158910-1-gutierrez.asier@huawei-partners.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [LSF/MM/BPF TOPIC][RFC PATCH v4 00/27] Private Memory Nodes (w/
- Compressed RAM)
-To: Gregory Price <gourry@gourry.net>
-Cc: lsf-pc@lists.linux-foundation.org, linux-kernel@vger.kernel.org,
-	linux-cxl@vger.kernel.org, cgroups@vger.kernel.org, linux-mm@kvack.org,
-	linux-trace-kernel@vger.kernel.org, damon@lists.linux.dev,
-	kernel-team@meta.com, gregkh@linuxfoundation.org, rafael@kernel.org,
-	dakr@kernel.org, dave@stgolabs.net, dave.jiang@intel.com,
-	alison.schofield@intel.com, vishal.l.verma@intel.com, ira.weiny@intel.com,
-	longman@redhat.com, akpm@linux-foundation.org, david@kernel.org,
-	lorenzo.stoakes@oracle.com, Liam.Howlett@oracle.com, vbabka@suse.cz,
-	rppt@kernel.org, surenb@google.com, mhocko@suse.com, osalvador@suse.de,
-	ziy@nvidia.com, matthew.brost@intel.com, joshua.hahnjy@gmail.com,
-	rakie.kim@sk.com, byungchul@sk.com, ying.huang@linux.alibaba.com,
-	apopple@nvidia.com, axelrasmussen@google.com, yuanchu@google.com,
-	weixugc@google.com, yury.norov@gmail.com, linux@rasmusvillemoes.dk,
-	mhiramat@kernel.org, mathieu.desnoyers@efficios.com, tj@kernel.org,
-	hannes@cmpxchg.org, mkoutny@suse.com, jackmanb@google.com, sj@kernel.org,
-	baolin.wang@linux.alibaba.com, npache@redhat.com, ryan.roberts@arm.com,
-	dev.jain@arm.com, baohua@kernel.org, lance.yang@linux.dev,
-	muchun.song@linux.dev, xu.xin16@zte.com.cn, chengming.zhou@linux.dev,
-	jannh@google.com, linmiaohe@huawei.com, nao.horiguchi@gmail.com,
-	pfalcato@suse.de, rientjes@google.com, shakeel.butt@linux.dev,
-	riel@surriel.com, harry.yoo@oracle.com, cl@gentwo.org,
-	roman.gushchin@linux.dev, chrisl@kernel.org, kasong@tencent.com,
-	shikemeng@huaweicloud.com, nphamcs@gmail.com, bhe@redhat.com,
-	zhengqi.arch@bytedance.com, terry.bowman@amd.com, gost.dev@samsung.com,
-	arungeorge05@gmail.com, cpgs@samsung.com
-Content-Language: en-US
-From: Arun George/Arun George <arun.george@samsung.com>
-In-Reply-To: <afmgJcFUjQLYxkb5@gourry-fedora-PF4VCD3F>
-Content-Transfer-Encoding: 7bit
-X-CMS-MailID: 20260522084048epcas5p4778c8dc9ced70300473adfc67f24098c
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-CMS-TYPE: 105P
-X-CPGSPASS: Y
-X-Hop-Count: 3
-X-CMS-RootMailID: 20260427123800epcas5p1e1a2fed257091b31e2e6c3a7d1b0c2b0
-References: <20260222084842.1824063-1-gourry@gourry.net>
-	<CGME20260427123800epcas5p1e1a2fed257091b31e2e6c3a7d1b0c2b0@epcas5p1.samsung.com>
-	<1983025922.01777297382206.JavaMail.epsvc@epcpadp2new>
-	<ae_i9IlIndumJWN3@gourry-fedora-PF4VCD3F>
-	<1891546521.01777455002601.JavaMail.epsvc@epcpadp1new>
-	<afIKxG5mJZE6QgpR@gourry-fedora-PF4VCD3F>
-	<1891546521.01777901881625.JavaMail.epsvc@epcpadp2new>
-	<afmgJcFUjQLYxkb5@gourry-fedora-PF4VCD3F>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: mscpeml100003.china.huawei.com (10.199.174.67) To
+ mscpeml500003.china.huawei.com (7.188.49.51)
 
-Thanks.
+From: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
 
-On 05-05-2026 01:15 pm, Gregory Price wrote:
-> In the scenario i'm talking about, a "write budget" is defined as a
-> number of pages that are allows to be mapped writable in the page
-> tables at any given time.
-> Agree. I was also in the same context.
+Overview
+========
 
-I am trying to bring the device perspective here, and would like to 
-discuss a few corner cases and possible solutions.
+This patch set introduces a new autotuning which allows to collapse
+hot regions into hugepages.
 
-As I see, solving the compressed memory problem statement has these 
-aspects mainly:
+Motivation
+==========
 
-1) Allocation control: private/managed memory concept.
-2) Write control: write-protected PTEs, write-controlled use cases like 
-ZSWAP
-3) Proactive reclaims: optional methods to ease back-pressure using 
-memory shrinkers, ballooning, kswapd, promotion etc. These methods will 
-be triggered based on notifications/interrupts from the device.
+Since TLB is a bottleneck for many systems[1], a way to optimize TLB
+misses (or hits) is to use huge pages. Unfortunately, using "always"
+in THP leads to memory fragmentation and memory waste. For this reason,
+most application guides and system administrators suggest to disable THP.
 
-May be they are not enough to cover some corner cases for cram!
+Currently DAMON has DAMOS_HUGEPAGE, DAMOS_NONHUGEPAGE and DAMOS_COLLAPSE.
+However, there is no way to tune the settings. It will collapse all the
+hot regions that meet the access pattern. If the server is a bare metal
+database or big data server, this will also lead to eventual fragmentation.
 
-  I believe that this thin-provisioned memory infra is susceptible to 
-'writes-above-media-capacity corner cases' (because of not handling 
-device back-pressure notifications in time) whichever methods we use in 
-the kernel. Even if we use write-controlled methods like ZSWAP and 
-pro-active reclaims, there could be corner cases where the communication 
-with the device could be broken and the write path is not aware of it 
-immediately. Note that OCP spec [1] says the device should mark the 
-memory location as 'poisoned' in 'over-capacity' writes.
+Additionally, currently THP is set globally. Ideally, there should be a
+way to control which tasks can use huge pages.
 
-So I have the following proposals / options for this scenario.
+Solution
+========
 
-    Option 1: Poisoned data management - This is about accepting that 
-poisoning of memory locations can happen in much more regular frequency 
-here than regular memories and we need to figure out potential recovery 
-mechanisms in host (not recovery of data; but recovery from the poison 
-situation). But I guess folks will not be okay with it in general, and I 
-am not aware of any workloads where data poisoning is tolerated (may be 
-caching workloads?).
+DAMON has now a way to autotune some of the variables and adjust quotas
+automatically, so that DAMON is fired only under the right circumstances.
+It would be nice to have something similar, but for huge pages.
 
-    Option 2 (preferred): Device assisted write budgeting - This is 
-about a device aware / assisted mechanism for the write-controlled 
-use-cases (Ex: ZSWAP) to know the 'safe number of  writes' that can be 
-performed to the device (Or allows to be mapped writable in the page 
-tables). This could be like a 'token bucket' algorithm, where the device 
-provides a 'budget / set of tokens' to the host. And it need to be 
-replenished periodically in the device communication code path; and if 
-the host does not find the token, writes cannot go ahead.
+A new autotuning quota goal[2], damos_get_used_hugepage_mem_bp, is
+introduced, which checks the huge page consumption to total anonymous
+memory consumption. This new quota mechanism reuses current autotuning
+architecture.
 
-In short, the communication with the device has to be maintained to make 
-pages mapped writable. For MVP, this could be a simple constraint of 
-checking actual device capacity periodically to replenish write-budget 
-for CRAM. For other users of private nodes (GPU memory?), this 
-constraint may not be needed at all.
+A new module is introduced to demonstrate the use of huge pages
+collapse autotuning. The goal is to collapse hot regions of a given
+process into huge pages. The module launches a kdamond thread for a 
+certain task provided by the user through monitored_pid module argument.
+Hugepage goal autotuning will automatically adjust the aggressiveness
+of hot region collapses.
 
-We are planning to send an RFC code which will fit into your CRAM infra 
-to discuss this poison management approach further.
+This module also has a user autotuning knob which allows the user to
+adjust the aggressiveness of page collapsing.
 
-[1]: 
-https://www.opencompute.org/documents/hyperscale-tiered-memory-expander-specification-for-compute-express-link-cxl-1-pdf
+Benchmarks
+==========
 
-~Arun George
+Huge page collapse autotuning was tested in a physicial machine with
+MariaDB 10.5.29 and sysbench as the benchmark framework.
+
+The hugepage module was set up in the following way:
+
+# echo 1000 > min_age
+# echo 1000 > quota_percentage_hugepage
+# echo $(pidof mariadbd) > monitored_pid
+# echo on > enabled
+
+The goal was to achieve 10% of the total memory used as hugepage.
+
+The table below shows the memory consumption over time. Gaps in the
+timestamp means that no changes in the hugepage consumption happened
+over that period of time.
+
++-----------+----------------+---------------+----------------------+
+| timestamp | anon_memory_mb | huge_pages_mb | percentage hugepage  |
++-----------+----------------+---------------+----------------------+
+| 0         | 2159.761719    | 0             | 0%                   |
+| 28        | 2177.574219    | 4             | 0%                   |
+| 38        | 2184.046875    | 130           | 6%                   |
+| 39        | 2181.785156    | 182           | 8%                   |
+| 210       | 2204.007813    | 188           | 9%                   |
+| 211       | 2203.972656    | 190           | 9%                   |
+| 212       | 2204.511719    | 192           | 9%                   |
+| 213       | 2205.15625     | 192           | 9%                   |
+| 214       | 2205.429688    | 194           | 9%                   |
+| 215       | 2209.175781    | 196           | 9%                   |
+| 216       | 2209.382813    | 198           | 9%                   |
+| 217       | 2209.34375     | 200           | 9%                   |
+| 218       | 2207.683594    | 202           | 9%                   |
+| 219       | 2207.753906    | 204           | 9%                   |
+| 220       | 2208.433594    | 206           | 9%                   |
+| 221       | 2208.28125     | 208           | 9%                   |
+| 222       | 2208.40625     | 210           | 10%                  |
+| 223       | 2208.257813    | 212           | 10%                  |
+| 224       | 2208.808594    | 214           | 10%                  |
+| 225       | 2211.695313    | 216           | 10%                  |
+| 226       | 2212.4375      | 218           | 10%                  |
+| 227       | 2211.683594    | 220           | 10%                  |
+| 228       | 2211.3125      | 222           | 10%                  |
+| 229       | 2211.066406    | 224           | 10%                  |
+| 230       | 2211.980469    | 226           | 10%                  |
+| 231       | 2212.019531    | 228           | 10%                  |
+| 232       | 2211.972656    | 230           | 10%                  |
+| 233       | 2212.417969    | 232           | 10%                  |
+| 234       | 2212.359375    | 234           | 11%                  |
+| 235       | 2213.921875    | 236           | 11%                  |
+| 236       | 2213.945313    | 238           | 11%                  |
+| 237       | 2213.917969    | 240           | 11%                  |
+| 238       | 2213.941406    | 242           | 11%                  |
+| 239       | 2214.105469    | 244           | 11%                  |
+| 240       | 2213.507813    | 246           | 11%                  |
+| 241       | 2213.542969    | 248           | 11%                  |
+| 242       | 2213.847656    | 250           | 11%                  |
+| 243       | 2213.007813    | 252           | 11%                  |
+| 244       | 2212.761719    | 254           | 11%                  |
+| 245       | 2217.003906    | 254           | 11%                  |
+| 246       | 2217.042969    | 256           | 12%                  |
+| 247       | 2215.722656    | 258           | 12%                  |
+| 248       | 2214.359375    | 260           | 12%                  |
+| 249       | 2214.621094    | 262           | 12%                  |
+| 250       | 2215.058594    | 264           | 12%                  |
+| 251       | 2214.902344    | 266           | 12%                  |
+| 252       | 2215.0625      | 268           | 12%                  |
+| 253       | 2215.070313    | 270           | 12%                  |
+| 254       | 2215           | 272           | 12%                  |
+| 255       | 2214.851563    | 274           | 12%                  |
+| 256       | 2214.019531    | 276           | 12%                  |
+| 257       | 2214.085938    | 278           | 13%                  |
+| 258       | 2214.046875    | 280           | 13%                  |
+| 259       | 2214.257813    | 282           | 13%                  |
+| 260       | 2215.644531    | 284           | 13%                  |
+| 261       | 2215.511719    | 286           | 13%                  |
+| 262       | 2217.160156    | 288           | 13%                  |
+| 263       | 2217.640625    | 290           | 13%                  |
+| 264       | 2217.648438    | 292           | 13%                  |
+| 265       | 2221.660156    | 294           | 13%                  |
+| 266       | 2219.136719    | 296           | 13%                  |
+| 267       | 2218.738281    | 298           | 13%                  |
+| 268       | 2219.222656    | 300           | 14%                  |
+| 269       | 2219.066406    | 302           | 14%                  |
+| 270       | 2219.175781    | 304           | 14%                  |
+| 271       | 2219.121094    | 306           | 14%                  |
+| 272       | 2218.484375    | 308           | 14%                  |
+| 273       | 2218.082031    | 310           | 14%                  |
+| 274       | 2218.894531    | 312           | 14%                  |
+| 275       | 2219.574219    | 314           | 14%                  |
+| 276       | 2219.886719    | 314           | 14%                  |
+| 277       | 2221.523438    | 316           | 14%                  |
+| 278       | 2221.546875    | 318           | 14%                  |
+| 279       | 2221.597656    | 320           | 14%                  |
+| 280       | 2224.21875     | 322           | 14%                  |
+| 281       | 2224.222656    | 324           | 15%                  |
+| 282       | 2224.585938    | 358           | 16%                  |
+| 283       | 2224.601563    | 434           | 20%                  |
+| 284       | 2224.632813    | 450           | 20%                  |
++-----------+----------------+---------------+----------------------+
+
+Eventually, the amount of huge pages reached 20%. This is consistent
+with how quota goals autotuning work. We are more aggresive when the
+quota is less than 10%, and less aggresive when the quota is higher.
+At some point, the aggressiveness just fades and no more collapses
+occur.
+
+TODO
+====
+- Support page splitting for cold hugepages.
+
+Patches Sequence
+================
+Patch 1 -> damon_modules_new_vaddr_ctx_target
+Patch 2 -> Introduce DAMOS_QUOTA_HUGEPAGE and autotuning
+Patch 3 -> Module that demonstrates how to use DAMOS_QUOTA_HUGEPAGE
+           and the new VADDR ctx creation
+Patch 4 -> Documentation
+
+Changes from previous versions
+==============================
+RFC 1[3] -> RFC 2
+  - Rebased into mm-new
+  - Use DAMOS_COLLAPSE instead of DAMOS_HUGEPAGE
+  - Fixed an issue that returned silently an error when the PID 
+    didn't exist in the system.[4]
+
+
+[1] https://dl.acm.org/doi/pdf/10.1145/3307650.3322227
+[2] https://lore.kernel.org/e67f05ad-dbb9-45e6-ba30-b167a99ac67d@huawei-partners.com
+[3] https://lore.kernel.org/20260430134139.2446417-1-gutierrez.asier@huawei-partners.com
+[4] https://lore.kernel.org/all/20260430154338.E22E6C2BCB3@smtp.kernel.org/
+
+Asier Gutierrez (4):
+  mm/damon: Generalize ctx_target creation for damon_ops_id and add vaddr support
+  mm/damon: Introduce DAMOS_QUOTA_HUGEPAGE auto tuning
+  mm/damon: introduce DAMON_HUGEPAGE for hot region hugepage collapsing
+  Documentation/admin-guide/mm/damon: add DAMON-based Hugepage Management documentation
+
+ .../admin-guide/mm/damon/hugepage.rst (new)   | 258 +++++++++++++
+ include/linux/damon.h                         |   1 +
+ mm/damon/Kconfig                              |   7 +
+ mm/damon/Makefile                             |   1 +
+ mm/damon/core.c                               |  15 +
+ mm/damon/hugepage.c (new)                     | 343 ++++++++++++++++++
+ mm/damon/modules-common.c                     |  33 +-
+ mm/damon/modules-common.h                     |   3 +
+ 8 files changed, 653 insertions(+), 8 deletions(-)
+ create mode 100644 Documentation/admin-guide/mm/damon/hugepage.rst
+ create mode 100644 mm/damon/hugepage.c
+
+-- 
+2.43.0
 
