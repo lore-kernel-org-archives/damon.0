@@ -1,24 +1,24 @@
 Received: from frasgout.his.huawei.com (frasgout.his.huawei.com [185.176.79.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8267D40913A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 822853D4123
 	for <damon@lists.linux.dev>; Fri, 22 May 2026 14:56:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.176.79.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779461765; cv=none; b=mwiFUu1uyIHo+W04YOmCG4Z75YTsXwzYSmidMf7veQAamxJ3i50Asrk0ohbm/YetlC6iMhQxfAewGEM2R4y2+VusXQLVxvBkDZPPUIbmQrIN/lLEAFUlch8/n0LFNDSploODgY6M0KJFmYZ9LwJjE+LLAjcvwrDMPORSLDFzz5E=
+	t=1779461767; cv=none; b=YKs+JGqSAf0clXRsxApx6Y7CvsegXxh33cBf0xw51ybca1CQGWDRw+7Z8kvq/fipudAMhVe6ryosrUr7MdXEBtkkaqPTWR3C/QrwNyFM4jNk8XygvRDX/clG0CANu/gsZzZprM5i3c38G4vPwOC9UjGVl88x04lT0kpAwT8t7lY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779461765; c=relaxed/simple;
-	bh=iYAEINib+QsHuWUea3Xl3Q6healAGvKknbeoNJL5Tic=;
+	s=arc-20240116; t=1779461767; c=relaxed/simple;
+	bh=ZZaI6DbWxqq8rVzeLx0fiwDysvjWBV92oOyrdS8DXy4=;
 	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=r74A81rgVa4FYmOWi7sjaxeaVK//XE+nxk5OD08CXdXKURci+nN9KGhv3OGXLQvgcBNUH2Ed37QG+HfjPqN7KS8akIIOEj0p69l6+T8pLBHS0v8gpAvznYRpxSsuPeZBF0+ekI35DTl9yaGoHxpqY6LBXwUqi95e4CXYVShxSZU=
+	 MIME-Version:Content-Type; b=jvSggjsj8edN6qU4561aJLboq6OdKbFDnEyIoh9linpDY8boAaLbdZiWEXXcaHb4+92ZwbuFHuIWcSqeZIMUjwjcvfSdtS84uQqKT2BlBVvcFxkY5KDnbNlMKmfqvsM/CzSPWY855LHCpnIdArWriVIyns65k6S2tFVXmfikEG8=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei-partners.com; spf=pass smtp.mailfrom=huawei-partners.com; arc=none smtp.client-ip=185.176.79.56
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei-partners.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei-partners.com
 Received: from mail.maildlp.com (unknown [172.18.224.83])
-	by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4gMSxp4s2czHnGcp;
+	by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4gMSxp5vP0zHnGhq;
 	Fri, 22 May 2026 22:55:26 +0800 (CST)
 Received: from mscpeml500003.china.huawei.com (unknown [7.188.49.51])
-	by mail.maildlp.com (Postfix) with ESMTPS id 8B47840575;
+	by mail.maildlp.com (Postfix) with ESMTPS id AF38440569;
 	Fri, 22 May 2026 22:55:54 +0800 (CST)
 Received: from mscphis01197.huawei.com (10.123.65.218) by
  mscpeml500003.china.huawei.com (7.188.49.51) with Microsoft SMTP Server
@@ -30,9 +30,9 @@ To: <gutierrez.asier@huawei-partners.com>, <artem.kuzin@huawei.com>,
 	<yanquanmin1@huawei.com>, <zuoze1@huawei.com>, <damon@lists.linux.dev>,
 	<sj@kernel.org>, <akpm@linux-foundation.org>, <linux-mm@kvack.org>,
 	<linux-kernel@vger.kernel.org>
-Subject: [RFC PATCH v2 1/4] mm/damon: Generalize ctx_target creation for damon_ops_id and add vaddr support
-Date: Fri, 22 May 2026 14:55:15 +0000
-Message-ID: <20260522145518.158910-2-gutierrez.asier@huawei-partners.com>
+Subject: [RFC PATCH v2 3/4] mm/damon: introduce DAMON_HUGEPAGE for hot region hugepage collapsing
+Date: Fri, 22 May 2026 14:55:17 +0000
+Message-ID: <20260522145518.158910-4-gutierrez.asier@huawei-partners.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260522145518.158910-1-gutierrez.asier@huawei-partners.com>
 References: <20260522145518.158910-1-gutierrez.asier@huawei-partners.com>
@@ -49,87 +49,401 @@ X-ClientProxiedBy: mscpeml100003.china.huawei.com (10.199.174.67) To
 
 From: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
 
-This patch adds a new function damon_modules_new_vaddr_ctx_target.
-Since ctx_target creation for vaddr and paddr is almost identical, the
-logic is extracted to a new function, damon_modules_new_ctx_target,
-and vaddr and paddr functions are left just as interfaces.
+This patch introduces a new DAMON module (DAMON_HUGEPAGE) which
+collapses hot regions into huge pages.
 
-This change was suggested earlier1 and it is needed to allow
-developers to create DAMON modules that use DAMON_OPS_VADDR targets.
+DAMON_HUGEPAGE operates in the virtual memory space, for a specific
+task. The user is expected to supply the PID of the task that is going
+to be monitored through the monitored_pid module variable.
+
+DAMON_HUGEPAGE uses the hugepage auto-tune mechanism to increase or
+decrease the aggressiveness of page collapsing. User autotuning is
+also available for additional tuning aggressiveness control.
+
+The module also includes changes to the DAMON compilation, so that the
+module can be enabled or disabled.
 
 Signed-off-by: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
-Suggested-by: SeongJae Park <sj@kernel.org>
 ---
- mm/damon/modules-common.c | 33 +++++++++++++++++++++++++--------
- mm/damon/modules-common.h |  3 +++
- 2 files changed, 28 insertions(+), 8 deletions(-)
+ mm/damon/Kconfig          |   7 +
+ mm/damon/Makefile         |   1 +
+ mm/damon/hugepage.c (new) | 343 ++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 351 insertions(+)
 
-diff --git a/mm/damon/modules-common.c b/mm/damon/modules-common.c
-index 86d58f8c4f63..35a4a89b6caa 100644
---- a/mm/damon/modules-common.c
-+++ b/mm/damon/modules-common.c
-@@ -9,13 +9,8 @@
+diff --git a/mm/damon/Kconfig b/mm/damon/Kconfig
+index 34631a44cdec..b615407cc13f 100644
+--- a/mm/damon/Kconfig
++++ b/mm/damon/Kconfig
+@@ -121,4 +121,11 @@ config DAMON_STAT_ENABLED_DEFAULT
+ 	  Whether to enable DAMON_STAT by default.  Users can disable it in
+ 	  boot or runtime using its 'enabled' parameter.
  
- #include "modules-common.h"
- 
--/*
-- * Allocate, set, and return a DAMON context for the physical address space.
-- * @ctxp:	Pointer to save the point to the newly created context
-- * @targetp:	Pointer to save the point to the newly created target
-- */
--int damon_modules_new_paddr_ctx_target(struct damon_ctx **ctxp,
--		struct damon_target **targetp)
-+static int _damon_modules_new_ctx_target(struct damon_ctx **ctxp,
-+		struct damon_target **targetp, enum damon_ops_id id)
- {
- 	struct damon_ctx *ctx;
- 	struct damon_target *target;
-@@ -24,7 +19,7 @@ int damon_modules_new_paddr_ctx_target(struct damon_ctx **ctxp,
- 	if (!ctx)
- 		return -ENOMEM;
- 
--	if (damon_select_ops(ctx, DAMON_OPS_PADDR)) {
-+	if (damon_select_ops(ctx, id)) {
- 		damon_destroy_ctx(ctx);
- 		return -EINVAL;
- 	}
-@@ -40,3 +35,25 @@ int damon_modules_new_paddr_ctx_target(struct damon_ctx **ctxp,
- 	*targetp = target;
- 	return 0;
- }
++config DAMON_HUGEPAGE
++	bool "Build DAMON-based collapse of hot regions (DAMON_HUGEPAGE)"
++	depends on DAMON_VADDR
++	help
++	 Collapse hot region into huge pages. Hot regions are determined by
++	 DAMON-based sampling
++
+ endmenu
+diff --git a/mm/damon/Makefile b/mm/damon/Makefile
+index d8d6bf5f8bff..7cb55cc483f9 100644
+--- a/mm/damon/Makefile
++++ b/mm/damon/Makefile
+@@ -7,3 +7,4 @@ obj-$(CONFIG_DAMON_SYSFS)	+= sysfs-common.o sysfs-schemes.o sysfs.o
+ obj-$(CONFIG_DAMON_RECLAIM)	+= modules-common.o reclaim.o
+ obj-$(CONFIG_DAMON_LRU_SORT)	+= modules-common.o lru_sort.o
+ obj-$(CONFIG_DAMON_STAT)	+= modules-common.o stat.o
++obj-$(CONFIG_DAMON_HUGEPAGE)	+= modules-common.o hugepage.o
+diff --git a/mm/damon/hugepage.c b/mm/damon/hugepage.c
+new file mode 100644
+index 000000000000..1a09e6ebb911
+--- /dev/null
++++ b/mm/damon/hugepage.c
+@@ -0,0 +1,343 @@
++// SPDX-License-Identifier: GPL-2.0
++/*
++ * Copyright (C) 2026 HUAWEI, Inc.
++ *             https://www.huawei.com
++ *
++ * Author: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
++ */
++
++#define pr_fmt(fmt) "damon-hugepage: " fmt
++
++#include <linux/damon.h>
++#include <linux/kstrtox.h>
++#include <linux/module.h>
++
++#include "modules-common.h"
++
++#ifdef MODULE_PARAM_PREFIX
++#undef MODULE_PARAM_PREFIX
++#endif
++#define MODULE_PARAM_PREFIX "damon_hugepage."
 +
 +/*
-+ * Allocate, set, and return a DAMON context for the physical address space.
-+ * @ctxp:	Pointer to save the point to the newly created context
-+ * @targetp:	Pointer to save the point to the newly created target
++ * Enable or disable DAMON_HUGEPAGE.
++ *
++ * You can enable DAMON_HUGEPAGE by setting the value of this parameter
++ * as ``Y``. Setting it as ``N`` disables DAMON_HUGEPAGE.
 + */
-+int damon_modules_new_paddr_ctx_target(struct damon_ctx **ctxp,
-+		struct damon_target **targetp)
-+{
-+	return _damon_modules_new_ctx_target(ctxp, targetp, DAMON_OPS_PADDR);
-+}
++static bool enabled __read_mostly;
 +
 +/*
-+ * Allocate, set, and return a DAMON context for the virtual address space.
-+ * @ctxp:	Pointer to save the point to the newly created context
-+ * @targetp:	Pointer to save the point to the newly created target
++ * Make DAMON_HUGEPAGE reads the input parameters again, except ``enabled``.
++ *
++ * Input parameters that updated while DAMON_HUGEPAGE is running are not applied
++ * by default.  Once this parameter is set as ``Y``, DAMON_HUGEPAGE reads values
++ * of parametrs except ``enabled`` again.  Once the re-reading is done, this
++ * parameter is set as ``N``.  If invalid parameters are found while the
++ * re-reading, DAMON_HUGEPAGE will be disabled.
 + */
-+int damon_modules_new_vaddr_ctx_target(struct damon_ctx **ctxp,
-+		struct damon_target **targetp)
-+{
-+	return _damon_modules_new_ctx_target(ctxp, targetp, DAMON_OPS_VADDR);
-+}
-diff --git a/mm/damon/modules-common.h b/mm/damon/modules-common.h
-index f103ad556368..324b9cb4957e 100644
---- a/mm/damon/modules-common.h
-+++ b/mm/damon/modules-common.h
-@@ -47,3 +47,6 @@
- 
- int damon_modules_new_paddr_ctx_target(struct damon_ctx **ctxp,
- 		struct damon_target **targetp);
++static bool commit_inputs __read_mostly;
++module_param(commit_inputs, bool, 0600);
 +
-+int damon_modules_new_vaddr_ctx_target(struct damon_ctx **ctxp,
-+		struct damon_target **targetp);
++/*
++ * Scale factor for DAMON_HUGEPAGE to ops address conversion.
++ *
++ * This parameter must not be set to 0.
++ */
++static unsigned long addr_unit __read_mostly = 1;
++
++static long monitored_pid;
++module_param(monitored_pid, ulong, 0600);
++
++/*
++ * Time threshold for hot memory regions identification in microseconds.
++ *
++ * If a memory region has been accessed for this or longer time,
++ * DAMON_HUGEPAGE identifies the region as hot, and collapse it into a huge
++ * page.  100 microseconds by default.
++ */
++static unsigned long min_age __read_mostly = 100000;
++module_param(min_age, ulong, 0600);
++
++static struct damos_quota damon_hugepage_quota = {
++	/* use up to 10 ms time, collapse up to 128 MiB per 1 sec by default */
++	.ms = 10,
++	.sz = 128 * 1024 * 1024,
++	.reset_interval = 1000,
++	.weight_sz = 0,
++	.weight_nr_accesses = 1,
++	.weight_age = 1
++};
++DEFINE_DAMON_MODULES_DAMOS_QUOTAS(damon_hugepage_quota);
++
++
++/*
++ * Desired ratio of huge pages use vs total anonymous memory usage.
++ *
++ * While keeping the caps that set by other quotas, DAMON_HUGEPAGE automatically
++ * increases and decreases the effective level of the quota to achieve the
++ * desired ratio.
++ *
++ * 100 bp by default.
++ */
++static unsigned long quota_percentage_hugepage __read_mostly = 100;
++module_param(quota_percentage_hugepage, ulong, 0600);
++
++/*
++ * User-specifiable feedback for auto-tuning of the effective quota.
++ *
++ * While keeping the caps that set by other quotas, DAMON_HUGEPAGE automatically
++ * increases and decreases the effective level of the quota aiming receiving this
++ * feedback of value ``10,000`` from the user.  DAMON_HUGEPAGE assumes the feedback
++ * value and the quota are positively proportional.  Value zero means disabling
++ * this auto-tuning feature.
++ *
++ * Disabled by default.
++ *
++ */
++static unsigned long quota_autotune_feedback __read_mostly;
++module_param(quota_autotune_feedback, ulong, 0600);
++
++/*
++ * PID of the DAMON thread
++ *
++ * If DAMON_HUGEPAGE is enabled, this becomes the PID of the worker thread.
++ * Else, -1.
++ */
++static int kdamond_pid __read_mostly = -1;
++module_param(kdamond_pid, int, 0400);
++
++static struct damos_stat damon_hugepage_stat;
++DEFINE_DAMON_MODULES_DAMOS_STATS_PARAMS(damon_hugepage_stat,
++		hugepage_tried_regions, hugepage_regions, quota_exceeds);
++
++static struct damon_attrs damon_hugepage_mon_attrs = {
++	.sample_interval = 5 * USEC_PER_MSEC,
++	.aggr_interval = 100 * USEC_PER_MSEC,
++	.ops_update_interval = 60 * USEC_PER_MSEC * MSEC_PER_SEC,
++	.min_nr_regions = 10,
++	.max_nr_regions = 1000,
++};
++DEFINE_DAMON_MODULES_MON_ATTRS_PARAMS(damon_hugepage_mon_attrs);
++
++static struct damon_ctx *ctx;
++static struct damon_target *target;
++
++static struct damos *damon_hugepage_new_scheme(void)
++{
++	struct damos_access_pattern pattern = {
++		/* Find regions having PMD_SIZE or larger size */
++		.min_sz_region = PMD_SIZE,
++		.max_sz_region = ULONG_MAX,
++		.min_nr_accesses = 0,
++		.max_nr_accesses = UINT_MAX,
++		.min_age_region = min_age /
++			damon_hugepage_mon_attrs.aggr_interval,
++		.max_age_region = UINT_MAX,
++	};
++
++	return damon_new_scheme(
++		&pattern,
++		/* synchrounous partial collapse as soon as found */
++		DAMOS_COLLAPSE, 0,
++		/* under the quota. */
++		&damon_hugepage_quota,
++		&(struct damos_watermarks){}, NUMA_NO_NODE);
++}
++
++static int damon_hugepage_apply_parameters(void)
++{
++	struct damon_ctx *param_ctx;
++	struct damon_target *param_target;
++	struct damos *scheme;
++	struct damos_quota_goal *goal;
++	struct pid *spid;
++	int err;
++
++	err = damon_modules_new_vaddr_ctx_target(&param_ctx, &param_target);
++	if (err)
++		return err;
++
++	param_ctx->addr_unit = addr_unit;
++	param_ctx->min_region_sz = max(DAMON_MIN_REGION_SZ / addr_unit, 1);
++
++	spid = find_get_pid(monitored_pid);
++	if (!spid) {
++		err = -EINVAL;
++		goto out;
++	}
++
++	param_target->pid = spid;
++
++	if (!damon_hugepage_mon_attrs.aggr_interval) {
++		err = -EINVAL;
++		goto out;
++	}
++
++	err = damon_set_attrs(param_ctx, &damon_hugepage_mon_attrs);
++	if (err)
++		goto out;
++
++	err = -ENOMEM;
++	scheme = damon_hugepage_new_scheme();
++	if (!scheme)
++		goto out;
++	damon_set_schemes(param_ctx, &scheme, 1);
++
++	goal = damos_new_quota_goal(DAMOS_QUOTA_HUGEPAGE, quota_percentage_hugepage);
++	if (!goal)
++		goto out;
++	damos_add_quota_goal(&scheme->quota, goal);
++
++	if (quota_autotune_feedback) {
++		goal = damos_new_quota_goal(DAMOS_QUOTA_USER_INPUT, 10000);
++		if (!goal)
++			goto out;
++		goal->current_value = quota_autotune_feedback;
++		damos_add_quota_goal(&scheme->quota, goal);
++	}
++
++	err = damon_commit_ctx(ctx, param_ctx);
++out:
++	damon_destroy_ctx(param_ctx);
++	return err;
++}
++
++static int damon_hugepage_handle_commit_inputs(void)
++{
++	int err;
++
++	if (!commit_inputs)
++		return 0;
++
++	err = damon_hugepage_apply_parameters();
++	commit_inputs = false;
++	return err;
++}
++
++static int damon_hugepage_damon_call_fn(void *arg)
++{
++	struct damon_ctx *c = arg;
++	struct damos *s;
++
++	/* update the stats parameter */
++	damon_for_each_scheme(s, c)
++		damon_hugepage_stat = s->stat;
++
++	return damon_hugepage_handle_commit_inputs();
++}
++
++static struct damon_call_control call_control = {
++	.fn = damon_hugepage_damon_call_fn,
++	.repeat = true,
++};
++
++static int damon_hugepage_turn(bool on)
++{
++	int err;
++
++	if (!on) {
++		err = damon_stop(&ctx, 1);
++		if (!err)
++			kdamond_pid = -1;
++		return err;
++	}
++
++	err = damon_hugepage_apply_parameters();
++	if (err)
++		return err;
++
++	err = damon_start(&ctx, 1, true);
++	if (err)
++		return err;
++	kdamond_pid = damon_kdamond_pid(ctx);
++	if (kdamond_pid < 0)
++		return kdamond_pid;
++	return damon_call(ctx, &call_control);
++}
++
++static int damon_hugepage_addr_unit_store(const char *val,
++		const struct kernel_param *kp)
++{
++	unsigned long input_addr_unit;
++	int err = kstrtoul(val, 0, &input_addr_unit);
++
++	if (err)
++		return err;
++	if (!input_addr_unit)
++		return -EINVAL;
++
++	addr_unit = input_addr_unit;
++	return 0;
++}
++
++static const struct kernel_param_ops addr_unit_param_ops = {
++	.set = damon_hugepage_addr_unit_store,
++	.get = param_get_ulong,
++};
++
++module_param_cb(addr_unit, &addr_unit_param_ops, &addr_unit, 0600);
++MODULE_PARM_DESC(addr_unit,
++	"Scale factor for DAMON_HUGEPAGE to ops address conversion (default: 1)");
++
++static int damon_hugepage_enabled_store(const char *val,
++				const struct kernel_param *kp)
++{
++	bool is_enabled = enabled;
++	bool enable;
++	int err;
++
++	err = kstrtobool(val, &enable);
++	if (err)
++		return err;
++
++	if (is_enabled == enable)
++		return 0;
++
++	/* Called before init function.  The function will handle this. */
++	if (!damon_initialized())
++		goto set_param_out;
++
++	err = damon_hugepage_turn(enable);
++	if (err)
++		return err;
++
++set_param_out:
++	enabled = enable;
++	return err;
++}
++
++static const struct kernel_param_ops enabled_param_ops = {
++	.set = damon_hugepage_enabled_store,
++	.get = param_get_bool,
++};
++
++module_param_cb(enabled, &enabled_param_ops, &enabled, 0600);
++MODULE_PARM_DESC(enabled,
++	"Enable or disable DAMON_HUGEPAGE (default: disabled)");
++
++static int __init damon_hugepage_init(void)
++{
++	int err;
++
++	if (!damon_initialized()) {
++		err = -ENOMEM;
++		goto out;
++	}
++	err = damon_modules_new_vaddr_ctx_target(&ctx, &target);
++	if (err)
++		goto out;
++
++	call_control.data = ctx;
++
++	/* 'enabled' has set before this function, probably via command line */
++	if (enabled)
++		err = damon_hugepage_turn(true);
++
++out:
++	if (err && enabled)
++		enabled = false;
++	return err;
++}
++
++module_init(damon_hugepage_init);
 -- 
 2.43.0
 
