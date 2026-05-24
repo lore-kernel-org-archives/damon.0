@@ -1,138 +1,102 @@
-Received: from out-186.mta1.migadu.com (out-186.mta1.migadu.com [95.215.58.186])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2465393DC7
-	for <damon@lists.linux.dev>; Sun, 24 May 2026 13:37:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.186
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 521DC285066;
+	Sun, 24 May 2026 17:46:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779629847; cv=none; b=BP8nPvS8VPzR2Ih7budG0gyRxn0uvamKXt9xsGQ7nrqgd0h7asFGGXiNkxG9sk0fqHKIA/DF44Iq4RhpSruTXYqVsi/bDUL0QloyrV5K/UBeQmFgsPM3CtIPCHl9jA63J8pkHR8kbxDL4v+hG1jQNkKYtYuj0bEpnCujDXASp8E=
+	t=1779644778; cv=none; b=AhGfaXkRkjGxiNtmQY1MZ1dAPedAhTlEbzuU9yA/JFLgtQmic0Le+yuz7mskgu9dDqVurnBVI4v+aYkwnNQ48+ycN4KrF6LcoZsjzQ+m05xXW8QvUE9kkC7S9aUvC6aO1Rk3icB4c4YXODQFH7kCQulEQjvDCYr+l5tpNBdSVUI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779629847; c=relaxed/simple;
-	bh=ZChN/TK63ifkoNG1MDG0wmln/ikSmoGJSIcgvfbnD9A=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=WBL+0KVtsEsV+VudRQNmq60lLsPOXKHiAlrvXfY5H2oXnhn7HhiN5rrAY5G5MLt7T74wTroTxYKYiBZOJ/oVXQTvNCJF3KOZS8R75gzDfZnxd8zwHXETlyTVvUPR6fZ9nOm/PoXetMO9Cc1zWdPUUS8S35kP0i4WEL7WPYqi3e8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=BAIZ6fPa; arc=none smtp.client-ip=95.215.58.186
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1779644778; c=relaxed/simple;
+	bh=D9V8RhGUrdDW5NOa0gr06FY1nmxytjBARffB1Ils0M4=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=sYcuyJAgS0OHqIkkh8q3dfeSR1/o3wgEcIg501A6f9DPGhcvlVQSBdAmED5JwDfvyHRmmszX3UeLAs4Cw8AljTwxmSphH7WP4EZCJ2a6RjmqgzhOhdXlfH8F25uWSWeJ1FHnxa9pC3ZoQpfRFLyKF8kjNYdhRwN7fCrEQZEUz8Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DvWzH3mc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="BAIZ6fPa"
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1779629841;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=sOoypwVXiJS7FMQk1ugjy+9q2SWezMLwPiTi1PVsw1c=;
-	b=BAIZ6fPa9cpaXB+ilch1OPpC99v27Yn87+M8XZZnovqAuZmJZp2BvQRG5QnJDUkFWqIwtb
-	eWSqfvWRwzPEManaWLFDBqAbxcjXc14hHmefDC6jcCPwAEDBfuL4PkXPBqgKKL+5Y3Isdl
-	IKVkwA90mhMatd+uHBpFD9CgbSHIH68=
-From: Lance Yang <lance.yang@linux.dev>
-To: mattsva.kernel@gmail.com
-Cc: linux-mm@kvack.org,
-	linux-doc@vger.kernel.org,
-	akpm@linux-foundation.org,
-	sj@kernel.org,
-	david@kernel.org,
-	ljs@kernel.org,
-	liam@infradead.org,
-	vbabka@kernel.org,
-	rppt@kernel.org,
-	surenb@google.com,
-	mhocko@suse.com,
-	corbet@lwn.net,
-	skhan@linuxfoundation.org,
-	ziy@nvidia.com,
-	baolin.wang@linux.alibaba.com,
-	npache@redhat.com,
-	ryan.roberts@arm.com,
-	dev.jain@arm.com,
-	baohua@kernel.org,
-	lance.yang@linux.dev,
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DvWzH3mc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D5EF1F000E9;
+	Sun, 24 May 2026 17:46:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1779644777;
+	bh=uBIKyCDUB4AI2j953g540RjbdIOwXHSPmEWd/lmfFd8=;
+	h=From:To:Cc:Subject:Date;
+	b=DvWzH3mcrvKY3cjnYwotg5mUYKLb8jHI/4yzSTjUWoxSvfKxV8VO9lcJSONFtzOPC
+	 B0WTssgk/v7CM0q3iY5uQkTNV/p9vsB2ID3IDcQZWC35VrihN0v82e2+j+dzpPopa6
+	 m8/Dmz82tYqTJrjbSVngHh1RDjVTgdpK2eMmm1sLTW8K7WdIqV2hnxPHW5ckkS4NpS
+	 nbKfYxkIddoIX2hjYU16kQFgzIeIrTf6AaBHL2TTuP7q2RDkbiUco1NyRssNjonTyx
+	 KVjI6xNkxSdVvQdNZP897Bnr05ksiW0UrShKlGE/fC8DHRpEAIGopnYybrnNE5K7Fi
+	 vfQ3n3ZQk/8Kg==
+From: SeongJae Park <sj@kernel.org>
+To: 
+Cc: SeongJae Park <sj@kernel.org>,
+	"# 5 . 15 . x" <stable@vger.kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Fernand Sieber <sieberf@amazon.com>,
+	Leonard Foerster <foersleo@amazon.de>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
 	damon@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] docs/mm: fix spelling mistakes in memory management docs
-Date: Sun, 24 May 2026 21:37:01 +0800
-Message-Id: <20260524133701.3470-1-lance.yang@linux.dev>
-In-Reply-To: <20260524124924.405071-1-mattsva.kernel@gmail.com>
-References: <20260524124924.405071-1-mattsva.kernel@gmail.com>
+	linux-kernel@vger.kernel.org,
+	linux-mm@kvack.org
+Subject: [RFC PATCH v1.1] mm/damon/ops-common: call folio_test_lru() after folio_get()
+Date: Sun, 24 May 2026 10:46:06 -0700
+Message-ID: <20260524174608.81112-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Migadu-Flow: FLOW_OUT
 
-Hi,
+damon_get_folio() speculatively calls folio_test_lru() before
+folio_try_get().  The folio can get freed and reallocated to a tail
+page.  In the case, VM_BUG_ON_PGFLAGS() in const_folio_flags() can be
+triggered.  Remove the speculative call.
 
-On Sun, May 24, 2026 at 02:49:21PM +0200, mattsva wrote:
->Signed-off-by: mattsva <mattsva.kernel@gmail.com>
+Also mark folio_test_lru() check right after folio_try_get() success as
+no more unlikely.
 
-Missing changelog ... and Signed-off-by should use your real identity,
-not a handle :)
+The race should be rare.  Also the problem can happen only if the kernel
+has enabled CONFIG_DEBUG_VM_PGFLAGS.  No real world report of this issue
+has been made so far.  This fix is based on only theoretical analysis.
+That said, a bug is a bug.  A similar issue was also fixed via commit
+3203b3ab0fcf ("mm/filemap: don't call folio_test_locked() without a
+reference in next_uptodate_folio()").  I don't expect this change will
+make a meaningful impact to DAMON performance in the real world, though
+I will be happy to be corrected from the real world reports.
 
-checkpatch.pl is your friend, please run it next time :)
+The issue was discovered [1] by Sashiko.
 
->---
-> Documentation/admin-guide/mm/damon/lru_sort.rst | 2 +-
-> Documentation/admin-guide/mm/damon/reclaim.rst  | 2 +-
-> Documentation/admin-guide/mm/transhuge.rst      | 2 +-
-> 3 files changed, 3 insertions(+), 3 deletions(-)
->
->diff --git a/Documentation/admin-guide/mm/damon/lru_sort.rst b/Documentation/admin-guide/mm/damon/lru_sort.rst
->index 14cc6b2db897..25e2f042a383 100644
->--- a/Documentation/admin-guide/mm/damon/lru_sort.rst
->+++ b/Documentation/admin-guide/mm/damon/lru_sort.rst
->@@ -75,7 +75,7 @@ Make DAMON_LRU_SORT reads the input parameters again, except ``enabled``.
-> 
-> Input parameters that updated while DAMON_LRU_SORT is running are not applied
-> by default.  Once this parameter is set as ``Y``, DAMON_LRU_SORT reads values
->-of parametrs except ``enabled`` again.  Once the re-reading is done, this
->+of parameters except ``enabled`` again.  Once the re-reading is done, this
-> parameter is set as ``N``.  If invalid parameters are found while the
-> re-reading, DAMON_LRU_SORT will be disabled.
-> 
->diff --git a/Documentation/admin-guide/mm/damon/reclaim.rst b/Documentation/admin-guide/mm/damon/reclaim.rst
->index d7a0225b4950..01a34c215b66 100644
->--- a/Documentation/admin-guide/mm/damon/reclaim.rst
->+++ b/Documentation/admin-guide/mm/damon/reclaim.rst
->@@ -67,7 +67,7 @@ Make DAMON_RECLAIM reads the input parameters again, except ``enabled``.
-> 
-> Input parameters that updated while DAMON_RECLAIM is running are not applied
-> by default.  Once this parameter is set as ``Y``, DAMON_RECLAIM reads values
->-of parametrs except ``enabled`` again.  Once the re-reading is done, this
->+of parameters except ``enabled`` again.  Once the re-reading is done, this
-> parameter is set as ``N``.  If invalid parameters are found while the
-> re-reading, DAMON_RECLAIM will be disabled.
+[1] https://lore.kernel.org/20260517234112.89245-1-sj@kernel.org
 
-Already fixed in mm-new:
+Fixes: 3f49584b262c ("mm/damon: implement primitives for the virtual memory address spaces")
+Cc: <stable@vger.kernel.org> # 5.15.x
+Signed-off-by: SeongJae Park <sj@kernel.org>
+---
+Changes from RFC v1
+- RFC v1: https://lore.kernel.org/20260523194145.93122-1-sj@kernel.org
+- Do not change post-folio_try_get() validation order.
 
-https://lore.kernel.org/20260426231619.107231-3-sj@kernel.org
+ mm/damon/ops-common.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
->diff --git a/Documentation/admin-guide/mm/transhuge.rst b/Documentation/admin-guide/mm/transhuge.rst
->index 5fbc3d89bb07..5d08a2a1c15f 100644
->--- a/Documentation/admin-guide/mm/transhuge.rst
->+++ b/Documentation/admin-guide/mm/transhuge.rst
->@@ -210,7 +210,7 @@ PMD-mappable transparent hugepage::
-> 	cat /sys/kernel/mm/transparent_hugepage/hpage_pmd_size
-> 
-> All THPs at fault and collapse time will be added to _deferred_list,
->-and will therefore be split under memory presure if they are considered
->+and will therefore be split under memory pressure if they are considered
+diff --git a/mm/damon/ops-common.c b/mm/damon/ops-common.c
+index 3a0ddc3ac7196..5c93ef2bb8a97 100644
+--- a/mm/damon/ops-common.c
++++ b/mm/damon/ops-common.c
+@@ -32,9 +32,9 @@ struct folio *damon_get_folio(unsigned long pfn)
+ 		return NULL;
+ 
+ 	folio = page_folio(page);
+-	if (!folio_test_lru(folio) || !folio_try_get(folio))
++	if (!folio_try_get(folio))
+ 		return NULL;
+-	if (unlikely(page_folio(page) != folio || !folio_test_lru(folio))) {
++	if (unlikely(page_folio(page) != folio) || !folio_test_lru(folio)) {
+ 		folio_put(folio);
+ 		folio = NULL;
+ 	}
 
-This one as well:
-
-https://lore.kernel.org/20260520051751.74396-1-leon.hwang@linux.dev
-
-> "underused". A THP is underused if the number of zero-filled pages in
-> the THP is above max_ptes_none (see below). It is possible to disable
-> this behaviour by writing 0 to shrink_underused, and enable it by writing
->-- 
-
-So this patch is stale now: all three hunks are already covered in
-mm-new.
-
-Thanks, Lance
+base-commit: d30b72f4d0d4a88b1162143322bc99b1fce6ea67
+-- 
+2.47.3
