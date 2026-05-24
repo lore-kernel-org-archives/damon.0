@@ -1,73 +1,89 @@
-Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
+Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2162224AFA
-	for <damon@lists.linux.dev>; Sun, 24 May 2026 10:03:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80E69395AFD
+	for <damon@lists.linux.dev>; Sun, 24 May 2026 12:51:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779617010; cv=none; b=pUuPf3ZqeqFmbffCITnmkhKnpLITDNIKD/cYC2HJus1vg+QD1Z7kEwswhmnK8tYHHQGmnojmNTN3jvsXDZbbEaZ1uVmBVtYOzmD6j5CU4Ek/Tx81C/iKOQXsMQH+r1uK+pGBT3zyzEebc6AHzkWndIDkLBjluAeN5Wi+SlArB0c=
+	t=1779627099; cv=none; b=hLyLM+q2Oie7y3FG4pablVKxM/LYJ/3J2/g9AInLP1kleMM7oHLhShmbSlEJzZzZBdwl6PVntMha5hPDnROZEmj54tkdxPkaWIxdlq7DTCigU/MsmlKy4Prz35br+6V2c6fbQPWvrXCD8ME4S2f9FoxAtWt6zkzQvXgLFIaNeMU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779617010; c=relaxed/simple;
-	bh=8/v42twDQCmIHyF6EGLKUMLW9TV8CTEejmHUQEe3vXQ=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=Jujg2YlSsPinTAC+jJ+sntngOrb1JT03MfbW9s6UT8NSFFZzKiY8Kq2U6m78t2h27CwOnJrGltsHAVPVdQszthh9ugjTnm5v4rPJZbFB2hSiNPHMnZbV3DxmC+8hfur/TdexCqMjgHuC+Eu9Ljp+o4Fh7HFvWYfP/0vNBq1CxZo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VsDgiOIb; arc=none smtp.client-ip=209.85.214.180
+	s=arc-20240116; t=1779627099; c=relaxed/simple;
+	bh=hL+s7EbAAJiC5PDsEX+EeqlhhRUkFl41FxobbygN9B8=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=fMTIipQC0I0pFcpzeMbjgobkqDxfkSssrwQp8/sFqJ3dKwMW6/cRXKcmIv+Xh06Of0E1UCInHDey16hOz7AbwBc3v9XHNRrxre9tfvj6QJCERLH2WvEfQSfWNHwdvv03+L9cNE8CpB1CENlJ+aD9QLtFpLM/hI++Zx9ZuZQh4j0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=c9c4pX2P; arc=none smtp.client-ip=209.85.208.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VsDgiOIb"
-Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-2bd5b3f8a98so17020955ad.2
-        for <damon@lists.linux.dev>; Sun, 24 May 2026 03:03:28 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="c9c4pX2P"
+Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-68852a4fc68so2774585a12.3
+        for <damon@lists.linux.dev>; Sun, 24 May 2026 05:51:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1779617008; x=1780221808; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1779627096; x=1780231896; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=EXBfuqbAyMEZ9CUfrSMvnKn8IB4mQp9S1TVPfOw1Hnw=;
-        b=VsDgiOIblXUcadPOACf4m3gFgd8pLDCAg7jgcFs+0Yi6xIluOrK4I427uPH6O78LEl
-         PMzcB5YgtBVo3CNESwmFJ3b9ataqroo0frtRJavJwPqbtOe2o0md6nSk5bgvlSDnrDHV
-         CnSBITwA63eYnAEdMnb2uqRfUPksVyx3qSRwcN7O4wsIk1Tzi+nZfK2OOvwjn8bJpMzB
-         edArCPGa3blh2QvOJkk/stxUnazndFRdvb2oNi4uE/wNvk9R0OpW1e3NGbEUtEccs+4c
-         GG+gLUNShX6pT5y4k+jXrsGTRb/JXgNWLK+Tsa1Zou1H4hR0SOXXKWDrZxJDySKjP9DX
-         Ganw==
+        bh=zaac+q2wcXPmSLkezcHQ4SREpixOUlTlhddu9awVmSo=;
+        b=c9c4pX2PX1I0iihbcGXv+LPcYR7xYHh0nwrIqS6Tv11+5JrS1eIXZbU6joB4FicZEx
+         KiFQ0TEwMHoEaX2ipWZKXNXqSKT/yMnJZ1BdwNBrk/1HYABm2ch+9Yu+TJfX6hD+O8fJ
+         qzHCfJSgRd3GsvfGyoXG2X7s75lySGYdyyTxLwJWLrSzsVBbrKOvgnKkMFxFLk3G3iLW
+         JNUvBbN4sQUI1JEV+/7IpA+QOSBlLAaYFsqdNqa/T8RWguTEDoEQIPb4xDYkIPhm+kiG
+         M0rDDHudaxbapaB/pg7TG46CSuyIMxKsp0nuyTQm0bBisfOb5BeG0GGoDtwgfa/yzzpw
+         t8lQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779617008; x=1780221808;
+        d=1e100.net; s=20251104; t=1779627096; x=1780231896;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=EXBfuqbAyMEZ9CUfrSMvnKn8IB4mQp9S1TVPfOw1Hnw=;
-        b=byXwD7NY7N8KnXU06+ZWIh0Q1jIBcf2GN8XYpv7krfxpcCteAfbDoHNOhfy0uJ5U0A
-         fqSfujhXl1JlL7OLFKRXlB990jkJ95kpq8c65i/YX8n4d5zxCHeRjcKXOqx/RGs/FJTl
-         neNp7Hx/sePL5DjEbxPZGckfuAthWLhgmA/GXnFJYFZbj0oBAYSm6spwuGBYtippRRPR
-         7+vchIk+3TISq9pF2SNan7InW5mSGvj4iKJ/FQv9E75BGcXxb2pKEUeLkIrqr1flnvI6
-         ait6bhOwW+vSxCf0qP8zL+p+Ipo+3kdchkVnEKBDAvJKeuSV66F/7lDlPXWiIaQm/jBH
-         d8Pw==
-X-Forwarded-Encrypted: i=1; AFNElJ+Py9dgxZ4DGqVOjQZM2KySU9VXQVpTK19uFWQcRCdj1SIeix+0wl8+QxBtlhygXD9mBiZ+Fw==@lists.linux.dev
-X-Gm-Message-State: AOJu0YzTiUBk2ZvGQSWeK3TemFJB04CyOzPFCjFc7hNHnwXfZVjsz2xy
-	g7SKP4SXUtvc1yyNwTXtu5EtSLYdlpa00Y+r0BMXC1BLLD611W4mN1zO
-X-Gm-Gg: Acq92OFRQ9J77r7zXAjgXhhoG7CBs/GRqieKpXX64/awaRINJvpQ5gujjS8WGXMoa9h
-	tCsAnx1PxH4RqsAZx405++QvT4R1izN5IoUuCKhR4cEChv3JJPR4xDTohR4QFdA+7N6kkb7Dvy8
-	fVL+3T3cUQ04v6Vx2hQIUYBrja9RGRfZr95pd2LelvRuJtU5dxc/vir3yai5mlncJDmCWXPoksA
-	wkcdNPp4QAyLAfEdVwRcyMtkVJsBlSX3+F4k3iq6SDiOXxSzdlL5D27GW3pchVXvLepDuYU/3yl
-	CWgN4XSa3ge2g20zhsVWNkuiqn3UDR16Y2VsZDHPH/rCqqHRSffR4N6ns5owkN+HS39Jb7hhvNk
-	wVsaqIABv9LNJm1Z0YW7Rqx8+4Hkf0Ms8KrCjkgk7G8ejpta5XAj0+qAwLLyobYuUUJoF3y2TOk
-	f2BME+XaB8XBp8IpJmmo99vc2YW/IDZNKF5YAnUDy1k+s0KD+X8DFKUGUHGh4=
-X-Received: by 2002:a05:6a21:4a8c:b0:39b:b6d2:1f24 with SMTP id adf61e73a8af0-3b3285caaf4mr5506279637.0.1779617008111;
-        Sun, 24 May 2026 03:03:28 -0700 (PDT)
-Received: from localhost.localdomain ([60.243.191.184])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-84165009761sm7630123b3a.60.2026.05.24.03.03.24
+        bh=zaac+q2wcXPmSLkezcHQ4SREpixOUlTlhddu9awVmSo=;
+        b=NAB9E0fn2o8RPIQgCTCfSQfWpihOgo44cbrhMkEzi7/cHlI5kTkEvTVjd/QaO7pRnU
+         x7S0V6MdIlEJFFceBuA1k2Hr2E6LDLPgpVROsNvCFj1MA7trj9JEOqp7OQVcG2jxeGcm
+         0gO7XaPUYJ13NmhgleUBHgzuzhmTLMtB9Mb7TRg7ZKQfztbr6rumWIkUjBeUwAQhTOAK
+         Ej5PHMNx3ahqr43VLs6JB7nkKru3J7ceZF6iTmqPAwdzahXyBO5vS8w7ENMa3b7W+KRZ
+         I4Zy+vebfsAjTUa0DTLUBxQ9cKH/RSHrKwj8AxMYb/ZzznfXk0VUPfTqL4iaYvv/zA7R
+         pPEA==
+X-Forwarded-Encrypted: i=1; AFNElJ8w2GPyogNk8MpuXtSagmL0qrGF8Q/Xsj0yj3Rqq3k5FhRhU07fkBOpdh/mVxOzquO2FfvMRg==@lists.linux.dev
+X-Gm-Message-State: AOJu0YwMxb0ii4r2WSRlrWYPQwnDr5eWVzZg+KjsTn9VlnGo5NFPOXsw
+	PKCvkYuQAw4b1fiHKaHVJbbK2RfElNvw9O5Gjg93DylT+R4crZIsx5YJ
+X-Gm-Gg: Acq92OGj5VArCHvEYvIT5vKfuE9HkfmFeV7UO55iutmsNQU4i+hpaJL57U+OMpC4rrK
+	08c1PHuREz572GZb0rDE68u/8vA1M813s9vKf3gxjckdrZq+0S3hkqw7+5DKpd66QJz6XuLtqdX
+	v2jxgNEMd+wIw11PNoeKPm5BDDKQ4s7yJmh5cFuSPrz+tlZeu3UZLduNUY7N+sgmCz6uY8sy9eP
+	iELs/KoFtxvupWLcr+XEtQTLP5R6pppp3xdY4aJLBrfu1eyHNu2xN12/VziPIXJl004pQ3AMKTK
+	oHex2giO8jfCLJtfkjeJcwltKKWQB1dBUeTV6Lvgh+7K+WXeZWgCWtBveITubuIkp96IhN029/E
+	YxS/V001eszEmo4pPkLGYH01uqdQI+kk7MFWHwUZdmG2R/12UcxcP9FiWXgvvcJD9uXqfbbFpQK
+	SgpRb+NVfB/DjYAXip9IfFXLMP5LlTKngFP/kk+Q3n+NSSB66HHZR+jfsGnazustNfcCA=
+X-Received: by 2002:a05:6402:370a:b0:680:c843:a1d0 with SMTP id 4fb4d7f45d1cf-6889c432224mr5618565a12.3.1779627095441;
+        Sun, 24 May 2026 05:51:35 -0700 (PDT)
+Received: from nixos.tail35a60b.ts.net (86-103-11-136.ip.tng.de. [86.103.11.136])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-688b9f6084fsm3042930a12.11.2026.05.24.05.51.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 24 May 2026 03:03:27 -0700 (PDT)
-From: Sailesh Nandanavanam <saileshnandanavanam@gmail.com>
-To: sj@kernel.org
-Cc: shuah@kernel.org,
-	damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	linux-kselftest@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Sailesh Nandanavanam <saileshnandanavanam@gmail.com>
-Subject: [PATCH v2] selftests/damon: add regression test for damos_walk() vs kdamond exit race
-Date: Sun, 24 May 2026 15:32:58 +0530
-Message-Id: <20260524100258.36819-1-saileshnandanavanam@gmail.com>
-X-Mailer: git-send-email 2.34.1
+        Sun, 24 May 2026 05:51:34 -0700 (PDT)
+From: mattsva <mattsva.kernel@gmail.com>
+To: linux-mm@kvack.org,
+	linux-doc@vger.kernel.org,
+	Andrew Morton <akpm@linux-foundation.org>
+Cc: mattsva <mattsva.kernel@gmail.com>,
+	SeongJae Park <sj@kernel.org>,
+	David Hildenbrand <david@kernel.org>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	Mike Rapoport <rppt@kernel.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Michal Hocko <mhocko@suse.com>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Zi Yan <ziy@nvidia.com>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Nico Pache <npache@redhat.com>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Dev Jain <dev.jain@arm.com>,
+	Barry Song <baohua@kernel.org>,
+	Lance Yang <lance.yang@linux.dev>,
+	damon@lists.linux.dev (open list:DAMON),
+	linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH] docs/mm: fix spelling mistakes in memory management docs
+Date: Sun, 24 May 2026 14:49:21 +0200
+Message-ID: <20260524124924.405071-1-mattsva.kernel@gmail.com>
+X-Mailer: git-send-email 2.54.0
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -76,134 +92,52 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Add a regression test that verifies damos_walk() does not deadlock
-when racing with kdamond_fn() exit.
-
-When kdamond_fn() finishes its main loop, it cancels remaining
-damos_walk() requests and unsets damon_ctx->kdamond. Without the fix
-in commit 33c3f6c2b48c, damos_walk() could be called right after
-cancellation but before kdamond pointer unset, causing it to wait
-forever for handling that never comes.
-
-The test starts kdamond monitoring a short-lived process, waits for
-the process to exit naturally triggering kdamond termination, then
-rapidly calls update_schemes_tried_regions in a separate thread to
-hit the race window. Using a thread with join timeout ensures the
-test can detect kernel-level deadlocks where the system call blocks
-in uninterruptible state.
-
-The sysfs state path is resolved dynamically via the kdamonds object
-instead of being hardcoded, and exceptions are handled specifically
-as OSError rather than using a bare except block.
-
-Fixes: 33c3f6c2b48c ("mm/damon/core: fix damos_walk() vs kdamond_fn() exit race")
-Signed-off-by: Sailesh Nandanavanam <saileshnandanavanam@gmail.com>
+Signed-off-by: mattsva <mattsva.kernel@gmail.com>
 ---
- tools/testing/selftests/damon/Makefile        |  1 +
- .../sysfs_damos_walk_kdamond_exit_race.py     | 82 +++++++++++++++++++
- 2 files changed, 83 insertions(+)
- create mode 100755 tools/testing/selftests/damon/sysfs_damos_walk_kdamond_exit_race.py
+ Documentation/admin-guide/mm/damon/lru_sort.rst | 2 +-
+ Documentation/admin-guide/mm/damon/reclaim.rst  | 2 +-
+ Documentation/admin-guide/mm/transhuge.rst      | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/tools/testing/selftests/damon/Makefile b/tools/testing/selftests/damon/Makefile
-index 2180c328a825..60c83d6c318e 100644
---- a/tools/testing/selftests/damon/Makefile
-+++ b/tools/testing/selftests/damon/Makefile
-@@ -20,6 +20,7 @@ TEST_PROGS += sysfs_update_removed_scheme_dir.sh
- TEST_PROGS += sysfs_update_schemes_tried_regions_hang.py
- TEST_PROGS += sysfs_memcg_path_leak.sh
- TEST_PROGS += sysfs_no_op_commit_break.py
-+TEST_PROGS += sysfs_damos_walk_kdamond_exit_race.py
+diff --git a/Documentation/admin-guide/mm/damon/lru_sort.rst b/Documentation/admin-guide/mm/damon/lru_sort.rst
+index 14cc6b2db897..25e2f042a383 100644
+--- a/Documentation/admin-guide/mm/damon/lru_sort.rst
++++ b/Documentation/admin-guide/mm/damon/lru_sort.rst
+@@ -75,7 +75,7 @@ Make DAMON_LRU_SORT reads the input parameters again, except ``enabled``.
  
- EXTRA_CLEAN = __pycache__
+ Input parameters that updated while DAMON_LRU_SORT is running are not applied
+ by default.  Once this parameter is set as ``Y``, DAMON_LRU_SORT reads values
+-of parametrs except ``enabled`` again.  Once the re-reading is done, this
++of parameters except ``enabled`` again.  Once the re-reading is done, this
+ parameter is set as ``N``.  If invalid parameters are found while the
+ re-reading, DAMON_LRU_SORT will be disabled.
  
-diff --git a/tools/testing/selftests/damon/sysfs_damos_walk_kdamond_exit_race.py b/tools/testing/selftests/damon/sysfs_damos_walk_kdamond_exit_race.py
-new file mode 100755
-index 000000000000..8e8006d63926
---- /dev/null
-+++ b/tools/testing/selftests/damon/sysfs_damos_walk_kdamond_exit_race.py
-@@ -0,0 +1,82 @@
-+#!/usr/bin/env python3
-+# SPDX-License-Identifier: GPL-2.0
-+#
-+# Regression test for damos_walk() vs kdamond_fn() exit race.
-+#
-+# When kdamond_fn() finishes its main loop, it cancels remaining damos_walk()
-+# requests and unsets damon_ctx->kdamond. If damos_walk() is called right
-+# after cancellation but before kdamond pointer unset, it could wait forever
-+# for handling that never comes, causing a deadlock.
-+#
-+# This test verifies the fix by rapidly calling update_schemes_tried_regions
-+# while kdamond is naturally terminating (monitored process exits).
-+# Without the fix (commit 33c3f6c2b48c), this would hang indefinitely.
-+
-+import os
-+import subprocess
-+import threading
-+import time
-+import _damon_sysfs
-+
-+def call_update(kdamond, result):
-+    err = kdamond.update_schemes_tried_regions()
-+    result['err'] = err
-+    result['done'] = True
-+
-+def main():
-+    proc = subprocess.Popen(['sleep', '0.3'])
-+
-+    kdamonds = _damon_sysfs.Kdamonds([_damon_sysfs.Kdamond(
-+            contexts=[_damon_sysfs.DamonCtx(
-+                ops='vaddr',
-+                targets=[_damon_sysfs.DamonTarget(pid=proc.pid)],
-+                schemes=[_damon_sysfs.Damos(
-+                    action='stat',
-+                    access_pattern=_damon_sysfs.DamosAccessPattern(
-+                        nr_accesses=[0, 200]))]
-+                )]
-+            )])
-+
-+    err = kdamonds.start()
-+    if err is not None:
-+        print('kdamond start failed: %s' % err)
-+        exit(1)
-+
-+    # Wait for monitored process to die naturally
-+    proc.wait()
-+
-+    # Rapidly call damos_walk() while kdamond is exiting
-+    # Use a thread with real timeout to detect kernel-level deadlock
-+    deadline = time.time() + 5
-+    while time.time() < deadline:
-+        result = {'done': False, 'err': None}
-+        t = threading.Thread(target=call_update,
-+                             args=(kdamonds.kdamonds[0], result))
-+        t.daemon = True
-+        t.start()
-+        t.join(timeout=5)
-+
-+        if not result['done']:
-+            print('FAIL: update_schemes_tried_regions hung - '
-+                  'possible damos_walk/kdamond exit race deadlock')
-+            exit(1)
-+
-+        if result['err'] is not None:
-+            # kdamond stopped cleanly - expected
-+            break
-+
-+        # Check kdamond state via sysfs using dynamic path
-+        state_path = os.path.join(
-+                kdamonds.kdamonds[0].sysfs_dir(), 'state')
-+        try:
-+            with open(state_path) as f:
-+                if f.read().strip() == 'off':
-+                    break
-+        except OSError as e:
-+            print('failed to read kdamond state: %s' % e)
-+            exit(1)
-+
-+    print('PASS: damos_walk() vs kdamond exit race not triggered')
-+
-+if __name__ == '__main__':
-+    main()
+diff --git a/Documentation/admin-guide/mm/damon/reclaim.rst b/Documentation/admin-guide/mm/damon/reclaim.rst
+index d7a0225b4950..01a34c215b66 100644
+--- a/Documentation/admin-guide/mm/damon/reclaim.rst
++++ b/Documentation/admin-guide/mm/damon/reclaim.rst
+@@ -67,7 +67,7 @@ Make DAMON_RECLAIM reads the input parameters again, except ``enabled``.
+ 
+ Input parameters that updated while DAMON_RECLAIM is running are not applied
+ by default.  Once this parameter is set as ``Y``, DAMON_RECLAIM reads values
+-of parametrs except ``enabled`` again.  Once the re-reading is done, this
++of parameters except ``enabled`` again.  Once the re-reading is done, this
+ parameter is set as ``N``.  If invalid parameters are found while the
+ re-reading, DAMON_RECLAIM will be disabled.
+ 
+diff --git a/Documentation/admin-guide/mm/transhuge.rst b/Documentation/admin-guide/mm/transhuge.rst
+index 5fbc3d89bb07..5d08a2a1c15f 100644
+--- a/Documentation/admin-guide/mm/transhuge.rst
++++ b/Documentation/admin-guide/mm/transhuge.rst
+@@ -210,7 +210,7 @@ PMD-mappable transparent hugepage::
+ 	cat /sys/kernel/mm/transparent_hugepage/hpage_pmd_size
+ 
+ All THPs at fault and collapse time will be added to _deferred_list,
+-and will therefore be split under memory presure if they are considered
++and will therefore be split under memory pressure if they are considered
+ "underused". A THP is underused if the number of zero-filled pages in
+ the THP is above max_ptes_none (see below). It is possible to disable
+ this behaviour by writing 0 to shrink_underused, and enable it by writing
 -- 
-2.34.1
+2.54.0
 
