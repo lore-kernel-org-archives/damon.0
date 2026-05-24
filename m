@@ -1,168 +1,135 @@
-Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6EA633D51A
-	for <damon@lists.linux.dev>; Sun, 24 May 2026 09:19:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F9DF1B4138
+	for <damon@lists.linux.dev>; Sun, 24 May 2026 09:37:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779614376; cv=none; b=Q4LDMtkjINTUJr0T/y26yL9qiU0L6dj+rSpmEJ1nYTbF5zNX7FHShaN7VOSLi3EYQsW96S/2jR9BId6bF5Yxk90399vt6tuQz/KZN+83a67j5fqzcS5OpohM4JaaKbhzp9vflUQOQTuR1S2+pF+BMPVUNbxXjK92kg8m0NhTaTM=
+	t=1779615427; cv=none; b=gcOJoiryvTY/+erDiDJa3jgJ99Uivxil66PuyVYvESwMMdatArMUu8De6lgYf3tnoHq8y14w7t0oGRs89v+/Db/H/Im2XGG2t2nyqXBXJEuiamHJFfwXa/SqUDwyjNgQVcIeBFSL8SINc89x0IzrHL29G5/fk+caT5RP6Ef0WAs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779614376; c=relaxed/simple;
-	bh=ojS7YMq9ny+6I7+wp1Uy03uzolXMYk7P5/Iw5lgboC8=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=IkXCauuSjWBvvwRh9zEwNzg+jCyk+sSml4U+H/0PfXcf8rVhBdPJA51ls+vTkiEjolNaaSQxQOtpsWwmsQMu61cD+DqOok5dP68FL0FNqjosb1Wp0m5DH4pCLgHsvwiDtd3ng4QXSft9DfT9ZHgVfK7SaYLzigEIBqiaewzdS7M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=qnRdK+3h; arc=none smtp.client-ip=209.85.214.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1779615427; c=relaxed/simple;
+	bh=zR2gG2kAN+P75LCoMIoi7mUeub9m/DorXPhmEAEqL/s=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=sE9FoPo9xmUyi01l5LZENNiTB/9fbVMnkYlNrudTGEPkGs+yPxGMWEmju2BGbm4tU31soqG0uuVhCRd6pCWuytCmgNvedOOGd2y4VlPy+ejMDvWEX1XkJsbOHOwWZbhhU4Veulgyl6AOz19TVx6c1QmZtd6ZxTAnx4M3ygSn8po=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HPYVPBDQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qnRdK+3h"
-Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-2b9a1896db5so15234155ad.3
-        for <damon@lists.linux.dev>; Sun, 24 May 2026 02:19:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1779614374; x=1780219174; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=rzFLSXviPLq0I/Xz70YuBFZ/FEtYhu4eVtx71crsM3c=;
-        b=qnRdK+3hFGFwIDRUsfGQMDzJAi5r1uAsTpQ8sy304FOjyqxeXtPEztIP0Y9vghhTX0
-         gRL5vQSxNVj7MIyc2+x1om62TaazpC75XXi9r2AoeE4UkxaMggydWQYM++c1Av7OhbNu
-         eMEyCit6jv1fWxGaYCDgeh5joUXzqSJcFF1hRVRn0e2CXK3yZSN0AQlPwBSeoG6BJCLP
-         gf6UfnpKauJw/SVcMiRrfhR1bqGgBFXBexMSbpwnwdRTukYe+IgNTwHpfxe5bkqrUoLF
-         ec7nOFjdAGQhUavXdvlcfLkYUANhqp4MGjL/EZsKB3kdocs1uKUt91naLWHzx0dUKRns
-         lFtw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779614374; x=1780219174;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=rzFLSXviPLq0I/Xz70YuBFZ/FEtYhu4eVtx71crsM3c=;
-        b=R5EcuLU9ahlI5thW9XXaeNHJmbHZFlYev3L4AVLmKnNhUSoKprVuRKuuir8f2qWWXK
-         hX4/lacsQ/GTJDQE5PeydDJN/878v6tVXptYO9O7pw3lXna605cJSj0uA/RyPrIaxhTQ
-         ePkVNUgZYxC9yfA9avQK+RxINU2G9/To9BAwxkDuTmsddwubF9haQh6Gi5xNFdqIdkxp
-         qPg3G8bS/27WFoV7aEGc6DF2qN3FKMQs/t8fSL0gSuUkdmeCdNLgh53x0FTKJlEmyw0p
-         A2gIXKa4wRsvu+2n7J+X0F1TpJxbiZ8/4mV/H774hlLmod/p19q9mTJz2V+9G/T5ZHMp
-         oKCA==
-X-Forwarded-Encrypted: i=1; AFNElJ/jLwm/bX/h5fbnfIKT7dMHgHc2FwEMj/1i9rNd5jhjyJ7ephY5VSOhKdsP5LjOKfAFGXAbpA==@lists.linux.dev
-X-Gm-Message-State: AOJu0YwgSZQ0fiWohBmtYlPb7bpzNC+fmkfwIE92Rp6aSd4cGYsueBBu
-	vwK402VIzV9DxsTQJ1b7RfSSgpwcm7F6mbVZJn2YmCW2dm6C/c+Hj9Jz
-X-Gm-Gg: Acq92OGZku0dgoujwycYC8BX3av5V06PBGThMurKAQkPc9dzvZJdC31DMkF8dTbqjHO
-	qcqi19ZY1+542wSI7FNtsGAJdeg5VYdjV1GytDrYecNH0B45Bt3McoopKLOpaPmlJvOiD9dpcIh
-	3nSLcVJquitLx2+eh2IIQy+Pmg4IvDUREi+irDNkEwokdeXCW29tOuCM4LJWtGjWT0XpwnTqOIW
-	i2HwIi6PC4C0aVmwXHHs4Z2rcHbue/xVm6y2yWIqSgmONdXeQNhe66fbus2dHEClF1mNyltfNRO
-	OjXWWCNXGojwwfxHA78B8o3L9AztnMS1kjbIRdZAQTwwQUH8IhCZ7GeuozDietaYc67JonEmlbG
-	gCM0a1/yabytdrl/khaXmW9sdIs3dmvQfTLWCiAALuaEQ+vFZhCjjfM1w3304Y2LrpII4r3hDgH
-	WuVaG2KIyOmFH7xCbj6cerMebD/PoYEHBz0vQwHEKEyrV/wprY1qTvRgoef8w=
-X-Received: by 2002:a17:902:ea01:b0:2bc:f1da:4c09 with SMTP id d9443c01a7336-2beb037fb81mr59515795ad.2.1779614373960;
-        Sun, 24 May 2026 02:19:33 -0700 (PDT)
-Received: from localhost.localdomain ([60.243.191.184])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2beb58c69a0sm62023705ad.59.2026.05.24.02.19.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 24 May 2026 02:19:33 -0700 (PDT)
-From: Sailesh Nandanavanam <saileshnandanavanam@gmail.com>
-To: sj@kernel.org
-Cc: shuah@kernel.org,
-	damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	linux-kselftest@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Sailesh Nandanavanam <saileshnandanavanam@gmail.com>
-Subject: [PATCH] selftests/damon: add regression test for damos_walk() vs kdamond exit race
-Date: Sun, 24 May 2026 14:48:12 +0530
-Message-Id: <20260524091812.35283-1-saileshnandanavanam@gmail.com>
-X-Mailer: git-send-email 2.34.1
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HPYVPBDQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FCCE1F000E9;
+	Sun, 24 May 2026 09:37:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1779615426;
+	bh=lEL0EoPWntYhW6ikF1eKDcixWHm7cLQfAGCS3pU4M1I=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=HPYVPBDQy6uxilByyrUo3MUssuuoHRBz5GOEHMmpki3HraOMRJYcOamp5REJqH2jG
+	 YMONwUxjhfGYAbEhjQLfwuPTSBPyt/hGaSrTxtVLZelIadeP63sqRA+YeO69RA//Ju
+	 J0NVwCE3ESiGFuSRRVt8oL8fnaYJrDYGpqZicSOF6GzV0Ebhf1h6R01OqhexF8M/uM
+	 X/bmpjLi9baE01ZKs+K41KjkhJDlLjZGhEs+sqlbrl+TA7NmLPx4atK4fpunDNsRvj
+	 AuZo02EN4SwCK9w81fCdlA7FFCZA7sryD8+oT+MpPB6jYR60uL2LcUMq/q3G9Koa59
+	 kvtis0SjR/ZtQ==
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH] selftests/damon: add regression test for damos_walk()
+ vs kdamond exit race
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "Sailesh Nandanavanam" <saileshnandanavanam@gmail.com>
+Cc: damon@lists.linux.dev
+In-Reply-To: <20260524091812.35283-1-saileshnandanavanam@gmail.com>
+References: <20260524091812.35283-1-saileshnandanavanam@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Sun, 24 May 2026 09:37:05 +0000
+Message-Id: <20260524093706.0FCCE1F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-Add a regression test that verifies damos_walk() does not deadlock
-when racing with kdamond_fn() exit.
+Thank you for your contribution! Sashiko AI review found 3 potential issue(=
+s) to consider:
+- [Medium] The script hardcodes the sysfs state path and suppresses excepti=
+ons with a bare `except` block, yielding a false pass if path resolution fa=
+ils.
+- [Medium] The script's custom timeout logic is incapable of detecting the =
+kernel deadlock because it blocks synchronously on the system call.
+- [Low] The new test script `sysfs_damos_walk_kdamond_exit_race.py` lacks e=
+xecute permissions.
+--
 
-When kdamond_fn() finishes its main loop, it cancels remaining
-damos_walk() requests and unsets damon_ctx->kdamond. Without the fix
-in commit 33c3f6c2b48c, damos_walk() could be called right after
-cancellation but before kdamond pointer unset, causing it to wait
-forever for handling that never comes.
+commit c1a389c100306b9715b021c992e2707ecc7ffc39
+Author: Sailesh Nandanavanam <saileshnandanavanam@gmail.com>
 
-The test starts kdamond monitoring a short-lived process, waits for
-the process to exit naturally triggering kdamond termination, then
-rapidly calls update_schemes_tried_regions to hit the race window.
-Without the fix this would hang indefinitely.
+selftests/damon: add regression test for damos_walk() vs kdamond exit race
+   =20
+This commit adds a regression test to verify that damos_walk() does not
+deadlock when racing with the kdamond_fn() exit path. It starts kdamond
+monitoring a short-lived process, waits for termination, and then rapidly
+calls update_schemes_tried_regions to hit the race window.
 
-Fixes: 33c3f6c2b48c ("mm/damon/core: fix damos_walk() vs kdamond_fn() exit race")
-Signed-off-by: Sailesh Nandanavanam <saileshnandanavanam@gmail.com>
----
- tools/testing/selftests/damon/Makefile        |  1 +
- .../sysfs_damos_walk_kdamond_exit_race.py     | 47 +++++++++++++++++++
- 2 files changed, 48 insertions(+)
- create mode 100644 tools/testing/selftests/damon/sysfs_damos_walk_kdamond_exit_race.py
+> diff --git a/tools/testing/selftests/damon/sysfs_damos_walk_kdamond_exit_=
+race.py b/tools/testing/selftests/damon/sysfs_damos_walk_kdamond_exit_race.=
+py
+> new file mode 100644
+> index 0000000000000..9b9d66a23f512
+> --- /dev/null
+> +++ b/tools/testing/selftests/damon/sysfs_damos_walk_kdamond_exit_race.py
 
-diff --git a/tools/testing/selftests/damon/Makefile b/tools/testing/selftests/damon/Makefile
-index 2180c328a825..60c83d6c318e 100644
---- a/tools/testing/selftests/damon/Makefile
-+++ b/tools/testing/selftests/damon/Makefile
-@@ -20,6 +20,7 @@ TEST_PROGS += sysfs_update_removed_scheme_dir.sh
- TEST_PROGS += sysfs_update_schemes_tried_regions_hang.py
- TEST_PROGS += sysfs_memcg_path_leak.sh
- TEST_PROGS += sysfs_no_op_commit_break.py
-+TEST_PROGS += sysfs_damos_walk_kdamond_exit_race.py
- 
- EXTRA_CLEAN = __pycache__
- 
-diff --git a/tools/testing/selftests/damon/sysfs_damos_walk_kdamond_exit_race.py b/tools/testing/selftests/damon/sysfs_damos_walk_kdamond_exit_race.py
-new file mode 100644
-index 000000000000..9b9d66a23f51
---- /dev/null
-+++ b/tools/testing/selftests/damon/sysfs_damos_walk_kdamond_exit_race.py
-@@ -0,0 +1,47 @@
-+#!/usr/bin/env python3
-+# SPDX-License-Identifier: GPL-2.0
-+#
-+# Regression test for damos_walk() vs kdamond_fn() exit race.
-+import subprocess
-+import time
-+import _damon_sysfs
-+def main():
-+    proc = subprocess.Popen(['sleep', '0.3'])
-+    kdamonds = _damon_sysfs.Kdamonds([_damon_sysfs.Kdamond(
-+            contexts=[_damon_sysfs.DamonCtx(
-+                ops='vaddr',
-+                targets=[_damon_sysfs.DamonTarget(pid=proc.pid)],
-+                schemes=[_damon_sysfs.Damos(
-+                    action='stat',
-+                    access_pattern=_damon_sysfs.DamosAccessPattern(
-+                        nr_accesses=[0, 200]))]
-+                )]
-+            )])
-+    err = kdamonds.start()
-+    if err is not None:
-+        print('kdamond start failed: %s' % err)
-+        exit(1)
-+    proc.wait()
-+    completed = False
-+    timeout = time.time() + 5
-+    while time.time() < timeout:
-+        err = kdamonds.kdamonds[0].update_schemes_tried_regions()
-+        if err is not None:
-+            completed = True
-+            break
-+        try:
-+            with open('/sys/kernel/mm/damon/admin/kdamonds/0/state') as f:
-+                state = f.read().strip()
-+            if state == 'off':
-+                completed = True
-+                break
-+        except:
-+            completed = True
-+            break
-+    if not completed:
-+        print('FAIL: test timed out - possible damos_walk/kdamond exit race deadlock')
-+        kdamonds.stop()
-+        exit(1)
-+    print('PASS: damos_walk() vs kdamond exit race not triggered')
-+if __name__ == '__main__':
-+    main()
--- 
-2.34.1
+[Severity: Low]
+Should this file be created with executable permissions (100755)? Since the
+script is added to TEST_PROGS in the Makefile, the kselftest framework expe=
+cts
+it to be directly executable. Without the execute bit, it can cause warnings
+during test execution.
 
+> @@ -0,0 +1,47 @@
+> +#!/usr/bin/env python3
+> +# SPDX-License-Identifier: GPL-2.0
+
+[ ... ]
+
+> +    proc.wait()
+> +    completed =3D False
+> +    timeout =3D time.time() + 5
+> +    while time.time() < timeout:
+> +        err =3D kdamonds.kdamonds[0].update_schemes_tried_regions()
+
+[Severity: Medium]
+If the kernel deadlock bug occurs, update_schemes_tried_regions() will
+trigger an uninterruptible wait in the kernel. Doesn't this mean the Python
+script will block indefinitely on the system call in the D state?
+
+Since the script is single-threaded, the while loop condition would never be
+re-evaluated, making the internal timeout and failure message unreachable.
+Instead, the test would just hang until the global kselftest timeout kills =
+it.
+
+> +        if err is not None:
+> +            completed =3D True
+> +            break
+> +        try:
+> +            with open('/sys/kernel/mm/damon/admin/kdamonds/0/state') as =
+f:
+> +                state =3D f.read().strip()
+> +            if state =3D=3D 'off':
+> +                completed =3D True
+> +                break
+> +        except:
+> +            completed =3D True
+> +            break
+
+[Severity: Medium]
+Is it safe to hardcode the sysfs state path and use a bare except block her=
+e?
+
+If sysfs is mounted at a non-standard location or another file error occurs,
+open() will raise an exception. The bare except block will catch this,
+incorrectly set completed to True, and exit the loop immediately. This resu=
+lts
+in a false pass on the very first iteration, completely missing the race
+window it is intended to test.=20
+
+Could the script dynamically resolve the path using the kdamonds object
+instead of suppressing all exceptions?
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260524091812.3528=
+3-1-saileshnandanavanam@gmail.com?part=3D1
