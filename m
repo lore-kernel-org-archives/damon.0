@@ -1,46 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F0CE386557;
-	Mon, 25 May 2026 16:38:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8005E3F4115;
+	Mon, 25 May 2026 16:48:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779727087; cv=none; b=BYLuWD/6Mgs4I1iOo9je+ax28yWOvmuOhEo1RGHK/ljtKxKhiuCWLcErmwLlIMrffsRlvzk4sVcHkEzPGkK9y5JvU9HGXShW8eUzBvYIH4tj/fmDRrMeEfZ+20wqz9fOTbftpiW+VboyZwHISpaUyTVJZFT6xcCpxrdmupfAh9s=
+	t=1779727706; cv=none; b=s9hXXIomoqMkUEUYoTAsKDCs4x51AGFATMRrA3RQCVufYszYOn+kKQfRXq4A1k5IvAyxGUrTHOZ/zqyqIyh9qy7uY4f3c04pQqcSjz4hmJRoo8CFGkPdd5HDwOI+6xqldl60uhLFzx8TR4S8P1wRxkK0kSPiwOE04v+6Kis5A6M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779727087; c=relaxed/simple;
-	bh=mNYDnJRsQei1JFmMRGhg9TEdOq/sijoYRD6l8Ki4hqo=;
+	s=arc-20240116; t=1779727706; c=relaxed/simple;
+	bh=af6+gZaCDSq7EKDjZOeLsSr2suEvIuKwR/1pPwYTH3w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=DDW6HuIhcUmK4ZfEXcL4U6nWoPDI/pidXMVuZ0K59lHSgR2iMmwBeD9KD7QHukgCuyP9jnUFP/AcfGs5WrpPCH8KCKtE1A0yeUGANE+qsqxCpalR1kZP/S0WWNxrYovanHXcAieq59AtcpYn2OtZUXLPAI6Pt0u6G8qj9CCGrKo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=faQpIRSx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EJMD3nHJI9VGHO4tWDM+aG9paXUMm8pRIGsrqtL69hnXOQ+KJiUZpdfJvOChEX8L+TlxW2B9TjSUNoydsMpsVP5A+WV885sjdWm86sTswjDKt1RCNjzK0nsiq4381TeIRWTTPjLNf3T/m3N9VmuQ7qk9KXwxu1WvNHGhIvye1k8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AYW7aLWw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="faQpIRSx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D4461F000E9;
-	Mon, 25 May 2026 16:38:05 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AYW7aLWw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03C321F000E9;
+	Mon, 25 May 2026 16:48:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1779727085;
-	bh=Q5U54gS45JuVd2BwEnLbeDvEWQ/J9bpKUA7tXloYeaY=;
+	s=k20260515; t=1779727705;
+	bh=X8+rOuAsw06eyL6NJoqLksg0G4h6H1UZY/EYUW4dvjM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=faQpIRSxTi5bRAhXgEFBkSGcCpMWmoEBQs3V+kx85/StV2fFbEp+jG3cmfppSnCPO
-	 wiJDLxDLp7tie7/z5tNc2xuSfsVnKNn+z5VoegRJ1mNo0/YY//ayiIDiAMZU9vX76k
-	 sytkrbIqHzhiENqIGnkBURa0qlkEsRe2oXEK/VzXyJL5Ud5w+GQgpQBNT9FIrdDxZI
-	 Tgecy2eUp9mN58jnbzLIq3M1lXFoIvt2md9QOyevvLgGuceeJUNJaa1IEVr7Oexwiu
-	 qc+9me8FnL4jWSf2hlJXUTOBv1wqF/Ozei2UcipFUy9c2PUx4xSkNh7mE7RxV/8hKa
-	 RbKWPmi9Z27ug==
+	b=AYW7aLWw9P8M36AJuw5en93j8uTOmjGw8dW+zJWYXUxbA2d2yDHupGk7l1/L0HRbr
+	 oMv1bauOvKGJw9Du/krlKcu4OysJEimCSPZ/L+6fIVs6AAjj1281k7BjxXMdp0UgdJ
+	 ygrF/WvixQqhNUyvQpOcDtrNx+C2wJ5PCJ9mVAgM6wyfwnFsKg5byVkPEudyV0ADwO
+	 8kJGAoJ7VyCW1HRjPTMvGsK17e+MiXYPraj9G4SXmaMVPtT9Usl1tcfYGmSv8qJCCk
+	 In3ZvvkRInC1vLLTb38QK3r4Ob3gDeK7oVyFEPSLrOgqQZ0I2FWiRqWsJH+3UM7rNb
+	 Z4wDIe5gBs9vQ==
 From: SeongJae Park <sj@kernel.org>
-To: Jiayuan Chen <jiayuan.chen@linux.dev>
+To: Gutierrez Asier <gutierrez.asier@huawei-partners.com>
 Cc: SeongJae Park <sj@kernel.org>,
+	artem.kuzin@huawei.com,
+	stepanov.anatoly@huawei.com,
+	wangkefeng.wang@huawei.com,
+	yanquanmin1@huawei.com,
+	zuoze1@huawei.com,
 	damon@lists.linux.dev,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Shu Anzai <shu17az@gmail.com>,
-	Jiayuan Chen <jiayuan.chen@shopee.com>,
-	Quanmin Yan <yanquanmin1@huawei.com>,
+	akpm@linux-foundation.org,
 	linux-mm@kvack.org,
 	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 0/2] mm/damon/core: detect internal variation above max_nr_regions/2
-Date: Mon, 25 May 2026 09:38:00 -0700
-Message-ID: <20260525163802.8667-1-sj@kernel.org>
+Subject: Re: [RFC PATCH v2 0/4] mm/damon: Introduce a huge page collapsing mechanism using auto tuning
+Date: Mon, 25 May 2026 09:48:16 -0700
+Message-ID: <20260525164816.8864-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <9cc396ae-da42-48ad-97d7-213208884ee5@linux.dev>
+In-Reply-To: <a746583d-af0e-401a-b1f8-d4a0e60d5cc3@huawei-partners.com>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -48,117 +50,46 @@ List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On Mon, 25 May 2026 16:09:42 +0800 Jiayuan Chen <jiayuan.chen@linux.dev> wrote:
+On Mon, 25 May 2026 16:53:17 +0300 Gutierrez Asier <gutierrez.asier@huawei-partners.com> wrote:
 
+> Hi SJ,
 > 
-> On 5/23/26 9:43 AM, SeongJae Park wrote:
-> > On Fri, 22 May 2026 23:11:47 +0800 Jiayuan Chen <jiayuan.chen@linux.dev> wrote:
-> >
-> >> Hi, SJ
-> >>
-> >> On 5/22/26 10:42 AM, SeongJae Park wrote:
-> >>> On Thu, 21 May 2026 23:07:11 +0800 Jiayuan Chen <jiayuan.chen@linux.dev> wrote:
-> >>>
-> >>>> Hi SJ,
-> >>>>
-> >>>> Thanks for taking a look.  Quick replies inline.
-> >>>>
-> >>>>
-> >>>> On 5/21/26 10:30 PM, SeongJae Park wrote:
-> >>>>> Hello Jiayuan,
-> >>>>>
-> >>>>> On Thu, 21 May 2026 12:52:22 +0800 Jiayuan Chen <jiayuan.chen@linux.dev> wrote:
-> > [...]
-> >>>> counter was just for convenience -- easier to cat a sysfs file than to wire
-> >>>>
-> >>>> up tracing.  Even the tracepoint covers it, It's cost to much for
-> >>>> Grafana to just get
-> >>>>
-> >>>> a metrics by tracepoint.
-> > Out of the scope of this patch series, but I'm interested in how you connect
-> > DAMON outputs to Grafana.  I believe that could be useful for many people who
-> > willing to get some fleet wide access pattern.  Maybe worthy to present to
-> > wider audiences, like System monitoring microconf [1] at LPC?
-> 
-> Honestly it's nothing fancy -- we just export nr_regions as a Prometheus 
-> metric because it's a
-> 
-> performance-relevant signal.
-> 
-> 
-> Vsualizing access patterns is a real pain point.  I have a small 
-> AI-written script that pulls region
-> 
-> data and turns it into a webpage I can open in the browser.  It's not 
-> live like Grafana -- I just run it when I
-> 
-> want to look at the data.  I don't think Grafana has a component for 
-> this kind of view anyway.
+> On 5/23/2026 8:17 PM, SeongJae Park wrote:
+> > On Fri, 22 May 2026 14:55:14 +0000 <gutierrez.asier@huawei-partners.com> wrote:
+[...]
+> >> A new module is introduced to demonstrate the use of huge pages
+> >> collapse autotuning. The goal is to collapse hot regions of a given
+> >> process into huge pages. The module launches a kdamond thread for a 
+> >> certain task provided by the user through monitored_pid module argument.
+> >> Hugepage goal autotuning will automatically adjust the aggressiveness
+> >> of hot region collapses.
+> > 
+> > Having a module for the demonstration purpose sounds good.  But, for the
+> > demonstration purpose, as I previousoly commented, making it as a sample module
+> > (put under /samples/damon/) or just drop when you drop RFC tag would be better.
+> > 
+> > Let me know if this module is aimed to be as is even after you drop RFC tag.
+> I'll move it to samples. I'll keep the RFC in the next version still,
+> so I make sure that the major details are polished before I drop RFC tag.
 
-I agree it is difficult.  So, you are using DAMON for not data access pattern
-obserrvability but access-aware system operations like proactive reclaim of
-cold pages?
-
-For Grafana integration, I'm trying to use idle time percentiels as the "format
-for fleet-wide aggregation".  My previous talk [1] at LPC may give you more
-details if you are interested in.
+Makes sense.  In the case, I think we can further reduce the number of
+parameters of the sample module and make the code simpler.
 
 [...]
-> > So I was thinking below as a suggestion.
-> >
-> > The basic idea is, choosing the number of regions to split based on the
-> > remaining budget (max_nr_regions - nr_regions).  I'd prefer making this simple
-> > and lightweight.  So suggesting something like below.
-> >
-> > void kdamond_split_regions()
-> > {
-> > 	static unsigned char rndseed;
-> >
-> > 	budget = max_nr_regions - current_nr_regions()
-> > 	if (budget > max_nr_regions / 2)
-> > 		split_step = 1
-> > 	elif (budget > max_nr_regions / 3)
-> > 		split_step = 2
-> > 	...
-> >
-> > 	idx = rndseed++ % split_step;
-> > 	for (; idx < current_nr_regions(), idx += split_step)
-> > 		split_region(nth_region(idx));
-> > }
-> >
-> > I think this might be similar to your downstream change, but what do you think,
-> > Jiayuan?
-> 
-> 
-> Yes, this is close to what we do downstream.  Roughly:
-> 
->    void kdamond_split_regions()
->    {
->        budget = max_nr_regions - current_nr_regions()
->        if (budget == 0)
->            return
-> 
->        split_step = current_nr_regions() / budget
-> 
->        for_each_region(r)
->            if (get_random_u32_below(split_step) == 0)
->                split_region(r)
->    }
-> 
-> And I like your version better -- the step formula (max/budget) leaves
-> a margin so it approaches max more smoothly. I'll try your approach first
-> 
-> and test it in our env.
+> >> TODO
+> >> ====
+> >> - Support page splitting for cold hugepages.
+> > 
+> > Sounds good!  By using two DAMOS schemes that doing collapsing and splitting, I
+> > think we can make more complete access-aware THP system.
+> My thought was to add cold page splitting as a separate RFC in the future.
 
-Sounds good!  Please feel free to let me know if any help is needed :)
-
-[...]
-
-[1] https://lpc.events/event/19/contributions/2075/
+Makes sense :)
 
 
 Thanks,
 SJ
+
+[...]
