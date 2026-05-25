@@ -1,218 +1,275 @@
-Received: from mail-qk1-f172.google.com (mail-qk1-f172.google.com [209.85.222.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out-186.mta1.migadu.com (out-186.mta1.migadu.com [95.215.58.186])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6192954723
-	for <damon@lists.linux.dev>; Mon, 25 May 2026 02:03:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B9D93DB96B
+	for <damon@lists.linux.dev>; Mon, 25 May 2026 08:09:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.186
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779674600; cv=none; b=Isj6S6Trch4xK7hgP8BIBWZcWbZScf3vFUeUiAzPA8ofYTDTV8p6Q9pblit64bpJWHeBT/VQh/NAQU/UDDL4odNNlOCDPXZ72Tgjs8GF9acMb6f+1xuRr3rXE7us05PXqcHCE41p0e+JqeTmLUJxzcsu+ReTXa5hn9irRtkEFxw=
+	t=1779696597; cv=none; b=ULbsLcXNzMpv3ZqPxBkFb5xBaiWLPO9RxJLAsQ2QnAmbEW1ko/AyHFJCtzAhRnySOmH4DTd1XkdvpmL3HvXHIKg6c54lvLCXFaCOg6nxK/GmS+m2vGxjIkXnlMvPADBhwiuyncbcmA3k6aPayYJu69IEbC4zIAmT4TPUNvfdb00=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779674600; c=relaxed/simple;
-	bh=tvbe4seE81VJXCS/sV64iAFa1bGbqBGMfj6eA3O0mQM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Bgu53ohwlxlzfJgPNgzPxMn9oj1lsyeVEjdEQhVPkVdMXbB0MxdeWUwGkKh33ejnI8xiBQjK0QR/rAyH5bgybS5pGyUxxG3RUAh9kt6NaVBXxoi9xWnhfYXicc661t6EZgMykKnOGeujjpd8Qu1TshKHhqGmFdNVBVCgNLBIDAQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gourry.net; spf=pass smtp.mailfrom=gourry.net; dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.b=DPhh/AfO; arc=none smtp.client-ip=209.85.222.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gourry.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gourry.net
+	s=arc-20240116; t=1779696597; c=relaxed/simple;
+	bh=Zh+F/Dvi7hqNMiYRpK6WtHeCQpYOBCTpLQnPvTwmLRg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=TltfdlNSRLjH4NjrW/rEIFmMGSuAmcad6H/V2bssmEwqpbWorpohU7OObZo80FpmpLVqNVdSWBnvyG/rc0OoP3kGrA9oWHr0D3IiG8XiTxmia6iPzqQgKefYQxAYw7GWwqfKz1ex8xWidixcWK39I6lsbWQs3iLYU5iDwL2+w3Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=JFU6eKPR; arc=none smtp.client-ip=95.215.58.186
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.b="DPhh/AfO"
-Received: by mail-qk1-f172.google.com with SMTP id af79cd13be357-914bf8abeaeso196540285a.0
-        for <damon@lists.linux.dev>; Sun, 24 May 2026 19:03:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gourry.net; s=google; t=1779674597; x=1780279397; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=a1dR+qUQ11esis+j6Iq3N8urMnTyCI4LYg4f+Ph15u8=;
-        b=DPhh/AfO3xoCu0BmsYmPUSeTzD+6WddIJdiYd+OyACSDMnQAUiUL5KJ4EU+7s23Pf7
-         OcOiVDyvghf2WRZne5/rOKhZL+rFhPk7tzrpSg/M0DFhrNydvr5lbjVln00pkoa4mESt
-         mMROqUE+7+1h1+nYtYtTZIhlc9q7oqNpGpnpGghgOvFLeifeR48A0a5wFqehF9v0nRY/
-         CmbPXFh0mmG3OqD++ziIdF8MCRZIG9jzE1VKuBtCb8uVPxwFNa3ML8b7YQSuddBcnq+f
-         lJ7yHAynoQBmJVyrCVE/apTtI6IaudlKXNINp0SKc3e19ezm17Mx7h79qe8K527xZobU
-         TqyA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779674597; x=1780279397;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=a1dR+qUQ11esis+j6Iq3N8urMnTyCI4LYg4f+Ph15u8=;
-        b=hCEZgd1lO+KSRwUQ06WXLAx5qJTeECrNXq366bQeKstO+JGgoo173z9zXiyVSTmvX9
-         /r5qLJvWhKWwA+Gp1oQ/D7vl7IG6nBj8XzEjZeZkcHmfxa7yYyIH0XLip23l4UJAm9hI
-         SY2PrbOXAy7YmYuBQ0wNSEuVnfB+Ex2dK7R9wq1WkIPB4CEfWTsVQ+rC1uHF1RuS3BKQ
-         gV5GvGZmprxI0WUznfLp8AkuVPIepE598iCxdRSbZGddkyRFROPLfdt6W5TqoBLDSbh8
-         lEv/z5cLbk5Wbw3gSIr1AMCeK5RvlxmDy/8IkNhXv6qOj5uNB/wznk5Q2mZxchIJ70yy
-         hHBw==
-X-Forwarded-Encrypted: i=1; AFNElJ/YCjKdrZvyZpmWZdsMfpbt4mee2LG3y7B7Fs6wvl2wmzaM5cuYUNvF3SyPS5SzWTfa/K1Eew==@lists.linux.dev
-X-Gm-Message-State: AOJu0YxutXJTffzGIu5pzHIBklsUWlE5Oz5viR51gZBeitzUxP48DMgL
-	TGQTKK4rRGZ3rI+zLSLHZphIm90Kci2b7Lb6DSrgq3ORvAVR/WqMGRSDXyPwupbO1cY=
-X-Gm-Gg: Acq92OFqNgWyX7cCk8uiTM/xT7Fi87qY1mhzX1WdBhMsJPrPz6g0NhEtOlXuSLc1vas
-	r7MfTKAqvZDtEFg941DlSE5BhL6226GrjsTypLJn5T+09JbkQ5cBCAPrqi0vC1DFWKTtqb1YEXu
-	v+2fuJArqZFoY0mZyLaxXH7tMtrUOm9C7mFiw/i5sp9dx+3/KU2Pp7HFmSMKhmH9PGe/2XdyBo2
-	n2YNonVtg1HQ9g/4jjfFVU9ZLaWMhqT/rrTeCirwc0SKwMPPjHlYyMbpMzm1PZKUwrZZfpXjrJT
-	9ro2jPV9y0yw5QYFKosic/RYlH9DUYCmQbti1antMAeP6OJdwBNPtR6XKLdmnGHj1h7mwuqSRYj
-	sodED+PqjO0iKL6lBd+7NIcn8hY2ec0rTFkAj/s9rXVPRowKkAZpllLOFwD/HlDEALvhS27WFva
-	4RwakdxKzo7eKyyTr34rfrEzIWfVmwREOc5713BiLyiOTAB6WFi3Uz/E7NZ8RVaN4DR1gIZteqf
-	1Y0HpTACgX8
-X-Received: by 2002:a05:620a:372a:b0:914:c100:6a0f with SMTP id af79cd13be357-914c10072a4mr1391916385a.23.1779674597141;
-        Sun, 24 May 2026 19:03:17 -0700 (PDT)
-Received: from gourry-fedora-PF4VCD3F (pool-100-36-248-188.washdc.fios.verizon.net. [100.36.248.188])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-914bb8c8034sm892777285a.7.2026.05.24.19.03.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 24 May 2026 19:03:16 -0700 (PDT)
-Date: Sun, 24 May 2026 22:03:13 -0400
-From: Gregory Price <gourry@gourry.net>
-To: Arun George/Arun George <arun.george@samsung.com>
-Cc: lsf-pc@lists.linux-foundation.org, linux-kernel@vger.kernel.org,
-	linux-cxl@vger.kernel.org, cgroups@vger.kernel.org,
-	linux-mm@kvack.org, linux-trace-kernel@vger.kernel.org,
-	damon@lists.linux.dev, kernel-team@meta.com,
-	gregkh@linuxfoundation.org, rafael@kernel.org, dakr@kernel.org,
-	dave@stgolabs.net, dave.jiang@intel.com, alison.schofield@intel.com,
-	vishal.l.verma@intel.com, ira.weiny@intel.com, longman@redhat.com,
-	akpm@linux-foundation.org, david@kernel.org,
-	lorenzo.stoakes@oracle.com, Liam.Howlett@oracle.com, vbabka@suse.cz,
-	rppt@kernel.org, surenb@google.com, mhocko@suse.com,
-	osalvador@suse.de, ziy@nvidia.com, matthew.brost@intel.com,
-	joshua.hahnjy@gmail.com, rakie.kim@sk.com, byungchul@sk.com,
-	ying.huang@linux.alibaba.com, apopple@nvidia.com,
-	axelrasmussen@google.com, yuanchu@google.com, weixugc@google.com,
-	yury.norov@gmail.com, linux@rasmusvillemoes.dk, mhiramat@kernel.org,
-	mathieu.desnoyers@efficios.com, tj@kernel.org, hannes@cmpxchg.org,
-	mkoutny@suse.com, jackmanb@google.com, sj@kernel.org,
-	baolin.wang@linux.alibaba.com, npache@redhat.com,
-	ryan.roberts@arm.com, dev.jain@arm.com, baohua@kernel.org,
-	lance.yang@linux.dev, muchun.song@linux.dev, xu.xin16@zte.com.cn,
-	chengming.zhou@linux.dev, jannh@google.com, linmiaohe@huawei.com,
-	nao.horiguchi@gmail.com, pfalcato@suse.de, rientjes@google.com,
-	shakeel.butt@linux.dev, riel@surriel.com, harry.yoo@oracle.com,
-	cl@gentwo.org, roman.gushchin@linux.dev, chrisl@kernel.org,
-	kasong@tencent.com, shikemeng@huaweicloud.com, nphamcs@gmail.com,
-	bhe@redhat.com, zhengqi.arch@bytedance.com, terry.bowman@amd.com,
-	gost.dev@samsung.com, arungeorge05@gmail.com, cpgs@samsung.com
-Subject: Re: [LSF/MM/BPF TOPIC][RFC PATCH v4 00/27] Private Memory Nodes (w/
- Compressed RAM)
-Message-ID: <ahOt4Zw66ukww2On@gourry-fedora-PF4VCD3F>
-References: <20260222084842.1824063-1-gourry@gourry.net>
- <CGME20260427123800epcas5p1e1a2fed257091b31e2e6c3a7d1b0c2b0@epcas5p1.samsung.com>
- <1983025922.01777297382206.JavaMail.epsvc@epcpadp2new>
- <ae_i9IlIndumJWN3@gourry-fedora-PF4VCD3F>
- <1891546521.01777455002601.JavaMail.epsvc@epcpadp1new>
- <afIKxG5mJZE6QgpR@gourry-fedora-PF4VCD3F>
- <1891546521.01777901881625.JavaMail.epsvc@epcpadp2new>
- <afmgJcFUjQLYxkb5@gourry-fedora-PF4VCD3F>
- <1891546521.01779449881859.JavaMail.epsvc@epcpadp2new>
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="JFU6eKPR"
+Message-ID: <9cc396ae-da42-48ad-97d7-213208884ee5@linux.dev>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1779696593;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=hTqKsYwKaaxYN0lSg5PLMZrGDCSmNNUCPODxwx2NeGo=;
+	b=JFU6eKPRx2oxsT8Y/3a5OO+5MrgUWrWm+e7a7D+Fq3FSLTw6JCM2fbeLFJKErLr5hkwwq4
+	nrP+dP4Mhon3H20MTYm7jGkur7r+xHPycPfQueaBd0XttEgtasaYiPZFdhXzzEOPisLJDn
+	14xIC1g4WDNo8L0nAdYoUgmuoIBe1uE=
+Date: Mon, 25 May 2026 16:09:42 +0800
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1891546521.01779449881859.JavaMail.epsvc@epcpadp2new>
+Subject: Re: [PATCH 0/2] mm/damon/core: detect internal variation above
+ max_nr_regions/2
+To: SeongJae Park <sj@kernel.org>
+Cc: damon@lists.linux.dev, Andrew Morton <akpm@linux-foundation.org>,
+ Shu Anzai <shu17az@gmail.com>, Jiayuan Chen <jiayuan.chen@shopee.com>,
+ Quanmin Yan <yanquanmin1@huawei.com>, linux-mm@kvack.org,
+ linux-kernel@vger.kernel.org
+References: <20260523014303.86907-1-sj@kernel.org>
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Jiayuan Chen <jiayuan.chen@linux.dev>
+In-Reply-To: <20260523014303.86907-1-sj@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Migadu-Flow: FLOW_OUT
 
-On Fri, May 22, 2026 at 02:10:34PM +0530, Arun George/Arun George wrote:
-> Thanks.
-> 
-> On 05-05-2026 01:15 pm, Gregory Price wrote:
-> > In the scenario i'm talking about, a "write budget" is defined as a
-> > number of pages that are allows to be mapped writable in the page
-> > tables at any given time.
-> > Agree. I was also in the same context.
-> 
-> I am trying to bring the device perspective here, and would like to 
-> discuss a few corner cases and possible solutions.
-> 
-> As I see, solving the compressed memory problem statement has these 
-> aspects mainly:
-> 
-> 1) Allocation control: private/managed memory concept.
-> 2) Write control: write-protected PTEs, write-controlled use cases like 
-> ZSWAP
-> 3) Proactive reclaims: optional methods to ease back-pressure using 
-> memory shrinkers, ballooning, kswapd, promotion etc. These methods will 
-> be triggered based on notifications/interrupts from the device.
-> 
-> May be they are not enough to cover some corner cases for cram!
-> 
->   I believe that this thin-provisioned memory infra is susceptible to 
 
-I'm not understanding the "thin provisioned" terminology you're using
-here.  Can you help define what you mean by thin-provision in this case?
+On 5/23/26 9:43 AM, SeongJae Park wrote:
+> On Fri, 22 May 2026 23:11:47 +0800 Jiayuan Chen <jiayuan.chen@linux.dev> wrote:
+>
+>> Hi, SJ
+>>
+>> On 5/22/26 10:42 AM, SeongJae Park wrote:
+>>> On Thu, 21 May 2026 23:07:11 +0800 Jiayuan Chen <jiayuan.chen@linux.dev> wrote:
+>>>
+>>>> Hi SJ,
+>>>>
+>>>> Thanks for taking a look.  Quick replies inline.
+>>>>
+>>>>
+>>>> On 5/21/26 10:30 PM, SeongJae Park wrote:
+>>>>> Hello Jiayuan,
+>>>>>
+>>>>> On Thu, 21 May 2026 12:52:22 +0800 Jiayuan Chen <jiayuan.chen@linux.dev> wrote:
+> [...]
+>>>> counter was just for convenience -- easier to cat a sysfs file than to wire
+>>>>
+>>>> up tracing.  Even the tracepoint covers it, It's cost to much for
+>>>> Grafana to just get
+>>>>
+>>>> a metrics by tracepoint.
+> Out of the scope of this patch series, but I'm interested in how you connect
+> DAMON outputs to Grafana.  I believe that could be useful for many people who
+> willing to get some fleet wide access pattern.  Maybe worthy to present to
+> wider audiences, like System monitoring microconf [1] at LPC?
 
-> 'writes-above-media-capacity corner cases' (because of not handling 
-> device back-pressure notifications in time) whichever methods we use in 
-> the kernel. Even if we use write-controlled methods like ZSWAP and 
-> pro-active reclaims, there could be corner cases where the communication 
-> with the device could be broken and the write path is not aware of it 
-> immediately. Note that OCP spec [1] says the device should mark the 
-> memory location as 'poisoned' in 'over-capacity' writes.
-> 
+Honestly it's nothing fancy -- we just export nr_regions as a Prometheus 
+metric because it's a
 
-The intent is to use the low-watermark to prevent new allocations from
-occurring, and the write-controls prevent writing to the device without
-interposition.
+performance-relevant signal.
 
-With a sufficient watermark such that the interrupt is delivered within
-some number of microseconds, that should be perfectly fine to prevent
-poison from ever occurring at all.
 
-Since poison is only delivered *on read*, the system can go a long,
-long time before poison is discovered. From the end-user perspective,
-this poison is basically unacceptable.
+Vsualizing access patterns is a real pain point.  I have a small 
+AI-written script that pulls region
 
-So either we can prevent poison from always occurring, or the hardware
-is not viable to support in a scaled production.  
+data and turns it into a webpage I can open in the browser.  It's not 
+live like Grafana -- I just run it when I
 
-If you think a sufficiently conservative watermark + write-protection is
-insufficient to defend against poison, then please let me know why.
+want to look at the data.  I don't think Grafana has a component for 
+this kind of view anyway.
 
-> So I have the following proposals / options for this scenario.
-> 
->     Option 1: Poisoned data management - This is about accepting that 
-> poisoning of memory locations can happen in much more regular frequency 
-> here than regular memories and we need to figure out potential recovery 
-> mechanisms in host (not recovery of data; but recovery from the poison 
-> situation). But I guess folks will not be okay with it in general, and I 
-> am not aware of any workloads where data poisoning is tolerated (may be 
-> caching workloads?).
-> 
 
-Given option 1, I would never put such a device into my production
-environment.  The only reasonable action for handling poison is killing
-the software, as the data is functionally corrupted.
+>>> Makes sense.  And I think this deserves to be upstreamed.  Some minor
+>>> modifications might be needed to your current implementation, though.  Please
+>>> feel free to send a patch to start the discussion, if you want.
+>>
+>> On the sysfs counter -- agreed, same data as the tracepoint. I'll
+>> look into a suitable location.
+> Maybe /sys/.../schemes/<S>/tried_regions/nr_regions ?
 
->     Option 2 (preferred): Device assisted write budgeting - This is 
-> about a device aware / assisted mechanism for the write-controlled 
-> use-cases (Ex: ZSWAP) to know the 'safe number of  writes' that can be 
-> performed to the device (Or allows to be mapped writable in the page 
-> tables). This could be like a 'token bucket' algorithm, where the device 
-> provides a 'budget / set of tokens' to the host. And it need to be 
-> replenished periodically in the device communication code path; and if 
-> the host does not find the token, writes cannot go ahead.
-> 
+It sounds reasonable.
 
-When I say budgeting, I mean literally a budget of writable pages,
-entirely controlled by software (mm/cram.c or zswap.c or whatever).
 
-This has nothing to do with device operation / throttling / bandwidth
-budgets etc.  It is simply a proposal of an optimization that allows the
-user to say:  X out of Y possible pages may be mapped writable.
+>
+> [...]
+>>>> Yes, age == 0 means the region's access count drifted past the merge
+>>>> threshold in
+>>>> the last aggregation -- the strongest signal it just changed internally.
+>>>> Regions with age > 0 are stable; splitting them tends to oscillate (the next
+>>>> merge cycle pulls the halves back together and we waste the budget).
+>>> Thank you for confirming this.  Yes, that sounds good approach to me.  But
+>>> because this is a core behavior, I'd like to be careful more than usual.  I
+>>> will spend more time at thinking if I'm missing something, and if this is the
+>>> best approach.  If you have measurements that I asked above and can share, that
+>>> will also be helpful.
+>>
+>> We considered selecting regions randomly past max/2 (which is what our
+>> downstream tree does).
+> Interesting.  Actually I was thinking something like this as a suggestion.
+>
+> And I understand that you had to develop and carry your downstream patches
+> because DAMON was not supporting your use case.  I know carrying downstream
+> patches is painful.  Sorry for the inconvenience and thank you for making this
+> voice.  I'm here for users, and I will be happy to help you removing the
+> downstream change.
+Appreciated -- this is exactly why we want to upstream it !
 
-I don't think this would be part of an initial MVP for a compressed ram
-service (regardless of it's cram.c or zswap.c)
+>> Random selection converges to higher
+>> nr_regions faster.  We picked age == 0 for upstream because:
+>>
+>> - It's DAMON's own signal that the region's nr_accesses just
+>>     crossed the merge threshold -- i.e. the access pattern is
+>>     currently unstable.  Splitting an unstable region is more likely
+>>     to reveal new internal structure than splitting a stable region
+>>
+>> - It's selective by design, so it leans conservative on a core
+>>     code path.  In our tests it still reaches the effective
+>>     refinement we need (e.g. 160-180 at max_nr_regions = 200), just
+>>     more gradually than random selection would.
+>>
+>> We thought a selective, signal-based filte.
+> I understand that you concern about the increased number of regions, which
+> would make the overhead greater?  I think the concern and your filtering
+> approach make sense.  But the age threshold value feels like a heuristic that
+> may not be good for someone.  I also think age != 0 might not always be a good
+> signal for distinguising the regions.  I feel temptation to keep using the
+> power of the chaos (randomness) in the regions adjustment.
+>
+> So I was thinking below as a suggestion.
+>
+> The basic idea is, choosing the number of regions to split based on the
+> remaining budget (max_nr_regions - nr_regions).  I'd prefer making this simple
+> and lightweight.  So suggesting something like below.
+>
+> void kdamond_split_regions()
+> {
+> 	static unsigned char rndseed;
+>
+> 	budget = max_nr_regions - current_nr_regions()
+> 	if (budget > max_nr_regions / 2)
+> 		split_step = 1
+> 	elif (budget > max_nr_regions / 3)
+> 		split_step = 2
+> 	...
+>
+> 	idx = rndseed++ % split_step;
+> 	for (; idx < current_nr_regions(), idx += split_step)
+> 		split_region(nth_region(idx));
+> }
+>
+> I think this might be similar to your downstream change, but what do you think,
+> Jiayuan?
 
-> In short, the communication with the device has to be maintained to make 
-> pages mapped writable. For MVP, this could be a simple constraint of 
-> checking actual device capacity periodically to replenish write-budget 
-> for CRAM. For other users of private nodes (GPU memory?), this 
-> constraint may not be needed at all.
-> 
-> We are planning to send an RFC code which will fit into your CRAM infra 
-> to discuss this poison management approach further.
-> 
 
-I'll try to get a new version out this or next week, apologies for the
-lag on this series, I've had a number of disruptions and major movements
-on the patch set since I last updated it in February.
+Yes, this is close to what we do downstream.  Roughly:
 
-~Gregory
+   void kdamond_split_regions()
+   {
+       budget = max_nr_regions - current_nr_regions()
+       if (budget == 0)
+           return
+
+       split_step = current_nr_regions() / budget
+
+       for_each_region(r)
+           if (get_random_u32_below(split_step) == 0)
+               split_region(r)
+   }
+
+And I like your version better -- the step formula (max/budget) leaves
+a margin so it approaches max more smoothly. I'll try your approach first
+
+and test it in our env.
+
+
+> I'm also bit concerned about the fact that it would increase the number of
+> regions.  However, DAMON never promised the usual number of regions will be
+> around max_nr_regions / 2.  More technically speaking, the current behavior is
+> that once the number of regions exceeds max_nr_regions / 2, it only slowly
+> decrease.  Anyway, it is not a documented behavior.
+>
+> Yes, maybe some users rely on the current behavior and changing that could make
+> them sad.  But I haven't heard any voice from such users.  Meanwhile Jiayuan
+> and their friends are apparently being suffered by the behavior and making this
+> voice.
+>
+> And we repeatedly told DAMON does its random evolution based on "selfish
+> voices" from users.  So I think we should move based on the Jiayuan's "selfish
+> voice" here.  If it really makes someone sad and if they make thier different
+> "selfish voice", that's when we can discuss on different direction.  The
+> someone could simply reduce max_nr_regions, or work together to make another
+> knob for making the new behavior opt-in or opt-out, depending on their loudness
+> of the voice.  If you rely on the current behavior, this is the best time to
+> make your voice.
+>
+> I hope this doesn't make people get us wrong.  We care quiet users.
+> Nonetheless in this case, the behavior is somewhat not documented.
+
+
+Thanks for raising this openly on the list.
+
+
+> [...]
+>> Our downstream paddr has per-cgroup tweaks,
+> Interesting!  Please consider sharing that on some conferences and/or
+> upstreaming that for the community and yourself!  No push, though.
+>
+>> so I don't think those
+>> numbers would be that meaningful for upstream review.  Here's a clean
+>> upstream-paddr reproducer instead.
+> [...]
+>> After running for an hour:
+>> 1.Without this series: nr_regions stays at ~100 (max/2), doesn't recover
+>> 2.With this series:    nr_regions stays at 160-180
+> Data from the real workload would be really interesting.  But this artificial
+> test results also helpful.  Thank you for conducting the test and sharing
+> these.
+>
+>> In real production this is actually pretty common.  Workloads keep
+>> changing state and creating new access patterns, so nr_regions
+>> naturally tends to live above max/2 most of the time -- which is
+>> exactly where the corner case kicks in.  On our production box with
+>> max_nr_regions = 20000, nr_regions sits at 11k-13k for long stretches
+>> without ever clearing.
+> Thanks for sharing these, I believe you.
+>
+>> ﻿Without this series the effective ceiling is just max/2.  Set max=200,
+>> you cap at ~100.  Set max=400, you cap at ~200.
+>>
+>>
+>> The 1-hour reproducer above is admittedly a bit of a toy -- I set
+>> max=200 to force the corner case without having to scale up the
+>> workload -- but it shows the same pattern: once nr_regions crosses
+>> max/2 it just stays there.
+>>
+>>
+>> The offline-pod example I mentioned earlier is just one workload that
+>> hits this.  The mechanism isn't specific to that workload: any new
+>> access pattern that shows up inside an existing region after
+>> nr_regions crosses max/2 will stay invisible until something else
+>> lowers nr_regions, which may never happen.
+> Yes, makes sense.
+>
+> [1] https://lpc.events/event/20/contributions/2327/
+>
+>
+> Thanks,
+> SJ
+>
+> [...]
