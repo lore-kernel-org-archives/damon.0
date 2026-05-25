@@ -1,275 +1,179 @@
-Received: from out-186.mta1.migadu.com (out-186.mta1.migadu.com [95.215.58.186])
+Received: from frasgout.his.huawei.com (frasgout.his.huawei.com [185.176.79.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B9D93DB96B
-	for <damon@lists.linux.dev>; Mon, 25 May 2026 08:09:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.186
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C0E5386C39
+	for <damon@lists.linux.dev>; Mon, 25 May 2026 13:53:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.176.79.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779696597; cv=none; b=ULbsLcXNzMpv3ZqPxBkFb5xBaiWLPO9RxJLAsQ2QnAmbEW1ko/AyHFJCtzAhRnySOmH4DTd1XkdvpmL3HvXHIKg6c54lvLCXFaCOg6nxK/GmS+m2vGxjIkXnlMvPADBhwiuyncbcmA3k6aPayYJu69IEbC4zIAmT4TPUNvfdb00=
+	t=1779717210; cv=none; b=AsOFSLXHjqNjW1TfQhjXLlQ/s1oCvd1zR08rNsTOKEyMIGgeKRY1xlnmEMbT4lVNbPUIYpI6pQzIdsDn6fO0JAcfXJPHHsreHFdz2yiNsbZ/ZNiA1Ed/nYoHdgHWqhrcB29EQ8gFoc6BhT54qMcuTohLlYIA9MsfLtNx/IWfCus=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779696597; c=relaxed/simple;
-	bh=Zh+F/Dvi7hqNMiYRpK6WtHeCQpYOBCTpLQnPvTwmLRg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=TltfdlNSRLjH4NjrW/rEIFmMGSuAmcad6H/V2bssmEwqpbWorpohU7OObZo80FpmpLVqNVdSWBnvyG/rc0OoP3kGrA9oWHr0D3IiG8XiTxmia6iPzqQgKefYQxAYw7GWwqfKz1ex8xWidixcWK39I6lsbWQs3iLYU5iDwL2+w3Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=JFU6eKPR; arc=none smtp.client-ip=95.215.58.186
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="JFU6eKPR"
-Message-ID: <9cc396ae-da42-48ad-97d7-213208884ee5@linux.dev>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1779696593;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=hTqKsYwKaaxYN0lSg5PLMZrGDCSmNNUCPODxwx2NeGo=;
-	b=JFU6eKPRx2oxsT8Y/3a5OO+5MrgUWrWm+e7a7D+Fq3FSLTw6JCM2fbeLFJKErLr5hkwwq4
-	nrP+dP4Mhon3H20MTYm7jGkur7r+xHPycPfQueaBd0XttEgtasaYiPZFdhXzzEOPisLJDn
-	14xIC1g4WDNo8L0nAdYoUgmuoIBe1uE=
-Date: Mon, 25 May 2026 16:09:42 +0800
+	s=arc-20240116; t=1779717210; c=relaxed/simple;
+	bh=mgrDKq0kXj0LPie0ajpXVqMcZtnkX/h4GjHWKXQpysQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=Mix8vgfoPKJpsRuZOwOFuO0T4Jp21grhfeoIZuzm/c2kG70/hGn4RMu4VeucnGuBWLeq3xj3TnGnu7AhczCjmp0qngco/ADH4xTKhRf+du9krRd6RSjJiDocmsPE+1F1U8M843J+GvNgVdgRSc+zMtltBLwhME3Kmf86yRr9c1s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei-partners.com; spf=pass smtp.mailfrom=huawei-partners.com; arc=none smtp.client-ip=185.176.79.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei-partners.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei-partners.com
+Received: from mail.maildlp.com (unknown [172.18.224.150])
+	by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4gPHPp4rvVzJ46DH;
+	Mon, 25 May 2026 21:52:30 +0800 (CST)
+Received: from mscpeml500003.china.huawei.com (unknown [7.188.49.51])
+	by mail.maildlp.com (Postfix) with ESMTPS id 28FA540570;
+	Mon, 25 May 2026 21:53:19 +0800 (CST)
+Received: from [10.123.123.154] (10.123.123.154) by
+ mscpeml500003.china.huawei.com (7.188.49.51) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.11; Mon, 25 May 2026 16:53:18 +0300
+Message-ID: <a746583d-af0e-401a-b1f8-d4a0e60d5cc3@huawei-partners.com>
+Date: Mon, 25 May 2026 16:53:17 +0300
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Subject: Re: [PATCH 0/2] mm/damon/core: detect internal variation above
- max_nr_regions/2
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v2 0/4] mm/damon: Introduce a huge page collapsing
+ mechanism using auto tuning
 To: SeongJae Park <sj@kernel.org>
-Cc: damon@lists.linux.dev, Andrew Morton <akpm@linux-foundation.org>,
- Shu Anzai <shu17az@gmail.com>, Jiayuan Chen <jiayuan.chen@shopee.com>,
- Quanmin Yan <yanquanmin1@huawei.com>, linux-mm@kvack.org,
- linux-kernel@vger.kernel.org
-References: <20260523014303.86907-1-sj@kernel.org>
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: Jiayuan Chen <jiayuan.chen@linux.dev>
-In-Reply-To: <20260523014303.86907-1-sj@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Migadu-Flow: FLOW_OUT
+CC: <artem.kuzin@huawei.com>, <stepanov.anatoly@huawei.com>,
+	<wangkefeng.wang@huawei.com>, <yanquanmin1@huawei.com>, <zuoze1@huawei.com>,
+	<damon@lists.linux.dev>, <akpm@linux-foundation.org>, <linux-mm@kvack.org>,
+	<linux-kernel@vger.kernel.org>
+References: <20260523171710.88918-1-sj@kernel.org>
+Content-Language: en-US
+From: Gutierrez Asier <gutierrez.asier@huawei-partners.com>
+In-Reply-To: <20260523171710.88918-1-sj@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: mscpeml100003.china.huawei.com (10.199.174.67) To
+ mscpeml500003.china.huawei.com (7.188.49.51)
 
+Hi SJ,
 
-On 5/23/26 9:43 AM, SeongJae Park wrote:
-> On Fri, 22 May 2026 23:11:47 +0800 Jiayuan Chen <jiayuan.chen@linux.dev> wrote:
->
->> Hi, SJ
+On 5/23/2026 8:17 PM, SeongJae Park wrote:
+> On Fri, 22 May 2026 14:55:14 +0000 <gutierrez.asier@huawei-partners.com> wrote:
+> 
+>> From: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
 >>
->> On 5/22/26 10:42 AM, SeongJae Park wrote:
->>> On Thu, 21 May 2026 23:07:11 +0800 Jiayuan Chen <jiayuan.chen@linux.dev> wrote:
->>>
->>>> Hi SJ,
->>>>
->>>> Thanks for taking a look.  Quick replies inline.
->>>>
->>>>
->>>> On 5/21/26 10:30 PM, SeongJae Park wrote:
->>>>> Hello Jiayuan,
->>>>>
->>>>> On Thu, 21 May 2026 12:52:22 +0800 Jiayuan Chen <jiayuan.chen@linux.dev> wrote:
+>> Overview
+>> ========
+>>
+>> This patch set introduces a new autotuning which allows to collapse
+>> hot regions into hugepages.
 > [...]
->>>> counter was just for convenience -- easier to cat a sysfs file than to wire
->>>>
->>>> up tracing.  Even the tracepoint covers it, It's cost to much for
->>>> Grafana to just get
->>>>
->>>> a metrics by tracepoint.
-> Out of the scope of this patch series, but I'm interested in how you connect
-> DAMON outputs to Grafana.  I believe that could be useful for many people who
-> willing to get some fleet wide access pattern.  Maybe worthy to present to
-> wider audiences, like System monitoring microconf [1] at LPC?
-
-Honestly it's nothing fancy -- we just export nr_regions as a Prometheus 
-metric because it's a
-
-performance-relevant signal.
-
-
-Vsualizing access patterns is a real pain point.  I have a small 
-AI-written script that pulls region
-
-data and turns it into a webpage I can open in the browser.  It's not 
-live like Grafana -- I just run it when I
-
-want to look at the data.  I don't think Grafana has a component for 
-this kind of view anyway.
-
-
->>> Makes sense.  And I think this deserves to be upstreamed.  Some minor
->>> modifications might be needed to your current implementation, though.  Please
->>> feel free to send a patch to start the discussion, if you want.
+>> Solution
+>> ========
 >>
->> On the sysfs counter -- agreed, same data as the tracepoint. I'll
->> look into a suitable location.
-> Maybe /sys/.../schemes/<S>/tried_regions/nr_regions ?
-
-It sounds reasonable.
-
-
->
+>> DAMON has now a way to autotune some of the variables and adjust quotas
+>> automatically, so that DAMON is fired only under the right circumstances.
+>> It would be nice to have something similar, but for huge pages.
+> 
+> Agree.
+> 
+>>
+>> A new autotuning quota goal[2], damos_get_used_hugepage_mem_bp,
+> 
+> Is the name correct?  I think 'get_used_' may better to be dropped.
+Let me change it for the next RFC version.
+> 
+>> is
+>> introduced, which checks the huge page consumption to total anonymous
+>> memory consumption. This new quota mechanism reuses current autotuning
+>> architecture.
+>>
+>> A new module is introduced to demonstrate the use of huge pages
+>> collapse autotuning. The goal is to collapse hot regions of a given
+>> process into huge pages. The module launches a kdamond thread for a 
+>> certain task provided by the user through monitored_pid module argument.
+>> Hugepage goal autotuning will automatically adjust the aggressiveness
+>> of hot region collapses.
+> 
+> Having a module for the demonstration purpose sounds good.  But, for the
+> demonstration purpose, as I previousoly commented, making it as a sample module
+> (put under /samples/damon/) or just drop when you drop RFC tag would be better.
+> 
+> Let me know if this module is aimed to be as is even after you drop RFC tag.
+I'll move it to samples. I'll keep the RFC in the next version still,
+so I make sure that the major details are polished before I drop RFC tag.
+> 
+>>
+>> This module also has a user autotuning knob which allows the user to
+>> adjust the aggressiveness of page collapsing.
+>>
+>> Benchmarks
+>> ==========
+>>
+>> Huge page collapse autotuning was tested in a physicial machine with
+>> MariaDB 10.5.29 and sysbench as the benchmark framework.
+>>
+>> The hugepage module was set up in the following way:
+>>
+>> # echo 1000 > min_age
+>> # echo 1000 > quota_percentage_hugepage
+>> # echo $(pidof mariadbd) > monitored_pid
+>> # echo on > enabled
+>>
+>> The goal was to achieve 10% of the total memory used as hugepage.
+>>
+>> The table below shows the memory consumption over time. Gaps in the
+>> timestamp means that no changes in the hugepage consumption happened
+>> over that period of time.
+>>
+>> +-----------+----------------+---------------+----------------------+
+>> | timestamp | anon_memory_mb | huge_pages_mb | percentage hugepage  |
+>> +-----------+----------------+---------------+----------------------+
+>> | 0         | 2159.761719    | 0             | 0%                   |
+>> | 28        | 2177.574219    | 4             | 0%                   |
 > [...]
->>>> Yes, age == 0 means the region's access count drifted past the merge
->>>> threshold in
->>>> the last aggregation -- the strongest signal it just changed internally.
->>>> Regions with age > 0 are stable; splitting them tends to oscillate (the next
->>>> merge cycle pulls the halves back together and we waste the budget).
->>> Thank you for confirming this.  Yes, that sounds good approach to me.  But
->>> because this is a core behavior, I'd like to be careful more than usual.  I
->>> will spend more time at thinking if I'm missing something, and if this is the
->>> best approach.  If you have measurements that I asked above and can share, that
->>> will also be helpful.
+>> | 283       | 2224.601563    | 434           | 20%                  |
+>> | 284       | 2224.632813    | 450           | 20%                  |
+>> +-----------+----------------+---------------+----------------------+
+> 
+> Thank you for sharing the test.  What about the performance?  Could you also do
+> comparison of the numbers against the module disabled case, and THP disabled
+> case?
+Will do it.
 >>
->> We considered selecting regions randomly past max/2 (which is what our
->> downstream tree does).
-> Interesting.  Actually I was thinking something like this as a suggestion.
->
-> And I understand that you had to develop and carry your downstream patches
-> because DAMON was not supporting your use case.  I know carrying downstream
-> patches is painful.  Sorry for the inconvenience and thank you for making this
-> voice.  I'm here for users, and I will be happy to help you removing the
-> downstream change.
-Appreciated -- this is exactly why we want to upstream it !
-
->> Random selection converges to higher
->> nr_regions faster.  We picked age == 0 for upstream because:
+>> Eventually, the amount of huge pages reached 20%. This is consistent
+>> with how quota goals autotuning work. We are more aggresive when the
+>> quota is less than 10%, and less aggresive when the quota is higher.
+>> At some point, the aggressiveness just fades and no more collapses
+>> occur.
+> 
+> You are correct.  If the behavior disturbs your test, please note that we
+> introduced 'temporal' quota tuner [1] to make it easier.  It is merged into
+> 7.1-rc1.
+> 
 >>
->> - It's DAMON's own signal that the region's nr_accesses just
->>     crossed the merge threshold -- i.e. the access pattern is
->>     currently unstable.  Splitting an unstable region is more likely
->>     to reveal new internal structure than splitting a stable region
+>> TODO
+>> ====
+>> - Support page splitting for cold hugepages.
+> 
+> Sounds good!  By using two DAMOS schemes that doing collapsing and splitting, I
+> think we can make more complete access-aware THP system.
+My thought was to add cold page splitting as a separate RFC in the future.
 >>
->> - It's selective by design, so it leans conservative on a core
->>     code path.  In our tests it still reaches the effective
->>     refinement we need (e.g. 160-180 at max_nr_regions = 200), just
->>     more gradually than random selection would.
->>
->> We thought a selective, signal-based filte.
-> I understand that you concern about the increased number of regions, which
-> would make the overhead greater?  I think the concern and your filtering
-> approach make sense.  But the age threshold value feels like a heuristic that
-> may not be good for someone.  I also think age != 0 might not always be a good
-> signal for distinguising the regions.  I feel temptation to keep using the
-> power of the chaos (randomness) in the regions adjustment.
->
-> So I was thinking below as a suggestion.
->
-> The basic idea is, choosing the number of regions to split based on the
-> remaining budget (max_nr_regions - nr_regions).  I'd prefer making this simple
-> and lightweight.  So suggesting something like below.
->
-> void kdamond_split_regions()
-> {
-> 	static unsigned char rndseed;
->
-> 	budget = max_nr_regions - current_nr_regions()
-> 	if (budget > max_nr_regions / 2)
-> 		split_step = 1
-> 	elif (budget > max_nr_regions / 3)
-> 		split_step = 2
-> 	...
->
-> 	idx = rndseed++ % split_step;
-> 	for (; idx < current_nr_regions(), idx += split_step)
-> 		split_region(nth_region(idx));
-> }
->
-> I think this might be similar to your downstream change, but what do you think,
-> Jiayuan?
-
-
-Yes, this is close to what we do downstream.  Roughly:
-
-   void kdamond_split_regions()
-   {
-       budget = max_nr_regions - current_nr_regions()
-       if (budget == 0)
-           return
-
-       split_step = current_nr_regions() / budget
-
-       for_each_region(r)
-           if (get_random_u32_below(split_step) == 0)
-               split_region(r)
-   }
-
-And I like your version better -- the step formula (max/budget) leaves
-a margin so it approaches max more smoothly. I'll try your approach first
-
-and test it in our env.
-
-
-> I'm also bit concerned about the fact that it would increase the number of
-> regions.  However, DAMON never promised the usual number of regions will be
-> around max_nr_regions / 2.  More technically speaking, the current behavior is
-> that once the number of regions exceeds max_nr_regions / 2, it only slowly
-> decrease.  Anyway, it is not a documented behavior.
->
-> Yes, maybe some users rely on the current behavior and changing that could make
-> them sad.  But I haven't heard any voice from such users.  Meanwhile Jiayuan
-> and their friends are apparently being suffered by the behavior and making this
-> voice.
->
-> And we repeatedly told DAMON does its random evolution based on "selfish
-> voices" from users.  So I think we should move based on the Jiayuan's "selfish
-> voice" here.  If it really makes someone sad and if they make thier different
-> "selfish voice", that's when we can discuss on different direction.  The
-> someone could simply reduce max_nr_regions, or work together to make another
-> knob for making the new behavior opt-in or opt-out, depending on their loudness
-> of the voice.  If you rely on the current behavior, this is the best time to
-> make your voice.
->
-> I hope this doesn't make people get us wrong.  We care quiet users.
-> Nonetheless in this case, the behavior is somewhat not documented.
-
-
-Thanks for raising this openly on the list.
-
-
-> [...]
->> Our downstream paddr has per-cgroup tweaks,
-> Interesting!  Please consider sharing that on some conferences and/or
-> upstreaming that for the community and yourself!  No push, though.
->
->> so I don't think those
->> numbers would be that meaningful for upstream review.  Here's a clean
->> upstream-paddr reproducer instead.
-> [...]
->> After running for an hour:
->> 1.Without this series: nr_regions stays at ~100 (max/2), doesn't recover
->> 2.With this series:    nr_regions stays at 160-180
-> Data from the real workload would be really interesting.  But this artificial
-> test results also helpful.  Thank you for conducting the test and sharing
-> these.
->
->> In real production this is actually pretty common.  Workloads keep
->> changing state and creating new access patterns, so nr_regions
->> naturally tends to live above max/2 most of the time -- which is
->> exactly where the corner case kicks in.  On our production box with
->> max_nr_regions = 20000, nr_regions sits at 11k-13k for long stretches
->> without ever clearing.
-> Thanks for sharing these, I believe you.
->
->> ﻿Without this series the effective ceiling is just max/2.  Set max=200,
->> you cap at ~100.  Set max=400, you cap at ~200.
->>
->>
->> The 1-hour reproducer above is admittedly a bit of a toy -- I set
->> max=200 to force the corner case without having to scale up the
->> workload -- but it shows the same pattern: once nr_regions crosses
->> max/2 it just stays there.
->>
->>
->> The offline-pod example I mentioned earlier is just one workload that
->> hits this.  The mechanism isn't specific to that workload: any new
->> access pattern that shows up inside an existing region after
->> nr_regions crosses max/2 will stay invisible until something else
->> lowers nr_regions, which may never happen.
-> Yes, makes sense.
->
-> [1] https://lpc.events/event/20/contributions/2327/
->
->
+>> Patches Sequence
+>> ================
+>> Patch 1 -> damon_modules_new_vaddr_ctx_target
+>> Patch 2 -> Introduce DAMOS_QUOTA_HUGEPAGE and autotuning
+>> Patch 3 -> Module that demonstrates how to use DAMOS_QUOTA_HUGEPAGE
+>>            and the new VADDR ctx creation
+>> Patch 4 -> Documentation
+> 
+> Patch 1 is only for Patch 3, right?  Let's put it just before patch 3.
+> 
+> [1] https://lkml.kernel.org/r/20260310010529.91162-2-sj@kernel.org
+> 
+> 
 > Thanks,
 > SJ
->
+> 
 > [...]
+> 
+
+-- 
+Asier Gutierrez
+Huawei
+
