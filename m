@@ -1,129 +1,103 @@
-Received: from frasgout.his.huawei.com (frasgout.his.huawei.com [185.176.79.56])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 573382E424F
-	for <damon@lists.linux.dev>; Mon, 25 May 2026 15:04:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.176.79.56
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3D1F2DAFBB
+	for <damon@lists.linux.dev>; Mon, 25 May 2026 15:34:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779721471; cv=none; b=E8bpOZSBLR/WjoRsHuO5enkST0UkAKb2yy7BaYwsGmLK7X7wUICQL6lHPS9UV4DamKCroxZtEcpZ2jz1+RRW7kJ+y51q+A+avZw0sIZCMCI1rVyA/gAkmusHx7yIP0gsx/7+0dj7RFttCZBFMvocWEbisEaFB3Pf6wHXqJ1OD7c=
+	t=1779723284; cv=none; b=LiCXdYWpr+qwZl/L3URjnf9KlD55W3cAFN6eM8la7faZ6Wba6z3fWq4M+7H7a5SL8k2MnSy8BbfqBQn8KUA9xNKxV9uWbM2jGNU5gqH7EY6flvLnQTz7uxmMjS9j7V9Unjcf4HWpjg0ATyEcJxJOp22qUXHAX55rBRhK4GLMoD8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779721471; c=relaxed/simple;
-	bh=aNGtIik+/l1QV/Wd1Tyz33U2dax+TVVlZnmWBsQQ5G8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=Qf8i5RcV4+Oij+N9OF62FP+T8I0MrSUWpNTnB+MMHzM4Fk+aRCEK1Jjz4RIEreaEr0IuPEZYTdwGTBS7Rd9CXjxMHSu/PESlMLyeOfoAbpwXtFrMGQoYkqjZYCJANHwScnPaW9fqtvPoqnLtvXg/RJ8ab5Y7ASBe0WrB+pyeyYs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei-partners.com; spf=pass smtp.mailfrom=huawei-partners.com; arc=none smtp.client-ip=185.176.79.56
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei-partners.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei-partners.com
-Received: from mail.maildlp.com (unknown [172.18.224.107])
-	by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4gPJzs6bxRzJ467l;
-	Mon, 25 May 2026 23:03:37 +0800 (CST)
-Received: from mscpeml500003.china.huawei.com (unknown [7.188.49.51])
-	by mail.maildlp.com (Postfix) with ESMTPS id 7889A4058B;
-	Mon, 25 May 2026 23:04:26 +0800 (CST)
-Received: from [10.123.123.154] (10.123.123.154) by
- mscpeml500003.china.huawei.com (7.188.49.51) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.11; Mon, 25 May 2026 18:04:25 +0300
-Message-ID: <fd55452e-8c4c-4983-a403-bd1ab7ac73f6@huawei-partners.com>
-Date: Mon, 25 May 2026 18:04:25 +0300
+	s=arc-20240116; t=1779723284; c=relaxed/simple;
+	bh=ljLvyMt8wKhecIBbvP3S4rUWse2mXFl2DFpcZOWBY14=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=rP51LYs2PD8IqwJuU2d5sCmBvG38ekxYH6jYXaBlFyfjx7oGhmnmVvX1cTeZWO4U/JV6keNV2eusd7X7l3KVgWZKlfhN5lM9CpSCHjiLj8e2Q4ePvd42YDgJvl+Odr8FmlBAn2Hx49GIdkTVIC7KCg7pmQdweI7D54lH2g2qykk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PXGl02LF; arc=none smtp.client-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PXGl02LF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D9621F000E9;
+	Mon, 25 May 2026 15:34:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1779723282;
+	bh=3zymzHLZ+lmWqrWR9C6uKANOjhryf2nuppP0lizdg3A=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=PXGl02LFhFmnk4X+mWiVNCTdbv8cqBcxcfC6nr6mtP9M4QFuI/rzfU01n+Z4vp68z
+	 B6URCJFrevFj7oxzI8OhSFm8rXoA0OaW1clUax7AzWXGrOHvu00rSIiMVgqKqgZRWS
+	 EWe2FOhPSK90mM92vY7PrWBPqr57ytGDhG5D/aUGARzybbL5/SRlNZ4+dqJwOyv7ks
+	 9dprfqNwRzX4DfWE9GnILV12cAnmrDbPbjyrztDtiSQDpx7s+SN0VCOojTbd81PCr6
+	 +2PxWUXFvecS1eyQEJfYLrGhsnQUFJf16+M97qR2wh3JT/q0L6jD086ob4g4KUjNIR
+	 ZLnd/Hi9UDN4A==
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH] mm/damon: fix stale TLB young-state handling on arm64
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "Kunwu Chan" <kunwu.chan@linux.dev>
+Cc: damon@lists.linux.dev
+In-Reply-To: <20260525144846.604907-1-kunwu.chan@linux.dev>
+References: <20260525144846.604907-1-kunwu.chan@linux.dev>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Mon, 25 May 2026 15:34:41 +0000
+Message-Id: <20260525153442.5D9621F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v2 2/4] mm/damon: Introduce DAMOS_QUOTA_HUGEPAGE auto
- tuning
-To: SeongJae Park <sj@kernel.org>
-CC: <artem.kuzin@huawei.com>, <stepanov.anatoly@huawei.com>,
-	<wangkefeng.wang@huawei.com>, <yanquanmin1@huawei.com>, <zuoze1@huawei.com>,
-	<damon@lists.linux.dev>, <akpm@linux-foundation.org>, <linux-mm@kvack.org>,
-	<linux-kernel@vger.kernel.org>
-References: <20260523172725.89221-1-sj@kernel.org>
-Content-Language: en-US
-From: Gutierrez Asier <gutierrez.asier@huawei-partners.com>
-In-Reply-To: <20260523172725.89221-1-sj@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: mscpeml500004.china.huawei.com (7.188.26.250) To
- mscpeml500003.china.huawei.com (7.188.49.51)
 
+Thank you for your contribution! Sashiko AI review found 1 potential issue(=
+s) to consider:
+- [Critical] Replacing pmdp_test_and_clear_young() with pmdp_clear_flush_yo=
+ung() causes kernel panics due to unaligned addresses and introduces severe=
+ performance regressions via synchronous broadcast TLB flushes.
+--
 
+commit 35d1d30f8c4d83134e4728cac82067099a6e3cab
+Author: Kunwu Chan <chentao@kylinos.cn>
+mm/damon: fix stale TLB young-state handling on arm64
 
-On 5/23/2026 8:27 PM, SeongJae Park wrote:
-> On Fri, 22 May 2026 14:55:16 +0000 <gutierrez.asier@huawei-partners.com> wrote:
-> 
->> From: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
->>
->> Introduce DAMOS_QUOTA_HUGEPAGE auto tuning Add a new DAMOS quota goal
-> 
-> I'd suggest to rename it to DAMOS_QUOTA_HUGEPAGE_BP for consistency.
-> 
-> Also, you missed the ending period after 'tuning'.
-> 
->> metric to measure the amount of huge page consumption to total
->> anonymous memory consumption ratio.
-> 
-> Why against anonymous memory only?
-Well, that was my first approach. All the projects that I have done
-recently were related to anonymous memory. I'll test it with total
-THP user vs total memory consumption and see if everything works
-in the same way.
-> 
->>
->> Signed-off-by: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
->> ---
->>  include/linux/damon.h |  1 +
->>  mm/damon/core.c       | 15 +++++++++++++++
->>  2 files changed, 16 insertions(+)
->>
->> diff --git a/include/linux/damon.h b/include/linux/damon.h
->> index c7a31572689b..8e15a674e893 100644
->> --- a/include/linux/damon.h
->> +++ b/include/linux/damon.h
->> @@ -177,6 +177,7 @@ enum damos_quota_goal_metric {
->>  	DAMOS_QUOTA_ACTIVE_MEM_BP,
->>  	DAMOS_QUOTA_INACTIVE_MEM_BP,
->>  	DAMOS_QUOTA_NODE_ELIGIBLE_MEM_BP,
->> +	DAMOS_QUOTA_HUGEPAGE,
->>  	NR_DAMOS_QUOTA_GOAL_METRICS,
->>  };
-> 
-> Before you drop RFC tag, please ensure to add kernel-doc comment for tyhe new
-> value.
-I will do it. Thanks for the reminder.
->>  
->> diff --git a/mm/damon/core.c b/mm/damon/core.c
->> index 9f38deddcb30..1f1cf10aa241 100644
->> --- a/mm/damon/core.c
->> +++ b/mm/damon/core.c
->> @@ -2536,6 +2536,18 @@ static unsigned int damos_get_in_active_mem_bp(bool active_ratio)
->>  	return mult_frac(inactive, 10000, total);
->>  }
->>  
->> +/*
->> + * Returns anon hugepage memory to total anon memory use ratio.
->> + */
->> +static unsigned int damos_get_used_hugepage_mem_bp(void)
->> +{
->> +	unsigned long used_hugepages, total_used;
->> + 
->> +	used_hugepages = global_node_page_state(NR_ANON_THPS);
->> +	total_used = global_node_page_state(NR_ANON_MAPPED);
->> +	return mult_frac(used_hugepages, 10000, total_used);
-> 
-> So this function returns anon THP to total anon pages ratio.  Why only anon
-> THP?  Also as I asked above, why only total anon?
-> 
-> 
-> Thanks,
-> SJ
-> 
-> [...]
-> 
+This commit modifies DAMON's page table access functions by replacing
+test_and_clear_young with clear_flush_young variants for both PTEs and PMDs
+to resolve stale TLB entry issues on arm64.
 
--- 
-Asier Gutierrez
-Huawei
+> diff --git a/mm/damon/ops-common.c b/mm/damon/ops-common.c
+> index 3a0ddc3ac7196..ef154df145310 100644
+> --- a/mm/damon/ops-common.c
+> +++ b/mm/damon/ops-common.c
 
+[ ... ]
+
+> @@ -90,7 +90,7 @@ void damon_pmdp_mkold(pmd_t *pmd, struct vm_area_struct=
+ *vma, unsigned long addr
+>  		return;
+> =20
+>  	if (likely(pmd_present(pmdval)))
+> -		young |=3D pmdp_test_and_clear_young(vma, addr, pmd);
+> +		young |=3D pmdp_clear_flush_young(vma, addr, pmd);
+
+[Severity: Critical]
+Does this change risk triggering a kernel panic due to unaligned addresses?
+
+DAMON randomly generates unaligned virtual addresses for sampling via
+damon_rand(). These unaligned addresses are passed directly to
+damon_pmdp_mkold() and subsequently to pmdp_clear_flush_young().
+
+On architectures like x86 and s390, and in the generic fallback
+implementation, pmdp_clear_flush_young() strictly asserts PMD alignment
+using VM_BUG_ON(address & ~HPAGE_PMD_MASK). Passing DAMON's unaligned
+sampling address could trigger this assertion.
+
+Additionally, could this introduce a performance regression?
+
+The generic pmdp_clear_flush_young() fallback, which is used by arm64 and
+riscv since they do not implement __HAVE_ARCH_PMDP_CLEAR_YOUNG_FLUSH,
+invokes flush_pmd_tlb_range(). This results in a synchronous broadcast TLB
+flush across the system just for clearing the accessed bit, which seems to
+conflict with DAMON's low-overhead design constraints.
+
+>  	young |=3D mmu_notifier_clear_young(vma->vm_mm, addr, addr + HPAGE_PMD_=
+SIZE);
+>  	if (young)
+>  		folio_set_young(folio);
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260525144846.6049=
+07-1-kunwu.chan@linux.dev?part=3D1
