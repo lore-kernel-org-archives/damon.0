@@ -1,103 +1,194 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0AC133557D;
-	Wed, 27 May 2026 14:33:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C40BB1427A
+	for <damon@lists.linux.dev>; Wed, 27 May 2026 17:19:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779892429; cv=none; b=NM59aqJo++P0Tf1xOuD6mLMNIwbcLrlALZAhIQNH+6Rd+yBkQk96J0KmIFkTec9yHPwHoRJJBLNLMlVy4/3X10Wi0f32pJ3UOPVOZmxyNRGK0YTLfsKjK71bncPP9KQSzQxfEnHi6BQsLyc6xxfL+aD5oLbU0WDvqxeP/dQ7NfA=
+	t=1779902396; cv=none; b=f+AzEOmn+I2dvGwdMmj0xY4MgRAZwcjgMYQWSkAjF8d7lXXaUEM4ky77bGMWwvP8tz7q/ZsvjhkiDlcQOX3I7cZLYUA3qtNQZqkZ8WH+pI79QVWyIVvcUcPlQp9Dpc6gnuxLxcBq3Face9L3R7AEna6bcr59bN1KzZgE1ki6sbc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779892429; c=relaxed/simple;
-	bh=C8CvBHWQDzBJDTrmMd/gPWBhN89D1x49lyWyrsxqYFA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=YQ6+XqL/mE5iqy6egT034DRI7nQQGOlTnJbHmk4ctERb0tlWn0t/HPPPRb1At56akRDPe2NVGwI8wrD0w99r+aj8FNSPWDjHgEz8tLXO+YB7dpXD0lTfkRnUjKvKlNnaIy0vtiiWodEbmiTyMwhgK5Oq7iFDdZ+kP1zW1u8JTc0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WN2tAxV0; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1779902396; c=relaxed/simple;
+	bh=v0a/7qFS9sIlK7DVv/NdHNmKGqhl7V17GuaMI3E5AJo=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=WWeTpLUC63+Elr5/cb24YMPJAeEdKvWCmWx9kNL1GF+HAiwiCLTmtdGQ8UIAzblnQdhomH2kQzy0mCkoeMvN/kXJtKD6yWCGL5pOsYr5wWb7PiLfTddRhUSFC2Fvm8J/yawsdVeWfco2UvrhD9NaHDUoo9FA6YlBpiunIqJcToQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RSZcEthU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WN2tAxV0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A07E01F00A3D;
-	Wed, 27 May 2026 14:33:35 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RSZcEthU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 511651F000E9;
+	Wed, 27 May 2026 17:19:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1779892428;
-	bh=C8CvBHWQDzBJDTrmMd/gPWBhN89D1x49lyWyrsxqYFA=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=WN2tAxV0o94rrrv4Q1mxW19tNTWQQ5CWz3ite40yZWPQ26hegLuQMbZHIYXdVf63u
-	 DzLAdrjEEbhIwyxrdddU0mu8kKSQqhAQ98zB7/1IckQo4uNiyf2oHOE1kDZ6nDkCnN
-	 vd1TU46xOto3ARQVIrNRMxeKq3fSWlcs/X2egEt+sKhWJIZ2bFF+TaPlRO8dKdfFkr
-	 nepRtpJFQxml9hoT6uXbJXfh5yWq6VogDgOQjP5azfaz/zqWrpUd3/mlouJ/AjQo6P
-	 1JcB1BIMrMd0QdCsYiZG8eMm7IaV6thorAeXgmX2laEB8ZgrDzh/VbTVlnu+shlOAk
-	 qH+jKqWkfquIQ==
-Date: Wed, 27 May 2026 15:33:31 +0100
-From: Lorenzo Stoakes <ljs@kernel.org>
+	s=k20260515; t=1779902394;
+	bh=LPVgkqUHjE+500Acen/8asZSlnpj1x2izgw/0y9I4Ys=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=RSZcEthUiLCVrAW8eDtb3d3YJrN6UFFaQkE54gB80A5vu3tpRftwUC+nZbw89z9+4
+	 HFVTa62dIWqROi+MxPYRsKur/I+Qv1NG/TXhIWH5UUp2JO2ni3uxpGegkVHjHyweLM
+	 3DubJlHgKYhKjmo9xQlvKfjbuNO2Lj1Tnz7la22diCG8Fn4ggWrrns+ishg26MgM6k
+	 rR65yKuqFJBkHo26r/W8CUtj9X+CRP4kybJKfhylsuhtOFggIouwFKx5pC2kCu2jFt
+	 +1m0J84gg7Me4zYqArqKVYxHkOlpV6w1pw9X6UxstEdIscwS3+REX6QalAPrcxuohX
+	 4puhutQ2v85Cg==
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH 15/15] mm: enable CONFIG_ANON_VMA_LAZY on arm64 and
+ x86_64
+Reply-To: sashiko-reviews@lists.linux.dev
 To: tao <tao.wangtao@honor.com>
-Cc: catalin.marinas@arm.com, will@kernel.org, tglx@kernel.org, 
-	mingo@redhat.com, bp@alien8.de, dave.hansen@linux.intel.com, x86@kernel.org, 
-	akpm@linux-foundation.org, david@kernel.org, willy@infradead.org, sj@kernel.org, 
-	kees@kernel.org, luizcap@redhat.com, zhangjiao2@cmss.chinamobile.com, 
-	kas@kernel.org, hpa@zytor.com, liam@infradead.org, vbabka@kernel.org, 
-	rppt@kernel.org, surenb@google.com, mhocko@suse.com, jack@suse.cz, 
-	riel@surriel.com, harry@kernel.org, jannh@google.com, jgg@ziepe.ca, 
-	jhubbard@nvidia.com, peterx@redhat.com, ziy@nvidia.com, baolin.wang@linux.alibaba.com, 
-	npache@redhat.com, ryan.roberts@arm.com, dev.jain@arm.com, baohua@kernel.org, 
-	lance.yang@linux.dev, xu.xin16@zte.com.cn, chengming.zhou@linux.dev, 
-	nao.horiguchi@gmail.com, matthew.brost@intel.com, joshua.hahnjy@gmail.com, 
-	rakie.kim@sk.com, byungchul@sk.com, gourry@gourry.net, 
-	ying.huang@linux.alibaba.com, apopple@nvidia.com, pfalcato@suse.de, 
-	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, linux-fsdevel@vger.kernel.org, 
-	linux-mm@kvack.org, damon@lists.linux.dev, shakeel.butt@linux.dev, ryncsn@gmail.com, 
-	21cnbao@gmail.com, jparsana@google.com, dvander@google.com, zhangji1@honor.com, 
-	wangzicheng@honor.com
-Subject: Re: [PATCH 0/15] mm: introduce ANON_VMA_LAZY for deferred anon_vma
- creation
-Message-ID: <ahcANgFDFwfC0v1q@lucifer>
-References: <20260527110147.17815-1-tao.wangtao@honor.com>
+Cc: damon@lists.linux.dev
+In-Reply-To: <20260527110147.17815-16-tao.wangtao@honor.com>
+References: <20260527110147.17815-16-tao.wangtao@honor.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Wed, 27 May 2026 17:19:53 +0000
+Message-Id: <20260527171954.511651F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260527110147.17815-1-tao.wangtao@honor.com>
 
-OK I've had a look through more thoroughly now and:
+Thank you for your contribution! Sashiko AI review found 4 potential issue(=
+s) to consider:
 
-NAK and NAK any approach like this.
+Pre-existing issues:
+- [Critical] Dereferencing mm_struct in folio_resolve_anon_vma_lazy() cause=
+s a use-after-free because SLAB_TYPESAFE_BY_RCU allows the VMA to be recycl=
+ed without pinning the new mm_struct.
+- [Critical] Unbalanced refcount drop in vma_prepare_anon_vma() error path =
+causes an underflow and premature freeing of the root anon_vma.
+- [High] Toggling the sysctl anon_vma_lazy at runtime causes Use-After-Free=
+ and VM_BUG_ON_VMA crashes due to flawed structural state checks.
+- [High] Unmapping the root of a split lazy anon VMA clears its anon_vma po=
+inter, permanently breaking reverse mapping for folios in the remaining chi=
+ld VMAs.
+--
 
+commit 6ca138075f0d0c3a8eba3846297fc8cdfbebaa40
+Author: tao <tao.wangtao@honor.com>
 
-Not only is this structurally all wrong, it does some insane stuff (pinning
-VMAs - no), the RCU usage is highly dubious and I suspect you've completely
-broken the anon rmap for things like migration, or have at least added very
-dubious edge cases.
+mm: enable CONFIG_ANON_VMA_LAZY on arm64 and x86_64
 
-You've added insane complexity, and also have failed to add even
-perfunctory tests, which is also totally unacceptable.
+All prerequisites are in place, so enable CONFIG_ANON_VMA_LAZY for
+arm64 and x86_64.
 
-The implementation is wrong, and the approach is wrong - we do not want to
-extend or build on anon_vma. So this is unmergeable, or any approach like
-it.
+> diff --git a/arch/arm64/Kconfig b/arch/arm64/Kconfig
+> index fe60738e5943b..9517883f0aaf2 100644
+> --- a/arch/arm64/Kconfig
+> +++ b/arch/arm64/Kconfig
+[ ... ]
+> @@ -81,6 +81,7 @@ config ARM64
+>  	select ARCH_SUPPORTS_NUMA_BALANCING
+>  	select ARCH_SUPPORTS_PAGE_TABLE_CHECK
+>  	select ARCH_SUPPORTS_PER_VMA_LOCK
+> +	select ARCH_SUPPORTS_ANON_VMA_LAZY
+>  	select ARCH_SUPPORTS_HUGE_PFNMAP if TRANSPARENT_HUGEPAGE
+>  	select ARCH_SUPPORTS_RT
+>  	select ARCH_SUPPORTS_SCHED_SMT
+> diff --git a/arch/x86/Kconfig b/arch/x86/Kconfig
+> index f3f7cb01d69d0..cc3430eaa7b41 100644
+> --- a/arch/x86/Kconfig
+> +++ b/arch/x86/Kconfig
+[ ... ]
+> @@ -28,6 +28,7 @@ config X86_64
+>  	select ARCH_SUPPORTS_MSEAL_SYSTEM_MAPPINGS
+>  	select ARCH_SUPPORTS_INT128 if CC_HAS_INT128
+>  	select ARCH_SUPPORTS_PER_VMA_LOCK
+> +	select ARCH_SUPPORTS_ANON_VMA_LAZY
+>  	select ARCH_SUPPORTS_HUGE_PFNMAP if TRANSPARENT_HUGEPAGE
+>  	select HAVE_ARCH_SOFT_DIRTY
+>  	select MODULES_USE_ELF_RELA
+> diff --git a/mm/rmap.c b/mm/rmap.c
+> index b3bebb58e3597..4edf3311b1ae0 100644
+> --- a/mm/rmap.c
+> +++ b/mm/rmap.c
+[ ... ]
+> @@ -168,7 +168,7 @@ static struct kmem_cache *anon_vma_chain_cachep;
+>   *        covering both regular anon_vma and lazy anon_vma mappings.
+>   */
+> =20
+> -bool anon_vma_lazy_enable;
+> +bool anon_vma_lazy_enable =3D true;
 
-I also, unfortunately, strongly suspect AI here. The turn of phrase, and
-poor commit messages, you doing this out of nowhere with absolutely no rmap
-experience before, your total lack of communication before.
+[Severity: Critical]
+This is a pre-existing issue, but enabling this by default exposes a potent=
+ial
+use-after-free when dereferencing the mm_struct in
+folio_resolve_anon_vma_lazy().
 
-Claude puts the probability of heavy AI usage at 85-90%, and I'm pretty
-convinced. Either way it's utterly unmergeable but that you (likely) used
-AI to generate this much work for us makes me actually pretty annoyed.
+During an RCU reverse mapping walk, folio_resolve_anon_vma_lazy() reads
+mm =3D vma->vm_mm locklessly. Because VMAs are allocated with
+SLAB_TYPESAFE_BY_RCU, the vma can be recycled and reallocated to a different
+process during the walk.
 
-As a result, I would strongly suggest you no longer submit patches for the
-reverse mapping part of mm, as there is now a real lack of trust.
+The function calls vma_get() to increment the VMA refcount, but fails to pin
+the foreign mm_struct via mmgrab(). If the foreign process exits concurrent=
+ly,
+its mm_struct is freed. The subsequent vma_lookup(mm, addr) dereferences
+mm->mm_mt, resulting in a use-after-free.
 
-If you wish to rebuild that, I suggest you _discuss_ concepts and ideas,
-e.g. send stuff on-list with a [DISCUSSION] tag, and engage with the
-community, and go from there.
+Should the foreign mm_struct be stabilized with mmgrab() before performing
+the lookup?
 
-It's also important to synchronise - I'm working on an anon rmap
-replacement that I'm more than happy to discuss with you or anybody else
-which should achieve the same numbers in an architecturally sound way.
+[Severity: Critical]
+This is a pre-existing issue, but enabling this by default exposes an
+unbalanced refcount drop in the vma_prepare_anon_vma() error path.
 
-You going off and, in a vacuum, generating a bunch of code with an
-unacceptable approach is not a civil way of engaging nor is it a good use
-of your time, or maintainer time looking at it.
+When attempting to upgrade a lazy anon_vma, a new anon_vma may be allocated.
+If this thread loses a race and the VMA is already upgraded by another thre=
+ad,
+the likely(!vma->anon_vma || is_lazy) check evaluates to false, skipping
+get_anon_vma(anon_vma->root).
 
-Thanks, Lorenzo
+However, the cleanup path unconditionally calls put_anon_vma(allocated).
+Inside __put_anon_vma(), the root's refcount is decremented. Since it was
+never incremented by this thread, this causes a refcount underflow and
+premature freeing of the root anon_vma. This can lead to a use-after-free
+for all other VMAs mapped to it.
+
+Could the cleanup path be adjusted to only decrement the refcount if it was
+successfully incremented?
+
+[Severity: High]
+This is a pre-existing issue, but enabling this by default exposes crashes
+and memory issues if anon_vma_lazy_enable is toggled at runtime.
+
+Disabling anon_vma_lazy_enabled() at runtime causes structural inconsistenc=
+ies
+for existing lazy VMAs. In anon_vma_fork(), the lazy fork path is skipped,
+falling through to anon_vma_clone(), which calls vma_link_anon_vma_lazy_roo=
+t().
+This triggers VM_BUG_ON_VMA(vma->vm_mm !=3D src->vm_mm, vma), which will cr=
+ash
+the kernel.
+
+Furthermore, SWAP_VMG_TARGET_IF_DELETE_ANON_VMA_LAZY_ROOT() becomes a no-op,
+meaning a pre-existing lazy root VMA being merged is deleted instead of
+preserved. Reverse mapping walkers will later dereference this freed VMA via
+folio->mapping, leading to a use-after-free.
+
+Is it safe to toggle this sysctl at runtime while lazy VMAs already exist in
+the system?
+
+[Severity: High]
+This is a pre-existing issue, but enabling this by default exposes a
+regression when unmapping the root of a split lazy anon VMA.
+
+When a lazy anon VMA is split, anon_vma_clone() links the new child VMA to
+the root VMA by holding a reference to the root. If the root VMA is later
+unmapped, unlink_anon_vmas() clears root_vma->anon_vma =3D NULL.
+
+However, the child VMA remains alive, and its anonymous folios still point =
+to
+the root VMA via folio->mapping. During a reverse mapping walk,
+folio_resolve_anon_vma_lazy() discovers !vma->anon_vma and aborts early.
+
+This permanently breaks reverse mapping for the folios in the child VMA,
+preventing them from being unmapped, migrated, or swapped out.
+
+Does clearing root_vma->anon_vma need to account for surviving child VMAs to
+avoid breaking reverse mapping?
+
+>  #endif
+> =20
+>  static inline struct anon_vma *anon_vma_alloc(void)
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260527110147.1781=
+5-1-tao.wangtao@honor.com?part=3D15
