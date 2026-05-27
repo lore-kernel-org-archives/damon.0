@@ -1,57 +1,96 @@
-Received: from mta20.hihonor.com (mta20.honor.com [81.70.206.69])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C5E03F0A91
-	for <damon@lists.linux.dev>; Wed, 27 May 2026 11:08:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=81.70.206.69
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB2993C09FC
+	for <damon@lists.linux.dev>; Wed, 27 May 2026 11:23:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779880093; cv=none; b=XkajGREu6xMlqUB+xH81ZTkAV5+3Dk8DmG96nJ0V1aCQkzRYauaPOx73CYmK83Jpb+5JCuu3xbUbTjq7B8/H/EOU9/YMuuBO/yiaJtKLvPysOTOI6HYkw2YT70oKWV5OMVx+sP+FM+gvCQL9NadgdSPhMERMtILvKKui0wNY/ZM=
+	t=1779881017; cv=none; b=HdIiCkepKCj6CQQ3vWrmtJ1tOOXx6FeGkFDMTF1fRxV7wkluVMXXoOqjjbv/hio3SjWo0hAdjC/hbWic4nsaDuJU44ZwKp47HcHN0+TD/QYKuGth73vqMITsLdEi7OVuDTPk4xZgFgBlfkXvzUVYXfTiq9vaBdhnCMpIwXLx6oM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779880093; c=relaxed/simple;
-	bh=5RoN2zk62hdf+TzEyIdl1VbOtdl1FBSsnOkeGJTu7is=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=n5Z0ed7q0RCvJtkkY+iASiCiaAD5EkJ0TOXFugYbjL7pADvFWBrwq3AUViqchx3JDqBbeq4wBlh2qUzv0GtvUlOWnFKocBqv9Q04hjyeCFUQ8aGt+tL1YfPjR4FKYBDhQnLDhSCH1SNlh4qnzHwlQaUpF1KvAQVr96rGj36f+hI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=honor.com; spf=pass smtp.mailfrom=honor.com; arc=none smtp.client-ip=81.70.206.69
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=honor.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=honor.com
-Received: from TW004-1.hihonor.com (unknown [10.77.232.85])
-	by mta20.hihonor.com (SkyGuard) with ESMTPS id 4gQRdQ01LHzYl88Q;
-	Wed, 27 May 2026 19:06:34 +0800 (CST)
-Received: from TA003.hihonor.com (10.72.0.43) by TW004-1.hihonor.com
- (10.77.232.85) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.37; Wed, 27 May
- 2026 19:08:00 +0800
-Received: from localhost.localdomain (10.144.18.117) by TA003.hihonor.com
- (10.72.0.43) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.37; Wed, 27 May
- 2026 19:07:59 +0800
-From: tao <tao.wangtao@honor.com>
-To: <catalin.marinas@arm.com>, <will@kernel.org>, <tglx@kernel.org>,
-	<mingo@redhat.com>, <bp@alien8.de>, <dave.hansen@linux.intel.com>,
-	<x86@kernel.org>, <akpm@linux-foundation.org>, <david@kernel.org>,
-	<willy@infradead.org>, <sj@kernel.org>, <kees@kernel.org>,
-	<luizcap@redhat.com>, <zhangjiao2@cmss.chinamobile.com>,
-	<tao.wangtao@honor.com>, <kas@kernel.org>, <ljs@kernel.org>
-CC: <hpa@zytor.com>, <liam@infradead.org>, <vbabka@kernel.org>,
-	<rppt@kernel.org>, <surenb@google.com>, <mhocko@suse.com>, <jack@suse.cz>,
-	<riel@surriel.com>, <harry@kernel.org>, <jannh@google.com>, <jgg@ziepe.ca>,
-	<jhubbard@nvidia.com>, <peterx@redhat.com>, <ziy@nvidia.com>,
-	<baolin.wang@linux.alibaba.com>, <npache@redhat.com>, <ryan.roberts@arm.com>,
-	<dev.jain@arm.com>, <baohua@kernel.org>, <lance.yang@linux.dev>,
-	<xu.xin16@zte.com.cn>, <chengming.zhou@linux.dev>, <nao.horiguchi@gmail.com>,
-	<matthew.brost@intel.com>, <joshua.hahnjy@gmail.com>, <rakie.kim@sk.com>,
-	<byungchul@sk.com>, <gourry@gourry.net>, <ying.huang@linux.alibaba.com>,
-	<apopple@nvidia.com>, <pfalcato@suse.de>,
-	<linux-arm-kernel@lists.infradead.org>, <linux-kernel@vger.kernel.org>,
-	<linux-fsdevel@vger.kernel.org>, <linux-mm@kvack.org>,
-	<damon@lists.linux.dev>, <shakeel.butt@linux.dev>, <ryncsn@gmail.com>,
-	<21cnbao@gmail.com>, <jparsana@google.com>, <dvander@google.com>,
-	<zhangji1@honor.com>, <wangzicheng@honor.com>
-Subject: [PATCH 08/15] mm: prepare rmap infrastructure for ANON_VMA_LAZY
-Date: Wed, 27 May 2026 19:01:40 +0800
-Message-ID: <20260527110147.17815-9-tao.wangtao@honor.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20260527110147.17815-1-tao.wangtao@honor.com>
+	s=arc-20240116; t=1779881017; c=relaxed/simple;
+	bh=2q0N0ZlqQEDw2c9h6pZIAZj6vqQp0AfH6x5YuFas+Kc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=WSW77zAzLtx9wrdo10onfeyjGYwBvOJgLh/VtNHkkeawF2Qw3J481Zh3FcWENZ/JG8E3Uw3W20IGLLnsMEqSShIkXSXRGrG21Wr908dlF9rgEUY7b5vE2A24ogsv8Lpiz3UcFmEeYsrcwfcfq8LCZxjM/R7vDBC/3eMP30hEZ1U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=cQkSSB30; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=EkGTAOuz; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=cQkSSB30; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=EkGTAOuz; arc=none smtp.client-ip=195.135.223.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="cQkSSB30";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="EkGTAOuz";
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="cQkSSB30";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="EkGTAOuz"
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id 2672366E9B;
+	Wed, 27 May 2026 11:23:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1779881014; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=QQymIob/bHvpmY35om5H+zfV6sgTV20OvOeUiMVaTTk=;
+	b=cQkSSB30Nn9V8SWFWhuaBkFN8vkGwfyFfnbmm84+ElI3TpFKPan28dYs7HrdQS7kU2zW9o
+	XJomGoFsh6jLDIQwypT1E3uIZbfEXWMR735yMUJACGYOB2HEIDJJ48HXtgmwrgCQeQtoOD
+	VZiWcXyE9aGUyvRWpjmhi2iO24udAbk=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1779881014;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=QQymIob/bHvpmY35om5H+zfV6sgTV20OvOeUiMVaTTk=;
+	b=EkGTAOuzgsIN+8uGREd/BK/l/mWwjnKQGEjhMTWE3VG1spUBZIxGhruFkqvAovkW46ERdd
+	E1AtWfcQlt6z9vDw==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1779881014; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=QQymIob/bHvpmY35om5H+zfV6sgTV20OvOeUiMVaTTk=;
+	b=cQkSSB30Nn9V8SWFWhuaBkFN8vkGwfyFfnbmm84+ElI3TpFKPan28dYs7HrdQS7kU2zW9o
+	XJomGoFsh6jLDIQwypT1E3uIZbfEXWMR735yMUJACGYOB2HEIDJJ48HXtgmwrgCQeQtoOD
+	VZiWcXyE9aGUyvRWpjmhi2iO24udAbk=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1779881014;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=QQymIob/bHvpmY35om5H+zfV6sgTV20OvOeUiMVaTTk=;
+	b=EkGTAOuzgsIN+8uGREd/BK/l/mWwjnKQGEjhMTWE3VG1spUBZIxGhruFkqvAovkW46ERdd
+	E1AtWfcQlt6z9vDw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 8E8755A7E0;
+	Wed, 27 May 2026 11:23:30 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+	by imap1.dmz-prg2.suse.org with ESMTPSA
+	id Xr8IHzLUFmpCJQAAD6G6ig
+	(envelope-from <pfalcato@suse.de>); Wed, 27 May 2026 11:23:30 +0000
+Date: Wed, 27 May 2026 12:23:28 +0100
+From: Pedro Falcato <pfalcato@suse.de>
+To: tao <tao.wangtao@honor.com>
+Cc: catalin.marinas@arm.com, will@kernel.org, tglx@kernel.org, 
+	mingo@redhat.com, bp@alien8.de, dave.hansen@linux.intel.com, x86@kernel.org, 
+	akpm@linux-foundation.org, david@kernel.org, willy@infradead.org, sj@kernel.org, 
+	kees@kernel.org, luizcap@redhat.com, zhangjiao2@cmss.chinamobile.com, 
+	kas@kernel.org, ljs@kernel.org, hpa@zytor.com, liam@infradead.org, 
+	vbabka@kernel.org, rppt@kernel.org, surenb@google.com, mhocko@suse.com, 
+	jack@suse.cz, riel@surriel.com, harry@kernel.org, jannh@google.com, 
+	jgg@ziepe.ca, jhubbard@nvidia.com, peterx@redhat.com, ziy@nvidia.com, 
+	baolin.wang@linux.alibaba.com, npache@redhat.com, ryan.roberts@arm.com, dev.jain@arm.com, 
+	baohua@kernel.org, lance.yang@linux.dev, xu.xin16@zte.com.cn, 
+	chengming.zhou@linux.dev, nao.horiguchi@gmail.com, matthew.brost@intel.com, 
+	joshua.hahnjy@gmail.com, rakie.kim@sk.com, byungchul@sk.com, gourry@gourry.net, 
+	ying.huang@linux.alibaba.com, apopple@nvidia.com, linux-arm-kernel@lists.infradead.org, 
+	linux-kernel@vger.kernel.org, linux-fsdevel@vger.kernel.org, linux-mm@kvack.org, 
+	damon@lists.linux.dev, shakeel.butt@linux.dev, ryncsn@gmail.com, 21cnbao@gmail.com, 
+	jparsana@google.com, dvander@google.com, zhangji1@honor.com, wangzicheng@honor.com
+Subject: Re: [PATCH 0/15] mm: introduce ANON_VMA_LAZY for deferred anon_vma
+ creation
+Message-ID: <ahbSwczOpsBKby7o@pedro-suse>
 References: <20260527110147.17815-1-tao.wangtao@honor.com>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -59,408 +98,110 @@ List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-ClientProxiedBy: TW006-1.hihonor.com (10.77.215.153) To TA003.hihonor.com
- (10.72.0.43)
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260527110147.17815-1-tao.wangtao@honor.com>
+X-Spam-Level: 
+X-Spam-Score: -2.30
+X-Spam-Flag: NO
+X-Spamd-Result: default: False [-2.30 / 50.00];
+	BAYES_HAM(-3.00)[100.00%];
+	SUSPICIOUS_RECIPS(1.50)[];
+	NEURAL_HAM_LONG(-1.00)[-1.000];
+	MID_RHS_NOT_FQDN(0.50)[];
+	NEURAL_HAM_SHORT(-0.20)[-1.000];
+	MIME_GOOD(-0.10)[text/plain];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	MISSING_XM_UA(0.00)[];
+	TAGGED_RCPT(0.00)[];
+	FUZZY_RATELIMITED(0.00)[rspamd.com];
+	ARC_NA(0.00)[];
+	FREEMAIL_ENVRCPT(0.00)[gmail.com];
+	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	FROM_EQ_ENVFROM(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	FREEMAIL_CC(0.00)[arm.com,kernel.org,redhat.com,alien8.de,linux.intel.com,linux-foundation.org,infradead.org,cmss.chinamobile.com,zytor.com,google.com,suse.com,suse.cz,surriel.com,ziepe.ca,nvidia.com,linux.alibaba.com,linux.dev,zte.com.cn,gmail.com,intel.com,sk.com,gourry.net,lists.infradead.org,vger.kernel.org,kvack.org,lists.linux.dev,honor.com];
+	TO_DN_SOME(0.00)[];
+	TO_MATCH_ENVRCPT_SOME(0.00)[];
+	RCVD_COUNT_TWO(0.00)[2];
+	RCVD_TLS_ALL(0.00)[];
+	RCPT_COUNT_GT_50(0.00)[59];
+	R_RATELIMIT(0.00)[to_ip_from(RL3mhzhn45zpqpmgqn4z7synfm)]
 
-Introduce ANON_VMA_LAZY helpers and prepare the anon_rmap and
-anon_vma_tree infrastructure for the upcoming ANON_VMA_LAZY feature.
+On Wed, May 27, 2026 at 07:01:32PM +0800, tao wrote:
+> TL;DR
+> -----
+> 
+> This series introduces ANON_VMA_LAZY, which defers anon_vma creation
+> until it is actually required.
+> 
+> - anon_vma memory reduced by ~92-97%, anon_vma_chain reduced by ~50-57%  
+> - rmap operations on ANON_VMA_LAZY VMAs do not require anon_vma locking
+> 
+> Background
+> ----------
+> 
+> Currently anon_vma structures are created eagerly when anonymous VMAs
+> are initialized. However, many VMAs never participate in fork or rmap
 
-Implement the core ANON_VMA_LAZY rmap semantics by updating
-anon_rmap_trylock_read(), anon_rmap_lock_read(), anon_rmap_unlock_read(),
-and anon_rmap_for_each_vma().
+This is not true, they are created on fault + a few other places.
 
-Also update __migrate_folio_record(): instead of storing both
-old_page_state and anon_vma in dst->private, store old_page_state in
-dst->private and use dst->mapping to hold anon_rmap.
+> operations that require anon_vma chains, so the allocated anon_vma and
+> anon_vma_chain objects are often unnecessary.
+> 
+> Design overview
+> ---------------
+> 
+> ANON_VMA_LAZY defers anon_vma allocation until it is actually needed
+> (for example during fork). VMAs that never participate in sharing can
+> avoid creating anon_vma structures entirely.
+> 
+> Before an anon_vma exists, rmap operations rely directly on VMA
+> information, so no anon_vma locking is required. An anon_vma is created
+> and linked only when sharing semantics are required.
+> 
+> This series introduces anon_rmap helpers to make rmap less dependent on
+> direct anon_vma access. It also introduces anon_vma_tree_t as a container
+> to support both the lazy and the existing anon_vma layouts.
+> 
+> Once a VMA becomes associated with an anon_vma, the normal behavior
+> remains unchanged.
+> 
+> Memory impact
+> -------------
+> 
+> Preliminary measurements show significant reductions in anon_vma-related
+> slab allocations.
+> 
+> After boot:
+> 
+> Object            | Before (active KB) | After (active KB) | Change
+> vm_area_struct    | 117035             | 118176            | +1.0%
+> anon_vma_chain    | 18865.8            | 8112.06           | -57.0%
+> anon_vma          | 20426.4            | 613.75            | -97.0%
+> 
+> After launching 24 apps:
+> 
+> Object            | Before (active KB) | After (active KB) | Change
+> vm_area_struct    | 196873             | 197345            | +0.2%
+> anon_vma_chain    | 31477.1            | 15576.8           | -50.5%
+> anon_vma          | 33280              | 2648.12           | -92.0%
+> 
+> Simple fork microbenchmarks also show a slight improvement in fork
+> performance, since child VMAs do not need to allocate anon_vma
+> structures during fork.
+> 
+> Feedback and suggestions are welcome.
 
-Split folio_lock_anon_rmap_read() and related functions into the next
-patch to keep this change small and easier to review.
+I'm afraid, per previous discussions[1], that no one is really willing to
+maintain extra complexity for the current state of anon rmap and anon vmas.
+Sorry :/
 
-Signed-off-by: tao <tao.wangtao@honor.com>
----
- include/linux/rmap.h | 53 +++++++++++++++++++++---
- mm/internal.h        | 99 +++++++++++++++++++++++++++++++++++++-------
- mm/migrate.c         | 11 ++++-
- mm/rmap.c            | 42 +++++++++++++++++++
- 4 files changed, 183 insertions(+), 22 deletions(-)
+Also, please don't send series this large without previous discussion and
+_at least_ an RFC tag.
 
-diff --git a/include/linux/rmap.h b/include/linux/rmap.h
-index 9802bce92695..ebe9f3f61170 100644
---- a/include/linux/rmap.h
-+++ b/include/linux/rmap.h
-@@ -938,15 +938,23 @@ void remove_migration_ptes(struct folio *src, struct folio *dst,
- 		enum ttu_flags flags);
- 
- /* Reverse mapping handle for anonymous folio rmap helpers. */
-+enum anon_rmap_type {
-+	ANON_RMAP_ANON_VMA = 0,
-+	ANON_RMAP_ANON_VMA_LAZY = 1,
-+};
-+#define ANON_RMAP_TYPE_BITS 1
-+#define ANON_RMAP_TYPE_MASK ((1UL << ANON_RMAP_TYPE_BITS) - 1)
-+
- typedef struct anon_rmap {
- 	unsigned long rmap;
- } anon_rmap_t;
- 
--#define ANON_RMAP_NULL make_anon_rmap(0)
-+#define ANON_RMAP_NULL (make_anon_rmap(0, ANON_RMAP_ANON_VMA))
- 
--static inline anon_rmap_t make_anon_rmap(const void *anon_mapping)
-+static inline anon_rmap_t make_anon_rmap(const void *anon_mapping,
-+	enum anon_rmap_type type)
- {
--	return (anon_rmap_t){ .rmap = (unsigned long)anon_mapping, };
-+	return (anon_rmap_t){ .rmap = (unsigned long)anon_mapping + type, };
- }
- 
- static inline unsigned long anon_rmap_value(anon_rmap_t anon_rmap)
-@@ -956,14 +964,38 @@ static inline unsigned long anon_rmap_value(anon_rmap_t anon_rmap)
- 
- static inline anon_rmap_t anon_vma_to_anon_rmap(const struct anon_vma *anon_vma)
- {
--	return make_anon_rmap(anon_vma);
-+	return make_anon_rmap(anon_vma, ANON_RMAP_ANON_VMA);
- }
- 
- static inline struct anon_vma *anon_rmap_to_anon_vma(anon_rmap_t anon_rmap)
- {
- 	unsigned long rmap = anon_rmap_value(anon_rmap);
- 
--	return (struct anon_vma *)rmap;
-+	return (struct anon_vma *)(rmap - ANON_RMAP_ANON_VMA);
-+}
-+
-+static inline anon_rmap_t vma_to_anon_rmap(const struct vm_area_struct *vma)
-+{
-+	return make_anon_rmap(vma, ANON_RMAP_ANON_VMA_LAZY);
-+}
-+
-+static inline struct vm_area_struct *anon_rmap_to_vma(anon_rmap_t anon_rmap)
-+{
-+	unsigned long rmap = anon_rmap_value(anon_rmap);
-+
-+	VM_BUG_ON((rmap & ANON_RMAP_TYPE_MASK) != ANON_RMAP_ANON_VMA_LAZY);
-+	return (struct vm_area_struct *)(rmap - ANON_RMAP_ANON_VMA_LAZY);
-+}
-+
-+static inline bool anon_rmap_is_anon_vma(anon_rmap_t anon_rmap)
-+{
-+#ifdef CONFIG_ANON_VMA_LAZY
-+	unsigned long rmap = anon_rmap_value(anon_rmap);
-+
-+	return (rmap & ANON_RMAP_TYPE_MASK) == ANON_RMAP_ANON_VMA;
-+#else
-+	return true;
-+#endif
- }
- 
- anon_rmap_t vma_get_anon_rmap(struct vm_area_struct *vma);
-@@ -1015,8 +1047,17 @@ static inline struct vm_area_struct *anon_rmap_iter_first_vma(
- 	anon_rmap_t anon_rmap, unsigned long start, unsigned long last,
- 	struct anon_vma_chain **avc)
- {
--	struct anon_vma *anon_vma = anon_rmap_to_anon_vma(anon_rmap);
-+	struct anon_vma *anon_vma;
-+
-+	*avc = NULL;
-+	if (!anon_rmap_is_anon_vma(anon_rmap)) {
-+		struct vm_area_struct *vma = anon_rmap_to_vma(anon_rmap);
- 
-+		if (vma->vm_pgoff + vma_pages(vma) < start || vma->vm_pgoff > last)
-+			return NULL; /* No overlap in the VMA range. */
-+		return vma;
-+	} else
-+		anon_vma = anon_rmap_to_anon_vma(anon_rmap);
- 	*avc = anon_vma_interval_tree_iter_first(&anon_vma->rb_root, start, last);
- 	return *avc ? (*avc)->vma : NULL;
- }
-diff --git a/mm/internal.h b/mm/internal.h
-index 639f9c287f4c..6b703646f66d 100644
---- a/mm/internal.h
-+++ b/mm/internal.h
-@@ -260,76 +260,147 @@ static inline void anon_vma_unlock_read(struct anon_vma *anon_vma)
- #ifdef CONFIG_ANON_VMA_LAZY
- extern bool anon_vma_lazy_enable;
- static inline bool anon_vma_lazy_enabled(void) { return anon_vma_lazy_enable; }
--#else
--static inline bool anon_vma_lazy_enabled(void) { return false; }
--#endif
- 
--static inline anon_vma_tree_t make_anon_vma_tree(struct anon_vma *anon_vma)
-+static inline int anon_vma_tree_type(anon_vma_tree_t anon_tree)
- {
--	return (anon_vma_tree_t)anon_vma;
-+	VM_WARN_ON(((unsigned long)anon_tree & ANON_VMA_TREE_MASK) ==
-+		ANON_VMA_TREE_INVALID);
-+	return (unsigned long)anon_tree & ANON_VMA_TREE_MASK;
-+}
-+
-+static inline bool anon_vma_tree_is_vma(anon_vma_tree_t anon_tree)
-+{
-+	return anon_vma_tree_type(anon_tree) == ANON_VMA_TREE_VMA;
-+}
-+
-+static inline bool anon_vma_tree_is_parent(anon_vma_tree_t anon_tree)
-+{
-+	return anon_vma_tree_type(anon_tree) == ANON_VMA_TREE_PARENT;
-+}
-+
-+static inline struct vm_area_struct *anon_vma_tree_vma(anon_vma_tree_t anon_tree)
-+{
-+	BUILD_BUG_ON(__alignof__(struct vm_area_struct) <= ANON_VMA_TREE_MASK);
-+	if (!anon_vma_tree_is_vma(anon_tree))
-+		return NULL;
-+	return (struct vm_area_struct *)(
-+		(unsigned long)anon_tree & ~ANON_VMA_TREE_MASK);
- }
- 
- static inline struct anon_vma *anon_vma_tree_anon_vma(anon_vma_tree_t anon_tree)
- {
--	return (struct anon_vma *)anon_tree;
-+	BUILD_BUG_ON(__alignof__(struct anon_vma) <= ANON_VMA_TREE_MASK);
-+	if (anon_vma_tree_is_vma(anon_tree))
-+		return NULL;
-+	return (struct anon_vma *)((unsigned long)anon_tree & ~ANON_VMA_TREE_MASK);
-+}
-+
-+#else
-+static inline bool anon_vma_lazy_enabled(void) { return false; }
-+static inline int anon_vma_tree_type(anon_vma_tree_t anon_tree) { return 0; }
-+static inline bool anon_vma_tree_is_vma(anon_vma_tree_t anon_tree) { return false; }
-+static inline bool anon_vma_tree_is_parent(
-+	anon_vma_tree_t anon_tree) { return false; }
-+static inline struct vm_area_struct *anon_vma_tree_vma(
-+	anon_vma_tree_t anon_tree) { return NULL; }
-+static inline struct anon_vma *anon_vma_tree_anon_vma(
-+	anon_vma_tree_t anon_tree) { return (struct anon_vma *)anon_tree; }
-+#endif
-+
-+static inline anon_vma_tree_t make_anon_vma_tree(const struct anon_vma *anon_vma)
-+{
-+	return (anon_vma_tree_t)anon_vma;
- }
- 
- /* Store anon_vma in vma->anon_vma using a tagged pointer. */
- static inline void vma_set_anon_vma(struct vm_area_struct *vma,
--		struct anon_vma *anon_vma)
-+	const struct anon_vma *anon_vma)
- {
- 	vma->anon_vma = (anon_vma_tree_t)anon_vma;
- }
- 
--/* Return the VMA's anon_vma. */
-+/* Return the VMA's anon_vma, or NULL if it is marked lazy. */
- static inline struct anon_vma *vma_anon_vma(const struct vm_area_struct *vma)
- {
- 	/* Use READ_ONCE() for reusable_anon_vma */
- 	anon_vma_tree_t anon_tree = READ_ONCE(vma->anon_vma);
- 
-+	if (anon_vma_tree_type(anon_tree) != ANON_VMA_TREE_REGULAR)
-+		return NULL;
- 	return anon_vma_tree_anon_vma(anon_tree);
- }
- 
-+static inline bool vma_is_anon_vma_lazy(const struct vm_area_struct *vma)
-+{
-+	return anon_vma_tree_type((anon_vma_tree_t)vma->anon_vma);
-+}
-+
-+static inline const struct vm_area_struct *vma_anon_vma_lazy_root(
-+	const struct vm_area_struct *vma)
-+{
-+	anon_vma_tree_t anon_tree = (anon_vma_tree_t)vma->anon_vma;
-+	int lazy_type = anon_vma_tree_type(anon_tree);
-+
-+	if (!lazy_type)
-+		return NULL;
-+	if (anon_vma_tree_is_parent(anon_tree))
-+		return vma;
-+	return anon_vma_tree_vma(anon_tree);
-+}
-+
-+static inline bool vma_is_anon_vma_lazy_root(const struct vm_area_struct *vma)
-+{
-+	return vma == vma_anon_vma_lazy_root(vma);
-+}
-+
-+/*
-+ * ANON_VMA_TREE_VMA is just a VMA, without anon_vma or anon_vma_chain,
-+ * so no protection is needed.
-+ */
- static inline void anon_vma_tree_lock_write(anon_vma_tree_t anon_tree)
- {
- 	struct anon_vma *anon_vma = anon_vma_tree_anon_vma(anon_tree);
- 
--	anon_vma_lock_write(anon_vma);
-+	if (anon_vma)
-+		anon_vma_lock_write(anon_vma);
- }
- 
- static inline int anon_vma_tree_trylock_write(anon_vma_tree_t anon_tree)
- {
- 	struct anon_vma *anon_vma = anon_vma_tree_anon_vma(anon_tree);
- 
--	return anon_vma_trylock_write(anon_vma);
-+	return anon_vma ? anon_vma_trylock_write(anon_vma) : 1;
- }
- 
- static inline void anon_vma_tree_unlock_write(anon_vma_tree_t anon_tree)
- {
- 	struct anon_vma *anon_vma = anon_vma_tree_anon_vma(anon_tree);
- 
--	anon_vma_unlock_write(anon_vma);
-+	if (anon_vma)
-+		anon_vma_unlock_write(anon_vma);
- }
- 
- static inline void anon_vma_tree_lock_read(anon_vma_tree_t anon_tree)
- {
- 	struct anon_vma *anon_vma = anon_vma_tree_anon_vma(anon_tree);
- 
--	anon_vma_lock_read(anon_vma);
-+	if (anon_vma)
-+		anon_vma_lock_read(anon_vma);
- }
- 
- static inline int anon_vma_tree_trylock_read(anon_vma_tree_t anon_tree)
- {
- 	struct anon_vma *anon_vma = anon_vma_tree_anon_vma(anon_tree);
- 
--	return anon_vma_trylock_read(anon_vma);
-+	return anon_vma ? anon_vma_trylock_read(anon_vma) : 1;
- }
- 
- static inline void anon_vma_tree_unlock_read(anon_vma_tree_t anon_tree)
- {
- 	struct anon_vma *anon_vma = anon_vma_tree_anon_vma(anon_tree);
- 
--	anon_vma_unlock_read(anon_vma);
-+	if (anon_vma)
-+		anon_vma_unlock_read(anon_vma);
- }
- 
- struct anon_vma *folio_get_anon_vma(const struct folio *folio);
-diff --git a/mm/migrate.c b/mm/migrate.c
-index 769983cf14e0..b397cdeab09a 100644
---- a/mm/migrate.c
-+++ b/mm/migrate.c
-@@ -1144,7 +1144,10 @@ static void __migrate_folio_record(struct folio *dst,
- 				   int old_page_state,
- 				   anon_rmap_t anon_rmap)
- {
--	dst->private = (void *)anon_rmap_to_anon_vma(anon_rmap) + old_page_state;
-+	unsigned long rmap = anon_rmap_value(anon_rmap);
-+
-+	dst->private = (void *)(rmap & ~PAGE_OLD_STATES) + old_page_state;
-+	dst->mapping = (struct address_space *)rmap;
- }
- 
- static void __migrate_folio_extract(struct folio *dst,
-@@ -1152,8 +1155,12 @@ static void __migrate_folio_extract(struct folio *dst,
- 				   anon_rmap_t *anon_rmapp)
- {
- 	unsigned long private = (unsigned long)dst->private;
-+	unsigned long mapping = (unsigned long)dst->mapping;
- 
--	*anon_rmapp = anon_vma_to_anon_rmap((void *)(private & ~PAGE_OLD_STATES));
-+	VM_BUG_ON((private & ~PAGE_OLD_STATES) != (mapping & ~ANON_RMAP_TYPE_MASK));
-+	*anon_rmapp = make_anon_rmap((void *)(mapping & ~ANON_RMAP_TYPE_MASK),
-+		mapping & ANON_RMAP_TYPE_MASK);
-+	dst->mapping = NULL;
- 	*old_page_state = private & PAGE_OLD_STATES;
- 	dst->private = NULL;
- }
-diff --git a/mm/rmap.c b/mm/rmap.c
-index 48c4463d8b2c..001c44570df8 100644
---- a/mm/rmap.c
-+++ b/mm/rmap.c
-@@ -794,42 +794,84 @@ anon_rmap_t vma_get_anon_rmap(struct vm_area_struct *vma)
- 
- 	mmap_assert_locked(vma->vm_mm);
- 	VM_BUG_ON(!vma->anon_vma);
-+	if (!anon_vma) {
-+		vma_get(vma);
-+		return vma_to_anon_rmap(vma);
-+	}
- 	get_anon_vma(anon_vma);
- 	return anon_vma_to_anon_rmap(anon_vma);
- }
- 
- void put_anon_rmap(anon_rmap_t anon_rmap)
- {
-+	if (!anon_rmap_is_anon_vma(anon_rmap)) {
-+		vma_put(anon_rmap_to_vma(anon_rmap));
-+		return;
-+	}
- 	put_anon_vma(anon_rmap_to_anon_vma(anon_rmap));
- }
- 
-+/*
-+ * Rmap for anonymous pages normally only needs read protection.
-+ * However, huge page splitting in huge_memory requires the rmap
-+ * write lock to prevent concurrency, achieved by upgrading to a
-+ * regular anon_vma.
-+ */
- void anon_rmap_lock_write(anon_rmap_t anon_rmap)
- {
-+	VM_BUG_ON(!anon_rmap_is_anon_vma(anon_rmap));
- 	anon_vma_lock_write(anon_rmap_to_anon_vma(anon_rmap));
- }
- 
- int anon_rmap_trylock_write(anon_rmap_t anon_rmap)
- {
-+	VM_BUG_ON(!anon_rmap_is_anon_vma(anon_rmap));
- 	return anon_vma_trylock_write(anon_rmap_to_anon_vma(anon_rmap));
- }
- 
- void anon_rmap_unlock_write(anon_rmap_t anon_rmap)
- {
-+	VM_BUG_ON(!anon_rmap_is_anon_vma(anon_rmap));
- 	anon_vma_unlock_write(anon_rmap_to_anon_vma(anon_rmap));
- }
- 
-+static void anon_vma_lazy_lock_read(struct vm_area_struct *vma)
-+{
-+	vma_get(vma);
-+}
-+
-+static bool anon_vma_lazy_trylock_read(struct vm_area_struct *vma)
-+{
-+	return (bool)vma_get(vma);
-+}
-+
-+static void anon_vma_lazy_unlock_read(struct vm_area_struct *vma)
-+{
-+	vma_put(vma);
-+}
-+
- void anon_rmap_lock_read(anon_rmap_t anon_rmap)
- {
-+	if (!anon_rmap_is_anon_vma(anon_rmap)) {
-+		anon_vma_lazy_lock_read(anon_rmap_to_vma(anon_rmap));
-+		return;
-+	}
- 	anon_vma_lock_read(anon_rmap_to_anon_vma(anon_rmap));
- }
- 
- int anon_rmap_trylock_read(anon_rmap_t anon_rmap)
- {
-+	if (!anon_rmap_is_anon_vma(anon_rmap))
-+		return anon_vma_lazy_trylock_read(anon_rmap_to_vma(anon_rmap));
- 	return anon_vma_trylock_read(anon_rmap_to_anon_vma(anon_rmap));
- }
- 
- void anon_rmap_unlock_read(anon_rmap_t anon_rmap)
- {
-+	if (!anon_rmap_is_anon_vma(anon_rmap)) {
-+		anon_vma_lazy_unlock_read(anon_rmap_to_vma(anon_rmap));
-+		return;
-+	}
- 	anon_vma_unlock_read(anon_rmap_to_anon_vma(anon_rmap));
- }
- 
+[1] https://lore.kernel.org/all/aec533b2-37a7-4f44-a279-c4aa604206ac@lucifer.local/
+
 -- 
-2.17.1
-
+Pedro
