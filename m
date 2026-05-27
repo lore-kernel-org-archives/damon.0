@@ -1,39 +1,30 @@
-Received: from mta22.hihonor.com (mta22.hihonor.com [81.70.192.198])
+Received: from mta20.hihonor.com (mta20.honor.com [81.70.206.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3D963F58F7
-	for <damon@lists.linux.dev>; Wed, 27 May 2026 11:08:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=81.70.192.198
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B50D3FA5F2
+	for <damon@lists.linux.dev>; Wed, 27 May 2026 11:08:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=81.70.206.69
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779880090; cv=none; b=I3h8R9IsyMaVAVIi8SUu0MTTebZydShDwmSgtpHJc2lWLTZ/nZ14reTDkMXbHMH3Ehf6cCU+aTy8G8c14jpJhJPQKHZ6uCiyA4STIp+QJZjlWHzE5f7eTxmGl9U0ccu5OFDoI2lsj+Jq/tlNb3IVvxasjVDxY5TPNo4wQ2j0wjg=
+	t=1779880092; cv=none; b=jNrdIknRYGMXeYkmFSd4Vpl3TZXokIcbxoap0dhwSjMO7q7B5hCL+3OHvAK4f8BmUJ5dlLnozCp82epzfZbhaMO7ocfDXcuZmN0rgGF1RzOfqmzFGwifATsA93uHFRBlPZCSbUeUYOjQ5Y/KAwDj9kpdnef0hoL3GaWGQEpxcwE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779880090; c=relaxed/simple;
-	bh=6F4C7jXw3kPjRHyDTra56ILH7RMIhMbIQ1DUccefIQ4=;
+	s=arc-20240116; t=1779880092; c=relaxed/simple;
+	bh=Dk7SM3To25Cme62PVbHQX7dIZzrQQBtRDWTHoV7EWI8=;
 	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Phsyldw4HooO4WGnBmLKGqyKNZp4YiKbIU1wWVGgmYw0+o8Gr6dC0iakjxuDXnH9F5X6EvgbNZTcDHAexcq02rpwAaRXFm1BF3bQ2RIhd4+ftNkiVNeBR0ClGmQTlWqm+3G5o5P7i8o0Pb1Dcncyogy+rydZx9SU4Xn4V+mWqq8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=honor.com; spf=pass smtp.mailfrom=honor.com; dkim=pass (1024-bit key) header.d=honor.com header.i=@honor.com header.b=d/GWnyKh; arc=none smtp.client-ip=81.70.192.198
+	 MIME-Version:Content-Type; b=SBGUx1I076MJaaXdIL1FXwtSJahJlIUCK3rSr9hQmr5oaiK+HJwXOZf11OF9OxefN1qdWKBMSDGjOyhsH8/kdSq4eKHHnkgY4veofg+5muYrPF1O1G1M3ECnxrLOJWXHbqelmnkWBg7sl/eCf20L2mRf89AlGqCBGRqqSDdVQ80=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=honor.com; spf=pass smtp.mailfrom=honor.com; arc=none smtp.client-ip=81.70.206.69
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=honor.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=honor.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=honor.com header.i=@honor.com header.b="d/GWnyKh"
-dkim-signature: v=1; a=rsa-sha256; d=honor.com; s=dkim;
-	c=relaxed/relaxed; q=dns/txt;
-	h=To:From;
-	bh=q/70JID062V814TY2TOyw8EA5k2YWRj4Olo6OZJNrik=;
-	b=d/GWnyKhP5OdN/FwoZeN58jllQS4j1OQ9Opo/3nlNKj09J/EjFx9D5jk0CvFygD3nYmcdbfbp
-	rCI6J2aiagXzUJlZApf+pFo0AMnJgoLif70IBWoHv3Wl5EA1H/AHwuhSuappH6oOZxlRXMsTTnK
-	kMH6ECTvISsLQzWBCPTWAFo=
-Received: from TW002-1.hihonor.com (unknown [10.72.0.137])
-	by mta22.hihonor.com (SkyGuard) with ESMTPS id 4gQRdj3h0vzYl1Gk;
-	Wed, 27 May 2026 19:06:49 +0800 (CST)
-Received: from TA003.hihonor.com (10.72.0.43) by TW002-1.hihonor.com
- (10.72.0.137) with Microsoft SMTP Server (version=TLS1_2,
+Received: from TW006-1.hihonor.com (unknown [10.77.215.153])
+	by mta20.hihonor.com (SkyGuard) with ESMTPS id 4gQRdP2F6tzYl7vQ;
+	Wed, 27 May 2026 19:06:33 +0800 (CST)
+Received: from TA003.hihonor.com (10.72.0.43) by TW006-1.hihonor.com
+ (10.77.215.153) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.37; Wed, 27 May
- 2026 19:08:04 +0800
+ 2026 19:07:59 +0800
 Received: from localhost.localdomain (10.144.18.117) by TA003.hihonor.com
  (10.72.0.43) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.37; Wed, 27 May
- 2026 19:08:03 +0800
+ 2026 19:07:58 +0800
 From: tao <tao.wangtao@honor.com>
 To: <catalin.marinas@arm.com>, <will@kernel.org>, <tglx@kernel.org>,
 	<mingo@redhat.com>, <bp@alien8.de>, <dave.hansen@linux.intel.com>,
@@ -56,9 +47,9 @@ CC: <hpa@zytor.com>, <liam@infradead.org>, <vbabka@kernel.org>,
 	<damon@lists.linux.dev>, <shakeel.butt@linux.dev>, <ryncsn@gmail.com>,
 	<21cnbao@gmail.com>, <jparsana@google.com>, <dvander@google.com>,
 	<zhangji1@honor.com>, <wangzicheng@honor.com>
-Subject: [PATCH 15/15] mm: enable CONFIG_ANON_VMA_LAZY on arm64 and x86_64
-Date: Wed, 27 May 2026 19:01:47 +0800
-Message-ID: <20260527110147.17815-16-tao.wangtao@honor.com>
+Subject: [PATCH 07/15] mm: replace direct FOLIO_MAPPING_ANON usage with helpers
+Date: Wed, 27 May 2026 19:01:39 +0800
+Message-ID: <20260527110147.17815-8-tao.wangtao@honor.com>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20260527110147.17815-1-tao.wangtao@honor.com>
 References: <20260527110147.17815-1-tao.wangtao@honor.com>
@@ -72,53 +63,125 @@ Content-Type: text/plain
 X-ClientProxiedBy: TW006-1.hihonor.com (10.77.215.153) To TA003.hihonor.com
  (10.72.0.43)
 
-All prerequisites are in place, so enable CONFIG_ANON_VMA_LAZY for
-arm64 and x86_64.
+Replace direct uses of FOLIO_MAPPING_ANON in external modules with
+helper functions in preparation for ANON_VMA_LAZY.
 
 Signed-off-by: tao <tao.wangtao@honor.com>
 ---
- arch/arm64/Kconfig | 1 +
- arch/x86/Kconfig   | 1 +
- mm/rmap.c          | 2 +-
- 3 files changed, 3 insertions(+), 1 deletion(-)
+ fs/proc/page.c             |  6 ++----
+ include/linux/page-flags.h | 15 ++++++++++++---
+ include/linux/pagemap.h    |  2 +-
+ mm/gup.c                   |  6 ++----
+ 4 files changed, 17 insertions(+), 12 deletions(-)
 
-diff --git a/arch/arm64/Kconfig b/arch/arm64/Kconfig
-index fe60738e5943..9517883f0aaf 100644
---- a/arch/arm64/Kconfig
-+++ b/arch/arm64/Kconfig
-@@ -81,6 +81,7 @@ config ARM64
- 	select ARCH_SUPPORTS_NUMA_BALANCING
- 	select ARCH_SUPPORTS_PAGE_TABLE_CHECK
- 	select ARCH_SUPPORTS_PER_VMA_LOCK
-+	select ARCH_SUPPORTS_ANON_VMA_LAZY
- 	select ARCH_SUPPORTS_HUGE_PFNMAP if TRANSPARENT_HUGEPAGE
- 	select ARCH_SUPPORTS_RT
- 	select ARCH_SUPPORTS_SCHED_SMT
-diff --git a/arch/x86/Kconfig b/arch/x86/Kconfig
-index f3f7cb01d69d..cc3430eaa7b4 100644
---- a/arch/x86/Kconfig
-+++ b/arch/x86/Kconfig
-@@ -28,6 +28,7 @@ config X86_64
- 	select ARCH_SUPPORTS_MSEAL_SYSTEM_MAPPINGS
- 	select ARCH_SUPPORTS_INT128 if CC_HAS_INT128
- 	select ARCH_SUPPORTS_PER_VMA_LOCK
-+	select ARCH_SUPPORTS_ANON_VMA_LAZY
- 	select ARCH_SUPPORTS_HUGE_PFNMAP if TRANSPARENT_HUGEPAGE
- 	select HAVE_ARCH_SOFT_DIRTY
- 	select MODULES_USE_ELF_RELA
-diff --git a/mm/rmap.c b/mm/rmap.c
-index e14509b47412..77e2ab95671a 100644
---- a/mm/rmap.c
-+++ b/mm/rmap.c
-@@ -168,7 +168,7 @@ static struct kmem_cache *anon_vma_chain_cachep;
-  *        covering both regular anon_vma and lazy anon_vma mappings.
-  */
+diff --git a/fs/proc/page.c b/fs/proc/page.c
+index f9b2c2c906cd..93ddfda9fa1d 100644
+--- a/fs/proc/page.c
++++ b/fs/proc/page.c
+@@ -148,7 +148,6 @@ u64 stable_page_flags(const struct page *page)
+ 	const struct folio *folio;
+ 	struct page_snapshot ps;
+ 	unsigned long k;
+-	unsigned long mapping;
+ 	bool is_anon;
+ 	u64 u = 0;
  
--bool anon_vma_lazy_enable;
-+bool anon_vma_lazy_enable = true;
+@@ -163,8 +162,7 @@ u64 stable_page_flags(const struct page *page)
+ 	folio = &ps.folio_snapshot;
+ 
+ 	k = folio->flags.f;
+-	mapping = (unsigned long)folio->mapping;
+-	is_anon = mapping & FOLIO_MAPPING_ANON;
++	is_anon = folio_test_anon(folio);
+ 
+ 	/*
+ 	 * pseudo flags for the well known (anonymous) memory mapped pages
+@@ -173,7 +171,7 @@ u64 stable_page_flags(const struct page *page)
+ 		u |= 1 << KPF_MMAP;
+ 	if (is_anon) {
+ 		u |= 1 << KPF_ANON;
+-		if (mapping & FOLIO_MAPPING_KSM)
++		if (!PageAnonNotKsm(page))
+ 			u |= 1 << KPF_KSM;
+ 	}
+ 
+diff --git a/include/linux/page-flags.h b/include/linux/page-flags.h
+index c0cc43118877..50c80a1e2c7c 100644
+--- a/include/linux/page-flags.h
++++ b/include/linux/page-flags.h
+@@ -720,15 +720,20 @@ PAGEFLAG_FALSE(VmemmapSelfHosted, vmemmap_self_hosted)
+ #define FOLIO_MAPPING_ANON_VMA_LAZY	FOLIO_MAPPING_ANON_KSM
+ #define FOLIO_MAPPING_FLAGS	(FOLIO_MAPPING_ANON | FOLIO_MAPPING_ANON_KSM)
+ 
+-static __always_inline bool folio_test_anon(const struct folio *folio)
++static __always_inline bool mapping_is_anon(unsigned long mapping)
+ {
+ #ifdef CONFIG_ANON_VMA_LAZY
+-	return ((unsigned long)folio->mapping & FOLIO_MAPPING_FLAGS) != 0;
++	return (mapping & FOLIO_MAPPING_FLAGS) != 0;
+ #else
+-	return ((unsigned long)folio->mapping & FOLIO_MAPPING_ANON) != 0;
++	return (mapping & FOLIO_MAPPING_ANON) != 0;
  #endif
+ }
  
- static inline struct anon_vma *anon_vma_alloc(void)
++static __always_inline bool folio_test_anon(const struct folio *folio)
++{
++	return mapping_is_anon((unsigned long)folio->mapping);
++}
++
+ static __always_inline bool folio_test_lazyfree(const struct folio *folio)
+ {
+ 	return folio_test_anon(folio) && !folio_test_swapbacked(folio);
+@@ -738,7 +743,11 @@ static __always_inline bool PageAnonNotKsm(const struct page *page)
+ {
+ 	unsigned long flags = (unsigned long)page_folio(page)->mapping;
+ 
++#ifdef CONFIG_ANON_VMA_LAZY
++	return (flags & FOLIO_MAPPING_FLAGS) != FOLIO_MAPPING_KSM;
++#else
+ 	return (flags & FOLIO_MAPPING_FLAGS) == FOLIO_MAPPING_ANON;
++#endif
+ }
+ 
+ static __always_inline bool PageAnon(const struct page *page)
+diff --git a/include/linux/pagemap.h b/include/linux/pagemap.h
+index 31a848485ad9..746939872ac4 100644
+--- a/include/linux/pagemap.h
++++ b/include/linux/pagemap.h
+@@ -507,7 +507,7 @@ static inline pgoff_t mapping_align_index(const struct address_space *mapping,
+ static inline bool mapping_large_folio_support(const struct address_space *mapping)
+ {
+ 	/* AS_FOLIO_ORDER is only reasonable for pagecache folios */
+-	VM_WARN_ONCE((unsigned long)mapping & FOLIO_MAPPING_ANON,
++	VM_WARN_ONCE(mapping_is_anon((unsigned long)mapping),
+ 			"Anonymous mapping always supports large folio");
+ 
+ 	return mapping_max_folio_order(mapping) > 0;
+diff --git a/mm/gup.c b/mm/gup.c
+index ad9ded39609c..69dda325b082 100644
+--- a/mm/gup.c
++++ b/mm/gup.c
+@@ -2740,7 +2740,6 @@ static bool gup_fast_folio_allowed(struct folio *folio, unsigned int flags)
+ 	bool reject_file_backed = false;
+ 	struct address_space *mapping;
+ 	bool check_secretmem = false;
+-	unsigned long mapping_flags;
+ 
+ 	/*
+ 	 * If we aren't pinning then no problematic write can occur. A long term
+@@ -2792,9 +2791,8 @@ static bool gup_fast_folio_allowed(struct folio *folio, unsigned int flags)
+ 		return false;
+ 
+ 	/* Anonymous folios pose no problem. */
+-	mapping_flags = (unsigned long)mapping & FOLIO_MAPPING_FLAGS;
+-	if (mapping_flags)
+-		return mapping_flags & FOLIO_MAPPING_ANON;
++	if (mapping_is_anon((unsigned long)mapping))
++		return true;
+ 
+ 	/*
+ 	 * At this point, we know the mapping is non-null and points to an
 -- 
 2.17.1
 
