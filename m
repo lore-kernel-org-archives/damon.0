@@ -1,175 +1,318 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3F403FDBF3
-	for <damon@lists.linux.dev>; Wed, 27 May 2026 11:43:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76C9A3EE1C2;
+	Wed, 27 May 2026 11:45:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779882199; cv=none; b=kG1D3ihX1zjmzg4sHrSdUkJY/bzNThQ/5ykLK1eaZm2m5PwlcSnFxr/OtGr05j2TEt1AyOn7LbAX+ThChB9CeH97PdtNPMD2QAPeuJHNPGVrrX/IubWQ7I7FheouCKtcb0o1YXzy5jkaHqxUQb5sxOCH6r0f6kYYSsP6vM9IQhE=
+	t=1779882302; cv=none; b=jtvH7+ch4qkd8NQAgYZi7jc6QwoUROIivkda1354ZZbfgCWL4DX1brc9wS2YnLXbXjkKaXCtFC9lfuSG2u363CVBr3GdE2tehjvwg7rDpRtA75F2H4dlNcGxFsCV7H4S5hK1ERjcwJH3iG3HjZblMGT49EpKo6MqHRmyjV6AWbQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779882199; c=relaxed/simple;
-	bh=PWw7wEc5hBK9ZpOe9sMBNpz1nnOvTFIoyHCcu4mVzKs=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=WnhiZjy7lXlqGvCfEreB/1ESpmbZV3nIiMa4aw01odhBYgjGFqy1blnXZdIDgiDjlMuS7zO5ohslaOAM86rITSTEXEAtMLgOjZD3h5P/Fa7fK4Zgo6f3QddoDFuqwlgx16mZPiExYvL6gMFCUoi40hpye25GhxpkVdIUlhe613s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YkLUD7of; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1779882302; c=relaxed/simple;
+	bh=GIYfYdBRhS8kpfSENeeHNih1c5YaL3XGMxMThQE9b/A=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=mvhEJXFUraDb3eCvej2iYGbQHvmsqgVH9bfQLOn/GAF5z869t/u+IoT7jyxuTtOEMHvSF406igswiubgYZfwvTISLwto0H6Y3JcYazfbjIn3sZ/jw3rZgqwmI8oD2umuskfnYsNtvcuU9j6e655bVXWQT8iUyWdXrN0tU0g6QWg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jmE0ACf3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YkLUD7of"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A50A1F000E9;
-	Wed, 27 May 2026 11:43:16 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jmE0ACf3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C5441F00A3A;
+	Wed, 27 May 2026 11:45:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1779882196;
-	bh=UwCRVxgUThr2PO25wOcBO3cybf9azgkbCrv/oJlM4PY=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=YkLUD7of2TrWz3OArDX1X68S8z6taJKB8LpdgzQwigJ0+9WYm8cTzF3EWlGA46L4T
-	 ouno5lBetCx1/lLLGUU+D8qYREvcRjlLaSjOHcJ8j5PvnjZRbE+Z6twxChZdNizFAr
-	 waCoEys41x9YyqnpmeVbz5xc25TqmLD61o3BfaZcWqEzLgSTrhCPI57JygW8zmqeAf
-	 vlVVgKas4VxakU8tX4ff7J6TwWSrgPcvOLY09AjB1WyazNw2WsJk5P+GCx01LonuLj
-	 QUHGwFuf3Wh6EOcegE7fD/DBM+ePlBxXpaP/t9GkBXindrjqcRr7qCGlKiaSiQuVZA
-	 CR7i4PqnEieLg==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH 07/15] mm: replace direct FOLIO_MAPPING_ANON usage with
- helpers
-Reply-To: sashiko-reviews@lists.linux.dev
+	s=k20260515; t=1779882301;
+	bh=6InA4tQAxLsS7j94L5G1yEXJPfdZ+4wJTUuxhR16ysc=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=jmE0ACf3VqYlPLAURNrUVBUpTirFjm6AOmbp7FRKMCQPS4O7hxubZyIL+l56vhbfB
+	 fs3RoVnvEGGcmt243CTajQnTYqO0SYgyRaF84t6ATP47FV1pJYn5iTjqCLmhPAWqwY
+	 Mw/snjX5RbRG0fXRfEdYygqgRCxy9F2/4aTsTowLGQF8cfiVDsHLTblBVYcCt7TxDr
+	 0m6eCV5JroXQKxiO6hO2mvynMgQFldZ8cQEBOCQQHN4vwpmdUYfV9eVzJ6qJeiSMqe
+	 vRlif/RwtY3kl2WyXvbbMIcEdqnmPeHPZWxlS9yjduXHt86hZ4zldvrHh9+SFgJ9E1
+	 0Xk1G0csyxJrQ==
+Date: Wed, 27 May 2026 12:44:57 +0100
+From: Lorenzo Stoakes <ljs@kernel.org>
 To: tao <tao.wangtao@honor.com>
-Cc: damon@lists.linux.dev
-In-Reply-To: <20260527110147.17815-8-tao.wangtao@honor.com>
-References: <20260527110147.17815-8-tao.wangtao@honor.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Wed, 27 May 2026 11:43:15 +0000
-Message-Id: <20260527114316.1A50A1F000E9@smtp.kernel.org>
+Cc: catalin.marinas@arm.com, will@kernel.org, tglx@kernel.org, 
+	mingo@redhat.com, bp@alien8.de, dave.hansen@linux.intel.com, x86@kernel.org, 
+	akpm@linux-foundation.org, david@kernel.org, willy@infradead.org, sj@kernel.org, 
+	kees@kernel.org, luizcap@redhat.com, zhangjiao2@cmss.chinamobile.com, 
+	kas@kernel.org, hpa@zytor.com, liam@infradead.org, vbabka@kernel.org, 
+	rppt@kernel.org, surenb@google.com, mhocko@suse.com, jack@suse.cz, 
+	riel@surriel.com, harry@kernel.org, jannh@google.com, jgg@ziepe.ca, 
+	jhubbard@nvidia.com, peterx@redhat.com, ziy@nvidia.com, baolin.wang@linux.alibaba.com, 
+	npache@redhat.com, ryan.roberts@arm.com, dev.jain@arm.com, baohua@kernel.org, 
+	lance.yang@linux.dev, xu.xin16@zte.com.cn, chengming.zhou@linux.dev, 
+	nao.horiguchi@gmail.com, matthew.brost@intel.com, joshua.hahnjy@gmail.com, 
+	rakie.kim@sk.com, byungchul@sk.com, gourry@gourry.net, 
+	ying.huang@linux.alibaba.com, apopple@nvidia.com, pfalcato@suse.de, 
+	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, linux-fsdevel@vger.kernel.org, 
+	linux-mm@kvack.org, damon@lists.linux.dev, shakeel.butt@linux.dev, ryncsn@gmail.com, 
+	21cnbao@gmail.com, jparsana@google.com, dvander@google.com, zhangji1@honor.com, 
+	wangzicheng@honor.com
+Subject: Re: [PATCH 01/15] mm/rmap: introduce anon_rmap APIs for anonymous
+ folios
+Message-ID: <ahbWKJL8TtGsFV4r@lucifer>
+References: <20260527110147.17815-1-tao.wangtao@honor.com>
+ <20260527110147.17815-2-tao.wangtao@honor.com>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260527110147.17815-2-tao.wangtao@honor.com>
 
-Thank you for your contribution! Sashiko AI review found 3 potential issue(=
-s) to consider:
-- [Critical] Incomplete tagged pointer filtering in `gup_fast_folio_allowed=
-()` allows non-anonymous tagged pointers to fall through and be dereference=
-d, causing a kernel panic.
-- [High] Calling `PageAnonNotKsm(page)` in `stable_page_flags()` bypasses t=
-he page snapshot, causing speculative folio access in a PFN-scanning loop.
-- [High] `PageAnonNotKsm()` incorrectly returns true for file-backed pages =
-under `CONFIG_ANON_VMA_LAZY`.
---
+On Wed, May 27, 2026 at 07:01:33PM +0800, tao wrote:
+> Add a set of anon_rmap APIs to operate on the reverse mappings of
+> anonymous folios.
+>
+> Introduce anon_rmap_for_each_vma() as a wrapper around
+> vma_interval_tree_foreach(), so callers no longer access the
+> interval tree directly.
+>
+> This prepares the rmap code for upcoming ANON_VMA_LAZY support and
+> RCU-based lockless rmap traversal.
+>
+> No functional change intended.
 
-commit 31e536094ea4838e96a754bf6847c942608b9162
-Author: tao <tao.wangtao@honor.com>
+This commit message is total garbage. You're not explaining WHY you're
+using words to describe what the code does. I can read the code?
 
-mm: replace direct FOLIO_MAPPING_ANON usage with helpers
+>
+> Signed-off-by: tao <tao.wangtao@honor.com>
 
-This patch replaces direct uses of FOLIO_MAPPING_ANON in external modules
-with helper functions in preparation for ANON_VMA_LAZY.
+This is all horrible, horribly invasive, and adding a pile of crap on machinery
+we want to get rid of.
 
-> diff --git a/fs/proc/page.c b/fs/proc/page.c
-> index f9b2c2c906cd7..93ddfda9fa1d2 100644
-> --- a/fs/proc/page.c
-> +++ b/fs/proc/page.c
-> @@ -163,8 +162,7 @@ u64 stable_page_flags(const struct page *page)
->  	folio =3D &ps.folio_snapshot;
-> =20
->  	k =3D folio->flags.f;
-> -	mapping =3D (unsigned long)folio->mapping;
-> -	is_anon =3D mapping & FOLIO_MAPPING_ANON;
-> +	is_anon =3D folio_test_anon(folio);
-> =20
->  	/*
->  	 * pseudo flags for the well known (anonymous) memory mapped pages
-> @@ -173,7 +171,7 @@ u64 stable_page_flags(const struct page *page)
->  		u |=3D 1 << KPF_MMAP;
->  	if (is_anon) {
->  		u |=3D 1 << KPF_ANON;
-> -		if (mapping & FOLIO_MAPPING_KSM)
-> +		if (!PageAnonNotKsm(page))
+You've added zero explanation or comments. This is just not upstreamable,
+and even if you did explain yourself we don't want to extend a broken
+abstraction with more broken complexity?
 
-[Severity: High]
-Does this code reintroduce speculative folio access on the unreferenced pag=
-e?
+You're also seemingly introducing a typesafe wrapper to wrap an arbitrary value?
 
-The stable_page_flags() function is a PFN walker. Because the pages being
-scanned are unreferenced, the code safely snapshots the page and its folio
-state before accessing it.
+> ---
+>  include/linux/rmap.h | 68 +++++++++++++++++++++++++++++++++++++++++
+>  mm/rmap.c            | 73 ++++++++++++++++++++++++++++++++++++++++++++
+>  2 files changed, 141 insertions(+)
+>
+> diff --git a/include/linux/rmap.h b/include/linux/rmap.h
+> index 8dc0871e5f00..c42314ea4362 100644
+> --- a/include/linux/rmap.h
+> +++ b/include/linux/rmap.h
+> @@ -937,6 +937,44 @@ int pfn_mkclean_range(unsigned long pfn, unsigned long nr_pages, pgoff_t pgoff,
+>  void remove_migration_ptes(struct folio *src, struct folio *dst,
+>  		enum ttu_flags flags);
+>
+> +/* Reverse mapping handle for anonymous folio rmap helpers. */
+> +typedef struct anon_rmap {
+> +	unsigned long rmap;
+> +} anon_rmap_t;
 
-The original code read the mapping from the stabilized snapshot. But
-PageAnonNotKsm(page) internally invokes page_folio(page)->mapping on the
-live, unreferenced page.
+I do not know why you're using a typedef when you just treat it as an
+arbitrary value?
 
-As documented in the MM subsystem guidelines, accessing folio state without
-stabilization in a PFN walker can cause a VM_BUG_ON or garbage reads if the
-compound page structure changes concurrently.
+> +
+> +#define ANON_RMAP_NULL make_anon_rmap(0)
 
->  			u |=3D 1 << KPF_KSM;
->  	}
-> =20
+This is just equivalent to a NULL value?...
 
-[ ... ]
+> +
+> +static inline anon_rmap_t make_anon_rmap(const void *anon_mapping)
+> +{
+> +	return (anon_rmap_t){ .rmap = (unsigned long)anon_mapping, };
+> +}
 
-> diff --git a/include/linux/page-flags.h b/include/linux/page-flags.h
-> index 5c10bf5db26fc..e2332aefa48f7 100644
-> --- a/include/linux/page-flags.h
-> +++ b/include/linux/page-flags.h
-> @@ -738,7 +743,11 @@ static __always_inline bool PageAnonNotKsm(const str=
-uct page *page)
->  {
->  	unsigned long flags =3D (unsigned long)page_folio(page)->mapping;
-> =20
-> +#ifdef CONFIG_ANON_VMA_LAZY
-> +	return (flags & FOLIO_MAPPING_FLAGS) !=3D FOLIO_MAPPING_KSM;
+You're intentionally defeating type safety to store arbitrary values?...
 
-[Severity: High]
-Will this macro return true for standard file-backed pages when
-CONFIG_ANON_VMA_LAZY is enabled?
+> +
+> +static inline unsigned long anon_rmap_value(anon_rmap_t anon_rmap)
+> +{
+> +	return anon_rmap.rmap;
+> +}
 
-For a standard file-backed page, the mapping pointer is word-aligned, meani=
-ng
-the lower bits are clear and flags & FOLIO_MAPPING_FLAGS evaluates to 0.
+'Untype safe my arbitrarily type safe wrapped type'...?
 
-Since 0 !=3D FOLIO_MAPPING_KSM evaluates to true, the macro seems to
-incorrectly evaluate to true for file-backed pages. The previous
-implementation correctly returned false for file pages since 0 =3D=3D 1 is
-false.
+> +
+> +static inline anon_rmap_t anon_vma_to_anon_rmap(const struct anon_vma *anon_vma)
+> +{
+> +	return make_anon_rmap(anon_vma);
+> +}
+> +
+> +static inline struct anon_vma *anon_rmap_to_anon_vma(anon_rmap_t anon_rmap)
+> +{
+> +	unsigned long rmap = anon_rmap_value(anon_rmap);
+> +
+> +	return (struct anon_vma *)rmap;
+> +}
 
-> +#else
->  	return (flags & FOLIO_MAPPING_FLAGS) =3D=3D FOLIO_MAPPING_ANON;
-> +#endif
+A ton of noise for seemingly no value?
+
+> +
+> +anon_rmap_t vma_get_anon_rmap(struct vm_area_struct *vma);
+> +void put_anon_rmap(anon_rmap_t anon_rmap);
+> +void anon_rmap_lock_write(anon_rmap_t anon_rmap);
+> +int anon_rmap_trylock_write(anon_rmap_t anon_rmap);
+> +void anon_rmap_unlock_write(anon_rmap_t anon_rmap);
+> +void anon_rmap_lock_read(anon_rmap_t anon_rmap);
+> +int anon_rmap_trylock_read(anon_rmap_t anon_rmap);
+> +void anon_rmap_unlock_read(anon_rmap_t anon_rmap);
+
+Yes let's add a bunch of extra broken abstractions on the broken abstraction.
+
+And let's not comment anything!
+
+> +
+>  /*
+>   * rmap_walk_control: To control rmap traversing for specific needs
+>   *
+> @@ -969,6 +1007,36 @@ void rmap_walk_locked(struct folio *folio, struct rmap_walk_control *rwc);
+>  struct anon_vma *folio_lock_anon_vma_read(const struct folio *folio,
+>  					  struct rmap_walk_control *rwc);
+>
+> +bool folio_maybe_same_anon_vma(const struct folio *folio,
+> +	const struct vm_area_struct *vma);
+
+What the hell is this?
+
+
+> +anon_rmap_t folio_get_anon_rmap(const struct folio *folio);
+> +anon_rmap_t folio_lock_anon_rmap_read(const struct folio *folio,
+> +	struct rmap_walk_control *rwc);
+> +
+> +static inline struct vm_area_struct *anon_rmap_iter_first_vma(
+> +	anon_rmap_t anon_rmap, unsigned long start, unsigned long last,
+> +	struct anon_vma_chain **avc)
+> +{
+> +	struct anon_vma *anon_vma = anon_rmap_to_anon_vma(anon_rmap);
+> +
+> +	*avc = anon_vma_interval_tree_iter_first(&anon_vma->rb_root, start, last);
+> +	return *avc ? (*avc)->vma : NULL;
+> +}
+
+So we're allowing for folios to have NULL entries (really the commit
+message should have that, rather than me scanning through uncommented
+code), but in what world are we ok with an anon folio NOT BEING LINKED BACK
+TO ITS VMA?
+
+That's broken no?
+
+> +
+> +static inline struct vm_area_struct *anon_rmap_iter_next_vma(
+> +	anon_rmap_t anon_rmap, unsigned long start, unsigned long last,
+> +	struct anon_vma_chain **avc)
+> +{
+> +	if (!*avc)
+> +		return NULL;
+> +	*avc = anon_vma_interval_tree_iter_next(*avc, start, last);
+> +	return *avc ? (*avc)->vma : NULL;
+> +}
+> +
+> +#define anon_rmap_foreach_vma(vma, avc, anon_rmap, start, last) 	   \
+> +	for (vma = anon_rmap_iter_first_vma(anon_rmap, start, last, &avc); \
+> +	     vma; vma = anon_rmap_iter_next_vma(anon_rmap, start, last, &avc))
+> +
+>  #else	/* !CONFIG_MMU */
+>
+>  #define anon_vma_init()		do {} while (0)
+> diff --git a/mm/rmap.c b/mm/rmap.c
+> index 78b7fb5f367c..1b2dada71778 100644
+> --- a/mm/rmap.c
+> +++ b/mm/rmap.c
+> @@ -701,6 +701,79 @@ struct anon_vma *folio_lock_anon_vma_read(const struct folio *folio,
+>  	return anon_vma;
 >  }
+>
+> +anon_rmap_t vma_get_anon_rmap(struct vm_area_struct *vma)
+> +{
+> +	mmap_assert_locked(vma->vm_mm);
+> +	VM_BUG_ON(!vma->anon_vma);
 
-[ ... ]
+We don't use BUG_ON() especially VM_BUG_ON().
 
-> diff --git a/mm/gup.c b/mm/gup.c
-> index ad9ded39609cb..69dda325b082f 100644
-> --- a/mm/gup.c
-> +++ b/mm/gup.c
-> @@ -2792,9 +2791,8 @@ static bool gup_fast_folio_allowed(struct folio *fo=
-lio, unsigned int flags)
->  		return false;
-> =20
->  	/* Anonymous folios pose no problem. */
-> -	mapping_flags =3D (unsigned long)mapping & FOLIO_MAPPING_FLAGS;
-> -	if (mapping_flags)
-> -		return mapping_flags & FOLIO_MAPPING_ANON;
-> +	if (mapping_is_anon((unsigned long)mapping))
-> +		return true;
+> +	get_anon_vma(vma->anon_vma);
+> +	return anon_vma_to_anon_rmap(vma->anon_vma);
+> +}
+> +
+> +void put_anon_rmap(anon_rmap_t anon_rmap)
+> +{
+> +	put_anon_vma(anon_rmap_to_anon_vma(anon_rmap));
+> +}
+> +
+> +void anon_rmap_lock_write(anon_rmap_t anon_rmap)
+> +{
+> +	anon_vma_lock_write(anon_rmap_to_anon_vma(anon_rmap));
+> +}
+> +
+> +int anon_rmap_trylock_write(anon_rmap_t anon_rmap)
+> +{
+> +	return anon_vma_trylock_write(anon_rmap_to_anon_vma(anon_rmap));
+> +}
+> +
+> +void anon_rmap_unlock_write(anon_rmap_t anon_rmap)
+> +{
+> +	anon_vma_unlock_write(anon_rmap_to_anon_vma(anon_rmap));
+> +}
+> +
+> +void anon_rmap_lock_read(anon_rmap_t anon_rmap)
+> +{
+> +	anon_vma_lock_read(anon_rmap_to_anon_vma(anon_rmap));
+> +}
+> +
+> +int anon_rmap_trylock_read(anon_rmap_t anon_rmap)
+> +{
+> +	return anon_vma_trylock_read(anon_rmap_to_anon_vma(anon_rmap));
+> +}
+> +
+> +void anon_rmap_unlock_read(anon_rmap_t anon_rmap)
+> +{
+> +	anon_vma_unlock_read(anon_rmap_to_anon_vma(anon_rmap));
+> +}
 
-[Severity: Critical]
-Could this allow non-anonymous tagged pointers to fall through and be
-dereferenced?
+All of these assume that you're getting an anon_vma even though you have
+established above that you can put arbitrary other values?
 
-The original code safely captured all tagged mapping pointers by checking
-mapping_flags =3D mapping & FOLIO_MAPPING_FLAGS. If the pointer was tagged =
-but
-not anonymous (e.g., PAGE_MAPPING_MOVABLE which uses bit 1), it returned
-false, avoiding further processing.
+This is terrible?
 
-With the new code, if mapping is a non-anonymous tagged pointer,
-mapping_is_anon() evaluates to false, and the function falls through. The
-subsequent code explicitly assumes the pointer is a valid
-struct address_space * and dereferences it (e.g., in
-secretmem_mapping(mapping)). Dereferencing a tagged pointer directly causes
-a misaligned memory access, leading to a kernel panic.
+> +
+> +bool folio_maybe_same_anon_vma(const struct folio *folio,
+> +	const struct vm_area_struct *vma)
+> +{
+> +	struct anon_vma *anon_vma;
+> +	struct anon_vma *tgt_anon_vma = vma->anon_vma;
+> +	bool same = false;
+> +
+> +	rcu_read_lock();
+> +	anon_vma = folio_anon_vma(folio);
+> +	if (anon_vma && tgt_anon_vma)
+> +		same = anon_vma->root == tgt_anon_vma->root;
+> +	rcu_read_unlock();
+> +	return same;
 
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260527110147.1781=
-5-1-tao.wangtao@honor.com?part=3D7
+What VMA locks are being held at this point? You assert none.
+
+Why is it maybe?
+
+Why are you taking the RCU lock?
+
+> +}
+> +
+> +anon_rmap_t folio_get_anon_rmap(const struct folio *folio)
+> +{
+> +	struct anon_vma *anon_vma = folio_get_anon_vma(folio);
+> +
+> +	return anon_vma ? anon_vma_to_anon_rmap(anon_vma) : ANON_RMAP_NULL;
+> +}
+> +
+> +anon_rmap_t folio_lock_anon_rmap_read(const struct folio *folio,
+> +				      struct rmap_walk_control *rwc)
+> +{
+> +	struct anon_vma *anon_vma = folio_lock_anon_vma_read(folio, rwc);
+> +
+> +	return anon_vma ? anon_vma_to_anon_rmap(anon_vma) : ANON_RMAP_NULL;
+> +}
+> +
+>  #ifdef CONFIG_ARCH_WANT_BATCHED_UNMAP_TLB_FLUSH
+>  /*
+>   * Flush TLB entries for recently unmapped pages from remote CPUs. It is
+> --
+> 2.17.1
+>
