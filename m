@@ -1,32 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76C9A3EE1C2;
-	Wed, 27 May 2026 11:45:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53D8A218845;
+	Wed, 27 May 2026 11:50:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779882302; cv=none; b=jtvH7+ch4qkd8NQAgYZi7jc6QwoUROIivkda1354ZZbfgCWL4DX1brc9wS2YnLXbXjkKaXCtFC9lfuSG2u363CVBr3GdE2tehjvwg7rDpRtA75F2H4dlNcGxFsCV7H4S5hK1ERjcwJH3iG3HjZblMGT49EpKo6MqHRmyjV6AWbQ=
+	t=1779882603; cv=none; b=ikE6hagbn0oeuqofN0xu5gR9VMTlBEAp4ZvkQerSMfpy7b9KWPEleQR/6lIXsGFD4BRyxM5kDmX+k7wGScn4J+jp1AQCbSla5S6RZcqLB9CHwzcfhXyjRuriwZwMTzzoXhGc0BQYzpCsb62cFE6Xx7wbOuyqdmzvSRg56g7p1pM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779882302; c=relaxed/simple;
-	bh=GIYfYdBRhS8kpfSENeeHNih1c5YaL3XGMxMThQE9b/A=;
+	s=arc-20240116; t=1779882603; c=relaxed/simple;
+	bh=uIOoIYkad+tAfz/Z+0DL0Cts//typLTIraUROO6LjiU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mvhEJXFUraDb3eCvej2iYGbQHvmsqgVH9bfQLOn/GAF5z869t/u+IoT7jyxuTtOEMHvSF406igswiubgYZfwvTISLwto0H6Y3JcYazfbjIn3sZ/jw3rZgqwmI8oD2umuskfnYsNtvcuU9j6e655bVXWQT8iUyWdXrN0tU0g6QWg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jmE0ACf3; arc=none smtp.client-ip=100.103.45.18
+	 Content-Type:Content-Disposition:In-Reply-To; b=b6N1BpXRBpA7tehGaktow+nBz14sbcHfPPb1LhVzP+hoP20r+yvoXLEhwJPf/y5R1lkVOoS2/ArPxieJU/d+BYF+165Q+VHVRADAthhE6LfTKc718OLg9D6wrDS3EpMyX7hSiEf4FiMI8DZBpcG1ydNAtJEumHYxNm9AsmQZ6Gc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=T13d3/cc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jmE0ACf3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C5441F00A3A;
-	Wed, 27 May 2026 11:45:00 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="T13d3/cc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75D8B1F000E9;
+	Wed, 27 May 2026 11:49:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1779882301;
-	bh=6InA4tQAxLsS7j94L5G1yEXJPfdZ+4wJTUuxhR16ysc=;
+	s=k20260515; t=1779882601;
+	bh=1i4tjDsZPp572HglBolUOi1mV5BbE0JYCKltZzPQjRo=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=jmE0ACf3VqYlPLAURNrUVBUpTirFjm6AOmbp7FRKMCQPS4O7hxubZyIL+l56vhbfB
-	 fs3RoVnvEGGcmt243CTajQnTYqO0SYgyRaF84t6ATP47FV1pJYn5iTjqCLmhPAWqwY
-	 Mw/snjX5RbRG0fXRfEdYygqgRCxy9F2/4aTsTowLGQF8cfiVDsHLTblBVYcCt7TxDr
-	 0m6eCV5JroXQKxiO6hO2mvynMgQFldZ8cQEBOCQQHN4vwpmdUYfV9eVzJ6qJeiSMqe
-	 vRlif/RwtY3kl2WyXvbbMIcEdqnmPeHPZWxlS9yjduXHt86hZ4zldvrHh9+SFgJ9E1
-	 0Xk1G0csyxJrQ==
-Date: Wed, 27 May 2026 12:44:57 +0100
+	b=T13d3/ccYiLbVhwDYukL2lWUhLlfl3uBRCLqHp/EDFBMLJeN6cwbHwstzU/q6gb68
+	 9rqJpRjvvwb6HV4McTPSaEJIgbWRbSDFM7P95xFKL1cgAnSZmNO4gG734MMxceNKNb
+	 JvH1ByHBZYsvjzqcshY6bKH+/9pWQQrEeN66t6iwxVgx5MQ1NCDySX680HBrOApbz9
+	 Gj2NPsDV/X7pXEHPOqg77JkGpinHGt+VKQrZ3/0cfNqdLjfTg3VzR7MM2in03di49O
+	 XLW9Jp77sW8SzERDcH+MBLur3/BI6fmK9nWVHALj1VIAbMGDqfwWdbKZkkh9ox4q88
+	 0ghSGin+PEG3g==
+Date: Wed, 27 May 2026 12:49:43 +0100
 From: Lorenzo Stoakes <ljs@kernel.org>
 To: tao <tao.wangtao@honor.com>
 Cc: catalin.marinas@arm.com, will@kernel.org, tglx@kernel.org, 
@@ -46,11 +46,10 @@ Cc: catalin.marinas@arm.com, will@kernel.org, tglx@kernel.org,
 	linux-mm@kvack.org, damon@lists.linux.dev, shakeel.butt@linux.dev, ryncsn@gmail.com, 
 	21cnbao@gmail.com, jparsana@google.com, dvander@google.com, zhangji1@honor.com, 
 	wangzicheng@honor.com
-Subject: Re: [PATCH 01/15] mm/rmap: introduce anon_rmap APIs for anonymous
- folios
-Message-ID: <ahbWKJL8TtGsFV4r@lucifer>
+Subject: Re: [PATCH 02/15] mm: convert anon_vma rmap APIs to anon_rmap
+Message-ID: <ahbZdWDiqTCWU77K@lucifer>
 References: <20260527110147.17815-1-tao.wangtao@honor.com>
- <20260527110147.17815-2-tao.wangtao@honor.com>
+ <20260527110147.17815-3-tao.wangtao@honor.com>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -59,260 +58,727 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260527110147.17815-2-tao.wangtao@honor.com>
+In-Reply-To: <20260527110147.17815-3-tao.wangtao@honor.com>
 
-On Wed, May 27, 2026 at 07:01:33PM +0800, tao wrote:
-> Add a set of anon_rmap APIs to operate on the reverse mappings of
-> anonymous folios.
+On Wed, May 27, 2026 at 07:01:34PM +0800, tao wrote:
+> Convert the rmap anon_vma interfaces to anon_rmap APIs to clarify the
+> semantics of anonymous rmap operations and prepare for upcoming
+> ANON_VMA_LAZY support and RCU-based lockless rmap traversal.
 >
-> Introduce anon_rmap_for_each_vma() as a wrapper around
-> vma_interval_tree_foreach(), so callers no longer access the
-> interval tree directly.
->
-> This prepares the rmap code for upcoming ANON_VMA_LAZY support and
-> RCU-based lockless rmap traversal.
+> Replace folio_anon_vma(), folio_get_anon_vma(), folio_lock_anon_vma_read(),
+> anon_vma_trylock_read(), anon_vma_lock_read(), anon_vma_unlock_read(),
+> anon_vma_trylock_write(), anon_vma_lock_write(), anon_vma_unlock_write(),
+> and vma_interval_tree_foreach() with the anon_rmap APIs.
+
+This is another worthless commit message. You're again just writing what you did
+not why or what for. This gives no help whatsoever.
+
 >
 > No functional change intended.
 
-This commit message is total garbage. You're not explaining WHY you're
-using words to describe what the code does. I can read the code?
+Err, there is a functional change, since you're literally changing how things
+iterate?
 
 >
 > Signed-off-by: tao <tao.wangtao@honor.com>
 
-This is all horrible, horribly invasive, and adding a pile of crap on machinery
-we want to get rid of.
+All of this is terrible, you're replacing a broken abstraction with something
+that assumes something completely broken with zero explanation.
 
-You've added zero explanation or comments. This is just not upstreamable,
-and even if you did explain yourself we don't want to extend a broken
-abstraction with more broken complexity?
-
-You're also seemingly introducing a typesafe wrapper to wrap an arbitrary value?
+No to this.
 
 > ---
->  include/linux/rmap.h | 68 +++++++++++++++++++++++++++++++++++++++++
->  mm/rmap.c            | 73 ++++++++++++++++++++++++++++++++++++++++++++
->  2 files changed, 141 insertions(+)
+>  include/linux/rmap.h  |  6 ++--
+>  mm/damon/ops-common.c |  4 +--
+>  mm/huge_memory.c      | 16 +++++------
+>  mm/ksm.c              | 43 ++++++++++++++---------------
+>  mm/memory-failure.c   | 11 ++++----
+>  mm/migrate.c          | 64 +++++++++++++++++++++----------------------
+>  mm/page_idle.c        |  2 +-
+>  mm/rmap.c             | 51 ++++++++++++++++++----------------
+>  8 files changed, 98 insertions(+), 99 deletions(-)
 >
 > diff --git a/include/linux/rmap.h b/include/linux/rmap.h
-> index 8dc0871e5f00..c42314ea4362 100644
+> index c42314ea4362..9802bce92695 100644
 > --- a/include/linux/rmap.h
 > +++ b/include/linux/rmap.h
-> @@ -937,6 +937,44 @@ int pfn_mkclean_range(unsigned long pfn, unsigned long nr_pages, pgoff_t pgoff,
->  void remove_migration_ptes(struct folio *src, struct folio *dst,
->  		enum ttu_flags flags);
+> @@ -997,15 +997,13 @@ struct rmap_walk_control {
+>  	bool (*rmap_one)(struct folio *folio, struct vm_area_struct *vma,
+>  					unsigned long addr, void *arg);
+>  	int (*done)(struct folio *folio);
+> -	struct anon_vma *(*anon_lock)(const struct folio *folio,
+> -				      struct rmap_walk_control *rwc);
+> +	anon_rmap_t (*anon_lock)(const struct folio *folio,
+> +				 struct rmap_walk_control *rwc);
+>  	bool (*invalid_vma)(struct vm_area_struct *vma, void *arg);
+>  };
 >
-> +/* Reverse mapping handle for anonymous folio rmap helpers. */
-> +typedef struct anon_rmap {
-> +	unsigned long rmap;
-> +} anon_rmap_t;
-
-I do not know why you're using a typedef when you just treat it as an
-arbitrary value?
-
-> +
-> +#define ANON_RMAP_NULL make_anon_rmap(0)
-
-This is just equivalent to a NULL value?...
-
-> +
-> +static inline anon_rmap_t make_anon_rmap(const void *anon_mapping)
-> +{
-> +	return (anon_rmap_t){ .rmap = (unsigned long)anon_mapping, };
-> +}
-
-You're intentionally defeating type safety to store arbitrary values?...
-
-> +
-> +static inline unsigned long anon_rmap_value(anon_rmap_t anon_rmap)
-> +{
-> +	return anon_rmap.rmap;
-> +}
-
-'Untype safe my arbitrarily type safe wrapped type'...?
-
-> +
-> +static inline anon_rmap_t anon_vma_to_anon_rmap(const struct anon_vma *anon_vma)
-> +{
-> +	return make_anon_rmap(anon_vma);
-> +}
-> +
-> +static inline struct anon_vma *anon_rmap_to_anon_vma(anon_rmap_t anon_rmap)
-> +{
-> +	unsigned long rmap = anon_rmap_value(anon_rmap);
-> +
-> +	return (struct anon_vma *)rmap;
-> +}
-
-A ton of noise for seemingly no value?
-
-> +
-> +anon_rmap_t vma_get_anon_rmap(struct vm_area_struct *vma);
-> +void put_anon_rmap(anon_rmap_t anon_rmap);
-> +void anon_rmap_lock_write(anon_rmap_t anon_rmap);
-> +int anon_rmap_trylock_write(anon_rmap_t anon_rmap);
-> +void anon_rmap_unlock_write(anon_rmap_t anon_rmap);
-> +void anon_rmap_lock_read(anon_rmap_t anon_rmap);
-> +int anon_rmap_trylock_read(anon_rmap_t anon_rmap);
-> +void anon_rmap_unlock_read(anon_rmap_t anon_rmap);
-
-Yes let's add a bunch of extra broken abstractions on the broken abstraction.
-
-And let's not comment anything!
-
-> +
->  /*
->   * rmap_walk_control: To control rmap traversing for specific needs
->   *
-> @@ -969,6 +1007,36 @@ void rmap_walk_locked(struct folio *folio, struct rmap_walk_control *rwc);
->  struct anon_vma *folio_lock_anon_vma_read(const struct folio *folio,
->  					  struct rmap_walk_control *rwc);
+>  void rmap_walk(struct folio *folio, struct rmap_walk_control *rwc);
+>  void rmap_walk_locked(struct folio *folio, struct rmap_walk_control *rwc);
+> -struct anon_vma *folio_lock_anon_vma_read(const struct folio *folio,
+> -					  struct rmap_walk_control *rwc);
 >
-> +bool folio_maybe_same_anon_vma(const struct folio *folio,
-> +	const struct vm_area_struct *vma);
-
-What the hell is this?
-
-
-> +anon_rmap_t folio_get_anon_rmap(const struct folio *folio);
-> +anon_rmap_t folio_lock_anon_rmap_read(const struct folio *folio,
-> +	struct rmap_walk_control *rwc);
-> +
-> +static inline struct vm_area_struct *anon_rmap_iter_first_vma(
-> +	anon_rmap_t anon_rmap, unsigned long start, unsigned long last,
-> +	struct anon_vma_chain **avc)
-> +{
-> +	struct anon_vma *anon_vma = anon_rmap_to_anon_vma(anon_rmap);
-> +
-> +	*avc = anon_vma_interval_tree_iter_first(&anon_vma->rb_root, start, last);
-> +	return *avc ? (*avc)->vma : NULL;
-> +}
-
-So we're allowing for folios to have NULL entries (really the commit
-message should have that, rather than me scanning through uncommented
-code), but in what world are we ok with an anon folio NOT BEING LINKED BACK
-TO ITS VMA?
-
-That's broken no?
-
-> +
-> +static inline struct vm_area_struct *anon_rmap_iter_next_vma(
-> +	anon_rmap_t anon_rmap, unsigned long start, unsigned long last,
-> +	struct anon_vma_chain **avc)
-> +{
-> +	if (!*avc)
-> +		return NULL;
-> +	*avc = anon_vma_interval_tree_iter_next(*avc, start, last);
-> +	return *avc ? (*avc)->vma : NULL;
-> +}
-> +
-> +#define anon_rmap_foreach_vma(vma, avc, anon_rmap, start, last) 	   \
-> +	for (vma = anon_rmap_iter_first_vma(anon_rmap, start, last, &avc); \
-> +	     vma; vma = anon_rmap_iter_next_vma(anon_rmap, start, last, &avc))
-> +
->  #else	/* !CONFIG_MMU */
+>  bool folio_maybe_same_anon_vma(const struct folio *folio,
+>  	const struct vm_area_struct *vma);
+> diff --git a/mm/damon/ops-common.c b/mm/damon/ops-common.c
+> index 8c6d613425c1..5788410965b8 100644
+> --- a/mm/damon/ops-common.c
+> +++ b/mm/damon/ops-common.c
+> @@ -172,7 +172,7 @@ void damon_folio_mkold(struct folio *folio)
+>  {
+>  	struct rmap_walk_control rwc = {
+>  		.rmap_one = damon_folio_mkold_one,
+> -		.anon_lock = folio_lock_anon_vma_read,
+> +		.anon_lock = folio_lock_anon_rmap_read,
+>  	};
 >
->  #define anon_vma_init()		do {} while (0)
-> diff --git a/mm/rmap.c b/mm/rmap.c
-> index 78b7fb5f367c..1b2dada71778 100644
-> --- a/mm/rmap.c
-> +++ b/mm/rmap.c
-> @@ -701,6 +701,79 @@ struct anon_vma *folio_lock_anon_vma_read(const struct folio *folio,
->  	return anon_vma;
+>  	if (!folio_mapped(folio) || !folio_raw_mapping(folio)) {
+> @@ -236,7 +236,7 @@ bool damon_folio_young(struct folio *folio)
+>  	struct rmap_walk_control rwc = {
+>  		.arg = &accessed,
+>  		.rmap_one = damon_folio_young_one,
+> -		.anon_lock = folio_lock_anon_vma_read,
+> +		.anon_lock = folio_lock_anon_rmap_read,
+>  	};
+>
+>  	if (!folio_mapped(folio) || !folio_raw_mapping(folio)) {
+> diff --git a/mm/huge_memory.c b/mm/huge_memory.c
+> index 970e077019b7..ab3c2397449a 100644
+> --- a/mm/huge_memory.c
+> +++ b/mm/huge_memory.c
+> @@ -4051,7 +4051,7 @@ static int __folio_split(struct folio *folio, unsigned int new_order,
+>  	struct folio *end_folio = folio_next(folio);
+>  	bool is_anon = folio_test_anon(folio);
+>  	struct address_space *mapping = NULL;
+> -	struct anon_vma *anon_vma = NULL;
+> +	anon_rmap_t anon_rmap = ANON_RMAP_NULL;
+>  	int old_order = folio_order(folio);
+>  	struct folio *new_folio, *next;
+>  	int nr_shmem_dropped = 0;
+> @@ -4087,12 +4087,12 @@ static int __folio_split(struct folio *folio, unsigned int new_order,
+>  		 * is taken to serialise against parallel split or collapse
+>  		 * operations.
+>  		 */
+> -		anon_vma = folio_get_anon_vma(folio);
+> -		if (!anon_vma) {
+> +		anon_rmap = folio_get_anon_rmap(folio);
+> +		if (!anon_rmap_value(anon_rmap)) {
+>  			ret = -EBUSY;
+>  			goto out;
+>  		}
+> -		anon_vma_lock_write(anon_vma);
+> +		anon_rmap_lock_write(anon_rmap);
+>  		mapping = NULL;
+>  	} else {
+>  		unsigned int min_order;
+> @@ -4122,7 +4122,7 @@ static int __folio_split(struct folio *folio, unsigned int new_order,
+>  			}
+>  		}
+>
+> -		anon_vma = NULL;
+> +		anon_rmap = ANON_RMAP_NULL;
+>  		i_mmap_lock_read(mapping);
+>
+>  		/*
+> @@ -4200,9 +4200,9 @@ static int __folio_split(struct folio *folio, unsigned int new_order,
+>  	}
+>
+>  out_unlock:
+> -	if (anon_vma) {
+> -		anon_vma_unlock_write(anon_vma);
+> -		put_anon_vma(anon_vma);
+> +	if (anon_rmap_value(anon_rmap)) {
+> +		anon_rmap_unlock_write(anon_rmap);
+> +		put_anon_rmap(anon_rmap);
+>  	}
+>  	if (mapping)
+>  		i_mmap_unlock_read(mapping);
+> diff --git a/mm/ksm.c b/mm/ksm.c
+> index 7d5b76478f0b..f4c204a8a379 100644
+> --- a/mm/ksm.c
+> +++ b/mm/ksm.c
+> @@ -187,7 +187,7 @@ struct ksm_stable_node {
+>  /**
+>   * struct ksm_rmap_item - reverse mapping item for virtual addresses
+>   * @rmap_list: next rmap_item in mm_slot's singly-linked rmap_list
+> - * @anon_vma: pointer to anon_vma for this mm,address, when in stable tree
+> + * @anon_rmap: anonymous folio rmap for this mm,address, when in stable tree
+>   * @nid: NUMA node id of unstable tree in which linked (may not match page)
+>   * @mm: the memory structure this rmap_item is pointing into
+>   * @address: the virtual address this rmap_item tracks (+ flags in low bits)
+> @@ -201,7 +201,7 @@ struct ksm_stable_node {
+>  struct ksm_rmap_item {
+>  	struct ksm_rmap_item *rmap_list;
+>  	union {
+> -		struct anon_vma *anon_vma;	/* when stable */
+> +		anon_rmap_t anon_rmap;	/* when stable */
+>  #ifdef CONFIG_NUMA
+>  		int nid;		/* when node of unstable tree */
+>  #endif
+> @@ -786,7 +786,7 @@ static void break_cow(struct ksm_rmap_item *rmap_item)
+>  	 * It is not an accident that whenever we want to break COW
+>  	 * to undo, we also need to drop a reference to the anon_vma.
+>  	 */
+> -	put_anon_vma(rmap_item->anon_vma);
+> +	put_anon_rmap(rmap_item->anon_rmap);
+>
+>  	mmap_read_lock(mm);
+>  	vma = find_mergeable_vma(mm, addr);
+> @@ -898,7 +898,7 @@ static void remove_node_from_stable_tree(struct ksm_stable_node *stable_node)
+>
+>  		VM_BUG_ON(stable_node->rmap_hlist_len <= 0);
+>  		stable_node->rmap_hlist_len--;
+> -		put_anon_vma(rmap_item->anon_vma);
+> +		put_anon_rmap(rmap_item->anon_rmap);
+>  		rmap_item->address &= PAGE_MASK;
+>  		cond_resched();
+>  	}
+> @@ -1051,7 +1051,7 @@ static void remove_rmap_item_from_tree(struct ksm_rmap_item *rmap_item)
+>  		VM_BUG_ON(stable_node->rmap_hlist_len <= 0);
+>  		stable_node->rmap_hlist_len--;
+>
+> -		put_anon_vma(rmap_item->anon_vma);
+> +		put_anon_rmap(rmap_item->anon_rmap);
+>  		rmap_item->head = NULL;
+>  		rmap_item->address &= PAGE_MASK;
+>
+> @@ -1598,9 +1598,8 @@ static int try_to_merge_with_ksm_page(struct ksm_rmap_item *rmap_item,
+>  	/* Unstable nid is in union with stable anon_vma: remove first */
+>  	remove_rmap_item_from_tree(rmap_item);
+>
+> -	/* Must get reference to anon_vma while still holding mmap_lock */
+> -	rmap_item->anon_vma = vma->anon_vma;
+> -	get_anon_vma(vma->anon_vma);
+> +	/* Must get reference to anon_rmap while still holding mmap_lock */
+> +	rmap_item->anon_rmap = vma_get_anon_rmap(vma);
+>  out:
+>  	mmap_read_unlock(mm);
+>  	trace_ksm_merge_with_ksm_page(kpage, page_to_pfn(kpage ? kpage : page),
+> @@ -3108,7 +3107,6 @@ struct folio *ksm_might_need_to_copy(struct folio *folio,
+>  			struct vm_area_struct *vma, unsigned long addr)
+>  {
+>  	struct page *page = folio_page(folio, 0);
+> -	struct anon_vma *anon_vma = folio_anon_vma(folio);
+>  	struct folio *new_folio;
+>
+>  	if (folio_test_large(folio))
+> @@ -3118,10 +3116,10 @@ struct folio *ksm_might_need_to_copy(struct folio *folio,
+>  		if (folio_stable_node(folio) &&
+>  		    !(ksm_run & KSM_RUN_UNMERGE))
+>  			return folio;	/* no need to copy it */
+> -	} else if (!anon_vma) {
+> +	} else if (!folio_test_anon(folio)) {
+>  		return folio;		/* no need to copy it */
+>  	} else if (folio->index == linear_page_index(vma, addr) &&
+> -			anon_vma->root == vma->anon_vma->root) {
+> +			folio_maybe_same_anon_vma(folio, vma)) {
+>  		return folio;		/* still no need to copy it */
+>  	}
+>  	if (PageHWPoison(page))
+> @@ -3173,20 +3171,20 @@ void rmap_walk_ksm(struct folio *folio, struct rmap_walk_control *rwc)
+>  	hlist_for_each_entry(rmap_item, &stable_node->hlist, hlist) {
+>  		/* Ignore the stable/unstable/sqnr flags */
+>  		const unsigned long addr = rmap_item->address & PAGE_MASK;
+> -		struct anon_vma *anon_vma = rmap_item->anon_vma;
+> +		anon_rmap_t anon_rmap = rmap_item->anon_rmap;
+>  		struct anon_vma_chain *vmac;
+>  		struct vm_area_struct *vma;
+>
+>  		cond_resched();
+> -		if (!anon_vma_trylock_read(anon_vma)) {
+> +		if (!anon_rmap_trylock_read(anon_rmap)) {
+>  			if (rwc->try_lock) {
+>  				rwc->contended = true;
+>  				return;
+>  			}
+> -			anon_vma_lock_read(anon_vma);
+> +			anon_rmap_lock_read(anon_rmap);
+>  		}
+>
+> -		anon_vma_interval_tree_foreach(vmac, &anon_vma->rb_root,
+> +		anon_rmap_foreach_vma(vma, vmac, anon_rmap,
+>  					       0, ULONG_MAX) {
+>
+>  			cond_resched();
+> @@ -3207,15 +3205,15 @@ void rmap_walk_ksm(struct folio *folio, struct rmap_walk_control *rwc)
+>  				continue;
+>
+>  			if (!rwc->rmap_one(folio, vma, addr, rwc->arg)) {
+> -				anon_vma_unlock_read(anon_vma);
+> +				anon_rmap_unlock_read(anon_rmap);
+>  				return;
+>  			}
+>  			if (rwc->done && rwc->done(folio)) {
+> -				anon_vma_unlock_read(anon_vma);
+> +				anon_rmap_unlock_read(anon_rmap);
+>  				return;
+>  			}
+>  		}
+> -		anon_vma_unlock_read(anon_vma);
+> +		anon_rmap_unlock_read(anon_rmap);
+>  	}
+>  	if (!search_new_forks++)
+>  		goto again;
+> @@ -3237,9 +3235,9 @@ void collect_procs_ksm(const struct folio *folio, const struct page *page,
+>  	if (!stable_node)
+>  		return;
+>  	hlist_for_each_entry(rmap_item, &stable_node->hlist, hlist) {
+> -		struct anon_vma *av = rmap_item->anon_vma;
+> +		anon_rmap_t anon_rmap = rmap_item->anon_rmap;
+>
+> -		anon_vma_lock_read(av);
+> +		anon_rmap_lock_read(anon_rmap);
+>  		rcu_read_lock();
+>  		for_each_process(tsk) {
+>  			struct anon_vma_chain *vmac;
+> @@ -3248,10 +3246,9 @@ void collect_procs_ksm(const struct folio *folio, const struct page *page,
+>  				task_early_kill(tsk, force_early);
+>  			if (!t)
+>  				continue;
+> -			anon_vma_interval_tree_foreach(vmac, &av->rb_root, 0,
+> +			anon_rmap_foreach_vma(vma, vmac, anon_rmap, 0,
+>  						       ULONG_MAX)
+>  			{
+> -				vma = vmac->vma;
+>  				if (vma->vm_mm == t->mm) {
+>  					addr = rmap_item->address & PAGE_MASK;
+>  					add_to_kill_ksm(t, page, vma, to_kill,
+> @@ -3260,7 +3257,7 @@ void collect_procs_ksm(const struct folio *folio, const struct page *page,
+>  			}
+>  		}
+>  		rcu_read_unlock();
+> -		anon_vma_unlock_read(av);
+> +		anon_rmap_unlock_read(anon_rmap);
+>  	}
+>  }
+>  #endif
+> diff --git a/mm/memory-failure.c b/mm/memory-failure.c
+> index ee42d4361309..bc9abba75b5d 100644
+> --- a/mm/memory-failure.c
+> +++ b/mm/memory-failure.c
+> @@ -547,11 +547,11 @@ static void collect_procs_anon(const struct folio *folio,
+>  		int force_early)
+>  {
+>  	struct task_struct *tsk;
+> -	struct anon_vma *av;
+> +	anon_rmap_t anon_rmap;
+>  	pgoff_t pgoff;
+>
+> -	av = folio_lock_anon_vma_read(folio, NULL);
+> -	if (av == NULL)	/* Not actually mapped anymore */
+> +	anon_rmap = folio_lock_anon_rmap_read(folio, NULL);
+> +	if (!anon_rmap_value(anon_rmap))	/* Not actually mapped anymore */
+>  		return;
+>
+>  	pgoff = page_pgoff(folio, page);
+> @@ -564,9 +564,8 @@ static void collect_procs_anon(const struct folio *folio,
+>
+>  		if (!t)
+>  			continue;
+> -		anon_vma_interval_tree_foreach(vmac, &av->rb_root,
+> +		anon_rmap_foreach_vma(vma, vmac, anon_rmap,
+>  					       pgoff, pgoff) {
+> -			vma = vmac->vma;
+>  			if (vma->vm_mm != t->mm)
+>  				continue;
+>  			addr = page_mapped_in_vma(page, vma);
+> @@ -574,7 +573,7 @@ static void collect_procs_anon(const struct folio *folio,
+>  		}
+>  	}
+>  	rcu_read_unlock();
+> -	anon_vma_unlock_read(av);
+> +	anon_rmap_unlock_read(anon_rmap);
 >  }
 >
-> +anon_rmap_t vma_get_anon_rmap(struct vm_area_struct *vma)
-> +{
-> +	mmap_assert_locked(vma->vm_mm);
-> +	VM_BUG_ON(!vma->anon_vma);
-
-We don't use BUG_ON() especially VM_BUG_ON().
-
-> +	get_anon_vma(vma->anon_vma);
-> +	return anon_vma_to_anon_rmap(vma->anon_vma);
-> +}
-> +
-> +void put_anon_rmap(anon_rmap_t anon_rmap)
-> +{
-> +	put_anon_vma(anon_rmap_to_anon_vma(anon_rmap));
-> +}
-> +
-> +void anon_rmap_lock_write(anon_rmap_t anon_rmap)
-> +{
-> +	anon_vma_lock_write(anon_rmap_to_anon_vma(anon_rmap));
-> +}
-> +
-> +int anon_rmap_trylock_write(anon_rmap_t anon_rmap)
-> +{
-> +	return anon_vma_trylock_write(anon_rmap_to_anon_vma(anon_rmap));
-> +}
-> +
-> +void anon_rmap_unlock_write(anon_rmap_t anon_rmap)
-> +{
-> +	anon_vma_unlock_write(anon_rmap_to_anon_vma(anon_rmap));
-> +}
-> +
-> +void anon_rmap_lock_read(anon_rmap_t anon_rmap)
-> +{
-> +	anon_vma_lock_read(anon_rmap_to_anon_vma(anon_rmap));
-> +}
-> +
-> +int anon_rmap_trylock_read(anon_rmap_t anon_rmap)
-> +{
-> +	return anon_vma_trylock_read(anon_rmap_to_anon_vma(anon_rmap));
-> +}
-> +
-> +void anon_rmap_unlock_read(anon_rmap_t anon_rmap)
-> +{
-> +	anon_vma_unlock_read(anon_rmap_to_anon_vma(anon_rmap));
-> +}
-
-All of these assume that you're getting an anon_vma even though you have
-established above that you can put arbitrary other values?
-
-This is terrible?
-
-> +
-> +bool folio_maybe_same_anon_vma(const struct folio *folio,
-> +	const struct vm_area_struct *vma)
+>  /*
+> diff --git a/mm/migrate.c b/mm/migrate.c
+> index 8a64291ab5b4..769983cf14e0 100644
+> --- a/mm/migrate.c
+> +++ b/mm/migrate.c
+> @@ -1142,18 +1142,18 @@ enum {
+>
+>  static void __migrate_folio_record(struct folio *dst,
+>  				   int old_page_state,
+> -				   struct anon_vma *anon_vma)
+> +				   anon_rmap_t anon_rmap)
+>  {
+> -	dst->private = (void *)anon_vma + old_page_state;
+> +	dst->private = (void *)anon_rmap_to_anon_vma(anon_rmap) + old_page_state;
+>  }
+>
+>  static void __migrate_folio_extract(struct folio *dst,
+>  				   int *old_page_state,
+> -				   struct anon_vma **anon_vmap)
+> +				   anon_rmap_t *anon_rmapp)
+>  {
+>  	unsigned long private = (unsigned long)dst->private;
+>
+> -	*anon_vmap = (struct anon_vma *)(private & ~PAGE_OLD_STATES);
+> +	*anon_rmapp = anon_vma_to_anon_rmap((void *)(private & ~PAGE_OLD_STATES));
+>  	*old_page_state = private & PAGE_OLD_STATES;
+>  	dst->private = NULL;
+>  }
+> @@ -1161,15 +1161,15 @@ static void __migrate_folio_extract(struct folio *dst,
+>  /* Restore the source folio to the original state upon failure */
+>  static void migrate_folio_undo_src(struct folio *src,
+>  				   int page_was_mapped,
+> -				   struct anon_vma *anon_vma,
+> +				   anon_rmap_t anon_rmap,
+>  				   bool locked,
+>  				   struct list_head *ret)
+>  {
+>  	if (page_was_mapped)
+>  		remove_migration_ptes(src, src, 0);
+> -	/* Drop an anon_vma reference if we took one */
+> -	if (anon_vma)
+> -		put_anon_vma(anon_vma);
+> +	/* Drop an anon_rmap reference if we took one */
+> +	if (anon_rmap_value(anon_rmap))
+> +		put_anon_rmap(anon_rmap);
+>  	if (locked)
+>  		folio_unlock(src);
+>  	if (ret)
+> @@ -1210,7 +1210,7 @@ static int migrate_folio_unmap(new_folio_t get_new_folio,
+>  	struct folio *dst;
+>  	int rc = -EAGAIN;
+>  	int old_page_state = 0;
+> -	struct anon_vma *anon_vma = NULL;
+> +	anon_rmap_t anon_rmap = ANON_RMAP_NULL;
+>  	bool locked = false;
+>  	bool dst_locked = false;
+>
+> @@ -1275,19 +1275,19 @@ static int migrate_folio_unmap(new_folio_t get_new_folio,
+>  	/*
+>  	 * By try_to_migrate(), src->mapcount goes down to 0 here. In this case,
+>  	 * we cannot notice that anon_vma is freed while we migrate a page.
+> -	 * This get_anon_vma() delays freeing anon_vma pointer until the end
+> +	 * This get_anon_rmap() delays freeing anon_rmap pointer until the end
+>  	 * of migration. File cache pages are no problem because of page_lock()
+>  	 * File Caches may use write_page() or lock_page() in migration, then,
+>  	 * just care Anon page here.
+>  	 *
+> -	 * Only folio_get_anon_vma() understands the subtleties of
+> -	 * getting a hold on an anon_vma from outside one of its mms.
+> -	 * But if we cannot get anon_vma, then we won't need it anyway,
+> +	 * Only folio_get_anon_rmap() understands the subtleties of
+> +	 * getting a hold on an anon_rmap from outside one of its mms.
+> +	 * But if we cannot get anon_rmap, then we won't need it anyway,
+>  	 * because that implies that the anon page is no longer mapped
+>  	 * (and cannot be remapped so long as we hold the page lock).
+>  	 */
+>  	if (folio_test_anon(src) && !folio_test_ksm(src))
+> -		anon_vma = folio_get_anon_vma(src);
+> +		anon_rmap = folio_get_anon_rmap(src);
+>
+>  	/*
+>  	 * Block others from accessing the new page when we get around to
+> @@ -1302,7 +1302,7 @@ static int migrate_folio_unmap(new_folio_t get_new_folio,
+>  	dst_locked = true;
+>
+>  	if (unlikely(page_has_movable_ops(&src->page))) {
+> -		__migrate_folio_record(dst, old_page_state, anon_vma);
+> +		__migrate_folio_record(dst, old_page_state, anon_rmap);
+>  		return 0;
+>  	}
+>
+> @@ -1326,13 +1326,13 @@ static int migrate_folio_unmap(new_folio_t get_new_folio,
+>  	} else if (folio_mapped(src)) {
+>  		/* Establish migration ptes */
+>  		VM_BUG_ON_FOLIO(folio_test_anon(src) &&
+> -			       !folio_test_ksm(src) && !anon_vma, src);
+> +			       !folio_test_ksm(src) && !anon_rmap_value(anon_rmap), src);
+>  		try_to_migrate(src, mode == MIGRATE_ASYNC ? TTU_BATCH_FLUSH : 0);
+>  		old_page_state |= PAGE_WAS_MAPPED;
+>  	}
+>
+>  	if (!folio_mapped(src)) {
+> -		__migrate_folio_record(dst, old_page_state, anon_vma);
+> +		__migrate_folio_record(dst, old_page_state, anon_rmap);
+>  		return 0;
+>  	}
+>
+> @@ -1345,7 +1345,7 @@ static int migrate_folio_unmap(new_folio_t get_new_folio,
+>  		ret = NULL;
+>
+>  	migrate_folio_undo_src(src, old_page_state & PAGE_WAS_MAPPED,
+> -			       anon_vma, locked, ret);
+> +			       anon_rmap, locked, ret);
+>  	migrate_folio_undo_dst(dst, dst_locked, put_new_folio, private);
+>
+>  	return rc;
+> @@ -1359,12 +1359,12 @@ static int migrate_folio_move(free_folio_t put_new_folio, unsigned long private,
+>  {
+>  	int rc;
+>  	int old_page_state = 0;
+> -	struct anon_vma *anon_vma = NULL;
+> +	anon_rmap_t anon_rmap = ANON_RMAP_NULL;
+>  	bool src_deferred_split = false;
+>  	bool src_partially_mapped = false;
+>  	struct list_head *prev;
+>
+> -	__migrate_folio_extract(dst, &old_page_state, &anon_vma);
+> +	__migrate_folio_extract(dst, &old_page_state, &anon_rmap);
+>  	prev = dst->lru.prev;
+>  	list_del(&dst->lru);
+>
+> @@ -1425,9 +1425,9 @@ static int migrate_folio_move(free_folio_t put_new_folio, unsigned long private,
+>  	 * and will be freed.
+>  	 */
+>  	list_del(&src->lru);
+> -	/* Drop an anon_vma reference if we took one */
+> -	if (anon_vma)
+> -		put_anon_vma(anon_vma);
+> +	/* Drop an anon_rmap reference if we took one */
+> +	if (anon_rmap_value(anon_rmap))
+> +		put_anon_rmap(anon_rmap);
+>  	folio_unlock(src);
+>  	migrate_folio_done(src, reason);
+>
+> @@ -1439,12 +1439,12 @@ static int migrate_folio_move(free_folio_t put_new_folio, unsigned long private,
+>  	 */
+>  	if (rc == -EAGAIN) {
+>  		list_add(&dst->lru, prev);
+> -		__migrate_folio_record(dst, old_page_state, anon_vma);
+> +		__migrate_folio_record(dst, old_page_state, anon_rmap);
+>  		return rc;
+>  	}
+>
+>  	migrate_folio_undo_src(src, old_page_state & PAGE_WAS_MAPPED,
+> -			       anon_vma, true, ret);
+> +			       anon_rmap, true, ret);
+>  	migrate_folio_undo_dst(dst, true, put_new_folio, private);
+>
+>  	return rc;
+> @@ -1476,7 +1476,7 @@ static int unmap_and_move_huge_page(new_folio_t get_new_folio,
+>  	struct folio *dst;
+>  	int rc = -EAGAIN;
+>  	int page_was_mapped = 0;
+> -	struct anon_vma *anon_vma = NULL;
+> +	anon_rmap_t anon_rmap = ANON_RMAP_NULL;
+>  	struct address_space *mapping = NULL;
+>  	enum ttu_flags ttu = 0;
+>
+> @@ -1513,7 +1513,7 @@ static int unmap_and_move_huge_page(new_folio_t get_new_folio,
+>  	}
+>
+>  	if (folio_test_anon(src))
+> -		anon_vma = folio_get_anon_vma(src);
+> +		anon_rmap = folio_get_anon_rmap(src);
+>
+>  	if (unlikely(!folio_trylock(dst)))
+>  		goto put_anon;
+> @@ -1550,8 +1550,8 @@ static int unmap_and_move_huge_page(new_folio_t get_new_folio,
+>  	folio_unlock(dst);
+>
+>  put_anon:
+> -	if (anon_vma)
+> -		put_anon_vma(anon_vma);
+> +	if (anon_rmap_value(anon_rmap))
+> +		put_anon_rmap(anon_rmap);
+>
+>  	if (!rc) {
+>  		move_hugetlb_state(src, dst, reason);
+> @@ -1778,11 +1778,11 @@ static void migrate_folios_undo(struct list_head *src_folios,
+>  	dst2 = list_next_entry(dst, lru);
+>  	list_for_each_entry_safe(folio, folio2, src_folios, lru) {
+>  		int old_page_state = 0;
+> -		struct anon_vma *anon_vma = NULL;
+> +		anon_rmap_t anon_rmap = ANON_RMAP_NULL;
+>
+> -		__migrate_folio_extract(dst, &old_page_state, &anon_vma);
+> +		__migrate_folio_extract(dst, &old_page_state, &anon_rmap);
+>  		migrate_folio_undo_src(folio, old_page_state & PAGE_WAS_MAPPED,
+> -				anon_vma, true, ret_folios);
+> +				anon_rmap, true, ret_folios);
+>  		list_del(&dst->lru);
+>  		migrate_folio_undo_dst(dst, true, put_new_folio, private);
+>  		dst = dst2;
+> diff --git a/mm/page_idle.c b/mm/page_idle.c
+> index 9c67cbac2965..d4103f20f526 100644
+> --- a/mm/page_idle.c
+> +++ b/mm/page_idle.c
+> @@ -102,7 +102,7 @@ static void page_idle_clear_pte_refs(struct folio *folio)
+>  	 */
+>  	static struct rmap_walk_control rwc = {
+>  		.rmap_one = page_idle_clear_pte_refs_one,
+> -		.anon_lock = folio_lock_anon_vma_read,
+> +		.anon_lock = folio_lock_anon_rmap_read,
+>  	};
+>
+>  	if (!folio_mapped(folio) || !folio_raw_mapping(folio))
+> diff --git a/mm/rmap.c b/mm/rmap.c
+> index 1b2dada71778..41607168e00e 100644
+> --- a/mm/rmap.c
+> +++ b/mm/rmap.c
+> @@ -630,8 +630,8 @@ struct anon_vma *folio_get_anon_vma(const struct folio *folio)
+>   * reference like with folio_get_anon_vma() and then block on the mutex
+>   * on !rwc->try_lock case.
+>   */
+> -struct anon_vma *folio_lock_anon_vma_read(const struct folio *folio,
+> -					  struct rmap_walk_control *rwc)
+> +static struct anon_vma *folio_lock_anon_vma_read(const struct folio *folio,
+> +						 struct rmap_walk_control *rwc)
+>  {
+>  	struct anon_vma *anon_vma = NULL;
+>  	struct anon_vma *root_anon_vma;
+> @@ -744,6 +744,14 @@ void anon_rmap_unlock_read(anon_rmap_t anon_rmap)
+>  	anon_vma_unlock_read(anon_rmap_to_anon_vma(anon_rmap));
+>  }
+>
+> +static anon_rmap_t folio_anon_rmap(const struct folio *folio)
 > +{
 > +	struct anon_vma *anon_vma;
-> +	struct anon_vma *tgt_anon_vma = vma->anon_vma;
-> +	bool same = false;
 > +
-> +	rcu_read_lock();
 > +	anon_vma = folio_anon_vma(folio);
-> +	if (anon_vma && tgt_anon_vma)
-> +		same = anon_vma->root == tgt_anon_vma->root;
-> +	rcu_read_unlock();
-> +	return same;
-
-What VMA locks are being held at this point? You assert none.
-
-Why is it maybe?
-
-Why are you taking the RCU lock?
-
-> +}
-> +
-> +anon_rmap_t folio_get_anon_rmap(const struct folio *folio)
-> +{
-> +	struct anon_vma *anon_vma = folio_get_anon_vma(folio);
-> +
 > +	return anon_vma ? anon_vma_to_anon_rmap(anon_vma) : ANON_RMAP_NULL;
 > +}
 > +
-> +anon_rmap_t folio_lock_anon_rmap_read(const struct folio *folio,
-> +				      struct rmap_walk_control *rwc)
-> +{
-> +	struct anon_vma *anon_vma = folio_lock_anon_vma_read(folio, rwc);
-> +
+>  bool folio_maybe_same_anon_vma(const struct folio *folio,
+>  	const struct vm_area_struct *vma)
+>  {
+> @@ -930,13 +938,11 @@ unsigned long page_address_in_vma(const struct folio *folio,
+>  		const struct page *page, const struct vm_area_struct *vma)
+>  {
+>  	if (folio_test_anon(folio)) {
+> -		struct anon_vma *anon_vma = folio_anon_vma(folio);
+>  		/*
+>  		 * Note: swapoff's unuse_vma() is more efficient with this
+>  		 * check, and needs it to match anon_vma when KSM is active.
+>  		 */
+> -		if (!vma->anon_vma || !anon_vma ||
+> -		    vma->anon_vma->root != anon_vma->root)
+> +		if (!vma->anon_vma || !folio_maybe_same_anon_vma(folio, vma))
+>  			return -EFAULT;
+>  	} else if (!vma->vm_file) {
+>  		return -EFAULT;
+> @@ -944,7 +950,7 @@ unsigned long page_address_in_vma(const struct folio *folio,
+>  		return -EFAULT;
+>  	}
+>
+> -	/* KSM folios don't reach here because of the !anon_vma check */
+> +	/* The !folio_maybe_same_anon_vma() above handles KSM folios */
+>  	return vma_address(vma, page_pgoff(folio, page), 1);
+>  }
+>
+> @@ -1145,7 +1151,7 @@ int folio_referenced(struct folio *folio, int is_locked,
+>  	struct rmap_walk_control rwc = {
+>  		.rmap_one = folio_referenced_one,
+>  		.arg = (void *)&pra,
+> -		.anon_lock = folio_lock_anon_vma_read,
+> +		.anon_lock = folio_lock_anon_rmap_read,
+>  		.try_lock = true,
+>  		.invalid_vma = invalid_folio_referenced_vma,
+>  	};
+> @@ -1580,8 +1586,7 @@ static void __page_check_anon_rmap(const struct folio *folio,
+>  	 * are initially only visible via the pagetables, and the pte is locked
+>  	 * over the call to folio_add_new_anon_rmap.
+>  	 */
+> -	VM_BUG_ON_FOLIO(folio_anon_vma(folio)->root != vma->anon_vma->root,
+> -			folio);
+> +	VM_BUG_ON_FOLIO(!folio_maybe_same_anon_vma(folio, vma), folio);
+>  	VM_BUG_ON_PAGE(page_pgoff(folio, page) != linear_page_index(vma, address),
+>  		       page);
+>  }
+> @@ -2468,7 +2473,7 @@ void try_to_unmap(struct folio *folio, enum ttu_flags flags)
+>  		.rmap_one = try_to_unmap_one,
+>  		.arg = (void *)flags,
+>  		.done = folio_not_mapped,
+> -		.anon_lock = folio_lock_anon_vma_read,
+> +		.anon_lock = folio_lock_anon_rmap_read,
+>  	};
+>
+>  	if (flags & TTU_RMAP_LOCKED)
+> @@ -2813,7 +2818,7 @@ void try_to_migrate(struct folio *folio, enum ttu_flags flags)
+>  		.rmap_one = try_to_migrate_one,
+>  		.arg = (void *)flags,
+>  		.done = folio_not_mapped,
+> -		.anon_lock = folio_lock_anon_vma_read,
+> +		.anon_lock = folio_lock_anon_rmap_read,
+>  	};
+>
+>  	/*
+> @@ -2990,8 +2995,8 @@ void __put_anon_vma(struct anon_vma *anon_vma)
+>  		anon_vma_free(root);
+>  }
+>
+> -static struct anon_vma *rmap_walk_anon_lock(const struct folio *folio,
+> -					    struct rmap_walk_control *rwc)
+> +static anon_rmap_t rmap_walk_anon_lock(const struct folio *folio,
+> +				       struct rmap_walk_control *rwc)
+>  {
+>  	struct anon_vma *anon_vma;
+>
+> @@ -3006,7 +3011,7 @@ static struct anon_vma *rmap_walk_anon_lock(const struct folio *folio,
+>  	 */
+>  	anon_vma = folio_anon_vma(folio);
+>  	if (!anon_vma)
+> -		return NULL;
+> +		return ANON_RMAP_NULL;
+>
+>  	if (anon_vma_trylock_read(anon_vma))
+>  		goto out;
+> @@ -3019,7 +3024,7 @@ static struct anon_vma *rmap_walk_anon_lock(const struct folio *folio,
+>
+>  	anon_vma_lock_read(anon_vma);
+>  out:
+> -	return anon_vma;
 > +	return anon_vma ? anon_vma_to_anon_rmap(anon_vma) : ANON_RMAP_NULL;
-> +}
-> +
->  #ifdef CONFIG_ARCH_WANT_BATCHED_UNMAP_TLB_FLUSH
+>  }
+>
 >  /*
->   * Flush TLB entries for recently unmapped pages from remote CPUs. It is
+> @@ -3035,9 +3040,10 @@ static struct anon_vma *rmap_walk_anon_lock(const struct folio *folio,
+>  static void rmap_walk_anon(struct folio *folio,
+>  		struct rmap_walk_control *rwc, bool locked)
+>  {
+> -	struct anon_vma *anon_vma;
+> +	anon_rmap_t anon_rmap;
+>  	pgoff_t pgoff_start, pgoff_end;
+>  	struct anon_vma_chain *avc;
+> +	struct vm_area_struct *vma;
+
+I have no idea why you put the VMA at this scope...
+
+>
+>  	/*
+>  	 * The folio lock ensures that folio->mapping can't be changed under us
+> @@ -3046,20 +3052,19 @@ static void rmap_walk_anon(struct folio *folio,
+>  	VM_WARN_ON_FOLIO(!folio_test_locked(folio), folio);
+>
+>  	if (locked) {
+> -		anon_vma = folio_anon_vma(folio);
+> +		anon_rmap = folio_anon_rmap(folio);
+>  		/* anon_vma disappear under us? */
+> -		VM_BUG_ON_FOLIO(!anon_vma, folio);
+> +		VM_BUG_ON_FOLIO(!anon_rmap_value(anon_rmap), folio);
+>  	} else {
+> -		anon_vma = rmap_walk_anon_lock(folio, rwc);
+> +		anon_rmap = rmap_walk_anon_lock(folio, rwc);
+>  	}
+> -	if (!anon_vma)
+> +	if (!anon_rmap_value(anon_rmap))
+>  		return;
+>
+>  	pgoff_start = folio_pgoff(folio);
+>  	pgoff_end = pgoff_start + folio_nr_pages(folio) - 1;
+> -	anon_vma_interval_tree_foreach(avc, &anon_vma->rb_root,
+> +	anon_rmap_foreach_vma(vma, avc, anon_rmap,
+>  			pgoff_start, pgoff_end) {
+> -		struct vm_area_struct *vma = avc->vma;
+
+Don't throw random changes like this in with a general replacement patch.
+
+>  		unsigned long address = vma_address(vma, pgoff_start,
+>  				folio_nr_pages(folio));
+>
+> @@ -3076,7 +3081,7 @@ static void rmap_walk_anon(struct folio *folio,
+>  	}
+>
+>  	if (!locked)
+> -		anon_vma_unlock_read(anon_vma);
+> +		anon_rmap_unlock_read(anon_rmap);
+>  }
+>
+>  /**
 > --
 > 2.17.1
 >
