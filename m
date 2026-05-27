@@ -1,184 +1,201 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 061F2280318
-	for <damon@lists.linux.dev>; Wed, 27 May 2026 13:02:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44052311C35
+	for <damon@lists.linux.dev>; Wed, 27 May 2026 14:02:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779886953; cv=none; b=qUl83dECIruXllmOLsW7yE4sUBrvyURq9Vlmvv0HtaxcbbztSBiloaY1cOl9k0KrDAmcxuzBMIHG6H1JoCQEE0Md+m/N18N3do747icqofbScbokzkCp0m1VfgkRN6exGZ+WLiemSQ7/nKmJ7xxygQWKRk5Kkk5pYrcDy64gstg=
+	t=1779890533; cv=none; b=SVfMqTenzwvRVwa+4uTn3ctxyxYAQ9+CPp3SDbEOlelfszOwSvHS4mk142gqQlsEkf5wyGwcgz6nYkds9uLsSJEt9VVl1tpLsDyUxW1p8kHAcahMvlqFuWgHw48dkADhJeXIWkx7xw4mRAJgM7LPYpvyLAqUprWNQ2vm0t6pWK4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779886953; c=relaxed/simple;
-	bh=inLAp7/uEJY5jTbJ8m+5t4XAfLhoaazjiX3pgbvzDOM=;
+	s=arc-20240116; t=1779890533; c=relaxed/simple;
+	bh=/bmGRa8uoSStF79McGx39SOsjjwWqOhl0fRRtnKE82M=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=gCZF7mNoCT/d06VY3YmyEfn650Th5RdnxuNF0EOutNTgyM4BZtMtaPXKqV+Xx2IaaeCyEz+mix7ktdu1JIznviXePch+MmQc7HOOGH8E5zsWoOmGOEkkVDCPpqWKpdc7J2aaku64saN0JeEQZZ0KuLm0hFwijtiEQ+BSXoJ31vo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XabAHfeB; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=NpZHb7YSyUqHdEsTXiPa31C+KVwhr38VY+0cngCHLSfBzsZxb747HeDEigQprQ5zdG0qPyB7ablv9pBDCgCMzbQwWPjpzzag11cELH1kD3Qn9oenXVsF7NuCBtJgODVmku5IM8ohwjWIT5HdW49VEQBYdA4gzHOno1yt1MeFRuU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DUCumBBz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XabAHfeB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B48871F000E9;
-	Wed, 27 May 2026 13:02:31 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DUCumBBz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53AAA1F00A3D;
+	Wed, 27 May 2026 14:01:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1779886951;
-	bh=6hOy9dJFAWa+JK1IUNBR38kChVdOn+rmdMmX32BaVGE=;
+	s=k20260515; t=1779890531;
+	bh=FkgMOAum7PqDzTK7rKLD/xMr/ND7i1PXGTLXoWRRlSs=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=XabAHfeBaYViWEMIeM1QmjaL5uim0++g4rVtR+U+9DHUrawZLW+IEs/elVTIdkD+I
-	 nB6/O3CptjHueb//PEQSnKV33+YH10wlaT4/DO1BuG+S5VqhkXSdgICMLV9m6CDjV1
-	 xBR3pJGBVd/u/80vY4ZI1WeS/Knl/4lqmr8vtfNhq5wUcvZxqL8+VX4tOTmwI8Zc2E
-	 aradmsC20kCavuZ4P1oLsFXhmAaBHUgbGiJglVz4Sy5KD7DrPWWayRGmh1VMrYzTv2
-	 EeNeIS4il17edd0+HdEskR8PTmdWAH1GhmbwF4G2zRFWAhVL9K3ra06+SFOwx7MTDF
-	 Hh1Gomj/88fGA==
+	b=DUCumBBzTerO4N9zhC728UGgQg5B81cHjd6qHqd9/ml/JytxO3Isz3pSBC2X//JCe
+	 TOymJU/1GHc+26aijr6LHfY4bi7gW0S0CxGvg38X4wUCrj10Gg3zh+0HlseU1Q4g4C
+	 zIoa/XvFiIa1DBJhAF8QygiBl/O1iAHoJHqIi4EFVeZ+1Fw4/SoFivo4bLzfGCWYf4
+	 5GcJuwlB+i2iOi15MTvmgYO7/c/KOReTZ+7QU1OskJ315cfex+sI5vlqEhNHlxqs7a
+	 1P17tyHlCoXjhy6rS7VdESN5HQl1JRtOL7iAcW5CuBo9x81IoVIxs8L78vAwQSGmtu
+	 HfRNKmQsnBqCw==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH 13/15] mm: support setup and upgrade of ANON_VMA_LAZY
- folios
+Subject: Re: [PATCH 08/15] mm: prepare rmap infrastructure for ANON_VMA_LAZY
 Reply-To: sashiko-reviews@lists.linux.dev
 To: tao <tao.wangtao@honor.com>
 Cc: damon@lists.linux.dev
-In-Reply-To: <20260527110147.17815-14-tao.wangtao@honor.com>
-References: <20260527110147.17815-14-tao.wangtao@honor.com>
+In-Reply-To: <20260527110147.17815-9-tao.wangtao@honor.com>
+References: <20260527110147.17815-9-tao.wangtao@honor.com>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Wed, 27 May 2026 13:02:31 +0000
-Message-Id: <20260527130231.B48871F000E9@smtp.kernel.org>
+Date: Wed, 27 May 2026 14:01:58 +0000
+Message-Id: <20260527140159.53AAA1F00A3D@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 
-Thank you for your contribution! Sashiko AI review found 6 potential issue(=
+Thank you for your contribution! Sashiko AI review found 3 potential issue(=
 s) to consider:
-- [Critical] Dereferencing `vma->vm_mm` before taking the VMA reference cau=
-ses a Use-After-Free on the `mm_struct`.
-- [Critical] Upgrading a VMA leaves dangling pointers in `folio->mapping`, =
-leading to Use-After-Free.
-- [High] rmap_walk_anon() silently aborts instead of retrying when a lazy m=
-apping is concurrently upgraded.
-- [High] Toggling the `anon_vma_lazy` sysctl at runtime causes `fork()` to =
-crash with `VM_BUG_ON_VMA`.
-- [High] Large anonymous folios spanning split VMAs break rmap traversal be=
-cause only one VMA updates the folio mapping.
-- [High] TOCTOU race in `__folio_rmap_sanity_checks()` causes a kernel pani=
-c when a folio mapping is concurrently upgraded.
+- [Critical] Race condition and missing synchronization in `anon_vma_lazy_l=
+ock_read()` and `anon_vma_tree_lock_write()` for lazy VMAs.
+- [Critical] Ignored return value of `vma_get()` in `anon_vma_lazy_lock_rea=
+d()` leads to Use-After-Free and refcount underflow.
+- [High] Off-by-one boundary check in `anon_rmap_iter_first_vma()` causes f=
+alse positive VMA overlap detection and out-of-bounds page table accesses.
 --
 
-commit a797e29fa9a2081d4af94616e5d30308d998bb4d
+commit 411934596db1ffd0b45c2469ce0c285daaf6e6e1
 Author: tao <tao.wangtao@honor.com>
-Subject: mm: support setup and upgrade of ANON_VMA_LAZY folios
 
-This commit introduces ANON_VMA_LAZY folios setup and upgrade mechanisms
-across mapping, duplicating, and rmap walk paths.
+mm: prepare rmap infrastructure for ANON_VMA_LAZY
 
-> rmap_walk_anon() detects ANON_VMA_LAZY upgrades and retries
-> the walk to ensure the mapping is handled correctly.
-
-[Severity: High]
-The commit message mentions that rmap_walk_anon() retries the walk if it
-detects an ANON_VMA_LAZY upgrade. Is this accurate?
-
-It appears there is no retry loop. If folio_lock_anon_vma_lazy_read()
-returns NULL because the mapping was upgraded concurrently,
-rmap_walk_anon_lock() returns ANON_RMAP_NULL and rmap_walk_anon()
-immediately aborts.
-
-Could this cause reverse mapping operations like try_to_unmap() to silently
-skip the folio, leading to memory leaks and failed migrations?
+Introduce ANON_VMA_LAZY helpers and prepare the anon_rmap and anon_vma_tree
+infrastructure for the upcoming ANON_VMA_LAZY feature.
 
 > diff --git a/include/linux/rmap.h b/include/linux/rmap.h
+> index 9802bce926959..ebe9f3f61170d 100644
 > --- a/include/linux/rmap.h
 > +++ b/include/linux/rmap.h
-> @@ -392,6 +392,14 @@ static __always_inline void __folio_rmap_sanity_chec=
-ks(const struct folio *folio
->  		unsigned long mapping =3D (unsigned long)folio->mapping;
->  		struct anon_vma *anon_vma;
-> =20
-> +		if (folio_test_anon_vma_lazy(folio)) {
-> +			struct vm_area_struct *root_vma =3D
-> +				(void *)(mapping - FOLIO_MAPPING_ANON_VMA_LAZY);
-> +
-> +			VM_WARN_ON_FOLIO(!rcuref_read(&root_vma->vm_rcuref), folio);
-> +			return;
-> +		}
-> +
->  		anon_vma =3D (void *)(mapping - FOLIO_MAPPING_ANON);
->  		VM_WARN_ON_FOLIO(atomic_read(&anon_vma->refcount) =3D=3D 0, folio);
-
-[Severity: High]
-Is there a TOCTOU race here when a folio mapping is concurrently upgraded?
-
-The code reads folio->mapping into the local mapping variable, then
-folio_test_anon_vma_lazy() re-reads folio->mapping. If the mapping is
-upgraded to a regular anon_vma between these reads, the test returns false,
-falling through to evaluate anon_vma using the first read which still has
-the lazy tag.
-
-This would yield an unaligned pointer (root_vma + 2), and dereferencing it
-in atomic_read() would panic the kernel.
 
 [ ... ]
 
-> @@ -431,6 +439,31 @@ void hugetlb_add_anon_rmap(struct folio *, struct vm=
-_area_struct *,
-> +static inline void folio_upgrade_anon_vma_lazy(struct folio *folio,
-> +					       struct vm_area_struct *vma)
-> +{
-> +	unsigned long anon_tree =3D (unsigned long)vma->anon_vma;
+> @@ -1015,8 +1047,17 @@ static inline struct vm_area_struct *anon_rmap_ite=
+r_first_vma(
+>  	anon_rmap_t anon_rmap, unsigned long start, unsigned long last,
+>  	struct anon_vma_chain **avc)
+>  {
+> -	struct anon_vma *anon_vma =3D anon_rmap_to_anon_vma(anon_rmap);
+> +	struct anon_vma *anon_vma;
 > +
-> +	VM_BUG_ON_VMA(!anon_tree || !IS_ALIGNED(anon_tree, sizeof(long)), vma);
+> +	*avc =3D NULL;
+> +	if (!anon_rmap_is_anon_vma(anon_rmap)) {
+> +		struct vm_area_struct *vma =3D anon_rmap_to_vma(anon_rmap);
+> =20
+> +		if (vma->vm_pgoff + vma_pages(vma) < start || vma->vm_pgoff > last)
+                                                    ^^^^^^
 
 [Severity: High]
-What happens if the anon_vma_lazy_enabled() sysctl is toggled to false at
-runtime?
+Does this off-by-one boundary check cause false positive VMA overlap detect=
+ion?
 
-If anon_vma_fork() skips upgrading the parent VMA's lazy mapping, later in
-fork(), copy_page_range() calls folio_try_dup_anon_rmap() which then
-invokes folio_upgrade_anon_vma_lazy() here.
+It looks like the exclusive end check uses < start instead of <=3D start.
+If a folio's start offset is exactly at the VMA's exclusive end, this check
+evaluates to false, incorrectly implying the folio overlaps with the VMA.
 
-Since src_vma->anon_vma was never upgraded and holds a tagged
-ANON_VMA_TREE_VMA pointer, wouldn't this IS_ALIGNED assertion fail and
-panic the kernel?
+The iteration would then yield the non-overlapping VMA to rmap_walk_anon(),
+which passes the offset to vma_address().
 
-> +	anon_tree =3D anon_tree + FOLIO_MAPPING_ANON;
-> +	WRITE_ONCE(folio->mapping, (struct address_space *)anon_tree);
+Because the offset is outside the VMA bounds, vma_address() calculates an
+address >=3D vma->vm_end and returns -EFAULT. This triggers
+VM_BUG_ON_VMA(address =3D=3D -EFAULT, vma) in rmap_walk_anon().
+
+> +			return NULL; /* No overlap in the VMA range. */
+> +		return vma;
+> +	} else
+> +		anon_vma =3D anon_rmap_to_anon_vma(anon_rmap);
+>  	*avc =3D anon_vma_interval_tree_iter_first(&anon_vma->rb_root, start, l=
+ast);
+>  	return *avc ? (*avc)->vma : NULL;
+>  }
+
+[ ... ]
+
+> diff --git a/mm/internal.h b/mm/internal.h
+> index 639f9c287f4c2..6b703646f66db 100644
+> --- a/mm/internal.h
+> +++ b/mm/internal.h
+
+[ ... ]
+
+> +/*
+> + * ANON_VMA_TREE_VMA is just a VMA, without anon_vma or anon_vma_chain,
+> + * so no protection is needed.
+> + */
+>  static inline void anon_vma_tree_lock_write(anon_vma_tree_t anon_tree)
+>  {
+>  	struct anon_vma *anon_vma =3D anon_vma_tree_anon_vma(anon_tree);
+> =20
+> -	anon_vma_lock_write(anon_vma);
+> +	if (anon_vma)
+> +		anon_vma_lock_write(anon_vma);
+
+[Severity: Critical]
+Can this missing synchronization lead to a use-after-free of page table pag=
+es?
+
+Here, anon_vma_tree_lock_write() acts as a no-op for lazy VMAs.
+In mm/rmap.c, anon_vma_lazy_lock_read() only increments vm_rcuref via vma_g=
+et()
+without acquiring any synchronization locks.
+
+Consequently, operations that traverse page tables (like rmap_walk_anon()) =
+run
+completely lockless and concurrently with page table structural changes like
+vma_adjust_trans_huge() in __split_vma() or VMA teardowns in free_pgtables(=
+).
+
+vma_get() doesn't prevent free_pgd_range() from unmapping and freeing the p=
+age
+tables. This allows page tables to be freed while page_vma_mapped_walk() is
+traversing them, which can lead to a use-after-free of page table pages.
+
+>  }
+> =20
+>  static inline int anon_vma_tree_trylock_write(anon_vma_tree_t anon_tree)
+
+[ ... ]
+
+> diff --git a/mm/rmap.c b/mm/rmap.c
+> index 58f470e0c3ffd..d13395a082c60 100644
+> --- a/mm/rmap.c
+> +++ b/mm/rmap.c
+
+[ ... ]
+
+> +static void anon_vma_lazy_lock_read(struct vm_area_struct *vma)
+> +{
+> +	vma_get(vma);
+
+[Severity: Critical]
+Is it safe to ignore the return value of vma_get() here?
+
+vma_get() returns NULL if the VMA's reference count is already zero, indica=
+ting
+it is scheduled for freeing.
+
+Because this failure is ignored and the function returns void, callers like
+anon_rmap_lock_read() might proceed to traverse a dying or freed VMA, assum=
+ing
+the lock and reference were successfully acquired.
+
+This can lead to a use-after-free when accessing VMA fields.
+
+Additionally, anon_vma_lazy_unlock_read() will later call vma_put(), which
+invokes rcuref_put() on an already-zero refcount, causing a refcount underf=
+low
+and potential double-free of the VMA memory.
+
 > +}
-
-[Severity: High]
-Can large anonymous folios spanning split VMAs break rmap traversal here?
-
-When an ANON_VMA_LAZY VMA is split, a large folio can span both resulting
-VMAs. During fork(), the first VMA is upgraded to a regular anon_vma and
-updates folio->mapping. When the second VMA is processed,
-folio_test_anon_vma_lazy() is already false, so the folio's mapping isn't
-updated to reflect the second VMA.
-
-Will future rmap walks traverse the first VMA but miss the second,
-stranding PTEs and leaking memory?
-
-[Severity: Critical]
-Does upgrading a VMA leave dangling pointers in folio->mapping?
-
-When a lazy VMA is upgraded to a regular anon_vma (for example, via
-vma_upgrade_anon_vma_lazy() during khugepaged operations or mprotect), it
-seems the VMA drops its reference to root_vma, but the page tables aren't
-walked to update folio->mapping for existing folios.
-
-These folios would retain the old root_vma + FOLIO_MAPPING_ANON_VMA_LAZY
-pointer. When the root_vma is eventually freed, could any rmap walk on
-these folios dereference the dangling pointer, causing a use-after-free on
-the freed VMA slab object?
-
-[Severity: Critical]
-While not explicitly in the provided diff context, can dereferencing
-vma->vm_mm before taking the VMA reference cause a use-after-free on the
-mm_struct?
-
-In folio_resolve_anon_vma_lazy(), the code reads mm =3D vma->vm_mm before
-calling vma_get(anon_lazy_root). Because the VMA is allocated from a
-SLAB_TYPESAFE_BY_RCU cache, it can be freed and recycled to a completely
-different process concurrently.
-
-The read mm pointer may point to a freed mm_struct. Calling
-vma_lookup(mm, addr) subsequently dereferences this stale mm pointer,
-leading to a use-after-free.
+> +
+> +static bool anon_vma_lazy_trylock_read(struct vm_area_struct *vma)
+> +{
+> +	return (bool)vma_get(vma);
+> +}
+> +
+> +static void anon_vma_lazy_unlock_read(struct vm_area_struct *vma)
+> +{
+> +	vma_put(vma);
+> +}
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260527110147.1781=
-5-1-tao.wangtao@honor.com?part=3D13
+5-1-tao.wangtao@honor.com?part=3D8
