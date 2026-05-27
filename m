@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A91F3CE0B8
-	for <damon@lists.linux.dev>; Wed, 27 May 2026 12:29:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 330CF31F9A4
+	for <damon@lists.linux.dev>; Wed, 27 May 2026 12:49:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779884967; cv=none; b=X1IjFZY4G9lTA9qPBrzbPho+3QU7KQBJTFoSRhvZvaGztTizYRGSPbhJTNyIJ+I4pew+wNNp69LjCIH/zTfC1QD3iRb0M3t0S3PsTTbynuycQIb/+ga+oT/vV62h9CUj/gXXIXoHPpM2Ib6IjgTkuTTmuNACQDy74OFlc10ygOw=
+	t=1779886180; cv=none; b=V9+JGfhTQa3lD5Ez90qq71Minw82cO0hqi2cKbGav5sIx/gOOJFFSD9wkOZQJdKBQsCB4+ihNwbDbKzr8gxqZHwzrsHcOcbdrUnr7g7DpedtN0ndIZmC8QTH7XP7TSJXlCY7Ki6fBgH52o/wjaQo7dNdTqV6tyeGJKKoAwNysAQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779884967; c=relaxed/simple;
-	bh=Ac1STWrCRJFIp1fMC1UC4YGbY9ersuoTMmewRvjl1+o=;
+	s=arc-20240116; t=1779886180; c=relaxed/simple;
+	bh=PxuajF8MO/jQN6tNXutEyMlNZ/tUz3Zn37DziNWbLSg=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=YXUXNP5Axibtn6QThqPazAT6J99yRhX0Nhz7BN3LM7Yas1WAZ7QOOLl9fyypgjZZl3AObMznUcmihPumGvaz3d1ttKMWoQyZbJg6asPeufCxt9aGNXgx0I9Y3HdU4rPnc5hH1Slg0yDvLrZwpGMpJH6QCPWKMlmckwRAeMBQ28U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PRgpt+yC; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=IZROB65yu+zUCI9j5XqNGylmAji3RUci3em11gOxv4iJKujPzf0x2p4F44IVWqH6isaJnS7zCeSO8JZD1K/AndIdI7OueBph6/Jyl0jvgSF0wRTt5CoFpIoAA0EYroDUjb/vz44bn1a10/ppON30Zbe8+3zL7Kt8A+g8lqqrnI4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=O4CGrKGi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PRgpt+yC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DADA1F00A3A;
-	Wed, 27 May 2026 12:29:26 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="O4CGrKGi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC0A71F000E9;
+	Wed, 27 May 2026 12:49:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1779884966;
-	bh=yhGpZXMBRuNeUcvyj921Xam738jkgnawbAyZiJI6S9g=;
+	s=k20260515; t=1779886178;
+	bh=5SOA/bfRuTclr5MPCNxxA9RHfrhASfifJuuw6lNj9uA=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=PRgpt+yCBwxon84iJg/htsyTL6lUPqsXL+JS5gMgx9guwHaBqmfMbJnyjlup0zKqG
-	 gSsf/QkFeMc0Jkn3IIBe4IVs/u3GFHCMhqEuAVCHQSLUGzfLGdgjeyMeqFTnKz4JQM
-	 vgGpfYQPgpD8l1/ol3PE5KPfAuw4G1gizHQZLCRv79yMQfaq2l97fqF5wXhcqjyjv5
-	 Xdr60dVv5IXcHzj4ngYMu6J09gDoZbB6kahDygERyZgDRG2PasvrarFqS+iWyBnsHH
-	 bUrHBKyyR1BpcJ+0rIwXtBdRr+OIh1gdTw+G5a3/seS082sk54sk3VFd2y1fLUrhNV
-	 YOMgigrce+w0w==
+	b=O4CGrKGiT3yY7fHR7OaLz0rry6g6xHlfekxn0qluGa4Y/IO4U7Z7zgeCq952QItay
+	 mAzvbuSxj3nbKj5ZXLxSJIirf5fsjNx480SplITBHef45YsOX4w5LDEktNo0IucSdU
+	 gZ4xyHR5DmUwJA2Ft6C+HkqmHJ5Ty3RJ+vTJ15wGDEUYF6ltPLwiNSm4pdIcoZ5qKb
+	 JKw2Fgudxpr4emzKOLJntZ1izNOY0s94YEiJzf7TbDg5ejsImQKAIR+1NgPbuTThUS
+	 pJdjlDrnrTMOSTo6GOAtAr7T+OJh6qQ/+jIrwIkLkjS5YpLJMjIK0SggNnLyopM2UR
+	 u/C9EUsEe2zTA==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH 10/15] mm: defer anon_vma creation with ANON_VMA_LAZY
+Subject: Re: [PATCH 14/15] mm: support merging of ANON_VMA_LAZY VMAs
 Reply-To: sashiko-reviews@lists.linux.dev
 To: tao <tao.wangtao@honor.com>
 Cc: damon@lists.linux.dev
-In-Reply-To: <20260527110147.17815-11-tao.wangtao@honor.com>
-References: <20260527110147.17815-11-tao.wangtao@honor.com>
+In-Reply-To: <20260527110147.17815-15-tao.wangtao@honor.com>
+References: <20260527110147.17815-15-tao.wangtao@honor.com>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Wed, 27 May 2026 12:29:25 +0000
-Message-Id: <20260527122926.3DADA1F00A3A@smtp.kernel.org>
+Date: Wed, 27 May 2026 12:49:38 +0000
+Message-Id: <20260527124938.BC0A71F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -45,82 +45,78 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 
 Thank you for your contribution! Sashiko AI review found 1 potential issue(=
 s) to consider:
-- [High] Unconditional increment of the root anon_vma refcount when reusing=
- an existing anon_vma causes a memory leak.
+- [Critical] The `SWAP_VMG_TARGET_IF_DELETE_ANON_VMA_LAZY_ROOT` macro cause=
+s a Use-After-Free of the surviving VMA, leaks the original target VMA, and=
+ breaks subsequent logic by mutating local variables.
 --
 
-commit e7b82bf7c91f9ff13c87c5b6d44b365dcfcf93c5
+commit c3a08dff39965e2def5b757c0b817a9f4a00d8f1
 Author: tao <tao.wangtao@honor.com>
 
-mm: defer anon_vma creation with ANON_VMA_LAZY
+mm: support merging of ANON_VMA_LAZY VMAs
 
-This commit defers anon_vma creation until fork by marking VMAs as
-ANON_VMA_LAZY to reduce allocation overhead. During fork, lazy VMAs are
-upgraded to establish the sharing topology, and child VMAs are created
-without allocating a new anon_vma.
+Allow ANON_VMA_LAZY VMAs to merge if they share the same root or if one
+side has no root. For ANON_VMA_LAZY merges, do not delete the lazy root
+VMA.
 
-> diff --git a/mm/rmap.c b/mm/rmap.c
-> index 12693c6897120..59848e1aaf531 100644
-> --- a/mm/rmap.c
-> +++ b/mm/rmap.c
+> diff --git a/mm/vma.c b/mm/vma.c
+> index 0a31ef82a90cb..ae1047dcfbc2e 100644
+> --- a/mm/vma.c
+> +++ b/mm/vma.c
 
 [ ... ]
 
-> @@ -282,19 +393,30 @@ int __anon_vma_prepare(struct vm_area_struct *vma)
+> @@ -776,6 +777,17 @@ static bool can_merge_remove_vma(struct vm_area_stru=
+ct *vma)
+>  	return !vma->vm_ops || !vma->vm_ops->close;
+>  }
 > =20
->  	anon_vma =3D find_mergeable_anon_vma(vma);
->  	allocated =3D NULL;
-> -	if (!anon_vma) {
-> +	/* If parent_anon_vma exists, mergeable anon_vma root must match it. */
-> +	if (!anon_vma ||
-> +		(parent_anon_vma && anon_vma->root !=3D parent_anon_vma->root)) {
->  		anon_vma =3D anon_vma_alloc();
->  		if (unlikely(!anon_vma))
->  			goto out_enomem_free_avc;
-> -		anon_vma->num_children++; /* self-parent link for new root */
->  		allocated =3D anon_vma;
-> +		if (parent_anon_vma) {
-> +			anon_vma->root =3D parent_anon_vma->root;
-> +			anon_vma->parent =3D parent_anon_vma;
-> +		}
->  	}
+> +/*
+> + * The ANON_VMA_LAZY root VMA may still be referenced by folio->mapping.
+> + * Keeping the root avoids allocating an extra VMA.
+> + */
+> +#define SWAP_VMG_TARGET_IF_DELETE_ANON_VMA_LAZY_ROOT(vmg, delete_vma) do=
+ { \
+> +	if (anon_vma_lazy_enabled()) { \
+> +		if (delete_vma && vma_is_anon_vma_lazy_root(delete_vma)) \
+> +			swap(vmg->target, delete_vma); \
+> +	} \
+> +} while (0)
+> +
+
+[ ... ]
+
+> @@ -933,12 +945,15 @@ static __must_check struct vm_area_struct *vma_merg=
+e_existing_range(
+>  		vmg->end =3D next->vm_end;
+>  		vmg->pgoff =3D prev->vm_pgoff;
 > =20
->  	anon_tree =3D make_anon_vma_tree(anon_vma);
-> +	if (upgrade_lazy)
-> +		is_lazy =3D vma_unlink_anon_vma_lazy(vma, anon_tree);
->  	anon_vma_tree_lock_write(anon_tree);
->  	/* page_table_lock to protect against threads */
->  	spin_lock(&mm->page_table_lock);
-> -	if (likely(!vma->anon_vma)) {
-> +	if (likely(!vma->anon_vma || is_lazy)) {
-> +		if (anon_vma->root !=3D anon_vma)
-> +			get_anon_vma(anon_vma->root);
+> +		SWAP_VMG_TARGET_IF_DELETE_ANON_VMA_LAZY_ROOT(vmg, middle);
+> +		SWAP_VMG_TARGET_IF_DELETE_ANON_VMA_LAZY_ROOT(vmg, next);
 
-[Severity: High]
-Does this code leak the root anon_vma when reusing an existing anon_vma?
+[Severity: Critical]
+Does swapping vmg->target and the local variable middle result in a
+use-after-free of the target VMA?
 
-When find_mergeable_anon_vma() finds a compatible anon_vma to reuse,
-allocated is left as NULL. However, the code proceeds to unconditionally
-call get_anon_vma(anon_vma->root) as long as anon_vma->root !=3D anon_vma.
+By swapping these variables, vmg->target now points to the VMA that was
+originally middle, while the local middle variable points to the original
+target (e.g., prev). However, this macro does not update the internal state
+tracking fields vmg->middle or vmg->next.
 
-The root's refcount tracks the number of child anon_vma structs, not the
-number of VMAs sharing the child anon_vma. Because a new anon_vma was not
-allocated, the root's refcount was already correctly incremented when the
-existing child anon_vma was originally created.
+When commit_merge() is called, init_multi_vma_prep() sets up the removal li=
+st
+using the unmodified vmg->middle and vmg->next. As a result, the newly
+selected target VMA is simultaneously stored into the maple tree and added =
+to
+the removal list, leading to a use-after-free when vma_complete() frees the
+removal list.
 
-When the VMAs are later unmapped and the child anon_vma's interval tree
-becomes completely empty, __put_anon_vma() is called exactly once for the
-child anon_vma, which decrements the root's refcount exactly once. Since the
-root's refcount is incremented every time a VMA reuses the child anon_vma
-but only decremented once when the child is freed, it seems the extraneous
-references will permanently leak root anon_vma structures.
+Simultaneously, the original target VMA (e.g., prev) is overwritten in the
+maple tree but never added to the removal list, leaking the VMA.
 
-> +		if (allocated)
-> +			anon_vma->parent->num_children++;
->  		vma->anon_vma =3D anon_tree;
->  		anon_vma_chain_assign(vma, avc, anon_vma);
->  		anon_vma_interval_tree_insert(avc, &anon_vma->rb_root);
+Additionally, because the local variables are swapped, subsequent logic such
+as dup_anon_vma() will read from the wrong VMAs.
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260527110147.1781=
-5-1-tao.wangtao@honor.com?part=3D10
+5-1-tao.wangtao@honor.com?part=3D14
