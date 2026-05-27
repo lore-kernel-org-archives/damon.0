@@ -1,86 +1,197 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E3733FF88A
-	for <damon@lists.linux.dev>; Wed, 27 May 2026 11:53:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23794391E7F;
+	Wed, 27 May 2026 11:56:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779882814; cv=none; b=rqcBI2+emNxpBchAygjohbe1yCF8BklbwYgu/spWuqEOx4qm4FbN2Y/BAFQAWyVE6tweot+e9kqvFhc503jd0EjngJRjmaDrpgeArKlQyBC0k98u/vN9EuQWVowWPNexHvpLOH4UhISV+/tNQkCq94kO56X5ij+L3pqu34lieXo=
+	t=1779883013; cv=none; b=QTo7VVCosyPsnTk3Kh1nAJzoPBozF92/IAOKOSPhEg+OxdG/lAS/IEQfYy/o4FhjgXrgqxb5y9XcN7suh/f7TLyidU8VfIfgHLWEyhuoOK4Lei4Ipc9jVYHJcjBWMwUm+4rmeP14FF1dQWGRPHLEdfqrJ5QWvmOI6cmw9ei/Zjk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779882814; c=relaxed/simple;
-	bh=988ZzJgwVf7erwFTN6W49VAKFdxuyvF8Hy/2qsMMy6g=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=XIDvU/jADDuK5PQ9G1p+Ae/7h9ZnFkNKwJOKO8m2SNFA0KDwZGhzfecYbBNYNlIwo6aj2mDgml5vLAwNlmi02RjU8ipqPuJdyE5SdsSZOTuTSZYwmI9Jxpk+W2SWvqW1iveBqfLqsXkDaTBQvRr2GpLyNs8vW1C6+piSW24Jp9E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Qwm1PyOA; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1779883013; c=relaxed/simple;
+	bh=pqXEBNOIc7QVQcLEAQHN55LJtXTCWStMsL2A99JgpB8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=uFZBAhcR7frh2ocUyC41zEq2Y1zTaLs2nGzhd3va2H2TvQ7B8NeFymPn/RaRgU1VBmnVL9DEs7s9pRJRynqWb2Cy0kw36XHY3klYO9iI4GPKLL8EmTcKxgzSb9KCYM9bQ+y5SfxAeD7tcp+KfrkS5VxiALGA0gO/PkOXxKOsdJk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NweolyGX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Qwm1PyOA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47F021F000E9;
-	Wed, 27 May 2026 11:53:30 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NweolyGX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20CF11F000E9;
+	Wed, 27 May 2026 11:56:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1779882810;
-	bh=GjUsX/mUiuaF0BbaaEp7LqrGCFgJ9DCIaofVhBvQr/Y=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=Qwm1PyOA+HhIxHnnsKRzKDsUpQGHCX8zDwrnbJZKPC6ELT3S9ND+0E82kIMINfLMX
-	 Qo2D3utZyjVgl0sObTiq0QKmvPZq6fseqKk3e1pFRvv6B49o8RZD4BSVVRvm3F939H
-	 T2twJnwPvlKLMmhp/SgUtITd0kG11R7CIxu9q713H/+Dics/TaN+BB+pMj7KDfEqBd
-	 jIgC41MYWq6uz43MrI+G/NsCKPEjUKrBuqfnoDaFHPGOsr7ngi1jmncdXUN3Lwqwvt
-	 TGQiGyBO/nhPgHGiYMUa86edsZrEOX5+GSW62L9vUCqbgZtlyc4SDUyOhW6kq0Ouyh
-	 Zy0oaANeKVemQ==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH 04/15] mm: switch to anon_vma_tree_t APIs in preparation
- for ANON_VMA_LAZY
-Reply-To: sashiko-reviews@lists.linux.dev
+	s=k20260515; t=1779883011;
+	bh=ksZ5oHiQw0set/5JzEq4vhK20DwRRO7Os6WxXBqwiRA=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=NweolyGXKEajQ0RagK6sfKNXR3ZzC9vSVU2YLniuEU+Glx+awY5/0FLd0SJ4c2fTA
+	 ZEawMCjKSwiuOqJZycIboFWAUXIsXCV3AjZmpmSiUxaUzweLj7Xb3OINPKYt2KuZct
+	 pps6h9ZusRXlL+CGq/ZIMQh5wOf0Wucq5+apl8w/QFyWX9GYCW0dUl/bCkG/tbUm2L
+	 LOOvm+uurETXlZAVKh1uT8YMvaSSxBD4qqvZJ7FqwYsJXg8WqcAInBwV3ljQt/QVJB
+	 4kWeE2s44qxGxrcfoOjgVQp0UjmsVLGZGNOtub+PELBiymmugD3s3Hn2+Rf+jegYJ0
+	 jT12W2JGCFVUw==
+Date: Wed, 27 May 2026 12:56:35 +0100
+From: Lorenzo Stoakes <ljs@kernel.org>
 To: tao <tao.wangtao@honor.com>
-Cc: damon@lists.linux.dev
-In-Reply-To: <20260527110147.17815-5-tao.wangtao@honor.com>
-References: <20260527110147.17815-5-tao.wangtao@honor.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Wed, 27 May 2026 11:53:29 +0000
-Message-Id: <20260527115330.47F021F000E9@smtp.kernel.org>
+Cc: catalin.marinas@arm.com, will@kernel.org, tglx@kernel.org, 
+	mingo@redhat.com, bp@alien8.de, dave.hansen@linux.intel.com, x86@kernel.org, 
+	akpm@linux-foundation.org, david@kernel.org, willy@infradead.org, sj@kernel.org, 
+	kees@kernel.org, luizcap@redhat.com, zhangjiao2@cmss.chinamobile.com, 
+	kas@kernel.org, hpa@zytor.com, liam@infradead.org, vbabka@kernel.org, 
+	rppt@kernel.org, surenb@google.com, mhocko@suse.com, jack@suse.cz, 
+	riel@surriel.com, harry@kernel.org, jannh@google.com, jgg@ziepe.ca, 
+	jhubbard@nvidia.com, peterx@redhat.com, ziy@nvidia.com, baolin.wang@linux.alibaba.com, 
+	npache@redhat.com, ryan.roberts@arm.com, dev.jain@arm.com, baohua@kernel.org, 
+	lance.yang@linux.dev, xu.xin16@zte.com.cn, chengming.zhou@linux.dev, 
+	nao.horiguchi@gmail.com, matthew.brost@intel.com, joshua.hahnjy@gmail.com, 
+	rakie.kim@sk.com, byungchul@sk.com, gourry@gourry.net, 
+	ying.huang@linux.alibaba.com, apopple@nvidia.com, pfalcato@suse.de, 
+	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, linux-fsdevel@vger.kernel.org, 
+	linux-mm@kvack.org, damon@lists.linux.dev, shakeel.butt@linux.dev, ryncsn@gmail.com, 
+	21cnbao@gmail.com, jparsana@google.com, dvander@google.com, zhangji1@honor.com, 
+	wangzicheng@honor.com
+Subject: Re: [PATCH 03/15] mm: introduce anon_vma_tree_t for multiple
+ anon_vma topologies
+Message-ID: <ahbatfs3G-Qkh7Vk@lucifer>
+References: <20260527110147.17815-1-tao.wangtao@honor.com>
+ <20260527110147.17815-4-tao.wangtao@honor.com>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260527110147.17815-4-tao.wangtao@honor.com>
 
-Thank you for your contribution! Sashiko AI review found 1 potential issue(=
-s) to consider:
-- [Low] The anon_vma field in vma_merge_struct is passed directly to a %px =
-format specifier without being cast to a pointer type.
---
+On Wed, May 27, 2026 at 07:01:35PM +0800, tao wrote:
+> Prepare for upcoming ANON_VMA_LAZY support and RCU-based lockless rmap
+> traversal by clearly separating anon_vma topology handling from the
+> anon_rmap semantics.
 
-commit 642dbe1cf1e7ec576816087b7c56d9a36c41f223
-Author: tao <tao.wangtao@honor.com>
+RCU is not 'lockless'... and if you truly get RCU semantics you break a bunch of
+stuff as I found out.
 
-mm: switch to anon_vma_tree_t APIs in preparation for ANON_VMA_LAZY
-   =20
-Replace direct anon_vma usage with anon_vma_tree_t APIs. This prepares
-for ANON_VMA_LAZY and prevents external modules from accessing anon_vma
-directly.
+>
+> Prepare for supporting multiple anon_vma topologies by introducing
+> lightweight abstractions used by the VMA and rmap code.
+>
+> Introduce anon_vma_tree_t as the type stored in vma->anon_vma:
+>
+>     typedef unsigned long anon_vma_tree_t;
+>
+> It represents a tagged pointer encoding a reference to the anon_vma
+> topology. The low bits are reserved as type tags to distinguish
+> different implementations (e.g. regular anon_vma and lazy anon_vma).
+> This keeps the VMA representation compact while allowing the topology
+> to evolve without changing the VMA layout.
+>
+> Signed-off-by: tao <tao.wangtao@honor.com>
 
-> diff --git a/mm/vma.h b/mm/vma.h
-> index 8e4b61a7304c6..d3bd832992195 100644
-> --- a/mm/vma.h
-> +++ b/mm/vma.h
-> @@ -104,7 +104,7 @@ struct vma_merge_struct {
->  		vma_flags_t vma_flags;
->  	};
->  	struct file *file;
-> -	struct anon_vma *anon_vma;
-> +	anon_vma_tree_t anon_vma;
+The commit message is at least better on this one, but this approach is again,
+predicated on extending a broken abstraction.
 
-[Severity: Low]
-Since anon_vma is now an anon_vma_tree_t (which is an unsigned long), does
-dump_vma_merge_struct() in mm/debug.c also need an explicit cast to (void *)
-when passing it to the %px format specifier?
+You could have saved time and effort by coming forward with this earlier to the
+community.
 
-Without the cast, this might trigger a compiler warning because %px strictly
-expects a pointer argument, which could cause a build failure under the
-kernel's -Werror configuration.
+You're also adding a bunch more messy code on top of anon_vma. It's just the
+wrong direction.
 
->  	struct mempolicy *policy;
+> ---
+>  include/linux/mm_types.h |  3 +++
+>  mm/internal.h            | 54 ++++++++++++++++++++++++++++++++++++++++
+>  2 files changed, 57 insertions(+)
+>
+> diff --git a/include/linux/mm_types.h b/include/linux/mm_types.h
+> index a308e2c23b82..5f4961ea1572 100644
+> --- a/include/linux/mm_types.h
+> +++ b/include/linux/mm_types.h
+> @@ -917,6 +917,9 @@ struct vm_area_desc {
+>  	struct mmap_action action;
+>  };
+>
+> +/* Tagged pointer stored in vma->anon_vma. Low bits encode anon_vma type. */
+> +typedef unsigned long anon_vma_tree_t;
+> +
+>  /*
+>   * This struct describes a virtual memory area. There is one of these
+>   * per VM-area/task. A VM area is any part of the process virtual memory
+> diff --git a/mm/internal.h b/mm/internal.h
+> index 5a2ddcf68e0b..76544ad44ff0 100644
+> --- a/mm/internal.h
+> +++ b/mm/internal.h
+> @@ -246,6 +246,60 @@ static inline void anon_vma_unlock_read(struct anon_vma *anon_vma)
+>  	up_read(&anon_vma->root->rwsem);
+>  }
+>
+> +/* anon_vma_tree_t APIs */
+> +
+> +static inline anon_vma_tree_t make_anon_vma_tree(struct anon_vma *anon_vma)
+> +{
+> +	return (anon_vma_tree_t)anon_vma;
+> +}
 
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260527110147.1781=
-5-1-tao.wangtao@honor.com?part=3D4
+You're literally returning an unsigned long of an anon_vma here?
+
+Why is the anon_rmap_t a wrapped struct and this an unsigned long?
+
+> +
+> +static inline struct anon_vma *anon_vma_tree_anon_vma(anon_vma_tree_t anon_tree)
+> +{
+> +	return (struct anon_vma *)anon_tree;
+> +}
+
+The anon_tree is an anon_vma? What?
+
+And it's a tagged pointer but we don't bother clearing any bits right?...!
+
+> +
+> +static inline void anon_vma_tree_lock_write(anon_vma_tree_t anon_tree)
+> +{
+> +	struct anon_vma *anon_vma = anon_vma_tree_anon_vma(anon_tree);
+> +
+> +	anon_vma_lock_write(anon_vma);
+> +}
+> +
+> +static inline int anon_vma_tree_trylock_write(anon_vma_tree_t anon_tree)
+> +{
+> +	struct anon_vma *anon_vma = anon_vma_tree_anon_vma(anon_tree);
+> +
+> +	return anon_vma_trylock_write(anon_vma);
+> +}
+> +
+> +static inline void anon_vma_tree_unlock_write(anon_vma_tree_t anon_tree)
+> +{
+> +	struct anon_vma *anon_vma = anon_vma_tree_anon_vma(anon_tree);
+> +
+> +	anon_vma_unlock_write(anon_vma);
+> +}
+> +
+> +static inline void anon_vma_tree_lock_read(anon_vma_tree_t anon_tree)
+> +{
+> +	struct anon_vma *anon_vma = anon_vma_tree_anon_vma(anon_tree);
+> +
+> +	anon_vma_lock_read(anon_vma);
+> +}
+> +
+> +static inline int anon_vma_tree_trylock_read(anon_vma_tree_t anon_tree)
+> +{
+> +	struct anon_vma *anon_vma = anon_vma_tree_anon_vma(anon_tree);
+> +
+> +	return anon_vma_trylock_read(anon_vma);
+> +}
+> +
+> +static inline void anon_vma_tree_unlock_read(anon_vma_tree_t anon_tree)
+> +{
+> +	struct anon_vma *anon_vma = anon_vma_tree_anon_vma(anon_tree);
+> +
+> +	anon_vma_unlock_read(anon_vma);
+> +}
+> +
+
+You keep adding more and more code on top of the existing mess. This is NOT what
+we want.
+
+>  struct anon_vma *folio_get_anon_vma(const struct folio *folio);
+>
+>  /* Operations which modify VMAs. */
+> --
+> 2.17.1
+>
