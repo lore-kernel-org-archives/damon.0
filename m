@@ -1,153 +1,126 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E3913F58DC
-	for <damon@lists.linux.dev>; Wed, 27 May 2026 12:24:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A91F3CE0B8
+	for <damon@lists.linux.dev>; Wed, 27 May 2026 12:29:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779884641; cv=none; b=O9alcOGpaTofqj/WxMUDeVdX9olTG5EsvxJ7y1OTIzvDkAivoBRw8vBKzlwhQqQcGHGH4m6o1Imw9fG46+bzmlxHWxzP4ozz1nhLM2S8xZGKQ7KMBfEkgZui4S1kr6jQI7Dr54CmCXWxrFot83kE/dHzEjqOpRwqOBYlOPzCnzE=
+	t=1779884967; cv=none; b=X1IjFZY4G9lTA9qPBrzbPho+3QU7KQBJTFoSRhvZvaGztTizYRGSPbhJTNyIJ+I4pew+wNNp69LjCIH/zTfC1QD3iRb0M3t0S3PsTTbynuycQIb/+ga+oT/vV62h9CUj/gXXIXoHPpM2Ib6IjgTkuTTmuNACQDy74OFlc10ygOw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779884641; c=relaxed/simple;
-	bh=KT8fEi2GCsYJ1JMODHWCJgCWGsx9vGqYCtxCHUxGgWk=;
+	s=arc-20240116; t=1779884967; c=relaxed/simple;
+	bh=Ac1STWrCRJFIp1fMC1UC4YGbY9ersuoTMmewRvjl1+o=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=uwISQPMYn9DkhCBodRlNVsES17Yx4jP7gBGgVAamRS2hpdMoaeYLDEwIu/EpT/TTwvpxukT1zZYGJyCRMsx7/9wgvUB2rvfNOhjw0yuPJnJ7SPy16IqmZazMahgJbmhvdVu2ANjTSu9Dy6DpPCt78IVFgbKtJDiNr/kAi0FlMz8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=G59fR61E; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=YXUXNP5Axibtn6QThqPazAT6J99yRhX0Nhz7BN3LM7Yas1WAZ7QOOLl9fyypgjZZl3AObMznUcmihPumGvaz3d1ttKMWoQyZbJg6asPeufCxt9aGNXgx0I9Y3HdU4rPnc5hH1Slg0yDvLrZwpGMpJH6QCPWKMlmckwRAeMBQ28U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PRgpt+yC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="G59fR61E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECD9C1F00A3C;
-	Wed, 27 May 2026 12:23:59 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PRgpt+yC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DADA1F00A3A;
+	Wed, 27 May 2026 12:29:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1779884640;
-	bh=VwIFy7vjhJnuV0WFyImjHes61Uk47QJrXQCOlcbs0ok=;
+	s=k20260515; t=1779884966;
+	bh=yhGpZXMBRuNeUcvyj921Xam738jkgnawbAyZiJI6S9g=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=G59fR61E2jxxTTZ98uvj3UIIjKkJBnO1qgTL/4ddit2wbXE174vai713b5u6L8q+Q
-	 +Efnjkaaf1jVoZnMH7Aogyb/IKnDxnsT6pHDVUjh+rLDkZzHZGBsdOKXTaL9782641
-	 ZhqBUZvAR1zd3zdxAd/sjdaVbSMiG29G2iKgPn7mTbtEY2/DUXA+VZoiNj4BE1IV5D
-	 C3iUlq4ZAfcEhu8FoHglY3z/CjJZ9VglVH+fLfR3pXQaAGoNB117PWYtsYGUzCJogH
-	 Dg6HP4A1Lbj6pj/UmNzXy7J8a9wNknyX8m1RqoNjSlUKtbHrhSuyPJoBc5onLTK79x
-	 s5zuCgs6ZAuTg==
+	b=PRgpt+yCBwxon84iJg/htsyTL6lUPqsXL+JS5gMgx9guwHaBqmfMbJnyjlup0zKqG
+	 gSsf/QkFeMc0Jkn3IIBe4IVs/u3GFHCMhqEuAVCHQSLUGzfLGdgjeyMeqFTnKz4JQM
+	 vgGpfYQPgpD8l1/ol3PE5KPfAuw4G1gizHQZLCRv79yMQfaq2l97fqF5wXhcqjyjv5
+	 Xdr60dVv5IXcHzj4ngYMu6J09gDoZbB6kahDygERyZgDRG2PasvrarFqS+iWyBnsHH
+	 bUrHBKyyR1BpcJ+0rIwXtBdRr+OIh1gdTw+G5a3/seS082sk54sk3VFd2y1fLUrhNV
+	 YOMgigrce+w0w==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH 12/15] mm: handle ANON_VMA_LAZY during migration
+Subject: Re: [PATCH 10/15] mm: defer anon_vma creation with ANON_VMA_LAZY
 Reply-To: sashiko-reviews@lists.linux.dev
 To: tao <tao.wangtao@honor.com>
 Cc: damon@lists.linux.dev
-In-Reply-To: <20260527110147.17815-13-tao.wangtao@honor.com>
-References: <20260527110147.17815-13-tao.wangtao@honor.com>
+In-Reply-To: <20260527110147.17815-11-tao.wangtao@honor.com>
+References: <20260527110147.17815-11-tao.wangtao@honor.com>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Wed, 27 May 2026 12:23:59 +0000
-Message-Id: <20260527122359.ECD9C1F00A3C@smtp.kernel.org>
+Date: Wed, 27 May 2026 12:29:25 +0000
+Message-Id: <20260527122926.3DADA1F00A3A@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 
-Thank you for your contribution! Sashiko AI review found 4 potential issue(=
+Thank you for your contribution! Sashiko AI review found 1 potential issue(=
 s) to consider:
-- [Critical] Dereferencing vma->vm_mm without protection leads to a use-aft=
-er-free of the mm_struct.
-- [High] Discarding the pointer returned by lock_vma_under_rcu() leads to a=
- leaked per-VMA lock and unmatched unlock on the original VMA.
-- [High] Migration unconditionally fails for unmapped anonymous folios beca=
-use folio_trylock_get_anon_rmap() returns NULL for them.
-- [High] Holding a dynamic number of anon_vma or VMA read locks concurrentl=
-y during batch migration violates locking rules and overflows lockdep depth.
+- [High] Unconditional increment of the root anon_vma refcount when reusing=
+ an existing anon_vma causes a memory leak.
 --
 
-commit 18d8778974aea49701a86271f93dca924bc4ff06
+commit e7b82bf7c91f9ff13c87c5b6d44b365dcfcf93c5
 Author: tao <tao.wangtao@honor.com>
 
-mm: handle ANON_VMA_LAZY during migration
+mm: defer anon_vma creation with ANON_VMA_LAZY
 
-To ensure the atomicity of folio migration, introduce
-folio_trylock_get_anon_rmap().
+This commit defers anon_vma creation until fork by marking VMAs as
+ANON_VMA_LAZY to reduce allocation overhead. During fork, lazy VMAs are
+upgraded to establish the sharing topology, and child VMAs are created
+without allocating a new anon_vma.
 
-> diff --git a/mm/migrate.c b/mm/migrate.c
-> index b397cdeab09a9..4abbfd1faea26 100644
-> --- a/mm/migrate.c
-> +++ b/mm/migrate.c
-[ ... ]
-> @@ -1287,26 +1300,17 @@ static int migrate_folio_unmap(new_folio_t get_ne=
-w_folio,
-[ ... ]
-> -	if (folio_test_anon(src) && !folio_test_ksm(src))
-> -		anon_rmap =3D folio_get_anon_rmap(src);
-[ ... ]
-> +	if (folio_test_anon(src) && !folio_test_ksm(src)) {
-> +		anon_rmap =3D folio_trylock_get_anon_rmap(src);
-> +		if (!anon_rmap_value(anon_rmap))
-> +			goto out;
-> +	}
-
-[Severity: High]
-Does this cause migration to unconditionally fail for unmapped anonymous
-folios? For unmapped folios, folio_get_anon_vma() returns NULL because
-folio_mapped() is false, which causes folio_trylock_get_anon_rmap() to
-return ANON_RMAP_NULL. Before this change, the code ignored a NULL rmap
-for unmapped folios and proceeded. With this goto out, any attempt to
-migrate an unmapped anonymous folio might repeatedly fail with -EAGAIN.
-
-[Severity: High]
-Could this lead to holding a dynamic number of read locks concurrently
-during batch migration? Because migrate_pages_batch() processes folios in
-batches, it iterates and calls migrate_folio_unmap() to acquire the lock
-for every folio before it begins calling migrate_folio_move() to release
-them.
-
-Holding these locks concurrently across an entire batch could easily exceed
-lockdep's MAX_LOCK_DEPTH (48) and cause severe contention or stall writers
-on those VMAs during long-latency operations like TLB flushing.
-
-[ ... ]
 > diff --git a/mm/rmap.c b/mm/rmap.c
-> index cb104310cdc9b..bd5587735ee06 100644
+> index 12693c6897120..59848e1aaf531 100644
 > --- a/mm/rmap.c
 > +++ b/mm/rmap.c
-> @@ -1223,6 +1223,46 @@ anon_rmap_t folio_lock_anon_rmap_read(const struct=
- folio *folio,
->  	return anon_vma ? anon_vma_to_anon_rmap(anon_vma) : ANON_RMAP_NULL;
->  }
+
+[ ... ]
+
+> @@ -282,19 +393,30 @@ int __anon_vma_prepare(struct vm_area_struct *vma)
 > =20
-> +anon_rmap_t folio_trylock_get_anon_rmap(const struct folio *folio)
-> +{
-> +	struct anon_vma *anon_vma;
-> +	struct vm_area_struct *vma;
-> +
-> +	if (folio_test_anon_vma_lazy(folio)) {
-> +		vma =3D folio_get_anon_vma_lazy(folio);
-> +		if (vma && !lock_vma_under_rcu(vma->vm_mm, vma->vm_start)) {
-
-[Severity: Critical]
-Is it safe to dereference vma->vm_mm here without protection? While the VMA
-object itself might be protected from being freed, a VMA does not pin its
-associated mm_struct. If the process has exited, the mm_struct could be
-freed via free_mm().
-
-Passing a dangling vma->vm_mm pointer to lock_vma_under_rcu(), which
-attempts to walk the maple tree, could result in a use-after-free.
+>  	anon_vma =3D find_mergeable_anon_vma(vma);
+>  	allocated =3D NULL;
+> -	if (!anon_vma) {
+> +	/* If parent_anon_vma exists, mergeable anon_vma root must match it. */
+> +	if (!anon_vma ||
+> +		(parent_anon_vma && anon_vma->root !=3D parent_anon_vma->root)) {
+>  		anon_vma =3D anon_vma_alloc();
+>  		if (unlikely(!anon_vma))
+>  			goto out_enomem_free_avc;
+> -		anon_vma->num_children++; /* self-parent link for new root */
+>  		allocated =3D anon_vma;
+> +		if (parent_anon_vma) {
+> +			anon_vma->root =3D parent_anon_vma->root;
+> +			anon_vma->parent =3D parent_anon_vma;
+> +		}
+>  	}
+> =20
+>  	anon_tree =3D make_anon_vma_tree(anon_vma);
+> +	if (upgrade_lazy)
+> +		is_lazy =3D vma_unlink_anon_vma_lazy(vma, anon_tree);
+>  	anon_vma_tree_lock_write(anon_tree);
+>  	/* page_table_lock to protect against threads */
+>  	spin_lock(&mm->page_table_lock);
+> -	if (likely(!vma->anon_vma)) {
+> +	if (likely(!vma->anon_vma || is_lazy)) {
+> +		if (anon_vma->root !=3D anon_vma)
+> +			get_anon_vma(anon_vma->root);
 
 [Severity: High]
-Does this discard the pointer returned by lock_vma_under_rcu() and leak the
-per-VMA lock?
+Does this code leak the root anon_vma when reusing an existing anon_vma?
 
-lock_vma_under_rcu() returns a pointer to the locked VMA if successful.
-The condition implicitly casts this pointer to a boolean and discards it.
-If the lock succeeds, the code proceeds to return the original vma pointer
-instead of the locked one, leaving the successfully locked VMA permanently
-locked.
+When find_mergeable_anon_vma() finds a compatible anon_vma to reuse,
+allocated is left as NULL. However, the code proceeds to unconditionally
+call get_anon_vma(anon_vma->root) as long as anon_vma->root !=3D anon_vma.
 
-Later, anon_rmap_unlock_put() would call vma_end_read() on the original
-vma pointer, which was never explicitly locked.
+The root's refcount tracks the number of child anon_vma structs, not the
+number of VMAs sharing the child anon_vma. Because a new anon_vma was not
+allocated, the root's refcount was already correctly incremented when the
+existing child anon_vma was originally created.
 
-> +			vma_put(vma);
-> +			vma =3D NULL;
-> +		}
-> +		if (vma)
-> +			return vma_to_anon_rmap(vma);
-> +	}
-[ ... ]
+When the VMAs are later unmapped and the child anon_vma's interval tree
+becomes completely empty, __put_anon_vma() is called exactly once for the
+child anon_vma, which decrements the root's refcount exactly once. Since the
+root's refcount is incremented every time a VMA reuses the child anon_vma
+but only decremented once when the child is freed, it seems the extraneous
+references will permanently leak root anon_vma structures.
+
+> +		if (allocated)
+> +			anon_vma->parent->num_children++;
+>  		vma->anon_vma =3D anon_tree;
+>  		anon_vma_chain_assign(vma, avc, anon_vma);
+>  		anon_vma_interval_tree_insert(avc, &anon_vma->rb_root);
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260527110147.1781=
-5-1-tao.wangtao@honor.com?part=3D12
+5-1-tao.wangtao@honor.com?part=3D10
