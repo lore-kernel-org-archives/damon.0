@@ -1,33 +1,42 @@
-Received: from mta21.hihonor.com (mta21.hihonor.com [81.70.160.142])
+Received: from mta22.hihonor.com (mta22.honor.com [81.70.192.198])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B5DC38A71F
-	for <damon@lists.linux.dev>; Thu, 28 May 2026 08:55:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=81.70.160.142
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B2B636E47E
+	for <damon@lists.linux.dev>; Thu, 28 May 2026 09:00:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=81.70.192.198
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779958508; cv=none; b=ZDFY4XQybS8jkhq3U0SNq1EbQJC7vnh4UKGL+tin+J2/AbQJN2vT7G4Ep9XISTQtJdXpRZw2g6XX5UFsc0crKGuGXqn9Ht6IFyDxAU3A30++Zpkox7pHjUy85eLQb/xikI/HQuRcmOFz7J0v/2qclYb+G+QnjkdqG0jqRRil/kk=
+	t=1779958809; cv=none; b=DF3bNWBWDtWKuPAto5oeLarPxorBvyTfa8mdo9aWN+F3yTHYExREDWxMK950eEiKqw39eHYY3Kd0h+dtsg4s8ZhnWSzhv5706fZphhP3TyqCqALB1O0mYoOCVmgGk37OsBk4fwMUsiubv+zrdL0rWUS7odWecxnlQYQkknJInPI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779958508; c=relaxed/simple;
-	bh=uMbNQmckTp5QaMoElcMoTyXu3ymd3LQP1tSw7Oj8rW8=;
+	s=arc-20240116; t=1779958809; c=relaxed/simple;
+	bh=Bux8GCftyQ+aPXERCy2YSrQ8/ekfm0FLVwx50wtZDiQ=;
 	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=BLOzfiAZ5i+eJ7ylfXCyWPr+J0ixqP1on8uIjR5oWVsZCdehYvoho8JPJfFkg5v7pX2moD5l4fCEjmT2nNvgDb1n0PCUaAt+eTfJtvtwnEZpyLuU6qUEnn4PbjUsNzFlmicrUgBvcb07FJY376gCd0IEj4QAoOtmjeiOfqEciRQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=honor.com; spf=pass smtp.mailfrom=honor.com; arc=none smtp.client-ip=81.70.160.142
+	 Content-Type:MIME-Version; b=bxTVMF272UU98Ma/TBx/xTcs9Q0yvYgxsb9+GgCFyVN5ajbTCAQtR9N4A2uGOoljVE4bQ8E3V4zJDujZkPqzlEvXJkrDiEqYNiDXifbiyv+AvOn6Ro71Ojrcwq5dzakU+nZX43Y75HXqRqu4qZbhSbBsPGI76XpjWQLC1EwO2+s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=honor.com; spf=pass smtp.mailfrom=honor.com; dkim=pass (1024-bit key) header.d=honor.com header.i=@honor.com header.b=WASDnVpC; arc=none smtp.client-ip=81.70.192.198
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=honor.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=honor.com
-Received: from TW001.hihonor.com (unknown [10.77.229.151])
-	by mta21.hihonor.com (SkyGuard) with ESMTPS id 4gR0dK5BqmzYkxql;
-	Thu, 28 May 2026 16:53:25 +0800 (CST)
-Received: from TA004.hihonor.com (10.72.0.6) by TW001.hihonor.com
- (10.77.229.151) with Microsoft SMTP Server (version=TLS1_2,
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=honor.com header.i=@honor.com header.b="WASDnVpC"
+dkim-signature: v=1; a=rsa-sha256; d=honor.com; s=dkim;
+	c=relaxed/relaxed; q=dns/txt;
+	h=To:From;
+	bh=XD3hORJdYdgNuk6+D4BQV8kmKZ7YLD8FvucsViATNX4=;
+	b=WASDnVpCEPy/DfZY9zA6UOFUvEQqxkvnRV1po3xn/d/NwIl+ux0JVJEQSKeFAuqA5QtrueMZR
+	KnRicy9kFmXVEKoIbAqhWZ4fjsIxKPwsUkbX148kjnjSzfE42VzBDj/GomPvnbh7RTocuIxyEQN
+	89bvgsqsegQyYL1C3p8go+0=
+Received: from TW003.hihonor.com (unknown [10.77.199.161])
+	by mta22.hihonor.com (SkyGuard) with ESMTPS id 4gR0lX0CxyzYkxhn;
+	Thu, 28 May 2026 16:58:48 +0800 (CST)
+Received: from TA002.hihonor.com (10.77.230.8) by TW003.hihonor.com
+ (10.77.199.161) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.37; Thu, 28 May
- 2026 16:55:02 +0800
-Received: from TA003.hihonor.com (10.72.0.43) by TA004.hihonor.com (10.72.0.6)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.27; Thu, 28 May
- 2026 16:55:02 +0800
+ 2026 17:00:00 +0800
+Received: from TA003.hihonor.com (10.72.0.43) by TA002.hihonor.com
+ (10.77.230.8) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.37; Thu, 28 May
+ 2026 16:59:08 +0800
 Received: from TA003.hihonor.com ([fe80::998f:47ec:980d:bdf1]) by
  TA003.hihonor.com ([fe80::998f:47ec:980d:bdf1%7]) with mapi id
- 15.02.2562.037; Thu, 28 May 2026 16:55:02 +0800
+ 15.02.2562.037; Thu, 28 May 2026 17:00:03 +0800
 From: wangtao <tao.wangtao@honor.com>
 To: Lorenzo Stoakes <ljs@kernel.org>
 CC: "catalin.marinas@arm.com" <catalin.marinas@arm.com>, "will@kernel.org"
@@ -68,14 +77,16 @@ CC: "catalin.marinas@arm.com" <catalin.marinas@arm.com>, "will@kernel.org"
 	"21cnbao@gmail.com" <21cnbao@gmail.com>, "jparsana@google.com"
 	<jparsana@google.com>, "dvander@google.com" <dvander@google.com>, zhangji
 	<zhangji1@honor.com>, wangzicheng <wangzicheng@honor.com>
-Subject: RE: [PATCH 02/15] mm: convert anon_vma rmap APIs to anon_rmap
-Thread-Topic: [PATCH 02/15] mm: convert anon_vma rmap APIs to anon_rmap
-Thread-Index: AQHc7ckSlLO6TLjg1UCiENwGiuHKtrYhPCKAgAHl8fA=
-Date: Thu, 28 May 2026 08:55:01 +0000
-Message-ID: <e55c557e85a64e439194d0fc5ea27aaf@honor.com>
+Subject: RE: [PATCH 03/15] mm: introduce anon_vma_tree_t for multiple anon_vma
+ topologies
+Thread-Topic: [PATCH 03/15] mm: introduce anon_vma_tree_t for multiple
+ anon_vma topologies
+Thread-Index: AQHc7ckS0nHB17pDfk6r1PTPwH0GsrYhPg2AgAHhCFA=
+Date: Thu, 28 May 2026 09:00:02 +0000
+Message-ID: <f53d9327cf064c87aec7c50e867b0e0d@honor.com>
 References: <20260527110147.17815-1-tao.wangtao@honor.com>
- <20260527110147.17815-3-tao.wangtao@honor.com> <ahbZdWDiqTCWU77K@lucifer>
-In-Reply-To: <ahbZdWDiqTCWU77K@lucifer>
+ <20260527110147.17815-4-tao.wangtao@honor.com> <ahbatfs3G-Qkh7Vk@lucifer>
+In-Reply-To: <ahbatfs3G-Qkh7Vk@lucifer>
 Accept-Language: en-US
 Content-Language: zh-CN
 X-MS-Has-Attach:
@@ -89,105 +100,98 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 
-> Subject: Re: [PATCH 02/15] mm: convert anon_vma rmap APIs to anon_rmap
+> Subject: Re: [PATCH 03/15] mm: introduce anon_vma_tree_t for multiple
+> anon_vma topologies
 >=20
-> On Wed, May 27, 2026 at 07:01:34PM +0800, tao wrote:
-> > Convert the rmap anon_vma interfaces to anon_rmap APIs to clarify the
-> > semantics of anonymous rmap operations and prepare for upcoming
-> > ANON_VMA_LAZY support and RCU-based lockless rmap traversal.
+> On Wed, May 27, 2026 at 07:01:35PM +0800, tao wrote:
+> > Prepare for upcoming ANON_VMA_LAZY support and RCU-based lockless
+> rmap
+> > traversal by clearly separating anon_vma topology handling from the
+> > anon_rmap semantics.
+>=20
+> RCU is not 'lockless'... and if you truly get RCU semantics you break a b=
+unch
+> of stuff as I found out.
+>=20
+RCU is required when acquiring anon_vma or vma. When calling
+rmap_one, RCU lock is not required; the lock is obtained with
+anon_rmap_lock_read() or folio_lock_anon_rmap_read().
+
+For regular anon_vma, the anon_vma lock is still used. For
+ANON_VMA_LAZY, there is only one vma, so the anon_vma lock is not
+needed; we only need to ensure the vma is valid.
+
 > >
-> > Replace folio_anon_vma(), folio_get_anon_vma(),
-> > folio_lock_anon_vma_read(), anon_vma_trylock_read(),
-> > anon_vma_lock_read(), anon_vma_unlock_read(),
-> > anon_vma_trylock_write(), anon_vma_lock_write(),
-> anon_vma_unlock_write(), and vma_interval_tree_foreach() with the
-> anon_rmap APIs.
+> > Prepare for supporting multiple anon_vma topologies by introducing
+> > lightweight abstractions used by the VMA and rmap code.
+> >
+> > Introduce anon_vma_tree_t as the type stored in vma->anon_vma:
+> >
+> >     typedef unsigned long anon_vma_tree_t;
+> >
+> > It represents a tagged pointer encoding a reference to the anon_vma
+> > topology. The low bits are reserved as type tags to distinguish
+> > different implementations (e.g. regular anon_vma and lazy anon_vma).
+> > This keeps the VMA representation compact while allowing the topology
+> > to evolve without changing the VMA layout.
+> >
+> > Signed-off-by: tao <tao.wangtao@honor.com>
 >=20
-> This is another worthless commit message. You're again just writing what =
-you
-> did not why or what for. This gives no help whatsoever.
+> The commit message is at least better on this one, but this approach is a=
+gain,
+> predicated on extending a broken abstraction.
+>=20
+> You could have saved time and effort by coming forward with this earlier =
+to
+> the community.
+>=20
+> You're also adding a bunch more messy code on top of anon_vma. It's just
+> the wrong direction.
 >=20
 I will update the commit message to add more explanation.
 
 > >
-> > No functional change intended.
+> > +/* anon_vma_tree_t APIs */
+> > +
+> > +static inline anon_vma_tree_t make_anon_vma_tree(struct anon_vma
+> > +*anon_vma) {
+> > +	return (anon_vma_tree_t)anon_vma;
+> > +}
 >=20
-> Err, there is a functional change, since you're literally changing how th=
-ings
-> iterate?
+> You're literally returning an unsigned long of an anon_vma here?
 >=20
-> >
-> > Signed-off-by: tao <tao.wangtao@honor.com>
+> Why is the anon_rmap_t a wrapped struct and this an unsigned long?
 >=20
-> All of this is terrible, you're replacing a broken abstraction with somet=
-hing
-> that assumes something completely broken with zero explanation.
->=20
-> No to this.
->=20
-Before supporting ANON_VMA_LAZY, these were indeed just simple wrappers.
+anon_vma_tree_t uses unsigned long because it is used internally
+by rmap.c and vma.c. In other places it is mainly used to check
+whether a fault has occurred.
 
-> >  /*
-> > @@ -3035,9 +3040,10 @@ static struct anon_vma
-> > *rmap_walk_anon_lock(const struct folio *folio,  static void
-> rmap_walk_anon(struct folio *folio,
-> >  		struct rmap_walk_control *rwc, bool locked)  {
-> > -	struct anon_vma *anon_vma;
-> > +	anon_rmap_t anon_rmap;
-> >  	pgoff_t pgoff_start, pgoff_end;
-> >  	struct anon_vma_chain *avc;
-> > +	struct vm_area_struct *vma;
+> > +
+> > +static inline struct anon_vma
+> *anon_vma_tree_anon_vma(anon_vma_tree_t
+> > +anon_tree) {
+> > +	return (struct anon_vma *)anon_tree; }
 >=20
-> I have no idea why you put the VMA at this scope...
+> The anon_tree is an anon_vma? What?
+>=20
+> And it's a tagged pointer but we don't bother clearing any bits right?...=
+!
+>=20
+When supporting ANON_VMA_LAZY, the lower bits definitions are added.
+I will add comments to clarify this.
 
-The vma is used in anon_rmap_foreach_vma().
+> > +static inline void anon_vma_tree_unlock_read(anon_vma_tree_t
+> > +anon_tree) {
+> > +	struct anon_vma *anon_vma =3D
+> anon_vma_tree_anon_vma(anon_tree);
+> > +
+> > +	anon_vma_unlock_read(anon_vma);
+> > +}
+> > +
+>=20
+> You keep adding more and more code on top of the existing mess. This is
+> NOT what we want.
+>=20
+Additional handling is introduced when enabling ANON_VMA_LAZY;
+I will add comments to clarify this.
 
->=20
-> >
-> >  	/*
-> >  	 * The folio lock ensures that folio->mapping can't be changed under
-> > us @@ -3046,20 +3052,19 @@ static void rmap_walk_anon(struct folio
-> *folio,
-> >  	VM_WARN_ON_FOLIO(!folio_test_locked(folio), folio);
-> >
-> >  	if (locked) {
-> > -		anon_vma =3D folio_anon_vma(folio);
-> > +		anon_rmap =3D folio_anon_rmap(folio);
-> >  		/* anon_vma disappear under us? */
-> > -		VM_BUG_ON_FOLIO(!anon_vma, folio);
-> > +		VM_BUG_ON_FOLIO(!anon_rmap_value(anon_rmap), folio);
-> >  	} else {
-> > -		anon_vma =3D rmap_walk_anon_lock(folio, rwc);
-> > +		anon_rmap =3D rmap_walk_anon_lock(folio, rwc);
-> >  	}
-> > -	if (!anon_vma)
-> > +	if (!anon_rmap_value(anon_rmap))
-> >  		return;
-> >
-> >  	pgoff_start =3D folio_pgoff(folio);
-> >  	pgoff_end =3D pgoff_start + folio_nr_pages(folio) - 1;
-> > -	anon_vma_interval_tree_foreach(avc, &anon_vma->rb_root,
-> > +	anon_rmap_foreach_vma(vma, avc, anon_rmap,
-> >  			pgoff_start, pgoff_end) {
-> > -		struct vm_area_struct *vma =3D avc->vma;
->=20
-> Don't throw random changes like this in with a general replacement patch.
-
-These were replaced carefully, but there may still be omissions or mistakes=
-. Please point them out specifically.
->=20
-> >  		unsigned long address =3D vma_address(vma, pgoff_start,
-> >  				folio_nr_pages(folio));
-> >
-> > @@ -3076,7 +3081,7 @@ static void rmap_walk_anon(struct folio *folio,
-> >  	}
-> >
-> >  	if (!locked)
-> > -		anon_vma_unlock_read(anon_vma);
-> > +		anon_rmap_unlock_read(anon_rmap);
-> >  }
-> >
-> >  /**
-> > --
-> > 2.17.1
-> >
