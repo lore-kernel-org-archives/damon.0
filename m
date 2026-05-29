@@ -1,105 +1,78 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D9FE1F78E6;
-	Fri, 29 May 2026 15:40:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5476A38F250;
+	Fri, 29 May 2026 16:00:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780069250; cv=none; b=SSAfNjErm7m+oxMKAAqkAhya57fArc9RnoqX0nUWkwg+N8qwqVMMsuczQyHzlFqyb2hcGoGlwPbRqf5jy2JEviubes2bMBPaRViMOIfuEXxf1QMZ9izpAX545CnzV65NGf9J21Ao3y2XpLXpZs/2fiUcRtIj2uzILv5mbAEtYNA=
+	t=1780070435; cv=none; b=pW90u0MQ+WF0jCTHg9QWdJHZjTE4gP8mz6XwhNIYi8+9MAEyOyobr/IEOHrXdL4JKEKZBWuAWBQOFW6vnaZZy02J5mAXZAmubWVYpqC/Vku5fjr1ncp0O+VoqK2PesCrMTKO+Tg2p7YPTUlc48X0vdiL+aAJkzmIosy8rs3yrMs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780069250; c=relaxed/simple;
-	bh=P5OXlc2w1jT8rpSydWhuQM+Wx/RRTDE8maGSqN+tbH4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=LpBdmj0oYqSsREr4v8VeOO5LTrFsgGeHvIW4OGK8BPuW5jhOh57rOAXbFXqpaKulBc21HkH0jL6B5NVsn6Cpo0/VVPve1pRUjLxh/as0tlZv8OEUDcNb1538kXIF82TnJP2vhT6CW9g3hxuKUx3jYdkPGqr+Ee0QJFP5wf9Y8Ow=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QUNwOBtd; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1780070435; c=relaxed/simple;
+	bh=WTD0fv78tOS9SwrhWVXui535NHykSF39tNx6ynFVpzw=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=KzifisYFfEzpVRARA40QJB1cR1731qceTRyWaWqiG4ZQt+gbE1T4EZYWmj6PjlgcKH1K691jCCeZjIC/fpcmqN8IYMrKJnGPs/sNiamt1PROsq4WeDsntU4aJB5hTw/u+PpvrzREncilvQfE/gDaRkYX7eyTL5QN3nFhB9kF6jU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IrhyuAPR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QUNwOBtd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACC151F00893;
-	Fri, 29 May 2026 15:40:36 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IrhyuAPR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82B701F00893;
+	Fri, 29 May 2026 16:00:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1780069248;
-	bh=hAYoCu/RXfyftNoJ6VS8vSHQtBSJuT1PmOIzykcmtbQ=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=QUNwOBtdHlaVN6zntNCHNfsn9Ya0qsXlEmh52j+bxLKsBC7DIzIhnvBoM/3IgCcca
-	 SCvz/Xu9OuvcHaAxbRg085ySDA5hW8nz97lugGsuVBxcKgxO0GYiYRmxvcuKmWaXGe
-	 /yCDUypGwkcF+2Nio/qTMTlS5VxsGSXdcEvsi7O20rDRUhEG6P6txj3YadQLjzqxAa
-	 SWQqIOHjkCz1TNbdHPsMERpiVQQKHfxRiuXjUNscx6ltv+N2VO6QzSyvNZP+YDsMHV
-	 XYgxVmHVu1BvYKm/VTdcnV+jNFcB1EB0mOjWOr7ioAP8W/elBicMpuRwJrXVyYr5Uj
-	 Y3d3AMnr7Thcw==
-Date: Fri, 29 May 2026 16:40:33 +0100
-From: Lorenzo Stoakes <ljs@kernel.org>
-To: Jonathan Corbet <corbet@lwn.net>
-Cc: Barry Song <baohua@kernel.org>, wangtao <tao.wangtao@honor.com>, 
-	"catalin.marinas@arm.com" <catalin.marinas@arm.com>, "will@kernel.org" <will@kernel.org>, 
-	"tglx@kernel.org" <tglx@kernel.org>, "mingo@redhat.com" <mingo@redhat.com>, 
-	"bp@alien8.de" <bp@alien8.de>, "dave.hansen@linux.intel.com" <dave.hansen@linux.intel.com>, 
-	"x86@kernel.org" <x86@kernel.org>, "akpm@linux-foundation.org" <akpm@linux-foundation.org>, 
-	"david@kernel.org" <david@kernel.org>, "willy@infradead.org" <willy@infradead.org>, 
-	"sj@kernel.org" <sj@kernel.org>, "kees@kernel.org" <kees@kernel.org>, 
-	"luizcap@redhat.com" <luizcap@redhat.com>, 
-	"zhangjiao2@cmss.chinamobile.com" <zhangjiao2@cmss.chinamobile.com>, "kas@kernel.org" <kas@kernel.org>, 
-	"hpa@zytor.com" <hpa@zytor.com>, "liam@infradead.org" <liam@infradead.org>, 
-	"vbabka@kernel.org" <vbabka@kernel.org>, "rppt@kernel.org" <rppt@kernel.org>, 
-	"surenb@google.com" <surenb@google.com>, "mhocko@suse.com" <mhocko@suse.com>, 
-	"jack@suse.cz" <jack@suse.cz>, "riel@surriel.com" <riel@surriel.com>, 
-	"harry@kernel.org" <harry@kernel.org>, "jannh@google.com" <jannh@google.com>, 
-	"jgg@ziepe.ca" <jgg@ziepe.ca>, "jhubbard@nvidia.com" <jhubbard@nvidia.com>, 
-	"peterx@redhat.com" <peterx@redhat.com>, "ziy@nvidia.com" <ziy@nvidia.com>, 
-	"baolin.wang@linux.alibaba.com" <baolin.wang@linux.alibaba.com>, "npache@redhat.com" <npache@redhat.com>, 
-	"ryan.roberts@arm.com" <ryan.roberts@arm.com>, "dev.jain@arm.com" <dev.jain@arm.com>, 
-	"lance.yang@linux.dev" <lance.yang@linux.dev>, "xu.xin16@zte.com.cn" <xu.xin16@zte.com.cn>, 
-	"chengming.zhou@linux.dev" <chengming.zhou@linux.dev>, "nao.horiguchi@gmail.com" <nao.horiguchi@gmail.com>, 
-	"matthew.brost@intel.com" <matthew.brost@intel.com>, "joshua.hahnjy@gmail.com" <joshua.hahnjy@gmail.com>, 
-	"rakie.kim@sk.com" <rakie.kim@sk.com>, "byungchul@sk.com" <byungchul@sk.com>, 
-	"gourry@gourry.net" <gourry@gourry.net>, "ying.huang@linux.alibaba.com" <ying.huang@linux.alibaba.com>, 
-	"apopple@nvidia.com" <apopple@nvidia.com>, "pfalcato@suse.de" <pfalcato@suse.de>, 
-	"linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>, "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>, 
-	"linux-fsdevel@vger.kernel.org" <linux-fsdevel@vger.kernel.org>, "linux-mm@kvack.org" <linux-mm@kvack.org>, 
-	"damon@lists.linux.dev" <damon@lists.linux.dev>, "shakeel.butt@linux.dev" <shakeel.butt@linux.dev>, 
-	"ryncsn@gmail.com" <ryncsn@gmail.com>, "jparsana@google.com" <jparsana@google.com>, 
-	"dvander@google.com" <dvander@google.com>, zhangji <zhangji1@honor.com>, 
-	wangzicheng <wangzicheng@honor.com>
-Subject: Re: [PATCH 0/15] mm: introduce ANON_VMA_LAZY for deferred anon_vma
- creation
-Message-ID: <ahmzXSN_sQYmq2Jp@lucifer>
-References: <20260527110147.17815-1-tao.wangtao@honor.com>
- <ahcANgFDFwfC0v1q@lucifer>
- <b24b4a8198ba412f8b8b42c43dccd058@honor.com>
- <ahf2mJg9OOWvu0jA@lucifer>
- <CAGsJ_4zy=-m5wjm0BC-vQXMHGRkHymC-5S_L9Oi708v339vvPw@mail.gmail.com>
- <87qzmu2r0t.fsf@trenco.lwn.net>
+	s=k20260515; t=1780070433;
+	bh=swbfRtX5liCUiybXlbewNQ/G2rwqPA7yjLKy/i2mBTs=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=IrhyuAPRj38zdilHD+aEEqVIYR4DydAimWaw0gU7zHdNCtaQ+pP0t/QOE1q8qqEAg
+	 GzL9BctiAudP1mzgkXWbVJfynffpMnD9ckCdFr+hrjjmih//NGs3Wkl8Y3NmTDg4tg
+	 qg4pbV+5X/SlmR5BKF2H7YvboSVJMDlaS3l2ReeL4FdV5x0pFZoCwPs7Iw2hrkQxjr
+	 9HJmMhxi8PyYN5xxTwiBDMsIZpoE/8Xu5VBmEQP+wHM7pPYAFtqdhE32Z+tzq2Z+nO
+	 vwrYWSHJeCDPjyFfm2PZbD8fTOGI6Y7DLphtDHsNcGyZa+vWvE6h3/ux9QQdNkh02O
+	 LygtWi0jUdEvg==
+From: SeongJae Park <sj@kernel.org>
+To: =?UTF-8?q?=EC=B5=9C=EC=9C=A0=ED=98=B8?= <dbgh9129@gmail.com>
+Cc: SeongJae Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v1] mm/damon/stat: roll back context on damon_call() failure
+Date: Fri, 29 May 2026 09:00:29 -0700
+Message-ID: <20260529160030.85303-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <CACrCO_XCxTDk7b8wo66CrxzfOXG50-uCxdE9tjJppH_ei5Wo+A@mail.gmail.com>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <87qzmu2r0t.fsf@trenco.lwn.net>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Fri, May 29, 2026 at 09:07:30AM -0600, Jonathan Corbet wrote:
-> Barry Song <baohua@kernel.org> writes:
->
-> > After coming back from Zagreb, I kept trying to find one or
-> > two full days to read Lorenzo's code and slides carefully and
-> > write a blog about them. Unfortunately, I have been completely
-> > busy with other work. Sigh... we always seem to have too many
-> > non-upstream tasks.
-> >
-> > If possible, I'd really appreciate it if you could take a
-> > deep dive into it and write a detailed blog post. I'd be
-> > very eager to read it and better understand the overall design.
-> > Otherwise, I'll try to find some time next week or later to
-> > go through it myself.
->
-> It's still somewhat superficial, but in case it's helpful:
->
->   https://lwn.net/Articles/1072378/
->
+On Fri, 29 May 2026 11:17:01 -0400 최유호 <dbgh9129@gmail.com> wrote:
 
-I found it to be great as usual :)
+> Dear SJ
+> 
+> On Fri, 29 May 2026 at 10:44, SeongJae Park <sj@kernel.org> wrote:
+> 
+> > But, having one damon_ctx object in the memory is a real problem?  Why?
+> 
+> I agree that keeping one `damon_ctx` is unlikely to be a serious problem.
+> My intention was not to address memory pressure but to maintain
+> failure-path consistency. If initialization fails after the context is
+> created and started, the internal state remains in place despite the
+> operation returning an error. The cleanup is then deferred until a
+> subsequent retry.
+> 
+> For this reason, I think this is worth fixing as a correctness issue.
+> That said, if you feel the current cleanup is sufficient, I can drop
+> this patch.
 
-> jon
+Thank you for clarifying, Yuho.  I think the current cleanup is ok, but I
+understand it is confusing to read.  Apparently that confused you at least, and
+that's not ok.  What about adding a comment explaining the context?
 
-Cheers, Lorenzo
+
+Thanks,
+SJ
+
+[...]
