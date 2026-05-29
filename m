@@ -1,238 +1,102 @@
-Received: from mta20.hihonor.com (mta20.hihonor.com [81.70.206.69])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 731E21F130B
-	for <damon@lists.linux.dev>; Fri, 29 May 2026 09:41:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=81.70.206.69
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 261613BE15E
+	for <damon@lists.linux.dev>; Fri, 29 May 2026 09:43:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780047692; cv=none; b=luJkZtO0NtRxLXT2fP/l9bsIEd5EPJWbR6m1FEOr0Gr5ByCW+5SJ6DsQQD8O0PQ3hySiUyUJZVQaEvZje/dMX75lhPist7ilub+CNm5A46bQYIfDtH78aC6k2fU8nc88Pbn+A3SrnqD3H0gWC3YdadfuELdZHlsNy50v65ZpcCA=
+	t=1780047811; cv=none; b=gc3rIZ0a5xjzYIqdC40bdIurYM7qqQlRCoa0moQELUgS41z/qg8IQHaNbMrRIzrFCXGLgCZa2yq86+K0FACp7e/LGxyZJ4QF8urweYYtsbTh1/2oIDjh7+n3E8RYxIwVElh7UleKNnLA7vXAB2RIqNqJJBH7/cpKNSiBl4jzwD0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780047692; c=relaxed/simple;
-	bh=nA5jVqkC4SgZmrSufFh/WWg241xgTmVuGCoXawjTA7E=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=BvTCPm1CuLWXBYxlOT8irOPl5HeK9G9x5vo0KnIepDCz1ASyiUn4D0Oz6fCaN0njlr0rzr/o74tduI61OYtqePFSf7UJSvi9IwH2GuO0JHrCY6cJ35VTYZa6TY2gVTX+sYSYvutprDZXpP5sL065ikVZyyFwqrKUUhJKYSQ4Af0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=honor.com; spf=pass smtp.mailfrom=honor.com; arc=none smtp.client-ip=81.70.206.69
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=honor.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=honor.com
-Received: from TW004-1.hihonor.com (unknown [10.77.232.85])
-	by mta20.hihonor.com (SkyGuard) with ESMTPS id 4gRdcV1YnbzYqZW5;
-	Fri, 29 May 2026 17:39:54 +0800 (CST)
-Received: from TA004.hihonor.com (10.72.0.6) by TW004-1.hihonor.com
- (10.77.232.85) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.37; Fri, 29 May
- 2026 17:41:21 +0800
-Received: from TA003.hihonor.com (10.72.0.43) by TA004.hihonor.com (10.72.0.6)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.27; Fri, 29 May
- 2026 17:41:21 +0800
-Received: from TA003.hihonor.com ([fe80::998f:47ec:980d:bdf1]) by
- TA003.hihonor.com ([fe80::998f:47ec:980d:bdf1%7]) with mapi id
- 15.02.2562.037; Fri, 29 May 2026 17:41:21 +0800
-From: wangtao <tao.wangtao@honor.com>
-To: Barry Song <baohua@kernel.org>, Lorenzo Stoakes <ljs@kernel.org>
-CC: "catalin.marinas@arm.com" <catalin.marinas@arm.com>, "will@kernel.org"
-	<will@kernel.org>, "tglx@kernel.org" <tglx@kernel.org>, "mingo@redhat.com"
-	<mingo@redhat.com>, "bp@alien8.de" <bp@alien8.de>,
-	"dave.hansen@linux.intel.com" <dave.hansen@linux.intel.com>, "x86@kernel.org"
-	<x86@kernel.org>, "akpm@linux-foundation.org" <akpm@linux-foundation.org>,
-	"david@kernel.org" <david@kernel.org>, "willy@infradead.org"
-	<willy@infradead.org>, "sj@kernel.org" <sj@kernel.org>, "kees@kernel.org"
-	<kees@kernel.org>, "luizcap@redhat.com" <luizcap@redhat.com>,
-	"zhangjiao2@cmss.chinamobile.com" <zhangjiao2@cmss.chinamobile.com>,
-	"kas@kernel.org" <kas@kernel.org>, "hpa@zytor.com" <hpa@zytor.com>,
-	"liam@infradead.org" <liam@infradead.org>, "vbabka@kernel.org"
-	<vbabka@kernel.org>, "rppt@kernel.org" <rppt@kernel.org>, "surenb@google.com"
-	<surenb@google.com>, "mhocko@suse.com" <mhocko@suse.com>, "jack@suse.cz"
-	<jack@suse.cz>, "riel@surriel.com" <riel@surriel.com>, "harry@kernel.org"
-	<harry@kernel.org>, "jannh@google.com" <jannh@google.com>, "jgg@ziepe.ca"
-	<jgg@ziepe.ca>, "jhubbard@nvidia.com" <jhubbard@nvidia.com>,
-	"peterx@redhat.com" <peterx@redhat.com>, "ziy@nvidia.com" <ziy@nvidia.com>,
-	"baolin.wang@linux.alibaba.com" <baolin.wang@linux.alibaba.com>,
-	"npache@redhat.com" <npache@redhat.com>, "ryan.roberts@arm.com"
-	<ryan.roberts@arm.com>, "dev.jain@arm.com" <dev.jain@arm.com>,
-	"lance.yang@linux.dev" <lance.yang@linux.dev>, "xu.xin16@zte.com.cn"
-	<xu.xin16@zte.com.cn>, "chengming.zhou@linux.dev" <chengming.zhou@linux.dev>,
-	"nao.horiguchi@gmail.com" <nao.horiguchi@gmail.com>,
-	"matthew.brost@intel.com" <matthew.brost@intel.com>,
-	"joshua.hahnjy@gmail.com" <joshua.hahnjy@gmail.com>, "rakie.kim@sk.com"
-	<rakie.kim@sk.com>, "byungchul@sk.com" <byungchul@sk.com>,
-	"gourry@gourry.net" <gourry@gourry.net>, "ying.huang@linux.alibaba.com"
-	<ying.huang@linux.alibaba.com>, "apopple@nvidia.com" <apopple@nvidia.com>,
-	"pfalcato@suse.de" <pfalcato@suse.de>, "linux-arm-kernel@lists.infradead.org"
-	<linux-arm-kernel@lists.infradead.org>, "linux-kernel@vger.kernel.org"
-	<linux-kernel@vger.kernel.org>, "linux-fsdevel@vger.kernel.org"
-	<linux-fsdevel@vger.kernel.org>, "linux-mm@kvack.org" <linux-mm@kvack.org>,
-	"damon@lists.linux.dev" <damon@lists.linux.dev>, "shakeel.butt@linux.dev"
-	<shakeel.butt@linux.dev>, "ryncsn@gmail.com" <ryncsn@gmail.com>,
-	"jparsana@google.com" <jparsana@google.com>, "dvander@google.com"
-	<dvander@google.com>, zhangji <zhangji1@honor.com>, wangzicheng
-	<wangzicheng@honor.com>
-Subject: RE: [PATCH 0/15] mm: introduce ANON_VMA_LAZY for deferred anon_vma
- creation
-Thread-Topic: [PATCH 0/15] mm: introduce ANON_VMA_LAZY for deferred anon_vma
- creation
-Thread-Index: AQHc7cjw5r5ki6LAJ0S2mW/rJEfblbYhaeaAgAGnM1D//4FNAIABAA8AgAEgmrA=
-Date: Fri, 29 May 2026 09:41:20 +0000
-Message-ID: <99dfc4a50f3643a6bef6deaeccfcf115@honor.com>
-References: <20260527110147.17815-1-tao.wangtao@honor.com>
- <ahcANgFDFwfC0v1q@lucifer> <b24b4a8198ba412f8b8b42c43dccd058@honor.com>
- <ahf2mJg9OOWvu0jA@lucifer>
- <CAGsJ_4zy=-m5wjm0BC-vQXMHGRkHymC-5S_L9Oi708v339vvPw@mail.gmail.com>
-In-Reply-To: <CAGsJ_4zy=-m5wjm0BC-vQXMHGRkHymC-5S_L9Oi708v339vvPw@mail.gmail.com>
-Accept-Language: en-US
-Content-Language: zh-CN
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+	s=arc-20240116; t=1780047811; c=relaxed/simple;
+	bh=OfhXLou49FXQ2kvqxzTlCf3SfCGwoszvSItAGjH68Xc=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=H9Lk4vF83R+F98fiKg3X05pCAKUUgGKTApVFxZzOMWKBEaQpI4BxAx11fOubqHpzVQoc+oQ0/rkH1EbAZYGrXkM9WWtxbfBUYpRZJbr0VnSEW3Mfy+/4FYpOL1UcRpifAhJpqAfXRTfeBC+0v8y8vFxxlQszkptGVwOH9ztl6hs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FcXOCPAo; arc=none smtp.client-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FcXOCPAo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D5031F00893;
+	Fri, 29 May 2026 09:43:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1780047807;
+	bh=wocgXFNCFl5PCne2Jwt/cF/fVTCoy1zFDiKqm7P2w3s=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=FcXOCPAo/hGVSlAN1QSZUXCk5cctslagF+mWA0+U2siek1cir8VbQ7WnetjonHrFj
+	 X5YSNBHfRrgWhEAtXWYi5zzaisR0yPYHPW8Btt5UCgaPxR891yRS8QDeHNenhKHWWj
+	 TLVx3sESMVtU4sY7yy7WV+OD3VS/kzD151VJXL3vBqwpXCePwrPxfKuE2BL5+TExJa
+	 8bd2gjeelREUHZPgTxVfnwMgM+p9Fh9e+WCFLmgxB2E9PQC/Cm7l1usFvHId/t0b5Z
+	 ImS5QCPuBuSf3vGQUj3FaoDWGj3r/F8yVvt8bQjUwqPOfWBGFabDsyG0GJ6mw+XvT1
+	 DcR2CBxqrCldQ==
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH v2 2/2] selftests/damon/sysfs.py: validate memcg_path
+ staging readback
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "Cheng Nie" <niecheng1@uniontech.com>
+Cc: damon@lists.linux.dev
+In-Reply-To: <FF9A1552C03B7C88+20260529092131.1703337-1-niecheng1@uniontech.com>
+References: <FF9A1552C03B7C88+20260529092131.1703337-1-niecheng1@uniontech.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Fri, 29 May 2026 09:43:26 +0000
+Message-Id: <20260529094327.6D5031F00893@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
 
-PiA+IE9uIFRodSwgTWF5IDI4LCAyMDI2IGF0IDA3OjU3OjMxQU0gKzAwMDAsIHdhbmd0YW8gd3Jv
-dGU6DQo+ID4gPiA+IFN1YmplY3Q6IFJlOiBbUEFUQ0ggMC8xNV0gbW06IGludHJvZHVjZSBBTk9O
-X1ZNQV9MQVpZIGZvcg0KPiBkZWZlcnJlZA0KPiA+ID4gPiBhbm9uX3ZtYSBjcmVhdGlvbg0KPiA+
-ID4gPg0KPiA+ID4gPiBPSyBJJ3ZlIGhhZCBhIGxvb2sgdGhyb3VnaCBtb3JlIHRob3JvdWdobHkg
-bm93IGFuZDoNCj4gPiA+ID4NCj4gPiA+ID4gTkFLIGFuZCBOQUsgYW55IGFwcHJvYWNoIGxpa2Ug
-dGhpcy4NCj4gPiA+ID4NCj4gPiA+ID4NCj4gPiA+ID4gTm90IG9ubHkgaXMgdGhpcyBzdHJ1Y3R1
-cmFsbHkgYWxsIHdyb25nLCBpdCBkb2VzIHNvbWUgaW5zYW5lIHN0dWZmDQo+ID4gPiA+IChwaW5u
-aW5nIFZNQXMgLSBubyksIHRoZSBSQ1UgdXNhZ2UgaXMgaGlnaGx5IGR1YmlvdXMgYW5kIEkgc3Vz
-cGVjdA0KPiA+ID4gPiB5b3UndmUgY29tcGxldGVseSBicm9rZW4gdGhlIGFub24gcm1hcCBmb3Ig
-dGhpbmdzIGxpa2UgbWlncmF0aW9uLA0KPiA+ID4gPiBvciBoYXZlIGF0IGxlYXN0IGFkZGVkIHZl
-cnkgZHViaW91cyBlZGdlIGNhc2VzLg0KPiA+ID4gPg0KPiA+ID4gPiBZb3UndmUgYWRkZWQgaW5z
-YW5lIGNvbXBsZXhpdHksIGFuZCBhbHNvIGhhdmUgZmFpbGVkIHRvIGFkZCBldmVuDQo+ID4gPiA+
-IHBlcmZ1bmN0b3J5IHRlc3RzLCB3aGljaCBpcyBhbHNvIHRvdGFsbHkgdW5hY2NlcHRhYmxlLg0K
-PiA+ID4gPg0KPiA+ID4gPiBUaGUgaW1wbGVtZW50YXRpb24gaXMgd3JvbmcsIGFuZCB0aGUgYXBw
-cm9hY2ggaXMgd3JvbmcgLSB3ZSBkbyBub3QNCj4gPiA+ID4gd2FudCB0byBleHRlbmQgb3IgYnVp
-bGQgb24gYW5vbl92bWEuIFNvIHRoaXMgaXMgdW5tZXJnZWFibGUsIG9yIGFueQ0KPiBhcHByb2Fj
-aCBsaWtlIGl0Lg0KPiA+ID4gPg0KPiA+ID4gPiBJIGFsc28sIHVuZm9ydHVuYXRlbHksIHN0cm9u
-Z2x5IHN1c3BlY3QgQUkgaGVyZS4gVGhlIHR1cm4gb2YNCj4gPiA+ID4gcGhyYXNlLCBhbmQgcG9v
-ciBjb21taXQgbWVzc2FnZXMsIHlvdSBkb2luZyB0aGlzIG91dCBvZiBub3doZXJlDQo+ID4gPiA+
-IHdpdGggYWJzb2x1dGVseSBubyBybWFwIGV4cGVyaWVuY2UgYmVmb3JlLCB5b3VyIHRvdGFsIGxh
-Y2sgb2YNCj4gY29tbXVuaWNhdGlvbiBiZWZvcmUuDQo+ID4gPiA+DQo+ID4gPiA+IENsYXVkZSBw
-dXRzIHRoZSBwcm9iYWJpbGl0eSBvZiBoZWF2eSBBSSB1c2FnZSBhdCA4NS05MCUsIGFuZCBJJ20N
-Cj4gPiA+ID4gcHJldHR5IGNvbnZpbmNlZC4gRWl0aGVyIHdheSBpdCdzIHV0dGVybHkgdW5tZXJn
-ZWFibGUgYnV0IHRoYXQgeW91DQo+ID4gPiA+IChsaWtlbHkpIHVzZWQgQUkgdG8gZ2VuZXJhdGUg
-dGhpcyBtdWNoIHdvcmsgZm9yIHVzIG1ha2VzIG1lIGFjdHVhbGx5DQo+IHByZXR0eSBhbm5veWVk
-Lg0KPiA+ID4gPg0KPiA+ID4gPiBBcyBhIHJlc3VsdCwgSSB3b3VsZCBzdHJvbmdseSBzdWdnZXN0
-IHlvdSBubyBsb25nZXIgc3VibWl0IHBhdGNoZXMNCj4gPiA+ID4gZm9yIHRoZSByZXZlcnNlIG1h
-cHBpbmcgcGFydCBvZiBtbSwgYXMgdGhlcmUgaXMgbm93IGEgcmVhbCBsYWNrIG9mIHRydXN0Lg0K
-PiA+ID4gPg0KPiA+ID4gPiBJZiB5b3Ugd2lzaCB0byByZWJ1aWxkIHRoYXQsIEkgc3VnZ2VzdCB5
-b3UgX2Rpc2N1c3NfIGNvbmNlcHRzIGFuZCBpZGVhcywNCj4gZS5nLg0KPiA+ID4gPiBzZW5kIHN0
-dWZmIG9uLWxpc3Qgd2l0aCBhIFtESVNDVVNTSU9OXSB0YWcsIGFuZCBlbmdhZ2Ugd2l0aCB0aGUN
-Cj4gPiA+ID4gY29tbXVuaXR5LCBhbmQgZ28gZnJvbSB0aGVyZS4NCj4gPiA+ID4NCj4gPiA+ID4g
-SXQncyBhbHNvIGltcG9ydGFudCB0byBzeW5jaHJvbmlzZSAtIEknbSB3b3JraW5nIG9uIGFuIGFu
-b24gcm1hcA0KPiA+ID4gPiByZXBsYWNlbWVudCB0aGF0IEknbSBtb3JlIHRoYW4gaGFwcHkgdG8g
-ZGlzY3VzcyB3aXRoIHlvdSBvcg0KPiA+ID4gPiBhbnlib2R5IGVsc2Ugd2hpY2ggc2hvdWxkIGFj
-aGlldmUgdGhlIHNhbWUgbnVtYmVycyBpbiBhbg0KPiBhcmNoaXRlY3R1cmFsbHkgc291bmQgd2F5
-Lg0KPiA+ID4gPg0KPiA+ID4gPiBZb3UgZ29pbmcgb2ZmIGFuZCwgaW4gYSB2YWN1dW0sIGdlbmVy
-YXRpbmcgYSBidW5jaCBvZiBjb2RlIHdpdGggYW4NCj4gPiA+ID4gdW5hY2NlcHRhYmxlIGFwcHJv
-YWNoIGlzIG5vdCBhIGNpdmlsIHdheSBvZiBlbmdhZ2luZyBub3IgaXMgaXQgYQ0KPiA+ID4gPiBn
-b29kIHVzZSBvZiB5b3VyIHRpbWUsIG9yIG1haW50YWluZXIgdGltZSBsb29raW5nIGF0IGl0Lg0K
-PiA+ID4gPg0KPiA+ID4gPiBUaGFua3MsIExvcmVuem8NCj4gPiA+DQo+ID4gPiBZb3VyIGVtYWls
-IGlzIHZlcnkgdW5mcmllbmRseS4gSSBob3BlIHlvdSBjYW4gcG9pbnQgb3V0IHRoZSBzcGVjaWZp
-Yw0KPiA+ID4gcHJvYmxlbXMgc28gd2UgY2FuIGRpc2N1c3MgaG93IHRvIHNvbHZlIHRoZW0uDQo+
-IA0KPiBIaSBUYW8sDQo+IA0KPiBMb3JlbnpvIGhhZCBhIGRpc2N1c3Npb24gYWJvdXQgcm1hcCBp
-biBaYWdyZWIgaGVyZToNCj4gaHR0cHM6Ly9sb3JlLmtlcm5lbC5vcmcvbGludXgtbW0vYWVjNTMz
-YjItMzdhNy00ZjQ0LWEyNzktDQo+IGM0YWE2MDQyMDZhY0BsdWNpZmVyLmxvY2FsLw0KPiANCj4g
-SGUgYWxzbyBzaGFyZWQgdGhlIFBvQyBjb2RlIGhlcmU6DQo+IGh0dHBzOi8vZ2l0Lmtlcm5lbC5v
-cmcvcHViL3NjbS9saW51eC9rZXJuZWwvZ2l0L2xqcy9saW51eC5naXQvbG9nLz9oPXByb2plY3Qv
-DQo+IGNvdy1jb250ZXh0DQo+IA0KPiBhbmQgdGhlIHNsaWRlcyB3ZXJlIHNoYXJlZCBhcyB3ZWxs
-LiBJbiBjYXNlIHlvdSBjYW4ndCBmaW5kIHRoZW0gb24gbGludXgtbW0gKEkNCj4gYWN0dWFsbHkg
-Y291bGRuJ3QgZmluZCB0aGVtIG15c2VsZiksIEkgYW0gYXR0YWNoaW5nIHRoZW0gYWdhaW4gaGVy
-ZSAtDQo+ICJzY2FsYWJsZS1jb3ctbHNmLWxvbmdlci12ZXJzaW9uLnBkZiINCj4gDQo+IEFmdGVy
-IGNvbWluZyBiYWNrIGZyb20gWmFncmViLCBJIGtlcHQgdHJ5aW5nIHRvIGZpbmQgb25lIG9yIHR3
-byBmdWxsIGRheXMgdG8NCj4gcmVhZCBMb3JlbnpvJ3MgY29kZSBhbmQgc2xpZGVzIGNhcmVmdWxs
-eSBhbmQgd3JpdGUgYSBibG9nIGFib3V0IHRoZW0uDQo+IFVuZm9ydHVuYXRlbHksIEkgaGF2ZSBi
-ZWVuIGNvbXBsZXRlbHkgYnVzeSB3aXRoIG90aGVyIHdvcmsuIFNpZ2guLi4gd2UNCj4gYWx3YXlz
-IHNlZW0gdG8gaGF2ZSB0b28gbWFueSBub24tdXBzdHJlYW0gdGFza3MuDQo+IA0KPiBJZiBwb3Nz
-aWJsZSwgSSdkIHJlYWxseSBhcHByZWNpYXRlIGl0IGlmIHlvdSBjb3VsZCB0YWtlIGEgZGVlcCBk
-aXZlIGludG8gaXQgYW5kDQo+IHdyaXRlIGEgZGV0YWlsZWQgYmxvZyBwb3N0LiBJJ2QgYmUgdmVy
-eSBlYWdlciB0byByZWFkIGl0IGFuZCBiZXR0ZXIgdW5kZXJzdGFuZA0KPiB0aGUgb3ZlcmFsbCBk
-ZXNpZ24uDQo+IE90aGVyd2lzZSwgSSdsbCB0cnkgdG8gZmluZCBzb21lIHRpbWUgbmV4dCB3ZWVr
-IG9yIGxhdGVyIHRvIGdvIHRocm91Z2ggaXQNCj4gbXlzZWxmLg0KPiANCkhpIEJhcnJ5LA0KDQpU
-aGFuayB5b3UgdmVyeSBtdWNoIGZvciB5b3VyIHJlcGx5Lg0KDQpJIHRvb2sgYW4gaW5pdGlhbCBs
-b29rIGF0IHRoZSBjb3ctY29udGV4dCBjb2RlLCBhbmQgYSBmZXcgcG9pbnRzICANCm1pZ2h0IGJl
-IHdvcnRoIG5vdGluZzoNCg0KMS4gY293X2NvbnRleHRfd2FsayBjdXJyZW50bHkgYXNzdW1lcyB0
-aGF0IHRoZSBybWFwIHdhbGsgcnVucyAgDQogICB1bmRlciBSQ1UgcHJvdGVjdGlvbi4gVGhpcyBt
-YXkgbmVlZCB0byBiZSBhZGp1c3RlZCBlYXJseSwgIA0KICAgc2luY2UgcGF0aHMgc3VjaCBhcyB0
-cnlfdG9fdW5tYXBfb25lLCBwYWdlX3ZtYV9ta2NsZWFuX29uZSwgIA0KICAgYW5kIHRyeV90b19t
-aWdyYXRlX29uZSBtYXkgaW52b2x2ZSB0YXNrIHN3aXRjaGluZy4NCg0KMi4gSW4gY293X2NvbnRl
-eHRfd2FsaywgdHJhdmVyc2VfY29udGV4dHMgYXBwZWFycyB0byBpbnZvbHZlICANCiAgIG11bHRp
-cGxlIG5lc3RlZCBsb29wcy4gV2hlbiB0aGVyZSBhcmUgbWFueSBjaGlsZCBwcm9jZXNzZXMgIA0K
-ICAgYWNyb3NzIHNldmVyYWwgZm9yayBsYXllcnMsIGl0IG1heSBub3QgYmUgYXMgc2ltcGxlIG9y
-ICANCiAgIGVmZmljaWVudCBhcyB0aGUgY3VycmVudCBhbm9uX3ZtYSBhcHByb2FjaC4NCg0KICAg
-SXQgbmVlZHMgdG8gdHJhdmVyc2UgYWxsIGNoaWxkIGNvd19jdHgsIGFuZCB3aXRoaW4gZWFjaCAg
-DQogICBjb3dfY3R4LCByZW1hcHNfZm9yX2VhY2goKSBoYXMgdHdvIGxldmVscyBvZiBpdGVyYXRp
-b246ICANCiAgIHJlbWFwc19mb3JfZWFjaF9lbnRyeSBhbmQgcmVtYXBzX2Zvcl9lYWNoX2VudHJ5
-X29mZnNldC4NCg0KICAgSW4gb3RoZXIgd29yZHMsIGl0IGZpcnN0IGl0ZXJhdGVzIG92ZXIgY293
-X2N0eCBhbmQgdGhlbiAgDQogICB0cmF2ZXJzZXMgcm1hcF9tdCBpbnNpZGUgZWFjaCBvbmUuIFRo
-ZSByb3VnaCBjb21wbGV4aXR5ICANCiAgIHNlZW1zIHRvIGJlIE8oI3Byb2MgKiBsb2coI3JtYXBf
-ZW50cmllc19pbl9jb3cpKSwgd2hpY2ggIA0KICAgbWF5IGJlIHNvbWV3aGF0IGhpZ2hlciB0aGFu
-IGFub25fdm1hJ3MgIA0KICAgTygjdm1hc19pbl9hbm9uX3ZtYSkuIEhvd2V2ZXIsIGluIG1vc3Qg
-Y2FzZXMgdGhlIG51bWJlciAgDQogICBvZiBwcm9jZXNzZXMgaXMgbm90IGxhcmdlLCBzbyB0aGUg
-aW1wYWN0IG1heSBiZSBsaW1pdGVkLg0KDQpQcmV2aW91c2x5LCBJIGFsc28gY29uc2lkZXJlZCBj
-b252ZXJ0aW5nIGFub25fdm1hJ3MgcmJfdHJlZSAgDQp0byBhIG1hcGxldHJlZS4gSWYgb25lIGVu
-dHJ5IHJlY29yZHMgYSBzaW5nbGUgVk1BLCB0aGUgIA0KYXZlcmFnZSBvdmVyaGVhZCBjb3VsZCBi
-ZSBsZXNzIHRoYW4gdHdvIGxvbmdzIHBlciBWTUEuDQoNCkhvd2V2ZXIsIHVubGlrZSByYl90cmVl
-LCBtYXBsZXRyZWUgZG9lcyBub3Qgc3VwcG9ydCBzdG9yaW5nICANCm11bHRpcGxlIGVsZW1lbnRz
-IHVuZGVyIGEgc2luZ2xlIGtleS4gVGhlIGtleSB3b3VsZCBuZWVkIHRvICANCmxvb2sgbGlrZSAo
-dm1hX2lkL21tX2lkICsgcGdvZmYpLiBPbiAzMi1iaXQgcGxhdGZvcm1zLCBzaW5jZSAgDQo2NC1i
-aXQgbWFwbGV0cmVlIGtleXMgYXJlIG5vdCBzdXBwb3J0ZWQgeWV0LCB0aGUgcmVtYWluaW5nICAN
-CjEyIGJpdHMgYXJlIG5vdCBlbm91Z2ggZm9yIHZtYV9pZC9tbV9pZC4NCg0KQmVjYXVzZSBvZiB0
-aGlzIGxpbWl0YXRpb24sIEkgbGF0ZXIgc3RhcnRlZCB0aGlua2luZyBhYm91dCAgDQp3YXlzIHRv
-IHJlZHVjZSBhbm9uX3ZtYSBhbGxvY2F0aW9ucyBpbnN0ZWFkLg0KDQpJIHdpbGwgdHJ5IHRvIGZp
-bmQgc29tZSB0aW1lIG5leHQgd2VlayB0byBhbmFseXplIHRoZSAgDQpjb3ctY29udGV4dCBkZXNp
-Z24gYW5kIGNvZGUgbW9yZSB0aG9yb3VnaGx5LCBhbmQgdGhlbiAgDQp3cml0ZSB1cCBhIHN1bW1h
-cnkuDQoNClRoYW5rcywNClRhbw0KDQo+ID4NCj4gPiBJIGFscmVhZHkgZGlkLCB5b3UndmUgbm90
-IHJlc3BvbmRlZCB0byBhbnkgb2YgdGhlbSwgYW5kIEknbSBzaW1wbHkgbm90DQo+ID4gc3BlbmRp
-bmcgYW55IG1vcmUgdGltZSBvbiB0aGlzLg0KPiA+DQo+ID4gVGhlIHNlcmllcyBpcyB0b3RhbGx5
-IHVubWVyZ2VhYmxlLCBwbGVhc2UgZG8gbm90IG1ha2UgZnVydGhlciBybWFwDQo+ID4gc3VibWlz
-c2lvbnMuDQo+ID4NCj4gPiA+DQo+ID4gPiBJIGFtIG5vdCBnb29kIGF0IEVuZ2xpc2ggYW5kIG5l
-ZWQgdG8gdXNlIEFJIHRvIHRyYW5zbGF0ZSBjb21taXQNCj4gPiA+IG1lc3NhZ2VzIGFuZCBjb21t
-ZW50cy4gVGhpcyByZXBseSBlbWFpbCBpcyBhbHNvIHRyYW5zbGF0ZWQgd2l0aCBBSS4NCj4gPiA+
-IEhvd2V2ZXIsIHRoZSBjb2RlIGlzIHdyaXR0ZW4gYnkgbWUuIEkgZG8gbm90IGtub3cgd2hpY2gg
-QUkgeW91IGFyZQ0KPiA+ID4gcmVmZXJyaW5nIHRvLCBidXQgdGhlIEFJIHRvb2xzIEkgdXNlIGN1
-cnJlbnRseSBjYW5ub3QgZWZmZWN0aXZlbHkNCj4gPiA+IHdyaXRlIGtlcm5lbCBjb2RlLg0KPiA+
-ID4NCj4gPg0KPiA+IFdlJ3JlIGZpbmUgd2l0aCB1c2luZyBBSSBmb3IgbGFuZ3VhZ2UsIG9yIGlu
-IGdlbmVyYWwgYXMgbG9uZyBhcw0KPiA+IHRoZXJlJ3MgYSBjbGVhciB1bmRlcnN0YW5kaW5nIG9m
-IHdoYXQncyBiZWluZyBzdWJtaXR0ZWQuDQo+ID4NCj4gPiBIb3dldmVyIEknbSB2ZXJ5IHVuY29u
-dmluY2VkIHRoYXQgdGhpcyBzZXJpZXMgd2Fzbid0IGdlbmVyYXRlZC4NCj4gPg0KPiA+IFlvdSBo
-YXZlIDIgcGF0Y2hlcyBpbiB0aGUga2VybmVsIGZvciB0aGUgZW50aXJldHkgb2YgMjAyNi4gT25l
-IGluDQo+ID4gYmx1ZXRvb3RoIGFuZCBvbmUgaW4gdGhlIHNjaGVkdWxlci4NCj4gPg0KPiA+IFBy
-aW9yIHRvIHRoYXQgeW91IGhhdmUgcGF0Y2hlcyBmcm9tIDIwMTggaW4gZGV2aWNlIHRyZWUgZHJp
-dmVycy4NCj4gPg0KPiA+IFlvdSBoYXZlIGV4YWN0bHkgMCBjb250cmlidXRpb25zIHRvIG1tLg0K
-PiA+DQo+ID4gT3V0IG9mIG5vd2hlcmUgdGhpcyB5ZWFyIHlvdSBoYXZlIGEgYmlnIHNlcmllcyBm
-b3IgRE1BLCB0aGlzIHNlcmllcw0KPiA+IGZvciBhbm9uX3ZtYSwgaGF2aW5nIGRvbmUgbm8gd29y
-ayBvciBhbnkgY29udHJpYnV0aW9ucyB0byBybWFwLCBsZXQNCj4gPiBhbG9uZSBvbmUgb2YgdGhl
-IHRyaWNraWVzdCBhbmQgbW9zdCBjb21wbGljYXRlZCBhcmVhcyBvZiBtbS4NCj4gPg0KPiA+IFlv
-dSBoYXZlIGEgdG90YWwgb2YgMzkgbWFpbHMgb24gdGhlIGxpbnV4LW1tIG1haWxpbmcgbGlzdC4N
-Cj4gPg0KPiA+IFN1ZGRlbmx5IGRvaW5nIGEgZ2lhbnQgYml0IG9mIHdvcmsgbGlrZSB0aGlzIHVz
-aW5nIGNvZGUgdGhhdCBsb29rcw0KPiA+IGVudGlyZWx5IGxpa2UgaXQncyBBSS1nZW5lcmF0ZWQs
-IGFuZCB3aGljaCBhZnRlciBhc3Nlc3NtZW50IGJ5IEFJDQo+ID4gZ2l2ZXMgYW4gODUtOTAlIHBy
-b2JhYmlsaXR5IG9mIEFJIGdlbmVyYXRpb24gaXMgcmVhbGx5IHN1c3BpY2lvdXMuDQo+ID4NCj4g
-PiBOb3csIGlmIEknbSBtaXN0YWtlbiwgYW5kIHlvdSBoYXZlIGEgZGlmZmVyZW50IG5hbWUvZW1h
-aWwvaWRlbnRpdHkgSQ0KPiA+IG1pc3NlZCB3aXRoIG1hbnkgbW0gY29udHJpYnV0ZXMgLSBJIHdp
-bGwgZWF0IG15IHdvcmRzIGhlcmUgKHRoZSBzZXJpZXMNCj4gPiBpcyBzdGlsbCB1bm1lcmdlYWJs
-ZSBlaXRoZXIgd2F5IHRob3VnaCkuDQo+ID4NCj4gPiBTbyBzb3JyeSwgdGhlcmUncyBzaW1wbHkg
-bm8gdHJ1c3QgYW5kIGFzIGEgbWFpbnRhaW5lciBvZiBybWFwIGFnYWluIEkNCj4gPiBtdXN0IHN0
-cm9uZ2x5IHN1Z2dlc3QgdGhhdCB5b3Ugbm8gbG9uZ2VyIHN1Ym1pdCBwYXRjaGVzIGZvciB0aGlz
-IHBhcnQNCj4gPiBvZiB0aGUga2VybmVsLg0KPiA+DQo+ID4gSWYgeW91IHdpc2ggdG8gYnVpbGQg
-dHJ1c3QgdXAgYWdhaW4sIGJlZ2luIHdpdGggZGlzY3Vzc2lvbnMsIGFuZCBtYXliZQ0KPiA+IHRy
-eSBzb21lIHNtYWxsZXIgcGF0Y2hlcyBpbiBtbSB0byBkZW1vbnN0cmF0ZSB0aGF0IHlvdSdyZSBn
-ZW51aW5lbHkNCj4gPiBhY3RpbmcgaW4gZ29vZCBmYWl0aD8NCj4gDQo+IEhpIExvcmVuem8sDQo+
-IA0KPiBJIHRydWx5IGJlbGlldmUgVGFvIGlzIGFjdGluZyB3aXRoIGdvb2QgaW50ZW50aW9ucywg
-YWx0aG91Z2ggdGhlIHdheSB0aGlzIGlzDQo+IGJlaW5nIGRvbmUgaXMgcXVpdGUgbWVzc3kuDQo+
-IA0KPiBNZW1vcnkgY29zdHMgYXJlIGluY3JlYXNpbmcgc2lnbmlmaWNhbnRseSB0aGVzZSBkYXlz
-LCBhbmQgYXMgSSB1bmRlcnN0YW5kIHRoZQ0KPiBwYXRjaHNldCwgaGUgaXMgdHJ5aW5nIHRvIHNh
-dmUgbWVtb3J5Lg0KPiANCj4gSG93ZXZlciwgSSBkb24ndCB0aGluayB0aGlzIGlzIGJlaW5nIGRv
-bmUgYXQgdGhlIHJpZ2h0IHRpbWUgb3IgaW4gdGhlIHJpZ2h0IHdheS4NCj4gVGhpcyBtYXkgYWxz
-byBiZSBkdWUgdG8gY3VsdHVyYWwgZGlmZmVyZW5jZXMsIGxhbmd1YWdlIGJhcnJpZXJzLCBpbmZv
-cm1hdGlvbg0KPiBnYXBzLCBhbmQgYSBsYWNrIG9mIGZhbWlsaWFyaXR5IHdpdGggdGhlIG1tIGNv
-bW11bml0eS4NCj4gQXMgYSBub24tbmF0aXZlIHNwZWFrZXIsIEkgY2FuIHNlZSBob3cgZGlmZmlj
-dWx0IHRoaXMgY2FuIHNvbWV0aW1lcyBiZS4NCj4gDQo+IEkgd291bGQgcmVhbGx5IGFzayB5b3Ug
-dG8gZ2l2ZSBUYW8gbW9yZSBjaGFuY2VzIHRvIGJ1aWxkIHRydXN0IHN0ZXAgYnkgc3RlcC4NCj4g
-DQo+IEJlc3QgUmVnYXJkcw0KPiBCYXJyeQ0K
+Thank you for your contribution! Sashiko AI review found 1 potential issue(=
+s) to consider:
+- [Medium] The newly added `test_memcg_filter_memcg_path_staging` test inad=
+vertently depends on `CONFIG_MEMCG` and active cgroup configurations due to=
+ a call to `commit()`, causing the test to fail inappropriately on environm=
+ents lacking them.
+--
+
+commit 45ed1607d8ff8754a1a322fb6da3631cdc56f283
+Author: Cheng Nie <niecheng1@uniontech.com>
+
+selftests/damon/sysfs.py: validate memcg_path staging readback
+
+This commit adds a dedicated test to selftests/damon/sysfs.py that writes
+memcg_path to sysfs and verifies its readback. It aims to test the sysfs
+behavior independently of the local userspace cgroup mount layout.
+
+> diff --git a/tools/testing/selftests/damon/sysfs.py b/tools/testing/selft=
+ests/damon/sysfs.py
+> index aa03a1187489f..0f20bc9c46b78 100755
+> --- a/tools/testing/selftests/damon/sysfs.py
+> +++ b/tools/testing/selftests/damon/sysfs.py
+> @@ -250,6 +250,43 @@ def assert_ctxs_committed(kdamonds):
+[ ... ]
+> +    context =3D _damon_sysfs.DamonCtx(
+> +            targets=3D[_damon_sysfs.DamonTarget(pid=3D-1)],
+> +            schemes=3D[_damon_sysfs.Damos(ops_filters=3D[memcg_filter])])
+> +    context.idx =3D 0
+> +    context.kdamond =3D kdamonds.kdamonds[0]
+> +    kdamonds.kdamonds[0].contexts =3D [context]
+> +
+> +    err =3D kdamonds.kdamonds[0].commit()
+
+[Severity: Medium]
+Could this cause a regression where the test fails on environments lacking
+memcg support or active cgroups?
+
+The stated goal of this test is to validate the sysfs staging readback
+without depending on local userspace cgroup mount layouts. However, when
+commit() is called, it instructs the kernel to apply the configuration.
+
+This triggers damon_sysfs_memcg_path_to_id(), which traverses online memory
+cgroups and will return -EINVAL if memcg support is disabled or the root
+cgroup '/' cannot be resolved to an active memcg. This causes the commit()
+operation to fail, which makes the entire selftest report a regression.
+
+Would it be better to only stage the values (e.g., via context.stage())
+and then verify the readback, without triggering the operational commit
+step?
+
+> +    if err is not None:
+> +        fail('memcg_path staging: kdamond commit', {'error': err})
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/4CDA28DC581FDCF8+20=
+260529090845.1696845-1-niecheng1@uniontech.com?part=3D2
