@@ -1,416 +1,112 @@
-Received: from mail-ot1-f65.google.com (mail-ot1-f65.google.com [209.85.210.65])
+Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 185A03FF1D8
-	for <damon@lists.linux.dev>; Fri, 29 May 2026 16:57:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.65
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780073835; cv=none; b=pJDnIe2+jxmp/uhgyChxHgYb4/awqitSztttArnG/xUgjoe3YH1OprDpQOvoTcw3x6rM0uf+f9V34m2+6DS0Ax9wlEGuFgL1G//zIfCTy3TsiaIalJ1ZB+y3vMSHnfAC98p8jAKkVwhCYSwC9U1zqAqcIW4eRFhWAbva6v/Ue2w=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780073835; c=relaxed/simple;
-	bh=iJHlTclTdvNVeqZJEsJKgPnybNHRC79ZU9HKHQ39RSo=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nV+nBYnVzeAlGS46aeET3e/xTKeNeBsix+zOFGkKUMQQk7KsTvP6HMjD+lyxYRkS5DqtX4pO+O/kNb+/dmmoFA8l8AjLRxPQyJAa4QAsLD//L/qGZ6EnApme/p5FgxrO8MMgabJNjHZa92EMLML+MdXUIQW/dACnQKUQ5ebdv9A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gWqq98uo; arc=none smtp.client-ip=209.85.210.65
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 549E23F58C5
+	for <damon@lists.linux.dev>; Fri, 29 May 2026 20:29:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.218.53
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780086600; cv=pass; b=tcLVrnjHMnB420OXJk45YIFMP4exsRJs7v71kpMqWH/SFZXYrVaxTYWy8GK+8Xve7QJt7dEHSsigFPpdgslz9gHwuWDn1HZB7cNyZbZWEwjc/IlEY5FRNkSpbxmhA41BU2uzjUybAO+DlRzRWdsUVv90HlvU3abbrUs08cCiST0=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780086600; c=relaxed/simple;
+	bh=wRm0Mrq4p/xpAUriVMRT8KHk0YOsp6bKZfV+5HD0Cyg=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=so4vCRTfskCx/czM6yPLiimtZUc7N+TZPZo9///C7aH2wPNz19G3A1v7Zwg7cnVhRrS7LB8A7O8VUw7Id+cjAozmc7uwWJYM67u4/HbNX1o8+Mu35+Ohun6ecWSqosfoDjomFHEBs8Rq48NZdZ5tAQhfd7+D+b+NPAbm62Ejcsc=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=K+mGveOE; arc=pass smtp.client-ip=209.85.218.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gWqq98uo"
-Received: by mail-ot1-f65.google.com with SMTP id 46e09a7af769-7de7dc85b74so12886484a34.2
-        for <damon@lists.linux.dev>; Fri, 29 May 2026 09:57:10 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="K+mGveOE"
+Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-bda62f13d90so1595864566b.2
+        for <damon@lists.linux.dev>; Fri, 29 May 2026 13:29:57 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1780086596; cv=none;
+        d=google.com; s=arc-20240605;
+        b=lrqZKNfGHD/ak02rbt7o0Z5jv1KIE8ixlHXyNzJguIFzNV5nnXpzG/Kr5c7NzEfItn
+         2oViwo+cmwiTOWtXo6bYyNYoBD02utJNlN622CwZg4tmaeAIUOtNh99xX6f18y3g4E9r
+         StNNVHTMZdBZX/1QJRJgjD//beSz9bFnw88RhWizXFVwCsKZEAlnT4yWGUkLq5VJeeBR
+         q0sOc0W0FzXzlCdR0bVspsdfOFjrdnCU/1DQYu9g4Sv/Upvv8VuDF/EF05lMAlgroupZ
+         EFDODXcP2thcsi7pGlI5BJR73W1TL1ZrrHbswdK3JQQ08lfUgWDnX3Irle3DBnmbJ+5U
+         F/zg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=KBAL2YVoeAsOB80jhdCnQFZpr0bN7/PSE/KDx/NE2YA=;
+        fh=a6BiU+7jW9hoz6/9rdWAFsp/aU3eMIiJSHMxIh6cpTY=;
+        b=jL9+V8G+PdiGcvU3L4i7v0y0pLVEmyFp4WGYtnokUc1Us5j1qRud6638gScpwua9oW
+         jP1kOoXSiI8D4bMSAdvXDwIdCAEufsdDTIEO3WSmjd+xxc8GkPuZpAysTK4n1Rw4yOOO
+         Cqn7WZUkTXS07LU1TYSV4+mntCMABYnzyKW1EEe7akSAwTbUuV6CsSXl/pUnaBAZIrYt
+         9vPvvPMKrZfS1Eb501GJ3AnNTYNqlBSERIBK2XwRihQD0hTenT3b1gTpM1d7CouaSqil
+         dknT4c9T+wbrUJPIRF82nu1m/kXVABhjhbI5mEMRiWPwx7DMK8qnODXSUWYUjsyunt9N
+         AKnw==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780073830; x=1780678630; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=4H/yIMAbtX2q0bElVklgb86re8LM0PVikJCfYxPTsWQ=;
-        b=gWqq98uo7ERab/VOnVuSwOn25jVJ0IZvNbfwVBH2NCa+kS4h32oQiFBVuZgXjHRPE5
-         WJDPCUjJmyZO6YjgiYLUMnqtspJdpmD9U30AScuUgofgODtw4RPNYwjqNWSk2Zlfp0xt
-         nEjxPXwLcW/HOBRsKt3Ehio72Cz+VkKaj2m8I+QIWGTo2UN5mpbg2cBY69JUoxvw1U85
-         zCTBAqdYZ/ZEXDMIPs90PiXYC7aku/LGjdHz9UfXu/C7kF6CB9st3IOPGJuDVlbTWaAl
-         5pIgyQUsHpm08/nlt1G+aga1uNoeIeEurxslPerevCPQBKzHTFqSNkCAfOcY51bhxqch
-         3EOg==
+        d=gmail.com; s=20251104; t=1780086596; x=1780691396; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=KBAL2YVoeAsOB80jhdCnQFZpr0bN7/PSE/KDx/NE2YA=;
+        b=K+mGveOEEXd5GLXCAVWy+Qj7yFNzfi5kS4fHABNI8TR+4oBtM1XdS1u+gG2Ya/uGh3
+         rhRjf28wxFeqvEBE2s6BgGVBvA9Rx4D+6mzrZBtOe0L4AB6KMdakFAaxMGiltQAZKQXH
+         99Gkzvy/BOsRfJP3hMYeZImioahagHP8z2dqj7EVpXcQxUmcPdklGBSCJ9SCoNJdy2jp
+         bVTltXaVphfeMSdWMsKMFAuj73YDhcxVLrkNFA854IUIRRzzx0G6gn8XhbyS94iwUPDP
+         5LjEvqcGjbuyj1sNeSkGkP+pnK050lmJJJA+qoEfGmn05a07KUowMwQ8cD86hpMatr/Y
+         urFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780073830; x=1780678630;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=4H/yIMAbtX2q0bElVklgb86re8LM0PVikJCfYxPTsWQ=;
-        b=TOqOjWBN+2exVtlQ0n4gCr9lByStr6k+WBLwGe6TJSjckrAGobjTdda/YOhaARc2D7
-         8lyItu4QYBS4QGihKVUmziu7t9vYx0uSDK19a5yzVt5uP6TuYxlU1VjaW/DaW9Pe9G+4
-         f3RvvCMPTDdr4yZXgo8vds5qcwFs4Q1YLTteRY2eOJnsN5/o7XuqTGbzh9KnygEU5g7k
-         h3W0P4tl/LXFZgLYs7dEcyY5o/ltCPFk0dN/p1aFFzJoxn2dkGBgZBa6mI0zQ6NayaZi
-         8lL+lVLF9K2MSBTmXmkrTbl68K7BpS8Dyu/nzSle0Bx7Tr03+BvdVAHP+lwUouhXavwe
-         RHPA==
-X-Forwarded-Encrypted: i=1; AFNElJ+iV9/jfzOM+expZI+yDyJ78WrTaTjmt2Mc1p0WLRPCy9ZzJR7akQaDMVs+FgaP96qIFpF6Ag==@lists.linux.dev
-X-Gm-Message-State: AOJu0Yy6ho2goIVPeHjSyHMb0RSUsu63XI6LAog9IeaTKYbfW+Bl2aBX
-	00jlnInbRNTokUxZRVvhO2QZQsJyA10ZbbywemLrxhpTICuQlONMphw=
-X-Gm-Gg: Acq92OER4KMi70C2xMYTCyBlLA72RwhMjgkEJR2zbvqC+v99GB8BgqspIAypuxlhzCY
-	gcCHo9FPHZ5H5fCcORLyE88tb/aD6u3QqLZ/VYy2dKNmZY5DlW5yoY5hxOc2lNgD/3LKyHpq7gf
-	SZ58oU5nqQSqLSn4LQOLZpvOySjg2oX5ndvIdR4jVB1//KaUr6hOnLQP9yVw/avXCcz0Yje5MXt
-	3xOOjwoKpLvrLIjpaOPYPSbqKmXMtycpR2LVBJ4vMTYMRLfM+rbHvTe6vdAus4YZk1CYFvChvYj
-	25jzYM4AVjHxFTzFwe0LwiNnb8FvsmhVgaw03m6tY54wI1JJLgqSRbXVL6wJifB3uhcwtDKRICS
-	OSVLjb6jszDEMZ1XmV7H6GB9A9qOp6aVBDOqot2JZSqJeZS6E1mE9bkX7sunm2ikxzNlOR7h/cH
-	cvxlKUTcowgWxFOzm/j4mugAmlZiLolLfe09NY4qrpq4KD73J0bcAq2XZnv0JmmcYSQ7x5/L0n0
-	X4d7V8ro27j
-X-Received: by 2002:a05:6830:348a:b0:7dc:cd0b:58ba with SMTP id 46e09a7af769-7e6a1d33c27mr359547a34.4.1780073830039;
-        Fri, 29 May 2026 09:57:10 -0700 (PDT)
-Received: from localhost (23-116-43-216.lightspeed.sntcca.sbcglobal.net. [23.116.43.216])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7e695da86e1sm1785786a34.27.2026.05.29.09.57.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 29 May 2026 09:57:09 -0700 (PDT)
-From: Ravi Jonnalagadda <ravis.opensrc@gmail.com>
-To: sj@kernel.org,
-	akinobu.mita@gmail.com,
-	damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org,
-	linux-doc@vger.kernel.org
-Cc: akpm@linux-foundation.org,
-	corbet@lwn.net,
-	bijan311@gmail.com,
-	ajayjoshi@micron.com,
-	honggyu.kim@sk.com,
-	yunjeong.mun@sk.com,
-	ravis.opensrc@gmail.com
-Subject: [RFC PATCH 5/6] mm/damon/vaddr: implement perf-event access check
-Date: Fri, 29 May 2026 09:56:39 -0700
-Message-ID: <20260529165640.820-6-ravis.opensrc@gmail.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260529165640.820-1-ravis.opensrc@gmail.com>
-References: <20260529165640.820-1-ravis.opensrc@gmail.com>
+        d=1e100.net; s=20251104; t=1780086596; x=1780691396;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=KBAL2YVoeAsOB80jhdCnQFZpr0bN7/PSE/KDx/NE2YA=;
+        b=p4pjKrs5KQCaQSO2PVn6eI34ZD3scQehbrAY09q/y0lJwac/Blqgb67prQvhsw7IrR
+         oNV4e7r3iF2fBjQkC74NpJeBNQ/UXNAg5r+0osrGKGeByWLldVNnbC6FXBgehBAEH7EY
+         vK3kSj398S1s7mMWnJF+NA/Sl5razKSKp3XjVGCdC9z3CQky3ID7TxNP3/EY8j0Wdc1d
+         Ukh4vTJefo7/avfuqYEFRyJkXmGOII830uUjt+L8Aspepeb8ZGxsiHQ5g1GYvi4dbiV9
+         OOQvweLHJ1WtA7/efMzFDJ6iDpvMve9PHorgDFZTIbhx0Wh6f7tZtuTuf57XChnKB/ua
+         nohQ==
+X-Forwarded-Encrypted: i=1; AFNElJ8N8kOnhPpa/2R77f+UwBAdMPUdo/OpjRKbtcfPH8z/U3vHJrsVOKLlYNcPvOVtLFFX9Tqt4w==@lists.linux.dev
+X-Gm-Message-State: AOJu0Yyz93ZCResbMsjW8h7CpDxBOEwVqvTLTm6HTnDvcSnEQrKRXOpC
+	7RyNCPlC3zmGCH3m1r18mb8W5ClxMbfUF4CsbwnOfTyn7pA8WCchjwiEQL+7T5dlWeBce9oIQ8Q
+	O2FfZ7bm7DAULWcbnMag9WMFUPc4KKPU=
+X-Gm-Gg: Acq92OH5I7e51Xoliv0Rp+vcw/N0MbBRtPdeM1xjHrcuSNJ8VvjYaIzPELCgA7tqPz6
+	NpSAjSD4pd+ZKI/d7draT3EyXQJ91AnAlLmxSvrmi4qALe4PUusTSRv89m5x0BFqHw/6h6kEUzg
+	EpZtEa8WZWWZComX4mWg+Y9CG/i1my/tW4WuOexqphKDfXpR4YhDLxVJaLco0DcrY1VDW0WlVlL
+	Zll4brI9EreZTdu4zSDtqstkOSuTU5+nK1bIgogetxhJlXkeTaO0edoxMpl2+MivdbhGUBaP7id
+	wrLT6tDDKOktpFNfxxs=
+X-Received: by 2002:a17:906:ef02:b0:bdc:55dc:dd85 with SMTP id
+ a640c23a62f3a-beab4f1fc2bmr62775066b.28.1780086595591; Fri, 29 May 2026
+ 13:29:55 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <CACrCO_XCxTDk7b8wo66CrxzfOXG50-uCxdE9tjJppH_ei5Wo+A@mail.gmail.com>
+ <20260529160030.85303-1-sj@kernel.org>
+In-Reply-To: <20260529160030.85303-1-sj@kernel.org>
+From: =?UTF-8?B?7LWc7Jyg7Zi4?= <dbgh9129@gmail.com>
+Date: Fri, 29 May 2026 16:29:44 -0400
+X-Gm-Features: AVHnY4K69zftCKA-7FXWI8bWbXBL2Ryf49rMdHcUkPQJ7C34OBdd6g5bxd0ugg4
+Message-ID: <CACrCO_Xend-ivqq6TZ3GDhfTm-JsyoYJQjgNa5pdeU+5sFwKrg@mail.gmail.com>
+Subject: Re: [PATCH v1] mm/damon/stat: roll back context on damon_call() failure
+To: SeongJae Park <sj@kernel.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>, damon@lists.linux.dev, linux-mm@kvack.org, 
+	linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-Add the perf-event backend used by the substrate.  Two stateless NMI
-overflow handlers are picked at perf_event_create_kernel_counter()
-time (paddr- vs vaddr-keyed) and called with context = NULL, so the
-NMI fast path never dereferences the per-event struct.  Each submits
-a damon_access_report into the per-CPU ring.
+On Fri, 29 May 2026 at 12:00, SeongJae Park <sj@kernel.org> wrote:
 
-The vaddr handler drops samples with addr == 0 or addr >= TASK_SIZE.
-The paddr handler gates on data->sample_flags & PERF_SAMPLE_PHYS_ADDR
-rather than testing data->phys_addr for zero (which would also drop
-legitimate page 0).  AMD IBS Op only populates phys_addr when
-IBS_OP_DATA3.dc_phy_addr_valid is set; gating on sample_flags is the
-documented way to detect that.  is_write is derived from
-data->data_src.mem_op.
+> Thank you for clarifying, Yuho.  I think the current cleanup is ok, but I
+> understand it is confusing to read.  Apparently that confused you at least, and
+> that's not ok.  What about adding a comment explaining the context?
 
-cpuhp_setup_state_multi() registers one global state at subsys_initcall;
-each damon_perf_event is added as an instance in damon_perf_init() so
-cpuhp drives per-CPU event creation and offline-time release.  Events
-are created with disabled=1 and armed by kdamond_fn() when the
-substrate is ready; per-CPU init failures are surfaced via
-init_complete / any_cpu_failed so damon_perf_init() rolls back the
-cpuhp instance instead of leaving a half-armed event behind.
+Thank you for the explanation.
 
-Signed-off-by: Ravi Jonnalagadda <ravis.opensrc@gmail.com>
----
- mm/damon/vaddr.c | 267 +++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 267 insertions(+)
+That makes sense. Looking again, I noticed the same retry-time cleanup
+pattern is also used in lru_sort.c and reclaim.c, so the behavior
+seems intentional.
 
-diff --git a/mm/damon/vaddr.c b/mm/damon/vaddr.c
-index d271476035641..73fcea91afa07 100644
---- a/mm/damon/vaddr.c
-+++ b/mm/damon/vaddr.c
-@@ -7,11 +7,13 @@
- 
- #define pr_fmt(fmt) "damon-va: " fmt
- 
-+#include <linux/cpuhotplug.h>
- #include <linux/highmem.h>
- #include <linux/hugetlb.h>
- #include <linux/mman.h>
- #include <linux/mmu_notifier.h>
- #include <linux/page_idle.h>
-+#include <linux/perf_event.h>
- #include <linux/pagewalk.h>
- #include <linux/sched/mm.h>
- 
-@@ -957,6 +959,263 @@ static int damon_va_scheme_score(struct damon_ctx *context,
- 	return DAMOS_MAX_SCORE;
- }
- 
-+#ifdef CONFIG_PERF_EVENTS
-+
-+#define DAMON_PERF_MAX_RECORDS	(1UL << 20)
-+#define DAMON_PERF_INIT_RECORDS	(1UL << 15)
-+
-+/*
-+ * NMI hot-path: avoid every heap dereference.  These handlers carry no
-+ * pointer back to the per-event struct -- perf_event_create_kernel_counter
-+ * is called with context = NULL.  Submission flows into the global
-+ * per-CPU SPSC ring (damon_report_access -> kdamond_check_reported_accesses
-+ * drains).
-+ */
-+static void damon_perf_overflow_vaddr(struct perf_event *perf_event,
-+		struct perf_sample_data *data, struct pt_regs *regs)
-+{
-+	struct damon_access_report report;
-+
-+	if (!data || !data->addr)
-+		return;
-+
-+	/* Drop kernel-VA hits -- only user-space VAs land in damon vaddr regions. */
-+	if (data->addr >= TASK_SIZE)
-+		return;
-+
-+	report = (struct damon_access_report){
-+		.vaddr = data->addr & PAGE_MASK,
-+		.size = PAGE_SIZE,
-+		.cpu = smp_processor_id(),
-+		.tid = current->pid,
-+		.tgid = current->tgid,
-+		.is_write = !!(data->data_src.mem_op & PERF_MEM_OP_STORE),
-+	};
-+	damon_report_access(&report);
-+}
-+
-+static void damon_perf_overflow_paddr(struct perf_event *perf_event,
-+		struct perf_sample_data *data, struct pt_regs *regs)
-+{
-+	struct damon_access_report report;
-+
-+	if (!data)
-+		return;
-+
-+	/*
-+	 * AMD IBS Op only populates data->phys_addr when
-+	 * IBS_OP_DATA3.dc_phy_addr_valid is set; otherwise the field
-+	 * carries a stale value.  Gate on sample_flags rather than testing
-+	 * phys_addr for zero (which would also drop legitimate page 0).
-+	 */
-+	if (!(data->sample_flags & PERF_SAMPLE_PHYS_ADDR))
-+		return;
-+
-+	report = (struct damon_access_report){
-+		.paddr = data->phys_addr & PAGE_MASK,
-+		.size = PAGE_SIZE,
-+		.cpu = smp_processor_id(),
-+		.is_write = !!(data->data_src.mem_op & PERF_MEM_OP_STORE),
-+	};
-+	damon_report_access(&report);
-+}
-+
-+static enum cpuhp_state damon_perf_cpuhp_state;
-+
-+static void damon_perf_event_init_attr(struct damon_perf_event *event,
-+		struct perf_event_attr *attr)
-+{
-+	*attr = (struct perf_event_attr) {
-+		.size = sizeof(*attr),
-+		.type = event->attr.type,
-+		.config = event->attr.config,
-+		.config1 = event->attr.config1,
-+		.config2 = event->attr.config2,
-+		.freq = event->attr.freq,
-+		.sample_type = PERF_SAMPLE_TIME | PERF_SAMPLE_ADDR |
-+			PERF_SAMPLE_PERIOD | PERF_SAMPLE_DATA_SRC |
-+			(event->attr.sample_phys_addr ?
-+				PERF_SAMPLE_PHYS_ADDR : 0) |
-+			(event->attr.sample_weight_struct ?
-+				PERF_SAMPLE_WEIGHT_STRUCT : 0),
-+		.precise_ip = event->attr.precise_ip,
-+		.pinned = 1,
-+		.disabled = 1,
-+		.wakeup_events = event->attr.wakeup_events,
-+		.exclude_kernel = event->attr.exclude_kernel,
-+		.exclude_hv = event->attr.exclude_hv,
-+	};
-+
-+	/*
-+	 * sample_period and sample_freq share storage in the kernel
-+	 * perf_event_attr (union).  Select based on the freq toggle so
-+	 * frequency-based callers (PEBS) and period-based callers
-+	 * (AMD IBS Op MaxCnt) both work correctly.
-+	 */
-+	if (event->attr.freq)
-+		attr->sample_freq = event->attr.sample_freq;
-+	else
-+		attr->sample_period = event->attr.sample_period;
-+}
-+
-+static int damon_perf_cpu_online(unsigned int cpu, struct hlist_node *node)
-+{
-+	struct damon_perf_event *event = hlist_entry(node,
-+			struct damon_perf_event, hlist_node);
-+	struct damon_perf *perf = event->priv;
-+	struct perf_event_attr attr;
-+	struct perf_event *perf_event;
-+	perf_overflow_handler_t handler;
-+
-+	if (!perf)
-+		return 0;
-+
-+	damon_perf_event_init_attr(event, &attr);
-+
-+	/*
-+	 * Pick a paddr- or vaddr-specific handler at create time so the
-+	 * NMI fast path is statically branched.  Pass NULL as context --
-+	 * handlers are stateless wrt the per-event struct, so the NMI
-+	 * fast path performs no per-event heap dereference.  Submission
-+	 * flows into the global per-CPU SPSC ring via damon_report_access().
-+	 */
-+	handler = event->attr.sample_phys_addr ?
-+		damon_perf_overflow_paddr : damon_perf_overflow_vaddr;
-+
-+	perf_event = perf_event_create_kernel_counter(&attr, cpu, NULL,
-+			handler, NULL);
-+	if (IS_ERR(perf_event)) {
-+		pr_warn_ratelimited("damon-perf: cpu %u event create failed: %ld\n",
-+				cpu, PTR_ERR(perf_event));
-+		if (!event->init_complete)
-+			event->any_cpu_failed = true;
-+		return 0;	/* never block CPU online */
-+	}
-+	*per_cpu_ptr(perf->event, cpu) = perf_event;
-+	/*
-+	 * Late-online CPU after the substrate is armed: events are created
-+	 * with attr.disabled = 1 and would otherwise stay quiescent on this
-+	 * CPU until the next arm walk.  Enable here so coverage matches the
-+	 * already-online CPUs.
-+	 */
-+	if (event->ctx && READ_ONCE(event->ctx->perf_events_active))
-+		perf_event_enable(perf_event);
-+	return 0;
-+}
-+
-+static int damon_perf_cpu_offline(unsigned int cpu, struct hlist_node *node)
-+{
-+	struct damon_perf_event *event = hlist_entry(node,
-+			struct damon_perf_event, hlist_node);
-+	struct damon_perf *perf = event->priv;
-+	struct perf_event *perf_event;
-+
-+	if (!perf)
-+		return 0;
-+
-+	perf_event = per_cpu(*perf->event, cpu);
-+	if (perf_event) {
-+		perf_event_disable(perf_event);
-+		perf_event_release_kernel(perf_event);
-+		*per_cpu_ptr(perf->event, cpu) = NULL;
-+	}
-+	return 0;
-+}
-+
-+void damon_perf_event_arm(struct damon_perf_event *event)
-+{
-+	struct damon_perf *perf = event->priv;
-+	struct perf_event *perf_event;
-+	int cpu;
-+
-+	if (!perf)
-+		return;
-+
-+	for_each_online_cpu(cpu) {
-+		perf_event = *per_cpu_ptr(perf->event, cpu);
-+		if (perf_event)
-+			perf_event_enable(perf_event);
-+	}
-+}
-+
-+void damon_perf_event_disarm(struct damon_perf_event *event)
-+{
-+	struct damon_perf *perf = event->priv;
-+	struct perf_event *perf_event;
-+	int cpu;
-+
-+	if (!perf)
-+		return;
-+
-+	for_each_online_cpu(cpu) {
-+		perf_event = *per_cpu_ptr(perf->event, cpu);
-+		if (perf_event)
-+			perf_event_disable(perf_event);
-+	}
-+}
-+
-+int damon_perf_init(struct damon_ctx *ctx, struct damon_perf_event *event)
-+{
-+	struct damon_perf *perf;
-+	int err = -ENOMEM;
-+
-+	perf = kzalloc(sizeof(*perf), GFP_KERNEL);
-+	if (!perf)
-+		return -ENOMEM;
-+
-+	perf->event = alloc_percpu(typeof(*perf->event));
-+	if (!perf->event)
-+		goto free_perf;
-+
-+	event->priv = perf;
-+	event->ctx = ctx;
-+	INIT_HLIST_NODE(&event->hlist_node);
-+
-+	/*
-+	 * cpuhp_state_add_instance() invokes the online callback synchronously
-+	 * for every currently-online CPU; late-online CPUs subsequently get
-+	 * an event automatically and offline CPUs release theirs cleanly.
-+	 */
-+	err = cpuhp_state_add_instance(damon_perf_cpuhp_state,
-+			&event->hlist_node);
-+	if (err)
-+		goto free_event;
-+
-+	event->init_complete = true;
-+	if (event->any_cpu_failed) {
-+		cpuhp_state_remove_instance(damon_perf_cpuhp_state,
-+				&event->hlist_node);
-+		err = -ENODEV;
-+		goto free_event;
-+	}
-+
-+	return 0;
-+
-+free_event:
-+	free_percpu(perf->event);
-+free_perf:
-+	kfree(perf);
-+	event->priv = NULL;
-+	return err;
-+}
-+
-+void damon_perf_cleanup(struct damon_ctx *ctx, struct damon_perf_event *event)
-+{
-+	struct damon_perf *perf = event->priv;
-+
-+	if (!perf)
-+		return;
-+
-+	cpuhp_state_remove_instance(damon_perf_cpuhp_state,
-+			&event->hlist_node);
-+
-+	free_percpu(perf->event);
-+	kfree(perf);
-+	event->priv = NULL;
-+}
-+
-+#endif /* CONFIG_PERF_EVENTS */
-+
- static int __init damon_va_initcall(void)
- {
- 	struct damon_operations ops = {
-@@ -979,6 +1238,14 @@ static int __init damon_va_initcall(void)
- 	ops_fvaddr.init = NULL;
- 	ops_fvaddr.update = NULL;
- 
-+#ifdef CONFIG_PERF_EVENTS
-+	err = cpuhp_setup_state_multi(CPUHP_AP_ONLINE_DYN, "damon/perf:online",
-+			damon_perf_cpu_online, damon_perf_cpu_offline);
-+	if (err < 0)
-+		return err;
-+	damon_perf_cpuhp_state = err;
-+#endif
-+
- 	err = damon_register_ops(&ops);
- 	if (err)
- 		return err;
--- 
-2.43.0
+I'll send v2 patch adding a comment explaining deferred cleanup and
+retry-time handling.
 
+Best,
+Yuho
