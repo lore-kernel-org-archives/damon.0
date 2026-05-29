@@ -1,43 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFCE73B3BFF;
-	Fri, 29 May 2026 14:44:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1CFF3E170F;
+	Fri, 29 May 2026 14:52:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780065881; cv=none; b=ZKr5mPixe9yi/4Zl+h35uApLnIYcbmOQduRHl246rsGpKZKm4N43XNCFVM0d78l+aZnMfg/utkMb7rWCdxrEgSLeGaqsIUt80I+vUMekoGz0qEErYqG4laKMMQl6vG4+C1aAm4yd/LiwBUJB33qAYuBkRXTrQncN6B443Mf3HK8=
+	t=1780066381; cv=none; b=pxQZthsN0rSFV1RXIFQI276o08iFpzpvTzxZIm3hW697HOT+tDoQiYnP0I/BNKs8iR4DSA/N8WIYq3hIxqKUCiH+LSK8qPypbu/erB9Fsf8sllKCa33uF4Y8Z9eoL7lawpvIlRoKINe5XjqLQy0/k9hdyv9D+6tOAPMbZEj025U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780065881; c=relaxed/simple;
-	bh=Ol6joHspgRP0ruux+ian57qzjqjKtPb5K5tMzrXlook=;
+	s=arc-20240116; t=1780066381; c=relaxed/simple;
+	bh=mETvTRXF6VHY9zMnCD32eQbesm4Tc+3fdL1qa1YNbYg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cLpBcCohZOj3yvyk0/iOCaZTFlx1oQP0iaSEHGGHGDRPNegqYkQ09+OOfi5UVhkXenVd91gqtxwLD1GcXBl0gx4pJTEJaR7zVjjj0JUx4Xb/X5dKND1uWW9cNd0pPtBLQmI4PsyIgbXMYBeQ52QBfJU4gCSw8CDLyeZkuCthC0E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=F68S+BVI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=F8eiOk6SRaeFNWeEy3FUSuGEGwAJvm81sUaubflIFSXIpD6M6Vo1WD3GFdD7VqI3/4gPRH6P3nwqPqtH1DYnAqv+aTDE9/+Z+uYgJTNijrZHoWLeW5m9WF3k0XdKOHDAqOBvlx+EldBwz3BCuYluffhLya6rcwoDPm48QGeH+qo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=keYCTE+v; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="F68S+BVI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2ECF1F00893;
-	Fri, 29 May 2026 14:44:39 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="keYCTE+v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBAA21F00893;
+	Fri, 29 May 2026 14:52:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1780065880;
-	bh=eSDXs1iBErDS79NVdNdY9EDtRW55Oz5UnXhb1rHekmU=;
+	s=k20260515; t=1780066379;
+	bh=DoKHSghnTxv8S3QLNddszzUqaQvDqqf/WFprH6BXgYM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=F68S+BVIcO7kPPYdQx2I1f5VR2PTd+HJbmJNR8WPxoi84zXHrZ9zTAZsBh28UzmuX
-	 8RfsK7Jfs2M/rIkssc9Ka32W9NuMGY47tK0ipgDsnbEORXCko8nNHiEUFd9y6Nc6Cf
-	 77XoF7ml7YHp+i5bFYPzNYM6DCKqzR8xu7fKTLgZXjwcIhuRlePiag944fUsLi/55H
-	 8njBfyF5yy5Hx7Jc8zuGYrkvo47+S2qTt4mIP/hxJhYBhN6WaG1k6v9x+EpUybKQDl
-	 gen8amrxTbYdeag/BrCtTZIRAyZt22LlLNVrmoZtpEucwti1eVD6zNW89zYVuPq/xT
-	 vnP7LtiJjn1ZQ==
+	b=keYCTE+vnVo3qXj6X5rUFkDWg/ADhxccUC9DidvaR6t0Ix3/rqHEnTnBNQ5nhvULK
+	 2URcVTlatAZmTQezK76owvgpfJjNhPXY3VpYdHZ5DcaHX+GofjyXTo1DVEptRBKWDZ
+	 rb/ZJ3aGvs2y5WVcOGt/vB1KWIRD1362kD0/985Wv1jFZB/LVImrYZJ7stFCqBPC1J
+	 WzaDpCyB9FxEZayjvmPSeweWi4ite9LR9PdLSm6WLqxGrybxLc9C64L/OHoCvGTJ2q
+	 RVu1PSnpUkm1IceG3FOprhtiYr2G3FoHZITbUTcyupzV2++Dz/NFvqni3mUH2sJmwN
+	 b0mmBBit25pTw==
 From: SeongJae Park <sj@kernel.org>
-To: Yuho Choi <dbgh9129@gmail.com>
+To: Cheng Nie <niecheng1@uniontech.com>
 Cc: SeongJae Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	shuah@kernel.org,
 	damon@lists.linux.dev,
 	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v1] mm/damon/stat: roll back context on damon_call() failure
-Date: Fri, 29 May 2026 07:44:35 -0700
-Message-ID: <20260529144435.83930-1-sj@kernel.org>
+	linux-kselftest@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	kernel@uniontech.com
+Subject: Re: [PATCH v2 1/2] selftests/damon/_damon_sysfs.py: fix memcg_path assignment
+Date: Fri, 29 May 2026 07:52:47 -0700
+Message-ID: <20260529145248.84593-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260529031519.1617000-1-dbgh9129@gmail.com>
+In-Reply-To: <9EAB27169F5D0F3D+20260529091948.1702421-1-niecheng1@uniontech.com>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -47,29 +49,21 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hello Yuho,
+On Fri, 29 May 2026 17:19:48 +0800 Cheng Nie <niecheng1@uniontech.com> wrote:
 
-
-Thank you for sharing this patch!
-
-On Thu, 28 May 2026 23:15:19 -0400 Yuho Choi <dbgh9129@gmail.com> wrote:
-
-> damon_stat_start() allocates and starts damon_stat_context before
-> registering the repeated damon_call() callback.  If damon_call() fails,
-> the function currently returns the error while leaving the context
-> allocated and stored in the global pointer.
+> DamosFilter stores memcg_path for sysfs staging, but the constructor
+> assigns it with a trailing comma and therefore turns it into a tuple.
 > 
-> The retry-time cleanup added for this path only runs if users try to
-> enable DAMON_STAT again.  If no retry happens, the failed start leaves
-> the context allocated indefinitely.
-> 
-> Roll back the failed start by stopping the kdamond before destroying
-> the context and clearing the global pointer.  damon_stop() waits for a
-> live kdamond via kthread_stop_put(); if the worker has already completed
-> teardown, there is no kdamond left to wait on and the context can be
-> destroyed.
+> Fix the assignment so memcg_path is stored as the intended string.
+> This makes memcg filter staging and follow-up validation use the
+> written path correctly.
 
-But, having one damon_ctx object in the memory is a real problem?  Why?
+Nice catch, thank you!
+
+> 
+> Signed-off-by: Cheng Nie <niecheng1@uniontech.com>
+
+Reviewed-by: SeongJae Park <sj@kernel.org>
 
 
 Thanks,
