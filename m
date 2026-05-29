@@ -1,78 +1,280 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oo1-f67.google.com (mail-oo1-f67.google.com [209.85.161.67])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5476A38F250;
-	Fri, 29 May 2026 16:00:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC7313F5BF0
+	for <damon@lists.linux.dev>; Fri, 29 May 2026 16:56:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.67
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780070435; cv=none; b=pW90u0MQ+WF0jCTHg9QWdJHZjTE4gP8mz6XwhNIYi8+9MAEyOyobr/IEOHrXdL4JKEKZBWuAWBQOFW6vnaZZy02J5mAXZAmubWVYpqC/Vku5fjr1ncp0O+VoqK2PesCrMTKO+Tg2p7YPTUlc48X0vdiL+aAJkzmIosy8rs3yrMs=
+	t=1780073821; cv=none; b=Xgu4RnYi039KACbHR6x7rTAG5c5MamqDQZ9cg1SW/fM4LSGOTmVpLulFckYyRAPWC/SyOzsRTrdxkQ8I17PNhnUAXnDF5mHK6GqKDi8Rb3iyo2UjRGGojaZr9aPbNjTkjpH6OQ0QISFllKvn7Iz8pQmHXc4MUVm+m9+ySC8MuUo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780070435; c=relaxed/simple;
-	bh=WTD0fv78tOS9SwrhWVXui535NHykSF39tNx6ynFVpzw=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=KzifisYFfEzpVRARA40QJB1cR1731qceTRyWaWqiG4ZQt+gbE1T4EZYWmj6PjlgcKH1K691jCCeZjIC/fpcmqN8IYMrKJnGPs/sNiamt1PROsq4WeDsntU4aJB5hTw/u+PpvrzREncilvQfE/gDaRkYX7eyTL5QN3nFhB9kF6jU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IrhyuAPR; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1780073821; c=relaxed/simple;
+	bh=maETY92mxf6V4uKhfkGsIoUysxtad2AThu1KxdzWrwo=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Tq0LKOTBi/qaWERtnA4TYeXrG1w5Dr22tet2uNJDPnRpeN+lMCXQVJ83vE8KjeSdTrZOxmeLugJ9PNuF3Zf+xfePk7vOd/gZqcLeqaZgoGpBukPc43RQ/Ok81jNCSFxZxFJ+8CNT0HskSKy/0+3nanjykHPGiMmzuoltrUyCNP8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HOv/xMw5; arc=none smtp.client-ip=209.85.161.67
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IrhyuAPR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82B701F00893;
-	Fri, 29 May 2026 16:00:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1780070433;
-	bh=swbfRtX5liCUiybXlbewNQ/G2rwqPA7yjLKy/i2mBTs=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IrhyuAPRj38zdilHD+aEEqVIYR4DydAimWaw0gU7zHdNCtaQ+pP0t/QOE1q8qqEAg
-	 GzL9BctiAudP1mzgkXWbVJfynffpMnD9ckCdFr+hrjjmih//NGs3Wkl8Y3NmTDg4tg
-	 qg4pbV+5X/SlmR5BKF2H7YvboSVJMDlaS3l2ReeL4FdV5x0pFZoCwPs7Iw2hrkQxjr
-	 9HJmMhxi8PyYN5xxTwiBDMsIZpoE/8Xu5VBmEQP+wHM7pPYAFtqdhE32Z+tzq2Z+nO
-	 vwrYWSHJeCDPjyFfm2PZbD8fTOGI6Y7DLphtDHsNcGyZa+vWvE6h3/ux9QQdNkh02O
-	 LygtWi0jUdEvg==
-From: SeongJae Park <sj@kernel.org>
-To: =?UTF-8?q?=EC=B5=9C=EC=9C=A0=ED=98=B8?= <dbgh9129@gmail.com>
-Cc: SeongJae Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HOv/xMw5"
+Received: by mail-oo1-f67.google.com with SMTP id 006d021491bc7-69d78547957so4211429eaf.0
+        for <damon@lists.linux.dev>; Fri, 29 May 2026 09:56:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1780073819; x=1780678619; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=61y2RUu4XsaORgnhBsj3LdYfK6rAcceIjq+Qt3FiRdA=;
+        b=HOv/xMw5DmIQ37ufyo4Me7WhNl6yk/D5UzFkuPwtWNYwEWNVhY6h45wfUNXDrCDeMl
+         TozjDspPHcY+MW2Hn2JnZr+HB8TMrNBXLlk7CwYXUSRehccZ8GSST8zbHtdRW/mZkXlm
+         p4Bq4JGrK0HtFy8ySFK8vLy7eywGQ/Lh/c2j4ZPMboiocMutQfauwlK1gPEhiNBnkwVi
+         YIRv6Tp1pQqnoAqv0mEnMBwA4WA6IaFQ8QlJCYypLuSoYtHz9qPObiXYf/JIxZghs0Lt
+         CGCz1jvEjKlY8yNfJEiGqfbwoA9QWBIdSuNZ+7aDKT7TC1Z0+z6yK9bhP78FiW0ER7K0
+         lPxA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780073819; x=1780678619;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=61y2RUu4XsaORgnhBsj3LdYfK6rAcceIjq+Qt3FiRdA=;
+        b=gD9O/Ov7mjCu0MpIQhIqfnF2EQjZFoSHOcs0DKg79tXuhrjr5/Qi6bITzxWQjLci6u
+         QsOjFgLfbNreJWZqFhOlidpEH7g+GrZESChE6iM35v9ADNoFW00yw0/QXj6vzTeDluYR
+         asYhxpn/UMNzjHiSQWWFVD39HYYcl6tU4hVv+M9c3m+vtvI9ULMvM5wjt4WVnVPtdWh3
+         qsHwRxW9VtofeKncBdJN92FDEyQHSuOc24PyeqtyzNbrvLtA6CfEjoQuuda4HcKOUi0K
+         wyQQCwkIK9lvWBbbti9euAXbfsNEr8z7XgjF9vEiZEceN2YB151GDZR2PHiN3mW4Tr4g
+         M15Q==
+X-Forwarded-Encrypted: i=1; AFNElJ8CkaHzFZgUGAAtGrSjD7mj0PGCZ+CRiltzuKx37+dK1qMM0a6PgExQf5jRKunSfPfPgDrg8A==@lists.linux.dev
+X-Gm-Message-State: AOJu0YwajaoGapmZcynrYQtmvaW7t9FiFG0HTmUxz3ymnzjSB/Q+CLHr
+	i5xhCubyE6Ay6nvQ4uR3f4IHNY9qg6X52eeIFMu2VGPh219TC1adv2adLRonj0WQxA==
+X-Gm-Gg: Acq92OHsigNbMPE22DCKosnTSVmI4e62UlJokDcw4yidXnQHVpR2Mz96v32DgxxcpU6
+	0Ol/n7jjVJ1UzfUdVWEjbMtE72/tR6WkkPXGJkPTQvqbasn/zl0wPuNcok5D52pI4tRJCnY7qMD
+	LSwPWw70K/2jNbNk1rGZ9+d50wYG7jiRlw8P4GXGW3rXMiW2uYEtkGA7MU+GEb+2khU5QTqyili
+	jVyAyOg81yU47JgFNtj9+kUZDo8yqUAVUd2SpCcL48HwPm5xxrbeN4Fr1BoiPSF587Rk4yKQSi9
+	A0VWvEijXi5LEfgG5NTihUoenvS7z1IR+YhTbVQf3crcjyMTu6maxPqiBsBDtOZTeNzWG2rf9wH
+	0tZoOdVT9HbJsDghtdluOTbGCojg8uZnhGf3IImxp86qh4j16j76hLLNMrVukFN8s+ZB7nASLpz
+	tfjG6oIFHB4ZcB08hJhdig/l6K72pb0l8NqEK61eUYNqCDIsu3AQb5nWD56oxCZflg16l/xfzVA
+	iYSECdpBNHL
+X-Received: by 2002:a05:6820:1985:b0:696:1a98:bd5 with SMTP id 006d021491bc7-69e0ff17ff1mr94887eaf.19.1780073818589;
+        Fri, 29 May 2026 09:56:58 -0700 (PDT)
+Received: from localhost (23-116-43-216.lightspeed.sntcca.sbcglobal.net. [23.116.43.216])
+        by smtp.gmail.com with ESMTPSA id 006d021491bc7-69e069b0ea8sm1442784eaf.12.2026.05.29.09.56.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 29 May 2026 09:56:58 -0700 (PDT)
+From: Ravi Jonnalagadda <ravis.opensrc@gmail.com>
+To: sj@kernel.org,
+	akinobu.mita@gmail.com,
 	damon@lists.linux.dev,
 	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v1] mm/damon/stat: roll back context on damon_call() failure
-Date: Fri, 29 May 2026 09:00:29 -0700
-Message-ID: <20260529160030.85303-1-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <CACrCO_XCxTDk7b8wo66CrxzfOXG50-uCxdE9tjJppH_ei5Wo+A@mail.gmail.com>
-References: 
+	linux-kernel@vger.kernel.org,
+	linux-doc@vger.kernel.org
+Cc: akpm@linux-foundation.org,
+	corbet@lwn.net,
+	bijan311@gmail.com,
+	ajayjoshi@micron.com,
+	honggyu.kim@sk.com,
+	yunjeong.mun@sk.com,
+	ravis.opensrc@gmail.com
+Subject: [RFC PATCH 0/6] mm/damon: hardware-sampled access reports
+Date: Fri, 29 May 2026 09:56:34 -0700
+Message-ID: <20260529165640.820-1-ravis.opensrc@gmail.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On Fri, 29 May 2026 11:17:01 -0400 최유호 <dbgh9129@gmail.com> wrote:
+This series introduces a vendor and PMU-agnostic substrate inside DAMON
+that consumes hardware-sampled access reports through the standard
+perf-event interface.  Userspace selects the PMU through sysfs (raw
+type/config knobs), driving either Intel PEBS L3-miss sampling or AMD
+IBS Op sampling.
 
-> Dear SJ
-> 
-> On Fri, 29 May 2026 at 10:44, SeongJae Park <sj@kernel.org> wrote:
-> 
-> > But, having one damon_ctx object in the memory is a real problem?  Why?
-> 
-> I agree that keeping one `damon_ctx` is unlikely to be a serious problem.
-> My intention was not to address memory pressure but to maintain
-> failure-path consistency. If initialization fails after the context is
-> created and started, the internal state remains in place despite the
-> operation returning an error. The cleanup is then deferred until a
-> subsequent retry.
-> 
-> For this reason, I think this is worth fixing as a correctness issue.
-> That said, if you feel the current cleanup is sufficient, I can drop
-> this patch.
+Why a unified perf-event substrate
 
-Thank you for clarifying, Yuho.  I think the current cleanup is ok, but I
-understand it is confusing to read.  Apparently that confused you at least, and
-that's not ok.  What about adding a comment explaining the context?
+Earlier hardware-sampled access-monitoring proposal [1] took an AMD IBS
+specific module path backend, owning its own probe configuration,
+sysfs knobs, and lifecycle.
+
+SeongJae Park has previously highlighted the advantage of Akinobu
+Mita's perf-event proposal [2]: let DAMON register kernel-counter perf
+events and consume samples from any sampling PMU that perf core knows
+about.  This series builds on that direction with the changes we
+needed to run it cross-vendor:
+
+  - a per-CPU lockless ring between the NMI sample handler and the
+    kdamond drain,
+  - per-CPU events that follow CPU hotplug cleanly,
+  - events fire only while the monitor is running -- created disabled,
+    armed when kdamond starts, disarmed and drained when it stops,
+  - all-or-nothing init across CPUs: a partial-CPU create failure rolls
+    the whole event back rather than leaving silent gaps,
+  - safe handling of vendor sample-validity flags so a stale or
+    unpopulated address is never mistaken for a valid sample.
+
+What the series adds
+
+Patch 1 introduces the substrate's data types: a per-event
+configuration struct and a per-context list to hang them on.  A
+CONFIG_PERF_EVENTS=n build folds to no-op stubs.
+
+Patch 2 exposes those types through sysfs.  Each entry maps to one
+perf event and lets userspace pick the PMU and how to sample it: the
+raw PMU type/config, addressing flags, and period or frequency.  The
+defaults are tuned for Intel PEBS; userspace overrides them for other
+PMUs.
+
+Patch 3 wires the sysfs apply path so configured events get attached
+to the running monitoring context.
+
+Patch 4 is the core of the series.  It replaces the mutex-protected
+report queue with a per-CPU lockless ring fed from NMI by the perf
+overflow handler and drained once per sample tick by the kdamond.
+Drained reports are matched to monitored regions by binary search
+over a per-tick snapshot.  The patch also wires the per-event
+lifecycle into kdamond: events arm when the monitor starts, disarm
+and drain when it stops, roll back cleanly when per-CPU init fails on
+some CPUs, and a second context that asks for the substrate while
+it is in use is rejected with -EBUSY.
+
+Patch 5 is the perf-event backend.  Two stateless overflow handlers
+(one vaddr-keyed, one paddr-keyed) are picked at event creation time
+and submit samples into the per-CPU ring.  Vendor-specific sample
+validity is honored at this layer.
+
+Patch 6 adds a tracepoint at every node_eligible_mem_bp quota-goal
+evaluation so userspace can watch goal convergence without polling
+sysfs.
+
+Userspace setup model
+
+Userspace selects the sampling PMU by pointing the perf event's
+`type` / `config` at it, and chooses the scheme topology that suits
+the address space the PMU reports on.  No module load or unload step
+is involved; `echo on > state` arms the substrate, `echo off > state`
+disarms it.
+
+Two configurations were used for validation.
+
+Configuration A: AMD IBS Op, paddr ops, system-wide PULL+PUSH tiering
+
+  IBS Op stamps samples with physical addresses, so DAMON reasons over
+  every backing page in the system regardless of which task or guest
+  touched it -- the substrate becomes a system-wide tiering controller.
+
+  Setup (abridged; `D=/sys/kernel/mm/damon/admin/kdamonds/0`):
+
+    echo 1     > /sys/kernel/mm/damon/admin/kdamonds/nr_kdamonds
+    echo 1     > $D/contexts/nr_contexts
+    echo paddr > $D/contexts/0/operations
+
+    # Two regions, one per NUMA node (DRAM + CXL).  PA ranges
+    # are derived per host from /proc/iomem; omitted here.
+    echo 1 > $D/contexts/0/targets/nr_targets
+    echo 2 > $D/contexts/0/targets/0/regions/nr_regions
+    echo <DRAM_LO> > $D/contexts/0/targets/0/regions/0/start
+    echo <DRAM_HI> > $D/contexts/0/targets/0/regions/0/end
+    echo <CXL_LO>  > $D/contexts/0/targets/0/regions/1/start
+    echo <CXL_HI>  > $D/contexts/0/targets/0/regions/1/end
+
+    # IBS Op event, period-based, paddr-stamped:
+    PE=$D/contexts/0/monitoring_attrs/sample/perf_events
+    echo 1 > $PE/nr_perf_events
+    echo $(cat /sys/bus/event_source/devices/ibs_op/type) > $PE/0/type
+    echo 0      > $PE/0/config
+    echo 1      > $PE/0/sample_phys_addr
+    echo 0      > $PE/0/freq
+    echo 262144 > $PE/0/sample_period
+    echo 0      > $PE/0/exclude_kernel
+    echo 0      > $PE/0/exclude_hv
+
+    # PULL scheme: migrate_hot toward DRAM, gated on
+    # node_eligible_mem_bp(nid=DRAM) goal target_value=TARGET_BP.
+    # addr filter restricts source to the CXL range.
+    # PUSH scheme: migrate_hot toward CXL, gated on
+    # node_eligible_mem_bp(nid=CXL) target_value=10000-TARGET_BP.
+    # addr filter restricts source to the DRAM range.
+    # Both schemes are migrate_hot; they converge from opposite
+    # directions on the same hot working set.
+
+    echo on > $D/state
+
+  Userspace tunes the steady-state DRAM:CXL split by writing the goal
+  `target_value`s; DAMON's quota autotuner drives migration intensity
+  to match.
+
+  Workload: a QEMU/KVM guest pinned to one NUMA node, running 32
+  multichase multiload threads each touching a 4 GiB working set
+  (~128 GiB aggregate) with the memcpy-libc kernel.  The guest sees
+  a flat single-NUMA layout and has no direct view of the host's
+  tiering topology, yet its hot pages are migrated to DRAM and cold
+  pages pushed to CXL by host-side DAMON acting on IBS-stamped
+  physical addresses -- the application inside the guest benefits
+  from tiering it never had to be aware of.  Validated on AMD Turin
+  (132-CPU EPYC).  The configuration converged to its target ratio
+  in seconds and remained stable for 7+ hours continuously, with no
+  perf core auto-throttle and no measurable drift in the achieved
+  interleave ratio.
+
+Configuration B: Intel PEBS L3-miss, vaddr ops, per-PID weighted-dest
+
+  PEBS reports vaddr samples in the context of the running task.
+  DAMON's vaddr ops monitors a specific PID.
+
+  Setup (abridged):
+
+    echo 1     > /sys/kernel/mm/damon/admin/kdamonds/nr_kdamonds
+    echo 1     > $D/contexts/nr_contexts
+    echo vaddr > $D/contexts/0/operations
+
+    echo 1     > $D/contexts/0/targets/nr_targets
+    echo $PID  > $D/contexts/0/targets/0/pid_target
+    echo 0     > $D/contexts/0/targets/0/regions/nr_regions
+
+    # PEBS MEM_LOAD_RETIRED.L3_MISS, frequency-based, vaddr-stamped:
+    echo 1      > $PE/nr_perf_events
+    echo 4      > $PE/0/type           # PERF_TYPE_RAW
+    echo 0x20d1 > $PE/0/config         # umask=0x20 event=0xd1
+    echo 0      > $PE/0/sample_phys_addr
+    echo 1      > $PE/0/freq
+    echo 5003   > $PE/0/sample_freq
+    echo 2      > $PE/0/precise_ip
+    echo 1      > $PE/0/wakeup_events
+
+    # Single migrate_hot scheme with two weighted destinations
+    # (DRAM + CXL).  Userspace tunes the steady-state interleave by
+    # writing dests/{0,1}/weight.
+
+    echo on > $D/state
+
+  Workload: 32 multichase multiload threads with a 4 GiB working set
+  each (~128 GiB aggregate) running directly on the host, monitored
+  by DAMON via the multiload PID.  Validated on Intel Granite Rapids
+  (144-CPU).  Convergence is fast and the system is stable.
+
+[1] https://lore.kernel.org/linux-mm/20260516223439.4033-1-ravis.opensrc@gmail.com/
+[2] https://lore.kernel.org/20260423004211.7037-1-akinobu.mita@gmail.com
+
+Ravi Jonnalagadda (6):
+  mm/damon: add struct damon_perf_event{,_attr} and per-ctx perf_events
+    list
+  mm/damon/sysfs-sample: expose perf_events configuration via sysfs
+  mm/damon/sysfs: install perf_events on apply
+  mm/damon/core: per-CPU SPSC ring drain and damon_perf_event lifecycle
+  mm/damon/vaddr: implement perf-event access check
+  mm/damon: add damos_node_eligible_mem_bp tracepoint
+
+ include/linux/damon.h        |  80 +++++
+ include/trace/events/damon.h |  49 +++
+ mm/damon/core.c              | 403 ++++++++++++++++++++----
+ mm/damon/ops-common.h        |  39 +++
+ mm/damon/sysfs-common.h      |   6 +
+ mm/damon/sysfs-sample.c      | 579 +++++++++++++++++++++++++++++++++++
+ mm/damon/sysfs.c             |   3 +
+ mm/damon/vaddr.c             | 267 ++++++++++++++++
+ 8 files changed, 1370 insertions(+), 56 deletions(-)
 
 
-Thanks,
-SJ
+base-commit: 4c8ad15abf15eb480d3ad85f902001e35465ef18
+-- 
+2.43.0
 
-[...]
