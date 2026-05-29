@@ -1,108 +1,113 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from ms.lwn.net (ms.lwn.net [45.79.88.28])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50CE33FB044
-	for <damon@lists.linux.dev>; Fri, 29 May 2026 15:03:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80C263EEAEB
+	for <damon@lists.linux.dev>; Fri, 29 May 2026 15:07:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.79.88.28
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780067024; cv=none; b=cz7yze1HGIjhE1+JkpqsxKou8vbIDFQgQhncrYshuW70pPj1f1jzWwnfnZGq9nKxh69sOTezzK0gUkGtf0kTM+voUP3/23EmpXt04KRJwJM8D9ebjpSJ5hRDUXE9geNXWRxKiYKbUdVx9mJuM94tVP37vCPwoRIj4Y3EMSVlIjU=
+	t=1780067258; cv=none; b=gNALC5lU320GyuG99gzFoX/G+SXcZQH40z8tPb3H2/gvp2uggoui0VFNL81EK5caFgij20L6JjSvra1tByaGli2Vpos48YhIWtLftSgmCGd1SjAde+xD9EmiUuCJpuzDv/JhWEN9KZ1I8r6Nn121ctoSwhqlYKm/m5xYl6USewg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780067024; c=relaxed/simple;
-	bh=8qGauW02PbtYwvU7H48IilgzQ0FWVUg0Jn7hqyyPRew=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hIjTCth+HDpdIT59IjmWVGm1C0rthpTt+4BCYmRuWOD5D2XhfDsaMgDb7CWKyZsvfkQULkaFBOuo0WOp3YIre86TljUjAvz7Q09An121qLQMJX/E3qaLDucCzgUiEPD5508VTQcW4xqQz3t+y5ryiLcDSK2X5VAX9T8Ihm90JOY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=n24+eRSu; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1780067258; c=relaxed/simple;
+	bh=Pil606WUH2ip76AQan+V+uJr/Ad8H1Jaot/pJ/IfzkA=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=ET6WdsHLuhxP1egxUgbCkWzkhBS9A/iLmlrvvX55eWO0eaMcLyTgE7A/4Ebd9y/VBzMh8+IeON0dRVZEs7+cIeOrhp1QFbJyvGdxAULlR2ZawLCIngPbP9nuiIehzByLHwcoheHDU2UXaS+DjFWqpnekUBUSMhEWPB1eBrbWkHY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lwn.net; spf=pass smtp.mailfrom=lwn.net; dkim=pass (2048-bit key) header.d=lwn.net header.i=@lwn.net header.b=YHFXwrZp; arc=none smtp.client-ip=45.79.88.28
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lwn.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lwn.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="n24+eRSu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2C761F00893;
-	Fri, 29 May 2026 15:03:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1780067023;
-	bh=8U9n7S2YnGUunZ6WY808+AGKxv6WLqze2/PSf4h1Q30=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=n24+eRSuBLxykh7etJS/sCCQMiw2/bzvfeIVRHc+3/xzvbWbeLXXj5gxBOhPmHm7Y
-	 O4DMn/+vjlLMBPTLBX8xIkKjKlhbqkb2yZii1iLuhbQ/p1+33ArJ9bZW5vCxrDkXrJ
-	 +ZTOjEUYP73rcsDby8AfH5v+qz5pexKhdggCR7kiOJFsKUQyMaJ0EBCCLaMMOXmjfW
-	 kohdj8SmRttiChioj3ltIrVnvOU1FAT5AI3y4xMAbnHpMFEmIxgJ3BYJrjzq8w0ulA
-	 vDX2K9QvVbvxNWdXxHuatZJALJyhUrQn0j35HpVPDtWPiRSoCZkzJK4Rx+X5rh3RlC
-	 thbWItjKwjheQ==
-From: SeongJae Park <sj@kernel.org>
-To: sashiko-bot@kernel.org
-Cc: SeongJae Park <sj@kernel.org>,
-	"Cheng Nie" <niecheng1@uniontech.com>,
-	damon@lists.linux.dev
-Subject: Re: [PATCH v2 2/2] selftests/damon/sysfs.py: validate memcg_path staging readback
-Date: Fri, 29 May 2026 08:03:37 -0700
-Message-ID: <20260529150338.84890-1-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260529094327.6D5031F00893@smtp.kernel.org>
-References: 
+	dkim=pass (2048-bit key) header.d=lwn.net header.i=@lwn.net header.b="YHFXwrZp"
+DKIM-Filter: OpenDKIM Filter v2.11.0 ms.lwn.net 10C8440E37
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=lwn.net; s=20201203;
+	t=1780067251; bh=ebIP9u+W/NdprxD2plfJ1x4u07OsUSk6F8cbjhxlAs4=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
+	b=YHFXwrZpXpELJCTLz1aonU6ujOlC3U+3KBMyzDRJIeqAQxcKO89EUcmvxyoUQM96G
+	 GofDbotXK9F4W+ymH9hdnOnS1IvDgr+Lwj66tJhtDzp5UmEbp+e5byw5Etm+YfUK7D
+	 /Ecut4iJxA08ifiuuZA6Vcwyd0e4utrKgns8b6tGmNx2OtCMX5T+skVL1jEXVmAbCL
+	 2QNrsrRMp72ArGrSCZhPWChA7mnro+R7Uv2NUXuEvWX6U49hDb9rCBCBah+o8+OAx/
+	 +rLwQA0b7r+EZwuhVhdFVhVfiBkLpFeYS21diLH8um6X9eUyPadg/1mjT/mKpeCdmY
+	 G6+x3PczFpJBw==
+Received: from localhost (mdns.lwn.net [45.79.72.68])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by ms.lwn.net (Postfix) with ESMTPSA id 10C8440E37;
+	Fri, 29 May 2026 15:07:31 +0000 (UTC)
+From: Jonathan Corbet <corbet@lwn.net>
+To: Barry Song <baohua@kernel.org>, Lorenzo Stoakes <ljs@kernel.org>
+Cc: wangtao <tao.wangtao@honor.com>, "catalin.marinas@arm.com"
+ <catalin.marinas@arm.com>, "will@kernel.org" <will@kernel.org>,
+ "tglx@kernel.org" <tglx@kernel.org>, "mingo@redhat.com"
+ <mingo@redhat.com>, "bp@alien8.de" <bp@alien8.de>,
+ "dave.hansen@linux.intel.com" <dave.hansen@linux.intel.com>,
+ "x86@kernel.org" <x86@kernel.org>, "akpm@linux-foundation.org"
+ <akpm@linux-foundation.org>, "david@kernel.org" <david@kernel.org>,
+ "willy@infradead.org" <willy@infradead.org>, "sj@kernel.org"
+ <sj@kernel.org>, "kees@kernel.org" <kees@kernel.org>, "luizcap@redhat.com"
+ <luizcap@redhat.com>, "zhangjiao2@cmss.chinamobile.com"
+ <zhangjiao2@cmss.chinamobile.com>, "kas@kernel.org" <kas@kernel.org>,
+ "hpa@zytor.com" <hpa@zytor.com>, "liam@infradead.org"
+ <liam@infradead.org>, "vbabka@kernel.org" <vbabka@kernel.org>,
+ "rppt@kernel.org" <rppt@kernel.org>, "surenb@google.com"
+ <surenb@google.com>, "mhocko@suse.com" <mhocko@suse.com>, "jack@suse.cz"
+ <jack@suse.cz>, "riel@surriel.com" <riel@surriel.com>, "harry@kernel.org"
+ <harry@kernel.org>, "jannh@google.com" <jannh@google.com>, "jgg@ziepe.ca"
+ <jgg@ziepe.ca>, "jhubbard@nvidia.com" <jhubbard@nvidia.com>,
+ "peterx@redhat.com" <peterx@redhat.com>, "ziy@nvidia.com"
+ <ziy@nvidia.com>, "baolin.wang@linux.alibaba.com"
+ <baolin.wang@linux.alibaba.com>, "npache@redhat.com" <npache@redhat.com>,
+ "ryan.roberts@arm.com" <ryan.roberts@arm.com>, "dev.jain@arm.com"
+ <dev.jain@arm.com>, "lance.yang@linux.dev" <lance.yang@linux.dev>,
+ "xu.xin16@zte.com.cn" <xu.xin16@zte.com.cn>, "chengming.zhou@linux.dev"
+ <chengming.zhou@linux.dev>, "nao.horiguchi@gmail.com"
+ <nao.horiguchi@gmail.com>, "matthew.brost@intel.com"
+ <matthew.brost@intel.com>, "joshua.hahnjy@gmail.com"
+ <joshua.hahnjy@gmail.com>, "rakie.kim@sk.com" <rakie.kim@sk.com>,
+ "byungchul@sk.com" <byungchul@sk.com>, "gourry@gourry.net"
+ <gourry@gourry.net>, "ying.huang@linux.alibaba.com"
+ <ying.huang@linux.alibaba.com>, "apopple@nvidia.com" <apopple@nvidia.com>,
+ "pfalcato@suse.de" <pfalcato@suse.de>,
+ "linux-arm-kernel@lists.infradead.org"
+ <linux-arm-kernel@lists.infradead.org>, "linux-kernel@vger.kernel.org"
+ <linux-kernel@vger.kernel.org>, "linux-fsdevel@vger.kernel.org"
+ <linux-fsdevel@vger.kernel.org>, "linux-mm@kvack.org"
+ <linux-mm@kvack.org>, "damon@lists.linux.dev" <damon@lists.linux.dev>,
+ "shakeel.butt@linux.dev" <shakeel.butt@linux.dev>, "ryncsn@gmail.com"
+ <ryncsn@gmail.com>, "jparsana@google.com" <jparsana@google.com>,
+ "dvander@google.com" <dvander@google.com>, zhangji <zhangji1@honor.com>,
+ wangzicheng <wangzicheng@honor.com>
+Subject: Re: [PATCH 0/15] mm: introduce ANON_VMA_LAZY for deferred anon_vma
+ creation
+In-Reply-To: <CAGsJ_4zy=-m5wjm0BC-vQXMHGRkHymC-5S_L9Oi708v339vvPw@mail.gmail.com>
+References: <20260527110147.17815-1-tao.wangtao@honor.com>
+ <ahcANgFDFwfC0v1q@lucifer> <b24b4a8198ba412f8b8b42c43dccd058@honor.com>
+ <ahf2mJg9OOWvu0jA@lucifer>
+ <CAGsJ_4zy=-m5wjm0BC-vQXMHGRkHymC-5S_L9Oi708v339vvPw@mail.gmail.com>
+Date: Fri, 29 May 2026 09:07:30 -0600
+Message-ID: <87qzmu2r0t.fsf@trenco.lwn.net>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-On Fri, 29 May 2026 09:43:26 +0000 sashiko-bot@kernel.org wrote:
+Barry Song <baohua@kernel.org> writes:
 
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] The newly added `test_memcg_filter_memcg_path_staging` test inadvertently depends on `CONFIG_MEMCG` and active cgroup configurations due to a call to `commit()`, causing the test to fail inappropriately on environments lacking them.
-> --
-> 
-> commit 45ed1607d8ff8754a1a322fb6da3631cdc56f283
-> Author: Cheng Nie <niecheng1@uniontech.com>
-> 
-> selftests/damon/sysfs.py: validate memcg_path staging readback
-> 
-> This commit adds a dedicated test to selftests/damon/sysfs.py that writes
-> memcg_path to sysfs and verifies its readback. It aims to test the sysfs
-> behavior independently of the local userspace cgroup mount layout.
-> 
-> > diff --git a/tools/testing/selftests/damon/sysfs.py b/tools/testing/selftests/damon/sysfs.py
-> > index aa03a1187489f..0f20bc9c46b78 100755
-> > --- a/tools/testing/selftests/damon/sysfs.py
-> > +++ b/tools/testing/selftests/damon/sysfs.py
-> > @@ -250,6 +250,43 @@ def assert_ctxs_committed(kdamonds):
-> [ ... ]
-> > +    context = _damon_sysfs.DamonCtx(
-> > +            targets=[_damon_sysfs.DamonTarget(pid=-1)],
-> > +            schemes=[_damon_sysfs.Damos(ops_filters=[memcg_filter])])
-> > +    context.idx = 0
-> > +    context.kdamond = kdamonds.kdamonds[0]
-> > +    kdamonds.kdamonds[0].contexts = [context]
-> > +
-> > +    err = kdamonds.kdamonds[0].commit()
-> 
-> [Severity: Medium]
-> Could this cause a regression where the test fails on environments lacking
-> memcg support or active cgroups?
-> 
-> The stated goal of this test is to validate the sysfs staging readback
-> without depending on local userspace cgroup mount layouts. However, when
-> commit() is called, it instructs the kernel to apply the configuration.
-> 
-> This triggers damon_sysfs_memcg_path_to_id(), which traverses online memory
-> cgroups and will return -EINVAL if memcg support is disabled or the root
-> cgroup '/' cannot be resolved to an active memcg. This causes the commit()
-> operation to fail, which makes the entire selftest report a regression.
+> After coming back from Zagreb, I kept trying to find one or
+> two full days to read Lorenzo's code and slides carefully and
+> write a blog about them. Unfortunately, I have been completely
+> busy with other work. Sigh... we always seem to have too many
+> non-upstream tasks.
+>
+> If possible, I'd really appreciate it if you could take a
+> deep dive into it and write a detailed blog post. I'd be
+> very eager to read it and better understand the overall design.
+> Otherwise, I'll try to find some time next week or later to
+> go through it myself.
 
-Good finding, thanks.
+It's still somewhat superficial, but in case it's helpful:
 
-> 
-> Would it be better to only stage the values (e.g., via context.stage())
-> and then verify the readback, without triggering the operational commit
-> step?
+  https://lwn.net/Articles/1072378/
 
-We have no stage() method for Kdamonds, though.  I'm suggesting [1] to just do
-'start()', but ignore the failure.  Cheng, let's keep discussion on the
-original thread [1].
-
-[1] https://lore.kernel.org/20260529150057.84753-1-sj@kernel.org
-
-
-Thanks,
-SJ
-
-[...]
+jon
