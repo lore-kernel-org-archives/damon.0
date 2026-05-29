@@ -1,45 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24CFF3EFFA7;
-	Fri, 29 May 2026 15:01:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50CE33FB044
+	for <damon@lists.linux.dev>; Fri, 29 May 2026 15:03:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780066879; cv=none; b=nVJU8aCqtibkp5byFNUJxmyGlUF/ko81075dcgPeUIgWsZeIM+e4ktAbeMFuFpuyurWu/+vVdwOWj7R0AhUDB0FgP4MeRSgpS1KfO88DKvD/2+PrWrj5hQKnJ/EgvifDki6Ll/6hXkK+3pwQPhRjCqkJwTkqWVWsbP0X2DfmwsA=
+	t=1780067024; cv=none; b=cz7yze1HGIjhE1+JkpqsxKou8vbIDFQgQhncrYshuW70pPj1f1jzWwnfnZGq9nKxh69sOTezzK0gUkGtf0kTM+voUP3/23EmpXt04KRJwJM8D9ebjpSJ5hRDUXE9geNXWRxKiYKbUdVx9mJuM94tVP37vCPwoRIj4Y3EMSVlIjU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780066879; c=relaxed/simple;
-	bh=rNKzhCNrBj5IYxTx8D3ydu7Wxfpbm5o4p9ZaZ5Rrvus=;
+	s=arc-20240116; t=1780067024; c=relaxed/simple;
+	bh=8qGauW02PbtYwvU7H48IilgzQ0FWVUg0Jn7hqyyPRew=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ra50dZDzYlk9/eIBF1JwvNB/zPBFdFrTFVXpCM0zIswhAvF2aOcP7MYF2muQ3qxn1YzhDIk6TSGvKhigiNbqi2DsQ7f2gBbjkQ5pU9UQoUnqIhOBgY4os3xoQW9rjA2O5Z9aFBm24eeldImefdsijqDn531RG3fvlOuonFlxheg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=K1b5V6y8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hIjTCth+HDpdIT59IjmWVGm1C0rthpTt+4BCYmRuWOD5D2XhfDsaMgDb7CWKyZsvfkQULkaFBOuo0WOp3YIre86TljUjAvz7Q09An121qLQMJX/E3qaLDucCzgUiEPD5508VTQcW4xqQz3t+y5ryiLcDSK2X5VAX9T8Ihm90JOY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=n24+eRSu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="K1b5V6y8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 825971F00898;
-	Fri, 29 May 2026 15:01:17 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="n24+eRSu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2C761F00893;
+	Fri, 29 May 2026 15:03:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1780066877;
-	bh=3ShsIQPosHpMnirHmH4xFd5qCR/Qbqzv+ZOS1pe/kbc=;
+	s=k20260515; t=1780067023;
+	bh=8U9n7S2YnGUunZ6WY808+AGKxv6WLqze2/PSf4h1Q30=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=K1b5V6y8fHjzldH5MYPUCQotj/88kq8UPiKAfP48FgDCJrs6LhbUNWDZhSKdPE3EW
-	 cwvLI+8VBgLRWCYaCGMTsPYiEF7QemHD845Zty5y9YE+GHnJ44pCOXM2hQ5QfLPVvE
-	 D99s61wSEjQ7keqXkTRrUulvX0970/bUO9XAwoT9lMH+HrG6LBqU7CLnssLHMPBncQ
-	 j4S5rorAIowxpyDjPSRxAaDE+CcDZjPrhZ/QXEtfpf014sggaYR7BXL6K86trSO0O3
-	 nP6EtjrDyo480gssnYzAsy63XZxpSExgzFTDPKeH8nag1UNciYV8sxQ613Vj/ehhtk
-	 QYTy2uJHwB5eQ==
+	b=n24+eRSuBLxykh7etJS/sCCQMiw2/bzvfeIVRHc+3/xzvbWbeLXXj5gxBOhPmHm7Y
+	 O4DMn/+vjlLMBPTLBX8xIkKjKlhbqkb2yZii1iLuhbQ/p1+33ArJ9bZW5vCxrDkXrJ
+	 +ZTOjEUYP73rcsDby8AfH5v+qz5pexKhdggCR7kiOJFsKUQyMaJ0EBCCLaMMOXmjfW
+	 kohdj8SmRttiChioj3ltIrVnvOU1FAT5AI3y4xMAbnHpMFEmIxgJ3BYJrjzq8w0ulA
+	 vDX2K9QvVbvxNWdXxHuatZJALJyhUrQn0j35HpVPDtWPiRSoCZkzJK4Rx+X5rh3RlC
+	 thbWItjKwjheQ==
 From: SeongJae Park <sj@kernel.org>
-To: Cheng Nie <niecheng1@uniontech.com>
+To: sashiko-bot@kernel.org
 Cc: SeongJae Park <sj@kernel.org>,
-	shuah@kernel.org,
-	damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	linux-kselftest@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	kernel@uniontech.com
+	"Cheng Nie" <niecheng1@uniontech.com>,
+	damon@lists.linux.dev
 Subject: Re: [PATCH v2 2/2] selftests/damon/sysfs.py: validate memcg_path staging readback
-Date: Fri, 29 May 2026 08:00:56 -0700
-Message-ID: <20260529150057.84753-1-sj@kernel.org>
+Date: Fri, 29 May 2026 08:03:37 -0700
+Message-ID: <20260529150338.84890-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <FF9A1552C03B7C88+20260529092131.1703337-1-niecheng1@uniontech.com>
+In-Reply-To: <20260529094327.6D5031F00893@smtp.kernel.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -49,66 +45,61 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Fri, 29 May 2026 17:21:31 +0800 Cheng Nie <niecheng1@uniontech.com> wrote:
+On Fri, 29 May 2026 09:43:26 +0000 sashiko-bot@kernel.org wrote:
 
-> Add a dedicated test at the end of main() that writes memcg_path to
-> sysfs and checks the readback path.  Validate the readback rather than
-> a derived memcg_id so the test stays focused on DAMON sysfs behavior
-> and avoids depending on the local userspace cgroup mount layout.
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] The newly added `test_memcg_filter_memcg_path_staging` test inadvertently depends on `CONFIG_MEMCG` and active cgroup configurations due to a call to `commit()`, causing the test to fail inappropriately on environments lacking them.
+> --
+> 
+> commit 45ed1607d8ff8754a1a322fb6da3631cdc56f283
+> Author: Cheng Nie <niecheng1@uniontech.com>
+> 
+> selftests/damon/sysfs.py: validate memcg_path staging readback
+> 
+> This commit adds a dedicated test to selftests/damon/sysfs.py that writes
+> memcg_path to sysfs and verifies its readback. It aims to test the sysfs
+> behavior independently of the local userspace cgroup mount layout.
+> 
+> > diff --git a/tools/testing/selftests/damon/sysfs.py b/tools/testing/selftests/damon/sysfs.py
+> > index aa03a1187489f..0f20bc9c46b78 100755
+> > --- a/tools/testing/selftests/damon/sysfs.py
+> > +++ b/tools/testing/selftests/damon/sysfs.py
+> > @@ -250,6 +250,43 @@ def assert_ctxs_committed(kdamonds):
+> [ ... ]
+> > +    context = _damon_sysfs.DamonCtx(
+> > +            targets=[_damon_sysfs.DamonTarget(pid=-1)],
+> > +            schemes=[_damon_sysfs.Damos(ops_filters=[memcg_filter])])
+> > +    context.idx = 0
+> > +    context.kdamond = kdamonds.kdamonds[0]
+> > +    kdamonds.kdamonds[0].contexts = [context]
+> > +
+> > +    err = kdamonds.kdamonds[0].commit()
+> 
+> [Severity: Medium]
+> Could this cause a regression where the test fails on environments lacking
+> memcg support or active cgroups?
+> 
+> The stated goal of this test is to validate the sysfs staging readback
+> without depending on local userspace cgroup mount layouts. However, when
+> commit() is called, it instructs the kernel to apply the configuration.
+> 
+> This triggers damon_sysfs_memcg_path_to_id(), which traverses online memory
+> cgroups and will return -EINVAL if memcg support is disabled or the root
+> cgroup '/' cannot be resolved to an active memcg. This causes the commit()
+> operation to fail, which makes the entire selftest report a regression.
 
-Nice addition of a test, thank you!
+Good finding, thanks.
 
 > 
-> Signed-off-by: Cheng Nie <niecheng1@uniontech.com>
-> ---
->  tools/testing/selftests/damon/sysfs.py | 39 ++++++++++++++++++++++++++
->  1 file changed, 39 insertions(+)
-> 
-> diff --git a/tools/testing/selftests/damon/sysfs.py b/tools/testing/selftests/damon/sysfs.py
-> index aa03a1187489..0f20bc9c46b7 100755
-> --- a/tools/testing/selftests/damon/sysfs.py
-> +++ b/tools/testing/selftests/damon/sysfs.py
-> @@ -250,6 +250,43 @@ def assert_ctxs_committed(kdamonds):
->              if ctx in ctxs_paused_for_dump:
->                  ctx.pause = False
->  
-> +def test_memcg_filter_memcg_path_staging():
-> +    global kdamonds
-> +    memcg_filter = _damon_sysfs.DamosFilter(
-> +            type_='memcg', matching=True, allow=True, memcg_path='/')
-> +    kdamonds = _damon_sysfs.Kdamonds(
-> +            [_damon_sysfs.Kdamond(
-> +                contexts=[_damon_sysfs.DamonCtx(
-> +                    targets=[_damon_sysfs.DamonTarget(pid=-1)],
-> +                    schemes=[_damon_sysfs.Damos()],
-> +                    )])])
-> +    err = kdamonds.start()
-> +    if err is not None:
-> +        fail('memcg_path staging: kdamond start', {'error': err})
+> Would it be better to only stage the values (e.g., via context.stage())
+> and then verify the readback, without triggering the operational commit
+> step?
 
-I'd prefer the error message to be in form of something like "'memcg_path
-staging: kdamond start (%s)' % err" for consistency.
+We have no stage() method for Kdamonds, though.  I'm suggesting [1] to just do
+'start()', but ignore the failure.  Cheng, let's keep discussion on the
+original thread [1].
 
-> +
-> +    context = _damon_sysfs.DamonCtx(
-> +            targets=[_damon_sysfs.DamonTarget(pid=-1)],
-> +            schemes=[_damon_sysfs.Damos(ops_filters=[memcg_filter])])
-> +    context.idx = 0
-> +    context.kdamond = kdamonds.kdamonds[0]
-> +    kdamonds.kdamonds[0].contexts = [context]
-> +
-> +    err = kdamonds.kdamonds[0].commit()
-> +    if err is not None:
-> +        fail('memcg_path staging: kdamond commit', {'error': err})
-
-It seems we don't really need to do commit().  As Sashiko mentioned [1], it
-also depends on CONFIG_MEMCG and active cgroup configuration.   It would be
-suffice to simply 'stage'.  We don't have stage() method on Kdamonds, though.
-What about setting all parameters including the memcg filter at the beginning,
-do 'kdamonds.start()', but ignore the failure, and check the content of the
-memcg_path file?
-
-[1] https://lore.kernel.org/20260529094327.6D5031F00893@smtp.kernel.org
+[1] https://lore.kernel.org/20260529150057.84753-1-sj@kernel.org
 
 
 Thanks,
