@@ -1,62 +1,64 @@
-Received: from mail-oo1-f67.google.com (mail-oo1-f67.google.com [209.85.161.67])
+Received: from mail-oa1-f67.google.com (mail-oa1-f67.google.com [209.85.160.67])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC7313F5BF0
-	for <damon@lists.linux.dev>; Fri, 29 May 2026 16:56:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.67
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CD073F5BF0
+	for <damon@lists.linux.dev>; Fri, 29 May 2026 16:57:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.67
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780073821; cv=none; b=Xgu4RnYi039KACbHR6x7rTAG5c5MamqDQZ9cg1SW/fM4LSGOTmVpLulFckYyRAPWC/SyOzsRTrdxkQ8I17PNhnUAXnDF5mHK6GqKDi8Rb3iyo2UjRGGojaZr9aPbNjTkjpH6OQ0QISFllKvn7Iz8pQmHXc4MUVm+m9+ySC8MuUo=
+	t=1780073823; cv=none; b=pS2VGKsW0pBbLNJIQSPzgP2ZXYqGhw0Le/Xl1uvHZBxcULa7nTQyGJwMwYGMVp5nK9S1hrJK5EFpsIKHd7H/sqeRebZg6N1ITltCaYoO+XttXI1dMRSjE4F2gcqaylB0PNRQ+zAJrflE+jdq7HuQZymE4hi3N7ZJZYVSXMxHOzA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780073821; c=relaxed/simple;
-	bh=maETY92mxf6V4uKhfkGsIoUysxtad2AThu1KxdzWrwo=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Tq0LKOTBi/qaWERtnA4TYeXrG1w5Dr22tet2uNJDPnRpeN+lMCXQVJ83vE8KjeSdTrZOxmeLugJ9PNuF3Zf+xfePk7vOd/gZqcLeqaZgoGpBukPc43RQ/Ok81jNCSFxZxFJ+8CNT0HskSKy/0+3nanjykHPGiMmzuoltrUyCNP8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HOv/xMw5; arc=none smtp.client-ip=209.85.161.67
+	s=arc-20240116; t=1780073823; c=relaxed/simple;
+	bh=/WB7DhhL0YPzVpIXGI8fiP8eIBsrpdAk77Iyd16ISAA=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=U64IFm2WHHHIEHdzQ1/oXv+jYvdxE36RLa7LlumH9d+rqd0kTEEf6aGedlzIGCo8naiBrX9M91fli28CyA5hiwFFlwpYlDXfD/5YFG5c6Nj22V5B9//oaUCqFUskJXVdTgLhoydR/0GHIILkqpRDNxOzFxzjorBOOcu7+fZ+QRE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Fl8nEKXF; arc=none smtp.client-ip=209.85.160.67
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HOv/xMw5"
-Received: by mail-oo1-f67.google.com with SMTP id 006d021491bc7-69d78547957so4211429eaf.0
-        for <damon@lists.linux.dev>; Fri, 29 May 2026 09:56:59 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Fl8nEKXF"
+Received: by mail-oa1-f67.google.com with SMTP id 586e51a60fabf-43bf95c3f6fso3830278fac.0
+        for <damon@lists.linux.dev>; Fri, 29 May 2026 09:57:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780073819; x=1780678619; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=61y2RUu4XsaORgnhBsj3LdYfK6rAcceIjq+Qt3FiRdA=;
-        b=HOv/xMw5DmIQ37ufyo4Me7WhNl6yk/D5UzFkuPwtWNYwEWNVhY6h45wfUNXDrCDeMl
-         TozjDspPHcY+MW2Hn2JnZr+HB8TMrNBXLlk7CwYXUSRehccZ8GSST8zbHtdRW/mZkXlm
-         p4Bq4JGrK0HtFy8ySFK8vLy7eywGQ/Lh/c2j4ZPMboiocMutQfauwlK1gPEhiNBnkwVi
-         YIRv6Tp1pQqnoAqv0mEnMBwA4WA6IaFQ8QlJCYypLuSoYtHz9qPObiXYf/JIxZghs0Lt
-         CGCz1jvEjKlY8yNfJEiGqfbwoA9QWBIdSuNZ+7aDKT7TC1Z0+z6yK9bhP78FiW0ER7K0
-         lPxA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780073819; x=1780678619;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20251104; t=1780073820; x=1780678620; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=61y2RUu4XsaORgnhBsj3LdYfK6rAcceIjq+Qt3FiRdA=;
-        b=gD9O/Ov7mjCu0MpIQhIqfnF2EQjZFoSHOcs0DKg79tXuhrjr5/Qi6bITzxWQjLci6u
-         QsOjFgLfbNreJWZqFhOlidpEH7g+GrZESChE6iM35v9ADNoFW00yw0/QXj6vzTeDluYR
-         asYhxpn/UMNzjHiSQWWFVD39HYYcl6tU4hVv+M9c3m+vtvI9ULMvM5wjt4WVnVPtdWh3
-         qsHwRxW9VtofeKncBdJN92FDEyQHSuOc24PyeqtyzNbrvLtA6CfEjoQuuda4HcKOUi0K
-         wyQQCwkIK9lvWBbbti9euAXbfsNEr8z7XgjF9vEiZEceN2YB151GDZR2PHiN3mW4Tr4g
-         M15Q==
-X-Forwarded-Encrypted: i=1; AFNElJ8CkaHzFZgUGAAtGrSjD7mj0PGCZ+CRiltzuKx37+dK1qMM0a6PgExQf5jRKunSfPfPgDrg8A==@lists.linux.dev
-X-Gm-Message-State: AOJu0YwajaoGapmZcynrYQtmvaW7t9FiFG0HTmUxz3ymnzjSB/Q+CLHr
-	i5xhCubyE6Ay6nvQ4uR3f4IHNY9qg6X52eeIFMu2VGPh219TC1adv2adLRonj0WQxA==
-X-Gm-Gg: Acq92OHsigNbMPE22DCKosnTSVmI4e62UlJokDcw4yidXnQHVpR2Mz96v32DgxxcpU6
-	0Ol/n7jjVJ1UzfUdVWEjbMtE72/tR6WkkPXGJkPTQvqbasn/zl0wPuNcok5D52pI4tRJCnY7qMD
-	LSwPWw70K/2jNbNk1rGZ9+d50wYG7jiRlw8P4GXGW3rXMiW2uYEtkGA7MU+GEb+2khU5QTqyili
-	jVyAyOg81yU47JgFNtj9+kUZDo8yqUAVUd2SpCcL48HwPm5xxrbeN4Fr1BoiPSF587Rk4yKQSi9
-	A0VWvEijXi5LEfgG5NTihUoenvS7z1IR+YhTbVQf3crcjyMTu6maxPqiBsBDtOZTeNzWG2rf9wH
-	0tZoOdVT9HbJsDghtdluOTbGCojg8uZnhGf3IImxp86qh4j16j76hLLNMrVukFN8s+ZB7nASLpz
-	tfjG6oIFHB4ZcB08hJhdig/l6K72pb0l8NqEK61eUYNqCDIsu3AQb5nWD56oxCZflg16l/xfzVA
-	iYSECdpBNHL
-X-Received: by 2002:a05:6820:1985:b0:696:1a98:bd5 with SMTP id 006d021491bc7-69e0ff17ff1mr94887eaf.19.1780073818589;
-        Fri, 29 May 2026 09:56:58 -0700 (PDT)
+        bh=vBG7U8aH1ARs37G3HmZz4dhZEB7morx48iJcdEwFffY=;
+        b=Fl8nEKXFrO11P0ubx3DvR+1JiiA3k0AClZjmc3LzKBGKP9KwWjoER6BqJeDU6J0Wkx
+         Cs+UDUjzFogNiP5Liy54Rajh3bGN7GGx4UTgsNbFx0ZwpTJfP25va2Dh6CiBJ+B1LmI/
+         GNa/5yl61GYfwk44EXtUQ4WdQjktiwKqaeU5eed9yA2u+/5QMLL2EGFXSZwcmjpAz9nl
+         s4srf6Mov9DIUJsMayGD0BRA8rt7EGYmIXrzq1wzxFYQjp6jATXkN9nxbGR/FhhPaMMr
+         OxICv+ceD/XID5g8nzT1wEGl6ZjKfUQobyRd6aVTrbUG8bDFCarjKzjXon1OsrIaS1sx
+         JNqQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780073820; x=1780678620;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=vBG7U8aH1ARs37G3HmZz4dhZEB7morx48iJcdEwFffY=;
+        b=QkWjFwIPEjC+UaMz2L7mDVgTunltvGiJ45ZKZoiFNHOsLoPs4slZFFrCqRV26J3tkV
+         5QVSGRcL42ckrCMAzoRyvRlsbQrijZ8VyBQ+KZXwnrmYdFn5Ej0CXGHEejLAqrivs21r
+         jqxc9blr+TgK0MVA1svzcCy60AvP6MN/B8zq+42KLC81rfBZ3C5aOORJBMw83ImWGmjJ
+         f2GCIfcobiA4MZuP33yNCyxQB0NhE7OXkhcRccdCl1Ln0tfYlJm5ekKi1LYZn1UlY1M0
+         1KSkaI5TVlVi20VbASiE2yRQAYgDSySQWyF/Kc/WNjW4KHxqc9CTH8WqEFhNt4gNlbib
+         3VRQ==
+X-Forwarded-Encrypted: i=1; AFNElJ/ceAg4mUQ4q1hSHYIo3Sv/jcpVg7f7cJo7muczjl0PKkpukOAv4UXX5aGrefoP8l9L9noOrg==@lists.linux.dev
+X-Gm-Message-State: AOJu0YzRfZcZz7IJ5jZ4ADBWl7URll8SvaayxAFuZPjZMVEGeSoVMn4c
+	mUXWaiSaj31m/5s7NqIb3hMPn5SNwMwi3W/wXNESrsKa4uVwrcNzkok=
+X-Gm-Gg: Acq92OGcbz1jvnRNB6tVqO87FcZy8qH+BOegwc+DG/HVee5cMGqHc21+W2+mRF6I4c4
+	+AjqVttGe0Ng31xnqmgpfaSJooadYh5rF+w8vO5NDfqVDyq70eRIdcN4pkcqvfVOdE8mSZyN5Mn
+	km9cedKxsPwjCrm2xeivM966Re7K4axPfNp0GrdVBoA9X3AKrPhohTO9jZ6qdo6j4M5WJ5w0Y8i
+	FpymkYejDHsjdQzv/inu0hKn6ICg81z+i2AF6THlaOL9UK3cijfvuz+ICOuw2Fk90wlbHN3pbyr
+	UvXeQhqDrrYnE20MUE3HISE0i/Ot433gFeh1yS1DJDCLmOkfP0fT5UWKeKoCDnKPPvCSTDKx+2h
+	XZ1DZvzQ1ASefhtMM9uGxf26UQb6u8OOHz/L/splVsVmAsCfS4dQYxBBJeRjvF6b3Qt/v0TkVMY
+	uq2aCKp5pnNwWIJ65PRJIliPcUUX9AOsTpylfwHKL/sOQ2zsCc20KOv/efmjggpl8ZuAO7bMMs9
+	ZaJb10Qd/d6
+X-Received: by 2002:a05:6871:890:b0:423:4260:2e0d with SMTP id 586e51a60fabf-43c891e473cmr1659989fac.8.1780073820507;
+        Fri, 29 May 2026 09:57:00 -0700 (PDT)
 Received: from localhost (23-116-43-216.lightspeed.sntcca.sbcglobal.net. [23.116.43.216])
-        by smtp.gmail.com with ESMTPSA id 006d021491bc7-69e069b0ea8sm1442784eaf.12.2026.05.29.09.56.57
+        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-43c93ef3ad7sm1403070fac.9.2026.05.29.09.56.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 29 May 2026 09:56:58 -0700 (PDT)
+        Fri, 29 May 2026 09:57:00 -0700 (PDT)
 From: Ravi Jonnalagadda <ravis.opensrc@gmail.com>
 To: sj@kernel.org,
 	akinobu.mita@gmail.com,
@@ -71,10 +73,12 @@ Cc: akpm@linux-foundation.org,
 	honggyu.kim@sk.com,
 	yunjeong.mun@sk.com,
 	ravis.opensrc@gmail.com
-Subject: [RFC PATCH 0/6] mm/damon: hardware-sampled access reports
-Date: Fri, 29 May 2026 09:56:34 -0700
-Message-ID: <20260529165640.820-1-ravis.opensrc@gmail.com>
+Subject: [RFC PATCH 1/6] mm/damon: add struct damon_perf_event{,_attr} and per-ctx perf_events list
+Date: Fri, 29 May 2026 09:56:35 -0700
+Message-ID: <20260529165640.820-2-ravis.opensrc@gmail.com>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260529165640.820-1-ravis.opensrc@gmail.com>
+References: <20260529165640.820-1-ravis.opensrc@gmail.com>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -83,198 +87,229 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-This series introduces a vendor and PMU-agnostic substrate inside DAMON
-that consumes hardware-sampled access reports through the standard
-perf-event interface.  Userspace selects the PMU through sysfs (raw
-type/config knobs), driving either Intel PEBS L3-miss sampling or AMD
-IBS Op sampling.
+Introduce the substrate types for using perf events as DAMON access
+check sources.  struct damon_perf_event_attr carries the raw PMU attr
+configurable from userspace; struct damon_perf_event is the per-event
+entry on a new damon_ctx::perf_events list.
 
-Why a unified perf-event substrate
+Declare damon_perf_init() and damon_perf_cleanup() in
+mm/damon/ops-common.h.  When CONFIG_PERF_EVENTS=n they fold to a no-op
+returning -ENOSYS.
 
-Earlier hardware-sampled access-monitoring proposal [1] took an AMD IBS
-specific module path backend, owning its own probe configuration,
-sysfs knobs, and lifecycle.
+Suggested-by: Akinobu Mita <akinobu.mita@gmail.com>
+Link: https://lore.kernel.org/20260423004211.7037-1-akinobu.mita@gmail.com
+Signed-off-by: Ravi Jonnalagadda <ravis.opensrc@gmail.com>
+---
+ include/linux/damon.h   | 80 +++++++++++++++++++++++++++++++++++++++++
+ mm/damon/ops-common.h   | 39 ++++++++++++++++++++
+ mm/damon/sysfs-common.h |  6 ++++
+ 3 files changed, 125 insertions(+)
 
-SeongJae Park has previously highlighted the advantage of Akinobu
-Mita's perf-event proposal [2]: let DAMON register kernel-counter perf
-events and consume samples from any sampling PMU that perf core knows
-about.  This series builds on that direction with the changes we
-needed to run it cross-vendor:
-
-  - a per-CPU lockless ring between the NMI sample handler and the
-    kdamond drain,
-  - per-CPU events that follow CPU hotplug cleanly,
-  - events fire only while the monitor is running -- created disabled,
-    armed when kdamond starts, disarmed and drained when it stops,
-  - all-or-nothing init across CPUs: a partial-CPU create failure rolls
-    the whole event back rather than leaving silent gaps,
-  - safe handling of vendor sample-validity flags so a stale or
-    unpopulated address is never mistaken for a valid sample.
-
-What the series adds
-
-Patch 1 introduces the substrate's data types: a per-event
-configuration struct and a per-context list to hang them on.  A
-CONFIG_PERF_EVENTS=n build folds to no-op stubs.
-
-Patch 2 exposes those types through sysfs.  Each entry maps to one
-perf event and lets userspace pick the PMU and how to sample it: the
-raw PMU type/config, addressing flags, and period or frequency.  The
-defaults are tuned for Intel PEBS; userspace overrides them for other
-PMUs.
-
-Patch 3 wires the sysfs apply path so configured events get attached
-to the running monitoring context.
-
-Patch 4 is the core of the series.  It replaces the mutex-protected
-report queue with a per-CPU lockless ring fed from NMI by the perf
-overflow handler and drained once per sample tick by the kdamond.
-Drained reports are matched to monitored regions by binary search
-over a per-tick snapshot.  The patch also wires the per-event
-lifecycle into kdamond: events arm when the monitor starts, disarm
-and drain when it stops, roll back cleanly when per-CPU init fails on
-some CPUs, and a second context that asks for the substrate while
-it is in use is rejected with -EBUSY.
-
-Patch 5 is the perf-event backend.  Two stateless overflow handlers
-(one vaddr-keyed, one paddr-keyed) are picked at event creation time
-and submit samples into the per-CPU ring.  Vendor-specific sample
-validity is honored at this layer.
-
-Patch 6 adds a tracepoint at every node_eligible_mem_bp quota-goal
-evaluation so userspace can watch goal convergence without polling
-sysfs.
-
-Userspace setup model
-
-Userspace selects the sampling PMU by pointing the perf event's
-`type` / `config` at it, and chooses the scheme topology that suits
-the address space the PMU reports on.  No module load or unload step
-is involved; `echo on > state` arms the substrate, `echo off > state`
-disarms it.
-
-Two configurations were used for validation.
-
-Configuration A: AMD IBS Op, paddr ops, system-wide PULL+PUSH tiering
-
-  IBS Op stamps samples with physical addresses, so DAMON reasons over
-  every backing page in the system regardless of which task or guest
-  touched it -- the substrate becomes a system-wide tiering controller.
-
-  Setup (abridged; `D=/sys/kernel/mm/damon/admin/kdamonds/0`):
-
-    echo 1     > /sys/kernel/mm/damon/admin/kdamonds/nr_kdamonds
-    echo 1     > $D/contexts/nr_contexts
-    echo paddr > $D/contexts/0/operations
-
-    # Two regions, one per NUMA node (DRAM + CXL).  PA ranges
-    # are derived per host from /proc/iomem; omitted here.
-    echo 1 > $D/contexts/0/targets/nr_targets
-    echo 2 > $D/contexts/0/targets/0/regions/nr_regions
-    echo <DRAM_LO> > $D/contexts/0/targets/0/regions/0/start
-    echo <DRAM_HI> > $D/contexts/0/targets/0/regions/0/end
-    echo <CXL_LO>  > $D/contexts/0/targets/0/regions/1/start
-    echo <CXL_HI>  > $D/contexts/0/targets/0/regions/1/end
-
-    # IBS Op event, period-based, paddr-stamped:
-    PE=$D/contexts/0/monitoring_attrs/sample/perf_events
-    echo 1 > $PE/nr_perf_events
-    echo $(cat /sys/bus/event_source/devices/ibs_op/type) > $PE/0/type
-    echo 0      > $PE/0/config
-    echo 1      > $PE/0/sample_phys_addr
-    echo 0      > $PE/0/freq
-    echo 262144 > $PE/0/sample_period
-    echo 0      > $PE/0/exclude_kernel
-    echo 0      > $PE/0/exclude_hv
-
-    # PULL scheme: migrate_hot toward DRAM, gated on
-    # node_eligible_mem_bp(nid=DRAM) goal target_value=TARGET_BP.
-    # addr filter restricts source to the CXL range.
-    # PUSH scheme: migrate_hot toward CXL, gated on
-    # node_eligible_mem_bp(nid=CXL) target_value=10000-TARGET_BP.
-    # addr filter restricts source to the DRAM range.
-    # Both schemes are migrate_hot; they converge from opposite
-    # directions on the same hot working set.
-
-    echo on > $D/state
-
-  Userspace tunes the steady-state DRAM:CXL split by writing the goal
-  `target_value`s; DAMON's quota autotuner drives migration intensity
-  to match.
-
-  Workload: a QEMU/KVM guest pinned to one NUMA node, running 32
-  multichase multiload threads each touching a 4 GiB working set
-  (~128 GiB aggregate) with the memcpy-libc kernel.  The guest sees
-  a flat single-NUMA layout and has no direct view of the host's
-  tiering topology, yet its hot pages are migrated to DRAM and cold
-  pages pushed to CXL by host-side DAMON acting on IBS-stamped
-  physical addresses -- the application inside the guest benefits
-  from tiering it never had to be aware of.  Validated on AMD Turin
-  (132-CPU EPYC).  The configuration converged to its target ratio
-  in seconds and remained stable for 7+ hours continuously, with no
-  perf core auto-throttle and no measurable drift in the achieved
-  interleave ratio.
-
-Configuration B: Intel PEBS L3-miss, vaddr ops, per-PID weighted-dest
-
-  PEBS reports vaddr samples in the context of the running task.
-  DAMON's vaddr ops monitors a specific PID.
-
-  Setup (abridged):
-
-    echo 1     > /sys/kernel/mm/damon/admin/kdamonds/nr_kdamonds
-    echo 1     > $D/contexts/nr_contexts
-    echo vaddr > $D/contexts/0/operations
-
-    echo 1     > $D/contexts/0/targets/nr_targets
-    echo $PID  > $D/contexts/0/targets/0/pid_target
-    echo 0     > $D/contexts/0/targets/0/regions/nr_regions
-
-    # PEBS MEM_LOAD_RETIRED.L3_MISS, frequency-based, vaddr-stamped:
-    echo 1      > $PE/nr_perf_events
-    echo 4      > $PE/0/type           # PERF_TYPE_RAW
-    echo 0x20d1 > $PE/0/config         # umask=0x20 event=0xd1
-    echo 0      > $PE/0/sample_phys_addr
-    echo 1      > $PE/0/freq
-    echo 5003   > $PE/0/sample_freq
-    echo 2      > $PE/0/precise_ip
-    echo 1      > $PE/0/wakeup_events
-
-    # Single migrate_hot scheme with two weighted destinations
-    # (DRAM + CXL).  Userspace tunes the steady-state interleave by
-    # writing dests/{0,1}/weight.
-
-    echo on > $D/state
-
-  Workload: 32 multichase multiload threads with a 4 GiB working set
-  each (~128 GiB aggregate) running directly on the host, monitored
-  by DAMON via the multiload PID.  Validated on Intel Granite Rapids
-  (144-CPU).  Convergence is fast and the system is stable.
-
-[1] https://lore.kernel.org/linux-mm/20260516223439.4033-1-ravis.opensrc@gmail.com/
-[2] https://lore.kernel.org/20260423004211.7037-1-akinobu.mita@gmail.com
-
-Ravi Jonnalagadda (6):
-  mm/damon: add struct damon_perf_event{,_attr} and per-ctx perf_events
-    list
-  mm/damon/sysfs-sample: expose perf_events configuration via sysfs
-  mm/damon/sysfs: install perf_events on apply
-  mm/damon/core: per-CPU SPSC ring drain and damon_perf_event lifecycle
-  mm/damon/vaddr: implement perf-event access check
-  mm/damon: add damos_node_eligible_mem_bp tracepoint
-
- include/linux/damon.h        |  80 +++++
- include/trace/events/damon.h |  49 +++
- mm/damon/core.c              | 403 ++++++++++++++++++++----
- mm/damon/ops-common.h        |  39 +++
- mm/damon/sysfs-common.h      |   6 +
- mm/damon/sysfs-sample.c      | 579 +++++++++++++++++++++++++++++++++++
- mm/damon/sysfs.c             |   3 +
- mm/damon/vaddr.c             | 267 ++++++++++++++++
- 8 files changed, 1370 insertions(+), 56 deletions(-)
-
-
-base-commit: 4c8ad15abf15eb480d3ad85f902001e35465ef18
+diff --git a/include/linux/damon.h b/include/linux/damon.h
+index c0375035a3a7b..11f1c1071b9ba 100644
+--- a/include/linux/damon.h
++++ b/include/linux/damon.h
+@@ -123,6 +123,7 @@ struct damon_target {
+  * @size:		The size of the accessed address range.
+  * @cpu:		The id of the CPU that made the access.
+  * @tid:		The task id of the task that made the access.
++ * @tgid:		Thread group id of the task that made the access.
+  * @is_write:		Whether the access is write.
+  *
+  * Any DAMON API callers that notified access events can report the information
+@@ -135,6 +136,7 @@ struct damon_access_report {
+ 	unsigned long size;
+ 	unsigned int cpu;
+ 	pid_t tid;
++	pid_t tgid;
+ 	bool is_write;
+ /* private: */
+ 	unsigned long report_jiffies;	/* when this report is made */
+@@ -501,6 +503,7 @@ struct damos_filter {
+ };
+ 
+ struct damon_ctx;
++struct damon_target_lookup;
+ struct damos;
+ 
+ /**
+@@ -966,6 +969,67 @@ struct damon_sample_control {
+ 	struct list_head sample_filters;
+ };
+ 
++/**
++ * struct damon_perf_event_attr - raw PMU event attr for access check.
++ *
++ * @type:		raw PMU event type.
++ * @config:		raw PMU event config.
++ * @config1:		raw PMU event config1.
++ * @config2:		raw PMU event config2.
++ * @sample_phys_addr:	whether to set PERF_SAMPLE_PHYS_ADDR in sample_type.
++ * @sample_weight_struct:	whether to set PERF_SAMPLE_WEIGHT_STRUCT in
++ *				sample_type.  PMUs that do not advertise
++ *				weight (e.g. AMD IBS Op) reject events with
++ *				this flag set, so it must be opt-in.
++ * @exclude_kernel:	exclude kernel-mode samples.
++ * @exclude_hv:		exclude hypervisor samples.
++ * @freq:		when true use @sample_freq, otherwise @sample_period.
++ * @sample_freq:	target sample rate when @freq is true.
++ * @sample_period:	period (samples-between-overflows) when @freq is false.
++ * @wakeup_events:	perf_event_attr.wakeup_events.
++ * @precise_ip:		precise sampling skid bound (PEBS-style PMUs).
++ */
++struct damon_perf_event_attr {
++	u32 type;
++	u64 config;
++	u64 config1;
++	u64 config2;
++	bool sample_phys_addr;
++	bool sample_weight_struct;
++	bool exclude_kernel;
++	bool exclude_hv;
++	bool freq;
++	u64 sample_freq;
++	u64 sample_period;
++	u32 wakeup_events;
++	u32 precise_ip;
++};
++
++/**
++ * struct damon_perf_event - perf event for access check.
++ *
++ * @attr:	Per-event PMU attribute (configured via sysfs).
++ * @priv:	Monitoring operations-specific data.
++ * @list:	List head for &damon_ctx->perf_events siblings.
++ * @hlist_node:	Tracks this event among cpuhp multi-instance entries.
++ * @init_complete:	Set after the synchronous online sweep finishes; gates
++ *		@any_cpu_failed writes from late hotplug callbacks.
++ * @any_cpu_failed:	Set by the cpuhp online callback if perf_event creation
++ *		fails on any CPU during the synchronous initial install.
++ * @ctx:	Back-pointer to the owning damon_ctx; the cpu_online callback
++ *		reads ctx->perf_events_active to decide whether to enable a
++ *		late-onlining CPU's event immediately after create.
++ */
++struct damon_perf_event {
++	struct damon_perf_event_attr attr;
++	void *priv;
++	struct list_head list;
++	struct hlist_node hlist_node;
++	bool init_complete;
++	bool any_cpu_failed;
++	struct damon_ctx *ctx;
++};
++
+ /**
+  * struct damon_ctx - Represents a context for each monitoring.  This is the
+  * main interface that allows users to set the attributes and get the results
+@@ -991,6 +1055,11 @@ struct damon_sample_control {
+  * @addr_unit:	Scale factor for core to ops address conversion.
+  * @min_region_sz:	Minimum region size.
+  * @pause:	Pause kdamond main loop.
++ * @perf_events:	Head of perf events (&damon_perf_event) list.
++ * @perf_events_active:	Set while kdamond_fn has the perf events armed.
++ *		Cleared in the kdamond_fn done path before the events are
++ *		disabled; serves as the gate for damon_commit_perf_events()
++ *		and the kdamond_fn drain dispatch.
+  */
+ struct damon_ctx {
+ 	struct damon_attrs attrs;
+@@ -1046,6 +1115,9 @@ struct damon_ctx {
+ 	unsigned long min_region_sz;
+ 	bool pause;
+ 
++	struct list_head perf_events;
++	bool perf_events_active;
++
+ /* private: */
+ 	/* Head of monitoring targets (&damon_target) list. */
+ 	struct list_head adaptive_targets;
+@@ -1054,6 +1126,14 @@ struct damon_ctx {
+ 
+ 	/* Per-ctx PRNG state for damon_rand(); kdamond is the sole consumer. */
+ 	struct rnd_state rnd_state;
++
++	/* Reusable drain-loop snapshot buffer (avoids per-tick kmalloc). */
++	struct {
++		struct damon_target_lookup *lookups;
++		unsigned int nr_lookups;
++		struct damon_region **region_buf;
++		unsigned int region_buf_cap;
++	} drain_snapshot;
+ };
+ 
+ /* Get a random number in [@l, @r) using @ctx's lockless PRNG. */
+diff --git a/mm/damon/ops-common.h b/mm/damon/ops-common.h
+index 5efa5b5970def..35da400a67ec1 100644
+--- a/mm/damon/ops-common.h
++++ b/mm/damon/ops-common.h
+@@ -23,3 +23,42 @@ bool damos_folio_filter_match(struct damos_filter *filter, struct folio *folio);
+ unsigned long damon_migrate_pages(struct list_head *folio_list, int target_nid);
+ 
+ bool damos_ops_has_filter(struct damos *s);
++
++#ifdef CONFIG_PERF_EVENTS
++
++/*
++ * Per-event opaque allocated by damon_perf_init().  The NMI overflow
++ * handler does NOT touch this struct; submission goes through the
++ * shared per-CPU SPSC ring via damon_report_access().
++ */
++struct damon_perf {
++	struct perf_event * __percpu *event;
++};
++
++int damon_perf_init(struct damon_ctx *ctx, struct damon_perf_event *event);
++void damon_perf_cleanup(struct damon_ctx *ctx, struct damon_perf_event *event);
++void damon_perf_event_arm(struct damon_perf_event *event);
++void damon_perf_event_disarm(struct damon_perf_event *event);
++
++#else /* !CONFIG_PERF_EVENTS */
++
++static inline int damon_perf_init(struct damon_ctx *ctx,
++		struct damon_perf_event *event)
++{
++	return -ENOSYS;
++}
++
++static inline void damon_perf_cleanup(struct damon_ctx *ctx,
++		struct damon_perf_event *event)
++{
++}
++
++static inline void damon_perf_event_arm(struct damon_perf_event *event)
++{
++}
++
++static inline void damon_perf_event_disarm(struct damon_perf_event *event)
++{
++}
++
++#endif /* CONFIG_PERF_EVENTS */
+diff --git a/mm/damon/sysfs-common.h b/mm/damon/sysfs-common.h
+index 25a6c28abdea8..67c7545fd57d0 100644
+--- a/mm/damon/sysfs-common.h
++++ b/mm/damon/sysfs-common.h
+@@ -66,10 +66,13 @@ int damon_sysfs_memcg_path_to_id(char *memcg_path, u64 *id);
+  * sample directory
+  */
+ 
++struct damon_sysfs_perf_events;
++
+ struct damon_sysfs_sample {
+ 	struct kobject kobj;
+ 	struct damon_sysfs_primitives *primitives;
+ 	struct damon_sysfs_sample_filters *filters;
++	struct damon_sysfs_perf_events *perf_events;
+ };
+ 
+ struct damon_sysfs_sample *damon_sysfs_sample_alloc(void);
+@@ -82,3 +85,6 @@ extern const struct kobj_type damon_sysfs_sample_ktype;
+ int damon_sysfs_set_sample_control(
+ 		struct damon_sample_control *control,
+ 		struct damon_sysfs_sample *sysfs_sample);
++
++int damon_sysfs_add_perf_events(struct damon_ctx *ctx,
++		struct damon_sysfs_sample *sysfs_sample);
 -- 
 2.43.0
 
