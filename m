@@ -1,125 +1,93 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from out-186.mta1.migadu.com (out-186.mta1.migadu.com [95.215.58.186])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B47773A963C
-	for <damon@lists.linux.dev>; Sat, 30 May 2026 11:28:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33E352E7382
+	for <damon@lists.linux.dev>; Sun, 31 May 2026 08:57:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.186
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780140505; cv=none; b=HcBaiy0r6tQzzuRpMF8hwGCdWUBlkBCksrcB0SNriegPKugH+Djgjjo/5igthLaaZSVaFhLmfGI4Fmj88SpniX6rInvLMGUU8Q0YHTKkhQCLcAx/tzH09JHn8S0SBG7SxDyYQIWIz8ptG+vOrSHHFFuD/rFMH4rOBD7waflz0xA=
+	t=1780217850; cv=none; b=oK9Y/bX2jCt/QS/nncgeQkv3CRV6puCitI17HWEWpofwKtYNi0kPpm1sCMVHMFfHmh/Xc3244Kvy/lkLmTcUfXiaTCppXyCw2BePiutZi4L3ML9RSIxQrfumUUAdbGYBlOzNGpQWngPC5h4n2J9wQC1yU20yTYBUkG1FhM9EXa4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780140505; c=relaxed/simple;
-	bh=eNVjiDtoALomYsclT0hUpRMM3pr0rt7mXonemwgAJbY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=liQoyN+1QeCowO1u+CKLGzK6dRH2tx2dwN4KFtvKCc4gyCdB2GSA+kQWSn6GUA7xhdXtL5R0/2SWfaBL3lbul3m+auUKXR4nhyDjH7VefuQ5BpeX37X+eJdq2hHwMkq3obZMBSVtc52VEY6u+7kC27Ms29Aiwi9kN1WVmpuqW34=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JDIWChJZ; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1780217850; c=relaxed/simple;
+	bh=kaJyk/3fbpHsuOzEq+fQVHrg3XAqinpl7/PARKXBC0o=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=gSUzkBK+zczBaNX1YAmG4db4Ry7b15wdSXh4kLAQ7SrM1W7UdUqniJ35Y3iQ5xDW+FOlgXnYvtF3O2OcHf7Plfd3bU7QjEMM3eKcS3g9thw08OCEoaDmkiLK7ZF95BuvK8b4rKzL5wN00o1BcAJJFPe8UnFesXCII/3LG4Cfwrs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=I1ib2Tdv; arc=none smtp.client-ip=95.215.58.186
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JDIWChJZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A36E1F008A0
-	for <damon@lists.linux.dev>; Sat, 30 May 2026 11:28:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1780140504;
-	bh=sq2iLDCXi6pDren51u1cQUzgAX9nwmLUuBb8+qFvt4c=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc;
-	b=JDIWChJZ5HBvxKRLY86aQ4mCtPB3mchD3+6j9CO4V3Zfldriy00F20T5l3/KrTzEY
-	 4iR2RT0/j4sFVS1dQZ/Kbkfjh+fEolP841WKNsjUJFg8pH7aW7wVjF2094d8vdd0yT
-	 HfLx9I2ayMHn6z3e0AlbCQldDW0lN2gN+c90HvIUP+7aJ7IsKwQGIOKBSeqTjRsoBI
-	 ko7ERB7kigumw4pkHRSD43tDFRqmRP5JBD5hbwk+j2P9SMScEXjdbJq2rCbpw0pIli
-	 7OftayBRqrL6XlN3WhscSpvzvxc1T1f7oK8QNIhax3GHkFLgbDcsu2J8qGGruoUQ+p
-	 p14DeXvsONWtg==
-Received: by mail-qk1-f170.google.com with SMTP id af79cd13be357-91541fa94aaso59822885a.2
-        for <damon@lists.linux.dev>; Sat, 30 May 2026 04:28:24 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AFNElJ8cd2bqqPCMtVqpBFLZaXsEw4+sXH+Z3mpXLnCeIcoacF8XSNKXTTdyu7uTqqX1+tf0epL75w==@lists.linux.dev
-X-Gm-Message-State: AOJu0YyfcjM8SKu3aq24C6UUZFv2s+9ayDMZzlSEJx+UKxpo6XMweAlC
-	qJLZVxU60LfsICFRifpOco1MiCf3PGwMv4YucodyZqMFQZ/T7zHnwdaQ14R494b3n3Uu2fXKQE7
-	TH8ntImEmYLSVKYkXdzkCa1/DVNbG/tc=
-X-Received: by 2002:a05:620a:45aa:b0:914:c246:ac9d with SMTP id
- af79cd13be357-9153d9f76eamr544656885a.28.1780140503550; Sat, 30 May 2026
- 04:28:23 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="I1ib2Tdv"
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1780217847;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=iiJNrzdhmETedEmIXH5LzZ4qCUgffcIFtMWEWQCqUyg=;
+	b=I1ib2TdvfLWD0ag/Tn7NwVs7KCqNVBsMX9C6ZwMs7x0kANWNk43SwvDWiUVk/klTEd0UEn
+	d4a0rOForr1bHx2ntIF9xwXSab40PNCukXvrbaF4e9pKQaQ9/PKIBsEdyr/bIXcNHAA/o8
+	ZQdDtqmwXY/IboWXT9k5dwfAvZAYEmg=
+From: Kunwu Chan <kunwu.chan@linux.dev>
+To: sj@kernel.org,
+	shuah@kernel.org
+Cc: damon@lists.linux.dev,
+	linux-kselftest@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-mm@kvack.org,
+	Kunwu Chan <kunwu.chan@gmail.com>
+Subject: [PATCH 0/5] selftests/damon: misc fixes for test bugs
+Date: Sun, 31 May 2026 16:56:28 +0800
+Message-ID: <20260531085633.48626-1-kunwu.chan@linux.dev>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260527110147.17815-1-tao.wangtao@honor.com> <ahcANgFDFwfC0v1q@lucifer>
- <b24b4a8198ba412f8b8b42c43dccd058@honor.com> <ahf2mJg9OOWvu0jA@lucifer>
- <CAGsJ_4zy=-m5wjm0BC-vQXMHGRkHymC-5S_L9Oi708v339vvPw@mail.gmail.com>
- <87qzmu2r0t.fsf@trenco.lwn.net> <ahmzXSN_sQYmq2Jp@lucifer>
-In-Reply-To: <ahmzXSN_sQYmq2Jp@lucifer>
-From: Barry Song <baohua@kernel.org>
-Date: Sat, 30 May 2026 19:28:12 +0800
-X-Gmail-Original-Message-ID: <CAGsJ_4yDek3neUQ_Le8nWr1XA7YrqZDKXZJX+u5f9kvv9=d0vQ@mail.gmail.com>
-X-Gm-Features: AVHnY4LYmPGlt-SyUQzP7ovTfzzfgSTVLh1_UKbg7JbyXYbDT08n9Dn5EUIKOuU
-Message-ID: <CAGsJ_4yDek3neUQ_Le8nWr1XA7YrqZDKXZJX+u5f9kvv9=d0vQ@mail.gmail.com>
-Subject: Re: [PATCH 0/15] mm: introduce ANON_VMA_LAZY for deferred anon_vma creation
-To: Lorenzo Stoakes <ljs@kernel.org>
-Cc: Jonathan Corbet <corbet@lwn.net>, wangtao <tao.wangtao@honor.com>, 
-	"catalin.marinas@arm.com" <catalin.marinas@arm.com>, "will@kernel.org" <will@kernel.org>, 
-	"tglx@kernel.org" <tglx@kernel.org>, "mingo@redhat.com" <mingo@redhat.com>, "bp@alien8.de" <bp@alien8.de>, 
-	"dave.hansen@linux.intel.com" <dave.hansen@linux.intel.com>, "x86@kernel.org" <x86@kernel.org>, 
-	"akpm@linux-foundation.org" <akpm@linux-foundation.org>, "david@kernel.org" <david@kernel.org>, 
-	"willy@infradead.org" <willy@infradead.org>, "sj@kernel.org" <sj@kernel.org>, "kees@kernel.org" <kees@kernel.org>, 
-	"luizcap@redhat.com" <luizcap@redhat.com>, 
-	"zhangjiao2@cmss.chinamobile.com" <zhangjiao2@cmss.chinamobile.com>, "kas@kernel.org" <kas@kernel.org>, 
-	"hpa@zytor.com" <hpa@zytor.com>, "liam@infradead.org" <liam@infradead.org>, 
-	"vbabka@kernel.org" <vbabka@kernel.org>, "rppt@kernel.org" <rppt@kernel.org>, 
-	"surenb@google.com" <surenb@google.com>, "mhocko@suse.com" <mhocko@suse.com>, "jack@suse.cz" <jack@suse.cz>, 
-	"riel@surriel.com" <riel@surriel.com>, "harry@kernel.org" <harry@kernel.org>, 
-	"jannh@google.com" <jannh@google.com>, "jgg@ziepe.ca" <jgg@ziepe.ca>, 
-	"jhubbard@nvidia.com" <jhubbard@nvidia.com>, "peterx@redhat.com" <peterx@redhat.com>, 
-	"ziy@nvidia.com" <ziy@nvidia.com>, 
-	"baolin.wang@linux.alibaba.com" <baolin.wang@linux.alibaba.com>, "npache@redhat.com" <npache@redhat.com>, 
-	"ryan.roberts@arm.com" <ryan.roberts@arm.com>, "dev.jain@arm.com" <dev.jain@arm.com>, 
-	"lance.yang@linux.dev" <lance.yang@linux.dev>, "xu.xin16@zte.com.cn" <xu.xin16@zte.com.cn>, 
-	"chengming.zhou@linux.dev" <chengming.zhou@linux.dev>, 
-	"nao.horiguchi@gmail.com" <nao.horiguchi@gmail.com>, 
-	"matthew.brost@intel.com" <matthew.brost@intel.com>, 
-	"joshua.hahnjy@gmail.com" <joshua.hahnjy@gmail.com>, "rakie.kim@sk.com" <rakie.kim@sk.com>, 
-	"byungchul@sk.com" <byungchul@sk.com>, "gourry@gourry.net" <gourry@gourry.net>, 
-	"ying.huang@linux.alibaba.com" <ying.huang@linux.alibaba.com>, "apopple@nvidia.com" <apopple@nvidia.com>, 
-	"pfalcato@suse.de" <pfalcato@suse.de>, 
-	"linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>, 
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>, 
-	"linux-fsdevel@vger.kernel.org" <linux-fsdevel@vger.kernel.org>, "linux-mm@kvack.org" <linux-mm@kvack.org>, 
-	"damon@lists.linux.dev" <damon@lists.linux.dev>, "shakeel.butt@linux.dev" <shakeel.butt@linux.dev>, 
-	"ryncsn@gmail.com" <ryncsn@gmail.com>, "jparsana@google.com" <jparsana@google.com>, 
-	"dvander@google.com" <dvander@google.com>, zhangji <zhangji1@honor.com>, 
-	wangzicheng <wangzicheng@honor.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
+X-Migadu-Flow: FLOW_OUT
 
-On Fri, May 29, 2026 at 11:40=E2=80=AFPM Lorenzo Stoakes <ljs@kernel.org> w=
-rote:
->
-> On Fri, May 29, 2026 at 09:07:30AM -0600, Jonathan Corbet wrote:
-> > Barry Song <baohua@kernel.org> writes:
-> >
-> > > After coming back from Zagreb, I kept trying to find one or
-> > > two full days to read Lorenzo's code and slides carefully and
-> > > write a blog about them. Unfortunately, I have been completely
-> > > busy with other work. Sigh... we always seem to have too many
-> > > non-upstream tasks.
-> > >
-> > > If possible, I'd really appreciate it if you could take a
-> > > deep dive into it and write a detailed blog post. I'd be
-> > > very eager to read it and better understand the overall design.
-> > > Otherwise, I'll try to find some time next week or later to
-> > > go through it myself.
-> >
-> > It's still somewhat superficial, but in case it's helpful:
-> >
-> >   https://lwn.net/Articles/1072378/
-> >
->
-> I found it to be great as usual :)
+From: Kunwu Chan <kunwu.chan@gmail.com>
 
-+1
-Thanks very much, Jon. That's really helpful.
+This series fixes several bugs in the DAMON selftests.  Most are
+trivial but cause tests to silently pass when they shouldn't, or
+fail prematurely on slow machines.
 
->
-> > jon
->
-> Cheers, Lorenzo
+Patch 1 fixes mutable default arguments in DamonCtx.__init__()
+that cause state to leak between test instances.
 
-Best Regards
-Barry
+Patch 2 fixes a trailing comma in DamosFilter that turns
+memcg_path from a string into a tuple, silently breaking memcg
+filter setup.
+
+Patch 3-4 fix bugs in damos_tried_regions.py: wrong operator
+precedence drops the "not met" prefix from failure output, and
+empty early aggregation cycles cause premature test failure.
+
+Patch 5 fixes several wrong strings that produce dead elif
+branches, skipped file existence checks, and broken dict key
+lookups.
+
+Based on next-20260529.
+base-commit: 7da7f07112610a520567421dd2ffcb51beaefbcc
+
+Kunwu Chan (5):
+  selftests/damon: prevent cross-context state pollution in DamonCtx
+  selftests/damon: fix memcg filter path handling
+  selftests/damon/damos_tried_regions: fix expectation output and join
+    TypeError
+  selftests/damon/damos_tried_regions: handle empty tried regions in
+    early cycles
+  selftests/damon: fix dead code, skipped checks, and broken lookups
+
+ tools/testing/selftests/damon/_damon_sysfs.py | 14 +++++++++----
+ .../selftests/damon/damos_apply_interval.py   |  2 +-
+ .../selftests/damon/damos_quota_goal.py       |  2 +-
+ .../selftests/damon/damos_tried_regions.py    | 20 ++++++++++---------
+ .../selftests/damon/drgn_dump_damon_status.py |  2 +-
+ tools/testing/selftests/damon/sysfs.py        |  4 ++--
+ tools/testing/selftests/damon/sysfs.sh        |  6 +++---
+ ...te_schemes_tried_regions_wss_estimation.py |  2 +-
+ 8 files changed, 30 insertions(+), 22 deletions(-)
+
+-- 
+2.43.0
+
