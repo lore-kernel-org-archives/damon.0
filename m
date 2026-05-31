@@ -1,45 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5434225F7A5;
-	Sun, 31 May 2026 16:25:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C079250BEC;
+	Sun, 31 May 2026 16:30:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780244702; cv=none; b=QWcpu4fgdugZT7Lwx1ejNK1/PicsPAY5uUcZZqpf0iIt0PrhoyGc/WQHOPMQuimOp5EMKc+sypTj1/Ht/SGZzbRB6wL8T121QO/G24m03xkbMXREBfWQBaPSYHTBALAZr0Xqkg6PzhSSy8iIh2sMpJAIFJ9+9moFc3QNwW6DZ5E=
+	t=1780245054; cv=none; b=HQRHCgIY28YyUOQCA+PLZ74sjagzCLy6GRtDpLCIM6+BzMrBWVfphhejshFCsF9BlosXqU/blBhMjlStc4/y7bbiy+s6ptZ9QITcdOhQrMJbEykyHLN1nBUK0fmmA5VASapNBWoy+ADQSEql+ikg3nTLXBqqr1oqNVd/oWgGqG4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780244702; c=relaxed/simple;
-	bh=y2rgs2gLrTZGN+TFgoSUZnva6UPvvW6hRWAgr8ltwnw=;
+	s=arc-20240116; t=1780245054; c=relaxed/simple;
+	bh=WxxjZxPah5rdAM53jYK0+5B40jxYAg6z0iixAmKZfmo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iOkzC5sEsFtdyUPPZbqsyE/SA5Y/5uOBbIRRCbQDt0OvQ+B2tBuofQx1CsaE1rXiT4Lx2rqSu+05Uo37RT/NpDb1UqfJvPsz239Ps4sBfzuRO7n7hw1mmF1nT0fLZO377YzlQ5Y1DaYNTSQdFgJbL6d96sZj9TrifnSI0bTw3gg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HH8R+L8H; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=H9nBv4y46dnXNEZvzju+jGN+q4vlVQckoSMMffYeSAyNC1mk21aZ7hQP57mG3q6g4y20haDnk92MlpJSvYM2WWXVI/vVR6UgTyBIYFU2P0VK3VZ10w7QxYaZEA9GglHnwMIPTTQTY+oPtNLfpxi1ZeBaLLCxjrs6H86jhrzQ2Fc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=et2lfG5Q; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HH8R+L8H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 955F81F00893;
-	Sun, 31 May 2026 16:25:00 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="et2lfG5Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C12421F00893;
+	Sun, 31 May 2026 16:30:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1780244700;
-	bh=a4xwiQThCs7F6+XmjiaWulJyRMq8uwTndHHdVcApUeA=;
+	s=k20260515; t=1780245053;
+	bh=ooHLjrYde68IF9paeXUdfTOnJaxqfaEudXi3V/Gpzfw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HH8R+L8HsK2swvjdoSOvXv3+R79dEhpbNVvX6VDjStjqIShSbGmPEwr2fYd8Dl/LK
-	 JLEb6N5PGpp/LY+/L5yvIBi+ueq4Q7VOfEcBRuhqgyDHs9HTFQGS8o1ICSzilFwmn6
-	 t8aRDA0UEoUXgw6SMCErJ8xPNmPdWjvU01VmGRVqPoEI2d7cwrO4eScHqNfW5XuSnm
-	 Wj83jVeKR7nPAZCE5vst6YxFiJB+zgJyGJLW/0LXURwk4NJ2NIJfa0pmrpHAUQX0SQ
-	 Q9jOPabpqBfkIXQtWhqJDs5JrQvOv2N9RWEZOPZ9OzZns1/04r5Xmmjq0oUHjQcVgq
-	 up3Gnj1ihLZWw==
+	b=et2lfG5QLbYIoA3FgGbare5SGurLAvM5KBRLjqiOh9RUqierVbKf9wzyH3wgiGycU
+	 tVJhavGlm8ky4grJeEbtbgCylyY0hbuqLt/+qECeq3e6+idodR2N/iiCmbGpLWd15W
+	 X4ouvEPx3w9juaWoxSGHtEad0nv8FsGaOGB0uWm1BWZYzQ8T5JNx3h0qPdWxxLyq1b
+	 4wsEqQx1Ntt+GA/1nNhWfSyn2kEqOItpBH8H+15iwZdJhyVjEv2afMgIjHwC8bI3Al
+	 dC2P3qG+Kw8nNQ8BeF4js2pbcn4dQKerZ3462G/HkGjQvXkGJs7YKEG6NtOFx4Q3Cl
+	 qzWAJvrxehV3A==
 From: SeongJae Park <sj@kernel.org>
-To: "Kunwu Chan" <kunwu.chan@linux.dev>
+To: Kunwu Chan <kunwu.chan@linux.dev>
 Cc: SeongJae Park <sj@kernel.org>,
-	"Kunwu Chan" <chentao@kylinos.cn>,
-	"Wang Lian" <lianux.mm@gmail.com>,
-	akpm@linux-foundation.org,
+	shuah@kernel.org,
 	damon@lists.linux.dev,
+	linux-kselftest@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] mm/damon: fix stale TLB young-state handling on arm64
-Date: Sun, 31 May 2026 09:24:56 -0700
-Message-ID: <20260531162457.98724-1-sj@kernel.org>
+	Kunwu Chan <kunwu.chan@gmail.com>,
+	Wang Lian <lianux.mm@gmail.com>,
+	Kunwu Chan <chentao@kylinos.cn>
+Subject: Re: [PATCH 1/5] selftests/damon: prevent cross-context state pollution in DamonCtx
+Date: Sun, 31 May 2026 09:30:49 -0700
+Message-ID: <20260531163050.98908-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <cfa837d8641972b79a404f4f9d489644dd6675f7@linux.dev>
+In-Reply-To: <20260531091724.84381-1-kunwu.chan@linux.dev>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -49,23 +51,33 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Sun, 31 May 2026 12:16:49 +0000 "Kunwu Chan" <kunwu.chan@linux.dev> wrote:
+On Sun, 31 May 2026 17:17:20 +0800 Kunwu Chan <kunwu.chan@linux.dev> wrote:
 
-[...]
-> We think that makes sense.  Explaining the rationale for not flushing TLB,
-> the limitations this can introduce for tests, and recommendations for
-> choosing reliable test working set sizes would be helpful.
+> From: Kunwu Chan <kunwu.chan@gmail.com>
+> 
+> DamonCtx.__init__() uses mutable default values for
+> monitoring_attrs, targets, and schemes.  In Python these are
+> evaluated once at function definition time, so multiple
+> DamonCtx instances can unintentionally share the same lists
+> and DamonAttrs instance.
+> 
+> Replace the mutable defaults with None sentinels and
+> initialize the objects when needed.
 
-Thank you for kindly accepting my suggestion.
+Nice change, thank you!
 
 > 
-> If we later find cases where the documented recommendations are still
-> insufficient, we can revisit more intrusive approaches.
-> 
-> I'd be happy to help with the documentation work if needed.  Please let
-> me know if you'd like me to prepare a draft patch.
+> Co-developed-by: Wang Lian <lianux.mm@gmail.com>
+> Signed-off-by: Wang Lian <lianux.mm@gmail.com>
+> Signed-off-by: Kunwu Chan <chentao@kylinos.cn>
 
-Yes, please feel free to send a patch! :)
+checkpatch.pl complains as below:
+
+WARNING: From:/Signed-off-by: email address mismatch: 'From: Kunwu Chan <kunwu.chan@gmail.com>' != 'Signed-off-by: Kunwu Chan <chentao@kylinos.cn>'
+
+Other than that,
+
+Reviewed-by: SeongJae Park <sj@kernel.org>
 
 
 Thanks,
