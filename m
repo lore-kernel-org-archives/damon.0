@@ -1,30 +1,32 @@
-Received: from out-186.mta1.migadu.com (out-186.mta1.migadu.com [95.215.58.186])
+Received: from out-180.mta0.migadu.com (out-180.mta0.migadu.com [91.218.175.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33E352E7382
-	for <damon@lists.linux.dev>; Sun, 31 May 2026 08:57:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.186
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E64B92343BE
+	for <damon@lists.linux.dev>; Sun, 31 May 2026 09:18:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780217850; cv=none; b=oK9Y/bX2jCt/QS/nncgeQkv3CRV6puCitI17HWEWpofwKtYNi0kPpm1sCMVHMFfHmh/Xc3244Kvy/lkLmTcUfXiaTCppXyCw2BePiutZi4L3ML9RSIxQrfumUUAdbGYBlOzNGpQWngPC5h4n2J9wQC1yU20yTYBUkG1FhM9EXa4=
+	t=1780219095; cv=none; b=CD+dVPQjvzQy8WTE2yyX5Awaul30C7Eu7QHbHvW+Xj78PtYBpH/chk8ztgPvZe48ztZosWYdJah5GncXZmP87EcuJKa/FhluFbJgQ3/otsEUnu98y0Jv9PXDDQWbuHeRB0qFFszZuXYiVUY8KMBG8/+7VYMUMvYJ60o9K3Qr4AU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780217850; c=relaxed/simple;
-	bh=kaJyk/3fbpHsuOzEq+fQVHrg3XAqinpl7/PARKXBC0o=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=gSUzkBK+zczBaNX1YAmG4db4Ry7b15wdSXh4kLAQ7SrM1W7UdUqniJ35Y3iQ5xDW+FOlgXnYvtF3O2OcHf7Plfd3bU7QjEMM3eKcS3g9thw08OCEoaDmkiLK7ZF95BuvK8b4rKzL5wN00o1BcAJJFPe8UnFesXCII/3LG4Cfwrs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=I1ib2Tdv; arc=none smtp.client-ip=95.215.58.186
+	s=arc-20240116; t=1780219095; c=relaxed/simple;
+	bh=2I7V68wBUEJOhsC+Qjlo0/3i5sUOYGo/ncWhJsZF4yI=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=NcLY6V1WTx7J5PSGiJFCSffPY/2GwbKDB3npp16VftT7rf16uiRv+CsGwvB8QMKMVDBd83yLxCRuQD9Hp2vGlDlmJCtxrQDEKJ/CzVM8mnAteFU/Fg8Oy6gA0FWofKGdz+NJ31z/Mfdowpeiu9lLLeAHF2Sh09u2hTKk0wYekpU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=G8EHJ/rD; arc=none smtp.client-ip=91.218.175.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="I1ib2Tdv"
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="G8EHJ/rD"
 X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1780217847;
+	t=1780219090;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=iiJNrzdhmETedEmIXH5LzZ4qCUgffcIFtMWEWQCqUyg=;
-	b=I1ib2TdvfLWD0ag/Tn7NwVs7KCqNVBsMX9C6ZwMs7x0kANWNk43SwvDWiUVk/klTEd0UEn
-	d4a0rOForr1bHx2ntIF9xwXSab40PNCukXvrbaF4e9pKQaQ9/PKIBsEdyr/bIXcNHAA/o8
-	ZQdDtqmwXY/IboWXT9k5dwfAvZAYEmg=
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=IWyXqkdh8B95Hbx0fw5ujqdH7uVIqVfs8/h+BIpCjW8=;
+	b=G8EHJ/rD302WYFwKwCeAEHVsN5ajorXot4mN3ifwo62TT10PHAvV0/oOR9JNE8XCYBZpDw
+	u5l5vPqec9u24mGpJoGUXj9aPK6YFYp0raryffYs2b3N8sbPeUhRvrDP4vmUYsR8I2eU7U
+	Y7yjeyBTUOfIFwNdNrhKrCHw+Azuv60=
 From: Kunwu Chan <kunwu.chan@linux.dev>
 To: sj@kernel.org,
 	shuah@kernel.org
@@ -32,10 +34,14 @@ Cc: damon@lists.linux.dev,
 	linux-kselftest@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org,
-	Kunwu Chan <kunwu.chan@gmail.com>
-Subject: [PATCH 0/5] selftests/damon: misc fixes for test bugs
-Date: Sun, 31 May 2026 16:56:28 +0800
-Message-ID: <20260531085633.48626-1-kunwu.chan@linux.dev>
+	Kunwu Chan <kunwu.chan@gmail.com>,
+	Wang Lian <lianux.mm@gmail.com>,
+	Kunwu Chan <chentao@kylinos.cn>
+Subject: [PATCH 1/5] selftests/damon: prevent cross-context state pollution in DamonCtx
+Date: Sun, 31 May 2026 17:17:20 +0800
+Message-ID: <20260531091724.84381-1-kunwu.chan@linux.dev>
+In-Reply-To: <20260531085633.48626-1-kunwu.chan@linux.dev>
+References: <20260531085633.48626-1-kunwu.chan@linux.dev>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -47,47 +53,52 @@ X-Migadu-Flow: FLOW_OUT
 
 From: Kunwu Chan <kunwu.chan@gmail.com>
 
-This series fixes several bugs in the DAMON selftests.  Most are
-trivial but cause tests to silently pass when they shouldn't, or
-fail prematurely on slow machines.
+DamonCtx.__init__() uses mutable default values for
+monitoring_attrs, targets, and schemes.  In Python these are
+evaluated once at function definition time, so multiple
+DamonCtx instances can unintentionally share the same lists
+and DamonAttrs instance.
 
-Patch 1 fixes mutable default arguments in DamonCtx.__init__()
-that cause state to leak between test instances.
+Replace the mutable defaults with None sentinels and
+initialize the objects when needed.
 
-Patch 2 fixes a trailing comma in DamosFilter that turns
-memcg_path from a string into a tuple, silently breaking memcg
-filter setup.
+Co-developed-by: Wang Lian <lianux.mm@gmail.com>
+Signed-off-by: Wang Lian <lianux.mm@gmail.com>
+Signed-off-by: Kunwu Chan <chentao@kylinos.cn>
+---
+ tools/testing/selftests/damon/_damon_sysfs.py | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-Patch 3-4 fix bugs in damos_tried_regions.py: wrong operator
-precedence drops the "not met" prefix from failure output, and
-empty early aggregation cycles cause premature test failure.
-
-Patch 5 fixes several wrong strings that produce dead elif
-branches, skipped file existence checks, and broken dict key
-lookups.
-
-Based on next-20260529.
-base-commit: 7da7f07112610a520567421dd2ffcb51beaefbcc
-
-Kunwu Chan (5):
-  selftests/damon: prevent cross-context state pollution in DamonCtx
-  selftests/damon: fix memcg filter path handling
-  selftests/damon/damos_tried_regions: fix expectation output and join
-    TypeError
-  selftests/damon/damos_tried_regions: handle empty tried regions in
-    early cycles
-  selftests/damon: fix dead code, skipped checks, and broken lookups
-
- tools/testing/selftests/damon/_damon_sysfs.py | 14 +++++++++----
- .../selftests/damon/damos_apply_interval.py   |  2 +-
- .../selftests/damon/damos_quota_goal.py       |  2 +-
- .../selftests/damon/damos_tried_regions.py    | 20 ++++++++++---------
- .../selftests/damon/drgn_dump_damon_status.py |  2 +-
- tools/testing/selftests/damon/sysfs.py        |  4 ++--
- tools/testing/selftests/damon/sysfs.sh        |  6 +++---
- ...te_schemes_tried_regions_wss_estimation.py |  2 +-
- 8 files changed, 30 insertions(+), 22 deletions(-)
-
+diff --git a/tools/testing/selftests/damon/_damon_sysfs.py b/tools/testing/selftests/damon/_damon_sysfs.py
+index 8b12cc048440..2f6f2699db25 100644
+--- a/tools/testing/selftests/damon/_damon_sysfs.py
++++ b/tools/testing/selftests/damon/_damon_sysfs.py
+@@ -624,17 +624,23 @@ class DamonCtx:
+     pause = None
+     idx = None
+ 
+-    def __init__(self, ops='paddr', monitoring_attrs=DamonAttrs(), targets=[],
+-            schemes=[], pause=False):
++    def __init__(self, ops='paddr', monitoring_attrs=None, targets=None,
++            schemes=None, pause=False):
+         self.ops = ops
++        if monitoring_attrs is None:
++            monitoring_attrs = DamonAttrs()
+         self.monitoring_attrs = monitoring_attrs
+         self.monitoring_attrs.context = self
+ 
++        if targets is None:
++            targets = []
+         self.targets = targets
+         for idx, target in enumerate(self.targets):
+             target.idx = idx
+             target.context = self
+ 
++        if schemes is None:
++            schemes = []
+         self.schemes = schemes
+         for idx, scheme in enumerate(self.schemes):
+             scheme.idx = idx
 -- 
 2.43.0
 
