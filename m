@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A878382F33
-	for <damon@lists.linux.dev>; Mon,  1 Jun 2026 08:03:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FC393890F9
+	for <damon@lists.linux.dev>; Mon,  1 Jun 2026 08:03:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780300988; cv=none; b=EQsi9Zrnls9ivdMiXSEK9LwbXHpceCwD3zn68TKar7Zs2XzwNM8cMooB6yHAb5Nl9sde9RaasA9/giZW5Ma+5dO3UCitn+egqou95fVyZhRcBS/gRfgO+Wb6cczEZMIrpgeqxdfcgD6IdVuMQ/FOydcU2W96KXCvCHhvLYK3RH4=
+	t=1780301002; cv=none; b=SB62wloJeEPy+qSH4bKbqs/CtELIKnl+oC8/DgrFOAN4gAMwTcTIEfyDZhlWmPUvp/F9eQB8grfeQcExnKESSv+FxfFooDKna/JW8Q1s0+D/0atvfrIVzvz1q9dFJEnHRJNheh5lp9VcdXrdYnkG/DeDFUnb2xw5/PvW19Sgr1s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780300988; c=relaxed/simple;
-	bh=LY1mIGwxKWj7/PJkgoiwUbC7umGPA32dnAnTXMQzI64=;
+	s=arc-20240116; t=1780301002; c=relaxed/simple;
+	bh=B6Ej/UUusZOqts85aUEVqKFu0dm+wkceLxvPmYr5p8g=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=d2D6s7vsEBs0gtwUQqhFvv/hUxtgslMWabuE710gk5aKh5TWgyceW+H/0itEJD86ZIxgHKPGrgssRWE5y9RKw/41tfAnw6LEoR2LRDVOBe/SIumqusEreJw2kwJcK6otSbRBKxaNkwn1amWItbAf4hEa0fO9Vuuspz12FOnaNCI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WdDcIL+T; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=qkLvn6ef59W7/uodlk2UI3Qh5t7/Y7/J128ji0aPYjmLDv+QFR+WE9k89ZnbDfp0IejIeiJDLGSGcXn1ZK7KjnBFIH2a0Wg++FiU5OXQJwnXFUFm3A8h3uFyQVpxCUlKac4auYMDnQENWATfr9e1qjWkttMf7K6Rjq1A/ISm2aA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=I8TrQLTn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WdDcIL+T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0532A1F00893;
-	Mon,  1 Jun 2026 08:03:06 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="I8TrQLTn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0F121F00893;
+	Mon,  1 Jun 2026 08:03:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1780300987;
-	bh=W+C87tKT5pskUyik2zzy06wCJmPxiMj3CFClwbimf24=;
+	s=k20260515; t=1780300997;
+	bh=Jm5UghuyVUki8jBZwNm6K1yjj6HobSiWasdSGL6oonk=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=WdDcIL+TEzNEKuWcUz0nKfawnYeGosCiBvI5v8Inp1QZ1fLXtPYkjmI9D+Vv7+d3p
-	 QLA0bRtduE99l80Xd/9N4hHWqNklVyvdwZJxOLbCFPSaU201fSPUChlw3n9P1RWawM
-	 MaGG5+9aNB89Il81k6mqGbMjqA7/uWzRR2iOLAIIV9jhi6U5+pBDWcx/EGOdhDzmrU
-	 AtLIgJ4C0A+3bPhDRac3ltCQjBAwrIhb0+p3b7K8gxsCi4gQ7u/M9yggh1G3Wz5D9C
-	 uO6T+kzvZFX9IBX7RyNmv+ZExo0BTE1hxrVOd4kGFgfbDgSihRvzxOIduw7uctSwMI
-	 7MjYrpxlvZO/g==
+	b=I8TrQLTnCwEDlZNokYjbYQUTKwkJZMvKwNex76WY9puEYpTS/VCngTK03UNuIyVvz
+	 gvZiRcUY252oUujxWCk6f5Qb89zIuW91dAryAoPAr3Nvvy5f+xfMWoPjCAlJV+Fn6K
+	 tSw48pAc3sFN4QFKlzQ81IWSjK7E6N6xfb/CmfMo9WHMPsyqVysA696KjCzsqka9xr
+	 T2P75njDkVUqlFRP+7jv27c1Fki3u4pO58M7a5B6gD+Qg5jHDJ/fJN/NlmzNtEUVwi
+	 F2rnXx03oJdjpIlFqCCNz8sGDBZk1WfJWK4AcVtObRmm/GCdFhFP3RcW/08E48HwKS
+	 GUCaoZRvDGrGA==
 From: sashiko-bot@kernel.org
 Subject: Re: [PATCH v3 2/2] selftests/damon/sysfs.py: validate memcg_path
  staging readback
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Cheng Nie" <niecheng1@uniontech.com>
 Cc: damon@lists.linux.dev
-In-Reply-To: <9FAF3DC4DEDDA72F+20260601074922.209222-1-niecheng1@uniontech.com>
-References: <9FAF3DC4DEDDA72F+20260601074922.209222-1-niecheng1@uniontech.com>
+In-Reply-To: <87B39E0F19A29319+20260601074533.205616-1-niecheng1@uniontech.com>
+References: <87B39E0F19A29319+20260601074533.205616-1-niecheng1@uniontech.com>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Mon, 01 Jun 2026 08:03:06 +0000
-Message-Id: <20260601080307.0532A1F00893@smtp.kernel.org>
+Date: Mon, 01 Jun 2026 08:03:17 +0000
+Message-Id: <20260601080317.A0F121F00893@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -46,20 +46,18 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 
 Thank you for your contribution! Sashiko AI review found 1 potential issue(=
 s) to consider:
-- [Medium] The test fails if CONFIG_MEMCG is disabled because stopping an u=
-nstarted kdamond returns an error, defeating the intent of ignoring start f=
-ailures.
+- [Medium] Test fails on teardown when `start()` fails, defeating the state=
+d intent of decoupling the test from `CONFIG_MEMCG`.
 --
 
-commit 82e2d2dc23cd1bb3cb389943f0bf754e63c68c96
+commit 995afe8f607b12ca4f4469ac19ac53b1340cae11
 Author: Cheng Nie <niecheng1@uniontech.com>
 
 selftests/damon/sysfs.py: validate memcg_path staging readback
 
-This commit adds a test to validate the staging readback of memcg_path in
-DAMON sysfs without committing it. It configures the memcg filter, verifies
-the readback, and attempts to ignore start() failures to avoid depending on
-CONFIG_MEMCG or cgroup layout.
+This commit adds a dedicated test to write memcg_path to sysfs and verify
+the readback path. It intentionally ignores kdamonds.start() failures so
+the test operates independently of CONFIG_MEMCG or cgroup layout.
 
 > diff --git a/tools/testing/selftests/damon/sysfs.py b/tools/testing/selft=
 ests/damon/sysfs.py
@@ -69,34 +67,42 @@ ests/damon/sysfs.py
 > @@ -250,6 +250,38 @@ def assert_ctxs_committed(kdamonds):
 [ ... ]
 > +def test_memcg_filter_memcg_path_staging():
-> +    global kdamonds
-> +    memcg_filter =3D _damon_sysfs.DamosFilter(
-> +            type_=3D'memcg', matching=3DTrue, allow=3DTrue, memcg_path=
-=3D'/')
-> +    kdamonds =3D _damon_sysfs.Kdamonds(
-> +            [_damon_sysfs.Kdamond(
-> +                contexts=3D[_damon_sysfs.DamonCtx(
-> +                    targets=3D[_damon_sysfs.DamonTarget(pid=3D-1)],
-> +                    schemes=3D[_damon_sysfs.Damos(
-> +                        ops_filters=3D[memcg_filter])],
-> +                    )])])
-> +    kdamonds.start()
 [ ... ]
+> +    kdamonds.start()
+> +
+> +    shown, rd_err =3D _damon_sysfs.read_file(
+> +            os.path.join(memcg_filter.sysfs_dir(), 'memcg_path'))
+> +    if rd_err is not None:
+> +        print('memcg_path staging: sysfs read (%s)' % rd_err)
+> +        kdamonds.stop()
+> +        exit(1)
+> +    if shown.rstrip('\n') !=3D memcg_filter.memcg_path:
+> +        print('memcg_path staging: memcg_path readback '
+> +              '(shown=3D%s, expected=3D%s)' %
+> +              (shown.rstrip('\n'), memcg_filter.memcg_path))
+> +        kdamonds.stop()
+> +        exit(1)
+> +
 > +    err =3D kdamonds.stop()
 > +    if err is not None:
 > +        print('memcg_path staging: kdamond stop (%s)' % err)
 > +        exit(1)
 
 [Severity: Medium]
-The commit message mentions ignoring start() failures so the test does not
-depend on CONFIG_MEMCG or cgroup layout. However, if start() fails,
-kdamonds.stop() will return an error because the kernel's
-damon_sysfs_turn_damon_off() returns -EINVAL when kdamond->damon_ctx is
-NULL.
+If start() fails as expected when CONFIG_MEMCG is disabled, won't this
+subsequent call to kdamonds.stop() return an error?
 
-Does this cause the test to exit(1) and fail anyway on environments without
-CONFIG_MEMCG when checking the return value of stop() here?
+Writing 'off' to the 'state' sysfs file of an unstarted kdamond causes
+damon_sysfs_turn_damon_off() to unconditionally return -EINVAL. This error
+propagates back to the Python script via write_file(), causing the script
+to exit with status 1.
+
+Does checking this error and exiting with a failure defeat the stated intent
+of ignoring the start() failure in the first place?
+
+> +    kdamonds =3D None
+> +
 
 --=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/D4787203018006D6+20=
-260601073635.200015-1-niecheng1@uniontech.com?part=3D2
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260601073635.2000=
+15-1-niecheng1@uniontech.com?part=3D2
