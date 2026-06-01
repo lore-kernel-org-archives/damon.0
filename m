@@ -1,51 +1,52 @@
-Received: from smtpbguseast3.qq.com (smtpbguseast3.qq.com [54.243.244.52])
+Received: from smtpbgbr1.qq.com (smtpbgbr1.qq.com [54.207.19.206])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 966B2386C16
-	for <damon@lists.linux.dev>; Mon,  1 Jun 2026 07:50:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.243.244.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FDC4358D32
+	for <damon@lists.linux.dev>; Mon,  1 Jun 2026 08:01:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.207.19.206
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780300202; cv=none; b=QposuV/cOVz5JN4N/1lqkl4m98yrkkT2qDMC5GPiV/KuLXPDWPhyY7zasxiFkFVZpjriHb7M+s3TiVdmXcQ+AFymxrACGc3umd0rqq2lslUxOcthS2Gh4hkUi1nlMEx4yJbNAfO4NxmXuag8ZStAR1FFaNCXXSz43RCv5vDKSo8=
+	t=1780300875; cv=none; b=ZCDZTAzmU0gbh/P7g8zubKK9hExFt8cabA5pPN5KLsWJxBBLfe9ZqF0xs94RqCeAi+GFYCwvIOgozgFgTOVR84mbIoV+ZbH/lM1JfxQLN1L31B0iYydDXeqgLhajtF/oykS9aF43dfUjw65R4NkFcrx2h51GF8vt8KGI7xwqs5Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780300202; c=relaxed/simple;
-	bh=Ui10wFMz45J23P1UzESKZoov93+QxhRiviRiKuErgFQ=;
+	s=arc-20240116; t=1780300875; c=relaxed/simple;
+	bh=hiGSqWdaKHtoPoaJNIXkxgho3SwPWyYReWIzlKiW4zc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TWjbl0fJV3qtBQ1yGOpNzB9yxLAm0or7gma+3klk8faZMIKINRiXuIr6As9NY6jSlJtMZhCgOZtwYuzAfmyQdAQjKUF3Zf/0FgQVY455lEYBIcXSYYe+eAWqle00khW6Tj0UuFuT+qCou3Pc2raPuc5xVWaoA+7b0VBiGY/WQDk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=uniontech.com; spf=pass smtp.mailfrom=uniontech.com; dkim=pass (1024-bit key) header.d=uniontech.com header.i=@uniontech.com header.b=S8YTF3Y2; arc=none smtp.client-ip=54.243.244.52
+	 MIME-Version; b=jMkbnZGcLMj/IdgMfqKTa8jQLDe7VfYiVhBA/9L3DHrM3QdMqj4eubbAt5wnhDxiXF/YExQez6HL5PoZwKslylzhTBp9EEu0H3rwq/fsa+qLcnc15xUJbdLiIaZgf0p+ZVsFHSbju8nv+lRVYSzXMy9/Tsp0YFwTC2ardlaEw6U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=uniontech.com; spf=pass smtp.mailfrom=uniontech.com; dkim=pass (1024-bit key) header.d=uniontech.com header.i=@uniontech.com header.b=TQtEXInh; arc=none smtp.client-ip=54.207.19.206
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=uniontech.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=uniontech.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=uniontech.com header.i=@uniontech.com header.b="S8YTF3Y2"
+	dkim=pass (1024-bit key) header.d=uniontech.com header.i=@uniontech.com header.b="TQtEXInh"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=uniontech.com;
-	s=onoh2408; t=1780300172;
-	bh=iKyEwkDOqalQswQ1rmvg6AgbJ6uvYlJ03lXFXs4SB1M=;
+	s=onoh2408; t=1780300844;
+	bh=GLPi/m3WQdmSBKWIOTMLaV276KDW7VEnDXW4StkpGCQ=;
 	h=From:To:Subject:Date:Message-ID:MIME-Version;
-	b=S8YTF3Y2PivDAnKJlAYUN+ipvO7KPsXbLF83dHr9A2Y6jSuVnr89CiAG78TSxiE5r
-	 7s0ZtHs9GiV/9MSP+BX6gEbzCzWp2qiKkuOQFPxR/6PdqznXneuS0SLhY8EIqt51Gh
-	 EV10apff4ivtgiFEsEp+MS1IORMf7TzWFJ7rZY3k=
-X-QQ-mid: zesmtpsz8t1780300166t38979b5a
-X-QQ-Originating-IP: JqpDz2mPNA+ZctIp3x7l0Rxyq9TU/u1A+AoOY1r1WpE=
-Received: from PEN1097 ( [1.202.39.170])
+	b=TQtEXInhVYsWxjpKM8S4NfnNPKeIhAaYmUZ6XCvmlL/+EVEntz7hZhxfoIWbWLkj7
+	 2kGWq1+LyLVp+uS9gsL/siNM/PfBo+2ERej+NhErdVWVKws8xLxt1yVuac0O9aNSb8
+	 qBhmaslhRPinPRyaVvqNjRgdefq0otMNBbjN9VVk=
+X-QQ-mid: esmtpsz11t1780300832t04d11e47
+X-QQ-Originating-IP: 3H4NN0ARhUWAe2T8BF5/hf0ZboV2Pv02TxsvReBukVw=
+Received: from PEN1097 ( [124.126.19.250])
 	by bizesmtp.qq.com (ESMTP) with 
-	id ; Mon, 01 Jun 2026 15:49:24 +0800 (CST)
+	id ; Mon, 01 Jun 2026 16:00:29 +0800 (CST)
 X-QQ-SSF: 0000000000000000000000000000000
 X-QQ-GoodBg: 1
-X-BIZMAIL-ID: 9316155705307074460
-EX-QQ-RecipientCnt: 7
+X-BIZMAIL-ID: 12924311070648685928
+EX-QQ-RecipientCnt: 8
 From: Cheng Nie <niecheng1@uniontech.com>
-To: niecheng1@uniontech.com
+To: niecheng1@uniontech.com,
+	sj@kernel.org
 Cc: damon@lists.linux.dev,
+	kernel@uniontech.com,
 	linux-kernel@vger.kernel.org,
 	linux-kselftest@vger.kernel.org,
 	linux-mm@kvack.org,
-	shuah@kernel.org,
-	sj@kernel.org
-Subject: [PATCH v3 2/2] selftests/damon/sysfs.py: validate memcg_path staging readback
-Date: Mon,  1 Jun 2026 15:49:22 +0800
-Message-ID: <9FAF3DC4DEDDA72F+20260601074922.209222-1-niecheng1@uniontech.com>
+	shuah@kernel.org
+Subject: Re: [PATCH v3 1/2] selftests/damon/_damon_sysfs.py: fix memcg_path assignment
+Date: Mon,  1 Jun 2026 16:00:28 +0800
+Message-ID: <79F7B6B20207E976+20260601080028.217269-1-niecheng1@uniontech.com>
 X-Mailer: git-send-email 2.51.0
-In-Reply-To: <D4787203018006D6+20260601073635.200015-1-niecheng1@uniontech.com>
-References: <D4787203018006D6+20260601073635.200015-1-niecheng1@uniontech.com>
+In-Reply-To: <A374E0020B17741D+20260601074408.204630-1-niecheng1@uniontech.com>
+References: <A374E0020B17741D+20260601074408.204630-1-niecheng1@uniontech.com>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -54,89 +55,40 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-QQ-SENDSIZE: 520
-Feedback-ID: zesmtpsz:uniontech.com:qybglogicsvrsz:qybglogicsvrsz4b-0
-X-QQ-XMAILINFO: M/5qe47GLMYOBizVx65eWdFouzicF4e+xCRO1KzC2oEf7Lw0p0hXIXkr
-	p0uhtN/YY8D4m1g+cHhHTdBJjF0h52DtlovCrFPmrSzMavIoHge4Ik3SWtxJrTQ16DPAl2t
-	kth3MK+ZuS/CSrzlTw76awjLUBvujLUWsQ2OGWMkjzSuWRxeOm5HF5jX2Fes2vHcUIpnwPg
-	gwm8Qo6lAcbHach7rDWoIcjgrWvkMsPEpbUw0A49JRUAF8RSRS6ujKycgjuYSTG5/xTn7tr
-	NNrVo1gJTRrvrSd8aj0Y/91sSEJ//Mer2bqUfBnIA57oGIMiwgUJJpUTyBkhGDFgCDss1AF
-	TieRCsbwM3EForRowVGRvLtS6nM/zyWOcIdDXU/eQYnNVp2aJGNsQWfREUk3eoBLmSLzSI/
-	a2FygrRXXmUqHATw8cQgXj8BqnC+dx656NMSkblwXXU9sLUHgIWmboNz3NwdgxxBuWNe78y
-	VNTijUojZyBimbJXj2ZGPAr8VerBBsBVH9kupTs4Uuc0ooquhGfqhSHUUGk1g8qboZIbcDq
-	MbLu7rkRzdoz8vkp0YI7IFfU1EsADRj7pPJrZu1xPP4U01mKGZSdQgdJpIp8Pz6D7X35rTK
-	SFsuD+h+aEAnF3t6VVhmQUImE8p9ZtIDlt+JKN2hEPvIUak3jlznaxVsjp4JnrTe6ZciIsk
-	oZ+dClC9lPhTmGvfll2BMZToz4TLyNL9dNAxD2pBTQOnGzB50ReCF+9IvfApP8/bmbRi0A5
-	RuaVb54KgZrRcRXFvTtOKBx+3AnsaGNdsWJtCMc/JLeL0Uy3gjSq6lPo03X1S6O2iU1lrJM
-	wNav9Q641HP84YCvvNpsLgYaRvHcBj5loZNHs12Mhjz7RGhrzfmZTdeaoP00qtUv5Gy6JL4
-	2TDuRuhECi1SvQ7HXdvRZmpjFfEG1PfDtZGB4aonj0S3sUhl8WgRZGrYRUBkANiqzgUVOU0
-	Gfe2yo7W2zv8hv8iH/rKAoQRfNg4q2yTEGzzpTzvSYSsdszs8osewkw1ViwS0QdUIxTqZBp
-	lL5xz+X3O6987R3iW7xoc917x9p1g6oQMyaCQzRG3Gk7o0i6Y8DuZ72+Unr1VHWVz3W0v0G
-	+7vz369VwLvq045jp1wvElUCS5sIDQyhYJiF78a/t0MwBSsMoxXv22cch6SbooCEVt2Igk4
-	Dlh2rY33GYDnIA5zSVgfe/uB2A==
+Feedback-ID: esmtpsz:uniontech.com:qybglogicsvrsz:qybglogicsvrsz4b-0
+X-QQ-XMAILINFO: M6Wwv1ws7JqNANWwCaBdpNz2/EBKknL+pDZ753tLdW7HAv6qihpgYXmT
+	9bwF42I5XLnqWjkPRqZlx/5E9Wky8kMLW2Xyo38LFSzrPwZy3Vl718axHnGpaT2aFrbXOjC
+	UulwIKA1hs3Pfp+j0qqaFR+VKv+HpAaFnhJ5xOjwBx7myg9NHtrKRHIZRBw+AZ1vuTL04+N
+	8ykAJwyLflb56iNSYED5r3NnsO1AIo0QlsnZHjVm6+bocuULUvvXhS1eeXCsDPJUdYzzg1J
+	6m53nERB6Bj0zaqoipX20oLwJ7tyWEUCcxkvofQxm822HvhTpL7aYTXtjuBgC1hT/WlFmda
+	xTl2xmE+irA2QBRmWeZv0463eBuTG1fx9hWNk2EOZXdre2E8779d82g7Yf2n4gpG8NB8TYM
+	cgOIdYoqSx/qLkdyggICyvNE30ts2XreWq56VzIJbSmre1Y/hG6oHGYWyyEt62kpNPBs7ao
+	8xm6hHkEGQZ1y0JmMiqEV8wXFnbtKRikG+yVP4oet9aHCPBrfJF3oU/3seuA/DLFh970Tlq
+	X/lmTOKTVTH/GnpUKxKHK2hjDDaRFVk1Sb2Sk1qJ1luiadfo9MiwRREMka6jGvtJP/1vf7k
+	E0A7HKi337iNmB9Q49+2j2suwcKq8+pfAEbKEt5tUWUH05i/0KqeOBKIWMlxTJ5dZ7C6umc
+	Cqo9SosXOJrEPKpoP5Qz3aKXZXRwbHd9Z8CfciBsrUfvN5GfDp2SURueqR+38yX60+riPq0
+	jYjFcZjj6F4xZH1ad2NEzPAzrKKDHmZsgL835SDN8XAq9UTyKbXbdD5WK/VWbOnxFtx61rp
+	2l2qeiP2gP4C3QBHLr1mSdf+M2gVjSFtZKXNWp/mekFt0xJtYWYKq3p3sTsPHTexbzn1z2T
+	VAP4vwG1hH+gaI/K9DNBiLiTN9UeAQq5yktqvyq+kxsOLeblkKMM6YoPj3bIH36ZntKrXKH
+	6a2fm+bg2aOUCqakV/D7t+gyzf5UqRv25D0MPD9CQe7WyfPslliJh7qzeHOqJc78sJfmWg9
+	6XzrloCMqjvpJ6KD/DcOR/M0spbGXB1KZm8btR6C+wBNSZBcURfRi4LH2/Y7feoCde6wEy/
+	Vhj1Co2jbvLVe2/7otF34LnvX9EVwi4wu5DNTOg5MDG
 X-QQ-XMRINFO: Mp0Kj//9VHAxzExpfF+O8yhSrljjwrznVg==
 X-QQ-RECHKSPAM: 0
 
-Add a dedicated test at the end of main() that writes memcg_path to
-sysfs and checks the readback path.  Configure the memcg filter before
-start(), verify staging readback without commit(), and ignore start()
-failures so the test does not depend on CONFIG_MEMCG or cgroup layout.
+Hi SJ,
 
-Signed-off-by: Cheng Nie <niecheng1@uniontech.com>
----
- tools/testing/selftests/damon/sysfs.py | 34 ++++++++++++++++++++++++++
- 1 file changed, 34 insertions(+)
+Sorry for the noise.  This patch email was sent by mistake with incorrect
+send-email settings (wrong To and In-Reply-To).  Please ignore this message
+and any other duplicate v3 patch emails outside the cover thread below.
 
-diff --git a/tools/testing/selftests/damon/sysfs.py b/tools/testing/selftests/damon/sysfs.py
-index aa03a1187489..7a17ab88361b 100755
---- a/tools/testing/selftests/damon/sysfs.py
-+++ b/tools/testing/selftests/damon/sysfs.py
-@@ -250,6 +250,38 @@ def assert_ctxs_committed(kdamonds):
-             if ctx in ctxs_paused_for_dump:
-                 ctx.pause = False
- 
-+def test_memcg_filter_memcg_path_staging():
-+    global kdamonds
-+    memcg_filter = _damon_sysfs.DamosFilter(
-+            type_='memcg', matching=True, allow=True, memcg_path='/')
-+    kdamonds = _damon_sysfs.Kdamonds(
-+            [_damon_sysfs.Kdamond(
-+                contexts=[_damon_sysfs.DamonCtx(
-+                    targets=[_damon_sysfs.DamonTarget(pid=-1)],
-+                    schemes=[_damon_sysfs.Damos(
-+                        ops_filters=[memcg_filter])],
-+                    )])])
-+    kdamonds.start()
-+
-+    shown, rd_err = _damon_sysfs.read_file(
-+            os.path.join(memcg_filter.sysfs_dir(), 'memcg_path'))
-+    if rd_err is not None:
-+        print('memcg_path staging: sysfs read (%s)' % rd_err)
-+        kdamonds.stop()
-+        exit(1)
-+    if shown.rstrip('\n') != memcg_filter.memcg_path:
-+        print('memcg_path staging: memcg_path readback '
-+              '(shown=%s, expected=%s)' %
-+              (shown.rstrip('\n'), memcg_filter.memcg_path))
-+        kdamonds.stop()
-+        exit(1)
-+
-+    err = kdamonds.stop()
-+    if err is not None:
-+        print('memcg_path staging: kdamond stop (%s)' % err)
-+        exit(1)
-+    kdamonds = None
-+
- def main():
-     global kdamonds
-     kdamonds = _damon_sysfs.Kdamonds(
-@@ -356,5 +388,7 @@ def main():
-     assert_ctxs_committed(kdamonds)
-     kdamonds.stop()
- 
-+    test_memcg_filter_memcg_path_staging()
-+
- if __name__ == '__main__':
-     main()
--- 
-2.51.0
+The correct v3 series is here:
 
+  https://lore.kernel.org/damon/D4787203018006D6+20260601073635.200015-1-niecheng1@uniontech.com/T/
+
+Please use the latest [PATCH v3 1/2] and [PATCH v3 2/2] in that thread.
+
+Sorry for the confusion.
+
+Thanks,
+Cheng Nie
