@@ -1,46 +1,52 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from smtpbgjp3.qq.com (smtpbgjp3.qq.com [54.92.39.34])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 593421F12E0;
-	Sun, 31 May 2026 17:08:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08ABA5733E
+	for <damon@lists.linux.dev>; Mon,  1 Jun 2026 00:54:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.92.39.34
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780247296; cv=none; b=mFJIgUyPrKYZGPtkdlHKgToKTNXl8/OdU+8lqDWo8h8xvu9QWArsaei6D0vTRKoag2YCViiVRmJFbZVoZb1DKbn0ZQ60TA8ECrySoilFYHv2fusbPc/qLfR/5CdIbvnaQEddrDSIgjKEJ+h980USKtBVTLx6RKIZi3vYmVPKd8c=
+	t=1780275300; cv=none; b=i3z8kw0+i8W3E39eps7VC4YGGnmdV3u9VHP/7PQN+YmCLqWFI6b3IWwZYCaIu3IjdxhReYyhMYATFJ+/0WpGB03MhRq6Mlia7wdY5ADYXvB9VuUMAC5igoFQBFHq/JwxX/c8vobN5u1jfgKkEkif6U5lx1kCST7S4QG4mgegIoI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780247296; c=relaxed/simple;
-	bh=5K076Fy7q4doSp5njfPcsB9AO/IeFgft+eS5BCwLEN8=;
+	s=arc-20240116; t=1780275300; c=relaxed/simple;
+	bh=IEJJEqNCkLJW/qCul0Gskb/AUCzPBTL3PE8VRk1n02g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B5uTUcXG+lk4cTIKj7ZCrxW03S+o+s6LI/DLmISw3sTTbBl1dDsuox0KfYcdHHZ7Xi0lpTMMnFDO/QVz2ywzs+Lkef+x9MMz9Py/RHbInthZz0R6NP5L18VogL4A8fE8pGFFmalYHC6B7sZU8W2G04Q1PSl6zL1IGmg6RxWtKWA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=T67PVWQC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=H+rb4CxaGhyJTgoHW3YToY5IJyL+A4iUawxNzlNI5jcU7htRxP6Bqtls2vkfOoa6Hc2B8H4tD/3Ib11FVqu2Jjh4Jva38jd6lZEkj9Q/B7O/G+SKUSjw5FZ9gPV2soRmFq4owTKMH9efehJw71VeWJSGWj6NLTWA04ST5u30m9Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=uniontech.com; spf=pass smtp.mailfrom=uniontech.com; dkim=pass (1024-bit key) header.d=uniontech.com header.i=@uniontech.com header.b=ZdLvSXr6; arc=none smtp.client-ip=54.92.39.34
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=uniontech.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=uniontech.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="T67PVWQC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA85D1F00893;
-	Sun, 31 May 2026 17:08:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1780247295;
-	bh=q0kft5uZTu7IpkVqR8CNYuSgsRuNK2ZGN1ogEISTcwU=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=T67PVWQCsaBBMEvoIVNH5eCFp2G8RFJWaM1NeWF9umI9ALi1cKs6OHZbf/RpzCs51
-	 iVZN1/DWiYRMSwp6nNzK7r6ay5bE8FTr7aVI0p252zfLFV8fJQLQf++S8RXta1FqUn
-	 WzlH1M/CV9T5wlMGhH/H848kG1aqeZoH14BbC5Gx3mLfvNaFiuSuwetKOLd0OBgVWa
-	 bZAehCUUlYhdApZ1F6iOeI/3S+AXsVSErx0eRo+15mIB63JKQNKr/XQZTU7xLM6zKV
-	 IgMP9e9aBiwTi2Ae2qyLuDuBGxsMYUQtIKv4bKHDW/HxKDlb1Gns8epCEr4Qq78gG4
-	 b1sAB8xU5s43w==
-From: SeongJae Park <sj@kernel.org>
-To: Kunwu Chan <kunwu.chan@linux.dev>
-Cc: SeongJae Park <sj@kernel.org>,
-	shuah@kernel.org,
-	damon@lists.linux.dev,
-	linux-kselftest@vger.kernel.org,
+	dkim=pass (1024-bit key) header.d=uniontech.com header.i=@uniontech.com header.b="ZdLvSXr6"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=uniontech.com;
+	s=onoh2408; t=1780275256;
+	bh=wplUvBwwSZUkE/1pF8JoDJVBT5NIk5fxpFOgyy27ARw=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version;
+	b=ZdLvSXr6IN0sOxjm16/fc4DJSCHCiT69okgiqQhMfJUTxQbrF3i3et/IO36XyF6TH
+	 0ra8LkjUZnqDJSsCzy0ySqO9F7g5jKbCXIFRcBNXnwLi4gvDUDsZ1BeyjLfbkobD4y
+	 cLJnr0azS3cO1UT6o77oR2P2BTgTPR3qDgre34As=
+X-QQ-mid: zesmtpip2t1780275245t0423d3d2
+X-QQ-Originating-IP: UErp3taaIoj7K2ov1DmKucmDovlP8o3qkbRO6SlocXQ=
+Received: from PEN1097 ( [localhost])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Mon, 01 Jun 2026 08:54:02 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 1
+X-BIZMAIL-ID: 14429530627096407333
+EX-QQ-RecipientCnt: 8
+From: Cheng Nie <niecheng1@uniontech.com>
+To: sj@kernel.org
+Cc: damon@lists.linux.dev,
+	kernel@uniontech.com,
 	linux-kernel@vger.kernel.org,
+	linux-kselftest@vger.kernel.org,
 	linux-mm@kvack.org,
-	Kunwu Chan <kunwu.chan@gmail.com>
-Subject: Re: [PATCH 0/5] selftests/damon: misc fixes for test bugs
-Date: Sun, 31 May 2026 10:08:06 -0700
-Message-ID: <20260531170807.99856-1-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260531085633.48626-1-kunwu.chan@linux.dev>
-References: 
+	niecheng1@uniontech.com,
+	shuah@kernel.org
+Subject: Re: [PATCH v2 2/2] selftests/damon/sysfs.py: validate memcg_path staging readback
+Date: Mon,  1 Jun 2026 08:53:59 +0800
+Message-ID: <4378862A53A443AF+20260601005359.26544-1-niecheng1@uniontech.com>
+X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20260529150057.84753-1-sj@kernel.org>
+References: <20260529150057.84753-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -48,41 +54,46 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+X-QQ-SENDSIZE: 520
+Feedback-ID: zesmtpip:uniontech.com:qybglogicsvrsz:qybglogicsvrsz4b-0
+X-QQ-XMAILINFO: MwJMCv7IGsyW0OMjaOMs13To4Fl6JKOmG69lSHdjIrVjZBU1BVNdCRZG
+	sv1ixIIM65x/dClUwvTMWttdwXpoollDXnXDNtePtQ+n5jBkKW5Vv/z9wPmJeiwRO78nKW1
+	MH/QPBut+g9cueTOns4G6b2S8hNXYaDlWs6HkqFBRLuOpFl7AXf93qpFe5dgsMBUb8WjWCz
+	2XjYUIk0uQow3r0a8EilOKyvMVRRT7qAFwj9ne5I5BZcuttflgifDeHcM5quBuLLFgXWQSy
+	0AecNgp4etO9fcmSujBc4K3lL8AWylvIGeM6kl30IXvL49Tu7tdmI1OU+/EFfPUzzcl4bYZ
+	hqEMjrbdJyCOnrKY4KTXgtIK+ha4acTl6CDAi0RdPImrBflCiAJaNoUDSncKJKKcW1OcH38
+	1kYWzE6L5ca3Tz74cw2cOxPSJcOKaWnw+SDC9kW192kmxKBTQQMHxQIn8OVUCIOwC66gmSm
+	Sa58QUHMXPu6weva50gf3xTAyg6k8EGBpJwx7UwgnbyGKeMgyFAY6mHZx5iM+7AG+PWLN7w
+	MQFgTjvS0R3002E285i9bvPG5t9qFfpclsrs6GtD2LbMssZrWQtL2cdKxwMn9S9jKPVOXw4
+	o/+Cop0daXds69HneOta4BDAafLpHV1lKiAE95Y0czCzWG+smyUD6+RG8jxFX5o1c4I/ZmT
+	M55JSi6t3ggZxYwHoszkZO5kom7zqOrBqHMwq6Nc3yFobJbon/FPVz4YHIVSSH3sumFVl++
+	fJppNDnZ5oL5iispPGPDmhQq/MuPdgPdl6PclEkC2BIXmRZcjwa/5ZWFUcmuxCfdBFr4CYu
+	DdpSrUdCUayxnnsBTcVQ3Cz5C5IaezzEIXciJSFzOxL7p4s0jMDXpqHvlCzccj9KkYMxgnK
+	i/94buMvUrdugPkTMU1DmEmt6yUwxW6+9nDGkbH6MtVVi6BAl/wjO0bUWCuVsB04wylcpof
+	syvVkWDgme93LUS7j4Q3XSTyfvCto2uTsH89Ul1xxgLbO1jvm+o6xijFx3FTVCbfdIUhCwI
+	t+XPKmld3FjgfF4GHl0mT6Lepg+YaFcdzLsdEZIuZfyju3+Le6MvIlYAsu9L8=
+X-QQ-XMRINFO: NyFYKkN4Ny6FuXrnB5Ye7Aabb3ujjtK+gg==
+X-QQ-RECHKSPAM: 0
 
-On Sun, 31 May 2026 16:56:28 +0800 Kunwu Chan <kunwu.chan@linux.dev> wrote:
+On Fri, 29 May 2026 08:00:56 -0700 SeongJae Park wrote:
 
-> From: Kunwu Chan <kunwu.chan@gmail.com>
-> 
-> This series fixes several bugs in the DAMON selftests.  Most are
-> trivial but cause tests to silently pass when they shouldn't, or
-> fail prematurely on slow machines.
+> I'd prefer the error message to be in form of something like "'memcg_path
+> staging: kdamond start (%s)' % err" for consistency.
 
-Thank you for sharing these great changes, Kunwu and Lian!
+Will do.
 
-> 
-> Patch 1 fixes mutable default arguments in DamonCtx.__init__()
-> that cause state to leak between test instances.
-> 
-> Patch 2 fixes a trailing comma in DamosFilter that turns
-> memcg_path from a string into a tuple, silently breaking memcg
-> filter setup.
-> 
-> Patch 3-4 fix bugs in damos_tried_regions.py: wrong operator
-> precedence drops the "not met" prefix from failure output, and
-> empty early aggregation cycles cause premature test failure.
-> 
-> Patch 5 fixes several wrong strings that produce dead elif
-> branches, skipped file existence checks, and broken dict key
-> lookups.
+> It seems we don't really need to do commit().  As Sashiko mentioned [1], it
+> also depends on CONFIG_MEMCG and active cgroup configuration.   It would be
+> suffice to simply 'stage'.  We don't have stage() method on Kdamonds, though.
+> What about setting all parameters including the memcg filter at the beginning,
+> do 'kdamonds.start()', but ignore the failure, and check the content of the
+> memcg_path file?
 
-I left comments to each patch.  To summarize,
+Agreed, thanks for the suggestion.  I will drop commit() and configure the
+memcg filter up front, then verify memcg_path readback after staging via
+start() as you suggested.
 
-Patches 1, 3 and 5 look good except signer/author info mismatch.
-
-For patches 2 and 4, I think we need more discussions.
-
+I will send a follow-up patch with these changes.
 
 Thanks,
-SJ
-
-[...]
+Cheng Nie
