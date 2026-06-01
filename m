@@ -1,48 +1,51 @@
-Received: from smtpbgjp3.qq.com (smtpbgjp3.qq.com [54.92.39.34])
+Received: from smtpbgau2.qq.com (smtpbgau2.qq.com [54.206.34.216])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B9F938D3F9
-	for <damon@lists.linux.dev>; Mon,  1 Jun 2026 09:01:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.92.39.34
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6A80237713
+	for <damon@lists.linux.dev>; Mon,  1 Jun 2026 09:05:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.206.34.216
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780304512; cv=none; b=Sj/tZfvVr1ZZBrV90Z24rbD27/bqcfRvPhJPNPUIJ2MgLfW8VppvkVESgfL5272uRF3K8eHBzm7+6hnwAKWIDrf53wlWMsur6azQIJczYaSZMqtSxZOwlQYyKXkjfWRY0SNwq7qdGY1Ku20HGXee0sVT1BJetP51XPH66Z2020E=
+	t=1780304751; cv=none; b=tAqn2vRmrL6K4HOU4Ep3DbIwqNdioM7XFDdWFUlTv2vFuc5QeIYdNpzTTwSLm/mNKT45+k8WJgt06pNvT32hG5umbIsZH7spovHe0MnoDnu3/Su/8agZSZN0Nd6WsrC5aGANiddtAE2aC6DIHOLmHla5ldIaatH7+gvNPufC+xc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780304512; c=relaxed/simple;
-	bh=vLILEbVUmGF4z8s96MKr0p9QRszBSgZA8sEpfRMMmVk=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=ZqhrZFLtbX8OYPQ3UKRDkqvX1sq2pzagu+koG9dUEqb/oOzuFX/FcshEcd8FABTjNqS+NzuevSg6I97aJMROmT4PzwqYD7mYYKVGQH5H0PuVGXG5TnMEgQlPYA1OaK+Y5kv/08OfyitUnxZqDO7dVHE8N+mAllSwmS7nw+SsAj0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=uniontech.com; spf=pass smtp.mailfrom=uniontech.com; dkim=pass (1024-bit key) header.d=uniontech.com header.i=@uniontech.com header.b=R8bHB7Co; arc=none smtp.client-ip=54.92.39.34
+	s=arc-20240116; t=1780304751; c=relaxed/simple;
+	bh=0aE6h/5Gor35FT0+47VDSaRxZdUotrOoDslgItJm8PY=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=YwTxuMIzXulWItjYA+h4gD732qAo7ONNiY8DsnnqmZMgpW9PmAQQacaaZBc7GwGMFP1VCZe5PGpitDzD1UUntgAHGPIVcSY364oq5RPM+qtzUxA+BHIxB6PfjkjDTTSD/ahbqk3q9AH13u9+hAMPUv8ra0l7YT+WIdnL/rxF/lo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=uniontech.com; spf=pass smtp.mailfrom=uniontech.com; dkim=pass (1024-bit key) header.d=uniontech.com header.i=@uniontech.com header.b=AemEIS1f; arc=none smtp.client-ip=54.206.34.216
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=uniontech.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=uniontech.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=uniontech.com header.i=@uniontech.com header.b="R8bHB7Co"
+	dkim=pass (1024-bit key) header.d=uniontech.com header.i=@uniontech.com header.b="AemEIS1f"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=uniontech.com;
-	s=onoh2408; t=1780304489;
-	bh=jDNtQRi5CizyyrP7BR7riMaNsb/AxIR/vWLi1EG8Law=;
+	s=onoh2408; t=1780304732;
+	bh=ea62rNturdRY4XhPqvTtukJW98iV/DZwMOLJ/F5D8vs=;
 	h=From:To:Subject:Date:Message-ID:MIME-Version;
-	b=R8bHB7CoXwX5mvkbQzjdQUhcySjclr4TyEDKzacRDe91Deg04v73SLA44nOGQqL3D
-	 TbSX6TU51wHiGuneSvG+hZYps445n7Mh4Oy70HEyIUp7N/SJ5/ySdHmQ9/4b2afEBC
-	 hP+EnYLRzDDb1Z+uid7/LYNpu07UPgY9NLXv9Km0=
-X-QQ-mid: esmtpgz12t1780304483t01ec96fc
-X-QQ-Originating-IP: Ob9Bpy4WPKB/RxPVu23A0LtyCLwN5F8DUWPaVIAfths=
-Received: from PEN1097 ( [1.202.39.170])
+	b=AemEIS1fhNRLY0jn7BjS7V9hm6q/gb1WBHf/aYfDQS66JWDk8dYi16bhDeRgalvR8
+	 lkVvGz5xcPXqODKv5n/0RlAAAIjHbm9K3XAQ6BSqMlc1KEqctiJx1oy1B4o7ZHkpu7
+	 VvXMW4I6cYQg4rgFy6qAG3JdWRUvYbek5iTB6cX4=
+X-QQ-mid: zesmtpgz8t1780304727t4a62472c
+X-QQ-Originating-IP: 2bcxmMbH2iusCaR5Nzg0f+ovlfhyFWqjrzOOczmEX18=
+Received: from PEN1097 ( [124.126.19.250])
 	by bizesmtp.qq.com (ESMTP) with 
-	id ; Mon, 01 Jun 2026 17:01:21 +0800 (CST)
+	id ; Mon, 01 Jun 2026 17:05:25 +0800 (CST)
 X-QQ-SSF: 0000000000000000000000000000000
 X-QQ-GoodBg: 1
-X-BIZMAIL-ID: 3002622667247154987
+X-BIZMAIL-ID: 41246512580462291
 EX-QQ-RecipientCnt: 7
 From: Cheng Nie <niecheng1@uniontech.com>
-To: sj@kernel.org
-Cc: shuah@kernel.org,
-	damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	linux-kselftest@vger.kernel.org,
+To: niecheng1@uniontech.com
+Cc: damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
-	niecheng1@uniontech.com
-Subject: [PATCH v4 0/2] selftests/damon: fix memcg_path staging handling
-Date: Mon,  1 Jun 2026 17:01:19 +0800
-Message-ID: <7E6EAB7C1BE04DEA+20260601090119.238457-1-niecheng1@uniontech.com>
+	linux-kselftest@vger.kernel.org,
+	linux-mm@kvack.org,
+	shuah@kernel.org,
+	sj@kernel.org
+Subject: [PATCH v4 1/2] selftests/damon/_damon_sysfs.py: fix memcg_path assignment
+Date: Mon,  1 Jun 2026 17:05:19 +0800
+Message-ID: <464AE12D4BC6B6F4+20260601090519.240482-1-niecheng1@uniontech.com>
 X-Mailer: git-send-email 2.51.0
+In-Reply-To: <7E6EAB7C1BE04DEA+20260601090119.238457-1-niecheng1@uniontech.com>
+References: <7E6EAB7C1BE04DEA+20260601090119.238457-1-niecheng1@uniontech.com>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -51,42 +54,53 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-QQ-SENDSIZE: 520
-Feedback-ID: esmtpgz:uniontech.com:qybglogicsvrsz:qybglogicsvrsz4b-0
-X-QQ-XMAILINFO: OY5SyXILbwKtE3uCPVi/0Yh3KKCebJf1yvt+cXombyJdoO4pjb44D18L
-	kSoLgTfSbr93ICK/FQydsOIaKZhoGs25lhQ//fU56aXGchhUSXU/oBGzRtMGIEogoa+z6ns
-	PAwKFDjGKMcHuJZDDUAeIOXjKHpEmjLr19C07kay71Q72jbqqE5TMKygGU594cI7TskyAQQ
-	21bfHZBzLnlQ8rTek5PJ3FsLLTG4jYolGj/nZgxPF6lToLJWrM4htANeY3P/TEBFfkRVouH
-	eQYdlKwTajupJrs99zVyF6Yiu3TkNVFl3wjZqMvB312kM6iPsOKWdnyRSqpH9E7yjk2qeSy
-	FJasIpfYIvHIXqhPpWnODrd1hzz4iJ1L0BHXDgKylrxfKdFoq+WAgSrdGwGZ6gAjErtGlMx
-	8AH+zUmyEAsE2twDpLTvlb7uQr/gNSPhEGZwY8C/FxpA2SRknm9nyWKqbgqALaOUVXkwZ1R
-	l9/ETqDhwfM0YYLF5HlN4vHf3hMccBB6a7Kb7NiIP9NnoOJ9rtPDfUVjy0AQ3SA/peBYo8R
-	0aun/RGgz1EnQcVbsq0C3i9anZcvYT7BMWNMg0Hv7Lx9Y4BhD0jHuJFhVRiotGprzZbU1LB
-	fCUfZUsvc0WGDTrGcMde8qsTCJdYhoNL2OaPKnmbknyrd4zkhtICBaETtNytn4h2wylli1i
-	WO0MVloxkwerer5hFiBA8FtU7VLfaTEH+eqjwyAlQdBpSfo2u+Oh4y75zHYBkUm085ZH3+R
-	e41kXAMhqpX0XF0TJq1buRSzWu2frKPSuqQT95NRW58nrxGCqXTGIDRwDAfzDwW2gpyY7y5
-	ZyFgq/4htWe8q9y/Gu4dc4mUhqzQxlVGl2G+Dxey1G5KLJ3KTS4XeCm7BjehCxOAVu8Ci9o
-	kACKSbXjspKkJ7z2Ui0Mp1MeirRikVV6DtjShDix/GZrrDZzpX2XCXhGlw9sf7N+O67Chrl
-	EqNhmrBeCusDfYuGxcrpZ57QJPvflw1MF+KFE54VuoAdceJ4XaquH2wpuHB0fVXGo6s39rm
-	+qerLx6YN3BNrPU2FAM+JyV5bBUa+w6TmJkE/jAh4I2XehDgAU78oJSCKV4v/H8s99P5pbk
-	HJqsvf75sBz
-X-QQ-XMRINFO: NS+P29fieYNwqS3WCnRCOn9D1NpZuCnCRA==
+Feedback-ID: zesmtpgz:uniontech.com:qybglogicsvrsz:qybglogicsvrsz4b-0
+X-QQ-XMAILINFO: OfLzXF8J7RicL/ZU5lX6H/24XsvdkJHW89YHSaoLnS0I9im0Y0dG2Z9j
+	EA4sHOksION396oefkjL7N3ihF+xbBnzd9hGoHKefggKJujqurYZvQEKibLLtt3yzvZqXJS
+	q5K8kThs6+M5G8+u2y+d8P+J3ZHc3NM8I9R0AsQlCtqDKzLXQVGDk3y0e7DuhjBFwlYmSpZ
+	FN6Fx/2HTMKaV+Cgn1zzUCDo13uKxlBM6zWeVaiIczE8i9Ynuhjl6Azb+n6tcRXMmRhtID0
+	0TrEZXZRrKlI4cWZlyM3IZmpt9+hQwbOg3C+Z8euefWAh5I+4iECq93x3iBZlPkMThcSDPb
+	Dq/qCj6UD3Y7sc3mOlSBSqMVe3tgLDdsUNsN5mXSjB8j76F/rgjLljhQSs+Lcv7qrGfJRQd
+	HsPIxMwtGfkGs+V6MnTcpsmCng2PrSKf90h0RGTIYxuSzMmlyhPKnkB357pw5YGCRgJIXi5
+	yfPerX5KzEydoboaqFt2DP/NDwgE9NYgsSwf17yHr8rXGJCNr+CLLCQjf6cCmVSiKbZjt3P
+	GGspFhhr2L4+BmV7MkeMrpZCoVH58FtWxjKwC4taAjPJJCiqe1Qi554mjQbvMkEjj/1xLgG
+	X4TdpD6+ueK4vpMAF0eiG0O5mVX7rA0HPPYUkh8z5ToO+DkfqY75KRFaRd8mIBZwcES4b9J
+	0g8tpqUxZvapoEWoteFa+myMgpB6B4ZaWFOVccOMyS/FPnMFge2IjL3uWZUZmj9Mj9dsFoK
+	0gpmyUmqwkcnu3jgU6T/zkhnkgI3nGBCGr1aFLDZlDwQVo79WG2iBkzWRQTAIb8QDDse2sC
+	x2oYO5lXQ6vowMjZFOdG9LB/g4OMIHxHA92CIzcwaNpp0u7b3pBMLIXJTBoeae8uiGZESUY
+	Z69YePUo2HduZMp5+IbDTB/3ayboLzJ+XXKm2A17v8+IdzqF+7sI/YhRzkDJwk0ppM9Gd9E
+	mN6jAaNyH0rvpnkzGxdtqr3EMYdeNc6HzU8PqYiwSfQIOQq1RXrzKxnBOay8aVaF2L4NLh8
+	LbGA4oOajEjLomJiAfdfqEfXJRa571zhzkutV42N2T6H0/fb5izQSY5aNrHUxSXN05xYvXp
+	HGuRzo67OubF4tpYPXL2OTJK1uBkAvxV2QGslHFW9NQFW0TkNgNBSVmQAgOQO1ccQ==
+X-QQ-XMRINFO: OWPUhxQsoeAVwkVaQIEGSKwwgKCxK/fD5g==
 X-QQ-RECHKSPAM: 0
 
-Changes from v3:
-- call stop() for cleanup without checking its return value
+DamosFilter stores memcg_path for sysfs staging, but the constructor
+assigns it with a trailing comma and therefore turns it into a tuple.
 
-Changes from v2:
-- configure memcg filter before start(), remove commit(), ignore
-  start() failure, verify memcg_path staging readback only
-- use print-style error messages as suggested
+Fix the assignment so memcg_path is stored as the intended string.
+This makes memcg filter staging and follow-up validation use the
+written path correctly.
 
-Cheng Nie (2):
-  selftests/damon/_damon_sysfs.py: fix memcg_path assignment
-  selftests/damon/sysfs.py: validate memcg_path staging readback
+Signed-off-by: Cheng Nie <niecheng1@uniontech.com>
+Reviewed-by: SeongJae Park <sj@kernel.org>
+---
+ tools/testing/selftests/damon/_damon_sysfs.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
- tools/testing/selftests/damon/_damon_sysfs.py |  2 +-
- tools/testing/selftests/damon/sysfs.py        | 31 ++++++++++++++++++++++++
- 2 files changed, 32 insertions(+), 1 deletion(-)
-
+diff --git a/tools/testing/selftests/damon/_damon_sysfs.py b/tools/testing/selftests/damon/_damon_sysfs.py
+index 8b12cc048440..43075892215e 100644
+--- a/tools/testing/selftests/damon/_damon_sysfs.py
++++ b/tools/testing/selftests/damon/_damon_sysfs.py
+@@ -271,7 +271,7 @@ class DamosFilter:
+         self.type_ = type_
+         self.matching = matching
+         self.allow = allow
+-        self.memcg_path = memcg_path,
++        self.memcg_path = memcg_path
+         self.addr_start = addr_start
+         self.addr_end = addr_end
+         self.target_idx = target_idx
 -- 
 2.51.0
+
