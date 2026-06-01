@@ -1,108 +1,82 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from smtpbgau2.qq.com (smtpbgau2.qq.com [54.206.34.216])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FC393890F9
-	for <damon@lists.linux.dev>; Mon,  1 Jun 2026 08:03:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56F093612EE;
+	Mon,  1 Jun 2026 08:47:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.206.34.216
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780301002; cv=none; b=SB62wloJeEPy+qSH4bKbqs/CtELIKnl+oC8/DgrFOAN4gAMwTcTIEfyDZhlWmPUvp/F9eQB8grfeQcExnKESSv+FxfFooDKna/JW8Q1s0+D/0atvfrIVzvz1q9dFJEnHRJNheh5lp9VcdXrdYnkG/DeDFUnb2xw5/PvW19Sgr1s=
+	t=1780303637; cv=none; b=XBgH7Kra3kPqOdod9RIdEODbPZ9unxBkboFQlyQpZQrQgsNyG0izx8m+TctaKclufkPPBIlPhRQQIbR65BFTnvmFt+zmNOu7z0aCyk1AKiRGWuTfChVTdw6l4gtRDP+v89qDzb+ttT1Qj7RZ3eW2KoV4qvcWchpJAU8t8YHgSL8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780301002; c=relaxed/simple;
-	bh=B6Ej/UUusZOqts85aUEVqKFu0dm+wkceLxvPmYr5p8g=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=qkLvn6ef59W7/uodlk2UI3Qh5t7/Y7/J128ji0aPYjmLDv+QFR+WE9k89ZnbDfp0IejIeiJDLGSGcXn1ZK7KjnBFIH2a0Wg++FiU5OXQJwnXFUFm3A8h3uFyQVpxCUlKac4auYMDnQENWATfr9e1qjWkttMf7K6Rjq1A/ISm2aA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=I8TrQLTn; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1780303637; c=relaxed/simple;
+	bh=vX5BfsPa5A68VVnS8RnhmW+u//JcdoVKLcTeGf3fT9M=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=BkbSaD7c27MIaOfGcU4gTCTyy/8EoxABjgz2EYONwosPNoc8ZA+W+r3eklqWyGupoUFN7HD9WeTP5RyXZ+920g42ZcmYG6lYHaIuWWSshZtKaipdFAFBCOGf46NuIZY1iP6+naYL7bZEAE9bgPSve4d3Gv8QL1g9jpYyMMkTkSg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=uniontech.com; spf=pass smtp.mailfrom=uniontech.com; dkim=pass (1024-bit key) header.d=uniontech.com header.i=@uniontech.com header.b=cBJgcPeE; arc=none smtp.client-ip=54.206.34.216
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=uniontech.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=uniontech.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="I8TrQLTn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0F121F00893;
-	Mon,  1 Jun 2026 08:03:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1780300997;
-	bh=Jm5UghuyVUki8jBZwNm6K1yjj6HobSiWasdSGL6oonk=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=I8TrQLTnCwEDlZNokYjbYQUTKwkJZMvKwNex76WY9puEYpTS/VCngTK03UNuIyVvz
-	 gvZiRcUY252oUujxWCk6f5Qb89zIuW91dAryAoPAr3Nvvy5f+xfMWoPjCAlJV+Fn6K
-	 tSw48pAc3sFN4QFKlzQ81IWSjK7E6N6xfb/CmfMo9WHMPsyqVysA696KjCzsqka9xr
-	 T2P75njDkVUqlFRP+7jv27c1Fki3u4pO58M7a5B6gD+Qg5jHDJ/fJN/NlmzNtEUVwi
-	 F2rnXx03oJdjpIlFqCCNz8sGDBZk1WfJWK4AcVtObRmm/GCdFhFP3RcW/08E48HwKS
-	 GUCaoZRvDGrGA==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v3 2/2] selftests/damon/sysfs.py: validate memcg_path
- staging readback
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Cheng Nie" <niecheng1@uniontech.com>
-Cc: damon@lists.linux.dev
-In-Reply-To: <87B39E0F19A29319+20260601074533.205616-1-niecheng1@uniontech.com>
-References: <87B39E0F19A29319+20260601074533.205616-1-niecheng1@uniontech.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Mon, 01 Jun 2026 08:03:17 +0000
-Message-Id: <20260601080317.A0F121F00893@smtp.kernel.org>
+	dkim=pass (1024-bit key) header.d=uniontech.com header.i=@uniontech.com header.b="cBJgcPeE"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=uniontech.com;
+	s=onoh2408; t=1780303607;
+	bh=lm7cKJpeJcGZ7rnE23IAbIn/bV3fvUzB6OuFZrA6new=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version;
+	b=cBJgcPeEZOEAwEAzYd5tmz/1bbS2aUtYKRSxBrQh3aE37Y6Q9qhfXeVSnrGHdxPcd
+	 TeF0oFhvNjS0WbHwvGkbH3fKwP5++g720UA1o0rYD4e2Bl3YI4U/TaxNrUU85kR36d
+	 e4sG1QGLvQ6vgG3Zzr7kcddhn1LkVOQHpfwm11zg=
+X-QQ-mid: zesmtpsz7t1780303600t4f15ad53
+X-QQ-Originating-IP: Np2n+HOREzcPugsu0aN+ms3gggza1Z72h61EW+IXUJA=
+Received: from PEN1097 ( [1.202.39.170])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Mon, 01 Jun 2026 16:46:38 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 9063147369591113145
+EX-QQ-RecipientCnt: 5
+From: Cheng Nie <niecheng1@uniontech.com>
+To: sashiko-bot@kernel.org
+Cc: sj@kernel.org,
+	damon@lists.linux.dev,
+	niecheng1@uniontech.com,
+	sashiko-reviews@lists.linux.dev
+Subject: Re: [PATCH v3 2/2] selftests/damon/sysfs.py: validate memcg_path staging readback
+Date: Mon,  1 Jun 2026 16:46:35 +0800
+Message-ID: <44CF9B1C840A17EB+20260601084635.234772-1-niecheng1@uniontech.com>
+X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20260601080307.0532A1F00893@smtp.kernel.org>
+References: <20260601080307.0532A1F00893@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-QQ-SENDSIZE: 520
+Feedback-ID: zesmtpsz:uniontech.com:qybglogicsvrsz:qybglogicsvrsz4b-0
+X-QQ-XMAILINFO: NQDSFSrlZSaiOi1mUdRyqp7FVcVzrRSSZhejmmQJGuJjbhIigKoGKyAL
+	xP0zTHfIol5s77++zAD1YAmXfvxV6lHUpSXoYblzyhuTvvsVZqiCDSv8AYv0JLt1Mwnq03s
+	03q/pNklnqALSWxQ5LlgvsQgYWkYYwm3VkiZegqS6BxJUN5FoNB0f+zp+b/qdgC/CwOeNU4
+	Oc8+8bg/gkrq6D6LBA+7AKg4/wvH6zJFR1OZAl1JLN4XUy3OTmO9NalJcxdtbqAKqkD5Mlt
+	aS3i1jwnyqUM0nXoMB2YqOAAnx2JvveoCqVsrzNglEcoT9zePBg9fx+UNvc9WKYQxEbbs4v
+	C49s0mfu0oGr4L6zuMTYRMBu/SFznJGfa7f8tqkaIUOjlAnoqSghQ9xI8e8mQd1X3htbUmg
+	BEYdzgHNwLJDuf11YcQE4xaMjlZAa5NKoMB1hOvEgLfUtHjlaj+LKHIHPnGmp4c0/d1rJen
+	/VVHUJyHrw0mwbwaaIrDryw0Mc7epcW91AZuxAM1Y+QsxJr23jxvL74y/7cit7GtRzbY0+5
+	9maZSa6ZkS+ifdJmB49u8o6uQFp4xDQlx14S1qCiq/5oGFaG6nFiDdY8MNPTqAlt3t77uF2
+	Af5puiFghm28vzpF7HZzjOP4woUlg1VCKvHwj65Ev5GAhs9MK91kjALPutDbLljyY+VZqc/
+	427eYojeeHrn+pMXt6Khu2UQXbbdW1hRus+X0Kbp0W3tIvqvcmRxsTilsFtWMQXyHRsti3/
+	+hwOFVO7e/3kvuEQdr1ZaDJkuVrWXrfS2hVTef4Q3mOEhfbcWGVC8/mDMX6LksP7R2+kvji
+	sA/CRB0KYkk800Phh5oJCZoi+gQD0tpTQIPzq+yrbY+EzQt2sWAiiMYzmTTSRC1Z0duR5q3
+	Sz1nrBdWjfzZX+TeSg7Daf0bQ0O40+d1DKGE4prG3W5CGfuD6vcP2GPOtBpafbFvoql/og3
+	Ip1B0bFSQxssMIVtrBLxeWCYBkdI0Rto4LXQKJS2+kPySBGfyoB5nP2TzFeel0kpzEqJImy
+	Bn0iBxYzmM39B5CxGQ2Wp2BgGBX4P20jPDqnohysFMQdPLu4CaDfsAV5hz1XIj5VHWPwSR9
+	WAJmroyi2Ny
+X-QQ-XMRINFO: Nq+8W0+stu50tPAe92KXseR0ZZmBTk3gLg==
+X-QQ-RECHKSPAM: 0
 
-Thank you for your contribution! Sashiko AI review found 1 potential issue(=
-s) to consider:
-- [Medium] Test fails on teardown when `start()` fails, defeating the state=
-d intent of decoupling the test from `CONFIG_MEMCG`.
---
+Hi SJ,
 
-commit 995afe8f607b12ca4f4469ac19ac53b1340cae11
-Author: Cheng Nie <niecheng1@uniontech.com>
+Thanks to Sashiko for the feedback on patch 2/2.  I will send a v4 soon
+that fixes the stop() cleanup issue in the memcg_path staging test.
 
-selftests/damon/sysfs.py: validate memcg_path staging readback
-
-This commit adds a dedicated test to write memcg_path to sysfs and verify
-the readback path. It intentionally ignores kdamonds.start() failures so
-the test operates independently of CONFIG_MEMCG or cgroup layout.
-
-> diff --git a/tools/testing/selftests/damon/sysfs.py b/tools/testing/selft=
-ests/damon/sysfs.py
-> index aa03a1187489f..7a17ab88361bc 100755
-> --- a/tools/testing/selftests/damon/sysfs.py
-> +++ b/tools/testing/selftests/damon/sysfs.py
-> @@ -250,6 +250,38 @@ def assert_ctxs_committed(kdamonds):
-[ ... ]
-> +def test_memcg_filter_memcg_path_staging():
-[ ... ]
-> +    kdamonds.start()
-> +
-> +    shown, rd_err =3D _damon_sysfs.read_file(
-> +            os.path.join(memcg_filter.sysfs_dir(), 'memcg_path'))
-> +    if rd_err is not None:
-> +        print('memcg_path staging: sysfs read (%s)' % rd_err)
-> +        kdamonds.stop()
-> +        exit(1)
-> +    if shown.rstrip('\n') !=3D memcg_filter.memcg_path:
-> +        print('memcg_path staging: memcg_path readback '
-> +              '(shown=3D%s, expected=3D%s)' %
-> +              (shown.rstrip('\n'), memcg_filter.memcg_path))
-> +        kdamonds.stop()
-> +        exit(1)
-> +
-> +    err =3D kdamonds.stop()
-> +    if err is not None:
-> +        print('memcg_path staging: kdamond stop (%s)' % err)
-> +        exit(1)
-
-[Severity: Medium]
-If start() fails as expected when CONFIG_MEMCG is disabled, won't this
-subsequent call to kdamonds.stop() return an error?
-
-Writing 'off' to the 'state' sysfs file of an unstarted kdamond causes
-damon_sysfs_turn_damon_off() to unconditionally return -EINVAL. This error
-propagates back to the Python script via write_file(), causing the script
-to exit with status 1.
-
-Does checking this error and exiting with a failure defeat the stated intent
-of ignoring the start() failure in the first place?
-
-> +    kdamonds =3D None
-> +
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260601073635.2000=
-15-1-niecheng1@uniontech.com?part=3D2
+Thanks,
+Cheng Nie
