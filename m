@@ -1,21 +1,21 @@
-Received: from out-176.mta1.migadu.com (out-176.mta1.migadu.com [95.215.58.176])
+Received: from out-179.mta1.migadu.com (out-179.mta1.migadu.com [95.215.58.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C74301E5207
-	for <damon@lists.linux.dev>; Mon,  1 Jun 2026 02:33:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67F2C1A0BD0
+	for <damon@lists.linux.dev>; Mon,  1 Jun 2026 02:39:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780281240; cv=none; b=PTg1OszUn+tP0g9rVGgWf8mHrhalQrIe+AOBSr7Jwb4qGor6MKfan5VG8ifPRAe51biCcnNBz+Ny07jd6MHzJyjKoKmcBGi62RQqS/eBZJMOFvUjbU3pj5vh6kPthUg2UHE4ORT5N4J4MzIqOowLGwryiH9A3IEe1d3pm3E2ucU=
+	t=1780281544; cv=none; b=sgH9A1F5D+lhCXRBRQ/Lu0gvAWtZIxUmdjc0ILrm/P1sF2Dmp83j+qr2N9nWm4sqx/tp1fFKJTh645mVqS6HDSVLrkDB73NVyXdUDTdaHPS0VzO/3hxbc2Mk335WCxF0/P/qEFkkxpjBo4FWMOir9rNG/j9W9tOEZ+0gKzwfDvw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780281240; c=relaxed/simple;
-	bh=JqDHJVAKyGpl+ngYGBc4rz9MtrD0LjNaznhwCYkd3R8=;
+	s=arc-20240116; t=1780281544; c=relaxed/simple;
+	bh=E5Sjn2yURtroB92Kl6+8gE5/WtDOFsolZL/dz0K6dT0=;
 	h=MIME-Version:Date:Content-Type:From:Message-ID:Subject:To:Cc:
-	 In-Reply-To:References; b=MYtZowmUPhGpxmOgU56TXmuOcuOOYWZVkazCDX4RNAz5BBQUYRIDkVKscnNxzGdZlz02uvZuQnmOcIYuDUnyVhgS99uVNCiz3zzVmyfVcAB9W3QetA1x6Vu+zOiiAh/f/twl/XWUWJivxkkMFqD8RMQ48X++z2TU9AQjwj6vOnE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=USGIKcbS; arc=none smtp.client-ip=95.215.58.176
+	 In-Reply-To:References; b=PHcPfjRx16cyinEP2v7VatEQUyjRviNDInEwmQor1sJP0cke62MyHY5qhUEbS14rV9Q6oRgIjrOY6baLeJfKcI5Wd7fFyOCJr5EZ/s5j2Y9oeWia4hfN+hW0DA0FG3emrMm26oQNyRDE0DrPHskj0tMes9vwTw3yZrvbQKSzW3g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=TDDX08vn; arc=none smtp.client-ip=95.215.58.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="USGIKcbS"
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="TDDX08vn"
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -23,92 +23,80 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1780281236;
+	t=1780281540;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=TMHgRM2VgLCMfYV/Kx1tsJefCoHRzu2kO6ZVF0TG+Ng=;
-	b=USGIKcbS9nOCEqYdBNcQ0LJXZKLix/4zkNsDQi4I/bTsjwkJ15Jjc1l9ouC84+s+uKAKQx
-	peltIFP+3sBipJu0MValVmndBCloOGVXp684I5NEdj9O7B438dTOT+Xa87xcFq25H6G3bX
-	eOWzpOa7XvD1Dae3zeJmayev2iA3IrQ=
-Date: Mon, 01 Jun 2026 02:33:50 +0000
+	bh=wMfLFxpky3lTG4VESTITwc7VxCTjEnXZROlAXcq5Ry8=;
+	b=TDDX08vnWpAHdaPWUgxv4HK+ImGI1p1k1QKOb38Vudzh3N3QUM5v/eX5xFmmhtIefELXju
+	4UZ7Wl5j/ebLQd7Gin6uOtLZ4fDy2pa/u+IMWqvr9PRgOHn7YoCZTPC+H+lL2KVr98cOx3
+	LF3RH+R9aTXdXh5/jHt3YmodWU+F+W4=
+Date: Mon, 01 Jun 2026 02:38:58 +0000
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: quoted-printable
 X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
 From: "Kunwu Chan" <kunwu.chan@linux.dev>
-Message-ID: <4915dbdd42711403f1781e3c7a71a11a53b0249d@linux.dev>
+Message-ID: <3353788b10ec296dcb549abfeaf29fe845574dc8@linux.dev>
 TLS-Required: No
-Subject: Re: [PATCH 4/5] selftests/damon/damos_tried_regions: handle empty
- tried regions in early cycles
+Subject: Re: [PATCH 0/5] selftests/damon: misc fixes for test bugs
 To: "SeongJae Park" <sj@kernel.org>
 Cc: "SeongJae Park" <sj@kernel.org>, shuah@kernel.org, damon@lists.linux.dev,
  linux-kselftest@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-mm@kvack.org, "Kunwu Chan" <kunwu.chan@gmail.com>, "Wang Lian"
- <lianux.mm@gmail.com>, "Kunwu Chan" <chentao@kylinos.cn>
-In-Reply-To: <20260531165437.99410-1-sj@kernel.org>
-References: <20260531165437.99410-1-sj@kernel.org>
+ linux-mm@kvack.org, "Kunwu Chan" <kunwu.chan@gmail.com>
+In-Reply-To: <20260531170807.99856-1-sj@kernel.org>
+References: <20260531170807.99856-1-sj@kernel.org>
 X-Migadu-Flow: FLOW_OUT
 
-June 1, 2026 at 12:54 AM, "SeongJae Park" <sj@kernel.org mailto:sj@kernel=
-.org?to=3D%22SeongJae%20Park%22%20%3Csj%40kernel.org%3E > wrote:
+June 1, 2026 at 1:08 AM, "SeongJae Park" <sj@kernel.org mailto:sj@kernel.=
+org?to=3D%22SeongJae%20Park%22%20%3Csj%40kernel.org%3E > wrote:
 
 
 >=20
->=20On Sun, 31 May 2026 17:17:23 +0800 Kunwu Chan <kunwu.chan@linux.dev> =
+>=20On Sun, 31 May 2026 16:56:28 +0800 Kunwu Chan <kunwu.chan@linux.dev> =
 wrote:
 >=20
 >=20>=20
 >=20> From: Kunwu Chan <kunwu.chan@gmail.com>
 > >=20=20
->=20>  The test aborts if the initial aggregation cycles produce zero
-> >  tried regions. This can happen on slow machines, causing false
-> >  failures. Skip empty cycles and retry up to 200 times before
-> >  giving up. Also check that enough samples were collected before
-> >  computing the 50th percentile.
+>=20>  This series fixes several bugs in the DAMON selftests. Most are
+> >  trivial but cause tests to silently pass when they shouldn't, or
+> >  fail prematurely on slow machines.
 > >=20
->=20I agree this will make the test be more reliable. I'm bit concerned i=
-f 200
-> times retry can make the test run too long, though.
+>=20Thank you for sharing these great changes, Kunwu and Lian!
 >=20
->=20Also, could you further elaborate why this can fail on slow machines?=
- That is,
-> DAMON will check the access of 'access_memory_even' process every 5ms. =
-Are you
-> thinking the 5ms is too short for 'access_memory_event' to make the exp=
-ected
-> access (accessing the 7 regins of 10 MiB size) within? If so, should we
-> increase the sampling interval before retrying?
+>=20>=20
+>=20> Patch 1 fixes mutable default arguments in DamonCtx.__init__()
+> >  that cause state to leak between test instances.
+> >=20=20
+>=20>  Patch 2 fixes a trailing comma in DamosFilter that turns
+> >  memcg_path from a string into a tuple, silently breaking memcg
+> >  filter setup.
+> >=20=20
+>=20>  Patch 3-4 fix bugs in damos_tried_regions.py: wrong operator
+> >  precedence drops the "not met" prefix from failure output, and
+> >  empty early aggregation cycles cause premature test failure.
+> >=20=20
+>=20>  Patch 5 fixes several wrong strings that produce dead elif
+> >  branches, skipped file existence checks, and broken dict key
+> >  lookups.
+> >=20
+>=20I left comments to each patch. To summarize,
 >=20
->=20I also suspect if the unreliable results you seen is due to the fact =
-that DAMON
-> is not flushing TLB, like we discussed before. If that's the case, coul=
-d we
-> increase the working set size of this test, similar to the wss_estimati=
-on test?
+>=20Patches 1, 3 and 5 look good except signer/author info mismatch.
+>=20
+>=20For patches 2 and 4, I think we need more discussions.
 >=20
 Thanks,=20SJ.
 
-Good points.
-
-I don't yet have enough evidence to say whether this is primarily due to
-scheduling delays, a too-short sampling interval, or effects from not
-flushing TLB.
-
-I'll investigate the root cause and see if increasing the working set
-size or adjusting the test configuration may be a cleaner solution than
-adding retries.
-
-I'll drop this patch from v2 for now and revisit it once I better
-understand the root cause.
+Noted. I'll fix the signer/author mismatch in v2. As discussed in the
+individual replies, I'll drop patches 2 and 4 for now and revisit 4
+once the underlying issues are better understood.
 
 Thanks,
 Kunwu
 
-> [1] https://lore.kernel.org/20260525144846.604907-1-kunwu.chan@linux.de=
-v
->=20
->=20Thanks,
+> Thanks,
 > SJ
 >=20
 >=20[...]
