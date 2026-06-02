@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 532E33C4552
-	for <damon@lists.linux.dev>; Tue,  2 Jun 2026 22:27:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7657A3806C6
+	for <damon@lists.linux.dev>; Tue,  2 Jun 2026 23:04:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780439252; cv=none; b=uaPd7FU9pmfXfJlJH3FCl3VXvTN9YThAwQbbbTk/Cqf9oEQfHkCF+LohJf6FT9QjLOzbqVTRN/HUtMbTMbZPIIeG1x03I6CCxlUIvE3YceHo/2O8Db9ogwfLsx/ohjvfCgu5oUHsrjxTb4198rQV0WB7Nuxbg/riTJGs/HhaG5I=
+	t=1780441446; cv=none; b=XDuV896qqX2o4ezLjBKb3LOqA07r1SldBwP8ybvLVhnD/u9IGkaSvV2SSYRSFdMH7DLkloqN49nAitV4eeVQFRhJ6Z5n9voWlVsKkEmPNRYoKdP/UpVdFnxLl0BpiE9Xlr1/0hVzoENnpEjClYd0tBcUNrXaaZTx74yUlaLPQqE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780439252; c=relaxed/simple;
-	bh=IPiUnyCYQyu+QmrL66bVqUiAaYmsJXs+ruL81nIq63U=;
+	s=arc-20240116; t=1780441446; c=relaxed/simple;
+	bh=fGzDjuAvcIt9jSsrnnmZfYKA/ydyZfYEEoZeMj6ExQM=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Hs7URBQdThjhNqRAtp3xRKldVYT0kuFjHe5MX3sHV8QU4CytNPygoddEaI27XSqJJ8joJ9geBKgLTGFi/B3S0rRcKVuYehpSbfIF+CK2hgwQDS3zrMn72akDksC3v3u/aAWDSk+KG52c0Ht4xcA5alI2eTeFmnv07WrgFdLWzio=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BYuCyZFu; arc=none smtp.client-ip=100.103.45.18
+	 To:Cc:Content-Type; b=d0YMb6WyRtwNwatmkrvMOwZdFjxMt1dbUJRCABhniNUC2ZdYLWCbg9xP4xZgTsjz/zw1WRxmLeYmOyeanRlfOkcQ091w94oiqgQTh41/cw5ZuuQxiDC1oyMZwT6rYCUCorXTzcFxUa3i9jwjmsCvn4xJ042F/AKY6sJgISnx9sM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EvUCuuQf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BYuCyZFu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33AE21F008A0
-	for <damon@lists.linux.dev>; Tue,  2 Jun 2026 22:27:31 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EvUCuuQf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40E691F0089C
+	for <damon@lists.linux.dev>; Tue,  2 Jun 2026 23:04:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1780439251;
-	bh=IPiUnyCYQyu+QmrL66bVqUiAaYmsJXs+ruL81nIq63U=;
+	s=k20260515; t=1780441445;
+	bh=fGzDjuAvcIt9jSsrnnmZfYKA/ydyZfYEEoZeMj6ExQM=;
 	h=References:In-Reply-To:From:Date:Subject:To:Cc;
-	b=BYuCyZFu4VrF0CEJSFaJM/ABaX2nQQVoc1FH+40z4ue4ec4N7KgRk10owK85AKvSh
-	 mwVfwpZRZt8pP6Xl/wEkonX0YxFAdYKfVuQ4FkfXhwDMLvDfUOJCtKzz8lQVCAV6hc
-	 JknjQy1W1+C3L/c0dxnrPNQVcC5Zm3S0Gcv8JYIWEiaNJszr8kvdZlM7DauUlcvtBt
-	 m4QEDmschH2RCmh3+OlaflVFFNtod3fufPXivuCnSUu0C8tdxWdVcflDvOQT0GVt+H
-	 TPxvWUGEM4GjXE0U0N8qTBl/HAYqgPMRyBC78LuIoyqDFMhU9ywUMVITNLKlpmjrue
-	 F3xnhnmiLgkbQ==
-Received: by mail-vs1-f54.google.com with SMTP id ada2fe7eead31-6cbb38f5094so2182793137.3
-        for <damon@lists.linux.dev>; Tue, 02 Jun 2026 15:27:31 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AFNElJ84kZ6YsVLwSUj68OfgdmMmu6YkUwttMNhTMllPVDHXOlhJ+7moVzICIwpV6cBeLh5oxXxwkw==@lists.linux.dev
-X-Gm-Message-State: AOJu0YwTfe00ySBkLFrACsu28e5XCqV7swwnUsTzfRojukJ7D9dgsFg8
-	UFi+zF6P9pu+nqLhhFO2NyLTwC+u1sPZoAauB7xYn0aVHx64eEr7DFxzrEXjRg/xZKzHPgXVJ2K
-	RofugMxK07m7j0vZS73cLVmu5dd26+Oc=
-X-Received: by 2002:a05:6102:4191:b0:631:b365:40f6 with SMTP id
- ada2fe7eead31-6ec733deaadmr286422137.23.1780439249968; Tue, 02 Jun 2026
- 15:27:29 -0700 (PDT)
+	b=EvUCuuQfxIVQtKdieJ/ojTw7O5oTpN+1v4wSoySeJnSQ77XhNPBL4s0Qq/Y1kunRy
+	 O/1dguz4EY6tg69/ld8u0YuxKtsGscTfoE3p7hvpY29oeTAInBfr4YsW9C4LSpW/dQ
+	 o+FniKL/AHjEv2g5G3bwTIAbht7mdo5l8J5i+nXwa5dKa5BmC1NhTBV5ulufIVzVX9
+	 GVUoQKkCgBsmCpKp4KXyQuW2FsNpAb6Pi5BgbcfO5gqv0Q59eu3/Alp+/1nEb8AWH5
+	 eJqUb/x3HgusCNWLkaE9PXVaih58QSkPAATsny3gUFg84kl8gPINK1abjlxx8KyOx1
+	 Z84I6M8uqEUcQ==
+Received: by mail-qk1-f179.google.com with SMTP id af79cd13be357-9158c621ebbso18130285a.2
+        for <damon@lists.linux.dev>; Tue, 02 Jun 2026 16:04:05 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AFNElJ//XwJtDc0zRJh5h5G+Vlukr62uxf5ikO2zirQYNsxucaAwziPqB+9cBv8guSFryWg7HZjz0A==@lists.linux.dev
+X-Gm-Message-State: AOJu0YwoFM76gyZDRQ+CGKpsDWaWAJFkjtBrV/KX1glPmdzAmZ7E1w8Z
+	cvUf0yTLUhNB2K21laqUgwTw1LrzQyp+4Lj9D5xKmGZzEdpu1FImfkYyp/gahZhfyAjhpQjrXhQ
+	Vpile2Th54pYVA1DE/HTRLO25FTG8GNA=
+X-Received: by 2002:a05:620a:25cf:b0:912:8fd0:4a5d with SMTP id
+ af79cd13be357-9158a8430eamr187006285a.55.1780441444405; Tue, 02 Jun 2026
+ 16:04:04 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -46,16 +46,16 @@ References: <20260527110147.17815-1-tao.wangtao@honor.com> <ahcANgFDFwfC0v1q@luc
  <CAGsJ_4zy=-m5wjm0BC-vQXMHGRkHymC-5S_L9Oi708v339vvPw@mail.gmail.com>
  <99dfc4a50f3643a6bef6deaeccfcf115@honor.com> <ahlzj--3Gm5pD9ge@lucifer>
  <a90bcb0fa3a044588350e92a78258a09@honor.com> <CAGsJ_4wFr89M2i8pth79swv3==i8SGSMWrbr+Yp2umwFTuCShg@mail.gmail.com>
- <1fb6a226-2899-497c-abbb-eb49c3a2f306@kernel.org>
-In-Reply-To: <1fb6a226-2899-497c-abbb-eb49c3a2f306@kernel.org>
+ <2e9175ab-f9be-44c6-bf1a-a82aeed18f98@linux.dev> <ah71gjj21rLIuTnb@lucifer>
+In-Reply-To: <ah71gjj21rLIuTnb@lucifer>
 From: Barry Song <baohua@kernel.org>
-Date: Wed, 3 Jun 2026 06:27:17 +0800
-X-Gmail-Original-Message-ID: <CAGsJ_4zyO4bWmjBEjeqdbDo_hgEyEQuSD6ZH59=mG9BdwirfNw@mail.gmail.com>
-X-Gm-Features: AVHnY4KyJyCedUIUa_arn7DimqNML6DLaItJ5RHt47reA6vuXBGcpLeyeVYr68w
-Message-ID: <CAGsJ_4zyO4bWmjBEjeqdbDo_hgEyEQuSD6ZH59=mG9BdwirfNw@mail.gmail.com>
+Date: Wed, 3 Jun 2026 07:03:53 +0800
+X-Gmail-Original-Message-ID: <CAGsJ_4yKtEnCEyLVpzKUNDDw0AwttnFhB7c1sicBpjecBxATQw@mail.gmail.com>
+X-Gm-Features: AVHnY4Khgdh1OvPc32I3tWzQ7qSOu8BOGvT2qrR5LpDulZJiDfW5EMOXKL2Djq8
+Message-ID: <CAGsJ_4yKtEnCEyLVpzKUNDDw0AwttnFhB7c1sicBpjecBxATQw@mail.gmail.com>
 Subject: Re: [PATCH 0/15] mm: introduce ANON_VMA_LAZY for deferred anon_vma creation
-To: Harry Yoo <harry@kernel.org>
-Cc: wangtao <tao.wangtao@honor.com>, Lorenzo Stoakes <ljs@kernel.org>, 
+To: Lorenzo Stoakes <ljs@kernel.org>
+Cc: Lance Yang <lance.yang@linux.dev>, 
 	"catalin.marinas@arm.com" <catalin.marinas@arm.com>, "will@kernel.org" <will@kernel.org>, 
 	"tglx@kernel.org" <tglx@kernel.org>, "mingo@redhat.com" <mingo@redhat.com>, "bp@alien8.de" <bp@alien8.de>, 
 	"dave.hansen@linux.intel.com" <dave.hansen@linux.intel.com>, "x86@kernel.org" <x86@kernel.org>, 
@@ -66,13 +66,13 @@ Cc: wangtao <tao.wangtao@honor.com>, Lorenzo Stoakes <ljs@kernel.org>,
 	"hpa@zytor.com" <hpa@zytor.com>, "liam@infradead.org" <liam@infradead.org>, 
 	"vbabka@kernel.org" <vbabka@kernel.org>, "rppt@kernel.org" <rppt@kernel.org>, 
 	"surenb@google.com" <surenb@google.com>, "mhocko@suse.com" <mhocko@suse.com>, "jack@suse.cz" <jack@suse.cz>, 
-	"riel@surriel.com" <riel@surriel.com>, "jannh@google.com" <jannh@google.com>, "jgg@ziepe.ca" <jgg@ziepe.ca>, 
+	"riel@surriel.com" <riel@surriel.com>, "harry@kernel.org" <harry@kernel.org>, 
+	"jannh@google.com" <jannh@google.com>, "jgg@ziepe.ca" <jgg@ziepe.ca>, 
 	"jhubbard@nvidia.com" <jhubbard@nvidia.com>, "peterx@redhat.com" <peterx@redhat.com>, 
 	"ziy@nvidia.com" <ziy@nvidia.com>, 
 	"baolin.wang@linux.alibaba.com" <baolin.wang@linux.alibaba.com>, "npache@redhat.com" <npache@redhat.com>, 
 	"ryan.roberts@arm.com" <ryan.roberts@arm.com>, "dev.jain@arm.com" <dev.jain@arm.com>, 
-	"lance.yang@linux.dev" <lance.yang@linux.dev>, "xu.xin16@zte.com.cn" <xu.xin16@zte.com.cn>, 
-	"chengming.zhou@linux.dev" <chengming.zhou@linux.dev>, 
+	"xu.xin16@zte.com.cn" <xu.xin16@zte.com.cn>, "chengming.zhou@linux.dev" <chengming.zhou@linux.dev>, 
 	"nao.horiguchi@gmail.com" <nao.horiguchi@gmail.com>, 
 	"matthew.brost@intel.com" <matthew.brost@intel.com>, 
 	"joshua.hahnjy@gmail.com" <joshua.hahnjy@gmail.com>, "rakie.kim@sk.com" <rakie.kim@sk.com>, 
@@ -84,155 +84,102 @@ Cc: wangtao <tao.wangtao@honor.com>, Lorenzo Stoakes <ljs@kernel.org>,
 	"linux-fsdevel@vger.kernel.org" <linux-fsdevel@vger.kernel.org>, "linux-mm@kvack.org" <linux-mm@kvack.org>, 
 	"damon@lists.linux.dev" <damon@lists.linux.dev>, "shakeel.butt@linux.dev" <shakeel.butt@linux.dev>, 
 	"ryncsn@gmail.com" <ryncsn@gmail.com>, "jparsana@google.com" <jparsana@google.com>, 
-	"dvander@google.com" <dvander@google.com>, zhangji <zhangji1@honor.com>, 
-	wangzicheng <wangzicheng@honor.com>
+	"dvander@google.com" <dvander@google.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Jun 3, 2026 at 3:57=E2=80=AFAM Harry Yoo <harry@kernel.org> wrote:
+On Tue, Jun 2, 2026 at 11:37=E2=80=AFPM Lorenzo Stoakes <ljs@kernel.org> wr=
+ote:
 >
->
->
-> On 6/2/26 11:15 AM, Barry Song wrote:
-> > On Mon, Jun 1, 2026 at 9:46=E2=80=AFAM wangtao <tao.wangtao@honor.com> =
-wrote:
-> > [...]
-> >>
-> >> You said discussion was welcome, yet when someone offered even a
-> >> small comment, you refused to continue the discussion.
-> >>
-> >> If I had known you would be this inconsistent, I would not have
-> >> replied to you in the first place.
-> >>
-> >> This will be my last reply to you. I will not respond again.
+> On Tue, Jun 02, 2026 at 10:46:35AM +0800, Lance Yang wrote:
 > >
-> > Hi Tao,
 > >
-> > Please don't walk away from the linux-mm community. I read your
-> > patchset and found it quite valuable. It not only reduces memory
-> > overhead, but also eliminates rmap costs for exclusive folios.
+> > On 2026/6/2 10:15, Barry Song wrote:
+> > > On Mon, Jun 1, 2026 at 9:46=E2=80=AFAM wangtao <tao.wangtao@honor.com=
+> wrote:
+> > > [...]
+> > > >
+> > > > You said discussion was welcome, yet when someone offered even a
+> > > > small comment, you refused to continue the discussion.
+> > > >
+> > > > If I had known you would be this inconsistent, I would not have
+> > > > replied to you in the first place.
+> > > >
+> > > > This will be my last reply to you. I will not respond again.
+> > > >
+> > >
+> > > Hi Tao,
+> > >
+> > > Please don't walk away from the linux-mm community. I read your
+> > > patchset and found it quite valuable. It not only reduces memory
+> > > overhead, but also eliminates rmap costs for exclusive folios.
+> > >
+> > > Since I'm not very confident discussing technical topics in English,
+> > > I wrote a blog post in Chinese about your patchset:
+> > >
+> > > https://mp.weixin.qq.com/s/k00tzhTl8HbL3k4G6ev4SA
+> > >
+> > > I have to admit that I found the implementation quite complex and
+> > > in need of significant improvement. However, I think the underlying
+> > > idea is very interesting and worth exploring further.
+> > >
+> > > I'm looking forward to seeing a v2 RFC with a cleaner and simpler
+> > > implementation while preserving the core concept.
+> > >
+> > > Regardless of whether it ultimately gets merged, I hope the discussio=
+n
+> > > can continue.
 > >
-> > Since I'm not very confident discussing technical topics in English,
-> > I wrote a blog post in Chinese about your patchset:
+> > Same here :)
 > >
-> > https://mp.weixin.qq.com/s/k00tzhTl8HbL3k4G6ev4SA
-> The cover letter and commit messages should have been elaborated to a
-> much greater degree instead of making people guess the design and intent
-> from the code.
+> > Tao, please don't let this thread get you down. No first RFC is
+> > perfect, and the idea still looks worth discussing :)
+> >
+> > Thanks for working on this!
+>
+> Guys, this isn't helpful.
+>
+> We aren't extending anon_vma, and I am working on replacing it, that's th=
+e
+> bottom line.
 
-Indeed. The cover letter does not clearly tell the story, and yesterday
-I needed quite some time to understand what the patchset
-was trying to achieve.
+Not trying to challenge your bottom line. As explained to Harry, I
+have no doubt about your expertise in rmap and many other mm
+areas, and I deeply respect your work on rmap.
+
+With more discussion, we might gain additional insight and
+inspiration. What Tao has inspired me with is the idea that if we
+assume most real-world processes are leaf processes, could we
+simplify parts of the design?
+
+This is why I suggested a v2, to improve the clarity of the cover
+letter and make the code easier to understand, and to see whether
+there is something worth considering further, even if it is not
+suitable for merging.
 
 >
-> > I have to admit that I found the implementation quite complex and
-> > in need of significant improvement.
->
-> > However, I think the underlying> idea is very interesting and worth
-> exploring further.
->
-> No. What it is trying to achieve is ambitious, but the idea itself is
-> not worth exploring further as-is unless the correctness and complexity
-> concerns are addressed.
+> I have presented compelling evidence suggesting this is AI generated. In
+> response I got more AI-generated nonsense. There's no trust, the code and
+> analysis are all wrong, end of discussion.
 
-Can we give Tao more time to address the concerns and explain
-the correctness of the approach?
-
-That said, I don't think the patchset is entirely without merit.
-The idea that caught my attention is whether knowing that a
-process is guaranteed to be a leaf process could allow us to
-simplify parts of the rmap machinery and reduce some of the
-associated overhead.
-
-Assuming that a fork server (e.g. systemd or zygote) is preferable
-to having each application perform its own fork(), Linux already
-largely relies on fork servers in practice. Matthew also pointed
-out that calling fork() in multithreaded applications is a
-terrible idea [1]. This may suggest that, in general, processes
-outside of a fork-server model should avoid using fork().
-
-If we were to introduce an API such as prctl(PR_SET_NOFORK) or
-something similar, could we eliminate a significant portion of
-the rmap-related overhead for such leaf processes, while still
-avoiding the complexity of the lazy allocation scheme proposed
-by Tao?
-
-I assume that the vast majority of processes in a real system
-are leaf processes?
-
-It also seems somewhat unusual that a few Android applications
-invoke fork() directly in a multithreaded context, while most
-use the zygote to create multiple processes for an app. Perhaps
-the Android framework should discourage this pattern entirely,
-and require applications to create child processes via the zygote?
-
-If, in real-world systems, more than 95% of processes are leaf
-processes, could that imply that the rmap design might be
-reconsidered for a different optimization path?
-
-[1] https://marc.info/?l=3Dlinuxppc-embedded&m=3D177912107460825&w=3D2
+I am not an AI expert, and I do not really use AI in kernel work,
+so I am not really sure what counts as AI versus non-AI. Sorry.
 
 >
-> > I'm looking forward to seeing a v2 RFC with a cleaner and simpler
-> > implementation while preserving the core concept.
+> >
+> > Cheers, Lance
+> >
 >
-> I'm afraid this encouragement would mislead us in the wrong direction,
-> where all of us end up wasting time.
+> Thanks, Lorenzo
 >
-> There isn't much point in posting v2 without addressing fundamental
-> questions about the design.
+> P.S. maintainership is utterly thankless, and I don't really expect much =
+in
+> return, but honestly reading this, given the case I've made here, was
+> really quite disappointing.
 
-I suggested a v2 because the current patchset does not clearly
-state what it is trying to achieve. A revised version might help
-clarify the intent and make it easier to understand. Even if the
-overall complexity (such as lazy allocation) makes it hard to
-move forward, we may still be able to learn from it and gain
-some useful inspiration.
+Understood. I see your position, and I personally have great
+respect and appreciation for your work on maintenance. Sorry if
+my words came across as disappointing.
 
->
-> > Regardless of whether it ultimately gets merged, I hope the discussion
-> > can continue.
->
-> Regarding the "improving the reverse mapping subsystem" topic, a more
-> constructive direction would be to carefully revisit the design
-> decisions and discuss what we can do about them (that's exactly what
-> Lorenzo has been doing).
-
-I have no doubt at all about Lorenzo=E2=80=99s expertise in rmap and many
-other mm areas. That is well understood and widely recognized.
-
-I just think that hearing more perspectives could help us gain
-additional insight and inspiration.
-
->
-> But that's not the first thing I would recommend to a relatively new
-> contributor given that it's really complicated and even the people who
-> have designed and reworked the reverse mapping subsystem over the past
-> 20+ years haven't come up with a fundamentally better design.
->
-> Reverse mapping is a frustratingly complicated subsystem. Without
-> carefully revisiting the current design, there is not much hope of
-> improving things at the design level, even slightly.
->
-> What I would recommend to new people instead is:
->
-> 1) starting by reviewing other people's work, so that you have enough
-> time to learn the historical context and subtleties of the subsystem
-> without making intrusive changes (which also keeps in touch with the
-> community), and
->
-> 2) making progress on smaller tasks with less intrusive changes, to
-> gradually build trust and be able to do more valuable work.
->
-
-Yes, that is a good approach for new contributors.
-
-> Unfortunately, looking at how this thread went, I see that the author is
-> now in a worse position than an entirely new contributor.
->
-> --
-> Cheers,
-> Harry / Hyeonggon
-
-Thanks
+Best Regards
 Barry
