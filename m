@@ -1,46 +1,49 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from smtpbgeu2.qq.com (smtpbgeu2.qq.com [18.194.254.142])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF4F23CBE96;
-	Mon,  1 Jun 2026 14:55:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6C6A2C234A;
+	Tue,  2 Jun 2026 01:29:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=18.194.254.142
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780325707; cv=none; b=oS5nCHKHBipmc7K1R6uenY2odU0NbICeOnf4r9NIbZZnuVDxq/GTlYn3Vt/qWnI2h/K7aekKYi6NbfVLp6UadfQ8VtBml3eqvzj0vtK0LureB2bkIRF4sWdw2Dzh4Lx9ftCwU5HUou4xZWKhtmBiez4HF/E1WaNvIprZZCh07Ts=
+	t=1780363745; cv=none; b=njoerrf4i96BhVFpPrsiX9rdRsrTQjWGt0DjoTLdbkC30QnVvangiNxnuhyN0/xT7IWyAcOCqu8TPwbftBid7Brr/IzIozY8bPZfLaJABjLgQMOZV34LKKiZhPgix3lLU6IRHEk3U9rkm+WUrIl9sRTpKS/01MRJMHb6W1xAdq4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780325707; c=relaxed/simple;
-	bh=g3L2vnZdWxQCOYAsUPfnT9syV+tmv3JLNZgI0eqgIoM=;
+	s=arc-20240116; t=1780363745; c=relaxed/simple;
+	bh=yNhsL6+11YWE0+t3tPnoC8/7OltlZJGmj23wQr1wC34=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NzQB7KsWDhMz/pvhn/SEMF9xc6FjXteUsjBs2DC9LtSDYTAzU9a7ehiGl24jtAlKBwT2Cic9g9qii/5rakFGe7FLDHSldaAQhn6iEvRdTUu4VmMRcFifbdjDxNcQC84RGUiFE7BMJvPgoqJkMd0+KMTkklvd2UWBNAfF92KAQCw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dWA01ekr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Xnq/M2Uk/3nayqnDuZ1GYo2T6NfqDjP/TmDV83MyZ0KvPwXwPwzYPN8/U4T+ipykQLwjcLSj6jH/I5wIVbFxQmLy+rnYwZVR92swDe5Q6x3sPRtlv4SE6oa6Ueu8QdEi14k1IRVeMjiypW3XHADmbviW71XSoFoteRdZrkO/CMg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=uniontech.com; spf=pass smtp.mailfrom=uniontech.com; dkim=pass (1024-bit key) header.d=uniontech.com header.i=@uniontech.com header.b=ZDbP/qRg; arc=none smtp.client-ip=18.194.254.142
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=uniontech.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=uniontech.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dWA01ekr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBB751F00893;
-	Mon,  1 Jun 2026 14:55:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1780325705;
-	bh=XG5RfpJwti7dylwLwxXSrJ1QM98QSD9PaVrRVudv0Hs=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dWA01ekriVpl9LuiMtnhLBxVRpoAQnrdChloT38CbGJDV3n46PNj9lXgod7r7P1TR
-	 vQr2c7hP3Stey87+7vLgfxaJ/wkIuejsS8ukh+QSf9PPPc2fWoZ/5ruLFKkjHjomyG
-	 7YvvnFHrNssF9j31/K3Pvfi97TIV+gUiIDHQFeprTz+DFnSDwRX06x+qPEPn1goxFW
-	 7PwV4gJLoWq86CSywNOXMq2Tf9/vgQNtlwOgFPHxOEvdTqfkZb23MwWCrC0ScUl/uL
-	 4KqIiRiTTV9t+z/dqXuehSsauPWhwHy4sLZTByGhnifdJvJ6QEsIm9FVf9zfp0LQpB
-	 I26fQQqcCx6Eg==
-From: SeongJae Park <sj@kernel.org>
-To: Cheng Nie <niecheng1@uniontech.com>
-Cc: SeongJae Park <sj@kernel.org>,
-	shuah@kernel.org,
-	damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	linux-kselftest@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: Re: [PATCH v4 0/2] selftests/damon: fix memcg_path staging handling
-Date: Mon,  1 Jun 2026 07:55:00 -0700
-Message-ID: <20260601145501.116884-1-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <7E6EAB7C1BE04DEA+20260601090119.238457-1-niecheng1@uniontech.com>
-References: 
+	dkim=pass (1024-bit key) header.d=uniontech.com header.i=@uniontech.com header.b="ZDbP/qRg"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=uniontech.com;
+	s=onoh2408; t=1780363724;
+	bh=M4xn0QTwhl2jCk5EJX13+ffTRXm7Y+KXJJFxxf4QpJY=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version;
+	b=ZDbP/qRgz/phjYTArEzQCWVIPZKJydDm3i6+x0CwMt0pmc2wYVIGX1pFXKivv6u2M
+	 7J+ifYNQ3N7ELg5z5Iv4utoufstzZwIPT77dhshEXUWgNC9HBQUmwrarwHtHM7VZ+d
+	 Pm5ztXXQeU2Yce46Baacg6+m3epYAY8Rn2lR7Pso=
+X-QQ-mid: esmtpsz21t1780363717t7d3e3f97
+X-QQ-Originating-IP: WhF+Z/FeaIYUrJYqIzDOxcXbCfmg43NAxv/Wr7vjIhU=
+Received: from PEN1097 ( [1.202.39.170])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Tue, 02 Jun 2026 09:28:35 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 13331546314602505893
+EX-QQ-RecipientCnt: 5
+From: Cheng Nie <niecheng1@uniontech.com>
+To: sj@kernel.org
+Cc: damon@lists.linux.dev,
+	niecheng1@uniontech.com,
+	sashiko-bot@kernel.org,
+	sashiko-reviews@lists.linux.dev
+Subject: Re: [PATCH v3 2/2] selftests/damon/sysfs.py: validate memcg_path staging readback
+Date: Tue,  2 Jun 2026 09:28:32 +0800
+Message-ID: <A556945AF3D53065+20260602012832.30023-1-niecheng1@uniontech.com>
+X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20260601143338.111762-1-sj@kernel.org>
+References: <20260601143338.111762-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -48,52 +51,31 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+X-QQ-SENDSIZE: 520
+Feedback-ID: esmtpsz:uniontech.com:qybglogicsvrsz:qybglogicsvrsz4b-0
+X-QQ-XMAILINFO: Nty3yXuijLhXh0QhXJ9n15Ck6jLB8qgSw/c9+hKuBQhNrY9Fuz43tZ/c
+	9H7P1zCaly99REt6hDz8gIXApnlxQdzgwIrmrjVTsMfN2vHxBxY+8ta9KI5vaQ4/ZIP1sAF
+	n7jDYC7vM4jXcb9c0YpGOfWNScoS2l7S0l8sUu61w9NJuDFstsrtUQhyPo6UeNjzQIjGdOB
+	euBO854frFVd4yTkzhbJNM+Y3iZtBKK4Axp+nlvntF7Kd8OVgkhJsQFjxHW8CUI2iU/oZVV
+	YUprIjeH4in1KBLtwMfcNPNijhgslG1YsHRNXHZ7OxrWs97LHPt3KmvpMAKV+3ifTNezO+V
+	hAPWrChV2eNWpDNGEBfbEv22PWlILsv8YGONS+1vC59YvhsnIc3QMc+VSUxmMZ0aIM+YpHi
+	gRNJcPA0Dd71vsDiNEshCyth0mCskjlpEUlZBGCE8eKrX6rxoSOOeCUAyiySkLVW+1tiH25
+	2HhzkWa/NqDwerbnqLZv6grm/NJiYjtbv5GyVydXmnQMKVHk4asrQrJPiC6yuYXmzy4vRzl
+	pzf5vTAz63b+oNzH5bQzxqcxCMOetsw/fWKvQ1JYyRuyn1yQ/qdDEgvqqEh9vg2ADq7/yDJ
+	KZD2b2PDr5eSby+wWRQ4XOVSTy5pJlwta+u/cPU8meX1lpw/c0PCQVpujg4lr+E+/mbQ/1S
+	FZSYgjQBeRuRtleGtBz4Fho7Va8tKB7l3gA94Q25a8MkwhRx0ssba4Czq/YUMVlBpdEHEU5
+	+km81Cpk2NWN4JsipOrWyUzTZOzQJaUxybtXhsIf18mZjDVbkULuSYYkHWZ5XWb4BZ90GnR
+	KNevWw7YJjkSQymoMKXzjdcYHMRZkuxVSLu9F/Rq5EEtuVhITnyg1+1aKbB2TlG/2IeVrzy
+	ydoIdVnN4Di8n3Qn1Sg5epJVMd/KalKBu8rtISXkcAjzuA0CK4cfHG9+ChFNfDx4zDzFEXf
+	6JBgf0/aNgAcawK/rABvTsjZ1P3irGW72MSQbFdqOFg2qLmyAu8NHSkSO7GMRg086IgdJn6
+	AYWEa/96vEB2nzXZKxiWSEZtDGVX4=
+X-QQ-XMRINFO: MPJ6Tf5t3I/ylTmHUqvI8+Wpn+Gzalws3A==
+X-QQ-RECHKSPAM: 0
 
-On Mon,  1 Jun 2026 17:01:19 +0800 Cheng Nie <niecheng1@uniontech.com> wrote:
+Hi SJ,
 
-Having a sentence for the cover letter would be nice.  E.g.,
-
-'''
-Fix a bug in _damon_sysfs.py for damos_filter memcg_path setup, and add a test
-case of it in sysfs.py.
-'''
-
-> Changes from v3:
-> - call stop() for cleanup without checking its return value
-> 
-> Changes from v2:
-> - configure memcg filter before start(), remove commit(), ignore
->   start() failure, verify memcg_path staging readback only
-> - use print-style error messages as suggested
-> 
-> Cheng Nie (2):
->   selftests/damon/_damon_sysfs.py: fix memcg_path assignment
->   selftests/damon/sysfs.py: validate memcg_path staging readback
-
-From the next time, please add links to the previous revisions [1].
-
-For other readers,
-v3: https://lore.kernel.org/E4B88E7D4879D1B1+20260601074250.203583-1-niecheng1@uniontech.com
-v2: https://lore.kernel.org/4CDA28DC581FDCF8+20260529090845.1696845-1-niecheng1@uniontech.com
-v1: https://lore.kernel.org/406BD1BA0F6AE326+20260528081039.1192194-3-niecheng1@uniontech.com
-
-I applied this series with the cover letter sentence change to damon/next [2]
-tree.  If this patch is not added to mm.git in short term (~1 week?), I will
-ask mm.git maintainer (Andrew Morton) to pick this.
-
-Andrew might want us to repost this series after next rc1, though, as we are
-apparently wanting to make mm.git more stabilized at this point.  Andrew, pleae
-let me know if so.
-
-So, no action from your side is needed for now.  If it seems I also forgot
-doing that or you cannot wait for my action, please feel free to directly ask
-that to Andrew.
-
-[1] https://docs.kernel.org/process/submitting-patches.html#commentary
-[2] https://origin.kernel.org/doc/html/latest/mm/damon/maintainer-profile.html#scm-trees
-
+Thank you for the reminder.  Sorry for sending v4 too quickly; I will
+wait for reviewers before posting a new version next time.
 
 Thanks,
-SJ
-
-[...]
+Cheng Nie
