@@ -1,81 +1,125 @@
-Received: from smtpbgeu2.qq.com (smtpbgeu2.qq.com [18.194.254.142])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6C6A2C234A;
-	Tue,  2 Jun 2026 01:29:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=18.194.254.142
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA2C11FBC8C
+	for <damon@lists.linux.dev>; Tue,  2 Jun 2026 02:15:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780363745; cv=none; b=njoerrf4i96BhVFpPrsiX9rdRsrTQjWGt0DjoTLdbkC30QnVvangiNxnuhyN0/xT7IWyAcOCqu8TPwbftBid7Brr/IzIozY8bPZfLaJABjLgQMOZV34LKKiZhPgix3lLU6IRHEk3U9rkm+WUrIl9sRTpKS/01MRJMHb6W1xAdq4=
+	t=1780366533; cv=none; b=aVzg+f4XDr14PYfnY+YyAAWjrvpdZrlXZSLXCLL8H04t3MEARLiYOzWC8/Mt9BbyiMwZSD3c6TRa025JhavoaXeO1+uzchUbLHBhdQwN/H2D12pOenD6DNk61XHOwF2PXAZZ2+/jVdybtio2NIFs2ek/i5s221qeP5mG83/9mis=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780363745; c=relaxed/simple;
-	bh=yNhsL6+11YWE0+t3tPnoC8/7OltlZJGmj23wQr1wC34=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xnq/M2Uk/3nayqnDuZ1GYo2T6NfqDjP/TmDV83MyZ0KvPwXwPwzYPN8/U4T+ipykQLwjcLSj6jH/I5wIVbFxQmLy+rnYwZVR92swDe5Q6x3sPRtlv4SE6oa6Ueu8QdEi14k1IRVeMjiypW3XHADmbviW71XSoFoteRdZrkO/CMg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=uniontech.com; spf=pass smtp.mailfrom=uniontech.com; dkim=pass (1024-bit key) header.d=uniontech.com header.i=@uniontech.com header.b=ZDbP/qRg; arc=none smtp.client-ip=18.194.254.142
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=uniontech.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=uniontech.com
+	s=arc-20240116; t=1780366533; c=relaxed/simple;
+	bh=vDNolArekgRosQOyPhKqBidL7MM7+dNKWKcNGsM/o4A=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=GcWRbxK3xZi+sVosklzE94+rJgKK+HEInCQ/v0GtHy71sRKwhDMXcScK4yPcnFkguhrQXcDfZSQESWALLlfLNpOQuzl7CYhccvOfWDZSl+g5j8CgOZmVNVUsUS8TZpZ0/WVPxlNoSCbfeE7JkcB+jrNG12KjWCwPCPOs+MVfXp4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GVPnVtx8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=uniontech.com header.i=@uniontech.com header.b="ZDbP/qRg"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=uniontech.com;
-	s=onoh2408; t=1780363724;
-	bh=M4xn0QTwhl2jCk5EJX13+ffTRXm7Y+KXJJFxxf4QpJY=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version;
-	b=ZDbP/qRgz/phjYTArEzQCWVIPZKJydDm3i6+x0CwMt0pmc2wYVIGX1pFXKivv6u2M
-	 7J+ifYNQ3N7ELg5z5Iv4utoufstzZwIPT77dhshEXUWgNC9HBQUmwrarwHtHM7VZ+d
-	 Pm5ztXXQeU2Yce46Baacg6+m3epYAY8Rn2lR7Pso=
-X-QQ-mid: esmtpsz21t1780363717t7d3e3f97
-X-QQ-Originating-IP: WhF+Z/FeaIYUrJYqIzDOxcXbCfmg43NAxv/Wr7vjIhU=
-Received: from PEN1097 ( [1.202.39.170])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Tue, 02 Jun 2026 09:28:35 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 13331546314602505893
-EX-QQ-RecipientCnt: 5
-From: Cheng Nie <niecheng1@uniontech.com>
-To: sj@kernel.org
-Cc: damon@lists.linux.dev,
-	niecheng1@uniontech.com,
-	sashiko-bot@kernel.org,
-	sashiko-reviews@lists.linux.dev
-Subject: Re: [PATCH v3 2/2] selftests/damon/sysfs.py: validate memcg_path staging readback
-Date: Tue,  2 Jun 2026 09:28:32 +0800
-Message-ID: <A556945AF3D53065+20260602012832.30023-1-niecheng1@uniontech.com>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20260601143338.111762-1-sj@kernel.org>
-References: <20260601143338.111762-1-sj@kernel.org>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GVPnVtx8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D6EC1F00A05
+	for <damon@lists.linux.dev>; Tue,  2 Jun 2026 02:15:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1780366532;
+	bh=vDNolArekgRosQOyPhKqBidL7MM7+dNKWKcNGsM/o4A=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc;
+	b=GVPnVtx88mdLm1WWoKMJNVP52OGVT6hSqHGGU/NMJ2ZYmp1lM4EhG7bBar3rDZ3Zi
+	 TcxR6ZPw9T/2gM35LpBRYKZl94OtaE0v9KeakbfZBDag3dMj+cvnK/i/UELlGHpaw4
+	 bcrE6Vk7PjxVS662uUJnk5KxxtHPd4+2betlow6/BTSvgaI9DUQu1VWM/iYhUarxJQ
+	 q6DAuG49IeAm8A3EP1ny0kmt0Tn4SFFsDNg81XUyYHbtjjYbNtlppOnjCQhMF242J8
+	 XaHZv6Zah5JHZMdfugRssA53ppN1fZHnH10PoWAJbGYnDdk3HRNj6nSsLa40P+aqKr
+	 EYJJmDXRRaasQ==
+Received: by mail-qk1-f178.google.com with SMTP id af79cd13be357-91550d518c0so210298485a.0
+        for <damon@lists.linux.dev>; Mon, 01 Jun 2026 19:15:32 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AFNElJ+3OGoc5QW4OtanL92QF3QIWcFbnQVUPovGtlJqMwSHG8dFy7pD5V6Px5Q4UAsWwM21iZCFgA==@lists.linux.dev
+X-Gm-Message-State: AOJu0YznHn+mmgwEUn4o8m3qCo7SYYkXVaCGOmBFsTUZ9DDnTp8IoI1M
+	y6waxlrpnH1/jPs8qcNMbK1Uh5X1K4/UnWblIGvO1IJAFzIYWoFAUKDFCNkXDdxycskN8Bifxjr
+	ZzBaTLubzb15jDVb+NUzEmFe1A9wieGc=
+X-Received: by 2002:a05:620a:46ab:b0:914:dc12:60d9 with SMTP id
+ af79cd13be357-9153da3c92amr2245294985a.46.1780366531281; Mon, 01 Jun 2026
+ 19:15:31 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-QQ-SENDSIZE: 520
-Feedback-ID: esmtpsz:uniontech.com:qybglogicsvrsz:qybglogicsvrsz4b-0
-X-QQ-XMAILINFO: Nty3yXuijLhXh0QhXJ9n15Ck6jLB8qgSw/c9+hKuBQhNrY9Fuz43tZ/c
-	9H7P1zCaly99REt6hDz8gIXApnlxQdzgwIrmrjVTsMfN2vHxBxY+8ta9KI5vaQ4/ZIP1sAF
-	n7jDYC7vM4jXcb9c0YpGOfWNScoS2l7S0l8sUu61w9NJuDFstsrtUQhyPo6UeNjzQIjGdOB
-	euBO854frFVd4yTkzhbJNM+Y3iZtBKK4Axp+nlvntF7Kd8OVgkhJsQFjxHW8CUI2iU/oZVV
-	YUprIjeH4in1KBLtwMfcNPNijhgslG1YsHRNXHZ7OxrWs97LHPt3KmvpMAKV+3ifTNezO+V
-	hAPWrChV2eNWpDNGEBfbEv22PWlILsv8YGONS+1vC59YvhsnIc3QMc+VSUxmMZ0aIM+YpHi
-	gRNJcPA0Dd71vsDiNEshCyth0mCskjlpEUlZBGCE8eKrX6rxoSOOeCUAyiySkLVW+1tiH25
-	2HhzkWa/NqDwerbnqLZv6grm/NJiYjtbv5GyVydXmnQMKVHk4asrQrJPiC6yuYXmzy4vRzl
-	pzf5vTAz63b+oNzH5bQzxqcxCMOetsw/fWKvQ1JYyRuyn1yQ/qdDEgvqqEh9vg2ADq7/yDJ
-	KZD2b2PDr5eSby+wWRQ4XOVSTy5pJlwta+u/cPU8meX1lpw/c0PCQVpujg4lr+E+/mbQ/1S
-	FZSYgjQBeRuRtleGtBz4Fho7Va8tKB7l3gA94Q25a8MkwhRx0ssba4Czq/YUMVlBpdEHEU5
-	+km81Cpk2NWN4JsipOrWyUzTZOzQJaUxybtXhsIf18mZjDVbkULuSYYkHWZ5XWb4BZ90GnR
-	KNevWw7YJjkSQymoMKXzjdcYHMRZkuxVSLu9F/Rq5EEtuVhITnyg1+1aKbB2TlG/2IeVrzy
-	ydoIdVnN4Di8n3Qn1Sg5epJVMd/KalKBu8rtISXkcAjzuA0CK4cfHG9+ChFNfDx4zDzFEXf
-	6JBgf0/aNgAcawK/rABvTsjZ1P3irGW72MSQbFdqOFg2qLmyAu8NHSkSO7GMRg086IgdJn6
-	AYWEa/96vEB2nzXZKxiWSEZtDGVX4=
-X-QQ-XMRINFO: MPJ6Tf5t3I/ylTmHUqvI8+Wpn+Gzalws3A==
-X-QQ-RECHKSPAM: 0
+References: <20260527110147.17815-1-tao.wangtao@honor.com> <ahcANgFDFwfC0v1q@lucifer>
+ <b24b4a8198ba412f8b8b42c43dccd058@honor.com> <ahf2mJg9OOWvu0jA@lucifer>
+ <CAGsJ_4zy=-m5wjm0BC-vQXMHGRkHymC-5S_L9Oi708v339vvPw@mail.gmail.com>
+ <99dfc4a50f3643a6bef6deaeccfcf115@honor.com> <ahlzj--3Gm5pD9ge@lucifer> <a90bcb0fa3a044588350e92a78258a09@honor.com>
+In-Reply-To: <a90bcb0fa3a044588350e92a78258a09@honor.com>
+From: Barry Song <baohua@kernel.org>
+Date: Tue, 2 Jun 2026 10:15:19 +0800
+X-Gmail-Original-Message-ID: <CAGsJ_4wFr89M2i8pth79swv3==i8SGSMWrbr+Yp2umwFTuCShg@mail.gmail.com>
+X-Gm-Features: AVHnY4LJPt1t2ZBIxfgvbOEnyfUBTI1uXsLcte0MhxaOkYp5LfKwaoVVIHaTQkk
+Message-ID: <CAGsJ_4wFr89M2i8pth79swv3==i8SGSMWrbr+Yp2umwFTuCShg@mail.gmail.com>
+Subject: Re: [PATCH 0/15] mm: introduce ANON_VMA_LAZY for deferred anon_vma creation
+To: wangtao <tao.wangtao@honor.com>
+Cc: Lorenzo Stoakes <ljs@kernel.org>, "catalin.marinas@arm.com" <catalin.marinas@arm.com>, 
+	"will@kernel.org" <will@kernel.org>, "tglx@kernel.org" <tglx@kernel.org>, "mingo@redhat.com" <mingo@redhat.com>, 
+	"bp@alien8.de" <bp@alien8.de>, "dave.hansen@linux.intel.com" <dave.hansen@linux.intel.com>, 
+	"x86@kernel.org" <x86@kernel.org>, "akpm@linux-foundation.org" <akpm@linux-foundation.org>, 
+	"david@kernel.org" <david@kernel.org>, "willy@infradead.org" <willy@infradead.org>, "sj@kernel.org" <sj@kernel.org>, 
+	"kees@kernel.org" <kees@kernel.org>, "luizcap@redhat.com" <luizcap@redhat.com>, 
+	"zhangjiao2@cmss.chinamobile.com" <zhangjiao2@cmss.chinamobile.com>, "kas@kernel.org" <kas@kernel.org>, 
+	"hpa@zytor.com" <hpa@zytor.com>, "liam@infradead.org" <liam@infradead.org>, 
+	"vbabka@kernel.org" <vbabka@kernel.org>, "rppt@kernel.org" <rppt@kernel.org>, 
+	"surenb@google.com" <surenb@google.com>, "mhocko@suse.com" <mhocko@suse.com>, "jack@suse.cz" <jack@suse.cz>, 
+	"riel@surriel.com" <riel@surriel.com>, "harry@kernel.org" <harry@kernel.org>, 
+	"jannh@google.com" <jannh@google.com>, "jgg@ziepe.ca" <jgg@ziepe.ca>, 
+	"jhubbard@nvidia.com" <jhubbard@nvidia.com>, "peterx@redhat.com" <peterx@redhat.com>, 
+	"ziy@nvidia.com" <ziy@nvidia.com>, 
+	"baolin.wang@linux.alibaba.com" <baolin.wang@linux.alibaba.com>, "npache@redhat.com" <npache@redhat.com>, 
+	"ryan.roberts@arm.com" <ryan.roberts@arm.com>, "dev.jain@arm.com" <dev.jain@arm.com>, 
+	"lance.yang@linux.dev" <lance.yang@linux.dev>, "xu.xin16@zte.com.cn" <xu.xin16@zte.com.cn>, 
+	"chengming.zhou@linux.dev" <chengming.zhou@linux.dev>, 
+	"nao.horiguchi@gmail.com" <nao.horiguchi@gmail.com>, 
+	"matthew.brost@intel.com" <matthew.brost@intel.com>, 
+	"joshua.hahnjy@gmail.com" <joshua.hahnjy@gmail.com>, "rakie.kim@sk.com" <rakie.kim@sk.com>, 
+	"byungchul@sk.com" <byungchul@sk.com>, "gourry@gourry.net" <gourry@gourry.net>, 
+	"ying.huang@linux.alibaba.com" <ying.huang@linux.alibaba.com>, "apopple@nvidia.com" <apopple@nvidia.com>, 
+	"pfalcato@suse.de" <pfalcato@suse.de>, 
+	"linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>, 
+	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>, 
+	"linux-fsdevel@vger.kernel.org" <linux-fsdevel@vger.kernel.org>, "linux-mm@kvack.org" <linux-mm@kvack.org>, 
+	"damon@lists.linux.dev" <damon@lists.linux.dev>, "shakeel.butt@linux.dev" <shakeel.butt@linux.dev>, 
+	"ryncsn@gmail.com" <ryncsn@gmail.com>, "jparsana@google.com" <jparsana@google.com>, 
+	"dvander@google.com" <dvander@google.com>, zhangji <zhangji1@honor.com>, 
+	wangzicheng <wangzicheng@honor.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi SJ,
+On Mon, Jun 1, 2026 at 9:46=E2=80=AFAM wangtao <tao.wangtao@honor.com> wrot=
+e:
+[...]
+>
+> You said discussion was welcome, yet when someone offered even a
+> small comment, you refused to continue the discussion.
+>
+> If I had known you would be this inconsistent, I would not have
+> replied to you in the first place.
+>
+> This will be my last reply to you. I will not respond again.
+>
 
-Thank you for the reminder.  Sorry for sending v4 too quickly; I will
-wait for reviewers before posting a new version next time.
+Hi Tao,
 
-Thanks,
-Cheng Nie
+Please don't walk away from the linux-mm community. I read your
+patchset and found it quite valuable. It not only reduces memory
+overhead, but also eliminates rmap costs for exclusive folios.
+
+Since I'm not very confident discussing technical topics in English,
+I wrote a blog post in Chinese about your patchset:
+
+https://mp.weixin.qq.com/s/k00tzhTl8HbL3k4G6ev4SA
+
+I have to admit that I found the implementation quite complex and
+in need of significant improvement. However, I think the underlying
+idea is very interesting and worth exploring further.
+
+I'm looking forward to seeing a v2 RFC with a cleaner and simpler
+implementation while preserving the core concept.
+
+Regardless of whether it ultimately gets merged, I hope the discussion
+can continue.
+
+Best regards,
+Barry
