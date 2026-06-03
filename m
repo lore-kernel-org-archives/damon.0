@@ -1,342 +1,139 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from out-185.mta0.migadu.com (out-185.mta0.migadu.com [91.218.175.185])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33B3E38D3FE;
-	Wed,  3 Jun 2026 07:54:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB4ED37DE84
+	for <damon@lists.linux.dev>; Wed,  3 Jun 2026 09:15:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.185
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780473265; cv=none; b=EOtmKVBq8daSB1iXUU/HyM2Jkjftfj982INndwvGLQB5r2WKOqvoH0T1Ym+WYzTNQAc2K3Bm6r0MJpi3mWp8WU2o2jb7xoYdW61rxiAd7jI9USAB6z22mWc+rC/H5V9kGJB+sDn6BlxP38jYBNVKWc94+6m6ROFj2/vwu43x6P8=
+	t=1780478106; cv=none; b=bT3YXPeRtm23T3PU3+UfSSl60247PUKSdlp1HYA11dCNBiowKjitiFj/CdJkQW5o9aw4JAYwHkqVdtd200uUYv+qrc7fualADFHon61OaSbQd5W1yRNNVz+0ZWOPa3CMwk9i4PwpQKCYIf8VFjz7Tx5wUj5nnH7oyurC6zt51LI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780473265; c=relaxed/simple;
-	bh=jrWx9IcoOX4ET7phfGSsnXQP0TnaVaXyNCDPoi+KTiE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=KojrOOmqEph1Hb6C9ErsUFkTCf7r41jSpo4zdhUdyNMsM+Jp3IXo8dOmV3ECnj43mC0E4u/UUQ3OEPxxHQoBgu7zHmhITZFCmGCkTSwGPvrRl0pPdhqBXqxPLdwqi2RmuDUcHiwt/9JZ5LuusDjvPyZrO5IVc0qgeJv4I4oJbNE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iBQdR899; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1780478106; c=relaxed/simple;
+	bh=zn7Seecs3LOSvLfv2aTTNGUwNVSAR/tJOyZPAL/5F2Q=;
+	h=MIME-Version:Date:Content-Type:From:Message-ID:Subject:To:Cc:
+	 In-Reply-To:References; b=cQ2XXLjRBeBejyhLEWlaA5dx7/It+KLCuQ0Pd3BHsYFhNCcOAZc7BijkAB2GnfyA1zLIj/KnfRlTI9NpjRZge6/W/G2dG3bdnMdIb8Q6IFHLY0vqoV+5pgjJENZ1LWCQe/rWbht5GuHyRz3z4r6Izti++cAhtidYD9PQcw+MDOg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=nIbQzVZ3; arc=none smtp.client-ip=91.218.175.185
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iBQdR899"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FA281F00893;
-	Wed,  3 Jun 2026 07:54:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1780473263;
-	bh=yVEWQXkYyS1Sz1wvYDfa0kDHIfb6GACqf4EYG4ej3sk=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=iBQdR899JgjQykJRr6/veC3nzp/U3AzVBUI7qT+uQIgJJd7ZBW9l9QZchBrf66Lhr
-	 0qI4HFuAOQqiRm2/77apvrCvt7IRTRHEa4wt717jm2i39+vV5nmUzsM/4cKYO+k+ro
-	 FlZZEF6HcMNPQ0I1XgOiejr5bUf2bL6NeY1vMs9n7UyycHig/Zpgmhzzw44UbpfZW9
-	 I/bhLe6VplTnVgMlkef6VbPnUZKT9CLdrT5guTrCNlMdH0XXLD086xrwhtinZEPUJc
-	 uFZuS/vxmUWw7DT/VpxH4TKVP1lgwDqEDTSFIfHhw+UeQ6vQkeZ4rDROLg0pc8VPLg
-	 IW18pcyKw93lQ==
-Date: Wed, 3 Jun 2026 08:54:08 +0100
-From: Lorenzo Stoakes <ljs@kernel.org>
-To: wangtao <tao.wangtao@honor.com>
-Cc: Harry Yoo <harry@kernel.org>, 
-	"catalin.marinas@arm.com" <catalin.marinas@arm.com>, "will@kernel.org" <will@kernel.org>, 
-	"tglx@kernel.org" <tglx@kernel.org>, "mingo@redhat.com" <mingo@redhat.com>, 
-	"bp@alien8.de" <bp@alien8.de>, "dave.hansen@linux.intel.com" <dave.hansen@linux.intel.com>, 
-	"x86@kernel.org" <x86@kernel.org>, "akpm@linux-foundation.org" <akpm@linux-foundation.org>, 
-	"david@kernel.org" <david@kernel.org>, "willy@infradead.org" <willy@infradead.org>, 
-	"sj@kernel.org" <sj@kernel.org>, "kees@kernel.org" <kees@kernel.org>, 
-	"luizcap@redhat.com" <luizcap@redhat.com>, 
-	"zhangjiao2@cmss.chinamobile.com" <zhangjiao2@cmss.chinamobile.com>, "kas@kernel.org" <kas@kernel.org>, 
-	"hpa@zytor.com" <hpa@zytor.com>, "liam@infradead.org" <liam@infradead.org>, 
-	"vbabka@kernel.org" <vbabka@kernel.org>, "rppt@kernel.org" <rppt@kernel.org>, 
-	"surenb@google.com" <surenb@google.com>, "mhocko@suse.com" <mhocko@suse.com>, 
-	"jack@suse.cz" <jack@suse.cz>, "riel@surriel.com" <riel@surriel.com>, 
-	"jannh@google.com" <jannh@google.com>, "jgg@ziepe.ca" <jgg@ziepe.ca>, 
-	"jhubbard@nvidia.com" <jhubbard@nvidia.com>, "peterx@redhat.com" <peterx@redhat.com>, 
-	"ziy@nvidia.com" <ziy@nvidia.com>, "baolin.wang@linux.alibaba.com" <baolin.wang@linux.alibaba.com>, 
-	"npache@redhat.com" <npache@redhat.com>, "ryan.roberts@arm.com" <ryan.roberts@arm.com>, 
-	"dev.jain@arm.com" <dev.jain@arm.com>, "baohua@kernel.org" <baohua@kernel.org>, 
-	"lance.yang@linux.dev" <lance.yang@linux.dev>, "xu.xin16@zte.com.cn" <xu.xin16@zte.com.cn>, 
-	"chengming.zhou@linux.dev" <chengming.zhou@linux.dev>, "nao.horiguchi@gmail.com" <nao.horiguchi@gmail.com>, 
-	"matthew.brost@intel.com" <matthew.brost@intel.com>, "joshua.hahnjy@gmail.com" <joshua.hahnjy@gmail.com>, 
-	"rakie.kim@sk.com" <rakie.kim@sk.com>, "byungchul@sk.com" <byungchul@sk.com>, 
-	"gourry@gourry.net" <gourry@gourry.net>, "ying.huang@linux.alibaba.com" <ying.huang@linux.alibaba.com>, 
-	"apopple@nvidia.com" <apopple@nvidia.com>, "pfalcato@suse.de" <pfalcato@suse.de>, 
-	"linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>, "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>, 
-	"linux-fsdevel@vger.kernel.org" <linux-fsdevel@vger.kernel.org>, "linux-mm@kvack.org" <linux-mm@kvack.org>, 
-	"damon@lists.linux.dev" <damon@lists.linux.dev>, "shakeel.butt@linux.dev" <shakeel.butt@linux.dev>, 
-	"ryncsn@gmail.com" <ryncsn@gmail.com>, "21cnbao@gmail.com" <21cnbao@gmail.com>, 
-	"jparsana@google.com" <jparsana@google.com>, "dvander@google.com" <dvander@google.com>, 
-	zhangji <zhangji1@honor.com>, wangzicheng <wangzicheng@honor.com>
-Subject: Re: [PATCH 0/15] mm: introduce ANON_VMA_LAZY for deferred anon_vma
- creation
-Message-ID: <ah_VMf0ZJTRsrArV@lucifer>
-References: <20260527110147.17815-1-tao.wangtao@honor.com>
- <0867dac0-bc48-4aa9-891f-2066a3eff989@kernel.org>
- <7319ad82f9ee4fc4b18b50b1842c9f99@honor.com>
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="nIbQzVZ3"
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <7319ad82f9ee4fc4b18b50b1842c9f99@honor.com>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1780478102;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=wUny2P+n6s64FxOiYIiTZOU4vfbpKQNJRW9sV8W1Tag=;
+	b=nIbQzVZ3H+WQX7NN+qawhZFTFRXfAXwxX6AJ/g0g/09kHk8He4+ve+LZlKYqbTxXHBj5UW
+	KDShM9jzOLqSvJIxaKVKSpB9jWzIzPhMXzqfV/wsqnn0t/3wbn3A7eyhtqJdNWI4Q9AcKm
+	k0Qsj1cn9FVSB8hIXPbvkmZscVdjwGg=
+Date: Wed, 03 Jun 2026 09:15:00 +0000
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: "Kunwu Chan" <kunwu.chan@linux.dev>
+Message-ID: <1eeea60ae762c3969344592bd58a50082877ce02@linux.dev>
+TLS-Required: No
+Subject: Re: [PATCH v2 0/3] selftests/damon: misc fixes for test bugs
+To: "SeongJae Park" <sj@kernel.org>
+Cc: "SeongJae Park" <sj@kernel.org>, shuah@kernel.org, damon@lists.linux.dev,
+ linux-kselftest@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-mm@kvack.org, "Kunwu Chan" <chentao@kylinos.cn>, "Andrew Morton"
+ <akpm@linux-foundation.org>
+In-Reply-To: <20260603050219.91743-1-sj@kernel.org>
+References: <20260603050219.91743-1-sj@kernel.org>
+X-Migadu-Flow: FLOW_OUT
 
-On Wed, Jun 03, 2026 at 02:59:04AM +0000, wangtao wrote:
-> > On 5/27/26 8:01 PM, tao wrote:
-> > > Design overview
-> > > ---------------
-> > >
-> > > ANON_VMA_LAZY defers anon_vma allocation until it is actually needed
-> > > (for example during fork). VMAs that never participate in sharing can
-> > > avoid creating anon_vma structures entirely.
-> > >
-> > > Before an anon_vma exists, rmap operations rely directly on VMA
-> > > information, so no anon_vma locking is required. An anon_vma is
-> > > created and linked only when sharing semantics are required.
-> >
-> > It is unfortunate that the design overview doesn't cover correctness aspect
-> > at all. VMAs are subject to change (even before being shared with other
-> > processes), and rmap needs something that doesn't go away across VMA
-> > merging, split, etc.
-> >
-> > I'm not sure how the idea is supposed work correctly.
-> >
-> > --
-> > Cheers,
-> > Harry / Hyeonggon
->
+2026=E5=B9=B46=E6=9C=883=E6=97=A5 13:02, "SeongJae Park" <sj@kernel.org m=
+ailto:sj@kernel.org?to=3D%22SeongJae%20Park%22%20%3Csj%40kernel.org%3E > =
+=E5=86=99=E5=88=B0:
 
-Against my better judgment I'll address the stuff here...
 
-> VMA operations can be roughly divided into three categories. The handling
-> of ANON_VMA_LAZY is briefly described below.
+>=20
+>=20On Wed, 03 Jun 2026 02:11:33 +0000 "Kunwu Chan" <kunwu.chan@linux.dev=
+> wrote:
+>=20
+>=20>=20
+>=20> 2026=E5=B9=B46=E6=9C=881=E6=97=A5 22:22, "SeongJae Park" <sj@kernel=
+.org mailto:sj@kernel.org?to=3D%22SeongJae%20Park%22%20%3Csj%40kernel.org=
+%3E > =E5=86=99=E5=88=B0:
+> >=20=20
+>=20>=20=20
+>=20>=20=20
+>=20>  On Mon, 1 Jun 2026 11:23:11 +0800 Kunwu Chan <kunwu.chan@linux.dev=
+> wrote:
+> >=20=20
+>=20>  >=20
+>=20>  > From: Kunwu Chan <chentao@kylinos.cn>
+> >  >=20
+>=20>  > This series fixes several bugs in the DAMON selftests. Most are
+> >  > trivial but cause tests to silently pass when they shouldn't, or
+> >  > fail prematurely on slow machines.
+> >  >=20
+>=20>  Nit. Only patch 3 fixes a fake test pass for "avail_operations" fi=
+le existence
+> >  test, and the series is not doing something for slow machines, right=
+? I think
+> >  the last sentence should be updated, for example:
+> >=20=20
+>=20>  '''
+> >  Most are trivial but makes test output wrong or even silently pass t=
+he one for
+> >  'avail_operation' file existence check.
+> >  '''
+> >=20=20
+>=20>  Other than that, all look good to me, and already have my Reviewed=
+-by: tag.
+> >=20=20
+>=20>  Asssuming you are ok with the above change, I applied this series =
+to damon/next
+> >  [1] tree with the above change. If this series is not added to mm.gi=
+t in short
+> >  term (~1 week?), I will ask mm.git maintainer (Andrew Morton) to pic=
+k this.
+> >=20
+>=20FYI, we are now quite close to next merge window. We want to focus on=
+ making
+> mm.git more stabilized and therefore ready for the next merge window, r=
+ather
+> than adding more changes that no really urgent. I understand this serie=
+s is
+> not really urgent. Hence, I will request adding this to mm.git after ne=
+xt -rc1
+> release. Let me know if you think this is really urgent.
+>=20
+Waiting=20until after -rc1 is perfectly fine, this series isn't
+urgent.  Thanks for letting me know.
 
-I don't agree, there are plenty more VMA operations. But with respect to anon
-rmap there are:
+Regards,
+Kunwu
 
-- fork
-- merge/split
-- remap
-
-Your approach seems to completely ignore VMA split and the need to maintain
-an interval tree to _multiple_ VMAs from a single anon_vma.
-
-You may also actually split a VMA against a single large folio (waiting on
-the deferred shrinker) and have a SINGLE _leaf_ anonymous folio that is
-mapped in two places.
-
-The lazy approach doesn't seem to address this properly. And fatally it
-ties an actual VMA afaict to the folio and has to implement a VMA reference
-count mechanism which interferes with the ordinarily VMA lifecycle to do
-it.
-
-The fact of us taking advantage of most stuff being AnonExclusive,
-i.e. 'leaves' is something that my approach is exactly taking into account.
-
-Of course also extending anon_vma is a real non-starter.
-
-Also the below + the series ignores MAP_PRIVATE file-backed mappings which
-is a pretty fatal flaw.
-
-It also, as Harry says, has zero description of correctness in a way we'd
-want and no tests.
-
->
-> 1. fork
->
-> fork duplicates the parent's mm/mmap. (exec creates a new mm/mmap and is
-> not involved here.) This can be viewed as copying the VMAs with identical
-> virtual addresses into a new address space.
->
-> If the parent VMA (pvma) is ANON_VMA_LAZY, it is first upgraded to a
-> regular anon_vma. The corresponding folio->mapping is then fixed in
-> try_dup_anon_rmap().
-
-And so we make fork, a very sensitive path in the kernel more expensive.
-
-I also question the locking situation with the conversion mentioned,
-updating folios in this manner is extremely difficult.
-
->
-> 2. mmap / brk / mprotect / munmap
->
-> These operations create, modify, or remove VMAs in the current mm. They
-> may split existing VMAs, merge adjacent VMAs, or remove a VMA from mm_mt.
-
-mmap and brk are not at all relevant to anon_vma, as no anon_vma is
-assigned upon mapping. It's on fault.
-
-mprotect/mlock/munmap/etc. might split, but I don't see how the lazy
-approach in any way addresses any of that.
-
->
-> When a new VMA is created, vm_start, vm_end and vm_pgoff are initialized
-> and the VMA is inserted into mm_mt. Although these fields may later be
-> modified, the following value remains invariant:
->
-> (vm_start - vm_pgoff * PAGE_SIZE)
-
-Err no it doesn't at all?
-
-If I fault in a VMA at vm_start, vm_pgoff = vm_start >> PAGE_SHIFT.
-
-Then if I remap it, vm_start changes, vm_pgoff stays the same, so:
-
-vm_start - vm_pgoff * PAGE_SIZE
-
-Changes right? And then that becomes essentially the offset from where it
-was faulted in.
-
->
-> We refer to this value as:
->
-> vma_mapping_base(vma) = vma->vm_start - vma->vm_pgoff * PAGE_SIZE
-
-This is mysteriously close to being the offset I mention in my CoW context
-work...
-
-I'm not sure what 'mapping base' means here.
-
->
-> This value also remains unchanged when the VMA is removed from mm_mt.
-
-Why does it matter what this value is on unmap?
-
->
-> If a VMA is split and produces new_vma, the following holds:
->
-> vma_mapping_base(new_vma) == vma_mapping_base(vma)
-
-This is a roundabout way of saying we offset the vma->vm_pgoff after split.
-
->
-> If two adjacent VMAs vma_a and vma_b are merged into vma_x, then:
->
-> vma_mapping_base(vma_a) == vma_mapping_base(vma_b) ==
-> vma_mapping_base(vma_x)
-
-This is just a roundabout way of saying the pgoff has to be aligned.
-
->
-> Assume the VMA where the first page fault occurs is called root_vma, and
-> ensure that any VMA produced by split or merge holds a reference to
-> root_vma.
-
-But this VMA can be unmapped later? Or remapped?
-
-Holding on to a VMA and treating it as some kind of canonical reference
-with a reference count completely changes what VMAs are, impacts the VMA
-lifecycle, and produces unwanted memory overhead in itself.
-
-It also raises concerns and issues around lock order which is very
-sensitive.
-
->
-> During rmap we can compute the folio address using root_vma:
->
-> vma_address(vma, pgoff, 1) =
-
-What's the parameters here? What's 1?
-
->     vma->vm_start + ((pgoff - vma->vm_pgoff) << PAGE_SHIFT)
->   = vma_mapping_base(vma) + pgoff * PAGE_SIZE
->   = vma_mapping_base(root_vma) + folio_pgoff * PAGE_SIZE
->
-> We can then use folio_addr to locate the VMA covering this folio.
-
-I'm really confused by this, you're kind of mixing and match parameters
-here.
-
-What I think you're saying is that, if a folio hasn't been remapped, you
-can figure out its address based on page offset.
-
-That's completely broken for MAP_PRIVATE file-backed mappings which also
-use anon_vma and also have to keep on working.
-
-It seems that for the lazy approach what you are doing is essentially
-caching the 'root' VMA in the folio. But this doesn't account for large
-folios and split VMAs.
-
-Even if you disabled it for those cases (which adds a ton of complexity in
-itself), you then have issues with locking - the anon_vma lock has to take
-a lock (that cannot be a VMA-level lock - results in lock inversion) even
-on these leaf entries, or you break locking.
-
-And we can't reasonably start pinning VMAs and using them as a sort of
-proto cached thing on top of the existing anon_vma logic.
-
-You also then need to, on remap, undo all this, which requires updating
-folio->mapping on remap, something I tried doing previously myself, but
-that's fraught with issues around lock inversion itself.
-
->
-> 3. mremap / uffd_move
-
-userfaultfd moving is not relevant as it actually updates the folio
-correctly.
-
->
-> If only the size changes and the start address remains the same, there
-> is no impact.
->
-> If the start address changes, the page is moved from (vma, addr) to
-> (new_vma, new_addr). In this case:
->
-> vma_mapping_base(new_vma) =
->     vma_mapping_base(vma) + new_addr - old_addr
-
-You say above that the mapping base never changes? But here it changes?
-
->
-> We first upgrade the VMA, and then fix folio->mapping in move_ptes().
-
-What's 'upgrading' a VMA? You mean converting the lazy anon_vma to a
-'normal' one.
-
-As above, this is fraught with lock inversion issues.
-
->
-> If performance becomes a concern, ANON_VMA_LAZY can be enabled only for
-> relatively small VMAs.
-
-I think you've got serious correctness, lock management and complexity
-issues and it's all a non-starter as the costs deeply exceed the benefits.
-
-This is one of the fundamental, frustrating aspects of the anon rmap - you
-keep thinking that 'surely' you can do sensible thing X, but it turns out
-you can't for various annoying reasons.
-
-It's one of the reasons it's really fraught for somebody coming to make
-changes, and one of the reasons why I am very keen on fundamentally
-changing it.
-
-And also on a not-wasting-time basis - I was already working in parallel on
-a rework here, so I think the civil thing is to at least wait for my work
-before issuing alternative solutions.
-
-Thanks, Lorenzo
-
->
->
-> vma操作可以分为3类，下面简单说明下ANON_VMA_LAZY的处理：
->
-> 1. fork 从父进程复制mm/mmap；（exev 创建一个新的mm/mmap，不涉及)。
->  这可以理解为在一个新的地址空间复制一份相同地址的VMAs.
->  如果pvma是ANON_VMA_LAZY，先升级为regular anon_vma，并在try_dup_anon_rmap中升级修正folio->mapping.
->
-> 2. mmap/brk/mprotect/munmap
->  创建、修改或删除当前mm的VMA，可能合并或拆分出新的VMAs或者将VMA从mm_mt删除。
->  创建一个新的vma并设置vm_start、vm_end、vm_pgoff插入mm_mt后，虽然后续可能修改这个VMA的vm_start、vm_end、vm_pgoff，但是保持
->  (vm_start - vm_pgoff * PAGE_SIZE)不变，我们可以把这个称之为vma_mapping_base(vma) = vma->vm_start - vma->vm_pgoff * PAGE_SIZE。
->  这个vma从mm_mt删除时，vma_mapping_base(vma)也保持不变。
->  从这个vma拆分出的new_vma，有vma_mapping_base(new_vma) == vma_mapping_base(vma)
->  合并相邻vma_a、vma_b为vma_x时，也有vma_mapping_base(vma_a) == vma_mapping_base(vma_b) == vma_mapping_base(vma_x)
->  如果我们第一次发生缺页的VMA称为root_vma，并在split或merge时都确保使用的vma持有root_vma的引用。
->  在rmap时我们可以用root_vma计算folio地址：
->    vma_address(vma, pgoff, 1) = vma->vm_start + ((pgoff - vma->vm_pgoff) << PAGE_SHIFT)
->                               = vma_mapping_base(vma) + pgoff * PAGE_SIZE
->                               = vma_mapping_base(root_vma) + folio_pgoff * PAGE_SIZE
->  然后用folio_addr查找folio所在的vma。
->
-> 3. mremap/uffd_move
->   如果只是修改大小，起始地址不变，不影响。
->   如果改变起始地址，将page从vma/addr移动到new_vma/new_addr
->   这时vma_mapping_base(new_vma) = vma_mapping_base(vma) + new_addr - old_addr
->   我们先升级vma，在move_ptes中再修正folio->mapping。
->   如果担心性能影响，可以只在较小的vma上使能ANON_VMA_LAZY。
+> >=20
+>=20> So, no action from your side is needed for now. If it seems I also =
+forgot
+> >  doing that or you cannot wait for my action, please feel free to dir=
+ectly ask
+> >  that to Andrew.
+> >=20=20
+>=20>  [1] https://origin.kernel.org/doc/html/latest/mm/damon/maintainer-=
+profile.html#scm-trees
+> >=20=20
+>=20>  Hi SJ,
+> >=20=20
+>=20>  The updated cover letter looks good to me, thanks for fixing it.=
+=20
+>=20>  Thanks also for applying to damon/next.=20
+>=20>  No further action needed on my side.
+> >=20
+>=20Thank you for confirming!
+>=20
+>=20Thanks,
+> SJ
+>=20
+>=20[...]
 >
