@@ -1,211 +1,147 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 617A71F1534;
-	Thu,  4 Jun 2026 14:35:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B0E433120E
+	for <damon@lists.linux.dev>; Thu,  4 Jun 2026 15:19:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780583723; cv=none; b=QDCL5zc5ETILiO06aZ7v/clRrVVfzk6eT2Uo9Zz4tioJHMZZw4mcxOGOStfaPJjqJMqHhyEFhmPI/il8RQCmffv+TlG62GXa6oJ+/B6Cbz862CX9uZQjg/7eSPOxWSxwBMcvKsdzlnpghvTdyQoX0nzJkaw3q/WefzkCNS+XmuQ=
+	t=1780586374; cv=none; b=GC/tO13rKWoCLKT0+dU1yk1RwRayNoih8BD2CZdbZULM2X+qQrEzzTVKVpzIW/9AsopKVA37kNbk2qLDKdBsV5qbunPrMX7QivzpyCcQQQTP1CzWgNyVmWiW04KG5nrzKJvu7gR/fa3T5YEFyewpbc4t+wAtBjna5qBPOBYE4M0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780583723; c=relaxed/simple;
-	bh=sLdz640Nny3Q+uhLCrx8j2DCb9DIqaeRvn21Qp7p43M=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=e+BitSEfwWHmL4nDPxheHyOvxfMitPY9u1anEQI7cTFOwT2mGn6U+4VPtTiweVH05bHGfc7Huu/ZhdLHEEF8bbIINeIrCGgz7gcpHgImuuq5EVxKOOJZnxxbvhd1YMi6A2xDXoz8+189QZpqa17giUv/vH84S7d1sLc4vnteLlc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ElwbEHai; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1780586374; c=relaxed/simple;
+	bh=erD6aZo/guU8tSOt7xC1KTyBQ2w86PNv0Ucu5HGNXPo=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=U3EzGJ7mkjt9L9seMGvGs07CnVWiRH2ch3QFDrWSj464jYEby9otnsdZnDHBJHN/iI/UaZZJiou5kcWL5QSwjgjrMyo4cvtPCdM5QsebP6YBCN7i36cPw33LhaNSYmw62DupjIjFr9Bk9Vt/v8zE7Q/zAySxveesKyb5QBHIhXk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=L09gPnQh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ElwbEHai"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B56451F00893;
-	Thu,  4 Jun 2026 14:35:21 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="L09gPnQh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93C431F00893;
+	Thu,  4 Jun 2026 15:19:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1780583722;
-	bh=vgLl/p3qkGVQ4J0lmKFNqcECALdu6p7bDPIjji6x+rw=;
-	h=From:To:Cc:Subject:Date;
-	b=ElwbEHaiF9IANaaSytaLz7EQlu4/Ut/lrGHBqHUmDI9GqM32kqROX2k3s6R9oZ7HO
-	 CmFNXNc0tCreViLwZ1EdrWC3D015+uxhUrLiO6o2N3iVQmMduj0A9lILeInKuNAScc
-	 TArZZ0o463TVLgqlK5TyivceCRd8CIN+6YhOurHJSSdn1eR5pmqUV9XdkJSTnpTQlF
-	 9FQxxclMfLLMtP+ub6Sg+x6B8UJCcwqpK+w8wNYNMn2y+dNwgaPq4caZHJK3WAhPNN
-	 hTMKViaQXzV5jQjjDG+Ltjy3udAOEvOXzyity8vnqeCRDkuvmzN4BKu5WemCBhTMGB
-	 i+W1jgcaDdg+g==
-From: SeongJae Park <sj@kernel.org>
-To: 
-Cc: SeongJae Park <sj@kernel.org>,
-	"# 6 . 11 . x" <stable@vger.kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	damon@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org
-Subject: [RFC PATCH v1.1] mm/damon/core: always put unsuccessfully committed target pids
-Date: Thu,  4 Jun 2026 07:35:08 -0700
-Message-ID: <20260604143514.84310-1-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
+	s=k20260515; t=1780586372;
+	bh=kcYaPGfZcJbqGTckhPXOSc/ANtL2+KfyhJIq6x3WlkE=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=L09gPnQhg4SwRySsoJDKWO/ZTryyT/OcRmnWQVg+23Hn8jGdHPzQ2c4r20LGZHsBp
+	 2n5ZTmC7B/TKVjD9DOQpeD17CQ3wkNKr5zAC1VWVC4vnOyXviRwYwszXnSuVy2H0JB
+	 5wZuTEYf+xOQXUXIFPOorbh4kN/6NQkM1NrFtKtvSGAoAYDUvPbY6GoJVjHHUDicrV
+	 IslRw3R5+YEj0ky62hHfTZjXcbm55Nob5HB1l0XgLSMdWF7hBbNj/aXYuQ4tUFgbQ3
+	 Eu0BRUY98OkrwfejfVp1Roe1dOAq0W1v/WRxff+luLp+uWB7q6atOf5z3Hfc14oDwx
+	 4/vb2zF7Pj6Yw==
+From: sashiko-bot@kernel.org
+Subject: Re: [RFC PATCH v3 1/4] mm/damon: Introduce DAMOS_QUOTA_HUGEPAGE
+ auto tuning
+Reply-To: sashiko-reviews@lists.linux.dev
+To: gutierrez.asier@huawei-partners.com
+Cc: damon@lists.linux.dev
+In-Reply-To: <20260604150338.501128-2-gutierrez.asier@huawei-partners.com>
+References: <20260604150338.501128-2-gutierrez.asier@huawei-partners.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Thu, 04 Jun 2026 15:19:31 +0000
+Message-Id: <20260604151932.93C431F00893@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-damon_commit_target() puts and gets the destination and the source
-target pids.  It puts the destination target pid because it will be
-overwritten by the source target pid.  It gets the source pid because
-the caller is supposed to eventually put the pids.  In more detail, the
-caller will call damon_destroy_ctx() after damon_commit_ctx() to destroy
-the entire source context.  And in this case, [f]vaddr operation set's
-cleanup_target() callback will put the pids.
+Thank you for your contribution! Sashiko AI review found 5 potential issue(=
+s) to consider:
 
-The commit operation is made at the context level.  The operation can
-fail in multiple places including in the middle and after the targets
-commit operations.  For any such failures, immediately the error is
-returned to the damon_commit_ctx() caller.  If some or all of the source
-target pids were committed to the destination during the unsuccessful
-context commit attempt, those pids should be put twice.
+New issues:
+- [High] A potential division by zero in damos_hugepage_mem_bp() can cause =
+a kernel panic if the total non-free RAM pages evaluate to 0.
+- [Medium] The new DAMOS_QUOTA_HUGEPAGE metric is inaccessible from userspa=
+ce because it was not added to the sysfs mapping array damos_sysfs_qgoal_me=
+tric_names.
+- [Medium] The implementation calculates the ratio of all THP memory to tot=
+al used memory, directly contradicting the commit message's claim that it m=
+easures huge page consumption relative to total anonymous memory.
+- [Medium] The calculation in mult_frac() can silently overflow a 32-bit un=
+signed long, resulting in arbitrarily small, incorrect quota targets.
 
-The source context will do the put operations using the above explained
-routine.  However, let's suppose the destination context was not
-originally using [f]vaddr operation set and the commit failed before the
-ops of the source context is committed.  The destination does not have
-the cleanup_target() ops callback, so it cannot put the pids via the
-damon_destroy_ctx().
+Pre-existing issues:
+- [High] The pre-existing DAMOS_QUOTA_ACTIVE_MEM_BP and INACTIVE_MEM_BP met=
+ric computation can trigger a kernel panic via division by zero.
+--
 
-As a result, the pids are leaked.  The issue in the real world would be
-not very common.  The commit feature is for changing parameters of
-running DAMON context while inheriting internal status like the
-monitoring results.  The monitoring results of a physical address range
-ain't have things that are beneficial to be inherited to a virtual
-address ranges monitoring.  So the problem-causing DAMON control would
-be not very common in the real world.  That said, it is a supported
-feature. And damon_commit_target() failure due to memory allocation is
-relatively realistic [1] if there are a huge number of target regions.
+commit 1f37bbf7381e392f999f133e0444c2faad754df9
+Author: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
 
-Fix by putting the pids in the commit operation in case of the failures.
+mm/damon: Introduce DAMOS_QUOTA_HUGEPAGE auto tuning
 
-The issue was discovered [2] by Sashiko.
+This commit introduces a new DAMOS quota goal metric, DAMOS_QUOTA_HUGEPAGE,
+which is intended to measure the ratio of huge page consumption against
+total anonymous memory.
 
-[1] https://lore.kernel.org/20260603112306.58490-1-akinobu.mita@gmail.com
-[2] https://lore.kernel.org/20260320020056.835-1-sj@kernel.org
+> Introduce DAMOS_QUOTA_HUGEPAGE auto tuning Add a
+> new DAMOS quota goal metric to measure the amount of huge
+> page consumption to total anonymous memory consumption
+> ratio.
 
-Fixes: 83dc7bbaecae ("mm/damon/sysfs: use damon_commit_ctx()")
-Cc: <stable@vger.kernel.org> # 6.11.x
-Signed-off-by: SeongJae Park <sj@kernel.org>
----
-Changes from RFC
-- rfc: https://lore.kernel.org/20260604042349.67720-1-sj@kernel.org
-- Check destination cleaanup availability using the cleanup callback.
-- Do the cleanup for all commit failure points in
-  [targets commit, ops commit] scope.
-- Wordsmith the commit message.
-- Add 'Fixes:' and Cc: stable@.
+[Severity: Medium]
+Does this description match the implementation?
 
- mm/damon/core.c | 55 ++++++++++++++++++++++++++++++++++++++++++-------
- 1 file changed, 47 insertions(+), 8 deletions(-)
+The commit message states this measures huge page consumption against total
+anonymous memory, but the code in damos_hugepage_mem_bp() calculates the sum
+of all transparent huge pages relative to total used memory.
 
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index 265d51ade25bf..7e4b9affc5b06 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -1387,10 +1387,36 @@ static int damon_commit_target(
- 	return 0;
- }
- 
-+/*
-+ * damon_revert_target_commits() - revert unsuccessful target commits.
-+ * @dst:	Commit destination context
-+ * @failed:	Commit failed destination target
-+ * @src:	Commit source context
-+ *
-+ * Revert target states that changed by damon_commit_target(), and cannot be
-+ * cleaned up by the destination context's ops.cleanup_target().
-+ */
-+static void damon_revert_target_commits(struct damon_ctx *dst,
-+		struct damon_target *failed, struct damon_ctx *src)
-+{
-+	struct damon_target *target;
-+
-+	if (!damon_target_has_pid(src))
-+		return;
-+	if (dst->ops.cleanup_target)
-+		return;
-+	damon_for_each_target(target, dst) {
-+		if (target == failed)
-+			return;
-+		put_pid(target->pid);
-+	}
-+}
-+
- static int damon_commit_targets(
- 		struct damon_ctx *dst, struct damon_ctx *src)
- {
- 	struct damon_target *dst_target, *next, *src_target, *new_target;
-+	struct damon_target *failed;
- 	int i = 0, j = 0, err;
- 
- 	damon_for_each_target_safe(dst_target, next, dst) {
-@@ -1404,8 +1430,10 @@ static int damon_commit_targets(
- 					dst_target, damon_target_has_pid(dst),
- 					src_target, damon_target_has_pid(src),
- 					src->min_region_sz);
--			if (err)
--				return err;
-+			if (err) {
-+				failed = dst_target;
-+				goto out;
-+			}
- 		} else {
- 			struct damos *s;
- 
-@@ -1419,25 +1447,34 @@ static int damon_commit_targets(
- 		}
- 	}
- 
-+	failed = NULL;
- 	damon_for_each_target_safe(src_target, next, src) {
- 		if (j++ < i)
- 			continue;
- 		/* target to remove has no matching dst */
--		if (src_target->obsolete)
--			return -EINVAL;
-+		if (src_target->obsolete) {
-+			err = -EINVAL;
-+			goto out;
-+		}
- 		new_target = damon_new_target();
--		if (!new_target)
--			return -ENOMEM;
-+		if (!new_target) {
-+			err = -ENOMEM;
-+			goto out;
-+		}
- 		err = damon_commit_target(new_target, false,
- 				src_target, damon_target_has_pid(src),
- 				src->min_region_sz);
- 		if (err) {
- 			damon_destroy_target(new_target, NULL);
--			return err;
-+			goto out;
- 		}
- 		damon_add_target(dst, new_target);
- 	}
- 	return 0;
-+
-+out:
-+	damon_revert_target_commits(dst, failed, src);
-+	return err;
- }
- 
- static void damon_commit_filter(struct damon_filter *dst,
-@@ -1571,8 +1608,10 @@ int damon_commit_ctx(struct damon_ctx *dst, struct damon_ctx *src)
- 	 */
- 	if (!damon_attrs_equals(&dst->attrs, &src->attrs)) {
- 		err = damon_set_attrs(dst, &src->attrs);
--		if (err)
-+		if (err) {
-+			damon_revert_target_commits(dst, NULL, src);
- 			return err;
-+		}
- 	}
- 	dst->pause = src->pause;
- 	dst->ops = src->ops;
+> diff --git a/include/linux/damon.h b/include/linux/damon.h
+> index 6f7edb3590ef9..d840b0bc0b953 100644
+> --- a/include/linux/damon.h
+> +++ b/include/linux/damon.h
+[ ... ]
+> @@ -176,6 +176,7 @@ enum damos_quota_goal_metric {
+>  	DAMOS_QUOTA_ACTIVE_MEM_BP,
+>  	DAMOS_QUOTA_INACTIVE_MEM_BP,
+>  	DAMOS_QUOTA_NODE_ELIGIBLE_MEM_BP,
+> +	DAMOS_QUOTA_HUGEPAGE,
 
-base-commit: eeac72cb1b86b53f95c1596ec43db17827a8355e
--- 
-2.47.3
+[Severity: Medium]
+Does this new metric need to be added to damos_sysfs_qgoal_metric_names[]
+in mm/damon/sysfs-schemes.c?
+
+Without adding it to the string mapping array, it appears this metric cannot
+be configured from userspace via sysfs.
+
+> diff --git a/mm/damon/core.c b/mm/damon/core.c
+> index 265d51ade25bf..71c8699bdd476 100644
+> --- a/mm/damon/core.c
+> +++ b/mm/damon/core.c
+> @@ -2756,6 +2756,17 @@ static unsigned int damos_get_in_active_mem_bp(boo=
+l active_ratio)
+>  	return mult_frac(inactive, 10000, total);
+>  }
+
+[Severity: High]
+This is a pre-existing issue, but can this cause a divide by zero kernel
+panic?
+
+If there are no active or inactive pages, or if per-CPU vmstat counter drift
+evaluates total to 0, mult_frac() will divide by zero.
+
+> +static unsigned int damos_hugepage_mem_bp(void)
+> +{
+> +	unsigned long thp, total;
+> +
+> +	thp =3D global_node_page_state(NR_ANON_THPS) +
+> +				global_node_page_state(NR_SHMEM_THPS) +
+> +				global_node_page_state(NR_FILE_THPS);
+> +	total =3D totalram_pages() - global_zone_page_state(NR_FREE_PAGES);
+> +	return mult_frac(thp, 10000, total);
+
+[Severity: High]
+Can mult_frac() divide by zero here?
+
+If the system is highly idle or due to per-CPU vmstat counter drift, total
+could evaluate to exactly 0.
+
+[Severity: Medium]
+Is there a risk of a 32-bit overflow in this calculation?
+
+On 32-bit architectures, mult_frac() preserves types, and computing
+thp * 10000 could exceed the maximum unsigned long value if there are
+more than ~1.7 GB of THPs, producing an arbitrarily small quota target.
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260604150338.5011=
+28-1-gutierrez.asier@huawei-partners.com?part=3D1
