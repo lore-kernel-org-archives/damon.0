@@ -1,216 +1,163 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1BEA356746
-	for <damon@lists.linux.dev>; Thu,  4 Jun 2026 15:41:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D61E3988E4
+	for <damon@lists.linux.dev>; Thu,  4 Jun 2026 15:48:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780587699; cv=none; b=rnZvBiJKcO19Md5WH1LWw2qYZGEWGm5MpoMKNV3O2AhsxiIpQjmOkj4Q/ojiR8iW8l2lzej2ZseD0YOXfNOY+oFYj60F4TajnN/KN/+fedNEoQWtrQcm2u28ZfcBtF7vA1gKR3v+GOdTVImcoto+OCtcSPm8GAZDoAIXYLp0JB4=
+	t=1780588126; cv=none; b=PfBU8v5wG+i9KGDHacZq/m6m/eMt6gVN+7muI5sp3bgzLhSHwdI9dv175Ful/9Bz/ihbGcp+4DgIuxXeI+Gthxehm4kuC922lLMDvVwNQ/jMhwaTXRcqSoZp1YnMKVwnJRPn+c5hRQafN8d980qoXN5yS4uZTUlynqNCHAwuRTg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780587699; c=relaxed/simple;
-	bh=RTnkB7ssv2velEHQ8tB83N5XPRWG3Vq16XfCgIocp7I=;
+	s=arc-20240116; t=1780588126; c=relaxed/simple;
+	bh=jEV5ClVmP0iQTyz1nuv98exl9hqDqDobV/q1I62Xc00=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=sMG8gXv5eNnvnMHvDPPrHWFge6xECvT7GUX/4czDvhyS/eh+Ow6LcxaY+JBmS/ZOxtyzkDxFvJxP6EKAJeIb+3cy6a7FIlodDdPbnsIrcIUtPD8jtrOG9L56ThtzSQ8cKK7p4K/nV14OkaDoDAN4xsA7SyeFgxtF2bRDCNMRWP8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Yfg7AvZD; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=MiuIVpOoRNoXKFPzfm/xgcSaGhTY/0QB50sE+m9eCSWsU9a91R1gxCLKB02Auf0kSfi2WL8ssq7LUDZnmAygU66+8+wR8JWC9G4eJvQP2RxfxlMDlYNVKrKgcnqufPnF9sQtS98XYpfnKBlROH770ZaAMyJWusx9N6cbXyW7ziQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ka1FP856; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Yfg7AvZD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E4EE1F00893;
-	Thu,  4 Jun 2026 15:41:37 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ka1FP856"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92DB11F00893;
+	Thu,  4 Jun 2026 15:48:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1780587697;
-	bh=K+/8fk4pxDabb2oMa4bNmPyf71DSrsHEDjigpem1mr0=;
+	s=k20260515; t=1780588120;
+	bh=8xsgwUkTlRTWpGEgX6efJZuVp8eH43bfejht7ROZsvg=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=Yfg7AvZDTka7l2c6UjV1xcKbIx4kAruyhYaIi7dpgcwqJm+jRVy3gotfG+rgIfCga
-	 c0A03fBmbJEQjAmbIhIgYb46uxqWzL23q6aOcvqj91T8tirHk/kni4+JzLTGAR81Nt
-	 CO8VSeoV0hb+NPIfsCWaxJr7hjcL5NOCdUvaKgIeqjoHYkV5XTntqcbHpA13qlVoL1
-	 iJ3wwDKkYtY+IGKLWX1GMZ0dUA0W1q+F+go8K/ubTIENsYo7owYOzSMEWl3JAnGURn
-	 apevCmnHlVyORExblHZIH4Zl0qmuS+pyfrduLd0mfCkl+fJbfxLJ1PxPEmyYjRMgVA
-	 rOzwuoA2kaiHg==
+	b=ka1FP856N52wLFYeSyJAX6qA0iF03wsUMTJvSjrOrcn1buMoZ9Tfo2ro8DzOJZ1ag
+	 VlLCOAWGy+TCgH0Qo66Hmb+NXRs5iNRARdZzEMC7HodR0KzT3DOKVHjMHW9rIpcLSM
+	 NBOSPSOokiLs/CBSwp/+v2YL2A9a1Y9qBDJo1zuHLTe111Zpv+8An/yFRQLS07bOm6
+	 VVRIGgGPDs+G47lnGiTXYGnFCEvnGfGGCFFfTYp0DSCJReIGxqGUihPoraRtWGXJqj
+	 tNTVOYO6HzXujb/3rYgN6sROdjupp0Php21AH1w76xREVGU3hfToUoa1Es+C+igytZ
+	 r/q0c1chiMH/w==
 From: sashiko-bot@kernel.org
-Subject: Re: [RFC PATCH v3 3/4] mm/damon: introduce DAMON_HUGEPAGE for hot
- region hugepage collapsing
+Subject: Re: [RFC PATCH v3 4/4] Documentation/admin-guide/mm/damon: add
+ DAMON-based Hugepage Management
 Reply-To: sashiko-reviews@lists.linux.dev
 To: gutierrez.asier@huawei-partners.com
 Cc: damon@lists.linux.dev
-In-Reply-To: <20260604150338.501128-4-gutierrez.asier@huawei-partners.com>
-References: <20260604150338.501128-4-gutierrez.asier@huawei-partners.com>
+In-Reply-To: <20260604150338.501128-5-gutierrez.asier@huawei-partners.com>
+References: <20260604150338.501128-5-gutierrez.asier@huawei-partners.com>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Thu, 04 Jun 2026 15:41:36 +0000
-Message-Id: <20260604154137.2E4EE1F00893@smtp.kernel.org>
+Date: Thu, 04 Jun 2026 15:48:40 +0000
+Message-Id: <20260604154840.92DB11F00893@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 
-Thank you for your contribution! Sashiko AI review found 5 potential issue(=
+Thank you for your contribution! Sashiko AI review found 4 potential issue(=
 s) to consider:
-- [High] A Time-of-Check to Time-of-Use (TOCTOU) race condition in damon_hu=
-gepage_apply_parameters() can lead to a division by zero kernel panic.
-- [High] Writing to the enabled sysfs node or passing it as a load paramete=
-r before module_init finishes causes an immediate NULL pointer dereference.
-- [High] The sysfs parameter addr_unit can be set to ULONG_MAX, leading to =
-an integer overflow in the ALIGN macro and a division by zero kernel panic.
-- [Medium] Misuse of ALIGN() produces a non-power-of-two min_region_sz, sil=
-ently breaking the monitoring daemon.
-- [Low] The addr_unit module parameter is exposed and documented for addres=
-s translation, but is entirely ignored by VADDR operations.
+- [Low] The newly added documentation file `hugepage.rst` is orphaned becau=
+se it is not included in any Sphinx `toctree`.
+- [Low] The documentation references an incorrect Kconfig symbol `CONFIG_DA=
+MON_HUGEPAGE` instead of `CONFIG_SAMPLE_DAMON_HUGEPAGE`.
+- [Low] Missing newline at the end of the newly added documentation file.
+- [Low] Multiple spelling and grammatical errors in the newly added documen=
+tation.
 --
 
-commit 3617a4956285835faa63e992e7cc7a6aa7cb4d8d
+commit 24c835e6a5624692adf95a519c4c1747fca62d26
 Author: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
 
-mm/damon: introduce DAMON_HUGEPAGE for hot region hugepage collapsing
+Documentation/admin-guide/mm/damon: add DAMON-based Hugepage Management
 
-This patch introduces a new DAMON module (SAMPLE_DAMON_HUGEPAGE)
-which collapses hot regions into huge pages.
-
-SAMPLE_DAMON_HUGEPAGE operates in the virtual memory space, for a
-specific task. The user is expected to supply the PID of the task
-that is going to be monitored through the monitored_pid module
-variable.
-
-SAMPLE_DAMON_HUGEPAGE uses the hugepage auto-tune mechanism to
-increase or decrease the aggressiveness of page collapsing. User
-autotuning is also available for additional tuning aggressiveness
-control.
-
-The module also includes changes to the DAMON compilation, so that
-the module can be enabled or disabled.
-
-> diff --git a/samples/damon/hugepage.c b/samples/damon/hugepage.c
-> new file mode 100644
-> --- /dev/null
-> +++ b/samples/damon/hugepage.c
-> @@ -0,0 +1,350 @@
-[ ... ]
-> +static struct damos *damon_hugepage_new_scheme(void)
-> +{
-> +	struct damos_access_pattern pattern =3D {
-> +		/* Find regions having PMD_SIZE or larger size */
-> +		.min_sz_region =3D PMD_SIZE,
-> +		.max_sz_region =3D ULONG_MAX,
-> +		.min_nr_accesses =3D 0,
-> +		.max_nr_accesses =3D UINT_MAX,
-> +		.min_age_region =3D min_age /
-> +			damon_hugepage_mon_attrs.aggr_interval,
-
-[Severity: High]
-Since damon_hugepage_mon_attrs.aggr_interval is a module parameter that can=
- be
-modified concurrently without locks, could it be set to zero exactly between
-the zero-check in damon_hugepage_apply_parameters() and this division?
-
-If a privileged user writes 0 to the sysfs node in that time window, it wou=
-ld
-trigger a division by zero kernel panic.
-
-> +		.max_age_region =3D UINT_MAX,
-> +	};
-> +
-> +	return damon_new_scheme(
-[ ... ]
-> +static int damon_hugepage_apply_parameters(void)
-> +{
-> +	struct damon_ctx *param_ctx;
-> +	struct damon_target *param_target;
-> +	struct damos *scheme;
-> +	struct damos_quota_goal *goal;
-> +	struct pid *spid;
-> +	int err;
-> +
-> +	err =3D damon_modules_new_vaddr_ctx_target(&param_ctx, &param_target);
-> +	if (err)
-> +		return err;
-> +
-> +	param_ctx->addr_unit =3D addr_unit;
-> +    // align power of two
-> +	param_ctx->min_region_sz =3D max(DAMON_MIN_REGION_SZ / ALIGN(addr_unit,=
- 2), 1);
-
-[Severity: High]
-Does this ALIGN() macro expose us to an integer overflow if a user sets
-addr_unit to ULONG_MAX?
-
-The macro adds (2 - 1) before masking, which would overflow ULONG_MAX to 0,
-making the evaluation 0. This leads to a division by zero panic on
-DAMON_MIN_REGION_SZ / 0.
-
-[Severity: Medium]
-Will this ALIGN(addr_unit, 2) calculation produce a non-power-of-two result
-if addr_unit is set to a value like 6?
-
-ALIGN(6, 2) evaluates to 6, and damon_commit_ctx() strictly requires
-min_region_sz to be a power of two. If it isn't, damon_commit_ctx()
-returns -EINVAL and flags the context as maybe_corrupted, which silently
-terminates the kdamond background thread.
-
-Should this use roundup_pow_of_two() instead?
-
-> +
-> +	spid =3D find_get_pid(monitored_pid);
-[ ... ]
-> +static const struct kernel_param_ops addr_unit_param_ops =3D {
-> +	.set =3D damon_hugepage_addr_unit_store,
-> +	.get =3D param_get_ulong,
-> +};
-> +
-> +module_param_cb(addr_unit, &addr_unit_param_ops, &addr_unit, 0600);
-> +MODULE_PARM_DESC(addr_unit,
-> +	"Scale factor for DAMON_HUGEPAGE to ops address conversion (default: 1)=
-");
+Add documentation for the DAMON-based Hugepage Management
+(SAMPLE_DAMON_HUGEPAGE) feature, which automatically manages
+huge pages by identifying hot memory regions and collapsing
+them back to regular pages.
 
 [Severity: Low]
-Is this parameter accurately described for VADDR operations?
+Is this new documentation file orphaned? It doesn't appear to be added to t=
+he
+toctree in Documentation/admin-guide/mm/damon/index.rst.
 
-The DAMON core explicitly ignores addr_unit for VADDR operations. Exposing
-this parameter does not scale addresses as documented, but it does improper=
-ly
-shrink the byte-granularity of min_region_sz, creating a misleading user AP=
-I.
+> diff --git a/Documentation/admin-guide/mm/damon/hugepage.rst b/Documentat=
+ion/admin-guide/mm/damon/hugepage.rst
+> new file mode 100644
+> index 0000000000000..86104aaa4d1c3
+> --- /dev/null
+> +++ b/Documentation/admin-guide/mm/damon/hugepage.rst
+
+[ ... ]
+
+> +Interface: Module Parameters
+> +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D
+> +
+> +To use this feature, you should first ensure your system is running on a=
+ kernel
+> +that is built with ``CONFIG_DAMON_HUGEPAGE=3Dy``.
+
+[Severity: Low]
+Does this reference the wrong Kconfig symbol? The module appears to be
+SAMPLE_DAMON_HUGEPAGE, so should this be CONFIG_SAMPLE_DAMON_HUGEPAGE=3Dy?
+
+[ ... ]
+
+> +commit_inputs
+> +-------------
+> +
+> +Make SAMPLE_DAMON_HUGEPAGE reads the input parameters again, except ``en=
+abled``.
+
+[Severity: Low]
+This isn't a bug, but should "reads" be "read" here?
 
 > +
-> +static int damon_hugepage_enabled_store(const char *val,
-> +				const struct kernel_param *kp)
-> +{
-> +	bool is_enabled =3D enabled;
-> +	bool enable;
-> +	int err;
-> +
-> +	err =3D kstrtobool(val, &enable);
-> +	if (err)
-> +		return err;
-> +
-> +	if (is_enabled =3D=3D enable)
-> +		return 0;
-> +
-> +	/* Monitored process may have exited. In that case, ctx->kdamon is set =
-*/
-> +	/* to NULL. If enabled is set to 'off' through sysfs, we just set the  =
-*/
-> +	/* params and exit */
-> +	if (!damon_is_running(ctx) && !enable)
+> +Input parameters that updated while SAMPLE_DAMON_HUGEPAGE is running are
 
-[Severity: High]
-Can this crash on boot or module load?
+[Severity: Low]
+This isn't a bug, but should this be "parameters that are updated"?
 
-If the parameter damon_hugepage.enabled=3DY is passed at boot or module loa=
-d,
-this store callback executes before the module's init function runs. Because
-the init function hasn't run, the global ctx pointer is NULL here.
+[ ... ]
 
-The left-hand side of the condition calls damon_is_running(ctx), which
-unconditionally dereferences the NULL pointer at mutex_lock(&ctx->kdamond_l=
-ock),
-causing a kernel panic.
-
-> +		goto set_param_out;
+> +quota_reset_interval_ms
+> +-----------------------
 > +
-> +	/* Called before init function.  The function will handle this. */
-> +	if (!damon_initialized())
-> +		goto set_param_out;
+> +The time/size quota charge reset interval in milliseconds.
+> +
+> +The charget reset interval for the quota of time (quota_ms) and size
+
+[Severity: Low]
+This isn't a bug, but there is a typo here ("charget" -> "charge").
+
+[ ... ]
+
+> +quota_autotune_feedback
+> +-----------------------
+> +
+> +User-specifiable feedback for auto-tuning of the effective quota.
+> +
+> +While keeping the caps that set by other quotas, SAMPLE_DAMON_HUGEPAGE
+> +automatically increases and decreases the effective level of the quota
+> +aiming receiving this feedback of value ``10,000`` from the user.
+
+[Severity: Low]
+This isn't a bug, but should this be "aiming to receive"?
+
+[ ... ]
+
+> +Example
+> +=3D=3D=3D=3D=3D=3D=3D
+> +
+> +Below runtime example commands make SAMPLE_DAMON_HUGEPAGE to find memory
+> +regions of  the task with PID 1234 that have been accessed in the last 1=
+00
+> +milliseconds or more and collpases those pages into huge pages. The page
+
+[Severity: Low]
+This isn't a bug, but there is a typo here ("collpases" -> "collapses").
+
+[ ... ]
+
+> +Note that this module (SAMPLE_DAMON_HUGEPAGE) cannot run simultaneously
+> +with other DAMON-based special-purpose modules.  Refer to
+> + :ref:`DAMON design special purpose modules exclusivity
+> + <damon_design_special_purpose_modules_exclusivity>` for more details.
+> \ No newline at end of file
+
+[Severity: Low]
+This isn't a bug, but could we add a newline at the end of the file?
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260604150338.5011=
-28-1-gutierrez.asier@huawei-partners.com?part=3D3
+28-1-gutierrez.asier@huawei-partners.com?part=3D4
