@@ -1,269 +1,211 @@
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8850942B751
-	for <damon@lists.linux.dev>; Thu,  4 Jun 2026 12:18:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 617A71F1534;
+	Thu,  4 Jun 2026 14:35:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780575531; cv=none; b=dxtkML5RtcBdzqIravnbprz/UQ+VHIjD+tWkj1IbZbM7v/IcUqw2035mjnBOlhQymQaa1mbhRralAVbNR1ZORD5/UyafUFY9j9Q2EwW0K/CbDQ38bc/skSs030t5qKZRhnlffhxqhEYi1YbZLT6sfVkzYlAfAzCXpC6WY7X0CFc=
+	t=1780583723; cv=none; b=QDCL5zc5ETILiO06aZ7v/clRrVVfzk6eT2Uo9Zz4tioJHMZZw4mcxOGOStfaPJjqJMqHhyEFhmPI/il8RQCmffv+TlG62GXa6oJ+/B6Cbz862CX9uZQjg/7eSPOxWSxwBMcvKsdzlnpghvTdyQoX0nzJkaw3q/WefzkCNS+XmuQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780575531; c=relaxed/simple;
-	bh=VAnfCTlLBiEiB+TD0eyA0lvhdUfV9bmWB+Umsp+9RUQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=kBngDlzDH2wzrGwtxPih3tvQ4eXTKYgZ8ugrFmXrZsrSf02cM/bWQ62S35woKo84nndyxuC34iaLxChIFixu8ERtwR9bAxGGLmVBKgaSGjeOEeDj1QVRulCE9b44UTh+prLAVG0l/xzs5xnpNXi/3C70egdcd1D+iP+80vPTQcs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gourry.net; spf=pass smtp.mailfrom=gourry.net; dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.b=h3zy/e83; arc=none smtp.client-ip=209.85.128.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gourry.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gourry.net
+	s=arc-20240116; t=1780583723; c=relaxed/simple;
+	bh=sLdz640Nny3Q+uhLCrx8j2DCb9DIqaeRvn21Qp7p43M=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=e+BitSEfwWHmL4nDPxheHyOvxfMitPY9u1anEQI7cTFOwT2mGn6U+4VPtTiweVH05bHGfc7Huu/ZhdLHEEF8bbIINeIrCGgz7gcpHgImuuq5EVxKOOJZnxxbvhd1YMi6A2xDXoz8+189QZpqa17giUv/vH84S7d1sLc4vnteLlc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ElwbEHai; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.b="h3zy/e83"
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-490ace40f4bso7877535e9.3
-        for <damon@lists.linux.dev>; Thu, 04 Jun 2026 05:18:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gourry.net; s=google; t=1780575528; x=1781180328; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=pv1Oyz2SuibchEQ+somLIZ/UIk84PCQQ/cJhhIFylGE=;
-        b=h3zy/e832Tk7HA6B4sQfRZ9m2MATawCaUUsf5plFOuYiQGtlEPoDsFnEcbty+zFC0v
-         91gu3rCTU5DwtObQCgYrgoKqdBcqCDdJ2SF0StG3MX6704j9XJxBFjIigO2BOuag+xb0
-         3etpbh5T/doUNYSoaewwJRkj4rxPyCmLfjxdE8zVjraBHDSqud7cIRAJHyFtY0Zlq1Vq
-         1xUvzayZJ88ojAXQS7IqCMxkrWnrN+yyvguN/T1PXdEINIVLFvfJw2Kme+IONM7kE4va
-         3jbBgcKY+KSBvbt2uMgk3Nc6lhOi4yu8Qe2+Puw73EC1Ii+e4baqz8CTUkE0M+FZqDkg
-         L6oA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780575528; x=1781180328;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=pv1Oyz2SuibchEQ+somLIZ/UIk84PCQQ/cJhhIFylGE=;
-        b=E7MwRJzSytqMQ17pwcPJbz7VYy0+GmwSkt2Z1DhFGc1/Dch0AKBVU0IQw3OMmUsl9E
-         Q+j20b9GvQloAJvRKndXMEg52XwtOmi5CYSb7OH52OvQuSHHnwBihabKGk6KlUhtv9j6
-         16RES8Ycrj2RGzaj0OZ47AMcGW7LZW0hlvdagdVXYEB1TQzk73ZHkbJiBEhI6dTktoFd
-         1u1vswxQdlAH1z/Rtq519Xvj8ynXzsH3jg8zFYJR6MnK4vtesbDxADnNC0DuXHLfbX1e
-         8GdRPwGIC9jmteIolImtqOPCTn6c0mgPPtwpSP9MCDqZaiI+DNwBl/DQ4+vUrZ7Bfv9H
-         /ULg==
-X-Forwarded-Encrypted: i=1; AFNElJ+NABOKxUb5W9ppFqXI+9xhlOSQvbTmWSCdHbmxvPFTW9Dn7jshV/7e7ba3xJcgnlEGwodIpg==@lists.linux.dev
-X-Gm-Message-State: AOJu0Yyt/KTdK+tGcNqW+9XVZQ70NSvwbPyn1n2Po1hfS7Eei1yBCGUg
-	9IaNWU/a3bmCFn2W2FJaGGvjjVV8BzBv89npiw92c+3bCHSAw+uRhwMRm2U3i1cBMVA=
-X-Gm-Gg: Acq92OHvnokGxByIzY4uJEUXVSo1vP34U2kc83YCD6TqCJxieBk8/GKNxWsHAR7YVol
-	NYyR0bWC/njcmQilzW4+m3PKTU922A7Z2JnZbWO3MiGg8W4im17BBiXVBACWzeLIKq02XkXqW5e
-	6vQSGXokwCoLBpB+J8zyLP5V20WnxLsSzVIVgAkYXhZ0v6n2yA5BJ6cje72sFHPh782gNx43MRj
-	wCvBi2fYaABsu411CQNainiAnNMHgWky3YH6SL7+i204cvSq8Cea7VSGoU9JNWEfh4VX3js9erb
-	nNREAj3GA9CQKzWS7mXoikbUQB02wl41GFma87dth4GcO20qhDxdLJqlaZ2sCH/VuOulI7oWUsA
-	9+UnTE1QY/WEGDjfhVrKldoiimNv6BpnqoxbFbbr+oBewHLjLLZ3zPj/Cx3bfiP7++z5SuCdfLM
-	UOhgk/SVI76uiAcs6GhMIWOPpDYO4WNbA=
-X-Received: by 2002:a05:600c:4043:b0:490:b2a6:8c2a with SMTP id 5b1f17b1804b1-490b5e748e3mr78263665e9.5.1780575527855;
-        Thu, 04 Jun 2026 05:18:47 -0700 (PDT)
-Received: from gourry-fedora-PF4VCD3F ([2620:10d:c092:500::7:a76c])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-490bc3cc140sm81382665e9.9.2026.06.04.05.18.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 04 Jun 2026 05:18:47 -0700 (PDT)
-Date: Thu, 4 Jun 2026 13:18:44 +0100
-From: Gregory Price <gourry@gourry.net>
-To: Balbir Singh <balbirs@nvidia.com>
-Cc: lsf-pc@lists.linux-foundation.org, linux-kernel@vger.kernel.org,
-	linux-cxl@vger.kernel.org, cgroups@vger.kernel.org,
-	linux-mm@kvack.org, linux-trace-kernel@vger.kernel.org,
-	damon@lists.linux.dev, kernel-team@meta.com,
-	gregkh@linuxfoundation.org, rafael@kernel.org, dakr@kernel.org,
-	dave@stgolabs.net, jonathan.cameron@huawei.com,
-	dave.jiang@intel.com, alison.schofield@intel.com,
-	vishal.l.verma@intel.com, ira.weiny@intel.com,
-	dan.j.williams@intel.com, longman@redhat.com,
-	akpm@linux-foundation.org, david@kernel.org,
-	lorenzo.stoakes@oracle.com, Liam.Howlett@oracle.com, vbabka@suse.cz,
-	rppt@kernel.org, surenb@google.com, mhocko@suse.com,
-	osalvador@suse.de, ziy@nvidia.com, matthew.brost@intel.com,
-	joshua.hahnjy@gmail.com, rakie.kim@sk.com, byungchul@sk.com,
-	ying.huang@linux.alibaba.com, apopple@nvidia.com,
-	axelrasmussen@google.com, yuanchu@google.com, weixugc@google.com,
-	yury.norov@gmail.com, linux@rasmusvillemoes.dk, mhiramat@kernel.org,
-	mathieu.desnoyers@efficios.com, tj@kernel.org, hannes@cmpxchg.org,
-	mkoutny@suse.com, jackmanb@google.com, sj@kernel.org,
-	baolin.wang@linux.alibaba.com, npache@redhat.com,
-	ryan.roberts@arm.com, dev.jain@arm.com, baohua@kernel.org,
-	lance.yang@linux.dev, muchun.song@linux.dev, xu.xin16@zte.com.cn,
-	chengming.zhou@linux.dev, jannh@google.com, linmiaohe@huawei.com,
-	nao.horiguchi@gmail.com, pfalcato@suse.de, rientjes@google.com,
-	shakeel.butt@linux.dev, riel@surriel.com, harry.yoo@oracle.com,
-	cl@gentwo.org, roman.gushchin@linux.dev, chrisl@kernel.org,
-	kasong@tencent.com, shikemeng@huaweicloud.com, nphamcs@gmail.com,
-	bhe@redhat.com, zhengqi.arch@bytedance.com, terry.bowman@amd.com
-Subject: Re: [LSF/MM/BPF TOPIC][RFC PATCH v4 00/27] Private Memory Nodes (w/
- Compressed RAM)
-Message-ID: <aiFtJFqkpbZ9qFvM@gourry-fedora-PF4VCD3F>
-References: <20260222084842.1824063-1-gourry@gourry.net>
- <ag6XyvxR-NU5rGn-@parvat>
- <ahOqzpzAua96HVkn@gourry-fedora-PF4VCD3F>
- <ah47NNhuiClgGCdn@parvat>
- <ah6bDNxlB1zBUnzN@gourry-fedora-PF4VCD3F>
- <ah-0CyZurn5D1ezY@parvat>
- <ah_RcTU8SpQG7hab@gourry-fedora-PF4VCD3F>
- <aiDVMgu0viTIml8H@parvat>
- <aiE5DZC8Io4SNI3H@gourry-fedora-PF4VCD3F>
- <aiFSZfRlFPd7qlIw@parvat>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ElwbEHai"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B56451F00893;
+	Thu,  4 Jun 2026 14:35:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1780583722;
+	bh=vgLl/p3qkGVQ4J0lmKFNqcECALdu6p7bDPIjji6x+rw=;
+	h=From:To:Cc:Subject:Date;
+	b=ElwbEHaiF9IANaaSytaLz7EQlu4/Ut/lrGHBqHUmDI9GqM32kqROX2k3s6R9oZ7HO
+	 CmFNXNc0tCreViLwZ1EdrWC3D015+uxhUrLiO6o2N3iVQmMduj0A9lILeInKuNAScc
+	 TArZZ0o463TVLgqlK5TyivceCRd8CIN+6YhOurHJSSdn1eR5pmqUV9XdkJSTnpTQlF
+	 9FQxxclMfLLMtP+ub6Sg+x6B8UJCcwqpK+w8wNYNMn2y+dNwgaPq4caZHJK3WAhPNN
+	 hTMKViaQXzV5jQjjDG+Ltjy3udAOEvOXzyity8vnqeCRDkuvmzN4BKu5WemCBhTMGB
+	 i+W1jgcaDdg+g==
+From: SeongJae Park <sj@kernel.org>
+To: 
+Cc: SeongJae Park <sj@kernel.org>,
+	"# 6 . 11 . x" <stable@vger.kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	damon@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	linux-mm@kvack.org
+Subject: [RFC PATCH v1.1] mm/damon/core: always put unsuccessfully committed target pids
+Date: Thu,  4 Jun 2026 07:35:08 -0700
+Message-ID: <20260604143514.84310-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aiFSZfRlFPd7qlIw@parvat>
+Content-Transfer-Encoding: 8bit
 
-On Thu, Jun 04, 2026 at 08:35:19PM +1000, Balbir Singh wrote:
-> 
-> My concern is that __GFP_PRIVATE is too wide, I wonder if we'll have a
-> need to support N_MEMORY_PRIVATE may not be all homogeneous memory nodes.
-> Very similar to how not all ZONE_DEVICE memory is homogenous.
->
+damon_commit_target() puts and gets the destination and the source
+target pids.  It puts the destination target pid because it will be
+overwritten by the source target pid.  It gets the source pid because
+the caller is supposed to eventually put the pids.  In more detail, the
+caller will call damon_destroy_ctx() after damon_commit_ctx() to destroy
+the entire source context.  And in this case, [f]vaddr operation set's
+cleanup_target() callback will put the pids.
 
-Can you more precise about your definition of homogeneous here?
+The commit operation is made at the context level.  The operation can
+fail in multiple places including in the middle and after the targets
+commit operations.  For any such failures, immediately the error is
+returned to the damon_commit_ctx() caller.  If some or all of the source
+target pids were committed to the destination during the unsuccessful
+context commit attempt, those pids should be put twice.
 
-Are you saying not all memory on a private node will be homogeneous?
-   While possible, I would argue that you should not do this and
-   should instead prefer to use multiple nodes - 1 per memory class.
+The source context will do the put operations using the above explained
+routine.  However, let's suppose the destination context was not
+originally using [f]vaddr operation set and the commit failed before the
+ops of the source context is committed.  The destination does not have
+the cleanup_target() ops callback, so it cannot put the pids via the
+damon_destroy_ctx().
 
-Are you saying not all private nodes will be homogenous?
-   I don't see the issue with this.
+As a result, the pids are leaked.  The issue in the real world would be
+not very common.  The commit feature is for changing parameters of
+running DAMON context while inheriting internal status like the
+monitoring results.  The monitoring results of a physical address range
+ain't have things that are beneficial to be inherited to a virtual
+address ranges monitoring.  So the problem-causing DAMON control would
+be not very common in the real world.  That said, it is a supported
+feature. And damon_commit_target() failure due to memory allocation is
+relatively realistic [1] if there are a huge number of target regions.
 
-> > 
-> > Agreed, but also one which can be deferred and played with since it's
-> > all kernel-internal.  None of this should have UAPI implications, and we
-> > need need to accept that we're going to get it wrong on the first try.
-> > 
-> 
-> Agreed that we might get the design wrong, until we fix it up. I feel
-> that __GFP_PRIVATE should be an evolution of the design to that point.
->
+Fix by putting the pids in the commit operation in case of the failures.
 
-Possibly.  If we can't guarantee isolation without __GFP_PRIVATE, then
-we probably can't merge the baseline without it.
+The issue was discovered [2] by Sashiko.
 
-> > Because pagecache pages are associated with potentially many VMAs.
-> > 
-> > The fault can be a soft fault or a hard fault.  On soft fault - the page
-> > was already present, and will simply fault into VMA without being
-> > migrated.
-> > 
-> 
-> Let's split this into two:
-> 
-> 1. unmapped page cache is never impacted by mempolicy and should not
->    end up on private memory nodes
-> 2. For shared pages, mempolicy would be hard, but it would need to
->    be on a set of nodes backed by private memory, depending on mbind()
->    policy
->
-... snip ...
-> 
-> I'd need to think more about this. For now, my basic requirement would
-> be that unmapped page cache should not come from/to private nodes.
-> 
+[1] https://lore.kernel.org/20260603112306.58490-1-akinobu.mita@gmail.com
+[2] https://lore.kernel.org/20260320020056.835-1-sj@kernel.org
 
-This does not fully describe the problem.
+Fixes: 83dc7bbaecae ("mm/damon/sysfs: use damon_commit_ctx()")
+Cc: <stable@vger.kernel.org> # 6.11.x
+Signed-off-by: SeongJae Park <sj@kernel.org>
+---
+Changes from RFC
+- rfc: https://lore.kernel.org/20260604042349.67720-1-sj@kernel.org
+- Check destination cleaanup availability using the cleanup callback.
+- Do the cleanup for all commit failure points in
+  [targets commit, ops commit] scope.
+- Wordsmith the commit message.
+- Add 'Fixes:' and Cc: stable@.
 
-A file can be opened and cached as unmapped page cache, and then mapped
-at a later time - at which point the mapped copy would share the filemap
-page cache page.
+ mm/damon/core.c | 55 ++++++++++++++++++++++++++++++++++++++++++-------
+ 1 file changed, 47 insertions(+), 8 deletions(-)
 
-Worse, because it's file-backed, you can have the memory faulted onto
-your remote node - reclaimed - and the faulted back in via the process
-accessing the file via unmapped operations (read/write), at which point
-you've had a silent migration occur.
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index 265d51ade25bf..7e4b9affc5b06 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -1387,10 +1387,36 @@ static int damon_commit_target(
+ 	return 0;
+ }
+ 
++/*
++ * damon_revert_target_commits() - revert unsuccessful target commits.
++ * @dst:	Commit destination context
++ * @failed:	Commit failed destination target
++ * @src:	Commit source context
++ *
++ * Revert target states that changed by damon_commit_target(), and cannot be
++ * cleaned up by the destination context's ops.cleanup_target().
++ */
++static void damon_revert_target_commits(struct damon_ctx *dst,
++		struct damon_target *failed, struct damon_ctx *src)
++{
++	struct damon_target *target;
++
++	if (!damon_target_has_pid(src))
++		return;
++	if (dst->ops.cleanup_target)
++		return;
++	damon_for_each_target(target, dst) {
++		if (target == failed)
++			return;
++		put_pid(target->pid);
++	}
++}
++
+ static int damon_commit_targets(
+ 		struct damon_ctx *dst, struct damon_ctx *src)
+ {
+ 	struct damon_target *dst_target, *next, *src_target, *new_target;
++	struct damon_target *failed;
+ 	int i = 0, j = 0, err;
+ 
+ 	damon_for_each_target_safe(dst_target, next, dst) {
+@@ -1404,8 +1430,10 @@ static int damon_commit_targets(
+ 					dst_target, damon_target_has_pid(dst),
+ 					src_target, damon_target_has_pid(src),
+ 					src->min_region_sz);
+-			if (err)
+-				return err;
++			if (err) {
++				failed = dst_target;
++				goto out;
++			}
+ 		} else {
+ 			struct damos *s;
+ 
+@@ -1419,25 +1447,34 @@ static int damon_commit_targets(
+ 		}
+ 	}
+ 
++	failed = NULL;
+ 	damon_for_each_target_safe(src_target, next, src) {
+ 		if (j++ < i)
+ 			continue;
+ 		/* target to remove has no matching dst */
+-		if (src_target->obsolete)
+-			return -EINVAL;
++		if (src_target->obsolete) {
++			err = -EINVAL;
++			goto out;
++		}
+ 		new_target = damon_new_target();
+-		if (!new_target)
+-			return -ENOMEM;
++		if (!new_target) {
++			err = -ENOMEM;
++			goto out;
++		}
+ 		err = damon_commit_target(new_target, false,
+ 				src_target, damon_target_has_pid(src),
+ 				src->min_region_sz);
+ 		if (err) {
+ 			damon_destroy_target(new_target, NULL);
+-			return err;
++			goto out;
+ 		}
+ 		damon_add_target(dst, new_target);
+ 	}
+ 	return 0;
++
++out:
++	damon_revert_target_commits(dst, failed, src);
++	return err;
+ }
+ 
+ static void damon_commit_filter(struct damon_filter *dst,
+@@ -1571,8 +1608,10 @@ int damon_commit_ctx(struct damon_ctx *dst, struct damon_ctx *src)
+ 	 */
+ 	if (!damon_attrs_equals(&dst->attrs, &src->attrs)) {
+ 		err = damon_set_attrs(dst, &src->attrs);
+-		if (err)
++		if (err) {
++			damon_revert_target_commits(dst, NULL, src);
+ 			return err;
++		}
+ 	}
+ 	dst->pause = src->pause;
+ 	dst->ops = src->ops;
 
-Basically consider
-
-Process A:
-   fd = open("myfile", ..., RO);
-   read(fd, ...);  /* mm/filemap.c fills page cache */
-
-Process B:
-   fd = open("myfile", ...);
-   mem = mmap(fd, ...);
-   mbind(mem, ..., private_node);
-   for page in mem:
-       int tmp = mem[page]; /* fault into vma */
-
-The result of Process A running first is Process B thinks it has faulted
-the memory onto private_node, but in reality it's taking soft faults and
-just getting the filemap folio mapped in.
-
-If you wanted mbind() support from the start, we would have to limit
-applicability to anon memory only.
-
-Shared anon memory is different, as there is a radix tree that deals
-with a shared mempolicy state.
-
-> 
-> I am open to this, I was coming from the blueprint approach of:
-> - Let's mimic N_MEMORY with N_MEMORY_PRIVATE and then pick and choose
->   what features to change or make specific to the implementation
->
-
-N_MEMORY essentially states:
-	"This is normal memory touch it however you like"
-
-N_MEMORY_PRIVATE (_MANAGED, w/e) says
-	"This is NOT normal memory, there are special rules here"
-
-So, no, lets not mimic N_MEMORY.  This is a "closed by default" design,
-while N_MEMORY is an "open by default" design.  This design choice is
-explicit to make reasoning about these nodes feasible.
-
-> > This is informed by a single use case / device.
-> > 
-> > There are users / devices that don't want any UAPI for their memory,
-> > but simply wish to re-utilize some subsection of mm/ (page_alloc,
-> > reclaim, etc).
-> > 
-> 
-> But then, why do they need NUMA nodes? Do we have a list of use cases?
->
-
-So far i have collected:
-
-- Network accelerators carrying their own memory for message buffers
-- GPUs with semi-general-purpose working memory across coherent links
-- Acceptionally slow distributed memory that you do not want fallback
-  allocations to (so you want to deliberately tier what lands there)
-- Compressed memory (just another form of accelerator really) which
-  has *special access rules* (i.e. writes need to be controlled)
-
-In most if not all of these cases, the right abstraction to reason about
-where memory *should come from* IS a NUMA node.
-
-- the network stack can be taught to check if the target device has a
-  node with memory and prefer that node over local memory
-
-- accelerators can be given private nodes to manage memory using
-  core mm/ components, without worrying that general kernel operation
-  will put unrelated memory on those nodes or do things like migrate
-  your pages out from under you (unless your driver/service requested
-  that).
-
-the tiering application should be somewhat obvious / trivial.
-
-> > 
-> > I am trying to test whether, lacking __GFP_PRIVATE, any normal runtime
-> > operations access private nodes removed from fallback lists are reached
-> > via something like the possible / online nodemask.
-> > 
-> > I remember, maybe a year ago, there were per-node allocations happening
-> > during hotplug and that's why I originally proposed __GFP_PRIVATE, but
-> > I'm trying to re-collect that data now.
-> > 
-> 
-> Thanks, I look forward to the next set of patches. Let me know if I
-> can help test what's on the list or if you want me to wait for the next
-> round
->
-
-Really I want to get the minimized set out the door so we can start
-breaking this up by feature (reclaim, mempolicy, etc), because trying to
-reason about it as a whole is infeasible - and I cannot be the single
-arbiter of every use case (I simply do not have sufficient context).
-
-I'm reworking it all as we speak.
-
-~Gregory
+base-commit: eeac72cb1b86b53f95c1596ec43db17827a8355e
+-- 
+2.47.3
