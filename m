@@ -1,268 +1,208 @@
-Received: from mail-pj1-f68.google.com (mail-pj1-f68.google.com [209.85.216.68])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F8FD13A3ED
-	for <damon@lists.linux.dev>; Fri,  5 Jun 2026 03:10:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.68
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 407253B71A6;
+	Fri,  5 Jun 2026 09:39:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780629026; cv=none; b=legwqqyHlNu2XkT8TYUjoQyqffS96OZozNxycG+RvJbF51iCxwmeWm5G4CoEPcSY/8O/4Vq1V+rvpbOyPIAyAcmFswmcKccLvhzK5XfaloBgbSjVth7V3qno7hOdL6BNrWeVJnirMOSXn09nRbHNGx4w1XCcohdMy0YvKHmiAe4=
+	t=1780652348; cv=none; b=i0afnz6aWhKWVUv+jOfVNFyfKzws+mvADenj3AtizSnIPsymZU6y0jc5M7CmAWv/WJFoLOjnFLJfofB+zBHI61derLinyqY0gGmGMMH6Z4y6u8BaduY3YDZZ/xuGjtAfShachbsJTC4PhG2HkujTuClkWkwKmldmO7xKsCNLjeA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780629026; c=relaxed/simple;
-	bh=t1mLICHhnLO6Jky0VScBSiBvl0tHQMm8najzZsWVzQM=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=ODNDn/2Z6J2OOpEJUcgCSxmQR6ZbF3jSouqgcWY2d2T1I88A4zDWLfO+7as66nNmZTITDyRRdJ3nm1bewGpbMRPkfcuD8tBePu1Oh/Cy9qg0U2PvcCFhAkkkl4kzMNk5iNJdfYyJCnYxSju/YQQ7N92Ou34NqdFcc0ogKmYkFjE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=qr8JBNWO; arc=none smtp.client-ip=209.85.216.68
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1780652348; c=relaxed/simple;
+	bh=x5+TosQSbym3AlXGBLbj6U8Nfi2vD+NLuMBI0rPvRzk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=aCoKe5AS4DtBE67Zb0gQ8EKLX067pjt1QRX9SxOJFXV7BRd+9BEoX/0FKiasmZAkAhLGClMWo/BTAgL0X54nBmMiMvScIXWSvECBLdlQIzuwOAwedWeSYLEHONOagCpWApuu48H1AgH46fPC4iaAdjVbgxmm8VO1J43rsLnm8Uk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=K7oT6stY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qr8JBNWO"
-Received: by mail-pj1-f68.google.com with SMTP id 98e67ed59e1d1-36b9ec98144so885872a91.1
-        for <damon@lists.linux.dev>; Thu, 04 Jun 2026 20:10:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780629022; x=1781233822; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=1ZEmz9CjR/k1fq+15RyyqofRsMPk5Kd3zOMwojBu/vU=;
-        b=qr8JBNWOofm8y64ke48d+dYCPpUoQjHCY0Ejo4cCvIi6vME1Wzn38g9y0pSi9bsA23
-         Hrs6FWYg7kaSvWTN6CQnijv+OxrxtwwCJO8+tCRvT7xxikuonDPMk0I9qPHYY4jk5X+p
-         gvuX9Dm++c8DGbi+3zO76E2iUt3t6NRifWztsuQNn1lLkWerhP+za/gEjmXzlMdpNK+o
-         zS5NcGM4llN9Cd48ObMsfWWf8WeMo/dKHfPK4z5CDGF7lvyPZbEJRQ5MddmNeEJ2BspU
-         EYbLqKyXLRLdQ0IDRUFMoS+dAKGegv3s7vg6EtN1tpVf423EXCULWSI+lGmEN8Z+7qfd
-         6zig==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780629022; x=1781233822;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=1ZEmz9CjR/k1fq+15RyyqofRsMPk5Kd3zOMwojBu/vU=;
-        b=nz11ssisCzdElO43tKOLDfgiQxBT2JVF1IEzfrxNyFYFlTnDEm5dIyYx83x30stgrZ
-         A9Rmv2KovZCqDmzrBAp+A+tlkVD9c82YIWMF1tNXZXzMIb/ocz1CipAHnpGntpi8GvH/
-         w2hhvvOxfC6YdEgRBdRNc708+buiir9bdIqIcukQx5XgtkjwWyCzce1GQqjSB1a3IjhR
-         XFmvIzs0J/HSdXqu48xKSvfmiw86UFa3o82IuzzFWGdjFfl6qAL9F1raadImANfXA5Wj
-         HWmhubdOCq0eaZ4CnitPdiw1PUn8il7a9Tuwzw4c8kwYHNri4w5LmpaHRd30+22dr8Gl
-         /eVQ==
-X-Gm-Message-State: AOJu0Yx6keU6jPrYlhvXzYDY+m5cqI1zW+shO9qC6sDg8rC0Wp1NVuq8
-	7fEr1yV2nSzYxQ0zD6MFmnCWK0LD1smvghEe6aRthX9Dv/bwK2ILdeve
-X-Gm-Gg: Acq92OH2BYogE+SkzHojlZu2RnxGse2alReH+iJ+mViJvTB2lB6oaU8s1gaA7NkVAaB
-	YBcbul2WieEiviU6pySMgzlj3c7FLL6BYSQR6mOutlC9iTJ/WACpDeJskMFj2VAD69DLMO8ZfyU
-	G3zRxbXX0oAWwtZTTQD1IRJ5GM0oPsafPl0JgiWS7+f6b+gaXxZ4IHIC2roCiFzsbN72CmPNw+T
-	IRSeCX6FeabR/8MMez84HAF4sCLbKiYfBTbJId6ZraY6BmPNO2CgVrDpIgEADbYu5outkrdTgLB
-	NXYubPfWrAU/2W0nHs3YfONpQCv26NV66ZRqDSsao9Mbh2tLHRl7Qdx6n4N3YlR2Fr74+rytu90
-	80LO3kzxcfPUYHkRSW1b4cFIGJ9LxlnD2TrFyR6a3H0lg8DW/uiADsYHV5//Qe3cAkt0KHCgB9s
-	tsrGihII78L6eMofkLHEOWLEN7P8AZH4A=
-X-Received: by 2002:a17:90a:fc45:b0:36d:a510:f8eb with SMTP id 98e67ed59e1d1-370eeff1e46mr1595157a91.3.1780629022034;
-        Thu, 04 Jun 2026 20:10:22 -0700 (PDT)
-Received: from kernel.. ([116.128.244.169])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-37133082519sm295006a91.1.2026.06.04.20.10.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 04 Jun 2026 20:10:21 -0700 (PDT)
-From: Kunwu Chan <kunwu.chan@gmail.com>
-X-Google-Original-From: Kunwu Chan <kunwu.chan@linux.dev>
-To: sj@kernel.org,
-	akpm@linux-foundation.org,
-	david@kernel.org,
-	ljs@kernel.org,
-	liam@infradead.org,
-	vbabka@kernel.org,
-	rppt@kernel.org,
-	surenb@google.com,
-	mhocko@suse.com,
-	corbet@lwn.net,
-	skhan@linuxfoundation.org
-Cc: damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	linux-doc@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Kunwu Chan <kunwu.chan@gmail.com>,
-	Wang Lian <lianux.mm@gmail.com>
-Subject: [PATCH] Docs/damon: add TLB flush policy document
-Date: Fri,  5 Jun 2026 11:10:08 +0800
-Message-ID: <20260605031008.397328-1-kunwu.chan@linux.dev>
-X-Mailer: git-send-email 2.43.0
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="K7oT6stY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E574C1F00893;
+	Fri,  5 Jun 2026 09:38:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1780652346;
+	bh=g0exJx9gpz8TpzX9EFSHldYxLTySh1XVwF0hmGrg+SA=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=K7oT6stYsJW/YT9+CLuE4TfgWKkFNtwhsSQ53mqQovYMrbZLJWUQ4rbp6uxejWd+z
+	 t5JHmN3KGMPCLS2TO56d7L74IOiAwX23PDECnj/nTfe197Q+OP9bE+qUvm01OxXTnz
+	 VaXeAe5nEKvW4je9Yuy/sT4e/OngJ5J28DetwPAR/eKcBYhye7LPWuij71lfZsJBoa
+	 XxqzSfDFN3Rxkre7vs/pwStv5dZDYpmh/+g9VuH+APF6pu+ubTi/Y8Qxo0UnhXkyAC
+	 UJGS0bNa3B5he8hGXH7wYqtLCc1Pknc+f/TnAx+wmk3H3+sBpOcWP4UpCfZcAct3pi
+	 G1RqfxxePG4cg==
+Message-ID: <68a4aec0-72d4-4967-b063-b57cc7ee40cf@kernel.org>
+Date: Fri, 5 Jun 2026 11:38:52 +0200
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/15] mm: introduce ANON_VMA_LAZY for deferred anon_vma
+ creation
+To: xu.xin16@zte.com.cn, tao.wangtao@honor.com
+Cc: catalin.marinas@arm.com, will@kernel.org, tglx@kernel.org,
+ mingo@redhat.com, bp@alien8.de, dave.hansen@linux.intel.com, x86@kernel.org,
+ akpm@linux-foundation.org, willy@infradead.org, sj@kernel.org,
+ kees@kernel.org, luizcap@redhat.com, zhangjiao2@cmss.chinamobile.com,
+ kas@kernel.org, ljs@kernel.org, hpa@zytor.com, liam@infradead.org,
+ vbabka@kernel.org, rppt@kernel.org, surenb@google.com, mhocko@suse.com,
+ jack@suse.cz, riel@surriel.com, harry@kernel.org, jannh@google.com,
+ jgg@ziepe.ca, jhubbard@nvidia.com, peterx@redhat.com, ziy@nvidia.com,
+ baolin.wang@linux.alibaba.com, npache@redhat.com, ryan.roberts@arm.com,
+ dev.jain@arm.com, baohua@kernel.org, lance.yang@linux.dev,
+ chengming.zhou@linux.dev, nao.horiguchi@gmail.com, matthew.brost@intel.com,
+ joshua.hahnjy@gmail.com, rakie.kim@sk.com, byungchul@sk.com,
+ gourry@gourry.net, ying.huang@linux.alibaba.com, apopple@nvidia.com,
+ pfalcato@suse.de, linux-arm-kernel@lists.infradead.org,
+ linux-kernel@vger.kernel.org, linux-fsdevel@vger.kernel.org,
+ linux-mm@kvack.org, damon@lists.linux.dev, shakeel.butt@linux.dev,
+ ryncsn@gmail.com, dvander@google.com, wangzicheng@honor.com
+References: <20260604111035154Lk-9ZgwKY4Nlk4zz30U1t@zte.com.cn>
+From: "David Hildenbrand (Arm)" <david@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=david@kernel.org; keydata=
+ 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
+ qIws/H2t
+In-Reply-To: <20260604111035154Lk-9ZgwKY4Nlk4zz30U1t@zte.com.cn>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kunwu Chan <kunwu.chan@gmail.com>
+On 6/4/26 05:10, xu.xin16@zte.com.cn wrote:
+>>>
+>>>  arch/arm64/Kconfig         |   1 +
+>>>  arch/x86/Kconfig           |   1 +
+>>>  fs/proc/page.c             |   6 +-
+>>>  include/linux/mm.h         |  38 ++
+>>>  include/linux/mm_types.h   |   9 +-
+>>>  include/linux/page-flags.h |  34 +-
+>>>  include/linux/pagemap.h    |   2 +-
+>>>  include/linux/rmap.h       | 165 ++++++++-
+>>>  mm/Kconfig                 |  22 ++
+>>>  mm/damon/ops-common.c      |   4 +-
+>>>  mm/debug.c                 |   2 +-
+>>>  mm/debug_vm_pgtable.c      |   2 +-
+>>>  mm/gup.c                   |   6 +-
+>>>  mm/huge_memory.c           |  16 +-
+>>>  mm/internal.h              | 171 +++++++++
+>>>  mm/khugepaged.c            |  13 +-
+>>>  mm/ksm.c                   |  43 ++-
+>>>  mm/memory-failure.c        |  11 +-
+>>>  mm/memory.c                |  19 +-
+>>>  mm/migrate.c               | 126 ++++---
+>>>  mm/mmap.c                  |  15 +-
+>>>  mm/mremap.c                |   4 +-
+>>>  mm/page_idle.c             |   2 +-
+>>>  mm/rmap.c                  | 690 ++++++++++++++++++++++++++++++++++---
+>>>  mm/vma.c                   |  76 ++--
+>>>  mm/vma.h                   |   4 +-
+>>>  mm/vma_exec.c              |   2 +-
+>>>  mm/vma_init.c              |   1 +
+>>>  28 files changed, 1279 insertions(+), 206 deletions(-)
+>>
+>> Hi!
+>>
+>> When I saw the diffsat I was concerned. Going through the patches made me ...
+>> more concerned :)
+>>
+>> This is a lot of complexity. On top of something that is already so complicated
+>> that I fail to grasp most details without regularly taking a look at the nice
+>> figures Lorenzo created recently.
+>>
+>> For example, I read above "since child VMAs do not need to allocate anon_vma"
+>> and wondered how that could be part of something that is just done lazily. Then
+>> I had to learn in the patches that there is some additional "Child VMAs
+>> are created as ANON_VMA_TREE_PARENT and do not allocate anon_vma" -- excuse me,
+>> what? :)
+>>
+>> Reading about VMA refcounts made me shiver. Reading "Holding only
+>> folio_lock(folio) cannot guarantee that the split
+>> operation completes atomically." confused me. Learning that we have to invent
+>> interesting ways to make page migration mutually exclusive to free_pgtables()
+>> concerned me. Figuring out that there are arch-specific config options and
+>> runtime toggles is a clear warning sign.
+>>
+>> Seeing test_folio_unmapped() was funny, though (why?! :)).
+>>
+>> I think this patch set has a noble goal of reducing anon_vma overhead when anon
+>> pages are not shared during fork. However, using anon_vma for them actually
+>> makes the overall implementation (e.g., rmap walks, locking) more consistent and
+>> simpler.
+>>
+>> Even if we could be convinced that most of this here is correct, how should we
+>> reasonably maintain this increasing level of complexity here?
+> 
+> Indeed, it's very complex, but having the changes of 15 patches scattered across
+> various subsystems is really frustrating for reviewers. It took me a whole day to
+> read through the entire patch set, which made an already complicated matter even
+> more complex (maintaining such complex code in the future will be a pain).
+> 
+> However, overall, I think the original intention behind Tao's patch is innovative
+> and valuable, and Tao could definitely make this patch set simpler and more
+> readable, because the core changes actually start from PATCH 10.
+> 
+> I believe that if Tao had done the following, things might have gone better and easier
+> for reviewing. In fact, I understand the motivation behind the patch is quite simple
+> at its core (just wanting to avoid allocating the anon_vma structure when a VMA hasn't
+> been truly forked, and instead put the VMA information directly into folio->mapping):
+> 
+> 1) You could actually simplify your patch significantly — without adding a lot of wrappers
+> and helper functions that introduce extra review overhead — and keep only the most essential elements.
+> 
+> 2) Provide complete test code (in tools/testing/selftest) that covers the affected functionality,
+> such as VMA, huge pages, KSM, etc.
+> 
+> 3) Use the RFC tag to start a discussion.
+> 
+> 
+> I would be very glad to see if Tao could post a simpler v2 version that does not alter the rmap
+> core data structures too much and does not introduce excessive complexity, no matter whether
+> it can be merged finaly.
 
-DAMON avoids TLB flushes after clearing PTE Accessed bits for sampling.
-The overhead was measured and found significant [1].  Production
-workloads with large working sets flush TLB buffers naturally, so
-accuracy impact is negligible.
+I'm afraid, the overall complexity would increase in any case.
 
-On systems with large TLB buffers and small test workloads, stale TLB
-entries persist across sampling intervals and produce false negatives.
-This comes up repeatedly on the mailing list and in private inquiries
-[2][3].
+So to quote myself "But fundamentally, I think we want to find a new design that
+is just naturally simpler."
 
-Add a document on the design decision, trade-offs, test environment
-problems, and recommendations.
-
-Link: https://lore.kernel.org/20200403103059.12762-1-sjpark@amazon.com [1]
-Link: https://lore.kernel.org/20260117020731.226785-3-sj@kernel.org [2]
-Link: https://lore.kernel.org/all/20260526145034.91594-1-sj@kernel.org [3]
-
-Co-developed-by: Wang Lian <lianux.mm@gmail.com>
-Signed-off-by: Wang Lian <lianux.mm@gmail.com>
-Signed-off-by: Kunwu Chan <kunwu.chan@gmail.com>
----
- Documentation/mm/damon/index.rst     |   1 +
- Documentation/mm/damon/tlb_flush.rst | 131 +++++++++++++++++++++++++++
- 2 files changed, 132 insertions(+)
- create mode 100644 Documentation/mm/damon/tlb_flush.rst
-
-diff --git a/Documentation/mm/damon/index.rst b/Documentation/mm/damon/index.rst
-index 318f6a7bfea4..5e239437dab3 100644
---- a/Documentation/mm/damon/index.rst
-+++ b/Documentation/mm/damon/index.rst
-@@ -19,6 +19,7 @@ DAMON is a Linux kernel subsystem for efficient :ref:`data access monitoring
- 
-    faq
-    design
-+   tlb_flush
-    api
-    maintainer-profile
- 
-diff --git a/Documentation/mm/damon/tlb_flush.rst b/Documentation/mm/damon/tlb_flush.rst
-new file mode 100644
-index 000000000000..394f7b86102a
---- /dev/null
-+++ b/Documentation/mm/damon/tlb_flush.rst
-@@ -0,0 +1,131 @@
-+.. SPDX-License-Identifier: GPL-2.0
-+
-+==========================================
-+DAMON TLB Flush Policy
-+==========================================
-+
-+:Author: Kunwu Chan <kunwu.chan@gmail.com>
-+:Author: Wang Lian <lianux.mm@gmail.com>
-+
-+Overview
-+========
-+
-+DAMON monitors data access by sampling PTE (Page Table Entry) Accessed bits
-+using ``ptep_test_and_clear_young()`` and ``pmdp_test_and_clear_young()``.
-+These functions clear the Accessed bit but do **not** flush the TLB
-+(Translation Lookaside Buffer).  This is an intentional design choice.
-+
-+Questions about this behavior come up repeatedly, both on the mailing list
-+and in private inquiries.  This document describes the reasoning, the
-+trade-offs, and recommendations for users and testers.
-+
-+Background
-+==========
-+
-+DAMON's access check works as follows:
-+
-+1. Clear the PTE Accessed bit for a sampled page.
-+2. Wait for one ``sampling interval``.
-+3. Check if the Accessed bit has been set again by the hardware.
-+
-+If the bit was set again, the page was accessed during the sampling interval.
-+
-+On architectures with hardware-managed TLB (e.g., x86, arm64), the CPU may
-+cache the Accessed bit state in the TLB.  After DAMON clears the Accessed bit
-+in the page table, a stale TLB entry with the old Accessed bit remains in the
-+TLB.  When the workload accesses the page, the access hits the stale TLB
-+entry and does not trigger a page table walk, so the Accessed bit in the page
-+table is not set again.  DAMON therefore fails to detect real accesses on its
-+next check, reporting false negatives.
-+
-+Flushing the TLB after clearing the Accessed bit prevents stale TLB entries
-+and eliminates this problem.  Functions such as ``ptep_clear_flush_young()`` and
-+``pmdp_clear_flush_young()`` provide this behavior.  However, TLB flushes come
-+at a performance cost.
-+
-+Why DAMON Does Not Flush TLB
-+============================
-+
-+DAMON intentionally avoids TLB flushes to keep monitoring overhead low.
-+The decision was made after measuring the performance impact of adding TLB
-+flushes to the sampling path.  The measurement showed the overhead is
-+significant enough to matter for production use [1]_.
-+
-+Production workloads typically have large working sets that flush TLB buffers
-+anyway through normal memory access patterns.  Stale TLB entries that could
-+cause monitoring inaccuracies are evicted by the workload's own memory activity
-+before the next sampling interval.  The accuracy impact is therefore negligible in
-+production.
-+
-+The following table summarizes the trade-off:
-+
-++---------------------+-----------------------------+---------------------------+
-+|                     | Without TLB Flush (current) | With TLB Flush            |
-++---------------------+-----------------------------+---------------------------+
-+| Monitoring Overhead | Low                         | Higher (flush cost)       |
-++---------------------+-----------------------------+---------------------------+
-+| Accuracy (prod)     | Good                        | Good                      |
-++---------------------+-----------------------------+---------------------------+
-+| Accuracy (test)     | May degrade                 | Good                      |
-++---------------------+-----------------------------+---------------------------+
-+
-+Impact on Testing and Small Workloads
-+=====================================
-+
-+The lack of TLB flush becomes problematic when the working set is small enough
-+to fit entirely within the TLB reach.  This is common in test environments
-+and synthetic benchmarks.  In such cases, stale TLB entries persist across
-+sampling intervals, so DAMON reports false accesses and monitoring results
-+become incorrect.
-+
-+For example, on a machine with a large TLB buffer, a test workload of a few
-+tens of megabytes may never experience TLB eviction.  DAMON's WSS (Working Set
-+Size) estimation can report 100% error (all regions reported as accessed,
-+or none reported as accessed depending on timing), and DAMOS schemes may never
-+trigger correctly.
-+
-+This issue was observed in DAMON selftests and was addressed by increasing the
-+test working set size to simulate production-like conditions, rather than
-+changing DAMON's TLB flush behavior [2]_.  The selftest working set size was
-+increased up to 160 MiB for this reason.
-+
-+Recommendations
-+===============
-+
-+For Users
-+---------
-+
-+If you observe unexpected ``nr_accesses`` values or inaccurate working
-+set size estimates, the cause is likely stale TLB entries from DAMON's
-+sampling without TLB flushes.  This happens when the working set fits
-+within the TLB reach, which is uncommon for production workloads but can
-+occur with small workloads.  See the For Testers section below for
-+how to verify this.
-+
-+For Testers and Developers
-+--------------------------
-+
-+When writing DAMON tests, ensure the test workload's working set is large
-+enough to trigger natural TLB eviction on the target test machine.  The
-+exact size depends on the CPU's TLB configuration.  The DAMON selftest for
-+WSS estimation uses 160 MiB per region after finding smaller sizes
-+unreliable on systems with large TLB buffers [2]_.
-+
-+For out-of-tree tests, gradually increase the working set size until DAMON
-+reports stable and accurate results, then use that size as the baseline for
-+subsequent tests on the same hardware.
-+
-+If DAMON reports unexpectedly high ``nr_accesses`` or empty
-+``tried_regions``, the ``diagnose_empty_tried_regions.py`` script from
-+DAMON selftests can help determine whether stale TLB entries are the cause.
-+
-+The existing DAMON selftests follow this approach [2]_.
-+
-+References
-+==========
-+
-+.. [1] `DAMON TLB flush overhead measurement
-+   <https://lore.kernel.org/20200403103059.12762-1-sjpark@amazon.com/>`_
-+
-+.. [2] `DAMON selftest: increase working set size for reliable results
-+   <https://lore.kernel.org/20260117020731.226785-3-sj@kernel.org/>`_
 -- 
-2.43.0
+Cheers,
 
+David
