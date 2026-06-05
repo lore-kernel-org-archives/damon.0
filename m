@@ -1,163 +1,141 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D61E3988E4
-	for <damon@lists.linux.dev>; Thu,  4 Jun 2026 15:48:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D77013D539;
+	Fri,  5 Jun 2026 00:44:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780588126; cv=none; b=PfBU8v5wG+i9KGDHacZq/m6m/eMt6gVN+7muI5sp3bgzLhSHwdI9dv175Ful/9Bz/ihbGcp+4DgIuxXeI+Gthxehm4kuC922lLMDvVwNQ/jMhwaTXRcqSoZp1YnMKVwnJRPn+c5hRQafN8d980qoXN5yS4uZTUlynqNCHAwuRTg=
+	t=1780620269; cv=none; b=ZZFQDAWcmRaFrEe5vHh5jxMj//mZG4S7Dc+abeLSdnMIFhoOukrDuQDAFAX8b42b2/ovLROAPc1mCOyWRoFbIjSHWTTJKFllOlwDkT9yFSGdo4vhgiW6I6RWgyWq03SVBW2V9A5GQ+gFwAr/k7mNkAMTEtue0gmLXuW949j/nok=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780588126; c=relaxed/simple;
-	bh=jEV5ClVmP0iQTyz1nuv98exl9hqDqDobV/q1I62Xc00=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=MiuIVpOoRNoXKFPzfm/xgcSaGhTY/0QB50sE+m9eCSWsU9a91R1gxCLKB02Auf0kSfi2WL8ssq7LUDZnmAygU66+8+wR8JWC9G4eJvQP2RxfxlMDlYNVKrKgcnqufPnF9sQtS98XYpfnKBlROH770ZaAMyJWusx9N6cbXyW7ziQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ka1FP856; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1780620269; c=relaxed/simple;
+	bh=4Vkg6o5Sa+/8zbFcs16G1eaOuZsWW5zg0q4ikaIzSPc=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=HEXzJnzMXTrsNaeYz0nBm8y2DQKNm9Grds4N/kwRwbmF01q9gj1giBaXgPJuWodMMAEJB+Cng5BWvgX1Jkrz6u8ntdwM++prF3UaM2gJqQ8BjBwmbf0Bb5PscKL7ThPK4B+K/2DcjP/LsJEUEgn5QiY+clCz34DXlQz/VguyWPk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=evSrm9Fc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ka1FP856"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92DB11F00893;
-	Thu,  4 Jun 2026 15:48:40 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="evSrm9Fc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B8A41F00893;
+	Fri,  5 Jun 2026 00:44:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1780588120;
-	bh=8xsgwUkTlRTWpGEgX6efJZuVp8eH43bfejht7ROZsvg=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=ka1FP856N52wLFYeSyJAX6qA0iF03wsUMTJvSjrOrcn1buMoZ9Tfo2ro8DzOJZ1ag
-	 VlLCOAWGy+TCgH0Qo66Hmb+NXRs5iNRARdZzEMC7HodR0KzT3DOKVHjMHW9rIpcLSM
-	 NBOSPSOokiLs/CBSwp/+v2YL2A9a1Y9qBDJo1zuHLTe111Zpv+8An/yFRQLS07bOm6
-	 VVRIGgGPDs+G47lnGiTXYGnFCEvnGfGGCFFfTYp0DSCJReIGxqGUihPoraRtWGXJqj
-	 tNTVOYO6HzXujb/3rYgN6sROdjupp0Php21AH1w76xREVGU3hfToUoa1Es+C+igytZ
-	 r/q0c1chiMH/w==
-From: sashiko-bot@kernel.org
-Subject: Re: [RFC PATCH v3 4/4] Documentation/admin-guide/mm/damon: add
- DAMON-based Hugepage Management
-Reply-To: sashiko-reviews@lists.linux.dev
+	s=k20260515; t=1780620268;
+	bh=6q2i0FownRA3YZDzx7XlKDNjZ1os0IoGmvW0lPidl0Y=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=evSrm9FcuKl26K4DQgLNCuVj0BGkyeskpZqhPt+rGdj2hEX78hB/S+maA9XDn9w7H
+	 eB/9UvWVhr1vC8htSeE+oxgVjQpIEIJ8ryqaCvNcqVTmQaWozEQysDKevfJvTubzzD
+	 xRazdqK6U+9QrLjDopCbUxU2mpOfBsIwdN8//vuwx8CQMvG2jwb7BBhr6SwSfBkaGN
+	 3ibx6nn1KujOWLQsd2L+X/PLf3lYTEo7+IjTrczhFxAKC0mMyQvll4zNXc5G61cfGJ
+	 XyLPtblkPCq0+tmePgdkbpqnNnR4AmOo4HghrlcniKPnfIWCUelqASA47Pc4PmAxXm
+	 m/46vt3uDbGvw==
+From: SeongJae Park <sj@kernel.org>
 To: gutierrez.asier@huawei-partners.com
-Cc: damon@lists.linux.dev
-In-Reply-To: <20260604150338.501128-5-gutierrez.asier@huawei-partners.com>
-References: <20260604150338.501128-5-gutierrez.asier@huawei-partners.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Thu, 04 Jun 2026 15:48:40 +0000
-Message-Id: <20260604154840.92DB11F00893@smtp.kernel.org>
+Cc: SeongJae Park <sj@kernel.org>,
+	artem.kuzin@huawei.com,
+	stepanov.anatoly@huawei.com,
+	wangkefeng.wang@huawei.com,
+	yanquanmin1@huawei.com,
+	zuoze1@huawei.com,
+	damon@lists.linux.dev,
+	akpm@linux-foundation.org,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [RFC PATCH v3 1/4] mm/damon: Introduce DAMOS_QUOTA_HUGEPAGE auto tuning
+Date: Thu,  4 Jun 2026 17:44:22 -0700
+Message-ID: <20260605004422.82568-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260604150338.501128-2-gutierrez.asier@huawei-partners.com>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-Thank you for your contribution! Sashiko AI review found 4 potential issue(=
-s) to consider:
-- [Low] The newly added documentation file `hugepage.rst` is orphaned becau=
-se it is not included in any Sphinx `toctree`.
-- [Low] The documentation references an incorrect Kconfig symbol `CONFIG_DA=
-MON_HUGEPAGE` instead of `CONFIG_SAMPLE_DAMON_HUGEPAGE`.
-- [Low] Missing newline at the end of the newly added documentation file.
-- [Low] Multiple spelling and grammatical errors in the newly added documen=
-tation.
---
+On Thu, 4 Jun 2026 15:03:34 +0000 <gutierrez.asier@huawei-partners.com> wrote:
 
-commit 24c835e6a5624692adf95a519c4c1747fca62d26
-Author: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
+> From: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
+> 
+> Introduce DAMOS_QUOTA_HUGEPAGE auto tuning Add a
+> new DAMOS quota goal metric to measure the amount of huge
+> page consumption to total anonymous memory consumption
+> ratio.
 
-Documentation/admin-guide/mm/damon: add DAMON-based Hugepage Management
+s/anonymous// ?
 
-Add documentation for the DAMON-based Hugepage Management
-(SAMPLE_DAMON_HUGEPAGE) feature, which automatically manages
-huge pages by identifying hot memory regions and collapsing
-them back to regular pages.
+> 
+> Signed-off-by: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
+> ---
+>  include/linux/damon.h |  1 +
+>  mm/damon/core.c       | 14 ++++++++++++++
+>  2 files changed, 15 insertions(+)
+> 
+> diff --git a/include/linux/damon.h b/include/linux/damon.h
+> index c7a31572689b..8e15a674e893 100644
+> --- a/include/linux/damon.h
+> +++ b/include/linux/damon.h
+> @@ -177,6 +177,7 @@ enum damos_quota_goal_metric {
+>  	DAMOS_QUOTA_ACTIVE_MEM_BP,
+>  	DAMOS_QUOTA_INACTIVE_MEM_BP,
+>  	DAMOS_QUOTA_NODE_ELIGIBLE_MEM_BP,
+> +	DAMOS_QUOTA_HUGEPAGE,
 
-[Severity: Low]
-Is this new documentation file orphaned? It doesn't appear to be added to t=
-he
-toctree in Documentation/admin-guide/mm/damon/index.rst.
+On the previous revision, I suggested renaming this to
+DAMOS_QUOTA_HUGEPAGE_MEM_BP for consistency, but it didn't got your reply.
+Could I ask your opinion?
 
-> diff --git a/Documentation/admin-guide/mm/damon/hugepage.rst b/Documentat=
-ion/admin-guide/mm/damon/hugepage.rst
-> new file mode 100644
-> index 0000000000000..86104aaa4d1c3
-> --- /dev/null
-> +++ b/Documentation/admin-guide/mm/damon/hugepage.rst
+Also, I asked you to add the kernel-doc comment before dropping RFC.  I know
+you didn't drop RFC tag yet, but could you consider adding it from the next
+revision?
 
-[ ... ]
-
-> +Interface: Module Parameters
-> +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D
+>  	NR_DAMOS_QUOTA_GOAL_METRICS,
+>  };
+>  
+> diff --git a/mm/damon/core.c b/mm/damon/core.c
+> index 9f38deddcb30..7fc7477a353a 100644
+> --- a/mm/damon/core.c
+> +++ b/mm/damon/core.c
+> @@ -2536,6 +2536,17 @@ static unsigned int damos_get_in_active_mem_bp(bool active_ratio)
+>  	return mult_frac(inactive, 10000, total);
+>  }
+>  
+> +static unsigned int damos_hugepage_mem_bp(void)
+> +{
+> +	unsigned long thp, total;
 > +
-> +To use this feature, you should first ensure your system is running on a=
- kernel
-> +that is built with ``CONFIG_DAMON_HUGEPAGE=3Dy``.
+> +	thp = global_node_page_state(NR_ANON_THPS) +
+> +				global_node_page_state(NR_SHMEM_THPS) +
+> +				global_node_page_state(NR_FILE_THPS);
+> +	total = totalram_pages() - global_zone_page_state(NR_FREE_PAGES);
+> +	return mult_frac(thp, 10000, total);
+> +}
 
-[Severity: Low]
-Does this reference the wrong Kconfig symbol? The module appears to be
-SAMPLE_DAMON_HUGEPAGE, so should this be CONFIG_SAMPLE_DAMON_HUGEPAGE=3Dy?
+As Sashiko also [1] commented, let's avoid divide by zero by checking if total
+is zero, before calling mult_frac().
 
-[ ... ]
-
-> +commit_inputs
-> +-------------
-> +
-> +Make SAMPLE_DAMON_HUGEPAGE reads the input parameters again, except ``en=
-abled``.
-
-[Severity: Low]
-This isn't a bug, but should "reads" be "read" here?
+I wouldn't mind ignoring Sashiko's 32-bit concern, but do you have any opinion?
 
 > +
-> +Input parameters that updated while SAMPLE_DAMON_HUGEPAGE is running are
+>  static void damos_set_quota_goal_current_value(struct damon_ctx *c,
+>  		struct damos *s, struct damos_quota_goal *goal)
+>  {
+> @@ -2567,6 +2578,9 @@ static void damos_set_quota_goal_current_value(struct damon_ctx *c,
+>  		goal->current_value = damos_get_node_eligible_mem_bp(c, s,
+>  				goal->nid);
+>  		break;
+> +	case DAMOS_QUOTA_HUGEPAGE:
+> +		goal->current_value = damos_hugepage_mem_bp();
+> +		break;
+>  	default:
+>  		break;
+>  	}
+> -- 
+> 2.43.0
 
-[Severity: Low]
-This isn't a bug, but should this be "parameters that are updated"?
+Other than the above comments, looks good to me overall.
 
-[ ... ]
+[1] https://lore.kernel.org/20260604151932.93C431F00893@smtp.kernel.org
 
-> +quota_reset_interval_ms
-> +-----------------------
-> +
-> +The time/size quota charge reset interval in milliseconds.
-> +
-> +The charget reset interval for the quota of time (quota_ms) and size
 
-[Severity: Low]
-This isn't a bug, but there is a typo here ("charget" -> "charge").
-
-[ ... ]
-
-> +quota_autotune_feedback
-> +-----------------------
-> +
-> +User-specifiable feedback for auto-tuning of the effective quota.
-> +
-> +While keeping the caps that set by other quotas, SAMPLE_DAMON_HUGEPAGE
-> +automatically increases and decreases the effective level of the quota
-> +aiming receiving this feedback of value ``10,000`` from the user.
-
-[Severity: Low]
-This isn't a bug, but should this be "aiming to receive"?
-
-[ ... ]
-
-> +Example
-> +=3D=3D=3D=3D=3D=3D=3D
-> +
-> +Below runtime example commands make SAMPLE_DAMON_HUGEPAGE to find memory
-> +regions of  the task with PID 1234 that have been accessed in the last 1=
-00
-> +milliseconds or more and collpases those pages into huge pages. The page
-
-[Severity: Low]
-This isn't a bug, but there is a typo here ("collpases" -> "collapses").
-
-[ ... ]
-
-> +Note that this module (SAMPLE_DAMON_HUGEPAGE) cannot run simultaneously
-> +with other DAMON-based special-purpose modules.  Refer to
-> + :ref:`DAMON design special purpose modules exclusivity
-> + <damon_design_special_purpose_modules_exclusivity>` for more details.
-> \ No newline at end of file
-
-[Severity: Low]
-This isn't a bug, but could we add a newline at the end of the file?
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260604150338.5011=
-28-1-gutierrez.asier@huawei-partners.com?part=3D4
+Thanks,
+SJ
