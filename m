@@ -1,41 +1,83 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f68.google.com (mail-pj1-f68.google.com [209.85.216.68])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 216B23D75BF;
-	Fri,  5 Jun 2026 01:38:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F8FD13A3ED
+	for <damon@lists.linux.dev>; Fri,  5 Jun 2026 03:10:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.68
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780623546; cv=none; b=qJrj2uk8mklNB34ydZn5MSOn4nTOUkId101npWuICTQJZOlPbeuLmLbqha71eyQpI40SX/YUs9GyTd+XWVSpN6GstkqWKGEoigExw+3HHfZh7X4yD1ayG/U2gWZ0gZWaZbT6/DNFh2AbJvswWoKUINeCJirN0v6E56QAqpNmp/Y=
+	t=1780629026; cv=none; b=legwqqyHlNu2XkT8TYUjoQyqffS96OZozNxycG+RvJbF51iCxwmeWm5G4CoEPcSY/8O/4Vq1V+rvpbOyPIAyAcmFswmcKccLvhzK5XfaloBgbSjVth7V3qno7hOdL6BNrWeVJnirMOSXn09nRbHNGx4w1XCcohdMy0YvKHmiAe4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780623546; c=relaxed/simple;
-	bh=mBcLU6n7ojT+f9p0l+H/Z7NAPsufzFOyPPPkEgNBFG8=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=S1hxwLP0NNVhpAQ+ECjyvvasqnzDJjCcEV9UyeWxw3ICUzYpMvSAvYl2fh5vzWIX8zHuKCyOhqPQkFwfBqT9ouhkYeZX6XhDOnXpf0fY1KzHGsnkDfMN+KyfChG33luoYCO1tny+T7/xede0yIGa7QRYyHs6XNCd8qea3gRYOFE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IszDWLyF; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1780629026; c=relaxed/simple;
+	bh=t1mLICHhnLO6Jky0VScBSiBvl0tHQMm8najzZsWVzQM=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=ODNDn/2Z6J2OOpEJUcgCSxmQR6ZbF3jSouqgcWY2d2T1I88A4zDWLfO+7as66nNmZTITDyRRdJ3nm1bewGpbMRPkfcuD8tBePu1Oh/Cy9qg0U2PvcCFhAkkkl4kzMNk5iNJdfYyJCnYxSju/YQQ7N92Ou34NqdFcc0ogKmYkFjE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=qr8JBNWO; arc=none smtp.client-ip=209.85.216.68
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IszDWLyF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4288E1F00893;
-	Fri,  5 Jun 2026 01:38:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1780623537;
-	bh=3FMzbu3u71nQTcvhV84Inp+2khcRaSZTlpCYSxQCCNM=;
-	h=From:To:Cc:Subject:Date;
-	b=IszDWLyFitkjiWmwl+Kee4Ar/yCCt+rr2vPxubON5Sn5HOqlMHCIUrqBfjdR0v+TI
-	 S1nvsmhv6yxqw7JSKXKNx26PulPRAU2/+sRVyNVePkQdxFb/yHdL6yvTZjmeKrB/jw
-	 tEC57196PqU+PM5l4g4iAtO4uaJUcITvtuF76B3M/fNt4U5ZA88WHatwJWQ06vcYoi
-	 KgUa5ObeT1M0LTVK37OUko46qiJbqdUrKj63jVzY/BTxIakQVHNetitOxwJnM5Ryqo
-	 8+IFVvW6INjYGSyo85+h9YLAsm525Fj9em3MXZE1P3uyPmsplPhmUs6h+CIslCzKDB
-	 zRLqtJGVFfySw==
-From: SeongJae Park <sj@kernel.org>
-To: Andrew Morton <akpm@linux-foundation.org>
-Cc: SeongJae Park <sj@kernel.org>,
-	"# 6 . 11 . x" <stable@vger.kernel.org>,
-	damon@lists.linux.dev,
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qr8JBNWO"
+Received: by mail-pj1-f68.google.com with SMTP id 98e67ed59e1d1-36b9ec98144so885872a91.1
+        for <damon@lists.linux.dev>; Thu, 04 Jun 2026 20:10:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1780629022; x=1781233822; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=1ZEmz9CjR/k1fq+15RyyqofRsMPk5Kd3zOMwojBu/vU=;
+        b=qr8JBNWOofm8y64ke48d+dYCPpUoQjHCY0Ejo4cCvIi6vME1Wzn38g9y0pSi9bsA23
+         Hrs6FWYg7kaSvWTN6CQnijv+OxrxtwwCJO8+tCRvT7xxikuonDPMk0I9qPHYY4jk5X+p
+         gvuX9Dm++c8DGbi+3zO76E2iUt3t6NRifWztsuQNn1lLkWerhP+za/gEjmXzlMdpNK+o
+         zS5NcGM4llN9Cd48ObMsfWWf8WeMo/dKHfPK4z5CDGF7lvyPZbEJRQ5MddmNeEJ2BspU
+         EYbLqKyXLRLdQ0IDRUFMoS+dAKGegv3s7vg6EtN1tpVf423EXCULWSI+lGmEN8Z+7qfd
+         6zig==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780629022; x=1781233822;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=1ZEmz9CjR/k1fq+15RyyqofRsMPk5Kd3zOMwojBu/vU=;
+        b=nz11ssisCzdElO43tKOLDfgiQxBT2JVF1IEzfrxNyFYFlTnDEm5dIyYx83x30stgrZ
+         A9Rmv2KovZCqDmzrBAp+A+tlkVD9c82YIWMF1tNXZXzMIb/ocz1CipAHnpGntpi8GvH/
+         w2hhvvOxfC6YdEgRBdRNc708+buiir9bdIqIcukQx5XgtkjwWyCzce1GQqjSB1a3IjhR
+         XFmvIzs0J/HSdXqu48xKSvfmiw86UFa3o82IuzzFWGdjFfl6qAL9F1raadImANfXA5Wj
+         HWmhubdOCq0eaZ4CnitPdiw1PUn8il7a9Tuwzw4c8kwYHNri4w5LmpaHRd30+22dr8Gl
+         /eVQ==
+X-Gm-Message-State: AOJu0Yx6keU6jPrYlhvXzYDY+m5cqI1zW+shO9qC6sDg8rC0Wp1NVuq8
+	7fEr1yV2nSzYxQ0zD6MFmnCWK0LD1smvghEe6aRthX9Dv/bwK2ILdeve
+X-Gm-Gg: Acq92OH2BYogE+SkzHojlZu2RnxGse2alReH+iJ+mViJvTB2lB6oaU8s1gaA7NkVAaB
+	YBcbul2WieEiviU6pySMgzlj3c7FLL6BYSQR6mOutlC9iTJ/WACpDeJskMFj2VAD69DLMO8ZfyU
+	G3zRxbXX0oAWwtZTTQD1IRJ5GM0oPsafPl0JgiWS7+f6b+gaXxZ4IHIC2roCiFzsbN72CmPNw+T
+	IRSeCX6FeabR/8MMez84HAF4sCLbKiYfBTbJId6ZraY6BmPNO2CgVrDpIgEADbYu5outkrdTgLB
+	NXYubPfWrAU/2W0nHs3YfONpQCv26NV66ZRqDSsao9Mbh2tLHRl7Qdx6n4N3YlR2Fr74+rytu90
+	80LO3kzxcfPUYHkRSW1b4cFIGJ9LxlnD2TrFyR6a3H0lg8DW/uiADsYHV5//Qe3cAkt0KHCgB9s
+	tsrGihII78L6eMofkLHEOWLEN7P8AZH4A=
+X-Received: by 2002:a17:90a:fc45:b0:36d:a510:f8eb with SMTP id 98e67ed59e1d1-370eeff1e46mr1595157a91.3.1780629022034;
+        Thu, 04 Jun 2026 20:10:22 -0700 (PDT)
+Received: from kernel.. ([116.128.244.169])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-37133082519sm295006a91.1.2026.06.04.20.10.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 04 Jun 2026 20:10:21 -0700 (PDT)
+From: Kunwu Chan <kunwu.chan@gmail.com>
+X-Google-Original-From: Kunwu Chan <kunwu.chan@linux.dev>
+To: sj@kernel.org,
+	akpm@linux-foundation.org,
+	david@kernel.org,
+	ljs@kernel.org,
+	liam@infradead.org,
+	vbabka@kernel.org,
+	rppt@kernel.org,
+	surenb@google.com,
+	mhocko@suse.com,
+	corbet@lwn.net,
+	skhan@linuxfoundation.org
+Cc: damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org
-Subject: [PATCH] mm/damon/core: always put unsuccessfully committed target pids
-Date: Thu,  4 Jun 2026 18:38:48 -0700
-Message-ID: <20260605013849.83750-1-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
+	Kunwu Chan <kunwu.chan@gmail.com>,
+	Wang Lian <lianux.mm@gmail.com>
+Subject: [PATCH] Docs/damon: add TLB flush policy document
+Date: Fri,  5 Jun 2026 11:10:08 +0800
+Message-ID: <20260605031008.397328-1-kunwu.chan@linux.dev>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -44,171 +86,183 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-damon_commit_target() puts and gets the destination and the source
-target pids.  It puts the destination target pid because it will be
-overwritten by the source target pid.  It gets the source pid because
-the caller is supposed to eventually put the pids.  In more detail, the
-caller will call damon_destroy_ctx() after damon_commit_ctx() to destroy
-the entire source context.  And in this case, [f]vaddr operation set's
-cleanup_target() callback will put the pids.
+From: Kunwu Chan <kunwu.chan@gmail.com>
 
-The commit operation is made at the context level.  The operation can
-fail in multiple places including in the middle and after the targets
-commit operations.  For any such failures, immediately the error is
-returned to the damon_commit_ctx() caller.  If some or all of the source
-target pids were committed to the destination during the unsuccessful
-context commit attempt, those pids should be put twice.
+DAMON avoids TLB flushes after clearing PTE Accessed bits for sampling.
+The overhead was measured and found significant [1].  Production
+workloads with large working sets flush TLB buffers naturally, so
+accuracy impact is negligible.
 
-The source context will do the put operations using the above explained
-routine.  However, let's suppose the destination context was not
-originally using [f]vaddr operation set and the commit failed before the
-ops of the source context is committed.  The destination does not have
-the cleanup_target() ops callback, so it cannot put the pids via the
-damon_destroy_ctx().
+On systems with large TLB buffers and small test workloads, stale TLB
+entries persist across sampling intervals and produce false negatives.
+This comes up repeatedly on the mailing list and in private inquiries
+[2][3].
 
-As a result, the pids are leaked.  The issue in the real world would be
-not very common.  The commit feature is for changing parameters of
-running DAMON context while inheriting internal status like the
-monitoring results.  The monitoring results of a physical address range
-ain't have things that are beneficial to be inherited to a virtual
-address ranges monitoring.  So the problem-causing DAMON control would
-be not very common in the real world.  That said, it is a supported
-feature. And damon_commit_target() failure due to memory allocation is
-relatively realistic [1] if there are a huge number of target regions.
+Add a document on the design decision, trade-offs, test environment
+problems, and recommendations.
 
-Fix by putting the pids in the commit operation in case of the failures.
+Link: https://lore.kernel.org/20200403103059.12762-1-sjpark@amazon.com [1]
+Link: https://lore.kernel.org/20260117020731.226785-3-sj@kernel.org [2]
+Link: https://lore.kernel.org/all/20260526145034.91594-1-sj@kernel.org [3]
 
-The issue was discovered [2] by Sashiko.
-
-[1] https://lore.kernel.org/20260603112306.58490-1-akinobu.mita@gmail.com
-[2] https://lore.kernel.org/20260320020056.835-1-sj@kernel.org
-
-Fixes: 83dc7bbaecae ("mm/damon/sysfs: use damon_commit_ctx()")
-Cc: <stable@vger.kernel.org> # 6.11.x
-Signed-off-by: SeongJae Park <sj@kernel.org>
+Co-developed-by: Wang Lian <lianux.mm@gmail.com>
+Signed-off-by: Wang Lian <lianux.mm@gmail.com>
+Signed-off-by: Kunwu Chan <kunwu.chan@gmail.com>
 ---
-Changes from RFC v1.1
-- rfc v1.1: https://lore.kernel.org/20260604143514.84310-1-sj@kernel.org
-- Rebase to latest mm-new.
-- Drop RFC tag.
-Changes from RFC
-- rfc: https://lore.kernel.org/20260604042349.67720-1-sj@kernel.org
-- Check destination cleaanup availability using the cleanup callback.
-- Do the cleanup for all commit failure points in
-  [targets commit, ops commit] scope.
-- Wordsmith the commit message.
-- Add 'Fixes:' and Cc: stable@.
+ Documentation/mm/damon/index.rst     |   1 +
+ Documentation/mm/damon/tlb_flush.rst | 131 +++++++++++++++++++++++++++
+ 2 files changed, 132 insertions(+)
+ create mode 100644 Documentation/mm/damon/tlb_flush.rst
 
- mm/damon/core.c | 55 ++++++++++++++++++++++++++++++++++++++++++-------
- 1 file changed, 47 insertions(+), 8 deletions(-)
-
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index 265d51ade25bf..7e4b9affc5b06 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -1387,10 +1387,36 @@ static int damon_commit_target(
- 	return 0;
- }
+diff --git a/Documentation/mm/damon/index.rst b/Documentation/mm/damon/index.rst
+index 318f6a7bfea4..5e239437dab3 100644
+--- a/Documentation/mm/damon/index.rst
++++ b/Documentation/mm/damon/index.rst
+@@ -19,6 +19,7 @@ DAMON is a Linux kernel subsystem for efficient :ref:`data access monitoring
  
-+/*
-+ * damon_revert_target_commits() - revert unsuccessful target commits.
-+ * @dst:	Commit destination context
-+ * @failed:	Commit failed destination target
-+ * @src:	Commit source context
-+ *
-+ * Revert target states that changed by damon_commit_target(), and cannot be
-+ * cleaned up by the destination context's ops.cleanup_target().
-+ */
-+static void damon_revert_target_commits(struct damon_ctx *dst,
-+		struct damon_target *failed, struct damon_ctx *src)
-+{
-+	struct damon_target *target;
+    faq
+    design
++   tlb_flush
+    api
+    maintainer-profile
+ 
+diff --git a/Documentation/mm/damon/tlb_flush.rst b/Documentation/mm/damon/tlb_flush.rst
+new file mode 100644
+index 000000000000..394f7b86102a
+--- /dev/null
++++ b/Documentation/mm/damon/tlb_flush.rst
+@@ -0,0 +1,131 @@
++.. SPDX-License-Identifier: GPL-2.0
 +
-+	if (!damon_target_has_pid(src))
-+		return;
-+	if (dst->ops.cleanup_target)
-+		return;
-+	damon_for_each_target(target, dst) {
-+		if (target == failed)
-+			return;
-+		put_pid(target->pid);
-+	}
-+}
++==========================================
++DAMON TLB Flush Policy
++==========================================
 +
- static int damon_commit_targets(
- 		struct damon_ctx *dst, struct damon_ctx *src)
- {
- 	struct damon_target *dst_target, *next, *src_target, *new_target;
-+	struct damon_target *failed;
- 	int i = 0, j = 0, err;
- 
- 	damon_for_each_target_safe(dst_target, next, dst) {
-@@ -1404,8 +1430,10 @@ static int damon_commit_targets(
- 					dst_target, damon_target_has_pid(dst),
- 					src_target, damon_target_has_pid(src),
- 					src->min_region_sz);
--			if (err)
--				return err;
-+			if (err) {
-+				failed = dst_target;
-+				goto out;
-+			}
- 		} else {
- 			struct damos *s;
- 
-@@ -1419,25 +1447,34 @@ static int damon_commit_targets(
- 		}
- 	}
- 
-+	failed = NULL;
- 	damon_for_each_target_safe(src_target, next, src) {
- 		if (j++ < i)
- 			continue;
- 		/* target to remove has no matching dst */
--		if (src_target->obsolete)
--			return -EINVAL;
-+		if (src_target->obsolete) {
-+			err = -EINVAL;
-+			goto out;
-+		}
- 		new_target = damon_new_target();
--		if (!new_target)
--			return -ENOMEM;
-+		if (!new_target) {
-+			err = -ENOMEM;
-+			goto out;
-+		}
- 		err = damon_commit_target(new_target, false,
- 				src_target, damon_target_has_pid(src),
- 				src->min_region_sz);
- 		if (err) {
- 			damon_destroy_target(new_target, NULL);
--			return err;
-+			goto out;
- 		}
- 		damon_add_target(dst, new_target);
- 	}
- 	return 0;
++:Author: Kunwu Chan <kunwu.chan@gmail.com>
++:Author: Wang Lian <lianux.mm@gmail.com>
 +
-+out:
-+	damon_revert_target_commits(dst, failed, src);
-+	return err;
- }
- 
- static void damon_commit_filter(struct damon_filter *dst,
-@@ -1571,8 +1608,10 @@ int damon_commit_ctx(struct damon_ctx *dst, struct damon_ctx *src)
- 	 */
- 	if (!damon_attrs_equals(&dst->attrs, &src->attrs)) {
- 		err = damon_set_attrs(dst, &src->attrs);
--		if (err)
-+		if (err) {
-+			damon_revert_target_commits(dst, NULL, src);
- 			return err;
-+		}
- 	}
- 	dst->pause = src->pause;
- 	dst->ops = src->ops;
-
-base-commit: f499b8d2253d32f4ea1e16198f348e6259cc14ca
++Overview
++========
++
++DAMON monitors data access by sampling PTE (Page Table Entry) Accessed bits
++using ``ptep_test_and_clear_young()`` and ``pmdp_test_and_clear_young()``.
++These functions clear the Accessed bit but do **not** flush the TLB
++(Translation Lookaside Buffer).  This is an intentional design choice.
++
++Questions about this behavior come up repeatedly, both on the mailing list
++and in private inquiries.  This document describes the reasoning, the
++trade-offs, and recommendations for users and testers.
++
++Background
++==========
++
++DAMON's access check works as follows:
++
++1. Clear the PTE Accessed bit for a sampled page.
++2. Wait for one ``sampling interval``.
++3. Check if the Accessed bit has been set again by the hardware.
++
++If the bit was set again, the page was accessed during the sampling interval.
++
++On architectures with hardware-managed TLB (e.g., x86, arm64), the CPU may
++cache the Accessed bit state in the TLB.  After DAMON clears the Accessed bit
++in the page table, a stale TLB entry with the old Accessed bit remains in the
++TLB.  When the workload accesses the page, the access hits the stale TLB
++entry and does not trigger a page table walk, so the Accessed bit in the page
++table is not set again.  DAMON therefore fails to detect real accesses on its
++next check, reporting false negatives.
++
++Flushing the TLB after clearing the Accessed bit prevents stale TLB entries
++and eliminates this problem.  Functions such as ``ptep_clear_flush_young()`` and
++``pmdp_clear_flush_young()`` provide this behavior.  However, TLB flushes come
++at a performance cost.
++
++Why DAMON Does Not Flush TLB
++============================
++
++DAMON intentionally avoids TLB flushes to keep monitoring overhead low.
++The decision was made after measuring the performance impact of adding TLB
++flushes to the sampling path.  The measurement showed the overhead is
++significant enough to matter for production use [1]_.
++
++Production workloads typically have large working sets that flush TLB buffers
++anyway through normal memory access patterns.  Stale TLB entries that could
++cause monitoring inaccuracies are evicted by the workload's own memory activity
++before the next sampling interval.  The accuracy impact is therefore negligible in
++production.
++
++The following table summarizes the trade-off:
++
+++---------------------+-----------------------------+---------------------------+
++|                     | Without TLB Flush (current) | With TLB Flush            |
+++---------------------+-----------------------------+---------------------------+
++| Monitoring Overhead | Low                         | Higher (flush cost)       |
+++---------------------+-----------------------------+---------------------------+
++| Accuracy (prod)     | Good                        | Good                      |
+++---------------------+-----------------------------+---------------------------+
++| Accuracy (test)     | May degrade                 | Good                      |
+++---------------------+-----------------------------+---------------------------+
++
++Impact on Testing and Small Workloads
++=====================================
++
++The lack of TLB flush becomes problematic when the working set is small enough
++to fit entirely within the TLB reach.  This is common in test environments
++and synthetic benchmarks.  In such cases, stale TLB entries persist across
++sampling intervals, so DAMON reports false accesses and monitoring results
++become incorrect.
++
++For example, on a machine with a large TLB buffer, a test workload of a few
++tens of megabytes may never experience TLB eviction.  DAMON's WSS (Working Set
++Size) estimation can report 100% error (all regions reported as accessed,
++or none reported as accessed depending on timing), and DAMOS schemes may never
++trigger correctly.
++
++This issue was observed in DAMON selftests and was addressed by increasing the
++test working set size to simulate production-like conditions, rather than
++changing DAMON's TLB flush behavior [2]_.  The selftest working set size was
++increased up to 160 MiB for this reason.
++
++Recommendations
++===============
++
++For Users
++---------
++
++If you observe unexpected ``nr_accesses`` values or inaccurate working
++set size estimates, the cause is likely stale TLB entries from DAMON's
++sampling without TLB flushes.  This happens when the working set fits
++within the TLB reach, which is uncommon for production workloads but can
++occur with small workloads.  See the For Testers section below for
++how to verify this.
++
++For Testers and Developers
++--------------------------
++
++When writing DAMON tests, ensure the test workload's working set is large
++enough to trigger natural TLB eviction on the target test machine.  The
++exact size depends on the CPU's TLB configuration.  The DAMON selftest for
++WSS estimation uses 160 MiB per region after finding smaller sizes
++unreliable on systems with large TLB buffers [2]_.
++
++For out-of-tree tests, gradually increase the working set size until DAMON
++reports stable and accurate results, then use that size as the baseline for
++subsequent tests on the same hardware.
++
++If DAMON reports unexpectedly high ``nr_accesses`` or empty
++``tried_regions``, the ``diagnose_empty_tried_regions.py`` script from
++DAMON selftests can help determine whether stale TLB entries are the cause.
++
++The existing DAMON selftests follow this approach [2]_.
++
++References
++==========
++
++.. [1] `DAMON TLB flush overhead measurement
++   <https://lore.kernel.org/20200403103059.12762-1-sjpark@amazon.com/>`_
++
++.. [2] `DAMON selftest: increase working set size for reliable results
++   <https://lore.kernel.org/20260117020731.226785-3-sj@kernel.org/>`_
 -- 
-2.47.3
+2.43.0
+
