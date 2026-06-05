@@ -1,31 +1,31 @@
 Received: from frasgout.his.huawei.com (frasgout.his.huawei.com [185.176.79.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D525E4C9014
-	for <damon@lists.linux.dev>; Fri,  5 Jun 2026 11:00:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79C994D2ED2
+	for <damon@lists.linux.dev>; Fri,  5 Jun 2026 11:13:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.176.79.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780657214; cv=none; b=E2vFc5xPxxoOnj/sG/fX/Y7WUV9uCGw+WndNtcVurfdvRs4kVKo+ouh4Jlaw6YjaTx8pUPAJpORrULqKJphqQydrN4n9dV9jrvbvqPNU55fHoF/P6Wpu/NkG2nh2+iF1xJ+4NOLMUmvI71Z6J6JrvRS/+lxT+E5e2t2YKB3Wjow=
+	t=1780657991; cv=none; b=rheyEfNQEgqHUDptGLIMx1991AqCguOLAL2TlaAmDENyMisaTAyY9lY/GvZjxLeFn987k+XkAl3eOZ86AwE9HU5DH1wilzdf3KnlXxVhIk3sEmuiZlLhRwJUsO7Y1bxJMeEbKKkfB/bnNpDdMME9zP1jEHmzVncjiZv4P0ofwmA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780657214; c=relaxed/simple;
-	bh=X/T2gYpVQ9y+HxPv6YfBMjeGAigeiWLAELaTH967MLU=;
+	s=arc-20240116; t=1780657991; c=relaxed/simple;
+	bh=Ooxk+lVhfF98dUGEdWvtkuY0Fng4kOAybu+ncYCdgvY=;
 	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=hWUnnUULudhX5bIJl6Uv5qNfGwuEJOvlNjwGAbCtnbrnZoTGAP6PCu9AbK3cvAbOq0cgLmvEADCTi4PC2B1dYMZ/AFusO2mTtG9H0U8+h+vS/RsiCLu6WM1MDoKeE+YSX37x/+9SEGl0dYPXvkyyth3323LwAwqXXYHxUdOAgKA=
+	 In-Reply-To:Content-Type; b=bkfzrMFKN9FGS9zXJV6QPHgGjDejuXrr58syR8r5VltkV+Vd8g8rDUgC2+a1maOCDAfkh9O3aO9Cf4ILaAFQt20tTojZnP2n7FyE4oo+qsSxOzTmgHnP8FbUx3BLsK8OJD8PWI9KS9/tdK3XwMxDRerUn2/ruki5RCv5FIGVa0s=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei-partners.com; spf=pass smtp.mailfrom=huawei-partners.com; arc=none smtp.client-ip=185.176.79.56
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei-partners.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei-partners.com
 Received: from mail.maildlp.com (unknown [172.18.224.107])
-	by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4gWz2q2BFtzHnGkQ;
-	Fri,  5 Jun 2026 18:59:15 +0800 (CST)
+	by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4gWzKg3MtBzHnGkZ;
+	Fri,  5 Jun 2026 19:12:07 +0800 (CST)
 Received: from mscpeml500003.china.huawei.com (unknown [7.188.49.51])
-	by mail.maildlp.com (Postfix) with ESMTPS id A38BC40584;
-	Fri,  5 Jun 2026 19:00:10 +0800 (CST)
+	by mail.maildlp.com (Postfix) with ESMTPS id D09B740584;
+	Fri,  5 Jun 2026 19:13:02 +0800 (CST)
 Received: from [10.123.123.154] (10.123.123.154) by
  mscpeml500003.china.huawei.com (7.188.49.51) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.11; Fri, 5 Jun 2026 14:00:10 +0300
-Message-ID: <cc60cd6b-d841-4b5f-b3f8-b5dd39ea5808@huawei-partners.com>
-Date: Fri, 5 Jun 2026 14:00:09 +0300
+ 15.2.1544.11; Fri, 5 Jun 2026 14:13:02 +0300
+Message-ID: <a9269eaf-a567-4dfe-99a3-cee4b13946de@huawei-partners.com>
+Date: Fri, 5 Jun 2026 14:13:01 +0300
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -33,114 +33,57 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v3 1/4] mm/damon: Introduce DAMOS_QUOTA_HUGEPAGE auto
- tuning
+Subject: Re: [RFC PATCH v3 2/4] mm/damon: Generalize ctx_target creation for
+ damon_ops_id and add vaddr support
 To: SeongJae Park <sj@kernel.org>
 CC: <artem.kuzin@huawei.com>, <stepanov.anatoly@huawei.com>,
 	<wangkefeng.wang@huawei.com>, <yanquanmin1@huawei.com>, <zuoze1@huawei.com>,
 	<damon@lists.linux.dev>, <akpm@linux-foundation.org>, <linux-mm@kvack.org>,
 	<linux-kernel@vger.kernel.org>
-References: <20260605004422.82568-1-sj@kernel.org>
+References: <20260605005023.82747-1-sj@kernel.org>
 Content-Language: en-US
 From: Gutierrez Asier <gutierrez.asier@huawei-partners.com>
-In-Reply-To: <20260605004422.82568-1-sj@kernel.org>
+In-Reply-To: <20260605005023.82747-1-sj@kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: mscpeml100003.china.huawei.com (10.199.174.67) To
+X-ClientProxiedBy: mscpeml500004.china.huawei.com (7.188.26.250) To
  mscpeml500003.china.huawei.com (7.188.49.51)
 
 
 
-On 6/5/2026 3:44 AM, SeongJae Park wrote:
-> On Thu, 4 Jun 2026 15:03:34 +0000 <gutierrez.asier@huawei-partners.com> wrote:
+On 6/5/2026 3:50 AM, SeongJae Park wrote:
+> On Thu, 4 Jun 2026 15:03:35 +0000 <gutierrez.asier@huawei-partners.com> wrote:
 > 
 >> From: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
 >>
->> Introduce DAMOS_QUOTA_HUGEPAGE auto tuning Add a
->> new DAMOS quota goal metric to measure the amount of huge
->> page consumption to total anonymous memory consumption
->> ratio.
-> 
-> s/anonymous// ?
-> 
+>> This patch adds a new function damon_modules_new_vaddr_ctx_target.
+>> Since ctx_target creation for vaddr and paddr is almost
+>> identical, the logic is extracted to a new function,
+>> damon_modules_new_ctx_target, and vaddr and paddr functions
+>> are left just as interfaces.
+>>
+>> This change was suggested earlier1 and it is needed to allow
+>> developers to create DAMON modules that use DAMON_OPS_VADDR targets.
 >>
 >> Signed-off-by: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
+>> Suggested-by: SeongJae Park <sj@kernel.org>
 >> ---
->>  include/linux/damon.h |  1 +
->>  mm/damon/core.c       | 14 ++++++++++++++
->>  2 files changed, 15 insertions(+)
->>
->> diff --git a/include/linux/damon.h b/include/linux/damon.h
->> index c7a31572689b..8e15a674e893 100644
->> --- a/include/linux/damon.h
->> +++ b/include/linux/damon.h
->> @@ -177,6 +177,7 @@ enum damos_quota_goal_metric {
->>  	DAMOS_QUOTA_ACTIVE_MEM_BP,
->>  	DAMOS_QUOTA_INACTIVE_MEM_BP,
->>  	DAMOS_QUOTA_NODE_ELIGIBLE_MEM_BP,
->> +	DAMOS_QUOTA_HUGEPAGE,
+>>  mm/damon/modules-common.c | 31 +++++++++++++++++++++++++++----
+>>  mm/damon/modules-common.h |  3 +++
+>>  2 files changed, 30 insertions(+), 4 deletions(-)
 > 
-> On the previous revision, I suggested renaming this to
-> DAMOS_QUOTA_HUGEPAGE_MEM_BP for consistency, but it didn't got your reply.
-> Could I ask your opinion?
+> This change is for the sample module that will be introduced by the third patch
+> of this series, right?
 > 
-> Also, I asked you to add the kernel-doc comment before dropping RFC.  I know
-> you didn't drop RFC tag yet, but could you consider adding it from the next
-> revision?
-Sorry, missed it. I will change it.
->>  	NR_DAMOS_QUOTA_GOAL_METRICS,
->>  };
->>  
->> diff --git a/mm/damon/core.c b/mm/damon/core.c
->> index 9f38deddcb30..7fc7477a353a 100644
->> --- a/mm/damon/core.c
->> +++ b/mm/damon/core.c
->> @@ -2536,6 +2536,17 @@ static unsigned int damos_get_in_active_mem_bp(bool active_ratio)
->>  	return mult_frac(inactive, 10000, total);
->>  }
->>  
->> +static unsigned int damos_hugepage_mem_bp(void)
->> +{
->> +	unsigned long thp, total;
->> +
->> +	thp = global_node_page_state(NR_ANON_THPS) +
->> +				global_node_page_state(NR_SHMEM_THPS) +
->> +				global_node_page_state(NR_FILE_THPS);
->> +	total = totalram_pages() - global_zone_page_state(NR_FREE_PAGES);
->> +	return mult_frac(thp, 10000, total);
->> +}
-> 
-> As Sashiko also [1] commented, let's avoid divide by zero by checking if total
-> is zero, before calling mult_frac().
-> 
-> I wouldn't mind ignoring Sashiko's 32-bit concern, but do you have any opinion?
-I just answered. I can cast 10.000 to unsigned long. I don't think many people
-using 32 bit systems will use over 1.6GB of huge pages, but it makes sense to
-be safe anyway.
->> +
->>  static void damos_set_quota_goal_current_value(struct damon_ctx *c,
->>  		struct damos *s, struct damos_quota_goal *goal)
->>  {
->> @@ -2567,6 +2578,9 @@ static void damos_set_quota_goal_current_value(struct damon_ctx *c,
->>  		goal->current_value = damos_get_node_eligible_mem_bp(c, s,
->>  				goal->nid);
->>  		break;
->> +	case DAMOS_QUOTA_HUGEPAGE:
->> +		goal->current_value = damos_hugepage_mem_bp();
->> +		break;
->>  	default:
->>  		break;
->>  	}
->> -- 
->> 2.43.0
-> 
-> Other than the above comments, looks good to me overall.
-> 
-> [1] https://lore.kernel.org/20260604151932.93C431F00893@smtp.kernel.org
-> 
-> 
+> I'd like sample modules to be simple and completely isolated under sample/
+> directory.  Is this change really required for the sammple directory?  If not,
+> could we please drop this patch?
+So, just create the context manually in the module without a new
+damon_modules_new_vaddr_ctx_target interface?> 
 > Thanks,
 > SJ
+> 
+> [...]
 > 
 
 -- 
