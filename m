@@ -1,173 +1,294 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from frasgout.his.huawei.com (frasgout.his.huawei.com [185.176.79.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 062D1378D9C;
-	Fri,  5 Jun 2026 10:08:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4F323F929A
+	for <damon@lists.linux.dev>; Fri,  5 Jun 2026 10:25:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.176.79.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780654094; cv=none; b=KLPJ0N4WfX4yeD/+5sMhkkd6uAVVeomEkIydBsOt2FD8JIJYTXMhx9JY2RIx59WQy/DWc9NPh+xI/cc/nl7zXDON7dwzJc87yhF/UWE8m5MGV9vMXWnmNJ3tFHCPOSUSdYK/x9fP4V+Og2amcb/69QxQmKftWqlHixQjw7oEs44=
+	t=1780655163; cv=none; b=ilbDtArJvPDYCKXSGP3KBunzyVMAFUakTsoD/6fo3GCruw6T09IC0Ynuh0VIeIInRrb8viBOwn1ad5zvDTILOZT+FFTp2CMBVyBIMDCwN5kgDwA3JM4+6jyu+doth1H9yWK/jZxHO0xgbsnfCi/aDVpd1sY6vdH3RzPMJ5ixk1I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780654094; c=relaxed/simple;
-	bh=m4UpGEEadJ0WjOAYoI4gvYf25oKzHkiSw67WOeZG6ew=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=CIoNK6KC+MiCSCh9kV+sS6BXwNNj/w2HWj3Bkk90e7NBBKyc5Sc36PJt6Bmjp/96iSqqRfDn/qUGpwqxMWsaYxMfvf6Eva+ubcbvIu1zt5RIV+0jnImJsAC3d43lSbGAvUL2KqndgnamuxavHy9euQlLi3qXORT+ncP9cWBRB1w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DE2kG58h; arc=none smtp.client-ip=100.103.45.18
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DE2kG58h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABC571F00893;
-	Fri,  5 Jun 2026 10:08:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1780654092;
-	bh=I5VqecLRt7G5iGb70TpzMF2J4Qjuy+1vUMH27FXaf78=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=DE2kG58hMxthGFnLTKM9WgyXXW0z/Ih2lPXc1ijI95aFcx2R7AziaFPmXqsNZ3iEo
-	 GJgPWk5slRIzPwDbGO0AL7r0+PbMGl0PHsUB5OtVy0oOTph7uJNMn8sFlSyIW/eDPU
-	 VjOeQjH0eVcLx3V6XQwfaEW04TFaTMRsqDxImeXLXM9YGApwhre4/PuiZboowesG+q
-	 PGQzllDWMEEz0pIBeeiWsdy05fSAGlpHIlKQTq4fd6LKW0Tej7F42wt9eTt8sQvn8V
-	 Er3vsj+ZXmfqiQwrPrmtc0ZsIGnnYFk312C4Ww2XJq1lNttvuHNlzozmQErjtzci6D
-	 fwBQzxAn0xlOg==
-Date: Fri, 5 Jun 2026 11:07:57 +0100
-From: Lorenzo Stoakes <ljs@kernel.org>
-To: "David Hildenbrand (Arm)" <david@kernel.org>
-Cc: xu.xin16@zte.com.cn, tao.wangtao@honor.com, catalin.marinas@arm.com, 
-	will@kernel.org, tglx@kernel.org, mingo@redhat.com, bp@alien8.de, 
-	dave.hansen@linux.intel.com, x86@kernel.org, akpm@linux-foundation.org, willy@infradead.org, 
-	sj@kernel.org, kees@kernel.org, luizcap@redhat.com, 
-	zhangjiao2@cmss.chinamobile.com, kas@kernel.org, hpa@zytor.com, liam@infradead.org, 
-	vbabka@kernel.org, rppt@kernel.org, surenb@google.com, mhocko@suse.com, 
-	jack@suse.cz, riel@surriel.com, harry@kernel.org, jannh@google.com, 
-	jgg@ziepe.ca, jhubbard@nvidia.com, peterx@redhat.com, ziy@nvidia.com, 
-	baolin.wang@linux.alibaba.com, npache@redhat.com, ryan.roberts@arm.com, dev.jain@arm.com, 
-	baohua@kernel.org, lance.yang@linux.dev, chengming.zhou@linux.dev, 
-	nao.horiguchi@gmail.com, matthew.brost@intel.com, joshua.hahnjy@gmail.com, 
-	rakie.kim@sk.com, byungchul@sk.com, gourry@gourry.net, 
-	ying.huang@linux.alibaba.com, apopple@nvidia.com, pfalcato@suse.de, 
-	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, linux-fsdevel@vger.kernel.org, 
-	linux-mm@kvack.org, damon@lists.linux.dev, shakeel.butt@linux.dev, ryncsn@gmail.com, 
-	dvander@google.com, wangzicheng@honor.com
-Subject: Re: [PATCH 0/15] mm: introduce ANON_VMA_LAZY for deferred anon_vma
- creation
-Message-ID: <aiKd7tfrICFnlWxV@lucifer>
-References: <20260604111035154Lk-9ZgwKY4Nlk4zz30U1t@zte.com.cn>
- <68a4aec0-72d4-4967-b063-b57cc7ee40cf@kernel.org>
+	s=arc-20240116; t=1780655163; c=relaxed/simple;
+	bh=OFaT2SJk0b+jIuV/wLm5DYuX9lwZj1qFIXsA8cA+gzU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=GNb+ZA4PKTWWH2RBfxd1yn/pFIlaYlLbIMyVCS0+eFw7yZj5DG5CwHFSU0wPH4YQeWbU2oHNBzLbU1juGAUE494Im2mokNkR/amXXPBlG9XgbQKZ53eWujYotbt/KHzr0DKT+xLPI2AjbfJ+GQ6HmbLVn2Wf8/b/B18xIgQejUo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei-partners.com; spf=pass smtp.mailfrom=huawei-partners.com; arc=none smtp.client-ip=185.176.79.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei-partners.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei-partners.com
+Received: from mail.maildlp.com (unknown [172.18.224.150])
+	by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4gWyJJ0hzSzJ4692;
+	Fri,  5 Jun 2026 18:25:52 +0800 (CST)
+Received: from mscpeml500003.china.huawei.com (unknown [7.188.49.51])
+	by mail.maildlp.com (Postfix) with ESMTPS id 21DA140571;
+	Fri,  5 Jun 2026 18:25:57 +0800 (CST)
+Received: from [10.123.123.154] (10.123.123.154) by
+ mscpeml500003.china.huawei.com (7.188.49.51) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.11; Fri, 5 Jun 2026 13:25:56 +0300
+Message-ID: <9f9e2159-5a6b-496f-9633-fa06c0217948@huawei-partners.com>
+Date: Fri, 5 Jun 2026 13:25:56 +0300
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <68a4aec0-72d4-4967-b063-b57cc7ee40cf@kernel.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v3 0/4] mm/damon: Introduce a huge page collapsing
+ mechanism using auto tuning
+To: SeongJae Park <sj@kernel.org>
+CC: <artem.kuzin@huawei.com>, <stepanov.anatoly@huawei.com>,
+	<wangkefeng.wang@huawei.com>, <yanquanmin1@huawei.com>, <zuoze1@huawei.com>,
+	<damon@lists.linux.dev>, <akpm@linux-foundation.org>, <linux-mm@kvack.org>,
+	<linux-kernel@vger.kernel.org>
+References: <20260605013406.83441-1-sj@kernel.org>
+Content-Language: en-US
+From: Gutierrez Asier <gutierrez.asier@huawei-partners.com>
+In-Reply-To: <20260605013406.83441-1-sj@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: mscpeml500004.china.huawei.com (7.188.26.250) To
+ mscpeml500003.china.huawei.com (7.188.49.51)
 
-On Fri, Jun 05, 2026 at 11:38:52AM +0200, David Hildenbrand (Arm) wrote:
-> On 6/4/26 05:10, xu.xin16@zte.com.cn wrote:
-> >>>
-> >>>  arch/arm64/Kconfig         |   1 +
-> >>>  arch/x86/Kconfig           |   1 +
-> >>>  fs/proc/page.c             |   6 +-
-> >>>  include/linux/mm.h         |  38 ++
-> >>>  include/linux/mm_types.h   |   9 +-
-> >>>  include/linux/page-flags.h |  34 +-
-> >>>  include/linux/pagemap.h    |   2 +-
-> >>>  include/linux/rmap.h       | 165 ++++++++-
-> >>>  mm/Kconfig                 |  22 ++
-> >>>  mm/damon/ops-common.c      |   4 +-
-> >>>  mm/debug.c                 |   2 +-
-> >>>  mm/debug_vm_pgtable.c      |   2 +-
-> >>>  mm/gup.c                   |   6 +-
-> >>>  mm/huge_memory.c           |  16 +-
-> >>>  mm/internal.h              | 171 +++++++++
-> >>>  mm/khugepaged.c            |  13 +-
-> >>>  mm/ksm.c                   |  43 ++-
-> >>>  mm/memory-failure.c        |  11 +-
-> >>>  mm/memory.c                |  19 +-
-> >>>  mm/migrate.c               | 126 ++++---
-> >>>  mm/mmap.c                  |  15 +-
-> >>>  mm/mremap.c                |   4 +-
-> >>>  mm/page_idle.c             |   2 +-
-> >>>  mm/rmap.c                  | 690 ++++++++++++++++++++++++++++++++++---
-> >>>  mm/vma.c                   |  76 ++--
-> >>>  mm/vma.h                   |   4 +-
-> >>>  mm/vma_exec.c              |   2 +-
-> >>>  mm/vma_init.c              |   1 +
-> >>>  28 files changed, 1279 insertions(+), 206 deletions(-)
-> >>
-> >> Hi!
-> >>
-> >> When I saw the diffsat I was concerned. Going through the patches made me ...
-> >> more concerned :)
-> >>
-> >> This is a lot of complexity. On top of something that is already so complicated
-> >> that I fail to grasp most details without regularly taking a look at the nice
-> >> figures Lorenzo created recently.
-> >>
-> >> For example, I read above "since child VMAs do not need to allocate anon_vma"
-> >> and wondered how that could be part of something that is just done lazily. Then
-> >> I had to learn in the patches that there is some additional "Child VMAs
-> >> are created as ANON_VMA_TREE_PARENT and do not allocate anon_vma" -- excuse me,
-> >> what? :)
-> >>
-> >> Reading about VMA refcounts made me shiver. Reading "Holding only
-> >> folio_lock(folio) cannot guarantee that the split
-> >> operation completes atomically." confused me. Learning that we have to invent
-> >> interesting ways to make page migration mutually exclusive to free_pgtables()
-> >> concerned me. Figuring out that there are arch-specific config options and
-> >> runtime toggles is a clear warning sign.
-> >>
-> >> Seeing test_folio_unmapped() was funny, though (why?! :)).
-> >>
-> >> I think this patch set has a noble goal of reducing anon_vma overhead when anon
-> >> pages are not shared during fork. However, using anon_vma for them actually
-> >> makes the overall implementation (e.g., rmap walks, locking) more consistent and
-> >> simpler.
-> >>
-> >> Even if we could be convinced that most of this here is correct, how should we
-> >> reasonably maintain this increasing level of complexity here?
-> >
-> > Indeed, it's very complex, but having the changes of 15 patches scattered across
-> > various subsystems is really frustrating for reviewers. It took me a whole day to
-> > read through the entire patch set, which made an already complicated matter even
-> > more complex (maintaining such complex code in the future will be a pain).
-> >
-> > However, overall, I think the original intention behind Tao's patch is innovative
-> > and valuable, and Tao could definitely make this patch set simpler and more
-> > readable, because the core changes actually start from PATCH 10.
-> >
-> > I believe that if Tao had done the following, things might have gone better and easier
-> > for reviewing. In fact, I understand the motivation behind the patch is quite simple
-> > at its core (just wanting to avoid allocating the anon_vma structure when a VMA hasn't
-> > been truly forked, and instead put the VMA information directly into folio->mapping):
-> >
-> > 1) You could actually simplify your patch significantly — without adding a lot of wrappers
-> > and helper functions that introduce extra review overhead — and keep only the most essential elements.
-> >
-> > 2) Provide complete test code (in tools/testing/selftest) that covers the affected functionality,
-> > such as VMA, huge pages, KSM, etc.
-> >
-> > 3) Use the RFC tag to start a discussion.
-> >
-> >
-> > I would be very glad to see if Tao could post a simpler v2 version that does not alter the rmap
-> > core data structures too much and does not introduce excessive complexity, no matter whether
-> > it can be merged finaly.
->
-> I'm afraid, the overall complexity would increase in any case.
->
-> So to quote myself "But fundamentally, I think we want to find a new design that
-> is just naturally simpler."
+Hi SJ,
 
-In general I'm prioritising my work, and hope to ship something within the next
-month, even if it might just be some early bits of work on this to plumb stuff
-in, and certainly the main ting will be an RFC :)
+On 6/5/2026 4:34 AM, SeongJae Park wrote:
+> Hello Asier,
+> 
+> 
+> Thank you for revisioning this great patch!
+> 
+> On Thu, 4 Jun 2026 15:03:33 +0000 <gutierrez.asier@huawei-partners.com> wrote:
+> 
+>> From: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
+>>
+>> Overview
+>> ========
+>>
+>> This patch set introduces a new autotuning which allows to collapse
+>> hot regions into hugepages.
+>>
+>> Motivation
+>> ==========
+>>
+>> Since TLB is a bottleneck for many systems[1], a way to optimize TLB
+>> misses (or hits) is to use huge pages. Unfortunately, using "always"
+>> in THP leads to memory fragmentation and memory waste. For this reason,
+>> most application guides and system administrators suggest to disable THP.
+>>
+>> Currently DAMON has DAMOS_HUGEPAGE, DAMOS_NONHUGEPAGE and DAMOS_COLLAPSE.
+>> However, there is no way to tune the settings. It will collapse all the
+>> hot regions that meet the access pattern. If the server is a bare metal
+>> database or big data server, this will also lead to eventual fragmentation.
+>>
+>> Additionally, currently THP is set globally. Ideally, there should be a
+>> way to control which tasks can use huge pages.
+> 
+> We can do process level control using prctl(PR_SET_THP_DISABLE) [1], isn't it?
+> I think the last above sentence is better to be reworded or simply dropped.
+Yes, although you will not disable it for all the processes except onein the system. I will reword it to make it more clear.
+>>
+>> Solution
+>> ========
+>>
+>> DAMON has now a way to autotune some of the variables and adjust quotas
+>> automatically, so that DAMON is fired only under the right circumstances.
+>> It would be nice to have something similar, but for huge pages.
+>>
+>> A new autotuning quota goal[2], damos_get_used_hugepage_mem_bp, is
+>> introduced, which checks the huge page consumption to total anonymous
+> 
+> In the previous revision I suggested to
+> s/damos_get_used_hugepage_mem_bp/damos_hugepage_mem_bp/ and you agreed.  Seems
+> it was forgotten?
 
-So keep an eye out for this which will hopefully address people's needs!
+Actually, I changed the code to damos_hugepage_mem_bp. I forgot to update
+the cover letter. Will do it for the next RFC version.
 
->
-> --
-> Cheers,
->
-> David
+>> memory consumption. This new quota mechanism reuses current autotuning
+>> architecture.
+>>
+>> A new module is introduced to demonstrate the use of huge pages
+> 
+> Let's clarify it is a  sample module.  That is,
+> s/A new module/A new sample module/ ?
 
-Thanks, Lorenzo
+Right, I will update the cover letter.
+
+>> collapse autotuning. The goal is to collapse hot regions of a given
+>> process into huge pages. The module launches a kdamond thread for a
+>> certain task provided by the user through monitored_pid module argument.
+> 
+> Following other vaddr based sample modues' pattern, what about
+> s/monitored_pid/target_pid/ ?
+Makes sense. I will change it.
+> 
+> As I also commented on the third patch of this series, apparently it is not
+> following the sample modules' pattern but that for non-sample modules.  Could
+> you please rewrite in a more simple way?
+
+OK, I will remove a lot of the module parameters. I'll use the prcl.c as
+an example.
+
+>> Hugepage goal autotuning will automatically adjust the aggressiveness
+>> of hot region collapses.
+>>
+>> This module also has a user autotuning knob which allows the user to
+>> adjust the aggressiveness of page collapsing.
+>>
+>> Benchmarks
+>> ==========
+>>
+>> Huge page collapse autotuning was tested in a physicial machine with
+>> MariaDB 10.5.29 and sysbench as the benchmark framework.
+>>
+>> The hugepage module was set up in the following way:
+>>
+>> # echo 1000 > min_age
+>> # echo 1000 > quota_percentage_hugepage
+>> # echo $(pidof mariadbd) > monitored_pid
+>> # echo on > enabled
+>>
+>> The goal was to achieve 5% of the total memory used as hugepage.
+> 
+> Any reason to set it 5% ?
+
+The database was not particularly big. This means that I set the target
+too high, it may never reach it. Not all the database is hot, actually.
+
+I will make it more clear in the following cover letters
+
+>>
+>> The table below shows the memory consumption over time. Gaps in the
+>> timestamp means that no changes in the hugepage consumption happened
+>> over that period of time.
+>>
+>> +-----------+----------------+----------------+----------------------+
+>> | timestamp | total mem used | huge page used | percentage hugepage  |
+>> +-----------+----------------+----------------+----------------------+
+>> | 0         | 4721188        | 0              | 0%                   |
+>> | 28        | 4216848        | 4              | 0%                   |
+>> | 37        | 4189912        | 38912          | 1%                   |
+>> | 39        | 4195188        | 47104          | 1%                   |
+>> | 55        | 4111612        | 51200          | 1%                   |
+>> | 59        | 4137012        | 53248          | 1%                   |
+>> | 60        | 4137052        | 55296          | 1%                   |
+>> | 61        | 4156832        | 57344          | 1%                   |
+>> | 62        | 4136920        | 59392          | 1%                   |
+>> | 64        | 4109872        | 61440          | 1%                   |
+>> | 65        | 4119108        | 63488          | 2%                   |
+>> | 66        | 4145532        | 65536          | 2%                   |
+>> | 67        | 4134544        | 67584          | 2%                   |
+>> | 68        | 4158244        | 126976         | 3%                   |
+>> | 69        | 4124276        | 204800         | 5%                   |
+>> | 70        | 4100680        | 333824         | 8%                   |
+>> | 71        | 4095540        | 462848         | 11%                  |
+>> +-----------+----------------+----------------+----------------------+
+> 
+> What is the timestamp unit?  Second?
+> 
+> What is the mem used unit?  Byytes?  Kiloboytes?
+> 
+> I also remember you mentioned you will compare the numbers for more setups
+> including module disabled case (baseline) and THP disabled case.  I think "THP
+> disabled" case was my typo.  Maybe I wanted to say "THP enabled" case.
+> 
+> Is that still on your TODO list?
+> 
+> Given this series is adding relatively small change (assuming the sample module
+> will be simplified), I wouldn't strictly request all such tests.  I'm just
+> curious about your plan.
+> 
+>>
+>> Performance:
+>> Baseline -> 18,162.45 transactions per second
+>> Hugepage autotune -> 18,211.82 transactions per second
+> 
+> So, 2.7% improvement!  I think it is not bad for this simple approach.
+> 
+> Could you further elaborate how the performance is measured?  From when the
+> transactions per second measurement is started, and when it was stopped?  Are
+> the numbers average?  Mean?  Or something else?
+> 
+>>
+>>
+>> Eventually, the amount of huge pages reached 20%. This is consistent
+>> with how quota goals autotuning work. We are more aggresive when the
+>> quota is less than 10%, and less aggresive when the quota is higher.
+>> At some point, the aggressiveness just fades and no more collapses
+>> occur.
+> 
+> Could you share more hugepage utilization change for long term that captures it
+> converges to 20% but after that doesn't increase more?
+
+Correct.
+
+> Also, have you tried temporal quota tuner?
+
+OK, I will give it try.
+
+>>
+>> TODO
+>> ====
+>> - Support page splitting for cold hugepages.
+> 
+> This is a future work out of the scope of this series, right?  I think that is
+> better to be clarified.  In the previous revision, I was reading this as a TODO
+> for a future revision of this patch series.
+> 
+> Also, do you have specific changes you want to make to this series before it is
+> merged, or dropping the RFC tag?
+> 
+>>
+>> Patches Sequence
+>> ================
+>> Patch 1 -> Introduce DAMOS_QUOTA_HUGEPAGE and autotuning
+>> Patch 2 -> damon_modules_new_vaddr_ctx_target
+>> Patch 3 -> Module that demonstrates how to use DAMOS_QUOTA_HUGEPAGE
+>>            and the new VADDR ctx creation
+>> Patch 4 -> Documentation
+> 
+> As I commented to each patch, patch 1 looks good except a few trivial things.
+> Patch 2 seems unnecessary.  I hope patch 3 to be much simplified and wrote
+> again following the sample modules' pattern.  Patch 4 seems too much for a
+> sample module.
+Thanks for the feedback, I will work out the patches.
+>>
+>> Changes from previous versions
+>> ==============================
+>> RFC 2[3] -> RFC 3
+>>   - Module moved to samples
+>>   - Change autotune to monitor total memory and hugepage
+>>   - Added performnace benchmarks to the cover letter
+>>   - Bail out gracefully when trying to start disable
+>>     the module after the monitored task exited. This 
+>>     issue was discovered by sashiko [4]
+>>   - Fixed typos and added quota_sz to the documentation
+>>     discovered by sashiko [5]
+>> RFC 1[6] -> RFC 2
+>>   - Rebased into mm-new
+>>   - Use DAMOS_COLLAPSE instead of DAMOS_HUGEPAGE
+>>   - Fixed an issue that returned silently an error when the PID
+>>     didn't exist in the system.[7]
+> 
+> Thank you for continuing this great work, Asier.
+> 
+>>
+>> [1] https://dl.acm.org/doi/pdf/10.1145/3307650.3322227
+>> [2] https://lore.kernel.org/e67f05ad-dbb9-45e6-ba30-b167a99ac67d@huawei-partners.com
+>> [3] https://lore.kernel.org/20260522145518.158910-1-gutierrez.asier@huawei-partners.com
+>> [4] https://lore.kernel.org/20260522171210.900B11F00A3D@smtp.kernel.org
+>> [5] https://lore.kernel.org/20260522171633.AAF5B1F000E9@smtp.kernel.org
+>> [6] https://lore.kernel.org/20260430134139.2446417-1-gutierrez.asier@huawei-partners.com
+>> [7] https://lore.kernel.org/all/20260430154338.E22E6C2BCB3@smtp.kernel.org/
+> 
+> 
+> Thanks,
+> SJ
+> 
+> [...]
+> 
+
+-- 
+Asier Gutierrez
+Huawei
+
